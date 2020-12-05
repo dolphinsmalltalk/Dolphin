@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ISchemaItem subclass: #ISchemaAttribute
+MSXML.ISchemaItem subclass: #'MSXML.ISchemaAttribute'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'MSXMLConstants'
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ISchemaAttribute guid: (IID fromString: '{50ea08b6-dd1b-4664-9a50-c2f40f4bd79a}')!
-ISchemaAttribute comment: '<ISchemaAttribute> is a wrapper class for the COM interface ''MSXML2.ISchemaAttribute'' generated from type information in the ''Microsoft XML, v4.0'' library. It contains methods to invoke the member functions exposed by that interface.
+MSXML.ISchemaAttribute guid: (OS.COM.IID fromString: '{50ea08b6-dd1b-4664-9a50-c2f40f4bd79a}')!
+MSXML.ISchemaAttribute comment: '<ISchemaAttribute> is a wrapper class for the COM interface ''MSXML2.ISchemaAttribute'' generated from type information in the ''Microsoft XML, v4.0'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains the following helpstring for this interface
 	"XML Schema Attribute"
@@ -45,8 +45,8 @@ interface ISchemaAttribute : ISchemaItem
 		[out, retval]VARIANT_BOOL* reference);
 };
 '!
-!ISchemaAttribute categoriesForClass!COM-Interfaces!MSXML2-Interfaces! !
-!ISchemaAttribute methodsFor!
+!MSXML.ISchemaAttribute categoriesForClass!COM-Interfaces!MSXML2-Interfaces! !
+!MSXML.ISchemaAttribute methodsFor!
 
 defaultValue
 	"Answer the <bstr> value of the 'defaultValue' property of the receiver."
@@ -135,8 +135,7 @@ scope
 	| answer |
 	answer := ISchemaComplexType newPointer.
 	self get_scope: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 type
 	"Answer the <ISchemaType> value of the 'type' property of the receiver."
@@ -144,8 +143,7 @@ type
 	| answer |
 	answer := ISchemaType newPointer.
 	self get_type: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 use
 	"Answer the <sdword> value of the 'use' property of the receiver."
@@ -155,20 +153,20 @@ use
 	self get_use: answer.
 	^answer asObject
 ! !
-!ISchemaAttribute categoriesFor: #defaultValue!**auto generated**!properties!public! !
-!ISchemaAttribute categoriesFor: #fixedValue!**auto generated**!properties!public! !
-!ISchemaAttribute categoriesFor: #get_defaultValue:!**auto generated**!COM Interfaces-ISchemaAttribute!private! !
-!ISchemaAttribute categoriesFor: #get_fixedValue:!**auto generated**!COM Interfaces-ISchemaAttribute!private! !
-!ISchemaAttribute categoriesFor: #get_isReference:!**auto generated**!COM Interfaces-ISchemaAttribute!private! !
-!ISchemaAttribute categoriesFor: #get_scope:!**auto generated**!COM Interfaces-ISchemaAttribute!private! !
-!ISchemaAttribute categoriesFor: #get_type:!**auto generated**!COM Interfaces-ISchemaAttribute!private! !
-!ISchemaAttribute categoriesFor: #get_use:!**auto generated**!COM Interfaces-ISchemaAttribute!private! !
-!ISchemaAttribute categoriesFor: #isReference!**auto generated**!properties!public! !
-!ISchemaAttribute categoriesFor: #scope!**auto generated**!properties!public! !
-!ISchemaAttribute categoriesFor: #type!**auto generated**!properties!public! !
-!ISchemaAttribute categoriesFor: #use!**auto generated**!properties!public! !
+!MSXML.ISchemaAttribute categoriesFor: #defaultValue!**auto generated**!properties!public! !
+!MSXML.ISchemaAttribute categoriesFor: #fixedValue!**auto generated**!properties!public! !
+!MSXML.ISchemaAttribute categoriesFor: #get_defaultValue:!**auto generated**!COM Interfaces-ISchemaAttribute!private! !
+!MSXML.ISchemaAttribute categoriesFor: #get_fixedValue:!**auto generated**!COM Interfaces-ISchemaAttribute!private! !
+!MSXML.ISchemaAttribute categoriesFor: #get_isReference:!**auto generated**!COM Interfaces-ISchemaAttribute!private! !
+!MSXML.ISchemaAttribute categoriesFor: #get_scope:!**auto generated**!COM Interfaces-ISchemaAttribute!private! !
+!MSXML.ISchemaAttribute categoriesFor: #get_type:!**auto generated**!COM Interfaces-ISchemaAttribute!private! !
+!MSXML.ISchemaAttribute categoriesFor: #get_use:!**auto generated**!COM Interfaces-ISchemaAttribute!private! !
+!MSXML.ISchemaAttribute categoriesFor: #isReference!**auto generated**!properties!public! !
+!MSXML.ISchemaAttribute categoriesFor: #scope!**auto generated**!properties!public! !
+!MSXML.ISchemaAttribute categoriesFor: #type!**auto generated**!properties!public! !
+!MSXML.ISchemaAttribute categoriesFor: #use!**auto generated**!properties!public! !
 
-!ISchemaAttribute class methodsFor!
+!MSXML.ISchemaAttribute class methodsFor!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'MSXML2.ISchemaAttribute'
@@ -188,5 +186,5 @@ defineFunctions
 		defineFunction: #get_isReference:
 			argumentTypes: 'varbool*'
 ! !
-!ISchemaAttribute class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!MSXML.ISchemaAttribute class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
 

@@ -287,6 +287,7 @@
     <Image Include="Res\Game controller.ico" />
     <Image Include="Res\Globe.ico" />
     <Image Include="Res\GotoFolder.ico" />
+    <Image Include="Res\GraphicsNamespace.ico" />
     <Image Include="Res\Guid.ico" />
     <Image Include="Res\Help.ico" />
     <Image Include="Res\HistoryErase.ico" />
@@ -294,6 +295,7 @@
     <Image Include="Res\Information.ico" />
     <Image Include="Res\Interactor.ico" />
     <Image Include="Res\JSON.ico" />
+    <Image Include="Res\KernelNamespace.ico" />
     <Image Include="Res\LinedNotes.ico" />
     <Image Include="Res\LintSleep.ico" />
     <Image Include="Res\LintWait.ico" />

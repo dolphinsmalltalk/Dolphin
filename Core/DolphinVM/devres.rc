@@ -587,7 +587,7 @@ VISUALOBJECTFINDER.ICO  ICON                    "res\\VisualObjectFinder.ico"
 
 WIZARD.ICO              ICON                    "Res\\Wizard.ico"
 
-XML.ICO                 ICON                    "Res\\Xml.ico"
+MSXML.ICO               ICON                    "Res\\Xml.ico"
 
 UNITTESTPLUGIN.ICO      ICON                    "Res\\UnitTestPlugin.ico"
 

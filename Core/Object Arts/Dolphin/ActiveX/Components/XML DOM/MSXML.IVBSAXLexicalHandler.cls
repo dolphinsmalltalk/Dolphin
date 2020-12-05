@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-IDispatch subclass: #IVBSAXLexicalHandler
+OS.COM.IDispatch subclass: #'MSXML.IVBSAXLexicalHandler'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'MSXMLConstants'
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-IVBSAXLexicalHandler guid: (IID fromString: '{032aac35-8c0e-4d9d-979f-e3b702935576}')!
-IVBSAXLexicalHandler comment: '<IVBSAXLexicalHandler> is a wrapper class for the COM interface ''MSXML2.IVBSAXLexicalHandler'' generated from type information in the ''Microsoft XML, v4.0'' library. It contains methods to invoke the member functions exposed by that interface.
+MSXML.IVBSAXLexicalHandler guid: (OS.COM.IID fromString: '{032aac35-8c0e-4d9d-979f-e3b702935576}')!
+MSXML.IVBSAXLexicalHandler comment: '<IVBSAXLexicalHandler> is a wrapper class for the COM interface ''MSXML2.IVBSAXLexicalHandler'' generated from type information in the ''Microsoft XML, v4.0'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains the following helpstring for this interface
 	"IVBSAXLexicalHandler interface"
@@ -47,8 +47,8 @@ interface IVBSAXLexicalHandler : IDispatch
 		[in, out]BSTR* strChars);
 };
 '!
-!IVBSAXLexicalHandler categoriesForClass!COM-Interfaces!MSXML2-Interfaces! !
-!IVBSAXLexicalHandler methodsFor!
+!MSXML.IVBSAXLexicalHandler categoriesForClass!COM-Interfaces!MSXML2-Interfaces! !
+!MSXML.IVBSAXLexicalHandler methodsFor!
 
 comment: strChars
 	"Invoke the comment() method of the COM object.
@@ -166,21 +166,21 @@ StartEntity: strName
 
 	<virtual stdcall: hresult 10 bstr*>
 	^self invalidCall: _failureCode! !
-!IVBSAXLexicalHandler categoriesFor: #comment:!**auto generated**!methods!public! !
-!IVBSAXLexicalHandler categoriesFor: #Comment:!**auto generated**!COM Interfaces-IVBSAXLexicalHandler!private! !
-!IVBSAXLexicalHandler categoriesFor: #EndCDATA!**auto generated**!COM Interfaces-IVBSAXLexicalHandler!public! !
-!IVBSAXLexicalHandler categoriesFor: #EndDTD!**auto generated**!COM Interfaces-IVBSAXLexicalHandler!public! !
-!IVBSAXLexicalHandler categoriesFor: #endEntity:!**auto generated**!methods!public! !
-!IVBSAXLexicalHandler categoriesFor: #EndEntity:!**auto generated**!COM Interfaces-IVBSAXLexicalHandler!private! !
-!IVBSAXLexicalHandler categoriesFor: #isExtensible!**auto generated**!public!testing! !
-!IVBSAXLexicalHandler categoriesFor: #isVBCollection!**auto generated**!public!testing! !
-!IVBSAXLexicalHandler categoriesFor: #StartCDATA!**auto generated**!COM Interfaces-IVBSAXLexicalHandler!public! !
-!IVBSAXLexicalHandler categoriesFor: #startDTD:strPublicId:strSystemId:!**auto generated**!methods!public! !
-!IVBSAXLexicalHandler categoriesFor: #StartDTD:strPublicId:strSystemId:!**auto generated**!COM Interfaces-IVBSAXLexicalHandler!private! !
-!IVBSAXLexicalHandler categoriesFor: #startEntity:!**auto generated**!methods!public! !
-!IVBSAXLexicalHandler categoriesFor: #StartEntity:!**auto generated**!COM Interfaces-IVBSAXLexicalHandler!private! !
+!MSXML.IVBSAXLexicalHandler categoriesFor: #comment:!**auto generated**!methods!public! !
+!MSXML.IVBSAXLexicalHandler categoriesFor: #Comment:!**auto generated**!COM Interfaces-IVBSAXLexicalHandler!private! !
+!MSXML.IVBSAXLexicalHandler categoriesFor: #EndCDATA!**auto generated**!COM Interfaces-IVBSAXLexicalHandler!public! !
+!MSXML.IVBSAXLexicalHandler categoriesFor: #EndDTD!**auto generated**!COM Interfaces-IVBSAXLexicalHandler!public! !
+!MSXML.IVBSAXLexicalHandler categoriesFor: #endEntity:!**auto generated**!methods!public! !
+!MSXML.IVBSAXLexicalHandler categoriesFor: #EndEntity:!**auto generated**!COM Interfaces-IVBSAXLexicalHandler!private! !
+!MSXML.IVBSAXLexicalHandler categoriesFor: #isExtensible!**auto generated**!public!testing! !
+!MSXML.IVBSAXLexicalHandler categoriesFor: #isVBCollection!**auto generated**!public!testing! !
+!MSXML.IVBSAXLexicalHandler categoriesFor: #StartCDATA!**auto generated**!COM Interfaces-IVBSAXLexicalHandler!public! !
+!MSXML.IVBSAXLexicalHandler categoriesFor: #startDTD:strPublicId:strSystemId:!**auto generated**!methods!public! !
+!MSXML.IVBSAXLexicalHandler categoriesFor: #StartDTD:strPublicId:strSystemId:!**auto generated**!COM Interfaces-IVBSAXLexicalHandler!private! !
+!MSXML.IVBSAXLexicalHandler categoriesFor: #startEntity:!**auto generated**!methods!public! !
+!MSXML.IVBSAXLexicalHandler categoriesFor: #StartEntity:!**auto generated**!COM Interfaces-IVBSAXLexicalHandler!private! !
 
-!IVBSAXLexicalHandler class methodsFor!
+!MSXML.IVBSAXLexicalHandler class methodsFor!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'MSXML2.IVBSAXLexicalHandler'
@@ -199,5 +199,5 @@ defineFunctions
 		defineFunction: #Comment:
 			argumentTypes: 'bstr*'
 ! !
-!IVBSAXLexicalHandler class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!MSXML.IVBSAXLexicalHandler class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
 

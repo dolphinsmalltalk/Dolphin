@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-IUnknown subclass: #ISAXEntityResolver
+OS.COM.IUnknown subclass: #'MSXML.ISAXEntityResolver'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'MSXMLConstants'
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ISAXEntityResolver guid: (IID fromString: '{99bca7bd-e8c4-4d5f-a0cf-6d907901ff07}')!
-ISAXEntityResolver comment: '<ISAXEntityResolver> is a wrapper class for the COM interface ''MSXML2.ISAXEntityResolver'' generated from type information in the ''Microsoft XML, v4.0'' library. It contains methods to invoke the member functions exposed by that interface.
+MSXML.ISAXEntityResolver guid: (OS.COM.IID fromString: '{99bca7bd-e8c4-4d5f-a0cf-6d907901ff07}')!
+MSXML.ISAXEntityResolver comment: '<ISAXEntityResolver> is a wrapper class for the COM interface ''MSXML2.ISAXEntityResolver'' generated from type information in the ''Microsoft XML, v4.0'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains the following helpstring for this interface
 	"ISAXEntityResolver interface"
@@ -31,8 +31,8 @@ interface ISAXEntityResolver : IUnknown
 		[out, retval]VARIANT* pvarInput);
 };
 '!
-!ISAXEntityResolver categoriesForClass!COM-Interfaces!MSXML2-Interfaces! !
-!ISAXEntityResolver methodsFor!
+!MSXML.ISAXEntityResolver categoriesForClass!COM-Interfaces!MSXML2-Interfaces! !
+!MSXML.ISAXEntityResolver methodsFor!
 
 resolveEntity: pwchPublicId pwchSystemId: pwchSystemId
 	"Answer the <VARIANT> result of invoking the resolveEntity() method of the COM object."
@@ -56,10 +56,10 @@ ResolveEntity: pwchPublicId pwchSystemId: pwchSystemId pvarInput: pvarInput
 
 	<virtual stdcall: hresult 4 word* word* variant*>
 	^self invalidCall: _failureCode! !
-!ISAXEntityResolver categoriesFor: #resolveEntity:pwchSystemId:!**auto generated**!methods!public! !
-!ISAXEntityResolver categoriesFor: #ResolveEntity:pwchSystemId:pvarInput:!**auto generated**!COM Interfaces-ISAXEntityResolver!private! !
+!MSXML.ISAXEntityResolver categoriesFor: #resolveEntity:pwchSystemId:!**auto generated**!methods!public! !
+!MSXML.ISAXEntityResolver categoriesFor: #ResolveEntity:pwchSystemId:pvarInput:!**auto generated**!COM Interfaces-ISAXEntityResolver!private! !
 
-!ISAXEntityResolver class methodsFor!
+!MSXML.ISAXEntityResolver class methodsFor!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'MSXML2.ISAXEntityResolver'
@@ -69,5 +69,5 @@ defineFunctions
 		defineFunction: #ResolveEntity:pwchSystemId:pvarInput:
 			argumentTypes: 'word* word* variant*'
 ! !
-!ISAXEntityResolver class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!MSXML.ISAXEntityResolver class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
 

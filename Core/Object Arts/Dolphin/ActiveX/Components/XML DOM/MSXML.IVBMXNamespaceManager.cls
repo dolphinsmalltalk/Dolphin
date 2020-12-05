@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-IDispatch subclass: #IVBMXNamespaceManager
+OS.COM.IDispatch subclass: #'MSXML.IVBMXNamespaceManager'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'MSXMLConstants'
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-IVBMXNamespaceManager guid: (IID fromString: '{c90352f5-643c-4fbc-bb23-e996eb2d51fd}')!
-IVBMXNamespaceManager comment: '<IVBMXNamespaceManager> is a wrapper class for the COM interface ''MSXML2.IVBMXNamespaceManager'' generated from type information in the ''Microsoft XML, v4.0'' library. It contains methods to invoke the member functions exposed by that interface.
+MSXML.IVBMXNamespaceManager guid: (OS.COM.IID fromString: '{c90352f5-643c-4fbc-bb23-e996eb2d51fd}')!
+MSXML.IVBMXNamespaceManager comment: '<IVBMXNamespaceManager> is a wrapper class for the COM interface ''MSXML2.IVBMXNamespaceManager'' generated from type information in the ''Microsoft XML, v4.0'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains the following helpstring for this interface
 	"IVBMXNamespaceManager interface"
@@ -63,8 +63,8 @@ interface IVBMXNamespaceManager : IDispatch
 		[out, retval]VARIANT* uri);
 };
 '!
-!IVBMXNamespaceManager categoriesForClass!COM-Interfaces!MSXML2-Interfaces! !
-!IVBMXNamespaceManager methodsFor!
+!MSXML.IVBMXNamespaceManager categoriesForClass!COM-Interfaces!MSXML2-Interfaces! !
+!MSXML.IVBMXNamespaceManager methodsFor!
 
 allowOverride
 	"Answer the <varbool> value of the 'allowOverride' property of the receiver."
@@ -106,8 +106,7 @@ getDeclaredPrefixes
 	| answer |
 	answer := IMXNamespacePrefixes newPointer.
 	self GetDeclaredPrefixes: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 GetDeclaredPrefixes: prefixes
 	"Private - Invoke the getDeclaredPrefixes() method of the COM object.
@@ -123,11 +122,8 @@ getPrefixes: namespaceURI
 
 	| answer |
 	answer := IMXNamespacePrefixes newPointer.
-	self
-		GetPrefixes: namespaceURI
-		prefixes: answer.
-	^answer asObject
-!
+	self GetPrefixes: namespaceURI prefixes: answer.
+	^answer asObject!
 
 GetPrefixes: namespaceURI prefixes: prefixes
 	"Private - Invoke the getPrefixes() method of the COM object.
@@ -244,28 +240,28 @@ Reset
 
 	<virtual stdcall: hresult 10>
 	^self invalidCall: _failureCode! !
-!IVBMXNamespaceManager categoriesFor: #allowOverride!**auto generated**!properties!public! !
-!IVBMXNamespaceManager categoriesFor: #allowOverride:!**auto generated**!properties!public! !
-!IVBMXNamespaceManager categoriesFor: #DeclarePrefix:namespaceURI:!**auto generated**!COM Interfaces-IVBMXNamespaceManager!public! !
-!IVBMXNamespaceManager categoriesFor: #get_allowOverride:!**auto generated**!COM Interfaces-IVBMXNamespaceManager!private! !
-!IVBMXNamespaceManager categoriesFor: #getDeclaredPrefixes!**auto generated**!methods!public! !
-!IVBMXNamespaceManager categoriesFor: #GetDeclaredPrefixes:!**auto generated**!COM Interfaces-IVBMXNamespaceManager!private! !
-!IVBMXNamespaceManager categoriesFor: #getPrefixes:!**auto generated**!methods!public! !
-!IVBMXNamespaceManager categoriesFor: #GetPrefixes:prefixes:!**auto generated**!COM Interfaces-IVBMXNamespaceManager!private! !
-!IVBMXNamespaceManager categoriesFor: #getURI:!**auto generated**!methods!public! !
-!IVBMXNamespaceManager categoriesFor: #GetURI:uri:!**auto generated**!COM Interfaces-IVBMXNamespaceManager!private! !
-!IVBMXNamespaceManager categoriesFor: #getURIFromNode:contextNode:!**auto generated**!methods!public! !
-!IVBMXNamespaceManager categoriesFor: #GetURIFromNode:contextNode:uri:!**auto generated**!COM Interfaces-IVBMXNamespaceManager!private! !
-!IVBMXNamespaceManager categoriesFor: #isExtensible!**auto generated**!public!testing! !
-!IVBMXNamespaceManager categoriesFor: #isVBCollection!**auto generated**!public!testing! !
-!IVBMXNamespaceManager categoriesFor: #PopContext!**auto generated**!COM Interfaces-IVBMXNamespaceManager!public! !
-!IVBMXNamespaceManager categoriesFor: #PushContext!**auto generated**!COM Interfaces-IVBMXNamespaceManager!public! !
-!IVBMXNamespaceManager categoriesFor: #pushNodeContext:!**auto generated**!methods!public! !
-!IVBMXNamespaceManager categoriesFor: #PushNodeContext:fDeep:!**auto generated**!COM Interfaces-IVBMXNamespaceManager!public! !
-!IVBMXNamespaceManager categoriesFor: #put_allowOverride:!**auto generated**!COM Interfaces-IVBMXNamespaceManager!private! !
-!IVBMXNamespaceManager categoriesFor: #Reset!**auto generated**!COM Interfaces-IVBMXNamespaceManager!public! !
+!MSXML.IVBMXNamespaceManager categoriesFor: #allowOverride!**auto generated**!properties!public! !
+!MSXML.IVBMXNamespaceManager categoriesFor: #allowOverride:!**auto generated**!properties!public! !
+!MSXML.IVBMXNamespaceManager categoriesFor: #DeclarePrefix:namespaceURI:!**auto generated**!COM Interfaces-IVBMXNamespaceManager!public! !
+!MSXML.IVBMXNamespaceManager categoriesFor: #get_allowOverride:!**auto generated**!COM Interfaces-IVBMXNamespaceManager!private! !
+!MSXML.IVBMXNamespaceManager categoriesFor: #getDeclaredPrefixes!**auto generated**!methods!public! !
+!MSXML.IVBMXNamespaceManager categoriesFor: #GetDeclaredPrefixes:!**auto generated**!COM Interfaces-IVBMXNamespaceManager!private! !
+!MSXML.IVBMXNamespaceManager categoriesFor: #getPrefixes:!**auto generated**!methods!public! !
+!MSXML.IVBMXNamespaceManager categoriesFor: #GetPrefixes:prefixes:!**auto generated**!COM Interfaces-IVBMXNamespaceManager!private! !
+!MSXML.IVBMXNamespaceManager categoriesFor: #getURI:!**auto generated**!methods!public! !
+!MSXML.IVBMXNamespaceManager categoriesFor: #GetURI:uri:!**auto generated**!COM Interfaces-IVBMXNamespaceManager!private! !
+!MSXML.IVBMXNamespaceManager categoriesFor: #getURIFromNode:contextNode:!**auto generated**!methods!public! !
+!MSXML.IVBMXNamespaceManager categoriesFor: #GetURIFromNode:contextNode:uri:!**auto generated**!COM Interfaces-IVBMXNamespaceManager!private! !
+!MSXML.IVBMXNamespaceManager categoriesFor: #isExtensible!**auto generated**!public!testing! !
+!MSXML.IVBMXNamespaceManager categoriesFor: #isVBCollection!**auto generated**!public!testing! !
+!MSXML.IVBMXNamespaceManager categoriesFor: #PopContext!**auto generated**!COM Interfaces-IVBMXNamespaceManager!public! !
+!MSXML.IVBMXNamespaceManager categoriesFor: #PushContext!**auto generated**!COM Interfaces-IVBMXNamespaceManager!public! !
+!MSXML.IVBMXNamespaceManager categoriesFor: #pushNodeContext:!**auto generated**!methods!public! !
+!MSXML.IVBMXNamespaceManager categoriesFor: #PushNodeContext:fDeep:!**auto generated**!COM Interfaces-IVBMXNamespaceManager!public! !
+!MSXML.IVBMXNamespaceManager categoriesFor: #put_allowOverride:!**auto generated**!COM Interfaces-IVBMXNamespaceManager!private! !
+!MSXML.IVBMXNamespaceManager categoriesFor: #Reset!**auto generated**!COM Interfaces-IVBMXNamespaceManager!public! !
 
-!IVBMXNamespaceManager class methodsFor!
+!MSXML.IVBMXNamespaceManager class methodsFor!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'MSXML2.IVBMXNamespaceManager'
@@ -310,8 +306,8 @@ newMXNamespaceManager60
 
 	^self onCLSID: (CLSID fromString: '{88D96A11-F192-11D4-A65F-0040963251E5}')
 ! !
-!IVBMXNamespaceManager class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
-!IVBMXNamespaceManager class categoriesFor: #newMXNamespaceManager!**auto generated**!instance creation!public! !
-!IVBMXNamespaceManager class categoriesFor: #newMXNamespaceManager40!**auto generated**!instance creation!public! !
-!IVBMXNamespaceManager class categoriesFor: #newMXNamespaceManager60!**auto generated**!instance creation!public! !
+!MSXML.IVBMXNamespaceManager class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!MSXML.IVBMXNamespaceManager class categoriesFor: #newMXNamespaceManager!**auto generated**!instance creation!public! !
+!MSXML.IVBMXNamespaceManager class categoriesFor: #newMXNamespaceManager40!**auto generated**!instance creation!public! !
+!MSXML.IVBMXNamespaceManager class categoriesFor: #newMXNamespaceManager60!**auto generated**!instance creation!public! !
 

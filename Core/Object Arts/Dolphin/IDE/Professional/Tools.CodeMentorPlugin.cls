@@ -845,9 +845,9 @@ lintRules
 lintRulesDoc
 	"Private - Answer the IXMLDOMDocument that represents the lint rules document"
 
-	LintRulesDoc isNull 
+	LintRulesDoc isNull
 		ifTrue: 
-			[LintRulesDoc := (Smalltalk.IXMLDOMDocument new)
+			[LintRulesDoc := MSXML newDocument
 						loadURL: self lintRulesDocURL;
 						yourself].
 	^LintRulesDoc!

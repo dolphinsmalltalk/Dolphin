@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-IDispatch subclass: #IMXSchemaDeclHandler
+OS.COM.IDispatch subclass: #'MSXML.IMXSchemaDeclHandler'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'MSXMLConstants'
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-IMXSchemaDeclHandler guid: (IID fromString: '{fa4bb38c-faf9-4cca-9302-d1dd0fe520db}')!
-IMXSchemaDeclHandler comment: '<IMXSchemaDeclHandler> is a wrapper class for the COM interface ''MSXML2.IMXSchemaDeclHandler'' generated from type information in the ''Microsoft XML, v4.0'' library. It contains methods to invoke the member functions exposed by that interface.
+MSXML.IMXSchemaDeclHandler guid: (OS.COM.IID fromString: '{fa4bb38c-faf9-4cca-9302-d1dd0fe520db}')!
+MSXML.IMXSchemaDeclHandler comment: '<IMXSchemaDeclHandler> is a wrapper class for the COM interface ''MSXML2.IMXSchemaDeclHandler'' generated from type information in the ''Microsoft XML, v4.0'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains the following helpstring for this interface
 	"IMXSchemaDeclHandler interface"
@@ -30,8 +30,8 @@ interface IMXSchemaDeclHandler : IDispatch
 		[in]ISchemaElement* oSchemaElement);
 };
 '!
-!IMXSchemaDeclHandler categoriesForClass!COM-Interfaces!MSXML2-Interfaces! !
-!IMXSchemaDeclHandler methodsFor!
+!MSXML.IMXSchemaDeclHandler categoriesForClass!COM-Interfaces!MSXML2-Interfaces! !
+!MSXML.IMXSchemaDeclHandler methodsFor!
 
 isExtensible
 	"Answer whether the receiver may add methods at run-time."
@@ -52,11 +52,11 @@ SchemaElementDecl: oSchemaElement
 
 	<virtual stdcall: hresult 8 ISchemaElement*>
 	^self invalidCall: _failureCode! !
-!IMXSchemaDeclHandler categoriesFor: #isExtensible!**auto generated**!public!testing! !
-!IMXSchemaDeclHandler categoriesFor: #isVBCollection!**auto generated**!public!testing! !
-!IMXSchemaDeclHandler categoriesFor: #SchemaElementDecl:!**auto generated**!COM Interfaces-IMXSchemaDeclHandler!public! !
+!MSXML.IMXSchemaDeclHandler categoriesFor: #isExtensible!**auto generated**!public!testing! !
+!MSXML.IMXSchemaDeclHandler categoriesFor: #isVBCollection!**auto generated**!public!testing! !
+!MSXML.IMXSchemaDeclHandler categoriesFor: #SchemaElementDecl:!**auto generated**!COM Interfaces-IMXSchemaDeclHandler!public! !
 
-!IMXSchemaDeclHandler class methodsFor!
+!MSXML.IMXSchemaDeclHandler class methodsFor!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'MSXML2.IMXSchemaDeclHandler'
@@ -66,5 +66,5 @@ defineFunctions
 		defineFunction: #SchemaElementDecl:
 			argumentTypes: 'ISchemaElement*'
 ! !
-!IMXSchemaDeclHandler class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!MSXML.IMXSchemaDeclHandler class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
 

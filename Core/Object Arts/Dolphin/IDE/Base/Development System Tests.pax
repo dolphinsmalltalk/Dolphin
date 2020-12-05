@@ -11,7 +11,6 @@ package setClassNames: #(
 	#{Refactory.Browser.Tests.PackageEnvironmentTest}
 	#{Refactory.Browser.Tests.PluggableEnvironmentTest}
 	#{Refactory.Browser.Tests.RewriteTestCase}
-	#{Smalltalk.XMLDOMNodeTest}
 	#{Tools.Tests}
 	#{Tools.Tests.ImageListViewTest}
 	#{Tools.Tests.KeyedAspectTest}
@@ -57,7 +56,6 @@ package setPrerequisites: #(
 	'..\..\System\Compiler\Smalltalk Parser'
 	'..\..\..\..\Contributions\Camp Smalltalk\SUnit\SUnit'
 	'..\..\..\..\Contributions\Camp Smalltalk\SUnit\SUnitPreload'
-	'..\..\ActiveX\Components\XML DOM\XML DOM'
 ).
 
 package!
@@ -114,12 +112,6 @@ Core.Tests.DolphinTest subclass: #'Tools.Tests.SmalltalkSystemTest'
 	classConstants: {}!
 Core.Tests.DolphinTest subclass: #'OS.Tests.VersionResourceTest'
 	instanceVariableNames: 'updatePath sourceModule sourceSize sourceBytes'
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-Core.Tests.DolphinTest subclass: #XMLDOMNodeTest
-	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''

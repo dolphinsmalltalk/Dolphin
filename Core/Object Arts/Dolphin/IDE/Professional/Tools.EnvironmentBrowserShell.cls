@@ -23,7 +23,7 @@ browseExecutableManifest
 
 browseExecutableManifestFile: filename
 	| dom |
-	dom := Smalltalk.IXMLDOMDocument new.
+	dom := MSXML newDocument.
 	dom loadURL: 'file://' , filename.
 	self browserEnvironment: (SmalltalkSystem current browserEnvFromDom: dom)!
 

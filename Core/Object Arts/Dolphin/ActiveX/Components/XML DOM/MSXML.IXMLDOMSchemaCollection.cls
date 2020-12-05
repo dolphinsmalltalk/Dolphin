@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-IDispatch subclass: #IXMLDOMSchemaCollection
+OS.COM.IDispatch subclass: #'MSXML.IXMLDOMSchemaCollection'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'MSXMLConstants'
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-IXMLDOMSchemaCollection guid: (IID fromString: '{373984c8-b845-449b-91e7-45ac83036ade}')!
-IXMLDOMSchemaCollection comment: '<IXMLDOMSchemaCollection> is a wrapper class for the COM interface ''MSXML2.IXMLDOMSchemaCollection'' generated from type information in the ''Microsoft XML, v4.0'' library. It contains methods to invoke the member functions exposed by that interface.
+MSXML.IXMLDOMSchemaCollection guid: (OS.COM.IID fromString: '{373984c8-b845-449b-91e7-45ac83036ade}')!
+MSXML.IXMLDOMSchemaCollection comment: '<IXMLDOMSchemaCollection> is a wrapper class for the COM interface ''MSXML2.IXMLDOMSchemaCollection'' generated from type information in the ''Microsoft XML, v4.0'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains the following helpstring for this interface
 	"XML Schemas Collection"
@@ -51,8 +51,8 @@ interface IXMLDOMSchemaCollection : IDispatch
 		[out, retval]IUnknown** ppUnk);
 };
 '!
-!IXMLDOMSchemaCollection categoriesForClass!COM-Interfaces!MSXML2-Interfaces! !
-!IXMLDOMSchemaCollection methodsFor!
+!MSXML.IXMLDOMSchemaCollection categoriesForClass!COM-Interfaces!MSXML2-Interfaces! !
+!MSXML.IXMLDOMSchemaCollection methodsFor!
 
 _newEnum
 	"Answer the <IUnknown> value of the '_newEnum' property of the receiver."
@@ -99,11 +99,8 @@ get: namespaceURI
 
 	| answer |
 	answer := IXMLDOMNode newPointer.
-	self
-		Get: namespaceURI
-		schemaNode: answer.
-	^answer asObject
-!
+	self Get: namespaceURI schemaNode: answer.
+	^answer asObject!
 
 Get: namespaceURI schemaNode: schemaNode
 	"Private - Invoke the get() method of the COM object.
@@ -185,22 +182,22 @@ Remove: namespaceURI
 
 	<virtual stdcall: hresult 10 bstr>
 	^self invalidCall: _failureCode! !
-!IXMLDOMSchemaCollection categoriesFor: #_newEnum!**auto generated**!properties!public! !
-!IXMLDOMSchemaCollection categoriesFor: #add:var:!**auto generated**!methods!public! !
-!IXMLDOMSchemaCollection categoriesFor: #Add:var:!**auto generated**!COM Interfaces-IXMLDOMSchemaCollection!private! !
-!IXMLDOMSchemaCollection categoriesFor: #AddCollection:!**auto generated**!COM Interfaces-IXMLDOMSchemaCollection!public! !
-!IXMLDOMSchemaCollection categoriesFor: #get:!**auto generated**!methods!public! !
-!IXMLDOMSchemaCollection categoriesFor: #Get:schemaNode:!**auto generated**!COM Interfaces-IXMLDOMSchemaCollection!private! !
-!IXMLDOMSchemaCollection categoriesFor: #get__newEnum:!**auto generated**!COM Interfaces-IXMLDOMSchemaCollection!private! !
-!IXMLDOMSchemaCollection categoriesFor: #get_length:!**auto generated**!COM Interfaces-IXMLDOMSchemaCollection!private! !
-!IXMLDOMSchemaCollection categoriesFor: #get_namespaceURI:length:!**auto generated**!COM Interfaces-IXMLDOMSchemaCollection!private! !
-!IXMLDOMSchemaCollection categoriesFor: #isExtensible!**auto generated**!public!testing! !
-!IXMLDOMSchemaCollection categoriesFor: #isVBCollection!**auto generated**!public!testing! !
-!IXMLDOMSchemaCollection categoriesFor: #length!**auto generated**!properties!public! !
-!IXMLDOMSchemaCollection categoriesFor: #namespaceURI:!**auto generated**!properties!public! !
-!IXMLDOMSchemaCollection categoriesFor: #Remove:!**auto generated**!COM Interfaces-IXMLDOMSchemaCollection!public! !
+!MSXML.IXMLDOMSchemaCollection categoriesFor: #_newEnum!**auto generated**!properties!public! !
+!MSXML.IXMLDOMSchemaCollection categoriesFor: #add:var:!**auto generated**!methods!public! !
+!MSXML.IXMLDOMSchemaCollection categoriesFor: #Add:var:!**auto generated**!COM Interfaces-IXMLDOMSchemaCollection!private! !
+!MSXML.IXMLDOMSchemaCollection categoriesFor: #AddCollection:!**auto generated**!COM Interfaces-IXMLDOMSchemaCollection!public! !
+!MSXML.IXMLDOMSchemaCollection categoriesFor: #get:!**auto generated**!methods!public! !
+!MSXML.IXMLDOMSchemaCollection categoriesFor: #Get:schemaNode:!**auto generated**!COM Interfaces-IXMLDOMSchemaCollection!private! !
+!MSXML.IXMLDOMSchemaCollection categoriesFor: #get__newEnum:!**auto generated**!COM Interfaces-IXMLDOMSchemaCollection!private! !
+!MSXML.IXMLDOMSchemaCollection categoriesFor: #get_length:!**auto generated**!COM Interfaces-IXMLDOMSchemaCollection!private! !
+!MSXML.IXMLDOMSchemaCollection categoriesFor: #get_namespaceURI:length:!**auto generated**!COM Interfaces-IXMLDOMSchemaCollection!private! !
+!MSXML.IXMLDOMSchemaCollection categoriesFor: #isExtensible!**auto generated**!public!testing! !
+!MSXML.IXMLDOMSchemaCollection categoriesFor: #isVBCollection!**auto generated**!public!testing! !
+!MSXML.IXMLDOMSchemaCollection categoriesFor: #length!**auto generated**!properties!public! !
+!MSXML.IXMLDOMSchemaCollection categoriesFor: #namespaceURI:!**auto generated**!properties!public! !
+!MSXML.IXMLDOMSchemaCollection categoriesFor: #Remove:!**auto generated**!COM Interfaces-IXMLDOMSchemaCollection!public! !
 
-!IXMLDOMSchemaCollection class methodsFor!
+!MSXML.IXMLDOMSchemaCollection class methodsFor!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'MSXML2.IXMLDOMSchemaCollection'
@@ -240,8 +237,8 @@ newXMLSchemaCache30
 
 	^self onCLSID: (CLSID fromString: '{F5078F34-C551-11D3-89B9-0000F81FE221}')
 ! !
-!IXMLDOMSchemaCollection class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
-!IXMLDOMSchemaCollection class categoriesFor: #newXMLSchemaCache!**auto generated**!instance creation!public! !
-!IXMLDOMSchemaCollection class categoriesFor: #newXMLSchemaCache26!**auto generated**!instance creation!public! !
-!IXMLDOMSchemaCollection class categoriesFor: #newXMLSchemaCache30!**auto generated**!instance creation!public! !
+!MSXML.IXMLDOMSchemaCollection class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!MSXML.IXMLDOMSchemaCollection class categoriesFor: #newXMLSchemaCache!**auto generated**!instance creation!public! !
+!MSXML.IXMLDOMSchemaCollection class categoriesFor: #newXMLSchemaCache26!**auto generated**!instance creation!public! !
+!MSXML.IXMLDOMSchemaCollection class categoriesFor: #newXMLSchemaCache30!**auto generated**!instance creation!public! !
 

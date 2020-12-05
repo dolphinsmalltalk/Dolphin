@@ -1,14 +1,14 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Core.Dictionary variableSubclass: #DOMNamedNodeMap
+Core.Dictionary variableSubclass: #'MSXML.DOMNamedNodeMap'
 	instanceVariableNames: 'interface parentNode'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-DOMNamedNodeMap guid: (Core.GUID fromString: '{20534a81-bce6-43d4-bb64-1ad3b4aa39d9}')!
-DOMNamedNodeMap isNonInstantiable: true!
-DOMNamedNodeMap comment: 'DOMNamedNodeMap is a hashed collection wrapper class for the MSXML <IXMLDOMNamedNodeMap> interface. Its purpose is to make all the power of Smalltalk dictionaries available on the much more limited DOM interface, and to provide seamless integration into the Smalltalk development environment (i.e. so that the node map prints, inspects, and acts like a dictionary). DOMNamedNodeMap itself is abstract, and has a number of subclasses employed to specialize it to particular types of named node. The most important of these is probably <DOMAttributeMap>, which implements dictionary behaviour for manipulating the XML attributes of a node.
+MSXML.DOMNamedNodeMap guid: (Core.GUID fromString: '{20534a81-bce6-43d4-bb64-1ad3b4aa39d9}')!
+MSXML.DOMNamedNodeMap isNonInstantiable: true!
+MSXML.DOMNamedNodeMap comment: 'DOMNamedNodeMap is a hashed collection wrapper class for the MSXML <IXMLDOMNamedNodeMap> interface. Its purpose is to make all the power of Smalltalk dictionaries available on the much more limited DOM interface, and to provide seamless integration into the Smalltalk development environment (i.e. so that the node map prints, inspects, and acts like a dictionary). DOMNamedNodeMap itself is abstract, and has a number of subclasses employed to specialize it to particular types of named node. The most important of these is probably <DOMAttributeMap>, which implements dictionary behaviour for manipulating the XML attributes of a node.
 
 All DOM interface methods that return an IXMLDOMNamedNodeMap have been modified to return a subinstance of this class.
 
@@ -17,8 +17,8 @@ Instance Variables:
 	parentNode	<IXMLDOMNode> subinstance.
 
 '!
-!DOMNamedNodeMap categoriesForClass!Collections-Unordered! !
-!DOMNamedNodeMap methodsFor!
+!MSXML.DOMNamedNodeMap categoriesForClass!Collections-Unordered! !
+!MSXML.DOMNamedNodeMap methodsFor!
 
 add: namedNode
 	"Include the <association> conforming <IXMLDOMNode> argument, newElement, as one of the receiver's 
@@ -215,38 +215,38 @@ uncheckedAdd: newObject
 	"Private - Should not be sent to the receiver."
 
 	^self shouldNotImplement! !
-!DOMNamedNodeMap categoriesFor: #add:!adding!public! !
-!DOMNamedNodeMap categoriesFor: #associationAt:ifAbsent:!accessing!public! !
-!DOMNamedNodeMap categoriesFor: #associationClass!constants!private! !
-!DOMNamedNodeMap categoriesFor: #associations!accessing!public! !
-!DOMNamedNodeMap categoriesFor: #associationsDo:!enumerating!public! !
-!DOMNamedNodeMap categoriesFor: #at:ifAbsent:!accessing!public! !
-!DOMNamedNodeMap categoriesFor: #at:put:!accessing!public! !
-!DOMNamedNodeMap categoriesFor: #copyElementsInto:!adding!private! !
-!DOMNamedNodeMap categoriesFor: #createNamedNode:!helpers!private! !
-!DOMNamedNodeMap categoriesFor: #do:!enumerating!public! !
-!DOMNamedNodeMap categoriesFor: #getNamedItem:!accessing!public! !
-!DOMNamedNodeMap categoriesFor: #hash:max:!private!searching! !
-!DOMNamedNodeMap categoriesFor: #includesKey:!public!searching! !
-!DOMNamedNodeMap categoriesFor: #interface!accessing!private! !
-!DOMNamedNodeMap categoriesFor: #item:!properties!public! !
-!DOMNamedNodeMap categoriesFor: #keysAndValuesDo:!enumerating!public! !
-!DOMNamedNodeMap categoriesFor: #length!properties!public! !
-!DOMNamedNodeMap categoriesFor: #lookup:!accessing!public! !
-!DOMNamedNodeMap categoriesFor: #nextNode!accessing!public! !
-!DOMNamedNodeMap categoriesFor: #postCopy!copying!public! !
-!DOMNamedNodeMap categoriesFor: #privateAt:put:!accessing!private! !
-!DOMNamedNodeMap categoriesFor: #removeIndex:!private!removing! !
-!DOMNamedNodeMap categoriesFor: #removeKey:ifAbsent:!public!removing! !
-!DOMNamedNodeMap categoriesFor: #removeNamedItem:!public!removing! !
-!DOMNamedNodeMap categoriesFor: #removeQualifiedItem:namespaceURI:!public!removing! !
-!DOMNamedNodeMap categoriesFor: #reset!enumerating!public! !
-!DOMNamedNodeMap categoriesFor: #setInterface:parentNode:!accessing!private! !
-!DOMNamedNodeMap categoriesFor: #setNamedItem:!accessing!public! !
-!DOMNamedNodeMap categoriesFor: #size!accessing!public! !
-!DOMNamedNodeMap categoriesFor: #uncheckedAdd:!adding!private! !
+!MSXML.DOMNamedNodeMap categoriesFor: #add:!adding!public! !
+!MSXML.DOMNamedNodeMap categoriesFor: #associationAt:ifAbsent:!accessing!public! !
+!MSXML.DOMNamedNodeMap categoriesFor: #associationClass!constants!private! !
+!MSXML.DOMNamedNodeMap categoriesFor: #associations!accessing!public! !
+!MSXML.DOMNamedNodeMap categoriesFor: #associationsDo:!enumerating!public! !
+!MSXML.DOMNamedNodeMap categoriesFor: #at:ifAbsent:!accessing!public! !
+!MSXML.DOMNamedNodeMap categoriesFor: #at:put:!accessing!public! !
+!MSXML.DOMNamedNodeMap categoriesFor: #copyElementsInto:!adding!private! !
+!MSXML.DOMNamedNodeMap categoriesFor: #createNamedNode:!helpers!private! !
+!MSXML.DOMNamedNodeMap categoriesFor: #do:!enumerating!public! !
+!MSXML.DOMNamedNodeMap categoriesFor: #getNamedItem:!accessing!public! !
+!MSXML.DOMNamedNodeMap categoriesFor: #hash:max:!private!searching! !
+!MSXML.DOMNamedNodeMap categoriesFor: #includesKey:!public!searching! !
+!MSXML.DOMNamedNodeMap categoriesFor: #interface!accessing!private! !
+!MSXML.DOMNamedNodeMap categoriesFor: #item:!properties!public! !
+!MSXML.DOMNamedNodeMap categoriesFor: #keysAndValuesDo:!enumerating!public! !
+!MSXML.DOMNamedNodeMap categoriesFor: #length!properties!public! !
+!MSXML.DOMNamedNodeMap categoriesFor: #lookup:!accessing!public! !
+!MSXML.DOMNamedNodeMap categoriesFor: #nextNode!accessing!public! !
+!MSXML.DOMNamedNodeMap categoriesFor: #postCopy!copying!public! !
+!MSXML.DOMNamedNodeMap categoriesFor: #privateAt:put:!accessing!private! !
+!MSXML.DOMNamedNodeMap categoriesFor: #removeIndex:!private!removing! !
+!MSXML.DOMNamedNodeMap categoriesFor: #removeKey:ifAbsent:!public!removing! !
+!MSXML.DOMNamedNodeMap categoriesFor: #removeNamedItem:!public!removing! !
+!MSXML.DOMNamedNodeMap categoriesFor: #removeQualifiedItem:namespaceURI:!public!removing! !
+!MSXML.DOMNamedNodeMap categoriesFor: #reset!enumerating!public! !
+!MSXML.DOMNamedNodeMap categoriesFor: #setInterface:parentNode:!accessing!private! !
+!MSXML.DOMNamedNodeMap categoriesFor: #setNamedItem:!accessing!public! !
+!MSXML.DOMNamedNodeMap categoriesFor: #size!accessing!public! !
+!MSXML.DOMNamedNodeMap categoriesFor: #uncheckedAdd:!adding!private! !
 
-!DOMNamedNodeMap class methodsFor!
+!MSXML.DOMNamedNodeMap class methodsFor!
 
 onInterface: anIXMLDOMNamedNodeMap parentNode: anIXMLDOMNode
 	"Answer a new instance of the receiver which implements the entire
@@ -256,5 +256,5 @@ onInterface: anIXMLDOMNamedNodeMap parentNode: anIXMLDOMNode
 		setInterface: anIXMLDOMNamedNodeMap parentNode: anIXMLDOMNode
 
 	! !
-!DOMNamedNodeMap class categoriesFor: #onInterface:parentNode:!instance creation!public! !
+!MSXML.DOMNamedNodeMap class categoriesFor: #onInterface:parentNode:!instance creation!public! !
 

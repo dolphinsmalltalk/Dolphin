@@ -1,16 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Object subclass: #XmlDomVisitor
+Core.Object subclass: #'MSXML.XmlDomVisitor'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-XmlDomVisitor guid: (GUID fromString: '{92cf165d-8533-4f76-9f0a-ff1c520339f4}')!
-XmlDomVisitor isAbstract: true!
-XmlDomVisitor comment: 'Abstract visitor for IXMLDOMDocument node tree.'!
-!XmlDomVisitor categoriesForClass!Kernel-Objects! !
-!XmlDomVisitor methodsFor!
+MSXML.XmlDomVisitor guid: (Core.GUID fromString: '{92cf165d-8533-4f76-9f0a-ff1c520339f4}')!
+MSXML.XmlDomVisitor isNonInstantiable: true!
+MSXML.XmlDomVisitor comment: 'Abstract visitor for IXMLDOMDocument node tree.'!
+!MSXML.XmlDomVisitor categoriesForClass!Kernel-Objects! !
+!MSXML.XmlDomVisitor methodsFor!
 
 visitAttribute: anIXMLDOMAttribute
 	!
@@ -61,20 +61,20 @@ visitProcessingInstruction: anIXMLDOMProcessingInstruction
 
 visitText: anIXMLDOMText
 	self visitCharacterData: anIXMLDOMText! !
-!XmlDomVisitor categoriesFor: #visitAttribute:!public!visiting! !
-!XmlDomVisitor categoriesFor: #visitCDATA:!public! !
-!XmlDomVisitor categoriesFor: #visitCharacterData:!private! !
-!XmlDomVisitor categoriesFor: #visitComment:!public! !
-!XmlDomVisitor categoriesFor: #visitDocument:!public!visiting! !
-!XmlDomVisitor categoriesFor: #visitDocumentType:!public!visiting! !
-!XmlDomVisitor categoriesFor: #visitDomNode:!private!visiting! !
-!XmlDomVisitor categoriesFor: #visitElement:!public!visiting! !
-!XmlDomVisitor categoriesFor: #visitEntity:!public!visiting! !
-!XmlDomVisitor categoriesFor: #visitEntityReference:!public!visiting! !
-!XmlDomVisitor categoriesFor: #visitNode:!public!visiting! !
-!XmlDomVisitor categoriesFor: #visitNodeChildren:!private!visiting! !
-!XmlDomVisitor categoriesFor: #visitNodes:!private!visiting! !
-!XmlDomVisitor categoriesFor: #visitNotation:!public!visiting! !
-!XmlDomVisitor categoriesFor: #visitProcessingInstruction:!public!visiting! !
-!XmlDomVisitor categoriesFor: #visitText:!public! !
+!MSXML.XmlDomVisitor categoriesFor: #visitAttribute:!public!visiting! !
+!MSXML.XmlDomVisitor categoriesFor: #visitCDATA:!public! !
+!MSXML.XmlDomVisitor categoriesFor: #visitCharacterData:!private! !
+!MSXML.XmlDomVisitor categoriesFor: #visitComment:!public! !
+!MSXML.XmlDomVisitor categoriesFor: #visitDocument:!public!visiting! !
+!MSXML.XmlDomVisitor categoriesFor: #visitDocumentType:!public!visiting! !
+!MSXML.XmlDomVisitor categoriesFor: #visitDomNode:!private!visiting! !
+!MSXML.XmlDomVisitor categoriesFor: #visitElement:!public!visiting! !
+!MSXML.XmlDomVisitor categoriesFor: #visitEntity:!public!visiting! !
+!MSXML.XmlDomVisitor categoriesFor: #visitEntityReference:!public!visiting! !
+!MSXML.XmlDomVisitor categoriesFor: #visitNode:!public!visiting! !
+!MSXML.XmlDomVisitor categoriesFor: #visitNodeChildren:!private!visiting! !
+!MSXML.XmlDomVisitor categoriesFor: #visitNodes:!private!visiting! !
+!MSXML.XmlDomVisitor categoriesFor: #visitNotation:!public!visiting! !
+!MSXML.XmlDomVisitor categoriesFor: #visitProcessingInstruction:!public!visiting! !
+!MSXML.XmlDomVisitor categoriesFor: #visitText:!public! !
 

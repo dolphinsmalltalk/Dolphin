@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-IUnknown subclass: #ISAXLexicalHandler
+OS.COM.IUnknown subclass: #'MSXML.ISAXLexicalHandler'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'MSXMLConstants'
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ISAXLexicalHandler guid: (IID fromString: '{7f85d5f5-47a8-4497-bda5-84ba04819ea6}')!
-ISAXLexicalHandler comment: '<ISAXLexicalHandler> is a wrapper class for the COM interface ''MSXML2.ISAXLexicalHandler'' generated from type information in the ''Microsoft XML, v4.0'' library. It contains methods to invoke the member functions exposed by that interface.
+MSXML.ISAXLexicalHandler guid: (OS.COM.IID fromString: '{7f85d5f5-47a8-4497-bda5-84ba04819ea6}')!
+MSXML.ISAXLexicalHandler comment: '<ISAXLexicalHandler> is a wrapper class for the COM interface ''MSXML2.ISAXLexicalHandler'' generated from type information in the ''Microsoft XML, v4.0'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains the following helpstring for this interface
 	"ISAXLexicalHandler interface"
@@ -52,8 +52,8 @@ interface ISAXLexicalHandler : IUnknown
 		[in]int cchChars);
 };
 '!
-!ISAXLexicalHandler categoriesForClass!COM-Interfaces!MSXML2-Interfaces! !
-!ISAXLexicalHandler methodsFor!
+!MSXML.ISAXLexicalHandler categoriesForClass!COM-Interfaces!MSXML2-Interfaces! !
+!MSXML.ISAXLexicalHandler methodsFor!
 
 Comment: pwchChars cchChars: cchChars
 	"Invoke the comment() method of the COM object.
@@ -122,15 +122,15 @@ StartEntity: pwchName cchName: cchName
 
 	<virtual stdcall: hresult 6 word* sdword>
 	^self invalidCall: _failureCode! !
-!ISAXLexicalHandler categoriesFor: #Comment:cchChars:!**auto generated**!COM Interfaces-ISAXLexicalHandler!public! !
-!ISAXLexicalHandler categoriesFor: #EndCDATA!**auto generated**!COM Interfaces-ISAXLexicalHandler!public! !
-!ISAXLexicalHandler categoriesFor: #EndDTD!**auto generated**!COM Interfaces-ISAXLexicalHandler!public! !
-!ISAXLexicalHandler categoriesFor: #EndEntity:cchName:!**auto generated**!COM Interfaces-ISAXLexicalHandler!public! !
-!ISAXLexicalHandler categoriesFor: #StartCDATA!**auto generated**!COM Interfaces-ISAXLexicalHandler!public! !
-!ISAXLexicalHandler categoriesFor: #StartDTD:cchName:pwchPublicId:cchPublicId:pwchSystemId:cchSystemId:!**auto generated**!COM Interfaces-ISAXLexicalHandler!public! !
-!ISAXLexicalHandler categoriesFor: #StartEntity:cchName:!**auto generated**!COM Interfaces-ISAXLexicalHandler!public! !
+!MSXML.ISAXLexicalHandler categoriesFor: #Comment:cchChars:!**auto generated**!COM Interfaces-ISAXLexicalHandler!public! !
+!MSXML.ISAXLexicalHandler categoriesFor: #EndCDATA!**auto generated**!COM Interfaces-ISAXLexicalHandler!public! !
+!MSXML.ISAXLexicalHandler categoriesFor: #EndDTD!**auto generated**!COM Interfaces-ISAXLexicalHandler!public! !
+!MSXML.ISAXLexicalHandler categoriesFor: #EndEntity:cchName:!**auto generated**!COM Interfaces-ISAXLexicalHandler!public! !
+!MSXML.ISAXLexicalHandler categoriesFor: #StartCDATA!**auto generated**!COM Interfaces-ISAXLexicalHandler!public! !
+!MSXML.ISAXLexicalHandler categoriesFor: #StartDTD:cchName:pwchPublicId:cchPublicId:pwchSystemId:cchSystemId:!**auto generated**!COM Interfaces-ISAXLexicalHandler!public! !
+!MSXML.ISAXLexicalHandler categoriesFor: #StartEntity:cchName:!**auto generated**!COM Interfaces-ISAXLexicalHandler!public! !
 
-!ISAXLexicalHandler class methodsFor!
+!MSXML.ISAXLexicalHandler class methodsFor!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'MSXML2.ISAXLexicalHandler'
@@ -149,5 +149,5 @@ defineFunctions
 		defineFunction: #Comment:cchChars:
 			argumentTypes: 'word* sdword'
 ! !
-!ISAXLexicalHandler class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!MSXML.ISAXLexicalHandler class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
 

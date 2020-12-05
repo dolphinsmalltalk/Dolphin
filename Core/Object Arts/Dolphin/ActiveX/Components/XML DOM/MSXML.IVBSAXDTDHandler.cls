@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-IDispatch subclass: #IVBSAXDTDHandler
+OS.COM.IDispatch subclass: #'MSXML.IVBSAXDTDHandler'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'MSXMLConstants'
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-IVBSAXDTDHandler guid: (IID fromString: '{24fb3297-302d-4620-ba39-3a732d850558}')!
-IVBSAXDTDHandler comment: '<IVBSAXDTDHandler> is a wrapper class for the COM interface ''MSXML2.IVBSAXDTDHandler'' generated from type information in the ''Microsoft XML, v4.0'' library. It contains methods to invoke the member functions exposed by that interface.
+MSXML.IVBSAXDTDHandler guid: (OS.COM.IID fromString: '{24fb3297-302d-4620-ba39-3a732d850558}')!
+MSXML.IVBSAXDTDHandler comment: '<IVBSAXDTDHandler> is a wrapper class for the COM interface ''MSXML2.IVBSAXDTDHandler'' generated from type information in the ''Microsoft XML, v4.0'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains the following helpstring for this interface
 	"IVBSAXDTDHandler interface"
@@ -38,8 +38,8 @@ interface IVBSAXDTDHandler : IDispatch
 		[in, out]BSTR* strNotationName);
 };
 '!
-!IVBSAXDTDHandler categoriesForClass!COM-Interfaces!MSXML2-Interfaces! !
-!IVBSAXDTDHandler methodsFor!
+!MSXML.IVBSAXDTDHandler categoriesForClass!COM-Interfaces!MSXML2-Interfaces! !
+!MSXML.IVBSAXDTDHandler methodsFor!
 
 isExtensible
 	"Answer whether the receiver may add methods at run-time."
@@ -111,14 +111,14 @@ UnparsedEntityDecl: strName strPublicId: strPublicId strSystemId: strSystemId st
 
 	<virtual stdcall: hresult 9 bstr* bstr* bstr* bstr*>
 	^self invalidCall: _failureCode! !
-!IVBSAXDTDHandler categoriesFor: #isExtensible!**auto generated**!public!testing! !
-!IVBSAXDTDHandler categoriesFor: #isVBCollection!**auto generated**!public!testing! !
-!IVBSAXDTDHandler categoriesFor: #notationDecl:strPublicId:strSystemId:!**auto generated**!methods!public! !
-!IVBSAXDTDHandler categoriesFor: #NotationDecl:strPublicId:strSystemId:!**auto generated**!COM Interfaces-IVBSAXDTDHandler!private! !
-!IVBSAXDTDHandler categoriesFor: #unparsedEntityDecl:strPublicId:strSystemId:strNotationName:!**auto generated**!methods!public! !
-!IVBSAXDTDHandler categoriesFor: #UnparsedEntityDecl:strPublicId:strSystemId:strNotationName:!**auto generated**!COM Interfaces-IVBSAXDTDHandler!private! !
+!MSXML.IVBSAXDTDHandler categoriesFor: #isExtensible!**auto generated**!public!testing! !
+!MSXML.IVBSAXDTDHandler categoriesFor: #isVBCollection!**auto generated**!public!testing! !
+!MSXML.IVBSAXDTDHandler categoriesFor: #notationDecl:strPublicId:strSystemId:!**auto generated**!methods!public! !
+!MSXML.IVBSAXDTDHandler categoriesFor: #NotationDecl:strPublicId:strSystemId:!**auto generated**!COM Interfaces-IVBSAXDTDHandler!private! !
+!MSXML.IVBSAXDTDHandler categoriesFor: #unparsedEntityDecl:strPublicId:strSystemId:strNotationName:!**auto generated**!methods!public! !
+!MSXML.IVBSAXDTDHandler categoriesFor: #UnparsedEntityDecl:strPublicId:strSystemId:strNotationName:!**auto generated**!COM Interfaces-IVBSAXDTDHandler!private! !
 
-!IVBSAXDTDHandler class methodsFor!
+!MSXML.IVBSAXDTDHandler class methodsFor!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'MSXML2.IVBSAXDTDHandler'
@@ -130,5 +130,5 @@ defineFunctions
 		defineFunction: #UnparsedEntityDecl:strPublicId:strSystemId:strNotationName:
 			argumentTypes: 'bstr* bstr* bstr* bstr*'
 ! !
-!IVBSAXDTDHandler class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!MSXML.IVBSAXDTDHandler class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
 

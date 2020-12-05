@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-IDispatch subclass: #ISchemaItemCollection
+OS.COM.IDispatch subclass: #'MSXML.ISchemaItemCollection'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'MSXMLConstants'
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ISchemaItemCollection guid: (IID fromString: '{50ea08b2-dd1b-4664-9a50-c2f40f4bd79a}')!
-ISchemaItemCollection comment: '<ISchemaItemCollection> is a wrapper class for the COM interface ''MSXML2.ISchemaItemCollection'' generated from type information in the ''Microsoft XML, v4.0'' library. It contains methods to invoke the member functions exposed by that interface.
+MSXML.ISchemaItemCollection guid: (OS.COM.IID fromString: '{50ea08b2-dd1b-4664-9a50-c2f40f4bd79a}')!
+MSXML.ISchemaItemCollection comment: '<ISchemaItemCollection> is a wrapper class for the COM interface ''MSXML2.ISchemaItemCollection'' generated from type information in the ''Microsoft XML, v4.0'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains the following helpstring for this interface
 	"XML Schema Item Collection"
@@ -46,8 +46,8 @@ interface ISchemaItemCollection : IDispatch
 		[out, retval]IUnknown** ppUnk);
 };
 '!
-!ISchemaItemCollection categoriesForClass!COM-Interfaces!MSXML2-Interfaces! !
-!ISchemaItemCollection methodsFor!
+!MSXML.ISchemaItemCollection categoriesForClass!COM-Interfaces!MSXML2-Interfaces! !
+!MSXML.ISchemaItemCollection methodsFor!
 
 _newEnum
 	"Answer the <IUnknown> value of the '_newEnum' property of the receiver."
@@ -101,22 +101,16 @@ item: index
 
 	| answer |
 	answer := ISchemaItem newPointer.
-	self
-		get_item: index
-		item: answer.
-	^answer asObject
-!
+	self get_item: index item: answer.
+	^answer asObject!
 
 itemByName: name
 	"Answer the <ISchemaItem> result of invoking the itemByName() method of the COM object."
 
 	| answer |
 	answer := ISchemaItem newPointer.
-	self
-		ItemByName: name
-		item: answer.
-	^answer asObject
-!
+	self ItemByName: name item: answer.
+	^answer asObject!
 
 ItemByName: name item: item
 	"Private - Invoke the itemByName() method of the COM object.
@@ -137,8 +131,7 @@ itemByQName: name namespaceURI: namespaceURI
 		ItemByQName: name
 		namespaceURI: namespaceURI
 		item: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 ItemByQName: name namespaceURI: namespaceURI item: item
 	"Private - Invoke the itemByQName() method of the COM object.
@@ -159,20 +152,20 @@ length
 	self get_length: answer.
 	^answer asObject
 ! !
-!ISchemaItemCollection categoriesFor: #_newEnum!**auto generated**!properties!public! !
-!ISchemaItemCollection categoriesFor: #get__newEnum:!**auto generated**!COM Interfaces-ISchemaItemCollection!private! !
-!ISchemaItemCollection categoriesFor: #get_item:item:!**auto generated**!COM Interfaces-ISchemaItemCollection!private! !
-!ISchemaItemCollection categoriesFor: #get_length:!**auto generated**!COM Interfaces-ISchemaItemCollection!private! !
-!ISchemaItemCollection categoriesFor: #isExtensible!**auto generated**!public!testing! !
-!ISchemaItemCollection categoriesFor: #isVBCollection!**auto generated**!public!testing! !
-!ISchemaItemCollection categoriesFor: #item:!**auto generated**!properties!public! !
-!ISchemaItemCollection categoriesFor: #itemByName:!**auto generated**!methods!public! !
-!ISchemaItemCollection categoriesFor: #ItemByName:item:!**auto generated**!COM Interfaces-ISchemaItemCollection!private! !
-!ISchemaItemCollection categoriesFor: #itemByQName:namespaceURI:!**auto generated**!methods!public! !
-!ISchemaItemCollection categoriesFor: #ItemByQName:namespaceURI:item:!**auto generated**!COM Interfaces-ISchemaItemCollection!private! !
-!ISchemaItemCollection categoriesFor: #length!**auto generated**!properties!public! !
+!MSXML.ISchemaItemCollection categoriesFor: #_newEnum!**auto generated**!properties!public! !
+!MSXML.ISchemaItemCollection categoriesFor: #get__newEnum:!**auto generated**!COM Interfaces-ISchemaItemCollection!private! !
+!MSXML.ISchemaItemCollection categoriesFor: #get_item:item:!**auto generated**!COM Interfaces-ISchemaItemCollection!private! !
+!MSXML.ISchemaItemCollection categoriesFor: #get_length:!**auto generated**!COM Interfaces-ISchemaItemCollection!private! !
+!MSXML.ISchemaItemCollection categoriesFor: #isExtensible!**auto generated**!public!testing! !
+!MSXML.ISchemaItemCollection categoriesFor: #isVBCollection!**auto generated**!public!testing! !
+!MSXML.ISchemaItemCollection categoriesFor: #item:!**auto generated**!properties!public! !
+!MSXML.ISchemaItemCollection categoriesFor: #itemByName:!**auto generated**!methods!public! !
+!MSXML.ISchemaItemCollection categoriesFor: #ItemByName:item:!**auto generated**!COM Interfaces-ISchemaItemCollection!private! !
+!MSXML.ISchemaItemCollection categoriesFor: #itemByQName:namespaceURI:!**auto generated**!methods!public! !
+!MSXML.ISchemaItemCollection categoriesFor: #ItemByQName:namespaceURI:item:!**auto generated**!COM Interfaces-ISchemaItemCollection!private! !
+!MSXML.ISchemaItemCollection categoriesFor: #length!**auto generated**!properties!public! !
 
-!ISchemaItemCollection class methodsFor!
+!MSXML.ISchemaItemCollection class methodsFor!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'MSXML2.ISchemaItemCollection'
@@ -190,5 +183,5 @@ defineFunctions
 		defineFunction: #get__newEnum:
 			argumentTypes: 'IUnknown**'
 ! !
-!ISchemaItemCollection class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!MSXML.ISchemaItemCollection class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
 

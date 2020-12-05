@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-IDispatch subclass: #ISchemaItem
+OS.COM.IDispatch subclass: #'MSXML.ISchemaItem'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'MSXMLConstants'
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ISchemaItem guid: (IID fromString: '{50ea08b3-dd1b-4664-9a50-c2f40f4bd79a}')!
-ISchemaItem comment: '<ISchemaItem> is a wrapper class for the COM interface ''MSXML2.ISchemaItem'' generated from type information in the ''Microsoft XML, v4.0'' library. It contains methods to invoke the member functions exposed by that interface.
+MSXML.ISchemaItem guid: (OS.COM.IID fromString: '{50ea08b3-dd1b-4664-9a50-c2f40f4bd79a}')!
+MSXML.ISchemaItem comment: '<ISchemaItem> is a wrapper class for the COM interface ''MSXML2.ISchemaItem'' generated from type information in the ''Microsoft XML, v4.0'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains the following helpstring for this interface
 	"XML Schema Item"
@@ -49,8 +49,8 @@ interface ISchemaItem : IDispatch
 		[out, retval]VARIANT_BOOL* isWritten);
 };
 '!
-!ISchemaItem categoriesForClass!COM-Interfaces!MSXML2-Interfaces! !
-!ISchemaItem methodsFor!
+!MSXML.ISchemaItem categoriesForClass!COM-Interfaces!MSXML2-Interfaces! !
+!MSXML.ISchemaItem methodsFor!
 
 get_id: id
 	"Private - Get the value of the 'id' property of the receiver.
@@ -158,8 +158,7 @@ schema
 	| answer |
 	answer := ISchema newPointer.
 	self get_schema: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 unhandledAttributes
 	"Answer the <IVBSAXAttributes> value of the 'unhandledAttributes' property of the receiver."
@@ -167,8 +166,7 @@ unhandledAttributes
 	| answer |
 	answer := IVBSAXAttributes newPointer.
 	self get_unhandledAttributes: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 writeAnnotation: annotationSink
 	"Answer the <VARIANT_BOOL> result of invoking the writeAnnotation() method of the COM object."
@@ -190,24 +188,24 @@ WriteAnnotation: annotationSink isWritten: isWritten
 
 	<virtual stdcall: hresult 14 IUnknown* varbool*>
 	^self invalidCall: _failureCode! !
-!ISchemaItem categoriesFor: #get_id:!**auto generated**!COM Interfaces-ISchemaItem!private! !
-!ISchemaItem categoriesFor: #get_itemType:!**auto generated**!COM Interfaces-ISchemaItem!private! !
-!ISchemaItem categoriesFor: #get_name:!**auto generated**!COM Interfaces-ISchemaItem!private! !
-!ISchemaItem categoriesFor: #get_namespaceURI:!**auto generated**!COM Interfaces-ISchemaItem!private! !
-!ISchemaItem categoriesFor: #get_schema:!**auto generated**!COM Interfaces-ISchemaItem!private! !
-!ISchemaItem categoriesFor: #get_unhandledAttributes:!**auto generated**!COM Interfaces-ISchemaItem!private! !
-!ISchemaItem categoriesFor: #id!**auto generated**!properties!public! !
-!ISchemaItem categoriesFor: #isExtensible!**auto generated**!public!testing! !
-!ISchemaItem categoriesFor: #isVBCollection!**auto generated**!public!testing! !
-!ISchemaItem categoriesFor: #itemType!**auto generated**!properties!public! !
-!ISchemaItem categoriesFor: #name!**auto generated**!properties!public! !
-!ISchemaItem categoriesFor: #namespaceURI!**auto generated**!properties!public! !
-!ISchemaItem categoriesFor: #schema!**auto generated**!properties!public! !
-!ISchemaItem categoriesFor: #unhandledAttributes!**auto generated**!properties!public! !
-!ISchemaItem categoriesFor: #writeAnnotation:!**auto generated**!methods!public! !
-!ISchemaItem categoriesFor: #WriteAnnotation:isWritten:!**auto generated**!COM Interfaces-ISchemaItem!private! !
+!MSXML.ISchemaItem categoriesFor: #get_id:!**auto generated**!COM Interfaces-ISchemaItem!private! !
+!MSXML.ISchemaItem categoriesFor: #get_itemType:!**auto generated**!COM Interfaces-ISchemaItem!private! !
+!MSXML.ISchemaItem categoriesFor: #get_name:!**auto generated**!COM Interfaces-ISchemaItem!private! !
+!MSXML.ISchemaItem categoriesFor: #get_namespaceURI:!**auto generated**!COM Interfaces-ISchemaItem!private! !
+!MSXML.ISchemaItem categoriesFor: #get_schema:!**auto generated**!COM Interfaces-ISchemaItem!private! !
+!MSXML.ISchemaItem categoriesFor: #get_unhandledAttributes:!**auto generated**!COM Interfaces-ISchemaItem!private! !
+!MSXML.ISchemaItem categoriesFor: #id!**auto generated**!properties!public! !
+!MSXML.ISchemaItem categoriesFor: #isExtensible!**auto generated**!public!testing! !
+!MSXML.ISchemaItem categoriesFor: #isVBCollection!**auto generated**!public!testing! !
+!MSXML.ISchemaItem categoriesFor: #itemType!**auto generated**!properties!public! !
+!MSXML.ISchemaItem categoriesFor: #name!**auto generated**!properties!public! !
+!MSXML.ISchemaItem categoriesFor: #namespaceURI!**auto generated**!properties!public! !
+!MSXML.ISchemaItem categoriesFor: #schema!**auto generated**!properties!public! !
+!MSXML.ISchemaItem categoriesFor: #unhandledAttributes!**auto generated**!properties!public! !
+!MSXML.ISchemaItem categoriesFor: #writeAnnotation:!**auto generated**!methods!public! !
+!MSXML.ISchemaItem categoriesFor: #WriteAnnotation:isWritten:!**auto generated**!COM Interfaces-ISchemaItem!private! !
 
-!ISchemaItem class methodsFor!
+!MSXML.ISchemaItem class methodsFor!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'MSXML2.ISchemaItem'
@@ -229,5 +227,5 @@ defineFunctions
 		defineFunction: #WriteAnnotation:isWritten:
 			argumentTypes: 'IUnknown* varbool*'
 ! !
-!ISchemaItem class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!MSXML.ISchemaItem class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
 

@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-IUnknown subclass: #ISAXDeclHandler
+OS.COM.IUnknown subclass: #'MSXML.ISAXDeclHandler'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'MSXMLConstants'
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ISAXDeclHandler guid: (IID fromString: '{862629ac-771a-47b2-8337-4e6843c1be90}')!
-ISAXDeclHandler comment: '<ISAXDeclHandler> is a wrapper class for the COM interface ''MSXML2.ISAXDeclHandler'' generated from type information in the ''Microsoft XML, v4.0'' library. It contains methods to invoke the member functions exposed by that interface.
+MSXML.ISAXDeclHandler guid: (OS.COM.IID fromString: '{862629ac-771a-47b2-8337-4e6843c1be90}')!
+MSXML.ISAXDeclHandler comment: '<ISAXDeclHandler> is a wrapper class for the COM interface ''MSXML2.ISAXDeclHandler'' generated from type information in the ''Microsoft XML, v4.0'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains the following helpstring for this interface
 	"ISAXDeclHandler interface"
@@ -58,8 +58,8 @@ interface ISAXDeclHandler : IUnknown
 		[in]int cchSystemId);
 };
 '!
-!ISAXDeclHandler categoriesForClass!COM-Interfaces!MSXML2-Interfaces! !
-!ISAXDeclHandler methodsFor!
+!MSXML.ISAXDeclHandler categoriesForClass!COM-Interfaces!MSXML2-Interfaces! !
+!MSXML.ISAXDeclHandler methodsFor!
 
 AttributeDecl: pwchElementName cchElementName: cchElementName pwchAttributeName: pwchAttributeName cchAttributeName: cchAttributeName pwchType: pwchType cchType: cchType pwchValueDefault: pwchValueDefault cchValueDefault: cchValueDefault pwchValue: pwchValue cchValue: cchValue
 	"Invoke the attributeDecl() method of the COM object.
@@ -116,12 +116,12 @@ InternalEntityDecl: pwchName cchName: cchName pwchValue: pwchValue cchValue: cch
 
 	<virtual stdcall: hresult 6 word* sdword word* sdword>
 	^self invalidCall: _failureCode! !
-!ISAXDeclHandler categoriesFor: #AttributeDecl:cchElementName:pwchAttributeName:cchAttributeName:pwchType:cchType:pwchValueDefault:cchValueDefault:pwchValue:cchValue:!**auto generated**!COM Interfaces-ISAXDeclHandler!public! !
-!ISAXDeclHandler categoriesFor: #ElementDecl:cchName:pwchModel:cchModel:!**auto generated**!COM Interfaces-ISAXDeclHandler!public! !
-!ISAXDeclHandler categoriesFor: #ExternalEntityDecl:cchName:pwchPublicId:cchPublicId:pwchSystemId:cchSystemId:!**auto generated**!COM Interfaces-ISAXDeclHandler!public! !
-!ISAXDeclHandler categoriesFor: #InternalEntityDecl:cchName:pwchValue:cchValue:!**auto generated**!COM Interfaces-ISAXDeclHandler!public! !
+!MSXML.ISAXDeclHandler categoriesFor: #AttributeDecl:cchElementName:pwchAttributeName:cchAttributeName:pwchType:cchType:pwchValueDefault:cchValueDefault:pwchValue:cchValue:!**auto generated**!COM Interfaces-ISAXDeclHandler!public! !
+!MSXML.ISAXDeclHandler categoriesFor: #ElementDecl:cchName:pwchModel:cchModel:!**auto generated**!COM Interfaces-ISAXDeclHandler!public! !
+!MSXML.ISAXDeclHandler categoriesFor: #ExternalEntityDecl:cchName:pwchPublicId:cchPublicId:pwchSystemId:cchSystemId:!**auto generated**!COM Interfaces-ISAXDeclHandler!public! !
+!MSXML.ISAXDeclHandler categoriesFor: #InternalEntityDecl:cchName:pwchValue:cchValue:!**auto generated**!COM Interfaces-ISAXDeclHandler!public! !
 
-!ISAXDeclHandler class methodsFor!
+!MSXML.ISAXDeclHandler class methodsFor!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'MSXML2.ISAXDeclHandler'
@@ -137,5 +137,5 @@ defineFunctions
 		defineFunction: #ExternalEntityDecl:cchName:pwchPublicId:cchPublicId:pwchSystemId:cchSystemId:
 			argumentTypes: 'word* sdword word* sdword word* sdword'
 ! !
-!ISAXDeclHandler class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!MSXML.ISAXDeclHandler class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
 

@@ -1,17 +1,17 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-IXMLDOMNode subclass: #IXMLDOMAttribute
+MSXML.IXMLDOMNode subclass: #'MSXML.IXMLDOMAttribute'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'MSXMLConstants'
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-IXMLDOMAttribute guid: (IID fromString: '{2933bf85-7b36-11d2-b20e-00c04f983e60}')!
-IXMLDOMAttribute comment: '<IXMLDOMAttribute> is a wrapper class for the COM interface ''MSXML.IXMLDOMAttribute'' generated from type information in the ''Microsoft XML, version 2.0'' library. It contains methods to invoke the member functions exposed by that interface.
+MSXML.IXMLDOMAttribute guid: (OS.COM.IID fromString: '{2933bf85-7b36-11d2-b20e-00c04f983e60}')!
+MSXML.IXMLDOMAttribute comment: '<IXMLDOMAttribute> is a wrapper class for the COM interface ''MSXML.IXMLDOMAttribute'' generated from type information in the ''Microsoft XML, version 2.0'' library. It contains methods to invoke the member functions exposed by that interface.
 
 This is a specialized node type to represent DOM attributes.'!
-!IXMLDOMAttribute categoriesForClass!COM-Interfaces!MSXML-Interfaces! !
-!IXMLDOMAttribute methodsFor!
+!MSXML.IXMLDOMAttribute categoriesForClass!COM-Interfaces!MSXML-Interfaces! !
+!MSXML.IXMLDOMAttribute methodsFor!
 
 <= comperand 
 	"Answer whether the receiver should be sorted before the <IXMLDOMAttribute> argument (see
@@ -102,21 +102,21 @@ value: attributeValue
 
 	self put_value: attributeValue asVariant
 ! !
-!IXMLDOMAttribute categoriesFor: #<=!comparing!public! !
-!IXMLDOMAttribute categoriesFor: #=!comparing!public! !
-!IXMLDOMAttribute categoriesFor: #get_name:!**auto generated**!COM Interfaces-IXMLDOMAttribute!private! !
-!IXMLDOMAttribute categoriesFor: #get_value:!**auto generated**!COM Interfaces-IXMLDOMAttribute!private! !
-!IXMLDOMAttribute categoriesFor: #key!accessing!public! !
-!IXMLDOMAttribute categoriesFor: #key:!accessing!public! !
-!IXMLDOMAttribute categoriesFor: #name!**auto generated**!properties!public! !
-!IXMLDOMAttribute categoriesFor: #printValueOn:!printing!private! !
-!IXMLDOMAttribute categoriesFor: #put_value:!**auto generated**!COM Interfaces-IXMLDOMAttribute!private! !
-!IXMLDOMAttribute categoriesFor: #value!**auto generated**!properties!public! !
-!IXMLDOMAttribute categoriesFor: #value:!**auto generated**!properties!public! !
+!MSXML.IXMLDOMAttribute categoriesFor: #<=!comparing!public! !
+!MSXML.IXMLDOMAttribute categoriesFor: #=!comparing!public! !
+!MSXML.IXMLDOMAttribute categoriesFor: #get_name:!**auto generated**!COM Interfaces-IXMLDOMAttribute!private! !
+!MSXML.IXMLDOMAttribute categoriesFor: #get_value:!**auto generated**!COM Interfaces-IXMLDOMAttribute!private! !
+!MSXML.IXMLDOMAttribute categoriesFor: #key!accessing!public! !
+!MSXML.IXMLDOMAttribute categoriesFor: #key:!accessing!public! !
+!MSXML.IXMLDOMAttribute categoriesFor: #name!**auto generated**!properties!public! !
+!MSXML.IXMLDOMAttribute categoriesFor: #printValueOn:!printing!private! !
+!MSXML.IXMLDOMAttribute categoriesFor: #put_value:!**auto generated**!COM Interfaces-IXMLDOMAttribute!private! !
+!MSXML.IXMLDOMAttribute categoriesFor: #value!**auto generated**!properties!public! !
+!MSXML.IXMLDOMAttribute categoriesFor: #value:!**auto generated**!properties!public! !
 
-IXMLDOMAttribute methodProtocol: #association attributes: #(#ansi #readOnly) selectors: #(#key #key: #value #value:)!
+MSXML.IXMLDOMAttribute methodProtocol: #association attributes: #(#ansi #readOnly) selectors: #(#key #key: #value #value:)!
 
-!IXMLDOMAttribute class methodsFor!
+!MSXML.IXMLDOMAttribute class methodsFor!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'MSXML2.IXMLDOMAttribute'
@@ -130,5 +130,5 @@ defineFunctions
 		defineFunction: #put_value:
 			argumentTypes: 'variant'
 ! !
-!IXMLDOMAttribute class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!MSXML.IXMLDOMAttribute class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
 

@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-IDispatch subclass: #IVBSAXErrorHandler
+OS.COM.IDispatch subclass: #'MSXML.IVBSAXErrorHandler'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'MSXMLConstants'
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-IVBSAXErrorHandler guid: (IID fromString: '{d963d3fe-173c-4862-9095-b92f66995f52}')!
-IVBSAXErrorHandler comment: '<IVBSAXErrorHandler> is a wrapper class for the COM interface ''MSXML2.IVBSAXErrorHandler'' generated from type information in the ''Microsoft XML, v4.0'' library. It contains methods to invoke the member functions exposed by that interface.
+MSXML.IVBSAXErrorHandler guid: (OS.COM.IID fromString: '{d963d3fe-173c-4862-9095-b92f66995f52}')!
+MSXML.IVBSAXErrorHandler comment: '<IVBSAXErrorHandler> is a wrapper class for the COM interface ''MSXML2.IVBSAXErrorHandler'' generated from type information in the ''Microsoft XML, v4.0'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains the following helpstring for this interface
 	"IVBSAXErrorHandler interface"
@@ -42,8 +42,8 @@ interface IVBSAXErrorHandler : IDispatch
 		[in]long nErrorCode);
 };
 '!
-!IVBSAXErrorHandler categoriesForClass!COM-Interfaces!MSXML2-Interfaces! !
-!IVBSAXErrorHandler methodsFor!
+!MSXML.IVBSAXErrorHandler categoriesForClass!COM-Interfaces!MSXML2-Interfaces! !
+!MSXML.IVBSAXErrorHandler methodsFor!
 
 error: oLocator strErrorMessage: strErrorMessage nErrorCode: nErrorCode
 	"Invoke the error() method of the COM object.
@@ -120,16 +120,16 @@ isVBCollection
 	"Answer whether the receiver is a VB style collection."
 
 	^false! !
-!IVBSAXErrorHandler categoriesFor: #error:strErrorMessage:nErrorCode:!**auto generated**!methods!public! !
-!IVBSAXErrorHandler categoriesFor: #Error:strErrorMessage:nErrorCode:!**auto generated**!COM Interfaces-IVBSAXErrorHandler!private! !
-!IVBSAXErrorHandler categoriesFor: #fatalError:strErrorMessage:nErrorCode:!**auto generated**!methods!public! !
-!IVBSAXErrorHandler categoriesFor: #FatalError:strErrorMessage:nErrorCode:!**auto generated**!COM Interfaces-IVBSAXErrorHandler!private! !
-!IVBSAXErrorHandler categoriesFor: #ignorableWarning:strErrorMessage:nErrorCode:!**auto generated**!methods!public! !
-!IVBSAXErrorHandler categoriesFor: #IgnorableWarning:strErrorMessage:nErrorCode:!**auto generated**!COM Interfaces-IVBSAXErrorHandler!private! !
-!IVBSAXErrorHandler categoriesFor: #isExtensible!**auto generated**!public!testing! !
-!IVBSAXErrorHandler categoriesFor: #isVBCollection!**auto generated**!public!testing! !
+!MSXML.IVBSAXErrorHandler categoriesFor: #error:strErrorMessage:nErrorCode:!**auto generated**!methods!public! !
+!MSXML.IVBSAXErrorHandler categoriesFor: #Error:strErrorMessage:nErrorCode:!**auto generated**!COM Interfaces-IVBSAXErrorHandler!private! !
+!MSXML.IVBSAXErrorHandler categoriesFor: #fatalError:strErrorMessage:nErrorCode:!**auto generated**!methods!public! !
+!MSXML.IVBSAXErrorHandler categoriesFor: #FatalError:strErrorMessage:nErrorCode:!**auto generated**!COM Interfaces-IVBSAXErrorHandler!private! !
+!MSXML.IVBSAXErrorHandler categoriesFor: #ignorableWarning:strErrorMessage:nErrorCode:!**auto generated**!methods!public! !
+!MSXML.IVBSAXErrorHandler categoriesFor: #IgnorableWarning:strErrorMessage:nErrorCode:!**auto generated**!COM Interfaces-IVBSAXErrorHandler!private! !
+!MSXML.IVBSAXErrorHandler categoriesFor: #isExtensible!**auto generated**!public!testing! !
+!MSXML.IVBSAXErrorHandler categoriesFor: #isVBCollection!**auto generated**!public!testing! !
 
-!IVBSAXErrorHandler class methodsFor!
+!MSXML.IVBSAXErrorHandler class methodsFor!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'MSXML2.IVBSAXErrorHandler'
@@ -143,5 +143,5 @@ defineFunctions
 		defineFunction: #IgnorableWarning:strErrorMessage:nErrorCode:
 			argumentTypes: 'IVBSAXLocator* bstr* sdword'
 ! !
-!IVBSAXErrorHandler class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!MSXML.IVBSAXErrorHandler class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
 

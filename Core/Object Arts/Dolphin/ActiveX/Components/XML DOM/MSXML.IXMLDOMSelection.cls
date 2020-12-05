@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-IXMLDOMNodeList subclass: #IXMLDOMSelection
+MSXML.IXMLDOMNodeList subclass: #'MSXML.IXMLDOMSelection'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'MSXMLConstants'
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-IXMLDOMSelection guid: (IID fromString: '{aa634fc7-5888-44a7-a257-3a47150d3a0e}')!
-IXMLDOMSelection comment: '<IXMLDOMSelection> is a wrapper class for the COM interface ''MSXML2.IXMLDOMSelection'' generated from type information in the ''Microsoft XML, v4.0'' library. It contains methods to invoke the member functions exposed by that interface.
+MSXML.IXMLDOMSelection guid: (OS.COM.IID fromString: '{aa634fc7-5888-44a7-a257-3a47150d3a0e}')!
+MSXML.IXMLDOMSelection comment: '<IXMLDOMSelection> is a wrapper class for the COM interface ''MSXML2.IXMLDOMSelection'' generated from type information in the ''Microsoft XML, v4.0'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
 
@@ -60,8 +60,8 @@ interface IXMLDOMSelection : IXMLDOMNodeList
 		[in]VARIANT value);
 };
 '!
-!IXMLDOMSelection categoriesForClass!COM-Interfaces!MSXML2-Interfaces! !
-!IXMLDOMSelection methodsFor!
+!MSXML.IXMLDOMSelection categoriesForClass!COM-Interfaces!MSXML2-Interfaces! !
+!MSXML.IXMLDOMSelection methodsFor!
 
 clone
 	"Answer the <IXMLDOMSelection> result of invoking the clone() method of the COM object.
@@ -70,8 +70,7 @@ clone
 	| answer |
 	answer := IXMLDOMSelection newPointer.
 	self Clone: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 Clone: ppNode
 	"Private - Invoke the clone() method of the COM object.
@@ -90,8 +89,7 @@ context
 	| answer |
 	answer := IXMLDOMNode newPointer.
 	self get_context: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 expr
 	"Answer the <bstr> value of the 'expr' property of the receiver.
@@ -157,11 +155,8 @@ matches: pNode
 
 	| answer |
 	answer := IXMLDOMNode newPointer.
-	self
-		Matches: pNode
-		ppNode: answer.
-	^answer asObject
-!
+	self Matches: pNode ppNode: answer.
+	^answer asObject!
 
 Matches: pNode ppNode: ppNode
 	"Private - Invoke the matches() method of the COM object.
@@ -181,8 +176,7 @@ peekNode
 	| answer |
 	answer := IXMLDOMNode newPointer.
 	self PeekNode: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 PeekNode: ppNode
 	"Private - Invoke the peekNode() method of the COM object.
@@ -230,8 +224,7 @@ removeNext
 	| answer |
 	answer := IXMLDOMNode newPointer.
 	self RemoveNext: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 RemoveNext: ppNode
 	"Private - Invoke the removeNext() method of the COM object.
@@ -269,29 +262,29 @@ setProperty_: name value: value
 		SetProperty: name
 		value: value asVariant
 ! !
-!IXMLDOMSelection categoriesFor: #clone!**auto generated**!methods!public! !
-!IXMLDOMSelection categoriesFor: #Clone:!**auto generated**!COM Interfaces-IXMLDOMSelection!private! !
-!IXMLDOMSelection categoriesFor: #context!**auto generated**!properties!public! !
-!IXMLDOMSelection categoriesFor: #expr!**auto generated**!properties!public! !
-!IXMLDOMSelection categoriesFor: #expr:!**auto generated**!properties!public! !
-!IXMLDOMSelection categoriesFor: #get_context:!**auto generated**!COM Interfaces-IXMLDOMSelection!private! !
-!IXMLDOMSelection categoriesFor: #get_expr:!**auto generated**!COM Interfaces-IXMLDOMSelection!private! !
-!IXMLDOMSelection categoriesFor: #GetProperty:value:!**auto generated**!COM Interfaces-IXMLDOMSelection!private! !
-!IXMLDOMSelection categoriesFor: #getProperty_:!**auto generated**!methods!public! !
-!IXMLDOMSelection categoriesFor: #matches:!**auto generated**!methods!public! !
-!IXMLDOMSelection categoriesFor: #Matches:ppNode:!**auto generated**!COM Interfaces-IXMLDOMSelection!private! !
-!IXMLDOMSelection categoriesFor: #peekNode!**auto generated**!methods!public! !
-!IXMLDOMSelection categoriesFor: #PeekNode:!**auto generated**!COM Interfaces-IXMLDOMSelection!private! !
-!IXMLDOMSelection categoriesFor: #put_expr:!**auto generated**!COM Interfaces-IXMLDOMSelection!private! !
-!IXMLDOMSelection categoriesFor: #putref_context:!**auto generated**!COM Interfaces-IXMLDOMSelection!private! !
-!IXMLDOMSelection categoriesFor: #RemoveAll!**auto generated**!COM Interfaces-IXMLDOMSelection!public! !
-!IXMLDOMSelection categoriesFor: #removeNext!**auto generated**!methods!public! !
-!IXMLDOMSelection categoriesFor: #RemoveNext:!**auto generated**!COM Interfaces-IXMLDOMSelection!private! !
-!IXMLDOMSelection categoriesFor: #setContext:!**auto generated**!properties!public! !
-!IXMLDOMSelection categoriesFor: #SetProperty:value:!**auto generated**!COM Interfaces-IXMLDOMSelection!private! !
-!IXMLDOMSelection categoriesFor: #setProperty_:value:!**auto generated**!methods!public! !
+!MSXML.IXMLDOMSelection categoriesFor: #clone!**auto generated**!methods!public! !
+!MSXML.IXMLDOMSelection categoriesFor: #Clone:!**auto generated**!COM Interfaces-IXMLDOMSelection!private! !
+!MSXML.IXMLDOMSelection categoriesFor: #context!**auto generated**!properties!public! !
+!MSXML.IXMLDOMSelection categoriesFor: #expr!**auto generated**!properties!public! !
+!MSXML.IXMLDOMSelection categoriesFor: #expr:!**auto generated**!properties!public! !
+!MSXML.IXMLDOMSelection categoriesFor: #get_context:!**auto generated**!COM Interfaces-IXMLDOMSelection!private! !
+!MSXML.IXMLDOMSelection categoriesFor: #get_expr:!**auto generated**!COM Interfaces-IXMLDOMSelection!private! !
+!MSXML.IXMLDOMSelection categoriesFor: #GetProperty:value:!**auto generated**!COM Interfaces-IXMLDOMSelection!private! !
+!MSXML.IXMLDOMSelection categoriesFor: #getProperty_:!**auto generated**!methods!public! !
+!MSXML.IXMLDOMSelection categoriesFor: #matches:!**auto generated**!methods!public! !
+!MSXML.IXMLDOMSelection categoriesFor: #Matches:ppNode:!**auto generated**!COM Interfaces-IXMLDOMSelection!private! !
+!MSXML.IXMLDOMSelection categoriesFor: #peekNode!**auto generated**!methods!public! !
+!MSXML.IXMLDOMSelection categoriesFor: #PeekNode:!**auto generated**!COM Interfaces-IXMLDOMSelection!private! !
+!MSXML.IXMLDOMSelection categoriesFor: #put_expr:!**auto generated**!COM Interfaces-IXMLDOMSelection!private! !
+!MSXML.IXMLDOMSelection categoriesFor: #putref_context:!**auto generated**!COM Interfaces-IXMLDOMSelection!private! !
+!MSXML.IXMLDOMSelection categoriesFor: #RemoveAll!**auto generated**!COM Interfaces-IXMLDOMSelection!public! !
+!MSXML.IXMLDOMSelection categoriesFor: #removeNext!**auto generated**!methods!public! !
+!MSXML.IXMLDOMSelection categoriesFor: #RemoveNext:!**auto generated**!COM Interfaces-IXMLDOMSelection!private! !
+!MSXML.IXMLDOMSelection categoriesFor: #setContext:!**auto generated**!properties!public! !
+!MSXML.IXMLDOMSelection categoriesFor: #SetProperty:value:!**auto generated**!COM Interfaces-IXMLDOMSelection!private! !
+!MSXML.IXMLDOMSelection categoriesFor: #setProperty_:value:!**auto generated**!methods!public! !
 
-!IXMLDOMSelection class methodsFor!
+!MSXML.IXMLDOMSelection class methodsFor!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'MSXML2.IXMLDOMSelection'
@@ -320,5 +313,5 @@ defineFunctions
 		defineFunction: #SetProperty:value:
 			argumentTypes: 'bstr variant'
 ! !
-!IXMLDOMSelection class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!MSXML.IXMLDOMSelection class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
 

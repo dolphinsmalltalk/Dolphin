@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ISchemaParticle subclass: #ISchemaAny
+MSXML.ISchemaParticle subclass: #'MSXML.ISchemaAny'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'MSXMLConstants'
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ISchemaAny guid: (IID fromString: '{50ea08bc-dd1b-4664-9a50-c2f40f4bd79a}')!
-ISchemaAny comment: '<ISchemaAny> is a wrapper class for the COM interface ''MSXML2.ISchemaAny'' generated from type information in the ''Microsoft XML, v4.0'' library. It contains methods to invoke the member functions exposed by that interface.
+MSXML.ISchemaAny guid: (OS.COM.IID fromString: '{50ea08bc-dd1b-4664-9a50-c2f40f4bd79a}')!
+MSXML.ISchemaAny comment: '<ISchemaAny> is a wrapper class for the COM interface ''MSXML2.ISchemaAny'' generated from type information in the ''Microsoft XML, v4.0'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains the following helpstring for this interface
 	"XML Schema Any"
@@ -33,8 +33,8 @@ interface ISchemaAny : ISchemaParticle
 		[out, retval]SCHEMAPROCESSCONTENTS* processContents);
 };
 '!
-!ISchemaAny categoriesForClass!COM-Interfaces!MSXML2-Interfaces! !
-!ISchemaAny methodsFor!
+!MSXML.ISchemaAny categoriesForClass!COM-Interfaces!MSXML2-Interfaces! !
+!MSXML.ISchemaAny methodsFor!
 
 get_namespaces: namespaces
 	"Private - Get the value of the 'namespaces' property of the receiver.
@@ -60,8 +60,7 @@ namespaces
 	| answer |
 	answer := ISchemaStringCollection newPointer.
 	self get_namespaces: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 processContents
 	"Answer the <sdword> value of the 'processContents' property of the receiver."
@@ -71,12 +70,12 @@ processContents
 	self get_processContents: answer.
 	^answer asObject
 ! !
-!ISchemaAny categoriesFor: #get_namespaces:!**auto generated**!COM Interfaces-ISchemaAny!private! !
-!ISchemaAny categoriesFor: #get_processContents:!**auto generated**!COM Interfaces-ISchemaAny!private! !
-!ISchemaAny categoriesFor: #namespaces!**auto generated**!properties!public! !
-!ISchemaAny categoriesFor: #processContents!**auto generated**!properties!public! !
+!MSXML.ISchemaAny categoriesFor: #get_namespaces:!**auto generated**!COM Interfaces-ISchemaAny!private! !
+!MSXML.ISchemaAny categoriesFor: #get_processContents:!**auto generated**!COM Interfaces-ISchemaAny!private! !
+!MSXML.ISchemaAny categoriesFor: #namespaces!**auto generated**!properties!public! !
+!MSXML.ISchemaAny categoriesFor: #processContents!**auto generated**!properties!public! !
 
-!ISchemaAny class methodsFor!
+!MSXML.ISchemaAny class methodsFor!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'MSXML2.ISchemaAny'
@@ -88,5 +87,5 @@ defineFunctions
 		defineFunction: #get_processContents:
 			argumentTypes: 'sdword*'
 ! !
-!ISchemaAny class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!MSXML.ISchemaAny class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
 

@@ -41,15 +41,14 @@ package basicScriptAt: #postinstall put: 'Smalltalk developmentSystem
 	helpId: 10625'.
 
 package setClassNames: #(
-	#{Smalltalk.XmlFormatter}
 	#{Smalltalk.XmlPad}
 	#{Smalltalk.XmlPadSessionManager}
 ).
 
 package setMethodNames: #(
-	#(#{Smalltalk.IXMLDOMComment} #formatAsText)
-	#(#{Smalltalk.IXMLDOMEntityReference} #formatAsText)
-	#(#{Smalltalk.IXMLDOMNode} #formatAsText)
+	#(#{MSXML.IXMLDOMComment} #formatAsText)
+	#(#{MSXML.IXMLDOMEntityReference} #formatAsText)
+	#(#{MSXML.IXMLDOMNode} #formatAsText)
 ).
 
 package setPrerequisites: #(
@@ -58,6 +57,7 @@ package setPrerequisites: #(
 	'..\..\..\Dolphin\MVP\Views\Control Bars\Dolphin Control Bars'
 	'..\..\..\Dolphin\MVP\Dialogs\Find\Dolphin Find Dialog'
 	'..\..\..\Dolphin\Base\Dolphin Message Box'
+	'..\..\..\Dolphin\MVP\Deprecated\Dolphin MVP (Deprecated)'
 	'..\..\..\Dolphin\MVP\Base\Dolphin MVP Base'
 	'..\..\..\Dolphin\Registry\Dolphin Registry Access'
 	'..\..\..\Dolphin\Registry\Dolphin Registry Serialisation'
@@ -68,7 +68,7 @@ package setPrerequisites: #(
 	'..\..\..\Dolphin\MVP\Models\Value\Dolphin Value Models'
 	'..\..\..\Dolphin\ActiveX\Components\VBScript\VBScript Regular Expressions'
 	'..\..\..\Dolphin\ActiveX\Components\XML DOM\XML DOM'
-	'..\..\..\Dolphin\ActiveX\Components\XML DOM\XML DOM Visitor'
+	'..\..\..\Dolphin\ActiveX\Components\XML DOM\XML Formatter'
 ).
 
 package setManualPrerequisites: #(
@@ -83,7 +83,7 @@ package!
 UI.TextDocument subclass: #XmlPad
 	instanceVariableNames: 'viewOptions'
 	classVariableNames: ''
-	imports: #()
+	imports: #(#{MSXML private})
 	classInstanceVariableNames: ''
 	classConstants: {
 		'RememberPlacementMask' -> 16r1
@@ -94,32 +94,26 @@ UI.RuntimeSessionManager subclass: #XmlPadSessionManager
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-XmlDomVisitor subclass: #XmlFormatter
-	instanceVariableNames: 'stream indent line newlineNeeded'
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
 
 "Loose Methods"!
 
-!IXMLDOMComment methodsFor!
+!MSXML.IXMLDOMComment methodsFor!
 
 formatAsText
 	^false! !
-!IXMLDOMComment categoriesFor: #formatAsText!public! !
+!MSXML.IXMLDOMComment categoriesFor: #formatAsText!public! !
 
-!IXMLDOMEntityReference methodsFor!
+!MSXML.IXMLDOMEntityReference methodsFor!
 
 formatAsText
 	^true! !
-!IXMLDOMEntityReference categoriesFor: #formatAsText!public! !
+!MSXML.IXMLDOMEntityReference categoriesFor: #formatAsText!public! !
 
-!IXMLDOMNode methodsFor!
+!MSXML.IXMLDOMNode methodsFor!
 
 formatAsText
 	^self isText! !
-!IXMLDOMNode categoriesFor: #formatAsText!public! !
+!MSXML.IXMLDOMNode categoriesFor: #formatAsText!public! !
 
 "End of package definition"!
 

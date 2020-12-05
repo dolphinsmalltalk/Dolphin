@@ -1,20 +1,20 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-IDispatch subclass: #IXMLHttpRequest
+OS.COM.IDispatch subclass: #'MSXML.IXMLHttpRequest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'MSXMLConstants'
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-IXMLHttpRequest guid: (IID fromString: '{ed8c108d-4349-11d2-91a4-00c04f7969e8}')!
-IXMLHttpRequest comment: '<IXMLHttpRequest> is a wrapper class for the COM interface ''MSXML.IXMLHttpRequest'' generated from type information in the ''Microsoft XML, version 2.0'' library. It contains methods to invoke the member functions exposed by that interface.
+MSXML.IXMLHttpRequest guid: (OS.COM.IID fromString: '{ed8c108d-4349-11d2-91a4-00c04f7969e8}')!
+MSXML.IXMLHttpRequest comment: '<IXMLHttpRequest> is a wrapper class for the COM interface ''MSXML.IXMLHttpRequest'' generated from type information in the ''Microsoft XML, version 2.0'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains the following (typically unhelpful) helpstring for this interface
 	"IXMLHttpRequest Interface"
 
 The Http Request COM object can be used to send and receive XML via HTTP to a Web server, including DAV enabled servers.'!
-!IXMLHttpRequest categoriesForClass!COM-Interfaces!MSXML-Interfaces! !
-!IXMLHttpRequest methodsFor!
+!MSXML.IXMLHttpRequest categoriesForClass!COM-Interfaces!MSXML-Interfaces! !
+!MSXML.IXMLHttpRequest methodsFor!
 
 Abort
 	"Invoke the abort() method of the COM object.
@@ -288,36 +288,36 @@ statusText
 	self get_statusText: answer.
 	^answer asObject
 ! !
-!IXMLHttpRequest categoriesFor: #Abort!**auto generated**!COM Interfaces-IXMLHTTPRequest!public! !
-!IXMLHttpRequest categoriesFor: #get_readyState:!**auto generated**!COM Interfaces-IXMLHTTPRequest!private! !
-!IXMLHttpRequest categoriesFor: #get_responseBody:!**auto generated**!COM Interfaces-IXMLHTTPRequest!private! !
-!IXMLHttpRequest categoriesFor: #get_responseStream:!**auto generated**!COM Interfaces-IXMLHTTPRequest!private! !
-!IXMLHttpRequest categoriesFor: #get_responseText:!**auto generated**!COM Interfaces-IXMLHTTPRequest!private! !
-!IXMLHttpRequest categoriesFor: #get_responseXML:!**auto generated**!COM Interfaces-IXMLHTTPRequest!private! !
-!IXMLHttpRequest categoriesFor: #get_status:!**auto generated**!COM Interfaces-IXMLHTTPRequest!private! !
-!IXMLHttpRequest categoriesFor: #get_statusText:!**auto generated**!COM Interfaces-IXMLHTTPRequest!private! !
-!IXMLHttpRequest categoriesFor: #getAllResponseHeaders!**auto generated**!methods!public! !
-!IXMLHttpRequest categoriesFor: #GetAllResponseHeaders:!**auto generated**!COM Interfaces-IXMLHTTPRequest!private! !
-!IXMLHttpRequest categoriesFor: #getResponseHeader:!**auto generated**!methods!public! !
-!IXMLHttpRequest categoriesFor: #GetResponseHeader:pbstrValue:!**auto generated**!COM Interfaces-IXMLHTTPRequest!private! !
-!IXMLHttpRequest categoriesFor: #onreadystatechange:!**auto generated**!properties!public! !
-!IXMLHttpRequest categoriesFor: #open:bstrUrl:!**auto generated**!methods!public! !
-!IXMLHttpRequest categoriesFor: #open:bstrUrl:varAsync:bstrUser:bstrPassword:!**auto generated**!methods!public! !
-!IXMLHttpRequest categoriesFor: #Open:bstrUrl:varAsync:bstrUser:bstrPassword:!**auto generated**!COM Interfaces-IXMLHTTPRequest!private! !
-!IXMLHttpRequest categoriesFor: #put_onreadystatechange:!**auto generated**!COM Interfaces-IXMLHTTPRequest!private! !
-!IXMLHttpRequest categoriesFor: #readyState!**auto generated**!properties!public! !
-!IXMLHttpRequest categoriesFor: #responseBody!**auto generated**!properties!public! !
-!IXMLHttpRequest categoriesFor: #responseStream!**auto generated**!properties!public! !
-!IXMLHttpRequest categoriesFor: #responseText!**auto generated**!properties!public! !
-!IXMLHttpRequest categoriesFor: #responseXML!**auto generated**!properties!public! !
-!IXMLHttpRequest categoriesFor: #send!**auto generated**!methods!public! !
-!IXMLHttpRequest categoriesFor: #send:!**auto generated**!methods!public! !
-!IXMLHttpRequest categoriesFor: #Send:!**auto generated**!COM Interfaces-IXMLHTTPRequest!private! !
-!IXMLHttpRequest categoriesFor: #SetRequestHeader:bstrValue:!**auto generated**!COM Interfaces-IXMLHTTPRequest!public! !
-!IXMLHttpRequest categoriesFor: #status!**auto generated**!properties!public! !
-!IXMLHttpRequest categoriesFor: #statusText!**auto generated**!properties!public! !
+!MSXML.IXMLHttpRequest categoriesFor: #Abort!**auto generated**!COM Interfaces-IXMLHTTPRequest!public! !
+!MSXML.IXMLHttpRequest categoriesFor: #get_readyState:!**auto generated**!COM Interfaces-IXMLHTTPRequest!private! !
+!MSXML.IXMLHttpRequest categoriesFor: #get_responseBody:!**auto generated**!COM Interfaces-IXMLHTTPRequest!private! !
+!MSXML.IXMLHttpRequest categoriesFor: #get_responseStream:!**auto generated**!COM Interfaces-IXMLHTTPRequest!private! !
+!MSXML.IXMLHttpRequest categoriesFor: #get_responseText:!**auto generated**!COM Interfaces-IXMLHTTPRequest!private! !
+!MSXML.IXMLHttpRequest categoriesFor: #get_responseXML:!**auto generated**!COM Interfaces-IXMLHTTPRequest!private! !
+!MSXML.IXMLHttpRequest categoriesFor: #get_status:!**auto generated**!COM Interfaces-IXMLHTTPRequest!private! !
+!MSXML.IXMLHttpRequest categoriesFor: #get_statusText:!**auto generated**!COM Interfaces-IXMLHTTPRequest!private! !
+!MSXML.IXMLHttpRequest categoriesFor: #getAllResponseHeaders!**auto generated**!methods!public! !
+!MSXML.IXMLHttpRequest categoriesFor: #GetAllResponseHeaders:!**auto generated**!COM Interfaces-IXMLHTTPRequest!private! !
+!MSXML.IXMLHttpRequest categoriesFor: #getResponseHeader:!**auto generated**!methods!public! !
+!MSXML.IXMLHttpRequest categoriesFor: #GetResponseHeader:pbstrValue:!**auto generated**!COM Interfaces-IXMLHTTPRequest!private! !
+!MSXML.IXMLHttpRequest categoriesFor: #onreadystatechange:!**auto generated**!properties!public! !
+!MSXML.IXMLHttpRequest categoriesFor: #open:bstrUrl:!**auto generated**!methods!public! !
+!MSXML.IXMLHttpRequest categoriesFor: #open:bstrUrl:varAsync:bstrUser:bstrPassword:!**auto generated**!methods!public! !
+!MSXML.IXMLHttpRequest categoriesFor: #Open:bstrUrl:varAsync:bstrUser:bstrPassword:!**auto generated**!COM Interfaces-IXMLHTTPRequest!private! !
+!MSXML.IXMLHttpRequest categoriesFor: #put_onreadystatechange:!**auto generated**!COM Interfaces-IXMLHTTPRequest!private! !
+!MSXML.IXMLHttpRequest categoriesFor: #readyState!**auto generated**!properties!public! !
+!MSXML.IXMLHttpRequest categoriesFor: #responseBody!**auto generated**!properties!public! !
+!MSXML.IXMLHttpRequest categoriesFor: #responseStream!**auto generated**!properties!public! !
+!MSXML.IXMLHttpRequest categoriesFor: #responseText!**auto generated**!properties!public! !
+!MSXML.IXMLHttpRequest categoriesFor: #responseXML!**auto generated**!properties!public! !
+!MSXML.IXMLHttpRequest categoriesFor: #send!**auto generated**!methods!public! !
+!MSXML.IXMLHttpRequest categoriesFor: #send:!**auto generated**!methods!public! !
+!MSXML.IXMLHttpRequest categoriesFor: #Send:!**auto generated**!COM Interfaces-IXMLHTTPRequest!private! !
+!MSXML.IXMLHttpRequest categoriesFor: #SetRequestHeader:bstrValue:!**auto generated**!COM Interfaces-IXMLHTTPRequest!public! !
+!MSXML.IXMLHttpRequest categoriesFor: #status!**auto generated**!properties!public! !
+!MSXML.IXMLHttpRequest categoriesFor: #statusText!**auto generated**!properties!public! !
 
-!IXMLHttpRequest class methodsFor!
+!MSXML.IXMLHttpRequest class methodsFor!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'MSXML2.IXMLHTTPRequest'
@@ -382,10 +382,10 @@ newXMLHTTP60
 
 	^self onCLSID: (CLSID fromString: '{88D96A0A-F192-11D4-A65F-0040963251E5}')
 ! !
-!IXMLHttpRequest class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
-!IXMLHttpRequest class categoriesFor: #newXMLHTTP!**auto generated**!instance creation!public! !
-!IXMLHttpRequest class categoriesFor: #newXMLHTTP26!**auto generated**!instance creation!public! !
-!IXMLHttpRequest class categoriesFor: #newXMLHTTP30!**auto generated**!instance creation!public! !
-!IXMLHttpRequest class categoriesFor: #newXMLHTTP40!**auto generated**!instance creation!public! !
-!IXMLHttpRequest class categoriesFor: #newXMLHTTP60!**auto generated**!instance creation!public! !
+!MSXML.IXMLHttpRequest class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!MSXML.IXMLHttpRequest class categoriesFor: #newXMLHTTP!**auto generated**!instance creation!public! !
+!MSXML.IXMLHttpRequest class categoriesFor: #newXMLHTTP26!**auto generated**!instance creation!public! !
+!MSXML.IXMLHttpRequest class categoriesFor: #newXMLHTTP30!**auto generated**!instance creation!public! !
+!MSXML.IXMLHttpRequest class categoriesFor: #newXMLHTTP40!**auto generated**!instance creation!public! !
+!MSXML.IXMLHttpRequest class categoriesFor: #newXMLHTTP60!**auto generated**!instance creation!public! !
 

@@ -108,6 +108,7 @@ contents
 	contents
 		add: #('Core\Object Arts\Dolphin\ActiveX\Components\XML DOM\XML DOM.pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\ActiveX\Components\XML DOM\XML DOM Visitor.pax' #plain #imageBased);
+		add: #('Core\Object Arts\Dolphin\ActiveX\Components\XML DOM\XML Formatter.pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\ActiveX\Components\Scripting\ActiveX Scripting.pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\ActiveX\Components\VBScript\VBScript Regular Expressions.pax' #plain #imageBased).
 

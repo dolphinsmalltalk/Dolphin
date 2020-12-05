@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-IDispatch subclass: #IXSLProcessor
+OS.COM.IDispatch subclass: #'MSXML.IXSLProcessor'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'MSXMLConstants'
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-IXSLProcessor guid: (IID fromString: '{2933bf92-7b36-11d2-b20e-00c04f983e60}')!
-IXSLProcessor comment: '<IXSLProcessor> is a wrapper class for the COM interface ''MSXML2.IXSLProcessor'' generated from type information in the ''Microsoft XML, v4.0'' library. It contains methods to invoke the member functions exposed by that interface.
+MSXML.IXSLProcessor guid: (OS.COM.IID fromString: '{2933bf92-7b36-11d2-b20e-00c04f983e60}')!
+MSXML.IXSLProcessor comment: '<IXSLProcessor> is a wrapper class for the COM interface ''MSXML2.IXSLProcessor'' generated from type information in the ''Microsoft XML, v4.0'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains the following helpstring for this interface
 	"IXSLProcessor Interface"
@@ -72,8 +72,8 @@ interface IXSLProcessor : IDispatch
 		[out, retval]IXMLDOMNode** stylesheet);
 };
 '!
-!IXSLProcessor categoriesForClass!COM-Interfaces!MSXML2-Interfaces! !
-!IXSLProcessor methodsFor!
+!MSXML.IXSLProcessor categoriesForClass!COM-Interfaces!MSXML2-Interfaces! !
+!MSXML.IXSLProcessor methodsFor!
 
 AddObject: obj namespaceURI: namespaceURI
 	"Invoke the addObject() method of the COM object.
@@ -231,8 +231,7 @@ ownerTemplate
 	| answer |
 	answer := IXSLTemplate newPointer.
 	self get_ownerTemplate: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 put_input: pVar
 	"Private - Set the value of the 'input' property of the object wrapped by the 
@@ -319,8 +318,7 @@ stylesheet
 	| answer |
 	answer := IXMLDOMNode newPointer.
 	self get_stylesheet: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 transform
 	"Answer the <VARIANT_BOOL> result of invoking the transform() method of the COM object.
@@ -341,37 +339,37 @@ Transform: pDone
 
 	<virtual stdcall: hresult 16 varbool*>
 	^self invalidCall: _failureCode! !
-!IXSLProcessor categoriesFor: #AddObject:namespaceURI:!**auto generated**!COM Interfaces-IXSLProcessor!public! !
-!IXSLProcessor categoriesFor: #addParameter:parameter:!**auto generated**!methods!public! !
-!IXSLProcessor categoriesFor: #addParameter:parameter:namespaceURI:!**auto generated**!methods!public! !
-!IXSLProcessor categoriesFor: #AddParameter:parameter:namespaceURI:!**auto generated**!COM Interfaces-IXSLProcessor!private! !
-!IXSLProcessor categoriesFor: #get_input:!**auto generated**!COM Interfaces-IXSLProcessor!private! !
-!IXSLProcessor categoriesFor: #get_output:!**auto generated**!COM Interfaces-IXSLProcessor!private! !
-!IXSLProcessor categoriesFor: #get_ownerTemplate:!**auto generated**!COM Interfaces-IXSLProcessor!private! !
-!IXSLProcessor categoriesFor: #get_readyState:!**auto generated**!COM Interfaces-IXSLProcessor!private! !
-!IXSLProcessor categoriesFor: #get_startMode:!**auto generated**!COM Interfaces-IXSLProcessor!private! !
-!IXSLProcessor categoriesFor: #get_startModeURI:!**auto generated**!COM Interfaces-IXSLProcessor!private! !
-!IXSLProcessor categoriesFor: #get_stylesheet:!**auto generated**!COM Interfaces-IXSLProcessor!private! !
-!IXSLProcessor categoriesFor: #input!**auto generated**!properties!public! !
-!IXSLProcessor categoriesFor: #input:!**auto generated**!properties!public! !
-!IXSLProcessor categoriesFor: #isExtensible!**auto generated**!public!testing! !
-!IXSLProcessor categoriesFor: #isVBCollection!**auto generated**!public!testing! !
-!IXSLProcessor categoriesFor: #output!**auto generated**!properties!public! !
-!IXSLProcessor categoriesFor: #output:!**auto generated**!properties!public! !
-!IXSLProcessor categoriesFor: #ownerTemplate!**auto generated**!properties!public! !
-!IXSLProcessor categoriesFor: #put_input:!**auto generated**!COM Interfaces-IXSLProcessor!private! !
-!IXSLProcessor categoriesFor: #put_output:!**auto generated**!COM Interfaces-IXSLProcessor!private! !
-!IXSLProcessor categoriesFor: #readyState!**auto generated**!properties!public! !
-!IXSLProcessor categoriesFor: #Reset!**auto generated**!COM Interfaces-IXSLProcessor!public! !
-!IXSLProcessor categoriesFor: #setStartMode:!**auto generated**!methods!public! !
-!IXSLProcessor categoriesFor: #SetStartMode:namespaceURI:!**auto generated**!COM Interfaces-IXSLProcessor!public! !
-!IXSLProcessor categoriesFor: #startMode!**auto generated**!properties!public! !
-!IXSLProcessor categoriesFor: #startModeURI!**auto generated**!properties!public! !
-!IXSLProcessor categoriesFor: #stylesheet!**auto generated**!properties!public! !
-!IXSLProcessor categoriesFor: #transform!**auto generated**!methods!public! !
-!IXSLProcessor categoriesFor: #Transform:!**auto generated**!COM Interfaces-IXSLProcessor!private! !
+!MSXML.IXSLProcessor categoriesFor: #AddObject:namespaceURI:!**auto generated**!COM Interfaces-IXSLProcessor!public! !
+!MSXML.IXSLProcessor categoriesFor: #addParameter:parameter:!**auto generated**!methods!public! !
+!MSXML.IXSLProcessor categoriesFor: #addParameter:parameter:namespaceURI:!**auto generated**!methods!public! !
+!MSXML.IXSLProcessor categoriesFor: #AddParameter:parameter:namespaceURI:!**auto generated**!COM Interfaces-IXSLProcessor!private! !
+!MSXML.IXSLProcessor categoriesFor: #get_input:!**auto generated**!COM Interfaces-IXSLProcessor!private! !
+!MSXML.IXSLProcessor categoriesFor: #get_output:!**auto generated**!COM Interfaces-IXSLProcessor!private! !
+!MSXML.IXSLProcessor categoriesFor: #get_ownerTemplate:!**auto generated**!COM Interfaces-IXSLProcessor!private! !
+!MSXML.IXSLProcessor categoriesFor: #get_readyState:!**auto generated**!COM Interfaces-IXSLProcessor!private! !
+!MSXML.IXSLProcessor categoriesFor: #get_startMode:!**auto generated**!COM Interfaces-IXSLProcessor!private! !
+!MSXML.IXSLProcessor categoriesFor: #get_startModeURI:!**auto generated**!COM Interfaces-IXSLProcessor!private! !
+!MSXML.IXSLProcessor categoriesFor: #get_stylesheet:!**auto generated**!COM Interfaces-IXSLProcessor!private! !
+!MSXML.IXSLProcessor categoriesFor: #input!**auto generated**!properties!public! !
+!MSXML.IXSLProcessor categoriesFor: #input:!**auto generated**!properties!public! !
+!MSXML.IXSLProcessor categoriesFor: #isExtensible!**auto generated**!public!testing! !
+!MSXML.IXSLProcessor categoriesFor: #isVBCollection!**auto generated**!public!testing! !
+!MSXML.IXSLProcessor categoriesFor: #output!**auto generated**!properties!public! !
+!MSXML.IXSLProcessor categoriesFor: #output:!**auto generated**!properties!public! !
+!MSXML.IXSLProcessor categoriesFor: #ownerTemplate!**auto generated**!properties!public! !
+!MSXML.IXSLProcessor categoriesFor: #put_input:!**auto generated**!COM Interfaces-IXSLProcessor!private! !
+!MSXML.IXSLProcessor categoriesFor: #put_output:!**auto generated**!COM Interfaces-IXSLProcessor!private! !
+!MSXML.IXSLProcessor categoriesFor: #readyState!**auto generated**!properties!public! !
+!MSXML.IXSLProcessor categoriesFor: #Reset!**auto generated**!COM Interfaces-IXSLProcessor!public! !
+!MSXML.IXSLProcessor categoriesFor: #setStartMode:!**auto generated**!methods!public! !
+!MSXML.IXSLProcessor categoriesFor: #SetStartMode:namespaceURI:!**auto generated**!COM Interfaces-IXSLProcessor!public! !
+!MSXML.IXSLProcessor categoriesFor: #startMode!**auto generated**!properties!public! !
+!MSXML.IXSLProcessor categoriesFor: #startModeURI!**auto generated**!properties!public! !
+!MSXML.IXSLProcessor categoriesFor: #stylesheet!**auto generated**!properties!public! !
+!MSXML.IXSLProcessor categoriesFor: #transform!**auto generated**!methods!public! !
+!MSXML.IXSLProcessor categoriesFor: #Transform:!**auto generated**!COM Interfaces-IXSLProcessor!private! !
 
-!IXSLProcessor class methodsFor!
+!MSXML.IXSLProcessor class methodsFor!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'MSXML2.IXSLProcessor'
@@ -406,5 +404,5 @@ defineFunctions
 		defineFunction: #get_stylesheet:
 			argumentTypes: 'IXMLDOMNode**'
 ! !
-!IXSLProcessor class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!MSXML.IXSLProcessor class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
 

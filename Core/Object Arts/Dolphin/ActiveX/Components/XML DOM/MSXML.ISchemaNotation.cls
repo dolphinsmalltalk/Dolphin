@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ISchemaItem subclass: #ISchemaNotation
+MSXML.ISchemaItem subclass: #'MSXML.ISchemaNotation'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'MSXMLConstants'
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ISchemaNotation guid: (IID fromString: '{50ea08be-dd1b-4664-9a50-c2f40f4bd79a}')!
-ISchemaNotation comment: '<ISchemaNotation> is a wrapper class for the COM interface ''MSXML2.ISchemaNotation'' generated from type information in the ''Microsoft XML, v4.0'' library. It contains methods to invoke the member functions exposed by that interface.
+MSXML.ISchemaNotation guid: (OS.COM.IID fromString: '{50ea08be-dd1b-4664-9a50-c2f40f4bd79a}')!
+MSXML.ISchemaNotation comment: '<ISchemaNotation> is a wrapper class for the COM interface ''MSXML2.ISchemaNotation'' generated from type information in the ''Microsoft XML, v4.0'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains the following helpstring for this interface
 	"XML Schema Notation"
@@ -33,8 +33,8 @@ interface ISchemaNotation : ISchemaItem
 		[out, retval]BSTR* uri);
 };
 '!
-!ISchemaNotation categoriesForClass!COM-Interfaces!MSXML2-Interfaces! !
-!ISchemaNotation methodsFor!
+!MSXML.ISchemaNotation categoriesForClass!COM-Interfaces!MSXML2-Interfaces! !
+!MSXML.ISchemaNotation methodsFor!
 
 get_publicIdentifier: uri
 	"Private - Get the value of the 'publicIdentifier' property of the receiver.
@@ -71,12 +71,12 @@ systemIdentifier
 	self get_systemIdentifier: answer.
 	^answer asObject
 ! !
-!ISchemaNotation categoriesFor: #get_publicIdentifier:!**auto generated**!COM Interfaces-ISchemaNotation!private! !
-!ISchemaNotation categoriesFor: #get_systemIdentifier:!**auto generated**!COM Interfaces-ISchemaNotation!private! !
-!ISchemaNotation categoriesFor: #publicIdentifier!**auto generated**!properties!public! !
-!ISchemaNotation categoriesFor: #systemIdentifier!**auto generated**!properties!public! !
+!MSXML.ISchemaNotation categoriesFor: #get_publicIdentifier:!**auto generated**!COM Interfaces-ISchemaNotation!private! !
+!MSXML.ISchemaNotation categoriesFor: #get_systemIdentifier:!**auto generated**!COM Interfaces-ISchemaNotation!private! !
+!MSXML.ISchemaNotation categoriesFor: #publicIdentifier!**auto generated**!properties!public! !
+!MSXML.ISchemaNotation categoriesFor: #systemIdentifier!**auto generated**!properties!public! !
 
-!ISchemaNotation class methodsFor!
+!MSXML.ISchemaNotation class methodsFor!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'MSXML2.ISchemaNotation'
@@ -88,5 +88,5 @@ defineFunctions
 		defineFunction: #get_publicIdentifier:
 			argumentTypes: 'bstr*'
 ! !
-!ISchemaNotation class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!MSXML.ISchemaNotation class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
 

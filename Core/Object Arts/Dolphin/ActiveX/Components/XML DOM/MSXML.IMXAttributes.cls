@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-IDispatch subclass: #IMXAttributes
+OS.COM.IDispatch subclass: #'MSXML.IMXAttributes'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'MSXMLConstants'
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-IMXAttributes guid: (IID fromString: '{f10d27cc-3ec0-415c-8ed8-77ab1c5e7262}')!
-IMXAttributes comment: '<IMXAttributes> is a wrapper class for the COM interface ''MSXML2.IMXAttributes'' generated from type information in the ''Microsoft XML, v4.0'' library. It contains methods to invoke the member functions exposed by that interface.
+MSXML.IMXAttributes guid: (OS.COM.IID fromString: '{f10d27cc-3ec0-415c-8ed8-77ab1c5e7262}')!
+MSXML.IMXAttributes comment: '<IMXAttributes> is a wrapper class for the COM interface ''MSXML2.IMXAttributes'' generated from type information in the ''Microsoft XML, v4.0'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains the following helpstring for this interface
 	"IMXAttributes interface"
@@ -74,8 +74,8 @@ interface IMXAttributes : IDispatch
 		[in]BSTR strValue);
 };
 '!
-!IMXAttributes categoriesForClass!COM-Interfaces!MSXML2-Interfaces! !
-!IMXAttributes methodsFor!
+!MSXML.IMXAttributes categoriesForClass!COM-Interfaces!MSXML2-Interfaces! !
+!MSXML.IMXAttributes methodsFor!
 
 AddAttribute: strURI strLocalName: strLocalName strQName: strQName strType: strType strValue: strValue
 	"Invoke the addAttribute() method of the COM object.
@@ -226,23 +226,23 @@ SetValue: nIndex strValue: strValue
 
 	<virtual stdcall: hresult 18 sdword bstr>
 	^self invalidCall: _failureCode! !
-!IMXAttributes categoriesFor: #AddAttribute:strLocalName:strQName:strType:strValue:!**auto generated**!COM Interfaces-IMXAttributes!public! !
-!IMXAttributes categoriesFor: #addAttributeFromIndex:nIndex:!**auto generated**!methods!public! !
-!IMXAttributes categoriesFor: #AddAttributeFromIndex:nIndex:!**auto generated**!COM Interfaces-IMXAttributes!private! !
-!IMXAttributes categoriesFor: #Clear!**auto generated**!COM Interfaces-IMXAttributes!public! !
-!IMXAttributes categoriesFor: #isExtensible!**auto generated**!public!testing! !
-!IMXAttributes categoriesFor: #isVBCollection!**auto generated**!public!testing! !
-!IMXAttributes categoriesFor: #RemoveAttribute:!**auto generated**!COM Interfaces-IMXAttributes!public! !
-!IMXAttributes categoriesFor: #SetAttribute:strURI:strLocalName:strQName:strType:strValue:!**auto generated**!COM Interfaces-IMXAttributes!public! !
-!IMXAttributes categoriesFor: #setAttributes:!**auto generated**!methods!public! !
-!IMXAttributes categoriesFor: #SetAttributes:!**auto generated**!COM Interfaces-IMXAttributes!private! !
-!IMXAttributes categoriesFor: #SetLocalName:strLocalName:!**auto generated**!COM Interfaces-IMXAttributes!public! !
-!IMXAttributes categoriesFor: #SetQName:strQName:!**auto generated**!COM Interfaces-IMXAttributes!public! !
-!IMXAttributes categoriesFor: #SetType:strType:!**auto generated**!COM Interfaces-IMXAttributes!public! !
-!IMXAttributes categoriesFor: #SetURI:strURI:!**auto generated**!COM Interfaces-IMXAttributes!public! !
-!IMXAttributes categoriesFor: #SetValue:strValue:!**auto generated**!COM Interfaces-IMXAttributes!public! !
+!MSXML.IMXAttributes categoriesFor: #AddAttribute:strLocalName:strQName:strType:strValue:!**auto generated**!COM Interfaces-IMXAttributes!public! !
+!MSXML.IMXAttributes categoriesFor: #addAttributeFromIndex:nIndex:!**auto generated**!methods!public! !
+!MSXML.IMXAttributes categoriesFor: #AddAttributeFromIndex:nIndex:!**auto generated**!COM Interfaces-IMXAttributes!private! !
+!MSXML.IMXAttributes categoriesFor: #Clear!**auto generated**!COM Interfaces-IMXAttributes!public! !
+!MSXML.IMXAttributes categoriesFor: #isExtensible!**auto generated**!public!testing! !
+!MSXML.IMXAttributes categoriesFor: #isVBCollection!**auto generated**!public!testing! !
+!MSXML.IMXAttributes categoriesFor: #RemoveAttribute:!**auto generated**!COM Interfaces-IMXAttributes!public! !
+!MSXML.IMXAttributes categoriesFor: #SetAttribute:strURI:strLocalName:strQName:strType:strValue:!**auto generated**!COM Interfaces-IMXAttributes!public! !
+!MSXML.IMXAttributes categoriesFor: #setAttributes:!**auto generated**!methods!public! !
+!MSXML.IMXAttributes categoriesFor: #SetAttributes:!**auto generated**!COM Interfaces-IMXAttributes!private! !
+!MSXML.IMXAttributes categoriesFor: #SetLocalName:strLocalName:!**auto generated**!COM Interfaces-IMXAttributes!public! !
+!MSXML.IMXAttributes categoriesFor: #SetQName:strQName:!**auto generated**!COM Interfaces-IMXAttributes!public! !
+!MSXML.IMXAttributes categoriesFor: #SetType:strType:!**auto generated**!COM Interfaces-IMXAttributes!public! !
+!MSXML.IMXAttributes categoriesFor: #SetURI:strURI:!**auto generated**!COM Interfaces-IMXAttributes!public! !
+!MSXML.IMXAttributes categoriesFor: #SetValue:strValue:!**auto generated**!COM Interfaces-IMXAttributes!public! !
 
-!IMXAttributes class methodsFor!
+!MSXML.IMXAttributes class methodsFor!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'MSXML2.IMXAttributes'
@@ -295,9 +295,9 @@ newSAXAttributes60
 
 	^self onCLSID: (CLSID fromString: '{88D96A0E-F192-11D4-A65F-0040963251E5}')
 ! !
-!IMXAttributes class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
-!IMXAttributes class categoriesFor: #newSAXAttributes!**auto generated**!instance creation!public! !
-!IMXAttributes class categoriesFor: #newSAXAttributes30!**auto generated**!instance creation!public! !
-!IMXAttributes class categoriesFor: #newSAXAttributes40!**auto generated**!instance creation!public! !
-!IMXAttributes class categoriesFor: #newSAXAttributes60!**auto generated**!instance creation!public! !
+!MSXML.IMXAttributes class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!MSXML.IMXAttributes class categoriesFor: #newSAXAttributes!**auto generated**!instance creation!public! !
+!MSXML.IMXAttributes class categoriesFor: #newSAXAttributes30!**auto generated**!instance creation!public! !
+!MSXML.IMXAttributes class categoriesFor: #newSAXAttributes40!**auto generated**!instance creation!public! !
+!MSXML.IMXAttributes class categoriesFor: #newSAXAttributes60!**auto generated**!instance creation!public! !
 

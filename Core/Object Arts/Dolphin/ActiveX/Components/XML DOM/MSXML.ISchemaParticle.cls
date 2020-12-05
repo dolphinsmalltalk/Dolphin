@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ISchemaItem subclass: #ISchemaParticle
+MSXML.ISchemaItem subclass: #'MSXML.ISchemaParticle'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'MSXMLConstants'
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ISchemaParticle guid: (IID fromString: '{50ea08b5-dd1b-4664-9a50-c2f40f4bd79a}')!
-ISchemaParticle comment: '<ISchemaParticle> is a wrapper class for the COM interface ''MSXML2.ISchemaParticle'' generated from type information in the ''Microsoft XML, v4.0'' library. It contains methods to invoke the member functions exposed by that interface.
+MSXML.ISchemaParticle guid: (OS.COM.IID fromString: '{50ea08b5-dd1b-4664-9a50-c2f40f4bd79a}')!
+MSXML.ISchemaParticle comment: '<ISchemaParticle> is a wrapper class for the COM interface ''MSXML2.ISchemaParticle'' generated from type information in the ''Microsoft XML, v4.0'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains the following helpstring for this interface
 	"XML Schema Particle"
@@ -33,8 +33,8 @@ interface ISchemaParticle : ISchemaItem
 		[out, retval]VARIANT* maxOccurs);
 };
 '!
-!ISchemaParticle categoriesForClass!COM-Interfaces!MSXML2-Interfaces! !
-!ISchemaParticle methodsFor!
+!MSXML.ISchemaParticle categoriesForClass!COM-Interfaces!MSXML2-Interfaces! !
+!MSXML.ISchemaParticle methodsFor!
 
 get_maxOccurs: maxOccurs
 	"Private - Get the value of the 'maxOccurs' property of the receiver.
@@ -71,12 +71,12 @@ minOccurs
 	self get_minOccurs: answer.
 	^answer asObject
 ! !
-!ISchemaParticle categoriesFor: #get_maxOccurs:!**auto generated**!COM Interfaces-ISchemaParticle!private! !
-!ISchemaParticle categoriesFor: #get_minOccurs:!**auto generated**!COM Interfaces-ISchemaParticle!private! !
-!ISchemaParticle categoriesFor: #maxOccurs!**auto generated**!properties!public! !
-!ISchemaParticle categoriesFor: #minOccurs!**auto generated**!properties!public! !
+!MSXML.ISchemaParticle categoriesFor: #get_maxOccurs:!**auto generated**!COM Interfaces-ISchemaParticle!private! !
+!MSXML.ISchemaParticle categoriesFor: #get_minOccurs:!**auto generated**!COM Interfaces-ISchemaParticle!private! !
+!MSXML.ISchemaParticle categoriesFor: #maxOccurs!**auto generated**!properties!public! !
+!MSXML.ISchemaParticle categoriesFor: #minOccurs!**auto generated**!properties!public! !
 
-!ISchemaParticle class methodsFor!
+!MSXML.ISchemaParticle class methodsFor!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'MSXML2.ISchemaParticle'
@@ -88,5 +88,5 @@ defineFunctions
 		defineFunction: #get_maxOccurs:
 			argumentTypes: 'variant*'
 ! !
-!ISchemaParticle class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!MSXML.ISchemaParticle class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
 

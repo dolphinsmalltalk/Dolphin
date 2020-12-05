@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-IXMLDOMParseError subclass: #IXMLDOMParseError2
+MSXML.IXMLDOMParseError subclass: #'MSXML.IXMLDOMParseError2'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'MSXMLConstants'
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-IXMLDOMParseError2 guid: (IID fromString: '{3efaa428-272f-11d2-836f-0000f87a7782}')!
-IXMLDOMParseError2 comment: '<IXMLDOMParseError2> is a wrapper class for the COM interface ''MSXML2.IXMLDOMParseError2'' generated from type information in the ''Microsoft XML, v6.0'' library. It contains methods to invoke the member functions exposed by that interface.
+MSXML.IXMLDOMParseError2 guid: (OS.COM.IID fromString: '{3efaa428-272f-11d2-836f-0000f87a7782}')!
+MSXML.IXMLDOMParseError2 comment: '<IXMLDOMParseError2> is a wrapper class for the COM interface ''MSXML2.IXMLDOMParseError2'' generated from type information in the ''Microsoft XML, v6.0'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains the following helpstring for this interface
 	"structure for reporting parser errors"
@@ -40,8 +40,8 @@ interface IXMLDOMParseError2 : IXMLDOMParseError
 		[out, retval]long* count);
 };
 '!
-!IXMLDOMParseError2 categoriesForClass!COM-Interfaces!MSXML2-Interfaces! !
-!IXMLDOMParseError2 methodsFor!
+!MSXML.IXMLDOMParseError2 categoriesForClass!COM-Interfaces!MSXML2-Interfaces! !
+!MSXML.IXMLDOMParseError2 methodsFor!
 
 allErrors
 	"Answer the <IXMLDOMParseErrorCollection> value of the 'allErrors' property of the receiver."
@@ -49,8 +49,7 @@ allErrors
 	| answer |
 	answer := IXMLDOMParseErrorCollection newPointer.
 	self get_allErrors: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 errorParameters: index
 	"Answer the <BSTR> result of invoking the errorParameters() method of the COM object."
@@ -117,16 +116,16 @@ get_errorXPath: xpathexpr
 
 	<virtual stdcall: hresult 15 bstr*>
 	^self invalidCall: _failureCode! !
-!IXMLDOMParseError2 categoriesFor: #allErrors!**auto generated**!properties!public! !
-!IXMLDOMParseError2 categoriesFor: #errorParameters:!**auto generated**!methods!public! !
-!IXMLDOMParseError2 categoriesFor: #ErrorParameters:param:!**auto generated**!COM Interfaces-IXMLDOMParseError2!private! !
-!IXMLDOMParseError2 categoriesFor: #errorParametersCount!**auto generated**!properties!public! !
-!IXMLDOMParseError2 categoriesFor: #errorXPath!**auto generated**!properties!public! !
-!IXMLDOMParseError2 categoriesFor: #get_allErrors:!**auto generated**!COM Interfaces-IXMLDOMParseError2!private! !
-!IXMLDOMParseError2 categoriesFor: #get_errorParametersCount:!**auto generated**!COM Interfaces-IXMLDOMParseError2!private! !
-!IXMLDOMParseError2 categoriesFor: #get_errorXPath:!**auto generated**!COM Interfaces-IXMLDOMParseError2!private! !
+!MSXML.IXMLDOMParseError2 categoriesFor: #allErrors!**auto generated**!properties!public! !
+!MSXML.IXMLDOMParseError2 categoriesFor: #errorParameters:!**auto generated**!methods!public! !
+!MSXML.IXMLDOMParseError2 categoriesFor: #ErrorParameters:param:!**auto generated**!COM Interfaces-IXMLDOMParseError2!private! !
+!MSXML.IXMLDOMParseError2 categoriesFor: #errorParametersCount!**auto generated**!properties!public! !
+!MSXML.IXMLDOMParseError2 categoriesFor: #errorXPath!**auto generated**!properties!public! !
+!MSXML.IXMLDOMParseError2 categoriesFor: #get_allErrors:!**auto generated**!COM Interfaces-IXMLDOMParseError2!private! !
+!MSXML.IXMLDOMParseError2 categoriesFor: #get_errorParametersCount:!**auto generated**!COM Interfaces-IXMLDOMParseError2!private! !
+!MSXML.IXMLDOMParseError2 categoriesFor: #get_errorXPath:!**auto generated**!COM Interfaces-IXMLDOMParseError2!private! !
 
-!IXMLDOMParseError2 class methodsFor!
+!MSXML.IXMLDOMParseError2 class methodsFor!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'MSXML2.IXMLDOMParseError2'
@@ -142,5 +141,5 @@ defineFunctions
 		defineFunction: #get_errorParametersCount:
 			argumentTypes: 'sdword*'
 ! !
-!IXMLDOMParseError2 class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!MSXML.IXMLDOMParseError2 class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
 

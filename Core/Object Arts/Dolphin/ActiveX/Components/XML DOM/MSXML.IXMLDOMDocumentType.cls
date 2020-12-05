@@ -1,17 +1,17 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-IXMLDOMNode subclass: #IXMLDOMDocumentType
+MSXML.IXMLDOMNode subclass: #'MSXML.IXMLDOMDocumentType'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'MSXMLConstants'
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-IXMLDOMDocumentType guid: (IID fromString: '{2933bf8b-7b36-11d2-b20e-00c04f983e60}')!
-IXMLDOMDocumentType comment: '<IXMLDOMDocumentType> is a wrapper class for the COM interface ''MSXML.IXMLDOMDocumentType'' generated from type information in the ''Microsoft XML, version 2.0'' library. It contains methods to invoke the member functions exposed by that interface.
+MSXML.IXMLDOMDocumentType guid: (OS.COM.IID fromString: '{2933bf8b-7b36-11d2-b20e-00c04f983e60}')!
+MSXML.IXMLDOMDocumentType comment: '<IXMLDOMDocumentType> is a wrapper class for the COM interface ''MSXML.IXMLDOMDocumentType'' generated from type information in the ''Microsoft XML, version 2.0'' library. It contains methods to invoke the member functions exposed by that interface.
 
 This is a specialized DOM node to represent document type declarations.'!
-!IXMLDOMDocumentType categoriesForClass!COM-Interfaces!MSXML-Interfaces! !
-!IXMLDOMDocumentType methodsFor!
+!MSXML.IXMLDOMDocumentType categoriesForClass!COM-Interfaces!MSXML-Interfaces! !
+!MSXML.IXMLDOMDocumentType methodsFor!
 
 entities
 	"Answer the <IXMLDOMNamedNodeMap> value of the 'entities' property of the receiver.
@@ -71,14 +71,14 @@ notations
 	answer := IXMLDOMNamedNodeMap newPointer.
 	self get_notations: answer.
 	^DOMNotationsMap onInterface: answer parentNode: self! !
-!IXMLDOMDocumentType categoriesFor: #entities!properties!public! !
-!IXMLDOMDocumentType categoriesFor: #get_entities:!**auto generated**!COM Interfaces-IXMLDOMDocumentType!private! !
-!IXMLDOMDocumentType categoriesFor: #get_name:!**auto generated**!COM Interfaces-IXMLDOMDocumentType!private! !
-!IXMLDOMDocumentType categoriesFor: #get_notations:!**auto generated**!COM Interfaces-IXMLDOMDocumentType!private! !
-!IXMLDOMDocumentType categoriesFor: #name!**auto generated**!properties!public! !
-!IXMLDOMDocumentType categoriesFor: #notations!properties!public! !
+!MSXML.IXMLDOMDocumentType categoriesFor: #entities!properties!public! !
+!MSXML.IXMLDOMDocumentType categoriesFor: #get_entities:!**auto generated**!COM Interfaces-IXMLDOMDocumentType!private! !
+!MSXML.IXMLDOMDocumentType categoriesFor: #get_name:!**auto generated**!COM Interfaces-IXMLDOMDocumentType!private! !
+!MSXML.IXMLDOMDocumentType categoriesFor: #get_notations:!**auto generated**!COM Interfaces-IXMLDOMDocumentType!private! !
+!MSXML.IXMLDOMDocumentType categoriesFor: #name!**auto generated**!properties!public! !
+!MSXML.IXMLDOMDocumentType categoriesFor: #notations!properties!public! !
 
-!IXMLDOMDocumentType class methodsFor!
+!MSXML.IXMLDOMDocumentType class methodsFor!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'MSXML2.IXMLDOMDocumentType'
@@ -92,5 +92,5 @@ defineFunctions
 		defineFunction: #get_notations:
 			argumentTypes: 'IXMLDOMNamedNodeMap**'
 ! !
-!IXMLDOMDocumentType class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!MSXML.IXMLDOMDocumentType class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
 

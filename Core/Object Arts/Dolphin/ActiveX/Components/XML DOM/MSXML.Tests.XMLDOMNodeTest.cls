@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Core.Tests.DolphinTest subclass: #XMLDOMNodeTest
+Core.Tests.DolphinTest subclass: #'MSXML.Tests.XMLDOMNodeTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-XMLDOMNodeTest guid: (Core.GUID fromString: '{956b7839-a2fb-47f1-9c74-2aacae4bdffb}')!
-XMLDOMNodeTest comment: ''!
-!XMLDOMNodeTest categoriesForClass!Unclassified! !
-!XMLDOMNodeTest methodsFor!
+MSXML.Tests.XMLDOMNodeTest guid: (Core.GUID fromString: '{956b7839-a2fb-47f1-9c74-2aacae4bdffb}')!
+MSXML.Tests.XMLDOMNodeTest comment: ''!
+!MSXML.Tests.XMLDOMNodeTest categoriesForClass!Unclassified! !
+!MSXML.Tests.XMLDOMNodeTest methodsFor!
 
 testDisplayOn
 	| elem |
@@ -43,7 +43,7 @@ testSetNodeTypeAndValue
 	elem setNodeTypeAndValue: false.
 	self assert: elem dataType equals: 'boolean'.
 	self assert: elem nodeTypedValue not! !
-!XMLDOMNodeTest categoriesFor: #testDisplayOn!public!unit tests! !
-!XMLDOMNodeTest categoriesFor: #testDownCast!public!unit tests! !
-!XMLDOMNodeTest categoriesFor: #testSetNodeTypeAndValue!public!unit tests! !
+!MSXML.Tests.XMLDOMNodeTest categoriesFor: #testDisplayOn!public!unit tests! !
+!MSXML.Tests.XMLDOMNodeTest categoriesFor: #testDownCast!public!unit tests! !
+!MSXML.Tests.XMLDOMNodeTest categoriesFor: #testSetNodeTypeAndValue!public!unit tests! !
 

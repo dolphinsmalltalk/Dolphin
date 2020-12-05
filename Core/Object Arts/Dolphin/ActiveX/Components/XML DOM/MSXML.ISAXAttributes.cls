@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-IUnknown subclass: #ISAXAttributes
+OS.COM.IUnknown subclass: #'MSXML.ISAXAttributes'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'MSXMLConstants'
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ISAXAttributes guid: (IID fromString: '{f078abe1-45d2-4832-91ea-4466ce2f25c9}')!
-ISAXAttributes comment: '<ISAXAttributes> is a wrapper class for the COM interface ''MSXML2.ISAXAttributes'' generated from type information in the ''Microsoft XML, v4.0'' library. It contains methods to invoke the member functions exposed by that interface.
+MSXML.ISAXAttributes guid: (OS.COM.IID fromString: '{f078abe1-45d2-4832-91ea-4466ce2f25c9}')!
+MSXML.ISAXAttributes comment: '<ISAXAttributes> is a wrapper class for the COM interface ''MSXML2.ISAXAttributes'' generated from type information in the ''Microsoft XML, v4.0'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains the following helpstring for this interface
 	"ISAXAttributes interface"
@@ -103,8 +103,8 @@ interface ISAXAttributes : IUnknown
 		[out]int* pcchValue);
 };
 '!
-!ISAXAttributes categoriesForClass!COM-Interfaces!MSXML2-Interfaces! !
-!ISAXAttributes methodsFor!
+!MSXML.ISAXAttributes categoriesForClass!COM-Interfaces!MSXML2-Interfaces! !
+!MSXML.ISAXAttributes methodsFor!
 
 getIndexFromName: pwchUri cchUri: cchUri pwchLocalName: pwchLocalName cchLocalName: cchLocalName
 	"Answer the <SDWORD> result of invoking the getIndexFromName() method of the COM object."
@@ -179,7 +179,7 @@ getLocalName: nIndex
 
 	| answer |
 	answer := (Array new: 2)
-				basicAt: 1 put: (WORD newBufferClass: COMTaskMemory);
+				basicAt: 1 put: (WORD newBufferClass: TaskMemory);
 				basicAt: 2 put: (SDWORD new);
 				yourself.
 	self
@@ -205,11 +205,11 @@ getName: nIndex
 
 	| answer |
 	answer := (Array new: 6)
-				basicAt: 1 put: (WORD newBufferClass: COMTaskMemory);
+				basicAt: 1 put: (WORD newBufferClass: TaskMemory);
 				basicAt: 2 put: (SDWORD new);
-				basicAt: 3 put: (WORD newBufferClass: COMTaskMemory);
+				basicAt: 3 put: (WORD newBufferClass: TaskMemory);
 				basicAt: 4 put: (SDWORD new);
-				basicAt: 5 put: (WORD newBufferClass: COMTaskMemory);
+				basicAt: 5 put: (WORD newBufferClass: TaskMemory);
 				basicAt: 6 put: (SDWORD new);
 				yourself.
 	self
@@ -243,7 +243,7 @@ getQName: nIndex
 
 	| answer |
 	answer := (Array new: 2)
-				basicAt: 1 put: (WORD newBufferClass: COMTaskMemory);
+				basicAt: 1 put: (WORD newBufferClass: TaskMemory);
 				basicAt: 2 put: (SDWORD new);
 				yourself.
 	self
@@ -269,7 +269,7 @@ getType: nIndex
 
 	| answer |
 	answer := (Array new: 2)
-				basicAt: 1 put: (WORD newBufferClass: COMTaskMemory);
+				basicAt: 1 put: (WORD newBufferClass: TaskMemory);
 				basicAt: 2 put: (SDWORD new);
 				yourself.
 	self
@@ -295,7 +295,7 @@ getTypeFromName: pwchUri cchUri: cchUri pwchLocalName: pwchLocalName cchLocalNam
 
 	| answer |
 	answer := (Array new: 2)
-				basicAt: 1 put: (WORD newBufferClass: COMTaskMemory);
+				basicAt: 1 put: (WORD newBufferClass: TaskMemory);
 				basicAt: 2 put: (SDWORD new);
 				yourself.
 	self
@@ -327,7 +327,7 @@ getTypeFromQName: pwchQName cchQName: cchQName
 
 	| answer |
 	answer := (Array new: 2)
-				basicAt: 1 put: (WORD newBufferClass: COMTaskMemory);
+				basicAt: 1 put: (WORD newBufferClass: TaskMemory);
 				basicAt: 2 put: (SDWORD new);
 				yourself.
 	self
@@ -355,7 +355,7 @@ getURI: nIndex
 
 	| answer |
 	answer := (Array new: 2)
-				basicAt: 1 put: (WORD newBufferClass: COMTaskMemory);
+				basicAt: 1 put: (WORD newBufferClass: TaskMemory);
 				basicAt: 2 put: (SDWORD new);
 				yourself.
 	self
@@ -381,7 +381,7 @@ getValue: nIndex
 
 	| answer |
 	answer := (Array new: 2)
-				basicAt: 1 put: (WORD newBufferClass: COMTaskMemory);
+				basicAt: 1 put: (WORD newBufferClass: TaskMemory);
 				basicAt: 2 put: (SDWORD new);
 				yourself.
 	self
@@ -407,7 +407,7 @@ getValueFromName: pwchUri cchUri: cchUri pwchLocalName: pwchLocalName cchLocalNa
 
 	| answer |
 	answer := (Array new: 2)
-				basicAt: 1 put: (WORD newBufferClass: COMTaskMemory);
+				basicAt: 1 put: (WORD newBufferClass: TaskMemory);
 				basicAt: 2 put: (SDWORD new);
 				yourself.
 	self
@@ -439,7 +439,7 @@ getValueFromQName: pwchQName cchQName: cchQName
 
 	| answer |
 	answer := (Array new: 2)
-				basicAt: 1 put: (WORD newBufferClass: COMTaskMemory);
+				basicAt: 1 put: (WORD newBufferClass: TaskMemory);
 				basicAt: 2 put: (SDWORD new);
 				yourself.
 	self
@@ -461,34 +461,34 @@ GetValueFromQName: pwchQName cchQName: cchQName ppwchValue: ppwchValue pcchValue
 
 	<virtual stdcall: hresult 16 word* sdword word** sdword*>
 	^self invalidCall: _failureCode! !
-!ISAXAttributes categoriesFor: #getIndexFromName:cchUri:pwchLocalName:cchLocalName:!**auto generated**!methods!public! !
-!ISAXAttributes categoriesFor: #GetIndexFromName:cchUri:pwchLocalName:cchLocalName:pnIndex:!**auto generated**!COM Interfaces-ISAXAttributes!private! !
-!ISAXAttributes categoriesFor: #getIndexFromQName:cchQName:!**auto generated**!methods!public! !
-!ISAXAttributes categoriesFor: #GetIndexFromQName:cchQName:pnIndex:!**auto generated**!COM Interfaces-ISAXAttributes!private! !
-!ISAXAttributes categoriesFor: #getLength!**auto generated**!methods!public! !
-!ISAXAttributes categoriesFor: #GetLength:!**auto generated**!COM Interfaces-ISAXAttributes!private! !
-!ISAXAttributes categoriesFor: #getLocalName:!**auto generated**!methods!public! !
-!ISAXAttributes categoriesFor: #GetLocalName:ppwchLocalName:pcchLocalName:!**auto generated**!COM Interfaces-ISAXAttributes!private! !
-!ISAXAttributes categoriesFor: #getName:!**auto generated**!methods!public! !
-!ISAXAttributes categoriesFor: #GetName:ppwchUri:pcchUri:ppwchLocalName:pcchLocalName:ppwchQName:pcchQName:!**auto generated**!COM Interfaces-ISAXAttributes!private! !
-!ISAXAttributes categoriesFor: #getQName:!**auto generated**!methods!public! !
-!ISAXAttributes categoriesFor: #GetQName:ppwchQName:pcchQName:!**auto generated**!COM Interfaces-ISAXAttributes!private! !
-!ISAXAttributes categoriesFor: #getType:!**auto generated**!methods!public! !
-!ISAXAttributes categoriesFor: #GetType:ppwchType:pcchType:!**auto generated**!COM Interfaces-ISAXAttributes!private! !
-!ISAXAttributes categoriesFor: #getTypeFromName:cchUri:pwchLocalName:cchLocalName:!**auto generated**!methods!public! !
-!ISAXAttributes categoriesFor: #GetTypeFromName:cchUri:pwchLocalName:cchLocalName:ppwchType:pcchType:!**auto generated**!COM Interfaces-ISAXAttributes!private! !
-!ISAXAttributes categoriesFor: #getTypeFromQName:cchQName:!**auto generated**!methods!public! !
-!ISAXAttributes categoriesFor: #GetTypeFromQName:cchQName:ppwchType:pcchType:!**auto generated**!COM Interfaces-ISAXAttributes!private! !
-!ISAXAttributes categoriesFor: #getURI:!**auto generated**!methods!public! !
-!ISAXAttributes categoriesFor: #GetURI:ppwchUri:pcchUri:!**auto generated**!COM Interfaces-ISAXAttributes!private! !
-!ISAXAttributes categoriesFor: #getValue:!**auto generated**!methods!public! !
-!ISAXAttributes categoriesFor: #GetValue:ppwchValue:pcchValue:!**auto generated**!COM Interfaces-ISAXAttributes!private! !
-!ISAXAttributes categoriesFor: #getValueFromName:cchUri:pwchLocalName:cchLocalName:!**auto generated**!methods!public! !
-!ISAXAttributes categoriesFor: #GetValueFromName:cchUri:pwchLocalName:cchLocalName:ppwchValue:pcchValue:!**auto generated**!COM Interfaces-ISAXAttributes!private! !
-!ISAXAttributes categoriesFor: #getValueFromQName:cchQName:!**auto generated**!methods!public! !
-!ISAXAttributes categoriesFor: #GetValueFromQName:cchQName:ppwchValue:pcchValue:!**auto generated**!COM Interfaces-ISAXAttributes!private! !
+!MSXML.ISAXAttributes categoriesFor: #getIndexFromName:cchUri:pwchLocalName:cchLocalName:!**auto generated**!methods!public! !
+!MSXML.ISAXAttributes categoriesFor: #GetIndexFromName:cchUri:pwchLocalName:cchLocalName:pnIndex:!**auto generated**!COM Interfaces-ISAXAttributes!private! !
+!MSXML.ISAXAttributes categoriesFor: #getIndexFromQName:cchQName:!**auto generated**!methods!public! !
+!MSXML.ISAXAttributes categoriesFor: #GetIndexFromQName:cchQName:pnIndex:!**auto generated**!COM Interfaces-ISAXAttributes!private! !
+!MSXML.ISAXAttributes categoriesFor: #getLength!**auto generated**!methods!public! !
+!MSXML.ISAXAttributes categoriesFor: #GetLength:!**auto generated**!COM Interfaces-ISAXAttributes!private! !
+!MSXML.ISAXAttributes categoriesFor: #getLocalName:!**auto generated**!methods!public! !
+!MSXML.ISAXAttributes categoriesFor: #GetLocalName:ppwchLocalName:pcchLocalName:!**auto generated**!COM Interfaces-ISAXAttributes!private! !
+!MSXML.ISAXAttributes categoriesFor: #getName:!**auto generated**!methods!public! !
+!MSXML.ISAXAttributes categoriesFor: #GetName:ppwchUri:pcchUri:ppwchLocalName:pcchLocalName:ppwchQName:pcchQName:!**auto generated**!COM Interfaces-ISAXAttributes!private! !
+!MSXML.ISAXAttributes categoriesFor: #getQName:!**auto generated**!methods!public! !
+!MSXML.ISAXAttributes categoriesFor: #GetQName:ppwchQName:pcchQName:!**auto generated**!COM Interfaces-ISAXAttributes!private! !
+!MSXML.ISAXAttributes categoriesFor: #getType:!**auto generated**!methods!public! !
+!MSXML.ISAXAttributes categoriesFor: #GetType:ppwchType:pcchType:!**auto generated**!COM Interfaces-ISAXAttributes!private! !
+!MSXML.ISAXAttributes categoriesFor: #getTypeFromName:cchUri:pwchLocalName:cchLocalName:!**auto generated**!methods!public! !
+!MSXML.ISAXAttributes categoriesFor: #GetTypeFromName:cchUri:pwchLocalName:cchLocalName:ppwchType:pcchType:!**auto generated**!COM Interfaces-ISAXAttributes!private! !
+!MSXML.ISAXAttributes categoriesFor: #getTypeFromQName:cchQName:!**auto generated**!methods!public! !
+!MSXML.ISAXAttributes categoriesFor: #GetTypeFromQName:cchQName:ppwchType:pcchType:!**auto generated**!COM Interfaces-ISAXAttributes!private! !
+!MSXML.ISAXAttributes categoriesFor: #getURI:!**auto generated**!methods!public! !
+!MSXML.ISAXAttributes categoriesFor: #GetURI:ppwchUri:pcchUri:!**auto generated**!COM Interfaces-ISAXAttributes!private! !
+!MSXML.ISAXAttributes categoriesFor: #getValue:!**auto generated**!methods!public! !
+!MSXML.ISAXAttributes categoriesFor: #GetValue:ppwchValue:pcchValue:!**auto generated**!COM Interfaces-ISAXAttributes!private! !
+!MSXML.ISAXAttributes categoriesFor: #getValueFromName:cchUri:pwchLocalName:cchLocalName:!**auto generated**!methods!public! !
+!MSXML.ISAXAttributes categoriesFor: #GetValueFromName:cchUri:pwchLocalName:cchLocalName:ppwchValue:pcchValue:!**auto generated**!COM Interfaces-ISAXAttributes!private! !
+!MSXML.ISAXAttributes categoriesFor: #getValueFromQName:cchQName:!**auto generated**!methods!public! !
+!MSXML.ISAXAttributes categoriesFor: #GetValueFromQName:cchQName:ppwchValue:pcchValue:!**auto generated**!COM Interfaces-ISAXAttributes!private! !
 
-!ISAXAttributes class methodsFor!
+!MSXML.ISAXAttributes class methodsFor!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'MSXML2.ISAXAttributes'
@@ -522,5 +522,5 @@ defineFunctions
 		defineFunction: #GetValueFromQName:cchQName:ppwchValue:pcchValue:
 			argumentTypes: 'word* sdword word** sdword*'
 ! !
-!ISAXAttributes class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!MSXML.ISAXAttributes class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
 

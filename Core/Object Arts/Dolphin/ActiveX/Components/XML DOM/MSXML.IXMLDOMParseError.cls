@@ -1,17 +1,17 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-IDispatch subclass: #IXMLDOMParseError
+OS.COM.IDispatch subclass: #'MSXML.IXMLDOMParseError'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'MSXMLConstants'
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-IXMLDOMParseError guid: (IID fromString: '{3efaa426-272f-11d2-836f-0000f87a7782}')!
-IXMLDOMParseError comment: '<IXMLDOMParseError> is a wrapper class for the COM interface ''MSXML.IXMLDOMParseError'' generated from type information in the ''Microsoft XML, version 2.0'' library. It contains methods to invoke the member functions exposed by that interface.
+MSXML.IXMLDOMParseError guid: (OS.COM.IID fromString: '{3efaa426-272f-11d2-836f-0000f87a7782}')!
+MSXML.IXMLDOMParseError comment: '<IXMLDOMParseError> is a wrapper class for the COM interface ''MSXML.IXMLDOMParseError'' generated from type information in the ''Microsoft XML, version 2.0'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The underlying COM object which exposes this interface is effectively a simple data object that encapsulates detailed information about parse errors detected by the XML parser.'!
-!IXMLDOMParseError categoriesForClass!COM-Interfaces!MSXML-Interfaces! !
-!IXMLDOMParseError methodsFor!
+!MSXML.IXMLDOMParseError categoriesForClass!COM-Interfaces!MSXML-Interfaces! !
+!MSXML.IXMLDOMParseError methodsFor!
 
 displayOn: aPuttableStream
 	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that an end-user might want to see."
@@ -177,26 +177,26 @@ value
 
 	^self errorCode
 ! !
-!IXMLDOMParseError categoriesFor: #displayOn:!printing!public! !
-!IXMLDOMParseError categoriesFor: #errorCode!**auto generated**!properties!public! !
-!IXMLDOMParseError categoriesFor: #filepos!**auto generated**!properties!public! !
-!IXMLDOMParseError categoriesFor: #get_errorCode:!**auto generated**!COM Interfaces-IXMLDOMParseError!private! !
-!IXMLDOMParseError categoriesFor: #get_filepos:!**auto generated**!COM Interfaces-IXMLDOMParseError!private! !
-!IXMLDOMParseError categoriesFor: #get_line:!**auto generated**!COM Interfaces-IXMLDOMParseError!private! !
-!IXMLDOMParseError categoriesFor: #get_linepos:!**auto generated**!COM Interfaces-IXMLDOMParseError!private! !
-!IXMLDOMParseError categoriesFor: #get_reason:!**auto generated**!COM Interfaces-IXMLDOMParseError!private! !
-!IXMLDOMParseError categoriesFor: #get_srcText:!**auto generated**!COM Interfaces-IXMLDOMParseError!private! !
-!IXMLDOMParseError categoriesFor: #get_url:!**auto generated**!COM Interfaces-IXMLDOMParseError!private! !
-!IXMLDOMParseError categoriesFor: #isExtensible!**auto generated**!public!testing! !
-!IXMLDOMParseError categoriesFor: #isVBCollection!**auto generated**!public!testing! !
-!IXMLDOMParseError categoriesFor: #line!**auto generated**!properties!public! !
-!IXMLDOMParseError categoriesFor: #linepos!**auto generated**!properties!public! !
-!IXMLDOMParseError categoriesFor: #reason!**auto generated**!properties!public! !
-!IXMLDOMParseError categoriesFor: #srcText!**auto generated**!properties!public! !
-!IXMLDOMParseError categoriesFor: #url!**auto generated**!properties!public! !
-!IXMLDOMParseError categoriesFor: #value!**auto generated**!properties!public! !
+!MSXML.IXMLDOMParseError categoriesFor: #displayOn:!printing!public! !
+!MSXML.IXMLDOMParseError categoriesFor: #errorCode!**auto generated**!properties!public! !
+!MSXML.IXMLDOMParseError categoriesFor: #filepos!**auto generated**!properties!public! !
+!MSXML.IXMLDOMParseError categoriesFor: #get_errorCode:!**auto generated**!COM Interfaces-IXMLDOMParseError!private! !
+!MSXML.IXMLDOMParseError categoriesFor: #get_filepos:!**auto generated**!COM Interfaces-IXMLDOMParseError!private! !
+!MSXML.IXMLDOMParseError categoriesFor: #get_line:!**auto generated**!COM Interfaces-IXMLDOMParseError!private! !
+!MSXML.IXMLDOMParseError categoriesFor: #get_linepos:!**auto generated**!COM Interfaces-IXMLDOMParseError!private! !
+!MSXML.IXMLDOMParseError categoriesFor: #get_reason:!**auto generated**!COM Interfaces-IXMLDOMParseError!private! !
+!MSXML.IXMLDOMParseError categoriesFor: #get_srcText:!**auto generated**!COM Interfaces-IXMLDOMParseError!private! !
+!MSXML.IXMLDOMParseError categoriesFor: #get_url:!**auto generated**!COM Interfaces-IXMLDOMParseError!private! !
+!MSXML.IXMLDOMParseError categoriesFor: #isExtensible!**auto generated**!public!testing! !
+!MSXML.IXMLDOMParseError categoriesFor: #isVBCollection!**auto generated**!public!testing! !
+!MSXML.IXMLDOMParseError categoriesFor: #line!**auto generated**!properties!public! !
+!MSXML.IXMLDOMParseError categoriesFor: #linepos!**auto generated**!properties!public! !
+!MSXML.IXMLDOMParseError categoriesFor: #reason!**auto generated**!properties!public! !
+!MSXML.IXMLDOMParseError categoriesFor: #srcText!**auto generated**!properties!public! !
+!MSXML.IXMLDOMParseError categoriesFor: #url!**auto generated**!properties!public! !
+!MSXML.IXMLDOMParseError categoriesFor: #value!**auto generated**!properties!public! !
 
-!IXMLDOMParseError class methodsFor!
+!MSXML.IXMLDOMParseError class methodsFor!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'MSXML2.IXMLDOMParseError'
@@ -221,6 +221,6 @@ defineFunctions
 
 icon
 	^Error icon! !
-!IXMLDOMParseError class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
-!IXMLDOMParseError class categoriesFor: #icon!public! !
+!MSXML.IXMLDOMParseError class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!MSXML.IXMLDOMParseError class categoriesFor: #icon!public! !
 

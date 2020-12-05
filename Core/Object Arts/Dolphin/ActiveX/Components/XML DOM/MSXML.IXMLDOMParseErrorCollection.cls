@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-IDispatch subclass: #IXMLDOMParseErrorCollection
+OS.COM.IDispatch subclass: #'MSXML.IXMLDOMParseErrorCollection'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'MSXMLConstants'
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-IXMLDOMParseErrorCollection guid: (IID fromString: '{3efaa429-272f-11d2-836f-0000f87a7782}')!
-IXMLDOMParseErrorCollection comment: '<IXMLDOMParseErrorCollection> is a wrapper class for the COM interface ''MSXML2.IXMLDOMParseErrorCollection'' generated from type information in the ''Microsoft XML, v6.0'' library. It contains methods to invoke the member functions exposed by that interface.
+MSXML.IXMLDOMParseErrorCollection guid: (OS.COM.IID fromString: '{3efaa429-272f-11d2-836f-0000f87a7782}')!
+MSXML.IXMLDOMParseErrorCollection comment: '<IXMLDOMParseErrorCollection> is a wrapper class for the COM interface ''MSXML2.IXMLDOMParseErrorCollection'' generated from type information in the ''Microsoft XML, v6.0'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains the following helpstring for this interface
 	"structure for reporting parser errors"
@@ -42,8 +42,8 @@ interface IXMLDOMParseErrorCollection : IDispatch
 		[out, retval]IUnknown** ppUnk);
 };
 '!
-!IXMLDOMParseErrorCollection categoriesForClass!COM-Interfaces!MSXML2-Interfaces! !
-!IXMLDOMParseErrorCollection methodsFor!
+!MSXML.IXMLDOMParseErrorCollection categoriesForClass!COM-Interfaces!MSXML2-Interfaces! !
+!MSXML.IXMLDOMParseErrorCollection methodsFor!
 
 _newEnum
 	"Answer the <IUnknown> value of the '_newEnum' property of the receiver."
@@ -106,11 +106,8 @@ item: index
 
 	| answer |
 	answer := IXMLDOMParseError2 newPointer.
-	self
-		get_item: index
-		error: answer.
-	^answer asObject
-!
+	self get_item: index error: answer.
+	^answer asObject!
 
 length
 	"Answer the <sdword> value of the 'length' property of the receiver."
@@ -127,8 +124,7 @@ next
 	| answer |
 	answer := IXMLDOMParseError2 newPointer.
 	self get_next: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 Reset
 	"Invoke the reset() method of the COM object.
@@ -137,19 +133,19 @@ Reset
 
 	<virtual stdcall: hresult 11>
 	^self invalidCall: _failureCode! !
-!IXMLDOMParseErrorCollection categoriesFor: #_newEnum!**auto generated**!properties!public! !
-!IXMLDOMParseErrorCollection categoriesFor: #get__newEnum:!**auto generated**!COM Interfaces-IXMLDOMParseErrorCollection!private! !
-!IXMLDOMParseErrorCollection categoriesFor: #get_item:error:!**auto generated**!COM Interfaces-IXMLDOMParseErrorCollection!private! !
-!IXMLDOMParseErrorCollection categoriesFor: #get_length:!**auto generated**!COM Interfaces-IXMLDOMParseErrorCollection!private! !
-!IXMLDOMParseErrorCollection categoriesFor: #get_next:!**auto generated**!COM Interfaces-IXMLDOMParseErrorCollection!private! !
-!IXMLDOMParseErrorCollection categoriesFor: #isExtensible!**auto generated**!public!testing! !
-!IXMLDOMParseErrorCollection categoriesFor: #isVBCollection!**auto generated**!public!testing! !
-!IXMLDOMParseErrorCollection categoriesFor: #item:!**auto generated**!properties!public! !
-!IXMLDOMParseErrorCollection categoriesFor: #length!**auto generated**!properties!public! !
-!IXMLDOMParseErrorCollection categoriesFor: #next!**auto generated**!properties!public! !
-!IXMLDOMParseErrorCollection categoriesFor: #Reset!**auto generated**!COM Interfaces-IXMLDOMParseErrorCollection!public! !
+!MSXML.IXMLDOMParseErrorCollection categoriesFor: #_newEnum!**auto generated**!properties!public! !
+!MSXML.IXMLDOMParseErrorCollection categoriesFor: #get__newEnum:!**auto generated**!COM Interfaces-IXMLDOMParseErrorCollection!private! !
+!MSXML.IXMLDOMParseErrorCollection categoriesFor: #get_item:error:!**auto generated**!COM Interfaces-IXMLDOMParseErrorCollection!private! !
+!MSXML.IXMLDOMParseErrorCollection categoriesFor: #get_length:!**auto generated**!COM Interfaces-IXMLDOMParseErrorCollection!private! !
+!MSXML.IXMLDOMParseErrorCollection categoriesFor: #get_next:!**auto generated**!COM Interfaces-IXMLDOMParseErrorCollection!private! !
+!MSXML.IXMLDOMParseErrorCollection categoriesFor: #isExtensible!**auto generated**!public!testing! !
+!MSXML.IXMLDOMParseErrorCollection categoriesFor: #isVBCollection!**auto generated**!public!testing! !
+!MSXML.IXMLDOMParseErrorCollection categoriesFor: #item:!**auto generated**!properties!public! !
+!MSXML.IXMLDOMParseErrorCollection categoriesFor: #length!**auto generated**!properties!public! !
+!MSXML.IXMLDOMParseErrorCollection categoriesFor: #next!**auto generated**!properties!public! !
+!MSXML.IXMLDOMParseErrorCollection categoriesFor: #Reset!**auto generated**!COM Interfaces-IXMLDOMParseErrorCollection!public! !
 
-!IXMLDOMParseErrorCollection class methodsFor!
+!MSXML.IXMLDOMParseErrorCollection class methodsFor!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'MSXML2.IXMLDOMParseErrorCollection'
@@ -166,5 +162,5 @@ defineFunctions
 		defineFunction: #get__newEnum:
 			argumentTypes: 'IUnknown**'
 ! !
-!IXMLDOMParseErrorCollection class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!MSXML.IXMLDOMParseErrorCollection class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
 

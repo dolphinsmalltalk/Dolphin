@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-IDispatch subclass: #IVBSAXAttributes
+OS.COM.IDispatch subclass: #'MSXML.IVBSAXAttributes'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'MSXMLConstants'
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-IVBSAXAttributes guid: (IID fromString: '{10dc0586-132b-4cac-8bb3-db00ac8b7ee0}')!
-IVBSAXAttributes comment: '<IVBSAXAttributes> is a wrapper class for the COM interface ''MSXML2.IVBSAXAttributes'' generated from type information in the ''Microsoft XML, v4.0'' library. It contains methods to invoke the member functions exposed by that interface.
+MSXML.IVBSAXAttributes guid: (OS.COM.IID fromString: '{10dc0586-132b-4cac-8bb3-db00ac8b7ee0}')!
+MSXML.IVBSAXAttributes comment: '<IVBSAXAttributes> is a wrapper class for the COM interface ''MSXML2.IVBSAXAttributes'' generated from type information in the ''Microsoft XML, v4.0'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains the following helpstring for this interface
 	"IVBSAXAttributes interface"
@@ -77,8 +77,8 @@ interface IVBSAXAttributes : IDispatch
 		[out, retval]BSTR* strValue);
 };
 '!
-!IVBSAXAttributes categoriesForClass!COM-Interfaces!MSXML2-Interfaces! !
-!IVBSAXAttributes methodsFor!
+!MSXML.IVBSAXAttributes categoriesForClass!COM-Interfaces!MSXML2-Interfaces! !
+!MSXML.IVBSAXAttributes methodsFor!
 
 get_length: nLength
 	"Private - Get the value of the 'length' property of the receiver.
@@ -367,34 +367,34 @@ length
 	self get_length: answer.
 	^answer asObject
 ! !
-!IVBSAXAttributes categoriesFor: #get_length:!**auto generated**!COM Interfaces-IVBSAXAttributes!private! !
-!IVBSAXAttributes categoriesFor: #getIndexFromName:strLocalName:!**auto generated**!methods!public! !
-!IVBSAXAttributes categoriesFor: #GetIndexFromName:strLocalName:nIndex:!**auto generated**!COM Interfaces-IVBSAXAttributes!private! !
-!IVBSAXAttributes categoriesFor: #getIndexFromQName:!**auto generated**!methods!public! !
-!IVBSAXAttributes categoriesFor: #GetIndexFromQName:nIndex:!**auto generated**!COM Interfaces-IVBSAXAttributes!private! !
-!IVBSAXAttributes categoriesFor: #getLocalName:!**auto generated**!methods!public! !
-!IVBSAXAttributes categoriesFor: #GetLocalName:strLocalName:!**auto generated**!COM Interfaces-IVBSAXAttributes!private! !
-!IVBSAXAttributes categoriesFor: #getQName:!**auto generated**!methods!public! !
-!IVBSAXAttributes categoriesFor: #GetQName:strQName:!**auto generated**!COM Interfaces-IVBSAXAttributes!private! !
-!IVBSAXAttributes categoriesFor: #getType:!**auto generated**!methods!public! !
-!IVBSAXAttributes categoriesFor: #GetType:strType:!**auto generated**!COM Interfaces-IVBSAXAttributes!private! !
-!IVBSAXAttributes categoriesFor: #getTypeFromName:strLocalName:!**auto generated**!methods!public! !
-!IVBSAXAttributes categoriesFor: #GetTypeFromName:strLocalName:strType:!**auto generated**!COM Interfaces-IVBSAXAttributes!private! !
-!IVBSAXAttributes categoriesFor: #getTypeFromQName:!**auto generated**!methods!public! !
-!IVBSAXAttributes categoriesFor: #GetTypeFromQName:strType:!**auto generated**!COM Interfaces-IVBSAXAttributes!private! !
-!IVBSAXAttributes categoriesFor: #getURI:!**auto generated**!methods!public! !
-!IVBSAXAttributes categoriesFor: #GetURI:strURI:!**auto generated**!COM Interfaces-IVBSAXAttributes!private! !
-!IVBSAXAttributes categoriesFor: #getValue:!**auto generated**!methods!public! !
-!IVBSAXAttributes categoriesFor: #GetValue:strValue:!**auto generated**!COM Interfaces-IVBSAXAttributes!private! !
-!IVBSAXAttributes categoriesFor: #getValueFromName:strLocalName:!**auto generated**!methods!public! !
-!IVBSAXAttributes categoriesFor: #GetValueFromName:strLocalName:strValue:!**auto generated**!COM Interfaces-IVBSAXAttributes!private! !
-!IVBSAXAttributes categoriesFor: #getValueFromQName:!**auto generated**!methods!public! !
-!IVBSAXAttributes categoriesFor: #GetValueFromQName:strValue:!**auto generated**!COM Interfaces-IVBSAXAttributes!private! !
-!IVBSAXAttributes categoriesFor: #isExtensible!**auto generated**!public!testing! !
-!IVBSAXAttributes categoriesFor: #isVBCollection!**auto generated**!public!testing! !
-!IVBSAXAttributes categoriesFor: #length!**auto generated**!properties!public! !
+!MSXML.IVBSAXAttributes categoriesFor: #get_length:!**auto generated**!COM Interfaces-IVBSAXAttributes!private! !
+!MSXML.IVBSAXAttributes categoriesFor: #getIndexFromName:strLocalName:!**auto generated**!methods!public! !
+!MSXML.IVBSAXAttributes categoriesFor: #GetIndexFromName:strLocalName:nIndex:!**auto generated**!COM Interfaces-IVBSAXAttributes!private! !
+!MSXML.IVBSAXAttributes categoriesFor: #getIndexFromQName:!**auto generated**!methods!public! !
+!MSXML.IVBSAXAttributes categoriesFor: #GetIndexFromQName:nIndex:!**auto generated**!COM Interfaces-IVBSAXAttributes!private! !
+!MSXML.IVBSAXAttributes categoriesFor: #getLocalName:!**auto generated**!methods!public! !
+!MSXML.IVBSAXAttributes categoriesFor: #GetLocalName:strLocalName:!**auto generated**!COM Interfaces-IVBSAXAttributes!private! !
+!MSXML.IVBSAXAttributes categoriesFor: #getQName:!**auto generated**!methods!public! !
+!MSXML.IVBSAXAttributes categoriesFor: #GetQName:strQName:!**auto generated**!COM Interfaces-IVBSAXAttributes!private! !
+!MSXML.IVBSAXAttributes categoriesFor: #getType:!**auto generated**!methods!public! !
+!MSXML.IVBSAXAttributes categoriesFor: #GetType:strType:!**auto generated**!COM Interfaces-IVBSAXAttributes!private! !
+!MSXML.IVBSAXAttributes categoriesFor: #getTypeFromName:strLocalName:!**auto generated**!methods!public! !
+!MSXML.IVBSAXAttributes categoriesFor: #GetTypeFromName:strLocalName:strType:!**auto generated**!COM Interfaces-IVBSAXAttributes!private! !
+!MSXML.IVBSAXAttributes categoriesFor: #getTypeFromQName:!**auto generated**!methods!public! !
+!MSXML.IVBSAXAttributes categoriesFor: #GetTypeFromQName:strType:!**auto generated**!COM Interfaces-IVBSAXAttributes!private! !
+!MSXML.IVBSAXAttributes categoriesFor: #getURI:!**auto generated**!methods!public! !
+!MSXML.IVBSAXAttributes categoriesFor: #GetURI:strURI:!**auto generated**!COM Interfaces-IVBSAXAttributes!private! !
+!MSXML.IVBSAXAttributes categoriesFor: #getValue:!**auto generated**!methods!public! !
+!MSXML.IVBSAXAttributes categoriesFor: #GetValue:strValue:!**auto generated**!COM Interfaces-IVBSAXAttributes!private! !
+!MSXML.IVBSAXAttributes categoriesFor: #getValueFromName:strLocalName:!**auto generated**!methods!public! !
+!MSXML.IVBSAXAttributes categoriesFor: #GetValueFromName:strLocalName:strValue:!**auto generated**!COM Interfaces-IVBSAXAttributes!private! !
+!MSXML.IVBSAXAttributes categoriesFor: #getValueFromQName:!**auto generated**!methods!public! !
+!MSXML.IVBSAXAttributes categoriesFor: #GetValueFromQName:strValue:!**auto generated**!COM Interfaces-IVBSAXAttributes!private! !
+!MSXML.IVBSAXAttributes categoriesFor: #isExtensible!**auto generated**!public!testing! !
+!MSXML.IVBSAXAttributes categoriesFor: #isVBCollection!**auto generated**!public!testing! !
+!MSXML.IVBSAXAttributes categoriesFor: #length!**auto generated**!properties!public! !
 
-!IVBSAXAttributes class methodsFor!
+!MSXML.IVBSAXAttributes class methodsFor!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'MSXML2.IVBSAXAttributes'
@@ -426,5 +426,5 @@ defineFunctions
 		defineFunction: #GetValueFromQName:strValue:
 			argumentTypes: 'bstr bstr*'
 ! !
-!IVBSAXAttributes class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!MSXML.IVBSAXAttributes class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
 

@@ -1,17 +1,17 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-IXMLDOMNode subclass: #IXMLDOMCharacterData
+MSXML.IXMLDOMNode subclass: #'MSXML.IXMLDOMCharacterData'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'MSXMLConstants'
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-IXMLDOMCharacterData guid: (IID fromString: '{2933bf84-7b36-11d2-b20e-00c04f983e60}')!
-IXMLDOMCharacterData comment: '<IXMLDOMCharacterData> is a wrapper class for the COM interface ''MSXML.IXMLDOMCharacterData'' generated from type information in the ''Microsoft XML, version 2.0'' library. It contains methods to invoke the member functions exposed by that interface.
+MSXML.IXMLDOMCharacterData guid: (OS.COM.IID fromString: '{2933bf84-7b36-11d2-b20e-00c04f983e60}')!
+MSXML.IXMLDOMCharacterData comment: '<IXMLDOMCharacterData> is a wrapper class for the COM interface ''MSXML.IXMLDOMCharacterData'' generated from type information in the ''Microsoft XML, version 2.0'' library. It contains methods to invoke the member functions exposed by that interface.
 
 This interface is an abstract root for the character-oriented node types in the DOM.'!
-!IXMLDOMCharacterData categoriesForClass!COM-Interfaces!MSXML-Interfaces! !
-!IXMLDOMCharacterData methodsFor!
+!MSXML.IXMLDOMCharacterData categoriesForClass!COM-Interfaces!MSXML-Interfaces! !
+!MSXML.IXMLDOMCharacterData methodsFor!
 
 = anObject 
 	^self class == anObject class and: [self data = anObject data]!
@@ -158,24 +158,24 @@ SubstringData: offset count: count data: data
 
 	<virtual stdcall: hresult 47 sdword sdword bstr*>
 	^self invalidCall: _failureCode! !
-!IXMLDOMCharacterData categoriesFor: #=!comparing!public! !
-!IXMLDOMCharacterData categoriesFor: #AppendData:!**auto generated**!COM Interfaces-IXMLDOMCharacterData!public! !
-!IXMLDOMCharacterData categoriesFor: #attributes!properties!public! !
-!IXMLDOMCharacterData categoriesFor: #childNodes!properties!public! !
-!IXMLDOMCharacterData categoriesFor: #data!**auto generated**!properties!public! !
-!IXMLDOMCharacterData categoriesFor: #data:!**auto generated**!properties!public! !
-!IXMLDOMCharacterData categoriesFor: #DeleteData:count:!**auto generated**!COM Interfaces-IXMLDOMCharacterData!public! !
-!IXMLDOMCharacterData categoriesFor: #get_data:!**auto generated**!COM Interfaces-IXMLDOMCharacterData!private! !
-!IXMLDOMCharacterData categoriesFor: #get_length:!**auto generated**!COM Interfaces-IXMLDOMCharacterData!private! !
-!IXMLDOMCharacterData categoriesFor: #InsertData:data:!**auto generated**!COM Interfaces-IXMLDOMCharacterData!public! !
-!IXMLDOMCharacterData categoriesFor: #isText!public!testing! !
-!IXMLDOMCharacterData categoriesFor: #length!**auto generated**!properties!public! !
-!IXMLDOMCharacterData categoriesFor: #put_data:!**auto generated**!COM Interfaces-IXMLDOMCharacterData!private! !
-!IXMLDOMCharacterData categoriesFor: #ReplaceData:count:data:!**auto generated**!COM Interfaces-IXMLDOMCharacterData!public! !
-!IXMLDOMCharacterData categoriesFor: #substringData:count:!**auto generated**!methods!public! !
-!IXMLDOMCharacterData categoriesFor: #SubstringData:count:data:!**auto generated**!COM Interfaces-IXMLDOMCharacterData!private! !
+!MSXML.IXMLDOMCharacterData categoriesFor: #=!comparing!public! !
+!MSXML.IXMLDOMCharacterData categoriesFor: #AppendData:!**auto generated**!COM Interfaces-IXMLDOMCharacterData!public! !
+!MSXML.IXMLDOMCharacterData categoriesFor: #attributes!properties!public! !
+!MSXML.IXMLDOMCharacterData categoriesFor: #childNodes!properties!public! !
+!MSXML.IXMLDOMCharacterData categoriesFor: #data!**auto generated**!properties!public! !
+!MSXML.IXMLDOMCharacterData categoriesFor: #data:!**auto generated**!properties!public! !
+!MSXML.IXMLDOMCharacterData categoriesFor: #DeleteData:count:!**auto generated**!COM Interfaces-IXMLDOMCharacterData!public! !
+!MSXML.IXMLDOMCharacterData categoriesFor: #get_data:!**auto generated**!COM Interfaces-IXMLDOMCharacterData!private! !
+!MSXML.IXMLDOMCharacterData categoriesFor: #get_length:!**auto generated**!COM Interfaces-IXMLDOMCharacterData!private! !
+!MSXML.IXMLDOMCharacterData categoriesFor: #InsertData:data:!**auto generated**!COM Interfaces-IXMLDOMCharacterData!public! !
+!MSXML.IXMLDOMCharacterData categoriesFor: #isText!public!testing! !
+!MSXML.IXMLDOMCharacterData categoriesFor: #length!**auto generated**!properties!public! !
+!MSXML.IXMLDOMCharacterData categoriesFor: #put_data:!**auto generated**!COM Interfaces-IXMLDOMCharacterData!private! !
+!MSXML.IXMLDOMCharacterData categoriesFor: #ReplaceData:count:data:!**auto generated**!COM Interfaces-IXMLDOMCharacterData!public! !
+!MSXML.IXMLDOMCharacterData categoriesFor: #substringData:count:!**auto generated**!methods!public! !
+!MSXML.IXMLDOMCharacterData categoriesFor: #SubstringData:count:data:!**auto generated**!COM Interfaces-IXMLDOMCharacterData!private! !
 
-!IXMLDOMCharacterData class methodsFor!
+!MSXML.IXMLDOMCharacterData class methodsFor!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'MSXML2.IXMLDOMCharacterData'
@@ -199,5 +199,5 @@ defineFunctions
 		defineFunction: #ReplaceData:count:data:
 			argumentTypes: 'sdword sdword bstr'
 ! !
-!IXMLDOMCharacterData class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!MSXML.IXMLDOMCharacterData class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
 

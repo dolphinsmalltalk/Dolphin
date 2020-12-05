@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ISchemaItem subclass: #ISchemaAttributeGroup
+MSXML.ISchemaItem subclass: #'MSXML.ISchemaAttributeGroup'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'MSXMLConstants'
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ISchemaAttributeGroup guid: (IID fromString: '{50ea08ba-dd1b-4664-9a50-c2f40f4bd79a}')!
-ISchemaAttributeGroup comment: '<ISchemaAttributeGroup> is a wrapper class for the COM interface ''MSXML2.ISchemaAttributeGroup'' generated from type information in the ''Microsoft XML, v4.0'' library. It contains methods to invoke the member functions exposed by that interface.
+MSXML.ISchemaAttributeGroup guid: (OS.COM.IID fromString: '{50ea08ba-dd1b-4664-9a50-c2f40f4bd79a}')!
+MSXML.ISchemaAttributeGroup comment: '<ISchemaAttributeGroup> is a wrapper class for the COM interface ''MSXML2.ISchemaAttributeGroup'' generated from type information in the ''Microsoft XML, v4.0'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains the following helpstring for this interface
 	"XML Schema Attribute Group"
@@ -33,8 +33,8 @@ interface ISchemaAttributeGroup : ISchemaItem
 		[out, retval]ISchemaItemCollection** attributes);
 };
 '!
-!ISchemaAttributeGroup categoriesForClass!COM-Interfaces!MSXML2-Interfaces! !
-!ISchemaAttributeGroup methodsFor!
+!MSXML.ISchemaAttributeGroup categoriesForClass!COM-Interfaces!MSXML2-Interfaces! !
+!MSXML.ISchemaAttributeGroup methodsFor!
 
 anyAttribute
 	"Answer the <ISchemaAny> value of the 'anyAttribute' property of the receiver."
@@ -42,8 +42,7 @@ anyAttribute
 	| answer |
 	answer := ISchemaAny newPointer.
 	self get_anyAttribute: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 attributes
 	"Answer the <ISchemaItemCollection> value of the 'attributes' property of the receiver."
@@ -51,8 +50,7 @@ attributes
 	| answer |
 	answer := ISchemaItemCollection newPointer.
 	self get_attributes: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 get_anyAttribute: anyAttribute
 	"Private - Get the value of the 'anyAttribute' property of the receiver.
@@ -71,12 +69,12 @@ get_attributes: attributes
 
 	<virtual stdcall: hresult 16 ISchemaItemCollection**>
 	^self invalidCall: _failureCode! !
-!ISchemaAttributeGroup categoriesFor: #anyAttribute!**auto generated**!properties!public! !
-!ISchemaAttributeGroup categoriesFor: #attributes!**auto generated**!properties!public! !
-!ISchemaAttributeGroup categoriesFor: #get_anyAttribute:!**auto generated**!COM Interfaces-ISchemaAttributeGroup!private! !
-!ISchemaAttributeGroup categoriesFor: #get_attributes:!**auto generated**!COM Interfaces-ISchemaAttributeGroup!private! !
+!MSXML.ISchemaAttributeGroup categoriesFor: #anyAttribute!**auto generated**!properties!public! !
+!MSXML.ISchemaAttributeGroup categoriesFor: #attributes!**auto generated**!properties!public! !
+!MSXML.ISchemaAttributeGroup categoriesFor: #get_anyAttribute:!**auto generated**!COM Interfaces-ISchemaAttributeGroup!private! !
+!MSXML.ISchemaAttributeGroup categoriesFor: #get_attributes:!**auto generated**!COM Interfaces-ISchemaAttributeGroup!private! !
 
-!ISchemaAttributeGroup class methodsFor!
+!MSXML.ISchemaAttributeGroup class methodsFor!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'MSXML2.ISchemaAttributeGroup'
@@ -88,5 +86,5 @@ defineFunctions
 		defineFunction: #get_attributes:
 			argumentTypes: 'ISchemaItemCollection**'
 ! !
-!ISchemaAttributeGroup class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!MSXML.ISchemaAttributeGroup class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
 

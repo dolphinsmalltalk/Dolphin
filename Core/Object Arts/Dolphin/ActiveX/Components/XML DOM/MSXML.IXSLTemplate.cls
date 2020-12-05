@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-IDispatch subclass: #IXSLTemplate
+OS.COM.IDispatch subclass: #'MSXML.IXSLTemplate'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'MSXMLConstants'
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-IXSLTemplate guid: (IID fromString: '{2933bf93-7b36-11d2-b20e-00c04f983e60}')!
-IXSLTemplate comment: '<IXSLTemplate> is a wrapper class for the COM interface ''MSXML2.IXSLTemplate'' generated from type information in the ''Microsoft XML, v4.0'' library. It contains methods to invoke the member functions exposed by that interface.
+MSXML.IXSLTemplate guid: (OS.COM.IID fromString: '{2933bf93-7b36-11d2-b20e-00c04f983e60}')!
+MSXML.IXSLTemplate comment: '<IXSLTemplate> is a wrapper class for the COM interface ''MSXML2.IXSLTemplate'' generated from type information in the ''Microsoft XML, v4.0'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains the following helpstring for this interface
 	"IXSLTemplate Interface"
@@ -36,8 +36,8 @@ interface IXSLTemplate : IDispatch
 		[out, retval]IXSLProcessor** ppProcessor);
 };
 '!
-!IXSLTemplate categoriesForClass!COM-Interfaces!MSXML2-Interfaces! !
-!IXSLTemplate methodsFor!
+!MSXML.IXSLTemplate categoriesForClass!COM-Interfaces!MSXML2-Interfaces! !
+!MSXML.IXSLTemplate methodsFor!
 
 createProcessor
 	"Answer the <IXSLProcessor> result of invoking the createProcessor() method of the COM object.
@@ -46,8 +46,7 @@ createProcessor
 	| answer |
 	answer := IXSLProcessor newPointer.
 	self CreateProcessor: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 CreateProcessor: ppProcessor
 	"Private - Invoke the createProcessor() method of the COM object.
@@ -102,18 +101,17 @@ stylesheet
 	| answer |
 	answer := IXMLDOMNode newPointer.
 	self get_stylesheet: answer.
-	^answer asObject
-! !
-!IXSLTemplate categoriesFor: #createProcessor!**auto generated**!methods!public! !
-!IXSLTemplate categoriesFor: #CreateProcessor:!**auto generated**!COM Interfaces-IXSLTemplate!private! !
-!IXSLTemplate categoriesFor: #get_stylesheet:!**auto generated**!COM Interfaces-IXSLTemplate!private! !
-!IXSLTemplate categoriesFor: #isExtensible!**auto generated**!public!testing! !
-!IXSLTemplate categoriesFor: #isVBCollection!**auto generated**!public!testing! !
-!IXSLTemplate categoriesFor: #putref_stylesheet:!**auto generated**!COM Interfaces-IXSLTemplate!private! !
-!IXSLTemplate categoriesFor: #setStylesheet:!**auto generated**!properties!public! !
-!IXSLTemplate categoriesFor: #stylesheet!**auto generated**!properties!public! !
+	^answer asObject! !
+!MSXML.IXSLTemplate categoriesFor: #createProcessor!**auto generated**!methods!public! !
+!MSXML.IXSLTemplate categoriesFor: #CreateProcessor:!**auto generated**!COM Interfaces-IXSLTemplate!private! !
+!MSXML.IXSLTemplate categoriesFor: #get_stylesheet:!**auto generated**!COM Interfaces-IXSLTemplate!private! !
+!MSXML.IXSLTemplate categoriesFor: #isExtensible!**auto generated**!public!testing! !
+!MSXML.IXSLTemplate categoriesFor: #isVBCollection!**auto generated**!public!testing! !
+!MSXML.IXSLTemplate categoriesFor: #putref_stylesheet:!**auto generated**!COM Interfaces-IXSLTemplate!private! !
+!MSXML.IXSLTemplate categoriesFor: #setStylesheet:!**auto generated**!properties!public! !
+!MSXML.IXSLTemplate categoriesFor: #stylesheet!**auto generated**!properties!public! !
 
-!IXSLTemplate class methodsFor!
+!MSXML.IXSLTemplate class methodsFor!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'MSXML2.IXSLTemplate'
@@ -157,10 +155,10 @@ newXSLTemplate60
 
 	^self onCLSID: (CLSID fromString: '{88D96A08-F192-11D4-A65F-0040963251E5}')
 ! !
-!IXSLTemplate class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
-!IXSLTemplate class categoriesFor: #newXSLTemplate!**auto generated**!instance creation!public! !
-!IXSLTemplate class categoriesFor: #newXSLTemplate26!**auto generated**!instance creation!public! !
-!IXSLTemplate class categoriesFor: #newXSLTemplate30!**auto generated**!instance creation!public! !
-!IXSLTemplate class categoriesFor: #newXSLTemplate40!**auto generated**!instance creation!public! !
-!IXSLTemplate class categoriesFor: #newXSLTemplate60!**auto generated**!instance creation!public! !
+!MSXML.IXSLTemplate class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!MSXML.IXSLTemplate class categoriesFor: #newXSLTemplate!**auto generated**!instance creation!public! !
+!MSXML.IXSLTemplate class categoriesFor: #newXSLTemplate26!**auto generated**!instance creation!public! !
+!MSXML.IXSLTemplate class categoriesFor: #newXSLTemplate30!**auto generated**!instance creation!public! !
+!MSXML.IXSLTemplate class categoriesFor: #newXSLTemplate40!**auto generated**!instance creation!public! !
+!MSXML.IXSLTemplate class categoriesFor: #newXSLTemplate60!**auto generated**!instance creation!public! !
 

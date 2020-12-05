@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-IXMLHttpRequest subclass: #IServerXMLHTTPRequest
+MSXML.IXMLHttpRequest subclass: #'MSXML.IServerXMLHTTPRequest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'MSXMLConstants'
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-IServerXMLHTTPRequest guid: (IID fromString: '{2e9196bf-13ba-4dd4-91ca-6c571f281495}')!
-IServerXMLHTTPRequest comment: '<IServerXMLHTTPRequest> is a wrapper class for the COM interface ''MSXML2.IServerXMLHTTPRequest'' generated from type information in the ''Microsoft XML, v4.0'' library. It contains methods to invoke the member functions exposed by that interface.
+MSXML.IServerXMLHTTPRequest guid: (OS.COM.IID fromString: '{2e9196bf-13ba-4dd4-91ca-6c571f281495}')!
+MSXML.IServerXMLHTTPRequest comment: '<IServerXMLHTTPRequest> is a wrapper class for the COM interface ''MSXML2.IServerXMLHTTPRequest'' generated from type information in the ''Microsoft XML, v4.0'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains the following helpstring for this interface
 	"IServerXMLHTTPRequest Interface"
@@ -44,8 +44,8 @@ interface IServerXMLHTTPRequest : IXMLHTTPRequest
 		[in]VARIANT value);
 };
 '!
-!IServerXMLHTTPRequest categoriesForClass!COM-Interfaces!MSXML2-Interfaces! !
-!IServerXMLHTTPRequest methodsFor!
+!MSXML.IServerXMLHTTPRequest categoriesForClass!COM-Interfaces!MSXML2-Interfaces! !
+!MSXML.IServerXMLHTTPRequest methodsFor!
 
 getOption: option
 	"Answer the <VARIANT> result of invoking the getOption() method of the COM object.
@@ -131,16 +131,16 @@ WaitForResponse: timeoutInSeconds isSuccessful: isSuccessful
 
 	<virtual stdcall: hresult 23 variant varbool*>
 	^self invalidCall: _failureCode! !
-!IServerXMLHTTPRequest categoriesFor: #getOption:!**auto generated**!methods!public! !
-!IServerXMLHTTPRequest categoriesFor: #GetOption:value:!**auto generated**!COM Interfaces-IServerXMLHTTPRequest!private! !
-!IServerXMLHTTPRequest categoriesFor: #setOption:value:!**auto generated**!methods!public! !
-!IServerXMLHTTPRequest categoriesFor: #SetOption:value:!**auto generated**!COM Interfaces-IServerXMLHTTPRequest!private! !
-!IServerXMLHTTPRequest categoriesFor: #SetTimeouts:connectTimeout:sendTimeout:receiveTimeout:!**auto generated**!COM Interfaces-IServerXMLHTTPRequest!public! !
-!IServerXMLHTTPRequest categoriesFor: #waitForResponse!**auto generated**!methods!public! !
-!IServerXMLHTTPRequest categoriesFor: #waitForResponse:!**auto generated**!methods!public! !
-!IServerXMLHTTPRequest categoriesFor: #WaitForResponse:isSuccessful:!**auto generated**!COM Interfaces-IServerXMLHTTPRequest!private! !
+!MSXML.IServerXMLHTTPRequest categoriesFor: #getOption:!**auto generated**!methods!public! !
+!MSXML.IServerXMLHTTPRequest categoriesFor: #GetOption:value:!**auto generated**!COM Interfaces-IServerXMLHTTPRequest!private! !
+!MSXML.IServerXMLHTTPRequest categoriesFor: #setOption:value:!**auto generated**!methods!public! !
+!MSXML.IServerXMLHTTPRequest categoriesFor: #SetOption:value:!**auto generated**!COM Interfaces-IServerXMLHTTPRequest!private! !
+!MSXML.IServerXMLHTTPRequest categoriesFor: #SetTimeouts:connectTimeout:sendTimeout:receiveTimeout:!**auto generated**!COM Interfaces-IServerXMLHTTPRequest!public! !
+!MSXML.IServerXMLHTTPRequest categoriesFor: #waitForResponse!**auto generated**!methods!public! !
+!MSXML.IServerXMLHTTPRequest categoriesFor: #waitForResponse:!**auto generated**!methods!public! !
+!MSXML.IServerXMLHTTPRequest categoriesFor: #WaitForResponse:isSuccessful:!**auto generated**!COM Interfaces-IServerXMLHTTPRequest!private! !
 
-!IServerXMLHTTPRequest class methodsFor!
+!MSXML.IServerXMLHTTPRequest class methodsFor!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'MSXML2.IServerXMLHTTPRequest'
@@ -168,7 +168,7 @@ newServerXMLHTTP30
 
 	^self onCLSID: (CLSID fromString: '{AFB40FFD-B609-40A3-9828-F88BBE11E4E3}')
 ! !
-!IServerXMLHTTPRequest class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
-!IServerXMLHTTPRequest class categoriesFor: #newServerXMLHTTP!**auto generated**!instance creation!public! !
-!IServerXMLHTTPRequest class categoriesFor: #newServerXMLHTTP30!**auto generated**!instance creation!public! !
+!MSXML.IServerXMLHTTPRequest class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!MSXML.IServerXMLHTTPRequest class categoriesFor: #newServerXMLHTTP!**auto generated**!instance creation!public! !
+!MSXML.IServerXMLHTTPRequest class categoriesFor: #newServerXMLHTTP30!**auto generated**!instance creation!public! !
 

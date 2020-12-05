@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-IXMLDOMSchemaCollection subclass: #IXMLDOMSchemaCollection2
+MSXML.IXMLDOMSchemaCollection subclass: #'MSXML.IXMLDOMSchemaCollection2'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'MSXMLConstants'
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-IXMLDOMSchemaCollection2 guid: (IID fromString: '{50ea08b0-dd1b-4664-9a50-c2f40f4bd79a}')!
-IXMLDOMSchemaCollection2 comment: '<IXMLDOMSchemaCollection2> is a wrapper class for the COM interface ''MSXML2.IXMLDOMSchemaCollection2'' generated from type information in the ''Microsoft XML, v4.0'' library. It contains methods to invoke the member functions exposed by that interface.
+MSXML.IXMLDOMSchemaCollection2 guid: (OS.COM.IID fromString: '{50ea08b0-dd1b-4664-9a50-c2f40f4bd79a}')!
+MSXML.IXMLDOMSchemaCollection2 comment: '<IXMLDOMSchemaCollection2> is a wrapper class for the COM interface ''MSXML2.IXMLDOMSchemaCollection2'' generated from type information in the ''Microsoft XML, v4.0'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains the following helpstring for this interface
 	"XML Schemas Collection 2"
@@ -43,8 +43,8 @@ interface IXMLDOMSchemaCollection2 : IXMLDOMSchemaCollection
 		[out, retval]ISchemaItem** item);
 };
 '!
-!IXMLDOMSchemaCollection2 categoriesForClass!COM-Interfaces!MSXML2-Interfaces! !
-!IXMLDOMSchemaCollection2 methodsFor!
+!MSXML.IXMLDOMSchemaCollection2 categoriesForClass!COM-Interfaces!MSXML2-Interfaces! !
+!MSXML.IXMLDOMSchemaCollection2 methodsFor!
 
 get_validateOnLoad: validateOnLoad
 	"Private - Get the value of the 'validateOnLoad' property of the receiver.
@@ -60,11 +60,8 @@ getDeclaration: node
 
 	| answer |
 	answer := ISchemaItem newPointer.
-	self
-		GetDeclaration: node
-		item: answer.
-	^answer asObject
-!
+	self GetDeclaration: node item: answer.
+	^answer asObject!
 
 GetDeclaration: node item: item
 	"Private - Invoke the getDeclaration() method of the COM object.
@@ -81,11 +78,8 @@ getSchema: namespaceURI
 
 	| answer |
 	answer := ISchema newPointer.
-	self
-		GetSchema: namespaceURI
-		schema: answer.
-	^answer asObject
-!
+	self GetSchema: namespaceURI schema: answer.
+	^answer asObject!
 
 GetSchema: namespaceURI schema: schema
 	"Private - Invoke the getSchema() method of the COM object.
@@ -129,17 +123,17 @@ validateOnLoad: validateOnLoad
 
 	self put_validateOnLoad: validateOnLoad
 ! !
-!IXMLDOMSchemaCollection2 categoriesFor: #get_validateOnLoad:!**auto generated**!COM Interfaces-IXMLDOMSchemaCollection2!private! !
-!IXMLDOMSchemaCollection2 categoriesFor: #getDeclaration:!**auto generated**!methods!public! !
-!IXMLDOMSchemaCollection2 categoriesFor: #GetDeclaration:item:!**auto generated**!COM Interfaces-IXMLDOMSchemaCollection2!private! !
-!IXMLDOMSchemaCollection2 categoriesFor: #getSchema:!**auto generated**!methods!public! !
-!IXMLDOMSchemaCollection2 categoriesFor: #GetSchema:schema:!**auto generated**!COM Interfaces-IXMLDOMSchemaCollection2!private! !
-!IXMLDOMSchemaCollection2 categoriesFor: #put_validateOnLoad:!**auto generated**!COM Interfaces-IXMLDOMSchemaCollection2!private! !
-!IXMLDOMSchemaCollection2 categoriesFor: #Validate!**auto generated**!COM Interfaces-IXMLDOMSchemaCollection2!public! !
-!IXMLDOMSchemaCollection2 categoriesFor: #validateOnLoad!**auto generated**!properties!public! !
-!IXMLDOMSchemaCollection2 categoriesFor: #validateOnLoad:!**auto generated**!properties!public! !
+!MSXML.IXMLDOMSchemaCollection2 categoriesFor: #get_validateOnLoad:!**auto generated**!COM Interfaces-IXMLDOMSchemaCollection2!private! !
+!MSXML.IXMLDOMSchemaCollection2 categoriesFor: #getDeclaration:!**auto generated**!methods!public! !
+!MSXML.IXMLDOMSchemaCollection2 categoriesFor: #GetDeclaration:item:!**auto generated**!COM Interfaces-IXMLDOMSchemaCollection2!private! !
+!MSXML.IXMLDOMSchemaCollection2 categoriesFor: #getSchema:!**auto generated**!methods!public! !
+!MSXML.IXMLDOMSchemaCollection2 categoriesFor: #GetSchema:schema:!**auto generated**!COM Interfaces-IXMLDOMSchemaCollection2!private! !
+!MSXML.IXMLDOMSchemaCollection2 categoriesFor: #put_validateOnLoad:!**auto generated**!COM Interfaces-IXMLDOMSchemaCollection2!private! !
+!MSXML.IXMLDOMSchemaCollection2 categoriesFor: #Validate!**auto generated**!COM Interfaces-IXMLDOMSchemaCollection2!public! !
+!MSXML.IXMLDOMSchemaCollection2 categoriesFor: #validateOnLoad!**auto generated**!properties!public! !
+!MSXML.IXMLDOMSchemaCollection2 categoriesFor: #validateOnLoad:!**auto generated**!properties!public! !
 
-!IXMLDOMSchemaCollection2 class methodsFor!
+!MSXML.IXMLDOMSchemaCollection2 class methodsFor!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'MSXML2.IXMLDOMSchemaCollection2'
@@ -168,7 +162,7 @@ newXMLSchemaCache60
 
 	^self onCLSID: (CLSID fromString: '{88D96A07-F192-11D4-A65F-0040963251E5}')
 ! !
-!IXMLDOMSchemaCollection2 class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
-!IXMLDOMSchemaCollection2 class categoriesFor: #newXMLSchemaCache40!**auto generated**!instance creation!public! !
-!IXMLDOMSchemaCollection2 class categoriesFor: #newXMLSchemaCache60!**auto generated**!instance creation!public! !
+!MSXML.IXMLDOMSchemaCollection2 class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!MSXML.IXMLDOMSchemaCollection2 class categoriesFor: #newXMLSchemaCache40!**auto generated**!instance creation!public! !
+!MSXML.IXMLDOMSchemaCollection2 class categoriesFor: #newXMLSchemaCache60!**auto generated**!instance creation!public! !
 

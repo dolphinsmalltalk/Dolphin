@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-IDispatch subclass: #IMXNamespacePrefixes
+OS.COM.IDispatch subclass: #'MSXML.IMXNamespacePrefixes'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'MSXMLConstants'
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-IMXNamespacePrefixes guid: (IID fromString: '{c90352f4-643c-4fbc-bb23-e996eb2d51fd}')!
-IMXNamespacePrefixes comment: '<IMXNamespacePrefixes> is a wrapper class for the COM interface ''MSXML2.IMXNamespacePrefixes'' generated from type information in the ''Microsoft XML, v4.0'' library. It contains methods to invoke the member functions exposed by that interface.
+MSXML.IMXNamespacePrefixes guid: (OS.COM.IID fromString: '{c90352f4-643c-4fbc-bb23-e996eb2d51fd}')!
+MSXML.IMXNamespacePrefixes comment: '<IMXNamespacePrefixes> is a wrapper class for the COM interface ''MSXML2.IMXNamespacePrefixes'' generated from type information in the ''Microsoft XML, v4.0'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains the following helpstring for this interface
 	"IMXNamespacePrefixes interface"
@@ -37,8 +37,8 @@ interface IMXNamespacePrefixes : IDispatch
 		[out, retval]IUnknown** ppUnk);
 };
 '!
-!IMXNamespacePrefixes categoriesForClass!COM-Interfaces!MSXML2-Interfaces! !
-!IMXNamespacePrefixes methodsFor!
+!MSXML.IMXNamespacePrefixes categoriesForClass!COM-Interfaces!MSXML2-Interfaces! !
+!MSXML.IMXNamespacePrefixes methodsFor!
 
 _newEnum
 	"Answer the <IUnknown> value of the '_newEnum' property of the receiver."
@@ -106,16 +106,16 @@ length
 	self get_length: answer.
 	^answer asObject
 ! !
-!IMXNamespacePrefixes categoriesFor: #_newEnum!**auto generated**!properties!public! !
-!IMXNamespacePrefixes categoriesFor: #get__newEnum:!**auto generated**!COM Interfaces-IMXNamespacePrefixes!private! !
-!IMXNamespacePrefixes categoriesFor: #get_item:prefix:!**auto generated**!COM Interfaces-IMXNamespacePrefixes!private! !
-!IMXNamespacePrefixes categoriesFor: #get_length:!**auto generated**!COM Interfaces-IMXNamespacePrefixes!private! !
-!IMXNamespacePrefixes categoriesFor: #isExtensible!**auto generated**!public!testing! !
-!IMXNamespacePrefixes categoriesFor: #isVBCollection!**auto generated**!public!testing! !
-!IMXNamespacePrefixes categoriesFor: #item:!**auto generated**!properties!public! !
-!IMXNamespacePrefixes categoriesFor: #length!**auto generated**!properties!public! !
+!MSXML.IMXNamespacePrefixes categoriesFor: #_newEnum!**auto generated**!properties!public! !
+!MSXML.IMXNamespacePrefixes categoriesFor: #get__newEnum:!**auto generated**!COM Interfaces-IMXNamespacePrefixes!private! !
+!MSXML.IMXNamespacePrefixes categoriesFor: #get_item:prefix:!**auto generated**!COM Interfaces-IMXNamespacePrefixes!private! !
+!MSXML.IMXNamespacePrefixes categoriesFor: #get_length:!**auto generated**!COM Interfaces-IMXNamespacePrefixes!private! !
+!MSXML.IMXNamespacePrefixes categoriesFor: #isExtensible!**auto generated**!public!testing! !
+!MSXML.IMXNamespacePrefixes categoriesFor: #isVBCollection!**auto generated**!public!testing! !
+!MSXML.IMXNamespacePrefixes categoriesFor: #item:!**auto generated**!properties!public! !
+!MSXML.IMXNamespacePrefixes categoriesFor: #length!**auto generated**!properties!public! !
 
-!IMXNamespacePrefixes class methodsFor!
+!MSXML.IMXNamespacePrefixes class methodsFor!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'MSXML2.IMXNamespacePrefixes'
@@ -129,5 +129,5 @@ defineFunctions
 		defineFunction: #get__newEnum:
 			argumentTypes: 'IUnknown**'
 ! !
-!IMXNamespacePrefixes class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!MSXML.IMXNamespacePrefixes class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
 

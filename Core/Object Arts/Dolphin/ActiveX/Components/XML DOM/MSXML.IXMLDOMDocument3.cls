@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-IXMLDOMDocument2 subclass: #IXMLDOMDocument3
+MSXML.IXMLDOMDocument2 subclass: #'MSXML.IXMLDOMDocument3'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'MSXMLConstants'
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-IXMLDOMDocument3 guid: (IID fromString: '{2933bf96-7b36-11d2-b20e-00c04f983e60}')!
-IXMLDOMDocument3 comment: '<IXMLDOMDocument3> is a wrapper class for the COM interface ''MSXML2.IXMLDOMDocument3'' generated from type information in the ''Microsoft XML, v6.0'' library. It contains methods to invoke the member functions exposed by that interface.
+MSXML.IXMLDOMDocument3 guid: (OS.COM.IID fromString: '{2933bf96-7b36-11d2-b20e-00c04f983e60}')!
+MSXML.IXMLDOMDocument3 comment: '<IXMLDOMDocument3> is a wrapper class for the COM interface ''MSXML2.IXMLDOMDocument3'' generated from type information in the ''Microsoft XML, v6.0'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
 
@@ -34,8 +34,8 @@ interface IXMLDOMDocument3 : IXMLDOMDocument2
 		[out, retval]IXMLDOMNode** clone);
 };
 '!
-!IXMLDOMDocument3 categoriesForClass!COM-Interfaces!MSXML2-Interfaces! !
-!IXMLDOMDocument3 methodsFor!
+!MSXML.IXMLDOMDocument3 categoriesForClass!COM-Interfaces!MSXML2-Interfaces! !
+!MSXML.IXMLDOMDocument3 methodsFor!
 
 importNode: node deep: deep
 	"Answer the <IXMLDOMNode> result of invoking the importNode() method of the COM object.
@@ -47,8 +47,7 @@ importNode: node deep: deep
 		ImportNode: node
 		deep: deep
 		clone: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 ImportNode: node deep: deep clone: clone
 	"Private - Invoke the importNode() method of the COM object.
@@ -68,11 +67,8 @@ validateNode: node
 
 	| answer |
 	answer := IXMLDOMParseError newPointer.
-	self
-		ValidateNode: node
-		errorObj: answer.
-	^answer asObject
-!
+	self ValidateNode: node errorObj: answer.
+	^answer asObject!
 
 ValidateNode: node errorObj: errorObj
 	"Private - Invoke the validateNode() method of the COM object.
@@ -84,12 +80,12 @@ ValidateNode: node errorObj: errorObj
 
 	<virtual stdcall: hresult 83 IXMLDOMNode* IXMLDOMParseError**>
 	^self invalidCall: _failureCode! !
-!IXMLDOMDocument3 categoriesFor: #importNode:deep:!**auto generated**!methods!public! !
-!IXMLDOMDocument3 categoriesFor: #ImportNode:deep:clone:!**auto generated**!COM Interfaces-IXMLDOMDocument3!private! !
-!IXMLDOMDocument3 categoriesFor: #validateNode:!**auto generated**!methods!public! !
-!IXMLDOMDocument3 categoriesFor: #ValidateNode:errorObj:!**auto generated**!COM Interfaces-IXMLDOMDocument3!private! !
+!MSXML.IXMLDOMDocument3 categoriesFor: #importNode:deep:!**auto generated**!methods!public! !
+!MSXML.IXMLDOMDocument3 categoriesFor: #ImportNode:deep:clone:!**auto generated**!COM Interfaces-IXMLDOMDocument3!private! !
+!MSXML.IXMLDOMDocument3 categoriesFor: #validateNode:!**auto generated**!methods!public! !
+!MSXML.IXMLDOMDocument3 categoriesFor: #ValidateNode:errorObj:!**auto generated**!COM Interfaces-IXMLDOMDocument3!private! !
 
-!IXMLDOMDocument3 class methodsFor!
+!MSXML.IXMLDOMDocument3 class methodsFor!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'MSXML2.IXMLDOMDocument3'
@@ -113,7 +109,7 @@ newFreeThreadedDOMDocument60
 
 	^self onCLSID: (CLSID fromString: '{88D96A06-F192-11D4-A65F-0040963251E5}')
 ! !
-!IXMLDOMDocument3 class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
-!IXMLDOMDocument3 class categoriesFor: #newDOMDocument60!**auto generated**!instance creation!public! !
-!IXMLDOMDocument3 class categoriesFor: #newFreeThreadedDOMDocument60!**auto generated**!instance creation!public! !
+!MSXML.IXMLDOMDocument3 class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!MSXML.IXMLDOMDocument3 class categoriesFor: #newDOMDocument60!**auto generated**!instance creation!public! !
+!MSXML.IXMLDOMDocument3 class categoriesFor: #newFreeThreadedDOMDocument60!**auto generated**!instance creation!public! !
 

@@ -1,17 +1,17 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-IXMLDOMNode subclass: #IXMLDOMElement
+MSXML.IXMLDOMNode subclass: #'MSXML.IXMLDOMElement'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'MSXMLConstants'
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-IXMLDOMElement guid: (IID fromString: '{2933bf86-7b36-11d2-b20e-00c04f983e60}')!
-IXMLDOMElement comment: '<IXMLDOMElement> is a wrapper class for the COM interface ''MSXML.IXMLDOMElement'' generated from type information in the ''Microsoft XML, version 2.0'' library. It contains methods to invoke the member functions exposed by that interface.
+MSXML.IXMLDOMElement guid: (OS.COM.IID fromString: '{2933bf86-7b36-11d2-b20e-00c04f983e60}')!
+MSXML.IXMLDOMElement comment: '<IXMLDOMElement> is a wrapper class for the COM interface ''MSXML.IXMLDOMElement'' generated from type information in the ''Microsoft XML, version 2.0'' library. It contains methods to invoke the member functions exposed by that interface.
 
 This is a specialized DOM node to represent elements (i.e. structures).'!
-!IXMLDOMElement categoriesForClass!COM-Interfaces!MSXML-Interfaces! !
-!IXMLDOMElement methodsFor!
+!MSXML.IXMLDOMElement categoriesForClass!COM-Interfaces!MSXML-Interfaces! !
+!MSXML.IXMLDOMElement methodsFor!
 
 = anObject 
 	^super = anObject and: 
@@ -59,11 +59,8 @@ getAttributeNode: name
 
 	| answer |
 	answer := IXMLDOMAttribute newPointer.
-	self
-		GetAttributeNode: name
-		attributeNode: answer.
-	^answer asObject
-!
+	self GetAttributeNode: name attributeNode: answer.
+	^answer asObject!
 
 GetAttributeNode: name attributeNode: attributeNode
 	"Private - Invoke the getAttributeNode() method of the COM object.
@@ -131,11 +128,8 @@ removeAttributeNode: domAttribute
 
 	| answer |
 	answer := IXMLDOMAttribute newPointer.
-	self
-		RemoveAttributeNode: domAttribute
-		attributeNode: answer.
-	^answer asObject
-!
+	self RemoveAttributeNode: domAttribute attributeNode: answer.
+	^answer asObject!
 
 RemoveAttributeNode: domAttribute attributeNode: attributeNode
 	"Private - Invoke the removeAttributeNode() method of the COM object.
@@ -174,11 +168,8 @@ setAttributeNode: domAttribute
 
 	| answer |
 	answer := IXMLDOMAttribute newPointer.
-	self
-		SetAttributeNode: domAttribute
-		attributeNode: answer.
-	^answer asObject
-!
+	self SetAttributeNode: domAttribute attributeNode: answer.
+	^answer asObject!
 
 SetAttributeNode: domAttribute attributeNode: attributeNode
 	"Private - Invoke the setAttributeNode() method of the COM object.
@@ -200,26 +191,26 @@ tagName
 	self get_tagName: answer.
 	^answer asObject
 ! !
-!IXMLDOMElement categoriesFor: #=!comparing!public! !
-!IXMLDOMElement categoriesFor: #get_tagName:!**auto generated**!COM Interfaces-IXMLDOMElement!private! !
-!IXMLDOMElement categoriesFor: #getAttribute:!**auto generated**!methods!public! !
-!IXMLDOMElement categoriesFor: #GetAttribute:value:!**auto generated**!COM Interfaces-IXMLDOMElement!private! !
-!IXMLDOMElement categoriesFor: #getAttributeNode:!**auto generated**!methods!public! !
-!IXMLDOMElement categoriesFor: #GetAttributeNode:attributeNode:!**auto generated**!COM Interfaces-IXMLDOMElement!private! !
-!IXMLDOMElement categoriesFor: #getElementsByTagName:!methods!public! !
-!IXMLDOMElement categoriesFor: #GetElementsByTagName:resultList:!**auto generated**!COM Interfaces-IXMLDOMElement!private! !
-!IXMLDOMElement categoriesFor: #namespaceURI:!properties!public! !
-!IXMLDOMElement categoriesFor: #Normalize!**auto generated**!COM Interfaces-IXMLDOMElement!public! !
-!IXMLDOMElement categoriesFor: #RemoveAttribute:!**auto generated**!COM Interfaces-IXMLDOMElement!public! !
-!IXMLDOMElement categoriesFor: #removeAttributeNode:!**auto generated**!methods!public! !
-!IXMLDOMElement categoriesFor: #RemoveAttributeNode:attributeNode:!**auto generated**!COM Interfaces-IXMLDOMElement!private! !
-!IXMLDOMElement categoriesFor: #setAttribute:value:!**auto generated**!methods!public! !
-!IXMLDOMElement categoriesFor: #SetAttribute:value:!**auto generated**!COM Interfaces-IXMLDOMElement!private! !
-!IXMLDOMElement categoriesFor: #setAttributeNode:!**auto generated**!methods!public! !
-!IXMLDOMElement categoriesFor: #SetAttributeNode:attributeNode:!**auto generated**!COM Interfaces-IXMLDOMElement!private! !
-!IXMLDOMElement categoriesFor: #tagName!**auto generated**!properties!public! !
+!MSXML.IXMLDOMElement categoriesFor: #=!comparing!public! !
+!MSXML.IXMLDOMElement categoriesFor: #get_tagName:!**auto generated**!COM Interfaces-IXMLDOMElement!private! !
+!MSXML.IXMLDOMElement categoriesFor: #getAttribute:!**auto generated**!methods!public! !
+!MSXML.IXMLDOMElement categoriesFor: #GetAttribute:value:!**auto generated**!COM Interfaces-IXMLDOMElement!private! !
+!MSXML.IXMLDOMElement categoriesFor: #getAttributeNode:!**auto generated**!methods!public! !
+!MSXML.IXMLDOMElement categoriesFor: #GetAttributeNode:attributeNode:!**auto generated**!COM Interfaces-IXMLDOMElement!private! !
+!MSXML.IXMLDOMElement categoriesFor: #getElementsByTagName:!methods!public! !
+!MSXML.IXMLDOMElement categoriesFor: #GetElementsByTagName:resultList:!**auto generated**!COM Interfaces-IXMLDOMElement!private! !
+!MSXML.IXMLDOMElement categoriesFor: #namespaceURI:!properties!public! !
+!MSXML.IXMLDOMElement categoriesFor: #Normalize!**auto generated**!COM Interfaces-IXMLDOMElement!public! !
+!MSXML.IXMLDOMElement categoriesFor: #RemoveAttribute:!**auto generated**!COM Interfaces-IXMLDOMElement!public! !
+!MSXML.IXMLDOMElement categoriesFor: #removeAttributeNode:!**auto generated**!methods!public! !
+!MSXML.IXMLDOMElement categoriesFor: #RemoveAttributeNode:attributeNode:!**auto generated**!COM Interfaces-IXMLDOMElement!private! !
+!MSXML.IXMLDOMElement categoriesFor: #setAttribute:value:!**auto generated**!methods!public! !
+!MSXML.IXMLDOMElement categoriesFor: #SetAttribute:value:!**auto generated**!COM Interfaces-IXMLDOMElement!private! !
+!MSXML.IXMLDOMElement categoriesFor: #setAttributeNode:!**auto generated**!methods!public! !
+!MSXML.IXMLDOMElement categoriesFor: #SetAttributeNode:attributeNode:!**auto generated**!COM Interfaces-IXMLDOMElement!private! !
+!MSXML.IXMLDOMElement categoriesFor: #tagName!**auto generated**!properties!public! !
 
-!IXMLDOMElement class methodsFor!
+!MSXML.IXMLDOMElement class methodsFor!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'MSXML2.IXMLDOMElement'
@@ -244,5 +235,5 @@ defineFunctions
 			argumentTypes: 'bstr IXMLDOMNodeList**';
 		defineFunction: #Normalize
 ! !
-!IXMLDOMElement class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!MSXML.IXMLDOMElement class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
 

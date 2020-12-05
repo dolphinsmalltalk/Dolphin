@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ISchemaItem subclass: #ISchemaType
+MSXML.ISchemaItem subclass: #'MSXML.ISchemaType'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'MSXMLConstants'
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ISchemaType guid: (IID fromString: '{50ea08b8-dd1b-4664-9a50-c2f40f4bd79a}')!
-ISchemaType comment: '<ISchemaType> is a wrapper class for the COM interface ''MSXML2.ISchemaType'' generated from type information in the ''Microsoft XML, v4.0'' library. It contains methods to invoke the member functions exposed by that interface.
+MSXML.ISchemaType guid: (OS.COM.IID fromString: '{50ea08b8-dd1b-4664-9a50-c2f40f4bd79a}')!
+MSXML.ISchemaType comment: '<ISchemaType> is a wrapper class for the COM interface ''MSXML2.ISchemaType'' generated from type information in the ''Microsoft XML, v4.0'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains the following helpstring for this interface
 	"XML Schema Type"
@@ -79,8 +79,8 @@ interface ISchemaType : ISchemaItem
 		[out, retval]ISchemaStringCollection** patterns);
 };
 '!
-!ISchemaType categoriesForClass!COM-Interfaces!MSXML2-Interfaces! !
-!ISchemaType methodsFor!
+!MSXML.ISchemaType categoriesForClass!COM-Interfaces!MSXML2-Interfaces! !
+!MSXML.ISchemaType methodsFor!
 
 baseTypes
 	"Answer the <ISchemaItemCollection> value of the 'baseTypes' property of the receiver."
@@ -88,8 +88,7 @@ baseTypes
 	| answer |
 	answer := ISchemaItemCollection newPointer.
 	self get_baseTypes: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 derivedBy
 	"Answer the <sdword> value of the 'derivedBy' property of the receiver."
@@ -106,8 +105,7 @@ enumeration
 	| answer |
 	answer := ISchemaStringCollection newPointer.
 	self get_enumeration: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 final
 	"Answer the <sdword> value of the 'final' property of the receiver."
@@ -361,8 +359,7 @@ patterns
 	| answer |
 	answer := ISchemaStringCollection newPointer.
 	self get_patterns: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 totalDigits
 	"Answer the <variant> value of the 'totalDigits' property of the receiver."
@@ -390,42 +387,42 @@ whitespace
 	self get_whitespace: answer.
 	^answer asObject
 ! !
-!ISchemaType categoriesFor: #baseTypes!**auto generated**!properties!public! !
-!ISchemaType categoriesFor: #derivedBy!**auto generated**!properties!public! !
-!ISchemaType categoriesFor: #enumeration!**auto generated**!properties!public! !
-!ISchemaType categoriesFor: #final!**auto generated**!properties!public! !
-!ISchemaType categoriesFor: #fractionDigits!**auto generated**!properties!public! !
-!ISchemaType categoriesFor: #get_baseTypes:!**auto generated**!COM Interfaces-ISchemaType!private! !
-!ISchemaType categoriesFor: #get_derivedBy:!**auto generated**!COM Interfaces-ISchemaType!private! !
-!ISchemaType categoriesFor: #get_enumeration:!**auto generated**!COM Interfaces-ISchemaType!private! !
-!ISchemaType categoriesFor: #get_final:!**auto generated**!COM Interfaces-ISchemaType!private! !
-!ISchemaType categoriesFor: #get_fractionDigits:!**auto generated**!COM Interfaces-ISchemaType!private! !
-!ISchemaType categoriesFor: #get_length:!**auto generated**!COM Interfaces-ISchemaType!private! !
-!ISchemaType categoriesFor: #get_maxExclusive:!**auto generated**!COM Interfaces-ISchemaType!private! !
-!ISchemaType categoriesFor: #get_maxInclusive:!**auto generated**!COM Interfaces-ISchemaType!private! !
-!ISchemaType categoriesFor: #get_maxLength:!**auto generated**!COM Interfaces-ISchemaType!private! !
-!ISchemaType categoriesFor: #get_minExclusive:!**auto generated**!COM Interfaces-ISchemaType!private! !
-!ISchemaType categoriesFor: #get_minInclusive:!**auto generated**!COM Interfaces-ISchemaType!private! !
-!ISchemaType categoriesFor: #get_minLength:!**auto generated**!COM Interfaces-ISchemaType!private! !
-!ISchemaType categoriesFor: #get_patterns:!**auto generated**!COM Interfaces-ISchemaType!private! !
-!ISchemaType categoriesFor: #get_totalDigits:!**auto generated**!COM Interfaces-ISchemaType!private! !
-!ISchemaType categoriesFor: #get_variety:!**auto generated**!COM Interfaces-ISchemaType!private! !
-!ISchemaType categoriesFor: #get_whitespace:!**auto generated**!COM Interfaces-ISchemaType!private! !
-!ISchemaType categoriesFor: #isValid:!**auto generated**!methods!public! !
-!ISchemaType categoriesFor: #IsValid:valid:!**auto generated**!COM Interfaces-ISchemaType!private! !
-!ISchemaType categoriesFor: #length!**auto generated**!properties!public! !
-!ISchemaType categoriesFor: #maxExclusive!**auto generated**!properties!public! !
-!ISchemaType categoriesFor: #maxInclusive!**auto generated**!properties!public! !
-!ISchemaType categoriesFor: #maxLength!**auto generated**!properties!public! !
-!ISchemaType categoriesFor: #minExclusive!**auto generated**!properties!public! !
-!ISchemaType categoriesFor: #minInclusive!**auto generated**!properties!public! !
-!ISchemaType categoriesFor: #minLength!**auto generated**!properties!public! !
-!ISchemaType categoriesFor: #patterns!**auto generated**!properties!public! !
-!ISchemaType categoriesFor: #totalDigits!**auto generated**!properties!public! !
-!ISchemaType categoriesFor: #variety!**auto generated**!properties!public! !
-!ISchemaType categoriesFor: #whitespace!**auto generated**!properties!public! !
+!MSXML.ISchemaType categoriesFor: #baseTypes!**auto generated**!properties!public! !
+!MSXML.ISchemaType categoriesFor: #derivedBy!**auto generated**!properties!public! !
+!MSXML.ISchemaType categoriesFor: #enumeration!**auto generated**!properties!public! !
+!MSXML.ISchemaType categoriesFor: #final!**auto generated**!properties!public! !
+!MSXML.ISchemaType categoriesFor: #fractionDigits!**auto generated**!properties!public! !
+!MSXML.ISchemaType categoriesFor: #get_baseTypes:!**auto generated**!COM Interfaces-ISchemaType!private! !
+!MSXML.ISchemaType categoriesFor: #get_derivedBy:!**auto generated**!COM Interfaces-ISchemaType!private! !
+!MSXML.ISchemaType categoriesFor: #get_enumeration:!**auto generated**!COM Interfaces-ISchemaType!private! !
+!MSXML.ISchemaType categoriesFor: #get_final:!**auto generated**!COM Interfaces-ISchemaType!private! !
+!MSXML.ISchemaType categoriesFor: #get_fractionDigits:!**auto generated**!COM Interfaces-ISchemaType!private! !
+!MSXML.ISchemaType categoriesFor: #get_length:!**auto generated**!COM Interfaces-ISchemaType!private! !
+!MSXML.ISchemaType categoriesFor: #get_maxExclusive:!**auto generated**!COM Interfaces-ISchemaType!private! !
+!MSXML.ISchemaType categoriesFor: #get_maxInclusive:!**auto generated**!COM Interfaces-ISchemaType!private! !
+!MSXML.ISchemaType categoriesFor: #get_maxLength:!**auto generated**!COM Interfaces-ISchemaType!private! !
+!MSXML.ISchemaType categoriesFor: #get_minExclusive:!**auto generated**!COM Interfaces-ISchemaType!private! !
+!MSXML.ISchemaType categoriesFor: #get_minInclusive:!**auto generated**!COM Interfaces-ISchemaType!private! !
+!MSXML.ISchemaType categoriesFor: #get_minLength:!**auto generated**!COM Interfaces-ISchemaType!private! !
+!MSXML.ISchemaType categoriesFor: #get_patterns:!**auto generated**!COM Interfaces-ISchemaType!private! !
+!MSXML.ISchemaType categoriesFor: #get_totalDigits:!**auto generated**!COM Interfaces-ISchemaType!private! !
+!MSXML.ISchemaType categoriesFor: #get_variety:!**auto generated**!COM Interfaces-ISchemaType!private! !
+!MSXML.ISchemaType categoriesFor: #get_whitespace:!**auto generated**!COM Interfaces-ISchemaType!private! !
+!MSXML.ISchemaType categoriesFor: #isValid:!**auto generated**!methods!public! !
+!MSXML.ISchemaType categoriesFor: #IsValid:valid:!**auto generated**!COM Interfaces-ISchemaType!private! !
+!MSXML.ISchemaType categoriesFor: #length!**auto generated**!properties!public! !
+!MSXML.ISchemaType categoriesFor: #maxExclusive!**auto generated**!properties!public! !
+!MSXML.ISchemaType categoriesFor: #maxInclusive!**auto generated**!properties!public! !
+!MSXML.ISchemaType categoriesFor: #maxLength!**auto generated**!properties!public! !
+!MSXML.ISchemaType categoriesFor: #minExclusive!**auto generated**!properties!public! !
+!MSXML.ISchemaType categoriesFor: #minInclusive!**auto generated**!properties!public! !
+!MSXML.ISchemaType categoriesFor: #minLength!**auto generated**!properties!public! !
+!MSXML.ISchemaType categoriesFor: #patterns!**auto generated**!properties!public! !
+!MSXML.ISchemaType categoriesFor: #totalDigits!**auto generated**!properties!public! !
+!MSXML.ISchemaType categoriesFor: #variety!**auto generated**!properties!public! !
+!MSXML.ISchemaType categoriesFor: #whitespace!**auto generated**!properties!public! !
 
-!ISchemaType class methodsFor!
+!MSXML.ISchemaType class methodsFor!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'MSXML2.ISchemaType'
@@ -467,5 +464,5 @@ defineFunctions
 		defineFunction: #get_patterns:
 			argumentTypes: 'ISchemaStringCollection**'
 ! !
-!ISchemaType class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!MSXML.ISchemaType class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
 

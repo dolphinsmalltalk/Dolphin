@@ -1,0 +1,12 @@
+﻿OS.COM.TypeLibraryAnalyzer {
+	#generationFlags : 1154,
+	#attributes : OS.COM.TLIBATTR {
+		#bytes : ByteArray [ '188f07f551c5d31189b90000f81fe22100000000010000000600000008000000' ]
+	},
+	#packageName : 'XML DOM',
+	#globalName : #MSXML2Lib,
+	#constantsPoolName : #MSXMLConstants,
+	#aliasMap : LookupTable {
+		'GUID' : #GUID
+	}
+}

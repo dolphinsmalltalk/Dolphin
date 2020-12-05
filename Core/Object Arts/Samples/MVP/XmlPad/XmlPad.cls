@@ -3,7 +3,7 @@
 UI.TextDocument subclass: #XmlPad
 	instanceVariableNames: 'viewOptions'
 	classVariableNames: ''
-	imports: #()
+	imports: #(#{MSXML private})
 	classInstanceVariableNames: ''
 	classConstants: {
 		'RememberPlacementMask' -> 16r1
@@ -38,8 +38,8 @@ canSave
 	[self basicValidateXml.
 	true] on: DOMParseError
 			do: 
-				[:ex | 
-				MessageBox 
+				[:ex |
+				MessageBox
 					confirm: 'The XML contains one or more errors and is invalid. Are you sure that you would like to save it?'
 					caption: ex tag displayString]!
 
@@ -106,16 +106,16 @@ isRememberingPlacement: aBoolean
 parseXml
 	^self parseXml: self getDocumentData validate: false!
 
-parseXml: aString validate: aBoolean 
+parseXml: aString validate: aBoolean
 	| dom |
-	dom := IXMLDOMDocument new.
+	dom := MSXML newDocument.
 	"Preserve whitespace in case there are any mixed text/element nodes. This allows the
 	formatter to preserve the text of these nodes exactly."
 	dom
 		preserveWhiteSpace: false;
 		validateOnParse: aBoolean;
 		resolveExternals: aBoolean.
-	(dom loadXML: aString asString) 
+	(dom loadXML: aString asString)
 		ifFalse: [dom parseErrorClass signal: 'Error in XML' with: dom parseError].
 	^dom!
 
@@ -143,7 +143,7 @@ reformatXml
 	| dom formatter reformatted |
 	dom := [self parseXml] on: DOMParseError
 				do: 
-					[:ex | 
+					[:ex |
 					statusModel value: ex tag.
 					nil].
 	dom ifNil: [^self].
@@ -154,7 +154,7 @@ reformatXml
 "
 	"Replace the text using the Scintilla target feature (this is like an invisible selection).
 	If we just set the text, then it would not be undoable."
-	(self scintilla)
+	self scintilla
 		targetAll;
 		replaceTarget: reformatted!
 
@@ -248,7 +248,8 @@ toolbar
 	^self view viewNamed: 'toolbar'!
 
 validateXml
-	statusModel value: (
+	statusModel
+		value: (
 			[self basicValidateXml.
 			nil] on: DOMParseError do: [:ex | ex tag])!
 
@@ -352,7 +353,7 @@ icon
 	"Answers an Icon that can be used to represent this class and which is displayed in the
 	caption of the dialog box."
 
-	^Icon fromId: 'XML.ICO'!
+	^MSXML icon!
 
 initialize
 	"

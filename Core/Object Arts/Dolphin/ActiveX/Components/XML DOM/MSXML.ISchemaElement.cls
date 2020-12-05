@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ISchemaParticle subclass: #ISchemaElement
+MSXML.ISchemaParticle subclass: #'MSXML.ISchemaElement'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'MSXMLConstants'
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ISchemaElement guid: (IID fromString: '{50ea08b7-dd1b-4664-9a50-c2f40f4bd79a}')!
-ISchemaElement comment: '<ISchemaElement> is a wrapper class for the COM interface ''MSXML2.ISchemaElement'' generated from type information in the ''Microsoft XML, v4.0'' library. It contains methods to invoke the member functions exposed by that interface.
+MSXML.ISchemaElement guid: (OS.COM.IID fromString: '{50ea08b7-dd1b-4664-9a50-c2f40f4bd79a}')!
+MSXML.ISchemaElement comment: '<ISchemaElement> is a wrapper class for the COM interface ''MSXML2.ISchemaElement'' generated from type information in the ''Microsoft XML, v4.0'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains the following helpstring for this interface
 	"XML Schema Element"
@@ -60,8 +60,8 @@ interface ISchemaElement : ISchemaParticle
 		[out, retval]VARIANT_BOOL* reference);
 };
 '!
-!ISchemaElement categoriesForClass!COM-Interfaces!MSXML2-Interfaces! !
-!ISchemaElement methodsFor!
+!MSXML.ISchemaElement categoriesForClass!COM-Interfaces!MSXML2-Interfaces! !
+!MSXML.ISchemaElement methodsFor!
 
 defaultValue
 	"Answer the <bstr> value of the 'defaultValue' property of the receiver."
@@ -195,8 +195,7 @@ identityConstraints
 	| answer |
 	answer := ISchemaItemCollection newPointer.
 	self get_identityConstraints: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 isAbstract
 	"Answer the <varbool> value of the 'isAbstract' property of the receiver."
@@ -231,8 +230,7 @@ scope
 	| answer |
 	answer := ISchemaComplexType newPointer.
 	self get_scope: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 substitutionGroup
 	"Answer the <ISchemaElement> value of the 'substitutionGroup' property of the receiver."
@@ -240,8 +238,7 @@ substitutionGroup
 	| answer |
 	answer := ISchemaElement newPointer.
 	self get_substitutionGroup: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 substitutionGroupExclusions
 	"Answer the <sdword> value of the 'substitutionGroupExclusions' property of the receiver."
@@ -258,32 +255,31 @@ type
 	| answer |
 	answer := ISchemaType newPointer.
 	self get_type: answer.
-	^answer asObject
-! !
-!ISchemaElement categoriesFor: #defaultValue!**auto generated**!properties!public! !
-!ISchemaElement categoriesFor: #disallowedSubstitutions!**auto generated**!properties!public! !
-!ISchemaElement categoriesFor: #fixedValue!**auto generated**!properties!public! !
-!ISchemaElement categoriesFor: #get_defaultValue:!**auto generated**!COM Interfaces-ISchemaElement!private! !
-!ISchemaElement categoriesFor: #get_disallowedSubstitutions:!**auto generated**!COM Interfaces-ISchemaElement!private! !
-!ISchemaElement categoriesFor: #get_fixedValue:!**auto generated**!COM Interfaces-ISchemaElement!private! !
-!ISchemaElement categoriesFor: #get_identityConstraints:!**auto generated**!COM Interfaces-ISchemaElement!private! !
-!ISchemaElement categoriesFor: #get_isAbstract:!**auto generated**!COM Interfaces-ISchemaElement!private! !
-!ISchemaElement categoriesFor: #get_isNillable:!**auto generated**!COM Interfaces-ISchemaElement!private! !
-!ISchemaElement categoriesFor: #get_isReference:!**auto generated**!COM Interfaces-ISchemaElement!private! !
-!ISchemaElement categoriesFor: #get_scope:!**auto generated**!COM Interfaces-ISchemaElement!private! !
-!ISchemaElement categoriesFor: #get_substitutionGroup:!**auto generated**!COM Interfaces-ISchemaElement!private! !
-!ISchemaElement categoriesFor: #get_substitutionGroupExclusions:!**auto generated**!COM Interfaces-ISchemaElement!private! !
-!ISchemaElement categoriesFor: #get_type:!**auto generated**!COM Interfaces-ISchemaElement!private! !
-!ISchemaElement categoriesFor: #identityConstraints!**auto generated**!properties!public! !
-!ISchemaElement categoriesFor: #isAbstract!**auto generated**!properties!public! !
-!ISchemaElement categoriesFor: #isNillable!**auto generated**!properties!public! !
-!ISchemaElement categoriesFor: #isReference!**auto generated**!properties!public! !
-!ISchemaElement categoriesFor: #scope!**auto generated**!properties!public! !
-!ISchemaElement categoriesFor: #substitutionGroup!**auto generated**!properties!public! !
-!ISchemaElement categoriesFor: #substitutionGroupExclusions!**auto generated**!properties!public! !
-!ISchemaElement categoriesFor: #type!**auto generated**!properties!public! !
+	^answer asObject! !
+!MSXML.ISchemaElement categoriesFor: #defaultValue!**auto generated**!properties!public! !
+!MSXML.ISchemaElement categoriesFor: #disallowedSubstitutions!**auto generated**!properties!public! !
+!MSXML.ISchemaElement categoriesFor: #fixedValue!**auto generated**!properties!public! !
+!MSXML.ISchemaElement categoriesFor: #get_defaultValue:!**auto generated**!COM Interfaces-ISchemaElement!private! !
+!MSXML.ISchemaElement categoriesFor: #get_disallowedSubstitutions:!**auto generated**!COM Interfaces-ISchemaElement!private! !
+!MSXML.ISchemaElement categoriesFor: #get_fixedValue:!**auto generated**!COM Interfaces-ISchemaElement!private! !
+!MSXML.ISchemaElement categoriesFor: #get_identityConstraints:!**auto generated**!COM Interfaces-ISchemaElement!private! !
+!MSXML.ISchemaElement categoriesFor: #get_isAbstract:!**auto generated**!COM Interfaces-ISchemaElement!private! !
+!MSXML.ISchemaElement categoriesFor: #get_isNillable:!**auto generated**!COM Interfaces-ISchemaElement!private! !
+!MSXML.ISchemaElement categoriesFor: #get_isReference:!**auto generated**!COM Interfaces-ISchemaElement!private! !
+!MSXML.ISchemaElement categoriesFor: #get_scope:!**auto generated**!COM Interfaces-ISchemaElement!private! !
+!MSXML.ISchemaElement categoriesFor: #get_substitutionGroup:!**auto generated**!COM Interfaces-ISchemaElement!private! !
+!MSXML.ISchemaElement categoriesFor: #get_substitutionGroupExclusions:!**auto generated**!COM Interfaces-ISchemaElement!private! !
+!MSXML.ISchemaElement categoriesFor: #get_type:!**auto generated**!COM Interfaces-ISchemaElement!private! !
+!MSXML.ISchemaElement categoriesFor: #identityConstraints!**auto generated**!properties!public! !
+!MSXML.ISchemaElement categoriesFor: #isAbstract!**auto generated**!properties!public! !
+!MSXML.ISchemaElement categoriesFor: #isNillable!**auto generated**!properties!public! !
+!MSXML.ISchemaElement categoriesFor: #isReference!**auto generated**!properties!public! !
+!MSXML.ISchemaElement categoriesFor: #scope!**auto generated**!properties!public! !
+!MSXML.ISchemaElement categoriesFor: #substitutionGroup!**auto generated**!properties!public! !
+!MSXML.ISchemaElement categoriesFor: #substitutionGroupExclusions!**auto generated**!properties!public! !
+!MSXML.ISchemaElement categoriesFor: #type!**auto generated**!properties!public! !
 
-!ISchemaElement class methodsFor!
+!MSXML.ISchemaElement class methodsFor!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'MSXML2.ISchemaElement'
@@ -313,5 +309,5 @@ defineFunctions
 		defineFunction: #get_isReference:
 			argumentTypes: 'varbool*'
 ! !
-!ISchemaElement class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!MSXML.ISchemaElement class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
 

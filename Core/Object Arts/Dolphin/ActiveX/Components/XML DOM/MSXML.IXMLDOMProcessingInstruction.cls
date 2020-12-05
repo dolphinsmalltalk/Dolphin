@@ -1,17 +1,17 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-IXMLDOMNode subclass: #IXMLDOMProcessingInstruction
+MSXML.IXMLDOMNode subclass: #'MSXML.IXMLDOMProcessingInstruction'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'MSXMLConstants'
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-IXMLDOMProcessingInstruction guid: (IID fromString: '{2933bf89-7b36-11d2-b20e-00c04f983e60}')!
-IXMLDOMProcessingInstruction comment: '<IXMLDOMProcessingInstruction> is a wrapper class for the COM interface ''MSXML.IXMLDOMProcessingInstruction'' generated from type information in the ''Microsoft XML, version 2.0'' library. It contains methods to invoke the member functions exposed by that interface.
+MSXML.IXMLDOMProcessingInstruction guid: (OS.COM.IID fromString: '{2933bf89-7b36-11d2-b20e-00c04f983e60}')!
+MSXML.IXMLDOMProcessingInstruction comment: '<IXMLDOMProcessingInstruction> is a wrapper class for the COM interface ''MSXML.IXMLDOMProcessingInstruction'' generated from type information in the ''Microsoft XML, version 2.0'' library. It contains methods to invoke the member functions exposed by that interface.
 
 This is a specialized DOM node to represent processing instructions. These are used to define processor-specific infromation in the text of the document.'!
-!IXMLDOMProcessingInstruction categoriesForClass!COM-Interfaces!MSXML-Interfaces! !
-!IXMLDOMProcessingInstruction methodsFor!
+!MSXML.IXMLDOMProcessingInstruction categoriesForClass!COM-Interfaces!MSXML-Interfaces! !
+!MSXML.IXMLDOMProcessingInstruction methodsFor!
 
 = anObject 
 	^self class == anObject class and: [self target = anObject target and: [self data = anObject data]]!
@@ -87,17 +87,17 @@ target
 	self get_target: answer.
 	^answer asObject
 ! !
-!IXMLDOMProcessingInstruction categoriesFor: #=!comparing!public! !
-!IXMLDOMProcessingInstruction categoriesFor: #childNodes!properties!public! !
-!IXMLDOMProcessingInstruction categoriesFor: #data!**auto generated**!properties!public! !
-!IXMLDOMProcessingInstruction categoriesFor: #data:!**auto generated**!properties!public! !
-!IXMLDOMProcessingInstruction categoriesFor: #get_data:!**auto generated**!COM Interfaces-IXMLDOMProcessingInstruction!private! !
-!IXMLDOMProcessingInstruction categoriesFor: #get_target:!**auto generated**!COM Interfaces-IXMLDOMProcessingInstruction!private! !
-!IXMLDOMProcessingInstruction categoriesFor: #printOn:!development!printing!public! !
-!IXMLDOMProcessingInstruction categoriesFor: #put_data:!**auto generated**!COM Interfaces-IXMLDOMProcessingInstruction!private! !
-!IXMLDOMProcessingInstruction categoriesFor: #target!**auto generated**!properties!public! !
+!MSXML.IXMLDOMProcessingInstruction categoriesFor: #=!comparing!public! !
+!MSXML.IXMLDOMProcessingInstruction categoriesFor: #childNodes!properties!public! !
+!MSXML.IXMLDOMProcessingInstruction categoriesFor: #data!**auto generated**!properties!public! !
+!MSXML.IXMLDOMProcessingInstruction categoriesFor: #data:!**auto generated**!properties!public! !
+!MSXML.IXMLDOMProcessingInstruction categoriesFor: #get_data:!**auto generated**!COM Interfaces-IXMLDOMProcessingInstruction!private! !
+!MSXML.IXMLDOMProcessingInstruction categoriesFor: #get_target:!**auto generated**!COM Interfaces-IXMLDOMProcessingInstruction!private! !
+!MSXML.IXMLDOMProcessingInstruction categoriesFor: #printOn:!development!printing!public! !
+!MSXML.IXMLDOMProcessingInstruction categoriesFor: #put_data:!**auto generated**!COM Interfaces-IXMLDOMProcessingInstruction!private! !
+!MSXML.IXMLDOMProcessingInstruction categoriesFor: #target!**auto generated**!properties!public! !
 
-!IXMLDOMProcessingInstruction class methodsFor!
+!MSXML.IXMLDOMProcessingInstruction class methodsFor!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'MSXML2.IXMLDOMProcessingInstruction'
@@ -111,5 +111,5 @@ defineFunctions
 		defineFunction: #put_data:
 			argumentTypes: 'bstr'
 ! !
-!IXMLDOMProcessingInstruction class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!MSXML.IXMLDOMProcessingInstruction class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
 

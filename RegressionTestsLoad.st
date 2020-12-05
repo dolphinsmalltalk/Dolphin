@@ -28,5 +28,6 @@ Package manager
 	install: 'Core\Object Arts\Dolphin\Sockets\Dolphin Sockets Tests.pax';
 	install: 'Core\Object Arts\Dolphin\System\STON\Dolphin STON Tests.pax';
 	install: 'Core\Object Arts\Dolphin\Registry\Dolphin Registry Access Tests.pax';
+	install: 'Core\Object Arts\Dolphin\ActiveX\Components\XML DOM\XML DOM Tests.pax';
 	yourself.
 !

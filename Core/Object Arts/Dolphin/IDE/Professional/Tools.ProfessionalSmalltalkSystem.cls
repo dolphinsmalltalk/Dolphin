@@ -72,7 +72,7 @@ newIdeaSpace
 
 openDeploymentLog: aString
 	| dom |
-	dom := Smalltalk.IXMLDOMDocument new.
+	dom := MSXML newDocument.
 	dom loadURL: 'file://' , aString.
 	^dom!
 

@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-IUnknown subclass: #ISAXContentHandler
+OS.COM.IUnknown subclass: #'MSXML.ISAXContentHandler'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'MSXMLConstants'
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ISAXContentHandler guid: (IID fromString: '{1545cdfa-9e4e-4497-a8a4-2bf7d0112c44}')!
-ISAXContentHandler comment: '<ISAXContentHandler> is a wrapper class for the COM interface ''MSXML2.ISAXContentHandler'' generated from type information in the ''Microsoft XML, v4.0'' library. It contains methods to invoke the member functions exposed by that interface.
+MSXML.ISAXContentHandler guid: (OS.COM.IID fromString: '{1545cdfa-9e4e-4497-a8a4-2bf7d0112c44}')!
+MSXML.ISAXContentHandler comment: '<ISAXContentHandler> is a wrapper class for the COM interface ''MSXML2.ISAXContentHandler'' generated from type information in the ''Microsoft XML, v4.0'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains the following helpstring for this interface
 	"ISAXContentHandler interface"
@@ -78,8 +78,8 @@ interface ISAXContentHandler : IUnknown
 		[in]int cchName);
 };
 '!
-!ISAXContentHandler categoriesForClass!COM-Interfaces!MSXML2-Interfaces! !
-!ISAXContentHandler methodsFor!
+!MSXML.ISAXContentHandler categoriesForClass!COM-Interfaces!MSXML2-Interfaces! !
+!MSXML.ISAXContentHandler methodsFor!
 
 Characters: pwchChars cchChars: cchChars
 	"Invoke the characters() method of the COM object.
@@ -198,19 +198,19 @@ StartPrefixMapping: pwchPrefix cchPrefix: cchPrefix pwchUri: pwchUri cchUri: cch
 
 	<virtual stdcall: hresult 7 word* sdword word* sdword>
 	^self invalidCall: _failureCode! !
-!ISAXContentHandler categoriesFor: #Characters:cchChars:!**auto generated**!COM Interfaces-ISAXContentHandler!public! !
-!ISAXContentHandler categoriesFor: #EndDocument!**auto generated**!COM Interfaces-ISAXContentHandler!public! !
-!ISAXContentHandler categoriesFor: #EndElement:cchNamespaceUri:pwchLocalName:cchLocalName:pwchQName:cchQName:!**auto generated**!COM Interfaces-ISAXContentHandler!public! !
-!ISAXContentHandler categoriesFor: #EndPrefixMapping:cchPrefix:!**auto generated**!COM Interfaces-ISAXContentHandler!public! !
-!ISAXContentHandler categoriesFor: #IgnorableWhitespace:cchChars:!**auto generated**!COM Interfaces-ISAXContentHandler!public! !
-!ISAXContentHandler categoriesFor: #ProcessingInstruction:cchTarget:pwchData:cchData:!**auto generated**!COM Interfaces-ISAXContentHandler!public! !
-!ISAXContentHandler categoriesFor: #PutDocumentLocator:!**auto generated**!COM Interfaces-ISAXContentHandler!public! !
-!ISAXContentHandler categoriesFor: #SkippedEntity:cchName:!**auto generated**!COM Interfaces-ISAXContentHandler!public! !
-!ISAXContentHandler categoriesFor: #StartDocument!**auto generated**!COM Interfaces-ISAXContentHandler!public! !
-!ISAXContentHandler categoriesFor: #StartElement:cchNamespaceUri:pwchLocalName:cchLocalName:pwchQName:cchQName:pAttributes:!**auto generated**!COM Interfaces-ISAXContentHandler!public! !
-!ISAXContentHandler categoriesFor: #StartPrefixMapping:cchPrefix:pwchUri:cchUri:!**auto generated**!COM Interfaces-ISAXContentHandler!public! !
+!MSXML.ISAXContentHandler categoriesFor: #Characters:cchChars:!**auto generated**!COM Interfaces-ISAXContentHandler!public! !
+!MSXML.ISAXContentHandler categoriesFor: #EndDocument!**auto generated**!COM Interfaces-ISAXContentHandler!public! !
+!MSXML.ISAXContentHandler categoriesFor: #EndElement:cchNamespaceUri:pwchLocalName:cchLocalName:pwchQName:cchQName:!**auto generated**!COM Interfaces-ISAXContentHandler!public! !
+!MSXML.ISAXContentHandler categoriesFor: #EndPrefixMapping:cchPrefix:!**auto generated**!COM Interfaces-ISAXContentHandler!public! !
+!MSXML.ISAXContentHandler categoriesFor: #IgnorableWhitespace:cchChars:!**auto generated**!COM Interfaces-ISAXContentHandler!public! !
+!MSXML.ISAXContentHandler categoriesFor: #ProcessingInstruction:cchTarget:pwchData:cchData:!**auto generated**!COM Interfaces-ISAXContentHandler!public! !
+!MSXML.ISAXContentHandler categoriesFor: #PutDocumentLocator:!**auto generated**!COM Interfaces-ISAXContentHandler!public! !
+!MSXML.ISAXContentHandler categoriesFor: #SkippedEntity:cchName:!**auto generated**!COM Interfaces-ISAXContentHandler!public! !
+!MSXML.ISAXContentHandler categoriesFor: #StartDocument!**auto generated**!COM Interfaces-ISAXContentHandler!public! !
+!MSXML.ISAXContentHandler categoriesFor: #StartElement:cchNamespaceUri:pwchLocalName:cchLocalName:pwchQName:cchQName:pAttributes:!**auto generated**!COM Interfaces-ISAXContentHandler!public! !
+!MSXML.ISAXContentHandler categoriesFor: #StartPrefixMapping:cchPrefix:pwchUri:cchUri:!**auto generated**!COM Interfaces-ISAXContentHandler!public! !
 
-!ISAXContentHandler class methodsFor!
+!MSXML.ISAXContentHandler class methodsFor!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'MSXML2.ISAXContentHandler'
@@ -238,5 +238,5 @@ defineFunctions
 		defineFunction: #SkippedEntity:cchName:
 			argumentTypes: 'word* sdword'
 ! !
-!ISAXContentHandler class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!MSXML.ISAXContentHandler class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
 

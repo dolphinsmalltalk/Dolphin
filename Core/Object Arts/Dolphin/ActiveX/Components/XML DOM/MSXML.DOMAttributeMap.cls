@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-DOMNamedNodeMap variableSubclass: #DOMAttributeMap
+MSXML.DOMNamedNodeMap variableSubclass: #'MSXML.DOMAttributeMap'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-DOMAttributeMap guid: (GUID fromString: '{a514645c-f053-4be4-87c8-99381ec1c930}')!
-DOMAttributeMap comment: 'Specialized <DOMNamedNodeMap> which contains <IXMLDOMAttribute>s. This is used to represent the dictionary of attributes associated with a DOM node. The keys and values are strings.'!
-!DOMAttributeMap categoriesForClass!Collections-Unordered! !
-!DOMAttributeMap methodsFor!
+MSXML.DOMAttributeMap guid: (Core.GUID fromString: '{a514645c-f053-4be4-87c8-99381ec1c930}')!
+MSXML.DOMAttributeMap comment: 'Specialized <DOMNamedNodeMap> which contains <IXMLDOMAttribute>s. This is used to represent the dictionary of attributes associated with a DOM node. The keys and values are strings.'!
+!MSXML.DOMAttributeMap categoriesForClass!Collections-Unordered! !
+!MSXML.DOMAttributeMap methodsFor!
 
 associationClass
 	"Private - Answer the class of association to be used for holding
@@ -21,6 +21,6 @@ createNamedNode: key
 	"Private - Instantiate and answer a new named node of the type contained in the receiver."
 
 	^parentNode ownerDocument createAttribute: key! !
-!DOMAttributeMap categoriesFor: #associationClass!constants!private! !
-!DOMAttributeMap categoriesFor: #createNamedNode:!helpers!private! !
+!MSXML.DOMAttributeMap categoriesFor: #associationClass!constants!private! !
+!MSXML.DOMAttributeMap categoriesFor: #createNamedNode:!helpers!private! !
 

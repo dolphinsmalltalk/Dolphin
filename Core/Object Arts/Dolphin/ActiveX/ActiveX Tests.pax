@@ -13,7 +13,6 @@ package setClassNames: #(
 	#{OS.COM.Tests.TestTypelib}
 	#{OS.COM.Tests.TypeLibraryAnalyzerTest}
 	#{Smalltalk.ADODBTest}
-	#{Smalltalk.XmlFormatterTest}
 ).
 
 package setMethodNames: #(
@@ -30,8 +29,6 @@ package setPrerequisites: #(
 	'COM\OLE COM'
 	'Components\Font\OLE Font'
 	'..\..\..\Contributions\Camp Smalltalk\SUnit\SUnit'
-	'Components\XML DOM\XML DOM'
-	'..\..\Samples\MVP\XmlPad\XmlPad'
 ).
 
 package!
@@ -58,12 +55,6 @@ Core.Tests.DolphinTest subclass: #'OS.COM.Tests.InterfaceTest'
 	classConstants: {}!
 Core.Tests.DolphinTest subclass: #'OS.COM.Tests.TypeLibraryAnalyzerTest'
 	instanceVariableNames: 'analyzer'
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-Core.Tests.DolphinTest subclass: #XmlFormatterTest
-	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''

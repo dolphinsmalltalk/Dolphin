@@ -1,17 +1,17 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-IXMLDOMNode subclass: #IXMLDOMEntity
+MSXML.IXMLDOMNode subclass: #'MSXML.IXMLDOMEntity'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'MSXMLConstants'
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-IXMLDOMEntity guid: (IID fromString: '{2933bf8d-7b36-11d2-b20e-00c04f983e60}')!
-IXMLDOMEntity comment: '<IXMLDOMEntity> is a wrapper class for the COM interface ''MSXML.IXMLDOMEntity'' generated from type information in the ''Microsoft XML, version 2.0'' library. It contains methods to invoke the member functions exposed by that interface.
+MSXML.IXMLDOMEntity guid: (OS.COM.IID fromString: '{2933bf8d-7b36-11d2-b20e-00c04f983e60}')!
+MSXML.IXMLDOMEntity comment: '<IXMLDOMEntity> is a wrapper class for the COM interface ''MSXML.IXMLDOMEntity'' generated from type information in the ''Microsoft XML, version 2.0'' library. It contains methods to invoke the member functions exposed by that interface.
 
 This is a specialized DOM node to represent parsed or unparsed entities in the XML document.'!
-!IXMLDOMEntity categoriesForClass!COM-Interfaces!MSXML-Interfaces! !
-!IXMLDOMEntity methodsFor!
+!MSXML.IXMLDOMEntity categoriesForClass!COM-Interfaces!MSXML-Interfaces! !
+!MSXML.IXMLDOMEntity methodsFor!
 
 get_notationName: name
 	"Private - Get the value of the 'notationName' property of the receiver.
@@ -108,20 +108,20 @@ value: arg1
 	is fixed)."
 
 	^self shouldNotImplement! !
-!IXMLDOMEntity categoriesFor: #get_notationName:!**auto generated**!COM Interfaces-IXMLDOMEntity!private! !
-!IXMLDOMEntity categoriesFor: #get_publicId:!**auto generated**!COM Interfaces-IXMLDOMEntity!private! !
-!IXMLDOMEntity categoriesFor: #get_systemId:!**auto generated**!COM Interfaces-IXMLDOMEntity!private! !
-!IXMLDOMEntity categoriesFor: #key!accessing!public! !
-!IXMLDOMEntity categoriesFor: #key:!accessing!public! !
-!IXMLDOMEntity categoriesFor: #notationName!**auto generated**!properties!public! !
-!IXMLDOMEntity categoriesFor: #publicId!**auto generated**!properties!public! !
-!IXMLDOMEntity categoriesFor: #systemId!**auto generated**!properties!public! !
-!IXMLDOMEntity categoriesFor: #value!accessing!public! !
-!IXMLDOMEntity categoriesFor: #value:!accessing!public! !
+!MSXML.IXMLDOMEntity categoriesFor: #get_notationName:!**auto generated**!COM Interfaces-IXMLDOMEntity!private! !
+!MSXML.IXMLDOMEntity categoriesFor: #get_publicId:!**auto generated**!COM Interfaces-IXMLDOMEntity!private! !
+!MSXML.IXMLDOMEntity categoriesFor: #get_systemId:!**auto generated**!COM Interfaces-IXMLDOMEntity!private! !
+!MSXML.IXMLDOMEntity categoriesFor: #key!accessing!public! !
+!MSXML.IXMLDOMEntity categoriesFor: #key:!accessing!public! !
+!MSXML.IXMLDOMEntity categoriesFor: #notationName!**auto generated**!properties!public! !
+!MSXML.IXMLDOMEntity categoriesFor: #publicId!**auto generated**!properties!public! !
+!MSXML.IXMLDOMEntity categoriesFor: #systemId!**auto generated**!properties!public! !
+!MSXML.IXMLDOMEntity categoriesFor: #value!accessing!public! !
+!MSXML.IXMLDOMEntity categoriesFor: #value:!accessing!public! !
 
-IXMLDOMEntity methodProtocol: #association attributes: #(#ansi #readOnly) selectors: #(#key #key: #value #value:)!
+MSXML.IXMLDOMEntity methodProtocol: #association attributes: #(#ansi #readOnly) selectors: #(#key #key: #value #value:)!
 
-!IXMLDOMEntity class methodsFor!
+!MSXML.IXMLDOMEntity class methodsFor!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'MSXML2.IXMLDOMEntity'
@@ -135,5 +135,5 @@ defineFunctions
 		defineFunction: #get_notationName:
 			argumentTypes: 'bstr*'
 ! !
-!IXMLDOMEntity class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!MSXML.IXMLDOMEntity class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
 

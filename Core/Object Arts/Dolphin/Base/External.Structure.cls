@@ -764,7 +764,7 @@ newPointer
 newPointer: pointerClass
 	"Answer a new instance of the receiver suitable for use as a reference
 	to an externally allocated object, using the specified pointer class (e.g.
-	COMTaskMemory)"
+	OS.COM.TaskMemory)"
 
 	^self basicNew initializeAtAddress: pointerClass new!
 

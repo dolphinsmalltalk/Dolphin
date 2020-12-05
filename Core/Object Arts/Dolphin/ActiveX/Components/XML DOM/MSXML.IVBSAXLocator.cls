@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-IDispatch subclass: #IVBSAXLocator
+OS.COM.IDispatch subclass: #'MSXML.IVBSAXLocator'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'MSXMLConstants'
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-IVBSAXLocator guid: (IID fromString: '{796e7ac5-5aa2-4eff-acad-3faaf01a3288}')!
-IVBSAXLocator comment: '<IVBSAXLocator> is a wrapper class for the COM interface ''MSXML2.IVBSAXLocator'' generated from type information in the ''Microsoft XML, v4.0'' library. It contains methods to invoke the member functions exposed by that interface.
+MSXML.IVBSAXLocator guid: (OS.COM.IID fromString: '{796e7ac5-5aa2-4eff-acad-3faaf01a3288}')!
+MSXML.IVBSAXLocator comment: '<IVBSAXLocator> is a wrapper class for the COM interface ''MSXML2.IVBSAXLocator'' generated from type information in the ''Microsoft XML, v4.0'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains the following helpstring for this interface
 	"IVBSAXLocator interface"
@@ -39,8 +39,8 @@ interface IVBSAXLocator : IDispatch
 		[out, retval]BSTR* strSystemId);
 };
 '!
-!IVBSAXLocator categoriesForClass!COM-Interfaces!MSXML2-Interfaces! !
-!IVBSAXLocator methodsFor!
+!MSXML.IVBSAXLocator categoriesForClass!COM-Interfaces!MSXML2-Interfaces! !
+!MSXML.IVBSAXLocator methodsFor!
 
 columnNumber
 	"Answer the <sdword> value of the 'columnNumber' property of the receiver.
@@ -127,18 +127,18 @@ systemId
 	self get_systemId: answer.
 	^answer asObject
 ! !
-!IVBSAXLocator categoriesFor: #columnNumber!**auto generated**!properties!public! !
-!IVBSAXLocator categoriesFor: #get_columnNumber:!**auto generated**!COM Interfaces-IVBSAXLocator!private! !
-!IVBSAXLocator categoriesFor: #get_lineNumber:!**auto generated**!COM Interfaces-IVBSAXLocator!private! !
-!IVBSAXLocator categoriesFor: #get_publicId:!**auto generated**!COM Interfaces-IVBSAXLocator!private! !
-!IVBSAXLocator categoriesFor: #get_systemId:!**auto generated**!COM Interfaces-IVBSAXLocator!private! !
-!IVBSAXLocator categoriesFor: #isExtensible!**auto generated**!public!testing! !
-!IVBSAXLocator categoriesFor: #isVBCollection!**auto generated**!public!testing! !
-!IVBSAXLocator categoriesFor: #lineNumber!**auto generated**!properties!public! !
-!IVBSAXLocator categoriesFor: #publicId!**auto generated**!properties!public! !
-!IVBSAXLocator categoriesFor: #systemId!**auto generated**!properties!public! !
+!MSXML.IVBSAXLocator categoriesFor: #columnNumber!**auto generated**!properties!public! !
+!MSXML.IVBSAXLocator categoriesFor: #get_columnNumber:!**auto generated**!COM Interfaces-IVBSAXLocator!private! !
+!MSXML.IVBSAXLocator categoriesFor: #get_lineNumber:!**auto generated**!COM Interfaces-IVBSAXLocator!private! !
+!MSXML.IVBSAXLocator categoriesFor: #get_publicId:!**auto generated**!COM Interfaces-IVBSAXLocator!private! !
+!MSXML.IVBSAXLocator categoriesFor: #get_systemId:!**auto generated**!COM Interfaces-IVBSAXLocator!private! !
+!MSXML.IVBSAXLocator categoriesFor: #isExtensible!**auto generated**!public!testing! !
+!MSXML.IVBSAXLocator categoriesFor: #isVBCollection!**auto generated**!public!testing! !
+!MSXML.IVBSAXLocator categoriesFor: #lineNumber!**auto generated**!properties!public! !
+!MSXML.IVBSAXLocator categoriesFor: #publicId!**auto generated**!properties!public! !
+!MSXML.IVBSAXLocator categoriesFor: #systemId!**auto generated**!properties!public! !
 
-!IVBSAXLocator class methodsFor!
+!MSXML.IVBSAXLocator class methodsFor!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'MSXML2.IVBSAXLocator'
@@ -154,5 +154,5 @@ defineFunctions
 		defineFunction: #get_systemId:
 			argumentTypes: 'bstr*'
 ! !
-!IVBSAXLocator class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!MSXML.IVBSAXLocator class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
 

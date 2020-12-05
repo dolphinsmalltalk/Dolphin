@@ -1,17 +1,17 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Error subclass: #DOMParseError
+Core.Error subclass: #'MSXML.DOMParseError'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-DOMParseError guid: (GUID fromString: '{80a8e9d9-c230-4610-8994-72021cfdadcb}')!
-DOMParseError comment: 'DOMParseError is an <Exception> class to wrap the IXMLDOMParseError interface from the Microsoft XML DOM. 
+MSXML.DOMParseError guid: (Core.GUID fromString: '{80a8e9d9-c230-4610-8994-72021cfdadcb}')!
+MSXML.DOMParseError comment: 'DOMParseError is an <Exception> class to wrap the IXMLDOMParseError interface from the Microsoft XML DOM. 
 
 Note that these exceptions are not raised automatically when the parsing of an XML document fails, e.g. in a call to IXMLDOMDocument>>load:, but must be raised (if desired) when the method returns false to indicate a failure.'!
-!DOMParseError categoriesForClass!Unclassified! !
-!DOMParseError methodsFor!
+!MSXML.DOMParseError categoriesForClass!Unclassified! !
+!MSXML.DOMParseError methodsFor!
 
 _descriptionArguments
 	"Answer a <sequencedReadableCollection> of the  arguments to be substitued 
@@ -46,6 +46,6 @@ _descriptionFormat
 	"Private - Answer a string which is the message format for the receiver's description."
 
 	^'%1 - ''%3'' at %4!!d!!, %5!!d!!'! !
-!DOMParseError categoriesFor: #_descriptionArguments!displaying!public! !
-!DOMParseError categoriesFor: #_descriptionFormat!displaying!private! !
+!MSXML.DOMParseError categoriesFor: #_descriptionArguments!displaying!public! !
+!MSXML.DOMParseError categoriesFor: #_descriptionFormat!displaying!private! !
 

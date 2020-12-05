@@ -1,19 +1,19 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Core.SequenceableCollection subclass: #DOMNodeList
+Core.SequenceableCollection subclass: #'MSXML.DOMNodeList'
 	instanceVariableNames: 'interface'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-DOMNodeList guid: (Core.GUID fromString: '{e1531d8f-7795-472d-83f8-24c7cd6c0947}')!
-DOMNodeList comment: 'DOMNodeList is a <sequencedReadableCollection> wrapper around the MSXML <IXMLDOMNodeList> interface. Its purpose is to make all the power of Smalltalk sequenceable collections available on the much more limited DOM interface, and to provide seamless integration into the Smalltalk development environment (i.e. so that the node map prints, inspects, and acts like an array). 
+MSXML.DOMNodeList guid: (Core.GUID fromString: '{e1531d8f-7795-472d-83f8-24c7cd6c0947}')!
+MSXML.DOMNodeList comment: 'DOMNodeList is a <sequencedReadableCollection> wrapper around the MSXML <IXMLDOMNodeList> interface. Its purpose is to make all the power of Smalltalk sequenceable collections available on the much more limited DOM interface, and to provide seamless integration into the Smalltalk development environment (i.e. so that the node map prints, inspects, and acts like an array). 
 All DOM interface methods that return an IXMLDOMNamedNodeMap have been modified to return a subinstance of this class.
 
 Instance Variables:
 	interface		<IXMLDOMNodeList>'!
-!DOMNodeList categoriesForClass!Unclassified! !
-!DOMNodeList methodsFor!
+!MSXML.DOMNodeList categoriesForClass!Unclassified! !
+!MSXML.DOMNodeList methodsFor!
 
 add: newElement 
 	^self shouldNotImplement!
@@ -99,23 +99,23 @@ xml
 	stream := String writeStream: 64.
 	self do: [:each | stream nextPutAll: each xml].
 	^stream contents! !
-!DOMNodeList categoriesFor: #add:!adding!public! !
-!DOMNodeList categoriesFor: #at:!accessing!public! !
-!DOMNodeList categoriesFor: #at:put:!accessing!public! !
-!DOMNodeList categoriesFor: #basicFree!private!realizing/unrealizing! !
-!DOMNodeList categoriesFor: #copyingClass!copying!private! !
-!DOMNodeList categoriesFor: #free!public!realizing/unrealizing! !
-!DOMNodeList categoriesFor: #interface!accessing!private! !
-!DOMNodeList categoriesFor: #interface:!accessing!private! !
-!DOMNodeList categoriesFor: #item:!properties!public! !
-!DOMNodeList categoriesFor: #length!properties!public! !
-!DOMNodeList categoriesFor: #nextNode!methods!public! !
-!DOMNodeList categoriesFor: #reset!methods!public! !
-!DOMNodeList categoriesFor: #size!accessing!public! !
-!DOMNodeList categoriesFor: #species!accessing!public! !
-!DOMNodeList categoriesFor: #xml!accessing!public! !
+!MSXML.DOMNodeList categoriesFor: #add:!adding!public! !
+!MSXML.DOMNodeList categoriesFor: #at:!accessing!public! !
+!MSXML.DOMNodeList categoriesFor: #at:put:!accessing!public! !
+!MSXML.DOMNodeList categoriesFor: #basicFree!private!realizing/unrealizing! !
+!MSXML.DOMNodeList categoriesFor: #copyingClass!copying!private! !
+!MSXML.DOMNodeList categoriesFor: #free!public!realizing/unrealizing! !
+!MSXML.DOMNodeList categoriesFor: #interface!accessing!private! !
+!MSXML.DOMNodeList categoriesFor: #interface:!accessing!private! !
+!MSXML.DOMNodeList categoriesFor: #item:!properties!public! !
+!MSXML.DOMNodeList categoriesFor: #length!properties!public! !
+!MSXML.DOMNodeList categoriesFor: #nextNode!methods!public! !
+!MSXML.DOMNodeList categoriesFor: #reset!methods!public! !
+!MSXML.DOMNodeList categoriesFor: #size!accessing!public! !
+!MSXML.DOMNodeList categoriesFor: #species!accessing!public! !
+!MSXML.DOMNodeList categoriesFor: #xml!accessing!public! !
 
-!DOMNodeList class methodsFor!
+!MSXML.DOMNodeList class methodsFor!
 
 on: anIXMLDOMNodeList
 	"Answer a new instance of the receiver which implements the entire
@@ -125,5 +125,5 @@ on: anIXMLDOMNodeList
 		interface: anIXMLDOMNodeList
 
 	! !
-!DOMNodeList class categoriesFor: #on:!instance creation!public! !
+!MSXML.DOMNodeList class categoriesFor: #on:!instance creation!public! !
 

@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-IUnknown subclass: #IMXNamespaceManager
+OS.COM.IUnknown subclass: #'MSXML.IMXNamespaceManager'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'MSXMLConstants'
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-IMXNamespaceManager guid: (IID fromString: '{c90352f6-643c-4fbc-bb23-e996eb2d51fd}')!
-IMXNamespaceManager comment: '<IMXNamespaceManager> is a wrapper class for the COM interface ''MSXML2.IMXNamespaceManager'' generated from type information in the ''Microsoft XML, v4.0'' library. It contains methods to invoke the member functions exposed by that interface.
+MSXML.IMXNamespaceManager guid: (OS.COM.IID fromString: '{c90352f6-643c-4fbc-bb23-e996eb2d51fd}')!
+MSXML.IMXNamespaceManager comment: '<IMXNamespaceManager> is a wrapper class for the COM interface ''MSXML2.IMXNamespaceManager'' generated from type information in the ''Microsoft XML, v4.0'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains the following helpstring for this interface
 	"IMXNamespaceManager interface"
@@ -63,8 +63,8 @@ interface IMXNamespaceManager : IUnknown
 		[in, out]int* pcchUri);
 };
 '!
-!IMXNamespaceManager categoriesForClass!COM-Interfaces!MSXML2-Interfaces! !
-!IMXNamespaceManager methodsFor!
+!MSXML.IMXNamespaceManager categoriesForClass!COM-Interfaces!MSXML2-Interfaces! !
+!MSXML.IMXNamespaceManager methodsFor!
 
 DeclarePrefix: prefix namespaceURI: namespaceURI
 	"Invoke the declarePrefix() method of the COM object.
@@ -218,22 +218,22 @@ Reset
 
 	<virtual stdcall: hresult 6>
 	^self invalidCall: _failureCode! !
-!IMXNamespaceManager categoriesFor: #DeclarePrefix:namespaceURI:!**auto generated**!COM Interfaces-IMXNamespaceManager!public! !
-!IMXNamespaceManager categoriesFor: #getAllowOverride!**auto generated**!methods!public! !
-!IMXNamespaceManager categoriesFor: #GetAllowOverride:!**auto generated**!COM Interfaces-IMXNamespaceManager!private! !
-!IMXNamespaceManager categoriesFor: #getDeclaredPrefix:pwchPrefix:pcchPrefix:!**auto generated**!methods!public! !
-!IMXNamespaceManager categoriesFor: #GetDeclaredPrefix:pwchPrefix:pcchPrefix:!**auto generated**!COM Interfaces-IMXNamespaceManager!private! !
-!IMXNamespaceManager categoriesFor: #getPrefix:nIndex:pwchPrefix:pcchPrefix:!**auto generated**!methods!public! !
-!IMXNamespaceManager categoriesFor: #GetPrefix:nIndex:pwchPrefix:pcchPrefix:!**auto generated**!COM Interfaces-IMXNamespaceManager!private! !
-!IMXNamespaceManager categoriesFor: #getURI:pContextNode:pwchUri:pcchUri:!**auto generated**!methods!public! !
-!IMXNamespaceManager categoriesFor: #GetURI:pContextNode:pwchUri:pcchUri:!**auto generated**!COM Interfaces-IMXNamespaceManager!private! !
-!IMXNamespaceManager categoriesFor: #PopContext!**auto generated**!COM Interfaces-IMXNamespaceManager!public! !
-!IMXNamespaceManager categoriesFor: #PushContext!**auto generated**!COM Interfaces-IMXNamespaceManager!public! !
-!IMXNamespaceManager categoriesFor: #PushNodeContext:fDeep:!**auto generated**!COM Interfaces-IMXNamespaceManager!public! !
-!IMXNamespaceManager categoriesFor: #PutAllowOverride:!**auto generated**!COM Interfaces-IMXNamespaceManager!public! !
-!IMXNamespaceManager categoriesFor: #Reset!**auto generated**!COM Interfaces-IMXNamespaceManager!public! !
+!MSXML.IMXNamespaceManager categoriesFor: #DeclarePrefix:namespaceURI:!**auto generated**!COM Interfaces-IMXNamespaceManager!public! !
+!MSXML.IMXNamespaceManager categoriesFor: #getAllowOverride!**auto generated**!methods!public! !
+!MSXML.IMXNamespaceManager categoriesFor: #GetAllowOverride:!**auto generated**!COM Interfaces-IMXNamespaceManager!private! !
+!MSXML.IMXNamespaceManager categoriesFor: #getDeclaredPrefix:pwchPrefix:pcchPrefix:!**auto generated**!methods!public! !
+!MSXML.IMXNamespaceManager categoriesFor: #GetDeclaredPrefix:pwchPrefix:pcchPrefix:!**auto generated**!COM Interfaces-IMXNamespaceManager!private! !
+!MSXML.IMXNamespaceManager categoriesFor: #getPrefix:nIndex:pwchPrefix:pcchPrefix:!**auto generated**!methods!public! !
+!MSXML.IMXNamespaceManager categoriesFor: #GetPrefix:nIndex:pwchPrefix:pcchPrefix:!**auto generated**!COM Interfaces-IMXNamespaceManager!private! !
+!MSXML.IMXNamespaceManager categoriesFor: #getURI:pContextNode:pwchUri:pcchUri:!**auto generated**!methods!public! !
+!MSXML.IMXNamespaceManager categoriesFor: #GetURI:pContextNode:pwchUri:pcchUri:!**auto generated**!COM Interfaces-IMXNamespaceManager!private! !
+!MSXML.IMXNamespaceManager categoriesFor: #PopContext!**auto generated**!COM Interfaces-IMXNamespaceManager!public! !
+!MSXML.IMXNamespaceManager categoriesFor: #PushContext!**auto generated**!COM Interfaces-IMXNamespaceManager!public! !
+!MSXML.IMXNamespaceManager categoriesFor: #PushNodeContext:fDeep:!**auto generated**!COM Interfaces-IMXNamespaceManager!public! !
+!MSXML.IMXNamespaceManager categoriesFor: #PutAllowOverride:!**auto generated**!COM Interfaces-IMXNamespaceManager!public! !
+!MSXML.IMXNamespaceManager categoriesFor: #Reset!**auto generated**!COM Interfaces-IMXNamespaceManager!public! !
 
-!IMXNamespaceManager class methodsFor!
+!MSXML.IMXNamespaceManager class methodsFor!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'MSXML2.IMXNamespaceManager'
@@ -258,5 +258,5 @@ defineFunctions
 		defineFunction: #GetURI:pContextNode:pwchUri:pcchUri:
 			argumentTypes: 'word* IXMLDOMNode* word* sdword*'
 ! !
-!IMXNamespaceManager class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!MSXML.IMXNamespaceManager class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
 

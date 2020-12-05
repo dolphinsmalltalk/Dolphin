@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'XML DOM Visitor'.
-package paxVersion: 2;
+package paxVersion: 2.1;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk XML DOM Visitor Package. 
 Copyright (c) Object Arts Ltd, 2000-2006
@@ -9,22 +9,22 @@ An abstract visitor for XML DOM trees.'.
 
 
 package setClassNames: #(
-	#{XmlDomVisitor}
+	#{MSXML.XmlDomVisitor}
 ).
 
 package setMethodNames: #(
-	#(#{IXMLDOMAttribute} #acceptVisitor:)
-	#(#{IXMLDOMCDATASection} #acceptVisitor:)
-	#(#{IXMLDOMComment} #acceptVisitor:)
-	#(#{IXMLDOMDocument} #acceptVisitor:)
-	#(#{IXMLDOMDocumentType} #acceptVisitor:)
-	#(#{IXMLDOMElement} #acceptVisitor:)
-	#(#{IXMLDOMEntity} #acceptVisitor:)
-	#(#{IXMLDOMEntityReference} #acceptVisitor:)
-	#(#{IXMLDOMNode} #acceptVisitor:)
-	#(#{IXMLDOMNotation} #acceptVisitor:)
-	#(#{IXMLDOMProcessingInstruction} #acceptVisitor:)
-	#(#{IXMLDOMText} #acceptVisitor:)
+	#(#{MSXML.IXMLDOMAttribute} #acceptVisitor:)
+	#(#{MSXML.IXMLDOMCDATASection} #acceptVisitor:)
+	#(#{MSXML.IXMLDOMComment} #acceptVisitor:)
+	#(#{MSXML.IXMLDOMDocument} #acceptVisitor:)
+	#(#{MSXML.IXMLDOMDocumentType} #acceptVisitor:)
+	#(#{MSXML.IXMLDOMElement} #acceptVisitor:)
+	#(#{MSXML.IXMLDOMEntity} #acceptVisitor:)
+	#(#{MSXML.IXMLDOMEntityReference} #acceptVisitor:)
+	#(#{MSXML.IXMLDOMNode} #acceptVisitor:)
+	#(#{MSXML.IXMLDOMNotation} #acceptVisitor:)
+	#(#{MSXML.IXMLDOMProcessingInstruction} #acceptVisitor:)
+	#(#{MSXML.IXMLDOMText} #acceptVisitor:)
 ).
 
 package setPrerequisites: #(
@@ -36,86 +36,86 @@ package!
 
 "Class Definitions"!
 
-Object subclass: #XmlDomVisitor
+Core.Object subclass: #'MSXML.XmlDomVisitor'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 
 "Loose Methods"!
 
-!IXMLDOMAttribute methodsFor!
+!MSXML.IXMLDOMAttribute methodsFor!
 
 acceptVisitor: anXmlNodeVisitor
 	anXmlNodeVisitor visitAttribute: self! !
-!IXMLDOMAttribute categoriesFor: #acceptVisitor:!public!visitor! !
+!MSXML.IXMLDOMAttribute categoriesFor: #acceptVisitor:!public!visitor! !
 
-!IXMLDOMCDATASection methodsFor!
+!MSXML.IXMLDOMCDATASection methodsFor!
 
 acceptVisitor: anXmlNodeVisitor
 	anXmlNodeVisitor visitCDATA: self! !
-!IXMLDOMCDATASection categoriesFor: #acceptVisitor:!public!visitor! !
+!MSXML.IXMLDOMCDATASection categoriesFor: #acceptVisitor:!public!visitor! !
 
-!IXMLDOMComment methodsFor!
+!MSXML.IXMLDOMComment methodsFor!
 
 acceptVisitor: anXmlNodeVisitor
 	anXmlNodeVisitor visitComment: self! !
-!IXMLDOMComment categoriesFor: #acceptVisitor:!public!visitor! !
+!MSXML.IXMLDOMComment categoriesFor: #acceptVisitor:!public!visitor! !
 
-!IXMLDOMDocument methodsFor!
+!MSXML.IXMLDOMDocument methodsFor!
 
 acceptVisitor: anXmlNodeVisitor
 	anXmlNodeVisitor visitDocument: self! !
-!IXMLDOMDocument categoriesFor: #acceptVisitor:!public!visitor! !
+!MSXML.IXMLDOMDocument categoriesFor: #acceptVisitor:!public!visitor! !
 
-!IXMLDOMDocumentType methodsFor!
+!MSXML.IXMLDOMDocumentType methodsFor!
 
 acceptVisitor: anXmlNodeVisitor
 	anXmlNodeVisitor visitDocumentType: self! !
-!IXMLDOMDocumentType categoriesFor: #acceptVisitor:!public!visitor! !
+!MSXML.IXMLDOMDocumentType categoriesFor: #acceptVisitor:!public!visitor! !
 
-!IXMLDOMElement methodsFor!
+!MSXML.IXMLDOMElement methodsFor!
 
 acceptVisitor: anXmlNodeVisitor
 	anXmlNodeVisitor visitElement: self! !
-!IXMLDOMElement categoriesFor: #acceptVisitor:!public!visitor! !
+!MSXML.IXMLDOMElement categoriesFor: #acceptVisitor:!public!visitor! !
 
-!IXMLDOMEntity methodsFor!
+!MSXML.IXMLDOMEntity methodsFor!
 
 acceptVisitor: anXmlNodeVisitor
 	anXmlNodeVisitor visitEntity: self! !
-!IXMLDOMEntity categoriesFor: #acceptVisitor:!public!visitor! !
+!MSXML.IXMLDOMEntity categoriesFor: #acceptVisitor:!public!visitor! !
 
-!IXMLDOMEntityReference methodsFor!
+!MSXML.IXMLDOMEntityReference methodsFor!
 
 acceptVisitor: anXmlNodeVisitor
 	anXmlNodeVisitor visitEntityReference: self! !
-!IXMLDOMEntityReference categoriesFor: #acceptVisitor:!public!visitor! !
+!MSXML.IXMLDOMEntityReference categoriesFor: #acceptVisitor:!public!visitor! !
 
-!IXMLDOMNode methodsFor!
+!MSXML.IXMLDOMNode methodsFor!
 
 acceptVisitor: anXmlNodeVisitor
 	anXmlNodeVisitor visitDomNode: self! !
-!IXMLDOMNode categoriesFor: #acceptVisitor:!public!visitor! !
+!MSXML.IXMLDOMNode categoriesFor: #acceptVisitor:!public!visitor! !
 
-!IXMLDOMNotation methodsFor!
+!MSXML.IXMLDOMNotation methodsFor!
 
 acceptVisitor: anXmlNodeVisitor
 	anXmlNodeVisitor visitNotation: self! !
-!IXMLDOMNotation categoriesFor: #acceptVisitor:!public!visitor! !
+!MSXML.IXMLDOMNotation categoriesFor: #acceptVisitor:!public!visitor! !
 
-!IXMLDOMProcessingInstruction methodsFor!
+!MSXML.IXMLDOMProcessingInstruction methodsFor!
 
 acceptVisitor: anXmlNodeVisitor
 	anXmlNodeVisitor visitProcessingInstruction: self! !
-!IXMLDOMProcessingInstruction categoriesFor: #acceptVisitor:!public!visitor! !
+!MSXML.IXMLDOMProcessingInstruction categoriesFor: #acceptVisitor:!public!visitor! !
 
-!IXMLDOMText methodsFor!
+!MSXML.IXMLDOMText methodsFor!
 
 acceptVisitor: anXmlNodeVisitor
 	anXmlNodeVisitor visitText: self! !
-!IXMLDOMText categoriesFor: #acceptVisitor:!public!visitor! !
+!MSXML.IXMLDOMText categoriesFor: #acceptVisitor:!public!visitor! !
 
 "End of package definition"!
 

@@ -17,7 +17,7 @@ testLintRulesXml
 	| xml rules name xpath node |
 	rules := CodeMentorPlugin lintRules.
 	"Escaping quotes in xpath's is notoriously complicated. To avoid that, use the older MSXML DOM version that supported C-style quoting"
-	xml := Smalltalk.IXMLDOMDocument2 newDOMDocument30 loadURL: CodeMentorPlugin lintRulesDocURL.
+	xml := MSXML.IXMLDOMDocument2 newDOMDocument30 loadURL: CodeMentorPlugin lintRulesDocURL.
 	rules allRules do: 
 			[:each |
 			name := each name copyReplaceAll: '"' with: '\"'.

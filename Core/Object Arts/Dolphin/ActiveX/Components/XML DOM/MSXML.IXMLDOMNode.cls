@@ -1,17 +1,17 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-IDispatch subclass: #IXMLDOMNode
+OS.COM.IDispatch subclass: #'MSXML.IXMLDOMNode'
 	instanceVariableNames: ''
 	classVariableNames: 'NodeTypes VarTypeToXMLDataType'
-	poolDictionaries: 'MSXMLConstants'
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-IXMLDOMNode guid: (IID fromString: '{2933bf80-7b36-11d2-b20e-00c04f983e60}')!
-IXMLDOMNode comment: '<IXMLDOMNode> is a wrapper class for the COM interface ''MSXML.IXMLDOMNode'' generated from type information in the ''Microsoft XML, version 2.0'' library. It contains methods to invoke the member functions exposed by that interface.
+MSXML.IXMLDOMNode guid: (OS.COM.IID fromString: '{2933bf80-7b36-11d2-b20e-00c04f983e60}')!
+MSXML.IXMLDOMNode comment: '<IXMLDOMNode> is a wrapper class for the COM interface ''MSXML.IXMLDOMNode'' generated from type information in the ''Microsoft XML, version 2.0'' library. It contains methods to invoke the member functions exposed by that interface.
 
 This is the generic interface for a single node in the DOM document tree. In the Dolphin wrapping of the DOM you should rarely, if ever, see instances of this interface since we automatically downcast to the correct specialized type of node (using the nodeType) whenever an interface method returns an interface of this generic type.'!
-!IXMLDOMNode categoriesForClass!COM-Interfaces!MSXML-Interfaces! !
-!IXMLDOMNode methodsFor!
+!MSXML.IXMLDOMNode categoriesForClass!COM-Interfaces!MSXML-Interfaces! !
+!MSXML.IXMLDOMNode methodsFor!
 
 = anObject 
 	^self class == anObject class and: [self childNodes = anObject childNodes]!
@@ -75,11 +75,8 @@ appendChild: newChild
 
 	| answer |
 	answer := IXMLDOMNode newPointer.
-	self
-		AppendChild: newChild
-		outNewChild: answer.
-	^answer asObject
-!
+	self AppendChild: newChild outNewChild: answer.
+	^answer asObject!
 
 AppendChild: newChild outNewChild: outNewChild
 	"Private - Invoke the appendChild() method of the COM object.
@@ -122,10 +119,8 @@ attributes
 	| answer |
 	answer := IXMLDOMNamedNodeMap newPointer.
 	self get_attributes: answer.
-	answer isNull 
-		ifTrue: 
-			[self 
-				error: 'Node does not (cannot) have any attributes, e.g. it is a text only node'].
+	answer isNull
+		ifTrue: [self error: 'Node does not (cannot) have any attributes, e.g. it is a text only node'].
 	^DOMAttributeMap onInterface: answer parentNode: self!
 
 baseName
@@ -148,19 +143,15 @@ childNodes
 	| answer |
 	answer := IXMLDOMNodeList newPointer.
 	self get_childNodes: answer.
-	^DOMNodeList on: answer
-!
+	^DOMNodeList on: answer!
 
 cloneNode: deep
 	"Answer the <IXMLDOMNode> result of invoking the cloneNode() method of the COM object."
 
 	| answer |
 	answer := IXMLDOMNode newPointer.
-	self
-		CloneNode: deep
-		cloneRoot: answer.
-	^answer asObject
-!
+	self CloneNode: deep cloneRoot: answer.
+	^answer asObject!
 
 CloneNode: deep cloneRoot: cloneRoot
 	"Private - Invoke the cloneNode() method of the COM object.
@@ -196,8 +187,7 @@ definition
 	| answer |
 	answer := IXMLDOMNode newPointer.
 	self get_definition: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 downCast
 	"Attempt to 'cast' the receiver down to a derived dual interface class 
@@ -218,8 +208,7 @@ firstChild
 	| answer |
 	answer := IXMLDOMNode newPointer.
 	self get_firstChild: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 get_attributes: attributeMap
 	"Private - Get the value of the 'attributes' property of the receiver.
@@ -452,8 +441,7 @@ insertBefore: newChild refChild: refChild
 		InsertBefore: newChild
 		refChild: refChild asVariant
 		outNewChild: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 InsertBefore: newChild refChild: refChild outNewChild: outNewChild
 	"Private - Invoke the insertBefore() method of the COM object.
@@ -489,8 +477,7 @@ lastChild
 	| answer |
 	answer := IXMLDOMNode newPointer.
 	self get_lastChild: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 namespaceURI
 	"Answer the <bstr> value of the 'namespaceURI' property of the receiver.
@@ -509,8 +496,7 @@ nextSibling
 	| answer |
 	answer := IXMLDOMNode newPointer.
 	self get_nextSibling: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 nodeName
 	"Answer the <bstr> value of the 'nodeName' property of the receiver.
@@ -599,8 +585,7 @@ ownerDocument
 	| answer |
 	answer := IXMLDOMDocument newPointer.
 	self get_ownerDocument: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 parentNode
 	"Answer the <IXMLDOMNode> value of the 'parentNode' property of the receiver.
@@ -609,8 +594,7 @@ parentNode
 	| answer |
 	answer := IXMLDOMNode newPointer.
 	self get_parentNode: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 parsed
 	"Answer the <varbool> value of the 'parsed' property of the receiver.
@@ -639,8 +623,7 @@ previousSibling
 	| answer |
 	answer := IXMLDOMNode newPointer.
 	self get_previousSibling: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 printValueOn: aStream
 	aStream print: ([self nodeName] on: HRESULTError
@@ -692,11 +675,8 @@ removeChild: childNode
 
 	| answer |
 	answer := IXMLDOMNode newPointer.
-	self
-		RemoveChild: childNode
-		oldChild: answer.
-	^answer asObject
-!
+	self RemoveChild: childNode oldChild: answer.
+	^answer asObject!
 
 RemoveChild: childNode oldChild: oldChild
 	"Private - Invoke the removeChild() method of the COM object.
@@ -719,8 +699,7 @@ replaceChild: newChild oldChild: oldChild
 		ReplaceChild: newChild
 		oldChild: oldChild
 		outOldChild: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 ReplaceChild: newChild oldChild: oldChild outOldChild: outOldChild
 	"Private - Invoke the replaceChild() method of the COM object.
@@ -734,7 +713,7 @@ ReplaceChild: newChild oldChild: oldChild outOldChild: outOldChild
 	<virtual stdcall: hresult 20 IXMLDOMNode* IXMLDOMNode* IXMLDOMNode**>
 	^self invalidCall: _failureCode!
 
-selectNodes: queryString 
+selectNodes: queryString
 	"Answer a <sequencedReadableCollection> on the <IXMLDOMNodeList> result 
 	<IXMLDOMNodeList> result of invoking the COM Object's selectNodes() method.
 	Helpstring: 'execute query on the subtree'.
@@ -743,9 +722,7 @@ selectNodes: queryString
 
 	| answer |
 	answer := IXMLDOMNodeList newPointer.
-	self
-		SelectNodes: queryString
-		resultList: answer.
+	self SelectNodes: queryString resultList: answer.
 	^DOMNodeList on: answer!
 
 SelectNodes: queryString resultList: resultList
@@ -765,11 +742,8 @@ selectSingleNode: queryString
 
 	| answer |
 	answer := IXMLDOMNode newPointer.
-	self
-		SelectSingleNode: queryString
-		resultNode: answer.
-	^answer asObject
-!
+	self SelectSingleNode: queryString resultNode: answer.
+	^answer asObject!
 
 SelectSingleNode: queryString resultNode: resultNode
 	"Private - Invoke the selectSingleNode() method of the COM object.
@@ -885,96 +859,96 @@ xml
 	self get_xml: answer.
 	^answer asObject
 ! !
-!IXMLDOMNode categoriesFor: #=!comparing!public! !
-!IXMLDOMNode categoriesFor: #addCDATASection:!adding!public! !
-!IXMLDOMNode categoriesFor: #addComment:!adding!public! !
-!IXMLDOMNode categoriesFor: #addElement:!adding!public! !
-!IXMLDOMNode categoriesFor: #addProcessingInstruction:data:!adding!public! !
-!IXMLDOMNode categoriesFor: #addTextNode:!adding!public! !
-!IXMLDOMNode categoriesFor: #appendChild:!**auto generated**!methods!public! !
-!IXMLDOMNode categoriesFor: #AppendChild:outNewChild:!**auto generated**!COM Interfaces-IXMLDOMNode!private! !
-!IXMLDOMNode categoriesFor: #asImplType!converting!public! !
-!IXMLDOMNode categoriesFor: #asObject!converting!public! !
-!IXMLDOMNode categoriesFor: #attributes!properties!public! !
-!IXMLDOMNode categoriesFor: #baseName!**auto generated**!properties!public! !
-!IXMLDOMNode categoriesFor: #childNodes!properties!public! !
-!IXMLDOMNode categoriesFor: #cloneNode:!**auto generated**!methods!public! !
-!IXMLDOMNode categoriesFor: #CloneNode:cloneRoot:!**auto generated**!COM Interfaces-IXMLDOMNode!private! !
-!IXMLDOMNode categoriesFor: #dataType!**auto generated**!properties!public! !
-!IXMLDOMNode categoriesFor: #dataType:!**auto generated**!properties!public! !
-!IXMLDOMNode categoriesFor: #definition!**auto generated**!properties!public! !
-!IXMLDOMNode categoriesFor: #downCast!converting!public! !
-!IXMLDOMNode categoriesFor: #firstChild!**auto generated**!properties!public! !
-!IXMLDOMNode categoriesFor: #get_attributes:!**auto generated**!COM Interfaces-IXMLDOMNode!private! !
-!IXMLDOMNode categoriesFor: #get_baseName:!**auto generated**!COM Interfaces-IXMLDOMNode!private! !
-!IXMLDOMNode categoriesFor: #get_childNodes:!**auto generated**!COM Interfaces-IXMLDOMNode!private! !
-!IXMLDOMNode categoriesFor: #get_dataType:!**auto generated**!COM Interfaces-IXMLDOMNode!private! !
-!IXMLDOMNode categoriesFor: #get_definition:!**auto generated**!COM Interfaces-IXMLDOMNode!private! !
-!IXMLDOMNode categoriesFor: #get_firstChild:!**auto generated**!COM Interfaces-IXMLDOMNode!private! !
-!IXMLDOMNode categoriesFor: #get_lastChild:!**auto generated**!COM Interfaces-IXMLDOMNode!private! !
-!IXMLDOMNode categoriesFor: #get_namespaceURI:!**auto generated**!COM Interfaces-IXMLDOMNode!private! !
-!IXMLDOMNode categoriesFor: #get_nextSibling:!**auto generated**!COM Interfaces-IXMLDOMNode!private! !
-!IXMLDOMNode categoriesFor: #get_nodeName:!**auto generated**!COM Interfaces-IXMLDOMNode!private! !
-!IXMLDOMNode categoriesFor: #get_nodeType:!**auto generated**!COM Interfaces-IXMLDOMNode!private! !
-!IXMLDOMNode categoriesFor: #get_nodeTypedValue:!**auto generated**!COM Interfaces-IXMLDOMNode!private! !
-!IXMLDOMNode categoriesFor: #get_nodeTypeString:!**auto generated**!COM Interfaces-IXMLDOMNode!private! !
-!IXMLDOMNode categoriesFor: #get_nodeValue:!**auto generated**!COM Interfaces-IXMLDOMNode!private! !
-!IXMLDOMNode categoriesFor: #get_ownerDocument:!**auto generated**!COM Interfaces-IXMLDOMNode!private! !
-!IXMLDOMNode categoriesFor: #get_parentNode:!**auto generated**!COM Interfaces-IXMLDOMNode!private! !
-!IXMLDOMNode categoriesFor: #get_parsed:!**auto generated**!COM Interfaces-IXMLDOMNode!private! !
-!IXMLDOMNode categoriesFor: #get_prefix:!**auto generated**!COM Interfaces-IXMLDOMNode!private! !
-!IXMLDOMNode categoriesFor: #get_previousSibling:!**auto generated**!COM Interfaces-IXMLDOMNode!private! !
-!IXMLDOMNode categoriesFor: #get_specified:!**auto generated**!COM Interfaces-IXMLDOMNode!private! !
-!IXMLDOMNode categoriesFor: #get_text:!**auto generated**!COM Interfaces-IXMLDOMNode!private! !
-!IXMLDOMNode categoriesFor: #get_xml:!**auto generated**!COM Interfaces-IXMLDOMNode!private! !
-!IXMLDOMNode categoriesFor: #hasChildNodes!**auto generated**!methods!public! !
-!IXMLDOMNode categoriesFor: #HasChildNodes:!**auto generated**!COM Interfaces-IXMLDOMNode!private! !
-!IXMLDOMNode categoriesFor: #innerXML!accessing!public! !
-!IXMLDOMNode categoriesFor: #insertBefore:refChild:!**auto generated**!methods!public! !
-!IXMLDOMNode categoriesFor: #InsertBefore:refChild:outNewChild:!**auto generated**!COM Interfaces-IXMLDOMNode!private! !
-!IXMLDOMNode categoriesFor: #isExtensible!**auto generated**!public!testing! !
-!IXMLDOMNode categoriesFor: #isText!public!testing! !
-!IXMLDOMNode categoriesFor: #isVBCollection!**auto generated**!public!testing! !
-!IXMLDOMNode categoriesFor: #lastChild!**auto generated**!properties!public! !
-!IXMLDOMNode categoriesFor: #namespaceURI!**auto generated**!properties!public! !
-!IXMLDOMNode categoriesFor: #nextSibling!**auto generated**!properties!public! !
-!IXMLDOMNode categoriesFor: #nodeName!**auto generated**!properties!public! !
-!IXMLDOMNode categoriesFor: #nodeType!**auto generated**!properties!public! !
-!IXMLDOMNode categoriesFor: #nodeTypedValue!**auto generated**!properties!public! !
-!IXMLDOMNode categoriesFor: #nodeTypedValue:!**auto generated**!properties!public! !
-!IXMLDOMNode categoriesFor: #nodeTypes!constants!public! !
-!IXMLDOMNode categoriesFor: #nodeTypeString!**auto generated**!properties!public! !
-!IXMLDOMNode categoriesFor: #nodeValue!**auto generated**!properties!public! !
-!IXMLDOMNode categoriesFor: #nodeValue:!**auto generated**!properties!public! !
-!IXMLDOMNode categoriesFor: #ownerDocument!**auto generated**!properties!public! !
-!IXMLDOMNode categoriesFor: #parentNode!**auto generated**!properties!public! !
-!IXMLDOMNode categoriesFor: #parsed!**auto generated**!properties!public! !
-!IXMLDOMNode categoriesFor: #prefix!**auto generated**!properties!public! !
-!IXMLDOMNode categoriesFor: #previousSibling!**auto generated**!properties!public! !
-!IXMLDOMNode categoriesFor: #printValueOn:!printing!private! !
-!IXMLDOMNode categoriesFor: #put_dataType:!**auto generated**!COM Interfaces-IXMLDOMNode!private! !
-!IXMLDOMNode categoriesFor: #put_nodeTypedValue:!**auto generated**!COM Interfaces-IXMLDOMNode!private! !
-!IXMLDOMNode categoriesFor: #put_nodeValue:!**auto generated**!COM Interfaces-IXMLDOMNode!private! !
-!IXMLDOMNode categoriesFor: #put_text:!**auto generated**!COM Interfaces-IXMLDOMNode!private! !
-!IXMLDOMNode categoriesFor: #removeChild:!**auto generated**!methods!public! !
-!IXMLDOMNode categoriesFor: #RemoveChild:oldChild:!**auto generated**!COM Interfaces-IXMLDOMNode!private! !
-!IXMLDOMNode categoriesFor: #replaceChild:oldChild:!**auto generated**!methods!public! !
-!IXMLDOMNode categoriesFor: #ReplaceChild:oldChild:outOldChild:!**auto generated**!COM Interfaces-IXMLDOMNode!private! !
-!IXMLDOMNode categoriesFor: #selectNodes:!methods!public! !
-!IXMLDOMNode categoriesFor: #SelectNodes:resultList:!**auto generated**!COM Interfaces-IXMLDOMNode!private! !
-!IXMLDOMNode categoriesFor: #selectSingleNode:!**auto generated**!methods!public! !
-!IXMLDOMNode categoriesFor: #SelectSingleNode:resultNode:!**auto generated**!COM Interfaces-IXMLDOMNode!private! !
-!IXMLDOMNode categoriesFor: #setNodeTypeAndValue:!accessing!public! !
-!IXMLDOMNode categoriesFor: #specified!**auto generated**!properties!public! !
-!IXMLDOMNode categoriesFor: #text!properties!public! !
-!IXMLDOMNode categoriesFor: #text:!**auto generated**!properties!public! !
-!IXMLDOMNode categoriesFor: #transformNode:!**auto generated**!methods!public! !
-!IXMLDOMNode categoriesFor: #TransformNode:xmlString:!**auto generated**!COM Interfaces-IXMLDOMNode!private! !
-!IXMLDOMNode categoriesFor: #transformNodeToObject:outputObject:!**auto generated**!methods!public! !
-!IXMLDOMNode categoriesFor: #TransformNodeToObject:outputObject:!**auto generated**!COM Interfaces-IXMLDOMNode!private! !
-!IXMLDOMNode categoriesFor: #xml!**auto generated**!properties!public! !
+!MSXML.IXMLDOMNode categoriesFor: #=!comparing!public! !
+!MSXML.IXMLDOMNode categoriesFor: #addCDATASection:!adding!public! !
+!MSXML.IXMLDOMNode categoriesFor: #addComment:!adding!public! !
+!MSXML.IXMLDOMNode categoriesFor: #addElement:!adding!public! !
+!MSXML.IXMLDOMNode categoriesFor: #addProcessingInstruction:data:!adding!public! !
+!MSXML.IXMLDOMNode categoriesFor: #addTextNode:!adding!public! !
+!MSXML.IXMLDOMNode categoriesFor: #appendChild:!**auto generated**!methods!public! !
+!MSXML.IXMLDOMNode categoriesFor: #AppendChild:outNewChild:!**auto generated**!COM Interfaces-IXMLDOMNode!private! !
+!MSXML.IXMLDOMNode categoriesFor: #asImplType!converting!public! !
+!MSXML.IXMLDOMNode categoriesFor: #asObject!converting!public! !
+!MSXML.IXMLDOMNode categoriesFor: #attributes!properties!public! !
+!MSXML.IXMLDOMNode categoriesFor: #baseName!**auto generated**!properties!public! !
+!MSXML.IXMLDOMNode categoriesFor: #childNodes!properties!public! !
+!MSXML.IXMLDOMNode categoriesFor: #cloneNode:!**auto generated**!methods!public! !
+!MSXML.IXMLDOMNode categoriesFor: #CloneNode:cloneRoot:!**auto generated**!COM Interfaces-IXMLDOMNode!private! !
+!MSXML.IXMLDOMNode categoriesFor: #dataType!**auto generated**!properties!public! !
+!MSXML.IXMLDOMNode categoriesFor: #dataType:!**auto generated**!properties!public! !
+!MSXML.IXMLDOMNode categoriesFor: #definition!**auto generated**!properties!public! !
+!MSXML.IXMLDOMNode categoriesFor: #downCast!converting!public! !
+!MSXML.IXMLDOMNode categoriesFor: #firstChild!**auto generated**!properties!public! !
+!MSXML.IXMLDOMNode categoriesFor: #get_attributes:!**auto generated**!COM Interfaces-IXMLDOMNode!private! !
+!MSXML.IXMLDOMNode categoriesFor: #get_baseName:!**auto generated**!COM Interfaces-IXMLDOMNode!private! !
+!MSXML.IXMLDOMNode categoriesFor: #get_childNodes:!**auto generated**!COM Interfaces-IXMLDOMNode!private! !
+!MSXML.IXMLDOMNode categoriesFor: #get_dataType:!**auto generated**!COM Interfaces-IXMLDOMNode!private! !
+!MSXML.IXMLDOMNode categoriesFor: #get_definition:!**auto generated**!COM Interfaces-IXMLDOMNode!private! !
+!MSXML.IXMLDOMNode categoriesFor: #get_firstChild:!**auto generated**!COM Interfaces-IXMLDOMNode!private! !
+!MSXML.IXMLDOMNode categoriesFor: #get_lastChild:!**auto generated**!COM Interfaces-IXMLDOMNode!private! !
+!MSXML.IXMLDOMNode categoriesFor: #get_namespaceURI:!**auto generated**!COM Interfaces-IXMLDOMNode!private! !
+!MSXML.IXMLDOMNode categoriesFor: #get_nextSibling:!**auto generated**!COM Interfaces-IXMLDOMNode!private! !
+!MSXML.IXMLDOMNode categoriesFor: #get_nodeName:!**auto generated**!COM Interfaces-IXMLDOMNode!private! !
+!MSXML.IXMLDOMNode categoriesFor: #get_nodeType:!**auto generated**!COM Interfaces-IXMLDOMNode!private! !
+!MSXML.IXMLDOMNode categoriesFor: #get_nodeTypedValue:!**auto generated**!COM Interfaces-IXMLDOMNode!private! !
+!MSXML.IXMLDOMNode categoriesFor: #get_nodeTypeString:!**auto generated**!COM Interfaces-IXMLDOMNode!private! !
+!MSXML.IXMLDOMNode categoriesFor: #get_nodeValue:!**auto generated**!COM Interfaces-IXMLDOMNode!private! !
+!MSXML.IXMLDOMNode categoriesFor: #get_ownerDocument:!**auto generated**!COM Interfaces-IXMLDOMNode!private! !
+!MSXML.IXMLDOMNode categoriesFor: #get_parentNode:!**auto generated**!COM Interfaces-IXMLDOMNode!private! !
+!MSXML.IXMLDOMNode categoriesFor: #get_parsed:!**auto generated**!COM Interfaces-IXMLDOMNode!private! !
+!MSXML.IXMLDOMNode categoriesFor: #get_prefix:!**auto generated**!COM Interfaces-IXMLDOMNode!private! !
+!MSXML.IXMLDOMNode categoriesFor: #get_previousSibling:!**auto generated**!COM Interfaces-IXMLDOMNode!private! !
+!MSXML.IXMLDOMNode categoriesFor: #get_specified:!**auto generated**!COM Interfaces-IXMLDOMNode!private! !
+!MSXML.IXMLDOMNode categoriesFor: #get_text:!**auto generated**!COM Interfaces-IXMLDOMNode!private! !
+!MSXML.IXMLDOMNode categoriesFor: #get_xml:!**auto generated**!COM Interfaces-IXMLDOMNode!private! !
+!MSXML.IXMLDOMNode categoriesFor: #hasChildNodes!**auto generated**!methods!public! !
+!MSXML.IXMLDOMNode categoriesFor: #HasChildNodes:!**auto generated**!COM Interfaces-IXMLDOMNode!private! !
+!MSXML.IXMLDOMNode categoriesFor: #innerXML!accessing!public! !
+!MSXML.IXMLDOMNode categoriesFor: #insertBefore:refChild:!**auto generated**!methods!public! !
+!MSXML.IXMLDOMNode categoriesFor: #InsertBefore:refChild:outNewChild:!**auto generated**!COM Interfaces-IXMLDOMNode!private! !
+!MSXML.IXMLDOMNode categoriesFor: #isExtensible!**auto generated**!public!testing! !
+!MSXML.IXMLDOMNode categoriesFor: #isText!public!testing! !
+!MSXML.IXMLDOMNode categoriesFor: #isVBCollection!**auto generated**!public!testing! !
+!MSXML.IXMLDOMNode categoriesFor: #lastChild!**auto generated**!properties!public! !
+!MSXML.IXMLDOMNode categoriesFor: #namespaceURI!**auto generated**!properties!public! !
+!MSXML.IXMLDOMNode categoriesFor: #nextSibling!**auto generated**!properties!public! !
+!MSXML.IXMLDOMNode categoriesFor: #nodeName!**auto generated**!properties!public! !
+!MSXML.IXMLDOMNode categoriesFor: #nodeType!**auto generated**!properties!public! !
+!MSXML.IXMLDOMNode categoriesFor: #nodeTypedValue!**auto generated**!properties!public! !
+!MSXML.IXMLDOMNode categoriesFor: #nodeTypedValue:!**auto generated**!properties!public! !
+!MSXML.IXMLDOMNode categoriesFor: #nodeTypes!constants!public! !
+!MSXML.IXMLDOMNode categoriesFor: #nodeTypeString!**auto generated**!properties!public! !
+!MSXML.IXMLDOMNode categoriesFor: #nodeValue!**auto generated**!properties!public! !
+!MSXML.IXMLDOMNode categoriesFor: #nodeValue:!**auto generated**!properties!public! !
+!MSXML.IXMLDOMNode categoriesFor: #ownerDocument!**auto generated**!properties!public! !
+!MSXML.IXMLDOMNode categoriesFor: #parentNode!**auto generated**!properties!public! !
+!MSXML.IXMLDOMNode categoriesFor: #parsed!**auto generated**!properties!public! !
+!MSXML.IXMLDOMNode categoriesFor: #prefix!**auto generated**!properties!public! !
+!MSXML.IXMLDOMNode categoriesFor: #previousSibling!**auto generated**!properties!public! !
+!MSXML.IXMLDOMNode categoriesFor: #printValueOn:!printing!private! !
+!MSXML.IXMLDOMNode categoriesFor: #put_dataType:!**auto generated**!COM Interfaces-IXMLDOMNode!private! !
+!MSXML.IXMLDOMNode categoriesFor: #put_nodeTypedValue:!**auto generated**!COM Interfaces-IXMLDOMNode!private! !
+!MSXML.IXMLDOMNode categoriesFor: #put_nodeValue:!**auto generated**!COM Interfaces-IXMLDOMNode!private! !
+!MSXML.IXMLDOMNode categoriesFor: #put_text:!**auto generated**!COM Interfaces-IXMLDOMNode!private! !
+!MSXML.IXMLDOMNode categoriesFor: #removeChild:!**auto generated**!methods!public! !
+!MSXML.IXMLDOMNode categoriesFor: #RemoveChild:oldChild:!**auto generated**!COM Interfaces-IXMLDOMNode!private! !
+!MSXML.IXMLDOMNode categoriesFor: #replaceChild:oldChild:!**auto generated**!methods!public! !
+!MSXML.IXMLDOMNode categoriesFor: #ReplaceChild:oldChild:outOldChild:!**auto generated**!COM Interfaces-IXMLDOMNode!private! !
+!MSXML.IXMLDOMNode categoriesFor: #selectNodes:!methods!public! !
+!MSXML.IXMLDOMNode categoriesFor: #SelectNodes:resultList:!**auto generated**!COM Interfaces-IXMLDOMNode!private! !
+!MSXML.IXMLDOMNode categoriesFor: #selectSingleNode:!**auto generated**!methods!public! !
+!MSXML.IXMLDOMNode categoriesFor: #SelectSingleNode:resultNode:!**auto generated**!COM Interfaces-IXMLDOMNode!private! !
+!MSXML.IXMLDOMNode categoriesFor: #setNodeTypeAndValue:!accessing!public! !
+!MSXML.IXMLDOMNode categoriesFor: #specified!**auto generated**!properties!public! !
+!MSXML.IXMLDOMNode categoriesFor: #text!properties!public! !
+!MSXML.IXMLDOMNode categoriesFor: #text:!**auto generated**!properties!public! !
+!MSXML.IXMLDOMNode categoriesFor: #transformNode:!**auto generated**!methods!public! !
+!MSXML.IXMLDOMNode categoriesFor: #TransformNode:xmlString:!**auto generated**!COM Interfaces-IXMLDOMNode!private! !
+!MSXML.IXMLDOMNode categoriesFor: #transformNodeToObject:outputObject:!**auto generated**!methods!public! !
+!MSXML.IXMLDOMNode categoriesFor: #TransformNodeToObject:outputObject:!**auto generated**!COM Interfaces-IXMLDOMNode!private! !
+!MSXML.IXMLDOMNode categoriesFor: #xml!**auto generated**!properties!public! !
 
-!IXMLDOMNode class methodsFor!
+!MSXML.IXMLDOMNode class methodsFor!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'MSXML2.IXMLDOMNode'
@@ -1089,6 +1063,6 @@ initialize
 		at: VT_UI4 put: 'ui4';
 		at: VT_UI8 put: 'ui8';
 		shrink! !
-!IXMLDOMNode class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
-!IXMLDOMNode class categoriesFor: #initialize!initializing!private! !
+!MSXML.IXMLDOMNode class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!MSXML.IXMLDOMNode class categoriesFor: #initialize!initializing!private! !
 

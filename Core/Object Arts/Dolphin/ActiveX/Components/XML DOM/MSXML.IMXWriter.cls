@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-IDispatch subclass: #IMXWriter
+OS.COM.IDispatch subclass: #'MSXML.IMXWriter'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'MSXMLConstants'
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-IMXWriter guid: (IID fromString: '{4d7ff4ba-1565-4ea8-94e1-6e724a46f98d}')!
-IMXWriter comment: '<IMXWriter> is a wrapper class for the COM interface ''MSXML2.IMXWriter'' generated from type information in the ''Microsoft XML, v4.0'' library. It contains methods to invoke the member functions exposed by that interface.
+MSXML.IMXWriter guid: (OS.COM.IID fromString: '{4d7ff4ba-1565-4ea8-94e1-6e724a46f98d}')!
+MSXML.IMXWriter comment: '<IMXWriter> is a wrapper class for the COM interface ''MSXML2.IMXWriter'' generated from type information in the ''Microsoft XML, v4.0'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains the following helpstring for this interface
 	"IMXWriter interface"
@@ -77,8 +77,8 @@ interface IMXWriter : IDispatch
 	HRESULT __stdcall flush();
 };
 '!
-!IMXWriter categoriesForClass!COM-Interfaces!MSXML2-Interfaces! !
-!IMXWriter methodsFor!
+!MSXML.IMXWriter categoriesForClass!COM-Interfaces!MSXML2-Interfaces! !
+!MSXML.IMXWriter methodsFor!
 
 byteOrderMark
 	"Answer the <varbool> value of the 'byteOrderMark' property of the receiver.
@@ -386,43 +386,43 @@ version: strVersion
 
 	self put_version: strVersion
 ! !
-!IMXWriter categoriesFor: #byteOrderMark!**auto generated**!properties!public! !
-!IMXWriter categoriesFor: #byteOrderMark:!**auto generated**!properties!public! !
-!IMXWriter categoriesFor: #disableOutputEscaping!**auto generated**!properties!public! !
-!IMXWriter categoriesFor: #disableOutputEscaping:!**auto generated**!properties!public! !
-!IMXWriter categoriesFor: #encoding!**auto generated**!properties!public! !
-!IMXWriter categoriesFor: #encoding:!**auto generated**!properties!public! !
-!IMXWriter categoriesFor: #Flush!**auto generated**!COM Interfaces-IMXWriter!public! !
-!IMXWriter categoriesFor: #get_byteOrderMark:!**auto generated**!COM Interfaces-IMXWriter!private! !
-!IMXWriter categoriesFor: #get_disableOutputEscaping:!**auto generated**!COM Interfaces-IMXWriter!private! !
-!IMXWriter categoriesFor: #get_encoding:!**auto generated**!COM Interfaces-IMXWriter!private! !
-!IMXWriter categoriesFor: #get_indent:!**auto generated**!COM Interfaces-IMXWriter!private! !
-!IMXWriter categoriesFor: #get_omitXMLDeclaration:!**auto generated**!COM Interfaces-IMXWriter!private! !
-!IMXWriter categoriesFor: #get_output:!**auto generated**!COM Interfaces-IMXWriter!private! !
-!IMXWriter categoriesFor: #get_standalone:!**auto generated**!COM Interfaces-IMXWriter!private! !
-!IMXWriter categoriesFor: #get_version:!**auto generated**!COM Interfaces-IMXWriter!private! !
-!IMXWriter categoriesFor: #indent!**auto generated**!properties!public! !
-!IMXWriter categoriesFor: #indent:!**auto generated**!properties!public! !
-!IMXWriter categoriesFor: #isExtensible!**auto generated**!public!testing! !
-!IMXWriter categoriesFor: #isVBCollection!**auto generated**!public!testing! !
-!IMXWriter categoriesFor: #omitXMLDeclaration!**auto generated**!properties!public! !
-!IMXWriter categoriesFor: #omitXMLDeclaration:!**auto generated**!properties!public! !
-!IMXWriter categoriesFor: #output!**auto generated**!properties!public! !
-!IMXWriter categoriesFor: #output:!**auto generated**!properties!public! !
-!IMXWriter categoriesFor: #put_byteOrderMark:!**auto generated**!COM Interfaces-IMXWriter!private! !
-!IMXWriter categoriesFor: #put_disableOutputEscaping:!**auto generated**!COM Interfaces-IMXWriter!private! !
-!IMXWriter categoriesFor: #put_encoding:!**auto generated**!COM Interfaces-IMXWriter!private! !
-!IMXWriter categoriesFor: #put_indent:!**auto generated**!COM Interfaces-IMXWriter!private! !
-!IMXWriter categoriesFor: #put_omitXMLDeclaration:!**auto generated**!COM Interfaces-IMXWriter!private! !
-!IMXWriter categoriesFor: #put_output:!**auto generated**!COM Interfaces-IMXWriter!private! !
-!IMXWriter categoriesFor: #put_standalone:!**auto generated**!COM Interfaces-IMXWriter!private! !
-!IMXWriter categoriesFor: #put_version:!**auto generated**!COM Interfaces-IMXWriter!private! !
-!IMXWriter categoriesFor: #standalone!**auto generated**!properties!public! !
-!IMXWriter categoriesFor: #standalone:!**auto generated**!properties!public! !
-!IMXWriter categoriesFor: #version!**auto generated**!properties!public! !
-!IMXWriter categoriesFor: #version:!**auto generated**!properties!public! !
+!MSXML.IMXWriter categoriesFor: #byteOrderMark!**auto generated**!properties!public! !
+!MSXML.IMXWriter categoriesFor: #byteOrderMark:!**auto generated**!properties!public! !
+!MSXML.IMXWriter categoriesFor: #disableOutputEscaping!**auto generated**!properties!public! !
+!MSXML.IMXWriter categoriesFor: #disableOutputEscaping:!**auto generated**!properties!public! !
+!MSXML.IMXWriter categoriesFor: #encoding!**auto generated**!properties!public! !
+!MSXML.IMXWriter categoriesFor: #encoding:!**auto generated**!properties!public! !
+!MSXML.IMXWriter categoriesFor: #Flush!**auto generated**!COM Interfaces-IMXWriter!public! !
+!MSXML.IMXWriter categoriesFor: #get_byteOrderMark:!**auto generated**!COM Interfaces-IMXWriter!private! !
+!MSXML.IMXWriter categoriesFor: #get_disableOutputEscaping:!**auto generated**!COM Interfaces-IMXWriter!private! !
+!MSXML.IMXWriter categoriesFor: #get_encoding:!**auto generated**!COM Interfaces-IMXWriter!private! !
+!MSXML.IMXWriter categoriesFor: #get_indent:!**auto generated**!COM Interfaces-IMXWriter!private! !
+!MSXML.IMXWriter categoriesFor: #get_omitXMLDeclaration:!**auto generated**!COM Interfaces-IMXWriter!private! !
+!MSXML.IMXWriter categoriesFor: #get_output:!**auto generated**!COM Interfaces-IMXWriter!private! !
+!MSXML.IMXWriter categoriesFor: #get_standalone:!**auto generated**!COM Interfaces-IMXWriter!private! !
+!MSXML.IMXWriter categoriesFor: #get_version:!**auto generated**!COM Interfaces-IMXWriter!private! !
+!MSXML.IMXWriter categoriesFor: #indent!**auto generated**!properties!public! !
+!MSXML.IMXWriter categoriesFor: #indent:!**auto generated**!properties!public! !
+!MSXML.IMXWriter categoriesFor: #isExtensible!**auto generated**!public!testing! !
+!MSXML.IMXWriter categoriesFor: #isVBCollection!**auto generated**!public!testing! !
+!MSXML.IMXWriter categoriesFor: #omitXMLDeclaration!**auto generated**!properties!public! !
+!MSXML.IMXWriter categoriesFor: #omitXMLDeclaration:!**auto generated**!properties!public! !
+!MSXML.IMXWriter categoriesFor: #output!**auto generated**!properties!public! !
+!MSXML.IMXWriter categoriesFor: #output:!**auto generated**!properties!public! !
+!MSXML.IMXWriter categoriesFor: #put_byteOrderMark:!**auto generated**!COM Interfaces-IMXWriter!private! !
+!MSXML.IMXWriter categoriesFor: #put_disableOutputEscaping:!**auto generated**!COM Interfaces-IMXWriter!private! !
+!MSXML.IMXWriter categoriesFor: #put_encoding:!**auto generated**!COM Interfaces-IMXWriter!private! !
+!MSXML.IMXWriter categoriesFor: #put_indent:!**auto generated**!COM Interfaces-IMXWriter!private! !
+!MSXML.IMXWriter categoriesFor: #put_omitXMLDeclaration:!**auto generated**!COM Interfaces-IMXWriter!private! !
+!MSXML.IMXWriter categoriesFor: #put_output:!**auto generated**!COM Interfaces-IMXWriter!private! !
+!MSXML.IMXWriter categoriesFor: #put_standalone:!**auto generated**!COM Interfaces-IMXWriter!private! !
+!MSXML.IMXWriter categoriesFor: #put_version:!**auto generated**!COM Interfaces-IMXWriter!private! !
+!MSXML.IMXWriter categoriesFor: #standalone!**auto generated**!properties!public! !
+!MSXML.IMXWriter categoriesFor: #standalone:!**auto generated**!properties!public! !
+!MSXML.IMXWriter categoriesFor: #version!**auto generated**!properties!public! !
+!MSXML.IMXWriter categoriesFor: #version:!**auto generated**!properties!public! !
 
-!IMXWriter class methodsFor!
+!MSXML.IMXWriter class methodsFor!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'MSXML2.IMXWriter'
@@ -511,13 +511,13 @@ newMXXMLWriter60
 
 	^self onCLSID: (CLSID fromString: '{88D96A0F-F192-11D4-A65F-0040963251E5}')
 ! !
-!IMXWriter class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
-!IMXWriter class categoriesFor: #newMXHTMLWriter!**auto generated**!instance creation!public! !
-!IMXWriter class categoriesFor: #newMXHTMLWriter30!**auto generated**!instance creation!public! !
-!IMXWriter class categoriesFor: #newMXHTMLWriter40!**auto generated**!instance creation!public! !
-!IMXWriter class categoriesFor: #newMXHTMLWriter60!**auto generated**!instance creation!public! !
-!IMXWriter class categoriesFor: #newMXXMLWriter!**auto generated**!instance creation!public! !
-!IMXWriter class categoriesFor: #newMXXMLWriter30!**auto generated**!instance creation!public! !
-!IMXWriter class categoriesFor: #newMXXMLWriter40!**auto generated**!instance creation!public! !
-!IMXWriter class categoriesFor: #newMXXMLWriter60!**auto generated**!instance creation!public! !
+!MSXML.IMXWriter class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!MSXML.IMXWriter class categoriesFor: #newMXHTMLWriter!**auto generated**!instance creation!public! !
+!MSXML.IMXWriter class categoriesFor: #newMXHTMLWriter30!**auto generated**!instance creation!public! !
+!MSXML.IMXWriter class categoriesFor: #newMXHTMLWriter40!**auto generated**!instance creation!public! !
+!MSXML.IMXWriter class categoriesFor: #newMXHTMLWriter60!**auto generated**!instance creation!public! !
+!MSXML.IMXWriter class categoriesFor: #newMXXMLWriter!**auto generated**!instance creation!public! !
+!MSXML.IMXWriter class categoriesFor: #newMXXMLWriter30!**auto generated**!instance creation!public! !
+!MSXML.IMXWriter class categoriesFor: #newMXXMLWriter40!**auto generated**!instance creation!public! !
+!MSXML.IMXWriter class categoriesFor: #newMXXMLWriter60!**auto generated**!instance creation!public! !
 

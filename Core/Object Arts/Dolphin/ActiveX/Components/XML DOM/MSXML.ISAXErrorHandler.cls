@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-IUnknown subclass: #ISAXErrorHandler
+OS.COM.IUnknown subclass: #'MSXML.ISAXErrorHandler'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'MSXMLConstants'
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ISAXErrorHandler guid: (IID fromString: '{a60511c4-ccf5-479e-98a3-dc8dc545b7d0}')!
-ISAXErrorHandler comment: '<ISAXErrorHandler> is a wrapper class for the COM interface ''MSXML2.ISAXErrorHandler'' generated from type information in the ''Microsoft XML, v4.0'' library. It contains methods to invoke the member functions exposed by that interface.
+MSXML.ISAXErrorHandler guid: (OS.COM.IID fromString: '{a60511c4-ccf5-479e-98a3-dc8dc545b7d0}')!
+MSXML.ISAXErrorHandler comment: '<ISAXErrorHandler> is a wrapper class for the COM interface ''MSXML2.ISAXErrorHandler'' generated from type information in the ''Microsoft XML, v4.0'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains the following helpstring for this interface
 	"ISAXErrorHandler interface"
@@ -41,8 +41,8 @@ interface ISAXErrorHandler : IUnknown
 		[in]HRESULT hrErrorCode);
 };
 '!
-!ISAXErrorHandler categoriesForClass!COM-Interfaces!MSXML2-Interfaces! !
-!ISAXErrorHandler methodsFor!
+!MSXML.ISAXErrorHandler categoriesForClass!COM-Interfaces!MSXML2-Interfaces! !
+!MSXML.ISAXErrorHandler methodsFor!
 
 Error: pLocator pwchErrorMessage: pwchErrorMessage hrErrorCode: hrErrorCode
 	"Invoke the error() method of the COM object.
@@ -76,11 +76,11 @@ IgnorableWarning: pLocator pwchErrorMessage: pwchErrorMessage hrErrorCode: hrErr
 
 	<virtual stdcall: hresult 6 ISAXLocator* word* hresult>
 	^self invalidCall: _failureCode! !
-!ISAXErrorHandler categoriesFor: #Error:pwchErrorMessage:hrErrorCode:!**auto generated**!COM Interfaces-ISAXErrorHandler!public! !
-!ISAXErrorHandler categoriesFor: #FatalError:pwchErrorMessage:hrErrorCode:!**auto generated**!COM Interfaces-ISAXErrorHandler!public! !
-!ISAXErrorHandler categoriesFor: #IgnorableWarning:pwchErrorMessage:hrErrorCode:!**auto generated**!COM Interfaces-ISAXErrorHandler!public! !
+!MSXML.ISAXErrorHandler categoriesFor: #Error:pwchErrorMessage:hrErrorCode:!**auto generated**!COM Interfaces-ISAXErrorHandler!public! !
+!MSXML.ISAXErrorHandler categoriesFor: #FatalError:pwchErrorMessage:hrErrorCode:!**auto generated**!COM Interfaces-ISAXErrorHandler!public! !
+!MSXML.ISAXErrorHandler categoriesFor: #IgnorableWarning:pwchErrorMessage:hrErrorCode:!**auto generated**!COM Interfaces-ISAXErrorHandler!public! !
 
-!ISAXErrorHandler class methodsFor!
+!MSXML.ISAXErrorHandler class methodsFor!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'MSXML2.ISAXErrorHandler'
@@ -94,5 +94,5 @@ defineFunctions
 		defineFunction: #IgnorableWarning:pwchErrorMessage:hrErrorCode:
 			argumentTypes: 'ISAXLocator* word* hresult'
 ! !
-!ISAXErrorHandler class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!MSXML.ISAXErrorHandler class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
 

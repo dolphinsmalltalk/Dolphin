@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-IDispatch subclass: #ISchemaStringCollection
+OS.COM.IDispatch subclass: #'MSXML.ISchemaStringCollection'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'MSXMLConstants'
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ISchemaStringCollection guid: (IID fromString: '{50ea08b1-dd1b-4664-9a50-c2f40f4bd79a}')!
-ISchemaStringCollection comment: '<ISchemaStringCollection> is a wrapper class for the COM interface ''MSXML2.ISchemaStringCollection'' generated from type information in the ''Microsoft XML, v4.0'' library. It contains methods to invoke the member functions exposed by that interface.
+MSXML.ISchemaStringCollection guid: (OS.COM.IID fromString: '{50ea08b1-dd1b-4664-9a50-c2f40f4bd79a}')!
+MSXML.ISchemaStringCollection comment: '<ISchemaStringCollection> is a wrapper class for the COM interface ''MSXML2.ISchemaStringCollection'' generated from type information in the ''Microsoft XML, v4.0'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains the following helpstring for this interface
 	"XML Schema String Collection"
@@ -37,8 +37,8 @@ interface ISchemaStringCollection : IDispatch
 		[out, retval]IUnknown** ppUnk);
 };
 '!
-!ISchemaStringCollection categoriesForClass!COM-Interfaces!MSXML2-Interfaces! !
-!ISchemaStringCollection methodsFor!
+!MSXML.ISchemaStringCollection categoriesForClass!COM-Interfaces!MSXML2-Interfaces! !
+!MSXML.ISchemaStringCollection methodsFor!
 
 _newEnum
 	"Answer the <IUnknown> value of the '_newEnum' property of the receiver."
@@ -106,16 +106,16 @@ length
 	self get_length: answer.
 	^answer asObject
 ! !
-!ISchemaStringCollection categoriesFor: #_newEnum!**auto generated**!properties!public! !
-!ISchemaStringCollection categoriesFor: #get__newEnum:!**auto generated**!COM Interfaces-ISchemaStringCollection!private! !
-!ISchemaStringCollection categoriesFor: #get_item:bstr:!**auto generated**!COM Interfaces-ISchemaStringCollection!private! !
-!ISchemaStringCollection categoriesFor: #get_length:!**auto generated**!COM Interfaces-ISchemaStringCollection!private! !
-!ISchemaStringCollection categoriesFor: #isExtensible!**auto generated**!public!testing! !
-!ISchemaStringCollection categoriesFor: #isVBCollection!**auto generated**!public!testing! !
-!ISchemaStringCollection categoriesFor: #item:!**auto generated**!properties!public! !
-!ISchemaStringCollection categoriesFor: #length!**auto generated**!properties!public! !
+!MSXML.ISchemaStringCollection categoriesFor: #_newEnum!**auto generated**!properties!public! !
+!MSXML.ISchemaStringCollection categoriesFor: #get__newEnum:!**auto generated**!COM Interfaces-ISchemaStringCollection!private! !
+!MSXML.ISchemaStringCollection categoriesFor: #get_item:bstr:!**auto generated**!COM Interfaces-ISchemaStringCollection!private! !
+!MSXML.ISchemaStringCollection categoriesFor: #get_length:!**auto generated**!COM Interfaces-ISchemaStringCollection!private! !
+!MSXML.ISchemaStringCollection categoriesFor: #isExtensible!**auto generated**!public!testing! !
+!MSXML.ISchemaStringCollection categoriesFor: #isVBCollection!**auto generated**!public!testing! !
+!MSXML.ISchemaStringCollection categoriesFor: #item:!**auto generated**!properties!public! !
+!MSXML.ISchemaStringCollection categoriesFor: #length!**auto generated**!properties!public! !
 
-!ISchemaStringCollection class methodsFor!
+!MSXML.ISchemaStringCollection class methodsFor!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'MSXML2.ISchemaStringCollection'
@@ -129,5 +129,5 @@ defineFunctions
 		defineFunction: #get__newEnum:
 			argumentTypes: 'IUnknown**'
 ! !
-!ISchemaStringCollection class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!MSXML.ISchemaStringCollection class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
 

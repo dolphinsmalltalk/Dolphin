@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-IUnknown subclass: #ISAXDTDHandler
+OS.COM.IUnknown subclass: #'MSXML.ISAXDTDHandler'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'MSXMLConstants'
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ISAXDTDHandler guid: (IID fromString: '{e15c1baf-afb3-4d60-8c36-19a8c45defed}')!
-ISAXDTDHandler comment: '<ISAXDTDHandler> is a wrapper class for the COM interface ''MSXML2.ISAXDTDHandler'' generated from type information in the ''Microsoft XML, v4.0'' library. It contains methods to invoke the member functions exposed by that interface.
+MSXML.ISAXDTDHandler guid: (OS.COM.IID fromString: '{e15c1baf-afb3-4d60-8c36-19a8c45defed}')!
+MSXML.ISAXDTDHandler comment: '<ISAXDTDHandler> is a wrapper class for the COM interface ''MSXML2.ISAXDTDHandler'' generated from type information in the ''Microsoft XML, v4.0'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains the following helpstring for this interface
 	"ISAXDTDHandler interface"
@@ -44,8 +44,8 @@ interface ISAXDTDHandler : IUnknown
 		[in]int cchNotationName);
 };
 '!
-!ISAXDTDHandler categoriesForClass!COM-Interfaces!MSXML2-Interfaces! !
-!ISAXDTDHandler methodsFor!
+!MSXML.ISAXDTDHandler categoriesForClass!COM-Interfaces!MSXML2-Interfaces! !
+!MSXML.ISAXDTDHandler methodsFor!
 
 NotationDecl: pwchName cchName: cchName pwchPublicId: pwchPublicId cchPublicId: cchPublicId pwchSystemId: pwchSystemId cchSystemId: cchSystemId
 	"Invoke the notationDecl() method of the COM object.
@@ -76,10 +76,10 @@ UnparsedEntityDecl: pwchName cchName: cchName pwchPublicId: pwchPublicId cchPubl
 
 	<virtual stdcall: hresult 5 word* sdword word* sdword word* sdword word* sdword>
 	^self invalidCall: _failureCode! !
-!ISAXDTDHandler categoriesFor: #NotationDecl:cchName:pwchPublicId:cchPublicId:pwchSystemId:cchSystemId:!**auto generated**!COM Interfaces-ISAXDTDHandler!public! !
-!ISAXDTDHandler categoriesFor: #UnparsedEntityDecl:cchName:pwchPublicId:cchPublicId:pwchSystemId:cchSystemId:pwchNotationName:cchNotationName:!**auto generated**!COM Interfaces-ISAXDTDHandler!public! !
+!MSXML.ISAXDTDHandler categoriesFor: #NotationDecl:cchName:pwchPublicId:cchPublicId:pwchSystemId:cchSystemId:!**auto generated**!COM Interfaces-ISAXDTDHandler!public! !
+!MSXML.ISAXDTDHandler categoriesFor: #UnparsedEntityDecl:cchName:pwchPublicId:cchPublicId:pwchSystemId:cchSystemId:pwchNotationName:cchNotationName:!**auto generated**!COM Interfaces-ISAXDTDHandler!public! !
 
-!ISAXDTDHandler class methodsFor!
+!MSXML.ISAXDTDHandler class methodsFor!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'MSXML2.ISAXDTDHandler'
@@ -91,5 +91,5 @@ defineFunctions
 		defineFunction: #UnparsedEntityDecl:cchName:pwchPublicId:cchPublicId:pwchSystemId:cchSystemId:pwchNotationName:cchNotationName:
 			argumentTypes: 'word* sdword word* sdword word* sdword word* sdword'
 ! !
-!ISAXDTDHandler class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!MSXML.ISAXDTDHandler class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
 

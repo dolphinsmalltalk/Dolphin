@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-IDispatch subclass: #IVBSAXDeclHandler
+OS.COM.IDispatch subclass: #'MSXML.IVBSAXDeclHandler'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'MSXMLConstants'
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-IVBSAXDeclHandler guid: (IID fromString: '{e8917260-7579-4be1-b5dd-7afbfa6f077b}')!
-IVBSAXDeclHandler comment: '<IVBSAXDeclHandler> is a wrapper class for the COM interface ''MSXML2.IVBSAXDeclHandler'' generated from type information in the ''Microsoft XML, v4.0'' library. It contains methods to invoke the member functions exposed by that interface.
+MSXML.IVBSAXDeclHandler guid: (OS.COM.IID fromString: '{e8917260-7579-4be1-b5dd-7afbfa6f077b}')!
+MSXML.IVBSAXDeclHandler comment: '<IVBSAXDeclHandler> is a wrapper class for the COM interface ''MSXML2.IVBSAXDeclHandler'' generated from type information in the ''Microsoft XML, v4.0'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains the following helpstring for this interface
 	"IVBSAXDeclHandler interface"
@@ -47,8 +47,8 @@ interface IVBSAXDeclHandler : IDispatch
 		[in, out]BSTR* strSystemId);
 };
 '!
-!IVBSAXDeclHandler categoriesForClass!COM-Interfaces!MSXML2-Interfaces! !
-!IVBSAXDeclHandler methodsFor!
+!MSXML.IVBSAXDeclHandler categoriesForClass!COM-Interfaces!MSXML2-Interfaces! !
+!MSXML.IVBSAXDeclHandler methodsFor!
 
 attributeDecl: strElementName strAttributeName: strAttributeName strType: strType strValueDefault: strValueDefault strValue: strValue
 	"Invoke the attributeDecl() method of the COM object.
@@ -175,18 +175,18 @@ isVBCollection
 	"Answer whether the receiver is a VB style collection."
 
 	^false! !
-!IVBSAXDeclHandler categoriesFor: #attributeDecl:strAttributeName:strType:strValueDefault:strValue:!**auto generated**!methods!public! !
-!IVBSAXDeclHandler categoriesFor: #AttributeDecl:strAttributeName:strType:strValueDefault:strValue:!**auto generated**!COM Interfaces-IVBSAXDeclHandler!private! !
-!IVBSAXDeclHandler categoriesFor: #elementDecl:strModel:!**auto generated**!methods!public! !
-!IVBSAXDeclHandler categoriesFor: #ElementDecl:strModel:!**auto generated**!COM Interfaces-IVBSAXDeclHandler!private! !
-!IVBSAXDeclHandler categoriesFor: #externalEntityDecl:strPublicId:strSystemId:!**auto generated**!methods!public! !
-!IVBSAXDeclHandler categoriesFor: #ExternalEntityDecl:strPublicId:strSystemId:!**auto generated**!COM Interfaces-IVBSAXDeclHandler!private! !
-!IVBSAXDeclHandler categoriesFor: #internalEntityDecl:strValue:!**auto generated**!methods!public! !
-!IVBSAXDeclHandler categoriesFor: #InternalEntityDecl:strValue:!**auto generated**!COM Interfaces-IVBSAXDeclHandler!private! !
-!IVBSAXDeclHandler categoriesFor: #isExtensible!**auto generated**!public!testing! !
-!IVBSAXDeclHandler categoriesFor: #isVBCollection!**auto generated**!public!testing! !
+!MSXML.IVBSAXDeclHandler categoriesFor: #attributeDecl:strAttributeName:strType:strValueDefault:strValue:!**auto generated**!methods!public! !
+!MSXML.IVBSAXDeclHandler categoriesFor: #AttributeDecl:strAttributeName:strType:strValueDefault:strValue:!**auto generated**!COM Interfaces-IVBSAXDeclHandler!private! !
+!MSXML.IVBSAXDeclHandler categoriesFor: #elementDecl:strModel:!**auto generated**!methods!public! !
+!MSXML.IVBSAXDeclHandler categoriesFor: #ElementDecl:strModel:!**auto generated**!COM Interfaces-IVBSAXDeclHandler!private! !
+!MSXML.IVBSAXDeclHandler categoriesFor: #externalEntityDecl:strPublicId:strSystemId:!**auto generated**!methods!public! !
+!MSXML.IVBSAXDeclHandler categoriesFor: #ExternalEntityDecl:strPublicId:strSystemId:!**auto generated**!COM Interfaces-IVBSAXDeclHandler!private! !
+!MSXML.IVBSAXDeclHandler categoriesFor: #internalEntityDecl:strValue:!**auto generated**!methods!public! !
+!MSXML.IVBSAXDeclHandler categoriesFor: #InternalEntityDecl:strValue:!**auto generated**!COM Interfaces-IVBSAXDeclHandler!private! !
+!MSXML.IVBSAXDeclHandler categoriesFor: #isExtensible!**auto generated**!public!testing! !
+!MSXML.IVBSAXDeclHandler categoriesFor: #isVBCollection!**auto generated**!public!testing! !
 
-!IVBSAXDeclHandler class methodsFor!
+!MSXML.IVBSAXDeclHandler class methodsFor!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'MSXML2.IVBSAXDeclHandler'
@@ -202,5 +202,5 @@ defineFunctions
 		defineFunction: #ExternalEntityDecl:strPublicId:strSystemId:
 			argumentTypes: 'bstr* bstr* bstr*'
 ! !
-!IVBSAXDeclHandler class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!MSXML.IVBSAXDeclHandler class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
 

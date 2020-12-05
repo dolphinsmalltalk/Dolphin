@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ISchemaItem subclass: #ISchema
+MSXML.ISchemaItem subclass: #'MSXML.ISchema'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'MSXMLConstants'
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ISchema guid: (IID fromString: '{50ea08b4-dd1b-4664-9a50-c2f40f4bd79a}')!
-ISchema comment: '<ISchema> is a wrapper class for the COM interface ''MSXML2.ISchema'' generated from type information in the ''Microsoft XML, v4.0'' library. It contains methods to invoke the member functions exposed by that interface.
+MSXML.ISchema guid: (OS.COM.IID fromString: '{50ea08b4-dd1b-4664-9a50-c2f40f4bd79a}')!
+MSXML.ISchema comment: '<ISchema> is a wrapper class for the COM interface ''MSXML2.ISchema'' generated from type information in the ''Microsoft XML, v4.0'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains the following helpstring for this interface
 	"XML Schema"
@@ -54,8 +54,8 @@ interface ISchema : ISchemaItem
 		[out, retval]ISchemaStringCollection** schemaLocations);
 };
 '!
-!ISchema categoriesForClass!COM-Interfaces!MSXML2-Interfaces! !
-!ISchema methodsFor!
+!MSXML.ISchema categoriesForClass!COM-Interfaces!MSXML2-Interfaces! !
+!MSXML.ISchema methodsFor!
 
 attributeGroups
 	"Answer the <ISchemaItemCollection> value of the 'attributeGroups' property of the receiver."
@@ -63,8 +63,7 @@ attributeGroups
 	| answer |
 	answer := ISchemaItemCollection newPointer.
 	self get_attributeGroups: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 attributes
 	"Answer the <ISchemaItemCollection> value of the 'attributes' property of the receiver."
@@ -72,8 +71,7 @@ attributes
 	| answer |
 	answer := ISchemaItemCollection newPointer.
 	self get_attributes: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 elements
 	"Answer the <ISchemaItemCollection> value of the 'elements' property of the receiver."
@@ -81,8 +79,7 @@ elements
 	| answer |
 	answer := ISchemaItemCollection newPointer.
 	self get_elements: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 get_attributeGroups: attributeGroups
 	"Private - Get the value of the 'attributeGroups' property of the receiver.
@@ -171,8 +168,7 @@ modelGroups
 	| answer |
 	answer := ISchemaItemCollection newPointer.
 	self get_modelGroups: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 notations
 	"Answer the <ISchemaItemCollection> value of the 'notations' property of the receiver."
@@ -180,8 +176,7 @@ notations
 	| answer |
 	answer := ISchemaItemCollection newPointer.
 	self get_notations: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 schemaLocations
 	"Answer the <ISchemaStringCollection> value of the 'schemaLocations' property of the receiver."
@@ -189,8 +184,7 @@ schemaLocations
 	| answer |
 	answer := ISchemaStringCollection newPointer.
 	self get_schemaLocations: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 targetNamespace
 	"Answer the <bstr> value of the 'targetNamespace' property of the receiver."
@@ -207,8 +201,7 @@ types
 	| answer |
 	answer := ISchemaItemCollection newPointer.
 	self get_types: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 version
 	"Answer the <bstr> value of the 'version' property of the receiver."
@@ -218,26 +211,26 @@ version
 	self get_version: answer.
 	^answer asObject
 ! !
-!ISchema categoriesFor: #attributeGroups!**auto generated**!properties!public! !
-!ISchema categoriesFor: #attributes!**auto generated**!properties!public! !
-!ISchema categoriesFor: #elements!**auto generated**!properties!public! !
-!ISchema categoriesFor: #get_attributeGroups:!**auto generated**!COM Interfaces-ISchema!private! !
-!ISchema categoriesFor: #get_attributes:!**auto generated**!COM Interfaces-ISchema!private! !
-!ISchema categoriesFor: #get_elements:!**auto generated**!COM Interfaces-ISchema!private! !
-!ISchema categoriesFor: #get_modelGroups:!**auto generated**!COM Interfaces-ISchema!private! !
-!ISchema categoriesFor: #get_notations:!**auto generated**!COM Interfaces-ISchema!private! !
-!ISchema categoriesFor: #get_schemaLocations:!**auto generated**!COM Interfaces-ISchema!private! !
-!ISchema categoriesFor: #get_targetNamespace:!**auto generated**!COM Interfaces-ISchema!private! !
-!ISchema categoriesFor: #get_types:!**auto generated**!COM Interfaces-ISchema!private! !
-!ISchema categoriesFor: #get_version:!**auto generated**!COM Interfaces-ISchema!private! !
-!ISchema categoriesFor: #modelGroups!**auto generated**!properties!public! !
-!ISchema categoriesFor: #notations!**auto generated**!properties!public! !
-!ISchema categoriesFor: #schemaLocations!**auto generated**!properties!public! !
-!ISchema categoriesFor: #targetNamespace!**auto generated**!properties!public! !
-!ISchema categoriesFor: #types!**auto generated**!properties!public! !
-!ISchema categoriesFor: #version!**auto generated**!properties!public! !
+!MSXML.ISchema categoriesFor: #attributeGroups!**auto generated**!properties!public! !
+!MSXML.ISchema categoriesFor: #attributes!**auto generated**!properties!public! !
+!MSXML.ISchema categoriesFor: #elements!**auto generated**!properties!public! !
+!MSXML.ISchema categoriesFor: #get_attributeGroups:!**auto generated**!COM Interfaces-ISchema!private! !
+!MSXML.ISchema categoriesFor: #get_attributes:!**auto generated**!COM Interfaces-ISchema!private! !
+!MSXML.ISchema categoriesFor: #get_elements:!**auto generated**!COM Interfaces-ISchema!private! !
+!MSXML.ISchema categoriesFor: #get_modelGroups:!**auto generated**!COM Interfaces-ISchema!private! !
+!MSXML.ISchema categoriesFor: #get_notations:!**auto generated**!COM Interfaces-ISchema!private! !
+!MSXML.ISchema categoriesFor: #get_schemaLocations:!**auto generated**!COM Interfaces-ISchema!private! !
+!MSXML.ISchema categoriesFor: #get_targetNamespace:!**auto generated**!COM Interfaces-ISchema!private! !
+!MSXML.ISchema categoriesFor: #get_types:!**auto generated**!COM Interfaces-ISchema!private! !
+!MSXML.ISchema categoriesFor: #get_version:!**auto generated**!COM Interfaces-ISchema!private! !
+!MSXML.ISchema categoriesFor: #modelGroups!**auto generated**!properties!public! !
+!MSXML.ISchema categoriesFor: #notations!**auto generated**!properties!public! !
+!MSXML.ISchema categoriesFor: #schemaLocations!**auto generated**!properties!public! !
+!MSXML.ISchema categoriesFor: #targetNamespace!**auto generated**!properties!public! !
+!MSXML.ISchema categoriesFor: #types!**auto generated**!properties!public! !
+!MSXML.ISchema categoriesFor: #version!**auto generated**!properties!public! !
 
-!ISchema class methodsFor!
+!MSXML.ISchema class methodsFor!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'MSXML2.ISchema'
@@ -263,5 +256,5 @@ defineFunctions
 		defineFunction: #get_schemaLocations:
 			argumentTypes: 'ISchemaStringCollection**'
 ! !
-!ISchema class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!MSXML.ISchema class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
 

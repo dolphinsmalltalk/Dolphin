@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-IDispatch subclass: #IMXXMLFilter
+OS.COM.IDispatch subclass: #'MSXML.IMXXMLFilter'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'MSXMLConstants'
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-IMXXMLFilter guid: (IID fromString: '{c90352f7-643c-4fbc-bb23-e996eb2d51fd}')!
-IMXXMLFilter comment: '<IMXXMLFilter> is a wrapper class for the COM interface ''MSXML2.IMXXMLFilter'' generated from type information in the ''Microsoft XML, v6.0'' library. It contains methods to invoke the member functions exposed by that interface.
+MSXML.IMXXMLFilter guid: (OS.COM.IID fromString: '{c90352f7-643c-4fbc-bb23-e996eb2d51fd}')!
+MSXML.IMXXMLFilter comment: '<IMXXMLFilter> is a wrapper class for the COM interface ''MSXML2.IMXXMLFilter'' generated from type information in the ''Microsoft XML, v6.0'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains the following helpstring for this interface
 	"IMXXMLFilter interface"
@@ -67,8 +67,8 @@ interface IMXXMLFilter : IDispatch
 		[in]IUnknown* oHandler);
 };
 '!
-!IMXXMLFilter categoriesForClass!COM-Interfaces!MSXML2-Interfaces! !
-!IMXXMLFilter methodsFor!
+!MSXML.IMXXMLFilter categoriesForClass!COM-Interfaces!MSXML2-Interfaces! !
+!MSXML.IMXXMLFilter methodsFor!
 
 contentHandler
 	"Answer the <IUnknown> value of the 'contentHandler' property of the receiver."
@@ -285,33 +285,33 @@ setErrorHandler: oHandler
 
 	self putref_errorHandler: oHandler
 ! !
-!IMXXMLFilter categoriesFor: #contentHandler!**auto generated**!properties!public! !
-!IMXXMLFilter categoriesFor: #dtdHandler!**auto generated**!properties!public! !
-!IMXXMLFilter categoriesFor: #entityResolver!**auto generated**!properties!public! !
-!IMXXMLFilter categoriesFor: #errorHandler!**auto generated**!properties!public! !
-!IMXXMLFilter categoriesFor: #get_contentHandler:!**auto generated**!COM Interfaces-IMXXMLFilter!private! !
-!IMXXMLFilter categoriesFor: #get_dtdHandler:!**auto generated**!COM Interfaces-IMXXMLFilter!private! !
-!IMXXMLFilter categoriesFor: #get_entityResolver:!**auto generated**!COM Interfaces-IMXXMLFilter!private! !
-!IMXXMLFilter categoriesFor: #get_errorHandler:!**auto generated**!COM Interfaces-IMXXMLFilter!private! !
-!IMXXMLFilter categoriesFor: #getFeature:!**auto generated**!methods!public! !
-!IMXXMLFilter categoriesFor: #GetFeature:fValue:!**auto generated**!COM Interfaces-IMXXMLFilter!private! !
-!IMXXMLFilter categoriesFor: #GetProperty:varValue:!**auto generated**!COM Interfaces-IMXXMLFilter!private! !
-!IMXXMLFilter categoriesFor: #getProperty_:!**auto generated**!methods!public! !
-!IMXXMLFilter categoriesFor: #isExtensible!**auto generated**!public!testing! !
-!IMXXMLFilter categoriesFor: #isVBCollection!**auto generated**!public!testing! !
-!IMXXMLFilter categoriesFor: #PutFeature:fValue:!**auto generated**!COM Interfaces-IMXXMLFilter!public! !
-!IMXXMLFilter categoriesFor: #putProperty:varValue:!**auto generated**!methods!public! !
-!IMXXMLFilter categoriesFor: #PutProperty:varValue:!**auto generated**!COM Interfaces-IMXXMLFilter!private! !
-!IMXXMLFilter categoriesFor: #putref_contentHandler:!**auto generated**!COM Interfaces-IMXXMLFilter!private! !
-!IMXXMLFilter categoriesFor: #putref_dtdHandler:!**auto generated**!COM Interfaces-IMXXMLFilter!private! !
-!IMXXMLFilter categoriesFor: #putref_entityResolver:!**auto generated**!COM Interfaces-IMXXMLFilter!private! !
-!IMXXMLFilter categoriesFor: #putref_errorHandler:!**auto generated**!COM Interfaces-IMXXMLFilter!private! !
-!IMXXMLFilter categoriesFor: #setContentHandler:!**auto generated**!properties!public! !
-!IMXXMLFilter categoriesFor: #setDtdHandler:!**auto generated**!properties!public! !
-!IMXXMLFilter categoriesFor: #setEntityResolver:!**auto generated**!properties!public! !
-!IMXXMLFilter categoriesFor: #setErrorHandler:!**auto generated**!properties!public! !
+!MSXML.IMXXMLFilter categoriesFor: #contentHandler!**auto generated**!properties!public! !
+!MSXML.IMXXMLFilter categoriesFor: #dtdHandler!**auto generated**!properties!public! !
+!MSXML.IMXXMLFilter categoriesFor: #entityResolver!**auto generated**!properties!public! !
+!MSXML.IMXXMLFilter categoriesFor: #errorHandler!**auto generated**!properties!public! !
+!MSXML.IMXXMLFilter categoriesFor: #get_contentHandler:!**auto generated**!COM Interfaces-IMXXMLFilter!private! !
+!MSXML.IMXXMLFilter categoriesFor: #get_dtdHandler:!**auto generated**!COM Interfaces-IMXXMLFilter!private! !
+!MSXML.IMXXMLFilter categoriesFor: #get_entityResolver:!**auto generated**!COM Interfaces-IMXXMLFilter!private! !
+!MSXML.IMXXMLFilter categoriesFor: #get_errorHandler:!**auto generated**!COM Interfaces-IMXXMLFilter!private! !
+!MSXML.IMXXMLFilter categoriesFor: #getFeature:!**auto generated**!methods!public! !
+!MSXML.IMXXMLFilter categoriesFor: #GetFeature:fValue:!**auto generated**!COM Interfaces-IMXXMLFilter!private! !
+!MSXML.IMXXMLFilter categoriesFor: #GetProperty:varValue:!**auto generated**!COM Interfaces-IMXXMLFilter!private! !
+!MSXML.IMXXMLFilter categoriesFor: #getProperty_:!**auto generated**!methods!public! !
+!MSXML.IMXXMLFilter categoriesFor: #isExtensible!**auto generated**!public!testing! !
+!MSXML.IMXXMLFilter categoriesFor: #isVBCollection!**auto generated**!public!testing! !
+!MSXML.IMXXMLFilter categoriesFor: #PutFeature:fValue:!**auto generated**!COM Interfaces-IMXXMLFilter!public! !
+!MSXML.IMXXMLFilter categoriesFor: #putProperty:varValue:!**auto generated**!methods!public! !
+!MSXML.IMXXMLFilter categoriesFor: #PutProperty:varValue:!**auto generated**!COM Interfaces-IMXXMLFilter!private! !
+!MSXML.IMXXMLFilter categoriesFor: #putref_contentHandler:!**auto generated**!COM Interfaces-IMXXMLFilter!private! !
+!MSXML.IMXXMLFilter categoriesFor: #putref_dtdHandler:!**auto generated**!COM Interfaces-IMXXMLFilter!private! !
+!MSXML.IMXXMLFilter categoriesFor: #putref_entityResolver:!**auto generated**!COM Interfaces-IMXXMLFilter!private! !
+!MSXML.IMXXMLFilter categoriesFor: #putref_errorHandler:!**auto generated**!COM Interfaces-IMXXMLFilter!private! !
+!MSXML.IMXXMLFilter categoriesFor: #setContentHandler:!**auto generated**!properties!public! !
+!MSXML.IMXXMLFilter categoriesFor: #setDtdHandler:!**auto generated**!properties!public! !
+!MSXML.IMXXMLFilter categoriesFor: #setEntityResolver:!**auto generated**!properties!public! !
+!MSXML.IMXXMLFilter categoriesFor: #setErrorHandler:!**auto generated**!properties!public! !
 
-!IMXXMLFilter class methodsFor!
+!MSXML.IMXXMLFilter class methodsFor!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'MSXML2.IMXXMLFilter'
@@ -343,5 +343,5 @@ defineFunctions
 		defineFunction: #putref_errorHandler:
 			argumentTypes: 'IUnknown*'
 ! !
-!IMXXMLFilter class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!MSXML.IMXXMLFilter class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
 

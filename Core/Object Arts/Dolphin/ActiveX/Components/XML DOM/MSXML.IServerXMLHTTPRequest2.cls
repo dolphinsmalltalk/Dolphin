@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-IServerXMLHTTPRequest subclass: #IServerXMLHTTPRequest2
+MSXML.IServerXMLHTTPRequest subclass: #'MSXML.IServerXMLHTTPRequest2'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'MSXMLConstants'
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-IServerXMLHTTPRequest2 guid: (IID fromString: '{2e01311b-c322-4b0a-bd77-b90cfdc8dce7}')!
-IServerXMLHTTPRequest2 comment: '<IServerXMLHTTPRequest2> is a wrapper class for the COM interface ''MSXML2.IServerXMLHTTPRequest2'' generated from type information in the ''Microsoft XML, v4.0'' library. It contains methods to invoke the member functions exposed by that interface.
+MSXML.IServerXMLHTTPRequest2 guid: (OS.COM.IID fromString: '{2e01311b-c322-4b0a-bd77-b90cfdc8dce7}')!
+MSXML.IServerXMLHTTPRequest2 comment: '<IServerXMLHTTPRequest2> is a wrapper class for the COM interface ''MSXML2.IServerXMLHTTPRequest2'' generated from type information in the ''Microsoft XML, v4.0'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains the following helpstring for this interface
 	"IServerXMLHTTPRequest2 Interface"
@@ -35,8 +35,8 @@ interface IServerXMLHTTPRequest2 : IServerXMLHTTPRequest
 		[in]BSTR bstrPassword);
 };
 '!
-!IServerXMLHTTPRequest2 categoriesForClass!COM-Interfaces!MSXML2-Interfaces! !
-!IServerXMLHTTPRequest2 methodsFor!
+!MSXML.IServerXMLHTTPRequest2 categoriesForClass!COM-Interfaces!MSXML2-Interfaces! !
+!MSXML.IServerXMLHTTPRequest2 methodsFor!
 
 setProxy: proxySetting
 	"Invoke the setProxy() method of the COM object.
@@ -79,12 +79,12 @@ SetProxyCredentials: bstrUserName bstrPassword: bstrPassword
 
 	<virtual stdcall: hresult 27 bstr bstr>
 	^self invalidCall: _failureCode! !
-!IServerXMLHTTPRequest2 categoriesFor: #setProxy:!**auto generated**!methods!public! !
-!IServerXMLHTTPRequest2 categoriesFor: #setProxy:varProxyServer:varBypassList:!**auto generated**!methods!public! !
-!IServerXMLHTTPRequest2 categoriesFor: #SetProxy:varProxyServer:varBypassList:!**auto generated**!COM Interfaces-IServerXMLHTTPRequest2!private! !
-!IServerXMLHTTPRequest2 categoriesFor: #SetProxyCredentials:bstrPassword:!**auto generated**!COM Interfaces-IServerXMLHTTPRequest2!public! !
+!MSXML.IServerXMLHTTPRequest2 categoriesFor: #setProxy:!**auto generated**!methods!public! !
+!MSXML.IServerXMLHTTPRequest2 categoriesFor: #setProxy:varProxyServer:varBypassList:!**auto generated**!methods!public! !
+!MSXML.IServerXMLHTTPRequest2 categoriesFor: #SetProxy:varProxyServer:varBypassList:!**auto generated**!COM Interfaces-IServerXMLHTTPRequest2!private! !
+!MSXML.IServerXMLHTTPRequest2 categoriesFor: #SetProxyCredentials:bstrPassword:!**auto generated**!COM Interfaces-IServerXMLHTTPRequest2!public! !
 
-!IServerXMLHTTPRequest2 class methodsFor!
+!MSXML.IServerXMLHTTPRequest2 class methodsFor!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'MSXML2.IServerXMLHTTPRequest2'
@@ -108,7 +108,7 @@ newServerXMLHTTP60
 
 	^self onCLSID: (CLSID fromString: '{88D96A0B-F192-11D4-A65F-0040963251E5}')
 ! !
-!IServerXMLHTTPRequest2 class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
-!IServerXMLHTTPRequest2 class categoriesFor: #newServerXMLHTTP40!**auto generated**!instance creation!public! !
-!IServerXMLHTTPRequest2 class categoriesFor: #newServerXMLHTTP60!**auto generated**!instance creation!public! !
+!MSXML.IServerXMLHTTPRequest2 class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!MSXML.IServerXMLHTTPRequest2 class categoriesFor: #newServerXMLHTTP40!**auto generated**!instance creation!public! !
+!MSXML.IServerXMLHTTPRequest2 class categoriesFor: #newServerXMLHTTP60!**auto generated**!instance creation!public! !
 

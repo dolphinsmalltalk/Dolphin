@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-IXMLDOMNode subclass: #IXMLDOMDocumentFragment
+MSXML.IXMLDOMNode subclass: #'MSXML.IXMLDOMDocumentFragment'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'MSXMLConstants'
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-IXMLDOMDocumentFragment guid: (IID fromString: '{3efaa413-272f-11d2-836f-0000f87a7782}')!
-IXMLDOMDocumentFragment comment: '<IXMLDOMDocumentFragment> is a wrapper class for the COM interface ''MSXML.IXMLDOMDocumentFragment'' generated from type information in the ''Microsoft XML, version 2.0'' library. It contains methods to invoke the member functions exposed by that interface.
+MSXML.IXMLDOMDocumentFragment guid: (OS.COM.IID fromString: '{3efaa413-272f-11d2-836f-0000f87a7782}')!
+MSXML.IXMLDOMDocumentFragment comment: '<IXMLDOMDocumentFragment> is a wrapper class for the COM interface ''MSXML.IXMLDOMDocumentFragment'' generated from type information in the ''Microsoft XML, version 2.0'' library. It contains methods to invoke the member functions exposed by that interface.
 
 This is a specialized DOM node to represent document fragments, which are lightweight objects useful for tree insert operatins.
 
@@ -20,4 +20,4 @@ The DocumentFragment node has special, defined behavior for IXMLDOMNode insert o
 The children of a DocumentFragment node make up zero or more nodes representing the tops of any subtrees defining the structure of the document. DocumentFragment nodes do not need to be well-formed XML documents (although they do need to follow the rules imposed upon well-formed XML parsed entities, which can have multiple top nodes). For example, a DocumentFragment might have only one child, and that child node could be a Text node. Such a structure model represents neither an HTML document nor a well-formed XML document.
 
 IXMLDOMDocumentFragment has no unique members of its own, but exposes the same members as IXMLDOMNode."'!
-!IXMLDOMDocumentFragment categoriesForClass!COM-Interfaces!MSXML-Interfaces! !
+!MSXML.IXMLDOMDocumentFragment categoriesForClass!COM-Interfaces!MSXML-Interfaces! !

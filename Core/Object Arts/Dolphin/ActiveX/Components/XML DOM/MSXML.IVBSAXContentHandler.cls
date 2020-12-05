@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-IDispatch subclass: #IVBSAXContentHandler
+OS.COM.IDispatch subclass: #'MSXML.IVBSAXContentHandler'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'MSXMLConstants'
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-IVBSAXContentHandler guid: (IID fromString: '{2ed7290a-4dd5-4b46-bb26-4e4155e77faa}')!
-IVBSAXContentHandler comment: '<IVBSAXContentHandler> is a wrapper class for the COM interface ''MSXML2.IVBSAXContentHandler'' generated from type information in the ''Microsoft XML, v4.0'' library. It contains methods to invoke the member functions exposed by that interface.
+MSXML.IVBSAXContentHandler guid: (OS.COM.IID fromString: '{2ed7290a-4dd5-4b46-bb26-4e4155e77faa}')!
+MSXML.IVBSAXContentHandler comment: '<IVBSAXContentHandler> is a wrapper class for the COM interface ''MSXML2.IVBSAXContentHandler'' generated from type information in the ''Microsoft XML, v4.0'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains the following helpstring for this interface
 	"IVBSAXContentHandler interface"
@@ -65,8 +65,8 @@ interface IVBSAXContentHandler : IDispatch
 		[in, out]BSTR* strName);
 };
 '!
-!IVBSAXContentHandler categoriesForClass!COM-Interfaces!MSXML2-Interfaces! !
-!IVBSAXContentHandler methodsFor!
+!MSXML.IVBSAXContentHandler categoriesForClass!COM-Interfaces!MSXML2-Interfaces! !
+!MSXML.IVBSAXContentHandler methodsFor!
 
 characters: strChars
 	"Invoke the characters() method of the COM object.
@@ -292,30 +292,30 @@ StartPrefixMapping: strPrefix strURI: strURI
 
 	<virtual stdcall: hresult 11 bstr* bstr*>
 	^self invalidCall: _failureCode! !
-!IVBSAXContentHandler categoriesFor: #characters:!**auto generated**!methods!public! !
-!IVBSAXContentHandler categoriesFor: #Characters:!**auto generated**!COM Interfaces-IVBSAXContentHandler!private! !
-!IVBSAXContentHandler categoriesFor: #EndDocument!**auto generated**!COM Interfaces-IVBSAXContentHandler!public! !
-!IVBSAXContentHandler categoriesFor: #endElement:strLocalName:strQName:!**auto generated**!methods!public! !
-!IVBSAXContentHandler categoriesFor: #EndElement:strLocalName:strQName:!**auto generated**!COM Interfaces-IVBSAXContentHandler!private! !
-!IVBSAXContentHandler categoriesFor: #endPrefixMapping:!**auto generated**!methods!public! !
-!IVBSAXContentHandler categoriesFor: #EndPrefixMapping:!**auto generated**!COM Interfaces-IVBSAXContentHandler!private! !
-!IVBSAXContentHandler categoriesFor: #ignorableWhitespace:!**auto generated**!methods!public! !
-!IVBSAXContentHandler categoriesFor: #IgnorableWhitespace:!**auto generated**!COM Interfaces-IVBSAXContentHandler!private! !
-!IVBSAXContentHandler categoriesFor: #isExtensible!**auto generated**!public!testing! !
-!IVBSAXContentHandler categoriesFor: #isVBCollection!**auto generated**!public!testing! !
-!IVBSAXContentHandler categoriesFor: #processingInstruction:strData:!**auto generated**!methods!public! !
-!IVBSAXContentHandler categoriesFor: #ProcessingInstruction:strData:!**auto generated**!COM Interfaces-IVBSAXContentHandler!private! !
-!IVBSAXContentHandler categoriesFor: #putref_documentLocator:!**auto generated**!COM Interfaces-IVBSAXContentHandler!private! !
-!IVBSAXContentHandler categoriesFor: #setDocumentLocator:!**auto generated**!properties!public! !
-!IVBSAXContentHandler categoriesFor: #skippedEntity:!**auto generated**!methods!public! !
-!IVBSAXContentHandler categoriesFor: #SkippedEntity:!**auto generated**!COM Interfaces-IVBSAXContentHandler!private! !
-!IVBSAXContentHandler categoriesFor: #StartDocument!**auto generated**!COM Interfaces-IVBSAXContentHandler!public! !
-!IVBSAXContentHandler categoriesFor: #startElement:strLocalName:strQName:oAttributes:!**auto generated**!methods!public! !
-!IVBSAXContentHandler categoriesFor: #StartElement:strLocalName:strQName:oAttributes:!**auto generated**!COM Interfaces-IVBSAXContentHandler!private! !
-!IVBSAXContentHandler categoriesFor: #startPrefixMapping:strURI:!**auto generated**!methods!public! !
-!IVBSAXContentHandler categoriesFor: #StartPrefixMapping:strURI:!**auto generated**!COM Interfaces-IVBSAXContentHandler!private! !
+!MSXML.IVBSAXContentHandler categoriesFor: #characters:!**auto generated**!methods!public! !
+!MSXML.IVBSAXContentHandler categoriesFor: #Characters:!**auto generated**!COM Interfaces-IVBSAXContentHandler!private! !
+!MSXML.IVBSAXContentHandler categoriesFor: #EndDocument!**auto generated**!COM Interfaces-IVBSAXContentHandler!public! !
+!MSXML.IVBSAXContentHandler categoriesFor: #endElement:strLocalName:strQName:!**auto generated**!methods!public! !
+!MSXML.IVBSAXContentHandler categoriesFor: #EndElement:strLocalName:strQName:!**auto generated**!COM Interfaces-IVBSAXContentHandler!private! !
+!MSXML.IVBSAXContentHandler categoriesFor: #endPrefixMapping:!**auto generated**!methods!public! !
+!MSXML.IVBSAXContentHandler categoriesFor: #EndPrefixMapping:!**auto generated**!COM Interfaces-IVBSAXContentHandler!private! !
+!MSXML.IVBSAXContentHandler categoriesFor: #ignorableWhitespace:!**auto generated**!methods!public! !
+!MSXML.IVBSAXContentHandler categoriesFor: #IgnorableWhitespace:!**auto generated**!COM Interfaces-IVBSAXContentHandler!private! !
+!MSXML.IVBSAXContentHandler categoriesFor: #isExtensible!**auto generated**!public!testing! !
+!MSXML.IVBSAXContentHandler categoriesFor: #isVBCollection!**auto generated**!public!testing! !
+!MSXML.IVBSAXContentHandler categoriesFor: #processingInstruction:strData:!**auto generated**!methods!public! !
+!MSXML.IVBSAXContentHandler categoriesFor: #ProcessingInstruction:strData:!**auto generated**!COM Interfaces-IVBSAXContentHandler!private! !
+!MSXML.IVBSAXContentHandler categoriesFor: #putref_documentLocator:!**auto generated**!COM Interfaces-IVBSAXContentHandler!private! !
+!MSXML.IVBSAXContentHandler categoriesFor: #setDocumentLocator:!**auto generated**!properties!public! !
+!MSXML.IVBSAXContentHandler categoriesFor: #skippedEntity:!**auto generated**!methods!public! !
+!MSXML.IVBSAXContentHandler categoriesFor: #SkippedEntity:!**auto generated**!COM Interfaces-IVBSAXContentHandler!private! !
+!MSXML.IVBSAXContentHandler categoriesFor: #StartDocument!**auto generated**!COM Interfaces-IVBSAXContentHandler!public! !
+!MSXML.IVBSAXContentHandler categoriesFor: #startElement:strLocalName:strQName:oAttributes:!**auto generated**!methods!public! !
+!MSXML.IVBSAXContentHandler categoriesFor: #StartElement:strLocalName:strQName:oAttributes:!**auto generated**!COM Interfaces-IVBSAXContentHandler!private! !
+!MSXML.IVBSAXContentHandler categoriesFor: #startPrefixMapping:strURI:!**auto generated**!methods!public! !
+!MSXML.IVBSAXContentHandler categoriesFor: #StartPrefixMapping:strURI:!**auto generated**!COM Interfaces-IVBSAXContentHandler!private! !
 
-!IVBSAXContentHandler class methodsFor!
+!MSXML.IVBSAXContentHandler class methodsFor!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'MSXML2.IVBSAXContentHandler'
@@ -343,5 +343,5 @@ defineFunctions
 		defineFunction: #SkippedEntity:
 			argumentTypes: 'bstr*'
 ! !
-!IVBSAXContentHandler class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!MSXML.IVBSAXContentHandler class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
 

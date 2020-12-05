@@ -1,0 +1,47 @@
+﻿| package |
+package := Package name: 'XML Formatter'.
+package paxVersion: 2.1;
+	basicComment: 'Dolphin Smalltalk XML DOM Formatter. 
+Copyright (c) Object Arts Ltd, 2000-2006
+
+`XmlFormatter` is an `XmlDomVisitor` that pretty-prints an XML node tree. Where appropriate it follows the W3C Canonical XML recommendation (http://www.w3.org/TR/xml-c14n), although it does not remove nodes (such as redundant namespace attributes) as described in that document. Also it will reformat mixed-content nodes where the text content is not in an immediate child. This may be incorrect in a markup document where inter-node whitespace is significant, but for the majority of data documents such whitespace is irrelevent.
+
+`XmlFormatter` is used in the `XmlPad` sample application to implement its Edit/Reformat command.
+
+Example usage:
+```
+	doc := MSXML.IXMLDOMDocument3 new.
+	doc loadText: ''<doc><elem>Hello World</elem></doc>''.
+	original := doc xml.
+
+	formatter := MSXML.XmlFormatter new.
+	reformatted := formatter format: doc.
+	
+	DiffBrowser show compare: original id: ''Original'' and: reformatted id: ''Reformatted''
+```
+'.
+
+
+package setClassNames: #(
+	#{MSXML.XmlFormatter}
+).
+
+package setPrerequisites: #(
+	'..\..\..\Base\Dolphin'
+	'XML DOM'
+	'XML DOM Visitor'
+).
+
+package!
+
+"Class Definitions"!
+
+MSXML.XmlDomVisitor subclass: #'MSXML.XmlFormatter'
+	instanceVariableNames: 'stream indent line newlineNeeded'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+"End of package definition"!
+

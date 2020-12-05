@@ -1017,6 +1017,8 @@
     <Image Include="Res\ToolsNamespace.ico" />
     <Image Include="Res\ExternalNamespace.ico" />
     <Image Include="Res\CoreNamespace.ico" />
+    <Image Include="Res\GraphicsNamespace.ico" />
+    <Image Include="Res\KernelNamespace.ico" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Res\hsplit.cur">

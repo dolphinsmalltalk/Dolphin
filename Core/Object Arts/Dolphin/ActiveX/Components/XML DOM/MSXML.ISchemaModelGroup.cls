@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ISchemaParticle subclass: #ISchemaModelGroup
+MSXML.ISchemaParticle subclass: #'MSXML.ISchemaModelGroup'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'MSXMLConstants'
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ISchemaModelGroup guid: (IID fromString: '{50ea08bb-dd1b-4664-9a50-c2f40f4bd79a}')!
-ISchemaModelGroup comment: '<ISchemaModelGroup> is a wrapper class for the COM interface ''MSXML2.ISchemaModelGroup'' generated from type information in the ''Microsoft XML, v4.0'' library. It contains methods to invoke the member functions exposed by that interface.
+MSXML.ISchemaModelGroup guid: (OS.COM.IID fromString: '{50ea08bb-dd1b-4664-9a50-c2f40f4bd79a}')!
+MSXML.ISchemaModelGroup comment: '<ISchemaModelGroup> is a wrapper class for the COM interface ''MSXML2.ISchemaModelGroup'' generated from type information in the ''Microsoft XML, v4.0'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains the following helpstring for this interface
 	"XML Schema Type"
@@ -30,8 +30,8 @@ interface ISchemaModelGroup : ISchemaParticle
 		[out, retval]ISchemaItemCollection** particles);
 };
 '!
-!ISchemaModelGroup categoriesForClass!COM-Interfaces!MSXML2-Interfaces! !
-!ISchemaModelGroup methodsFor!
+!MSXML.ISchemaModelGroup categoriesForClass!COM-Interfaces!MSXML2-Interfaces! !
+!MSXML.ISchemaModelGroup methodsFor!
 
 get_particles: particles
 	"Private - Get the value of the 'particles' property of the receiver.
@@ -48,12 +48,11 @@ particles
 	| answer |
 	answer := ISchemaItemCollection newPointer.
 	self get_particles: answer.
-	^answer asObject
-! !
-!ISchemaModelGroup categoriesFor: #get_particles:!**auto generated**!COM Interfaces-ISchemaModelGroup!private! !
-!ISchemaModelGroup categoriesFor: #particles!**auto generated**!properties!public! !
+	^answer asObject! !
+!MSXML.ISchemaModelGroup categoriesFor: #get_particles:!**auto generated**!COM Interfaces-ISchemaModelGroup!private! !
+!MSXML.ISchemaModelGroup categoriesFor: #particles!**auto generated**!properties!public! !
 
-!ISchemaModelGroup class methodsFor!
+!MSXML.ISchemaModelGroup class methodsFor!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'MSXML2.ISchemaModelGroup'
@@ -63,5 +62,5 @@ defineFunctions
 		defineFunction: #get_particles:
 			argumentTypes: 'ISchemaItemCollection**'
 ! !
-!ISchemaModelGroup class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!MSXML.ISchemaModelGroup class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
 

@@ -1,21 +1,21 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-IDispatch subclass: #IXMLDOMNamedNodeMap
+OS.COM.IDispatch subclass: #'MSXML.IXMLDOMNamedNodeMap'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'MSXMLConstants'
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-IXMLDOMNamedNodeMap guid: (IID fromString: '{2933bf83-7b36-11d2-b20e-00c04f983e60}')!
-IXMLDOMNamedNodeMap comment: '<IXMLDOMNamedNodeMap> is a wrapper class for the COM interface ''MSXML.IXMLDOMNamedNodeMap'' generated from type information in the ''Microsoft XML, version 2.0'' library. It contains methods to invoke the member functions exposed by that interface.
+MSXML.IXMLDOMNamedNodeMap guid: (OS.COM.IID fromString: '{2933bf83-7b36-11d2-b20e-00c04f983e60}')!
+MSXML.IXMLDOMNamedNodeMap comment: '<IXMLDOMNamedNodeMap> is a wrapper class for the COM interface ''MSXML.IXMLDOMNamedNodeMap'' generated from type information in the ''Microsoft XML, version 2.0'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
 
 IXMLDOMNamedNodeMap is used as the result of DOM methods that can return dictionary of nodes. We always wrap these with a further object (a subinstance of DOMNamedNodeMap) which implements the full node map protocol, but which is also specialized to the type of the nodes stored there-in, and implements <abstractDictionary>, which makes it much more useful in Smalltalk. For this reason all high-level wrapper methods have been removed from this class.
 
 Note that node maps support access by both string (node name) and integer (positional) keys, i.e. they are ordered, unlike traditional Smalltalk dictionaries. Node maps also include support for namespaces.'!
-!IXMLDOMNamedNodeMap categoriesForClass!COM-Interfaces!MSXML-Interfaces! !
-!IXMLDOMNamedNodeMap methodsFor!
+!MSXML.IXMLDOMNamedNodeMap categoriesForClass!COM-Interfaces!MSXML-Interfaces! !
+!MSXML.IXMLDOMNamedNodeMap methodsFor!
 
 _newEnum
 	"Answer the <IUnknown> value of the '_newEnum' property of the receiver."
@@ -60,11 +60,8 @@ getNamedItem: name
 
 	| answer |
 	answer := IXMLDOMNode newPointer.
-	self
-		GetNamedItem: name
-		namedItem: answer.
-	^answer asObject
-!
+	self GetNamedItem: name namedItem: answer.
+	^answer asObject!
 
 GetNamedItem: name namedItem: namedItem
 	"Private - Invoke the getNamedItem() method of the COM object.
@@ -87,8 +84,7 @@ getQualifiedItem: baseName namespaceURI: namespaceURI
 		GetQualifiedItem: baseName
 		namespaceURI: namespaceURI
 		qualifiedItem: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 GetQualifiedItem: baseName namespaceURI: namespaceURI qualifiedItem: qualifiedItem
 	"Private - Invoke the getQualifiedItem() method of the COM object.
@@ -118,11 +114,8 @@ item: index
 
 	| answer |
 	answer := IXMLDOMNode newPointer.
-	self
-		get_item: index
-		listItem: answer.
-	^answer asObject
-!
+	self get_item: index listItem: answer.
+	^answer asObject!
 
 length
 	"Answer the <sdword> value of the 'length' property of the receiver.
@@ -141,8 +134,7 @@ nextNode
 	| answer |
 	answer := IXMLDOMNode newPointer.
 	self NextNode: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 NextNode: nextItem
 	"Private - Invoke the nextNode() method of the COM object.
@@ -160,11 +152,8 @@ removeNamedItem: name
 
 	| answer |
 	answer := IXMLDOMNode newPointer.
-	self
-		RemoveNamedItem: name
-		namedItem: answer.
-	^answer asObject
-!
+	self RemoveNamedItem: name namedItem: answer.
+	^answer asObject!
 
 RemoveNamedItem: name namedItem: namedItem
 	"Private - Invoke the removeNamedItem() method of the COM object.
@@ -187,8 +176,7 @@ removeQualifiedItem: baseName namespaceURI: namespaceURI
 		RemoveQualifiedItem: baseName
 		namespaceURI: namespaceURI
 		qualifiedItem: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 RemoveQualifiedItem: baseName namespaceURI: namespaceURI qualifiedItem: qualifiedItem
 	"Private - Invoke the removeQualifiedItem() method of the COM object.
@@ -217,11 +205,8 @@ setNamedItem: newItem
 
 	| answer |
 	answer := IXMLDOMNode newPointer.
-	self
-		SetNamedItem: newItem
-		nameItem: answer.
-	^answer asObject
-!
+	self SetNamedItem: newItem nameItem: answer.
+	^answer asObject!
 
 SetNamedItem: newItem nameItem: nameItem
 	"Private - Invoke the setNamedItem() method of the COM object.
@@ -233,29 +218,29 @@ SetNamedItem: newItem nameItem: nameItem
 
 	<virtual stdcall: hresult 9 IXMLDOMNode* IXMLDOMNode**>
 	^self invalidCall: _failureCode! !
-!IXMLDOMNamedNodeMap categoriesFor: #_newEnum!**auto generated**!properties!public! !
-!IXMLDOMNamedNodeMap categoriesFor: #get__newEnum:!**auto generated**!COM Interfaces-IXMLDOMNamedNodeMap!private! !
-!IXMLDOMNamedNodeMap categoriesFor: #get_item:listItem:!**auto generated**!COM Interfaces-IXMLDOMNamedNodeMap!private! !
-!IXMLDOMNamedNodeMap categoriesFor: #get_length:!**auto generated**!COM Interfaces-IXMLDOMNamedNodeMap!private! !
-!IXMLDOMNamedNodeMap categoriesFor: #getNamedItem:!**auto generated**!methods!public! !
-!IXMLDOMNamedNodeMap categoriesFor: #GetNamedItem:namedItem:!**auto generated**!COM Interfaces-IXMLDOMNamedNodeMap!private! !
-!IXMLDOMNamedNodeMap categoriesFor: #getQualifiedItem:namespaceURI:!**auto generated**!methods!public! !
-!IXMLDOMNamedNodeMap categoriesFor: #GetQualifiedItem:namespaceURI:qualifiedItem:!**auto generated**!COM Interfaces-IXMLDOMNamedNodeMap!private! !
-!IXMLDOMNamedNodeMap categoriesFor: #isExtensible!**auto generated**!public!testing! !
-!IXMLDOMNamedNodeMap categoriesFor: #isVBCollection!**auto generated**!public!testing! !
-!IXMLDOMNamedNodeMap categoriesFor: #item:!**auto generated**!properties!public! !
-!IXMLDOMNamedNodeMap categoriesFor: #length!**auto generated**!properties!public! !
-!IXMLDOMNamedNodeMap categoriesFor: #nextNode!**auto generated**!methods!public! !
-!IXMLDOMNamedNodeMap categoriesFor: #NextNode:!**auto generated**!COM Interfaces-IXMLDOMNamedNodeMap!private! !
-!IXMLDOMNamedNodeMap categoriesFor: #removeNamedItem:!**auto generated**!methods!public! !
-!IXMLDOMNamedNodeMap categoriesFor: #RemoveNamedItem:namedItem:!**auto generated**!COM Interfaces-IXMLDOMNamedNodeMap!private! !
-!IXMLDOMNamedNodeMap categoriesFor: #removeQualifiedItem:namespaceURI:!**auto generated**!methods!public! !
-!IXMLDOMNamedNodeMap categoriesFor: #RemoveQualifiedItem:namespaceURI:qualifiedItem:!**auto generated**!COM Interfaces-IXMLDOMNamedNodeMap!private! !
-!IXMLDOMNamedNodeMap categoriesFor: #Reset!**auto generated**!COM Interfaces-IXMLDOMNamedNodeMap!public! !
-!IXMLDOMNamedNodeMap categoriesFor: #setNamedItem:!**auto generated**!methods!public! !
-!IXMLDOMNamedNodeMap categoriesFor: #SetNamedItem:nameItem:!**auto generated**!COM Interfaces-IXMLDOMNamedNodeMap!private! !
+!MSXML.IXMLDOMNamedNodeMap categoriesFor: #_newEnum!**auto generated**!properties!public! !
+!MSXML.IXMLDOMNamedNodeMap categoriesFor: #get__newEnum:!**auto generated**!COM Interfaces-IXMLDOMNamedNodeMap!private! !
+!MSXML.IXMLDOMNamedNodeMap categoriesFor: #get_item:listItem:!**auto generated**!COM Interfaces-IXMLDOMNamedNodeMap!private! !
+!MSXML.IXMLDOMNamedNodeMap categoriesFor: #get_length:!**auto generated**!COM Interfaces-IXMLDOMNamedNodeMap!private! !
+!MSXML.IXMLDOMNamedNodeMap categoriesFor: #getNamedItem:!**auto generated**!methods!public! !
+!MSXML.IXMLDOMNamedNodeMap categoriesFor: #GetNamedItem:namedItem:!**auto generated**!COM Interfaces-IXMLDOMNamedNodeMap!private! !
+!MSXML.IXMLDOMNamedNodeMap categoriesFor: #getQualifiedItem:namespaceURI:!**auto generated**!methods!public! !
+!MSXML.IXMLDOMNamedNodeMap categoriesFor: #GetQualifiedItem:namespaceURI:qualifiedItem:!**auto generated**!COM Interfaces-IXMLDOMNamedNodeMap!private! !
+!MSXML.IXMLDOMNamedNodeMap categoriesFor: #isExtensible!**auto generated**!public!testing! !
+!MSXML.IXMLDOMNamedNodeMap categoriesFor: #isVBCollection!**auto generated**!public!testing! !
+!MSXML.IXMLDOMNamedNodeMap categoriesFor: #item:!**auto generated**!properties!public! !
+!MSXML.IXMLDOMNamedNodeMap categoriesFor: #length!**auto generated**!properties!public! !
+!MSXML.IXMLDOMNamedNodeMap categoriesFor: #nextNode!**auto generated**!methods!public! !
+!MSXML.IXMLDOMNamedNodeMap categoriesFor: #NextNode:!**auto generated**!COM Interfaces-IXMLDOMNamedNodeMap!private! !
+!MSXML.IXMLDOMNamedNodeMap categoriesFor: #removeNamedItem:!**auto generated**!methods!public! !
+!MSXML.IXMLDOMNamedNodeMap categoriesFor: #RemoveNamedItem:namedItem:!**auto generated**!COM Interfaces-IXMLDOMNamedNodeMap!private! !
+!MSXML.IXMLDOMNamedNodeMap categoriesFor: #removeQualifiedItem:namespaceURI:!**auto generated**!methods!public! !
+!MSXML.IXMLDOMNamedNodeMap categoriesFor: #RemoveQualifiedItem:namespaceURI:qualifiedItem:!**auto generated**!COM Interfaces-IXMLDOMNamedNodeMap!private! !
+!MSXML.IXMLDOMNamedNodeMap categoriesFor: #Reset!**auto generated**!COM Interfaces-IXMLDOMNamedNodeMap!public! !
+!MSXML.IXMLDOMNamedNodeMap categoriesFor: #setNamedItem:!**auto generated**!methods!public! !
+!MSXML.IXMLDOMNamedNodeMap categoriesFor: #SetNamedItem:nameItem:!**auto generated**!COM Interfaces-IXMLDOMNamedNodeMap!private! !
 
-!IXMLDOMNamedNodeMap class methodsFor!
+!MSXML.IXMLDOMNamedNodeMap class methodsFor!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'MSXML2.IXMLDOMNamedNodeMap'
@@ -282,5 +267,5 @@ defineFunctions
 		defineFunction: #get__newEnum:
 			argumentTypes: 'IUnknown**'
 ! !
-!IXMLDOMNamedNodeMap class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!MSXML.IXMLDOMNamedNodeMap class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
 

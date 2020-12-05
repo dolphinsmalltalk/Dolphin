@@ -432,6 +432,12 @@ Core.Tests.DolphinTest subclass: #'External.Tests.INTEGERTest'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+Core.Tests.DolphinTest subclass: #'Core.Tests.LinkTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
 Core.Tests.DolphinTest subclass: #'Core.Tests.LocaleTest'
 	instanceVariableNames: 'savedLocale'
 	classVariableNames: ''
@@ -444,6 +450,12 @@ Core.Tests.DolphinTest subclass: #'Kernel.Tests.MemoryManagerTest'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+Core.Tests.DolphinTest subclass: #'Core.Tests.MessageTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
 Core.Tests.DolphinTest subclass: #'Core.Tests.MethodCategoryTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -451,12 +463,6 @@ Core.Tests.DolphinTest subclass: #'Core.Tests.MethodCategoryTest'
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Core.Tests.DolphinTest subclass: #'Core.Tests.NumberTest'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-Core.Tests.DolphinTest subclass: #'Core.Tests.LinkTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -475,12 +481,6 @@ Core.Tests.DolphinTest subclass: #'Core.Tests.PackageTest'
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Core.Tests.DolphinTest subclass: #PoolConstantsDictionaryTest
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-Core.Tests.DolphinTest subclass: #'Core.Tests.MessageTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -546,6 +546,12 @@ Core.Tests.DolphinTest subclass: #'Core.Tests.SortAlgorithmTest'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+Core.Tests.DolphinTest subclass: #'Kernel.Tests.StackFrameTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
 Core.Tests.DolphinTest subclass: #'Kernel.Tests.STBTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -565,12 +571,6 @@ Core.Tests.DolphinTest subclass: #'External.Tests.StructureTest'
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Core.Tests.DolphinTest subclass: #'Core.Tests.TimeStampTest'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-Core.Tests.DolphinTest subclass: #'Kernel.Tests.StackFrameTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -1135,7 +1135,7 @@ setTestAttributes: suitesNode id: idInteger name: suiteName duration: aDuration 
 writeJunitTestLog: aTestSuite result: aTestResult
 	| doc suitesNode currentId currentClass suiteNode classTests classErrors classFailures classSkipped classElapsed caseAttribs suiteName testsInteger errorsInteger failuresInteger skippedInteger duration |
 	suiteName := aTestSuite name ?? 'RegressionTests'.
-	doc := Smalltalk.IXMLDOMDocument3 new.
+	doc := MSXML newDocument.
 	suitesNode := doc addElement: 'testsuites'.
 	duration := aTestResult duration.
 	testsInteger := aTestResult runCount.

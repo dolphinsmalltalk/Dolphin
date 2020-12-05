@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-IUnknown subclass: #ISAXLocator
+OS.COM.IUnknown subclass: #'MSXML.ISAXLocator'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'MSXMLConstants'
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ISAXLocator guid: (IID fromString: '{9b7e472a-0de4-4640-bff3-84d38a051c31}')!
-ISAXLocator comment: '<ISAXLocator> is a wrapper class for the COM interface ''MSXML2.ISAXLocator'' generated from type information in the ''Microsoft XML, v4.0'' library. It contains methods to invoke the member functions exposed by that interface.
+MSXML.ISAXLocator guid: (OS.COM.IID fromString: '{9b7e472a-0de4-4640-bff3-84d38a051c31}')!
+MSXML.ISAXLocator comment: '<ISAXLocator> is a wrapper class for the COM interface ''MSXML2.ISAXLocator'' generated from type information in the ''Microsoft XML, v4.0'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains the following helpstring for this interface
 	"ISAXLocator interface"
@@ -38,8 +38,8 @@ interface ISAXLocator : IUnknown
 		[out, retval]unsigned short** ppwchSystemId);
 };
 '!
-!ISAXLocator categoriesForClass!COM-Interfaces!MSXML2-Interfaces! !
-!ISAXLocator methodsFor!
+!MSXML.ISAXLocator categoriesForClass!COM-Interfaces!MSXML2-Interfaces! !
+!MSXML.ISAXLocator methodsFor!
 
 getColumnNumber
 	"Answer the <SDWORD> result of invoking the getColumnNumber() method of the COM object."
@@ -81,7 +81,7 @@ getPublicId
 	"Answer the <WORD> result of invoking the getPublicId() method of the COM object."
 
 	| answer |
-	answer := (WORD newBufferClass: COMTaskMemory).
+	answer := (WORD newBufferClass: TaskMemory).
 	self GetPublicId: answer.
 	^answer asObject
 !
@@ -99,7 +99,7 @@ getSystemId
 	"Answer the <WORD> result of invoking the getSystemId() method of the COM object."
 
 	| answer |
-	answer := (WORD newBufferClass: COMTaskMemory).
+	answer := (WORD newBufferClass: TaskMemory).
 	self GetSystemId: answer.
 	^answer asObject
 !
@@ -112,16 +112,16 @@ GetSystemId: ppwchSystemId
 
 	<virtual stdcall: hresult 7 word**>
 	^self invalidCall: _failureCode! !
-!ISAXLocator categoriesFor: #getColumnNumber!**auto generated**!methods!public! !
-!ISAXLocator categoriesFor: #GetColumnNumber:!**auto generated**!COM Interfaces-ISAXLocator!private! !
-!ISAXLocator categoriesFor: #getLineNumber!**auto generated**!methods!public! !
-!ISAXLocator categoriesFor: #GetLineNumber:!**auto generated**!COM Interfaces-ISAXLocator!private! !
-!ISAXLocator categoriesFor: #getPublicId!**auto generated**!methods!public! !
-!ISAXLocator categoriesFor: #GetPublicId:!**auto generated**!COM Interfaces-ISAXLocator!private! !
-!ISAXLocator categoriesFor: #getSystemId!**auto generated**!methods!public! !
-!ISAXLocator categoriesFor: #GetSystemId:!**auto generated**!COM Interfaces-ISAXLocator!private! !
+!MSXML.ISAXLocator categoriesFor: #getColumnNumber!**auto generated**!methods!public! !
+!MSXML.ISAXLocator categoriesFor: #GetColumnNumber:!**auto generated**!COM Interfaces-ISAXLocator!private! !
+!MSXML.ISAXLocator categoriesFor: #getLineNumber!**auto generated**!methods!public! !
+!MSXML.ISAXLocator categoriesFor: #GetLineNumber:!**auto generated**!COM Interfaces-ISAXLocator!private! !
+!MSXML.ISAXLocator categoriesFor: #getPublicId!**auto generated**!methods!public! !
+!MSXML.ISAXLocator categoriesFor: #GetPublicId:!**auto generated**!COM Interfaces-ISAXLocator!private! !
+!MSXML.ISAXLocator categoriesFor: #getSystemId!**auto generated**!methods!public! !
+!MSXML.ISAXLocator categoriesFor: #GetSystemId:!**auto generated**!COM Interfaces-ISAXLocator!private! !
 
-!ISAXLocator class methodsFor!
+!MSXML.ISAXLocator class methodsFor!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'MSXML2.ISAXLocator'
@@ -137,5 +137,5 @@ defineFunctions
 		defineFunction: #GetSystemId:
 			argumentTypes: 'word**'
 ! !
-!ISAXLocator class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!MSXML.ISAXLocator class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
 

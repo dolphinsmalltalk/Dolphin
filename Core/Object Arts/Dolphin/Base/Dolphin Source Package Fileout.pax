@@ -240,7 +240,7 @@ fileOutBinaryVariables
 			| stream |
 			stream := FileStream write: (self fileNameForBinaryVariable: each extension: 'ston') text: true.
 			STON put: each value onStreamPretty: stream.
-			stream close]!
+			stream cr; close]!
 
 fileOutBootDefinitions
 	"Private - If this is a system package then only write out .st files capable of defining

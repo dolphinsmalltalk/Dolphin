@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-SharedPool subclass: #MSXMLConstants
+Kernel.SharedPool subclass: #'MSXML.MSXMLConstants'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -27,6 +27,6 @@ SharedPool subclass: #MSXMLConstants
 		'XMLELEMTYPE_PI' -> 16r5.
 		'XMLELEMTYPE_TEXT' -> 16r1
 	}!
-MSXMLConstants guid: (GUID fromString: '{56524e9a-764c-418f-8e37-151392bf33c7}')!
-MSXMLConstants comment: ''!
-!MSXMLConstants categoriesForClass!Unclassified! !
+MSXML.MSXMLConstants guid: (Core.GUID fromString: '{56524e9a-764c-418f-8e37-151392bf33c7}')!
+MSXML.MSXMLConstants comment: ''!
+!MSXML.MSXMLConstants categoriesForClass!Unclassified! !

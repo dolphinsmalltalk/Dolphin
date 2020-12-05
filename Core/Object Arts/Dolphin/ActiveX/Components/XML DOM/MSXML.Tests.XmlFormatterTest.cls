@@ -1,16 +1,17 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-DolphinTest subclass: #XmlFormatterTest
+Core.Tests.DolphinTest subclass: #'MSXML.Tests.XmlFormatterTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-XmlFormatterTest guid: (GUID fromString: '{834290a8-1967-49c5-ad9f-f47cb1ed5d12}')!
-XmlFormatterTest comment: ''!
-!XmlFormatterTest categoriesForClass!Unclassified! !
-!XmlFormatterTest methodsFor!
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+MSXML.Tests.XmlFormatterTest guid: (Core.GUID fromString: '{834290a8-1967-49c5-ad9f-f47cb1ed5d12}')!
+MSXML.Tests.XmlFormatterTest comment: ''!
+!MSXML.Tests.XmlFormatterTest categoriesForClass!Unclassified! !
+!MSXML.Tests.XmlFormatterTest methodsFor!
 
-assertReformat: text toCanonical: canonical 
+assertReformat: text toCanonical: canonical
 	| formatter reformatted dom |
 	dom := self parseXml: text.
 	formatter := XmlFormatter new.
@@ -154,16 +155,15 @@ testDocumentType
 	dom loadText: text.
 	formatter := XmlFormatter new.
 	reformatted := formatter format: dom.
-
 	self assert: reformatted = text
-"
+	"
 DiffBrowser compare: reformatted with: text
 "! !
-!XmlFormatterTest categoriesFor: #assertReformat:toCanonical:!helpers!private! !
-!XmlFormatterTest categoriesFor: #newDocument!helpers!private! !
-!XmlFormatterTest categoriesFor: #parseXml:!helpers!private! !
-!XmlFormatterTest categoriesFor: #testCanonicalExample3_1!public!unit tests! !
-!XmlFormatterTest categoriesFor: #testCanonicalExample3_2!public!unit tests! !
-!XmlFormatterTest categoriesFor: #testCanonicalExample3_3!public!unit tests! !
-!XmlFormatterTest categoriesFor: #testDocumentType!public!unit tests! !
+!MSXML.Tests.XmlFormatterTest categoriesFor: #assertReformat:toCanonical:!helpers!private! !
+!MSXML.Tests.XmlFormatterTest categoriesFor: #newDocument!helpers!private! !
+!MSXML.Tests.XmlFormatterTest categoriesFor: #parseXml:!helpers!private! !
+!MSXML.Tests.XmlFormatterTest categoriesFor: #testCanonicalExample3_1!public!unit tests! !
+!MSXML.Tests.XmlFormatterTest categoriesFor: #testCanonicalExample3_2!public!unit tests! !
+!MSXML.Tests.XmlFormatterTest categoriesFor: #testCanonicalExample3_3!public!unit tests! !
+!MSXML.Tests.XmlFormatterTest categoriesFor: #testDocumentType!public!unit tests! !
 

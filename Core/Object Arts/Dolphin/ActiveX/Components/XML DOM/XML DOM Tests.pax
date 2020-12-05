@@ -1,0 +1,45 @@
+﻿| package |
+package := Package name: 'XML DOM Tests'.
+package paxVersion: 2.1;
+	basicComment: ''.
+
+
+package setClassNames: #(
+	#{MSXML.Tests}
+	#{MSXML.Tests.XMLDOMNodeTest}
+	#{MSXML.Tests.XmlFormatterTest}
+).
+
+package setPrerequisites: #(
+	'..\..\..\Base\Dolphin Base Tests'
+	'..\..\..\..\..\Contributions\Camp Smalltalk\SUnit\SUnit'
+	'..\..\..\..\..\Contributions\Camp Smalltalk\SUnit\SUnitPreload'
+	'XML DOM'
+	'XML Formatter'
+).
+
+package!
+
+"Class Definitions"!
+
+MSXML subclass: #'MSXML.Tests'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #(#{XProgramming.SUnit})
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Core.Tests.DolphinTest subclass: #'MSXML.Tests.XMLDOMNodeTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Core.Tests.DolphinTest subclass: #'MSXML.Tests.XmlFormatterTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+"End of package definition"!
+
