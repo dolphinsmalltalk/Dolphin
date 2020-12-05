@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'Dolphin Professional Tools'.
-package paxVersion: 2;
+package paxVersion: 2.1;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk Professional Additional Tools.
 Copyright (c) Object Arts Ltd, 2001-2006.
@@ -22,49 +22,49 @@ package basicPackageVersion: '6.2'.
 package basicScriptAt: #postinstall put: 'EnvironmentBrowserShell initializeTool'.
 
 package setClassNames: #(
-	#{AXControlBrowser}
-	#{ChoosePackagedClassDialog}
-	#{ClassDiagramPlugin}
-	#{DebugInfoPlugin}
-	#{Disassembler}
-	#{EnvironmentBrowserShell}
-	#{IdeaSpaceShell}
-	#{PackagedClassSelector}
-	#{PackagedResourceIdentifierDialog}
-	#{ProcessMonitor}
-	#{ProfessionalSmalltalkSystem}
-	#{ResourceListPlugin}
-	#{SystemBrowserShell}
-	#{UnitTestPlugin}
+	#{Smalltalk.AXControlBrowser}
+	#{Smalltalk.ChoosePackagedClassDialog}
+	#{Smalltalk.ClassDiagramPlugin}
+	#{Smalltalk.DebugInfoPlugin}
+	#{Smalltalk.Disassembler}
+	#{Smalltalk.EnvironmentBrowserShell}
+	#{Smalltalk.IdeaSpaceShell}
+	#{Smalltalk.PackagedClassSelector}
+	#{Smalltalk.PackagedResourceIdentifierDialog}
+	#{Smalltalk.ProcessMonitor}
+	#{Smalltalk.ProfessionalSmalltalkSystem}
+	#{Smalltalk.ResourceListPlugin}
+	#{Smalltalk.SystemBrowserShell}
+	#{Smalltalk.UnitTestPlugin}
 ).
 
 package setMethodNames: #(
-	#(#{ClassDescription} #correspondingTestCase)
-	#(#{LinkButton class} #publishedAspectsOfInstances)
-	#(#{PackageSelector} #browseDeployed)
-	#(#{PackageSelector} #browsePackageSources)
-	#(#{PackageSelector} #browseSources)
-	#(#{Process} #priorityName)
-	#(#{ProcessorScheduler} #nameOfPriority:)
-	#(#{SlideyInneyOuteyThing class} #example1)
-	#(#{SlideyInneyOuteyThing class} #publishedAspectsOfInstances)
-	#(#{SmalltalkSystem} #openIdeaSpace)
-	#(#{SmalltalkSystem} #updateHelpMenus)
-	#(#{SmalltalkToolShell} #addToNewIdeaSpace)
-	#(#{SmalltalkToolShell} #browseSystem)
-	#(#{SmalltalkToolShell} #destroy)
-	#(#{SmalltalkToolShell} #dragToolToIdeaSpace)
-	#(#{SmalltalkToolShell} #exit)
-	#(#{SmalltalkToolShell class} #addToNewIdeaSpace:)
-	#(#{SmalltalkToolShell class} #dragToolToIdeaSpace:)
-	#(#{SmalltalkWorkspaceDocument} #addToNewIdeaSpace)
-	#(#{SmalltalkWorkspaceDocument} #browseSources)
-	#(#{SmalltalkWorkspaceDocument} #dragToolToIdeaSpace)
-	#(#{StyledContainer class} #publishedAspectsOfInstances)
-	#(#{SysLinkView class} #publishedAspectsOfInstances)
-	#(#{SysLinkView class} #publishedEventsOfInstances)
-	#(#{TestCase class} #correspondingTestCase)
-	#(#{Toolbar class} #resource_Idea_space_card_tools)
+	#(#{Core.ClassDescription} #correspondingTestCase)
+	#(#{Core.Process} #priorityName)
+	#(#{Kernel.ProcessorScheduler} #nameOfPriority:)
+	#(#{Smalltalk.PackageSelector} #browseDeployed)
+	#(#{Smalltalk.PackageSelector} #browsePackageSources)
+	#(#{Smalltalk.PackageSelector} #browseSources)
+	#(#{Smalltalk.SmalltalkSystem} #openIdeaSpace)
+	#(#{Smalltalk.SmalltalkSystem} #updateHelpMenus)
+	#(#{Smalltalk.SmalltalkToolShell} #addToNewIdeaSpace)
+	#(#{Smalltalk.SmalltalkToolShell} #browseSystem)
+	#(#{Smalltalk.SmalltalkToolShell} #destroy)
+	#(#{Smalltalk.SmalltalkToolShell} #dragToolToIdeaSpace)
+	#(#{Smalltalk.SmalltalkToolShell} #exit)
+	#(#{Smalltalk.SmalltalkToolShell class} #addToNewIdeaSpace:)
+	#(#{Smalltalk.SmalltalkToolShell class} #dragToolToIdeaSpace:)
+	#(#{Smalltalk.SmalltalkWorkspaceDocument} #addToNewIdeaSpace)
+	#(#{Smalltalk.SmalltalkWorkspaceDocument} #browseSources)
+	#(#{Smalltalk.SmalltalkWorkspaceDocument} #dragToolToIdeaSpace)
+	#(#{Smalltalk.StyledContainer class} #publishedAspectsOfInstances)
+	#(#{UI.LinkButton class} #publishedAspectsOfInstances)
+	#(#{UI.SlideyInneyOuteyThing class} #example1)
+	#(#{UI.SlideyInneyOuteyThing class} #publishedAspectsOfInstances)
+	#(#{UI.SysLinkView class} #publishedAspectsOfInstances)
+	#(#{UI.SysLinkView class} #publishedEventsOfInstances)
+	#(#{UI.Toolbar class} #resource_Idea_space_card_tools)
+	#(#{XProgramming.SUnit.TestCase class} #correspondingTestCase)
 ).
 
 package setPrerequisites: #(
@@ -97,6 +97,8 @@ package setPrerequisites: #(
 	'..\..\MVP\Models\Value\Dolphin Value Models'
 	'..\..\ActiveX\COM\OLE COM'
 	'..\..\..\..\Contributions\Camp Smalltalk\SUnit\SUnit'
+	'..\..\..\..\Contributions\Camp Smalltalk\SUnit\SUnitLegacy'
+	'..\..\..\..\Contributions\Camp Smalltalk\SUnit\SUnitPreload'
 	'..\..\ActiveX\Shell\Windows Shell'
 	'..\..\ActiveX\Components\XML DOM\XML DOM'
 ).
@@ -105,7 +107,7 @@ package!
 
 "Class Definitions"!
 
-InstructionInterpreter subclass: #Disassembler
+Kernel.InstructionInterpreter subclass: #Disassembler
 	instanceVariableNames: 'stream'
 	classVariableNames: ''
 	imports: #()
@@ -138,7 +140,7 @@ ClassBrowserPlugin subclass: #ResourceListPlugin
 ClassBrowserPlugin subclass: #UnitTestPlugin
 	instanceVariableNames: 'result icon autoSwitchProcess defectsPresenter modePresenter detailsPresenter'
 	classVariableNames: 'AutoSwitchDelayMs ErrorColor FailColor NoTestsColor PassColor RunningColor'
-	imports: #()
+	imports: #(#{XProgramming.SUnit})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 ClassSelector subclass: #PackagedClassSelector
@@ -194,7 +196,7 @@ ClassBrowserAbstract subclass: #SystemBrowserShell
 
 "Loose Methods"!
 
-!ClassDescription methodsFor!
+!Core.ClassDescription methodsFor!
 
 correspondingTestCase
 	"Answer a corresponding <TestCase> class that can be used to unit test the receiver. Answer nil if
@@ -203,24 +205,40 @@ correspondingTestCase
 	| potentialTestCaseNames |
 	potentialTestCaseNames := #('Test' 'Tests' 'TestCase' 'TestCases')
 				collect: [:each | (self name , each) asQualifiedReference].
-	potentialTestCaseNames
-		do: [:each | each valueOrNil ifNotNil: [:class | (class inheritsFrom: TestCase) ifTrue: [^class]]].
+	potentialTestCaseNames do: 
+			[:each |
+			each valueOrNil
+				ifNotNil: [:class | (class inheritsFrom: XProgramming.SUnit.TestCase) ifTrue: [^class]]].
 	^nil! !
-!ClassDescription categoriesFor: #correspondingTestCase!development!public! !
+!Core.ClassDescription categoriesFor: #correspondingTestCase!development!public! !
 
-!LinkButton class methodsFor!
+!Core.Process methodsFor!
 
-publishedAspectsOfInstances
-	"Answer a <LookupTable> of the <Aspect>s published by instances of the receiver."
+priorityName
+	"Answer symbolic name of the receiver's priority (see ProcessorScheduler)."
 
-	| answer |
-	answer := super publishedAspectsOfInstances.
-	answer
-		add: (Aspect multilineString: #text);
-		add: (Aspect name: #commandDescription) beReadOnly;
-		yourself.
-	^answer! !
-!LinkButton class categoriesFor: #publishedAspectsOfInstances!constants!public! !
+	^Processor nameOfPriority: self priority
+! !
+!Core.Process categoriesFor: #priorityName!accessing!public! !
+
+!Kernel.ProcessorScheduler methodsFor!
+
+nameOfPriority: anInteger
+	"Answer the name of the specified priority"
+
+	^#(
+		systemBasePriority
+		systemBackgroundPriority
+		userBackgroundPriority
+		userLowerPriority
+		userSchedulingPriority
+		userBoostedPriority
+		userInterruptPriority
+		lowIOPriority
+		highIOPriority
+		timingPriority)
+			at: anInteger ifAbsent: [#unknownPriority]! !
+!Kernel.ProcessorScheduler categoriesFor: #nameOfPriority:!enquiries!public! !
 
 !PackageSelector methodsFor!
 
@@ -238,9 +256,9 @@ browsePackageSources
 
 	| packages |
 	packages := self packages select: [:each | each isUsingPAX].
-	packages size ~= self packages size 
+	packages size ~= self packages size
 		ifTrue: 
-			[MessageBox 
+			[MessageBox
 				notify: 'Some of the selected packages are not using PAX source mode.
 These will be omitted from the Source Browser display.'].
 	SourceBrowser forSourcesOfPackages: packages!
@@ -252,69 +270,6 @@ browseSources
 !PackageSelector categoriesFor: #browseDeployed!commands!public! !
 !PackageSelector categoriesFor: #browsePackageSources!commands!private! !
 !PackageSelector categoriesFor: #browseSources!commands!private! !
-
-!Process methodsFor!
-
-priorityName
-	"Answer symbolic name of the receiver's priority (see ProcessorScheduler)."
-
-	^Processor nameOfPriority: self priority
-! !
-!Process categoriesFor: #priorityName!accessing!public! !
-
-!ProcessorScheduler methodsFor!
-
-nameOfPriority: anInteger
-	"Answer the name of the specified priority"
-
-	^#(
-		systemBasePriority
-		systemBackgroundPriority
-		userBackgroundPriority
-		userLowerPriority
-		userSchedulingPriority
-		userBoostedPriority
-		userInterruptPriority
-		lowIOPriority
-		highIOPriority
-		timingPriority)
-			at: anInteger ifAbsent: [#unknownPriority]! !
-!ProcessorScheduler categoriesFor: #nameOfPriority:!enquiries!public! !
-
-!SlideyInneyOuteyThing class methodsFor!
-
-example1
-	| s cards tree l t |
-	s := SlideyInneyOuteyThing new showShell.
-	s isTrayResizable: true.
-	s animation: #slide.
-	cards := s tray.
-	cards name: 'cards'.
-	s parentView layoutManager: ProportionalLayout new.
-	s parentView addSubView: Splitter new.
-	tree := cards addSubView: TreeView new.
-	tree model: ClassHierarchyModel withAllClasses.
-	tree viewMode: #smallIcons.
-	t := s parentView addSubView: ScintillaView new.
-	t text: Object comment.
-	tree arrangement: 'Tree'.
-	l := cards addSubView: ListView new.
-	l arrangement: 'List'.
-	l model list: View methodDictionary keys asSortedCollection!
-
-publishedAspectsOfInstances
-	"Answer a <LookupTable> of the <Aspect>s published by instances of the receiver."
-
-	| aspects |
-	aspects := super publishedAspectsOfInstances.
-	#(#layoutManager #isTransparent #isTabStop #isGroupStop #isDragSource #isDropTarget) 
-		do: [:each | aspects removeKey: each].
-	#(#isHiddenOnUnpin #isTrayResizable #isCardChangeAnimated) 
-		do: [:each | aspects add: (Aspect boolean: each)].
-	aspects add: (Aspect choice: #animation from: Animations keys asSortedCollection).
-	^aspects! !
-!SlideyInneyOuteyThing class categoriesFor: #example1!examples!public! !
-!SlideyInneyOuteyThing class categoriesFor: #publishedAspectsOfInstances!constants!public! !
 
 !SmalltalkSystem methodsFor!
 
@@ -449,13 +404,62 @@ publishedAspectsOfInstances
 	^aspects! !
 !StyledContainer class categoriesFor: #publishedAspectsOfInstances!constants!public! !
 
-!SysLinkView class methodsFor!
+!UI.LinkButton class methodsFor!
+
+publishedAspectsOfInstances
+	"Answer a <LookupTable> of the <Aspect>s published by instances of the receiver."
+
+	| answer |
+	answer := super publishedAspectsOfInstances.
+	answer
+		add: (Smalltalk.Aspect multilineString: #text);
+		add: (Smalltalk.Aspect name: #commandDescription) beReadOnly;
+		yourself.
+	^answer! !
+!UI.LinkButton class categoriesFor: #publishedAspectsOfInstances!constants!public! !
+
+!UI.SlideyInneyOuteyThing class methodsFor!
+
+example1
+	| s cards tree l t |
+	s := SlideyInneyOuteyThing new showShell.
+	s isTrayResizable: true.
+	s animation: #slide.
+	cards := s tray.
+	cards name: 'cards'.
+	s parentView layoutManager: ProportionalLayout new.
+	s parentView addSubView: Splitter new.
+	tree := cards addSubView: TreeView new.
+	tree model: Smalltalk.ClassHierarchyModel withAllClasses.
+	tree viewMode: #smallIcons.
+	t := s parentView addSubView: Smalltalk.ScintillaView new.
+	t text: Object comment.
+	tree arrangement: 'Tree'.
+	l := cards addSubView: ListView new.
+	l arrangement: 'List'.
+	l model list: View methodDictionary keys asSortedCollection!
+
+publishedAspectsOfInstances
+	"Answer a <LookupTable> of the <Aspect>s published by instances of the receiver."
+
+	| aspects |
+	aspects := super publishedAspectsOfInstances.
+	#(#layoutManager #isTransparent #isTabStop #isGroupStop #isDragSource #isDropTarget) 
+		do: [:each | aspects removeKey: each].
+	#(#isHiddenOnUnpin #isTrayResizable #isCardChangeAnimated) 
+		do: [:each | aspects add: (Smalltalk.Aspect boolean: each)].
+	aspects add: (Smalltalk.Aspect choice: #animation from: Animations keys asSortedCollection).
+	^aspects! !
+!UI.SlideyInneyOuteyThing class categoriesFor: #example1!examples!public! !
+!UI.SlideyInneyOuteyThing class categoriesFor: #publishedAspectsOfInstances!constants!public! !
+
+!UI.SysLinkView class methodsFor!
 
 publishedAspectsOfInstances
     	"Answer a <LookupTable> of the <Aspect>s published by instances of the receiver."
     
     	^(super publishedAspectsOfInstances)
-    		add: (Aspect multilineString: #text);
+    		add: (Smalltalk.Aspect multilineString: #text);
     		yourself!
 
 publishedEventsOfInstances
@@ -466,16 +470,10 @@ publishedEventsOfInstances
     		add: #linkClicked:;
     		yourself.
     ! !
-!SysLinkView class categoriesFor: #publishedAspectsOfInstances!constants!public! !
-!SysLinkView class categoriesFor: #publishedEventsOfInstances!events!public! !
+!UI.SysLinkView class categoriesFor: #publishedAspectsOfInstances!constants!public! !
+!UI.SysLinkView class categoriesFor: #publishedEventsOfInstances!events!public! !
 
-!TestCase class methodsFor!
-
-correspondingTestCase
-	^self! !
-!TestCase class categoriesFor: #correspondingTestCase!public! !
-
-!Toolbar class methodsFor!
+!UI.Toolbar class methodsFor!
 
 resource_Idea_space_card_tools
 	"Answer the literal data from which the 'Idea space card tools' resource can be reconstituted.
@@ -485,8 +483,14 @@ resource_Idea_space_card_tools
 	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Idea_space_card_tools)
 	"
 
-	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.Toolbar) 34 25 nil nil 34 2 8 1409289036 131137 416 nil nil nil 517 nil nil nil 416 327686 ##(Smalltalk.Color) #default 8 1903898080 170 192 8 #() 170 192 34 10 51221 1115206 1 ##(Smalltalk.ToolbarIconButton) 416 1 1180998 4 ##(Smalltalk.CommandDescription) #cardHistoryForward 8 'Forward' 1 1 263494 3 ##(Smalltalk.Icon) nil true 1572870 ##(Smalltalk.ImageRelativeFileLocator) 8 'HistoryForward.ico' 2032142 ##(Smalltalk.STBExternalResourceLibraryProxy) 8 'dolphindr7.dll' nil 51221 51227 594 416 1 626 #closeCard 8 'Close This Card' 1 1 788806 1 ##(Smalltalk.TextTileIcon) $\x2716 nil nil nil nil nil 1 nil nil 51227 51223 594 416 1 626 #moveCardLeft 8 'Move Card Left' 1 1 850 $\x25C0 8 'Cambria' nil 482 #menuHilight nil nil 1 nil nil 51223 51219 594 416 1 626 #cardHistoryBack 8 'Back' 1 1 674 nil true 720 8 'HistoryBack.ico' 768 51219 51225 594 416 1 626 #moveCardRight 8 'Move Card Right' 1 1 850 $\x25B6 8 'Cambria' nil 960 nil nil 1 nil nil 51225 34 7 1049158 1 ##(Smalltalk.ToolbarSeparator) 416 1 976 608 1154 416 1 880 1056 800 nil nil 1 nil nil nil nil nil 983302 ##(Smalltalk.MessageSequence) 138 144 34 2 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 328198 ##(Smalltalk.Point) 3839 21 1314 263 51 416 1266 #updateSizePosted 544 416 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 127 7 0 0 10 0 0 0 2 8 0 0 35 0 0 0] 8 #() 1314 193 193 nil 27 )! !
-!Toolbar class categoriesFor: #resource_Idea_space_card_tools!public!resources-views! !
+	^#(#'!!STL' 4 788558 10 ##(UI.STBViewProxy) ##(UI.Toolbar) 34 25 nil nil 34 2 8 1409289036 131137 416 nil nil nil 517 nil nil nil 416 327686 ##(Smalltalk.Color) #default 8 1903898080 170 192 8 #() 170 192 34 10 51221 1115206 1 ##(UI.ToolbarIconButton) 416 1 1180998 4 ##(UI.CommandDescription) #cardHistoryForward 8 'Forward' 1 1 263494 3 ##(Smalltalk.Icon) nil true 1572870 ##(Smalltalk.ImageRelativeFileLocator) 8 'HistoryForward.ico' 2032142 ##(Smalltalk.STBExternalResourceLibraryProxy) 8 'dolphindr7.dll' nil 51221 51227 594 416 1 626 #closeCard 8 'Close This Card' 1 1 788806 1 ##(Smalltalk.TextTileIcon) $\x2716 nil nil nil nil nil 1 nil nil 51227 51223 594 416 1 626 #moveCardLeft 8 'Move Card Left' 1 1 850 $\x25C0 8 'Cambria' nil 482 #menuHilight nil nil 1 nil nil 51223 51219 594 416 1 626 #cardHistoryBack 8 'Back' 1 1 674 nil true 720 8 'HistoryBack.ico' 768 51219 51225 594 416 1 626 #moveCardRight 8 'Move Card Right' 1 1 850 $\x25B6 8 'Cambria' nil 960 nil nil 1 nil nil 51225 34 7 1049158 1 ##(UI.ToolbarSeparator) 416 1 976 608 1154 416 1 880 1056 800 nil nil 1 nil nil nil nil nil 983302 ##(Smalltalk.MessageSequence) 138 144 34 2 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 328198 ##(Smalltalk.Point) 3839 21 1314 263 51 416 1266 #updateSizePosted 544 416 983302 ##(OS.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 127 7 0 0 10 0 0 0 2 8 0 0 35 0 0 0] 8 #() 1314 193 193 nil 27)! !
+!UI.Toolbar class categoriesFor: #resource_Idea_space_card_tools!public!resources-views! !
+
+!XProgramming.SUnit.TestCase class methodsFor!
+
+correspondingTestCase
+	^self! !
+!XProgramming.SUnit.TestCase class categoriesFor: #correspondingTestCase!public! !
 
 "End of package definition"!
 

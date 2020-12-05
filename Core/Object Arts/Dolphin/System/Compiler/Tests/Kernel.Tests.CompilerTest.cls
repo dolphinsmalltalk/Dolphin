@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-DolphinTest subclass: #CompilerTest
+Core.Tests.DolphinTest subclass: #'Kernel.Tests.CompilerTest'
 	instanceVariableNames: 'defaultCompileFlags'
 	classVariableNames: 'TempInstrs'
-	poolDictionaries: 'CompilerFlags OpcodePool SmalltalkParseErrorCodes'
+	imports: #(#{Kernel.CompilerFlags} #{Kernel.OpcodePool} #{Kernel.ParseErrorCodes})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-CompilerTest guid: (GUID fromString: '{5aff22bd-5d99-4b24-9b1d-c8d1ede77213}')!
-CompilerTest comment: ''!
-!CompilerTest categoriesForClass!Unclassified! !
-!CompilerTest methodsFor!
+Kernel.Tests.CompilerTest guid: (Core.GUID fromString: '{5aff22bd-5d99-4b24-9b1d-c8d1ede77213}')!
+Kernel.Tests.CompilerTest comment: ''!
+!Kernel.Tests.CompilerTest categoriesForClass!Unclassified! !
+!Kernel.Tests.CompilerTest methodsFor!
 
 assertBlocksOptimized: compiled
 	| literals |
@@ -53,16 +53,17 @@ defaultCompileFlags
 evalTestMethod: aCompiledMethod 
 	^self evalTestMethod: aCompiledMethod withArgs: #()!
 
-evalTestMethod: aCompiledMethod withArgs: anArray 
+evalTestMethod: aCompiledMethod withArgs: anArray
 	^aCompiledMethod value: DolphinCompilerTestMethods new withArguments: anArray!
 
 evaluateExpression: aString 
 	^Compiler evaluate: aString!
 
-getTestMethod: aSymbol 
+getTestMethod: aSymbol
 	| oldMethod result method |
 	oldMethod := DolphinCompilerTestMethods compiledMethodAt: aSymbol.
-	self shouldnt: [result := self compileMethod: oldMethod getSource in: DolphinCompilerTestMethods]
+	self shouldnt: 
+			[result := self compileMethod: oldMethod getSource in: DolphinCompilerTestMethods]
 		raise: self compilationErrorClass.
 	method := result method.
 	method selector: aSymbol.
@@ -82,18 +83,17 @@ scan: aString class: aNumberClass
 	self assert: result class identicalTo: aNumberClass.
 	self assert: result equals: expected!
 
-scanNonNumericEnd: aString class: aNumberClass 
+scanNonNumericEnd: aString class: aNumberClass
 	| expected stream extra |
 	stream := aString readStream.
 	expected := Number readFrom: stream.
 	extra := stream upToEnd.
-	self 
+	self
 		should: [self evaluateExpression: aString]
 		raise: MessageNotUnderstood
 		matching: 
-			[:ex | 
-			ex receiver class == aNumberClass 
-				and: [ex receiver = expected and: [extra beginsWith: ex selector]]]!
+			[:ex |
+			ex receiver class == aNumberClass and: [ex receiver = expected and: [extra beginsWith: ex selector]]]!
 
 scanScaledDecimal: each
 	| result1 expected |
@@ -296,14 +296,16 @@ testCopyingBlocks1
 	method := self getTestMethod: #testCopyingBlocks1.
 	self assert: method stackTempCount equals: 1.
 	self deny: method needsContext.
-	self assert: (method value: DolphinCompilerTestMethods new withArguments: #()) equals: Array new!
+	self assert: (method value: DolphinCompilerTestMethods new withArguments: #())
+		equals: Array new!
 
 testCopyingBlocks2
 	| method |
 	method := self getTestMethod: #testCopyingBlocks2.
 	self deny: method needsContext.
 	self assert: method stackTempCount equals: 1.
-	self assert: (method value: DolphinCompilerTestMethods new withArguments: #()) equals: 'abc'!
+	self assert: (method value: DolphinCompilerTestMethods new withArguments: #())
+		equals: 'abc'!
 
 testDecrementPushTempOptimisation
 	| disasm expr expected |
@@ -1023,16 +1025,16 @@ testReturnPseudoVar
 						ifTrue: [ByteArray with: retInstr]
 						ifFalse: [ByteArray with: Nop with: retInstr].
 			self assert: method byteCodes equals: bytecodes.
-			self assert: (method value: DolphinCompilerTestMethods new withArguments: #()) equals: eachValue]!
+			self assert: (method value: DolphinCompilerTestMethods new withArguments: #())
+				equals: eachValue]!
 
 testScanningScaledDecimals
 	"Test Number>>readFrom: with ScaledDecimals"
 
-	| string result expected |
+	| string result |
 	#('123s' '123s2' '123.0s' '123.12s' '123.12s2' '123.12s3')
 		do: [:each | self scanScaledDecimal: each].
 	string := '123s-2'.
-	expected := Number readFrom: string readStream.
 	result := self evaluateExpression: string.
 	self assert: result class identicalTo: ScaledDecimal.
 	self assert: result scale equals: 0.
@@ -1109,7 +1111,8 @@ testSpecialLiteralsAsUnarySelectors
 			self denyIsNil: method]!
 
 testSymbolScanning
-	#('#a' '#a1' '#a:' '#a1:' '#a:b:' '#a_:_:' '#a1:b2:' '#|' '#||' '#|||' '#_' '#_a' '#-' '#--' '#''£''' '#''你好''' '#''🐬''') do: 
+	#('#a' '#a1' '#a:' '#a1:' '#a:b:' '#a_:_:' '#a1:b2:' '#|' '#||' '#|||' '#_' '#_a' '#-' '#--' '#''£''' '#''你好''' '#''🐬''')
+		do: 
 			[:each |
 			| sym bracketed chars |
 			sym := self evaluateExpression: each.
@@ -1140,10 +1143,10 @@ testTempMaps
 	"Check that the temp maps for all the test methods are consistent with the bytecodes."
 
 	| env specials |
-	env := BrowserEnvironment new.
+	env := Refactory.Browser.BrowserEnvironment new.
 	specials := OrderedCollection new.
 	"Full block nested in optimized block"
-	specials add: AXMethodName >> #printSignatureOn:.
+	specials add: Smalltalk.AXMethodName >> #printSignatureOn:.
 	"Inlined return in a whileFalse control structure"
 	specials add: Base64Codec >> #nextBase64From:.
 	"Inlined returns in ifTrue/ifFalse optimised to ifNil"
@@ -1151,11 +1154,11 @@ testTempMaps
 	"Inlined returns in ifTrue/ifFalse stgructure"
 	specials add: Boolean >> #&.
 	"Full block nested in otherwise clean block"
-	specials add: BrowserEnvironment >> #numberSelectors.
+	specials add: Refactory.Browser.BrowserEnvironment >> #numberSelectors.
 	"Full block nested in multiple levels of optimized blocks"
 	specials add: CompiledCode >> #byteCodes:.
 	"Clean and copying blocks as the values of optimized blocks"
-	specials add: ListViewColumn >> #rowSortBlock.
+	specials add: UI.ListViewColumn >> #rowSortBlock.
 	"Full block nested in multiple other blocks"
 	specials add: TestResult >> #debugCase:.
 	"Optimized blocks assigning temps inside full blocks"
@@ -1499,92 +1502,92 @@ verifyTextMapsOf: each
 				ifFalse: 
 					[byte := debugMethod byteCodes at: ip.
 					self deny: byte equals: 0]]! !
-!CompilerTest categoriesFor: #assertBlocksOptimized:!helpers!private! !
-!CompilerTest categoriesFor: #checkCompileError:range:code:line:source:!helpers!private! !
-!CompilerTest categoriesFor: #compilationErrorClass!constants!private! !
-!CompilerTest categoriesFor: #compilationWarningClass!constants!private! !
-!CompilerTest categoriesFor: #compileExpression:!helpers!private! !
-!CompilerTest categoriesFor: #compileExpression:in:!helpers!private! !
-!CompilerTest categoriesFor: #compileMethod:in:!helpers!private! !
-!CompilerTest categoriesFor: #defaultCompileFlags!helpers!private! !
-!CompilerTest categoriesFor: #evalTestMethod:!helpers!private! !
-!CompilerTest categoriesFor: #evalTestMethod:withArgs:!helpers!private! !
-!CompilerTest categoriesFor: #evaluateExpression:!helpers!private! !
-!CompilerTest categoriesFor: #getTestMethod:!private! !
-!CompilerTest categoriesFor: #messageFromError:!helpers!private! !
-!CompilerTest categoriesFor: #scan:class:!helpers!private! !
-!CompilerTest categoriesFor: #scanNonNumericEnd:class:!helpers!private! !
-!CompilerTest categoriesFor: #scanScaledDecimal:!helpers!private! !
-!CompilerTest categoriesFor: #scanSmallIntegerNonNumericEnd:!helpers!private! !
-!CompilerTest categoriesFor: #setInteractiveCompile!helpers!private! !
-!CompilerTest categoriesFor: #setUp!helpers!private! !
-!CompilerTest categoriesFor: #shortPushOne!helpers!private! !
-!CompilerTest categoriesFor: #test1054!public!unit tests! !
-!CompilerTest categoriesFor: #testBlockTempsMap!public!unit tests! !
-!CompilerTest categoriesFor: #testBlockWithAllTempTypes!public!unit tests! !
-!CompilerTest categoriesFor: #testBraceArrays!public!unit tests! !
-!CompilerTest categoriesFor: #testByteArraysInLiteralArrays!public!unit tests! !
-!CompilerTest categoriesFor: #testCharacterScanning!public!unit tests! !
-!CompilerTest categoriesFor: #testCompileTimeExpressions!public!unit tests! !
-!CompilerTest categoriesFor: #testConstExpressionReferences!public!unit tests! !
-!CompilerTest categoriesFor: #testCopyingBlocks1!public!unit tests! !
-!CompilerTest categoriesFor: #testCopyingBlocks2!public!unit tests! !
-!CompilerTest categoriesFor: #testDecrementPushTempOptimisation!public!unit tests! !
-!CompilerTest categoriesFor: #testDecrementTempOptimisation!public!unit tests! !
-!CompilerTest categoriesFor: #testEmpty!public!unit tests! !
-!CompilerTest categoriesFor: #testEmptyIfInLoop!public!unit tests! !
-!CompilerTest categoriesFor: #testFarReturnFromBlock!public!unit tests! !
-!CompilerTest categoriesFor: #testFloatScanning!public!unit tests! !
-!CompilerTest categoriesFor: #testIfNil!public!unit tests! !
-!CompilerTest categoriesFor: #testIfNilifNotNil!public!unit tests! !
-!CompilerTest categoriesFor: #testIfNilifNotNilNoArg!public!unit tests! !
-!CompilerTest categoriesFor: #testIfNilifNotNilNoArgUnused!public!unit tests! !
-!CompilerTest categoriesFor: #testIfNilifNotNilUnused!public!unit tests! !
-!CompilerTest categoriesFor: #testIfNilUnused!public!unit tests! !
-!CompilerTest categoriesFor: #testIfNotNil!public!unit tests! !
-!CompilerTest categoriesFor: #testIfNotNilifNil!public!unit tests! !
-!CompilerTest categoriesFor: #testIfNotNilifNilNoArg!public!unit tests! !
-!CompilerTest categoriesFor: #testIfNotNilifNilNoArgUnused!public!unit tests! !
-!CompilerTest categoriesFor: #testIfNotNilifNilUnused!public!unit tests! !
-!CompilerTest categoriesFor: #testIfNotNilNoArg!public!unit tests! !
-!CompilerTest categoriesFor: #testIfNotNilNoArgUnused!public!unit tests! !
-!CompilerTest categoriesFor: #testIfNotNilUnused!public! !
-!CompilerTest categoriesFor: #testImmutableLiterals!public!unit tests! !
-!CompilerTest categoriesFor: #testIncrementDecrementOptimisation!public!unit tests! !
-!CompilerTest categoriesFor: #testIncrementPushTempOptimisation!public!unit tests! !
-!CompilerTest categoriesFor: #testIncrementTempOptimisation!public!unit tests! !
-!CompilerTest categoriesFor: #testIntegerScanning!public!unit tests! !
-!CompilerTest categoriesFor: #testIntegerScanningBoundaries!public!unit tests! !
-!CompilerTest categoriesFor: #testLiteralArray!public!unit tests! !
-!CompilerTest categoriesFor: #testLiteralStringEncoding!public!unit tests! !
-!CompilerTest categoriesFor: #testMutable!public!unit tests!unit tests-known failures! !
-!CompilerTest categoriesFor: #testNestedCopyingBlocks!public!unit tests! !
-!CompilerTest categoriesFor: #testNestedWhileTrueAtStartOfCleanBlock!public!unit tests! !
-!CompilerTest categoriesFor: #testQualifiedReference!public!unit tests! !
-!CompilerTest categoriesFor: #testRadixInteger!public!unit tests! !
-!CompilerTest categoriesFor: #testReturnFromOptimizedBlock!public!unit tests! !
-!CompilerTest categoriesFor: #testReturnImmediate!exceptions!public!unit tests! !
-!CompilerTest categoriesFor: #testReturnPseudoVar!public!unit tests! !
-!CompilerTest categoriesFor: #testScanningScaledDecimals!public!unit tests! !
-!CompilerTest categoriesFor: #testScope!public!unit tests! !
-!CompilerTest categoriesFor: #testSharedOuterTemps!public!unit tests! !
-!CompilerTest categoriesFor: #testSpecialLiteralsAsUnarySelectors!public! !
-!CompilerTest categoriesFor: #testSymbolScanning!public!unit tests! !
-!CompilerTest categoriesFor: #testTempMaps!public!unit tests! !
-!CompilerTest categoriesFor: #testTempPairing!public!unit tests! !
-!CompilerTest categoriesFor: #testTextMapOfEmptyBlock!public! !
-!CompilerTest categoriesFor: #testTextMapsOfCleanBlocks!public!unit tests! !
-!CompilerTest categoriesFor: #testTimesRepeat!public!unit tests! !
-!CompilerTest categoriesFor: #testTimesRepeatResult!public!unit tests! !
-!CompilerTest categoriesFor: #testToByDo!public!unit tests! !
-!CompilerTest categoriesFor: #testToByDoWithFloatSteps!public!unit tests! !
-!CompilerTest categoriesFor: #testWhileFalse!public!unit tests! !
-!CompilerTest categoriesFor: #testWhileTrue!public!unit tests! !
-!CompilerTest categoriesFor: #testWriteAccessor!public!unit tests!unit tests-known failures! !
-!CompilerTest categoriesFor: #verifyTempsMapOf:!helpers!private! !
-!CompilerTest categoriesFor: #verifyTextMapsOf:!helpers!private!unit tests-long running! !
+!Kernel.Tests.CompilerTest categoriesFor: #assertBlocksOptimized:!helpers!private! !
+!Kernel.Tests.CompilerTest categoriesFor: #checkCompileError:range:code:line:source:!helpers!private! !
+!Kernel.Tests.CompilerTest categoriesFor: #compilationErrorClass!constants!private! !
+!Kernel.Tests.CompilerTest categoriesFor: #compilationWarningClass!constants!private! !
+!Kernel.Tests.CompilerTest categoriesFor: #compileExpression:!helpers!private! !
+!Kernel.Tests.CompilerTest categoriesFor: #compileExpression:in:!helpers!private! !
+!Kernel.Tests.CompilerTest categoriesFor: #compileMethod:in:!helpers!private! !
+!Kernel.Tests.CompilerTest categoriesFor: #defaultCompileFlags!helpers!private! !
+!Kernel.Tests.CompilerTest categoriesFor: #evalTestMethod:!helpers!private! !
+!Kernel.Tests.CompilerTest categoriesFor: #evalTestMethod:withArgs:!helpers!private! !
+!Kernel.Tests.CompilerTest categoriesFor: #evaluateExpression:!helpers!private! !
+!Kernel.Tests.CompilerTest categoriesFor: #getTestMethod:!private! !
+!Kernel.Tests.CompilerTest categoriesFor: #messageFromError:!helpers!private! !
+!Kernel.Tests.CompilerTest categoriesFor: #scan:class:!helpers!private! !
+!Kernel.Tests.CompilerTest categoriesFor: #scanNonNumericEnd:class:!helpers!private! !
+!Kernel.Tests.CompilerTest categoriesFor: #scanScaledDecimal:!helpers!private! !
+!Kernel.Tests.CompilerTest categoriesFor: #scanSmallIntegerNonNumericEnd:!helpers!private! !
+!Kernel.Tests.CompilerTest categoriesFor: #setInteractiveCompile!helpers!private! !
+!Kernel.Tests.CompilerTest categoriesFor: #setUp!helpers!private! !
+!Kernel.Tests.CompilerTest categoriesFor: #shortPushOne!helpers!private! !
+!Kernel.Tests.CompilerTest categoriesFor: #test1054!public!unit tests! !
+!Kernel.Tests.CompilerTest categoriesFor: #testBlockTempsMap!public!unit tests! !
+!Kernel.Tests.CompilerTest categoriesFor: #testBlockWithAllTempTypes!public!unit tests! !
+!Kernel.Tests.CompilerTest categoriesFor: #testBraceArrays!public!unit tests! !
+!Kernel.Tests.CompilerTest categoriesFor: #testByteArraysInLiteralArrays!public!unit tests! !
+!Kernel.Tests.CompilerTest categoriesFor: #testCharacterScanning!public!unit tests! !
+!Kernel.Tests.CompilerTest categoriesFor: #testCompileTimeExpressions!public!unit tests! !
+!Kernel.Tests.CompilerTest categoriesFor: #testConstExpressionReferences!public!unit tests! !
+!Kernel.Tests.CompilerTest categoriesFor: #testCopyingBlocks1!public!unit tests! !
+!Kernel.Tests.CompilerTest categoriesFor: #testCopyingBlocks2!public!unit tests! !
+!Kernel.Tests.CompilerTest categoriesFor: #testDecrementPushTempOptimisation!public!unit tests! !
+!Kernel.Tests.CompilerTest categoriesFor: #testDecrementTempOptimisation!public!unit tests! !
+!Kernel.Tests.CompilerTest categoriesFor: #testEmpty!public!unit tests! !
+!Kernel.Tests.CompilerTest categoriesFor: #testEmptyIfInLoop!public!unit tests! !
+!Kernel.Tests.CompilerTest categoriesFor: #testFarReturnFromBlock!public!unit tests! !
+!Kernel.Tests.CompilerTest categoriesFor: #testFloatScanning!public!unit tests! !
+!Kernel.Tests.CompilerTest categoriesFor: #testIfNil!public!unit tests! !
+!Kernel.Tests.CompilerTest categoriesFor: #testIfNilifNotNil!public!unit tests! !
+!Kernel.Tests.CompilerTest categoriesFor: #testIfNilifNotNilNoArg!public!unit tests! !
+!Kernel.Tests.CompilerTest categoriesFor: #testIfNilifNotNilNoArgUnused!public!unit tests! !
+!Kernel.Tests.CompilerTest categoriesFor: #testIfNilifNotNilUnused!public!unit tests! !
+!Kernel.Tests.CompilerTest categoriesFor: #testIfNilUnused!public!unit tests! !
+!Kernel.Tests.CompilerTest categoriesFor: #testIfNotNil!public!unit tests! !
+!Kernel.Tests.CompilerTest categoriesFor: #testIfNotNilifNil!public!unit tests! !
+!Kernel.Tests.CompilerTest categoriesFor: #testIfNotNilifNilNoArg!public!unit tests! !
+!Kernel.Tests.CompilerTest categoriesFor: #testIfNotNilifNilNoArgUnused!public!unit tests! !
+!Kernel.Tests.CompilerTest categoriesFor: #testIfNotNilifNilUnused!public!unit tests! !
+!Kernel.Tests.CompilerTest categoriesFor: #testIfNotNilNoArg!public!unit tests! !
+!Kernel.Tests.CompilerTest categoriesFor: #testIfNotNilNoArgUnused!public!unit tests! !
+!Kernel.Tests.CompilerTest categoriesFor: #testIfNotNilUnused!public! !
+!Kernel.Tests.CompilerTest categoriesFor: #testImmutableLiterals!public!unit tests! !
+!Kernel.Tests.CompilerTest categoriesFor: #testIncrementDecrementOptimisation!public!unit tests! !
+!Kernel.Tests.CompilerTest categoriesFor: #testIncrementPushTempOptimisation!public!unit tests! !
+!Kernel.Tests.CompilerTest categoriesFor: #testIncrementTempOptimisation!public!unit tests! !
+!Kernel.Tests.CompilerTest categoriesFor: #testIntegerScanning!public!unit tests! !
+!Kernel.Tests.CompilerTest categoriesFor: #testIntegerScanningBoundaries!public!unit tests! !
+!Kernel.Tests.CompilerTest categoriesFor: #testLiteralArray!public!unit tests! !
+!Kernel.Tests.CompilerTest categoriesFor: #testLiteralStringEncoding!public!unit tests! !
+!Kernel.Tests.CompilerTest categoriesFor: #testMutable!public!unit tests!unit tests-known failures! !
+!Kernel.Tests.CompilerTest categoriesFor: #testNestedCopyingBlocks!public!unit tests! !
+!Kernel.Tests.CompilerTest categoriesFor: #testNestedWhileTrueAtStartOfCleanBlock!public!unit tests! !
+!Kernel.Tests.CompilerTest categoriesFor: #testQualifiedReference!public!unit tests! !
+!Kernel.Tests.CompilerTest categoriesFor: #testRadixInteger!public!unit tests! !
+!Kernel.Tests.CompilerTest categoriesFor: #testReturnFromOptimizedBlock!public!unit tests! !
+!Kernel.Tests.CompilerTest categoriesFor: #testReturnImmediate!exceptions!public!unit tests! !
+!Kernel.Tests.CompilerTest categoriesFor: #testReturnPseudoVar!public!unit tests! !
+!Kernel.Tests.CompilerTest categoriesFor: #testScanningScaledDecimals!public!unit tests! !
+!Kernel.Tests.CompilerTest categoriesFor: #testScope!public!unit tests! !
+!Kernel.Tests.CompilerTest categoriesFor: #testSharedOuterTemps!public!unit tests! !
+!Kernel.Tests.CompilerTest categoriesFor: #testSpecialLiteralsAsUnarySelectors!public! !
+!Kernel.Tests.CompilerTest categoriesFor: #testSymbolScanning!public!unit tests! !
+!Kernel.Tests.CompilerTest categoriesFor: #testTempMaps!public!unit tests! !
+!Kernel.Tests.CompilerTest categoriesFor: #testTempPairing!public!unit tests! !
+!Kernel.Tests.CompilerTest categoriesFor: #testTextMapOfEmptyBlock!public! !
+!Kernel.Tests.CompilerTest categoriesFor: #testTextMapsOfCleanBlocks!public!unit tests! !
+!Kernel.Tests.CompilerTest categoriesFor: #testTimesRepeat!public!unit tests! !
+!Kernel.Tests.CompilerTest categoriesFor: #testTimesRepeatResult!public!unit tests! !
+!Kernel.Tests.CompilerTest categoriesFor: #testToByDo!public!unit tests! !
+!Kernel.Tests.CompilerTest categoriesFor: #testToByDoWithFloatSteps!public!unit tests! !
+!Kernel.Tests.CompilerTest categoriesFor: #testWhileFalse!public!unit tests! !
+!Kernel.Tests.CompilerTest categoriesFor: #testWhileTrue!public!unit tests! !
+!Kernel.Tests.CompilerTest categoriesFor: #testWriteAccessor!public!unit tests!unit tests-known failures! !
+!Kernel.Tests.CompilerTest categoriesFor: #verifyTempsMapOf:!helpers!private! !
+!Kernel.Tests.CompilerTest categoriesFor: #verifyTextMapsOf:!helpers!private!unit tests-long running! !
 
-!CompilerTest class methodsFor!
+!Kernel.Tests.CompilerTest class methodsFor!
 
 buildSuiteFromSelectors
 	^super buildSuiteFromSelectors!
@@ -1625,7 +1628,7 @@ initialize
 
 resources
 	^{CompilerTestClasses}! !
-!CompilerTest class categoriesFor: #buildSuiteFromSelectors!Building Suites!public! !
-!CompilerTest class categoriesFor: #initialize!public!unit tests-long running! !
-!CompilerTest class categoriesFor: #resources!Accessing!public! !
+!Kernel.Tests.CompilerTest class categoriesFor: #buildSuiteFromSelectors!Building Suites!public! !
+!Kernel.Tests.CompilerTest class categoriesFor: #initialize!public!unit tests-long running! !
+!Kernel.Tests.CompilerTest class categoriesFor: #resources!Accessing!public! !
 

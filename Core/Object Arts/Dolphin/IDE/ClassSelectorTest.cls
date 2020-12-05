@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-SelectableItemsTest subclass: #ClassSelectorTest
+UI.Tests.SelectableItemsTest subclass: #ClassSelectorTest
 	instanceVariableNames: 'packageA packageB packageC dolphinTestA dolphinTestB dolphinTestC dolphinTestD dolphinTestE dolphinTestF dolphinTestG dolphinTestH dolphinTestI'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ClassSelectorTest guid: (GUID fromString: '{165b5ae1-4f70-45e2-94d3-cc4f11c068dc}')!
-ClassSelectorTest isAbstract: true!
+ClassSelectorTest guid: (Core.GUID fromString: '{165b5ae1-4f70-45e2-94d3-cc4f11c068dc}')!
+ClassSelectorTest isNonInstantiable: true!
 ClassSelectorTest comment: ''!
 !ClassSelectorTest categoriesForClass!Unclassified! !
 !ClassSelectorTest methodsFor!
@@ -96,9 +96,9 @@ resetSelection
 
 setUp
 	super setUp.
-	packageA := DolphinTestPackages current a.
-	packageB := DolphinTestPackages current b.
-	packageC := DolphinTestPackages current c!
+	packageA := Core.Tests.DolphinTestPackages current a.
+	packageB := Core.Tests.DolphinTestPackages current b.
+	packageC := Core.Tests.DolphinTestPackages current c!
 
 tearDown
 	super tearDown.
@@ -318,6 +318,6 @@ testSelection
 !ClassSelectorTest class methodsFor!
 
 resources
-	^{DolphinTestPackages}! !
+	^{Core.Tests.DolphinTestPackages}! !
 !ClassSelectorTest class categoriesFor: #resources!Accessing!public! !
 

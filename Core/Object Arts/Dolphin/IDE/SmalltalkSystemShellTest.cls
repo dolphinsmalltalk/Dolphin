@@ -1,12 +1,12 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-DolphinTest subclass: #SmalltalkSystemShellTest
+Core.Tests.DolphinTest subclass: #SmalltalkSystemShellTest
 	instanceVariableNames: 'systemShell'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-SmalltalkSystemShellTest guid: (GUID fromString: '{6d373cd5-f02e-4adb-bce9-f0755886a74b}')!
+SmalltalkSystemShellTest guid: (Core.GUID fromString: '{6d373cd5-f02e-4adb-bce9-f0755886a74b}')!
 SmalltalkSystemShellTest comment: ''!
 !SmalltalkSystemShellTest categoriesForClass!Unclassified! !
 !SmalltalkSystemShellTest methodsFor!

@@ -1,11 +1,11 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-DolphinCompilerTestMethods subclass: #DolphinCompilerTestMethodsSubclass
+Kernel.Tests.DolphinCompilerTestMethods subclass: #'Kernel.Tests.DolphinCompilerTestMethodsSubclass'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-DolphinCompilerTestMethodsSubclass guid: (GUID fromString: '{4057e09c-979b-4bca-a4b5-541930bd1339}')!
-DolphinCompilerTestMethodsSubclass comment: ''!
-!DolphinCompilerTestMethodsSubclass categoriesForClass!Kernel-Objects! !
+Kernel.Tests.DolphinCompilerTestMethodsSubclass guid: (Core.GUID fromString: '{4057e09c-979b-4bca-a4b5-541930bd1339}')!
+Kernel.Tests.DolphinCompilerTestMethodsSubclass comment: ''!
+!Kernel.Tests.DolphinCompilerTestMethodsSubclass categoriesForClass!Kernel-Objects! !

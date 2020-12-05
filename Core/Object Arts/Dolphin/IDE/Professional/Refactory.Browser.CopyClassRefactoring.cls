@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-RenameClassRefactoring subclass: #CopyClassRefactoring
+Refactory.Browser.RenameClassRefactoring subclass: #'Refactory.Browser.CopyClassRefactoring'
 	instanceVariableNames: 'superclass'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-CopyClassRefactoring guid: (GUID fromString: '{c6843969-c4d4-4f0f-8de1-ceae5725b831}')!
-CopyClassRefactoring comment: ''!
-!CopyClassRefactoring categoriesForClass!Refactory-Refactorings! !
-!CopyClassRefactoring methodsFor!
+Refactory.Browser.CopyClassRefactoring guid: (Core.GUID fromString: '{c6843969-c4d4-4f0f-8de1-ceae5725b831}')!
+Refactory.Browser.CopyClassRefactoring comment: ''!
+!Refactory.Browser.CopyClassRefactoring categoriesForClass!Refactory-Refactorings! !
+!Refactory.Browser.CopyClassRefactoring methodsFor!
 
 copyClass
 	self performComponentRefactoring: (AddClassRefactoring 
@@ -20,18 +20,21 @@ copyClass
 				category: class category).
 	^self model classNamed: newName!
 
-copyClassVarsTo: clone 
+copyClassVarsTo: clone
 	(class allClassVariableNames difference: superclass allClassVariableNames) do: 
-			[:each | 
-			self performComponentRefactoring: (AddClassVariableRefactoring 
+			[:each |
+			self performComponentRefactoring: (AddClassVariableRefactoring
 						model: self model
 						variable: each
 						class: clone)]!
 
-copyInstVarsTo: clone 
+copyImportsTo: clone
+	class allImports do: [:each | (clone importsNamespace: each) ifFalse: [clone addImport: each]]	"No refactoring for adding pools"!
+
+copyInstVarsTo: clone
 	(class allInstanceVariableNames difference: superclass allInstanceVariableNames) do: 
-			[:each | 
-			self performComponentRefactoring: (AddInstanceVariableRefactoring 
+			[:each |
+			self performComponentRefactoring: (AddInstanceVariableRefactoring
 						model: self model
 						variable: each
 						class: clone)]!
@@ -44,12 +47,8 @@ copyMethodsFrom: aRBAbstractClass to: cloneClass
 			(cloneClass compile: method source classified: (aRBAbstractClass protocolsFor: each)) 
 				package: method method owningPackageIfLoose]!
 
-copyPoolsTo: clone 
-	class allPoolDictionaryNames 
-		do: [:each | (clone definesPoolDictionary: each) ifFalse: [clone addPoolDictionary: each]]	"No refactoring for adding pools"!
-
 displayOn: aPuttableStream
-	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that an end-user might want to see."
+	"Append to the <puttableStream> argument a String whose characters are a representation of the receiver that an end-user might want to see."
 
 	aPuttableStream
 		nextPutAll: 'Clone class ';
@@ -87,22 +86,22 @@ transform
 	clone := self copyClass.
 	self copyInstVarsTo: clone.
 	self copyClassVarsTo: clone.
-	self copyPoolsTo: clone.
+	self copyImportsTo: clone.
 	self copyMethodsFrom: class to: clone.
 	self copyMethodsFrom: class metaclass to: clone metaclass! !
-!CopyClassRefactoring categoriesFor: #copyClass!private!transforming! !
-!CopyClassRefactoring categoriesFor: #copyClassVarsTo:!private!transforming! !
-!CopyClassRefactoring categoriesFor: #copyInstVarsTo:!private!transforming! !
-!CopyClassRefactoring categoriesFor: #copyMethodsFrom:to:!private!transforming! !
-!CopyClassRefactoring categoriesFor: #copyPoolsTo:!private!transforming! !
-!CopyClassRefactoring categoriesFor: #displayOn:!displaying!public! !
-!CopyClassRefactoring categoriesFor: #preconditions!preconditions!public! !
-!CopyClassRefactoring categoriesFor: #storeOn:!printing!public! !
-!CopyClassRefactoring categoriesFor: #superclass!accessing!private! !
-!CopyClassRefactoring categoriesFor: #superclass:!accessing!private! !
-!CopyClassRefactoring categoriesFor: #transform!public!transforming! !
+!Refactory.Browser.CopyClassRefactoring categoriesFor: #copyClass!private!transforming! !
+!Refactory.Browser.CopyClassRefactoring categoriesFor: #copyClassVarsTo:!private!transforming! !
+!Refactory.Browser.CopyClassRefactoring categoriesFor: #copyImportsTo:!private!transforming! !
+!Refactory.Browser.CopyClassRefactoring categoriesFor: #copyInstVarsTo:!private!transforming! !
+!Refactory.Browser.CopyClassRefactoring categoriesFor: #copyMethodsFrom:to:!private!transforming! !
+!Refactory.Browser.CopyClassRefactoring categoriesFor: #displayOn:!displaying!public! !
+!Refactory.Browser.CopyClassRefactoring categoriesFor: #preconditions!preconditions!public! !
+!Refactory.Browser.CopyClassRefactoring categoriesFor: #storeOn:!printing!public! !
+!Refactory.Browser.CopyClassRefactoring categoriesFor: #superclass!accessing!private! !
+!Refactory.Browser.CopyClassRefactoring categoriesFor: #superclass:!accessing!private! !
+!Refactory.Browser.CopyClassRefactoring categoriesFor: #transform!public!transforming! !
 
-!CopyClassRefactoring class methodsFor!
+!Refactory.Browser.CopyClassRefactoring class methodsFor!
 
 clone: aClass as: aNewName superclass: superClass 
 	^(super rename: aClass to: aNewName)
@@ -116,6 +115,6 @@ model: aRBNamespace clone: aClass as: aNewName superclass: superClass
 		to: aNewName)
 		superclass: superClass;
 		yourself! !
-!CopyClassRefactoring class categoriesFor: #clone:as:superclass:!instance creation!public! !
-!CopyClassRefactoring class categoriesFor: #model:clone:as:superclass:!instance creation!public! !
+!Refactory.Browser.CopyClassRefactoring class categoriesFor: #clone:as:superclass:!instance creation!public! !
+!Refactory.Browser.CopyClassRefactoring class categoriesFor: #model:clone:as:superclass:!instance creation!public! !
 

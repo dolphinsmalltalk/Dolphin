@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'Scintilla View Generator'.
-package paxVersion: 2;
+package paxVersion: 2.1;
 	basicComment: 'Tool to regenerate ScintillaView when upgrading to a new version of Scintilla.
 
 You will need to download the Scintilla source matching the binary version of Scintilla (downloadable as part of the Scite editor package). Extract the source from the zip, and copy the Scintilla.iface file to the scintilla view package folder, overwriting the existing one. This should be checked in for documentary purposes.
@@ -9,66 +9,67 @@ It is suggested that you run the generator in preview mode, which is the default
 
 
 package setClassNames: #(
-	#{ScintillaDef}
-	#{ScintillaEventDef}
-	#{ScintillaFunctionDef}
-	#{ScintillaParam}
-	#{ScintillaTypeRef}
-	#{ScintillaViewGenerator}
+	#{Smalltalk.ScintillaDef}
+	#{Smalltalk.ScintillaEventDef}
+	#{Smalltalk.ScintillaFunctionDef}
+	#{Smalltalk.ScintillaParam}
+	#{Smalltalk.ScintillaTypeRef}
+	#{Smalltalk.ScintillaViewGenerator}
 ).
 
 package setPrerequisites: #(
 	'..\..\Base\Dolphin'
-	'..\..\Base\Deprecated\Dolphin Base (Deprecated)'
+	'..\..\Base\Deprecated\Dolphin Base (Old Names)'
 	'..\..\MVP\Dialogs\Common\Dolphin Common Dialogs'
+	'..\..\Base\Deprecated\Dolphin Legacy Package Support'
 	'..\..\MVP\Base\Dolphin MVP Base'
 	'Dolphin Refactoring Browser'
 	'..\..\MVP\Presenters\Text\Dolphin Rich Text Presenter'
 	'..\..\MVP\Views\Scintilla\Dolphin Scintilla View'
 	'..\..\MVP\Presenters\Text\Dolphin Text Presenter'
-	'..\..\..\..\Contributions\Refactory\Refactoring Browser\Change Objects\RBChangeObjects'
+	'..\..\..\..\Contributions\Refactory\RBOldNames'
 	'..\..\..\..\Contributions\Refactory\Refactoring Browser\Refactorings\RBRefactorings'
-	'..\..\System\Compiler\Smalltalk Parser'
+	'..\..\System\Compiler\Smalltalk Parser (Old Names)'
 ).
 
 package!
 
 "Class Definitions"!
 
-Object subclass: #ScintillaDef
+Core.Object subclass: #ScintillaDef
 	instanceVariableNames: 'id name isDeprecated comment selector constName'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Object subclass: #ScintillaParam
+Core.Object subclass: #ScintillaParam
 	instanceVariableNames: 'name typeName typeRef'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Object subclass: #ScintillaTypeRef
+Core.Object subclass: #ScintillaTypeRef
 	instanceVariableNames: 'name objectClass byRef toMessage fromMessage default'
 	classVariableNames: 'TypeMap'
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Object subclass: #ScintillaViewGenerator
+Core.Object subclass: #ScintillaViewGenerator
 	instanceVariableNames: 'events commentQueue lexerConstantPrefixes previewChanges commands parsingDeprecated namespace constantsPool generatedSelectors aliases functions'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 ScintillaDef subclass: #ScintillaEventDef
 	instanceVariableNames: 'args'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 ScintillaDef subclass: #ScintillaFunctionDef
 	instanceVariableNames: 'funcType returnType lParam wParam returnTypeName'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 

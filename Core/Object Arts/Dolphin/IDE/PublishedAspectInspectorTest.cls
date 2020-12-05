@@ -1,12 +1,12 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-DolphinTest subclass: #PublishedAspectInspectorTest
+Core.Tests.DolphinTest subclass: #PublishedAspectInspectorTest
 	instanceVariableNames: 'inspector treePresenter displayPresenter'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-PublishedAspectInspectorTest guid: (GUID fromString: '{26c95677-a861-4030-8d8e-b6bed0a6c3ef}')!
+PublishedAspectInspectorTest guid: (Core.GUID fromString: '{26c95677-a861-4030-8d8e-b6bed0a6c3ef}')!
 PublishedAspectInspectorTest comment: ''!
 !PublishedAspectInspectorTest categoriesForClass!Unclassified! !
 !PublishedAspectInspectorTest methodsFor!
@@ -35,9 +35,7 @@ getAccessorValueText: anAspectAccessor
 isUsingListTreeView
 	"Private - Answer true if the PAI is using a ListTreeView rather than the older style TreeView"
 
-	^(Smalltalk lookup: #ListTreeView)
-		ifNil: [false]
-		ifNotNil: [:ltv | treePresenter view isKindOf: ltv]!
+	^#{UI.ListTreeView} ifDefined: [:ltv | treePresenter view isKindOf: ltv] ifNotDefined: [false]!
 
 repaint
 	false

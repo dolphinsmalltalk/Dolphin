@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-AbstractParserErrorTest subclass: #SmalltalkParserErrorTest
+Kernel.Tests.AbstractParserErrorTest subclass: #'Kernel.Tests.ParserErrorTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-SmalltalkParserErrorTest guid: (GUID fromString: '{67c4b011-40fa-43b7-83a4-cd8d616c16d0}')!
-SmalltalkParserErrorTest comment: ''!
-!SmalltalkParserErrorTest categoriesForClass!Unclassified! !
-!SmalltalkParserErrorTest methodsFor!
+Kernel.Tests.ParserErrorTest guid: (Core.GUID fromString: '{67c4b011-40fa-43b7-83a4-cd8d616c16d0}')!
+Kernel.Tests.ParserErrorTest comment: ''!
+!Kernel.Tests.ParserErrorTest categoriesForClass!Unclassified! !
+!Kernel.Tests.ParserErrorTest methodsFor!
 
 ifNil: aBlock
 	^nil!
@@ -19,7 +19,7 @@ ifNotNil: notNilBlock ifNil: nilBlock
 
 lexicalError: aString range: anInterval line: lineInteger code: anInteger
 	self
-		lexicalErrorFrom: [SmalltalkScanner on: aString readStream]
+		lexicalErrorFrom: [self scannerClass on: aString readStream]
 		range: anInterval
 		line: lineInteger
 		code: anInteger!
@@ -27,20 +27,20 @@ lexicalError: aString range: anInterval line: lineInteger code: anInteger
 lexicalErrorFrom: aBlockClosure range: anInterval line: lineInteger code: anInteger
 	self
 		should: [aBlockClosure value contents]
-		raise: SmalltalkParser errorClass
+		raise: self parserClass errorClass
 		matching: [:ex | ex errorCode = anInteger and: [ex range = anInterval and: [ex line = lineInteger]]]!
 
 parseExpression: aString in: aClass
 	| ast errorBlock |
 	errors := OrderedCollection new.
 	errorBlock := [:err | errors addLast: err].
-	ast := SmalltalkParser
+	ast := Parser
 				parseExpression: aString
 				in: aClass
 				onError: errorBlock.
 	^errors isEmpty
 		ifTrue: 
-			[BrowserSemanticAnalyser
+			[Smalltalk.BrowserSemanticAnalyser
 				analyzeParseTree: ast
 				for: aClass
 				context: nil
@@ -49,16 +49,16 @@ parseExpression: aString in: aClass
 		ifFalse: [ast]!
 
 parseMethod: aString in: aClass
-	| ast errors |
-	errors := OrderedCollection new.
+	| ast syntaxErrors |
+	syntaxErrors := OrderedCollection new.
 	ast := self parserClass
 				parseMethod: aString
 				in: aClass
-				onError: [:err | errors addLast: err].
+				onError: [:err | syntaxErrors addLast: err].
 	"Don't perform semantic analysis if there are syntax errors"
-	^errors isEmpty
+	^syntaxErrors isEmpty
 		ifTrue: 
-			[BrowserSemanticAnalyser
+			[Smalltalk.BrowserSemanticAnalyser
 				analyzeParseTree: ast
 				for: aClass
 				context: nil
@@ -67,10 +67,10 @@ parseMethod: aString in: aClass
 		ifFalse: [ast]!
 
 parserClass
-	^SmalltalkParser!
+	^Parser!
 
 scannerClass
-	^SmalltalkScanner!
+	^Scanner!
 
 testErrorsBadCodePoint
 	#('$\x110000' '$\xFFFFFFFF') do: 
@@ -163,6 +163,14 @@ testErrorsNonsenseAtEndOfMethod
 		line: 1
 		code: CErrNonsenseAtExprEnd!
 
+testErrorsPrimitivesCloseTagRecovery
+	| source ast |
+	source := 'blah <primitive: 10 ^self invalidCall: _failureCode'.
+	ast := [self parserClass parseMethod: source] on: self parserClass errorClass do: [:ex | ex resume].
+	self assert: ast formattedCode equals: 'blah
+	<primitive: 10>
+	^self invalidCall: _failureCode'!
+
 testErrorsQualifiedReferenceInvalidName
 	| ast qr |
 	ast := super testErrorsQualifiedReferenceInvalidName.
@@ -198,31 +206,31 @@ testErrorsQualifierReferenceEmpty
 testErrorsTempsNotClosedRecovery
 	| source ast |
 	source := 'blah | 1+2 ^3'.
-	ast := [SmalltalkParser parseMethod: source] on: self compilationErrorClass do: [:ex | ex resume].
+	ast := [self parserClass parseMethod: source] on: self compilationErrorClass do: [:ex | ex resume].
 	self assert: ast formattedCode equals: 'blah
 	1 + 2.
 	^3'.
 	source := 'blah | a 1 + 2. a := 3'.
-	ast := [SmalltalkParser parseMethod: source] on: self compilationErrorClass do: [:ex | ex resume].
+	ast := [self parserClass parseMethod: source] on: self compilationErrorClass do: [:ex | ex resume].
 	self assert: ast formattedCode equals: 'blah
 	| a |
 	1 + 2.
 	a := 3'.
 	source := 'blah |'.
-	ast := [SmalltalkParser parseMethod: source] on: self compilationErrorClass do: [:ex | ex resume].
+	ast := [self parserClass parseMethod: source] on: self compilationErrorClass do: [:ex | ex resume].
 	self assert: ast formattedCode equals: 'blah
 	'.
 	source := 'blah | '.
-	ast := [SmalltalkParser parseMethod: source] on: self compilationErrorClass do: [:ex | ex resume].
+	ast := [self parserClass parseMethod: source] on: self compilationErrorClass do: [:ex | ex resume].
 	self assert: ast formattedCode equals: 'blah
 	'.
 	source := 'blah | a b'.
-	ast := [SmalltalkParser parseMethod: source] on: self compilationErrorClass do: [:ex | ex resume].
+	ast := [self parserClass parseMethod: source] on: self compilationErrorClass do: [:ex | ex resume].
 	self assert: ast formattedCode equals: 'blah
 	| a b |
 	'.
 	source := 'blah | a a := 1. ^a'.
-	ast := [SmalltalkParser parseMethod: source] on: self compilationErrorClass do: [:ex | ex resume].
+	ast := [self parserClass parseMethod: source] on: self compilationErrorClass do: [:ex | ex resume].
 	self assert: ast formattedCode equals: 'blah
 	| a |
 	'':=''.
@@ -231,27 +239,27 @@ testErrorsTempsNotClosedRecovery
 	self assert: ast argumentNames isEmpty.
 	self assert: ast allTemporaryVariables asArray equals: #('a').
 	source := '[:a | | b ]'.
-	ast := [SmalltalkParser parseExpression: source] on: self compilationErrorClass
+	ast := [self parserClass parseExpression: source] on: self compilationErrorClass
 				do: [:ex | ex resume].
 	self assert: ast isBlock.
 	self assert: ast argumentNames asArray equals: #('a').
 	self assert: ast allTemporaryVariables asArray equals: #('b').
 	source := '[:a | |]'.
-	ast := [SmalltalkParser parseExpression: source] on: self compilationErrorClass
+	ast := [self parserClass parseExpression: source] on: self compilationErrorClass
 				do: [:ex | ex resume].
 	self assert: ast formattedCode equals: '[:a | ]'.
 	self assert: ast isBlock.
 	self assert: ast argumentNames asArray equals: #('a').
 	self assert: ast allTemporaryVariables isEmpty.
 	source := '[:a ||'.
-	ast := [SmalltalkParser parseExpression: source] on: self compilationErrorClass
+	ast := [self parserClass parseExpression: source] on: self compilationErrorClass
 				do: [:ex | ex resume].
 	self assert: ast formattedCode equals: '[:a | ]'.
 	self assert: ast isBlock.
 	self assert: ast argumentNames asArray equals: #('a').
 	self assert: ast allTemporaryVariables isEmpty.
 	source := '[:a ||]'.
-	ast := [SmalltalkParser parseExpression: source] on: self compilationErrorClass
+	ast := [self parserClass parseExpression: source] on: self compilationErrorClass
 				do: [:ex | ex resume].
 	self assert: ast formattedCode equals: '[:a | ]'.
 	self assert: ast isBlock.
@@ -415,35 +423,36 @@ writtenNotReadRange: aString
 	| start |
 	start := aString lastIndexOf: $_.
 	^start to: start + 3! !
-!SmalltalkParserErrorTest categoriesFor: #ifNil:!control flow!public! !
-!SmalltalkParserErrorTest categoriesFor: #ifNotNil:ifNil:!control flow!public! !
-!SmalltalkParserErrorTest categoriesFor: #lexicalError:range:line:code:!helpers!private! !
-!SmalltalkParserErrorTest categoriesFor: #lexicalErrorFrom:range:line:code:!helpers!private! !
-!SmalltalkParserErrorTest categoriesFor: #parseExpression:in:!helpers!private! !
-!SmalltalkParserErrorTest categoriesFor: #parseMethod:in:!helpers!private! !
-!SmalltalkParserErrorTest categoriesFor: #parserClass!constants!private! !
-!SmalltalkParserErrorTest categoriesFor: #scannerClass!constants!private! !
-!SmalltalkParserErrorTest categoriesFor: #testErrorsBadCodePoint!public!unit tests! !
-!SmalltalkParserErrorTest categoriesFor: #testErrorsExpectCodePoint!public!unit tests! !
-!SmalltalkParserErrorTest categoriesFor: #testErrorsLexicalBadNumber!public!unit tests! !
-!SmalltalkParserErrorTest categoriesFor: #testErrorsNonsenseAtEndOfExpression!public!unit tests! !
-!SmalltalkParserErrorTest categoriesFor: #testErrorsNonsenseAtEndOfMethod!public!unit tests! !
-!SmalltalkParserErrorTest categoriesFor: #testErrorsQualifiedReferenceInvalidName!public!unit tests! !
-!SmalltalkParserErrorTest categoriesFor: #testErrorsQualifiedReferenceMetaNotClosed!public!unit tests! !
-!SmalltalkParserErrorTest categoriesFor: #testErrorsQualifiedReferenceNotClosed!public!unit tests! !
-!SmalltalkParserErrorTest categoriesFor: #testErrorsQualifierReferenceEmpty!public!unit tests! !
-!SmalltalkParserErrorTest categoriesFor: #testErrorsTempsNotClosedRecovery!public!unit tests! !
-!SmalltalkParserErrorTest categoriesFor: #testInfoHardBreakpoint!public!unit tests! !
-!SmalltalkParserErrorTest categoriesFor: #testInfoSupersendsOther!public!unit tests! !
-!SmalltalkParserErrorTest categoriesFor: #testInfoUnreferencedArg!public!unit tests! !
-!SmalltalkParserErrorTest categoriesFor: #testParserErrors!public!unit tests! !
-!SmalltalkParserErrorTest categoriesFor: #testWarningUnreachable!public!unit tests! !
-!SmalltalkParserErrorTest categoriesFor: #testWarningUsesBooleanClass!public!unit tests! !
-!SmalltalkParserErrorTest categoriesFor: #testWarnMsgUnimplemented!public!unit tests! !
-!SmalltalkParserErrorTest categoriesFor: #testWarnNiladicExceptionHandler!public!unit tests! !
-!SmalltalkParserErrorTest categoriesFor: #testWarnNonNiladicGuardedBlock!public!unit tests! !
-!SmalltalkParserErrorTest categoriesFor: #testWarnRestrictedSelector!public!unit tests! !
-!SmalltalkParserErrorTest categoriesFor: #testWarnUndefinedSelector!public!unit tests! !
-!SmalltalkParserErrorTest categoriesFor: #testWarnUnimplementedAbstractMethod!public!unit tests! !
-!SmalltalkParserErrorTest categoriesFor: #writtenNotReadRange:!helpers!private! !
+!Kernel.Tests.ParserErrorTest categoriesFor: #ifNil:!control flow!public! !
+!Kernel.Tests.ParserErrorTest categoriesFor: #ifNotNil:ifNil:!control flow!public! !
+!Kernel.Tests.ParserErrorTest categoriesFor: #lexicalError:range:line:code:!helpers!private! !
+!Kernel.Tests.ParserErrorTest categoriesFor: #lexicalErrorFrom:range:line:code:!helpers!private! !
+!Kernel.Tests.ParserErrorTest categoriesFor: #parseExpression:in:!private! !
+!Kernel.Tests.ParserErrorTest categoriesFor: #parseMethod:in:!private! !
+!Kernel.Tests.ParserErrorTest categoriesFor: #parserClass!constants!private! !
+!Kernel.Tests.ParserErrorTest categoriesFor: #scannerClass!constants!private! !
+!Kernel.Tests.ParserErrorTest categoriesFor: #testErrorsBadCodePoint!public!unit tests! !
+!Kernel.Tests.ParserErrorTest categoriesFor: #testErrorsExpectCodePoint!public!unit tests! !
+!Kernel.Tests.ParserErrorTest categoriesFor: #testErrorsLexicalBadNumber!public!unit tests! !
+!Kernel.Tests.ParserErrorTest categoriesFor: #testErrorsNonsenseAtEndOfExpression!public!unit tests! !
+!Kernel.Tests.ParserErrorTest categoriesFor: #testErrorsNonsenseAtEndOfMethod!public!unit tests! !
+!Kernel.Tests.ParserErrorTest categoriesFor: #testErrorsPrimitivesCloseTagRecovery!public!unit tests! !
+!Kernel.Tests.ParserErrorTest categoriesFor: #testErrorsQualifiedReferenceInvalidName!public!unit tests! !
+!Kernel.Tests.ParserErrorTest categoriesFor: #testErrorsQualifiedReferenceMetaNotClosed!public!unit tests! !
+!Kernel.Tests.ParserErrorTest categoriesFor: #testErrorsQualifiedReferenceNotClosed!public!unit tests! !
+!Kernel.Tests.ParserErrorTest categoriesFor: #testErrorsQualifierReferenceEmpty!public!unit tests! !
+!Kernel.Tests.ParserErrorTest categoriesFor: #testErrorsTempsNotClosedRecovery!public!unit tests! !
+!Kernel.Tests.ParserErrorTest categoriesFor: #testInfoHardBreakpoint!public!unit tests! !
+!Kernel.Tests.ParserErrorTest categoriesFor: #testInfoSupersendsOther!public!unit tests! !
+!Kernel.Tests.ParserErrorTest categoriesFor: #testInfoUnreferencedArg!public!unit tests! !
+!Kernel.Tests.ParserErrorTest categoriesFor: #testParserErrors!public!unit tests! !
+!Kernel.Tests.ParserErrorTest categoriesFor: #testWarningUnreachable!public!unit tests! !
+!Kernel.Tests.ParserErrorTest categoriesFor: #testWarningUsesBooleanClass!public!unit tests! !
+!Kernel.Tests.ParserErrorTest categoriesFor: #testWarnMsgUnimplemented!public!unit tests! !
+!Kernel.Tests.ParserErrorTest categoriesFor: #testWarnNiladicExceptionHandler!public!unit tests! !
+!Kernel.Tests.ParserErrorTest categoriesFor: #testWarnNonNiladicGuardedBlock!public!unit tests! !
+!Kernel.Tests.ParserErrorTest categoriesFor: #testWarnRestrictedSelector!public!unit tests! !
+!Kernel.Tests.ParserErrorTest categoriesFor: #testWarnUndefinedSelector!public!unit tests! !
+!Kernel.Tests.ParserErrorTest categoriesFor: #testWarnUnimplementedAbstractMethod!public!unit tests! !
+!Kernel.Tests.ParserErrorTest categoriesFor: #writtenNotReadRange:!helpers!private! !
 

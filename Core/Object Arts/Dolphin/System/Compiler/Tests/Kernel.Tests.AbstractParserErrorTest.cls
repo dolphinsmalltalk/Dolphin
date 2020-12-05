@@ -1,16 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-DolphinTest subclass: #AbstractParserErrorTest
+Core.Tests.DolphinTest subclass: #'Kernel.Tests.AbstractParserErrorTest'
 	instanceVariableNames: 'errors'
 	classVariableNames: ''
-	poolDictionaries: 'SmalltalkParseErrorCodes'
+	imports: #(#{Kernel.ParseErrorCodes} #{External})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-AbstractParserErrorTest guid: (GUID fromString: '{5f42cbdc-9ab6-40b0-826d-b9cb9dd30c78}')!
-AbstractParserErrorTest isAbstract: true!
-AbstractParserErrorTest comment: ''!
-!AbstractParserErrorTest categoriesForClass!Unclassified! !
-!AbstractParserErrorTest methodsFor!
+Kernel.Tests.AbstractParserErrorTest guid: (Core.GUID fromString: '{5f42cbdc-9ab6-40b0-826d-b9cb9dd30c78}')!
+Kernel.Tests.AbstractParserErrorTest isNonInstantiable: true!
+Kernel.Tests.AbstractParserErrorTest comment: ''!
+!Kernel.Tests.AbstractParserErrorTest categoriesForClass!Unclassified! !
+!Kernel.Tests.AbstractParserErrorTest methodsFor!
 
 buildNestedBlocks: nesting 
 	| source |
@@ -83,10 +83,11 @@ errorFormats
 evaluateExpression: aString 
 	^Compiler evaluate: aString!
 
-getTestMethod: aSymbol 
+getTestMethod: aSymbol
 	| oldMethod result method |
 	oldMethod := DolphinCompilerTestMethods compiledMethodAt: aSymbol.
-	self shouldnt: [result := self compileMethod: oldMethod getSource in: DolphinCompilerTestMethods]
+	self shouldnt: 
+			[result := self compileMethod: oldMethod getSource in: DolphinCompilerTestMethods]
 		raise: Compiler errorClass.
 	method := result method.
 	method selector: aSymbol.
@@ -196,12 +197,12 @@ parseMethodInfo: aString in: aClass range: anInterval code: anInteger
 		range: anInterval
 		code: anInteger!
 
-parseMethodInfo: aSymbol rangeBlock: aMonadicValuable code: anInteger 
+parseMethodInfo: aSymbol rangeBlock: aMonadicValuable code: anInteger
 	| text method range |
 	method := DolphinCompilerTestMethods compiledMethodAt: aSymbol.
 	text := method getSource.
 	range := aMonadicValuable value: text.
-	self 
+	self
 		parseMethodInfo: text
 		in: method methodClass
 		range: range
@@ -230,12 +231,12 @@ parseMethodWarning: aString range: anInterval code: anInteger
 		range: anInterval
 		code: anInteger!
 
-parseMethodWarning: aSymbol rangeBlock: aMonadicValuable code: anInteger 
+parseMethodWarning: aSymbol rangeBlock: aMonadicValuable code: anInteger
 	| text method range |
 	method := DolphinCompilerTestMethods compiledMethodAt: aSymbol.
 	text := method getSource.
 	range := aMonadicValuable value: text.
-	self 
+	self
 		parseMethodWarning: text
 		in: method methodClass
 		range: range
@@ -258,11 +259,11 @@ tempWarningRangeIn: aString
 testByteArraysInLiteralArrays
 	"#980"
 
-	| compiled text |
+	| text |
 	text := '#(1 2 #[-1 255])'.
-	self should: [compiled := self parseExpression: text] raise: self compilationErrorClass.
+	self should: [self parseExpression: text] raise: self compilationErrorClass.
 	text := '#(#[1 256] 1 2)'.
-	self should: [compiled := self parseExpression: text] raise: self compilationErrorClass!
+	self should: [self parseExpression: text] raise: self compilationErrorClass!
 
 testCompileTimeExpressions
 	#(' ##( ' ' ##(1 ') do: 
@@ -315,10 +316,10 @@ testErrorsAssignClass
 	[Smalltalk at: #CompilerTestGlobal put: Object.
 	self shouldnt: [self evaluateExpression: 'CompilerTestGlobal := 1']
 		raise: Compiler notificationClass.
-	self assert: #{CompilerTestGlobal} value equals: 1.
+	self assert: #{Smalltalk.CompilerTestGlobal} value equals: 1.
 	self shouldnt: [self evaluateExpression: 'CompilerTestGlobal := ''2''']
 		raise: Compiler notificationClass.
-	self assert: #{CompilerTestGlobal} value equals: '2']
+	self assert: #{Smalltalk.CompilerTestGlobal} value equals: '2']
 			ensure: [Smalltalk removeKey: #CompilerTestGlobal ifAbsent: []]!
 
 testErrorsAssignConstant
@@ -695,74 +696,73 @@ testErrorsExtTypeIndirections
 				range: (mark to: mark + each second size - 1)]!
 
 testErrorsExtTypes
-	"identifier, but unrecognised so looks up as a class name"
-
-	"Non-global (bad form)"
+	"External types can be any of a number of built in type names, such as 'dword', or the name of an External.Structure class."
 
 	| source mark |
+	"identifier, but unrecognised so looks up as a class name"
 	source := 'blah <cdecl: voide blah>'.
 	mark := source indexOf: $v.
-	self 
+	self
 		parseMethodError: source
-		code: CErrUndefinedClass
+		code: CErrUndeclared
 		range: (mark to: mark + 4).
 	"Non-global (mispelling)"
 	source := 'blah <cdecl: SDWRD blah>'.
 	mark := source indexOf: $S.
-	self 
+	self
 		parseMethodError: source
-		code: CErrUndefinedClass
+		code: CErrUndeclared
 		range: (mark to: mark + 4).
 	"Fixed pointer class with zero inst. vars (must be at least one)"
 	source := 'blah <cdecl: Object blah>'.
 	mark := source indexOf: $O.
-	self 
+	self
 		parseMethodError: source
 		code: CErrInvalidStructArg
 		range: (mark to: mark + 5).
 	"Indexable pointer class with zero inst. vars (must be at least one)"
 	source := 'blah: x _: y <cdecl: void blah ByteArray Array>'.
 	mark := source lastIndexOf: $A.
-	self 
+	self
 		parseMethodError: source
 		code: CErrInvalidStructArg
 		range: (mark to: mark + 4).
 	"Non-class global"
-	source := 'blah: x _: y <cdecl: void blah Win32Constants sdword>'.
-	mark := source lastIndexOf: $W.
-	self 
+	source := 'blah: x _: y <cdecl: void blah Transcript sdword>'.
+	mark := source lastIndexOf: $T.
+	self
 		parseMethodError: source
 		code: CErrInvalidStructArg
-		range: (mark to: mark + 14 - 1).
+		range: (mark to: mark + #Transcript size - 1).
 
 	"Not an identifier"
 	source := 'blah <cdecl: 12 blah>'.
 	mark := source indexOf: $1.
-	self 
+	self
 		parseMethodError: source
 		code: CErrExpectExtType
 		range: (mark to: mark + 1).
 	source := 'blah: x <cdecl: sdword blah void>'.
 	mark := source lastIndexOf: $v.
-	self 
+	self
 		parseMethodError: source
 		code: CErrArgTypeCannotBeVoid
 		range: (mark to: mark + 3).
 	source := 'blah: x <cdecl: & blah dword>'.
 	mark := source lastIndexOf: $&.
-	self 
+	self
 		parseMethodError: source
 		code: CErrExpectExtType
 		range: (mark to: mark).
 	source := 'blah: x _: y <cdecl: DWORD func * handle>'.
 	mark := source indexOf: $*.
-	self 
+	self
 		parseMethodError: source
 		code: CErrExpectExtType
 		range: (mark to: mark).
 	source := 'blah: x _: y <cdecl: DWORD func 1 handle>'.
 	mark := source indexOf: $1.
-	self 
+	self
 		parseMethodError: source
 		code: CErrExpectExtType
 		range: (mark to: mark).
@@ -770,19 +770,19 @@ testErrorsExtTypes
 	"parser will only read binary selectors of up to two characters, and therefore '***' is treated as two tokens"
 	source := 'blah: x _: y <cdecl: DWORD blah dword*** handle>'.
 	mark := source indexOf: $*.
-	self 
+	self
 		parseMethodError: source
 		code: CErrBadExtTypeQualifier
 		range: (mark to: mark + 2).
 	source := 'blah: x _: y <cdecl: DWORD& blah dword* handle>'.
 	mark := source indexOf: $&.
-	self 
+	self
 		parseMethodError: source
 		code: CErrBadExtTypeQualifier
 		range: (mark to: mark).
 	source := 'blah: x _: y <cdecl: DWORD blah dword& handle>'.
 	mark := source indexOf: $&.
-	self 
+	self
 		parseMethodError: source
 		code: CErrBadExtTypeQualifier
 		range: (mark to: mark)!
@@ -1120,31 +1120,24 @@ testErrorsPrimitives
 		code: CErrBadPrimCallType
 		range: (mark + 1 to: mark + 9)!
 
-testErrorsPrimitivesCloseTagRecovery
-	| source ast |
-	source := 'blah <primitive: 10 ^self invalidCall: _failureCode'.
-	ast := [SmalltalkParser parseMethod: source] on: SmalltalkParser errorClass do: [:ex | ex resume].
-	self assert: ast formattedCode equals: 'blah
-	<primitive: 10>
-	^self invalidCall: _failureCode'!
-
 testErrorsQualifiedReferenceBadExtension
 	| source |
 	source := ' #{A.B.C class2}'.
 	^self
 		parseExprError: source
-		range: ((source indexOf: $#) to: (source indexOf: $C))
+		range: ((source indexOf: $c) to: (source indexOf: $2))
 		line: 1
-		code: CErrQualifiedRefNotClosed!
+		code: CErrBadQualifiedRefModifier!
 
 testErrorsQualifiedReferenceExtraDot
-	| source |
+	| source extraDotAt |
 	source := ' #{A.B.}'.
+	extraDotAt := source lastIndexOf: $..
 	^self
 		parseExprError: source
-		range: ((source indexOf: $#) to: (source indexOf: $B))
+		range: (extraDotAt to: extraDotAt)
 		line: 1
-		code: CErrQualifiedRefNotClosed!
+		code: CErrBadQualifiedRefModifier!
 
 testErrorsQualifiedReferenceInvalidName
 	| source result |
@@ -1163,11 +1156,11 @@ testErrorsQualifiedReferenceInvalidName
 	^result!
 
 testErrorsQualifiedReferenceMetaNotClosed
-	| source ast |
+	| source |
 	source := ' #{A.B.C class name'.
 	^self
 		parseExprError: source
-		range: ((source indexOf: $#) to: (source indexOf: $C))
+		range: ((source indexOf: $#) to: (source lastIndexOf: $s))
 		line: 1
 		code: CErrQualifiedRefNotClosed!
 
@@ -1717,26 +1710,22 @@ testWarningSupersendNotImplemented
 		code: CWarnMsgUnimplemented.
 	"Now compile some supersends which are implemented"
 	self shouldnt: 
-			[| result |
-			result := self parseMethod: 'run ^super run' in: self class]
+			[self parseMethod: 'run ^super run' in: self class]
 		raise: self compilationWarningClass.
 	self shouldnt: 
-			[| result |
-			result := self parseMethod: 'isAbstract ^super isAbstract' in: self class class]
+			[self parseMethod: 'isAbstract ^super isAbstract' in: self class class]
 		raise: self compilationWarningClass.
 	"Finally a class side supersend that is a send to the instance side"
 	self shouldnt: 
-			[| result |
-			result := self parseMethod: 'class ^super class' in: self class class]
+			[self parseMethod: 'class ^super class' in: self class class]
 		raise: self compilationWarningClass!
 
 testWarningUnoptimizedConditionNonEmptyBlock
 	| source |
 	#(#and: #or:) do: 
 			[:each |
-			| stem format |
+			| format |
 			"Non-block literal - in this case a SmallInteger"
-			stem := 'x [1] '.
 			format := 'x true <1s> [ ] '.
 			source := format expandMacrosWith: each.
 			self
@@ -1813,7 +1802,7 @@ testWarningUnoptimizedIfNil
 			self]!
 
 testWarningUnoptimizedIfNotNilNonMonadicArg
-	| start keyword end mark |
+	| start keyword end |
 	#('x 1 ifNotNil: 1' 'x | a | a := [:x|]. 1 ifNotNil: a' 'x 1 ifNotNil: 1 ifNil: []' 'x | a | a := [:x|]. 1 ifNotNil: a ifNil: []') 
 		do: 
 			[:each | 
@@ -1953,120 +1942,119 @@ writtenNotReadRange: aString
 	compiler on the temp decl, the parser on the first dead store."
 
 	^self subclassResponsibility! !
-!AbstractParserErrorTest categoriesFor: #buildNestedBlocks:!helpers!private! !
-!AbstractParserErrorTest categoriesFor: #checkCompileError:range:code:line:source:!helpers!private! !
-!AbstractParserErrorTest categoriesFor: #compilationErrorClass!constants!private! !
-!AbstractParserErrorTest categoriesFor: #compilationWarningClass!constants!private! !
-!AbstractParserErrorTest categoriesFor: #compileMethod:in:!helpers!private! !
-!AbstractParserErrorTest categoriesFor: #errorFormats!constants!private! !
-!AbstractParserErrorTest categoriesFor: #evaluateExpression:!helpers!private! !
-!AbstractParserErrorTest categoriesFor: #getTestMethod:!helpers!private! !
-!AbstractParserErrorTest categoriesFor: #lexicalError:range:line:code:!helpers!private! !
-!AbstractParserErrorTest categoriesFor: #maxLiterals!constants!private! !
-!AbstractParserErrorTest categoriesFor: #parseError:!helpers!private! !
-!AbstractParserErrorTest categoriesFor: #parseExprError:in:range:line:code:!helpers!private! !
-!AbstractParserErrorTest categoriesFor: #parseExprError:range:line:code:!helpers!private! !
-!AbstractParserErrorTest categoriesFor: #parseExpression:!helpers!private! !
-!AbstractParserErrorTest categoriesFor: #parseExpression:in:!parsing!private! !
-!AbstractParserErrorTest categoriesFor: #parseMethod:in:!helpers!private! !
-!AbstractParserErrorTest categoriesFor: #parseMethod:notificationClass:in:range:code:!helpers!private! !
-!AbstractParserErrorTest categoriesFor: #parseMethodError:code:range:!helpers!private! !
-!AbstractParserErrorTest categoriesFor: #parseMethodError:in:range:code:!helpers!private! !
-!AbstractParserErrorTest categoriesFor: #parseMethodInfo:in:range:code:!helpers!private! !
-!AbstractParserErrorTest categoriesFor: #parseMethodInfo:rangeBlock:code:!helpers!private! !
-!AbstractParserErrorTest categoriesFor: #parseMethodWarning:in:range:code:!helpers!private! !
-!AbstractParserErrorTest categoriesFor: #parseMethodWarning:in:range:code:extra:!helpers!private! !
-!AbstractParserErrorTest categoriesFor: #parseMethodWarning:range:code:!helpers!private! !
-!AbstractParserErrorTest categoriesFor: #parseMethodWarning:rangeBlock:code:!helpers!private! !
-!AbstractParserErrorTest categoriesFor: #parserClass!constants!private! !
-!AbstractParserErrorTest categoriesFor: #restrictedSelectors!constants!private! !
-!AbstractParserErrorTest categoriesFor: #tempWarningRangeIn:!helpers!private! !
-!AbstractParserErrorTest categoriesFor: #testByteArraysInLiteralArrays!public!unit tests! !
-!AbstractParserErrorTest categoriesFor: #testCompileTimeExpressions!public!unit tests! !
-!AbstractParserErrorTest categoriesFor: #testErrorsArrayNotClosed!public!unit tests! !
-!AbstractParserErrorTest categoriesFor: #testErrorsAssignBlockArgument!public!unit tests! !
-!AbstractParserErrorTest categoriesFor: #testErrorsAssignClass!public!unit tests! !
-!AbstractParserErrorTest categoriesFor: #testErrorsAssignConstant!public!unit tests! !
-!AbstractParserErrorTest categoriesFor: #testErrorsAssignMethodArgument!public!unit tests! !
-!AbstractParserErrorTest categoriesFor: #testErrorsBadCascade!public!unit tests! !
-!AbstractParserErrorTest categoriesFor: #testErrorsBadExtCallTypes!public!unit tests! !
-!AbstractParserErrorTest categoriesFor: #testErrorsBadMessagePattern!public!unit tests! !
-!AbstractParserErrorTest categoriesFor: #testErrorsBadSuper!public!unit tests! !
-!AbstractParserErrorTest categoriesFor: #testErrorsBadTokenInArray!public!unit tests! !
-!AbstractParserErrorTest categoriesFor: #testErrorsBlockArgNameMissing!public!unit tests! !
-!AbstractParserErrorTest categoriesFor: #testErrorsBlockNotClosed!public!unit tests! !
-!AbstractParserErrorTest categoriesFor: #testErrorsBlockTempsNotClosed!public!unit tests! !
-!AbstractParserErrorTest categoriesFor: #testErrorsBraceArrayNotClosed!public!unit tests! !
-!AbstractParserErrorTest categoriesFor: #testErrorsDuplicateArg!public!unit tests! !
-!AbstractParserErrorTest categoriesFor: #testErrorsDuplicateTemp!public!unit tests! !
-!AbstractParserErrorTest categoriesFor: #testErrorsExpectFnName!public!unit tests! !
-!AbstractParserErrorTest categoriesFor: #testErrorsExpectMessage!public!unit tests! !
-!AbstractParserErrorTest categoriesFor: #testErrorsExpectVariableName!public!unit tests! !
-!AbstractParserErrorTest categoriesFor: #testErrorsExtArgCountMismatch!public!unit tests! !
-!AbstractParserErrorTest categoriesFor: #testErrorsExtTypeIndirections!public!unit tests! !
-!AbstractParserErrorTest categoriesFor: #testErrorsExtTypes!public!unit tests! !
-!AbstractParserErrorTest categoriesFor: #testErrorsIfNotNil!public!unit tests! !
-!AbstractParserErrorTest categoriesFor: #testErrorsIllegalByteArrays!public!unit tests! !
-!AbstractParserErrorTest categoriesFor: #testErrorsIncorrectNumberOfNotNilBlockArgs!public!unit tests! !
-!AbstractParserErrorTest categoriesFor: #testErrorsInvalidExpressionStart!public!unit tests! !
-!AbstractParserErrorTest categoriesFor: #testErrorsLexicalBadChar!public!unit tests! !
-!AbstractParserErrorTest categoriesFor: #testErrorsLexicalBadCodePoint!public!unit tests! !
-!AbstractParserErrorTest categoriesFor: #testErrorsLexicalCommentNotClosed!public!unit tests! !
-!AbstractParserErrorTest categoriesFor: #testErrorsLexicalExpectChar!public!unit tests! !
-!AbstractParserErrorTest categoriesFor: #testErrorsLexicalExpectCodePoint!public!unit tests! !
-!AbstractParserErrorTest categoriesFor: #testErrorsLexicalExpectConst!public!unit tests! !
-!AbstractParserErrorTest categoriesFor: #testErrorsLexicalStringNotClosed!public!unit tests! !
-!AbstractParserErrorTest categoriesFor: #testErrorsLiteralArray!public!unit tests! !
-!AbstractParserErrorTest categoriesFor: #testErrorsLiteralByteArray!public!unit tests! !
-!AbstractParserErrorTest categoriesFor: #testErrorsMutableAnnotationNotClosed!public!unit tests! !
-!AbstractParserErrorTest categoriesFor: #testErrorsNegateNonNumber!public!unit tests! !
-!AbstractParserErrorTest categoriesFor: #testErrorsNonsenseAtEndOfExpression!public!unit tests! !
-!AbstractParserErrorTest categoriesFor: #testErrorsNonsenseAtEndOfMethod!public!unit tests! !
-!AbstractParserErrorTest categoriesFor: #testErrorsOptimizedExpressionNotClosed!public!unit tests! !
-!AbstractParserErrorTest categoriesFor: #testErrorsPrimitives!public!unit tests! !
-!AbstractParserErrorTest categoriesFor: #testErrorsPrimitivesCloseTagRecovery!public!unit tests! !
-!AbstractParserErrorTest categoriesFor: #testErrorsQualifiedReferenceBadExtension!public!unit tests! !
-!AbstractParserErrorTest categoriesFor: #testErrorsQualifiedReferenceExtraDot!public!unit tests! !
-!AbstractParserErrorTest categoriesFor: #testErrorsQualifiedReferenceInvalidName!public!unit tests! !
-!AbstractParserErrorTest categoriesFor: #testErrorsQualifiedReferenceMetaNotClosed!public!unit tests! !
-!AbstractParserErrorTest categoriesFor: #testErrorsQualifiedReferenceNotClosed!public!unit tests! !
-!AbstractParserErrorTest categoriesFor: #testErrorsQualifierReferenceEmpty!public!unit tests! !
-!AbstractParserErrorTest categoriesFor: #testErrorsRedefiningPseudo!public!unit tests! !
-!AbstractParserErrorTest categoriesFor: #testErrorsRedefiningSpecialLiterals!public!unit tests! !
-!AbstractParserErrorTest categoriesFor: #testErrorsStringNotClosed!public!unit tests! !
-!AbstractParserErrorTest categoriesFor: #testErrorsSupersendFromObject!public!unit tests! !
-!AbstractParserErrorTest categoriesFor: #testErrorsTempsNotClosed!public!unit tests! !
-!AbstractParserErrorTest categoriesFor: #testErrorsTooManyArgs!public!unit tests! !
-!AbstractParserErrorTest categoriesFor: #testErrorsTooManyTemps!public!unit tests! !
-!AbstractParserErrorTest categoriesFor: #testErrorsTooManyTempsInOptimizedBlock!public!unit tests! !
-!AbstractParserErrorTest categoriesFor: #testErrorsUnclosedParenthesis!public!unit tests! !
-!AbstractParserErrorTest categoriesFor: #testErrorsUnspportedCallConv!public!unit tests! !
-!AbstractParserErrorTest categoriesFor: #testErrorsUnterminatedStatement!public!unit tests! !
-!AbstractParserErrorTest categoriesFor: #testErrorsVirtualCalls!public!unit tests! !
-!AbstractParserErrorTest categoriesFor: #testErrorsZeroArgOptimisedBlock!public!unit tests! !
-!AbstractParserErrorTest categoriesFor: #testOverriddenBlockArgumentError!public!unit tests! !
-!AbstractParserErrorTest categoriesFor: #testOverriddenBlockArgumentWarning!public!unit tests! !
-!AbstractParserErrorTest categoriesFor: #testOverriddenMethodArgumentError!public!unit tests! !
-!AbstractParserErrorTest categoriesFor: #testOverriddenMethodArgumentWarning!public!unit tests! !
-!AbstractParserErrorTest categoriesFor: #testRestrictedSelectors!public!unit tests! !
-!AbstractParserErrorTest categoriesFor: #testUnoptimizedLoopsNonMonadicArg!public!unit tests! !
-!AbstractParserErrorTest categoriesFor: #testWarningMutableIgnored!public!unit tests! !
-!AbstractParserErrorTest categoriesFor: #testWarningReadBeforeWritten!public!unit tests! !
-!AbstractParserErrorTest categoriesFor: #testWarningReadNotWritten!public!unit tests! !
-!AbstractParserErrorTest categoriesFor: #testWarningRedefiningArg!public!unit tests! !
-!AbstractParserErrorTest categoriesFor: #testWarningRedefiningInstVar!public!unit tests! !
-!AbstractParserErrorTest categoriesFor: #testWarningRedefiningStatic!public!unit tests! !
-!AbstractParserErrorTest categoriesFor: #testWarningRedefiningTemp!public!unit tests! !
-!AbstractParserErrorTest categoriesFor: #testWarningSelfSendNotImplemented!public!unit tests! !
-!AbstractParserErrorTest categoriesFor: #testWarningSupersendNotImplemented!public!unit tests! !
-!AbstractParserErrorTest categoriesFor: #testWarningUnoptimizedConditionNonEmptyBlock!public!unit tests! !
-!AbstractParserErrorTest categoriesFor: #testWarningUnoptimizedConditionNonNiladicArg!public!unit tests! !
-!AbstractParserErrorTest categoriesFor: #testWarningUnoptimizedIfNil!public!unit tests! !
-!AbstractParserErrorTest categoriesFor: #testWarningUnoptimizedIfNotNilNonMonadicArg!public!unit tests! !
-!AbstractParserErrorTest categoriesFor: #testWarningUnoptimizedLoopsNonNiladicArg!public!unit tests! !
-!AbstractParserErrorTest categoriesFor: #testWarningUnoptimizedLoopsNonNiladicReceiver!public!unit tests! !
-!AbstractParserErrorTest categoriesFor: #testWarningUnreferencedTemp!public!unit tests! !
-!AbstractParserErrorTest categoriesFor: #testWarningWrittenNotRead!public!unit tests! !
-!AbstractParserErrorTest categoriesFor: #traceException:source:!helpers!private! !
-!AbstractParserErrorTest categoriesFor: #writtenNotReadRange:!helpers!private! !
+!Kernel.Tests.AbstractParserErrorTest categoriesFor: #buildNestedBlocks:!helpers!private! !
+!Kernel.Tests.AbstractParserErrorTest categoriesFor: #checkCompileError:range:code:line:source:!helpers!private! !
+!Kernel.Tests.AbstractParserErrorTest categoriesFor: #compilationErrorClass!constants!private! !
+!Kernel.Tests.AbstractParserErrorTest categoriesFor: #compilationWarningClass!constants!private! !
+!Kernel.Tests.AbstractParserErrorTest categoriesFor: #compileMethod:in:!helpers!private! !
+!Kernel.Tests.AbstractParserErrorTest categoriesFor: #errorFormats!constants!private! !
+!Kernel.Tests.AbstractParserErrorTest categoriesFor: #evaluateExpression:!helpers!private! !
+!Kernel.Tests.AbstractParserErrorTest categoriesFor: #getTestMethod:!helpers!private! !
+!Kernel.Tests.AbstractParserErrorTest categoriesFor: #lexicalError:range:line:code:!helpers!private! !
+!Kernel.Tests.AbstractParserErrorTest categoriesFor: #maxLiterals!constants!private! !
+!Kernel.Tests.AbstractParserErrorTest categoriesFor: #parseError:!helpers!private! !
+!Kernel.Tests.AbstractParserErrorTest categoriesFor: #parseExprError:in:range:line:code:!helpers!private! !
+!Kernel.Tests.AbstractParserErrorTest categoriesFor: #parseExprError:range:line:code:!helpers!private! !
+!Kernel.Tests.AbstractParserErrorTest categoriesFor: #parseExpression:!helpers!private! !
+!Kernel.Tests.AbstractParserErrorTest categoriesFor: #parseExpression:in:!parsing!private! !
+!Kernel.Tests.AbstractParserErrorTest categoriesFor: #parseMethod:in:!helpers!private! !
+!Kernel.Tests.AbstractParserErrorTest categoriesFor: #parseMethod:notificationClass:in:range:code:!helpers!private! !
+!Kernel.Tests.AbstractParserErrorTest categoriesFor: #parseMethodError:code:range:!helpers!private! !
+!Kernel.Tests.AbstractParserErrorTest categoriesFor: #parseMethodError:in:range:code:!helpers!private! !
+!Kernel.Tests.AbstractParserErrorTest categoriesFor: #parseMethodInfo:in:range:code:!helpers!private! !
+!Kernel.Tests.AbstractParserErrorTest categoriesFor: #parseMethodInfo:rangeBlock:code:!helpers!private! !
+!Kernel.Tests.AbstractParserErrorTest categoriesFor: #parseMethodWarning:in:range:code:!helpers!private! !
+!Kernel.Tests.AbstractParserErrorTest categoriesFor: #parseMethodWarning:in:range:code:extra:!helpers!private! !
+!Kernel.Tests.AbstractParserErrorTest categoriesFor: #parseMethodWarning:range:code:!helpers!private! !
+!Kernel.Tests.AbstractParserErrorTest categoriesFor: #parseMethodWarning:rangeBlock:code:!helpers!private! !
+!Kernel.Tests.AbstractParserErrorTest categoriesFor: #parserClass!constants!private! !
+!Kernel.Tests.AbstractParserErrorTest categoriesFor: #restrictedSelectors!constants!private! !
+!Kernel.Tests.AbstractParserErrorTest categoriesFor: #tempWarningRangeIn:!helpers!private! !
+!Kernel.Tests.AbstractParserErrorTest categoriesFor: #testByteArraysInLiteralArrays!public!unit tests! !
+!Kernel.Tests.AbstractParserErrorTest categoriesFor: #testCompileTimeExpressions!public!unit tests! !
+!Kernel.Tests.AbstractParserErrorTest categoriesFor: #testErrorsArrayNotClosed!public!unit tests! !
+!Kernel.Tests.AbstractParserErrorTest categoriesFor: #testErrorsAssignBlockArgument!public!unit tests! !
+!Kernel.Tests.AbstractParserErrorTest categoriesFor: #testErrorsAssignClass!public!unit tests! !
+!Kernel.Tests.AbstractParserErrorTest categoriesFor: #testErrorsAssignConstant!public!unit tests! !
+!Kernel.Tests.AbstractParserErrorTest categoriesFor: #testErrorsAssignMethodArgument!public!unit tests! !
+!Kernel.Tests.AbstractParserErrorTest categoriesFor: #testErrorsBadCascade!public!unit tests! !
+!Kernel.Tests.AbstractParserErrorTest categoriesFor: #testErrorsBadExtCallTypes!public!unit tests! !
+!Kernel.Tests.AbstractParserErrorTest categoriesFor: #testErrorsBadMessagePattern!public!unit tests! !
+!Kernel.Tests.AbstractParserErrorTest categoriesFor: #testErrorsBadSuper!public!unit tests! !
+!Kernel.Tests.AbstractParserErrorTest categoriesFor: #testErrorsBadTokenInArray!public!unit tests! !
+!Kernel.Tests.AbstractParserErrorTest categoriesFor: #testErrorsBlockArgNameMissing!public!unit tests! !
+!Kernel.Tests.AbstractParserErrorTest categoriesFor: #testErrorsBlockNotClosed!public!unit tests! !
+!Kernel.Tests.AbstractParserErrorTest categoriesFor: #testErrorsBlockTempsNotClosed!public!unit tests! !
+!Kernel.Tests.AbstractParserErrorTest categoriesFor: #testErrorsBraceArrayNotClosed!public!unit tests! !
+!Kernel.Tests.AbstractParserErrorTest categoriesFor: #testErrorsDuplicateArg!public!unit tests! !
+!Kernel.Tests.AbstractParserErrorTest categoriesFor: #testErrorsDuplicateTemp!public!unit tests! !
+!Kernel.Tests.AbstractParserErrorTest categoriesFor: #testErrorsExpectFnName!public!unit tests! !
+!Kernel.Tests.AbstractParserErrorTest categoriesFor: #testErrorsExpectMessage!public!unit tests! !
+!Kernel.Tests.AbstractParserErrorTest categoriesFor: #testErrorsExpectVariableName!public!unit tests! !
+!Kernel.Tests.AbstractParserErrorTest categoriesFor: #testErrorsExtArgCountMismatch!public!unit tests! !
+!Kernel.Tests.AbstractParserErrorTest categoriesFor: #testErrorsExtTypeIndirections!public!unit tests! !
+!Kernel.Tests.AbstractParserErrorTest categoriesFor: #testErrorsExtTypes!public!unit tests! !
+!Kernel.Tests.AbstractParserErrorTest categoriesFor: #testErrorsIfNotNil!public!unit tests! !
+!Kernel.Tests.AbstractParserErrorTest categoriesFor: #testErrorsIllegalByteArrays!public!unit tests! !
+!Kernel.Tests.AbstractParserErrorTest categoriesFor: #testErrorsIncorrectNumberOfNotNilBlockArgs!public!unit tests! !
+!Kernel.Tests.AbstractParserErrorTest categoriesFor: #testErrorsInvalidExpressionStart!public!unit tests! !
+!Kernel.Tests.AbstractParserErrorTest categoriesFor: #testErrorsLexicalBadChar!public!unit tests! !
+!Kernel.Tests.AbstractParserErrorTest categoriesFor: #testErrorsLexicalBadCodePoint!public!unit tests! !
+!Kernel.Tests.AbstractParserErrorTest categoriesFor: #testErrorsLexicalCommentNotClosed!public!unit tests! !
+!Kernel.Tests.AbstractParserErrorTest categoriesFor: #testErrorsLexicalExpectChar!public!unit tests! !
+!Kernel.Tests.AbstractParserErrorTest categoriesFor: #testErrorsLexicalExpectCodePoint!public!unit tests! !
+!Kernel.Tests.AbstractParserErrorTest categoriesFor: #testErrorsLexicalExpectConst!public!unit tests! !
+!Kernel.Tests.AbstractParserErrorTest categoriesFor: #testErrorsLexicalStringNotClosed!public!unit tests! !
+!Kernel.Tests.AbstractParserErrorTest categoriesFor: #testErrorsLiteralArray!public!unit tests! !
+!Kernel.Tests.AbstractParserErrorTest categoriesFor: #testErrorsLiteralByteArray!public!unit tests! !
+!Kernel.Tests.AbstractParserErrorTest categoriesFor: #testErrorsMutableAnnotationNotClosed!public!unit tests! !
+!Kernel.Tests.AbstractParserErrorTest categoriesFor: #testErrorsNegateNonNumber!public!unit tests! !
+!Kernel.Tests.AbstractParserErrorTest categoriesFor: #testErrorsNonsenseAtEndOfExpression!public!unit tests! !
+!Kernel.Tests.AbstractParserErrorTest categoriesFor: #testErrorsNonsenseAtEndOfMethod!public!unit tests! !
+!Kernel.Tests.AbstractParserErrorTest categoriesFor: #testErrorsOptimizedExpressionNotClosed!public!unit tests! !
+!Kernel.Tests.AbstractParserErrorTest categoriesFor: #testErrorsPrimitives!public!unit tests! !
+!Kernel.Tests.AbstractParserErrorTest categoriesFor: #testErrorsQualifiedReferenceBadExtension!public!unit tests! !
+!Kernel.Tests.AbstractParserErrorTest categoriesFor: #testErrorsQualifiedReferenceExtraDot!public!unit tests! !
+!Kernel.Tests.AbstractParserErrorTest categoriesFor: #testErrorsQualifiedReferenceInvalidName!public!unit tests! !
+!Kernel.Tests.AbstractParserErrorTest categoriesFor: #testErrorsQualifiedReferenceMetaNotClosed!public!unit tests! !
+!Kernel.Tests.AbstractParserErrorTest categoriesFor: #testErrorsQualifiedReferenceNotClosed!public!unit tests! !
+!Kernel.Tests.AbstractParserErrorTest categoriesFor: #testErrorsQualifierReferenceEmpty!public!unit tests! !
+!Kernel.Tests.AbstractParserErrorTest categoriesFor: #testErrorsRedefiningPseudo!public!unit tests! !
+!Kernel.Tests.AbstractParserErrorTest categoriesFor: #testErrorsRedefiningSpecialLiterals!public!unit tests! !
+!Kernel.Tests.AbstractParserErrorTest categoriesFor: #testErrorsStringNotClosed!public!unit tests! !
+!Kernel.Tests.AbstractParserErrorTest categoriesFor: #testErrorsSupersendFromObject!public!unit tests! !
+!Kernel.Tests.AbstractParserErrorTest categoriesFor: #testErrorsTempsNotClosed!public!unit tests! !
+!Kernel.Tests.AbstractParserErrorTest categoriesFor: #testErrorsTooManyArgs!public!unit tests! !
+!Kernel.Tests.AbstractParserErrorTest categoriesFor: #testErrorsTooManyTemps!public!unit tests! !
+!Kernel.Tests.AbstractParserErrorTest categoriesFor: #testErrorsTooManyTempsInOptimizedBlock!public!unit tests! !
+!Kernel.Tests.AbstractParserErrorTest categoriesFor: #testErrorsUnclosedParenthesis!public!unit tests! !
+!Kernel.Tests.AbstractParserErrorTest categoriesFor: #testErrorsUnspportedCallConv!public!unit tests! !
+!Kernel.Tests.AbstractParserErrorTest categoriesFor: #testErrorsUnterminatedStatement!public!unit tests! !
+!Kernel.Tests.AbstractParserErrorTest categoriesFor: #testErrorsVirtualCalls!public!unit tests! !
+!Kernel.Tests.AbstractParserErrorTest categoriesFor: #testErrorsZeroArgOptimisedBlock!public!unit tests! !
+!Kernel.Tests.AbstractParserErrorTest categoriesFor: #testOverriddenBlockArgumentError!public!unit tests! !
+!Kernel.Tests.AbstractParserErrorTest categoriesFor: #testOverriddenBlockArgumentWarning!public!unit tests! !
+!Kernel.Tests.AbstractParserErrorTest categoriesFor: #testOverriddenMethodArgumentError!public!unit tests! !
+!Kernel.Tests.AbstractParserErrorTest categoriesFor: #testOverriddenMethodArgumentWarning!public!unit tests! !
+!Kernel.Tests.AbstractParserErrorTest categoriesFor: #testRestrictedSelectors!public!unit tests! !
+!Kernel.Tests.AbstractParserErrorTest categoriesFor: #testUnoptimizedLoopsNonMonadicArg!public!unit tests! !
+!Kernel.Tests.AbstractParserErrorTest categoriesFor: #testWarningMutableIgnored!public!unit tests! !
+!Kernel.Tests.AbstractParserErrorTest categoriesFor: #testWarningReadBeforeWritten!public!unit tests! !
+!Kernel.Tests.AbstractParserErrorTest categoriesFor: #testWarningReadNotWritten!public!unit tests! !
+!Kernel.Tests.AbstractParserErrorTest categoriesFor: #testWarningRedefiningArg!public!unit tests! !
+!Kernel.Tests.AbstractParserErrorTest categoriesFor: #testWarningRedefiningInstVar!public!unit tests! !
+!Kernel.Tests.AbstractParserErrorTest categoriesFor: #testWarningRedefiningStatic!public!unit tests! !
+!Kernel.Tests.AbstractParserErrorTest categoriesFor: #testWarningRedefiningTemp!public!unit tests! !
+!Kernel.Tests.AbstractParserErrorTest categoriesFor: #testWarningSelfSendNotImplemented!public!unit tests! !
+!Kernel.Tests.AbstractParserErrorTest categoriesFor: #testWarningSupersendNotImplemented!public!unit tests! !
+!Kernel.Tests.AbstractParserErrorTest categoriesFor: #testWarningUnoptimizedConditionNonEmptyBlock!public!unit tests! !
+!Kernel.Tests.AbstractParserErrorTest categoriesFor: #testWarningUnoptimizedConditionNonNiladicArg!public!unit tests! !
+!Kernel.Tests.AbstractParserErrorTest categoriesFor: #testWarningUnoptimizedIfNil!public!unit tests! !
+!Kernel.Tests.AbstractParserErrorTest categoriesFor: #testWarningUnoptimizedIfNotNilNonMonadicArg!public!unit tests! !
+!Kernel.Tests.AbstractParserErrorTest categoriesFor: #testWarningUnoptimizedLoopsNonNiladicArg!public!unit tests! !
+!Kernel.Tests.AbstractParserErrorTest categoriesFor: #testWarningUnoptimizedLoopsNonNiladicReceiver!public!unit tests! !
+!Kernel.Tests.AbstractParserErrorTest categoriesFor: #testWarningUnreferencedTemp!public!unit tests! !
+!Kernel.Tests.AbstractParserErrorTest categoriesFor: #testWarningWrittenNotRead!public!unit tests! !
+!Kernel.Tests.AbstractParserErrorTest categoriesFor: #traceException:source:!helpers!private! !
+!Kernel.Tests.AbstractParserErrorTest categoriesFor: #writtenNotReadRange:!helpers!private! !
 

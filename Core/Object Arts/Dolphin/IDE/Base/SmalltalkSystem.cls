@@ -1,12 +1,12 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Model subclass: #SmalltalkSystem
+Core.Model subclass: #SmalltalkSystem
 	instanceVariableNames: 'systemFolderClass workspaceClass defaultInspectorClass defaultBrowserClass systemFolder packageBrowserClass debuggerClass viewComposerClass protocolBrowserClass workspaceShellClass resourceBrowserClass changedIcon hierarchyBrowserClass preferAlternateInspectors formatterClass classChooserClass resourceIdentifierDialogClass findDetails methodWorkspaceClass allSelectors argumentClasses methodExplorerClass aboutBoxClass testBrowserClass toolbarBitmapSize displayItLocale'
 	classVariableNames: 'Current FileDrops RegisteredTools'
-	imports: #(#{CompilerFlags} #{SmalltalkParseErrorCodes})
+	imports: #(#{Kernel.CompilerFlags} #{Refactory.Browser} #{Kernel.ParseErrorCodes})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-SmalltalkSystem guid: (GUID fromString: '{87b4c66c-026e-11d3-9fd7-00a0cc3e4a32}')!
+SmalltalkSystem guid: (Core.GUID fromString: '{87b4c66c-026e-11d3-9fd7-00a0cc3e4a32}')!
 SmalltalkSystem comment: 'SmalltalkSystem is a Facade onto the Dolphin Smalltalk development environment. Most of the development tools hold the Singleton instance of SmalltalkSystem as their model and use it to act as a go-between between programmer, user interface, and the development image.
 
 Instance Variables:
@@ -165,7 +165,7 @@ addClass: class toProtocol: newProtocol
 	^true!
 
 addClassChangeClass
-	^DolphinAddClassChange!
+	^AddClassChange!
 
 addGlobalName: aSymbol
 	"Adds a global called aSymbol to the system dictionary"
@@ -349,11 +349,11 @@ applyOptionsToTool: aSmalltalkToolShell
 	aSmalltalkToolShell view managedSubViews
 		do: [:each | (each isKindOf: Toolbar) ifTrue: [each bitmapSize: self toolbarBitmapSize]]!
 
-applyPublishedAspectsLiteralMap: aLookupTable to: aTool 
+applyPublishedAspectsLiteralMap: aLookupTable to: aTool
 	"Private - Applies the literal publishes aspect values held in aLookupTable to aTool"
 
 	aLookupTable keysAndValuesDo: 
-			[:eachAspect :eachLiteralValueArray | 
+			[:eachAspect :eachLiteralValueArray |
 			(aTool aspectValue: eachAspect) value: (Object fromLiteralStoreArray: eachLiteralValueArray)]!
 
 argumentClasses
@@ -400,7 +400,7 @@ basicCreateSubclass: aSymbol of: aClass subclasses: aCollection
 						with: aClass kindOfSubclass
 						with: aSymbol).
 	self changeManager performChange: addClass.
-	^aSymbol asQualifiedReference value!
+	^aSymbol asQualifiedReference valueOrNil!
 
 basicRemoveMethods: aCollection
 	| changes |
@@ -410,11 +410,11 @@ basicRemoveMethods: aCollection
 	self changeManager
 		performChange: (aCollection size = 1 ifTrue: [changes changes first] ifFalse: [changes])!
 
-beginDrag: aDragDropSession methods: aCollection 
+beginDrag: aDragDropSession methods: aCollection
 	| ddObjects stream chunks |
 	ddObjects := OrderedCollection new.
 	aCollection do: 
-			[:each | 
+			[:each |
 			ddObjects add: ((aDragDropSession newDragObject: each)
 						format: #CompiledMethod data: each;
 						yourself)].
@@ -504,7 +504,7 @@ browseClassReferences: aClass in: aBrowserEnvironment
 	"Opens a new MethodBrowser on all the methods defined in the specified <BrowserEnvironment>
 	which refer to the <Class>, aClass."
 
-	self browseGlobalReferences: aClass binding in: aBrowserEnvironment!
+	self browseVariableReferences: aClass binding in: aBrowserEnvironment!
 
 browseClassVariables: aClass
 	"Opens a selection dialog to choose one of the class variables of browseClass to browse.
@@ -514,7 +514,8 @@ browseClassVariables: aClass
 	classVars := OrderedCollection new.
 	aClass withAllSuperclassesDo: 
 			[:each |
-			each classVarNames asSortedCollection asArray reverseDo: [:eachName | classVars addFirst: eachName]].
+			each classBindingNames asSortedCollection asArray
+				reverseDo: [:eachName | classVars addFirst: eachName]].
 	aVariable := ChoicePrompter choices: classVars caption: 'Class Variables'.
 	aVariable notNil
 		ifTrue: 
@@ -618,15 +619,8 @@ browseEnvironment: aBrowserEnvironment
 
 	^self browseMethodsIn: aBrowserEnvironment!
 
-browseFolder: aString 
+browseFolder: aString
 	ShellLibrary default shellOpen: aString!
-
-browseGlobalReferences: aVariableBinding in: aBrowserEnvironment
-	"Opens a new Method Browser on all the methods which refer to the global binding represented
-	by the <Association> argument. Also includes methods that refer directly to the current
-	value of the global binding."
-
-	self browseMethodsIn: (self referencesToVariable: aVariableBinding in: aBrowserEnvironment)!
 
 browseHierarchy
 	"Open a new hierarchy browser at the root of the standard class hierarchy."
@@ -647,27 +641,27 @@ browseInstanceVariables: browseClass
 		action: #browseReferencesToInstVar:inHierarchyOf:within:
 		in: self systemEnvironment!
 
-browseInstanceVariables: browseClass action: selector in: aBrowserEnvironment 
+browseInstanceVariables: browseClass action: selector in: aBrowserEnvironment
 	| instVars varName |
 	instVars := OrderedCollection new.
-	browseClass 
+	browseClass
 		withAllSuperclassesDo: [:each | instVars addAllFirst: each instVarNames asSortedCollection].
-	instVars isEmpty 
+	instVars isEmpty
 		ifFalse: [varName := ChoicePrompter choices: instVars caption: 'Instance Variables']
 		ifTrue: [MessageBox notify: browseClass name , ' has no instance variables.'].
-	varName notNil 
+	varName notNil
 		ifTrue: 
-			[self 
+			[self
 				perform: selector
 				with: varName
 				with: browseClass
 				with: aBrowserEnvironment]!
 
-browseMessageDefinitions: aString in: aBrowserEnvironment 
+browseMessageDefinitions: aString in: aBrowserEnvironment
 	"Private - Prompt for a selector and open a method browser displaying the
 	implementors of that selector."
 
-	(self promptForSelector: aString caption: 'Definitions of ...') 
+	(self promptForSelector: aString caption: 'Definitions of ...')
 		ifNotNil: [:search | Cursor wait showWhile: [self browseDefinitionsMatching: search in: aBrowserEnvironment]]!
 
 browseMessageDefinitionsIn: aBrowserEnvironment 
@@ -676,12 +670,12 @@ browseMessageDefinitionsIn: aBrowserEnvironment
 
 	self browseMessageDefinitions: '' in: aBrowserEnvironment!
 
-browseMessageReferences: aString in: aBrowserEnvironment 
+browseMessageReferences: aString in: aBrowserEnvironment
 	"Private - Prompt for a selector and open a method browser displaying the references to that
 	selector, using the <readableString> argument as the initial suggestion (or if that is empty
 	the first word of the clipboard text)."
 
-	(self promptForSelector: aString caption: 'References to...') 
+	(self promptForSelector: aString caption: 'References to...')
 		ifNotNil: [:search | Cursor wait showWhile: [self browseReferencesMatching: search in: aBrowserEnvironment]]!
 
 browseMessageReferencesIn: aBrowserEnvironment 
@@ -690,7 +684,7 @@ browseMessageReferencesIn: aBrowserEnvironment
 
 	self browseMessageReferences: '' in: aBrowserEnvironment!
 
-browseMessageReferencesInHierarchyOf: aClass within: aBrowserEnvironment 
+browseMessageReferencesInHierarchyOf: aClass within: aBrowserEnvironment
 	"Private - Prompt for a selector and open a method browser displaying the
 	references to that selector from the local hierarchy of aClass."
 
@@ -724,8 +718,8 @@ browseMethod: aCompiledMethod
 
 	^self browseMethod: aCompiledMethod with: self defaultBrowserClass!
 
-browseMethod: aCompiledMethod with: aClassBrowserClass 
-	^(aClassBrowserClass show)
+browseMethod: aCompiledMethod with: aClassBrowserClass
+	^aClassBrowserClass show
 		packages: (Set with: aCompiledMethod owningPackage);
 		selectMethod: aCompiledMethod;
 		setInitialFocus;
@@ -782,14 +776,15 @@ browseMethodHierarchyFrom: aCompiledMethod
 	browser browser beSorted: [:a :b | a methodClass inheritsFrom: b methodClass].
 	^browser!
 
-browseMethodProtocols: protocolNames 
+browseMethodProtocols: protocolNames
 	"Browse all the methods which participate in the implementation of the named method
 	protocols."
 
 	| protocols protClass env |
 	protClass := Object methodProtocolClass.
 	protocols := protocolNames collect: [:p | protClass name: p asSymbol].
-	env := MethodProtocolEnvironment onEnvironment: self systemEnvironment protocols: protocols.
+	env := Refactory.Browser.MethodProtocolEnvironment onEnvironment: self systemEnvironment
+				protocols: protocols.
 	self browseMethodsIn: env!
 
 browseMethodsIn: aBrowserEnvironment 
@@ -1014,15 +1009,15 @@ browseSystem
 
 	^self browseSystem: Object!
 
-browseSystem: aClassOrNil 
+browseSystem: aClassOrNil
 	"Opens a new System Browser on aClassOrNil"
 
 	| packages |
 	packages := Set new.
 	aClassOrNil ifNotNil: [:class | packages add: class owningPackage].
-	^(self browseSystemPackages: packages) 
+	^(self browseSystemPackages: packages)
 		ifNotNil: 
-			[:browser | 
+			[:browser |
 			browser
 				actualClass: aClassOrNil;
 				setInitialFocus;
@@ -1042,6 +1037,13 @@ browseTests
 	"Open a new SUnit browser on all test."
 
 	^self testBrowserClass show!
+
+browseVariableReferences: aVariableBinding in: aBrowserEnvironment
+	"Opens a new Method Browser on all the methods which refer to the global binding represented
+	by the <Association> argument. Also includes methods that refer directly to the current
+	value of the global binding."
+
+	self browseMethodsIn: (self referencesToVariable: aVariableBinding in: aBrowserEnvironment)!
 
 browseViewHierarchy: aView
 	"Useful utility for browsing a view hierarchy."
@@ -1100,7 +1102,7 @@ buildMessageMenu: aMenu forMethods: aCollection browseSelector: browseSelector e
 		description: '&Message...'.
 	(aMenu itemAt: 1) isDefault: true!
 
-buildSimpleSignatureFor: aSymbol 
+buildSimpleSignatureFor: aSymbol
 	| stream |
 	stream := String writeStream.
 	self printSignatureForKeywordsAndArgs: (self keywordsAndArgsForSelector: aSymbol) on: stream.
@@ -1180,12 +1182,11 @@ chooseDefaultPackage
 	"Allow the user to set the default package which all new classes are added to."
 
 	| package |
-	package := PackagePrompter 
+	package := PackagePrompter
 				showModalOn: self defaultPackage asValue
 				caption: 'Default package for new objects'
 				default: nil.
-	package notNil 
-		ifTrue: [self defaultPackage: (package = Package uncommitted ifFalse: [package])]!
+	package notNil ifTrue: [self defaultPackage: (package = Package uncommitted ifFalse: [package])]!
 
 chooseSelectorsInProtocol: protocol forClass: class
 	"Private - Pop-up a multi-select <ChoicePrompter> displaying the selectors 
@@ -1208,13 +1209,13 @@ chooseSelectorsInProtocol: protocol forClass: class
 		ifTrue: [^nil].
 	^newSelectors value!
 
-chooseViewOf: aClass 
+chooseViewOf: aClass
 	"Choose one of the existing views of aClass.
 	Allow the user to choose from a list if necessary"
 
 	| viewResourceNames name |
 	viewResourceNames := aClass resourceNames.
-	name := viewResourceNames size == 1 
+	name := viewResourceNames size == 1
 				ifTrue: [viewResourceNames first]
 				ifFalse: [ChoicePrompter choices: viewResourceNames caption: 'Available views'].
 	^name notNil ifTrue: [ResourceIdentifier class: aClass name: name]!
@@ -1247,16 +1248,15 @@ classesReferencingPool: aPoolDictionary
 classesReferencingPoolNamed: aSymbol
 	"Answer a <collection> of all classes that directly reference the named <PoolDictionary>."
 
-	^Smalltalk allClasses select: [:each | each sharedPoolNames includes: aSymbol]
-!
+	^Smalltalk allClasses select: [:each | each sharedPoolNames includes: aSymbol]!
 
 classFileIn: aClass
 	"The user has chosen to file in aClass. Prompt for a file and file it in"
 
 	| filename |
-	filename := FileOpenDialog new
+	filename := UI.FileOpenDialog new
 				caption: 'File In ' , aClass name , ' Class';
-				fileTypes: {self classFilesType. FileDialog allFilesType};
+				fileTypes: {self classFilesType. UI.FileDialog allFilesType};
 				value: aClass fileOutName;
 				showModal.
 	filename notNil ifTrue: [self sourceManager fileInPackagedClass: aClass from: filename]!
@@ -1265,9 +1265,9 @@ classFileOut: aClass
 	"The user has chosen to file out aClass. Prompt for a file and file it out"
 
 	| filename |
-	filename := FileSaveDialog new
+	filename := UI.FileSaveDialog new
 				caption: 'File Out ' , aClass name , ' Class';
-				fileTypes: {self classFilesType. FileDialog allFilesType};
+				fileTypes: {self classFilesType. UI.FileDialog allFilesType};
 				value: aClass fileOutName;
 				showModal.
 	filename notNil ifTrue: [self sourceManager fileOutPackagedClass: aClass to: filename]!
@@ -1287,8 +1287,8 @@ classHierarchy
 clearChangeHistory
 	"Discard system change history (i.e. undo/redo list)."
 
-	(MessageBox 
-		confirm: 'Are you sure you want to clear the change history (undo/redo for past changes will be lost)?') 
+	(MessageBox
+		confirm: 'Are you sure you want to clear the change history (undo/redo for past changes will be lost)?')
 			ifTrue: [self nukeChangeHistory]!
 
 clearSystemFolder
@@ -1352,12 +1352,12 @@ closeAll
 	| mb |
 	mb := MessageBox new.
 	mb beTaskModal.
-	(mb 
+	(mb
 		confirm: 'All open windows will be closed, but you will be prompted to save or retain any changes.
 
-Are you sure that you would like to proceed?') 
+Are you sure that you would like to proceed?')
 			ifFalse: [^self].
-	View topLevelViews 
+	View topLevelViews
 		do: [:each | each presenter class == self systemFolderClass ifFalse: [each close]]!
 
 compilationFailuresCategory
@@ -1395,10 +1395,10 @@ compressChanges
 		buttonStyle: #yesNo;
 		defaultButton: 2;
 		caption: 'Compress Changes...'.
-	(mb 
+	(mb
 		warning: 'Compressing changes removes old method source and expression evaluations from the change log.
 
-Are you sure you want to continue?') 
+Are you sure you want to continue?')
 			== #yes ifTrue: [self sourceManager compressChanges]!
 
 compressSources
@@ -1411,12 +1411,12 @@ compressSources
 		buttonStyle: #yesNo;
 		defaultButton: 2;
 		caption: 'Compress Sources...'.
-	(mb 
+	(mb
 		warning: 'Compressing sources compacts the change log into the source (.sml) file. After compaction all record of what has changed will be lost and the change log will be empty. 
 
 Compressing sources is useful when you want to consolidate your work into a a new baseline image, but should otherwise be avoided.
 
-Are you absolutely sure you want to continue?') 
+Are you absolutely sure you want to continue?')
 			== #yes ifFalse: [^self].
 	progress := ProgressDialog create: 'No cancel view' operation: [].
 	progress caption: 'Compressing  sources, please wait...'.
@@ -1593,8 +1593,7 @@ defaultFont
 defaultFont: aFontOrNil
 	"Set the default font to use for the development system tools to aFontOrNil"
 
-	View desktop font: aFontOrNil.
-!
+	View desktop font: aFontOrNil!
 
 defaultInspectorClass
 	"Answer the class of inspector (a <SmalltalkToolShell>) to be used by default in 
@@ -1699,10 +1698,10 @@ deleteClassHierarchy: aClass
 				expandMacrosWith: prompt))
 		ifFalse: [^false].
 	removedGlobals := OrderedCollection new.
-	references := self referencesToVariable: (self globalVariableNamed: aClass name) in: scope.
+	references := self referencesToVariable: aClass binding in: scope.
 	aClass allSubclassesEndOrderDo: 
 			[:each |
-			removedGlobals add: (self globalVariableNamed: each name).
+			removedGlobals add: each binding.
 			changes removeClass: each].
 	changes removeClass: aClass.
 	[self changeManager performChange: changes] on: ClassBuilder invalidRemoveError
@@ -1719,12 +1718,10 @@ deleteClassHierarchy: aClass
 			self browseMethodsIn: references].
 	^true!
 
-deleteResource: aResourceIdentifier 
-	(MessageBox 
-		confirm: 'Are you sure you wish to delete ' , aResourceIdentifier displayString) 
-			ifFalse: [^self].
-	self sourceManager 
-		logEvaluate: 'SessionManager current resourceManager removeResource: ' 
+deleteResource: aResourceIdentifier
+	(MessageBox confirm: 'Are you sure you wish to delete ' , aResourceIdentifier displayString)
+		ifFalse: [^self].
+	self sourceManager logEvaluate: 'SessionManager current resourceManager removeResource: '
 				, aResourceIdentifier storeString.
 	self resourceManager removeResource: aResourceIdentifier!
 
@@ -1762,7 +1759,7 @@ displayItLocale: aLocale
 	displayItLocale := aLocale!
 
 displayOn: aPuttableStream
-	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that an end-user might want to see."
+	"Append to the <puttableStream> argument a String whose characters are a representation of the receiver that an end-user might want to see."
 
 	aPuttableStream nextPutAll: 'Development System'!
 
@@ -1829,9 +1826,9 @@ fileFileIn
 	(containing chunks) and file it in"
 
 	| filename |
-	filename := FileOpenDialog new
+	filename := UI.FileOpenDialog new
 				caption: 'File in...';
-				fileTypes: {self smalltalkFilesType. self classFilesType. FileDialog allFilesType};
+				fileTypes: {self smalltalkFilesType. self classFilesType. UI.FileDialog allFilesType};
 				defaultExtension: '';
 				showModal.
 	filename notNil
@@ -1877,16 +1874,16 @@ findMatchingClass: aString in: aBrowserEnvironment
 
 findSelectorValidationBlock
 	^
-	[:details | 
+	[:details |
 	| mode pattern |
 	mode := details searchMode.
 	pattern := details pattern.
-	mode == #wildcardExpression 
+	mode == #wildcardExpression
 		ifTrue: [pattern trimBlanks notEmpty]
 		ifFalse: 
-			[mode == #regularExpression 
+			[mode == #regularExpression
 				ifTrue: [details hasValidRegularExpression]
-				ifFalse: [SmalltalkScanner isSelector: details pattern]]]!
+				ifFalse: [Scanner isSelector: details pattern]]]!
 
 formatterClass
 	"Answer the <stParseNodeVisitor> that should be used for auto-formatting code in the system."
@@ -1898,11 +1895,6 @@ formatterClass: anStParseNodeVisitor
 	"Set the <stParseNodeVisitor> that should be used for auto-formatting code in the system."
 
 	formatterClass := anStParseNodeVisitor!
-
-globalVariableNamed: key
-	"Private - Answer the global variable whose name is, key."
-
-	^Smalltalk bindingFor: key asSymbol!
 
 hardResetGUI
 	"Forcibly close all views to clean up if necessary"
@@ -1965,7 +1957,7 @@ helpWhatsThis
 	tracker := MouseTracker forPresenter: View active startingAt: 0 @ 0.
 	Cursor help showWhile: [tracker startTracking: finder].
 	object := finder value.
-	(object class conformsToProtocol: #whatsThisHelp) 
+	(object class conformsToProtocol: #whatsThisHelp)
 		ifFalse: [object := finder foundView ifNil: [^self]].
 	self sessionManager whatsThis: object!
 
@@ -2074,16 +2066,14 @@ initializeSystemFolder
 					helpId: 10560)!
 
 inspect: anObject
-	^((Keyboard default isShiftDown xor: self preferAlternateInspectors) 
+	^((Keyboard default isShiftDown xor: self preferAlternateInspectors)
 		ifTrue: [anObject alternateInspectorClass]
-		ifFalse: [anObject inspectorClass]) shellOn: anObject
-
-!
+		ifFalse: [anObject inspectorClass]) shellOn: anObject!
 
 inspectVisualObject
 	| finder tracker |
 	finder := VisualObjectFinder new.
-	tracker := MouseTracker forPresenter: View active startingAt: 0@0.
+	tracker := MouseTracker forPresenter: View active startingAt: 0 @ 0.
 	Cursor help showWhile: [tracker startTracking: finder].
 	finder value ifNotNil: [:object | object inspect]!
 
@@ -2117,22 +2107,22 @@ installPackage: aString
 			self sourceManager logComment: ex description.
 			ex resume]!
 
-instVarAccessFilter: aString in: startClass 
+instVarAccessFilter: aString in: startClass
 	^
-	[:each | 
-	(each methodClass includesBehavior: startClass) 
+	[:each |
+	(each methodClass includesBehavior: startClass)
 		and: [[each accessesInstVar: aString] on: NotFoundError do: [:e | false]]]!
 
-instVarReaderFilter: aString in: startClass 
+instVarReaderFilter: aString in: startClass
 	^
-	[:each | 
-	(each methodClass includesBehavior: startClass) 
+	[:each |
+	(each methodClass includesBehavior: startClass)
 		and: [[each readsInstVar: aString] on: NotFoundError do: [:e | false]]]!
 
-instVarWriterFilter: aString in: startClass 
+instVarWriterFilter: aString in: startClass
 	^
-	[:each | 
-	(each methodClass includesBehavior: startClass) 
+	[:each |
+	(each methodClass includesBehavior: startClass)
 		and: [[each writesInstVar: aString] on: NotFoundError do: [:e | false]]]!
 
 interruptHotKey
@@ -2141,7 +2131,7 @@ interruptHotKey
 
 	^VMLibrary default registryAt: #interruptHotKey!
 
-interruptHotKey: anInteger 
+interruptHotKey: anInteger
 	"Set the HOTKEYF_XXX|VK_XXX code to be used by the VM as the break/interrupt key to the
 	<SmallInteger> argument, which must be a sensible VK value, e.g. VK_CANCEL, or things will
 	go badly."
@@ -2158,12 +2148,11 @@ isRegisteredTool: aClass
 
 	^self class registeredTools includes: aClass!
 
-isValidClassVarName: aString for: aClass 
+isValidClassVarName: aString for: aClass
 	^ClassBuilder isValidClassName: aString!
 
 isValidInstanceVariableName: name for: aClass
-	^(Compiler isAValidLocalIdentifier: name) 
-		and: [(aClass allInstVarNames includes: name) not]!
+	^(Compiler isAValidLocalIdentifier: name) and: [(aClass allInstVarNames includes: name) not]!
 
 isValidNewClassVarName: aString for: aClass
 	^(self isValidClassVarName: aString for: aClass) and: 
@@ -2180,11 +2169,11 @@ keywordsAndArgsOfMethod: aCompiledMethod
 		ifNil: [self keywordsAndArgsForSelector: aCompiledMethod selector]
 		ifNotNil: [:ast | (ast selectorParts collect: [:each | each value]) -> ast argumentNames]!
 
-loadViewResource: aResourceArray inContext: contextView 
+loadViewResource: aResourceArray inContext: contextView
 	ShellView
 		defaultExtentBlock: [:shellView | shellView extent];
 		createHookBlock: 
-				[:shellView :createBlock | 
+				[:shellView :createBlock |
 				| exStyle |
 				exStyle := shellView extendedStyle.
 				shellView hasTaskbarIcon: false.
@@ -2277,7 +2266,7 @@ methodsWithCompilationIssuesIn: aBrowserEnvironment
 methodsWithNewBytecodes
 	"Private - Answer a <BrowserEnvironment> containing all the methods that would have different bytecodes if recompiled with the current compiler."
 
-	^self methodsWithNewBytecodesIn: BrowserEnvironment new!
+	^self methodsWithNewBytecodesIn: self systemEnvironment!
 
 methodsWithNewBytecodesIn: aBrowserEnvironment
 	"Private - Answer a <BrowserEnvironment> containing all the methods in the
@@ -2305,13 +2294,13 @@ methodWorkspaceClass
 minimizeAll
 	"Minimize all views"
 
-	View topLevelViews 
+	View topLevelViews
 		do: [:each | (each class canUnderstandProtocol: #topView) ifTrue: [each minimize]]!
 
 myDolphinAccount
 	self openUrl: self sessionManager myDolphinUrl!
 
-nameForArgument: anObject 
+nameForArgument: anObject
 	| type answer |
 	answer := String writeStream.
 	type := self typeForArgumentClass: anObject class.
@@ -2319,22 +2308,23 @@ nameForArgument: anObject
 	answer
 		nextPutAll: (type name first isVowel ifTrue: ['an'] ifFalse: ['a']);
 		print: type.
-	((anObject isKindOf: Collection) and: [(anObject isKindOf: Interval) not and: [anObject notEmpty and: [anObject class isBytes not]]]) 
-		ifTrue: 
-			[| commonBase first |
-			first := true.
-			anObject do: 
-					[:each | 
-					first 
-						ifTrue: 
-							[commonBase := each class.
-							first := false]
-						ifFalse: [[each class includesBehavior: commonBase] whileFalse: [commonBase := commonBase superclass]]].
-			(commonBase notNil and: [commonBase ~~ Object and: [commonBase ~~ UndefinedObject]]) 
-				ifTrue: 
-					[answer
-						nextPutAll: 'Of';
-						print: (self typeForArgumentClass: commonBase)]].
+	((anObject isKindOf: Collection)
+		and: [(anObject isKindOf: Interval) not and: [anObject notEmpty and: [anObject class isBytes not]]])
+			ifTrue: 
+				[| commonBase first |
+				first := true.
+				anObject do: 
+						[:each |
+						first
+							ifTrue: 
+								[commonBase := each class.
+								first := false]
+							ifFalse: [[each class includesBehavior: commonBase] whileFalse: [commonBase := commonBase superclass]]].
+				(commonBase notNil and: [commonBase ~~ Object and: [commonBase ~~ UndefinedObject]])
+					ifTrue: 
+						[answer
+							nextPutAll: 'Of';
+							print: (self typeForArgumentClass: commonBase)]].
 	^answer contents!
 
 nameForBlockOfArity: anInteger 
@@ -2363,7 +2353,7 @@ nonDefaultSystemOptionsLiteralsMap
 
 	^self systemOptions inject: LookupTable new
 		into: 
-			[:map :each | 
+			[:map :each |
 			| nonDefaults |
 			nonDefaults := self nonDefaultPublishedAspectsLiteralsMapOf: each.
 			nonDefaults notEmpty ifTrue: [map at: each put: nonDefaults].
@@ -2387,14 +2377,13 @@ okToInstallPatchLevel: anInteger
 	signals an exception if not"
 
 	| patchFiles |
-	self patchLevel >= anInteger 
+	self patchLevel >= anInteger
 		ifTrue: [self error: 'Image is already at Patch Level ' , anInteger displayString].
-	patchFiles := (self patchLevel + 1 to: anInteger - 1) 
+	patchFiles := (self patchLevel + 1 to: anInteger - 1)
 				collect: [:level | File composeStem: 'Patch Level ' , level displayString extension: 'st'].
 
 	"Check patch files exist and then file them in"
-	patchFiles 
-		do: [:filename | (File exists: filename) ifFalse: [self errorNotFound: filename]].
+	patchFiles do: [:filename | (File exists: filename) ifFalse: [self errorNotFound: filename]].
 	patchFiles do: [:filename | self sourceManager fileIn: filename].
 	^true!
 
@@ -2451,38 +2440,36 @@ onDragOverProtocol: session
 	that would occur if a drop took place now of the objects in that session."
 
 	| op formatOk |
-	formatOk := (session isFormatAvailable: #CompiledMethod) 
+	formatOk := (session isFormatAvailable: #CompiledMethod)
 				or: [(session isFormatAvailable: #Class) or: [session isFormatAvailable: #MethodProtocol]].
-	(session isTargetSameAsSource not and: 
-			[formatOk 
-				and: [session suggestedTarget notNil and: [session suggestedTarget isReadOnly not]]]) 
-		ifTrue: 
-			[op := session intendedOperation == #move 
-						ifTrue: 
-							["moves not permitted"
-
-							#copy]
-						ifFalse: [session intendedOperation]].
+	(session isTargetSameAsSource not
+		and: [formatOk and: [session suggestedTarget notNil and: [session suggestedTarget isReadOnly not]]])
+			ifTrue: 
+				[op := session intendedOperation == #move
+							ifTrue: 
+								["moves not permitted"
+								#copy]
+							ifFalse: [session intendedOperation]].
 	session operation: op!
 
 onDropFiles: aDroppedFilesList over: aPresenter 
 	aDroppedFilesList do: [:each | self onFileDropped: each over: aPresenter]!
 
-onDropOverProtocol: session 
+onDropOverProtocol: session
 	"The drag operation described by <DragDropSession>, session, would like to 
 	do a drop into the protocols pane.
 	Override this method to accept the dragObject(s)."
 
 	| target |
 	target := session suggestedTarget.
-	target isNil 
+	target isNil
 		ifTrue: 
 			[Sound errorBeep.
 			^false].
 	session dragObjects do: 
-			[:each | 
+			[:each |
 			"See if the drop is a CompiledMethod"
-			(each isFormatAvailable: #CompiledMethod) 
+			(each isFormatAvailable: #CompiledMethod)
 				ifTrue: 
 					[| method selectorPresent |
 					method := each format: #CompiledMethod.
@@ -2492,11 +2479,11 @@ onDropOverProtocol: session
 					(selectorPresent not and: [session isCopy]) ifTrue: [self addMethod: method toProtocol: target].
 
 					"Check for a removal from a protocol"
-					(selectorPresent and: [session isLink]) 
+					(selectorPresent and: [session isLink])
 						ifTrue: [self removeSelector: method selector fromProtocol: target]].
 
 			"See if the drop is a Class"
-			(each isFormatAvailable: #Class) 
+			(each isFormatAvailable: #Class)
 				ifTrue: 
 					[| class classPresent |
 					class := each format: #Class.
@@ -2509,14 +2496,14 @@ onDropOverProtocol: session
 					(classPresent and: [session isLink]) ifTrue: [self removeClass: class fromProtocol: target]].
 
 			"See if the drop is a Protocol"
-			(each isFormatAvailable: #MethodProtocol) 
+			(each isFormatAvailable: #MethodProtocol)
 				ifTrue: 
 					[| protocol |
 					protocol := each format: #MethodProtocol.
 
 					"Check for a copy to additional protocol"
 					session isCopy ifTrue: [self addProtocolSelectors: protocol toProtocol: target]]].
-	session isMove 
+	session isMove
 		ifTrue: 
 			[self assert: [false].	"Moves into protocols are not permitted"
 			"Operation must never be #move to avoid methods being removed"
@@ -2529,10 +2516,14 @@ onFileDropped: aString over: aPresenter
 	aPresenter routeCommand: (CommandDescription command: (Message selector: selector argument: aString)
 				description: ('Drop <1s>' expandMacrosWith: aString))!
 
-onMethodAdded: aCompilationResult 
-	allSelectors isNil ifFalse: [allSelectors add: aCompilationResult method selector].
-	self packageManager onMethodAdded: aCompilationResult.
-	self trigger: #methodAdded: with: aCompilationResult!
+onMethodAdded: aCompilationResult
+	| method |
+	method := aCompilationResult method.
+	allSelectors isNil ifFalse: [allSelectors add: method selector].
+	method methodClass isAnonymous
+		ifFalse: 
+			[self packageManager onMethodAdded: aCompilationResult.
+			self trigger: #methodAdded: with: aCompilationResult]!
 
 onMethodCategorized: aCompiledMethod
 	"The method aCompiledMethod has been re-categorized.
@@ -2596,15 +2587,15 @@ onVariableRenamed: aVariableBinding from: aBindingReference
 		with: aVariableBinding
 		with: aBindingReference!
 
-openHelpTopic: topic 
+openHelpTopic: topic
 	"Open the <readableString> Education Centre topic"
 
-	^self openHelpUrl: (File 
+	^self openHelpUrl: (File
 				composePath: self helpRootUrl
 				stem: topic
 				extension: 'htm')!
 
-openHelpTopicForTool: anObject 
+openHelpTopicForTool: anObject
 	"Open the HTML page in the Education Centre for anObject. The page
 	with be the same name as the object's class"
 
@@ -2618,7 +2609,7 @@ openHelpUrl: url
 		ifTrue: [self openLocalHelpUrl: url style: nil]
 		ifFalse: [self openUrl: url]!
 
-openLocalHelpUrl: aURLString style: aWindowStyleDescriptionString 
+openLocalHelpUrl: aURLString style: aWindowStyleDescriptionString
 	"Open the HTML Help URL identified in aURLString "
 
 	^HTMLHelpLibrary default htmlHelpUrl: aURLString style: aWindowStyleDescriptionString!
@@ -2632,10 +2623,7 @@ openTool: folderItem
 openUrl: aURLString
 	"Open the URL identified in aURLString in a browser"
 
-	ShellLibrary default 
-		shellOpen: aURLString
-		directory: self sessionManager installationDirectory.
-!
+	ShellLibrary default shellOpen: aURLString directory: self sessionManager installationDirectory!
 
 openViewComposer
 	"Open a new ViewComposer editing a new instance of ShellView."
@@ -2674,7 +2662,7 @@ openWorkspace
 openXmlFile: aString
 	#{XmlPad} ifDefined: [:xmlpad | xmlpad filename: aString]!
 
-overlappingObjectsError: anError 
+overlappingObjectsError: anError
 	"Private - The resumeable <Error>, anError, was raised when an attempt to install a new 
 	package failed because existing packages in the image already contain global objects of the 
 	same name as some of the objects in the new package. Answers true if the load should continue."
@@ -2690,7 +2678,7 @@ overlappingObjectsError: anError
 		cr;
 		cr.
 	self sessionManager trace: msg contents.	"#2142"
-	msg 
+	msg
 		nextPutAll: 'If you proceed with installation the system will remove the clashing items from their existing packages (if any).
 This may change existing packages, and if you later uninstall this package the clashing objects will be removed along with it.
 
@@ -2758,7 +2746,7 @@ packageOpenFileDialogTypes
 	^{{'Packages (<1s>)' expandMacrosWithArguments: {filter} locale: Locale invariant. filter}.
 		self pacFileDialogType.
 		self paxFileDialogType.
-		FileDialog allFilesType}!
+		UI.FileDialog allFilesType}!
 
 panic
 	"Forcibly close all views to clean up if necessary"
@@ -2766,11 +2754,11 @@ panic
 	| mb |
 	mb := MessageBox new.
 	mb beTaskModal.
-	(mb 
+	(mb
 		confirm: 'Are you sure you wish to forcibly close all open windows?
 If so, all windows will be destroyed and a new System Folder will be opened.
 
-You should do this only if you believe you may have hidden or partially composed windows in your image that are preventing some objects from otherwise being garbage collected.') 
+You should do this only if you believe you may have hidden or partially composed windows in your image that are preventing some objects from otherwise being garbage collected.')
 			ifFalse: [^self].
 	self hardResetGUI!
 
@@ -2801,42 +2789,42 @@ poolDictionariesFolder
 
 	^self systemFolder asOrderedCollection detect: [:each | each description='Pool Dictionaries'].!
 
-populateMenu: popup tree: folderModel items: folderItems 
+populateMenu: popup tree: folderModel items: folderItems
 	"Private - Populate the menu, popup, with items from the system folder, folder."
 
 	| accels aMonadicValuable |
 	accels := PluggableSet searchPolicy: SearchPolicy caseInsensitive.
 	"Ensure any existing keyboard shortcuts are accounted for"
 	aMonadicValuable := 
-			[:each | 
+			[:each |
 			| i |
 			(i := each text indexOf: $&) ~= 0 ifTrue: [accels add: (each text at: i + 1)]].
 	popup itemsDo: aMonadicValuable.
 	(folderItems asSortedCollection: [:a :b | a description < b description]) do: 
-			[:each | 
-			"First generate the item text, with keyboard shortcut"
+			[:each |
 			| text i |
+			"First generate the item text, with keyboard shortcut"
 			text := each description.
 			i := text findFirst: [:c | c isSeparator not and: [(accels includes: c) not]].
-			i ~~ 0 
+			i ~~ 0
 				ifTrue: 
 					[accels add: (text at: i).
 					text := (text copyFrom: 1 to: i - 1) , '&' , (text copyFrom: i)].
-			each isFolder 
+			each isFolder
 				ifTrue: 
 					[| children |
 					children := folderModel childrenOf: each.
-					children notEmpty 
+					children notEmpty
 						ifTrue: 
 							[| subMenu |
 							subMenu := popup addSubmenu: text.
 							subMenu image: each icon.
-							self 
+							self
 								populateMenu: subMenu
 								tree: folderModel
 								items: children]]
 				ifFalse: 
-					[popup 
+					[popup
 						addCommand: (Message selector: #openTool: argument: each)
 						description: text
 						image: each icon]]!
@@ -2869,7 +2857,7 @@ populateMessagesMenus: aMenu fromMethods: aCollection environment: aBrowserEnvir
 	"Not a message menu"
 	^false!
 
-populateToolsMenu: toolsMenu 
+populateToolsMenu: toolsMenu
 	"Private - Populate the Tools menu with the same hierarchy of items as the system folder.
 	The menu is arranged in alphabetical order, with dynamically generated keyboard
 	shortcuts using the earliest character not used as the shortcut for a previous item
@@ -2877,7 +2865,7 @@ populateToolsMenu: toolsMenu
 
 	| folder optionsMenu |
 	toolsMenu clear.
-	optionsMenu := Menu 
+	optionsMenu := Menu
 				fromStrings: #('&Options' '&Inspect Options//inspectSystemOptions' '-' '&Remember this Layout and Size//rememberThisSize' '&Forget Layout and Size//forgetSize').
 	optionsMenu image: self userPreferencesIcon.
 	toolsMenu
@@ -2885,22 +2873,22 @@ populateToolsMenu: toolsMenu
 		addSeparator.
 	((toolsMenu itemAt: 1) itemAt: 1) isDefault: true.
 	folder := self systemFolder.
-	self 
+	self
 		populateMenu: toolsMenu
 		tree: folder
 		items: folder roots!
 
-populateWindowMenu: windowMenu 
+populateWindowMenu: windowMenu
 	"Private - Populate the open windows menu"
 
 	| openShells allOpenClasses toolClasses otherClasses viewComposers |
 	windowMenu clear.
-	openShells := (self sessionManager inputState topLevelWindows 
+	openShells := (self sessionManager inputState topLevelWindows
 				select: [:each | each class conformsToProtocol: #topView]) collect: [:each | each presenter].
 
 	"Reject shells that are owned by a view composer"
 	viewComposers := ViewComposer allInstances.
-	openShells := openShells 
+	openShells := openShells
 				reject: [:each | viewComposers anySatisfy: [:vc | vc hasOwnedComposingView: each]].
 	allOpenClasses := openShells asSet collect: [:each | each class].
 	toolClasses := allOpenClasses select: [:each | self isRegisteredTool: each].
@@ -2908,22 +2896,22 @@ populateWindowMenu: windowMenu
 
 	"System shell is always first"
 	toolClasses remove: self systemFolderClass ifAbsent: [].
-	(openShells detect: [:each | each class == self systemFolderClass] ifNone: []) 
+	(openShells detect: [:each | each class == self systemFolderClass] ifNone: [])
 		ifNotNil: 
-			[:systemShell | 
-			windowMenu 
+			[:systemShell |
+			windowMenu
 				addCommand: (Message selector: #showShellWithHandle: argument: systemShell view handle)
 				description: 'System Folder'
 				image: systemShell icon].
 
 	"Now tools"
-	self 
+	self
 		populateWindowMenu: windowMenu
 		withShells: openShells
 		ofClasses: toolClasses.
 
 	"Now others"
-	self 
+	self
 		populateWindowMenu: windowMenu
 		withShells: openShells
 		ofClasses: otherClasses.
@@ -2932,23 +2920,23 @@ populateWindowMenu: windowMenu
 	windowMenu addSeparator.
 	windowMenu addCommand: (MessageSend receiver: self selector: #minimizeAll)
 		description: '&Minimize All'.
-	windowMenu 
+	windowMenu
 		addCommand: (MessageSend receiver: self selector: #closeAll)
 		description: '&Close All'
 		image: false icon!
 
-populateWindowMenu: windowMenu withShells: openShells ofClasses: toolClasses 
+populateWindowMenu: windowMenu withShells: openShells ofClasses: toolClasses
 	toolClasses notEmpty ifTrue: [windowMenu addSeparator].
 	toolClasses asSortedCollection do: 
-			[:eachClass | 
+			[:eachClass |
 			| shells |
 			shells := openShells select: [:each | each class == eachClass].
 			shells do: 
-					[:eachShell | 
+					[:eachShell |
 					| description |
 					description := eachShell view text.
 					eachShell view isWindowVisible ifFalse: [description := description , ' (hidden)'].
-					windowMenu 
+					windowMenu
 						addCommand: (Message selector: #showShellWithHandle: argument: eachShell view handle)
 						description: description
 						image: eachShell icon]]!
@@ -2963,6 +2951,7 @@ printBlockStatsOn: aStream
 	"
 		Smalltalk developmentSystem printBlockStatsOn: Transcript.
 	"
+
 	| fullBlocks needOuter methodsWithCleanBlocks totalMethods stackTemps blockCopy copiedValues methodsWithSharedTemps envTemps needSelf allBlockCopies argumentCounts copyingBlocks allLiteralBlocks instructions methodEnvTemps hybridBlocks methodsWithContext |
 	argumentCounts := Bag new.
 	copiedValues := Bag new.
@@ -3184,7 +3173,7 @@ promptForClass
 
 	^self promptForClassIn: self systemEnvironment!
 
-promptForClassIn: aBrowserEnvironment 
+promptForClassIn: aBrowserEnvironment
 	| class className |
 	class := nil.
 	className := ''.
@@ -3193,28 +3182,27 @@ promptForClassIn: aBrowserEnvironment
 	[className := self promptForClassName: className.
 	className isNil ifTrue: [^nil].
 	class := self findMatchingClass: className in: aBrowserEnvironment.
-	class isNil] 
-			whileTrue] 
+	class isNil]
+			whileTrue]
 			on: OperationAborted
 			do: [:ex | ].
 	^class!
 
-promptForClassName: aString 
-	^((Prompter 
+promptForClassName: aString
+	^((Prompter
 		createOn: (self suggestedWord: aString)
 		prompt: 'Enter a Class name (may be wildcarded): '
 		caption: 'Find a Class')
 		validationBlock: 
-				[:name | 
+				[:name |
 				| trimmed |
 				trimmed := name trimBlanks.
-				trimmed notEmpty 
-					and: [(SmalltalkScanner isVariable: trimmed) or: [trimmed includesAnyOf: '#*']]];
+				trimmed notEmpty and: [(Scanner isVariable: trimmed) or: [trimmed includesAnyOf: '#*']]];
 		showModal) ifNotNil: [:name | name trimBlanks]!
 
-promptForClassVarName: nameString in: aClass prompt: promptString caption: captionString 
+promptForClassVarName: nameString in: aClass prompt: promptString caption: captionString
 	| newName |
-	newName := (Prompter 
+	newName := (Prompter
 				createOn: nameString
 				prompt: promptString
 				caption: captionString)
@@ -3224,7 +3212,7 @@ promptForClassVarName: nameString in: aClass prompt: promptString caption: capti
 
 promptForInstVarName: nameString in: aClass prompt: promptString caption: captionString
 	| newName |
-	newName := (Prompter 
+	newName := (Prompter
 				createOn: nameString
 				prompt: promptString
 				caption: captionString)
@@ -3245,13 +3233,13 @@ promptForReferencesToGlobal: aString in: aBrowserEnvironment
 		showModal)
 			ifNotNil: [:globalName | self referencesToVariable: globalName asQualifiedReference binding in: aBrowserEnvironment]!
 
-promptForSearchString: aFindDetails caption: aString 
+promptForSearchString: aFindDetails caption: aString
 	^(AdvancedFindDialog create: 'Directionless view' on: aFindDetails)
 		isWildCardEnabled: true;
 		caption: aString;
 		showModal!
 
-promptForSelector: suggestionString caption: captionString 
+promptForSelector: suggestionString caption: captionString
 	"Private - 
 	"
 
@@ -3453,12 +3441,12 @@ reformatAllMethodsIn: aBrowserEnvironment
 	changes name: ('Reformat <1p>' expandMacrosWith: aBrowserEnvironment).
 	aBrowserEnvironment methodsDo: 
 			[:each |
-			(SmalltalkParser parseExistingMethodNoError: each)
+			(Parser parseExistingMethodNoError: each)
 				ifNotNil: [:tree | changes compile: tree formattedCode in: each methodClass]].
 	self changeManager performChange: changes!
 
-reformatSource: aString in: aClass 
-	^(SmalltalkParser parseMethod: aString in: aClass) ifNotNil: [:ast | ast formattedCode]!
+reformatSource: aString in: aClass
+	^(Parser parseMethod: aString in: aClass) ifNotNil: [:ast | ast formattedCode]!
 
 registerSystemEvents
 	"Private - Register interest with the 'standard' development environment. 
@@ -3522,12 +3510,6 @@ removeClass: class fromProtocol: protocol
 				with: protocol))
 			ifTrue: [protocol removeClass: class]!
 
-removeGlobalNamed: aSymbol
-	"Remove the global called aSymbol from the system dictionary."
-
-	self environment removeGlobalNamed: aSymbol.
-!
-
 removeMethod: aCompiledMethod
 	"Removes the <CompiledMethod>, method, from its class after first verifying with the user.
 	If the method is implementing any protocols on behalf of its owner class or subclasses then 
@@ -3581,7 +3563,7 @@ It is recommended that you press Cancel to abort deletion unless you are absolut
 			"Removing the selector from the class will remove protocols from the class and subclasses"].
 	aCompositeRefactoryChange removeMethod: aCompiledMethod selector from: aCompiledMethod methodClass!
 
-removeMethods: aCollectionOfMethods 
+removeMethods: aCollectionOfMethods
 	"Remove a collection of methods as a single-undoable action. The user is first prompted to
 	confirm that they really want to remove the methods."
 
@@ -3592,15 +3574,15 @@ removeMethods: aCollectionOfMethods
 		cr.
 	methods := aCollectionOfMethods asSortedCollection: CompiledMethod defaultSortBlock.
 	max := 40.
-	methods 
+	methods
 		from: 1
 		to: (methods size min: max)
 		do: 
-			[:each | 
+			[:each |
 			stream
 				crtab;
 				display: each].
-	methods size > max 
+	methods size > max
 		ifTrue: 
 			[stream
 				crtab;
@@ -3690,16 +3672,15 @@ removeSystemFolderIconsForClass: aClass
 		systemFolder remove: each].
 	self unregisterTool: aClass!
 
-renameClass: aClass 
+renameClass: aClass
 	"Rename aClass to a new name requested from the user."
 
 	| oldClassName |
 	oldClassName := aClass name asString.
-	(Prompter 
+	(Prompter
 		on: oldClassName
 		prompt: 'New name for ' , oldClassName
-		caption: 'Rename Class') 
-			ifNotNil: [:newClassName | self renameClass: aClass to: newClassName]!
+		caption: 'Rename Class') ifNotNil: [:newClassName | self renameClass: aClass to: newClassName]!
 
 renameClass: aClass to: newClassName
 	"Rename aClass to newClassName. Also list all of the methods which reference
@@ -3707,7 +3688,7 @@ renameClass: aClass to: newClassName
 
 	| oldClassName references global |
 	oldClassName := aClass name asString.
-	global := self globalVariableNamed: aClass name.
+	global := aClass binding.
 	references := self referencesToVariable: global in: self systemEnvironment.
 	ClassBuilder renameClass: aClass to: newClassName.
 	references isEmpty
@@ -3750,11 +3731,6 @@ renameClassVariable: aString to: newName in: aClass within: aBrowserEnvironment
 		of: aClass
 		within: aBrowserEnvironment!
 
-renameGlobal: oldSymbol to: newSymbol
-	"Rename the global, informing the system of the change."
-
-	Smalltalk renameGlobal: oldSymbol to: newSymbol!
-
 renameInstanceVariable: aString in: aClass 
 	"Implements the Rename Instance Variable refactoring."
 
@@ -3786,6 +3762,11 @@ renameInstanceVariable: aString to: newName in: aClass within: aBrowserEnvironme
 		within: aBrowserEnvironment .
 	^newName!
 
+renameVariable: oldSymbol to: newSymbol
+	"Rename the global, informing the system of the change."
+
+	Smalltalk renameVariable: oldSymbol to: newSymbol!
+
 requestPackageFileName: aString
 	"Private - Answer a <readableString> being a revised the path for the package,
 	or nil if no suggestions are available (e.g. this is not an interactive session and so
@@ -3793,7 +3774,7 @@ requestPackageFileName: aString
 
 	| stem |
 	stem := File splitStemFrom: aString.
-	^FileOpenDialog new
+	^UI.FileOpenDialog new
 		fileTypes: self packageOpenFileDialogTypes;
 		defaultExtension: (File splitExtensionFrom: aString);
 		value: stem;
@@ -3821,7 +3802,7 @@ resaveViewResourcesMatching: matchBlock do: doBlock
 			[:rid |
 			vc openOn: rid.
 			(doBlock value: vc) ifTrue: [vc fileSave].
-			(MemoryManager current)
+			MemoryManager current
 				collectGarbage;
 				administerLastRites].
 	vc exit!
@@ -3884,8 +3865,8 @@ saveImageAs
 	"Save the Smalltalk image and sources to a user chosen filename."
 
 	| fileName |
-	fileName := FileSaveDialog new
-				fileTypes: {self imageFilesType. FileDialog allFilesType};
+	fileName := UI.FileSaveDialog new
+				fileTypes: {self imageFilesType. UI.FileDialog allFilesType};
 				defaultExtension: '';
 				value: self sessionManager imagePath;
 				caption: 'Save Image As';
@@ -3905,22 +3886,22 @@ saveImageAs
 							[self playSaveImageSound.
 							self sessionManager saveImage: fileName]]]!
 
-selectMethods: aMonadicValuable in: aBrowserEnvironment 
+selectMethods: aMonadicValuable in: aBrowserEnvironment
 	"Private - Answer a <BrowserEnvironment> scoped to contain only those methods within the
 	<BrowserEnvironment> argument for which the <monadicValuable> argument evaluates to true.
 	The resulting BrowserEnvironment is not a static list, but will always include whichever
 	methods pass the filter at the particular point in time that the enquiry is made."
 
-	^(PluggableEnvironment onEnvironment: aBrowserEnvironment select: aMonadicValuable)
+	^(Refactory.Browser.PluggableEnvironment onEnvironment: aBrowserEnvironment select: aMonadicValuable)
 		label: 'Some methods from ' , aBrowserEnvironment label;
 		yourself!
 
-selectMethods: aMonadicValuable in: aBrowserEnvironment withProgress: aString 
+selectMethods: aMonadicValuable in: aBrowserEnvironment withProgress: aString
 	| progress |
 	progress := ProgressDialog create.
 	progress text: aString.
 	progress operation: 
-			[:p | 
+			[:p |
 			| matching |
 			matching := self selectMethods: aMonadicValuable in: aBrowserEnvironment.
 			matching progressBlock: [:percentComplete | p value: percentComplete].
@@ -3933,6 +3914,10 @@ sessionManager
 	"Private - Answer the receiver's default session manager."
 
 	^SessionManager current!
+
+setCustomDrawAttributes: anNMCUSTOMDRAW forClass: aClass
+	aClass isDeprecated ifTrue: [anNMCUSTOMDRAW font isStruckThrough: true].
+	aClass isVisiblyAbstract ifTrue: [anNMCUSTOMDRAW font isItalic: true]!
 
 showPrerequisitesForPackage: aPackage
 	(self browsePackages: {aPackage}) showPrerequisitesFor: aPackage!
@@ -3949,7 +3934,7 @@ showTranscript
 
 	TranscriptShell current show; setFocus!
 
-signatureOfMethod: aCompiledMethod 
+signatureOfMethod: aCompiledMethod
 	| stream |
 	stream := String writeStream.
 	self printSignatureForKeywordsAndArgs: (self keywordsAndArgsOfMethod: aCompiledMethod) on: stream.
@@ -3982,11 +3967,9 @@ stbSaveOn: anSTBOutFiler
 
 	anSTBOutFiler saveObject: self as: (STBSingletonProxy forClass: self class)!
 
-suggestedWord: aString 
+suggestedWord: aString
 	| start stream suggestion |
-	suggestion := aString isEmpty 
-				ifTrue: [Clipboard current getTextOrEmpty]
-				ifFalse: [aString].
+	suggestion := aString isEmpty ifTrue: [Clipboard current getTextOrEmpty] ifFalse: [aString].
 	stream := suggestion readStream.
 	stream skipSeparators.
 	start := stream position + 1.
@@ -4061,7 +4044,7 @@ uninitialize
 	"Private - Uninitialize the receiver."
 
 	self clearSystemFolder.
-	Smalltalk removeEventsTriggeredFor: self.!
+	Smalltalk removeEventsTriggeredFor: self!
 
 unregisterTool: aToolClass
 	"Removes aToolClass from the collection of registered tools for the receiver."
@@ -4073,7 +4056,7 @@ upgradeAllResourcesReferencingClassNamed: aSymbol
 
 	| var refs |
 	var := aSymbol asQualifiedReference binding.
-	refs := self referencesToVariable: var in: BrowserEnvironment new.
+	refs := self referencesToVariable: var in: self systemEnvironment.
 	refs allMethods do: [:each | (ResourceIdentifier forMethod: each) ifNotNil: [:ri | ri reassign]]!
 
 userPreferencesIcon
@@ -4282,7 +4265,6 @@ wrapText: aString toWidth: max indent: colInteger tabWidth: tabInteger
 !SmalltalkSystem categoriesFor: #browseDefinitionsOfSelector:in:!browsing!public! !
 !SmalltalkSystem categoriesFor: #browseEnvironment:!browsing!public! !
 !SmalltalkSystem categoriesFor: #browseFolder:!browsing!public! !
-!SmalltalkSystem categoriesFor: #browseGlobalReferences:in:!browsing!public! !
 !SmalltalkSystem categoriesFor: #browseHierarchy!browsing!commands!public! !
 !SmalltalkSystem categoriesFor: #browseHierarchy:!browsing!commands!public! !
 !SmalltalkSystem categoriesFor: #browseInstanceVariables:!browsing!public! !
@@ -4330,6 +4312,7 @@ wrapText: aString toWidth: max indent: colInteger tabWidth: tabInteger
 !SmalltalkSystem categoriesFor: #browseSystemOnMethod:!browsing!public! !
 !SmalltalkSystem categoriesFor: #browseSystemPackages:!browsing!public! !
 !SmalltalkSystem categoriesFor: #browseTests!browsing!commands!public! !
+!SmalltalkSystem categoriesFor: #browseVariableReferences:in:!browsing!public! !
 !SmalltalkSystem categoriesFor: #browseViewHierarchy:!browsing!public! !
 !SmalltalkSystem categoriesFor: #buildAllSelectors!helpers!private! !
 !SmalltalkSystem categoriesFor: #buildMessageMenu:forMethods:browseSelector:extraArgs:browseOtherSelector:!helpers!menus!private! !
@@ -4423,7 +4406,6 @@ wrapText: aString toWidth: max indent: colInteger tabWidth: tabInteger
 !SmalltalkSystem categoriesFor: #findSelectorValidationBlock!accessing!private! !
 !SmalltalkSystem categoriesFor: #formatterClass!accessing!public! !
 !SmalltalkSystem categoriesFor: #formatterClass:!accessing!public! !
-!SmalltalkSystem categoriesFor: #globalVariableNamed:!accessing!private! !
 !SmalltalkSystem categoriesFor: #hardResetGUI!commands!public! !
 !SmalltalkSystem categoriesFor: #hasRedoableOperations!public!testing! !
 !SmalltalkSystem categoriesFor: #hasUndoableOperations!public!testing! !
@@ -4572,7 +4554,6 @@ wrapText: aString toWidth: max indent: colInteger tabWidth: tabInteger
 !SmalltalkSystem categoriesFor: #registerSystemEvents!initializing!private! !
 !SmalltalkSystem categoriesFor: #registerTool:!accessing!public! !
 !SmalltalkSystem categoriesFor: #removeClass:fromProtocol:!operations!private!protocols! !
-!SmalltalkSystem categoriesFor: #removeGlobalNamed:!operations!public! !
 !SmalltalkSystem categoriesFor: #removeMethod:!operations!public! !
 !SmalltalkSystem categoriesFor: #removeMethod:changes:!operations!private! !
 !SmalltalkSystem categoriesFor: #removeMethods:!commands!public! !
@@ -4588,10 +4569,10 @@ wrapText: aString toWidth: max indent: colInteger tabWidth: tabInteger
 !SmalltalkSystem categoriesFor: #renameClassVariable:in:!public!refactoring! !
 !SmalltalkSystem categoriesFor: #renameClassVariable:in:within:!public!refactoring! !
 !SmalltalkSystem categoriesFor: #renameClassVariable:to:in:within:!private!refactoring! !
-!SmalltalkSystem categoriesFor: #renameGlobal:to:!operations!public! !
 !SmalltalkSystem categoriesFor: #renameInstanceVariable:in:!public!refactoring! !
 !SmalltalkSystem categoriesFor: #renameInstanceVariable:in:within:!public!refactoring! !
 !SmalltalkSystem categoriesFor: #renameInstanceVariable:to:in:within:!private!refactoring! !
+!SmalltalkSystem categoriesFor: #renameVariable:to:!operations!public! !
 !SmalltalkSystem categoriesFor: #requestPackageFileName:!operations!private! !
 !SmalltalkSystem categoriesFor: #requiresDolphinPro:!browsing!public! !
 !SmalltalkSystem categoriesFor: #resaveViewResourcesMatching:do:!public! !
@@ -4610,6 +4591,7 @@ wrapText: aString toWidth: max indent: colInteger tabWidth: tabInteger
 !SmalltalkSystem categoriesFor: #selectMethods:in:!enquiries!private! !
 !SmalltalkSystem categoriesFor: #selectMethods:in:withProgress:!private!searching! !
 !SmalltalkSystem categoriesFor: #sessionManager!accessing!private! !
+!SmalltalkSystem categoriesFor: #setCustomDrawAttributes:forClass:!helpers!private! !
 !SmalltalkSystem categoriesFor: #showPrerequisitesForPackage:!helpers!public! !
 !SmalltalkSystem categoriesFor: #showShellWithHandle:!commands!private! !
 !SmalltalkSystem categoriesFor: #showTranscript!commands!public! !
@@ -4679,7 +4661,7 @@ initialize
 	ThemeColor addNamed: #toolBackground color: Color face3d!
 
 initializeFileDrops
-	FileDrops := (LookupTable new)
+	FileDrops := LookupTable new
 				at: 'cls' put: #dropClassFile:;
 				at: 'txt' put: #dropTextFile:;
 				at: 'xml' put: #dropXmlFile:;
@@ -4704,8 +4686,7 @@ publishedAspectsOfInstances
 		do: [:each | aspects add: (Aspect boolean: each)].
 	^aspects
 		add: ((Aspect font: #defaultFont) category: #appearence);
-		add: (Aspect choice: #formatterClass
-					from: (ClassCategory name: 'System-Compiler-Formatters') classes);
+		add: (Aspect choice: #formatterClass from: (ClassCategory name: 'System-Compiler-Formatters') classes);
 		add: (Aspect integer: #changeHistorySize);
 		add: (Aspect color: #toolBackgroundColor);
 		add: (Aspect hotkey: #interruptHotKey);
@@ -4740,8 +4721,7 @@ publishedEventsOfInstances
 registeredTools
 	"Answers the collection of tools registered for the receiver"
 
-	RegisteredTools isNil ifTrue: [
-		RegisteredTools := Set new ].
+	RegisteredTools isNil ifTrue: [RegisteredTools := Set new].
 	^RegisteredTools!
 
 registerTool: aToolClass

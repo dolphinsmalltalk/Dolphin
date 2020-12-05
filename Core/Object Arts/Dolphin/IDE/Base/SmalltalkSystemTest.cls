@@ -1,12 +1,12 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-DolphinTest subclass: #SmalltalkSystemTest
+Core.Tests.DolphinTest subclass: #SmalltalkSystemTest
 	instanceVariableNames: 'devsys'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-SmalltalkSystemTest guid: (GUID fromString: '{8ce20f6c-ccc5-4249-85e0-ef3888d589d7}')!
+SmalltalkSystemTest guid: (Core.GUID fromString: '{8ce20f6c-ccc5-4249-85e0-ef3888d589d7}')!
 SmalltalkSystemTest comment: ''!
 !SmalltalkSystemTest categoriesForClass!Unclassified! !
 !SmalltalkSystemTest methodsFor!
@@ -17,7 +17,7 @@ setUp
 testAllSelectorsImplementedIn
 	| env all |
 	"Github #645"
-	env := BrowserEnvironment new forPackages: {Object owningPackage. ImageStripper owningPackage}.
+	env := Refactory.Browser.BrowserEnvironment new forPackages: {Object owningPackage. ImageStripper owningPackage}.
 	"Preconditions"
 	self assert: (env definesClass: MSG)
 		description: 'Test inconclusive; package does not own expected class'.
@@ -29,7 +29,7 @@ testAllSelectorsImplementedIn
 	all := Smalltalk developmentSystem unimplementedSelectorsIn: env.
 	self assert: (all includes: #viewClass).
 	self deny: (all includes: #x).
-	env := BrowserEnvironment new forPackages: {Object owningPackage.
+	env := Refactory.Browser.BrowserEnvironment new forPackages: {Object owningPackage.
 						(STBViewProxy >> #viewClass) owningPackage}.
 	all := Smalltalk developmentSystem unimplementedSelectorsIn: env.
 	self deny: (all includes: #viewClass)!
@@ -84,12 +84,11 @@ testNameForArgument
 	self assert: (devsys nameForArgument: 'abc') equals: 'aString'.
 	self assert: (devsys nameForArgument: #[1 2 3]) equals: 'aByteArray'.
 	self assert: (devsys nameForArgument: Object yourAddress asExternalAddress)
-		equals: 'anExternalAddress'!
+		equals: 'anAddress'!
 
 testWrapText
-	| formatter wrapped |
+	| wrapped |
 	(devsys respondsTo: #wrapText:toWidth:indent:tabWidth:) ifFalse: [^self].
-	formatter := devsys formatterClass.
 	wrapped := devsys
 				wrapText: 'abc d'
 				toWidth: 5

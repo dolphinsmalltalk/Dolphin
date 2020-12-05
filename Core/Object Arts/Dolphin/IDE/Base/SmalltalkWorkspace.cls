@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Presenter subclass: #SmalltalkWorkspace
+UI.Presenter subclass: #SmalltalkWorkspace
 	instanceVariableNames: 'evaluationContext errorModel findDetails workspacePool evaluationPools compilationErrors textStyles searchEnvironment modifiedModel flags indicatorStyles'
 	classVariableNames: 'Abbreviations AnnotationMode AutoCompleteDwell DefaultCaretColor DefaultFont DefaultTabWidth FontQuality IndicatorStyles IsAutoCompletionCaseInsensitive IsAutoCompletionEnabled IsAutoCompletionSpaceAdded IsAutoCompletionTruncating KeyBindings KeywordCompletions MaxAutoCompletionListSize StandardUnaryReturnTypes TextStyles UseDirectWrite WordWrap WrapIndentMode'
-	poolDictionaries: 'CompilerFlags ScintillaConstants'
+	imports: #(#{Kernel.CompilerFlags} #{ScintillaConstants})
 	classInstanceVariableNames: 'additionalKeyBindings commandQueryHandlers'
 	classConstants: {
 		'AutoCompleteMask' -> 16r1.
 		'VariableTipsMask' -> 16r2
 	}!
-SmalltalkWorkspace guid: (GUID fromString: '{87b4c687-026e-11d3-9fd7-00a0cc3e4a32}')!
+SmalltalkWorkspace guid: (Core.GUID fromString: '{87b4c687-026e-11d3-9fd7-00a0cc3e4a32}')!
 SmalltalkWorkspace comment: 'SmalltalkWorkspace is a <presenter> for displaying a workspace area within a <ScintillaView>. Note that, for efficiency purposes, a SmalltakWorkspace does not have a model. The textual data is held only within the associated view. since there seems little point in duplicating this text and holding it within the image as, say, a <readableString>.
 
 In Dolphin 5.1 and earlier SmalltalkWorkspace could work with an <TextEdit> view, however as of Dolphin 6 it is specialised to support only <ScintillaView> as this allows it to take advantage of the advanced features of that control.
@@ -144,7 +144,7 @@ browseReferences
 	"Prompt for a selector and open a method browser displaying the references to that
 	selector."
 
-	self commandPolicy 
+	self commandPolicy
 		route: (CommandDescription command: self browseReferencesCommand description: 'Browse References')!
 
 browseReferencesCommand
@@ -161,11 +161,10 @@ chooseEvaluationPools
 	"Display a ListPrompter to allow the user to choose the evaluation pools associated with the
 	receiver"
 
-	ChoicePrompter 
-		on: (self aspectValue: #evaluationPools) 
+	ChoicePrompter
+		on: (self aspectValue: #evaluationPools)
 		multipleChoices: Smalltalk developmentSystem availablePools asArray
-		caption: 'Available pools'.
-	!
+		caption: 'Available pools'!
 
 chunkFilerClass
 	^ChunkSourceFiler!
@@ -240,13 +239,11 @@ cloneNew
 
 	| clone |
 	clone := Smalltalk developmentSystem newWorkspace.
-	
-	clone workspace 
+	clone workspace
 		text: self text;
 		workspacePool: self workspacePool;
 		evaluationPools: self evaluationPools;
 		evaluationContext: self evaluationContext.
-
 	^clone!
 
 compilationErrors
@@ -360,10 +357,10 @@ completeWord
 	| last styleName |
 	last := view caretPosition - 1.
 	styleName := (view styleAt: last) name.
-	(self 
+	(self
 		autoComplete: styleName
 		at: last
-		maxItems: self maxCompletionListSize) 
+		maxItems: self maxCompletionListSize)
 			ifNil: 
 				[self showCompletionListAfterToken: (self tokenBefore: last) maxItems: self maxCompletionListSize].
 	view isAutoCompletionActive not ifTrue: [Sound warningBeep]!
@@ -397,7 +394,7 @@ completionStringFor: aString at: anInteger
 	"Include quotes if and only if needed."
 	answer := rawContents asSymbol printString.
 	"Strip the leading # if already present in the view outside the range we will be replacing."
-	^(view characterAt: anInteger - 1) == $# ifTrue: [answer allButFirst] ifFalse: [answer].!
+	^(view characterAt: anInteger - 1) == $# ifTrue: [answer allButFirst] ifFalse: [answer]!
 
 copySelection
 	"Copy the selection to the clipboard, or the line on which the caret is placed if there is
@@ -461,22 +458,22 @@ displayIt
 
 	self evaluateAndDisplay: [:obj | obj displayString: self systemModel displayItLocale]!
 
-dragOver: aDragDropSession 
+dragOver: aDragDropSession
 	"The drag operation described by the <DragDropSession> argument has moved to a new position
 	over the receiver's window. Use the session to provide feedback to the user about allowable
 	operations etc. Implementation Note: Override this message to suggest a default drop action
 	of pasting in the Chunk/String at the drop position."
 
-	aDragDropSession operation: ((aDragDropSession isFormatAvailable: #Chunk) 
+	aDragDropSession operation: ((aDragDropSession isFormatAvailable: #Chunk)
 				ifTrue: [#copy]
 				ifFalse: 
-					[(#(#String #ObjectRef) anySatisfy: [:e | aDragDropSession isFormatAvailable: e]) 
+					[(#(#String #ObjectRef) anySatisfy: [:e | aDragDropSession isFormatAvailable: e])
 						ifTrue: [aDragDropSession intendedOperation]]).
 
 	"Superclass triggers event to allow observers to override."
 	super dragOver: aDragDropSession!
 
-drop: session 
+drop: session
 	"The drag operation described by the <DragDropSession>, session, has culminated in a drop
 	over the receiver."
 
@@ -488,15 +485,15 @@ drop: session
 	| targetPos answer |
 	answer := super drop: session.
 	targetPos := session suggestedTarget.
-	targetPos isNil 
+	targetPos isNil
 		ifFalse: 
 			[self caretPosition: targetPos.
 			session dragObjects do: 
-					[:each | 
-					(each isFormatAvailable: #ObjectRef) 
+					[:each |
+					(each isFormatAvailable: #ObjectRef)
 						ifTrue: [self dropObjectRef: (each format: #ObjectRef)]
 						ifFalse: 
-							[(each format: #Chunk ifAbsent: [each format: #String ifAbsent: []]) 
+							[(each format: #Chunk ifAbsent: [each format: #String ifAbsent: []])
 								ifNotNil: [:text | self replaceSelection: text]]]].
 	^answer!
 
@@ -640,30 +637,30 @@ firstError
 					a severity > b severity or: [a severity = b severity and: [a position <= b position]]].
 	^ordered isEmpty ifFalse: [ordered first]!
 
-getCompletionSignatureFor: aString at: anInteger 
+getCompletionSignatureFor: aString at: anInteger
 	| prev receiverStyle selector |
 	selector := aString asSymbol.
 	prev := self tokenBefore: anInteger - 1.
-	prev isNil 
+	prev isNil
 		ifTrue: 
-			[(self selfClass lookupMethod: selector) 
+			[(self selfClass lookupMethod: selector)
 				ifNotNil: [:method | ^self systemModel signatureOfMethod: method]]
 		ifFalse: 
 			[receiverStyle := prev value.
-			receiverStyle == #identifier 
+			receiverStyle == #identifier
 				ifTrue: 
 					[| ident |
 					ident := view plainTextRange: prev key.
-					(self classForIdentifier: ident) 
+					(self classForIdentifier: ident)
 						ifNotNil: 
-							[:methodClass | 
-							(methodClass lookupMethod: selector) 
+							[:methodClass |
+							(methodClass lookupMethod: selector)
 								ifNotNil: [:method | ^self systemModel signatureOfMethod: method]]]].
 	"Perform a breadth-first traversal of the class hierarchy to find the highest definition of
 	the selector and use the signature of that."
 	Smalltalk allBehaviorsDo: 
-			[:each | 
-			(each includesSelector: selector) 
+			[:each |
+			(each includesSelector: selector)
 				ifTrue: [^self systemModel signatureOfMethod: (each compiledMethodAt: selector)]].
 	"Should never get here - user shouldn't be offered choice of a selector that is not implemented."
 	^self systemModel buildSimpleSignatureFor: selector!
@@ -742,10 +739,10 @@ identifiersStartingWith: aString maxItems: anInteger
 			class := self selfClass instanceClass.
 			class withAllSuperclassesDo: 
 					[:eachClass |
-					eachClass classPool bindingsDo: selectVars.
-					eachClass sharedPoolsDo: [:eachPool | eachPool bindingsDo: selectVars]].
+					eachClass bindingsDo: selectVars.
+					eachClass importedNamespacesDo: [:eachNs | eachNs bindingsDo: selectVars]].
 			evaluationPools do: [:eachPool | eachPool associationsDo: selectVars].
-			class environment bindingsDo: selectVars].
+			class environment ?? Smalltalk bindingsDo: selectVars].
 	^variables!
 
 indicatorStyles
@@ -1050,7 +1047,7 @@ promptForVariableName: anObjectRef
 				prompt: 'Enter a variable name:'
 				caption: ('Drop of <1s> onto workspace' expandMacrosWith: anObjectRef value basicPrintString).
 	name isNil ifTrue: [^nil].
-	(SmalltalkScanner isVariable: name)
+	(Scanner isVariable: name)
 		ifTrue: [true]
 		ifFalse: 
 			[MessageBox errorMsg: ('<1p> is not a valid variable name.' expandMacrosWith: name).
@@ -1140,8 +1137,8 @@ reformatSource
 	| source formatter reformatted expr tabs |
 	source := self hasSelection ifTrue: [self selection] ifFalse: [self text].
 	tabs := (source findFirst: [:each | each ~~ Character tab]) - 1.
-	expr := [SmalltalkParser parseExpression: source in: self parseContext]
-				on: SmalltalkParser notificationClass
+	expr := [Parser parseExpression: source in: self parseContext]
+				on: Parser notificationClass
 				do: [:e | e okToContinue ifTrue: [e exit: nil] ifFalse: [^self]].
 	formatter := expr formatterClass new.
 	tabs <= 0
@@ -1224,19 +1221,19 @@ selectNext
 
 	| indicators pos |
 	indicators := view indicators.
-	indicators isEmpty 
+	indicators isEmpty
 		ifTrue: 
 			[Sound warningBeep.
 			^self].
 	pos := view caretPosition.
-	self selectionRange: ((indicators detect: [:each | each range start > pos] ifNone: []) 
+	self selectionRange: ((indicators detect: [:each | each range start > pos] ifNone: [])
 				ifNil: 
 					[| len |
 					len := self textLength.
 					pos > len ifTrue: [indicators first range] ifFalse: [len + 1 to: len]]
 				ifNotNil: [:next | next range])!
 
-selectorsStartingWith: aString maxItems: anInteger 
+selectorsStartingWith: aString maxItems: anInteger
 	"Private - Build and answer a collection of selectors from those implemented in the
 	receiver's superclasses that are potential completions for the specified prefix. If there
 	are more matching selectors than the specified maximum, then answer an empty collection."
@@ -1244,20 +1241,20 @@ selectorsStartingWith: aString maxItems: anInteger
 	| selectors class |
 	selectors := Set new.
 	class := self selfClass.
-	class allSuperclassesDo: (aString isEmpty 
+	class allSuperclassesDo: (aString isEmpty
 				ifTrue: 
 					[
-					[:eachClass | 
+					[:eachClass |
 					selectors addAll: eachClass selectors.
 					selectors size > anInteger ifTrue: [^#()]]]
 				ifFalse: 
 					[| ignoreCase |
 					ignoreCase := self isAutoCompletionCaseInsensitive.
 					
-					[:eachClass | 
+					[:eachClass |
 					eachClass selectors do: 
-							[:eachSelector | 
-							(eachSelector beginsWith: aString ignoreCase: ignoreCase) 
+							[:eachSelector |
+							(eachSelector beginsWith: aString ignoreCase: ignoreCase)
 								ifTrue: 
 									[selectors add: eachSelector.
 									selectors size > anInteger ifTrue: [^#()]]]]]).
@@ -1271,12 +1268,12 @@ selectPrev
 
 	| indicators pos |
 	indicators := view indicators.
-	indicators isEmpty 
+	indicators isEmpty
 		ifTrue: 
 			[Sound warningBeep.
 			^self].
 	pos := self selectionRange start.
-	self selectionRange: ((indicators reverse detect: [:each | each range start < pos] ifNone: []) 
+	self selectionRange: ((indicators reverse detect: [:each | each range start < pos] ifNone: [])
 				ifNil: [pos = 1 ifTrue: [indicators last range] ifFalse: [1 to: 0]]
 				ifNotNil: [:next | next range])!
 
@@ -1349,28 +1346,28 @@ showFirstError: anInteger
 				ifNotNil: [:first | self showError: first offset: anInteger]].
 	^compilationErrors notEmpty!
 
-showIdentifierCompletionListAt: posInteger maxItems: maxInteger start: start 
+showIdentifierCompletionListAt: posInteger maxItems: maxInteger start: start
 	"Trim blanks in case requesting display of identifier list on whitespace"
 
 	| prefix choices lastDot |
 	prefix := (view plainTextFrom: start to: posInteger) trimBlanks.
 	lastDot := prefix lastIndexOf: $..
-	lastDot isZero 
+	lastDot isZero
 		ifTrue: [choices := self identifiersStartingWith: prefix maxItems: maxInteger]
 		ifFalse: 
-			["Qualified name, find the binding"
-			| qualifier pool |
+			[| qualifier pool |
+			"Qualified name, find the binding"
 			qualifier := prefix copyFrom: 1 to: lastDot - 1.
 			prefix := prefix copyFrom: lastDot + 1 to: prefix size.
 			choices := #().
-			(self selfClass fullBindingFor: qualifier) 
+			(self selfClass fullBindingFor: qualifier)
 				ifNotNil: 
-					[:var | 
+					[:var |
 					pool := var value.
 					pool isBehavior ifTrue: [pool := pool classPool].
-					(pool isKindOf: Dictionary) 
+					(pool isKindOf: Dictionary)
 						ifTrue: 
-							[choices := prefix isEmpty 
+							[choices := prefix isEmpty
 										ifTrue: [pool associations]
 										ifFalse: 
 											[| ignoreCase |
@@ -1446,13 +1443,13 @@ startAutocompleteTimer
 stylerClass: aScintillaStylerClass
 	self view stylerClass: aScintillaStylerClass!
 
-symbolsStartingWith: aString maxItems: anInteger 
+symbolsStartingWith: aString maxItems: anInteger
 	| stream ignoreCase |
 	stream := Array writeStream: (anInteger bitShift: -1).
 	ignoreCase := self isAutoCompletionCaseInsensitive.
 	Symbol allInstancesDo: 
-			[:each | 
-			(each beginsWith: aString ignoreCase: ignoreCase) 
+			[:each |
+			(each beginsWith: aString ignoreCase: ignoreCase)
 				ifTrue: 
 					[stream nextPut: each.
 					stream size > anInteger ifTrue: [^#()]]].
@@ -1831,7 +1828,7 @@ defaultKeywordCompletions
 	perform a more helpful insertion for commonly used keyword selectors where the arguments are
 	of a known type, for example the control structures."
 
-	^(LookupTable new)
+	^LookupTable new
 		at: 'at:ifAbsent:' put: 'at: ?key? ifAbsent: []';
 		at: 'ifTrue:' put: 'ifTrue: [??]';
 		at: 'ifFalse:' put: 'ifFalse: [??]';
@@ -1986,7 +1983,7 @@ defaultTextStyles
 					yourself);
 		add: ((ScintillaTextStyle name: #literalArray)
 					description: 'Opening/closing token of literal array, i.e. #()';
-					isBold: true;
+					weight: SC_WEIGHT_SEMIBOLD;
 					yourself);
 		add: ((ScintillaTextStyle name: #tag)
 					description: 'Primitive or external call tag, e.g. <primitive: 1>';
@@ -2193,7 +2190,7 @@ resource_Default_view
 	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Default_view)
 	"
 
-	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.ScintillaView) 34 50 nil nil 34 2 8 1411453252 1 416 721990 2 ##(Smalltalk.ValueHolder) nil false 1310726 ##(Smalltalk.EqualitySearchPolicy) nil 655878 ##(Smalltalk.ThemeColor) #smalltalkWorkspace nil 21 265030 4 ##(Smalltalk.Menu) nil true 34 13 984134 2 ##(Smalltalk.CommandMenuItem) 1 1180998 4 ##(Smalltalk.CommandDescription) #accept 8 '&Accept' 1 1 nil nil nil 983366 1 ##(Smalltalk.DividerMenuItem) 4097 578 nil true 34 10 626 1 658 #undo 8 '&Undo' 1 1 263494 3 ##(Smalltalk.Icon) nil true 1572870 ##(Smalltalk.ImageRelativeFileLocator) 8 'EditUndo.ico' 2032142 ##(Smalltalk.STBExternalResourceLibraryProxy) 8 'dolphindr7.dll' nil nil nil 706 4097 626 1 658 #cutSelection 8 'Cu&t' 1 1 818 nil true 864 8 'EditCut.ico' 912 nil nil 626 1 658 #copySelection 8 '&Copy' 1 1 818 nil true 864 8 'EditCopy.ico' 912 nil nil 626 1 658 #pasteClipboard 8 '&Paste' 1 1 818 nil true 864 8 'EditPaste.ico' 912 nil nil 626 1 658 #clearSelection 8 'De&lete' 1 1 818 nil true 864 8 'EditClear.ico' 912 nil nil 706 4097 626 1 658 #reformatSource 8 'Re&format' 1 1 nil nil nil 706 4097 626 1 658 #selectAll 8 '&Select All' 1 1 nil nil nil 8 '&Edit' nil 134217729 nil nil nil nil nil 578 nil true 34 10 626 1 658 #inspectWorkspacePool 8 '&Variables' 1 1 nil nil nil 626 1 658 #cloneNew 8 'Clo&ne' 1 1 818 nil true 864 8 'SmalltalkWorkspace.ico' 912 nil nil 706 4097 626 1 658 #toggleAutoCompletion 8 'Auto-complete' 1 1 nil nil nil 626 1 658 #toggleIndentationGuides 8 'Indentation &Guides' 1 1 nil nil nil 626 1 658 #toggleLineEndings 8 'Line &Endings' 1 1 788806 1 ##(Smalltalk.TextTileIcon) $¶ 8 'Arial' nil nil nil nil 1 nil nil nil nil 626 1 658 #toggleLineNumbers 8 'Line N&umbers' 1 1 nil nil nil 626 1 658 #toggleStyling 8 '&Syntax Coloring' 1 1 nil nil nil 626 1 658 #toggleWhitespace 8 'W&hitespace' 1 1 nil nil nil 626 1 658 #toggleWordWrap 8 '&Word Wrap' 1 1 nil nil nil 8 'Wor&kspace' nil 134217729 nil nil nil nil nil 706 4097 626 1 658 #browseIt 8 'Bro&wse It' 1 1 818 nil true 864 8 'ClassBrowserShell.ico' 912 nil nil 626 1 658 #displayIt 8 '&Display It' 1 1 818 nil true 864 8 'DisplayIt.ico' 912 nil nil 626 1 658 #printIt 8 '&Print It' 1 1 818 nil true 864 8 'PrintIt.ico' 912 nil nil 626 1 658 #evaluateIt 8 'E&valuate It' 1 1 818 nil true 864 8 'EvaluateIt.ico' 912 nil nil 626 1 658 #inspectIt 8 '&Inspect It' 1 1 818 nil true 864 8 'InspectIt.ico' 912 nil nil 626 1 658 #debugIt 8 'Deb&ug It' 1 1 818 nil true 864 8 'DebugIt.ico' 912 nil nil 706 4097 578 nil true 34 2 626 2097153 658 #browseDefinitions 8 'Defi&nitions...' 1 1 nil nil nil 626 1 658 #browseReferences 8 '&References...' 1 1 nil nil nil 8 '&Browse' nil 1 nil nil nil nil nil 8 '&Workspace' nil 134217729 nil nil nil nil nil nil nil 416 nil 8 1533163101 852486 ##(Smalltalk.NullConverter) nil nil 9 nil 170 192 34 4 #normal 1182790 1 ##(Smalltalk.ScintillaTextStyle) 1 nil nil 1 nil nil nil nil #normal nil nil nil #callTip 2754 77 327686 ##(Smalltalk.Color) #gray 2802 #white 1 nil nil nil nil #callTip nil nil nil nil 1639686 ##(Smalltalk.SmalltalkExpressionStyler) 1 nil nil false 138 144 8 #() 170 192 34 2 #default 1641542 2 ##(Smalltalk.ScintillaMarkerDefinition) 1 nil nil nil 416 #circle nil nil nil nil nil nil 138 ##(Smalltalk.IdentitySet) 2896 nil 170 176 2896 nil nil nil nil nil 2802 #silver nil nil 65 nil nil 170 192 34 6 #literalBytes 8 '[]' #specialCharacter 8 '()[]<>' #literalArray 8 '()' 8 '' 3 170 192 34 2 #container 2720 nil nil nil nil 130003 nil 170 192 2896 nil nil 170 192 34 6 #Warning 2754 1027 2802 #darkGoldenrod 2802 #ivory 1 nil nil nil nil #Warning nil nil nil #Notification 2754 1029 nil 2802 #gainsboro 1 nil nil nil nil #Notification nil nil nil #Error 2754 1031 2802 #firebrick 2802 #floralWhite 1 nil nil nil nil #Error nil nil nil nil 983302 ##(Smalltalk.MessageSequence) 138 144 34 12 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 328198 ##(Smalltalk.Point) 7039 21 3442 461 311 416 3394 #contextMenu: 34 1 592 416 3394 #textLimit: 8 #(1073741823) 416 3394 #hoverTime: 8 #(500) 416 3394 #caretPeriod: 8 #(530) 416 3394 #wordWrap: 8 #(true) 416 3394 #margins: 34 1 34 3 985158 3 ##(Smalltalk.ScintillaMargin) 1 416 1 3 nil nil nil nil 3698 3 416 1 nil nil 67108863 nil nil 3698 5 416 1 nil nil nil nil nil 416 3394 #tabWidth: 8 #(4) 416 3394 #targetRange: 34 1 525062 ##(Smalltalk.Interval) 1 -1 3 416 3394 #maxCompletionListHeight: 8 #(9) 416 3394 #edgeColumn: 8 #(1) 416 3394 #hasAdditionalSelectionTyping: 8 #(true) 416 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 191 13 0 0 10 0 0 0 165 14 0 0 165 0 0 0] 8 #() 3442 193 193 nil 29 )!
+	^#(#'!!STL' 4 788558 10 ##(UI.STBViewProxy) ##(Smalltalk.ScintillaView) 34 50 nil nil 34 2 8 1411453252 1 416 721990 2 ##(UI.ValueHolder) nil false 1310726 ##(Smalltalk.EqualitySearchPolicy) nil 655878 ##(Graphics.ThemeColor) #smalltalkWorkspace nil 21 265030 4 ##(UI.Menu) nil true 34 13 984134 2 ##(UI.CommandMenuItem) 1 1180998 4 ##(UI.CommandDescription) #accept 8 '&Accept' 1 1 nil nil nil 983366 1 ##(UI.DividerMenuItem) 4097 578 nil true 34 10 626 1 658 #undo 8 '&Undo' 1 1 263494 3 ##(Smalltalk.Icon) nil true 1572870 ##(Smalltalk.ImageRelativeFileLocator) 8 'EditUndo.ico' 2032142 ##(Smalltalk.STBExternalResourceLibraryProxy) 8 'dolphindr7.dll' nil nil nil 706 4097 626 1 658 #cutSelection 8 'Cu&t' 1 1 818 nil true 864 8 'EditCut.ico' 912 nil nil 626 1 658 #copySelection 8 '&Copy' 1 1 818 nil true 864 8 'EditCopy.ico' 912 nil nil 626 1 658 #pasteClipboard 8 '&Paste' 1 1 818 nil true 864 8 'EditPaste.ico' 912 nil nil 626 1 658 #clearSelection 8 'De&lete' 1 1 818 nil true 864 8 'EditClear.ico' 912 nil nil 706 4097 626 1 658 #reformatSource 8 'Re&format' 1 1 nil nil nil 706 4097 626 1 658 #selectAll 8 '&Select All' 1 1 nil nil nil 8 '&Edit' nil 134217729 nil nil nil nil nil 578 nil true 34 10 626 1 658 #inspectWorkspacePool 8 '&Variables' 1 1 nil nil nil 626 1 658 #cloneNew 8 'Clo&ne' 1 1 818 nil true 864 8 'SmalltalkWorkspace.ico' 912 nil nil 706 4097 626 1 658 #toggleAutoCompletion 8 'Auto-complete' 1 1 nil nil nil 626 1 658 #toggleIndentationGuides 8 'Indentation &Guides' 1 1 nil nil nil 626 1 658 #toggleLineEndings 8 'Line &Endings' 1 1 788806 1 ##(Smalltalk.TextTileIcon) $¶ 8 'Arial' nil nil nil nil 1 nil nil nil nil 626 1 658 #toggleLineNumbers 8 'Line N&umbers' 1 1 nil nil nil 626 1 658 #toggleStyling 8 '&Syntax Coloring' 1 1 nil nil nil 626 1 658 #toggleWhitespace 8 'W&hitespace' 1 1 nil nil nil 626 1 658 #toggleWordWrap 8 '&Word Wrap' 1 1 nil nil nil 8 'Wor&kspace' nil 134217729 nil nil nil nil nil 706 4097 626 1 658 #browseIt 8 'Bro&wse It' 1 1 818 nil true 864 8 'ClassBrowserShell.ico' 912 nil nil 626 1 658 #displayIt 8 '&Display It' 1 1 818 nil true 864 8 'DisplayIt.ico' 912 nil nil 626 1 658 #printIt 8 '&Print It' 1 1 818 nil true 864 8 'PrintIt.ico' 912 nil nil 626 1 658 #evaluateIt 8 'E&valuate It' 1 1 818 nil true 864 8 'EvaluateIt.ico' 912 nil nil 626 1 658 #inspectIt 8 '&Inspect It' 1 1 818 nil true 864 8 'InspectIt.ico' 912 nil nil 626 1 658 #debugIt 8 'Deb&ug It' 1 1 818 nil true 864 8 'DebugIt.ico' 912 nil nil 706 4097 578 nil true 34 2 626 2097153 658 #browseDefinitions 8 'Defi&nitions...' 1 1 nil nil nil 626 1 658 #browseReferences 8 '&References...' 1 1 nil nil nil 8 '&Browse' nil 1 nil nil nil nil nil 8 '&Workspace' nil 134217729 nil nil nil nil nil nil nil 416 nil 8 1533163101 852486 ##(UI.NullConverter) nil nil 9 nil 170 192 34 4 #normal 1182790 1 ##(Smalltalk.ScintillaTextStyle) 1 nil nil 1 nil nil nil nil #normal nil nil nil #callTip 2754 77 327686 ##(Smalltalk.Color) #gray 2802 #white 1 nil nil nil nil #callTip nil nil nil nil 1639686 ##(Smalltalk.SmalltalkExpressionStyler) 1 nil nil false 138 144 8 #() 170 192 34 2 #default 1641542 2 ##(Smalltalk.ScintillaMarkerDefinition) 1 nil nil nil 416 #circle nil nil nil nil nil nil 138 ##(Smalltalk.IdentitySet) 2896 nil 170 176 2896 nil nil nil nil nil 2802 #silver nil nil 65 nil nil 170 192 34 6 #literalBytes 8 '[]' #specialCharacter 8 '()[]<>' #literalArray 8 '()' 8 '' 3 170 192 34 2 #container 2720 nil nil nil nil 130003 nil 170 192 2896 nil nil 170 192 34 6 #Warning 2754 1027 2802 #darkGoldenrod 2802 #ivory 1 nil nil nil nil #Warning nil nil nil #Notification 2754 1029 nil 2802 #gainsboro 1 nil nil nil nil #Notification nil nil nil #Error 2754 1031 2802 #firebrick 2802 #floralWhite 1 nil nil nil nil #Error nil nil nil nil 983302 ##(Smalltalk.MessageSequence) 138 144 34 12 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 328198 ##(Smalltalk.Point) 7039 21 3442 461 311 416 3394 #contextMenu: 34 1 592 416 3394 #textLimit: 8 #(1073741823) 416 3394 #hoverTime: 8 #(500) 416 3394 #caretPeriod: 8 #(530) 416 3394 #wordWrap: 8 #(true) 416 3394 #margins: 34 1 34 3 985158 3 ##(Smalltalk.ScintillaMargin) 1 416 1 3 nil nil nil nil 3698 3 416 1 nil nil 67108863 nil nil 3698 5 416 1 nil nil nil nil nil 416 3394 #tabWidth: 8 #(4) 416 3394 #targetRange: 34 1 525062 ##(Smalltalk.Interval) 1 -1 3 416 3394 #maxCompletionListHeight: 8 #(9) 416 3394 #edgeColumn: 8 #(1) 416 3394 #hasAdditionalSelectionTyping: 8 #(true) 416 983302 ##(OS.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 191 13 0 0 10 0 0 0 165 14 0 0 165 0 0 0] 8 #() 3442 193 193 nil 29)!
 
 setAdditionalKeyBindings: anArray
 	additionalKeyBindings := anArray ifNotNil: [anArray]!
@@ -2205,12 +2202,12 @@ textStyles
 	TextStyles isNil ifTrue: [self textStyles: self defaultTextStyles].
 	^TextStyles!
 
-textStyles: aCollectionOfScintillaTextStyles 
+textStyles: aCollectionOfScintillaTextStyles
 	"Set the text styles used to colour text in the receiver's instances. These must have the
 	names used in the styler, which by default is a <SmalltalkStyler>."
 
-	TextStyles := aCollectionOfScintillaTextStyles asOrderedCollection 
-				sortUsing: (DefaultSortAlgorithm newSortBlock: [:a :b | a name <= b name]).
+	TextStyles := aCollectionOfScintillaTextStyles asOrderedCollection
+				sortUsing: (SortAlgorithm defaultSort: [:a :b | a name <= b name]).
 	self primAllSubinstances do: [:each | each textStyles: self textStyles]!
 
 textStylesAspect
@@ -2232,7 +2229,7 @@ useDirectWrite
 	"Answer whether to use DirectWrite for drawing text in the workspace. This offers improved quality, coloured emoji's, and hardware acceleration, but may not 
 	work well in all circumstances, so it can be turned off."
 
-	^UseDirectWrite and: [VMLibrary default isWindowsVistaOrGreater]!
+	^UseDirectWrite and: [KernelLibrary default isWindowsVistaOrGreater]!
 
 useDirectWrite: aBoolean
 	| tech |

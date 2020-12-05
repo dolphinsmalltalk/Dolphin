@@ -1,88 +1,144 @@
 ﻿| package |
-package := Package name: 'Smalltalk Parser Tests'.
-package paxVersion: 1;
+package := Package name: 'Smalltalk Compiler Tests'.
+package paxVersion: 2.1;
 	basicComment: ''.
 
 
-package classNames
-	add: #SmalltalkParserErrorTest;
-	add: #StIdentifierTokenTest;
-	add: #StLiteralArrayTokenTest;
-	add: #StLiteralTokenTest;
-	add: #StNumberLiteralTokenTest;
-	add: #StOptimizedTokenTest;
-	add: #StSpecialCharacterTokenTest;
-	add: #StTokenTest;
-	add: #StValueTokenTest;
-	yourself.
-
-package binaryGlobalNames: (Set new
-	yourself).
-
-package globalAliases: (Set new
-	yourself).
+package setClassNames: #(
+	#{Kernel.Tests.AbstractParserErrorTest}
+	#{Kernel.Tests.CompilerErrorTest}
+	#{Kernel.Tests.CompilerTest}
+	#{Kernel.Tests.CompilerTestClasses}
+	#{Kernel.Tests.DolphinCompilerTestMethods}
+	#{Kernel.Tests.DolphinCompilerTestMethodsSubclass}
+	#{Kernel.Tests.ParserErrorTest}
+	#{Kernel.Tests.ParserTest}
+	#{Kernel.Tests.StIdentifierTokenTest}
+	#{Kernel.Tests.StLiteralArrayTokenTest}
+	#{Kernel.Tests.StLiteralTokenTest}
+	#{Kernel.Tests.StNumberLiteralTokenTest}
+	#{Kernel.Tests.StOptimizedTokenTest}
+	#{Kernel.Tests.StSpecialCharacterTokenTest}
+	#{Kernel.Tests.StTokenTest}
+	#{Kernel.Tests.StValueTokenTest}
+).
 
 package setPrerequisites: #(
+	'..\..\..\IDE\Community Edition\ActiveX Automation Development'
+	'..\..\Continuations\Continuation Tests'
 	'..\..\..\IDE\Base\Development System'
-	'..\..\..\IDE\Base\Development System Tests'
 	'..\..\..\Base\Dolphin'
 	'..\..\..\Base\Dolphin Base Tests'
-	'..\Smalltalk Parser').
+	'..\..\Base64\Dolphin Base64'
+	'..\..\..\MVP\Views\Common Controls\Dolphin Common Controls'
+	'..\..\..\Base\Dolphin Legacy Date & Time'
+	'..\..\..\..\..\Contributions\Refactory\Refactoring Browser\Environments\RBEnvironments'
+	'..\Smalltalk Parser'
+	'..\..\..\..\..\Contributions\Camp Smalltalk\SUnit\SUnit'
+).
 
 package!
 
 "Class Definitions"!
 
-DolphinTest subclass: #StTokenTest
+Core.Object subclass: #'Kernel.Tests.DolphinCompilerTestMethods'
+	instanceVariableNames: 'iv1 iv2'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {
+		'Const' -> 16r1
+	}!
+Kernel.Tests.DolphinCompilerTestMethods subclass: #'Kernel.Tests.DolphinCompilerTestMethodsSubclass'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-AbstractParserErrorTest subclass: #SmalltalkParserErrorTest
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Core.Tests.DolphinTest subclass: #'Kernel.Tests.AbstractParserErrorTest'
+	instanceVariableNames: 'errors'
+	classVariableNames: ''
+	imports: #(#{Kernel.ParseErrorCodes} #{External})
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Core.Tests.DolphinTest subclass: #'Kernel.Tests.CompilerTest'
+	instanceVariableNames: 'defaultCompileFlags'
+	classVariableNames: 'TempInstrs'
+	imports: #(#{Kernel.CompilerFlags} #{Kernel.OpcodePool} #{Kernel.ParseErrorCodes})
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Core.Tests.DolphinTest subclass: #'Kernel.Tests.ParserTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'SmalltalkParseErrorCodes'
-	classInstanceVariableNames: ''!
-StTokenTest subclass: #StOptimizedTokenTest
+	imports: #(#{External.ExtCallArgTypes} #{Kernel.ParseErrorCodes})
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Core.Tests.DolphinTest subclass: #'Kernel.Tests.StTokenTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-StTokenTest subclass: #StValueTokenTest
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Kernel.Tests.AbstractParserErrorTest subclass: #'Kernel.Tests.CompilerErrorTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-StValueTokenTest subclass: #StIdentifierTokenTest
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Kernel.Tests.AbstractParserErrorTest subclass: #'Kernel.Tests.ParserErrorTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-StValueTokenTest subclass: #StLiteralArrayTokenTest
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Kernel.Tests.StTokenTest subclass: #'Kernel.Tests.StOptimizedTokenTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-StValueTokenTest subclass: #StLiteralTokenTest
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Kernel.Tests.StTokenTest subclass: #'Kernel.Tests.StValueTokenTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-StValueTokenTest subclass: #StSpecialCharacterTokenTest
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Kernel.Tests.StValueTokenTest subclass: #'Kernel.Tests.StIdentifierTokenTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-StLiteralTokenTest subclass: #StNumberLiteralTokenTest
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Kernel.Tests.StValueTokenTest subclass: #'Kernel.Tests.StLiteralArrayTokenTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
-
-"Loose Methods"!
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Kernel.Tests.StValueTokenTest subclass: #'Kernel.Tests.StLiteralTokenTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Kernel.Tests.StValueTokenTest subclass: #'Kernel.Tests.StSpecialCharacterTokenTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Kernel.Tests.StLiteralTokenTest subclass: #'Kernel.Tests.StNumberLiteralTokenTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Core.Tests.DolphinTestClassResource subclass: #'Kernel.Tests.CompilerTestClasses'
+	instanceVariableNames: 'testClass'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
 
 "End of package definition"!
 

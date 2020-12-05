@@ -1,18 +1,18 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-RenameMethodRefactoring subclass: #RenameMethodReferencesRefactoring
+Refactory.Browser.RenameMethodRefactoring subclass: #'Refactory.Browser.RenameMethodReferencesRefactoring'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-RenameMethodReferencesRefactoring guid: (GUID fromString: '{721e4622-9483-4d18-a01f-8c2ae241b26b}')!
-RenameMethodReferencesRefactoring comment: 'RenameMethodReferencesRefactoring is a specialisation of the <RenameMethodRefactoring> that does not rename any implementors. This can be useful when one wishes to adapt code using one selector to another, and occurrence one frequently encounters when porting code from one Smalltalk to another. Note that this may not be behaviour preserving.'!
-!RenameMethodReferencesRefactoring categoriesForClass!Refactory-Refactorings! !
-!RenameMethodReferencesRefactoring methodsFor!
+Refactory.Browser.RenameMethodReferencesRefactoring guid: (Core.GUID fromString: '{721e4622-9483-4d18-a01f-8c2ae241b26b}')!
+Refactory.Browser.RenameMethodReferencesRefactoring comment: 'RenameMethodReferencesRefactoring is a specialisation of the <RenameMethodRefactoring> that does not rename any implementors. This can be useful when one wishes to adapt code using one selector to another, and occurrence one frequently encounters when porting code from one Smalltalk to another. Note that this may not be behaviour preserving.'!
+!Refactory.Browser.RenameMethodReferencesRefactoring categoriesForClass!Refactory-Refactorings! !
+!Refactory.Browser.RenameMethodReferencesRefactoring methodsFor!
 
 displayOn: aPuttableStream
-	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that an end-user might want to see."
+	"Append to the <puttableStream> argument a String whose characters are a representation of the receiver that an end-user might want to see."
 
 	aPuttableStream
 		nextPutAll: 'Replace References to ';
@@ -30,7 +30,7 @@ preconditions
 						[self 
 							refactoringWarning: 'Renaming method references may not preserve behaviour.'.
 						true])! !
-!RenameMethodReferencesRefactoring categoriesFor: #displayOn:!displaying!public! !
-!RenameMethodReferencesRefactoring categoriesFor: #initialize!initializing!public! !
-!RenameMethodReferencesRefactoring categoriesFor: #preconditions!preconditions!public! !
+!Refactory.Browser.RenameMethodReferencesRefactoring categoriesFor: #displayOn:!displaying!public! !
+!Refactory.Browser.RenameMethodReferencesRefactoring categoriesFor: #initialize!initializing!public! !
+!Refactory.Browser.RenameMethodReferencesRefactoring categoriesFor: #preconditions!preconditions!public! !
 

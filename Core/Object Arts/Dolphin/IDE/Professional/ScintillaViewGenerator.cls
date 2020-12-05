@@ -1,12 +1,12 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Object subclass: #ScintillaViewGenerator
+Core.Object subclass: #ScintillaViewGenerator
 	instanceVariableNames: 'events commentQueue lexerConstantPrefixes previewChanges commands parsingDeprecated namespace constantsPool generatedSelectors aliases functions'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ScintillaViewGenerator guid: (GUID fromString: '{babb8e5d-5ee9-43b2-a88b-0959484c008e}')!
+ScintillaViewGenerator guid: (Core.GUID fromString: '{babb8e5d-5ee9-43b2-a88b-0959484c008e}')!
 ScintillaViewGenerator comment: 'This class reads the Scintilla.iface definition and autogenerates wrapper methods into the ScintillaView class, and defines constants in the ScintillaConstants pool.
 
 The parsing is not sophisticated, but adequate for purpose.
@@ -1637,7 +1637,7 @@ initialize
 	"Special case"
 	commands at: 'SCI_SETZOOM' put: #resetZoom.
 	parsingDeprecated := false.
-	namespace := RBNamespace new.
+	namespace := Refactory.Browser.RBNamespace new.
 	generatedSelectors := LookupTable new.
 	constantsPool := PoolConstantsDictionary new.
 	aliases := LookupTable new.

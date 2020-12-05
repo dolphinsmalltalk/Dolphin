@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-DolphinTest subclass: #SmalltalkParserTest
+Core.Tests.DolphinTest subclass: #'Kernel.Tests.ParserTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'ExtCallArgTypes SmalltalkParseErrorCodes'
+	imports: #(#{External.ExtCallArgTypes} #{Kernel.ParseErrorCodes})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-SmalltalkParserTest guid: (GUID fromString: '{947b6d13-1a2a-43c0-8053-bde0fccfbd44}')!
-SmalltalkParserTest comment: 'SUnitBrowser openOnTestCase: self'!
-!SmalltalkParserTest categoriesForClass!Refactory-Testing! !
-!SmalltalkParserTest methodsFor!
+Kernel.Tests.ParserTest guid: (Core.GUID fromString: '{947b6d13-1a2a-43c0-8053-bde0fccfbd44}')!
+Kernel.Tests.ParserTest comment: 'SUnitBrowser openOnTestCase: self'!
+!Kernel.Tests.ParserTest categoriesForClass!Refactory-Testing! !
+!Kernel.Tests.ParserTest methodsFor!
 
 assertToken: aStToken isChar: aCharacter
 	self assert: aStToken isLiteralToken.
@@ -18,10 +18,10 @@ assertToken: aStToken isChar: aCharacter
 		ifFalse: [self assert: aStToken value equals: aCharacter]!
 
 parserClass
-	^SmalltalkParser!
+	^Parser!
 
 scannerClass
-	^SmalltalkScanner!
+	^Scanner!
 
 scanNonNumericEnd: aString class: tokenClass
 	| expected stream extra scanner actual next |
@@ -126,7 +126,7 @@ testExternalCalls
 	| ffiCall tree src types |
 	self assert: (KernelLibrary parseTreeFor: #loadLibraryEx:hFile:dwFlags:) isPrimitive.
 	"Zero args"
-	tree := SmalltalkParser parseMethod: 'blah <stdcall: void blah>'.
+	tree := self parserClass parseMethod: 'blah <stdcall: void blah>'.
 	self assert: tree formattedCode trimBlanks equals: 'blah
 	<stdcall: void blah>'.
 	ffiCall := tree tag.
@@ -136,7 +136,7 @@ testExternalCalls
 	self assertIsNil: ffiCall returnType structClass.
 
 	"One simple arg"
-	tree := SmalltalkParser parseMethod: 'blah: x <stdcall: dword blah sdword>'.
+	tree := self parserClass parseMethod: 'blah: x <stdcall: dword blah sdword>'.
 	self assert: tree formattedCode trimBlanks equals: 'blah: x
 	<stdcall: dword blah sdword>'.
 	ffiCall := tree tag.
@@ -153,13 +153,13 @@ testExternalCalls
 
 	"Void is not a valid argument type (can only be used for return)"
 	self
-		should: [SmalltalkParser parseMethod: 'blah: x <stdcall: void blah void>']
-		raise: SmalltalkParser errorClass
+		should: [self parserClass parseMethod: 'blah: x <stdcall: void blah void>']
+		raise: self parserClass errorClass
 		matching: [:err | err errorCode = CErrArgTypeCannotBeVoid].
 
 	"Mismatch between Smalltalk arguments and external argument types."
-	self should: [SmalltalkParser parseMethod: 'blah: x _: y <stdcall: void blah void>']
-		raise: SmalltalkParser errorClass.
+	self should: [self parserClass parseMethod: 'blah: x _: y <stdcall: void blah void>']
+		raise: self parserClass errorClass.
 
 
 	"Many simple args"
@@ -182,7 +182,7 @@ testExternalCalls
 				nextPutAll: each].
 	src nextPut: $>.
 	src := src contents.
-	tree := SmalltalkParser parseMethod: src.
+	tree := self parserClass parseMethod: src.
 	self assert: tree formattedCode trimBlanks equals: src.
 	ffiCall := tree tag.
 	self assert: ffiCall argumentTypes size equals: types size.
@@ -213,19 +213,13 @@ testFloatScanning
 	#('5.1234a' '0.5e' '1.5e2e3' '1.5e2e-3' '1.5e-Integer zero' '1.5e-' '1.5e+' '1.7976931348623158+e308')
 		do: [:each | self scanNonNumericEnd: each class: StNumberLiteralToken].
 	self scanNonNumericEnd: '5.F' class: StNumberLiteralToken! !
-!SmalltalkParserTest categoriesFor: #assertToken:isChar:!helpers!private! !
-!SmalltalkParserTest categoriesFor: #parserClass!constants!private! !
-!SmalltalkParserTest categoriesFor: #scannerClass!constants!private! !
-!SmalltalkParserTest categoriesFor: #scanNonNumericEnd:class:!public! !
-!SmalltalkParserTest categoriesFor: #testCharacterScanning!public!unit tests! !
-!SmalltalkParserTest categoriesFor: #testExpressionSolver!public! !
-!SmalltalkParserTest categoriesFor: #testExternalCallEquality!public!unit tests! !
-!SmalltalkParserTest categoriesFor: #testExternalCalls!public!unit tests! !
-!SmalltalkParserTest categoriesFor: #testFloatScanning!public!unit tests! !
-
-!SmalltalkParserTest class methodsFor!
-
-parserClass
-	^SmalltalkParser! !
-!SmalltalkParserTest class categoriesFor: #parserClass!accessing!public! !
+!Kernel.Tests.ParserTest categoriesFor: #assertToken:isChar:!helpers!private! !
+!Kernel.Tests.ParserTest categoriesFor: #parserClass!constants!private! !
+!Kernel.Tests.ParserTest categoriesFor: #scannerClass!constants!private! !
+!Kernel.Tests.ParserTest categoriesFor: #scanNonNumericEnd:class:!public! !
+!Kernel.Tests.ParserTest categoriesFor: #testCharacterScanning!public!unit tests! !
+!Kernel.Tests.ParserTest categoriesFor: #testExpressionSolver!public! !
+!Kernel.Tests.ParserTest categoriesFor: #testExternalCallEquality!public!unit tests! !
+!Kernel.Tests.ParserTest categoriesFor: #testExternalCalls!public!unit tests! !
+!Kernel.Tests.ParserTest categoriesFor: #testFloatScanning!public!unit tests! !
 

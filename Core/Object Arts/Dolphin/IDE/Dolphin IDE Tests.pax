@@ -1,34 +1,34 @@
 ﻿| package |
 package := Package name: 'Dolphin IDE Tests'.
-package paxVersion: 2;
+package paxVersion: 2.1;
 	preDeclareClassesOnLoad: false;
 	basicComment: ''.
 
 
 package setClassNames: #(
-	#{AddMethodChangeTest}
-	#{ClassBrowserAbstractTest}
-	#{ClassBrowserTest}
-	#{ClassHierarchySelectorTest}
-	#{ClassListSelectorTest}
-	#{ClassSelectorTest}
-	#{ClosedCommandDescriptionIssueDialog}
-	#{ClosedCommandDescriptionTest}
-	#{CodeMentorTest}
-	#{DebuggerTest}
-	#{IdeaSpaceShellTest}
-	#{MethodWorkspaceTest}
-	#{PackageBrowserShellTest}
-	#{PackagedClassSelectorTest}
-	#{PackageFolderTest}
-	#{PackageManagerTest}
-	#{PackageSelectorTest}
-	#{PublishedAspectInspectorTest}
-	#{ResourceBrowserTest}
-	#{SmalltalkStylerTest}
-	#{SmalltalkSystemShellTest}
-	#{SystemBrowserTest}
-	#{ViewComposerTest}
+	#{Refactory.Browser.Tests.AddMethodChangeTest}
+	#{Smalltalk.ClassBrowserAbstractTest}
+	#{Smalltalk.ClassBrowserTest}
+	#{Smalltalk.ClassHierarchySelectorTest}
+	#{Smalltalk.ClassListSelectorTest}
+	#{Smalltalk.ClassSelectorTest}
+	#{Smalltalk.ClosedCommandDescriptionIssueDialog}
+	#{Smalltalk.ClosedCommandDescriptionTest}
+	#{Smalltalk.CodeMentorTest}
+	#{Smalltalk.DebuggerTest}
+	#{Smalltalk.IdeaSpaceShellTest}
+	#{Smalltalk.MethodWorkspaceTest}
+	#{Smalltalk.PackageBrowserShellTest}
+	#{Smalltalk.PackagedClassSelectorTest}
+	#{Smalltalk.PackageFolderTest}
+	#{Smalltalk.PackageManagerTest}
+	#{Smalltalk.PackageSelectorTest}
+	#{Smalltalk.PublishedAspectInspectorTest}
+	#{Smalltalk.ResourceBrowserTest}
+	#{Smalltalk.SmalltalkStylerTest}
+	#{Smalltalk.SmalltalkSystemShellTest}
+	#{Smalltalk.SystemBrowserTest}
+	#{Smalltalk.ViewComposerTest}
 ).
 
 package setPrerequisites: #(
@@ -47,8 +47,10 @@ package setPrerequisites: #(
 	'..\MVP\Presenters\Tree\Dolphin Tree Presenter'
 	'..\..\..\Contributions\IDB\IDB Method History'
 	'..\..\..\Contributions\Refactory\Refactoring Browser\Change Objects\RBChangeObjects'
-	'..\..\..\Contributions\Refactory\Refactoring Browser\Environments\RBEnvironments'
+	'..\..\..\Contributions\Refactory\RBOldNames'
+	'..\..\..\Contributions\Refactory\Refactoring Browser\Tests\RBTestMethods'
 	'..\..\..\Contributions\Camp Smalltalk\SUnit\SUnit'
+	'..\..\..\Contributions\Camp Smalltalk\SUnit\SUnitLegacy'
 	'..\ActiveX\Components\XML DOM\XML DOM'
 ).
 
@@ -56,142 +58,142 @@ package!
 
 "Class Definitions"!
 
-Dialog subclass: #ClosedCommandDescriptionIssueDialog
+UI.Dialog subclass: #ClosedCommandDescriptionIssueDialog
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-TestCase subclass: #ClosedCommandDescriptionTest
+XProgramming.SUnit.TestCase subclass: #ClosedCommandDescriptionTest
 	instanceVariableNames: 'dialog'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-DolphinTest subclass: #AddMethodChangeTest
+Core.Tests.DolphinTest subclass: #'Refactory.Browser.Tests.AddMethodChangeTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-DolphinTest subclass: #ClassBrowserAbstractTest
+Core.Tests.DolphinTest subclass: #ClassBrowserAbstractTest
 	instanceVariableNames: 'browser methodsPresenter packageA plugins'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-DolphinTest subclass: #CodeMentorTest
+Core.Tests.DolphinTest subclass: #CodeMentorTest
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-DolphinTest subclass: #DebuggerTest
+Core.Tests.DolphinTest subclass: #DebuggerTest
 	instanceVariableNames: 'process savedShowWalkbacks savedView'
 	classVariableNames: ''
-	poolDictionaries: 'OpcodePool'
+	imports: #(#{Kernel.OpcodePool})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-DolphinTest subclass: #IdeaSpaceShellTest
+Core.Tests.DolphinTest subclass: #IdeaSpaceShellTest
 	instanceVariableNames: 'ideaShell browserPlugins'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-DolphinTest subclass: #PackageBrowserShellTest
+Core.Tests.DolphinTest subclass: #PackageBrowserShellTest
 	instanceVariableNames: 'packageA packageB packageC dolphinTestA dolphinTestB dolphinTestC shell cardsPresenter classesPresenter methodsPresenter variablesPresenter resourcesPresenter dependencyPresenters methodAA methodAB methodAC methodBA methodBB methodCA'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-DolphinTest subclass: #PackageManagerTest
+Core.Tests.DolphinTest subclass: #PackageManagerTest
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-DolphinTest subclass: #PublishedAspectInspectorTest
+Core.Tests.DolphinTest subclass: #PublishedAspectInspectorTest
 	instanceVariableNames: 'inspector treePresenter displayPresenter'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-DolphinTest subclass: #ResourceBrowserTest
+Core.Tests.DolphinTest subclass: #ResourceBrowserTest
 	instanceVariableNames: 'resourceBrowser testClass'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-DolphinTest subclass: #SmalltalkStylerTest
+Core.Tests.DolphinTest subclass: #SmalltalkStylerTest
 	instanceVariableNames: 'mock scintilla'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-DolphinTest subclass: #SmalltalkSystemShellTest
+Core.Tests.DolphinTest subclass: #SmalltalkSystemShellTest
 	instanceVariableNames: 'systemShell'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-DolphinTest subclass: #ViewComposerTest
+Core.Tests.DolphinTest subclass: #ViewComposerTest
 	instanceVariableNames: 'vc sampleClass'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 ClassBrowserAbstractTest subclass: #ClassBrowserTest
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 ClassBrowserAbstractTest subclass: #SystemBrowserTest
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-FolderTest subclass: #PackageFolderTest
+UI.Tests.FolderTest subclass: #PackageFolderTest
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-PresenterTest subclass: #MethodWorkspaceTest
+UI.Tests.PresenterTest subclass: #MethodWorkspaceTest
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-SelectableItemsTest subclass: #ClassSelectorTest
+UI.Tests.SelectableItemsTest subclass: #ClassSelectorTest
 	instanceVariableNames: 'packageA packageB packageC dolphinTestA dolphinTestB dolphinTestC dolphinTestD dolphinTestE dolphinTestF dolphinTestG dolphinTestH dolphinTestI'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-SelectableItemsTest subclass: #PackageSelectorTest
+UI.Tests.SelectableItemsTest subclass: #PackageSelectorTest
 	instanceVariableNames: 'packageA'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 ClassSelectorTest subclass: #ClassHierarchySelectorTest
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 ClassSelectorTest subclass: #ClassListSelectorTest
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 ClassSelectorTest subclass: #PackagedClassSelectorTest
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 

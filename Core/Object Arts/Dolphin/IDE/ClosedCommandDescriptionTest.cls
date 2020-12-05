@@ -1,12 +1,12 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-TestCase subclass: #ClosedCommandDescriptionTest
+XProgramming.SUnit.TestCase subclass: #ClosedCommandDescriptionTest
 	instanceVariableNames: 'dialog'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ClosedCommandDescriptionTest guid: (GUID fromString: '{c860325b-fae5-47a0-a5d0-711d8ac4c509}')!
+ClosedCommandDescriptionTest guid: (Core.GUID fromString: '{c860325b-fae5-47a0-a5d0-711d8ac4c509}')!
 ClosedCommandDescriptionTest comment: ''!
 !ClosedCommandDescriptionTest categoriesForClass!Unclassified! !
 !ClosedCommandDescriptionTest methodsFor!

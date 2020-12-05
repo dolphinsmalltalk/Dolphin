@@ -1,12 +1,12 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-DolphinTest subclass: #PackageBrowserShellTest
+Core.Tests.DolphinTest subclass: #PackageBrowserShellTest
 	instanceVariableNames: 'packageA packageB packageC dolphinTestA dolphinTestB dolphinTestC shell cardsPresenter classesPresenter methodsPresenter variablesPresenter resourcesPresenter dependencyPresenters methodAA methodAB methodAC methodBA methodBB methodCA'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-PackageBrowserShellTest guid: (GUID fromString: '{c635384e-76c1-4b7d-b532-6a2ec1916dbe}')!
+PackageBrowserShellTest guid: (Core.GUID fromString: '{c635384e-76c1-4b7d-b532-6a2ec1916dbe}')!
 PackageBrowserShellTest comment: ''!
 !PackageBrowserShellTest categoriesForClass!Unclassified! !
 !PackageBrowserShellTest methodsFor!
@@ -179,7 +179,7 @@ renameClass
 	self assert: methodAB methodClass identicalTo: testA value.
 	self assert: methodCA isLoose.
 	self assert: methodCA methodClass identicalTo: dolphinTestC.
-	ClassBuilder renameClass: testA value to: testA2.
+	ClassBuilder renameClass: testA value to: testA2 asSymbol.
 	self assert: methodAB isLoose.
 	self assert: methodAB methodClass identicalTo: testA2 value.
 	self assert: methodAA isLoose not.
@@ -187,7 +187,7 @@ renameClass
 	self assert: methodCA isLoose.
 	self assert: methodCA methodClass identicalTo: dolphinTestC.
 	self assertCurrentCardInSync.
-	ClassBuilder renameClass: testA2 value to: testA.
+	ClassBuilder renameClass: testA2 value to: testA asSymbol.
 	self assert: methodAB isLoose.
 	self assert: methodAB methodClass identicalTo: testA value.
 	self assert: methodAA isLoose not.
@@ -223,9 +223,9 @@ resourceManager
 setUp
 	super setUp.
 	self assertIsNil: Package manager defaultPackage.
-	packageA := DolphinTestPackages current a.
-	packageB := DolphinTestPackages current b.
-	packageC := DolphinTestPackages current c.
+	packageA := Core.Tests.DolphinTestPackages current a.
+	packageB := Core.Tests.DolphinTestPackages current b.
+	packageC := Core.Tests.DolphinTestPackages current c.
 	{packageA. packageB. packageC} do: [:each | self assert: each variableNames isEmpty].
 	shell := PackageBrowserShell create showShell.
 	cardsPresenter := shell instVarAt: (shell class indexOfInstVar: 'cardsPresenter').
@@ -326,47 +326,47 @@ testGlobals
 
 	"Add to displayed package"
 	packageA addVariableNamed: #TestGlobalA.
-	self assert: variablesPresenter model asArray equals: {#TestGlobalA asQualifiedReference}.
+	self assert: variablesPresenter model asArray equals: {(Smalltalk associationAt: #TestGlobalA) fullyQualifiedReference}.
 
 	"Add to displayed package"
 	packageC addVariableNamed: #TestGlobalC.
 	self assert: (variablesPresenter model asArray
-				noDifference: {#TestGlobalA asQualifiedReference. #TestGlobalC asQualifiedReference}).
+				noDifference: {(Smalltalk associationAt: #TestGlobalA) fullyQualifiedReference. (Smalltalk associationAt: #TestGlobalC) fullyQualifiedReference}).
 
 	"Add to non-displayed package"
 	packageB addVariableNamed: #TestGlobalB.
 	self assert: (variablesPresenter model asArray
-				noDifference: {#TestGlobalA asQualifiedReference. #TestGlobalC asQualifiedReference}).
+				noDifference: {(Smalltalk associationAt: #TestGlobalA) fullyQualifiedReference. (Smalltalk associationAt: #TestGlobalC) fullyQualifiedReference}).
 
 	"Move to non-displayed package"
 	packageB addVariableNamed: #TestGlobalA.
-	self assert: (variablesPresenter model asArray noDifference: {#TestGlobalC asQualifiedReference}).
+	self assert: (variablesPresenter model asArray noDifference: {(Smalltalk associationAt: #TestGlobalC) fullyQualifiedReference}).
 
 	"Move from non-displayed package"
 	packageA addVariableNamed: #TestGlobalB.
 	self assert: (variablesPresenter model asArray
-				noDifference: {#TestGlobalB asQualifiedReference. #TestGlobalC asQualifiedReference}).
+				noDifference: {(Smalltalk associationAt: #TestGlobalB) fullyQualifiedReference. (Smalltalk associationAt: #TestGlobalC) fullyQualifiedReference}).
 
 	"Move between displayed packages"
 	packageA addVariableNamed: #TestGlobalC.
 	self assert: (variablesPresenter model asArray
-				noDifference: {#TestGlobalB asQualifiedReference. #TestGlobalC asQualifiedReference}).
+				noDifference: {(Smalltalk associationAt: #TestGlobalB) fullyQualifiedReference. (Smalltalk associationAt: #TestGlobalC) fullyQualifiedReference}).
 
 	"Remove from displayed package"
 	Smalltalk removeKey: #TestGlobalB.
-	self assert: (variablesPresenter model asArray noDifference: {#TestGlobalC asQualifiedReference}).
+	self assert: (variablesPresenter model asArray noDifference: {(Smalltalk associationAt: #TestGlobalC) fullyQualifiedReference}).
 
 	"Rename in displayed package"
-	Smalltalk renameGlobal: #TestGlobalC to: #TestGlobalD.
-	self assert: (variablesPresenter model asArray noDifference: {#TestGlobalD asQualifiedReference}).
+	Smalltalk renameVariable: #TestGlobalC to: #TestGlobalD.
+	self assert: (variablesPresenter model asArray noDifference: {(Smalltalk associationAt: #TestGlobalD) fullyQualifiedReference}).
 
 	"Rename in non-displayed package"
-	Smalltalk renameGlobal: #TestGlobalA to: #TestGlobalC.
-	self assert: (variablesPresenter model asArray noDifference: {#TestGlobalD asQualifiedReference}).
+	Smalltalk renameVariable: #TestGlobalA to: #TestGlobalC.
+	self assert: (variablesPresenter model asArray noDifference: {(Smalltalk associationAt: #TestGlobalD) fullyQualifiedReference}).
 
 	"Remove from non-displayed package"
 	Smalltalk removeKey: #TestGlobalC.
-	self assert: (variablesPresenter model asArray noDifference: {#TestGlobalD asQualifiedReference}).
+	self assert: (variablesPresenter model asArray noDifference: {(Smalltalk associationAt: #TestGlobalD) fullyQualifiedReference}).
 
 	"Move to unpackaged"
 	packageA removeVariableNamed: #TestGlobalD.
@@ -521,6 +521,6 @@ testRepackageMethods
 !PackageBrowserShellTest class methodsFor!
 
 resources
-	^{DolphinTestPackages}! !
+	^{Core.Tests.DolphinTestPackages}! !
 !PackageBrowserShellTest class categoriesFor: #resources!public! !
 

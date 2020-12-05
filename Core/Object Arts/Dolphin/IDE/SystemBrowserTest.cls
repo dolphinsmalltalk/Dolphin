@@ -3,10 +3,10 @@
 ClassBrowserAbstractTest subclass: #SystemBrowserTest
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-SystemBrowserTest guid: (GUID fromString: '{2e020526-2bd1-4fb6-b539-9c2456468a2c}')!
+SystemBrowserTest guid: (Core.GUID fromString: '{2e020526-2bd1-4fb6-b539-9c2456468a2c}')!
 SystemBrowserTest comment: ''!
 !SystemBrowserTest categoriesForClass!Unclassified! !
 !SystemBrowserTest methodsFor!

@@ -1,12 +1,12 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-DolphinTest subclass: #CodeMentorTest
+Core.Tests.DolphinTest subclass: #CodeMentorTest
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-CodeMentorTest guid: (GUID fromString: '{57ac07f6-6b32-42d2-a0cd-7488ae11ec92}')!
+CodeMentorTest guid: (Core.GUID fromString: '{57ac07f6-6b32-42d2-a0cd-7488ae11ec92}')!
 CodeMentorTest comment: ''!
 !CodeMentorTest categoriesForClass!Unclassified! !
 !CodeMentorTest methodsFor!

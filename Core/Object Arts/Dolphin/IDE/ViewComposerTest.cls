@@ -1,12 +1,12 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-DolphinTest subclass: #ViewComposerTest
+Core.Tests.DolphinTest subclass: #ViewComposerTest
 	instanceVariableNames: 'vc sampleClass'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ViewComposerTest guid: (GUID fromString: '{84c0e504-bdda-4d87-92dc-53b89f80f634}')!
+ViewComposerTest guid: (Core.GUID fromString: '{84c0e504-bdda-4d87-92dc-53b89f80f634}')!
 ViewComposerTest comment: ''!
 !ViewComposerTest categoriesForClass!Unclassified! !
 !ViewComposerTest methodsFor!
@@ -86,7 +86,7 @@ testBasicEdit
 	"Test open a default view that is reasonably complex"
 	rid := ResourceIdentifier class: ViewComposer.
 	self openTestSubjectOn: rid.
-	self assert: vc caption equals: rid displayString, '(ShellView)'.
+	self assert: vc caption equals: rid displayString, '(UI.ShellView)'.
 	self assert: vc composingView class identicalTo: ShellView.
 	self assert: vc primarySelection equals: vc composingView.
 	"Test saving"

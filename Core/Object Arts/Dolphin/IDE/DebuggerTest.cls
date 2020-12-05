@@ -1,12 +1,12 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-DolphinTest subclass: #DebuggerTest
+Core.Tests.DolphinTest subclass: #DebuggerTest
 	instanceVariableNames: 'process savedShowWalkbacks savedView'
 	classVariableNames: ''
-	poolDictionaries: 'OpcodePool'
+	imports: #(#{Kernel.OpcodePool})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-DebuggerTest guid: (GUID fromString: '{29cfd485-34b1-41d6-a030-30d1fe5a9edd}')!
+DebuggerTest guid: (Core.GUID fromString: '{29cfd485-34b1-41d6-a030-30d1fe5a9edd}')!
 DebuggerTest comment: ''!
 !DebuggerTest categoriesForClass!Unclassified! !
 !DebuggerTest methodsFor!

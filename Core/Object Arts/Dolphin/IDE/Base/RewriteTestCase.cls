@@ -1,18 +1,18 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-TestCase subclass: #RewriteTestCase
+XProgramming.SUnit.TestCase subclass: #RewriteTestCase
 	instanceVariableNames: 'env'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-RewriteTestCase guid: (GUID fromString: '{6a77c1e6-2f15-4abc-9442-261f617e5ba1}')!
+RewriteTestCase guid: (Core.GUID fromString: '{6a77c1e6-2f15-4abc-9442-261f617e5ba1}')!
 RewriteTestCase comment: ''!
 !RewriteTestCase categoriesForClass!Unclassified! !
 !RewriteTestCase methodsFor!
 
 setUp
-	env := BrowserEnvironment new.
+	env := Refactory.Browser.BrowserEnvironment new.
 	env := env forClasses: {Animal. Animal class}.
 	env := env referencesTo: #notify:caption:!
 
@@ -26,22 +26,22 @@ testFindReplace
 	| find replace rule |
 	find := '``@receiver notify: ``@arg caption: ``@arg1 '.
 	replace := 'self notify: ``@arg caption: ``@arg1'.
-	rule := ParseTreeLintRule
+	rule := Refactory.Browser.ParseTreeLintRule
 				createParseTreeRule: {find. replace}
 				method: false
 				name: 'Find'.
-	SmalllintChecker runRule: rule onEnvironment: env.
+	Refactory.Browser.SmalllintChecker runRule: rule onEnvironment: env.
 	self deny: rule isEmpty!
 
 testTransformationRule
 	| find replace rule |
 	find := '``@receiver notify: ``@arg caption: ``@arg1 '.
 	replace := 'self notify: ``@arg caption: ``@arg1'.
-	rule := TransformationRule
+	rule := Refactory.Browser.TransformationRule
 				rewrite: {{find. replace}}
 				methods: false
 				name: 'Transform'.
-	SmalllintChecker runRule: rule onEnvironment: env.
+	Refactory.Browser.SmalllintChecker runRule: rule onEnvironment: env.
 	self deny: rule changes changes isEmpty! !
 !RewriteTestCase categoriesFor: #setUp!public!unit tests! !
 !RewriteTestCase categoriesFor: #testEnvironment!public!unit tests! !

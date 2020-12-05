@@ -1,17 +1,17 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-DolphinTest subclass: #VMTest
+Core.Tests.DolphinTest subclass: #'Kernel.Tests.VMTest'
 	instanceVariableNames: 'expiryHandler'
 	classVariableNames: ''
-	poolDictionaries: 'CRTConstants'
+	imports: #(#{OS.CRTConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-VMTest guid: (GUID fromString: '{d03f75a2-8c1c-4559-8177-eff37d37a6e8}')!
-VMTest comment: 'Test the VM primitives and other VM related operations.
+Kernel.Tests.VMTest guid: (Core.GUID fromString: '{d03f75a2-8c1c-4559-8177-eff37d37a6e8}')!
+Kernel.Tests.VMTest comment: 'Test the VM primitives and other VM related operations.
 
 SUnitBrowser openOnTestCase: self'!
-!VMTest categoriesForClass!Unclassified! !
-!VMTest methodsFor!
+!Kernel.Tests.VMTest categoriesForClass!Unclassified! !
+!Kernel.Tests.VMTest methodsFor!
 
 assertImmutableAtPut: anObject
 	| value |
@@ -100,13 +100,14 @@ earlyTermination: aBoolean
 	list := proc suspendingList.
 	state := proc state.
 	state == #dead
-		ifTrue: [self assert: a == 0 | (a == 3) description: 'Unexpected state ', aCopy printString]
+		ifTrue: [self assert: a == 0 | (a == 3) description: 'Unexpected state ' , aCopy printString]
 		ifFalse: 
 			[| count |
 			"On occasion NT will put Dolphin to sleep for 50mS+ and consequentlty the Process will have finished up anyway"
 
 			"The Process will not be able to terminate until the overlapped call completes"
-			self assert: (list == Processor pendingTerminations or: [list == proc threadSync]) description: 'Terminated call waiting on unexpected list ', list printString.
+			self assert: (list == Processor pendingTerminations or: [list == proc threadSync])
+				description: 'Terminated call waiting on unexpected list ' , list printString.
 			"a will still be run, because the VM will not reschedule the process to run the curtailment block until the overlapped
 		call can be terminated."
 			self assert: aCopy identicalTo: 2.
@@ -123,8 +124,9 @@ earlyTermination: aBoolean
 			[proc isTerminated not and: [count < 50]] whileTrue: 
 					[Processor sleep: 1 milliseconds.
 					count := count + 1].
-			self assert: proc isTerminated description: 'Process not terminated: ', proc printString.
-			self assert: Processor pendingTerminations isEmpty description: 'There are still pending terminations']!
+			self assert: proc isTerminated description: 'Process not terminated: ' , proc printString.
+			self assert: Processor pendingTerminations isEmpty
+				description: 'There are still pending terminations']!
 
 elementsExpired: anInteger of: aMourningWeakObject
 	expiryHandler value: anInteger value: aMourningWeakObject!
@@ -375,7 +377,7 @@ suspendAndTerminate
 	"2) Ditto, but resumed and so allowed to complete"!
 
 testAllReferences
-	| object refs weak |
+	| object refs |
 	object := Array new: 1.
 	refs := object allReferences.
 	self assert: refs equals: {Processor activeProcess}.
@@ -459,7 +461,7 @@ testDwordAtOffsetPut
 			self assert: bytes equals: (ByteArray new: each - 4) , #[16rFF 16rFF 16rFF 16rFF].
 			bytes dwordAtOffset: each - 4 put: #[16rAA 16rBB 16rCC 16rDD].
 			self assert: (bytes dwordAtOffset: each - 4) equals: 16rDDCCBBAA.
-			dword := DWORD fromInteger: 16r11223344.
+			dword := External.DWORD fromInteger: 16r11223344.
 			bytes dwordAtOffset: each - 4 put: dword.
 			self assert: (bytes dwordAtOffset: each - 4) equals: 16r11223344.
 			dword isImmutable: true.
@@ -478,23 +480,24 @@ testEvaluationOrder
 testExtCallArgBstr
 	"Note that BSTR is one of the FFI parameter types that may cause the VM to perform a type conversion that allocates memory, and as such cannot be used safely in overlapped calls unless the calling code is careful to perform all conversions to BSTR from Smalltalk strings in advance with #asBSTR"
 
-	| beers |
+	| beers olelib |
+	olelib := Smalltalk.OLEAutLibrary default.
 	{''. 'a'. '£2'. 'a' , (String with: Character null) , 'b'} do: 
 			[:each |
 			| subject expected actual |
 			expected := each asUtf16String size.
-			actual := OLEAutLibrary default sysStringLen: each.
+			actual := olelib sysStringLen: each.
 			self assert: actual equals: expected.
 			subject := each asUtf8String.
-			actual := OLEAutLibrary default sysStringLen: subject.
+			actual := olelib sysStringLen: subject.
 			self assert: actual equals: expected.
 			subject := each asUtf16String.
-			actual := OLEAutLibrary default sysStringLen: subject.
+			actual := olelib sysStringLen: subject.
 			self assert: actual equals: expected].
 	"Like most string length functions, SysStringLen reports the number of code units, not the number of characters"
 	beers := Utf8String fromByteArray: #[16rF0 16r9F 16r8D 16rBB].
-	self assert: (OLEAutLibrary default sysStringLen: beers) equals: 2.
-	self assert: (OLEAutLibrary default sysStringLen: beers asUtf16String) equals: 2!
+	self assert: (olelib sysStringLen: beers) equals: 2.
+	self assert: (olelib sysStringLen: beers asUtf16String) equals: 2!
 
 testExtCallArgLppvoid
 	"Regression test for https://github.com/dolphinsmalltalk/Dolphin/issues/940
@@ -628,7 +631,7 @@ testFPFaultInPrimitive
 	subsequently invoked method, even when interrupts are off."
 
 	| mask receiver |
-	mask := Float exceptionMask: (_MCW_EM maskClear: CRTConstants._EM_OVERFLOW).
+	mask := Float exceptionMask: (_MCW_EM maskClear: _EM_OVERFLOW).
 	receiver := 2.0.
 	
 	[self
@@ -668,14 +671,14 @@ testFPStatus
 	[Float exceptionMask: _MCW_EM.
 	mainStatus1 := Float statusFlags.
 	self assert: mainStatus1 equals: 0.
-	self assert: (status1 anyMask: CRTConstants._SW_OVERFLOW).
+	self assert: (status1 anyMask: _SW_OVERFLOW).
 	value := 100.0 / 0.
 	mainStatus1 := Float statusFlags.
 	sem2 signal.
 	sem1 wait.
 	mainStatus2 := Float statusFlags]
 			ensure: [Float exceptionMask: oldMask].
-	self assert: (mainStatus1 anyMask: CRTConstants._SW_ZERODIVIDE).
+	self assert: (mainStatus1 anyMask: _SW_ZERODIVIDE).
 	self assert: mainStatus2 equals: mainStatus1.
 	self assert: status2 equals: status1.
 	self assert: value isInfinite!
@@ -683,7 +686,7 @@ testFPStatus
 testGPFTrap
 
 	| nullPointer |
-	nullPointer := ExternalAddress new.
+	nullPointer := External.Address new.
 	self
 		should: 
 			[Processor enableAsyncEvents: false.
@@ -697,7 +700,7 @@ testGPFTrap
 				address: 0) and: 
 						[self
 							isFault: gpf
-							raisedIn: ExternalAddress >> #dwordAtOffset:
+							raisedIn: External.Address >> #dwordAtOffset:
 							receiver: nullPointer]].
 	self
 		should: [nullPointer dwordAtOffset: 0 put: 1]
@@ -710,7 +713,7 @@ testGPFTrap
 				address: 0) and: 
 						[self
 							isFault: gpf
-							raisedIn: ExternalAddress >> #dwordAtOffset:put:
+							raisedIn: External.Address >> #dwordAtOffset:put:
 							receiver: nullPointer]]!
 
 testImmutableAtPut
@@ -829,14 +832,24 @@ testImmutableStringCompare
 	self assert: s1 equals: s2!
 
 testImmutableWriteAccessors
-	| class inst |
-	class := CompilerTestClasses current testClass.
-	inst := (class new)
-				isImmutable: true;
-				yourself.
+	| inst class max vars |
+	max := 33.
+	class := (ClassBuilder forAnonymousSubclassOf: Object)
+				instanceVariables: ((1 to: max) collect: [:i | 'iv' , i printString]);
+				createNewClass.
+	vars := class instVarNames.
+	vars do: [:each | class basicCompile: each , ': arg ' , each , ' := arg'].
+	inst := class new.
+	vars keysAndValuesDo: [:i :each | inst perform: (each copyWith: $:) asSymbol with: i].
+	vars keysAndValuesDo: [:i :each | self assert: (inst instVarAt: i) equals: i].
+	inst isImmutable: true.
 	"Note that the primitive write accessor will fail and fall back on executing the method bytecodes, which will fail sending #errorInstVarAt:put:"
-	class instVarNames 
-		do: [:each | self should: [inst perform: (each , ':') asSymbol with: each] raise: Processor constWriteSignal]!
+	vars do: 
+			[:each |
+			self should: [inst perform: (each copyWith: $:) asSymbol with: each]
+				raise: Processor constWriteSignal].
+	"The values should not have been changed"
+	vars keysAndValuesDo: [:i :each | self assert: (inst instVarAt: i) equals: i]!
 
 testIndirectByteAtOffsetPrimitives
 	| nullPointer b p |
@@ -869,7 +882,7 @@ testIndirectByteAtOffsetPrimitives
 				address: 0) and: 
 						[self
 							isFault: ex
-							raisedIn: ExternalAddress >> #byteAtOffset:put:
+							raisedIn: External.Address >> #byteAtOffset:put:
 							receiver: nullPointer]].
 	self
 		should: 
@@ -884,7 +897,7 @@ testIndirectByteAtOffsetPrimitives
 				address: 0) and: 
 						[self
 							isFault: gpf
-							raisedIn: ExternalAddress >> #byteAtOffset:
+							raisedIn: External.Address >> #byteAtOffset:
 							receiver: nullPointer]]!
 
 testIndirectDwordAtOffsetPrimitives
@@ -922,7 +935,7 @@ testIndirectDwordAtOffsetPrimitives
 						address: 0) and: 
 								[self
 									isFault: ex
-									raisedIn: ExternalAddress >> #dwordAtOffset:put:
+									raisedIn: External.Address >> #dwordAtOffset:put:
 									receiver: nullPointer]]].
 	self
 		should: 
@@ -937,7 +950,7 @@ testIndirectDwordAtOffsetPrimitives
 				address: 0) and: 
 						[self
 							isFault: gpf
-							raisedIn: ExternalAddress >> #dwordAtOffset:
+							raisedIn: External.Address >> #dwordAtOffset:
 							receiver: nullPointer]]!
 
 testIndirectSdwordAtOffsetPrimitives
@@ -976,7 +989,7 @@ testIndirectSdwordAtOffsetPrimitives
 						address: 0) and: 
 								[self
 									isFault: ex
-									raisedIn: ExternalAddress >> #sdwordAtOffset:put:
+									raisedIn: External.Address >> #sdwordAtOffset:put:
 									receiver: nullPointer]]].
 	self
 		should: 
@@ -991,7 +1004,7 @@ testIndirectSdwordAtOffsetPrimitives
 				address: 0) and: 
 						[self
 							isFault: gpf
-							raisedIn: ExternalAddress >> #sdwordAtOffset:
+							raisedIn: External.Address >> #sdwordAtOffset:
 							receiver: nullPointer]]!
 
 testIndirectSwordAtOffsetPrimitives
@@ -1030,7 +1043,7 @@ testIndirectSwordAtOffsetPrimitives
 				address: 0) and: 
 						[self
 							isFault: ex
-							raisedIn: ExternalAddress >> #swordAtOffset:put:
+							raisedIn: External.Address >> #swordAtOffset:put:
 							receiver: nullPointer]].
 	self
 		should: 
@@ -1045,7 +1058,7 @@ testIndirectSwordAtOffsetPrimitives
 				address: 0) and: 
 						[self
 							isFault: gpf
-							raisedIn: ExternalAddress >> #swordAtOffset:
+							raisedIn: External.Address >> #swordAtOffset:
 							receiver: nullPointer]]!
 
 testIndirectWordAtOffsetPrimitives
@@ -1061,7 +1074,10 @@ testIndirectWordAtOffsetPrimitives
 			self assert: (b wordAtOffset: 4) equals: 0].
 
 	"Error if arg is negative or requires more that 16-bits to represent as an unsigned int"
-	#(-1 16r10000 -16r8001) do: [:each | self should: [p wordAtOffset: 0 put: each] 
+	#(-1 16r10000 -16r8001) do: 
+			[:each |
+			self
+				should: [p wordAtOffset: 0 put: each]
 				raise: HRESULTError
 				matching: [:ex | ex hresult = ##(HRESULT fromPrimitiveFailureCode: _PrimitiveFailureCode.IntegerOutOfRange)]].
 
@@ -1081,7 +1097,7 @@ testIndirectWordAtOffsetPrimitives
 				address: 0) and: 
 						[self
 							isFault: ex
-							raisedIn: ExternalAddress >> #wordAtOffset:put:
+							raisedIn: External.Address >> #wordAtOffset:put:
 							receiver: nullPointer]].
 	self
 		should: 
@@ -1096,7 +1112,7 @@ testIndirectWordAtOffsetPrimitives
 				address: 0) and: 
 						[self
 							isFault: gpf
-							raisedIn: ExternalAddress >> #wordAtOffset:
+							raisedIn: External.Address >> #wordAtOffset:
 							receiver: nullPointer]]!
 
 testIntDivideByZero
@@ -1155,8 +1171,8 @@ testMustBeBoolean
 	self should: [[1] whileTrue: [1 + 2]] raise: Error.
 	self should: [[1] whileFalse] raise: Error.
 	self should: [[1] whileFalse: [1 + 2]] raise: Error.
-	trueClass := MustBeBooleanTestClasses current trueClass.
-	falseClass := MustBeBooleanTestClasses current falseClass.
+	trueClass := Core.Tests.MustBeBooleanTestClasses current trueClass.
+	falseClass := Core.Tests.MustBeBooleanTestClasses current falseClass.
 	pseudoTrue := trueClass new.
 	pseudoFalse := falseClass new.
 	self assert: (pseudoTrue and: [true]).
@@ -1299,7 +1315,7 @@ testPrimitiveBitShift
 	{'s'. 1 / 2. 1.0. SmallInteger maximum + 1. SmallInteger minimum - 1}
 		do: [:each | self assert: (method value: 1 withArguments: {each}) equals: 'InvalidParameter1'].
 	"At present this primitive does not handle LargeInteger args, unlike some other integer arithmetic primitives"
-	cases := SmallIntegerTest bitShiftTestCases.
+	cases := Core.Tests.SmallIntegerTest bitShiftTestCases.
 	overflowCases := cases select: [:each | each last class == LargeInteger].
 	self verifyBinaryPrimitive: method forCases: (cases difference: overflowCases).
 	overflowCases
@@ -1357,16 +1373,16 @@ testPrimitiveBytesEqual
 
 testPrimitiveBytesIsNull
 	| method subject |
-	method := self createPrimitiveMethodLike: ExternalIntegerBytes >> #isNull.
-	subject := DWORDBytes new.
+	method := self createPrimitiveMethodLike: External.IntegerBytes >> #isNull.
+	subject := External.DWORDBytes new.
 	self assert: (method value: subject withArguments: #()).
 	subject isImmutable: true.
 	self assert: (method value: subject withArguments: #()).
-	subject := DWORDBytes fromInteger: 1.
+	subject := External.DWORDBytes fromInteger: 1.
 	self deny: (method value: subject withArguments: #()).
-	subject := UIntPtrBytes newFixed: 8.
+	subject := External.UIntPtrBytes newFixed: 8.
 	self assert: (method value: subject withArguments: #()) equals: 'ObjectTypeMismatch'.
-	{ExternalAddress. ExternalHandle} do: 
+	{External.Address. External.Handle} do: 
 			[:each |
 			self assert: (each fromInteger: 1) isNull not.
 			self assert: (each fromInteger: -1) isNull not.
@@ -1378,7 +1394,7 @@ testPrimitiveBytesIsNull
 		do: 
 			[:each |
 			| bytes |
-			bytes := DWORDBytes newFixed: each.
+			bytes := External.DWORDBytes newFixed: each.
 			self should: [bytes isNull] raise: BoundsError].
 
 	"The primitive will fail, but the backup code will work"
@@ -1386,7 +1402,7 @@ testPrimitiveBytesIsNull
 		do: 
 			[:each |
 			| bytes |
-			bytes := DWORDBytes newFixed: each.
+			bytes := External.DWORDBytes newFixed: each.
 			self assert: bytes isNull]!
 
 testPrimitiveChangeBehavior
@@ -1400,9 +1416,9 @@ testPrimitiveChangeBehavior
 		{obj. Object. obj}.
 		{'a' -> 'b'. Array. #('a' 'b')}.
 		{{'a'. 'b'}. Association. 'a' -> 'b'}.
-		{10 @ 20 -> (100 @ 200). Rectangle. 10 @ 20 corner: 100 @ 200}.
-		{ExternalHandle fromInteger: 1234. DWORDBytes. DWORDBytes fromInteger: 1234}.
-		{Object guid. CLSID. CLSID fromString: '{87b4c451-026e-11d3-9fd7-00a0cc3e4a32}'}.
+		{10 @ 20 -> (100 @ 200). Graphics.Rectangle. 10 @ 20 corner: 100 @ 200}.
+		{External.Handle fromInteger: 1234. DWORDBytes. DWORDBytes fromInteger: 1234}.
+		{Object guid. Smalltalk.CLSID. Smalltalk.CLSID fromString: '{87b4c451-026e-11d3-9fd7-00a0cc3e4a32}'}.
 		{{1. 0}. OrderedCollection. OrderedCollection new}.
 		{{1. 2. 'a'. 'b'}. OrderedCollection. OrderedCollection with: 'a' with: 'b'}.
 		{OrderedCollection with: 'a' with: 'b'. Array. #(1 2 'a' 'b')}.
@@ -1429,7 +1445,7 @@ testPrimitiveChangeBehavior
 		{{1}. Association}.
 		{ByteArray new. Array}.
 		{{}. ByteArray}.
-		{ExternalAddress new. ByteArray}.
+		{External.Address new. ByteArray}.
 		{{1}. OrderedCollection}.
 		{AnsiString with: $a. Utf8String}} do: 
 				[:each |
@@ -1524,7 +1540,7 @@ testPrimitiveDiv
 		do: [:each | self assert: (method value: 1 withArguments: {each}) equals: 'InvalidParameter1'].
 	"At present this primitive does not handle LargeInteger args, unlike some other integer arithmetic primitives"
 	self verifyBinaryPrimitive: method
-		forCases: (SmallIntegerTest integerDivideTestCases reject: [:each | each second isKindOf: Float])!
+		forCases: (Core.Tests.SmallIntegerTest integerDivideTestCases reject: [:each | each second isKindOf: Float])!
 
 testPrimitiveDivide
 	| method |
@@ -1752,7 +1768,7 @@ testPrimitiveHighBit
 	| method |
 	method := self createPrimitiveMethodLike: SmallInteger >> #highBit.
 	{0. 0. 1. 1. 2. 2. SmallInteger maximum. VMConstants.IntPtrBits - 2. -1. 'IntegerOutOfRange'. SmallInteger minimum. 'IntegerOutOfRange'}
-		pairsDo: [:each :expected | self assert: (method value: each withArguments: #()) equals: expected]!
+	pairsDo: [:each :expected | self assert: (method value: each withArguments: #()) equals: expected]!
 
 testPrimitiveIdentical
 	| method |
@@ -2097,11 +2113,11 @@ testPrimitiveMakePoint
 			[:i |
 			method := self
 						createPrimitiveMethod: primitiveIndex
-						in: Point3D class
+						in: Graphics.Point3D class
 						argCount: i.
-			expected := Point3D basicNew.
+			expected := Graphics.Point3D basicNew.
 			1 to: i do: [:j | expected instVarAt: j put: j].
-			result := method value: Point3D withArguments: (1 to: i) asArray.
+			result := method value: Graphics.Point3D withArguments: (1 to: i) asArray.
 			self assert: result equals: expected].
 	"Indexable type with fixed fields too, e.g. Context"
 	0 to: 4
@@ -2131,7 +2147,7 @@ testPrimitiveMod
 		do: [:each | self assert: (method value: 1 withArguments: {each}) equals: 'InvalidParameter1'].
 
 	"SmallInteger arguments - overflow into a LargeInteger result is not possible"
-	cases := SmallIntegerTest moduloTestCases.
+	cases := Core.Tests.SmallIntegerTest moduloTestCases.
 	self verifyBinaryPrimitive: method
 		forCases: (cases select: [:each | each second class == SmallInteger]).
 	(cases reject: [:each | each second class == SmallInteger])
@@ -2176,7 +2192,7 @@ testPrimitiveNewFixedFailure
 	"Only byte objects can be pinned"
 	self assert: (method value: Array withArguments: #(1)) equals: 'ObjectTypeMismatch'.
 	"ExternalIntegerBytes is abstract"
-	self assert: (method value: ExternalIntegerBytes withArguments: #(1)) equals: 'NonInstantiable'!
+	self assert: (method value: External.IntegerBytes withArguments: #(1)) equals: 'NonInstantiable'!
 
 testPrimitiveNewInitializedFailure
 	| method |
@@ -2186,7 +2202,7 @@ testPrimitiveNewInitializedFailure
 				argCount: 3.
 	"Only valid for pointer classes"
 	self assert: (method value: Array withArguments: #(1 2 3)) equals: #(1 2 3).
-	self assert: (method value: Point withArguments: #(1 2 3)) equals: 'WrongNumberOfArgs'.
+	self assert: (method value: Graphics.Point withArguments: #(1 2 3)) equals: 'WrongNumberOfArgs'.
 	self assert: (method value: MessageSendAbstract withArguments: #(1 2 3)) equals: 'NonInstantiable'.
 	self assert: (method value: ByteArray withArguments: #(1 2 3)) equals: 'ObjectTypeMismatch'!
 
@@ -2336,7 +2352,7 @@ testPrimitiveQuo
 	It accepts SmallInteger and LargeInteger arguments, and fails for everything else"
 	{'s'. 1 / 2. 1.23 }
 		do: [:each | self assert: (method value: 1 withArguments: {each}) equals: 'InvalidParameter1'].
-	self verifyBinaryPrimitive: method forCases: (SmallIntegerTest quoTestCases reject: [:each | each second isKindOf: Float])!
+	self verifyBinaryPrimitive: method forCases: (Core.Tests.SmallIntegerTest quoTestCases reject: [:each | each second isKindOf: Float])!
 
 testPrimitiveReplaceElements
 	self exerciseReplaceElementsOf: #($a $b $c $d $e) with: #(1 2 3 4 5 6).
@@ -2782,8 +2798,8 @@ testPrimitiveStringNextIndexOfFromTo
 
 testPrimitiveStructIsNull
 	| method subject |
-	method := self createPrimitiveMethodLike: ExternalStructure >> #isNull.
-	subject := DWORD new.
+	method := self createPrimitiveMethodLike: External.Structure >> #isNull.
+	subject := External.DWORD new.
 	self deny: (method value: subject withArguments: #()).
 	subject bytes isImmutable: true.
 	self deny: (method value: subject withArguments: #()).
@@ -2791,13 +2807,13 @@ testPrimitiveStructIsNull
 	self assert: (method value: subject withArguments: #()).
 	subject bytes: Object new.
 	self assert: (method value: subject withArguments: #()) equals: 'ObjectTypeMismatch'.
-	subject bytes: ExternalHandle new.
+	subject bytes: External.Handle new.
 	self deny: (method value: subject withArguments: #()).
-	subject bytes: ExternalAddress new.
+	subject bytes: External.Address new.
 	self assert: (method value: subject withArguments: #()).
-	subject := DWORD fromInteger: 1.
+	subject := External.DWORD fromInteger: 1.
 	self deny: (method value: subject withArguments: #()).
-	subject := DWORD fromAddress: 1.
+	subject := External.DWORD fromAddress: 1.
 	self deny: (method value: subject withArguments: #())!
 
 testPrimitiveSubtract
@@ -2891,6 +2907,47 @@ testQwordAtOffset
 	self assert: actual byteSize equals: 12.
 	self assert: actual equals: 16rFFFFFFFFFFFFFFFF!
 
+testRegistry
+	| interruptHotKey nonClasses imageVersionMinor imageVersionMajor |
+	interruptHotKey := Smalltalk developmentSystem interruptHotKey.
+	self assert: interruptHotKey isInteger.
+	imageVersionMinor := SessionManager current imageVersionMinor.
+	self assert: imageVersionMinor isInteger.
+	imageVersionMajor := SessionManager current imageVersionMajor.
+	self assert: imageVersionMajor isInteger.
+	nonClasses := Dictionary withAll: {#DolphinHandle -> (KernelLibrary default getModuleHandle: nil).
+						#Corpse -> DeadObject current.
+						#interruptHotKey -> interruptHotKey.
+						#BereavementSemaphore -> (MemoryManager current instVarNamed: 'bereavements').
+						#FinalizeSemaphore -> (MemoryManager current instVarNamed: 'lastRequests').
+						#TimingSemaphore -> Delay.TimingSemaphore.
+						#WakeupEvent -> (SessionManager inputState instVarNamed: 'wakeupEvent').
+						#ImageVersionMinor -> imageVersionMinor.
+						#ImageVersionMajor -> imageVersionMajor.
+						#KernelHandle -> KernelLibrary default handle.
+						#CRTHandle -> CRTLibrary default handle.
+						#Dispatcher -> SessionManager inputState.
+						#VMHandle -> VMLibrary default handle.
+						#arithmeticSelectors -> #+.
+						#commonSelectors -> #==.
+						#BereavementQueue -> (MemoryManager current instVarNamed: 'bereaved').
+						#InputSemaphore -> SessionManager inputState inputSemaphore.
+						#MsgWndHandle -> SessionManager inputState msgWindow asParameter.
+						#memoryManager -> MemoryManager current.
+						#ArrayBinding -> (Core bindingFor: #Array).
+						#FinalizeQueue -> (MemoryManager current instVarNamed: 'hospice').
+						#Processor -> Processor}.
+	VMLibrary.RegistryKeys keysAndValuesDo: 
+			[:name :each |
+			| actual expected |
+			actual := VMLibrary.Registry at: each.
+			expected := nonClasses at: name ifAbsent: [actual fullyQualifiedReference value].
+			expected class isMeta
+				ifTrue: 
+					[self assert: actual name identicalTo: name.
+					self assert: actual identicalTo: expected]
+				ifFalse: [self assert: actual equals: expected]]!
+
 testSignedFromUnsigned
 	"Test SmallIntegers and 4 & 8 byte LargeIntegers"
 
@@ -2979,7 +3036,7 @@ testVMPointersImmutable
 			[:ex |
 			self
 				isFault: ex
-				raisedIn: ExternalAddress >> #dwordAtOffset:put:
+				raisedIn: External.Address >> #dwordAtOffset:put:
 				receiver: vmPointers]!
 
 testWeakMournerNotifications
@@ -3097,7 +3154,7 @@ verifyExtCallCrtFault: aBoolean
 	self
 		should: [lib chmod: nil pmode: 0]
 		raise: CRTError
-		matching: [:ex | ex tag == CRTConstants.EINVAL]!
+		matching: [:ex | ex tag == EINVAL]!
 
 verifyExtCallFpFault: aBoolean
 	| method exceptions fpFault |
@@ -3516,161 +3573,156 @@ verifyPrimitiveNextPutAllOnUtfStrings: method
 								value: eachTarget
 								value: eachArg
 								value: each]]]! !
-!VMTest categoriesFor: #assertImmutableAtPut:!private!unit tests! !
-!VMTest categoriesFor: #assertImmutableBasicAtPut:!private!unit tests! !
-!VMTest categoriesFor: #assertImmutableInstVarAtPut:!private!unit tests! !
-!VMTest categoriesFor: #assertImmutableResize:!private!unit tests! !
-!VMTest categoriesFor: #compile:in:!helpers!private! !
-!VMTest categoriesFor: #createPrimitiveMethod:in:argCount:!helpers!private! !
-!VMTest categoriesFor: #createPrimitiveMethodLike:!helpers!private! !
-!VMTest categoriesFor: #earlyTermination:!helpers!private! !
-!VMTest categoriesFor: #elementsExpired:of:!helpers!private! !
-!VMTest categoriesFor: #exerciseReplaceElementsOf:from:to:with:startingAt:!private!unit tests! !
-!VMTest categoriesFor: #exerciseReplaceElementsOf:with:!private!unit tests! !
-!VMTest categoriesFor: #findCaller:in:!helpers!private! !
-!VMTest categoriesFor: #findFaultInterruptFrame:!helpers!private! !
-!VMTest categoriesFor: #firstVmVersionRespectingNonInstantiable!constants!private! !
-!VMTest categoriesFor: #hashBytes:!helpers!private! !
-!VMTest categoriesFor: #immutableTestSubjects!constants!private!unit tests! !
-!VMTest categoriesFor: #isFault:raisedIn:receiver:!helpers!private! !
-!VMTest categoriesFor: #isGPF:reading:address:!helpers!private! !
-!VMTest categoriesFor: #skipIfVMDoesNotSupportArgumentConversionsThatAllocateMemoryInOverlappedCalls!helpers!private! !
-!VMTest categoriesFor: #suspendAndTerminate!helpers!private! !
-!VMTest categoriesFor: #testAllReferences!public!unit tests! !
-!VMTest categoriesFor: #testAllReferencesWeak!public! !
-!VMTest categoriesFor: #testBSTRArg!public!unit tests! !
-!VMTest categoriesFor: #testCRTFault!public!unit tests! !
-!VMTest categoriesFor: #testDwordAtOffsetPut!public!unit tests! !
-!VMTest categoriesFor: #testEvaluationOrder!public!unit tests! !
-!VMTest categoriesFor: #testExtCallArgBstr!public!unit tests! !
-!VMTest categoriesFor: #testExtCallArgLppvoid!public!unit tests! !
-!VMTest categoriesFor: #testExtCallArgLpwstr!public!unit tests! !
-!VMTest categoriesFor: #testExtCallCrtFault!public! !
-!VMTest categoriesFor: #testExtCallFpFault!public! !
-!VMTest categoriesFor: #testExtCallGpf!public! !
-!VMTest categoriesFor: #testExtCallIntDivZero!public! !
-!VMTest categoriesFor: #testExtCallOverlappedArgLppvoid!public!unit tests! !
-!VMTest categoriesFor: #testExtCallOverlappedArgLpwstr!public!unit tests! !
-!VMTest categoriesFor: #testExtCallOverlappedCrtFault!public! !
-!VMTest categoriesFor: #testExtCallOverlappedFpFault!public! !
-!VMTest categoriesFor: #testExtCallOverlappedGC!public!unit tests! !
-!VMTest categoriesFor: #testExtCallOverlappedGpf!public! !
-!VMTest categoriesFor: #testExtCallOverlappedIntDivZero!public! !
-!VMTest categoriesFor: #testExtCallOverlappedRetHRESULT!public!unit tests! !
-!VMTest categoriesFor: #testExtCallOverlappedRetLpwstr!public!unit tests! !
-!VMTest categoriesFor: #testExtCallOverlappedRetNtStatus!public!unit tests! !
-!VMTest categoriesFor: #testExtCallOverlappedSuspendAndTerminate!public!unit tests! !
-!VMTest categoriesFor: #testExtCallOverlappedTermination!public!unit tests! !
-!VMTest categoriesFor: #testExtCallRetHRESULT!public!unit tests! !
-!VMTest categoriesFor: #testExtCallRetLpwstr!public!unit tests! !
-!VMTest categoriesFor: #testExtCallRetNtStatus!public!unit tests! !
-!VMTest categoriesFor: #testExtendedCharsInCrashDump!public!unit tests! !
-!VMTest categoriesFor: #testFPFaultInPrimitive!public!unit tests! !
-!VMTest categoriesFor: #testFPStatus!public!unit tests! !
-!VMTest categoriesFor: #testGPFTrap!public!unit tests! !
-!VMTest categoriesFor: #testImmutableAtPut!public!unit tests! !
-!VMTest categoriesFor: #testImmutableBasicAtPut!public!unit tests! !
-!VMTest categoriesFor: #testImmutableBufferAtPuts!public!unit tests! !
-!VMTest categoriesFor: #testImmutableInstVarAtPut!public!unit tests! !
-!VMTest categoriesFor: #testImmutableNextPut!public!unit tests! !
-!VMTest categoriesFor: #testImmutableNextPutAll!public!unit tests! !
-!VMTest categoriesFor: #testImmutableReplacePrimitives!public!unit tests! !
-!VMTest categoriesFor: #testImmutableResize!public!unit tests! !
-!VMTest categoriesFor: #testImmutableStringCompare!public!unit tests! !
-!VMTest categoriesFor: #testImmutableWriteAccessors!public!unit tests! !
-!VMTest categoriesFor: #testIndirectByteAtOffsetPrimitives!public!unit tests! !
-!VMTest categoriesFor: #testIndirectDwordAtOffsetPrimitives!public!unit tests! !
-!VMTest categoriesFor: #testIndirectSdwordAtOffsetPrimitives!public!unit tests! !
-!VMTest categoriesFor: #testIndirectSwordAtOffsetPrimitives!public!unit tests! !
-!VMTest categoriesFor: #testIndirectWordAtOffsetPrimitives!public!unit tests! !
-!VMTest categoriesFor: #testIntDivideByZero!public!unit tests! !
-!VMTest categoriesFor: #testMakeLargeUnsigned!public!unit tests! !
-!VMTest categoriesFor: #testMustBeBoolean!public!unit tests! !
-!VMTest categoriesFor: #testPrimitiveAdd!public!unit tests! !
-!VMTest categoriesFor: #testPrimitiveAllInstances!public!unit tests! !
-!VMTest categoriesFor: #testPrimitiveAllMask!public!unit tests! !
-!VMTest categoriesFor: #testPrimitiveAnyMask!public!unit tests! !
-!VMTest categoriesFor: #testPrimitiveAt!public!unit tests! !
-!VMTest categoriesFor: #testPrimitiveAtPut!public!unit tests! !
-!VMTest categoriesFor: #testPrimitiveBasicAt!public!unit tests! !
-!VMTest categoriesFor: #testPrimitiveBasicAtPut!public!unit tests! !
-!VMTest categoriesFor: #testPrimitiveBitShift!public!unit tests! !
-!VMTest categoriesFor: #testPrimitiveBytesEqual!public!unit tests! !
-!VMTest categoriesFor: #testPrimitiveBytesIsNull!public!unit tests! !
-!VMTest categoriesFor: #testPrimitiveChangeBehavior!public!unit tests! !
-!VMTest categoriesFor: #testPrimitiveCopyFromTo!public!unit tests! !
-!VMTest categoriesFor: #testPrimitiveDiv!public!unit tests! !
-!VMTest categoriesFor: #testPrimitiveDivide!public!unit tests! !
-!VMTest categoriesFor: #testPrimitiveEnableInterrupts!public!unit tests! !
-!VMTest categoriesFor: #testPrimitiveEqual!public!unit tests! !
-!VMTest categoriesFor: #testPrimitiveExtraInstanceSpec!public! !
-!VMTest categoriesFor: #testPrimitiveFindString!public!unit tests! !
-!VMTest categoriesFor: #testPrimitiveGreaterOrEqual!public!unit tests! !
-!VMTest categoriesFor: #testPrimitiveGreaterThan!public!unit tests! !
-!VMTest categoriesFor: #testPrimitiveHashBytes!public!unit tests! !
-!VMTest categoriesFor: #testPrimitiveHighBit!public!unit tests! !
-!VMTest categoriesFor: #testPrimitiveIdentical!public!unit tests! !
-!VMTest categoriesFor: #testPrimitiveIndexOfSp!public!unit tests! !
-!VMTest categoriesFor: #testPrimitiveInstanceCounts!public!unit tests! !
-!VMTest categoriesFor: #testPrimitiveInstanceCounts2!public!unit tests! !
-!VMTest categoriesFor: #testPrimitiveInstVarAt!public!unit tests! !
-!VMTest categoriesFor: #testPrimitiveInstVarAtPut!public!unit tests! !
-!VMTest categoriesFor: #testPrimitiveIsKindOf!public!unit tests! !
-!VMTest categoriesFor: #testPrimitiveLessOrEqual!public!unit tests! !
-!VMTest categoriesFor: #testPrimitiveLessThan!public!unit tests! !
-!VMTest categoriesFor: #testPrimitiveLookupMethod!public!unit tests! !
-!VMTest categoriesFor: #testPrimitiveMakePoint!public!unit tests! !
-!VMTest categoriesFor: #testPrimitiveMod!public!unit tests! !
-!VMTest categoriesFor: #testPrimitiveMultiply!public!unit tests! !
-!VMTest categoriesFor: #testPrimitiveNewColonFailure!public!unit tests! !
-!VMTest categoriesFor: #testPrimitiveNewFailure!public!unit tests! !
-!VMTest categoriesFor: #testPrimitiveNewFixedFailure!public!unit tests! !
-!VMTest categoriesFor: #testPrimitiveNewInitializedFailure!public!unit tests! !
-!VMTest categoriesFor: #testPrimitiveNewVirtualFailure!public!unit tests! !
-!VMTest categoriesFor: #testPrimitiveNextPut!public!unit tests! !
-!VMTest categoriesFor: #testPrimitiveNextPutAll!public!unit tests! !
-!VMTest categoriesFor: #testPrimitiveObjectCount!public!unit tests! !
-!VMTest categoriesFor: #testPrimitiveQuo!public!unit tests! !
-!VMTest categoriesFor: #testPrimitiveReplaceElements!public!unit tests! !
-!VMTest categoriesFor: #testPrimitiveResume!public!unit tests! !
-!VMTest categoriesFor: #testPrimitiveSetMutableInstVar!public!unit tests! !
-!VMTest categoriesFor: #testPrimitiveSetSpecialBehavior!public!unit tests! !
-!VMTest categoriesFor: #testPrimitiveShallowCopy!public!unit tests! !
-!VMTest categoriesFor: #testPrimitiveSize!public!unit tests! !
-!VMTest categoriesFor: #testPrimitiveSmallIntegerByteAt!public!unit tests! !
-!VMTest categoriesFor: #testPrimitiveStringAt!public!unit tests! !
-!VMTest categoriesFor: #testPrimitiveStringAtPut!public!unit tests! !
-!VMTest categoriesFor: #testPrimitiveStringCmp!public!unit tests! !
-!VMTest categoriesFor: #testPrimitiveStringCollate!public!unit tests! !
-!VMTest categoriesFor: #testPrimitiveStringNextIndexOfFromTo!public!unit tests! !
-!VMTest categoriesFor: #testPrimitiveStructIsNull!public!unit tests! !
-!VMTest categoriesFor: #testPrimitiveSubtract!public!unit tests! !
-!VMTest categoriesFor: #testPrimitiveYourAddress!public!unit tests! !
-!VMTest categoriesFor: #testQwordAtOffset!public!unit tests! !
-!VMTest categoriesFor: #testSignedFromUnsigned!public!unit tests! !
-!VMTest categoriesFor: #testSqwordAtOffset!public!unit tests! !
-!VMTest categoriesFor: #testVMPointersImmutable!public!unit tests! !
-!VMTest categoriesFor: #testWeakMournerNotifications!public!unit tests! !
-!VMTest categoriesFor: #verifyBinaryPrimitive:forCases:!helpers!private! !
-!VMTest categoriesFor: #verifyExtCallArgLppvoid:!helpers!private! !
-!VMTest categoriesFor: #verifyExtCallArgLpwstr:!helpers!private! !
-!VMTest categoriesFor: #verifyExtCallCrtFault:!helpers!private! !
-!VMTest categoriesFor: #verifyExtCallFpFault:!helpers!private! !
-!VMTest categoriesFor: #verifyExtCallGpf:!helpers!private! !
-!VMTest categoriesFor: #verifyExtCallIntDivZero:!helpers!private! !
-!VMTest categoriesFor: #verifyExtCallRetHRESULT:!helpers!private! !
-!VMTest categoriesFor: #verifyExtCallRetLpwstr:!helpers!private! !
-!VMTest categoriesFor: #verifyExtCallRetNtStatus:!helpers!private! !
-!VMTest categoriesFor: #verifyPrimitiveAt:performBlock:!helpers!private! !
-!VMTest categoriesFor: #verifyPrimitiveAtPut:performBlock:!helpers!private! !
-!VMTest categoriesFor: #verifyPrimitiveNextPutAllOnAnsiString:!helpers!private! !
-!VMTest categoriesFor: #verifyPrimitiveNextPutAllOnArray:!helpers!private! !
-!VMTest categoriesFor: #verifyPrimitiveNextPutAllOnByteArray:!helpers!private! !
-!VMTest categoriesFor: #verifyPrimitiveNextPutAllOnUtfStrings:!helpers!private! !
-
-!VMTest class methodsFor!
-
-resources
-	^{MustBeBooleanTestClasses}! !
-!VMTest class categoriesFor: #resources!Accessing!public! !
+!Kernel.Tests.VMTest categoriesFor: #assertImmutableAtPut:!private!unit tests! !
+!Kernel.Tests.VMTest categoriesFor: #assertImmutableBasicAtPut:!private!unit tests! !
+!Kernel.Tests.VMTest categoriesFor: #assertImmutableInstVarAtPut:!private!unit tests! !
+!Kernel.Tests.VMTest categoriesFor: #assertImmutableResize:!private!unit tests! !
+!Kernel.Tests.VMTest categoriesFor: #compile:in:!helpers!private! !
+!Kernel.Tests.VMTest categoriesFor: #createPrimitiveMethod:in:argCount:!helpers!private! !
+!Kernel.Tests.VMTest categoriesFor: #createPrimitiveMethodLike:!helpers!private! !
+!Kernel.Tests.VMTest categoriesFor: #earlyTermination:!helpers!private! !
+!Kernel.Tests.VMTest categoriesFor: #elementsExpired:of:!helpers!private! !
+!Kernel.Tests.VMTest categoriesFor: #exerciseReplaceElementsOf:from:to:with:startingAt:!private!unit tests! !
+!Kernel.Tests.VMTest categoriesFor: #exerciseReplaceElementsOf:with:!private!unit tests! !
+!Kernel.Tests.VMTest categoriesFor: #findCaller:in:!helpers!private! !
+!Kernel.Tests.VMTest categoriesFor: #findFaultInterruptFrame:!helpers!private! !
+!Kernel.Tests.VMTest categoriesFor: #firstVmVersionRespectingNonInstantiable!constants!private! !
+!Kernel.Tests.VMTest categoriesFor: #hashBytes:!helpers!private! !
+!Kernel.Tests.VMTest categoriesFor: #immutableTestSubjects!constants!private!unit tests! !
+!Kernel.Tests.VMTest categoriesFor: #isFault:raisedIn:receiver:!helpers!private! !
+!Kernel.Tests.VMTest categoriesFor: #isGPF:reading:address:!helpers!private! !
+!Kernel.Tests.VMTest categoriesFor: #skipIfVMDoesNotSupportArgumentConversionsThatAllocateMemoryInOverlappedCalls!helpers!private! !
+!Kernel.Tests.VMTest categoriesFor: #suspendAndTerminate!helpers!private! !
+!Kernel.Tests.VMTest categoriesFor: #testAllReferences!public!unit tests! !
+!Kernel.Tests.VMTest categoriesFor: #testAllReferencesWeak!public! !
+!Kernel.Tests.VMTest categoriesFor: #testBSTRArg!public!unit tests! !
+!Kernel.Tests.VMTest categoriesFor: #testCRTFault!public!unit tests! !
+!Kernel.Tests.VMTest categoriesFor: #testDwordAtOffsetPut!public!unit tests! !
+!Kernel.Tests.VMTest categoriesFor: #testEvaluationOrder!public!unit tests! !
+!Kernel.Tests.VMTest categoriesFor: #testExtCallArgBstr!public!unit tests! !
+!Kernel.Tests.VMTest categoriesFor: #testExtCallArgLppvoid!public!unit tests! !
+!Kernel.Tests.VMTest categoriesFor: #testExtCallArgLpwstr!public!unit tests! !
+!Kernel.Tests.VMTest categoriesFor: #testExtCallCrtFault!public! !
+!Kernel.Tests.VMTest categoriesFor: #testExtCallFpFault!public! !
+!Kernel.Tests.VMTest categoriesFor: #testExtCallGpf!public! !
+!Kernel.Tests.VMTest categoriesFor: #testExtCallIntDivZero!public! !
+!Kernel.Tests.VMTest categoriesFor: #testExtCallOverlappedArgLppvoid!public!unit tests! !
+!Kernel.Tests.VMTest categoriesFor: #testExtCallOverlappedArgLpwstr!public!unit tests! !
+!Kernel.Tests.VMTest categoriesFor: #testExtCallOverlappedCrtFault!public! !
+!Kernel.Tests.VMTest categoriesFor: #testExtCallOverlappedFpFault!public! !
+!Kernel.Tests.VMTest categoriesFor: #testExtCallOverlappedGC!public!unit tests! !
+!Kernel.Tests.VMTest categoriesFor: #testExtCallOverlappedGpf!public! !
+!Kernel.Tests.VMTest categoriesFor: #testExtCallOverlappedIntDivZero!public! !
+!Kernel.Tests.VMTest categoriesFor: #testExtCallOverlappedRetHRESULT!public!unit tests! !
+!Kernel.Tests.VMTest categoriesFor: #testExtCallOverlappedRetLpwstr!public!unit tests! !
+!Kernel.Tests.VMTest categoriesFor: #testExtCallOverlappedRetNtStatus!public!unit tests! !
+!Kernel.Tests.VMTest categoriesFor: #testExtCallOverlappedSuspendAndTerminate!public!unit tests! !
+!Kernel.Tests.VMTest categoriesFor: #testExtCallOverlappedTermination!public!unit tests! !
+!Kernel.Tests.VMTest categoriesFor: #testExtCallRetHRESULT!public!unit tests! !
+!Kernel.Tests.VMTest categoriesFor: #testExtCallRetLpwstr!public!unit tests! !
+!Kernel.Tests.VMTest categoriesFor: #testExtCallRetNtStatus!public!unit tests! !
+!Kernel.Tests.VMTest categoriesFor: #testExtendedCharsInCrashDump!public!unit tests! !
+!Kernel.Tests.VMTest categoriesFor: #testFPFaultInPrimitive!public!unit tests! !
+!Kernel.Tests.VMTest categoriesFor: #testFPStatus!public!unit tests! !
+!Kernel.Tests.VMTest categoriesFor: #testGPFTrap!public!unit tests! !
+!Kernel.Tests.VMTest categoriesFor: #testImmutableAtPut!public!unit tests! !
+!Kernel.Tests.VMTest categoriesFor: #testImmutableBasicAtPut!public!unit tests! !
+!Kernel.Tests.VMTest categoriesFor: #testImmutableBufferAtPuts!public!unit tests! !
+!Kernel.Tests.VMTest categoriesFor: #testImmutableInstVarAtPut!public!unit tests! !
+!Kernel.Tests.VMTest categoriesFor: #testImmutableNextPut!public!unit tests! !
+!Kernel.Tests.VMTest categoriesFor: #testImmutableNextPutAll!public!unit tests! !
+!Kernel.Tests.VMTest categoriesFor: #testImmutableReplacePrimitives!public!unit tests! !
+!Kernel.Tests.VMTest categoriesFor: #testImmutableResize!public!unit tests! !
+!Kernel.Tests.VMTest categoriesFor: #testImmutableStringCompare!public!unit tests! !
+!Kernel.Tests.VMTest categoriesFor: #testImmutableWriteAccessors!public!unit tests! !
+!Kernel.Tests.VMTest categoriesFor: #testIndirectByteAtOffsetPrimitives!public!unit tests! !
+!Kernel.Tests.VMTest categoriesFor: #testIndirectDwordAtOffsetPrimitives!public!unit tests! !
+!Kernel.Tests.VMTest categoriesFor: #testIndirectSdwordAtOffsetPrimitives!public!unit tests! !
+!Kernel.Tests.VMTest categoriesFor: #testIndirectSwordAtOffsetPrimitives!public!unit tests! !
+!Kernel.Tests.VMTest categoriesFor: #testIndirectWordAtOffsetPrimitives!public!unit tests! !
+!Kernel.Tests.VMTest categoriesFor: #testIntDivideByZero!public!unit tests! !
+!Kernel.Tests.VMTest categoriesFor: #testMakeLargeUnsigned!public!unit tests! !
+!Kernel.Tests.VMTest categoriesFor: #testMustBeBoolean!public!unit tests! !
+!Kernel.Tests.VMTest categoriesFor: #testPrimitiveAdd!public!unit tests! !
+!Kernel.Tests.VMTest categoriesFor: #testPrimitiveAllInstances!public!unit tests! !
+!Kernel.Tests.VMTest categoriesFor: #testPrimitiveAllMask!public!unit tests! !
+!Kernel.Tests.VMTest categoriesFor: #testPrimitiveAnyMask!public!unit tests! !
+!Kernel.Tests.VMTest categoriesFor: #testPrimitiveAt!public!unit tests! !
+!Kernel.Tests.VMTest categoriesFor: #testPrimitiveAtPut!public!unit tests! !
+!Kernel.Tests.VMTest categoriesFor: #testPrimitiveBasicAt!public!unit tests! !
+!Kernel.Tests.VMTest categoriesFor: #testPrimitiveBasicAtPut!public!unit tests! !
+!Kernel.Tests.VMTest categoriesFor: #testPrimitiveBitShift!public!unit tests! !
+!Kernel.Tests.VMTest categoriesFor: #testPrimitiveBytesEqual!public!unit tests! !
+!Kernel.Tests.VMTest categoriesFor: #testPrimitiveBytesIsNull!public!unit tests! !
+!Kernel.Tests.VMTest categoriesFor: #testPrimitiveChangeBehavior!public!unit tests! !
+!Kernel.Tests.VMTest categoriesFor: #testPrimitiveCopyFromTo!public!unit tests! !
+!Kernel.Tests.VMTest categoriesFor: #testPrimitiveDiv!public!unit tests! !
+!Kernel.Tests.VMTest categoriesFor: #testPrimitiveDivide!public!unit tests! !
+!Kernel.Tests.VMTest categoriesFor: #testPrimitiveEnableInterrupts!public!unit tests! !
+!Kernel.Tests.VMTest categoriesFor: #testPrimitiveEqual!public!unit tests! !
+!Kernel.Tests.VMTest categoriesFor: #testPrimitiveExtraInstanceSpec!public! !
+!Kernel.Tests.VMTest categoriesFor: #testPrimitiveFindString!public!unit tests! !
+!Kernel.Tests.VMTest categoriesFor: #testPrimitiveGreaterOrEqual!public!unit tests! !
+!Kernel.Tests.VMTest categoriesFor: #testPrimitiveGreaterThan!public!unit tests! !
+!Kernel.Tests.VMTest categoriesFor: #testPrimitiveHashBytes!public!unit tests! !
+!Kernel.Tests.VMTest categoriesFor: #testPrimitiveHighBit!public!unit tests! !
+!Kernel.Tests.VMTest categoriesFor: #testPrimitiveIdentical!public!unit tests! !
+!Kernel.Tests.VMTest categoriesFor: #testPrimitiveIndexOfSp!public!unit tests! !
+!Kernel.Tests.VMTest categoriesFor: #testPrimitiveInstanceCounts!public!unit tests! !
+!Kernel.Tests.VMTest categoriesFor: #testPrimitiveInstanceCounts2!public!unit tests! !
+!Kernel.Tests.VMTest categoriesFor: #testPrimitiveInstVarAt!public!unit tests! !
+!Kernel.Tests.VMTest categoriesFor: #testPrimitiveInstVarAtPut!public!unit tests! !
+!Kernel.Tests.VMTest categoriesFor: #testPrimitiveIsKindOf!public!unit tests! !
+!Kernel.Tests.VMTest categoriesFor: #testPrimitiveLessOrEqual!public!unit tests! !
+!Kernel.Tests.VMTest categoriesFor: #testPrimitiveLessThan!public!unit tests! !
+!Kernel.Tests.VMTest categoriesFor: #testPrimitiveLookupMethod!public!unit tests! !
+!Kernel.Tests.VMTest categoriesFor: #testPrimitiveMakePoint!public!unit tests! !
+!Kernel.Tests.VMTest categoriesFor: #testPrimitiveMod!public!unit tests! !
+!Kernel.Tests.VMTest categoriesFor: #testPrimitiveMultiply!public!unit tests! !
+!Kernel.Tests.VMTest categoriesFor: #testPrimitiveNewColonFailure!public!unit tests! !
+!Kernel.Tests.VMTest categoriesFor: #testPrimitiveNewFailure!public!unit tests! !
+!Kernel.Tests.VMTest categoriesFor: #testPrimitiveNewFixedFailure!public!unit tests! !
+!Kernel.Tests.VMTest categoriesFor: #testPrimitiveNewInitializedFailure!public!unit tests! !
+!Kernel.Tests.VMTest categoriesFor: #testPrimitiveNewVirtualFailure!public!unit tests! !
+!Kernel.Tests.VMTest categoriesFor: #testPrimitiveNextPut!public!unit tests! !
+!Kernel.Tests.VMTest categoriesFor: #testPrimitiveNextPutAll!public!unit tests! !
+!Kernel.Tests.VMTest categoriesFor: #testPrimitiveObjectCount!public!unit tests! !
+!Kernel.Tests.VMTest categoriesFor: #testPrimitiveQuo!public!unit tests! !
+!Kernel.Tests.VMTest categoriesFor: #testPrimitiveReplaceElements!public!unit tests! !
+!Kernel.Tests.VMTest categoriesFor: #testPrimitiveResume!public!unit tests! !
+!Kernel.Tests.VMTest categoriesFor: #testPrimitiveSetMutableInstVar!public!unit tests! !
+!Kernel.Tests.VMTest categoriesFor: #testPrimitiveSetSpecialBehavior!public!unit tests! !
+!Kernel.Tests.VMTest categoriesFor: #testPrimitiveShallowCopy!public!unit tests! !
+!Kernel.Tests.VMTest categoriesFor: #testPrimitiveSize!public!unit tests! !
+!Kernel.Tests.VMTest categoriesFor: #testPrimitiveSmallIntegerByteAt!public!unit tests! !
+!Kernel.Tests.VMTest categoriesFor: #testPrimitiveStringAt!public!unit tests! !
+!Kernel.Tests.VMTest categoriesFor: #testPrimitiveStringAtPut!public!unit tests! !
+!Kernel.Tests.VMTest categoriesFor: #testPrimitiveStringCmp!public!unit tests! !
+!Kernel.Tests.VMTest categoriesFor: #testPrimitiveStringCollate!public!unit tests! !
+!Kernel.Tests.VMTest categoriesFor: #testPrimitiveStringNextIndexOfFromTo!public!unit tests! !
+!Kernel.Tests.VMTest categoriesFor: #testPrimitiveStructIsNull!public!unit tests! !
+!Kernel.Tests.VMTest categoriesFor: #testPrimitiveSubtract!public!unit tests! !
+!Kernel.Tests.VMTest categoriesFor: #testPrimitiveYourAddress!public!unit tests! !
+!Kernel.Tests.VMTest categoriesFor: #testQwordAtOffset!public!unit tests! !
+!Kernel.Tests.VMTest categoriesFor: #testRegistry!public! !
+!Kernel.Tests.VMTest categoriesFor: #testSignedFromUnsigned!public!unit tests! !
+!Kernel.Tests.VMTest categoriesFor: #testSqwordAtOffset!public!unit tests! !
+!Kernel.Tests.VMTest categoriesFor: #testVMPointersImmutable!public!unit tests! !
+!Kernel.Tests.VMTest categoriesFor: #testWeakMournerNotifications!public!unit tests! !
+!Kernel.Tests.VMTest categoriesFor: #verifyBinaryPrimitive:forCases:!helpers!private! !
+!Kernel.Tests.VMTest categoriesFor: #verifyExtCallArgLppvoid:!helpers!private! !
+!Kernel.Tests.VMTest categoriesFor: #verifyExtCallArgLpwstr:!helpers!private! !
+!Kernel.Tests.VMTest categoriesFor: #verifyExtCallCrtFault:!helpers!private! !
+!Kernel.Tests.VMTest categoriesFor: #verifyExtCallFpFault:!helpers!private! !
+!Kernel.Tests.VMTest categoriesFor: #verifyExtCallGpf:!helpers!private! !
+!Kernel.Tests.VMTest categoriesFor: #verifyExtCallIntDivZero:!helpers!private! !
+!Kernel.Tests.VMTest categoriesFor: #verifyExtCallRetHRESULT:!helpers!private! !
+!Kernel.Tests.VMTest categoriesFor: #verifyExtCallRetLpwstr:!helpers!private! !
+!Kernel.Tests.VMTest categoriesFor: #verifyExtCallRetNtStatus:!helpers!private! !
+!Kernel.Tests.VMTest categoriesFor: #verifyPrimitiveAt:performBlock:!helpers!private! !
+!Kernel.Tests.VMTest categoriesFor: #verifyPrimitiveAtPut:performBlock:!helpers!private! !
+!Kernel.Tests.VMTest categoriesFor: #verifyPrimitiveNextPutAllOnAnsiString:!helpers!private! !
+!Kernel.Tests.VMTest categoriesFor: #verifyPrimitiveNextPutAllOnArray:!helpers!private! !
+!Kernel.Tests.VMTest categoriesFor: #verifyPrimitiveNextPutAllOnByteArray:!helpers!private! !
+!Kernel.Tests.VMTest categoriesFor: #verifyPrimitiveNextPutAllOnUtfStrings:!helpers!private! !
 

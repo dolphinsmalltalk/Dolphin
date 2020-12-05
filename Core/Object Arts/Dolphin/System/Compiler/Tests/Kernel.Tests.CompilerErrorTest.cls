@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-AbstractParserErrorTest subclass: #CompilerErrorTest
+Kernel.Tests.AbstractParserErrorTest subclass: #'Kernel.Tests.CompilerErrorTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-CompilerErrorTest guid: (GUID fromString: '{46595911-e729-41d5-92f4-57241cf25eac}')!
-CompilerErrorTest comment: ''!
-!CompilerErrorTest categoriesForClass!Unclassified! !
-!CompilerErrorTest methodsFor!
+Kernel.Tests.CompilerErrorTest guid: (Core.GUID fromString: '{46595911-e729-41d5-92f4-57241cf25eac}')!
+Kernel.Tests.CompilerErrorTest comment: ''!
+!Kernel.Tests.CompilerErrorTest categoriesForClass!Unclassified! !
+!Kernel.Tests.CompilerErrorTest methodsFor!
 
 defaultCompileFlags
 	^CompilerFlags.Interactive "| CompilerFlags.SyntaxCheckOnly"
@@ -90,7 +90,7 @@ testErrorsBadContext
 		parseMethodError: source
 		in: anon
 		range: (1 to: source size)
-		code: SmalltalkParseErrorCodes.CErrBadContext!
+		code: ParseErrorCodes.CErrBadContext!
 
 testErrorsBadPools
 	| source |
@@ -99,7 +99,7 @@ testErrorsBadPools
 		should: 
 			[Compiler
 				compileForEvaluation: source
-				in: UndefinedObject
+				in: nil
 				evaluationPools: 'Bad pools'
 				flags: self defaultCompileFlags]
 		raise: self compilationErrorClass
@@ -110,7 +110,7 @@ testErrorsBadPools
 			self
 				checkCompileError: ex
 				range: range
-				code: SmalltalkParseErrorCodes.CErrBadPools
+				code: ParseErrorCodes.CErrBadPools
 				line: 1
 				source: source]!
 
@@ -129,19 +129,19 @@ testErrorsLexicalExpectExtendedLiteral
 		parseExprError: '###'
 		range: (3 to: 3)
 		line: 1
-		code: SmalltalkParseErrorCodes.LErrExpectExtendedLiteral!
+		code: ParseErrorCodes.LErrExpectExtendedLiteral!
 
 testErrorsNonsenseAtEndOfExpression
 	self 
 		parseExprError: '1+2]3'
 		range: (1 to: 3)
 		line: 1
-		code: SmalltalkParseErrorCodes.CErrUnterminatedStatement.
+		code: ParseErrorCodes.CErrUnterminatedStatement.
 	self 
 		parseExprError: ' ##(1+2]3)'
 		range: (5 to: 7)
 		line: 1
-		code: SmalltalkParseErrorCodes.CErrUnterminatedStatement!
+		code: ParseErrorCodes.CErrUnterminatedStatement!
 
 testErrorsNonsenseAtEndOfMethod
 	"Nonense at end of method - not sure how to get this error to emerge - can do it with the Smalltalk Parser with an expression like.
@@ -152,21 +152,21 @@ testErrorsNonsenseAtEndOfMethod
 	source := 'blah ^1+2]'.
 	self 
 		parseMethodError: source
-		code: SmalltalkParseErrorCodes.CErrUnterminatedStatement
+		code: ParseErrorCodes.CErrUnterminatedStatement
 		range: ((source indexOf: $^) to: (source indexOf: $]) - 1).
 	source := '1+2]. 3+4'.
 	self 
 		parseExprError: source
 		range: (1 to: 3)
 		line: 1
-		code: SmalltalkParseErrorCodes.CErrUnterminatedStatement.
+		code: ParseErrorCodes.CErrUnterminatedStatement.
 	source := '1+2.] 3+4'.
 	mark := source indexOf: $].
 	self 
 		parseExprError: source
 		range: (mark to: mark)
 		line: 1
-		code: SmalltalkParseErrorCodes.CErrInvalExprStart!
+		code: ParseErrorCodes.CErrInvalExprStart!
 
 writtenNotReadRange: aString
 	"The Dolphin Compiler reports written-not-read temps against the temp declaration."
@@ -174,19 +174,19 @@ writtenNotReadRange: aString
 	| start |
 	start := aString indexOf: $_.
 	^start to: start + 3! !
-!CompilerErrorTest categoriesFor: #defaultCompileFlags!constants!private! !
-!CompilerErrorTest categoriesFor: #parseExpression:in:!helpers!private! !
-!CompilerErrorTest categoriesFor: #parseMethod:in:!helpers!private! !
-!CompilerErrorTest categoriesFor: #parserClass!constants!private! !
-!CompilerErrorTest categoriesFor: #printLiterals:on:!helpers!private! !
-!CompilerErrorTest categoriesFor: #skipUnlessCompilerSupportsCodePointErrors!private!unit tests! !
-!CompilerErrorTest categoriesFor: #tempWarningRangeIn:!helpers!private! !
-!CompilerErrorTest categoriesFor: #testErrorsBadContext!public!unit tests! !
-!CompilerErrorTest categoriesFor: #testErrorsBadPools!public!unit tests! !
-!CompilerErrorTest categoriesFor: #testErrorsLexicalBadCodePoint!public!unit tests! !
-!CompilerErrorTest categoriesFor: #testErrorsLexicalExpectCodePoint!public!unit tests! !
-!CompilerErrorTest categoriesFor: #testErrorsLexicalExpectExtendedLiteral!public!unit tests! !
-!CompilerErrorTest categoriesFor: #testErrorsNonsenseAtEndOfExpression!public!unit tests! !
-!CompilerErrorTest categoriesFor: #testErrorsNonsenseAtEndOfMethod!public!unit tests! !
-!CompilerErrorTest categoriesFor: #writtenNotReadRange:!helpers!private! !
+!Kernel.Tests.CompilerErrorTest categoriesFor: #defaultCompileFlags!constants!private! !
+!Kernel.Tests.CompilerErrorTest categoriesFor: #parseExpression:in:!helpers!private! !
+!Kernel.Tests.CompilerErrorTest categoriesFor: #parseMethod:in:!helpers!private! !
+!Kernel.Tests.CompilerErrorTest categoriesFor: #parserClass!constants!private! !
+!Kernel.Tests.CompilerErrorTest categoriesFor: #printLiterals:on:!helpers!private! !
+!Kernel.Tests.CompilerErrorTest categoriesFor: #skipUnlessCompilerSupportsCodePointErrors!private!unit tests! !
+!Kernel.Tests.CompilerErrorTest categoriesFor: #tempWarningRangeIn:!helpers!private! !
+!Kernel.Tests.CompilerErrorTest categoriesFor: #testErrorsBadContext!public!unit tests! !
+!Kernel.Tests.CompilerErrorTest categoriesFor: #testErrorsBadPools!public!unit tests! !
+!Kernel.Tests.CompilerErrorTest categoriesFor: #testErrorsLexicalBadCodePoint!public!unit tests! !
+!Kernel.Tests.CompilerErrorTest categoriesFor: #testErrorsLexicalExpectCodePoint!public!unit tests! !
+!Kernel.Tests.CompilerErrorTest categoriesFor: #testErrorsLexicalExpectExtendedLiteral!public!unit tests! !
+!Kernel.Tests.CompilerErrorTest categoriesFor: #testErrorsNonsenseAtEndOfExpression!public!unit tests! !
+!Kernel.Tests.CompilerErrorTest categoriesFor: #testErrorsNonsenseAtEndOfMethod!public!unit tests! !
+!Kernel.Tests.CompilerErrorTest categoriesFor: #writtenNotReadRange:!helpers!private! !
 

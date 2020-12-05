@@ -3,10 +3,10 @@
 VirtualMethodCategory subclass: #PluggableVirtualMethodCategory
 	instanceVariableNames: 'filter isSlowToEnumerate'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-PluggableVirtualMethodCategory guid: (GUID fromString: '{cf4b4026-94a0-45e3-9949-2dca5b07b1e8}')!
+PluggableVirtualMethodCategory guid: (Core.GUID fromString: '{cf4b4026-94a0-45e3-9949-2dca5b07b1e8}')!
 PluggableVirtualMethodCategory comment: 'PluggableMethodCategory is a virtual method category class the dynamically generated membership of which includes all methods that pass a configurable filter. See the class side #initialize method for examples.
 
 Instance Variables:
@@ -71,7 +71,7 @@ initialize
 	"The '*-sends unimplemented message' category contains all methods that send messages which
 	are not implemented in any class in the image"
 	self addPseud: ((self newNamed: self pseudPrefix , 'sends unimplemented message'
-				withFilter: [:each | (each messages difference: Smalltalk developmentSystem allSelectors) notEmpty])
+				withFilter: [:each | (each messages difference: SmalltalkSystem current allSelectors) notEmpty])
 				isSlowToEnumerate: true;
 				yourself)!
 

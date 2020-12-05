@@ -1,12 +1,12 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-DolphinTest subclass: #VersionResourceTest
+Core.Tests.DolphinTest subclass: #VersionResourceTest
 	instanceVariableNames: 'updatePath sourceModule sourceSize sourceBytes'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-VersionResourceTest guid: (GUID fromString: '{a475b032-cef9-4aa6-affe-32b7dc1c4640}')!
+VersionResourceTest guid: (Core.GUID fromString: '{a475b032-cef9-4aa6-affe-32b7dc1c4640}')!
 VersionResourceTest comment: ''!
 !VersionResourceTest categoriesForClass!Unclassified! !
 !VersionResourceTest methodsFor!
@@ -39,14 +39,14 @@ setUp
 	| pVer header |
 	updatePath := File temporaryFilename.
 	File copy: self sourcePath to: updatePath.
-	sourceModule := ExternalLibrary open: self sourcePath.
+	sourceModule := External.Library open: self sourcePath.
 	pVer := VersionResource getVersionResourceOfModule: sourceModule.
 	header := VS_VERSION_INFO_HEADER fromAddress: pVer.
 	sourceSize := header wLength.
 	sourceBytes := pVer copyFrom: 1 to: sourceSize!
 
 sourcePath
-	^(FolderRelativeFileLocator basePath: SessionManager current installationDirectory) 
+	^(FolderRelativeFileLocator basePath: SessionManager current installationDirectory)
 		localFileSpecFor: 'GUIToGo.exe'!
 
 tearDown

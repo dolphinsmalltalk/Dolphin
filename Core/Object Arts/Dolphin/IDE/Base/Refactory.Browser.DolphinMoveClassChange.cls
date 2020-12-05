@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-RefactoryClassChange subclass: #DolphinMoveClassChange
+Refactory.Browser.RefactoryClassChange subclass: #'Refactory.Browser.DolphinMoveClassChange'
 	instanceVariableNames: 'superclassName'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-DolphinMoveClassChange guid: (GUID fromString: '{bc59a55b-44a6-46b0-bead-8e1fbf05e2a9}')!
-DolphinMoveClassChange comment: 'DolphinMoveClassChange is a Dolphin specific class change that invokes the ClassBuilder to move a class under a new superclass.'!
-!DolphinMoveClassChange categoriesForClass!Refactory-Change Objects! !
-!DolphinMoveClassChange methodsFor!
+Refactory.Browser.DolphinMoveClassChange guid: (Core.GUID fromString: '{bc59a55b-44a6-46b0-bead-8e1fbf05e2a9}')!
+Refactory.Browser.DolphinMoveClassChange comment: 'DolphinMoveClassChange is a Dolphin specific class change that invokes the ClassBuilder to move a class under a new superclass.'!
+!Refactory.Browser.DolphinMoveClassChange categoriesForClass!Refactory-Change Objects! !
+!Refactory.Browser.DolphinMoveClassChange methodsFor!
 
 = anAddClassChange 
 	^super = anAddClassChange and: [anAddClassChange superclassName = superclassName]!
@@ -36,10 +36,6 @@ expression
 				display: eachArg].
 	^stream contents!
 
-initialize
-	super initialize.
-	isMeta := false!
-
 primitiveExecute
 	^self changeClass compilerClass evaluate: self expression logged: true!
 
@@ -48,16 +44,15 @@ superclassName
 
 superclassName: aString 
 	superclassName := aString asSymbol! !
-!DolphinMoveClassChange categoriesFor: #=!comparing!public! !
-!DolphinMoveClassChange categoriesFor: #asUndoOperation!converting!public! !
-!DolphinMoveClassChange categoriesFor: #changeString!printing!public! !
-!DolphinMoveClassChange categoriesFor: #expression!private! !
-!DolphinMoveClassChange categoriesFor: #initialize!initialize/release!private! !
-!DolphinMoveClassChange categoriesFor: #primitiveExecute!public! !
-!DolphinMoveClassChange categoriesFor: #superclassName!accessing!public! !
-!DolphinMoveClassChange categoriesFor: #superclassName:!accessing!public! !
+!Refactory.Browser.DolphinMoveClassChange categoriesFor: #=!comparing!public! !
+!Refactory.Browser.DolphinMoveClassChange categoriesFor: #asUndoOperation!converting!public! !
+!Refactory.Browser.DolphinMoveClassChange categoriesFor: #changeString!printing!public! !
+!Refactory.Browser.DolphinMoveClassChange categoriesFor: #expression!private! !
+!Refactory.Browser.DolphinMoveClassChange categoriesFor: #primitiveExecute!public! !
+!Refactory.Browser.DolphinMoveClassChange categoriesFor: #superclassName!accessing!public! !
+!Refactory.Browser.DolphinMoveClassChange categoriesFor: #superclassName:!accessing!public! !
 
-!DolphinMoveClassChange class methodsFor!
+!Refactory.Browser.DolphinMoveClassChange class methodsFor!
 
 move: aClass toSuperclass: superClass 
 	^(self new changeClass: aClass)
@@ -68,6 +63,6 @@ moveClassNamed: aSymbol toSuperClassNamed: superSymbol
 	^(self new changeClassName: aSymbol)
 		superclassName: superSymbol;
 		yourself! !
-!DolphinMoveClassChange class categoriesFor: #move:toSuperclass:!instance creation!public! !
-!DolphinMoveClassChange class categoriesFor: #moveClassNamed:toSuperClassNamed:!instance creation!public! !
+!Refactory.Browser.DolphinMoveClassChange class categoriesFor: #move:toSuperclass:!instance creation!public! !
+!Refactory.Browser.DolphinMoveClassChange class categoriesFor: #moveClassNamed:toSuperClassNamed:!instance creation!public! !
 

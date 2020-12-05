@@ -3,13 +3,13 @@
 SmalltalkToolShell subclass: #ClassBrowserAbstract
 	instanceVariableNames: 'classesPresenter categoriesPresenter methodBrowserPresenter definitionPresenter modePresenter flags history variablesPresenter protocolsPresenter filterPresenter packageModel statusModel versionModel cardsPresenter loadedPlugins methodCategories'
 	classVariableNames: 'GrayedMethodFadeFactor HistoryListSize LooseMethodColor WordWrapDefinition'
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: 'defaultShowInheritedMethods defaultFilterObjectMethods plugins'
 	classConstants: {
 		'FilterObjectMethodsMask' -> 16r2.
 		'ShowInheritedMethodsMask' -> 16r1
 	}!
-ClassBrowserAbstract guid: (GUID fromString: '{87b4c6bc-026e-11d3-9fd7-00a0cc3e4a32}')!
+ClassBrowserAbstract guid: (Core.GUID fromString: '{87b4c6bc-026e-11d3-9fd7-00a0cc3e4a32}')!
 ClassBrowserAbstract comment: 'ClassBrowserAbstract is an abstract <SmalltalkToolShell> that implements most of the functionality required for a class browser development tool. Concrete subclasses implement the Class Hierarchy Browser and System Browser development tools.
 
 Instance Variables:
@@ -95,8 +95,7 @@ actualClassChainCategories
 
 	| categories |
 	categories := Set new.
-	self actualClassChain 
-		do: [:each | categories addAll: each methodCategories].
+	self actualClassChain do: [:each | categories addAll: each methodCategories].
 	^categories!
 
 actualClassChainMethods
@@ -107,13 +106,13 @@ actualClassChainMethods
 
 	| dict classes |
 	classes := self actualClassChain.
-	classes size = 1 
+	classes size = 1
 		ifTrue: [dict := classes first methodDictionary]
 		ifFalse: 
 			[dict := IdentityDictionary new.
 			classes reverseDo: 
-					[:eachClass | 
-					eachClass methodDictionary 
+					[:eachClass |
+					eachClass methodDictionary
 						keysAndValuesDo: [:eachSelector :eachMethod | dict at: eachSelector put: eachMethod]]].
 	^dict values!
 
@@ -144,9 +143,8 @@ addMethodProtocol
 	| actualClass newProtocol protocols protClass |
 	actualClass := self actualClass.
 	protClass := actualClass methodProtocolClass.
-	protocols := protClass allMethodProtocols 
-				asSortedCollection: [:a :b | a name < b name].
-	newProtocol := (ChoicePrompter 
+	protocols := protClass allMethodProtocols asSortedCollection: [:a :b | a name < b name].
+	newProtocol := (ChoicePrompter
 				create: 'Extensible choice prompter'
 				on: nil asValue
 				choices: protocols
@@ -154,8 +152,7 @@ addMethodProtocol
 				getTextBlock: [:protocol | protocol name];
 				newBlock: [:aString | protClass name: aString];
 				showModal.
-	newProtocol notNil 
-		ifTrue: [self model addClass: actualClass toProtocol: newProtocol]!
+	newProtocol notNil ifTrue: [self model addClass: actualClass toProtocol: newProtocol]!
 
 addProtocol: newProtocol to: class
 	"Private - Add the <MethodProtocol>, newProtocol, to the <ClassDescription>, class, if
@@ -208,7 +205,7 @@ addToCommandRoute: route
 		appendTarget: classesPresenter;
 		appendPresenter: self.!
 
-allCategoriesOfMethod: aCompiledMethod 
+allCategoriesOfMethod: aCompiledMethod
 	"Answer a collection of all the categories that contain the <CompiledMethod> argument, 
 	including any intermediate categories in the tree."
 
@@ -271,26 +268,26 @@ browseItCommand
 	| focus |
 	filterPresenter isNil ifTrue: [^nil].
 	focus := View focus.
-	focus == categoriesPresenter view 
+	focus == categoriesPresenter view
 		ifTrue: [^#browseMethodCategory]
 		ifFalse: 
-			[focus == protocolsPresenter view 
+			[focus == protocolsPresenter view
 				ifTrue: [^#browseMethodProtocol]
 				ifFalse: [focus == variablesPresenter view ifTrue: [^#browseInstVarReferences]]].
 	^nil!
 
-browseMessageDefinitionsIn: aBrowserEnvironment 
+browseMessageDefinitionsIn: aBrowserEnvironment
 	"Private - Prompt for a selector and open a method browser displaying all definitions of
 	that selector in the specified <BrowserEnvironment>."
 
-	(self systemModel promptForSelector: '' caption: 'Definitions of ...') 
+	(self systemModel promptForSelector: '' caption: 'Definitions of ...')
 		ifNotNil: [:search | Cursor wait showWhile: [self browseDefinitionsMatching: search in: aBrowserEnvironment]]!
 
-browseMessageReferencesIn: aBrowserEnvironment 
+browseMessageReferencesIn: aBrowserEnvironment
 	"Private - Prompt for a selector and open a method browser displaying the references to that
 	selector from methods defined in the specified <BrowserEnvironment>."
 
-	(self systemModel promptForSelector: '' caption: 'References to...') 
+	(self systemModel promptForSelector: '' caption: 'References to...')
 		ifNotNil: [:search | Cursor wait showWhile: [self browseReferencesMatching: search in: aBrowserEnvironment]]!
 
 browseMethodCategory
@@ -355,24 +352,24 @@ buildHistoryFutureMenu
 		text: 'Forward';
 		yourself!
 
-buildHistoryMenu: visits command: cmdSelector 
+buildHistoryMenu: visits command: cmdSelector
 	"Private - Answer a dynamically created past visit history menu."
 
 	| popup class subMenu selectors |
 	popup := Menu new.
 	class := nil.
 	visits keysAndValuesDo: 
-			[:i :m | 
+			[:i :m |
 			| mclass sel |
 			mclass := m methodClass.
-			mclass = class 
+			mclass = class
 				ifFalse: 
 					[selectors := IdentitySet new.
 					subMenu := popup addSubmenu: mclass name.
 					class := mclass].
 			sel := m selector.
 			"We only want to add each method to the menu once"
-			(selectors includes: sel) 
+			(selectors includes: sel)
 				ifFalse: 
 					[subMenu addCommand: (Message selector: cmdSelector argument: i) description: sel.
 					selectors add: sel].
@@ -481,20 +478,20 @@ createComponents
 	methodBrowserPresenter := self add: self methodBrowserClass new name: 'methodBrowser'.
 	methodBrowserPresenter methodsPresenter helpId: 10741.
 	workspaceClass := self workspaceClass.
-	definitionPresenter := self 
+	definitionPresenter := self
 				add: workspaceClass new
 				name: 'definition'
 				helpId: 10746.
-	categoriesPresenter := self 
+	categoriesPresenter := self
 				add: (TreePresenter on: (CategoryTreeModel new title: MethodCategory all))
 				name: 'categories'
 				helpId: 10740.
-	modePresenter := self 
+	modePresenter := self
 				add: RadioButtonSetPresenter new
 				name: 'mode'
 				helpId: 10752.
 	variablesPresenter := self add: (ListPresenter on: ListModel newEquality) name: 'variables'.
-	protocolsPresenter := self 
+	protocolsPresenter := self
 				add: ListPresenter new
 				name: 'protocols'
 				helpId: 10743.
@@ -696,13 +693,12 @@ deleteItCommand
 	focus := View focus.
 	focus == categoriesPresenter view ifTrue: [^#removeMethodCategory].
 	focus == protocolsPresenter view ifTrue: [^#removeMethodProtocol].
-	(self canRefactor and: [focus == variablesPresenter view]) 
-		ifTrue: [^#removeInstanceVariables].
+	(self canRefactor and: [focus == variablesPresenter view]) ifTrue: [^#removeInstanceVariables].
 	^nil!
 
 dropMethods: aDragDropSession onto: aClass
 	| changes isMove count |
-	changes := CompositeRefactoryChange new.
+	changes := Refactory.Browser.CompositeRefactoryChange new.
 	isMove := aDragDropSession isMove.
 	count := 0.
 	aDragDropSession dragObjects do: 
@@ -825,14 +821,14 @@ inspectIt
 	self perform: self inspectItCommand!
 
 inspectItCommand
-	filterPresenter notNil 
+	filterPresenter notNil
 		ifTrue: 
 			[| focus |
 			focus := View focus.
-			focus == categoriesPresenter view 
+			focus == categoriesPresenter view
 				ifTrue: [^#inspectMethodCategories]
 				ifFalse: 
-					[focus == protocolsPresenter view 
+					[focus == protocolsPresenter view
 						ifTrue: [^#inspectMethodProtocols]
 						ifFalse: [focus == variablesPresenter view ifTrue: [^#browseInstVarReferences]]]].
 	^nil!
@@ -893,12 +889,12 @@ isInstanceMode: aBoolean
 
 	modePresenter value: (aBoolean ifTrue: [#instanceMode] ifFalse: [#classMode])!
 
-isMethodFiltrate: aCompiledMethod 
+isMethodFiltrate: aCompiledMethod
 	"Private - Answer whether the <CompiledMethod> argument passes through the current method filter.
 	It is assumed that the method is from the currently displayed hierarchy."
 
 	self isFilterObjectMethods ifFalse: [^true].
-	^((self isInstanceMode ifTrue: [Object] ifFalse: [Object class]) 
+	^((self isInstanceMode ifTrue: [Object] ifFalse: [Object class])
 		includesBehavior: aCompiledMethod methodClass) not!
 
 isMethodVisible: aCompiledMethod 
@@ -1005,7 +1001,7 @@ onBrowserCardChanged
 				workspace updateErrorStatus.
 				self modifiedModel: workspace modifiedModel]!
 
-onCategory: aMethodCategory renameTo: aString accept: aValueHolder 
+onCategory: aMethodCategory renameTo: aString accept: aValueHolder
 	| newCategory newName |
 	newName := String writeStream.
 	(aMethodCategory subNames allButLast copyWith: aString) do: [:each | newName nextPutAll: each]
@@ -1067,7 +1063,7 @@ onClassSelected
 	| definition selection |
 	self promptToCopyChanges.
 	selection := self selectedClass.
-	definition := selection isNil 
+	definition := selection isNil
 				ifTrue: 
 					[methodBrowserPresenter
 						filter: [:method | false];
@@ -1085,7 +1081,7 @@ onClassSelected
 	self updateCaption.
 
 	"If we have a plugin as the current card then let it decide whether to show the class definition pane"
-	(self loadedPlugins includes: self currentCard) 
+	(self loadedPlugins includes: self currentCard)
 		ifFalse: 
 			[(self hasMethodSelected not and: [self isSourceCardVisible]) ifTrue: [self ensureDefinitionVisible]].
 	self trigger: #classSelected!
@@ -1141,32 +1137,32 @@ onDragCategory: aDragDropSession
 								and: [categories anySatisfy: [:eachCategory | eachCategory includesMethod: eachMethod]]]]).
 	self systemModel beginDrag: aDragDropSession methods: methods!
 
-onDragMethodsCut: aDragDropSession 
+onDragMethodsCut: aDragDropSession
 	"Private - The <DragDropSession>, session, has just completed a successful move operation. 
 	The receiver is now responsible for deleting the drag object from its origin."
 
 	| methods |
 	methods := OrderedCollection new.
 	aDragDropSession dragObjects do: 
-			[:each | 
-			(each isFormatAvailable: #CompiledMethod) 
+			[:each |
+			(each isFormatAvailable: #CompiledMethod)
 				ifTrue: 
 					[| method |
 					method := each format: #CompiledMethod.
 					methods add: method]].
 	self systemModel basicRemoveMethods: methods!
 
-onDragOverCategory: session 
+onDragOverCategory: session
 	"Private - The user is dragging over the category hierarchy pane.
 	Set the operation of the <DragDropSession>, session,
 	that would occur if a drop took place now of the objects in that session."
 
-	(session isTargetSameAsSource not and: [session isFormatAvailable: #CompiledMethod]) 
+	(session isTargetSameAsSource not and: [session isFormatAvailable: #CompiledMethod])
 		ifTrue: 
 			[| target op |
 			target := session suggestedTarget.
 			op := session intendedOperation.
-			(target notNil and: [target acceptsAdditions]) 
+			(target notNil and: [target acceptsAdditions])
 				ifTrue: 
 					[session
 						supportedOperations: #(#copy #move #link);
@@ -1176,26 +1172,26 @@ onDragOverCategory: session
 	"Set the operation to nil to signify that we don't want the drop"
 	session operation: nil!
 
-onDragOverMethod: aDragDropSession 
+onDragOverMethod: aDragDropSession
 	"Private - The user is dragging over the method list pane.
 	Set the operation of the <DragDropSession>, session,
 	that would occur if a drop took place now of the objects in that session."
 
-	aDragDropSession 
-		operation: ((aDragDropSession dragSource ~= aDragDropSession dropTarget 
-				and: [aDragDropSession isFormatAvailable: #CompiledMethod]) 
+	aDragDropSession
+		operation: ((aDragDropSession dragSource ~= aDragDropSession dropTarget
+				and: [aDragDropSession isFormatAvailable: #CompiledMethod])
 					ifTrue: [aDragDropSession intendedOperation])!
 
-onDragOverMode: aDragDropSession 
+onDragOverMode: aDragDropSession
 	"Private - The user is dragging over the instance/class mode selection tab.
 	Set the operation of the <DragDropSession> argument that would occur 
 	if a drop took place now of the objects in that session."
 
 	| allowDrop |
 	allowDrop := false.
-	(aDragDropSession isFormatAvailable: #CompiledMethod) 
+	(aDragDropSession isFormatAvailable: #CompiledMethod)
 		ifTrue: 
-			[aDragDropSession dragSource topView == self view topView 
+			[aDragDropSession dragSource topView == self view topView
 				ifTrue: 
 					["Drag was sourced from this class browser"
 					allowDrop := aDragDropSession suggestedTarget ~= modePresenter value]]
@@ -1208,7 +1204,8 @@ onDragProtocol: session
 	"Private - A protocol drag has been started. Just extend the available formats
 	to mention the availability of MethodProtocols."
 
-	session dragObjects do: [:dragee | dragee format: #MethodProtocol data: (dragee format: #Object)].!
+	session dragObjects
+		do: [:dragee | dragee format: #MethodProtocol data: (dragee format: #Object)]!
 
 onDragVariableRefs: aDragDropSession 
 	"Private - A drag of the methods referencing a particular variable has been started (useful
@@ -1427,21 +1424,19 @@ onModeSelectionChanged
 		newSelection: modePresenter value;
 		oldSelection: (classesPresenter isInstanceMode ifTrue: [#instanceMode] ifFalse: [#classMode]).
 	self onPromptToSaveMethodChanges: changingEvent.
-	changingEvent value 
+	changingEvent value
 		ifTrue: [classesPresenter isInstanceMode: changingEvent newSelection = #instanceMode]
 		ifFalse: [modePresenter noEventsDo: [modePresenter value: changingEvent oldSelection]]!
 
-onPackageDoubleClicked: aPoint 
+onPackageDoubleClicked: aPoint
 	"Private - The receiver's package status item was double clicked at the specified point.
 	Open the package browser on the package."
 
 	| package |
 	package := packageModel value.
-	package isNil 
+	package isNil
 		ifTrue: 
-			[classesPresenter hasSelection 
-				ifTrue: [classesPresenter classPackage]
-				ifFalse: [Sound errorBeep]]
+			[classesPresenter hasSelection ifTrue: [classesPresenter classPackage] ifFalse: [Sound errorBeep]]
 		ifFalse: [Cursor wait showWhile: [packageModel value browse]]!
 
 onPromptToSaveChanges: aSelectionChangingEvent
@@ -1519,18 +1514,19 @@ onProtocolUpdated: aMethodProtocol
 					protocolsPresenter model remove: aMethodProtocol]].
 	self method ifNotNil: [:method | self methodProtocols: method protocols]!
 
-onRenameInstVar: anAssociation to: aString 
+onRenameInstVar: anAssociation to: aString
 	"Private - Action an in-place inst var rename that passed validation."
 
 	"Implementation Note: Selection will be lost by #classUpdated: event, unless we explicitly maintain it"
 
 	| selections |
 	selections := variablesPresenter view selectionsByIndex.
-	(self model 
+	(self model
 		renameInstanceVariable: anAssociation value
 		to: aString
 		in: anAssociation key
-		within: BrowserEnvironment new) ifNotNil: [variablesPresenter view selectionsByIndex: selections]!
+		within: Refactory.Browser.BrowserEnvironment new)
+			ifNotNil: [variablesPresenter view selectionsByIndex: selections]!
 
 onRenameInstVar: anAssociation to: aString accept: aValueHolder
 	"Private - In-place inst var rename has been made by the user, validate it."
@@ -1683,7 +1679,7 @@ packageForNewMethod
 
 	^nil!
 
-packageNames: aCollection 
+packageNames: aCollection
 	"Set the receiver's package selection to include only those packages named in the argument.
 	This may have no effect if the receiver does not support filtering by package."
 
@@ -1734,10 +1730,9 @@ printCaptionForMethod: aCompiledMethod on: aWriteStream
 	aCompiledMethod displayOn: aWriteStream!
 
 printClassTitle: anObject on: target 
-	"Private - Print the 'title' of the currently selected class onto the <puttableStream>, target.
-	This includes a prefix for the package."
+	"Private - Print the 'title' of the currently selected class onto the <puttableStream>, target."
 
-	target display: anObject
+	target nextPutAll: anObject fullName
 !
 
 printShortCaptionForClass: aClass on: aWriteStream
@@ -1972,9 +1967,9 @@ recordMethodVisit
 		ifFalse: [history current: method]!
 
 reformatAll
-	(MessageBox 
-		confirm: 'Are you sure you want to reformat all methods in the currently selected class?<n><n>(The operation is undoable)' 
-				expandMacros) 
+	(MessageBox
+		confirm: 'Are you sure you want to reformat all methods in the currently selected class?<n><n>(The operation is undoable)'
+				expandMacros)
 			ifFalse: [^self].
 	self model reformatAllMethodsIn: classesPresenter selectionEnvironment!
 
@@ -2310,7 +2305,7 @@ sourceCardName
 statusModel
 	^statusModel!
 
-statusText: aString 
+statusText: aString
 	self statusModel value: (aString isNil ifFalse: [Notification new messageText: aString])!
 
 toggleFilterObjectMethods
@@ -2365,14 +2360,14 @@ updateCategories
 			(last isNil or: [(categoriesPresenter selection: last ifAbsent: []) ~= last])
 				ifTrue: [categoriesPresenter selection: allCategory]]!
 
-updateClass: aspectString presenter: aSmalltalkWorkspace source: sourceString 
+updateClass: aspectString presenter: aSmalltalkWorkspace source: sourceString
 	| class event |
 	class := self actualClass.
 	event := (SelectionChangingEvent forSource: self)
 				oldSelection: class;
 				newSelection: class;
 				yourself.
-	(aSmalltalkWorkspace prompt: aspectString toSaveChanges: event) 
+	(aSmalltalkWorkspace prompt: aspectString toSaveChanges: event)
 		ifTrue: [aSmalltalkWorkspace text: sourceString]!
 
 updateFilters
@@ -2464,13 +2459,13 @@ updateVariables
 			refresh the methods list"
 			self onVariableSelected]!
 
-validateProtocol: targetProtocol renameTo: newName 
+validateProtocol: targetProtocol renameTo: newName
 	"Private - Warn that renaming a protocol is not wise, especially if it already has conforming
 	classes."
 
 	| otherClasses msg |
 	msg := String writeStream.
-	(Object methodProtocolClass exists: newName) 
+	(Object methodProtocolClass exists: newName)
 		ifTrue: 
 			[msg
 				nextPutAll: 'You cannot rename ';
@@ -2480,10 +2475,10 @@ validateProtocol: targetProtocol renameTo: newName
 				nextPutAll: ' because a protocol with that name already exists'.
 			MessageBox errorMsg: msg contents.
 			^false].
-	otherClasses := (targetProtocol baseBehaviors)
+	otherClasses := targetProtocol baseBehaviors
 				remove: self actualClass ifAbsent: [];
 				yourself.
-	otherClasses isEmpty 
+	otherClasses isEmpty
 		ifTrue: 
 			[msg
 				nextPutAll: 'The protocol ';
@@ -2502,7 +2497,7 @@ validateProtocol: targetProtocol renameTo: newName
 				nextPutAll: 'with the following roots:';
 				cr.
 			otherClasses asSortedCollection do: 
-					[:c | 
+					[:c |
 					msg
 						crtab;
 						display: c].
@@ -2512,7 +2507,7 @@ validateProtocol: targetProtocol renameTo: newName
 				nextPutAll: 'If this protocol is renamed these classes or their clients may be adversely affected.';
 				cr;
 				nextPutAll: 'Are you sure that you would like to proceed (not recommended)?'].
-	^(MessageBox new)
+	^MessageBox new
 		defaultButton: 2;
 		caption: 'Renaming protocol ' , targetProtocol displayString;
 		confirm: msg contents!
@@ -2789,7 +2784,7 @@ classCommentIcon
 defaultAdditionalAccelerators
 	| accels |
 	accels := super defaultAdditionalAccelerators , #(#(#renameIt 'F2')).
-	Smalltalk developmentSystem canRefactor 
+	Smalltalk developmentSystem canRefactor
 		ifTrue: [accels := accels , #(#(#pushUpMethods 'Shift+Ctrl+6') #(#pushDownMethods 'Shift+Ctrl+7'))].
 	^accels!
 
@@ -2860,7 +2855,7 @@ plugins
 	"Answer the plugins installed by instances of the receiver"
 
 	plugins isNil ifTrue: [self plugins: self defaultPluginsCollection].
-	^SystemMetrics current hasInternetExplorerControl 
+	^SystemMetrics current hasInternetExplorerControl
 		ifTrue: [plugins]
 		ifFalse: 
 			["The CodeMentor plugin relies on the Internet Explorer control>"

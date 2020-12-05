@@ -121,8 +121,8 @@ publishedAspectsOfInstances
 	"Answer a <LookupTable> of the <Aspect>s published by instances of the receiver."
 
 	^(super publishedAspectsOfInstances)
-		add: (Aspect integer: #getSize);
-		add: (Aspect boolean: #isSingle);
+		add: (Smalltalk.Aspect integer: #getSize);
+		add: (Smalltalk.Aspect boolean: #isSingle);
 		yourself! !
 !ITEMIDLIST class categoriesFor: #publishedAspectsOfInstances!must strip!public! !
 

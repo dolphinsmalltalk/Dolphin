@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-SmalllintContext subclass: #SmalllintCachingContext
+Refactory.Browser.SmalllintContext subclass: #'Refactory.Browser.SmalllintCachingContext'
 	instanceVariableNames: ''
 	classVariableNames: 'Literals Mtx Selectors'
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-SmalllintCachingContext guid: (GUID fromString: '{8dc28c1a-eaf8-479b-9393-8e00da03fc44}')!
-SmalllintCachingContext comment: ''!
-!SmalllintCachingContext categoriesForClass!Refactory-Lint! !
-!SmalllintCachingContext methodsFor!
+Refactory.Browser.SmalllintCachingContext guid: (Core.GUID fromString: '{8dc28c1a-eaf8-479b-9393-8e00da03fc44}')!
+Refactory.Browser.SmalllintCachingContext comment: ''!
+!Refactory.Browser.SmalllintCachingContext categoriesForClass!Refactory-Lint! !
+!Refactory.Browser.SmalllintCachingContext methodsFor!
 
 computeLiterals
 	(Literals isNil or: [Selectors isNil]) 
@@ -37,13 +37,13 @@ selectors
 	selectors isNil ifTrue: [self computeLiterals].
 	^selectors
 ! !
-!SmalllintCachingContext categoriesFor: #computeLiterals!helpers!private! !
-!SmalllintCachingContext categoriesFor: #initialize!initialize/release!public! !
-!SmalllintCachingContext categoriesFor: #literals!accessing!public! !
-!SmalllintCachingContext categoriesFor: #mutex!accessing!private! !
-!SmalllintCachingContext categoriesFor: #selectors!accessing!public! !
+!Refactory.Browser.SmalllintCachingContext categoriesFor: #computeLiterals!helpers!private! !
+!Refactory.Browser.SmalllintCachingContext categoriesFor: #initialize!initialize/release!public! !
+!Refactory.Browser.SmalllintCachingContext categoriesFor: #literals!accessing!public! !
+!Refactory.Browser.SmalllintCachingContext categoriesFor: #mutex!accessing!private! !
+!Refactory.Browser.SmalllintCachingContext categoriesFor: #selectors!accessing!public! !
 
-!SmalllintCachingContext class methodsFor!
+!Refactory.Browser.SmalllintCachingContext class methodsFor!
 
 clearCache
 	Literals := Selectors := nil!
@@ -55,7 +55,7 @@ initialize
 	"
 
 	Mtx := Mutex new.
-	(self systemModel)
+	self systemModel
 		removeEventsTriggeredFor: self;
 		when: #methodAdded:
 			send: #clearCache
@@ -84,9 +84,9 @@ systemModel
 uninitialize
 	self clearCache.
 	self systemModel removeEventsTriggeredFor: self! !
-!SmalllintCachingContext class categoriesFor: #clearCache!operations!private! !
-!SmalllintCachingContext class categoriesFor: #initialize!class initialization!private! !
-!SmalllintCachingContext class categoriesFor: #isSafeToEncryptWithProductProtection!constants!public!testing! !
-!SmalllintCachingContext class categoriesFor: #systemModel!accessing!private! !
-!SmalllintCachingContext class categoriesFor: #uninitialize!class initialization!private! !
+!Refactory.Browser.SmalllintCachingContext class categoriesFor: #clearCache!operations!private! !
+!Refactory.Browser.SmalllintCachingContext class categoriesFor: #initialize!class initialization!private! !
+!Refactory.Browser.SmalllintCachingContext class categoriesFor: #isSafeToEncryptWithProductProtection!constants!public!testing! !
+!Refactory.Browser.SmalllintCachingContext class categoriesFor: #systemModel!accessing!private! !
+!Refactory.Browser.SmalllintCachingContext class categoriesFor: #uninitialize!class initialization!private! !
 

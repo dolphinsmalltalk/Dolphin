@@ -1,16 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Shell subclass: #SmalltalkToolShell
+UI.Shell subclass: #SmalltalkToolShell
 	instanceVariableNames: 'searchPresenter fontSizePresenter'
 	classVariableNames: 'HistoryDwellTime SearchFieldFlashes'
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: 'optionFlags defaultView defaultExtent defaultSlideyPinsMap additionalKeyBindings commandQueryHandlers'
 	classConstants: {
 		'CanUseIdeaSpaceMask' -> 16r2.
 		'ReuseIfOpenMask' -> 16r1
 	}!
-SmalltalkToolShell guid: (GUID fromString: '{87b4c6a0-026e-11d3-9fd7-00a0cc3e4a32}')!
-SmalltalkToolShell isAbstract: true!
+SmalltalkToolShell guid: (Core.GUID fromString: '{87b4c6a0-026e-11d3-9fd7-00a0cc3e4a32}')!
+SmalltalkToolShell isNonInstantiable: true!
 SmalltalkToolShell comment: 'SmalltalkToolShell is an abstract <topPresenter> providing umbrella functionality for most of the Dolphin development tools. 
 
 All of the tools have the singleton instance of SmalltalkSystem as their model. This makes sense because the SmalltalkSystem is effectively a Facade onto the Smalltalk development image; all user interface modifications to the image should go through this central point. In this way, a tool is effectively acting as a view onto the development image. It is also convenient since all <model>s are also <commandTarget>s. This means that some user interface commands can be directly picked up and acted upon by the SmalltalkSystem without any intervention being required from the tool itself.
@@ -70,7 +70,7 @@ createComponents
 	"Private - Create the presenters contained by the receiver"
 
 	super createComponents.
-	searchPresenter := self 
+	searchPresenter := self
 				add: SmalltalkSearchPresenter new
 				name: 'search'
 				helpId: 10510.
@@ -87,7 +87,7 @@ createSchematicWiring
 		withArguments: {nil. self}!
 
 displayOn: aPuttableStream
-	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that an end-user might want to see."
+	"Append to the <puttableStream> argument a String whose characters are a representation of the receiver that an end-user might want to see."
 
 	aPuttableStream nextPutAll: self shortCaption!
 
@@ -276,11 +276,11 @@ searchForObject: anObject
 searchForPackage: aPackage 
 	^aPackage browse!
 
-searchForSymbol: aSymbol 
-	self 
+searchForSymbol: aSymbol
+	self
 		routeCommand: (CommandDescription command: (Message selector: #browseMethodsInEnvironments:
 						argument: (self systemModel messagesMatching: (MethodSearch newSelector: aSymbol)
-								in: BrowserEnvironment new)))!
+								in: Refactory.Browser.BrowserEnvironment new)))!
 
 searchSmalltalk
 	| searchView |

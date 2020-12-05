@@ -1,12 +1,12 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-BrowserEnvironmentTest subclass: #PackageEnvironmentTest
+Refactory.Browser.Tests.BrowserEnvironmentTest subclass: #PackageEnvironmentTest
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-PackageEnvironmentTest guid: (GUID fromString: '{4375158a-0238-45ad-86e5-967559575ded}')!
+PackageEnvironmentTest guid: (Core.GUID fromString: '{4375158a-0238-45ad-86e5-967559575ded}')!
 PackageEnvironmentTest comment: 'SUnitBrowser openOnTestCase: self'!
 !PackageEnvironmentTest categoriesForClass!Refactory-Testing! !
 !PackageEnvironmentTest methodsFor!
@@ -19,7 +19,7 @@ classNamesFor: aPackageEnvironment
 	classNames := aPackageEnvironment classNames asSet
 				addAll: aPackageEnvironment not classNames;
 				yourself.
-	allClassNames := BrowserEnvironment new classNames.
+	allClassNames := Refactory.Browser.BrowserEnvironment new classNames.
 	self assert: classNames equals: allClassNames.
 	"	looseClasses := Set new.
 	aPackageEnvironment packageNames do: [:eachPak | (Package manager packageNamed: eachPak) methods 

@@ -1,12 +1,12 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Dialog subclass: #ClosedCommandDescriptionIssueDialog
+UI.Dialog subclass: #ClosedCommandDescriptionIssueDialog
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ClosedCommandDescriptionIssueDialog guid: (GUID fromString: '{2c4a1983-3026-4a8f-a9d4-6f33dd5bea95}')!
+ClosedCommandDescriptionIssueDialog guid: (Core.GUID fromString: '{2c4a1983-3026-4a8f-a9d4-6f33dd5bea95}')!
 ClosedCommandDescriptionIssueDialog comment: ''!
 !ClosedCommandDescriptionIssueDialog categoriesForClass!MVP-Presenters! !
 !ClosedCommandDescriptionIssueDialog methodsFor!

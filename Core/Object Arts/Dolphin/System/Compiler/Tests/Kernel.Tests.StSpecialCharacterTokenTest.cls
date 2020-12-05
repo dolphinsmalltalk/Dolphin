@@ -1,14 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-StValueTokenTest subclass: #StSpecialCharacterTokenTest
+Kernel.Tests.StValueTokenTest subclass: #'Kernel.Tests.StSpecialCharacterTokenTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-StSpecialCharacterTokenTest guid: (GUID fromString: '{adf66b34-f041-4d5f-bb4f-0843ea9096eb}')!
-StSpecialCharacterTokenTest comment: ''!
-!StSpecialCharacterTokenTest categoriesForClass!Unclassified! !
-!StSpecialCharacterTokenTest methodsFor!
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Kernel.Tests.StSpecialCharacterTokenTest guid: (Core.GUID fromString: '{adf66b34-f041-4d5f-bb4f-0843ea9096eb}')!
+Kernel.Tests.StSpecialCharacterTokenTest comment: ''!
+!Kernel.Tests.StSpecialCharacterTokenTest categoriesForClass!Unclassified! !
+!Kernel.Tests.StSpecialCharacterTokenTest methodsFor!
 
 exampleSource
 	^':'!
@@ -18,7 +19,7 @@ exampleValue
 
 subjectClass
 	^StSpecialCharacterToken! !
-!StSpecialCharacterTokenTest categoriesFor: #exampleSource!constants!private! !
-!StSpecialCharacterTokenTest categoriesFor: #exampleValue!constants!private! !
-!StSpecialCharacterTokenTest categoriesFor: #subjectClass!constants!private! !
+!Kernel.Tests.StSpecialCharacterTokenTest categoriesFor: #exampleSource!constants!private! !
+!Kernel.Tests.StSpecialCharacterTokenTest categoriesFor: #exampleValue!constants!private! !
+!Kernel.Tests.StSpecialCharacterTokenTest categoriesFor: #subjectClass!constants!private! !
 

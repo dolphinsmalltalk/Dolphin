@@ -1,17 +1,17 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Object subclass: #DolphinCompilerTestMethods
+Core.Object subclass: #'Kernel.Tests.DolphinCompilerTestMethods'
 	instanceVariableNames: 'iv1 iv2'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'Const' -> 16r1
 	}!
-DolphinCompilerTestMethods guid: (GUID fromString: '{c6d8841d-910d-434f-9fec-9d821dd7a202}')!
-DolphinCompilerTestMethods comment: ''!
-!DolphinCompilerTestMethods categoriesForClass!Kernel-Objects! !
-!DolphinCompilerTestMethods methodsFor!
+Kernel.Tests.DolphinCompilerTestMethods guid: (Core.GUID fromString: '{c6d8841d-910d-434f-9fec-9d821dd7a202}')!
+Kernel.Tests.DolphinCompilerTestMethods comment: ''!
+!Kernel.Tests.DolphinCompilerTestMethods categoriesForClass!Kernel-Objects! !
+!Kernel.Tests.DolphinCompilerTestMethods methodsFor!
 
 ~~ x
 	^super ~~ x!
@@ -504,87 +504,87 @@ testWarnUndefinedSelector
 
 testWarnUnimplementedAbstractMethod
 	^self subclassResponsibility! !
-!DolphinCompilerTestMethods categoriesFor: #~~!public!unit tests! !
-!DolphinCompilerTestMethods categoriesFor: #==!public!unit tests! !
-!DolphinCompilerTestMethods categoriesFor: #basicSize!public!unit tests! !
-!DolphinCompilerTestMethods categoriesFor: #ifNil:!public!unit tests! !
-!DolphinCompilerTestMethods categoriesFor: #ifNil:ifNotNil:!public!unit tests! !
-!DolphinCompilerTestMethods categoriesFor: #testBlockWithAllTempTypes!public!unit tests! !
-!DolphinCompilerTestMethods categoriesFor: #testCopyingBlocks1!public!unit tests! !
-!DolphinCompilerTestMethods categoriesFor: #testCopyingBlocks2!public!unit tests! !
-!DolphinCompilerTestMethods categoriesFor: #testImmutableLiterals!public!unit tests! !
-!DolphinCompilerTestMethods categoriesFor: #testIncrementOptimisationMNU!public!unit tests! !
-!DolphinCompilerTestMethods categoriesFor: #testIncrementPushTempOptimisation!public!unit tests! !
-!DolphinCompilerTestMethods categoriesFor: #testIncrementPushTempOptimisationFloat!public!unit tests! !
-!DolphinCompilerTestMethods categoriesFor: #testIncrementPushTempOptimisationLargeInt!public!unit tests! !
-!DolphinCompilerTestMethods categoriesFor: #testIncrementPushTempOptimisationLong!public!unit tests! !
-!DolphinCompilerTestMethods categoriesFor: #testIncrementPushTempOptimisationMNU!public!unit tests! !
-!DolphinCompilerTestMethods categoriesFor: #testIncrementPushTempOptimisationOverflow!public!unit tests! !
-!DolphinCompilerTestMethods categoriesFor: #testIncrementTempOptimisation!public!unit tests! !
-!DolphinCompilerTestMethods categoriesFor: #testIncrementTempOptimisationFloat!public!unit tests! !
-!DolphinCompilerTestMethods categoriesFor: #testIncrementTempOptimisationLargeInt!public!unit tests! !
-!DolphinCompilerTestMethods categoriesFor: #testIncrementTempOptimisationLong!public!unit tests! !
-!DolphinCompilerTestMethods categoriesFor: #testIncrementTempOptimisationMNU!public!unit tests! !
-!DolphinCompilerTestMethods categoriesFor: #testIncrementTempOptimisationOverflow!public!unit tests! !
-!DolphinCompilerTestMethods categoriesFor: #testInfoHardBreakpoint!public!unit tests! !
-!DolphinCompilerTestMethods categoriesFor: #testInfoHardBreakpointInBlock!public!unit tests! !
-!DolphinCompilerTestMethods categoriesFor: #testInfoSupersendsOther!public!unit tests! !
-!DolphinCompilerTestMethods categoriesFor: #testInfoUnreferencedArgBlock!public!unit tests! !
-!DolphinCompilerTestMethods categoriesFor: #testInfoUnreferencedArgMethod:!public!unit tests! !
-!DolphinCompilerTestMethods categoriesFor: #testInfoUnreferencedArgOptimizedBlock!public!unit tests! !
-!DolphinCompilerTestMethods categoriesFor: #testMaximumBlockNesting!public! !
-!DolphinCompilerTestMethods categoriesFor: #testNestedCopyingBlocks!public!unit tests! !
-!DolphinCompilerTestMethods categoriesFor: #testNestedWhileTrueAtStartOfCleanBlock!public!unit tests! !
-!DolphinCompilerTestMethods categoriesFor: #testOverriddenBlockArgumentWarning!public!unit tests! !
-!DolphinCompilerTestMethods categoriesFor: #testOverriddenMethodArgumentWarning:!public!unit tests! !
-!DolphinCompilerTestMethods categoriesFor: #testReturnFalse!public!unit tests! !
-!DolphinCompilerTestMethods categoriesFor: #testReturnFromOptimizedBlock!public!unit tests! !
-!DolphinCompilerTestMethods categoriesFor: #testReturnNil!public!unit tests! !
-!DolphinCompilerTestMethods categoriesFor: #testReturnTrue!public!unit tests! !
-!DolphinCompilerTestMethods categoriesFor: #testSharedOuterTemps1!public!unit tests! !
-!DolphinCompilerTestMethods categoriesFor: #testSharedOuterTemps2!public!unit tests! !
-!DolphinCompilerTestMethods categoriesFor: #testTempsMapInlinedReturn!public!unit tests! !
-!DolphinCompilerTestMethods categoriesFor: #testTempsMapNestedFullBlocks!public!unit tests! !
-!DolphinCompilerTestMethods categoriesFor: #testTempsMapNestedFullInOptimized!public!unit tests! !
-!DolphinCompilerTestMethods categoriesFor: #testWarningCantOptimizeLoop!public! !
-!DolphinCompilerTestMethods categoriesFor: #testWarningMutableIgnored!public!unit tests! !
-!DolphinCompilerTestMethods categoriesFor: #testWarningReadBeforeWrittenBlockTemp!public!unit tests! !
-!DolphinCompilerTestMethods categoriesFor: #testWarningReadBeforeWrittenFullBlock!public!unit tests! !
-!DolphinCompilerTestMethods categoriesFor: #testWarningReadBeforeWrittenMethodTemp!public!unit tests! !
-!DolphinCompilerTestMethods categoriesFor: #testWarningReadNotWrittenBlockTemp!public!unit tests! !
-!DolphinCompilerTestMethods categoriesFor: #testWarningReadNotWrittenMethodTemp!public!unit tests! !
-!DolphinCompilerTestMethods categoriesFor: #testWarningReadNotWrittenOptimizedBlockTemp!public!unit tests! !
-!DolphinCompilerTestMethods categoriesFor: #testWarningRedefiningArgInOptimizedBlock:!public!unit tests! !
-!DolphinCompilerTestMethods categoriesFor: #testWarningRedefiningBlockArgInBlock!public!unit tests! !
-!DolphinCompilerTestMethods categoriesFor: #testWarningRedefiningInstVarAsArg:!public!unit tests! !
-!DolphinCompilerTestMethods categoriesFor: #testWarningRedefiningInstVarAsBlockArg!public!unit tests! !
-!DolphinCompilerTestMethods categoriesFor: #testWarningRedefiningInstVarAsBlockTemp!public!unit tests! !
-!DolphinCompilerTestMethods categoriesFor: #testWarningRedefiningInstVarAsOptimizedBlockArg!public!unit tests! !
-!DolphinCompilerTestMethods categoriesFor: #testWarningRedefiningInstVarAsOptimizedBlockTemp!public!unit tests! !
-!DolphinCompilerTestMethods categoriesFor: #testWarningRedefiningInstVarAsTemp!public!unit tests! !
-!DolphinCompilerTestMethods categoriesFor: #testWarningRedefiningMethodArgInBlock:!public!unit tests! !
-!DolphinCompilerTestMethods categoriesFor: #testWarningRedefiningStaticAsArg:!public!unit tests! !
-!DolphinCompilerTestMethods categoriesFor: #testWarningRedefiningStaticAsBlockArg!public!unit tests! !
-!DolphinCompilerTestMethods categoriesFor: #testWarningRedefiningStaticAsBlockTemp!public!unit tests! !
-!DolphinCompilerTestMethods categoriesFor: #testWarningRedefiningStaticAsBlockTemp:x:!public!unit tests! !
-!DolphinCompilerTestMethods categoriesFor: #testWarningRedefiningStaticAsTemp!public!unit tests! !
-!DolphinCompilerTestMethods categoriesFor: #testWarningUnreachable!public!unit tests! !
-!DolphinCompilerTestMethods categoriesFor: #testWarningUnreferencedTempBlock!public!unit tests! !
-!DolphinCompilerTestMethods categoriesFor: #testWarningUnreferencedTempBraceArray!public!unit tests! !
-!DolphinCompilerTestMethods categoriesFor: #testWarningUnreferencedTempMethod!public!unit tests! !
-!DolphinCompilerTestMethods categoriesFor: #testWarningUnreferencedTempOptimizedBlock!public!unit tests! !
-!DolphinCompilerTestMethods categoriesFor: #testWarningUsesFalse!public!unit tests! !
-!DolphinCompilerTestMethods categoriesFor: #testWarningUsesTrue!public!unit tests! !
-!DolphinCompilerTestMethods categoriesFor: #testWarningWrittenNotReadBlockTemp!public!unit tests! !
-!DolphinCompilerTestMethods categoriesFor: #testWarningWrittenNotReadBraceArray!public!unit tests! !
-!DolphinCompilerTestMethods categoriesFor: #testWarningWrittenNotReadFullBlock!public!unit tests! !
-!DolphinCompilerTestMethods categoriesFor: #testWarningWrittenNotReadMethodTemp!public!unit tests! !
-!DolphinCompilerTestMethods categoriesFor: #testWarnMsgUnimplementedByConst!public!unit tests! !
-!DolphinCompilerTestMethods categoriesFor: #testWarnMsgUnimplementedByNil!public!unit tests! !
-!DolphinCompilerTestMethods categoriesFor: #testWarnMsgUnimplementedBySelf!public!unit tests! !
-!DolphinCompilerTestMethods categoriesFor: #testWarnMsgUnimplementedBySuper!public!unit tests! !
-!DolphinCompilerTestMethods categoriesFor: #testWarnNiladicExceptionHandler!public!unit tests! !
-!DolphinCompilerTestMethods categoriesFor: #testWarnNonNiladicGuardedBlock!public!unit tests! !
-!DolphinCompilerTestMethods categoriesFor: #testWarnUndefinedSelector!public!unit tests! !
-!DolphinCompilerTestMethods categoriesFor: #testWarnUnimplementedAbstractMethod!public!unit tests! !
+!Kernel.Tests.DolphinCompilerTestMethods categoriesFor: #~~!public!unit tests! !
+!Kernel.Tests.DolphinCompilerTestMethods categoriesFor: #==!public!unit tests! !
+!Kernel.Tests.DolphinCompilerTestMethods categoriesFor: #basicSize!public!unit tests! !
+!Kernel.Tests.DolphinCompilerTestMethods categoriesFor: #ifNil:!public!unit tests! !
+!Kernel.Tests.DolphinCompilerTestMethods categoriesFor: #ifNil:ifNotNil:!public!unit tests! !
+!Kernel.Tests.DolphinCompilerTestMethods categoriesFor: #testBlockWithAllTempTypes!public!unit tests! !
+!Kernel.Tests.DolphinCompilerTestMethods categoriesFor: #testCopyingBlocks1!public!unit tests! !
+!Kernel.Tests.DolphinCompilerTestMethods categoriesFor: #testCopyingBlocks2!public!unit tests! !
+!Kernel.Tests.DolphinCompilerTestMethods categoriesFor: #testImmutableLiterals!public!unit tests! !
+!Kernel.Tests.DolphinCompilerTestMethods categoriesFor: #testIncrementOptimisationMNU!public!unit tests! !
+!Kernel.Tests.DolphinCompilerTestMethods categoriesFor: #testIncrementPushTempOptimisation!public!unit tests! !
+!Kernel.Tests.DolphinCompilerTestMethods categoriesFor: #testIncrementPushTempOptimisationFloat!public!unit tests! !
+!Kernel.Tests.DolphinCompilerTestMethods categoriesFor: #testIncrementPushTempOptimisationLargeInt!public!unit tests! !
+!Kernel.Tests.DolphinCompilerTestMethods categoriesFor: #testIncrementPushTempOptimisationLong!public!unit tests! !
+!Kernel.Tests.DolphinCompilerTestMethods categoriesFor: #testIncrementPushTempOptimisationMNU!public!unit tests! !
+!Kernel.Tests.DolphinCompilerTestMethods categoriesFor: #testIncrementPushTempOptimisationOverflow!public!unit tests! !
+!Kernel.Tests.DolphinCompilerTestMethods categoriesFor: #testIncrementTempOptimisation!public!unit tests! !
+!Kernel.Tests.DolphinCompilerTestMethods categoriesFor: #testIncrementTempOptimisationFloat!public!unit tests! !
+!Kernel.Tests.DolphinCompilerTestMethods categoriesFor: #testIncrementTempOptimisationLargeInt!public!unit tests! !
+!Kernel.Tests.DolphinCompilerTestMethods categoriesFor: #testIncrementTempOptimisationLong!public!unit tests! !
+!Kernel.Tests.DolphinCompilerTestMethods categoriesFor: #testIncrementTempOptimisationMNU!public!unit tests! !
+!Kernel.Tests.DolphinCompilerTestMethods categoriesFor: #testIncrementTempOptimisationOverflow!public!unit tests! !
+!Kernel.Tests.DolphinCompilerTestMethods categoriesFor: #testInfoHardBreakpoint!public!unit tests! !
+!Kernel.Tests.DolphinCompilerTestMethods categoriesFor: #testInfoHardBreakpointInBlock!public!unit tests! !
+!Kernel.Tests.DolphinCompilerTestMethods categoriesFor: #testInfoSupersendsOther!public!unit tests! !
+!Kernel.Tests.DolphinCompilerTestMethods categoriesFor: #testInfoUnreferencedArgBlock!public!unit tests! !
+!Kernel.Tests.DolphinCompilerTestMethods categoriesFor: #testInfoUnreferencedArgMethod:!public!unit tests! !
+!Kernel.Tests.DolphinCompilerTestMethods categoriesFor: #testInfoUnreferencedArgOptimizedBlock!public!unit tests! !
+!Kernel.Tests.DolphinCompilerTestMethods categoriesFor: #testMaximumBlockNesting!public! !
+!Kernel.Tests.DolphinCompilerTestMethods categoriesFor: #testNestedCopyingBlocks!public!unit tests! !
+!Kernel.Tests.DolphinCompilerTestMethods categoriesFor: #testNestedWhileTrueAtStartOfCleanBlock!public!unit tests! !
+!Kernel.Tests.DolphinCompilerTestMethods categoriesFor: #testOverriddenBlockArgumentWarning!public!unit tests! !
+!Kernel.Tests.DolphinCompilerTestMethods categoriesFor: #testOverriddenMethodArgumentWarning:!public!unit tests! !
+!Kernel.Tests.DolphinCompilerTestMethods categoriesFor: #testReturnFalse!public!unit tests! !
+!Kernel.Tests.DolphinCompilerTestMethods categoriesFor: #testReturnFromOptimizedBlock!public!unit tests! !
+!Kernel.Tests.DolphinCompilerTestMethods categoriesFor: #testReturnNil!public!unit tests! !
+!Kernel.Tests.DolphinCompilerTestMethods categoriesFor: #testReturnTrue!public!unit tests! !
+!Kernel.Tests.DolphinCompilerTestMethods categoriesFor: #testSharedOuterTemps1!public!unit tests! !
+!Kernel.Tests.DolphinCompilerTestMethods categoriesFor: #testSharedOuterTemps2!public!unit tests! !
+!Kernel.Tests.DolphinCompilerTestMethods categoriesFor: #testTempsMapInlinedReturn!public!unit tests! !
+!Kernel.Tests.DolphinCompilerTestMethods categoriesFor: #testTempsMapNestedFullBlocks!public!unit tests! !
+!Kernel.Tests.DolphinCompilerTestMethods categoriesFor: #testTempsMapNestedFullInOptimized!public!unit tests! !
+!Kernel.Tests.DolphinCompilerTestMethods categoriesFor: #testWarningCantOptimizeLoop!public! !
+!Kernel.Tests.DolphinCompilerTestMethods categoriesFor: #testWarningMutableIgnored!public!unit tests! !
+!Kernel.Tests.DolphinCompilerTestMethods categoriesFor: #testWarningReadBeforeWrittenBlockTemp!public!unit tests! !
+!Kernel.Tests.DolphinCompilerTestMethods categoriesFor: #testWarningReadBeforeWrittenFullBlock!public!unit tests! !
+!Kernel.Tests.DolphinCompilerTestMethods categoriesFor: #testWarningReadBeforeWrittenMethodTemp!public!unit tests! !
+!Kernel.Tests.DolphinCompilerTestMethods categoriesFor: #testWarningReadNotWrittenBlockTemp!public!unit tests! !
+!Kernel.Tests.DolphinCompilerTestMethods categoriesFor: #testWarningReadNotWrittenMethodTemp!public!unit tests! !
+!Kernel.Tests.DolphinCompilerTestMethods categoriesFor: #testWarningReadNotWrittenOptimizedBlockTemp!public!unit tests! !
+!Kernel.Tests.DolphinCompilerTestMethods categoriesFor: #testWarningRedefiningArgInOptimizedBlock:!public!unit tests! !
+!Kernel.Tests.DolphinCompilerTestMethods categoriesFor: #testWarningRedefiningBlockArgInBlock!public!unit tests! !
+!Kernel.Tests.DolphinCompilerTestMethods categoriesFor: #testWarningRedefiningInstVarAsArg:!public!unit tests! !
+!Kernel.Tests.DolphinCompilerTestMethods categoriesFor: #testWarningRedefiningInstVarAsBlockArg!public!unit tests! !
+!Kernel.Tests.DolphinCompilerTestMethods categoriesFor: #testWarningRedefiningInstVarAsBlockTemp!public!unit tests! !
+!Kernel.Tests.DolphinCompilerTestMethods categoriesFor: #testWarningRedefiningInstVarAsOptimizedBlockArg!public!unit tests! !
+!Kernel.Tests.DolphinCompilerTestMethods categoriesFor: #testWarningRedefiningInstVarAsOptimizedBlockTemp!public!unit tests! !
+!Kernel.Tests.DolphinCompilerTestMethods categoriesFor: #testWarningRedefiningInstVarAsTemp!public!unit tests! !
+!Kernel.Tests.DolphinCompilerTestMethods categoriesFor: #testWarningRedefiningMethodArgInBlock:!public!unit tests! !
+!Kernel.Tests.DolphinCompilerTestMethods categoriesFor: #testWarningRedefiningStaticAsArg:!public!unit tests! !
+!Kernel.Tests.DolphinCompilerTestMethods categoriesFor: #testWarningRedefiningStaticAsBlockArg!public!unit tests! !
+!Kernel.Tests.DolphinCompilerTestMethods categoriesFor: #testWarningRedefiningStaticAsBlockTemp!public!unit tests! !
+!Kernel.Tests.DolphinCompilerTestMethods categoriesFor: #testWarningRedefiningStaticAsBlockTemp:x:!public!unit tests! !
+!Kernel.Tests.DolphinCompilerTestMethods categoriesFor: #testWarningRedefiningStaticAsTemp!public!unit tests! !
+!Kernel.Tests.DolphinCompilerTestMethods categoriesFor: #testWarningUnreachable!public!unit tests! !
+!Kernel.Tests.DolphinCompilerTestMethods categoriesFor: #testWarningUnreferencedTempBlock!public!unit tests! !
+!Kernel.Tests.DolphinCompilerTestMethods categoriesFor: #testWarningUnreferencedTempBraceArray!public!unit tests! !
+!Kernel.Tests.DolphinCompilerTestMethods categoriesFor: #testWarningUnreferencedTempMethod!public!unit tests! !
+!Kernel.Tests.DolphinCompilerTestMethods categoriesFor: #testWarningUnreferencedTempOptimizedBlock!public!unit tests! !
+!Kernel.Tests.DolphinCompilerTestMethods categoriesFor: #testWarningUsesFalse!public!unit tests! !
+!Kernel.Tests.DolphinCompilerTestMethods categoriesFor: #testWarningUsesTrue!public!unit tests! !
+!Kernel.Tests.DolphinCompilerTestMethods categoriesFor: #testWarningWrittenNotReadBlockTemp!public!unit tests! !
+!Kernel.Tests.DolphinCompilerTestMethods categoriesFor: #testWarningWrittenNotReadBraceArray!public!unit tests! !
+!Kernel.Tests.DolphinCompilerTestMethods categoriesFor: #testWarningWrittenNotReadFullBlock!public!unit tests! !
+!Kernel.Tests.DolphinCompilerTestMethods categoriesFor: #testWarningWrittenNotReadMethodTemp!public!unit tests! !
+!Kernel.Tests.DolphinCompilerTestMethods categoriesFor: #testWarnMsgUnimplementedByConst!public!unit tests! !
+!Kernel.Tests.DolphinCompilerTestMethods categoriesFor: #testWarnMsgUnimplementedByNil!public!unit tests! !
+!Kernel.Tests.DolphinCompilerTestMethods categoriesFor: #testWarnMsgUnimplementedBySelf!public!unit tests! !
+!Kernel.Tests.DolphinCompilerTestMethods categoriesFor: #testWarnMsgUnimplementedBySuper!public!unit tests! !
+!Kernel.Tests.DolphinCompilerTestMethods categoriesFor: #testWarnNiladicExceptionHandler!public!unit tests! !
+!Kernel.Tests.DolphinCompilerTestMethods categoriesFor: #testWarnNonNiladicGuardedBlock!public!unit tests! !
+!Kernel.Tests.DolphinCompilerTestMethods categoriesFor: #testWarnUndefinedSelector!public!unit tests! !
+!Kernel.Tests.DolphinCompilerTestMethods categoriesFor: #testWarnUnimplementedAbstractMethod!public!unit tests! !
 

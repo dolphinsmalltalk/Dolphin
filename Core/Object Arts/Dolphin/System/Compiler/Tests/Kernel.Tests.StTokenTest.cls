@@ -1,17 +1,18 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-DolphinTest subclass: #StTokenTest
+Core.Tests.DolphinTest subclass: #'Kernel.Tests.StTokenTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-StTokenTest guid: (GUID fromString: '{944596e9-aab5-4b72-85ee-a051a4913fd7}')!
-StTokenTest isAbstract: true!
-StTokenTest comment: ''!
-!StTokenTest categoriesForClass!Unclassified! !
-!StTokenTest methodsFor!
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Kernel.Tests.StTokenTest guid: (Core.GUID fromString: '{944596e9-aab5-4b72-85ee-a051a4913fd7}')!
+Kernel.Tests.StTokenTest isNonInstantiable: true!
+Kernel.Tests.StTokenTest comment: ''!
+!Kernel.Tests.StTokenTest categoriesForClass!Unclassified! !
+!Kernel.Tests.StTokenTest methodsFor!
 
 subjectClass
 	^self subclassResponsibility! !
-!StTokenTest categoriesFor: #subjectClass!constants!private! !
+!Kernel.Tests.StTokenTest categoriesFor: #subjectClass!constants!private! !
 

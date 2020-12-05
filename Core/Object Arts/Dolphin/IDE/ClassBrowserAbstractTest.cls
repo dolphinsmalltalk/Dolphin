@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-DolphinTest subclass: #ClassBrowserAbstractTest
+Core.Tests.DolphinTest subclass: #ClassBrowserAbstractTest
 	instanceVariableNames: 'browser methodsPresenter packageA plugins'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ClassBrowserAbstractTest guid: (GUID fromString: '{fa025e63-3880-48ae-82d4-4b3172d507cc}')!
-ClassBrowserAbstractTest isAbstract: true!
+ClassBrowserAbstractTest guid: (Core.GUID fromString: '{fa025e63-3880-48ae-82d4-4b3172d507cc}')!
+ClassBrowserAbstractTest isNonInstantiable: true!
 ClassBrowserAbstractTest comment: ''!
 !ClassBrowserAbstractTest categoriesForClass!Unclassified! !
 !ClassBrowserAbstractTest methodsFor!
@@ -57,7 +57,7 @@ inheritedMethodAddRemoveTests
 				self assertIsOnlyMethodVisible: method].
 
 	"Add a couple of methods to an unrelated hierarchy, but with the same selector as something in the hierarchy"
-	{ProtoObject -> 'blah'. BooleanTest -> 'blah'} do: 
+	{ProtoObject -> 'blah'. Core.Tests.BooleanTest -> 'blah'} do: 
 			[:each |
 			method := each key
 						compile: each value
@@ -135,7 +135,7 @@ inheritedMethodAddRemoveTests
 			self assertIsOnlyMethodVisible: (ClassBrowserAbstractTest compiledMethodAt: each value)].
 
 	"Remove methods not in the hierarchy, but which has an implementation in this hierarchy"
-	{ProtoObject. BooleanTest} do: 
+	{ProtoObject. Core.Tests.BooleanTest} do: 
 			[:each |
 			method := each removeSelector: 'blah' asSymbol.
 			self assertIsOnlyMethodVisible: (ClassBrowserAbstractTest compiledMethodAt: method selector)].
@@ -183,7 +183,7 @@ setUp
 					a := each -> each plugins.
 					each plugins: #().
 					a].
-	packageA := DolphinTestPackages current a!
+	packageA := Core.Tests.DolphinTestPackages current a!
 
 tearDown
 	| methods |

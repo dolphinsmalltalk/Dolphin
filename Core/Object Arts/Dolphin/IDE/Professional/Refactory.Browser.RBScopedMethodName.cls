@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-RBMethodName subclass: #RBScopedMethodName
+Refactory.Browser.RBMethodName subclass: #'Refactory.Browser.RBScopedMethodName'
 	instanceVariableNames: 'methodClass originalArguments originalSelector scope scopes'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-RBScopedMethodName guid: (GUID fromString: '{50a0d881-8784-4db2-b798-817a44da9e38}')!
-RBScopedMethodName comment: 'Dolphin extension of RBMethodName. Holds a scope (a BrowserEnvironment) that defines the context within which the rename is performed.
+Refactory.Browser.RBScopedMethodName guid: (Core.GUID fromString: '{50a0d881-8784-4db2-b798-817a44da9e38}')!
+Refactory.Browser.RBScopedMethodName comment: 'Dolphin extension of RBMethodName. Holds a scope (a BrowserEnvironment) that defines the context within which the rename is performed.
 
 Instance Variables:
 	methodClass			<ClassDescription>. Class of the method being (re)named.
@@ -17,8 +17,8 @@ Instance Variables:
 	scopes				<LookupTable> mapping <String> name to <BrowserEnvironment>. Possible rename scopes.
 
 '!
-!RBScopedMethodName categoriesForClass!Refactory-Support! !
-!RBScopedMethodName methodsFor!
+!Refactory.Browser.RBScopedMethodName categoriesForClass!Refactory-Support! !
+!Refactory.Browser.RBScopedMethodName methodsFor!
 
 addScope: aBrowserEnvironment 
 	^scopes at: aBrowserEnvironment label put: aBrowserEnvironment!
@@ -68,7 +68,7 @@ originalArguments
 originalSelector
 	^originalSelector!
 
-packages: aCollectionOfPackages 
+packages: aCollectionOfPackages
 	aCollectionOfPackages isEmpty ifTrue: [^self].
 	scope := (BrowserEnvironment new forPackages: aCollectionOfPackages)
 				label: (aCollectionOfPackages size > 1 ifTrue: ['Packages'] ifFalse: ['Package']);
@@ -87,31 +87,31 @@ scope: aBrowserEnvironment
 scopeNames
 	^scopes asSortedCollection: [:a :b | a label <= b label]!
 
-setSelector: aSymbol arguments: anArray 
+setSelector: aSymbol arguments: anArray
 	super setSelector: aSymbol arguments: anArray.
 	scopes := LookupTable new.
 	self addScope: BrowserEnvironment new name: 'Global'! !
-!RBScopedMethodName categoriesFor: #addScope:!adding!public! !
-!RBScopedMethodName categoriesFor: #addScope:name:!adding!public! !
-!RBScopedMethodName categoriesFor: #addScopesForMethod:!initializing!private! !
-!RBScopedMethodName categoriesFor: #defaultScope!initializing!public! !
-!RBScopedMethodName categoriesFor: #hasNewSignature!commands!private! !
-!RBScopedMethodName categoriesFor: #initializeForMethod:!initializing!private! !
-!RBScopedMethodName categoriesFor: #methodClass!accessing!public! !
-!RBScopedMethodName categoriesFor: #originalArguments!accessing!public! !
-!RBScopedMethodName categoriesFor: #originalSelector!accessing!public! !
-!RBScopedMethodName categoriesFor: #packages:!accessing!public! !
-!RBScopedMethodName categoriesFor: #permutation!accessing!public! !
-!RBScopedMethodName categoriesFor: #scope!accessing!public! !
-!RBScopedMethodName categoriesFor: #scope:!accessing!public! !
-!RBScopedMethodName categoriesFor: #scopeNames!constants!public! !
-!RBScopedMethodName categoriesFor: #setSelector:arguments:!initializing!private! !
+!Refactory.Browser.RBScopedMethodName categoriesFor: #addScope:!adding!public! !
+!Refactory.Browser.RBScopedMethodName categoriesFor: #addScope:name:!adding!public! !
+!Refactory.Browser.RBScopedMethodName categoriesFor: #addScopesForMethod:!initializing!private! !
+!Refactory.Browser.RBScopedMethodName categoriesFor: #defaultScope!initializing!public! !
+!Refactory.Browser.RBScopedMethodName categoriesFor: #hasNewSignature!commands!private! !
+!Refactory.Browser.RBScopedMethodName categoriesFor: #initializeForMethod:!initializing!private! !
+!Refactory.Browser.RBScopedMethodName categoriesFor: #methodClass!accessing!public! !
+!Refactory.Browser.RBScopedMethodName categoriesFor: #originalArguments!accessing!public! !
+!Refactory.Browser.RBScopedMethodName categoriesFor: #originalSelector!accessing!public! !
+!Refactory.Browser.RBScopedMethodName categoriesFor: #packages:!accessing!public! !
+!Refactory.Browser.RBScopedMethodName categoriesFor: #permutation!accessing!public! !
+!Refactory.Browser.RBScopedMethodName categoriesFor: #scope!accessing!public! !
+!Refactory.Browser.RBScopedMethodName categoriesFor: #scope:!accessing!public! !
+!Refactory.Browser.RBScopedMethodName categoriesFor: #scopeNames!constants!public! !
+!Refactory.Browser.RBScopedMethodName categoriesFor: #setSelector:arguments:!initializing!private! !
 
-!RBScopedMethodName class methodsFor!
+!Refactory.Browser.RBScopedMethodName class methodsFor!
 
 fromMethod: aCompiledMethod
 	^(self new)
 		initializeForMethod: aCompiledMethod;
 		yourself! !
-!RBScopedMethodName class categoriesFor: #fromMethod:!instance creation!public! !
+!Refactory.Browser.RBScopedMethodName class categoriesFor: #fromMethod:!instance creation!public! !
 

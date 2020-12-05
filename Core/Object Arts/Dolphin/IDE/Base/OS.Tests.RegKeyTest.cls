@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-DolphinTest subclass: #RegKeyTest
+Core.Tests.DolphinTest subclass: #'OS.Tests.RegKeyTest'
 	instanceVariableNames: 'testKey'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-RegKeyTest guid: (GUID fromString: '{a67b125d-54b1-4bf8-9634-222b74e70c77}')!
-RegKeyTest comment: ''!
-!RegKeyTest categoriesForClass!Unclassified! !
-!RegKeyTest methodsFor!
+OS.Tests.RegKeyTest guid: (Core.GUID fromString: '{a67b125d-54b1-4bf8-9634-222b74e70c77}')!
+OS.Tests.RegKeyTest comment: ''!
+!OS.Tests.RegKeyTest categoriesForClass!Unclassified! !
+!OS.Tests.RegKeyTest methodsFor!
 
 setUp
 	super setUp.
@@ -126,7 +126,7 @@ testParentPath
 
 testScintillaTextStyleSerialization
 	| styles rehydratedStyles |
-	styles := SmalltalkWorkspace textStyles asArray.
+	styles := Smalltalk.SmalltalkWorkspace textStyles asArray.
 	styles storeUnderRegKey: testKey as: 'testScintillaTextStyleSerialization'.
 	rehydratedStyles := Object fromRegKey: (testKey at: 'testScintillaTextStyleSerialization').
 	self deny: rehydratedStyles identicalTo: styles.
@@ -137,14 +137,14 @@ testSz
 			[:each |
 			testKey valueAt: 'String' put: each.
 			self assert: (testKey valueAt: 'String') equals: each]! !
-!RegKeyTest categoriesFor: #setUp!private!unit tests! !
-!RegKeyTest categoriesFor: #tearDown!private!unit tests! !
-!RegKeyTest categoriesFor: #testCreateUnderRoot!public!unit tests! !
-!RegKeyTest categoriesFor: #testEmptySz!public!unit tests! !
-!RegKeyTest categoriesFor: #testExpandSz!public!unit tests! !
-!RegKeyTest categoriesFor: #testIntegerSerialisation!public!unit tests! !
-!RegKeyTest categoriesFor: #testMultiSz!public!unit tests! !
-!RegKeyTest categoriesFor: #testParentPath!public!unit tests! !
-!RegKeyTest categoriesFor: #testScintillaTextStyleSerialization!public!unit tests! !
-!RegKeyTest categoriesFor: #testSz!public!unit tests! !
+!OS.Tests.RegKeyTest categoriesFor: #setUp!private!unit tests! !
+!OS.Tests.RegKeyTest categoriesFor: #tearDown!private!unit tests! !
+!OS.Tests.RegKeyTest categoriesFor: #testCreateUnderRoot!public!unit tests! !
+!OS.Tests.RegKeyTest categoriesFor: #testEmptySz!public!unit tests! !
+!OS.Tests.RegKeyTest categoriesFor: #testExpandSz!public!unit tests! !
+!OS.Tests.RegKeyTest categoriesFor: #testIntegerSerialisation!public!unit tests! !
+!OS.Tests.RegKeyTest categoriesFor: #testMultiSz!public!unit tests! !
+!OS.Tests.RegKeyTest categoriesFor: #testParentPath!public!unit tests! !
+!OS.Tests.RegKeyTest categoriesFor: #testScintillaTextStyleSerialization!public!unit tests! !
+!OS.Tests.RegKeyTest categoriesFor: #testSz!public!unit tests! !
 

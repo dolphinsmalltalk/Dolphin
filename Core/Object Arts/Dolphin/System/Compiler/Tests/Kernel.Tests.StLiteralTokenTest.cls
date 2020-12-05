@@ -1,14 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-StValueTokenTest subclass: #StLiteralTokenTest
+Kernel.Tests.StValueTokenTest subclass: #'Kernel.Tests.StLiteralTokenTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-StLiteralTokenTest guid: (GUID fromString: '{6c7db873-cac7-4f7a-96ec-691eaf779d2d}')!
-StLiteralTokenTest comment: ''!
-!StLiteralTokenTest categoriesForClass!Unclassified! !
-!StLiteralTokenTest methodsFor!
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Kernel.Tests.StLiteralTokenTest guid: (Core.GUID fromString: '{6c7db873-cac7-4f7a-96ec-691eaf779d2d}')!
+Kernel.Tests.StLiteralTokenTest comment: ''!
+!Kernel.Tests.StLiteralTokenTest categoriesForClass!Unclassified! !
+!Kernel.Tests.StLiteralTokenTest methodsFor!
 
 subjectClass
 	^StLiteralToken!
@@ -50,6 +51,6 @@ testInstanceCreation
 	self assert: token2 stop equals: 25.
 	self assertIsNil: token2 comments.
 	self assert: token2 value equals: #hello! !
-!StLiteralTokenTest categoriesFor: #subjectClass!constants!private! !
-!StLiteralTokenTest categoriesFor: #testInstanceCreation!public!unit tests! !
+!Kernel.Tests.StLiteralTokenTest categoriesFor: #subjectClass!constants!private! !
+!Kernel.Tests.StLiteralTokenTest categoriesFor: #testInstanceCreation!public!unit tests! !
 

@@ -1,20 +1,21 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-StValueTokenTest subclass: #StLiteralArrayTokenTest
+Kernel.Tests.StValueTokenTest subclass: #'Kernel.Tests.StLiteralArrayTokenTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-StLiteralArrayTokenTest guid: (GUID fromString: '{dff6e9a2-a766-4469-b3d1-0b7b1fa8d1dc}')!
-StLiteralArrayTokenTest comment: ''!
-!StLiteralArrayTokenTest categoriesForClass!Unclassified! !
-!StLiteralArrayTokenTest methodsFor!
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Kernel.Tests.StLiteralArrayTokenTest guid: (Core.GUID fromString: '{dff6e9a2-a766-4469-b3d1-0b7b1fa8d1dc}')!
+Kernel.Tests.StLiteralArrayTokenTest comment: ''!
+!Kernel.Tests.StLiteralArrayTokenTest categoriesForClass!Unclassified! !
+!Kernel.Tests.StLiteralArrayTokenTest methodsFor!
 
 exampleSource
 	^'#('!
 
 subjectClass
 	^StLiteralArrayToken! !
-!StLiteralArrayTokenTest categoriesFor: #exampleSource!constants!private! !
-!StLiteralArrayTokenTest categoriesFor: #subjectClass!constants!private! !
+!Kernel.Tests.StLiteralArrayTokenTest categoriesFor: #exampleSource!constants!private! !
+!Kernel.Tests.StLiteralArrayTokenTest categoriesFor: #subjectClass!constants!private! !
 

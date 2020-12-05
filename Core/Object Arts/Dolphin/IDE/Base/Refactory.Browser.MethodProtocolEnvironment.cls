@@ -1,21 +1,21 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-BrowserEnvironmentWrapper subclass: #MethodProtocolEnvironment
+Refactory.Browser.BrowserEnvironmentWrapper subclass: #'Refactory.Browser.MethodProtocolEnvironment'
 	instanceVariableNames: 'protocols'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-MethodProtocolEnvironment guid: (GUID fromString: '{e2dca651-3bdb-4a9e-a4a7-c13ed6b54082}')!
-MethodProtocolEnvironment comment: 'MethodProtocolEnvironment is a Dolphin specific <BrowserEnvironment> that represents the classes that conform to a set of Dolphin method protocols.
+Refactory.Browser.MethodProtocolEnvironment guid: (Core.GUID fromString: '{e2dca651-3bdb-4a9e-a4a7-c13ed6b54082}')!
+Refactory.Browser.MethodProtocolEnvironment comment: 'MethodProtocolEnvironment is a Dolphin specific <BrowserEnvironment> that represents the classes that conform to a set of Dolphin method protocols.
 
 Note the confusion of terminology with the Refactory ProtocolEnvironment class. The latter is using the old Smallltalk-80 terminology - in Dolphin we refer to Smalltalk-80 "protocols" as "method categories".
 
 Instance Variables:
 	protocols		<collection> of <MethodProtocol>
 '!
-!MethodProtocolEnvironment categoriesForClass!Refactory-Environments! !
-!MethodProtocolEnvironment methodsFor!
+!Refactory.Browser.MethodProtocolEnvironment categoriesForClass!Refactory-Environments! !
+!Refactory.Browser.MethodProtocolEnvironment methodsFor!
 
 defaultLabel
 	| stream |
@@ -52,17 +52,17 @@ storeOn: aStream
 		space.
 	(protocols asArray collect: [:each | each name]) storeOn: aStream.
 	aStream nextPut: $)! !
-!MethodProtocolEnvironment categoriesFor: #defaultLabel!constants!private! !
-!MethodProtocolEnvironment categoriesFor: #includesClass:!public!testing! !
-!MethodProtocolEnvironment categoriesFor: #includesSelector:in:!public!testing! !
-!MethodProtocolEnvironment categoriesFor: #protocols:!accessing!private! !
-!MethodProtocolEnvironment categoriesFor: #storeOn:!printing!public! !
+!Refactory.Browser.MethodProtocolEnvironment categoriesFor: #defaultLabel!constants!private! !
+!Refactory.Browser.MethodProtocolEnvironment categoriesFor: #includesClass:!public!testing! !
+!Refactory.Browser.MethodProtocolEnvironment categoriesFor: #includesSelector:in:!public!testing! !
+!Refactory.Browser.MethodProtocolEnvironment categoriesFor: #protocols:!accessing!private! !
+!Refactory.Browser.MethodProtocolEnvironment categoriesFor: #storeOn:!printing!public! !
 
-!MethodProtocolEnvironment class methodsFor!
+!Refactory.Browser.MethodProtocolEnvironment class methodsFor!
 
 onEnvironment: anEnvironment protocols: aCollection 
 	^(self onEnvironment: anEnvironment)
 		protocols: aCollection;
 		yourself! !
-!MethodProtocolEnvironment class categoriesFor: #onEnvironment:protocols:!instance creation!public! !
+!Refactory.Browser.MethodProtocolEnvironment class categoriesFor: #onEnvironment:protocols:!instance creation!public! !
 

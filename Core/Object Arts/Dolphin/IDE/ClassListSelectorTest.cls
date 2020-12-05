@@ -3,10 +3,10 @@
 ClassSelectorTest subclass: #ClassListSelectorTest
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ClassListSelectorTest guid: (GUID fromString: '{1e05f062-5ab2-4d18-b534-77cb8b7ca82e}')!
+ClassListSelectorTest guid: (Core.GUID fromString: '{1e05f062-5ab2-4d18-b534-77cb8b7ca82e}')!
 ClassListSelectorTest comment: ''!
 !ClassListSelectorTest categoriesForClass!Unclassified! !
 !ClassListSelectorTest methodsFor!

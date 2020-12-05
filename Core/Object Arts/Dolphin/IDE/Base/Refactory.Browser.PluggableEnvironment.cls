@@ -1,19 +1,19 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-BrowserEnvironmentWrapper subclass: #PluggableEnvironment
+Refactory.Browser.BrowserEnvironmentWrapper subclass: #'Refactory.Browser.PluggableEnvironment'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-PluggableEnvironment guid: (GUID fromString: '{09ce2832-6e4a-40f8-83c8-b7685a4f6b62}')!
-PluggableEnvironment comment: 'PluggableEnvironment is a Dolphin specific <BrowserEnvironment> that includes only those methods (and the classes of those methods) that pass a configurable <monadicValuable> filter. This is very useful for maintaining the contents of dynamically updating method browsers.
+Refactory.Browser.PluggableEnvironment guid: (Core.GUID fromString: '{09ce2832-6e4a-40f8-83c8-b7685a4f6b62}')!
+Refactory.Browser.PluggableEnvironment comment: 'PluggableEnvironment is a Dolphin specific <BrowserEnvironment> that includes only those methods (and the classes of those methods) that pass a configurable <monadicValuable> filter. This is very useful for maintaining the contents of dynamically updating method browsers.
 
 Instance Variables:
 	filter		<monadicValuable> evaluated against each candidate method
 '!
-!PluggableEnvironment categoriesForClass!Refactory-Environments! !
-!PluggableEnvironment methodsFor!
+!Refactory.Browser.PluggableEnvironment categoriesForClass!Refactory-Environments! !
+!Refactory.Browser.PluggableEnvironment methodsFor!
 
 addMethods: methodCollection 
 	^(self snapshot)
@@ -21,12 +21,12 @@ addMethods: methodCollection
 		yourself!
 
 classesAndSelectorsDo: aBlock 
-	environment classesDo: 
+	self allClassesDo: 
 			[:class | 
 			self selectorsForClass: class do: [:sel | aBlock value: class value: sel]]!
 
 classesDo: aBlock
-	environment classesDo: [:each | (self includesAnyMethodsOf: each) ifTrue: [aBlock value: each]]!
+	self allClassesDo: [:each | (self includesAnyMethodsOf: each) ifTrue: [aBlock value: each]]!
 
 includesAnyMethodsOf: aClass 
 	aClass selectorsAndMethodsDo: 
@@ -61,21 +61,21 @@ snapshot
 
 storeOn: aStream 
 	self snapshot storeOn: aStream! !
-!PluggableEnvironment categoriesFor: #addMethods:!adding!public! !
-!PluggableEnvironment categoriesFor: #classesAndSelectorsDo:!accessing!public! !
-!PluggableEnvironment categoriesFor: #classesDo:!accessing!public! !
-!PluggableEnvironment categoriesFor: #includesAnyMethodsOf:!private!testing! !
-!PluggableEnvironment categoriesFor: #includesClass:!public!testing! !
-!PluggableEnvironment categoriesFor: #includesSelector:in:!public!testing! !
-!PluggableEnvironment categoriesFor: #selectorsForClass:do:!enumerating!public! !
-!PluggableEnvironment categoriesFor: #snapshot!accessing!private! !
-!PluggableEnvironment categoriesFor: #storeOn:!printing!public! !
+!Refactory.Browser.PluggableEnvironment categoriesFor: #addMethods:!adding!public! !
+!Refactory.Browser.PluggableEnvironment categoriesFor: #classesAndSelectorsDo:!accessing!public! !
+!Refactory.Browser.PluggableEnvironment categoriesFor: #classesDo:!accessing!public! !
+!Refactory.Browser.PluggableEnvironment categoriesFor: #includesAnyMethodsOf:!private!testing! !
+!Refactory.Browser.PluggableEnvironment categoriesFor: #includesClass:!public!testing! !
+!Refactory.Browser.PluggableEnvironment categoriesFor: #includesSelector:in:!public!testing! !
+!Refactory.Browser.PluggableEnvironment categoriesFor: #selectorsForClass:do:!enumerating!public! !
+!Refactory.Browser.PluggableEnvironment categoriesFor: #snapshot!accessing!private! !
+!Refactory.Browser.PluggableEnvironment categoriesFor: #storeOn:!printing!public! !
 
-!PluggableEnvironment class methodsFor!
+!Refactory.Browser.PluggableEnvironment class methodsFor!
 
 onEnvironment: anEnvironment select: aMonadicValuable 
 	^(self onEnvironment: anEnvironment)
 		filter: aMonadicValuable;
 		yourself! !
-!PluggableEnvironment class categoriesFor: #onEnvironment:select:!instance creation!public! !
+!Refactory.Browser.PluggableEnvironment class categoriesFor: #onEnvironment:select:!instance creation!public! !
 

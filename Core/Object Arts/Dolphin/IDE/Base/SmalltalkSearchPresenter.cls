@@ -1,12 +1,12 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Presenter subclass: #SmalltalkSearchPresenter
+UI.Presenter subclass: #SmalltalkSearchPresenter
 	instanceVariableNames: 'environment'
 	classVariableNames: 'AutoCompleteDwell'
-	poolDictionaries: 'ScintillaConstants'
+	imports: #(#{ScintillaConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-SmalltalkSearchPresenter guid: (GUID fromString: '{a8c5bf80-8660-45e4-865c-f489ca9ca4e8}')!
+SmalltalkSearchPresenter guid: (Core.GUID fromString: '{a8c5bf80-8660-45e4-865c-f489ca9ca4e8}')!
 SmalltalkSearchPresenter comment: ''!
 !SmalltalkSearchPresenter categoriesForClass!MVP-Resources-IDE Tools! !
 !SmalltalkSearchPresenter methodsFor!
@@ -18,7 +18,7 @@ applyOptions
 				select: [:each | (Compiler isAValidIdentifierChar: each) or: [each == $:]]).
 	view maxCompletionListHeight: 10.
 	view maxCompletionListWidth: 40.
-	view autoCompletionSeparator: $\x7F.!
+	view autoCompletionSeparator: $\x7F!
 
 autoComplete: aSymbol at: posInteger maxItems: maxInteger 
 	aSymbol == #normal 
@@ -62,13 +62,13 @@ findDetails
 goSearch
 	| searchForObject |
 	searchForObject := self searchObject.
-	searchForObject notNil 
+	searchForObject notNil
 		ifTrue: [self performSmalltalkSearchFor: searchForObject]
 		ifFalse: [^Sound errorBeep]!
 
 initialize
 	super initialize.
-	environment := BrowserEnvironment new!
+	environment := Refactory.Browser.BrowserEnvironment new!
 
 insertCompletion: aString at: anInteger 
 	"Private - Private-"
@@ -104,8 +104,8 @@ onAutoComplete: aString startingAt: anInteger accept: aValueHolder
 	self insertCompletion: aString at: anInteger.
 	aValueHolder value: false!
 
-onCharAdded: aCharacter 
-	aCharacter = Character cr 
+onCharAdded: aCharacter
+	aCharacter = Character cr
 		ifTrue: 
 			[| searchExpression |
 			searchExpression := self view plainText copyWithoutAll: String lineDelimiter.
@@ -124,9 +124,9 @@ onViewOpened
 	super onViewOpened.
 	self applyOptions!
 
-performSmalltalkSearchFor: anObject 
+performSmalltalkSearchFor: anObject
 	self searchText: ''.
-	self commandPolicy 
+	self commandPolicy
 		route: (CommandDescription command: (Message selector: #searchSmalltalkFor: argument: anObject))!
 
 queryCommand: aCommandQuery 
@@ -159,14 +159,11 @@ searchItemsStartingWith: aString maxItems: anInteger
 	result := OrderedCollection new.
 	addBlock := 
 			[:obj |
-			(obj displayString beginsWith: aString) ifTrue: 
+			(obj displayString beginsWith: aString)
+				ifTrue: 
 					[result add: obj.
 					result size > anInteger ifTrue: [^#()]]].
 	Package manager packages do: addBlock.
-	Smalltalk associationsDo: 
-			[:assoc |
-			((assoc value isBehavior not or: [assoc key ~= assoc value name])
-				and: [assoc value class conformsToProtocol: #sourceObject]) ifTrue: [addBlock value: assoc]].
 	classFilter := (aString includes: $>)
 				ifTrue: 
 					[| classNamePrefix |
@@ -180,10 +177,11 @@ searchItemsStartingWith: aString maxItems: anInteger
 	classes do: 
 			[:each |
 			addBlock
-				value: (each isMeta ifTrue: [VariableBinding key: each name value: each] ifFalse: [each classBinding])].
-	classes size = 1 ifTrue: 
+				value: (each isMeta ifTrue: [VariableBinding key: each name value: each] ifFalse: [each bindingOrNil])].
+	classes size = 1
+		ifTrue: 
 			[environment selectorsForClass: classes anyOne do: [:sel | addBlock value: classes anyOne >> sel]].
-	^result.!
+	^result!
 
 searchObject
 	| searchText |
@@ -192,8 +190,15 @@ searchObject
 	(searchText first isUppercase not and: [Symbol isLiteralSymbol: searchText])
 		ifTrue: [^Symbol findInterned: searchText].
 	(Package manager packageNamed: searchText ifNone: []) ifNotNil: [:a | ^a].
-	(BindingReference isValidQualifiedName: searchText)
-		ifTrue: [searchText asQualifiedReference ifDefined: [:a | ^a]].
+	(BindingReference isQualifiedName: searchText)
+		ifTrue: 
+			[(BindingReference isValidQualifiedName: searchText)
+				ifTrue: [searchText asQualifiedReference ifDefined: [:a | ^a]]]
+		ifFalse: 
+			[| allClasses index |
+			allClasses := Smalltalk allClasses.
+			index := allClasses findFirst: [:each | each name = searchText].
+			index ~~ 0 ifTrue: [^allClasses at: index]].
 	^[Compiler evaluate: (searchText copyReplaceAll: '>>' with: '>>#')] on: Exception do: [:x | nil]!
 
 searchText
@@ -202,12 +207,12 @@ searchText
 searchText: aString
 	self view plainText: aString!
 
-selectorsStartingWith: aString maxItems: anInteger 
+selectorsStartingWith: aString maxItems: anInteger
 	| stream |
 	stream := Array writeStream: (anInteger bitShift: -1).
 	Smalltalk developmentSystem allSelectors do: 
-			[:each | 
-			(each beginsWith: aString) 
+			[:each |
+			(each beginsWith: aString)
 				ifTrue: 
 					[stream nextPut: each.
 					stream size > anInteger ifTrue: [^#()]]].
@@ -312,7 +317,7 @@ resource_Default_view
 	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Default_view)
 	"
 
-	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.ScintillaView) 34 50 nil nil 34 2 8 1411449156 262145 416 721990 2 ##(Smalltalk.ValueHolder) nil false 1310726 ##(Smalltalk.EqualitySearchPolicy) nil nil nil 21 nil nil nil 416 nil 8 1533163101 852486 ##(Smalltalk.NullConverter) nil nil 73 nil 170 192 34 4 #normal 1182790 1 ##(Smalltalk.ScintillaTextStyle) 1 nil nil 1 nil nil nil nil #normal nil nil nil #callTip 626 77 327686 ##(Smalltalk.Color) #gray 674 #white 1 nil nil nil nil #callTip nil nil nil nil 1639686 ##(Smalltalk.SmalltalkExpressionStyler) 1 nil nil false 138 144 8 #() 170 192 768 138 ##(Smalltalk.IdentitySet) 768 nil 170 176 768 nil nil nil nil nil 674 #silver nil nil 65 nil nil 170 192 34 6 #literalBytes 8 '[]' #specialCharacter 8 '()[]<>' #literalArray 8 '()' 8 '' 1 170 192 34 2 #container 592 nil nil nil nil 130003 138 ##(Smalltalk.Set) 34 5 1245702 ##(Smalltalk.ScintillaKeyBinding) 9385 4345 1010 9951 4345 1010 9353 4345 1010 9435 4345 1010 9431 4345 170 192 34 4 #Warning 1510470 3 ##(Smalltalk.ScintillaIndicatorStyle) 17 416 674 #blue 3 false #Warning nil nil nil nil nil nil #Error 1138 19 416 674 #red 3 false #Error nil nil nil nil nil nil nil nil 170 192 34 6 #Warning 626 1027 674 #darkGoldenrod 674 #ivory 1 nil nil nil nil #Warning nil nil nil #Notification 626 1029 nil 674 #gainsboro 1 nil nil nil nil #Notification nil nil nil #Error 626 1031 674 #firebrick 674 #floralWhite 1 nil nil nil nil #Error nil nil nil nil 983302 ##(Smalltalk.MessageSequence) 138 144 34 9 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 328198 ##(Smalltalk.Point) 7039 21 1490 371 39 416 1442 #textLimit: 8 #(1073741823) 416 1442 #hoverTime: 8 #(500) 416 1442 #caretPeriod: 8 #(530) 416 1442 #margins: 34 1 34 3 985158 3 ##(Smalltalk.ScintillaMargin) 1 416 1 3 nil nil nil nil 1682 3 416 1 nil nil 67108863 nil nil 1682 5 416 1 nil nil nil nil nil 416 1442 #canHScroll: 8 #(false) 416 1442 #targetRange: 34 1 525062 ##(Smalltalk.Interval) 1 -1 3 416 1442 #maxCompletionListHeight: 8 #(9) 416 1442 #edgeColumn: 8 #(1) 416 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 191 13 0 0 10 0 0 0 120 14 0 0 29 0 0 0] 8 #() 1490 193 193 nil 29 )! !
+	^#(#'!!STL' 4 788558 10 ##(UI.STBViewProxy) ##(Smalltalk.ScintillaView) 34 50 nil nil 34 2 8 1411449156 262145 416 721990 2 ##(UI.ValueHolder) nil false 1310726 ##(Smalltalk.EqualitySearchPolicy) nil nil nil 21 nil nil nil 416 nil 8 1533163101 852486 ##(UI.NullConverter) nil nil 73 nil 170 192 34 4 #normal 1182790 1 ##(Smalltalk.ScintillaTextStyle) 1 nil nil 1 nil nil nil nil #normal nil nil nil #callTip 626 77 327686 ##(Smalltalk.Color) #gray 674 #white 1 nil nil nil nil #callTip nil nil nil nil 1639686 ##(Smalltalk.SmalltalkExpressionStyler) 1 nil nil false 138 144 8 #() 170 192 768 138 ##(Smalltalk.IdentitySet) 768 nil 170 176 768 nil nil nil nil nil 674 #silver nil nil 65 nil nil 170 192 34 6 #literalBytes 8 '[]' #specialCharacter 8 '()[]<>' #literalArray 8 '()' 8 '' 1 170 192 34 2 #container 592 nil nil nil nil 130003 138 ##(Smalltalk.Set) 34 5 1245702 ##(Smalltalk.ScintillaKeyBinding) 9385 4345 1010 9951 4345 1010 9353 4345 1010 9435 4345 1010 9431 4345 170 192 34 4 #Warning 1510470 3 ##(Smalltalk.ScintillaIndicatorStyle) 17 416 674 #blue 3 false #Warning nil nil nil nil nil nil #Error 1138 19 416 674 #red 3 false #Error nil nil nil nil nil nil nil nil 170 192 34 6 #Warning 626 1027 674 #darkGoldenrod 674 #ivory 1 nil nil nil nil #Warning nil nil nil #Notification 626 1029 nil 674 #gainsboro 1 nil nil nil nil #Notification nil nil nil #Error 626 1031 674 #firebrick 674 #floralWhite 1 nil nil nil nil #Error nil nil nil nil 983302 ##(Smalltalk.MessageSequence) 138 144 34 9 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 328198 ##(Smalltalk.Point) 7039 21 1490 371 39 416 1442 #textLimit: 8 #(1073741823) 416 1442 #hoverTime: 8 #(500) 416 1442 #caretPeriod: 8 #(530) 416 1442 #margins: 34 1 34 3 985158 3 ##(Smalltalk.ScintillaMargin) 1 416 1 3 nil nil nil nil 1682 3 416 1 nil nil 67108863 nil nil 1682 5 416 1 nil nil nil nil nil 416 1442 #canHScroll: 8 #(false) 416 1442 #targetRange: 34 1 525062 ##(Smalltalk.Interval) 1 -1 3 416 1442 #maxCompletionListHeight: 8 #(9) 416 1442 #edgeColumn: 8 #(1) 416 983302 ##(OS.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 191 13 0 0 10 0 0 0 120 14 0 0 29 0 0 0] 8 #() 1490 193 193 nil 29)! !
 !SmalltalkSearchPresenter class categoriesFor: #autoCompleteDwell!accessing!autocompletion!public! !
 !SmalltalkSearchPresenter class categoriesFor: #autoCompleteDwell:!accessing!autocompletion!public! !
 !SmalltalkSearchPresenter class categoriesFor: #defaultAdditionalAccelerators!public! !

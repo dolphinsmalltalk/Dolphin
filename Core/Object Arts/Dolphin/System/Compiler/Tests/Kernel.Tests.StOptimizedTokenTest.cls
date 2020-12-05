@@ -1,14 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-StTokenTest subclass: #StOptimizedTokenTest
+Kernel.Tests.StTokenTest subclass: #'Kernel.Tests.StOptimizedTokenTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-StOptimizedTokenTest guid: (GUID fromString: '{9b15fc9c-7c2c-41cb-b2b9-7a8e037ee1be}')!
-StOptimizedTokenTest comment: ''!
-!StOptimizedTokenTest categoriesForClass!Unclassified! !
-!StOptimizedTokenTest methodsFor!
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Kernel.Tests.StOptimizedTokenTest guid: (Core.GUID fromString: '{9b15fc9c-7c2c-41cb-b2b9-7a8e037ee1be}')!
+Kernel.Tests.StOptimizedTokenTest comment: ''!
+!Kernel.Tests.StOptimizedTokenTest categoriesForClass!Unclassified! !
+!Kernel.Tests.StOptimizedTokenTest methodsFor!
 
 subjectClass
 	^StOptimizedToken!
@@ -34,6 +35,6 @@ testInstanceCreation
 	self assert: token2 start equals: 20.
 	self assert: token2 stop equals: 22.
 	self assert: token2 comments equals: nil! !
-!StOptimizedTokenTest categoriesFor: #subjectClass!constants!private! !
-!StOptimizedTokenTest categoriesFor: #testInstanceCreation!public!unit tests! !
+!Kernel.Tests.StOptimizedTokenTest categoriesFor: #subjectClass!constants!private! !
+!Kernel.Tests.StOptimizedTokenTest categoriesFor: #testInstanceCreation!public!unit tests! !
 

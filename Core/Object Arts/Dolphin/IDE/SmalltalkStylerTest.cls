@@ -1,12 +1,12 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-DolphinTest subclass: #SmalltalkStylerTest
+Core.Tests.DolphinTest subclass: #SmalltalkStylerTest
 	instanceVariableNames: 'mock scintilla'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-SmalltalkStylerTest guid: (GUID fromString: '{a4d5d58a-e2a3-4f2b-8877-0c480d6f3b01}')!
+SmalltalkStylerTest guid: (Core.GUID fromString: '{a4d5d58a-e2a3-4f2b-8877-0c480d6f3b01}')!
 SmalltalkStylerTest comment: ''!
 !SmalltalkStylerTest categoriesForClass!Unclassified! !
 !SmalltalkStylerTest methodsFor!
@@ -59,7 +59,7 @@ scanNumeric: aString class: aClass
 
 setUp
 	super setUp.
-	mock := MockScintillaView new.
+	mock := UI.Tests.MockScintillaView new.
 	mock textStyles: SmalltalkWorkspace defaultTextStyles!
 
 tearDown

@@ -1,14 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-SelectableItemsPresenter subclass: #ClassSelector
+UI.SelectableItemsPresenter subclass: #ClassSelector
 	instanceVariableNames: 'flags classesPresenter searchEnvironment'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: 'commandQueryHandlers'
 	classConstants: {
-		'ClassModeMask' -> 16r1
+		'ClassModeMask' -> 16r1.
+		'ShowFullNamesMask' -> 16r2
 	}!
-ClassSelector guid: (GUID fromString: '{cb9d5680-134d-4c0b-9052-ad4536946a49}')!
+ClassSelector guid: (Core.GUID fromString: '{cb9d5680-134d-4c0b-9052-ad4536946a49}')!
 ClassSelector comment: 'A ClassSelector is an abstract class used to implement the common behaviour for selecting a class from the Smalltalk class hierarchy. It also provides the ability to source and sink drag and drop operations. Dropping a class object onto another class in the tree will change the superclass of the dropped class. A drop of a <CompiledMethod> will copy or move the method to the class under the drop, maintaining its existing method categories. Class objects may also be dragged from a ClassHierarchySelector in a variety of formats: as <Class> objects, as <String> definitions, or as a chunk format definitions.
 
 Note that a ClassSelector maintains whether it is in ''''class'''' (actually metaclass) or ''''instance'''' mode. A number of commands and operations supported by the receiver can be applied to either <Metaclass> or <Class> objects, and which is operated on is determined by the selection and the mode. See #actualClass and its references.
@@ -35,10 +36,11 @@ actualClass
 actualClass: class
 	"Sets the actual class selected and determines the current mode"
 
-	^self actualClass: class ifAbsent: [
-			MessageBox new
+	^self actualClass: class
+		ifAbsent: 
+			[MessageBox new
 				owner: self view;
-				errorMsg: class name, ' is not available for browsing'].!
+				errorMsg: class name , ' is not available for browsing']!
 
 actualClass: aClass ifAbsent: exceptionHandler
 	"Sets the actual class selected and determines the current mode."
@@ -111,9 +113,9 @@ browsePublishedAspects
 
 	| class pubs choice |
 	class := self selection.
-	pubs  := class publishedAspectsOfInstances.
-	pubs isEmpty ifTrue: [^MessageBox notify: class displayString, ' does not publish any aspects.'].
-	choice := ChoicePrompter choices: pubs asSortedCollection caption: class name, ' published aspects'.
+	pubs := class publishedAspectsOfInstances.
+	pubs isEmpty ifTrue: [^MessageBox notify: class displayString , ' does not publish any aspects.'].
+	choice := ChoicePrompter choices: pubs asSortedCollection caption: class name , ' published aspects'.
 	choice notNil ifTrue: [choice name copyToClipboard].
 	^choice!
 
@@ -121,16 +123,14 @@ browsePublishedEvents
 	"Browse the published events that can be triggered by instances of the current class.
 	Copy the chosen symbolic event name (if any) to the clipboard."
 
-
 	| pubEvents choice class name |
 	class := self selection.
 	pubEvents := class publishedEventsOfInstances asSortedCollection.
 	name := class name.
-	pubEvents isEmpty ifTrue: [^MessageBox notify: name, ' does not publish any events.'].
-	choice := ChoicePrompter choices: pubEvents caption: name, ' published events'.
+	pubEvents isEmpty ifTrue: [^MessageBox notify: name , ' does not publish any events.'].
+	choice := ChoicePrompter choices: pubEvents caption: name , ' published events'.
 	choice notNil ifTrue: [choice printString copyToClipboard].
-	^choice
-!
+	^choice!
 
 browseReferences
 	"Context-sensitive browse references command (Shift+F12)."
@@ -140,7 +140,7 @@ browseReferences
 browserEnvironment
 	"Answer the <BrowserEnvironment> from which the receiver is displaying a list of classes."
 
-	^BrowserEnvironment new!
+	^Refactory.Browser.BrowserEnvironment new!
 
 browseSystem
 	"Open a new system browser on at the same point as the receiver."
@@ -171,7 +171,7 @@ buildAllVariablesMenu: aMenu
 	class := class instanceClass.
 	classVars := OrderedCollection new.
 	class
-		withAllSuperclassesDo: [:eachClass | eachClass classVarNames do: [:each | classVars add: eachClass -> each]].
+		withAllSuperclassesDo: [:eachClass | eachClass classBindingNames do: [:each | classVars add: eachClass -> each]].
 	(aMenu notEmpty and: [classVars notEmpty]) ifTrue: [aMenu addSeparator].
 	classVars size > self maximumVariableMenuEntries
 		ifTrue: [aMenu addCommand: #browseClassVariables description: '&Class Variable...']
@@ -183,17 +183,17 @@ buildAllVariablesMenu: aMenu
 				variables: classVars
 				format: '<1s>.<2s>']!
 
-buildViewsMenu: aMenu command: selector 
+buildViewsMenu: aMenu command: selector
 	"Private - Build a dynamic pull-out menu with all views of the current selection
 	as the choices."
 
 	| class |
 	aMenu clear.
 	class := self selection.
-	(class resourceIdentifiers) asSortedCollection do: 
-			[:each | 
+	class resourceIdentifiers asSortedCollection do: 
+			[:each |
 			| msg |
-			msg := MessageSend 
+			msg := MessageSend
 						receiver: self
 						selector: selector
 						argument: each name.
@@ -210,33 +210,28 @@ categorizeClass
 	aClass := self selection.
 	originalCategories := aClass categories.
 	categories := aClass classCategoryClass allClassCategories asSortedCollection.
-
-	chosenCategories := (ChoicePrompter 
-						create: 'Extensible multi-selection choice prompter'
-						on: originalCategories
-						multipleChoices: categories
-						caption: 'Categorize ', aClass name)
-					newBlock: [:aString | Object classCategoryClass name: aString];
-					showModal.
-
-	(chosenCategories notNil and: [(chosenCategories symmetricDifference: originalCategories) notEmpty]) 
+	chosenCategories := (ChoicePrompter
+				create: 'Extensible multi-selection choice prompter'
+				on: originalCategories
+				multipleChoices: categories
+				caption: 'Categorize ' , aClass name)
+				newBlock: [:aString | Object classCategoryClass name: aString];
+				showModal.
+	(chosenCategories notNil and: [(chosenCategories symmetricDifference: originalCategories) notEmpty])
 		ifTrue: [aClass categories: chosenCategories]!
 
 chooseVariables: aBoolean caption: aString
 	"Note that this is deliberately _not_ part of the 'Dolphin Refactoring Browse' package"
 
 	| varNames class |
-	varNames := (aBoolean 
+	varNames := (aBoolean
 				ifTrue: 
 					[class := self selection.
-					class classVarNames]
+					class classBindingNames]
 				ifFalse: 
 					[class := self actualClass.
-					class instVarNames]) 
-					asSortedCollection.
-	varNames := ChoicePrompter 
-				multipleChoices: varNames
-				caption: aString.
+					class instVarNames]) asSortedCollection.
+	varNames := ChoicePrompter multipleChoices: varNames caption: aString.
 	^varNames isNil ifFalse: [varNames collect: [:each | class -> each]]!
 
 classPackage
@@ -249,7 +244,7 @@ classPackage
 				showModalOn: oldPkg asValue
 				caption: ('Package of <1p>...' expandMacrosWith: class)
 				default: nil
-				validationBlock: [:package | package notNil and: [class environment includesKey: class name]].
+				validationBlock: [:package | package notNil and: [class fullyQualifiedReference isDefined]].
 	(newPkg isNil or: [newPkg = oldPkg]) ifFalse: [self queryMoveClass: class toPackage: newPkg]!
 
 clearSelection
@@ -294,6 +289,9 @@ createSchematicWiring
 			to: self;
 		when: #dragOver:
 			send: #onDragOver:
+			to: self;
+		when: #aboutToEditLabel:
+			send: #onAboutToRenameClass:
 			to: self
 
 	"when: #dragCut: send: #onClassCut: to: self;"	"Nothing to do"!
@@ -330,7 +328,7 @@ dropClass: aSourceClass onto: aTargetClass changes: aCompositeRefactoryChange
 							not]])
 		ifTrue: [^self].
 	aCompositeRefactoryChange
-		addChange: (DolphinMoveClassChange move: aSourceClass toSuperclass: aTargetClass)!
+		addChange: (Refactory.Browser.DolphinMoveClassChange move: aSourceClass toSuperclass: aTargetClass)!
 
 dropMethod: aCompiledMethod onto: aClass changes: aCompositeRefactoryChange
 	"Don't copy the method over itself, or over an existing method in the class only at user behest. Answer whether the method
@@ -350,7 +348,7 @@ dropMethod: aCompiledMethod onto: aClass changes: aCompositeRefactoryChange
 				package: aCompiledMethod owningPackageIfLoose).
 	^true!
 
-editView: viewName 
+editView: viewName
 	"Open the ViewComposer on an existing view resource belonging to the
 	selected class of the specified name."
 
@@ -371,9 +369,9 @@ findClass
 	"Prompts for a class name and finds it within the receiver. Will accept wild-
 	carded class name from the user."
 
-	(Smalltalk developmentSystem promptForClassIn: self searchEnvironment) 
+	(Smalltalk developmentSystem promptForClassIn: self searchEnvironment)
 		ifNotNil: 
-			[:class | 
+			[:class |
 			class notNil ifTrue: [self actualClass: class].
 			self ensureSelectionVisible]!
 
@@ -382,7 +380,7 @@ initialize
 
 	super initialize.
 	flags := 0.
-	searchEnvironment := BrowserEnvironment new!
+	searchEnvironment := Refactory.Browser.BrowserEnvironment new!
 
 inspectIt
 	"Open an inspector on the currently selected class."
@@ -405,6 +403,16 @@ isInstanceMode: aBoolean
 		ifFalse: 
 			[flags := flags mask: ClassModeMask set: aBoolean not.
 			self trigger: #modeChanged]!
+
+isShowingFullNames
+	"Answer whether the receiver is display full class names (including namespace) in it's class hierarchy tree."
+
+	^flags allMask: ShowFullNamesMask!
+
+isShowingFullNames: aBoolean
+	"Set  whether the receiver is display full class names (including namespace) in it's class hierarchy tree."
+
+	flags := flags mask: ShowFullNamesMask set: aBoolean!
 
 maximumVariableMenuEntries
 	"The maximum number of variables that should be listed in the variable refactoring menus
@@ -438,14 +446,16 @@ onAboutToDisplayMenu: aMenu
 	menuName == #browseVariablesMenu ifTrue: [^self buildAllVariablesMenu: aMenu].
 	self canRefactor ifTrue: [^self populateRefactoringMenu: aMenu]!
 
+onAboutToRenameClass: aLabelEditingEvent 
+	aLabelEditingEvent text: aLabelEditingEvent object fullName!
+
 onClass: aClass renamedTo: text
 	"The class, aClass, has been renamed by the user to, text, by editing the label
 	in the classes presenter and subsequently confirmed. Ask the receiver's
 	model to actually rename the class, converting any exception raised to a
 	friendlier message box."
 
-	[Cursor wait showWhile: [self systemModel renameClass: aClass to: text]] 
-		on: Error
+	[Cursor wait showWhile: [self systemModel renameClass: aClass to: text]] on: Error
 		do: [:e | e okCancel]!
 
 onClass: aClass renameTo: text accept: booleanValue
@@ -456,18 +466,18 @@ onClass: aClass renameTo: text accept: booleanValue
 	"Implementation Notes: We don't set the booleanValue holder to true, because the rename may
 	not work."
 
-	text isEmpty
+	(text isEmpty or: [aClass fullName = text])
 		ifTrue: 
 			[booleanValue value: false.
 			^self].
-	(MessageBox
-		confirm: ('Are you sure you would like to rename <1p> to <2s>?' expandMacrosWith: aClass name
+	(MessageBox confirm: ('Are you sure you would like to rename the class <1s> to <2s>?'
+				expandMacrosWith: aClass fullName
 				with: text))
-			ifTrue: 
-				["Queue deferred action as we can't delete the old item now while still in use (causes GPF in TreeView)"
-				[self onClass: aClass renamedTo: text] postToMessageQueue]!
+		ifTrue: 
+			["Queue deferred action as we can't delete the old item now while still in use (causes GPF in TreeView)"
+			[self onClass: aClass renamedTo: text] postToMessageQueue]!
 
-onDrag: session 
+onDrag: session
 	"Private - A class drag has been started. Populate the <DragDropSession>, 
 	session, with the objects to be dragged."
 
@@ -478,10 +488,10 @@ onDrag: session
 		format: #Class data: dragClass;
 		format: #String data: dragClass definition;
 		format: #Chunk data: dragClass definitionChunk.
-	session supportedOperations: #(#move copy).
+	session supportedOperations: #(#move #copy).
 	session dragObjects: (OrderedCollection with: dragDropObject)!
 
-onDragOver: session 
+onDragOver: session
 	"Private - The user is dragging over the class hierarchy pane.
 	Set the operation of the <DragDropSession>, session,
 	that would occur if a drop took place now of the objects in that session."
@@ -496,22 +506,22 @@ onDragOver: session
 	"Note that we don't want to permit a drop of a class' own methods over itself, as if a move they'll get deleted"
 	methods := session dragObjects select: [:each | each isFormatAvailable: #CompiledMethod].
 	(methods notEmpty and: 
-			[methods allSatisfy: [:each | (each format: #CompiledMethod) methodClass instanceClass ~~ dropClass]]) 
+			[methods allSatisfy: [:each | (each format: #CompiledMethod) methodClass instanceClass ~~ dropClass]])
 		ifTrue: 
 			[session
 				supportedOperations: #(#move #copy);
 				operation: session intendedOperation.
 			^self].
-	(session isFormatAvailable: #Class) 
+	(session isFormatAvailable: #Class)
 		ifTrue: 
 			[session operation: #move.
 			^self].
-	(session isFormatAvailable: #MethodProtocol) 
+	(session isFormatAvailable: #MethodProtocol)
 		ifTrue: 
 			[session operation: #copy.
 			^self]!
 
-onDropOver: aDragDropSession 
+onDropOver: aDragDropSession
 	"Private - The drag operation described by the <DragDropSession>, session, would like 
 	to do a drop over the receiver's class pane."
 
@@ -520,41 +530,41 @@ onDropOver: aDragDropSession
 
 	| dropClass changes isMove |
 	dropClass := aDragDropSession suggestedTarget.
-	dropClass isNil 
+	dropClass isNil
 		ifTrue: 
 			[Sound errorBeep.
 			aDragDropSession operation: nil.
 			^self].
-	changes := CompositeRefactoryChange named: aDragDropSession operation asPhrase.
+	changes := Refactory.Browser.CompositeRefactoryChange named: aDragDropSession operation asPhrase.
 	isMove := aDragDropSession isMove.
 	aDragDropSession dragObjects do: 
-			[:each | 
-			(each isFormatAvailable: #CompiledMethod) 
+			[:each |
+			(each isFormatAvailable: #CompiledMethod)
 				ifTrue: 
 					[| method |
 					method := each format: #CompiledMethod.
 					"Note that when dropping over a class we keep class methods on the class side."
-					((self 
+					((self
 						dropMethod: method
 						onto: (method isClassMethod ifTrue: [dropClass class] ifFalse: [dropClass])
-						changes: changes) and: [isMove]) 
+						changes: changes) and: [isMove])
 						ifTrue: [changes removeMethod: method selector from: method methodClass]].
-			(each isFormatAvailable: #Class) 
+			(each isFormatAvailable: #Class)
 				ifTrue: 
 					[| class |
 					class := each format: #Class.
-					isMove 
+					isMove
 						ifTrue: 
-							[self 
+							[self
 								dropClass: class
 								onto: dropClass
 								changes: changes]
 						ifFalse: 
-							[self 
+							[self
 								cloneClass: class
 								under: dropClass
 								changes: changes]].
-			(each isFormatAvailable: #MethodProtocol) 
+			(each isFormatAvailable: #MethodProtocol)
 				ifTrue: [self systemModel addClass: dropClass toProtocol: (each format: #MethodProtocol)]].
 	aDragDropSession resetOperation.
 	self performDropChanges: changes target: Object!
@@ -724,7 +734,13 @@ queryCommand: aCommandQuery
 									["This odd way of testing if the selected class is a kind of TestCase is 
 									used to avoid creating a dependency on the SUnit package, so it can 
 								be uninstalled if desired."
-									class allSuperclasses anySatisfy: [:each | each name = #TestCase]]]).
+									class allSuperclasses anySatisfy: [:each | each name = #'XProgramming.SUnit.TestCase']]]).
+			^true].
+	#toggleShowFullNames == selector
+		ifTrue: 
+			[aCommandQuery
+				isEnabled: true;
+				isChecked: self isShowingFullNames.
 			^true].
 	^super queryCommand: aCommandQuery!
 
@@ -778,7 +794,7 @@ renameClassVariable
 
 	| classVar class |
 	class := self selection.
-	classVar := ChoicePrompter choices: class classVarNames asSortedCollection
+	classVar := ChoicePrompter choices: class classBindingNames asSortedCollection
 				caption: 'Rename Class Variable...'.
 	classVar isNil ifFalse: [self systemModel renameClassVariable: classVar in: class]!
 
@@ -790,8 +806,7 @@ renameInstanceVariable
 	class := self actualClass.
 	instVar := ChoicePrompter choices: class instVarNames asSortedCollection
 				caption: 'Rename Instance Variable...'.
-	instVar isNil 
-		ifFalse: [self systemModel renameInstanceVariable: instVar in: class]!
+	instVar isNil ifFalse: [self systemModel renameInstanceVariable: instVar in: class]!
 
 searchEnvironment
 	^searchEnvironment!
@@ -831,7 +846,12 @@ systemModel
 	^Smalltalk developmentSystem!
 
 testBrowserClass
-	^self systemModel testBrowserClass! !
+	^self systemModel testBrowserClass!
+
+toggleShowFullNames
+	self isShowingFullNames: self isShowingFullNames not.
+	classesPresenter selectableItems view getTextBlock: (Message
+				selector: (self isShowingFullNames ifTrue: [#fullName] ifFalse: [#unqualifiedName]))! !
 !ClassSelector categoriesFor: #actualClass!accessing!public! !
 !ClassSelector categoriesFor: #actualClass:!accessing!public! !
 !ClassSelector categoriesFor: #actualClass:ifAbsent:!accessing!public! !
@@ -873,10 +893,13 @@ testBrowserClass
 !ClassSelector categoriesFor: #inspectIt!commands!public! !
 !ClassSelector categoriesFor: #isInstanceMode!modes!public! !
 !ClassSelector categoriesFor: #isInstanceMode:!modes!public! !
+!ClassSelector categoriesFor: #isShowingFullNames!modes!public! !
+!ClassSelector categoriesFor: #isShowingFullNames:!modes!public! !
 !ClassSelector categoriesFor: #maximumVariableMenuEntries!menus!private! !
 !ClassSelector categoriesFor: #model:!accessing!public! !
 !ClassSelector categoriesFor: #newView!commands!public! !
 !ClassSelector categoriesFor: #onAboutToDisplayMenu:!event handling!menus!public! !
+!ClassSelector categoriesFor: #onAboutToRenameClass:!event handling!private! !
 !ClassSelector categoriesFor: #onClass:renamedTo:!event handling!public! !
 !ClassSelector categoriesFor: #onClass:renameTo:accept:!event handling!public! !
 !ClassSelector categoriesFor: #onDrag:!event handling!private! !
@@ -903,6 +926,7 @@ testBrowserClass
 !ClassSelector categoriesFor: #sourceControl!accessing!private! !
 !ClassSelector categoriesFor: #systemModel!commands!private! !
 !ClassSelector categoriesFor: #testBrowserClass!constants!private! !
+!ClassSelector categoriesFor: #toggleShowFullNames!commands!private!refactoring! !
 
 !ClassSelector class methodsFor!
 

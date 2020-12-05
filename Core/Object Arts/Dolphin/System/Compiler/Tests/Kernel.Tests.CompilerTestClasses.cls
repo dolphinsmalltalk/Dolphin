@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-DolphinTestClassResource subclass: #CompilerTestClasses
+Core.Tests.DolphinTestClassResource subclass: #'Kernel.Tests.CompilerTestClasses'
 	instanceVariableNames: 'testClass'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-CompilerTestClasses guid: (GUID fromString: '{23db72f8-4a90-4244-adbc-ea3e9c776d0a}')!
-CompilerTestClasses comment: ''!
-!CompilerTestClasses categoriesForClass!Unclassified! !
-!CompilerTestClasses methodsFor!
+Kernel.Tests.CompilerTestClasses guid: (Core.GUID fromString: '{23db72f8-4a90-4244-adbc-ea3e9c776d0a}')!
+Kernel.Tests.CompilerTestClasses comment: ''!
+!Kernel.Tests.CompilerTestClasses categoriesForClass!Unclassified! !
+!Kernel.Tests.CompilerTestClasses methodsFor!
 
 compileMethods
 	self compileAccessorsFor: testClass!
@@ -37,8 +37,8 @@ tearDown
 
 testClass
 	^testClass! !
-!CompilerTestClasses categoriesFor: #compileMethods!private!Running! !
-!CompilerTestClasses categoriesFor: #createClasses!private!Running! !
-!CompilerTestClasses categoriesFor: #tearDown!public!Running! !
-!CompilerTestClasses categoriesFor: #testClass!public!Running! !
+!Kernel.Tests.CompilerTestClasses categoriesFor: #compileMethods!private!Running! !
+!Kernel.Tests.CompilerTestClasses categoriesFor: #createClasses!private!Running! !
+!Kernel.Tests.CompilerTestClasses categoriesFor: #tearDown!public!Running! !
+!Kernel.Tests.CompilerTestClasses categoriesFor: #testClass!public!Running! !
 

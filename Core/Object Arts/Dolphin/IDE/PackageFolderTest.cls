@@ -1,12 +1,12 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-FolderTest subclass: #PackageFolderTest
+UI.Tests.FolderTest subclass: #PackageFolderTest
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-PackageFolderTest guid: (GUID fromString: '{3a14afc2-659e-4b7b-af2f-dc8631af7128}')!
+PackageFolderTest guid: (Core.GUID fromString: '{3a14afc2-659e-4b7b-af2f-dc8631af7128}')!
 PackageFolderTest comment: ''!
 !PackageFolderTest categoriesForClass!Unclassified! !
 !PackageFolderTest methodsFor!

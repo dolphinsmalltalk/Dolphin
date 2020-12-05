@@ -3,10 +3,10 @@
 ClassSelectorTest subclass: #ClassHierarchySelectorTest
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ClassHierarchySelectorTest guid: (GUID fromString: '{92fa03e6-71b4-4ff0-8fb9-901b0058396f}')!
+ClassHierarchySelectorTest guid: (Core.GUID fromString: '{92fa03e6-71b4-4ff0-8fb9-901b0058396f}')!
 ClassHierarchySelectorTest comment: ''!
 !ClassHierarchySelectorTest categoriesForClass!Unclassified! !
 !ClassHierarchySelectorTest methodsFor!
@@ -23,7 +23,7 @@ removalOfSelectionLeaves: aClass
 	siblings := aClass superclass subclasses.
 	^siblings size = 1 
 		ifTrue: [aClass superclass]
-		ifFalse: [siblings after: aClass]!
+		ifFalse: [siblings asSortedCollection after: aClass]!
 
 resetSelection
 	super resetSelection.
