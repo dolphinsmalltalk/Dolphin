@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Object subclass: #STONReader
+Core.Object subclass: #'STON.Reader'
 	instanceVariableNames: 'readStream objects classes unresolvedReferences stringStream acceptUnknownClasses newLine convertNewLines'
-	classVariableNames: ''
-	poolDictionaries: ''
+	classVariableNames: 'NotFound'
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-STONReader guid: (GUID fromString: '{d393ea51-a9cb-4a9f-bdc2-477e3bb22712}')!
-STONReader comment: 'STONReader materializes objects using the Smalltalk Object Notation format.
+STON.Reader guid: (Core.GUID fromString: '{d393ea51-a9cb-4a9f-bdc2-477e3bb22712}')!
+STON.Reader comment: 'STONReader materializes objects using the Smalltalk Object Notation format.
 
 This parser is backwards compatible with standard JSON.
 
@@ -21,8 +21,8 @@ Customization options are:
 	if false, CR, LF and CRLF are read unmodified
 - newLine <String> default is String cr
 	sequence to use as EOL'!
-!STONReader categoriesForClass!STON-Core-Reader! !
-!STONReader methodsFor!
+!STON.Reader categoriesForClass!STON-Core-Reader! !
+!STON.Reader methodsFor!
 
 acceptUnknownClasses: boolean
 	acceptUnknownClasses := boolean!
@@ -54,9 +54,8 @@ convertNewLines: boolean
 error: aString
 	| streamPosition |
 	"Remain compatible with streams that don't understand #position"
-	streamPosition := [ readStream position ]
-		on: MessageNotUnderstood do: [ nil ].
-	^ STONReaderError signal: aString streamPosition: streamPosition!
+	streamPosition := [readStream position] on: MessageNotUnderstood do: [nil].
+	^ReaderError signal: aString streamPosition: streamPosition!
 
 expectChar: character
 	"Expect character and consume input and optional whitespace at the end,
@@ -83,16 +82,11 @@ isSimpleSymbolChar: char
 	^char isLetter or: ['0123456789-_./' includes: char]!
 
 lookupClass: name
-	Smalltalk globals 
-		at: name 
-		ifPresent: [ :class | ^ class ].
-	^ classes 
-		at: name 
-		ifAbsentPut: [
-			Object allSubclasses 
-				detect: [ :class | class isMeta not and: [ class stonName = name ]  ]
-				ifNone: [ NotFound signalFor: name ] ]
-	!
+	Smalltalk globals at: name ifPresent: [:class | ^class].
+	^classes at: name
+		ifAbsentPut: 
+			[Object allSubclasses detect: [:class | class isMeta not and: [class stonName = name]]
+				ifNone: [NotFound signalFor: name]]!
 
 match: string do: block
 	"Try to read and consume string and execute block if successful.
@@ -121,9 +115,9 @@ newLine: string
 newReference
 	| index reference |
 	index := objects size + 1.
-	reference := STONReference index: index.
+	reference := STON.Reference index: index.
 	objects at: index put: reference.
-	^ reference!
+	^reference!
 
 next
 	| object |
@@ -152,30 +146,32 @@ parseCharacter
 parseCharacterConvertingNewLinesOn: writeStream
 	| char |
 	(char := readStream next) = $\
-		ifTrue: [ writeStream nextPut: self parseEscapedCharacter ]
-		ifFalse: [ 
-			char = Character lf 
-				ifTrue: [ writeStream nextPutAll: newLine ]
-				ifFalse: [ 
-					char = Character cr 
-						ifTrue: [ 
-							readStream peekFor: Character lf.
-							writeStream nextPutAll: newLine ]
-						ifFalse: [ writeStream nextPut: char ] ] ]!
+		ifTrue: [writeStream nextPut: self parseEscapedCharacter]
+		ifFalse: 
+			[char = Character lf
+				ifTrue: [writeStream nextPutAll: newLine]
+				ifFalse: 
+					[char = Character cr
+						ifTrue: 
+							[readStream peekFor: Character lf.
+							writeStream nextPutAll: newLine]
+						ifFalse: [writeStream nextPut: char]]]!
 
 parseCharacterHex
 	| value codePoint |
 	value := self parseCharacterHex4Value.
-	(value < 16rD800 or: [ value > 16rDBFF ])
-		ifTrue: [ codePoint := value ]
-		ifFalse: [ | leadSurrogate trailSurrogate |
+	(value < 16rD800 or: [value > 16rDBFF])
+		ifTrue: [codePoint := value]
+		ifFalse: 
+			[| leadSurrogate trailSurrogate |
 			"Characters not in the Basic Multilingual Plane are encoded as a UTF-16 surrogate pair"
+
 			"See https://tools.ietf.org/html/rfc7159#section-7"
 			leadSurrogate := value.
 			trailSurrogate := self parseTrailingSurrogateHexEscape.
 			codePoint := (leadSurrogate - 16rD800) * 16r400 + (trailSurrogate - 16rDC00).
-			codePoint := 16r10000 + codePoint ].
-	^ Character codePoint: codePoint!
+			codePoint := 16r10000 + codePoint].
+	^Character codePoint: codePoint!
 
 parseCharacterHex4Value
 	| value |
@@ -230,30 +226,22 @@ parseConstantDo: block
 parseEscapedCharacter
 	| char |
 	char := readStream next.
-	(#($' $" $/ $\) includes: char)
-		ifTrue: [ ^ char ].
-	char = $b
-		ifTrue: [ ^ Character backspace ].
-	char = $f
-		ifTrue: [ ^ Character newPage ].
-	char = $n
-		ifTrue: [ ^ Character lf ].
-	char = $r
-		ifTrue: [ ^ Character cr ].
-	char = $t
-		ifTrue: [ ^ Character tab ].
-	char = $u
-		ifTrue: [ ^ self parseCharacterHex ].
+	(#($' $" $/ $\) includes: char) ifTrue: [^char].
+	char = $b ifTrue: [^Character backspace].
+	char = $f ifTrue: [^Character newPage].
+	char = $n ifTrue: [^Character lf].
+	char = $r ifTrue: [^Character cr].
+	char = $t ifTrue: [^Character tab].
+	char = $u ifTrue: [^self parseCharacterHex].
 	self error: 'invalid escape character \' , (String with: char).
-	^ char!
+	^char!
 
 parseList
 	| reference array |
 	reference := self newReference.
-	array := STON listClass streamContents: [ :stream |
-		self parseListDo: [ :each | stream nextPut: each ] ].
+	array := STON listClass streamContents: [:stream | self parseListDo: [:each | stream nextPut: each]].
 	self setReference: reference to: array.
-	^ array!
+	^array!
 
 parseListDo: block
 	| index |
@@ -278,9 +266,8 @@ parseMap
 	| map |
 	map := STON mapClass new.
 	self storeReference: map.
-	self parseMapDo: [ :key :value |
-		map at: key put: value ].
-	^ map!
+	self parseMapDo: [:key :value | map at: key put: value].
+	^map!
 
 parseMapDo: block
 	self expectChar: ${.
@@ -297,18 +284,17 @@ parseMapDo: block
 
 parseMapOrListRepresentation
 	"Private - Parse either a map or list to be used as a representation, not considering it as a referenceable object"
-	readStream atEnd 
-		ifFalse: [ 
-			readStream peek = ${
-				ifTrue: [ | map |
+
+	readStream atEnd
+		ifFalse: 
+			[readStream peek = ${
+				ifTrue: 
+					[| map |
 					map := STON mapClass new.
-					self parseMapDo: [ :key :value |
-						map at: key put: value ].
-					^ map ].
+					self parseMapDo: [:key :value | map at: key put: value].
+					^map].
 			readStream peek = $[
-				ifTrue: [ 
-					^ STON listClass streamContents: [ :stream |
-						self parseListDo: [ :each | stream nextPut: each ] ] ] ].
+				ifTrue: [^STON listClass streamContents: [:stream | self parseListDo: [:each | stream nextPut: each]]]].
 	self error: 'invalid input'!
 
 parseNamedInstVarsFor: anObject
@@ -320,19 +306,17 @@ parseNumber
 	negated := readStream peekFor: $-.
 	number := self parseNumberInteger.
 	(readStream peekFor: $/)
-		ifTrue: [ 
-			number := Fraction numerator: number denominator: self parseNumberInteger.
+		ifTrue: 
+			[number := Fraction numerator: number denominator: self parseNumberInteger.
 			(readStream peekFor: $s)
-				ifTrue: [ number := ScaledDecimal newFromNumber: number scale: self parseNumberInteger ] ]
-		ifFalse: [ 
-			(readStream peekFor: $.)
-				ifTrue: [ number := number + self parseNumberFraction ].
-			((readStream peekFor: $e) or: [ readStream peekFor: $E ])
-				ifTrue: [ number := number * self parseNumberExponent ] ].
-	negated
-		ifTrue: [ number := number negated ].
+				ifTrue: [number := ScaledDecimal newFromNumber: number scale: self parseNumberInteger]]
+		ifFalse: 
+			[(readStream peekFor: $.) ifTrue: [number := number + self parseNumberFraction].
+			((readStream peekFor: $e) or: [readStream peekFor: $E])
+				ifTrue: [number := number * self parseNumberExponent]].
+	negated ifTrue: [number := number negated].
 	self consumeWhitespace.
-	^ number!
+	^number!
 
 parseNumberExponent
 	| number negated |
@@ -386,7 +370,7 @@ parseReference
 	index := self parseNumberInteger.
 	self consumeWhitespace.
 	unresolvedReferences := unresolvedReferences + 1.
-	^ STONReference index: index!
+	^STON.Reference index: index!
 
 parseSimpleValue
 	| char |
@@ -450,9 +434,9 @@ parseTrailingSurrogateHexEscape
 parseValue
 	| value |
 	value := self parseSimpleValue.
-	^ (self matchChar: $:)
-		ifTrue: [ STON associationClass key: value value: self parseValue ]
-		ifFalse: [ value ]!
+	^(self matchChar: $:)
+		ifTrue: [STON associationClass key: value value: self parseValue]
+		ifFalse: [value]!
 
 processSubObjectsOf: object
 	| unresolvedReferencesCount |
@@ -489,71 +473,70 @@ storeReference: object
 	^ index!
 
 stringStreamContents: block
-	stringStream ifNil: [ 
-		stringStream := (String new: 32) writeStream ].
+	stringStream ifNil: [stringStream := (String new: 32) writeStream].
 	stringStream reset.
 	block value: stringStream.
-	^ stringStream contents! !
-!STONReader categoriesFor: #acceptUnknownClasses:!initialize/release!private! !
-!STONReader categoriesFor: #allowComplexMapKeys:!initialize/release!private! !
-!STONReader categoriesFor: #atEnd!private!testing! !
-!STONReader categoriesFor: #close!initialize/release!private! !
-!STONReader categoriesFor: #consumeWhitespace!helpers!private! !
-!STONReader categoriesFor: #convertNewLines:!initialize/release!private! !
-!STONReader categoriesFor: #error:!error handling!private! !
-!STONReader categoriesFor: #expectChar:!helpers!private! !
-!STONReader categoriesFor: #initialize!initialize/release!private! !
-!STONReader categoriesFor: #isClassChar:!helpers!private! !
-!STONReader categoriesFor: #isClassStartChar:!helpers!private! !
-!STONReader categoriesFor: #isSimpleSymbolChar:!helpers!private! !
-!STONReader categoriesFor: #lookupClass:!helpers!private! !
-!STONReader categoriesFor: #match:do:!helpers!private! !
-!STONReader categoriesFor: #matchChar:!helpers!private! !
-!STONReader categoriesFor: #newLine:!initialize/release!private! !
-!STONReader categoriesFor: #newReference!helpers!private! !
-!STONReader categoriesFor: #next!helpers!public! !
-!STONReader categoriesFor: #on:!initialize/release!private! !
-!STONReader categoriesFor: #optimizeForLargeStructures!initialize/release!private! !
-!STONReader categoriesFor: #parseCharacter!parsing-internal!private! !
-!STONReader categoriesFor: #parseCharacterConvertingNewLinesOn:!parsing-internal!private! !
-!STONReader categoriesFor: #parseCharacterHex!helpers!private! !
-!STONReader categoriesFor: #parseCharacterHex4Value!helpers!private! !
-!STONReader categoriesFor: #parseCharacterHexDigit!parsing-internal!private! !
-!STONReader categoriesFor: #parseClass!parsing-internal!private! !
-!STONReader categoriesFor: #parseConstantDo:!parsing-internal!private! !
-!STONReader categoriesFor: #parseEscapedCharacter!parsing-internal!private! !
-!STONReader categoriesFor: #parseList!parsing!private! !
-!STONReader categoriesFor: #parseListDo:!parsing!private! !
-!STONReader categoriesFor: #parseListSingleton!parsing!private! !
-!STONReader categoriesFor: #parseMap!parsing!private! !
-!STONReader categoriesFor: #parseMapDo:!parsing!private! !
-!STONReader categoriesFor: #parseMapOrListRepresentation!parsing!private! !
-!STONReader categoriesFor: #parseNamedInstVarsFor:!parsing!private! !
-!STONReader categoriesFor: #parseNumber!parsing-internal!private! !
-!STONReader categoriesFor: #parseNumberExponent!parsing-internal!private! !
-!STONReader categoriesFor: #parseNumberFraction!parsing-internal!private! !
-!STONReader categoriesFor: #parseNumberInteger!parsing-internal!private! !
-!STONReader categoriesFor: #parseObject!parsing!private! !
-!STONReader categoriesFor: #parseReference!parsing-internal!private! !
-!STONReader categoriesFor: #parseSimpleValue!parsing!private! !
-!STONReader categoriesFor: #parseString!parsing-internal!private! !
-!STONReader categoriesFor: #parseStringInternal!parsing-internal!private! !
-!STONReader categoriesFor: #parseSymbol!parsing-internal!private! !
-!STONReader categoriesFor: #parseTrailingSurrogateHexEscape!helpers!private! !
-!STONReader categoriesFor: #parseValue!parsing!private! !
-!STONReader categoriesFor: #processSubObjectsOf:!helpers!private! !
-!STONReader categoriesFor: #reset!initialize/release!private! !
-!STONReader categoriesFor: #resolveReference:!helpers!private! !
-!STONReader categoriesFor: #resolveReferenceIndex:!helpers!private! !
-!STONReader categoriesFor: #setReference:to:!helpers!private! !
-!STONReader categoriesFor: #storeReference:!helpers!private! !
-!STONReader categoriesFor: #stringStreamContents:!helpers!private! !
+	^stringStream contents! !
+!STON.Reader categoriesFor: #acceptUnknownClasses:!initialize/release!private! !
+!STON.Reader categoriesFor: #allowComplexMapKeys:!initialize/release!private! !
+!STON.Reader categoriesFor: #atEnd!private!testing! !
+!STON.Reader categoriesFor: #close!initialize/release!private! !
+!STON.Reader categoriesFor: #consumeWhitespace!helpers!private! !
+!STON.Reader categoriesFor: #convertNewLines:!initialize/release!private! !
+!STON.Reader categoriesFor: #error:!error handling!private! !
+!STON.Reader categoriesFor: #expectChar:!helpers!private! !
+!STON.Reader categoriesFor: #initialize!initialize/release!private! !
+!STON.Reader categoriesFor: #isClassChar:!helpers!private! !
+!STON.Reader categoriesFor: #isClassStartChar:!helpers!private! !
+!STON.Reader categoriesFor: #isSimpleSymbolChar:!helpers!private! !
+!STON.Reader categoriesFor: #lookupClass:!helpers!private! !
+!STON.Reader categoriesFor: #match:do:!helpers!private! !
+!STON.Reader categoriesFor: #matchChar:!helpers!private! !
+!STON.Reader categoriesFor: #newLine:!initialize/release!private! !
+!STON.Reader categoriesFor: #newReference!helpers!private! !
+!STON.Reader categoriesFor: #next!helpers!public! !
+!STON.Reader categoriesFor: #on:!initialize/release!private! !
+!STON.Reader categoriesFor: #optimizeForLargeStructures!initialize/release!private! !
+!STON.Reader categoriesFor: #parseCharacter!parsing-internal!private! !
+!STON.Reader categoriesFor: #parseCharacterConvertingNewLinesOn:!parsing-internal!private! !
+!STON.Reader categoriesFor: #parseCharacterHex!helpers!private! !
+!STON.Reader categoriesFor: #parseCharacterHex4Value!helpers!private! !
+!STON.Reader categoriesFor: #parseCharacterHexDigit!parsing-internal!private! !
+!STON.Reader categoriesFor: #parseClass!parsing-internal!private! !
+!STON.Reader categoriesFor: #parseConstantDo:!parsing-internal!private! !
+!STON.Reader categoriesFor: #parseEscapedCharacter!parsing-internal!private! !
+!STON.Reader categoriesFor: #parseList!parsing!private! !
+!STON.Reader categoriesFor: #parseListDo:!parsing!private! !
+!STON.Reader categoriesFor: #parseListSingleton!parsing!private! !
+!STON.Reader categoriesFor: #parseMap!parsing!private! !
+!STON.Reader categoriesFor: #parseMapDo:!parsing!private! !
+!STON.Reader categoriesFor: #parseMapOrListRepresentation!parsing!private! !
+!STON.Reader categoriesFor: #parseNamedInstVarsFor:!parsing!private! !
+!STON.Reader categoriesFor: #parseNumber!parsing-internal!private! !
+!STON.Reader categoriesFor: #parseNumberExponent!parsing-internal!private! !
+!STON.Reader categoriesFor: #parseNumberFraction!parsing-internal!private! !
+!STON.Reader categoriesFor: #parseNumberInteger!parsing-internal!private! !
+!STON.Reader categoriesFor: #parseObject!parsing!private! !
+!STON.Reader categoriesFor: #parseReference!parsing-internal!private! !
+!STON.Reader categoriesFor: #parseSimpleValue!parsing!private! !
+!STON.Reader categoriesFor: #parseString!parsing-internal!private! !
+!STON.Reader categoriesFor: #parseStringInternal!parsing-internal!private! !
+!STON.Reader categoriesFor: #parseSymbol!parsing-internal!private! !
+!STON.Reader categoriesFor: #parseTrailingSurrogateHexEscape!helpers!private! !
+!STON.Reader categoriesFor: #parseValue!parsing!private! !
+!STON.Reader categoriesFor: #processSubObjectsOf:!helpers!private! !
+!STON.Reader categoriesFor: #reset!initialize/release!private! !
+!STON.Reader categoriesFor: #resolveReference:!helpers!private! !
+!STON.Reader categoriesFor: #resolveReferenceIndex:!helpers!private! !
+!STON.Reader categoriesFor: #setReference:to:!helpers!private! !
+!STON.Reader categoriesFor: #storeReference:!helpers!private! !
+!STON.Reader categoriesFor: #stringStreamContents:!helpers!private! !
 
-!STONReader class methodsFor!
+!STON.Reader class methodsFor!
 
 on: readStream
 	^ self new
 		on: readStream;
 		yourself! !
-!STONReader class categoriesFor: #on:!instance creation!public! !
+!STON.Reader class categoriesFor: #on:!instance creation!public! !
 

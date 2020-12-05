@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Object subclass: #STONWriter
+Core.Object subclass: #'STON.Writer'
 	instanceVariableNames: 'writeStream prettyPrint stonCharacters newLine asciiOnly jsonMode keepNewLines referencePolicy level objects'
 	classVariableNames: 'STONCharacters STONSimpleSymbolCharacters'
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-STONWriter guid: (GUID fromString: '{ad80eebc-c783-428d-8dbf-ebde1ffe8ddf}')!
-STONWriter comment: 'STONWriter serializes objects using the Smalltalk Object Notation format. 
+STON.Writer guid: (Core.GUID fromString: '{ad80eebc-c783-428d-8dbf-ebde1ffe8ddf}')!
+STON.Writer comment: 'STONWriter serializes objects using the Smalltalk Object Notation format. 
 
 Customization options are:
 
@@ -35,8 +35,8 @@ Customization options are:
 	
 Note that in default STON mode I only use the following named character escapes: \b \t \n \f \'' and \\ while in JSON mode \'' is replaced by \"
 '!
-!STONWriter categoriesForClass!STON-Core-Writer! !
-!STONWriter methodsFor!
+!STON.Writer categoriesForClass!STON-Core-Writer! !
+!STON.Writer methodsFor!
 
 asciiOnly: boolean
 	asciiOnly := boolean!
@@ -114,20 +114,19 @@ encodeString: string
 encodeStringKeepingNewLines: string
 	| input char |
 	input := string readStream.
-	[ input atEnd ]
-		whileFalse: [ 
-			char := input next.
+	[input atEnd] whileFalse: 
+			[char := input next.
 			char = Character lf
-				ifTrue: [ writeStream nextPutAll: newLine ]
-				ifFalse: [ 
-					char = Character cr
-						ifTrue: [ 
-							input peekFor: Character lf.
-							writeStream nextPutAll: newLine ]
-						ifFalse: [ self encodeCharacter: char ] ] ]!
+				ifTrue: [writeStream nextPutAll: newLine]
+				ifFalse: 
+					[char = Character cr
+						ifTrue: 
+							[input peekFor: Character lf.
+							writeStream nextPutAll: newLine]
+						ifFalse: [self encodeCharacter: char]]]!
 
 error: aString
-	^ STONWriterError signal: aString!
+	^STON.WriterError signal: aString!
 
 escape: char with: anObject
 	"Instruct me to escape char with object, either a replacement string or #pass"
@@ -331,12 +330,13 @@ writeObject: anObject
 								ifTrue: [ dictionary at: each asSymbol put: nil ] ] ] ] ]!
 
 writeObject: anObject do: block
-	(jsonMode and: [ anObject class ~= STON listClass and: [ anObject class ~= STON mapClass ] ])
-		ifTrue: [ self error: 'wrong object class for JSON mode' ].
-	self with: anObject do: [
-		writeStream nextPutAll: anObject class stonName.
-		self prettyPrintSpace.
-		block value ]!
+	(jsonMode and: [anObject class ~= STON listClass and: [anObject class ~= STON mapClass]])
+		ifTrue: [self error: 'wrong object class for JSON mode'].
+	self with: anObject
+		do: 
+			[writeStream nextPutAll: anObject class stonName.
+			self prettyPrintSpace.
+			block value]!
 
 writeObject: object listSingleton: element
 	self writeObject: object do: [
@@ -348,12 +348,13 @@ writeObject: object listSingleton: element
 		writeStream nextPut: $] ]!
 
 writeObject: anObject named: stonName do: block
-	(jsonMode and: [ anObject class ~= STON listClass and: [ anObject class ~= STON mapClass ] ])
-		ifTrue: [ self error: 'wrong object class for JSON mode' ].
-	self with: anObject do: [
-		writeStream nextPutAll: stonName.
-		self prettyPrintSpace.
-		block value ]!
+	(jsonMode and: [anObject class ~= STON listClass and: [anObject class ~= STON mapClass]])
+		ifTrue: [self error: 'wrong object class for JSON mode'].
+	self with: anObject
+		do: 
+			[writeStream nextPutAll: stonName.
+			self prettyPrintSpace.
+			block value]!
 
 writeObject: object named: stonName listSingleton: element
 	self writeObject: object named: stonName do: [
@@ -365,34 +366,40 @@ writeObject: object named: stonName listSingleton: element
 		writeStream nextPut: $] ]!
 
 writeObject: object streamList: block
-	self writeObject: object do: [ | listWriter |
-		listWriter := STONListWriter on: self.
-		writeStream nextPut: $[.
-		self indentedDo: [
+	self writeObject: object
+		do: 
+			[| listWriter |
+			listWriter := STON.ListWriter on: self.
+			writeStream nextPut: $[.
+			self indentedDo: 
+					[self newlineIndent.
+					block value: listWriter].
 			self newlineIndent.
-			block value: listWriter ].
-		self newlineIndent.
-		writeStream nextPut: $] ]!
+			writeStream nextPut: $]]!
 
 writeObject: object streamMap: block
-	self writeObject: object do: [ | mapWriter |
-		mapWriter := STONMapWriter on: self.
-		writeStream nextPut: ${.
-		self indentedDo: [
+	self writeObject: object
+		do: 
+			[| mapWriter |
+			mapWriter := STON.MapWriter on: self.
+			writeStream nextPut: ${.
+			self indentedDo: 
+					[self newlineIndent.
+					block value: mapWriter].
 			self newlineIndent.
-			block value: mapWriter ].
-		self newlineIndent.
-		writeStream nextPut: $} ]!
+			writeStream nextPut: $}]!
 
 writeObject: object streamShortList: block
-	self writeObject: object do: [ | listWriter |
-		listWriter := STONShortListWriter on: self.
-		writeStream nextPut: $[.
-		self indentedDo: [
+	self writeObject: object
+		do: 
+			[| listWriter |
+			listWriter := STON.ShortListWriter on: self.
+			writeStream nextPut: $[.
+			self indentedDo: 
+					[self prettyPrintSpace.
+					block value: listWriter].
 			self prettyPrintSpace.
-			block value: listWriter ].
-		self prettyPrintSpace.
-		writeStream nextPut: $] ]!
+			writeStream nextPut: $]]!
 
 writeReference: index
 	writeStream
@@ -423,61 +430,61 @@ writeSymbol: symbol
 					writeStream nextPutAll: symbol ]
 				ifFalse: [
 					self encodeString: symbol ] ]! !
-!STONWriter categoriesFor: #asciiOnly:!initialize/release!public! !
-!STONWriter categoriesFor: #close!initialize/release!public! !
-!STONWriter categoriesFor: #encodeCharacter:!private! !
-!STONWriter categoriesFor: #encodeKey:value:!private! !
-!STONWriter categoriesFor: #encodeList:!public!writing! !
-!STONWriter categoriesFor: #encodeMap:!public!writing! !
-!STONWriter categoriesFor: #encodeString:!private! !
-!STONWriter categoriesFor: #encodeStringKeepingNewLines:!private! !
-!STONWriter categoriesFor: #error:!error handling!public! !
-!STONWriter categoriesFor: #escape:with:!initialize/release!public! !
-!STONWriter categoriesFor: #escapeUnicode:!initialize/release!public! !
-!STONWriter categoriesFor: #escapeUnicode4:!private! !
-!STONWriter categoriesFor: #indentedDo:!private! !
-!STONWriter categoriesFor: #initialize!initialize/release!public! !
-!STONWriter categoriesFor: #isSimpleSymbol:!private! !
-!STONWriter categoriesFor: #jsonMode!initialize/release!public! !
-!STONWriter categoriesFor: #jsonMode:!initialize/release!public! !
-!STONWriter categoriesFor: #keepNewLines:!initialize/release!public! !
-!STONWriter categoriesFor: #listElementSeparator!private! !
-!STONWriter categoriesFor: #mapElementSeparator!private! !
-!STONWriter categoriesFor: #newLine:!initialize/release!public! !
-!STONWriter categoriesFor: #newlineIndent!private! !
-!STONWriter categoriesFor: #nextPut:!public! !
-!STONWriter categoriesFor: #on:!initialize/release!public! !
-!STONWriter categoriesFor: #optimizeForLargeStructures!initialize/release!public! !
-!STONWriter categoriesFor: #prettyPrint:!initialize/release!public! !
-!STONWriter categoriesFor: #prettyPrintSpace!private! !
-!STONWriter categoriesFor: #referencePolicy:!initialize/release!public! !
-!STONWriter categoriesFor: #reset!initialize/release!public! !
-!STONWriter categoriesFor: #shortListElementSeparator!private! !
-!STONWriter categoriesFor: #stonCharacters!private! !
-!STONWriter categoriesFor: #with:do:!private! !
-!STONWriter categoriesFor: #writeableStonCharacters!public!writing! !
-!STONWriter categoriesFor: #writeAssociation:!public!writing! !
-!STONWriter categoriesFor: #writeBoolean:!public!writing! !
-!STONWriter categoriesFor: #writeFloat:!public!writing! !
-!STONWriter categoriesFor: #writeFraction:!public!writing! !
-!STONWriter categoriesFor: #writeInteger:!public!writing! !
-!STONWriter categoriesFor: #writeList:!public!writing! !
-!STONWriter categoriesFor: #writeMap:!public!writing! !
-!STONWriter categoriesFor: #writeNull!public!writing! !
-!STONWriter categoriesFor: #writeObject:!public!writing! !
-!STONWriter categoriesFor: #writeObject:do:!public!writing! !
-!STONWriter categoriesFor: #writeObject:listSingleton:!public!writing! !
-!STONWriter categoriesFor: #writeObject:named:do:!public!writing! !
-!STONWriter categoriesFor: #writeObject:named:listSingleton:!public!writing! !
-!STONWriter categoriesFor: #writeObject:streamList:!public!writing! !
-!STONWriter categoriesFor: #writeObject:streamMap:!public!writing! !
-!STONWriter categoriesFor: #writeObject:streamShortList:!public!writing! !
-!STONWriter categoriesFor: #writeReference:!public!writing! !
-!STONWriter categoriesFor: #writeScaledDecimal:!public!writing! !
-!STONWriter categoriesFor: #writeString:!public!writing! !
-!STONWriter categoriesFor: #writeSymbol:!public!writing! !
+!STON.Writer categoriesFor: #asciiOnly:!initialize/release!public! !
+!STON.Writer categoriesFor: #close!initialize/release!public! !
+!STON.Writer categoriesFor: #encodeCharacter:!private! !
+!STON.Writer categoriesFor: #encodeKey:value:!private! !
+!STON.Writer categoriesFor: #encodeList:!public!writing! !
+!STON.Writer categoriesFor: #encodeMap:!public!writing! !
+!STON.Writer categoriesFor: #encodeString:!private! !
+!STON.Writer categoriesFor: #encodeStringKeepingNewLines:!private! !
+!STON.Writer categoriesFor: #error:!error handling!public! !
+!STON.Writer categoriesFor: #escape:with:!initialize/release!public! !
+!STON.Writer categoriesFor: #escapeUnicode:!initialize/release!public! !
+!STON.Writer categoriesFor: #escapeUnicode4:!private! !
+!STON.Writer categoriesFor: #indentedDo:!private! !
+!STON.Writer categoriesFor: #initialize!initialize/release!public! !
+!STON.Writer categoriesFor: #isSimpleSymbol:!private! !
+!STON.Writer categoriesFor: #jsonMode!initialize/release!public! !
+!STON.Writer categoriesFor: #jsonMode:!initialize/release!public! !
+!STON.Writer categoriesFor: #keepNewLines:!initialize/release!public! !
+!STON.Writer categoriesFor: #listElementSeparator!private! !
+!STON.Writer categoriesFor: #mapElementSeparator!private! !
+!STON.Writer categoriesFor: #newLine:!initialize/release!public! !
+!STON.Writer categoriesFor: #newlineIndent!private! !
+!STON.Writer categoriesFor: #nextPut:!public! !
+!STON.Writer categoriesFor: #on:!initialize/release!public! !
+!STON.Writer categoriesFor: #optimizeForLargeStructures!initialize/release!public! !
+!STON.Writer categoriesFor: #prettyPrint:!initialize/release!public! !
+!STON.Writer categoriesFor: #prettyPrintSpace!private! !
+!STON.Writer categoriesFor: #referencePolicy:!initialize/release!public! !
+!STON.Writer categoriesFor: #reset!initialize/release!public! !
+!STON.Writer categoriesFor: #shortListElementSeparator!private! !
+!STON.Writer categoriesFor: #stonCharacters!private! !
+!STON.Writer categoriesFor: #with:do:!private! !
+!STON.Writer categoriesFor: #writeableStonCharacters!public!writing! !
+!STON.Writer categoriesFor: #writeAssociation:!public!writing! !
+!STON.Writer categoriesFor: #writeBoolean:!public!writing! !
+!STON.Writer categoriesFor: #writeFloat:!public!writing! !
+!STON.Writer categoriesFor: #writeFraction:!public!writing! !
+!STON.Writer categoriesFor: #writeInteger:!public!writing! !
+!STON.Writer categoriesFor: #writeList:!public!writing! !
+!STON.Writer categoriesFor: #writeMap:!public!writing! !
+!STON.Writer categoriesFor: #writeNull!public!writing! !
+!STON.Writer categoriesFor: #writeObject:!public!writing! !
+!STON.Writer categoriesFor: #writeObject:do:!public!writing! !
+!STON.Writer categoriesFor: #writeObject:listSingleton:!public!writing! !
+!STON.Writer categoriesFor: #writeObject:named:do:!public!writing! !
+!STON.Writer categoriesFor: #writeObject:named:listSingleton:!public!writing! !
+!STON.Writer categoriesFor: #writeObject:streamList:!public!writing! !
+!STON.Writer categoriesFor: #writeObject:streamMap:!public!writing! !
+!STON.Writer categoriesFor: #writeObject:streamShortList:!public!writing! !
+!STON.Writer categoriesFor: #writeReference:!public!writing! !
+!STON.Writer categoriesFor: #writeScaledDecimal:!public!writing! !
+!STON.Writer categoriesFor: #writeString:!public!writing! !
+!STON.Writer categoriesFor: #writeSymbol:!public!writing! !
 
-!STONWriter class methodsFor!
+!STON.Writer class methodsFor!
 
 initialize
 	"Modification timestamp 20170131"
@@ -488,23 +495,22 @@ initialize
 initializeSTONCharacters
 	| escapes |
 	STONCharacters := Array new: 127.
-	32 to: 126 do: [ :each | 
-		STONCharacters at: each + 1 put: #pass ].
+	32 to: 126 do: [:each | STONCharacters at: each + 1 put: #pass].
 	"This is the minimal STON set of named escapes"
-	escapes := #( 8 '\b' 9 '\t' 10 '\n' 12 '\f' 13 '\r' 39 '\''' 92 '\\' ).
-	escapes pairsDo: [ :code :escape | 
-		STONCharacters at: code + 1 put: escape ]!
+	escapes := #(8 '\b' 9 '\t' 10 '\n' 12 '\f' 13 '\r' 39 '\''' 92 '\\').
+	escapes pairsDo: [:code :escape | STONCharacters at: code + 1 put: escape]!
 
 initializeSTONSimpleSymbolCharacters
 	"STONSimpleSymbolCharacters asArray collectWithIndex: [ :each :index |
 		each isZero ifTrue: [ (index - 1) asCharacter ] ]."
-		
+
 	STONSimpleSymbolCharacters := ByteArray new: 256 withAll: 1.
-	1 to: 256 do: [ :each | | char |
-		char := (each - 1) asCharacter.
-		(self isSimpleSymbolChar: char)
-			ifTrue: [ 
-				STONSimpleSymbolCharacters at: each put: 0 ] ]!
+	1 to: 256
+		do: 
+			[:each |
+			| char |
+			char := (each - 1) asCharacter.
+			(self isSimpleSymbolChar: char) ifTrue: [STONSimpleSymbolCharacters at: each put: 0]]!
 
 isSimpleSymbolChar: char
 	^ 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-_./' includes: char!
@@ -513,9 +519,9 @@ on: writeStream
 	^ self new
 		on: writeStream;
 		yourself! !
-!STONWriter class categoriesFor: #initialize!class initialization!public! !
-!STONWriter class categoriesFor: #initializeSTONCharacters!class initialization!public! !
-!STONWriter class categoriesFor: #initializeSTONSimpleSymbolCharacters!class initialization!public! !
-!STONWriter class categoriesFor: #isSimpleSymbolChar:!private! !
-!STONWriter class categoriesFor: #on:!instance creation!public! !
+!STON.Writer class categoriesFor: #initialize!class initialization!public! !
+!STON.Writer class categoriesFor: #initializeSTONCharacters!class initialization!public! !
+!STON.Writer class categoriesFor: #initializeSTONSimpleSymbolCharacters!class initialization!public! !
+!STON.Writer class categoriesFor: #isSimpleSymbolChar:!private! !
+!STON.Writer class categoriesFor: #on:!instance creation!public! !
 

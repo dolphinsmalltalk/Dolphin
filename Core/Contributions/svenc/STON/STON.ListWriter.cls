@@ -1,19 +1,19 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-STONStreamWriter subclass: #STONListWriter
+STON.StreamWriter subclass: #'STON.ListWriter'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-STONListWriter guid: (GUID fromString: '{7f97d53a-86b9-4db6-9949-a819d1045f49}')!
-STONListWriter comment: 'STONArrayWriter helps in writing array based STON representations.
+STON.ListWriter guid: (Core.GUID fromString: '{7f97d53a-86b9-4db6-9949-a819d1045f49}')!
+STON.ListWriter comment: 'STONArrayWriter helps in writing array based STON representations.
 '!
-!STONListWriter categoriesForClass!STON-Core-Writer! !
-!STONListWriter methodsFor!
+!STON.ListWriter categoriesForClass!STON-Core-Writer! !
+!STON.ListWriter methodsFor!
 
 add: anObject
 	first ifTrue: [ first := false ] ifFalse: [ writer listElementSeparator ].
 	writer nextPut: anObject! !
-!STONListWriter categoriesFor: #add:!accessing!public! !
+!STON.ListWriter categoriesFor: #add:!accessing!public! !
 

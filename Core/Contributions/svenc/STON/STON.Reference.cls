@@ -1,16 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Object subclass: #STONReference
+Core.Object subclass: #'STON.Reference'
 	instanceVariableNames: 'index'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-STONReference guid: (GUID fromString: '{be937146-c626-437a-b2f6-097eef5bedc0}')!
-STONReference comment: 'STONReference holds a forward reference to another object during materialization.
+STON.Reference guid: (Core.GUID fromString: '{be937146-c626-437a-b2f6-097eef5bedc0}')!
+STON.Reference comment: 'STONReference holds a forward reference to another object during materialization.
 '!
-!STONReference categoriesForClass!STON-Core-Utilities! !
-!STONReference methodsFor!
+!STON.Reference categoriesForClass!STON-Core-Utilities! !
+!STON.Reference methodsFor!
 
 = anObject
 	^ self class == anObject class and: [ self index = anObject index ]!
@@ -30,18 +30,18 @@ isStonReference
 printOn: stream
 	super printOn: stream.
 	stream nextPut: $(; print: index; nextPut: $)! !
-!STONReference categoriesFor: #=!comparing!public! !
-!STONReference categoriesFor: #hash!comparing!public! !
-!STONReference categoriesFor: #index!accessing!public! !
-!STONReference categoriesFor: #index:!accessing!public! !
-!STONReference categoriesFor: #isStonReference!public!testing! !
-!STONReference categoriesFor: #printOn:!printing!public! !
+!STON.Reference categoriesFor: #=!comparing!public! !
+!STON.Reference categoriesFor: #hash!comparing!public! !
+!STON.Reference categoriesFor: #index!accessing!public! !
+!STON.Reference categoriesFor: #index:!accessing!public! !
+!STON.Reference categoriesFor: #isStonReference!public!testing! !
+!STON.Reference categoriesFor: #printOn:!printing!public! !
 
-!STONReference class methodsFor!
+!STON.Reference class methodsFor!
 
 index: integer
 	^ self new
 		index: integer;
 		yourself! !
-!STONReference class categoriesFor: #index:!instance creation!public! !
+!STON.Reference class categoriesFor: #index:!instance creation!public! !
 

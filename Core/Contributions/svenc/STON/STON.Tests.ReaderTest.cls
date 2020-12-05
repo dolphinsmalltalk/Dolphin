@@ -1,21 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-TestCase subclass: #STONReaderTest
+STON.Tests.STONTestCase subclass: #'STON.Tests.ReaderTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-STONReaderTest guid: (GUID fromString: '{6a0fdc02-84d9-4344-8b1e-55e345843ec9}')!
-STONReaderTest comment: 'STONReaderTests test materialization.
+STON.Tests.ReaderTest guid: (Core.GUID fromString: '{6a0fdc02-84d9-4344-8b1e-55e345843ec9}')!
+STON.Tests.ReaderTest comment: 'STONReaderTests test materialization.
 '!
-!STONReaderTest categoriesForClass!STON-Tests-Reader! !
-!STONReaderTest methodsFor!
-
-materialize: string
-	^ STON reader 
-		on: string readStream;
-		next!
+!STON.Tests.ReaderTest categoriesForClass!STON-Tests-Reader! !
+!STON.Tests.ReaderTest methodsFor!
 
 testAssociation
 	self assert: (self materialize: '''foo'':1') equals: 'foo' -> 1.
@@ -32,14 +27,8 @@ testAssociation
 !
 
 testBag
-	self 
-		assert: (self materialize: 'Bag{#a:2,#b:3}') 
-		equals: (Bag withAll: #(a a b b b)).
-	self 
-		assert: (self materialize: 'Bag{}') 
-		equals: Bag new.
-
-!
+	self assert: (self materialize: 'Bag{#a:2,#b:3}') equals: (Bag withAll: #(#a #a #b #b #b)).
+	self assert: (self materialize: 'Bag{}') equals: Bag new!
 
 testBoolean
 	self assert: (self materialize: 'true') equals: true.
@@ -56,19 +45,12 @@ testClass
 	self assert: (self materialize: 'Class[#Point]') equals: Point!
 
 testClassWithUnderscore
-
 	| cls data reader |
-
 	cls := Object newAnonymousSubclass.
 	cls setName: #A_B_C123AnonClass.
-
 	data := STON toString: cls new.
-	reader := STONReader on: data readStream.
-
-	(reader instVarNamed: #classes) 
-		at: cls name 
-		put: cls.
-
+	reader := STON.Reader on: data readStream.
+	(reader instVarNamed: #classes) at: cls name put: cls.
 	self assert: reader next class equals: cls!
 
 testColor
@@ -84,42 +66,55 @@ testColor
 
 testConvertingNewLines
 	| input result output |
-	input := '''line ending with CR', String cr, 
-		'line ending with LF', String lf, 
-		'line ending with CRLF', String crlf, ''''.
-	output := 'line ending with CR', String crlf, 
-		'line ending with LF', String crlf, 
-		'line ending with CRLF', String crlf.
-	result := (STON reader on: input readStream) newLine: String crlf; convertNewLines: true; next.
+	input := '''line ending with CR' , String cr , 'line ending with LF' , String lf
+				, 'line ending with CRLF' , String crlf
+				, ''''.
+	output := 'line ending with CR' , String crlf , 'line ending with LF' , String crlf
+				, 'line ending with CRLF' , String crlf.
+	result := (STON reader on: input readStream)
+				newLine: String crlf;
+				convertNewLines: true;
+				next.
 	self assert: result equals: output.
-	output := 'line ending with CR', String cr, 
-		'line ending with LF', String cr, 
-		'line ending with CRLF', String cr.
-	result := (STON reader on: input readStream) newLine: String cr; convertNewLines: true; next.
+	output := 'line ending with CR' , String cr , 'line ending with LF' , String cr
+				, 'line ending with CRLF' , String cr.
+	result := (STON reader on: input readStream)
+				newLine: String cr;
+				convertNewLines: true;
+				next.
 	self assert: result equals: output!
 
 testDate
 	| date |
-	date := (Date year: 2012 month: 1 day: 1) translateToUTC.
+	date := (Date
+				year: 2012
+				month: 1
+				day: 1) translateToUTC.
 	self assert: (self materialize: 'Date[''2012-01-01Z'']') equals: date.
 	self assert: (self materialize: 'Date[''2012-01-01+00:00'']') equals: date.
-	date := (Date year: 2012 month: 1 day: 1) translateTo: 1 hour.
+	date := (Date
+				year: 2012
+				month: 1
+				day: 1) translateTo: 1 hour.
 	self assert: (self materialize: 'Date[''2012-01-01+01:00'']') equals: date.
 	"a missing timezone offset results in the local timezone offset being used,
 	this is never written by STON, but matches the first implementation for backwards compatibility"
-	date := Date year: 2012 month: 1 day: 1.
-	self assert: (self materialize: 'Date[''2012-01-01'']') equals: date.!
+	date := Date
+				year: 2012
+				month: 1
+				day: 1.
+	self assert: (self materialize: 'Date[''2012-01-01'']') equals: date!
 
 testDateAndTime
 	| dateAndTime |
 	dateAndTime := DateAndTime
-		year: 2012
-		month: 1
-		day: 1
-		hour: 6
-		minute: 30
-		second: 15
-		offset: 1 hour.
+				year: 2012
+				month: 1
+				day: 1
+				hour: 6
+				minute: 30
+				second: 15
+				offset: 1 hour.
 	self assert: (self materialize: 'DateAndTime[''2012-01-01T06:30:15+01:00'']') equals: dateAndTime!
 
 testDeepStructure
@@ -129,10 +124,10 @@ testDeepStructure
 	deepest := Array with: holder.
 	structure := deepest.
 	"Modified from original as this causes a stack overflow in Dolphin with depth 1024. There is no obvious reason to make this test go so deep anyway since there it makes no difference to the code paths."
-	1 * 512 timesRepeat: [ structure := Array with: structure ].
+	1 * 512 timesRepeat: [structure := Array with: structure].
 	structure := Array with: holder with: structure.
 	writer := STON writer optimizeForLargeStructures.
-	ston := String streamContents: [ :out | (writer on: out) nextPut: structure ].
+	ston := String streamContents: [:out | (writer on: out) nextPut: structure].
 	"After reading, the second pass will have to go down the structure to resolve the reference - not with DolphinSTONReader it won't."
 	reader := STON reader optimizeForLargeStructures.
 	result := (reader on: ston readStream) next.
@@ -141,63 +136,57 @@ testDeepStructure
 testDictionary
 	| collection |
 	collection := STON mapClass new
-		at: 1 put: 1;
-		at: 2 put: 2;
-		yourself.
+				at: 1 put: 1;
+				at: 2 put: 2;
+				yourself.
 	self assert: (self materialize: '{1:1,2:2}') equals: collection.
 	self assert: (self materialize: '{}') equals: STON mapClass new!
 
 testDictionaryWithComplexKeys
 	| collection reader |
 	collection := STON mapClass new
-		at: true put: 1;
-		at: #(foo) put: 2;
-		yourself.
+				at: true put: 1;
+				at: #(#foo) put: 2;
+				yourself.
 	"allowing complex map keys used to be optional, now it is always the default"
-	reader := STONReader on: '{true:1,[#foo]:2}' readStream.
+	reader := STON.Reader on: '{true:1,[#foo]:2}' readStream.
 	self assert: reader next equals: collection!
 
 testDictionaryWithIndirectReferenceKeys
 	| keysCollection dictionary ston object |
-	keysCollection := OrderedCollection streamContents: [ :out |
-		10 timesRepeat: [ out nextPut: UUID new ] ].
+	keysCollection := OrderedCollection
+				streamContents: [:out | 10 timesRepeat: [out nextPut: UUID new]].
 	dictionary := Dictionary new.
-	keysCollection doWithIndex: [ :each :index | 
-		dictionary at: (Array with: each) put: index ].
+	keysCollection doWithIndex: [:each :index | dictionary at: (Array with: each) put: index].
 	object := Array with: keysCollection with: dictionary.
 	ston := STON toStringPretty: object.
 	object := (STON reader on: ston readStream) next.
-	object first doWithIndex: [ :each :index |
-		self assert: (object second at: (Array with: each)) equals: index ].
-	self assert: object second isHealthy !
+	object first
+		doWithIndex: [:each :index | self assert: (object second at: (Array with: each)) equals: index].
+	self assert: object second isHealthy!
 
 testDictionaryWithReferenceKeys
 	| keysCollection dictionary ston object |
-	keysCollection := OrderedCollection streamContents: [ :out |
-		10 timesRepeat: [ out nextPut: UUID new ] ].
+	keysCollection := OrderedCollection
+				streamContents: [:out | 10 timesRepeat: [out nextPut: UUID new]].
 	dictionary := Dictionary new.
-	keysCollection doWithIndex: [ :each :index | 
-		dictionary at: each put: index ].
+	keysCollection doWithIndex: [:each :index | dictionary at: each put: index].
 	object := Array with: keysCollection with: dictionary.
 	ston := STON toStringPretty: object.
 	object := (STON reader on: ston readStream) next.
-	object first doWithIndex: [ :each :index |
-		self assert: (object second at: each) equals: index ].
-	self assert: object second isHealthy !
+	object first doWithIndex: [:each :index | self assert: (object second at: each) equals: index].
+	self assert: object second isHealthy!
 
 testError
-	#( 'foo' '{foo:}' '{foo,}' '[1,]' '+1' ']' '#' '' '  ' '	' 'nul' 'tru' 'fals' ) do: [ :each |
-		self 
-			should: [ self materialize: each ] 
-			raise: STONReaderError ]
-!
+	#('foo' '{foo:}' '{foo,}' '[1,]' '+1' ']' '#' '' '  ' '	' 'nul' 'tru' 'fals')
+		do: [:each | self should: [self materialize: each] raise: STON.ReaderError]!
 
 testFloat
 	self assert: ((self materialize: '1.5') closeTo: 1.5).
 	self assert: ((self materialize: '-1.5') closeTo: -1.5).
 	self assert: (self materialize: '0.0') isZero.
 	self assert: (Float pi closeTo: (self materialize: '3.14149')).
-	self assert: (1/3 closeTo: (self materialize: '0.333333')).
+	self assert: (1 / 3 closeTo: (self materialize: '0.333333')).
 	self assert: ((self materialize: '1.0e100') closeTo: (10 raisedTo: 100)).
 	self assert: ((self materialize: '1.0e-100') closeTo: (10 raisedTo: -100)).
 	self assert: ((self materialize: '-1.0e-100') closeTo: (10 raisedTo: -100) negated)!
@@ -211,18 +200,18 @@ testFraction
 testIdentityDictionary
 	| collection |
 	collection := IdentityDictionary new
-		at: 1 put: 1;
-		at: 2 put: 2;
-		yourself.
+				at: 1 put: 1;
+				at: 2 put: 2;
+				yourself.
 	self assert: (self materialize: 'IdentityDictionary{1:1,2:2}') equals: collection.
 	self assert: (self materialize: 'IdentityDictionary{}') equals: IdentityDictionary new!
 
 testIllegalCharacterEscapes
-	self should: [ STON fromString: '''\a''' ] raise: STONReaderError.
-	self should: [ STON fromString: '''\u''' ] raise: STONReaderError.
-	self should: [ STON fromString: '''\u00''' ] raise: STONReaderError.
-	self should: [ STON fromString: '''\u000''' ] raise: STONReaderError.
-	self should: [ STON fromString: '''\*''' ] raise: STONReaderError!
+	self should: [STON fromString: '''\a'''] raise: STON.ReaderError.
+	self should: [STON fromString: '''\u'''] raise: STON.ReaderError.
+	self should: [STON fromString: '''\u00'''] raise: STON.ReaderError.
+	self should: [STON fromString: '''\u000'''] raise: STON.ReaderError.
+	self should: [STON fromString: '''\*'''] raise: STON.ReaderError!
 
 testInteger
 	self assert: (self materialize: '1') equals: 1.
@@ -238,19 +227,28 @@ testJsonString
 	self assert: (self materialize: '"foo"') equals: 'foo'.
 	self assert: (self materialize: '"FOO"') equals: 'FOO'.
 	self assert: (self materialize: '"\u00E9l\u00E8ve en Fran\u00E7ais"') equals: 'élève en Français'.
-	string := String withAll: {$" . $' . $\ . Character tab . Character cr . Character lf . Character newPage . Character backspace}.
+	string := String withAll: {$".
+						$'.
+						$\.
+						Character tab.
+						Character cr.
+						Character lf.
+						Character newPage.
+						Character backspace}.
 	self assert: (self materialize: '"\"\''\\\t\r\n\f\b"') equals: string!
 
 testList
 	self assert: STON listClass equals: Array.
-	self assert: (self materialize: '[1,2,3]') equals: (STON listClass with: 1 with: 2 with: 3).
+	self assert: (self materialize: '[1,2,3]')
+		equals: (STON listClass
+				with: 1
+				with: 2
+				with: 3).
 	self assert: (self materialize: '[]') equals: STON listClass new!
 
 testMap
-	self
-		assert: (self materialize: '{#foo:1}')
-		equals:
-			(STON mapClass new
+	self assert: (self materialize: '{#foo:1}')
+		equals: (STON mapClass new
 				at: #foo put: 1;
 				yourself).
 	self assert: (self materialize: '{}') equals: STON mapClass new!
@@ -260,31 +258,27 @@ testMetaclass
 
 testMultiple
 	| reader |
-	reader := STON reader 
-		on: '123 -123 nil #foo true [ 0 ] false { #one : 1 }' readStream.
+	reader := STON reader on: '123 -123 nil #foo true [ 0 ] false { #one : 1 }' readStream.
 	self deny: reader atEnd.
-	self assert: reader next equals: 123. 
-	self assert: reader next equals: -123. 
-	self assert: reader next equals: nil. 
-	self assert: reader next equals: #foo. 
-	self assert: reader next equals: true. 
-	self assert: reader next equals: { 0 }. 
-	self assert: reader next equals: false. 
-	self assert: reader next equals: (Dictionary with: #one -> 1). 
-	self assert: reader atEnd.
-!
+	self assert: reader next equals: 123.
+	self assert: reader next equals: -123.
+	self assert: reader next equals: nil.
+	self assert: reader next equals: #foo.
+	self assert: reader next equals: true.
+	self assert: reader next equals: {0}.
+	self assert: reader next equals: false.
+	self assert: reader next equals: (Dictionary with: #one -> 1).
+	self assert: reader atEnd!
 
 testNewSymbol
 	| n notASymbol shouldBeSymbol |
-	
 	"Find a name that has not yet been interned"
 	n := 0.
-	[ Symbol hasInterned: (notASymbol := 'notASymbol', n printString) ifTrue: [ :symbol | symbol ] ] 
-		whileTrue: [ n := n + 1 ].
+	[Symbol hasInterned: (notASymbol := 'notASymbol' , n printString) ifTrue: [:symbol | symbol]]
+		whileTrue: [n := n + 1].
 	"Parsing the new, not yet interned name should create a new Symbol"
-	shouldBeSymbol := self materialize: '#', notASymbol.
-	self assert: (shouldBeSymbol isSymbol and: [ notASymbol = shouldBeSymbol asString ])
-!
+	shouldBeSymbol := self materialize: '#' , notASymbol.
+	self assert: (shouldBeSymbol isSymbol and: [notASymbol = shouldBeSymbol asString])!
 
 testNil
 	self assert: (self materialize: 'nil') isNil!
@@ -293,8 +287,8 @@ testNonBMPCharacterDecoding
 	"Characters not in the Basic Multilingual Plane are encoded as a UTF-16 surrogate pair"
 
 	| string object |
-	string := String with: 16r1D11E asCharacter. "MUSICAL SYMBOL G CLEF"
-	object := (STON fromString: '''\uD834\uDD1E''').
+	string := String with: 16r1D11E asCharacter.	"MUSICAL SYMBOL G CLEF"
+	object := STON fromString: '''\uD834\uDD1E'''.
 	self assert: object equals: string!
 
 testNull
@@ -325,7 +319,11 @@ testReferenceSharing
 	| one array |
 	one := {#one}.
 	array := self materialize: '[[#one],@2,@2]'.
-	self assert: array equals: (STON listClass with: one with: one with: one).
+	self assert: array
+		equals: (STON listClass
+				with: one
+				with: one
+				with: one).
 	self assert: array first identicalTo: array second.
 	self assert: array first identicalTo: array third!
 
@@ -338,44 +336,49 @@ testScaledDecimal
 
 testSetWithIndirectReferenceElements
 	| elementsCollection set ston object |
-	elementsCollection := OrderedCollection streamContents: [ :out |
-		10 timesRepeat: [ out nextPut: UUID new ] ].
-	set := Set withAll: (elementsCollection collect: [ :each | Array with: each ]).
+	elementsCollection := OrderedCollection
+				streamContents: [:out | 10 timesRepeat: [out nextPut: UUID new]].
+	set := Set withAll: (elementsCollection collect: [:each | Array with: each]).
 	object := Array with: elementsCollection with: set.
 	ston := STON toStringPretty: object.
-	object := STON fromString: ston" readStream".
-	object first do: [ :each |
-		self assert: (object second includes: (Array with: each)) ].
-	self assert: object second isHealthy !
+	object := STON fromString: ston.	" readStream"
+	object first do: [:each | self assert: (object second includes: (Array with: each))].
+	self assert: object second isHealthy!
 
 testSetWithReferenceElements
 	| elementsCollection set ston object |
-	elementsCollection := OrderedCollection streamContents: [ :out |
-		10 timesRepeat: [ out nextPut: UUID new ] ].
+	elementsCollection := OrderedCollection
+				streamContents: [:out | 10 timesRepeat: [out nextPut: UUID new]].
 	set := Set withAll: elementsCollection.
 	object := Array with: elementsCollection with: set.
 	ston := STON toStringPretty: object.
-	object := STON fromString: ston "readStream".
-	object first do: [ :each |
-		self assert: (object second includes: each) ].
-	self assert: object second isHealthy !
+	object := STON fromString: ston.	"readStream"
+	object first do: [:each | self assert: (object second includes: each)].
+	self assert: object second isHealthy!
 
 testStreaming
 	| reader |
-	reader := STON reader 
-		on: '1 2 3 4 5 6 7 8 9 10' readStream.
-	self 
-		assert: (Array streamContents: [ :stream |
-			[ reader atEnd] whileFalse: [ 
-				stream nextPut: reader next ] ]) sum
+	reader := STON reader on: '1 2 3 4 5 6 7 8 9 10' readStream.
+	self
+		assert: (Array streamContents: [:stream | [reader atEnd] whileFalse: [stream nextPut: reader next]])
+				sum
 		equals: #(1 2 3 4 5 6 7 8 9 10) sum!
 
 testString
 	| string |
 	self assert: (self materialize: '''foo''') equals: 'foo'.
 	self assert: (self materialize: '''FOO''') equals: 'FOO'.
-	self assert: (self materialize: '''\u00E9l\u00E8ve en Fran\u00E7ais''') equals: 'élève en Français'.
-	string := String withAll: {$" . $' . $\ . $/ . Character tab . Character cr . Character lf . Character newPage . Character backspace}.
+	self assert: (self materialize: '''\u00E9l\u00E8ve en Fran\u00E7ais''')
+		equals: 'élève en Français'.
+	string := String withAll: {$".
+						$'.
+						$\.
+						$/.
+						Character tab.
+						Character cr.
+						Character lf.
+						Character newPage.
+						Character backspace}.
 	self assert: (self materialize: '''\"\''\\\/\t\r\n\f\b''') equals: string!
 
 testSymbol
@@ -384,20 +387,26 @@ testSymbol
 
 testTime
 	| time |
-	time := Time hour: 6 minute: 30 second: 15.
+	time := Time
+				hour: 6
+				minute: 30
+				second: 15.
 	self assert: (self materialize: 'Time[''06:30:15'']') equals: time.
-	time := Time hour: 6 minute: 30 second: 15 nanoSecond: 123.
-	self assert: (self materialize: 'Time[''06:30:15.000000123'']') equals: time.
-!
+	time := Time
+				hour: 6
+				minute: 30
+				second: 15
+				nanoSecond: 123.
+	self assert: (self materialize: 'Time[''06:30:15.000000123'']') equals: time!
 
 testUnknownClasses
 	| input object |
 	input := 'FooBar { #foo : 1, #bar : true }'.
-	self should: [ self materialize: input ] raise: STONReaderError.
-	object := STON reader 
-		acceptUnknownClasses: true; 
-		on: input readStream; 
-		next.
+	self should: [self materialize: input] raise: STON.ReaderError.
+	object := STON reader
+				acceptUnknownClasses: true;
+				on: input readStream;
+				next.
 	self assert: object class equals: STON mapClass.
 	self assert: (object at: #foo) equals: 1.
 	self assert: (object at: #bar).
@@ -408,70 +417,73 @@ testUser
 	(user := STONTestUser new)
 		username: 'john@foo.com';
 		password: 'secret1'.
-	self assert: (self materialize: 'STONTestUser{#username:''john@foo.com'',#password:''secret1'',#enabled:true}') equals: user!
+	self assert: (self
+				materialize: 'STON.Tests.STONTestUser{#username:''john@foo.com'',#password:''secret1'',#enabled:true}')
+		equals: user!
 
 testUser2
 	| user |
 	(user := STONTestUser2 new)
 		username: 'john@foo.com';
 		password: 'secret1'.
-	self assert: (self materialize: 'STONTestUser2{#username:''john@foo.com'',#password:''secret1'',#enabled:true}') equals: user!
+	self assert: (self
+				materialize: 'STON.Tests.STONTestUser2{#username:''john@foo.com'',#password:''secret1'',#enabled:true}')
+		equals: user!
 
 testWhitespace
 	| whitespace |
-	whitespace := {Character space . Character tab . Character cr . Character lf}.
+	whitespace := {Character space. Character tab. Character cr. Character lf}.
 	self assert: (self materialize: whitespace , '123') equals: 123!
 
 testWideSymbol
 	self assert: (self materialize: '#''яблоко''') equals: #'яблоко'.
 	self assert: (self materialize: '#яблоко') equals: #'яблоко'! !
-!STONReaderTest categoriesFor: #materialize:!private! !
-!STONReaderTest categoriesFor: #testAssociation!public!tests! !
-!STONReaderTest categoriesFor: #testBag!public!tests! !
-!STONReaderTest categoriesFor: #testBoolean!public!tests! !
-!STONReaderTest categoriesFor: #testByteArray!public!tests! !
-!STONReaderTest categoriesFor: #testCharacter!public!tests! !
-!STONReaderTest categoriesFor: #testClass!public!tests! !
-!STONReaderTest categoriesFor: #testClassWithUnderscore!public!tests! !
-!STONReaderTest categoriesFor: #testColor!public!tests! !
-!STONReaderTest categoriesFor: #testConvertingNewLines!public!tests! !
-!STONReaderTest categoriesFor: #testDate!public!tests! !
-!STONReaderTest categoriesFor: #testDateAndTime!public!tests! !
-!STONReaderTest categoriesFor: #testDeepStructure!public!tests! !
-!STONReaderTest categoriesFor: #testDictionary!public!tests! !
-!STONReaderTest categoriesFor: #testDictionaryWithComplexKeys!public!tests! !
-!STONReaderTest categoriesFor: #testDictionaryWithIndirectReferenceKeys!public!tests! !
-!STONReaderTest categoriesFor: #testDictionaryWithReferenceKeys!public!tests! !
-!STONReaderTest categoriesFor: #testError!public!tests! !
-!STONReaderTest categoriesFor: #testFloat!public!tests! !
-!STONReaderTest categoriesFor: #testFraction!public!tests! !
-!STONReaderTest categoriesFor: #testIdentityDictionary!public!tests! !
-!STONReaderTest categoriesFor: #testIllegalCharacterEscapes!public!tests! !
-!STONReaderTest categoriesFor: #testInteger!public!tests! !
-!STONReaderTest categoriesFor: #testJsonString!public!tests! !
-!STONReaderTest categoriesFor: #testList!public!tests! !
-!STONReaderTest categoriesFor: #testMap!public!tests! !
-!STONReaderTest categoriesFor: #testMetaclass!public!tests! !
-!STONReaderTest categoriesFor: #testMultiple!public!tests! !
-!STONReaderTest categoriesFor: #testNewSymbol!public!tests! !
-!STONReaderTest categoriesFor: #testNil!public!tests! !
-!STONReaderTest categoriesFor: #testNonBMPCharacterDecoding!public!tests! !
-!STONReaderTest categoriesFor: #testNull!public!tests! !
-!STONReaderTest categoriesFor: #testObject!public!tests! !
-!STONReaderTest categoriesFor: #testOrderedCollection!public!tests! !
-!STONReaderTest categoriesFor: #testPoint!public!tests! !
-!STONReaderTest categoriesFor: #testReferenceCycle!public!tests! !
-!STONReaderTest categoriesFor: #testReferenceSharing!public!tests! !
-!STONReaderTest categoriesFor: #testScaledDecimal!public!tests! !
-!STONReaderTest categoriesFor: #testSetWithIndirectReferenceElements!public!tests! !
-!STONReaderTest categoriesFor: #testSetWithReferenceElements!public!tests! !
-!STONReaderTest categoriesFor: #testStreaming!public!tests! !
-!STONReaderTest categoriesFor: #testString!public!tests! !
-!STONReaderTest categoriesFor: #testSymbol!public!tests! !
-!STONReaderTest categoriesFor: #testTime!public!tests! !
-!STONReaderTest categoriesFor: #testUnknownClasses!public!tests! !
-!STONReaderTest categoriesFor: #testUser!public!tests! !
-!STONReaderTest categoriesFor: #testUser2!public!tests! !
-!STONReaderTest categoriesFor: #testWhitespace!public!tests! !
-!STONReaderTest categoriesFor: #testWideSymbol!public!tests! !
+!STON.Tests.ReaderTest categoriesFor: #testAssociation!public!tests! !
+!STON.Tests.ReaderTest categoriesFor: #testBag!public!tests! !
+!STON.Tests.ReaderTest categoriesFor: #testBoolean!public!tests! !
+!STON.Tests.ReaderTest categoriesFor: #testByteArray!public!tests! !
+!STON.Tests.ReaderTest categoriesFor: #testCharacter!public!tests! !
+!STON.Tests.ReaderTest categoriesFor: #testClass!public!tests! !
+!STON.Tests.ReaderTest categoriesFor: #testClassWithUnderscore!public!tests! !
+!STON.Tests.ReaderTest categoriesFor: #testColor!public!tests! !
+!STON.Tests.ReaderTest categoriesFor: #testConvertingNewLines!public!tests! !
+!STON.Tests.ReaderTest categoriesFor: #testDate!public!tests! !
+!STON.Tests.ReaderTest categoriesFor: #testDateAndTime!public!tests! !
+!STON.Tests.ReaderTest categoriesFor: #testDeepStructure!public!tests! !
+!STON.Tests.ReaderTest categoriesFor: #testDictionary!public!tests! !
+!STON.Tests.ReaderTest categoriesFor: #testDictionaryWithComplexKeys!public!tests! !
+!STON.Tests.ReaderTest categoriesFor: #testDictionaryWithIndirectReferenceKeys!public!tests! !
+!STON.Tests.ReaderTest categoriesFor: #testDictionaryWithReferenceKeys!public!tests! !
+!STON.Tests.ReaderTest categoriesFor: #testError!public!tests! !
+!STON.Tests.ReaderTest categoriesFor: #testFloat!public!tests! !
+!STON.Tests.ReaderTest categoriesFor: #testFraction!public!tests! !
+!STON.Tests.ReaderTest categoriesFor: #testIdentityDictionary!public!tests! !
+!STON.Tests.ReaderTest categoriesFor: #testIllegalCharacterEscapes!public!tests! !
+!STON.Tests.ReaderTest categoriesFor: #testInteger!public!tests! !
+!STON.Tests.ReaderTest categoriesFor: #testJsonString!public!tests! !
+!STON.Tests.ReaderTest categoriesFor: #testList!public!tests! !
+!STON.Tests.ReaderTest categoriesFor: #testMap!public!tests! !
+!STON.Tests.ReaderTest categoriesFor: #testMetaclass!public!tests! !
+!STON.Tests.ReaderTest categoriesFor: #testMultiple!public!tests! !
+!STON.Tests.ReaderTest categoriesFor: #testNewSymbol!public!tests! !
+!STON.Tests.ReaderTest categoriesFor: #testNil!public!tests! !
+!STON.Tests.ReaderTest categoriesFor: #testNonBMPCharacterDecoding!public!tests! !
+!STON.Tests.ReaderTest categoriesFor: #testNull!public!tests! !
+!STON.Tests.ReaderTest categoriesFor: #testObject!public!tests! !
+!STON.Tests.ReaderTest categoriesFor: #testOrderedCollection!public!tests! !
+!STON.Tests.ReaderTest categoriesFor: #testPoint!public!tests! !
+!STON.Tests.ReaderTest categoriesFor: #testReferenceCycle!public!tests! !
+!STON.Tests.ReaderTest categoriesFor: #testReferenceSharing!public!tests! !
+!STON.Tests.ReaderTest categoriesFor: #testScaledDecimal!public!tests! !
+!STON.Tests.ReaderTest categoriesFor: #testSetWithIndirectReferenceElements!public!tests! !
+!STON.Tests.ReaderTest categoriesFor: #testSetWithReferenceElements!public!tests! !
+!STON.Tests.ReaderTest categoriesFor: #testStreaming!public!tests! !
+!STON.Tests.ReaderTest categoriesFor: #testString!public!tests! !
+!STON.Tests.ReaderTest categoriesFor: #testSymbol!public!tests! !
+!STON.Tests.ReaderTest categoriesFor: #testTime!public!tests! !
+!STON.Tests.ReaderTest categoriesFor: #testUnknownClasses!public!tests! !
+!STON.Tests.ReaderTest categoriesFor: #testUser!public!tests! !
+!STON.Tests.ReaderTest categoriesFor: #testUser2!public!tests! !
+!STON.Tests.ReaderTest categoriesFor: #testWhitespace!public!tests! !
+!STON.Tests.ReaderTest categoriesFor: #testWideSymbol!public!tests! !
 

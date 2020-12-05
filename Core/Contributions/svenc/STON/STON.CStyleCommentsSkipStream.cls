@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Object subclass: #STONCStyleCommentsSkipStream
+Core.Object subclass: #'STON.CStyleCommentsSkipStream'
 	instanceVariableNames: 'stream peekedCharacter delimiter escape'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-STONCStyleCommentsSkipStream guid: (GUID fromString: '{cbe95784-18b0-4161-a8b1-142a76001d59}')!
-STONCStyleCommentsSkipStream comment: 'I am STONCStyleCommentsSkipStream, a character ReadStream wrapping another character ReadStream. I skip C style comments, much like a classic C preprocessor.
+STON.CStyleCommentsSkipStream guid: (Core.GUID fromString: '{cbe95784-18b0-4161-a8b1-142a76001d59}')!
+STON.CStyleCommentsSkipStream comment: 'I am STONCStyleCommentsSkipStream, a character ReadStream wrapping another character ReadStream. I skip C style comments, much like a classic C preprocessor.
 
 C, C++, Java, JavaScript style comments are either the multiline
 
@@ -27,8 +27,8 @@ Here is an example:
 	
 Comments inside single and double quote delimited strings are ignored. Backslash escapes for single and double quotes inside strings are honored.
 '!
-!STONCStyleCommentsSkipStream categoriesForClass!STON-Core-Utilities! !
-!STONCStyleCommentsSkipStream methodsFor!
+!STON.CStyleCommentsSkipStream categoriesForClass!STON-Core-Utilities! !
+!STON.CStyleCommentsSkipStream methodsFor!
 
 atEnd
 	^ self peek isNil!
@@ -37,7 +37,7 @@ close
 	stream close!
 
 collectionSpecies
-	^ String!
+	^String!
 
 consumeComment
 	stream peek = $/ ifTrue: [ self consumeToEOL ].
@@ -49,15 +49,15 @@ consumeToCommentEnd
 consumeToEOL
 	| eol char |
 	eol := false.
-	[ eol ] whileFalse: [ 
-		char := stream next.
-		(char isNil or: [ char = Character lf ])
-			ifTrue: [ eol := true ]
-			ifFalse: [ 
-				char = Character cr
-					ifTrue: [ 
-						eol := true.
-						stream peekFor: Character lf ] ] ]!
+	[eol] whileFalse: 
+			[char := stream next.
+			(char isNil or: [char = Character lf])
+				ifTrue: [eol := true]
+				ifFalse: 
+					[char = Character cr
+						ifTrue: 
+							[eol := true.
+							stream peekFor: Character lf]]]!
 
 escape
 	"Return true when we previously read a backslash escape inside a string, 
@@ -126,18 +126,22 @@ next: requestedCount into: collection startingAt: offset
 
 nextLine
 	"Read a CR, LF or CRLF terminated line, returning the contents of the line without the EOL. Return nil when the receiver is #atEnd."
-	
-	self atEnd ifTrue: [ ^ nil ].
-	^ self collectionSpecies streamContents: [ :out | | eol char |
-		eol := false.
-		[ eol ] whileFalse: [ 
-			char := self next.
-			(char isNil or: [ char = Character lf ])
-				ifTrue: [ eol := true ]
-				ifFalse: [ 
-					char = Character cr 
-						ifTrue: [ eol := true. self peekFor: Character lf ]
-						ifFalse: [  out nextPut: char ] ] ] ]!
+
+	self atEnd ifTrue: [^nil].
+	^self collectionSpecies streamContents: 
+			[:out |
+			| eol char |
+			eol := false.
+			[eol] whileFalse: 
+					[char := self next.
+					(char isNil or: [char = Character lf])
+						ifTrue: [eol := true]
+						ifFalse: 
+							[char = Character cr
+								ifTrue: 
+									[eol := true.
+									self peekFor: Character lf]
+								ifFalse: [out nextPut: char]]]]!
 
 nextNonCommentChar
 	| char |
@@ -212,37 +216,37 @@ upToEnd
 
 wrappedStream
 	^ stream! !
-!STONCStyleCommentsSkipStream categoriesFor: #atEnd!public!testing! !
-!STONCStyleCommentsSkipStream categoriesFor: #close!initialize/release!public! !
-!STONCStyleCommentsSkipStream categoriesFor: #collectionSpecies!accessing!public! !
-!STONCStyleCommentsSkipStream categoriesFor: #consumeComment!private! !
-!STONCStyleCommentsSkipStream categoriesFor: #consumeToCommentEnd!private! !
-!STONCStyleCommentsSkipStream categoriesFor: #consumeToEOL!private! !
-!STONCStyleCommentsSkipStream categoriesFor: #escape!private! !
-!STONCStyleCommentsSkipStream categoriesFor: #handleStringDelimiter:!private! !
-!STONCStyleCommentsSkipStream categoriesFor: #insideString!private! !
-!STONCStyleCommentsSkipStream categoriesFor: #isBinary!public!testing! !
-!STONCStyleCommentsSkipStream categoriesFor: #next!accessing!public! !
-!STONCStyleCommentsSkipStream categoriesFor: #next:!accessing!public! !
-!STONCStyleCommentsSkipStream categoriesFor: #next:into:!accessing!public! !
-!STONCStyleCommentsSkipStream categoriesFor: #next:into:startingAt:!accessing!public! !
-!STONCStyleCommentsSkipStream categoriesFor: #nextLine!accessing!public! !
-!STONCStyleCommentsSkipStream categoriesFor: #nextNonCommentChar!private! !
-!STONCStyleCommentsSkipStream categoriesFor: #on:!initialize/release!public! !
-!STONCStyleCommentsSkipStream categoriesFor: #peek!accessing!public! !
-!STONCStyleCommentsSkipStream categoriesFor: #peekFor:!accessing!public! !
-!STONCStyleCommentsSkipStream categoriesFor: #position!accessing!public! !
-!STONCStyleCommentsSkipStream categoriesFor: #readInto:startingAt:count:!accessing!public! !
-!STONCStyleCommentsSkipStream categoriesFor: #skip:!accessing!public! !
-!STONCStyleCommentsSkipStream categoriesFor: #upTo:!accessing!public! !
-!STONCStyleCommentsSkipStream categoriesFor: #upToEnd!accessing!public! !
-!STONCStyleCommentsSkipStream categoriesFor: #wrappedStream!accessing!public! !
+!STON.CStyleCommentsSkipStream categoriesFor: #atEnd!public!testing! !
+!STON.CStyleCommentsSkipStream categoriesFor: #close!initialize/release!public! !
+!STON.CStyleCommentsSkipStream categoriesFor: #collectionSpecies!accessing!public! !
+!STON.CStyleCommentsSkipStream categoriesFor: #consumeComment!private! !
+!STON.CStyleCommentsSkipStream categoriesFor: #consumeToCommentEnd!private! !
+!STON.CStyleCommentsSkipStream categoriesFor: #consumeToEOL!private! !
+!STON.CStyleCommentsSkipStream categoriesFor: #escape!private! !
+!STON.CStyleCommentsSkipStream categoriesFor: #handleStringDelimiter:!private! !
+!STON.CStyleCommentsSkipStream categoriesFor: #insideString!private! !
+!STON.CStyleCommentsSkipStream categoriesFor: #isBinary!public!testing! !
+!STON.CStyleCommentsSkipStream categoriesFor: #next!accessing!public! !
+!STON.CStyleCommentsSkipStream categoriesFor: #next:!accessing!public! !
+!STON.CStyleCommentsSkipStream categoriesFor: #next:into:!accessing!public! !
+!STON.CStyleCommentsSkipStream categoriesFor: #next:into:startingAt:!accessing!public! !
+!STON.CStyleCommentsSkipStream categoriesFor: #nextLine!accessing!public! !
+!STON.CStyleCommentsSkipStream categoriesFor: #nextNonCommentChar!private! !
+!STON.CStyleCommentsSkipStream categoriesFor: #on:!initialize/release!public! !
+!STON.CStyleCommentsSkipStream categoriesFor: #peek!accessing!public! !
+!STON.CStyleCommentsSkipStream categoriesFor: #peekFor:!accessing!public! !
+!STON.CStyleCommentsSkipStream categoriesFor: #position!accessing!public! !
+!STON.CStyleCommentsSkipStream categoriesFor: #readInto:startingAt:count:!accessing!public! !
+!STON.CStyleCommentsSkipStream categoriesFor: #skip:!accessing!public! !
+!STON.CStyleCommentsSkipStream categoriesFor: #upTo:!accessing!public! !
+!STON.CStyleCommentsSkipStream categoriesFor: #upToEnd!accessing!public! !
+!STON.CStyleCommentsSkipStream categoriesFor: #wrappedStream!accessing!public! !
 
-!STONCStyleCommentsSkipStream class methodsFor!
+!STON.CStyleCommentsSkipStream class methodsFor!
 
 on: readStream
 	^ self new
 		on: readStream;
 		yourself! !
-!STONCStyleCommentsSkipStream class categoriesFor: #on:!instance creation!public! !
+!STON.CStyleCommentsSkipStream class categoriesFor: #on:!instance creation!public! !
 

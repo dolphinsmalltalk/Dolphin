@@ -1,40 +1,48 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Error subclass: #STONReaderError
+Core.Error subclass: #'STON.ReaderError'
 	instanceVariableNames: 'streamPosition'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-STONReaderError guid: (GUID fromString: '{c96113a2-1225-4af4-8f71-53e0ac1932a3}')!
-STONReaderError comment: 'STONReaderError is the error/exception signalled by STONReader when illegal/incorrect input is seen. 
+STON.ReaderError guid: (Core.GUID fromString: '{c96113a2-1225-4af4-8f71-53e0ac1932a3}')!
+STON.ReaderError comment: 'STONReaderError is the error/exception signalled by STONReader when illegal/incorrect input is seen. 
 '!
-!STONReaderError categoriesForClass!STON-Core-Exceptions! !
-!STONReaderError methodsFor!
+!STON.ReaderError categoriesForClass!STON-Core-Exceptions! !
+!STON.ReaderError methodsFor!
+
+_descriptionArguments
+	"Answer an string describing the extra information supplied when the receiver
+	was raised. Here we answer the classic does not understand error."
+
+	^{streamPosition. messageText}!
+
+_descriptionFormat
+	"Answer the Win32 format String to be used to format the description for the receiver."
+
+	^streamPosition ifNil: ['%1'] ifNotNil: ['At character %1!!d!!: %2']!
 
 messageText
-	^ streamPosition 
-		ifNil: [ 
-			super messageText ] 
-		ifNotNil: [ :pos | 
-			'At character {1}: {2}' format: 
-				(Array with: streamPosition with: super messageText) ]!
+	^ messageText!
 
 streamPosition
 	^ streamPosition!
 
 streamPosition: aNumber
 	streamPosition := aNumber! !
-!STONReaderError categoriesFor: #messageText!accessing!public! !
-!STONReaderError categoriesFor: #streamPosition!accessing!public! !
-!STONReaderError categoriesFor: #streamPosition:!accessing!public! !
+!STON.ReaderError categoriesFor: #_descriptionArguments!displaying!public! !
+!STON.ReaderError categoriesFor: #_descriptionFormat!displaying!public! !
+!STON.ReaderError categoriesFor: #messageText!accessing!public! !
+!STON.ReaderError categoriesFor: #streamPosition!accessing!public! !
+!STON.ReaderError categoriesFor: #streamPosition:!accessing!public! !
 
-!STONReaderError class methodsFor!
+!STON.ReaderError class methodsFor!
 
 signal: aString streamPosition: streamPosition 
 	^ self new
 		streamPosition: streamPosition;
 		signal: aString;
 		yourself! !
-!STONReaderError class categoriesFor: #signal:streamPosition:!instance creation!public! !
+!STON.ReaderError class categoriesFor: #signal:streamPosition:!instance creation!public! !
 

@@ -1,11 +1,11 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Error subclass: #STONWriterError
+Core.Error subclass: #'STON.WriterError'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-STONWriterError guid: (GUID fromString: '{9849f136-99c4-448a-965c-027610fa6e4f}')!
-STONWriterError comment: 'STONWriterError is the error/exception signalled by STONWriter when illegal/incorrect input is seen. '!
-!STONWriterError categoriesForClass!STON-Core-Exceptions! !
+STON.WriterError guid: (Core.GUID fromString: '{9849f136-99c4-448a-965c-027610fa6e4f}')!
+STON.WriterError comment: 'STONWriterError is the error/exception signalled by STONWriter when illegal/incorrect input is seen. '!
+!STON.WriterError categoriesForClass!STON-Core-Exceptions! !

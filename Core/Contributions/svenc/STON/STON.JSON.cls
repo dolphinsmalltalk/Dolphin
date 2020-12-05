@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Object subclass: #STONJSON
+Core.Object subclass: #'STON.JSON'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-STONJSON guid: (GUID fromString: '{5d40ba2f-84f1-44cf-970b-5ff22fd8fc7c}')!
-STONJSON comment: 'I am STONJSON, a class side facade to use STON as a simple JSON parser/writer.
+STON.JSON guid: (Core.GUID fromString: '{5d40ba2f-84f1-44cf-970b-5ff22fd8fc7c}')!
+STON.JSON comment: 'I am STONJSON, a class side facade to use STON as a simple JSON parser/writer.
 
 STON is more or less a superset of JSON and is backwards compatible with JSON while parsing, and can be compatible with it while writing. The important differences (and the whole reason why STON exists in the first place) are 
 
@@ -39,14 +39,14 @@ E x a m p l e s
   STONJSON fromString: ''{"foo":1,"bar":2,"sub":{"a":true,"b":false},"flags":[1,8,32]}''.
  
 For a much more sophisticated JSON parser/writer implementation, have a look at NeoJSON.'!
-!STONJSON categoriesForClass!STON-Core-Base! !
-!STONJSON class methodsFor!
+!STON.JSON categoriesForClass!STON-Core-Base! !
+!STON.JSON class methodsFor!
 
 fromStream: stream
-	^ STON fromStream: stream!
+	^STON fromStream: stream!
 
 fromString: string
-	^ STON fromString: string!
+	^STON fromString: string!
 
 put: object onStream: stream
 	STON put: object asJsonOnStream: stream!
@@ -55,14 +55,14 @@ put: object onStreamPretty: stream
 	STON put: object asJsonOnStreamPretty: stream!
 
 toString: object
-	^ STON toJsonString: object!
+	^STON toJsonString: object!
 
 toStringPretty: object
-	^ STON toJsonStringPretty: object! !
-!STONJSON class categoriesFor: #fromStream:!convenience!public! !
-!STONJSON class categoriesFor: #fromString:!convenience!public! !
-!STONJSON class categoriesFor: #put:onStream:!convenience!public! !
-!STONJSON class categoriesFor: #put:onStreamPretty:!convenience!public! !
-!STONJSON class categoriesFor: #toString:!convenience!public! !
-!STONJSON class categoriesFor: #toStringPretty:!convenience!public! !
+	^STON toJsonStringPretty: object! !
+!STON.JSON class categoriesFor: #fromStream:!convenience!public! !
+!STON.JSON class categoriesFor: #fromString:!convenience!public! !
+!STON.JSON class categoriesFor: #put:onStream:!convenience!public! !
+!STON.JSON class categoriesFor: #put:onStreamPretty:!convenience!public! !
+!STON.JSON class categoriesFor: #toString:!convenience!public! !
+!STON.JSON class categoriesFor: #toStringPretty:!convenience!public! !
 

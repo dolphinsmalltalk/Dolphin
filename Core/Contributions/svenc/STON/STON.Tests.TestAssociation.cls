@@ -1,23 +1,24 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Association subclass: #STONTestAssociation
+Core.Association subclass: #'STON.Tests.TestAssociation'
 	instanceVariableNames: 'timestamp'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-STONTestAssociation guid: (GUID fromString: '{d412d7d7-3654-4d31-9ebf-dbbe2a26135a}')!
-STONTestAssociation comment: 'STONTestAssociation is used to support unit tests.
+STON.Tests.TestAssociation guid: (Core.GUID fromString: '{d412d7d7-3654-4d31-9ebf-dbbe2a26135a}')!
+STON.Tests.TestAssociation comment: 'STONTestAssociation is used to support unit tests.
 '!
-!STONTestAssociation categoriesForClass!STON-Tests-Base! !
-!STONTestAssociation methodsFor!
+!STON.Tests.TestAssociation categoriesForClass!STON-Tests-Base! !
+!STON.Tests.TestAssociation methodsFor!
 
 key: aKey value: anObject 
 	super key: aKey value: anObject.
-	timestamp := self now!
+	timestamp := self now.
+	^self!
 
 now
-	^ DateAndTime now!
+	^DateAndTime now!
 
 timestamp
 	^ timestamp!
@@ -25,8 +26,8 @@ timestamp
 value: anObject
 	super value: anObject.
 	timestamp := self now! !
-!STONTestAssociation categoriesFor: #key:value:!accessing!public! !
-!STONTestAssociation categoriesFor: #now!accessing!public! !
-!STONTestAssociation categoriesFor: #timestamp!accessing!public! !
-!STONTestAssociation categoriesFor: #value:!accessing!public! !
+!STON.Tests.TestAssociation categoriesFor: #key:value:!accessing!public! !
+!STON.Tests.TestAssociation categoriesFor: #now!accessing!public! !
+!STON.Tests.TestAssociation categoriesFor: #timestamp!accessing!public! !
+!STON.Tests.TestAssociation categoriesFor: #value:!accessing!public! !
 

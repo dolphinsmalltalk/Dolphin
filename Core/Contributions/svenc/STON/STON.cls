@@ -1,12 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Object subclass: #STON
+Kernel.Namespace subclass: #STON
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #(#{Core private} #{Kernel private})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-STON guid: (GUID fromString: '{9f4c50c0-4b3c-4c6c-b0b5-98940098a150}')!
+STON guid: (Core.GUID fromString: '{9f4c50c0-4b3c-4c6c-b0b5-98940098a150}')!
+STON isNonInstantiable: true!
 STON comment: 'STON implements serialization and materialization using the Smalltalk Object Notation format.
 
 I am a class side facade offering a high level API to write and read objects using STON.
@@ -179,7 +180,7 @@ fromStream: readStream
 	^ (self reader on: readStream) next!
 
 fromStreamWithComments: readStream
-	^ (self reader on: (STONCStyleCommentsSkipStream on: readStream)) next!
+	^ (self reader on: (CStyleCommentsSkipStream on: readStream)) next!
 
 fromString: string
 	^ self fromStream: string readStream!
@@ -188,7 +189,7 @@ fromStringWithComments: string
 	^ self fromStreamWithComments: string readStream!
 
 jsonWriter
-	^ STONWriter new
+	^ Writer new
 			jsonMode: true;
 			referencePolicy: #error;
 			yourself!
@@ -216,7 +217,7 @@ put: object onStreamPretty: stream
 		nextPut: object!
 
 reader
-	^ STONReader new!
+	^ Reader new!
 
 toJsonString: object
 	^ String streamContents: [ :stream |
@@ -235,7 +236,7 @@ toStringPretty: object
 		self put: object onStreamPretty: stream ]!
 
 writer
-	^ STONWriter new! !
+	^Writer new! !
 !STON class categoriesFor: #associationClass!accessing!public! !
 !STON class categoriesFor: #classNameKey!accessing!public! !
 !STON class categoriesFor: #fromStream:!convencience!public! !

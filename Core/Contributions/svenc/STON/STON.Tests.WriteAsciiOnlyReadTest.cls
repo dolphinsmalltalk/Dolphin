@@ -1,29 +1,31 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-STONWriteReadTest subclass: #STONWriteAsciiOnlyReadTest
+STON.Tests.WriteReadTest subclass: #'STON.Tests.WriteAsciiOnlyReadTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-STONWriteAsciiOnlyReadTest guid: (GUID fromString: '{4c42c50a-a5ee-46fb-865d-0ad651fd33ee}')!
-STONWriteAsciiOnlyReadTest comment: 'Unit tests for writing ASCII only'!
-!STONWriteAsciiOnlyReadTest categoriesForClass!STON-Tests-Writer! !
-!STONWriteAsciiOnlyReadTest methodsFor!
+STON.Tests.WriteAsciiOnlyReadTest guid: (Core.GUID fromString: '{4c42c50a-a5ee-46fb-865d-0ad651fd33ee}')!
+STON.Tests.WriteAsciiOnlyReadTest comment: 'Unit tests for writing ASCII only'!
+!STON.Tests.WriteAsciiOnlyReadTest categoriesForClass!STON-Tests-Writer! !
+!STON.Tests.WriteAsciiOnlyReadTest methodsFor!
 
 serialize: anObject
-	^ String streamContents: [ :stream |
-		STON writer 
-			on: stream; 
-			asciiOnly: true;
-			nextPut: anObject ]!
+	^String streamContents: 
+			[:stream |
+			STON writer
+				on: stream;
+				asciiOnly: true;
+				nextPut: anObject]!
 
 serializeJson: anObject
-	^ String streamContents: [ :stream |
-		STON jsonWriter 
-			on: stream; 
-			asciiOnly: true;
-			nextPut: anObject ]! !
-!STONWriteAsciiOnlyReadTest categoriesFor: #serialize:!private! !
-!STONWriteAsciiOnlyReadTest categoriesFor: #serializeJson:!private! !
+	^String streamContents: 
+			[:stream |
+			STON jsonWriter
+				on: stream;
+				asciiOnly: true;
+				nextPut: anObject]! !
+!STON.Tests.WriteAsciiOnlyReadTest categoriesFor: #serialize:!private! !
+!STON.Tests.WriteAsciiOnlyReadTest categoriesFor: #serializeJson:!private! !
 

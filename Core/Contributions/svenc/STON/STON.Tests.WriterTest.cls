@@ -1,41 +1,45 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-TestCase subclass: #STONWriterTest
+STON.Tests.STONTestCase subclass: #'STON.Tests.WriterTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-STONWriterTest guid: (GUID fromString: '{c786d815-b405-4113-a350-3ee3370c7879}')!
-STONWriterTest comment: ''!
-!STONWriterTest categoriesForClass!STON-Tests-Writer! !
-!STONWriterTest methodsFor!
+STON.Tests.WriterTest guid: (Core.GUID fromString: '{c786d815-b405-4113-a350-3ee3370c7879}')!
+STON.Tests.WriterTest comment: ''!
+!STON.Tests.WriterTest categoriesForClass!STON-Tests-Writer! !
+!STON.Tests.WriterTest methodsFor!
 
 serialize: anObject
-	^ String streamContents: [ :stream |
-		STON writer 
-			on: stream;
-			nextPut: anObject ]!
+	^String streamContents: 
+			[:stream |
+			STON writer
+				on: stream;
+				nextPut: anObject]!
 
 serializeAsciiOnly: anObject
-	^ String streamContents: [ :stream |
-		STON writer 
-			on: stream;
-			asciiOnly: true;
-			nextPut: anObject ]!
+	^String streamContents: 
+			[:stream |
+			STON writer
+				on: stream;
+				asciiOnly: true;
+				nextPut: anObject]!
 
 serializeJson: anObject
-	^ String streamContents: [ :stream |
-		STON jsonWriter 
-			on: stream; 
-			nextPut: anObject ]!
+	^String streamContents: 
+			[:stream |
+			STON jsonWriter
+				on: stream;
+				nextPut: anObject]!
 
 serializePretty: anObject
-	^ String streamContents: [ :stream |
-		STON writer 
-			on: stream; 
-			prettyPrint: true;
-			nextPut: anObject ]!
+	^String streamContents: 
+			[:stream |
+			STON writer
+				on: stream;
+				prettyPrint: true;
+				nextPut: anObject]!
 
 testAssociation
 	self assert: (self serialize: 'foo' -> 1) equals: '''foo'':1'.
@@ -44,13 +48,8 @@ testAssociation
 	self assert: (self serialize: 123 -> 456) equals: '123:456'!
 
 testBag
-	self 
-		assert: (self serialize: (Bag withAll: #(a a)))
-		equals: 'Bag{#a:2}'.
-	self 
-		assert: (self serialize: Bag new)
-		equals: 'Bag{}'
-!
+	self assert: (self serialize: (Bag withAll: #(#a #a))) equals: 'Bag{#a:2}'.
+	self assert: (self serialize: Bag new) equals: 'Bag{}'!
 
 testBoolean
 	self assert: (self serialize: true) equals: 'true'.
@@ -77,48 +76,56 @@ testColor
 
 testCustomNewline
 	| output |
-	output := String streamContents: [ :out |
-		(STON writer on: out)
-			newLine: String lf;
-			prettyPrint: true;
-			nextPut: #( 1 ) ].
-	#dolphin. "withCRs does not behave in a portable manner"
-	self 
-		assert: output 
-		equals: ('[\	1\]' withCRs "replaceAll: Character cr with: Character lf" copyWithout: Character cr)!
+	output := String streamContents: 
+					[:out |
+					(STON writer on: out)
+						newLine: String lf;
+						prettyPrint: true;
+						nextPut: #(1)].
+	#dolphin.	"withCRs does not behave in a portable manner"
+	self assert: output equals: ('[\	1\]' withCRs copyWithout: Character cr)	"replaceAll: Character cr with: Character lf"!
 
 testDate
 	| date |
-	self skip. "Dolphin's legacy Dates do not support TZ offset."
-	date := (Date year: 2012 month: 1 day: 1) translateToUTC.
+	self skip.	"Dolphin's legacy Dates do not support TZ offset."
+	date := (Date
+				year: 2012
+				month: 1
+				day: 1) translateToUTC.
 	self assert: (self serialize: date) equals: 'Date[''2012-01-01Z'']'.
-	date := (Date year: 2012 month: 1 day: 1) translateTo: 1 hour.
-	self assert: (self serialize: date) equals: 'Date[''2012-01-01+01:00'']'.!
+	date := (Date
+				year: 2012
+				month: 1
+				day: 1) translateTo: 1 hour.
+	self assert: (self serialize: date) equals: 'Date[''2012-01-01+01:00'']'!
 
 testDateAndTime
 	| dateAndTime |
 	dateAndTime := DateAndTime
-		year: 2012
-		month: 1
-		day: 1
-		hour: 6
-		minute: 30
-		second: 15
-		offset: 1 hour.
+				year: 2012
+				month: 1
+				day: 1
+				hour: 6
+				minute: 30
+				second: 15
+				offset: 1 hour.
 	self assert: (self serialize: dateAndTime) equals: 'DateAndTime[''2012-01-01T06:30:15+01:00'']'!
 
 testDictionary
 	| collection |
 	collection := STON mapClass new
-		at: 1 put: 1;
-		at: 2 put: 2;
-		yourself.
+				at: 1 put: 1;
+				at: 2 put: 2;
+				yourself.
 	self assert: (self serialize: collection) equals: '{1:1,2:2}'.
 	self assert: (self serialize: STON mapClass new) equals: '{}'!
 
 testDictionaryWithComplexKeys
 	| collection |
-	collection := STON mapClass new at: true put: 1; at: #(foo) put: 2; yourself.
+	collection := STON mapClass new
+				at: true put: 1;
+				at: #(#foo) put: 2;
+				yourself.
 	self assert: (#('{true:1,[#foo]:2}' '{[#foo]:2,true:1}') includes: (self serialize: collection))!
 
 testDoubleQuotedString
@@ -126,15 +133,23 @@ testDoubleQuotedString
 	self assert: (self serializeJson: 'foo') equals: '"foo"'.
 	self assert: (self serializeJson: 'FOO') equals: '"FOO"'.
 	self assert: (self serializeJson: 'élève en Français') equals: '"élève en Français"'.
-	string := String withAll: {$" . $' . $\ . $/ . Character tab . Character cr . Character lf . Character newPage . Character backspace}.
+	string := String withAll: {$".
+						$'.
+						$\.
+						$/.
+						Character tab.
+						Character cr.
+						Character lf.
+						Character newPage.
+						Character backspace}.
 	"Note that in JSON mode, double quotes get escaped, and single quotes not"
 	self assert: (self serializeJson: string) equals: '"\"''\\/\t\r\n\f\b"'!
 
 testEmptyArrayPretty
-	self assert: (self serializePretty: STON listClass new) equals: '[ ]' !
+	self assert: (self serializePretty: STON listClass new) equals: '[ ]'!
 
 testEmptyDictionaryPretty
-	self assert: (self serializePretty: STON mapClass new) equals: '{ }' !
+	self assert: (self serializePretty: STON mapClass new) equals: '{ }'!
 
 testFloat
 	self assert: (self serialize: 1.5) equals: '1.5'.
@@ -157,9 +172,9 @@ testFraction
 testIdentityDictionary
 	| collection |
 	collection := IdentityDictionary new
-		at: 1 put: 1;
-		at: 2 put: 2;
-		yourself.
+				at: 1 put: 1;
+				at: 2 put: 2;
+				yourself.
 	self assert: (self serialize: collection) equals: 'IdentityDictionary{1:1,2:2}'.
 	self assert: (self serialize: IdentityDictionary new) equals: 'IdentityDictionary{}'!
 
@@ -179,32 +194,40 @@ testIsSimpleSymbol
 	self assert: (STON writer isSimpleSymbol: #'Foo/Bar').
 	self assert: (STON writer isSimpleSymbol: #'Foo.Bar').
 	self assert: (STON writer isSimpleSymbol: #'Foo-Bar').
-	self assert: (STON writer isSimpleSymbol: #'Foo_Bar').
+	self assert: (STON writer isSimpleSymbol: #Foo_Bar).
 	self assert: (STON writer isSimpleSymbol: #foo).
 	self deny: (STON writer isSimpleSymbol: #'#^&$%')!
 
 testKeepingNewLines
 	| input result output |
-	input := 'line ending with CR', String cr, 
-		'line ending with LF', String lf, 
-		'line ending with CRLF', String crlf.
-	output := '''line ending with CR', String crlf, 
-		'line ending with LF', String crlf, 
-		'line ending with CRLF', String crlf, ''''.
-	result := String streamContents: [ :out |
-		(STON writer on: out) newLine: String crlf; keepNewLines: true; nextPut: input ].
+	input := 'line ending with CR' , String cr , 'line ending with LF' , String lf
+				, 'line ending with CRLF' , String crlf.
+	output := '''line ending with CR' , String crlf , 'line ending with LF' , String crlf
+				, 'line ending with CRLF' , String crlf
+				, ''''.
+	result := String streamContents: 
+					[:out |
+					(STON writer on: out)
+						newLine: String crlf;
+						keepNewLines: true;
+						nextPut: input].
 	self assert: result equals: output.
-	output := '''line ending with CR', String cr, 
-		'line ending with LF', String cr, 
-		'line ending with CRLF', String cr, ''''.
-	result := String streamContents: [ :out |
-		(STON writer on: out) newLine: String cr; keepNewLines: true; nextPut: input ].
+	output := '''line ending with CR' , String cr , 'line ending with LF' , String cr
+				, 'line ending with CRLF' , String cr
+				, ''''.
+	result := String streamContents: 
+					[:out |
+					(STON writer on: out)
+						newLine: String cr;
+						keepNewLines: true;
+						nextPut: input].
 	self assert: result equals: output!
 
 testList
 	self assert: (self serialize: (STON listClass withAll: #(1 2 3))) equals: '[1,2,3]'.
 	self assert: (self serialize: STON listClass new) equals: '[]'.
-	self assert: (self serialize: (STON listClass withAll: {1 . -1 . 0 . #foo . 'a b c' . true . false . nil})) equals: '[1,-1,0,#foo,''a b c'',true,false,nil]'!
+	self assert: (self serialize: (STON listClass withAll: {1. -1. 0. #foo. 'a b c'. true. false. nil}))
+		equals: '[1,-1,0,#foo,''a b c'',true,false,nil]'!
 
 testMap
 	| map serialized |
@@ -232,9 +255,12 @@ testNonBMPCharacterEncoding
 	"Characters not in the Basic Multilingual Plane are encoded as a UTF-16 surrogate pair"
 
 	| string json |
-	string := String with: 16r1D11E asCharacter. "MUSICAL SYMBOL G CLEF"
-	json := String streamContents: [ :out |
-		(STON writer on: out) asciiOnly: true; nextPut: string ].
+	string := String with: 16r1D11E asCharacter.	"MUSICAL SYMBOL G CLEF"
+	json := String streamContents: 
+					[:out |
+					(STON writer on: out)
+						asciiOnly: true;
+						nextPut: string].
 	self assert: json equals: '''\uD834\uDD1E'''!
 
 testNull
@@ -258,42 +284,50 @@ testReferenceCycle
 testReferenceSharing
 	| array one |
 	one := {#one}.
-	array := STON listClass with: one with: one with: one.
+	array := STON listClass
+				with: one
+				with: one
+				with: one.
 	self assert: (self serialize: array) equals: '[[#one],@2,@2]'!
 
 testReferenceSharingError
 	| serializer array one |
-	serializer := [ :object | 
-		String streamContents: [ :stream |
-			STON writer 
-				on: stream;
-				referencePolicy: #error; 
-				nextPut: object ] ].
-	one := { #one }.
-	array := STON listClass with: one with: one with: one.
-	self 
-		should: [ (serializer value: array) = '[[#one],[#one],[#one]]' ] 
-		raise: STONWriterError
-!
+	serializer := 
+			[:object |
+			String streamContents: 
+					[:stream |
+					STON writer
+						on: stream;
+						referencePolicy: #error;
+						nextPut: object]].
+	one := {#one}.
+	array := STON listClass
+				with: one
+				with: one
+				with: one.
+	self should: [(serializer value: array) = '[[#one],[#one],[#one]]'] raise: WriterError!
 
 testReferenceSharingIgnore
 	| serializer array one |
-	serializer := [ :object | 
-	String
-		streamContents: [ :stream | 
-			STON writer
-				on: stream;
-				referencePolicy: #ignore;
-				nextPut: object ] ].
+	serializer := 
+			[:object |
+			String streamContents: 
+					[:stream |
+					STON writer
+						on: stream;
+						referencePolicy: #ignore;
+						nextPut: object]].
 	one := {#one}.
-	array := STON listClass with: one with: one with: one.
+	array := STON listClass
+				with: one
+				with: one
+				with: one.
 	self assert: (serializer value: array) equals: '[[#one],[#one],[#one]]'!
 
 testRestrictedClassesInJsonMode
-	self should: [ self serializeJson: 1@2 ] raise: STONWriterError.
-	self should: [ self serializeJson: #foo->100 ] raise: STONWriterError.
-	self should: [ self serializeJson: STONTestUser dummy ] raise: STONWriterError.
-!
+	self should: [self serializeJson: 1 @ 2] raise: WriterError.
+	self should: [self serializeJson: #foo -> 100] raise: WriterError.
+	self should: [self serializeJson: STONTestUser dummy] raise: WriterError!
 
 testScaledDecimal
 	self assert: (self serialize: 1/3s2) equals: '1/3s2'.
@@ -305,9 +339,18 @@ testString
 	| string |
 	self assert: (self serialize: 'foo') equals: '''foo'''.
 	self assert: (self serialize: 'FOO') equals: '''FOO'''.
-	self assert: (self serializeAsciiOnly: 'élève en Français') equals: '''\u00E9l\u00E8ve en Fran\u00E7ais'''.
+	self assert: (self serializeAsciiOnly: 'élève en Français')
+		equals: '''\u00E9l\u00E8ve en Fran\u00E7ais'''.
 	self assert: (self serialize: 'élève en Français') equals: '''élève en Français'''.
-	string := String withAll: {$" . $' . $\ . $/ . Character tab . Character cr . Character lf . Character newPage . Character backspace}.
+	string := String withAll: {$".
+						$'.
+						$\.
+						$/.
+						Character tab.
+						Character cr.
+						Character lf.
+						Character newPage.
+						Character backspace}.
 	self assert: (self serialize: string) equals: '''"\''\\/\t\r\n\f\b'''!
 
 testSymbol
@@ -327,85 +370,87 @@ testSymbolAsString
 
 testTime
 	| time |
-	time := Time hour: 6 minute: 30 second: 15.
+	time := Time
+				hour: 6
+				minute: 30
+				second: 15.
 	self assert: (self serialize: time) equals: 'Time[''06:30:15'']'.
-	time := Time hour: 6 minute: 30 second: 15 nanoSecond: 123.
-	self assert: (self serialize: time) equals: 'Time[''06:30:15.000000123'']'.
-!
+	time := Time
+				hour: 6
+				minute: 30
+				second: 15
+				nanoSecond: 123.
+	self assert: (self serialize: time) equals: 'Time[''06:30:15.000000123'']'!
 
 testUser
 	| user |
-	(user := STONTestUser new)
+	(user := STON.Tests.STONTestUser new)
 		username: 'john@foo.com';
 		password: 'secret1'.
-	self 
-		assert: (self serialize: user)
+	self assert: (self serialize: user)
 		equals: 'TestUser{#username:''john@foo.com'',#password:''secret1'',#enabled:true}'!
 
 testUser2
 	| user |
-	(user := STONTestUser2 new)
+	(user := STON.Tests.STONTestUser2 new)
 		username: 'john@foo.com';
 		password: 'secret1'.
-	self 
-		assert: (self serialize: user)
+	self assert: (self serialize: user)
 		equals: 'TestUser2{#username:''john@foo.com'',#password:''secret1'',#enabled:true}'!
 
 testUser3Nil
 	| user |
-	user := STONTestUser3 new.
-	self 
-		assert: (self serialize: user) 
-		equals: 'TestUser3{#username:nil,#password:nil,#enabled:true}'!
+	user := STON.Tests.STONTestUser3 new.
+	self assert: (self serialize: user) equals: 'TestUser3{#username:nil,#password:nil,#enabled:true}'!
 
 testUserNil
 	| user |
-	user := STONTestUser new.
+	user := STON.Tests.STONTestUser new.
 	self assert: (self serialize: user) equals: 'TestUser{#enabled:true}'! !
-!STONWriterTest categoriesFor: #serialize:!private! !
-!STONWriterTest categoriesFor: #serializeAsciiOnly:!private! !
-!STONWriterTest categoriesFor: #serializeJson:!private! !
-!STONWriterTest categoriesFor: #serializePretty:!private! !
-!STONWriterTest categoriesFor: #testAssociation!public!tests! !
-!STONWriterTest categoriesFor: #testBag!public!tests! !
-!STONWriterTest categoriesFor: #testBoolean!public!tests! !
-!STONWriterTest categoriesFor: #testByteArray!public!tests! !
-!STONWriterTest categoriesFor: #testClass!public!tests! !
-!STONWriterTest categoriesFor: #testColor!public!tests! !
-!STONWriterTest categoriesFor: #testCustomNewline!public!tests! !
-!STONWriterTest categoriesFor: #testDate!public!tests! !
-!STONWriterTest categoriesFor: #testDateAndTime!public!tests! !
-!STONWriterTest categoriesFor: #testDictionary!public!tests! !
-!STONWriterTest categoriesFor: #testDictionaryWithComplexKeys!public!tests! !
-!STONWriterTest categoriesFor: #testDoubleQuotedString!public!tests! !
-!STONWriterTest categoriesFor: #testEmptyArrayPretty!public!tests! !
-!STONWriterTest categoriesFor: #testEmptyDictionaryPretty!public!tests! !
-!STONWriterTest categoriesFor: #testFloat!public!tests! !
-!STONWriterTest categoriesFor: #testFraction!public!tests! !
-!STONWriterTest categoriesFor: #testIdentityDictionary!public!tests! !
-!STONWriterTest categoriesFor: #testInteger!public!tests! !
-!STONWriterTest categoriesFor: #testIsSimpleSymbol!public!tests! !
-!STONWriterTest categoriesFor: #testKeepingNewLines!public!tests! !
-!STONWriterTest categoriesFor: #testList!public!tests! !
-!STONWriterTest categoriesFor: #testMap!public!tests! !
-!STONWriterTest categoriesFor: #testMetaclass!public!tests! !
-!STONWriterTest categoriesFor: #testNil!public!tests! !
-!STONWriterTest categoriesFor: #testNonBMPCharacterEncoding!public!tests! !
-!STONWriterTest categoriesFor: #testNull!public!tests! !
-!STONWriterTest categoriesFor: #testOrderedCollection!public!tests! !
-!STONWriterTest categoriesFor: #testPoint!public!tests! !
-!STONWriterTest categoriesFor: #testReferenceCycle!public!tests! !
-!STONWriterTest categoriesFor: #testReferenceSharing!public!tests! !
-!STONWriterTest categoriesFor: #testReferenceSharingError!public!tests! !
-!STONWriterTest categoriesFor: #testReferenceSharingIgnore!public!tests! !
-!STONWriterTest categoriesFor: #testRestrictedClassesInJsonMode!public!tests! !
-!STONWriterTest categoriesFor: #testScaledDecimal!public!tests! !
-!STONWriterTest categoriesFor: #testString!public!tests! !
-!STONWriterTest categoriesFor: #testSymbol!public!tests! !
-!STONWriterTest categoriesFor: #testSymbolAsString!public!tests! !
-!STONWriterTest categoriesFor: #testTime!public!tests! !
-!STONWriterTest categoriesFor: #testUser!public!tests! !
-!STONWriterTest categoriesFor: #testUser2!public!tests! !
-!STONWriterTest categoriesFor: #testUser3Nil!public!tests! !
-!STONWriterTest categoriesFor: #testUserNil!public!tests! !
+!STON.Tests.WriterTest categoriesFor: #serialize:!private! !
+!STON.Tests.WriterTest categoriesFor: #serializeAsciiOnly:!private! !
+!STON.Tests.WriterTest categoriesFor: #serializeJson:!private! !
+!STON.Tests.WriterTest categoriesFor: #serializePretty:!private! !
+!STON.Tests.WriterTest categoriesFor: #testAssociation!public!tests! !
+!STON.Tests.WriterTest categoriesFor: #testBag!public!tests! !
+!STON.Tests.WriterTest categoriesFor: #testBoolean!public!tests! !
+!STON.Tests.WriterTest categoriesFor: #testByteArray!public!tests! !
+!STON.Tests.WriterTest categoriesFor: #testClass!public!tests! !
+!STON.Tests.WriterTest categoriesFor: #testColor!public!tests! !
+!STON.Tests.WriterTest categoriesFor: #testCustomNewline!public!tests! !
+!STON.Tests.WriterTest categoriesFor: #testDate!public!tests! !
+!STON.Tests.WriterTest categoriesFor: #testDateAndTime!public!tests! !
+!STON.Tests.WriterTest categoriesFor: #testDictionary!public!tests! !
+!STON.Tests.WriterTest categoriesFor: #testDictionaryWithComplexKeys!public!tests! !
+!STON.Tests.WriterTest categoriesFor: #testDoubleQuotedString!public!tests! !
+!STON.Tests.WriterTest categoriesFor: #testEmptyArrayPretty!public!tests! !
+!STON.Tests.WriterTest categoriesFor: #testEmptyDictionaryPretty!public!tests! !
+!STON.Tests.WriterTest categoriesFor: #testFloat!public!tests! !
+!STON.Tests.WriterTest categoriesFor: #testFraction!public!tests! !
+!STON.Tests.WriterTest categoriesFor: #testIdentityDictionary!public!tests! !
+!STON.Tests.WriterTest categoriesFor: #testInteger!public!tests! !
+!STON.Tests.WriterTest categoriesFor: #testIsSimpleSymbol!public!tests! !
+!STON.Tests.WriterTest categoriesFor: #testKeepingNewLines!public!tests! !
+!STON.Tests.WriterTest categoriesFor: #testList!public!tests! !
+!STON.Tests.WriterTest categoriesFor: #testMap!public!tests! !
+!STON.Tests.WriterTest categoriesFor: #testMetaclass!public!tests! !
+!STON.Tests.WriterTest categoriesFor: #testNil!public!tests! !
+!STON.Tests.WriterTest categoriesFor: #testNonBMPCharacterEncoding!public!tests! !
+!STON.Tests.WriterTest categoriesFor: #testNull!public!tests! !
+!STON.Tests.WriterTest categoriesFor: #testOrderedCollection!public!tests! !
+!STON.Tests.WriterTest categoriesFor: #testPoint!public!tests! !
+!STON.Tests.WriterTest categoriesFor: #testReferenceCycle!public!tests! !
+!STON.Tests.WriterTest categoriesFor: #testReferenceSharing!public!tests! !
+!STON.Tests.WriterTest categoriesFor: #testReferenceSharingError!public!tests! !
+!STON.Tests.WriterTest categoriesFor: #testReferenceSharingIgnore!public!tests! !
+!STON.Tests.WriterTest categoriesFor: #testRestrictedClassesInJsonMode!public!tests! !
+!STON.Tests.WriterTest categoriesFor: #testScaledDecimal!public!tests! !
+!STON.Tests.WriterTest categoriesFor: #testString!public!tests! !
+!STON.Tests.WriterTest categoriesFor: #testSymbol!public!tests! !
+!STON.Tests.WriterTest categoriesFor: #testSymbolAsString!public!tests! !
+!STON.Tests.WriterTest categoriesFor: #testTime!public!tests! !
+!STON.Tests.WriterTest categoriesFor: #testUser!public!tests! !
+!STON.Tests.WriterTest categoriesFor: #testUser2!public!tests! !
+!STON.Tests.WriterTest categoriesFor: #testUser3Nil!public!tests! !
+!STON.Tests.WriterTest categoriesFor: #testUserNil!public!tests! !
 

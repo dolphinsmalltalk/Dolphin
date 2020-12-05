@@ -1,44 +1,44 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-TestCase subclass: #STONTest
+STON.Tests.STONTestCase subclass: #'STON.Tests.STONTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-STONTest guid: (GUID fromString: '{b7f68843-9e21-424e-96cd-9c4a89a45e6c}')!
-STONTest comment: ''!
-!STONTest categoriesForClass!STON-Tests-Facade! !
-!STONTest methodsFor!
+STON.Tests.STONTest guid: (Core.GUID fromString: '{b7f68843-9e21-424e-96cd-9c4a89a45e6c}')!
+STON.Tests.STONTest comment: ''!
+!STON.Tests.STONTest categoriesForClass!STON-Tests-Facade! !
+!STON.Tests.STONTest methodsFor!
 
 testFromString
 	| object |
-	object := STON listClass withAll: {1 . 0 . -1 . true . false . nil}.
+	object := STON listClass withAll: {1. 0. -1. true. false. nil}.
 	self assert: (STON fromString: '[1,0,-1,true,false,nil]') equals: object!
 
 testFromStringWithComments
 	| object |
-	object := STON listClass withAll: { 1. 0. -1. true. false. nil }.
-	self 
-		assert: (STON fromStringWithComments: '// comment\[1, /* comment */ 0, -1, true, false, nil] // comment' withCRs)
+	object := STON listClass withAll: {1. 0. -1. true. false. nil}.
+	self assert: (STON
+				fromStringWithComments: '// comment\[1, /* comment */ 0, -1, true, false, nil] // comment' withCRs)
 		equals: object!
 
 testPrettyPrinting
 	| object |
 	object := STONTestUser dummy.
 	self assert: (STON fromString: (STON toStringPretty: object)) equals: object.
-	object := STONTestDomainObject dummy.
+	object := TestDomainObject dummy.
 	self assert: (STON fromString: (STON toStringPretty: object)) equals: object!
 
 testRoomExitCycles
 	| model room1 room2 exit1 exit2 ston object |
-	(room1 := STONTestMap new) at: #name put: 'Room 1'.
-	(room2 := STONTestMap new) at: #name put: 'Room 2'.
-	(exit1 := STONTestMap new)
+	(room1 := TestMap new) at: #name put: 'Room 1'.
+	(room2 := TestMap new) at: #name put: 'Room 2'.
+	(exit1 := TestMap new)
 		at: #name put: 'Exit 1';
 		at: #origin put: room1;
 		at: #destination put: room2.
-	(exit2 := STONTestMap new)
+	(exit2 := TestMap new)
 		at: #name put: 'Exit 2';
 		at: #origin put: room2;
 		at: #destination put: room1.
@@ -61,11 +61,11 @@ testRoomExitCycles
 
 testToString
 	| object |
-	object := STON listClass withAll: {1 . 0 . -1 . true . false . nil}.
+	object := STON listClass withAll: {1. 0. -1. true. false. nil}.
 	self assert: (STON toString: object) equals: '[1,0,-1,true,false,nil]'! !
-!STONTest categoriesFor: #testFromString!public! !
-!STONTest categoriesFor: #testFromStringWithComments!public! !
-!STONTest categoriesFor: #testPrettyPrinting!public! !
-!STONTest categoriesFor: #testRoomExitCycles!public! !
-!STONTest categoriesFor: #testToString!public! !
+!STON.Tests.STONTest categoriesFor: #testFromString!public! !
+!STON.Tests.STONTest categoriesFor: #testFromStringWithComments!public! !
+!STON.Tests.STONTest categoriesFor: #testPrettyPrinting!public! !
+!STON.Tests.STONTest categoriesFor: #testRoomExitCycles!public! !
+!STON.Tests.STONTest categoriesFor: #testToString!public! !
 

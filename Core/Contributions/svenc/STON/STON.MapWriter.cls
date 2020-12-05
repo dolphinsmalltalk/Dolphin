@@ -1,18 +1,18 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-STONStreamWriter subclass: #STONMapWriter
+STON.StreamWriter subclass: #'STON.MapWriter'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-STONMapWriter guid: (GUID fromString: '{934f79fb-8d08-4d18-aedc-36e3878d689e}')!
-STONMapWriter comment: 'STONDictionaryWriter helps in writing dictionary based STON representations.'!
-!STONMapWriter categoriesForClass!STON-Core-Writer! !
-!STONMapWriter methodsFor!
+STON.MapWriter guid: (Core.GUID fromString: '{934f79fb-8d08-4d18-aedc-36e3878d689e}')!
+STON.MapWriter comment: 'STONDictionaryWriter helps in writing dictionary based STON representations.'!
+!STON.MapWriter categoriesForClass!STON-Core-Writer! !
+!STON.MapWriter methodsFor!
 
 at: key put: value
 	first ifTrue: [ first := false ] ifFalse: [ writer mapElementSeparator ].
 	writer encodeKey: key value: value! !
-!STONMapWriter categoriesFor: #at:put:!accessing!public! !
+!STON.MapWriter categoriesFor: #at:put:!accessing!public! !
 

@@ -1,29 +1,30 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-STONWriteReadTest subclass: #STONWriteReadCommentsTest
+STON.Tests.WriteReadTest subclass: #'STON.Tests.WriteReadCommentsTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-STONWriteReadCommentsTest guid: (GUID fromString: '{bf56364e-5655-4f45-abbe-c24e5e081d0c}')!
-STONWriteReadCommentsTest comment: 'Unit test writing and reading of comments'!
-!STONWriteReadCommentsTest categoriesForClass!STON-Tests-Writer! !
-!STONWriteReadCommentsTest methodsFor!
+STON.Tests.WriteReadCommentsTest guid: (Core.GUID fromString: '{bf56364e-5655-4f45-abbe-c24e5e081d0c}')!
+STON.Tests.WriteReadCommentsTest comment: 'Unit test writing and reading of comments'!
+!STON.Tests.WriteReadCommentsTest categoriesForClass!STON-Tests-Writer! !
+!STON.Tests.WriteReadCommentsTest methodsFor!
 
 materialize: string
-	^ STON reader
-		on: (STONCStyleCommentsSkipStream on: string readStream);
+	^STON reader
+		on: (STON.CStyleCommentsSkipStream on: string readStream);
 		optimizeForLargeStructures;
 		next!
 
 serialize: anObject
-	^ String streamContents: [ :stream |
-		stream << '/* initial comment */'.
-		STON writer 
-			on: stream;
-			nextPut: anObject.
-		stream << '/* final comment */' ]! !
-!STONWriteReadCommentsTest categoriesFor: #materialize:!private! !
-!STONWriteReadCommentsTest categoriesFor: #serialize:!private! !
+	^String streamContents: 
+			[:stream |
+			stream << '/* initial comment */'.
+			STON writer
+				on: stream;
+				nextPut: anObject.
+			stream << '/* final comment */']! !
+!STON.Tests.WriteReadCommentsTest categoriesFor: #materialize:!private! !
+!STON.Tests.WriteReadCommentsTest categoriesFor: #serialize:!private! !
 

@@ -1,19 +1,19 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-STONListWriter subclass: #STONShortListWriter
+STON.ListWriter subclass: #'STON.ShortListWriter'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-STONShortListWriter guid: (GUID fromString: '{ee1770c5-72c7-4882-b356-730030a4deea}')!
-STONShortListWriter comment: 'STONShortArrayWriter helps in writing short array based STON representations.
+STON.ShortListWriter guid: (Core.GUID fromString: '{ee1770c5-72c7-4882-b356-730030a4deea}')!
+STON.ShortListWriter comment: 'STONShortArrayWriter helps in writing short array based STON representations.
 '!
-!STONShortListWriter categoriesForClass!STON-Core-Writer! !
-!STONShortListWriter methodsFor!
+!STON.ShortListWriter categoriesForClass!STON-Core-Writer! !
+!STON.ShortListWriter methodsFor!
 
 add: anObject
 	first ifTrue: [ first := false ] ifFalse: [ writer shortListElementSeparator ].
 	writer nextPut: anObject! !
-!STONShortListWriter categoriesFor: #add:!accessing!public! !
+!STON.ShortListWriter categoriesFor: #add:!accessing!public! !
 

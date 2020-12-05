@@ -1,21 +1,21 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Object subclass: #STONTestUser
+Core.Object subclass: #'STON.Tests.STONTestUser'
 	instanceVariableNames: 'username password enabled'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-STONTestUser guid: (GUID fromString: '{dc73b82c-2449-48f5-82a0-c000b743f362}')!
-STONTestUser comment: 'STONTestUser is used to support unit tests.
+STON.Tests.STONTestUser guid: (Core.GUID fromString: '{dc73b82c-2449-48f5-82a0-c000b743f362}')!
+STON.Tests.STONTestUser comment: 'STONTestUser is used to support unit tests.
 
 Instance Variables
 	enabled:		<Boolean>
 	password:	<String>
 	username:	<String>
 '!
-!STONTestUser categoriesForClass!STON-Tests-Base! !
-!STONTestUser methodsFor!
+!STON.Tests.STONTestUser categoriesForClass!STON-Tests-Base! !
+!STON.Tests.STONTestUser methodsFor!
 
 = anObject
 	"Answer whether the receiver and anObject represent the same object."
@@ -52,27 +52,36 @@ username
 
 username: anObject
 	username := anObject! !
-!STONTestUser categoriesFor: #=!comparing!public! !
-!STONTestUser categoriesFor: #enabled!accessing!public! !
-!STONTestUser categoriesFor: #enabled:!accessing!public! !
-!STONTestUser categoriesFor: #hash!comparing!public! !
-!STONTestUser categoriesFor: #initialize!initialize/release!public! !
-!STONTestUser categoriesFor: #password!accessing!public! !
-!STONTestUser categoriesFor: #password:!accessing!public! !
-!STONTestUser categoriesFor: #username!accessing!public! !
-!STONTestUser categoriesFor: #username:!accessing!public! !
+!STON.Tests.STONTestUser categoriesFor: #=!comparing!public! !
+!STON.Tests.STONTestUser categoriesFor: #enabled!accessing!public! !
+!STON.Tests.STONTestUser categoriesFor: #enabled:!accessing!public! !
+!STON.Tests.STONTestUser categoriesFor: #hash!comparing!public! !
+!STON.Tests.STONTestUser categoriesFor: #initialize!initialize/release!public! !
+!STON.Tests.STONTestUser categoriesFor: #password!accessing!public! !
+!STON.Tests.STONTestUser categoriesFor: #password:!accessing!public! !
+!STON.Tests.STONTestUser categoriesFor: #username!accessing!public! !
+!STON.Tests.STONTestUser categoriesFor: #username:!accessing!public! !
 
-!STONTestUser class methodsFor!
+!STON.Tests.STONTestUser class methodsFor!
 
 dummy
 	"self dummy"
-	
+
 	| username password |
-	username := String streamContents: [ :stream |
-		stream << 'user'; print: 999 atRandom; << '@company'; print: 99 atRandom; << '.com' ].
-	password := String streamContents: [ :stream |
-		stream << 'secret'; print: 999 atRandom ].
-	^ self new
+	username := String streamContents: 
+					[:stream |
+					stream
+						<< 'user';
+						print: 999 atRandom;
+						<< '@company';
+						print: 99 atRandom;
+						<< '.com'].
+	password := String streamContents: 
+					[:stream |
+					stream
+						<< 'secret';
+						print: 999 atRandom].
+	^self new
 		username: username;
 		password: password;
 		yourself!
@@ -82,7 +91,7 @@ new
 
 stonName
 	^ #TestUser! !
-!STONTestUser class categoriesFor: #dummy!instance creation!public! !
-!STONTestUser class categoriesFor: #new!public! !
-!STONTestUser class categoriesFor: #stonName!public!ston/core! !
+!STON.Tests.STONTestUser class categoriesFor: #dummy!instance creation!public! !
+!STON.Tests.STONTestUser class categoriesFor: #new!public! !
+!STON.Tests.STONTestUser class categoriesFor: #stonName!public!ston/core! !
 

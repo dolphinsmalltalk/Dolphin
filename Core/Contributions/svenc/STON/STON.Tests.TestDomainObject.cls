@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Object subclass: #STONTestDomainObject
+Core.Object subclass: #'STON.Tests.TestDomainObject'
 	instanceVariableNames: 'created modified integer float description color tags bytes boolean'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-STONTestDomainObject guid: (GUID fromString: '{ef1278a4-658e-4799-870c-89c6de6b7c53}')!
-STONTestDomainObject comment: 'STONTestDomainObject is used to support unit tests.
+STON.Tests.TestDomainObject guid: (Core.GUID fromString: '{ef1278a4-658e-4799-870c-89c6de6b7c53}')!
+STON.Tests.TestDomainObject comment: 'STONTestDomainObject is used to support unit tests.
 
 Instance Variables
 	boolean:		<Boolean>
@@ -19,8 +19,8 @@ Instance Variables
 	integer:		<Integer>
 	modified:	<DateAndTime>
 	tags:			<Array of: Symbol>'!
-!STONTestDomainObject categoriesForClass!STON-Tests-Base! !
-!STONTestDomainObject methodsFor!
+!STON.Tests.TestDomainObject categoriesForClass!STON-Tests-Base! !
+!STON.Tests.TestDomainObject methodsFor!
 
 = anObject
 	"Answer whether the receiver and anObject represent the same object."
@@ -96,7 +96,7 @@ hash
 								bitXor: (boolean hash bitXor: (float hash bitXor: (bytes hash bitXor: (integer hash bitXor: tags hash)))))))!
 
 initialize
-	created := modified := DateAndTime now.!
+	created := modified := DateAndTime now!
 
 integer
 	^ integer!
@@ -115,47 +115,46 @@ tags
 
 tags: anObject
 	tags := anObject! !
-!STONTestDomainObject categoriesFor: #=!comparing!public! !
-!STONTestDomainObject categoriesFor: #boolean!accessing!public! !
-!STONTestDomainObject categoriesFor: #boolean:!accessing!public! !
-!STONTestDomainObject categoriesFor: #bytes!accessing!public! !
-!STONTestDomainObject categoriesFor: #bytes:!accessing!public! !
-!STONTestDomainObject categoriesFor: #color!accessing!public! !
-!STONTestDomainObject categoriesFor: #color:!accessing!public! !
-!STONTestDomainObject categoriesFor: #created!accessing!public! !
-!STONTestDomainObject categoriesFor: #created:!accessing!public! !
-!STONTestDomainObject categoriesFor: #description!accessing!public! !
-!STONTestDomainObject categoriesFor: #description:!accessing!public! !
-!STONTestDomainObject categoriesFor: #float!accessing!public! !
-!STONTestDomainObject categoriesFor: #float:!accessing!public! !
-!STONTestDomainObject categoriesFor: #hash!comparing!public! !
-!STONTestDomainObject categoriesFor: #initialize!initialize/release!public! !
-!STONTestDomainObject categoriesFor: #integer!accessing!public! !
-!STONTestDomainObject categoriesFor: #integer:!accessing!public! !
-!STONTestDomainObject categoriesFor: #modified!accessing!public! !
-!STONTestDomainObject categoriesFor: #modified:!accessing!public! !
-!STONTestDomainObject categoriesFor: #tags!accessing!public! !
-!STONTestDomainObject categoriesFor: #tags:!accessing!public! !
+!STON.Tests.TestDomainObject categoriesFor: #=!comparing!public! !
+!STON.Tests.TestDomainObject categoriesFor: #boolean!accessing!public! !
+!STON.Tests.TestDomainObject categoriesFor: #boolean:!accessing!public! !
+!STON.Tests.TestDomainObject categoriesFor: #bytes!accessing!public! !
+!STON.Tests.TestDomainObject categoriesFor: #bytes:!accessing!public! !
+!STON.Tests.TestDomainObject categoriesFor: #color!accessing!public! !
+!STON.Tests.TestDomainObject categoriesFor: #color:!accessing!public! !
+!STON.Tests.TestDomainObject categoriesFor: #created!accessing!public! !
+!STON.Tests.TestDomainObject categoriesFor: #created:!accessing!public! !
+!STON.Tests.TestDomainObject categoriesFor: #description!accessing!public! !
+!STON.Tests.TestDomainObject categoriesFor: #description:!accessing!public! !
+!STON.Tests.TestDomainObject categoriesFor: #float!accessing!public! !
+!STON.Tests.TestDomainObject categoriesFor: #float:!accessing!public! !
+!STON.Tests.TestDomainObject categoriesFor: #hash!comparing!public! !
+!STON.Tests.TestDomainObject categoriesFor: #initialize!initialize/release!public! !
+!STON.Tests.TestDomainObject categoriesFor: #integer!accessing!public! !
+!STON.Tests.TestDomainObject categoriesFor: #integer:!accessing!public! !
+!STON.Tests.TestDomainObject categoriesFor: #modified!accessing!public! !
+!STON.Tests.TestDomainObject categoriesFor: #modified:!accessing!public! !
+!STON.Tests.TestDomainObject categoriesFor: #tags!accessing!public! !
+!STON.Tests.TestDomainObject categoriesFor: #tags:!accessing!public! !
 
-!STONTestDomainObject class methodsFor!
+!STON.Tests.TestDomainObject class methodsFor!
 
 dummy
-	^ self new
+	^self new
 		integer: 999999 atRandom;
 		float: 999 atRandom / Float pi;
 		boolean: #(true false) atRandom;
-		bytes: (ByteArray streamContents: [ :out | 32 timesRepeat: [ out nextPut: 255 atRandom ] ]);
-		description: (String streamContents: [ :out | 16 atRandom timesRepeat: [ out nextPutAll: 'Blah' ] ]);
+		bytes: (ByteArray streamContents: [:out | 32 timesRepeat: [out nextPut: 255 atRandom]]);
+		description: (String streamContents: [:out | 16 atRandom timesRepeat: [out nextPutAll: 'Blah']]);
 		color: #(#red #green #blue) atRandom;
-		tags: (Array 
-			with: #(#one #two #three) atRandom
- 			with: #(#alpha #beta #gamma) atRandom 
-			with: #(#low #medium #high) atRandom);
-		yourself
-!
+		tags: (Array
+					with: #(#one #two #three) atRandom
+					with: #(#alpha #beta #gamma) atRandom
+					with: #(#low #medium #high) atRandom);
+		yourself!
 
 stonName
 	^ #TestDomainObject! !
-!STONTestDomainObject class categoriesFor: #dummy!instance creation!public! !
-!STONTestDomainObject class categoriesFor: #stonName!public!ston/core! !
+!STON.Tests.TestDomainObject class categoriesFor: #dummy!instance creation!public! !
+!STON.Tests.TestDomainObject class categoriesFor: #stonName!public!ston/core! !
 

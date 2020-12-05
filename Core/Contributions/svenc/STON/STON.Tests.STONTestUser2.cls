@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-STONTestUser subclass: #STONTestUser2
+STON.Tests.STONTestUser subclass: #'STON.Tests.STONTestUser2'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-STONTestUser2 guid: (GUID fromString: '{2b83d7a9-b33a-4c5e-a872-6a271dcf9f7e}')!
-STONTestUser2 comment: 'STONTestUser2 extends STONTestUser with explicit implementations of #fromSton: and #stonOn:'!
-!STONTestUser2 categoriesForClass!STON-Tests-Base! !
-!STONTestUser2 methodsFor!
+STON.Tests.STONTestUser2 guid: (Core.GUID fromString: '{2b83d7a9-b33a-4c5e-a872-6a271dcf9f7e}')!
+STON.Tests.STONTestUser2 comment: 'STONTestUser2 extends STONTestUser with explicit implementations of #fromSton: and #stonOn:'!
+!STON.Tests.STONTestUser2 categoriesForClass!STON-Tests-Base! !
+!STON.Tests.STONTestUser2 methodsFor!
 
 fromSton: stonReader
 	stonReader parseMapDo: [ :key :value |
@@ -24,12 +24,12 @@ stonOn: stonWriter
 			at: #username put: username;
 			at: #password put: password;
 			at: #enabled put: enabled ]! !
-!STONTestUser2 categoriesFor: #fromSton:!public!ston/core! !
-!STONTestUser2 categoriesFor: #stonOn:!public!ston/core! !
+!STON.Tests.STONTestUser2 categoriesFor: #fromSton:!public!ston/core! !
+!STON.Tests.STONTestUser2 categoriesFor: #stonOn:!public!ston/core! !
 
-!STONTestUser2 class methodsFor!
+!STON.Tests.STONTestUser2 class methodsFor!
 
 stonName
 	^ #TestUser2! !
-!STONTestUser2 class categoriesFor: #stonName!public!ston/core! !
+!STON.Tests.STONTestUser2 class categoriesFor: #stonName!public!ston/core! !
 

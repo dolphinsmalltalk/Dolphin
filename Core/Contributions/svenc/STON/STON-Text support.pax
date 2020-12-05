@@ -1,13 +1,13 @@
 ﻿| package |
 package := Package name: 'STON-Text support'.
-package paxVersion: 2;
+package paxVersion: 2.1;
 	basicComment: ''.
 
 
 package setMethodNames: #(
-	#(#{RunArray} #fromSton:)
-	#(#{RunArray} #stonOn:)
-	#(#{RunArray class} #fromSton:)
+	#(#{Core.RunArray} #fromSton:)
+	#(#{Core.RunArray} #stonOn:)
+	#(#{Core.RunArray class} #fromSton:)
 ).
 
 package setPrerequisites: #(
@@ -18,7 +18,7 @@ package!
 
 "Loose Methods"!
 
-!RunArray methodsFor!
+!Core.RunArray methodsFor!
 
 fromSton: stonReader
 	"Overwritten to get back the standard object behavior"
@@ -29,16 +29,16 @@ stonOn: stonWriter
 	"Overwritten to get back the standard object behavior"
 	
 	stonWriter writeObject: self! !
-!RunArray categoriesFor: #fromSton:!public!ston! !
-!RunArray categoriesFor: #stonOn:!public!ston! !
+!Core.RunArray categoriesFor: #fromSton:!public!ston! !
+!Core.RunArray categoriesFor: #stonOn:!public!ston! !
 
-!RunArray class methodsFor!
+!Core.RunArray class methodsFor!
 
 fromSton: stonReader
 	^ self new
 		fromSton: stonReader;
 		yourself! !
-!RunArray class categoriesFor: #fromSton:!public!ston! !
+!Core.RunArray class categoriesFor: #fromSton:!public!ston! !
 
 "End of package definition"!
 

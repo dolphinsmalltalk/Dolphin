@@ -1,16 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Object subclass: #STONStreamWriter
+Core.Object subclass: #'STON.StreamWriter'
 	instanceVariableNames: 'writer first'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-STONStreamWriter guid: (GUID fromString: '{6bdb0b54-8382-4d5b-b901-b52c3b1fdb07}')!
-STONStreamWriter comment: 'STONStreamWriter helps in streaming writing STON representations.
+STON.StreamWriter guid: (Core.GUID fromString: '{6bdb0b54-8382-4d5b-b901-b52c3b1fdb07}')!
+STON.StreamWriter comment: 'STONStreamWriter helps in streaming writing STON representations.
 This is an abstract class.'!
-!STONStreamWriter categoriesForClass!STON-Core-Writer! !
-!STONStreamWriter methodsFor!
+!STON.StreamWriter categoriesForClass!STON-Core-Writer! !
+!STON.StreamWriter methodsFor!
 
 initialize
 	super initialize.
@@ -18,10 +18,10 @@ initialize
 
 on: stonWriter
 	writer := stonWriter! !
-!STONStreamWriter categoriesFor: #initialize!initialize/release!public! !
-!STONStreamWriter categoriesFor: #on:!initialize/release!public! !
+!STON.StreamWriter categoriesFor: #initialize!initialize/release!public! !
+!STON.StreamWriter categoriesFor: #on:!initialize/release!public! !
 
-!STONStreamWriter class methodsFor!
+!STON.StreamWriter class methodsFor!
 
 new
 	^super new initialize!
@@ -30,6 +30,6 @@ on: stonWriter
 	^ self new
 		on: stonWriter;
 		yourself! !
-!STONStreamWriter class categoriesFor: #new!public! !
-!STONStreamWriter class categoriesFor: #on:!instance creation!public! !
+!STON.StreamWriter class categoriesFor: #new!public! !
+!STON.StreamWriter class categoriesFor: #on:!instance creation!public! !
 
