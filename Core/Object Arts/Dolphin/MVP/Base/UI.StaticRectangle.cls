@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ControlView subclass: #StaticRectangle
+UI.ControlView subclass: #'UI.StaticRectangle'
 	instanceVariableNames: ''
 	classVariableNames: 'StyleMap'
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-StaticRectangle guid: (GUID fromString: '{aad4f3a9-dc68-42b2-bedc-0a4fc49880f2}')!
-StaticRectangle comment: '`StaticRectangle` is a simple `ControlView` class which wraps the Windows STATIC control for simple rectangles and frames.
+UI.StaticRectangle guid: (Core.GUID fromString: '{aad4f3a9-dc68-42b2-bedc-0a4fc49880f2}')!
+UI.StaticRectangle comment: '`StaticRectangle` is a simple `ControlView` class which wraps the Windows STATIC control for simple rectangles and frames.
 
 The rectangle styles paint a solid block of colour filling the client area. The frame styles draw a border/frame around the edge of the client area of the control allowing the background colour to show through.
 
@@ -15,8 +15,8 @@ Apart from its uses for background rectangles and frames, StaticRectangle can al
 
 ## Class Variables:
   `StyleMap`		`LookupTable` of `Symbol` rectangle/frame style names Windows styles.'!
-!StaticRectangle categoriesForClass!MVP-Views! !
-!StaticRectangle methodsFor!
+!UI.StaticRectangle categoriesForClass!MVP-Views! !
+!UI.StaticRectangle methodsFor!
 
 setStyle: rectangleStyleBits
 	"Private - Sets the rectangle style of this static control."
@@ -35,11 +35,11 @@ style: rectangleStyleName
 	name, rectangleStyleName."
 
 	self setStyle: (StyleMap at: rectangleStyleName)! !
-!StaticRectangle categoriesFor: #setStyle:!accessing!private! !
-!StaticRectangle categoriesFor: #style!accessing!public! !
-!StaticRectangle categoriesFor: #style:!accessing!public! !
+!UI.StaticRectangle categoriesFor: #setStyle:!accessing!private! !
+!UI.StaticRectangle categoriesFor: #style!accessing!public! !
+!UI.StaticRectangle categoriesFor: #style:!accessing!public! !
 
-!StaticRectangle class methodsFor!
+!UI.StaticRectangle class methodsFor!
 
 initialize
 	"Private - Initialise the receiver's class variables:
@@ -70,14 +70,14 @@ resource_Default_view
 	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Default_view)
 	"
 
-	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.StaticRectangle) 34 14 nil nil 34 2 8 1140850951 1 416 nil 327686 ##(Smalltalk.Color) #default nil 7 nil nil nil 416 nil 8 1903849936 983302 ##(Smalltalk.MessageSequence) 138 144 34 2 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 328198 ##(Smalltalk.Point) 3839 21 642 211 51 416 594 #isEnabled: 8 #(false) 416 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 127 7 0 0 10 0 0 0 232 7 0 0 35 0 0 0] 8 #() 642 193 193 nil 27 )!
+	^#(#'!!STL' 4 985166 10 ##(UI.STBViewProxy) ##(UI.StaticRectangle) 34 14 nil nil 34 2 8 1140850951 1 416 nil 917510 ##(Graphics.Color) #default nil 7 nil nil nil 416 nil 8 1920531648 1310982 ##(Core.MessageSequence) 138 144 34 2 1049350 ##(Core.MessageSend) #createAt:extent: 34 2 655878 ##(Graphics.Point) 6143 21 642 211 51 416 594 #isEnabled: 8 #(false) 416 1179910 ##(OS.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 104 12 0 0 35 0 0 0] 8 #() 642 193 193 nil 27)!
 
 winClassName
 	"Private - Answer the name of the Windows window class to use when realizing the receiver."
 
 	^'STATIC'
 ! !
-!StaticRectangle class categoriesFor: #initialize!development!initializing!private! !
-!StaticRectangle class categoriesFor: #resource_Default_view!public!resources-views! !
-!StaticRectangle class categoriesFor: #winClassName!constants!private! !
+!UI.StaticRectangle class categoriesFor: #initialize!development!initializing!private! !
+!UI.StaticRectangle class categoriesFor: #resource_Default_view!public!resources-views! !
+!UI.StaticRectangle class categoriesFor: #winClassName!constants!private! !
 

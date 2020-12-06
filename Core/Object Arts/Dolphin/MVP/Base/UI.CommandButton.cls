@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ControlView subclass: #CommandButton
+UI.ControlView subclass: #'UI.CommandButton'
 	instanceVariableNames: 'commandDescription'
 	classVariableNames: 'StandardCommands'
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-CommandButton guid: (GUID fromString: '{7e1607a8-cdec-4c98-b2a8-c1376e58380e}')!
-CommandButton comment: 'CommandButton is the abstract class of  <ControlView>s that act as <commandSource>s, holding a <CommandDescription> detailing the command that should be fired when the button is clicked. The command is subject to the normal command routing followed by all commands in Dolphin, e.g. those initiated from menus, toolbars and keyboard accelerators. See the <CommandDescription> comment for further details.
+UI.CommandButton guid: (Core.GUID fromString: '{7e1607a8-cdec-4c98-b2a8-c1376e58380e}')!
+UI.CommandButton comment: 'CommandButton is the abstract class of  <ControlView>s that act as <commandSource>s, holding a <CommandDescription> detailing the command that should be fired when the button is clicked. The command is subject to the normal command routing followed by all commands in Dolphin, e.g. those initiated from menus, toolbars and keyboard accelerators. See the <CommandDescription> comment for further details.
 
 Concrete subclasses provide implementations based on the Windows BUTTON (PushButton) and SysLink (LinkButton) controls.
 
@@ -17,8 +17,8 @@ Instance Variables:
 Class Variables:
 	StandardCommands	<IdentityDictionary> map of <selector>s to standard button IDs.
 '!
-!CommandButton categoriesForClass!MVP-Resources-Buttons!MVP-Views! !
-!CommandButton methodsFor!
+!UI.CommandButton categoriesForClass!MVP-Resources-Buttons!MVP-Views! !
+!UI.CommandButton methodsFor!
 
 command
 	"Answer the <commandMessage> which is triggered when the receiver is pushed."
@@ -92,21 +92,21 @@ validateUserInterface
 		ifTrue: 
 			["The button text should be updated"
 			self text: query text]! !
-!CommandButton categoriesFor: #command!accessing!public! !
-!CommandButton categoriesFor: #command:!accessing!public! !
-!CommandButton categoriesFor: #commandDescription!accessing!public! !
-!CommandButton categoriesFor: #commandDescription:!accessing!public! !
-!CommandButton categoriesFor: #commandSource!accessing!public! !
-!CommandButton categoriesFor: #defaultExtent!constants!private! !
-!CommandButton categoriesFor: #defaultId!accessing!private! !
-!CommandButton categoriesFor: #displayOnFormats!displaying!private! !
-!CommandButton categoriesFor: #initialize!initializing!private! !
-!CommandButton categoriesFor: #isChecked!accessing!public! !
-!CommandButton categoriesFor: #isChecked:!accessing!public! !
-!CommandButton categoriesFor: #onActionPerformed!event handling!public! !
-!CommandButton categoriesFor: #validateUserInterface!operations!public! !
+!UI.CommandButton categoriesFor: #command!accessing!public! !
+!UI.CommandButton categoriesFor: #command:!accessing!public! !
+!UI.CommandButton categoriesFor: #commandDescription!accessing!public! !
+!UI.CommandButton categoriesFor: #commandDescription:!accessing!public! !
+!UI.CommandButton categoriesFor: #commandSource!accessing!public! !
+!UI.CommandButton categoriesFor: #defaultExtent!constants!private! !
+!UI.CommandButton categoriesFor: #defaultId!accessing!private! !
+!UI.CommandButton categoriesFor: #displayOnFormats!displaying!private! !
+!UI.CommandButton categoriesFor: #initialize!initializing!private! !
+!UI.CommandButton categoriesFor: #isChecked!accessing!public! !
+!UI.CommandButton categoriesFor: #isChecked:!accessing!public! !
+!UI.CommandButton categoriesFor: #onActionPerformed!event handling!public! !
+!UI.CommandButton categoriesFor: #validateUserInterface!operations!public! !
 
-!CommandButton class methodsFor!
+!UI.CommandButton class methodsFor!
 
 icon
 	"Answers an <Icon> that can be used to represent this class"
@@ -139,7 +139,7 @@ initialize
 
 themePartName
 	^'BUTTON'! !
-!CommandButton class categoriesFor: #icon!constants!public! !
-!CommandButton class categoriesFor: #initialize!development!initializing!private! !
-!CommandButton class categoriesFor: #themePartName!constants!public!theming! !
+!UI.CommandButton class categoriesFor: #icon!constants!public! !
+!UI.CommandButton class categoriesFor: #initialize!development!initializing!private! !
+!UI.CommandButton class categoriesFor: #themePartName!constants!public!theming! !
 

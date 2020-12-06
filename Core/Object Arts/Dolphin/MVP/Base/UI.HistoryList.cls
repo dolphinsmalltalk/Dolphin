@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Object subclass: #HistoryList
+Core.Object subclass: #'UI.HistoryList'
 	instanceVariableNames: 'history position maxAge searchPolicy'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-HistoryList guid: (GUID fromString: '{87b4c490-026e-11d3-9fd7-00a0cc3e4a32}')!
-HistoryList comment: 'HistoryList maintains a list of recent visits which can be navigated back and forth, with similar behaviour to a Web browser''s history list.
+UI.HistoryList guid: (Core.GUID fromString: '{87b4c490-026e-11d3-9fd7-00a0cc3e4a32}')!
+UI.HistoryList comment: 'HistoryList maintains a list of recent visits which can be navigated back and forth, with similar behaviour to a Web browser''s history list.
 
 Instance Variables:
 	history		<OrderedCollection>. The history, oldest first.
@@ -16,8 +16,8 @@ Instance Variables:
 	searchPolicy	<SearchPolicy> used to compare items when adding/removing visits.
 
 '!
-!HistoryList categoriesForClass!MVP-Presenters-Support! !
-!HistoryList methodsFor!
+!UI.HistoryList categoriesForClass!MVP-Presenters-Support! !
+!UI.HistoryList methodsFor!
 
 addLast: anObject 
 	"Add a visit to the <Object>, location, to the receiver's history list after the
@@ -114,7 +114,7 @@ hasPast
 
 	^self pastSize > 0!
 
-initialize: anInteger 
+initialize: anInteger
 	"Private - Initialize the receiver's instance variables."
 
 	history := OrderedCollection new.
@@ -235,8 +235,8 @@ shrink
 	oldPosition := position.
 	history from: 2
 		keysAndValuesDo: 
-			[:i :each | 
-			(self searchPolicy compare: last with: each) 
+			[:i :each |
+			(self searchPolicy compare: last with: each)
 				ifTrue: [i <= oldPosition ifTrue: [position := position - 1]]
 				ifFalse: 
 					[consolidated addLast: each.
@@ -260,44 +260,44 @@ visit: item
 	(self isEmpty or: [(self searchPolicy compare: self current with: item) not]) 
 		ifTrue: [self addLast: item]
 		ifFalse: [self current: item]! !
-!HistoryList categoriesFor: #addLast:!adding!public! !
-!HistoryList categoriesFor: #clear!operations!public! !
-!HistoryList categoriesFor: #clearFuture!operations!public! !
-!HistoryList categoriesFor: #clearPast!operations!public! !
-!HistoryList categoriesFor: #close!operations!public! !
-!HistoryList categoriesFor: #contents!accessing!public! !
-!HistoryList categoriesFor: #current!accessing!public! !
-!HistoryList categoriesFor: #current:!accessing!public! !
-!HistoryList categoriesFor: #futureSize!accessing!public! !
-!HistoryList categoriesFor: #goBack:!operations!public! !
-!HistoryList categoriesFor: #goForward:!operations!public! !
-!HistoryList categoriesFor: #hasFuture!public!testing! !
-!HistoryList categoriesFor: #hasPast!accessing!public! !
-!HistoryList categoriesFor: #initialize:!initializing!private! !
-!HistoryList categoriesFor: #isEmpty!public!testing! !
-!HistoryList categoriesFor: #next!accessing!public! !
-!HistoryList categoriesFor: #next:!accessing!public! !
-!HistoryList categoriesFor: #notEmpty!public!testing! !
-!HistoryList categoriesFor: #past!accessing!public! !
-!HistoryList categoriesFor: #pastSize!accessing!public! !
-!HistoryList categoriesFor: #position!positioning!public! !
-!HistoryList categoriesFor: #position:!positioning!public! !
-!HistoryList categoriesFor: #previous!accessing!public! !
-!HistoryList categoriesFor: #previous:!accessing!public! !
-!HistoryList categoriesFor: #remove:!public!removing! !
-!HistoryList categoriesFor: #removeMatching:!public!removing! !
-!HistoryList categoriesFor: #reset!positioning!public! !
-!HistoryList categoriesFor: #searchPolicy!accessing!public! !
-!HistoryList categoriesFor: #searchPolicy:!accessing!public! !
-!HistoryList categoriesFor: #setToEnd!positioning!public! !
-!HistoryList categoriesFor: #shrink!operations!public! !
-!HistoryList categoriesFor: #skip:!operations!public! !
-!HistoryList categoriesFor: #upToEnd!accessing!public! !
-!HistoryList categoriesFor: #visit:!operations!public! !
+!UI.HistoryList categoriesFor: #addLast:!adding!public! !
+!UI.HistoryList categoriesFor: #clear!operations!public! !
+!UI.HistoryList categoriesFor: #clearFuture!operations!public! !
+!UI.HistoryList categoriesFor: #clearPast!operations!public! !
+!UI.HistoryList categoriesFor: #close!operations!public! !
+!UI.HistoryList categoriesFor: #contents!accessing!public! !
+!UI.HistoryList categoriesFor: #current!accessing!public! !
+!UI.HistoryList categoriesFor: #current:!accessing!public! !
+!UI.HistoryList categoriesFor: #futureSize!accessing!public! !
+!UI.HistoryList categoriesFor: #goBack:!operations!public! !
+!UI.HistoryList categoriesFor: #goForward:!operations!public! !
+!UI.HistoryList categoriesFor: #hasFuture!public!testing! !
+!UI.HistoryList categoriesFor: #hasPast!accessing!public! !
+!UI.HistoryList categoriesFor: #initialize:!initializing!private! !
+!UI.HistoryList categoriesFor: #isEmpty!public!testing! !
+!UI.HistoryList categoriesFor: #next!accessing!public! !
+!UI.HistoryList categoriesFor: #next:!accessing!public! !
+!UI.HistoryList categoriesFor: #notEmpty!public!testing! !
+!UI.HistoryList categoriesFor: #past!accessing!public! !
+!UI.HistoryList categoriesFor: #pastSize!accessing!public! !
+!UI.HistoryList categoriesFor: #position!positioning!public! !
+!UI.HistoryList categoriesFor: #position:!positioning!public! !
+!UI.HistoryList categoriesFor: #previous!accessing!public! !
+!UI.HistoryList categoriesFor: #previous:!accessing!public! !
+!UI.HistoryList categoriesFor: #remove:!public!removing! !
+!UI.HistoryList categoriesFor: #removeMatching:!public!removing! !
+!UI.HistoryList categoriesFor: #reset!positioning!public! !
+!UI.HistoryList categoriesFor: #searchPolicy!accessing!public! !
+!UI.HistoryList categoriesFor: #searchPolicy:!accessing!public! !
+!UI.HistoryList categoriesFor: #setToEnd!positioning!public! !
+!UI.HistoryList categoriesFor: #shrink!operations!public! !
+!UI.HistoryList categoriesFor: #skip:!operations!public! !
+!UI.HistoryList categoriesFor: #upToEnd!accessing!public! !
+!UI.HistoryList categoriesFor: #visit:!operations!public! !
 
-HistoryList methodProtocol: #sequencedStream attributes: #(#ansi #readOnly) selectors: #(#close #contents #isEmpty #position #position: #reset #setToEnd)!
+UI.HistoryList methodProtocol: #sequencedStream attributes: #(#ansi #readOnly) selectors: #(#close #contents #isEmpty #position #position: #reset #setToEnd)!
 
-!HistoryList class methodsFor!
+!UI.HistoryList class methodsFor!
 
 icon
 	"Answers an Icon that can be used to represent this class"
@@ -316,7 +316,7 @@ new: maxAge
 	with capacity for the specified maximum number of items."
 
 	^super new initialize: maxAge! !
-!HistoryList class categoriesFor: #icon!constants!public! !
-!HistoryList class categoriesFor: #new!instance creation!public! !
-!HistoryList class categoriesFor: #new:!instance creation!public! !
+!UI.HistoryList class categoriesFor: #icon!constants!public! !
+!UI.HistoryList class categoriesFor: #new!instance creation!public! !
+!UI.HistoryList class categoriesFor: #new:!instance creation!public! !
 

@@ -1,16 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ExternalStructure subclass: #ExternalSize
+External.Structure subclass: #'External.SIZE'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ExternalSize guid: (GUID fromString: '{6dbb8332-abe3-4ac8-9388-e209e560e8a3}')!
-ExternalSize isAbstract: true!
-ExternalSize comment: '`SizeStructure` is the abstract class of structures representing a 2-dimensional extent. There are concrete subclasses for different types of width and height values used by different APIs.'!
-!ExternalSize categoriesForClass!Win32-Structs! !
-!ExternalSize methodsFor!
+External.SIZE guid: (Core.GUID fromString: '{6dbb8332-abe3-4ac8-9388-e209e560e8a3}')!
+External.SIZE isNonInstantiable: true!
+External.SIZE comment: '`SizeStructure` is the abstract class of structures representing a 2-dimensional extent. There are concrete subclasses for different types of width and height values used by different APIs.'!
+!External.SIZE categoriesForClass!Win32-Structs! !
+!External.SIZE methodsFor!
 
 asObject
 	"Answer a suitable Smalltalk object to represent the receiver's value, in this case
@@ -22,7 +22,7 @@ asPoint
 	"Answer a suitable Smalltalk object to represent the receiver's value, in this case
 	a <Point>."
 
-	^Point x: self width y: self height!
+	^self width @ self height!
 
 height
 	^self subclassResponsibility!
@@ -41,16 +41,16 @@ x
 
 y
 	^self height! !
-!ExternalSize categoriesFor: #asObject!converting!public! !
-!ExternalSize categoriesFor: #asPoint!converting!public! !
-!ExternalSize categoriesFor: #height!accessing!public! !
-!ExternalSize categoriesFor: #height:!accessing!public! !
-!ExternalSize categoriesFor: #width!accessing!public! !
-!ExternalSize categoriesFor: #width:!accessing!public! !
-!ExternalSize categoriesFor: #x!accessing!public! !
-!ExternalSize categoriesFor: #y!accessing!public! !
+!External.SIZE categoriesFor: #asObject!converting!public! !
+!External.SIZE categoriesFor: #asPoint!converting!public! !
+!External.SIZE categoriesFor: #height!accessing!public! !
+!External.SIZE categoriesFor: #height:!accessing!public! !
+!External.SIZE categoriesFor: #width!accessing!public! !
+!External.SIZE categoriesFor: #width:!accessing!public! !
+!External.SIZE categoriesFor: #x!accessing!public! !
+!External.SIZE categoriesFor: #y!accessing!public! !
 
-!ExternalSize class methodsFor!
+!External.SIZE class methodsFor!
 
 fromPoint: aPoint 
 	"Answer a new instance of the receiver representing the magnitude of aPoint."
@@ -60,14 +60,14 @@ fromPoint: aPoint
 icon
 	"Answer a suitable iconic representation for the receiver."
 
-	^Icon fromId: 'extent.ico'!
+	^Graphics.Icon fromId: 'extent.ico'!
 
 width: cx height: cy
 	^self new
 		width: cx;
 		height: cy;
 		yourself! !
-!ExternalSize class categoriesFor: #fromPoint:!instance creation!public! !
-!ExternalSize class categoriesFor: #icon!constants!public! !
-!ExternalSize class categoriesFor: #width:height:!instance creation!public! !
+!External.SIZE class categoriesFor: #fromPoint:!instance creation!public! !
+!External.SIZE class categoriesFor: #icon!constants!public! !
+!External.SIZE class categoriesFor: #width:height:!instance creation!public! !
 

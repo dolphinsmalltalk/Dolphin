@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Win32Structure subclass: #DRAWITEMSTRUCT
+OS.Win32Structure subclass: #'OS.DRAWITEMSTRUCT'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_CtlID' -> 16r4.
@@ -16,13 +16,13 @@ Win32Structure subclass: #DRAWITEMSTRUCT
 		'_OffsetOf_itemState' -> 16r10.
 		'_OffsetOf_rcItem' -> 16r1C
 	}!
-DRAWITEMSTRUCT guid: (GUID fromString: '{87b4c5e9-026e-11d3-9fd7-00a0cc3e4a32}')!
-DRAWITEMSTRUCT comment: '<DRAWITEMSTRUCT> is an <ExternalStructure> class to wrap the struct ''Win.DRAWITEMSTRUCT'' from type information in the ''Windows API (ANSI)'' library.
+OS.DRAWITEMSTRUCT guid: (Core.GUID fromString: '{87b4c5e9-026e-11d3-9fd7-00a0cc3e4a32}')!
+OS.DRAWITEMSTRUCT comment: '<DRAWITEMSTRUCT> is an <ExternalStructure> class to wrap the struct ''Win.DRAWITEMSTRUCT'' from type information in the ''Windows API (ANSI)'' library.
 
 From MSDN: "The DRAWITEMSTRUCT structure provides information the owner window must have to determine how to paint an owner-drawn control or menu item. The owner window of the owner-drawn control or menu item receives a pointer to this structure as the lParam parameter of the WM_DRAWITEM message."
 '!
-!DRAWITEMSTRUCT categoriesForClass!Win-Structs! !
-!DRAWITEMSTRUCT methodsFor!
+!OS.DRAWITEMSTRUCT categoriesForClass!Win-Structs! !
+!OS.DRAWITEMSTRUCT methodsFor!
 
 CtlID
 	"Answer the <Integer> value of the receiver's 'CtlID' field."
@@ -70,21 +70,21 @@ itemState
 	^bytes dwordAtOffset: _OffsetOf_itemState!
 
 rcItem
-	"Answer the <RECT> value of the receiver's 'rcItem' field."
+	"Answer the <RECTL> value of the receiver's 'rcItem' field."
 
-	^RECT fromAddress: bytes yourAddress + _OffsetOf_rcItem! !
-!DRAWITEMSTRUCT categoriesFor: #CtlID!**compiled accessors**!public! !
-!DRAWITEMSTRUCT categoriesFor: #CtlType!**compiled accessors**!public! !
-!DRAWITEMSTRUCT categoriesFor: #hDC!**compiled accessors**!public! !
-!DRAWITEMSTRUCT categoriesFor: #hwndItem!**compiled accessors**!public! !
-!DRAWITEMSTRUCT categoriesFor: #isGrayed!public!testing! !
-!DRAWITEMSTRUCT categoriesFor: #isSelected!public!testing! !
-!DRAWITEMSTRUCT categoriesFor: #itemAction!**compiled accessors**!public! !
-!DRAWITEMSTRUCT categoriesFor: #itemID!**compiled accessors**!public! !
-!DRAWITEMSTRUCT categoriesFor: #itemState!**compiled accessors**!public! !
-!DRAWITEMSTRUCT categoriesFor: #rcItem!**compiled accessors**!public! !
+	^RECTL fromAddress: bytes yourAddress + _OffsetOf_rcItem! !
+!OS.DRAWITEMSTRUCT categoriesFor: #CtlID!**compiled accessors**!public! !
+!OS.DRAWITEMSTRUCT categoriesFor: #CtlType!**compiled accessors**!public! !
+!OS.DRAWITEMSTRUCT categoriesFor: #hDC!**compiled accessors**!public! !
+!OS.DRAWITEMSTRUCT categoriesFor: #hwndItem!**compiled accessors**!public! !
+!OS.DRAWITEMSTRUCT categoriesFor: #isGrayed!public!testing! !
+!OS.DRAWITEMSTRUCT categoriesFor: #isSelected!public!testing! !
+!OS.DRAWITEMSTRUCT categoriesFor: #itemAction!**compiled accessors**!public! !
+!OS.DRAWITEMSTRUCT categoriesFor: #itemID!**compiled accessors**!public! !
+!OS.DRAWITEMSTRUCT categoriesFor: #itemState!**compiled accessors**!public! !
+!OS.DRAWITEMSTRUCT categoriesFor: #rcItem!**compiled accessors**!public! !
 
-!DRAWITEMSTRUCT class methodsFor!
+!OS.DRAWITEMSTRUCT class methodsFor!
 
 defineFields
 	"Define the fields of the DRAWITEMSTRUCT structure.
@@ -99,7 +99,7 @@ defineFields
 			UINT itemState;
 			HWND hwndItem;
 			HDC hDC;
-			RECT rcItem;
+			RECTL rcItem;
 			ULONG_PTR itemData;
 		} DRAWITEMSTRUCT;
 "
@@ -112,11 +112,11 @@ defineFields
 		defineField: #itemState type: DWORDField readOnly;
 		defineField: #hwndItem type: DWORDField readOnly;
 		defineField: #hDC type: DWORDField readOnly;
-		defineField: #rcItem type: (StructureField type: RECT) beReadOnly;
+		defineField: #rcItem type: (StructureField type: RECTL) beReadOnly;
 		defineField: #itemData type: UINT_PTRField filler!
 
 getFieldNames
 	^#(#CtlType #CtlID #itemID #itemAction #itemState #hwndItem #hDC #rcItem)! !
-!DRAWITEMSTRUCT class categoriesFor: #defineFields!public!template definition! !
-!DRAWITEMSTRUCT class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.DRAWITEMSTRUCT class categoriesFor: #defineFields!public!template definition! !
+!OS.DRAWITEMSTRUCT class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Object subclass: #Event
+Core.Object subclass: #'UI.Event'
 	instanceVariableNames: 'window'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Event guid: (GUID fromString: '{04134010-906c-40dd-b5e7-7f26e4216aa0}')!
-Event comment: ''!
-!Event categoriesForClass!Kernel-Objects! !
-!Event methodsFor!
+UI.Event guid: (Core.GUID fromString: '{04134010-906c-40dd-b5e7-7f26e4216aa0}')!
+UI.Event comment: ''!
+!UI.Event categoriesForClass!Kernel-Objects! !
+!UI.Event methodsFor!
 
 hwnd
 	^window asParameter!
@@ -22,11 +22,11 @@ window
 	must be a registered Dolphin window."
 
 	^window! !
-!Event categoriesFor: #hwnd!accessing!private! !
-!Event categoriesFor: #setSource:!initializing!private! !
-!Event categoriesFor: #window!accessing!public! !
+!UI.Event categoriesFor: #hwnd!accessing!private! !
+!UI.Event categoriesFor: #setSource:!initializing!private! !
+!UI.Event categoriesFor: #window!accessing!public! !
 
-!Event class methodsFor!
+!UI.Event class methodsFor!
 
 forSource: aWindow
 	^(self basicNew)
@@ -37,6 +37,6 @@ icon
 	"Answers an Icon that can be used to represent this class."
 
 	^##(self) defaultIcon! !
-!Event class categoriesFor: #forSource:!instance creation!public! !
-!Event class categoriesFor: #icon!constants!public! !
+!UI.Event class categoriesFor: #forSource:!instance creation!public! !
+!UI.Event class categoriesFor: #icon!constants!public! !
 

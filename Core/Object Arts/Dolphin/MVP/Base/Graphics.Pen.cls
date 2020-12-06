@@ -1,20 +1,20 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-GraphicsTool subclass: #Pen
+Graphics.GraphicsTool subclass: #'Graphics.Pen'
 	instanceVariableNames: 'logPen'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Pen guid: (GUID fromString: '{87b4c637-026e-11d3-9fd7-00a0cc3e4a32}')!
-Pen comment: 'Pen is a <GraphicsTool> that wraps a Windows GDI Pen object. Pens are selected into <Canvas>s to draw lines in various styles, widths, and colours.
+Graphics.Pen guid: (Core.GUID fromString: '{87b4c637-026e-11d3-9fd7-00a0cc3e4a32}')!
+Graphics.Pen comment: 'Pen is a <GraphicsTool> that wraps a Windows GDI Pen object. Pens are selected into <Canvas>s to draw lines in various styles, widths, and colours.
 
 Instance Variables:
 	logPen	<LOGPEN>. Logical description of the pen.
 
 '!
-!Pen categoriesForClass!Graphics-Tools! !
-!Pen methodsFor!
+!Graphics.Pen categoriesForClass!Graphics-Tools! !
+!Graphics.Pen methodsFor!
 
 color
 	^logPen color!
@@ -30,7 +30,7 @@ createHandle
 
 	^GDILibrary default createPenIndirect: logPen!
 
-handle: anExternalHandle 
+handle: anExternalHandle
 	"Private - Set the handle for the receiver and query its logical info."
 
 	super handle: anExternalHandle.
@@ -73,19 +73,19 @@ width: anInteger
 	self width = anInteger ifTrue: [^self].
 	logPen width: anInteger.
 	self free! !
-!Pen categoriesFor: #color!accessing!public! !
-!Pen categoriesFor: #color:!accessing!public! !
-!Pen categoriesFor: #createHandle!private!realizing/unrealizing! !
-!Pen categoriesFor: #handle:!accessing!private! !
-!Pen categoriesFor: #logPen:!accessing!private! !
-!Pen categoriesFor: #style!accessing!private! !
-!Pen categoriesFor: #style:!accessing!private! !
-!Pen categoriesFor: #styleName!accessing!public! !
-!Pen categoriesFor: #styleName:!accessing!public! !
-!Pen categoriesFor: #width!accessing!public! !
-!Pen categoriesFor: #width:!accessing!public! !
+!Graphics.Pen categoriesFor: #color!accessing!public! !
+!Graphics.Pen categoriesFor: #color:!accessing!public! !
+!Graphics.Pen categoriesFor: #createHandle!private!realizing/unrealizing! !
+!Graphics.Pen categoriesFor: #handle:!accessing!private! !
+!Graphics.Pen categoriesFor: #logPen:!accessing!private! !
+!Graphics.Pen categoriesFor: #style!accessing!private! !
+!Graphics.Pen categoriesFor: #style:!accessing!private! !
+!Graphics.Pen categoriesFor: #styleName!accessing!public! !
+!Graphics.Pen categoriesFor: #styleName:!accessing!public! !
+!Graphics.Pen categoriesFor: #width!accessing!public! !
+!Graphics.Pen categoriesFor: #width:!accessing!public! !
 
-!Pen class methodsFor!
+!Graphics.Pen class methodsFor!
 
 black
 	"Answer the stock black pen."
@@ -184,23 +184,23 @@ withStyleName: aString
 		withStyle: (self styleNames indexOf: aString) - 1
 		width: 0
 		color: Color black! !
-!Pen class categoriesFor: #black!instance creation!public! !
-!Pen class categoriesFor: #blue!instance creation!public! !
-!Pen class categoriesFor: #color:!instance creation!public! !
-!Pen class categoriesFor: #dashDot!instance creation!public! !
-!Pen class categoriesFor: #dashDotDot!instance creation!public! !
-!Pen class categoriesFor: #dashed!instance creation!public! !
-!Pen class categoriesFor: #dotted!instance creation!public! !
-!Pen class categoriesFor: #fromLogPen:!instance creation!public! !
-!Pen class categoriesFor: #green!instance creation!public! !
-!Pen class categoriesFor: #icon!constants!public! !
-!Pen class categoriesFor: #insideFrame!instance creation!public! !
-!Pen class categoriesFor: #newColor:!instance creation!private! !
-!Pen class categoriesFor: #none!instance creation!public! !
-!Pen class categoriesFor: #red!instance creation!public! !
-!Pen class categoriesFor: #solid!instance creation!public! !
-!Pen class categoriesFor: #styleNames!constants!private! !
-!Pen class categoriesFor: #white!instance creation!public! !
-!Pen class categoriesFor: #withStyle:width:color:!instance creation!public! !
-!Pen class categoriesFor: #withStyleName:!public! !
+!Graphics.Pen class categoriesFor: #black!instance creation!public! !
+!Graphics.Pen class categoriesFor: #blue!instance creation!public! !
+!Graphics.Pen class categoriesFor: #color:!instance creation!public! !
+!Graphics.Pen class categoriesFor: #dashDot!instance creation!public! !
+!Graphics.Pen class categoriesFor: #dashDotDot!instance creation!public! !
+!Graphics.Pen class categoriesFor: #dashed!instance creation!public! !
+!Graphics.Pen class categoriesFor: #dotted!instance creation!public! !
+!Graphics.Pen class categoriesFor: #fromLogPen:!instance creation!public! !
+!Graphics.Pen class categoriesFor: #green!instance creation!public! !
+!Graphics.Pen class categoriesFor: #icon!constants!public! !
+!Graphics.Pen class categoriesFor: #insideFrame!instance creation!public! !
+!Graphics.Pen class categoriesFor: #newColor:!instance creation!private! !
+!Graphics.Pen class categoriesFor: #none!instance creation!public! !
+!Graphics.Pen class categoriesFor: #red!instance creation!public! !
+!Graphics.Pen class categoriesFor: #solid!instance creation!public! !
+!Graphics.Pen class categoriesFor: #styleNames!constants!private! !
+!Graphics.Pen class categoriesFor: #white!instance creation!public! !
+!Graphics.Pen class categoriesFor: #withStyle:width:color:!instance creation!public! !
+!Graphics.Pen class categoriesFor: #withStyleName:!public! !
 

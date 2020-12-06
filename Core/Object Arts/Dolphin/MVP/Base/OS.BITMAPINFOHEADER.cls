@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Win32Structure subclass: #BITMAPINFOHEADER
+OS.Win32Structure subclass: #'OS.BITMAPINFOHEADER'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_biBitCount' -> 16rE.
@@ -18,12 +18,12 @@ Win32Structure subclass: #BITMAPINFOHEADER
 		'_OffsetOf_biYPelsPerMeter' -> 16r1C.
 		'_OffsetOf_dwSize' -> 16r0
 	}!
-BITMAPINFOHEADER guid: (GUID fromString: '{87b4c5cb-026e-11d3-9fd7-00a0cc3e4a32}')!
-BITMAPINFOHEADER comment: 'BITMAPINFOHEADER is an <ExternalStructure> class to represent the Win32 structure of the same name.
+OS.BITMAPINFOHEADER guid: (Core.GUID fromString: '{87b4c5cb-026e-11d3-9fd7-00a0cc3e4a32}')!
+OS.BITMAPINFOHEADER comment: 'BITMAPINFOHEADER is an <ExternalStructure> class to represent the Win32 structure of the same name.
 
 The BITMAPINFOHEADER structure is used for header information describing device-independent bitmaps.'!
-!BITMAPINFOHEADER categoriesForClass!External-Data-Structured-Win32! !
-!BITMAPINFOHEADER methodsFor!
+!OS.BITMAPINFOHEADER categoriesForClass!External-Data-Structured-Win32! !
+!OS.BITMAPINFOHEADER methodsFor!
 
 biBitCount
 	"Answer the <Integer> value of the receiver's 'biBitCount' field."
@@ -155,32 +155,32 @@ numQuads
 				ifTrue: [0]
 				ifFalse: [3]]
 ! !
-!BITMAPINFOHEADER categoriesFor: #biBitCount!**compiled accessors**!public! !
-!BITMAPINFOHEADER categoriesFor: #biBitCount:!**compiled accessors**!public! !
-!BITMAPINFOHEADER categoriesFor: #biClrImportant!**compiled accessors**!public! !
-!BITMAPINFOHEADER categoriesFor: #biClrImportant:!**compiled accessors**!public! !
-!BITMAPINFOHEADER categoriesFor: #biClrUsed!**compiled accessors**!public! !
-!BITMAPINFOHEADER categoriesFor: #biClrUsed:!**compiled accessors**!public! !
-!BITMAPINFOHEADER categoriesFor: #biCompression!**compiled accessors**!public! !
-!BITMAPINFOHEADER categoriesFor: #biCompression:!**compiled accessors**!public! !
-!BITMAPINFOHEADER categoriesFor: #biHeight!**compiled accessors**!public! !
-!BITMAPINFOHEADER categoriesFor: #biHeight:!**compiled accessors**!public! !
-!BITMAPINFOHEADER categoriesFor: #biPlanes!**compiled accessors**!public! !
-!BITMAPINFOHEADER categoriesFor: #biPlanes:!**compiled accessors**!public! !
-!BITMAPINFOHEADER categoriesFor: #biSizeImage!**compiled accessors**!public! !
-!BITMAPINFOHEADER categoriesFor: #biSizeImage:!**compiled accessors**!public! !
-!BITMAPINFOHEADER categoriesFor: #biWidth!**compiled accessors**!public! !
-!BITMAPINFOHEADER categoriesFor: #biWidth:!**compiled accessors**!public! !
-!BITMAPINFOHEADER categoriesFor: #biXPelsPerMeter!**compiled accessors**!public! !
-!BITMAPINFOHEADER categoriesFor: #biXPelsPerMeter:!**compiled accessors**!public! !
-!BITMAPINFOHEADER categoriesFor: #biYPelsPerMeter!**compiled accessors**!public! !
-!BITMAPINFOHEADER categoriesFor: #biYPelsPerMeter:!**compiled accessors**!public! !
-!BITMAPINFOHEADER categoriesFor: #depth!accessing!public! !
-!BITMAPINFOHEADER categoriesFor: #dwSize:!**compiled accessors**!public! !
-!BITMAPINFOHEADER categoriesFor: #extent!accessing!public! !
-!BITMAPINFOHEADER categoriesFor: #numQuads!initializing!public! !
+!OS.BITMAPINFOHEADER categoriesFor: #biBitCount!**compiled accessors**!public! !
+!OS.BITMAPINFOHEADER categoriesFor: #biBitCount:!**compiled accessors**!public! !
+!OS.BITMAPINFOHEADER categoriesFor: #biClrImportant!**compiled accessors**!public! !
+!OS.BITMAPINFOHEADER categoriesFor: #biClrImportant:!**compiled accessors**!public! !
+!OS.BITMAPINFOHEADER categoriesFor: #biClrUsed!**compiled accessors**!public! !
+!OS.BITMAPINFOHEADER categoriesFor: #biClrUsed:!**compiled accessors**!public! !
+!OS.BITMAPINFOHEADER categoriesFor: #biCompression!**compiled accessors**!public! !
+!OS.BITMAPINFOHEADER categoriesFor: #biCompression:!**compiled accessors**!public! !
+!OS.BITMAPINFOHEADER categoriesFor: #biHeight!**compiled accessors**!public! !
+!OS.BITMAPINFOHEADER categoriesFor: #biHeight:!**compiled accessors**!public! !
+!OS.BITMAPINFOHEADER categoriesFor: #biPlanes!**compiled accessors**!public! !
+!OS.BITMAPINFOHEADER categoriesFor: #biPlanes:!**compiled accessors**!public! !
+!OS.BITMAPINFOHEADER categoriesFor: #biSizeImage!**compiled accessors**!public! !
+!OS.BITMAPINFOHEADER categoriesFor: #biSizeImage:!**compiled accessors**!public! !
+!OS.BITMAPINFOHEADER categoriesFor: #biWidth!**compiled accessors**!public! !
+!OS.BITMAPINFOHEADER categoriesFor: #biWidth:!**compiled accessors**!public! !
+!OS.BITMAPINFOHEADER categoriesFor: #biXPelsPerMeter!**compiled accessors**!public! !
+!OS.BITMAPINFOHEADER categoriesFor: #biXPelsPerMeter:!**compiled accessors**!public! !
+!OS.BITMAPINFOHEADER categoriesFor: #biYPelsPerMeter!**compiled accessors**!public! !
+!OS.BITMAPINFOHEADER categoriesFor: #biYPelsPerMeter:!**compiled accessors**!public! !
+!OS.BITMAPINFOHEADER categoriesFor: #depth!accessing!public! !
+!OS.BITMAPINFOHEADER categoriesFor: #dwSize:!**compiled accessors**!public! !
+!OS.BITMAPINFOHEADER categoriesFor: #extent!accessing!public! !
+!OS.BITMAPINFOHEADER categoriesFor: #numQuads!initializing!public! !
 
-!BITMAPINFOHEADER class methodsFor!
+!OS.BITMAPINFOHEADER class methodsFor!
 
 defineFields
 	"Define the Win32 BITMAPINFOHEADER structure
@@ -198,11 +198,10 @@ defineFields
 		defineField: #biXPelsPerMeter type: SDWORDField new;
 		defineField: #biYPelsPerMeter type: SDWORDField new;
 		defineField: #biClrUsed type: DWORDField new;
-		defineField: #biClrImportant type: DWORDField new
-!
+		defineField: #biClrImportant type: DWORDField new!
 
 getFieldNames
 	^#(#dwSize #biWidth #biHeight #biPlanes #biBitCount #biCompression #biSizeImage #biXPelsPerMeter #biYPelsPerMeter #biClrUsed #biClrImportant)! !
-!BITMAPINFOHEADER class categoriesFor: #defineFields!public!template definition! !
-!BITMAPINFOHEADER class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.BITMAPINFOHEADER class categoriesFor: #defineFields!public!template definition! !
+!OS.BITMAPINFOHEADER class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

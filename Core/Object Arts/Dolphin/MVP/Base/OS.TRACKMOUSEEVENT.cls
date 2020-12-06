@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Win32Structure subclass: #TRACKMOUSEEVENT
+OS.Win32Structure subclass: #'OS.TRACKMOUSEEVENT'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_dwFlags' -> 16r4.
@@ -11,8 +11,8 @@ Win32Structure subclass: #TRACKMOUSEEVENT
 		'_OffsetOf_dwSize' -> 16r0.
 		'_OffsetOf_hwndTrack' -> 16r8
 	}!
-TRACKMOUSEEVENT guid: (GUID fromString: '{f8a7c94e-cff5-4d76-be3c-2de4f4f6a4ef}')!
-TRACKMOUSEEVENT comment: '<TRACKMOUSEEVENT> is an <ExternalStructure> class to wrap the struct ''Win32.TRACKMOUSEEVENT'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
+OS.TRACKMOUSEEVENT guid: (Core.GUID fromString: '{f8a7c94e-cff5-4d76-be3c-2de4f4f6a4ef}')!
+OS.TRACKMOUSEEVENT comment: '<TRACKMOUSEEVENT> is an <ExternalStructure> class to wrap the struct ''Win32.TRACKMOUSEEVENT'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains the following helpstring for this struct
 	"Used in conjunction with the TrackMouseEvent function to track when the mouse pointer leaves a window or hovers over a window for a specified amount of time."
@@ -27,8 +27,8 @@ struct tagTRACKMOUSEEVENT {
 	[helpstring("Specifies the hover time-out (if TME_HOVER was specified in dwFlags), in milliseconds.")] DWORD dwHoverTime;
 } TRACKMOUSEEVENT;
 '!
-!TRACKMOUSEEVENT categoriesForClass!Win32-Structs! !
-!TRACKMOUSEEVENT methodsFor!
+!OS.TRACKMOUSEEVENT categoriesForClass!Win32-Structs! !
+!OS.TRACKMOUSEEVENT methodsFor!
 
 dwFlags
 	"Answer the <Integer> value of the receiver's 'dwFlags' field."
@@ -64,15 +64,15 @@ hwndTrack: anExternalHandle
 	"Set the receiver's 'hwndTrack' field to the value of the argument, anExternalHandle"
 
 	bytes uintPtrAtOffset: _OffsetOf_hwndTrack put: anExternalHandle! !
-!TRACKMOUSEEVENT categoriesFor: #dwFlags!**compiled accessors**!public! !
-!TRACKMOUSEEVENT categoriesFor: #dwFlags:!**compiled accessors**!public! !
-!TRACKMOUSEEVENT categoriesFor: #dwHoverTime!**compiled accessors**!public! !
-!TRACKMOUSEEVENT categoriesFor: #dwHoverTime:!**compiled accessors**!public! !
-!TRACKMOUSEEVENT categoriesFor: #dwSize:!**compiled accessors**!public! !
-!TRACKMOUSEEVENT categoriesFor: #hwndTrack!**compiled accessors**!public! !
-!TRACKMOUSEEVENT categoriesFor: #hwndTrack:!**compiled accessors**!public! !
+!OS.TRACKMOUSEEVENT categoriesFor: #dwFlags!**compiled accessors**!public! !
+!OS.TRACKMOUSEEVENT categoriesFor: #dwFlags:!**compiled accessors**!public! !
+!OS.TRACKMOUSEEVENT categoriesFor: #dwHoverTime!**compiled accessors**!public! !
+!OS.TRACKMOUSEEVENT categoriesFor: #dwHoverTime:!**compiled accessors**!public! !
+!OS.TRACKMOUSEEVENT categoriesFor: #dwSize:!**compiled accessors**!public! !
+!OS.TRACKMOUSEEVENT categoriesFor: #hwndTrack!**compiled accessors**!public! !
+!OS.TRACKMOUSEEVENT categoriesFor: #hwndTrack:!**compiled accessors**!public! !
 
-!TRACKMOUSEEVENT class methodsFor!
+!OS.TRACKMOUSEEVENT class methodsFor!
 
 defineFields
 	"Define the fields of the TRACKMOUSEEVENT structure.
@@ -95,6 +95,6 @@ defineFields
 
 getFieldNames
 	^#(#dwSize #dwFlags #hwndTrack #dwHoverTime)! !
-!TRACKMOUSEEVENT class categoriesFor: #defineFields!public!template definition! !
-!TRACKMOUSEEVENT class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.TRACKMOUSEEVENT class categoriesFor: #defineFields!public!template definition! !
+!OS.TRACKMOUSEEVENT class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

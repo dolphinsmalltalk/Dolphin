@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Win32Structure subclass: #ICONINFO
+OS.Win32Structure subclass: #'OS.ICONINFO'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_fIcon' -> 16r0.
@@ -12,10 +12,10 @@ Win32Structure subclass: #ICONINFO
 		'_OffsetOf_xHotspot' -> 16r4.
 		'_OffsetOf_yHotspot' -> 16r8
 	}!
-ICONINFO guid: (GUID fromString: '{87b4c5f5-026e-11d3-9fd7-00a0cc3e4a32}')!
-ICONINFO comment: ''!
-!ICONINFO categoriesForClass!External-Data-Structured-Win32! !
-!ICONINFO methodsFor!
+OS.ICONINFO guid: (Core.GUID fromString: '{87b4c5f5-026e-11d3-9fd7-00a0cc3e4a32}')!
+OS.ICONINFO comment: ''!
+!OS.ICONINFO categoriesForClass!External-Data-Structured-Win32! !
+!OS.ICONINFO methodsFor!
 
 extent
 	"Answer the extent of the icon descibed by the receiver in pels.
@@ -38,7 +38,7 @@ free
 	| hbm |
 	self beUnfinalizable.
 	hbm := self hbmColor.
-	hbm isNull 
+	hbm isNull
 		ifFalse: 
 			[GDILibrary default deleteObject: hbm.
 			self hbmColor: 0].
@@ -83,17 +83,17 @@ yHotspot
 	"Answer the <Integer> value of the receiver's 'yHotspot' field."
 
 	^bytes dwordAtOffset: _OffsetOf_yHotspot! !
-!ICONINFO categoriesFor: #extent!accessing!public! !
-!ICONINFO categoriesFor: #free!public!realizing/unrealizing! !
-!ICONINFO categoriesFor: #hbmColor!**compiled accessors**!public! !
-!ICONINFO categoriesFor: #hbmColor:!**compiled accessors**!public! !
-!ICONINFO categoriesFor: #hbmMask!**compiled accessors**!public! !
-!ICONINFO categoriesFor: #hbmMask:!**compiled accessors**!public! !
-!ICONINFO categoriesFor: #initialize!initializing!private! !
-!ICONINFO categoriesFor: #xHotspot!**compiled accessors**!public! !
-!ICONINFO categoriesFor: #yHotspot!**compiled accessors**!public! !
+!OS.ICONINFO categoriesFor: #extent!accessing!public! !
+!OS.ICONINFO categoriesFor: #free!public!realizing/unrealizing! !
+!OS.ICONINFO categoriesFor: #hbmColor!**compiled accessors**!public! !
+!OS.ICONINFO categoriesFor: #hbmColor:!**compiled accessors**!public! !
+!OS.ICONINFO categoriesFor: #hbmMask!**compiled accessors**!public! !
+!OS.ICONINFO categoriesFor: #hbmMask:!**compiled accessors**!public! !
+!OS.ICONINFO categoriesFor: #initialize!initializing!private! !
+!OS.ICONINFO categoriesFor: #xHotspot!**compiled accessors**!public! !
+!OS.ICONINFO categoriesFor: #yHotspot!**compiled accessors**!public! !
 
-!ICONINFO class methodsFor!
+!OS.ICONINFO class methodsFor!
 
 defineFields
 	"Define the fields of the Win32 ICONINFO structure.
@@ -113,12 +113,10 @@ defineFields
 		defineField: #xHotspot type: DWORDField readOnly;
 		defineField: #yHotspot type: DWORDField readOnly;
 		defineField: #hbmMask type: HANDLEField new;
-		defineField: #hbmColor type: HANDLEField new
-
-!
+		defineField: #hbmColor type: HANDLEField new!
 
 getFieldNames
 	^#(#fIcon #xHotspot #yHotspot #hbmMask #hbmColor)! !
-!ICONINFO class categoriesFor: #defineFields!development!public!template definition! !
-!ICONINFO class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.ICONINFO class categoriesFor: #defineFields!development!public!template definition! !
+!OS.ICONINFO class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

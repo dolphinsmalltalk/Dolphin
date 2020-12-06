@@ -1,21 +1,21 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ControlView subclass: #ValueConvertingControlView
+UI.ControlView subclass: #'UI.ValueConvertingControlView'
 	instanceVariableNames: 'typeconverter'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ValueConvertingControlView guid: (GUID fromString: '{87b4c72a-026e-11d3-9fd7-00a0cc3e4a32}')!
-ValueConvertingControlView isAbstract: true!
-ValueConvertingControlView comment: 'ValueConvertingControlView is the abstract superclass of <view>s that implement Windows controls obeying the <valueValue> protocol. Such views may be associated with any <valueModel>. One important aspect of a ValueConvertingControlView is that it supports a #typeConverter aspect. By supplying a <typeConverter> in this way, it is possible to attachthe view to a wide range of <valueModel>s containing different types of object. The <typeConverter> is responsible for mapping the model''s value to a suitable form in order for the view to display and, for the reverse process, taking a modified view''s content and setting it back as  the appropriate type of object in the model.
+UI.ValueConvertingControlView guid: (Core.GUID fromString: '{87b4c72a-026e-11d3-9fd7-00a0cc3e4a32}')!
+UI.ValueConvertingControlView isNonInstantiable: true!
+UI.ValueConvertingControlView comment: 'ValueConvertingControlView is the abstract superclass of <view>s that implement Windows controls obeying the <valueValue> protocol. Such views may be associated with any <valueModel>. One important aspect of a ValueConvertingControlView is that it supports a #typeConverter aspect. By supplying a <typeConverter> in this way, it is possible to attachthe view to a wide range of <valueModel>s containing different types of object. The <typeConverter> is responsible for mapping the model''s value to a suitable form in order for the view to display and, for the reverse process, taking a modified view''s content and setting it back as  the appropriate type of object in the model.
 
 Instance Variables:
 	typeconverter	<typeConverter> used to convert between model values and display values.
 
 '!
-!ValueConvertingControlView categoriesForClass!MVP-Views! !
-!ValueConvertingControlView methodsFor!
+!UI.ValueConvertingControlView categoriesForClass!MVP-Views! !
+!UI.ValueConvertingControlView methodsFor!
 
 connectModel
 	"Connect the receiver to its model, wiring events, etc.
@@ -119,10 +119,9 @@ updateModel
 	"Private - The displayed value of the receiver has changed so set this
 	back into the model after first running through the type converter"
 
-	[self model value: (self typeconverter convertFromRightToLeft: self displayValue)] 
-		on: InvalidFormat
+	[self model value: (self typeconverter convertFromRightToLeft: self displayValue)] on: InvalidFormat
 		do: 
-			[:exception | 
+			[:exception |
 			exception beep.
 			self
 				value: self typeconverter leftNullValue;
@@ -142,28 +141,28 @@ value: anObject
 	"Set the receiver's model value to anObject"
 
 	self model value: anObject! !
-!ValueConvertingControlView categoriesFor: #connectModel!models!public! !
-!ValueConvertingControlView categoriesFor: #defaultExtent!constants!private! !
-!ValueConvertingControlView categoriesFor: #defaultTypeConverter!accessing!public! !
-!ValueConvertingControlView categoriesFor: #defaultTypeConverterClass!initializing!private! !
-!ValueConvertingControlView categoriesFor: #displayValue!private!updating! !
-!ValueConvertingControlView categoriesFor: #displayValue:!private!updating! !
-!ValueConvertingControlView categoriesFor: #initializeNewTypeConverter:!accessing!private! !
-!ValueConvertingControlView categoriesFor: #onViewCreated!event handling!public! !
-!ValueConvertingControlView categoriesFor: #refreshContents!public!updating! !
-!ValueConvertingControlView categoriesFor: #typeconverter!accessing!public! !
-!ValueConvertingControlView categoriesFor: #typeconverter:!accessing!public! !
-!ValueConvertingControlView categoriesFor: #typeconverterClass!accessing!public! !
-!ValueConvertingControlView categoriesFor: #typeconverterClass:!accessing!public! !
-!ValueConvertingControlView categoriesFor: #updateModel!private!updating! !
-!ValueConvertingControlView categoriesFor: #updateModel:!private!updating! !
-!ValueConvertingControlView categoriesFor: #value!accessing!public! !
-!ValueConvertingControlView categoriesFor: #value:!accessing!public! !
+!UI.ValueConvertingControlView categoriesFor: #connectModel!models!public! !
+!UI.ValueConvertingControlView categoriesFor: #defaultExtent!constants!private! !
+!UI.ValueConvertingControlView categoriesFor: #defaultTypeConverter!accessing!public! !
+!UI.ValueConvertingControlView categoriesFor: #defaultTypeConverterClass!initializing!private! !
+!UI.ValueConvertingControlView categoriesFor: #displayValue!private!updating! !
+!UI.ValueConvertingControlView categoriesFor: #displayValue:!private!updating! !
+!UI.ValueConvertingControlView categoriesFor: #initializeNewTypeConverter:!accessing!private! !
+!UI.ValueConvertingControlView categoriesFor: #onViewCreated!event handling!public! !
+!UI.ValueConvertingControlView categoriesFor: #refreshContents!public!updating! !
+!UI.ValueConvertingControlView categoriesFor: #typeconverter!accessing!public! !
+!UI.ValueConvertingControlView categoriesFor: #typeconverter:!accessing!public! !
+!UI.ValueConvertingControlView categoriesFor: #typeconverterClass!accessing!public! !
+!UI.ValueConvertingControlView categoriesFor: #typeconverterClass:!accessing!public! !
+!UI.ValueConvertingControlView categoriesFor: #updateModel!private!updating! !
+!UI.ValueConvertingControlView categoriesFor: #updateModel:!private!updating! !
+!UI.ValueConvertingControlView categoriesFor: #value!accessing!public! !
+!UI.ValueConvertingControlView categoriesFor: #value:!accessing!public! !
 
-ValueConvertingControlView methodProtocol: #value attributes: #(#readOnly) selectors: #(#value #value:)!
-ValueConvertingControlView methodProtocol: #valueView attributes: #(#readOnly) selectors: #(#value #value:)!
+UI.ValueConvertingControlView methodProtocol: #value attributes: #(#readOnly) selectors: #(#value #value:)!
+UI.ValueConvertingControlView methodProtocol: #valueView attributes: #(#readOnly) selectors: #(#value #value:)!
 
-!ValueConvertingControlView class methodsFor!
+!UI.ValueConvertingControlView class methodsFor!
 
 defaultModel
 	"Answer a default model to be assigned to the receiver when it is initialized."
@@ -174,6 +173,6 @@ icon
 	"Answers an Icon that can be used to represent this class"
 
 	^##(self) defaultIcon! !
-!ValueConvertingControlView class categoriesFor: #defaultModel!models!public! !
-!ValueConvertingControlView class categoriesFor: #icon!constants!public! !
+!UI.ValueConvertingControlView class categoriesFor: #defaultModel!models!public! !
+!UI.ValueConvertingControlView class categoriesFor: #icon!constants!public! !
 

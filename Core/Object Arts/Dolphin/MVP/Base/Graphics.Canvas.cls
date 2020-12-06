@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Object subclass: #Canvas
+Core.Object subclass: #'Graphics.Canvas'
 	instanceVariableNames: 'handle source owned pen brush font saved saveIds'
 	classVariableNames: 'DesktopResolution'
-	poolDictionaries: 'Win32Constants'
+	imports: #(#{OS.Win32Constants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Canvas guid: (GUID fromString: '{87b4c45e-026e-11d3-9fd7-00a0cc3e4a32}')!
-Canvas comment: 'Canvas is the class that represents device contexts for drawing graphical output such as lines, shapes, bitmaps and text. As a context, Canvas instances maintain not only the current drawing position, but also the current pen, brush, font, foreground and background colors, text drawing mode, etc.
+Graphics.Canvas guid: (Core.GUID fromString: '{87b4c45e-026e-11d3-9fd7-00a0cc3e4a32}')!
+Graphics.Canvas comment: 'Canvas is the class that represents device contexts for drawing graphical output such as lines, shapes, bitmaps and text. As a context, Canvas instances maintain not only the current drawing position, but also the current pen, brush, font, foreground and background colors, text drawing mode, etc.
 
 Instance Variables:
 	handle		<ExternalHandle>
@@ -26,8 +26,8 @@ Class Variables:
 
 
 '!
-!Canvas categoriesForClass!Graphics-Drawing! !
-!Canvas methodsFor!
+!Graphics.Canvas categoriesForClass!Graphics-Drawing! !
+!Graphics.Canvas methodsFor!
 
 alphaBlend: aCanvas rectangle: aRectangle to: dstOrigin extent: dstExtent blend: blendFunction
 	"Alpha blends a rectangular region from aCanvas to the receiver with scaling.
@@ -57,16 +57,15 @@ alphaBlendBitmap: aBitmap at: dstOrigin extent: dstExtent from: srcOrigin extent
 	| hPalette oldPalette answer |
 	hPalette := aBitmap createPalette.
 	hPalette notNil ifTrue: [oldPalette := self palette: hPalette].
-	answer := self 
+	answer := self
 				alphaBlend: aBitmap canvas
 				rectangle: (Rectangle origin: srcOrigin extent: srcExtent)
 				to: dstOrigin
 				extent: dstExtent
 				blend: blendFunction.
-	hPalette notNil 
+	hPalette notNil
 		ifTrue: 
 			["Tidy up palette manipulation"
-
 			self selectPalette: oldPalette.
 			GDILibrary default deleteObject: hPalette].
 	^answer!
@@ -90,7 +89,7 @@ backcolor: aColor
 backgroundMode
 	^GDILibrary default getBkMode: self asParameter!
 
-backgroundMode: anInteger 
+backgroundMode: anInteger
 	"Set the receiver's background drawing mode to mode."
 
 	^GDILibrary default setBkMode: self asParameter iBkMode: anInteger!
@@ -109,15 +108,14 @@ bitBlt: aCanvasOrHandle rectangle: aRectangle to: dstOrigin rop: rop
 
 	^GDILibrary default
 		bitBlt: self asParameter
-		nXDest: dstOrigin x 
-		nYDest: dstOrigin y 
-		nWidth: aRectangle width 
-		nHeight: aRectangle height 
-		hdcSrc: aCanvasOrHandle asParameter 
-		nXSrc: aRectangle left 
-		nYSrc: aRectangle top 
-		dwRop: rop
-!
+		nXDest: dstOrigin x
+		nYDest: dstOrigin y
+		nWidth: aRectangle width
+		nHeight: aRectangle height
+		hdcSrc: aCanvasOrHandle asParameter
+		nXSrc: aRectangle left
+		nYSrc: aRectangle top
+		dwRop: rop!
 
 brush
 	"Answer the current brush."
@@ -146,16 +144,18 @@ brushOrigin: aPoint
 
 	| previous |
 	previous := POINTL new.
-	GDILibrary default 
-		setBrushOrgEx: self asParameter nXOrg: aPoint x nYOrg: aPoint y lppt: previous asParameter.
-	^previous asPoint
-!
+	GDILibrary default
+		setBrushOrgEx: self asParameter
+		nXOrg: aPoint x
+		nYOrg: aPoint y
+		lppt: previous asParameter.
+	^previous asPoint!
 
 clipBox
 	"Answers the smallest <Rectangle> the completely bounds the receiver's current clipping region."
 
 	| answer |
-	answer := RECT new.
+	answer := RECTL new.
 	GDILibrary default getClipBox: self asParameter lprc: answer.
 	^answer asRectangle!
 
@@ -169,7 +169,7 @@ colors
 
 	^2 raisedToInteger: (self colorDepth)!
 
-drawBitmap: aBitmap at: dstOrigin extent: dstExtent from: srcOrigin extent: srcExtent rop: dwRasterOp 
+drawBitmap: aBitmap at: dstOrigin extent: dstExtent from: srcOrigin extent: srcExtent rop: dwRasterOp
 	"Private - Blit the specified rectangle of aBitmap to the specified destination
 	rectangle with the specified raster op. The receiver is stretched to
 	fit the destination rectangle. Handles and palette changes required
@@ -180,24 +180,23 @@ drawBitmap: aBitmap at: dstOrigin extent: dstExtent from: srcOrigin extent: srcE
 	| hPalette oldPalette answer |
 	hPalette := aBitmap createPalette.
 	hPalette notNil ifTrue: [oldPalette := self palette: hPalette].
-	answer := self 
+	answer := self
 				stretchBlt: aBitmap canvas
 				rectangle: (Rectangle origin: srcOrigin extent: srcExtent)
 				to: dstOrigin
 				extent: dstExtent
 				rop: dwRasterOp.
-	hPalette notNil 
+	hPalette notNil
 		ifTrue: 
 			["Tidy up palette manipulation"
-
 			self selectPalette: oldPalette.
 			GDILibrary default deleteObject: hPalette].
 	^answer!
 
-drawEdge: aRectangle edge: edgeInteger grfFlags: bdrInteger 
+drawEdge: aRectangle edge: edgeInteger grfFlags: bdrInteger
 	"The DrawEdge function draws one or more edges of rectangle."
 
-	^UserLibrary default 
+	^UserLibrary default
 		drawEdge: self asParameter
 		qrc: aRectangle asParameter
 		edge: edgeInteger
@@ -211,24 +210,23 @@ ellipse: aRectangle
 		nLeftRect: aRectangle left
 		nTopRect: aRectangle top
 		nRightRect: aRectangle right
-		nBottomRect: aRectangle bottom
-!
+		nBottomRect: aRectangle bottom!
 
 erase
 	"Erase the receiver to the current background colour (not the current brush)."
 
-	self fillRectangle: (RECT 
+	self fillRectangle: (RECTL
 				left: 0
 				top: 0
 				right: self width
 				bottom: self height)
 		color: self backcolor!
 
-excludeClipRectangle: aRectangle 
+excludeClipRectangle: aRectangle
 	"Exclude the specified <Rectangle> from the receiver's clip region, this means that any
 	attempt to draw in that rectangle will be ignored."
 
-	^GDILibrary default 
+	^GDILibrary default
 		excludeClipRect: self asParameter
 		nLeftRect: aRectangle left
 		nTopRect: aRectangle top
@@ -319,12 +317,12 @@ fontNames
 	answer := Set new.
 	self fonts: nil
 		do: 
-			[:lf :lp :dw | 
+			[:lf :lp :dw |
 			answer add: lf faceName.
 			true].
 	^answer!
 
-fonts: aString do: operation 
+fonts: aString do: operation
 	"Enumerate the fonts in a specified font family that are available on the receiver's device.
 	The triadic valuable argument, operation, is passed the LOGFONTW, TEXTMETRICW and font 
 	type as its three arguments, and should answer true to continue the enueration, false to 
@@ -338,14 +336,14 @@ fonts: aString do: operation
 		);"
 
 	| callback answer |
-	callback := ExternalCallback block: 
-					[:lplf :lptm :dwType :lpData | 
-					operation 
+	callback := External.Callback block: 
+					[:lplf :lptm :dwType :lpData |
+					operation
 						value: lplf
 						value: lptm
 						value: dwType]
-				descriptor: (ExternalDescriptor returnType: 'sdword' argumentTypes: 'LOGFONTW* lpvoid dword uintptr').
-	answer := GDILibrary default 
+				descriptor: (External.Descriptor returnType: 'sdword' argumentTypes: 'LOGFONTW* lpvoid dword uintptr').
+	answer := GDILibrary default
 				enumFonts: self asParameter
 				lpFaceName: aString
 				lpFontFunc: callback asParameter
@@ -410,7 +408,7 @@ getCurrentObject: aTypeInteger
 
 	^GDILibrary default getCurrentObject: self asParameter uObjectType: aTypeInteger!
 
-getDeviceCaps: anInteger 
+getDeviceCaps: anInteger
 	"Private - Answer the specified device capability."
 
 	^GDILibrary default getDeviceCaps: self asParameter nIndex: anInteger!
@@ -458,15 +456,12 @@ intersectClipRectangle: aRectangle
 		nRightRect: aRectangle right
 		nBottomRect: aRectangle bottom!
 
-invertRectangle: aRectangle 
+invertRectangle: aRectangle
 	"Invert the pixels within aRectangle"
 
-	^UserLibrary default
-		invertRect: self asParameter
-		lprc: aRectangle asParameter
-!
+	^UserLibrary default invertRect: self asParameter lprc: aRectangle asParameter!
 
-invertRegion: aRegion 
+invertRegion: aRegion
 	"Invert the pixels within aRegion"
 
 	^GDILibrary default invertRgn: self asParameter hRgn: aRegion asParameter!
@@ -475,16 +470,14 @@ isRectangleVisible: aRectangle
 	"Answer whether any part of aRectangle is within the receivers device
 	context cliiping region."
 
-	^GDILibrary default
-		rectVisible: self asParameter
-		lprc: aRectangle asParameter!
+	^GDILibrary default rectVisible: self asParameter lprc: aRectangle asParameter!
 
-lineFrom: startPoint to: endPoint 
+lineFrom: startPoint to: endPoint
 	"Draws a line from the <Point>, startPoint, up to BUT NOT INCLUDING, 
 	the <Point>, endPoint.
 	Implementation Note: For speed inline the raw calls."
 
-	(GDILibrary default)
+	GDILibrary default
 		moveToEx: self asParameter
 			x: startPoint x
 			y: startPoint y
@@ -493,10 +486,10 @@ lineFrom: startPoint to: endPoint
 			nXEnd: endPoint x
 			nYEnd: endPoint y!
 
-lineTo: aPoint 
+lineTo: aPoint
 	"Draws a line from the current position up to, BUT NOT INCLUDING, aPoint."
 
-	^GDILibrary default 
+	^GDILibrary default
 		lineTo: self asParameter
 		nXEnd: aPoint x
 		nYEnd: aPoint y!
@@ -506,15 +499,15 @@ mapMode
 
 	^GDILibrary default getMapMode: self asParameter!
 
-mapMode: anInteger 
+mapMode: anInteger
 	"Sets the mapping mode of the receiver"
 
 	^GDILibrary default setMapMode: self asParameter fnMapMode: anInteger!
 
-moveTo: aPoint 
+moveTo: aPoint
 	"Moves the current position to the <Point> argument."
 
-	^GDILibrary default 
+	^GDILibrary default
 		moveToEx: self asParameter
 		x: aPoint x
 		y: aPoint y
@@ -535,7 +528,7 @@ offsetWindowOrigin: aPoint
 
 	| previous |
 	previous := POINTL new.
-	(GDILibrary default 
+	(GDILibrary default
 		offsetWindowOrgEx: self asParameter
 		nXOrg: aPoint x
 		nYOrg: aPoint y
@@ -582,10 +575,7 @@ ownedDC: hDC
 paintRegion: aRegion
 	"Draw a filled region, aRegion, using the current brush"
 
-	^GDILibrary default
-		paintRgn: self asParameter
-		hRgn: aRegion asParameter
-!
+	^GDILibrary default paintRgn: self asParameter hRgn: aRegion asParameter!
 
 palette: hPalette
 	"Selects and realizes the palette in hPalette into the receiver. 
@@ -656,7 +646,7 @@ pixelAt: aPoint put: pixelColor
 		y: aPoint y
 		crColor: pixelColor asCOLORREF!
 
-plgBlt: aCanvas rectangle: aRectangle topLeft: topLeftPoint topRight: topRightPoint bottomLeft: bottomLeftPoint 
+plgBlt: aCanvas rectangle: aRectangle topLeft: topLeftPoint topRight: topRightPoint bottomLeft: bottomLeftPoint
 	| points |
 	points := ByteArray newFixed: 24.
 	points
@@ -666,7 +656,7 @@ plgBlt: aCanvas rectangle: aRectangle topLeft: topLeftPoint topRight: topRightPo
 		sdwordAtOffset: 12 put: topRightPoint y;
 		sdwordAtOffset: 16 put: bottomLeftPoint x;
 		sdwordAtOffset: 20 put: bottomLeftPoint y.
-	^GDILibrary default 
+	^GDILibrary default
 		plgBlt: self asParameter
 		lpPoint: points
 		hdcSrc: aCanvas asParameter
@@ -694,18 +684,17 @@ polygon: collectionOfPoints
 realizePalette
 	"Realizes the current logical palette of the receiver into the system palette"
 
-	^GDILibrary default realizePalette: self asParameter
-!
+	^GDILibrary default realizePalette: self asParameter!
 
 rectangle: aRectangle
 	"Draw aRectangle on the receiver."
 
-	^GDILibrary default rectangle: self asParameter
+	^GDILibrary default
+		rectangle: self asParameter
 		nLeftRect: aRectangle left
 		nTopRect: aRectangle top
 		nRightRect: aRectangle right
-		nBottomRect: aRectangle bottom
-!
+		nBottomRect: aRectangle bottom!
 
 rectangle: aRectangle round: aPoint
 	"Draw a round rectangle on the receiver."
@@ -717,8 +706,7 @@ rectangle: aRectangle round: aPoint
 		nRightRect: aRectangle right
 		nBottomRect: aRectangle bottom
 		nWidth: aPoint x
-		nHeight: aPoint y
-!
+		nHeight: aPoint y!
 
 resolution
 	"Answers a Point containing the logical pixels per inch for the receiver"
@@ -737,22 +725,21 @@ restore: saveIndex
 	| restoredId restoredObjects |
 	GDILibrary default restoreDC: self asParameter nSavedDC: saveIndex.
 	saveIndex == -1
-		ifTrue: [
-			"Effectivaly a 'pop' to previous context"
+		ifTrue: 
+			["Effectivaly a 'pop' to previous context"
 			restoredId := self saveIds removeLast]
-		ifFalse: [
-			"Restored to a specified point"
+		ifFalse: 
+			["Restored to a specified point"
 			restoredId := self saveIds remove: saveIndex].
 	restoredObjects := self saved removeKey: restoredId.
 	pen := restoredObjects at: 1.
 	brush := restoredObjects at: 2.
-	font := restoredObjects at: 3			
-			!
+	font := restoredObjects at: 3!
 
 rop2
 	^GDILibrary default getROP2: self asParameter!
 
-rop2: anInteger 
+rop2: anInteger
 	^GDILibrary default setROP2: self asParameter fnDrawMode: anInteger!
 
 save
@@ -783,24 +770,23 @@ selectClipRegion: aRegion
 	"Select aRegion as the clipping region of the receiver or deselect
 	current clipping region if aRegion is nil."
 
-	^GDILibrary default
-		selectClipRgn: self asParameter
-		hrgn: aRegion asParameter!
+	^GDILibrary default selectClipRgn: self asParameter hrgn: aRegion asParameter!
 
 selectObject: aGraphicsToolOrHandle
 	"Private - Select aGraphicsToolOrHandle into the receiver, answering the handle of the previous
 	object of that type."
 
-	^GDILibrary default selectObject: self asParameter
-		hgdiobj: aGraphicsToolOrHandle asParameter!
+	^GDILibrary default selectObject: self asParameter hgdiobj: aGraphicsToolOrHandle asParameter!
 
 selectPalette: hPalette
 	"Selects the palette in hPalette into the receiver. Follow this with
 	a #realizePalette to actual change the system palette. Answers the handle
 	of the previous palette"
 
-	^GDILibrary default selectPalette: self asParameter hPal: hPalette bForceBackground: false
-!
+	^GDILibrary default
+		selectPalette: self asParameter
+		hPal: hPalette
+		bForceBackground: false!
 
 setDefaultAttributes
 	"Private - Set the receiver's initial pen, brush and font."
@@ -808,7 +794,7 @@ setDefaultAttributes
 	self
 		pen: Pen black;
 		brush: Brush black;
-		font: Font default.!
+		font: Font default!
 
 setTextAlign: alignment
 	"Set the receiver's alignment for drawing text."
@@ -827,18 +813,17 @@ stretchBlt: aCanvas rectangle: aRectangle to: dstOrigin extent: dstExtent rop: r
 	Answer true if the operation succeeds"
 
 	^GDILibrary default
-		stretchBlt: self asParameter 
-		nXOriginDest: dstOrigin x 
-		nYOriginDest: dstOrigin y 
-		nWidthDest: dstExtent x 
-		nHeightDest: dstExtent y 
-		hdcSrc: aCanvas asParameter 
-		nXOriginSrc: aRectangle left 
-		nYOriginSrc: aRectangle top 
-		nWidthSrc: aRectangle width 
-		nHeightSrc: aRectangle height 
-		dwRop: rop
-!
+		stretchBlt: self asParameter
+		nXOriginDest: dstOrigin x
+		nYOriginDest: dstOrigin y
+		nWidthDest: dstExtent x
+		nHeightDest: dstExtent y
+		hdcSrc: aCanvas asParameter
+		nXOriginSrc: aRectangle left
+		nYOriginSrc: aRectangle top
+		nWidthSrc: aRectangle width
+		nHeightSrc: aRectangle height
+		dwRop: rop!
 
 text: aString at: aPoint
 	"Draw aString on the receiver starting at aPoint."
@@ -851,11 +836,10 @@ text: aString at: aPoint
 		nXStart: aPoint x
 		nYStart: aPoint y
 		lpString: text
-		cbString: text size
-!
+		cbString: text size!
 
 textExtent: aString
-	"Answer the extent of string using the receivers currently selected font. Note this will only provide an accurate result for a single line of text, and when paired with the GDI ExtTextOut function for painting the text, which will only be the case if the Canvas>>text:at: method is used. For calculating the extent of text drawn with the User32 DrawText API (e.g. by Canvas>>formatText:&c) one of the textExtent:width:&c family of methods must be used."
+	"Answer the extent of aString using the receivers currently selected font. Note this will only provide an accurate result for a single line of text, and when paired with the GDI ExtTextOut function for painting the text, which will only be the case if the Canvas>>text:at: method is used. For calculating the extent of text drawn with the User32 DrawText API (e.g. by Canvas>>formatText:&c) one of the textExtent:width:&c family of methods must be used."
 
 	| size text |
 	size := POINTL new.
@@ -880,7 +864,7 @@ textExtent: aString width: anIntegerWidth alignment: anAlignSymbol
 				at: #right put: DT_RIGHT;
 				shrink;
 				yourself) at: anAlignSymbol ifAbsent: [DT_LEFT].
-	rect := RECT extent: anIntegerWidth @ 0.
+	rect := RECTL extent: anIntegerWidth @ 0.
 	height := self
 				formatText: aString
 				in: rect
@@ -892,7 +876,7 @@ textExtent: aString width: widthInteger flags: flagsInteger
 	There are a large number of DT_XXX flags that can be used to draw the text in different ways - see https://docs.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-drawtextexw for details."
 
 	| rect |
-	rect := RECT extent: widthInteger @ 0.
+	rect := RECTL extent: widthInteger @ 0.
 	self
 		formatText: aString
 		in: rect
@@ -915,7 +899,7 @@ viewportExtent
 
 	| extent |
 	extent := POINTL new.
-	(GDILibrary default getViewportExtEx: self asParameter lpSize: extent) 
+	(GDILibrary default getViewportExtEx: self asParameter lpSize: extent)
 		ifFalse: [^GDILibrary default systemError].
 	^extent asPoint!
 
@@ -925,7 +909,7 @@ viewportExtent: aPoint
 
 	| previous |
 	previous := POINTL new.
-	(GDILibrary default 
+	(GDILibrary default
 		setViewportExtEx: self asParameter
 		nXExtent: aPoint x
 		nYExtent: aPoint y
@@ -937,7 +921,7 @@ viewportOrigin
 
 	| origin |
 	origin := POINTL new.
-	(GDILibrary default getViewportOrgEx: self asParameter lppt: origin) 
+	(GDILibrary default getViewportOrgEx: self asParameter lppt: origin)
 		ifFalse: [^GDILibrary default systemError].
 	^origin asPoint!
 
@@ -947,7 +931,7 @@ viewportOrigin: aPoint
 
 	| previous |
 	previous := POINTL new.
-	(GDILibrary default 
+	(GDILibrary default
 		setViewportOrgEx: self asParameter
 		nXOrg: aPoint x
 		nYOrg: aPoint y
@@ -961,8 +945,7 @@ viewportRectangle: aRectangle
 	| oldExtent oldOrigin |
 	oldOrigin := self viewportOrigin: aRectangle topLeft.
 	oldExtent := self viewportExtent: aRectangle extent.
-	^Rectangle origin: oldOrigin extent: oldExtent
-!
+	^Rectangle origin: oldOrigin extent: oldExtent!
 
 width
 	^self getDeviceCaps: HORZRES!
@@ -972,17 +955,17 @@ windowExtent
 
 	| extent |
 	extent := POINTL new.
-	(GDILibrary default getWindowExtEx: self asParameter lpSize: extent) 
+	(GDILibrary default getWindowExtEx: self asParameter lpSize: extent)
 		ifFalse: [^GDILibrary default systemError].
 	^extent asPoint!
 
-windowExtent: aPoint 
+windowExtent: aPoint
 	"Sets the extent of the receiver's window mapping. 
 	Answers the old window extent"
 
 	| previous |
-	previous := SIZE new.
-	(GDILibrary default 
+	previous := SIZEL new.
+	(GDILibrary default
 		setWindowExtEx: self asParameter
 		nXExtent: aPoint x
 		nYExtent: aPoint y
@@ -994,7 +977,7 @@ windowOrigin
 
 	| origin |
 	origin := POINTL new.
-	(GDILibrary default getWindowOrgEx: self asParameter lppt: origin) 
+	(GDILibrary default getWindowOrgEx: self asParameter lppt: origin)
 		ifFalse: [^GDILibrary default systemError].
 	^origin asPoint!
 
@@ -1004,7 +987,7 @@ windowOrigin: aPoint
 
 	| previous |
 	previous := POINTL new.
-	(GDILibrary default 
+	(GDILibrary default
 		setWindowOrgEx: self asParameter
 		nXOrg: aPoint x
 		nYOrg: aPoint y
@@ -1018,120 +1001,119 @@ windowRectangle: aRectangle
 	| oldExtent oldOrigin |
 	oldOrigin := self windowOrigin: aRectangle topLeft.
 	oldExtent := self windowExtent: aRectangle extent.
-	^Rectangle origin: oldOrigin extent: oldExtent
-!
+	^Rectangle origin: oldOrigin extent: oldExtent!
 
 windowScaling
 	"Answers a Point that is the ratio of window units to device units for the receiver"
 
 	^self windowExtent / self viewportExtent! !
-!Canvas categoriesFor: #alphaBlend:rectangle:to:extent:blend:!drawing!public! !
-!Canvas categoriesFor: #alphaBlendBitmap:at:extent:from:extent:blend:!colors!private! !
-!Canvas categoriesFor: #asParameter!converting!public! !
-!Canvas categoriesFor: #backcolor!accessing!colors!public! !
-!Canvas categoriesFor: #backcolor:!accessing!colors!public! !
-!Canvas categoriesFor: #backgroundMode!accessing!public! !
-!Canvas categoriesFor: #backgroundMode:!accessing!public! !
-!Canvas categoriesFor: #basicFree!private!realizing/unrealizing! !
-!Canvas categoriesFor: #bitBlt:rectangle:to:rop:!drawing!public! !
-!Canvas categoriesFor: #brush!public!tools! !
-!Canvas categoriesFor: #brush:!public!tools! !
-!Canvas categoriesFor: #brushColor!accessing!colors!public! !
-!Canvas categoriesFor: #brushOrigin:!accessing!public! !
-!Canvas categoriesFor: #clipBox!accessing!public! !
-!Canvas categoriesFor: #colorDepth!accessing!public! !
-!Canvas categoriesFor: #colors!accessing!public! !
-!Canvas categoriesFor: #drawBitmap:at:extent:from:extent:rop:!colors!private! !
-!Canvas categoriesFor: #drawEdge:edge:grfFlags:!drawing!public! !
-!Canvas categoriesFor: #ellipse:!drawing!public! !
-!Canvas categoriesFor: #erase!drawing!public! !
-!Canvas categoriesFor: #excludeClipRectangle:!operations!public! !
-!Canvas categoriesFor: #extent!accessing!public! !
-!Canvas categoriesFor: #fillRectangle:!drawing!public! !
-!Canvas categoriesFor: #fillRectangle:brush:!drawing!public! !
-!Canvas categoriesFor: #fillRectangle:color:!drawing!public! !
-!Canvas categoriesFor: #fillRectangle:startColor:endColor:verticalGradient:!drawing!public! !
-!Canvas categoriesFor: #fillRegion:brush:!drawing!public! !
-!Canvas categoriesFor: #font!accessing!public!tools! !
-!Canvas categoriesFor: #font:!accessing!public!tools! !
-!Canvas categoriesFor: #fontHandle!accessing!private!tools! !
-!Canvas categoriesFor: #fontNames!enquiries!public! !
-!Canvas categoriesFor: #fonts:do:!enumerating!public! !
-!Canvas categoriesFor: #forecolor!modes!public! !
-!Canvas categoriesFor: #forecolor:!modes!public! !
-!Canvas categoriesFor: #formatText:in:!drawing!public! !
-!Canvas categoriesFor: #formatText:in:flags:!drawing!public! !
-!Canvas categoriesFor: #frameRectangle:brush:!drawing!public! !
-!Canvas categoriesFor: #free!public!realizing/unrealizing! !
-!Canvas categoriesFor: #getCurrentObject:!accessing!public! !
-!Canvas categoriesFor: #getDeviceCaps:!accessing!private! !
-!Canvas categoriesFor: #getFont!accessing!public!tools! !
-!Canvas categoriesFor: #getPixel:!drawing!private! !
-!Canvas categoriesFor: #handle!accessing!public! !
-!Canvas categoriesFor: #height!accessing!public! !
-!Canvas categoriesFor: #hiMetricToPels:!converting!public! !
-!Canvas categoriesFor: #intersectClipRectangle:!drawing!public! !
-!Canvas categoriesFor: #invertRectangle:!drawing!public! !
-!Canvas categoriesFor: #invertRegion:!drawing!public! !
-!Canvas categoriesFor: #isRectangleVisible:!drawing!public!testing! !
-!Canvas categoriesFor: #lineFrom:to:!drawing!public! !
-!Canvas categoriesFor: #lineTo:!drawing!public! !
-!Canvas categoriesFor: #mapMode!public!transformations! !
-!Canvas categoriesFor: #mapMode:!public!transformations! !
-!Canvas categoriesFor: #moveTo:!drawing!public! !
-!Canvas categoriesFor: #nonOwnedDC:!initializing!private! !
-!Canvas categoriesFor: #offsetWindowOrigin:!public!transformations! !
-!Canvas categoriesFor: #onExit!event handling!public! !
-!Canvas categoriesFor: #outlineTextMetrics!accessing!public! !
-!Canvas categoriesFor: #ownedDC:!initializing!private! !
-!Canvas categoriesFor: #paintRegion:!drawing!public! !
-!Canvas categoriesFor: #palette:!colors!public! !
-!Canvas categoriesFor: #patBlt:rop:!drawing!public! !
-!Canvas categoriesFor: #pelsToHiMetric:!converting!public! !
-!Canvas categoriesFor: #pen!public!tools! !
-!Canvas categoriesFor: #pen:!public!tools! !
-!Canvas categoriesFor: #penColor!accessing!colors!public! !
-!Canvas categoriesFor: #pixelAt:!accessing!public! !
-!Canvas categoriesFor: #pixelAt:put:!accessing!public! !
-!Canvas categoriesFor: #plgBlt:rectangle:topLeft:topRight:bottomLeft:!drawing!public! !
-!Canvas categoriesFor: #polygon:!drawing!public! !
-!Canvas categoriesFor: #realizePalette!colors!public! !
-!Canvas categoriesFor: #rectangle:!drawing!public! !
-!Canvas categoriesFor: #rectangle:round:!drawing!public! !
-!Canvas categoriesFor: #resolution!accessing!public! !
-!Canvas categoriesFor: #restore!operations!public! !
-!Canvas categoriesFor: #restore:!operations!public! !
-!Canvas categoriesFor: #rop2!accessing!public! !
-!Canvas categoriesFor: #rop2:!accessing!public! !
-!Canvas categoriesFor: #save!operations!public! !
-!Canvas categoriesFor: #saved!accessing!private! !
-!Canvas categoriesFor: #saveIds!accessing!private! !
-!Canvas categoriesFor: #selectClipRegion:!operations!public! !
-!Canvas categoriesFor: #selectObject:!operations!private! !
-!Canvas categoriesFor: #selectPalette:!colors!public! !
-!Canvas categoriesFor: #setDefaultAttributes!private!tools! !
-!Canvas categoriesFor: #setTextAlign:!modes!public! !
-!Canvas categoriesFor: #source:!accessing!private! !
-!Canvas categoriesFor: #stretchBlt:rectangle:to:extent:rop:!drawing!public! !
-!Canvas categoriesFor: #text:at:!drawing!public! !
-!Canvas categoriesFor: #textExtent:!enquiries!public! !
-!Canvas categoriesFor: #textExtent:width:alignment:!enquiries!public! !
-!Canvas categoriesFor: #textExtent:width:flags:!enquiries!public! !
-!Canvas categoriesFor: #textMetrics!accessing!public! !
-!Canvas categoriesFor: #viewportExtent!public!transformations! !
-!Canvas categoriesFor: #viewportExtent:!public!transformations! !
-!Canvas categoriesFor: #viewportOrigin!public!transformations! !
-!Canvas categoriesFor: #viewportOrigin:!public!transformations! !
-!Canvas categoriesFor: #viewportRectangle:!public!transformations! !
-!Canvas categoriesFor: #width!accessing!public! !
-!Canvas categoriesFor: #windowExtent!public!transformations! !
-!Canvas categoriesFor: #windowExtent:!public!transformations! !
-!Canvas categoriesFor: #windowOrigin!public!transformations! !
-!Canvas categoriesFor: #windowOrigin:!public!transformations! !
-!Canvas categoriesFor: #windowRectangle:!public!transformations! !
-!Canvas categoriesFor: #windowScaling!public!transformations! !
+!Graphics.Canvas categoriesFor: #alphaBlend:rectangle:to:extent:blend:!drawing!public! !
+!Graphics.Canvas categoriesFor: #alphaBlendBitmap:at:extent:from:extent:blend:!colors!private! !
+!Graphics.Canvas categoriesFor: #asParameter!converting!public! !
+!Graphics.Canvas categoriesFor: #backcolor!accessing!colors!public! !
+!Graphics.Canvas categoriesFor: #backcolor:!accessing!colors!public! !
+!Graphics.Canvas categoriesFor: #backgroundMode!accessing!public! !
+!Graphics.Canvas categoriesFor: #backgroundMode:!accessing!public! !
+!Graphics.Canvas categoriesFor: #basicFree!private!realizing/unrealizing! !
+!Graphics.Canvas categoriesFor: #bitBlt:rectangle:to:rop:!drawing!public! !
+!Graphics.Canvas categoriesFor: #brush!public!tools! !
+!Graphics.Canvas categoriesFor: #brush:!public!tools! !
+!Graphics.Canvas categoriesFor: #brushColor!accessing!colors!public! !
+!Graphics.Canvas categoriesFor: #brushOrigin:!accessing!public! !
+!Graphics.Canvas categoriesFor: #clipBox!accessing!public! !
+!Graphics.Canvas categoriesFor: #colorDepth!accessing!public! !
+!Graphics.Canvas categoriesFor: #colors!accessing!public! !
+!Graphics.Canvas categoriesFor: #drawBitmap:at:extent:from:extent:rop:!colors!private! !
+!Graphics.Canvas categoriesFor: #drawEdge:edge:grfFlags:!drawing!public! !
+!Graphics.Canvas categoriesFor: #ellipse:!drawing!public! !
+!Graphics.Canvas categoriesFor: #erase!drawing!public! !
+!Graphics.Canvas categoriesFor: #excludeClipRectangle:!operations!public! !
+!Graphics.Canvas categoriesFor: #extent!accessing!public! !
+!Graphics.Canvas categoriesFor: #fillRectangle:!drawing!public! !
+!Graphics.Canvas categoriesFor: #fillRectangle:brush:!drawing!public! !
+!Graphics.Canvas categoriesFor: #fillRectangle:color:!drawing!public! !
+!Graphics.Canvas categoriesFor: #fillRectangle:startColor:endColor:verticalGradient:!drawing!public! !
+!Graphics.Canvas categoriesFor: #fillRegion:brush:!drawing!public! !
+!Graphics.Canvas categoriesFor: #font!accessing!public!tools! !
+!Graphics.Canvas categoriesFor: #font:!accessing!public!tools! !
+!Graphics.Canvas categoriesFor: #fontHandle!accessing!private!tools! !
+!Graphics.Canvas categoriesFor: #fontNames!enquiries!public! !
+!Graphics.Canvas categoriesFor: #fonts:do:!enumerating!public! !
+!Graphics.Canvas categoriesFor: #forecolor!modes!public! !
+!Graphics.Canvas categoriesFor: #forecolor:!modes!public! !
+!Graphics.Canvas categoriesFor: #formatText:in:!drawing!public! !
+!Graphics.Canvas categoriesFor: #formatText:in:flags:!drawing!public! !
+!Graphics.Canvas categoriesFor: #frameRectangle:brush:!drawing!public! !
+!Graphics.Canvas categoriesFor: #free!public!realizing/unrealizing! !
+!Graphics.Canvas categoriesFor: #getCurrentObject:!accessing!public! !
+!Graphics.Canvas categoriesFor: #getDeviceCaps:!accessing!private! !
+!Graphics.Canvas categoriesFor: #getFont!accessing!public!tools! !
+!Graphics.Canvas categoriesFor: #getPixel:!drawing!private! !
+!Graphics.Canvas categoriesFor: #handle!accessing!public! !
+!Graphics.Canvas categoriesFor: #height!accessing!public! !
+!Graphics.Canvas categoriesFor: #hiMetricToPels:!converting!public! !
+!Graphics.Canvas categoriesFor: #intersectClipRectangle:!drawing!public! !
+!Graphics.Canvas categoriesFor: #invertRectangle:!drawing!public! !
+!Graphics.Canvas categoriesFor: #invertRegion:!drawing!public! !
+!Graphics.Canvas categoriesFor: #isRectangleVisible:!drawing!public!testing! !
+!Graphics.Canvas categoriesFor: #lineFrom:to:!drawing!public! !
+!Graphics.Canvas categoriesFor: #lineTo:!drawing!public! !
+!Graphics.Canvas categoriesFor: #mapMode!public!transformations! !
+!Graphics.Canvas categoriesFor: #mapMode:!public!transformations! !
+!Graphics.Canvas categoriesFor: #moveTo:!drawing!public! !
+!Graphics.Canvas categoriesFor: #nonOwnedDC:!initializing!private! !
+!Graphics.Canvas categoriesFor: #offsetWindowOrigin:!public!transformations! !
+!Graphics.Canvas categoriesFor: #onExit!event handling!public! !
+!Graphics.Canvas categoriesFor: #outlineTextMetrics!accessing!public! !
+!Graphics.Canvas categoriesFor: #ownedDC:!initializing!private! !
+!Graphics.Canvas categoriesFor: #paintRegion:!drawing!public! !
+!Graphics.Canvas categoriesFor: #palette:!colors!public! !
+!Graphics.Canvas categoriesFor: #patBlt:rop:!drawing!public! !
+!Graphics.Canvas categoriesFor: #pelsToHiMetric:!converting!public! !
+!Graphics.Canvas categoriesFor: #pen!public!tools! !
+!Graphics.Canvas categoriesFor: #pen:!public!tools! !
+!Graphics.Canvas categoriesFor: #penColor!accessing!colors!public! !
+!Graphics.Canvas categoriesFor: #pixelAt:!accessing!public! !
+!Graphics.Canvas categoriesFor: #pixelAt:put:!accessing!public! !
+!Graphics.Canvas categoriesFor: #plgBlt:rectangle:topLeft:topRight:bottomLeft:!drawing!public! !
+!Graphics.Canvas categoriesFor: #polygon:!drawing!public! !
+!Graphics.Canvas categoriesFor: #realizePalette!colors!public! !
+!Graphics.Canvas categoriesFor: #rectangle:!drawing!public! !
+!Graphics.Canvas categoriesFor: #rectangle:round:!drawing!public! !
+!Graphics.Canvas categoriesFor: #resolution!accessing!public! !
+!Graphics.Canvas categoriesFor: #restore!operations!public! !
+!Graphics.Canvas categoriesFor: #restore:!operations!public! !
+!Graphics.Canvas categoriesFor: #rop2!accessing!public! !
+!Graphics.Canvas categoriesFor: #rop2:!accessing!public! !
+!Graphics.Canvas categoriesFor: #save!operations!public! !
+!Graphics.Canvas categoriesFor: #saved!accessing!private! !
+!Graphics.Canvas categoriesFor: #saveIds!accessing!private! !
+!Graphics.Canvas categoriesFor: #selectClipRegion:!operations!public! !
+!Graphics.Canvas categoriesFor: #selectObject:!operations!private! !
+!Graphics.Canvas categoriesFor: #selectPalette:!colors!public! !
+!Graphics.Canvas categoriesFor: #setDefaultAttributes!private!tools! !
+!Graphics.Canvas categoriesFor: #setTextAlign:!modes!public! !
+!Graphics.Canvas categoriesFor: #source:!accessing!private! !
+!Graphics.Canvas categoriesFor: #stretchBlt:rectangle:to:extent:rop:!drawing!public! !
+!Graphics.Canvas categoriesFor: #text:at:!drawing!public! !
+!Graphics.Canvas categoriesFor: #textExtent:!enquiries!public! !
+!Graphics.Canvas categoriesFor: #textExtent:width:alignment:!enquiries!public! !
+!Graphics.Canvas categoriesFor: #textExtent:width:flags:!enquiries!public! !
+!Graphics.Canvas categoriesFor: #textMetrics!accessing!public! !
+!Graphics.Canvas categoriesFor: #viewportExtent!public!transformations! !
+!Graphics.Canvas categoriesFor: #viewportExtent:!public!transformations! !
+!Graphics.Canvas categoriesFor: #viewportOrigin!public!transformations! !
+!Graphics.Canvas categoriesFor: #viewportOrigin:!public!transformations! !
+!Graphics.Canvas categoriesFor: #viewportRectangle:!public!transformations! !
+!Graphics.Canvas categoriesFor: #width!accessing!public! !
+!Graphics.Canvas categoriesFor: #windowExtent!public!transformations! !
+!Graphics.Canvas categoriesFor: #windowExtent:!public!transformations! !
+!Graphics.Canvas categoriesFor: #windowOrigin!public!transformations! !
+!Graphics.Canvas categoriesFor: #windowOrigin:!public!transformations! !
+!Graphics.Canvas categoriesFor: #windowRectangle:!public!transformations! !
+!Graphics.Canvas categoriesFor: #windowScaling!public!transformations! !
 
-!Canvas class methodsFor!
+!Graphics.Canvas class methodsFor!
 
 desktopResolution
 	"Answer the resolution of the active desktop."
@@ -1165,7 +1147,7 @@ getDC
 	N.B. This is one half of the <dcSource> protocol, and must be matched with 
 	a call to #releaseDC: to delete the DC."
 
-	^GDILibrary default 
+	^GDILibrary default
 		createDC: 'DISPLAY'
 		lpszDevice: nil
 		lpszOutput: nil
@@ -1204,8 +1186,7 @@ releaseDC: hDC
 	for clients which supply a DC directly via #withOwnedDC:
 	Answer whether the DC was indeed deleted."
 
-	^(GDILibrary default
-		deleteDC: hDC asParameter) ~~ 0!
+	^(GDILibrary default deleteDC: hDC asParameter) ~~ 0!
 
 screenResolution
 	"Answers a Point containing the logical pixels per inch of the screen.
@@ -1240,22 +1221,22 @@ withOwnedDC: hDC
 	finalized (or explicitly freed) with a call to DeleteDC()."
 
 	^self withDC: hDC ownedBy: self! !
-!Canvas class categoriesFor: #desktopResolution!initializing!public! !
-!Canvas class categoriesFor: #forDesktop!instance creation!public! !
-!Canvas class categoriesFor: #forDisplay!instance creation!public! !
-!Canvas class categoriesFor: #forNonClientView:!instance creation!public! !
-!Canvas class categoriesFor: #forView:!instance creation!public! !
-!Canvas class categoriesFor: #getDC!accessing!public! !
-!Canvas class categoriesFor: #icon!constants!public! !
-!Canvas class categoriesFor: #new!instance creation!private! !
-!Canvas class categoriesFor: #on:!instance creation!public! !
-!Canvas class categoriesFor: #onExit!event handling!public! !
-!Canvas class categoriesFor: #onStartup!event handling!private! !
-!Canvas class categoriesFor: #releaseDC:!operations!public! !
-!Canvas class categoriesFor: #screenResolution!environment!public! !
-!Canvas class categoriesFor: #withDC:ownedBy:!instance creation!public! !
-!Canvas class categoriesFor: #withNonOwnedDC:!instance creation!public! !
-!Canvas class categoriesFor: #withOwnedDC:!instance creation!public! !
+!Graphics.Canvas class categoriesFor: #desktopResolution!initializing!public! !
+!Graphics.Canvas class categoriesFor: #forDesktop!instance creation!public! !
+!Graphics.Canvas class categoriesFor: #forDisplay!instance creation!public! !
+!Graphics.Canvas class categoriesFor: #forNonClientView:!instance creation!public! !
+!Graphics.Canvas class categoriesFor: #forView:!instance creation!public! !
+!Graphics.Canvas class categoriesFor: #getDC!accessing!public! !
+!Graphics.Canvas class categoriesFor: #icon!constants!public! !
+!Graphics.Canvas class categoriesFor: #new!instance creation!private! !
+!Graphics.Canvas class categoriesFor: #on:!instance creation!public! !
+!Graphics.Canvas class categoriesFor: #onExit!event handling!public! !
+!Graphics.Canvas class categoriesFor: #onStartup!event handling!private! !
+!Graphics.Canvas class categoriesFor: #releaseDC:!operations!public! !
+!Graphics.Canvas class categoriesFor: #screenResolution!environment!public! !
+!Graphics.Canvas class categoriesFor: #withDC:ownedBy:!instance creation!public! !
+!Graphics.Canvas class categoriesFor: #withNonOwnedDC:!instance creation!public! !
+!Graphics.Canvas class categoriesFor: #withOwnedDC:!instance creation!public! !
 
-Canvas class methodProtocol: #dcSource attributes: #(#readOnly) selectors: #(#getDC #releaseDC:)!
+Graphics.Canvas class methodProtocol: #dcSource attributes: #(#readOnly) selectors: #(#getDC #releaseDC:)!
 

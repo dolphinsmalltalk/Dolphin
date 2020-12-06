@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Canvas subclass: #PrinterCanvas
+Graphics.Canvas subclass: #'Graphics.PrinterCanvas'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-PrinterCanvas guid: (GUID fromString: '{87b4c4ff-026e-11d3-9fd7-00a0cc3e4a32}')!
-PrinterCanvas comment: ''!
-!PrinterCanvas categoriesForClass!Graphics-Drawing! !
-!PrinterCanvas methodsFor!
+Graphics.PrinterCanvas guid: (Core.GUID fromString: '{87b4c4ff-026e-11d3-9fd7-00a0cc3e4a32}')!
+Graphics.PrinterCanvas comment: ''!
+!Graphics.PrinterCanvas categoriesForClass!Graphics-Drawing! !
+!Graphics.PrinterCanvas methodsFor!
 
 basicFree
 	"Private - Free the external resources associated with the receiver."
@@ -20,15 +20,12 @@ basicFree
 endDoc
 	"Signal the end of the current document."
 
-	GDILibrary default endDoc: self asParameter
-!
+	GDILibrary default endDoc: self asParameter!
 
 endPage
 	"Signal the end of the current page."
 
-	GDILibrary default endPage: self asParameter
-
-!
+	GDILibrary default endPage: self asParameter!
 
 startDoc
 	"Signal the start of a new document."
@@ -45,16 +42,16 @@ startPage
 	"Signal the start of a new page."
 
 	GDILibrary default startPage: self asParameter! !
-!PrinterCanvas categoriesFor: #basicFree!private!realizing/unrealizing! !
-!PrinterCanvas categoriesFor: #endDoc!operations!public! !
-!PrinterCanvas categoriesFor: #endPage!operations!public! !
-!PrinterCanvas categoriesFor: #startDoc!operations!public! !
-!PrinterCanvas categoriesFor: #startDocNamed:!operations!public! !
-!PrinterCanvas categoriesFor: #startPage!operations!public! !
+!Graphics.PrinterCanvas categoriesFor: #basicFree!private!realizing/unrealizing! !
+!Graphics.PrinterCanvas categoriesFor: #endDoc!operations!public! !
+!Graphics.PrinterCanvas categoriesFor: #endPage!operations!public! !
+!Graphics.PrinterCanvas categoriesFor: #startDoc!operations!public! !
+!Graphics.PrinterCanvas categoriesFor: #startDocNamed:!operations!public! !
+!Graphics.PrinterCanvas categoriesFor: #startPage!operations!public! !
 
-!PrinterCanvas class methodsFor!
+!Graphics.PrinterCanvas class methodsFor!
 
 icon
 	^##(self) defaultIcon! !
-!PrinterCanvas class categoriesFor: #icon!constants!development!public! !
+!Graphics.PrinterCanvas class categoriesFor: #icon!constants!development!public! !
 

@@ -1,17 +1,17 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Win32Structure subclass: #LOGPALETTE
+OS.Win32Structure subclass: #'OS.LOGPALETTE'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_palNumEntries' -> 16r2.
 		'_OffsetOf_palPalEntry' -> 16r4.
 		'_OffsetOf_palVersion' -> 16r0
 	}!
-LOGPALETTE guid: (GUID fromString: '{87b4c5fa-026e-11d3-9fd7-00a0cc3e4a32}')!
-LOGPALETTE comment: '<LOGPALETTE> is an <ExternalStructure> class to wrap the struct ''Win32.LOGPALETTE'' from type information in the ''Win32 API'' library.
+OS.LOGPALETTE guid: (Core.GUID fromString: '{87b4c5fa-026e-11d3-9fd7-00a0cc3e4a32}')!
+OS.LOGPALETTE comment: '<LOGPALETTE> is an <ExternalStructure> class to wrap the struct ''Win32.LOGPALETTE'' from type information in the ''Win32 API'' library.
 
 The type library contains the following helpstring for this struct
 	"The LOGPALETTE structure defines a logical palette."
@@ -27,8 +27,8 @@ struct tagLOGPALETTE {
 	[readonly, helpstring("Specifies an array of PALETTEENTRY structures that define the color and usage of each entry in the logical palette."), size_is("palNumEntries")] PALETTEENTRY palPalEntry[256];
 } LOGPALETTE;
 '!
-!LOGPALETTE categoriesForClass!Win32-Structs! !
-!LOGPALETTE methodsFor!
+!OS.LOGPALETTE categoriesForClass!Win32-Structs! !
+!OS.LOGPALETTE methodsFor!
 
 palNumEntries
 	"Answer the <Integer> value of the receiver's 'palNumEntries' field."
@@ -57,13 +57,13 @@ palVersion: anInteger
 	"Set the receiver's 'palVersion' field to the value of the argument, anInteger"
 
 	bytes wordAtOffset: _OffsetOf_palVersion put: anInteger! !
-!LOGPALETTE categoriesFor: #palNumEntries!**compiled accessors**!public! !
-!LOGPALETTE categoriesFor: #palNumEntries:!**compiled accessors**!public! !
-!LOGPALETTE categoriesFor: #palPalEntry!**compiled accessors**!public! !
-!LOGPALETTE categoriesFor: #palVersion!**compiled accessors**!public! !
-!LOGPALETTE categoriesFor: #palVersion:!**compiled accessors**!public! !
+!OS.LOGPALETTE categoriesFor: #palNumEntries!**compiled accessors**!public! !
+!OS.LOGPALETTE categoriesFor: #palNumEntries:!**compiled accessors**!public! !
+!OS.LOGPALETTE categoriesFor: #palPalEntry!**compiled accessors**!public! !
+!OS.LOGPALETTE categoriesFor: #palVersion!**compiled accessors**!public! !
+!OS.LOGPALETTE categoriesFor: #palVersion:!**compiled accessors**!public! !
 
-!LOGPALETTE class methodsFor!
+!OS.LOGPALETTE class methodsFor!
 
 defineFields
 	"Define the fields of the LOGPALETTE structure.
@@ -100,7 +100,7 @@ new
 	^(super new)
 		palNumEntries: 256;
 		yourself! !
-!LOGPALETTE class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!LOGPALETTE class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!LOGPALETTE class categoriesFor: #new!instance creation!public! !
+!OS.LOGPALETTE class categoriesFor: #defineFields!**auto generated**!public!template definition! !
+!OS.LOGPALETTE class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.LOGPALETTE class categoriesFor: #new!instance creation!public! !
 

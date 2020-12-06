@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ExternalLibrary subclass: #ThemeLibrary
+External.Library subclass: #'OS.ThemeLibrary'
 	instanceVariableNames: ''
 	classVariableNames: 'IsAppThemed'
-	poolDictionaries: 'ThemeConstants'
+	imports: #(#{OS.ThemeConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ThemeLibrary guid: (GUID fromString: '{fb91df3f-4cb4-48a2-adee-a75b9a4d30a2}')!
-ThemeLibrary comment: 'ThemeLibrary is the <ExternalLibrary> class to represent the dynamic link library, ''UXTHEME.DLL''.It was generated generated from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library. It contains methods for each of the functions defined by the corresponding module in that type library.
+OS.ThemeLibrary guid: (Core.GUID fromString: '{fb91df3f-4cb4-48a2-adee-a75b9a4d30a2}')!
+OS.ThemeLibrary comment: 'ThemeLibrary is the <ExternalLibrary> class to represent the dynamic link library, ''UXTHEME.DLL''.It was generated generated from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library. It contains methods for each of the functions defined by the corresponding module in that type library.
 
 The type library contains the following helpstring for this module
 	"Windows Theme Library. Only available in Windows XP and above."
@@ -350,8 +350,8 @@ module Theme
 		[in]DTBGOPTS* pOptions);
 };
 '!
-!ThemeLibrary categoriesForClass!Win32-Modules! !
-!ThemeLibrary methodsFor!
+!OS.ThemeLibrary categoriesForClass!Win32-Modules! !
+!OS.ThemeLibrary methodsFor!
 
 closeThemeData: htheme
 	"Invoke the CloseThemeData() function of the module wrapped by the receiver.
@@ -372,10 +372,10 @@ drawThemeBackground: htheme hdc: hdc iPartId: iPartId iStateId: iStateId pRect: 
 			[in]HDC HDC,
 			[in]int iPartId,
 			[in]int iStateId,
-			[in]RECT* pRect,
-			[in]RECT* pClipRect);"
+			[in]RECTL* pRect,
+			[in]RECTL* pClipRect);"
 
-	<stdcall: hresult DrawThemeBackground handle handle sdword sdword RECT* RECT*>
+	<stdcall: hresult DrawThemeBackground handle handle sdword sdword RECTL* RECTL*>
 	^self invalidCall: _failureCode!
 
 drawThemeBackgroundEx: htheme hdc: hdc iPartId: iPartId iStateId: iStateId pRect: pRect pOptions: pOptions
@@ -387,10 +387,10 @@ drawThemeBackgroundEx: htheme hdc: hdc iPartId: iPartId iStateId: iStateId pRect
 			[in]HDC HDC,
 			[in]int iPartId,
 			[in]int iStateId,
-			[in]RECT* pRect,
+			[in]RECTL* pRect,
 			[in]DTBGOPTS* pOptions);"
 
-	<stdcall: hresult DrawThemeBackgroundEx handle handle sdword sdword RECT* DTBGOPTS*>
+	<stdcall: hresult DrawThemeBackgroundEx handle handle sdword sdword RECTL* DTBGOPTS*>
 	^self invalidCall: _failureCode!
 
 drawThemeEdge: htheme hdc: hdc iPartId: iPartId iStateId: iStateId pDestRect: pDestRect uEdge: uEdge uFlags: uFlags pContentRect: pContentRect
@@ -402,12 +402,12 @@ drawThemeEdge: htheme hdc: hdc iPartId: iPartId iStateId: iStateId pDestRect: pD
 			[in]HDC HDC,
 			[in]int iPartId,
 			[in]int iStateId,
-			[in]RECT* pDestRect,
+			[in]RECTL* pDestRect,
 			[in]UINT uEdge,
 			[in]UINT uFlags,
-			[out]RECT* pContentRect);"
+			[out]RECTL* pContentRect);"
 
-	<stdcall: hresult DrawThemeEdge handle handle sdword sdword RECT* dword dword RECT*>
+	<stdcall: hresult DrawThemeEdge handle handle sdword sdword RECTL* dword dword RECTL*>
 	^self invalidCall: _failureCode!
 
 drawThemeIcon: htheme hdc: hdc iPartId: iPartId iStateId: iStateId pRect: pRect himl: himl iImageIndex: iImageIndex
@@ -419,11 +419,11 @@ drawThemeIcon: htheme hdc: hdc iPartId: iPartId iStateId: iStateId pRect: pRect 
 			[in]HDC HDC,
 			[in]int iPartId,
 			[in]int iStateId,
-			[in]RECT* pRect,
+			[in]RECTL* pRect,
 			[in]HIMAGELIST himl,
 			[in]int iImageIndex);"
 
-	<stdcall: hresult DrawThemeIcon handle handle sdword sdword RECT* handle sdword>
+	<stdcall: hresult DrawThemeIcon handle handle sdword sdword RECTL* handle sdword>
 	^self invalidCall: _failureCode!
 
 drawThemeParentBackground: hwnd hdc: hdc prc: prc
@@ -433,9 +433,9 @@ drawThemeParentBackground: hwnd hdc: hdc prc: prc
 		HRESULT __stdcall DrawThemeParentBackground(
 			[in]HWND HWND,
 			[in]HDC HDC,
-			[in, optional]RECT* prc);"
+			[in, optional]RECTL* prc);"
 
-	<stdcall: hresult DrawThemeParentBackground handle handle RECT*>
+	<stdcall: hresult DrawThemeParentBackground handle handle RECTL*>
 	^self invalidCall: _failureCode!
 
 drawThemeText: htheme hdc: hdc iPartId: iPartId iStateId: iStateId pszText: pszText iCharCount: iCharCount dwTextFlags: dwTextFlags dwTextFlags2: dwTextFlags2 pRect: pRect
@@ -451,9 +451,9 @@ drawThemeText: htheme hdc: hdc iPartId: iPartId iStateId: iStateId pszText: pszT
 			[in]int iCharCount,
 			[in]DWORD dwTextFlags,
 			[in]DWORD dwTextFlags2,
-			[in]RECT* pRect);"
+			[in]RECTL* pRect);"
 
-	<stdcall: hresult DrawThemeText handle handle sdword sdword lpwstr sdword dword dword RECT*>
+	<stdcall: hresult DrawThemeText handle handle sdword sdword lpwstr sdword dword dword RECTL*>
 	^self invalidCall: _failureCode!
 
 enableThemeDialogTexture: hwnd dwFlags: dwFlags
@@ -510,10 +510,10 @@ getThemeBackgroundContentRect: htheme hdc: hdc iPartId: iPartId iStateId: iState
 			[in]HDC HDC,
 			[in]int iPartId,
 			[in]int iStateId,
-			[in]RECT* pBoundingRect,
-			[out]RECT* pContentRect);"
+			[in]RECTL* pBoundingRect,
+			[out]RECTL* pContentRect);"
 
-	<stdcall: hresult GetThemeBackgroundContentRect handle handle sdword sdword RECT* RECT*>
+	<stdcall: hresult GetThemeBackgroundContentRect handle handle sdword sdword RECTL* RECTL*>
 	^self invalidCall: _failureCode!
 
 getThemeBackgroundExtent: htheme hdc: hdc iPartId: iPartId iStateId: iStateId pContentRect: pContentRect pExtentRect: pExtentRect
@@ -525,10 +525,10 @@ getThemeBackgroundExtent: htheme hdc: hdc iPartId: iPartId iStateId: iStateId pC
 			[in]HDC HDC,
 			[in]int iPartId,
 			[in]int iStateId,
-			[in]RECT* pContentRect,
-			[out]RECT* pExtentRect);"
+			[in]RECTL* pContentRect,
+			[out]RECTL* pExtentRect);"
 
-	<stdcall: hresult GetThemeBackgroundExtent handle handle sdword sdword RECT* RECT*>
+	<stdcall: hresult GetThemeBackgroundExtent handle handle sdword sdword RECTL* RECTL*>
 	^self invalidCall: _failureCode!
 
 getThemeBackgroundRegion: htheme hdc: hdc iPartId: iPartId iStateId: iStateId pRect: pRect pRegion: pRegion
@@ -540,10 +540,10 @@ getThemeBackgroundRegion: htheme hdc: hdc iPartId: iPartId iStateId: iStateId pR
 			[in]HDC HDC,
 			[in]int iPartId,
 			[in]int iStateId,
-			[in]RECT* pRect,
+			[in]RECTL* pRect,
 			[out]HRGN* pRegion);"
 
-	<stdcall: hresult GetThemeBackgroundRegion handle handle sdword sdword RECT* handle*>
+	<stdcall: hresult GetThemeBackgroundRegion handle handle sdword sdword RECTL* handle*>
 	^self invalidCall: _failureCode!
 
 getThemeBool: htheme iPartId: iPartId iStateId: iStateId iPropId: iPropId pfVal: pfVal
@@ -655,10 +655,10 @@ getThemeMargins: htheme hdc: hdc iPartId: iPartId iStateId: iStateId iPropId: iP
 			[in]int iPartId,
 			[in]int iStateId,
 			[in]int iPropId,
-			[in]RECT* prc,
+			[in]RECTL* prc,
 			[out]MARGINS* pMargins);"
 
-	<stdcall: hresult GetThemeMargins handle handle sdword sdword sdword RECT* MARGINS*>
+	<stdcall: hresult GetThemeMargins handle handle sdword sdword sdword RECTL* MARGINS*>
 	^self invalidCall: _failureCode!
 
 getThemeMetric: htheme hdc: hdc iPartId: iPartId iStateId: iStateId iPropId: iPropId piVal: piVal
@@ -685,11 +685,11 @@ getThemePartSize: htheme hdc: hdc iPartId: iPartId iStateId: iStateId prc: prc e
 			[in]HDC HDC,
 			[in]int iPartId,
 			[in]int iStateId,
-			[in]RECT* prc,
+			[in]RECTL* prc,
 			[in]THEMESIZE eSize,
-			[out]SIZE* psz);"
+			[out]SIZEL* psz);"
 
-	<stdcall: hresult GetThemePartSize handle handle sdword sdword RECT* sdword SIZE*>
+	<stdcall: hresult GetThemePartSize handle handle sdword sdword RECTL* sdword SIZEL*>
 	^self invalidCall: _failureCode!
 
 getThemePosition: htheme iPartId: iPartId iStateId: iStateId iPropId: iPropId pPoint: pPoint
@@ -722,16 +722,16 @@ getThemePropertyOrigin: htheme iPartId: iPartId iStateId: iStateId iPropId: iPro
 
 getThemeRect: htheme iPartId: iPartId iStateId: iStateId iPropId: iPropId pRect: pRect
 	"Invoke the GetThemeRect() function of the module wrapped by the receiver.
-	Helpstring: Get the value for the specified RECT property
+	Helpstring: Get the value for the specified RECTL property
 
 		HRESULT __stdcall GetThemeRect(
 			[in]HTHEME HTHEME,
 			[in]int iPartId,
 			[in]int iStateId,
 			[in]int iPropId,
-			[out]RECT* pRect);"
+			[out]RECTL* pRect);"
 
-	<stdcall: hresult GetThemeRect handle sdword sdword sdword RECT*>
+	<stdcall: hresult GetThemeRect handle sdword sdword sdword RECTL*>
 	^self invalidCall: _failureCode!
 
 getThemeString: htheme iPartId: iPartId iStateId: iStateId iPropId: iPropId pszBuff: pszBuff cchMaxBuffChars: cchMaxBuffChars
@@ -842,10 +842,10 @@ getThemeTextExtent: htheme hdc: hdc iPartId: iPartId iStateId: iStateId pszText:
 			[in]LPWSTR pszText,
 			[in]int iCharCount,
 			[in]DWORD dwTextFlags,
-			[in]RECT* pBoundingRect,
-			[out]RECT* pExtentRect);"
+			[in]RECTL* pBoundingRect,
+			[out]RECTL* pExtentRect);"
 
-	<stdcall: hresult GetThemeTextExtent handle handle sdword sdword lpwstr sdword dword RECT* RECT*>
+	<stdcall: hresult GetThemeTextExtent handle handle sdword sdword lpwstr sdword dword RECTL* RECTL*>
 	^self invalidCall: _failureCode!
 
 getThemeTextMetrics: htheme hdc: hdc iPartId: iPartId iStateId: iStateId pTM: pTM
@@ -882,12 +882,12 @@ hitTestThemeBackground: htheme hdc: hdc iPartId: iPartId iStateId: iStateId dwOp
 			[in]int iPartId,
 			[in]int iStateId,
 			[in]DWORD dwOptions,
-			[in]RECT* pRect,
+			[in]RECTL* pRect,
 			[in]HRGN HRGN,
 			[in]POINTL ptTest,
 			[out]WORD* pwHitTestCode);"
 
-	<stdcall: hresult HitTestThemeBackground handle handle sdword sdword dword RECT* handle POINTL word*>
+	<stdcall: hresult HitTestThemeBackground handle handle sdword sdword dword RECTL* handle POINTL word*>
 	^self invalidCall: _failureCode!
 
 isAppThemed
@@ -986,57 +986,57 @@ setWindowTheme: hwnd pszSubAppName: pszSubAppName pszSubIdList: pszSubIdList
 
 	<stdcall: hresult SetWindowTheme handle lpwstr lpwstr>
 	^self invalidCall: _failureCode! !
-!ThemeLibrary categoriesFor: #closeThemeData:!**auto generated**!public! !
-!ThemeLibrary categoriesFor: #drawThemeBackground:hdc:iPartId:iStateId:pRect:pClipRect:!**auto generated**!public! !
-!ThemeLibrary categoriesFor: #drawThemeBackgroundEx:hdc:iPartId:iStateId:pRect:pOptions:!**auto generated**!public! !
-!ThemeLibrary categoriesFor: #drawThemeEdge:hdc:iPartId:iStateId:pDestRect:uEdge:uFlags:pContentRect:!**auto generated**!public! !
-!ThemeLibrary categoriesFor: #drawThemeIcon:hdc:iPartId:iStateId:pRect:himl:iImageIndex:!**auto generated**!public! !
-!ThemeLibrary categoriesFor: #drawThemeParentBackground:hdc:prc:!**auto generated**!public! !
-!ThemeLibrary categoriesFor: #drawThemeText:hdc:iPartId:iStateId:pszText:iCharCount:dwTextFlags:dwTextFlags2:pRect:!**auto generated**!public! !
-!ThemeLibrary categoriesFor: #enableThemeDialogTexture:dwFlags:!**auto generated**!public! !
-!ThemeLibrary categoriesFor: #enableTheming:!**auto generated**!public! !
-!ThemeLibrary categoriesFor: #getCurrentThemeName:cchMaxNameChars:pszColorBuff:cchMaxColorChars:pszSizeBuff:cchMaxSizeChars:!**auto generated**!public! !
-!ThemeLibrary categoriesFor: #getThemeAppProperties!**auto generated**!public! !
-!ThemeLibrary categoriesFor: #getThemeBackgroundContentRect:hdc:iPartId:iStateId:pBoundingRect:pContentRect:!**auto generated**!public! !
-!ThemeLibrary categoriesFor: #getThemeBackgroundExtent:hdc:iPartId:iStateId:pContentRect:pExtentRect:!**auto generated**!public! !
-!ThemeLibrary categoriesFor: #getThemeBackgroundRegion:hdc:iPartId:iStateId:pRect:pRegion:!**auto generated**!public! !
-!ThemeLibrary categoriesFor: #getThemeBool:iPartId:iStateId:iPropId:pfVal:!**auto generated**!public! !
-!ThemeLibrary categoriesFor: #getThemeColor:iPartId:iStateId:iPropId:pColor:!**auto generated**!public! !
-!ThemeLibrary categoriesFor: #getThemeDocumentationProperty:pszPropertyName:pszValueBuff:cchMaxValChars:!**auto generated**!public! !
-!ThemeLibrary categoriesFor: #getThemeEnumValue:iPartId:iStateId:iPropId:piVal:!**auto generated**!public! !
-!ThemeLibrary categoriesFor: #getThemeFilename:iPartId:iStateId:iPropId:pszThemeFileName:cchMaxBuffChars:!**auto generated**!public! !
-!ThemeLibrary categoriesFor: #getThemeFont:hdc:iPartId:iStateId:iPropId:pFont:!**auto generated**!public! !
-!ThemeLibrary categoriesFor: #getThemeInt:iPartId:iStateId:iPropId:piVal:!**auto generated**!public! !
-!ThemeLibrary categoriesFor: #getThemeMargins:hdc:iPartId:iStateId:iPropId:prc:pMargins:!**auto generated**!public! !
-!ThemeLibrary categoriesFor: #getThemeMetric:hdc:iPartId:iStateId:iPropId:piVal:!**auto generated**!public! !
-!ThemeLibrary categoriesFor: #getThemePartSize:hdc:iPartId:iStateId:prc:eSize:psz:!**auto generated**!public! !
-!ThemeLibrary categoriesFor: #getThemePosition:iPartId:iStateId:iPropId:pPoint:!**auto generated**!public! !
-!ThemeLibrary categoriesFor: #getThemePropertyOrigin:iPartId:iStateId:iPropId:pOrigin:!**auto generated**!public! !
-!ThemeLibrary categoriesFor: #getThemeRect:iPartId:iStateId:iPropId:pRect:!**auto generated**!public! !
-!ThemeLibrary categoriesFor: #getThemeString:iPartId:iStateId:iPropId:pszBuff:cchMaxBuffChars:!**auto generated**!public! !
-!ThemeLibrary categoriesFor: #getThemeSysBool:iBoolId:!**auto generated**!public! !
-!ThemeLibrary categoriesFor: #getThemeSysColor:iColorId:!**auto generated**!public! !
-!ThemeLibrary categoriesFor: #getThemeSysColorBrush:iColorId:!**auto generated**!public! !
-!ThemeLibrary categoriesFor: #getThemeSysFont:iFontId:plf:!**auto generated**!public! !
-!ThemeLibrary categoriesFor: #getThemeSysInt:iIntId:piValue:!**auto generated**!public! !
-!ThemeLibrary categoriesFor: #getThemeSysSize:iSizeId:!**auto generated**!public! !
-!ThemeLibrary categoriesFor: #getThemeSysString:iStringId:pszStringBuff:cchMaxStringChars:!**auto generated**!public! !
-!ThemeLibrary categoriesFor: #getThemeTextExtent:hdc:iPartId:iStateId:pszText:iCharCount:dwTextFlags:pBoundingRect:pExtentRect:!**auto generated**!public! !
-!ThemeLibrary categoriesFor: #getThemeTextMetrics:hdc:iPartId:iStateId:pTM:!**auto generated**!public! !
-!ThemeLibrary categoriesFor: #getWindowTheme:!**auto generated**!public! !
-!ThemeLibrary categoriesFor: #hitTestThemeBackground:hdc:iPartId:iStateId:dwOptions:pRect:hrgn:ptTest:pwHitTestCode:!**auto generated**!public! !
-!ThemeLibrary categoriesFor: #isAppThemed!**auto generated**!public! !
-!ThemeLibrary categoriesFor: #isThemeActive!**auto generated**!public! !
-!ThemeLibrary categoriesFor: #isThemeBackgroundPartiallyTransparent:iPartId:iStateId:!**auto generated**!public! !
-!ThemeLibrary categoriesFor: #isThemeDialogTextureEnabled:!**auto generated**!public! !
-!ThemeLibrary categoriesFor: #isThemePartDefined:iPartId:iStateId:!**auto generated**!public! !
-!ThemeLibrary categoriesFor: #onExit!private! !
-!ThemeLibrary categoriesFor: #onStartup!private! !
-!ThemeLibrary categoriesFor: #openThemeData:pszClassList:!**auto generated**!public! !
-!ThemeLibrary categoriesFor: #setThemeAppProperties:!**auto generated**!public! !
-!ThemeLibrary categoriesFor: #setWindowTheme:pszSubAppName:pszSubIdList:!**auto generated**!public! !
+!OS.ThemeLibrary categoriesFor: #closeThemeData:!**auto generated**!public! !
+!OS.ThemeLibrary categoriesFor: #drawThemeBackground:hdc:iPartId:iStateId:pRect:pClipRect:!**auto generated**!public! !
+!OS.ThemeLibrary categoriesFor: #drawThemeBackgroundEx:hdc:iPartId:iStateId:pRect:pOptions:!**auto generated**!public! !
+!OS.ThemeLibrary categoriesFor: #drawThemeEdge:hdc:iPartId:iStateId:pDestRect:uEdge:uFlags:pContentRect:!**auto generated**!public! !
+!OS.ThemeLibrary categoriesFor: #drawThemeIcon:hdc:iPartId:iStateId:pRect:himl:iImageIndex:!**auto generated**!public! !
+!OS.ThemeLibrary categoriesFor: #drawThemeParentBackground:hdc:prc:!**auto generated**!public! !
+!OS.ThemeLibrary categoriesFor: #drawThemeText:hdc:iPartId:iStateId:pszText:iCharCount:dwTextFlags:dwTextFlags2:pRect:!**auto generated**!public! !
+!OS.ThemeLibrary categoriesFor: #enableThemeDialogTexture:dwFlags:!**auto generated**!public! !
+!OS.ThemeLibrary categoriesFor: #enableTheming:!**auto generated**!public! !
+!OS.ThemeLibrary categoriesFor: #getCurrentThemeName:cchMaxNameChars:pszColorBuff:cchMaxColorChars:pszSizeBuff:cchMaxSizeChars:!**auto generated**!public! !
+!OS.ThemeLibrary categoriesFor: #getThemeAppProperties!**auto generated**!public! !
+!OS.ThemeLibrary categoriesFor: #getThemeBackgroundContentRect:hdc:iPartId:iStateId:pBoundingRect:pContentRect:!**auto generated**!public! !
+!OS.ThemeLibrary categoriesFor: #getThemeBackgroundExtent:hdc:iPartId:iStateId:pContentRect:pExtentRect:!**auto generated**!public! !
+!OS.ThemeLibrary categoriesFor: #getThemeBackgroundRegion:hdc:iPartId:iStateId:pRect:pRegion:!**auto generated**!public! !
+!OS.ThemeLibrary categoriesFor: #getThemeBool:iPartId:iStateId:iPropId:pfVal:!**auto generated**!public! !
+!OS.ThemeLibrary categoriesFor: #getThemeColor:iPartId:iStateId:iPropId:pColor:!**auto generated**!public! !
+!OS.ThemeLibrary categoriesFor: #getThemeDocumentationProperty:pszPropertyName:pszValueBuff:cchMaxValChars:!**auto generated**!public! !
+!OS.ThemeLibrary categoriesFor: #getThemeEnumValue:iPartId:iStateId:iPropId:piVal:!**auto generated**!public! !
+!OS.ThemeLibrary categoriesFor: #getThemeFilename:iPartId:iStateId:iPropId:pszThemeFileName:cchMaxBuffChars:!**auto generated**!public! !
+!OS.ThemeLibrary categoriesFor: #getThemeFont:hdc:iPartId:iStateId:iPropId:pFont:!**auto generated**!public! !
+!OS.ThemeLibrary categoriesFor: #getThemeInt:iPartId:iStateId:iPropId:piVal:!**auto generated**!public! !
+!OS.ThemeLibrary categoriesFor: #getThemeMargins:hdc:iPartId:iStateId:iPropId:prc:pMargins:!**auto generated**!public! !
+!OS.ThemeLibrary categoriesFor: #getThemeMetric:hdc:iPartId:iStateId:iPropId:piVal:!**auto generated**!public! !
+!OS.ThemeLibrary categoriesFor: #getThemePartSize:hdc:iPartId:iStateId:prc:eSize:psz:!**auto generated**!public! !
+!OS.ThemeLibrary categoriesFor: #getThemePosition:iPartId:iStateId:iPropId:pPoint:!**auto generated**!public! !
+!OS.ThemeLibrary categoriesFor: #getThemePropertyOrigin:iPartId:iStateId:iPropId:pOrigin:!**auto generated**!public! !
+!OS.ThemeLibrary categoriesFor: #getThemeRect:iPartId:iStateId:iPropId:pRect:!**auto generated**!public! !
+!OS.ThemeLibrary categoriesFor: #getThemeString:iPartId:iStateId:iPropId:pszBuff:cchMaxBuffChars:!**auto generated**!public! !
+!OS.ThemeLibrary categoriesFor: #getThemeSysBool:iBoolId:!**auto generated**!public! !
+!OS.ThemeLibrary categoriesFor: #getThemeSysColor:iColorId:!**auto generated**!public! !
+!OS.ThemeLibrary categoriesFor: #getThemeSysColorBrush:iColorId:!**auto generated**!public! !
+!OS.ThemeLibrary categoriesFor: #getThemeSysFont:iFontId:plf:!**auto generated**!public! !
+!OS.ThemeLibrary categoriesFor: #getThemeSysInt:iIntId:piValue:!**auto generated**!public! !
+!OS.ThemeLibrary categoriesFor: #getThemeSysSize:iSizeId:!**auto generated**!public! !
+!OS.ThemeLibrary categoriesFor: #getThemeSysString:iStringId:pszStringBuff:cchMaxStringChars:!**auto generated**!public! !
+!OS.ThemeLibrary categoriesFor: #getThemeTextExtent:hdc:iPartId:iStateId:pszText:iCharCount:dwTextFlags:pBoundingRect:pExtentRect:!**auto generated**!public! !
+!OS.ThemeLibrary categoriesFor: #getThemeTextMetrics:hdc:iPartId:iStateId:pTM:!**auto generated**!public! !
+!OS.ThemeLibrary categoriesFor: #getWindowTheme:!**auto generated**!public! !
+!OS.ThemeLibrary categoriesFor: #hitTestThemeBackground:hdc:iPartId:iStateId:dwOptions:pRect:hrgn:ptTest:pwHitTestCode:!**auto generated**!public! !
+!OS.ThemeLibrary categoriesFor: #isAppThemed!**auto generated**!public! !
+!OS.ThemeLibrary categoriesFor: #isThemeActive!**auto generated**!public! !
+!OS.ThemeLibrary categoriesFor: #isThemeBackgroundPartiallyTransparent:iPartId:iStateId:!**auto generated**!public! !
+!OS.ThemeLibrary categoriesFor: #isThemeDialogTextureEnabled:!**auto generated**!public! !
+!OS.ThemeLibrary categoriesFor: #isThemePartDefined:iPartId:iStateId:!**auto generated**!public! !
+!OS.ThemeLibrary categoriesFor: #onExit!private! !
+!OS.ThemeLibrary categoriesFor: #onStartup!private! !
+!OS.ThemeLibrary categoriesFor: #openThemeData:pszClassList:!**auto generated**!public! !
+!OS.ThemeLibrary categoriesFor: #setThemeAppProperties:!**auto generated**!public! !
+!OS.ThemeLibrary categoriesFor: #setWindowTheme:pszSubAppName:pszSubIdList:!**auto generated**!public! !
 
-!ThemeLibrary class methodsFor!
+!OS.ThemeLibrary class methodsFor!
 
 fileName
 	"Answer the host system file name for the library."
@@ -1048,7 +1048,7 @@ isAppThemed
 	^IsAppThemed!
 
 new
-	^(SystemMetrics current hasThemes 
+	^(SystemMetrics current hasThemes
 		ifTrue: [SystemMetrics current hasEnhancedThemes ifTrue: [VistaThemeLibrary] ifFalse: [self]]
 		ifFalse: [MockThemeLibrary]) basicNew!
 
@@ -1057,8 +1057,8 @@ onStartup2
 
 	default := nil.
 	IsAppThemed := self default isThemeActive and: [default isAppThemed]! !
-!ThemeLibrary class categoriesFor: #fileName!**auto generated**!constants!public! !
-!ThemeLibrary class categoriesFor: #isAppThemed!private!testing! !
-!ThemeLibrary class categoriesFor: #new!instance creation!public! !
-!ThemeLibrary class categoriesFor: #onStartup2!event handling!private! !
+!OS.ThemeLibrary class categoriesFor: #fileName!**auto generated**!constants!public! !
+!OS.ThemeLibrary class categoriesFor: #isAppThemed!private!testing! !
+!OS.ThemeLibrary class categoriesFor: #new!instance creation!public! !
+!OS.ThemeLibrary class categoriesFor: #onStartup2!event handling!private! !
 

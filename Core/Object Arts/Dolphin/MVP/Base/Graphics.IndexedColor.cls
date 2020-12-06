@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Color subclass: #IndexedColor
+Graphics.Color subclass: #'Graphics.IndexedColor'
 	instanceVariableNames: 'index'
 	classVariableNames: 'InstancesByIndex InstancesByName Names'
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-IndexedColor guid: (GUID fromString: '{87b4c53a-026e-11d3-9fd7-00a0cc3e4a32}')!
-IndexedColor comment: '`IndexedColor` instances represent the 16 standard colours that have been defined in Windows since its inception and that are always available in the standard system palette. There are actually 20 indexed colours, but 4 of these do not necessarily map to a fixed colour name.
+Graphics.IndexedColor guid: (Core.GUID fromString: '{87b4c53a-026e-11d3-9fd7-00a0cc3e4a32}')!
+Graphics.IndexedColor comment: '`IndexedColor` instances represent the 16 standard colours that have been defined in Windows since its inception and that are always available in the standard system palette. There are actually 20 indexed colours, but 4 of these do not necessarily map to a fixed colour name.
 
 As indexed colors are a legacy representation they are now soft-deprecated. They should be avoided in new code and in most circumstances where you might previously have received an `IndexedColor` from a `Color` instance creation method, you will now get an `RGB` instead. IndexedColors are no longer accessible by name through `Color class>>named:`. However, it is expected that `IndexedColor`s will continue to exist in pre-existing view resources and might result from calling certain older APIs.
 
@@ -32,8 +32,8 @@ Historically we have used a logical system to name the indexed colours, which co
  yellow		yellow
 
 In cases where the names are different, the common colours may also contain a slightly different colour with the same name as the Dolphin indexed colour name. An example is #darkCyan, which is a subtly different shade of turquoise to teal.'!
-!IndexedColor categoriesForClass!Drawing! !
-!IndexedColor methodsFor!
+!Graphics.IndexedColor categoriesForClass!Drawing! !
+!Graphics.IndexedColor methodsFor!
 
 asCOLORREF
 	"Answer the receiver's COLORREF encoding. This is basically an BGR encoding, but the high bits (that would be used for an alpha value in an ARGB) are used for some special values, either
@@ -54,7 +54,7 @@ asRGB
 	^Color fromRgbCode: self rgbCode!
 
 asRGBUsingNoPalette
-	Notification deprecated. "Use #asRGB"
+	Notification deprecated.	"Use #asRGB"
 	^self asRGB!
 
 asRGBUsingPalette: aPalette
@@ -134,22 +134,22 @@ stbSaveOn: anSTBOutFiler
 
 	"IndexedColors are soft-deprecated - upgrade them to equivalent named colours on save."
 	anSTBOutFiler nextPut: self asRGB! !
-!IndexedColor categoriesFor: #asCOLORREF!accessing!public! !
-!IndexedColor categoriesFor: #asParameter!converting!public! !
-!IndexedColor categoriesFor: #asRGB!converting!public!wine fix! !
-!IndexedColor categoriesFor: #asRGBUsingNoPalette!converting!public! !
-!IndexedColor categoriesFor: #asRGBUsingPalette:!converting!public! !
-!IndexedColor categoriesFor: #index!accessing!public! !
-!IndexedColor categoriesFor: #name!accessing!public! !
-!IndexedColor categoriesFor: #printOn:!development!printing!public! !
-!IndexedColor categoriesFor: #rgbCode!converting!public! !
-!IndexedColor categoriesFor: #rgbCodeFromPalette:!converting!public! !
-!IndexedColor categoriesFor: #rgbCodeFromStdPalette!converting!public! !
-!IndexedColor categoriesFor: #setIndex:!accessing!private! !
-!IndexedColor categoriesFor: #shallowCopy!copying!public! !
-!IndexedColor categoriesFor: #stbSaveOn:!binary filing!public! !
+!Graphics.IndexedColor categoriesFor: #asCOLORREF!accessing!public! !
+!Graphics.IndexedColor categoriesFor: #asParameter!converting!public! !
+!Graphics.IndexedColor categoriesFor: #asRGB!converting!public!wine fix! !
+!Graphics.IndexedColor categoriesFor: #asRGBUsingNoPalette!converting!public! !
+!Graphics.IndexedColor categoriesFor: #asRGBUsingPalette:!converting!public! !
+!Graphics.IndexedColor categoriesFor: #index!accessing!public! !
+!Graphics.IndexedColor categoriesFor: #name!accessing!public! !
+!Graphics.IndexedColor categoriesFor: #printOn:!development!printing!public! !
+!Graphics.IndexedColor categoriesFor: #rgbCode!converting!public! !
+!Graphics.IndexedColor categoriesFor: #rgbCodeFromPalette:!converting!public! !
+!Graphics.IndexedColor categoriesFor: #rgbCodeFromStdPalette!converting!public! !
+!Graphics.IndexedColor categoriesFor: #setIndex:!accessing!private! !
+!Graphics.IndexedColor categoriesFor: #shallowCopy!copying!public! !
+!Graphics.IndexedColor categoriesFor: #stbSaveOn:!binary filing!public! !
 
-!IndexedColor class methodsFor!
+!Graphics.IndexedColor class methodsFor!
 
 black
 	^self named: #black!
@@ -204,10 +204,10 @@ withIndex: anInteger
 	"Answer the unique <IndexedColor> whose index is the <integer> argument."
 
 	^InstancesByIndex at: anInteger! !
-!IndexedColor class categoriesFor: #black!common colors!public! !
-!IndexedColor class categoriesFor: #initialize!development!initializing!public! !
-!IndexedColor class categoriesFor: #named:!instance creation!named colors!public! !
-!IndexedColor class categoriesFor: #stbReadFrom:format:!binary filing!public! !
-!IndexedColor class categoriesFor: #white!common colors!public! !
-!IndexedColor class categoriesFor: #withIndex:!instance creation!public! !
+!Graphics.IndexedColor class categoriesFor: #black!common colors!public! !
+!Graphics.IndexedColor class categoriesFor: #initialize!development!initializing!public! !
+!Graphics.IndexedColor class categoriesFor: #named:!instance creation!named colors!public! !
+!Graphics.IndexedColor class categoriesFor: #stbReadFrom:format:!binary filing!public! !
+!Graphics.IndexedColor class categoriesFor: #white!common colors!public! !
+!Graphics.IndexedColor class categoriesFor: #withIndex:!instance creation!public! !
 

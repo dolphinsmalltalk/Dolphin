@@ -1,18 +1,18 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Object subclass: #LayoutManager
+Core.Object subclass: #'UI.LayoutManager'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-LayoutManager guid: (GUID fromString: '{87b4c497-026e-11d3-9fd7-00a0cc3e4a32}')!
-LayoutManager isAbstract: true!
-LayoutManager comment: 'LayoutManager is the abstract superclass for classes that wish to implement the <layoutManager> protocol for the automatic arrangement of views within a parent <compositeView>. Dolphin supplies a base set of general purpose concrete layout managers which are general purpose enough to cover most requirements. 
+UI.LayoutManager guid: (Core.GUID fromString: '{87b4c497-026e-11d3-9fd7-00a0cc3e4a32}')!
+UI.LayoutManager isNonInstantiable: true!
+UI.LayoutManager comment: 'LayoutManager is the abstract superclass for classes that wish to implement the <layoutManager> protocol for the automatic arrangement of views within a parent <compositeView>. Dolphin supplies a base set of general purpose concrete layout managers which are general purpose enough to cover most requirements. 
 
 To define a new layout manager you must implement the <layoutManager> protocol methods in [subclass responsibility], and you will probably want to override #preferredLayoutExtentOf:context: as well.'!
-!LayoutManager categoriesForClass!MVP-Layout Managers-Abstract! !
-!LayoutManager methodsFor!
+!UI.LayoutManager categoriesForClass!MVP-Layout Managers-Abstract! !
+!UI.LayoutManager methodsFor!
 
 arrangementOf: aView
 	"Answer the arrangement parameter of aView in the receiver. 
@@ -33,7 +33,7 @@ arrangementOf: aView put: anObject
 
 !
 
-layoutContainer: aContainerView 
+layoutContainer: aContainerView
 	"Lay out the managed sub-views of the <ContainerView> argument."
 
 	| context |
@@ -85,24 +85,24 @@ resolutionScaledBy: scale
 
 visibleSubViewsOf: aCompositeView context: aLayoutContext 
 	^aCompositeView managedSubViews select: [:each | aLayoutContext isViewVisible: each]! !
-!LayoutManager categoriesFor: #arrangementOf:!accessing!public! !
-!LayoutManager categoriesFor: #arrangementOf:put:!accessing!public! !
-!LayoutManager categoriesFor: #layoutContainer:!geometry!public! !
-!LayoutManager categoriesFor: #layoutContainer:context:!geometry!private! !
-!LayoutManager categoriesFor: #preferredLayoutExtentOf:context:!enquiries!public! !
-!LayoutManager categoriesFor: #removeSubView:!public!removing! !
-!LayoutManager categoriesFor: #reposition:to:!geometry!private! !
-!LayoutManager categoriesFor: #resize:to:!geometry!public! !
-!LayoutManager categoriesFor: #resolutionScaledBy:!geometry!private! !
-!LayoutManager categoriesFor: #visibleSubViewsOf:context:!helpers!private! !
+!UI.LayoutManager categoriesFor: #arrangementOf:!accessing!public! !
+!UI.LayoutManager categoriesFor: #arrangementOf:put:!accessing!public! !
+!UI.LayoutManager categoriesFor: #layoutContainer:!geometry!public! !
+!UI.LayoutManager categoriesFor: #layoutContainer:context:!geometry!private! !
+!UI.LayoutManager categoriesFor: #preferredLayoutExtentOf:context:!enquiries!public! !
+!UI.LayoutManager categoriesFor: #removeSubView:!public!removing! !
+!UI.LayoutManager categoriesFor: #reposition:to:!geometry!private! !
+!UI.LayoutManager categoriesFor: #resize:to:!geometry!public! !
+!UI.LayoutManager categoriesFor: #resolutionScaledBy:!geometry!private! !
+!UI.LayoutManager categoriesFor: #visibleSubViewsOf:context:!helpers!private! !
 
-LayoutManager methodProtocol: #layoutManager attributes: #(#readOnly) selectors: #(#arrangementOf: #arrangementOf:put: #layoutContainer: #preferredLayoutExtentOf:context: #removeSubView:)!
+UI.LayoutManager methodProtocol: #layoutManager attributes: #(#readOnly) selectors: #(#arrangementOf: #arrangementOf:put: #layoutContainer: #preferredLayoutExtentOf:context: #removeSubView:)!
 
-!LayoutManager class methodsFor!
+!UI.LayoutManager class methodsFor!
 
 new
 	"Answer an instance of the receiver. Instances require initialization"
 
 	^super new initialize! !
-!LayoutManager class categoriesFor: #new!instance creation!public! !
+!UI.LayoutManager class categoriesFor: #new!instance creation!public! !
 

@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-SharedPool subclass: #ButtonConstants
+Kernel.SharedPool subclass: #'OS.ButtonConstants'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -51,6 +51,7 @@ SharedPool subclass: #ButtonConstants
 		'BST_INDETERMINATE' -> 16r2.
 		'BST_UNCHECKED' -> 16r0
 	}!
-ButtonConstants guid: (GUID fromString: '{4468d603-0524-4246-aac6-40acaa431b19}')!
-ButtonConstants comment: ''!
-!ButtonConstants categoriesForClass!Unclassified! !
+OS.ButtonConstants guid: (Core.GUID fromString: '{4468d603-0524-4246-aac6-40acaa431b19}')!
+OS.ButtonConstants isNonInstantiable: true!
+OS.ButtonConstants comment: ''!
+!OS.ButtonConstants categoriesForClass!Unclassified! !

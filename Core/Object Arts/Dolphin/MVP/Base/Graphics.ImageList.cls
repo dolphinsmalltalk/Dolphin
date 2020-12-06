@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-GraphicsTool subclass: #WinImageList
+Graphics.GraphicsTool subclass: #'Graphics.ImageList'
 	instanceVariableNames: 'extent initialSize growBy createFlags'
 	classVariableNames: ''
-	poolDictionaries: 'CommCtrlConstants'
+	imports: #(#{OS.CommCtrlConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-WinImageList guid: (GUID fromString: '{87b4c639-026e-11d3-9fd7-00a0cc3e4a32}')!
-WinImageList comment: 'WinImageList encapsulates a Windows "image list", which itself can be characterised as a strip of images addressable by integer index.
+Graphics.ImageList guid: (Core.GUID fromString: '{87b4c639-026e-11d3-9fd7-00a0cc3e4a32}')!
+Graphics.ImageList comment: 'WinImageList encapsulates a Windows "image list", which itself can be characterised as a strip of images addressable by integer index.
 
 Instance Variables:
 	extent			<Point>. Size of the images in the list.
@@ -16,8 +16,8 @@ Instance Variables:
 	createFlags		<integer>. Variious flagss specified when the list was created.
 
 '!
-!WinImageList categoriesForClass!Graphics-Tools! !
-!WinImageList methodsFor!
+!Graphics.ImageList categoriesForClass!Graphics-Tools! !
+!Graphics.ImageList methodsFor!
 
 addBitmap: aBitmap
 	"Append the <Bitmap> argument to the list of images held by the receiver
@@ -25,7 +25,7 @@ addBitmap: aBitmap
 
 	^self addBitmap: aBitmap mask: nil!
 
-addBitmap: aBitmap mask: aColorOrNil 
+addBitmap: aBitmap mask: aColorOrNil
 	"Append the <Bitmap> argument to the list of images held by the receiver answering the
 	zero-based <integer> index at which it was added. The argument, aColor, specifies the mask
 	colour to be used; pixels in the bitmap of the specified colour are converted to black, and
@@ -46,7 +46,7 @@ addBitmap: aBitmap mask: aColorOrNil
 	"#305 - We must make sure the bitmap is not selected into a DC, or the result will be a blank image in the list
 	 	this won't damage the Bitmap in any way, because the canvas can be lazily recreated."
 	bmp freeDC.
-	^CommCtrlLibrary default 
+	^CommCtrlLibrary default
 		imageList_AddMasked: hImgList
 		hbmImage: bmp asParameter
 		crMask: (aColorOrNil isNil ifTrue: [CLR_NONE] ifFalse: [aColorOrNil asCOLORREF])!
@@ -96,10 +96,10 @@ basicFree
 
 	CommCtrlLibrary default imageList_Destroy: handle!
 
-beginDragImage: anInteger hotSpotX: x hotSpotY: y 
+beginDragImage: anInteger hotSpotX: x hotSpotY: y
 	"Start a drag process using the image at the offset anInteger in the receiver."
 
-	^CommCtrlLibrary default 
+	^CommCtrlLibrary default
 		imageList_BeginDrag: handle
 		iTrack: anInteger
 		dxHotspot: x
@@ -120,7 +120,7 @@ createHandle
 	This may be installed as the handle of the receiver if called from #basicRealize or it
 	may be used by third parties who require a duplicate handle"
 
-	^CommCtrlLibrary default 
+	^CommCtrlLibrary default
 		imageList_Create: extent x
 		cy: extent y
 		flags: createFlags
@@ -133,27 +133,27 @@ depth
 
 	^createFlags bitAnd: ILC_COLORDB!
 
-dragEnter: aView at: aPoint 
+dragEnter: aView at: aPoint
 	"The drag for which the receiver is supplying images has entered the specified
 	<View> at the specified point."
 
-	^CommCtrlLibrary default 
+	^CommCtrlLibrary default
 		imageList_DragEnter: aView asParameter
 		x: aPoint x
 		y: aPoint y!
 
-dragLeave: aView 
+dragLeave: aView
 	"The drag for which the receiver is supplying images has exited the specified
 	<View>."
 
 	^CommCtrlLibrary default imageList_DragLeave: aView asParameter!
 
-dragMoveTo: aPoint 
+dragMoveTo: aPoint
 	"Move the drag image to (x, y)."
 
 	^CommCtrlLibrary default imageList_DragMove: aPoint x y: aPoint y!
 
-dragShow: aBoolean 
+dragShow: aBoolean
 	"Show/hide the drag image as a 'fake' cursor."
 
 	^CommCtrlLibrary default imageList_DragShowNolock: aBoolean!
@@ -182,11 +182,11 @@ draw: imageIndexInteger on: aCanvas at: aPoint backcolor: backColor forecolor: f
 		rgbFg: (foreColor isNil ifTrue: [CLR_DEFAULT] ifFalse: [foreColor asCOLORREF])
 		fStyle: flagsInteger!
 
-draw: imageIndexInteger on: aCanvas at: aPoint flags: flagsInteger 
+draw: imageIndexInteger on: aCanvas at: aPoint flags: flagsInteger
 	"Draw the image at <integer> index, imageIndex, in the receiver onto the <Canvas>,
 	target, at the <Point>, position, with <integer> style mask, flags."
 
-	^CommCtrlLibrary default 
+	^CommCtrlLibrary default
 		imageList_Draw: self asParameter
 		i: imageIndexInteger - 1
 		hdcDst: aCanvas asParameter
@@ -203,21 +203,21 @@ extent
 	"Answer a <Point>, the x any y coordinates of which specify the width and height (respectively)
 	of the bitmaps held by the receiver."
 
-	^extent 
+	^extent
 		ifNil: 
 			[| cx cy |
 			cx := SDWORD new.
 			cy := SDWORD new.
-			CommCtrlLibrary default 
+			CommCtrlLibrary default
 				imageList_GetIconSize: self handle
 				cx: cx
 				cy: cy.
 			extent := cx asInteger @ cy asInteger]!
 
-getIcon: anIntegerIndex style: anIntegerStyle 
+getIcon: anIntegerIndex style: anIntegerStyle
 	"Answer an instance of Icon generated from the image at anIntegerIndex."
 
-	^Icon fromOwnedHandle: (CommCtrlLibrary default 
+	^Icon fromOwnedHandle: (CommCtrlLibrary default
 				imageList_GetIcon: handle
 				i: anIntegerIndex - 1
 				flags: anIntegerStyle)!
@@ -248,10 +248,10 @@ isPersistent
 
 	^false!
 
-setDragCursorImage: anInteger hotSpotX: x hotSpotY: y 
+setDragCursorImage: anInteger hotSpotX: x hotSpotY: y
 	"Start a drag process using the image at the offset anInteger in the receiver."
 
-	^CommCtrlLibrary default 
+	^CommCtrlLibrary default
 		imageList_SetDragCursorImage: handle
 		iDrag: anInteger
 		dxHotspot: x
@@ -265,37 +265,37 @@ setExtent: aPoint depth: bppInteger initialSize: sizeInteger growBy: growByInteg
 	initialSize := sizeInteger.
 	growBy := growByInteger.
 	createFlags := (aBoolean ifTrue: [ILC_MASK] ifFalse: [0]) bitOr: bppInteger! !
-!WinImageList categoriesFor: #addBitmap:!adding!public! !
-!WinImageList categoriesFor: #addBitmap:mask:!adding!public! !
-!WinImageList categoriesFor: #addIcon:!adding!public! !
-!WinImageList categoriesFor: #addImage:!adding!public! !
-!WinImageList categoriesFor: #addTransparentBitmap:!adding!public! !
-!WinImageList categoriesFor: #backcolor!accessing!public! !
-!WinImageList categoriesFor: #backcolor:!accessing!public! !
-!WinImageList categoriesFor: #basicFree!private!realizing/unrealizing! !
-!WinImageList categoriesFor: #beginDragImage:hotSpotX:hotSpotY:!modes!public! !
-!WinImageList categoriesFor: #copy!copying!public! !
-!WinImageList categoriesFor: #copyHandle!private!realizing/unrealizing! !
-!WinImageList categoriesFor: #createHandle!private!realizing/unrealizing! !
-!WinImageList categoriesFor: #depth!accessing!public! !
-!WinImageList categoriesFor: #dragEnter:at:!drag & drop!public! !
-!WinImageList categoriesFor: #dragLeave:!drag & drop!public! !
-!WinImageList categoriesFor: #dragMoveTo:!drag & drop!public! !
-!WinImageList categoriesFor: #dragShow:!drag & drop!public! !
-!WinImageList categoriesFor: #draw:on:at:!drawing!public! !
-!WinImageList categoriesFor: #draw:on:at:backcolor:forecolor:flags:!drawing-bitmaps!public! !
-!WinImageList categoriesFor: #draw:on:at:flags:!drawing-bitmaps!public! !
-!WinImageList categoriesFor: #endDrag!drag & drop!public! !
-!WinImageList categoriesFor: #extent!accessing!public! !
-!WinImageList categoriesFor: #getIcon:style:!accessing!public! !
-!WinImageList categoriesFor: #getImageCount!accessing!public! !
-!WinImageList categoriesFor: #hasMask!private!testing! !
-!WinImageList categoriesFor: #initialize!initializing!public! !
-!WinImageList categoriesFor: #isPersistent!private!testing! !
-!WinImageList categoriesFor: #setDragCursorImage:hotSpotX:hotSpotY:!modes!public! !
-!WinImageList categoriesFor: #setExtent:depth:initialSize:growBy:masked:!accessing!private! !
+!Graphics.ImageList categoriesFor: #addBitmap:!adding!public! !
+!Graphics.ImageList categoriesFor: #addBitmap:mask:!adding!public! !
+!Graphics.ImageList categoriesFor: #addIcon:!adding!public! !
+!Graphics.ImageList categoriesFor: #addImage:!adding!public! !
+!Graphics.ImageList categoriesFor: #addTransparentBitmap:!adding!public! !
+!Graphics.ImageList categoriesFor: #backcolor!accessing!public! !
+!Graphics.ImageList categoriesFor: #backcolor:!accessing!public! !
+!Graphics.ImageList categoriesFor: #basicFree!private!realizing/unrealizing! !
+!Graphics.ImageList categoriesFor: #beginDragImage:hotSpotX:hotSpotY:!modes!public! !
+!Graphics.ImageList categoriesFor: #copy!copying!public! !
+!Graphics.ImageList categoriesFor: #copyHandle!private!realizing/unrealizing! !
+!Graphics.ImageList categoriesFor: #createHandle!private!realizing/unrealizing! !
+!Graphics.ImageList categoriesFor: #depth!accessing!public! !
+!Graphics.ImageList categoriesFor: #dragEnter:at:!drag & drop!public! !
+!Graphics.ImageList categoriesFor: #dragLeave:!drag & drop!public! !
+!Graphics.ImageList categoriesFor: #dragMoveTo:!drag & drop!public! !
+!Graphics.ImageList categoriesFor: #dragShow:!drag & drop!public! !
+!Graphics.ImageList categoriesFor: #draw:on:at:!drawing!public! !
+!Graphics.ImageList categoriesFor: #draw:on:at:backcolor:forecolor:flags:!drawing-bitmaps!public! !
+!Graphics.ImageList categoriesFor: #draw:on:at:flags:!drawing-bitmaps!public! !
+!Graphics.ImageList categoriesFor: #endDrag!drag & drop!public! !
+!Graphics.ImageList categoriesFor: #extent!accessing!public! !
+!Graphics.ImageList categoriesFor: #getIcon:style:!accessing!public! !
+!Graphics.ImageList categoriesFor: #getImageCount!accessing!public! !
+!Graphics.ImageList categoriesFor: #hasMask!private!testing! !
+!Graphics.ImageList categoriesFor: #initialize!initializing!public! !
+!Graphics.ImageList categoriesFor: #isPersistent!private!testing! !
+!Graphics.ImageList categoriesFor: #setDragCursorImage:hotSpotX:hotSpotY:!modes!public! !
+!Graphics.ImageList categoriesFor: #setExtent:depth:initialSize:growBy:masked:!accessing!private! !
 
-!WinImageList class methodsFor!
+!Graphics.ImageList class methodsFor!
 
 defaultColorDepth
 	"Answer the default color depth based on that of the current screen driver."
@@ -377,15 +377,15 @@ newExtent: aPoint masked: aBoolean
 		newExtent: aPoint
 		initialSize: self defaultInitialSize
 		masked: aBoolean! !
-!WinImageList class categoriesFor: #defaultColorDepth!constants!public! !
-!WinImageList class categoriesFor: #defaultGrowthGranularity!constants!public! !
-!WinImageList class categoriesFor: #defaultIconFlags!constants!public! !
-!WinImageList class categoriesFor: #defaultImageFlags!constants!public! !
-!WinImageList class categoriesFor: #defaultInitialSize!constants!public! !
-!WinImageList class categoriesFor: #icon!constants!public! !
-!WinImageList class categoriesFor: #newExtent:!instance creation!public! !
-!WinImageList class categoriesFor: #newExtent:depth:initialSize:growBy:masked:!instance creation!public! !
-!WinImageList class categoriesFor: #newExtent:depth:masked:!instance creation!public! !
-!WinImageList class categoriesFor: #newExtent:initialSize:masked:!instance creation!public! !
-!WinImageList class categoriesFor: #newExtent:masked:!instance creation!public! !
+!Graphics.ImageList class categoriesFor: #defaultColorDepth!constants!public! !
+!Graphics.ImageList class categoriesFor: #defaultGrowthGranularity!constants!public! !
+!Graphics.ImageList class categoriesFor: #defaultIconFlags!constants!public! !
+!Graphics.ImageList class categoriesFor: #defaultImageFlags!constants!public! !
+!Graphics.ImageList class categoriesFor: #defaultInitialSize!constants!public! !
+!Graphics.ImageList class categoriesFor: #icon!constants!public! !
+!Graphics.ImageList class categoriesFor: #newExtent:!instance creation!public! !
+!Graphics.ImageList class categoriesFor: #newExtent:depth:initialSize:growBy:masked:!instance creation!public! !
+!Graphics.ImageList class categoriesFor: #newExtent:depth:masked:!instance creation!public! !
+!Graphics.ImageList class categoriesFor: #newExtent:initialSize:masked:!instance creation!public! !
+!Graphics.ImageList class categoriesFor: #newExtent:masked:!instance creation!public! !
 

@@ -1,16 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Menu subclass: #MenuBar
+UI.Menu subclass: #'UI.MenuBar'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-MenuBar guid: (GUID fromString: '{87b4c641-026e-11d3-9fd7-00a0cc3e4a32}')!
-MenuBar comment: 'MenuBar represents the special class of menus drawn horizontally across the top of the client area of a top-level view, i.e. the menu bar.
+UI.MenuBar guid: (Core.GUID fromString: '{87b4c641-026e-11d3-9fd7-00a0cc3e4a32}')!
+UI.MenuBar comment: 'MenuBar represents the special class of menus drawn horizontally across the top of the client area of a top-level view, i.e. the menu bar.
 '!
-!MenuBar categoriesForClass!Graphics-Tools! !
-!MenuBar methodsFor!
+!UI.MenuBar categoriesForClass!Graphics-Tools! !
+!UI.MenuBar methodsFor!
 
 createHandle
 	"Private - Answer an external handle to a new menu."
@@ -30,7 +30,7 @@ printOn: aStream
 	aStream basicPrint: self
 !
 
-queryAlong: aCommandPolicy 
+queryAlong: aCommandPolicy
 	"Answer a <CommandQuery> reflecting the current state of the receiver's command for the
 	specified <commandPolicy>. We want top-level MenuBars to be enabled by default."
 
@@ -45,9 +45,9 @@ showIn: aWindow position: aPos
 	"Private - Show the receiver in aWindow at aPos."
 
 	^self shouldNotImplement! !
-!MenuBar categoriesFor: #createHandle!private!realizing/unrealizing! !
-!MenuBar categoriesFor: #isMenuBar!public!testing! !
-!MenuBar categoriesFor: #printOn:!printing!public! !
-!MenuBar categoriesFor: #queryAlong:!operations!public! !
-!MenuBar categoriesFor: #showIn:position:!drawing!private! !
+!UI.MenuBar categoriesFor: #createHandle!private!realizing/unrealizing! !
+!UI.MenuBar categoriesFor: #isMenuBar!public!testing! !
+!UI.MenuBar categoriesFor: #printOn:!printing!public! !
+!UI.MenuBar categoriesFor: #queryAlong:!operations!public! !
+!UI.MenuBar categoriesFor: #showIn:position:!drawing!private! !
 

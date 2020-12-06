@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-CommandPolicy subclass: #DelegatingCommandPolicy
+UI.CommandPolicy subclass: #'UI.DelegatingCommandPolicy'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-DelegatingCommandPolicy guid: (GUID fromString: '{aba1d303-40c8-44b1-8bc7-bd99e0efa423}')!
-DelegatingCommandPolicy comment: ''!
-!DelegatingCommandPolicy categoriesForClass!Unclassified! !
-!DelegatingCommandPolicy methodsFor!
+UI.DelegatingCommandPolicy guid: (Core.GUID fromString: '{aba1d303-40c8-44b1-8bc7-bd99e0efa423}')!
+UI.DelegatingCommandPolicy comment: ''!
+!UI.DelegatingCommandPolicy categoriesForClass!Unclassified! !
+!UI.DelegatingCommandPolicy methodsFor!
 
 visitPresenter: presenter
 	"Visit the <presenter>, presenter, as the next in the chain-of-command, 
@@ -18,5 +18,5 @@ visitPresenter: presenter
 	to the parent presenter."
 
 	^presenter addToCommandRoute: self! !
-!DelegatingCommandPolicy categoriesFor: #visitPresenter:!operations!private! !
+!UI.DelegatingCommandPolicy categoriesFor: #visitPresenter:!operations!private! !
 

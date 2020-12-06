@@ -1,16 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-SessionManager subclass: #GUISessionManager
+Core.SessionManager subclass: #'UI.GUISessionManager'
 	instanceVariableNames: 'savedWindows'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'NoSplashMask' -> 16r2.
 		'UnattendedMask' -> 16r4
 	}!
-GUISessionManager guid: (GUID fromString: '{81bc839c-bcd6-4502-a491-418ed5a109e6}')!
-GUISessionManager comment: 'GUISessionManager is the class of <SessionManager>s used to manage the life-cycle of a graphical (as opposed to command line, or console) application.
+UI.GUISessionManager guid: (Core.GUID fromString: '{81bc839c-bcd6-4502-a491-418ed5a109e6}')!
+UI.GUISessionManager comment: 'GUISessionManager is the class of <SessionManager>s used to manage the life-cycle of a graphical (as opposed to command line, or console) application.
 
 Note that Dolphin GUI applications can access the console and standard I/O streams, but a separate console window will be opened.
 
@@ -18,8 +18,8 @@ Instance Variables:
 	savedWindows	<UndefinedObject>, or <Array> of <ViewState>. Saved state of open windows (image save/load)
 
 '!
-!GUISessionManager categoriesForClass!System-Support! !
-!GUISessionManager methodsFor!
+!UI.GUISessionManager categoriesForClass!System-Support! !
+!UI.GUISessionManager methodsFor!
 
 allocConsole
 	"Private - Open a console window for this session."
@@ -115,9 +115,8 @@ resourceManager
 restoreWindowState
 	"Private - Restore the state of the persistant top-level windows."
 
-	savedWindows notNil ifTrue: [
-		savedWindows do: [:each | 
-			[each restore] on: ProcessTermination do: [:e |]]]!
+	savedWindows notNil
+		ifTrue: [savedWindows do: [:each | [each restore] on: ProcessTermination do: [:e | ]]]!
 
 saveSessionState
 	"Save down any session state that needs to be preserved and which is not automatically
@@ -130,9 +129,8 @@ saveWindowState
 	"Private - Save the state of the top-level windows."
 
 	inputState purgeDeadWindows.
-	savedWindows := self topLevelWindowsInZOrder reverse collect: [ :w | ViewState recordStateOf: w forRecreate: false]
-
-!
+	savedWindows := self topLevelWindowsInZOrder reverse
+				collect: [:w | ViewState recordStateOf: w forRecreate: false]!
 
 showSplash
 	"Show a splash screen for this session. Can be overidden in subclasses to bring up
@@ -180,30 +178,30 @@ windowSystemStartup
 
 	#(#{Canvas} #{GraphicsTool} #{Clipboard} #{View} #{ToolbarIconButton} #{Command})
 		do: [:s | s ifDefined: [:c | c onStartup]]! !
-!GUISessionManager categoriesFor: #allocConsole!operations!private! !
-!GUISessionManager categoriesFor: #basicShutdown!operations-shutdown!private! !
-!GUISessionManager categoriesFor: #basicTertiaryStartup!operations-startup!public! !
-!GUISessionManager categoriesFor: #clearSessionState!operations!public! !
-!GUISessionManager categoriesFor: #clearWindowState!operations-saving!private! !
-!GUISessionManager categoriesFor: #commandLineParser!helpers!private! !
-!GUISessionManager categoriesFor: #disableWindowGhosting!helpers!public! !
-!GUISessionManager categoriesFor: #inputStateClass!constants!private! !
-!GUISessionManager categoriesFor: #isUnattended!public!testing! !
-!GUISessionManager categoriesFor: #onSettingChanged:!event handling!private! !
-!GUISessionManager categoriesFor: #parseCmdLineFlags!operations-startup!private! !
-!GUISessionManager categoriesFor: #resourceManager!accessing!public! !
-!GUISessionManager categoriesFor: #restoreWindowState!operations-startup!private! !
-!GUISessionManager categoriesFor: #saveSessionState!operations!public! !
-!GUISessionManager categoriesFor: #saveWindowState!operations-saving!private! !
-!GUISessionManager categoriesFor: #showSplash!operations!public! !
-!GUISessionManager categoriesFor: #startUI!operations-startup!public! !
-!GUISessionManager categoriesFor: #tertiaryStartup!operations-startup!public! !
-!GUISessionManager categoriesFor: #topLevelWindows!accessing!public! !
-!GUISessionManager categoriesFor: #topLevelWindowsInZOrder!accessing!public! !
-!GUISessionManager categoriesFor: #windowSystemShutdown!operations-shutdown!private! !
-!GUISessionManager categoriesFor: #windowSystemStartup!operations-startup!private! !
+!UI.GUISessionManager categoriesFor: #allocConsole!operations!private! !
+!UI.GUISessionManager categoriesFor: #basicShutdown!operations-shutdown!private! !
+!UI.GUISessionManager categoriesFor: #basicTertiaryStartup!operations-startup!public! !
+!UI.GUISessionManager categoriesFor: #clearSessionState!operations!public! !
+!UI.GUISessionManager categoriesFor: #clearWindowState!operations-saving!private! !
+!UI.GUISessionManager categoriesFor: #commandLineParser!helpers!private! !
+!UI.GUISessionManager categoriesFor: #disableWindowGhosting!helpers!public! !
+!UI.GUISessionManager categoriesFor: #inputStateClass!constants!private! !
+!UI.GUISessionManager categoriesFor: #isUnattended!public!testing! !
+!UI.GUISessionManager categoriesFor: #onSettingChanged:!event handling!private! !
+!UI.GUISessionManager categoriesFor: #parseCmdLineFlags!operations-startup!private! !
+!UI.GUISessionManager categoriesFor: #resourceManager!accessing!public! !
+!UI.GUISessionManager categoriesFor: #restoreWindowState!operations-startup!private! !
+!UI.GUISessionManager categoriesFor: #saveSessionState!operations!public! !
+!UI.GUISessionManager categoriesFor: #saveWindowState!operations-saving!private! !
+!UI.GUISessionManager categoriesFor: #showSplash!operations!public! !
+!UI.GUISessionManager categoriesFor: #startUI!operations-startup!public! !
+!UI.GUISessionManager categoriesFor: #tertiaryStartup!operations-startup!public! !
+!UI.GUISessionManager categoriesFor: #topLevelWindows!accessing!public! !
+!UI.GUISessionManager categoriesFor: #topLevelWindowsInZOrder!accessing!public! !
+!UI.GUISessionManager categoriesFor: #windowSystemShutdown!operations-shutdown!private! !
+!UI.GUISessionManager categoriesFor: #windowSystemStartup!operations-startup!private! !
 
-!GUISessionManager class methodsFor!
+!UI.GUISessionManager class methodsFor!
 
 icon
 	"Answers an Icon that can be used to represent this class"
@@ -215,6 +213,6 @@ isConsoleApplication
 	(as opposed to a GUI application, which is a completely separate thing under Windows)."
 
 	^false! !
-!GUISessionManager class categoriesFor: #icon!constants!development!public! !
-!GUISessionManager class categoriesFor: #isConsoleApplication!public!testing! !
+!UI.GUISessionManager class categoriesFor: #icon!constants!development!public! !
+!UI.GUISessionManager class categoriesFor: #isConsoleApplication!public!testing! !
 

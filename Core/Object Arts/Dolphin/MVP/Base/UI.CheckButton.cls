@@ -1,14 +1,14 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ValueConvertingControlView subclass: #CheckButton
+UI.ValueConvertingControlView subclass: #'UI.CheckButton'
 	instanceVariableNames: 'image'
 	classVariableNames: 'AlignmentMap'
-	poolDictionaries: 'ButtonConstants'
+	imports: #(#{OS.ButtonConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-CheckButton guid: (GUID fromString: '{e7a5424e-24cd-4389-a849-591db02a92d0}')!
-CheckButton isAbstract: true!
-CheckButton comment: 'CheckButton is the abstract subclass of <valueView>s implementing the Windows "BUTTON" class in checkbox and radio button styles. The <valueModel> associated with a CheckButton must alway yield a <boolean> value once mapped through the installed type converter, although nil is also an acceptable value for a <CheckBox> in 3-state mode. A CheckButton will normally be used in conjunction with either a <BooleanPresenter>, or in a group connected to a <RadioButtonSetPresenter>.
+UI.CheckButton guid: (Core.GUID fromString: '{e7a5424e-24cd-4389-a849-591db02a92d0}')!
+UI.CheckButton isNonInstantiable: true!
+UI.CheckButton comment: 'CheckButton is the abstract subclass of <valueView>s implementing the Windows "BUTTON" class in checkbox and radio button styles. The <valueModel> associated with a CheckButton must alway yield a <boolean> value once mapped through the installed type converter, although nil is also an acceptable value for a <CheckBox> in 3-state mode. A CheckButton will normally be used in conjunction with either a <BooleanPresenter>, or in a group connected to a <RadioButtonSetPresenter>.
 
 The text in a button control can be aligned in various ways (this may also affect the alignment of any image displayed in the button):
 		#left			- left edge, vertically centred
@@ -27,8 +27,8 @@ Instance Variables:
 Class Variables:
 	AlignmentMap	<LookupTable> mapping the alignment modes listed above to the corresponding integer flags.
 '!
-!CheckButton categoriesForClass!MVP-Views! !
-!CheckButton methodsFor!
+!UI.CheckButton categoriesForClass!MVP-Views! !
+!UI.CheckButton methodsFor!
 
 alignment
 	"Answer a <Symbol> naming the alignment of the text and graphic in the associated BUTTON
@@ -142,22 +142,22 @@ onViewCreated
 
 	super onViewCreated.
 	self image: self image! !
-!CheckButton categoriesFor: #alignment!accessing!public! !
-!CheckButton categoriesFor: #alignment:!accessing!public! !
-!CheckButton categoriesFor: #basicWindowStyle!constants!private! !
-!CheckButton categoriesFor: #command:id:!commands!private! !
-!CheckButton categoriesFor: #defaultWindowStyle!constants!private! !
-!CheckButton categoriesFor: #displayValue!private!updating! !
-!CheckButton categoriesFor: #displayValue:!private!updating! !
-!CheckButton categoriesFor: #hasLeftText!accessing-styles!public! !
-!CheckButton categoriesFor: #hasLeftText:!accessing-styles!public! !
-!CheckButton categoriesFor: #image!accessing!public! !
-!CheckButton categoriesFor: #image:!accessing!public! !
-!CheckButton categoriesFor: #isPushLike!accessing-styles!public! !
-!CheckButton categoriesFor: #isPushLike:!accessing-styles!public! !
-!CheckButton categoriesFor: #onViewCreated!event handling!public! !
+!UI.CheckButton categoriesFor: #alignment!accessing!public! !
+!UI.CheckButton categoriesFor: #alignment:!accessing!public! !
+!UI.CheckButton categoriesFor: #basicWindowStyle!constants!private! !
+!UI.CheckButton categoriesFor: #command:id:!commands!private! !
+!UI.CheckButton categoriesFor: #defaultWindowStyle!constants!private! !
+!UI.CheckButton categoriesFor: #displayValue!private!updating! !
+!UI.CheckButton categoriesFor: #displayValue:!private!updating! !
+!UI.CheckButton categoriesFor: #hasLeftText!accessing-styles!public! !
+!UI.CheckButton categoriesFor: #hasLeftText:!accessing-styles!public! !
+!UI.CheckButton categoriesFor: #image!accessing!public! !
+!UI.CheckButton categoriesFor: #image:!accessing!public! !
+!UI.CheckButton categoriesFor: #isPushLike!accessing-styles!public! !
+!UI.CheckButton categoriesFor: #isPushLike:!accessing-styles!public! !
+!UI.CheckButton categoriesFor: #onViewCreated!event handling!public! !
 
-!CheckButton class methodsFor!
+!UI.CheckButton class methodsFor!
 
 defaultModel
 	"Answer a default model to be assigned to the receiver when it is initialized."
@@ -191,8 +191,8 @@ winClassName
 	"Private - Answer the name of the Windows window class to use when realising the receiver."
 
 	^'BUTTON'! !
-!CheckButton class categoriesFor: #defaultModel!models!public! !
-!CheckButton class categoriesFor: #initialize!development!initializing!private! !
-!CheckButton class categoriesFor: #themePartName!accessing!public! !
-!CheckButton class categoriesFor: #winClassName!constants!private! !
+!UI.CheckButton class categoriesFor: #defaultModel!models!public! !
+!UI.CheckButton class categoriesFor: #initialize!development!initializing!private! !
+!UI.CheckButton class categoriesFor: #themePartName!accessing!public! !
+!UI.CheckButton class categoriesFor: #winClassName!constants!private! !
 

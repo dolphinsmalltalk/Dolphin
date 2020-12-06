@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Win32Structure subclass: #SCROLLINFO
+OS.Win32Structure subclass: #'OS.SCROLLINFO'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_dwSize' -> 16r0.
@@ -14,10 +14,10 @@ Win32Structure subclass: #SCROLLINFO
 		'_OffsetOf_nPos' -> 16r14.
 		'_OffsetOf_nTrackPos' -> 16r18
 	}!
-SCROLLINFO guid: (GUID fromString: '{87b4c60f-026e-11d3-9fd7-00a0cc3e4a32}')!
-SCROLLINFO comment: ''!
-!SCROLLINFO categoriesForClass!External-Data-Structured-Win32! !
-!SCROLLINFO methodsFor!
+OS.SCROLLINFO guid: (Core.GUID fromString: '{87b4c60f-026e-11d3-9fd7-00a0cc3e4a32}')!
+OS.SCROLLINFO comment: ''!
+!OS.SCROLLINFO categoriesForClass!External-Data-Structured-Win32! !
+!OS.SCROLLINFO methodsFor!
 
 dwSize: anInteger
 	"Set the receiver's 'dwSize' field to the value of the argument, anInteger"
@@ -121,27 +121,27 @@ range: anInterval
 		nMin: anInterval start;
 		nMax: anInterval stop;
 		maskIn: SIF_RANGE! !
-!SCROLLINFO categoriesFor: #dwSize:!**compiled accessors**!public! !
-!SCROLLINFO categoriesFor: #fMask!**compiled accessors**!public! !
-!SCROLLINFO categoriesFor: #fMask:!**compiled accessors**!public! !
-!SCROLLINFO categoriesFor: #maskIn:!accessing!public! !
-!SCROLLINFO categoriesFor: #nMax!**compiled accessors**!public! !
-!SCROLLINFO categoriesFor: #nMax:!**compiled accessors**!public! !
-!SCROLLINFO categoriesFor: #nMin!**compiled accessors**!public! !
-!SCROLLINFO categoriesFor: #nMin:!**compiled accessors**!public! !
-!SCROLLINFO categoriesFor: #nPage!**compiled accessors**!public! !
-!SCROLLINFO categoriesFor: #nPage:!**compiled accessors**!public! !
-!SCROLLINFO categoriesFor: #nPos!**compiled accessors**!public! !
-!SCROLLINFO categoriesFor: #nPos:!**compiled accessors**!public! !
-!SCROLLINFO categoriesFor: #nTrackPos!**compiled accessors**!public! !
-!SCROLLINFO categoriesFor: #page!accessing!public! !
-!SCROLLINFO categoriesFor: #page:!accessing!public! !
-!SCROLLINFO categoriesFor: #pos!accessing!public! !
-!SCROLLINFO categoriesFor: #pos:!accessing!public! !
-!SCROLLINFO categoriesFor: #range!accessing!public! !
-!SCROLLINFO categoriesFor: #range:!accessing!public! !
+!OS.SCROLLINFO categoriesFor: #dwSize:!**compiled accessors**!public! !
+!OS.SCROLLINFO categoriesFor: #fMask!**compiled accessors**!public! !
+!OS.SCROLLINFO categoriesFor: #fMask:!**compiled accessors**!public! !
+!OS.SCROLLINFO categoriesFor: #maskIn:!accessing!public! !
+!OS.SCROLLINFO categoriesFor: #nMax!**compiled accessors**!public! !
+!OS.SCROLLINFO categoriesFor: #nMax:!**compiled accessors**!public! !
+!OS.SCROLLINFO categoriesFor: #nMin!**compiled accessors**!public! !
+!OS.SCROLLINFO categoriesFor: #nMin:!**compiled accessors**!public! !
+!OS.SCROLLINFO categoriesFor: #nPage!**compiled accessors**!public! !
+!OS.SCROLLINFO categoriesFor: #nPage:!**compiled accessors**!public! !
+!OS.SCROLLINFO categoriesFor: #nPos!**compiled accessors**!public! !
+!OS.SCROLLINFO categoriesFor: #nPos:!**compiled accessors**!public! !
+!OS.SCROLLINFO categoriesFor: #nTrackPos!**compiled accessors**!public! !
+!OS.SCROLLINFO categoriesFor: #page!accessing!public! !
+!OS.SCROLLINFO categoriesFor: #page:!accessing!public! !
+!OS.SCROLLINFO categoriesFor: #pos!accessing!public! !
+!OS.SCROLLINFO categoriesFor: #pos:!accessing!public! !
+!OS.SCROLLINFO categoriesFor: #range!accessing!public! !
+!OS.SCROLLINFO categoriesFor: #range:!accessing!public! !
 
-!SCROLLINFO class methodsFor!
+!OS.SCROLLINFO class methodsFor!
 
 defineFields
 	"Define the layout of the Win32 SCROLLINFO structure
@@ -159,17 +159,17 @@ defineFields
 		SCROLLINFO; 
 	typedef SCROLLINFO FAR *LPSCROLLINFO;"
 
-	self 
+	self
 		defineField: #dwSize type: DWORDField writeOnly beOverride;
 		defineField: #fMask type: DWORDField new;
 		defineField: #nMin type: SDWORDField new;
 		defineField: #nMax type: SDWORDField new;
 		defineField: #nPage type: DWORDField new;
 		defineField: #nPos type: SDWORDField new;
-		defineField: #nTrackPos type: SDWORDField readOnly "cannot be set"!
+		defineField: #nTrackPos type: SDWORDField readOnly	"cannot be set"!
 
 getFieldNames
 	^#(#dwSize #fMask #nMin #nMax #nPage #nPos #nTrackPos)! !
-!SCROLLINFO class categoriesFor: #defineFields!public!template definition! !
-!SCROLLINFO class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.SCROLLINFO class categoriesFor: #defineFields!public!template definition! !
+!OS.SCROLLINFO class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

@@ -1,17 +1,17 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Object subclass: #CommandQuery
+Core.Object subclass: #'UI.CommandQuery'
 	instanceVariableNames: 'commandDescription receiver source text flags image'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'CheckedMask' -> 16r2.
 		'DefaultMask' -> 16r4.
 		'EnabledMask' -> 16r1
 	}!
-CommandQuery guid: (GUID fromString: '{87b4c46b-026e-11d3-9fd7-00a0cc3e4a32}')!
-CommandQuery comment: 'A CommandQuery is used to determine whether, and how, a particular command can be performed. A command is queried in two situations. The first is to determine whether a command source should be enabled and/or checked. When a menu is pulled down it needs to determine the enable, default, and check state of each of its items. Similarly, a PushButton or ToolbarButton will need to determine its state; usually at idle time during #validateUserInterface processing. The second situation arises when a command is to be dispatched and executed. Again a CommandQuery is used to determine the target object that will actually perform it (i.e. the eventual receiver).
+UI.CommandQuery guid: (Core.GUID fromString: '{87b4c46b-026e-11d3-9fd7-00a0cc3e4a32}')!
+UI.CommandQuery comment: 'A CommandQuery is used to determine whether, and how, a particular command can be performed. A command is queried in two situations. The first is to determine whether a command source should be enabled and/or checked. When a menu is pulled down it needs to determine the enable, default, and check state of each of its items. Similarly, a PushButton or ToolbarButton will need to determine its state; usually at idle time during #validateUserInterface processing. The second situation arises when a command is to be dispatched and executed. Again a CommandQuery is used to determine the target object that will actually perform it (i.e. the eventual receiver).
 
 To determine the default/enable/checked state of a command, a CommandQuery is created and routed (using the current CommandPolicy) through each of the #queryCommand: methods of the potential target objects. The #queryCommand: method is responsible for using the #isDefault, #enabled: and #checked: methods to set the state of the command at that target location. If, at any point in the routing, a target object sets the CommandQuery as being enabled then the framework will determine that the target should be the eventual receiver of the command. As of Dolphin 3.0 a #queryCommand: implementation can also explicitly set the receiver to override the frameworks default behaviour. A further enhancement for 3.0 is the ability to specify a default command with #isDefault:, with this becoming the default menu item.
 
@@ -22,8 +22,8 @@ Instance Variables:
 	receiver			<Object> indicating the target that will accept the command.
 	source			<view> where the command originated.
 	flags			<integer> containing various flags indicating the status of the command. '!
-!CommandQuery categoriesForClass!MVP-Commands! !
-!CommandQuery methodsFor!
+!UI.CommandQuery categoriesForClass!MVP-Commands! !
+!UI.CommandQuery methodsFor!
 
 applicationShell
 	"Answers the <topPresenter> that will be responsible for performing this command."
@@ -144,9 +144,7 @@ perform
 	"Perform the command on the receiver and answer the result."
 
 	| command answer shell |
-	command := Command 
-		receiver: self receiver
-		commandDescription: self commandDescription.
+	command := Command receiver: self receiver commandDescription: self commandDescription.
 	shell := self applicationShell.
 	answer := shell performCommand: command.
 	"The command might close the window, in which case should we bother?"
@@ -198,37 +196,37 @@ text: aString
 	"Set the text state of the receiver to aString"
 
 	text := aString! !
-!CommandQuery categoriesFor: #applicationShell!accessing!public! !
-!CommandQuery categoriesFor: #beChecked!accessing!public! !
-!CommandQuery categoriesFor: #beDisabled!accessing!public! !
-!CommandQuery categoriesFor: #beEnabled!accessing!public! !
-!CommandQuery categoriesFor: #beUnchecked!accessing!public! !
-!CommandQuery categoriesFor: #canPerform!public!testing! !
-!CommandQuery categoriesFor: #canPerformAgainst:!accessing!public! !
-!CommandQuery categoriesFor: #command!accessing!public! !
-!CommandQuery categoriesFor: #commandDescription!accessing!public! !
-!CommandQuery categoriesFor: #commandDescription:source:!initializing!private! !
-!CommandQuery categoriesFor: #commandSymbol!accessing!public! !
-!CommandQuery categoriesFor: #description!accessing!public! !
-!CommandQuery categoriesFor: #image!accessing!public! !
-!CommandQuery categoriesFor: #image:!accessing!public! !
-!CommandQuery categoriesFor: #initialize!initializing!private! !
-!CommandQuery categoriesFor: #isChecked!public!testing! !
-!CommandQuery categoriesFor: #isChecked:!accessing!public! !
-!CommandQuery categoriesFor: #isDefault!accessing!public! !
-!CommandQuery categoriesFor: #isDefault:!accessing!public! !
-!CommandQuery categoriesFor: #isEnabled!public!testing! !
-!CommandQuery categoriesFor: #isEnabled:!accessing!public! !
-!CommandQuery categoriesFor: #perform!operations!public! !
-!CommandQuery categoriesFor: #printOn:!development!printing!public! !
-!CommandQuery categoriesFor: #receiver!accessing!public! !
-!CommandQuery categoriesFor: #receiver:!accessing!public! !
-!CommandQuery categoriesFor: #source!accessing!public! !
-!CommandQuery categoriesFor: #source:!accessing!private! !
-!CommandQuery categoriesFor: #text!accessing!public! !
-!CommandQuery categoriesFor: #text:!accessing!public! !
+!UI.CommandQuery categoriesFor: #applicationShell!accessing!public! !
+!UI.CommandQuery categoriesFor: #beChecked!accessing!public! !
+!UI.CommandQuery categoriesFor: #beDisabled!accessing!public! !
+!UI.CommandQuery categoriesFor: #beEnabled!accessing!public! !
+!UI.CommandQuery categoriesFor: #beUnchecked!accessing!public! !
+!UI.CommandQuery categoriesFor: #canPerform!public!testing! !
+!UI.CommandQuery categoriesFor: #canPerformAgainst:!accessing!public! !
+!UI.CommandQuery categoriesFor: #command!accessing!public! !
+!UI.CommandQuery categoriesFor: #commandDescription!accessing!public! !
+!UI.CommandQuery categoriesFor: #commandDescription:source:!initializing!private! !
+!UI.CommandQuery categoriesFor: #commandSymbol!accessing!public! !
+!UI.CommandQuery categoriesFor: #description!accessing!public! !
+!UI.CommandQuery categoriesFor: #image!accessing!public! !
+!UI.CommandQuery categoriesFor: #image:!accessing!public! !
+!UI.CommandQuery categoriesFor: #initialize!initializing!private! !
+!UI.CommandQuery categoriesFor: #isChecked!public!testing! !
+!UI.CommandQuery categoriesFor: #isChecked:!accessing!public! !
+!UI.CommandQuery categoriesFor: #isDefault!accessing!public! !
+!UI.CommandQuery categoriesFor: #isDefault:!accessing!public! !
+!UI.CommandQuery categoriesFor: #isEnabled!public!testing! !
+!UI.CommandQuery categoriesFor: #isEnabled:!accessing!public! !
+!UI.CommandQuery categoriesFor: #perform!operations!public! !
+!UI.CommandQuery categoriesFor: #printOn:!development!printing!public! !
+!UI.CommandQuery categoriesFor: #receiver!accessing!public! !
+!UI.CommandQuery categoriesFor: #receiver:!accessing!public! !
+!UI.CommandQuery categoriesFor: #source!accessing!public! !
+!UI.CommandQuery categoriesFor: #source:!accessing!private! !
+!UI.CommandQuery categoriesFor: #text!accessing!public! !
+!UI.CommandQuery categoriesFor: #text:!accessing!public! !
 
-!CommandQuery class methodsFor!
+!UI.CommandQuery class methodsFor!
 
 commandDescription: item source: aView
 	"Answers an instance of the receiver for the <commandDescription>, command,
@@ -241,6 +239,6 @@ new
 	"Answers an instance of the receiver on a nil message"
 
 	^self commandDescription: CommandDescription new source: nil! !
-!CommandQuery class categoriesFor: #commandDescription:source:!instance creation!public! !
-!CommandQuery class categoriesFor: #new!instance creation!public! !
+!UI.CommandQuery class categoriesFor: #commandDescription:source:!instance creation!public! !
+!UI.CommandQuery class categoriesFor: #new!instance creation!public! !
 

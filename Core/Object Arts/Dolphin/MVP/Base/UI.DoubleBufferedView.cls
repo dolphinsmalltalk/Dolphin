@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-View subclass: #DoubleBufferedView
+UI.View subclass: #'UI.DoubleBufferedView'
 	instanceVariableNames: 'backSurface requiresRender'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-DoubleBufferedView guid: (GUID fromString: '{f0757e5d-e398-4ede-9e0f-8c6ccb3699fc}')!
-DoubleBufferedView comment: ''!
-!DoubleBufferedView categoriesForClass!Unclassified! !
-!DoubleBufferedView methodsFor!
+UI.DoubleBufferedView guid: (Core.GUID fromString: '{f0757e5d-e398-4ede-9e0f-8c6ccb3699fc}')!
+UI.DoubleBufferedView comment: ''!
+!UI.DoubleBufferedView categoriesForClass!Unclassified! !
+!UI.DoubleBufferedView methodsFor!
 
 canvas
 	"Answer a <Canvas> onto the back surface"
@@ -50,13 +50,11 @@ initializeSurfacesFor: aPointExtent
 	"Private - Initialize the front and back surfaces for a view size of aPointExtent"
 
 	| canvas |
-
-	backSurface notNil ifTrue: [ backSurface free ].
+	backSurface notNil ifTrue: [backSurface free].
 	canvas := super canvas.
 	backSurface := Bitmap compatible: canvas extent: aPointExtent.
 	canvas free.
-	self invalidate.
-!
+	self invalidate!
 
 invalidate
 	"Flag the current rendition as being invalid. A repaint will cause a
@@ -119,18 +117,18 @@ wmNcHitTest: message wParam: wParam lParam: lParam
 		wmNcHitTest: message
 		wParam: wParam
 		lParam: lParam! !
-!DoubleBufferedView categoriesFor: #canvas!accessing!public! !
-!DoubleBufferedView categoriesFor: #filerProxy!binary filing!private! !
-!DoubleBufferedView categoriesFor: #flip!operations!public! !
-!DoubleBufferedView categoriesFor: #initialize!initializing!private! !
-!DoubleBufferedView categoriesFor: #initializeSurfacesFor:!initializing!private! !
-!DoubleBufferedView categoriesFor: #invalidate!operations!public! !
-!DoubleBufferedView categoriesFor: #onCreated:!event handling!private! !
-!DoubleBufferedView categoriesFor: #onEraseRequired:!event handling!private! !
-!DoubleBufferedView categoriesFor: #onPaintRequired:!event handling!private! !
-!DoubleBufferedView categoriesFor: #onPositionChanged:!event handling!private! !
-!DoubleBufferedView categoriesFor: #refreshContents!public!updating! !
-!DoubleBufferedView categoriesFor: #render!operations!private! !
-!DoubleBufferedView categoriesFor: #repaint!operations!public! !
-!DoubleBufferedView categoriesFor: #wmNcHitTest:wParam:lParam:!event handling-win32!private! !
+!UI.DoubleBufferedView categoriesFor: #canvas!accessing!public! !
+!UI.DoubleBufferedView categoriesFor: #filerProxy!binary filing!private! !
+!UI.DoubleBufferedView categoriesFor: #flip!operations!public! !
+!UI.DoubleBufferedView categoriesFor: #initialize!initializing!private! !
+!UI.DoubleBufferedView categoriesFor: #initializeSurfacesFor:!initializing!private! !
+!UI.DoubleBufferedView categoriesFor: #invalidate!operations!public! !
+!UI.DoubleBufferedView categoriesFor: #onCreated:!event handling!private! !
+!UI.DoubleBufferedView categoriesFor: #onEraseRequired:!event handling!private! !
+!UI.DoubleBufferedView categoriesFor: #onPaintRequired:!event handling!private! !
+!UI.DoubleBufferedView categoriesFor: #onPositionChanged:!event handling!private! !
+!UI.DoubleBufferedView categoriesFor: #refreshContents!public!updating! !
+!UI.DoubleBufferedView categoriesFor: #render!operations!private! !
+!UI.DoubleBufferedView categoriesFor: #repaint!operations!public! !
+!UI.DoubleBufferedView categoriesFor: #wmNcHitTest:wParam:lParam:!event handling-win32!private! !
 

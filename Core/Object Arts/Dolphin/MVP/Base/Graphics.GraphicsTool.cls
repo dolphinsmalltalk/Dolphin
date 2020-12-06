@@ -1,16 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Object subclass: #GraphicsTool
+Core.Object subclass: #'Graphics.GraphicsTool'
 	instanceVariableNames: 'handle ownsHandle'
 	classVariableNames: ''
-	poolDictionaries: 'Win32Constants'
+	imports: #(#{OS.Win32Constants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-GraphicsTool guid: (GUID fromString: '{87b4c48d-026e-11d3-9fd7-00a0cc3e4a32}')!
-GraphicsTool isAbstract: true!
-GraphicsTool comment: ''!
-!GraphicsTool categoriesForClass!Graphics-Tools! !
-!GraphicsTool methodsFor!
+Graphics.GraphicsTool guid: (Core.GUID fromString: '{87b4c48d-026e-11d3-9fd7-00a0cc3e4a32}')!
+Graphics.GraphicsTool isNonInstantiable: true!
+Graphics.GraphicsTool comment: ''!
+!Graphics.GraphicsTool categoriesForClass!Graphics-Tools! !
+!Graphics.GraphicsTool methodsFor!
 
 asParameter
 	"Answer the receiver in a form suitable for an API call."
@@ -84,8 +84,7 @@ getData: aWinStruct
 	^GDILibrary default
 		getObject: self asParameter
 		cbBuffer: aWinStruct byteSize
-		lpvObject: aWinStruct
-		!
+		lpvObject: aWinStruct!
 
 getDataW: aWinStruct
 	"Private - Get the data bytes of the receiver's external resource object into	
@@ -94,13 +93,12 @@ getDataW: aWinStruct
 	^GDILibrary default
 		getObjectW: self asParameter
 		cbBuffer: aWinStruct byteSize
-		lpvObject: aWinStruct
-		!
+		lpvObject: aWinStruct!
 
 getStockObject: anInteger
 	"Private - Get the handle of the specified stock object."
 
-	^GDILibrary default getStockObject: anInteger		!
+	^GDILibrary default getStockObject: anInteger!
 
 handle
 	"Answer the receiver's handle. If unrealized then attempt to realize it first."
@@ -201,34 +199,34 @@ stbSaveOn: anSTBOutFiler
 	self isPersistent ifFalse: [self error: 'Cannot #stbSaveOn: ' , self printString].
 	anSTBOutFiler override: handle with: nil.
 	[super stbSaveOn: anSTBOutFiler] ensure: [anSTBOutFiler removeOverrideFor: handle]! !
-!GraphicsTool categoriesFor: #asParameter!converting!public! !
-!GraphicsTool categoriesFor: #basicFree!private!realizing/unrealizing! !
-!GraphicsTool categoriesFor: #basicHandle!accessing!public! !
-!GraphicsTool categoriesFor: #basicRealize!private!realizing/unrealizing! !
-!GraphicsTool categoriesFor: #clearCached!private!realizing/unrealizing! !
-!GraphicsTool categoriesFor: #createHandle!private!realizing/unrealizing! !
-!GraphicsTool categoriesFor: #detachHandle!accessing!public! !
-!GraphicsTool categoriesFor: #equals:!comparing!public! !
-!GraphicsTool categoriesFor: #free!public!realizing/unrealizing! !
-!GraphicsTool categoriesFor: #getData:!accessing!private! !
-!GraphicsTool categoriesFor: #getDataW:!accessing!private! !
-!GraphicsTool categoriesFor: #getStockObject:!accessing!private! !
-!GraphicsTool categoriesFor: #handle!accessing!public! !
-!GraphicsTool categoriesFor: #handle:!accessing!private! !
-!GraphicsTool categoriesFor: #initialize!initializing!public! !
-!GraphicsTool categoriesFor: #isPersistent!private!testing! !
-!GraphicsTool categoriesFor: #isRealized!public!testing! !
-!GraphicsTool categoriesFor: #onExit!event handling!private! !
-!GraphicsTool categoriesFor: #onStartup!event handling!private! !
-!GraphicsTool categoriesFor: #ownedHandle:!accessing!private! !
-!GraphicsTool categoriesFor: #ownsHandle!public!testing! !
-!GraphicsTool categoriesFor: #ownsHandle:!initializing!private! !
-!GraphicsTool categoriesFor: #postCopy!copying!public! !
-!GraphicsTool categoriesFor: #realize!public!realizing/unrealizing! !
-!GraphicsTool categoriesFor: #stbFixup:at:!binary filing!public! !
-!GraphicsTool categoriesFor: #stbSaveOn:!binary filing!public! !
+!Graphics.GraphicsTool categoriesFor: #asParameter!converting!public! !
+!Graphics.GraphicsTool categoriesFor: #basicFree!private!realizing/unrealizing! !
+!Graphics.GraphicsTool categoriesFor: #basicHandle!accessing!public! !
+!Graphics.GraphicsTool categoriesFor: #basicRealize!private!realizing/unrealizing! !
+!Graphics.GraphicsTool categoriesFor: #clearCached!private!realizing/unrealizing! !
+!Graphics.GraphicsTool categoriesFor: #createHandle!private!realizing/unrealizing! !
+!Graphics.GraphicsTool categoriesFor: #detachHandle!accessing!public! !
+!Graphics.GraphicsTool categoriesFor: #equals:!comparing!public! !
+!Graphics.GraphicsTool categoriesFor: #free!public!realizing/unrealizing! !
+!Graphics.GraphicsTool categoriesFor: #getData:!accessing!private! !
+!Graphics.GraphicsTool categoriesFor: #getDataW:!accessing!private! !
+!Graphics.GraphicsTool categoriesFor: #getStockObject:!accessing!private! !
+!Graphics.GraphicsTool categoriesFor: #handle!accessing!public! !
+!Graphics.GraphicsTool categoriesFor: #handle:!accessing!private! !
+!Graphics.GraphicsTool categoriesFor: #initialize!initializing!public! !
+!Graphics.GraphicsTool categoriesFor: #isPersistent!private!testing! !
+!Graphics.GraphicsTool categoriesFor: #isRealized!public!testing! !
+!Graphics.GraphicsTool categoriesFor: #onExit!event handling!private! !
+!Graphics.GraphicsTool categoriesFor: #onStartup!event handling!private! !
+!Graphics.GraphicsTool categoriesFor: #ownedHandle:!accessing!private! !
+!Graphics.GraphicsTool categoriesFor: #ownsHandle!public!testing! !
+!Graphics.GraphicsTool categoriesFor: #ownsHandle:!initializing!private! !
+!Graphics.GraphicsTool categoriesFor: #postCopy!copying!public! !
+!Graphics.GraphicsTool categoriesFor: #realize!public!realizing/unrealizing! !
+!Graphics.GraphicsTool categoriesFor: #stbFixup:at:!binary filing!public! !
+!Graphics.GraphicsTool categoriesFor: #stbSaveOn:!binary filing!public! !
 
-!GraphicsTool class methodsFor!
+!Graphics.GraphicsTool class methodsFor!
 
 fromHandle: aHandle
 	"Answers an instance of the receiver with aHandle. The handle is not
@@ -274,11 +272,11 @@ onStartup2
 	"Private - Perform system startup processing for all subclasses."
 
 	self subclassesDo: [:c | c onStartup2]! !
-!GraphicsTool class categoriesFor: #fromHandle:!instance creation!public! !
-!GraphicsTool class categoriesFor: #fromOwnedHandle:!instance creation!public! !
-!GraphicsTool class categoriesFor: #icon!constants!public! !
-!GraphicsTool class categoriesFor: #new!instance creation!public! !
-!GraphicsTool class categoriesFor: #onExit!event handling!public! !
-!GraphicsTool class categoriesFor: #onStartup!event handling!public! !
-!GraphicsTool class categoriesFor: #onStartup2!event handling!private! !
+!Graphics.GraphicsTool class categoriesFor: #fromHandle:!instance creation!public! !
+!Graphics.GraphicsTool class categoriesFor: #fromOwnedHandle:!instance creation!public! !
+!Graphics.GraphicsTool class categoriesFor: #icon!constants!public! !
+!Graphics.GraphicsTool class categoriesFor: #new!instance creation!public! !
+!Graphics.GraphicsTool class categoriesFor: #onExit!event handling!public! !
+!Graphics.GraphicsTool class categoriesFor: #onStartup!event handling!public! !
+!Graphics.GraphicsTool class categoriesFor: #onStartup2!event handling!private! !
 

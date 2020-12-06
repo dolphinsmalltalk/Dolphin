@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Object subclass: #Clipboard
+Core.Object subclass: #'UI.Clipboard'
 	instanceVariableNames: 'isOpen registeredFormats idToName'
 	classVariableNames: 'Current'
-	poolDictionaries: 'Win32Constants'
+	imports: #(#{OS.Win32Constants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Clipboard guid: (GUID fromString: '{87b4c463-026e-11d3-9fd7-00a0cc3e4a32}')!
-Clipboard comment: ''!
-!Clipboard categoriesForClass!System-Support! !
-!Clipboard methodsFor!
+UI.Clipboard guid: (Core.GUID fromString: '{87b4c463-026e-11d3-9fd7-00a0cc3e4a32}')!
+UI.Clipboard comment: ''!
+!UI.Clipboard categoriesForClass!System-Support! !
+!UI.Clipboard methodsFor!
 
 addRegisteredFormat: formatName id: id converter: aTypeConverter
 	registeredFormats at: formatName put: {id. aTypeConverter}.
@@ -58,17 +58,17 @@ basicEmpty
 	UserLibrary default emptyClipboard ifFalse: [Win32Error signal]!
 
 basicFree
-        "Private - Close the clipboard.
+	"Private - Close the clipboard.
 	We don't treat attempting to close the clipboard when it is not
 	open as an exception."
 
 	^UserLibrary default closeClipboard!
 
 basicRealize
-        "Open the clipboard."
+	"Open the clipboard."
 
 	isOpen := UserLibrary default openClipboard: nil.
-	isOpen ifFalse: [Win32Error signal].!
+	isOpen ifFalse: [Win32Error signal]!
 
 close
         "Close the clipboard."
@@ -94,7 +94,7 @@ free
 	self basicFree!
 
 getBitmap
-        "Answer a Bitmap copied from the clipboard, or raise an 
+	"Answer a Bitmap copied from the clipboard, or raise an 
 	exception if no Bitmap is available."
 
 	^self getBitmapIfNone: [self errorFormatNotAvailable: #Bitmap]!
@@ -106,7 +106,7 @@ getBitmapIfNone: exceptionHandler
 	^self getRegisteredFormat: #Bitmap ifNone: exceptionHandler!
 
 getDIBSection
-        "Answer a Bitmap copied from the clipboard, or raise an 
+	"Answer a Bitmap copied from the clipboard, or raise an 
 	exception if no Bitmap is available."
 
 	^self getDIBSectionIfNone: [self errorFormatNotAvailable: #DIBSection]!
@@ -130,7 +130,7 @@ getFormatName: format
 	^len == 0 ifFalse: [(name resize: len) asUtf8String]!
 
 getObject
-        "Answer the <Object> stored on the clipboard or raise an error if none."
+	"Answer the <Object> stored on the clipboard or raise an error if none."
 
 	^self getObjectIfNone: [self errorFormatNotAvailable: #Object]!
 
@@ -147,7 +147,7 @@ getObjectClassIfNone: exceptionHandler
 	^self getRegisteredFormat: #ObjectClass ifNone: exceptionHandler!
 
 getObjectIfNone: exceptionHandler
-        "Answer the <object> stored on the clipboard. If no object is currently available, the
+	"Answer the <object> stored on the clipboard. If no object is currently available, the
 	answers the result of evaluating the <niladicValuable> exceptionHandler."
 
 	^self getRegisteredFormat: #Object ifNone: exceptionHandler!
@@ -167,7 +167,7 @@ getRegisteredFormat: name ifNone: exceptionHandler
 			formatId last rightToLeft: handle]!
 
 getText
-        "Answer a <readableString> containing the the CF_UNICODETEXT contents 
+	"Answer a <readableString> containing the the CF_UNICODETEXT contents 
 	of the clipboard. If no text is currently available, raise an exception."
 
 	^self getTextIfNone: [self errorFormatNotAvailable: #String]!
@@ -192,18 +192,18 @@ initialize
 	idToName := IdentityDictionary new.
 	nullConversion := NullConverter new.
 	objectConverter := PluggableTypeConverter
-				leftToRight: [:obj | ExternalMemory copyBytesToGlobalHeap: obj binaryStoreBytes]
+				leftToRight: [:obj | External.Memory copyBytesToGlobalHeap: obj binaryStoreBytes]
 				rightToLeft: [:handle | Object fromBinaryStoreBytes: (ByteArray fromGlobalHandle: handle)].
 	self
 		addRegisteredFormat: #String
 			id: CF_UNICODETEXT
 			converter: (PluggableTypeConverter
-					leftToRight: [:obj | ExternalMemory copyBytesToGlobalHeap: obj asString asUtf16String]
+					leftToRight: [:obj | External.Memory copyBytesToGlobalHeap: obj asString asUtf16String]
 					rightToLeft: [:handle | Utf16String fromGlobalHandle: handle]);
 		addRegisteredFormat: #AnsiString
 			id: CF_TEXT
 			converter: (PluggableTypeConverter
-					leftToRight: [:obj | ExternalMemory copyBytesToGlobalHeap: obj asString asAnsiString]
+					leftToRight: [:obj | External.Memory copyBytesToGlobalHeap: obj asString asAnsiString]
 					rightToLeft: [:handle | AnsiString fromGlobalHandle: handle]);
 		addRegisteredFormat: #Bitmap
 			id: CF_BITMAP
@@ -312,7 +312,7 @@ setData: handle formatId: formatId
 	wasOpen := self open.
 	^
 	[wasOpen ifFalse: [self basicEmpty].
-	UserLibrary default setClipboardData: formatId hMem: handle] 
+	UserLibrary default setClipboardData: formatId hMem: handle]
 			ensure: [wasOpen ifFalse: [self close]]!
 
 setDIB: aDIBSection
@@ -340,50 +340,50 @@ setText: text
 	to the clipboard the text is considered to terminate at the first null character."
 
 	self setRegisteredFormat: #String data: text! !
-!Clipboard categoriesFor: #addRegisteredFormat:id:converter:!operations!public! !
-!Clipboard categoriesFor: #apply:!operations!private! !
-!Clipboard categoriesFor: #availableFormatIds!enquiries!public! !
-!Clipboard categoriesFor: #availableFormats!enquiries!public! !
-!Clipboard categoriesFor: #basicEmpty!operations!private! !
-!Clipboard categoriesFor: #basicFree!private!realizing/unrealizing! !
-!Clipboard categoriesFor: #basicRealize!public!realizing/unrealizing! !
-!Clipboard categoriesFor: #close!public!realizing/unrealizing! !
-!Clipboard categoriesFor: #empty!operations!public! !
-!Clipboard categoriesFor: #errorFormatNotAvailable:!exceptions!public! !
-!Clipboard categoriesFor: #free!public!realizing/unrealizing! !
-!Clipboard categoriesFor: #getBitmap!accessing!public! !
-!Clipboard categoriesFor: #getBitmapIfNone:!accessing!public! !
-!Clipboard categoriesFor: #getDIBSection!accessing!public! !
-!Clipboard categoriesFor: #getDIBSectionIfNone:!accessing!public! !
-!Clipboard categoriesFor: #getFormatName:!accessing!public! !
-!Clipboard categoriesFor: #getObject!accessing!public! !
-!Clipboard categoriesFor: #getObjectClass!accessing!public! !
-!Clipboard categoriesFor: #getObjectClassIfNone:!accessing!public! !
-!Clipboard categoriesFor: #getObjectIfNone:!accessing!public! !
-!Clipboard categoriesFor: #getRegisteredFormat:ifNone:!accessing!public! !
-!Clipboard categoriesFor: #getText!accessing!public! !
-!Clipboard categoriesFor: #getTextIfNone:!accessing!public! !
-!Clipboard categoriesFor: #getTextOrEmpty!accessing!public! !
-!Clipboard categoriesFor: #initialize!initializing!private! !
-!Clipboard categoriesFor: #isBitmapAvailable!public!testing! !
-!Clipboard categoriesFor: #isDIBAvailable!public!testing! !
-!Clipboard categoriesFor: #isFormatAvailable:!public!testing! !
-!Clipboard categoriesFor: #isFormatIdAvailable:!private!testing! !
-!Clipboard categoriesFor: #isFormatRegistered:!public!testing! !
-!Clipboard categoriesFor: #isObjectAvailable!public!testing! !
-!Clipboard categoriesFor: #isTextAvailable!public!testing! !
-!Clipboard categoriesFor: #open!public!realizing/unrealizing! !
-!Clipboard categoriesFor: #registerFormat:!operations!public! !
-!Clipboard categoriesFor: #registerFormat:converter:!operations!public! !
-!Clipboard categoriesFor: #setBitmap:!accessing!public! !
-!Clipboard categoriesFor: #setBitmap:format:!accessing!public! !
-!Clipboard categoriesFor: #setData:formatId:!accessing!private! !
-!Clipboard categoriesFor: #setDIB:!accessing!public! !
-!Clipboard categoriesFor: #setObject:!accessing!public! !
-!Clipboard categoriesFor: #setRegisteredFormat:data:!accessing!public! !
-!Clipboard categoriesFor: #setText:!accessing!public! !
+!UI.Clipboard categoriesFor: #addRegisteredFormat:id:converter:!operations!public! !
+!UI.Clipboard categoriesFor: #apply:!operations!private! !
+!UI.Clipboard categoriesFor: #availableFormatIds!enquiries!public! !
+!UI.Clipboard categoriesFor: #availableFormats!enquiries!public! !
+!UI.Clipboard categoriesFor: #basicEmpty!operations!private! !
+!UI.Clipboard categoriesFor: #basicFree!private!realizing/unrealizing! !
+!UI.Clipboard categoriesFor: #basicRealize!public!realizing/unrealizing! !
+!UI.Clipboard categoriesFor: #close!public!realizing/unrealizing! !
+!UI.Clipboard categoriesFor: #empty!operations!public! !
+!UI.Clipboard categoriesFor: #errorFormatNotAvailable:!exceptions!public! !
+!UI.Clipboard categoriesFor: #free!public!realizing/unrealizing! !
+!UI.Clipboard categoriesFor: #getBitmap!accessing!public! !
+!UI.Clipboard categoriesFor: #getBitmapIfNone:!accessing!public! !
+!UI.Clipboard categoriesFor: #getDIBSection!accessing!public! !
+!UI.Clipboard categoriesFor: #getDIBSectionIfNone:!accessing!public! !
+!UI.Clipboard categoriesFor: #getFormatName:!accessing!public! !
+!UI.Clipboard categoriesFor: #getObject!accessing!public! !
+!UI.Clipboard categoriesFor: #getObjectClass!accessing!public! !
+!UI.Clipboard categoriesFor: #getObjectClassIfNone:!accessing!public! !
+!UI.Clipboard categoriesFor: #getObjectIfNone:!accessing!public! !
+!UI.Clipboard categoriesFor: #getRegisteredFormat:ifNone:!accessing!public! !
+!UI.Clipboard categoriesFor: #getText!accessing!public! !
+!UI.Clipboard categoriesFor: #getTextIfNone:!accessing!public! !
+!UI.Clipboard categoriesFor: #getTextOrEmpty!accessing!public! !
+!UI.Clipboard categoriesFor: #initialize!initializing!private! !
+!UI.Clipboard categoriesFor: #isBitmapAvailable!public!testing! !
+!UI.Clipboard categoriesFor: #isDIBAvailable!public!testing! !
+!UI.Clipboard categoriesFor: #isFormatAvailable:!public!testing! !
+!UI.Clipboard categoriesFor: #isFormatIdAvailable:!private!testing! !
+!UI.Clipboard categoriesFor: #isFormatRegistered:!public!testing! !
+!UI.Clipboard categoriesFor: #isObjectAvailable!public!testing! !
+!UI.Clipboard categoriesFor: #isTextAvailable!public!testing! !
+!UI.Clipboard categoriesFor: #open!public!realizing/unrealizing! !
+!UI.Clipboard categoriesFor: #registerFormat:!operations!public! !
+!UI.Clipboard categoriesFor: #registerFormat:converter:!operations!public! !
+!UI.Clipboard categoriesFor: #setBitmap:!accessing!public! !
+!UI.Clipboard categoriesFor: #setBitmap:format:!accessing!public! !
+!UI.Clipboard categoriesFor: #setData:formatId:!accessing!private! !
+!UI.Clipboard categoriesFor: #setDIB:!accessing!public! !
+!UI.Clipboard categoriesFor: #setObject:!accessing!public! !
+!UI.Clipboard categoriesFor: #setRegisteredFormat:data:!accessing!public! !
+!UI.Clipboard categoriesFor: #setText:!accessing!public! !
 
-!Clipboard class methodsFor!
+!UI.Clipboard class methodsFor!
 
 current
 	"Answer the singleton instance of the receiver."
@@ -412,9 +412,9 @@ onStartup
 	initialization."
 
 	Current := nil! !
-!Clipboard class categoriesFor: #current!instance creation!public! !
-!Clipboard class categoriesFor: #icon!constants!public! !
-!Clipboard class categoriesFor: #new!instance creation!public! !
-!Clipboard class categoriesFor: #onPreStripImage!class hierarchy-removing!private! !
-!Clipboard class categoriesFor: #onStartup!event handling!private! !
+!UI.Clipboard class categoriesFor: #current!instance creation!public! !
+!UI.Clipboard class categoriesFor: #icon!constants!public! !
+!UI.Clipboard class categoriesFor: #new!instance creation!public! !
+!UI.Clipboard class categoriesFor: #onPreStripImage!class hierarchy-removing!private! !
+!UI.Clipboard class categoriesFor: #onStartup!event handling!private! !
 

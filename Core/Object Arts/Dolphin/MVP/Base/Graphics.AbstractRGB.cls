@@ -1,18 +1,18 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Color subclass: #AbstractRGB
+Graphics.Color subclass: #'Graphics.AbstractRGB'
 	instanceVariableNames: 'code'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-AbstractRGB guid: (GUID fromString: '{3f709950-6d41-46a2-bf1f-f6092de13e68}')!
-AbstractRGB isAbstract: true!
-AbstractRGB comment: '`AbstractColor` is the abstract class of colours specified by individual colour components.
+Graphics.AbstractRGB guid: (Core.GUID fromString: '{3f709950-6d41-46a2-bf1f-f6092de13e68}')!
+Graphics.AbstractRGB isNonInstantiable: true!
+Graphics.AbstractRGB comment: '`AbstractColor` is the abstract class of colours specified by individual colour components.
 
  Concrete subclasses `RGB` represent colours composed of arbitrary proportions of red, green, and blue, and `ARGB` the same but with alpha (translucency).'!
-!AbstractRGB categoriesForClass!Drawing! !
-!AbstractRGB methodsFor!
+!Graphics.AbstractRGB categoriesForClass!Drawing! !
+!Graphics.AbstractRGB methodsFor!
 
 asGrayscale
 	"Answer a <Color> that is a grayscale representation of the receiver."
@@ -209,24 +209,24 @@ setCode: anInteger
 	"Private - Set the <integer> value of the ColorRef (i.e. that encoded integer value passed to API calls to represent the color)."
 
 	code := anInteger! !
-!AbstractRGB categoriesFor: #asGrayscale!converting!public! !
-!AbstractRGB categoriesFor: #asInteger!converting!public! !
-!AbstractRGB categoriesFor: #asParameter!converting!public! !
-!AbstractRGB categoriesFor: #brightness!accessing!public! !
-!AbstractRGB categoriesFor: #chroma!accessing!public! !
-!AbstractRGB categoriesFor: #code!accessing!private! !
-!AbstractRGB categoriesFor: #fadedBy:!converting!public! !
-!AbstractRGB categoriesFor: #green!accessing!public! !
-!AbstractRGB categoriesFor: #hls!converting!public! !
-!AbstractRGB categoriesFor: #hslSaturation!accessing!public! !
-!AbstractRGB categoriesFor: #hsv!converting!public! !
-!AbstractRGB categoriesFor: #hsvSaturation!accessing!public! !
-!AbstractRGB categoriesFor: #hue!accessing!public! !
-!AbstractRGB categoriesFor: #intensity:!converting!public! !
-!AbstractRGB categoriesFor: #isGrayscale!public!testing! !
-!AbstractRGB categoriesFor: #lightness!accessing!public! !
-!AbstractRGB categoriesFor: #luminance!accessing!public! !
-!AbstractRGB categoriesFor: #registerName:!helpers!private! !
-!AbstractRGB categoriesFor: #rgb!converting!public! !
-!AbstractRGB categoriesFor: #setCode:!accessing!private! !
+!Graphics.AbstractRGB categoriesFor: #asGrayscale!converting!public! !
+!Graphics.AbstractRGB categoriesFor: #asInteger!converting!public! !
+!Graphics.AbstractRGB categoriesFor: #asParameter!converting!public! !
+!Graphics.AbstractRGB categoriesFor: #brightness!accessing!public! !
+!Graphics.AbstractRGB categoriesFor: #chroma!accessing!public! !
+!Graphics.AbstractRGB categoriesFor: #code!accessing!private! !
+!Graphics.AbstractRGB categoriesFor: #fadedBy:!converting!public! !
+!Graphics.AbstractRGB categoriesFor: #green!accessing!public! !
+!Graphics.AbstractRGB categoriesFor: #hls!converting!public! !
+!Graphics.AbstractRGB categoriesFor: #hslSaturation!accessing!public! !
+!Graphics.AbstractRGB categoriesFor: #hsv!converting!public! !
+!Graphics.AbstractRGB categoriesFor: #hsvSaturation!accessing!public! !
+!Graphics.AbstractRGB categoriesFor: #hue!accessing!public! !
+!Graphics.AbstractRGB categoriesFor: #intensity:!converting!public! !
+!Graphics.AbstractRGB categoriesFor: #isGrayscale!public!testing! !
+!Graphics.AbstractRGB categoriesFor: #lightness!accessing!public! !
+!Graphics.AbstractRGB categoriesFor: #luminance!accessing!public! !
+!Graphics.AbstractRGB categoriesFor: #registerName:!helpers!private! !
+!Graphics.AbstractRGB categoriesFor: #rgb!converting!public! !
+!Graphics.AbstractRGB categoriesFor: #setCode:!accessing!private! !
 

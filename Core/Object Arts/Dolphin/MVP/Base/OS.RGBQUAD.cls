@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Win32Structure subclass: #RGBQUAD
+OS.Win32Structure subclass: #'OS.RGBQUAD'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_rgbBlue' -> 16r0.
@@ -11,8 +11,8 @@ Win32Structure subclass: #RGBQUAD
 		'_OffsetOf_rgbRed' -> 16r2.
 		'_OffsetOf_rgbReserved' -> 16r3
 	}!
-RGBQUAD guid: (GUID fromString: '{87b4c60d-026e-11d3-9fd7-00a0cc3e4a32}')!
-RGBQUAD comment: '<RGBQUAD> is an <ExternalStructure> class to wrap the struct ''Win.RGBQUAD'' from type information in the ''Windows API (ANSI)'' library.
+OS.RGBQUAD guid: (Core.GUID fromString: '{87b4c60d-026e-11d3-9fd7-00a0cc3e4a32}')!
+OS.RGBQUAD comment: '<RGBQUAD> is an <ExternalStructure> class to wrap the struct ''Win.RGBQUAD'' from type information in the ''Windows API (ANSI)'' library.
 
 The type library contains no documentation for this struct
 
@@ -28,13 +28,13 @@ struct tagRGBQUAD {
 	BYTE rgbReserved;
 } RGBQUAD;
 '!
-!RGBQUAD categoriesForClass!External-Data-Structured-Win32! !
-!RGBQUAD methodsFor!
+!OS.RGBQUAD categoriesForClass!External-Data-Structured-Win32! !
+!OS.RGBQUAD methodsFor!
 
 asColor
 	"Answer the <Color> equivalent of the receiver."
 
-	^Color fromRgbCode: (bytes dwordAtOffset: 0)!
+	^Graphics.Color fromRgbCode: (bytes dwordAtOffset: 0)!
 
 rgbBlue
 	"Answer the <Integer> value of the receiver's 'rgbBlue' field."
@@ -65,15 +65,15 @@ rgbRed: anInteger
 	"Set the receiver's 'rgbRed' field to the value of the argument, anInteger"
 
 	bytes byteAtOffset: _OffsetOf_rgbRed put: anInteger! !
-!RGBQUAD categoriesFor: #asColor!converting!public! !
-!RGBQUAD categoriesFor: #rgbBlue!**compiled accessors**!public! !
-!RGBQUAD categoriesFor: #rgbBlue:!**compiled accessors**!public! !
-!RGBQUAD categoriesFor: #rgbGreen!**compiled accessors**!public! !
-!RGBQUAD categoriesFor: #rgbGreen:!**compiled accessors**!public! !
-!RGBQUAD categoriesFor: #rgbRed!**compiled accessors**!public! !
-!RGBQUAD categoriesFor: #rgbRed:!**compiled accessors**!public! !
+!OS.RGBQUAD categoriesFor: #asColor!converting!public! !
+!OS.RGBQUAD categoriesFor: #rgbBlue!**compiled accessors**!public! !
+!OS.RGBQUAD categoriesFor: #rgbBlue:!**compiled accessors**!public! !
+!OS.RGBQUAD categoriesFor: #rgbGreen!**compiled accessors**!public! !
+!OS.RGBQUAD categoriesFor: #rgbGreen:!**compiled accessors**!public! !
+!OS.RGBQUAD categoriesFor: #rgbRed!**compiled accessors**!public! !
+!OS.RGBQUAD categoriesFor: #rgbRed:!**compiled accessors**!public! !
 
-!RGBQUAD class methodsFor!
+!OS.RGBQUAD class methodsFor!
 
 defineFields
 	"Define the fields of the RGBQUAD structure.
@@ -103,7 +103,7 @@ fromColor: aColor
 
 getFieldNames
 	^#(#rgbBlue #rgbGreen #rgbRed)! !
-!RGBQUAD class categoriesFor: #defineFields!public!template definition! !
-!RGBQUAD class categoriesFor: #fromColor:!instance creation!public! !
-!RGBQUAD class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.RGBQUAD class categoriesFor: #defineFields!public!template definition! !
+!OS.RGBQUAD class categoriesFor: #fromColor:!instance creation!public! !
+!OS.RGBQUAD class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

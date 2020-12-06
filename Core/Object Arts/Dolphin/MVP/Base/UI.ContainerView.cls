@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-View subclass: #ContainerView
+UI.View subclass: #'UI.ContainerView'
 	instanceVariableNames: 'layoutManager names insets'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ContainerView guid: (GUID fromString: '{87b4c70c-026e-11d3-9fd7-00a0cc3e4a32}')!
-ContainerView comment: 'ContainerView is an abstract class which implements the <compositeView> protocol for its subclasses. This protocol allows for <compositeView>s to contain sub-views which may be managed by the container.
+UI.ContainerView guid: (Core.GUID fromString: '{87b4c70c-026e-11d3-9fd7-00a0cc3e4a32}')!
+UI.ContainerView comment: 'ContainerView is an abstract class which implements the <compositeView> protocol for its subclasses. This protocol allows for <compositeView>s to contain sub-views which may be managed by the container.
 
 Instance Variables:
 	layoutManager		<layoutManager> responsible for the geometry of any sub-views.
@@ -17,8 +17,8 @@ Instance Variables:
 
 
 '!
-!ContainerView categoriesForClass!MVP-Resources-Containers!MVP-Views! !
-!ContainerView methodsFor!
+!UI.ContainerView categoriesForClass!MVP-Resources-Containers!MVP-Views! !
+!UI.ContainerView methodsFor!
 
 actualInsets: aLayoutContext 
 	"Private - Answer a <Rectangle> whose edges specify the actual inset (in pixels) by which
@@ -100,21 +100,20 @@ errorDuplicateName: aString
 
 	^self error: 'duplicate name: ' , aString!
 
-implicitInsets: aLayoutContext 
+implicitInsets: aLayoutContext
 	"Private - Answer a <Rectangle> whose edges specify the implicit distance (in pixels) by
 	which the sub views have to be inset from the border of the receiver. This method should be
 	overridden by subclasses where the container cannot allow the sub views access to the entire
 	client area."
 
-	^##(Rectangle origin: 0 @ 0 corner: 0 @ 0)!
+	^Rectangle.Empty!
 
 initialize
 	"Private - Initialize the receiver"
 
 	super initialize.
 	names := IdentityDictionary new.
-	self layoutManager: self defaultLayoutManager.
-!
+	self layoutManager: self defaultLayoutManager!
 
 insets
 	"Answer the <Rectangle> whose edges specify the distance (in pixels) by which the sub views
@@ -122,14 +121,14 @@ insets
 
 	^insets ifNil: [Rectangle new]!
 
-insets: aRectangleOrPointOrNil 
+insets: aRectangleOrPointOrNil
 	"Set the <Rectangle> whose edges specify the distance (in pixels) by which the sub views are
 	inset from the border of the receiver."
 
-	insets := (aRectangleOrPointOrNil isKindOf: Number) 
+	insets := (aRectangleOrPointOrNil isKindOf: Number)
 				ifTrue: [aRectangleOrPointOrNil asPoint corner: aRectangleOrPointOrNil asPoint]
 				ifFalse: 
-					[(aRectangleOrPointOrNil isKindOf: Point) 
+					[(aRectangleOrPointOrNil isKindOf: Point)
 						ifTrue: [aRectangleOrPointOrNil corner: aRectangleOrPointOrNil]
 						ifFalse: [aRectangleOrPointOrNil]].
 	self invalidateLayout!
@@ -288,41 +287,41 @@ viewNamed: aString ifNone: exceptionHandler
 					found := each viewNamed: aString ifNone: [].
 					found notNil ifTrue: [^found]].
 			exceptionHandler value]! !
-!ContainerView categoriesFor: #actualInsets:!accessing!private! !
-!ContainerView categoriesFor: #actualPreferredExtent:!geometry!private! !
-!ContainerView categoriesFor: #addSubView:name:!hierarchy!public!sub views! !
-!ContainerView categoriesFor: #arrangementOf:!accessing!public! !
-!ContainerView categoriesFor: #arrangementOf:put:!accessing!public! !
-!ContainerView categoriesFor: #canAcceptSubViews!hierarchy!public!sub views! !
-!ContainerView categoriesFor: #defaultExtent!constants!private! !
-!ContainerView categoriesFor: #defaultExtentOf:!geometry!public! !
-!ContainerView categoriesFor: #defaultLayoutManager!constants!private! !
-!ContainerView categoriesFor: #defaultWindowExStyle!constants!private! !
-!ContainerView categoriesFor: #errorDuplicateName:!exceptions!public! !
-!ContainerView categoriesFor: #implicitInsets:!accessing!private! !
-!ContainerView categoriesFor: #initialize!initializing!private! !
-!ContainerView categoriesFor: #insets!accessing!public! !
-!ContainerView categoriesFor: #insets:!accessing!public! !
-!ContainerView categoriesFor: #isControlParent!accessing-styles!public! !
-!ContainerView categoriesFor: #isControlParent:!accessing-styles!public! !
-!ContainerView categoriesFor: #layout:!geometry!private! !
-!ContainerView categoriesFor: #layoutManager!geometry!public! !
-!ContainerView categoriesFor: #layoutManager:!geometry!public! !
-!ContainerView categoriesFor: #name:as:!hierarchy!public!sub views! !
-!ContainerView categoriesFor: #nameOf:!hierarchy!public!sub views! !
-!ContainerView categoriesFor: #onSubViewAdded:!event handling!public! !
-!ContainerView categoriesFor: #onSubViewRemoved:!event handling!private! !
-!ContainerView categoriesFor: #onZOrderChanged!event handling!public! !
-!ContainerView categoriesFor: #removeSubView:!hierarchy!public!sub views! !
-!ContainerView categoriesFor: #resolutionScaledBy:!geometry!private! !
-!ContainerView categoriesFor: #tabFirst!public!tabbing! !
-!ContainerView categoriesFor: #validateSubViewLayouts:!geometry!private! !
-!ContainerView categoriesFor: #validateUserInterface!operations!public! !
-!ContainerView categoriesFor: #viewNamed:ifNone:!hierarchy!public!sub views! !
+!UI.ContainerView categoriesFor: #actualInsets:!accessing!private! !
+!UI.ContainerView categoriesFor: #actualPreferredExtent:!geometry!private! !
+!UI.ContainerView categoriesFor: #addSubView:name:!hierarchy!public!sub views! !
+!UI.ContainerView categoriesFor: #arrangementOf:!accessing!public! !
+!UI.ContainerView categoriesFor: #arrangementOf:put:!accessing!public! !
+!UI.ContainerView categoriesFor: #canAcceptSubViews!hierarchy!public!sub views! !
+!UI.ContainerView categoriesFor: #defaultExtent!constants!private! !
+!UI.ContainerView categoriesFor: #defaultExtentOf:!geometry!public! !
+!UI.ContainerView categoriesFor: #defaultLayoutManager!constants!private! !
+!UI.ContainerView categoriesFor: #defaultWindowExStyle!constants!private! !
+!UI.ContainerView categoriesFor: #errorDuplicateName:!exceptions!public! !
+!UI.ContainerView categoriesFor: #implicitInsets:!accessing!private! !
+!UI.ContainerView categoriesFor: #initialize!initializing!private! !
+!UI.ContainerView categoriesFor: #insets!accessing!public! !
+!UI.ContainerView categoriesFor: #insets:!accessing!public! !
+!UI.ContainerView categoriesFor: #isControlParent!accessing-styles!public! !
+!UI.ContainerView categoriesFor: #isControlParent:!accessing-styles!public! !
+!UI.ContainerView categoriesFor: #layout:!geometry!private! !
+!UI.ContainerView categoriesFor: #layoutManager!geometry!public! !
+!UI.ContainerView categoriesFor: #layoutManager:!geometry!public! !
+!UI.ContainerView categoriesFor: #name:as:!hierarchy!public!sub views! !
+!UI.ContainerView categoriesFor: #nameOf:!hierarchy!public!sub views! !
+!UI.ContainerView categoriesFor: #onSubViewAdded:!event handling!public! !
+!UI.ContainerView categoriesFor: #onSubViewRemoved:!event handling!private! !
+!UI.ContainerView categoriesFor: #onZOrderChanged!event handling!public! !
+!UI.ContainerView categoriesFor: #removeSubView:!hierarchy!public!sub views! !
+!UI.ContainerView categoriesFor: #resolutionScaledBy:!geometry!private! !
+!UI.ContainerView categoriesFor: #tabFirst!public!tabbing! !
+!UI.ContainerView categoriesFor: #validateSubViewLayouts:!geometry!private! !
+!UI.ContainerView categoriesFor: #validateUserInterface!operations!public! !
+!UI.ContainerView categoriesFor: #viewNamed:ifNone:!hierarchy!public!sub views! !
 
-ContainerView methodProtocol: #compositeView attributes: #(#readOnly) selectors: #(#addSubView: #allParents #allSubViews #arrangement #arrangement: #backcolor #backcolor: #canAcceptSubViews #canvas #clientExtent #clientHeight #clientRectangle #clientWidth #close #contextMenu #contextMenu: #cursor #cursorPosition #destroy #disable #disableRedraw #enable #enableRedraw #ensureLayoutValid #ensureRectangleVisible: #ensureSubView:rectangleVisible: #ensureSubViewVisible: #ensureVisible #extent #extent: #firstSubView #font #font: #forecolor #forecolor: #hasBorder #hasBorder: #hasClientEdge #hasClientEdge: #hasFocus #hasLayoutManager #hasStaticEdge #hasStaticEdge: #hasVisibleStyle #hasVisibleStyle: #height #height: #hide #invalidate #invalidateCalculatedExtent #invalidateLayout #invalidateRect: #invalidateRect:erase: #invalidateRgn: #invalidateUserInterface #isEnabled: #isGroupStop #isGroupStop: #isLayoutValid #isManaged #isManaged: #isTabStop #isTabStop: #isTopView #isTransparent #isTransparent: #isWindowVisible #layout #layoutExtent: #layoutManager #layoutManager: #managedSubViews #mapPoint:to: #mapRectangle:to: #model #model: #name #name: #nameOf: #needsValidateLayout #nextSiblingView #nonClientCanvas #onAboutToCreate #onBegin:drag: #onCommand: #onCreated: #onDestroyed #onEraseRequired: #onHScroll: #onModelChanged #onPaintRequired: #onSubViewAdded: #onSubViewRemoved: #onViewCreated #onVScroll: #onZOrderChanged #parentView #placement #placement: #plainText #position #position: #preferredExtent #preferredExtent: #presenter #presenter: #presenterConnectionPoint #preTranslateKeyboardInput: #preTranslateMessage: #preTranslateMouseInput: #previousSiblingView #queryContextMenu #recreate #rectangle #rectangle: #refreshContents #removeSubView: #resolution #screenRectangle #screenRectangle: #scrollBy:clip: #scrollBy:scroll:clip: #setCapture #styles #subViewFromPoint: #subViewFromPoint:flags: #subViews #tabFirst #tabNext #text #text: #topView #update #updateModel #usePreferredExtent #usePreferredExtent: #validate #validateLayout #validateRect: #validateUserInterface #viewNamed: #viewNamed:ifNone: #width #width: #withAllParents #withAllSubViews #x #x: #y #y: #zOrderAfter: #zOrderAfter:withFlags: #zOrderBottom #zOrderTop)!
+UI.ContainerView methodProtocol: #compositeView attributes: #(#readOnly) selectors: #(#addSubView: #allParents #allSubViews #arrangement #arrangement: #backcolor #backcolor: #canAcceptSubViews #canvas #clientExtent #clientHeight #clientRectangle #clientWidth #close #contextMenu #contextMenu: #cursor #cursorPosition #destroy #disable #disableRedraw #enable #enableRedraw #ensureLayoutValid #ensureRectangleVisible: #ensureSubView:rectangleVisible: #ensureSubViewVisible: #ensureVisible #extent #extent: #firstSubView #font #font: #forecolor #forecolor: #hasBorder #hasBorder: #hasClientEdge #hasClientEdge: #hasFocus #hasLayoutManager #hasStaticEdge #hasStaticEdge: #hasVisibleStyle #hasVisibleStyle: #height #height: #hide #invalidate #invalidateCalculatedExtent #invalidateLayout #invalidateRect: #invalidateRect:erase: #invalidateRgn: #invalidateUserInterface #isEnabled: #isGroupStop #isGroupStop: #isLayoutValid #isManaged #isManaged: #isTabStop #isTabStop: #isTopView #isTransparent #isTransparent: #isWindowVisible #layout #layoutExtent: #layoutManager #layoutManager: #managedSubViews #mapPoint:to: #mapRectangle:to: #model #model: #name #name: #nameOf: #needsValidateLayout #nextSiblingView #nonClientCanvas #onAboutToCreate #onBegin:drag: #onCommand: #onCreated: #onDestroyed #onEraseRequired: #onHScroll: #onModelChanged #onPaintRequired: #onSubViewAdded: #onSubViewRemoved: #onViewCreated #onVScroll: #onZOrderChanged #parentView #placement #placement: #plainText #position #position: #preferredExtent #preferredExtent: #presenter #presenter: #presenterConnectionPoint #preTranslateKeyboardInput: #preTranslateMessage: #preTranslateMouseInput: #previousSiblingView #queryContextMenu #recreate #rectangle #rectangle: #refreshContents #removeSubView: #resolution #screenRectangle #screenRectangle: #scrollBy:clip: #scrollBy:scroll:clip: #setCapture #styles #subViewFromPoint: #subViewFromPoint:flags: #subViews #tabFirst #tabNext #text #text: #topView #update #updateModel #usePreferredExtent #usePreferredExtent: #validate #validateLayout #validateRect: #validateUserInterface #viewNamed: #viewNamed:ifNone: #width #width: #withAllParents #withAllSubViews #x #x: #y #y: #zOrderAfter: #zOrderAfter:withFlags: #zOrderBottom #zOrderTop)!
 
-!ContainerView class methodsFor!
+!UI.ContainerView class methodsFor!
 
 icon
 	"Answers an Icon that can be used to represent this class"
@@ -337,7 +336,7 @@ resource_Default_view
 	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Default_view)
 	"
 
-	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.ContainerView) 34 15 nil nil 34 2 8 1140850688 131073 416 nil nil nil 5 nil nil nil 416 nil 170 192 8 #() nil 983302 ##(Smalltalk.MessageSequence) 138 144 34 1 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 328198 ##(Smalltalk.Point) 1 1 626 701 501 416 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 0 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 94 1 0 0 250 0 0 0] 8 #() 626 193 193 nil 27 )! !
-!ContainerView class categoriesFor: #icon!constants!public! !
-!ContainerView class categoriesFor: #resource_Default_view!public!resources-views! !
+	^#(#'!!STL' 4 985166 10 ##(UI.STBViewProxy) ##(UI.ContainerView) 34 15 nil nil 34 2 8 1140850688 131073 416 nil nil nil 7 nil nil nil 416 nil 170 192 8 #() nil 1310982 ##(Core.MessageSequence) 138 144 34 1 1049350 ##(Core.MessageSend) #createAt:extent: 34 2 655878 ##(Graphics.Point) 6143 21 626 701 501 416 1179910 ##(OS.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 93 13 0 0 4 1 0 0] 8 #() 626 193 193 nil 27)! !
+!UI.ContainerView class categoriesFor: #icon!constants!public! !
+!UI.ContainerView class categoriesFor: #resource_Default_view!public!resources-views! !
 

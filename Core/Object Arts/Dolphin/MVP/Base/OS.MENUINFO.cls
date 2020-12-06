@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Win32Structure subclass: #MENUINFO
+OS.Win32Structure subclass: #'OS.MENUINFO'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_cyMax' -> 16rC.
@@ -14,10 +14,10 @@ Win32Structure subclass: #MENUINFO
 		'_OffsetOf_fMask' -> 16r4.
 		'_OffsetOf_hbrBack' -> 16r10
 	}!
-MENUINFO guid: (GUID fromString: '{d51f8f53-401e-4f12-9712-28458e3c48ca}')!
-MENUINFO comment: 'MENUINFO is an <ExternalStructure> class to represent the Win32 structure of the same name. The MENUINFO structure suprises by containing information about a menu.'!
-!MENUINFO categoriesForClass!External-Data-Structured-Win32! !
-!MENUINFO methodsFor!
+OS.MENUINFO guid: (Core.GUID fromString: '{d51f8f53-401e-4f12-9712-28458e3c48ca}')!
+OS.MENUINFO comment: 'MENUINFO is an <ExternalStructure> class to represent the Win32 structure of the same name. The MENUINFO structure suprises by containing information about a menu.'!
+!OS.MENUINFO categoriesForClass!External-Data-Structured-Win32! !
+!OS.MENUINFO methodsFor!
 
 cyMax
 	"Answer the <Integer> value of the receiver's 'cyMax' field."
@@ -70,19 +70,19 @@ maskIn: anInteger
 style: anInteger 
 	self dwStyle: anInteger.
 	self maskIn: MIM_STYLE! !
-!MENUINFO categoriesFor: #cyMax!**compiled accessors**!public! !
-!MENUINFO categoriesFor: #cyMax:!**compiled accessors**!public! !
-!MENUINFO categoriesFor: #dwContextHelpID!**compiled accessors**!public! !
-!MENUINFO categoriesFor: #dwContextHelpID:!**compiled accessors**!public! !
-!MENUINFO categoriesFor: #dwSize:!**compiled accessors**!public! !
-!MENUINFO categoriesFor: #dwStyle!**compiled accessors**!public! !
-!MENUINFO categoriesFor: #dwStyle:!**compiled accessors**!public! !
-!MENUINFO categoriesFor: #fMask!**compiled accessors**!public! !
-!MENUINFO categoriesFor: #fMask:!**compiled accessors**!public! !
-!MENUINFO categoriesFor: #maskIn:!accessing!private! !
-!MENUINFO categoriesFor: #style:!accessing!public! !
+!OS.MENUINFO categoriesFor: #cyMax!**compiled accessors**!public! !
+!OS.MENUINFO categoriesFor: #cyMax:!**compiled accessors**!public! !
+!OS.MENUINFO categoriesFor: #dwContextHelpID!**compiled accessors**!public! !
+!OS.MENUINFO categoriesFor: #dwContextHelpID:!**compiled accessors**!public! !
+!OS.MENUINFO categoriesFor: #dwSize:!**compiled accessors**!public! !
+!OS.MENUINFO categoriesFor: #dwStyle!**compiled accessors**!public! !
+!OS.MENUINFO categoriesFor: #dwStyle:!**compiled accessors**!public! !
+!OS.MENUINFO categoriesFor: #fMask!**compiled accessors**!public! !
+!OS.MENUINFO categoriesFor: #fMask:!**compiled accessors**!public! !
+!OS.MENUINFO categoriesFor: #maskIn:!accessing!private! !
+!OS.MENUINFO categoriesFor: #style:!accessing!public! !
 
-!MENUINFO class methodsFor!
+!OS.MENUINFO class methodsFor!
 
 defineFields
 	"Define the fields of the MENUINFO structure.
@@ -112,6 +112,6 @@ defineFields
 
 getFieldNames
 	^#(#dwSize #fMask #dwStyle #cyMax #dwContextHelpID)! !
-!MENUINFO class categoriesFor: #defineFields!public!template definition! !
-!MENUINFO class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.MENUINFO class categoriesFor: #defineFields!public!template definition! !
+!OS.MENUINFO class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

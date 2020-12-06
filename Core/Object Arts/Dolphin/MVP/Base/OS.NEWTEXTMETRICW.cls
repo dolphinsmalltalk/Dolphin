@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-TEXTMETRICW subclass: #NEWTEXTMETRICW
+OS.TEXTMETRICW subclass: #'OS.NEWTEXTMETRICW'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_ntmAvgWidth' -> 16r48.
@@ -11,8 +11,8 @@ TEXTMETRICW subclass: #NEWTEXTMETRICW
 		'_OffsetOf_ntmFlags' -> 16r3C.
 		'_OffsetOf_ntmSizeEM' -> 16r40
 	}!
-NEWTEXTMETRICW guid: (GUID fromString: '{5a49e86c-3d79-4c3d-b5be-65a1b21f73ed}')!
-NEWTEXTMETRICW comment: '<NEWTEXTMETRIC> is an <ExternalStructure> class to wrap the struct ''Win.NEWTEXTMETRIC'' from type information in the ''Windows API'' library.
+OS.NEWTEXTMETRICW guid: (Core.GUID fromString: '{5a49e86c-3d79-4c3d-b5be-65a1b21f73ed}')!
+OS.NEWTEXTMETRICW comment: '<NEWTEXTMETRIC> is an <ExternalStructure> class to wrap the struct ''Win.NEWTEXTMETRIC'' from type information in the ''Windows API'' library.
 
 IDL definition follows:
 
@@ -25,8 +25,8 @@ struct tagNEWTEXTMETRIC {
 	UINT ntmAvgWidth;
 } NEWTEXTMETRIC;
 '!
-!NEWTEXTMETRICW categoriesForClass!Win-Structs! !
-!NEWTEXTMETRICW methodsFor!
+!OS.NEWTEXTMETRICW categoriesForClass!Win-Structs! !
+!OS.NEWTEXTMETRICW methodsFor!
 
 ntmAvgWidth
 	"Answer the <Integer> value of the receiver's 'ntmAvgWidth' field."
@@ -47,12 +47,12 @@ ntmSizeEM
 	"Answer the <Integer> value of the receiver's 'ntmSizeEM' field."
 
 	^bytes dwordAtOffset: _OffsetOf_ntmSizeEM! !
-!NEWTEXTMETRICW categoriesFor: #ntmAvgWidth!**compiled accessors**!public! !
-!NEWTEXTMETRICW categoriesFor: #ntmCellHeight!**compiled accessors**!public! !
-!NEWTEXTMETRICW categoriesFor: #ntmFlags!**compiled accessors**!public! !
-!NEWTEXTMETRICW categoriesFor: #ntmSizeEM!**compiled accessors**!public! !
+!OS.NEWTEXTMETRICW categoriesFor: #ntmAvgWidth!**compiled accessors**!public! !
+!OS.NEWTEXTMETRICW categoriesFor: #ntmCellHeight!**compiled accessors**!public! !
+!OS.NEWTEXTMETRICW categoriesFor: #ntmFlags!**compiled accessors**!public! !
+!OS.NEWTEXTMETRICW categoriesFor: #ntmSizeEM!**compiled accessors**!public! !
 
-!NEWTEXTMETRICW class methodsFor!
+!OS.NEWTEXTMETRICW class methodsFor!
 
 defineFields
 	"Define the fields of the NEWTEXTMETRIC structure.
@@ -77,6 +77,6 @@ defineFields
 
 getFieldNames
 	^#(#tmHeight #tmAscent #tmDescent #tmInternalLeading #tmExternalLeading #tmAveCharWidth #tmMaxCharWidth #tmWeight #tmOverhang #tmDigitizedAspectX #tmDigitizedAspectY #tmFirstChar #tmLastChar #tmDefaultChar #tmBreakChar #tmItalic #tmUnderlined #tmStruckOut #tmPitchAndFamily #tmCharSet #ntmFlags #ntmSizeEM #ntmCellHeight #ntmAvgWidth)! !
-!NEWTEXTMETRICW class categoriesFor: #defineFields!public!template definition! !
-!NEWTEXTMETRICW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.NEWTEXTMETRICW class categoriesFor: #defineFields!public!template definition! !
+!OS.NEWTEXTMETRICW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

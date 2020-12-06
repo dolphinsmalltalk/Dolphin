@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Object subclass: #FindDetails
+Core.Object subclass: #'UI.FindDetails'
 	instanceVariableNames: 'pattern replaceWith searchMode flags action'
 	classVariableNames: 'IgnoreCaseMask UpMask WholeWordMask WrapMask'
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-FindDetails guid: (GUID fromString: '{ec9a373c-74cf-4a2c-b29c-227014e985f9}')!
-FindDetails comment: ''!
-!FindDetails categoriesForClass!Kernel-Objects! !
-!FindDetails methodsFor!
+UI.FindDetails guid: (Core.GUID fromString: '{ec9a373c-74cf-4a2c-b29c-227014e985f9}')!
+UI.FindDetails comment: ''!
+!UI.FindDetails categoriesForClass!Kernel-Objects! !
+!UI.FindDetails methodsFor!
 
 action
 	"Answer the find/replace action. One of #find, #replace, #replaceAll."
@@ -112,32 +112,32 @@ searchMode
 searchMode: aSymbol 
 	(self class searchModes includes: aSymbol) ifFalse: [self error: 'Invalid search mode: ' , aSymbol].
 	searchMode := aSymbol! !
-!FindDetails categoriesFor: #action!accessing!public! !
-!FindDetails categoriesFor: #action:!accessing!public! !
-!FindDetails categoriesFor: #findIn:range:!public! !
-!FindDetails categoriesFor: #findWhat!accessing!public! !
-!FindDetails categoriesFor: #hasValidRegularExpression!public!testing! !
-!FindDetails categoriesFor: #initialize!initializing!public! !
-!FindDetails categoriesFor: #isCaseSensitive!public!testing! !
-!FindDetails categoriesFor: #isCaseSensitive:!accessing!public! !
-!FindDetails categoriesFor: #isForwards!public!testing! !
-!FindDetails categoriesFor: #isForwards:!accessing!public! !
-!FindDetails categoriesFor: #isRegularExpression!public!testing! !
-!FindDetails categoriesFor: #isWholeWord!public!testing! !
-!FindDetails categoriesFor: #isWholeWord:!accessing!public! !
-!FindDetails categoriesFor: #isWildcard!public!testing! !
-!FindDetails categoriesFor: #isWildcard:!accessing!public! !
-!FindDetails categoriesFor: #isWrapAround!public!testing! !
-!FindDetails categoriesFor: #isWrapAround:!accessing!public! !
-!FindDetails categoriesFor: #pattern!accessing!public! !
-!FindDetails categoriesFor: #pattern:!accessing!public! !
-!FindDetails categoriesFor: #regularExpression!accessing!public! !
-!FindDetails categoriesFor: #replaceWith!accessing!public! !
-!FindDetails categoriesFor: #replaceWith:!accessing!public! !
-!FindDetails categoriesFor: #searchMode!accessing!public! !
-!FindDetails categoriesFor: #searchMode:!accessing!public! !
+!UI.FindDetails categoriesFor: #action!accessing!public! !
+!UI.FindDetails categoriesFor: #action:!accessing!public! !
+!UI.FindDetails categoriesFor: #findIn:range:!public! !
+!UI.FindDetails categoriesFor: #findWhat!accessing!public! !
+!UI.FindDetails categoriesFor: #hasValidRegularExpression!public!testing! !
+!UI.FindDetails categoriesFor: #initialize!initializing!public! !
+!UI.FindDetails categoriesFor: #isCaseSensitive!public!testing! !
+!UI.FindDetails categoriesFor: #isCaseSensitive:!accessing!public! !
+!UI.FindDetails categoriesFor: #isForwards!public!testing! !
+!UI.FindDetails categoriesFor: #isForwards:!accessing!public! !
+!UI.FindDetails categoriesFor: #isRegularExpression!public!testing! !
+!UI.FindDetails categoriesFor: #isWholeWord!public!testing! !
+!UI.FindDetails categoriesFor: #isWholeWord:!accessing!public! !
+!UI.FindDetails categoriesFor: #isWildcard!public!testing! !
+!UI.FindDetails categoriesFor: #isWildcard:!accessing!public! !
+!UI.FindDetails categoriesFor: #isWrapAround!public!testing! !
+!UI.FindDetails categoriesFor: #isWrapAround:!accessing!public! !
+!UI.FindDetails categoriesFor: #pattern!accessing!public! !
+!UI.FindDetails categoriesFor: #pattern:!accessing!public! !
+!UI.FindDetails categoriesFor: #regularExpression!accessing!public! !
+!UI.FindDetails categoriesFor: #replaceWith!accessing!public! !
+!UI.FindDetails categoriesFor: #replaceWith:!accessing!public! !
+!UI.FindDetails categoriesFor: #searchMode!accessing!public! !
+!UI.FindDetails categoriesFor: #searchMode:!accessing!public! !
 
-!FindDetails class methodsFor!
+!UI.FindDetails class methodsFor!
 
 icon
 	"Answers an Icon that can be used to represent this class"
@@ -171,9 +171,9 @@ newPattern: aString
 
 searchModes
 	^#(#text #wildcardExpression)! !
-!FindDetails class categoriesFor: #icon!constants!public! !
-!FindDetails class categoriesFor: #initialize!development!initializing!public! !
-!FindDetails class categoriesFor: #new!instance creation!public! !
-!FindDetails class categoriesFor: #newPattern:!instance creation!public! !
-!FindDetails class categoriesFor: #searchModes!constants!public! !
+!UI.FindDetails class categoriesFor: #icon!constants!public! !
+!UI.FindDetails class categoriesFor: #initialize!development!initializing!public! !
+!UI.FindDetails class categoriesFor: #new!instance creation!public! !
+!UI.FindDetails class categoriesFor: #newPattern:!instance creation!public! !
+!UI.FindDetails class categoriesFor: #searchModes!constants!public! !
 

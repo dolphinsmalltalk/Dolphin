@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ArithmeticValue subclass: #Point3D
+Core.ArithmeticValue subclass: #'Graphics.Point3D'
 	instanceVariableNames: 'x y z'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Point3D guid: (GUID fromString: '{87b4c659-026e-11d3-9fd7-00a0cc3e4a32}')!
-Point3D comment: 'A Point3D represents an x-y-z pair of numbers usually indicating a point in a three-dimensional Cartesian coordinate volume. Following the convention for Point, Point3D is often attributed a "left-handed" coordinate system. However, this is not essential and either left or right-handed systems may be adopted depending on the application.
+Graphics.Point3D guid: (Core.GUID fromString: '{87b4c659-026e-11d3-9fd7-00a0cc3e4a32}')!
+Graphics.Point3D comment: 'A Point3D represents an x-y-z pair of numbers usually indicating a point in a three-dimensional Cartesian coordinate volume. Following the convention for Point, Point3D is often attributed a "left-handed" coordinate system. However, this is not essential and either left or right-handed systems may be adopted depending on the application.
 
 A Point3D is typically created using the binary message @ to a Point:
 
@@ -18,8 +18,8 @@ Arithmetic operations can be carried out between two Point3Ds or between a Point
 (150 @ 200 @ 400) + (50 @ 50 @ 50) "Addition of Point3Ds"
 (150 @ 200 @ 400) + 100 "Addition of scalar"
 (150 @ 200 @ 400) * 3 "Scaling"'!
-!Point3D categoriesForClass!Graphics-Geometry! !
-!Point3D methodsFor!
+!Graphics.Point3D categoriesForClass!Graphics-Geometry! !
+!Graphics.Point3D methodsFor!
 
 - anArithmeticValue
 	"Answer the receiver minus anArithmeticValue as a Point3D."
@@ -252,48 +252,48 @@ z: aNumber
 	"Set the z coordinate of the receiver"
 
 	z := aNumber! !
-!Point3D categoriesFor: #-!arithmetic!public! !
-!Point3D categoriesFor: #*!arithmetic!public! !
-!Point3D categoriesFor: #/!arithmetic!public! !
-!Point3D categoriesFor: #+!arithmetic!public! !
-!Point3D categoriesFor: #<!comparing!public! !
-!Point3D categoriesFor: #<=!comparing!public! !
-!Point3D categoriesFor: #=!comparing!public! !
-!Point3D categoriesFor: #>!comparing!public! !
-!Point3D categoriesFor: #>=!comparing!public! !
-!Point3D categoriesFor: #abs!arithmetic!public! !
-!Point3D categoriesFor: #addToPoint3D:!double dispatch!private! !
-!Point3D categoriesFor: #asPoint!converting!public! !
-!Point3D categoriesFor: #asPoint3D!converting!public! !
-!Point3D categoriesFor: #ceiling!public!truncation and round off! !
-!Point3D categoriesFor: #coerce:!coercing!private! !
-!Point3D categoriesFor: #dist:!operations!public! !
-!Point3D categoriesFor: #divideIntoPoint3D:!double dispatch!private! !
-!Point3D categoriesFor: #dotProduct:!operations!public! !
-!Point3D categoriesFor: #floor!public!truncation and round off! !
-!Point3D categoriesFor: #generality!coercing!private! !
-!Point3D categoriesFor: #hash!comparing!public! !
-!Point3D categoriesFor: #isSelfEvaluating!public!testing! !
-!Point3D categoriesFor: #max:!comparing!public! !
-!Point3D categoriesFor: #min:!comparing!public! !
-!Point3D categoriesFor: #multiplyByPoint3D:!double dispatch!private! !
-!Point3D categoriesFor: #normalize!public! !
-!Point3D categoriesFor: #printOn:!printing!public! !
-!Point3D categoriesFor: #r!accessing!public! !
-!Point3D categoriesFor: #raisedTo:!mathematical!public! !
-!Point3D categoriesFor: #rounded!public!truncation and round off! !
-!Point3D categoriesFor: #roundTo:!public!truncation and round off! !
-!Point3D categoriesFor: #subtractFromPoint3D:!double dispatch!private! !
-!Point3D categoriesFor: #truncated!public!truncation and round off! !
-!Point3D categoriesFor: #x!accessing!public! !
-!Point3D categoriesFor: #x:!accessing!public! !
-!Point3D categoriesFor: #x:y:z:!accessing!public! !
-!Point3D categoriesFor: #y!accessing!public! !
-!Point3D categoriesFor: #y:!accessing!public! !
-!Point3D categoriesFor: #z!accessing!public! !
-!Point3D categoriesFor: #z:!accessing!public! !
+!Graphics.Point3D categoriesFor: #-!arithmetic!public! !
+!Graphics.Point3D categoriesFor: #*!arithmetic!public! !
+!Graphics.Point3D categoriesFor: #/!arithmetic!public! !
+!Graphics.Point3D categoriesFor: #+!arithmetic!public! !
+!Graphics.Point3D categoriesFor: #<!comparing!public! !
+!Graphics.Point3D categoriesFor: #<=!comparing!public! !
+!Graphics.Point3D categoriesFor: #=!comparing!public! !
+!Graphics.Point3D categoriesFor: #>!comparing!public! !
+!Graphics.Point3D categoriesFor: #>=!comparing!public! !
+!Graphics.Point3D categoriesFor: #abs!arithmetic!public! !
+!Graphics.Point3D categoriesFor: #addToPoint3D:!double dispatch!private! !
+!Graphics.Point3D categoriesFor: #asPoint!converting!public! !
+!Graphics.Point3D categoriesFor: #asPoint3D!converting!public! !
+!Graphics.Point3D categoriesFor: #ceiling!public!truncation and round off! !
+!Graphics.Point3D categoriesFor: #coerce:!coercing!private! !
+!Graphics.Point3D categoriesFor: #dist:!operations!public! !
+!Graphics.Point3D categoriesFor: #divideIntoPoint3D:!double dispatch!private! !
+!Graphics.Point3D categoriesFor: #dotProduct:!operations!public! !
+!Graphics.Point3D categoriesFor: #floor!public!truncation and round off! !
+!Graphics.Point3D categoriesFor: #generality!coercing!private! !
+!Graphics.Point3D categoriesFor: #hash!comparing!public! !
+!Graphics.Point3D categoriesFor: #isSelfEvaluating!public!testing! !
+!Graphics.Point3D categoriesFor: #max:!comparing!public! !
+!Graphics.Point3D categoriesFor: #min:!comparing!public! !
+!Graphics.Point3D categoriesFor: #multiplyByPoint3D:!double dispatch!private! !
+!Graphics.Point3D categoriesFor: #normalize!public! !
+!Graphics.Point3D categoriesFor: #printOn:!printing!public! !
+!Graphics.Point3D categoriesFor: #r!accessing!public! !
+!Graphics.Point3D categoriesFor: #raisedTo:!mathematical!public! !
+!Graphics.Point3D categoriesFor: #rounded!public!truncation and round off! !
+!Graphics.Point3D categoriesFor: #roundTo:!public!truncation and round off! !
+!Graphics.Point3D categoriesFor: #subtractFromPoint3D:!double dispatch!private! !
+!Graphics.Point3D categoriesFor: #truncated!public!truncation and round off! !
+!Graphics.Point3D categoriesFor: #x!accessing!public! !
+!Graphics.Point3D categoriesFor: #x:!accessing!public! !
+!Graphics.Point3D categoriesFor: #x:y:z:!accessing!public! !
+!Graphics.Point3D categoriesFor: #y!accessing!public! !
+!Graphics.Point3D categoriesFor: #y:!accessing!public! !
+!Graphics.Point3D categoriesFor: #z!accessing!public! !
+!Graphics.Point3D categoriesFor: #z:!accessing!public! !
 
-!Point3D class methodsFor!
+!Graphics.Point3D class methodsFor!
 
 fromFLOATArray: aFLOATArray 
 	^self 
@@ -346,14 +346,14 @@ zero
 	"Answer the receiver's representation of zero."
 
 	^0 @ 0 @ 0! !
-!Point3D class categoriesFor: #fromFLOATArray:!public! !
-!Point3D class categoriesFor: #icon!constants!public! !
-!Point3D class categoriesFor: #new!instance creation!public! !
-!Point3D class categoriesFor: #one!instance creation!public! !
-!Point3D class categoriesFor: #origin!instance creation!public! !
-!Point3D class categoriesFor: #x:y:z:!instance creation!public! !
-!Point3D class categoriesFor: #xAxis!instance creation!public! !
-!Point3D class categoriesFor: #yAxis!instance creation!public! !
-!Point3D class categoriesFor: #zAxis!instance creation!public! !
-!Point3D class categoriesFor: #zero!instance creation!public! !
+!Graphics.Point3D class categoriesFor: #fromFLOATArray:!public! !
+!Graphics.Point3D class categoriesFor: #icon!constants!public! !
+!Graphics.Point3D class categoriesFor: #new!instance creation!public! !
+!Graphics.Point3D class categoriesFor: #one!instance creation!public! !
+!Graphics.Point3D class categoriesFor: #origin!instance creation!public! !
+!Graphics.Point3D class categoriesFor: #x:y:z:!instance creation!public! !
+!Graphics.Point3D class categoriesFor: #xAxis!instance creation!public! !
+!Graphics.Point3D class categoriesFor: #yAxis!instance creation!public! !
+!Graphics.Point3D class categoriesFor: #zAxis!instance creation!public! !
+!Graphics.Point3D class categoriesFor: #zero!instance creation!public! !
 

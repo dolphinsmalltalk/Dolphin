@@ -1,14 +1,14 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-GraphicsTool subclass: #Image
+Graphics.GraphicsTool subclass: #'Graphics.Image'
 	instanceVariableNames: 'fileLocator identifier instanceHandle'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Image guid: (GUID fromString: '{87b4c635-026e-11d3-9fd7-00a0cc3e4a32}')!
-Image isAbstract: true!
-Image comment: 'Image is the class of <GraphicsTools>s that represent pictures which can be drawn onto the display (or other device).
+Graphics.Image guid: (Core.GUID fromString: '{87b4c635-026e-11d3-9fd7-00a0cc3e4a32}')!
+Graphics.Image isNonInstantiable: true!
+Graphics.Image comment: 'Image is the class of <GraphicsTools>s that represent pictures which can be drawn onto the display (or other device).
 
 Instance Variables:
 	fileLocator		<fileLocator> used to complete the relative path held as the ''identifier'' when loading the image.
@@ -16,8 +16,8 @@ Instance Variables:
 	instanceHandle	<ExternalLibrary> (usually <ExternalResourceLibrary) represent the module from which the image was loaded.
 
 '!
-!Image categoriesForClass!Graphics-Tools! !
-!Image methodsFor!
+!Graphics.Image categoriesForClass!Graphics-Tools! !
+!Graphics.Image methodsFor!
 
 = anObject 
 	"Answer whether the receiver and anObject are equivalent.
@@ -50,7 +50,7 @@ copy
 copyHandle
 	"Private - Answer an external handle to the image which is a copy of that represented by the receiver."
 
-	^UserLibrary default 
+	^UserLibrary default
 		copyImage: self handle
 		uType: self imageType
 		cxDesired: 0
@@ -66,11 +66,10 @@ createHandle
 	library. If even that fails then the answer will be nil."
 
 	| spec |
-	instanceHandle notNil 
+	instanceHandle notNil
 		ifTrue: [(self loadFromInstance: instanceHandle) ifNotNil: [:hImage | ^hImage]].
 	spec := self fileSpec.
-	spec isInteger 
-		ifFalse: [(self loadFromFile: spec extent: 0 @ 0) ifNotNil: [:hImage | ^hImage]].
+	spec isInteger ifFalse: [(self loadFromFile: spec extent: 0 @ 0) ifNotNil: [:hImage | ^hImage]].
 	^self loadFromInstance: SessionManager current defaultResourceLibrary!
 
 drawDisabledOn: aCanvas at: aPoint extent: sizePoint
@@ -84,7 +83,7 @@ drawOn: aCanvas
 	"Draw the receiver to aCanvas at position aPoint (no stretching).
 	Answer whether the operation succeeded."
 
-	^self drawOn: aCanvas at: Point zero!
+	^self drawOn: aCanvas at: Point.Zero!
 
 drawOn: aCanvas at: aPoint
 	"Draw the receiver to aCanvas at position aPoint (no stretching).
@@ -200,7 +199,7 @@ loadFromFile: pathString extent: aPoint
 	"Private - Attempts to load an image of the receivers type from a disk file.
 	Answers the image's handle, or nil if the image could not be loaded."
 
-	^UserLibrary default 
+	^UserLibrary default
 		loadImage: 0
 		lpszName: pathString asResourceId
 		uType: self imageType
@@ -236,39 +235,39 @@ printOn: aStream
 						nextPutAll: #fromId:;
 						space;
 						print: id]]! !
-!Image categoriesFor: #=!comparing!public! !
-!Image categoriesFor: #addToImageList:mask:!private!testing! !
-!Image categoriesFor: #asSharedCopy!converting!public! !
-!Image categoriesFor: #copy!copying!public! !
-!Image categoriesFor: #copyHandle!private!realizing/unrealizing! !
-!Image categoriesFor: #createHandle!private!realizing/unrealizing! !
-!Image categoriesFor: #drawDisabledOn:at:extent:!drawing-bitmaps!public! !
-!Image categoriesFor: #drawOn:!drawing-bitmaps!public! !
-!Image categoriesFor: #drawOn:at:!drawing-bitmaps!public! !
-!Image categoriesFor: #drawOn:at:extent:!drawing-bitmaps!public! !
-!Image categoriesFor: #extent!accessing!public! !
-!Image categoriesFor: #fileLocator!accessing!public! !
-!Image categoriesFor: #fileLocator:!accessing!public! !
-!Image categoriesFor: #fileSpec!accessing!private! !
-!Image categoriesFor: #freeDC!private!realizing/unrealizing! !
-!Image categoriesFor: #fullIdentifier!accessing!private! !
-!Image categoriesFor: #hash!comparing!public! !
-!Image categoriesFor: #hotspot!accessing!public! !
-!Image categoriesFor: #identifier!accessing!public! !
-!Image categoriesFor: #identifier:!accessing!public! !
-!Image categoriesFor: #imageManager!accessing!public! !
-!Image categoriesFor: #imageType!constants!private!testing! !
-!Image categoriesFor: #instanceHandle!accessing!public! !
-!Image categoriesFor: #instanceHandle:!accessing!public! !
-!Image categoriesFor: #isPersistent!private!testing! !
-!Image categoriesFor: #isShared!private!testing! !
-!Image categoriesFor: #loadFromFile:extent:!private!realizing/unrealizing! !
-!Image categoriesFor: #loadFromInstance:!private!realizing/unrealizing! !
-!Image categoriesFor: #printOn:!printing!public! !
+!Graphics.Image categoriesFor: #=!comparing!public! !
+!Graphics.Image categoriesFor: #addToImageList:mask:!private!testing! !
+!Graphics.Image categoriesFor: #asSharedCopy!converting!public! !
+!Graphics.Image categoriesFor: #copy!copying!public! !
+!Graphics.Image categoriesFor: #copyHandle!private!realizing/unrealizing! !
+!Graphics.Image categoriesFor: #createHandle!private!realizing/unrealizing! !
+!Graphics.Image categoriesFor: #drawDisabledOn:at:extent:!drawing-bitmaps!public! !
+!Graphics.Image categoriesFor: #drawOn:!drawing-bitmaps!public! !
+!Graphics.Image categoriesFor: #drawOn:at:!drawing-bitmaps!public! !
+!Graphics.Image categoriesFor: #drawOn:at:extent:!drawing-bitmaps!public! !
+!Graphics.Image categoriesFor: #extent!accessing!public! !
+!Graphics.Image categoriesFor: #fileLocator!accessing!public! !
+!Graphics.Image categoriesFor: #fileLocator:!accessing!public! !
+!Graphics.Image categoriesFor: #fileSpec!accessing!private! !
+!Graphics.Image categoriesFor: #freeDC!private!realizing/unrealizing! !
+!Graphics.Image categoriesFor: #fullIdentifier!accessing!private! !
+!Graphics.Image categoriesFor: #hash!comparing!public! !
+!Graphics.Image categoriesFor: #hotspot!accessing!public! !
+!Graphics.Image categoriesFor: #identifier!accessing!public! !
+!Graphics.Image categoriesFor: #identifier:!accessing!public! !
+!Graphics.Image categoriesFor: #imageManager!accessing!public! !
+!Graphics.Image categoriesFor: #imageType!constants!private!testing! !
+!Graphics.Image categoriesFor: #instanceHandle!accessing!public! !
+!Graphics.Image categoriesFor: #instanceHandle:!accessing!public! !
+!Graphics.Image categoriesFor: #isPersistent!private!testing! !
+!Graphics.Image categoriesFor: #isShared!private!testing! !
+!Graphics.Image categoriesFor: #loadFromFile:extent:!private!realizing/unrealizing! !
+!Graphics.Image categoriesFor: #loadFromInstance:!private!realizing/unrealizing! !
+!Graphics.Image categoriesFor: #printOn:!printing!public! !
 
-Image methodProtocol: #image attributes: #(#readOnly) selectors: #(#drawOn: #drawOn:at: #drawOn:at:extent: #extent)!
+Graphics.Image methodProtocol: #image attributes: #(#readOnly) selectors: #(#drawOn: #drawOn:at: #drawOn:at:extent: #extent)!
 
-!Image class methodsFor!
+!Graphics.Image class methodsFor!
 
 fromFile: aFilename
 	"Answer an instance loaded from the file aFilename.
@@ -282,14 +281,13 @@ fromFile: aFilename
 				usingLocator: FileLocator installRelative)
 	"
 
-	^self  fromFile: aFilename usingLocator: FileLocator default
-!
+	^self fromFile: aFilename usingLocator: FileLocator default!
 
-fromFile: aFilename usingLocator: aFileLocator 
+fromFile: aFilename usingLocator: aFileLocator
 	"Answer an instance loaded from the file aFilename by using aFileLocator."
 
 	| relativeFilename |
-	relativeFilename := (aFileLocator isNil or: [File isRelativePath: aFilename]) 
+	relativeFilename := (aFileLocator isNil or: [File isRelativePath: aFilename])
 				ifTrue: [aFilename]
 				ifFalse: [aFileLocator relativePathTo: aFilename].
 	^(self fromId: relativeFilename in: nil)
@@ -299,8 +297,7 @@ fromFile: aFilename usingLocator: aFileLocator
 fromId: anIntegerOrStringId
 	"Answer a new instance with a resource Id of anIntegerOrStringId."
 
-	^self fromId: anIntegerOrStringId in: SessionManager current defaultResourceLibrary
-!
+	^self fromId: anIntegerOrStringId in: SessionManager current defaultResourceLibrary!
 
 fromId: anIntegerOrStringId in: anInstanceHandle
 	"Answer a new instance with a resourceID of anIntegerOrStringId
@@ -310,8 +307,7 @@ fromId: anIntegerOrStringId in: anInstanceHandle
 		fileLocator: FileLocator default;
 		identifier: anIntegerOrStringId;
 		instanceHandle: anInstanceHandle;
-		yourself
-!
+		yourself!
 
 fromSystemId: anIntegerId
 	"Answer a new instance of the Windows pre-defined icon specified by anIntegerID."
@@ -329,18 +325,18 @@ imageManager
 
 	^ImageManager new!
 
-stbConvertFrom: anSTBClassFormat 
+stbConvertFrom: anSTBClassFormat
 	"Version 3 adds locator instance variable."
 
 	^
-	[:data | 
+	[:data |
 	| newInstance |
 	newInstance := self basicNew.
-	anSTBClassFormat version < 3 
+	anSTBClassFormat version < 3
 		ifTrue: 
 			[1 to: data size
 				do: 
-					[:i | 
+					[:i |
 					| offset |
 					offset := i <= 2 ifTrue: [0] ifFalse: [1].
 					newInstance instVarAt: i + offset put: (data at: i)].
@@ -351,13 +347,13 @@ stbVersion
 	"Answer the current binary filer version number for instances of the receiver."
 
 	^3! !
-!Image class categoriesFor: #fromFile:!instance creation!public! !
-!Image class categoriesFor: #fromFile:usingLocator:!instance creation!public! !
-!Image class categoriesFor: #fromId:!instance creation!public! !
-!Image class categoriesFor: #fromId:in:!instance creation!public! !
-!Image class categoriesFor: #fromSystemId:!instance creation!public! !
-!Image class categoriesFor: #icon!constants!public! !
-!Image class categoriesFor: #imageManager!accessing!public! !
-!Image class categoriesFor: #stbConvertFrom:!binary filing!public! !
-!Image class categoriesFor: #stbVersion!binary filing!public! !
+!Graphics.Image class categoriesFor: #fromFile:!instance creation!public! !
+!Graphics.Image class categoriesFor: #fromFile:usingLocator:!instance creation!public! !
+!Graphics.Image class categoriesFor: #fromId:!instance creation!public! !
+!Graphics.Image class categoriesFor: #fromId:in:!instance creation!public! !
+!Graphics.Image class categoriesFor: #fromSystemId:!instance creation!public! !
+!Graphics.Image class categoriesFor: #icon!constants!public! !
+!Graphics.Image class categoriesFor: #imageManager!accessing!public! !
+!Graphics.Image class categoriesFor: #stbConvertFrom:!binary filing!public! !
+!Graphics.Image class categoriesFor: #stbVersion!binary filing!public! !
 

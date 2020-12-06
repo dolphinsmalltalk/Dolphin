@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Win32Structure subclass: #MARGINS
+OS.Win32Structure subclass: #'OS.MARGINS'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_cxLeftWidth' -> 16r0.
@@ -11,8 +11,8 @@ Win32Structure subclass: #MARGINS
 		'_OffsetOf_cyBottomHeight' -> 16rC.
 		'_OffsetOf_cyTopHeight' -> 16r8
 	}!
-MARGINS guid: (GUID fromString: '{d92a9b7d-a1dc-4ef4-97e5-869e7a720a83}')!
-MARGINS comment: '<MARGINS> is an <ExternalStructure> class to wrap the struct ''Win32.MARGINS'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
+OS.MARGINS guid: (Core.GUID fromString: '{d92a9b7d-a1dc-4ef4-97e5-869e7a720a83}')!
+OS.MARGINS comment: '<MARGINS> is an <ExternalStructure> class to wrap the struct ''Win32.MARGINS'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains the following helpstring for this struct
 	"Defines the margins of windows that have visual styles applied."
@@ -29,8 +29,8 @@ struct tagMARGINS {
 	[helpstring("Height of bottom border that retains its size")] int cyBottomHeight;
 } MARGINS;
 '!
-!MARGINS categoriesForClass!Win32-Structs! !
-!MARGINS methodsFor!
+!OS.MARGINS categoriesForClass!Win32-Structs! !
+!OS.MARGINS methodsFor!
 
 cxLeftWidth
 	"Answer the <Integer> value of the receiver's 'cxLeftWidth' field."
@@ -71,16 +71,16 @@ cyTopHeight: anInteger
 	"Set the receiver's 'cyTopHeight' field to the value of the argument, anInteger"
 
 	bytes sdwordAtOffset: _OffsetOf_cyTopHeight put: anInteger! !
-!MARGINS categoriesFor: #cxLeftWidth!**compiled accessors**!public! !
-!MARGINS categoriesFor: #cxLeftWidth:!**compiled accessors**!public! !
-!MARGINS categoriesFor: #cxRightWidth!**compiled accessors**!public! !
-!MARGINS categoriesFor: #cxRightWidth:!**compiled accessors**!public! !
-!MARGINS categoriesFor: #cyBottomHeight!**compiled accessors**!public! !
-!MARGINS categoriesFor: #cyBottomHeight:!**compiled accessors**!public! !
-!MARGINS categoriesFor: #cyTopHeight!**compiled accessors**!public! !
-!MARGINS categoriesFor: #cyTopHeight:!**compiled accessors**!public! !
+!OS.MARGINS categoriesFor: #cxLeftWidth!**compiled accessors**!public! !
+!OS.MARGINS categoriesFor: #cxLeftWidth:!**compiled accessors**!public! !
+!OS.MARGINS categoriesFor: #cxRightWidth!**compiled accessors**!public! !
+!OS.MARGINS categoriesFor: #cxRightWidth:!**compiled accessors**!public! !
+!OS.MARGINS categoriesFor: #cyBottomHeight!**compiled accessors**!public! !
+!OS.MARGINS categoriesFor: #cyBottomHeight:!**compiled accessors**!public! !
+!OS.MARGINS categoriesFor: #cyTopHeight!**compiled accessors**!public! !
+!OS.MARGINS categoriesFor: #cyTopHeight:!**compiled accessors**!public! !
 
-!MARGINS class methodsFor!
+!OS.MARGINS class methodsFor!
 
 defineFields
 	"Define the fields of the MARGINS structure.
@@ -103,6 +103,6 @@ defineFields
 
 getFieldNames
 	^#(#cxLeftWidth #cxRightWidth #cyTopHeight #cyBottomHeight)! !
-!MARGINS class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!MARGINS class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.MARGINS class categoriesFor: #defineFields!**auto generated**!public!template definition! !
+!OS.MARGINS class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

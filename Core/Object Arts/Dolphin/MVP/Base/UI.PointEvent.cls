@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-WindowsEvent subclass: #PointEvent
+UI.WindowsEvent subclass: #'UI.PointEvent'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-PointEvent guid: (GUID fromString: '{87b4c551-026e-11d3-9fd7-00a0cc3e4a32}')!
-PointEvent comment: ''!
-!PointEvent categoriesForClass!Events!MVP-Views-Events! !
-!PointEvent methodsFor!
+UI.PointEvent guid: (Core.GUID fromString: '{87b4c551-026e-11d3-9fd7-00a0cc3e4a32}')!
+UI.PointEvent comment: ''!
+!UI.PointEvent categoriesForClass!Events!MVP-Views-Events! !
+!UI.PointEvent methodsFor!
 
 position
 	"Answer the point stored in the receiver's lParam."
@@ -36,9 +36,9 @@ y
 	"Answer the y-position of the pointer."
 
 	^self lParamY! !
-!PointEvent categoriesFor: #position!accessing!public! !
-!PointEvent categoriesFor: #printLParamOn:!printing!private! !
-!PointEvent categoriesFor: #screenPosition!accessing!public! !
-!PointEvent categoriesFor: #x!accessing!public! !
-!PointEvent categoriesFor: #y!accessing!public! !
+!UI.PointEvent categoriesFor: #position!accessing!public! !
+!UI.PointEvent categoriesFor: #printLParamOn:!printing!private! !
+!UI.PointEvent categoriesFor: #screenPosition!accessing!public! !
+!UI.PointEvent categoriesFor: #x!accessing!public! !
+!UI.PointEvent categoriesFor: #y!accessing!public! !
 

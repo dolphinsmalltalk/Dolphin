@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ArithmeticValue subclass: #Point
+Core.ArithmeticValue subclass: #'Graphics.Point'
 	instanceVariableNames: 'x y'
 	classVariableNames: 'Zero'
-	poolDictionaries: ''
+	imports: #(#{Kernel.VMConstants private})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Point guid: (GUID fromString: '{87b4c658-026e-11d3-9fd7-00a0cc3e4a32}')!
-Point comment: 'A Point represents an x-y pair of numbers usually indicating a point on a two-dimensional Cartesian coordinate plane. Points are often used to designate the location of pixels within a Bitmap or on the display screen. By Smalltalk convention, x increases to the right and y down, consistent with the layout of text on a page and with pixels in Windows'' bitmaps. This "left-handed" coordinate system is the convention for Points used within the standard Smalltalk image (in classes such as Rectangle) but there is nothing in the Point class itself that prohibits the implied use of a "right-handed" coordinate system in which y increases in the upward direction.
+Graphics.Point guid: (Core.GUID fromString: '{87b4c658-026e-11d3-9fd7-00a0cc3e4a32}')!
+Graphics.Point comment: 'A Point represents an x-y pair of numbers usually indicating a point on a two-dimensional Cartesian coordinate plane. Points are often used to designate the location of pixels within a Bitmap or on the display screen. By Smalltalk convention, x increases to the right and y down, consistent with the layout of text on a page and with pixels in Windows'' bitmaps. This "left-handed" coordinate system is the convention for Points used within the standard Smalltalk image (in classes such as Rectangle) but there is nothing in the Point class itself that prohibits the implied use of a "right-handed" coordinate system in which y increases in the upward direction.
 
 A Point is typically created using the binary message @ to a Number:
 
@@ -18,8 +18,8 @@ Arithmetic operations can be carried out between two Points or between a Point a
 (150 @ 200) + (50 @ 50) "Addition of Points"
 (150 @ 200) + 100 "Addition of scalar"
 (150 @ 200) * 3 "Scaling"'!
-!Point categoriesForClass!Graphics-Geometry! !
-!Point methodsFor!
+!Graphics.Point categoriesForClass!Graphics-Geometry! !
+!Graphics.Point methodsFor!
 
 - anArithmeticValue
 	"Answer the receiver minus anArithmeticValue as a Point."
@@ -105,7 +105,7 @@ asDword
 	"Answer the receiver in a form suitable for returning as the result of a window
 	procedure (or passing to a function expecting a 32-bit value)."
 
-	^(DWORD fromPoint: self) value!
+	^(External.DWORD fromPoint: self) value!
 
 asParameter
 	"Answer the receiver in a form suitable for passing to an external function."
@@ -128,8 +128,7 @@ asUIntPtr
 	default window proc. of the window to be called for most objects other than Integers when
 	used as a return value)."
 
-	^(self x bitAnd: VMConstants.HalfPtrMask) 
-		bitOr: ((self y bitAnd: VMConstants.HalfPtrMask) bitShift: VMConstants.HalfPtrBits)!
+	^(self x bitAnd: HalfPtrMask) bitOr: ((self y bitAnd: HalfPtrMask) bitShift: HalfPtrBits)!
 
 ceiling
 	"Answer a new Point with the x and y values of the receiver truncated
@@ -302,53 +301,53 @@ y: aNumber
 	"Set the receiver's y coordinate"
 
 	y := aNumber! !
-!Point categoriesFor: #-!arithmetic!public! !
-!Point categoriesFor: #*!arithmetic!public! !
-!Point categoriesFor: #/!arithmetic!public! !
-!Point categoriesFor: #@!converting!public! !
-!Point categoriesFor: #+!arithmetic!public! !
-!Point categoriesFor: #<!comparing!public! !
-!Point categoriesFor: #<=!comparing!public! !
-!Point categoriesFor: #=!comparing!public! !
-!Point categoriesFor: #>!comparing!public! !
-!Point categoriesFor: #>=!comparing!public! !
-!Point categoriesFor: #abs!arithmetic!public! !
-!Point categoriesFor: #addToPoint:!double dispatch!private! !
-!Point categoriesFor: #asDword!converting!public! !
-!Point categoriesFor: #asParameter!converting!public! !
-!Point categoriesFor: #asPoint!converting!public! !
-!Point categoriesFor: #asPoint3D!converting!public! !
-!Point categoriesFor: #asUIntPtr!converting!public! !
-!Point categoriesFor: #ceiling!public!truncation and round off! !
-!Point categoriesFor: #coerce:!coercing!private! !
-!Point categoriesFor: #corner:!converting!public! !
-!Point categoriesFor: #degrees!accessing!public! !
-!Point categoriesFor: #dist:!operations!public! !
-!Point categoriesFor: #divideIntoPoint:!double dispatch!private! !
-!Point categoriesFor: #dotProduct:!operations!public! !
-!Point categoriesFor: #extent:!converting!public! !
-!Point categoriesFor: #floor!public!truncation and round off! !
-!Point categoriesFor: #generality!coercing!private! !
-!Point categoriesFor: #hash!comparing!public! !
-!Point categoriesFor: #isSelfEvaluating!public!testing! !
-!Point categoriesFor: #max:!comparing!public! !
-!Point categoriesFor: #min:!comparing!public! !
-!Point categoriesFor: #multiplyByPoint:!double dispatch!private! !
-!Point categoriesFor: #printOn:!printing!public! !
-!Point categoriesFor: #r!accessing!public! !
-!Point categoriesFor: #raisedTo:!mathematical!public! !
-!Point categoriesFor: #rounded!public!truncation and round off! !
-!Point categoriesFor: #roundTo:!public!truncation and round off! !
-!Point categoriesFor: #subtractFromPoint:!double dispatch!private! !
-!Point categoriesFor: #transpose!operations!public! !
-!Point categoriesFor: #truncated!public!truncation and round off! !
-!Point categoriesFor: #x!accessing!public! !
-!Point categoriesFor: #x:!accessing!public! !
-!Point categoriesFor: #x:y:!accessing!private! !
-!Point categoriesFor: #y!accessing!public! !
-!Point categoriesFor: #y:!accessing!public! !
+!Graphics.Point categoriesFor: #-!arithmetic!public! !
+!Graphics.Point categoriesFor: #*!arithmetic!public! !
+!Graphics.Point categoriesFor: #/!arithmetic!public! !
+!Graphics.Point categoriesFor: #@!converting!public! !
+!Graphics.Point categoriesFor: #+!arithmetic!public! !
+!Graphics.Point categoriesFor: #<!comparing!public! !
+!Graphics.Point categoriesFor: #<=!comparing!public! !
+!Graphics.Point categoriesFor: #=!comparing!public! !
+!Graphics.Point categoriesFor: #>!comparing!public! !
+!Graphics.Point categoriesFor: #>=!comparing!public! !
+!Graphics.Point categoriesFor: #abs!arithmetic!public! !
+!Graphics.Point categoriesFor: #addToPoint:!double dispatch!private! !
+!Graphics.Point categoriesFor: #asDword!converting!public! !
+!Graphics.Point categoriesFor: #asParameter!converting!public! !
+!Graphics.Point categoriesFor: #asPoint!converting!public! !
+!Graphics.Point categoriesFor: #asPoint3D!converting!public! !
+!Graphics.Point categoriesFor: #asUIntPtr!converting!public! !
+!Graphics.Point categoriesFor: #ceiling!public!truncation and round off! !
+!Graphics.Point categoriesFor: #coerce:!coercing!private! !
+!Graphics.Point categoriesFor: #corner:!converting!public! !
+!Graphics.Point categoriesFor: #degrees!accessing!public! !
+!Graphics.Point categoriesFor: #dist:!operations!public! !
+!Graphics.Point categoriesFor: #divideIntoPoint:!double dispatch!private! !
+!Graphics.Point categoriesFor: #dotProduct:!operations!public! !
+!Graphics.Point categoriesFor: #extent:!converting!public! !
+!Graphics.Point categoriesFor: #floor!public!truncation and round off! !
+!Graphics.Point categoriesFor: #generality!coercing!private! !
+!Graphics.Point categoriesFor: #hash!comparing!public! !
+!Graphics.Point categoriesFor: #isSelfEvaluating!public!testing! !
+!Graphics.Point categoriesFor: #max:!comparing!public! !
+!Graphics.Point categoriesFor: #min:!comparing!public! !
+!Graphics.Point categoriesFor: #multiplyByPoint:!double dispatch!private! !
+!Graphics.Point categoriesFor: #printOn:!printing!public! !
+!Graphics.Point categoriesFor: #r!accessing!public! !
+!Graphics.Point categoriesFor: #raisedTo:!mathematical!public! !
+!Graphics.Point categoriesFor: #rounded!public!truncation and round off! !
+!Graphics.Point categoriesFor: #roundTo:!public!truncation and round off! !
+!Graphics.Point categoriesFor: #subtractFromPoint:!double dispatch!private! !
+!Graphics.Point categoriesFor: #transpose!operations!public! !
+!Graphics.Point categoriesFor: #truncated!public!truncation and round off! !
+!Graphics.Point categoriesFor: #x!accessing!public! !
+!Graphics.Point categoriesFor: #x:!accessing!public! !
+!Graphics.Point categoriesFor: #x:y:!accessing!private! !
+!Graphics.Point categoriesFor: #y!accessing!public! !
+!Graphics.Point categoriesFor: #y:!accessing!public! !
 
-!Point class methodsFor!
+!Graphics.Point class methodsFor!
 
 initialize
 	Zero := (self x: 0 y: 0)
@@ -366,9 +365,7 @@ one
 	^self x: 1 y: 1!
 
 unitialize
-	(classPool bindingFor: 'Zero')
-		isImmutable: false;
-		value: nil!
+	#{Zero} binding setValue: nil!
 
 x: xCoord y: yCoord 
 	"Answer a new instance of the receiver with the specified
@@ -381,10 +378,10 @@ zero
 	"Answer the receiver's representation of zero."
 
 	^Zero! !
-!Point class categoriesFor: #initialize!class initialization!development!public! !
-!Point class categoriesFor: #new!instance creation!public! !
-!Point class categoriesFor: #one!instance creation!public! !
-!Point class categoriesFor: #unitialize!class hierarchy-removing!public! !
-!Point class categoriesFor: #x:y:!instance creation!public! !
-!Point class categoriesFor: #zero!instance creation!public! !
+!Graphics.Point class categoriesFor: #initialize!class initialization!development!public! !
+!Graphics.Point class categoriesFor: #new!instance creation!public! !
+!Graphics.Point class categoriesFor: #one!instance creation!public! !
+!Graphics.Point class categoriesFor: #unitialize!class hierarchy-removing!public! !
+!Graphics.Point class categoriesFor: #x:y:!instance creation!public! !
+!Graphics.Point class categoriesFor: #zero!instance creation!public! !
 

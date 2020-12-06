@@ -1,17 +1,17 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ExternalLibrary subclass: #CommCtrlLibrary
+External.Library subclass: #'OS.CommCtrlLibrary'
 	instanceVariableNames: ''
 	classVariableNames: 'InitFlags'
-	poolDictionaries: 'CommCtrlConstants'
+	imports: #(#{OS.CommCtrlConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-CommCtrlLibrary guid: (GUID fromString: '{64674056-3a82-101b-8181-00aa003743d3}')!
-CommCtrlLibrary comment: 'CommCtrlLibrary is an <ExternalLibrary> to represent the Windows Common Controls Library, COMCTL32.DLL. This library implements the "newer" (post-Windows 95) controls such as the ListView and TreeView, with recent additions (known collectively as the IE4 controls) such as the DateTimePicker. A notable exception is the RichEdit control, which is implemented in its own library.
+OS.CommCtrlLibrary guid: (Core.GUID fromString: '{64674056-3a82-101b-8181-00aa003743d3}')!
+OS.CommCtrlLibrary comment: 'CommCtrlLibrary is an <ExternalLibrary> to represent the Windows Common Controls Library, COMCTL32.DLL. This library implements the "newer" (post-Windows 95) controls such as the ListView and TreeView, with recent additions (known collectively as the IE4 controls) such as the DateTimePicker. A notable exception is the RichEdit control, which is implemented in its own library.
 
 Dolphin requires at least version 4.70 of this library (previous versions were supported by some older versions of Dolphin, but you must now upgrade to the latest DLL, which is available as a free download from Microsoft).'!
-!CommCtrlLibrary categoriesForClass!External-Libraries-Win32! !
-!CommCtrlLibrary methodsFor!
+!OS.CommCtrlLibrary categoriesForClass!External-Libraries-Win32! !
+!OS.CommCtrlLibrary methodsFor!
 
 imageList_AddMasked: himl hbmImage: hbmImage crMask: crMask
 	"Invoke the ImageList_AddMasked() function of the module wrapped by the receiver.
@@ -279,7 +279,7 @@ initialize
 
 	| struct |
 	struct := ByteArray new: 8.
-	struct 
+	struct
 		dwordAtOffset: 0 put: 8;
 		dwordAtOffset: 4 put: self class initFlags.
 	self initCommonControlsEx: struct!
@@ -310,33 +310,33 @@ loadIconWithScaleDown: hInst pszName: pszName cx: cx cy: cy phico: phico
 
 	<stdcall: sdword LoadIconWithScaleDown handle lpvoid sdword sdword handle*>
 	^self invalidCall: _failureCode! !
-!CommCtrlLibrary categoriesFor: #imageList_AddMasked:hbmImage:crMask:!**auto generated**!public!win32 functions-image list! !
-!CommCtrlLibrary categoriesFor: #imageList_BeginDrag:iTrack:dxHotspot:dyHotspot:!**auto generated**!public!win32 functions-image list! !
-!CommCtrlLibrary categoriesFor: #imageList_Create:cy:flags:cInitial:cGrow:!**auto generated**!public!win32 functions-image list! !
-!CommCtrlLibrary categoriesFor: #imageList_Destroy:!**auto generated**!public!win32 functions-image list! !
-!CommCtrlLibrary categoriesFor: #imageList_DragEnter:x:y:!**auto generated**!public!win32 functions-image list! !
-!CommCtrlLibrary categoriesFor: #imageList_DragLeave:!**auto generated**!public!win32 functions-image list! !
-!CommCtrlLibrary categoriesFor: #imageList_DragMove:y:!**auto generated**!public!win32 functions-image list! !
-!CommCtrlLibrary categoriesFor: #imageList_DragShowNolock:!**auto generated**!public!win32 functions-image list! !
-!CommCtrlLibrary categoriesFor: #imageList_Draw:i:hdcDst:x:y:fStyle:!primitives!public!win32 functions-image list! !
-!CommCtrlLibrary categoriesFor: #imageList_DrawEx:i:hdcDst:x:y:dx:dy:rgbBk:rgbFg:fStyle:!**auto generated**!public!win32 functions-image list! !
-!CommCtrlLibrary categoriesFor: #imageList_Duplicate:!**auto generated**!public!win32 functions-image list! !
-!CommCtrlLibrary categoriesFor: #imageList_EndDrag!**auto generated**!public!win32 functions-image list! !
-!CommCtrlLibrary categoriesFor: #imageList_GetBkColor:!**auto generated**!public!win32 functions-image list! !
-!CommCtrlLibrary categoriesFor: #imageList_GetIcon:i:flags:!**auto generated**!public!win32 functions-image list! !
-!CommCtrlLibrary categoriesFor: #imageList_GetIconSize:cx:cy:!**auto generated**!public!win32 functions-image list! !
-!CommCtrlLibrary categoriesFor: #imageList_GetImageCount:!**auto generated**!public!win32 functions-image list! !
-!CommCtrlLibrary categoriesFor: #imageList_LoadImage:lpbmp:cx:cGrow:crMask:uType:uFlags:!**auto generated**!public!win32 functions-image list! !
-!CommCtrlLibrary categoriesFor: #imageList_ReplaceIcon:i:hicon:!**auto generated**!public!win32 functions-image list! !
-!CommCtrlLibrary categoriesFor: #imageList_SetBkColor:clrBk:!**auto generated**!public!win32 functions-image list! !
-!CommCtrlLibrary categoriesFor: #imageList_SetDragCursorImage:iDrag:dxHotspot:dyHotspot:!**auto generated**!public!win32 functions-image list! !
-!CommCtrlLibrary categoriesFor: #imageList_SetIconSize:cx:cy:!**auto generated**!public!win32 functions-image list! !
-!CommCtrlLibrary categoriesFor: #initCommonControlsEx:!initializing!primitives!public! !
-!CommCtrlLibrary categoriesFor: #initialize!initializing!private! !
-!CommCtrlLibrary categoriesFor: #loadIconMetric:pszName:lims:phico:!**auto generated**!public! !
-!CommCtrlLibrary categoriesFor: #loadIconWithScaleDown:pszName:cx:cy:phico:!**auto generated**!public! !
+!OS.CommCtrlLibrary categoriesFor: #imageList_AddMasked:hbmImage:crMask:!**auto generated**!public!win32 functions-image list! !
+!OS.CommCtrlLibrary categoriesFor: #imageList_BeginDrag:iTrack:dxHotspot:dyHotspot:!**auto generated**!public!win32 functions-image list! !
+!OS.CommCtrlLibrary categoriesFor: #imageList_Create:cy:flags:cInitial:cGrow:!**auto generated**!public!win32 functions-image list! !
+!OS.CommCtrlLibrary categoriesFor: #imageList_Destroy:!**auto generated**!public!win32 functions-image list! !
+!OS.CommCtrlLibrary categoriesFor: #imageList_DragEnter:x:y:!**auto generated**!public!win32 functions-image list! !
+!OS.CommCtrlLibrary categoriesFor: #imageList_DragLeave:!**auto generated**!public!win32 functions-image list! !
+!OS.CommCtrlLibrary categoriesFor: #imageList_DragMove:y:!**auto generated**!public!win32 functions-image list! !
+!OS.CommCtrlLibrary categoriesFor: #imageList_DragShowNolock:!**auto generated**!public!win32 functions-image list! !
+!OS.CommCtrlLibrary categoriesFor: #imageList_Draw:i:hdcDst:x:y:fStyle:!primitives!public!win32 functions-image list! !
+!OS.CommCtrlLibrary categoriesFor: #imageList_DrawEx:i:hdcDst:x:y:dx:dy:rgbBk:rgbFg:fStyle:!**auto generated**!public!win32 functions-image list! !
+!OS.CommCtrlLibrary categoriesFor: #imageList_Duplicate:!**auto generated**!public!win32 functions-image list! !
+!OS.CommCtrlLibrary categoriesFor: #imageList_EndDrag!**auto generated**!public!win32 functions-image list! !
+!OS.CommCtrlLibrary categoriesFor: #imageList_GetBkColor:!**auto generated**!public!win32 functions-image list! !
+!OS.CommCtrlLibrary categoriesFor: #imageList_GetIcon:i:flags:!**auto generated**!public!win32 functions-image list! !
+!OS.CommCtrlLibrary categoriesFor: #imageList_GetIconSize:cx:cy:!**auto generated**!public!win32 functions-image list! !
+!OS.CommCtrlLibrary categoriesFor: #imageList_GetImageCount:!**auto generated**!public!win32 functions-image list! !
+!OS.CommCtrlLibrary categoriesFor: #imageList_LoadImage:lpbmp:cx:cGrow:crMask:uType:uFlags:!**auto generated**!public!win32 functions-image list! !
+!OS.CommCtrlLibrary categoriesFor: #imageList_ReplaceIcon:i:hicon:!**auto generated**!public!win32 functions-image list! !
+!OS.CommCtrlLibrary categoriesFor: #imageList_SetBkColor:clrBk:!**auto generated**!public!win32 functions-image list! !
+!OS.CommCtrlLibrary categoriesFor: #imageList_SetDragCursorImage:iDrag:dxHotspot:dyHotspot:!**auto generated**!public!win32 functions-image list! !
+!OS.CommCtrlLibrary categoriesFor: #imageList_SetIconSize:cx:cy:!**auto generated**!public!win32 functions-image list! !
+!OS.CommCtrlLibrary categoriesFor: #initCommonControlsEx:!initializing!primitives!public! !
+!OS.CommCtrlLibrary categoriesFor: #initialize!initializing!private! !
+!OS.CommCtrlLibrary categoriesFor: #loadIconMetric:pszName:lims:phico:!**auto generated**!public! !
+!OS.CommCtrlLibrary categoriesFor: #loadIconWithScaleDown:pszName:cx:cy:phico:!**auto generated**!public! !
 
-!CommCtrlLibrary class methodsFor!
+!OS.CommCtrlLibrary class methodsFor!
 
 closeDefault
 	"Private - Close the default instance of the receiver (if there is one).
@@ -362,9 +362,9 @@ initFlags
 
 initFlags: anInteger 
 	InitFlags := anInteger! !
-!CommCtrlLibrary class categoriesFor: #closeDefault!private!realizing/unrealizing! !
-!CommCtrlLibrary class categoriesFor: #defaultInitFlags!accessing!private! !
-!CommCtrlLibrary class categoriesFor: #fileName!constants!public! !
-!CommCtrlLibrary class categoriesFor: #initFlags!accessing!public! !
-!CommCtrlLibrary class categoriesFor: #initFlags:!accessing!not an aspect!public! !
+!OS.CommCtrlLibrary class categoriesFor: #closeDefault!private!realizing/unrealizing! !
+!OS.CommCtrlLibrary class categoriesFor: #defaultInitFlags!accessing!private! !
+!OS.CommCtrlLibrary class categoriesFor: #fileName!constants!public! !
+!OS.CommCtrlLibrary class categoriesFor: #initFlags!accessing!public! !
+!OS.CommCtrlLibrary class categoriesFor: #initFlags:!accessing!not an aspect!public! !
 

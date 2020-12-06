@@ -1,16 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Object subclass: #CommandDescription
+Core.Object subclass: #'UI.CommandDescription'
 	instanceVariableNames: 'command description acceleratorKey flags image'
 	classVariableNames: 'CommandDescriptionRegistry CurrentId'
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'DefaultMask' -> 16r1.
 		'ModalMask' -> 16r2
 	}!
-CommandDescription guid: (GUID fromString: '{87b4c469-026e-11d3-9fd7-00a0cc3e4a32}')!
-CommandDescription comment: 'A CommandDescription acts as the fundamental source for all MVP user interface commands. An instance of this class holds the command itself, a textual description of the command''s function and, optionally, an accelerator key that may trigger the command action when used within a menu. The command can be a <Message>, <Symbol> or, indeed, any object that responds to the <commandMessage> protocol. For most commands, symbols are prevalent but messages can sometimes be more convenient, especially if the command is to carry parameters, such as in dynamically constructed menus (e.g. the browser history list).
+UI.CommandDescription guid: (Core.GUID fromString: '{87b4c469-026e-11d3-9fd7-00a0cc3e4a32}')!
+UI.CommandDescription comment: 'A CommandDescription acts as the fundamental source for all MVP user interface commands. An instance of this class holds the command itself, a textual description of the command''s function and, optionally, an accelerator key that may trigger the command action when used within a menu. The command can be a <Message>, <Symbol> or, indeed, any object that responds to the <commandMessage> protocol. For most commands, symbols are prevalent but messages can sometimes be more convenient, especially if the command is to carry parameters, such as in dynamically constructed menus (e.g. the browser history list).
 
 The MVP command framework operates as follows. There exist a number of potential command sources which each carry a CommandDescription that dictates the command that they wish to transmit. Possible command sources are Menus (drop-down and context), PushButtons and ToolbarButtons. When each source is actioned, the framework determines an appropriate view that can be considered as the origin for the command. Usually this is the view with focus but, in the case of context menus, it is the view beneath the context mouse click. 
 
@@ -33,8 +33,8 @@ Instance Variables:
 	unused		Reserved for future use.
 	
 '!
-!CommandDescription categoriesForClass!MVP-Commands! !
-!CommandDescription methodsFor!
+!UI.CommandDescription categoriesForClass!MVP-Commands! !
+!UI.CommandDescription methodsFor!
 
 acceleratorKey
 	"Answers the <integer> accelerator key code for the receiver, or zero if there is none."
@@ -86,13 +86,6 @@ commandString
 	"Answer a String representation of the receiver's command."
 
 	^self command printString!
-
-commandString: commandText
-	"Sets the receiver's command from the <readableString> representation, commandText."
-
-	| c |
-	c := Compiler evaluate: commandText.
-	c notNil ifTrue: [self command: c]!
 
 commandSymbol
 	"Answer a <Symbol> representing the receiver's command."
@@ -208,39 +201,38 @@ toolTipText
 	"Answer a <readableString> suitable for displaying in a Tool-tip control."
 
 	^self description! !
-!CommandDescription categoriesFor: #acceleratorKey!accessing!public! !
-!CommandDescription categoriesFor: #acceleratorKey:!accessing!public! !
-!CommandDescription categoriesFor: #acceleratorKeyDisplayString!accessing!public! !
-!CommandDescription categoriesFor: #acceleratorKeyString!accessing!public! !
-!CommandDescription categoriesFor: #acceleratorKeyString:!accessing!public! !
-!CommandDescription categoriesFor: #canPerformAgainst:!commands!public!testing! !
-!CommandDescription categoriesFor: #command!accessing!public! !
-!CommandDescription categoriesFor: #command:!accessing!public! !
-!CommandDescription categoriesFor: #commandString!accessing!public! !
-!CommandDescription categoriesFor: #commandString:!accessing!initializing!public! !
-!CommandDescription categoriesFor: #commandSymbol!accessing!public! !
-!CommandDescription categoriesFor: #description!accessing!public! !
-!CommandDescription categoriesFor: #description:!accessing!public! !
-!CommandDescription categoriesFor: #displayOn:!printing!public! !
-!CommandDescription categoriesFor: #hasAcceleratorKey!public!testing! !
-!CommandDescription categoriesFor: #id!accessing!public! !
-!CommandDescription categoriesFor: #image!accessing!public! !
-!CommandDescription categoriesFor: #image:!accessing!public! !
-!CommandDescription categoriesFor: #initialize!initializing!private! !
-!CommandDescription categoriesFor: #isModalCommand!public!testing! !
-!CommandDescription categoriesFor: #isModalCommand:!public!testing! !
-!CommandDescription categoriesFor: #menuText!accessing!private! !
-!CommandDescription categoriesFor: #messages!enquiries!public! !
-!CommandDescription categoriesFor: #performAgainst:!operations!private! !
-!CommandDescription categoriesFor: #printOn:!development!printing!public! !
-!CommandDescription categoriesFor: #queryCommand:!commands!private! !
-!CommandDescription categoriesFor: #registerAcceleratorKeyIn:!operations!private! !
-!CommandDescription categoriesFor: #toolTipText!accessing!public! !
+!UI.CommandDescription categoriesFor: #acceleratorKey!accessing!public! !
+!UI.CommandDescription categoriesFor: #acceleratorKey:!accessing!public! !
+!UI.CommandDescription categoriesFor: #acceleratorKeyDisplayString!accessing!public! !
+!UI.CommandDescription categoriesFor: #acceleratorKeyString!accessing!public! !
+!UI.CommandDescription categoriesFor: #acceleratorKeyString:!accessing!public! !
+!UI.CommandDescription categoriesFor: #canPerformAgainst:!commands!public!testing! !
+!UI.CommandDescription categoriesFor: #command!accessing!public! !
+!UI.CommandDescription categoriesFor: #command:!accessing!public! !
+!UI.CommandDescription categoriesFor: #commandString!accessing!public! !
+!UI.CommandDescription categoriesFor: #commandSymbol!accessing!public! !
+!UI.CommandDescription categoriesFor: #description!accessing!public! !
+!UI.CommandDescription categoriesFor: #description:!accessing!public! !
+!UI.CommandDescription categoriesFor: #displayOn:!printing!public! !
+!UI.CommandDescription categoriesFor: #hasAcceleratorKey!public!testing! !
+!UI.CommandDescription categoriesFor: #id!accessing!public! !
+!UI.CommandDescription categoriesFor: #image!accessing!public! !
+!UI.CommandDescription categoriesFor: #image:!accessing!public! !
+!UI.CommandDescription categoriesFor: #initialize!initializing!private! !
+!UI.CommandDescription categoriesFor: #isModalCommand!public!testing! !
+!UI.CommandDescription categoriesFor: #isModalCommand:!public!testing! !
+!UI.CommandDescription categoriesFor: #menuText!accessing!private! !
+!UI.CommandDescription categoriesFor: #messages!enquiries!public! !
+!UI.CommandDescription categoriesFor: #performAgainst:!operations!private! !
+!UI.CommandDescription categoriesFor: #printOn:!development!printing!public! !
+!UI.CommandDescription categoriesFor: #queryCommand:!commands!private! !
+!UI.CommandDescription categoriesFor: #registerAcceleratorKeyIn:!operations!private! !
+!UI.CommandDescription categoriesFor: #toolTipText!accessing!public! !
 
-CommandDescription methodProtocol: #commandTarget attributes: #(#readOnly) selectors: #(#queryCommand:)!
-CommandDescription methodProtocol: #messageSender attributes: #(#readOnly) selectors: #(#messages)!
+UI.CommandDescription methodProtocol: #commandTarget attributes: #(#readOnly) selectors: #(#queryCommand:)!
+UI.CommandDescription methodProtocol: #messageSender attributes: #(#readOnly) selectors: #(#messages)!
 
-!CommandDescription class methodsFor!
+!UI.CommandDescription class methodsFor!
 
 command: commandMessage
 	"Answer a new instance of the receiver for the specified <commandMessage>.
@@ -311,24 +303,25 @@ startingId
 
 	^4000!
 
-stbConvertFrom: anSTBClassFormat 
+stbConvertFrom: anSTBClassFormat
 	"Convert from earlier CommandDescription versions."
 
 	^
-	[:data | 
+	[:data |
 	| newInstance |
 	newInstance := self basicNew.
 	1 to: data size do: [:i | newInstance instVarAt: i put: (data at: i)].
-	anSTBClassFormat version < 2 
+	anSTBClassFormat version < 2
 		ifTrue: 
 			[newInstance instVarAt: 1 put: (data at: 1).	"command"
 			newInstance instVarAt: 2 put: (data at: 3).	"description <- shortDescription"
 			newInstance instVarAt: 3
-				put: (anSTBClassFormat version < 1 
+				put: (anSTBClassFormat version < 1
 						ifFalse: [data at: 4]
-						ifTrue: [(data at: 4) isNil ifTrue: [0] ifFalse: [AcceleratorTable keyCodeFromInvariantString: (data at: 4)]]).
+						ifTrue: 
+							[(data at: 4) isNil ifTrue: [0] ifFalse: [AcceleratorTable keyCodeFromInvariantString: (data at: 4)]]).
 			4 to: self instSize do: [:i | newInstance instVarAt: i put: (data at: i + 1)]].
-	anSTBClassFormat version < 4 
+	anSTBClassFormat version < 4
 		ifTrue: 
 			["Ensure flags zeroed"
 			(newInstance instVarAt: 4) isNil ifTrue: [newInstance instVarAt: 4 put: 0]].
@@ -344,16 +337,16 @@ withId: anInteger ifAbsent: absentBlock
 	then the value of absentBlock."
 
 	^CommandDescriptionRegistry keyAtValue: anInteger ifAbsent: absentBlock! !
-!CommandDescription class categoriesFor: #command:!instance creation!public! !
-!CommandDescription class categoriesFor: #command:description:!instance creation!public! !
-!CommandDescription class categoriesFor: #command:description:image:!instance creation!public! !
-!CommandDescription class categoriesFor: #idFor:!command registry!private! !
-!CommandDescription class categoriesFor: #initialize!development!initializing!private! !
-!CommandDescription class categoriesFor: #maximumId!command registry!private! !
-!CommandDescription class categoriesFor: #new!instance creation!public! !
-!CommandDescription class categoriesFor: #nextId!command registry!private! !
-!CommandDescription class categoriesFor: #startingId!command registry!private! !
-!CommandDescription class categoriesFor: #stbConvertFrom:!binary filing!public! !
-!CommandDescription class categoriesFor: #stbVersion!binary filing!public! !
-!CommandDescription class categoriesFor: #withId:ifAbsent:!command registry!public! !
+!UI.CommandDescription class categoriesFor: #command:!instance creation!public! !
+!UI.CommandDescription class categoriesFor: #command:description:!instance creation!public! !
+!UI.CommandDescription class categoriesFor: #command:description:image:!instance creation!public! !
+!UI.CommandDescription class categoriesFor: #idFor:!command registry!private! !
+!UI.CommandDescription class categoriesFor: #initialize!development!initializing!private! !
+!UI.CommandDescription class categoriesFor: #maximumId!command registry!private! !
+!UI.CommandDescription class categoriesFor: #new!instance creation!public! !
+!UI.CommandDescription class categoriesFor: #nextId!command registry!private! !
+!UI.CommandDescription class categoriesFor: #startingId!command registry!private! !
+!UI.CommandDescription class categoriesFor: #stbConvertFrom:!binary filing!public! !
+!UI.CommandDescription class categoriesFor: #stbVersion!binary filing!public! !
+!UI.CommandDescription class categoriesFor: #withId:ifAbsent:!command registry!public! !
 

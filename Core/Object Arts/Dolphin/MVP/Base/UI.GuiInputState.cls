@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-InputState subclass: #GuiInputState
+Kernel.InputState subclass: #'UI.GuiInputState'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-GuiInputState guid: (GUID fromString: '{63335fe2-2ac2-43b5-9747-3c264e8b7fdf}')!
-GuiInputState comment: ''!
-!GuiInputState categoriesForClass!Kernel-Support! !
-!GuiInputState methodsFor!
+UI.GuiInputState guid: (Core.GUID fromString: '{63335fe2-2ac2-43b5-9747-3c264e8b7fdf}')!
+UI.GuiInputState comment: ''!
+!UI.GuiInputState categoriesForClass!Kernel-Support! !
+!UI.GuiInputState methodsFor!
 
 aboutToForkUI
 	"Private - A new main UI process is being started. Reset any global UI state."
@@ -18,8 +18,8 @@ aboutToForkUI
 
 allTopLevelWindowHandlesDo: aMonadicValuable
 	| callback answer |
-	callback := ExternalCallback block: [:hwnd :lParam | aMonadicValuable value: hwnd]
-				descriptor: (ExternalDescriptor returnType: 'bool' argumentTypes: 'ExternalHandle uintptr').
+	callback := External.Callback block: [:hwnd :lParam | aMonadicValuable value: hwnd]
+				descriptor: (External.Descriptor returnType: 'bool' argumentTypes: 'ExternalHandle uintptr').
 	answer := UserLibrary default enumWindows: callback asParameter lParam: 0.
 	callback free.
 	^answer!
@@ -49,9 +49,12 @@ isDolphinWindow: hWnd
 
 topLevelWindowHandlesDo: aMonadicValuable
 	| callback answer |
-	callback := ExternalCallback block: [:hwnd :lParam | aMonadicValuable value: hwnd]
-				descriptor: (ExternalDescriptor returnType: 'bool' argumentTypes: 'ExternalHandle uintptr').
-	answer := UserLibrary default enumThreadWindows: (KernelLibrary default getCurrentThreadId) lpfn: callback asParameter lParam: 0.
+	callback := External.Callback block: [:hwnd :lParam | aMonadicValuable value: hwnd]
+				descriptor: (External.Descriptor returnType: 'bool' argumentTypes: 'ExternalHandle uintptr').
+	answer := UserLibrary default
+				enumThreadWindows: KernelLibrary default getCurrentThreadId
+				lpfn: callback asParameter
+				lParam: 0.
 	callback free.
 	^answer!
 
@@ -65,7 +68,7 @@ topLevelWindows
 	desktop := View desktop.
 	bEnabled := Processor enableAsyncEvents: false.
 	windows do: 
-			[:each | 
+			[:each |
 			"This selection filter has been re-written for bug fix #2261. Previously
 			WS_CHILD views that were children of the desktop were not being included in
 			the answered collection. This resulted in the View Composer not having any
@@ -105,7 +108,7 @@ uiIdle
 				ifFalse: [self uiIdle: each]].
 	^true!
 
-uiIdle: aShellWindow 
+uiIdle: aShellWindow
 	"Private - If the argument is one of the receiver's currently visible windows, then request
 	it to update its UI."
 
@@ -133,20 +136,20 @@ visibleWindows
 	user := UserLibrary default.
 	hDesktop := user getDesktopWindow.
 	^windows select: 
-			[:each | 
+			[:each |
 			| hWnd |
 			hWnd := each asParameter.
 			hWnd notNil and: [hWnd ~= hDesktop and: [(user isWindow: hWnd) and: [user isWindowVisible: hWnd]]]]! !
-!GuiInputState categoriesFor: #aboutToForkUI!idling!private! !
-!GuiInputState categoriesFor: #allTopLevelWindowHandlesDo:!enumerating!private! !
-!GuiInputState categoriesFor: #getLastInputInfo!helpers!private! !
-!GuiInputState categoriesFor: #guiStartup!operations-startup!private! !
-!GuiInputState categoriesFor: #isDolphinWindow:!private!testing! !
-!GuiInputState categoriesFor: #topLevelWindowHandlesDo:!enumerating!private! !
-!GuiInputState categoriesFor: #topLevelWindows!enumerating!public! !
-!GuiInputState categoriesFor: #topLevelWindowsInZOrder!enumerating!public! !
-!GuiInputState categoriesFor: #uiIdle!idling!private! !
-!GuiInputState categoriesFor: #uiIdle:!idling!private! !
-!GuiInputState categoriesFor: #userSessionIdleMs!idling!public! !
-!GuiInputState categoriesFor: #visibleWindows!private!testing! !
+!UI.GuiInputState categoriesFor: #aboutToForkUI!idling!private! !
+!UI.GuiInputState categoriesFor: #allTopLevelWindowHandlesDo:!enumerating!private! !
+!UI.GuiInputState categoriesFor: #getLastInputInfo!helpers!private! !
+!UI.GuiInputState categoriesFor: #guiStartup!operations-startup!private! !
+!UI.GuiInputState categoriesFor: #isDolphinWindow:!private!testing! !
+!UI.GuiInputState categoriesFor: #topLevelWindowHandlesDo:!enumerating!private! !
+!UI.GuiInputState categoriesFor: #topLevelWindows!enumerating!public! !
+!UI.GuiInputState categoriesFor: #topLevelWindowsInZOrder!enumerating!public! !
+!UI.GuiInputState categoriesFor: #uiIdle!idling!private! !
+!UI.GuiInputState categoriesFor: #uiIdle:!idling!private! !
+!UI.GuiInputState categoriesFor: #userSessionIdleMs!idling!public! !
+!UI.GuiInputState categoriesFor: #visibleWindows!private!testing! !
 

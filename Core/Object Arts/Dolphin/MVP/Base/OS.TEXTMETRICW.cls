@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Win32Structure subclass: #TEXTMETRICW
+OS.Win32Structure subclass: #'OS.TEXTMETRICW'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_tmAscent' -> 16r4.
@@ -27,8 +27,8 @@ Win32Structure subclass: #TEXTMETRICW
 		'_OffsetOf_tmUnderlined' -> 16r35.
 		'_OffsetOf_tmWeight' -> 16r1C
 	}!
-TEXTMETRICW guid: (GUID fromString: '{ea0d6df4-3794-11d3-979e-0080c8d59432}')!
-TEXTMETRICW comment: '<TEXTMETRIC> is an <ExternalStructure> class to wrap the struct ''Win.TEXTMETRIC'' from type information in the ''Windows API (ANSI)'' library.
+OS.TEXTMETRICW guid: (Core.GUID fromString: '{ea0d6df4-3794-11d3-979e-0080c8d59432}')!
+OS.TEXTMETRICW comment: '<TEXTMETRIC> is an <ExternalStructure> class to wrap the struct ''Win.TEXTMETRIC'' from type information in the ''Windows API (ANSI)'' library.
 
 The type library contains no documentation for this struct
 
@@ -60,8 +60,8 @@ struct tagTEXTMETRIC {
 	BYTE tmCharSet;
 } TEXTMETRIC;
 '!
-!TEXTMETRICW categoriesForClass!Win32-Structs! !
-!TEXTMETRICW methodsFor!
+!OS.TEXTMETRICW categoriesForClass!Win32-Structs! !
+!OS.TEXTMETRICW methodsFor!
 
 tmAscent
 	"Answer the <Integer> value of the receiver's 'tmAscent' field."
@@ -162,28 +162,28 @@ tmWeight
 	"Answer the <Integer> value of the receiver's 'tmWeight' field."
 
 	^bytes sdwordAtOffset: _OffsetOf_tmWeight! !
-!TEXTMETRICW categoriesFor: #tmAscent!**compiled accessors**!public! !
-!TEXTMETRICW categoriesFor: #tmAveCharWidth!**compiled accessors**!public! !
-!TEXTMETRICW categoriesFor: #tmBreakChar!**compiled accessors**!public! !
-!TEXTMETRICW categoriesFor: #tmCharSet!**compiled accessors**!public! !
-!TEXTMETRICW categoriesFor: #tmDefaultChar!**compiled accessors**!public! !
-!TEXTMETRICW categoriesFor: #tmDescent!**compiled accessors**!public! !
-!TEXTMETRICW categoriesFor: #tmDigitizedAspectX!**compiled accessors**!public! !
-!TEXTMETRICW categoriesFor: #tmDigitizedAspectY!**compiled accessors**!public! !
-!TEXTMETRICW categoriesFor: #tmExternalLeading!**compiled accessors**!public! !
-!TEXTMETRICW categoriesFor: #tmFirstChar!**compiled accessors**!public! !
-!TEXTMETRICW categoriesFor: #tmHeight!**compiled accessors**!public! !
-!TEXTMETRICW categoriesFor: #tmInternalLeading!**compiled accessors**!public! !
-!TEXTMETRICW categoriesFor: #tmItalic!**compiled accessors**!public! !
-!TEXTMETRICW categoriesFor: #tmLastChar!**compiled accessors**!public! !
-!TEXTMETRICW categoriesFor: #tmMaxCharWidth!**compiled accessors**!public! !
-!TEXTMETRICW categoriesFor: #tmOverhang!**compiled accessors**!public! !
-!TEXTMETRICW categoriesFor: #tmPitchAndFamily!**compiled accessors**!public! !
-!TEXTMETRICW categoriesFor: #tmStruckOut!**compiled accessors**!public! !
-!TEXTMETRICW categoriesFor: #tmUnderlined!**compiled accessors**!public! !
-!TEXTMETRICW categoriesFor: #tmWeight!**compiled accessors**!public! !
+!OS.TEXTMETRICW categoriesFor: #tmAscent!**compiled accessors**!public! !
+!OS.TEXTMETRICW categoriesFor: #tmAveCharWidth!**compiled accessors**!public! !
+!OS.TEXTMETRICW categoriesFor: #tmBreakChar!**compiled accessors**!public! !
+!OS.TEXTMETRICW categoriesFor: #tmCharSet!**compiled accessors**!public! !
+!OS.TEXTMETRICW categoriesFor: #tmDefaultChar!**compiled accessors**!public! !
+!OS.TEXTMETRICW categoriesFor: #tmDescent!**compiled accessors**!public! !
+!OS.TEXTMETRICW categoriesFor: #tmDigitizedAspectX!**compiled accessors**!public! !
+!OS.TEXTMETRICW categoriesFor: #tmDigitizedAspectY!**compiled accessors**!public! !
+!OS.TEXTMETRICW categoriesFor: #tmExternalLeading!**compiled accessors**!public! !
+!OS.TEXTMETRICW categoriesFor: #tmFirstChar!**compiled accessors**!public! !
+!OS.TEXTMETRICW categoriesFor: #tmHeight!**compiled accessors**!public! !
+!OS.TEXTMETRICW categoriesFor: #tmInternalLeading!**compiled accessors**!public! !
+!OS.TEXTMETRICW categoriesFor: #tmItalic!**compiled accessors**!public! !
+!OS.TEXTMETRICW categoriesFor: #tmLastChar!**compiled accessors**!public! !
+!OS.TEXTMETRICW categoriesFor: #tmMaxCharWidth!**compiled accessors**!public! !
+!OS.TEXTMETRICW categoriesFor: #tmOverhang!**compiled accessors**!public! !
+!OS.TEXTMETRICW categoriesFor: #tmPitchAndFamily!**compiled accessors**!public! !
+!OS.TEXTMETRICW categoriesFor: #tmStruckOut!**compiled accessors**!public! !
+!OS.TEXTMETRICW categoriesFor: #tmUnderlined!**compiled accessors**!public! !
+!OS.TEXTMETRICW categoriesFor: #tmWeight!**compiled accessors**!public! !
 
-!TEXTMETRICW class methodsFor!
+!OS.TEXTMETRICW class methodsFor!
 
 defineFields
 	"Define the fields of the TEXTMETRICW structure.
@@ -243,7 +243,7 @@ packing
 	"Uses non-standard packing"
 
 	^4! !
-!TEXTMETRICW class categoriesFor: #defineFields!public!template definition! !
-!TEXTMETRICW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!TEXTMETRICW class categoriesFor: #packing!constants!public! !
+!OS.TEXTMETRICW class categoriesFor: #defineFields!public!template definition! !
+!OS.TEXTMETRICW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.TEXTMETRICW class categoriesFor: #packing!constants!public! !
 

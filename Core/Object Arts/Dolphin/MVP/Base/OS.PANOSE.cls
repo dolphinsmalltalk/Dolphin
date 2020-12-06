@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Win32Structure subclass: #PANOSE
+OS.Win32Structure subclass: #'OS.PANOSE'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_bArmStyle' -> 16r6.
@@ -17,11 +17,10 @@ Win32Structure subclass: #PANOSE
 		'_OffsetOf_bWeight' -> 16r2.
 		'_OffsetOf_bXHeight' -> 16r9
 	}!
-PANOSE guid: (GUID fromString: '{ab0b82a7-5304-49c0-9937-e7474bc1a82f}')!
-PANOSE comment: '<PANOSE> is an <ExternalStructure> class to wrap the struct ''Win.PANOSE'' from type information in the ''Windows API (ANSI)'' library.
-'!
-!PANOSE categoriesForClass!Win-Structs! !
-!PANOSE methodsFor!
+OS.PANOSE guid: (Core.GUID fromString: '{fd0c19a2-34cf-4a99-a522-d4fd0cc0f003}')!
+OS.PANOSE comment: ''!
+!OS.PANOSE categoriesForClass!Unclassified! !
+!OS.PANOSE methodsFor!
 
 bArmStyle
 	"Answer the <Integer> value of the receiver's 'bArmStyle' field."
@@ -72,18 +71,18 @@ bXHeight
 	"Answer the <Integer> value of the receiver's 'bXHeight' field."
 
 	^bytes byteAtOffset: _OffsetOf_bXHeight! !
-!PANOSE categoriesFor: #bArmStyle!**compiled accessors**!public! !
-!PANOSE categoriesFor: #bContrast!**compiled accessors**!public! !
-!PANOSE categoriesFor: #bFamilyType!**compiled accessors**!public! !
-!PANOSE categoriesFor: #bLetterform!**compiled accessors**!public! !
-!PANOSE categoriesFor: #bMidline!**compiled accessors**!public! !
-!PANOSE categoriesFor: #bProportion!**compiled accessors**!public! !
-!PANOSE categoriesFor: #bSerifStyle!**compiled accessors**!public! !
-!PANOSE categoriesFor: #bStrokeVariation!**compiled accessors**!public! !
-!PANOSE categoriesFor: #bWeight!**compiled accessors**!public! !
-!PANOSE categoriesFor: #bXHeight!**compiled accessors**!public! !
+!OS.PANOSE categoriesFor: #bArmStyle!**compiled accessors**!public! !
+!OS.PANOSE categoriesFor: #bContrast!**compiled accessors**!public! !
+!OS.PANOSE categoriesFor: #bFamilyType!**compiled accessors**!public! !
+!OS.PANOSE categoriesFor: #bLetterform!**compiled accessors**!public! !
+!OS.PANOSE categoriesFor: #bMidline!**compiled accessors**!public! !
+!OS.PANOSE categoriesFor: #bProportion!**compiled accessors**!public! !
+!OS.PANOSE categoriesFor: #bSerifStyle!**compiled accessors**!public! !
+!OS.PANOSE categoriesFor: #bStrokeVariation!**compiled accessors**!public! !
+!OS.PANOSE categoriesFor: #bWeight!**compiled accessors**!public! !
+!OS.PANOSE categoriesFor: #bXHeight!**compiled accessors**!public! !
 
-!PANOSE class methodsFor!
+!OS.PANOSE class methodsFor!
 
 defineFields
 	"Define the fields of the PANOSE structure.
@@ -118,6 +117,6 @@ defineFields
 
 getFieldNames
 	^#(#bFamilyType #bSerifStyle #bWeight #bProportion #bContrast #bStrokeVariation #bArmStyle #bLetterform #bMidline #bXHeight)! !
-!PANOSE class categoriesFor: #defineFields!public!template definition! !
-!PANOSE class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.PANOSE class categoriesFor: #defineFields!public!template definition! !
+!OS.PANOSE class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

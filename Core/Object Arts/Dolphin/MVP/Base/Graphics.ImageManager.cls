@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Object subclass: #ImageManager
+Core.Object subclass: #'Graphics.ImageManager'
 	instanceVariableNames: 'images imageLists maskcolor backcolor'
 	classVariableNames: ''
-	poolDictionaries: 'Win32Constants'
+	imports: #(#{OS.Win32Constants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ImageManager guid: (GUID fromString: '{87b4c492-026e-11d3-9fd7-00a0cc3e4a32}')!
-ImageManager comment: ''!
-!ImageManager categoriesForClass!Graphics-Tools! !
-!ImageManager methodsFor!
+Graphics.ImageManager guid: (Core.GUID fromString: '{87b4c492-026e-11d3-9fd7-00a0cc3e4a32}')!
+Graphics.ImageManager comment: ''!
+!Graphics.ImageManager categoriesForClass!Graphics-Tools! !
+!Graphics.ImageManager methodsFor!
 
 addImage: anImage
 	"Adds the <image>, anImage, to the receiver if it is not already there. All objects to be added
@@ -145,10 +145,9 @@ newImageLists
 	imageLists := LookupTable new!
 
 newImageListWithExtent: aPoint
-	"Private - Answer a new <WinImageList> appropriately configured to hold images for the receiver
-	of the specified extent."
+	"Private - Answer a new <ImageList> appropriately configured to hold images for the receiver of the specified extent."
 
-	^(WinImageList
+	^(ImageList
 		newExtent: aPoint
 		initialSize: (images size max: 16)
 		masked: maskcolor notNil)
@@ -202,33 +201,33 @@ stbSaveOn: anSTBOutFiler
 
 	self purgeImages.
 	super stbSaveOn: anSTBOutFiler! !
-!ImageManager categoriesFor: #addImage:!adding!public! !
-!ImageManager categoriesFor: #addImage:extent:!adding!public! !
-!ImageManager categoriesFor: #addImage:extent:maskcolor:!adding!private! !
-!ImageManager categoriesFor: #addImage:maskcolor:!adding!private! !
-!ImageManager categoriesFor: #backcolor!accessing!public! !
-!ImageManager categoriesFor: #backcolor:!accessing!public! !
-!ImageManager categoriesFor: #basicAddImage:extent:maskcolor:!adding!private! !
-!ImageManager categoriesFor: #buildImageListWithExtent:!helpers!private! !
-!ImageManager categoriesFor: #imageAt:!accessing!public! !
-!ImageManager categoriesFor: #imageAt:ifAbsent:!accessing!public! !
-!ImageManager categoriesFor: #imageListWithExtent:!accessing!public! !
-!ImageManager categoriesFor: #indexOfImage:!public!searching! !
-!ImageManager categoriesFor: #initialize!initializing!private! !
-!ImageManager categoriesFor: #maskcolor!accessing!public! !
-!ImageManager categoriesFor: #maskcolor:!accessing!public! !
-!ImageManager categoriesFor: #maximumImageIndex!helpers!private! !
-!ImageManager categoriesFor: #newImageLists!private!removing! !
-!ImageManager categoriesFor: #newImageListWithExtent:!helpers!private! !
-!ImageManager categoriesFor: #newImages!private!removing! !
-!ImageManager categoriesFor: #orderedImages!accessing!private! !
-!ImageManager categoriesFor: #purge!public!removing! !
-!ImageManager categoriesFor: #purgeImages!operations!private! !
-!ImageManager categoriesFor: #purgeImagesWithExtent:!operations!private! !
-!ImageManager categoriesFor: #size!accessing!public! !
-!ImageManager categoriesFor: #stbSaveOn:!binary filing!public! !
+!Graphics.ImageManager categoriesFor: #addImage:!adding!public! !
+!Graphics.ImageManager categoriesFor: #addImage:extent:!adding!public! !
+!Graphics.ImageManager categoriesFor: #addImage:extent:maskcolor:!adding!private! !
+!Graphics.ImageManager categoriesFor: #addImage:maskcolor:!adding!private! !
+!Graphics.ImageManager categoriesFor: #backcolor!accessing!public! !
+!Graphics.ImageManager categoriesFor: #backcolor:!accessing!public! !
+!Graphics.ImageManager categoriesFor: #basicAddImage:extent:maskcolor:!adding!private! !
+!Graphics.ImageManager categoriesFor: #buildImageListWithExtent:!helpers!private! !
+!Graphics.ImageManager categoriesFor: #imageAt:!accessing!public! !
+!Graphics.ImageManager categoriesFor: #imageAt:ifAbsent:!accessing!public! !
+!Graphics.ImageManager categoriesFor: #imageListWithExtent:!accessing!public! !
+!Graphics.ImageManager categoriesFor: #indexOfImage:!public!searching! !
+!Graphics.ImageManager categoriesFor: #initialize!initializing!private! !
+!Graphics.ImageManager categoriesFor: #maskcolor!accessing!public! !
+!Graphics.ImageManager categoriesFor: #maskcolor:!accessing!public! !
+!Graphics.ImageManager categoriesFor: #maximumImageIndex!helpers!private! !
+!Graphics.ImageManager categoriesFor: #newImageLists!private!removing! !
+!Graphics.ImageManager categoriesFor: #newImageListWithExtent:!helpers!private! !
+!Graphics.ImageManager categoriesFor: #newImages!private!removing! !
+!Graphics.ImageManager categoriesFor: #orderedImages!accessing!private! !
+!Graphics.ImageManager categoriesFor: #purge!public!removing! !
+!Graphics.ImageManager categoriesFor: #purgeImages!operations!private! !
+!Graphics.ImageManager categoriesFor: #purgeImagesWithExtent:!operations!private! !
+!Graphics.ImageManager categoriesFor: #size!accessing!public! !
+!Graphics.ImageManager categoriesFor: #stbSaveOn:!binary filing!public! !
 
-!ImageManager class methodsFor!
+!Graphics.ImageManager class methodsFor!
 
 new
 	"Answer a new initialized instance of the receiver."
@@ -249,7 +248,7 @@ stbVersion
 	"Answer the current binary filer version number for instances of the receiver."
 
 	^1! !
-!ImageManager class categoriesFor: #new!instance creation!public! !
-!ImageManager class categoriesFor: #stbConvertFrom:!binary filing!public! !
-!ImageManager class categoriesFor: #stbVersion!binary filing!public! !
+!Graphics.ImageManager class categoriesFor: #new!instance creation!public! !
+!Graphics.ImageManager class categoriesFor: #stbConvertFrom:!binary filing!public! !
+!Graphics.ImageManager class categoriesFor: #stbVersion!binary filing!public! !
 

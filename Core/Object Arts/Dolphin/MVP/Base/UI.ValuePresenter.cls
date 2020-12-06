@@ -1,21 +1,21 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Presenter subclass: #ValuePresenter
+UI.Presenter subclass: #'UI.ValuePresenter'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ValuePresenter guid: (GUID fromString: '{87b4c689-026e-11d3-9fd7-00a0cc3e4a32}')!
-ValuePresenter comment: 'ValuePresenter is a <valuePresenter>s that presents the contents of a <valueModel> within a <valueView>.
+UI.ValuePresenter guid: (Core.GUID fromString: '{87b4c689-026e-11d3-9fd7-00a0cc3e4a32}')!
+UI.ValuePresenter comment: 'ValuePresenter is a <valuePresenter>s that presents the contents of a <valueModel> within a <valueView>.
 
 When designing a <presenter> it is necessary to make an initial decision as to how its model data should be displayed and edited. If the model is a mutable object, in that it is legal (and sensible) to modify it in place, then it is usual to treat it as a simple <presenter> and create a class descended directly from Presenter itself. If, on the other hand, the model is to be immutable then the presenter should be implemented as a <valuePresenter>. If the identity of the underlying model data must remain unchanged then use a standard <presenter>. If this is not the case then a <valuePresenter> will be more suitable.
 
 In many cases a <valuePresenter> will be implemented as a subclass of ValuePresenter. However, this is not essential and instances of ValuePresenter can be created and use directly.
 
 '!
-!ValuePresenter categoriesForClass!MVP-Presenters! !
-!ValuePresenter methodsFor!
+!UI.ValuePresenter categoriesForClass!MVP-Presenters! !
+!UI.ValuePresenter methodsFor!
 
 findDetails
 	"Required so can be used with a TextEdit view."
@@ -64,17 +64,17 @@ value: anObject
 
 	self model value: anObject.
 ! !
-!ValuePresenter categoriesFor: #findDetails!accessing!public! !
-!ValuePresenter categoriesFor: #model:!accessing!public! !
-!ValuePresenter categoriesFor: #onValueChanged!event handling!public! !
-!ValuePresenter categoriesFor: #setValue:!accessing!private! !
-!ValuePresenter categoriesFor: #value!accessing!public! !
-!ValuePresenter categoriesFor: #value:!accessing!public! !
+!UI.ValuePresenter categoriesFor: #findDetails!accessing!public! !
+!UI.ValuePresenter categoriesFor: #model:!accessing!public! !
+!UI.ValuePresenter categoriesFor: #onValueChanged!event handling!public! !
+!UI.ValuePresenter categoriesFor: #setValue:!accessing!private! !
+!UI.ValuePresenter categoriesFor: #value!accessing!public! !
+!UI.ValuePresenter categoriesFor: #value:!accessing!public! !
 
-ValuePresenter methodProtocol: #value attributes: #(#readOnly) selectors: #(#value #value:)!
-ValuePresenter methodProtocol: #valuePresenter attributes: #(#readOnly) selectors: #(#value #value:)!
+UI.ValuePresenter methodProtocol: #value attributes: #(#readOnly) selectors: #(#value #value:)!
+UI.ValuePresenter methodProtocol: #valuePresenter attributes: #(#readOnly) selectors: #(#value #value:)!
 
-!ValuePresenter class methodsFor!
+!UI.ValuePresenter class methodsFor!
 
 defaultModel
 	"Answer a default model to be assigned to the receiver when it
@@ -87,6 +87,6 @@ icon
 	"Answers an Icon that can be used to represent this class"
 
 	^##(self) defaultIcon! !
-!ValuePresenter class categoriesFor: #defaultModel!models!public! !
-!ValuePresenter class categoriesFor: #icon!constants!public! !
+!UI.ValuePresenter class categoriesFor: #defaultModel!models!public! !
+!UI.ValuePresenter class categoriesFor: #icon!constants!public! !
 

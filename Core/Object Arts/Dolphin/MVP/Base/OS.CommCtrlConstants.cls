@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-SharedPool subclass: #CommCtrlConstants
+Kernel.SharedPool subclass: #'OS.CommCtrlConstants'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -92,6 +92,7 @@ SharedPool subclass: #CommCtrlConstants
 		'ILD_TRANSPARENT' -> 16r1.
 		'LIM_LARGE' -> 16r1.
 		'LIM_SMALL' -> 16r0.
+		'LVM_GETEDITCONTROL' -> 16r1018.
 		'NM_CHAR' -> -16r12.
 		'NM_CLICK' -> -16r2.
 		'NM_CUSTOMDRAW' -> -16rC.
@@ -116,8 +117,10 @@ SharedPool subclass: #CommCtrlConstants
 		'NM_TOOLTIPSCREATED' -> -16r13.
 		'TTF_IDISHWND' -> 16r1.
 		'TTN_GETDISPINFOA' -> -16r208.
-		'TTN_GETDISPINFOW' -> -16r212
+		'TTN_GETDISPINFOW' -> -16r212.
+		'TVM_GETEDITCONTROL' -> 16r110F
 	}!
-CommCtrlConstants guid: (GUID fromString: '{13fdce7c-6ba4-4b0a-8ec8-90af54a7fbb1}')!
-CommCtrlConstants comment: ''!
-!CommCtrlConstants categoriesForClass!Unclassified! !
+OS.CommCtrlConstants guid: (Core.GUID fromString: '{13fdce7c-6ba4-4b0a-8ec8-90af54a7fbb1}')!
+OS.CommCtrlConstants isNonInstantiable: true!
+OS.CommCtrlConstants comment: ''!
+!OS.CommCtrlConstants categoriesForClass!Unclassified! !

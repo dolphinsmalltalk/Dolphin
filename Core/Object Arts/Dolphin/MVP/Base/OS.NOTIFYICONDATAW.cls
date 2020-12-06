@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Win32Structure subclass: #NOTIFYICONDATAW
+OS.Win32Structure subclass: #'OS.NOTIFYICONDATAW'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_dwSize' -> 16r0.
@@ -14,10 +14,10 @@ Win32Structure subclass: #NOTIFYICONDATAW
 		'_OffsetOf_uFlags' -> 16rC.
 		'_OffsetOf_uID' -> 16r8
 	}!
-NOTIFYICONDATAW guid: (GUID fromString: '{70cb825f-18f0-4968-9638-a8444b0bd805}')!
-NOTIFYICONDATAW comment: ''!
-!NOTIFYICONDATAW categoriesForClass!No category! !
-!NOTIFYICONDATAW methodsFor!
+OS.NOTIFYICONDATAW guid: (Core.GUID fromString: '{70cb825f-18f0-4968-9638-a8444b0bd805}')!
+OS.NOTIFYICONDATAW comment: ''!
+!OS.NOTIFYICONDATAW categoriesForClass!No category! !
+!OS.NOTIFYICONDATAW methodsFor!
 
 dwSize: anInteger
 	"Set the receiver's 'dwSize' field to the value of the argument, anInteger"
@@ -89,20 +89,20 @@ uID: anInteger
 	"Set the receiver's 'uID' field to the value of the argument, anInteger"
 
 	bytes dwordAtOffset: _OffsetOf_uID put: anInteger! !
-!NOTIFYICONDATAW categoriesFor: #dwSize:!**compiled accessors**!public! !
-!NOTIFYICONDATAW categoriesFor: #hIcon:!**compiled accessors**!public! !
-!NOTIFYICONDATAW categoriesFor: #hWnd:!**compiled accessors**!public! !
-!NOTIFYICONDATAW categoriesFor: #icon:!accessing!public! !
-!NOTIFYICONDATAW categoriesFor: #message:!accessing!public! !
-!NOTIFYICONDATAW categoriesFor: #szTip!**compiled accessors**!public! !
-!NOTIFYICONDATAW categoriesFor: #szTip:!**compiled accessors**!public! !
-!NOTIFYICONDATAW categoriesFor: #tipText:!accessing!public! !
-!NOTIFYICONDATAW categoriesFor: #uCallbackMessage:!**compiled accessors**!public! !
-!NOTIFYICONDATAW categoriesFor: #uFlags!**compiled accessors**!public! !
-!NOTIFYICONDATAW categoriesFor: #uFlags:!**compiled accessors**!public! !
-!NOTIFYICONDATAW categoriesFor: #uID:!**compiled accessors**!public! !
+!OS.NOTIFYICONDATAW categoriesFor: #dwSize:!**compiled accessors**!public! !
+!OS.NOTIFYICONDATAW categoriesFor: #hIcon:!**compiled accessors**!public! !
+!OS.NOTIFYICONDATAW categoriesFor: #hWnd:!**compiled accessors**!public! !
+!OS.NOTIFYICONDATAW categoriesFor: #icon:!accessing!public! !
+!OS.NOTIFYICONDATAW categoriesFor: #message:!accessing!public! !
+!OS.NOTIFYICONDATAW categoriesFor: #szTip!**compiled accessors**!public! !
+!OS.NOTIFYICONDATAW categoriesFor: #szTip:!**compiled accessors**!public! !
+!OS.NOTIFYICONDATAW categoriesFor: #tipText:!accessing!public! !
+!OS.NOTIFYICONDATAW categoriesFor: #uCallbackMessage:!**compiled accessors**!public! !
+!OS.NOTIFYICONDATAW categoriesFor: #uFlags!**compiled accessors**!public! !
+!OS.NOTIFYICONDATAW categoriesFor: #uFlags:!**compiled accessors**!public! !
+!OS.NOTIFYICONDATAW categoriesFor: #uID:!**compiled accessors**!public! !
 
-!NOTIFYICONDATAW class methodsFor!
+!OS.NOTIFYICONDATAW class methodsFor!
 
 defineFields
 	"Define the fields of the NOTIFYICONDATA 'structure'.
@@ -130,6 +130,6 @@ defineFields
 
 getFieldNames
 	^#(#dwSize #hWnd #uID #uFlags #uCallbackMessage #hIcon #szTip)! !
-!NOTIFYICONDATAW class categoriesFor: #defineFields!public!template definition! !
-!NOTIFYICONDATAW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.NOTIFYICONDATAW class categoriesFor: #defineFields!public!template definition! !
+!OS.NOTIFYICONDATAW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

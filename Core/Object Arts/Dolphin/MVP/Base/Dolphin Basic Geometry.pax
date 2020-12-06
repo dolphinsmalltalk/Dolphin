@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'Dolphin Basic Geometry'.
-package paxVersion: 2;
+package paxVersion: 2.1;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Basic Geometry.
 Copyright (c) Object Arts Ltd. 1997-2018. Portions Copyright (c) CGI Group (Europe) Ltd. 1997.
@@ -8,34 +8,24 @@ Copyright (c) Object Arts Ltd. 1997-2018. Portions Copyright (c) CGI Group (Euro
 
 
 package setClassNames: #(
-	#{ExternalPoint}
-	#{ExternalRectangle}
-	#{Point}
-	#{Point3D}
-	#{POINTL}
-	#{RECT}
-	#{Rectangle}
+	#{External.POINT}
+	#{External.RECT}
+	#{Graphics.Point}
+	#{Graphics.Point3D}
+	#{Graphics.Rectangle}
+	#{OS.POINTL}
+	#{OS.RECTL}
 ).
 
 package setMethodNames: #(
-	#(#{ArithmeticValue} #_expandRectangle:)
-	#(#{ArithmeticValue} #_insetRectangle:)
-	#(#{ArithmeticValue} #_offsetRectangle:)
-	#(#{DWORD class} #fromPoint:)
-	#(#{Number} #@)
-	#(#{Number} #asPoint)
-	#(#{Number} #asPoint3D)
-	#(#{UserLibrary} #subtractRect:lprcSrc1:lprcSrc2:)
-).
-
-package setVariableNames: #(
-	#{POINT}
-	#{RECTL}
-).
-
-package setAliasVariableNames: #(
-	#{POINT}
-	#{RECTL}
+	#(#{Core.ArithmeticValue} #_expandRectangle:)
+	#(#{Core.ArithmeticValue} #_insetRectangle:)
+	#(#{Core.ArithmeticValue} #_offsetRectangle:)
+	#(#{Core.Number} #@)
+	#(#{Core.Number} #asPoint)
+	#(#{Core.Number} #asPoint3D)
+	#(#{External.DWORD class} #fromPoint:)
+	#(#{OS.UserLibrary} #subtractRect:lprcSrc1:lprcSrc2:)
 ).
 
 package setPrerequisites: #(
@@ -46,37 +36,49 @@ package!
 
 "Class Definitions"!
 
-Object subclass: #Rectangle
+Core.Object subclass: #'Graphics.Rectangle'
 	instanceVariableNames: 'origin corner'
 	classVariableNames: 'Empty'
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ExternalStructure subclass: #ExternalPoint
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
+Core.ArithmeticValue subclass: #'Graphics.Point'
+	instanceVariableNames: 'x y'
+	classVariableNames: 'Zero'
+	imports: #(#{Kernel.VMConstants private})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ExternalStructure subclass: #ExternalRectangle
-	instanceVariableNames: ''
+Core.ArithmeticValue subclass: #'Graphics.Point3D'
+	instanceVariableNames: 'x y z'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ExternalPoint subclass: #POINTL
+External.Structure subclass: #'External.POINT'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+External.Structure subclass: #'External.RECT'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+External.POINT subclass: #'OS.POINTL'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_x' -> 16r0.
 		'_OffsetOf_y' -> 16r4
 	}!
-ExternalRectangle subclass: #RECT
+External.RECT subclass: #'OS.RECTL'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_bottom' -> 16rC.
@@ -84,29 +86,10 @@ ExternalRectangle subclass: #RECT
 		'_OffsetOf_right' -> 16r8.
 		'_OffsetOf_top' -> 16r4
 	}!
-ArithmeticValue subclass: #Point
-	instanceVariableNames: 'x y'
-	classVariableNames: 'Zero'
-	poolDictionaries: ''
-	classInstanceVariableNames: ''
-	classConstants: {}!
-ArithmeticValue subclass: #Point3D
-	instanceVariableNames: 'x y z'
-	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''
-	classConstants: {}!
-
-"Variable Aliases"!
-
-POINT := POINTL!
-
-RECTL := RECT!
-
 
 "Loose Methods"!
 
-!ArithmeticValue methodsFor!
+!Core.ArithmeticValue methodsFor!
 
 _expandRectangle: rect
 	"Private - Expand the <Rectangle>, rect, by the magnitude of the receiver.
@@ -128,11 +111,34 @@ _offsetRectangle: aRectangle
 	Double-dispatched from the Rectangle itself."
 
 	^aRectangle species origin: aRectangle origin + self corner: aRectangle corner + self! !
-!ArithmeticValue categoriesFor: #_expandRectangle:!double dispatch!private! !
-!ArithmeticValue categoriesFor: #_insetRectangle:!double dispatch!private! !
-!ArithmeticValue categoriesFor: #_offsetRectangle:!double dispatch!private! !
+!Core.ArithmeticValue categoriesFor: #_expandRectangle:!double dispatch!private! !
+!Core.ArithmeticValue categoriesFor: #_insetRectangle:!double dispatch!private! !
+!Core.ArithmeticValue categoriesFor: #_offsetRectangle:!double dispatch!private! !
 
-!DWORD class methodsFor!
+!Core.Number methodsFor!
+
+@ yCoord
+	"Answer a Point with the receiver as X and the argument as Y.
+	The traditional Make Point primitive is present because this operation may be
+	performed a few thousand times when opening a complex window (for example).
+	The primitive is simply a VM level implementation of #x:y:, and does not fail."
+
+	^Graphics.Point x: self y: yCoord!
+
+asPoint
+	"Answer a Point with the receiver as both co-ordinates."
+
+	^self @ self!
+
+asPoint3D
+	"Answer a Point with the receiver as all three co-ordinates."
+
+	^self @ self @ self! !
+!Core.Number categoriesFor: #@!converting!public! !
+!Core.Number categoriesFor: #asPoint!converting!public! !
+!Core.Number categoriesFor: #asPoint3D!converting!public! !
+
+!External.DWORD class methodsFor!
 
 fromPoint: aPoint
 	"Private - Answer a new instance of the receiver with high and low
@@ -144,37 +150,14 @@ fromPoint: aPoint
 		lowSWord: aPoint x;
 		highSWord: aPoint y;
 		yourself! !
-!DWORD class categoriesFor: #fromPoint:!instance creation!private! !
+!External.DWORD class categoriesFor: #fromPoint:!instance creation!private! !
 
-!Number methodsFor!
-
-@ yCoord 
-	"Answer a Point with the receiver as X and the argument as Y.
-	The traditional Make Point primitive is present because this operation may be
-	performed a few thousand times when opening a complex window (for example).
-	The primitive is simply a VM level implementation of #x:y:, and does not fail."
-
-	^Point x: self y: yCoord!
-
-asPoint
-	"Answer a Point with the receiver as both co-ordinates."
-
-	^self @ self!
-
-asPoint3D
-	"Answer a Point with the receiver as all three co-ordinates."
-
-	^self @ self @ self! !
-!Number categoriesFor: #@!converting!public! !
-!Number categoriesFor: #asPoint!converting!public! !
-!Number categoriesFor: #asPoint3D!converting!public! !
-
-!UserLibrary methodsFor!
+!OS.UserLibrary methodsFor!
 
 subtractRect: lprcDst lprcSrc1: lprcSrc1 lprcSrc2: lprcSrc2
-	<stdcall: bool SubtractRect RECT* RECT* RECT*>
+	<stdcall: bool SubtractRect RECTL* RECTL* RECTL*>
 	^self invalidCall: _failureCode! !
-!UserLibrary categoriesFor: #subtractRect:lprcSrc1:lprcSrc2:!public!rectangle functions! !
+!OS.UserLibrary categoriesFor: #subtractRect:lprcSrc1:lprcSrc2:!public!rectangle functions! !
 
 "End of package definition"!
 

@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-SharedPool subclass: #HTMLHelpConstants
+Kernel.SharedPool subclass: #'OS.HTMLHelpConstants'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -19,6 +19,7 @@ SharedPool subclass: #HTMLHelpConstants
 		'HH_TP_HELP_WM_HELP' -> 16r11.
 		'HH_UNINITIALIZE' -> 16r1D
 	}!
-HTMLHelpConstants guid: (GUID fromString: '{8fa353ac-bdb2-4d52-9169-e27fc53fe1b2}')!
-HTMLHelpConstants comment: ''!
-!HTMLHelpConstants categoriesForClass!Unclassified! !
+OS.HTMLHelpConstants guid: (Core.GUID fromString: '{8fa353ac-bdb2-4d52-9169-e27fc53fe1b2}')!
+OS.HTMLHelpConstants isNonInstantiable: true!
+OS.HTMLHelpConstants comment: ''!
+!OS.HTMLHelpConstants categoriesForClass!Unclassified! !

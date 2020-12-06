@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-LayoutManager subclass: #BorderLayout
+UI.LayoutManager subclass: #'UI.BorderLayout'
 	instanceVariableNames: 'horizontalGap verticalGap north south east west center'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-BorderLayout guid: (GUID fromString: '{87b4c646-026e-11d3-9fd7-00a0cc3e4a32}')!
-BorderLayout comment: 'BorderLayout implements a general purpose <layoutManager> to layout <view> objects within a <compositeView>. It arranges views that have been added to their parent container with the #arrangement aspects #north, #south, #east, #west and #center. These identified views are "docked" along the appropriate edges and in the centre of the container. A BorderLayout attempts to keep the radial dimension of the edge components fixed at either their current size or (if specified) the preferred size, and then resizes the #center view to fill the remaining space.
+UI.BorderLayout guid: (Core.GUID fromString: '{87b4c646-026e-11d3-9fd7-00a0cc3e4a32}')!
+UI.BorderLayout comment: 'BorderLayout implements a general purpose <layoutManager> to layout <view> objects within a <compositeView>. It arranges views that have been added to their parent container with the #arrangement aspects #north, #south, #east, #west and #center. These identified views are "docked" along the appropriate edges and in the centre of the container. A BorderLayout attempts to keep the radial dimension of the edge components fixed at either their current size or (if specified) the preferred size, and then resizes the #center view to fill the remaining space.
 
 BorderLayout is a very useful layout manager, and is commonly employed in conjunction with a shell to position a <Toolbar> to the north, a <Statusbar> to the south, and a composite view in the centre that contains the applicaiton views.
 
@@ -20,8 +20,8 @@ Instance Variables:
 	west			<view> that will be positioned at the left of the container
 	center			<view> that will be positioned at the centre of the container
 '!
-!BorderLayout categoriesForClass!MVP-Layout Managers-General! !
-!BorderLayout methodsFor!
+!UI.BorderLayout categoriesForClass!MVP-Layout Managers-General! !
+!UI.BorderLayout methodsFor!
 
 arrangementOf: aView 
 	"Answer the arrangement parameter of aView in the receiver. This will be one of #center,
@@ -280,33 +280,33 @@ widthForEdge: aView ofHeight: anInteger inContext: aLayoutContext
 	rect height: anInteger.
 	aLayoutContext setView: aView rectangle: rect.
 	^(aView layoutExtent: aLayoutContext) x! !
-!BorderLayout categoriesFor: #arrangementOf:!accessing!public! !
-!BorderLayout categoriesFor: #arrangementOf:put:!accessing!public! !
-!BorderLayout categoriesFor: #center!accessing!public! !
-!BorderLayout categoriesFor: #center:!accessing!public! !
-!BorderLayout categoriesFor: #east!accessing!public! !
-!BorderLayout categoriesFor: #east:!accessing!public! !
-!BorderLayout categoriesFor: #heightForEdge:ofWidth:inContext:!geometry!helpers!private! !
-!BorderLayout categoriesFor: #horizontalGap!accessing!public! !
-!BorderLayout categoriesFor: #horizontalGap:!accessing!public! !
-!BorderLayout categoriesFor: #initialize!initializing!private! !
-!BorderLayout categoriesFor: #layoutContainer:context:!geometry!private! !
-!BorderLayout categoriesFor: #north!accessing!public! !
-!BorderLayout categoriesFor: #north:!accessing!public! !
-!BorderLayout categoriesFor: #preferredLayoutExtentOf:context:!enquiries!public! !
-!BorderLayout categoriesFor: #removeSubView:!public!removing! !
-!BorderLayout categoriesFor: #reposition:to:!geometry!private! !
-!BorderLayout categoriesFor: #resize:to:!geometry!public! !
-!BorderLayout categoriesFor: #resolutionScaledBy:!geometry!private! !
-!BorderLayout categoriesFor: #south!accessing!public! !
-!BorderLayout categoriesFor: #south:!accessing!public! !
-!BorderLayout categoriesFor: #verticalGap!accessing!public! !
-!BorderLayout categoriesFor: #verticalGap:!accessing!public! !
-!BorderLayout categoriesFor: #west!accessing!public! !
-!BorderLayout categoriesFor: #west:!accessing!public! !
-!BorderLayout categoriesFor: #widthForEdge:ofHeight:inContext:!geometry!helpers!private! !
+!UI.BorderLayout categoriesFor: #arrangementOf:!accessing!public! !
+!UI.BorderLayout categoriesFor: #arrangementOf:put:!accessing!public! !
+!UI.BorderLayout categoriesFor: #center!accessing!public! !
+!UI.BorderLayout categoriesFor: #center:!accessing!public! !
+!UI.BorderLayout categoriesFor: #east!accessing!public! !
+!UI.BorderLayout categoriesFor: #east:!accessing!public! !
+!UI.BorderLayout categoriesFor: #heightForEdge:ofWidth:inContext:!geometry!helpers!private! !
+!UI.BorderLayout categoriesFor: #horizontalGap!accessing!public! !
+!UI.BorderLayout categoriesFor: #horizontalGap:!accessing!public! !
+!UI.BorderLayout categoriesFor: #initialize!initializing!private! !
+!UI.BorderLayout categoriesFor: #layoutContainer:context:!geometry!private! !
+!UI.BorderLayout categoriesFor: #north!accessing!public! !
+!UI.BorderLayout categoriesFor: #north:!accessing!public! !
+!UI.BorderLayout categoriesFor: #preferredLayoutExtentOf:context:!enquiries!public! !
+!UI.BorderLayout categoriesFor: #removeSubView:!public!removing! !
+!UI.BorderLayout categoriesFor: #reposition:to:!geometry!private! !
+!UI.BorderLayout categoriesFor: #resize:to:!geometry!public! !
+!UI.BorderLayout categoriesFor: #resolutionScaledBy:!geometry!private! !
+!UI.BorderLayout categoriesFor: #south!accessing!public! !
+!UI.BorderLayout categoriesFor: #south:!accessing!public! !
+!UI.BorderLayout categoriesFor: #verticalGap!accessing!public! !
+!UI.BorderLayout categoriesFor: #verticalGap:!accessing!public! !
+!UI.BorderLayout categoriesFor: #west!accessing!public! !
+!UI.BorderLayout categoriesFor: #west:!accessing!public! !
+!UI.BorderLayout categoriesFor: #widthForEdge:ofHeight:inContext:!geometry!helpers!private! !
 
-!BorderLayout class methodsFor!
+!UI.BorderLayout class methodsFor!
 
 horizontalGap: horizontal verticalGap: vertical
 	"Answer a new instance of the receiver intialized with
@@ -316,5 +316,5 @@ horizontalGap: horizontal verticalGap: vertical
 		horizontalGap: horizontal;
 		verticalGap: vertical;
 		yourself! !
-!BorderLayout class categoriesFor: #horizontalGap:verticalGap:!instance creation!public! !
+!UI.BorderLayout class categoriesFor: #horizontalGap:verticalGap:!instance creation!public! !
 

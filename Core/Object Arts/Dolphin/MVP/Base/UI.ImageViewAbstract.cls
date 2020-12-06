@@ -1,17 +1,17 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-StaticView subclass: #ImageViewAbstract
+UI.StaticView subclass: #'UI.ImageViewAbstract'
 	instanceVariableNames: 'image viewMode ivFlags insets imageBorder'
 	classVariableNames: 'EdgeStyles'
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'DoubleBufferMask' -> 16r2.
 		'EraseWholeMask' -> 16r1
 	}!
-ImageViewAbstract guid: (GUID fromString: '{49987909-4a1f-4e2e-8b1f-2cc2f3ca2c3c}')!
-ImageViewAbstract isAbstract: true!
-ImageViewAbstract comment: 'ImageViewAbstract is an abstract class of <valueView>s for displaying static <image>s. The <valueModel> associated with an image view must always yield an <image> value when mapped through the installed type converter. An ImageViewAbstract will normally be used in conjunction with a <ImagePresenter>. The mode in which the image is displayed can be controlled using the #viewMode aspect which can be set to one of the following: (#normal, #centered, #scale, #scaleToFit, or #scaleBestFit). 
+UI.ImageViewAbstract guid: (Core.GUID fromString: '{49987909-4a1f-4e2e-8b1f-2cc2f3ca2c3c}')!
+UI.ImageViewAbstract isNonInstantiable: true!
+UI.ImageViewAbstract comment: 'ImageViewAbstract is an abstract class of <valueView>s for displaying static <image>s. The <valueModel> associated with an image view must always yield an <image> value when mapped through the installed type converter. An ImageViewAbstract will normally be used in conjunction with a <ImagePresenter>. The mode in which the image is displayed can be controlled using the #viewMode aspect which can be set to one of the following: (#normal, #centered, #scale, #scaleToFit, or #scaleBestFit). 
 
 Instance Variables:
 	image		<image> which is a cache for the image being displayed.
@@ -19,8 +19,8 @@ Instance Variables:
 	ivFlags		<integer> flags controlling styles/modes, etc.
 	insets 		<Rectangle> specifying insets of the image from its border on each edge.
 	imageBorder	<Symbol> identifying style of the border (if any) drawn around the image'!
-!ImageViewAbstract categoriesForClass!MVP-Views! !
-!ImageViewAbstract methodsFor!
+!UI.ImageViewAbstract categoriesForClass!MVP-Views! !
+!UI.ImageViewAbstract methodsFor!
 
 calcRectangle: displayRect
 	"Answer the rectangle that should be the destination of the blt "
@@ -133,29 +133,31 @@ insets
 
 	^insets ifNil: [Rectangle new]!
 
-insets: aRectangle 
+insets: aRectangle
 	"Set the <Rectangle> whose edges specify the distance (in pixels) by which the sub views are
 	inset from the border of the receiver."
 
-	insets := aRectangle = Rectangle new ifFalse: [aRectangle].
-	self invalidateLayout; invalidate!
+	insets := aRectangle = Rectangle.Empty ifFalse: [aRectangle].
+	self
+		invalidateLayout;
+		invalidate!
 
-invalidateRect: aRectangle erase: aBoolean 
-	"Invalidates the specified client rectangle (a RECT, Rectangle, or nil for the whole client window).
+invalidateRect: aRectangle erase: aBoolean
+	"Invalidates the specified client rectangle (a RECTL, Rectangle, or nil for the whole client window).
 	Set whether to erase the receivers background before repainting. Answer whether the function succeeds."
 
 	"There is a possibility that this may be called before the receiver has been created
 	so check for this to avoid accidentally redrawing the entire desktop"
 
 	handle isNull ifTrue: [^false].
-	^self hasTransparentBackground 
+	^self hasTransparentBackground
 		ifTrue: 
-			[self parentView invalidateRect: (aRectangle isNil 
+			[self parentView invalidateRect: (aRectangle isNil
 						ifTrue: [self rectangle]
 						ifFalse: [self mapRectangle: aRectangle to: self parentView])
 				erase: aBoolean]
 		ifFalse: 
-			[UserLibrary default 
+			[UserLibrary default
 				invalidate: handle
 				lpRect: aRectangle asParameter
 				bErase: aBoolean asParameter]!
@@ -238,7 +240,7 @@ scaleBestFit: imageExtent in: displayRect
 	"Unlike #scaleToFit, only scale if the image extent is larger than the displayRect"
 
 	| scale |
-	scale := (imageExtent isZero or: [imageExtent < displayRect extent]) 
+	scale := (imageExtent isZero or: [imageExtent < displayRect extent])
 				ifTrue: [1]
 				ifFalse: 
 					[| r |
@@ -248,7 +250,7 @@ scaleBestFit: imageExtent in: displayRect
 
 scaleToFit: imageExtent in: displayRect
 	| scale |
-	scale := imageExtent isZero 
+	scale := imageExtent isZero
 				ifTrue: [1]
 				ifFalse: 
 					[| r |
@@ -296,42 +298,42 @@ wmPrintClient: message wParam: wParam lParam: lParam
 	self ensureLayoutValid.
 	self paintOn: (Canvas withNonOwnedDC: wParam).
 	^0! !
-!ImageViewAbstract categoriesFor: #calcRectangle:!geometry!private! !
-!ImageViewAbstract categoriesFor: #calculateExtent:!geometry!private! !
-!ImageViewAbstract categoriesFor: #centered:in:!geometry!private! !
-!ImageViewAbstract categoriesFor: #default:in:!geometry!private! !
-!ImageViewAbstract categoriesFor: #defaultWindowProcessing:wParam:lParam:!dispatching!private! !
-!ImageViewAbstract categoriesFor: #displayRectangle!geometry!private! !
-!ImageViewAbstract categoriesFor: #displayValue!private!updating! !
-!ImageViewAbstract categoriesFor: #displayValue:!private!updating! !
-!ImageViewAbstract categoriesFor: #drawBorderOn:imageRect:displayRect:!drawing!private! !
-!ImageViewAbstract categoriesFor: #eraseBackground:around:!event handling!private! !
-!ImageViewAbstract categoriesFor: #imageBorder!modes!public! !
-!ImageViewAbstract categoriesFor: #imageBorder:!modes!public! !
-!ImageViewAbstract categoriesFor: #initialize!initializing!private! !
-!ImageViewAbstract categoriesFor: #insets!accessing!public! !
-!ImageViewAbstract categoriesFor: #insets:!accessing!public! !
-!ImageViewAbstract categoriesFor: #invalidateRect:erase:!drawing!public! !
-!ImageViewAbstract categoriesFor: #isDoubleBuffered!public!testing! !
-!ImageViewAbstract categoriesFor: #isDoubleBuffered:!accessing!public! !
-!ImageViewAbstract categoriesFor: #isWholeBackgroundErased!public!testing! !
-!ImageViewAbstract categoriesFor: #isWholeBackgroundErased:!accessing!public! !
-!ImageViewAbstract categoriesFor: #ivFlags!private!testing! !
-!ImageViewAbstract categoriesFor: #normal:in:!geometry!private! !
-!ImageViewAbstract categoriesFor: #onEraseRequired:!drawing!event handling!private! !
-!ImageViewAbstract categoriesFor: #onPaintRequired:!event handling!private! !
-!ImageViewAbstract categoriesFor: #paintImageOn:!drawing!private! !
-!ImageViewAbstract categoriesFor: #paintOn:!drawing!event handling!private! !
-!ImageViewAbstract categoriesFor: #scale:in:!geometry!private! !
-!ImageViewAbstract categoriesFor: #scaleBestFit:in:!geometry!private! !
-!ImageViewAbstract categoriesFor: #scaleToFit:in:!geometry!private! !
-!ImageViewAbstract categoriesFor: #subclassWindow:!operations!private! !
-!ImageViewAbstract categoriesFor: #viewMode!modes!public! !
-!ImageViewAbstract categoriesFor: #viewMode:!modes!public! !
-!ImageViewAbstract categoriesFor: #wmPaint:wParam:lParam:!event handling-win32!private! !
-!ImageViewAbstract categoriesFor: #wmPrintClient:wParam:lParam:!event handling-win32!private! !
+!UI.ImageViewAbstract categoriesFor: #calcRectangle:!geometry!private! !
+!UI.ImageViewAbstract categoriesFor: #calculateExtent:!geometry!private! !
+!UI.ImageViewAbstract categoriesFor: #centered:in:!geometry!private! !
+!UI.ImageViewAbstract categoriesFor: #default:in:!geometry!private! !
+!UI.ImageViewAbstract categoriesFor: #defaultWindowProcessing:wParam:lParam:!dispatching!private! !
+!UI.ImageViewAbstract categoriesFor: #displayRectangle!geometry!private! !
+!UI.ImageViewAbstract categoriesFor: #displayValue!private!updating! !
+!UI.ImageViewAbstract categoriesFor: #displayValue:!private!updating! !
+!UI.ImageViewAbstract categoriesFor: #drawBorderOn:imageRect:displayRect:!drawing!private! !
+!UI.ImageViewAbstract categoriesFor: #eraseBackground:around:!event handling!private! !
+!UI.ImageViewAbstract categoriesFor: #imageBorder!modes!public! !
+!UI.ImageViewAbstract categoriesFor: #imageBorder:!modes!public! !
+!UI.ImageViewAbstract categoriesFor: #initialize!initializing!private! !
+!UI.ImageViewAbstract categoriesFor: #insets!accessing!public! !
+!UI.ImageViewAbstract categoriesFor: #insets:!accessing!public! !
+!UI.ImageViewAbstract categoriesFor: #invalidateRect:erase:!drawing!public! !
+!UI.ImageViewAbstract categoriesFor: #isDoubleBuffered!public!testing! !
+!UI.ImageViewAbstract categoriesFor: #isDoubleBuffered:!accessing!public! !
+!UI.ImageViewAbstract categoriesFor: #isWholeBackgroundErased!public!testing! !
+!UI.ImageViewAbstract categoriesFor: #isWholeBackgroundErased:!accessing!public! !
+!UI.ImageViewAbstract categoriesFor: #ivFlags!private!testing! !
+!UI.ImageViewAbstract categoriesFor: #normal:in:!geometry!private! !
+!UI.ImageViewAbstract categoriesFor: #onEraseRequired:!drawing!event handling!private! !
+!UI.ImageViewAbstract categoriesFor: #onPaintRequired:!event handling!private! !
+!UI.ImageViewAbstract categoriesFor: #paintImageOn:!drawing!private! !
+!UI.ImageViewAbstract categoriesFor: #paintOn:!drawing!event handling!private! !
+!UI.ImageViewAbstract categoriesFor: #scale:in:!geometry!private! !
+!UI.ImageViewAbstract categoriesFor: #scaleBestFit:in:!geometry!private! !
+!UI.ImageViewAbstract categoriesFor: #scaleToFit:in:!geometry!private! !
+!UI.ImageViewAbstract categoriesFor: #subclassWindow:!operations!private! !
+!UI.ImageViewAbstract categoriesFor: #viewMode!modes!public! !
+!UI.ImageViewAbstract categoriesFor: #viewMode:!modes!public! !
+!UI.ImageViewAbstract categoriesFor: #wmPaint:wParam:lParam:!event handling-win32!private! !
+!UI.ImageViewAbstract categoriesFor: #wmPrintClient:wParam:lParam:!event handling-win32!private! !
 
-!ImageViewAbstract class methodsFor!
+!UI.ImageViewAbstract class methodsFor!
 
 edgeStyles
 	^self edgeStyleTable keys asArray!
@@ -372,11 +374,11 @@ winClassName
 	to instances of the receiver."
 
 	^self wndClassName! !
-!ImageViewAbstract class categoriesFor: #edgeStyles!constants!public! !
-!ImageViewAbstract class categoriesFor: #edgeStyleTable!constants!public! !
-!ImageViewAbstract class categoriesFor: #icon!constants!public! !
-!ImageViewAbstract class categoriesFor: #initialize!development!initializing!private! !
-!ImageViewAbstract class categoriesFor: #stbConvertFromVersion12:!binary filing!private! !
-!ImageViewAbstract class categoriesFor: #viewModes!constants!public! !
-!ImageViewAbstract class categoriesFor: #winClassName!constants!private! !
+!UI.ImageViewAbstract class categoriesFor: #edgeStyles!constants!public! !
+!UI.ImageViewAbstract class categoriesFor: #edgeStyleTable!constants!public! !
+!UI.ImageViewAbstract class categoriesFor: #icon!constants!public! !
+!UI.ImageViewAbstract class categoriesFor: #initialize!development!initializing!private! !
+!UI.ImageViewAbstract class categoriesFor: #stbConvertFromVersion12:!binary filing!private! !
+!UI.ImageViewAbstract class categoriesFor: #viewModes!constants!public! !
+!UI.ImageViewAbstract class categoriesFor: #winClassName!constants!private! !
 

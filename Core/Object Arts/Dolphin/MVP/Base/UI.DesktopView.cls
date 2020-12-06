@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-View subclass: #DesktopView
+UI.View subclass: #'UI.DesktopView'
 	instanceVariableNames: 'resolution defaultExtentBlock dvReserved1 dvReserved2'
 	classVariableNames: 'Current'
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-DesktopView guid: (GUID fromString: '{87b4c70e-026e-11d3-9fd7-00a0cc3e4a32}')!
-DesktopView comment: 'DesktopView is a <compositeView> representing the Windows desktop. 
+UI.DesktopView guid: (Core.GUID fromString: '{87b4c70e-026e-11d3-9fd7-00a0cc3e4a32}')!
+UI.DesktopView comment: 'DesktopView is a <compositeView> representing the Windows desktop. 
 
 Instance Variables:
 	resolution	<Point>holding the logical pixels per inch of the Window''s system font.
@@ -16,8 +16,8 @@ Class Variables:
 	Current	<DesktopView> singleton instance of the desktop.
 
 '!
-!DesktopView categoriesForClass!MVP-Views! !
-!DesktopView methodsFor!
+!UI.DesktopView categoriesForClass!MVP-Views! !
+!UI.DesktopView methodsFor!
 
 actualFont
 	"Private - Answer the actual font to be used to paint text in the receiver"
@@ -99,8 +99,7 @@ commandPolicyWithSource: sourceView
 	so that commands can be routed for views parented directly by the desktop which
 	do not have a shell."
 
-	^CommandPolicy defaultClass 
-		commandSource: sourceView!
+	^CommandPolicy defaultClass commandSource: sourceView!
 
 defaultExtentOf: aShellView 
 	"Private - Answer the default extent of a ShellView created within the receiver."
@@ -148,15 +147,14 @@ invalidateLayout
 	"Nothing to do."
 !
 
-invalidateRect: aRectangle erase: aBoolean 
-	"Invalidates the specified desktop rectangle (a RECT, Rectangle, or nil for the whole client window).
+invalidateRect: aRectangle erase: aBoolean
+	"Invalidates the specified desktop rectangle (a RECTL, Rectangle, or nil for the whole client window).
 	Set whether to erase the receivers background before repainting. Answer whether the function succeeds."
 
-	^UserLibrary default 
+	^UserLibrary default
 		invalidate: handle
 		lpRect: aRectangle asParameter
-		bErase: aBoolean asParameter
-!
+		bErase: aBoolean asParameter!
 
 invalidateUserInterface
 	"Invalidates the user interface of the receiver indicating that it needs
@@ -262,7 +260,7 @@ refresh
 	"Redraw the entire desktop and all windows (i.e. a complete screen refresh). This will cause
 	a lot of flashing!!"
 
-	^UserLibrary default 
+	^UserLibrary default
 		invalidate: nil
 		lpRect: nil
 		bErase: true!
@@ -313,58 +311,58 @@ workArea
 	"Answer a <Rectangle> which is the desktop area excluding that 
 	occuppied by the tool bar."
 
-	^(SystemMetrics current getSysParamStruct: SPI_GETWORKAREA type: RECT) asRectangle! !
-!DesktopView categoriesFor: #actualFont!accessing!private! !
-!DesktopView categoriesFor: #addCommandHistory:!accessing!private! !
-!DesktopView categoriesFor: #addSubView:!hierarchy!public!sub views! !
-!DesktopView categoriesFor: #allParents!hierarchy!public! !
-!DesktopView categoriesFor: #ambientBackcolor!accessing!private! !
-!DesktopView categoriesFor: #assumeDesktopHandle!accessing!public! !
-!DesktopView categoriesFor: #basicActualBackcolor!accessing!private! !
-!DesktopView categoriesFor: #buttonRemoved:!default button!private! !
-!DesktopView categoriesFor: #canvas!accessing!public! !
-!DesktopView categoriesFor: #caption!accessing!public! !
-!DesktopView categoriesFor: #caption:!accessing!public! !
-!DesktopView categoriesFor: #commandPolicyWithSource:!commands!public! !
-!DesktopView categoriesFor: #defaultExtentOf:!geometry!helpers!private! !
-!DesktopView categoriesFor: #displayOn:!displaying!public! !
-!DesktopView categoriesFor: #ensureSubView:rectangleVisible:!private!updating! !
-!DesktopView categoriesFor: #ensureSubViewVisible:!public!sub views! !
-!DesktopView categoriesFor: #ensureVisible!accessing!public! !
-!DesktopView categoriesFor: #filerProxy!binary filing!private! !
-!DesktopView categoriesFor: #helpId!accessing!public! !
-!DesktopView categoriesFor: #iconTitleFont!geometry!public! !
-!DesktopView categoriesFor: #invalidateLayout!geometry!public! !
-!DesktopView categoriesFor: #invalidateRect:erase:!drawing!public! !
-!DesktopView categoriesFor: #invalidateUserInterface!accessing!public! !
-!DesktopView categoriesFor: #isLayoutValid!geometry!public!testing! !
-!DesktopView categoriesFor: #layoutManager:!geometry!public! !
-!DesktopView categoriesFor: #name!accessing!public! !
-!DesktopView categoriesFor: #name:!accessing!public! !
-!DesktopView categoriesFor: #name:as:!hierarchy!public!sub views! !
-!DesktopView categoriesFor: #onAboutToDisplaySystemMenu:!event handling!public! !
-!DesktopView categoriesFor: #onStartup!event handling!public! !
-!DesktopView categoriesFor: #onViewActivated:!event handling!public! !
-!DesktopView categoriesFor: #onViewDeactivated:!event handling!public! !
-!DesktopView categoriesFor: #onViewMinimized:!event handling!public! !
-!DesktopView categoriesFor: #onViewRestored:!event handling!public! !
-!DesktopView categoriesFor: #performCommand:!commands!public! !
-!DesktopView categoriesFor: #queryContextMenu!menus!public! !
-!DesktopView categoriesFor: #refresh!drawing!public! !
-!DesktopView categoriesFor: #resolution!accessing!public! !
-!DesktopView categoriesFor: #screenRectangle!geometry!public! !
-!DesktopView categoriesFor: #setDefaultButton:state:!accessing!default button!private! !
-!DesktopView categoriesFor: #setFocus!operations!public! !
-!DesktopView categoriesFor: #topShell!hierarchy!public! !
-!DesktopView categoriesFor: #topView!hierarchy!public! !
-!DesktopView categoriesFor: #updateCaption!public!updating! !
-!DesktopView categoriesFor: #withAllParentsDo:!hierarchy!public! !
-!DesktopView categoriesFor: #workArea!geometry!public! !
+	^(SystemMetrics current getSysParamStruct: SPI_GETWORKAREA type: RECTL) asRectangle! !
+!UI.DesktopView categoriesFor: #actualFont!accessing!private! !
+!UI.DesktopView categoriesFor: #addCommandHistory:!accessing!private! !
+!UI.DesktopView categoriesFor: #addSubView:!hierarchy!public!sub views! !
+!UI.DesktopView categoriesFor: #allParents!hierarchy!public! !
+!UI.DesktopView categoriesFor: #ambientBackcolor!accessing!private! !
+!UI.DesktopView categoriesFor: #assumeDesktopHandle!accessing!public! !
+!UI.DesktopView categoriesFor: #basicActualBackcolor!accessing!private! !
+!UI.DesktopView categoriesFor: #buttonRemoved:!default button!private! !
+!UI.DesktopView categoriesFor: #canvas!accessing!public! !
+!UI.DesktopView categoriesFor: #caption!accessing!public! !
+!UI.DesktopView categoriesFor: #caption:!accessing!public! !
+!UI.DesktopView categoriesFor: #commandPolicyWithSource:!commands!public! !
+!UI.DesktopView categoriesFor: #defaultExtentOf:!geometry!helpers!private! !
+!UI.DesktopView categoriesFor: #displayOn:!displaying!public! !
+!UI.DesktopView categoriesFor: #ensureSubView:rectangleVisible:!private!updating! !
+!UI.DesktopView categoriesFor: #ensureSubViewVisible:!public!sub views! !
+!UI.DesktopView categoriesFor: #ensureVisible!accessing!public! !
+!UI.DesktopView categoriesFor: #filerProxy!binary filing!private! !
+!UI.DesktopView categoriesFor: #helpId!accessing!public! !
+!UI.DesktopView categoriesFor: #iconTitleFont!geometry!public! !
+!UI.DesktopView categoriesFor: #invalidateLayout!geometry!public! !
+!UI.DesktopView categoriesFor: #invalidateRect:erase:!drawing!public! !
+!UI.DesktopView categoriesFor: #invalidateUserInterface!accessing!public! !
+!UI.DesktopView categoriesFor: #isLayoutValid!geometry!public!testing! !
+!UI.DesktopView categoriesFor: #layoutManager:!geometry!public! !
+!UI.DesktopView categoriesFor: #name!accessing!public! !
+!UI.DesktopView categoriesFor: #name:!accessing!public! !
+!UI.DesktopView categoriesFor: #name:as:!hierarchy!public!sub views! !
+!UI.DesktopView categoriesFor: #onAboutToDisplaySystemMenu:!event handling!public! !
+!UI.DesktopView categoriesFor: #onStartup!event handling!public! !
+!UI.DesktopView categoriesFor: #onViewActivated:!event handling!public! !
+!UI.DesktopView categoriesFor: #onViewDeactivated:!event handling!public! !
+!UI.DesktopView categoriesFor: #onViewMinimized:!event handling!public! !
+!UI.DesktopView categoriesFor: #onViewRestored:!event handling!public! !
+!UI.DesktopView categoriesFor: #performCommand:!commands!public! !
+!UI.DesktopView categoriesFor: #queryContextMenu!menus!public! !
+!UI.DesktopView categoriesFor: #refresh!drawing!public! !
+!UI.DesktopView categoriesFor: #resolution!accessing!public! !
+!UI.DesktopView categoriesFor: #screenRectangle!geometry!public! !
+!UI.DesktopView categoriesFor: #setDefaultButton:state:!accessing!default button!private! !
+!UI.DesktopView categoriesFor: #setFocus!operations!public! !
+!UI.DesktopView categoriesFor: #topShell!hierarchy!public! !
+!UI.DesktopView categoriesFor: #topView!hierarchy!public! !
+!UI.DesktopView categoriesFor: #updateCaption!public!updating! !
+!UI.DesktopView categoriesFor: #withAllParentsDo:!hierarchy!public! !
+!UI.DesktopView categoriesFor: #workArea!geometry!public! !
 
-DesktopView methodProtocol: #compositeView attributes: #(#readOnly) selectors: #(#addSubView: #allParents #allSubViews #arrangement #arrangement: #backcolor #backcolor: #canAcceptSubViews #canvas #clientExtent #clientHeight #clientRectangle #clientWidth #close #contextMenu #contextMenu: #cursor #cursorPosition #destroy #disable #disableRedraw #enable #enableRedraw #ensureLayoutValid #ensureRectangleVisible: #ensureSubView:rectangleVisible: #ensureSubViewVisible: #ensureVisible #extent #extent: #firstSubView #font #font: #forecolor #forecolor: #hasBorder #hasBorder: #hasClientEdge #hasClientEdge: #hasFocus #hasLayoutManager #hasStaticEdge #hasStaticEdge: #hasVisibleStyle #hasVisibleStyle: #height #height: #hide #invalidate #invalidateCalculatedExtent #invalidateLayout #invalidateRect: #invalidateRect:erase: #invalidateRgn: #invalidateUserInterface #isEnabled: #isGroupStop #isGroupStop: #isLayoutValid #isManaged #isManaged: #isTabStop #isTabStop: #isTopView #isTransparent #isTransparent: #isWindowVisible #layout #layoutExtent: #layoutManager #layoutManager: #managedSubViews #mapPoint:to: #mapRectangle:to: #model #model: #name #name: #nameOf: #needsValidateLayout #nextSiblingView #nonClientCanvas #onAboutToCreate #onBegin:drag: #onCommand: #onCreated: #onDestroyed #onEraseRequired: #onHScroll: #onModelChanged #onPaintRequired: #onSubViewAdded: #onSubViewRemoved: #onViewCreated #onVScroll: #onZOrderChanged #parentView #placement #placement: #plainText #position #position: #preferredExtent #preferredExtent: #presenter #presenter: #presenterConnectionPoint #preTranslateKeyboardInput: #preTranslateMessage: #preTranslateMouseInput: #previousSiblingView #queryContextMenu #recreate #rectangle #rectangle: #refreshContents #removeSubView: #resolution #screenRectangle #screenRectangle: #scrollBy:clip: #scrollBy:scroll:clip: #setCapture #styles #subViewFromPoint: #subViewFromPoint:flags: #subViews #tabFirst #tabNext #text #text: #topView #update #updateModel #usePreferredExtent #usePreferredExtent: #validate #validateLayout #validateRect: #validateUserInterface #viewNamed: #viewNamed:ifNone: #width #width: #withAllParents #withAllSubViews #x #x: #y #y: #zOrderAfter: #zOrderAfter:withFlags: #zOrderBottom #zOrderTop)!
-DesktopView methodProtocol: #topPresenter attributes: #(#readOnly) selectors: #(#caption #caption: #commandPolicyWithSource: #ensureVisible #invalidateUserInterface #onAboutToDisplayMenu: #onAboutToDisplaySystemMenu: #onActionPerformed #onCloseRequested #onIdleEntered #onInputMaskRequired: #onKeyPressed: #onKeyReleased: #onKeyTyped: #onKillFocus #onLeftButtonDoubleClicked: #onLeftButtonPressed: #onLeftButtonReleased: #onMouseMoved: #onPositionChanged: #onPositionChanging: #onRightButtonDoubleClicked: #onRightButtonPressed: #onRightButtonReleased: #onSetFocus #onTipTextRequired: #onViewActivated: #onViewClosed #onViewDeactivated: #onViewMinimized: #onViewOpened #onViewRestored: #parentPresenter #performAction #performCommand: #setFocus #show #topShell #updateCaption #view)!
+UI.DesktopView methodProtocol: #compositeView attributes: #(#readOnly) selectors: #(#addSubView: #allParents #allSubViews #arrangement #arrangement: #backcolor #backcolor: #canAcceptSubViews #canvas #clientExtent #clientHeight #clientRectangle #clientWidth #close #contextMenu #contextMenu: #cursor #cursorPosition #destroy #disable #disableRedraw #enable #enableRedraw #ensureLayoutValid #ensureRectangleVisible: #ensureSubView:rectangleVisible: #ensureSubViewVisible: #ensureVisible #extent #extent: #firstSubView #font #font: #forecolor #forecolor: #hasBorder #hasBorder: #hasClientEdge #hasClientEdge: #hasFocus #hasLayoutManager #hasStaticEdge #hasStaticEdge: #hasVisibleStyle #hasVisibleStyle: #height #height: #hide #invalidate #invalidateCalculatedExtent #invalidateLayout #invalidateRect: #invalidateRect:erase: #invalidateRgn: #invalidateUserInterface #isEnabled: #isGroupStop #isGroupStop: #isLayoutValid #isManaged #isManaged: #isTabStop #isTabStop: #isTopView #isTransparent #isTransparent: #isWindowVisible #layout #layoutExtent: #layoutManager #layoutManager: #managedSubViews #mapPoint:to: #mapRectangle:to: #model #model: #name #name: #nameOf: #needsValidateLayout #nextSiblingView #nonClientCanvas #onAboutToCreate #onBegin:drag: #onCommand: #onCreated: #onDestroyed #onEraseRequired: #onHScroll: #onModelChanged #onPaintRequired: #onSubViewAdded: #onSubViewRemoved: #onViewCreated #onVScroll: #onZOrderChanged #parentView #placement #placement: #plainText #position #position: #preferredExtent #preferredExtent: #presenter #presenter: #presenterConnectionPoint #preTranslateKeyboardInput: #preTranslateMessage: #preTranslateMouseInput: #previousSiblingView #queryContextMenu #recreate #rectangle #rectangle: #refreshContents #removeSubView: #resolution #screenRectangle #screenRectangle: #scrollBy:clip: #scrollBy:scroll:clip: #setCapture #styles #subViewFromPoint: #subViewFromPoint:flags: #subViews #tabFirst #tabNext #text #text: #topView #update #updateModel #usePreferredExtent #usePreferredExtent: #validate #validateLayout #validateRect: #validateUserInterface #viewNamed: #viewNamed:ifNone: #width #width: #withAllParents #withAllSubViews #x #x: #y #y: #zOrderAfter: #zOrderAfter:withFlags: #zOrderBottom #zOrderTop)!
+UI.DesktopView methodProtocol: #topPresenter attributes: #(#readOnly) selectors: #(#caption #caption: #commandPolicyWithSource: #ensureVisible #invalidateUserInterface #onAboutToDisplayMenu: #onAboutToDisplaySystemMenu: #onActionPerformed #onCloseRequested #onIdleEntered #onInputMaskRequired: #onKeyPressed: #onKeyReleased: #onKeyTyped: #onKillFocus #onLeftButtonDoubleClicked: #onLeftButtonPressed: #onLeftButtonReleased: #onMouseMoved: #onPositionChanged: #onPositionChanging: #onRightButtonDoubleClicked: #onRightButtonPressed: #onRightButtonReleased: #onSetFocus #onTipTextRequired: #onViewActivated: #onViewClosed #onViewDeactivated: #onViewMinimized: #onViewOpened #onViewRestored: #parentPresenter #performAction #performCommand: #setFocus #show #topShell #updateCaption #view)!
 
-!DesktopView class methodsFor!
+!UI.DesktopView class methodsFor!
 
 current
 	"Answers the singleton instance of the receiver."
@@ -388,7 +386,7 @@ initialize
 			assumeDesktopHandle;
 			yourself!
 
-stbConvertFromVersion9: anArray 
+stbConvertFromVersion9: anArray
 	"Private - Perform an STB conversion from a version 9 (or earlier) instance
 	of the receiver to version 10,
 		10: append iconTitleFont inst. var., and a couple more reserved for future use
@@ -417,10 +415,10 @@ uninitialize
 		winFinalize;
 		handle: nil.
 	Current := nil! !
-!DesktopView class categoriesFor: #current!accessing!public! !
-!DesktopView class categoriesFor: #current:!accessing!public! !
-!DesktopView class categoriesFor: #icon!constants!public! !
-!DesktopView class categoriesFor: #initialize!development!initializing!private! !
-!DesktopView class categoriesFor: #stbConvertFromVersion9:!binary filing!private! !
-!DesktopView class categoriesFor: #uninitialize!class hierarchy-removing!private! !
+!UI.DesktopView class categoriesFor: #current!accessing!public! !
+!UI.DesktopView class categoriesFor: #current:!accessing!public! !
+!UI.DesktopView class categoriesFor: #icon!constants!public! !
+!UI.DesktopView class categoriesFor: #initialize!development!initializing!private! !
+!UI.DesktopView class categoriesFor: #stbConvertFromVersion9:!binary filing!private! !
+!UI.DesktopView class categoriesFor: #uninitialize!class hierarchy-removing!private! !
 

@@ -1,16 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ExternalStructure subclass: #ExternalPoint
+External.Structure subclass: #'External.POINT'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ExternalPoint guid: (GUID fromString: '{5a0c3f56-8db8-4509-8563-3affe77805b2}')!
-ExternalPoint isAbstract: true!
-ExternalPoint comment: '`PointStructure` is the abstract class of structures representing positions in a 2-dimensional space. There are concrete subclasses for different types of co-ordinate value.'!
-!ExternalPoint categoriesForClass!External-Data-Structured! !
-!ExternalPoint methodsFor!
+External.POINT guid: (Core.GUID fromString: '{5a0c3f56-8db8-4509-8563-3affe77805b2}')!
+External.POINT isNonInstantiable: true!
+External.POINT comment: '`POINT` is the abstract class of structures representing positions in a 2-dimensional space. There are concrete subclasses for different types of co-ordinate value.'!
+!External.POINT categoriesForClass!External-Data-Structured! !
+!External.POINT methodsFor!
 
 asDword
 	"Answer the receiver in a form suitable for passing or returning 
@@ -58,18 +58,18 @@ y
 
 y: anObject
 	self subclassResponsibility! !
-!ExternalPoint categoriesFor: #asDword!converting!public! !
-!ExternalPoint categoriesFor: #asObject!converting!public! !
-!ExternalPoint categoriesFor: #asPoint!converting!public! !
-!ExternalPoint categoriesFor: #asUIntPtr!converting!public! !
-!ExternalPoint categoriesFor: #value!accessing!public! !
-!ExternalPoint categoriesFor: #value:!accessing!public! !
-!ExternalPoint categoriesFor: #x!accessing!public! !
-!ExternalPoint categoriesFor: #x:!accessing!public! !
-!ExternalPoint categoriesFor: #y!accessing!public! !
-!ExternalPoint categoriesFor: #y:!accessing!public! !
+!External.POINT categoriesFor: #asDword!converting!public! !
+!External.POINT categoriesFor: #asObject!converting!public! !
+!External.POINT categoriesFor: #asPoint!converting!public! !
+!External.POINT categoriesFor: #asUIntPtr!converting!public! !
+!External.POINT categoriesFor: #value!accessing!public! !
+!External.POINT categoriesFor: #value:!accessing!public! !
+!External.POINT categoriesFor: #x!accessing!public! !
+!External.POINT categoriesFor: #x:!accessing!public! !
+!External.POINT categoriesFor: #y!accessing!public! !
+!External.POINT categoriesFor: #y:!accessing!public! !
 
-!ExternalPoint class methodsFor!
+!External.POINT class methodsFor!
 
 fromPoint: aPoint
 	"Answer a new instance of the receiver representing aPoint."
@@ -82,7 +82,7 @@ getFieldNames
 icon
 	"Answer a suitable iconic representation for the receiver."
 
-	^Point icon!
+	^Graphics.Point icon!
 
 x: x y: y
 	"Answer a new instance of the receiver representing the Point whose 
@@ -92,8 +92,8 @@ x: x y: y
 		x: x;
 		y: y;
 		yourself! !
-!ExternalPoint class categoriesFor: #fromPoint:!instance creation!public! !
-!ExternalPoint class categoriesFor: #getFieldNames!constants!private! !
-!ExternalPoint class categoriesFor: #icon!constants!development!public! !
-!ExternalPoint class categoriesFor: #x:y:!instance creation!public! !
+!External.POINT class categoriesFor: #fromPoint:!instance creation!public! !
+!External.POINT class categoriesFor: #getFieldNames!constants!private! !
+!External.POINT class categoriesFor: #icon!constants!development!public! !
+!External.POINT class categoriesFor: #x:y:!instance creation!public! !
 

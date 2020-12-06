@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Pen subclass: #StockPen
+Graphics.Pen subclass: #'Graphics.StockPen'
 	instanceVariableNames: 'id'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-StockPen guid: (GUID fromString: '{87b4c642-026e-11d3-9fd7-00a0cc3e4a32}')!
-StockPen comment: ''!
-!StockPen categoriesForClass!Graphics-Tools! !
-!StockPen methodsFor!
+Graphics.StockPen guid: (Core.GUID fromString: '{87b4c642-026e-11d3-9fd7-00a0cc3e4a32}')!
+Graphics.StockPen comment: ''!
+!Graphics.StockPen categoriesForClass!Graphics-Tools! !
+!Graphics.StockPen methodsFor!
 
 createHandle
 	"Private - Answer the handle for the stock pen with receiver's id."
@@ -29,11 +29,11 @@ ownedHandle: aHandle
 	"Implementation Note: Stock objects should never be free'd"
 
 	self handle: aHandle! !
-!StockPen categoriesFor: #createHandle!private!realizing/unrealizing! !
-!StockPen categoriesFor: #id:!private!realizing/unrealizing! !
-!StockPen categoriesFor: #ownedHandle:!accessing!private! !
+!Graphics.StockPen categoriesFor: #createHandle!private!realizing/unrealizing! !
+!Graphics.StockPen categoriesFor: #id:!private!realizing/unrealizing! !
+!Graphics.StockPen categoriesFor: #ownedHandle:!accessing!private! !
 
-!StockPen class methodsFor!
+!Graphics.StockPen class methodsFor!
 
 fromId: anInteger
 	"Answer a new instance of the receiver representing the stock pen id anInteger."
@@ -42,5 +42,5 @@ fromId: anInteger
 		ownsHandle: false;
 		id: anInteger;
 		yourself! !
-!StockPen class categoriesFor: #fromId:!instance creation!public! !
+!Graphics.StockPen class categoriesFor: #fromId:!instance creation!public! !
 

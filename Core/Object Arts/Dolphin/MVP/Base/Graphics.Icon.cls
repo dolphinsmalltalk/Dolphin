@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Image subclass: #Icon
+Graphics.Image subclass: #'Graphics.Icon'
 	instanceVariableNames: ''
 	classVariableNames: 'Blank DefaultApplication Error Information Question Warning WinLogo'
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Icon guid: (GUID fromString: '{87b4c63e-026e-11d3-9fd7-00a0cc3e4a32}')!
-Icon comment: 'Icon is the class of <Image>s that represent Windows'' icons (essentially a pair of bitmaps, one of which is a mask used to draw the other bitmap transparently).
+Graphics.Icon guid: (Core.GUID fromString: '{87b4c63e-026e-11d3-9fd7-00a0cc3e4a32}')!
+Graphics.Icon comment: 'Icon is the class of <Image>s that represent Windows'' icons (essentially a pair of bitmaps, one of which is a mask used to draw the other bitmap transparently).
 
 Class Variables:
 	Question			<Icon>. Standard system questionmark icon.
@@ -19,8 +19,8 @@ Class Variables:
 	Warning			<Icon>. Standard system warning icon, as used in warning message boxes.
 
 '!
-!Icon categoriesForClass!Graphics-Tools! !
-!Icon methodsFor!
+!Graphics.Icon categoriesForClass!Graphics-Tools! !
+!Graphics.Icon methodsFor!
 
 addToImageList: aWinImageList mask: aColorOrNil 
 	"Private - Add a pictorial representation of the receiver to the <WinImageList>
@@ -29,21 +29,21 @@ addToImageList: aWinImageList mask: aColorOrNil
 
 	^self valueWithHandle: [:hIcon | aWinImageList addIcon: hIcon] forExtent: aWinImageList extent!
 
-asAlphaBitmap: aPoint 
+asAlphaBitmap: aPoint
 	"Answer a 32-bpp bitmap (i.e. with Alpha channel) that contains the receiver's
 	image rendered at the specified size."
 
 	| bmp |
-	bmp := DIBSection 
+	bmp := DIBSection
 				width: aPoint x
 				height: aPoint y
 				depth: 32.
 	"Use the services of an ImageList to get the correct sized icon automagically, and to
 	provide an alpha channel even if the original icon had no more than a simple mask."
-	#todo. "If we could determine that the icon is 32-bit (with alpha) then we could just draw
+	#todo.	"If we could determine that the icon is 32-bit (with alpha) then we could just draw
 	       it directly with DrawIconEx, which would save rendering all the icons into an image
 	       list at the desired extent."
-	(self imageManager imageListWithExtent: aPoint) 
+	(self imageManager imageListWithExtent: aPoint)
 		draw: self imageIndex
 		on: bmp canvas
 		at: Point.Zero
@@ -85,7 +85,7 @@ createHandle
 drawDisabledOn: aCanvas at: aPoint extent: sizePoint
 	"Draw a disabled/grayed representation of the receiver on aCanvas at aPoint with extent sizePoint."
 
-	^UserLibrary default 
+	^UserLibrary default
 		drawState: aCanvas asParameter
 		hbr: nil
 		lpOutputFunc: nil
@@ -95,7 +95,7 @@ drawDisabledOn: aCanvas at: aPoint extent: sizePoint
 		y: aPoint y
 		cx: sizePoint x
 		cy: sizePoint y
-		fuFlags: ##(DST_ICON| DSS_DISABLED)!
+		fuFlags: ##(DST_ICON | DSS_DISABLED)!
 
 drawOn: aCanvas at: aPoint
 	"Copies the receiver to aCanvas at position aPoint."
@@ -153,12 +153,12 @@ drawOn: aCanvas at: aPoint frame: anInteger background: aBrush
 	background aBrush."
 
 	^self
-		drawOn: aCanvas 
-		at: aPoint 
-		extent: Point zero
-		frame: anInteger 
-		background: aBrush 
-		flags: ##(DI_DEFAULTSIZE|DI_NORMAL)!
+		drawOn: aCanvas
+		at: aPoint
+		extent: Point.Zero
+		frame: anInteger
+		background: aBrush
+		flags: ##(DI_DEFAULTSIZE | DI_NORMAL)!
 
 extent
 	"Answers the dimensions of the receiver in pixels.
@@ -184,8 +184,7 @@ getIconInfo
 	info := ICONINFO new.
 	(UserLibrary default getIconInfo: self asParameter piconinfo: info)
 		ifFalse: [UserLibrary default systemError].
-	^info
-	!
+	^info!
 
 hotspot
 	"Answer a Point specifying the receiver's hot spot (only really relevant for cursors)."
@@ -220,7 +219,11 @@ includesFrame: frameNumber
 	| hDC includes screenDC |
 	screenDC := UserLibrary default getDC: nil.
 	hDC := GDILibrary default createCompatibleDC: screenDC.
-	includes := self drawOn: hDC at: Point zero frame: frameNumber background: nil.
+	includes := self
+				drawOn: hDC
+				at: Point.Zero
+				frame: frameNumber
+				background: nil.
 	GDILibrary default deleteDC: hDC.
 	UserLibrary default releaseDC: nil hDC: screenDC.
 	^includes!
@@ -231,7 +234,7 @@ load: anObject fromInstance: hModule extent: aPoint
 	^SystemMetrics current hasIconScaleDown
 		ifTrue: 
 			[| hIcon |
-			hIcon := ExternalHandle new.
+			hIcon := External.Handle new.
 			(CommCtrlLibrary default
 				loadIconWithScaleDown: hModule
 				pszName: anObject asResourceId
@@ -260,7 +263,7 @@ loadFromInstance: hModule
 	^SystemMetrics current hasIconScaleDown
 		ifTrue: 
 			[| hIcon |
-			hIcon := ExternalHandle new.
+			hIcon := External.Handle new.
 			(CommCtrlLibrary default
 				loadIconMetric: hModule asParameter
 				pszName: identifier asResourceId
@@ -304,32 +307,32 @@ valueWithHandle: operation forExtent: aPoint
 						UserLibrary default destroyIcon: hIcon.
 						^answer]].
 	^operation value: self asParameter! !
-!Icon categoriesFor: #addToImageList:mask:!double dispatch!private! !
-!Icon categoriesFor: #asAlphaBitmap:!converting!public! !
-!Icon categoriesFor: #asCursor!public! !
-!Icon categoriesFor: #asIcon!public! !
-!Icon categoriesFor: #asMenuBitmap!converting!public! !
-!Icon categoriesFor: #basicFree!private!realizing/unrealizing! !
-!Icon categoriesFor: #createHandle!private!realizing/unrealizing! !
-!Icon categoriesFor: #drawDisabledOn:at:extent:!drawing-bitmaps!public! !
-!Icon categoriesFor: #drawOn:at:!drawing-bitmaps!public! !
-!Icon categoriesFor: #drawOn:at:extent:!drawing-bitmaps!public! !
-!Icon categoriesFor: #drawOn:at:extent:frame:background:!drawing-bitmaps!public! !
-!Icon categoriesFor: #drawOn:at:extent:frame:background:flags:!drawing-bitmaps!public! !
-!Icon categoriesFor: #drawOn:at:frame:background:!drawing-bitmaps!public! !
-!Icon categoriesFor: #extent!accessing!public! !
-!Icon categoriesFor: #getIconInfo!helpers!private! !
-!Icon categoriesFor: #hotspot!accessing!public! !
-!Icon categoriesFor: #icon!constants!public! !
-!Icon categoriesFor: #imageIndex!accessing!public! !
-!Icon categoriesFor: #imageType!constants!private! !
-!Icon categoriesFor: #includesFrame:!public!searching! !
-!Icon categoriesFor: #load:fromInstance:extent:!private!realizing/unrealizing! !
-!Icon categoriesFor: #loadFlags!private!realizing/unrealizing! !
-!Icon categoriesFor: #loadFromInstance:!private!realizing/unrealizing! !
-!Icon categoriesFor: #valueWithHandle:forExtent:!helpers!private!wine fix! !
+!Graphics.Icon categoriesFor: #addToImageList:mask:!double dispatch!private! !
+!Graphics.Icon categoriesFor: #asAlphaBitmap:!converting!public! !
+!Graphics.Icon categoriesFor: #asCursor!public! !
+!Graphics.Icon categoriesFor: #asIcon!public! !
+!Graphics.Icon categoriesFor: #asMenuBitmap!converting!public! !
+!Graphics.Icon categoriesFor: #basicFree!private!realizing/unrealizing! !
+!Graphics.Icon categoriesFor: #createHandle!private!realizing/unrealizing! !
+!Graphics.Icon categoriesFor: #drawDisabledOn:at:extent:!drawing-bitmaps!public! !
+!Graphics.Icon categoriesFor: #drawOn:at:!drawing-bitmaps!public! !
+!Graphics.Icon categoriesFor: #drawOn:at:extent:!drawing-bitmaps!public! !
+!Graphics.Icon categoriesFor: #drawOn:at:extent:frame:background:!drawing-bitmaps!public! !
+!Graphics.Icon categoriesFor: #drawOn:at:extent:frame:background:flags:!drawing-bitmaps!public! !
+!Graphics.Icon categoriesFor: #drawOn:at:frame:background:!drawing-bitmaps!public! !
+!Graphics.Icon categoriesFor: #extent!accessing!public! !
+!Graphics.Icon categoriesFor: #getIconInfo!helpers!private! !
+!Graphics.Icon categoriesFor: #hotspot!accessing!public! !
+!Graphics.Icon categoriesFor: #icon!constants!public! !
+!Graphics.Icon categoriesFor: #imageIndex!accessing!public! !
+!Graphics.Icon categoriesFor: #imageType!constants!private! !
+!Graphics.Icon categoriesFor: #includesFrame:!public!searching! !
+!Graphics.Icon categoriesFor: #load:fromInstance:extent:!private!realizing/unrealizing! !
+!Graphics.Icon categoriesFor: #loadFlags!private!realizing/unrealizing! !
+!Graphics.Icon categoriesFor: #loadFromInstance:!private!realizing/unrealizing! !
+!Graphics.Icon categoriesFor: #valueWithHandle:forExtent:!helpers!private!wine fix! !
 
-!Icon class methodsFor!
+!Graphics.Icon class methodsFor!
 
 asterisk
 	"Answer a new instance of the Asterisk icon (used in informative messages)"
@@ -452,27 +455,27 @@ window
 
 	WinLogo isNil ifTrue: [WinLogo := self fromSystemId: IDI_WINLOGO].
 	^WinLogo! !
-!Icon class categoriesFor: #asterisk!instance creation!public! !
-!Icon class categoriesFor: #blank!instance creation!public! !
-!Icon class categoriesFor: #clear!initializing!public! !
-!Icon class categoriesFor: #defaultApplication!instance creation!public! !
-!Icon class categoriesFor: #defaultExtent!constants!public! !
-!Icon class categoriesFor: #error!instance creation!public! !
-!Icon class categoriesFor: #exclamation!instance creation!public! !
-!Icon class categoriesFor: #extraLargeExtent!constants!public! !
-!Icon class categoriesFor: #filesType!constants!private! !
-!Icon class categoriesFor: #hand!instance creation!public! !
-!Icon class categoriesFor: #icon!constants!public! !
-!Icon class categoriesFor: #imageManager!accessing!public! !
-!Icon class categoriesFor: #information!instance creation!public! !
-!Icon class categoriesFor: #largeExtent!constants!public! !
-!Icon class categoriesFor: #null!instance creation!public! !
-!Icon class categoriesFor: #onPreStripImage!class hierarchy-removing!private! !
-!Icon class categoriesFor: #onStartup2!event handling!private! !
-!Icon class categoriesFor: #question!instance creation!public! !
-!Icon class categoriesFor: #smallExtent!constants!public! !
-!Icon class categoriesFor: #tileExtent!constants!public! !
-!Icon class categoriesFor: #uninitialize!class hierarchy-removing!private! !
-!Icon class categoriesFor: #warning!instance creation!public! !
-!Icon class categoriesFor: #window!instance creation!public! !
+!Graphics.Icon class categoriesFor: #asterisk!instance creation!public! !
+!Graphics.Icon class categoriesFor: #blank!instance creation!public! !
+!Graphics.Icon class categoriesFor: #clear!initializing!public! !
+!Graphics.Icon class categoriesFor: #defaultApplication!instance creation!public! !
+!Graphics.Icon class categoriesFor: #defaultExtent!constants!public! !
+!Graphics.Icon class categoriesFor: #error!instance creation!public! !
+!Graphics.Icon class categoriesFor: #exclamation!instance creation!public! !
+!Graphics.Icon class categoriesFor: #extraLargeExtent!constants!public! !
+!Graphics.Icon class categoriesFor: #filesType!constants!private! !
+!Graphics.Icon class categoriesFor: #hand!instance creation!public! !
+!Graphics.Icon class categoriesFor: #icon!constants!public! !
+!Graphics.Icon class categoriesFor: #imageManager!accessing!public! !
+!Graphics.Icon class categoriesFor: #information!instance creation!public! !
+!Graphics.Icon class categoriesFor: #largeExtent!constants!public! !
+!Graphics.Icon class categoriesFor: #null!instance creation!public! !
+!Graphics.Icon class categoriesFor: #onPreStripImage!class hierarchy-removing!private! !
+!Graphics.Icon class categoriesFor: #onStartup2!event handling!private! !
+!Graphics.Icon class categoriesFor: #question!instance creation!public! !
+!Graphics.Icon class categoriesFor: #smallExtent!constants!public! !
+!Graphics.Icon class categoriesFor: #tileExtent!constants!public! !
+!Graphics.Icon class categoriesFor: #uninitialize!class hierarchy-removing!private! !
+!Graphics.Icon class categoriesFor: #warning!instance creation!public! !
+!Graphics.Icon class categoriesFor: #window!instance creation!public! !
 

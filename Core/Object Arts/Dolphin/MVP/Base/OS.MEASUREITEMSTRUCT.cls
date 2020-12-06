@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Win32Structure subclass: #MEASUREITEMSTRUCT
+OS.Win32Structure subclass: #'OS.MEASUREITEMSTRUCT'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_CtlID' -> 16r4.
@@ -13,12 +13,12 @@ Win32Structure subclass: #MEASUREITEMSTRUCT
 		'_OffsetOf_itemID' -> 16r8.
 		'_OffsetOf_itemWidth' -> 16rC
 	}!
-MEASUREITEMSTRUCT guid: (GUID fromString: '{0b195eeb-b134-493b-87f4-a70c213ac690}')!
-MEASUREITEMSTRUCT comment: '<MEASUREITEMSTRUCT> is an <ExternalStructure> class to wrap the struct ''Win.MEASUREITEMSTRUCT'' from type information in the ''Windows API (ANSI)'' library.
+OS.MEASUREITEMSTRUCT guid: (Core.GUID fromString: '{0b195eeb-b134-493b-87f4-a70c213ac690}')!
+OS.MEASUREITEMSTRUCT comment: '<MEASUREITEMSTRUCT> is an <ExternalStructure> class to wrap the struct ''Win.MEASUREITEMSTRUCT'' from type information in the ''Windows API (ANSI)'' library.
 
 From MSDN: "The MEASUREITEMSTRUCT structure informs the system of the dimensions of an owner-drawn control or menu item. This allows the system to process user interaction with the control correctly."'!
-!MEASUREITEMSTRUCT categoriesForClass!Win-Structs! !
-!MEASUREITEMSTRUCT methodsFor!
+!OS.MEASUREITEMSTRUCT categoriesForClass!Win-Structs! !
+!OS.MEASUREITEMSTRUCT methodsFor!
 
 CtlID
 	"Answer the <Integer> value of the receiver's 'CtlID' field."
@@ -54,15 +54,15 @@ itemWidth: anInteger
 	"Set the receiver's 'itemWidth' field to the value of the argument, anInteger"
 
 	bytes dwordAtOffset: _OffsetOf_itemWidth put: anInteger! !
-!MEASUREITEMSTRUCT categoriesFor: #CtlID!**compiled accessors**!public! !
-!MEASUREITEMSTRUCT categoriesFor: #CtlType!**compiled accessors**!public! !
-!MEASUREITEMSTRUCT categoriesFor: #itemHeight!**compiled accessors**!public! !
-!MEASUREITEMSTRUCT categoriesFor: #itemHeight:!**compiled accessors**!public! !
-!MEASUREITEMSTRUCT categoriesFor: #itemID!**compiled accessors**!public! !
-!MEASUREITEMSTRUCT categoriesFor: #itemWidth!**compiled accessors**!public! !
-!MEASUREITEMSTRUCT categoriesFor: #itemWidth:!**compiled accessors**!public! !
+!OS.MEASUREITEMSTRUCT categoriesFor: #CtlID!**compiled accessors**!public! !
+!OS.MEASUREITEMSTRUCT categoriesFor: #CtlType!**compiled accessors**!public! !
+!OS.MEASUREITEMSTRUCT categoriesFor: #itemHeight!**compiled accessors**!public! !
+!OS.MEASUREITEMSTRUCT categoriesFor: #itemHeight:!**compiled accessors**!public! !
+!OS.MEASUREITEMSTRUCT categoriesFor: #itemID!**compiled accessors**!public! !
+!OS.MEASUREITEMSTRUCT categoriesFor: #itemWidth!**compiled accessors**!public! !
+!OS.MEASUREITEMSTRUCT categoriesFor: #itemWidth:!**compiled accessors**!public! !
 
-!MEASUREITEMSTRUCT class methodsFor!
+!OS.MEASUREITEMSTRUCT class methodsFor!
 
 defineFields
 	"Define the fields of the MEASUREITEMSTRUCT structure.
@@ -89,6 +89,6 @@ defineFields
 
 getFieldNames
 	^#(#CtlType #CtlID #itemID #itemWidth #itemHeight)! !
-!MEASUREITEMSTRUCT class categoriesFor: #defineFields!public!template definition! !
-!MEASUREITEMSTRUCT class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.MEASUREITEMSTRUCT class categoriesFor: #defineFields!public!template definition! !
+!OS.MEASUREITEMSTRUCT class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

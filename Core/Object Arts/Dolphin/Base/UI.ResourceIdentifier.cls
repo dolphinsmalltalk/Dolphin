@@ -166,9 +166,9 @@ storeOn: aStream
 
 	aStream
 		nextPut: $(;
-		print: self class;
+		store: self class;
 		nextPutAll: ' class: ';
-		print: self owningClass;
+		store: self owningClass;
 		nextPutAll: ' name: ';
 		print: self name;
 		nextPut: $)! !

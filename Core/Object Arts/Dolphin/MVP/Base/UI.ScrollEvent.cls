@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-WindowsEvent subclass: #ScrollEvent
+UI.WindowsEvent subclass: #'UI.ScrollEvent'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ScrollEvent guid: (GUID fromString: '{87b4c552-026e-11d3-9fd7-00a0cc3e4a32}')!
-ScrollEvent comment: ''!
-!ScrollEvent categoriesForClass!Events!MVP-Views-Events! !
-!ScrollEvent methodsFor!
+UI.ScrollEvent guid: (Core.GUID fromString: '{87b4c552-026e-11d3-9fd7-00a0cc3e4a32}')!
+UI.ScrollEvent comment: ''!
+!UI.ScrollEvent categoriesForClass!Events!MVP-Views-Events! !
+!UI.ScrollEvent methodsFor!
 
 bottom
 	"Answer whether the scroll event is to the far bottom/right."
@@ -67,10 +67,10 @@ pos
 	co-ordinate space. Instead the current trackbar position is queried using GetScrollInfo()."
 
 	| struct |
-	struct := (SCROLLINFO new)
+	struct := SCROLLINFO new
 				maskIn: SIF_TRACKPOS;
 				yourself.
-	^(UserLibrary default 
+	^(UserLibrary default
 		getScrollInfo: self hwnd
 		fnBar: (message = WM_HSCROLL ifTrue: [SB_HORZ] ifFalse: [SB_VERT])
 		lpsi: struct) ifTrue: [struct nTrackPos] ifFalse: [wParam highWord]!
@@ -100,20 +100,20 @@ top
 	"Answer whether the scroll event is to the far top/left."
 
 	^self scrollCode = SB_TOP! !
-!ScrollEvent categoriesFor: #bottom!public!testing! !
-!ScrollEvent categoriesFor: #endScroll!public!testing! !
-!ScrollEvent categoriesFor: #lineDown!public!testing! !
-!ScrollEvent categoriesFor: #lineLeft!public!testing! !
-!ScrollEvent categoriesFor: #lineRight!public!testing! !
-!ScrollEvent categoriesFor: #lineUp!public!testing! !
-!ScrollEvent categoriesFor: #pageDown!public!testing! !
-!ScrollEvent categoriesFor: #pageLeft!public!testing! !
-!ScrollEvent categoriesFor: #pageRight!public!testing! !
-!ScrollEvent categoriesFor: #pageUp!public!testing! !
-!ScrollEvent categoriesFor: #pos!accessing!public! !
-!ScrollEvent categoriesFor: #scrollBar!accessing!public! !
-!ScrollEvent categoriesFor: #scrollCode!accessing!public! !
-!ScrollEvent categoriesFor: #thumbPosition!public!testing! !
-!ScrollEvent categoriesFor: #thumbTrack!public!testing! !
-!ScrollEvent categoriesFor: #top!public!testing! !
+!UI.ScrollEvent categoriesFor: #bottom!public!testing! !
+!UI.ScrollEvent categoriesFor: #endScroll!public!testing! !
+!UI.ScrollEvent categoriesFor: #lineDown!public!testing! !
+!UI.ScrollEvent categoriesFor: #lineLeft!public!testing! !
+!UI.ScrollEvent categoriesFor: #lineRight!public!testing! !
+!UI.ScrollEvent categoriesFor: #lineUp!public!testing! !
+!UI.ScrollEvent categoriesFor: #pageDown!public!testing! !
+!UI.ScrollEvent categoriesFor: #pageLeft!public!testing! !
+!UI.ScrollEvent categoriesFor: #pageRight!public!testing! !
+!UI.ScrollEvent categoriesFor: #pageUp!public!testing! !
+!UI.ScrollEvent categoriesFor: #pos!accessing!public! !
+!UI.ScrollEvent categoriesFor: #scrollBar!accessing!public! !
+!UI.ScrollEvent categoriesFor: #scrollCode!accessing!public! !
+!UI.ScrollEvent categoriesFor: #thumbPosition!public!testing! !
+!UI.ScrollEvent categoriesFor: #thumbTrack!public!testing! !
+!UI.ScrollEvent categoriesFor: #top!public!testing! !
 

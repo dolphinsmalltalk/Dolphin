@@ -1,20 +1,20 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ValueConvertingControlView subclass: #StaticView
+UI.ValueConvertingControlView subclass: #'UI.StaticView'
 	instanceVariableNames: 'unused'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-StaticView guid: (GUID fromString: '{87b4c739-026e-11d3-9fd7-00a0cc3e4a32}')!
-StaticView comment: 'StaticView is an abstract <valueView> class for implementing the Windows ''STATIC'' control class. The subclasses are intended to display model data but they do not allow it to be edited by the user.
+UI.StaticView guid: (Core.GUID fromString: '{87b4c739-026e-11d3-9fd7-00a0cc3e4a32}')!
+UI.StaticView comment: 'StaticView is an abstract <valueView> class for implementing the Windows ''STATIC'' control class. The subclasses are intended to display model data but they do not allow it to be edited by the user.
 
 Instance Variables:
 	unused	<UndefinedObject> reserved for future use.
 
 '!
-!StaticView categoriesForClass!MVP-Views! !
-!StaticView methodsFor!
+!UI.StaticView categoriesForClass!MVP-Views! !
+!UI.StaticView methodsFor!
 
 defaultBackcolor
 	"Private - Answer the default colour for the receiver's background"
@@ -41,7 +41,7 @@ invalidateOnResize
 	^true!
 
 invalidateRect: rectangle erase: eraseBoolean 
-	"Invalidates the specified client rectangle (a RECT, Rectangle, or nil for the whole client window).
+	"Invalidates the specified client rectangle (a RECTL, Rectangle, or nil for the whole client window).
 	Set whether to erase the receivers background before repainting. Answer whether the function succeeds.
 	Static views appear to behave in an odd way that requires us to perform the invalidation in the
 	parent rectangle"
@@ -83,18 +83,18 @@ onPositionChanged: aPositionEvent
 updateModel
 	"Flush changes in the view back to the associated model.
 	Static views don't allow such changes"! !
-!StaticView categoriesFor: #defaultBackcolor!colors!constants!private! !
-!StaticView categoriesFor: #defaultExtent!constants!private! !
-!StaticView categoriesFor: #defaultWindowStyle!constants!private! !
-!StaticView categoriesFor: #invalidateOnResize!private!testing! !
-!StaticView categoriesFor: #invalidateRect:erase:!drawing!public! !
-!StaticView categoriesFor: #isSunken!accessing-styles!public!testing! !
-!StaticView categoriesFor: #isSunken:!accessing-styles!public! !
-!StaticView categoriesFor: #onLeftButtonDoubleClicked:!event handling!public! !
-!StaticView categoriesFor: #onPositionChanged:!event handling-win32!public! !
-!StaticView categoriesFor: #updateModel!public!updating! !
+!UI.StaticView categoriesFor: #defaultBackcolor!colors!constants!private! !
+!UI.StaticView categoriesFor: #defaultExtent!constants!private! !
+!UI.StaticView categoriesFor: #defaultWindowStyle!constants!private! !
+!UI.StaticView categoriesFor: #invalidateOnResize!private!testing! !
+!UI.StaticView categoriesFor: #invalidateRect:erase:!drawing!public! !
+!UI.StaticView categoriesFor: #isSunken!accessing-styles!public!testing! !
+!UI.StaticView categoriesFor: #isSunken:!accessing-styles!public! !
+!UI.StaticView categoriesFor: #onLeftButtonDoubleClicked:!event handling!public! !
+!UI.StaticView categoriesFor: #onPositionChanged:!event handling-win32!public! !
+!UI.StaticView categoriesFor: #updateModel!public!updating! !
 
-!StaticView class methodsFor!
+!UI.StaticView class methodsFor!
 
 stbConvertFromVersion12: anArray 
 	"Private - Perform an STB conversion from a version 12 <StaticView> to version 13."
@@ -107,6 +107,6 @@ winClassName
 
 	^'STATIC'
 ! !
-!StaticView class categoriesFor: #stbConvertFromVersion12:!binary filing!private! !
-!StaticView class categoriesFor: #winClassName!constants!private! !
+!UI.StaticView class categoriesFor: #stbConvertFromVersion12:!binary filing!private! !
+!UI.StaticView class categoriesFor: #winClassName!constants!private! !
 

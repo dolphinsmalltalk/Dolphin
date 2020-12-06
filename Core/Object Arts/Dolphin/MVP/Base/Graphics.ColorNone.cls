@@ -1,19 +1,19 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ColorRef subclass: #ColorNone
+Graphics.ColorRef subclass: #'Graphics.ColorNone'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ColorNone guid: (GUID fromString: '{21257bc4-33c5-4684-b606-e387fcfbede6}')!
-ColorNone comment: '`ColorNone` is the special `ColorRef` which represents a completely transparent colour. It is used to specify that something should be drawn transparently, or that the background should not be filled.
+Graphics.ColorNone guid: (Core.GUID fromString: '{21257bc4-33c5-4684-b606-e387fcfbede6}')!
+Graphics.ColorNone comment: '`ColorNone` is the special `ColorRef` which represents a completely transparent colour. It is used to specify that something should be drawn transparently, or that the background should not be filled.
 
 `ColorNone`s singleton instance is accessed using the expression `Color transparent`.
 
 The superclass `code` instance variable has the value `Win32Constants.CLR_NONE`.'!
-!ColorNone categoriesForClass!Unclassified! !
-!ColorNone methodsFor!
+!Graphics.ColorNone categoriesForClass!Unclassified! !
+!Graphics.ColorNone methodsFor!
 
 alpha
 	"Answer the receiver's alpha component (a SmallInteger in the range 0..255). This specifies
@@ -103,20 +103,20 @@ shallowCopy
 	"The receiver has a singleton instance."
 
 	^self! !
-!ColorNone categoriesFor: #alpha!accessing!public! !
-!ColorNone categoriesFor: #alphaMask!accessing!private! !
-!ColorNone categoriesFor: #argbCode!accessing!public! !
-!ColorNone categoriesFor: #brush!converting!public! !
-!ColorNone categoriesFor: #hls!converting!public! !
-!ColorNone categoriesFor: #hslSaturation!accessing!public! !
-!ColorNone categoriesFor: #hsv!converting!public! !
-!ColorNone categoriesFor: #hsvSaturation!accessing!public! !
-!ColorNone categoriesFor: #hue!public! !
-!ColorNone categoriesFor: #isNone!public!testing! !
-!ColorNone categoriesFor: #luminance!public! !
-!ColorNone categoriesFor: #name!accessing!public! !
-!ColorNone categoriesFor: #normalizedAlpha!public! !
-!ColorNone categoriesFor: #pen!converting!public! !
-!ColorNone categoriesFor: #rgbCode!accessing!public! !
-!ColorNone categoriesFor: #shallowCopy!copying!public! !
+!Graphics.ColorNone categoriesFor: #alpha!accessing!public! !
+!Graphics.ColorNone categoriesFor: #alphaMask!accessing!private! !
+!Graphics.ColorNone categoriesFor: #argbCode!accessing!public! !
+!Graphics.ColorNone categoriesFor: #brush!converting!public! !
+!Graphics.ColorNone categoriesFor: #hls!converting!public! !
+!Graphics.ColorNone categoriesFor: #hslSaturation!accessing!public! !
+!Graphics.ColorNone categoriesFor: #hsv!converting!public! !
+!Graphics.ColorNone categoriesFor: #hsvSaturation!accessing!public! !
+!Graphics.ColorNone categoriesFor: #hue!public! !
+!Graphics.ColorNone categoriesFor: #isNone!public!testing! !
+!Graphics.ColorNone categoriesFor: #luminance!public! !
+!Graphics.ColorNone categoriesFor: #name!accessing!public! !
+!Graphics.ColorNone categoriesFor: #normalizedAlpha!public! !
+!Graphics.ColorNone categoriesFor: #pen!converting!public! !
+!Graphics.ColorNone categoriesFor: #rgbCode!accessing!public! !
+!Graphics.ColorNone categoriesFor: #shallowCopy!copying!public! !
 

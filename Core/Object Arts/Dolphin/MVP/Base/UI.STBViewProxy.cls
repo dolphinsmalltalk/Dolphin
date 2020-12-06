@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-STBProxy subclass: #STBViewProxy
+Kernel.STBProxy subclass: #'UI.STBViewProxy'
 	instanceVariableNames: 'viewClass instVars state placement subViews resolution events version'
 	classVariableNames: ''
-	poolDictionaries: 'Win32Constants'
+	imports: #(#{OS.Win32Constants})
 	classInstanceVariableNames: ''
 	classConstants: {
 		'CreationParentIndex' -> 16r2.
@@ -11,10 +11,10 @@ STBProxy subclass: #STBViewProxy
 		'EventsIndex' -> 16rB.
 		'HandleIndex' -> 16r1
 	}!
-STBViewProxy guid: (GUID fromString: '{87b4c6f4-026e-11d3-9fd7-00a0cc3e4a32}')!
-STBViewProxy comment: 'STBViewProxy is the class of <STBProxy> objects used to represent <View> instances in STB files.'!
-!STBViewProxy categoriesForClass!System-Binary storage! !
-!STBViewProxy methodsFor!
+UI.STBViewProxy guid: (Core.GUID fromString: '{87b4c6f4-026e-11d3-9fd7-00a0cc3e4a32}')!
+UI.STBViewProxy comment: 'STBViewProxy is the class of <STBProxy> objects used to represent <View> instances in STB files.'!
+!UI.STBViewProxy categoriesForClass!System-Binary storage! !
+!UI.STBViewProxy methodsFor!
 
 beTopView
 	"Make the receiver's represented object appear as a top view, ie. one with an unspecified parent.
@@ -208,34 +208,34 @@ viewClass: aClass
 	"Set the class of <View> of which the receiver is representing an instance."
 
 	viewClass := aClass! !
-!STBViewProxy categoriesFor: #beTopView!accessing!public! !
-!STBViewProxy categoriesFor: #clearSubViews!accessing!public! !
-!STBViewProxy categoriesFor: #connectModel!models!public! !
-!STBViewProxy categoriesFor: #getEvents!events!private! !
-!STBViewProxy categoriesFor: #icon!accessing!private! !
-!STBViewProxy categoriesFor: #instVars!accessing!public! !
-!STBViewProxy categoriesFor: #instVars:!accessing!public! !
-!STBViewProxy categoriesFor: #isTopView!accessing!private! !
-!STBViewProxy categoriesFor: #nameOf:!accessing!public! !
-!STBViewProxy categoriesFor: #parentView:!accessing!private! !
-!STBViewProxy categoriesFor: #placement!accessing!public! !
-!STBViewProxy categoriesFor: #printOn:!development!printing!public! !
-!STBViewProxy categoriesFor: #resolution!accessing!private! !
-!STBViewProxy categoriesFor: #resolution:!accessing!private! !
-!STBViewProxy categoriesFor: #restoreFromProxy:!binary filing!private! !
-!STBViewProxy categoriesFor: #restoreTopView!converting!private! !
-!STBViewProxy categoriesFor: #restoreView!converting!private! !
-!STBViewProxy categoriesFor: #setEvents:!events!private! !
-!STBViewProxy categoriesFor: #setView:!accessing!public! !
-!STBViewProxy categoriesFor: #state!accessing!public! !
-!STBViewProxy categoriesFor: #stbFixup:at:!converting!public! !
-!STBViewProxy categoriesFor: #subViews!accessing!public! !
-!STBViewProxy categoriesFor: #version!accessing!public! !
-!STBViewProxy categoriesFor: #version:!accessing!public! !
-!STBViewProxy categoriesFor: #viewClass!accessing!public! !
-!STBViewProxy categoriesFor: #viewClass:!accessing!public! !
+!UI.STBViewProxy categoriesFor: #beTopView!accessing!public! !
+!UI.STBViewProxy categoriesFor: #clearSubViews!accessing!public! !
+!UI.STBViewProxy categoriesFor: #connectModel!models!public! !
+!UI.STBViewProxy categoriesFor: #getEvents!events!private! !
+!UI.STBViewProxy categoriesFor: #icon!accessing!private! !
+!UI.STBViewProxy categoriesFor: #instVars!accessing!public! !
+!UI.STBViewProxy categoriesFor: #instVars:!accessing!public! !
+!UI.STBViewProxy categoriesFor: #isTopView!accessing!private! !
+!UI.STBViewProxy categoriesFor: #nameOf:!accessing!public! !
+!UI.STBViewProxy categoriesFor: #parentView:!accessing!private! !
+!UI.STBViewProxy categoriesFor: #placement!accessing!public! !
+!UI.STBViewProxy categoriesFor: #printOn:!development!printing!public! !
+!UI.STBViewProxy categoriesFor: #resolution!accessing!private! !
+!UI.STBViewProxy categoriesFor: #resolution:!accessing!private! !
+!UI.STBViewProxy categoriesFor: #restoreFromProxy:!binary filing!private! !
+!UI.STBViewProxy categoriesFor: #restoreTopView!converting!private! !
+!UI.STBViewProxy categoriesFor: #restoreView!converting!private! !
+!UI.STBViewProxy categoriesFor: #setEvents:!events!private! !
+!UI.STBViewProxy categoriesFor: #setView:!accessing!public! !
+!UI.STBViewProxy categoriesFor: #state!accessing!public! !
+!UI.STBViewProxy categoriesFor: #stbFixup:at:!converting!public! !
+!UI.STBViewProxy categoriesFor: #subViews!accessing!public! !
+!UI.STBViewProxy categoriesFor: #version!accessing!public! !
+!UI.STBViewProxy categoriesFor: #version:!accessing!public! !
+!UI.STBViewProxy categoriesFor: #viewClass!accessing!public! !
+!UI.STBViewProxy categoriesFor: #viewClass:!accessing!public! !
 
-!STBViewProxy class methodsFor!
+!UI.STBViewProxy class methodsFor!
 
 forView: aView 
 	"Answer a new instance representing aView."
@@ -302,8 +302,8 @@ stbVersion
 	 so if you are changing this number, THINK AGAIN."
 
 	^10! !
-!STBViewProxy class categoriesFor: #forView:!instance creation!public! !
-!STBViewProxy class categoriesFor: #initialize!development!initializing!public! !
-!STBViewProxy class categoriesFor: #stbConvertFrom:!binary filing!public! !
-!STBViewProxy class categoriesFor: #stbVersion!binary filing!public! !
+!UI.STBViewProxy class categoriesFor: #forView:!instance creation!public! !
+!UI.STBViewProxy class categoriesFor: #initialize!development!initializing!public! !
+!UI.STBViewProxy class categoriesFor: #stbConvertFrom:!binary filing!public! !
+!UI.STBViewProxy class categoriesFor: #stbVersion!binary filing!public! !
 

@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Win32Structure subclass: #RGNDATA
+OS.Win32Structure subclass: #'OS.RGNDATA'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_dwSize' -> 16r0.
@@ -12,10 +12,10 @@ Win32Structure subclass: #RGNDATA
 		'_OffsetOf_nRgnSize' -> 16rC.
 		'_OffsetOf_rcBound' -> 16r10
 	}!
-RGNDATA guid: (GUID fromString: '{87b4c60e-026e-11d3-9fd7-00a0cc3e4a32}')!
-RGNDATA comment: ''!
-!RGNDATA categoriesForClass!External-Data-Structured-Win32! !
-!RGNDATA methodsFor!
+OS.RGNDATA guid: (Core.GUID fromString: '{87b4c60e-026e-11d3-9fd7-00a0cc3e4a32}')!
+OS.RGNDATA comment: ''!
+!OS.RGNDATA categoriesForClass!External-Data-Structured-Win32! !
+!OS.RGNDATA methodsFor!
 
 dwSize: anInteger
 	"Set the receiver's 'dwSize' field to the value of the argument, anInteger"
@@ -53,29 +53,29 @@ nRgnSize: anInteger
 	bytes dwordAtOffset: _OffsetOf_nRgnSize put: anInteger!
 
 rcBound
-	"Answer the <RECT> value of the receiver's 'rcBound' field."
+	"Answer the <RECTL> value of the receiver's 'rcBound' field."
 
-	^RECT fromAddress: bytes yourAddress + _OffsetOf_rcBound!
+	^RECTL fromAddress: bytes yourAddress + _OffsetOf_rcBound!
 
-rcBound: aRECT
-	"Set the receiver's 'rcBound' field to the value of the argument, aRECT"
+rcBound: aRECTL
+	"Set the receiver's 'rcBound' field to the value of the argument, aRECTL"
 
-	aRECT
+	aRECTL
 		replaceBytesOf: bytes
 		from: ##(_OffsetOf_rcBound + 1)
-		to: ##(_OffsetOf_rcBound + RECT basicByteSize)
+		to: ##(_OffsetOf_rcBound + RECTL basicByteSize)
 		startingAt: 1! !
-!RGNDATA categoriesFor: #dwSize:!**compiled accessors**!public! !
-!RGNDATA categoriesFor: #iType!**compiled accessors**!public! !
-!RGNDATA categoriesFor: #iType:!**compiled accessors**!public! !
-!RGNDATA categoriesFor: #nCount!**compiled accessors**!public! !
-!RGNDATA categoriesFor: #nCount:!**compiled accessors**!public! !
-!RGNDATA categoriesFor: #nRgnSize!**compiled accessors**!public! !
-!RGNDATA categoriesFor: #nRgnSize:!**compiled accessors**!public! !
-!RGNDATA categoriesFor: #rcBound!**compiled accessors**!public! !
-!RGNDATA categoriesFor: #rcBound:!**compiled accessors**!public! !
+!OS.RGNDATA categoriesFor: #dwSize:!**compiled accessors**!public! !
+!OS.RGNDATA categoriesFor: #iType!**compiled accessors**!public! !
+!OS.RGNDATA categoriesFor: #iType:!**compiled accessors**!public! !
+!OS.RGNDATA categoriesFor: #nCount!**compiled accessors**!public! !
+!OS.RGNDATA categoriesFor: #nCount:!**compiled accessors**!public! !
+!OS.RGNDATA categoriesFor: #nRgnSize!**compiled accessors**!public! !
+!OS.RGNDATA categoriesFor: #nRgnSize:!**compiled accessors**!public! !
+!OS.RGNDATA categoriesFor: #rcBound!**compiled accessors**!public! !
+!OS.RGNDATA categoriesFor: #rcBound:!**compiled accessors**!public! !
 
-!RGNDATA class methodsFor!
+!OS.RGNDATA class methodsFor!
 
 defineFields
 	"Define the fields of the RGNDATA 'structure'.
@@ -90,7 +90,7 @@ defineFields
 			DWORD   iType;
 			DWORD   nCount;
 			DWORD   nRgnSize;
-			RECT	rcBound;
+			RECTL	rcBound;
 		};
 
 		struct RGNDATA 
@@ -101,15 +101,14 @@ defineFields
 	"
 
 	self
-		defineField: #dwSize 	type: DWORDField writeOnly beOverride;
-		defineField: #iType		type: DWORDField new;
-		defineField: #nCount	type: DWORDField new;
-		defineField: #nRgnSize	type: DWORDField new;
-		defineField: #rcBound	type: (StructureField type: RECT)
-!
+		defineField: #dwSize type: DWORDField writeOnly beOverride;
+		defineField: #iType type: DWORDField new;
+		defineField: #nCount type: DWORDField new;
+		defineField: #nRgnSize type: DWORDField new;
+		defineField: #rcBound type: (StructureField type: RECTL)!
 
 getFieldNames
 	^#(#dwSize #iType #nCount #nRgnSize #rcBound)! !
-!RGNDATA class categoriesFor: #defineFields!public!template definition! !
-!RGNDATA class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.RGNDATA class categoriesFor: #defineFields!public!template definition! !
+!OS.RGNDATA class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

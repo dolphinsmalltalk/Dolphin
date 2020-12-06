@@ -1,21 +1,21 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Win32Structure subclass: #ACCEL
+OS.Win32Structure subclass: #'OS.ACCEL'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_cmd' -> 16r4.
 		'_OffsetOf_fVirt' -> 16r0.
 		'_OffsetOf_key' -> 16r2
 	}!
-ACCEL guid: (GUID fromString: '{87b4c5c8-026e-11d3-9fd7-00a0cc3e4a32}')!
-ACCEL comment: 'ACCEL is an <ExternalStructure> class to represent the Win32 structure of the same name.
+OS.ACCEL guid: (Core.GUID fromString: '{87b4c5c8-026e-11d3-9fd7-00a0cc3e4a32}')!
+OS.ACCEL comment: 'ACCEL is an <ExternalStructure> class to represent the Win32 structure of the same name.
 
 ACCEL is used to associate accelerator key entries with a Window.'!
-!ACCEL categoriesForClass!External-Data-Structured-Win32! !
-!ACCEL methodsFor!
+!OS.ACCEL categoriesForClass!External-Data-Structured-Win32! !
+!OS.ACCEL methodsFor!
 
 cmd: anInteger
 	"Set the receiver's 'cmd' field to the value of the argument, anInteger"
@@ -31,11 +31,11 @@ key: anInteger
 	"Set the receiver's 'key' field to the value of the argument, anInteger"
 
 	bytes wordAtOffset: _OffsetOf_key put: anInteger! !
-!ACCEL categoriesFor: #cmd:!**compiled accessors**!public! !
-!ACCEL categoriesFor: #fVirt:!**compiled accessors**!public! !
-!ACCEL categoriesFor: #key:!**compiled accessors**!public! !
+!OS.ACCEL categoriesFor: #cmd:!**compiled accessors**!public! !
+!OS.ACCEL categoriesFor: #fVirt:!**compiled accessors**!public! !
+!OS.ACCEL categoriesFor: #key:!**compiled accessors**!public! !
 
-!ACCEL class methodsFor!
+!OS.ACCEL class methodsFor!
 
 defineFields
 	"Define the Win32 ACCEL structure. Note that this structure requires packing to achieve natural field alignment.
@@ -57,6 +57,6 @@ defineFields
 
 getFieldNames
 	^#(#fVirt #key #cmd)! !
-!ACCEL class categoriesFor: #defineFields!public!template definition! !
-!ACCEL class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.ACCEL class categoriesFor: #defineFields!public!template definition! !
+!OS.ACCEL class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

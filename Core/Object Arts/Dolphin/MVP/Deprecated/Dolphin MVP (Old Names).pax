@@ -1,0 +1,42 @@
+﻿| package |
+package := Package name: 'Dolphin MVP (Old Names)'.
+package paxVersion: 2.1;
+	basicComment: 'Dolphin Smalltalk Graphical User Interface framework (Pre-namespace Names).
+
+This package includes legacy aliases for MVP classes that have been renamed in Dolphin 7.2 following the addition of Namespaces.'.
+
+
+package setVariableNames: #(
+	#{Smalltalk.POINT}
+	#{Smalltalk.RECT}
+	#{Smalltalk.SIZE}
+	#{Smalltalk.WinImageList}
+).
+
+package setAliasVariableNames: #(
+	#{Smalltalk.POINT}
+	#{Smalltalk.RECT}
+	#{Smalltalk.SIZE}
+	#{Smalltalk.WinImageList}
+).
+
+package setPrerequisites: #(
+	'..\Base\Dolphin Basic Geometry'
+	'..\Base\Dolphin MVP Base'
+).
+
+package!
+
+"Variable Aliases"!
+
+Smalltalk.POINT := OS.POINTL!
+
+Smalltalk.RECT := OS.RECTL!
+
+Smalltalk.SIZE := OS.SIZEL!
+
+Smalltalk.WinImageList := Graphics.ImageList!
+
+
+"End of package definition"!
+

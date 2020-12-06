@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Color subclass: #SystemColor
+Graphics.Color subclass: #'Graphics.SystemColor'
 	instanceVariableNames: 'id'
 	classVariableNames: 'ColorsById NamesById'
-	poolDictionaries: 'Win32Constants'
+	imports: #(#{OS.Win32Constants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-SystemColor guid: (GUID fromString: '{87b4c53c-026e-11d3-9fd7-00a0cc3e4a32}')!
-SystemColor comment: '`SystemColor` instances represent the logical colours defined by the current Windows colour scheme, for example the colour of dialog backgrounds, window captions, etc.
+Graphics.SystemColor guid: (Core.GUID fromString: '{87b4c53c-026e-11d3-9fd7-00a0cc3e4a32}')!
+Graphics.SystemColor comment: '`SystemColor` instances represent the logical colours defined by the current Windows colour scheme, for example the colour of dialog backgrounds, window captions, etc.
 
 SystemColors are usually accessed by name, either through a specific instance creation method of the `Color` superclass, e.g. `Color window` or by request by symbolic name, e.g. `Color named: #inactiveCaption`. They can also be accessed by their COLOR_XXX code, e.g. `SystemColor withIndex: Win32Constants.COLOR_SCROLLBAR`
 
@@ -19,8 +19,8 @@ SystemColors are usually accessed by name, either through a specific instance cr
   `NamesById`		`<Dictionary>`
 
 '!
-!SystemColor categoriesForClass!Drawing! !
-!SystemColor methodsFor!
+!Graphics.SystemColor categoriesForClass!Drawing! !
+!Graphics.SystemColor methodsFor!
 
 asParameter
 	"Answer the receiver in a form suitable for an API call."
@@ -93,17 +93,17 @@ shallowCopy
 	"The receiver's instances are unique for each named value."
 
 	^self! !
-!SystemColor categoriesFor: #asParameter!converting!public! !
-!SystemColor categoriesFor: #asRGB!converting!public! !
-!SystemColor categoriesFor: #brushClass!constants!private! !
-!SystemColor categoriesFor: #id!accessing!private! !
-!SystemColor categoriesFor: #name!accessing!public! !
-!SystemColor categoriesFor: #printOn:!development!printing!public! !
-!SystemColor categoriesFor: #rgbCode!converting!public! !
-!SystemColor categoriesFor: #setId:!accessing!private! !
-!SystemColor categoriesFor: #shallowCopy!copying!public! !
+!Graphics.SystemColor categoriesFor: #asParameter!converting!public! !
+!Graphics.SystemColor categoriesFor: #asRGB!converting!public! !
+!Graphics.SystemColor categoriesFor: #brushClass!constants!private! !
+!Graphics.SystemColor categoriesFor: #id!accessing!private! !
+!Graphics.SystemColor categoriesFor: #name!accessing!public! !
+!Graphics.SystemColor categoriesFor: #printOn:!development!printing!public! !
+!Graphics.SystemColor categoriesFor: #rgbCode!converting!public! !
+!Graphics.SystemColor categoriesFor: #setId:!accessing!private! !
+!Graphics.SystemColor categoriesFor: #shallowCopy!copying!public! !
 
-!SystemColor class methodsFor!
+!Graphics.SystemColor class methodsFor!
 
 initialize
 	| namesById colorsById |
@@ -142,7 +142,7 @@ withIndex: anInteger
 	"
 
 	^ColorsById at: anInteger + 1! !
-!SystemColor class categoriesFor: #initialize!class initialization!development!public! !
-!SystemColor class categoriesFor: #stbReadFrom:format:!binary filing!public! !
-!SystemColor class categoriesFor: #withIndex:!instance creation!public! !
+!Graphics.SystemColor class categoriesFor: #initialize!class initialization!development!public! !
+!Graphics.SystemColor class categoriesFor: #stbReadFrom:format:!binary filing!public! !
+!Graphics.SystemColor class categoriesFor: #withIndex:!instance creation!public! !
 

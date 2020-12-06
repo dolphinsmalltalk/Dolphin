@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'Dolphin MVP Base'.
-package paxVersion: 2;
+package paxVersion: 2.1;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk Graphical User Interface framework.
 Copyright (c) Object Arts Ltd. 1997-2018. Portions Copyright (c) CGI Group (Europe) Ltd. 1997.
@@ -14,11 +14,7 @@ GDILibrary openDefault!!
 CommCtrlLibrary default!!
 "Due to a limitation of the Dolphin protocols system, any protocols on a class that are incomplete without loose methods in an add-on package are lost when the add-on package is uninstalled (essentially this is because the package system is largely unaware of protocols, and so only protocols defined in the basic class are maintained). In this case we add #queryCommand: to MessageSend so that it can be used as a closed command. The command routing framework tests for the <commandTarget> protocol to see whether it should include the command itself in the route."
 MessageSend addProtocol: #commandTarget!!
-"It was a crap idea to have classes whose names only differed by case wasn''t it - hence we need this bodge even now"
-SourceManager default fileIn: self path , ''BITMAP_Struct.cls''!!
-BITMAP initializeAfterLoad!!
-SourceManager default fileIn: self path , ''DIBSECTION_Struct.cls''!!
-DIBSECTION initializeAfterLoad!!'.
+'.
 package basicScriptAt: #postuninstall put: '| resIds |
 resIds := ResourceIdentifier allResourceIdentifiers.
 resIds isEmpty 
@@ -38,367 +34,359 @@ resIds isEmpty
 package basicScriptAt: #preuninstall put: 'MemoryManager current collectGarbage; collectGarbage; administerLastRites!!'.
 
 package setClassNames: #(
-	#{AbstractDelegatingView}
-	#{AbstractLOGFONT}
-	#{AbstractNonReferenceDelegatingView}
-	#{AbstractRGB}
-	#{ACCEL}
-	#{AcceleratorTable}
-	#{AlignmentFlags}
-	#{ARGB}
-	#{Bitmap}
-	#{BITMAP}
-	#{BITMAPINFO}
-	#{BITMAPINFOHEADER}
-	#{BLENDFUNCTION}
-	#{BorderLayout}
-	#{BP_ANIMATIONPARAMS}
-	#{BP_PAINTPARAMS}
-	#{Brush}
-	#{ButtonConstants}
-	#{Canvas}
-	#{CapturingInteractor}
-	#{CHARRANGE}
-	#{CheckBox}
-	#{CheckButton}
-	#{Clipboard}
-	#{ClosedCommandDescription}
-	#{Color}
-	#{ColorDefault}
-	#{ColorEvent}
-	#{ColorNone}
-	#{ColorRef}
-	#{Command}
-	#{CommandButton}
-	#{CommandDescription}
-	#{CommandMenuItem}
-	#{CommandPolicy}
-	#{CommandQuery}
-	#{CommCtrlConstants}
-	#{CommCtrlLibrary}
-	#{ContainerView}
-	#{ControlView}
-	#{Cursor}
-	#{DefaultShellSessionManager}
-	#{DelegatingCommandPolicy}
-	#{DesktopView}
-	#{DEVMODE}
-	#{Dialog}
-	#{DialogView}
-	#{DIBSection}
-	#{DIBSECTION}
-	#{DividerMenuItem}
-	#{DOCINFOW}
-	#{DoubleBufferedView}
-	#{DragDropObject}
-	#{DragDropSession}
-	#{DraggableViewInteractor}
-	#{DRAWITEMSTRUCT}
-	#{DTBGOPTS}
-	#{DwmApiLibrary}
-	#{Event}
-	#{ExternalSize}
-	#{FindDetails}
-	#{FLASHWINFO}
-	#{FlowLayout}
-	#{Font}
-	#{FramingCalculation}
-	#{FramingConstraints}
-	#{FramingContext}
-	#{FramingLayout}
-	#{GDILibrary}
-	#{GRADIENT_RECT}
-	#{GRADIENT_TRIANGLE}
-	#{GraphicsTool}
-	#{Grid}
-	#{GridLayout}
-	#{GroupBox}
-	#{GuiInputState}
-	#{GUISessionManager}
-	#{HatchBrush}
-	#{HistoryList}
-	#{HTMLHelpConstants}
-	#{HTMLHelpLibrary}
-	#{Icon}
-	#{IconImageManager}
-	#{ICONINFO}
-	#{Image}
-	#{ImageManager}
-	#{ImageViewAbstract}
-	#{IndexedColor}
-	#{Interactor}
-	#{InternalDragDropObject}
-	#{InternalDragDropSession}
-	#{KeyEvent}
-	#{LASTINPUTINFO}
-	#{LayoutContext}
-	#{LayoutManager}
-	#{LegacyCommandPolicy}
-	#{LinearLayout}
-	#{LOGBRUSH}
-	#{LOGFONT}
-	#{LOGFONTW}
-	#{LOGPALETTE}
-	#{LOGPEN}
-	#{MARGINS}
-	#{MEASUREITEMSTRUCT}
-	#{Menu}
-	#{MenuBar}
-	#{MENUINFO}
-	#{MenuItem}
-	#{MENUITEMINFOW}
-	#{MINMAXINFO}
-	#{MockThemeLibrary}
-	#{MouseEvent}
-	#{MouseTracker}
-	#{MouseWheelEvent}
-	#{NCCALCSIZE_PARAMS}
-	#{NEWTEXTMETRICW}
-	#{NMHDR}
-	#{NMTTDISPINFOW}
-	#{NONCLIENTMETRICSW}
-	#{NOTIFYICONDATAW}
-	#{NullIcon}
-	#{OUTLINETEXTMETRICW}
-	#{PaintEvent}
-	#{PAINTSTRUCT}
-	#{PALETTEENTRY}
-	#{PANOSE}
-	#{Pen}
-	#{PluggableColor}
-	#{PointEvent}
-	#{POINTF}
-	#{PositionEvent}
-	#{Presenter}
-	#{PrinterCanvas}
-	#{ProportionalLayout}
-	#{PushButton}
-	#{ReferenceView}
-	#{Region}
-	#{RGB}
-	#{RGBQUAD}
-	#{RGNDATA}
-	#{RuntimeSessionManager}
-	#{ScrollEvent}
-	#{SCROLLINFO}
-	#{SelectableItemsPresenter}
-	#{SelectionChangedEvent}
-	#{SelectionChangeEvent}
-	#{SelectionChangingEvent}
-	#{SettingsChangeEvent}
-	#{Shell}
-	#{ShellView}
-	#{SIZE}
-	#{SizeEvent}
-	#{Splash}
-	#{Splitter}
-	#{StaticPath}
-	#{StaticRectangle}
-	#{StaticText}
-	#{StaticView}
-	#{STBViewProxy}
-	#{StockBrush}
-	#{StockFont}
-	#{StockPen}
-	#{SysColorBrush}
-	#{SystemColor}
-	#{SystemMetrics}
-	#{TEXTMETRICW}
-	#{ThemeColor}
-	#{ThemeConstants}
-	#{ThemeLibrary}
-	#{TRACKMOUSEEVENT}
-	#{TRIVERTEX}
-	#{ValueConvertingControlView}
-	#{ValueDialog}
-	#{ValuePresenter}
-	#{View}
-	#{ViewState}
-	#{VirtualColor}
-	#{VistaThemeLibrary}
-	#{WINDOWPLACEMENT}
-	#{WINDOWPOS}
-	#{WindowsEvent}
-	#{WinImageList}
-	#{WNDCLASS}
+	#{External.SIZE}
+	#{Graphics.AbstractRGB}
+	#{Graphics.ARGB}
+	#{Graphics.Bitmap}
+	#{Graphics.Brush}
+	#{Graphics.Canvas}
+	#{Graphics.Color}
+	#{Graphics.ColorDefault}
+	#{Graphics.ColorNone}
+	#{Graphics.ColorRef}
+	#{Graphics.Cursor}
+	#{Graphics.DIBSection}
+	#{Graphics.Font}
+	#{Graphics.GraphicsTool}
+	#{Graphics.Grid}
+	#{Graphics.HatchBrush}
+	#{Graphics.Icon}
+	#{Graphics.IconImageManager}
+	#{Graphics.Image}
+	#{Graphics.ImageList}
+	#{Graphics.ImageManager}
+	#{Graphics.IndexedColor}
+	#{Graphics.NullIcon}
+	#{Graphics.Pen}
+	#{Graphics.PluggableColor}
+	#{Graphics.PrinterCanvas}
+	#{Graphics.Region}
+	#{Graphics.RGB}
+	#{Graphics.StockBrush}
+	#{Graphics.StockFont}
+	#{Graphics.StockPen}
+	#{Graphics.SysColorBrush}
+	#{Graphics.SystemColor}
+	#{Graphics.ThemeColor}
+	#{Graphics.VirtualColor}
+	#{OS.AbstractLOGFONT}
+	#{OS.ACCEL}
+	#{OS.BITMAP}
+	#{OS.BITMAPINFO}
+	#{OS.BITMAPINFOHEADER}
+	#{OS.BLENDFUNCTION}
+	#{OS.BP_ANIMATIONPARAMS}
+	#{OS.BP_PAINTPARAMS}
+	#{OS.ButtonConstants}
+	#{OS.CHARRANGE}
+	#{OS.CommCtrlConstants}
+	#{OS.CommCtrlLibrary}
+	#{OS.DEVMODE}
+	#{OS.DIBSECTION}
+	#{OS.DOCINFOW}
+	#{OS.DRAWITEMSTRUCT}
+	#{OS.DTBGOPTS}
+	#{OS.DwmApiLibrary}
+	#{OS.FLASHWINFO}
+	#{OS.GDILibrary}
+	#{OS.GRADIENT_RECT}
+	#{OS.GRADIENT_TRIANGLE}
+	#{OS.HTMLHelpConstants}
+	#{OS.HTMLHelpLibrary}
+	#{OS.ICONINFO}
+	#{OS.LASTINPUTINFO}
+	#{OS.LOGBRUSH}
+	#{OS.LOGFONT}
+	#{OS.LOGFONTW}
+	#{OS.LOGPALETTE}
+	#{OS.LOGPEN}
+	#{OS.MARGINS}
+	#{OS.MEASUREITEMSTRUCT}
+	#{OS.MENUINFO}
+	#{OS.MENUITEMINFOW}
+	#{OS.MINMAXINFO}
+	#{OS.MockThemeLibrary}
+	#{OS.NCCALCSIZE_PARAMS}
+	#{OS.NEWTEXTMETRICW}
+	#{OS.NMHDR}
+	#{OS.NMTTDISPINFOW}
+	#{OS.NONCLIENTMETRICSW}
+	#{OS.NOTIFYICONDATAW}
+	#{OS.OUTLINETEXTMETRICW}
+	#{OS.PAINTSTRUCT}
+	#{OS.PALETTEENTRY}
+	#{OS.PANOSE}
+	#{OS.RGBQUAD}
+	#{OS.RGNDATA}
+	#{OS.SCROLLINFO}
+	#{OS.SIZEL}
+	#{OS.SystemMetrics}
+	#{OS.TEXTMETRICW}
+	#{OS.ThemeConstants}
+	#{OS.ThemeLibrary}
+	#{OS.TRACKMOUSEEVENT}
+	#{OS.TRIVERTEX}
+	#{OS.VistaThemeLibrary}
+	#{OS.WINDOWPLACEMENT}
+	#{OS.WINDOWPOS}
+	#{OS.WNDCLASS}
+	#{UI.AbstractDelegatingView}
+	#{UI.AbstractNonReferenceDelegatingView}
+	#{UI.AcceleratorTable}
+	#{UI.BorderLayout}
+	#{UI.CapturingInteractor}
+	#{UI.CheckBox}
+	#{UI.CheckButton}
+	#{UI.Clipboard}
+	#{UI.ClosedCommandDescription}
+	#{UI.ColorEvent}
+	#{UI.Command}
+	#{UI.CommandButton}
+	#{UI.CommandDescription}
+	#{UI.CommandMenuItem}
+	#{UI.CommandPolicy}
+	#{UI.CommandQuery}
+	#{UI.ContainerView}
+	#{UI.ControlView}
+	#{UI.DefaultShellSessionManager}
+	#{UI.DelegatingCommandPolicy}
+	#{UI.DesktopView}
+	#{UI.Dialog}
+	#{UI.DialogView}
+	#{UI.DividerMenuItem}
+	#{UI.DoubleBufferedView}
+	#{UI.DragDropObject}
+	#{UI.DragDropSession}
+	#{UI.DraggableViewInteractor}
+	#{UI.Event}
+	#{UI.FindDetails}
+	#{UI.FlowLayout}
+	#{UI.FramingCalculation}
+	#{UI.FramingConstraints}
+	#{UI.FramingContext}
+	#{UI.FramingLayout}
+	#{UI.GridLayout}
+	#{UI.GroupBox}
+	#{UI.GuiInputState}
+	#{UI.GUISessionManager}
+	#{UI.HistoryList}
+	#{UI.ImageViewAbstract}
+	#{UI.Interactor}
+	#{UI.InternalDragDropObject}
+	#{UI.InternalDragDropSession}
+	#{UI.Keyboard}
+	#{UI.KeyEvent}
+	#{UI.LabelEditedEvent}
+	#{UI.LabelEditEvent}
+	#{UI.LabelEditingEvent}
+	#{UI.LayoutContext}
+	#{UI.LayoutManager}
+	#{UI.LegacyCommandPolicy}
+	#{UI.LinearLayout}
+	#{UI.Menu}
+	#{UI.MenuBar}
+	#{UI.MenuItem}
+	#{UI.MouseEvent}
+	#{UI.MouseTracker}
+	#{UI.MouseWheelEvent}
+	#{UI.PaintEvent}
+	#{UI.PointEvent}
+	#{UI.PositionEvent}
+	#{UI.Presenter}
+	#{UI.ProportionalLayout}
+	#{UI.PushButton}
+	#{UI.ReferenceView}
+	#{UI.RuntimeSessionManager}
+	#{UI.ScrollEvent}
+	#{UI.SelectableItemsPresenter}
+	#{UI.SelectionChangedEvent}
+	#{UI.SelectionChangeEvent}
+	#{UI.SelectionChangingEvent}
+	#{UI.SettingsChangeEvent}
+	#{UI.Shell}
+	#{UI.ShellView}
+	#{UI.SizeEvent}
+	#{UI.Splash}
+	#{UI.Splitter}
+	#{UI.StaticPath}
+	#{UI.StaticRectangle}
+	#{UI.StaticText}
+	#{UI.StaticView}
+	#{UI.STBViewProxy}
+	#{UI.ValueConvertingControlView}
+	#{UI.ValueDialog}
+	#{UI.ValuePresenter}
+	#{UI.View}
+	#{UI.ViewState}
+	#{UI.WindowsEvent}
 ).
 
 package setMethodNames: #(
-	#(#{AnsiString} #copyToClipboard)
-	#(#{ClassDescription} #defaultIcon)
-	#(#{ConsoleSessionManager class} #icon)
-	#(#{KernelLibrary} #getConsoleWindow)
-	#(#{MessageSend} #queryCommand:)
-	#(#{Object} #addToImageList:mask:)
-	#(#{Object} #icon)
-	#(#{Object} #iconImageIndex)
-	#(#{Object class} #icon)
-	#(#{ResourceIdentifier} #canShow)
-	#(#{ResourceIdentifier} #fixupIcon)
-	#(#{ResourceIdentifier} #icon)
-	#(#{ResourceIdentifier} #loadWithContext:)
-	#(#{ResourceIdentifier} #loadWithContext:forEdit:)
-	#(#{ResourceIdentifier} #show)
-	#(#{String} #copyToClipboard)
-	#(#{String} #setTextInto:)
-	#(#{Symbol} #copyToClipboard)
-	#(#{UndefinedObject} #asResourceId)
-	#(#{UserLibrary} #adjustWindowRectEx:dwStyle:bMenu:dwExStyle:)
-	#(#{UserLibrary} #animateWindow:dwTime:dwFlags:)
-	#(#{UserLibrary} #attachThreadInput:idAttachTo:fAttach:)
-	#(#{UserLibrary} #beginDeferWindowPos:)
-	#(#{UserLibrary} #beginPaint:lpPaint:)
-	#(#{UserLibrary} #bringWindowToTop:)
-	#(#{UserLibrary} #callWindowProc:hWnd:msg:wParam:lParam:)
-	#(#{UserLibrary} #childWindowFromPointEx:pt:uFlags:)
-	#(#{UserLibrary} #clientToScreen:lpPoint:)
-	#(#{UserLibrary} #closeClipboard)
-	#(#{UserLibrary} #countClipboardFormats)
-	#(#{UserLibrary} #createAcceleratorTable:cEntries:)
-	#(#{UserLibrary} #createMenu)
-	#(#{UserLibrary} #createPopupMenu)
-	#(#{UserLibrary} #createWindowEx:lpClassName:lpWindowName:dwStyle:x:y:nWidth:nHeight:hWndParent:hMenu:hInstance:lpParam:)
-	#(#{UserLibrary} #deferWindowPos:hwnd:hwndInsertAfter:x:y:cx:cy:uFlags:)
-	#(#{UserLibrary} #deleteMenu:uPosition:uFlags:)
-	#(#{UserLibrary} #destroyAcceleratorTable:)
-	#(#{UserLibrary} #destroyIcon:)
-	#(#{UserLibrary} #destroyMenu:)
-	#(#{UserLibrary} #drawEdge:qrc:edge:grfFlags:)
-	#(#{UserLibrary} #drawFocusRect:lprc:)
-	#(#{UserLibrary} #drawFrameControl:lprc:uType:uState:)
-	#(#{UserLibrary} #drawIconEx:xLeft:yTop:hIcon:cxWidth:cyHeight:istepIfAniCur:hbrFlickerFreeDraw:diFlags:)
-	#(#{UserLibrary} #drawMenuBar:)
-	#(#{UserLibrary} #drawState:hbr:lpOutputFunc:lData:wData:x:y:cx:cy:fuFlags:)
-	#(#{UserLibrary} #drawTextEx:lpchText:cchText:lprc:dwDTFormat:lpDTParams:)
-	#(#{UserLibrary} #emptyClipboard)
-	#(#{UserLibrary} #endDeferWindowPos:)
-	#(#{UserLibrary} #endDialog:nResult:)
-	#(#{UserLibrary} #endPaint:lpPaint:)
-	#(#{UserLibrary} #enumClipboardFormats:)
-	#(#{UserLibrary} #enumThreadWindows:lpfn:lParam:)
-	#(#{UserLibrary} #enumWindows:lParam:)
-	#(#{UserLibrary} #fillRect:lprc:hbr:)
-	#(#{UserLibrary} #findWindow:lpWindowName:)
-	#(#{UserLibrary} #flashWindow:bInvert:)
-	#(#{UserLibrary} #flashWindowEx:)
-	#(#{UserLibrary} #frameRect:lprc:hbr:)
-	#(#{UserLibrary} #getAncestor:gaFlags:)
-	#(#{UserLibrary} #getCapture)
-	#(#{UserLibrary} #getClassName:lpClassName:nMaxCount:)
-	#(#{UserLibrary} #getClientRect:lpRect:)
-	#(#{UserLibrary} #getClipboardData:)
-	#(#{UserLibrary} #getClipboardFormatName:lpszFormatName:cchMaxCount:)
-	#(#{UserLibrary} #getCursor)
-	#(#{UserLibrary} #getCursorPos:)
-	#(#{UserLibrary} #getDC)
-	#(#{UserLibrary} #getDC:)
-	#(#{UserLibrary} #getDCEx:hrgnClip:flags:)
-	#(#{UserLibrary} #getFocus)
-	#(#{UserLibrary} #getForegroundWindow)
-	#(#{UserLibrary} #getIconInfo:piconinfo:)
-	#(#{UserLibrary} #getLastActivePopup:)
-	#(#{UserLibrary} #getLastInputInfo:)
-	#(#{UserLibrary} #getMenuInfo:lpcmi:)
-	#(#{UserLibrary} #getNextDlgGroupItem:hCtl:bPrevious:)
-	#(#{UserLibrary} #getNextDlgTabItem:hCtl:bPrevious:)
-	#(#{UserLibrary} #getProp:lpString:)
-	#(#{UserLibrary} #getScrollInfo:fnBar:lpsi:)
-	#(#{UserLibrary} #getSystemMenu:bRevert:)
-	#(#{UserLibrary} #getTopWindow:)
-	#(#{UserLibrary} #getUpdateRect:lpRect:bErase:)
-	#(#{UserLibrary} #getWindow:uCmd:)
-	#(#{UserLibrary} #getWindowDC:)
-	#(#{UserLibrary} #getWindowLong:nIndex:)
-	#(#{UserLibrary} #getWindowLongPtr:nIndex:)
-	#(#{UserLibrary} #getWindowPlacement:lpwndpl:)
-	#(#{UserLibrary} #getWindowRect:lpRect:)
-	#(#{UserLibrary} #getWindowText:lpString:nMaxCount:)
-	#(#{UserLibrary} #getWindowTextLength:)
-	#(#{UserLibrary} #getWindowThreadProcessId:lpdwProcessId:)
-	#(#{UserLibrary} #getWindowULong:nIndex:)
-	#(#{UserLibrary} #getWindowULongPtr:nIndex:)
-	#(#{UserLibrary} #insertMenuItem:uItem:fByPosition:lpmii:)
-	#(#{UserLibrary} #invalidate:lpRect:bErase:)
-	#(#{UserLibrary} #invalidateRgn:hRgn:bErase:)
-	#(#{UserLibrary} #invertRect:lprc:)
-	#(#{UserLibrary} #isChild:hWnd:)
-	#(#{UserLibrary} #isClipboardFormatAvailable:)
-	#(#{UserLibrary} #isDialogMessage:lpMsg:)
-	#(#{UserLibrary} #isIconic:)
-	#(#{UserLibrary} #isWindowUnicode:)
-	#(#{UserLibrary} #isZoomed:)
-	#(#{UserLibrary} #loadAccelerators:lpTableName:)
-	#(#{UserLibrary} #loadCursorFromFile:)
-	#(#{UserLibrary} #loadIcon:lpIconName:)
-	#(#{UserLibrary} #loadImage:lpszName:uType:cxDesired:cyDesired:fuLoad:)
-	#(#{UserLibrary} #loadMenu:lpMenuName:)
-	#(#{UserLibrary} #lockWindowUpdate:)
-	#(#{UserLibrary} #makeDragList:)
-	#(#{UserLibrary} #mapWindowPoints:hWndTo:lpPoints:cPoints:)
-	#(#{UserLibrary} #modifyMenu:uPosition:uFlags:uIDNewItem:lpNewItem:)
-	#(#{UserLibrary} #openClipboard:)
-	#(#{UserLibrary} #printWindow:hdcBlt:nFlags:)
-	#(#{UserLibrary} #redrawWindow:lprcUpdate:hrgnUpdate:flags:)
-	#(#{UserLibrary} #registerClass:)
-	#(#{UserLibrary} #registerClipboardFormat:)
-	#(#{UserLibrary} #registerHotKey:id:fsModifiers:vk:)
-	#(#{UserLibrary} #registerWindowMessage:)
-	#(#{UserLibrary} #releaseCapture)
-	#(#{UserLibrary} #releaseDC:)
-	#(#{UserLibrary} #releaseDC:hDC:)
-	#(#{UserLibrary} #removeMenu:uPosition:uFlags:)
-	#(#{UserLibrary} #removeProp:lpString:)
-	#(#{UserLibrary} #screenToClient:lpPoint:)
-	#(#{UserLibrary} #scrollWindowEx:dx:dy:prcScroll:prcClip:hrgnUpdate:prcUpdate:flags:)
-	#(#{UserLibrary} #sendDlgItemMessage:nIDDlgItem:msg:wParam:lParam:)
-	#(#{UserLibrary} #sendMessage:msg:wParam:lpParam:)
-	#(#{UserLibrary} #sendMessage:msg:wpParam:lpParam:)
-	#(#{UserLibrary} #sendMessageU:msg:wParam:lParam:)
-	#(#{UserLibrary} #sendMessageU:msg:wParam:lpParam:)
-	#(#{UserLibrary} #setCapture:)
-	#(#{UserLibrary} #setClassLong:nIndex:dwNewLong:)
-	#(#{UserLibrary} #setClipboardData:hMem:)
-	#(#{UserLibrary} #setCursorPosX:y:)
-	#(#{UserLibrary} #setDlgItemInt:nIDDlgItem:uValue:bSigned:)
-	#(#{UserLibrary} #setFocus:)
-	#(#{UserLibrary} #setForegroundWindow:)
-	#(#{UserLibrary} #setLayeredWindowAttributes:lcrKey:bAlpha:dwFlags:)
-	#(#{UserLibrary} #setMenu:hMenu:)
-	#(#{UserLibrary} #setMenuDefaultItem:uItem:fByPos:)
-	#(#{UserLibrary} #setMenuInfo:lpcmi:)
-	#(#{UserLibrary} #setMenuItemInfo:uItem:fByPosition:lpmii:)
-	#(#{UserLibrary} #setParent:hWndNewParent:)
-	#(#{UserLibrary} #setProp:lpString:hData:)
-	#(#{UserLibrary} #setScrollInfo:fnBar:lpsi:fRedraw:)
-	#(#{UserLibrary} #setSysColors:lpaElements:lpaRgbValues:)
-	#(#{UserLibrary} #setWindowLong:nIndex:dwNewLong:)
-	#(#{UserLibrary} #setWindowLongPtr:nIndex:dwNewLong:)
-	#(#{UserLibrary} #setWindowPlacement:lpwndpl:)
-	#(#{UserLibrary} #setWindowPos:hWndInsertAfter:x:y:cx:cy:uFlags:)
-	#(#{UserLibrary} #setWindowULong:nIndex:dwNewLong:)
-	#(#{UserLibrary} #setWindowULongPtr:nIndex:dwNewLong:)
-	#(#{UserLibrary} #showCursor:)
-	#(#{UserLibrary} #systemParametersInfo:uiParam:pvParam:fWinIni:)
-	#(#{UserLibrary} #trackMouseEvent:)
-	#(#{UserLibrary} #trackPopupMenu:uFlags:x:y:nReserved:hWnd:prcRect:)
-	#(#{UserLibrary} #translateAccelerator:haccl:lpmsg:)
-	#(#{UserLibrary} #unregisterClass:hInstance:)
-	#(#{UserLibrary} #unregisterHotKey:id:)
-	#(#{UserLibrary} #validate:lpRect:)
-	#(#{UserLibrary} #windowFromPoint:)
-).
-
-package setVariableNames: #(
-	#{SIZEL}
-).
-
-package setAliasVariableNames: #(
-	#{SIZEL}
+	#(#{Core.AnsiString} #copyToClipboard)
+	#(#{Core.ClassDescription} #defaultIcon)
+	#(#{Core.MessageSend} #queryCommand:)
+	#(#{Core.Object} #addToImageList:mask:)
+	#(#{Core.Object} #icon)
+	#(#{Core.Object} #iconImageIndex)
+	#(#{Core.Object class} #icon)
+	#(#{Core.String} #copyToClipboard)
+	#(#{Core.String} #setTextInto:)
+	#(#{Core.Symbol} #copyToClipboard)
+	#(#{Core.UndefinedObject} #asResourceId)
+	#(#{OS.KernelLibrary} #getConsoleWindow)
+	#(#{OS.UserLibrary} #adjustWindowRectEx:dwStyle:bMenu:dwExStyle:)
+	#(#{OS.UserLibrary} #animateWindow:dwTime:dwFlags:)
+	#(#{OS.UserLibrary} #attachThreadInput:idAttachTo:fAttach:)
+	#(#{OS.UserLibrary} #beginDeferWindowPos:)
+	#(#{OS.UserLibrary} #beginPaint:lpPaint:)
+	#(#{OS.UserLibrary} #bringWindowToTop:)
+	#(#{OS.UserLibrary} #callWindowProc:hWnd:msg:wParam:lParam:)
+	#(#{OS.UserLibrary} #childWindowFromPointEx:pt:uFlags:)
+	#(#{OS.UserLibrary} #clientToScreen:lpPoint:)
+	#(#{OS.UserLibrary} #closeClipboard)
+	#(#{OS.UserLibrary} #countClipboardFormats)
+	#(#{OS.UserLibrary} #createAcceleratorTable:cEntries:)
+	#(#{OS.UserLibrary} #createMenu)
+	#(#{OS.UserLibrary} #createPopupMenu)
+	#(#{OS.UserLibrary} #createWindowEx:lpClassName:lpWindowName:dwStyle:x:y:nWidth:nHeight:hWndParent:hMenu:hInstance:lpParam:)
+	#(#{OS.UserLibrary} #deferWindowPos:hwnd:hwndInsertAfter:x:y:cx:cy:uFlags:)
+	#(#{OS.UserLibrary} #deleteMenu:uPosition:uFlags:)
+	#(#{OS.UserLibrary} #destroyAcceleratorTable:)
+	#(#{OS.UserLibrary} #destroyIcon:)
+	#(#{OS.UserLibrary} #destroyMenu:)
+	#(#{OS.UserLibrary} #drawEdge:qrc:edge:grfFlags:)
+	#(#{OS.UserLibrary} #drawFocusRect:lprc:)
+	#(#{OS.UserLibrary} #drawFrameControl:lprc:uType:uState:)
+	#(#{OS.UserLibrary} #drawIconEx:xLeft:yTop:hIcon:cxWidth:cyHeight:istepIfAniCur:hbrFlickerFreeDraw:diFlags:)
+	#(#{OS.UserLibrary} #drawMenuBar:)
+	#(#{OS.UserLibrary} #drawState:hbr:lpOutputFunc:lData:wData:x:y:cx:cy:fuFlags:)
+	#(#{OS.UserLibrary} #drawTextEx:lpchText:cchText:lprc:dwDTFormat:lpDTParams:)
+	#(#{OS.UserLibrary} #emptyClipboard)
+	#(#{OS.UserLibrary} #endDeferWindowPos:)
+	#(#{OS.UserLibrary} #endDialog:nResult:)
+	#(#{OS.UserLibrary} #endPaint:lpPaint:)
+	#(#{OS.UserLibrary} #enumClipboardFormats:)
+	#(#{OS.UserLibrary} #enumThreadWindows:lpfn:lParam:)
+	#(#{OS.UserLibrary} #enumWindows:lParam:)
+	#(#{OS.UserLibrary} #fillRect:lprc:hbr:)
+	#(#{OS.UserLibrary} #findWindow:lpWindowName:)
+	#(#{OS.UserLibrary} #flashWindow:bInvert:)
+	#(#{OS.UserLibrary} #flashWindowEx:)
+	#(#{OS.UserLibrary} #frameRect:lprc:hbr:)
+	#(#{OS.UserLibrary} #getAncestor:gaFlags:)
+	#(#{OS.UserLibrary} #getCapture)
+	#(#{OS.UserLibrary} #getClassName:lpClassName:nMaxCount:)
+	#(#{OS.UserLibrary} #getClientRect:lpRect:)
+	#(#{OS.UserLibrary} #getClipboardData:)
+	#(#{OS.UserLibrary} #getClipboardFormatName:lpszFormatName:cchMaxCount:)
+	#(#{OS.UserLibrary} #getCursor)
+	#(#{OS.UserLibrary} #getCursorPos:)
+	#(#{OS.UserLibrary} #getDC)
+	#(#{OS.UserLibrary} #getDC:)
+	#(#{OS.UserLibrary} #getDCEx:hrgnClip:flags:)
+	#(#{OS.UserLibrary} #getFocus)
+	#(#{OS.UserLibrary} #getForegroundWindow)
+	#(#{OS.UserLibrary} #getIconInfo:piconinfo:)
+	#(#{OS.UserLibrary} #getLastActivePopup:)
+	#(#{OS.UserLibrary} #getLastInputInfo:)
+	#(#{OS.UserLibrary} #getMenuInfo:lpcmi:)
+	#(#{OS.UserLibrary} #getNextDlgGroupItem:hCtl:bPrevious:)
+	#(#{OS.UserLibrary} #getNextDlgTabItem:hCtl:bPrevious:)
+	#(#{OS.UserLibrary} #getProp:lpString:)
+	#(#{OS.UserLibrary} #getScrollInfo:fnBar:lpsi:)
+	#(#{OS.UserLibrary} #getSystemMenu:bRevert:)
+	#(#{OS.UserLibrary} #getTopWindow:)
+	#(#{OS.UserLibrary} #getUpdateRect:lpRect:bErase:)
+	#(#{OS.UserLibrary} #getWindow:uCmd:)
+	#(#{OS.UserLibrary} #getWindowDC:)
+	#(#{OS.UserLibrary} #getWindowLong:nIndex:)
+	#(#{OS.UserLibrary} #getWindowLongPtr:nIndex:)
+	#(#{OS.UserLibrary} #getWindowPlacement:lpwndpl:)
+	#(#{OS.UserLibrary} #getWindowRect:lpRect:)
+	#(#{OS.UserLibrary} #getWindowText:lpString:nMaxCount:)
+	#(#{OS.UserLibrary} #getWindowTextLength:)
+	#(#{OS.UserLibrary} #getWindowThreadProcessId:lpdwProcessId:)
+	#(#{OS.UserLibrary} #getWindowULong:nIndex:)
+	#(#{OS.UserLibrary} #getWindowULongPtr:nIndex:)
+	#(#{OS.UserLibrary} #insertMenuItem:uItem:fByPosition:lpmii:)
+	#(#{OS.UserLibrary} #invalidate:lpRect:bErase:)
+	#(#{OS.UserLibrary} #invalidateRgn:hRgn:bErase:)
+	#(#{OS.UserLibrary} #invertRect:lprc:)
+	#(#{OS.UserLibrary} #isChild:hWnd:)
+	#(#{OS.UserLibrary} #isClipboardFormatAvailable:)
+	#(#{OS.UserLibrary} #isDialogMessage:lpMsg:)
+	#(#{OS.UserLibrary} #isIconic:)
+	#(#{OS.UserLibrary} #isWindowUnicode:)
+	#(#{OS.UserLibrary} #isZoomed:)
+	#(#{OS.UserLibrary} #loadAccelerators:lpTableName:)
+	#(#{OS.UserLibrary} #loadCursorFromFile:)
+	#(#{OS.UserLibrary} #loadIcon:lpIconName:)
+	#(#{OS.UserLibrary} #loadImage:lpszName:uType:cxDesired:cyDesired:fuLoad:)
+	#(#{OS.UserLibrary} #loadMenu:lpMenuName:)
+	#(#{OS.UserLibrary} #lockWindowUpdate:)
+	#(#{OS.UserLibrary} #makeDragList:)
+	#(#{OS.UserLibrary} #mapWindowPoints:hWndTo:lpPoints:cPoints:)
+	#(#{OS.UserLibrary} #modifyMenu:uPosition:uFlags:uIDNewItem:lpNewItem:)
+	#(#{OS.UserLibrary} #openClipboard:)
+	#(#{OS.UserLibrary} #printWindow:hdcBlt:nFlags:)
+	#(#{OS.UserLibrary} #redrawWindow:lprcUpdate:hrgnUpdate:flags:)
+	#(#{OS.UserLibrary} #registerClass:)
+	#(#{OS.UserLibrary} #registerClipboardFormat:)
+	#(#{OS.UserLibrary} #registerHotKey:id:fsModifiers:vk:)
+	#(#{OS.UserLibrary} #registerWindowMessage:)
+	#(#{OS.UserLibrary} #releaseCapture)
+	#(#{OS.UserLibrary} #releaseDC:)
+	#(#{OS.UserLibrary} #releaseDC:hDC:)
+	#(#{OS.UserLibrary} #removeMenu:uPosition:uFlags:)
+	#(#{OS.UserLibrary} #removeProp:lpString:)
+	#(#{OS.UserLibrary} #screenToClient:lpPoint:)
+	#(#{OS.UserLibrary} #scrollWindowEx:dx:dy:prcScroll:prcClip:hrgnUpdate:prcUpdate:flags:)
+	#(#{OS.UserLibrary} #sendDlgItemMessage:nIDDlgItem:msg:wParam:lParam:)
+	#(#{OS.UserLibrary} #sendMessage:msg:wParam:lpParam:)
+	#(#{OS.UserLibrary} #sendMessage:msg:wpParam:lpParam:)
+	#(#{OS.UserLibrary} #sendMessageU:msg:wParam:lParam:)
+	#(#{OS.UserLibrary} #sendMessageU:msg:wParam:lpParam:)
+	#(#{OS.UserLibrary} #setCapture:)
+	#(#{OS.UserLibrary} #setClassLong:nIndex:dwNewLong:)
+	#(#{OS.UserLibrary} #setClipboardData:hMem:)
+	#(#{OS.UserLibrary} #setCursorPosX:y:)
+	#(#{OS.UserLibrary} #setDlgItemInt:nIDDlgItem:uValue:bSigned:)
+	#(#{OS.UserLibrary} #setFocus:)
+	#(#{OS.UserLibrary} #setForegroundWindow:)
+	#(#{OS.UserLibrary} #setLayeredWindowAttributes:lcrKey:bAlpha:dwFlags:)
+	#(#{OS.UserLibrary} #setMenu:hMenu:)
+	#(#{OS.UserLibrary} #setMenuDefaultItem:uItem:fByPos:)
+	#(#{OS.UserLibrary} #setMenuInfo:lpcmi:)
+	#(#{OS.UserLibrary} #setMenuItemInfo:uItem:fByPosition:lpmii:)
+	#(#{OS.UserLibrary} #setParent:hWndNewParent:)
+	#(#{OS.UserLibrary} #setProp:lpString:hData:)
+	#(#{OS.UserLibrary} #setScrollInfo:fnBar:lpsi:fRedraw:)
+	#(#{OS.UserLibrary} #setSysColors:lpaElements:lpaRgbValues:)
+	#(#{OS.UserLibrary} #setWindowLong:nIndex:dwNewLong:)
+	#(#{OS.UserLibrary} #setWindowLongPtr:nIndex:dwNewLong:)
+	#(#{OS.UserLibrary} #setWindowPlacement:lpwndpl:)
+	#(#{OS.UserLibrary} #setWindowPos:hWndInsertAfter:x:y:cx:cy:uFlags:)
+	#(#{OS.UserLibrary} #setWindowULong:nIndex:dwNewLong:)
+	#(#{OS.UserLibrary} #setWindowULongPtr:nIndex:dwNewLong:)
+	#(#{OS.UserLibrary} #showCursor:)
+	#(#{OS.UserLibrary} #systemParametersInfo:uiParam:pvParam:fWinIni:)
+	#(#{OS.UserLibrary} #trackMouseEvent:)
+	#(#{OS.UserLibrary} #trackPopupMenu:uFlags:x:y:nReserved:hWnd:prcRect:)
+	#(#{OS.UserLibrary} #translateAccelerator:haccl:lpmsg:)
+	#(#{OS.UserLibrary} #unregisterClass:hInstance:)
+	#(#{OS.UserLibrary} #unregisterHotKey:id:)
+	#(#{OS.UserLibrary} #validate:lpRect:)
+	#(#{OS.UserLibrary} #windowFromPoint:)
+	#(#{UI.ResourceIdentifier} #canShow)
+	#(#{UI.ResourceIdentifier} #fixupIcon)
+	#(#{UI.ResourceIdentifier} #icon)
+	#(#{UI.ResourceIdentifier} #loadWithContext:)
+	#(#{UI.ResourceIdentifier} #loadWithContext:forEdit:)
+	#(#{UI.ResourceIdentifier} #show)
 ).
 
 package setPrerequisites: #(
 	'..\..\Base\Dolphin'
-	'..\..\Base\Deprecated\Dolphin Base (Deprecated)'
 	'Dolphin Basic Geometry'
 	'..\..\Base\Dolphin Command-line Parser'
 	'..\..\Base\Dolphin Conformant Array Fields'
@@ -411,21 +399,7 @@ package!
 
 "Class Definitions"!
 
-SharedPool subclass: #AlignmentFlags
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {
-		'AlignBottom' -> 16r8.
-		'AlignHCenter' -> 16r1.
-		'AlignLeft' -> 16r0.
-		'AlignmentMask' -> 16rF.
-		'AlignRight' -> 16r2.
-		'AlignTop' -> 16r0.
-		'AlignVCenter' -> 16r4
-	}!
-SharedPool subclass: #ButtonConstants
+Kernel.SharedPool subclass: #'OS.ButtonConstants'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -476,7 +450,7 @@ SharedPool subclass: #ButtonConstants
 		'BST_INDETERMINATE' -> 16r2.
 		'BST_UNCHECKED' -> 16r0
 	}!
-SharedPool subclass: #CommCtrlConstants
+Kernel.SharedPool subclass: #'OS.CommCtrlConstants'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -568,6 +542,7 @@ SharedPool subclass: #CommCtrlConstants
 		'ILD_TRANSPARENT' -> 16r1.
 		'LIM_LARGE' -> 16r1.
 		'LIM_SMALL' -> 16r0.
+		'LVM_GETEDITCONTROL' -> 16r1018.
 		'NM_CHAR' -> -16r12.
 		'NM_CLICK' -> -16r2.
 		'NM_CUSTOMDRAW' -> -16rC.
@@ -592,9 +567,10 @@ SharedPool subclass: #CommCtrlConstants
 		'NM_TOOLTIPSCREATED' -> -16r13.
 		'TTF_IDISHWND' -> 16r1.
 		'TTN_GETDISPINFOA' -> -16r208.
-		'TTN_GETDISPINFOW' -> -16r212
+		'TTN_GETDISPINFOW' -> -16r212.
+		'TVM_GETEDITCONTROL' -> 16r110F
 	}!
-SharedPool subclass: #HTMLHelpConstants
+Kernel.SharedPool subclass: #'OS.HTMLHelpConstants'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -613,7 +589,7 @@ SharedPool subclass: #HTMLHelpConstants
 		'HH_TP_HELP_WM_HELP' -> 16r11.
 		'HH_UNINITIALIZE' -> 16r1D
 	}!
-SharedPool subclass: #ThemeConstants
+Kernel.SharedPool subclass: #'OS.ThemeConstants'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -1034,6 +1010,7 @@ SharedPool subclass: #ThemeConstants
 		'TMT_BGFILL' -> 16r89D.
 		'TMT_BGTYPE' -> 16rFA1.
 		'TMT_BLENDCOLOR' -> 16r138B.
+		'TMT_BODYTEXTCOLOR' -> 16rEF3.
 		'TMT_BOOL' -> 16rCB.
 		'TMT_BORDERCOLOR' -> 16rED9.
 		'TMT_BORDERCOLORHINT' -> 16rEEE.
@@ -1367,31 +1344,31 @@ SharedPool subclass: #ThemeConstants
 		'WP_VERTSCROLL' -> 16r1B.
 		'WP_VERTTHUMB' -> 16r1C
 	}!
-Object subclass: #Canvas
+Core.Object subclass: #'Graphics.Canvas'
 	instanceVariableNames: 'handle source owned pen brush font saved saveIds'
 	classVariableNames: 'DesktopResolution'
-	imports: #(#{Win32Constants})
+	imports: #(#{OS.Win32Constants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Object subclass: #Clipboard
+Core.Object subclass: #'UI.Clipboard'
 	instanceVariableNames: 'isOpen registeredFormats idToName'
 	classVariableNames: 'Current'
-	imports: #(#{Win32Constants})
+	imports: #(#{OS.Win32Constants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Object subclass: #Color
+Core.Object subclass: #'Graphics.Color'
 	instanceVariableNames: ''
 	classVariableNames: 'Black ColorNames CommonColors Default Face3d NamedColors None White Window WindowText'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Object subclass: #Command
+Core.Object subclass: #'UI.Command'
 	instanceVariableNames: 'commandDescription receiver undoAction redoAction isBenign'
 	classVariableNames: 'Current'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Object subclass: #CommandDescription
+Core.Object subclass: #'UI.CommandDescription'
 	instanceVariableNames: 'command description acceleratorKey flags image'
 	classVariableNames: 'CommandDescriptionRegistry CurrentId'
 	imports: #()
@@ -1400,13 +1377,13 @@ Object subclass: #CommandDescription
 		'DefaultMask' -> 16r1.
 		'ModalMask' -> 16r2
 	}!
-Object subclass: #CommandPolicy
+Core.Object subclass: #'UI.CommandPolicy'
 	instanceVariableNames: 'source path'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Object subclass: #CommandQuery
+Core.Object subclass: #'UI.CommandQuery'
 	instanceVariableNames: 'commandDescription receiver source text flags image'
 	classVariableNames: ''
 	imports: #()
@@ -1416,31 +1393,31 @@ Object subclass: #CommandQuery
 		'DefaultMask' -> 16r4.
 		'EnabledMask' -> 16r1
 	}!
-Object subclass: #DragDropObject
+Core.Object subclass: #'UI.DragDropObject'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Object subclass: #DragDropSession
+Core.Object subclass: #'UI.DragDropSession'
 	instanceVariableNames: 'dragSource dragPoint suggestedSource dragObjects defaultOperation dropTarget suggestedTarget operationsSupportedByDropTarget operation inDropTargetScrollZone dragImages scrollProcess'
 	classVariableNames: 'Current DefaultImages OperationDescriptions'
-	imports: #(#{Win32Constants})
+	imports: #(#{OS.Win32Constants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Object subclass: #Event
+Core.Object subclass: #'UI.Event'
 	instanceVariableNames: 'window'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Object subclass: #FindDetails
+Core.Object subclass: #'UI.FindDetails'
 	instanceVariableNames: 'pattern replaceWith searchMode flags action'
 	classVariableNames: 'IgnoreCaseMask UpMask WholeWordMask WrapMask'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Object subclass: #FramingCalculation
+Core.Object subclass: #'UI.FramingCalculation'
 	instanceVariableNames: 'name framingBlock offsetBlock flags'
 	classVariableNames: 'Calculations'
 	imports: #()
@@ -1450,85 +1427,91 @@ Object subclass: #FramingCalculation
 		'ProportionalMask' -> 16r2.
 		'VerticalMask' -> 16r1
 	}!
-Object subclass: #FramingConstraints
+Core.Object subclass: #'UI.FramingConstraints'
 	instanceVariableNames: 'leftFraming leftOffset rightFraming rightOffset topFraming topOffset bottomFraming bottomOffset'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Object subclass: #FramingContext
+Core.Object subclass: #'UI.FramingContext'
 	instanceVariableNames: 'layoutContext view rectangle parentRect'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Object subclass: #GraphicsTool
+Core.Object subclass: #'Graphics.GraphicsTool'
 	instanceVariableNames: 'handle ownsHandle'
 	classVariableNames: ''
-	imports: #(#{Win32Constants})
+	imports: #(#{OS.Win32Constants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Object subclass: #Grid
+Core.Object subclass: #'Graphics.Grid'
 	instanceVariableNames: 'resolution'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Object subclass: #HistoryList
+Core.Object subclass: #'UI.HistoryList'
 	instanceVariableNames: 'history position maxAge searchPolicy'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Object subclass: #ImageManager
+Core.Object subclass: #'Graphics.ImageManager'
 	instanceVariableNames: 'images imageLists maskcolor backcolor'
 	classVariableNames: ''
-	imports: #(#{Win32Constants})
+	imports: #(#{OS.Win32Constants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Object subclass: #Interactor
+Core.Object subclass: #'UI.Interactor'
 	instanceVariableNames: 'presenter'
 	classVariableNames: ''
-	imports: #(#{Win32Constants})
+	imports: #(#{OS.Win32Constants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Object subclass: #LayoutContext
+Core.Object subclass: #'UI.Keyboard'
+	instanceVariableNames: 'state virtualKeys modifierKeys keyNames'
+	classVariableNames: 'DefaultInstance InvariantInstance'
+	imports: #(#{OS.Win32Constants})
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Core.Object subclass: #'UI.LayoutContext'
 	instanceVariableNames: 'container positions'
 	classVariableNames: ''
-	imports: #(#{Win32Constants})
+	imports: #(#{OS.Win32Constants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Object subclass: #LayoutManager
+Core.Object subclass: #'UI.LayoutManager'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Object subclass: #MenuItem
+Core.Object subclass: #'UI.MenuItem'
 	instanceVariableNames: 'flags'
 	classVariableNames: 'Dividers'
-	imports: #(#{Win32Constants})
+	imports: #(#{OS.Win32Constants})
 	classInstanceVariableNames: ''
 	classConstants: {
 		'StringSeparator' -> $/.
 		'StylesMask' -> 16rFFFFF
 	}!
-Object subclass: #Presenter
+Core.Object subclass: #'UI.Presenter'
 	instanceVariableNames: 'model view parentPresenter events subPresenters names helpId'
 	classVariableNames: ''
-	imports: #(#{Win32Constants})
+	imports: #(#{OS.Win32Constants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Object subclass: #SystemMetrics
+Core.Object subclass: #'OS.SystemMetrics'
 	instanceVariableNames: 'menuCheckExtent smallIconExtent largeIconExtent dragHysteresis scrollThumbExtent sizingFrameExtent dialogFrameExtent borderExtent nonClientMetrics menuFont edgeExtent hasFlatMenus iconTitleFont hasSmoothScrollingLists isVistaOrLater defaultColorDepth hasIconScaleDown isNotWine'
 	classVariableNames: 'Current'
-	imports: #(#{Win32Constants})
+	imports: #(#{OS.Win32Constants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Object subclass: #View
+Core.Object subclass: #'UI.View'
 	instanceVariableNames: 'handle creationParent creationStyle presenter model backcolor preferredExtent flags contextMenu font events interactor'
 	classVariableNames: 'MessageMap NextId ViewClosedError WndClassAtom'
-	imports: #(#{Win32Constants} #{Win32Errors})
+	imports: #(#{OS.Win32Constants} #{OS.Win32Errors})
 	classInstanceVariableNames: 'theme'
 	classConstants: {
 		'CreateCenteredMask' -> 16r40.
@@ -1542,241 +1525,533 @@ Object subclass: #View
 		'UIValidMask' -> 16r10.
 		'UsePreferredExtentMask' -> 16r100
 	}!
-Object subclass: #ViewState
+Core.Object subclass: #'UI.ViewState'
 	instanceVariableNames: 'view state placement subViewStates'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Canvas subclass: #PrinterCanvas
+Graphics.Canvas subclass: #'Graphics.PrinterCanvas'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Color subclass: #AbstractRGB
+Graphics.Color subclass: #'Graphics.AbstractRGB'
 	instanceVariableNames: 'code'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Color subclass: #IndexedColor
+Graphics.Color subclass: #'Graphics.IndexedColor'
 	instanceVariableNames: 'index'
 	classVariableNames: 'InstancesByIndex InstancesByName Names'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Color subclass: #SystemColor
+Graphics.Color subclass: #'Graphics.SystemColor'
 	instanceVariableNames: 'id'
 	classVariableNames: 'ColorsById NamesById'
-	imports: #(#{Win32Constants})
+	imports: #(#{OS.Win32Constants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Color subclass: #VirtualColor
+Graphics.Color subclass: #'Graphics.VirtualColor'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-AbstractRGB subclass: #ARGB
+Graphics.AbstractRGB subclass: #'Graphics.ARGB'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-AbstractRGB subclass: #ColorRef
+Graphics.AbstractRGB subclass: #'Graphics.ColorRef'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ColorRef subclass: #ColorDefault
+Graphics.ColorRef subclass: #'Graphics.ColorDefault'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ColorRef subclass: #ColorNone
+Graphics.ColorRef subclass: #'Graphics.ColorNone'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ColorRef subclass: #RGB
+Graphics.ColorRef subclass: #'Graphics.RGB'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-VirtualColor subclass: #PluggableColor
+Graphics.VirtualColor subclass: #'Graphics.PluggableColor'
 	instanceVariableNames: 'valuable'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-VirtualColor subclass: #ThemeColor
+Graphics.VirtualColor subclass: #'Graphics.ThemeColor'
 	instanceVariableNames: 'name actualColor'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-CommandDescription subclass: #ClosedCommandDescription
+UI.CommandDescription subclass: #'UI.ClosedCommandDescription'
 	instanceVariableNames: 'queryBlock receiver'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-CommandPolicy subclass: #DelegatingCommandPolicy
+UI.CommandPolicy subclass: #'UI.DelegatingCommandPolicy'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-CommandPolicy subclass: #LegacyCommandPolicy
+UI.CommandPolicy subclass: #'UI.LegacyCommandPolicy'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-DragDropObject subclass: #InternalDragDropObject
+UI.DragDropObject subclass: #'UI.InternalDragDropObject'
 	instanceVariableNames: 'availableFormats'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-DragDropSession subclass: #InternalDragDropSession
+UI.DragDropSession subclass: #'UI.InternalDragDropSession'
 	instanceVariableNames: 'lastImageKey imageList oldCursor dragButton operationDescriptions'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Event subclass: #SelectionChangeEvent
+UI.Event subclass: #'UI.LabelEditEvent'
+	instanceVariableNames: 'cancel item object text'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+UI.Event subclass: #'UI.SelectionChangeEvent'
 	instanceVariableNames: 'newSelections oldSelections cause'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Event subclass: #WindowsEvent
+UI.Event subclass: #'UI.WindowsEvent'
 	instanceVariableNames: 'message wParam lParam lResult'
 	classVariableNames: ''
-	imports: #(#{Win32Constants})
+	imports: #(#{OS.Win32Constants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-SelectionChangeEvent subclass: #SelectionChangedEvent
+UI.LabelEditEvent subclass: #'UI.LabelEditedEvent'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-SelectionChangeEvent subclass: #SelectionChangingEvent
+UI.LabelEditEvent subclass: #'UI.LabelEditingEvent'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+UI.SelectionChangeEvent subclass: #'UI.SelectionChangedEvent'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+UI.SelectionChangeEvent subclass: #'UI.SelectionChangingEvent'
 	instanceVariableNames: 'permit'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-WindowsEvent subclass: #ColorEvent
+UI.WindowsEvent subclass: #'UI.ColorEvent'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-WindowsEvent subclass: #KeyEvent
+UI.WindowsEvent subclass: #'UI.KeyEvent'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-WindowsEvent subclass: #PaintEvent
+UI.WindowsEvent subclass: #'UI.PaintEvent'
 	instanceVariableNames: 'hdc paintStruct'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-WindowsEvent subclass: #PointEvent
+UI.WindowsEvent subclass: #'UI.PointEvent'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-WindowsEvent subclass: #PositionEvent
+UI.WindowsEvent subclass: #'UI.PositionEvent'
 	instanceVariableNames: 'lpwp'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-WindowsEvent subclass: #ScrollEvent
+UI.WindowsEvent subclass: #'UI.ScrollEvent'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-WindowsEvent subclass: #SettingsChangeEvent
+UI.WindowsEvent subclass: #'UI.SettingsChangeEvent'
 	instanceVariableNames: 'area'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-WindowsEvent subclass: #SizeEvent
+UI.WindowsEvent subclass: #'UI.SizeEvent'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-PointEvent subclass: #MouseEvent
+UI.PointEvent subclass: #'UI.MouseEvent'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-MouseEvent subclass: #MouseWheelEvent
+UI.MouseEvent subclass: #'UI.MouseWheelEvent'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ExternalLibrary subclass: #CommCtrlLibrary
+Graphics.GraphicsTool subclass: #'UI.AcceleratorTable'
+	instanceVariableNames: 'commands'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Graphics.GraphicsTool subclass: #'Graphics.Brush'
+	instanceVariableNames: 'logBrush'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Graphics.GraphicsTool subclass: #'Graphics.Font'
+	instanceVariableNames: 'logfont resolution'
+	classVariableNames: 'System'
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Graphics.GraphicsTool subclass: #'Graphics.Image'
+	instanceVariableNames: 'fileLocator identifier instanceHandle'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Graphics.GraphicsTool subclass: #'Graphics.ImageList'
+	instanceVariableNames: 'extent initialSize growBy createFlags'
+	classVariableNames: ''
+	imports: #(#{OS.CommCtrlConstants})
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Graphics.GraphicsTool subclass: #'UI.Menu'
+	instanceVariableNames: 'items text name flags image imageManager id _reserved1 _reserved2'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Graphics.GraphicsTool subclass: #'Graphics.Pen'
+	instanceVariableNames: 'logPen'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Graphics.GraphicsTool subclass: #'Graphics.Region'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Graphics.Brush subclass: #'Graphics.HatchBrush'
+	instanceVariableNames: 'id color'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Graphics.Brush subclass: #'Graphics.StockBrush'
+	instanceVariableNames: 'id'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Graphics.StockBrush subclass: #'Graphics.SysColorBrush'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Graphics.Font subclass: #'Graphics.StockFont'
+	instanceVariableNames: 'id'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Graphics.Image subclass: #'Graphics.Bitmap'
+	instanceVariableNames: 'hdc flags extent'
+	classVariableNames: 'SharedBitmaps'
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {
+		'IsSharedMask' -> 16r2.
+		'Map3DColorsMask' -> 16r1
+	}!
+Graphics.Image subclass: #'Graphics.Icon'
+	instanceVariableNames: ''
+	classVariableNames: 'Blank DefaultApplication Error Information Question Warning WinLogo'
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Graphics.Bitmap subclass: #'Graphics.DIBSection'
+	instanceVariableNames: 'depth imageBits'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Graphics.Icon subclass: #'Graphics.Cursor'
+	instanceVariableNames: ''
+	classVariableNames: 'AppStarting Arrow Cross Current DDCopy DDCopyScroll DDLink DDLinkScroll DDMove DDMoveScroll DDNone Hand Help IBeam No SizeAll SizeNESW SizeNS SizeNWSE SizeWE SplitHorizontal SplitVertical UpArrow Wait'
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Graphics.Icon subclass: #'Graphics.NullIcon'
+	instanceVariableNames: ''
+	classVariableNames: 'Current'
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+UI.Menu subclass: #'UI.MenuBar'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Graphics.Pen subclass: #'Graphics.StockPen'
+	instanceVariableNames: 'id'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Graphics.ImageManager subclass: #'Graphics.IconImageManager'
+	instanceVariableNames: 'bitmaps'
+	classVariableNames: 'Current'
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Kernel.InputState subclass: #'UI.GuiInputState'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+UI.Interactor subclass: #'UI.CapturingInteractor'
+	instanceVariableNames: 'oldInteractor stateFlags'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {
+		'HotMask' -> 16r1.
+		'LeftDownMask' -> 16r4.
+		'MiddleDownMask' -> 16r8.
+		'RightDownMask' -> 16r10
+	}!
+UI.CapturingInteractor subclass: #'UI.MouseTracker'
+	instanceVariableNames: 'dragButton target startPoint startPointLocal origin hysteresis _unused10 trackPosition constrain'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {
+		'TrackingMask' -> 16r400
+	}!
+UI.MouseTracker subclass: #'UI.DraggableViewInteractor'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+UI.LayoutManager subclass: #'UI.BorderLayout'
+	instanceVariableNames: 'horizontalGap verticalGap north south east west center'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+UI.LayoutManager subclass: #'UI.FlowLayout'
+	instanceVariableNames: 'horizontalGap verticalGap flags'
+	classVariableNames: 'AlignmentMap'
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {
+		'AlignBottom' -> 16r8.
+		'AlignHCenter' -> 16r1.
+		'AlignLeft' -> 16r0.
+		'AlignmentMask' -> 16rF.
+		'AlignRight' -> 16r2.
+		'AlignTop' -> 16r0.
+		'AlignVCenter' -> 16r4
+	}!
+UI.LayoutManager subclass: #'UI.FramingLayout'
+	instanceVariableNames: 'framings'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+UI.LayoutManager subclass: #'UI.GridLayout'
+	instanceVariableNames: 'rows columns horizontalGap verticalGap'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+UI.LayoutManager subclass: #'UI.LinearLayout'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+UI.LinearLayout subclass: #'UI.ProportionalLayout'
+	instanceVariableNames: 'proportions isVertical'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+External.Library subclass: #'OS.CommCtrlLibrary'
 	instanceVariableNames: ''
 	classVariableNames: 'InitFlags'
-	imports: #(#{CommCtrlConstants})
+	imports: #(#{OS.CommCtrlConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ExternalLibrary subclass: #DwmApiLibrary
+External.Library subclass: #'OS.DwmApiLibrary'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ExternalLibrary subclass: #HTMLHelpLibrary
+External.Library subclass: #'OS.HTMLHelpLibrary'
 	instanceVariableNames: 'cookie'
 	classVariableNames: ''
-	imports: #(#{HTMLHelpConstants})
+	imports: #(#{OS.HTMLHelpConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ExternalLibrary subclass: #ThemeLibrary
+External.Library subclass: #'OS.ThemeLibrary'
 	instanceVariableNames: ''
 	classVariableNames: 'IsAppThemed'
-	imports: #(#{ThemeConstants})
+	imports: #(#{OS.ThemeConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-PermanentLibrary subclass: #GDILibrary
+External.PermanentLibrary subclass: #'OS.GDILibrary'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ThemeLibrary subclass: #MockThemeLibrary
+OS.ThemeLibrary subclass: #'OS.MockThemeLibrary'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ThemeLibrary subclass: #VistaThemeLibrary
+OS.ThemeLibrary subclass: #'OS.VistaThemeLibrary'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ExternalStructure subclass: #DEVMODE
+UI.MenuItem subclass: #'UI.CommandMenuItem'
+	instanceVariableNames: 'commandDescription image _reserved'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {
+		'IsDefaultMask' -> 16r100000
+	}!
+UI.MenuItem subclass: #'UI.DividerMenuItem'
+	instanceVariableNames: ''
+	classVariableNames: 'BarBreak Break DividerLookup Separator'
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+UI.Presenter subclass: #'UI.SelectableItemsPresenter'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+UI.Presenter subclass: #'UI.Shell'
+	instanceVariableNames: 'caption commandHistory'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+UI.Presenter subclass: #'UI.ValuePresenter'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+UI.Shell subclass: #'UI.Dialog'
+	instanceVariableNames: 'confirmed ownerView'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+UI.Dialog subclass: #'UI.ValueDialog'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Core.SessionManager subclass: #'UI.GUISessionManager'
+	instanceVariableNames: 'savedWindows'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {
+		'NoSplashMask' -> 16r2.
+		'UnattendedMask' -> 16r4
+	}!
+UI.GUISessionManager subclass: #'UI.RuntimeSessionManager'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+UI.RuntimeSessionManager subclass: #'UI.DefaultShellSessionManager'
+	instanceVariableNames: 'mainShellClass'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Kernel.STBProxy subclass: #'UI.STBViewProxy'
+	instanceVariableNames: 'viewClass instVars state placement subViews resolution events version'
+	classVariableNames: ''
+	imports: #(#{OS.Win32Constants})
+	classInstanceVariableNames: ''
+	classConstants: {
+		'CreationParentIndex' -> 16r2.
+		'CreationStyleIndex' -> 16r3.
+		'EventsIndex' -> 16rB.
+		'HandleIndex' -> 16r1
+	}!
+External.Structure subclass: #'OS.DEVMODE'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -1815,13 +2090,7 @@ ExternalStructure subclass: #DEVMODE
 		'_OffsetOf_dmTTOption' -> 16r42.
 		'_OffsetOf_dmYResolution' -> 16r40
 	}!
-ExternalStructure subclass: #ExternalSize
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-ExternalStructure subclass: #NCCALCSIZE_PARAMS
+External.Structure subclass: #'OS.NCCALCSIZE_PARAMS'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -1830,16 +2099,13 @@ ExternalStructure subclass: #NCCALCSIZE_PARAMS
 		'_OffsetOf_lppos' -> 16r30.
 		'_OffsetOf_rgrc' -> 16r0
 	}!
-ExternalPoint subclass: #POINTF
+External.Structure subclass: #'External.SIZE'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {
-		'_OffsetOf_x' -> 16r0.
-		'_OffsetOf_y' -> 16r4
-	}!
-ExternalSize subclass: #SIZE
+	classConstants: {}!
+External.SIZE subclass: #'OS.SIZEL'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -1848,7 +2114,7 @@ ExternalSize subclass: #SIZE
 		'_OffsetOf_cx' -> 16r0.
 		'_OffsetOf_cy' -> 16r4
 	}!
-Win32Structure subclass: #AbstractLOGFONT
+OS.Win32Structure subclass: #'OS.AbstractLOGFONT'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -1868,7 +2134,7 @@ Win32Structure subclass: #AbstractLOGFONT
 		'_OffsetOf_lfWeight' -> 16r10.
 		'_OffsetOf_lfWidth' -> 16r4
 	}!
-Win32Structure subclass: #ACCEL
+OS.Win32Structure subclass: #'OS.ACCEL'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -1878,7 +2144,7 @@ Win32Structure subclass: #ACCEL
 		'_OffsetOf_fVirt' -> 16r0.
 		'_OffsetOf_key' -> 16r2
 	}!
-Win32Structure subclass: #BITMAP
+OS.Win32Structure subclass: #'OS.BITMAP'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -1892,7 +2158,7 @@ Win32Structure subclass: #BITMAP
 		'_OffsetOf_bmWidth' -> 16r4.
 		'_OffsetOf_bmWidthBytes' -> 16rC
 	}!
-Win32Structure subclass: #BITMAPINFO
+OS.Win32Structure subclass: #'OS.BITMAPINFO'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -1901,7 +2167,7 @@ Win32Structure subclass: #BITMAPINFO
 		'_OffsetOf_bmiColors' -> 16r28.
 		'_OffsetOf_bmiHeader' -> 16r0
 	}!
-Win32Structure subclass: #BITMAPINFOHEADER
+OS.Win32Structure subclass: #'OS.BITMAPINFOHEADER'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -1919,7 +2185,7 @@ Win32Structure subclass: #BITMAPINFOHEADER
 		'_OffsetOf_biYPelsPerMeter' -> 16r1C.
 		'_OffsetOf_dwSize' -> 16r0
 	}!
-Win32Structure subclass: #BLENDFUNCTION
+OS.Win32Structure subclass: #'OS.BLENDFUNCTION'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -1930,7 +2196,7 @@ Win32Structure subclass: #BLENDFUNCTION
 		'_OffsetOf_BlendOp' -> 16r0.
 		'_OffsetOf_SourceConstantAlpha' -> 16r2
 	}!
-Win32Structure subclass: #BP_ANIMATIONPARAMS
+OS.Win32Structure subclass: #'OS.BP_ANIMATIONPARAMS'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -1941,7 +2207,7 @@ Win32Structure subclass: #BP_ANIMATIONPARAMS
 		'_OffsetOf_dwSize' -> 16r0.
 		'_OffsetOf_style' -> 16r8
 	}!
-Win32Structure subclass: #BP_PAINTPARAMS
+OS.Win32Structure subclass: #'OS.BP_PAINTPARAMS'
 	instanceVariableNames: 'blendFunction'
 	classVariableNames: ''
 	imports: #()
@@ -1952,7 +2218,7 @@ Win32Structure subclass: #BP_PAINTPARAMS
 		'_OffsetOf_pBlendFunction' -> 16rC.
 		'_OffsetOf_prcExclude' -> 16r8
 	}!
-Win32Structure subclass: #CHARRANGE
+OS.Win32Structure subclass: #'OS.CHARRANGE'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -1961,7 +2227,7 @@ Win32Structure subclass: #CHARRANGE
 		'_OffsetOf_cpMax' -> 16r4.
 		'_OffsetOf_cpMin' -> 16r0
 	}!
-Win32Structure subclass: #DIBSECTION
+OS.Win32Structure subclass: #'OS.DIBSECTION'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -1973,7 +2239,7 @@ Win32Structure subclass: #DIBSECTION
 		'_OffsetOf_dshSection' -> 16r4C.
 		'_OffsetOf_dsOffset' -> 16r50
 	}!
-Win32Structure subclass: #DOCINFOW
+OS.Win32Structure subclass: #'OS.DOCINFOW'
 	instanceVariableNames: 'docName'
 	classVariableNames: ''
 	imports: #()
@@ -1985,7 +2251,7 @@ Win32Structure subclass: #DOCINFOW
 		'_OffsetOf_lpszDocName' -> 16r4.
 		'_OffsetOf_lpszOutput' -> 16r8
 	}!
-Win32Structure subclass: #DRAWITEMSTRUCT
+OS.Win32Structure subclass: #'OS.DRAWITEMSTRUCT'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -2001,7 +2267,7 @@ Win32Structure subclass: #DRAWITEMSTRUCT
 		'_OffsetOf_itemState' -> 16r10.
 		'_OffsetOf_rcItem' -> 16r1C
 	}!
-Win32Structure subclass: #DTBGOPTS
+OS.Win32Structure subclass: #'OS.DTBGOPTS'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -2011,7 +2277,7 @@ Win32Structure subclass: #DTBGOPTS
 		'_OffsetOf_dwSize' -> 16r0.
 		'_OffsetOf_rcClip' -> 16r8
 	}!
-Win32Structure subclass: #FLASHWINFO
+OS.Win32Structure subclass: #'OS.FLASHWINFO'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -2023,7 +2289,7 @@ Win32Structure subclass: #FLASHWINFO
 		'_OffsetOf_hwnd' -> 16r4.
 		'_OffsetOf_uCount' -> 16rC
 	}!
-Win32Structure subclass: #GRADIENT_RECT
+OS.Win32Structure subclass: #'OS.GRADIENT_RECT'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -2032,7 +2298,7 @@ Win32Structure subclass: #GRADIENT_RECT
 		'_OffsetOf_lowerRight' -> 16r4.
 		'_OffsetOf_upperLeft' -> 16r0
 	}!
-Win32Structure subclass: #GRADIENT_TRIANGLE
+OS.Win32Structure subclass: #'OS.GRADIENT_TRIANGLE'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -2042,7 +2308,7 @@ Win32Structure subclass: #GRADIENT_TRIANGLE
 		'_OffsetOf_Vertex2' -> 16r4.
 		'_OffsetOf_Vertex3' -> 16r8
 	}!
-Win32Structure subclass: #ICONINFO
+OS.Win32Structure subclass: #'OS.ICONINFO'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -2054,7 +2320,7 @@ Win32Structure subclass: #ICONINFO
 		'_OffsetOf_xHotspot' -> 16r4.
 		'_OffsetOf_yHotspot' -> 16r8
 	}!
-Win32Structure subclass: #LASTINPUTINFO
+OS.Win32Structure subclass: #'OS.LASTINPUTINFO'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -2063,7 +2329,7 @@ Win32Structure subclass: #LASTINPUTINFO
 		'_OffsetOf_dwSize' -> 16r0.
 		'_OffsetOf_dwTime' -> 16r4
 	}!
-Win32Structure subclass: #LOGBRUSH
+OS.Win32Structure subclass: #'OS.LOGBRUSH'
 	instanceVariableNames: 'hatch'
 	classVariableNames: ''
 	imports: #()
@@ -2073,7 +2339,7 @@ Win32Structure subclass: #LOGBRUSH
 		'_OffsetOf_lbHatch' -> 16r8.
 		'_OffsetOf_lbStyle' -> 16r0
 	}!
-Win32Structure subclass: #LOGPALETTE
+OS.Win32Structure subclass: #'OS.LOGPALETTE'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -2083,7 +2349,7 @@ Win32Structure subclass: #LOGPALETTE
 		'_OffsetOf_palPalEntry' -> 16r4.
 		'_OffsetOf_palVersion' -> 16r0
 	}!
-Win32Structure subclass: #LOGPEN
+OS.Win32Structure subclass: #'OS.LOGPEN'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -2093,7 +2359,7 @@ Win32Structure subclass: #LOGPEN
 		'_OffsetOf_lopnStyle' -> 16r0.
 		'_OffsetOf_lopnWidth' -> 16r4
 	}!
-Win32Structure subclass: #MARGINS
+OS.Win32Structure subclass: #'OS.MARGINS'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -2104,7 +2370,7 @@ Win32Structure subclass: #MARGINS
 		'_OffsetOf_cyBottomHeight' -> 16rC.
 		'_OffsetOf_cyTopHeight' -> 16r8
 	}!
-Win32Structure subclass: #MEASUREITEMSTRUCT
+OS.Win32Structure subclass: #'OS.MEASUREITEMSTRUCT'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -2117,7 +2383,7 @@ Win32Structure subclass: #MEASUREITEMSTRUCT
 		'_OffsetOf_itemID' -> 16r8.
 		'_OffsetOf_itemWidth' -> 16rC
 	}!
-Win32Structure subclass: #MENUINFO
+OS.Win32Structure subclass: #'OS.MENUINFO'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -2131,7 +2397,7 @@ Win32Structure subclass: #MENUINFO
 		'_OffsetOf_fMask' -> 16r4.
 		'_OffsetOf_hbrBack' -> 16r10
 	}!
-Win32Structure subclass: #MENUITEMINFOW
+OS.Win32Structure subclass: #'OS.MENUITEMINFOW'
 	instanceVariableNames: 'text bitmap'
 	classVariableNames: ''
 	imports: #()
@@ -2150,7 +2416,7 @@ Win32Structure subclass: #MENUITEMINFOW
 		'_OffsetOf_hSubMenu' -> 16r14.
 		'_OffsetOf_wID' -> 16r10
 	}!
-Win32Structure subclass: #MINMAXINFO
+OS.Win32Structure subclass: #'OS.MINMAXINFO'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -2162,17 +2428,17 @@ Win32Structure subclass: #MINMAXINFO
 		'_OffsetOf_ptMinTrackSize' -> 16r18.
 		'_OffsetOf_ptReserved' -> 16r0
 	}!
-Win32Structure subclass: #NMHDR
+OS.Win32Structure subclass: #'OS.NMHDR'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{CommCtrlConstants})
+	imports: #(#{OS.CommCtrlConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_code' -> 16r8.
 		'_OffsetOf_hwndFrom' -> 16r0.
 		'_OffsetOf_idFrom' -> 16r4
 	}!
-Win32Structure subclass: #NONCLIENTMETRICSW
+OS.Win32Structure subclass: #'OS.NONCLIENTMETRICSW'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -2195,7 +2461,7 @@ Win32Structure subclass: #NONCLIENTMETRICSW
 		'_OffsetOf_lfSmCaptionFont' -> 16r7C.
 		'_OffsetOf_lfStatusFont' -> 16r13C
 	}!
-Win32Structure subclass: #NOTIFYICONDATAW
+OS.Win32Structure subclass: #'OS.NOTIFYICONDATAW'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -2209,7 +2475,7 @@ Win32Structure subclass: #NOTIFYICONDATAW
 		'_OffsetOf_uFlags' -> 16rC.
 		'_OffsetOf_uID' -> 16r8
 	}!
-Win32Structure subclass: #OUTLINETEXTMETRICW
+OS.Win32Structure subclass: #'OS.OUTLINETEXTMETRICW'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -2248,7 +2514,7 @@ Win32Structure subclass: #OUTLINETEXTMETRICW
 		'_OffsetOf_otmTextMetrics' -> 16r4.
 		'_OffsetOf_otmusMinimumPPEM' -> 16r94
 	}!
-Win32Structure subclass: #PAINTSTRUCT
+OS.Win32Structure subclass: #'OS.PAINTSTRUCT'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -2261,7 +2527,7 @@ Win32Structure subclass: #PAINTSTRUCT
 		'_OffsetOf_rcPaint' -> 16r8.
 		'_OffsetOf_rgbReserved' -> 16r20
 	}!
-Win32Structure subclass: #PALETTEENTRY
+OS.Win32Structure subclass: #'OS.PALETTEENTRY'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -2272,7 +2538,7 @@ Win32Structure subclass: #PALETTEENTRY
 		'_OffsetOf_peGreen' -> 16r1.
 		'_OffsetOf_peRed' -> 16r0
 	}!
-Win32Structure subclass: #PANOSE
+OS.Win32Structure subclass: #'OS.PANOSE'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -2289,7 +2555,7 @@ Win32Structure subclass: #PANOSE
 		'_OffsetOf_bWeight' -> 16r2.
 		'_OffsetOf_bXHeight' -> 16r9
 	}!
-Win32Structure subclass: #RGBQUAD
+OS.Win32Structure subclass: #'OS.RGBQUAD'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -2300,7 +2566,7 @@ Win32Structure subclass: #RGBQUAD
 		'_OffsetOf_rgbRed' -> 16r2.
 		'_OffsetOf_rgbReserved' -> 16r3
 	}!
-Win32Structure subclass: #RGNDATA
+OS.Win32Structure subclass: #'OS.RGNDATA'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -2312,7 +2578,7 @@ Win32Structure subclass: #RGNDATA
 		'_OffsetOf_nRgnSize' -> 16rC.
 		'_OffsetOf_rcBound' -> 16r10
 	}!
-Win32Structure subclass: #SCROLLINFO
+OS.Win32Structure subclass: #'OS.SCROLLINFO'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -2326,7 +2592,7 @@ Win32Structure subclass: #SCROLLINFO
 		'_OffsetOf_nPos' -> 16r14.
 		'_OffsetOf_nTrackPos' -> 16r18
 	}!
-Win32Structure subclass: #TEXTMETRICW
+OS.Win32Structure subclass: #'OS.TEXTMETRICW'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -2353,7 +2619,7 @@ Win32Structure subclass: #TEXTMETRICW
 		'_OffsetOf_tmUnderlined' -> 16r35.
 		'_OffsetOf_tmWeight' -> 16r1C
 	}!
-Win32Structure subclass: #TRACKMOUSEEVENT
+OS.Win32Structure subclass: #'OS.TRACKMOUSEEVENT'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -2364,7 +2630,7 @@ Win32Structure subclass: #TRACKMOUSEEVENT
 		'_OffsetOf_dwSize' -> 16r0.
 		'_OffsetOf_hwndTrack' -> 16r8
 	}!
-Win32Structure subclass: #TRIVERTEX
+OS.Win32Structure subclass: #'OS.TRIVERTEX'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -2377,7 +2643,7 @@ Win32Structure subclass: #TRIVERTEX
 		'_OffsetOf_x' -> 16r0.
 		'_OffsetOf_y' -> 16r4
 	}!
-Win32Structure subclass: #WINDOWPLACEMENT
+OS.Win32Structure subclass: #'OS.WINDOWPLACEMENT'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -2390,7 +2656,7 @@ Win32Structure subclass: #WINDOWPLACEMENT
 		'_OffsetOf_rcNormalPosition' -> 16r1C.
 		'_OffsetOf_showCmd' -> 16r8
 	}!
-Win32Structure subclass: #WINDOWPOS
+OS.Win32Structure subclass: #'OS.WINDOWPOS'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -2404,7 +2670,7 @@ Win32Structure subclass: #WINDOWPOS
 		'_OffsetOf_x' -> 16r8.
 		'_OffsetOf_y' -> 16rC
 	}!
-Win32Structure subclass: #WNDCLASS
+OS.Win32Structure subclass: #'OS.WNDCLASS'
 	instanceVariableNames: 'menuName className'
 	classVariableNames: ''
 	imports: #()
@@ -2421,7 +2687,7 @@ Win32Structure subclass: #WNDCLASS
 		'_OffsetOf_lpszMenuName' -> 16r20.
 		'_OffsetOf_style' -> 16r0
 	}!
-AbstractLOGFONT subclass: #LOGFONT
+OS.AbstractLOGFONT subclass: #'OS.LOGFONT'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -2429,7 +2695,7 @@ AbstractLOGFONT subclass: #LOGFONT
 	classConstants: {
 		'_OffsetOf_lfFaceName' -> 16r1C
 	}!
-AbstractLOGFONT subclass: #LOGFONTW
+OS.AbstractLOGFONT subclass: #'OS.LOGFONTW'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -2437,7 +2703,7 @@ AbstractLOGFONT subclass: #LOGFONTW
 	classConstants: {
 		'_OffsetOf_lfFaceName' -> 16r1C
 	}!
-NMHDR subclass: #NMTTDISPINFOW
+OS.NMHDR subclass: #'OS.NMTTDISPINFOW'
 	instanceVariableNames: 'text'
 	classVariableNames: ''
 	imports: #()
@@ -2449,7 +2715,7 @@ NMHDR subclass: #NMTTDISPINFOW
 		'_OffsetOf_szText' -> 16r10.
 		'_OffsetOf_uFlags' -> 16rB4
 	}!
-TEXTMETRICW subclass: #NEWTEXTMETRICW
+OS.TEXTMETRICW subclass: #'OS.NEWTEXTMETRICW'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -2460,303 +2726,37 @@ TEXTMETRICW subclass: #NEWTEXTMETRICW
 		'_OffsetOf_ntmFlags' -> 16r3C.
 		'_OffsetOf_ntmSizeEM' -> 16r40
 	}!
-GraphicsTool subclass: #AcceleratorTable
-	instanceVariableNames: 'commands'
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-GraphicsTool subclass: #Brush
-	instanceVariableNames: 'logBrush'
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-GraphicsTool subclass: #Font
-	instanceVariableNames: 'logfont resolution'
-	classVariableNames: 'System'
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-GraphicsTool subclass: #Image
-	instanceVariableNames: 'fileLocator identifier instanceHandle'
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-GraphicsTool subclass: #Menu
-	instanceVariableNames: 'items text name flags image imageManager id _reserved1 _reserved2'
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-GraphicsTool subclass: #Pen
-	instanceVariableNames: 'logPen'
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-GraphicsTool subclass: #Region
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-GraphicsTool subclass: #WinImageList
-	instanceVariableNames: 'extent initialSize growBy createFlags'
-	classVariableNames: ''
-	imports: #(#{CommCtrlConstants})
-	classInstanceVariableNames: ''
-	classConstants: {}!
-Brush subclass: #HatchBrush
-	instanceVariableNames: 'id color'
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-Brush subclass: #StockBrush
-	instanceVariableNames: 'id'
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-StockBrush subclass: #SysColorBrush
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-Font subclass: #StockFont
-	instanceVariableNames: 'id'
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-Image subclass: #Bitmap
-	instanceVariableNames: 'hdc flags extent'
-	classVariableNames: 'SharedBitmaps'
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {
-		'IsSharedMask' -> 16r2.
-		'Map3DColorsMask' -> 16r1
-	}!
-Image subclass: #Icon
-	instanceVariableNames: ''
-	classVariableNames: 'Blank DefaultApplication Error Information Question Warning WinLogo'
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-Bitmap subclass: #DIBSection
-	instanceVariableNames: 'depth imageBits'
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-Icon subclass: #Cursor
-	instanceVariableNames: ''
-	classVariableNames: 'AppStarting Arrow Cross Current DDCopy DDCopyScroll DDLink DDLinkScroll DDMove DDMoveScroll DDNone Hand Help IBeam No SizeAll SizeNESW SizeNS SizeNWSE SizeWE SplitHorizontal SplitVertical UpArrow Wait'
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-Icon subclass: #NullIcon
-	instanceVariableNames: ''
-	classVariableNames: 'Current'
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-Menu subclass: #MenuBar
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-Pen subclass: #StockPen
-	instanceVariableNames: 'id'
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-ImageManager subclass: #IconImageManager
-	instanceVariableNames: 'bitmaps'
-	classVariableNames: 'Current'
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-InputState subclass: #GuiInputState
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-Interactor subclass: #CapturingInteractor
-	instanceVariableNames: 'oldInteractor stateFlags'
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {
-		'HotMask' -> 16r1.
-		'LeftDownMask' -> 16r4.
-		'MiddleDownMask' -> 16r8.
-		'RightDownMask' -> 16r10
-	}!
-CapturingInteractor subclass: #MouseTracker
-	instanceVariableNames: 'dragButton target startPoint startPointLocal origin hysteresis _unused10 trackPosition constrain'
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {
-		'TrackingMask' -> 16r400
-	}!
-MouseTracker subclass: #DraggableViewInteractor
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-LayoutManager subclass: #BorderLayout
-	instanceVariableNames: 'horizontalGap verticalGap north south east west center'
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-LayoutManager subclass: #FlowLayout
-	instanceVariableNames: 'horizontalGap verticalGap flags'
-	classVariableNames: 'AlignmentMap'
-	imports: #(#{AlignmentFlags})
-	classInstanceVariableNames: ''
-	classConstants: {}!
-LayoutManager subclass: #FramingLayout
-	instanceVariableNames: 'framings'
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-LayoutManager subclass: #GridLayout
-	instanceVariableNames: 'rows columns horizontalGap verticalGap'
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-LayoutManager subclass: #LinearLayout
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-LinearLayout subclass: #ProportionalLayout
-	instanceVariableNames: 'proportions isVertical'
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-MenuItem subclass: #CommandMenuItem
-	instanceVariableNames: 'commandDescription image _reserved'
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {
-		'IsDefaultMask' -> 16r100000
-	}!
-MenuItem subclass: #DividerMenuItem
-	instanceVariableNames: ''
-	classVariableNames: 'BarBreak Break DividerLookup Separator'
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-Presenter subclass: #SelectableItemsPresenter
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-Presenter subclass: #Shell
-	instanceVariableNames: 'caption commandHistory'
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-Presenter subclass: #ValuePresenter
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-Shell subclass: #Dialog
-	instanceVariableNames: 'confirmed ownerView'
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-Dialog subclass: #ValueDialog
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-SessionManager subclass: #GUISessionManager
-	instanceVariableNames: 'savedWindows'
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {
-		'NoSplashMask' -> 16r2.
-		'UnattendedMask' -> 16r4
-	}!
-GUISessionManager subclass: #RuntimeSessionManager
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-RuntimeSessionManager subclass: #DefaultShellSessionManager
-	instanceVariableNames: 'mainShellClass'
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-STBProxy subclass: #STBViewProxy
-	instanceVariableNames: 'viewClass instVars state placement subViews resolution events version'
-	classVariableNames: ''
-	imports: #(#{Win32Constants})
-	classInstanceVariableNames: ''
-	classConstants: {
-		'CreationParentIndex' -> 16r2.
-		'CreationStyleIndex' -> 16r3.
-		'EventsIndex' -> 16rB.
-		'HandleIndex' -> 16r1
-	}!
-View subclass: #AbstractDelegatingView
+UI.View subclass: #'UI.AbstractDelegatingView'
 	instanceVariableNames: 'resourceIdentifier referee'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-View subclass: #ContainerView
+UI.View subclass: #'UI.ContainerView'
 	instanceVariableNames: 'layoutManager names insets'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-View subclass: #ControlView
+UI.View subclass: #'UI.ControlView'
 	instanceVariableNames: 'forecolor oldWndProc'
 	classVariableNames: 'CommonControlCallError'
-	imports: #(#{CommCtrlConstants})
+	imports: #(#{OS.CommCtrlConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-View subclass: #DesktopView
+UI.View subclass: #'UI.DesktopView'
 	instanceVariableNames: 'resolution defaultExtentBlock dvReserved1 dvReserved2'
 	classVariableNames: 'Current'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-View subclass: #DoubleBufferedView
+UI.View subclass: #'UI.DoubleBufferedView'
 	instanceVariableNames: 'backSurface requiresRender'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-View subclass: #Splitter
+UI.View subclass: #'UI.Splitter'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -2764,90 +2764,90 @@ View subclass: #Splitter
 	classConstants: {
 		'FlatMask' -> 16r100000
 	}!
-AbstractDelegatingView subclass: #AbstractNonReferenceDelegatingView
+UI.AbstractDelegatingView subclass: #'UI.AbstractNonReferenceDelegatingView'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-AbstractDelegatingView subclass: #ReferenceView
+UI.AbstractDelegatingView subclass: #'UI.ReferenceView'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ContainerView subclass: #ShellView
+UI.ContainerView subclass: #'UI.ShellView'
 	instanceVariableNames: 'menuBar acceleratorTable combinedAcceleratorTable lastFocus defaultButton largeIcon smallIcon maxExtent minExtent flashes svFlags _svReserved2'
 	classVariableNames: 'CreateHookBlock DefaultExtentBlock DialogMessageMap'
-	imports: #(#{ButtonConstants})
+	imports: #(#{OS.ButtonConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
 		'DefaultButtonIndex' -> 16r14.
 		'TransientMask' -> 16r1
 	}!
-ShellView subclass: #DialogView
+UI.ShellView subclass: #'UI.DialogView'
 	instanceVariableNames: 'endModal isModal oldWndProc'
 	classVariableNames: ''
-	imports: #(#{ThemeConstants})
+	imports: #(#{OS.ThemeConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
 		'InProcLoopMask' -> 16r100000
 	}!
-ShellView subclass: #Splash
+UI.ShellView subclass: #'UI.Splash'
 	instanceVariableNames: 'splashDelay bitmap overlayWith'
 	classVariableNames: ''
-	imports: #(#{Win32Constants})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ControlView subclass: #CommandButton
+UI.ControlView subclass: #'UI.CommandButton'
 	instanceVariableNames: 'commandDescription'
 	classVariableNames: 'StandardCommands'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ControlView subclass: #GroupBox
+UI.ControlView subclass: #'UI.GroupBox'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{ButtonConstants})
+	imports: #(#{OS.ButtonConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ControlView subclass: #StaticRectangle
+UI.ControlView subclass: #'UI.StaticRectangle'
 	instanceVariableNames: ''
 	classVariableNames: 'StyleMap'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ControlView subclass: #ValueConvertingControlView
+UI.ControlView subclass: #'UI.ValueConvertingControlView'
 	instanceVariableNames: 'typeconverter'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-CommandButton subclass: #PushButton
+UI.CommandButton subclass: #'UI.PushButton'
 	instanceVariableNames: 'image isDefault note _reserved1 _reserved2'
 	classVariableNames: 'ButtonStyleMap'
-	imports: #(#{ButtonConstants})
+	imports: #(#{OS.ButtonConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ValueConvertingControlView subclass: #CheckButton
+UI.ValueConvertingControlView subclass: #'UI.CheckButton'
 	instanceVariableNames: 'image'
 	classVariableNames: 'AlignmentMap'
-	imports: #(#{ButtonConstants})
+	imports: #(#{OS.ButtonConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ValueConvertingControlView subclass: #StaticView
+UI.ValueConvertingControlView subclass: #'UI.StaticView'
 	instanceVariableNames: 'unused'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-CheckButton subclass: #CheckBox
+UI.CheckButton subclass: #'UI.CheckBox'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-StaticView subclass: #ImageViewAbstract
+UI.StaticView subclass: #'UI.ImageViewAbstract'
 	instanceVariableNames: 'image viewMode ivFlags insets imageBorder'
 	classVariableNames: 'EdgeStyles'
 	imports: #()
@@ -2856,65 +2856,40 @@ StaticView subclass: #ImageViewAbstract
 		'DoubleBufferMask' -> 16r2.
 		'EraseWholeMask' -> 16r1
 	}!
-StaticView subclass: #StaticText
+UI.StaticView subclass: #'UI.StaticText'
 	instanceVariableNames: ''
 	classVariableNames: 'AlignmentMap'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-StaticText subclass: #StaticPath
+UI.StaticText subclass: #'UI.StaticPath'
 	instanceVariableNames: 'text'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 
-"Variable Aliases"!
-
-SIZEL := SIZE!
-
-
 "Loose Methods"!
 
-!AnsiString methodsFor!
+!Core.AnsiString methodsFor!
 
 copyToClipboard
 	"Copy the #String format of the receiver to the clipboard."
 
-	Clipboard current setRegisteredFormat: #AnsiString data: self! !
-!AnsiString categoriesFor: #copyToClipboard!copying!public! !
+	UI.Clipboard current setRegisteredFormat: #AnsiString data: self! !
+!Core.AnsiString categoriesFor: #copyToClipboard!copying!public! !
 
-!ClassDescription methodsFor!
+!Core.ClassDescription methodsFor!
 
 defaultIcon
 	"Answer a suitable default icon to use for this class. Not all classes use their 
 	default icon; one must define an appropriate #icon method in each class where the 
 	icon required differs from that of the superclass."
 
-	^#{Icon} value fromId: self defaultIconName! !
-!ClassDescription categoriesFor: #defaultIcon!constants!public! !
+	^#{Graphics.Icon} value fromId: self defaultIconName! !
+!Core.ClassDescription categoriesFor: #defaultIcon!constants!public! !
 
-!ConsoleSessionManager class methodsFor!
-
-icon
-	"Answers an Icon that can be used to represent this class"
-
-	^##(self) defaultIcon! !
-!ConsoleSessionManager class categoriesFor: #icon!constants!development!public! !
-
-!KernelLibrary methodsFor!
-
-getConsoleWindow
-	"Invoke the GetConsoleWindow() function of the module wrapped by the receiver.
-	Helpstring: Retrieves the window handle used by the console associated with the calling process.
-
-		wireHWND __stdcall GetConsoleWindow();"
-
-	<stdcall: handle GetConsoleWindow>
-	^self invalidCall: _failureCode! !
-!KernelLibrary categoriesFor: #getConsoleWindow!**auto generated**!public!win32 functions-console! !
-
-!MessageSend methodsFor!
+!Core.MessageSend methodsFor!
 
 queryCommand: query
 	"Private - Enters status and target details about the receiver's own command into the 
@@ -2924,9 +2899,9 @@ queryCommand: query
 
 	query isEnabled: true; receiver: self receiver.
 	^true! !
-!MessageSend categoriesFor: #queryCommand:!commands!private! !
+!Core.MessageSend categoriesFor: #queryCommand:!commands!private! !
 
-!Object methodsFor!
+!Core.Object methodsFor!
 
 addToImageList: aWinImageList mask: aColorOrNil 
 	"Private - Add a pictorial representation of the receiver to aWinImageList."
@@ -2940,11 +2915,11 @@ icon
 
 iconImageIndex
 	^self icon imageIndex! !
-!Object categoriesFor: #addToImageList:mask:!double dispatch!private! !
-!Object categoriesFor: #icon!constants!public! !
-!Object categoriesFor: #iconImageIndex!accessing!public! !
+!Core.Object categoriesFor: #addToImageList:mask:!double dispatch!private! !
+!Core.Object categoriesFor: #icon!constants!public! !
+!Core.Object categoriesFor: #iconImageIndex!accessing!public! !
 
-!Object class methodsFor!
+!Core.Object class methodsFor!
 
 icon
 	"Answers an Icon that can be used to represent this class. Here we use a constant expression 
@@ -2955,59 +2930,14 @@ icon
 	from an ExternalResourceLibrary other than the system default."
 
 	^##(self) defaultIcon! !
-!Object class categoriesFor: #icon!constants!public! !
+!Core.Object class categoriesFor: #icon!constants!public! !
 
-!ResourceIdentifier methodsFor!
-
-canShow
-	^self resourceOrNil notNil and: [self owningClass respondsTo: #show:]!
-
-fixupIcon
-	"Private - Now try to determine the icon to use from the class of the top level object in the 
-	resource. We perform a non-realizing load of the resource object."
-
-	| icon stlInFilerClass |
-	stlInFilerClass := #{STLInFiler} value.
-	icon := [(stlInFilerClass on: self resource readStream) basicNext icon] on: Error do: [:x | x icon].
-	self icon: icon.
-	^icon!
-
-icon	
-	^self propertyAt: #_icon ifAbsent: [self fixupIcon]!
-
-loadWithContext: context 
-	"Load and answer the resource represented by the receiver with context context."
-
-	^self loadWithContext: context forEdit: false!
-
-loadWithContext: context forEdit: aBoolean 
-	^self resource 
-		ifNotNil: 
-			[:resource | 
-			(STLInFiler on: resource readStream)
-				isUpgrading: aBoolean;
-				context: context;
-				next]!
-
-show
-	"Display the resource identified by the receiver in whatever way is appropriate. 
-	Answer the <Presenter> opended to display it."
-
-	^self owningClass show: self name.
-! !
-!ResourceIdentifier categoriesFor: #canShow!public!testing! !
-!ResourceIdentifier categoriesFor: #fixupIcon!helpers!private! !
-!ResourceIdentifier categoriesFor: #icon!accessing!development!public! !
-!ResourceIdentifier categoriesFor: #loadWithContext:!operations!public! !
-!ResourceIdentifier categoriesFor: #loadWithContext:forEdit:!operations!private! !
-!ResourceIdentifier categoriesFor: #show!operations!public! !
-
-!String methodsFor!
+!Core.String methodsFor!
 
 copyToClipboard
 	"Copy the receiver to the clipboard."
 
-	Clipboard current setText: self!
+	UI.Clipboard current setText: self!
 
 setTextInto: aView
 	"Private - Sent as part of a double dispatch from View objects to set their text from
@@ -3015,24 +2945,36 @@ setTextInto: aView
 	message back to aView."
 
 	aView plainText: self! !
-!String categoriesFor: #copyToClipboard!copying!public! !
-!String categoriesFor: #setTextInto:!double dispatch!private! !
+!Core.String categoriesFor: #copyToClipboard!copying!public! !
+!Core.String categoriesFor: #setTextInto:!double dispatch!private! !
 
-!Symbol methodsFor!
+!Core.Symbol methodsFor!
 
 copyToClipboard
 	"Copy the #String format of the receiver to the clipboard."
 
-	Clipboard current setRegisteredFormat: #String data: self! !
-!Symbol categoriesFor: #copyToClipboard!copying!public! !
+	UI.Clipboard current setRegisteredFormat: #String data: self! !
+!Core.Symbol categoriesFor: #copyToClipboard!copying!public! !
 
-!UndefinedObject methodsFor!
+!Core.UndefinedObject methodsFor!
 
 asResourceId
 	^self! !
-!UndefinedObject categoriesFor: #asResourceId!converting!public! !
+!Core.UndefinedObject categoriesFor: #asResourceId!converting!public! !
 
-!UserLibrary methodsFor!
+!OS.KernelLibrary methodsFor!
+
+getConsoleWindow
+	"Invoke the GetConsoleWindow() function of the module wrapped by the receiver.
+	Helpstring: Retrieves the window handle used by the console associated with the calling process.
+
+		wireHWND __stdcall GetConsoleWindow();"
+
+	<stdcall: handle GetConsoleWindow>
+	^self invalidCall: _failureCode! !
+!OS.KernelLibrary categoriesFor: #getConsoleWindow!**auto generated**!public!win32 functions-console! !
+
+!OS.UserLibrary methodsFor!
 
 adjustWindowRectEx: rect dwStyle: styleFlags bMenu: menuPresent dwExStyle: exStyleFlags
 	"Calculates the required size of the rectangle of a window with extended style based 
@@ -3046,7 +2988,7 @@ adjustWindowRectEx: rect dwStyle: styleFlags bMenu: menuPresent dwExStyle: exSty
 		DWORD dwExStyle 	// extended style
 		);"
 
-	<stdcall: bool AdjustWindowRectEx RECT* dword bool dword>
+	<stdcall: bool AdjustWindowRectEx RECTL* dword bool dword>
 	^self invalidCall: _failureCode!
 
 animateWindow: hwnd dwTime: dwTime dwFlags: dwFlags
@@ -3265,11 +3207,11 @@ drawEdge: hdc qrc: qrc edge: edge grfFlags: grfFlags
 
 		BOOL __stdcall DrawEdge(
 			[in]HDC HDC,
-			[in, out]RECT* qrc,
+			[in, out]RECTL* qrc,
 			[in]UINT edge,
 			[in]UINT grfFlags);"
 
-	<stdcall: bool DrawEdge handle RECT* dword dword>
+	<stdcall: bool DrawEdge handle RECTL* dword dword>
 	^self invalidCall: _failureCode!
 
 drawFocusRect: hdc lprc: aRECT
@@ -3279,7 +3221,7 @@ drawFocusRect: hdc lprc: aRECT
 			CONST RECT *lprc	// pointer to structure for rectangle
 		);"
 
-	<stdcall: bool DrawFocusRect handle RECT*>
+	<stdcall: bool DrawFocusRect handle RECTL*>
 	^self invalidCall: _failureCode!
 
 drawFrameControl: hdc lprc: lprc uType: uType uState: uState
@@ -3288,11 +3230,11 @@ drawFrameControl: hdc lprc: lprc uType: uType uState: uState
 
 		BOOL __stdcall DrawFrameControl(
 			[in]HDC HDC,
-			[in, out]RECT* lprc,
+			[in, out]RECTL* lprc,
 			[in]UINT uType,
 			[in]UINT uState);"
 
-	<stdcall: bool DrawFrameControl handle RECT* dword dword>
+	<stdcall: bool DrawFrameControl handle RECTL* dword dword>
 	^self invalidCall: _failureCode!
 
 drawIconEx: hDC xLeft: x yTop: y hIcon: hIcon cxWidth: w cyHeight: h istepIfAniCur: anInteger hbrFlickerFreeDraw: brush diFlags: flags
@@ -3356,7 +3298,7 @@ drawTextEx: hdc lpchText: lpchText cchText: cchText lprc: lprc dwDTFormat: dwDTF
 		);
 	"
 
-	<stdcall: sdword DrawTextExW handle lpwstr sdword RECT* dword lpvoid>
+	<stdcall: sdword DrawTextExW handle lpwstr sdword RECTL* dword lpvoid>
 	^self invalidCall: _failureCode!
 
 emptyClipboard
@@ -3431,11 +3373,11 @@ fillRect: hdc lprc: aRECT hbr: hBrush
 	right and bottom exclusive.
 			int FillRect(
 			HDC hDC,			// handle to device context 
-			CONST RECT *lprc,	// pointer to structure with rectangle  
+			CONST RECTL *lprc,	// pointer to structure with rectangle  
 			HBRUSH hbr 		// handle to brush
 		);"
 
-	<stdcall: bool FillRect handle RECT* handle>
+	<stdcall: bool FillRect handle RECTL* handle>
 	^self invalidCall: _failureCode!
 
 findWindow: lpClassName lpWindowName: lpWindowName
@@ -3465,7 +3407,7 @@ frameRect: hdc lprc: aRECT hbr: hBrush
 			HBRUSH hbr 		// handle to brush 
 		);"
 
-	<stdcall: bool FrameRect handle RECT* handle>
+	<stdcall: bool FrameRect handle RECTL* handle>
 	^self invalidCall: _failureCode!
 
 getAncestor: hwnd gaFlags: gaFlags
@@ -3507,7 +3449,7 @@ getClientRect: aWindowHandle lpRect: aRECT
 			LPRECT lpRect 	// address of structure for client coordinates
 		);"
 
-	<stdcall: bool GetClientRect handle RECT*>
+	<stdcall: bool GetClientRect handle RECTL*>
 	^self invalidCall: _failureCode!
 
 getClipboardData: format
@@ -3695,7 +3637,7 @@ getUpdateRect: hWnd lpRect: lpRect bErase: bErase
 			BOOL bErase <> // erase flag 
 		); "
 
-	<stdcall: bool GetUpdateRect handle RECT* bool>
+	<stdcall: bool GetUpdateRect handle RECTL* bool>
 	^self invalidCall: _failureCode!
 
 getWindow: hWnd uCmd: flags
@@ -3790,7 +3732,7 @@ getWindowRect: aWindowHandle lpRect: aRECT
 			LPRECT lpRect 	// address of structure for window coordinates
 		);"
 
-	<stdcall: bool GetWindowRect handle RECT*>
+	<stdcall: bool GetWindowRect handle RECTL*>
 	^self invalidCall: _failureCode!
 
 getWindowText: aWindow lpString: aBuffer nMaxCount: len
@@ -3865,7 +3807,7 @@ invalidate: hWnd lpRect: aRECT bErase: aBoolean
 			BOOL bErase			// erase-background flag 
 		);"
 
-	<stdcall: bool InvalidateRect handle RECT* bool>
+	<stdcall: bool InvalidateRect handle RECTL* bool>
 	^self invalidCall: _failureCode!
 
 invalidateRgn: hWnd hRgn: aRegion bErase: aBoolean
@@ -3891,7 +3833,7 @@ invertRect: hdc lprc: aRECT
 		CONST RECT *lprc	// address of structure with rectangle	
 		); "
 
-	<stdcall: bool InvertRect handle RECT*>
+	<stdcall: bool InvertRect handle RECTL*>
 	^self invalidCall: _failureCode!
 
 isChild: hWndParent hWnd: hWnd
@@ -4064,13 +4006,13 @@ redrawWindow: hWnd lprcUpdate: lprcUpdate hrgnUpdate: hrgnUpdate flags: flags
 	"Update the specified rectangle or region in a window's client area. 
 		BOOL RedrawWindow(
 			HWND hWnd,				// handle to window
-			CONST RECT *lprcUpdate,	// update rectangle
+			CONST RECTL *lprcUpdate,	// update rectangle
 			HRGN hrgnUpdate,			// handle to update region
 			UINT flags				// array of redraw flags
 		);
 	"
 
-	<stdcall: bool RedrawWindow handle RECT* handle dword>
+	<stdcall: bool RedrawWindow handle RECTL* handle dword>
 	^self invalidCall: _failureCode!
 
 registerClass: aWNDCLASS
@@ -4192,7 +4134,7 @@ scrollWindowEx: aWindowHandle dx: horizontalScrolling dy: verticalScrolling prcS
 		UINT flags			// scrolling flags
 	);"
 
-	<stdcall: sdword ScrollWindowEx handle sdword sdword RECT* RECT* handle lpvoid dword>
+	<stdcall: sdword ScrollWindowEx handle sdword sdword RECTL* RECTL* handle lpvoid dword>
 	^self invalidCall: _failureCode!
 
 sendDlgItemMessage: aWindowHandle nIDDlgItem: anIntegerId msg: aString wParam: wParam lParam: lParam
@@ -4426,7 +4368,7 @@ setSysColors: count lpaElements: elements lpaRgbValues: values
 			__in  const COLORREF* lpaRgbValues
 			);"
 
-	<stdcall: bool SetSysColors sdword sdword* ColorRef*>
+	<stdcall: bool SetSysColors sdword sdword* dword*>
 	^self invalidCall: _failureCode!
 
 setWindowLong: hWnd nIndex: nIndex dwNewLong: dwNewLong
@@ -4525,10 +4467,10 @@ trackPopupMenu: hMenu uFlags: uFlags x: x y: y nReserved: reserved hWnd: hWnd pr
 			int y,				// vertical position, in screen coordinates
 			int nReserved,			// reserved, must be zero
 			HWND hWnd,			// handle of owner window
-			CONST RECT *prcRect	// points to RECT that specifies no-dismissal area
+			CONST RECTL *prcRect	// points to RECT that specifies no-dismissal area
 		);"
 
-	<stdcall: bool TrackPopupMenu handle dword sdword sdword sdword handle RECT*>
+	<stdcall: bool TrackPopupMenu handle dword sdword sdword sdword handle RECTL*>
 	^self invalidCall: _failureCode!
 
 translateAccelerator: handleWindow haccl: handleAccelerators lpmsg: aMSG
@@ -4572,7 +4514,7 @@ validate: hWnd lpRect: aRECT
 			CONST RECT *lpRect		// address of rectangle coordinates 
 		);"
 
-	<stdcall: bool ValidateRect handle RECT*>
+	<stdcall: bool ValidateRect handle RECTL*>
 	^self invalidCall: _failureCode!
 
 windowFromPoint: aPOINTL
@@ -4592,149 +4534,194 @@ windowFromPoint: aPOINTL
 
 	<stdcall: handle WindowFromPoint POINTL>
 	^self invalidCall: _failureCode! !
-!UserLibrary categoriesFor: #adjustWindowRectEx:dwStyle:bMenu:dwExStyle:!public!win32 functions-coordinate space and transformation! !
-!UserLibrary categoriesFor: #animateWindow:dwTime:dwFlags:!**auto generated**!public! !
-!UserLibrary categoriesFor: #attachThreadInput:idAttachTo:fAttach:!public!win32 functions-message and message queue! !
-!UserLibrary categoriesFor: #beginDeferWindowPos:!**auto generated**!public! !
-!UserLibrary categoriesFor: #beginPaint:lpPaint:!public!win32 functions-painting and drawing! !
-!UserLibrary categoriesFor: #bringWindowToTop:!public!win32 functions-window! !
-!UserLibrary categoriesFor: #callWindowProc:hWnd:msg:wParam:lParam:!public!win32 functions-window procedure! !
-!UserLibrary categoriesFor: #childWindowFromPointEx:pt:uFlags:!public!win32 functions-window! !
-!UserLibrary categoriesFor: #clientToScreen:lpPoint:!public!win32 functions-coordinate space and transformation! !
-!UserLibrary categoriesFor: #closeClipboard!public!win32 functions-clipboard! !
-!UserLibrary categoriesFor: #countClipboardFormats!public!win32 functions-clipboard! !
-!UserLibrary categoriesFor: #createAcceleratorTable:cEntries:!public!win32 functions-keyboard accelerator! !
-!UserLibrary categoriesFor: #createMenu!public!win32 functions-menu! !
-!UserLibrary categoriesFor: #createPopupMenu!public!win32 functions-menu! !
-!UserLibrary categoriesFor: #createWindowEx:lpClassName:lpWindowName:dwStyle:x:y:nWidth:nHeight:hWndParent:hMenu:hInstance:lpParam:!public!win32 functions-window! !
-!UserLibrary categoriesFor: #deferWindowPos:hwnd:hwndInsertAfter:x:y:cx:cy:uFlags:!**auto generated**!public! !
-!UserLibrary categoriesFor: #deleteMenu:uPosition:uFlags:!public!win32 functions-menu! !
-!UserLibrary categoriesFor: #destroyAcceleratorTable:!public!win32 functions-keyboard accelerator! !
-!UserLibrary categoriesFor: #destroyIcon:!public!win32 functions-icon! !
-!UserLibrary categoriesFor: #destroyMenu:!public!win32 functions-menu! !
-!UserLibrary categoriesFor: #drawEdge:qrc:edge:grfFlags:!**auto generated**!public!win32 functions-painting and drawing! !
-!UserLibrary categoriesFor: #drawFocusRect:lprc:!public!win32 functions-painting and drawing! !
-!UserLibrary categoriesFor: #drawFrameControl:lprc:uType:uState:!**auto generated**!public!win32 functions-painting and drawing! !
-!UserLibrary categoriesFor: #drawIconEx:xLeft:yTop:hIcon:cxWidth:cyHeight:istepIfAniCur:hbrFlickerFreeDraw:diFlags:!public!win32 functions-icon! !
-!UserLibrary categoriesFor: #drawMenuBar:!public!win32 functions-menu! !
-!UserLibrary categoriesFor: #drawState:hbr:lpOutputFunc:lData:wData:x:y:cx:cy:fuFlags:!**auto generated**!public! !
-!UserLibrary categoriesFor: #drawTextEx:lpchText:cchText:lprc:dwDTFormat:lpDTParams:!public!win32 functions-font and text! !
-!UserLibrary categoriesFor: #emptyClipboard!public!win32 functions-clipboard! !
-!UserLibrary categoriesFor: #endDeferWindowPos:!**auto generated**!public! !
-!UserLibrary categoriesFor: #endDialog:nResult:!public!win32 functions-dialog box! !
-!UserLibrary categoriesFor: #endPaint:lpPaint:!public!win32 functions-painting and drawing! !
-!UserLibrary categoriesFor: #enumClipboardFormats:!public!win32 functions-clipboard! !
-!UserLibrary categoriesFor: #enumThreadWindows:lpfn:lParam:!public!win32 functions-window! !
-!UserLibrary categoriesFor: #enumWindows:lParam:!public!win32 functions-window! !
-!UserLibrary categoriesFor: #fillRect:lprc:hbr:!public!win32 functions-filled shape! !
-!UserLibrary categoriesFor: #findWindow:lpWindowName:!public!win32 functions-filled shape! !
-!UserLibrary categoriesFor: #flashWindow:bInvert:!public!win32 functions-error handling! !
-!UserLibrary categoriesFor: #flashWindowEx:!public!win32 functions-error handling! !
-!UserLibrary categoriesFor: #frameRect:lprc:hbr:!public!win32 functions-filled shape! !
-!UserLibrary categoriesFor: #getAncestor:gaFlags:!**auto generated**!public! !
-!UserLibrary categoriesFor: #getCapture!public!win32 functions-mouse input! !
-!UserLibrary categoriesFor: #getClassName:lpClassName:nMaxCount:!public!win32 functions-window class! !
-!UserLibrary categoriesFor: #getClientRect:lpRect:!public!win32 functions-window! !
-!UserLibrary categoriesFor: #getClipboardData:!public!win32 functions-clipboard! !
-!UserLibrary categoriesFor: #getClipboardFormatName:lpszFormatName:cchMaxCount:!public!win32 functions-clipboard! !
-!UserLibrary categoriesFor: #getCursor!public!win32 functions-cursor! !
-!UserLibrary categoriesFor: #getCursorPos:!public!win32 functions-cursor! !
-!UserLibrary categoriesFor: #getDC!operations!public! !
-!UserLibrary categoriesFor: #getDC:!not an aspect!public!win32 functions-device context! !
-!UserLibrary categoriesFor: #getDCEx:hrgnClip:flags:!public!win32 functions-device context! !
-!UserLibrary categoriesFor: #getFocus!public!win32 functions-keyboard input! !
-!UserLibrary categoriesFor: #getForegroundWindow!public!win32 functions-keyboard input! !
-!UserLibrary categoriesFor: #getIconInfo:piconinfo:!public!win32 functions-icon! !
-!UserLibrary categoriesFor: #getLastActivePopup:!public!win32 functions-window! !
-!UserLibrary categoriesFor: #getLastInputInfo:!public!win32 functions-keyboard input!win32 functions-mouse input!win32 functions-timer!win32 functions-window! !
-!UserLibrary categoriesFor: #getMenuInfo:lpcmi:!public!win32 functions-menu! !
-!UserLibrary categoriesFor: #getNextDlgGroupItem:hCtl:bPrevious:!public!win32 functions-window! !
-!UserLibrary categoriesFor: #getNextDlgTabItem:hCtl:bPrevious:!public!win32 functions-window! !
-!UserLibrary categoriesFor: #getProp:lpString:!public!win32 functions-window property! !
-!UserLibrary categoriesFor: #getScrollInfo:fnBar:lpsi:!public!win32 functions-scroll bar! !
-!UserLibrary categoriesFor: #getSystemMenu:bRevert:!public!win32 functions-menu!win32 functions-system information! !
-!UserLibrary categoriesFor: #getTopWindow:!public!win32 functions-window! !
-!UserLibrary categoriesFor: #getUpdateRect:lpRect:bErase:!public!win32 functions-painting and drawing! !
-!UserLibrary categoriesFor: #getWindow:uCmd:!public!win32 functions-window! !
-!UserLibrary categoriesFor: #getWindowDC:!public!win32 functions-device context! !
-!UserLibrary categoriesFor: #getWindowLong:nIndex:!public!win32 functions-window class! !
-!UserLibrary categoriesFor: #getWindowLongPtr:nIndex:!public!win32 functions-window class! !
-!UserLibrary categoriesFor: #getWindowPlacement:lpwndpl:!public!win32 functions-window! !
-!UserLibrary categoriesFor: #getWindowRect:lpRect:!public!win32 functions-window! !
-!UserLibrary categoriesFor: #getWindowText:lpString:nMaxCount:!public! !
-!UserLibrary categoriesFor: #getWindowTextLength:!public! !
-!UserLibrary categoriesFor: #getWindowThreadProcessId:lpdwProcessId:!public!win32 functions-window! !
-!UserLibrary categoriesFor: #getWindowULong:nIndex:!public!win32 functions-window class! !
-!UserLibrary categoriesFor: #getWindowULongPtr:nIndex:!public!win32 functions-window class! !
-!UserLibrary categoriesFor: #insertMenuItem:uItem:fByPosition:lpmii:!public!win32 functions-menu! !
-!UserLibrary categoriesFor: #invalidate:lpRect:bErase:!public!win32 functions-painting and drawing! !
-!UserLibrary categoriesFor: #invalidateRgn:hRgn:bErase:!public!win32 functions-painting and drawing! !
-!UserLibrary categoriesFor: #invertRect:lprc:!public!win32 functions-filled shape! !
-!UserLibrary categoriesFor: #isChild:hWnd:!public!win32 functions-window! !
-!UserLibrary categoriesFor: #isClipboardFormatAvailable:!public!win32 functions-clipboard! !
-!UserLibrary categoriesFor: #isDialogMessage:lpMsg:!public!win32 functions-dialog box! !
-!UserLibrary categoriesFor: #isIconic:!public!win32 functions-icon! !
-!UserLibrary categoriesFor: #isWindowUnicode:!public!win32 functions-window!win32 functions-window procedure! !
-!UserLibrary categoriesFor: #isZoomed:!public!win32 functions-window! !
-!UserLibrary categoriesFor: #loadAccelerators:lpTableName:!public!win32 functions-keyboard accelerator! !
-!UserLibrary categoriesFor: #loadCursorFromFile:!public!win32 functions-cursor! !
-!UserLibrary categoriesFor: #loadIcon:lpIconName:!public!win32 functions-icon! !
-!UserLibrary categoriesFor: #loadImage:lpszName:uType:cxDesired:cyDesired:fuLoad:!public!win32 functions-resources! !
-!UserLibrary categoriesFor: #loadMenu:lpMenuName:!public!win32 functions-menu! !
-!UserLibrary categoriesFor: #lockWindowUpdate:!public!win32 functions-painting and drawing! !
-!UserLibrary categoriesFor: #makeDragList:!public!win32 functions-list box! !
-!UserLibrary categoriesFor: #mapWindowPoints:hWndTo:lpPoints:cPoints:!public!win32 functions-coordinate space and transformation! !
-!UserLibrary categoriesFor: #modifyMenu:uPosition:uFlags:uIDNewItem:lpNewItem:!public!win32 functions-menu! !
-!UserLibrary categoriesFor: #openClipboard:!public!win32 functions-clipboard! !
-!UserLibrary categoriesFor: #printWindow:hdcBlt:nFlags:!public!win32 functions-painting and drawing! !
-!UserLibrary categoriesFor: #redrawWindow:lprcUpdate:hrgnUpdate:flags:!public!win32 functions-painting and drawing! !
-!UserLibrary categoriesFor: #registerClass:!public!win32 functions-window class! !
-!UserLibrary categoriesFor: #registerClipboardFormat:!public!win32 functions-clipboard! !
-!UserLibrary categoriesFor: #registerHotKey:id:fsModifiers:vk:!public!win32 functions-keyboard input! !
-!UserLibrary categoriesFor: #registerWindowMessage:!public!win32 functions-message and message queue! !
-!UserLibrary categoriesFor: #releaseCapture!public!win32 functions-mouse input! !
-!UserLibrary categoriesFor: #releaseDC:!operations!public! !
-!UserLibrary categoriesFor: #releaseDC:hDC:!public!win32 functions-device context! !
-!UserLibrary categoriesFor: #removeMenu:uPosition:uFlags:!public!win32 functions-menu! !
-!UserLibrary categoriesFor: #removeProp:lpString:!public!win32 functions-window property! !
-!UserLibrary categoriesFor: #screenToClient:lpPoint:!public!win32 functions-coordinate space and transformation! !
-!UserLibrary categoriesFor: #scrollWindowEx:dx:dy:prcScroll:prcClip:hrgnUpdate:prcUpdate:flags:!public!win32 functions-window! !
-!UserLibrary categoriesFor: #sendDlgItemMessage:nIDDlgItem:msg:wParam:lParam:!public!win32 functions-dialog box! !
-!UserLibrary categoriesFor: #sendMessage:msg:wParam:lpParam:!public!win32 functions-message and message queue! !
-!UserLibrary categoriesFor: #sendMessage:msg:wpParam:lpParam:!public!win32 functions-message and message queue! !
-!UserLibrary categoriesFor: #sendMessageU:msg:wParam:lParam:!public!win32 functions-message and message queue! !
-!UserLibrary categoriesFor: #sendMessageU:msg:wParam:lpParam:!public!win32 functions-message and message queue! !
-!UserLibrary categoriesFor: #setCapture:!public!win32 functions-mouse input! !
-!UserLibrary categoriesFor: #setClassLong:nIndex:dwNewLong:!public!win32 functions-window class! !
-!UserLibrary categoriesFor: #setClipboardData:hMem:!public!win32 functions-clipboard! !
-!UserLibrary categoriesFor: #setCursorPosX:y:!public!win32 functions-cursor! !
-!UserLibrary categoriesFor: #setDlgItemInt:nIDDlgItem:uValue:bSigned:!public!win32 functions-dialog box! !
-!UserLibrary categoriesFor: #setFocus:!public!win32 functions-keyboard input! !
-!UserLibrary categoriesFor: #setForegroundWindow:!public!win32 functions-keyboard input! !
-!UserLibrary categoriesFor: #setLayeredWindowAttributes:lcrKey:bAlpha:dwFlags:!public!win32 functions-window! !
-!UserLibrary categoriesFor: #setMenu:hMenu:!public!win32 functions-menu! !
-!UserLibrary categoriesFor: #setMenuDefaultItem:uItem:fByPos:!public!win32 functions-menu! !
-!UserLibrary categoriesFor: #setMenuInfo:lpcmi:!public!win32 functions-menu! !
-!UserLibrary categoriesFor: #setMenuItemInfo:uItem:fByPosition:lpmii:!public!win32 functions-menu! !
-!UserLibrary categoriesFor: #setParent:hWndNewParent:!public!win32 functions-window! !
-!UserLibrary categoriesFor: #setProp:lpString:hData:!public!win32 functions-window property! !
-!UserLibrary categoriesFor: #setScrollInfo:fnBar:lpsi:fRedraw:!public!win32 functions-scroll bar! !
-!UserLibrary categoriesFor: #setSysColors:lpaElements:lpaRgbValues:!public! !
-!UserLibrary categoriesFor: #setWindowLong:nIndex:dwNewLong:!public!win32 functions-window class! !
-!UserLibrary categoriesFor: #setWindowLongPtr:nIndex:dwNewLong:!public!win32 functions-window class! !
-!UserLibrary categoriesFor: #setWindowPlacement:lpwndpl:!public!win32 functions-window! !
-!UserLibrary categoriesFor: #setWindowPos:hWndInsertAfter:x:y:cx:cy:uFlags:!public!win32 functions-window! !
-!UserLibrary categoriesFor: #setWindowULong:nIndex:dwNewLong:!public!win32 functions-window class! !
-!UserLibrary categoriesFor: #setWindowULongPtr:nIndex:dwNewLong:!public!win32 functions-window class! !
-!UserLibrary categoriesFor: #showCursor:!public!win32 functions-cursor! !
-!UserLibrary categoriesFor: #systemParametersInfo:uiParam:pvParam:fWinIni:!public!win32 functions-string manipulation! !
-!UserLibrary categoriesFor: #trackMouseEvent:!public!win32 functions-mouse input! !
-!UserLibrary categoriesFor: #trackPopupMenu:uFlags:x:y:nReserved:hWnd:prcRect:!public!win32 functions-menu! !
-!UserLibrary categoriesFor: #translateAccelerator:haccl:lpmsg:!public!win32 functions-keyboard accelerator! !
-!UserLibrary categoriesFor: #unregisterClass:hInstance:!public!win32 functions-window class! !
-!UserLibrary categoriesFor: #unregisterHotKey:id:!public!win32 functions-keyboard input! !
-!UserLibrary categoriesFor: #validate:lpRect:!public!win32 functions-painting and drawing! !
-!UserLibrary categoriesFor: #windowFromPoint:!public!win32 functions-window! !
+!OS.UserLibrary categoriesFor: #adjustWindowRectEx:dwStyle:bMenu:dwExStyle:!public!win32 functions-coordinate space and transformation! !
+!OS.UserLibrary categoriesFor: #animateWindow:dwTime:dwFlags:!**auto generated**!public! !
+!OS.UserLibrary categoriesFor: #attachThreadInput:idAttachTo:fAttach:!public!win32 functions-message and message queue! !
+!OS.UserLibrary categoriesFor: #beginDeferWindowPos:!**auto generated**!public! !
+!OS.UserLibrary categoriesFor: #beginPaint:lpPaint:!public!win32 functions-painting and drawing! !
+!OS.UserLibrary categoriesFor: #bringWindowToTop:!public!win32 functions-window! !
+!OS.UserLibrary categoriesFor: #callWindowProc:hWnd:msg:wParam:lParam:!public!win32 functions-window procedure! !
+!OS.UserLibrary categoriesFor: #childWindowFromPointEx:pt:uFlags:!public!win32 functions-window! !
+!OS.UserLibrary categoriesFor: #clientToScreen:lpPoint:!public!win32 functions-coordinate space and transformation! !
+!OS.UserLibrary categoriesFor: #closeClipboard!public!win32 functions-clipboard! !
+!OS.UserLibrary categoriesFor: #countClipboardFormats!public!win32 functions-clipboard! !
+!OS.UserLibrary categoriesFor: #createAcceleratorTable:cEntries:!public!win32 functions-keyboard accelerator! !
+!OS.UserLibrary categoriesFor: #createMenu!public!win32 functions-menu! !
+!OS.UserLibrary categoriesFor: #createPopupMenu!public!win32 functions-menu! !
+!OS.UserLibrary categoriesFor: #createWindowEx:lpClassName:lpWindowName:dwStyle:x:y:nWidth:nHeight:hWndParent:hMenu:hInstance:lpParam:!public!win32 functions-window! !
+!OS.UserLibrary categoriesFor: #deferWindowPos:hwnd:hwndInsertAfter:x:y:cx:cy:uFlags:!**auto generated**!public! !
+!OS.UserLibrary categoriesFor: #deleteMenu:uPosition:uFlags:!public!win32 functions-menu! !
+!OS.UserLibrary categoriesFor: #destroyAcceleratorTable:!public!win32 functions-keyboard accelerator! !
+!OS.UserLibrary categoriesFor: #destroyIcon:!public!win32 functions-icon! !
+!OS.UserLibrary categoriesFor: #destroyMenu:!public!win32 functions-menu! !
+!OS.UserLibrary categoriesFor: #drawEdge:qrc:edge:grfFlags:!**auto generated**!public!win32 functions-painting and drawing! !
+!OS.UserLibrary categoriesFor: #drawFocusRect:lprc:!public!win32 functions-painting and drawing! !
+!OS.UserLibrary categoriesFor: #drawFrameControl:lprc:uType:uState:!**auto generated**!public!win32 functions-painting and drawing! !
+!OS.UserLibrary categoriesFor: #drawIconEx:xLeft:yTop:hIcon:cxWidth:cyHeight:istepIfAniCur:hbrFlickerFreeDraw:diFlags:!public!win32 functions-icon! !
+!OS.UserLibrary categoriesFor: #drawMenuBar:!public!win32 functions-menu! !
+!OS.UserLibrary categoriesFor: #drawState:hbr:lpOutputFunc:lData:wData:x:y:cx:cy:fuFlags:!**auto generated**!public! !
+!OS.UserLibrary categoriesFor: #drawTextEx:lpchText:cchText:lprc:dwDTFormat:lpDTParams:!public!win32 functions-font and text! !
+!OS.UserLibrary categoriesFor: #emptyClipboard!public!win32 functions-clipboard! !
+!OS.UserLibrary categoriesFor: #endDeferWindowPos:!**auto generated**!public! !
+!OS.UserLibrary categoriesFor: #endDialog:nResult:!public!win32 functions-dialog box! !
+!OS.UserLibrary categoriesFor: #endPaint:lpPaint:!public!win32 functions-painting and drawing! !
+!OS.UserLibrary categoriesFor: #enumClipboardFormats:!public!win32 functions-clipboard! !
+!OS.UserLibrary categoriesFor: #enumThreadWindows:lpfn:lParam:!public!win32 functions-window! !
+!OS.UserLibrary categoriesFor: #enumWindows:lParam:!public!win32 functions-window! !
+!OS.UserLibrary categoriesFor: #fillRect:lprc:hbr:!public!win32 functions-filled shape! !
+!OS.UserLibrary categoriesFor: #findWindow:lpWindowName:!public!win32 functions-filled shape! !
+!OS.UserLibrary categoriesFor: #flashWindow:bInvert:!public!win32 functions-error handling! !
+!OS.UserLibrary categoriesFor: #flashWindowEx:!public!win32 functions-error handling! !
+!OS.UserLibrary categoriesFor: #frameRect:lprc:hbr:!public!win32 functions-filled shape! !
+!OS.UserLibrary categoriesFor: #getAncestor:gaFlags:!**auto generated**!public! !
+!OS.UserLibrary categoriesFor: #getCapture!public!win32 functions-mouse input! !
+!OS.UserLibrary categoriesFor: #getClassName:lpClassName:nMaxCount:!public!win32 functions-window class! !
+!OS.UserLibrary categoriesFor: #getClientRect:lpRect:!public!win32 functions-window! !
+!OS.UserLibrary categoriesFor: #getClipboardData:!public!win32 functions-clipboard! !
+!OS.UserLibrary categoriesFor: #getClipboardFormatName:lpszFormatName:cchMaxCount:!public!win32 functions-clipboard! !
+!OS.UserLibrary categoriesFor: #getCursor!public!win32 functions-cursor! !
+!OS.UserLibrary categoriesFor: #getCursorPos:!public!win32 functions-cursor! !
+!OS.UserLibrary categoriesFor: #getDC!operations!public! !
+!OS.UserLibrary categoriesFor: #getDC:!not an aspect!public!win32 functions-device context! !
+!OS.UserLibrary categoriesFor: #getDCEx:hrgnClip:flags:!public!win32 functions-device context! !
+!OS.UserLibrary categoriesFor: #getFocus!public!win32 functions-keyboard input! !
+!OS.UserLibrary categoriesFor: #getForegroundWindow!public!win32 functions-keyboard input! !
+!OS.UserLibrary categoriesFor: #getIconInfo:piconinfo:!public!win32 functions-icon! !
+!OS.UserLibrary categoriesFor: #getLastActivePopup:!public!win32 functions-window! !
+!OS.UserLibrary categoriesFor: #getLastInputInfo:!public!win32 functions-keyboard input!win32 functions-mouse input!win32 functions-timer!win32 functions-window! !
+!OS.UserLibrary categoriesFor: #getMenuInfo:lpcmi:!public!win32 functions-menu! !
+!OS.UserLibrary categoriesFor: #getNextDlgGroupItem:hCtl:bPrevious:!public!win32 functions-window! !
+!OS.UserLibrary categoriesFor: #getNextDlgTabItem:hCtl:bPrevious:!public!win32 functions-window! !
+!OS.UserLibrary categoriesFor: #getProp:lpString:!public!win32 functions-window property! !
+!OS.UserLibrary categoriesFor: #getScrollInfo:fnBar:lpsi:!public!win32 functions-scroll bar! !
+!OS.UserLibrary categoriesFor: #getSystemMenu:bRevert:!public!win32 functions-menu!win32 functions-system information! !
+!OS.UserLibrary categoriesFor: #getTopWindow:!public!win32 functions-window! !
+!OS.UserLibrary categoriesFor: #getUpdateRect:lpRect:bErase:!public!win32 functions-painting and drawing! !
+!OS.UserLibrary categoriesFor: #getWindow:uCmd:!public!win32 functions-window! !
+!OS.UserLibrary categoriesFor: #getWindowDC:!public!win32 functions-device context! !
+!OS.UserLibrary categoriesFor: #getWindowLong:nIndex:!public!win32 functions-window class! !
+!OS.UserLibrary categoriesFor: #getWindowLongPtr:nIndex:!public!win32 functions-window class! !
+!OS.UserLibrary categoriesFor: #getWindowPlacement:lpwndpl:!public!win32 functions-window! !
+!OS.UserLibrary categoriesFor: #getWindowRect:lpRect:!public!win32 functions-window! !
+!OS.UserLibrary categoriesFor: #getWindowText:lpString:nMaxCount:!public! !
+!OS.UserLibrary categoriesFor: #getWindowTextLength:!public! !
+!OS.UserLibrary categoriesFor: #getWindowThreadProcessId:lpdwProcessId:!public!win32 functions-window! !
+!OS.UserLibrary categoriesFor: #getWindowULong:nIndex:!public!win32 functions-window class! !
+!OS.UserLibrary categoriesFor: #getWindowULongPtr:nIndex:!public!win32 functions-window class! !
+!OS.UserLibrary categoriesFor: #insertMenuItem:uItem:fByPosition:lpmii:!public!win32 functions-menu! !
+!OS.UserLibrary categoriesFor: #invalidate:lpRect:bErase:!public!win32 functions-painting and drawing! !
+!OS.UserLibrary categoriesFor: #invalidateRgn:hRgn:bErase:!public!win32 functions-painting and drawing! !
+!OS.UserLibrary categoriesFor: #invertRect:lprc:!public!win32 functions-filled shape! !
+!OS.UserLibrary categoriesFor: #isChild:hWnd:!public!win32 functions-window! !
+!OS.UserLibrary categoriesFor: #isClipboardFormatAvailable:!public!win32 functions-clipboard! !
+!OS.UserLibrary categoriesFor: #isDialogMessage:lpMsg:!public!win32 functions-dialog box! !
+!OS.UserLibrary categoriesFor: #isIconic:!public!win32 functions-icon! !
+!OS.UserLibrary categoriesFor: #isWindowUnicode:!public!win32 functions-window!win32 functions-window procedure! !
+!OS.UserLibrary categoriesFor: #isZoomed:!public!win32 functions-window! !
+!OS.UserLibrary categoriesFor: #loadAccelerators:lpTableName:!public!win32 functions-keyboard accelerator! !
+!OS.UserLibrary categoriesFor: #loadCursorFromFile:!public!win32 functions-cursor! !
+!OS.UserLibrary categoriesFor: #loadIcon:lpIconName:!public!win32 functions-icon! !
+!OS.UserLibrary categoriesFor: #loadImage:lpszName:uType:cxDesired:cyDesired:fuLoad:!public!win32 functions-resources! !
+!OS.UserLibrary categoriesFor: #loadMenu:lpMenuName:!public!win32 functions-menu! !
+!OS.UserLibrary categoriesFor: #lockWindowUpdate:!public!win32 functions-painting and drawing! !
+!OS.UserLibrary categoriesFor: #makeDragList:!public!win32 functions-list box! !
+!OS.UserLibrary categoriesFor: #mapWindowPoints:hWndTo:lpPoints:cPoints:!public!win32 functions-coordinate space and transformation! !
+!OS.UserLibrary categoriesFor: #modifyMenu:uPosition:uFlags:uIDNewItem:lpNewItem:!public!win32 functions-menu! !
+!OS.UserLibrary categoriesFor: #openClipboard:!public!win32 functions-clipboard! !
+!OS.UserLibrary categoriesFor: #printWindow:hdcBlt:nFlags:!public!win32 functions-painting and drawing! !
+!OS.UserLibrary categoriesFor: #redrawWindow:lprcUpdate:hrgnUpdate:flags:!public!win32 functions-painting and drawing! !
+!OS.UserLibrary categoriesFor: #registerClass:!public!win32 functions-window class! !
+!OS.UserLibrary categoriesFor: #registerClipboardFormat:!public!win32 functions-clipboard! !
+!OS.UserLibrary categoriesFor: #registerHotKey:id:fsModifiers:vk:!public!win32 functions-keyboard input! !
+!OS.UserLibrary categoriesFor: #registerWindowMessage:!public!win32 functions-message and message queue! !
+!OS.UserLibrary categoriesFor: #releaseCapture!public!win32 functions-mouse input! !
+!OS.UserLibrary categoriesFor: #releaseDC:!operations!public! !
+!OS.UserLibrary categoriesFor: #releaseDC:hDC:!public!win32 functions-device context! !
+!OS.UserLibrary categoriesFor: #removeMenu:uPosition:uFlags:!public!win32 functions-menu! !
+!OS.UserLibrary categoriesFor: #removeProp:lpString:!public!win32 functions-window property! !
+!OS.UserLibrary categoriesFor: #screenToClient:lpPoint:!public!win32 functions-coordinate space and transformation! !
+!OS.UserLibrary categoriesFor: #scrollWindowEx:dx:dy:prcScroll:prcClip:hrgnUpdate:prcUpdate:flags:!public!win32 functions-window! !
+!OS.UserLibrary categoriesFor: #sendDlgItemMessage:nIDDlgItem:msg:wParam:lParam:!public!win32 functions-dialog box! !
+!OS.UserLibrary categoriesFor: #sendMessage:msg:wParam:lpParam:!public!win32 functions-message and message queue! !
+!OS.UserLibrary categoriesFor: #sendMessage:msg:wpParam:lpParam:!public!win32 functions-message and message queue! !
+!OS.UserLibrary categoriesFor: #sendMessageU:msg:wParam:lParam:!public!win32 functions-message and message queue! !
+!OS.UserLibrary categoriesFor: #sendMessageU:msg:wParam:lpParam:!public!win32 functions-message and message queue! !
+!OS.UserLibrary categoriesFor: #setCapture:!public!win32 functions-mouse input! !
+!OS.UserLibrary categoriesFor: #setClassLong:nIndex:dwNewLong:!public!win32 functions-window class! !
+!OS.UserLibrary categoriesFor: #setClipboardData:hMem:!public!win32 functions-clipboard! !
+!OS.UserLibrary categoriesFor: #setCursorPosX:y:!public!win32 functions-cursor! !
+!OS.UserLibrary categoriesFor: #setDlgItemInt:nIDDlgItem:uValue:bSigned:!public!win32 functions-dialog box! !
+!OS.UserLibrary categoriesFor: #setFocus:!public!win32 functions-keyboard input! !
+!OS.UserLibrary categoriesFor: #setForegroundWindow:!public!win32 functions-keyboard input! !
+!OS.UserLibrary categoriesFor: #setLayeredWindowAttributes:lcrKey:bAlpha:dwFlags:!public!win32 functions-window! !
+!OS.UserLibrary categoriesFor: #setMenu:hMenu:!public!win32 functions-menu! !
+!OS.UserLibrary categoriesFor: #setMenuDefaultItem:uItem:fByPos:!public!win32 functions-menu! !
+!OS.UserLibrary categoriesFor: #setMenuInfo:lpcmi:!public!win32 functions-menu! !
+!OS.UserLibrary categoriesFor: #setMenuItemInfo:uItem:fByPosition:lpmii:!public!win32 functions-menu! !
+!OS.UserLibrary categoriesFor: #setParent:hWndNewParent:!public!win32 functions-window! !
+!OS.UserLibrary categoriesFor: #setProp:lpString:hData:!public!win32 functions-window property! !
+!OS.UserLibrary categoriesFor: #setScrollInfo:fnBar:lpsi:fRedraw:!public!win32 functions-scroll bar! !
+!OS.UserLibrary categoriesFor: #setSysColors:lpaElements:lpaRgbValues:!public! !
+!OS.UserLibrary categoriesFor: #setWindowLong:nIndex:dwNewLong:!public!win32 functions-window class! !
+!OS.UserLibrary categoriesFor: #setWindowLongPtr:nIndex:dwNewLong:!public!win32 functions-window class! !
+!OS.UserLibrary categoriesFor: #setWindowPlacement:lpwndpl:!public!win32 functions-window! !
+!OS.UserLibrary categoriesFor: #setWindowPos:hWndInsertAfter:x:y:cx:cy:uFlags:!public!win32 functions-window! !
+!OS.UserLibrary categoriesFor: #setWindowULong:nIndex:dwNewLong:!public!win32 functions-window class! !
+!OS.UserLibrary categoriesFor: #setWindowULongPtr:nIndex:dwNewLong:!public!win32 functions-window class! !
+!OS.UserLibrary categoriesFor: #showCursor:!public!win32 functions-cursor! !
+!OS.UserLibrary categoriesFor: #systemParametersInfo:uiParam:pvParam:fWinIni:!public!win32 functions-string manipulation! !
+!OS.UserLibrary categoriesFor: #trackMouseEvent:!public!win32 functions-mouse input! !
+!OS.UserLibrary categoriesFor: #trackPopupMenu:uFlags:x:y:nReserved:hWnd:prcRect:!public!win32 functions-menu! !
+!OS.UserLibrary categoriesFor: #translateAccelerator:haccl:lpmsg:!public!win32 functions-keyboard accelerator! !
+!OS.UserLibrary categoriesFor: #unregisterClass:hInstance:!public!win32 functions-window class! !
+!OS.UserLibrary categoriesFor: #unregisterHotKey:id:!public!win32 functions-keyboard input! !
+!OS.UserLibrary categoriesFor: #validate:lpRect:!public!win32 functions-painting and drawing! !
+!OS.UserLibrary categoriesFor: #windowFromPoint:!public!win32 functions-window! !
+
+!UI.ResourceIdentifier methodsFor!
+
+canShow
+	^self resourceOrNil notNil and: [self owningClass respondsTo: #show:]!
+
+fixupIcon
+	"Private - Now try to determine the icon to use from the class of the top level object in the 
+	resource. We perform a non-realizing load of the resource object."
+
+	| icon stlInFilerClass |
+	stlInFilerClass := #{STLInFiler} value.
+	icon := [(stlInFilerClass on: self resource readStream) basicNext icon] on: Error do: [:x | x icon].
+	self icon: icon.
+	^icon!
+
+icon	
+	^self propertyAt: #_icon ifAbsent: [self fixupIcon]!
+
+loadWithContext: context 
+	"Load and answer the resource represented by the receiver with context context."
+
+	^self loadWithContext: context forEdit: false!
+
+loadWithContext: context forEdit: aBoolean
+	^self resource
+		ifNotNil: 
+			[:resource |
+			(STLInFiler on: resource readStream)
+				isUpgrading: aBoolean;
+				context: context;
+				next]!
+
+show
+	"Display the resource identified by the receiver in whatever way is appropriate. 
+	Answer the <Presenter> opended to display it."
+
+	^self owningClass show: self name.
+! !
+!UI.ResourceIdentifier categoriesFor: #canShow!public!testing! !
+!UI.ResourceIdentifier categoriesFor: #fixupIcon!helpers!private! !
+!UI.ResourceIdentifier categoriesFor: #icon!accessing!development!public! !
+!UI.ResourceIdentifier categoriesFor: #loadWithContext:!operations!public! !
+!UI.ResourceIdentifier categoriesFor: #loadWithContext:forEdit:!operations!private! !
+!UI.ResourceIdentifier categoriesFor: #show!operations!public! !
 
 "End of package definition"!
 

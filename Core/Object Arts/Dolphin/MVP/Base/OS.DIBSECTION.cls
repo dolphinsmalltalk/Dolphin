@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Win32Structure subclass: #DIBSECTION
+OS.Win32Structure subclass: #'OS.DIBSECTION'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_dsBitfields' -> 16r40.
@@ -12,8 +12,8 @@ Win32Structure subclass: #DIBSECTION
 		'_OffsetOf_dshSection' -> 16r4C.
 		'_OffsetOf_dsOffset' -> 16r50
 	}!
-DIBSECTION guid: (GUID fromString: '{87b4c5e7-026e-11d3-9fd7-00a0cc3e4a32}')!
-DIBSECTION comment: '<DIBSECTION> is an <ExternalStructure> class to wrap the struct ''Win.DIBSECTION'' from type information in the ''Windows API (ANSI)'' library.
+OS.DIBSECTION guid: (Core.GUID fromString: '{87b4c5e7-026e-11d3-9fd7-00a0cc3e4a32}')!
+OS.DIBSECTION comment: '<DIBSECTION> is an <ExternalStructure> class to wrap the struct ''Win.DIBSECTION'' from type information in the ''Windows API (ANSI)'' library.
 
 The type library contains no documentation for this struct
 
@@ -30,8 +30,8 @@ struct tagDIBSECTION {
 	long dsOffset;
 } DIBSECTION;
 '!
-!DIBSECTION categoriesForClass!Win32-Structs! !
-!DIBSECTION methodsFor!
+!OS.DIBSECTION categoriesForClass!Win32-Structs! !
+!OS.DIBSECTION methodsFor!
 
 dsBitfields
 	"Answer the <DWORDArray> value of the receiver's 'dsBitfields' field."
@@ -85,17 +85,17 @@ dsOffset: anInteger
 	"Set the receiver's 'dsOffset' field to the value of the argument, anInteger"
 
 	bytes dwordAtOffset: _OffsetOf_dsOffset put: anInteger! !
-!DIBSECTION categoriesFor: #dsBitfields!**compiled accessors**!public! !
-!DIBSECTION categoriesFor: #dsBm!**compiled accessors**!public! !
-!DIBSECTION categoriesFor: #dsBm:!**compiled accessors**!public! !
-!DIBSECTION categoriesFor: #dsBmih!**compiled accessors**!public! !
-!DIBSECTION categoriesFor: #dsBmih:!**compiled accessors**!public! !
-!DIBSECTION categoriesFor: #dshSection!**compiled accessors**!public! !
-!DIBSECTION categoriesFor: #dshSection:!**compiled accessors**!public! !
-!DIBSECTION categoriesFor: #dsOffset!**compiled accessors**!public! !
-!DIBSECTION categoriesFor: #dsOffset:!**compiled accessors**!public! !
+!OS.DIBSECTION categoriesFor: #dsBitfields!**compiled accessors**!public! !
+!OS.DIBSECTION categoriesFor: #dsBm!**compiled accessors**!public! !
+!OS.DIBSECTION categoriesFor: #dsBm:!**compiled accessors**!public! !
+!OS.DIBSECTION categoriesFor: #dsBmih!**compiled accessors**!public! !
+!OS.DIBSECTION categoriesFor: #dsBmih:!**compiled accessors**!public! !
+!OS.DIBSECTION categoriesFor: #dshSection!**compiled accessors**!public! !
+!OS.DIBSECTION categoriesFor: #dshSection:!**compiled accessors**!public! !
+!OS.DIBSECTION categoriesFor: #dsOffset!**compiled accessors**!public! !
+!OS.DIBSECTION categoriesFor: #dsOffset:!**compiled accessors**!public! !
 
-!DIBSECTION class methodsFor!
+!OS.DIBSECTION class methodsFor!
 
 defineFields
 	"Define the fields of the DIBSECTION structure.
@@ -118,14 +118,8 @@ defineFields
 		defineField: #dshSection type: HANDLEField new;
 		defineField: #dsOffset type: DWORDField new!
 
-fileOutStem
-	"Private - Answer standard file name for the class to file out on."
-
-	^'DIBSECTION_Struct'!
-
 getFieldNames
 	^#(#dsBm #dsBmih #dsBitfields #dshSection #dsOffset)! !
-!DIBSECTION class categoriesFor: #defineFields!public!template definition! !
-!DIBSECTION class categoriesFor: #fileOutStem!private!source filing! !
-!DIBSECTION class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.DIBSECTION class categoriesFor: #defineFields!public!template definition! !
+!OS.DIBSECTION class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

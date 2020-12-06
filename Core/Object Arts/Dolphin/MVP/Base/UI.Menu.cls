@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-GraphicsTool subclass: #Menu
+Graphics.GraphicsTool subclass: #'UI.Menu'
 	instanceVariableNames: 'items text name flags image imageManager id _reserved1 _reserved2'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Menu guid: (GUID fromString: '{87b4c636-026e-11d3-9fd7-00a0cc3e4a32}')!
-Menu comment: 'Menu is the class of objects use to represent popup menu''s in windows. A menu holds a list of items that may be commands, sub-menus, or dividers.
+UI.Menu guid: (Core.GUID fromString: '{87b4c636-026e-11d3-9fd7-00a0cc3e4a32}')!
+UI.Menu comment: 'Menu is the class of objects use to represent popup menu''s in windows. A menu holds a list of items that may be commands, sub-menus, or dividers.
 
 Instance Variables:
 	items			<sequencedReadableCollection>
@@ -20,8 +20,8 @@ Instance Variables:
 	_reserved1		<UndefinedObject>. Reserved for future use.
 	_reserved2		<UndefinedObject>. Reserved for future use.
 '!
-!Menu categoriesForClass!Graphics-Tools! !
-!Menu methodsFor!
+!UI.Menu categoriesForClass!Graphics-Tools! !
+!UI.Menu methodsFor!
 
 acceleratorKey
 	"Answer the accelerator key code for the receiver.
@@ -30,17 +30,20 @@ acceleratorKey
 
 	^0!
 
-addCommand: command description: aString 
+addCommand: command description: aString
 	"Append a <CommandMenuItem> to the receiver configured with the specified command
 	and description, and answer it."
 
 	^self addItem: (CommandMenuItem command: command description: aString)!
 
-addCommand: command description: aString  image: anImage
+addCommand: command description: aString image: anImage
 	"Append a <CommandMenuItem> to the receiver configured with the specified command
 	and description, and answer it."
 
-	^self addItem: (CommandMenuItem command: command description: aString image: anImage)!
+	^self addItem: (CommandMenuItem
+				command: command
+				description: aString
+				image: anImage)!
 
 addCommandDescription: aCommandDescription
 	"Append a <CommandMenuItem> to the receiver configured with the specified 
@@ -61,7 +64,7 @@ addSeparator
 
 	^self addItem: DividerMenuItem separator!
 
-addSubmenu: aString 
+addSubmenu: aString
 	"Append a sub-<Menu> to the receiver with the specified title, and answer it."
 
 	^self addItem: (Menu description: aString)!
@@ -90,8 +93,8 @@ basicFree
 	| lib |
 	lib := UserLibrary default.
 	items keysAndValuesDo: 
-			[:i :menuItem | 
-			lib 
+			[:i :menuItem |
+			lib
 				removeMenu: handle
 				uPosition: i - 1
 				uFlags: MF_BYPOSITION.
@@ -141,7 +144,7 @@ commandDescription
 	"Answer a <CommandDescription> for the receiver.
 	See #command."
 
-	^CommandDescription 
+	^CommandDescription
 		command: self command
 		description: self description
 		image: self image!
@@ -151,7 +154,7 @@ commandString
 
 	^name ?? ''!
 
-commandString: aString 
+commandString: aString
 	"Sets the receiver's command from the <readableString> representation, aString."
 
 	| command |
@@ -176,11 +179,12 @@ defaultFlags
 
 deleteItemAt: position
 	"Private - Delete the receiver's item at the specified one-based index."
-	
+
 	(items at: position) free.
-	(UserLibrary default deleteMenu: self handle uPosition: position-1 uFlags: MF_BYPOSITION)
-		ifFalse: [UserLibrary default systemError]
-!
+	(UserLibrary default
+		deleteMenu: self handle
+		uPosition: position - 1
+		uFlags: MF_BYPOSITION) ifFalse: [UserLibrary default systemError]!
 
 description
 	"Private - Answer a short textual description of the receiver's command.
@@ -191,31 +195,31 @@ description
 description: aString 
 	self text: aString!
 
-drawItemImage: itemImage on: hDC at: topLeft disabled: aBoolean 
+drawItemImage: itemImage on: hDC at: topLeft disabled: aBoolean
 	| imageList extent imageIndex callback |
 	extent := SystemMetrics current menuImageExtent.
 	imageList := self imageManager imageListWithExtent: extent.
 	imageIndex := self imageManager indexOfImage: itemImage.
-	aBoolean 
+	aBoolean
 		ifFalse: 
-			[imageList 
+			[imageList
 				draw: imageIndex
 				on: hDC
 				at: topLeft.
 			^self].
 	"Use DrawState() API to get the correct disabled image look, but use the callback option
 	because we want to draw out of an image list rather than from an icon or bitmap"
-	callback := ExternalCallback block: 
-					[:hdc :lData :wData :cx :cy | 
+	callback := External.Callback block: 
+					[:hdc :lData :wData :cx :cy |
 					"Must draw on the DC supplied to the callback, not the original DC"
-					imageList 
+					imageList
 						draw: wData
 						on: hdc
 						at: 0 @ 0.
 					true]
-				descriptor: (ExternalDescriptor returnType: 'bool'
+				descriptor: (External.Descriptor returnType: 'bool'
 						argumentTypes: 'handle intptr uintptr sdword sdword').
-	UserLibrary default 
+	UserLibrary default
 		drawState: hDC
 		hbr: nil
 		lpOutputFunc: callback asParameter
@@ -236,18 +240,18 @@ findCommand: aSymbol
 flags: anInteger 
 	flags := anInteger!
 
-fromStrings: menuArray 
+fromStrings: menuArray
 	"Private - Convert menuArray into a series of MenuItems.
 	menuArray is an array of strings. 
 	NB: Not realized yet."
 
 	self text: (menuArray at: 1 ifAbsent: [^self]).
-	menuArray 
+	menuArray
 		from: 2
 		to: menuArray size
 		do: 
-			[:menuString | 
-			self addItem: ((menuString isMemberOf: Array) 
+			[:menuString |
+			self addItem: ((menuString isMemberOf: Array)
 						ifTrue: [self class fromStrings: menuString]
 						ifFalse: [MenuItem fromString: menuString])]!
 
@@ -578,7 +582,7 @@ removeItemAt: index
 			[(UserLibrary default
 				removeMenu: self handle
 				uPosition: index - 1
-				uFlags: MF_BYPOSITION) ifFalse: [UserLibrary default systemError]].
+				uFlags: MF_BYPOSITION) ifFalse: [OS.UserLibrary default systemError]].
 	^removed!
 
 replaceItem: oldMenuItem with: newMenuItem
@@ -591,16 +595,17 @@ setDefault: index
 	to be the default item. If the index is zero, then the menu has no default."
 
 	UserLibrary default
-		setMenuDefaultItem: self handle uItem: index - 1
+		setMenuDefaultItem: self handle
+		uItem: index - 1
 		fByPos: TRUE!
 
-setItem: anInteger info: aMENUITEMINFO 
+setItem: anInteger info: aMENUITEMINFO
 	"Private - Set state and type information for the item of the receiver with specified
 	<integer> index. This can control features such as whether the item is enabled or disabled,
 	checked or unchecked (and if checked whether check-box or radio button style), command
 	string, bitmap, etc. Answer whether the call succeeded."
 
-	^UserLibrary default 
+	^UserLibrary default
 		setMenuItemInfo: self handle
 		uItem: anInteger - 1
 		fByPosition: true
@@ -645,102 +650,102 @@ typeFlags
 
 	^0!
 
-updateItem: indexInteger id: idInteger text: newText 
+updateItem: indexInteger id: idInteger text: newText
 	"Private - Update the text of the menu item with the 1-based <integer> position, indexInteger, 
 	within the receiver to the <readableString>, newText."
 
-	UserLibrary default 
-		modifyMenu: self handle 
+	UserLibrary default
+		modifyMenu: self handle
 		uPosition: indexInteger - 1
 		uFlags: ##(MF_BYPOSITION | MFT_STRING)
 		uIDNewItem: idInteger
 		lpNewItem: newText! !
-!Menu categoriesFor: #acceleratorKey!accessing!public! !
-!Menu categoriesFor: #addCommand:description:!adding!public! !
-!Menu categoriesFor: #addCommand:description:image:!adding!public! !
-!Menu categoriesFor: #addCommandDescription:!adding!public! !
-!Menu categoriesFor: #addItem:!adding!public! !
-!Menu categoriesFor: #addSeparator!adding!public! !
-!Menu categoriesFor: #addSubmenu:!adding!public! !
-!Menu categoriesFor: #allItems!public! !
-!Menu categoriesFor: #allMenus!public! !
-!Menu categoriesFor: #applyFlags!private!realizing/unrealizing! !
-!Menu categoriesFor: #basicFree!private!realizing/unrealizing! !
-!Menu categoriesFor: #basicRealize!public!realizing/unrealizing! !
-!Menu categoriesFor: #clear!public!removing! !
-!Menu categoriesFor: #clearCached!private!realizing/unrealizing! !
-!Menu categoriesFor: #command!accessing!public! !
-!Menu categoriesFor: #commandDescription!accessing!public! !
-!Menu categoriesFor: #commandString!accessing!public! !
-!Menu categoriesFor: #commandString:!accessing!public! !
-!Menu categoriesFor: #createHandle!public!realizing/unrealizing! !
-!Menu categoriesFor: #defaultFlags!initializing!private! !
-!Menu categoriesFor: #deleteItemAt:!accessing!private! !
-!Menu categoriesFor: #description!accessing!private! !
-!Menu categoriesFor: #description:!accessing!public! !
-!Menu categoriesFor: #drawItemImage:on:at:disabled:!helpers!private! !
-!Menu categoriesFor: #findCommand:!public!searching! !
-!Menu categoriesFor: #flags:!accessing!private! !
-!Menu categoriesFor: #fromStrings:!converting!private! !
-!Menu categoriesFor: #hasSharedImageColumn!public!testing! !
-!Menu categoriesFor: #hasSharedImageColumn:!accessing!public! !
-!Menu categoriesFor: #hasSubmenu!public!testing! !
-!Menu categoriesFor: #id!accessing!public! !
-!Menu categoriesFor: #image!accessing!public! !
-!Menu categoriesFor: #image:!accessing!public! !
-!Menu categoriesFor: #imageManager!accessing!private! !
-!Menu categoriesFor: #includesCommand:!public!testing! !
-!Menu categoriesFor: #indexOfCommand:!accessing!private! !
-!Menu categoriesFor: #indexOfCommand:ifAbsent:!accessing!private! !
-!Menu categoriesFor: #initialize!initializing!private! !
-!Menu categoriesFor: #insertIntoMenu:at:!adding!private! !
-!Menu categoriesFor: #insertIntoMenu:at:info:!public!realizing/unrealizing! !
-!Menu categoriesFor: #insertItem:after:!adding!public! !
-!Menu categoriesFor: #insertItem:at:!adding!public! !
-!Menu categoriesFor: #insertItem:before:!adding!public! !
-!Menu categoriesFor: #isAutoDismiss!public!testing! !
-!Menu categoriesFor: #isAutoDismiss:!accessing!public! !
-!Menu categoriesFor: #isDefault!accessing!public! !
-!Menu categoriesFor: #isDivider!public!testing! !
-!Menu categoriesFor: #isEmpty!public!testing! !
-!Menu categoriesFor: #isMenuBar!public!testing! !
-!Menu categoriesFor: #isModeless!public!testing! !
-!Menu categoriesFor: #isModeless:!accessing!public! !
-!Menu categoriesFor: #isRadioButtonStyle!public! !
-!Menu categoriesFor: #itemAt:!accessing!public! !
-!Menu categoriesFor: #itemAt:put:!accessing!public! !
-!Menu categoriesFor: #items!accessing!public! !
-!Menu categoriesFor: #items:!accessing!public! !
-!Menu categoriesFor: #itemsDo:!enumerating!public! !
-!Menu categoriesFor: #itemWithId:!accessing!public! !
-!Menu categoriesFor: #menuFromHandle:!accessing!public! !
-!Menu categoriesFor: #name!accessing!public! !
-!Menu categoriesFor: #name:!accessing!public! !
-!Menu categoriesFor: #notEmpty!public!testing! !
-!Menu categoriesFor: #onDrawItem:!event handling-win32!private! !
-!Menu categoriesFor: #postCopy!copying!public! !
-!Menu categoriesFor: #printOn:!printing!public! !
-!Menu categoriesFor: #queryAllAlong:!operations!public! !
-!Menu categoriesFor: #queryAllFromView:!operations!private! !
-!Menu categoriesFor: #queryAlong:!operations!public! !
-!Menu categoriesFor: #registerAcceleratorKeyIn:!adding!public! !
-!Menu categoriesFor: #removeItem:!public!removing! !
-!Menu categoriesFor: #removeItemAt:!public!removing! !
-!Menu categoriesFor: #replaceItem:with:!public!replacing! !
-!Menu categoriesFor: #setDefault:!accessing!public! !
-!Menu categoriesFor: #setItem:info:!accessing!private! !
-!Menu categoriesFor: #showIn:position:!drawing!public! !
-!Menu categoriesFor: #size!accessing!public! !
-!Menu categoriesFor: #styleFlags!private!realizing/unrealizing! !
-!Menu categoriesFor: #text!accessing!public! !
-!Menu categoriesFor: #text:!accessing!public! !
-!Menu categoriesFor: #typeFlags!private!realizing/unrealizing! !
-!Menu categoriesFor: #updateItem:id:text:!accessing!private! !
+!UI.Menu categoriesFor: #acceleratorKey!accessing!public! !
+!UI.Menu categoriesFor: #addCommand:description:!adding!public! !
+!UI.Menu categoriesFor: #addCommand:description:image:!adding!public! !
+!UI.Menu categoriesFor: #addCommandDescription:!adding!public! !
+!UI.Menu categoriesFor: #addItem:!adding!public! !
+!UI.Menu categoriesFor: #addSeparator!adding!public! !
+!UI.Menu categoriesFor: #addSubmenu:!adding!public! !
+!UI.Menu categoriesFor: #allItems!public! !
+!UI.Menu categoriesFor: #allMenus!public! !
+!UI.Menu categoriesFor: #applyFlags!private!realizing/unrealizing! !
+!UI.Menu categoriesFor: #basicFree!private!realizing/unrealizing! !
+!UI.Menu categoriesFor: #basicRealize!public!realizing/unrealizing! !
+!UI.Menu categoriesFor: #clear!public!removing! !
+!UI.Menu categoriesFor: #clearCached!private!realizing/unrealizing! !
+!UI.Menu categoriesFor: #command!accessing!public! !
+!UI.Menu categoriesFor: #commandDescription!accessing!public! !
+!UI.Menu categoriesFor: #commandString!accessing!public! !
+!UI.Menu categoriesFor: #commandString:!accessing!public! !
+!UI.Menu categoriesFor: #createHandle!public!realizing/unrealizing! !
+!UI.Menu categoriesFor: #defaultFlags!initializing!private! !
+!UI.Menu categoriesFor: #deleteItemAt:!accessing!private! !
+!UI.Menu categoriesFor: #description!accessing!private! !
+!UI.Menu categoriesFor: #description:!accessing!public! !
+!UI.Menu categoriesFor: #drawItemImage:on:at:disabled:!helpers!private! !
+!UI.Menu categoriesFor: #findCommand:!public!searching! !
+!UI.Menu categoriesFor: #flags:!accessing!private! !
+!UI.Menu categoriesFor: #fromStrings:!converting!private! !
+!UI.Menu categoriesFor: #hasSharedImageColumn!public!testing! !
+!UI.Menu categoriesFor: #hasSharedImageColumn:!accessing!public! !
+!UI.Menu categoriesFor: #hasSubmenu!public!testing! !
+!UI.Menu categoriesFor: #id!accessing!public! !
+!UI.Menu categoriesFor: #image!accessing!public! !
+!UI.Menu categoriesFor: #image:!accessing!public! !
+!UI.Menu categoriesFor: #imageManager!accessing!private! !
+!UI.Menu categoriesFor: #includesCommand:!public!testing! !
+!UI.Menu categoriesFor: #indexOfCommand:!accessing!private! !
+!UI.Menu categoriesFor: #indexOfCommand:ifAbsent:!accessing!private! !
+!UI.Menu categoriesFor: #initialize!initializing!private! !
+!UI.Menu categoriesFor: #insertIntoMenu:at:!adding!private! !
+!UI.Menu categoriesFor: #insertIntoMenu:at:info:!public!realizing/unrealizing! !
+!UI.Menu categoriesFor: #insertItem:after:!adding!public! !
+!UI.Menu categoriesFor: #insertItem:at:!adding!public! !
+!UI.Menu categoriesFor: #insertItem:before:!adding!public! !
+!UI.Menu categoriesFor: #isAutoDismiss!public!testing! !
+!UI.Menu categoriesFor: #isAutoDismiss:!accessing!public! !
+!UI.Menu categoriesFor: #isDefault!accessing!public! !
+!UI.Menu categoriesFor: #isDivider!public!testing! !
+!UI.Menu categoriesFor: #isEmpty!public!testing! !
+!UI.Menu categoriesFor: #isMenuBar!public!testing! !
+!UI.Menu categoriesFor: #isModeless!public!testing! !
+!UI.Menu categoriesFor: #isModeless:!accessing!public! !
+!UI.Menu categoriesFor: #isRadioButtonStyle!public! !
+!UI.Menu categoriesFor: #itemAt:!accessing!public! !
+!UI.Menu categoriesFor: #itemAt:put:!accessing!public! !
+!UI.Menu categoriesFor: #items!accessing!public! !
+!UI.Menu categoriesFor: #items:!accessing!public! !
+!UI.Menu categoriesFor: #itemsDo:!enumerating!public! !
+!UI.Menu categoriesFor: #itemWithId:!accessing!public! !
+!UI.Menu categoriesFor: #menuFromHandle:!accessing!public! !
+!UI.Menu categoriesFor: #name!accessing!public! !
+!UI.Menu categoriesFor: #name:!accessing!public! !
+!UI.Menu categoriesFor: #notEmpty!public!testing! !
+!UI.Menu categoriesFor: #onDrawItem:!event handling-win32!private! !
+!UI.Menu categoriesFor: #postCopy!copying!public! !
+!UI.Menu categoriesFor: #printOn:!printing!public! !
+!UI.Menu categoriesFor: #queryAllAlong:!operations!public! !
+!UI.Menu categoriesFor: #queryAllFromView:!operations!private! !
+!UI.Menu categoriesFor: #queryAlong:!operations!public! !
+!UI.Menu categoriesFor: #registerAcceleratorKeyIn:!adding!public! !
+!UI.Menu categoriesFor: #removeItem:!public!removing! !
+!UI.Menu categoriesFor: #removeItemAt:!public!removing! !
+!UI.Menu categoriesFor: #replaceItem:with:!public!replacing! !
+!UI.Menu categoriesFor: #setDefault:!accessing!public! !
+!UI.Menu categoriesFor: #setItem:info:!accessing!private! !
+!UI.Menu categoriesFor: #showIn:position:!drawing!public! !
+!UI.Menu categoriesFor: #size!accessing!public! !
+!UI.Menu categoriesFor: #styleFlags!private!realizing/unrealizing! !
+!UI.Menu categoriesFor: #text!accessing!public! !
+!UI.Menu categoriesFor: #text:!accessing!public! !
+!UI.Menu categoriesFor: #typeFlags!private!realizing/unrealizing! !
+!UI.Menu categoriesFor: #updateItem:id:text:!accessing!private! !
 
-Menu methodProtocol: #commandSource attributes: #(#readOnly) selectors: #(#commandDescription)!
-Menu methodProtocol: #menuItem attributes: #(#readOnly) selectors: #(#acceleratorKey #command #hasSubmenu #id #image #insertIntoMenu:at:info: #items #menuFromHandle: #queryAlong: #registerAcceleratorKeyIn: #text)!
+UI.Menu methodProtocol: #commandSource attributes: #(#readOnly) selectors: #(#commandDescription)!
+UI.Menu methodProtocol: #menuItem attributes: #(#readOnly) selectors: #(#acceleratorKey #command #hasSubmenu #id #image #insertIntoMenu:at:info: #items #menuFromHandle: #queryAlong: #registerAcceleratorKeyIn: #text)!
 
-!Menu class methodsFor!
+!UI.Menu class methodsFor!
 
 description: text
 	"Answer a new instance of the receiver with the specified menu text."
@@ -816,13 +821,13 @@ stbConvertToVersion2: anArray
 
 	^anArray copyWith: nil!
 
-stbConvertToVersion3: anArray 
+stbConvertToVersion3: anArray
 	"Private - Version 3 adds flags, image, and bitmap instance variables.
 	The flags must be zeroed, but the other two default to nil."
 
 	| vars |
 	self assert: [anArray size = 5].
-	vars := (Array new: 8) 
+	vars := (Array new: 8)
 				replaceFrom: 1
 				to: anArray size
 				with: anArray.
@@ -836,15 +841,15 @@ stbVersion
 
 uninitialize
 	View unregisterMessageMappings: {WM_CONTEXTMENU. WM_INITMENU. WM_INITMENUPOPUP}! !
-!Menu class categoriesFor: #description:!instance creation!public! !
-!Menu class categoriesFor: #fromStrings:!instance creation!public! !
-!Menu class categoriesFor: #icon!constants!public! !
-!Menu class categoriesFor: #initialize!class initialization!development!public! !
-!Menu class categoriesFor: #menuMessageMappings!constants!must not strip!private! !
-!Menu class categoriesFor: #stbConvertFrom:!binary filing!public! !
-!Menu class categoriesFor: #stbConvertToVersion1:!binary filing!private! !
-!Menu class categoriesFor: #stbConvertToVersion2:!binary filing!private! !
-!Menu class categoriesFor: #stbConvertToVersion3:!binary filing!private! !
-!Menu class categoriesFor: #stbVersion!binary filing!public! !
-!Menu class categoriesFor: #uninitialize!class hierarchy-removing!private! !
+!UI.Menu class categoriesFor: #description:!instance creation!public! !
+!UI.Menu class categoriesFor: #fromStrings:!instance creation!public! !
+!UI.Menu class categoriesFor: #icon!constants!public! !
+!UI.Menu class categoriesFor: #initialize!class initialization!development!public! !
+!UI.Menu class categoriesFor: #menuMessageMappings!constants!must not strip!private! !
+!UI.Menu class categoriesFor: #stbConvertFrom:!binary filing!public! !
+!UI.Menu class categoriesFor: #stbConvertToVersion1:!binary filing!private! !
+!UI.Menu class categoriesFor: #stbConvertToVersion2:!binary filing!private! !
+!UI.Menu class categoriesFor: #stbConvertToVersion3:!binary filing!private! !
+!UI.Menu class categoriesFor: #stbVersion!binary filing!public! !
+!UI.Menu class categoriesFor: #uninitialize!class hierarchy-removing!private! !
 

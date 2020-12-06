@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Win32Structure subclass: #MINMAXINFO
+OS.Win32Structure subclass: #'OS.MINMAXINFO'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_ptMaxPosition' -> 16r10.
@@ -12,8 +12,8 @@ Win32Structure subclass: #MINMAXINFO
 		'_OffsetOf_ptMinTrackSize' -> 16r18.
 		'_OffsetOf_ptReserved' -> 16r0
 	}!
-MINMAXINFO guid: (GUID fromString: '{76ebd637-6ab0-4d00-812c-fa6942e1318e}')!
-MINMAXINFO comment: '<MINMAXINFO> is an <ExternalStructure> class to wrap the struct ''Win.MINMAXINFO'' from type information in the ''Windows API (ANSI)'' library.
+OS.MINMAXINFO guid: (Core.GUID fromString: '{76ebd637-6ab0-4d00-812c-fa6942e1318e}')!
+OS.MINMAXINFO comment: '<MINMAXINFO> is an <ExternalStructure> class to wrap the struct ''Win.MINMAXINFO'' from type information in the ''Windows API (ANSI)'' library.
 
 The type library contains no documentation for this struct
 
@@ -29,8 +29,8 @@ typedef struct tagMINMAXINFO {
 	POINTL ptMaxTrackSize;
 } MINMAXINFO;
 '!
-!MINMAXINFO categoriesForClass!Win-Structs! !
-!MINMAXINFO methodsFor!
+!OS.MINMAXINFO categoriesForClass!Win-Structs! !
+!OS.MINMAXINFO methodsFor!
 
 ptMaxTrackSize
 	"Answer the <POINTL> value of the receiver's 'ptMaxTrackSize' field."
@@ -59,12 +59,12 @@ ptMinTrackSize: aPOINTL
 		from: ##(_OffsetOf_ptMinTrackSize + 1)
 		to: ##(_OffsetOf_ptMinTrackSize + POINTL basicByteSize)
 		startingAt: 1! !
-!MINMAXINFO categoriesFor: #ptMaxTrackSize!**compiled accessors**!public! !
-!MINMAXINFO categoriesFor: #ptMaxTrackSize:!**compiled accessors**!public! !
-!MINMAXINFO categoriesFor: #ptMinTrackSize!**compiled accessors**!public! !
-!MINMAXINFO categoriesFor: #ptMinTrackSize:!**compiled accessors**!public! !
+!OS.MINMAXINFO categoriesFor: #ptMaxTrackSize!**compiled accessors**!public! !
+!OS.MINMAXINFO categoriesFor: #ptMaxTrackSize:!**compiled accessors**!public! !
+!OS.MINMAXINFO categoriesFor: #ptMinTrackSize!**compiled accessors**!public! !
+!OS.MINMAXINFO categoriesFor: #ptMinTrackSize:!**compiled accessors**!public! !
 
-!MINMAXINFO class methodsFor!
+!OS.MINMAXINFO class methodsFor!
 
 defineFields
 	"Define the fields of the MINMAXINFO structure.
@@ -88,6 +88,6 @@ defineFields
 
 getFieldNames
 	^#(#ptMaxSize #ptMaxPosition #ptMinTrackSize #ptMaxTrackSize)! !
-!MINMAXINFO class categoriesFor: #defineFields!public!template definition! !
-!MINMAXINFO class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.MINMAXINFO class categoriesFor: #defineFields!public!template definition! !
+!OS.MINMAXINFO class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

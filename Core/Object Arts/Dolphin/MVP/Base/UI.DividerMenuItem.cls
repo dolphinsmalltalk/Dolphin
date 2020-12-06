@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-MenuItem subclass: #DividerMenuItem
+UI.MenuItem subclass: #'UI.DividerMenuItem'
 	instanceVariableNames: ''
 	classVariableNames: 'BarBreak Break DividerLookup Separator'
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-DividerMenuItem guid: (GUID fromString: '{87b4c661-026e-11d3-9fd7-00a0cc3e4a32}')!
-DividerMenuItem comment: 'DividerMenuItem represents a divider that can be placed between other items in a <Menu>. Separate singleton instances for the various styles are held in class variables and answered by the #separator, #break and #barBreak [instance creation] methods.
+UI.DividerMenuItem guid: (Core.GUID fromString: '{87b4c661-026e-11d3-9fd7-00a0cc3e4a32}')!
+UI.DividerMenuItem comment: 'DividerMenuItem represents a divider that can be placed between other items in a <Menu>. Separate singleton instances for the various styles are held in class variables and answered by the #separator, #break and #barBreak [instance creation] methods.
 
 Class Variables:
 	Separator		<DividerMenuItem> singleton instance for the standard separator style.
@@ -16,8 +16,8 @@ Class Variables:
 	Break		<DividerMenuItem> singleton instance for the break separater style
 
 '!
-!DividerMenuItem categoriesForClass!MVP-Views-Support! !
-!DividerMenuItem methodsFor!
+!UI.DividerMenuItem categoriesForClass!MVP-Views-Support! !
+!UI.DividerMenuItem methodsFor!
 
 acceleratorKey
 	"Private - Answer the accelerator key code for the receiver.
@@ -61,7 +61,7 @@ populateItemInfo: aMENUITEMINFO
 
 	aMENUITEMINFO type: self styleFlags!
 
-queryAlong: aCommandPolicy 
+queryAlong: aCommandPolicy
 	"Answer an enabled <CommandQuery> as dividers must always be enabled."
 
 	^CommandQuery new beEnabled!
@@ -81,20 +81,20 @@ text
 	"Private - Answer the menu text (i.e. the text that appears in the menu) for the receiver."
 
 	^''! !
-!DividerMenuItem categoriesFor: #acceleratorKey!accessing!private! !
-!DividerMenuItem categoriesFor: #acceleratorKey:!accessing!private! !
-!DividerMenuItem categoriesFor: #command!accessing!private! !
-!DividerMenuItem categoriesFor: #commandDescription!accessing!private! !
-!DividerMenuItem categoriesFor: #displayOn:!displaying!public! !
-!DividerMenuItem categoriesFor: #id!accessing!public! !
-!DividerMenuItem categoriesFor: #isDivider!public!testing! !
-!DividerMenuItem categoriesFor: #populateItemInfo:!private!realizing/unrealizing! !
-!DividerMenuItem categoriesFor: #queryAlong:!operations!public! !
-!DividerMenuItem categoriesFor: #styleName!accessing!public! !
-!DividerMenuItem categoriesFor: #styleName:!accessing!private! !
-!DividerMenuItem categoriesFor: #text!accessing!private! !
+!UI.DividerMenuItem categoriesFor: #acceleratorKey!accessing!private! !
+!UI.DividerMenuItem categoriesFor: #acceleratorKey:!accessing!private! !
+!UI.DividerMenuItem categoriesFor: #command!accessing!private! !
+!UI.DividerMenuItem categoriesFor: #commandDescription!accessing!private! !
+!UI.DividerMenuItem categoriesFor: #displayOn:!displaying!public! !
+!UI.DividerMenuItem categoriesFor: #id!accessing!public! !
+!UI.DividerMenuItem categoriesFor: #isDivider!public!testing! !
+!UI.DividerMenuItem categoriesFor: #populateItemInfo:!private!realizing/unrealizing! !
+!UI.DividerMenuItem categoriesFor: #queryAlong:!operations!public! !
+!UI.DividerMenuItem categoriesFor: #styleName!accessing!public! !
+!UI.DividerMenuItem categoriesFor: #styleName:!accessing!private! !
+!UI.DividerMenuItem categoriesFor: #text!accessing!private! !
 
-!DividerMenuItem class methodsFor!
+!UI.DividerMenuItem class methodsFor!
 
 barBreak
 	"Answer unique DividerMenuItem which splits places following menu items in
@@ -119,10 +119,10 @@ initialize
 	"
 
 	DividerLookup := LookupTable new
-		at: MFT_SEPARATOR put: #separator;
-		at: MFT_MENUBREAK put: #break;
-		at: MFT_MENUBARBREAK put: #barBreak;
-		yourself!
+				at: MFT_SEPARATOR put: #separator;
+				at: MFT_MENUBREAK put: #break;
+				at: MFT_MENUBARBREAK put: #barBreak;
+				yourself!
 
 new
 	"Answers an instance of the receiver"
@@ -161,13 +161,13 @@ uninitialize
 	"Private - Uninitialize the receiver as it is about to be removed from the system."
 
 	BarBreak := Break := Separator := nil! !
-!DividerMenuItem class categoriesFor: #barBreak!instance creation!public! !
-!DividerMenuItem class categoriesFor: #break!instance creation!public! !
-!DividerMenuItem class categoriesFor: #initialize!development!initializing!private! !
-!DividerMenuItem class categoriesFor: #new!instance creation!public! !
-!DividerMenuItem class categoriesFor: #onPreStripImage!class hierarchy-removing!private! !
-!DividerMenuItem class categoriesFor: #separator!instance creation!public! !
-!DividerMenuItem class categoriesFor: #stbConvertFrom:!binary filing!public! !
-!DividerMenuItem class categoriesFor: #styleNameChoices!constants!public! !
-!DividerMenuItem class categoriesFor: #uninitialize!class hierarchy-removing!private! !
+!UI.DividerMenuItem class categoriesFor: #barBreak!instance creation!public! !
+!UI.DividerMenuItem class categoriesFor: #break!instance creation!public! !
+!UI.DividerMenuItem class categoriesFor: #initialize!development!initializing!private! !
+!UI.DividerMenuItem class categoriesFor: #new!instance creation!public! !
+!UI.DividerMenuItem class categoriesFor: #onPreStripImage!class hierarchy-removing!private! !
+!UI.DividerMenuItem class categoriesFor: #separator!instance creation!public! !
+!UI.DividerMenuItem class categoriesFor: #stbConvertFrom:!binary filing!public! !
+!UI.DividerMenuItem class categoriesFor: #styleNameChoices!constants!public! !
+!UI.DividerMenuItem class categoriesFor: #uninitialize!class hierarchy-removing!private! !
 

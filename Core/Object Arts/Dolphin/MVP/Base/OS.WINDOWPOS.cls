@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Win32Structure subclass: #WINDOWPOS
+OS.Win32Structure subclass: #'OS.WINDOWPOS'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_cx' -> 16r10.
@@ -14,10 +14,10 @@ Win32Structure subclass: #WINDOWPOS
 		'_OffsetOf_x' -> 16r8.
 		'_OffsetOf_y' -> 16rC
 	}!
-WINDOWPOS guid: (GUID fromString: '{cd69a071-3606-11d3-93bd-00a024ca708a}')!
-WINDOWPOS comment: ''!
-!WINDOWPOS categoriesForClass!External-Data-Structured-Win32! !
-!WINDOWPOS methodsFor!
+OS.WINDOWPOS guid: (Core.GUID fromString: '{cd69a071-3606-11d3-93bd-00a024ca708a}')!
+OS.WINDOWPOS comment: ''!
+!OS.WINDOWPOS categoriesForClass!External-Data-Structured-Win32! !
+!OS.WINDOWPOS methodsFor!
 
 cx
 	"Answer the <Integer> value of the receiver's 'cx' field."
@@ -70,20 +70,20 @@ y
 	"Answer the <Integer> value of the receiver's 'y' field."
 
 	^bytes sdwordAtOffset: _OffsetOf_y! !
-!WINDOWPOS categoriesFor: #cx!**compiled accessors**!public! !
-!WINDOWPOS categoriesFor: #cx:!**compiled accessors**!public! !
-!WINDOWPOS categoriesFor: #cy!**compiled accessors**!public! !
-!WINDOWPOS categoriesFor: #cy:!**compiled accessors**!public! !
-!WINDOWPOS categoriesFor: #extent!accessing!public! !
-!WINDOWPOS categoriesFor: #flags!**compiled accessors**!public! !
-!WINDOWPOS categoriesFor: #hwndInsertAfter!**compiled accessors**!public! !
-!WINDOWPOS categoriesFor: #isRectangleChanged!public!testing! !
-!WINDOWPOS categoriesFor: #position!accessing!public! !
-!WINDOWPOS categoriesFor: #rectangle!accessing!public! !
-!WINDOWPOS categoriesFor: #x!**compiled accessors**!public! !
-!WINDOWPOS categoriesFor: #y!**compiled accessors**!public! !
+!OS.WINDOWPOS categoriesFor: #cx!**compiled accessors**!public! !
+!OS.WINDOWPOS categoriesFor: #cx:!**compiled accessors**!public! !
+!OS.WINDOWPOS categoriesFor: #cy!**compiled accessors**!public! !
+!OS.WINDOWPOS categoriesFor: #cy:!**compiled accessors**!public! !
+!OS.WINDOWPOS categoriesFor: #extent!accessing!public! !
+!OS.WINDOWPOS categoriesFor: #flags!**compiled accessors**!public! !
+!OS.WINDOWPOS categoriesFor: #hwndInsertAfter!**compiled accessors**!public! !
+!OS.WINDOWPOS categoriesFor: #isRectangleChanged!public!testing! !
+!OS.WINDOWPOS categoriesFor: #position!accessing!public! !
+!OS.WINDOWPOS categoriesFor: #rectangle!accessing!public! !
+!OS.WINDOWPOS categoriesFor: #x!**compiled accessors**!public! !
+!OS.WINDOWPOS categoriesFor: #y!**compiled accessors**!public! !
 
-!WINDOWPOS class methodsFor!
+!OS.WINDOWPOS class methodsFor!
 
 defineFields
 	"Define the layout of the Win32 WINDOWPOS structure.
@@ -107,11 +107,10 @@ defineFields
 		defineField: #y type: SDWORDField readOnly;
 		defineField: #cx type: SDWORDField new;
 		defineField: #cy type: SDWORDField new;
-		defineField: #flags type: DWORDField readOnly
-!
+		defineField: #flags type: DWORDField readOnly!
 
 getFieldNames
 	^#(#hwndInsertAfter #x #y #cx #cy #flags)! !
-!WINDOWPOS class categoriesFor: #defineFields!public!template definition! !
-!WINDOWPOS class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.WINDOWPOS class categoriesFor: #defineFields!public!template definition! !
+!OS.WINDOWPOS class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

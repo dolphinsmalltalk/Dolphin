@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-AbstractDelegatingView subclass: #ReferenceView
+UI.AbstractDelegatingView subclass: #'UI.ReferenceView'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ReferenceView guid: (GUID fromString: '{87b4c713-026e-11d3-9fd7-00a0cc3e4a32}')!
-ReferenceView comment: 'ReferenceView represents a dummy <view> that is capable of loading another view to take its place. This "referee" view is  identified by its resource identifier. The reference view then steps aside and forwards all pertinent messages to the referee. In general, from this point on, the reference view can be assumed to take a minimal part in the view hierarchy.
+UI.ReferenceView guid: (Core.GUID fromString: '{87b4c713-026e-11d3-9fd7-00a0cc3e4a32}')!
+UI.ReferenceView comment: 'ReferenceView represents a dummy <view> that is capable of loading another view to take its place. This "referee" view is  identified by its resource identifier. The reference view then steps aside and forwards all pertinent messages to the referee. In general, from this point on, the reference view can be assumed to take a minimal part in the view hierarchy.
 
 Typically, ReferenceViews are used to allow existing views held by the ResourceManager to be loaded, as is, into other views. In this way, if the referee view definition is changed then, when the referer is re-loaded, it will automatically get the latest referee definition.
 
@@ -16,21 +16,21 @@ Instance Variables (inherited)
 	referee			<view> which is the delegated view.
 
 '!
-!ReferenceView categoriesForClass!MVP-Views! !
-!ReferenceView methodsFor!
+!UI.ReferenceView categoriesForClass!MVP-Views! !
+!UI.ReferenceView methodsFor!
 
 clearReferee
 	referee := nil!
 
 configureReferee
 	referee
-		rectangle: (Point zero extent: self extent);
+		rectangle: (Point.Zero extent: self extent);
 		isManaged: false;
 		isTabStop: self isTabStop;
 		isGroupStop: self isGroupStop;
 		isDragSource: self isDragSource;
 		isDropTarget: self isDropTarget.
-	self contextMenu 
+	self contextMenu
 		ifNotNil: 
 			[referee
 				contextMenu: nil;
@@ -104,15 +104,15 @@ resource
 	for a 'Default view' resource in the same owning class."
 
 	| resource |
-	(resource := resourceIdentifier resourceOrNil) isNil 
+	(resource := resourceIdentifier resourceOrNil) isNil
 		ifTrue: 
 			[| rid |
-"self halt."
+			"self halt."
 			rid := resourceIdentifier copy.
 			rid name: 'Default view'.
-			Notification 
-				signal: 'Warning: ''' , resourceIdentifier printString , ''' not found. Trying: ''' 
-						, rid printString , ''' instead.'.
+			Notification
+				signal: 'Warning: ''' , resourceIdentifier printString , ''' not found. Trying: ''' , rid printString
+						, ''' instead.'.
 			resource := rid resourceOrNil.
 			resource notNil ifTrue: [resourceIdentifier := rid]].
 	^resource!
@@ -137,21 +137,21 @@ validateUserInterface
 	when the UI has been flagged as being invalid"
 
 	self referee presenter validateUserInterface! !
-!ReferenceView categoriesFor: #clearReferee!event handling!private! !
-!ReferenceView categoriesFor: #configureReferee!helpers!private! !
-!ReferenceView categoriesFor: #createDelegate!event handling!private! !
-!ReferenceView categoriesFor: #filerProxy!binary filing!private! !
-!ReferenceView categoriesFor: #loadReferee!helpers!private! !
-!ReferenceView categoriesFor: #nonReferenceAncestor!accessing!public! !
-!ReferenceView categoriesFor: #presenterConnectionPoint!public! !
-!ReferenceView categoriesFor: #printOn:!development!printing!public! !
-!ReferenceView categoriesFor: #referee!accessing!public! !
-!ReferenceView categoriesFor: #resource!operations!public! !
-!ReferenceView categoriesFor: #resourceIdentifier!accessing!private! !
-!ReferenceView categoriesFor: #resourceIdentifier:!accessing!private! !
-!ReferenceView categoriesFor: #validateUserInterface!operations!public! !
+!UI.ReferenceView categoriesFor: #clearReferee!event handling!private! !
+!UI.ReferenceView categoriesFor: #configureReferee!helpers!private! !
+!UI.ReferenceView categoriesFor: #createDelegate!event handling!private! !
+!UI.ReferenceView categoriesFor: #filerProxy!binary filing!private! !
+!UI.ReferenceView categoriesFor: #loadReferee!helpers!private! !
+!UI.ReferenceView categoriesFor: #nonReferenceAncestor!accessing!public! !
+!UI.ReferenceView categoriesFor: #presenterConnectionPoint!public! !
+!UI.ReferenceView categoriesFor: #printOn:!development!printing!public! !
+!UI.ReferenceView categoriesFor: #referee!accessing!public! !
+!UI.ReferenceView categoriesFor: #resource!operations!public! !
+!UI.ReferenceView categoriesFor: #resourceIdentifier!accessing!private! !
+!UI.ReferenceView categoriesFor: #resourceIdentifier:!accessing!private! !
+!UI.ReferenceView categoriesFor: #validateUserInterface!operations!public! !
 
-!ReferenceView class methodsFor!
+!UI.ReferenceView class methodsFor!
 
 icon
 	"Answers an Icon that can be used to represent this class"
@@ -191,9 +191,9 @@ stbConvertFromVersion9: anArray
 	rid := array at: 13.
 	rid owningClass == #{Toolbar} valueOrNil ifTrue: [array at: 6 put: Color face3d].
 	^array! !
-!ReferenceView class categoriesFor: #icon!constants!public! !
-!ReferenceView class categoriesFor: #new!development!instance creation!public! !
-!ReferenceView class categoriesFor: #resourceIdentifier:!instance creation!public! !
-!ReferenceView class categoriesFor: #stbConvertFromVersion12:!binary filing!private! !
-!ReferenceView class categoriesFor: #stbConvertFromVersion9:!binary filing!private! !
+!UI.ReferenceView class categoriesFor: #icon!constants!public! !
+!UI.ReferenceView class categoriesFor: #new!development!instance creation!public! !
+!UI.ReferenceView class categoriesFor: #resourceIdentifier:!instance creation!public! !
+!UI.ReferenceView class categoriesFor: #stbConvertFromVersion12:!binary filing!private! !
+!UI.ReferenceView class categoriesFor: #stbConvertFromVersion9:!binary filing!private! !
 

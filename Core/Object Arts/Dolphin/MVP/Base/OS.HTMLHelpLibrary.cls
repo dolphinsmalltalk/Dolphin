@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ExternalLibrary subclass: #HTMLHelpLibrary
+External.Library subclass: #'OS.HTMLHelpLibrary'
 	instanceVariableNames: 'cookie'
 	classVariableNames: ''
-	poolDictionaries: 'HTMLHelpConstants'
+	imports: #(#{OS.HTMLHelpConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-HTMLHelpLibrary guid: (GUID fromString: '{9e0d2430-3877-11d3-93bd-00a024ca708a}')!
-HTMLHelpLibrary comment: ''!
-!HTMLHelpLibrary categoriesForClass!Unclassified! !
-!HTMLHelpLibrary methodsFor!
+OS.HTMLHelpLibrary guid: (Core.GUID fromString: '{9e0d2430-3877-11d3-93bd-00a024ca708a}')!
+OS.HTMLHelpLibrary comment: ''!
+!OS.HTMLHelpLibrary categoriesForClass!Unclassified! !
+!OS.HTMLHelpLibrary methodsFor!
 
 close
 	"Release the reference the receiver has to the External Library it represents, but
@@ -51,8 +51,12 @@ htmlHelpCloseAll
 htmlHelpInitialize
 	"Private - Initialize the HTML help system - must be the first command."
 
-	cookie := DWORD new.	
-	self htmlHelp: 0 pszFile: nil uCommand: HH_INITIALIZE dwData: cookie yourAddress.
+	cookie := DWORD new.
+	self
+		htmlHelp: 0
+		pszFile: nil
+		uCommand: HH_INITIALIZE
+		dwData: cookie yourAddress.
 	cookie := cookie asInteger!
 
 htmlHelpUninitialize
@@ -71,26 +75,26 @@ htmlHelpUrl: url
 
 	^self htmlHelpUrl: url style: nil!
 
-htmlHelpUrl: url style: styleOrNil 
+htmlHelpUrl: url style: styleOrNil
 	"Brings up the HTML help window on the <readableString> url. If styleOrNil is not nil
 	then the help window is brought up as the specified style."
 
 	self assert: [cookie notNil].
-	^self 
+	^self
 		htmlHelp: UserLibrary default getDesktopWindow
 		pszFile: (styleOrNil isNil ifTrue: [url] ifFalse: [url , '>' , styleOrNil])
 		uCommand: HH_DISPLAY_TOPIC
 		dwData: 0! !
-!HTMLHelpLibrary categoriesFor: #close!public!realizing/unrealizing! !
-!HTMLHelpLibrary categoriesFor: #handle:!accessing!private! !
-!HTMLHelpLibrary categoriesFor: #htmlHelp:pszFile:uCommand:dwData:!operations!public! !
-!HTMLHelpLibrary categoriesFor: #htmlHelpCloseAll!operations!public! !
-!HTMLHelpLibrary categoriesFor: #htmlHelpInitialize!operations!private! !
-!HTMLHelpLibrary categoriesFor: #htmlHelpUninitialize!operations!private! !
-!HTMLHelpLibrary categoriesFor: #htmlHelpUrl:!operations!public! !
-!HTMLHelpLibrary categoriesFor: #htmlHelpUrl:style:!operations!public! !
+!OS.HTMLHelpLibrary categoriesFor: #close!public!realizing/unrealizing! !
+!OS.HTMLHelpLibrary categoriesFor: #handle:!accessing!private! !
+!OS.HTMLHelpLibrary categoriesFor: #htmlHelp:pszFile:uCommand:dwData:!operations!public! !
+!OS.HTMLHelpLibrary categoriesFor: #htmlHelpCloseAll!operations!public! !
+!OS.HTMLHelpLibrary categoriesFor: #htmlHelpInitialize!operations!private! !
+!OS.HTMLHelpLibrary categoriesFor: #htmlHelpUninitialize!operations!private! !
+!OS.HTMLHelpLibrary categoriesFor: #htmlHelpUrl:!operations!public! !
+!OS.HTMLHelpLibrary categoriesFor: #htmlHelpUrl:style:!operations!public! !
 
-!HTMLHelpLibrary class methodsFor!
+!OS.HTMLHelpLibrary class methodsFor!
 
 fileName
 	"Answer the host system file name of the external library which the 
@@ -104,6 +108,6 @@ htmlHelpCloseAll
 
 	(default notNil and: [default isOpen]) ifTrue: [
 		default htmlHelpCloseAll]! !
-!HTMLHelpLibrary class categoriesFor: #fileName!constants!public! !
-!HTMLHelpLibrary class categoriesFor: #htmlHelpCloseAll!operations!public! !
+!OS.HTMLHelpLibrary class categoriesFor: #fileName!constants!public! !
+!OS.HTMLHelpLibrary class categoriesFor: #htmlHelpCloseAll!operations!public! !
 

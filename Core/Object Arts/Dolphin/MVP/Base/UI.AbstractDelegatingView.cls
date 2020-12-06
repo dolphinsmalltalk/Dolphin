@@ -1,20 +1,20 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-View subclass: #AbstractDelegatingView
+UI.View subclass: #'UI.AbstractDelegatingView'
 	instanceVariableNames: 'resourceIdentifier referee'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-AbstractDelegatingView guid: (GUID fromString: '{93fdcca7-1448-41db-abf2-5aa02abef751}')!
-AbstractDelegatingView isAbstract: true!
-AbstractDelegatingView comment: 'AbstractDelegatingView is an abstract class for views that contain another view internally and delegate their interface to it. An example is ToolBotton, which presents the interace of a toolbar button but actually contains an instance of class Toolbar internally and uses it to do all the work.
+UI.AbstractDelegatingView guid: (Core.GUID fromString: '{93fdcca7-1448-41db-abf2-5aa02abef751}')!
+UI.AbstractDelegatingView isNonInstantiable: true!
+UI.AbstractDelegatingView comment: 'AbstractDelegatingView is an abstract class for views that contain another view internally and delegate their interface to it. An example is ToolBotton, which presents the interace of a toolbar button but actually contains an instance of class Toolbar internally and uses it to do all the work.
 
 Instance Variables:
 	resourceIdentifier	<ResourceIdentifier> only used by ReferenceView sublass. Here for compatibility with previous instances of ReferenceView.
 	referee			<view> which is the delegated view.'!
-!AbstractDelegatingView categoriesForClass!MVP-Resources-Misc! !
-!AbstractDelegatingView methodsFor!
+!UI.AbstractDelegatingView categoriesForClass!MVP-Resources-Misc! !
+!UI.AbstractDelegatingView methodsFor!
 
 backcolor: aColorOrNil 
 	"Sets the background colour of the receiver and the referee to aColorOrNil."
@@ -174,28 +174,28 @@ viewNamed: aString ifNone: aBlock
 	on to our referee."
 
 	^self referee viewNamed: aString ifNone: aBlock! !
-!AbstractDelegatingView categoriesFor: #backcolor:!accessing!public! !
-!AbstractDelegatingView categoriesFor: #calculateExtent:!geometry!private! !
-!AbstractDelegatingView categoriesFor: #clearReferee!event handling!private! !
-!AbstractDelegatingView categoriesFor: #createDelegate!event handling!private! !
-!AbstractDelegatingView categoriesFor: #defaultWindowExStyle!constants!private! !
-!AbstractDelegatingView categoriesFor: #isDragSource:!accessing!public! !
-!AbstractDelegatingView categoriesFor: #isDropTarget:!accessing!public! !
-!AbstractDelegatingView categoriesFor: #isGroupStop:!accessing-styles!public! !
-!AbstractDelegatingView categoriesFor: #isTabStop:!accessing-styles!public! !
-!AbstractDelegatingView categoriesFor: #layout:!geometry!private! !
-!AbstractDelegatingView categoriesFor: #model!accessing!private! !
-!AbstractDelegatingView categoriesFor: #model:!accessing!private! !
-!AbstractDelegatingView categoriesFor: #onDestroyed!event handling!private! !
-!AbstractDelegatingView categoriesFor: #onViewCreated!event handling!private! !
-!AbstractDelegatingView categoriesFor: #preferredExtent!geometry!public! !
-!AbstractDelegatingView categoriesFor: #preferredExtent:!geometry!public! !
-!AbstractDelegatingView categoriesFor: #referee!accessing!private! !
-!AbstractDelegatingView categoriesFor: #show!operations!public! !
-!AbstractDelegatingView categoriesFor: #tabFocus!private!tabbing! !
-!AbstractDelegatingView categoriesFor: #usePreferredExtent!accessing!public! !
-!AbstractDelegatingView categoriesFor: #usePreferredExtent:!accessing!not an aspect!public! !
-!AbstractDelegatingView categoriesFor: #validateSubViewLayouts:!geometry!private! !
-!AbstractDelegatingView categoriesFor: #validateUserInterface!operations!public! !
-!AbstractDelegatingView categoriesFor: #viewNamed:ifNone:!hierarchy!public!sub views! !
+!UI.AbstractDelegatingView categoriesFor: #backcolor:!accessing!public! !
+!UI.AbstractDelegatingView categoriesFor: #calculateExtent:!geometry!private! !
+!UI.AbstractDelegatingView categoriesFor: #clearReferee!event handling!private! !
+!UI.AbstractDelegatingView categoriesFor: #createDelegate!event handling!private! !
+!UI.AbstractDelegatingView categoriesFor: #defaultWindowExStyle!constants!private! !
+!UI.AbstractDelegatingView categoriesFor: #isDragSource:!accessing!public! !
+!UI.AbstractDelegatingView categoriesFor: #isDropTarget:!accessing!public! !
+!UI.AbstractDelegatingView categoriesFor: #isGroupStop:!accessing-styles!public! !
+!UI.AbstractDelegatingView categoriesFor: #isTabStop:!accessing-styles!public! !
+!UI.AbstractDelegatingView categoriesFor: #layout:!geometry!private! !
+!UI.AbstractDelegatingView categoriesFor: #model!accessing!private! !
+!UI.AbstractDelegatingView categoriesFor: #model:!accessing!private! !
+!UI.AbstractDelegatingView categoriesFor: #onDestroyed!event handling!private! !
+!UI.AbstractDelegatingView categoriesFor: #onViewCreated!event handling!private! !
+!UI.AbstractDelegatingView categoriesFor: #preferredExtent!geometry!public! !
+!UI.AbstractDelegatingView categoriesFor: #preferredExtent:!geometry!public! !
+!UI.AbstractDelegatingView categoriesFor: #referee!accessing!private! !
+!UI.AbstractDelegatingView categoriesFor: #show!operations!public! !
+!UI.AbstractDelegatingView categoriesFor: #tabFocus!private!tabbing! !
+!UI.AbstractDelegatingView categoriesFor: #usePreferredExtent!accessing!public! !
+!UI.AbstractDelegatingView categoriesFor: #usePreferredExtent:!accessing!not an aspect!public! !
+!UI.AbstractDelegatingView categoriesFor: #validateSubViewLayouts:!geometry!private! !
+!UI.AbstractDelegatingView categoriesFor: #validateUserInterface!operations!public! !
+!UI.AbstractDelegatingView categoriesFor: #viewNamed:ifNone:!hierarchy!public!sub views! !
 

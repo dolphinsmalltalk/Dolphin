@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Win32Structure subclass: #BP_ANIMATIONPARAMS
+OS.Win32Structure subclass: #'OS.BP_ANIMATIONPARAMS'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_dwDuration' -> 16rC.
@@ -11,8 +11,8 @@ Win32Structure subclass: #BP_ANIMATIONPARAMS
 		'_OffsetOf_dwSize' -> 16r0.
 		'_OffsetOf_style' -> 16r8
 	}!
-BP_ANIMATIONPARAMS guid: (GUID fromString: '{74d57e87-6087-4e82-ac07-680d0a3db4e6}')!
-BP_ANIMATIONPARAMS comment: '<BP_ANIMATIONPARAMS> is an <ExternalStructure> class to wrap the struct ''Win32.BP_ANIMATIONPARAMS'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
+OS.BP_ANIMATIONPARAMS guid: (Core.GUID fromString: '{74d57e87-6087-4e82-ac07-680d0a3db4e6}')!
+OS.BP_ANIMATIONPARAMS comment: '<BP_ANIMATIONPARAMS> is an <ExternalStructure> class to wrap the struct ''Win32.BP_ANIMATIONPARAMS'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
 
@@ -28,8 +28,8 @@ struct tagBP_ANIMATIONPARAMS {
 	unsigned long dwDuration;
 } BP_ANIMATIONPARAMS;
 '!
-!BP_ANIMATIONPARAMS categoriesForClass!Win32-Structs! !
-!BP_ANIMATIONPARAMS methodsFor!
+!OS.BP_ANIMATIONPARAMS categoriesForClass!Win32-Structs! !
+!OS.BP_ANIMATIONPARAMS methodsFor!
 
 dwDuration
 	"Answer the <Integer> value of the receiver's 'dwDuration' field."
@@ -65,15 +65,15 @@ style: anInteger
 	"Set the receiver's 'style' field to the value of the argument, anInteger"
 
 	bytes sdwordAtOffset: _OffsetOf_style put: anInteger! !
-!BP_ANIMATIONPARAMS categoriesFor: #dwDuration!**compiled accessors**!public! !
-!BP_ANIMATIONPARAMS categoriesFor: #dwDuration:!**compiled accessors**!public! !
-!BP_ANIMATIONPARAMS categoriesFor: #dwFlags!**compiled accessors**!public! !
-!BP_ANIMATIONPARAMS categoriesFor: #dwFlags:!**compiled accessors**!public! !
-!BP_ANIMATIONPARAMS categoriesFor: #dwSize:!**compiled accessors**!public! !
-!BP_ANIMATIONPARAMS categoriesFor: #style!**compiled accessors**!public! !
-!BP_ANIMATIONPARAMS categoriesFor: #style:!**compiled accessors**!public! !
+!OS.BP_ANIMATIONPARAMS categoriesFor: #dwDuration!**compiled accessors**!public! !
+!OS.BP_ANIMATIONPARAMS categoriesFor: #dwDuration:!**compiled accessors**!public! !
+!OS.BP_ANIMATIONPARAMS categoriesFor: #dwFlags!**compiled accessors**!public! !
+!OS.BP_ANIMATIONPARAMS categoriesFor: #dwFlags:!**compiled accessors**!public! !
+!OS.BP_ANIMATIONPARAMS categoriesFor: #dwSize:!**compiled accessors**!public! !
+!OS.BP_ANIMATIONPARAMS categoriesFor: #style!**compiled accessors**!public! !
+!OS.BP_ANIMATIONPARAMS categoriesFor: #style:!**compiled accessors**!public! !
 
-!BP_ANIMATIONPARAMS class methodsFor!
+!OS.BP_ANIMATIONPARAMS class methodsFor!
 
 defineFields
 	"Define the fields of the BP_ANIMATIONPARAMS structure.
@@ -97,6 +97,6 @@ defineFields
 
 getFieldNames
 	^#(#dwSize #dwFlags #style #dwDuration)! !
-!BP_ANIMATIONPARAMS class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!BP_ANIMATIONPARAMS class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.BP_ANIMATIONPARAMS class categoriesFor: #defineFields!**auto generated**!public!template definition! !
+!OS.BP_ANIMATIONPARAMS class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

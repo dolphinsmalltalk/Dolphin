@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ImageManager subclass: #IconImageManager
+Graphics.ImageManager subclass: #'Graphics.IconImageManager'
 	instanceVariableNames: 'bitmaps'
 	classVariableNames: 'Current'
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-IconImageManager guid: (GUID fromString: '{87b4c645-026e-11d3-9fd7-00a0cc3e4a32}')!
-IconImageManager comment: ''!
-!IconImageManager categoriesForClass!Graphics-Tools! !
-!IconImageManager methodsFor!
+Graphics.IconImageManager guid: (Core.GUID fromString: '{87b4c645-026e-11d3-9fd7-00a0cc3e4a32}')!
+Graphics.IconImageManager comment: ''!
+!Graphics.IconImageManager categoriesForClass!Graphics-Tools! !
+!Graphics.IconImageManager methodsFor!
 
 bitmapForIcon: anIcon extent: aPoint
 	| forExtent |
@@ -37,13 +37,13 @@ stbSaveOn: anSTBOutFiler
 	"Save out a binary representation of the receiver to anSTBOutFiler."
 
 	anSTBOutFiler writePreambleFor: self! !
-!IconImageManager categoriesFor: #bitmapForIcon:extent:!public!searching! !
-!IconImageManager categoriesFor: #initialize!initializing!private! !
-!IconImageManager categoriesFor: #menuBitmapForIcon:!public!searching! !
-!IconImageManager categoriesFor: #newImages!private!removing! !
-!IconImageManager categoriesFor: #stbSaveOn:!binary filing!public! !
+!Graphics.IconImageManager categoriesFor: #bitmapForIcon:extent:!public!searching! !
+!Graphics.IconImageManager categoriesFor: #initialize!initializing!private! !
+!Graphics.IconImageManager categoriesFor: #menuBitmapForIcon:!public!searching! !
+!Graphics.IconImageManager categoriesFor: #newImages!private!removing! !
+!Graphics.IconImageManager categoriesFor: #stbSaveOn:!binary filing!public! !
 
-!IconImageManager class methodsFor!
+!Graphics.IconImageManager class methodsFor!
 
 current
 	"Answer the singleton instance of the receiver"
@@ -79,10 +79,10 @@ uninitialize
 	"Private - Uninitialize the receiver as it is about to be removed from the system."
 
 	Current := nil! !
-!IconImageManager class categoriesFor: #current!instance creation!public! !
-!IconImageManager class categoriesFor: #new!instance creation!private! !
-!IconImageManager class categoriesFor: #onPreStripImage!class hierarchy-removing!private! !
-!IconImageManager class categoriesFor: #reset!operations!public! !
-!IconImageManager class categoriesFor: #stbReadFrom:format:!binary filing!public! !
-!IconImageManager class categoriesFor: #uninitialize!class hierarchy-removing!private! !
+!Graphics.IconImageManager class categoriesFor: #current!instance creation!public! !
+!Graphics.IconImageManager class categoriesFor: #new!instance creation!private! !
+!Graphics.IconImageManager class categoriesFor: #onPreStripImage!class hierarchy-removing!private! !
+!Graphics.IconImageManager class categoriesFor: #reset!operations!public! !
+!Graphics.IconImageManager class categoriesFor: #stbReadFrom:format:!binary filing!public! !
+!Graphics.IconImageManager class categoriesFor: #uninitialize!class hierarchy-removing!private! !
 

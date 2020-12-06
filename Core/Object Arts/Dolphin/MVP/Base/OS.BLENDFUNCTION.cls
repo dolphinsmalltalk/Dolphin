@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Win32Structure subclass: #BLENDFUNCTION
+OS.Win32Structure subclass: #'OS.BLENDFUNCTION'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_AlphaFormat' -> 16r3.
@@ -11,8 +11,8 @@ Win32Structure subclass: #BLENDFUNCTION
 		'_OffsetOf_BlendOp' -> 16r0.
 		'_OffsetOf_SourceConstantAlpha' -> 16r2
 	}!
-BLENDFUNCTION guid: (GUID fromString: '{18e4db2f-bc13-4088-8c0d-df249d0bb979}')!
-BLENDFUNCTION comment: '<BLENDFUNCTION> is an <ExternalStructure> class to wrap the struct ''Win32.BLENDFUNCTION'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
+OS.BLENDFUNCTION guid: (Core.GUID fromString: '{18e4db2f-bc13-4088-8c0d-df249d0bb979}')!
+OS.BLENDFUNCTION comment: '<BLENDFUNCTION> is an <ExternalStructure> class to wrap the struct ''Win32.BLENDFUNCTION'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 IDL definition follows:
 
@@ -24,8 +24,8 @@ struct tagBLENDFUNCTION {
 	BYTE AlphaFormat;
 } BLENDFUNCTION;
 '!
-!BLENDFUNCTION categoriesForClass!Win32-Structs! !
-!BLENDFUNCTION methodsFor!
+!OS.BLENDFUNCTION categoriesForClass!Win32-Structs! !
+!OS.BLENDFUNCTION methodsFor!
 
 AlphaFormat
 	"Answer the <Integer> value of the receiver's 'AlphaFormat' field."
@@ -87,20 +87,20 @@ usePerPixelAlpha: aBoolean
 	blend. If not then only the constant alpha is used."
 
 	self AlphaFormat: (aBoolean ifTrue: [AC_SRC_ALPHA] ifFalse: [0])! !
-!BLENDFUNCTION categoriesFor: #AlphaFormat!**compiled accessors**!public! !
-!BLENDFUNCTION categoriesFor: #AlphaFormat:!**compiled accessors**!public! !
-!BLENDFUNCTION categoriesFor: #blend:!accessing!public! !
-!BLENDFUNCTION categoriesFor: #BlendFlags!**compiled accessors**!public! !
-!BLENDFUNCTION categoriesFor: #BlendFlags:!**compiled accessors**!public! !
-!BLENDFUNCTION categoriesFor: #BlendOp!**compiled accessors**!public! !
-!BLENDFUNCTION categoriesFor: #BlendOp:!**compiled accessors**!public! !
-!BLENDFUNCTION categoriesFor: #blendPercentage:!accessing!public! !
-!BLENDFUNCTION categoriesFor: #initialize!initializing!public! !
-!BLENDFUNCTION categoriesFor: #SourceConstantAlpha!**compiled accessors**!public! !
-!BLENDFUNCTION categoriesFor: #SourceConstantAlpha:!**compiled accessors**!public! !
-!BLENDFUNCTION categoriesFor: #usePerPixelAlpha:!accessing!public! !
+!OS.BLENDFUNCTION categoriesFor: #AlphaFormat!**compiled accessors**!public! !
+!OS.BLENDFUNCTION categoriesFor: #AlphaFormat:!**compiled accessors**!public! !
+!OS.BLENDFUNCTION categoriesFor: #blend:!accessing!public! !
+!OS.BLENDFUNCTION categoriesFor: #BlendFlags!**compiled accessors**!public! !
+!OS.BLENDFUNCTION categoriesFor: #BlendFlags:!**compiled accessors**!public! !
+!OS.BLENDFUNCTION categoriesFor: #BlendOp!**compiled accessors**!public! !
+!OS.BLENDFUNCTION categoriesFor: #BlendOp:!**compiled accessors**!public! !
+!OS.BLENDFUNCTION categoriesFor: #blendPercentage:!accessing!public! !
+!OS.BLENDFUNCTION categoriesFor: #initialize!initializing!public! !
+!OS.BLENDFUNCTION categoriesFor: #SourceConstantAlpha!**compiled accessors**!public! !
+!OS.BLENDFUNCTION categoriesFor: #SourceConstantAlpha:!**compiled accessors**!public! !
+!OS.BLENDFUNCTION categoriesFor: #usePerPixelAlpha:!accessing!public! !
 
-!BLENDFUNCTION class methodsFor!
+!OS.BLENDFUNCTION class methodsFor!
 
 blend: aNumber 
 	"Answers an instance of the receiver set up to specify a blend of a constant
@@ -132,7 +132,7 @@ defineFields
 
 getFieldNames
 	^#(#BlendOp #BlendFlags #SourceConstantAlpha #AlphaFormat)! !
-!BLENDFUNCTION class categoriesFor: #blend:!instance creation!public! !
-!BLENDFUNCTION class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!BLENDFUNCTION class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.BLENDFUNCTION class categoriesFor: #blend:!instance creation!public! !
+!OS.BLENDFUNCTION class categoriesFor: #defineFields!**auto generated**!public!template definition! !
+!OS.BLENDFUNCTION class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

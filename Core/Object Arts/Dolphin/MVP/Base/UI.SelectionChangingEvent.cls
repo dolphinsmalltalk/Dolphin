@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-SelectionChangeEvent subclass: #SelectionChangingEvent
+UI.SelectionChangeEvent subclass: #'UI.SelectionChangingEvent'
 	instanceVariableNames: 'permit'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-SelectionChangingEvent guid: (GUID fromString: '{cf88ca57-dc8c-46e6-beab-59fe115eb945}')!
-SelectionChangingEvent comment: ''!
-!SelectionChangingEvent categoriesForClass!MVP-Views-Events! !
-!SelectionChangingEvent methodsFor!
+UI.SelectionChangingEvent guid: (Core.GUID fromString: '{cf88ca57-dc8c-46e6-beab-59fe115eb945}')!
+UI.SelectionChangingEvent comment: ''!
+!UI.SelectionChangingEvent categoriesForClass!MVP-Views-Events! !
+!UI.SelectionChangingEvent methodsFor!
 
 canIntercept
 	^true!
@@ -23,14 +23,14 @@ value
 
 value: aBoolean
 	permit := aBoolean! !
-!SelectionChangingEvent categoriesFor: #canIntercept!public!testing! !
-!SelectionChangingEvent categoriesFor: #setSource:!initializing!private! !
-!SelectionChangingEvent categoriesFor: #value!accessing!public! !
-!SelectionChangingEvent categoriesFor: #value:!accessing!public! !
+!UI.SelectionChangingEvent categoriesFor: #canIntercept!public!testing! !
+!UI.SelectionChangingEvent categoriesFor: #setSource:!initializing!private! !
+!UI.SelectionChangingEvent categoriesFor: #value!accessing!public! !
+!UI.SelectionChangingEvent categoriesFor: #value:!accessing!public! !
 
-!SelectionChangingEvent class methodsFor!
+!UI.SelectionChangingEvent class methodsFor!
 
 new
 	^self shouldNotImplement! !
-!SelectionChangingEvent class categoriesFor: #new!instance creation!public! !
+!UI.SelectionChangingEvent class categoriesFor: #new!instance creation!public! !
 

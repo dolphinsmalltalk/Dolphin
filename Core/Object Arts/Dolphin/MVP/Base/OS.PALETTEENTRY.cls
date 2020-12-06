@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Win32Structure subclass: #PALETTEENTRY
+OS.Win32Structure subclass: #'OS.PALETTEENTRY'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_peBlue' -> 16r2.
@@ -11,8 +11,8 @@ Win32Structure subclass: #PALETTEENTRY
 		'_OffsetOf_peGreen' -> 16r1.
 		'_OffsetOf_peRed' -> 16r0
 	}!
-PALETTEENTRY guid: (GUID fromString: '{87b4c606-026e-11d3-9fd7-00a0cc3e4a32}')!
-PALETTEENTRY comment: '<PALETTEENTRY> is an <ExternalStructure> class to wrap the struct ''Win32.PALETTEENTRY'' from type information in the ''Win32 API'' library.
+OS.PALETTEENTRY guid: (Core.GUID fromString: '{87b4c606-026e-11d3-9fd7-00a0cc3e4a32}')!
+OS.PALETTEENTRY comment: '<PALETTEENTRY> is an <ExternalStructure> class to wrap the struct ''Win32.PALETTEENTRY'' from type information in the ''Win32 API'' library.
 
 The type library contains the following helpstring for this struct
 	"The PALETTEENTRY structure specifies the color and usage of an entry in a logical palette."
@@ -29,13 +29,13 @@ struct tagPALETTEENTRY {
 	[helpstring("Flags from the PC_ enumeration indicating how the palette entry should be used.")] BYTE peFlags;
 } PALETTEENTRY;
 '!
-!PALETTEENTRY categoriesForClass!Win32-Structs! !
-!PALETTEENTRY methodsFor!
+!OS.PALETTEENTRY categoriesForClass!Win32-Structs! !
+!OS.PALETTEENTRY methodsFor!
 
 asColor
 	"Answer a new Colour based on the receiver's data"
 
-	^Color fromRgbCode: self rgbCode!
+	^Graphics.Color fromRgbCode: self rgbCode!
 
 peBlue
 	"Answer the <Integer> value of the receiver's 'peBlue' field."
@@ -79,18 +79,18 @@ peRed: anInteger
 
 rgbCode
 	^(bytes dwordAtOffset: 0) bitAnd: 16rFFFFFF! !
-!PALETTEENTRY categoriesFor: #asColor!converting!public! !
-!PALETTEENTRY categoriesFor: #peBlue!**compiled accessors**!public! !
-!PALETTEENTRY categoriesFor: #peBlue:!**compiled accessors**!public! !
-!PALETTEENTRY categoriesFor: #peFlags!**compiled accessors**!public! !
-!PALETTEENTRY categoriesFor: #peFlags:!**compiled accessors**!public! !
-!PALETTEENTRY categoriesFor: #peGreen!**compiled accessors**!public! !
-!PALETTEENTRY categoriesFor: #peGreen:!**compiled accessors**!public! !
-!PALETTEENTRY categoriesFor: #peRed!**compiled accessors**!public! !
-!PALETTEENTRY categoriesFor: #peRed:!**compiled accessors**!public! !
-!PALETTEENTRY categoriesFor: #rgbCode!accessing!public! !
+!OS.PALETTEENTRY categoriesFor: #asColor!converting!public! !
+!OS.PALETTEENTRY categoriesFor: #peBlue!**compiled accessors**!public! !
+!OS.PALETTEENTRY categoriesFor: #peBlue:!**compiled accessors**!public! !
+!OS.PALETTEENTRY categoriesFor: #peFlags!**compiled accessors**!public! !
+!OS.PALETTEENTRY categoriesFor: #peFlags:!**compiled accessors**!public! !
+!OS.PALETTEENTRY categoriesFor: #peGreen!**compiled accessors**!public! !
+!OS.PALETTEENTRY categoriesFor: #peGreen:!**compiled accessors**!public! !
+!OS.PALETTEENTRY categoriesFor: #peRed!**compiled accessors**!public! !
+!OS.PALETTEENTRY categoriesFor: #peRed:!**compiled accessors**!public! !
+!OS.PALETTEENTRY categoriesFor: #rgbCode!accessing!public! !
 
-!PALETTEENTRY class methodsFor!
+!OS.PALETTEENTRY class methodsFor!
 
 defineFields
 	"Define the fields of the PALETTEENTRY structure.
@@ -107,10 +107,18 @@ defineFields
 "
 
 	self
-		defineField: #peRed type: BYTEField new offset: 0;
-		defineField: #peGreen type: BYTEField new offset: 1;
-		defineField: #peBlue type: BYTEField new offset: 2;
-		defineField: #peFlags type: BYTEField new offset: 3.
+		defineField: #peRed
+			type: BYTEField new
+			offset: 0;
+		defineField: #peGreen
+			type: BYTEField new
+			offset: 1;
+		defineField: #peBlue
+			type: BYTEField new
+			offset: 2;
+		defineField: #peFlags
+			type: BYTEField new
+			offset: 3.
 	self byteSize: 4!
 
 getFieldNames
@@ -131,7 +139,7 @@ threeThreeTwo
 					pe peGreen: ((i bitShift: -2) bitAnd: 2r111) * 255 // 7.
 					pe peBlue: (i bitAnd: 2r11) * 255 // 3].
 	^palette! !
-!PALETTEENTRY class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!PALETTEENTRY class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!PALETTEENTRY class categoriesFor: #threeThreeTwo!instance creation!public! !
+!OS.PALETTEENTRY class categoriesFor: #defineFields!**auto generated**!public!template definition! !
+!OS.PALETTEENTRY class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.PALETTEENTRY class categoriesFor: #threeThreeTwo!instance creation!public! !
 

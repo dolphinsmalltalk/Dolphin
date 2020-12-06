@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Event subclass: #WindowsEvent
+UI.Event subclass: #'UI.WindowsEvent'
 	instanceVariableNames: 'message wParam lParam lResult'
 	classVariableNames: ''
-	poolDictionaries: 'Win32Constants'
+	imports: #(#{OS.Win32Constants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-WindowsEvent guid: (GUID fromString: '{87b4c482-026e-11d3-9fd7-00a0cc3e4a32}')!
-WindowsEvent comment: ''!
-!WindowsEvent categoriesForClass!MVP-Views-Events! !
-!WindowsEvent methodsFor!
+UI.WindowsEvent guid: (Core.GUID fromString: '{87b4c482-026e-11d3-9fd7-00a0cc3e4a32}')!
+UI.WindowsEvent comment: ''!
+!UI.WindowsEvent categoriesForClass!MVP-Views-Events! !
+!UI.WindowsEvent methodsFor!
 
 defaultWindowProcessing
 	"Forward this event to the associated window's default window procedure and answer the
@@ -105,22 +105,22 @@ window: aView message: msgInteger wParam: wInteger lParam: lInteger
 
 wParam
 	^wParam! !
-!WindowsEvent categoriesFor: #defaultWindowProcessing!event handling!public! !
-!WindowsEvent categoriesFor: #isHandled!public!testing! !
-!WindowsEvent categoriesFor: #lParam!accessing!public! !
-!WindowsEvent categoriesFor: #lParam:!accessing!public! !
-!WindowsEvent categoriesFor: #lParamX!accessing!public! !
-!WindowsEvent categoriesFor: #lParamY!accessing!public! !
-!WindowsEvent categoriesFor: #lResult!accessing!public! !
-!WindowsEvent categoriesFor: #lResult:!accessing!not an aspect!public! !
-!WindowsEvent categoriesFor: #message!accessing!private! !
-!WindowsEvent categoriesFor: #printLParamOn:!development!printing!private! !
-!WindowsEvent categoriesFor: #printOn:!development!printing!public! !
-!WindowsEvent categoriesFor: #printWParamOn:!development!printing!private! !
-!WindowsEvent categoriesFor: #window:message:wParam:lParam:!initializing!private! !
-!WindowsEvent categoriesFor: #wParam!accessing!public! !
+!UI.WindowsEvent categoriesFor: #defaultWindowProcessing!event handling!public! !
+!UI.WindowsEvent categoriesFor: #isHandled!public!testing! !
+!UI.WindowsEvent categoriesFor: #lParam!accessing!public! !
+!UI.WindowsEvent categoriesFor: #lParam:!accessing!public! !
+!UI.WindowsEvent categoriesFor: #lParamX!accessing!public! !
+!UI.WindowsEvent categoriesFor: #lParamY!accessing!public! !
+!UI.WindowsEvent categoriesFor: #lResult!accessing!public! !
+!UI.WindowsEvent categoriesFor: #lResult:!accessing!not an aspect!public! !
+!UI.WindowsEvent categoriesFor: #message!accessing!private! !
+!UI.WindowsEvent categoriesFor: #printLParamOn:!development!printing!private! !
+!UI.WindowsEvent categoriesFor: #printOn:!development!printing!public! !
+!UI.WindowsEvent categoriesFor: #printWParamOn:!development!printing!private! !
+!UI.WindowsEvent categoriesFor: #window:message:wParam:lParam:!initializing!private! !
+!UI.WindowsEvent categoriesFor: #wParam!accessing!public! !
 
-!WindowsEvent class methodsFor!
+!UI.WindowsEvent class methodsFor!
 
 window: aView message: msgInteger wParam: wInteger lParam: lInteger 
 	"Answer an instance of the receiver containing the message details specified by the
@@ -136,5 +136,5 @@ window: aView message: msgInteger wParam: wInteger lParam: lInteger
 		message: msgInteger
 		wParam: wInteger
 		lParam: lInteger! !
-!WindowsEvent class categoriesFor: #window:message:wParam:lParam:!instance creation!public! !
+!UI.WindowsEvent class categoriesFor: #window:message:wParam:lParam:!instance creation!public! !
 

@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Brush subclass: #HatchBrush
+Graphics.Brush subclass: #'Graphics.HatchBrush'
 	instanceVariableNames: 'id color'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-HatchBrush guid: (GUID fromString: '{7b044e62-1bef-40c1-a50a-1f63f6d10c2d}')!
-HatchBrush comment: '`HatchBrush` is type of `Brush` that wraps a Windows GDI Brush object for drawing in one of the standard hashed patterns.
+Graphics.HatchBrush guid: (Core.GUID fromString: '{7b044e62-1bef-40c1-a50a-1f63f6d10c2d}')!
+Graphics.HatchBrush comment: '`HatchBrush` is type of `Brush` that wraps a Windows GDI Brush object for drawing in one of the standard hashed patterns.
 
 HatchBrushes are not normally instantiated directly, but rather through one of the relevant instance creation methods of the superclass, `Brush`. For example:
 
@@ -17,8 +17,8 @@ HatchBrushes are not normally instantiated directly, but rather through one of t
   `id`		`<integer>` code from the HS_xxx enumeration, which specified the hatched pattern that will be drawn
   `color`	`<Color>` of the lines that will be drawn to form the pattern
 '!
-!HatchBrush categoriesForClass!Graphics-Tools! !
-!HatchBrush methodsFor!
+!Graphics.HatchBrush categoriesForClass!Graphics-Tools! !
+!Graphics.HatchBrush methodsFor!
 
 createHandle
 	^GDILibrary default createHatchBrush: id color: color asCOLORREF!
@@ -50,16 +50,16 @@ printOn: aPuttableStream
 setId: anInteger color: aColor 
 	id := anInteger.
 	color := aColor! !
-!HatchBrush categoriesFor: #createHandle!private!realizing/unrealizing! !
-!HatchBrush categoriesFor: #name!accessing!public! !
-!HatchBrush categoriesFor: #printOn:!printing!public! !
-!HatchBrush categoriesFor: #setId:color:!initializing!private! !
+!Graphics.HatchBrush categoriesFor: #createHandle!private!realizing/unrealizing! !
+!Graphics.HatchBrush categoriesFor: #name!accessing!public! !
+!Graphics.HatchBrush categoriesFor: #printOn:!printing!public! !
+!Graphics.HatchBrush categoriesFor: #setId:color:!initializing!private! !
 
-!HatchBrush class methodsFor!
+!Graphics.HatchBrush class methodsFor!
 
 fromId: anInteger color: aColor
 	"Answer a new instance of the receiver for painting a hatched pattern of the type identifiedby the <integer> argument, anInteger, which should be a code from the HS_xxx enumeration, in the <Color>, aColor."
 
 	^self new setId: anInteger color: aColor! !
-!HatchBrush class categoriesFor: #fromId:color:!instance creation!public! !
+!Graphics.HatchBrush class categoriesFor: #fromId:color:!instance creation!public! !
 

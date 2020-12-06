@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-SharedPool subclass: #ThemeConstants
+Kernel.SharedPool subclass: #'OS.ThemeConstants'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -755,6 +755,7 @@ SharedPool subclass: #ThemeConstants
 		'WP_VERTSCROLL' -> 16r1B.
 		'WP_VERTTHUMB' -> 16r1C
 	}!
-ThemeConstants guid: (GUID fromString: '{f601ab70-6b9a-47cf-81f7-79e3c79b803a}')!
-ThemeConstants comment: ''!
-!ThemeConstants categoriesForClass!Unclassified! !
+OS.ThemeConstants guid: (Core.GUID fromString: '{f601ab70-6b9a-47cf-81f7-79e3c79b803a}')!
+OS.ThemeConstants isNonInstantiable: true!
+OS.ThemeConstants comment: ''!
+!OS.ThemeConstants categoriesForClass!Unclassified! !

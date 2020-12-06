@@ -1,16 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Presenter subclass: #SelectableItemsPresenter
+UI.Presenter subclass: #'UI.SelectableItemsPresenter'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-SelectableItemsPresenter guid: (GUID fromString: '{266d2ff0-37e3-4f48-92df-759d16a0fe97}')!
-SelectableItemsPresenter isAbstract: true!
-SelectableItemsPresenter comment: 'SelectableItemsPresenter ia an abstract class that implements the <selectableItems> protocol for components that need to make one or more selections from multiple items held by their model. Typically the model will be either a <listModel> or <treeModel>.'!
-!SelectableItemsPresenter categoriesForClass!MVP-Presenters!MVP-Resources-Lists! !
-!SelectableItemsPresenter methodsFor!
+UI.SelectableItemsPresenter guid: (Core.GUID fromString: '{266d2ff0-37e3-4f48-92df-759d16a0fe97}')!
+UI.SelectableItemsPresenter isNonInstantiable: true!
+UI.SelectableItemsPresenter comment: 'SelectableItemsPresenter ia an abstract class that implements the <selectableItems> protocol for components that need to make one or more selections from multiple items held by their model. Typically the model will be either a <listModel> or <treeModel>.'!
+!UI.SelectableItemsPresenter categoriesForClass!MVP-Presenters!MVP-Resources-Lists! !
+!UI.SelectableItemsPresenter methodsFor!
 
 ensureSelectionVisible
 	"Ensure the selected item is visible, scrolling it into view if necessary.
@@ -102,7 +102,7 @@ selectionOrNil: anObject
 
 	^[self selectableItems selectionOrNil: anObject] on: NotFoundError
 		do: 
-			[:ex | 
+			[:ex |
 			self resetForItem: anObject.
 			self selectableItems selectionOrNil: anObject]!
 
@@ -130,24 +130,24 @@ selections: aCollection ifAbsent: exceptionHandler
 		ifAbsent: 
 			[self resetForItems: aCollection.
 			self selectableItems selections: aCollection ifAbsent: exceptionHandler]! !
-!SelectableItemsPresenter categoriesFor: #ensureSelectionVisible!public!selection! !
-!SelectableItemsPresenter categoriesFor: #hasSelection!public!selection! !
-!SelectableItemsPresenter categoriesFor: #hasSingleSelection!public!selection! !
-!SelectableItemsPresenter categoriesFor: #onSelectionChanged!event handling!public! !
-!SelectableItemsPresenter categoriesFor: #onSelectionChanging:!event handling!public! !
-!SelectableItemsPresenter categoriesFor: #resetForItem:!event handling!private! !
-!SelectableItemsPresenter categoriesFor: #resetForItems:!event handling!private! !
-!SelectableItemsPresenter categoriesFor: #resetSelection!public!selection! !
-!SelectableItemsPresenter categoriesFor: #selectableItems!private!selection! !
-!SelectableItemsPresenter categoriesFor: #selection!public!selection! !
-!SelectableItemsPresenter categoriesFor: #selection:!public!selection! !
-!SelectableItemsPresenter categoriesFor: #selection:ifAbsent:!public!selection! !
-!SelectableItemsPresenter categoriesFor: #selectionIfNone:!public!selection! !
-!SelectableItemsPresenter categoriesFor: #selectionOrNil!public!selection! !
-!SelectableItemsPresenter categoriesFor: #selectionOrNil:!public!selection! !
-!SelectableItemsPresenter categoriesFor: #selections!public!selection! !
-!SelectableItemsPresenter categoriesFor: #selections:!public!selection! !
-!SelectableItemsPresenter categoriesFor: #selections:ifAbsent:!public!selection! !
+!UI.SelectableItemsPresenter categoriesFor: #ensureSelectionVisible!public!selection! !
+!UI.SelectableItemsPresenter categoriesFor: #hasSelection!public!selection! !
+!UI.SelectableItemsPresenter categoriesFor: #hasSingleSelection!public!selection! !
+!UI.SelectableItemsPresenter categoriesFor: #onSelectionChanged!event handling!public! !
+!UI.SelectableItemsPresenter categoriesFor: #onSelectionChanging:!event handling!public! !
+!UI.SelectableItemsPresenter categoriesFor: #resetForItem:!event handling!private! !
+!UI.SelectableItemsPresenter categoriesFor: #resetForItems:!event handling!private! !
+!UI.SelectableItemsPresenter categoriesFor: #resetSelection!public!selection! !
+!UI.SelectableItemsPresenter categoriesFor: #selectableItems!private!selection! !
+!UI.SelectableItemsPresenter categoriesFor: #selection!public!selection! !
+!UI.SelectableItemsPresenter categoriesFor: #selection:!public!selection! !
+!UI.SelectableItemsPresenter categoriesFor: #selection:ifAbsent:!public!selection! !
+!UI.SelectableItemsPresenter categoriesFor: #selectionIfNone:!public!selection! !
+!UI.SelectableItemsPresenter categoriesFor: #selectionOrNil!public!selection! !
+!UI.SelectableItemsPresenter categoriesFor: #selectionOrNil:!public!selection! !
+!UI.SelectableItemsPresenter categoriesFor: #selections!public!selection! !
+!UI.SelectableItemsPresenter categoriesFor: #selections:!public!selection! !
+!UI.SelectableItemsPresenter categoriesFor: #selections:ifAbsent:!public!selection! !
 
-SelectableItemsPresenter methodProtocol: #selectableItems attributes: #(#readOnly) selectors: #(#hasSelection #onSelectionChanged #onSelectionChanging: #resetSelection #selection #selection: #selection:ifAbsent: #selectionIfNone: #selectionOrNil #selectionOrNil:)!
+UI.SelectableItemsPresenter methodProtocol: #selectableItems attributes: #(#readOnly) selectors: #(#hasSelection #onSelectionChanged #onSelectionChanging: #resetSelection #selection #selection: #selection:ifAbsent: #selectionIfNone: #selectionOrNil #selectionOrNil:)!
 

@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Object subclass: #Grid
+Core.Object subclass: #'Graphics.Grid'
 	instanceVariableNames: 'resolution'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Grid guid: (GUID fromString: '{87b4c48e-026e-11d3-9fd7-00a0cc3e4a32}')!
-Grid comment: ''!
-!Grid categoriesForClass!MVP-Views-Support! !
-!Grid methodsFor!
+Graphics.Grid guid: (Core.GUID fromString: '{87b4c48e-026e-11d3-9fd7-00a0cc3e4a32}')!
+Graphics.Grid comment: ''!
+!Graphics.Grid categoriesForClass!MVP-Views-Support! !
+!Graphics.Grid methodsFor!
 
 constrainPoint: aPoint
 	"Answers the position for aPoint
@@ -32,12 +32,12 @@ resolution: anInteger
 	"Sets the number of pixels between adjacent points in the grid to anInteger."
 
 	resolution := anInteger! !
-!Grid categoriesFor: #constrainPoint:!accessing!public! !
-!Grid categoriesFor: #constrainRectangle:!accessing!public! !
-!Grid categoriesFor: #resolution!accessing!public! !
-!Grid categoriesFor: #resolution:!accessing!public! !
+!Graphics.Grid categoriesFor: #constrainPoint:!accessing!public! !
+!Graphics.Grid categoriesFor: #constrainRectangle:!accessing!public! !
+!Graphics.Grid categoriesFor: #resolution!accessing!public! !
+!Graphics.Grid categoriesFor: #resolution:!accessing!public! !
 
-!Grid class methodsFor!
+!Graphics.Grid class methodsFor!
 
 resolution: anInteger
 	"Answers a new instance of the receiver with
@@ -46,5 +46,5 @@ resolution: anInteger
 	^self new
 		resolution: anInteger;
 		yourself! !
-!Grid class categoriesFor: #resolution:!instance creation!public! !
+!Graphics.Grid class categoriesFor: #resolution:!instance creation!public! !
 

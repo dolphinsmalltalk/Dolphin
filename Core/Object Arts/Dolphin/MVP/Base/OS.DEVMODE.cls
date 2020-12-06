@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ExternalStructure subclass: #DEVMODE
+External.Structure subclass: #'OS.DEVMODE'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_dmBitsPerPel' -> 16r68.
@@ -39,8 +39,8 @@ ExternalStructure subclass: #DEVMODE
 		'_OffsetOf_dmTTOption' -> 16r42.
 		'_OffsetOf_dmYResolution' -> 16r40
 	}!
-DEVMODE guid: (GUID fromString: '{62ad7874-bbbf-4852-99d9-8040855ecb49}')!
-DEVMODE comment: '<DEVMODE> is an <ExternalStructure> class to wrap the struct ''Win32.DEVMODE'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
+OS.DEVMODE guid: (Core.GUID fromString: '{62ad7874-bbbf-4852-99d9-8040855ecb49}')!
+OS.DEVMODE comment: '<DEVMODE> is an <ExternalStructure> class to wrap the struct ''Win32.DEVMODE'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
 
@@ -84,8 +84,8 @@ struct tagDEVMODE {
 	DWORD dmReserved2;
 } DEVMODE;
 '!
-!DEVMODE categoriesForClass!Win32-Structs! !
-!DEVMODE class methodsFor!
+!OS.DEVMODE categoriesForClass!Win32-Structs! !
+!OS.DEVMODE class methodsFor!
 
 defineFields
 	"Define the fields of the DEVMODE structure.
@@ -166,6 +166,6 @@ defineFields
 
 getFieldNames
 	^#(#dmDeviceName #dmSpecVersion #dmDriverVersion #dmSize #dmDriverExtra #dmFields #dmOrientation #dmPaperSize #dmPaperLength #dmPaperWidth #dmScale #dmCopies #dmDefaultSource #dmPrintQuality #dmColor #dmDuplex #dmYResolution #dmTTOption #dmCollate #dmFormName #dmLogPixels #dmBitsPerPel #dmPelsWidth #dmPelsHeight #dmDisplayFlags #dmDisplayFrequency #dmICMMethod #dmICMIntent #dmMediaType #dmDitherType)! !
-!DEVMODE class categoriesFor: #defineFields!public!template definition! !
-!DEVMODE class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.DEVMODE class categoriesFor: #defineFields!public!template definition! !
+!OS.DEVMODE class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

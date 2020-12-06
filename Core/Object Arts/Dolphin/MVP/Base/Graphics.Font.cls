@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-GraphicsTool subclass: #Font
+Graphics.GraphicsTool subclass: #'Graphics.Font'
 	instanceVariableNames: 'logfont resolution'
 	classVariableNames: 'System'
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Font guid: (GUID fromString: '{87b4c634-026e-11d3-9fd7-00a0cc3e4a32}')!
-Font comment: ''!
-!Font categoriesForClass!Graphics-Tools! !
-!Font methodsFor!
+Graphics.Font guid: (Core.GUID fromString: '{87b4c634-026e-11d3-9fd7-00a0cc3e4a32}')!
+Graphics.Font comment: ''!
+!Graphics.Font categoriesForClass!Graphics-Tools! !
+!Graphics.Font methodsFor!
 
 = aFont
 	"Answer true if aFont is equal to (has the same logical font info) as the receiver."
@@ -78,7 +78,7 @@ initialize
 
 	super initialize.
 	(logfont := LOGFONTW new) lfWeight: FW_NORMAL.
-	resolution := self desktopResolution.!
+	resolution := self desktopResolution!
 
 isBold
 	"Answer whether the receiver is bold."
@@ -243,45 +243,45 @@ weight: anInteger
 	logfont lfWeight: anInteger.
 	"Cause the receiver to be re-realized"
 	self free! !
-!Font categoriesFor: #=!comparing!public! !
-!Font categoriesFor: #beBold!accessing!public! !
-!Font categoriesFor: #beItalic!accessing!public! !
-!Font categoriesFor: #beUnderlined!accessing!public! !
-!Font categoriesFor: #characterSet!accessing!public! !
-!Font categoriesFor: #characterSet:!accessing!public! !
-!Font categoriesFor: #createHandle!private!realizing/unrealizing! !
-!Font categoriesFor: #desktopResolution!initializing!private! !
-!Font categoriesFor: #displayOn:!displaying!public! !
-!Font categoriesFor: #handle:!accessing!public! !
-!Font categoriesFor: #hash!comparing!public! !
-!Font categoriesFor: #initialize!initializing!public! !
-!Font categoriesFor: #isBold!public!testing! !
-!Font categoriesFor: #isBold:!modes!public! !
-!Font categoriesFor: #isDefault!public!testing! !
-!Font categoriesFor: #isItalic!public!testing! !
-!Font categoriesFor: #isItalic:!modes!public! !
-!Font categoriesFor: #isStruckThrough!public!testing! !
-!Font categoriesFor: #isStruckThrough:!accessing!public! !
-!Font categoriesFor: #isUnderlined!public!testing! !
-!Font categoriesFor: #isUnderlined:!modes!public! !
-!Font categoriesFor: #logFont!accessing!public! !
-!Font categoriesFor: #logFont:!accessing!public! !
-!Font categoriesFor: #name!accessing!public! !
-!Font categoriesFor: #name:!accessing!public! !
-!Font categoriesFor: #pixelFromPoints:!mapping!private! !
-!Font categoriesFor: #pixelSize!accessing!public! !
-!Font categoriesFor: #pixelSize:!accessing!public! !
-!Font categoriesFor: #pointFromPixels:!mapping!private! !
-!Font categoriesFor: #pointSize!accessing!public! !
-!Font categoriesFor: #pointSize:!accessing!public! !
-!Font categoriesFor: #postCopy!copying!public! !
-!Font categoriesFor: #printOn:!development!printing!public! !
-!Font categoriesFor: #resolution!accessing!public! !
-!Font categoriesFor: #resolution:!accessing!public! !
-!Font categoriesFor: #weight!accessing!public! !
-!Font categoriesFor: #weight:!accessing!public! !
+!Graphics.Font categoriesFor: #=!comparing!public! !
+!Graphics.Font categoriesFor: #beBold!accessing!public! !
+!Graphics.Font categoriesFor: #beItalic!accessing!public! !
+!Graphics.Font categoriesFor: #beUnderlined!accessing!public! !
+!Graphics.Font categoriesFor: #characterSet!accessing!public! !
+!Graphics.Font categoriesFor: #characterSet:!accessing!public! !
+!Graphics.Font categoriesFor: #createHandle!private!realizing/unrealizing! !
+!Graphics.Font categoriesFor: #desktopResolution!initializing!private! !
+!Graphics.Font categoriesFor: #displayOn:!displaying!public! !
+!Graphics.Font categoriesFor: #handle:!accessing!public! !
+!Graphics.Font categoriesFor: #hash!comparing!public! !
+!Graphics.Font categoriesFor: #initialize!initializing!public! !
+!Graphics.Font categoriesFor: #isBold!public!testing! !
+!Graphics.Font categoriesFor: #isBold:!modes!public! !
+!Graphics.Font categoriesFor: #isDefault!public!testing! !
+!Graphics.Font categoriesFor: #isItalic!public!testing! !
+!Graphics.Font categoriesFor: #isItalic:!modes!public! !
+!Graphics.Font categoriesFor: #isStruckThrough!public!testing! !
+!Graphics.Font categoriesFor: #isStruckThrough:!accessing!public! !
+!Graphics.Font categoriesFor: #isUnderlined!public!testing! !
+!Graphics.Font categoriesFor: #isUnderlined:!modes!public! !
+!Graphics.Font categoriesFor: #logFont!accessing!public! !
+!Graphics.Font categoriesFor: #logFont:!accessing!public! !
+!Graphics.Font categoriesFor: #name!accessing!public! !
+!Graphics.Font categoriesFor: #name:!accessing!public! !
+!Graphics.Font categoriesFor: #pixelFromPoints:!mapping!private! !
+!Graphics.Font categoriesFor: #pixelSize!accessing!public! !
+!Graphics.Font categoriesFor: #pixelSize:!accessing!public! !
+!Graphics.Font categoriesFor: #pointFromPixels:!mapping!private! !
+!Graphics.Font categoriesFor: #pointSize!accessing!public! !
+!Graphics.Font categoriesFor: #pointSize:!accessing!public! !
+!Graphics.Font categoriesFor: #postCopy!copying!public! !
+!Graphics.Font categoriesFor: #printOn:!development!printing!public! !
+!Graphics.Font categoriesFor: #resolution!accessing!public! !
+!Graphics.Font categoriesFor: #resolution:!accessing!public! !
+!Graphics.Font categoriesFor: #weight!accessing!public! !
+!Graphics.Font categoriesFor: #weight:!accessing!public! !
 
-!Font class methodsFor!
+!Graphics.Font class methodsFor!
 
 default
 	"Answers the default font for the system."
@@ -349,15 +349,15 @@ uninitialize
 	"Uninitialize the class variables of the receiver as it is about to be removed from the system."
 
 	System := nil! !
-!Font class categoriesFor: #default!instance creation!public! !
-!Font class categoriesFor: #defaultPointSize!constants!private! !
-!Font class categoriesFor: #fromLogFont:!instance creation!public! !
-!Font class categoriesFor: #icon!constants!public! !
-!Font class categoriesFor: #name:!instance creation!public! !
-!Font class categoriesFor: #name:pixelSize:!instance creation!public! !
-!Font class categoriesFor: #name:pointSize:!instance creation!public! !
-!Font class categoriesFor: #onPreStripImage!class hierarchy-removing!private! !
-!Font class categoriesFor: #reset!instance creation!public! !
-!Font class categoriesFor: #system!instance creation!public! !
-!Font class categoriesFor: #uninitialize!class hierarchy-removing!private! !
+!Graphics.Font class categoriesFor: #default!instance creation!public! !
+!Graphics.Font class categoriesFor: #defaultPointSize!constants!private! !
+!Graphics.Font class categoriesFor: #fromLogFont:!instance creation!public! !
+!Graphics.Font class categoriesFor: #icon!constants!public! !
+!Graphics.Font class categoriesFor: #name:!instance creation!public! !
+!Graphics.Font class categoriesFor: #name:pixelSize:!instance creation!public! !
+!Graphics.Font class categoriesFor: #name:pointSize:!instance creation!public! !
+!Graphics.Font class categoriesFor: #onPreStripImage!class hierarchy-removing!private! !
+!Graphics.Font class categoriesFor: #reset!instance creation!public! !
+!Graphics.Font class categoriesFor: #system!instance creation!public! !
+!Graphics.Font class categoriesFor: #uninitialize!class hierarchy-removing!private! !
 

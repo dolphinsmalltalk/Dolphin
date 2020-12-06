@@ -1,17 +1,17 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Win32Structure subclass: #LOGBRUSH
+OS.Win32Structure subclass: #'OS.LOGBRUSH'
 	instanceVariableNames: 'hatch'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_lbColor' -> 16r4.
 		'_OffsetOf_lbHatch' -> 16r8.
 		'_OffsetOf_lbStyle' -> 16r0
 	}!
-LOGBRUSH guid: (GUID fromString: '{87b4c5f8-026e-11d3-9fd7-00a0cc3e4a32}')!
-LOGBRUSH comment: '<LOGBRUSH> is an <ExternalStructure> class to wrap the struct ''Win.LOGBRUSH'' from type information in the ''Windows API (ANSI)'' library.
+OS.LOGBRUSH guid: (Core.GUID fromString: '{87b4c5f8-026e-11d3-9fd7-00a0cc3e4a32}')!
+OS.LOGBRUSH comment: '<LOGBRUSH> is an <ExternalStructure> class to wrap the struct ''Win.LOGBRUSH'' from type information in the ''Windows API (ANSI)'' library.
 
 From MSDN: "The LOGBRUSH structure defines the style, color, and pattern of a physical brush. It is used by the CreateBrushIndirect and ExtCreatePen functions."
 
@@ -19,13 +19,13 @@ Instance Variables:
 	hatch		<integer> hatch code from the HS_XXX enumeration, or <Bitmap> (for a bitmap brush, preventing the premature GC of that Bitmap).
 
 '!
-!LOGBRUSH categoriesForClass!Win32-Structs! !
-!LOGBRUSH methodsFor!
+!OS.LOGBRUSH categoriesForClass!Win32-Structs! !
+!OS.LOGBRUSH methodsFor!
 
 color
 	"Answer the colour member of the receiver as a Colour"
 
-	^Color fromCOLORREF: self lbColor!
+	^Graphics.Color fromCOLORREF: self lbColor!
 
 color: aColor
 	"Sets the colour member of the receiver from  the <Color> argument."
@@ -35,9 +35,9 @@ color: aColor
 hatch
 	"Answer the hatch object. This is either a <Bitmap>, or one of a set of standard <integer> constants."
 
-	^hatch 
+	^hatch
 		ifNil: 
-			[self lbStyle = BS_PATTERN ifTrue: [hatch := Bitmap fromHandle: self lbHatch] ifFalse: [self lbHatch]]!
+			[self lbStyle = BS_PATTERN ifTrue: [hatch := Graphics.Bitmap fromHandle: self lbHatch] ifFalse: [self lbHatch]]!
 
 hatch: aBitmapOrInteger 
 	hatch := aBitmapOrInteger.
@@ -84,21 +84,21 @@ style
 
 style: anInteger 
 	self lbStyle: anInteger! !
-!LOGBRUSH categoriesFor: #color!accessing!public! !
-!LOGBRUSH categoriesFor: #color:!accessing!public! !
-!LOGBRUSH categoriesFor: #hatch!accessing!public! !
-!LOGBRUSH categoriesFor: #hatch:!accessing!public! !
-!LOGBRUSH categoriesFor: #hatchStyleName!accessing!public! !
-!LOGBRUSH categoriesFor: #lbColor!**compiled accessors**!public! !
-!LOGBRUSH categoriesFor: #lbColor:!**compiled accessors**!public! !
-!LOGBRUSH categoriesFor: #lbHatch!**compiled accessors**!public! !
-!LOGBRUSH categoriesFor: #lbHatch:!**compiled accessors**!public! !
-!LOGBRUSH categoriesFor: #lbStyle!**compiled accessors**!public! !
-!LOGBRUSH categoriesFor: #lbStyle:!**compiled accessors**!public! !
-!LOGBRUSH categoriesFor: #style!accessing!public! !
-!LOGBRUSH categoriesFor: #style:!accessing!public! !
+!OS.LOGBRUSH categoriesFor: #color!accessing!public! !
+!OS.LOGBRUSH categoriesFor: #color:!accessing!public! !
+!OS.LOGBRUSH categoriesFor: #hatch!accessing!public! !
+!OS.LOGBRUSH categoriesFor: #hatch:!accessing!public! !
+!OS.LOGBRUSH categoriesFor: #hatchStyleName!accessing!public! !
+!OS.LOGBRUSH categoriesFor: #lbColor!**compiled accessors**!public! !
+!OS.LOGBRUSH categoriesFor: #lbColor:!**compiled accessors**!public! !
+!OS.LOGBRUSH categoriesFor: #lbHatch!**compiled accessors**!public! !
+!OS.LOGBRUSH categoriesFor: #lbHatch:!**compiled accessors**!public! !
+!OS.LOGBRUSH categoriesFor: #lbStyle!**compiled accessors**!public! !
+!OS.LOGBRUSH categoriesFor: #lbStyle:!**compiled accessors**!public! !
+!OS.LOGBRUSH categoriesFor: #style!accessing!public! !
+!OS.LOGBRUSH categoriesFor: #style:!accessing!public! !
 
-!LOGBRUSH class methodsFor!
+!OS.LOGBRUSH class methodsFor!
 
 defineFields
 	"Define the fields of the LOGBRUSH structure.
@@ -133,8 +133,8 @@ stbConvertFrom: anSTBClassFormat
 
 stbVersion
 	^1! !
-!LOGBRUSH class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!LOGBRUSH class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!LOGBRUSH class categoriesFor: #stbConvertFrom:!binary filing!public! !
-!LOGBRUSH class categoriesFor: #stbVersion!binary filing!public! !
+!OS.LOGBRUSH class categoriesFor: #defineFields!**auto generated**!public!template definition! !
+!OS.LOGBRUSH class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.LOGBRUSH class categoriesFor: #stbConvertFrom:!binary filing!public! !
+!OS.LOGBRUSH class categoriesFor: #stbVersion!binary filing!public! !
 

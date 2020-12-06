@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Win32Structure subclass: #WINDOWPLACEMENT
+OS.Win32Structure subclass: #'OS.WINDOWPLACEMENT'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_dwSize' -> 16r0.
@@ -13,10 +13,10 @@ Win32Structure subclass: #WINDOWPLACEMENT
 		'_OffsetOf_rcNormalPosition' -> 16r1C.
 		'_OffsetOf_showCmd' -> 16r8
 	}!
-WINDOWPLACEMENT guid: (GUID fromString: '{87b4c61b-026e-11d3-9fd7-00a0cc3e4a32}')!
-WINDOWPLACEMENT comment: ''!
-!WINDOWPLACEMENT categoriesForClass!External-Data-Structured-Win32! !
-!WINDOWPLACEMENT methodsFor!
+OS.WINDOWPLACEMENT guid: (Core.GUID fromString: '{87b4c61b-026e-11d3-9fd7-00a0cc3e4a32}')!
+OS.WINDOWPLACEMENT comment: ''!
+!OS.WINDOWPLACEMENT categoriesForClass!External-Data-Structured-Win32! !
+!OS.WINDOWPLACEMENT methodsFor!
 
 dwSize: anInteger
 	"Set the receiver's 'dwSize' field to the value of the argument, anInteger"
@@ -24,9 +24,9 @@ dwSize: anInteger
 	bytes dwordAtOffset: _OffsetOf_dwSize put: anInteger!
 
 rcNormalPosition
-	"Answer the <RECT> value of the receiver's 'rcNormalPosition' field."
+	"Answer the <RECTL> value of the receiver's 'rcNormalPosition' field."
 
-	^RECT fromAddress: bytes yourAddress + _OffsetOf_rcNormalPosition!
+	^RECTL fromAddress: bytes yourAddress + _OffsetOf_rcNormalPosition!
 
 rcNormalPosition: aRECT
 	"Set the receiver's 'rcNormalPosition' field to the value of the argument, aRECT"
@@ -34,7 +34,7 @@ rcNormalPosition: aRECT
 	aRECT
 		replaceBytesOf: bytes
 		from: ##(_OffsetOf_rcNormalPosition + 1)
-		to: ##(_OffsetOf_rcNormalPosition + RECT basicByteSize)
+		to: ##(_OffsetOf_rcNormalPosition + RECTL basicByteSize)
 		startingAt: 1!
 
 showCmd
@@ -46,13 +46,13 @@ showCmd: anInteger
 	"Set the receiver's 'showCmd' field to the value of the argument, anInteger"
 
 	bytes dwordAtOffset: _OffsetOf_showCmd put: anInteger! !
-!WINDOWPLACEMENT categoriesFor: #dwSize:!**compiled accessors**!public! !
-!WINDOWPLACEMENT categoriesFor: #rcNormalPosition!**compiled accessors**!public! !
-!WINDOWPLACEMENT categoriesFor: #rcNormalPosition:!**compiled accessors**!public! !
-!WINDOWPLACEMENT categoriesFor: #showCmd!**compiled accessors**!public! !
-!WINDOWPLACEMENT categoriesFor: #showCmd:!**compiled accessors**!public! !
+!OS.WINDOWPLACEMENT categoriesFor: #dwSize:!**compiled accessors**!public! !
+!OS.WINDOWPLACEMENT categoriesFor: #rcNormalPosition!**compiled accessors**!public! !
+!OS.WINDOWPLACEMENT categoriesFor: #rcNormalPosition:!**compiled accessors**!public! !
+!OS.WINDOWPLACEMENT categoriesFor: #showCmd!**compiled accessors**!public! !
+!OS.WINDOWPLACEMENT categoriesFor: #showCmd:!**compiled accessors**!public! !
 
-!WINDOWPLACEMENT class methodsFor!
+!OS.WINDOWPLACEMENT class methodsFor!
 
 defineFields
 	"Define the layout of the Win32 WINDOWPLACEMENT structure. 
@@ -65,22 +65,21 @@ defineFields
 			UINT  length;
 			UINT  flags;
 			UINT  showCmd;
-			POINT ptMinPosition;
-			POINT ptMaxPosition;
-			RECT  rcNormalPosition;
+			POINTL ptMinPosition;
+			POINTL ptMaxPosition;
+			RECTL  rcNormalPosition;
 		} WINDOWPLACEMENT;"
 
-	self 
+	self
 		defineField: #dwSize type: DWORDField writeOnly beOverride;
 		defineField: #flags type: DWORDField filler;
 		defineField: #showCmd type: DWORDField new;
 		defineField: #ptMinPosition type: (StructureField type: POINTL) beFiller;
 		defineField: #ptMaxPosition type: (StructureField type: POINTL) beFiller;
-		defineField: #rcNormalPosition type: (StructureField type: RECT)
-!
+		defineField: #rcNormalPosition type: (StructureField type: RECTL)!
 
 getFieldNames
 	^#(#dwSize #showCmd #rcNormalPosition)! !
-!WINDOWPLACEMENT class categoriesFor: #defineFields!public!template definition! !
-!WINDOWPLACEMENT class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.WINDOWPLACEMENT class categoriesFor: #defineFields!public!template definition! !
+!OS.WINDOWPLACEMENT class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

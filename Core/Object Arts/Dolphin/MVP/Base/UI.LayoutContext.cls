@@ -1,17 +1,17 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Object subclass: #LayoutContext
+Core.Object subclass: #'UI.LayoutContext'
 	instanceVariableNames: 'container positions'
 	classVariableNames: ''
-	poolDictionaries: 'Win32Constants'
+	imports: #(#{OS.Win32Constants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-LayoutContext guid: (GUID fromString: '{85935809-471d-43cd-98f0-4c8f861663de}')!
-LayoutContext comment: 'LayoutContext is used by LayoutManagers to buffer window layout changes such as moving, resizing (i.e. changing the view rectangle) and hiding/showing views. LayoutContext can then apply the buffered changes en-masse using the Win32 DeferWindowPos APIs. This minimises the amount of unecesary relayout and redrawing that would otherwise occur as layout managers allocate space to their charges.
+UI.LayoutContext guid: (Core.GUID fromString: '{85935809-471d-43cd-98f0-4c8f861663de}')!
+UI.LayoutContext comment: 'LayoutContext is used by LayoutManagers to buffer window layout changes such as moving, resizing (i.e. changing the view rectangle) and hiding/showing views. LayoutContext can then apply the buffered changes en-masse using the Win32 DeferWindowPos APIs. This minimises the amount of unecesary relayout and redrawing that would otherwise occur as layout managers allocate space to their charges.
 
 Note that DeferWindowPos is only able to batch up window repositioning requests for children of the same parent window. Consequently if a LayoutContext is used to buffer layout requests for multiple layout managers (which is typically the case), then it will generate multiple deferred window repositioning batches. These batches are applied bottom up so that the innermost children are repositioned first, and so on up the parent chain.'!
-!LayoutContext categoriesForClass!Kernel-Objects! !
-!LayoutContext methodsFor!
+!UI.LayoutContext categoriesForClass!Kernel-Objects! !
+!UI.LayoutContext methodsFor!
 
 apply
 	"Apply the batch of deferred window positioning operations that the receiver represents."
@@ -93,7 +93,7 @@ rectangleOf: aView
 	(positions lookup: aView) ifNotNil: [:pos | (pos at: 2) ifNotNil: [:rect | ^rect]].
 	^aView rectangle!
 
-repositionSubViewsOf: aView 
+repositionSubViewsOf: aView
 	"Private - Recursively reposition the sub-views of the argument.
 	Unfortunately the DeferWindowPos API has the limitation that all windows in the repositioning batch must have the same parent, and consequently we must recursively position the subviews as multiple batches,
 	rather than accumulating all the positions and then applying one large deferred update."
@@ -101,22 +101,22 @@ repositionSubViewsOf: aView
 	| pairs |
 	pairs := OrderedCollection new.
 	aView subViewsDo: 
-			[:each | 
+			[:each |
 			self repositionSubViewsOf: each.
 			positions at: each
 				ifPresent: 
-					[:pos | 
+					[:pos |
 					| view rect |
 					view := pos at: 1.
 					rect := pos at: 2.
 					((rect notNil and: [rect ~= view rectangle]) or: 
 							[| show |
 							show := pos at: 3.
-							show notNil and: [show ~= view isWindowVisible]]) 
+							show notNil and: [show ~= view isWindowVisible]])
 						ifTrue: [pairs addLast: pos]]].
 	self deferWindowPositions: pairs!
 
-setContainer: aContainerView 
+setContainer: aContainerView
 	positions := LookupTable new.
 	container := aContainerView!
 
@@ -148,29 +148,29 @@ setView: aView visibility: aBoolean
 
 showView: aView 
 	self setView: aView visibility: true! !
-!LayoutContext categoriesFor: #apply!operations!public! !
-!LayoutContext categoriesFor: #clientExtentOf:!accessing!public! !
-!LayoutContext categoriesFor: #clientRectangleOf:!accessing!public! !
-!LayoutContext categoriesFor: #deferRectangles!private!testing! !
-!LayoutContext categoriesFor: #deferWindowPositions:!operations!public! !
-!LayoutContext categoriesFor: #extentOf:!accessing!public! !
-!LayoutContext categoriesFor: #hideView:!accessing!public! !
-!LayoutContext categoriesFor: #isViewVisible:!enquiries!public! !
-!LayoutContext categoriesFor: #positionForView:!accessing!private! !
-!LayoutContext categoriesFor: #rectangleOf:!accessing!public! !
-!LayoutContext categoriesFor: #repositionSubViewsOf:!operations!private! !
-!LayoutContext categoriesFor: #setContainer:!initializing!private! !
-!LayoutContext categoriesFor: #setView:extent:!accessing!public! !
-!LayoutContext categoriesFor: #setView:origin:!accessing!public! !
-!LayoutContext categoriesFor: #setView:rectangle:!accessing!public! !
-!LayoutContext categoriesFor: #setView:visibility:!accessing!public! !
-!LayoutContext categoriesFor: #showView:!accessing!public! !
+!UI.LayoutContext categoriesFor: #apply!operations!public! !
+!UI.LayoutContext categoriesFor: #clientExtentOf:!accessing!public! !
+!UI.LayoutContext categoriesFor: #clientRectangleOf:!accessing!public! !
+!UI.LayoutContext categoriesFor: #deferRectangles!private!testing! !
+!UI.LayoutContext categoriesFor: #deferWindowPositions:!operations!public! !
+!UI.LayoutContext categoriesFor: #extentOf:!accessing!public! !
+!UI.LayoutContext categoriesFor: #hideView:!accessing!public! !
+!UI.LayoutContext categoriesFor: #isViewVisible:!enquiries!public! !
+!UI.LayoutContext categoriesFor: #positionForView:!accessing!private! !
+!UI.LayoutContext categoriesFor: #rectangleOf:!accessing!public! !
+!UI.LayoutContext categoriesFor: #repositionSubViewsOf:!operations!private! !
+!UI.LayoutContext categoriesFor: #setContainer:!initializing!private! !
+!UI.LayoutContext categoriesFor: #setView:extent:!accessing!public! !
+!UI.LayoutContext categoriesFor: #setView:origin:!accessing!public! !
+!UI.LayoutContext categoriesFor: #setView:rectangle:!accessing!public! !
+!UI.LayoutContext categoriesFor: #setView:visibility:!accessing!public! !
+!UI.LayoutContext categoriesFor: #showView:!accessing!public! !
 
-!LayoutContext class methodsFor!
+!UI.LayoutContext class methodsFor!
 
 forContainer: aView 
 	^(self new)
 		setContainer: aView;
 		yourself! !
-!LayoutContext class categoriesFor: #forContainer:!instance creation!public! !
+!UI.LayoutContext class categoriesFor: #forContainer:!instance creation!public! !
 

@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Win32Structure subclass: #NONCLIENTMETRICSW
+OS.Win32Structure subclass: #'OS.NONCLIENTMETRICSW'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_dwSize' -> 16r0.
@@ -23,12 +23,12 @@ Win32Structure subclass: #NONCLIENTMETRICSW
 		'_OffsetOf_lfSmCaptionFont' -> 16r7C.
 		'_OffsetOf_lfStatusFont' -> 16r13C
 	}!
-NONCLIENTMETRICSW guid: (GUID fromString: '{87b4c602-026e-11d3-9fd7-00a0cc3e4a32}')!
-NONCLIENTMETRICSW comment: '<NONCLIENTMETRICSW> is an <ExternalStructure> class to wrap the Win32 structure of the same name.
+OS.NONCLIENTMETRICSW guid: (Core.GUID fromString: '{87b4c602-026e-11d3-9fd7-00a0cc3e4a32}')!
+OS.NONCLIENTMETRICSW comment: '<NONCLIENTMETRICSW> is an <ExternalStructure> class to wrap the Win32 structure of the same name.
 
 From MSDN: "The NONCLIENTMETRICS structure contains the scalable metrics associated with the nonclient area of a nonminimized window. This structure is used by the SPI_GETNONCLIENTMETRICS and SPI_SETNONCLIENTMETRICS actions of SystemParametersInfo."'!
-!NONCLIENTMETRICSW categoriesForClass!External-Data-Structured-Win32! !
-!NONCLIENTMETRICSW methodsFor!
+!OS.NONCLIENTMETRICSW categoriesForClass!External-Data-Structured-Win32! !
+!OS.NONCLIENTMETRICSW methodsFor!
 
 dwSize: anInteger
 	"Set the receiver's 'dwSize' field to the value of the argument, anInteger"
@@ -69,16 +69,16 @@ lfMenuFont
 	"Answer the <LOGFONTW> value of the receiver's 'lfMenuFont' field."
 
 	^LOGFONTW fromAddress: bytes yourAddress + _OffsetOf_lfMenuFont! !
-!NONCLIENTMETRICSW categoriesFor: #dwSize:!**compiled accessors**!public! !
-!NONCLIENTMETRICSW categoriesFor: #iCaptionHeight!**compiled accessors**!public! !
-!NONCLIENTMETRICSW categoriesFor: #iMenuHeight!**compiled accessors**!public! !
-!NONCLIENTMETRICSW categoriesFor: #iMenuWidth!**compiled accessors**!public! !
-!NONCLIENTMETRICSW categoriesFor: #iPaddedBorderWidth!**compiled accessors**!public! !
-!NONCLIENTMETRICSW categoriesFor: #iScrollHeight!**compiled accessors**!public! !
-!NONCLIENTMETRICSW categoriesFor: #iScrollWidth!**compiled accessors**!public! !
-!NONCLIENTMETRICSW categoriesFor: #lfMenuFont!**compiled accessors**!public! !
+!OS.NONCLIENTMETRICSW categoriesFor: #dwSize:!**compiled accessors**!public! !
+!OS.NONCLIENTMETRICSW categoriesFor: #iCaptionHeight!**compiled accessors**!public! !
+!OS.NONCLIENTMETRICSW categoriesFor: #iMenuHeight!**compiled accessors**!public! !
+!OS.NONCLIENTMETRICSW categoriesFor: #iMenuWidth!**compiled accessors**!public! !
+!OS.NONCLIENTMETRICSW categoriesFor: #iPaddedBorderWidth!**compiled accessors**!public! !
+!OS.NONCLIENTMETRICSW categoriesFor: #iScrollHeight!**compiled accessors**!public! !
+!OS.NONCLIENTMETRICSW categoriesFor: #iScrollWidth!**compiled accessors**!public! !
+!OS.NONCLIENTMETRICSW categoriesFor: #lfMenuFont!**compiled accessors**!public! !
 
-!NONCLIENTMETRICSW class methodsFor!
+!OS.NONCLIENTMETRICSW class methodsFor!
 
 defineFields
 	"Define the fields of the Win32 NONCLIENTMETRICSW structure.
@@ -124,6 +124,6 @@ defineFields
 
 getFieldNames
 	^#(#dwSize #iBorderWidth #iScrollWidth #iScrollHeight #iCaptionWidth #iCaptionHeight #lfCationFont #iSmCaptionWidth #iSmCaptionHeight #lfSmCaptionFont #iMenuWidth #iMenuHeight #lfMenuFont #lfStatusFont #lfMessageFont #iPaddedBorderWidth)! !
-!NONCLIENTMETRICSW class categoriesFor: #defineFields!public!template definition! !
-!NONCLIENTMETRICSW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.NONCLIENTMETRICSW class categoriesFor: #defineFields!public!template definition! !
+!OS.NONCLIENTMETRICSW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

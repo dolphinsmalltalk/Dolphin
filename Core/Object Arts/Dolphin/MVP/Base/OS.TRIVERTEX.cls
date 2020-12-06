@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Win32Structure subclass: #TRIVERTEX
+OS.Win32Structure subclass: #'OS.TRIVERTEX'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_alpha' -> 16rE.
@@ -13,8 +13,8 @@ Win32Structure subclass: #TRIVERTEX
 		'_OffsetOf_x' -> 16r0.
 		'_OffsetOf_y' -> 16r4
 	}!
-TRIVERTEX guid: (GUID fromString: '{c7529ab7-4488-494b-a3f0-8549402a5f57}')!
-TRIVERTEX comment: '<TRIVERTEX> is an <ExternalStructure> class to wrap the struct ''Win32.TRIVERTEX'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
+OS.TRIVERTEX guid: (Core.GUID fromString: '{c7529ab7-4488-494b-a3f0-8549402a5f57}')!
+OS.TRIVERTEX comment: '<TRIVERTEX> is an <ExternalStructure> class to wrap the struct ''Win32.TRIVERTEX'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains the following helpstring for this struct
 	"Contains color and position information"
@@ -33,8 +33,8 @@ struct tagTRIVERTEX {
 	COLOR16 Alpha;
 } TRIVERTEX;
 '!
-!TRIVERTEX categoriesForClass!Win32-Structs! !
-!TRIVERTEX methodsFor!
+!OS.TRIVERTEX categoriesForClass!Win32-Structs! !
+!OS.TRIVERTEX methodsFor!
 
 alpha
 	"Answer the <Integer> value of the receiver's 'alpha' field."
@@ -107,22 +107,22 @@ y: anInteger
 	"Set the receiver's 'y' field to the value of the argument, anInteger"
 
 	bytes sdwordAtOffset: _OffsetOf_y put: anInteger! !
-!TRIVERTEX categoriesFor: #alpha!**compiled accessors**!public! !
-!TRIVERTEX categoriesFor: #alpha:!**compiled accessors**!public! !
-!TRIVERTEX categoriesFor: #blue!**compiled accessors**!public! !
-!TRIVERTEX categoriesFor: #blue:!**compiled accessors**!public! !
-!TRIVERTEX categoriesFor: #color:!accessing!public! !
-!TRIVERTEX categoriesFor: #green!**compiled accessors**!public! !
-!TRIVERTEX categoriesFor: #green:!**compiled accessors**!public! !
-!TRIVERTEX categoriesFor: #position:!accessing!public! !
-!TRIVERTEX categoriesFor: #red!**compiled accessors**!public! !
-!TRIVERTEX categoriesFor: #red:!**compiled accessors**!public! !
-!TRIVERTEX categoriesFor: #x!**compiled accessors**!public! !
-!TRIVERTEX categoriesFor: #x:!**compiled accessors**!public! !
-!TRIVERTEX categoriesFor: #y!**compiled accessors**!public! !
-!TRIVERTEX categoriesFor: #y:!**compiled accessors**!public! !
+!OS.TRIVERTEX categoriesFor: #alpha!**compiled accessors**!public! !
+!OS.TRIVERTEX categoriesFor: #alpha:!**compiled accessors**!public! !
+!OS.TRIVERTEX categoriesFor: #blue!**compiled accessors**!public! !
+!OS.TRIVERTEX categoriesFor: #blue:!**compiled accessors**!public! !
+!OS.TRIVERTEX categoriesFor: #color:!accessing!public! !
+!OS.TRIVERTEX categoriesFor: #green!**compiled accessors**!public! !
+!OS.TRIVERTEX categoriesFor: #green:!**compiled accessors**!public! !
+!OS.TRIVERTEX categoriesFor: #position:!accessing!public! !
+!OS.TRIVERTEX categoriesFor: #red!**compiled accessors**!public! !
+!OS.TRIVERTEX categoriesFor: #red:!**compiled accessors**!public! !
+!OS.TRIVERTEX categoriesFor: #x!**compiled accessors**!public! !
+!OS.TRIVERTEX categoriesFor: #x:!**compiled accessors**!public! !
+!OS.TRIVERTEX categoriesFor: #y!**compiled accessors**!public! !
+!OS.TRIVERTEX categoriesFor: #y:!**compiled accessors**!public! !
 
-!TRIVERTEX class methodsFor!
+!OS.TRIVERTEX class methodsFor!
 
 defineFields
 	"Define the fields of the TRIVERTEX structure.
@@ -150,6 +150,6 @@ defineFields
 
 getFieldNames
 	^#(#x #y #red #green #blue #alpha)! !
-!TRIVERTEX class categoriesFor: #defineFields!public!template definition! !
-!TRIVERTEX class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.TRIVERTEX class categoriesFor: #defineFields!public!template definition! !
+!OS.TRIVERTEX class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

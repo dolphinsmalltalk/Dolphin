@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Object subclass: #Rectangle
+Core.Object subclass: #'Graphics.Rectangle'
 	instanceVariableNames: 'origin corner'
 	classVariableNames: 'Empty'
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Rectangle guid: (GUID fromString: '{87b4c4ad-026e-11d3-9fd7-00a0cc3e4a32}')!
-Rectangle comment: 'Instances of Rectangle represent a rectangular areas in a two dimensional Cartesian coordinate system. A Rectangle contains two Points; origin, which specifies the top left corner, and corner, which indicates the bottom right corner of the region described. 
+Graphics.Rectangle guid: (Core.GUID fromString: '{87b4c4ad-026e-11d3-9fd7-00a0cc3e4a32}')!
+Graphics.Rectangle comment: 'Instances of Rectangle represent a rectangular areas in a two dimensional Cartesian coordinate system. A Rectangle contains two Points; origin, which specifies the top left corner, and corner, which indicates the bottom right corner of the region described. 
 
 A Rectangle is typically created by sending the method #corner: to an instance of Point, although a number of other instance creation class methods are also provided:
 
@@ -16,8 +16,8 @@ A Rectangle is typically created by sending the method #corner: to an instance o
 Rectangles inhabit the same Smalltalk standard "left-handed" coordinate system as do Points; i.e. with the y axis increasing downwards. Because of this, in a non-empty Rectangle, the origin is always expected to be above and to the left of the corner. Rectangles that are not in this normalised state can be sent the message #normalize to answer a copy that is. Many of the operation messages on Rectangles will assume that the receiver is normalised.
 
 (150@150 corner: 100@100) normalize'!
-!Rectangle categoriesForClass!Graphics-Geometry! !
-!Rectangle methodsFor!
+!Graphics.Rectangle categoriesForClass!Graphics-Geometry! !
+!Graphics.Rectangle methodsFor!
 
 _expandRectangle: aRectangle 
 	"Private - Expand the <Rectangle> argument by the magnitude of the receiver.
@@ -72,9 +72,9 @@ areasOutside: aRectangle
 
 asParameter
 	"Answer the receiver in a form suitable for passing to an external function, in this case as
-	a Win32 RECT structure."
+	a Win32 RECTL structure."
 
-	^RECT
+	^RECTL
 		left: origin x
 		top: origin y
 		right: corner x
@@ -439,9 +439,12 @@ scaleBy: delta
 
 subtract: aRectangle
 	| rect |
-	#todo "Implememt in Smalltalk".
-	rect := RECT new.
-	UserLibrary default subtractRect: rect lprcSrc1: self asParameter lprcSrc2: aRectangle asParameter.
+	#todo.	"Implememt in Smalltalk"
+	rect := RECTL new.
+	UserLibrary default
+		subtractRect: rect
+		lprcSrc1: self asParameter
+		lprcSrc2: aRectangle asParameter.
 	^rect asObject!
 
 top
@@ -529,99 +532,104 @@ width: aNumber
 	negative, the result is undefined)"
 
 	corner := (origin x + aNumber) @ corner y! !
-!Rectangle categoriesFor: #_expandRectangle:!double dispatch!private! !
-!Rectangle categoriesFor: #_insetRectangle:!double dispatch!private! !
-!Rectangle categoriesFor: #_offsetRectangle:!double dispatch!private! !
-!Rectangle categoriesFor: #=!comparing!public! !
-!Rectangle categoriesFor: #area!accessing!public! !
-!Rectangle categoriesFor: #areasOutside:!accessing!public! !
-!Rectangle categoriesFor: #asParameter!converting!public! !
-!Rectangle categoriesFor: #bottom!accessing!public! !
-!Rectangle categoriesFor: #bottom:!accessing!public! !
-!Rectangle categoriesFor: #bottomAlign!accessing!public! !
-!Rectangle categoriesFor: #bottomAlign:!accessing!public! !
-!Rectangle categoriesFor: #bottomCenter!accessing!public! !
-!Rectangle categoriesFor: #bottomCenter:!accessing!public! !
-!Rectangle categoriesFor: #bottomLeft!accessing!public! !
-!Rectangle categoriesFor: #bottomLeft:!accessing!public! !
-!Rectangle categoriesFor: #bottomRight!accessing!public! !
-!Rectangle categoriesFor: #bottomRight:!accessing!public! !
-!Rectangle categoriesFor: #center!accessing!public! !
-!Rectangle categoriesFor: #center:!accessing!public! !
-!Rectangle categoriesFor: #centerX!accessing!public! !
-!Rectangle categoriesFor: #centerX:!accessing!public! !
-!Rectangle categoriesFor: #centerY!accessing!public! !
-!Rectangle categoriesFor: #centerY:!accessing!public! !
-!Rectangle categoriesFor: #constrain:!public!rectangle functions! !
-!Rectangle categoriesFor: #contains:!public!testing! !
-!Rectangle categoriesFor: #containsPoint:!public!testing! !
-!Rectangle categoriesFor: #copy!copying!public! !
-!Rectangle categoriesFor: #corner!accessing!public! !
-!Rectangle categoriesFor: #corner:!accessing!public! !
-!Rectangle categoriesFor: #expandBy:!public!rectangle functions! !
-!Rectangle categoriesFor: #expandedBy:!public!rectangle functions! !
-!Rectangle categoriesFor: #extent!accessing!public! !
-!Rectangle categoriesFor: #extent:!accessing!public! !
-!Rectangle categoriesFor: #hash!comparing!public! !
-!Rectangle categoriesFor: #height!accessing!public! !
-!Rectangle categoriesFor: #height:!accessing!public! !
-!Rectangle categoriesFor: #insetBy:!public!rectangle functions! !
-!Rectangle categoriesFor: #insetCornerBy:!operations!public! !
-!Rectangle categoriesFor: #insetOriginBy:!public!rectangle functions! !
-!Rectangle categoriesFor: #insetOriginBy:cornerBy:!public!rectangle functions! !
-!Rectangle categoriesFor: #intersect:!public!rectangle functions! !
-!Rectangle categoriesFor: #intersects:!public!testing! !
-!Rectangle categoriesFor: #isSelfEvaluating!public!testing! !
-!Rectangle categoriesFor: #left!accessing!public! !
-!Rectangle categoriesFor: #left:!accessing!public! !
-!Rectangle categoriesFor: #leftAlign!accessing!public! !
-!Rectangle categoriesFor: #leftAlign:!accessing!public! !
-!Rectangle categoriesFor: #leftCenter!accessing!public! !
-!Rectangle categoriesFor: #leftCenter:!accessing!public! !
-!Rectangle categoriesFor: #merge:!public!rectangle functions! !
-!Rectangle categoriesFor: #moveBy:!public!transforming! !
-!Rectangle categoriesFor: #moveTo:!public!transforming! !
-!Rectangle categoriesFor: #normalize!public!rectangle functions! !
-!Rectangle categoriesFor: #origin!accessing!public! !
-!Rectangle categoriesFor: #origin:!accessing!public! !
-!Rectangle categoriesFor: #origin:corner:!accessing!public! !
-!Rectangle categoriesFor: #origin:extent:!accessing!public! !
-!Rectangle categoriesFor: #position!accessing!public! !
-!Rectangle categoriesFor: #position:!accessing!public! !
-!Rectangle categoriesFor: #printOn:!printing!public! !
-!Rectangle categoriesFor: #right!accessing!public! !
-!Rectangle categoriesFor: #right:!accessing!public! !
-!Rectangle categoriesFor: #rightAlign!accessing!public! !
-!Rectangle categoriesFor: #rightAlign:!accessing!public! !
-!Rectangle categoriesFor: #rightCenter!accessing!public! !
-!Rectangle categoriesFor: #rightCenter:!accessing!public! !
-!Rectangle categoriesFor: #rounded!public!truncation and round off! !
-!Rectangle categoriesFor: #scaleBy:!public!transforming! !
-!Rectangle categoriesFor: #subtract:!public!rectangle functions! !
-!Rectangle categoriesFor: #top!accessing!public! !
-!Rectangle categoriesFor: #top:!accessing!public! !
-!Rectangle categoriesFor: #topAlign!accessing!public! !
-!Rectangle categoriesFor: #topAlign:!accessing!public! !
-!Rectangle categoriesFor: #topCenter!accessing!public! !
-!Rectangle categoriesFor: #topCenter:!accessing!public! !
-!Rectangle categoriesFor: #topLeft!accessing!public! !
-!Rectangle categoriesFor: #topLeft:!accessing!public! !
-!Rectangle categoriesFor: #topRight!accessing!public! !
-!Rectangle categoriesFor: #topRight:!accessing!public! !
-!Rectangle categoriesFor: #translateBy:!public!transforming! !
-!Rectangle categoriesFor: #translatedBy:!public!transforming! !
-!Rectangle categoriesFor: #truncated!converting!public! !
-!Rectangle categoriesFor: #width!accessing!public! !
-!Rectangle categoriesFor: #width:!accessing!public! !
+!Graphics.Rectangle categoriesFor: #_expandRectangle:!double dispatch!private! !
+!Graphics.Rectangle categoriesFor: #_insetRectangle:!double dispatch!private! !
+!Graphics.Rectangle categoriesFor: #_offsetRectangle:!double dispatch!private! !
+!Graphics.Rectangle categoriesFor: #=!comparing!public! !
+!Graphics.Rectangle categoriesFor: #area!accessing!public! !
+!Graphics.Rectangle categoriesFor: #areasOutside:!accessing!public! !
+!Graphics.Rectangle categoriesFor: #asParameter!converting!public! !
+!Graphics.Rectangle categoriesFor: #bottom!accessing!public! !
+!Graphics.Rectangle categoriesFor: #bottom:!accessing!public! !
+!Graphics.Rectangle categoriesFor: #bottomAlign!accessing!public! !
+!Graphics.Rectangle categoriesFor: #bottomAlign:!accessing!public! !
+!Graphics.Rectangle categoriesFor: #bottomCenter!accessing!public! !
+!Graphics.Rectangle categoriesFor: #bottomCenter:!accessing!public! !
+!Graphics.Rectangle categoriesFor: #bottomLeft!accessing!public! !
+!Graphics.Rectangle categoriesFor: #bottomLeft:!accessing!public! !
+!Graphics.Rectangle categoriesFor: #bottomRight!accessing!public! !
+!Graphics.Rectangle categoriesFor: #bottomRight:!accessing!public! !
+!Graphics.Rectangle categoriesFor: #center!accessing!public! !
+!Graphics.Rectangle categoriesFor: #center:!accessing!public! !
+!Graphics.Rectangle categoriesFor: #centerX!accessing!public! !
+!Graphics.Rectangle categoriesFor: #centerX:!accessing!public! !
+!Graphics.Rectangle categoriesFor: #centerY!accessing!public! !
+!Graphics.Rectangle categoriesFor: #centerY:!accessing!public! !
+!Graphics.Rectangle categoriesFor: #constrain:!public!rectangle functions! !
+!Graphics.Rectangle categoriesFor: #contains:!public!testing! !
+!Graphics.Rectangle categoriesFor: #containsPoint:!public!testing! !
+!Graphics.Rectangle categoriesFor: #copy!copying!public! !
+!Graphics.Rectangle categoriesFor: #corner!accessing!public! !
+!Graphics.Rectangle categoriesFor: #corner:!accessing!public! !
+!Graphics.Rectangle categoriesFor: #expandBy:!public!rectangle functions! !
+!Graphics.Rectangle categoriesFor: #expandedBy:!public!rectangle functions! !
+!Graphics.Rectangle categoriesFor: #extent!accessing!public! !
+!Graphics.Rectangle categoriesFor: #extent:!accessing!public! !
+!Graphics.Rectangle categoriesFor: #hash!comparing!public! !
+!Graphics.Rectangle categoriesFor: #height!accessing!public! !
+!Graphics.Rectangle categoriesFor: #height:!accessing!public! !
+!Graphics.Rectangle categoriesFor: #insetBy:!public!rectangle functions! !
+!Graphics.Rectangle categoriesFor: #insetCornerBy:!operations!public! !
+!Graphics.Rectangle categoriesFor: #insetOriginBy:!public!rectangle functions! !
+!Graphics.Rectangle categoriesFor: #insetOriginBy:cornerBy:!public!rectangle functions! !
+!Graphics.Rectangle categoriesFor: #intersect:!public!rectangle functions! !
+!Graphics.Rectangle categoriesFor: #intersects:!public!testing! !
+!Graphics.Rectangle categoriesFor: #isSelfEvaluating!public!testing! !
+!Graphics.Rectangle categoriesFor: #left!accessing!public! !
+!Graphics.Rectangle categoriesFor: #left:!accessing!public! !
+!Graphics.Rectangle categoriesFor: #leftAlign!accessing!public! !
+!Graphics.Rectangle categoriesFor: #leftAlign:!accessing!public! !
+!Graphics.Rectangle categoriesFor: #leftCenter!accessing!public! !
+!Graphics.Rectangle categoriesFor: #leftCenter:!accessing!public! !
+!Graphics.Rectangle categoriesFor: #merge:!public!rectangle functions! !
+!Graphics.Rectangle categoriesFor: #moveBy:!public!transforming! !
+!Graphics.Rectangle categoriesFor: #moveTo:!public!transforming! !
+!Graphics.Rectangle categoriesFor: #normalize!public!rectangle functions! !
+!Graphics.Rectangle categoriesFor: #origin!accessing!public! !
+!Graphics.Rectangle categoriesFor: #origin:!accessing!public! !
+!Graphics.Rectangle categoriesFor: #origin:corner:!accessing!public! !
+!Graphics.Rectangle categoriesFor: #origin:extent:!accessing!public! !
+!Graphics.Rectangle categoriesFor: #position!accessing!public! !
+!Graphics.Rectangle categoriesFor: #position:!accessing!public! !
+!Graphics.Rectangle categoriesFor: #printOn:!printing!public! !
+!Graphics.Rectangle categoriesFor: #right!accessing!public! !
+!Graphics.Rectangle categoriesFor: #right:!accessing!public! !
+!Graphics.Rectangle categoriesFor: #rightAlign!accessing!public! !
+!Graphics.Rectangle categoriesFor: #rightAlign:!accessing!public! !
+!Graphics.Rectangle categoriesFor: #rightCenter!accessing!public! !
+!Graphics.Rectangle categoriesFor: #rightCenter:!accessing!public! !
+!Graphics.Rectangle categoriesFor: #rounded!public!truncation and round off! !
+!Graphics.Rectangle categoriesFor: #scaleBy:!public!transforming! !
+!Graphics.Rectangle categoriesFor: #subtract:!public!rectangle functions! !
+!Graphics.Rectangle categoriesFor: #top!accessing!public! !
+!Graphics.Rectangle categoriesFor: #top:!accessing!public! !
+!Graphics.Rectangle categoriesFor: #topAlign!accessing!public! !
+!Graphics.Rectangle categoriesFor: #topAlign:!accessing!public! !
+!Graphics.Rectangle categoriesFor: #topCenter!accessing!public! !
+!Graphics.Rectangle categoriesFor: #topCenter:!accessing!public! !
+!Graphics.Rectangle categoriesFor: #topLeft!accessing!public! !
+!Graphics.Rectangle categoriesFor: #topLeft:!accessing!public! !
+!Graphics.Rectangle categoriesFor: #topRight!accessing!public! !
+!Graphics.Rectangle categoriesFor: #topRight:!accessing!public! !
+!Graphics.Rectangle categoriesFor: #translateBy:!public!transforming! !
+!Graphics.Rectangle categoriesFor: #translatedBy:!public!transforming! !
+!Graphics.Rectangle categoriesFor: #truncated!converting!public! !
+!Graphics.Rectangle categoriesFor: #width!accessing!public! !
+!Graphics.Rectangle categoriesFor: #width:!accessing!public! !
 
-Rectangle methodProtocol: #rectangle attributes: #(#readOnly) selectors: #(#area #areasOutside: #bottom #bottom: #bottomCenter #bottomCenter: #bottomLeft #bottomLeft: #bottomRight #bottomRight: #contains: #containsPoint: #corner #corner: #expandBy: #extent #extent: #height #height: #insetBy: #intersect: #intersects: #left #left: #leftCenter #merge: #moveBy: #moveTo: #origin #origin: #origin:corner: #origin:extent: #right #right: #rightCenter #scaleBy: #top #top: #topCenter #topLeft #topLeft: #topRight #topRight: #translateBy: #truncated #width #width:)!
+Graphics.Rectangle methodProtocol: #rectangle attributes: #(#readOnly) selectors: #(#area #areasOutside: #bottom #bottom: #bottomCenter #bottomCenter: #bottomLeft #bottomLeft: #bottomRight #bottomRight: #contains: #containsPoint: #corner #corner: #expandBy: #extent #extent: #height #height: #insetBy: #intersect: #intersects: #left #left: #leftCenter #merge: #moveBy: #moveTo: #origin #origin: #origin:corner: #origin:extent: #right #right: #rightCenter #scaleBy: #top #top: #topCenter #topLeft #topLeft: #topRight #topRight: #translateBy: #truncated #width #width:)!
 
-!Rectangle class methodsFor!
+!Graphics.Rectangle class methodsFor!
 
 center: centrePoint extent: extentPoint 
 	"Answer an instance of the receiver of the extent, extentPoint, centred on centrePoint."
 
 	^self origin: centrePoint - (extentPoint // 2) extent: extentPoint!
+
+extent: aPoint
+	"Answer an instance of the receiver of the extent, aPoint with origin at (0@0)."
+
+	^self origin: Point.Zero extent: aPoint!
 
 initialize
 	"Empty can't be a class constant or it creates a load order problem in that the Number>>@ method is not defined when the class is declared in the .pax file"
@@ -654,21 +662,20 @@ origin: originPoint extent: extentPoint
 	^self origin: originPoint corner: originPoint + extentPoint!
 
 unitialize
-	(classPool bindingFor: 'Empty')
-		isImmutable: false;
-		value: nil!
+	#{Empty} binding setValue: nil!
 
 vertex: aPoint1 vertex: aPoint2 
 	"Answer a new, normalised, instance of the receiver with the specified diagonally opposite
 	vertices."
 
 	^self origin: (aPoint1 min: aPoint2) corner: (aPoint1 max: aPoint2)! !
-!Rectangle class categoriesFor: #center:extent:!instance creation!public! !
-!Rectangle class categoriesFor: #initialize!class initialization!development!public! !
-!Rectangle class categoriesFor: #left:top:right:bottom:!instance creation!public! !
-!Rectangle class categoriesFor: #new!instance creation!public! !
-!Rectangle class categoriesFor: #origin:corner:!instance creation!public! !
-!Rectangle class categoriesFor: #origin:extent:!instance creation!public! !
-!Rectangle class categoriesFor: #unitialize!class hierarchy-removing!public! !
-!Rectangle class categoriesFor: #vertex:vertex:!instance creation!public! !
+!Graphics.Rectangle class categoriesFor: #center:extent:!instance creation!public! !
+!Graphics.Rectangle class categoriesFor: #extent:!instance creation!public! !
+!Graphics.Rectangle class categoriesFor: #initialize!class initialization!development!public! !
+!Graphics.Rectangle class categoriesFor: #left:top:right:bottom:!instance creation!public! !
+!Graphics.Rectangle class categoriesFor: #new!instance creation!public! !
+!Graphics.Rectangle class categoriesFor: #origin:corner:!instance creation!public! !
+!Graphics.Rectangle class categoriesFor: #origin:extent:!instance creation!public! !
+!Graphics.Rectangle class categoriesFor: #unitialize!class hierarchy-removing!public! !
+!Graphics.Rectangle class categoriesFor: #vertex:vertex:!instance creation!public! !
 

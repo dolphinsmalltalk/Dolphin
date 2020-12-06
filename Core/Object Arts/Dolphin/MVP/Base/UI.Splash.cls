@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ShellView subclass: #Splash
+UI.ShellView subclass: #'UI.Splash'
 	instanceVariableNames: 'splashDelay bitmap overlayWith'
 	classVariableNames: ''
-	poolDictionaries: 'Win32Constants'
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Splash guid: (GUID fromString: '{87b4c722-026e-11d3-9fd7-00a0cc3e4a32}')!
-Splash comment: 'Splash is a class that implements a <topView> for displaying a modal splash screen style bitmap. 
+UI.Splash guid: (Core.GUID fromString: '{87b4c722-026e-11d3-9fd7-00a0cc3e4a32}')!
+UI.Splash comment: 'Splash is a class that implements a <topView> for displaying a modal splash screen style bitmap. 
 
 A Splash window stays visible for a defined period of time indicated by the <Delay> passed to #showTimed:. If #showTimed is used, then a default delay period is automatically provided. If #show is used then the window remains visible for an indefinite period of time. One may choose to specify an overlay to be drawn on top of the bitmap using #overlayWith: and providing a suitable <monadicValuable> to perform the painting. 
 
@@ -19,8 +19,8 @@ Instance Variables:
 	overlayWith	<monadicValuable> or nil, specifying any paint actions to overlay the bitmap.
 
 '!
-!Splash categoriesForClass!MVP-Views! !
-!Splash methodsFor!
+!UI.Splash categoriesForClass!MVP-Views! !
+!UI.Splash methodsFor!
 
 bitmap: aBitmap
 	"Private - Set the bitmap to display in the receiver"
@@ -82,7 +82,7 @@ onPaintRequired: aPaintEvent
 
 	| canvas |
 	canvas := aPaintEvent canvas.
-	bitmap notNil ifTrue: [bitmap drawOn: canvas at: Point zero].
+	bitmap notNil ifTrue: [bitmap drawOn: canvas at: Point.Zero].
 	self overlayWith ifNotNil: [:overlay | overlay value: canvas]!
 
 overlayWith
@@ -100,17 +100,17 @@ overlayWith: aMonadicValuable
 show
 	"Shows the receiver for an indefinite time"
 
-	self showTimed: Semaphore new	!
+	self showTimed: Semaphore new!
 
 showTimed
 	"Shows the receiver and forks a process that will close it after the default delay"
 
 	^self showTimed: self defaultSplashDelay	!
 
-showTimed: aDelay 
+showTimed: aDelay
 	"Shows the receiver and forks a process that will close it after aDelay"
 
-	(SessionManager current)
+	SessionManager current
 		when: #imageSaveStarting
 			send: #forceClose
 			to: self;
@@ -129,24 +129,24 @@ showWindow
 
 	super show.
 	self beTopMost; update! !
-!Splash categoriesFor: #bitmap:!accessing!initializing!private! !
-!Splash categoriesFor: #close!operations!public! !
-!Splash categoriesFor: #defaultExtent!constants!public! !
-!Splash categoriesFor: #defaultSplashDelay!constants!public! !
-!Splash categoriesFor: #defaultWindowExStyle!constants!private! !
-!Splash categoriesFor: #defaultWindowStyle!constants!private! !
-!Splash categoriesFor: #forceClose!event handling!private! !
-!Splash categoriesFor: #initialize!initializing!private! !
-!Splash categoriesFor: #onLeftButtonPressed:!event handling!public! !
-!Splash categoriesFor: #onPaintRequired:!event handling!public! !
-!Splash categoriesFor: #overlayWith!accessing!public! !
-!Splash categoriesFor: #overlayWith:!accessing!public! !
-!Splash categoriesFor: #show!operations!public! !
-!Splash categoriesFor: #showTimed!operations!public! !
-!Splash categoriesFor: #showTimed:!operations!public! !
-!Splash categoriesFor: #showWindow!operations!private! !
+!UI.Splash categoriesFor: #bitmap:!accessing!initializing!private! !
+!UI.Splash categoriesFor: #close!operations!public! !
+!UI.Splash categoriesFor: #defaultExtent!constants!public! !
+!UI.Splash categoriesFor: #defaultSplashDelay!constants!public! !
+!UI.Splash categoriesFor: #defaultWindowExStyle!constants!private! !
+!UI.Splash categoriesFor: #defaultWindowStyle!constants!private! !
+!UI.Splash categoriesFor: #forceClose!event handling!private! !
+!UI.Splash categoriesFor: #initialize!initializing!private! !
+!UI.Splash categoriesFor: #onLeftButtonPressed:!event handling!public! !
+!UI.Splash categoriesFor: #onPaintRequired:!event handling!public! !
+!UI.Splash categoriesFor: #overlayWith!accessing!public! !
+!UI.Splash categoriesFor: #overlayWith:!accessing!public! !
+!UI.Splash categoriesFor: #show!operations!public! !
+!UI.Splash categoriesFor: #showTimed!operations!public! !
+!UI.Splash categoriesFor: #showTimed:!operations!public! !
+!UI.Splash categoriesFor: #showWindow!operations!private! !
 
-!Splash class methodsFor!
+!UI.Splash class methodsFor!
 
 bitmap: aBitmap
 	"Creates an instance of the receiver that will display aBitmap"
@@ -165,6 +165,6 @@ bitmap: aBitmap overlayWith: aBlock
 		create;
 		yourself
 	! !
-!Splash class categoriesFor: #bitmap:!instance creation!public! !
-!Splash class categoriesFor: #bitmap:overlayWith:!instance creation!public! !
+!UI.Splash class categoriesFor: #bitmap:!instance creation!public! !
+!UI.Splash class categoriesFor: #bitmap:overlayWith:!instance creation!public! !
 

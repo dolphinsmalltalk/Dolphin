@@ -1,20 +1,20 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Object subclass: #Interactor
+Core.Object subclass: #'UI.Interactor'
 	instanceVariableNames: 'presenter'
 	classVariableNames: ''
-	poolDictionaries: 'Win32Constants'
+	imports: #(#{OS.Win32Constants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Interactor guid: (GUID fromString: '{6281dd52-ad59-468b-b5b9-c5594195cef8}')!
-Interactor isAbstract: true!
-Interactor comment: '`Interactor` is an abstract class of `<interactor>`s that provide a plug-in capability to replace a `<presenter>`s normal response to user input events with something else, either temporarily (such as for the duration of a drag session) or for the life of the presenter.
+UI.Interactor guid: (Core.GUID fromString: '{6281dd52-ad59-468b-b5b9-c5594195cef8}')!
+UI.Interactor isNonInstantiable: true!
+UI.Interactor comment: '`Interactor` is an abstract class of `<interactor>`s that provide a plug-in capability to replace a `<presenter>`s normal response to user input events with something else, either temporarily (such as for the duration of a drag session) or for the life of the presenter.
 
 ## Instance Variables:
   `presenter`		`<presenter>` for which the `Interactor` is processing user input.
 '!
-!Interactor categoriesForClass!MVP-Interactors! !
-!Interactor methodsFor!
+!UI.Interactor categoriesForClass!MVP-Interactors! !
+!UI.Interactor methodsFor!
 
 onCaptureChanged: aViewOrNil 
 	"Default handler for a mouse capture changed event from the event source."
@@ -143,36 +143,36 @@ setPresenter: aPresenter
 
 view
 	^self presenter view! !
-!Interactor categoriesFor: #onCaptureChanged:!event handling!public! !
-!Interactor categoriesFor: #onGetCursor:!event handling!public! !
-!Interactor categoriesFor: #onKeyPressed:!event handling!public! !
-!Interactor categoriesFor: #onKeyReleased:!event handling!public! !
-!Interactor categoriesFor: #onKeyTyped:!event handling!public! !
-!Interactor categoriesFor: #onLeftButtonDoubleClicked:!event handling!public! !
-!Interactor categoriesFor: #onLeftButtonPressed:!event handling!public! !
-!Interactor categoriesFor: #onLeftButtonReleased:!event handling!public! !
-!Interactor categoriesFor: #onMiddleButtonDoubleClicked:!event handling!public! !
-!Interactor categoriesFor: #onMiddleButtonPressed:!event handling!public! !
-!Interactor categoriesFor: #onMiddleButtonReleased:!event handling!public! !
-!Interactor categoriesFor: #onMouseLeave:!event handling!public! !
-!Interactor categoriesFor: #onMouseMoved:!event handling!public! !
-!Interactor categoriesFor: #onMouseWheeled:!event handling!public! !
-!Interactor categoriesFor: #onRightButtonDoubleClicked:!event handling!public! !
-!Interactor categoriesFor: #onRightButtonPressed:!event handling!public! !
-!Interactor categoriesFor: #onRightButtonReleased:!event handling!public! !
-!Interactor categoriesFor: #onSysKeyPressed:!event handling!public! !
-!Interactor categoriesFor: #onSysKeyReleased:!event handling!public! !
-!Interactor categoriesFor: #onSysKeyTyped:!event handling!public! !
-!Interactor categoriesFor: #onXButtonDoubleClicked:!event handling!public! !
-!Interactor categoriesFor: #onXButtonPressed:!event handling!public! !
-!Interactor categoriesFor: #onXButtonReleased:!event handling!public! !
-!Interactor categoriesFor: #presenter!accessing!public! !
-!Interactor categoriesFor: #setPresenter:!accessing!private! !
-!Interactor categoriesFor: #view!public!testing! !
+!UI.Interactor categoriesFor: #onCaptureChanged:!event handling!public! !
+!UI.Interactor categoriesFor: #onGetCursor:!event handling!public! !
+!UI.Interactor categoriesFor: #onKeyPressed:!event handling!public! !
+!UI.Interactor categoriesFor: #onKeyReleased:!event handling!public! !
+!UI.Interactor categoriesFor: #onKeyTyped:!event handling!public! !
+!UI.Interactor categoriesFor: #onLeftButtonDoubleClicked:!event handling!public! !
+!UI.Interactor categoriesFor: #onLeftButtonPressed:!event handling!public! !
+!UI.Interactor categoriesFor: #onLeftButtonReleased:!event handling!public! !
+!UI.Interactor categoriesFor: #onMiddleButtonDoubleClicked:!event handling!public! !
+!UI.Interactor categoriesFor: #onMiddleButtonPressed:!event handling!public! !
+!UI.Interactor categoriesFor: #onMiddleButtonReleased:!event handling!public! !
+!UI.Interactor categoriesFor: #onMouseLeave:!event handling!public! !
+!UI.Interactor categoriesFor: #onMouseMoved:!event handling!public! !
+!UI.Interactor categoriesFor: #onMouseWheeled:!event handling!public! !
+!UI.Interactor categoriesFor: #onRightButtonDoubleClicked:!event handling!public! !
+!UI.Interactor categoriesFor: #onRightButtonPressed:!event handling!public! !
+!UI.Interactor categoriesFor: #onRightButtonReleased:!event handling!public! !
+!UI.Interactor categoriesFor: #onSysKeyPressed:!event handling!public! !
+!UI.Interactor categoriesFor: #onSysKeyReleased:!event handling!public! !
+!UI.Interactor categoriesFor: #onSysKeyTyped:!event handling!public! !
+!UI.Interactor categoriesFor: #onXButtonDoubleClicked:!event handling!public! !
+!UI.Interactor categoriesFor: #onXButtonPressed:!event handling!public! !
+!UI.Interactor categoriesFor: #onXButtonReleased:!event handling!public! !
+!UI.Interactor categoriesFor: #presenter!accessing!public! !
+!UI.Interactor categoriesFor: #setPresenter:!accessing!private! !
+!UI.Interactor categoriesFor: #view!public!testing! !
 
-Interactor methodProtocol: #interactor attributes: #(#readOnly) selectors: #(#onGetCursor: #onKeyPressed: #onKeyReleased: #onKeyTyped: #onLeftButtonDoubleClicked: #onLeftButtonPressed: #onLeftButtonReleased: #onMiddleButtonDoubleClicked: #onMiddleButtonPressed: #onMiddleButtonReleased: #onMouseLeave: #onMouseMoved: #onMouseWheeled: #onRightButtonDoubleClicked: #onRightButtonPressed: #onRightButtonReleased: #onSysKeyPressed: #onSysKeyReleased: #onSysKeyTyped: #onXButtonDoubleClicked: #onXButtonPressed: #onXButtonReleased:)!
+UI.Interactor methodProtocol: #interactor attributes: #(#readOnly) selectors: #(#onGetCursor: #onKeyPressed: #onKeyReleased: #onKeyTyped: #onLeftButtonDoubleClicked: #onLeftButtonPressed: #onLeftButtonReleased: #onMiddleButtonDoubleClicked: #onMiddleButtonPressed: #onMiddleButtonReleased: #onMouseLeave: #onMouseMoved: #onMouseWheeled: #onRightButtonDoubleClicked: #onRightButtonPressed: #onRightButtonReleased: #onSysKeyPressed: #onSysKeyReleased: #onSysKeyTyped: #onXButtonDoubleClicked: #onXButtonPressed: #onXButtonReleased:)!
 
-!Interactor class methodsFor!
+!UI.Interactor class methodsFor!
 
 forPresenter: aPresenter
 	^self basicNew
@@ -215,11 +215,11 @@ stbConvertToVersion1: anArray
 
 stbVersion
 	^1! !
-!Interactor class categoriesFor: #forPresenter:!instance creation!public! !
-!Interactor class categoriesFor: #icon!constants!public! !
-!Interactor class categoriesFor: #new!instance creation!public! !
-!Interactor class categoriesFor: #stbConvert:fromVersion:!binary filing!private! !
-!Interactor class categoriesFor: #stbConvertFrom:!binary filing!public! !
-!Interactor class categoriesFor: #stbConvertToVersion1:!binary filing!private! !
-!Interactor class categoriesFor: #stbVersion!binary filing!public! !
+!UI.Interactor class categoriesFor: #forPresenter:!instance creation!public! !
+!UI.Interactor class categoriesFor: #icon!constants!public! !
+!UI.Interactor class categoriesFor: #new!instance creation!public! !
+!UI.Interactor class categoriesFor: #stbConvert:fromVersion:!binary filing!private! !
+!UI.Interactor class categoriesFor: #stbConvertFrom:!binary filing!public! !
+!UI.Interactor class categoriesFor: #stbConvertToVersion1:!binary filing!private! !
+!UI.Interactor class categoriesFor: #stbVersion!binary filing!public! !
 

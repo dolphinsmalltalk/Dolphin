@@ -1,21 +1,21 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Presenter subclass: #Shell
+UI.Presenter subclass: #'UI.Shell'
 	instanceVariableNames: 'caption commandHistory'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Shell guid: (GUID fromString: '{87b4c68f-026e-11d3-9fd7-00a0cc3e4a32}')!
-Shell comment: 'Shell implements the <topPresenter> protocol for presenters that are to appear in <topView>s; i.e. in top-level windows on the desktop.A Shell provides methods for supplying a caption for the associated <topView> and for maintaining a <HistoryList> of commands that have recently been performed within it. By default, a Shell will not maintain a command history unless it is explicitly told to do so using its #hasCommandHistory aspect. The purpose of maintaining a command history is to support the potential for #undo and #redo operations. For these to work successfully, each <Command> must be provided with an appropriate undo action after it has been performed. For more details see the comment for Command.
+UI.Shell guid: (Core.GUID fromString: '{87b4c68f-026e-11d3-9fd7-00a0cc3e4a32}')!
+UI.Shell comment: 'Shell implements the <topPresenter> protocol for presenters that are to appear in <topView>s; i.e. in top-level windows on the desktop.A Shell provides methods for supplying a caption for the associated <topView> and for maintaining a <HistoryList> of commands that have recently been performed within it. By default, a Shell will not maintain a command history unless it is explicitly told to do so using its #hasCommandHistory aspect. The purpose of maintaining a command history is to support the potential for #undo and #redo operations. For these to work successfully, each <Command> must be provided with an appropriate undo action after it has been performed. For more details see the comment for Command.
 
 Instance Variables:
 	caption		<readableString> or nil, holding and explicit caption for the associated <topView>.
 	commandHistory	<HistoryList> or nil, holding a history of <Command>s that the presenter has recently performed.
 
 '!
-!Shell categoriesForClass!MVP-Presenters!MVP-Resources-Shells! !
-!Shell methodsFor!
+!UI.Shell categoriesForClass!MVP-Presenters!MVP-Resources-Shells! !
+!UI.Shell methodsFor!
 
 addCommandHistory: aCommand 
 	"Private - Adds aCommand to the receiver's command history list.
@@ -55,8 +55,7 @@ caption: aString
 clearCommandHistory
 	"Clear the receiver's command history list if one is available"
 
-	commandHistory notNil ifTrue: [
-		commandHistory := HistoryList new ]!
+	commandHistory notNil ifTrue: [commandHistory := HistoryList new]!
 
 commandHistory
 	"Private - Answer the history list of recent commands for the receiver"
@@ -79,7 +78,7 @@ commandPolicyWithSource: sourceView
 	^self commandPolicyClass
 		commandSource: sourceView!
 
-createView: aResourceNameString 
+createView: aResourceNameString
 	"Private - Creates and connects a view for the receiver from the resource identified
 	by aResourceNameString. Answers the new view created"
 
@@ -102,7 +101,7 @@ hasCommandHistory: aBoolean
 	"Set the receiver to allow it to keep a command history list
 	to allow commands to be undone"
 
-	commandHistory := aBoolean ifTrue: [ HistoryList new ].!
+	commandHistory := aBoolean ifTrue: [HistoryList new]!
 
 onAboutToDisplaySystemMenu: hMenu
 	"The system menu with <integer> handle, hMenu, is about to be displayed.
@@ -138,7 +137,7 @@ onViewDestroyed
 	runtime session if this is the main shell of an application."
 
 	super onViewDestroyed.
-	(self class shutdownOnExit and: [SessionManager current isRuntime]) 
+	(self class shutdownOnExit and: [SessionManager current isRuntime])
 		ifTrue: [SessionManager current exit]!
 
 onViewMinimized: aSizeEvent
@@ -231,6 +230,7 @@ redo
 	we place the receiver in a state where it will not accept any further command histories."
 
 	"Save the original history list"
+
 	| history |
 	self hasCommandHistory ifFalse: [^self].
 	history := commandHistory.
@@ -271,7 +271,6 @@ undo
 	command undo] ensure: 
 				["Restore the original history list. If the command executed can be redone
 			then backup by one command. Otherwise we clear the redo portion of the list."
-
 				commandHistory := history].
 	commandHistory goBack: 1.
 	command canRedo ifFalse: [commandHistory clearFuture].
@@ -304,43 +303,43 @@ view: aShellView
 	super view: aShellView.
 	self onViewOpened; setInitialFocus
 ! !
-!Shell categoriesFor: #addCommandHistory:!accessing!private! !
-!Shell categoriesFor: #allAdditionalKeyBindings!constants!private! !
-!Shell categoriesFor: #caption!accessing!public! !
-!Shell categoriesFor: #caption:!accessing!public! !
-!Shell categoriesFor: #clearCommandHistory!accessing!public! !
-!Shell categoriesFor: #commandHistory!accessing!private! !
-!Shell categoriesFor: #commandPolicyClass!commands!constants!public! !
-!Shell categoriesFor: #commandPolicyWithSource:!commands!public! !
-!Shell categoriesFor: #createView:!operations!private! !
-!Shell categoriesFor: #exit!commands!public! !
-!Shell categoriesFor: #hasCommandHistory!accessing!public! !
-!Shell categoriesFor: #hasCommandHistory:!accessing!public! !
-!Shell categoriesFor: #onAboutToDisplaySystemMenu:!event handling!public! !
-!Shell categoriesFor: #onIdleEntered!event handling!public! !
-!Shell categoriesFor: #onSettingChanged:!event handling-win32!public! !
-!Shell categoriesFor: #onTimeChanged:!event handling-win32!public! !
-!Shell categoriesFor: #onViewActivated:!event handling!public! !
-!Shell categoriesFor: #onViewDeactivated:!event handling!public! !
-!Shell categoriesFor: #onViewDestroyed!event handling!public! !
-!Shell categoriesFor: #onViewMinimized:!event handling!public! !
-!Shell categoriesFor: #onViewNcActivated:!event handling!public! !
-!Shell categoriesFor: #onViewNcDeactivated:!event handling!public! !
-!Shell categoriesFor: #onViewOpened!event handling!public! !
-!Shell categoriesFor: #onViewRestored:!event handling!public! !
-!Shell categoriesFor: #performCommand:!commands!public! !
-!Shell categoriesFor: #queryCommand:!commands!private! !
-!Shell categoriesFor: #redo!commands!public! !
-!Shell categoriesFor: #setInitialFocus!operations!public! !
-!Shell categoriesFor: #shortCaption!accessing!public! !
-!Shell categoriesFor: #undo!commands!public! !
-!Shell categoriesFor: #updateCaption!public!updating! !
-!Shell categoriesFor: #updateIcon!private!updating! !
-!Shell categoriesFor: #view:!accessing!public! !
+!UI.Shell categoriesFor: #addCommandHistory:!accessing!private! !
+!UI.Shell categoriesFor: #allAdditionalKeyBindings!constants!private! !
+!UI.Shell categoriesFor: #caption!accessing!public! !
+!UI.Shell categoriesFor: #caption:!accessing!public! !
+!UI.Shell categoriesFor: #clearCommandHistory!accessing!public! !
+!UI.Shell categoriesFor: #commandHistory!accessing!private! !
+!UI.Shell categoriesFor: #commandPolicyClass!commands!constants!public! !
+!UI.Shell categoriesFor: #commandPolicyWithSource:!commands!public! !
+!UI.Shell categoriesFor: #createView:!operations!private! !
+!UI.Shell categoriesFor: #exit!commands!public! !
+!UI.Shell categoriesFor: #hasCommandHistory!accessing!public! !
+!UI.Shell categoriesFor: #hasCommandHistory:!accessing!public! !
+!UI.Shell categoriesFor: #onAboutToDisplaySystemMenu:!event handling!public! !
+!UI.Shell categoriesFor: #onIdleEntered!event handling!public! !
+!UI.Shell categoriesFor: #onSettingChanged:!event handling-win32!public! !
+!UI.Shell categoriesFor: #onTimeChanged:!event handling-win32!public! !
+!UI.Shell categoriesFor: #onViewActivated:!event handling!public! !
+!UI.Shell categoriesFor: #onViewDeactivated:!event handling!public! !
+!UI.Shell categoriesFor: #onViewDestroyed!event handling!public! !
+!UI.Shell categoriesFor: #onViewMinimized:!event handling!public! !
+!UI.Shell categoriesFor: #onViewNcActivated:!event handling!public! !
+!UI.Shell categoriesFor: #onViewNcDeactivated:!event handling!public! !
+!UI.Shell categoriesFor: #onViewOpened!event handling!public! !
+!UI.Shell categoriesFor: #onViewRestored:!event handling!public! !
+!UI.Shell categoriesFor: #performCommand:!commands!public! !
+!UI.Shell categoriesFor: #queryCommand:!commands!private! !
+!UI.Shell categoriesFor: #redo!commands!public! !
+!UI.Shell categoriesFor: #setInitialFocus!operations!public! !
+!UI.Shell categoriesFor: #shortCaption!accessing!public! !
+!UI.Shell categoriesFor: #undo!commands!public! !
+!UI.Shell categoriesFor: #updateCaption!public!updating! !
+!UI.Shell categoriesFor: #updateIcon!private!updating! !
+!UI.Shell categoriesFor: #view:!accessing!public! !
 
-Shell methodProtocol: #topPresenter attributes: #(#readOnly) selectors: #(#caption #caption: #commandPolicyWithSource: #ensureVisible #invalidateUserInterface #onAboutToDisplayMenu: #onAboutToDisplaySystemMenu: #onActionPerformed #onCloseRequested #onIdleEntered #onInputMaskRequired: #onKeyPressed: #onKeyReleased: #onKeyTyped: #onKillFocus #onLeftButtonDoubleClicked: #onLeftButtonPressed: #onLeftButtonReleased: #onMouseMoved: #onPositionChanged: #onPositionChanging: #onRightButtonDoubleClicked: #onRightButtonPressed: #onRightButtonReleased: #onSetFocus #onTipTextRequired: #onViewActivated: #onViewClosed #onViewDeactivated: #onViewMinimized: #onViewOpened #onViewRestored: #parentPresenter #performAction #performCommand: #setFocus #show #topShell #updateCaption #view)!
+UI.Shell methodProtocol: #topPresenter attributes: #(#readOnly) selectors: #(#caption #caption: #commandPolicyWithSource: #ensureVisible #invalidateUserInterface #onAboutToDisplayMenu: #onAboutToDisplaySystemMenu: #onActionPerformed #onCloseRequested #onIdleEntered #onInputMaskRequired: #onKeyPressed: #onKeyReleased: #onKeyTyped: #onKillFocus #onLeftButtonDoubleClicked: #onLeftButtonPressed: #onLeftButtonReleased: #onMouseMoved: #onPositionChanged: #onPositionChanging: #onRightButtonDoubleClicked: #onRightButtonPressed: #onRightButtonReleased: #onSetFocus #onTipTextRequired: #onViewActivated: #onViewClosed #onViewDeactivated: #onViewMinimized: #onViewOpened #onViewRestored: #parentPresenter #performAction #performCommand: #setFocus #show #topShell #updateCaption #view)!
 
-!Shell class methodsFor!
+!UI.Shell class methodsFor!
 
 asSessionManagerClass
 	^DefaultShellSessionManager!
@@ -383,7 +382,7 @@ resource_Default_view
 	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Default_view)
 	"
 
-	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.ShellView) 34 27 nil nil 8 #(13565952 65536) 416 nil 327686 ##(Smalltalk.Color) #default nil 549 nil nil nil 416 nil 170 192 8 #() nil nil nil nil nil 1 nil nil nil nil 1 nil nil 983302 ##(Smalltalk.MessageSequence) 138 144 34 1 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 328198 ##(Smalltalk.Point) 7039 21 642 1201 801 416 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 0 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 191 13 0 0 10 0 0 0 23 16 0 0 154 1 0 0] 8 #() 642 193 193 nil 27 )!
+	^#(#'!!STL' 4 985166 10 ##(UI.STBViewProxy) ##(UI.ShellView) 34 27 nil nil 8 #(13565952 65536) 416 nil 917510 ##(Graphics.Color) #default nil 549 nil nil nil 416 nil 170 192 8 #() nil nil nil nil nil 1 nil nil nil nil 1 nil nil 1310982 ##(Core.MessageSequence) 138 144 34 1 1049350 ##(Core.MessageSend) #createAt:extent: 34 2 655878 ##(Graphics.Point) 6143 21 642 1201 801 416 1179910 ##(OS.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 0 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 87 14 0 0 154 1 0 0] 8 #() 642 193 193 nil 27)!
 
 shutdownOnExit
 	"Answer whether a runtime session should be shutdown when an instance of the receiver is closed."
@@ -392,11 +391,11 @@ shutdownOnExit
 	does mean most applications will need to override for their main shell window."
 
 	^false! !
-!Shell class categoriesFor: #asSessionManagerClass!converting!public!VM and session managerment! !
-!Shell class categoriesFor: #create:!instance creation!public! !
-!Shell class categoriesFor: #create:in:on:!instance creation!public! !
-!Shell class categoriesFor: #icon!constants!public! !
-!Shell class categoriesFor: #installNew!converting!public!VM and session managerment! !
-!Shell class categoriesFor: #resource_Default_view!public!resources-views! !
-!Shell class categoriesFor: #shutdownOnExit!public!testing! !
+!UI.Shell class categoriesFor: #asSessionManagerClass!converting!public!VM and session managerment! !
+!UI.Shell class categoriesFor: #create:!instance creation!public! !
+!UI.Shell class categoriesFor: #create:in:on:!instance creation!public! !
+!UI.Shell class categoriesFor: #icon!constants!public! !
+!UI.Shell class categoriesFor: #installNew!converting!public!VM and session managerment! !
+!UI.Shell class categoriesFor: #resource_Default_view!public!resources-views! !
+!UI.Shell class categoriesFor: #shutdownOnExit!public!testing! !
 

@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-CommandButton subclass: #PushButton
+UI.CommandButton subclass: #'UI.PushButton'
 	instanceVariableNames: 'image isDefault note _reserved1 _reserved2'
 	classVariableNames: 'ButtonStyleMap'
-	poolDictionaries: 'ButtonConstants'
+	imports: #(#{OS.ButtonConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-PushButton guid: (GUID fromString: '{87b4c729-026e-11d3-9fd7-00a0cc3e4a32}')!
-PushButton comment: 'PushButton is a <CommandButton> implementing the Windows "BUTTON" class, usually in push button mode, i.e. with the BS_PUSHLIKE style. 
+UI.PushButton guid: (Core.GUID fromString: '{87b4c729-026e-11d3-9fd7-00a0cc3e4a32}')!
+UI.PushButton comment: 'PushButton is a <CommandButton> implementing the Windows "BUTTON" class, usually in push button mode, i.e. with the BS_PUSHLIKE style. 
 
 Note that we have chosen not to support the text alignment styles of the BUTTON control on PushButton''s, because the ability to align the text in the push button rectangle doesn''t seem that useful. Alignment styles are, however, supported on the other incarnations of the BUTTON control as represented by the <CheckBox> and <RadioButton> classes, and so if needed the implemenation can be borrowed from there.
 
@@ -23,15 +23,15 @@ Instance Variables:
 Class Variables:
 	ButtonStyleMap		<IdentityDictionary> mapping <Symbol>ic button style names to the corresponding <Integer> style flags.
 '!
-!PushButton categoriesForClass!MVP-Views! !
-!PushButton methodsFor!
+!UI.PushButton categoriesForClass!MVP-Views! !
+!UI.PushButton methodsFor!
 
 baseCreationStyle
 	| base |
 	base := self baseStyle.
 	"Command Link style is only supported on Vista. If not on Vista (or later) downgrade to a
 	normal push button"
-	((base allMask: BS_COMMANDLINK) and: [SystemMetrics current hasLinkButtons not]) 
+	((base allMask: BS_COMMANDLINK) and: [SystemMetrics current hasLinkButtons not])
 		ifTrue: [base := base maskClear: BS_COMMANDLINK].
 	^base!
 
@@ -247,36 +247,36 @@ text: aString
 
 	super text: aString.
 	commandDescription description: aString! !
-!PushButton categoriesFor: #baseCreationStyle!private!realizing/unrealizing! !
-!PushButton categoriesFor: #bmSetStyle:wParam:lParam:!event handling-win32!private! !
-!PushButton categoriesFor: #command:id:!commands!private! !
-!PushButton categoriesFor: #defaultWindowStyle!constants!private! !
-!PushButton categoriesFor: #getNote!helpers!private! !
-!PushButton categoriesFor: #hasFlatAppearance!accessing-styles!public! !
-!PushButton categoriesFor: #hasFlatAppearance:!accessing-styles!public! !
-!PushButton categoriesFor: #id:!accessing!public! !
-!PushButton categoriesFor: #image!accessing!public! !
-!PushButton categoriesFor: #image:!accessing!public! !
-!PushButton categoriesFor: #initialize!initializing!private! !
-!PushButton categoriesFor: #isChecked!accessing!public! !
-!PushButton categoriesFor: #isChecked:!accessing!public! !
-!PushButton categoriesFor: #isDefault!public!testing! !
-!PushButton categoriesFor: #isDefault:!accessing-styles!public! !
-!PushButton categoriesFor: #isMultiline!accessing-styles!public! !
-!PushButton categoriesFor: #isMultiline:!accessing-styles!public! !
-!PushButton categoriesFor: #note!accessing!public! !
-!PushButton categoriesFor: #note:!accessing!public! !
-!PushButton categoriesFor: #onDestroyed!event handling!private! !
-!PushButton categoriesFor: #onViewCreated!event handling!public! !
-!PushButton categoriesFor: #setDefault:!accessing-styles!private! !
-!PushButton categoriesFor: #setNote!helpers!private! !
-!PushButton categoriesFor: #style!accessing!public! !
-!PushButton categoriesFor: #style:!accessing!public! !
-!PushButton categoriesFor: #text:!accessing!public! !
+!UI.PushButton categoriesFor: #baseCreationStyle!private!realizing/unrealizing! !
+!UI.PushButton categoriesFor: #bmSetStyle:wParam:lParam:!event handling-win32!private! !
+!UI.PushButton categoriesFor: #command:id:!commands!private! !
+!UI.PushButton categoriesFor: #defaultWindowStyle!constants!private! !
+!UI.PushButton categoriesFor: #getNote!helpers!private! !
+!UI.PushButton categoriesFor: #hasFlatAppearance!accessing-styles!public! !
+!UI.PushButton categoriesFor: #hasFlatAppearance:!accessing-styles!public! !
+!UI.PushButton categoriesFor: #id:!accessing!public! !
+!UI.PushButton categoriesFor: #image!accessing!public! !
+!UI.PushButton categoriesFor: #image:!accessing!public! !
+!UI.PushButton categoriesFor: #initialize!initializing!private! !
+!UI.PushButton categoriesFor: #isChecked!accessing!public! !
+!UI.PushButton categoriesFor: #isChecked:!accessing!public! !
+!UI.PushButton categoriesFor: #isDefault!public!testing! !
+!UI.PushButton categoriesFor: #isDefault:!accessing-styles!public! !
+!UI.PushButton categoriesFor: #isMultiline!accessing-styles!public! !
+!UI.PushButton categoriesFor: #isMultiline:!accessing-styles!public! !
+!UI.PushButton categoriesFor: #note!accessing!public! !
+!UI.PushButton categoriesFor: #note:!accessing!public! !
+!UI.PushButton categoriesFor: #onDestroyed!event handling!private! !
+!UI.PushButton categoriesFor: #onViewCreated!event handling!public! !
+!UI.PushButton categoriesFor: #setDefault:!accessing-styles!private! !
+!UI.PushButton categoriesFor: #setNote!helpers!private! !
+!UI.PushButton categoriesFor: #style!accessing!public! !
+!UI.PushButton categoriesFor: #style:!accessing!public! !
+!UI.PushButton categoriesFor: #text:!accessing!public! !
 
-PushButton methodProtocol: #commandSource attributes: #(#readOnly) selectors: #(#commandDescription)!
+UI.PushButton methodProtocol: #commandSource attributes: #(#readOnly) selectors: #(#commandDescription)!
 
-!PushButton class methodsFor!
+!UI.PushButton class methodsFor!
 
 buttonMessageMappings
 	^{BM_SETSTYLE -> #bmSetStyle:wParam:lParam:}!
@@ -313,7 +313,7 @@ resource_Cancel_button
 	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Cancel_button)
 	"
 
-	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.PushButton) 34 20 nil nil 34 2 8 1140924416 1 416 nil nil nil 5 nil nil nil 416 nil 8 1915188384 1180998 4 ##(Smalltalk.CommandDescription) #cancel 8 '&Cancel' 1 1 nil nil false nil nil nil 983302 ##(Smalltalk.MessageSequence) 138 144 34 3 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 328198 ##(Smalltalk.Point) 11 11 658 141 51 416 610 #isEnabled: 8 #(false) 416 610 #text: 34 1 8 '&Cancel' 416 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 0 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 5 0 0 0 5 0 0 0 75 0 0 0 30 0 0 0] 8 #() 658 193 193 nil 29 )!
+	^#(#'!!STL' 4 985166 10 ##(UI.STBViewProxy) ##(UI.PushButton) 34 20 nil nil 34 2 8 1140924416 1 416 nil nil nil 7 nil nil nil 416 nil 8 1920683440 1377606 4 ##(UI.CommandDescription) #cancel 8 '&Cancel' 1 1 nil nil false nil nil nil 1310982 ##(Core.MessageSequence) 138 144 34 3 1049350 ##(Core.MessageSend) #createAt:extent: 34 2 655878 ##(Graphics.Point) 6143 21 658 141 51 416 610 #isEnabled: 8 #(false) 416 610 #text: 34 1 8 '&Cancel' 416 1179910 ##(OS.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 69 12 0 0 35 0 0 0] 8 #() 658 193 193 nil 29)!
 
 resource_No_button
 	"Answer the literal data from which the 'No button' resource can be reconstituted.
@@ -323,7 +323,7 @@ resource_No_button
 	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_No_button)
 	"
 
-	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.PushButton) 34 20 nil nil 34 2 8 1140924416 1 416 nil nil nil 5 nil nil nil 416 nil 8 1915188384 1180998 4 ##(Smalltalk.CommandDescription) #no 8 '&No' 1 1 nil nil false nil nil nil 983302 ##(Smalltalk.MessageSequence) 138 144 34 3 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 328198 ##(Smalltalk.Point) 21 11 658 141 51 416 610 #isEnabled: 8 #(false) 416 610 #text: 34 1 8 '&No' 416 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 0 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 10 0 0 0 5 0 0 0 80 0 0 0 30 0 0 0] 8 #() 658 193 193 nil 29 )!
+	^#(#'!!STL' 4 985166 10 ##(UI.STBViewProxy) ##(UI.PushButton) 34 20 nil nil 34 2 8 1140924416 1 416 nil nil nil 7 nil nil nil 416 nil 8 1920683440 1377606 4 ##(UI.CommandDescription) #no 8 '&No' 1 1 nil nil false nil nil nil 1310982 ##(Core.MessageSequence) 138 144 34 3 1049350 ##(Core.MessageSend) #createAt:extent: 34 2 655878 ##(Graphics.Point) 6143 21 658 141 51 416 610 #isEnabled: 8 #(false) 416 610 #text: 34 1 8 '&No' 416 1179910 ##(OS.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 69 12 0 0 35 0 0 0] 8 #() 658 193 193 nil 29)!
 
 resource_OK_button
 	"Answer the literal data from which the 'OK button' resource can be reconstituted.
@@ -333,7 +333,7 @@ resource_OK_button
 	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_OK_button)
 	"
 
-	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.PushButton) 34 20 nil nil 34 2 8 1140924416 1 416 nil nil nil 5 nil nil nil 416 nil 8 1915188384 1180998 4 ##(Smalltalk.CommandDescription) #ok 8 '&OK' 1 1 nil nil true nil nil nil 983302 ##(Smalltalk.MessageSequence) 138 144 34 3 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 328198 ##(Smalltalk.Point) 11 11 658 141 51 416 610 #isEnabled: 8 #(false) 416 610 #text: 34 1 8 '&OK' 416 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 0 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 5 0 0 0 5 0 0 0 75 0 0 0 30 0 0 0] 8 #() 658 193 193 nil 29 )!
+	^#(#'!!STL' 4 985166 10 ##(UI.STBViewProxy) ##(UI.PushButton) 34 20 nil nil 34 2 8 1140924416 1 416 nil nil nil 7 nil nil nil 416 nil 8 1920683440 1377606 4 ##(UI.CommandDescription) #ok 8 '&OK' 1 1 nil nil true nil nil nil 1310982 ##(Core.MessageSequence) 138 144 34 3 1049350 ##(Core.MessageSend) #createAt:extent: 34 2 655878 ##(Graphics.Point) 6143 21 658 141 51 416 610 #isEnabled: 8 #(false) 416 610 #text: 34 1 8 '&OK' 416 1179910 ##(OS.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 69 12 0 0 35 0 0 0] 8 #() 658 193 193 nil 29)!
 
 resource_Push_and_check
 	"Answer the literal data from which the 'Push and check' resource can be reconstituted.
@@ -343,7 +343,7 @@ resource_Push_and_check
 	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Push_and_check)
 	"
 
-	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.CheckBox) 34 16 nil nil 34 2 8 1409363971 1 416 721990 2 ##(Smalltalk.ValueHolder) nil nil 1114118 ##(Smalltalk.NeverSearchPolicy) false 327686 ##(Smalltalk.Color) #default nil 5 nil nil nil 416 nil 8 1903885040 852486 ##(Smalltalk.NullConverter) nil nil nil 983302 ##(Smalltalk.MessageSequence) 138 144 34 2 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 328198 ##(Smalltalk.Point) 3839 21 738 231 61 416 690 #text: 34 1 8 'Push and Check' 416 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 127 7 0 0 10 0 0 0 242 7 0 0 40 0 0 0] 8 #() 738 193 193 nil 27 )!
+	^#(#'!!STL' 4 985166 10 ##(UI.STBViewProxy) ##(UI.CheckBox) 34 16 nil nil 34 2 8 1409363971 1 416 918598 2 ##(UI.ValueHolder) nil nil 1441798 ##(Kernel.NeverSearchPolicy) false 917510 ##(Graphics.Color) #default nil 5 nil nil nil 416 nil 8 1920683440 1049094 ##(UI.NullConverter) nil nil nil 1310982 ##(Core.MessageSequence) 138 144 34 2 1049350 ##(Core.MessageSend) #createAt:extent: 34 2 655878 ##(Graphics.Point) 6143 21 738 231 61 416 690 #text: 34 1 8 'Push and Check' 416 1179910 ##(OS.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 114 12 0 0 40 0 0 0] 8 #() 738 193 193 nil 27)!
 
 resource_Push_button
 	"Answer the literal data from which the 'Push button' resource can be reconstituted.
@@ -353,7 +353,7 @@ resource_Push_button
 	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Push_button)
 	"
 
-	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.PushButton) 34 20 nil nil 34 2 8 1140924416 1 416 nil nil nil 5 nil nil nil 416 nil 8 1915188384 1180998 4 ##(Smalltalk.CommandDescription) nil nil 1 1 nil nil false nil nil nil 983302 ##(Smalltalk.MessageSequence) 138 144 34 2 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 328198 ##(Smalltalk.Point) 11 11 642 141 51 416 594 #isEnabled: 8 #(false) 416 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 0 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 5 0 0 0 5 0 0 0 75 0 0 0 30 0 0 0] 8 #() 642 193 193 nil 29 )!
+	^#(#'!!STL' 4 985166 10 ##(UI.STBViewProxy) ##(UI.PushButton) 34 20 nil nil 34 2 8 1140924416 1 416 nil nil nil 7 nil nil nil 416 nil 8 1920683440 1377606 4 ##(UI.CommandDescription) nil nil 1 1 nil nil false nil nil nil 1310982 ##(Core.MessageSequence) 138 144 34 2 1049350 ##(Core.MessageSend) #createAt:extent: 34 2 655878 ##(Graphics.Point) 6143 21 642 141 51 416 594 #isEnabled: 8 #(false) 416 1179910 ##(OS.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 69 12 0 0 35 0 0 0] 8 #() 642 193 193 nil 29)!
 
 resource_Yes_button
 	"Answer the literal data from which the 'Yes button' resource can be reconstituted.
@@ -363,9 +363,9 @@ resource_Yes_button
 	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Yes_button)
 	"
 
-	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.PushButton) 34 20 nil nil 34 2 8 1140924416 1 416 nil nil nil 5 nil nil nil 416 nil 8 1915188384 1180998 4 ##(Smalltalk.CommandDescription) #yes 8 '&Yes' 1 1 nil nil false nil nil nil 983302 ##(Smalltalk.MessageSequence) 138 144 34 3 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 328198 ##(Smalltalk.Point) 21 21 658 141 51 416 610 #isEnabled: 8 #(false) 416 610 #text: 34 1 8 '&Yes' 416 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 0 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 10 0 0 0 10 0 0 0 80 0 0 0 35 0 0 0] 8 #() 658 193 193 nil 29 )!
+	^#(#'!!STL' 4 985166 10 ##(UI.STBViewProxy) ##(UI.PushButton) 34 20 nil nil 34 2 8 1140924416 1 416 nil nil nil 7 nil nil nil 416 nil 8 1920683440 1377606 4 ##(UI.CommandDescription) #yes 8 '&Yes' 1 1 nil nil false nil nil nil 1310982 ##(Core.MessageSequence) 138 144 34 3 1049350 ##(Core.MessageSend) #createAt:extent: 34 2 655878 ##(Graphics.Point) 6143 21 658 141 51 416 610 #isEnabled: 8 #(false) 416 610 #text: 34 1 8 '&Yes' 416 1179910 ##(OS.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 69 12 0 0 35 0 0 0] 8 #() 658 193 193 nil 29)!
 
-stbConvertFromVersion1: anArray 
+stbConvertFromVersion1: anArray
 	"Private - Perform an STB conversion from a version 1 (or earlier) <View> to version 2."
 
 	| array |
@@ -393,18 +393,18 @@ winClassName
 
 	^'BUTTON'
 ! !
-!PushButton class categoriesFor: #buttonMessageMappings!constants!must not strip!private! !
-!PushButton class categoriesFor: #icon!constants!public! !
-!PushButton class categoriesFor: #initialize!development!initializing!private! !
-!PushButton class categoriesFor: #resource_Cancel_button!public!resources-views! !
-!PushButton class categoriesFor: #resource_No_button!public!resources-views! !
-!PushButton class categoriesFor: #resource_OK_button!public!resources-views! !
-!PushButton class categoriesFor: #resource_Push_and_check!public!resources-views! !
-!PushButton class categoriesFor: #resource_Push_button!public!resources-views! !
-!PushButton class categoriesFor: #resource_Yes_button!public!resources-views! !
-!PushButton class categoriesFor: #stbConvertFromVersion1:!binary filing!private! !
-!PushButton class categoriesFor: #stbConvertFromVersion9:!binary filing!private! !
-!PushButton class categoriesFor: #stbVersion!public! !
-!PushButton class categoriesFor: #uninitialize!class hierarchy-removing!private! !
-!PushButton class categoriesFor: #winClassName!constants!private! !
+!UI.PushButton class categoriesFor: #buttonMessageMappings!constants!must not strip!private! !
+!UI.PushButton class categoriesFor: #icon!constants!public! !
+!UI.PushButton class categoriesFor: #initialize!development!initializing!private! !
+!UI.PushButton class categoriesFor: #resource_Cancel_button!public!resources-views! !
+!UI.PushButton class categoriesFor: #resource_No_button!public!resources-views! !
+!UI.PushButton class categoriesFor: #resource_OK_button!public!resources-views! !
+!UI.PushButton class categoriesFor: #resource_Push_and_check!public!resources-views! !
+!UI.PushButton class categoriesFor: #resource_Push_button!public!resources-views! !
+!UI.PushButton class categoriesFor: #resource_Yes_button!public!resources-views! !
+!UI.PushButton class categoriesFor: #stbConvertFromVersion1:!binary filing!private! !
+!UI.PushButton class categoriesFor: #stbConvertFromVersion9:!binary filing!private! !
+!UI.PushButton class categoriesFor: #stbVersion!public! !
+!UI.PushButton class categoriesFor: #uninitialize!class hierarchy-removing!private! !
+!UI.PushButton class categoriesFor: #winClassName!constants!private! !
 

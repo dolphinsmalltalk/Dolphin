@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Interactor subclass: #CapturingInteractor
+UI.Interactor subclass: #'UI.CapturingInteractor'
 	instanceVariableNames: 'oldInteractor stateFlags'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'HotMask' -> 16r1.
@@ -11,9 +11,9 @@ Interactor subclass: #CapturingInteractor
 		'MiddleDownMask' -> 16r8.
 		'RightDownMask' -> 16r10
 	}!
-CapturingInteractor guid: (GUID fromString: '{d6b9eec9-b8fc-41a9-abc6-1df89013c95e}')!
-CapturingInteractor isAbstract: true!
-CapturingInteractor comment: '`CapturingInteractor` is an abstract class of `<interactor>`s that intercept user input events and potentially absorbs them so that they do not reach the presenter. i.e. if a <CapturingInteractor> is installed into a view then it may appear to ignore all user input. Subclasses may use the input for other purposes, or selectively forward it on to the `<presenter>`.
+UI.CapturingInteractor guid: (Core.GUID fromString: '{d6b9eec9-b8fc-41a9-abc6-1df89013c95e}')!
+UI.CapturingInteractor isNonInstantiable: true!
+UI.CapturingInteractor comment: '`CapturingInteractor` is an abstract class of `<interactor>`s that intercept user input events and potentially absorbs them so that they do not reach the presenter. i.e. if a <CapturingInteractor> is installed into a view then it may appear to ignore all user input. Subclasses may use the input for other purposes, or selectively forward it on to the `<presenter>`.
 
 ## Instance Variables:
   `oldInteractor`		`<interactor>`. The <interactor> installed in the <presenter> before this one.
@@ -26,8 +26,8 @@ CapturingInteractor comment: '`CapturingInteractor` is an abstract class of `<in
   `LeftDownMask`		`<integer>` flags mask to record left-button down.
 
 '!
-!CapturingInteractor categoriesForClass!Unclassified! !
-!CapturingInteractor methodsFor!
+!UI.CapturingInteractor categoriesForClass!Unclassified! !
+!UI.CapturingInteractor methodsFor!
 
 buttonsReleased
 	stateFlags := stateFlags maskClear: ##(LeftDownMask | MiddleDownMask | RightDownMask)!
@@ -219,7 +219,7 @@ onXButtonReleased: aMouseEvent
 releaseCapture
 	"Private - Release mouse capture."
 
-	View releaseCapture.!
+	View releaseCapture!
 
 setCapture
 	"Private - Sets mouse capture to the receiver's event source, replacing
@@ -230,53 +230,58 @@ setCapture
 	source := self view.
 	oldInteractor := source interactor: self.
 	source setCapture! !
-!CapturingInteractor categoriesFor: #buttonsReleased!event handling!private! !
-!CapturingInteractor categoriesFor: #captureMouse!initializing!public! !
-!CapturingInteractor categoriesFor: #captureReleased!event handling!private! !
-!CapturingInteractor categoriesFor: #changeHotState:!helpers!private! !
-!CapturingInteractor categoriesFor: #initialize!initializing!public! !
-!CapturingInteractor categoriesFor: #isHot!public!testing! !
-!CapturingInteractor categoriesFor: #isHot:!accessing!public! !
-!CapturingInteractor categoriesFor: #isLeftButtonDown!public!testing! !
-!CapturingInteractor categoriesFor: #isLeftButtonDown:!accessing!public! !
-!CapturingInteractor categoriesFor: #isMiddleButtonDown!public!testing! !
-!CapturingInteractor categoriesFor: #isMiddleButtonDown:!accessing!public! !
-!CapturingInteractor categoriesFor: #isRightButtonDown!public!testing! !
-!CapturingInteractor categoriesFor: #isRightButtonDown:!accessing!public! !
-!CapturingInteractor categoriesFor: #onCaptureChanged:!event handling!public! !
-!CapturingInteractor categoriesFor: #onKeyPressed:!event handling!public! !
-!CapturingInteractor categoriesFor: #onKeyReleased:!event handling!public! !
-!CapturingInteractor categoriesFor: #onKeyTyped:!event handling!public! !
-!CapturingInteractor categoriesFor: #onLeftButtonDoubleClicked:!event handling!public! !
-!CapturingInteractor categoriesFor: #onLeftButtonPressed:!event handling!public! !
-!CapturingInteractor categoriesFor: #onLeftButtonReleased:!event handling!public! !
-!CapturingInteractor categoriesFor: #onMiddleButtonDoubleClicked:!event handling!public! !
-!CapturingInteractor categoriesFor: #onMiddleButtonPressed:!event handling!public! !
-!CapturingInteractor categoriesFor: #onMiddleButtonReleased:!event handling!public! !
-!CapturingInteractor categoriesFor: #onMouseLeave:!event handling!public! !
-!CapturingInteractor categoriesFor: #onMouseMoved:!event handling!public! !
-!CapturingInteractor categoriesFor: #onMouseWheeled:!event handling!public! !
-!CapturingInteractor categoriesFor: #onRightButtonDoubleClicked:!event handling!public! !
-!CapturingInteractor categoriesFor: #onRightButtonPressed:!event handling!public! !
-!CapturingInteractor categoriesFor: #onRightButtonReleased:!event handling!public! !
-!CapturingInteractor categoriesFor: #onSysKeyPressed:!event handling!public! !
-!CapturingInteractor categoriesFor: #onSysKeyReleased:!event handling!public! !
-!CapturingInteractor categoriesFor: #onSysKeyTyped:!event handling!public! !
-!CapturingInteractor categoriesFor: #onXButtonDoubleClicked:!event handling!public! !
-!CapturingInteractor categoriesFor: #onXButtonPressed:!event handling!public! !
-!CapturingInteractor categoriesFor: #onXButtonReleased:!event handling!public! !
-!CapturingInteractor categoriesFor: #releaseCapture!helpers!private! !
-!CapturingInteractor categoriesFor: #setCapture!helpers!private! !
+!UI.CapturingInteractor categoriesFor: #buttonsReleased!event handling!private! !
+!UI.CapturingInteractor categoriesFor: #captureMouse!initializing!public! !
+!UI.CapturingInteractor categoriesFor: #captureReleased!event handling!private! !
+!UI.CapturingInteractor categoriesFor: #changeHotState:!helpers!private! !
+!UI.CapturingInteractor categoriesFor: #initialize!initializing!public! !
+!UI.CapturingInteractor categoriesFor: #isHot!public!testing! !
+!UI.CapturingInteractor categoriesFor: #isHot:!accessing!public! !
+!UI.CapturingInteractor categoriesFor: #isLeftButtonDown!public!testing! !
+!UI.CapturingInteractor categoriesFor: #isLeftButtonDown:!accessing!public! !
+!UI.CapturingInteractor categoriesFor: #isMiddleButtonDown!public!testing! !
+!UI.CapturingInteractor categoriesFor: #isMiddleButtonDown:!accessing!public! !
+!UI.CapturingInteractor categoriesFor: #isRightButtonDown!public!testing! !
+!UI.CapturingInteractor categoriesFor: #isRightButtonDown:!accessing!public! !
+!UI.CapturingInteractor categoriesFor: #onCaptureChanged:!event handling!public! !
+!UI.CapturingInteractor categoriesFor: #onKeyPressed:!event handling!public! !
+!UI.CapturingInteractor categoriesFor: #onKeyReleased:!event handling!public! !
+!UI.CapturingInteractor categoriesFor: #onKeyTyped:!event handling!public! !
+!UI.CapturingInteractor categoriesFor: #onLeftButtonDoubleClicked:!event handling!public! !
+!UI.CapturingInteractor categoriesFor: #onLeftButtonPressed:!event handling!public! !
+!UI.CapturingInteractor categoriesFor: #onLeftButtonReleased:!event handling!public! !
+!UI.CapturingInteractor categoriesFor: #onMiddleButtonDoubleClicked:!event handling!public! !
+!UI.CapturingInteractor categoriesFor: #onMiddleButtonPressed:!event handling!public! !
+!UI.CapturingInteractor categoriesFor: #onMiddleButtonReleased:!event handling!public! !
+!UI.CapturingInteractor categoriesFor: #onMouseLeave:!event handling!public! !
+!UI.CapturingInteractor categoriesFor: #onMouseMoved:!event handling!public! !
+!UI.CapturingInteractor categoriesFor: #onMouseWheeled:!event handling!public! !
+!UI.CapturingInteractor categoriesFor: #onRightButtonDoubleClicked:!event handling!public! !
+!UI.CapturingInteractor categoriesFor: #onRightButtonPressed:!event handling!public! !
+!UI.CapturingInteractor categoriesFor: #onRightButtonReleased:!event handling!public! !
+!UI.CapturingInteractor categoriesFor: #onSysKeyPressed:!event handling!public! !
+!UI.CapturingInteractor categoriesFor: #onSysKeyReleased:!event handling!public! !
+!UI.CapturingInteractor categoriesFor: #onSysKeyTyped:!event handling!public! !
+!UI.CapturingInteractor categoriesFor: #onXButtonDoubleClicked:!event handling!public! !
+!UI.CapturingInteractor categoriesFor: #onXButtonPressed:!event handling!public! !
+!UI.CapturingInteractor categoriesFor: #onXButtonReleased:!event handling!public! !
+!UI.CapturingInteractor categoriesFor: #releaseCapture!helpers!private! !
+!UI.CapturingInteractor categoriesFor: #setCapture!helpers!private! !
 
-!CapturingInteractor class methodsFor!
+!UI.CapturingInteractor class methodsFor!
 
-stbConvertToVersion1: instVars 
+stbConvertToVersion1: instVars
 	| converted |
 	converted := Array new: instVars size + 1.
-	converted at: 1 put: (instVars at: 1);
+	converted
+		at: 1 put: (instVars at: 1);
 		at: 2 put: (instVars at: 2);
 		at: 3 put: 0.
-	converted replaceFrom: 4 to: converted size with: instVars startingAt: 3.
+	converted
+		replaceFrom: 4
+		to: converted size
+		with: instVars
+		startingAt: 3.
 	^converted! !
-!CapturingInteractor class categoriesFor: #stbConvertToVersion1:!binary filing!private! !
+!UI.CapturingInteractor class categoriesFor: #stbConvertToVersion1:!binary filing!private! !
 

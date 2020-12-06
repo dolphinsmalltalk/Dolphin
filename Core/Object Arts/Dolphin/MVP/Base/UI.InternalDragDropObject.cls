@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-DragDropObject subclass: #InternalDragDropObject
+UI.DragDropObject subclass: #'UI.InternalDragDropObject'
 	instanceVariableNames: 'availableFormats'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-InternalDragDropObject guid: (GUID fromString: '{87b4c54a-026e-11d3-9fd7-00a0cc3e4a32}')!
-InternalDragDropObject comment: ''!
-!InternalDragDropObject categoriesForClass!MVP-DragDrop! !
-!InternalDragDropObject methodsFor!
+UI.InternalDragDropObject guid: (Core.GUID fromString: '{66dcba44-45b2-4c2d-8b18-0fbcf0e9ff95}')!
+UI.InternalDragDropObject comment: ''!
+!UI.InternalDragDropObject categoriesForClass!Unclassified! !
+!UI.InternalDragDropObject methodsFor!
 
 availableFormats
 	"Answer an ordered collection of strings identifying each of the receiver's available formats."
@@ -36,9 +36,9 @@ isFormatAvailable: formatIdentifier
 	"Answer whether the receiver can render itself in the format identified by formatIdentifier."
 
 	^availableFormats includesKey: formatIdentifier! !
-!InternalDragDropObject categoriesFor: #availableFormats!accessing!public! !
-!InternalDragDropObject categoriesFor: #format:data:!accessing!public! !
-!InternalDragDropObject categoriesFor: #format:ifAbsent:!accessing!public! !
-!InternalDragDropObject categoriesFor: #initialize!initializing!private! !
-!InternalDragDropObject categoriesFor: #isFormatAvailable:!public!testing! !
+!UI.InternalDragDropObject categoriesFor: #availableFormats!accessing!public! !
+!UI.InternalDragDropObject categoriesFor: #format:data:!accessing!public! !
+!UI.InternalDragDropObject categoriesFor: #format:ifAbsent:!accessing!public! !
+!UI.InternalDragDropObject categoriesFor: #initialize!initializing!private! !
+!UI.InternalDragDropObject categoriesFor: #isFormatAvailable:!public!testing! !
 

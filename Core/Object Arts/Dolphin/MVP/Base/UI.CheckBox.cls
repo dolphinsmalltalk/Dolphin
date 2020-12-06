@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-CheckButton subclass: #CheckBox
+UI.CheckButton subclass: #'UI.CheckBox'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-CheckBox guid: (GUID fromString: '{87b4c734-026e-11d3-9fd7-00a0cc3e4a32}')!
-CheckBox comment: 'CheckBox is a <valueView> implementing the Windows "BUTTON" class in either BS_AUTOCHECKBOX or BS_AUTO3STATE style. The <valueModel> associated with a CheckBox must alway yield a <boolean> value once mapped through the installed type converter, although nil is also an acceptable value for a 3-state button where it indicates that the button is in an indeterminate state. A CheckBox will normally be used in conjunction with a <BooleanPresenter>.'!
-!CheckBox categoriesForClass!MVP-Views! !
-!CheckBox methodsFor!
+UI.CheckBox guid: (Core.GUID fromString: '{87b4c734-026e-11d3-9fd7-00a0cc3e4a32}')!
+UI.CheckBox comment: 'CheckBox is a <valueView> implementing the Windows "BUTTON" class in either BS_AUTOCHECKBOX or BS_AUTO3STATE style. The <valueModel> associated with a CheckBox must alway yield a <boolean> value once mapped through the installed type converter, although nil is also an acceptable value for a 3-state button where it indicates that the button is in an indeterminate state. A CheckBox will normally be used in conjunction with a <BooleanPresenter>.'!
+!UI.CheckBox categoriesForClass!MVP-Views! !
+!UI.CheckBox methodsFor!
 
 basicWindowStyle
 	"Private - Answer a basic default style to use when creating a checkbox."
@@ -29,14 +29,14 @@ is3State: aBoolean
 	self baseStyle: (aBoolean ifTrue: [BS_AUTO3STATE] ifFalse: [self basicWindowStyle])
 		maskedBy: BS_TYPEMASK!
 
-paintTransparentBackgroundOn: aCanvas 
+paintTransparentBackgroundOn: aCanvas
 	self isThemed ifFalse: [^self].
-	ThemeLibrary default 
+	ThemeLibrary default
 		drawThemeParentBackground: self asParameter
 		hdc: aCanvas asParameter
 		prc: nil! !
-!CheckBox categoriesFor: #basicWindowStyle!constants!private! !
-!CheckBox categoriesFor: #is3State!accessing!public! !
-!CheckBox categoriesFor: #is3State:!accessing!public! !
-!CheckBox categoriesFor: #paintTransparentBackgroundOn:!private!updating! !
+!UI.CheckBox categoriesFor: #basicWindowStyle!constants!private! !
+!UI.CheckBox categoriesFor: #is3State!accessing!public! !
+!UI.CheckBox categoriesFor: #is3State:!accessing!public! !
+!UI.CheckBox categoriesFor: #paintTransparentBackgroundOn:!private!updating! !
 

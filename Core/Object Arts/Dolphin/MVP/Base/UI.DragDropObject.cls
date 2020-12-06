@@ -1,16 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Object subclass: #DragDropObject
+Core.Object subclass: #'UI.DragDropObject'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-DragDropObject guid: (GUID fromString: '{87b4c480-026e-11d3-9fd7-00a0cc3e4a32}')!
-DragDropObject isAbstract: true!
-DragDropObject comment: ''!
-!DragDropObject categoriesForClass!MVP-DragDrop! !
-!DragDropObject methodsFor!
+UI.DragDropObject guid: (Core.GUID fromString: '{87b4c480-026e-11d3-9fd7-00a0cc3e4a32}')!
+UI.DragDropObject isNonInstantiable: true!
+UI.DragDropObject comment: ''!
+!UI.DragDropObject categoriesForClass!MVP-DragDrop! !
+!UI.DragDropObject methodsFor!
 
 availableFormats
 	"Answer an ordered collection of strings identifying each of the receiver's available formats."
@@ -74,19 +74,19 @@ printOn: aStream
 		nextPut: $(;
 		print: self object;
 		nextPut: $)! !
-!DragDropObject categoriesFor: #availableFormats!accessing!public! !
-!DragDropObject categoriesFor: #format:!accessing!public! !
-!DragDropObject categoriesFor: #format:data:!accessing!public!testing! !
-!DragDropObject categoriesFor: #format:ifAbsent:!accessing!public! !
-!DragDropObject categoriesFor: #isFormatAvailable:!public!testing! !
-!DragDropObject categoriesFor: #isObjectAvailable!public!testing! !
-!DragDropObject categoriesFor: #isObjectKindAvailable:!public!testing! !
-!DragDropObject categoriesFor: #object!accessing!public! !
-!DragDropObject categoriesFor: #object:!accessing!public! !
-!DragDropObject categoriesFor: #objectIfAbsent:!accessing!public! !
-!DragDropObject categoriesFor: #printOn:!printing!public! !
+!UI.DragDropObject categoriesFor: #availableFormats!accessing!public! !
+!UI.DragDropObject categoriesFor: #format:!accessing!public! !
+!UI.DragDropObject categoriesFor: #format:data:!accessing!public!testing! !
+!UI.DragDropObject categoriesFor: #format:ifAbsent:!accessing!public! !
+!UI.DragDropObject categoriesFor: #isFormatAvailable:!public!testing! !
+!UI.DragDropObject categoriesFor: #isObjectAvailable!public!testing! !
+!UI.DragDropObject categoriesFor: #isObjectKindAvailable:!public!testing! !
+!UI.DragDropObject categoriesFor: #object!accessing!public! !
+!UI.DragDropObject categoriesFor: #object:!accessing!public! !
+!UI.DragDropObject categoriesFor: #objectIfAbsent:!accessing!public! !
+!UI.DragDropObject categoriesFor: #printOn:!printing!public! !
 
-!DragDropObject class methodsFor!
+!UI.DragDropObject class methodsFor!
 
 new
 	"Answer a new instance of the receiver."
@@ -99,6 +99,6 @@ object: anObject
 	^self new
 		object: anObject;
 		yourself! !
-!DragDropObject class categoriesFor: #new!instance creation!public! !
-!DragDropObject class categoriesFor: #object:!instance creation!public! !
+!UI.DragDropObject class categoriesFor: #new!instance creation!public! !
+!UI.DragDropObject class categoriesFor: #object:!instance creation!public! !
 

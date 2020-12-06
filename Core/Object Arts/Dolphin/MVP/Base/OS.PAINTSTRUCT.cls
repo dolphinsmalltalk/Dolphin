@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Win32Structure subclass: #PAINTSTRUCT
+OS.Win32Structure subclass: #'OS.PAINTSTRUCT'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_fErase' -> 16r4.
@@ -13,10 +13,10 @@ Win32Structure subclass: #PAINTSTRUCT
 		'_OffsetOf_rcPaint' -> 16r8.
 		'_OffsetOf_rgbReserved' -> 16r20
 	}!
-PAINTSTRUCT guid: (GUID fromString: '{87b4c605-026e-11d3-9fd7-00a0cc3e4a32}')!
-PAINTSTRUCT comment: ''!
-!PAINTSTRUCT categoriesForClass!External-Data-Structured-Win32! !
-!PAINTSTRUCT methodsFor!
+OS.PAINTSTRUCT guid: (Core.GUID fromString: '{87b4c605-026e-11d3-9fd7-00a0cc3e4a32}')!
+OS.PAINTSTRUCT comment: ''!
+!OS.PAINTSTRUCT categoriesForClass!External-Data-Structured-Win32! !
+!OS.PAINTSTRUCT methodsFor!
 
 fErase
 	"Answer the <Boolean> value of the receiver's 'fErase' field."
@@ -24,13 +24,13 @@ fErase
 	^(bytes dwordAtOffset: _OffsetOf_fErase) asBoolean!
 
 rcPaint
-	"Answer the <RECT> value of the receiver's 'rcPaint' field."
+	"Answer the <RECTL> value of the receiver's 'rcPaint' field."
 
-	^RECT fromAddress: bytes yourAddress + _OffsetOf_rcPaint! !
-!PAINTSTRUCT categoriesFor: #fErase!**compiled accessors**!public! !
-!PAINTSTRUCT categoriesFor: #rcPaint!**compiled accessors**!public! !
+	^RECTL fromAddress: bytes yourAddress + _OffsetOf_rcPaint! !
+!OS.PAINTSTRUCT categoriesFor: #fErase!**compiled accessors**!public! !
+!OS.PAINTSTRUCT categoriesFor: #rcPaint!**compiled accessors**!public! !
 
-!PAINTSTRUCT class methodsFor!
+!OS.PAINTSTRUCT class methodsFor!
 
 defineFields
 	"Define the Win32 PAINTSTRUCT structure.
@@ -40,14 +40,14 @@ defineFields
 	self
 		defineField: #hdc type: DWORDField readOnly beUncompiled;
 		defineField: #fErase type: BOOLField readOnly;
-		defineField: #rcPaint type: (StructureField type: RECT) beReadOnly;
+		defineField: #rcPaint type: (StructureField type: RECTL) beReadOnly;
 		defineField: #fRestore type: BOOLField filler;
 		defineField: #fIncUpdate type: BOOLField filler;
-		"Help file wrongly species 16 bytes, header file says 32"
-		defineField: #rgbReserved type: (ArrayField type: ByteArray length: 32) beFiller!
+		defineField: #rgbReserved type: (ArrayField type: ByteArray length: 32) beFiller
+	"Help file wrongly species 16 bytes, header file says 32"!
 
 getFieldNames
 	^#(#hdc #fErase #rcPaint)! !
-!PAINTSTRUCT class categoriesFor: #defineFields!public!template definition! !
-!PAINTSTRUCT class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.PAINTSTRUCT class categoriesFor: #defineFields!public!template definition! !
+!OS.PAINTSTRUCT class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

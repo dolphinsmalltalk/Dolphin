@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-MenuItem subclass: #CommandMenuItem
+UI.MenuItem subclass: #'UI.CommandMenuItem'
 	instanceVariableNames: 'commandDescription image _reserved'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'IsDefaultMask' -> 16r100000
 	}!
-CommandMenuItem guid: (GUID fromString: '{87b4c660-026e-11d3-9fd7-00a0cc3e4a32}')!
-CommandMenuItem comment: 'CommandMenuItem represents a <commandSource> menu item held by a <Menu>. The item is configured with a <CommandDescription> to be fired when the item is chosen.. 
+UI.CommandMenuItem guid: (Core.GUID fromString: '{87b4c660-026e-11d3-9fd7-00a0cc3e4a32}')!
+UI.CommandMenuItem comment: 'CommandMenuItem represents a <commandSource> menu item held by a <Menu>. The item is configured with a <CommandDescription> to be fired when the item is chosen.. 
 
 Instance Variables:
 	commandDescription	<CommandDescription> indicating the command to be fired for the item.
@@ -21,8 +21,8 @@ Class Variables:
 
 
 '!
-!CommandMenuItem categoriesForClass!MVP-Views-Support! !
-!CommandMenuItem methodsFor!
+!UI.CommandMenuItem categoriesForClass!MVP-Views-Support! !
+!UI.CommandMenuItem methodsFor!
 
 acceleratorKey
 	"Answer the accelerator key code for the receiver."
@@ -68,11 +68,6 @@ commandString
 	"Answer a String representation of the receiver's command."
 
 	^self commandDescription commandString!
-
-commandString: commandText
-	"Sets the receiver's command from the <readableString> representation, commandText."
-
-	self commandDescription commandString: commandText!
 
 description
 	"Answers a short <readableString> description of the receiver's command."
@@ -181,39 +176,38 @@ text
 	"Answer the menu text (i.e. the text that appears in the menu) for the receiver."
 
 	^self commandDescription menuText! !
-!CommandMenuItem categoriesFor: #acceleratorKey!accessing!public! !
-!CommandMenuItem categoriesFor: #acceleratorKey:!accessing!public! !
-!CommandMenuItem categoriesFor: #acceleratorKeyDisplayString!accessing!public! !
-!CommandMenuItem categoriesFor: #acceleratorKeyString!accessing!public! !
-!CommandMenuItem categoriesFor: #acceleratorKeyString:!accessing!public! !
-!CommandMenuItem categoriesFor: #command:!accessing!public! !
-!CommandMenuItem categoriesFor: #commandDescription!accessing!private! !
-!CommandMenuItem categoriesFor: #commandDescription:!accessing!private! !
-!CommandMenuItem categoriesFor: #commandString!accessing!public! !
-!CommandMenuItem categoriesFor: #commandString:!accessing!public! !
-!CommandMenuItem categoriesFor: #description!accessing!public! !
-!CommandMenuItem categoriesFor: #description:!accessing!public! !
-!CommandMenuItem categoriesFor: #displayOn:!displaying!public! !
-!CommandMenuItem categoriesFor: #id!accessing!public! !
-!CommandMenuItem categoriesFor: #image!accessing!public! !
-!CommandMenuItem categoriesFor: #image:!accessing!public! !
-!CommandMenuItem categoriesFor: #isDefault!accessing!public! !
-!CommandMenuItem categoriesFor: #isDefault:!accessing!public! !
-!CommandMenuItem categoriesFor: #isModalCommand!public!testing! !
-!CommandMenuItem categoriesFor: #isModalCommand:!accessing!public! !
-!CommandMenuItem categoriesFor: #isRadioButtonStyle!accessing!public! !
-!CommandMenuItem categoriesFor: #isRadioButtonStyle:!accessing!public! !
-!CommandMenuItem categoriesFor: #itemWithId:!accessing!public! !
-!CommandMenuItem categoriesFor: #populateItemInfo:!private!realizing/unrealizing! !
-!CommandMenuItem categoriesFor: #postCopy!copying!public! !
-!CommandMenuItem categoriesFor: #queryAlong:!operations!public! !
-!CommandMenuItem categoriesFor: #registerAcceleratorKeyIn:!menus!public! !
-!CommandMenuItem categoriesFor: #stbSaveOn:!binary filing!public! !
-!CommandMenuItem categoriesFor: #text!accessing!public! !
+!UI.CommandMenuItem categoriesFor: #acceleratorKey!accessing!public! !
+!UI.CommandMenuItem categoriesFor: #acceleratorKey:!accessing!public! !
+!UI.CommandMenuItem categoriesFor: #acceleratorKeyDisplayString!accessing!public! !
+!UI.CommandMenuItem categoriesFor: #acceleratorKeyString!accessing!public! !
+!UI.CommandMenuItem categoriesFor: #acceleratorKeyString:!accessing!public! !
+!UI.CommandMenuItem categoriesFor: #command:!accessing!public! !
+!UI.CommandMenuItem categoriesFor: #commandDescription!accessing!private! !
+!UI.CommandMenuItem categoriesFor: #commandDescription:!accessing!private! !
+!UI.CommandMenuItem categoriesFor: #commandString!accessing!public! !
+!UI.CommandMenuItem categoriesFor: #description!accessing!public! !
+!UI.CommandMenuItem categoriesFor: #description:!accessing!public! !
+!UI.CommandMenuItem categoriesFor: #displayOn:!displaying!public! !
+!UI.CommandMenuItem categoriesFor: #id!accessing!public! !
+!UI.CommandMenuItem categoriesFor: #image!accessing!public! !
+!UI.CommandMenuItem categoriesFor: #image:!accessing!public! !
+!UI.CommandMenuItem categoriesFor: #isDefault!accessing!public! !
+!UI.CommandMenuItem categoriesFor: #isDefault:!accessing!public! !
+!UI.CommandMenuItem categoriesFor: #isModalCommand!public!testing! !
+!UI.CommandMenuItem categoriesFor: #isModalCommand:!accessing!public! !
+!UI.CommandMenuItem categoriesFor: #isRadioButtonStyle!accessing!public! !
+!UI.CommandMenuItem categoriesFor: #isRadioButtonStyle:!accessing!public! !
+!UI.CommandMenuItem categoriesFor: #itemWithId:!accessing!public! !
+!UI.CommandMenuItem categoriesFor: #populateItemInfo:!private!realizing/unrealizing! !
+!UI.CommandMenuItem categoriesFor: #postCopy!copying!public! !
+!UI.CommandMenuItem categoriesFor: #queryAlong:!operations!public! !
+!UI.CommandMenuItem categoriesFor: #registerAcceleratorKeyIn:!menus!public! !
+!UI.CommandMenuItem categoriesFor: #stbSaveOn:!binary filing!public! !
+!UI.CommandMenuItem categoriesFor: #text!accessing!public! !
 
-CommandMenuItem methodProtocol: #commandSource attributes: #(#readOnly) selectors: #(#commandDescription)!
+UI.CommandMenuItem methodProtocol: #commandSource attributes: #(#readOnly) selectors: #(#commandDescription)!
 
-!CommandMenuItem class methodsFor!
+!UI.CommandMenuItem class methodsFor!
 
 command: action description: text
 	"Answer a new instance of the receiver containing a <CommandDescription> composed
@@ -225,7 +219,10 @@ command: action description: text image: image
 	"Answer a new instance of the receiver containing a <CommandDescription> composed
 	from the niladicValuable>, action, the <readableString> description, text and the <Image>, image."
 
-	^self commandDescription: (CommandDescription command: action description: text image: image)!
+	^self commandDescription: (CommandDescription
+				command: action
+				description: text
+				image: image)!
 
 commandDescription: aCommandDescription
 	"Answers a new instance of the receiver for the specified command."
@@ -243,9 +240,9 @@ stbVersion
 	"Answer the current binary filer version number for instances of the receiver."
 
 	^2! !
-!CommandMenuItem class categoriesFor: #command:description:!instance creation!public! !
-!CommandMenuItem class categoriesFor: #command:description:image:!instance creation!public! !
-!CommandMenuItem class categoriesFor: #commandDescription:!instance creation!public! !
-!CommandMenuItem class categoriesFor: #new!instance creation!public! !
-!CommandMenuItem class categoriesFor: #stbVersion!binary filing!public! !
+!UI.CommandMenuItem class categoriesFor: #command:description:!instance creation!public! !
+!UI.CommandMenuItem class categoriesFor: #command:description:image:!instance creation!public! !
+!UI.CommandMenuItem class categoriesFor: #commandDescription:!instance creation!public! !
+!UI.CommandMenuItem class categoriesFor: #new!instance creation!public! !
+!UI.CommandMenuItem class categoriesFor: #stbVersion!binary filing!public! !
 

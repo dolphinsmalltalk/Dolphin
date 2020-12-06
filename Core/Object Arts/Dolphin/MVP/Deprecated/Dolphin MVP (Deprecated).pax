@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'Dolphin MVP (Deprecated)'.
-package paxVersion: 2;
+package paxVersion: 2.1;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk Graphical User Interface framework (Deprecated Classes and Methods).
 
@@ -11,134 +11,134 @@ package basicPackageVersion: '6.2'.
 
 
 package setClassNames: #(
-	#{ComparisonPolicy}
-	#{Msimg32Library}
-	#{MultipleSelectionListBox}
-	#{MultipleSelectionListView}
+	#{Smalltalk.ComparisonPolicy}
+	#{Smalltalk.Msimg32Library}
+	#{Smalltalk.MultipleSelectionListBox}
+	#{Smalltalk.MultipleSelectionListView}
 ).
 
 package setMethodNames: #(
-	#(#{AcceleratorTable} #accelerators)
-	#(#{AcceleratorTable} #addKey:commandDescription:)
-	#(#{AcceleratorTable class} #keyModifierNames:)
-	#(#{AcceleratorTable class} #keyModifierNames:do:)
-	#(#{ARGB} #asARGB)
-	#(#{BasicListAbstract} #basicSelectionByIndex:)
-	#(#{BLENDFUNCTION} #beAlpha)
-	#(#{BLENDFUNCTION} #beNotAlpha)
-	#(#{BorderLayout} #hasCenter)
-	#(#{BorderLayout} #hasEast)
-	#(#{BorderLayout} #hasNorth)
-	#(#{BorderLayout} #hasSouth)
-	#(#{BorderLayout} #hasWest)
-	#(#{Brush class} #dkGray)
-	#(#{Brush class} #hatchedDiagonal)
-	#(#{Brush class} #hollow)
-	#(#{Brush class} #ltGray)
-	#(#{Canvas} #origin:)
-	#(#{Canvas} #setBkMode:)
-	#(#{Canvas} #setTextColor:)
-	#(#{ChoicePresenter class} #resource_Multiselection_list_box)
-	#(#{Clipboard} #getObjectBinaryStoreBytes)
-	#(#{Clipboard} #getObjectBinaryStoreBytesIfNone:)
-	#(#{Clipboard} #setText:format:)
-	#(#{Color} #asARGB)
-	#(#{Color} #asIndexedColor)
-	#(#{Color} #saturation)
-	#(#{Color class} #buttonFace)
-	#(#{ColorNone} #saturation)
-	#(#{ColorRef} #asIndexedColor)
-	#(#{ColorRef} #asIndexedColorUsingPalette:)
-	#(#{GUISessionManager} #whatsThis:)
-	#(#{IndexedColor} #asIndexedColor)
-	#(#{ListBox} #basicSelectionByIndex:)
-	#(#{ListModel} #updateAtIndex:)
-	#(#{ListModel} #updateItem:)
-	#(#{ListModel} #updateItem:ifAbsent:)
-	#(#{ListPresenter class} #resource_Multiselection_enhanced_list_view)
-	#(#{ListPresenter class} #resource_Multiselection_list_box)
-	#(#{ListView} #autoArrange)
-	#(#{ListView} #autoArrange:)
-	#(#{ListView} #columns)
-	#(#{ListView} #hasTrackSelect)
-	#(#{ListView} #hasTrackSelect:)
-	#(#{LVBKIMAGEW} #offset:)
-	#(#{Menu} #find:)
-	#(#{Menu} #find:ifAbsent:)
-	#(#{Menu} #remove:)
-	#(#{Menu} #remove:ifAbsent:)
-	#(#{Menu} #replace:with:)
-	#(#{MoenTreeView} #updateItem:andChildren:imagesOnly:)
-	#(#{PaintEvent class} #handle:wParam:hdc:paintStruct:)
-	#(#{RGB} #asIndexedColorUsingPalette:)
-	#(#{RGB class} #stdColor:)
-	#(#{ScintillaIndicator} #type)
-	#(#{ScintillaIndicatorStyle} #alphaPercent)
-	#(#{ScintillaIndicatorStyle} #alphaPercent:)
-	#(#{ScintillaIndicatorStyle} #hoverStyleName)
-	#(#{ScintillaIndicatorStyle} #hoverStyleName:)
-	#(#{ScintillaIndicatorStyle} #styleName)
-	#(#{ScintillaIndicatorStyle} #styleName:)
-	#(#{ScintillaIndicatorStyle class} #styleNames)
-	#(#{ScintillaView} #highlightRange:withIndicator:)
-	#(#{ScintillaView} #indicatorDefinitions:)
-	#(#{ScintillaView} #isKeyboardInputUnicode)
-	#(#{ScintillaView} #isKeyboardInputUnicode:)
-	#(#{ScrollingDecorator} #continuousTracking)
-	#(#{ScrollingDecorator} #continuousTracking:)
-	#(#{ShellView} #hasThickFrame)
-	#(#{ShellView} #hasThickFrame:)
-	#(#{Slider} #hasTicksBoth)
-	#(#{Slider} #hasTicksBoth:)
-	#(#{Slider} #hasTicksTopOrLeft)
-	#(#{Slider} #hasTicksTopOrLeft:)
-	#(#{Slider} #selection)
-	#(#{Slider} #selection:)
-	#(#{STBViewProxy} #for:)
-	#(#{STBViewProxy class} #for:)
-	#(#{SystemColor} #asIndexedColor)
-	#(#{SystemColor class} #fromId:)
-	#(#{SystemMetrics} #hasFlashWindow)
-	#(#{SystemMetrics} #hasMenuImages)
-	#(#{TextEdit} #find:range:down:wholeWord:matchCase:)
-	#(#{TextEdit} #findNextWrapped:down:wholeWord:matchCase:)
-	#(#{TextEdit} #isLowercase)
-	#(#{TextEdit} #isLowercase:)
-	#(#{TextEdit} #isNumeric)
-	#(#{TextEdit} #isNumeric:)
-	#(#{TextEdit} #isUpperCase)
-	#(#{TextEdit} #isUppercase:)
-	#(#{TextEdit} #lines)
-	#(#{TextTileIcon class} #text:font:color:)
-	#(#{TreeView} #disableExpandAll)
-	#(#{TreeView} #disableExpandAll:)
-	#(#{TypeConverter} #leftExceptionalValue)
-	#(#{TypeConverter} #leftExceptionalValue:)
-	#(#{TypeConverter} #rightExceptionalValue)
-	#(#{TypeConverter} #rightExceptionalValue:)
-	#(#{UserLibrary} #winHelp:lpszHelp:uCommand:dwData:)
-	#(#{View} #defaultWindowProcessing:)
-	#(#{View} #hasWindowEdge)
-	#(#{View} #hasWindowEdge:)
-	#(#{View} #winHelpPopup:topic:)
-	#(#{View} #winHelpPopup:topic:at:)
-	#(#{VirtualColor} #asIndexedColor)
-	#(#{WindowsEvent class} #message:handle:wParam:lParam:)
-	#(#{WinImageList class} #width:height:flags:size:growthGranularity:)
+	#(#{Graphics.ARGB} #asARGB)
+	#(#{Graphics.Brush class} #dkGray)
+	#(#{Graphics.Brush class} #hatchedDiagonal)
+	#(#{Graphics.Brush class} #hollow)
+	#(#{Graphics.Brush class} #ltGray)
+	#(#{Graphics.Canvas} #origin:)
+	#(#{Graphics.Canvas} #setBkMode:)
+	#(#{Graphics.Canvas} #setTextColor:)
+	#(#{Graphics.Color} #asARGB)
+	#(#{Graphics.Color} #asIndexedColor)
+	#(#{Graphics.Color} #saturation)
+	#(#{Graphics.Color class} #buttonFace)
+	#(#{Graphics.ColorNone} #saturation)
+	#(#{Graphics.ColorRef} #asIndexedColor)
+	#(#{Graphics.ColorRef} #asIndexedColorUsingPalette:)
+	#(#{Graphics.ImageList class} #width:height:flags:size:growthGranularity:)
+	#(#{Graphics.IndexedColor} #asIndexedColor)
+	#(#{Graphics.RGB} #asIndexedColorUsingPalette:)
+	#(#{Graphics.RGB class} #stdColor:)
+	#(#{Graphics.SystemColor} #asIndexedColor)
+	#(#{Graphics.SystemColor class} #fromId:)
+	#(#{Graphics.TextTileIcon class} #text:font:color:)
+	#(#{Graphics.VirtualColor} #asIndexedColor)
+	#(#{OS.BLENDFUNCTION} #beAlpha)
+	#(#{OS.BLENDFUNCTION} #beNotAlpha)
+	#(#{OS.LVBKIMAGEW} #offset:)
+	#(#{OS.SystemMetrics} #hasFlashWindow)
+	#(#{OS.SystemMetrics} #hasMenuImages)
+	#(#{OS.UserLibrary} #winHelp:lpszHelp:uCommand:dwData:)
+	#(#{Smalltalk.ScintillaIndicator} #type)
+	#(#{Smalltalk.ScintillaIndicatorStyle} #alphaPercent)
+	#(#{Smalltalk.ScintillaIndicatorStyle} #alphaPercent:)
+	#(#{Smalltalk.ScintillaIndicatorStyle} #hoverStyleName)
+	#(#{Smalltalk.ScintillaIndicatorStyle} #hoverStyleName:)
+	#(#{Smalltalk.ScintillaIndicatorStyle} #styleName)
+	#(#{Smalltalk.ScintillaIndicatorStyle} #styleName:)
+	#(#{Smalltalk.ScintillaIndicatorStyle class} #styleNames)
+	#(#{Smalltalk.ScintillaView} #highlightRange:withIndicator:)
+	#(#{Smalltalk.ScintillaView} #indicatorDefinitions:)
+	#(#{Smalltalk.ScintillaView} #isKeyboardInputUnicode)
+	#(#{Smalltalk.ScintillaView} #isKeyboardInputUnicode:)
+	#(#{UI.AcceleratorTable} #accelerators)
+	#(#{UI.AcceleratorTable} #addKey:commandDescription:)
+	#(#{UI.AcceleratorTable class} #keyModifierNames:)
+	#(#{UI.AcceleratorTable class} #keyModifierNames:do:)
+	#(#{UI.BasicListAbstract} #basicSelectionByIndex:)
+	#(#{UI.BorderLayout} #hasCenter)
+	#(#{UI.BorderLayout} #hasEast)
+	#(#{UI.BorderLayout} #hasNorth)
+	#(#{UI.BorderLayout} #hasSouth)
+	#(#{UI.BorderLayout} #hasWest)
+	#(#{UI.ChoicePresenter class} #resource_Multiselection_list_box)
+	#(#{UI.Clipboard} #getObjectBinaryStoreBytes)
+	#(#{UI.Clipboard} #getObjectBinaryStoreBytesIfNone:)
+	#(#{UI.Clipboard} #setText:format:)
+	#(#{UI.GUISessionManager} #whatsThis:)
+	#(#{UI.ListBox} #basicSelectionByIndex:)
+	#(#{UI.ListModel} #updateAtIndex:)
+	#(#{UI.ListModel} #updateItem:)
+	#(#{UI.ListModel} #updateItem:ifAbsent:)
+	#(#{UI.ListPresenter class} #resource_Multiselection_enhanced_list_view)
+	#(#{UI.ListPresenter class} #resource_Multiselection_list_box)
+	#(#{UI.ListView} #autoArrange)
+	#(#{UI.ListView} #autoArrange:)
+	#(#{UI.ListView} #columns)
+	#(#{UI.ListView} #hasTrackSelect)
+	#(#{UI.ListView} #hasTrackSelect:)
+	#(#{UI.Menu} #find:)
+	#(#{UI.Menu} #find:ifAbsent:)
+	#(#{UI.Menu} #remove:)
+	#(#{UI.Menu} #remove:ifAbsent:)
+	#(#{UI.Menu} #replace:with:)
+	#(#{UI.MoenTreeView} #updateItem:andChildren:imagesOnly:)
+	#(#{UI.PaintEvent class} #handle:wParam:hdc:paintStruct:)
+	#(#{UI.ScrollingDecorator} #continuousTracking)
+	#(#{UI.ScrollingDecorator} #continuousTracking:)
+	#(#{UI.ShellView} #hasThickFrame)
+	#(#{UI.ShellView} #hasThickFrame:)
+	#(#{UI.Slider} #hasTicksBoth)
+	#(#{UI.Slider} #hasTicksBoth:)
+	#(#{UI.Slider} #hasTicksTopOrLeft)
+	#(#{UI.Slider} #hasTicksTopOrLeft:)
+	#(#{UI.Slider} #selection)
+	#(#{UI.Slider} #selection:)
+	#(#{UI.STBViewProxy} #for:)
+	#(#{UI.STBViewProxy class} #for:)
+	#(#{UI.TextEdit} #find:range:down:wholeWord:matchCase:)
+	#(#{UI.TextEdit} #findNextWrapped:down:wholeWord:matchCase:)
+	#(#{UI.TextEdit} #isLowercase)
+	#(#{UI.TextEdit} #isLowercase:)
+	#(#{UI.TextEdit} #isNumeric)
+	#(#{UI.TextEdit} #isNumeric:)
+	#(#{UI.TextEdit} #isUpperCase)
+	#(#{UI.TextEdit} #isUppercase:)
+	#(#{UI.TextEdit} #lines)
+	#(#{UI.TreeView} #disableExpandAll)
+	#(#{UI.TreeView} #disableExpandAll:)
+	#(#{UI.TypeConverter} #leftExceptionalValue)
+	#(#{UI.TypeConverter} #leftExceptionalValue:)
+	#(#{UI.TypeConverter} #rightExceptionalValue)
+	#(#{UI.TypeConverter} #rightExceptionalValue:)
+	#(#{UI.View} #defaultWindowProcessing:)
+	#(#{UI.View} #hasWindowEdge)
+	#(#{UI.View} #hasWindowEdge:)
+	#(#{UI.View} #winHelpPopup:topic:)
+	#(#{UI.View} #winHelpPopup:topic:at:)
+	#(#{UI.WindowsEvent class} #message:handle:wParam:lParam:)
 ).
 
 package setVariableNames: #(
-	#{CheckedPushButton}
-	#{CompositePresenter}
-	#{MultipleChoicePresenter}
-	#{StaticViewAbstract}
+	#{Smalltalk.CheckedPushButton}
+	#{Smalltalk.CompositePresenter}
+	#{Smalltalk.MultipleChoicePresenter}
+	#{Smalltalk.StaticViewAbstract}
 ).
 
 package setAliasVariableNames: #(
-	#{CheckedPushButton}
-	#{CompositePresenter}
-	#{MultipleChoicePresenter}
-	#{StaticViewAbstract}
+	#{Smalltalk.CheckedPushButton}
+	#{Smalltalk.CompositePresenter}
+	#{Smalltalk.MultipleChoicePresenter}
+	#{Smalltalk.StaticViewAbstract}
 ).
 
 package setPrerequisites: #(
@@ -162,131 +162,52 @@ package!
 
 "Class Definitions"!
 
-Object subclass: #ComparisonPolicy
+Core.Object subclass: #ComparisonPolicy
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ExternalLibrary subclass: #Msimg32Library
+External.Library subclass: #Msimg32Library
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ListBox subclass: #MultipleSelectionListBox
+UI.ListBox subclass: #MultipleSelectionListBox
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ListView subclass: #MultipleSelectionListView
+UI.ListView subclass: #MultipleSelectionListView
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 
 "Variable Aliases"!
 
-CheckedPushButton := PushButton!
+Smalltalk.CheckedPushButton := UI.PushButton!
 
-CompositePresenter := Presenter!
+Smalltalk.CompositePresenter := UI.Presenter!
 
-MultipleChoicePresenter := ChoicePresenter!
+Smalltalk.MultipleChoicePresenter := UI.ChoicePresenter!
 
-StaticViewAbstract := StaticView!
+Smalltalk.StaticViewAbstract := UI.StaticView!
 
 
 "Loose Methods"!
 
-!AcceleratorTable methodsFor!
-
-accelerators
-	#deprecated.
-	^commands associations!
-
-addKey: vKeyCode commandDescription: aCommandDescription 
-	#deprecated.
-	aCommandDescription acceleratorKey: vKeyCode.
-	self addCommand: aCommandDescription! !
-!AcceleratorTable categoriesFor: #accelerators!accessing!public! !
-!AcceleratorTable categoriesFor: #addKey:commandDescription:!adding!public! !
-
-!AcceleratorTable class methodsFor!
-
-keyModifierNames: anInteger
-	Notification deprecated.
-	^self keyModifierNames: anInteger keyboard: Keyboard default!
-
-keyModifierNames: anInteger do: aMonadicValuable
-	Notification deprecated.
-	self
-		keyModifierNames: anInteger
-		keyboard: Keyboard default
-		do: aMonadicValuable! !
-!AcceleratorTable class categoriesFor: #keyModifierNames:!enquiries!public! !
-!AcceleratorTable class categoriesFor: #keyModifierNames:do:!enquiries!public! !
-
-!ARGB methodsFor!
+!Graphics.ARGB methodsFor!
 
 asARGB
 	Notification deprecated.	"Generally speaking it should not be necessary to convert colours explicitly to ARGB representation, rather any Color should be accepted and converted at the point of passing to an external API if needed."
 	^self! !
-!ARGB categoriesFor: #asARGB!converting!public! !
+!Graphics.ARGB categoriesFor: #asARGB!converting!public! !
 
-!BasicListAbstract methodsFor!
-
-basicSelectionByIndex: anInteger 
-	#deprecated.	"Present for loading of old view resources"
-	self setSingleSelection: anInteger! !
-!BasicListAbstract categoriesFor: #basicSelectionByIndex:!private!selection! !
-
-!BLENDFUNCTION methodsFor!
-
-beAlpha
-	#deprecated.
-	self usePerPixelAlpha: true!
-
-beNotAlpha
-	#deprecated.
-	self usePerPixelAlpha: false! !
-!BLENDFUNCTION categoriesFor: #beAlpha!accessing!public! !
-!BLENDFUNCTION categoriesFor: #beNotAlpha!accessing!public! !
-
-!BorderLayout methodsFor!
-
-hasCenter
-	"Answer whether a view has been arranged to the centre of the layout."
-
-	^self center notNil!
-
-hasEast
-	"Answer whether a view has been arranged to the left edge."
-
-	^self east notNil!
-
-hasNorth
-	"Answer whether a view has been arranged to the top edge."
-
-	^self north notNil!
-
-hasSouth
-	"Answer whether a view has been arranged to the bottom edge."
-
-	^self south notNil!
-
-hasWest
-	"Answer whether a view has been arranged to the right edge."
-
-	^self west notNil! !
-!BorderLayout categoriesFor: #hasCenter!accessing!public! !
-!BorderLayout categoriesFor: #hasEast!accessing!public! !
-!BorderLayout categoriesFor: #hasNorth!accessing!public! !
-!BorderLayout categoriesFor: #hasSouth!accessing!public! !
-!BorderLayout categoriesFor: #hasWest!accessing!public! !
-
-!Brush class methodsFor!
+!Graphics.Brush class methodsFor!
 
 dkGray
 	Notification deprecated.
@@ -304,14 +225,15 @@ hollow
 
 ltGray
 	"Answer the stock light grey brush."
+
 	Notification deprecated.
 	^self silver! !
-!Brush class categoriesFor: #dkGray!instance creation!public! !
-!Brush class categoriesFor: #hatchedDiagonal!instance creation!public! !
-!Brush class categoriesFor: #hollow!instance creation!public! !
-!Brush class categoriesFor: #ltGray!instance creation!public! !
+!Graphics.Brush class categoriesFor: #dkGray!instance creation!public! !
+!Graphics.Brush class categoriesFor: #hatchedDiagonal!instance creation!public! !
+!Graphics.Brush class categoriesFor: #hollow!instance creation!public! !
+!Graphics.Brush class categoriesFor: #ltGray!instance creation!public! !
 
-!Canvas methodsFor!
+!Graphics.Canvas methodsFor!
 
 origin: aPoint
 	Notification deprecated.	"5.0: Use #viewportOrigin:"
@@ -324,48 +246,11 @@ setBkMode: mode
 setTextColor: colour
 	Notification deprecated.	"6.0 (reprise)"
 	^self forecolor: colour! !
-!Canvas categoriesFor: #origin:!operations!public! !
-!Canvas categoriesFor: #setBkMode:!modes!public! !
-!Canvas categoriesFor: #setTextColor:!modes!public! !
+!Graphics.Canvas categoriesFor: #origin:!operations!public! !
+!Graphics.Canvas categoriesFor: #setBkMode:!modes!public! !
+!Graphics.Canvas categoriesFor: #setTextColor:!modes!public! !
 
-!ChoicePresenter class methodsFor!
-
-resource_Multiselection_list_box
-	"Answer the literal data from which the 'Multiselection list box' resource can be reconstituted.
-	DO NOT EDIT OR RECATEGORIZE THIS METHOD.
-
-	If you wish to modify this resource evaluate:
-	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Multiselection_list_box)
-	"
-
-	^#(#'!!STL' 3 788558 10 ##(Smalltalk.STBViewProxy)  8 ##(Smalltalk.MultipleSelectionListBox)  98 17 0 0 98 2 8 1412499713 1025 416 590662 2 ##(Smalltalk.ListModel)  202 208 98 0 0 1114638 ##(Smalltalk.STBSingletonProxy)  8 ##(Smalltalk.SearchPolicy)  8 #identity 524550 ##(Smalltalk.ColorRef)  8 4278190080 0 5 0 0 0 416 0 8 4294906339 459270 ##(Smalltalk.Message)  8 #displayString 98 0 544 32 983302 ##(Smalltalk.MessageSequence)  202 208 98 2 721670 ##(Smalltalk.MessageSend)  8 #createAt:extent: 98 2 328198 ##(Smalltalk.Point)  2799 21 882 251 351 416 818 8 #horizontalExtent: 98 1 1 416 983302 ##(Smalltalk.WINDOWPLACEMENT)  8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 119 5 0 0 10 0 0 0 244 5 0 0 185 0 0 0] 98 0 882 193 193 0 27 )! !
-!ChoicePresenter class categoriesFor: #resource_Multiselection_list_box!public!resources-views! !
-
-!Clipboard methodsFor!
-
-getObjectBinaryStoreBytes
-	"Answer the STB binary store bytes for the <object> stored on the the clipboard, or raise an
-	exception if none is available."
-
-	Notification deprecated.
-	^self getObjectBinaryStoreBytesIfNone: [self errorFormatNotAvailable: #Object]!
-
-getObjectBinaryStoreBytesIfNone: exceptionHandler
-	"Answer the STB binary store bytes for an <object> stored on the clipboard. If no object is
-	currently available, the answers the result of evaluating the <niladicValuable>
-	exceptionHandler."
-
-	Notification deprecated.
-	^(self getObjectIfNone: [^exceptionHandler value]) binaryStoreBytes!
-
-setText: text format: formatName
-	Notification deprecated.	"Just use setData:format:"
-	self setRegisteredFormat: formatName data: text! !
-!Clipboard categoriesFor: #getObjectBinaryStoreBytes!accessing!public! !
-!Clipboard categoriesFor: #getObjectBinaryStoreBytesIfNone:!accessing!public! !
-!Clipboard categoriesFor: #setText:format:!accessing!public! !
-
-!Color methodsFor!
+!Graphics.Color methodsFor!
 
 asARGB
 	Notification deprecated.	"Generally speaking it should not be necessary to convert colours explicitly to ARGB representation, rather any Color should be accepted and converted at the point of passing to an external API if needed."
@@ -384,25 +269,25 @@ saturation
 
 	Notification deprecated.
 	^self asRGB hls at: 3! !
-!Color categoriesFor: #asARGB!converting!public! !
-!Color categoriesFor: #asIndexedColor!converting!public! !
-!Color categoriesFor: #saturation!accessing!public! !
+!Graphics.Color categoriesFor: #asARGB!converting!public! !
+!Graphics.Color categoriesFor: #asIndexedColor!converting!public! !
+!Graphics.Color categoriesFor: #saturation!accessing!public! !
 
-!Color class methodsFor!
+!Graphics.Color class methodsFor!
 
 buttonFace
 	Notification deprecated.
 	^Color face3d! !
-!Color class categoriesFor: #buttonFace!instance creation!public! !
+!Graphics.Color class categoriesFor: #buttonFace!instance creation!public! !
 
-!ColorNone methodsFor!
+!Graphics.ColorNone methodsFor!
 
 saturation
 	Notification deprecated.
 	^0! !
-!ColorNone categoriesFor: #saturation!public! !
+!Graphics.ColorNone categoriesFor: #saturation!public! !
 
-!ColorRef methodsFor!
+!Graphics.ColorRef methodsFor!
 
 asIndexedColor
 	"Answer the receiver as an <IndexedColor> mapped using the default palette."
@@ -416,19 +301,24 @@ asIndexedColorUsingPalette: hPalette
 	"Answer the receiver as the nearest <IndexedColour> using hPalette"
 
 	^self asRGB asIndexedColorUsingPalette: hPalette! !
-!ColorRef categoriesFor: #asIndexedColor!converting!public! !
-!ColorRef categoriesFor: #asIndexedColorUsingPalette:!converting!public! !
+!Graphics.ColorRef categoriesFor: #asIndexedColor!converting!public! !
+!Graphics.ColorRef categoriesFor: #asIndexedColorUsingPalette:!converting!public! !
 
-!GUISessionManager methodsFor!
+!Graphics.ImageList class methodsFor!
 
-whatsThis: object 
-	| helpId |
-	#deprecated. "The Windows Help program is no longer supported on Windows 10 and later."
-	helpId := object helpId.
-	View active winHelpPopup: self popupHelpFile topic: helpId! !
-!GUISessionManager categoriesFor: #whatsThis:!commands!public! !
+width: cx height: cy flags: flags size: sizeInteger growthGranularity: growthInteger
+	"Answer a new instances with the given parameters."
 
-!IndexedColor methodsFor!
+	#deprecated.
+	^self 
+		newExtent: cx @ cy
+		depth: flags
+		initialSize: sizeInteger
+		growBy: growthInteger
+		masked: false! !
+!Graphics.ImageList class categoriesFor: #width:height:flags:size:growthGranularity:!instance creation!public! !
+
+!Graphics.IndexedColor methodsFor!
 
 asIndexedColor
 	"Answer the receiver as an <IndexedColor>."
@@ -437,183 +327,121 @@ asIndexedColor
 
 	Notification deprecated.
 	^self! !
-!IndexedColor categoriesFor: #asIndexedColor!converting!public! !
+!Graphics.IndexedColor categoriesFor: #asIndexedColor!converting!public! !
 
-!ListBox methodsFor!
+!Graphics.RGB methodsFor!
 
-basicSelectionByIndex: sel
-	#deprecated.	"Presenter for old view resources"
-	self basicSelectionsByIndex: sel! !
-!ListBox categoriesFor: #basicSelectionByIndex:!private!selection! !
-
-!ListModel methodsFor!
-
-updateAtIndex: anInteger 
-	"Update, and answer, an object in the receiver at anInteger index because 
-	it's contents have changed. If anInteger index does not exist in the list 
-	then raise a suitable exception. Answer anObject."
-
-	| elem |
-	#deprecated.	"Use #refreshAtIndex:"
-	elem := self list at: anInteger.
-	self notifyItem: elem updatedAtIndex: anInteger.
-	^elem!
-
-updateItem: anObject
-	#deprecated.	"Use #refresh:"
-	^self refresh: anObject!
-
-updateItem: anObject ifAbsent: exceptionHandler
-	#deprecated.	"Use #refresh:ifAbsent:"
-	^self refresh: anObject ifAbsent: exceptionHandler! !
-!ListModel categoriesFor: #updateAtIndex:!public!updating! !
-!ListModel categoriesFor: #updateItem:!private!updating! !
-!ListModel categoriesFor: #updateItem:ifAbsent:!public!searching! !
-
-!ListPresenter class methodsFor!
-
-resource_Multiselection_enhanced_list_view
-	"Answer the literal data from which the 'Multiselection enhanced list view' resource can be reconstituted.
-	DO NOT EDIT OR RECATEGORIZE THIS METHOD.
-
-	If you wish to modify this resource evaluate:
-	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Multiselection_enhanced_list_view)
-	"
-
-	^#(#'!!STL' 3 788558 10 ##(STBViewProxy)  8 ##(MultipleSelectionListView)  98 30 0 0 98 2 8 1140920393 1025 416 590662 2 ##(ListModel)  202 208 98 0 0 1114638 ##(STBSingletonProxy)  8 ##(SearchPolicy)  8 #identity 524550 ##(ColorRef)  8 4278190080 0 7 0 0 0 416 0 8 4294902987 459270 ##(Message)  8 #displayString 98 0 8 ##(IconicListAbstract)  570 8 ##(IconImageManager)  8 #current 0 0 0 0 0 0 202 208 98 1 920646 5 ##(ListViewColumn)  8 'Column 1' 201 8 #left 690 720 736 8 ##(SortedCollection)  0 0 416 0 1 0 0 8 #report 544 0 131169 0 0 983302 ##(MessageSequence)  202 208 98 2 721670 ##(MessageSend)  8 #createAt:extent: 98 2 328198 ##(Point)  11 11 1090 401 397 416 1026 8 #text: 98 1 8 'Column 1' 416 983302 ##(WINDOWPLACEMENT)  8 #[44 0 0 0 0 0 0 0 0 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 5 0 0 0 5 0 0 0 205 0 0 0 203 0 0 0] 98 0 1090 193 193 0 27 )!
-
-resource_Multiselection_list_box
-	"Answer the literal data from which the 'Multiselection list box' resource can be reconstituted.
-	DO NOT EDIT OR RECATEGORIZE THIS METHOD.
-
-	If you wish to modify this resource evaluate:
-	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Multiselection_list_box)
-	"
-
-	^#(#'!!STL' 3 788558 10 ##(STBViewProxy)  8 ##(MultipleSelectionListBox)  98 17 0 0 98 2 8 1144064257 1025 416 590662 2 ##(ListModel)  202 208 98 0 0 1114638 ##(STBSingletonProxy)  8 ##(SearchPolicy)  8 #identity 524550 ##(ColorRef)  8 4278190080 0 7 0 0 0 416 0 8 4294903705 459270 ##(Message)  8 #displayString 98 0 544 32 983302 ##(MessageSequence)  202 208 98 2 721670 ##(MessageSend)  8 #createAt:extent: 98 2 328198 ##(Point)  11 11 882 251 351 416 818 8 #horizontalExtent: 98 1 1 416 983302 ##(WINDOWPLACEMENT)  8 #[44 0 0 0 0 0 0 0 0 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 5 0 0 0 5 0 0 0 130 0 0 0 180 0 0 0] 98 0 882 193 193 0 27 )! !
-!ListPresenter class categoriesFor: #resource_Multiselection_enhanced_list_view!public!resources-views! !
-!ListPresenter class categoriesFor: #resource_Multiselection_list_box!public!resources-views! !
-
-!ListView methodsFor!
-
-autoArrange
-	#deprecated.
-	^self isAutoArranged!
-
-autoArrange: aBoolean 
-	#deprecated.
-	self isAutoArranged: aBoolean!
-
-columns
-	#deprecated. "5.0"
-	^self allColumns copyFrom: 2!
-
-hasTrackSelect
-	#deprecated. "6.0"
-	^self hasHotTracking!
-
-hasTrackSelect: aBoolean 
-	#deprecated. "6.0"
-	self hasHotTracking: aBoolean! !
-!ListView categoriesFor: #autoArrange!arranging!public! !
-!ListView categoriesFor: #autoArrange:!accessing-styles!public! !
-!ListView categoriesFor: #columns!columns!public! !
-!ListView categoriesFor: #hasTrackSelect!accessing-styles!public! !
-!ListView categoriesFor: #hasTrackSelect:!accessing-styles!public! !
-
-!LVBKIMAGEW methodsFor!
-
-offset: aPoint 
-	Notification deprecated.	"Use #offsetPercent: or #offsetTile:"
-	self
-		xOffsetPercent: aPoint x;
-		yOffsetPercent: aPoint y! !
-!LVBKIMAGEW categoriesFor: #offset:!public! !
-
-!Menu methodsFor!
-
-find: aString
-	"Answer the <MenuItem> whose text matches the <readableString> argument.
-	Any & characters in the MenuItems are ignored for the comparison."
-
-	Notification deprecated. "Searching a menu by display string is a poor practice."
-	^self find: aString ifAbsent: [self errorNotFound: aString]!
-
-find: aString ifAbsent: exceptionHandler
-	"Answer the MenuItem whose text matches the <readableString> argument, or the 
-	result of evaluating the <niladicValuable>, exceptionHandler, if there is no matching
-	item. Any & characters in the MenuItems are ignored for the comparison."
-
-	Notification deprecated. "Searching a menu by display string is a poor practice."
-	^items detect: [:aMenuItem | (aMenuItem text copyWithout: $&) = aString]
-		ifNone: exceptionHandler!
-
-remove: aString 
-	"Remove the MenuItem whose text matches the <readableString> argument. Any & characters in
-	the MenuItems are ignored for the comparison."
-
-	Notification deprecated. "Searching a menu by display string is a poor practice."
-	self removeItem: (self find: aString)!
-
-remove: aString ifAbsent: exceptionHandler 
-	"Remove the MenuItem whose text matches the <readableString> argument, or the 
-	result of evaluating the <niladicValuable>, exceptionHandler, if there is no matching
-	item. Any & characters in the MenuItems are ignored for the comparison."
-
-	Notification deprecated. "Searching a menu by display string is a poor practice."
-	self removeItem: (self find: aString ifAbsent: [^exceptionHandler value])!
-
-replace: aString with: aMenu
-	| index |
-	Notification deprecated.	"Searching a menu by display string is a poor practice."
-	index := items indexOf: (self find: aString).
-	self itemAt: index put: aMenu! !
-!Menu categoriesFor: #find:!public!searching! !
-!Menu categoriesFor: #find:ifAbsent:!public!searching! !
-!Menu categoriesFor: #remove:!public!removing! !
-!Menu categoriesFor: #remove:ifAbsent:!public!removing! !
-!Menu categoriesFor: #replace:with:!public!replacing! !
-
-!MoenTreeView methodsFor!
-
-updateItem: element andChildren: andChildren imagesOnly: aBoolean 
-	#deprecated.
-	self 
-		invalidateItem: element
-		andChildren: andChildren
-		imagesOnly: aBoolean! !
-!MoenTreeView categoriesFor: #updateItem:andChildren:imagesOnly:!painting!public! !
-
-!PaintEvent class methodsFor!
-
-handle: hWnd wParam: wParam hdc: hdc paintStruct: ps
-	#deprecated.
-	^self
-		window: (View fromHandle: hWnd)
-		wParam: wParam
-		hdc: hdc
-		paintStruct: ps! !
-!PaintEvent class categoriesFor: #handle:wParam:hdc:paintStruct:!instance creation!public! !
-
-!RGB methodsFor!
-
-asIndexedColorUsingPalette: hPalette 
+asIndexedColorUsingPalette: hPalette
 	"Answer the receiver as an IndexedColour using hPalette"
 
 	| index |
 	Notification deprecated.
 	index := GDILibrary default getNearestPaletteIndex: hPalette crColor: self asCOLORREF.
-	^index < 0 
+	^index < 0
 		ifTrue: [GDILibrary default systemError]
 		ifFalse: [IndexedColor withIndex: (index bitOr: 16r1000000)]! !
-!RGB categoriesFor: #asIndexedColorUsingPalette:!converting!public! !
+!Graphics.RGB categoriesFor: #asIndexedColorUsingPalette:!converting!public! !
 
-!RGB class methodsFor!
+!Graphics.RGB class methodsFor!
 
 stdColor: aSymbol
 	Notification deprecated.
 	^self named: aSymbol! !
-!RGB class categoriesFor: #stdColor:!instance creation!public! !
+!Graphics.RGB class categoriesFor: #stdColor:!instance creation!public! !
+
+!Graphics.SystemColor methodsFor!
+
+asIndexedColor
+	"Answer the receiver as an <IndexedColor>."
+
+	"IndexedColors are soft-deprecated. You should avoid their deliberate use, although they may continue to exist in older view resources, etc, and be returned from certain older APIs."
+
+	Notification deprecated.
+	^(Color fromRgbCode: self rgbCode) asIndexedColor! !
+!Graphics.SystemColor categoriesFor: #asIndexedColor!converting!public! !
+
+!Graphics.SystemColor class methodsFor!
+
+fromId: anInteger
+	Notification deprecated.
+	^self withIndex: anInteger! !
+!Graphics.SystemColor class categoriesFor: #fromId:!instance creation!public! !
+
+!Graphics.TextTileIcon class methodsFor!
+
+text: labelString font: fontString color: aColor
+	Notification deprecated.
+	^self
+		text: labelString
+		fontName: fontString
+		color: aColor! !
+!Graphics.TextTileIcon class categoriesFor: #text:font:color:!instance creation!public! !
+
+!Graphics.VirtualColor methodsFor!
+
+asIndexedColor
+	"Answer the receiver as an <IndexedColor>."
+
+	"IndexedColors are soft-deprecated. You should avoid their deliberate use, although they may continue to exist in older view resources, etc, and be returned from certain older APIs."
+
+	Notification deprecated.
+	^self actualColor asIndexedColor! !
+!Graphics.VirtualColor categoriesFor: #asIndexedColor!converting!public! !
+
+!OS.BLENDFUNCTION methodsFor!
+
+beAlpha
+	#deprecated.
+	self usePerPixelAlpha: true!
+
+beNotAlpha
+	#deprecated.
+	self usePerPixelAlpha: false! !
+!OS.BLENDFUNCTION categoriesFor: #beAlpha!accessing!public! !
+!OS.BLENDFUNCTION categoriesFor: #beNotAlpha!accessing!public! !
+
+!OS.LVBKIMAGEW methodsFor!
+
+offset: aPoint
+	Notification deprecated.	"Use #offsetPercent: or #offsetTile:"
+	self
+		xOffsetPercent: aPoint x;
+		yOffsetPercent: aPoint y! !
+!OS.LVBKIMAGEW categoriesFor: #offset:!public! !
+
+!OS.SystemMetrics methodsFor!
+
+hasFlashWindow
+	"Answer whether the host supports the FlashWindowEx API."
+
+
+
+	#deprecated.
+	^true!
+
+hasMenuImages
+	"Answer whether the host supports images on menus."
+
+	#deprecated. "We no longer support OSs earlier than Vista, let alone XP."
+	^true! !
+!OS.SystemMetrics categoriesFor: #hasFlashWindow!capability enquiries!public! !
+!OS.SystemMetrics categoriesFor: #hasMenuImages!capability enquiries!public! !
+
+!OS.UserLibrary methodsFor!
+
+winHelp: hwndMain lpszHelp: lpszHelp uCommand: uCommand dwData: dwData
+	"Invoke the WinHelp() function of the module wrapped by the receiver.
+	Helpstring: Starts windows help and passes a request for help
+
+		BOOL __stdcall WinHelp(
+			HWND hwndMain,
+			LPCSTR lpszHelp,
+			unsigned int uCommand,
+			ULONG_PTR dwData);"
+
+	<stdcall: bool WinHelpA handle lpstr dword uintptr>
+	^self invalidCall: _failureCode! !
+!OS.UserLibrary categoriesFor: #winHelp:lpszHelp:uCommand:dwData:!**auto generated**!public! !
 
 !ScintillaIndicator methodsFor!
 
@@ -656,8 +484,7 @@ styleName
 
 styleName: aSymbol
 	Notification deprecated.
-	self style: aSymbol
-! !
+	self style: aSymbol! !
 !ScintillaIndicatorStyle categoriesFor: #alphaPercent!accessing!public! !
 !ScintillaIndicatorStyle categoriesFor: #alphaPercent:!accessing!public! !
 !ScintillaIndicatorStyle categoriesFor: #hoverStyleName!accessing!public! !
@@ -714,7 +541,267 @@ isKeyboardInputUnicode: keysUnicodeBoolean
 !ScintillaView categoriesFor: #isKeyboardInputUnicode!**auto generated**!other settings!public!scintilla interface!testing! !
 !ScintillaView categoriesFor: #isKeyboardInputUnicode:!**auto generated**!other settings!public!scintilla interface! !
 
-!ScrollingDecorator methodsFor!
+!UI.AcceleratorTable methodsFor!
+
+accelerators
+	#deprecated.
+	^commands associations!
+
+addKey: vKeyCode commandDescription: aCommandDescription 
+	#deprecated.
+	aCommandDescription acceleratorKey: vKeyCode.
+	self addCommand: aCommandDescription! !
+!UI.AcceleratorTable categoriesFor: #accelerators!accessing!public! !
+!UI.AcceleratorTable categoriesFor: #addKey:commandDescription:!adding!public! !
+
+!UI.AcceleratorTable class methodsFor!
+
+keyModifierNames: anInteger
+	Notification deprecated.
+	^self keyModifierNames: anInteger keyboard: Keyboard default!
+
+keyModifierNames: anInteger do: aMonadicValuable
+	Notification deprecated.
+	self
+		keyModifierNames: anInteger
+		keyboard: Keyboard default
+		do: aMonadicValuable! !
+!UI.AcceleratorTable class categoriesFor: #keyModifierNames:!enquiries!public! !
+!UI.AcceleratorTable class categoriesFor: #keyModifierNames:do:!enquiries!public! !
+
+!UI.BasicListAbstract methodsFor!
+
+basicSelectionByIndex: anInteger 
+	#deprecated.	"Present for loading of old view resources"
+	self setSingleSelection: anInteger! !
+!UI.BasicListAbstract categoriesFor: #basicSelectionByIndex:!private!selection! !
+
+!UI.BorderLayout methodsFor!
+
+hasCenter
+	"Answer whether a view has been arranged to the centre of the layout."
+
+	^self center notNil!
+
+hasEast
+	"Answer whether a view has been arranged to the left edge."
+
+	^self east notNil!
+
+hasNorth
+	"Answer whether a view has been arranged to the top edge."
+
+	^self north notNil!
+
+hasSouth
+	"Answer whether a view has been arranged to the bottom edge."
+
+	^self south notNil!
+
+hasWest
+	"Answer whether a view has been arranged to the right edge."
+
+	^self west notNil! !
+!UI.BorderLayout categoriesFor: #hasCenter!accessing!public! !
+!UI.BorderLayout categoriesFor: #hasEast!accessing!public! !
+!UI.BorderLayout categoriesFor: #hasNorth!accessing!public! !
+!UI.BorderLayout categoriesFor: #hasSouth!accessing!public! !
+!UI.BorderLayout categoriesFor: #hasWest!accessing!public! !
+
+!UI.ChoicePresenter class methodsFor!
+
+resource_Multiselection_list_box
+	"Answer the literal data from which the 'Multiselection list box' resource can be reconstituted.
+	DO NOT EDIT OR RECATEGORIZE THIS METHOD.
+
+	If you wish to modify this resource evaluate:
+	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Multiselection_list_box)
+	"
+
+	^#(#'!!STL' 4 985166 10 ##(UI.STBViewProxy) ##(Smalltalk.MultipleSelectionListBox) 34 17 nil nil 34 2 8 1412499713 1025 416 787270 2 ##(UI.ListModel) 138 144 8 #() nil 1638406 ##(Kernel.IdentitySearchPolicy) 917510 ##(Graphics.Color) #default nil 5 nil nil nil 416 nil 8 1920482304 786950 ##(Core.Message) #displayString 8 #() 8 #() false 1310982 ##(Core.MessageSequence) 138 144 34 3 1049350 ##(Core.MessageSend) #createAt:extent: 34 2 655878 ##(Graphics.Point) 6143 21 802 251 351 416 754 #caretIndex: 8 #(1) 416 754 #horizontalExtent: 8 #(0) 416 1179910 ##(OS.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 124 12 0 0 185 0 0 0] 8 #() 802 193 193 nil 27)! !
+!UI.ChoicePresenter class categoriesFor: #resource_Multiselection_list_box!public!resources-views! !
+
+!UI.Clipboard methodsFor!
+
+getObjectBinaryStoreBytes
+	"Answer the STB binary store bytes for the <object> stored on the the clipboard, or raise an
+	exception if none is available."
+
+	Notification deprecated.
+	^self getObjectBinaryStoreBytesIfNone: [self errorFormatNotAvailable: #Object]!
+
+getObjectBinaryStoreBytesIfNone: exceptionHandler
+	"Answer the STB binary store bytes for an <object> stored on the clipboard. If no object is
+	currently available, the answers the result of evaluating the <niladicValuable>
+	exceptionHandler."
+
+	Notification deprecated.
+	^(self getObjectIfNone: [^exceptionHandler value]) binaryStoreBytes!
+
+setText: text format: formatName
+	Notification deprecated.	"Just use setData:format:"
+	self setRegisteredFormat: formatName data: text! !
+!UI.Clipboard categoriesFor: #getObjectBinaryStoreBytes!accessing!public! !
+!UI.Clipboard categoriesFor: #getObjectBinaryStoreBytesIfNone:!accessing!public! !
+!UI.Clipboard categoriesFor: #setText:format:!accessing!public! !
+
+!UI.GUISessionManager methodsFor!
+
+whatsThis: object
+	| helpId |
+	#deprecated.	"The Windows Help program is no longer supported on Windows 10 and later."
+	helpId := object helpId.
+	View active winHelpPopup: self popupHelpFile topic: helpId! !
+!UI.GUISessionManager categoriesFor: #whatsThis:!commands!public! !
+
+!UI.ListBox methodsFor!
+
+basicSelectionByIndex: sel
+	#deprecated.	"Presenter for old view resources"
+	self basicSelectionsByIndex: sel! !
+!UI.ListBox categoriesFor: #basicSelectionByIndex:!private!selection! !
+
+!UI.ListModel methodsFor!
+
+updateAtIndex: anInteger 
+	"Update, and answer, an object in the receiver at anInteger index because 
+	it's contents have changed. If anInteger index does not exist in the list 
+	then raise a suitable exception. Answer anObject."
+
+	| elem |
+	#deprecated.	"Use #refreshAtIndex:"
+	elem := self list at: anInteger.
+	self notifyItem: elem updatedAtIndex: anInteger.
+	^elem!
+
+updateItem: anObject
+	#deprecated.	"Use #refresh:"
+	^self refresh: anObject!
+
+updateItem: anObject ifAbsent: exceptionHandler
+	#deprecated.	"Use #refresh:ifAbsent:"
+	^self refresh: anObject ifAbsent: exceptionHandler! !
+!UI.ListModel categoriesFor: #updateAtIndex:!public!updating! !
+!UI.ListModel categoriesFor: #updateItem:!private!updating! !
+!UI.ListModel categoriesFor: #updateItem:ifAbsent:!public!searching! !
+
+!UI.ListPresenter class methodsFor!
+
+resource_Multiselection_enhanced_list_view
+	"Answer the literal data from which the 'Multiselection enhanced list view' resource can be reconstituted.
+	DO NOT EDIT OR RECATEGORIZE THIS METHOD.
+
+	If you wish to modify this resource evaluate:
+	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Multiselection_enhanced_list_view)
+	"
+
+	^#(#'!!STL' 3 788558 10 ##(STBViewProxy) 8 ##(Smalltalk.MultipleSelectionListView) 98 30 0 0 98 2 8 1140920393 1025 416 590662 2 ##(ListModel) 202 208 98 0 0 1114638 ##(STBSingletonProxy) 8 ##(SearchPolicy) 8 #identity 524550 ##(ColorRef) 8 4278190080 0 7 0 0 0 416 0 8 4294902987 459270 ##(Message) 8 #displayString 98 0 8 ##(IconicListAbstract) 570 8 ##(IconImageManager) 8 #current 0 0 0 0 0 0 202 208 98 1 920646 5 ##(ListViewColumn) 8 'Column 1' 201 8 #left 690 720 736 8 ##(SortedCollection) 0 0 416 0 1 0 0 8 #report 544 0 131169 0 0 983302 ##(MessageSequence) 202 208 98 2 721670 ##(MessageSend) 8 #createAt:extent: 98 2 328198 ##(Point) 11 11 1090 401 397 416 1026 8 #text: 98 1 8 'Column 1' 416 983302 ##(WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 0 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 5 0 0 0 5 0 0 0 205 0 0 0 203 0 0 0] 98 0 1090 193 193 0 27)!
+
+resource_Multiselection_list_box
+	"Answer the literal data from which the 'Multiselection list box' resource can be reconstituted.
+	DO NOT EDIT OR RECATEGORIZE THIS METHOD.
+
+	If you wish to modify this resource evaluate:
+	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Multiselection_list_box)
+	"
+
+	^#(#'!!STL' 3 788558 10 ##(STBViewProxy) 8 ##(Smalltalk.MultipleSelectionListBox) 98 17 0 0 98 2 8 1144064257 1025 416 590662 2 ##(ListModel) 202 208 98 0 0 1114638 ##(STBSingletonProxy) 8 ##(SearchPolicy) 8 #identity 524550 ##(ColorRef) 8 4278190080 0 7 0 0 0 416 0 8 4294903705 459270 ##(Message) 8 #displayString 98 0 544 32 983302 ##(MessageSequence) 202 208 98 2 721670 ##(MessageSend) 8 #createAt:extent: 98 2 328198 ##(Point) 11 11 882 251 351 416 818 8 #horizontalExtent: 98 1 1 416 983302 ##(WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 0 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 5 0 0 0 5 0 0 0 130 0 0 0 180 0 0 0] 98 0 882 193 193 0 27)! !
+!UI.ListPresenter class categoriesFor: #resource_Multiselection_enhanced_list_view!public!resources-views! !
+!UI.ListPresenter class categoriesFor: #resource_Multiselection_list_box!public!resources-views! !
+
+!UI.ListView methodsFor!
+
+autoArrange
+	#deprecated.
+	^self isAutoArranged!
+
+autoArrange: aBoolean 
+	#deprecated.
+	self isAutoArranged: aBoolean!
+
+columns
+	#deprecated. "5.0"
+	^self allColumns copyFrom: 2!
+
+hasTrackSelect
+	#deprecated. "6.0"
+	^self hasHotTracking!
+
+hasTrackSelect: aBoolean 
+	#deprecated. "6.0"
+	self hasHotTracking: aBoolean! !
+!UI.ListView categoriesFor: #autoArrange!arranging!public! !
+!UI.ListView categoriesFor: #autoArrange:!accessing-styles!public! !
+!UI.ListView categoriesFor: #columns!columns!public! !
+!UI.ListView categoriesFor: #hasTrackSelect!accessing-styles!public! !
+!UI.ListView categoriesFor: #hasTrackSelect:!accessing-styles!public! !
+
+!UI.Menu methodsFor!
+
+find: aString
+	"Answer the <MenuItem> whose text matches the <readableString> argument.
+	Any & characters in the MenuItems are ignored for the comparison."
+
+	Notification deprecated. "Searching a menu by display string is a poor practice."
+	^self find: aString ifAbsent: [self errorNotFound: aString]!
+
+find: aString ifAbsent: exceptionHandler
+	"Answer the MenuItem whose text matches the <readableString> argument, or the 
+	result of evaluating the <niladicValuable>, exceptionHandler, if there is no matching
+	item. Any & characters in the MenuItems are ignored for the comparison."
+
+	Notification deprecated. "Searching a menu by display string is a poor practice."
+	^items detect: [:aMenuItem | (aMenuItem text copyWithout: $&) = aString]
+		ifNone: exceptionHandler!
+
+remove: aString 
+	"Remove the MenuItem whose text matches the <readableString> argument. Any & characters in
+	the MenuItems are ignored for the comparison."
+
+	Notification deprecated. "Searching a menu by display string is a poor practice."
+	self removeItem: (self find: aString)!
+
+remove: aString ifAbsent: exceptionHandler 
+	"Remove the MenuItem whose text matches the <readableString> argument, or the 
+	result of evaluating the <niladicValuable>, exceptionHandler, if there is no matching
+	item. Any & characters in the MenuItems are ignored for the comparison."
+
+	Notification deprecated. "Searching a menu by display string is a poor practice."
+	self removeItem: (self find: aString ifAbsent: [^exceptionHandler value])!
+
+replace: aString with: aMenu
+	| index |
+	Notification deprecated.	"Searching a menu by display string is a poor practice."
+	index := items indexOf: (self find: aString).
+	self itemAt: index put: aMenu! !
+!UI.Menu categoriesFor: #find:!public!searching! !
+!UI.Menu categoriesFor: #find:ifAbsent:!public!searching! !
+!UI.Menu categoriesFor: #remove:!public!removing! !
+!UI.Menu categoriesFor: #remove:ifAbsent:!public!removing! !
+!UI.Menu categoriesFor: #replace:with:!public!replacing! !
+
+!UI.MoenTreeView methodsFor!
+
+updateItem: element andChildren: andChildren imagesOnly: aBoolean 
+	#deprecated.
+	self 
+		invalidateItem: element
+		andChildren: andChildren
+		imagesOnly: aBoolean! !
+!UI.MoenTreeView categoriesFor: #updateItem:andChildren:imagesOnly:!painting!public! !
+
+!UI.PaintEvent class methodsFor!
+
+handle: hWnd wParam: wParam hdc: hdc paintStruct: ps
+	#deprecated.
+	^self
+		window: (View fromHandle: hWnd)
+		wParam: wParam
+		hdc: hdc
+		paintStruct: ps! !
+!UI.PaintEvent class categoriesFor: #handle:wParam:hdc:paintStruct:!instance creation!public! !
+
+!UI.ScrollingDecorator methodsFor!
 
 continuousTracking
 	#deprecated.
@@ -723,10 +810,10 @@ continuousTracking
 continuousTracking: aBoolean 
 	#deprecated.
 	self isTrackingContinuous: aBoolean! !
-!ScrollingDecorator categoriesFor: #continuousTracking!modes!public! !
-!ScrollingDecorator categoriesFor: #continuousTracking:!modes!public! !
+!UI.ScrollingDecorator categoriesFor: #continuousTracking!modes!public! !
+!UI.ScrollingDecorator categoriesFor: #continuousTracking:!modes!public! !
 
-!ShellView methodsFor!
+!UI.ShellView methodsFor!
 
 hasThickFrame
 	#deprecated. "6.0: #1375"
@@ -735,10 +822,10 @@ hasThickFrame
 hasThickFrame: aBoolean 
 	#deprecated. "6.0: #1375"
 	self isResizable: aBoolean! !
-!ShellView categoriesFor: #hasThickFrame!accessing-styles!public! !
-!ShellView categoriesFor: #hasThickFrame:!accessing-styles!public! !
+!UI.ShellView categoriesFor: #hasThickFrame!accessing-styles!public! !
+!UI.ShellView categoriesFor: #hasThickFrame:!accessing-styles!public! !
 
-!Slider methodsFor!
+!UI.Slider methodsFor!
 
 hasTicksBoth
 	#deprecated.
@@ -760,69 +847,35 @@ selection
 	Notification deprecated.
 	^self selectionRange!
 
-selection: anIntervalOrNil 
+selection: anIntervalOrNil
 	Notification deprecated.
 	self selectionRange: anIntervalOrNil! !
-!Slider categoriesFor: #hasTicksBoth!accessing-styles!public!updating! !
-!Slider categoriesFor: #hasTicksBoth:!accessing-styles!public!updating! !
-!Slider categoriesFor: #hasTicksTopOrLeft!accessing-styles!public!updating! !
-!Slider categoriesFor: #hasTicksTopOrLeft:!accessing-styles!public!updating! !
-!Slider categoriesFor: #selection!accessing!public! !
-!Slider categoriesFor: #selection:!accessing!public! !
+!UI.Slider categoriesFor: #hasTicksBoth!accessing-styles!public!updating! !
+!UI.Slider categoriesFor: #hasTicksBoth:!accessing-styles!public!updating! !
+!UI.Slider categoriesFor: #hasTicksTopOrLeft!accessing-styles!public!updating! !
+!UI.Slider categoriesFor: #hasTicksTopOrLeft:!accessing-styles!public!updating! !
+!UI.Slider categoriesFor: #selection!accessing!public! !
+!UI.Slider categoriesFor: #selection:!accessing!public! !
 
-!STBViewProxy methodsFor!
+!UI.STBViewProxy methodsFor!
 
 for: aView 
 	#deprecated.
 	self setView: aView! !
-!STBViewProxy categoriesFor: #for:!accessing!public! !
+!UI.STBViewProxy categoriesFor: #for:!accessing!public! !
 
-!STBViewProxy class methodsFor!
+!UI.STBViewProxy class methodsFor!
 
 for: aView 
 	#deprecated.
 	^self forView: aView! !
-!STBViewProxy class categoriesFor: #for:!instance creation!public! !
+!UI.STBViewProxy class categoriesFor: #for:!instance creation!public! !
 
-!SystemColor methodsFor!
+!UI.TextEdit methodsFor!
 
-asIndexedColor
-	"Answer the receiver as an <IndexedColor>."
-
-	"IndexedColors are soft-deprecated. You should avoid their deliberate use, although they may continue to exist in older view resources, etc, and be returned from certain older APIs."
-
-	Notification deprecated.
-	^(Color fromRgbCode: self rgbCode) asIndexedColor! !
-!SystemColor categoriesFor: #asIndexedColor!converting!public! !
-
-!SystemColor class methodsFor!
-
-fromId: anInteger
-	Notification deprecated.
-	^self withIndex: anInteger! !
-!SystemColor class categoriesFor: #fromId:!instance creation!public! !
-
-!SystemMetrics methodsFor!
-
-hasFlashWindow
-	"Answer whether the host supports the FlashWindowEx API."
-
+find: findWhat range: rangeInterval down: downBoolean wholeWord: wordBoolean matchCase: caseBoolean
 	#deprecated.
-	^true!
-
-hasMenuImages
-	"Answer whether the host supports images on menus."
-
-	#deprecated. "We no longer support OSs earlier than Vista, let alone XP."
-	^true! !
-!SystemMetrics categoriesFor: #hasFlashWindow!capability enquiries!public! !
-!SystemMetrics categoriesFor: #hasMenuImages!capability enquiries!public! !
-
-!TextEdit methodsFor!
-
-find: findWhat range: rangeInterval down: downBoolean wholeWord: wordBoolean matchCase: caseBoolean 
-	#deprecated.
-	^(self find: ((FindDetails new)
+	^(self find: (FindDetails new
 				action: #findNext;
 				findWhat: findWhat;
 				isForwards: downBoolean;
@@ -832,9 +885,9 @@ find: findWhat range: rangeInterval down: downBoolean wholeWord: wordBoolean mat
 				yourself)
 		range: rangeInterval) start!
 
-findNextWrapped: aString down: downBoolean wholeWord: wordBoolean matchCase: caseBoolean 
+findNextWrapped: aString down: downBoolean wholeWord: wordBoolean matchCase: caseBoolean
 	#deprecated.
-	self findNextWrapped: ((FindDetails new)
+	self findNextWrapped: (FindDetails new
 				isForwards: downBoolean;
 				isWholeWord: wordBoolean;
 				isCaseSensitive: caseBoolean;
@@ -869,27 +922,17 @@ isUppercase: aBoolean
 lines
 	#deprecated. "5.0"
 	^self lineCount! !
-!TextEdit categoriesFor: #find:range:down:wholeWord:matchCase:!private!searching & replacing! !
-!TextEdit categoriesFor: #findNextWrapped:down:wholeWord:matchCase:!public!searching & replacing! !
-!TextEdit categoriesFor: #isLowercase!public!testing! !
-!TextEdit categoriesFor: #isLowercase:!public!testing! !
-!TextEdit categoriesFor: #isNumeric!public!testing! !
-!TextEdit categoriesFor: #isNumeric:!accessing!public! !
-!TextEdit categoriesFor: #isUpperCase!public!testing! !
-!TextEdit categoriesFor: #isUppercase:!public!testing! !
-!TextEdit categoriesFor: #lines!accessing!public! !
+!UI.TextEdit categoriesFor: #find:range:down:wholeWord:matchCase:!private!searching & replacing! !
+!UI.TextEdit categoriesFor: #findNextWrapped:down:wholeWord:matchCase:!public!searching & replacing! !
+!UI.TextEdit categoriesFor: #isLowercase!public!testing! !
+!UI.TextEdit categoriesFor: #isLowercase:!public!testing! !
+!UI.TextEdit categoriesFor: #isNumeric!public!testing! !
+!UI.TextEdit categoriesFor: #isNumeric:!accessing!public! !
+!UI.TextEdit categoriesFor: #isUpperCase!public!testing! !
+!UI.TextEdit categoriesFor: #isUppercase:!public!testing! !
+!UI.TextEdit categoriesFor: #lines!accessing!public! !
 
-!TextTileIcon class methodsFor!
-
-text: labelString font: fontString color: aColor
-	Notification deprecated.
-	^self
-		text: labelString
-		fontName: fontString
-		color: aColor! !
-!TextTileIcon class categoriesFor: #text:font:color:!instance creation!public! !
-
-!TreeView methodsFor!
+!UI.TreeView methodsFor!
 
 disableExpandAll
 	#deprecated.
@@ -898,10 +941,10 @@ disableExpandAll
 disableExpandAll: aBoolean 
 	#deprecated.
 	self isExpandAllEnabled: aBoolean not! !
-!TreeView categoriesFor: #disableExpandAll!accessing!public! !
-!TreeView categoriesFor: #disableExpandAll:!accessing!public! !
+!UI.TreeView categoriesFor: #disableExpandAll!accessing!public! !
+!UI.TreeView categoriesFor: #disableExpandAll:!accessing!public! !
 
-!TypeConverter methodsFor!
+!UI.TypeConverter methodsFor!
 
 leftExceptionalValue
 	#deprecated.
@@ -918,28 +961,12 @@ rightExceptionalValue
 rightExceptionalValue: anObject
 	#deprecated.
 	^self rightNullValue: anObject! !
-!TypeConverter categoriesFor: #leftExceptionalValue!accessing!public! !
-!TypeConverter categoriesFor: #leftExceptionalValue:!accessing!public! !
-!TypeConverter categoriesFor: #rightExceptionalValue!accessing!public! !
-!TypeConverter categoriesFor: #rightExceptionalValue:!accessing!public! !
+!UI.TypeConverter categoriesFor: #leftExceptionalValue!accessing!public! !
+!UI.TypeConverter categoriesFor: #leftExceptionalValue:!accessing!public! !
+!UI.TypeConverter categoriesFor: #rightExceptionalValue!accessing!public! !
+!UI.TypeConverter categoriesFor: #rightExceptionalValue:!accessing!public! !
 
-!UserLibrary methodsFor!
-
-winHelp: hwndMain lpszHelp: lpszHelp uCommand: uCommand dwData: dwData
-	"Invoke the WinHelp() function of the module wrapped by the receiver.
-	Helpstring: Starts windows help and passes a request for help
-
-		BOOL __stdcall WinHelp(
-			HWND hwndMain,
-			LPCSTR lpszHelp,
-			unsigned int uCommand,
-			ULONG_PTR dwData);"
-
-	<stdcall: bool WinHelpA handle lpstr dword uintptr>
-	^self invalidCall: _failureCode! !
-!UserLibrary categoriesFor: #winHelp:lpszHelp:uCommand:dwData:!**auto generated**!public! !
-
-!View methodsFor!
+!UI.View methodsFor!
 
 defaultWindowProcessing: anEvent
 	#deprecated.
@@ -962,38 +989,27 @@ winHelpPopup: helpFileString topic: topicId
 		topic: topicId
 		at: nil!
 
-winHelpPopup: helpFileString topic: topicId at: aPointOrNil 
-	#deprecated. "Not supported on Windows 10 and later."
-	aPointOrNil notNil 
+winHelpPopup: helpFileString topic: topicId at: aPointOrNil
+	#deprecated.	"Not supported on Windows 10 and later."
+	aPointOrNil notNil
 		ifTrue: 
-			[UserLibrary default 
+			[UserLibrary default
 				winHelp: View active handle
 				lpszHelp: ''
 				uCommand: HELP_SETPOPUP_POS
 				dwData: aPointOrNil asUIntPtr].
-	^UserLibrary default 
+	^UserLibrary default
 		winHelp: self handle
 		lpszHelp: helpFileString
 		uCommand: HELP_CONTEXTPOPUP
 		dwData: topicId! !
-!View categoriesFor: #defaultWindowProcessing:!dispatching!public! !
-!View categoriesFor: #hasWindowEdge!accessing-styles!public! !
-!View categoriesFor: #hasWindowEdge:!accessing-styles!public! !
-!View categoriesFor: #winHelpPopup:topic:!public! !
-!View categoriesFor: #winHelpPopup:topic:at:!public! !
+!UI.View categoriesFor: #defaultWindowProcessing:!dispatching!public! !
+!UI.View categoriesFor: #hasWindowEdge!accessing-styles!public! !
+!UI.View categoriesFor: #hasWindowEdge:!accessing-styles!public! !
+!UI.View categoriesFor: #winHelpPopup:topic:!public! !
+!UI.View categoriesFor: #winHelpPopup:topic:at:!public! !
 
-!VirtualColor methodsFor!
-
-asIndexedColor
-	"Answer the receiver as an <IndexedColor>."
-
-	"IndexedColors are soft-deprecated. You should avoid their deliberate use, although they may continue to exist in older view resources, etc, and be returned from certain older APIs."
-
-	Notification deprecated.
-	^self actualColor asIndexedColor! !
-!VirtualColor categoriesFor: #asIndexedColor!converting!public! !
-
-!WindowsEvent class methodsFor!
+!UI.WindowsEvent class methodsFor!
 
 message: msgInteger handle: wndHandle wParam: wInteger lParam: lInteger
 	#deprecated.
@@ -1002,21 +1018,7 @@ message: msgInteger handle: wndHandle wParam: wInteger lParam: lInteger
 		message: msgInteger
 		wParam: wInteger
 		lParam: lInteger! !
-!WindowsEvent class categoriesFor: #message:handle:wParam:lParam:!public! !
-
-!WinImageList class methodsFor!
-
-width: cx height: cy flags: flags size: sizeInteger growthGranularity: growthInteger
-	"Answer a new instances with the given parameters."
-
-	#deprecated.
-	^self 
-		newExtent: cx @ cy
-		depth: flags
-		initialSize: sizeInteger
-		growBy: growthInteger
-		masked: false! !
-!WinImageList class categoriesFor: #width:height:flags:size:growthGranularity:!instance creation!public! !
+!UI.WindowsEvent class categoriesFor: #message:handle:wParam:lParam:!public! !
 
 "End of package definition"!
 

@@ -1,16 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-LayoutManager subclass: #LinearLayout
+UI.LayoutManager subclass: #'UI.LinearLayout'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-LinearLayout guid: (GUID fromString: '{f3556fda-7d0c-4e04-9193-43add8df9ffa}')!
-LinearLayout isAbstract: true!
-LinearLayout comment: ''!
-!LinearLayout categoriesForClass!MVP-Layout Managers-Abstract! !
-!LinearLayout methodsFor!
+UI.LinearLayout guid: (Core.GUID fromString: '{f3556fda-7d0c-4e04-9193-43add8df9ffa}')!
+UI.LinearLayout isNonInstantiable: true!
+UI.LinearLayout comment: ''!
+!UI.LinearLayout categoriesForClass!MVP-Layout Managers-Abstract! !
+!UI.LinearLayout methodsFor!
 
 beHorizontal
 	"Orientate the views which the receiver lays out so they are stacked
@@ -80,13 +80,13 @@ preferredLayoutExtentOf: aCompositeView context: aLayoutContext
 		do: [:each | accumulate value: (each layoutExtent: aLayoutContext)].
 	insets := aCompositeView actualInsets: aLayoutContext.
 	^box + insets topLeft + insets bottomRight! !
-!LinearLayout categoriesFor: #beHorizontal!modes!public! !
-!LinearLayout categoriesFor: #beVertical!modes!public! !
-!LinearLayout categoriesFor: #initialize!initializing!private! !
-!LinearLayout categoriesFor: #isHorizontal!public!testing! !
-!LinearLayout categoriesFor: #isVertical!public!testing! !
-!LinearLayout categoriesFor: #isVertical:!accessing!public! !
-!LinearLayout categoriesFor: #majorDimensionOf:!geometry!private! !
-!LinearLayout categoriesFor: #pointWithMajor:minor:!helpers!private! !
-!LinearLayout categoriesFor: #preferredLayoutExtentOf:context:!enquiries!public! !
+!UI.LinearLayout categoriesFor: #beHorizontal!modes!public! !
+!UI.LinearLayout categoriesFor: #beVertical!modes!public! !
+!UI.LinearLayout categoriesFor: #initialize!initializing!private! !
+!UI.LinearLayout categoriesFor: #isHorizontal!public!testing! !
+!UI.LinearLayout categoriesFor: #isVertical!public!testing! !
+!UI.LinearLayout categoriesFor: #isVertical:!accessing!public! !
+!UI.LinearLayout categoriesFor: #majorDimensionOf:!geometry!private! !
+!UI.LinearLayout categoriesFor: #pointWithMajor:minor:!helpers!private! !
+!UI.LinearLayout categoriesFor: #preferredLayoutExtentOf:context:!enquiries!public! !
 

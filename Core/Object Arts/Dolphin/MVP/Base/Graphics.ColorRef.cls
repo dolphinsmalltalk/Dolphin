@@ -1,21 +1,21 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-AbstractRGB subclass: #ColorRef
+Graphics.AbstractRGB subclass: #'Graphics.ColorRef'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ColorRef guid: (GUID fromString: '{ed5fcdeb-52e8-4a5c-9eb7-38bf3a3aa575}')!
-ColorRef isAbstract: true!
-ColorRef comment: '`ColorRef` is the abstract class of palette independent (absolute) color values used with most Win32 GDI APIs that have a specific integer encoding described in the Windows documentation as a COLORREF.
+Graphics.ColorRef guid: (Core.GUID fromString: '{ed5fcdeb-52e8-4a5c-9eb7-38bf3a3aa575}')!
+Graphics.ColorRef isNonInstantiable: true!
+Graphics.ColorRef comment: '`ColorRef` is the abstract class of palette independent (absolute) color values used with most Win32 GDI APIs that have a specific integer encoding described in the Windows documentation as a COLORREF.
 
 ## Instance Variables:
   `code`		`<integer>`; a Windows `COLORREF` value. e.g. an `RGB` value.
 
 '!
-!ColorRef categoriesForClass!Unclassified! !
-!ColorRef methodsFor!
+!Graphics.ColorRef categoriesForClass!Unclassified! !
+!Graphics.ColorRef methodsFor!
 
 asColorRef
 	"Answer the receiver as a <ColorRef> (an <RGB> or one of the standard pseudo-colour constants Color default and Color none)"
@@ -48,14 +48,14 @@ red
 	"Answer the receiver's red component component expressed as an <integer> in the range [0,255]."
 
 	^code bitAnd: 16rFF! !
-!ColorRef categoriesFor: #asColorRef!converting!public! !
-!ColorRef categoriesFor: #asCOLORREF!accessing!public! !
-!ColorRef categoriesFor: #asRGB!converting!public! !
-!ColorRef categoriesFor: #blue!accessing!public! !
-!ColorRef categoriesFor: #errorNotARealColor!exceptions!private! !
-!ColorRef categoriesFor: #red!accessing!public! !
+!Graphics.ColorRef categoriesFor: #asColorRef!converting!public! !
+!Graphics.ColorRef categoriesFor: #asCOLORREF!accessing!public! !
+!Graphics.ColorRef categoriesFor: #asRGB!converting!public! !
+!Graphics.ColorRef categoriesFor: #blue!accessing!public! !
+!Graphics.ColorRef categoriesFor: #errorNotARealColor!exceptions!private! !
+!Graphics.ColorRef categoriesFor: #red!accessing!public! !
 
-!ColorRef class methodsFor!
+!Graphics.ColorRef class methodsFor!
 
 defaultColorRepresentation
 	"Private - Answer a unique colour that we can use to represent (Color default). This is used in the ColorDialog to allow users to
@@ -88,7 +88,7 @@ stbReadFrom: anSTBInFiler format: anSTBClassConversion
 	answer := self fromCOLORREF: anSTBInFiler basicNext.
 	anSTBInFiler fixup: ref to: answer.
 	^answer! !
-!ColorRef class categoriesFor: #defaultColorRepresentation!constants!private! !
-!ColorRef class categoriesFor: #fromCOLORREF:!instance creation!private! !
-!ColorRef class categoriesFor: #stbReadFrom:format:!binary filing!public! !
+!Graphics.ColorRef class categoriesFor: #defaultColorRepresentation!constants!private! !
+!Graphics.ColorRef class categoriesFor: #fromCOLORREF:!instance creation!private! !
+!Graphics.ColorRef class categoriesFor: #stbReadFrom:format:!binary filing!public! !
 

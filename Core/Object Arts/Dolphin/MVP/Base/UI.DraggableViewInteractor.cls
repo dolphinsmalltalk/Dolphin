@@ -1,17 +1,17 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-MouseTracker subclass: #DraggableViewInteractor
+UI.MouseTracker subclass: #'UI.DraggableViewInteractor'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-DraggableViewInteractor guid: (GUID fromString: '{17db18df-6991-4fe4-b6f7-ebe986ea3281}')!
-DraggableViewInteractor comment: '`DraggableViewInteractor` is a `CapturingInteractor` that tracks hot state as the mouse moves over (hot) and out (cold) of the associated view. If the left mouse button is pressed down when hot, then the interactor initiates a "drag", sending tracking events to the its `Presenter` in the same way as a `MouseTracker` does.
+UI.DraggableViewInteractor guid: (Core.GUID fromString: '{17db18df-6991-4fe4-b6f7-ebe986ea3281}')!
+UI.DraggableViewInteractor comment: '`DraggableViewInteractor` is a `CapturingInteractor` that tracks hot state as the mouse moves over (hot) and out (cold) of the associated view. If the left mouse button is pressed down when hot, then the interactor initiates a "drag", sending tracking events to the its `Presenter` in the same way as a `MouseTracker` does.
 
 An example use is with `Splitter`s. When the mouse moves over the `Splitter`, the interactor moves into the "hot" state and invalidates the view. The view can choose to take account of the "hot" state when repainting, which the `Splitter` does by including some subtle adornment to indicate its presence to the user. Initiating a drag results in the interactor turning off the hot state, before sending the `Splitter` the normal `MouseTracker` tracking events, which it responds to by drawing its hypothetical new position, etc.'!
-!DraggableViewInteractor categoriesForClass!MVP-Interactors! !
-!DraggableViewInteractor methodsFor!
+!UI.DraggableViewInteractor categoriesForClass!MVP-Interactors! !
+!UI.DraggableViewInteractor methodsFor!
 
 changeHotState: aBoolean
 	"Note the assumption that the view has visual indication of its hot state (i.e. when the mouse is over it)."
@@ -45,7 +45,7 @@ onMouseMoved: aMouseEvent
 				isTracking: false;
 				isHot: true].
 	^false	"Suppress perform default processing"! !
-!DraggableViewInteractor categoriesFor: #changeHotState:!accessing!private! !
-!DraggableViewInteractor categoriesFor: #onLeftButtonPressed:!event handling!public! !
-!DraggableViewInteractor categoriesFor: #onMouseMoved:!event handling!public! !
+!UI.DraggableViewInteractor categoriesFor: #changeHotState:!accessing!private! !
+!UI.DraggableViewInteractor categoriesFor: #onLeftButtonPressed:!event handling!public! !
+!UI.DraggableViewInteractor categoriesFor: #onMouseMoved:!event handling!public! !
 

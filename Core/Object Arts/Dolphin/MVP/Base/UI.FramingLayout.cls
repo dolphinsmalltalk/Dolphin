@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-LayoutManager subclass: #FramingLayout
+UI.LayoutManager subclass: #'UI.FramingLayout'
 	instanceVariableNames: 'framings'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-FramingLayout guid: (GUID fromString: '{87b4c649-026e-11d3-9fd7-00a0cc3e4a32}')!
-FramingLayout comment: 'FramingLayout implements a general purpose <layoutManager> to layout <view> objects within a <compositeView>. This is the most complex of the layout managers provided with the base Dolphin image but also the most flexible. Each of the managed views is given a series of constraints which indicate how it should be laid out within the parent. These constraints are instances of <FramingConstraints> and are specified by setting the #arrangement aspects of the various views. See the class comment for FramingConstraints for more details.
+UI.FramingLayout guid: (Core.GUID fromString: '{87b4c649-026e-11d3-9fd7-00a0cc3e4a32}')!
+UI.FramingLayout comment: 'FramingLayout implements a general purpose <layoutManager> to layout <view> objects within a <compositeView>. This is the most complex of the layout managers provided with the base Dolphin image but also the most flexible. Each of the managed views is given a series of constraints which indicate how it should be laid out within the parent. These constraints are instances of <FramingConstraints> and are specified by setting the #arrangement aspects of the various views. See the class comment for FramingConstraints for more details.
 
 Some examples of the use of FramingLayout managers can be seen in the default views for ChoicePrompter and for AXTypeLibraryPrompter. Try evaluating the following and resizing the dialogs to see the effect.
 
@@ -17,8 +17,8 @@ AXTypeLibraryPrompter showModal.
 Instance Variables:
 	framings	<LookupTable> mapping the managed views to their FramingConstraints
 '!
-!FramingLayout categoriesForClass!MVP-Layout Managers-General! !
-!FramingLayout methodsFor!
+!UI.FramingLayout categoriesForClass!MVP-Layout Managers-General! !
+!UI.FramingLayout methodsFor!
 
 arrangementOf: aView 
 	"Answer the current framing constraints for aView. This will lazily
@@ -40,7 +40,7 @@ initialize
 	"Private - Initialize the state of the receiver."
 
 	super initialize.
-	framings := LookupTable new.!
+	framings := LookupTable new!
 
 layoutContainer: aCompositeView context: aLayoutContext 
 	"Private - Update the <LayoutContext> argument with rectangles for the sub-views of its the
@@ -58,12 +58,12 @@ layoutContainer: aCompositeView context: aLayoutContext
 						within: containerRect
 						context: aLayoutContext)]!
 
-newConstraintFor: aView 
+newConstraintFor: aView
 	| framing context aRectangle |
 	framing := FramingConstraints new.
 	context := LayoutContext forContainer: aView parentView.
 	aRectangle := context rectangleOf: aView.
-	framing 
+	framing
 		updateFor: aView
 		rectangle: aRectangle
 		layoutContext: context.
@@ -109,13 +109,13 @@ resolutionScaledBy: aPoint
 	scale."
 
 	framings do: [:each | each resolutionScaledBy: aPoint]! !
-!FramingLayout categoriesFor: #arrangementOf:!accessing!public! !
-!FramingLayout categoriesFor: #arrangementOf:put:!accessing!public! !
-!FramingLayout categoriesFor: #initialize!initializing!private! !
-!FramingLayout categoriesFor: #layoutContainer:context:!geometry!private! !
-!FramingLayout categoriesFor: #newConstraintFor:!helpers!private! !
-!FramingLayout categoriesFor: #removeSubView:!public!removing! !
-!FramingLayout categoriesFor: #reposition:to:!geometry!private! !
-!FramingLayout categoriesFor: #resize:to:!geometry!public! !
-!FramingLayout categoriesFor: #resolutionScaledBy:!geometry!private! !
+!UI.FramingLayout categoriesFor: #arrangementOf:!accessing!public! !
+!UI.FramingLayout categoriesFor: #arrangementOf:put:!accessing!public! !
+!UI.FramingLayout categoriesFor: #initialize!initializing!private! !
+!UI.FramingLayout categoriesFor: #layoutContainer:context:!geometry!private! !
+!UI.FramingLayout categoriesFor: #newConstraintFor:!helpers!private! !
+!UI.FramingLayout categoriesFor: #removeSubView:!public!removing! !
+!UI.FramingLayout categoriesFor: #reposition:to:!geometry!private! !
+!UI.FramingLayout categoriesFor: #resize:to:!geometry!public! !
+!UI.FramingLayout categoriesFor: #resolutionScaledBy:!geometry!private! !
 

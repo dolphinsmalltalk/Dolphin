@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-WindowsEvent subclass: #PositionEvent
+UI.WindowsEvent subclass: #'UI.PositionEvent'
 	instanceVariableNames: 'lpwp'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-PositionEvent guid: (GUID fromString: '{cd69a072-3606-11d3-93bd-00a024ca708a}')!
-PositionEvent comment: 'PositionEvent is the class of <Event> associated with a window reposition event originating from a WM_WINDOWPOSCHANGING or WM_WINDOWPOSCHANGED message.'!
-!PositionEvent categoriesForClass!MVP-Views-Events! !
-!PositionEvent methodsFor!
+UI.PositionEvent guid: (Core.GUID fromString: '{cd69a072-3606-11d3-93bd-00a024ca708a}')!
+UI.PositionEvent comment: 'PositionEvent is the class of <Event> associated with a window reposition event originating from a WM_WINDOWPOSCHANGING or WM_WINDOWPOSCHANGED message.'!
+!UI.PositionEvent categoriesForClass!MVP-Views-Events! !
+!UI.PositionEvent methodsFor!
 
 extent
 	"Answer the extent of the window after the size event.
@@ -128,29 +128,29 @@ y
 	"Answer the y-position of the window origin."
 
 	^self lpwp y! !
-!PositionEvent categoriesFor: #extent!accessing!public! !
-!PositionEvent categoriesFor: #extent:!accessing!public! !
-!PositionEvent categoriesFor: #flags!accessing!public! !
-!PositionEvent categoriesFor: #height!accessing!public! !
-!PositionEvent categoriesFor: #height:!accessing!public! !
-!PositionEvent categoriesFor: #isActivate!public!testing! !
-!PositionEvent categoriesFor: #isClientAreaChanged!public!testing! !
-!PositionEvent categoriesFor: #isHideWindow!public!testing! !
-!PositionEvent categoriesFor: #isMove!public!testing! !
-!PositionEvent categoriesFor: #isRectangleChanged!public!testing! !
-!PositionEvent categoriesFor: #isResize!public!testing! !
-!PositionEvent categoriesFor: #isVisibilityChange!public!testing! !
-!PositionEvent categoriesFor: #isZOrderChanged!public!testing! !
-!PositionEvent categoriesFor: #lpwp!accessing!private! !
-!PositionEvent categoriesFor: #position!accessing!public! !
-!PositionEvent categoriesFor: #printLParamOn:!development!printing!private! !
-!PositionEvent categoriesFor: #rectangle!accessing!public! !
-!PositionEvent categoriesFor: #width!accessing!public! !
-!PositionEvent categoriesFor: #width:!accessing!public! !
-!PositionEvent categoriesFor: #x!accessing!public! !
-!PositionEvent categoriesFor: #y!accessing!public! !
+!UI.PositionEvent categoriesFor: #extent!accessing!public! !
+!UI.PositionEvent categoriesFor: #extent:!accessing!public! !
+!UI.PositionEvent categoriesFor: #flags!accessing!public! !
+!UI.PositionEvent categoriesFor: #height!accessing!public! !
+!UI.PositionEvent categoriesFor: #height:!accessing!public! !
+!UI.PositionEvent categoriesFor: #isActivate!public!testing! !
+!UI.PositionEvent categoriesFor: #isClientAreaChanged!public!testing! !
+!UI.PositionEvent categoriesFor: #isHideWindow!public!testing! !
+!UI.PositionEvent categoriesFor: #isMove!public!testing! !
+!UI.PositionEvent categoriesFor: #isRectangleChanged!public!testing! !
+!UI.PositionEvent categoriesFor: #isResize!public!testing! !
+!UI.PositionEvent categoriesFor: #isVisibilityChange!public!testing! !
+!UI.PositionEvent categoriesFor: #isZOrderChanged!public!testing! !
+!UI.PositionEvent categoriesFor: #lpwp!accessing!private! !
+!UI.PositionEvent categoriesFor: #position!accessing!public! !
+!UI.PositionEvent categoriesFor: #printLParamOn:!development!printing!private! !
+!UI.PositionEvent categoriesFor: #rectangle!accessing!public! !
+!UI.PositionEvent categoriesFor: #width!accessing!public! !
+!UI.PositionEvent categoriesFor: #width:!accessing!public! !
+!UI.PositionEvent categoriesFor: #x!accessing!public! !
+!UI.PositionEvent categoriesFor: #y!accessing!public! !
 
-!PositionEvent class methodsFor!
+!UI.PositionEvent class methodsFor!
 
 window: aView message: msgInteger wParam: wInteger lParam: lInteger
 	"Answer an instance of the receiver containing the message details specified by the parameters."
@@ -160,5 +160,5 @@ window: aView message: msgInteger wParam: wInteger lParam: lInteger
 		message: msgInteger
 		wParam: wInteger
 		lParam: lInteger asExternalAddress! !
-!PositionEvent class categoriesFor: #window:message:wParam:lParam:!instance creation!public! !
+!UI.PositionEvent class categoriesFor: #window:message:wParam:lParam:!instance creation!public! !
 

@@ -1,13 +1,21 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-LayoutManager subclass: #FlowLayout
+UI.LayoutManager subclass: #'UI.FlowLayout'
 	instanceVariableNames: 'horizontalGap verticalGap flags'
 	classVariableNames: 'AlignmentMap'
-	poolDictionaries: 'AlignmentFlags'
+	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {}!
-FlowLayout guid: (GUID fromString: '{87b4c648-026e-11d3-9fd7-00a0cc3e4a32}')!
-FlowLayout comment: 'FlowLayout implements a general purpose <layoutManager> to layout <view> objects within a <compositeView>. The views are arranged in a similar manner to words on a page; from left to right and top to bottom. The FlowLayout fits as many visible views as possible into a single row before moving onto the next row. Any invisible views are ignored, and are allocated no space in the layout. You can specify the overall alignment of the rows to be #left, #centre or #right. The separation between adjacent components can be specified with the #horizontalGap and #verticalGap aspects. 
+	classConstants: {
+		'AlignBottom' -> 16r8.
+		'AlignHCenter' -> 16r1.
+		'AlignLeft' -> 16r0.
+		'AlignmentMask' -> 16rF.
+		'AlignRight' -> 16r2.
+		'AlignTop' -> 16r0.
+		'AlignVCenter' -> 16r4
+	}!
+UI.FlowLayout guid: (Core.GUID fromString: '{87b4c648-026e-11d3-9fd7-00a0cc3e4a32}')!
+UI.FlowLayout comment: 'FlowLayout implements a general purpose <layoutManager> to layout <view> objects within a <compositeView>. The views are arranged in a similar manner to words on a page; from left to right and top to bottom. The FlowLayout fits as many visible views as possible into a single row before moving onto the next row. Any invisible views are ignored, and are allocated no space in the layout. You can specify the overall alignment of the rows to be #left, #centre or #right. The separation between adjacent components can be specified with the #horizontalGap and #verticalGap aspects. 
 
 Note that a FlowLayout takes no notice of the #arrangement aspects of the views that it manages.
 
@@ -18,8 +26,8 @@ Instance Variables:
 	verticalGap 		<integer> vertical gap between adjacent views
 	alignment		<Symbol> either #left, #center or #right
 '!
-!FlowLayout categoriesForClass!MVP-Layout Managers-General! !
-!FlowLayout methodsFor!
+!UI.FlowLayout categoriesForClass!MVP-Layout Managers-General! !
+!UI.FlowLayout methodsFor!
 
 alignment
 	"Answers the alignment of the receiver. This will be either #left, #center or #right."
@@ -170,22 +178,22 @@ verticalGap: anInteger
 	"Set the vertical gap between items laid out by the receiver to be the <integer> argument."
 
 	verticalGap := anInteger! !
-!FlowLayout categoriesFor: #alignment!accessing!public! !
-!FlowLayout categoriesFor: #alignment:!accessing!public! !
-!FlowLayout categoriesFor: #flowSplit:context:!helpers!private! !
-!FlowLayout categoriesFor: #horizontalAlignment!accessing!private! !
-!FlowLayout categoriesFor: #horizontalGap!accessing!public! !
-!FlowLayout categoriesFor: #horizontalGap:!accessing!public! !
-!FlowLayout categoriesFor: #initialize!initializing!private! !
-!FlowLayout categoriesFor: #layoutContainer:context:!geometry!private! !
-!FlowLayout categoriesFor: #preferredLayoutExtentOf:context:!enquiries!public! !
-!FlowLayout categoriesFor: #resize:to:!geometry!public! !
-!FlowLayout categoriesFor: #resolutionScaledBy:!geometry!private! !
-!FlowLayout categoriesFor: #verticalAlignment!accessing!private! !
-!FlowLayout categoriesFor: #verticalGap!accessing!public! !
-!FlowLayout categoriesFor: #verticalGap:!accessing!public! !
+!UI.FlowLayout categoriesFor: #alignment!accessing!public! !
+!UI.FlowLayout categoriesFor: #alignment:!accessing!public! !
+!UI.FlowLayout categoriesFor: #flowSplit:context:!helpers!private! !
+!UI.FlowLayout categoriesFor: #horizontalAlignment!accessing!private! !
+!UI.FlowLayout categoriesFor: #horizontalGap!accessing!public! !
+!UI.FlowLayout categoriesFor: #horizontalGap:!accessing!public! !
+!UI.FlowLayout categoriesFor: #initialize!initializing!private! !
+!UI.FlowLayout categoriesFor: #layoutContainer:context:!geometry!private! !
+!UI.FlowLayout categoriesFor: #preferredLayoutExtentOf:context:!enquiries!public! !
+!UI.FlowLayout categoriesFor: #resize:to:!geometry!public! !
+!UI.FlowLayout categoriesFor: #resolutionScaledBy:!geometry!private! !
+!UI.FlowLayout categoriesFor: #verticalAlignment!accessing!private! !
+!UI.FlowLayout categoriesFor: #verticalGap!accessing!public! !
+!UI.FlowLayout categoriesFor: #verticalGap:!accessing!public! !
 
-!FlowLayout class methodsFor!
+!UI.FlowLayout class methodsFor!
 
 initialize
 	"
@@ -204,18 +212,18 @@ initialize
 				at: #bottomRight put: AlignRight | AlignBottom;
 				shrink!
 
-stbConvertFrom: anSTBClassFormat 
+stbConvertFrom: anSTBClassFormat
 	"Convert from earlier schema.
 	1) Former 'alignment' instance variable becomes 'flags', in which alignment is encoded."
 
 	^
-	[:data | 
+	[:data |
 	| newInstance |
 	newInstance := self new.
 	newInstance
 		horizontalGap: data first;
 		verticalGap: data second;
-		alignment: (##((IdentityDictionary new)
+		alignment: (##(IdentityDictionary new
 					at: #left put: #leftTop;
 					at: #center put: #topCenter;
 					at: #right put: #topRight;
@@ -224,7 +232,7 @@ stbConvertFrom: anSTBClassFormat
 
 stbVersion
 	^1! !
-!FlowLayout class categoriesFor: #initialize!development!helpers!public! !
-!FlowLayout class categoriesFor: #stbConvertFrom:!binary filing!public! !
-!FlowLayout class categoriesFor: #stbVersion!constants!public! !
+!UI.FlowLayout class categoriesFor: #initialize!development!helpers!public! !
+!UI.FlowLayout class categoriesFor: #stbConvertFrom:!binary filing!public! !
+!UI.FlowLayout class categoriesFor: #stbVersion!constants!public! !
 

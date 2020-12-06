@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ThemeLibrary subclass: #MockThemeLibrary
+OS.ThemeLibrary subclass: #'OS.MockThemeLibrary'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-MockThemeLibrary guid: (GUID fromString: '{44aa9479-53f3-4ca9-8949-89d3d916b997}')!
-MockThemeLibrary comment: 'MockThemeLibrary is a dummy ThemeLibrary used on host systems that do not have UXTHEME.DLL (i.e. anything earlier than Windows XP). Its main purpose is to avoid the need to test for Windows XP in some cases where theme calls are needed on XP, but are not relevant on older platforms. Most of the methods do nothing, but in some cases a sensible implementation is provided, in particular the tests for theming available and active answer false. These tests would typically be used to guard most theme related code, so no other theme library calls would then be made.'!
-!MockThemeLibrary categoriesForClass!Win32-Modules! !
-!MockThemeLibrary methodsFor!
+OS.MockThemeLibrary guid: (Core.GUID fromString: '{44aa9479-53f3-4ca9-8949-89d3d916b997}')!
+OS.MockThemeLibrary comment: 'MockThemeLibrary is a dummy ThemeLibrary used on host systems that do not have UXTHEME.DLL (i.e. anything earlier than Windows XP). Its main purpose is to avoid the need to test for Windows XP in some cases where theme calls are needed on XP, but are not relevant on older platforms. Most of the methods do nothing, but in some cases a sensible implementation is provided, in particular the tests for theming available and active answer false. These tests would typically be used to guard most theme related code, so no other theme library calls would then be made.'!
+!OS.MockThemeLibrary categoriesForClass!Win32-Modules! !
+!OS.MockThemeLibrary methodsFor!
 
 closeThemeData: htheme
 	"Invoke the CloseThemeData() function of the module wrapped by the receiver.
@@ -29,11 +29,11 @@ drawThemeBackground: htheme hdc: hDC iPartId: iPartId iStateId: iStateId pRect: 
 			[in]HANDLE hDC,
 			[in]int iPartId,
 			[in]int iStateId,
-			[in]RECT* pRect,
-			[in]RECT* pClipRect);"
+			[in]RECTL* pRect,
+			[in]RECTL* pClipRect);"
 
 	| canvas |
-	canvas := Canvas withNonOwnedDC: hDC.
+	canvas := Graphics.Canvas withNonOwnedDC: hDC.
 	canvas fillRectangle: pRect.
 	^S_OK!
 
@@ -46,7 +46,7 @@ drawThemeBackgroundEx: htheme hdc: hDC iPartId: iPartId iStateId: iStateId pRect
 			[in]HANDLE hDC,
 			[in]int iPartId,
 			[in]int iStateId,
-			[in]RECT* pRect,
+			[in]RECTL* pRect,
 			[in]DTBGOPTS* pOptions);"
 
 	^self 
@@ -66,10 +66,10 @@ drawThemeEdge: htheme hdc: hDC iPartId: iPartId iStateId: iStateId pDestRect: pD
 			[in]HANDLE hDC,
 			[in]int iPartId,
 			[in]int iStateId,
-			[in]RECT* pDestRect,
+			[in]RECTL* pDestRect,
 			[in]unsigned int uEdge,
 			[in]unsigned int uFlags,
-			[out]RECT* pContentRect);"
+			[out]RECTL* pContentRect);"
 
 	^E_NOTIMPL!
 
@@ -82,41 +82,41 @@ drawThemeIcon: htheme hdc: hDC iPartId: iPartId iStateId: iStateId pRect: pRect 
 			[in]HANDLE hDC,
 			[in]int iPartId,
 			[in]int iStateId,
-			[in]RECT* pRect,
+			[in]RECTL* pRect,
 			[in]HANDLE himl,
 			[in]int iImageIndex);"
 
 	^E_NOTIMPL!
 
-drawThemeParentBackground: hwnd hdc: hDC prc: prc 
+drawThemeParentBackground: hwnd hdc: hDC prc: prc
 	"Invoke the DrawThemeParentBackground() function of the module wrapped by the receiver.
 	Helpstring: Used by partially-transparent or alpha-blended child controls to draw the part of their parent that they appear in front of.
 
 		HRESULT __stdcall DrawThemeParentBackground(
 			[in]HANDLE hwnd,
 			[in]HANDLE hDC,
-			[in, optional]RECT* prc);"
+			[in, optional]RECTL* prc);"
 
-	| offset parent lResult oldOrg |
+	| offset parent oldOrg |
 	parent := UserLibrary default getParent: hwnd.
 	offset := POINTL new.
-	UserLibrary default 
+	UserLibrary default
 		mapWindowPoints: hwnd
 		hWndTo: parent
 		lpPoints: offset
 		cPoints: 1.
 	oldOrg := POINTL new.
-	(GDILibrary default 
+	(GDILibrary default
 		offsetWindowOrgEx: hDC
 		nXOrg: offset x
 		nYOrg: offset y
 		lppt: oldOrg) ifFalse: [^HRESULT win32Error: KernelLibrary default getLastError].
-	lResult := UserLibrary default 
-				sendMessage: parent
-				msg: WM_PRINTCLIENT
-				wParam: hDC
-				lParam: PRF_CLIENT.
-	GDILibrary default 
+	UserLibrary default
+		sendMessage: parent
+		msg: WM_PRINTCLIENT
+		wParam: hDC
+		lParam: PRF_CLIENT.
+	GDILibrary default
 		setWindowOrgEx: hDC
 		nXOrg: oldOrg x
 		nYOrg: oldOrg y
@@ -136,7 +136,7 @@ drawThemeText: htheme hdc: hDC iPartId: iPartId iStateId: iStateId pszText: pszT
 			[in]int iCharCount,
 			[in]unsigned long dwTextFlags,
 			[in]unsigned long dwTextFlags2,
-			[in]RECT* pRect);"
+			[in]RECTL* pRect);"
 
 	^E_NOTIMPL!
 
@@ -190,8 +190,8 @@ getThemeBackgroundContentRect: htheme hdc: hDC iPartId: iPartId iStateId: iState
 			[in]HANDLE hDC,
 			[in]int iPartId,
 			[in]int iStateId,
-			[in]RECT* pBoundingRect,
-			[out]RECT* pContentRect);"
+			[in]RECTL* pBoundingRect,
+			[out]RECTL* pContentRect);"
 
 	^E_NOTIMPL!
 
@@ -204,8 +204,8 @@ getThemeBackgroundExtent: htheme hdc: hDC iPartId: iPartId iStateId: iStateId pC
 			[in]HANDLE hDC,
 			[in]int iPartId,
 			[in]int iStateId,
-			[in]RECT* pContentRect,
-			[out]RECT* pExtentRect);"
+			[in]RECTL* pContentRect,
+			[out]RECTL* pExtentRect);"
 
 	pExtentRect copyBytes: pContentRect.
 	^S_OK!
@@ -219,7 +219,7 @@ getThemeBackgroundRegion: htheme hdc: hDC iPartId: iPartId iStateId: iStateId pR
 			[in]HANDLE hDC,
 			[in]int iPartId,
 			[in]int iStateId,
-			[in]RECT* pRect,
+			[in]RECTL* pRect,
 			[out]HANDLE* pRegion);"
 
 	^E_NOTIMPL!
@@ -340,7 +340,7 @@ getThemeMargins: htheme hdc: hDC iPartId: iPartId iStateId: iStateId iPropId: iP
 			[in]int iPartId,
 			[in]int iStateId,
 			[in]int iPropId,
-			[in]RECT* prc,
+			[in]RECTL* prc,
 			[out]MARGINS* pMargins);"
 
 	^E_NOTIMPL!
@@ -368,7 +368,7 @@ getThemePartSize: htheme hdc: hDC iPartId: iPartId iStateId: iStateId prc: prc e
 			[in]HANDLE hDC,
 			[in]int iPartId,
 			[in]int iStateId,
-			[in]RECT* prc,
+			[in]RECTL* prc,
 			[in]THEMESIZE eSize,
 			[out]SIZE* psz);"
 
@@ -383,7 +383,7 @@ getThemePosition: htheme iPartId: iPartId iStateId: iStateId iPropId: iPropId pP
 			[in]int iPartId,
 			[in]int iStateId,
 			[in]int iPropId,
-			[out]POINT* pPoint);"
+			[out]POINTL* pPoint);"
 
 	^E_NOTIMPL!
 
@@ -402,14 +402,14 @@ getThemePropertyOrigin: htheme iPartId: iPartId iStateId: iStateId iPropId: iPro
 
 getThemeRect: htheme iPartId: iPartId iStateId: iStateId iPropId: iPropId pRect: pRect 
 	"Invoke the GetThemeRect() function of the module wrapped by the receiver.
-	Helpstring: Get the value for the specified RECT property
+	Helpstring: Get the value for the specified RECTL property
 
 		HRESULT __stdcall GetThemeRect(
 			[in]HTHEME HTHEME,
 			[in]int iPartId,
 			[in]int iStateId,
 			[in]int iPropId,
-			[out]RECT* pRect);"
+			[out]RECTL* pRect);"
 
 	^E_NOTIMPL!
 
@@ -438,7 +438,7 @@ getThemeSysBool: htheme iBoolId: iBoolId
 
 	^false!
 
-getThemeSysColor: htheme iColorId: iColorId 
+getThemeSysColor: htheme iColorId: iColorId
 	"Invoke the GetThemeSysColor() function of the module wrapped by the receiver.
 	Helpstring: Get the value of the specified System color
 
@@ -446,9 +446,9 @@ getThemeSysColor: htheme iColorId: iColorId
 			[in]HTHEME HTHEME,
 			[in]int iColorId);"
 
-	^(SystemColor fromId: iColorId) asCOLORREF!
+	^(Graphics.SystemColor fromId: iColorId) asCOLORREF!
 
-getThemeSysColorBrush: htheme iColorId: iColorId 
+getThemeSysColorBrush: htheme iColorId: iColorId
 	"Invoke the GetThemeSysColorBrush() function of the module wrapped by the receiver.
 	Helpstring: Get the brush for the specified System color
 
@@ -514,13 +514,13 @@ getThemeTextExtent: htheme hdc: hDC iPartId: iPartId iStateId: iStateId pszText:
 			[in]LPWSTR pszText,
 			[in]int iCharCount,
 			[in]unsigned long dwTextFlags,
-			[in]RECT* pBoundingRect,
-			[out]RECT* pExtentRect);"
+			[in]RECTL* pBoundingRect,
+			[out]RECTL* pExtentRect);"
 
 	#todo.	"Can implement this"
 	^E_NOTIMPL!
 
-getThemeTextMetrics: htheme hdc: hDC iPartId: iPartId iStateId: iStateId pTM: ptm 
+getThemeTextMetrics: htheme hdc: hDC iPartId: iPartId iStateId: iStateId pTM: ptm
 	"Invoke the GetThemeTextMetrics() function of the module wrapped by the receiver.
 	Helpstring: Returns info about the theme-specified font for the part/state passed in.
 
@@ -531,7 +531,7 @@ getThemeTextMetrics: htheme hdc: hDC iPartId: iPartId iStateId: iStateId pTM: pt
 			[in]int iStateId,
 			[out]TEXTMETRIC* ptm);"
 
-	^(GDILibrary default getTextMetrics: hDC lptm: ptm) 
+	^(GDILibrary default getTextMetrics: hDC lptm: ptm)
 		ifTrue: [S_OK]
 		ifFalse: [(HRESULT win32Error: 2) asInteger]!
 
@@ -554,9 +554,9 @@ hitTestThemeBackground: htheme hdc: hDC iPartId: iPartId iStateId: iStateId dwOp
 			[in]int iPartId,
 			[in]int iStateId,
 			[in]unsigned long dwOptions,
-			[in]RECT* pRect,
+			[in]RECTL* pRect,
 			[in]HANDLE hrgn,
-			[in]POINT ptTest,
+			[in]POINTL ptTest,
 			[out]unsigned short* pwHitTestCode);"
 
 	^E_NOTIMPL!
@@ -644,53 +644,53 @@ setWindowTheme: hwnd pszSubAppName: pszSubAppName pszSubIdList: pszSubIdList
 			[in]LPWSTR pszSubIdList);"
 
 	^E_NOTIMPL! !
-!MockThemeLibrary categoriesFor: #closeThemeData:!public!win32 functions-visual styles! !
-!MockThemeLibrary categoriesFor: #drawThemeBackground:hdc:iPartId:iStateId:pRect:pClipRect:!public!win32 functions-visual styles! !
-!MockThemeLibrary categoriesFor: #drawThemeBackgroundEx:hdc:iPartId:iStateId:pRect:pOptions:!public!win32 functions-visual styles! !
-!MockThemeLibrary categoriesFor: #drawThemeEdge:hdc:iPartId:iStateId:pDestRect:uEdge:uFlags:pContentRect:!public!win32 functions-visual styles! !
-!MockThemeLibrary categoriesFor: #drawThemeIcon:hdc:iPartId:iStateId:pRect:himl:iImageIndex:!public!win32 functions-visual styles! !
-!MockThemeLibrary categoriesFor: #drawThemeParentBackground:hdc:prc:!public!win32 functions-visual styles! !
-!MockThemeLibrary categoriesFor: #drawThemeText:hdc:iPartId:iStateId:pszText:iCharCount:dwTextFlags:dwTextFlags2:pRect:!public!win32 functions-visual styles! !
-!MockThemeLibrary categoriesFor: #enableThemeDialogTexture:dwFlags:!public!win32 functions-visual styles! !
-!MockThemeLibrary categoriesFor: #enableTheming:!public!win32 functions-visual styles! !
-!MockThemeLibrary categoriesFor: #getCurrentThemeName:cchMaxNameChars:pszColorBuff:cchMaxColorChars:pszSizeBuff:cchMaxSizeChars:!public!win32 functions-visual styles! !
-!MockThemeLibrary categoriesFor: #getThemeAppProperties!public!win32 functions-visual styles! !
-!MockThemeLibrary categoriesFor: #getThemeBackgroundContentRect:hdc:iPartId:iStateId:pBoundingRect:pContentRect:!public!win32 functions-visual styles! !
-!MockThemeLibrary categoriesFor: #getThemeBackgroundExtent:hdc:iPartId:iStateId:pContentRect:pExtentRect:!public!win32 functions-visual styles! !
-!MockThemeLibrary categoriesFor: #getThemeBackgroundRegion:hdc:iPartId:iStateId:pRect:pRegion:!public!win32 functions-visual styles! !
-!MockThemeLibrary categoriesFor: #getThemeBool:iPartId:iStateId:iPropId:pfVal:!public!win32 functions-visual styles! !
-!MockThemeLibrary categoriesFor: #getThemeColor:iPartId:iStateId:iPropId:pColor:!public!win32 functions-visual styles! !
-!MockThemeLibrary categoriesFor: #getThemeDocumentationProperty:pszPropertyName:pszValueBuff:cchMaxValChars:!public!win32 functions-visual styles! !
-!MockThemeLibrary categoriesFor: #getThemeEnumValue:iPartId:iStateId:iPropId:piVal:!public!win32 functions-visual styles! !
-!MockThemeLibrary categoriesFor: #getThemeFilename:iPartId:iStateId:iPropId:pszThemeFileName:cchMaxBuffChars:!public!win32 functions-visual styles! !
-!MockThemeLibrary categoriesFor: #getThemeFont:hdc:iPartId:iStateId:iPropId:pFont:!public!win32 functions-visual styles! !
-!MockThemeLibrary categoriesFor: #getThemeInt:iPartId:iStateId:iPropId:piVal:!public!win32 functions-visual styles! !
-!MockThemeLibrary categoriesFor: #getThemeIntList:iPartId:iStateId:iPropId:pIntList:!public!win32 functions-visual styles! !
-!MockThemeLibrary categoriesFor: #getThemeMargins:hdc:iPartId:iStateId:iPropId:prc:pMargins:!public!win32 functions-visual styles! !
-!MockThemeLibrary categoriesFor: #getThemeMetric:hdc:iPartId:iStateId:iPropId:piVal:!public!win32 functions-visual styles! !
-!MockThemeLibrary categoriesFor: #getThemePartSize:hdc:iPartId:iStateId:prc:eSize:psz:!public!win32 functions-visual styles! !
-!MockThemeLibrary categoriesFor: #getThemePosition:iPartId:iStateId:iPropId:pPoint:!public!win32 functions-visual styles! !
-!MockThemeLibrary categoriesFor: #getThemePropertyOrigin:iPartId:iStateId:iPropId:pOrigin:!public!win32 functions-visual styles! !
-!MockThemeLibrary categoriesFor: #getThemeRect:iPartId:iStateId:iPropId:pRect:!public!win32 functions-visual styles! !
-!MockThemeLibrary categoriesFor: #getThemeString:iPartId:iStateId:iPropId:pszBuff:cchMaxBuffChars:!public!win32 functions-visual styles! !
-!MockThemeLibrary categoriesFor: #getThemeSysBool:iBoolId:!public!win32 functions-visual styles! !
-!MockThemeLibrary categoriesFor: #getThemeSysColor:iColorId:!public!win32 functions-visual styles! !
-!MockThemeLibrary categoriesFor: #getThemeSysColorBrush:iColorId:!public!win32 functions-visual styles! !
-!MockThemeLibrary categoriesFor: #getThemeSysFont:iFontId:plf:!public!win32 functions-visual styles! !
-!MockThemeLibrary categoriesFor: #getThemeSysInt:iIntId:piValue:!public!win32 functions-visual styles! !
-!MockThemeLibrary categoriesFor: #getThemeSysSize:iSizeId:!public!win32 functions-visual styles! !
-!MockThemeLibrary categoriesFor: #getThemeSysString:iStringId:pszStringBuff:cchMaxStringChars:!public!win32 functions-visual styles! !
-!MockThemeLibrary categoriesFor: #getThemeTextExtent:hdc:iPartId:iStateId:pszText:iCharCount:dwTextFlags:pBoundingRect:pExtentRect:!public!win32 functions-visual styles! !
-!MockThemeLibrary categoriesFor: #getThemeTextMetrics:hdc:iPartId:iStateId:pTM:!public!win32 functions-visual styles! !
-!MockThemeLibrary categoriesFor: #getWindowTheme:!public!win32 functions-visual styles! !
-!MockThemeLibrary categoriesFor: #hitTestThemeBackground:hdc:iPartId:iStateId:dwOptions:pRect:hrgn:ptTest:pwHitTestCode:!public!win32 functions-visual styles! !
-!MockThemeLibrary categoriesFor: #isAppThemed!public!win32 functions-visual styles! !
-!MockThemeLibrary categoriesFor: #isThemeActive!public!win32 functions-visual styles! !
-!MockThemeLibrary categoriesFor: #isThemeBackgroundPartiallyTransparent:iPartId:iStateId:!public!win32 functions-visual styles! !
-!MockThemeLibrary categoriesFor: #isThemeDialogTextureEnabled:!public!win32 functions-visual styles! !
-!MockThemeLibrary categoriesFor: #isThemePartDefined:iPartId:iStateId:!public!win32 functions-visual styles! !
-!MockThemeLibrary categoriesFor: #open:!private!realizing/unrealizing! !
-!MockThemeLibrary categoriesFor: #openThemeData:pszClassList:!public!win32 functions-visual styles! !
-!MockThemeLibrary categoriesFor: #setThemeAppProperties:!public!win32 functions-visual styles! !
-!MockThemeLibrary categoriesFor: #setWindowTheme:pszSubAppName:pszSubIdList:!public!win32 functions-visual styles! !
+!OS.MockThemeLibrary categoriesFor: #closeThemeData:!public!win32 functions-visual styles! !
+!OS.MockThemeLibrary categoriesFor: #drawThemeBackground:hdc:iPartId:iStateId:pRect:pClipRect:!public!win32 functions-visual styles! !
+!OS.MockThemeLibrary categoriesFor: #drawThemeBackgroundEx:hdc:iPartId:iStateId:pRect:pOptions:!public!win32 functions-visual styles! !
+!OS.MockThemeLibrary categoriesFor: #drawThemeEdge:hdc:iPartId:iStateId:pDestRect:uEdge:uFlags:pContentRect:!public!win32 functions-visual styles! !
+!OS.MockThemeLibrary categoriesFor: #drawThemeIcon:hdc:iPartId:iStateId:pRect:himl:iImageIndex:!public!win32 functions-visual styles! !
+!OS.MockThemeLibrary categoriesFor: #drawThemeParentBackground:hdc:prc:!public!win32 functions-visual styles! !
+!OS.MockThemeLibrary categoriesFor: #drawThemeText:hdc:iPartId:iStateId:pszText:iCharCount:dwTextFlags:dwTextFlags2:pRect:!public!win32 functions-visual styles! !
+!OS.MockThemeLibrary categoriesFor: #enableThemeDialogTexture:dwFlags:!public!win32 functions-visual styles! !
+!OS.MockThemeLibrary categoriesFor: #enableTheming:!public!win32 functions-visual styles! !
+!OS.MockThemeLibrary categoriesFor: #getCurrentThemeName:cchMaxNameChars:pszColorBuff:cchMaxColorChars:pszSizeBuff:cchMaxSizeChars:!public!win32 functions-visual styles! !
+!OS.MockThemeLibrary categoriesFor: #getThemeAppProperties!public!win32 functions-visual styles! !
+!OS.MockThemeLibrary categoriesFor: #getThemeBackgroundContentRect:hdc:iPartId:iStateId:pBoundingRect:pContentRect:!public!win32 functions-visual styles! !
+!OS.MockThemeLibrary categoriesFor: #getThemeBackgroundExtent:hdc:iPartId:iStateId:pContentRect:pExtentRect:!public!win32 functions-visual styles! !
+!OS.MockThemeLibrary categoriesFor: #getThemeBackgroundRegion:hdc:iPartId:iStateId:pRect:pRegion:!public!win32 functions-visual styles! !
+!OS.MockThemeLibrary categoriesFor: #getThemeBool:iPartId:iStateId:iPropId:pfVal:!public!win32 functions-visual styles! !
+!OS.MockThemeLibrary categoriesFor: #getThemeColor:iPartId:iStateId:iPropId:pColor:!public!win32 functions-visual styles! !
+!OS.MockThemeLibrary categoriesFor: #getThemeDocumentationProperty:pszPropertyName:pszValueBuff:cchMaxValChars:!public!win32 functions-visual styles! !
+!OS.MockThemeLibrary categoriesFor: #getThemeEnumValue:iPartId:iStateId:iPropId:piVal:!public!win32 functions-visual styles! !
+!OS.MockThemeLibrary categoriesFor: #getThemeFilename:iPartId:iStateId:iPropId:pszThemeFileName:cchMaxBuffChars:!public!win32 functions-visual styles! !
+!OS.MockThemeLibrary categoriesFor: #getThemeFont:hdc:iPartId:iStateId:iPropId:pFont:!public!win32 functions-visual styles! !
+!OS.MockThemeLibrary categoriesFor: #getThemeInt:iPartId:iStateId:iPropId:piVal:!public!win32 functions-visual styles! !
+!OS.MockThemeLibrary categoriesFor: #getThemeIntList:iPartId:iStateId:iPropId:pIntList:!public!win32 functions-visual styles! !
+!OS.MockThemeLibrary categoriesFor: #getThemeMargins:hdc:iPartId:iStateId:iPropId:prc:pMargins:!public!win32 functions-visual styles! !
+!OS.MockThemeLibrary categoriesFor: #getThemeMetric:hdc:iPartId:iStateId:iPropId:piVal:!public!win32 functions-visual styles! !
+!OS.MockThemeLibrary categoriesFor: #getThemePartSize:hdc:iPartId:iStateId:prc:eSize:psz:!public!win32 functions-visual styles! !
+!OS.MockThemeLibrary categoriesFor: #getThemePosition:iPartId:iStateId:iPropId:pPoint:!public!win32 functions-visual styles! !
+!OS.MockThemeLibrary categoriesFor: #getThemePropertyOrigin:iPartId:iStateId:iPropId:pOrigin:!public!win32 functions-visual styles! !
+!OS.MockThemeLibrary categoriesFor: #getThemeRect:iPartId:iStateId:iPropId:pRect:!public!win32 functions-visual styles! !
+!OS.MockThemeLibrary categoriesFor: #getThemeString:iPartId:iStateId:iPropId:pszBuff:cchMaxBuffChars:!public!win32 functions-visual styles! !
+!OS.MockThemeLibrary categoriesFor: #getThemeSysBool:iBoolId:!public!win32 functions-visual styles! !
+!OS.MockThemeLibrary categoriesFor: #getThemeSysColor:iColorId:!public!win32 functions-visual styles! !
+!OS.MockThemeLibrary categoriesFor: #getThemeSysColorBrush:iColorId:!public!win32 functions-visual styles! !
+!OS.MockThemeLibrary categoriesFor: #getThemeSysFont:iFontId:plf:!public!win32 functions-visual styles! !
+!OS.MockThemeLibrary categoriesFor: #getThemeSysInt:iIntId:piValue:!public!win32 functions-visual styles! !
+!OS.MockThemeLibrary categoriesFor: #getThemeSysSize:iSizeId:!public!win32 functions-visual styles! !
+!OS.MockThemeLibrary categoriesFor: #getThemeSysString:iStringId:pszStringBuff:cchMaxStringChars:!public!win32 functions-visual styles! !
+!OS.MockThemeLibrary categoriesFor: #getThemeTextExtent:hdc:iPartId:iStateId:pszText:iCharCount:dwTextFlags:pBoundingRect:pExtentRect:!public!win32 functions-visual styles! !
+!OS.MockThemeLibrary categoriesFor: #getThemeTextMetrics:hdc:iPartId:iStateId:pTM:!public!win32 functions-visual styles! !
+!OS.MockThemeLibrary categoriesFor: #getWindowTheme:!public!win32 functions-visual styles! !
+!OS.MockThemeLibrary categoriesFor: #hitTestThemeBackground:hdc:iPartId:iStateId:dwOptions:pRect:hrgn:ptTest:pwHitTestCode:!public!win32 functions-visual styles! !
+!OS.MockThemeLibrary categoriesFor: #isAppThemed!public!win32 functions-visual styles! !
+!OS.MockThemeLibrary categoriesFor: #isThemeActive!public!win32 functions-visual styles! !
+!OS.MockThemeLibrary categoriesFor: #isThemeBackgroundPartiallyTransparent:iPartId:iStateId:!public!win32 functions-visual styles! !
+!OS.MockThemeLibrary categoriesFor: #isThemeDialogTextureEnabled:!public!win32 functions-visual styles! !
+!OS.MockThemeLibrary categoriesFor: #isThemePartDefined:iPartId:iStateId:!public!win32 functions-visual styles! !
+!OS.MockThemeLibrary categoriesFor: #open:!private!realizing/unrealizing! !
+!OS.MockThemeLibrary categoriesFor: #openThemeData:pszClassList:!public!win32 functions-visual styles! !
+!OS.MockThemeLibrary categoriesFor: #setThemeAppProperties:!public!win32 functions-visual styles! !
+!OS.MockThemeLibrary categoriesFor: #setWindowTheme:pszSubAppName:pszSubIdList:!public!win32 functions-visual styles! !
 

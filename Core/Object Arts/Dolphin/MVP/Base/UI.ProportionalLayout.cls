@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-LinearLayout subclass: #ProportionalLayout
+UI.LinearLayout subclass: #'UI.ProportionalLayout'
 	instanceVariableNames: 'proportions isVertical'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ProportionalLayout guid: (GUID fromString: '{87b4c64b-026e-11d3-9fd7-00a0cc3e4a32}')!
-ProportionalLayout comment: 'ProportionalLayout implements a general purpose <layoutManager> to layout <view> objects within a <compositeView>. The managed views are arranged either vertically or horizontally depending on the setting of the <boolean> #isVertical aspect. The layout manager attempts to keep the relative sizes of the views in proportion according to the arrangement aspects of each view, which must be <number>s. Any view with an arrangement of 0 will be left at its original size. Managed views that are not currently visible are ignored, in which case they are allocated no proportion of the available space.
+UI.ProportionalLayout guid: (Core.GUID fromString: '{87b4c64b-026e-11d3-9fd7-00a0cc3e4a32}')!
+UI.ProportionalLayout comment: 'ProportionalLayout implements a general purpose <layoutManager> to layout <view> objects within a <compositeView>. The managed views are arranged either vertically or horizontally depending on the setting of the <boolean> #isVertical aspect. The layout manager attempts to keep the relative sizes of the views in proportion according to the arrangement aspects of each view, which must be <number>s. Any view with an arrangement of 0 will be left at its original size. Managed views that are not currently visible are ignored, in which case they are allocated no proportion of the available space.
 
 For example. You have four views in a container managed by a ProportionalLayout; each has an arrangement of 2, 0, 5, 3 respectively. The second view will always keep its current size. The remainder of the space available in the container will be split between the remaining views in the ratios 2:5:3. 
 
@@ -20,8 +20,8 @@ Instance Variables:
 	isVertical		<boolean>
 
 '!
-!ProportionalLayout categoriesForClass!MVP-Layout Managers-General! !
-!ProportionalLayout methodsFor!
+!UI.ProportionalLayout categoriesForClass!MVP-Layout Managers-General! !
+!UI.ProportionalLayout methodsFor!
 
 arrangementOf: aView 
 	"Answer a <Number> representing the current proportion for aView. Answer the default if a
@@ -39,7 +39,7 @@ hasFixedSize: aView
 	^(self arrangementOf: aView) isZero 
 		or: [self isVertical ifTrue: [aView hasFixedHeight] ifFalse: [aView hasFixedWidth]]!
 
-hideShowSplitters: aCompositeView context: aLayoutContext 
+hideShowSplitters: aCompositeView context: aLayoutContext
 	"Private - Show only those splitters that have at least one resiable view on either side
 	before the next splitter on that side. This should be the minimal set of splitters that
 	allows for adjustment of the resizable panes, and no more."
@@ -53,25 +53,25 @@ hideShowSplitters: aCompositeView context: aLayoutContext
 	resizable := false.
 	managed := aCompositeView managedSubViews.
 	managed do: 
-			[:each | 
-			(each isKindOf: Splitter) 
+			[:each |
+			(each isKindOf: Splitter)
 				ifTrue: 
-					[resizable 
+					[resizable
 						ifTrue: 
 							[aLayoutContext showView: each.
 							resizable := false]
 						ifFalse: [aLayoutContext hideView: each]]
 				ifFalse: 
-					[((aLayoutContext isViewVisible: each) and: [(self hasFixedSize: each) not]) 
+					[((aLayoutContext isViewVisible: each) and: [(self hasFixedSize: each) not])
 						ifTrue: [resizable := true]]].
 	resizable := false.
 	managed reverseDo: 
-			[:each | 
-			(aLayoutContext isViewVisible: each) 
+			[:each |
+			(aLayoutContext isViewVisible: each)
 				ifTrue: 
-					[(each isKindOf: Splitter) 
+					[(each isKindOf: Splitter)
 						ifTrue: 
-							[resizable 
+							[resizable
 								ifTrue: 
 									[aLayoutContext showView: each.
 									resizable := false]
@@ -204,17 +204,17 @@ totalProportionsOf: viewCollection
 	^viewCollection inject: 0 into: [:total :aView |
 			total + (self arrangementOf: aView)].
 ! !
-!ProportionalLayout categoriesFor: #arrangementOf:!accessing!public! !
-!ProportionalLayout categoriesFor: #arrangementOf:put:!accessing!public! !
-!ProportionalLayout categoriesFor: #hasFixedSize:!private!testing! !
-!ProportionalLayout categoriesFor: #hideShowSplitters:context:!helpers!private! !
-!ProportionalLayout categoriesFor: #initialize!initializing!private! !
-!ProportionalLayout categoriesFor: #isVertical!public!testing! !
-!ProportionalLayout categoriesFor: #isVertical:!accessing!public! !
-!ProportionalLayout categoriesFor: #layoutContainer:context:!helpers!private! !
-!ProportionalLayout categoriesFor: #nearestResizableViewFrom:inViews:by:!helpers!private! !
-!ProportionalLayout categoriesFor: #proportions!accessing!private! !
-!ProportionalLayout categoriesFor: #removeSubView:!public!removing! !
-!ProportionalLayout categoriesFor: #reposition:to:!operations!private! !
-!ProportionalLayout categoriesFor: #totalProportionsOf:!helpers!private! !
+!UI.ProportionalLayout categoriesFor: #arrangementOf:!accessing!public! !
+!UI.ProportionalLayout categoriesFor: #arrangementOf:put:!accessing!public! !
+!UI.ProportionalLayout categoriesFor: #hasFixedSize:!private!testing! !
+!UI.ProportionalLayout categoriesFor: #hideShowSplitters:context:!helpers!private! !
+!UI.ProportionalLayout categoriesFor: #initialize!initializing!private! !
+!UI.ProportionalLayout categoriesFor: #isVertical!public!testing! !
+!UI.ProportionalLayout categoriesFor: #isVertical:!accessing!public! !
+!UI.ProportionalLayout categoriesFor: #layoutContainer:context:!helpers!private! !
+!UI.ProportionalLayout categoriesFor: #nearestResizableViewFrom:inViews:by:!helpers!private! !
+!UI.ProportionalLayout categoriesFor: #proportions!accessing!private! !
+!UI.ProportionalLayout categoriesFor: #removeSubView:!public!removing! !
+!UI.ProportionalLayout categoriesFor: #reposition:to:!operations!private! !
+!UI.ProportionalLayout categoriesFor: #totalProportionsOf:!helpers!private! !
 

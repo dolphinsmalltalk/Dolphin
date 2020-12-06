@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Bitmap subclass: #DIBSection
+Graphics.Bitmap subclass: #'Graphics.DIBSection'
 	instanceVariableNames: 'depth imageBits'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-DIBSection guid: (GUID fromString: '{f44c914a-2b3f-11d3-8368-7a8b5a000000}')!
-DIBSection comment: ''!
-!DIBSection categoriesForClass!Graphics-Tools! !
-!DIBSection methodsFor!
+Graphics.DIBSection guid: (Core.GUID fromString: '{f44c914a-2b3f-11d3-8368-7a8b5a000000}')!
+Graphics.DIBSection comment: ''!
+!Graphics.DIBSection categoriesForClass!Graphics-Tools! !
+!Graphics.DIBSection methodsFor!
 
 baseLoadFlags
 	"Answer the basic load flags to be used when calling LoadImage() to realize the receiver."
@@ -79,14 +79,13 @@ createHandle
 		biCompression: BI_RGB.	"Top down pixel order"
 
 	"Slot for pointer to the bitmap bits"
-	imageBits := ExternalAddress new.
+	imageBits := External.Address new.
 
 	"Create the bitmap but differently for RGB and paletized usage"
-	depth > 8 
+	depth > 8
 		ifTrue: 
 			["RGB usage"
-
-			dibSection := GDILibrary default 
+			dibSection := GDILibrary default
 						createDIBSection: 0
 						pbmi: info
 						iUsage: DIB_RGB_COLORS
@@ -94,18 +93,17 @@ createHandle
 						hSection: 0
 						dwOffset: 0]
 		ifFalse: 
-			["Paletized usage"
-
-			| palBitmap canvas bits |
+			[| palBitmap canvas bits |
+			"Paletized usage"
 			bits := DWORD new.
-			palBitmap := Bitmap 
+			palBitmap := Bitmap
 						width: 1
 						height: 1
 						planes: 1
 						bitsPerPixel: depth
 						bits: bits.
 			canvas := palBitmap canvas.
-			dibSection := GDILibrary default 
+			dibSection := GDILibrary default
 						createDIBSection: canvas asParameter
 						pbmi: info
 						iUsage: DIB_PAL_COLORS
@@ -124,9 +122,7 @@ depth
 erase
 	"Private - Erase area occupied by the DIB."
 
-	self canvas 
-		fillRectangle: (Rectangle origin: Point zero extent: self extent) 
-		brush: Brush white!
+	self canvas fillRectangle: (RECTL extent: self extent) brush: Brush white!
 
 errorInappropriateColorTable: aRGBQUADArray
 	"Raise an error that the receiver cannot hold aRGBQUADArray as its colour table"
@@ -143,7 +139,7 @@ getColorTable
 	size := 2 raisedToInteger: bits.
 	quads := StructureArray length: size elementClass: RGBQUAD.
 	canvas := self canvas.
-	size := GDILibrary default 
+	size := GDILibrary default
 				getDIBColorTable: canvas asParameter
 				uStartIndex: 0
 				cEntries: size
@@ -166,7 +162,7 @@ imageBits
 	imageBits isNil ifTrue: [self cacheInfo].
 	^imageBits!
 
-setColorTable: anRGBQUADArray 
+setColorTable: anRGBQUADArray
 	"Sets the colour table for the receiver to be that in anRGBQUADArray.
 	Signals #errorInvalidColorTable if the table is the wrong size, or not appropriate,
 	for the receiver"
@@ -174,13 +170,12 @@ setColorTable: anRGBQUADArray
 	| bits size newSize canvas |
 	bits := self depth.
 	size := 2 raisedToInteger: bits.
-	anRGBQUADArray size = size 
+	anRGBQUADArray size = size
 		ifFalse: 
 			["Inappropriate colour table size"
-
 			self errorInappropriateColorTable: anRGBQUADArray].
 	canvas := self canvas.
-	newSize := GDILibrary default 
+	newSize := GDILibrary default
 				setDIBColorTable: canvas asParameter
 				uStartIndex: 0
 				cEntries: size
@@ -195,21 +190,24 @@ width: w height: h depth: d
 
 	extent := w@h.
 	depth := d! !
-!DIBSection categoriesFor: #baseLoadFlags!constants!public! !
-!DIBSection categoriesFor: #cacheInfo!helpers!private! !
-!DIBSection categoriesFor: #clearCached!initializing!private! !
-!DIBSection categoriesFor: #copyToGlobalHeap!accessing!private! !
-!DIBSection categoriesFor: #createHandle!private!realizing/unrealizing! !
-!DIBSection categoriesFor: #depth!accessing!public! !
-!DIBSection categoriesFor: #erase!drawing!private! !
-!DIBSection categoriesFor: #errorInappropriateColorTable:!exceptions!public! !
-!DIBSection categoriesFor: #getColorTable!accessing!public! !
-!DIBSection categoriesFor: #getDIBSECTION!accessing!public! !
-!DIBSection categoriesFor: #imageBits!accessing!public! !
-!DIBSection categoriesFor: #setColorTable:!accessing!public! !
-!DIBSection categoriesFor: #width:height:depth:!initializing!private! !
+!Graphics.DIBSection categoriesFor: #baseLoadFlags!constants!public! !
+!Graphics.DIBSection categoriesFor: #cacheInfo!helpers!private! !
+!Graphics.DIBSection categoriesFor: #clearCached!initializing!private! !
+!Graphics.DIBSection categoriesFor: #copyToGlobalHeap!accessing!private! !
+!Graphics.DIBSection categoriesFor: #createHandle!private!realizing/unrealizing! !
+!Graphics.DIBSection categoriesFor: #depth!accessing!public! !
+!Graphics.DIBSection categoriesFor: #erase!drawing!private! !
+!Graphics.DIBSection categoriesFor: #errorInappropriateColorTable:!exceptions!public! !
+!Graphics.DIBSection categoriesFor: #getColorTable!accessing!public! !
+!Graphics.DIBSection categoriesFor: #getDIBSECTION!accessing!public! !
+!Graphics.DIBSection categoriesFor: #imageBits!accessing!public! !
+!Graphics.DIBSection categoriesFor: #setColorTable:!accessing!public! !
+!Graphics.DIBSection categoriesFor: #width:height:depth:!initializing!private! !
 
-!DIBSection class methodsFor!
+!Graphics.DIBSection class methodsFor!
+
+extent: aPoint
+	^self width: aPoint x height: aPoint y!
 
 fromGlobalHandle: anExternalHandle
 	"Answer a new <DIBSection> instantiated with header and bits from the global memory block
@@ -261,7 +259,8 @@ width: width height: height depth: depth
 		height: height 
 		depth: depth
 		! !
-!DIBSection class categoriesFor: #fromGlobalHandle:!instance creation!public! !
-!DIBSection class categoriesFor: #width:height:!instance creation!public! !
-!DIBSection class categoriesFor: #width:height:depth:!instance creation!public! !
+!Graphics.DIBSection class categoriesFor: #extent:!instance creation!public! !
+!Graphics.DIBSection class categoriesFor: #fromGlobalHandle:!instance creation!public! !
+!Graphics.DIBSection class categoriesFor: #width:height:!instance creation!public! !
+!Graphics.DIBSection class categoriesFor: #width:height:depth:!instance creation!public! !
 

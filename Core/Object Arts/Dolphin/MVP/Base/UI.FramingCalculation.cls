@@ -1,21 +1,21 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Object subclass: #FramingCalculation
+Core.Object subclass: #'UI.FramingCalculation'
 	instanceVariableNames: 'name framingBlock offsetBlock flags'
 	classVariableNames: 'Calculations'
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'IndependentMask' -> 16r4.
 		'ProportionalMask' -> 16r2.
 		'VerticalMask' -> 16r1
 	}!
-FramingCalculation guid: (GUID fromString: '{d8059738-a2e8-4291-8e24-e31cf4bee13a}')!
-FramingCalculation comment: 'FramingCalculation instances are used to represent the individual edge constraints in a <FramingConstraints> instance. See that class'' comment for further details.
+UI.FramingCalculation guid: (Core.GUID fromString: '{d8059738-a2e8-4291-8e24-e31cf4bee13a}')!
+UI.FramingCalculation comment: 'FramingCalculation instances are used to represent the individual edge constraints in a <FramingConstraints> instance. See that class'' comment for further details.
 
 You can add a new framing calculation by following the pattern of the existing instance creation methods (e.g. #fixedPreviousLeft). Essentially you must extend this class by adding a new class side instance creation method as a loose method in your package. In order to allow for efficient sharing of FramingCalculation instances, and yet not interfere with the stripping process, the instances are created lazily and are normally held in a dictionary and looked up by name. During the deployment process, however, the dictionary is deliberately nilled to allow FramingCalculations to be stripped entirely should it turn out not to be used (i.e. you don''t make any use of <FramingLayout>s in your application), and so that unused calculations are removed too. This mechanism is implemented by #lookupCalc:framingBlock:offsetBlock:flags: method, which you must also call for your own framing calculations.'!
-!FramingCalculation categoriesForClass!MVP-Layout Managers-Support! !
-!FramingCalculation methodsFor!
+!UI.FramingCalculation categoriesForClass!MVP-Layout Managers-Support! !
+!UI.FramingCalculation methodsFor!
 
 calculateEdge: anInteger context: aFramingContext 
 	^(framingBlock value: anInteger value: aFramingContext) truncated!
@@ -68,18 +68,18 @@ stbSaveOn: anSTBOutFiler
 
 	anSTBOutFiler writePreambleFor: self.
 	anSTBOutFiler nextPut: self name! !
-!FramingCalculation categoriesFor: #calculateEdge:context:!calculations!public! !
-!FramingCalculation categoriesFor: #calculateOffset:context:!calculations!public! !
-!FramingCalculation categoriesFor: #displayOn:!displaying!public! !
-!FramingCalculation categoriesFor: #isIndependent!public!testing! !
-!FramingCalculation categoriesFor: #isProportional!public!testing! !
-!FramingCalculation categoriesFor: #isVertical!public!testing! !
-!FramingCalculation categoriesFor: #name!accessing!public! !
-!FramingCalculation categoriesFor: #name:framingBlock:offsetBlock:flags:!initializing!private! !
-!FramingCalculation categoriesFor: #printOn:!public! !
-!FramingCalculation categoriesFor: #stbSaveOn:!binary filing!private! !
+!UI.FramingCalculation categoriesFor: #calculateEdge:context:!calculations!public! !
+!UI.FramingCalculation categoriesFor: #calculateOffset:context:!calculations!public! !
+!UI.FramingCalculation categoriesFor: #displayOn:!displaying!public! !
+!UI.FramingCalculation categoriesFor: #isIndependent!public!testing! !
+!UI.FramingCalculation categoriesFor: #isProportional!public!testing! !
+!UI.FramingCalculation categoriesFor: #isVertical!public!testing! !
+!UI.FramingCalculation categoriesFor: #name!accessing!public! !
+!UI.FramingCalculation categoriesFor: #name:framingBlock:offsetBlock:flags:!initializing!private! !
+!UI.FramingCalculation categoriesFor: #printOn:!public! !
+!UI.FramingCalculation categoriesFor: #stbSaveOn:!binary filing!private! !
 
-!FramingCalculation class methodsFor!
+!UI.FramingCalculation class methodsFor!
 
 centerRelativeParentHeight
 	^self 
@@ -305,26 +305,26 @@ stbReadFrom: anSTBInFiler format: anSTBClassConversion
 	answer := self perform: anSTBInFiler basicNext.
 	anSTBInFiler fixup: ref to: answer.
 	^answer! !
-!FramingCalculation class categoriesFor: #centerRelativeParentHeight!instance creation!public! !
-!FramingCalculation class categoriesFor: #centerRelativeParentWidth!instance creation!public! !
-!FramingCalculation class categoriesFor: #fixedParentBottom!instance creation!public! !
-!FramingCalculation class categoriesFor: #fixedParentLeft!instance creation!public! !
-!FramingCalculation class categoriesFor: #fixedParentRight!instance creation!public! !
-!FramingCalculation class categoriesFor: #fixedParentTop!instance creation!public! !
-!FramingCalculation class categoriesFor: #fixedPreviousBottom!instance creation!public! !
-!FramingCalculation class categoriesFor: #fixedPreviousLeft!instance creation!public! !
-!FramingCalculation class categoriesFor: #fixedPreviousRight!instance creation!public! !
-!FramingCalculation class categoriesFor: #fixedPreviousTop!instance creation!public! !
-!FramingCalculation class categoriesFor: #fixedViewBottom!instance creation!public! !
-!FramingCalculation class categoriesFor: #fixedViewLeft!instance creation!public! !
-!FramingCalculation class categoriesFor: #fixedViewRight!instance creation!public! !
-!FramingCalculation class categoriesFor: #fixedViewTop!instance creation!public! !
-!FramingCalculation class categoriesFor: #initialize!initializing!public! !
-!FramingCalculation class categoriesFor: #lookupCalc:framingBlock:offsetBlock:flags:!accessing!private! !
-!FramingCalculation class categoriesFor: #newName:framingBlock:offsetBlock:flags:!instance creation!private! !
-!FramingCalculation class categoriesFor: #onPostStripImage!event handling!private! !
-!FramingCalculation class categoriesFor: #onPreStripImage!class hierarchy-removing!private! !
-!FramingCalculation class categoriesFor: #relativeParentHeight!instance creation!public! !
-!FramingCalculation class categoriesFor: #relativeParentWidth!instance creation!public! !
-!FramingCalculation class categoriesFor: #stbReadFrom:format:!binary filing!public! !
+!UI.FramingCalculation class categoriesFor: #centerRelativeParentHeight!instance creation!public! !
+!UI.FramingCalculation class categoriesFor: #centerRelativeParentWidth!instance creation!public! !
+!UI.FramingCalculation class categoriesFor: #fixedParentBottom!instance creation!public! !
+!UI.FramingCalculation class categoriesFor: #fixedParentLeft!instance creation!public! !
+!UI.FramingCalculation class categoriesFor: #fixedParentRight!instance creation!public! !
+!UI.FramingCalculation class categoriesFor: #fixedParentTop!instance creation!public! !
+!UI.FramingCalculation class categoriesFor: #fixedPreviousBottom!instance creation!public! !
+!UI.FramingCalculation class categoriesFor: #fixedPreviousLeft!instance creation!public! !
+!UI.FramingCalculation class categoriesFor: #fixedPreviousRight!instance creation!public! !
+!UI.FramingCalculation class categoriesFor: #fixedPreviousTop!instance creation!public! !
+!UI.FramingCalculation class categoriesFor: #fixedViewBottom!instance creation!public! !
+!UI.FramingCalculation class categoriesFor: #fixedViewLeft!instance creation!public! !
+!UI.FramingCalculation class categoriesFor: #fixedViewRight!instance creation!public! !
+!UI.FramingCalculation class categoriesFor: #fixedViewTop!instance creation!public! !
+!UI.FramingCalculation class categoriesFor: #initialize!initializing!public! !
+!UI.FramingCalculation class categoriesFor: #lookupCalc:framingBlock:offsetBlock:flags:!accessing!private! !
+!UI.FramingCalculation class categoriesFor: #newName:framingBlock:offsetBlock:flags:!instance creation!private! !
+!UI.FramingCalculation class categoriesFor: #onPostStripImage!event handling!private! !
+!UI.FramingCalculation class categoriesFor: #onPreStripImage!class hierarchy-removing!private! !
+!UI.FramingCalculation class categoriesFor: #relativeParentHeight!instance creation!public! !
+!UI.FramingCalculation class categoriesFor: #relativeParentWidth!instance creation!public! !
+!UI.FramingCalculation class categoriesFor: #stbReadFrom:format:!binary filing!public! !
 

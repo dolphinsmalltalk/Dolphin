@@ -1,16 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ExternalStructure subclass: #ExternalRectangle
+External.Structure subclass: #'External.RECT'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ExternalRectangle guid: (GUID fromString: '{e552b3f7-8653-46d4-b764-1e59cf1c15f7}')!
-ExternalRectangle isAbstract: true!
-ExternalRectangle comment: '`RectangleStructure` is the abstract class of structures representing rectangular geometries. There are concrete subclasses for different types of position and extent values.'!
-!ExternalRectangle categoriesForClass!Win32-Structs! !
-!ExternalRectangle methodsFor!
+External.RECT guid: (Core.GUID fromString: '{e552b3f7-8653-46d4-b764-1e59cf1c15f7}')!
+External.RECT isNonInstantiable: true!
+External.RECT comment: '`RECT` is the abstract class of structures representing rectangular geometries. There are concrete subclasses for different types of position and extent values.'!
+!External.RECT categoriesForClass!Win32-Structs! !
+!External.RECT methodsFor!
 
 area
 	"Answer the area of the receiver; the product of width and height."
@@ -27,7 +27,7 @@ asObject
 asRectangle
 	"Answer a new Rectangle that matches the receiver."
 
-	^Rectangle origin: self topLeft corner: self bottomRight!
+	^Graphics.Rectangle origin: self topLeft corner: self bottomRight!
 
 bottom
 	^self subclassResponsibility!
@@ -115,33 +115,37 @@ width
 	"Answer the width of the receiver."
 
 	^self right - self left! !
-!ExternalRectangle categoriesFor: #area!accessing!public! !
-!ExternalRectangle categoriesFor: #asObject!converting!public! !
-!ExternalRectangle categoriesFor: #asRectangle!converting!public! !
-!ExternalRectangle categoriesFor: #bottom!accessing!public! !
-!ExternalRectangle categoriesFor: #bottom:!accessing!public! !
-!ExternalRectangle categoriesFor: #bottomRight!accessing!public! !
-!ExternalRectangle categoriesFor: #center!accessing!public! !
-!ExternalRectangle categoriesFor: #centerX!accessing!public! !
-!ExternalRectangle categoriesFor: #centerY!accessing!public! !
-!ExternalRectangle categoriesFor: #corner!accessing!public! !
-!ExternalRectangle categoriesFor: #extent!accessing!public! !
-!ExternalRectangle categoriesFor: #extent:!accessing!public! !
-!ExternalRectangle categoriesFor: #height!accessing!public! !
-!ExternalRectangle categoriesFor: #left!accessing!public! !
-!ExternalRectangle categoriesFor: #left:!accessing!public! !
-!ExternalRectangle categoriesFor: #origin!accessing!public! !
-!ExternalRectangle categoriesFor: #right!accessing!public! !
-!ExternalRectangle categoriesFor: #right:!accessing!public! !
-!ExternalRectangle categoriesFor: #top!accessing!public! !
-!ExternalRectangle categoriesFor: #top:!accessing!public! !
-!ExternalRectangle categoriesFor: #topLeft!accessing!public! !
-!ExternalRectangle categoriesFor: #width!accessing!public! !
+!External.RECT categoriesFor: #area!accessing!public! !
+!External.RECT categoriesFor: #asObject!converting!public! !
+!External.RECT categoriesFor: #asRectangle!converting!public! !
+!External.RECT categoriesFor: #bottom!accessing!public! !
+!External.RECT categoriesFor: #bottom:!accessing!public! !
+!External.RECT categoriesFor: #bottomRight!accessing!public! !
+!External.RECT categoriesFor: #center!accessing!public! !
+!External.RECT categoriesFor: #centerX!accessing!public! !
+!External.RECT categoriesFor: #centerY!accessing!public! !
+!External.RECT categoriesFor: #corner!accessing!public! !
+!External.RECT categoriesFor: #extent!accessing!public! !
+!External.RECT categoriesFor: #extent:!accessing!public! !
+!External.RECT categoriesFor: #height!accessing!public! !
+!External.RECT categoriesFor: #left!accessing!public! !
+!External.RECT categoriesFor: #left:!accessing!public! !
+!External.RECT categoriesFor: #origin!accessing!public! !
+!External.RECT categoriesFor: #right!accessing!public! !
+!External.RECT categoriesFor: #right:!accessing!public! !
+!External.RECT categoriesFor: #top!accessing!public! !
+!External.RECT categoriesFor: #top:!accessing!public! !
+!External.RECT categoriesFor: #topLeft!accessing!public! !
+!External.RECT categoriesFor: #width!accessing!public! !
 
-!ExternalRectangle class methodsFor!
+!External.RECT class methodsFor!
 
 extent: aPoint
-	^self origin: Point.Zero extent: aPoint!
+	^self
+		left: 0
+		top: 0
+		width: aPoint x
+		height: aPoint y!
 
 fromRectangle: aRectangle
 	"Answer a new instance of the receiver instantiated from the Smalltalk
@@ -158,7 +162,7 @@ fromRectangle: aRectangle
 icon
 	"Answer a suitable iconic representation for the receiver."
 
-	^Rectangle icon!
+	^Graphics.Rectangle icon!
 
 left: left top: top right: right bottom: bottom
 	^self subclassResponsibility!
@@ -191,11 +195,11 @@ origin: originPoint extent: extentPoint
 		top: originPoint y
 		width: extentPoint x
 		height: extentPoint y! !
-!ExternalRectangle class categoriesFor: #extent:!instance creation!public! !
-!ExternalRectangle class categoriesFor: #fromRectangle:!instance creation!public! !
-!ExternalRectangle class categoriesFor: #icon!constants!public! !
-!ExternalRectangle class categoriesFor: #left:top:right:bottom:!instance creation!public! !
-!ExternalRectangle class categoriesFor: #left:top:width:height:!instance creation!public! !
-!ExternalRectangle class categoriesFor: #origin:corner:!instance creation!public! !
-!ExternalRectangle class categoriesFor: #origin:extent:!instance creation!public! !
+!External.RECT class categoriesFor: #extent:!instance creation!public! !
+!External.RECT class categoriesFor: #fromRectangle:!instance creation!public! !
+!External.RECT class categoriesFor: #icon!constants!public! !
+!External.RECT class categoriesFor: #left:top:right:bottom:!instance creation!public! !
+!External.RECT class categoriesFor: #left:top:width:height:!instance creation!public! !
+!External.RECT class categoriesFor: #origin:corner:!instance creation!public! !
+!External.RECT class categoriesFor: #origin:extent:!instance creation!public! !
 

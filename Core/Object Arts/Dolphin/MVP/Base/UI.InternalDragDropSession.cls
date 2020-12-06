@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-DragDropSession subclass: #InternalDragDropSession
+UI.DragDropSession subclass: #'UI.InternalDragDropSession'
 	instanceVariableNames: 'lastImageKey imageList oldCursor dragButton operationDescriptions'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-InternalDragDropSession guid: (GUID fromString: '{87b4c54b-026e-11d3-9fd7-00a0cc3e4a32}')!
-InternalDragDropSession comment: '
+UI.InternalDragDropSession guid: (Core.GUID fromString: '{87b4c54b-026e-11d3-9fd7-00a0cc3e4a32}')!
+UI.InternalDragDropSession comment: '
 Instance Variables:
 	lastImageKey			<Symbol> name of the last displayed drag cursor image (e.g. #move or #copyScroll)
 	imageList				<WinImageList> holding the drag cursor images.
@@ -16,8 +16,8 @@ Instance Variables:
 	operationDescriptions	<abstractDictionary> mapping d&d symbols to the descriptions to be used on the right drag popup menu
 
 '!
-!InternalDragDropSession categoriesForClass!MVP-DragDrop! !
-!InternalDragDropSession methodsFor!
+!UI.InternalDragDropSession categoriesForClass!MVP-DragDrop! !
+!UI.InternalDragDropSession methodsFor!
 
 beginDragImage
 	| dragIm |
@@ -31,9 +31,8 @@ beginDragImage
 buildDragImageList
 	| i maxImageExtent |
 	self getCustomDragImages.	"Put all of the images into an ImageList and convert the drag images into imageList indices."
-	maxImageExtent := Point new.
-	dragImages do: [:image | maxImageExtent := maxImageExtent max: image extent].
-	imageList := WinImageList 
+	maxImageExtent := dragImages inject: Point.Zero into: [:max :image | max max: image extent].
+	imageList := ImageList
 				newExtent: (maxImageExtent min: SystemMetrics current largeIconExtent)
 				depth: self defaultDragColorDepth
 				initialSize: dragImages size
@@ -41,7 +40,7 @@ buildDragImageList
 				masked: true.
 	i := 0.
 	dragImages := dragImages collect: 
-					[:image | 
+					[:image |
 					imageList addImage: image.
 					i := i + 1.
 					i - 1 -> image hotspot]!
@@ -79,7 +78,7 @@ defaultDragColorDepth
 	metrics := SystemMetrics current.
 	^metrics defaultColorDepth min: metrics dragImageColorDepth!
 
-doDragDropAt: aPoint button: buttonSymbol 
+doDragDropAt: aPoint button: buttonSymbol
 	"Initiate a drag and drop operation at the screen coordinates, aPoint, active while the mouse button
 	identified by buttonSymbol remains pressed. The buttonSymbol indicates which button up event will be used to
 	terminate the drag and whether it is a simple drag operation or an extended drag operation. Answer whether a
@@ -98,7 +97,7 @@ doDragDropAt: aPoint button: buttonSymbol
 dragObjectClass
 	^InternalDragDropObject!
 
-dropTargetUnder: aPoint 
+dropTargetUnder: aPoint
 	"Private - Look for the nearest drop target in the parent chain, starting with the view
 	under the specified <Point>."
 
@@ -135,7 +134,7 @@ getExtendedOperation
 
 giveCursorFeedback
 	| cursorSelector |
-	cursorSelector := ##((IdentityDictionary new)
+	cursorSelector := ##(IdentityDictionary new
 				at: #none put: #ddNone;
 				at: #move put: #ddMove;
 				at: #copy put: #ddCopy;
@@ -149,17 +148,17 @@ giveFeedback
 	"Private - Set the drag cursor to indicate the effect of a drop on the current target."
 
 	| imageKey |
-	(imageKey := self imageKey) ~~ lastImageKey 
+	(imageKey := self imageKey) ~~ lastImageKey
 		ifTrue: 
 			[| dragIm |
-			SystemMetrics current hasImageListDragCursors 
+			SystemMetrics current hasImageListDragCursors
 				ifFalse: 
 					["Fall back to using the old (non-specific) drag and drop
 					 cursors"
 					self giveCursorFeedback]
 				ifTrue: 
 					[dragIm := dragImages at: imageKey.
-					imageList 
+					imageList
 						setDragCursorImage: dragIm key
 						hotSpotX: dragIm value x
 						hotSpotY: dragIm value y].
@@ -200,9 +199,9 @@ promptForDropOperation
 	default := 0.
 	opNames := self operationDescriptions.
 	self supportedOperations do: 
-			[:opSymbol | 
+			[:opSymbol |
 			opSymbol == defaultOp ifTrue: [default := i].
-			popup addCommand: (MessageSend 
+			popup addCommand: (MessageSend
 						receiver: self
 						selector: #operation:
 						argument: opSymbol)
@@ -210,7 +209,7 @@ promptForDropOperation
 			i := i + 1].
 	popup
 		addSeparator;
-		addCommand: (MessageSend 
+		addCommand: (MessageSend
 					receiver: self
 					selector: #operation:
 					argument: nil)
@@ -255,26 +254,26 @@ startTrackingAt: aPoint
 	self beginDragImage.
 	self giveFeedback.
 	^self dragPoint! !
-!InternalDragDropSession categoriesFor: #beginDragImage!public!tracking! !
-!InternalDragDropSession categoriesFor: #buildDragImageList!private!tracking! !
-!InternalDragDropSession categoriesFor: #cancelTrackingAt:!public!tracking! !
-!InternalDragDropSession categoriesFor: #continueTrackingAt:from:!public!tracking! !
-!InternalDragDropSession categoriesFor: #defaultDragColorDepth!accessing!private! !
-!InternalDragDropSession categoriesFor: #doDragDropAt:button:!operations!public! !
-!InternalDragDropSession categoriesFor: #dragObjectClass!constants!public! !
-!InternalDragDropSession categoriesFor: #dropTargetUnder:!helpers!private!tracking! !
-!InternalDragDropSession categoriesFor: #endTrackingAt:!public!tracking! !
-!InternalDragDropSession categoriesFor: #getExtendedOperation!operations!private! !
-!InternalDragDropSession categoriesFor: #giveCursorFeedback!operations!private!wine fix! !
-!InternalDragDropSession categoriesFor: #giveFeedback!operations!private!wine fix! !
-!InternalDragDropSession categoriesFor: #hideDragImage!operations!public! !
-!InternalDragDropSession categoriesFor: #isExtendedDrag!public!testing! !
-!InternalDragDropSession categoriesFor: #operationDescriptions!accessing!public! !
-!InternalDragDropSession categoriesFor: #operationDescriptions:!accessing!public! !
-!InternalDragDropSession categoriesFor: #promptForDropOperation!operations!private! !
-!InternalDragDropSession categoriesFor: #showDragImage!operations!public! !
-!InternalDragDropSession categoriesFor: #solidifyOperation!operations!private! !
-!InternalDragDropSession categoriesFor: #startTrackingAt:!public!tracking! !
+!UI.InternalDragDropSession categoriesFor: #beginDragImage!public!tracking! !
+!UI.InternalDragDropSession categoriesFor: #buildDragImageList!private!tracking! !
+!UI.InternalDragDropSession categoriesFor: #cancelTrackingAt:!public!tracking! !
+!UI.InternalDragDropSession categoriesFor: #continueTrackingAt:from:!public!tracking! !
+!UI.InternalDragDropSession categoriesFor: #defaultDragColorDepth!accessing!private! !
+!UI.InternalDragDropSession categoriesFor: #doDragDropAt:button:!operations!public! !
+!UI.InternalDragDropSession categoriesFor: #dragObjectClass!constants!public! !
+!UI.InternalDragDropSession categoriesFor: #dropTargetUnder:!helpers!private!tracking! !
+!UI.InternalDragDropSession categoriesFor: #endTrackingAt:!public!tracking! !
+!UI.InternalDragDropSession categoriesFor: #getExtendedOperation!operations!private! !
+!UI.InternalDragDropSession categoriesFor: #giveCursorFeedback!operations!private!wine fix! !
+!UI.InternalDragDropSession categoriesFor: #giveFeedback!operations!private!wine fix! !
+!UI.InternalDragDropSession categoriesFor: #hideDragImage!operations!public! !
+!UI.InternalDragDropSession categoriesFor: #isExtendedDrag!public!testing! !
+!UI.InternalDragDropSession categoriesFor: #operationDescriptions!accessing!public! !
+!UI.InternalDragDropSession categoriesFor: #operationDescriptions:!accessing!public! !
+!UI.InternalDragDropSession categoriesFor: #promptForDropOperation!operations!private! !
+!UI.InternalDragDropSession categoriesFor: #showDragImage!operations!public! !
+!UI.InternalDragDropSession categoriesFor: #solidifyOperation!operations!private! !
+!UI.InternalDragDropSession categoriesFor: #startTrackingAt:!public!tracking! !
 
-InternalDragDropSession methodProtocol: #mouseTrackerTarget attributes: #(#readOnly) selectors: #(#cancelTrackingAt: #continueTrackingAt:from: #endTrackingAt: #startTrackingAt:)!
+UI.InternalDragDropSession methodProtocol: #mouseTrackerTarget attributes: #(#readOnly) selectors: #(#cancelTrackingAt: #continueTrackingAt:from: #endTrackingAt: #startTrackingAt:)!
 

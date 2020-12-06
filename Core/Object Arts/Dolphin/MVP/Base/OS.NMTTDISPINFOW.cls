@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-NMHDR subclass: #NMTTDISPINFOW
+OS.NMHDR subclass: #'OS.NMTTDISPINFOW'
 	instanceVariableNames: 'text'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_hinst' -> 16rB0.
@@ -12,10 +12,10 @@ NMHDR subclass: #NMTTDISPINFOW
 		'_OffsetOf_szText' -> 16r10.
 		'_OffsetOf_uFlags' -> 16rB4
 	}!
-NMTTDISPINFOW guid: (GUID fromString: '{fd2f4864-6901-4633-8b54-accb5c28a265}')!
-NMTTDISPINFOW comment: ''!
-!NMTTDISPINFOW categoriesForClass!External-Data-Structured-Win32! !
-!NMTTDISPINFOW methodsFor!
+OS.NMTTDISPINFOW guid: (Core.GUID fromString: '{fd2f4864-6901-4633-8b54-accb5c28a265}')!
+OS.NMTTDISPINFOW comment: ''!
+!OS.NMTTDISPINFOW categoriesForClass!External-Data-Structured-Win32! !
+!OS.NMTTDISPINFOW methodsFor!
 
 idIsHandle
 	"Answer true if id stored in the receiver's header is a window handle, or false
@@ -51,14 +51,14 @@ uFlags
 	"Answer the <Integer> value of the receiver's 'uFlags' field."
 
 	^bytes dwordAtOffset: _OffsetOf_uFlags! !
-!NMTTDISPINFOW categoriesFor: #idIsHandle!private!testing! !
-!NMTTDISPINFOW categoriesFor: #lpszText!**compiled accessors**!public! !
-!NMTTDISPINFOW categoriesFor: #lpszText:!**compiled accessors**!public! !
-!NMTTDISPINFOW categoriesFor: #text!accessing!public! !
-!NMTTDISPINFOW categoriesFor: #text:!accessing!public! !
-!NMTTDISPINFOW categoriesFor: #uFlags!**compiled accessors**!public! !
+!OS.NMTTDISPINFOW categoriesFor: #idIsHandle!private!testing! !
+!OS.NMTTDISPINFOW categoriesFor: #lpszText!**compiled accessors**!public! !
+!OS.NMTTDISPINFOW categoriesFor: #lpszText:!**compiled accessors**!public! !
+!OS.NMTTDISPINFOW categoriesFor: #text!accessing!public! !
+!OS.NMTTDISPINFOW categoriesFor: #text:!accessing!public! !
+!OS.NMTTDISPINFOW categoriesFor: #uFlags!**compiled accessors**!public! !
 
-!NMTTDISPINFOW class methodsFor!
+!OS.NMTTDISPINFOW class methodsFor!
 
 defineFields
 	"Define the fields of the NMTTDISPINFOW structure.
@@ -84,6 +84,6 @@ defineFields
 
 getFieldNames
 	^#(#hwndFrom #idFrom #code #lpszText #uFlags)! !
-!NMTTDISPINFOW class categoriesFor: #defineFields!public!template definition! !
-!NMTTDISPINFOW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.NMTTDISPINFOW class categoriesFor: #defineFields!public!template definition! !
+!OS.NMTTDISPINFOW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

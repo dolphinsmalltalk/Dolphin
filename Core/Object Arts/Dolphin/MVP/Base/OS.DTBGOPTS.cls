@@ -1,17 +1,17 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Win32Structure subclass: #DTBGOPTS
+OS.Win32Structure subclass: #'OS.DTBGOPTS'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_dwFlags' -> 16r4.
 		'_OffsetOf_dwSize' -> 16r0.
 		'_OffsetOf_rcClip' -> 16r8
 	}!
-DTBGOPTS guid: (GUID fromString: '{cdf611d8-4c3f-48a1-b3eb-fd222762e69b}')!
-DTBGOPTS comment: '<DTBGOPTS> is an <ExternalStructure> class to wrap the struct ''Win32.DTBGOPTS'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
+OS.DTBGOPTS guid: (Core.GUID fromString: '{cdf611d8-4c3f-48a1-b3eb-fd222762e69b}')!
+OS.DTBGOPTS comment: '<DTBGOPTS> is an <ExternalStructure> class to wrap the struct ''Win32.DTBGOPTS'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains the following helpstring for this struct
 	"Defines the options for the DrawThemeBackgroundEx function."
@@ -27,8 +27,8 @@ struct tagDTBGOPTS {
 	[helpstring("clipping rectangle")] RECT rcClip;
 } DTBGOPTS;
 '!
-!DTBGOPTS categoriesForClass!Win32-Structs! !
-!DTBGOPTS methodsFor!
+!OS.DTBGOPTS categoriesForClass!Win32-Structs! !
+!OS.DTBGOPTS methodsFor!
 
 dwFlags
 	"Answer the <Integer> value of the receiver's 'dwFlags' field."
@@ -51,9 +51,9 @@ dwSize: anInteger
 	bytes dwordAtOffset: _OffsetOf_dwSize put: anInteger!
 
 rcClip
-	"Answer the <RECT> value of the receiver's 'rcClip' field."
+	"Answer the <RECTL> value of the receiver's 'rcClip' field."
 
-	^RECT fromAddress: bytes yourAddress + _OffsetOf_rcClip!
+	^RECTL fromAddress: bytes yourAddress + _OffsetOf_rcClip!
 
 rcClip: aRECT
 	"Set the receiver's 'rcClip' field to the value of the argument, aRECT"
@@ -61,16 +61,16 @@ rcClip: aRECT
 	aRECT
 		replaceBytesOf: bytes
 		from: ##(_OffsetOf_rcClip + 1)
-		to: ##(_OffsetOf_rcClip + RECT basicByteSize)
+		to: ##(_OffsetOf_rcClip + RECTL basicByteSize)
 		startingAt: 1! !
-!DTBGOPTS categoriesFor: #dwFlags!**compiled accessors**!public! !
-!DTBGOPTS categoriesFor: #dwFlags:!**compiled accessors**!public! !
-!DTBGOPTS categoriesFor: #dwSize!**compiled accessors**!public! !
-!DTBGOPTS categoriesFor: #dwSize:!**compiled accessors**!public! !
-!DTBGOPTS categoriesFor: #rcClip!**compiled accessors**!public! !
-!DTBGOPTS categoriesFor: #rcClip:!**compiled accessors**!public! !
+!OS.DTBGOPTS categoriesFor: #dwFlags!**compiled accessors**!public! !
+!OS.DTBGOPTS categoriesFor: #dwFlags:!**compiled accessors**!public! !
+!OS.DTBGOPTS categoriesFor: #dwSize!**compiled accessors**!public! !
+!OS.DTBGOPTS categoriesFor: #dwSize:!**compiled accessors**!public! !
+!OS.DTBGOPTS categoriesFor: #rcClip!**compiled accessors**!public! !
+!OS.DTBGOPTS categoriesFor: #rcClip:!**compiled accessors**!public! !
 
-!DTBGOPTS class methodsFor!
+!OS.DTBGOPTS class methodsFor!
 
 defineFields
 	"Define the fields of the DTBGOPTS structure.
@@ -80,17 +80,17 @@ defineFields
 		struct tagDTBGOPTS {
 			[helpstring('size of the struct')] unsigned long dwSize;
 			[helpstring('which options have been specified')] unsigned long dwFlags;
-			[helpstring('clipping rectangle')] RECT rcClip;
+			[helpstring('clipping rectangle')] RECTL rcClip;
 		} DTBGOPTS;
 "
 
 	self
 		defineField: #dwSize type: DWORDField new;
 		defineField: #dwFlags type: DWORDField new;
-		defineField: #rcClip type: (StructureField type: RECT)!
+		defineField: #rcClip type: (StructureField type: RECTL)!
 
 getFieldNames
 	^#(#dwSize #dwFlags #rcClip)! !
-!DTBGOPTS class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!DTBGOPTS class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.DTBGOPTS class categoriesFor: #defineFields!**auto generated**!public!template definition! !
+!OS.DTBGOPTS class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

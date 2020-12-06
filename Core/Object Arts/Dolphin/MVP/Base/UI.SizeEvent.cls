@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-WindowsEvent subclass: #SizeEvent
+UI.WindowsEvent subclass: #'UI.SizeEvent'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-SizeEvent guid: (GUID fromString: '{87b4c553-026e-11d3-9fd7-00a0cc3e4a32}')!
-SizeEvent comment: ''!
-!SizeEvent categoriesForClass!Events!MVP-Views-Events! !
-!SizeEvent methodsFor!
+UI.SizeEvent guid: (Core.GUID fromString: '{87b4c553-026e-11d3-9fd7-00a0cc3e4a32}')!
+UI.SizeEvent comment: ''!
+!UI.SizeEvent categoriesForClass!Events!MVP-Views-Events! !
+!UI.SizeEvent methodsFor!
 
 extent
 	"Answer the extent of the client area after the size event."
@@ -30,8 +30,8 @@ width
 	"Answer the width of the client area after the size event."
 
 	^self lParamX! !
-!SizeEvent categoriesFor: #extent!accessing!public! !
-!SizeEvent categoriesFor: #height!accessing!public! !
-!SizeEvent categoriesFor: #type!accessing!public! !
-!SizeEvent categoriesFor: #width!accessing!public! !
+!UI.SizeEvent categoriesFor: #extent!accessing!public! !
+!UI.SizeEvent categoriesFor: #height!accessing!public! !
+!UI.SizeEvent categoriesFor: #type!accessing!public! !
+!UI.SizeEvent categoriesFor: #width!accessing!public! !
 

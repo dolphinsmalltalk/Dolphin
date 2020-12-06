@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Object subclass: #Keyboard
+Core.Object subclass: #'UI.Keyboard'
 	instanceVariableNames: 'state virtualKeys modifierKeys keyNames'
 	classVariableNames: 'DefaultInstance InvariantInstance'
-	poolDictionaries: 'Win32Constants'
+	imports: #(#{OS.Win32Constants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Keyboard guid: (GUID fromString: '{87b4c496-026e-11d3-9fd7-00a0cc3e4a32}')!
-Keyboard comment: '`Keyboard` is an abstraction over the system keyboard, and provides services to enquire and set the state of keys, and to map between key codes and the names of keys in the particular keyboard layout that the instance represents.
+UI.Keyboard guid: (Core.GUID fromString: '{87b4c496-026e-11d3-9fd7-00a0cc3e4a32}')!
+UI.Keyboard comment: '`Keyboard` is an abstraction over the system keyboard, and provides services to enquire and set the state of keys, and to map between key codes and the names of keys in the particular keyboard layout that the instance represents.
 
 ## Instance Variables:
   `state`			`<Array>`
@@ -19,8 +19,8 @@ Keyboard comment: '`Keyboard` is an abstraction over the system keyboard, and pr
   `DefaultInstance`		`Keyboard` instance representing the current input language
   `InvariantInstance`		`Keyboard` instance represent the Dolphin invariant input language (UK English).
 '!
-!Keyboard categoriesForClass!System-Support! !
-!Keyboard methodsFor!
+!UI.Keyboard categoriesForClass!System-Support! !
+!UI.Keyboard methodsFor!
 
 asyncKeyState: virtualKeyCodeInteger
 	"Private - Answer the state of the specified virtual key."
@@ -184,8 +184,7 @@ setKeyState: virtualKeyCodeInteger to: byteMask
 setState
 	"Private - Modify Win32's keyboard state to that currently cached."
 
-	state ifNotNil: [UserLibrary default setKeyboardState: state]
-!
+	state ifNotNil: [UserLibrary default setKeyboardState: state]!
 
 virtualKeyFromString: aString
 	"Answer the <integer> virtual key code for the named key from this keyboard layout."
@@ -201,45 +200,45 @@ virtualKeys
 			[self buildVKeyMaps.
 			virtualKeys]!
 
-virtualKeys: aLookupTableOfInteger 
+virtualKeys: aLookupTableOfInteger
 	virtualKeys := aLookupTableOfInteger.
 	keyNames := IdentityDictionary new: virtualKeys size.
 	aLookupTableOfInteger keysAndValuesDo: [:name :vk | keyNames at: vk put: name]!
 
-vKeyToScanCode: anInteger 
+vKeyToScanCode: anInteger
 	"Private - Answer the scan code corresponding to the virtual key code, anInteger, or 0 if there isn't one."
 
 	^UserLibrary default mapVirtualKey: (anInteger bitAnd: 16rFF) uMapType: MAPVK_VK_TO_VSC! !
-!Keyboard categoriesFor: #asyncKeyState:!helpers!private! !
-!Keyboard categoriesFor: #buildVKeyMaps!helpers!private! !
-!Keyboard categoriesFor: #buttonKeys!constants!private! !
-!Keyboard categoriesFor: #getKeyNameFromVKey:ifNone:!helpers!private! !
-!Keyboard categoriesFor: #getState!helpers!private! !
-!Keyboard categoriesFor: #isAltDown!public!testing! !
-!Keyboard categoriesFor: #isButtonDown:!public!testing! !
-!Keyboard categoriesFor: #isCancelDown!public!testing! !
-!Keyboard categoriesFor: #isCancelPressed!public!testing! !
-!Keyboard categoriesFor: #isCtrlDown!public!testing! !
-!Keyboard categoriesFor: #isKeyDown:!private!testing! !
-!Keyboard categoriesFor: #isKeyPressed:!private!testing! !
-!Keyboard categoriesFor: #isModifierDown!public!testing! !
-!Keyboard categoriesFor: #isShiftDown!public!testing! !
-!Keyboard categoriesFor: #keyNameFromLParam:!helpers!private! !
-!Keyboard categoriesFor: #keyNameFromScanCode:!helpers!private! !
-!Keyboard categoriesFor: #keyNameFromVKey:ifNone:!helpers!private! !
-!Keyboard categoriesFor: #keyNames!accessing!private! !
-!Keyboard categoriesFor: #keyState:!helpers!private! !
-!Keyboard categoriesFor: #modifierKeys!accessing!private! !
-!Keyboard categoriesFor: #resetCancel!operations!public! !
-!Keyboard categoriesFor: #resetKey:!helpers!private! !
-!Keyboard categoriesFor: #setKeyState:to:!helpers!private! !
-!Keyboard categoriesFor: #setState!helpers!private! !
-!Keyboard categoriesFor: #virtualKeyFromString:!enquiries!public! !
-!Keyboard categoriesFor: #virtualKeys!accessing!private! !
-!Keyboard categoriesFor: #virtualKeys:!initializing!private! !
-!Keyboard categoriesFor: #vKeyToScanCode:!helpers!private! !
+!UI.Keyboard categoriesFor: #asyncKeyState:!helpers!private! !
+!UI.Keyboard categoriesFor: #buildVKeyMaps!helpers!private! !
+!UI.Keyboard categoriesFor: #buttonKeys!constants!private! !
+!UI.Keyboard categoriesFor: #getKeyNameFromVKey:ifNone:!helpers!private! !
+!UI.Keyboard categoriesFor: #getState!helpers!private! !
+!UI.Keyboard categoriesFor: #isAltDown!public!testing! !
+!UI.Keyboard categoriesFor: #isButtonDown:!public!testing! !
+!UI.Keyboard categoriesFor: #isCancelDown!public!testing! !
+!UI.Keyboard categoriesFor: #isCancelPressed!public!testing! !
+!UI.Keyboard categoriesFor: #isCtrlDown!public!testing! !
+!UI.Keyboard categoriesFor: #isKeyDown:!private!testing! !
+!UI.Keyboard categoriesFor: #isKeyPressed:!private!testing! !
+!UI.Keyboard categoriesFor: #isModifierDown!public!testing! !
+!UI.Keyboard categoriesFor: #isShiftDown!public!testing! !
+!UI.Keyboard categoriesFor: #keyNameFromLParam:!helpers!private! !
+!UI.Keyboard categoriesFor: #keyNameFromScanCode:!helpers!private! !
+!UI.Keyboard categoriesFor: #keyNameFromVKey:ifNone:!helpers!private! !
+!UI.Keyboard categoriesFor: #keyNames!accessing!private! !
+!UI.Keyboard categoriesFor: #keyState:!helpers!private! !
+!UI.Keyboard categoriesFor: #modifierKeys!accessing!private! !
+!UI.Keyboard categoriesFor: #resetCancel!operations!public! !
+!UI.Keyboard categoriesFor: #resetKey:!helpers!private! !
+!UI.Keyboard categoriesFor: #setKeyState:to:!helpers!private! !
+!UI.Keyboard categoriesFor: #setState!helpers!private! !
+!UI.Keyboard categoriesFor: #virtualKeyFromString:!enquiries!public! !
+!UI.Keyboard categoriesFor: #virtualKeys!accessing!private! !
+!UI.Keyboard categoriesFor: #virtualKeys:!initializing!private! !
+!UI.Keyboard categoriesFor: #vKeyToScanCode:!helpers!private! !
 
-!Keyboard class methodsFor!
+!UI.Keyboard class methodsFor!
 
 default
 	"Answers the default Keyboard to use"
@@ -257,7 +256,6 @@ initialize
 	"
 
 	InvariantInstance := DefaultInstance := nil.
-
 	SessionManager current
 		when: #settingChanged:
 		send: #onSettingChanged:
@@ -385,9 +383,7 @@ layoutName
 	buf := Utf16String newFixed: KL_NAMELENGTH.
 	^(UserLibrary default getKeyboardLayoutName: buf)
 		ifTrue: [buf trimNulls]
-		ifFalse: [UserLibrary default systemError]
-
-!
+		ifFalse: [UserLibrary default systemError]!
 
 layoutName: aString
 	"Set the current keyboard layout by <readableString> name, answering whether this was accepted.
@@ -419,15 +415,15 @@ virtualKey: aString
 	"Answer the <integer> virtual key code corresponding to the key with invariant (UK English) name, aString."
 
 	^self invariant virtualKeyFromString: aString! !
-!Keyboard class categoriesFor: #default!accessing!public! !
-!Keyboard class categoriesFor: #default:!accessing!public! !
-!Keyboard class categoriesFor: #initialize!development!initializing!private! !
-!Keyboard class categoriesFor: #invariant!accessing!public! !
-!Keyboard class categoriesFor: #invariantVKeyMap!constants!private! !
-!Keyboard class categoriesFor: #layoutName!accessing!public! !
-!Keyboard class categoriesFor: #layoutName:!accessing!public! !
-!Keyboard class categoriesFor: #onPreStripImage!class hierarchy-removing!private! !
-!Keyboard class categoriesFor: #onSettingChanged:!event handling-win32!private! !
-!Keyboard class categoriesFor: #uninitialize!class hierarchy-removing!private! !
-!Keyboard class categoriesFor: #virtualKey:!enquiries!public! !
+!UI.Keyboard class categoriesFor: #default!accessing!public! !
+!UI.Keyboard class categoriesFor: #default:!accessing!public! !
+!UI.Keyboard class categoriesFor: #initialize!development!initializing!private! !
+!UI.Keyboard class categoriesFor: #invariant!accessing!public! !
+!UI.Keyboard class categoriesFor: #invariantVKeyMap!constants!private! !
+!UI.Keyboard class categoriesFor: #layoutName!accessing!public! !
+!UI.Keyboard class categoriesFor: #layoutName:!accessing!public! !
+!UI.Keyboard class categoriesFor: #onPreStripImage!class hierarchy-removing!private! !
+!UI.Keyboard class categoriesFor: #onSettingChanged:!event handling-win32!private! !
+!UI.Keyboard class categoriesFor: #uninitialize!class hierarchy-removing!private! !
+!UI.Keyboard class categoriesFor: #virtualKey:!enquiries!public! !
 

@@ -1,21 +1,21 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-CommandDescription subclass: #ClosedCommandDescription
+UI.CommandDescription subclass: #'UI.ClosedCommandDescription'
 	instanceVariableNames: 'queryBlock receiver'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ClosedCommandDescription guid: (GUID fromString: '{26e7b7a8-fc97-462c-8edf-c6e4467046ff}')!
-ClosedCommandDescription comment: 'ClosedCommandDescription is the class of <CommandDescription>s that have a pluggable implementation of #queryCommand: such that they can be completely self contained, both describing the command to be performed, where to send it, and also managing enablement/disablement.
+UI.ClosedCommandDescription guid: (Core.GUID fromString: '{26e7b7a8-fc97-462c-8edf-c6e4467046ff}')!
+UI.ClosedCommandDescription comment: 'ClosedCommandDescription is the class of <CommandDescription>s that have a pluggable implementation of #queryCommand: such that they can be completely self contained, both describing the command to be performed, where to send it, and also managing enablement/disablement.
 
 Instance Variables:
 	queryBlock	<monadicValue> implementation of #queryCommand:. Can be nil.
 	receiver		<Object> to which the command will be sent. Can be nil, in which case queryBlock determines receiver. 
 	
 '!
-!ClosedCommandDescription categoriesForClass!MVP-Commands! !
-!ClosedCommandDescription methodsFor!
+!UI.ClosedCommandDescription categoriesForClass!MVP-Commands! !
+!UI.ClosedCommandDescription methodsFor!
 
 queryBlock: aMonadicValuable
 	queryBlock := aMonadicValuable!
@@ -51,12 +51,12 @@ receiver
 
 receiver: anObject
 	receiver := anObject! !
-!ClosedCommandDescription categoriesFor: #queryBlock:!accessing!public! !
-!ClosedCommandDescription categoriesFor: #queryCommand:!commands!public! !
-!ClosedCommandDescription categoriesFor: #receiver!accessing!public! !
-!ClosedCommandDescription categoriesFor: #receiver:!accessing!public! !
+!UI.ClosedCommandDescription categoriesFor: #queryBlock:!accessing!public! !
+!UI.ClosedCommandDescription categoriesFor: #queryCommand:!commands!public! !
+!UI.ClosedCommandDescription categoriesFor: #receiver!accessing!public! !
+!UI.ClosedCommandDescription categoriesFor: #receiver:!accessing!public! !
 
-!ClosedCommandDescription class methodsFor!
+!UI.ClosedCommandDescription class methodsFor!
 
 command: commandMessage description: aString queryBlock: aMonadicValuable
 	"Answer a new instance of the receiver to send the specified <commandMessage>. The 
@@ -86,7 +86,7 @@ command: commandMessage description: aString receiver: anObject
 	always be sent to anObject."
 
 	^self command: commandMessage description: aString queryBlock: nil receiver: anObject! !
-!ClosedCommandDescription class categoriesFor: #command:description:queryBlock:!instance creation!public! !
-!ClosedCommandDescription class categoriesFor: #command:description:queryBlock:receiver:!instance creation!public! !
-!ClosedCommandDescription class categoriesFor: #command:description:receiver:!instance creation!public! !
+!UI.ClosedCommandDescription class categoriesFor: #command:description:queryBlock:!instance creation!public! !
+!UI.ClosedCommandDescription class categoriesFor: #command:description:queryBlock:receiver:!instance creation!public! !
+!UI.ClosedCommandDescription class categoriesFor: #command:description:receiver:!instance creation!public! !
 

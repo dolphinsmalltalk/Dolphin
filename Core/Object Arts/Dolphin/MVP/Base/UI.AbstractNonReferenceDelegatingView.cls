@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-AbstractDelegatingView subclass: #AbstractNonReferenceDelegatingView
+UI.AbstractDelegatingView subclass: #'UI.AbstractNonReferenceDelegatingView'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-AbstractNonReferenceDelegatingView guid: (GUID fromString: '{0d2a2ef6-1bed-4665-b4c0-9a97c209b222}')!
-AbstractNonReferenceDelegatingView comment: 'Adds some methods that are not appropriate for ReferenceViews. Strictly the introduction of this class is only requiredto ensure ReferenceView remains backwardly compatible.'!
-!AbstractNonReferenceDelegatingView categoriesForClass!MVP-Resources-Misc! !
-!AbstractNonReferenceDelegatingView methodsFor!
+UI.AbstractNonReferenceDelegatingView guid: (Core.GUID fromString: '{0d2a2ef6-1bed-4665-b4c0-9a97c209b222}')!
+UI.AbstractNonReferenceDelegatingView comment: 'Adds some methods that are not appropriate for ReferenceViews. Strictly the introduction of this class is only requiredto ensure ReferenceView remains backwardly compatible.'!
+!UI.AbstractNonReferenceDelegatingView categoriesForClass!MVP-Resources-Misc! !
+!UI.AbstractNonReferenceDelegatingView methodsFor!
 
 ambientBackcolor
 	"Private - Answer the background colour that should be inherited by children of this view
@@ -56,13 +56,13 @@ isEnabled
 
 isEnabled: aBoolean 
 	self isStateRestoring ifFalse: [self referee isEnabled: aBoolean]! !
-!AbstractNonReferenceDelegatingView categoriesFor: #ambientBackcolor!accessing!private! !
-!AbstractNonReferenceDelegatingView categoriesFor: #hasBorder!accessing!accessing-styles!public! !
-!AbstractNonReferenceDelegatingView categoriesFor: #hasBorder:!accessing!accessing-styles!public! !
-!AbstractNonReferenceDelegatingView categoriesFor: #hasClientEdge!accessing!accessing-styles!public! !
-!AbstractNonReferenceDelegatingView categoriesFor: #hasClientEdge:!accessing!accessing-styles!public! !
-!AbstractNonReferenceDelegatingView categoriesFor: #hasStaticEdge!accessing!accessing-styles!public! !
-!AbstractNonReferenceDelegatingView categoriesFor: #hasStaticEdge:!accessing!accessing-styles!public! !
-!AbstractNonReferenceDelegatingView categoriesFor: #isEnabled!accessing!public!testing! !
-!AbstractNonReferenceDelegatingView categoriesFor: #isEnabled:!accessing!public!state! !
+!UI.AbstractNonReferenceDelegatingView categoriesFor: #ambientBackcolor!accessing!private! !
+!UI.AbstractNonReferenceDelegatingView categoriesFor: #hasBorder!accessing!accessing-styles!public! !
+!UI.AbstractNonReferenceDelegatingView categoriesFor: #hasBorder:!accessing!accessing-styles!public! !
+!UI.AbstractNonReferenceDelegatingView categoriesFor: #hasClientEdge!accessing!accessing-styles!public! !
+!UI.AbstractNonReferenceDelegatingView categoriesFor: #hasClientEdge:!accessing!accessing-styles!public! !
+!UI.AbstractNonReferenceDelegatingView categoriesFor: #hasStaticEdge!accessing!accessing-styles!public! !
+!UI.AbstractNonReferenceDelegatingView categoriesFor: #hasStaticEdge:!accessing!accessing-styles!public! !
+!UI.AbstractNonReferenceDelegatingView categoriesFor: #isEnabled!accessing!public!testing! !
+!UI.AbstractNonReferenceDelegatingView categoriesFor: #isEnabled:!accessing!public!state! !
 

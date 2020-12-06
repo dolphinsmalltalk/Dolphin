@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Win32Structure subclass: #OUTLINETEXTMETRICW
+OS.Win32Structure subclass: #'OS.OUTLINETEXTMETRICW'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_dwSize' -> 16r0.
@@ -39,10 +39,10 @@ Win32Structure subclass: #OUTLINETEXTMETRICW
 		'_OffsetOf_otmTextMetrics' -> 16r4.
 		'_OffsetOf_otmusMinimumPPEM' -> 16r94
 	}!
-OUTLINETEXTMETRICW guid: (GUID fromString: '{52831a87-901f-4a84-894b-ab539352b71f}')!
-OUTLINETEXTMETRICW comment: '<OUTLINETEXTMETRIC> is an <ExternalStructure> class to wrap the struct ''Win.OUTLINETEXTMETRIC'' from type information in the ''Windows API (ANSI)'' library.'!
-!OUTLINETEXTMETRICW categoriesForClass!Win-Structs! !
-!OUTLINETEXTMETRICW methodsFor!
+OS.OUTLINETEXTMETRICW guid: (Core.GUID fromString: '{52831a87-901f-4a84-894b-ab539352b71f}')!
+OS.OUTLINETEXTMETRICW comment: '<OUTLINETEXTMETRIC> is an <ExternalStructure> class to wrap the struct ''Win.OUTLINETEXTMETRIC'' from type information in the ''Windows API (ANSI)'' library.'!
+!OS.OUTLINETEXTMETRICW categoriesForClass!Win-Structs! !
+!OS.OUTLINETEXTMETRICW methodsFor!
 
 dwSize: anInteger
 	"Set the receiver's 'dwSize' field to the value of the argument, anInteger"
@@ -51,17 +51,17 @@ dwSize: anInteger
 
 faceName
 	"Answer the receiver's <readableString> font face name."
-	
+
 	^Utf16String fromAddress: bytes yourAddress + self otmpFaceName!
 
 familyName
 	"Answer the receiver's <readableString> font family name."
-	
+
 	^Utf16String fromAddress: bytes yourAddress + self otmpFamilyName!
 
 fullName
 	"Answer the receiver's <readableString> full font name."
-	
+
 	^Utf16String fromAddress: bytes yourAddress + self otmpFullName!
 
 otmAscent
@@ -160,9 +160,9 @@ otmptSuperscriptSize
 	^POINTL fromAddress: bytes yourAddress + _OffsetOf_otmptSuperscriptSize!
 
 otmrcFontBox
-	"Answer the <RECT> value of the receiver's 'otmrcFontBox' field."
+	"Answer the <RECTL> value of the receiver's 'otmrcFontBox' field."
 
-	^RECT fromAddress: bytes yourAddress + _OffsetOf_otmrcFontBox!
+	^RECTL fromAddress: bytes yourAddress + _OffsetOf_otmrcFontBox!
 
 otmsCapEmHeight
 	"Answer the <Integer> value of the receiver's 'otmsCapEmHeight' field."
@@ -220,43 +220,43 @@ styleName
 	e.g. regular, bold, italic, etc"
 
 	^Utf16String fromAddress: bytes yourAddress + self otmpStyleName! !
-!OUTLINETEXTMETRICW categoriesFor: #dwSize:!**compiled accessors**!public! !
-!OUTLINETEXTMETRICW categoriesFor: #faceName!accessing!public! !
-!OUTLINETEXTMETRICW categoriesFor: #familyName!accessing!public! !
-!OUTLINETEXTMETRICW categoriesFor: #fullName!accessing!public! !
-!OUTLINETEXTMETRICW categoriesFor: #otmAscent!**compiled accessors**!public! !
-!OUTLINETEXTMETRICW categoriesFor: #otmDescent!**compiled accessors**!public! !
-!OUTLINETEXTMETRICW categoriesFor: #otmEMSquare!**compiled accessors**!public! !
-!OUTLINETEXTMETRICW categoriesFor: #otmfsSelection!**compiled accessors**!public! !
-!OUTLINETEXTMETRICW categoriesFor: #otmfsType!**compiled accessors**!public! !
-!OUTLINETEXTMETRICW categoriesFor: #otmItalicAngle!**compiled accessors**!public! !
-!OUTLINETEXTMETRICW categoriesFor: #otmLineGap!**compiled accessors**!public! !
-!OUTLINETEXTMETRICW categoriesFor: #otmMacAscent!**compiled accessors**!public! !
-!OUTLINETEXTMETRICW categoriesFor: #otmMacDescent!**compiled accessors**!public! !
-!OUTLINETEXTMETRICW categoriesFor: #otmMacLineGap!**compiled accessors**!public! !
-!OUTLINETEXTMETRICW categoriesFor: #otmPanoseNumber!**compiled accessors**!public! !
-!OUTLINETEXTMETRICW categoriesFor: #otmpFaceName!**compiled accessors**!public! !
-!OUTLINETEXTMETRICW categoriesFor: #otmpFamilyName!**compiled accessors**!public! !
-!OUTLINETEXTMETRICW categoriesFor: #otmpFullName!**compiled accessors**!public! !
-!OUTLINETEXTMETRICW categoriesFor: #otmpStyleName!**compiled accessors**!public! !
-!OUTLINETEXTMETRICW categoriesFor: #otmptSubscriptOffset!**compiled accessors**!public! !
-!OUTLINETEXTMETRICW categoriesFor: #otmptSubscriptSize!**compiled accessors**!public! !
-!OUTLINETEXTMETRICW categoriesFor: #otmptSuperscriptOffset!**compiled accessors**!public! !
-!OUTLINETEXTMETRICW categoriesFor: #otmptSuperscriptSize!**compiled accessors**!public! !
-!OUTLINETEXTMETRICW categoriesFor: #otmrcFontBox!**compiled accessors**!public! !
-!OUTLINETEXTMETRICW categoriesFor: #otmsCapEmHeight!**compiled accessors**!public! !
-!OUTLINETEXTMETRICW categoriesFor: #otmsCharSlopeRise!**compiled accessors**!public! !
-!OUTLINETEXTMETRICW categoriesFor: #otmsCharSlopeRun!**compiled accessors**!public! !
-!OUTLINETEXTMETRICW categoriesFor: #otmsStrikeoutPosition!**compiled accessors**!public! !
-!OUTLINETEXTMETRICW categoriesFor: #otmsStrikeoutSize!**compiled accessors**!public! !
-!OUTLINETEXTMETRICW categoriesFor: #otmsUnderscorePosition!**compiled accessors**!public! !
-!OUTLINETEXTMETRICW categoriesFor: #otmsUnderscoreSize!**compiled accessors**!public! !
-!OUTLINETEXTMETRICW categoriesFor: #otmsXHeight!**compiled accessors**!public! !
-!OUTLINETEXTMETRICW categoriesFor: #otmTextMetrics!**compiled accessors**!public! !
-!OUTLINETEXTMETRICW categoriesFor: #otmusMinimumPPEM!**compiled accessors**!public! !
-!OUTLINETEXTMETRICW categoriesFor: #styleName!accessing!public! !
+!OS.OUTLINETEXTMETRICW categoriesFor: #dwSize:!**compiled accessors**!public! !
+!OS.OUTLINETEXTMETRICW categoriesFor: #faceName!accessing!public! !
+!OS.OUTLINETEXTMETRICW categoriesFor: #familyName!accessing!public! !
+!OS.OUTLINETEXTMETRICW categoriesFor: #fullName!accessing!public! !
+!OS.OUTLINETEXTMETRICW categoriesFor: #otmAscent!**compiled accessors**!public! !
+!OS.OUTLINETEXTMETRICW categoriesFor: #otmDescent!**compiled accessors**!public! !
+!OS.OUTLINETEXTMETRICW categoriesFor: #otmEMSquare!**compiled accessors**!public! !
+!OS.OUTLINETEXTMETRICW categoriesFor: #otmfsSelection!**compiled accessors**!public! !
+!OS.OUTLINETEXTMETRICW categoriesFor: #otmfsType!**compiled accessors**!public! !
+!OS.OUTLINETEXTMETRICW categoriesFor: #otmItalicAngle!**compiled accessors**!public! !
+!OS.OUTLINETEXTMETRICW categoriesFor: #otmLineGap!**compiled accessors**!public! !
+!OS.OUTLINETEXTMETRICW categoriesFor: #otmMacAscent!**compiled accessors**!public! !
+!OS.OUTLINETEXTMETRICW categoriesFor: #otmMacDescent!**compiled accessors**!public! !
+!OS.OUTLINETEXTMETRICW categoriesFor: #otmMacLineGap!**compiled accessors**!public! !
+!OS.OUTLINETEXTMETRICW categoriesFor: #otmPanoseNumber!**compiled accessors**!public! !
+!OS.OUTLINETEXTMETRICW categoriesFor: #otmpFaceName!**compiled accessors**!public! !
+!OS.OUTLINETEXTMETRICW categoriesFor: #otmpFamilyName!**compiled accessors**!public! !
+!OS.OUTLINETEXTMETRICW categoriesFor: #otmpFullName!**compiled accessors**!public! !
+!OS.OUTLINETEXTMETRICW categoriesFor: #otmpStyleName!**compiled accessors**!public! !
+!OS.OUTLINETEXTMETRICW categoriesFor: #otmptSubscriptOffset!**compiled accessors**!public! !
+!OS.OUTLINETEXTMETRICW categoriesFor: #otmptSubscriptSize!**compiled accessors**!public! !
+!OS.OUTLINETEXTMETRICW categoriesFor: #otmptSuperscriptOffset!**compiled accessors**!public! !
+!OS.OUTLINETEXTMETRICW categoriesFor: #otmptSuperscriptSize!**compiled accessors**!public! !
+!OS.OUTLINETEXTMETRICW categoriesFor: #otmrcFontBox!**compiled accessors**!public! !
+!OS.OUTLINETEXTMETRICW categoriesFor: #otmsCapEmHeight!**compiled accessors**!public! !
+!OS.OUTLINETEXTMETRICW categoriesFor: #otmsCharSlopeRise!**compiled accessors**!public! !
+!OS.OUTLINETEXTMETRICW categoriesFor: #otmsCharSlopeRun!**compiled accessors**!public! !
+!OS.OUTLINETEXTMETRICW categoriesFor: #otmsStrikeoutPosition!**compiled accessors**!public! !
+!OS.OUTLINETEXTMETRICW categoriesFor: #otmsStrikeoutSize!**compiled accessors**!public! !
+!OS.OUTLINETEXTMETRICW categoriesFor: #otmsUnderscorePosition!**compiled accessors**!public! !
+!OS.OUTLINETEXTMETRICW categoriesFor: #otmsUnderscoreSize!**compiled accessors**!public! !
+!OS.OUTLINETEXTMETRICW categoriesFor: #otmsXHeight!**compiled accessors**!public! !
+!OS.OUTLINETEXTMETRICW categoriesFor: #otmTextMetrics!**compiled accessors**!public! !
+!OS.OUTLINETEXTMETRICW categoriesFor: #otmusMinimumPPEM!**compiled accessors**!public! !
+!OS.OUTLINETEXTMETRICW categoriesFor: #styleName!accessing!public! !
 
-!OUTLINETEXTMETRICW class methodsFor!
+!OS.OUTLINETEXTMETRICW class methodsFor!
 
 defineFields
 	"Define the fields of the OUTLINETEXTMETRICW structure.
@@ -279,7 +279,7 @@ defineFields
 			UINT otmLineGap;
 			UINT otmsCapEmHeight;
 			UINT otmsXHeight;
-			RECT otmrcFontBox;
+			RECTL otmrcFontBox;
 			int otmMacAscent;
 			int otmMacDescent;
 			UINT otmMacLineGap;
@@ -315,7 +315,7 @@ defineFields
 		defineField: #otmLineGap type: DWORDField readOnly;
 		defineField: #otmsCapEmHeight type: DWORDField readOnly;
 		defineField: #otmsXHeight type: DWORDField readOnly;
-		defineField: #otmrcFontBox type: (StructureField type: RECT) beReadOnly;
+		defineField: #otmrcFontBox type: (StructureField type: RECTL) beReadOnly;
 		defineField: #otmMacAscent type: SDWORDField readOnly;
 		defineField: #otmMacDescent type: SDWORDField readOnly;
 		defineField: #otmMacLineGap type: DWORDField readOnly;
@@ -336,6 +336,6 @@ defineFields
 
 getFieldNames
 	^#(#dwSize #otmTextMetrics #otmPanoseNumber #otmfsSelection #otmfsType #otmsCharSlopeRise #otmsCharSlopeRun #otmItalicAngle #otmEMSquare #otmAscent #otmDescent #otmLineGap #otmsCapEmHeight #otmsXHeight #otmrcFontBox #otmMacAscent #otmMacDescent #otmMacLineGap #otmusMinimumPPEM #otmptSubscriptSize #otmptSubscriptOffset #otmptSuperscriptSize #otmptSuperscriptOffset #otmsStrikeoutSize #otmsStrikeoutPosition #otmsUnderscoreSize #otmsUnderscorePosition #otmpFamilyName #otmpFaceName #otmpStyleName #otmpFullName)! !
-!OUTLINETEXTMETRICW class categoriesFor: #defineFields!public!template definition! !
-!OUTLINETEXTMETRICW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.OUTLINETEXTMETRICW class categoriesFor: #defineFields!public!template definition! !
+!OS.OUTLINETEXTMETRICW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

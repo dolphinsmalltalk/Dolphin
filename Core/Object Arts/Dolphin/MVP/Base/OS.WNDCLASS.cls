@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Win32Structure subclass: #WNDCLASS
+OS.Win32Structure subclass: #'OS.WNDCLASS'
 	instanceVariableNames: 'menuName className'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_cbClsExtra' -> 16r8.
@@ -17,11 +17,11 @@ Win32Structure subclass: #WNDCLASS
 		'_OffsetOf_lpszMenuName' -> 16r20.
 		'_OffsetOf_style' -> 16r0
 	}!
-WNDCLASS guid: (GUID fromString: '{87b4c61c-026e-11d3-9fd7-00a0cc3e4a32}')!
-WNDCLASS comment: 'WNDCLASS is the class of <ExternalStructure> which represent the Windows structure of the same name. It is used to retrieve and specify Windows "Class" information, e.g. when registering a window class.
+OS.WNDCLASS guid: (Core.GUID fromString: '{87b4c61c-026e-11d3-9fd7-00a0cc3e4a32}')!
+OS.WNDCLASS comment: 'WNDCLASS is the class of <ExternalStructure> which represent the Windows structure of the same name. It is used to retrieve and specify Windows "Class" information, e.g. when registering a window class.
 '!
-!WNDCLASS categoriesForClass!External-Data-Structured-Win32! !
-!WNDCLASS methodsFor!
+!OS.WNDCLASS categoriesForClass!External-Data-Structured-Win32! !
+!OS.WNDCLASS methodsFor!
 
 className: aString
 	"Set the receiver's className and lpszClassName fields to aString.
@@ -88,20 +88,20 @@ style: anInteger
 	"Set the receiver's 'style' field to the value of the argument, anInteger"
 
 	bytes dwordAtOffset: _OffsetOf_style put: anInteger! !
-!WNDCLASS categoriesFor: #className:!accessing!public! !
-!WNDCLASS categoriesFor: #hbrBackground:!**compiled accessors**!public! !
-!WNDCLASS categoriesFor: #hCursor:!**compiled accessors**!public! !
-!WNDCLASS categoriesFor: #hIcon:!**compiled accessors**!public! !
-!WNDCLASS categoriesFor: #hInstance:!**compiled accessors**!public! !
-!WNDCLASS categoriesFor: #lpfnWndProc:!**compiled accessors**!public! !
-!WNDCLASS categoriesFor: #lpszClassName!**compiled accessors**!public! !
-!WNDCLASS categoriesFor: #lpszClassName:!**compiled accessors**!public! !
-!WNDCLASS categoriesFor: #lpszMenuName!**compiled accessors**!public! !
-!WNDCLASS categoriesFor: #lpszMenuName:!**compiled accessors**!public! !
-!WNDCLASS categoriesFor: #menuName:!accessing!public! !
-!WNDCLASS categoriesFor: #style:!**compiled accessors**!public! !
+!OS.WNDCLASS categoriesFor: #className:!accessing!public! !
+!OS.WNDCLASS categoriesFor: #hbrBackground:!**compiled accessors**!public! !
+!OS.WNDCLASS categoriesFor: #hCursor:!**compiled accessors**!public! !
+!OS.WNDCLASS categoriesFor: #hIcon:!**compiled accessors**!public! !
+!OS.WNDCLASS categoriesFor: #hInstance:!**compiled accessors**!public! !
+!OS.WNDCLASS categoriesFor: #lpfnWndProc:!**compiled accessors**!public! !
+!OS.WNDCLASS categoriesFor: #lpszClassName!**compiled accessors**!public! !
+!OS.WNDCLASS categoriesFor: #lpszClassName:!**compiled accessors**!public! !
+!OS.WNDCLASS categoriesFor: #lpszMenuName!**compiled accessors**!public! !
+!OS.WNDCLASS categoriesFor: #lpszMenuName:!**compiled accessors**!public! !
+!OS.WNDCLASS categoriesFor: #menuName:!accessing!public! !
+!OS.WNDCLASS categoriesFor: #style:!**compiled accessors**!public! !
 
-!WNDCLASS class methodsFor!
+!OS.WNDCLASS class methodsFor!
 
 defineFields
 	"Define the layout of the Win32 WNDCLASS structure. Currently to avoid
@@ -124,7 +124,7 @@ defineFields
 			LPCWSTR	lpszClassName; 
 		} WNDCLASS; "
 
-	self 
+	self
 		defineField: #style type: DWORDField writeOnly;
 		defineField: #lpfnWndProc type: DWORDField writeOnly;
 		defineField: #cbClsExtra type: SDWORDField filler;
@@ -138,6 +138,6 @@ defineFields
 
 getFieldNames
 	^#(#style #lpfnWndProc #hInstance #hIcon #hCursor #hbrBackground #lpszMenuName #lpszClassName)! !
-!WNDCLASS class categoriesFor: #defineFields!public!template definition! !
-!WNDCLASS class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.WNDCLASS class categoriesFor: #defineFields!public!template definition! !
+!OS.WNDCLASS class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

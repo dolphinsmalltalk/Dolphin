@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Win32Structure subclass: #BITMAP
+OS.Win32Structure subclass: #'OS.BITMAP'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_bmBits' -> 16r14.
@@ -14,12 +14,12 @@ Win32Structure subclass: #BITMAP
 		'_OffsetOf_bmWidth' -> 16r4.
 		'_OffsetOf_bmWidthBytes' -> 16rC
 	}!
-BITMAP guid: (GUID fromString: '{f44c9143-2b3f-11d3-8368-7a8b5a000000}')!
-BITMAP comment: 'BITMAP is an <ExternalStructure> class to represent the Win32 structure of the same name.
+OS.BITMAP guid: (Core.GUID fromString: '{f44c9143-2b3f-11d3-8368-7a8b5a000000}')!
+OS.BITMAP comment: 'BITMAP is an <ExternalStructure> class to represent the Win32 structure of the same name.
 
 The BITMAP structure is used to describe bitmaps, containing attributes such as the width, height, and color format, and a pointer to the bitmap''s bits.'!
-!BITMAP categoriesForClass!External-Data-Structured-Win32! !
-!BITMAP methodsFor!
+!OS.BITMAP categoriesForClass!External-Data-Structured-Win32! !
+!OS.BITMAP methodsFor!
 
 bmBits
 	"Answer the <ExternalAddress> value of the receiver's 'bmBits' field."
@@ -65,17 +65,17 @@ extent
 	"Answer the width and height (in pels) of the the bitmap described by the receiver."
 
 	^self bmWidth @ self bmHeight! !
-!BITMAP categoriesFor: #bmBits!**compiled accessors**!public! !
-!BITMAP categoriesFor: #bmBitsPixel!**compiled accessors**!public! !
-!BITMAP categoriesFor: #bmHeight!**compiled accessors**!public! !
-!BITMAP categoriesFor: #bmPlanes!**compiled accessors**!public! !
-!BITMAP categoriesFor: #bmType!**compiled accessors**!public! !
-!BITMAP categoriesFor: #bmWidth!**compiled accessors**!public! !
-!BITMAP categoriesFor: #bmWidthBytes!**compiled accessors**!public! !
-!BITMAP categoriesFor: #depth!accessing!public! !
-!BITMAP categoriesFor: #extent!accessing!public! !
+!OS.BITMAP categoriesFor: #bmBits!**compiled accessors**!public! !
+!OS.BITMAP categoriesFor: #bmBitsPixel!**compiled accessors**!public! !
+!OS.BITMAP categoriesFor: #bmHeight!**compiled accessors**!public! !
+!OS.BITMAP categoriesFor: #bmPlanes!**compiled accessors**!public! !
+!OS.BITMAP categoriesFor: #bmType!**compiled accessors**!public! !
+!OS.BITMAP categoriesFor: #bmWidth!**compiled accessors**!public! !
+!OS.BITMAP categoriesFor: #bmWidthBytes!**compiled accessors**!public! !
+!OS.BITMAP categoriesFor: #depth!accessing!public! !
+!OS.BITMAP categoriesFor: #extent!accessing!public! !
 
-!BITMAP class methodsFor!
+!OS.BITMAP class methodsFor!
 
 defineFields
 	"Define the Win32 BITMAP structure
@@ -92,22 +92,16 @@ defineFields
 		} BITMAP;"
 
 	self
-	     defineField: #bmType type: SDWORDField readOnly;
-	     defineField: #bmWidth type: SDWORDField readOnly;
-	     defineField: #bmHeight type: SDWORDField readOnly;
-	     defineField: #bmWidthBytes type: SDWORDField readOnly;
-	     defineField: #bmPlanes type: WORDField readOnly;
-	     defineField: #bmBitsPixel type:WORDField readOnly;
-	     defineField: #bmBits type: LPVOIDField readOnly!
-
-fileOutStem
-	"Private - Answer standard file name stem for the class to file out on."
-
-	^'BITMAP_Struct'!
+		defineField: #bmType type: SDWORDField readOnly;
+		defineField: #bmWidth type: SDWORDField readOnly;
+		defineField: #bmHeight type: SDWORDField readOnly;
+		defineField: #bmWidthBytes type: SDWORDField readOnly;
+		defineField: #bmPlanes type: WORDField readOnly;
+		defineField: #bmBitsPixel type: WORDField readOnly;
+		defineField: #bmBits type: LPVOIDField readOnly!
 
 getFieldNames
 	^#(#bmType #bmWidth #bmHeight #bmWidthBytes #bmPlanes #bmBitsPixel #bmBits)! !
-!BITMAP class categoriesFor: #defineFields!public!template definition! !
-!BITMAP class categoriesFor: #fileOutStem!private!source filing! !
-!BITMAP class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.BITMAP class categoriesFor: #defineFields!public!template definition! !
+!OS.BITMAP class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

@@ -1,19 +1,19 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-GraphicsTool subclass: #AcceleratorTable
+Graphics.GraphicsTool subclass: #'UI.AcceleratorTable'
 	instanceVariableNames: 'commands'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-AcceleratorTable guid: (GUID fromString: '{87b4c632-026e-11d3-9fd7-00a0cc3e4a32}')!
-AcceleratorTable comment: '`AcceleratorTable` is the class used to represent the table of "accelerator" key sequences associated with a top-level view. These key-sequences provide keyboard shortcuts to commands on the menu or toolbar (or any other command sources).
+UI.AcceleratorTable guid: (Core.GUID fromString: '{87b4c632-026e-11d3-9fd7-00a0cc3e4a32}')!
+UI.AcceleratorTable comment: '`AcceleratorTable` is the class used to represent the table of "accelerator" key sequences associated with a top-level view. These key-sequences provide keyboard shortcuts to commands on the menu or toolbar (or any other command sources).
 
 ## Instance Variables:
   `commands`		`IdentityDictionary` mapping between a key code `<integer>` and the associated `CommandDescription`
 '!
-!AcceleratorTable categoriesForClass!Graphics-Tools! !
-!AcceleratorTable methodsFor!
+!UI.AcceleratorTable categoriesForClass!Graphics-Tools! !
+!UI.AcceleratorTable methodsFor!
 
 addCommand: aCommandDescription 
 	"Add a new accelerator to the table. The argument, vKeyCode, is an integer with the
@@ -50,13 +50,15 @@ createHandle
 	accels := StructureArray length: count elementClass: ACCEL.
 	accels beUnfinalizable.	"Nothing to free here"
 	i := 1.
-	cmds keysAndValuesDo: [:vkey :command ||struct |
-		struct := accels at: i.
-		struct
-			fVirt: ((vkey bitShift: -9) bitOr: FVIRTKEY);
-			key: (vkey bitAnd: 16rFF);
-			cmd: command id	"Always add virtual key flag, or modifiers ignored".
-		i := i + 1].
+	cmds keysAndValuesDo: 
+			[:vkey :command |
+			| struct |
+			struct := accels at: i.
+			struct
+				fVirt: ((vkey bitShift: -9) bitOr: FVIRTKEY);
+				key: (vkey bitAnd: 16rFF);
+				cmd: command id.	"Always add virtual key flag, or modifiers ignored"
+			i := i + 1].
 	^UserLibrary default createAcceleratorTable: accels cEntries: count!
 
 includes: commandSymbol 
@@ -87,18 +89,18 @@ postCopy
 	super postCopy.
 	commands := commands copy.
 	^self! !
-!AcceleratorTable categoriesFor: #addCommand:!adding!public! !
-!AcceleratorTable categoriesFor: #basicFree!private!realizing/unrealizing! !
-!AcceleratorTable categoriesFor: #commands!accessing!public! !
-!AcceleratorTable categoriesFor: #commands:!initializing!private! !
-!AcceleratorTable categoriesFor: #createHandle!private!realizing/unrealizing! !
-!AcceleratorTable categoriesFor: #includes:!public!searching! !
-!AcceleratorTable categoriesFor: #initialize!initializing!private! !
-!AcceleratorTable categoriesFor: #isEmpty!public!testing! !
-!AcceleratorTable categoriesFor: #notEmpty!public!testing! !
-!AcceleratorTable categoriesFor: #postCopy!copying!public! !
+!UI.AcceleratorTable categoriesFor: #addCommand:!adding!public! !
+!UI.AcceleratorTable categoriesFor: #basicFree!private!realizing/unrealizing! !
+!UI.AcceleratorTable categoriesFor: #commands!accessing!public! !
+!UI.AcceleratorTable categoriesFor: #commands:!initializing!private! !
+!UI.AcceleratorTable categoriesFor: #createHandle!private!realizing/unrealizing! !
+!UI.AcceleratorTable categoriesFor: #includes:!public!searching! !
+!UI.AcceleratorTable categoriesFor: #initialize!initializing!private! !
+!UI.AcceleratorTable categoriesFor: #isEmpty!public!testing! !
+!UI.AcceleratorTable categoriesFor: #notEmpty!public!testing! !
+!UI.AcceleratorTable categoriesFor: #postCopy!copying!public! !
 
-!AcceleratorTable class methodsFor!
+!UI.AcceleratorTable class methodsFor!
 
 icon
 	"Answers an Icon that can be used to represent this class"
@@ -210,11 +212,11 @@ splitKeyString: aString
 
 	^self keySeparator split: aString!
 
-stbConvertFrom: anSTBClassFormat 
+stbConvertFrom: anSTBClassFormat
 	"Version 1 changes format of the 'commands' (formerly 'accelerators') instance variable."
 
 	^
-	[:data | 
+	[:data |
 	| newInstance map |
 	newInstance := self basicNew.
 	1 to: data size do: [:i | newInstance instVarAt: i put: (data at: i)].
@@ -225,21 +227,21 @@ stbConvertFrom: anSTBClassFormat
 
 stbVersion
 	^1! !
-!AcceleratorTable class categoriesFor: #icon!constants!public! !
-!AcceleratorTable class categoriesFor: #invariantKeyStringFromCode:!enquiries!public! !
-!AcceleratorTable class categoriesFor: #keyCode:modifiers:!helpers!public! !
-!AcceleratorTable class categoriesFor: #keyCodeFromInvariantString:!enquiries!public! !
-!AcceleratorTable class categoriesFor: #keyCodeFromString:!enquiries!public! !
-!AcceleratorTable class categoriesFor: #keyCodeFromString:keyboard:!enquiries!public! !
-!AcceleratorTable class categoriesFor: #keyModifierNames:keyboard:!enquiries!private! !
-!AcceleratorTable class categoriesFor: #keyModifierNames:keyboard:do:!enquiries!private! !
-!AcceleratorTable class categoriesFor: #keySeparator!constants!private! !
-!AcceleratorTable class categoriesFor: #keyStringFromCode:!enquiries!public! !
-!AcceleratorTable class categoriesFor: #keyStringFromCode:keyboard:!enquiries!public! !
-!AcceleratorTable class categoriesFor: #keyStringFromCode:modifiers:!enquiries!helpers!private! !
-!AcceleratorTable class categoriesFor: #keyStringFromCode:modifiers:keyboard:!enquiries!helpers!private! !
-!AcceleratorTable class categoriesFor: #splitKeyCode:!helpers!public! !
-!AcceleratorTable class categoriesFor: #splitKeyString:!helpers!public! !
-!AcceleratorTable class categoriesFor: #stbConvertFrom:!binary filing!private! !
-!AcceleratorTable class categoriesFor: #stbVersion!binary filing!public! !
+!UI.AcceleratorTable class categoriesFor: #icon!constants!public! !
+!UI.AcceleratorTable class categoriesFor: #invariantKeyStringFromCode:!enquiries!public! !
+!UI.AcceleratorTable class categoriesFor: #keyCode:modifiers:!helpers!public! !
+!UI.AcceleratorTable class categoriesFor: #keyCodeFromInvariantString:!enquiries!public! !
+!UI.AcceleratorTable class categoriesFor: #keyCodeFromString:!enquiries!public! !
+!UI.AcceleratorTable class categoriesFor: #keyCodeFromString:keyboard:!enquiries!public! !
+!UI.AcceleratorTable class categoriesFor: #keyModifierNames:keyboard:!enquiries!private! !
+!UI.AcceleratorTable class categoriesFor: #keyModifierNames:keyboard:do:!enquiries!private! !
+!UI.AcceleratorTable class categoriesFor: #keySeparator!constants!private! !
+!UI.AcceleratorTable class categoriesFor: #keyStringFromCode:!enquiries!public! !
+!UI.AcceleratorTable class categoriesFor: #keyStringFromCode:keyboard:!enquiries!public! !
+!UI.AcceleratorTable class categoriesFor: #keyStringFromCode:modifiers:!enquiries!helpers!private! !
+!UI.AcceleratorTable class categoriesFor: #keyStringFromCode:modifiers:keyboard:!enquiries!helpers!private! !
+!UI.AcceleratorTable class categoriesFor: #splitKeyCode:!helpers!public! !
+!UI.AcceleratorTable class categoriesFor: #splitKeyString:!helpers!public! !
+!UI.AcceleratorTable class categoriesFor: #stbConvertFrom:!binary filing!private! !
+!UI.AcceleratorTable class categoriesFor: #stbVersion!binary filing!public! !
 

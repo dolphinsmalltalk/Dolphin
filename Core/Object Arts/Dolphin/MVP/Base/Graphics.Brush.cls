@@ -1,18 +1,18 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-GraphicsTool subclass: #Brush
+Graphics.GraphicsTool subclass: #'Graphics.Brush'
 	instanceVariableNames: 'logBrush'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Brush guid: (GUID fromString: '{87b4c633-026e-11d3-9fd7-00a0cc3e4a32}')!
-Brush comment: '`Brush` is a `GraphicsTool` that wraps a Windows GDI Brush object. Brushes are selected into `Canvas`s to paint areas of pixels, for example to fill rectangles.
+Graphics.Brush guid: (Core.GUID fromString: '{87b4c633-026e-11d3-9fd7-00a0cc3e4a32}')!
+Graphics.Brush comment: '`Brush` is a `GraphicsTool` that wraps a Windows GDI Brush object. Brushes are selected into `Canvas`s to paint areas of pixels, for example to fill rectangles.
 
 ## Instance Variables:
   `logBrush` 	`LOGBRUSH`. Windows API structure describing the brush.'!
-!Brush categoriesForClass!Graphics-Tools! !
-!Brush methodsFor!
+!Graphics.Brush categoriesForClass!Graphics-Tools! !
+!Graphics.Brush methodsFor!
 
 createHandle
 	"Private - Answer an external handle to a new brush as described by the logbrush structure."
@@ -22,7 +22,7 @@ createHandle
 logBrush
 	"Private - Answe the logical description (LOGBRUSH) for the receiver."
 
-	logBrush isNil 
+	logBrush isNil
 		ifTrue: 
 			[logBrush := LOGBRUSH new.
 			self getData: logBrush].
@@ -56,12 +56,12 @@ printOn: aPuttableStream
 				print: self logBrush;
 				nextPut: $)]
 ! !
-!Brush categoriesFor: #createHandle!private!realizing/unrealizing! !
-!Brush categoriesFor: #logBrush!accessing!private! !
-!Brush categoriesFor: #logBrush:!accessing!private! !
-!Brush categoriesFor: #printOn:!printing!public! !
+!Graphics.Brush categoriesFor: #createHandle!private!realizing/unrealizing! !
+!Graphics.Brush categoriesFor: #logBrush!accessing!private! !
+!Graphics.Brush categoriesFor: #logBrush:!accessing!private! !
+!Graphics.Brush categoriesFor: #printOn:!printing!public! !
 
-!Brush class methodsFor!
+!Graphics.Brush class methodsFor!
 
 bitmap: aBitmap 
 	"Answer a new instance of the receiver for painting the specified <Bitmap> pattern."
@@ -89,7 +89,7 @@ cross
 cross: aColor
 	"Answer a new instance of the receiver for painting a hatched pattern of evenly-spaced, perpendicular, vertical and horizontal lines in the specified <Color>."
 
-	^HatchBrush fromId: Win32Constants.HS_CROSS color: aColor!
+	^HatchBrush fromId: HS_CROSS color: aColor!
 
 darkGray
 	"Answer the stock dark grey Brush."
@@ -104,7 +104,7 @@ diagonal
 diagonal: aColor
 	"Answer a new instance of the receiver for painting a hatched pattern of evenly-spaced diagonal lines in the specified <Color>. The lines are draw from bottom left towards top right, i.e. sloping up from a left to right perspective."
 
-	^HatchBrush fromId: Win32Constants.HS_BDIAGONAL color: aColor!
+	^HatchBrush fromId: HS_BDIAGONAL color: aColor!
 
 diamond
 	"Answer a new instance of the receiver for painting a hatched pattern of evenly-spaced, diagonal and reverse-diagonal lines, in black."
@@ -114,7 +114,7 @@ diamond
 diamond: aColor
 	"Answer a new instance of the receiver for painting a hatched pattern of evenly-spaced, diagonal and reverse-diagonal lines in the specified <Color>."
 
-	^HatchBrush fromId: Win32Constants.HS_DIAGCROSS color: aColor!
+	^HatchBrush fromId: HS_DIAGCROSS color: aColor!
 
 fromLogBrush: aLOGBRUSH
 	"Answer a new instance of the receiver containing the given logical brush."
@@ -136,7 +136,7 @@ horizontal
 horizontal: aColor
 	"Answer a new instance of the receiver for painting a hatched pattern of horizontally-oriented parallel lines in the specified <Color>."
 
-	^HatchBrush fromId: Win32Constants.HS_HORIZONTAL color: aColor!
+	^HatchBrush fromId: HS_HORIZONTAL color: aColor!
 
 icon
 	"Answers an Icon that can be used to represent this class"
@@ -162,7 +162,7 @@ reverseDiagonal
 reverseDiagonal: aColor
 	"Answer a new instance of the receiver for painting a reverse diagonal hatched pattern in the specified <Color>. The lines are draw from top left towards bottom right, i.e. sloping down from a left to right perspective."
 
-	^HatchBrush fromId: Win32Constants.HS_FDIAGONAL color: aColor!
+	^HatchBrush fromId: HS_FDIAGONAL color: aColor!
 
 silver
 	"Answer the stock light grey brush."
@@ -185,7 +185,7 @@ vertical
 vertical: aColor
 	"Answer a new instance of the receiver for painting a hatched pattern of vertically-oriented parallel lines in the specified <Color>."
 
-	^HatchBrush fromId: Win32Constants.HS_VERTICAL color: aColor!
+	^HatchBrush fromId: HS_VERTICAL color: aColor!
 
 white
 	"Answer the stock white brush."
@@ -200,30 +200,30 @@ withStyle: styleFlags color: aColour hatch: hatchObject
 				color: aColour;
 				hatch: hatchObject;
 				yourself)! !
-!Brush class categoriesFor: #bitmap:!instance creation!public! !
-!Brush class categoriesFor: #black!instance creation!public! !
-!Brush class categoriesFor: #color:!instance creation!public! !
-!Brush class categoriesFor: #cross!instance creation!public! !
-!Brush class categoriesFor: #cross:!instance creation!public! !
-!Brush class categoriesFor: #darkGray!instance creation!public! !
-!Brush class categoriesFor: #diagonal!instance creation!public! !
-!Brush class categoriesFor: #diagonal:!instance creation!public! !
-!Brush class categoriesFor: #diamond!instance creation!public! !
-!Brush class categoriesFor: #diamond:!instance creation!public! !
-!Brush class categoriesFor: #fromLogBrush:!instance creation!public! !
-!Brush class categoriesFor: #gray!instance creation!public! !
-!Brush class categoriesFor: #horizontal!instance creation!public! !
-!Brush class categoriesFor: #horizontal:!instance creation!public! !
-!Brush class categoriesFor: #icon!constants!public! !
-!Brush class categoriesFor: #logBrushClass!constants!private! !
-!Brush class categoriesFor: #newColor:!instance creation!private! !
-!Brush class categoriesFor: #reverseDiagonal!instance creation!public! !
-!Brush class categoriesFor: #reverseDiagonal:!instance creation!public! !
-!Brush class categoriesFor: #silver!instance creation!public! !
-!Brush class categoriesFor: #sysColorBrushClass!instance creation!public! !
-!Brush class categoriesFor: #transparent!instance creation!public! !
-!Brush class categoriesFor: #vertical!instance creation!public! !
-!Brush class categoriesFor: #vertical:!instance creation!public! !
-!Brush class categoriesFor: #white!instance creation!public! !
-!Brush class categoriesFor: #withStyle:color:hatch:!instance creation!public! !
+!Graphics.Brush class categoriesFor: #bitmap:!instance creation!public! !
+!Graphics.Brush class categoriesFor: #black!instance creation!public! !
+!Graphics.Brush class categoriesFor: #color:!instance creation!public! !
+!Graphics.Brush class categoriesFor: #cross!instance creation!public! !
+!Graphics.Brush class categoriesFor: #cross:!instance creation!public! !
+!Graphics.Brush class categoriesFor: #darkGray!instance creation!public! !
+!Graphics.Brush class categoriesFor: #diagonal!instance creation!public! !
+!Graphics.Brush class categoriesFor: #diagonal:!instance creation!public! !
+!Graphics.Brush class categoriesFor: #diamond!instance creation!public! !
+!Graphics.Brush class categoriesFor: #diamond:!instance creation!public! !
+!Graphics.Brush class categoriesFor: #fromLogBrush:!instance creation!public! !
+!Graphics.Brush class categoriesFor: #gray!instance creation!public! !
+!Graphics.Brush class categoriesFor: #horizontal!instance creation!public! !
+!Graphics.Brush class categoriesFor: #horizontal:!instance creation!public! !
+!Graphics.Brush class categoriesFor: #icon!constants!public! !
+!Graphics.Brush class categoriesFor: #logBrushClass!constants!private! !
+!Graphics.Brush class categoriesFor: #newColor:!instance creation!private! !
+!Graphics.Brush class categoriesFor: #reverseDiagonal!instance creation!public! !
+!Graphics.Brush class categoriesFor: #reverseDiagonal:!instance creation!public! !
+!Graphics.Brush class categoriesFor: #silver!instance creation!public! !
+!Graphics.Brush class categoriesFor: #sysColorBrushClass!instance creation!public! !
+!Graphics.Brush class categoriesFor: #transparent!instance creation!public! !
+!Graphics.Brush class categoriesFor: #vertical!instance creation!public! !
+!Graphics.Brush class categoriesFor: #vertical:!instance creation!public! !
+!Graphics.Brush class categoriesFor: #white!instance creation!public! !
+!Graphics.Brush class categoriesFor: #withStyle:color:hatch:!instance creation!public! !
 

@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-LayoutManager subclass: #GridLayout
+UI.LayoutManager subclass: #'UI.GridLayout'
 	instanceVariableNames: 'rows columns horizontalGap verticalGap'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-GridLayout guid: (GUID fromString: '{87b4c64a-026e-11d3-9fd7-00a0cc3e4a32}')!
-GridLayout comment: 'GridLayout implements a general purpose <layoutManager> to layout <view> objects within a <compositeView>. The managed views are arranged in a rectangular grid with either the number of rows or the number of columns specified by positive <integer> values of the #rows and #columns aspects, as follows:
+UI.GridLayout guid: (Core.GUID fromString: '{87b4c64a-026e-11d3-9fd7-00a0cc3e4a32}')!
+UI.GridLayout comment: 'GridLayout implements a general purpose <layoutManager> to layout <view> objects within a <compositeView>. The managed views are arranged in a rectangular grid with either the number of rows or the number of columns specified by positive <integer> values of the #rows and #columns aspects, as follows:
 	
 	(rows,columns)	
 	(0,0)			Invalid
@@ -25,8 +25,8 @@ Instance Variables:
 	horizontalGap	<integer>
 	verticalGap		<integer>
 '!
-!GridLayout categoriesForClass!MVP-Layout Managers-General! !
-!GridLayout methodsFor!
+!UI.GridLayout categoriesForClass!MVP-Layout Managers-General! !
+!UI.GridLayout methodsFor!
 
 columns
 	"Answers the number of columns for the receiver, or zero if unspecified."
@@ -150,16 +150,16 @@ verticalGap: anInteger
 	"Set the vertical gap between items laid out by the receiver to be the <integer> argument."
 
 	verticalGap := anInteger! !
-!GridLayout categoriesFor: #columns!accessing!public! !
-!GridLayout categoriesFor: #columns:!accessing!public! !
-!GridLayout categoriesFor: #horizontalGap!accessing!public! !
-!GridLayout categoriesFor: #horizontalGap:!accessing!public! !
-!GridLayout categoriesFor: #initialize!initializing!private! !
-!GridLayout categoriesFor: #layoutContainer:context:!geometry!private! !
-!GridLayout categoriesFor: #preferredLayoutExtentOf:context:!enquiries!public! !
-!GridLayout categoriesFor: #resolutionScaledBy:!geometry!private! !
-!GridLayout categoriesFor: #rows!accessing!public! !
-!GridLayout categoriesFor: #rows:!accessing!public! !
-!GridLayout categoriesFor: #verticalGap!accessing!public! !
-!GridLayout categoriesFor: #verticalGap:!accessing!public! !
+!UI.GridLayout categoriesFor: #columns!accessing!public! !
+!UI.GridLayout categoriesFor: #columns:!accessing!public! !
+!UI.GridLayout categoriesFor: #horizontalGap!accessing!public! !
+!UI.GridLayout categoriesFor: #horizontalGap:!accessing!public! !
+!UI.GridLayout categoriesFor: #initialize!initializing!private! !
+!UI.GridLayout categoriesFor: #layoutContainer:context:!geometry!private! !
+!UI.GridLayout categoriesFor: #preferredLayoutExtentOf:context:!enquiries!public! !
+!UI.GridLayout categoriesFor: #resolutionScaledBy:!geometry!private! !
+!UI.GridLayout categoriesFor: #rows!accessing!public! !
+!UI.GridLayout categoriesFor: #rows:!accessing!public! !
+!UI.GridLayout categoriesFor: #verticalGap!accessing!public! !
+!UI.GridLayout categoriesFor: #verticalGap:!accessing!public! !
 

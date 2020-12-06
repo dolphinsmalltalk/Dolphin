@@ -1,16 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-StaticText subclass: #StaticPath
+UI.StaticText subclass: #'UI.StaticPath'
 	instanceVariableNames: 'text'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-StaticPath guid: (GUID fromString: '{c79f6206-3e83-4124-b572-d8d54cd25cb1}')!
-StaticPath comment: 'StaticPath is a <valueView> class for a Window STATIC control specifically intended for displaying file paths, which are truncated to fit by replacing path components with ellipses as necessary. Note that the path is expected to be dsiplayed on a single line, and will not wrap to multiple lines unless the last remaining component would be truncated. See <StaticText> for further details.
+UI.StaticPath guid: (Core.GUID fromString: '{c79f6206-3e83-4124-b572-d8d54cd25cb1}')!
+UI.StaticPath comment: 'StaticPath is a <valueView> class for a Window STATIC control specifically intended for displaying file paths, which are truncated to fit by replacing path components with ellipses as necessary. Note that the path is expected to be dsiplayed on a single line, and will not wrap to multiple lines unless the last remaining component would be truncated. See <StaticText> for further details.
 '!
-!StaticPath categoriesForClass!Unclassified! !
-!StaticPath methodsFor!
+!UI.StaticPath categoriesForClass!Unclassified! !
+!UI.StaticPath methodsFor!
 
 isSingleLine
 	^true!
@@ -49,17 +49,17 @@ setWindowText: pathString
 		id: self id
 		pszPath: pathString.
 	^true! !
-!StaticPath categoriesFor: #isSingleLine!private!testing! !
-!StaticPath categoriesFor: #layout:!geometry!private! !
-!StaticPath categoriesFor: #plainText!accessing!public! !
-!StaticPath categoriesFor: #plainText:!private!updating! !
-!StaticPath categoriesFor: #setWindowText:!accessing!private! !
+!UI.StaticPath categoriesFor: #isSingleLine!private!testing! !
+!UI.StaticPath categoriesFor: #layout:!geometry!private! !
+!UI.StaticPath categoriesFor: #plainText!accessing!public! !
+!UI.StaticPath categoriesFor: #plainText:!private!updating! !
+!UI.StaticPath categoriesFor: #setWindowText:!accessing!private! !
 
-!StaticPath class methodsFor!
+!UI.StaticPath class methodsFor!
 
 icon
 	"Answers an Icon that can be used to represent this class"
 
 	^##(self) defaultIcon! !
-!StaticPath class categoriesFor: #icon!constants!public! !
+!UI.StaticPath class categoriesFor: #icon!constants!public! !
 

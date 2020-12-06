@@ -1,24 +1,24 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ExternalLibrary subclass: #DwmApiLibrary
+External.Library subclass: #'OS.DwmApiLibrary'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-DwmApiLibrary guid: (GUID fromString: '{fcb369e6-2d71-4ff5-ad95-d88dba33698c}')!
-DwmApiLibrary comment: ''!
-!DwmApiLibrary categoriesForClass!External-Libraries! !
-!DwmApiLibrary methodsFor!
+OS.DwmApiLibrary guid: (Core.GUID fromString: '{fcb369e6-2d71-4ff5-ad95-d88dba33698c}')!
+OS.DwmApiLibrary comment: ''!
+!OS.DwmApiLibrary categoriesForClass!External-Libraries! !
+!OS.DwmApiLibrary methodsFor!
 
 dwmIsCompositionEnabled: pfEnabled
 	"HRESULT DwmIsCompositionEnabled( BOOL *pfEnabled);"
 
 	<stdcall: hresult DwmIsCompositionEnabled BOOL*>
 	^self invalidCall: _failureCode! !
-!DwmApiLibrary categoriesFor: #dwmIsCompositionEnabled:!public! !
+!OS.DwmApiLibrary categoriesFor: #dwmIsCompositionEnabled:!public! !
 
-!DwmApiLibrary class methodsFor!
+!OS.DwmApiLibrary class methodsFor!
 
 fileName
 	^'dwmapi'!
@@ -29,6 +29,6 @@ isDesktopCompositionEnabled
 			answer := BOOL new.
 			self default dwmIsCompositionEnabled: answer.
 			answer asObject]! !
-!DwmApiLibrary class categoriesFor: #fileName!constants!public! !
-!DwmApiLibrary class categoriesFor: #isDesktopCompositionEnabled!public!queries! !
+!OS.DwmApiLibrary class categoriesFor: #fileName!constants!public! !
+!OS.DwmApiLibrary class categoriesFor: #isDesktopCompositionEnabled!public!queries! !
 

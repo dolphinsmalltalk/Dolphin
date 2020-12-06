@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-CapturingInteractor subclass: #MouseTracker
+UI.CapturingInteractor subclass: #'UI.MouseTracker'
 	instanceVariableNames: 'dragButton target startPoint startPointLocal origin hysteresis _unused10 trackPosition constrain'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'TrackingMask' -> 16r400
 	}!
-MouseTracker guid: (GUID fromString: '{87b4c711-026e-11d3-9fd7-00a0cc3e4a32}')!
-MouseTracker comment: '`MouseTracker` is an `<Interactor`> that is used to manage the visual dragging of objects using the mouse. An instance should be created as the result of a mouse down event and once started using `#startTracking:` it captures the mouse and relays the drag messages that are part of the `<mouseTrackerTarget>` protocol to the target that is assigned to it. Once the drag has completed, and the originating button has been released, the mouse capture is also dropped. Tracking will also be cancelled if the user Alt+Tab''s to another application, or presses the ESC (escape) key (assuming the originating view still has focus).
+UI.MouseTracker guid: (Core.GUID fromString: '{87b4c711-026e-11d3-9fd7-00a0cc3e4a32}')!
+UI.MouseTracker comment: '`MouseTracker` is an `<Interactor`> that is used to manage the visual dragging of objects using the mouse. An instance should be created as the result of a mouse down event and once started using `#startTracking:` it captures the mouse and relays the drag messages that are part of the `<mouseTrackerTarget>` protocol to the target that is assigned to it. Once the drag has completed, and the originating button has been released, the mouse capture is also dropped. Tracking will also be cancelled if the user Alt+Tab''s to another application, or presses the ESC (escape) key (assuming the originating view still has focus).
 
 ## Instance Variables:
   `dragButton`		`Symbol` identifying the button (either #left or #right) that started the drag
@@ -27,8 +27,8 @@ MouseTracker comment: '`MouseTracker` is an `<Interactor`> that is used to manag
 
 
 '!
-!MouseTracker categoriesForClass!MVP-Interactors! !
-!MouseTracker methodsFor!
+!UI.MouseTracker categoriesForClass!MVP-Interactors! !
+!UI.MouseTracker methodsFor!
 
 beHorizontalOnly
 	"Set the receiver for horizontal dragging only"
@@ -151,17 +151,14 @@ onMouseMoved: aMouseEvent
 	"Track the mouse movement to aMouseEvent"
 
 	| constrainedPosition |
-	constrainedPosition := self 
-				constrainPositionFromDelta: aMouseEvent position - self startPointLocal.
-	self isTracking 
+	constrainedPosition := self constrainPositionFromDelta: aMouseEvent position - self startPointLocal.
+	self isTracking
 		ifTrue: 
-			[self trackPosition: (self target continueTrackingAt: constrainedPosition
-						from: self trackPosition)]
+			[self trackPosition: (self target continueTrackingAt: constrainedPosition from: self trackPosition)]
 		ifFalse: 
 			["We have not yet moved outside the hysteresis zone"
-
-			((Rectangle center: self startPoint extent: self hysteresis) 
-				containsPoint: aMouseEvent screenPosition) 
+			((Rectangle center: self startPoint extent: self hysteresis)
+				containsPoint: aMouseEvent screenPosition)
 					ifFalse: 
 						[self isTracking: true.
 						self trackPosition: (self target startTrackingAt: constrainedPosition)]].
@@ -246,7 +243,8 @@ startPointLocal
 	"Private - Answer the starting mouse position when the receiver was instantiated
 	in the coordinate system of the receiver's source."
 
-	startPointLocal isNil ifTrue: [startPointLocal := View desktop mapPoint: self startPoint to: self view].
+	startPointLocal isNil
+		ifTrue: [startPointLocal := View desktop mapPoint: self startPoint to: self view].
 	^startPointLocal!
 
 startTracking: aMouseTrackerTarget 
@@ -278,44 +276,44 @@ trackPositionDelta: aPointDelta
 	a delta value from the origin"
 
 	trackPosition := self origin + aPointDelta! !
-!MouseTracker categoriesFor: #beHorizontalOnly!modes!public! !
-!MouseTracker categoriesFor: #beVerticalOnly!modes!public! !
-!MouseTracker categoriesFor: #cancelTracking!accessing!private! !
-!MouseTracker categoriesFor: #captureReleased!event handling!private! !
-!MouseTracker categoriesFor: #constrainPositionFromDelta:!helpers!private! !
-!MouseTracker categoriesFor: #dragButton!accessing!public! !
-!MouseTracker categoriesFor: #dragButton:!accessing!public! !
-!MouseTracker categoriesFor: #dragButtonUp:!drag & drop!private! !
-!MouseTracker categoriesFor: #hysteresis!accessing!private! !
-!MouseTracker categoriesFor: #hysteresis:!initializing!public! !
-!MouseTracker categoriesFor: #isHorizontalOnly!private!testing! !
-!MouseTracker categoriesFor: #isTracking!private!testing! !
-!MouseTracker categoriesFor: #isTracking:!private!testing! !
-!MouseTracker categoriesFor: #isVerticalOnly!private!testing! !
-!MouseTracker categoriesFor: #onKeyPressed:!event handling!public! !
-!MouseTracker categoriesFor: #onKeyReleased:!event handling!public! !
-!MouseTracker categoriesFor: #onKeyTransition:!event handling!private! !
-!MouseTracker categoriesFor: #onLeftButtonReleased:!event handling!public! !
-!MouseTracker categoriesFor: #onMouseHovering:!event handling!public! !
-!MouseTracker categoriesFor: #onMouseMoved:!event handling!public! !
-!MouseTracker categoriesFor: #onRightButtonReleased:!event handling!public! !
-!MouseTracker categoriesFor: #onSysKeyPressed:!event handling!public! !
-!MouseTracker categoriesFor: #onSysKeyReleased:!event handling!public! !
-!MouseTracker categoriesFor: #onSysKeyTransition:!helpers!private! !
-!MouseTracker categoriesFor: #origin!accessing!public! !
-!MouseTracker categoriesFor: #origin:!accessing!public! !
-!MouseTracker categoriesFor: #setPresenter:!accessing!private! !
-!MouseTracker categoriesFor: #simulateMouseMouse:!helpers!private! !
-!MouseTracker categoriesFor: #startPoint!accessing!private! !
-!MouseTracker categoriesFor: #startPoint:!accessing!private! !
-!MouseTracker categoriesFor: #startPointLocal!accessing!private! !
-!MouseTracker categoriesFor: #startTracking:!initializing!public! !
-!MouseTracker categoriesFor: #target!accessing!private! !
-!MouseTracker categoriesFor: #trackPosition!accessing!private! !
-!MouseTracker categoriesFor: #trackPosition:!accessing!private! !
-!MouseTracker categoriesFor: #trackPositionDelta:!accessing!private! !
+!UI.MouseTracker categoriesFor: #beHorizontalOnly!modes!public! !
+!UI.MouseTracker categoriesFor: #beVerticalOnly!modes!public! !
+!UI.MouseTracker categoriesFor: #cancelTracking!accessing!private! !
+!UI.MouseTracker categoriesFor: #captureReleased!event handling!private! !
+!UI.MouseTracker categoriesFor: #constrainPositionFromDelta:!helpers!private! !
+!UI.MouseTracker categoriesFor: #dragButton!accessing!public! !
+!UI.MouseTracker categoriesFor: #dragButton:!accessing!public! !
+!UI.MouseTracker categoriesFor: #dragButtonUp:!drag & drop!private! !
+!UI.MouseTracker categoriesFor: #hysteresis!accessing!private! !
+!UI.MouseTracker categoriesFor: #hysteresis:!initializing!public! !
+!UI.MouseTracker categoriesFor: #isHorizontalOnly!private!testing! !
+!UI.MouseTracker categoriesFor: #isTracking!private!testing! !
+!UI.MouseTracker categoriesFor: #isTracking:!private!testing! !
+!UI.MouseTracker categoriesFor: #isVerticalOnly!private!testing! !
+!UI.MouseTracker categoriesFor: #onKeyPressed:!event handling!public! !
+!UI.MouseTracker categoriesFor: #onKeyReleased:!event handling!public! !
+!UI.MouseTracker categoriesFor: #onKeyTransition:!event handling!private! !
+!UI.MouseTracker categoriesFor: #onLeftButtonReleased:!event handling!public! !
+!UI.MouseTracker categoriesFor: #onMouseHovering:!event handling!public! !
+!UI.MouseTracker categoriesFor: #onMouseMoved:!event handling!public! !
+!UI.MouseTracker categoriesFor: #onRightButtonReleased:!event handling!public! !
+!UI.MouseTracker categoriesFor: #onSysKeyPressed:!event handling!public! !
+!UI.MouseTracker categoriesFor: #onSysKeyReleased:!event handling!public! !
+!UI.MouseTracker categoriesFor: #onSysKeyTransition:!helpers!private! !
+!UI.MouseTracker categoriesFor: #origin!accessing!public! !
+!UI.MouseTracker categoriesFor: #origin:!accessing!public! !
+!UI.MouseTracker categoriesFor: #setPresenter:!accessing!private! !
+!UI.MouseTracker categoriesFor: #simulateMouseMouse:!helpers!private! !
+!UI.MouseTracker categoriesFor: #startPoint!accessing!private! !
+!UI.MouseTracker categoriesFor: #startPoint:!accessing!private! !
+!UI.MouseTracker categoriesFor: #startPointLocal!accessing!private! !
+!UI.MouseTracker categoriesFor: #startTracking:!initializing!public! !
+!UI.MouseTracker categoriesFor: #target!accessing!private! !
+!UI.MouseTracker categoriesFor: #trackPosition!accessing!private! !
+!UI.MouseTracker categoriesFor: #trackPosition:!accessing!private! !
+!UI.MouseTracker categoriesFor: #trackPositionDelta:!accessing!private! !
 
-!MouseTracker class methodsFor!
+!UI.MouseTracker class methodsFor!
 
 defaultHysteresis
 	"Answer the default distance in pixels that the mouse must move before 
@@ -335,7 +333,7 @@ icon
 	"Answers an Icon that can be used to represent this class"
 
 	^##(self) defaultIcon! !
-!MouseTracker class categoriesFor: #defaultHysteresis!constants!public! !
-!MouseTracker class categoriesFor: #forPresenter:startingAt:!instance creation!public! !
-!MouseTracker class categoriesFor: #icon!constants!public! !
+!UI.MouseTracker class categoriesFor: #defaultHysteresis!constants!public! !
+!UI.MouseTracker class categoriesFor: #forPresenter:startingAt:!instance creation!public! !
+!UI.MouseTracker class categoriesFor: #icon!constants!public! !
 

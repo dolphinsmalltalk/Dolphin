@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Object subclass: #FramingConstraints
+Core.Object subclass: #'UI.FramingConstraints'
 	instanceVariableNames: 'leftFraming leftOffset rightFraming rightOffset topFraming topOffset bottomFraming bottomOffset'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-FramingConstraints guid: (GUID fromString: '{87b4c48b-026e-11d3-9fd7-00a0cc3e4a32}')!
-FramingConstraints comment: 'FramingConstraints are used to describe the constraints to be placed on the various edges of a <view> that is to be laid out under the jurisdiction of a <FramingLayout> manager. When a view is under the control of a FramingLayout it is given an arrangement aspect that consists of a FramingConstraints instance. It is this that describes the relationships for computing the locations of the various edges of the view and the offsets to be applied from these locations. 
+UI.FramingConstraints guid: (Core.GUID fromString: '{87b4c48b-026e-11d3-9fd7-00a0cc3e4a32}')!
+UI.FramingConstraints comment: 'FramingConstraints are used to describe the constraints to be placed on the various edges of a <view> that is to be laid out under the jurisdiction of a <FramingLayout> manager. When a view is under the control of a FramingLayout it is given an arrangement aspect that consists of a FramingConstraints instance. It is this that describes the relationships for computing the locations of the various edges of the view and the offsets to be applied from these locations. 
 
 For each of the edges of the view, a FramingConstraints holds a framing relationship and an offset for the edge position relative to the computed location of this. The framing parameters can be set for each edge using the following pairs of aspects.
 
@@ -71,8 +71,8 @@ Instance Variables:
 
 
 '!
-!FramingConstraints categoriesForClass!MVP-Layout Managers-Support! !
-!FramingConstraints methodsFor!
+!UI.FramingConstraints categoriesForClass!MVP-Layout Managers-Support! !
+!UI.FramingConstraints methodsFor!
 
 bottomFraming
 	"Answer the <Symbol> name of the framing calculation used to calculate the receiver's bottom edge."
@@ -148,20 +148,20 @@ offsets
 
 	^Rectangle origin: self topOffset @ self leftOffset corner: self bottomOffset @ self rightOffset!
 
-rectangleFor: aView within: aRectangle context: aLayoutContext 
+rectangleFor: aView within: aRectangle context: aLayoutContext
 	"Private - Answer a new <Rectangle> generated from the receiver's framings applied to the
 	specified parent extent."
 
 	| rectangle context |
-	context := FramingContext 
+	context := FramingContext
 				layoutContext: aLayoutContext
 				view: aView
 				parentRectangle: aRectangle.
 	rectangle := context rectangle.
 	"frame the left and right edges"
-	(leftFraming isIndependent or: [rightFraming isIndependent]) 
+	(leftFraming isIndependent or: [rightFraming isIndependent])
 		ifTrue: 
-			[leftFraming isIndependent 
+			[leftFraming isIndependent
 				ifTrue: 
 					[rectangle left: (leftFraming calculateEdge: leftOffset context: context).
 					rectangle right: (rightFraming calculateEdge: rightOffset context: context)]
@@ -170,9 +170,9 @@ rectangleFor: aView within: aRectangle context: aLayoutContext
 					rectangle left: (leftFraming calculateEdge: leftOffset context: context)]].
 
 	"frame the top and bottom edges"
-	(topFraming isIndependent or: [bottomFraming isIndependent]) 
+	(topFraming isIndependent or: [bottomFraming isIndependent])
 		ifTrue: 
-			[topFraming isIndependent 
+			[topFraming isIndependent
 				ifTrue: 
 					[rectangle top: (topFraming calculateEdge: topOffset context: context).
 					rectangle bottom: (bottomFraming calculateEdge: bottomOffset context: context)]
@@ -262,49 +262,49 @@ updateFor: aView context: aFramingContext
 			bottomOffset := bottomFraming calculateOffset: aFramingContext bottom context: aFramingContext.
 			topOffset := topFraming calculateOffset: aFramingContext top context: aFramingContext]!
 
-updateFor: aView rectangle: aRectangle layoutContext: aLayoutContext 
+updateFor: aView rectangle: aRectangle layoutContext: aLayoutContext
 	"Private - Update the framing constraints to a new rectangle."
 
 	| parentView context parentRect |
 	parentView := aView parentView.
-	parentRect := (aLayoutContext clientRectangleOf: parentView) 
+	parentRect := (aLayoutContext clientRectangleOf: parentView)
 				insetBy: (parentView actualInsets: aLayoutContext).
-	context := FramingContext 
+	context := FramingContext
 				layoutContext: aLayoutContext
 				view: aView
 				parentRectangle: parentRect.
 	context rectangle: aRectangle.
 	self updateFor: aView context: context! !
-!FramingConstraints categoriesFor: #bottomFraming!accessing!public! !
-!FramingConstraints categoriesFor: #bottomFraming:!accessing!public! !
-!FramingConstraints categoriesFor: #bottomOffset!accessing!public! !
-!FramingConstraints categoriesFor: #bottomOffset:!accessing!public! !
-!FramingConstraints categoriesFor: #errorCantFixEdgeToItself!exceptions!private! !
-!FramingConstraints categoriesFor: #errorNoIndepentEdge!exceptions!private! !
-!FramingConstraints categoriesFor: #framings!accessing!public! !
-!FramingConstraints categoriesFor: #initialize!initializing!private! !
-!FramingConstraints categoriesFor: #leftFraming!accessing!public! !
-!FramingConstraints categoriesFor: #leftFraming:!accessing!public! !
-!FramingConstraints categoriesFor: #leftOffset!accessing!public! !
-!FramingConstraints categoriesFor: #leftOffset:!accessing!public! !
-!FramingConstraints categoriesFor: #messages!accessing!public! !
-!FramingConstraints categoriesFor: #offsets!accessing!public! !
-!FramingConstraints categoriesFor: #rectangleFor:within:context:!operations!private! !
-!FramingConstraints categoriesFor: #resolutionScaledBy:!geometry!private! !
-!FramingConstraints categoriesFor: #rightFraming!accessing!public! !
-!FramingConstraints categoriesFor: #rightFraming:!accessing!public! !
-!FramingConstraints categoriesFor: #rightOffset!accessing!public! !
-!FramingConstraints categoriesFor: #rightOffset:!accessing!public! !
-!FramingConstraints categoriesFor: #topFraming!accessing!public! !
-!FramingConstraints categoriesFor: #topFraming:!accessing!public! !
-!FramingConstraints categoriesFor: #topOffset!accessing!public! !
-!FramingConstraints categoriesFor: #topOffset:!accessing!public! !
-!FramingConstraints categoriesFor: #updateFor:context:!geometry!private! !
-!FramingConstraints categoriesFor: #updateFor:rectangle:layoutContext:!geometry!private! !
+!UI.FramingConstraints categoriesFor: #bottomFraming!accessing!public! !
+!UI.FramingConstraints categoriesFor: #bottomFraming:!accessing!public! !
+!UI.FramingConstraints categoriesFor: #bottomOffset!accessing!public! !
+!UI.FramingConstraints categoriesFor: #bottomOffset:!accessing!public! !
+!UI.FramingConstraints categoriesFor: #errorCantFixEdgeToItself!exceptions!private! !
+!UI.FramingConstraints categoriesFor: #errorNoIndepentEdge!exceptions!private! !
+!UI.FramingConstraints categoriesFor: #framings!accessing!public! !
+!UI.FramingConstraints categoriesFor: #initialize!initializing!private! !
+!UI.FramingConstraints categoriesFor: #leftFraming!accessing!public! !
+!UI.FramingConstraints categoriesFor: #leftFraming:!accessing!public! !
+!UI.FramingConstraints categoriesFor: #leftOffset!accessing!public! !
+!UI.FramingConstraints categoriesFor: #leftOffset:!accessing!public! !
+!UI.FramingConstraints categoriesFor: #messages!accessing!public! !
+!UI.FramingConstraints categoriesFor: #offsets!accessing!public! !
+!UI.FramingConstraints categoriesFor: #rectangleFor:within:context:!operations!private! !
+!UI.FramingConstraints categoriesFor: #resolutionScaledBy:!geometry!private! !
+!UI.FramingConstraints categoriesFor: #rightFraming!accessing!public! !
+!UI.FramingConstraints categoriesFor: #rightFraming:!accessing!public! !
+!UI.FramingConstraints categoriesFor: #rightOffset!accessing!public! !
+!UI.FramingConstraints categoriesFor: #rightOffset:!accessing!public! !
+!UI.FramingConstraints categoriesFor: #topFraming!accessing!public! !
+!UI.FramingConstraints categoriesFor: #topFraming:!accessing!public! !
+!UI.FramingConstraints categoriesFor: #topOffset!accessing!public! !
+!UI.FramingConstraints categoriesFor: #topOffset:!accessing!public! !
+!UI.FramingConstraints categoriesFor: #updateFor:context:!geometry!private! !
+!UI.FramingConstraints categoriesFor: #updateFor:rectangle:layoutContext:!geometry!private! !
 
-FramingConstraints methodProtocol: #messageSender attributes: #(#readOnly) selectors: #(#messages)!
+UI.FramingConstraints methodProtocol: #messageSender attributes: #(#readOnly) selectors: #(#messages)!
 
-!FramingConstraints class methodsFor!
+!UI.FramingConstraints class methodsFor!
 
 calculationClass
 	^FramingCalculation!
@@ -338,12 +338,12 @@ stbConvertFrom: anSTBClassFormat
 	1 to: instVars size do: [:i | answer instVarAt: i put: (instVars at: i)].
 	answer]!
 
-stbConvertFromVersion0: anArray 
+stbConvertFromVersion0: anArray
 	"Private - Convert from previous version resource. 
 	Version 1 removes deprecated framing symbols."
 
 	| conversionMap |
-	conversionMap := ##((IdentityDictionary new)
+	conversionMap := ##(IdentityDictionary new
 				at: #relativeParentBottom put: #relativeParentHeight;
 				at: #relativeParentTop put: #relativeParentHeight;
 				at: #relativeParentLeft put: #relativeParentWidth;
@@ -355,23 +355,23 @@ stbConvertFromVersion0: anArray
 				yourself).
 	^anArray collect: [:each | conversionMap at: each ifAbsent: [each]]!
 
-stbConvertFromVersion1: anArray 
+stbConvertFromVersion1: anArray
 	"Private - Migrate from previous schema. 
 	Version 2 uses objects for framing calc's rather than holding symbolic names and looking
 	up methods indirectly."
 
-	^anArray 
+	^anArray
 		collect: [:each | (each isKindOf: Symbol) ifTrue: [FramingCalculation perform: each] ifFalse: [each]]!
 
 stbVersion
 	"Answer the current binary filer version number for instances of the receiver."
 
 	^2! !
-!FramingConstraints class categoriesFor: #calculationClass!constants!private! !
-!FramingConstraints class categoriesFor: #new!instance creation!public! !
-!FramingConstraints class categoriesFor: #stbConvert:fromVersion:!binary filing!private! !
-!FramingConstraints class categoriesFor: #stbConvertFrom:!binary filing!public! !
-!FramingConstraints class categoriesFor: #stbConvertFromVersion0:!binary filing!private! !
-!FramingConstraints class categoriesFor: #stbConvertFromVersion1:!binary filing!private! !
-!FramingConstraints class categoriesFor: #stbVersion!binary filing!public! !
+!UI.FramingConstraints class categoriesFor: #calculationClass!constants!private! !
+!UI.FramingConstraints class categoriesFor: #new!instance creation!public! !
+!UI.FramingConstraints class categoriesFor: #stbConvert:fromVersion:!binary filing!private! !
+!UI.FramingConstraints class categoriesFor: #stbConvertFrom:!binary filing!public! !
+!UI.FramingConstraints class categoriesFor: #stbConvertFromVersion0:!binary filing!private! !
+!UI.FramingConstraints class categoriesFor: #stbConvertFromVersion1:!binary filing!private! !
+!UI.FramingConstraints class categoriesFor: #stbVersion!binary filing!public! !
 

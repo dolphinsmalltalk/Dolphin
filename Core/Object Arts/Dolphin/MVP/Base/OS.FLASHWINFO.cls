@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Win32Structure subclass: #FLASHWINFO
+OS.Win32Structure subclass: #'OS.FLASHWINFO'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_dwFlags' -> 16r8.
@@ -12,15 +12,15 @@ Win32Structure subclass: #FLASHWINFO
 		'_OffsetOf_hwnd' -> 16r4.
 		'_OffsetOf_uCount' -> 16rC
 	}!
-FLASHWINFO guid: (GUID fromString: '{2a5e4594-f531-486b-a082-17686b820cd4}')!
-FLASHWINFO comment: 'FLASHWINFO is the class of <ExternalStructure> which represent the Win32 structure of the same name.
+OS.FLASHWINFO guid: (Core.GUID fromString: '{2a5e4594-f531-486b-a082-17686b820cd4}')!
+OS.FLASHWINFO comment: 'FLASHWINFO is the class of <ExternalStructure> which represent the Win32 structure of the same name.
 
 FLASHWINFO is used to pass parameters to the FlashWindowEx() API call.
 
 Instance Variables:
 	None'!
-!FLASHWINFO categoriesForClass!External-Data-Structured-Win32! !
-!FLASHWINFO methodsFor!
+!OS.FLASHWINFO categoriesForClass!External-Data-Structured-Win32! !
+!OS.FLASHWINFO methodsFor!
 
 dwFlags
 	"Answer the <Integer> value of the receiver's 'dwFlags' field."
@@ -51,14 +51,14 @@ uCount: anInteger
 	"Set the receiver's 'uCount' field to the value of the argument, anInteger"
 
 	bytes dwordAtOffset: _OffsetOf_uCount put: anInteger! !
-!FLASHWINFO categoriesFor: #dwFlags!**compiled accessors**!public! !
-!FLASHWINFO categoriesFor: #dwFlags:!**compiled accessors**!public! !
-!FLASHWINFO categoriesFor: #dwSize:!**compiled accessors**!public! !
-!FLASHWINFO categoriesFor: #dwTimeout:!**compiled accessors**!public! !
-!FLASHWINFO categoriesFor: #hwnd:!**compiled accessors**!public! !
-!FLASHWINFO categoriesFor: #uCount:!**compiled accessors**!public! !
+!OS.FLASHWINFO categoriesFor: #dwFlags!**compiled accessors**!public! !
+!OS.FLASHWINFO categoriesFor: #dwFlags:!**compiled accessors**!public! !
+!OS.FLASHWINFO categoriesFor: #dwSize:!**compiled accessors**!public! !
+!OS.FLASHWINFO categoriesFor: #dwTimeout:!**compiled accessors**!public! !
+!OS.FLASHWINFO categoriesFor: #hwnd:!**compiled accessors**!public! !
+!OS.FLASHWINFO categoriesFor: #uCount:!**compiled accessors**!public! !
 
-!FLASHWINFO class methodsFor!
+!OS.FLASHWINFO class methodsFor!
 
 defineFields
 	"Define the fields of the Win32 FLASHWINFO structure.
@@ -74,15 +74,15 @@ defineFields
 		} FLASHWINFO;
 	"
 
-	self 
-		defineField: #dwSize		type: DWORDField writeOnly beOverride;
-		defineField: #hwnd		type: HANDLEField writeOnly;
-		defineField: #dwFlags		type: DWORDField new;
-		defineField: #uCount		type: DWORDField writeOnly;
-		defineField: #dwTimeout	type: DWORDField writeOnly!
+	self
+		defineField: #dwSize type: DWORDField writeOnly beOverride;
+		defineField: #hwnd type: HANDLEField writeOnly;
+		defineField: #dwFlags type: DWORDField new;
+		defineField: #uCount type: DWORDField writeOnly;
+		defineField: #dwTimeout type: DWORDField writeOnly!
 
 getFieldNames
 	^#(#dwSize #hwnd #dwFlags #uCount #dwTimeout)! !
-!FLASHWINFO class categoriesFor: #defineFields!public!template definition! !
-!FLASHWINFO class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.FLASHWINFO class categoriesFor: #defineFields!public!template definition! !
+!OS.FLASHWINFO class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

@@ -1,20 +1,20 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-StaticView subclass: #StaticText
+UI.StaticView subclass: #'UI.StaticText'
 	instanceVariableNames: ''
 	classVariableNames: 'AlignmentMap'
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-StaticText guid: (GUID fromString: '{87b4c740-026e-11d3-9fd7-00a0cc3e4a32}')!
-StaticText comment: 'StaticText is a <valueView> class for a Window STATIC control for displaying text in one of a number of text styles. The <valueModel> associated with a StaticText must always yield a <readableString> value when mapped through the installed type converter. A StaticText will normally be used in conjunction with a <TextPresenter>. The alignment of the text (and therefore the style of the underlying Windows control) can be specified using the alignment aspect which can assume of of the following values: (#left, #center, #right, #leftNoWrap, #simple).
+UI.StaticText guid: (Core.GUID fromString: '{87b4c740-026e-11d3-9fd7-00a0cc3e4a32}')!
+UI.StaticText comment: 'StaticText is a <valueView> class for a Window STATIC control for displaying text in one of a number of text styles. The <valueModel> associated with a StaticText must always yield a <readableString> value when mapped through the installed type converter. A StaticText will normally be used in conjunction with a <TextPresenter>. The alignment of the text (and therefore the style of the underlying Windows control) can be specified using the alignment aspect which can assume of of the following values: (#left, #center, #right, #leftNoWrap, #simple).
 
 Class Variables:
 	AlignmentMap	<LookupTable> of <Symbol> alignment specifiers to Windows styles.
 
 '!
-!StaticText categoriesForClass!MVP-Views! !
-!StaticText methodsFor!
+!UI.StaticText categoriesForClass!MVP-Views! !
+!UI.StaticText methodsFor!
 
 alignment
 	"Answer a symbolic text alignment for the receiver's current mode."
@@ -24,9 +24,23 @@ alignment
 	^AlignmentMap keyAtValue: typeFlags ifAbsent: [#left]!
 
 alignment: aSymbol
-	"Sets the text alignment to the symbolic aligment name, aSymbol."
+	"Sets the text alignment to the symbolic alignment name, aSymbol."
 
-	self setAlignment: (AlignmentMap at: aSymbol)	!
+	| flag |
+	flag := AlignmentMap lookup: aSymbol.
+	flag
+		ifNil: 
+			["We also map the Checkbox alignments to make it easy to mutate a Checkbox to a StaticText label, mapping them to the closest substitute"
+			flag := ##(IdentityDictionary withAll: {#topRight -> SS_RIGHT.
+								#topCenter -> SS_CENTER.
+								#rightCenter -> SS_RIGHT.
+								#bottomCenter -> SS_CENTER.
+								#bottomLeft -> SS_LEFT.
+								#bottomRight -> SS_RIGHT.
+								#leftCenter -> SS_LEFT.
+								#topLeft -> SS_LEFT})
+						at: aSymbol].
+	self setAlignment: flag!
 
 beCenterAligned
 	"Sets the receiver into center aligned mode"
@@ -145,25 +159,25 @@ value: anObject
 	receiver's window directly via #displayValue:."
 
 	self displayValue: (self typeconverter convertFromLeftToRight: anObject)! !
-!StaticText categoriesFor: #alignment!accessing!public! !
-!StaticText categoriesFor: #alignment:!accessing!public! !
-!StaticText categoriesFor: #beCenterAligned!accessing!public! !
-!StaticText categoriesFor: #beLeftAligned!accessing!public! !
-!StaticText categoriesFor: #beNoWordWrap!accessing!public! !
-!StaticText categoriesFor: #beRightAligned!accessing!public! !
-!StaticText categoriesFor: #calculateExtent:!geometry!private! !
-!StaticText categoriesFor: #clear!operations!public! !
-!StaticText categoriesFor: #displayValue!private!updating! !
-!StaticText categoriesFor: #displayValue:!private!updating! !
-!StaticText categoriesFor: #getAlignment!accessing!private! !
-!StaticText categoriesFor: #initialize!initializing!private! !
-!StaticText categoriesFor: #isSingleLine!private!testing! !
-!StaticText categoriesFor: #refreshContents!public!updating! !
-!StaticText categoriesFor: #setAlignment:!accessing!private! !
-!StaticText categoriesFor: #value!accessing!public! !
-!StaticText categoriesFor: #value:!accessing!public! !
+!UI.StaticText categoriesFor: #alignment!accessing!public! !
+!UI.StaticText categoriesFor: #alignment:!accessing!public! !
+!UI.StaticText categoriesFor: #beCenterAligned!accessing!public! !
+!UI.StaticText categoriesFor: #beLeftAligned!accessing!public! !
+!UI.StaticText categoriesFor: #beNoWordWrap!accessing!public! !
+!UI.StaticText categoriesFor: #beRightAligned!accessing!public! !
+!UI.StaticText categoriesFor: #calculateExtent:!geometry!private! !
+!UI.StaticText categoriesFor: #clear!operations!public! !
+!UI.StaticText categoriesFor: #displayValue!private!updating! !
+!UI.StaticText categoriesFor: #displayValue:!private!updating! !
+!UI.StaticText categoriesFor: #getAlignment!accessing!private! !
+!UI.StaticText categoriesFor: #initialize!initializing!private! !
+!UI.StaticText categoriesFor: #isSingleLine!private!testing! !
+!UI.StaticText categoriesFor: #refreshContents!public!updating! !
+!UI.StaticText categoriesFor: #setAlignment:!accessing!private! !
+!UI.StaticText categoriesFor: #value!accessing!public! !
+!UI.StaticText categoriesFor: #value:!accessing!public! !
 
-!StaticText class methodsFor!
+!UI.StaticText class methodsFor!
 
 icon
 	"Answers an Icon that can be used to represent this class"
@@ -185,6 +199,6 @@ initialize
 				shrink;
 				isImmutable: true;
 				yourself)! !
-!StaticText class categoriesFor: #icon!constants!public! !
-!StaticText class categoriesFor: #initialize!development!initializing!private! !
+!UI.StaticText class categoriesFor: #icon!constants!public! !
+!UI.StaticText class categoriesFor: #initialize!development!initializing!private! !
 

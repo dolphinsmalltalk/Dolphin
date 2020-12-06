@@ -1,19 +1,19 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-AbstractLOGFONT subclass: #LOGFONT
+OS.AbstractLOGFONT subclass: #'OS.LOGFONT'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_lfFaceName' -> 16r1C
 	}!
-LOGFONT guid: (GUID fromString: '{87b4c5f9-026e-11d3-9fd7-00a0cc3e4a32}')!
-LOGFONT comment: '<LOGFONT> is an <ExternalStructure> class to wrap the Win32 structure LOGFONTA. 
+OS.LOGFONT guid: (Core.GUID fromString: '{87b4c5f9-026e-11d3-9fd7-00a0cc3e4a32}')!
+OS.LOGFONT comment: '<LOGFONT> is an <ExternalStructure> class to wrap the Win32 structure LOGFONTA. 
 
 LOGFONT has been replaced by LOGFONTW, but is retained due to references from pre-existing view resources (which contain Font instances that reference LOGFONT instances). It will be deprecated in a future release.'!
-!LOGFONT categoriesForClass!DxVBLibA-Structs! !
-!LOGFONT methodsFor!
+!OS.LOGFONT categoriesForClass!DxVBLibA-Structs! !
+!OS.LOGFONT methodsFor!
 
 createFont
 	^GDILibrary default createFontIndirectA: self!
@@ -50,14 +50,14 @@ lfFaceName: anAnsiString
 		to: _OffsetOf_lfFaceName + size
 		startingAt: 1.
 	bytes byteAtOffset: _OffsetOf_lfFaceName + size put: 0! !
-!LOGFONT categoriesFor: #createFont!private!realizing/unrealizing! !
-!LOGFONT categoriesFor: #faceName!accessing!public! !
-!LOGFONT categoriesFor: #faceName:!accessing!public! !
-!LOGFONT categoriesFor: #getData:!helpers!private! !
-!LOGFONT categoriesFor: #lfFaceName!**compiled accessors**!public! !
-!LOGFONT categoriesFor: #lfFaceName:!**compiled accessors**!public! !
+!OS.LOGFONT categoriesFor: #createFont!private!realizing/unrealizing! !
+!OS.LOGFONT categoriesFor: #faceName!accessing!public! !
+!OS.LOGFONT categoriesFor: #faceName:!accessing!public! !
+!OS.LOGFONT categoriesFor: #getData:!helpers!private! !
+!OS.LOGFONT categoriesFor: #lfFaceName!**compiled accessors**!public! !
+!OS.LOGFONT categoriesFor: #lfFaceName:!**compiled accessors**!public! !
 
-!LOGFONT class methodsFor!
+!OS.LOGFONT class methodsFor!
 
 defineFields
 	"Define the Win32 LOGFONT structure.
@@ -66,5 +66,5 @@ defineFields
 
 	super defineFields.
 	self defineField: #lfFaceName type: (StringField type: AnsiString length: LF_FACESIZE)! !
-!LOGFONT class categoriesFor: #defineFields!public!template definition! !
+!OS.LOGFONT class categoriesFor: #defineFields!public!template definition! !
 

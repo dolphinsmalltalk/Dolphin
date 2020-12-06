@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ShellView subclass: #DialogView
+UI.ShellView subclass: #'UI.DialogView'
 	instanceVariableNames: 'endModal isModal oldWndProc'
 	classVariableNames: ''
-	poolDictionaries: 'ThemeConstants'
+	imports: #(#{OS.ThemeConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
 		'InProcLoopMask' -> 16r100000
 	}!
-DialogView guid: (GUID fromString: '{87b4c71e-026e-11d3-9fd7-00a0cc3e4a32}')!
-DialogView comment: 'DialogView is a specialisation of <topView> that provides the ability to be displayed modally and to return a value.
+UI.DialogView guid: (Core.GUID fromString: '{87b4c71e-026e-11d3-9fd7-00a0cc3e4a32}')!
+UI.DialogView comment: 'DialogView is a specialisation of <topView> that provides the ability to be displayed modally and to return a value.
 
 Instance Variables:
 	endModal		<Semaphore> to wait on during the dialog modal loop.
@@ -17,8 +17,8 @@ Instance Variables:
 	oldWndProc	<ExternalAddress> holding the original Windows dlgProc.
 
 '!
-!DialogView categoriesForClass!MVP-Views! !
-!DialogView methodsFor!
+!UI.DialogView categoriesForClass!MVP-Views! !
+!UI.DialogView methodsFor!
 
 answer
 	"Answer the answer for the receiver"
@@ -30,7 +30,7 @@ answer: anObject
 
 	self model: anObject!
 
-basicCreateAt: position extent: size 
+basicCreateAt: position extent: size
 	"Private - Create the Windows window ensuring it has the VM window procedure.
 	Answer the receiver. The position and size are currently ignored."
 
@@ -39,7 +39,7 @@ basicCreateAt: position extent: size
 	has been opened with the LOAD_LIBRARY_AS_DATAFILE flag. Dialog templates
 	can only be loaded from DLLs that have been loaded as normal code modules."
 
-	^UserLibrary default 
+	^UserLibrary default
 		createDialog: self resourceLib asParameter
 		lpTemplate: self templateId asResourceId
 		hWndParent: self class active asParameter
@@ -141,8 +141,7 @@ enableItem: anInteger state: aBoolean
 	"Private - Enable/Disable the receiver's control with the specified Id. Answers the previous
 	state of the window."
 
-	^UserLibrary default
-		enableWindow: (self getItem: anInteger) asParameter bEnable: aBoolean!
+	^UserLibrary default enableWindow: (self getItem: anInteger) asParameter bEnable: aBoolean!
 
 endDialog: result
 	"Close the receiver with result as the result of the dialog (should be an Integer
@@ -216,7 +215,7 @@ onInitDialog
 	UserLibrary default setParent: self asParameter hWndNewParent: creationParent asParameter.
 
 	"If the dialog does not have a caption, assume it is a property page in a tabbed dialog"
-	(self isPropertyPage and: [self isThemed]) 
+	(self isPropertyPage and: [self isThemed])
 		ifTrue: [ThemeLibrary default enableThemeDialogTexture: self asParameter dwFlags: ETDT_ENABLETAB].
 
 	"Tell Windows NOT to set the focus. We set focus later after we have populated the dialog
@@ -307,15 +306,17 @@ setItem: anIntegerId int: anInteger
 setItem: anInteger text: aString
 	"Private - Set the text of the receiver's control with the specified id."
 
-	(UserLibrary default setDlgItemText: self asParameter nIDDlgItem: anInteger lpString: aString)
-		ifFalse: [UserLibrary default systemError]!
+	(UserLibrary default
+		setDlgItemText: self asParameter
+		nIDDlgItem: anInteger
+		lpString: aString) ifFalse: [UserLibrary default systemError]!
 
 showModal
 	"Private - Show the (already created) receiver as a dialog modal to the current active window."
 
 	^self showModalTo: self class active!
 
-showModalTo: aView 
+showModalTo: aView
 	"Private - Show the (already created) receiver as a dialog modal to aView."
 
 	| enableOwningView owningView |
@@ -325,19 +326,19 @@ showModalTo: aView
 	(enableOwningView := owningView isEnabled) ifTrue: [owningView isEnabled: false].
 	
 	["Only now can we adjust the position of the dialog (if required)."
-	self isInitiallyCentered 
+	self isInitiallyCentered
 		ifTrue: [self position: (self centerExtent: self extent within: creationParent)].
 	self
 		layout;
 		show.
-	self isInProc ifTrue: [self runModalInProcessLoop] ifFalse: [self runModalLoop]] 
+	self isInProc ifTrue: [self runModalInProcessLoop] ifFalse: [self runModalLoop]]
 			ensure: 
 				["Seems windows may re-enable a disabled view itself, so we re-establish enablement state regardless"
 				owningView isEnabled: enableOwningView.
 				enableOwningView ifTrue: [owningView beActive].
 				"Force the owning view to re-paint and update its cursor in case actions following closure of the dialog are lengthy"
 				owningView update.
-				UserLibrary default 
+				UserLibrary default
 					sendMessage: owningView asParameter
 					msg: WM_SETCURSOR
 					wParam: 0
@@ -378,46 +379,46 @@ wmInitDialog: message wParam: wParam lParam: lParam
 	self defaultButtonId isNil ifTrue: [self setDefId: 0].
 
 	^self onInitDialog! !
-!DialogView categoriesFor: #answer!accessing!public! !
-!DialogView categoriesFor: #answer:!accessing!not an aspect!public! !
-!DialogView categoriesFor: #basicCreateAt:extent:!private!realizing/unrealizing! !
-!DialogView categoriesFor: #cancel!commands!public! !
-!DialogView categoriesFor: #defaultBackcolor!colors!constants!private! !
-!DialogView categoriesFor: #defaultWindowProcessing:wParam:lParam:!dispatching!private! !
-!DialogView categoriesFor: #defaultWindowStyle!constants!private! !
-!DialogView categoriesFor: #destroy!public!realizing/unrealizing! !
-!DialogView categoriesFor: #dmGetDefId:wParam:lParam:!default button!event handling-win32!private! !
-!DialogView categoriesFor: #dmSetDefId:wParam:lParam:!default button!event handling-win32!private! !
-!DialogView categoriesFor: #enableItem:state:!accessing!private! !
-!DialogView categoriesFor: #endDialog:!operations!public! !
-!DialogView categoriesFor: #getItemText:!accessing!private! !
-!DialogView categoriesFor: #has3dLook!accessing!public! !
-!DialogView categoriesFor: #has3dLook:!accessing!public! !
-!DialogView categoriesFor: #initialize!initializing!private! !
-!DialogView categoriesFor: #isInProc!public!testing! !
-!DialogView categoriesFor: #isInProc:!accessing!public! !
-!DialogView categoriesFor: #isModal!accessing!private! !
-!DialogView categoriesFor: #isModal:!accessing!private! !
-!DialogView categoriesFor: #isPersistentView!public!testing! !
-!DialogView categoriesFor: #isPropertyPage!public!testing! !
-!DialogView categoriesFor: #oldWndProc:!accessing!private! !
-!DialogView categoriesFor: #onInitDialog!event handling!public! !
-!DialogView categoriesFor: #performCommand:!commands!public! !
-!DialogView categoriesFor: #preTranslateKeyboardInput:!dispatching!public! !
-!DialogView categoriesFor: #resourceLib!constants!public! !
-!DialogView categoriesFor: #runModalInProcessLoop!operations!private! !
-!DialogView categoriesFor: #runModalLoop!operations!private! !
-!DialogView categoriesFor: #setItem:font:!accessing!private! !
-!DialogView categoriesFor: #setItem:icon:!accessing!private! !
-!DialogView categoriesFor: #setItem:int:!accessing!private! !
-!DialogView categoriesFor: #setItem:text:!accessing!private! !
-!DialogView categoriesFor: #showModal!private!realizing/unrealizing! !
-!DialogView categoriesFor: #showModalTo:!private!realizing/unrealizing! !
-!DialogView categoriesFor: #subclassWindow:!operations!private! !
-!DialogView categoriesFor: #templateId!constants!private! !
-!DialogView categoriesFor: #wmInitDialog:wParam:lParam:!event handling-win32!public! !
+!UI.DialogView categoriesFor: #answer!accessing!public! !
+!UI.DialogView categoriesFor: #answer:!accessing!not an aspect!public! !
+!UI.DialogView categoriesFor: #basicCreateAt:extent:!private!realizing/unrealizing! !
+!UI.DialogView categoriesFor: #cancel!commands!public! !
+!UI.DialogView categoriesFor: #defaultBackcolor!colors!constants!private! !
+!UI.DialogView categoriesFor: #defaultWindowProcessing:wParam:lParam:!dispatching!private! !
+!UI.DialogView categoriesFor: #defaultWindowStyle!constants!private! !
+!UI.DialogView categoriesFor: #destroy!public!realizing/unrealizing! !
+!UI.DialogView categoriesFor: #dmGetDefId:wParam:lParam:!default button!event handling-win32!private! !
+!UI.DialogView categoriesFor: #dmSetDefId:wParam:lParam:!default button!event handling-win32!private! !
+!UI.DialogView categoriesFor: #enableItem:state:!accessing!private! !
+!UI.DialogView categoriesFor: #endDialog:!operations!public! !
+!UI.DialogView categoriesFor: #getItemText:!accessing!private! !
+!UI.DialogView categoriesFor: #has3dLook!accessing!public! !
+!UI.DialogView categoriesFor: #has3dLook:!accessing!public! !
+!UI.DialogView categoriesFor: #initialize!initializing!private! !
+!UI.DialogView categoriesFor: #isInProc!public!testing! !
+!UI.DialogView categoriesFor: #isInProc:!accessing!public! !
+!UI.DialogView categoriesFor: #isModal!accessing!private! !
+!UI.DialogView categoriesFor: #isModal:!accessing!private! !
+!UI.DialogView categoriesFor: #isPersistentView!public!testing! !
+!UI.DialogView categoriesFor: #isPropertyPage!public!testing! !
+!UI.DialogView categoriesFor: #oldWndProc:!accessing!private! !
+!UI.DialogView categoriesFor: #onInitDialog!event handling!public! !
+!UI.DialogView categoriesFor: #performCommand:!commands!public! !
+!UI.DialogView categoriesFor: #preTranslateKeyboardInput:!dispatching!public! !
+!UI.DialogView categoriesFor: #resourceLib!constants!public! !
+!UI.DialogView categoriesFor: #runModalInProcessLoop!operations!private! !
+!UI.DialogView categoriesFor: #runModalLoop!operations!private! !
+!UI.DialogView categoriesFor: #setItem:font:!accessing!private! !
+!UI.DialogView categoriesFor: #setItem:icon:!accessing!private! !
+!UI.DialogView categoriesFor: #setItem:int:!accessing!private! !
+!UI.DialogView categoriesFor: #setItem:text:!accessing!private! !
+!UI.DialogView categoriesFor: #showModal!private!realizing/unrealizing! !
+!UI.DialogView categoriesFor: #showModalTo:!private!realizing/unrealizing! !
+!UI.DialogView categoriesFor: #subclassWindow:!operations!private! !
+!UI.DialogView categoriesFor: #templateId!constants!private! !
+!UI.DialogView categoriesFor: #wmInitDialog:wParam:lParam:!event handling-win32!public! !
 
-!DialogView class methodsFor!
+!UI.DialogView class methodsFor!
 
 icon
 	"Answers an Icon that can be used to represent this class"
@@ -434,7 +435,7 @@ on: aSubjectModel
 
 	^super new model: aSubjectModel.
 ! !
-!DialogView class categoriesFor: #icon!constants!public! !
-!DialogView class categoriesFor: #new!instance creation!public! !
-!DialogView class categoriesFor: #on:!instance creation!public! !
+!UI.DialogView class categoriesFor: #icon!constants!public! !
+!UI.DialogView class categoriesFor: #new!instance creation!public! !
+!UI.DialogView class categoriesFor: #on:!instance creation!public! !
 

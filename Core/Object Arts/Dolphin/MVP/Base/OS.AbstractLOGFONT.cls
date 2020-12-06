@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Win32Structure subclass: #AbstractLOGFONT
+OS.Win32Structure subclass: #'OS.AbstractLOGFONT'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_lfCharSet' -> 16r17.
@@ -20,11 +20,11 @@ Win32Structure subclass: #AbstractLOGFONT
 		'_OffsetOf_lfWeight' -> 16r10.
 		'_OffsetOf_lfWidth' -> 16r4
 	}!
-AbstractLOGFONT guid: (GUID fromString: '{8f358ad9-379c-415d-a076-730db113b289}')!
-AbstractLOGFONT isAbstract: true!
-AbstractLOGFONT comment: ''!
-!AbstractLOGFONT categoriesForClass!DxVBLibA-Structs! !
-!AbstractLOGFONT methodsFor!
+OS.AbstractLOGFONT guid: (Core.GUID fromString: '{8f358ad9-379c-415d-a076-730db113b289}')!
+OS.AbstractLOGFONT isNonInstantiable: true!
+OS.AbstractLOGFONT comment: ''!
+!OS.AbstractLOGFONT categoriesForClass!DxVBLibA-Structs! !
+!OS.AbstractLOGFONT methodsFor!
 
 createFont
 	^self subclassResponsibility!
@@ -154,35 +154,35 @@ lfWidth: anInteger
 	"Set the receiver's 'lfWidth' field to the value of the argument, anInteger"
 
 	bytes sdwordAtOffset: _OffsetOf_lfWidth put: anInteger! !
-!AbstractLOGFONT categoriesFor: #createFont!private!realizing/unrealizing! !
-!AbstractLOGFONT categoriesFor: #faceName!accessing!public! !
-!AbstractLOGFONT categoriesFor: #faceName:!accessing!public! !
-!AbstractLOGFONT categoriesFor: #getData:!accessing!public! !
-!AbstractLOGFONT categoriesFor: #isFixedWidth!public! !
-!AbstractLOGFONT categoriesFor: #lfCharSet!**compiled accessors**!public! !
-!AbstractLOGFONT categoriesFor: #lfCharSet:!**compiled accessors**!public! !
-!AbstractLOGFONT categoriesFor: #lfEscapement!**compiled accessors**!public! !
-!AbstractLOGFONT categoriesFor: #lfEscapement:!**compiled accessors**!public! !
-!AbstractLOGFONT categoriesFor: #lfFaceName!public! !
-!AbstractLOGFONT categoriesFor: #lfFaceName:!accessing!public! !
-!AbstractLOGFONT categoriesFor: #lfHeight!**compiled accessors**!public! !
-!AbstractLOGFONT categoriesFor: #lfHeight:!**compiled accessors**!public! !
-!AbstractLOGFONT categoriesFor: #lfItalic!**compiled accessors**!public! !
-!AbstractLOGFONT categoriesFor: #lfItalic:!**compiled accessors**!public! !
-!AbstractLOGFONT categoriesFor: #lfPitchAndFamily!**compiled accessors**!public! !
-!AbstractLOGFONT categoriesFor: #lfPitchAndFamily:!**compiled accessors**!public! !
-!AbstractLOGFONT categoriesFor: #lfQuality!**compiled accessors**!public! !
-!AbstractLOGFONT categoriesFor: #lfQuality:!**compiled accessors**!public! !
-!AbstractLOGFONT categoriesFor: #lfStrikeOut!**compiled accessors**!public! !
-!AbstractLOGFONT categoriesFor: #lfStrikeOut:!**compiled accessors**!public! !
-!AbstractLOGFONT categoriesFor: #lfUnderline!**compiled accessors**!public! !
-!AbstractLOGFONT categoriesFor: #lfUnderline:!**compiled accessors**!public! !
-!AbstractLOGFONT categoriesFor: #lfWeight!**compiled accessors**!public! !
-!AbstractLOGFONT categoriesFor: #lfWeight:!**compiled accessors**!public! !
-!AbstractLOGFONT categoriesFor: #lfWidth!**compiled accessors**!public! !
-!AbstractLOGFONT categoriesFor: #lfWidth:!**compiled accessors**!public! !
+!OS.AbstractLOGFONT categoriesFor: #createFont!private!realizing/unrealizing! !
+!OS.AbstractLOGFONT categoriesFor: #faceName!accessing!public! !
+!OS.AbstractLOGFONT categoriesFor: #faceName:!accessing!public! !
+!OS.AbstractLOGFONT categoriesFor: #getData:!accessing!public! !
+!OS.AbstractLOGFONT categoriesFor: #isFixedWidth!public! !
+!OS.AbstractLOGFONT categoriesFor: #lfCharSet!**compiled accessors**!public! !
+!OS.AbstractLOGFONT categoriesFor: #lfCharSet:!**compiled accessors**!public! !
+!OS.AbstractLOGFONT categoriesFor: #lfEscapement!**compiled accessors**!public! !
+!OS.AbstractLOGFONT categoriesFor: #lfEscapement:!**compiled accessors**!public! !
+!OS.AbstractLOGFONT categoriesFor: #lfFaceName!public! !
+!OS.AbstractLOGFONT categoriesFor: #lfFaceName:!accessing!public! !
+!OS.AbstractLOGFONT categoriesFor: #lfHeight!**compiled accessors**!public! !
+!OS.AbstractLOGFONT categoriesFor: #lfHeight:!**compiled accessors**!public! !
+!OS.AbstractLOGFONT categoriesFor: #lfItalic!**compiled accessors**!public! !
+!OS.AbstractLOGFONT categoriesFor: #lfItalic:!**compiled accessors**!public! !
+!OS.AbstractLOGFONT categoriesFor: #lfPitchAndFamily!**compiled accessors**!public! !
+!OS.AbstractLOGFONT categoriesFor: #lfPitchAndFamily:!**compiled accessors**!public! !
+!OS.AbstractLOGFONT categoriesFor: #lfQuality!**compiled accessors**!public! !
+!OS.AbstractLOGFONT categoriesFor: #lfQuality:!**compiled accessors**!public! !
+!OS.AbstractLOGFONT categoriesFor: #lfStrikeOut!**compiled accessors**!public! !
+!OS.AbstractLOGFONT categoriesFor: #lfStrikeOut:!**compiled accessors**!public! !
+!OS.AbstractLOGFONT categoriesFor: #lfUnderline!**compiled accessors**!public! !
+!OS.AbstractLOGFONT categoriesFor: #lfUnderline:!**compiled accessors**!public! !
+!OS.AbstractLOGFONT categoriesFor: #lfWeight!**compiled accessors**!public! !
+!OS.AbstractLOGFONT categoriesFor: #lfWeight:!**compiled accessors**!public! !
+!OS.AbstractLOGFONT categoriesFor: #lfWidth!**compiled accessors**!public! !
+!OS.AbstractLOGFONT categoriesFor: #lfWidth:!**compiled accessors**!public! !
 
-!AbstractLOGFONT class methodsFor!
+!OS.AbstractLOGFONT class methodsFor!
 
 defineFields
 	"Define the Win32 LOGFONT structure.
@@ -206,6 +206,6 @@ defineFields
 
 getFieldNames
 	^#(#lfHeight #lfWidth #lfEscapement #lfOrientation #lfWeight #lfItalic #lfUnderline #lfStrikeOut #lfCharSet #lfOutPrecision #lfClipPrecision #lfQuality #lfPitchAndFamily #lfFaceName)! !
-!AbstractLOGFONT class categoriesFor: #defineFields!public!template definition! !
-!AbstractLOGFONT class categoriesFor: #getFieldNames!constants!private! !
+!OS.AbstractLOGFONT class categoriesFor: #defineFields!public!template definition! !
+!OS.AbstractLOGFONT class categoriesFor: #getFieldNames!constants!private! !
 

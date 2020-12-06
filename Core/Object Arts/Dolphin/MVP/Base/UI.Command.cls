@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Object subclass: #Command
+Core.Object subclass: #'UI.Command'
 	instanceVariableNames: 'commandDescription receiver undoAction redoAction isBenign'
 	classVariableNames: 'Current'
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Command guid: (GUID fromString: '{87b4c468-026e-11d3-9fd7-00a0cc3e4a32}')!
-Command comment: 'A Command is used to perform a user interface command as part of the MVP framework. It is effectively a <CommandDescription> that is bound to a particular receiver and its operation can be performed by sending it a #value message.
+UI.Command guid: (Core.GUID fromString: '{87b4c468-026e-11d3-9fd7-00a0cc3e4a32}')!
+UI.Command comment: 'A Command is used to perform a user interface command as part of the MVP framework. It is effectively a <CommandDescription> that is bound to a particular receiver and its operation can be performed by sending it a #value message.
 
 Command objects come with the additional capablity of being able to optionally undo and redo the command''s action. We assume that the target responsible for executing the command will also have sufficient information to specify how the command should be undone all re-done. The target may get hold of the currently executing command using:
 
@@ -23,8 +23,8 @@ Instance Variables:
 	undoAction		<niladicValuable> that, when evaluated, will undo the original command.
 	redoAction		<niladicValuable> that, when evaluated, will redo the original command.
 	isBenign			<boolean> indicating that a command has had no effect on the receiver''s state.'!
-!Command categoriesForClass!MVP-Commands! !
-!Command methodsFor!
+!UI.Command categoriesForClass!MVP-Commands! !
+!UI.Command methodsFor!
 
 beBenign
 	"Set the receiver to be a benign command"
@@ -108,23 +108,23 @@ value
 	prior := Current.
 	Current := self.
 	^[self commandDescription performAgainst: self receiver] ensure: [Current := prior]! !
-!Command categoriesFor: #beBenign!accessing!public! !
-!Command categoriesFor: #canRedo!accessing!public! !
-!Command categoriesFor: #canUndo!accessing!public! !
-!Command categoriesFor: #command!commands!public! !
-!Command categoriesFor: #commandDescription!accessing!public! !
-!Command categoriesFor: #description!accessing!public! !
-!Command categoriesFor: #isBenign!accessing!public! !
-!Command categoriesFor: #isModalCommand!public!testing! !
-!Command categoriesFor: #receiver!accessing!public! !
-!Command categoriesFor: #receiver:commandDescription:!initializing!private! !
-!Command categoriesFor: #redo!operations!public! !
-!Command categoriesFor: #redoWith:!accessing!public! !
-!Command categoriesFor: #undo!operations!public! !
-!Command categoriesFor: #undoWith:!accessing!public! !
-!Command categoriesFor: #value!evaluating!public! !
+!UI.Command categoriesFor: #beBenign!accessing!public! !
+!UI.Command categoriesFor: #canRedo!accessing!public! !
+!UI.Command categoriesFor: #canUndo!accessing!public! !
+!UI.Command categoriesFor: #command!commands!public! !
+!UI.Command categoriesFor: #commandDescription!accessing!public! !
+!UI.Command categoriesFor: #description!accessing!public! !
+!UI.Command categoriesFor: #isBenign!accessing!public! !
+!UI.Command categoriesFor: #isModalCommand!public!testing! !
+!UI.Command categoriesFor: #receiver!accessing!public! !
+!UI.Command categoriesFor: #receiver:commandDescription:!initializing!private! !
+!UI.Command categoriesFor: #redo!operations!public! !
+!UI.Command categoriesFor: #redoWith:!accessing!public! !
+!UI.Command categoriesFor: #undo!operations!public! !
+!UI.Command categoriesFor: #undoWith:!accessing!public! !
+!UI.Command categoriesFor: #value!evaluating!public! !
 
-!Command class methodsFor!
+!UI.Command class methodsFor!
 
 current
 	"Answers the current instance of the receiver that is being performed"
@@ -145,8 +145,8 @@ receiver: anObject commandDescription: aCommandDescription
 
 	^super new receiver: anObject commandDescription: aCommandDescription
 ! !
-!Command class categoriesFor: #current!accessing!public! !
-!Command class categoriesFor: #new!instance creation!private! !
-!Command class categoriesFor: #onStartup!public! !
-!Command class categoriesFor: #receiver:commandDescription:!instance creation!public! !
+!UI.Command class categoriesFor: #current!accessing!public! !
+!UI.Command class categoriesFor: #new!instance creation!private! !
+!UI.Command class categoriesFor: #onStartup!public! !
+!UI.Command class categoriesFor: #receiver:commandDescription:!instance creation!public! !
 

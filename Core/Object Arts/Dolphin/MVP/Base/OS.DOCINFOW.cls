@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Win32Structure subclass: #DOCINFOW
+OS.Win32Structure subclass: #'OS.DOCINFOW'
 	instanceVariableNames: 'docName'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_dwSize' -> 16r0.
@@ -12,12 +12,12 @@ Win32Structure subclass: #DOCINFOW
 		'_OffsetOf_lpszDocName' -> 16r4.
 		'_OffsetOf_lpszOutput' -> 16r8
 	}!
-DOCINFOW guid: (GUID fromString: '{87b4c5e8-026e-11d3-9fd7-00a0cc3e4a32}')!
-DOCINFOW comment: 'DOCINFO is an <ExternalStructure> class which represents the Win32 DOCINFO structure of the same name.
+OS.DOCINFOW guid: (Core.GUID fromString: '{87b4c5e8-026e-11d3-9fd7-00a0cc3e4a32}')!
+OS.DOCINFOW comment: 'DOCINFO is an <ExternalStructure> class which represents the Win32 DOCINFO structure of the same name.
 
 DOCINFO is used in conjunction with the StartDoc() GDI call.'!
-!DOCINFOW categoriesForClass!External-Data-Structured-Win32! !
-!DOCINFOW methodsFor!
+!OS.DOCINFOW categoriesForClass!External-Data-Structured-Win32! !
+!OS.DOCINFOW methodsFor!
 
 docName: aString
 	docName := aString asUtf16String.
@@ -47,14 +47,14 @@ lpszOutput: anUtf16String
 	"Set the receiver's 'lpszOutput' field to the value of the argument, anUtf16String"
 
 	bytes uintPtrAtOffset: _OffsetOf_lpszOutput put: anUtf16String yourAddress! !
-!DOCINFOW categoriesFor: #docName:!accessing!public! !
-!DOCINFOW categoriesFor: #dwSize:!**compiled accessors**!public! !
-!DOCINFOW categoriesFor: #fwType:!**compiled accessors**!public! !
-!DOCINFOW categoriesFor: #lpszDatatype:!**compiled accessors**!public! !
-!DOCINFOW categoriesFor: #lpszDocName:!**compiled accessors**!public! !
-!DOCINFOW categoriesFor: #lpszOutput:!**compiled accessors**!public! !
+!OS.DOCINFOW categoriesFor: #docName:!accessing!public! !
+!OS.DOCINFOW categoriesFor: #dwSize:!**compiled accessors**!public! !
+!OS.DOCINFOW categoriesFor: #fwType:!**compiled accessors**!public! !
+!OS.DOCINFOW categoriesFor: #lpszDatatype:!**compiled accessors**!public! !
+!OS.DOCINFOW categoriesFor: #lpszDocName:!**compiled accessors**!public! !
+!OS.DOCINFOW categoriesFor: #lpszOutput:!**compiled accessors**!public! !
 
-!DOCINFOW class methodsFor!
+!OS.DOCINFOW class methodsFor!
 
 defineFields
 	"Define the fields of the Win32 DOCINFOW structure.
@@ -78,6 +78,6 @@ defineFields
 
 getFieldNames
 	^#(#dwSize #lpszDocName #lpszOutput #lpszDatatype #fwType)! !
-!DOCINFOW class categoriesFor: #defineFields!public!template definition! !
-!DOCINFOW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.DOCINFOW class categoriesFor: #defineFields!public!template definition! !
+!OS.DOCINFOW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

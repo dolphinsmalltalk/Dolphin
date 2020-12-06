@@ -1,20 +1,20 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Win32Structure subclass: #BITMAPINFO
+OS.Win32Structure subclass: #'OS.BITMAPINFO'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_bmiColors' -> 16r28.
 		'_OffsetOf_bmiHeader' -> 16r0
 	}!
-BITMAPINFO guid: (GUID fromString: '{87b4c5ca-026e-11d3-9fd7-00a0cc3e4a32}')!
-BITMAPINFO comment: 'BITMAPINFO is an <ExternalStructure> class to represent the Win32 structure of the same name.
+OS.BITMAPINFO guid: (Core.GUID fromString: '{87b4c5ca-026e-11d3-9fd7-00a0cc3e4a32}')!
+OS.BITMAPINFO comment: 'BITMAPINFO is an <ExternalStructure> class to represent the Win32 structure of the same name.
 
 The BITMAPINFO structure is used to describe device-independent bitmaps. See MSDN for further information.'!
-!BITMAPINFO categoriesForClass!External-Data-Structured-Win32! !
-!BITMAPINFO methodsFor!
+!OS.BITMAPINFO categoriesForClass!External-Data-Structured-Win32! !
+!OS.BITMAPINFO methodsFor!
 
 bmiColors
 	"Answer the <StructureArray> value of the receiver's 'bmiColors' field."
@@ -63,7 +63,7 @@ colors
 
 	^self bmiColors!
 
-initialize: anInteger 
+initialize: anInteger
 	super initialize: anInteger.
 	self bmiHeader dwSize: BITMAPINFOHEADER byteSize!
 
@@ -71,16 +71,16 @@ numQuads
 	"Private - Answer the number of <RGBQUAD>s in the receiver's colour table."
 
 	^self bmiHeader numQuads! !
-!BITMAPINFO categoriesFor: #bmiColors!**compiled accessors**!public! !
-!BITMAPINFO categoriesFor: #bmiColors:!**compiled accessors**!public! !
-!BITMAPINFO categoriesFor: #bmiHeader!**compiled accessors**!public! !
-!BITMAPINFO categoriesFor: #bmiHeader:!**compiled accessors**!public! !
-!BITMAPINFO categoriesFor: #byteSize!accessing!public! !
-!BITMAPINFO categoriesFor: #colors!accessing!public! !
-!BITMAPINFO categoriesFor: #initialize:!initializing!private! !
-!BITMAPINFO categoriesFor: #numQuads!accessing!private! !
+!OS.BITMAPINFO categoriesFor: #bmiColors!**compiled accessors**!public! !
+!OS.BITMAPINFO categoriesFor: #bmiColors:!**compiled accessors**!public! !
+!OS.BITMAPINFO categoriesFor: #bmiHeader!**compiled accessors**!public! !
+!OS.BITMAPINFO categoriesFor: #bmiHeader:!**compiled accessors**!public! !
+!OS.BITMAPINFO categoriesFor: #byteSize!accessing!public! !
+!OS.BITMAPINFO categoriesFor: #colors!accessing!public! !
+!OS.BITMAPINFO categoriesFor: #initialize:!initializing!private! !
+!OS.BITMAPINFO categoriesFor: #numQuads!accessing!private! !
 
-!BITMAPINFO class methodsFor!
+!OS.BITMAPINFO class methodsFor!
 
 colorDepth: colorDepth
 	"Answer a new instance of the receiver capable of representing information about an RGB
@@ -108,7 +108,7 @@ defineFields
 
 getFieldNames
 	^#(#bmiHeader #bmiColors)! !
-!BITMAPINFO class categoriesFor: #colorDepth:!instance creation!public! !
-!BITMAPINFO class categoriesFor: #defineFields!public!template definition! !
-!BITMAPINFO class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.BITMAPINFO class categoriesFor: #colorDepth:!instance creation!public! !
+!OS.BITMAPINFO class categoriesFor: #defineFields!public!template definition! !
+!OS.BITMAPINFO class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

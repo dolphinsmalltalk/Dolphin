@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Icon subclass: #Cursor
+Graphics.Icon subclass: #'Graphics.Cursor'
 	instanceVariableNames: ''
 	classVariableNames: 'AppStarting Arrow Cross Current DDCopy DDCopyScroll DDLink DDLinkScroll DDMove DDMoveScroll DDNone Hand Help IBeam No SizeAll SizeNESW SizeNS SizeNWSE SizeWE SplitHorizontal SplitVertical UpArrow Wait'
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Cursor guid: (GUID fromString: '{87b4c640-026e-11d3-9fd7-00a0cc3e4a32}')!
-Cursor comment: ''!
-!Cursor categoriesForClass!Graphics-Tools! !
-!Cursor methodsFor!
+Graphics.Cursor guid: (Core.GUID fromString: '{87b4c640-026e-11d3-9fd7-00a0cc3e4a32}')!
+Graphics.Cursor comment: ''!
+!Graphics.Cursor categoriesForClass!Graphics-Tools! !
+!Graphics.Cursor methodsFor!
 
 imageType
 	"Private - Answer the Win32 image type for the receiver."
@@ -44,7 +44,7 @@ makeCurrent
 printOn: aStream
 	instanceHandle == 0
 		ifTrue: 
-			[(##((LookupTable new)
+			[(##(LookupTable new
 				at: IDC_APPSTARTING put: #appStarting;
 				at: IDC_ARROW put: #arrow;
 				at: IDC_CROSS put: #cross;
@@ -86,15 +86,15 @@ showWhile: aBlock
 	^aBlock ensure: 
 			[Current := previous.
 			UserLibrary default setCursor: actual]! !
-!Cursor categoriesFor: #imageType!constants!private! !
-!Cursor categoriesFor: #load:fromInstance:extent:!private!realizing/unrealizing! !
-!Cursor categoriesFor: #loadFromInstance:!private!realizing/unrealizing! !
-!Cursor categoriesFor: #makeCurrent!operations!public! !
-!Cursor categoriesFor: #printOn:!development!printing!public! !
-!Cursor categoriesFor: #setCursor!operations!private! !
-!Cursor categoriesFor: #showWhile:!operations!public! !
+!Graphics.Cursor categoriesFor: #imageType!constants!private! !
+!Graphics.Cursor categoriesFor: #load:fromInstance:extent:!private!realizing/unrealizing! !
+!Graphics.Cursor categoriesFor: #loadFromInstance:!private!realizing/unrealizing! !
+!Graphics.Cursor categoriesFor: #makeCurrent!operations!public! !
+!Graphics.Cursor categoriesFor: #printOn:!development!printing!public! !
+!Graphics.Cursor categoriesFor: #setCursor!operations!private! !
+!Graphics.Cursor categoriesFor: #showWhile:!operations!public! !
 
-!Cursor class methodsFor!
+!Graphics.Cursor class methodsFor!
 
 appStarting
 	"Answer the instance that is the AppStarting cursor."
@@ -132,57 +132,46 @@ current: aCursorOrNil
 ddCopy
 	"Answer the instance that is the OLE DROPEFFECT_COPY cursor."
 
-	DDCopy isNil ifTrue: [
-		DDCopy := self fromId: 3 in: (ExternalResourceLibrary open: 'ole32')].
-
+	DDCopy isNil ifTrue: [DDCopy := self fromId: 3 in: (External.ResourceLibrary open: 'ole32')].
 	^DDCopy!
 
 ddCopyScroll
 	"Answer the instance that is the OLE DROPEFFECT_COPY | DROPEFFECT_SCROLL cursor."
 
-	DDCopyScroll isNil ifTrue: [
-		DDCopyScroll := self fromId: 6 in: (ExternalResourceLibrary open: 'ole32')].
-
+	DDCopyScroll isNil
+		ifTrue: [DDCopyScroll := self fromId: 6 in: (External.ResourceLibrary open: 'ole32')].
 	^DDCopyScroll!
 
 ddLink
 	"Answer the instance that is the OLE DROPEFFECT_LINK cursor."
 
-	DDLink isNil ifTrue: [
-		DDLink := self fromId: 4 in: (ExternalResourceLibrary open: 'ole32')].
-
+	DDLink isNil ifTrue: [DDLink := self fromId: 4 in: (External.ResourceLibrary open: 'ole32')].
 	^DDLink!
 
 ddLinkScroll
 	"Answer the instance that is the OLE DROPEFFECT_LINK | DROPEFFECT_SCROLL cursor."
 
-	DDLinkScroll isNil ifTrue: [
-		DDLinkScroll := self fromId: 7 in: (ExternalResourceLibrary open: 'ole32')].
-
+	DDLinkScroll isNil
+		ifTrue: [DDLinkScroll := self fromId: 7 in: (External.ResourceLibrary open: 'ole32')].
 	^DDLinkScroll!
 
 ddMove
 	"Answer the instance that is the OLE DROPEFFECT_MOVE cursor."
 
-	DDMove isNil ifTrue: [
-		DDMove := self fromId: 2 in: (ExternalResourceLibrary open: 'ole32')].
-
+	DDMove isNil ifTrue: [DDMove := self fromId: 2 in: (External.ResourceLibrary open: 'ole32')].
 	^DDMove!
 
 ddMoveScroll
 	"Answer the instance that is the OLE DROPEFFECT_MOVE | DROPEFFECT_SCROLL cursor."
 
-	DDMoveScroll isNil ifTrue: [
-		DDMoveScroll := self fromId: 5 in: (ExternalResourceLibrary open: 'ole32')].
-
+	DDMoveScroll isNil
+		ifTrue: [DDMoveScroll := self fromId: 5 in: (External.ResourceLibrary open: 'ole32')].
 	^DDMoveScroll!
 
 ddNone
 	"Answer the instance that is the OLE DROPEFFECT_NONE cursor."
 
-	DDNone isNil ifTrue: [
-		DDNone := self fromId: 1 in: (ExternalResourceLibrary open: 'ole32')].
-
+	DDNone isNil ifTrue: [DDNone := self fromId: 1 in: (External.ResourceLibrary open: 'ole32')].
 	^DDNone!
 
 defaultExtent
@@ -242,8 +231,7 @@ position
 	| pos |
 	pos := POINTL new.
 	UserLibrary default getCursorPos: pos.
-	^pos asPoint
-!
+	^pos asPoint!
 
 reset
 	"Clear the global cursor setting. Answers the previous global cursor (or nil if none)."
@@ -327,39 +315,39 @@ wait
 
 	Wait isNil ifTrue: [Wait := self fromSystemId: IDC_WAIT].
 	^Wait! !
-!Cursor class categoriesFor: #appStarting!accessing!public! !
-!Cursor class categoriesFor: #arrow!instance creation!public! !
-!Cursor class categoriesFor: #cross!instance creation!public! !
-!Cursor class categoriesFor: #current!accessing!public! !
-!Cursor class categoriesFor: #current:!accessing!private! !
-!Cursor class categoriesFor: #ddCopy!instance creation!public! !
-!Cursor class categoriesFor: #ddCopyScroll!instance creation!public! !
-!Cursor class categoriesFor: #ddLink!instance creation!public! !
-!Cursor class categoriesFor: #ddLinkScroll!instance creation!public! !
-!Cursor class categoriesFor: #ddMove!instance creation!public! !
-!Cursor class categoriesFor: #ddMoveScroll!instance creation!public! !
-!Cursor class categoriesFor: #ddNone!instance creation!public! !
-!Cursor class categoriesFor: #defaultExtent!constants!public! !
-!Cursor class categoriesFor: #filesType!constants!private! !
-!Cursor class categoriesFor: #hand!instance creation!public! !
-!Cursor class categoriesFor: #help!instance creation!public! !
-!Cursor class categoriesFor: #hide!operations!public! !
-!Cursor class categoriesFor: #iBeam!instance creation!public! !
-!Cursor class categoriesFor: #icon!constants!public! !
-!Cursor class categoriesFor: #no!instance creation!public! !
-!Cursor class categoriesFor: #onPreStripImage!class hierarchy-removing!private! !
-!Cursor class categoriesFor: #position!accessing!public! !
-!Cursor class categoriesFor: #reset!initializing!public! !
-!Cursor class categoriesFor: #show!operations!public! !
-!Cursor class categoriesFor: #show:!operations!public! !
-!Cursor class categoriesFor: #sizeAll!instance creation!public! !
-!Cursor class categoriesFor: #sizeNESW!instance creation!public! !
-!Cursor class categoriesFor: #sizeNS!instance creation!public! !
-!Cursor class categoriesFor: #sizeNWSE!instance creation!public! !
-!Cursor class categoriesFor: #sizeWE!instance creation!public! !
-!Cursor class categoriesFor: #splitHorizontal!instance creation!public! !
-!Cursor class categoriesFor: #splitVertical!instance creation!public! !
-!Cursor class categoriesFor: #uninitialize!class hierarchy-removing!private! !
-!Cursor class categoriesFor: #upArrow!instance creation!public! !
-!Cursor class categoriesFor: #wait!instance creation!public! !
+!Graphics.Cursor class categoriesFor: #appStarting!accessing!public! !
+!Graphics.Cursor class categoriesFor: #arrow!instance creation!public! !
+!Graphics.Cursor class categoriesFor: #cross!instance creation!public! !
+!Graphics.Cursor class categoriesFor: #current!accessing!public! !
+!Graphics.Cursor class categoriesFor: #current:!accessing!private! !
+!Graphics.Cursor class categoriesFor: #ddCopy!instance creation!public! !
+!Graphics.Cursor class categoriesFor: #ddCopyScroll!instance creation!public! !
+!Graphics.Cursor class categoriesFor: #ddLink!instance creation!public! !
+!Graphics.Cursor class categoriesFor: #ddLinkScroll!instance creation!public! !
+!Graphics.Cursor class categoriesFor: #ddMove!instance creation!public! !
+!Graphics.Cursor class categoriesFor: #ddMoveScroll!instance creation!public! !
+!Graphics.Cursor class categoriesFor: #ddNone!instance creation!public! !
+!Graphics.Cursor class categoriesFor: #defaultExtent!constants!public! !
+!Graphics.Cursor class categoriesFor: #filesType!constants!private! !
+!Graphics.Cursor class categoriesFor: #hand!instance creation!public! !
+!Graphics.Cursor class categoriesFor: #help!instance creation!public! !
+!Graphics.Cursor class categoriesFor: #hide!operations!public! !
+!Graphics.Cursor class categoriesFor: #iBeam!instance creation!public! !
+!Graphics.Cursor class categoriesFor: #icon!constants!public! !
+!Graphics.Cursor class categoriesFor: #no!instance creation!public! !
+!Graphics.Cursor class categoriesFor: #onPreStripImage!class hierarchy-removing!private! !
+!Graphics.Cursor class categoriesFor: #position!accessing!public! !
+!Graphics.Cursor class categoriesFor: #reset!initializing!public! !
+!Graphics.Cursor class categoriesFor: #show!operations!public! !
+!Graphics.Cursor class categoriesFor: #show:!operations!public! !
+!Graphics.Cursor class categoriesFor: #sizeAll!instance creation!public! !
+!Graphics.Cursor class categoriesFor: #sizeNESW!instance creation!public! !
+!Graphics.Cursor class categoriesFor: #sizeNS!instance creation!public! !
+!Graphics.Cursor class categoriesFor: #sizeNWSE!instance creation!public! !
+!Graphics.Cursor class categoriesFor: #sizeWE!instance creation!public! !
+!Graphics.Cursor class categoriesFor: #splitHorizontal!instance creation!public! !
+!Graphics.Cursor class categoriesFor: #splitVertical!instance creation!public! !
+!Graphics.Cursor class categoriesFor: #uninitialize!class hierarchy-removing!private! !
+!Graphics.Cursor class categoriesFor: #upArrow!instance creation!public! !
+!Graphics.Cursor class categoriesFor: #wait!instance creation!public! !
 

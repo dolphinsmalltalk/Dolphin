@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Font subclass: #StockFont
+Graphics.Font subclass: #'Graphics.StockFont'
 	instanceVariableNames: 'id'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-StockFont guid: (GUID fromString: '{87b4c63c-026e-11d3-9fd7-00a0cc3e4a32}')!
-StockFont comment: ''!
-!StockFont categoriesForClass!Graphics-Tools! !
-!StockFont methodsFor!
+Graphics.StockFont guid: (Core.GUID fromString: '{87b4c63c-026e-11d3-9fd7-00a0cc3e4a32}')!
+Graphics.StockFont comment: ''!
+!Graphics.StockFont categoriesForClass!Graphics-Tools! !
+!Graphics.StockFont methodsFor!
 
 = aFont
 	"Answer true if aFont is equal to (has the same id as) the receiver."
@@ -44,14 +44,14 @@ ownedHandle: aHandle
 	"Implementation Note: Stock objects should never be free'd"
 
 	self handle: aHandle! !
-!StockFont categoriesFor: #=!comparing!public! !
-!StockFont categoriesFor: #createHandle!private!realizing/unrealizing! !
-!StockFont categoriesFor: #hash!comparing!public! !
-!StockFont categoriesFor: #id!accessing!private! !
-!StockFont categoriesFor: #id:!accessing!private! !
-!StockFont categoriesFor: #ownedHandle:!accessing!private! !
+!Graphics.StockFont categoriesFor: #=!comparing!public! !
+!Graphics.StockFont categoriesFor: #createHandle!private!realizing/unrealizing! !
+!Graphics.StockFont categoriesFor: #hash!comparing!public! !
+!Graphics.StockFont categoriesFor: #id!accessing!private! !
+!Graphics.StockFont categoriesFor: #id:!accessing!private! !
+!Graphics.StockFont categoriesFor: #ownedHandle:!accessing!private! !
 
-!StockFont class methodsFor!
+!Graphics.StockFont class methodsFor!
 
 fromId: anInteger
 	"Answer a new instance of the receiver representing the stock font id anInteger."
@@ -60,5 +60,5 @@ fromId: anInteger
 		ownsHandle: false;
 		id: anInteger;
 		yourself! !
-!StockFont class categoriesFor: #fromId:!instance creation!public! !
+!Graphics.StockFont class categoriesFor: #fromId:!instance creation!public! !
 

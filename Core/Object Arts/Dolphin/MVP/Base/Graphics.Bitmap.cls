@@ -1,16 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Image subclass: #Bitmap
+Graphics.Image subclass: #'Graphics.Bitmap'
 	instanceVariableNames: 'hdc flags extent'
 	classVariableNames: 'SharedBitmaps'
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'IsSharedMask' -> 16r2.
 		'Map3DColorsMask' -> 16r1
 	}!
-Bitmap guid: (GUID fromString: '{87b4c63d-026e-11d3-9fd7-00a0cc3e4a32}')!
-Bitmap comment: 'Bitmap is the class of <Image>s that represent Windows'' device-dependent Bitmaps.
+Graphics.Bitmap guid: (Core.GUID fromString: '{87b4c63d-026e-11d3-9fd7-00a0cc3e4a32}')!
+Graphics.Bitmap comment: 'Bitmap is the class of <Image>s that represent Windows'' device-dependent Bitmaps.
 
 Instance Variables:
 	hdc		<Canvas>. A cached canvas into which the bitmap has been selected.
@@ -23,8 +23,8 @@ Class Variables:
 	IsSharedMask		<integer>
 
 '!
-!Bitmap categoriesForClass!Graphics-Tools! !
-!Bitmap methodsFor!
+!Graphics.Bitmap categoriesForClass!Graphics-Tools! !
+!Graphics.Bitmap methodsFor!
 
 addToImageList: aWinImageList mask: aColorOrNil
 	"Private - Add a pictorial representation of the receiver to aWinImageList."
@@ -50,13 +50,13 @@ alphaBlendOn: aCanvas at: dstOrigin extent: dstExtent from: srcOrigin
 		from: srcOrigin
 		extent: self extent!
 
-alphaBlendOn: aCanvas at: dstOrigin extent: dstExtent from: srcOrigin extent: srcExtent 
+alphaBlendOn: aCanvas at: dstOrigin extent: dstExtent from: srcOrigin extent: srcExtent
 	| blend |
 	blend := BLENDFUNCTION new.
 	blend
 		blendPercentage: 100;
 		usePerPixelAlpha: true.
-	^self 
+	^self
 		alphaBlendOn: aCanvas
 		at: dstOrigin
 		extent: dstExtent
@@ -94,7 +94,7 @@ asByteArray
 	width := size x.
 	byteSize := 4 * width * height.
 	bmi := BITMAPINFO new.
-	(bmi bmiHeader)
+	bmi bmiHeader
 		biWidth: width;
 		biHeight: -1 * height;
 		biPlanes: 1;
@@ -102,7 +102,7 @@ asByteArray
 		biCompression: BI_RGB;
 		biSizeImage: byteSize.
 	bits := ByteArray newFixed: byteSize.
-	ret := GDILibrary default 
+	ret := GDILibrary default
 				getDIBits: canvas asParameter
 				hbm: self asParameter
 				uStartScan: 0
@@ -142,7 +142,7 @@ cacheInfo
 canvas
 	"Answer a Canvas to access the bitmap"
 
-	hdc isNil 
+	hdc isNil
 		ifTrue: 
 			[hdc := GDILibrary default createCompatibleDC: nil.
 			GDILibrary default selectObject: hdc hgdiobj: self asParameter].
@@ -189,15 +189,15 @@ copyBits
 copyToClipboard
 	"Copy the receiver to the clipboard."
 
-	Clipboard current setBitmap: self!
+	UI.Clipboard current setBitmap: self!
 
 createPalette
 	"Private - Attempt the create an answer an HPALETTE for the receiver's palette.
 	Answers nil if the receiver has no palette."
 
-	^self getColorTable 
+	^self getColorTable
 		ifNotNil: 
-			[:colors | 
+			[:colors |
 			| lp palEntries len |
 			lp := LOGPALETTE new.
 			lp palVersion: 16r300.
@@ -205,7 +205,7 @@ createPalette
 			self assert: [colors byteSize <= palEntries byteSize].
 			"Just assign it over directly"
 			len := palEntries size min: colors size.
-			palEntries 
+			palEntries
 				replaceFrom: 1
 				to: len
 				with: colors
@@ -214,13 +214,13 @@ createPalette
 			lp palNumEntries: len.
 			GDILibrary default createPalette: lp]!
 
-createWatermarkAlphaPercent: percent backcolor: backcolor 
+createWatermarkAlphaPercent: percent backcolor: backcolor
 	| blend combined transparentColor mask rect watermark hasAlpha |
 	transparentColor := self canvas pixelAt: 0 @ 0.
 	rect := 0 @ 0 extent: self extent.
 	"Create the watermark image by fading the source bitmap"
 	watermark := Bitmap displayCompatibleWithExtent: self extent.
-	(watermark canvas)
+	watermark canvas
 		backcolor: backcolor;
 		erase.
 	blend := BLENDFUNCTION new.
@@ -228,7 +228,7 @@ createWatermarkAlphaPercent: percent backcolor: backcolor
 	blend
 		blendPercentage: percent;
 		usePerPixelAlpha: hasAlpha.
-	self 
+	self
 		alphaBlendOn: watermark canvas
 		at: 0 @ 0
 		extent: self extent
@@ -237,11 +237,11 @@ createWatermarkAlphaPercent: percent backcolor: backcolor
 		blend: blend.
 	hasAlpha ifTrue: [^watermark].
 	"If no alpha channel, we must do our own masking, so create a monochrome AND mask bitmap"
-	mask := Bitmap 
+	mask := Bitmap
 				width: self extent x
 				height: self extent y
 				depth: 1.
-	(mask canvas)
+	mask canvas
 		backcolor: transparentColor;
 		bitBlt: self canvas
 			rectangle: rect
@@ -249,7 +249,7 @@ createWatermarkAlphaPercent: percent backcolor: backcolor
 			rop: SRCCOPY.
 	self free.
 	"Mask out the transparent areas of the image (i.e. those in the transparent colour)"
-	(watermark canvas)
+	watermark canvas
 		backcolor: Color black;
 		forecolor: Color white;
 		bitBlt: mask canvas
@@ -259,7 +259,7 @@ createWatermarkAlphaPercent: percent backcolor: backcolor
 
 	"Now use the mask to paint the background colour in the transparent areas"
 	combined := Bitmap displayCompatibleWithExtent: self extent.
-	(combined canvas)
+	combined canvas
 		backcolor: backcolor;
 		bitBlt: mask canvas
 			rectangle: rect
@@ -267,7 +267,7 @@ createWatermarkAlphaPercent: percent backcolor: backcolor
 			rop: MERGECOPY.
 	mask free.
 	"Finally combine background and image"
-	combined canvas 
+	combined canvas
 		bitBlt: watermark canvas
 		rectangle: rect
 		to: 0 @ 0
@@ -293,7 +293,7 @@ detachHandle
 drawDisabledOn: aCanvas at: aPoint extent: sizePoint
 	"Draw a disabled/grayed representation of the receiver on aCanvas at aPoint with extent sizePoint."
 
-	^UserLibrary default 
+	^UserLibrary default
 		drawState: aCanvas asParameter
 		hbr: nil
 		lpOutputFunc: nil
@@ -303,18 +303,18 @@ drawDisabledOn: aCanvas at: aPoint extent: sizePoint
 		y: aPoint y
 		cx: sizePoint x
 		cy: sizePoint y
-		fuFlags: ##(DST_BITMAP| DSS_DISABLED)!
+		fuFlags: ##(DST_BITMAP | DSS_DISABLED)!
 
 drawOn: aCanvas at: dstOrigin extent: dstExtent
 	"Copies the receiver to aCanvas at the position specified by the Point, dstOrigin,
 	and the with size specified by the Point, dstExtent. The receiver is stretched
 	to fit the destination rectangle."
 
-	^self 
-		drawOn: aCanvas 
+	^self
+		drawOn: aCanvas
 		at: dstOrigin
 		extent: dstExtent
-		from: Point zero
+		from: Point.Zero
 		extent: self extent
 		rop: SRCCOPY!
 
@@ -476,7 +476,7 @@ loadFromFile: pathString extent: anObject
 	| fuLoad |
 	fuLoad := self baseLoadFlags bitOr: LR_LOADFROMFILE.
 	self getMap3DColors ifTrue: [fuLoad := fuLoad bitOr: LR_LOADMAP3DCOLORS].
-	^UserLibrary default 
+	^UserLibrary default
 		loadImage: 0
 		lpszName: pathString asResourceId
 		uType: self imageType
@@ -504,12 +504,12 @@ pixelData
 	pixData := DWORDArray new: self extent x * self extent y.
 	n := 1.
 	canvas := self canvas.
-	0 to: self extent x-1
+	0 to: self extent x - 1
 		do: 
-			[:x | 
-			0 to: self extent y -1 
+			[:x |
+			0 to: self extent y - 1
 				do: 
-					[:y | 
+					[:y |
 					pixData at: n put: (canvas getPixel: x @ y).
 					n := n + 1]].
 	self freeDC.
@@ -533,54 +533,54 @@ stbFixup: anSTBInFiler at: newObjectIndex
 			[answer := self asSharedCopy.
 			anSTBInFiler fixup: newObjectIndex to: answer].
 	^answer! !
-!Bitmap categoriesFor: #addToImageList:mask:!double dispatch!private! !
-!Bitmap categoriesFor: #alphaBlendOn:at:!drawing-bitmaps!public! !
-!Bitmap categoriesFor: #alphaBlendOn:at:extent:!drawing-bitmaps!public! !
-!Bitmap categoriesFor: #alphaBlendOn:at:extent:from:!drawing-bitmaps!public! !
-!Bitmap categoriesFor: #alphaBlendOn:at:extent:from:extent:!drawing-bitmaps!public! !
-!Bitmap categoriesFor: #alphaBlendOn:at:extent:from:extent:blend:!drawing-bitmaps!public! !
-!Bitmap categoriesFor: #asBitmap!public! !
-!Bitmap categoriesFor: #asByteArray!converting!public! !
-!Bitmap categoriesFor: #asSharedCopy!converting!public! !
-!Bitmap categoriesFor: #baseLoadFlags!constants!public! !
-!Bitmap categoriesFor: #basicFree!private!realizing/unrealizing! !
-!Bitmap categoriesFor: #cacheInfo!helpers!private! !
-!Bitmap categoriesFor: #canvas!accessing!public! !
-!Bitmap categoriesFor: #clearCached!initializing!private! !
-!Bitmap categoriesFor: #copy!copying!public! !
-!Bitmap categoriesFor: #copyBits!copying!private! !
-!Bitmap categoriesFor: #copyToClipboard!copying!public! !
-!Bitmap categoriesFor: #createPalette!private!realizing/unrealizing! !
-!Bitmap categoriesFor: #createWatermarkAlphaPercent:backcolor:!helpers!public! !
-!Bitmap categoriesFor: #depth!accessing!public! !
-!Bitmap categoriesFor: #detachHandle!accessing!public! !
-!Bitmap categoriesFor: #drawDisabledOn:at:extent:!drawing-bitmaps!public! !
-!Bitmap categoriesFor: #drawOn:at:extent:!drawing-bitmaps!public! !
-!Bitmap categoriesFor: #drawOn:at:extent:from:extent:!drawing-bitmaps!public! !
-!Bitmap categoriesFor: #drawOn:at:extent:from:extent:rop:!drawing-bitmaps!public! !
-!Bitmap categoriesFor: #drawOn:at:from:extent:!drawing-bitmaps!public! !
-!Bitmap categoriesFor: #drawOn:at:from:extent:rop:!drawing-bitmaps!public! !
-!Bitmap categoriesFor: #extent!accessing!public! !
-!Bitmap categoriesFor: #freeDC!private!realizing/unrealizing! !
-!Bitmap categoriesFor: #getColorTable!accessing!public! !
-!Bitmap categoriesFor: #getInfo!accessing!public! !
-!Bitmap categoriesFor: #getMap3DColors!accessing!public! !
-!Bitmap categoriesFor: #getPaletteEntries!accessing!public! !
-!Bitmap categoriesFor: #hasAlpha!public!testing! !
-!Bitmap categoriesFor: #imageType!constants!private! !
-!Bitmap categoriesFor: #initialize!initializing!private! !
-!Bitmap categoriesFor: #isShared!private!testing! !
-!Bitmap categoriesFor: #isShared:!accessing!private! !
-!Bitmap categoriesFor: #isTransparent!accessing!public! !
-!Bitmap categoriesFor: #isTransparent:!accessing!public! !
-!Bitmap categoriesFor: #loadFlags!private!realizing/unrealizing! !
-!Bitmap categoriesFor: #loadFromFile:extent:!private!realizing/unrealizing! !
-!Bitmap categoriesFor: #loadFromInstance:!private!realizing/unrealizing! !
-!Bitmap categoriesFor: #pixelData!accessing!public! !
-!Bitmap categoriesFor: #setMap3DColors:!accessing!public! !
-!Bitmap categoriesFor: #stbFixup:at:!binary filing!public! !
+!Graphics.Bitmap categoriesFor: #addToImageList:mask:!double dispatch!private! !
+!Graphics.Bitmap categoriesFor: #alphaBlendOn:at:!drawing-bitmaps!public! !
+!Graphics.Bitmap categoriesFor: #alphaBlendOn:at:extent:!drawing-bitmaps!public! !
+!Graphics.Bitmap categoriesFor: #alphaBlendOn:at:extent:from:!drawing-bitmaps!public! !
+!Graphics.Bitmap categoriesFor: #alphaBlendOn:at:extent:from:extent:!drawing-bitmaps!public! !
+!Graphics.Bitmap categoriesFor: #alphaBlendOn:at:extent:from:extent:blend:!drawing-bitmaps!public! !
+!Graphics.Bitmap categoriesFor: #asBitmap!public! !
+!Graphics.Bitmap categoriesFor: #asByteArray!converting!public! !
+!Graphics.Bitmap categoriesFor: #asSharedCopy!converting!public! !
+!Graphics.Bitmap categoriesFor: #baseLoadFlags!constants!public! !
+!Graphics.Bitmap categoriesFor: #basicFree!private!realizing/unrealizing! !
+!Graphics.Bitmap categoriesFor: #cacheInfo!helpers!private! !
+!Graphics.Bitmap categoriesFor: #canvas!accessing!public! !
+!Graphics.Bitmap categoriesFor: #clearCached!initializing!private! !
+!Graphics.Bitmap categoriesFor: #copy!copying!public! !
+!Graphics.Bitmap categoriesFor: #copyBits!copying!private! !
+!Graphics.Bitmap categoriesFor: #copyToClipboard!copying!public! !
+!Graphics.Bitmap categoriesFor: #createPalette!private!realizing/unrealizing! !
+!Graphics.Bitmap categoriesFor: #createWatermarkAlphaPercent:backcolor:!helpers!public! !
+!Graphics.Bitmap categoriesFor: #depth!accessing!public! !
+!Graphics.Bitmap categoriesFor: #detachHandle!accessing!public! !
+!Graphics.Bitmap categoriesFor: #drawDisabledOn:at:extent:!drawing-bitmaps!public! !
+!Graphics.Bitmap categoriesFor: #drawOn:at:extent:!drawing-bitmaps!public! !
+!Graphics.Bitmap categoriesFor: #drawOn:at:extent:from:extent:!drawing-bitmaps!public! !
+!Graphics.Bitmap categoriesFor: #drawOn:at:extent:from:extent:rop:!drawing-bitmaps!public! !
+!Graphics.Bitmap categoriesFor: #drawOn:at:from:extent:!drawing-bitmaps!public! !
+!Graphics.Bitmap categoriesFor: #drawOn:at:from:extent:rop:!drawing-bitmaps!public! !
+!Graphics.Bitmap categoriesFor: #extent!accessing!public! !
+!Graphics.Bitmap categoriesFor: #freeDC!private!realizing/unrealizing! !
+!Graphics.Bitmap categoriesFor: #getColorTable!accessing!public! !
+!Graphics.Bitmap categoriesFor: #getInfo!accessing!public! !
+!Graphics.Bitmap categoriesFor: #getMap3DColors!accessing!public! !
+!Graphics.Bitmap categoriesFor: #getPaletteEntries!accessing!public! !
+!Graphics.Bitmap categoriesFor: #hasAlpha!public!testing! !
+!Graphics.Bitmap categoriesFor: #imageType!constants!private! !
+!Graphics.Bitmap categoriesFor: #initialize!initializing!private! !
+!Graphics.Bitmap categoriesFor: #isShared!private!testing! !
+!Graphics.Bitmap categoriesFor: #isShared:!accessing!private! !
+!Graphics.Bitmap categoriesFor: #isTransparent!accessing!public! !
+!Graphics.Bitmap categoriesFor: #isTransparent:!accessing!public! !
+!Graphics.Bitmap categoriesFor: #loadFlags!private!realizing/unrealizing! !
+!Graphics.Bitmap categoriesFor: #loadFromFile:extent:!private!realizing/unrealizing! !
+!Graphics.Bitmap categoriesFor: #loadFromInstance:!private!realizing/unrealizing! !
+!Graphics.Bitmap categoriesFor: #pixelData!accessing!public! !
+!Graphics.Bitmap categoriesFor: #setMap3DColors:!accessing!public! !
+!Graphics.Bitmap categoriesFor: #stbFixup:at:!binary filing!public! !
 
-!Bitmap class methodsFor!
+!Graphics.Bitmap class methodsFor!
 
 compatible: canvas extent: size
 	"Answer a new instance of the receiver with suitable dimensions and
@@ -592,9 +592,10 @@ compatible: canvas width: width height: height
 	"Answer a new instance of the receiver with suitable dimensions and
 	available colours the same as canvas."
 
-	^self fromOwnedHandle: (
-		GDILibrary default createCompatibleBitmap: canvas asParameter nWidth: width nHeight: height).
-!
+	^self fromOwnedHandle: (GDILibrary default
+				createCompatibleBitmap: canvas asParameter
+				nWidth: width
+				nHeight: height)!
 
 displayCompatibleWithExtent: aPoint
 	"Answer a new instance of the receiver with suitable dimensions and
@@ -627,7 +628,7 @@ fromId: anIntegerOrStringId inFile: aString flags: anInteger
 	flags in anInteger."
 
 	| reslib icon |
-	reslib := ExternalResourceLibrary open: aString.
+	reslib := External.ResourceLibrary open: aString.
 	icon := self fromOwnedHandle: (UserLibrary default
 						loadImage: reslib asParameter
 						lpszName: anIntegerOrStringId asResourceId
@@ -652,7 +653,7 @@ fromView: aView background: aBrush
 	ext := aView extent.
 	answer := self displayCompatibleWithExtent: ext.
 	canvas := answer canvas.
-	canvas fillRectangle: (RECT extent: ext) brush: aBrush.
+	canvas fillRectangle: (RECTL extent: ext) brush: aBrush.
 	aView
 		sendMessage: WM_PRINT
 		wParam: canvas handle
@@ -665,8 +666,7 @@ initialize
 		Bitmap initialize
 	"
 
-	SharedBitmaps := WeakLookupTable new
-	!
+	SharedBitmaps := WeakLookupTable new!
 
 sharedCopyOf: aBitmap
 	"Answers a cached copy of aBitmap if one has already been loaded from the same
@@ -675,7 +675,7 @@ sharedCopyOf: aBitmap
 
 	^SharedBitmaps at: aBitmap fullIdentifier ifAbsentPut: [aBitmap isShared: true. aBitmap]!
 
-stbConvertFrom: anSTBClassFormat 
+stbConvertFrom: anSTBClassFormat
 	"Convert from version 0 Bitmap. 
 	Version 1 adds a caching inst var for the extent to avoid having to keep querying 
 	the BITMAPINFOHEADER.. 
@@ -683,21 +683,21 @@ stbConvertFrom: anSTBClassFormat
 	Version 3 adds Image>>locator instance variable"
 
 	^
-	[:data | 
+	[:data |
 	| newInstance |
 	newInstance := self basicNew.
 	1 to: data size do: [:i | newInstance instVarAt: i put: (data at: i)].
-	anSTBClassFormat version < 3 
+	anSTBClassFormat version < 3
 		ifTrue: 
 			[data size to: 1
 				by: -1
 				do: 
-					[:i | 
+					[:i |
 					| offset |
 					offset := i <= 2 ifTrue: [0] ifFalse: [1].
 					newInstance instVarAt: i + offset put: (newInstance instVarAt: i)].
 			newInstance fileLocator: FileLocator default].
-	anSTBClassFormat version < 2 
+	anSTBClassFormat version < 2
 		ifTrue: 
 			[| isMap3D |
 			isMap3D := newInstance instVarAt: 7.
@@ -716,26 +716,26 @@ width: widthInteger height: heightInteger depth: depthInteger
 		bitsPerPixel: depthInteger
 		bits: nil!
 
-width: widthInteger height: heightInteger planes: planesInteger bitsPerPixel: bpsInteger bits: anExternalAddressOrNil 
+width: widthInteger height: heightInteger planes: planesInteger bitsPerPixel: bpsInteger bits: anExternalAddressOrNil
 	"Answer a new instance of the receiver with suitable dimensions."
 
-	^self fromOwnedHandle: (GDILibrary default 
+	^self fromOwnedHandle: (GDILibrary default
 				createBitmap: widthInteger
 				nHeight: heightInteger
 				cPlanes: planesInteger
 				cBitsPerPel: bpsInteger
 				lpvBits: anExternalAddressOrNil)! !
-!Bitmap class categoriesFor: #compatible:extent:!instance creation!public! !
-!Bitmap class categoriesFor: #compatible:width:height:!instance creation!public! !
-!Bitmap class categoriesFor: #displayCompatibleWithExtent:!instance creation!public! !
-!Bitmap class categoriesFor: #filesType!constants!private! !
-!Bitmap class categoriesFor: #fromId:inFile:!instance creation!public! !
-!Bitmap class categoriesFor: #fromId:inFile:flags:!instance creation!public! !
-!Bitmap class categoriesFor: #fromView:!instance creation!public! !
-!Bitmap class categoriesFor: #fromView:background:!instance creation!public! !
-!Bitmap class categoriesFor: #initialize!development!initializing!private! !
-!Bitmap class categoriesFor: #sharedCopyOf:!instance creation!public! !
-!Bitmap class categoriesFor: #stbConvertFrom:!binary filing!public! !
-!Bitmap class categoriesFor: #width:height:depth:!instance creation!public! !
-!Bitmap class categoriesFor: #width:height:planes:bitsPerPixel:bits:!instance creation!public! !
+!Graphics.Bitmap class categoriesFor: #compatible:extent:!instance creation!public! !
+!Graphics.Bitmap class categoriesFor: #compatible:width:height:!instance creation!public! !
+!Graphics.Bitmap class categoriesFor: #displayCompatibleWithExtent:!instance creation!public! !
+!Graphics.Bitmap class categoriesFor: #filesType!constants!private! !
+!Graphics.Bitmap class categoriesFor: #fromId:inFile:!instance creation!public! !
+!Graphics.Bitmap class categoriesFor: #fromId:inFile:flags:!instance creation!public! !
+!Graphics.Bitmap class categoriesFor: #fromView:!instance creation!public! !
+!Graphics.Bitmap class categoriesFor: #fromView:background:!instance creation!public! !
+!Graphics.Bitmap class categoriesFor: #initialize!development!initializing!private! !
+!Graphics.Bitmap class categoriesFor: #sharedCopyOf:!instance creation!public! !
+!Graphics.Bitmap class categoriesFor: #stbConvertFrom:!binary filing!public! !
+!Graphics.Bitmap class categoriesFor: #width:height:depth:!instance creation!public! !
+!Graphics.Bitmap class categoriesFor: #width:height:planes:bitsPerPixel:bits:!instance creation!public! !
 

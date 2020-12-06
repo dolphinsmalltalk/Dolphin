@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Win32Structure subclass: #MENUITEMINFOW
+OS.Win32Structure subclass: #'OS.MENUITEMINFOW'
 	instanceVariableNames: 'text bitmap'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_cch' -> 16r28.
@@ -19,12 +19,12 @@ Win32Structure subclass: #MENUITEMINFOW
 		'_OffsetOf_hSubMenu' -> 16r14.
 		'_OffsetOf_wID' -> 16r10
 	}!
-MENUITEMINFOW guid: (GUID fromString: '{d9f31567-d705-4885-9ed7-f92ae9fefbf2}')!
-MENUITEMINFOW comment: '<MENUITEMINFOA> is an <ExternalStructure> class to wrap the Win32 structure of the same name.
+OS.MENUITEMINFOW guid: (Core.GUID fromString: '{d9f31567-d705-4885-9ed7-f92ae9fefbf2}')!
+OS.MENUITEMINFOW comment: '<MENUITEMINFOA> is an <ExternalStructure> class to wrap the Win32 structure of the same name.
 
 See the Win32 SDK documentation for further information.'!
-!MENUITEMINFOW categoriesForClass!External-Data-Structured-Win32! !
-!MENUITEMINFOW methodsFor!
+!OS.MENUITEMINFOW categoriesForClass!External-Data-Structured-Win32! !
+!OS.MENUITEMINFOW methodsFor!
 
 basicText: aString
 	"Private - Set the menu item text to be the <readableString> argument, aString."
@@ -192,32 +192,32 @@ wID: anInteger
 	"Set the receiver's 'wID' field to the value of the argument, anInteger"
 
 	bytes dwordAtOffset: _OffsetOf_wID put: anInteger! !
-!MENUITEMINFOW categoriesFor: #basicText:!accessing!private! !
-!MENUITEMINFOW categoriesFor: #cch:!**compiled accessors**!public! !
-!MENUITEMINFOW categoriesFor: #commandMenuItem:!initializing!private! !
-!MENUITEMINFOW categoriesFor: #dwItemData:!**compiled accessors**!public! !
-!MENUITEMINFOW categoriesFor: #dwSize:!**compiled accessors**!public! !
-!MENUITEMINFOW categoriesFor: #dwTypeData!**compiled accessors**!public! !
-!MENUITEMINFOW categoriesFor: #dwTypeData:!**compiled accessors**!public! !
-!MENUITEMINFOW categoriesFor: #fMask!**compiled accessors**!public! !
-!MENUITEMINFOW categoriesFor: #fMask:!**compiled accessors**!public! !
-!MENUITEMINFOW categoriesFor: #fState!**compiled accessors**!public! !
-!MENUITEMINFOW categoriesFor: #fState:!**compiled accessors**!public! !
-!MENUITEMINFOW categoriesFor: #fType!**compiled accessors**!public! !
-!MENUITEMINFOW categoriesFor: #fType:!**compiled accessors**!public! !
-!MENUITEMINFOW categoriesFor: #hbmpChecked:!**compiled accessors**!public! !
-!MENUITEMINFOW categoriesFor: #hbmpItem:!**compiled accessors**!public! !
-!MENUITEMINFOW categoriesFor: #hbmpUnchecked:!**compiled accessors**!public! !
-!MENUITEMINFOW categoriesFor: #hSubMenu:!**compiled accessors**!public! !
-!MENUITEMINFOW categoriesFor: #maskOut:!accessing!private! !
-!MENUITEMINFOW categoriesFor: #menuItem:text:state:!accessing!private! !
-!MENUITEMINFOW categoriesFor: #setImage:!helpers!private! !
-!MENUITEMINFOW categoriesFor: #subMenu:text:!accessing!private! !
-!MENUITEMINFOW categoriesFor: #type:!accessing!private! !
-!MENUITEMINFOW categoriesFor: #wID!**compiled accessors**!public! !
-!MENUITEMINFOW categoriesFor: #wID:!**compiled accessors**!public! !
+!OS.MENUITEMINFOW categoriesFor: #basicText:!accessing!private! !
+!OS.MENUITEMINFOW categoriesFor: #cch:!**compiled accessors**!public! !
+!OS.MENUITEMINFOW categoriesFor: #commandMenuItem:!initializing!private! !
+!OS.MENUITEMINFOW categoriesFor: #dwItemData:!**compiled accessors**!public! !
+!OS.MENUITEMINFOW categoriesFor: #dwSize:!**compiled accessors**!public! !
+!OS.MENUITEMINFOW categoriesFor: #dwTypeData!**compiled accessors**!public! !
+!OS.MENUITEMINFOW categoriesFor: #dwTypeData:!**compiled accessors**!public! !
+!OS.MENUITEMINFOW categoriesFor: #fMask!**compiled accessors**!public! !
+!OS.MENUITEMINFOW categoriesFor: #fMask:!**compiled accessors**!public! !
+!OS.MENUITEMINFOW categoriesFor: #fState!**compiled accessors**!public! !
+!OS.MENUITEMINFOW categoriesFor: #fState:!**compiled accessors**!public! !
+!OS.MENUITEMINFOW categoriesFor: #fType!**compiled accessors**!public! !
+!OS.MENUITEMINFOW categoriesFor: #fType:!**compiled accessors**!public! !
+!OS.MENUITEMINFOW categoriesFor: #hbmpChecked:!**compiled accessors**!public! !
+!OS.MENUITEMINFOW categoriesFor: #hbmpItem:!**compiled accessors**!public! !
+!OS.MENUITEMINFOW categoriesFor: #hbmpUnchecked:!**compiled accessors**!public! !
+!OS.MENUITEMINFOW categoriesFor: #hSubMenu:!**compiled accessors**!public! !
+!OS.MENUITEMINFOW categoriesFor: #maskOut:!accessing!private! !
+!OS.MENUITEMINFOW categoriesFor: #menuItem:text:state:!accessing!private! !
+!OS.MENUITEMINFOW categoriesFor: #setImage:!helpers!private! !
+!OS.MENUITEMINFOW categoriesFor: #subMenu:text:!accessing!private! !
+!OS.MENUITEMINFOW categoriesFor: #type:!accessing!private! !
+!OS.MENUITEMINFOW categoriesFor: #wID!**compiled accessors**!public! !
+!OS.MENUITEMINFOW categoriesFor: #wID:!**compiled accessors**!public! !
 
-!MENUITEMINFOW class methodsFor!
+!OS.MENUITEMINFOW class methodsFor!
 
 defineFields
 	"Define the fields of the MENUITEMINFOW structure.
@@ -254,6 +254,6 @@ defineFields
 
 getFieldNames
 	^#(#dwSize #fMask #fType #fState #wID #hSubMenu #hbmpChecked #hbmpUnchecked #dwItemData #dwTypeData #cch #hbmpItem)! !
-!MENUITEMINFOW class categoriesFor: #defineFields!public!template definition! !
-!MENUITEMINFOW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.MENUITEMINFOW class categoriesFor: #defineFields!public!template definition! !
+!OS.MENUITEMINFOW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

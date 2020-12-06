@@ -1,16 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Color subclass: #VirtualColor
+Graphics.Color subclass: #'Graphics.VirtualColor'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-VirtualColor guid: (GUID fromString: '{aa0eebfb-75db-4ed8-a11f-55ac6b62948e}')!
-VirtualColor isAbstract: true!
-VirtualColor comment: '`VirtualColor` is the abstract class of `Color`s with an indirectly stored or calculated color value that can vary at run time.'!
-!VirtualColor categoriesForClass!Drawing! !
-!VirtualColor methodsFor!
+Graphics.VirtualColor guid: (Core.GUID fromString: '{aa0eebfb-75db-4ed8-a11f-55ac6b62948e}')!
+Graphics.VirtualColor isNonInstantiable: true!
+Graphics.VirtualColor comment: '`VirtualColor` is the abstract class of `Color`s with an indirectly stored or calculated color value that can vary at run time.'!
+!Graphics.VirtualColor categoriesForClass!Drawing! !
+!Graphics.VirtualColor methodsFor!
 
 argbCode
 	"Answer the receiver's colour value in 32-bit ARGB encoding with 8-bits per component in alpha, red, green, blue order."
@@ -41,10 +41,10 @@ rgbCode
 	"Answer the receiver's color value in 24-bit RGB encoding with 8-bits per component in (blue, green, red) order."
 
 	^self actualColor rgbCode! !
-!VirtualColor categoriesFor: #argbCode!converting!public! !
-!VirtualColor categoriesFor: #asParameter!converting!public! !
-!VirtualColor categoriesFor: #asRGB!converting!public! !
-!VirtualColor categoriesFor: #isDefault!public!testing! !
-!VirtualColor categoriesFor: #isNone!public!testing! !
-!VirtualColor categoriesFor: #rgbCode!converting!public! !
+!Graphics.VirtualColor categoriesFor: #argbCode!converting!public! !
+!Graphics.VirtualColor categoriesFor: #asParameter!converting!public! !
+!Graphics.VirtualColor categoriesFor: #asRGB!converting!public! !
+!Graphics.VirtualColor categoriesFor: #isDefault!public!testing! !
+!Graphics.VirtualColor categoriesFor: #isNone!public!testing! !
+!Graphics.VirtualColor categoriesFor: #rgbCode!converting!public! !
 

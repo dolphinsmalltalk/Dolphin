@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ThemeLibrary subclass: #VistaThemeLibrary
+OS.ThemeLibrary subclass: #'OS.VistaThemeLibrary'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-VistaThemeLibrary guid: (GUID fromString: '{a07fa8a2-68a8-4f59-9459-e71f9bece9ac}')!
-VistaThemeLibrary comment: ''!
-!VistaThemeLibrary categoriesForClass!Win32-Modules! !
-!VistaThemeLibrary methodsFor!
+OS.VistaThemeLibrary guid: (Core.GUID fromString: '{a07fa8a2-68a8-4f59-9459-e71f9bece9ac}')!
+OS.VistaThemeLibrary comment: ''!
+!OS.VistaThemeLibrary categoriesForClass!Win32-Modules! !
+!OS.VistaThemeLibrary methodsFor!
 
 beginBufferedAnimation: hwnd hdcTarget: hdcTarget prcTarget: prcTarget dwFormat: dwFormat pPaintParams: pPaintParams pAnimationParams: pAnimationParams phdcFrom: phdcFrom phdcTo: phdcTo
 	"Invoke the BeginBufferedAnimation() function of the module wrapped by the receiver.
@@ -17,14 +17,14 @@ beginBufferedAnimation: hwnd hdcTarget: hdcTarget prcTarget: prcTarget dwFormat:
 		HANDLE __stdcall BeginBufferedAnimation(
 			[in]HWND HWND,
 			[in]HDC hdcTarget,
-			[in]RECT* prcTarget,
+			[in]RECTL* prcTarget,
 			[in]BP_BUFFERFORMAT dwFormat,
 			[in]BP_PAINTPARAMS* pPaintParams,
 			[in]BP_ANIMATIONPARAMS* pAnimationParams,
 			[out]HDC* phdcFrom,
 			[out]HDC* phdcTo);"
 
-	<stdcall: handle BeginBufferedAnimation handle handle RECT* sdword BP_PAINTPARAMS* BP_ANIMATIONPARAMS* handle* handle*>
+	<stdcall: handle BeginBufferedAnimation handle handle RECTL* sdword BP_PAINTPARAMS* BP_ANIMATIONPARAMS* handle* handle*>
 	^self invalidCall: _failureCode!
 
 beginBufferedPaint: hdcTarget prcTarget: prcTarget dwFormat: dwFormat pPaintParams: pPaintParams phDC: phDC
@@ -33,12 +33,12 @@ beginBufferedPaint: hdcTarget prcTarget: prcTarget dwFormat: dwFormat pPaintPara
 
 		HANDLE __stdcall BeginBufferedPaint(
 			[in]HDC hdcTarget,
-			[in]RECT* prcTarget,
+			[in]RECTL* prcTarget,
 			[in]BP_BUFFERFORMAT dwFormat,
 			[in]BP_PAINTPARAMS* pPaintParams,
 			[out]HDC* phDC);"
 
-	<stdcall: handle BeginBufferedPaint handle RECT* sdword BP_PAINTPARAMS* handle*>
+	<stdcall: handle BeginBufferedPaint handle RECTL* sdword BP_PAINTPARAMS* handle*>
 	^self invalidCall: _failureCode!
 
 bufferedPaintClear: hBufferedPaint prc: prc
@@ -47,9 +47,9 @@ bufferedPaintClear: hBufferedPaint prc: prc
 
 		HRESULT __stdcall BufferedPaintClear(
 			[in]HANDLE hBufferedPaint,
-			[in, optional]RECT* prc);"
+			[in, optional]RECTL* prc);"
 
-	<stdcall: hresult BufferedPaintClear handle RECT*>
+	<stdcall: hresult BufferedPaintClear handle RECTL*>
 	^self invalidCall: _failureCode!
 
 bufferedPaintInit
@@ -77,10 +77,10 @@ bufferedPaintSetAlpha: hBufferedPaint prc: prc alpha: alpha
 
 		HRESULT __stdcall BufferedPaintSetAlpha(
 			[in]HANDLE hBufferedPaint,
-			[in]RECT* prc,
+			[in]RECTL* prc,
 			[in]BYTE Alpha);"
 
-	<stdcall: hresult BufferedPaintSetAlpha handle RECT* byte>
+	<stdcall: hresult BufferedPaintSetAlpha handle RECTL* byte>
 	^self invalidCall: _failureCode!
 
 bufferedPaintStopAllAnimations: hwnd
@@ -152,9 +152,9 @@ getBufferedPaintTargetRect: hBufferedPaint prc: prc
 
 		HRESULT __stdcall GetBufferedPaintTargetRect(
 			[in]HANDLE hBufferedPaint,
-			[out, retval]RECT* prc);"
+			[out, retval]RECTL* prc);"
 
-	<stdcall: hresult GetBufferedPaintTargetRect handle RECT*>
+	<stdcall: hresult GetBufferedPaintTargetRect handle RECTL*>
 	^self invalidCall: _failureCode!
 
 isCompositionActive
@@ -175,20 +175,20 @@ onStartup
 	"Private - Perform any initialization required at system startup time"
 
 	self bufferedPaintInit! !
-!VistaThemeLibrary categoriesFor: #beginBufferedAnimation:hdcTarget:prcTarget:dwFormat:pPaintParams:pAnimationParams:phdcFrom:phdcTo:!**auto generated**!public! !
-!VistaThemeLibrary categoriesFor: #beginBufferedPaint:prcTarget:dwFormat:pPaintParams:phDC:!**auto generated**!public! !
-!VistaThemeLibrary categoriesFor: #bufferedPaintClear:prc:!**auto generated**!public! !
-!VistaThemeLibrary categoriesFor: #bufferedPaintInit!**auto generated**!public! !
-!VistaThemeLibrary categoriesFor: #bufferedPaintRenderAnimation:hdcTarget:!**auto generated**!public! !
-!VistaThemeLibrary categoriesFor: #bufferedPaintSetAlpha:prc:alpha:!**auto generated**!public! !
-!VistaThemeLibrary categoriesFor: #bufferedPaintStopAllAnimations:!**auto generated**!public! !
-!VistaThemeLibrary categoriesFor: #bufferedPaintUnInit!public! !
-!VistaThemeLibrary categoriesFor: #endBufferedPaint:fUpdateTarget:!**auto generated**!public! !
-!VistaThemeLibrary categoriesFor: #getBufferedPaintBits:ppbBuffer:pcxRow:!**auto generated**!public! !
-!VistaThemeLibrary categoriesFor: #getBufferedPaintDC:!**auto generated**!public! !
-!VistaThemeLibrary categoriesFor: #getBufferedPaintTargetDC:!**auto generated**!public! !
-!VistaThemeLibrary categoriesFor: #getBufferedPaintTargetRect:prc:!**auto generated**!public! !
-!VistaThemeLibrary categoriesFor: #isCompositionActive!**auto generated**!public! !
-!VistaThemeLibrary categoriesFor: #onExit!private! !
-!VistaThemeLibrary categoriesFor: #onStartup!private! !
+!OS.VistaThemeLibrary categoriesFor: #beginBufferedAnimation:hdcTarget:prcTarget:dwFormat:pPaintParams:pAnimationParams:phdcFrom:phdcTo:!**auto generated**!public! !
+!OS.VistaThemeLibrary categoriesFor: #beginBufferedPaint:prcTarget:dwFormat:pPaintParams:phDC:!**auto generated**!public! !
+!OS.VistaThemeLibrary categoriesFor: #bufferedPaintClear:prc:!**auto generated**!public! !
+!OS.VistaThemeLibrary categoriesFor: #bufferedPaintInit!**auto generated**!public! !
+!OS.VistaThemeLibrary categoriesFor: #bufferedPaintRenderAnimation:hdcTarget:!**auto generated**!public! !
+!OS.VistaThemeLibrary categoriesFor: #bufferedPaintSetAlpha:prc:alpha:!**auto generated**!public! !
+!OS.VistaThemeLibrary categoriesFor: #bufferedPaintStopAllAnimations:!**auto generated**!public! !
+!OS.VistaThemeLibrary categoriesFor: #bufferedPaintUnInit!public! !
+!OS.VistaThemeLibrary categoriesFor: #endBufferedPaint:fUpdateTarget:!**auto generated**!public! !
+!OS.VistaThemeLibrary categoriesFor: #getBufferedPaintBits:ppbBuffer:pcxRow:!**auto generated**!public! !
+!OS.VistaThemeLibrary categoriesFor: #getBufferedPaintDC:!**auto generated**!public! !
+!OS.VistaThemeLibrary categoriesFor: #getBufferedPaintTargetDC:!**auto generated**!public! !
+!OS.VistaThemeLibrary categoriesFor: #getBufferedPaintTargetRect:prc:!**auto generated**!public! !
+!OS.VistaThemeLibrary categoriesFor: #isCompositionActive!**auto generated**!public! !
+!OS.VistaThemeLibrary categoriesFor: #onExit!private! !
+!OS.VistaThemeLibrary categoriesFor: #onStartup!private! !
 

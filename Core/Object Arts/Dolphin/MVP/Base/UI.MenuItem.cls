@@ -1,17 +1,17 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Object subclass: #MenuItem
+Core.Object subclass: #'UI.MenuItem'
 	instanceVariableNames: 'flags'
 	classVariableNames: 'Dividers'
-	poolDictionaries: 'Win32Constants'
+	imports: #(#{OS.Win32Constants})
 	classInstanceVariableNames: ''
 	classConstants: {
 		'StringSeparator' -> $/.
 		'StylesMask' -> 16rFFFFF
 	}!
-MenuItem guid: (GUID fromString: '{87b4c49d-026e-11d3-9fd7-00a0cc3e4a32}')!
-MenuItem isAbstract: true!
-MenuItem comment: 'MenuItem is an abstract class whose subclasses represent the items held by a <Menu>.
+UI.MenuItem guid: (Core.GUID fromString: '{87b4c49d-026e-11d3-9fd7-00a0cc3e4a32}')!
+UI.MenuItem isNonInstantiable: true!
+UI.MenuItem comment: 'MenuItem is an abstract class whose subclasses represent the items held by a <Menu>.
 
 Instance Variables:
 	flags		<integer>
@@ -22,8 +22,8 @@ Class Variables:
 	StringSeparator	<Character> separator to use when parsing menu definitions using #fromString:
 
 '!
-!MenuItem categoriesForClass!MVP-Views-Support! !
-!MenuItem methodsFor!
+!UI.MenuItem categoriesForClass!MVP-Views-Support! !
+!UI.MenuItem methodsFor!
 
 acceleratorKey
 	"Answer the accelerator key code for the receiver."
@@ -79,12 +79,11 @@ insertIntoMenu: aMenu at: position info: aMENUITEMINFO
 	"Append the receiver to the menu, aMenu."
 
 	self populateItemInfo: aMENUITEMINFO.
-	(UserLibrary default 
+	(UserLibrary default
 		insertMenuItem: aMenu asParameter
 		uItem: position
 		fByPosition: true
-		lpmii: aMENUITEMINFO)
-			ifFalse: [Win32Error signal: 'Unable to realize ', self printString]!
+		lpmii: aMENUITEMINFO) ifFalse: [Win32Error signal: 'Unable to realize ' , self printString]!
 
 isDefault
 	"Answer whether the receiver is expecting to be the default item on a menu."
@@ -170,37 +169,37 @@ text
 	"Answer the menu text (i.e. the text that appears in the menu) for the receiver."
 
 	^self subclassResponsibility! !
-!MenuItem categoriesFor: #acceleratorKey!accessing!public! !
-!MenuItem categoriesFor: #acceleratorKey:!accessing!private! !
-!MenuItem categoriesFor: #allItems!accessing!public! !
-!MenuItem categoriesFor: #command!commands!public! !
-!MenuItem categoriesFor: #commandDescription!accessing!private! !
-!MenuItem categoriesFor: #edit!accessing!operations!private! !
-!MenuItem categoriesFor: #flags!accessing!private! !
-!MenuItem categoriesFor: #flags:!accessing!private! !
-!MenuItem categoriesFor: #hasSubmenu!menus!private! !
-!MenuItem categoriesFor: #id!accessing!private! !
-!MenuItem categoriesFor: #image!accessing!public! !
-!MenuItem categoriesFor: #insertIntoMenu:at:info:!public!realizing/unrealizing! !
-!MenuItem categoriesFor: #isDefault!public!testing! !
-!MenuItem categoriesFor: #isDefault:!accessing!public! !
-!MenuItem categoriesFor: #isDivider!public!testing! !
-!MenuItem categoriesFor: #items!accessing!public! !
-!MenuItem categoriesFor: #itemsDo:!accessing!private! !
-!MenuItem categoriesFor: #itemWithId:!accessing!public! !
-!MenuItem categoriesFor: #menuFromHandle:!accessing!public! !
-!MenuItem categoriesFor: #name!public! !
-!MenuItem categoriesFor: #populateItemInfo:!private!realizing/unrealizing! !
-!MenuItem categoriesFor: #printOn:!printing!public! !
-!MenuItem categoriesFor: #queryAlong:!operations!public! !
-!MenuItem categoriesFor: #registerAcceleratorKeyIn:!menus!public! !
-!MenuItem categoriesFor: #styleFlags!accessing!private! !
-!MenuItem categoriesFor: #styleFlags:!accessing!not an aspect!private! !
-!MenuItem categoriesFor: #text!accessing!public! !
+!UI.MenuItem categoriesFor: #acceleratorKey!accessing!public! !
+!UI.MenuItem categoriesFor: #acceleratorKey:!accessing!private! !
+!UI.MenuItem categoriesFor: #allItems!accessing!public! !
+!UI.MenuItem categoriesFor: #command!commands!public! !
+!UI.MenuItem categoriesFor: #commandDescription!accessing!private! !
+!UI.MenuItem categoriesFor: #edit!accessing!operations!private! !
+!UI.MenuItem categoriesFor: #flags!accessing!private! !
+!UI.MenuItem categoriesFor: #flags:!accessing!private! !
+!UI.MenuItem categoriesFor: #hasSubmenu!menus!private! !
+!UI.MenuItem categoriesFor: #id!accessing!private! !
+!UI.MenuItem categoriesFor: #image!accessing!public! !
+!UI.MenuItem categoriesFor: #insertIntoMenu:at:info:!public!realizing/unrealizing! !
+!UI.MenuItem categoriesFor: #isDefault!public!testing! !
+!UI.MenuItem categoriesFor: #isDefault:!accessing!public! !
+!UI.MenuItem categoriesFor: #isDivider!public!testing! !
+!UI.MenuItem categoriesFor: #items!accessing!public! !
+!UI.MenuItem categoriesFor: #itemsDo:!accessing!private! !
+!UI.MenuItem categoriesFor: #itemWithId:!accessing!public! !
+!UI.MenuItem categoriesFor: #menuFromHandle:!accessing!public! !
+!UI.MenuItem categoriesFor: #name!public! !
+!UI.MenuItem categoriesFor: #populateItemInfo:!private!realizing/unrealizing! !
+!UI.MenuItem categoriesFor: #printOn:!printing!public! !
+!UI.MenuItem categoriesFor: #queryAlong:!operations!public! !
+!UI.MenuItem categoriesFor: #registerAcceleratorKeyIn:!menus!public! !
+!UI.MenuItem categoriesFor: #styleFlags!accessing!private! !
+!UI.MenuItem categoriesFor: #styleFlags:!accessing!not an aspect!private! !
+!UI.MenuItem categoriesFor: #text!accessing!public! !
 
-MenuItem methodProtocol: #menuItem attributes: #(#readOnly) selectors: #(#acceleratorKey #command #hasSubmenu #id #image #insertIntoMenu:at:info: #items #menuFromHandle: #queryAlong: #registerAcceleratorKeyIn: #text)!
+UI.MenuItem methodProtocol: #menuItem attributes: #(#readOnly) selectors: #(#acceleratorKey #command #hasSubmenu #id #image #insertIntoMenu:at:info: #items #menuFromHandle: #queryAlong: #registerAcceleratorKeyIn: #text)!
 
-!MenuItem class methodsFor!
+!UI.MenuItem class methodsFor!
 
 errorIllegalMenuString: illegalString
 	"Private - Raise an error to inform that illegalString can not be
@@ -271,10 +270,10 @@ stbVersion
 	"Answer the current binary filer version number for instances of the receiver."
 
 	^1! !
-!MenuItem class categoriesFor: #errorIllegalMenuString:!exceptions!private! !
-!MenuItem class categoriesFor: #fromString:!instance creation!public! !
-!MenuItem class categoriesFor: #initialize!development!initializing!private! !
-!MenuItem class categoriesFor: #new!instance creation!private! !
-!MenuItem class categoriesFor: #stbConvertFrom:!binary filing!public! !
-!MenuItem class categoriesFor: #stbVersion!binary filing!public! !
+!UI.MenuItem class categoriesFor: #errorIllegalMenuString:!exceptions!private! !
+!UI.MenuItem class categoriesFor: #fromString:!instance creation!public! !
+!UI.MenuItem class categoriesFor: #initialize!development!initializing!private! !
+!UI.MenuItem class categoriesFor: #new!instance creation!private! !
+!UI.MenuItem class categoriesFor: #stbConvertFrom:!binary filing!public! !
+!UI.MenuItem class categoriesFor: #stbVersion!binary filing!public! !
 

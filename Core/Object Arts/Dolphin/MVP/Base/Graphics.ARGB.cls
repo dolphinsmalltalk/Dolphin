@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-AbstractRGB subclass: #ARGB
+Graphics.AbstractRGB subclass: #'Graphics.ARGB'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ARGB guid: (GUID fromString: '{5adf6d2a-72cb-4706-b355-516359e43521}')!
-ARGB comment: '`ARGB` is the class of colour values specified as individual 8-bit red, green, blue and alpha levels encoded as a 32-bit <integer> value with the components in A,R,G,B order. This encoding is used with all of the more modern Windows graphics APIs such as Gdiplus, DirectDraw, Direct3D, etc.'!
-!ARGB categoriesForClass!Unclassified! !
-!ARGB methodsFor!
+Graphics.ARGB guid: (Core.GUID fromString: '{5adf6d2a-72cb-4706-b355-516359e43521}')!
+Graphics.ARGB comment: '`ARGB` is the class of colour values specified as individual 8-bit red, green, blue and alpha levels encoded as a 32-bit <integer> value with the components in A,R,G,B order. This encoding is used with all of the more modern Windows graphics APIs such as Gdiplus, DirectDraw, Direct3D, etc.'!
+!Graphics.ARGB categoriesForClass!Unclassified! !
+!Graphics.ARGB methodsFor!
 
 alpha
 	"Answer the receiver's alpha component (a SmallInteger in the range 0..255)."
@@ -65,18 +65,18 @@ red
 	"Answer the receiver's red component component expressed as an <integer> in the range [0,255]."
 
 	^(code bitShift: -16) bitAnd: 255! !
-!ARGB categoriesFor: #alpha!accessing!public! !
-!ARGB categoriesFor: #alpha:!accessing!public! !
-!ARGB categoriesFor: #alphaMask!accessing!private! !
-!ARGB categoriesFor: #argb!converting!public! !
-!ARGB categoriesFor: #argbCode!accessing!public! !
-!ARGB categoriesFor: #asRGB!converting!public! !
-!ARGB categoriesFor: #blue!accessing!public! !
-!ARGB categoriesFor: #isNone!public!testing! !
-!ARGB categoriesFor: #normalizedAlpha!accessing!public! !
-!ARGB categoriesFor: #red!accessing!public! !
+!Graphics.ARGB categoriesFor: #alpha!accessing!public! !
+!Graphics.ARGB categoriesFor: #alpha:!accessing!public! !
+!Graphics.ARGB categoriesFor: #alphaMask!accessing!private! !
+!Graphics.ARGB categoriesFor: #argb!converting!public! !
+!Graphics.ARGB categoriesFor: #argbCode!accessing!public! !
+!Graphics.ARGB categoriesFor: #asRGB!converting!public! !
+!Graphics.ARGB categoriesFor: #blue!accessing!public! !
+!Graphics.ARGB categoriesFor: #isNone!public!testing! !
+!Graphics.ARGB categoriesFor: #normalizedAlpha!accessing!public! !
+!Graphics.ARGB categoriesFor: #red!accessing!public! !
 
-!ARGB class methodsFor!
+!Graphics.ARGB class methodsFor!
 
 a: alphaValue r: redValue g: greenValue b: blueValue
 	"Answer an instance whose four components are given.
@@ -142,13 +142,13 @@ red: redValue green: greenValue blue: blueValue
 
 transparent
 	^self none! !
-!ARGB class categoriesFor: #a:r:g:b:!instance creation!public! !
-!ARGB class categoriesFor: #alpha:red:green:blue:!instance creation!public! !
-!ARGB class categoriesFor: #default!instance creation!public! !
-!ARGB class categoriesFor: #fromArgbCode:!instance creation!public! !
-!ARGB class categoriesFor: #fromInteger:!instance creation!private! !
-!ARGB class categoriesFor: #none!instance creation!public! !
-!ARGB class categoriesFor: #r:g:b:!instance creation!public! !
-!ARGB class categoriesFor: #red:green:blue:!instance creation!public! !
-!ARGB class categoriesFor: #transparent!instance creation!public! !
+!Graphics.ARGB class categoriesFor: #a:r:g:b:!instance creation!public! !
+!Graphics.ARGB class categoriesFor: #alpha:red:green:blue:!instance creation!public! !
+!Graphics.ARGB class categoriesFor: #default!instance creation!public! !
+!Graphics.ARGB class categoriesFor: #fromArgbCode:!instance creation!public! !
+!Graphics.ARGB class categoriesFor: #fromInteger:!instance creation!private! !
+!Graphics.ARGB class categoriesFor: #none!instance creation!public! !
+!Graphics.ARGB class categoriesFor: #r:g:b:!instance creation!public! !
+!Graphics.ARGB class categoriesFor: #red:green:blue:!instance creation!public! !
+!Graphics.ARGB class categoriesFor: #transparent!instance creation!public! !
 

@@ -1,19 +1,19 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ColorRef subclass: #RGB
+Graphics.ColorRef subclass: #'Graphics.RGB'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-RGB guid: (GUID fromString: '{87b4c53b-026e-11d3-9fd7-00a0cc3e4a32}')!
-RGB comment: '`RGB` is the class of colour values specified as individual 8-bit red, green and blue levels encoded as a 32-bit integer with components in B,G,R order (aka a COLORREF). The RGB encoding is used with the older GDI and common control APIs, and cannot represent alpha/translucency, except for the special case of complete transparency (see `ColorNone`).
+Graphics.RGB guid: (Core.GUID fromString: '{87b4c53b-026e-11d3-9fd7-00a0cc3e4a32}')!
+Graphics.RGB comment: '`RGB` is the class of colour values specified as individual 8-bit red, green and blue levels encoded as a 32-bit integer with components in B,G,R order (aka a COLORREF). The RGB encoding is used with the older GDI and common control APIs, and cannot represent alpha/translucency, except for the special case of complete transparency (see `ColorNone`).
 
 
 
 '!
-!RGB categoriesForClass!Drawing! !
-!RGB methodsFor!
+!Graphics.RGB categoriesForClass!Drawing! !
+!Graphics.RGB methodsFor!
 
 alpha: anAlphaInteger
 	"Answer an <Color> that has the same red, green and blue components as the receiver, but with the <integer> alpha, anAlphaInteger.
@@ -43,12 +43,12 @@ setCode: anInteger
 	"Private - Set the <integer> value of the ColorRef (i.e. that value passed to API calls to represent the color)."
 
 	code := anInteger bitAnd: 16rFFFFFF! !
-!RGB categoriesFor: #alpha:!accessing!public! !
-!RGB categoriesFor: #asRGB!converting!public! !
-!RGB categoriesFor: #rgbCode!accessing!public! !
-!RGB categoriesFor: #setCode:!accessing!private! !
+!Graphics.RGB categoriesFor: #alpha:!accessing!public! !
+!Graphics.RGB categoriesFor: #asRGB!converting!public! !
+!Graphics.RGB categoriesFor: #rgbCode!accessing!public! !
+!Graphics.RGB categoriesFor: #setCode:!accessing!private! !
 
-!RGB class methodsFor!
+!Graphics.RGB class methodsFor!
 
 fromInteger: anInteger
 	"Private - Answer an instance whose three component colour values are embedded in anInteger. This should only be used for STB loading. Use fromRgbCode: instead."
@@ -106,11 +106,11 @@ stbVersion
 	"Answer the current binary filer version number for instances of the receiver."
 
 	^1! !
-!RGB class categoriesFor: #fromInteger:!instance creation!private! !
-!RGB class categoriesFor: #fromRgbCode:!instance creation!public! !
-!RGB class categoriesFor: #r:g:b:!instance creation!public! !
-!RGB class categoriesFor: #red:green:blue:!instance creation!public! !
-!RGB class categoriesFor: #stbConvertFrom:!binary filing!public! !
-!RGB class categoriesFor: #stbReadFrom:format:!binary filing!public! !
-!RGB class categoriesFor: #stbVersion!binary filing!public! !
+!Graphics.RGB class categoriesFor: #fromInteger:!instance creation!private! !
+!Graphics.RGB class categoriesFor: #fromRgbCode:!instance creation!public! !
+!Graphics.RGB class categoriesFor: #r:g:b:!instance creation!public! !
+!Graphics.RGB class categoriesFor: #red:green:blue:!instance creation!public! !
+!Graphics.RGB class categoriesFor: #stbConvertFrom:!binary filing!public! !
+!Graphics.RGB class categoriesFor: #stbReadFrom:format:!binary filing!public! !
+!Graphics.RGB class categoriesFor: #stbVersion!binary filing!public! !
 

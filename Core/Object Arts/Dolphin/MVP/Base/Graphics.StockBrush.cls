@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Brush subclass: #StockBrush
+Graphics.Brush subclass: #'Graphics.StockBrush'
 	instanceVariableNames: 'id'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-StockBrush guid: (GUID fromString: '{87b4c63a-026e-11d3-9fd7-00a0cc3e4a32}')!
-StockBrush comment: '`StockBrush` is type of `Brush` that wraps one of the standard (aka ''stock'') Windows GDI Brush objects, for example black and white brushes.
+Graphics.StockBrush guid: (Core.GUID fromString: '{87b4c63a-026e-11d3-9fd7-00a0cc3e4a32}')!
+Graphics.StockBrush comment: '`StockBrush` is type of `Brush` that wraps one of the standard (aka ''stock'') Windows GDI Brush objects, for example black and white brushes.
 
 StockBrushes are normally instantiated using one of the relevant instance creation methods of the superclass, `Brush`. For example:
 
@@ -17,8 +17,8 @@ StockBrushes are normally instantiated using one of the relevant instance creati
   `id`		`<integer>` code identifying the brush pattern and colour
 
 '!
-!StockBrush categoriesForClass!Graphics-Tools! !
-!StockBrush methodsFor!
+!Graphics.StockBrush categoriesForClass!Graphics-Tools! !
+!Graphics.StockBrush methodsFor!
 
 createHandle
 	"Private - Get the handle for the stock brush with receiver's id."
@@ -51,13 +51,13 @@ printOn: aPuttableStream
 		print: Brush;
 		space;
 		display: self name! !
-!StockBrush categoriesFor: #createHandle!private!realizing/unrealizing! !
-!StockBrush categoriesFor: #id:!private!realizing/unrealizing! !
-!StockBrush categoriesFor: #name!accessing!public! !
-!StockBrush categoriesFor: #ownedHandle:!accessing!private! !
-!StockBrush categoriesFor: #printOn:!printing!public! !
+!Graphics.StockBrush categoriesFor: #createHandle!private!realizing/unrealizing! !
+!Graphics.StockBrush categoriesFor: #id:!private!realizing/unrealizing! !
+!Graphics.StockBrush categoriesFor: #name!accessing!public! !
+!Graphics.StockBrush categoriesFor: #ownedHandle:!accessing!private! !
+!Graphics.StockBrush categoriesFor: #printOn:!printing!public! !
 
-!StockBrush class methodsFor!
+!Graphics.StockBrush class methodsFor!
 
 fromId: anInteger
 	"Answer a new instance of the receiver representing the stock brush id anInteger."
@@ -70,6 +70,6 @@ new
 	"StockBrushes should only be instantiated with #fromID:"
 
 	^self shouldNotImplement! !
-!StockBrush class categoriesFor: #fromId:!instance creation!public! !
-!StockBrush class categoriesFor: #new!instance creation!public! !
+!Graphics.StockBrush class categoriesFor: #fromId:!instance creation!public! !
+!Graphics.StockBrush class categoriesFor: #new!instance creation!public! !
 
