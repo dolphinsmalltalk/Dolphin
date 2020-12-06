@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-DolphinTest subclass: #RectangleTest
-	instanceVariableNames: 'desktop oddDesktop unary'
+AbstractRectangleTest subclass: #RectangleTest
+	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -10,13 +10,8 @@ RectangleTest comment: ''!
 !RectangleTest categoriesForClass!Unclassified! !
 !RectangleTest methodsFor!
 
-setUp
-	"Note that desktop is always a fixed size to make writing the tests easier"
-	desktop := Rectangle origin: 0@0 corner: 1280@1024.
-
-	oddDesktop := Rectangle origin: 0@0 corner: 1279@1023.
-
-	unary := Rectangle origin: 0@0 extent: 1@1!
+subjectClass
+	^Rectangle!
 
 testAreasOutside
 	"2"
@@ -44,15 +39,6 @@ testAreasOutside
 	self assert: ((100 @ 100 corner: 200 @ 200) areasOutside: (200 @ 200 corner: 400 @ 400))
 		equals: (Array with: (100 @ 100 corner: 200 @ 200))!
 
-testCenter
-	self assert: desktop center equals: 640 @ 512.
-	self assert: oddDesktop center equals: 639 @ 511.
-	self assert: unary center equals: 0 @ 0!
-
-testCenterX
-	self assert: desktop centerX equals: 640.
-	self assert: oddDesktop centerX equals: 639!
-
 testInsetBy
 	self assert: (desktop insetBy: 1) equals: (1 @ 1 corner: 1279 @ 1023).
 	self assert: (desktop insetBy: 2) equals: (2 @ 2 corner: 1278 @ 1022).
@@ -61,9 +47,7 @@ testInsetBy
 	self assert: (desktop insetBy: 1 @ 2) equals: (1 @ 2 corner: 1279 @ 1022).
 	self assert: ((1 @ 2 corner: 3 @ 4) insetBy: (2 @ 0 corner: 0 @ 0)) equals: (3 @ 2 corner: 3 @ 4).
 	#todo	"Add more insetBy: <Rectangle> tests"! !
-!RectangleTest categoriesFor: #setUp!public!Running! !
+!RectangleTest categoriesFor: #subjectClass!constants!private! !
 !RectangleTest categoriesFor: #testAreasOutside!public!unit tests! !
-!RectangleTest categoriesFor: #testCenter!public!unit tests! !
-!RectangleTest categoriesFor: #testCenterX!public!unit tests! !
 !RectangleTest categoriesFor: #testInsetBy!public!unit tests! !
 

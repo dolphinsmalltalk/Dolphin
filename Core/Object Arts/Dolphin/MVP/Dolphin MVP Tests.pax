@@ -7,6 +7,7 @@ package paxVersion: 1;
 
 package classNames
 	add: #AbstractContainerViewTest;
+	add: #AbstractRectangleTest;
 	add: #AbstractTextEditTest;
 	add: #AcceleratorTableTest;
 	add: #ARGBTest;
@@ -21,6 +22,7 @@ package classNames
 	add: #ContainerViewTest;
 	add: #DifferencesPresenterTest;
 	add: #EvaluationConverterTest;
+	add: #ExternalRectangleTest;
 	add: #FileDialogTest;
 	add: #FlowLayoutTest;
 	add: #FolderTest;
@@ -50,6 +52,7 @@ package classNames
 	add: #PushButtonTest;
 	add: #RadioButtonSetPresenterTest;
 	add: #RectangleTest;
+	add: #RECTLTest;
 	add: #ReferenceViewTest;
 	add: #ResourceIdentifierTest;
 	add: #RichTextEditTest;
@@ -135,6 +138,11 @@ DolphinTest subclass: #AbstractContainerViewTest
 	instanceVariableNames: 'containerView'
 	classVariableNames: ''
 	poolDictionaries: 'Win32Constants'
+	classInstanceVariableNames: ''!
+DolphinTest subclass: #AbstractRectangleTest
+	instanceVariableNames: 'desktop oddDesktop unary'
+	classVariableNames: ''
+	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 DolphinTest subclass: #ARGBTest
 	instanceVariableNames: ''
@@ -231,11 +239,6 @@ DolphinTest subclass: #RadioButtonSetPresenterTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-DolphinTest subclass: #RectangleTest
-	instanceVariableNames: 'desktop oddDesktop unary'
-	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
 DolphinTest subclass: #ResourceIdentifierTest
 	instanceVariableNames: 'tempViewResource'
 	classVariableNames: ''
@@ -272,6 +275,21 @@ AbstractContainerViewTest subclass: #StyledContainerTest
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 AbstractKeyboardTest subclass: #AcceleratorTableTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+AbstractRectangleTest subclass: #ExternalRectangleTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+AbstractRectangleTest subclass: #RectangleTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ExternalRectangleTest subclass: #RECTLTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''

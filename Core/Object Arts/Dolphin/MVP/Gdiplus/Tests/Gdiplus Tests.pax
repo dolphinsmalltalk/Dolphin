@@ -44,6 +44,7 @@ package classNames
 	add: #GdiplusTestInitializer;
 	add: #GdiplusTests;
 	add: #GpColorMatrixTest;
+	add: #RECTFTest;
 	yourself.
 
 package methodNames
@@ -62,6 +63,7 @@ package setPrerequisites: #(
 	'..\..\..\Base\Dolphin'
 	'..\..\Base\Dolphin Basic Geometry'
 	'..\..\Base\Dolphin MVP Base'
+	'..\..\Dolphin MVP Tests'
 	'..\Gdiplus'
 	'..\..\..\ActiveX\Structured Storage\OLE Structured Storage'
 	'..\..\..\..\..\Contributions\Camp Smalltalk\SUnit\SUnit'
@@ -80,6 +82,11 @@ TestCase subclass: #GdiplusTests
 	instanceVariableNames: 'model'
 	classVariableNames: ''
 	poolDictionaries: 'GdiplusConstants'
+	classInstanceVariableNames: ''!
+ExternalRectangleTest subclass: #RECTFTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 GdiplusTests subclass: #GdiplusAdjustableArrowCapTest
 	instanceVariableNames: ''
