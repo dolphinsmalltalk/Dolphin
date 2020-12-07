@@ -10,12 +10,15 @@ DelayTest comment: ''!
 !DelayTest categoriesForClass!Unclassified! !
 !DelayTest methodsFor!
 
-expectDelay: expectedMilliseconds for: nowMicroseconds
+expectDelay: expectedDuration for: nowMicroseconds
 	| elapsed delta |
 	elapsed := nowMicroseconds - startTime.
-	delta := (elapsed - (expectedMilliseconds * 1000)) abs.
-	self assert: delta < 2000
-		description: ('Expected delay of <1d>ms, got <2d>ms' expandMacrosWith: expectedMilliseconds
+	delta := elapsed - expectedDuration asMicroseconds.
+	"Although a Delay could end up waiting much longer than the expected duration,
+	e.g. if the CPU is very busy, this should happen only rarely, and we do not want
+	to tolerate it if it happens all the time as that would indicate an actual bug."
+	self assert: (delta > -1000 and: [delta < 3000])
+		description: ('Expected delay of <1d>ms, got <2d>ms' expandMacrosWith: expectedDuration
 				with: (elapsed // 100 / 10 asScaledDecimal: 1))!
 
 setUp
@@ -30,7 +33,7 @@ tearDown
 testBasicWait
 	delay := Delay forMilliseconds: 20.
 	delay wait.
-	self expectDelay: 20 for: Time microsecondClockValue!
+	self expectDelay: 20 milliseconds for: Time microsecondClockValue!
 
 testCancel
 	| proc endTime |
@@ -40,7 +43,7 @@ testCancel
 			endTime := Time microsecondClockValue] forkAt: Processor userInterruptPriority.
 	
 	[delay cancel.
-	self deny: Delay.Current == delay.
+	self deny: Delay.Current identicalTo: delay.
 	self deny: (Delay.Pending includes: delay).
 	(Delay forMilliseconds: 30) wait.
 	self assertIsNil: endTime.
@@ -58,8 +61,8 @@ testSchedulingMultipleDelays
 	[delay wait.
 	endTime := Time microsecondClockValue] forkAt: Processor userInterruptPriority.
 	(Delay forMilliseconds: 30) wait.
-	self expectDelay: 20 for: endTime.
-	self expectDelay: 30 for: Time microsecondClockValue!
+	self expectDelay: 20 milliseconds for: endTime.
+	self expectDelay: 30 milliseconds for: Time microsecondClockValue!
 
 testSchedulingMultipleDelaysLongerFirst
 	| endTime |
@@ -70,12 +73,12 @@ testSchedulingMultipleDelaysLongerFirst
 	"Wait for a shorter period than the other process"
 	(Delay forMilliseconds: 20) wait.
 	"We should have waited for the correct time, other proc is still waiting"
-	self expectDelay: 20 for: Time microsecondClockValue.
+	self expectDelay: 20 milliseconds for: Time microsecondClockValue.
 	self assertIsNil: endTime.
 	"Now wait long enough for it to be done"
 	(Delay forMilliseconds: 20) wait.
-	self expectDelay: 30 for: endTime.
-	self expectDelay: 40 for: Time microsecondClockValue!
+	self expectDelay: 30 milliseconds for: endTime.
+	self expectDelay: 40 milliseconds for: Time microsecondClockValue!
 
 testSignal
 	| endTime |
@@ -85,7 +88,7 @@ testSignal
 	endTime := Time microsecondClockValue] forkAt: Processor userInterruptPriority.
 	(Delay forMilliseconds: 10) wait.
 	delay signal.
-	self expectDelay: 10 for: endTime!
+	self expectDelay: 10 milliseconds for: endTime!
 
 testSimultaneousWaitAndSignal
 	| waitError signalError signalFinished endTime |
@@ -101,7 +104,7 @@ testSimultaneousWaitAndSignal
 			forkAt: Processor userInterruptPriority.	"Will block on AccessProtect in #cancel too, but higher priority"
 	Delay.AccessProtect signal.	"Allow the bug to unfold"
 	KernelLibrary default sleep: 10.	"Wait for both processes above to finish, without using the Delay mechanism"
-	self expectDelay: 0 for: endTime.	"Process should not have actually waited on the delay"
+	self expectDelay: 0 milliseconds for: endTime.	"Process should not have actually waited on the delay"
 	self assertIsNil: waitError.
 	self assert: signalFinished.
 	self assertIsNil: signalError!

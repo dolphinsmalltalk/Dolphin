@@ -45,7 +45,7 @@ Example usage:
 	^self resumptionTime <= anotherDelay resumptionTime!
 
 basicCancel
-	^self == Current
+	self == Current
 		ifTrue: 
 			[self class
 				cancelTimer;
