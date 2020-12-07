@@ -583,12 +583,6 @@ backspace
 	^$\b
 !
 
-basicNew
-	"Characters should not be instantiated directly; they can be created by literal references,
-	by operations on other Characters or Strings, or with the Character>>value: message."
-
-	^self shouldNotImplement!
-
 byteCharacterSet
 	"Answer the ANSI character set, i.e. the complete set of Characters that can be encoded in an <AnsiString>."
 
@@ -814,7 +808,6 @@ value: anInteger
 !Character class categoriesFor: #ansiValue:!instance creation!public! !
 !Character class categoriesFor: #asciiValue:!instance creation!public! !
 !Character class categoriesFor: #backspace!constants!public! !
-!Character class categoriesFor: #basicNew!instance creation!public! !
 !Character class categoriesFor: #byteCharacterSet!constants!public! !
 !Character class categoriesFor: #codePoint:!instance creation!public! !
 !Character class categoriesFor: #codePoint:ifInvalid:!instance creation!public! !
