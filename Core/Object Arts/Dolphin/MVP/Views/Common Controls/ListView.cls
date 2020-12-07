@@ -172,11 +172,12 @@ autoResizeColumns
 
 	self isReportMode ifTrue: [self autoResizeColumns: self clientWidth]!
 
-autoResizeColumns: anInteger
-	"Private - Attempt to share the specified <integer> width between all automagically
-	resizeable columns in the receiver. This only has a visible effect in #report mode."
+autoResizeColumns: clientWidth
+	"Private - Attempt to share the specified <integer> width (which must be the client width of the view,
+	after subtracting for borders and such) between all automagically resizeable columns in the receiver.
+	This only has a visible effect in #report mode."
 
-	| cols autoCols fixedWidth idealWidth remainingWidth clientWidth |
+	| cols autoCols fixedWidth idealWidth remainingWidth |
 	fixedWidth := 0.
 	autoCols := 0.
 	cols := self allColumns.
@@ -186,13 +187,11 @@ autoResizeColumns: anInteger
 				ifTrue: [autoCols := autoCols + 1]
 				ifFalse: [fixedWidth := fixedWidth + (self lvmGetColumnWidth: eachKey - 1)]].
 	autoCols == 0 ifTrue: [^self].
-	"Not sure where the magic number 4 comes from, but it doesn't appear to be correct any more"
-	clientWidth := anInteger - 4.
-	"#1063: ListView doesn't seem to report its actual client width correctly if it has a static edge
-	but not one of the other border styles, hence we must 'adjust' it a little in this case."
-	(self hasStaticEdge and: [(self hasClientEdge or: [self hasBorder]) not])
-		ifTrue: [clientWidth := clientWidth - 2].
 	remainingWidth := clientWidth - fixedWidth.
+	"#1063: If we have a static edge but no other edge style, using the full reported client width
+	results in a scrollbar for some reason. Adjust the available width a little to prevent this."
+	(self hasStaticEdge and: [(self hasClientEdge or: [self hasBorder]) not])
+		ifTrue: [remainingWidth := remainingWidth - 2].
 	remainingWidth <= 0 ifTrue: [^self].
 	"Split the available width between the auto columns - note the use of fractional arithmetic to avoid accumulating a rounding error"
 	idealWidth := remainingWidth / autoCols.
@@ -1759,22 +1758,25 @@ onPositionChanged: aPositionEvent
 	control, as that is when it updates scrollbars which can cause the horizontal scrollbar to
 	briefly flicker if the column widths are not adjusted beforehand (#2103)."
 
-	(aPositionEvent isRectangleChanged and: [self isReportMode])
+	(aPositionEvent isClientAreaChanged and: [self isReportMode])
 		ifTrue: 
-			[| width count |
-			width := aPositionEvent width.
+			[| clientWidth requiredHeight count |
+			clientWidth := (self calcClientRectangleFromRectangle: aPositionEvent rectangle) width.
 			count := self itemCount.
+			"We cannot use LVM_APPROXIMATEVIEWRECT on its own,
+			as it will overflow for large numbers of items. Instead we use it to account for
+			the height of the column header and any borders/edge styles, then compute
+			the height of the items separately."
+			requiredHeight := (self
+						lvmApproximateViewRect: 0
+						cx: aPositionEvent width
+						cy: aPositionEvent height) y
+						- SystemMetrics current scrollbarHeight.
 			count > 0
-				ifTrue: 
-					[| extent height |
-					height := aPositionEvent height.
-					extent := self
-								lvmApproximateViewRect: count
-								cx: width
-								cy: height.
-					extent y - SystemMetrics current scrollbarHeight > height
-						ifTrue: [width := width - SystemMetrics current scrollbarWidth]].
-			self autoResizeColumns: width].
+				ifTrue: [requiredHeight := requiredHeight + (self itemRect: count) bottom - (self itemRect: 1) top].
+			requiredHeight > aPositionEvent height
+				ifTrue: [clientWidth := clientWidth - SystemMetrics current scrollbarWidth].
+			self autoResizeColumns: clientWidth].
 	^super onPositionChanged: aPositionEvent!
 
 onRightButtonPressed: aMouseEvent

@@ -77,6 +77,66 @@ setUpForSelectionTesting
 sortSelections
 	^self subclassResponsibility!
 
+testAutoResizeColumns
+	presenter viewMode: #report.
+	"One column, full width"
+	self verifyColumnWidths: #(196).
+	"Resizes given the addition of another column"
+	presenter addColumn width: 50.
+	self verifyColumnWidths: #(146 50).
+	"Two auto-resize columns share non-fixed space equally"
+	presenter addColumn isAutoResize: true.
+	self verifyColumnWidths: #(73 50 73).
+	"Rounding errors do not accumulate"
+	presenter columnsList second width: 51.
+	self verifyColumnWidths: #(73 51 72)!
+
+testAutoResizeColumnsPositionChangedAddingScrollbar
+	| shellNCHeight |
+	shellNCHeight := presenter topShell height - presenter height.
+	presenter viewMode: #report.
+	presenter list: (1 to: 15).
+	self verifyColumnWidths: #(196).
+	"This is the shortest we can be without a vertical scrollbar. Sanity-check that one is in fact not shown."
+	presenter topShell height: 343 + shellNCHeight.
+	self deny: (presenter getWindowStyle allMask: WS_VSCROLL).
+	self verifyColumnWidths: #(196).
+	"One pixel shorter, and a scrollbar appears, which we must compensate for."
+	presenter topShell height: 342 + shellNCHeight.
+	self assert: (presenter getWindowStyle allMask: WS_VSCROLL).
+	self verifyColumnWidths: {196 - SystemMetrics current scrollbarWidth}!
+
+testAutoResizeColumnsWithChangedBorderStyles
+	presenter viewMode: #report.
+	self verifyColumnWidths: #(196).
+	"Static edge adds an additional 1px on each side"
+	presenter hasStaticEdge: true.
+	self verifyColumnWidths: #(194).
+	"This is a special case--we might expect to see 198 here, but when
+	static edge is the *only* border style, the columns must total 2px less
+	than the actual client width or a scrollbar appears."
+	presenter hasClientEdge: false.
+	self verifyColumnWidths: #(196).
+	"Giving the control a border stops this strange behavior,
+	resulting in no actual change in width even though the
+	visual thickness of the border increases by 1px."
+	presenter hasBorder: true.
+	self verifyColumnWidths: #(196)!
+
+testAutoResizeColumnsWithLargeNumberOfItems
+	| font |
+	presenter viewMode: #report.
+	"With reasonably normal font settings, this is squarely in the range where
+	LVM_APPROXIMATEVIEWRECT will overflow and return a negative value."
+	presenter list: (1 to: 2000).
+	self verifyColumnWidths: {196 - SystemMetrics current scrollbarWidth}.
+	"Use a massive font to trigger the bug with a (relatively) small number of rows."
+	font := presenter actualFont copy.
+	font pointSize: font pointSize * 4.
+	presenter font: font.
+	presenter list: (1 to: 500).
+	self verifyColumnWidths: {196 - SystemMetrics current scrollbarWidth}!
+
 testBackImage
 	| watermark |
 	self deny: presenter view backImageIsTiled.
@@ -276,7 +336,10 @@ verifyClicks: anArray
 		do: 
 			[:click :expected |
 			self assert: click iItem equals: expected first - 1.
-			self assert: click position equals: expected second]! !
+			self assert: click position equals: expected second]!
+
+verifyColumnWidths: widths
+	presenter columnsList with: widths do: [:col :width | self assert: col width equals: width]! !
 !ListViewTest categoriesFor: #classToTest!helpers!private! !
 !ListViewTest categoriesFor: #getColumns!helpers!private! !
 !ListViewTest categoriesFor: #getItem:!helpers!private! !
@@ -286,6 +349,10 @@ verifyClicks: anArray
 !ListViewTest categoriesFor: #setupClickIntercept!private! !
 !ListViewTest categoriesFor: #setUpForSelectionTesting!helpers!private! !
 !ListViewTest categoriesFor: #sortSelections!helpers!public! !
+!ListViewTest categoriesFor: #testAutoResizeColumns!public!unit tests! !
+!ListViewTest categoriesFor: #testAutoResizeColumnsPositionChangedAddingScrollbar!public!unit tests! !
+!ListViewTest categoriesFor: #testAutoResizeColumnsWithChangedBorderStyles!public!unit tests! !
+!ListViewTest categoriesFor: #testAutoResizeColumnsWithLargeNumberOfItems!public!unit tests! !
 !ListViewTest categoriesFor: #testBackImage!public!unit tests! !
 !ListViewTest categoriesFor: #testChangeViewMode!public!unit tests! !
 !ListViewTest categoriesFor: #testCheckBoxes!public!unit tests! !
@@ -296,4 +363,5 @@ verifyClicks: anArray
 !ListViewTest categoriesFor: #testSetTextBlockDoesNotAffectSelection!public!unit tests! !
 !ListViewTest categoriesFor: #testSetTextImageDoesNotAffectSelection!public!unit tests! !
 !ListViewTest categoriesFor: #verifyClicks:!helpers!private! !
+!ListViewTest categoriesFor: #verifyColumnWidths:!helpers!private! !
 
