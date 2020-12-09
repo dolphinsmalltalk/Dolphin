@@ -421,8 +421,8 @@ writtenNotReadRange: aString
 !SmalltalkParserErrorTest categoriesFor: #lexicalError:range:line:code:!helpers!private! !
 !SmalltalkParserErrorTest categoriesFor: #lexicalErrorFrom:range:line:code:!helpers!private! !
 !SmalltalkParserErrorTest categoriesFor: #lexicalQualifiedRefError:code:range:!helpers!private! !
-!SmalltalkParserErrorTest categoriesFor: #parseExpression:in:!private! !
-!SmalltalkParserErrorTest categoriesFor: #parseMethod:in:!private! !
+!SmalltalkParserErrorTest categoriesFor: #parseExpression:in:!helpers!private! !
+!SmalltalkParserErrorTest categoriesFor: #parseMethod:in:!helpers!private! !
 !SmalltalkParserErrorTest categoriesFor: #parserClass!constants!private! !
 !SmalltalkParserErrorTest categoriesFor: #scannerClass!constants!private! !
 !SmalltalkParserErrorTest categoriesFor: #testErrorsBadCodePoint!public!unit tests! !

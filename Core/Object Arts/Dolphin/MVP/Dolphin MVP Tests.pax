@@ -7,6 +7,7 @@ package paxVersion: 1;
 
 package classNames
 	add: #AbstractContainerViewTest;
+	add: #AbstractPointTest;
 	add: #AbstractRectangleTest;
 	add: #AbstractTextEditTest;
 	add: #AcceleratorTableTest;
@@ -22,6 +23,7 @@ package classNames
 	add: #ContainerViewTest;
 	add: #DifferencesPresenterTest;
 	add: #EvaluationConverterTest;
+	add: #ExternalPointTest;
 	add: #ExternalRectangleTest;
 	add: #FileDialogTest;
 	add: #FlowLayoutTest;
@@ -45,7 +47,10 @@ package classNames
 	add: #MultipleSelectionListViewTest;
 	add: #MultiSelectListBoxTest;
 	add: #MultiSelectListViewTest;
+	add: #PluggableColorTest;
 	add: #Point3DTest;
+	add: #POINTLTest;
+	add: #POINTSTest;
 	add: #PointTest;
 	add: #PresenterTest;
 	add: #ProportionalLayoutTest;
@@ -56,6 +61,9 @@ package classNames
 	add: #ReferenceViewTest;
 	add: #ResourceIdentifierTest;
 	add: #RichTextEditTest;
+	add: #ScintillaIndicatorTest;
+	add: #ScintillaLexerMetadataTest;
+	add: #ScintillaLexerPropertyTest;
 	add: #ScintillaViewTest;
 	add: #ScrollingDecoratorTest;
 	add: #SelectableItemsTest;
@@ -70,11 +78,13 @@ package classNames
 	add: #TabViewTest;
 	add: #TabViewXPTest;
 	add: #TextEditTest;
+	add: #ThemeColorTest;
 	add: #TreePresenterTest;
 	add: #TreeViewTest;
 	add: #TypeConverterTest;
 	add: #ValueConverterTest;
 	add: #ViewTest;
+	add: #VirtualColorTest;
 	add: #WindowsEventTest;
 	yourself.
 
@@ -108,6 +118,7 @@ package setPrerequisites: #(
 	'Presenters\List\Dolphin List Presenter'
 	'..\System\Filer\Dolphin Literal Filer'
 	'..\System\Filer\Dolphin Literal Filer Tests'
+	'Metafiles\Dolphin Metafile Records'
 	'Views\MoenTree\Dolphin MoenTree View'
 	'Deprecated\Dolphin MVP (Deprecated)'
 	'Base\Dolphin MVP Base'
@@ -138,6 +149,11 @@ DolphinTest subclass: #AbstractContainerViewTest
 	instanceVariableNames: 'containerView'
 	classVariableNames: ''
 	poolDictionaries: 'Win32Constants'
+	classInstanceVariableNames: ''!
+DolphinTest subclass: #AbstractPointTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 DolphinTest subclass: #AbstractRectangleTest
 	instanceVariableNames: 'desktop oddDesktop unary'
@@ -219,11 +235,6 @@ DolphinTest subclass: #Point3DTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-DolphinTest subclass: #PointTest
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
 DolphinTest subclass: #PresenterTest
 	instanceVariableNames: 'presenter'
 	classVariableNames: ''
@@ -244,6 +255,16 @@ DolphinTest subclass: #ResourceIdentifierTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+DolphinTest subclass: #ScintillaIndicatorTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+DolphinTest subclass: #ScintillaLexerMetadataTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
 DolphinTest subclass: #TypeConverterTest
 	instanceVariableNames: 'edit savedLocale'
 	classVariableNames: ''
@@ -255,6 +276,11 @@ DolphinTest subclass: #ValueConverterTest
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 DolphinTest subclass: #ViewTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+DolphinTest subclass: #VirtualColorTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
@@ -275,6 +301,26 @@ AbstractContainerViewTest subclass: #StyledContainerTest
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 AbstractKeyboardTest subclass: #AcceleratorTableTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+AbstractPointTest subclass: #ExternalPointTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+AbstractPointTest subclass: #PointTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ExternalPointTest subclass: #POINTLTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ExternalPointTest subclass: #POINTSTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
@@ -475,6 +521,21 @@ SelectableTreeItemsTest subclass: #TreePresenterTest
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 SelectableTreeItemsTest subclass: #TreeViewTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ScintillaLexerMetadataTest subclass: #ScintillaLexerPropertyTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+VirtualColorTest subclass: #PluggableColorTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+VirtualColorTest subclass: #ThemeColorTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''

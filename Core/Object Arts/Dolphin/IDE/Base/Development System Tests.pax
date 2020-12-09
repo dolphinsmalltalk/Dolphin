@@ -21,7 +21,6 @@ package classNames
 	add: #ProductReleaseTest;
 	add: #RegKeyTest;
 	add: #RewriteTestCase;
-	add: #SmalltalkParserErrorTest;
 	add: #SmalltalkParserTest;
 	add: #SmalltalkSystemTest;
 	add: #SmalltalkWorkspaceTest;
@@ -152,11 +151,6 @@ AbstractParserErrorTest subclass: #CompilerErrorTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'CompilerFlags'
-	classInstanceVariableNames: ''!
-AbstractParserErrorTest subclass: #SmalltalkParserErrorTest
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: 'SmalltalkParseErrorCodes'
 	classInstanceVariableNames: ''!
 PresenterTest subclass: #SmalltalkWorkspaceTest
 	instanceVariableNames: ''

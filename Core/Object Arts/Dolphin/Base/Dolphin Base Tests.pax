@@ -73,11 +73,13 @@ package classNames
 	add: #IntrosortAlgorithmTest;
 	add: #KeyboardTest;
 	add: #LargeIntegerTest;
+	add: #LinkTest;
 	add: #LocaleTest;
 	add: #LookupTableTest;
 	add: #MemoryManagerTest;
 	add: #MenuPainterTest;
 	add: #MergesortAlgorithmTest;
+	add: #MessageTest;
 	add: #MetaclassTest;
 	add: #MethodCategoryTest;
 	add: #MethodDictionaryTest;
@@ -111,6 +113,7 @@ package classNames
 	add: #SortAlgorithmTest;
 	add: #SortedCollectionTest;
 	add: #StableSortAlgorithmTest;
+	add: #StackFrameTest;
 	add: #STBTest;
 	add: #StdioFileStreamTest;
 	add: #StreamTest;
@@ -352,6 +355,11 @@ DolphinTest subclass: #IntegerTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+DolphinTest subclass: #LinkTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
 DolphinTest subclass: #LocaleTest
 	instanceVariableNames: 'savedLocale'
 	classVariableNames: ''
@@ -363,6 +371,11 @@ DolphinTest subclass: #MemoryManagerTest
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 DolphinTest subclass: #MenuPainterTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+DolphinTest subclass: #MessageTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
@@ -428,6 +441,11 @@ DolphinTest subclass: #SignalTest
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 DolphinTest subclass: #SortAlgorithmTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+DolphinTest subclass: #StackFrameTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''

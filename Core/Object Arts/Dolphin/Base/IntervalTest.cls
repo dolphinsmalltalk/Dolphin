@@ -106,6 +106,22 @@ testEquals6
 	self deny: (1 to: 0 by: 3) equals: (1 to: 0 by: 2).
 	self assert: (0 to: 1 by: -1) equals: (0 to: 2 by: -1)!
 
+testFromToBy
+	| interval interval2 originalMethod testMethod |
+	interval := Interval
+				from: 5
+				to: 25
+				by: 5.
+	self assert: interval asArray equals: #(5 10 15 20 25).
+	originalMethod := Interval class compiledMethodAt: #from:to:by:.
+	testMethod := originalMethod copy.
+	"Sanity check"
+	self deny: testMethod == originalMethod.
+	testMethod extraIndex: 0.
+	"Invoke the method directly so we don't need to install it."
+	interval2 := testMethod value: Interval withArguments: #(5 25 5).
+	self assert: interval2 equals: interval!
+
 testIncludes
 	| interval float |
 	self assert: ((1 to: 1) includes: 1).
@@ -203,6 +219,7 @@ testStoreOn
 !IntervalTest categoriesFor: #testEquals4!public!testing! !
 !IntervalTest categoriesFor: #testEquals5!public!testing! !
 !IntervalTest categoriesFor: #testEquals6!public!unit tests! !
+!IntervalTest categoriesFor: #testFromToBy!public!unit tests! !
 !IntervalTest categoriesFor: #testIncludes!public!unit tests! !
 !IntervalTest categoriesFor: #testIsEmpty!public!unit tests! !
 !IntervalTest categoriesFor: #testPrintString!public!unit tests! !

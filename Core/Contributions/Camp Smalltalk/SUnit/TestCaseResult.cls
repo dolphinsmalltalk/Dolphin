@@ -78,6 +78,7 @@ printSourceOn: aStream
 	map := testMethod textMap.
 	entry := map at: (StackFrame findIP: ip inTextMap: map).
 	range := entry value.
+	range isEmpty ifTrue: [range := range start to: range start].
 	source := testMethod getSource.
 	range := range intersection: (1 to: source size).
 	source := source copyFrom: range first to: range last.

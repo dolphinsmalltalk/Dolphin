@@ -56,6 +56,24 @@ testEquality
 	self deny: model equals: (ARGB a: 1 r: 255 g: 0 b: 0).
 	model hash!
 
+testFromArgbCode
+	| argb1 argb2 originalMethod testMethod |
+	argb1 := ARGB fromArgbCode: 16rDEADBEEF.
+	self assert: argb1
+		equals: (ARGB
+				a: 16rDE
+				r: 16rAD
+				g: 16rBE
+				b: 16rEF).
+	originalMethod := ARGB class compiledMethodAt: #fromArgbCode:.
+	testMethod := originalMethod copy.
+	"Sanity check"
+	self deny: testMethod == originalMethod.
+	testMethod extraIndex: 0.
+	"Invoke the method directly so we don't need to install it."
+	argb2 := testMethod value: ARGB withArguments: #(16rDEADBEEF).
+	self assert: argb2 equals: argb1!
+
 testPrintString
 	| model |
 	model := ARGB
@@ -89,6 +107,7 @@ testStbRoundTrip
 !ARGBTest categoriesFor: #assertComponents:isCode:!asserting!private! !
 !ARGBTest categoriesFor: #testConstructionValues!public!unit tests! !
 !ARGBTest categoriesFor: #testEquality!public!unit tests! !
+!ARGBTest categoriesFor: #testFromArgbCode!public!unit tests! !
 !ARGBTest categoriesFor: #testPrintString!public!unit tests! !
 !ARGBTest categoriesFor: #testStbRoundTrip!public!unit tests! !
 

@@ -133,55 +133,37 @@ newFromStack: aSmallInteger
 	<primitive: 190>
 	^self primitiveFailed: _failureCode!
 
-with: element1 
-	"Answer a new instance of the receiver containing the single 
-	<Object> element, element1."
+with: element1
+	"Answer a new instance of the receiver containing the single <Object> element, element1."
 
 	<primitive: 157>
-	^super with: element1!
+	^{element1}!
 
 with: element1 with: element2 
-	"Answer an instance of the receiver containing the <Object>
-	arguments as its elements"
+	"Answer an instance of the receiver containing the <Object>	arguments as its elements"
 
 	<primitive: 157>
-	^super with: element1 with: element2!
+	^{element1. element2}!
 
-with: element1 with: element2 with: element3 
-	"Answer an instance of the receiver containing the <Object>
-	arguments as its elements."
-
-	<primitive: 157>
-	^super 
-		with: element1
-		with: element2
-		with: element3!
-
-with: element1 with: element2 with: element3 with: element4 
-	"Answer an instance of the receiver containing the <Object>
-	arguments as its elements."
+with: element1 with: element2 with: element3
+	"Answer an instance of the receiver containing the <Object>	arguments as its elements."
 
 	<primitive: 157>
-	^super 
-		with: element1
-		with: element2
-		with: element3
-		with: element4!
+	^{element1. element2. element3}!
 
-with: element1 with: element2 with: element3 with: element4 with: element5 
-	"Answer an instance of the receiver containing the <Object>
-	arguments as its elements."
-
-	"N.B. This is not an ANSI standard method (up to 4 elements are supported
-	by <Array factory> #with:&c messages, for more one must use #withAll:)."
+with: element1 with: element2 with: element3 with: element4
+	"Answer an instance of the receiver containing the <Object>	arguments as its elements."
 
 	<primitive: 157>
-	^super 
-		with: element1
-		with: element2
-		with: element3
-		with: element4
-		with: element5! !
+	^{element1. element2. element3. element4}!
+
+with: element1 with: element2 with: element3 with: element4 with: element5
+	"Answer an instance of the receiver containing the <Object>arguments as its elements."
+
+	"N.B. This is not an ANSI standard method. Up to 4 elements are supported by <Array factory> #with:&c messages, for more one must either #withAll:. Brace arrays are of course neater (and faster), but non-standard."
+
+	<primitive: 157>
+	^{element1. element2. element3. element4. element5}! !
 !Array class categoriesFor: #empty!instance creation!public! !
 !Array class categoriesFor: #newFromStack:!instance creation!must not strip!private! !
 !Array class categoriesFor: #with:!instance creation!public! !
