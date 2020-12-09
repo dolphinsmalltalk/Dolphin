@@ -20,6 +20,9 @@ displayOn: target
 getDescription
 	^self subclassResponsibility!
 
+id
+	^id!
+
 name
 	^self subclassResponsibility!
 
@@ -30,12 +33,22 @@ printOn: target
 		display: self;
 		space;
 		print: self description;
-		nextPut: $)! !
+		nextPut: $)!
+
+view
+	^view!
+
+view: aScintillaView id: anObject
+	view := aScintillaView.
+	id := anObject! !
 !ScintillaLexerMetadata categoriesFor: #description!accessing!public! !
 !ScintillaLexerMetadata categoriesFor: #displayOn:!printing!public! !
 !ScintillaLexerMetadata categoriesFor: #getDescription!accessing!private! !
+!ScintillaLexerMetadata categoriesFor: #id!accessing!private! !
 !ScintillaLexerMetadata categoriesFor: #name!accessing!public! !
 !ScintillaLexerMetadata categoriesFor: #printOn:!printing!public! !
+!ScintillaLexerMetadata categoriesFor: #view!accessing!private! !
+!ScintillaLexerMetadata categoriesFor: #view:id:!public! !
 
 !ScintillaLexerMetadata class methodsFor!
 

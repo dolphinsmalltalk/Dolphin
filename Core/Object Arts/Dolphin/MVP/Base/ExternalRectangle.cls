@@ -56,6 +56,12 @@ centerY
 
 	^(self top + self bottom) // 2!
 
+corner
+	"Answer the Point at the bottom-right corner of the receiver"
+
+	^self bottomRight
+!
+
 extent
 	"Answer a Point representing the extent of the receiver. The x coordinate 
 	is the width and the y coordinate is the height."
@@ -117,6 +123,7 @@ width
 !ExternalRectangle categoriesFor: #center!accessing!public! !
 !ExternalRectangle categoriesFor: #centerX!accessing!public! !
 !ExternalRectangle categoriesFor: #centerY!accessing!public! !
+!ExternalRectangle categoriesFor: #corner!accessing!public! !
 !ExternalRectangle categoriesFor: #extent!accessing!public! !
 !ExternalRectangle categoriesFor: #extent:!accessing!public! !
 !ExternalRectangle categoriesFor: #height!accessing!public! !

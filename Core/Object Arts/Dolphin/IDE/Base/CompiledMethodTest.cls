@@ -19,6 +19,16 @@ returnPlusOne: anInteger
 returnTrue
 	^true!
 
+testExtraIndex
+	| subject copy |
+	subject := String >> #=.
+	self assert: subject extraIndex equals: 219.
+	copy := subject copy.
+	copy extraIndex: 0.
+	self assert: copy argumentCount equals: 1.
+	copy extraIndex: 219.
+	self assert: copy header equals: subject header!
+
 testIsQuick
 	| method |
 	method := self class compiledMethodAt: #returnTrue.
@@ -55,6 +65,7 @@ testValueWithReceiverArguments
 	self assert: value equals: 2! !
 !CompiledMethodTest categoriesFor: #returnPlusOne:!examples!public! !
 !CompiledMethodTest categoriesFor: #returnTrue!examples!public! !
+!CompiledMethodTest categoriesFor: #testExtraIndex!public!testing / testing! !
 !CompiledMethodTest categoriesFor: #testIsQuick!public!testing / testing! !
 !CompiledMethodTest categoriesFor: #testIsSimpleSelfSend!public!testing / testing! !
 !CompiledMethodTest categoriesFor: #testValueWithReceiverArguments!public!testing / evaluating! !

@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-DolphinTest subclass: #PointTest
+AbstractPointTest subclass: #PointTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
@@ -13,36 +13,39 @@ PointTest comment: 'This is the unit test for the class Point. Unit tests are a 
 !PointTest categoriesForClass!Unclassified! !
 !PointTest methodsFor!
 
+subjectClass
+	^Point!
+
 testAbs
-	self assert: (0 @ 0) abs equals: 0 @ 0.
-	self assert: (1 @ 1) abs equals: 1 @ 1.
-	self assert: (-1 @ 1) abs equals: 1 @ 1.
-	self assert: (1 @ -1) abs equals: 1 @ 1.
-	self assert: (-1 @ -1) abs equals: 1 @ 1!
+	self assert: (self subjectClass x: 0 y: 0) abs equals: (self subjectClass x: 0 y: 0).
+	self assert: (self subjectClass x: 1 y: 1) abs equals: (self subjectClass x: 1 y: 1).
+	self assert: (self subjectClass x: -1 y: 1) abs equals: (self subjectClass x: 1 y: 1).
+	self assert: (self subjectClass x: 1 y: -1) abs equals: (self subjectClass x: 1 y: 1).
+	self assert: (self subjectClass x: -1 y: -1) abs equals: (self subjectClass x: 1 y: 1)!
 
 testEquals
-	self assert: 0 @ 0 equals: 0.
-	self assert: 0 equals: 0 @ 0.
-	self assert: 1 @ 1 equals: 1 @ 1.
-	self deny: 1 @ 2 equals: 2 @ 1.
-	self deny: 1 @ 2 equals: 1.5!
+	self assert: (self subjectClass x: 0 y: 0) equals: 0.
+	self assert: 0 equals: (self subjectClass x: 0 y: 0).
+	self assert: (self subjectClass x: 1 y: 1) equals: (self subjectClass x: 1 y: 1).
+	self deny: (self subjectClass x: 1 y: 2) equals: (self subjectClass x: 2 y: 1).
+	self deny: (self subjectClass x: 1 y: 2) equals: 1.5!
 
 testIsZero
-	self assert: (0 @ 0) isZero.
-	self deny: (0 @ 1) isZero.
-	self deny: (1 @ 0) isZero.
-	self deny: (1 @ 1) isZero!
+	self assert: (self subjectClass x: 0 y: 0) isZero.
+	self deny: (self subjectClass x: 0 y: 1) isZero.
+	self deny: (self subjectClass x: 1 y: 0) isZero.
+	self deny: (self subjectClass x: 1 y: 1) isZero!
 
 testStrictlyPositive
-	self deny: (0 @ 0) strictlyPositive.
-	self deny: (0 @ 1) strictlyPositive.
-	self deny: (1 @ 0) strictlyPositive.
-	self assert: (1 @ 1) strictlyPositive.
-	self deny: (1 @ -1) strictlyPositive.
-	self deny: (-1 @ 1) strictlyPositive.
-! !
+	self deny: (self subjectClass x: 0 y: 0) strictlyPositive.
+	self deny: (self subjectClass x: 0 y: 1) strictlyPositive.
+	self deny: (self subjectClass x: 1 y: 0) strictlyPositive.
+	self assert: (self subjectClass x: 1 y: 1) strictlyPositive.
+	self deny: (self subjectClass x: 1 y: -1) strictlyPositive.
+	self deny: (self subjectClass x: -1 y: 1) strictlyPositive! !
+!PointTest categoriesFor: #subjectClass!constants!private! !
 !PointTest categoriesFor: #testAbs!public!unit tests! !
 !PointTest categoriesFor: #testEquals!public!unit tests! !
-!PointTest categoriesFor: #testIsZero!public!testing / testing! !
-!PointTest categoriesFor: #testStrictlyPositive!public!testing / testing! !
+!PointTest categoriesFor: #testIsZero!public!unit tests! !
+!PointTest categoriesFor: #testStrictlyPositive!public!unit tests! !
 

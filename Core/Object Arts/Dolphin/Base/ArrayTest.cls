@@ -86,11 +86,93 @@ testNonLiteralStoreOn
 	rehydrated := Compiler evaluate: storeString.
 	self assert: rehydrated class identicalTo: Array.
 	self deny: rehydrated isLiteral.
-	self assert: rehydrated equals: array! !
+	self assert: rehydrated equals: array!
+
+testWith
+	| array array2 originalMethod testMethod |
+	array := Array with: 1.
+	self assert: array equals: #(1).
+	originalMethod := Array class compiledMethodAt: #with:.
+	testMethod := originalMethod copy.
+	"Sanity check"
+	self deny: testMethod == originalMethod.
+	testMethod extraIndex: 0.
+	"Invoke the method directly so we don't need to install it."
+	array2 := testMethod value: Array withArguments: #(1).
+	self assert: array2 equals: array!
+
+testWithWith
+	| array array2 originalMethod testMethod |
+	array := Array with: 1 with: 2.
+	self assert: array equals: #(1 2).
+	originalMethod := Array class compiledMethodAt: #with:with:.
+	testMethod := originalMethod copy.
+	"Sanity check"
+	self deny: testMethod == originalMethod.
+	testMethod extraIndex: 0.
+	"Invoke the method directly so we don't need to install it."
+	array2 := testMethod value: Array withArguments: #(1 2).
+	self assert: array2 equals: array!
+
+testWithWithWith
+	| array array2 originalMethod testMethod |
+	array := Array
+				with: 1
+				with: 2
+				with: 3.
+	self assert: array equals: #(1 2 3).
+	originalMethod := Array class compiledMethodAt: #with:with:with:.
+	testMethod := originalMethod copy.
+	"Sanity check"
+	self deny: testMethod == originalMethod.
+	testMethod extraIndex: 0.
+	"Invoke the method directly so we don't need to install it."
+	array2 := testMethod value: Array withArguments: #(1 2 3).
+	self assert: array2 equals: array!
+
+testWithWithWithWith
+	| array array2 originalMethod testMethod |
+	array := Array
+				with: 1
+				with: 2
+				with: 3
+				with: 4.
+	self assert: array equals: #(1 2 3 4).
+	originalMethod := Array class compiledMethodAt: #with:with:with:with:.
+	testMethod := originalMethod copy.
+	"Sanity check"
+	self deny: testMethod == originalMethod.
+	testMethod extraIndex: 0.
+	"Invoke the method directly so we don't need to install it."
+	array2 := testMethod value: Array withArguments: #(1 2 3 4).
+	self assert: array2 equals: array!
+
+testWithWithWithWithWith
+	| array array2 originalMethod testMethod |
+	array := Array
+				with: 1
+				with: 2
+				with: 3
+				with: 4
+				with: 5.
+	self assert: array equals: #(1 2 3 4 5).
+	originalMethod := Array class compiledMethodAt: #with:with:with:with:with:.
+	testMethod := originalMethod copy.
+	"Sanity check"
+	self deny: testMethod == originalMethod.
+	testMethod extraIndex: 0.
+	"Invoke the method directly so we don't need to install it."
+	array2 := testMethod value: Array withArguments: #(1 2 3 4 5).
+	self assert: array2 equals: array! !
 !ArrayTest categoriesFor: #collectionClass!helpers!private! !
 !ArrayTest categoriesFor: #testCyclicRefPrinting!public! !
 !ArrayTest categoriesFor: #testIsLiteral!public!unit tests! !
 !ArrayTest categoriesFor: #testLiteralStoreOn!public!unit tests! !
 !ArrayTest categoriesFor: #testMixedConcatenation!public! !
 !ArrayTest categoriesFor: #testNonLiteralStoreOn!public!unit tests! !
+!ArrayTest categoriesFor: #testWith!public!unit tests! !
+!ArrayTest categoriesFor: #testWithWith!public!unit tests! !
+!ArrayTest categoriesFor: #testWithWithWith!public!unit tests! !
+!ArrayTest categoriesFor: #testWithWithWithWith!public!unit tests! !
+!ArrayTest categoriesFor: #testWithWithWithWithWith!public!unit tests! !
 

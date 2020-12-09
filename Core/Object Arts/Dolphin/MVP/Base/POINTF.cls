@@ -14,6 +14,11 @@ POINTF comment: '`POINTF` is an `ExternalStructure` class to wrap the struct of 
 !POINTF categoriesForClass!External-Data-Structured! !
 !POINTF methodsFor!
 
+asDword
+	"Answer the receiver in a form suitable for passing or returning as a 32-bit value (i.e. a 32-bit integer)."
+
+	^self shouldNotImplement!
+
 x
 	"Answer the <Float> value of the receiver's 'x' field."
 
@@ -33,6 +38,7 @@ y: aFloat
 	"Set the receiver's 'y' field to the value of the argument, aFloat"
 
 	bytes floatAtOffset: _OffsetOf_y put: aFloat! !
+!POINTF categoriesFor: #asDword!converting!public! !
 !POINTF categoriesFor: #x!**compiled accessors**!public! !
 !POINTF categoriesFor: #x:!**compiled accessors**!public! !
 !POINTF categoriesFor: #y!**compiled accessors**!public! !

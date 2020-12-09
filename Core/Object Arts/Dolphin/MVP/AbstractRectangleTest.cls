@@ -39,6 +39,20 @@ testHeight
 testLeft
 	self assert: oddDesktop left  equals: -1!
 
+testOriginCorner
+	| rect rect2 originalMethod testMethod |
+	rect := self subjectClass origin: 100 @ 200 corner: 300 @ 400.
+	self assert: rect origin equals: 100 @ 200.
+	self assert: rect corner equals: 300 @ 400.
+	originalMethod := self subjectClass class lookupMethod: #origin:corner:.
+	testMethod := originalMethod copy.
+	"Sanity check"
+	self deny: testMethod == originalMethod.
+	testMethod extraIndex: 0.
+	"Invoke the method directly so we don't need to install it."
+	rect2 := testMethod value: self subjectClass withArguments: {100 @ 200. 300 @ 400}.
+	self assert: rect2 equals: rect!
+
 testRight
 	self assert: desktop right equals: 1280!
 
@@ -54,6 +68,7 @@ testWidth
 !AbstractRectangleTest categoriesFor: #testCenterX!public!unit tests! !
 !AbstractRectangleTest categoriesFor: #testHeight!public!unit tests! !
 !AbstractRectangleTest categoriesFor: #testLeft!public!unit tests! !
+!AbstractRectangleTest categoriesFor: #testOriginCorner!public!unit tests! !
 !AbstractRectangleTest categoriesFor: #testRight!public!unit tests! !
 !AbstractRectangleTest categoriesFor: #testTop!public!unit tests! !
 !AbstractRectangleTest categoriesFor: #testWidth!public!unit tests! !

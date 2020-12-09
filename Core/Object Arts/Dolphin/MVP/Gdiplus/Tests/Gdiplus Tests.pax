@@ -44,6 +44,7 @@ package classNames
 	add: #GdiplusTestInitializer;
 	add: #GdiplusTests;
 	add: #GpColorMatrixTest;
+	add: #POINTFTest;
 	add: #RECTFTest;
 	yourself.
 
@@ -82,6 +83,11 @@ TestCase subclass: #GdiplusTests
 	instanceVariableNames: 'model'
 	classVariableNames: ''
 	poolDictionaries: 'GdiplusConstants'
+	classInstanceVariableNames: ''!
+ExternalPointTest subclass: #POINTFTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ExternalRectangleTest subclass: #RECTFTest
 	instanceVariableNames: ''

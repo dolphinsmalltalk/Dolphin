@@ -1,0 +1,88 @@
+﻿| package |
+package := Package name: 'Smalltalk Parser Tests'.
+package paxVersion: 1;
+	basicComment: ''.
+
+
+package classNames
+	add: #SmalltalkParserErrorTest;
+	add: #StIdentifierTokenTest;
+	add: #StLiteralArrayTokenTest;
+	add: #StLiteralTokenTest;
+	add: #StNumberLiteralTokenTest;
+	add: #StOptimizedTokenTest;
+	add: #StSpecialCharacterTokenTest;
+	add: #StTokenTest;
+	add: #StValueTokenTest;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
+
+package setPrerequisites: #(
+	'..\..\..\IDE\Base\Development System'
+	'..\..\..\IDE\Base\Development System Tests'
+	'..\..\..\Base\Dolphin'
+	'..\..\..\Base\Dolphin Base Tests'
+	'..\Smalltalk Parser').
+
+package!
+
+"Class Definitions"!
+
+DolphinTest subclass: #StTokenTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+AbstractParserErrorTest subclass: #SmalltalkParserErrorTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: 'SmalltalkParseErrorCodes'
+	classInstanceVariableNames: ''!
+StTokenTest subclass: #StOptimizedTokenTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+StTokenTest subclass: #StValueTokenTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+StValueTokenTest subclass: #StIdentifierTokenTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+StValueTokenTest subclass: #StLiteralArrayTokenTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+StValueTokenTest subclass: #StLiteralTokenTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+StValueTokenTest subclass: #StSpecialCharacterTokenTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+StLiteralTokenTest subclass: #StNumberLiteralTokenTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+"Global Aliases"!
+
+
+"Loose Methods"!
+
+"End of package definition"!
+

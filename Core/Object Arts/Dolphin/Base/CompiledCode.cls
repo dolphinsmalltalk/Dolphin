@@ -225,7 +225,11 @@ extraIndex
 	^(header bitShift: -23) bitAnd: 255!
 
 extraIndex: anInteger
-	header := (header bitAnd: ##((255 << 23) bitInvert)) bitOr: ((anInteger bitAnd: 255) bitShift: 23)!
+	"Private - Set the extraIndex in the method header - used as the primitive index."
+
+	"The header value must be a SmallInteger, but holds a 31-bit value so may be negative - asStackPointer is not well named, but ensures that the full 31-bits can be held in the SmallInteger range."
+
+	header := ((header bitAnd: 16r7FFFFF) bitOr: ((anInteger bitAnd: 255) bitShift: 23)) asStackPointer!
 
 getDebugInfo
 	"Private - Invoke the compiler to answer a compilation result containing a 

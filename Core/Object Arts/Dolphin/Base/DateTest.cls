@@ -11,12 +11,20 @@ DateTest comment: ''!
 !DateTest methodsFor!
 
 testFromDays
-	| date today |
+	| date today originalMethod testMethod date2 |
 	date := Date fromDays: 1.
 	self assert: date asDays equals: 1.
 	today := Date today.
 	date := Date fromDays: today asDays.
-	self assert: today equals: date!
+	self assert: today equals: date.
+	originalMethod := Date class compiledMethodAt: #fromDays:.
+	testMethod := originalMethod copy.
+	"Sanity check"
+	self deny: testMethod == originalMethod.
+	testMethod extraIndex: 0.
+	"Invoke the method directly so we don't need to install it."
+	date2 := testMethod value: Date withArguments: {today asDays}.
+	self assert: date2 equals: today!
 
 testFromSeconds
 	| date today dtNow now |

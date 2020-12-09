@@ -121,6 +121,19 @@ testClassCodePoint
 			self should: [Character codePoint: (i << 16) + 16rFFFE] raise: Error.
 			self should: [Character codePoint: (i << 16) + 16rFFFF] raise: Error]!
 
+testClassNewCode
+	| ch ch2 originalMethod testMethod |
+	ch := Character newCode: Character dolphin code.
+	self assert: ch equals: $\x1F42C.
+	originalMethod := Character class compiledMethodAt: #newCode:.
+	testMethod := originalMethod copy.
+	"Sanity check"
+	self deny: testMethod == originalMethod.
+	testMethod extraIndex: 0.
+	"Invoke the method directly so we don't need to install it."
+	ch2 := testMethod value: Character withArguments: {ch code}.
+	self assert: ch2 equals: ch!
+
 testCodePoint
 	| euro utf8 utf16 |
 	euro := (AnsiString fromByteArray: #[128]) at: 1.
@@ -489,6 +502,7 @@ testStb
 !CharacterTest categoriesFor: #testAsUtf16String!public!unit tests! !
 !CharacterTest categoriesFor: #testAsUtf8String!public!unit tests! !
 !CharacterTest categoriesFor: #testClassCodePoint!public!unit tests! !
+!CharacterTest categoriesFor: #testClassNewCode!public! !
 !CharacterTest categoriesFor: #testCodePoint!public!unit tests! !
 !CharacterTest categoriesFor: #testDigitValue!public!unit tests! !
 !CharacterTest categoriesFor: #testEquals!public!unit tests! !
