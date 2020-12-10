@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-BatchAspectAccessor subclass: #IndexedInstVarBatchAccessor
+Tools.BatchAspectAccessor subclass: #'Tools.IndexedInstVarBatchAccessor'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-IndexedInstVarBatchAccessor guid: (GUID fromString: '{234eecdb-d11a-49c1-9c57-68f684cc8b21}')!
-IndexedInstVarBatchAccessor comment: 'Part of the InstVarInspector framework. IndexedInstVarBatchAccessors are used to give access to a group of <IndexedInstVarAccessors> for indexed slots of an object. Batching the accessors up in this way allows the InstVarInspector to only display a certain number of elements at a time. This can substantially improve performance when displaying large indexed objects.'!
-!IndexedInstVarBatchAccessor categoriesForClass!MVP-Models! !
-!IndexedInstVarBatchAccessor methodsFor!
+Tools.IndexedInstVarBatchAccessor guid: (Core.GUID fromString: '{234eecdb-d11a-49c1-9c57-68f684cc8b21}')!
+Tools.IndexedInstVarBatchAccessor comment: 'Part of the InstVarInspector framework. IndexedInstVarBatchAccessors are used to give access to a group of <IndexedInstVarAccessors> for indexed slots of an object. Batching the accessors up in this way allows the InstVarInspector to only display a certain number of elements at a time. This can substantially improve performance when displaying large indexed objects.'!
+!Tools.IndexedInstVarBatchAccessor categoriesForClass!MVP-Models! !
+!Tools.IndexedInstVarBatchAccessor methodsFor!
 
 aspectClass
 	^InstVarAspect!
@@ -37,12 +37,12 @@ keys
 
 subjectIncludesKey: nextKey
 	^nextKey <= self subject basicSize! !
-!IndexedInstVarBatchAccessor categoriesFor: #aspectClass!public! !
-!IndexedInstVarBatchAccessor categoriesFor: #getBatchAccessors!accessing!public! !
-!IndexedInstVarBatchAccessor categoriesFor: #keys!accessing!public! !
-!IndexedInstVarBatchAccessor categoriesFor: #subjectIncludesKey:!accessing!private! !
+!Tools.IndexedInstVarBatchAccessor categoriesFor: #aspectClass!public! !
+!Tools.IndexedInstVarBatchAccessor categoriesFor: #getBatchAccessors!accessing!public! !
+!Tools.IndexedInstVarBatchAccessor categoriesFor: #keys!accessing!public! !
+!Tools.IndexedInstVarBatchAccessor categoriesFor: #subjectIncludesKey:!accessing!private! !
 
-!IndexedInstVarBatchAccessor class methodsFor!
+!Tools.IndexedInstVarBatchAccessor class methodsFor!
 
 subject: anObject batchSize: sizeInteger
 	"Answers an instance of the receiver that is an interface onto a range of
@@ -53,5 +53,5 @@ subject: anObject batchSize: sizeInteger
 		keys: (1 to: anObject basicSize)
 		startingAt: 1
 		batchSize: sizeInteger! !
-!IndexedInstVarBatchAccessor class categoriesFor: #subject:batchSize:!instance creation!public! !
+!Tools.IndexedInstVarBatchAccessor class categoriesFor: #subject:batchSize:!instance creation!public! !
 

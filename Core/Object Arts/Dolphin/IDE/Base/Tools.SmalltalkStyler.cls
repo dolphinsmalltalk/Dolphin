@@ -1,14 +1,14 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-UI.Scintilla.Styler subclass: #SmalltalkStyler
+UI.Scintilla.Styler subclass: #'Tools.SmalltalkStyler'
 	instanceVariableNames: 'arrayDepth view last inTag stack'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-SmalltalkStyler guid: (Core.GUID fromString: '{eb307480-e6d7-4715-934e-59caf9618538}')!
-SmalltalkStyler isNonInstantiable: true!
-SmalltalkStyler comment: 'SmalltalkStyler is a <ScintillaStyler> that is capable of colouring Smalltalk source text according to the established Dolphin syntax colouring convention; in fact it is somewhat more sophisticated than the earlier compiler based colouring, and can differentiate a larger set of syntactic elements. The text styles emitted are:
+Tools.SmalltalkStyler guid: (Core.GUID fromString: '{eb307480-e6d7-4715-934e-59caf9618538}')!
+Tools.SmalltalkStyler isNonInstantiable: true!
+Tools.SmalltalkStyler comment: 'SmalltalkStyler is a <ScintillaStyler> that is capable of colouring Smalltalk source text according to the established Dolphin syntax colouring convention; in fact it is somewhat more sophisticated than the earlier compiler based colouring, and can differentiate a larger set of syntactic elements. The text styles emitted are:
 
 #argDecl			Formal parameter name in method signature
 #assignment			Assignment token, i.e. :=
@@ -45,8 +45,8 @@ The colouring is largely based on identification of tokens through lexical analy
 
 Pure lexical analysis has the drawback that it isn''t able to distinguish between different uses of the same token type. In Smalltalk there are a number of such ambiguities, for example identifiers that might be variable names or unary selectors. Another example is the use of the vertical bar symbol as a temporary declaration delimiter and also as a binary selector. In order to handle these cases efficiently a number of extra style names are introduced to record an informal parse state as the colouring progresses. Since the style set up for the last token (mostly) encodes the parse state, it is possible to style the current token without looking any further back. This does, however, mean that there are more styles than are strictly needed for visual purposes - for example there are styles for opening and closing temp bars, but it is unlikely one would want these to have a different appearance. There is one case, that of literal arrays, where it is necessary to look back further when styling. This is because literal arrays may contain unquoted literal symbols and nester arrays, at least in Smalltalk-80 syntax.
 '!
-!SmalltalkStyler categoriesForClass!Kernel-Objects! !
-!SmalltalkStyler methodsFor!
+!Tools.SmalltalkStyler categoriesForClass!Kernel-Objects! !
+!Tools.SmalltalkStyler methodsFor!
 
 applyStyle: aSymbol toNext: anInteger 
 	anInteger < 1 ifTrue: [^self].
@@ -398,52 +398,52 @@ visitSpecialCharacterToken: aStSpecialCharacterToken
 			^#specialCharacter].
 	(char == $] and: [self lastIsLiteralByte]) ifTrue: [^#literalBytes].
 	^#specialCharacter! !
-!SmalltalkStyler categoriesFor: #applyStyle:toNext:!helpers!private! !
-!SmalltalkStyler categoriesFor: #atStart!private!testing! !
-!SmalltalkStyler categoriesFor: #colorComments:startingAt:!operations!private! !
-!SmalltalkStyler categoriesFor: #colorText:in:startingAt:!operations!private! !
-!SmalltalkStyler categoriesFor: #colourBefore:startingAt:!operations!private! !
-!SmalltalkStyler categoriesFor: #colourTokens:startingAt:!operations!private! !
-!SmalltalkStyler categoriesFor: #initialBinaryStyle:!constants!private! !
-!SmalltalkStyler categoriesFor: #initialize!initializing!private! !
-!SmalltalkStyler categoriesFor: #initialKeywordStyle!constants!private! !
-!SmalltalkStyler categoriesFor: #initialLiteralStyle:!helpers!private! !
-!SmalltalkStyler categoriesFor: #initialUnaryStyle!constants!private! !
-!SmalltalkStyler categoriesFor: #isInArray!private!testing! !
-!SmalltalkStyler categoriesFor: #isLiteralArrayAt:in:!helpers!private! !
-!SmalltalkStyler categoriesFor: #lastCharacter!accessing!private! !
-!SmalltalkStyler categoriesFor: #lastIsLiteralByte!private!testing! !
-!SmalltalkStyler categoriesFor: #lastIsSpecial:!helpers!private! !
-!SmalltalkStyler categoriesFor: #lastIsStyle:char:!helpers!private! !
-!SmalltalkStyler categoriesFor: #lastIsStyle:chars:!helpers!private! !
-!SmalltalkStyler categoriesFor: #lastStyle!accessing!private! !
-!SmalltalkStyler categoriesFor: #lastToken!accessing!private! !
-!SmalltalkStyler categoriesFor: #literalArrayIndicatorId!constants!private! !
-!SmalltalkStyler categoriesFor: #prepareToStyleView:!initializing!public! !
-!SmalltalkStyler categoriesFor: #resetStylingIn:from:to:!helpers!private! !
-!SmalltalkStyler categoriesFor: #scannerClass!constants!private! !
-!SmalltalkStyler categoriesFor: #styleForBar!helpers!private! !
-!SmalltalkStyler categoriesFor: #styleForToken:!helpers!private! !
-!SmalltalkStyler categoriesFor: #stylingStartBefore:in:!helpers!private! !
-!SmalltalkStyler categoriesFor: #tokenBefore:!helpers!private! !
-!SmalltalkStyler categoriesFor: #visitAssignmentToken:!public!visiting! !
-!SmalltalkStyler categoriesFor: #visitBinarySelectorToken:!public!visiting! !
-!SmalltalkStyler categoriesFor: #visitErrorToken:!public!visiting! !
-!SmalltalkStyler categoriesFor: #visitIdentifierToken:!public!visiting! !
-!SmalltalkStyler categoriesFor: #visitIllegalCharacterToken:!public!visiting! !
-!SmalltalkStyler categoriesFor: #visitKeywordToken:!public!visiting! !
-!SmalltalkStyler categoriesFor: #visitLiteralArrayToken:!public!visiting! !
-!SmalltalkStyler categoriesFor: #visitLiteralToken:!public!visiting! !
-!SmalltalkStyler categoriesFor: #visitNumberLiteralToken:!public!visiting! !
-!SmalltalkStyler categoriesFor: #visitOptimizedToken:!public!visiting! !
-!SmalltalkStyler categoriesFor: #visitQualifiedReferenceToken:!public!visiting! !
-!SmalltalkStyler categoriesFor: #visitSpecialCharacterToken:!public!visiting! !
+!Tools.SmalltalkStyler categoriesFor: #applyStyle:toNext:!helpers!private! !
+!Tools.SmalltalkStyler categoriesFor: #atStart!private!testing! !
+!Tools.SmalltalkStyler categoriesFor: #colorComments:startingAt:!operations!private! !
+!Tools.SmalltalkStyler categoriesFor: #colorText:in:startingAt:!operations!private! !
+!Tools.SmalltalkStyler categoriesFor: #colourBefore:startingAt:!operations!private! !
+!Tools.SmalltalkStyler categoriesFor: #colourTokens:startingAt:!operations!private! !
+!Tools.SmalltalkStyler categoriesFor: #initialBinaryStyle:!constants!private! !
+!Tools.SmalltalkStyler categoriesFor: #initialize!initializing!private! !
+!Tools.SmalltalkStyler categoriesFor: #initialKeywordStyle!constants!private! !
+!Tools.SmalltalkStyler categoriesFor: #initialLiteralStyle:!helpers!private! !
+!Tools.SmalltalkStyler categoriesFor: #initialUnaryStyle!constants!private! !
+!Tools.SmalltalkStyler categoriesFor: #isInArray!private!testing! !
+!Tools.SmalltalkStyler categoriesFor: #isLiteralArrayAt:in:!helpers!private! !
+!Tools.SmalltalkStyler categoriesFor: #lastCharacter!accessing!private! !
+!Tools.SmalltalkStyler categoriesFor: #lastIsLiteralByte!private!testing! !
+!Tools.SmalltalkStyler categoriesFor: #lastIsSpecial:!helpers!private! !
+!Tools.SmalltalkStyler categoriesFor: #lastIsStyle:char:!helpers!private! !
+!Tools.SmalltalkStyler categoriesFor: #lastIsStyle:chars:!helpers!private! !
+!Tools.SmalltalkStyler categoriesFor: #lastStyle!accessing!private! !
+!Tools.SmalltalkStyler categoriesFor: #lastToken!accessing!private! !
+!Tools.SmalltalkStyler categoriesFor: #literalArrayIndicatorId!constants!private! !
+!Tools.SmalltalkStyler categoriesFor: #prepareToStyleView:!initializing!public! !
+!Tools.SmalltalkStyler categoriesFor: #resetStylingIn:from:to:!helpers!private! !
+!Tools.SmalltalkStyler categoriesFor: #scannerClass!constants!private! !
+!Tools.SmalltalkStyler categoriesFor: #styleForBar!helpers!private! !
+!Tools.SmalltalkStyler categoriesFor: #styleForToken:!helpers!private! !
+!Tools.SmalltalkStyler categoriesFor: #stylingStartBefore:in:!helpers!private! !
+!Tools.SmalltalkStyler categoriesFor: #tokenBefore:!helpers!private! !
+!Tools.SmalltalkStyler categoriesFor: #visitAssignmentToken:!public!visiting! !
+!Tools.SmalltalkStyler categoriesFor: #visitBinarySelectorToken:!public!visiting! !
+!Tools.SmalltalkStyler categoriesFor: #visitErrorToken:!public!visiting! !
+!Tools.SmalltalkStyler categoriesFor: #visitIdentifierToken:!public!visiting! !
+!Tools.SmalltalkStyler categoriesFor: #visitIllegalCharacterToken:!public!visiting! !
+!Tools.SmalltalkStyler categoriesFor: #visitKeywordToken:!public!visiting! !
+!Tools.SmalltalkStyler categoriesFor: #visitLiteralArrayToken:!public!visiting! !
+!Tools.SmalltalkStyler categoriesFor: #visitLiteralToken:!public!visiting! !
+!Tools.SmalltalkStyler categoriesFor: #visitNumberLiteralToken:!public!visiting! !
+!Tools.SmalltalkStyler categoriesFor: #visitOptimizedToken:!public!visiting! !
+!Tools.SmalltalkStyler categoriesFor: #visitQualifiedReferenceToken:!public!visiting! !
+!Tools.SmalltalkStyler categoriesFor: #visitSpecialCharacterToken:!public!visiting! !
 
-SmalltalkStyler methodProtocol: #stTokenVisitor attributes: #(#readOnly) selectors: #(#visitAssignmentToken: #visitBinarySelectorToken: #visitErrorToken: #visitIdentifierToken: #visitIllegalCharacterToken: #visitKeywordToken: #visitLiteralArrayToken: #visitLiteralToken: #visitNumberLiteralToken: #visitOptimizedToken: #visitQualifiedReferenceToken: #visitSpecialCharacterToken:)!
+Tools.SmalltalkStyler methodProtocol: #stTokenVisitor attributes: #(#readOnly) selectors: #(#visitAssignmentToken: #visitBinarySelectorToken: #visitErrorToken: #visitIdentifierToken: #visitIllegalCharacterToken: #visitKeywordToken: #visitLiteralArrayToken: #visitLiteralToken: #visitNumberLiteralToken: #visitOptimizedToken: #visitQualifiedReferenceToken: #visitSpecialCharacterToken:)!
 
-!SmalltalkStyler class methodsFor!
+!Tools.SmalltalkStyler class methodsFor!
 
 language
 	^'Smalltalk'! !
-!SmalltalkStyler class categoriesFor: #language!constants!public! !
+!Tools.SmalltalkStyler class categoriesFor: #language!constants!public! !
 

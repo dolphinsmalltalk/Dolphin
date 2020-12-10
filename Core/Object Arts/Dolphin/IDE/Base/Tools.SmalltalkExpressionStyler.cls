@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-SmalltalkStyler subclass: #SmalltalkExpressionStyler
+Tools.SmalltalkStyler subclass: #'Tools.SmalltalkExpressionStyler'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-SmalltalkExpressionStyler guid: (GUID fromString: '{a79e3e47-8adc-4b02-b7a5-4b473ad6c632}')!
-SmalltalkExpressionStyler comment: 'SmalltalkExpressionStyler is a <SmalltalkStyler> specialised for colouring Smalltalk expressions (as opposed to methods) in workspaces.'!
-!SmalltalkExpressionStyler categoriesForClass!Kernel-Objects! !
-!SmalltalkExpressionStyler methodsFor!
+Tools.SmalltalkExpressionStyler guid: (Core.GUID fromString: '{a79e3e47-8adc-4b02-b7a5-4b473ad6c632}')!
+Tools.SmalltalkExpressionStyler comment: 'SmalltalkExpressionStyler is a <SmalltalkStyler> specialised for colouring Smalltalk expressions (as opposed to methods) in workspaces.'!
+!Tools.SmalltalkExpressionStyler categoriesForClass!Kernel-Objects! !
+!Tools.SmalltalkExpressionStyler methodsFor!
 
 initialBinaryStyle: aStBinarySelectorToken 
 	aStBinarySelectorToken value = #'||' 
@@ -25,7 +25,7 @@ initialKeywordStyle
 
 initialUnaryStyle
 	^#identifier! !
-!SmalltalkExpressionStyler categoriesFor: #initialBinaryStyle:!constants!private! !
-!SmalltalkExpressionStyler categoriesFor: #initialKeywordStyle!constants!private! !
-!SmalltalkExpressionStyler categoriesFor: #initialUnaryStyle!constants!private! !
+!Tools.SmalltalkExpressionStyler categoriesFor: #initialBinaryStyle:!constants!private! !
+!Tools.SmalltalkExpressionStyler categoriesFor: #initialKeywordStyle!constants!private! !
+!Tools.SmalltalkExpressionStyler categoriesFor: #initialUnaryStyle!constants!private! !
 

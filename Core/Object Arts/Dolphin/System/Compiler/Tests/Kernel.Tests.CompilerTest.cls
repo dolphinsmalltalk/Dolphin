@@ -1142,33 +1142,34 @@ testSymbolScanning
 testTempMaps
 	"Check that the temp maps for all the test methods are consistent with the bytecodes."
 
-	| env specials |
-	env := Refactory.Browser.BrowserEnvironment new.
+	| specials |
 	specials := OrderedCollection new.
 	"Full block nested in optimized block"
-	specials add: Smalltalk.AXMethodName >> #printSignatureOn:.
+	#{Tools.AXMethodName} ifDefinedDo: [:class | specials add: class >> #printSignatureOn:].
 	"Inlined return in a whileFalse control structure"
-	specials add: Base64Codec >> #nextBase64From:.
+	#{Base64Codec} ifDefinedDo: [:class | specials add: class >> #nextBase64From:].
 	"Inlined returns in ifTrue/ifFalse optimised to ifNil"
 	specials add: Behavior >> #whichClassIncludesSelector:.
 	"Inlined returns in ifTrue/ifFalse stgructure"
 	specials add: Boolean >> #&.
 	"Full block nested in otherwise clean block"
-	specials add: Refactory.Browser.BrowserEnvironment >> #numberSelectors.
+	#{Refactory.Browser.BrowserEnvironment}
+		ifDefinedDo: [:class | specials add: class >> #numberSelectors].
 	"Full block nested in multiple levels of optimized blocks"
 	specials add: CompiledCode >> #byteCodes:.
 	"Clean and copying blocks as the values of optimized blocks"
-	specials add: UI.ListViewColumn >> #rowSortBlock.
+	#{UI.ListViewColumn} ifDefinedDo: [:class | specials add: class >> #rowSortBlock].
 	"Full block nested in multiple other blocks"
 	specials add: TestResult >> #debugCase:.
 	"Optimized blocks assigning temps inside full blocks"
-	specials add: Date >> #monthsSince:.
+	#{Date} ifDefinedDo: [:class | specials add: class >> #monthsSince:].
 	"Test case for continuations"
-	specials add: ContinuationTest >> #testBlockVars.
+	#{ContinuationTest} ifDefinedDo: [:class | specials add: class >> #testBlockVars].
 	"Clean block in otherwise empty clean block"
 	specials add: EventsCollection >> #triggerEvent:with:with:.
-	(env forClasses: {DolphinCompilerTestMethods}) | (env forMethods: specials)
-		methodsDo: [:each | self verifyTempsMapOf: each]!
+	"Verify each of the specials that is available plus the standard set of test methods"
+	specials do: [:each | self verifyTempsMapOf: each].
+	DolphinCompilerTestMethods allMethodsDo: [:each | self verifyTempsMapOf: each]!
 
 testTempPairing
 	| prefix method pairs pair |

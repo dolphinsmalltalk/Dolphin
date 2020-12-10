@@ -1,22 +1,16 @@
 ﻿| package |
 package := Package name: 'SSW EditableListView Tests'.
-package paxVersion: 1;
+package paxVersion: 2.1;
 	basicComment: ''.
 
 
-package classNames
-	add: #EditableListViewTest;
-	yourself.
+package setClassNames: #(
+	#{Smalltalk.EditableListViewTest}
+).
 
-package methodNames
-	add: #PackageClosureTests -> #testEditableListViewDemo;
-	yourself.
-
-package binaryGlobalNames: (Set new
-	yourself).
-
-package globalAliases: (Set new
-	yourself).
+package setMethodNames: #(
+	#(#{Tools.Tests.PackageClosureTests} #testEditableListViewDemo)
+).
 
 package setPrerequisites: #(
 	'..\..\..\Object Arts\Dolphin\Base\Dolphin'
@@ -24,33 +18,32 @@ package setPrerequisites: #(
 	'..\..\..\Object Arts\Dolphin\Lagoon\Lagoon Tests'
 	'..\SSW EditableListView'
 	'..\SSW EditableListView Demo'
-	'..\..\Camp Smalltalk\SUnit\SUnit').
+	'..\..\Camp Smalltalk\SUnit\SUnit'
+).
 
 package!
 
 "Class Definitions"!
 
-TestCase subclass: #EditableListViewTest
+XProgramming.SUnit.TestCase subclass: #EditableListViewTest
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
 
 "Loose Methods"!
 
-!PackageClosureTests methodsFor!
+!Tools.Tests.PackageClosureTests methodsFor!
 
 testEditableListViewDemo
 	"Tests predicted unimplemented messages in EditableListViewDemo
 		- defineTemplate- sent from ExternalStructure>>ensureDefined, which is replaced with a no-op stub in deployed apps. Should not be in the UnimplementedMessages section of the actual deployment log for GUI apps.
 		- evaluate: Compiler deliberately removed from the scope of the test to reduce noise. Should not be in the UnimplementedMessages section of the actual deployment log for GUI apps."
 
-	self verifyPackageClosure: (self environmentForAppDeployment: {EditableListViewDemo owningPackage})
+	self verifyPackageClosure: (self environmentForAppDeployment: {Smalltalk.EditableListViewDemo owningPackage})
 		missing: #(#defineTemplate #evaluate:)! !
-!PackageClosureTests categoriesFor: #testEditableListViewDemo!public!unit tests! !
+!Tools.Tests.PackageClosureTests categoriesFor: #testEditableListViewDemo!public!unit tests! !
 
 "End of package definition"!
 

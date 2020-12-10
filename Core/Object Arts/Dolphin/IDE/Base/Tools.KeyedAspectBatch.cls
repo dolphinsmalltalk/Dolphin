@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-KeyedAspect subclass: #KeyedAspectBatch
+Tools.KeyedAspect subclass: #'Tools.KeyedAspectBatch'
 	instanceVariableNames: 'batchSize keys accessorClass'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-KeyedAspectBatch guid: (GUID fromString: '{0f7d3efe-6f95-4de3-a5e1-2ec7a86eb8b2}')!
-KeyedAspectBatch comment: 'Part of the PublishedAspectorInspector framework.<KeyedAspectBatch> instances are used to describe a group of <KeyedAspects> of a keyed collection. Batching the keyed aspects up in this way via a <KeyedAspectBatchAccessor> allows the PAI to only display a certain number of elements at a time. This can substantially improve performance when displaying large (or slow to access) collections.'!
-!KeyedAspectBatch categoriesForClass!Attribute-Definition! !
-!KeyedAspectBatch methodsFor!
+Tools.KeyedAspectBatch guid: (Core.GUID fromString: '{0f7d3efe-6f95-4de3-a5e1-2ec7a86eb8b2}')!
+Tools.KeyedAspectBatch comment: 'Part of the PublishedAspectorInspector framework.<KeyedAspectBatch> instances are used to describe a group of <KeyedAspects> of a keyed collection. Batching the keyed aspects up in this way via a <KeyedAspectBatchAccessor> allows the PAI to only display a certain number of elements at a time. This can substantially improve performance when displaying large (or slow to access) collections.'!
+!Tools.KeyedAspectBatch categoriesForClass!Attribute-Definition! !
+!Tools.KeyedAspectBatch methodsFor!
 
 accessorClass
 	^accessorClass!
@@ -30,13 +30,13 @@ setKeys: aSequencedReadableCollection batchSize: anInteger accessorClass: aClass
 	keys := aSequencedReadableCollection.
 	batchSize := anInteger.
 	accessorClass := aClass! !
-!KeyedAspectBatch categoriesFor: #accessorClass!constants!public! !
-!KeyedAspectBatch categoriesFor: #batchSize!accessing!public! !
-!KeyedAspectBatch categoriesFor: #keys!accessing!public! !
-!KeyedAspectBatch categoriesFor: #readFrom:!public! !
-!KeyedAspectBatch categoriesFor: #setKeys:batchSize:accessorClass:!private! !
+!Tools.KeyedAspectBatch categoriesFor: #accessorClass!constants!public! !
+!Tools.KeyedAspectBatch categoriesFor: #batchSize!accessing!public! !
+!Tools.KeyedAspectBatch categoriesFor: #keys!accessing!public! !
+!Tools.KeyedAspectBatch categoriesFor: #readFrom:!public! !
+!Tools.KeyedAspectBatch categoriesFor: #setKeys:batchSize:accessorClass:!private! !
 
-!KeyedAspectBatch class methodsFor!
+!Tools.KeyedAspectBatch class methodsFor!
 
 keys: aSequencedReadableCollection startingAt: startInteger batchSize: sizeInteger accessorClass: aClass 
 	"Answer an instance of the receiver created with aKey"
@@ -46,5 +46,5 @@ keys: aSequencedReadableCollection startingAt: startInteger batchSize: sizeInteg
 			batchSize: sizeInteger
 			accessorClass: aClass;
 		yourself! !
-!KeyedAspectBatch class categoriesFor: #keys:startingAt:batchSize:accessorClass:!public! !
+!Tools.KeyedAspectBatch class categoriesFor: #keys:startingAt:batchSize:accessorClass:!public! !
 

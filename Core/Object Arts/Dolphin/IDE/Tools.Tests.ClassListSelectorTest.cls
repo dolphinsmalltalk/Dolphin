@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ClassSelectorTest subclass: #ClassListSelectorTest
+Tools.Tests.ClassSelectorTest subclass: #'Tools.Tests.ClassListSelectorTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ClassListSelectorTest guid: (Core.GUID fromString: '{1e05f062-5ab2-4d18-b534-77cb8b7ca82e}')!
-ClassListSelectorTest comment: ''!
-!ClassListSelectorTest categoriesForClass!Unclassified! !
-!ClassListSelectorTest methodsFor!
+Tools.Tests.ClassListSelectorTest guid: (Core.GUID fromString: '{1e05f062-5ab2-4d18-b534-77cb8b7ca82e}')!
+Tools.Tests.ClassListSelectorTest comment: ''!
+!Tools.Tests.ClassListSelectorTest categoriesForClass!Unclassified! !
+!Tools.Tests.ClassListSelectorTest methodsFor!
 
 assertContains: anObject
 	"Private - Asserts that the receiver contains anObject. We do this by trying to select the object since this allows
@@ -42,7 +42,7 @@ denyContains: anObject
 
 initializePresenter
 	super initializePresenter.
-	presenter browserEnvironment: BrowserEnvironment new!
+	presenter browserEnvironment: Refactory.Browser.BrowserEnvironment new!
 
 listModel
 	^presenter model!
@@ -144,14 +144,14 @@ testAddRemoveListItems
 
 treeModel
 	^presenter selectableItems treeModel! !
-!ClassListSelectorTest categoriesFor: #assertContains:!helpers!private! !
-!ClassListSelectorTest categoriesFor: #classToTest!helpers!private! !
-!ClassListSelectorTest categoriesFor: #denyContains:!helpers!private! !
-!ClassListSelectorTest categoriesFor: #initializePresenter!public!Running! !
-!ClassListSelectorTest categoriesFor: #listModel!accessing!private! !
-!ClassListSelectorTest categoriesFor: #listPresenter!public!unit tests! !
-!ClassListSelectorTest categoriesFor: #removalOfSelectionLeaves:!helpers!private! !
-!ClassListSelectorTest categoriesFor: #resetSelection!helpers!private! !
-!ClassListSelectorTest categoriesFor: #testAddRemoveListItems!public!unit tests! !
-!ClassListSelectorTest categoriesFor: #treeModel!accessing!private! !
+!Tools.Tests.ClassListSelectorTest categoriesFor: #assertContains:!helpers!private! !
+!Tools.Tests.ClassListSelectorTest categoriesFor: #classToTest!helpers!private! !
+!Tools.Tests.ClassListSelectorTest categoriesFor: #denyContains:!helpers!private! !
+!Tools.Tests.ClassListSelectorTest categoriesFor: #initializePresenter!public!Running! !
+!Tools.Tests.ClassListSelectorTest categoriesFor: #listModel!accessing!private! !
+!Tools.Tests.ClassListSelectorTest categoriesFor: #listPresenter!public!unit tests! !
+!Tools.Tests.ClassListSelectorTest categoriesFor: #removalOfSelectionLeaves:!helpers!private! !
+!Tools.Tests.ClassListSelectorTest categoriesFor: #resetSelection!helpers!private! !
+!Tools.Tests.ClassListSelectorTest categoriesFor: #testAddRemoveListItems!public!unit tests! !
+!Tools.Tests.ClassListSelectorTest categoriesFor: #treeModel!accessing!private! !
 

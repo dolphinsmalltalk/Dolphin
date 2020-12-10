@@ -270,8 +270,10 @@ package setMethodNames: #(
 package setPrerequisites: #(
 	'..\..\Base\Dolphin'
 	'..\..\Base\Dolphin Conformant Array Fields'
+	'..\..\Base\Deprecated\Dolphin Base (Deprecated)'
 	'..\..\Base\Dolphin Legacy Date & Time'
 	'..\COM\OLE COM'
+	
 ).
 
 package!

@@ -1,20 +1,20 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-InstructionInterpreter subclass: #Disassembler
+Kernel.InstructionInterpreter subclass: #'Tools.Disassembler'
 	instanceVariableNames: 'stream'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Disassembler guid: (GUID fromString: '{87b4c47e-026e-11d3-9fd7-00a0cc3e4a32}')!
-Disassembler comment: 'Disassembler is an <InstructionInterpreter> for disassembling Dolphin <CompiledMethod>s.
+Tools.Disassembler guid: (Core.GUID fromString: '{87b4c47e-026e-11d3-9fd7-00a0cc3e4a32}')!
+Tools.Disassembler comment: 'Disassembler is an <InstructionInterpreter> for disassembling Dolphin <CompiledMethod>s.
 
 Instance Variables:
 	stream		<puttableStream>. The stream to which disassembled instructions are written.
 
 '!
-!Disassembler categoriesForClass!System-Support! !
-!Disassembler methodsFor!
+!Tools.Disassembler categoriesForClass!System-Support! !
+!Tools.Disassembler methodsFor!
 
 blockCopy: argc stack: stack env: env copy: copy offset1: offset1 offset2: offset2 
 	"Private - Interpret a Block copy instruction."
@@ -556,88 +556,88 @@ unused: extensionByte1 with: extensionByte2 with: extensionByte3
 		nextPutAll: ' and ';
 		print: extensionByte3;
 		cr! !
-!Disassembler categoriesFor: #blockCopy:stack:env:copy:offset1:offset2:!instructions-miscellaneous!private! !
-!Disassembler categoriesFor: #break!instructions-miscellaneous!private! !
-!Disassembler categoriesFor: #decodeHeaderOn:!private! !
-!Disassembler categoriesFor: #decPushTemp:temp:!instructions-stack ops!private! !
-!Disassembler categoriesFor: #decrementStackTop!instructions-stack ops!private! !
-!Disassembler categoriesFor: #decTemp:temp:!instructions-miscellaneous!private! !
-!Disassembler categoriesFor: #disassemble!printing!public! !
-!Disassembler categoriesFor: #disassembleUntil:!printing!public! !
-!Disassembler categoriesFor: #duplicateStackTop!instructions-stack ops!private! !
-!Disassembler categoriesFor: #exLongPushImmediate:byte2:byte3:byte4:!instructions-stack ops!public! !
-!Disassembler categoriesFor: #fullDisassembly!public! !
-!Disassembler categoriesFor: #incPushTemp:temp:!instructions-stack ops!private! !
-!Disassembler categoriesFor: #incrementStackTop!instructions-miscellaneous!private! !
-!Disassembler categoriesFor: #incTemp:temp:!instructions-stack ops!private! !
-!Disassembler categoriesFor: #initialize!initializing!private! !
-!Disassembler categoriesFor: #isZero!instructions-miscellaneous!private! !
-!Disassembler categoriesFor: #jump:!interpreting!private! !
-!Disassembler categoriesFor: #jumpIfFalse:!interpreting!private! !
-!Disassembler categoriesFor: #jumpIfNil:!interpreting!private! !
-!Disassembler categoriesFor: #jumpIfNotNil:!interpreting!private! !
-!Disassembler categoriesFor: #jumpIfTrue:!interpreting!private! !
-!Disassembler categoriesFor: #listing!printing!public! !
-!Disassembler categoriesFor: #macroInstructionPart2!interpreting!public! !
-!Disassembler categoriesFor: #maxLiteralPrint!constants!private! !
-!Disassembler categoriesFor: #methodClass!accessing!public! !
-!Disassembler categoriesFor: #nop!instructions-miscellaneous!private! !
-!Disassembler categoriesFor: #popInstVar:!instructions-stack ops!public! !
-!Disassembler categoriesFor: #popOuter:temp:!interpreting!private! !
-!Disassembler categoriesFor: #popStackTop!instructions-stack ops!private! !
-!Disassembler categoriesFor: #popStatic:!instructions-stack ops!public! !
-!Disassembler categoriesFor: #popTemp:!instructions-stack ops!public! !
-!Disassembler categoriesFor: #printConstSuffix:!printing!private! !
-!Disassembler categoriesFor: #printExLongPrefix!printing!private! !
-!Disassembler categoriesFor: #printInstVarSuffix:!printing!private! !
-!Disassembler categoriesFor: #printJumpOffset:!printing!private! !
-!Disassembler categoriesFor: #printLiteral:!printing!private! !
-!Disassembler categoriesFor: #printLongPrefix!printing!private! !
-!Disassembler categoriesFor: #printOuter:temp:!printing!private! !
-!Disassembler categoriesFor: #printPopPrefix!printing!private! !
-!Disassembler categoriesFor: #printPseudoSuffix:!printing!private! !
-!Disassembler categoriesFor: #printPushPrefix!printing!private! !
-!Disassembler categoriesFor: #printReturnPrefix!printing!private! !
-!Disassembler categoriesFor: #printSendPrefix!printing!private! !
-!Disassembler categoriesFor: #printSendSuffix:!printing!private! !
-!Disassembler categoriesFor: #printSendSuffix:args:!printing!private! !
-!Disassembler categoriesFor: #printShortJumpOffset:!printing!private! !
-!Disassembler categoriesFor: #printShortPrefix!printing!private! !
-!Disassembler categoriesFor: #printStaticSuffix:!printing!private! !
-!Disassembler categoriesFor: #printStorePrefix!printing!private! !
-!Disassembler categoriesFor: #printSupersendPrefix!printing!private! !
-!Disassembler categoriesFor: #printTempSuffix:!printing!private! !
-!Disassembler categoriesFor: #printUnusedPrefix:!printing!private! !
-!Disassembler categoriesFor: #pushActiveFrame!instructions-stack ops!private! !
-!Disassembler categoriesFor: #pushCharacter:!interpreting!private! !
-!Disassembler categoriesFor: #pushConst:!instructions-stack ops!private! !
-!Disassembler categoriesFor: #pushImmediateInteger:!interpreting!private! !
-!Disassembler categoriesFor: #pushInstVar:!instructions-stack ops!private! !
-!Disassembler categoriesFor: #pushOuter:temp:!interpreting!private! !
-!Disassembler categoriesFor: #pushPseudo:!instructions-stack ops!private! !
-!Disassembler categoriesFor: #pushSelf!instructions-stack ops!private! !
-!Disassembler categoriesFor: #pushStatic:!instructions-stack ops!private! !
-!Disassembler categoriesFor: #pushTemp:!instructions-stack ops!private! !
-!Disassembler categoriesFor: #reset!public! !
-!Disassembler categoriesFor: #returnFromBlock!instructions-returning!private! !
-!Disassembler categoriesFor: #returnFromBlockHome!instructions-returning!private! !
-!Disassembler categoriesFor: #returnFromMessage!instructions-returning!private! !
-!Disassembler categoriesFor: #returnPseudo:!instructions-returning!private! !
-!Disassembler categoriesFor: #returnSelf!instructions-returning!private! !
-!Disassembler categoriesFor: #send:args:!interpreting!private! !
-!Disassembler categoriesFor: #shortSpecialSend:!instructions-sending!private! !
-!Disassembler categoriesFor: #shortSpecialSendEx:!instructions-sending!private! !
-!Disassembler categoriesFor: #storeInstVar:!instructions-stack ops!private! !
-!Disassembler categoriesFor: #storeOuter:temp:!interpreting!private! !
-!Disassembler categoriesFor: #storeStatic:!instructions-stack ops!private! !
-!Disassembler categoriesFor: #storeTemp:!instructions-stack ops!private! !
-!Disassembler categoriesFor: #supersend:args:!interpreting!private! !
-!Disassembler categoriesFor: #unused!instructions-unused!private! !
-!Disassembler categoriesFor: #unused:!instructions-unused!private! !
-!Disassembler categoriesFor: #unused:with:!instructions-unused!private! !
-!Disassembler categoriesFor: #unused:with:with:!instructions-unused!private! !
+!Tools.Disassembler categoriesFor: #blockCopy:stack:env:copy:offset1:offset2:!instructions-miscellaneous!private! !
+!Tools.Disassembler categoriesFor: #break!instructions-miscellaneous!private! !
+!Tools.Disassembler categoriesFor: #decodeHeaderOn:!private! !
+!Tools.Disassembler categoriesFor: #decPushTemp:temp:!instructions-stack ops!private! !
+!Tools.Disassembler categoriesFor: #decrementStackTop!instructions-stack ops!private! !
+!Tools.Disassembler categoriesFor: #decTemp:temp:!instructions-miscellaneous!private! !
+!Tools.Disassembler categoriesFor: #disassemble!printing!public! !
+!Tools.Disassembler categoriesFor: #disassembleUntil:!printing!public! !
+!Tools.Disassembler categoriesFor: #duplicateStackTop!instructions-stack ops!private! !
+!Tools.Disassembler categoriesFor: #exLongPushImmediate:byte2:byte3:byte4:!instructions-stack ops!public! !
+!Tools.Disassembler categoriesFor: #fullDisassembly!public! !
+!Tools.Disassembler categoriesFor: #incPushTemp:temp:!instructions-stack ops!private! !
+!Tools.Disassembler categoriesFor: #incrementStackTop!instructions-miscellaneous!private! !
+!Tools.Disassembler categoriesFor: #incTemp:temp:!instructions-stack ops!private! !
+!Tools.Disassembler categoriesFor: #initialize!initializing!private! !
+!Tools.Disassembler categoriesFor: #isZero!instructions-miscellaneous!private! !
+!Tools.Disassembler categoriesFor: #jump:!interpreting!private! !
+!Tools.Disassembler categoriesFor: #jumpIfFalse:!interpreting!private! !
+!Tools.Disassembler categoriesFor: #jumpIfNil:!interpreting!private! !
+!Tools.Disassembler categoriesFor: #jumpIfNotNil:!interpreting!private! !
+!Tools.Disassembler categoriesFor: #jumpIfTrue:!interpreting!private! !
+!Tools.Disassembler categoriesFor: #listing!printing!public! !
+!Tools.Disassembler categoriesFor: #macroInstructionPart2!interpreting!public! !
+!Tools.Disassembler categoriesFor: #maxLiteralPrint!constants!private! !
+!Tools.Disassembler categoriesFor: #methodClass!accessing!public! !
+!Tools.Disassembler categoriesFor: #nop!instructions-miscellaneous!private! !
+!Tools.Disassembler categoriesFor: #popInstVar:!instructions-stack ops!public! !
+!Tools.Disassembler categoriesFor: #popOuter:temp:!interpreting!private! !
+!Tools.Disassembler categoriesFor: #popStackTop!instructions-stack ops!private! !
+!Tools.Disassembler categoriesFor: #popStatic:!instructions-stack ops!public! !
+!Tools.Disassembler categoriesFor: #popTemp:!instructions-stack ops!public! !
+!Tools.Disassembler categoriesFor: #printConstSuffix:!printing!private! !
+!Tools.Disassembler categoriesFor: #printExLongPrefix!printing!private! !
+!Tools.Disassembler categoriesFor: #printInstVarSuffix:!printing!private! !
+!Tools.Disassembler categoriesFor: #printJumpOffset:!printing!private! !
+!Tools.Disassembler categoriesFor: #printLiteral:!printing!private! !
+!Tools.Disassembler categoriesFor: #printLongPrefix!printing!private! !
+!Tools.Disassembler categoriesFor: #printOuter:temp:!printing!private! !
+!Tools.Disassembler categoriesFor: #printPopPrefix!printing!private! !
+!Tools.Disassembler categoriesFor: #printPseudoSuffix:!printing!private! !
+!Tools.Disassembler categoriesFor: #printPushPrefix!printing!private! !
+!Tools.Disassembler categoriesFor: #printReturnPrefix!printing!private! !
+!Tools.Disassembler categoriesFor: #printSendPrefix!printing!private! !
+!Tools.Disassembler categoriesFor: #printSendSuffix:!printing!private! !
+!Tools.Disassembler categoriesFor: #printSendSuffix:args:!printing!private! !
+!Tools.Disassembler categoriesFor: #printShortJumpOffset:!printing!private! !
+!Tools.Disassembler categoriesFor: #printShortPrefix!printing!private! !
+!Tools.Disassembler categoriesFor: #printStaticSuffix:!printing!private! !
+!Tools.Disassembler categoriesFor: #printStorePrefix!printing!private! !
+!Tools.Disassembler categoriesFor: #printSupersendPrefix!printing!private! !
+!Tools.Disassembler categoriesFor: #printTempSuffix:!printing!private! !
+!Tools.Disassembler categoriesFor: #printUnusedPrefix:!printing!private! !
+!Tools.Disassembler categoriesFor: #pushActiveFrame!instructions-stack ops!private! !
+!Tools.Disassembler categoriesFor: #pushCharacter:!interpreting!private! !
+!Tools.Disassembler categoriesFor: #pushConst:!instructions-stack ops!private! !
+!Tools.Disassembler categoriesFor: #pushImmediateInteger:!interpreting!private! !
+!Tools.Disassembler categoriesFor: #pushInstVar:!instructions-stack ops!private! !
+!Tools.Disassembler categoriesFor: #pushOuter:temp:!interpreting!private! !
+!Tools.Disassembler categoriesFor: #pushPseudo:!instructions-stack ops!private! !
+!Tools.Disassembler categoriesFor: #pushSelf!instructions-stack ops!private! !
+!Tools.Disassembler categoriesFor: #pushStatic:!instructions-stack ops!private! !
+!Tools.Disassembler categoriesFor: #pushTemp:!instructions-stack ops!private! !
+!Tools.Disassembler categoriesFor: #reset!public! !
+!Tools.Disassembler categoriesFor: #returnFromBlock!instructions-returning!private! !
+!Tools.Disassembler categoriesFor: #returnFromBlockHome!instructions-returning!private! !
+!Tools.Disassembler categoriesFor: #returnFromMessage!instructions-returning!private! !
+!Tools.Disassembler categoriesFor: #returnPseudo:!instructions-returning!private! !
+!Tools.Disassembler categoriesFor: #returnSelf!instructions-returning!private! !
+!Tools.Disassembler categoriesFor: #send:args:!interpreting!private! !
+!Tools.Disassembler categoriesFor: #shortSpecialSend:!instructions-sending!private! !
+!Tools.Disassembler categoriesFor: #shortSpecialSendEx:!instructions-sending!private! !
+!Tools.Disassembler categoriesFor: #storeInstVar:!instructions-stack ops!private! !
+!Tools.Disassembler categoriesFor: #storeOuter:temp:!interpreting!private! !
+!Tools.Disassembler categoriesFor: #storeStatic:!instructions-stack ops!private! !
+!Tools.Disassembler categoriesFor: #storeTemp:!instructions-stack ops!private! !
+!Tools.Disassembler categoriesFor: #supersend:args:!interpreting!private! !
+!Tools.Disassembler categoriesFor: #unused!instructions-unused!private! !
+!Tools.Disassembler categoriesFor: #unused:!instructions-unused!private! !
+!Tools.Disassembler categoriesFor: #unused:with:!instructions-unused!private! !
+!Tools.Disassembler categoriesFor: #unused:with:with:!instructions-unused!private! !
 
-!Disassembler class methodsFor!
+!Tools.Disassembler class methodsFor!
 
 disassemble: aCompiledMethod 
 	"Answer a String containing a disassembly listing for aMethod."
@@ -648,6 +648,6 @@ disassemble: aSymbol in: aClass
 	"Answer a String containing a disassembly of aClass' method with selector, aSymbol."
 
 	^self disassemble: (aClass compiledMethodAt: aSymbol)! !
-!Disassembler class categoriesFor: #disassemble:!instance creation!public! !
-!Disassembler class categoriesFor: #disassemble:in:!instance creation!public! !
+!Tools.Disassembler class categoriesFor: #disassemble:!instance creation!public! !
+!Tools.Disassembler class categoriesFor: #disassemble:in:!instance creation!public! !
 

@@ -1,16 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Core.Tests.DolphinTest subclass: #ClassBrowserAbstractTest
+Core.Tests.DolphinTest subclass: #'Tools.Tests.ClassBrowserAbstractTest'
 	instanceVariableNames: 'browser methodsPresenter packageA plugins'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ClassBrowserAbstractTest guid: (Core.GUID fromString: '{fa025e63-3880-48ae-82d4-4b3172d507cc}')!
-ClassBrowserAbstractTest isNonInstantiable: true!
-ClassBrowserAbstractTest comment: ''!
-!ClassBrowserAbstractTest categoriesForClass!Unclassified! !
-!ClassBrowserAbstractTest methodsFor!
+Tools.Tests.ClassBrowserAbstractTest guid: (Core.GUID fromString: '{fa025e63-3880-48ae-82d4-4b3172d507cc}')!
+Tools.Tests.ClassBrowserAbstractTest isNonInstantiable: true!
+Tools.Tests.ClassBrowserAbstractTest comment: ''!
+!Tools.Tests.ClassBrowserAbstractTest categoriesForClass!Unclassified! !
+!Tools.Tests.ClassBrowserAbstractTest methodsFor!
 
 assertIsOnlyMethodVisible: method
 	(browser isFilterObjectMethods and: [method methodClass == Object]) 
@@ -47,7 +47,7 @@ inheritedMethodAddRemoveTests
 	| myMethod method |
 	{Object -> 'blah'.
 		TestCase -> 'blah2'.
-		DolphinTest -> 'blah3'.
+		Core.Tests.DolphinTest -> 'blah3'.
 		ClassBrowserAbstractTest -> 'blah4'} do: 
 				[:each |
 				method := each key
@@ -68,7 +68,7 @@ inheritedMethodAddRemoveTests
 	"Add a method to Object that is already in this class, repeat in non-immediate superclass, and again in immediate superclass"
 	myMethod := ClassBrowserAbstractTest compiledMethodAt: #visibilityTestPlaceHolder.
 	self assert: (browser isMethodVisible: myMethod).
-	{Object. TestCase. DolphinTest} do: 
+	{Object. TestCase. Core.Tests.DolphinTest} do: 
 			[:each |
 			method := each
 						compile: 'visibilityTestPlaceHolder'
@@ -87,14 +87,14 @@ inheritedMethodAddRemoveTests
 			self assertIsOnlyMethodVisible: method].
 
 	"Add a method to super that is already overridden in class (from Object)"
-	method := DolphinTest
+	method := Core.Tests.DolphinTest
 				compile: 'blah'
 				categories: #()
 				package: packageA.
 	self assertIsOnlyMethodVisible: (ClassBrowserAbstractTest compiledMethodAt: method selector).
 
 	"Add a method to super that is already overridden in class (from super super)"
-	method := DolphinTest
+	method := Core.Tests.DolphinTest
 				compile: 'blah2'
 				categories: #()
 				package: packageA.
@@ -108,7 +108,7 @@ inheritedMethodAddRemoveTests
 	self assertIsOnlyMethodVisible: (ClassBrowserAbstractTest compiledMethodAt: method selector).
 
 	"Now overriding a superclass once removed but adding to our superclass"
-	method := DolphinTest
+	method := Core.Tests.DolphinTest
 				compile: 'addDependentToHierachy: anObject'
 				categories: #()
 				package: packageA.
@@ -122,14 +122,14 @@ inheritedMethodAddRemoveTests
 	self assertIsOnlyMethodVisible: method.
 
 	"Overriding object adding to immediate superclass"
-	method := DolphinTest
+	method := Core.Tests.DolphinTest
 				compile: 'removeDependent: anObject'
 				categories: #()
 				package: packageA.
 	self assertIsOnlyMethodVisible: method.
 
 	"Some invisible removes of inherited methods"
-	{TestCase -> 'blah' asSymbol. DolphinTest -> 'blah' asSymbol. DolphinTest -> 'blah2' asSymbol} do: 
+	{TestCase -> 'blah' asSymbol. Core.Tests.DolphinTest -> 'blah' asSymbol. Core.Tests.DolphinTest -> 'blah2' asSymbol} do: 
 			[:each |
 			method := each key removeSelector: each value.
 			self assertIsOnlyMethodVisible: (ClassBrowserAbstractTest compiledMethodAt: each value)].
@@ -142,7 +142,7 @@ inheritedMethodAddRemoveTests
 
 	"Remove override of a method inherited from an immediate superclass, of a method inherited from a non-immediate superclass, 
 	and of a method inherited from Object"
-	{DolphinTest -> 'blah3'. TestCase -> 'blah2'. Object -> 'blah'} do: 
+	{Core.Tests.DolphinTest -> 'blah3'. TestCase -> 'blah2'. Object -> 'blah'} do: 
 			[:each |
 			method := ClassBrowserAbstractTest removeSelector: each value asSymbol.
 			self assertIsOnlyMethodVisible: (each key compiledMethodAt: method selector)].
@@ -150,7 +150,7 @@ inheritedMethodAddRemoveTests
 
 	"Remove some visible non-overridden methods"
 	{Object -> 'blah' asSymbol.
-		DolphinTest -> 'blah3' asSymbol.
+		Core.Tests.DolphinTest -> 'blah3' asSymbol.
 		TestCase -> 'blah2' asSymbol.
 		ClassBrowserAbstractTest -> 'blah4' asSymbol} do: 
 				[:each |
@@ -159,13 +159,13 @@ inheritedMethodAddRemoveTests
 					assert: (methodsPresenter list allSatisfy: [:eachMethod | eachMethod selector ~~ method selector])].
 
 	"Remove methods that would be inherited if not for the implementation in this class"
-	{DolphinTest. TestCase. Object} do: 
+	{Core.Tests.DolphinTest. TestCase. Object} do: 
 			[:each |
 			method := each removeSelector: myMethod selector.
 			self assertIsOnlyMethodVisible: myMethod].
 
 	"Remove method overridding object in immediate super"
-	method := DolphinTest removeSelector: #removeDependent:.
+	method := Core.Tests.DolphinTest removeSelector: #removeDependent:.
 	self assertIsOnlyMethodVisible: (Object compiledMethodAt: method selector).
 
 	"Remove method overridding object in non-immediate super"
@@ -173,7 +173,7 @@ inheritedMethodAddRemoveTests
 	self assertIsOnlyMethodVisible: (Object compiledMethodAt: method selector).
 
 	"Remove super method overridding non-immediate super"
-	method := DolphinTest removeSelector: #addDependentToHierachy:.
+	method := Core.Tests.DolphinTest removeSelector: #addDependentToHierachy:.
 	self assertIsOnlyMethodVisible: (TestCase compiledMethodAt: method selector)!
 
 setUp
@@ -197,7 +197,7 @@ testAddRemoveOfInheritedMethods
 	self browser toggleShowInheritedMethods.
 	self assert: browser isShowInheritedMethods.
 	self assert: browser isFilterObjectMethods equals: browser class defaultFilterObjectMethods.
-	browser actualClass: ClassBrowserAbstractTest.
+	browser actualClass: Tools.Tests.ClassBrowserAbstractTest.
 	self inheritedMethodAddRemoveTests.
 	browser toggleFilterObjectMethods.
 	self deleteTestMethods: packageA methods.
@@ -238,7 +238,7 @@ testIsMethodVisible
 		assert: (browser isMethodVisible: (ClassBrowserAbstractTest compiledMethodAt: #testIsMethodVisible)).
 	self assert: (browser isMethodVisible: (ClassBrowserAbstractTest compiledMethodAt: #setUp)).
 	self deny: (browser isMethodVisible: (TestCase compiledMethodAt: #setUp)).
-	self deny: (browser isMethodVisible: (DolphinTest compiledMethodAt: #createPackage:)).
+	self deny: (browser isMethodVisible: (Core.Tests.DolphinTest compiledMethodAt: #createPackage:)).
 	self deny: (browser isMethodVisible: (Object compiledMethodAt: #==)).
 	self deny: (browser isMethodVisible: (TestResource compiledMethodAt: #name)).
 	browser toggleShowInheritedMethods.
@@ -247,7 +247,7 @@ testIsMethodVisible
 		assert: (browser isMethodVisible: (ClassBrowserAbstractTest compiledMethodAt: #testIsMethodVisible)).
 	self assert: (browser isMethodVisible: (ClassBrowserAbstractTest compiledMethodAt: #setUp)).
 	self deny: (browser isMethodVisible: (TestCase compiledMethodAt: #setUp)).
-	self assert: (browser isMethodVisible: (DolphinTest compiledMethodAt: #createPackage:)).
+	self assert: (browser isMethodVisible: (Core.Tests.DolphinTest compiledMethodAt: #createPackage:)).
 	self assert: (browser isMethodVisible: (Object compiledMethodAt: #==))
 		equals: browser class defaultFilterObjectMethods not.
 	self deny: (browser isMethodVisible: (TestResource compiledMethodAt: #name)).
@@ -257,7 +257,7 @@ testIsMethodVisible
 		assert: (browser isMethodVisible: (ClassBrowserAbstractTest compiledMethodAt: #testIsMethodVisible)).
 	self assert: (browser isMethodVisible: (ClassBrowserAbstractTest compiledMethodAt: #setUp)).
 	self deny: (browser isMethodVisible: (TestCase compiledMethodAt: #setUp)).
-	self assert: (browser isMethodVisible: (DolphinTest compiledMethodAt: #createPackage:)).
+	self assert: (browser isMethodVisible: (Core.Tests.DolphinTest compiledMethodAt: #createPackage:)).
 	self assert: (browser isMethodVisible: (Object compiledMethodAt: #==))
 		equals: browser class defaultFilterObjectMethods.
 	self deny: (browser isMethodVisible: (TestResource compiledMethodAt: #name))!
@@ -266,7 +266,7 @@ testIsMethodVisibleClassSide
 	| subjectClass |
 	self deny: self browser isShowInheritedMethods.
 	self assert: browser isFilterObjectMethods equals: browser class defaultFilterObjectMethods.
-	subjectClass := PackageBrowserShellTest class.
+	subjectClass := Tools.Tests.PackageBrowserShellTest class.
 	browser actualClass: subjectClass.
 	self assert: (browser isMethodVisible: (subjectClass compiledMethodAt: #resources)).
 	self deny: (browser isMethodVisible: (TestCase class compiledMethodAt: #resources)).
@@ -314,7 +314,7 @@ testSwitchFilterPane
 	"#1768"
 
 	| testMethod |
-	testMethod := ClassBrowserAbstractTest compiledMethodAt: #testSwitchFilterPane.
+	testMethod := Tools.Tests.ClassBrowserAbstractTest compiledMethodAt: #testSwitchFilterPane.
 	self browser method: testMethod.
 	self assert: browser method identicalTo: testMethod.
 	self assert: (browser instVarNamed: 'methodBrowserPresenter') source equals: testMethod getSource.
@@ -335,19 +335,19 @@ testSwitchFilterPane
 	self assert: (browser instVarNamed: 'methodBrowserPresenter') source equals: testMethod getSource!
 
 visibilityTestPlaceHolder! !
-!ClassBrowserAbstractTest categoriesFor: #assertIsOnlyMethodVisible:!helpers!public! !
-!ClassBrowserAbstractTest categoriesFor: #browser!accessing!private! !
-!ClassBrowserAbstractTest categoriesFor: #browserClass!public!Running! !
-!ClassBrowserAbstractTest categoriesFor: #deleteTestMethods:!helpers!private! !
-!ClassBrowserAbstractTest categoriesFor: #inheritedMethodAddRemoveTests!helpers!private! !
-!ClassBrowserAbstractTest categoriesFor: #setUp!private!Running! !
-!ClassBrowserAbstractTest categoriesFor: #tearDown!private!Running! !
-!ClassBrowserAbstractTest categoriesFor: #testAddRemoveOfInheritedMethods!public!unit tests! !
-!ClassBrowserAbstractTest categoriesFor: #testBrowseItOpensSystemBrowserOnPackageOfLooseMethod!public!unit tests! !
-!ClassBrowserAbstractTest categoriesFor: #testEvaluationContext!public!unit tests! !
-!ClassBrowserAbstractTest categoriesFor: #testIsMethodVisible!public!unit tests! !
-!ClassBrowserAbstractTest categoriesFor: #testIsMethodVisibleClassSide!public!unit tests! !
-!ClassBrowserAbstractTest categoriesFor: #testIsMethodVisibleInObject!public!unit tests! !
-!ClassBrowserAbstractTest categoriesFor: #testSwitchFilterPane!public!unit tests! !
-!ClassBrowserAbstractTest categoriesFor: #visibilityTestPlaceHolder!helpers!private! !
+!Tools.Tests.ClassBrowserAbstractTest categoriesFor: #assertIsOnlyMethodVisible:!helpers!public! !
+!Tools.Tests.ClassBrowserAbstractTest categoriesFor: #browser!accessing!private! !
+!Tools.Tests.ClassBrowserAbstractTest categoriesFor: #browserClass!public!Running! !
+!Tools.Tests.ClassBrowserAbstractTest categoriesFor: #deleteTestMethods:!helpers!private! !
+!Tools.Tests.ClassBrowserAbstractTest categoriesFor: #inheritedMethodAddRemoveTests!helpers!private! !
+!Tools.Tests.ClassBrowserAbstractTest categoriesFor: #setUp!private!Running! !
+!Tools.Tests.ClassBrowserAbstractTest categoriesFor: #tearDown!private!Running! !
+!Tools.Tests.ClassBrowserAbstractTest categoriesFor: #testAddRemoveOfInheritedMethods!public!unit tests! !
+!Tools.Tests.ClassBrowserAbstractTest categoriesFor: #testBrowseItOpensSystemBrowserOnPackageOfLooseMethod!public!unit tests! !
+!Tools.Tests.ClassBrowserAbstractTest categoriesFor: #testEvaluationContext!public!unit tests! !
+!Tools.Tests.ClassBrowserAbstractTest categoriesFor: #testIsMethodVisible!public!unit tests! !
+!Tools.Tests.ClassBrowserAbstractTest categoriesFor: #testIsMethodVisibleClassSide!public!unit tests! !
+!Tools.Tests.ClassBrowserAbstractTest categoriesFor: #testIsMethodVisibleInObject!public!unit tests! !
+!Tools.Tests.ClassBrowserAbstractTest categoriesFor: #testSwitchFilterPane!public!unit tests! !
+!Tools.Tests.ClassBrowserAbstractTest categoriesFor: #visibilityTestPlaceHolder!helpers!private! !
 

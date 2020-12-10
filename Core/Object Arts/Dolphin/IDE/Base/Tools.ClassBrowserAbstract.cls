@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-SmalltalkToolShell subclass: #ClassBrowserAbstract
+Tools.SmalltalkToolShell subclass: #'Tools.ClassBrowserAbstract'
 	instanceVariableNames: 'classesPresenter categoriesPresenter methodBrowserPresenter definitionPresenter modePresenter flags history variablesPresenter protocolsPresenter filterPresenter packageModel statusModel versionModel cardsPresenter loadedPlugins methodCategories'
 	classVariableNames: 'GrayedMethodFadeFactor HistoryListSize LooseMethodColor WordWrapDefinition'
 	imports: #()
@@ -9,8 +9,8 @@ SmalltalkToolShell subclass: #ClassBrowserAbstract
 		'FilterObjectMethodsMask' -> 16r2.
 		'ShowInheritedMethodsMask' -> 16r1
 	}!
-ClassBrowserAbstract guid: (Core.GUID fromString: '{87b4c6bc-026e-11d3-9fd7-00a0cc3e4a32}')!
-ClassBrowserAbstract comment: 'ClassBrowserAbstract is an abstract <SmalltalkToolShell> that implements most of the functionality required for a class browser development tool. Concrete subclasses implement the Class Hierarchy Browser and System Browser development tools.
+Tools.ClassBrowserAbstract guid: (Core.GUID fromString: '{87b4c6bc-026e-11d3-9fd7-00a0cc3e4a32}')!
+Tools.ClassBrowserAbstract comment: 'ClassBrowserAbstract is an abstract <SmalltalkToolShell> that implements most of the functionality required for a class browser development tool. Concrete subclasses implement the Class Hierarchy Browser and System Browser development tools.
 
 Instance Variables:
 	classesPresenter			<ClassHierarchySelector> displaying the class hierarchy.
@@ -41,8 +41,8 @@ Class Instance Variables:
 	DefaultShowInheritedMethods	<boolean>
 	DefaultFilterObjectMethods		<boolean>
 '!
-!ClassBrowserAbstract categoriesForClass!MVP-Presenters! !
-!ClassBrowserAbstract methodsFor!
+!Tools.ClassBrowserAbstract categoriesForClass!MVP-Presenters! !
+!Tools.ClassBrowserAbstract methodsFor!
 
 accept
 	"Save the source on the currently displayed source card."
@@ -418,7 +418,7 @@ categoriesEnvironment
 	^self searchEnvironment forMethodCategories: self categories!
 
 categoriesFilter
-	^(self category isNil or: [self category == AllMethodsCategory current]) 
+	^(self category isNil or: [self category == AllMethodsCategory current])
 		ifTrue: [self classMethodFilter]
 		ifFalse: [self categoriesMethodFilter]!
 
@@ -1120,20 +1120,20 @@ onCloseRequested: boolValueHolder
 
 	boolValueHolder value: self promptToSaveChanges!
 
-onDragCategory: aDragDropSession 
+onDragCategory: aDragDropSession
 	"Private - A drag of a category has been started. Enter details into the <DragDropSession>,
 	session."
 
 	| methods category |
 	category := aDragDropSession suggestedSource.
-	methods := self methodsMatching: (category == AllMethodsCategory current 
+	methods := self methodsMatching: (category == AllMethodsCategory current
 						ifTrue: [self classMethodFilter]
 						ifFalse: 
 							[| categories |
 							categories := self hierarchyOfCategory: category.
 							
-							[:eachMethod | 
-							(self isMethodVisible: eachMethod) 
+							[:eachMethod |
+							(self isMethodVisible: eachMethod)
 								and: [categories anySatisfy: [:eachCategory | eachCategory includesMethod: eachMethod]]]]).
 	self systemModel beginDrag: aDragDropSession methods: methods!
 
@@ -2540,233 +2540,233 @@ variablesMethodFilter
 	| indices |
 	indices := self variablesIndices.
 	^[:m | (self isMethodVisible: m) and: [m byteCodeDispatcher accessesInstVarAtAnyOf: indices]]! !
-!ClassBrowserAbstract categoriesFor: #accept!commands!public! !
-!ClassBrowserAbstract categoriesFor: #acceptItCommand!helpers!private! !
-!ClassBrowserAbstract categoriesFor: #actualClass!accessing!public! !
-!ClassBrowserAbstract categoriesFor: #actualClass:!accessing!public! !
-!ClassBrowserAbstract categoriesFor: #actualClass:ifAbsent:!accessing!public! !
-!ClassBrowserAbstract categoriesFor: #actualClassChain!accessing!private! !
-!ClassBrowserAbstract categoriesFor: #actualClassChainCategories!accessing!private! !
-!ClassBrowserAbstract categoriesFor: #actualClassChainMethods!helpers!private! !
-!ClassBrowserAbstract categoriesFor: #addCategoriesOfMethod:!helpers!private! !
-!ClassBrowserAbstract categoriesFor: #addMethod:toCategory:!operations!private! !
-!ClassBrowserAbstract categoriesFor: #addMethodCategory!commands!private! !
-!ClassBrowserAbstract categoriesFor: #addMethodProtocol!commands!private! !
-!ClassBrowserAbstract categoriesFor: #addProtocol:to:!commands!private! !
-!ClassBrowserAbstract categoriesFor: #addToCommandRoute:!commands!public! !
-!ClassBrowserAbstract categoriesFor: #allCategoriesOfMethod:!helpers!private! !
-!ClassBrowserAbstract categoriesFor: #allCategory!private!updating! !
-!ClassBrowserAbstract categoriesFor: #applyOptions!operations!options!private! !
-!ClassBrowserAbstract categoriesFor: #browseContainingText!commands!public! !
-!ClassBrowserAbstract categoriesFor: #browseDefinitionsMatching:in:!helpers!private! !
-!ClassBrowserAbstract categoriesFor: #browseHierarchy!commands!public! !
-!ClassBrowserAbstract categoriesFor: #browseInstVarReferences!commands!public! !
-!ClassBrowserAbstract categoriesFor: #browseIt!commands!public! !
-!ClassBrowserAbstract categoriesFor: #browseItCommand!helpers!private! !
-!ClassBrowserAbstract categoriesFor: #browseMessageDefinitionsIn:!commands!private! !
-!ClassBrowserAbstract categoriesFor: #browseMessageReferencesIn:!commands!private! !
-!ClassBrowserAbstract categoriesFor: #browseMethodCategory!commands!private! !
-!ClassBrowserAbstract categoriesFor: #browseMethodsIn:!operations!public! !
-!ClassBrowserAbstract categoriesFor: #browseOverriddenMethod!commands!public! !
-!ClassBrowserAbstract categoriesFor: #browseReferences!commands!public! !
-!ClassBrowserAbstract categoriesFor: #browseReferencesMatching:in:!helpers!private! !
-!ClassBrowserAbstract categoriesFor: #browserEnvironment!accessing!public! !
-!ClassBrowserAbstract categoriesFor: #browseSelectorsInProtocol!commands!private! !
-!ClassBrowserAbstract categoriesFor: #browseSystem!commands!public! !
-!ClassBrowserAbstract categoriesFor: #buildHistoryFutureMenu!helpers!menus!private! !
-!ClassBrowserAbstract categoriesFor: #buildHistoryMenu:command:!helpers!menus!private! !
-!ClassBrowserAbstract categoriesFor: #buildHistoryPastMenu!helpers!menus!private! !
-!ClassBrowserAbstract categoriesFor: #buildPopupForCommand:!event handling!private! !
-!ClassBrowserAbstract categoriesFor: #canSaveMethod!commands!private! !
-!ClassBrowserAbstract categoriesFor: #canSaveState!private!saved state! !
-!ClassBrowserAbstract categoriesFor: #cardsPresenter!accessing!private! !
-!ClassBrowserAbstract categoriesFor: #categories!accessing!private! !
-!ClassBrowserAbstract categoriesFor: #categoriesEnvironment!commands!private! !
-!ClassBrowserAbstract categoriesFor: #categoriesFilter!accessing!private! !
-!ClassBrowserAbstract categoriesFor: #categoriesMethodFilter!accessing!private! !
-!ClassBrowserAbstract categoriesFor: #category!accessing!public! !
-!ClassBrowserAbstract categoriesFor: #classDefinition!accessing!private! !
-!ClassBrowserAbstract categoriesFor: #classForNewMethod!operations!private! !
-!ClassBrowserAbstract categoriesFor: #classMethodFilter!accessing!private! !
-!ClassBrowserAbstract categoriesFor: #clearSelection!commands!private! !
-!ClassBrowserAbstract categoriesFor: #createAccessors!commands!private!refactoring! !
-!ClassBrowserAbstract categoriesFor: #createComponents!initializing!private! !
-!ClassBrowserAbstract categoriesFor: #createPlugins!initializing!public! !
-!ClassBrowserAbstract categoriesFor: #createSchematicWiring!initializing!public! !
-!ClassBrowserAbstract categoriesFor: #currentCard!accessing!public! !
-!ClassBrowserAbstract categoriesFor: #customDrawCategoryTree:!helpers!private! !
-!ClassBrowserAbstract categoriesFor: #customDrawProtocols:!helpers!private! !
-!ClassBrowserAbstract categoriesFor: #customDrawSelector:!helpers!private! !
-!ClassBrowserAbstract categoriesFor: #definitionCardName!constants!private! !
-!ClassBrowserAbstract categoriesFor: #deleteItCommand!helpers!private! !
-!ClassBrowserAbstract categoriesFor: #dropMethods:onto:!helpers!private! !
-!ClassBrowserAbstract categoriesFor: #emphasiseCategoryItem:isRelevant:!helpers!private! !
-!ClassBrowserAbstract categoriesFor: #emphasiseProtocolItem:isRelevant:!helpers!private! !
-!ClassBrowserAbstract categoriesFor: #ensureDefinitionVisible!operations!private! !
-!ClassBrowserAbstract categoriesFor: #ensureSourceVisible!operations!private! !
-!ClassBrowserAbstract categoriesFor: #hasClassSelected!public!refactoring!testing! !
-!ClassBrowserAbstract categoriesFor: #hasEditableMethodSelected!public!testing! !
-!ClassBrowserAbstract categoriesFor: #hasEditableMethodsSelected!public!testing! !
-!ClassBrowserAbstract categoriesFor: #hasFuture!public!testing! !
-!ClassBrowserAbstract categoriesFor: #hasMethodSelected!public!refactoring!testing! !
-!ClassBrowserAbstract categoriesFor: #hasPast!public!testing! !
-!ClassBrowserAbstract categoriesFor: #hierarchyOfCategory:!helpers!private! !
-!ClassBrowserAbstract categoriesFor: #historyClear!commands!public! !
-!ClassBrowserAbstract categoriesFor: #historySkip:!commands!private! !
-!ClassBrowserAbstract categoriesFor: #initialize!initializing!private! !
-!ClassBrowserAbstract categoriesFor: #inspectCollection:!helpers!private! !
-!ClassBrowserAbstract categoriesFor: #inspectInstanceVariables!commands!private! !
-!ClassBrowserAbstract categoriesFor: #inspectIt!commands!public! !
-!ClassBrowserAbstract categoriesFor: #inspectItCommand!helpers!private! !
-!ClassBrowserAbstract categoriesFor: #inspectMethodCategories!commands!private! !
-!ClassBrowserAbstract categoriesFor: #inspectMethodProtocols!commands!private! !
-!ClassBrowserAbstract categoriesFor: #isDefinitionCardVisible!private!testing! !
-!ClassBrowserAbstract categoriesFor: #isDisplayingCategories!commands!private! !
-!ClassBrowserAbstract categoriesFor: #isDisplayingProtocols!commands!private! !
-!ClassBrowserAbstract categoriesFor: #isDisplayingVariables!commands!private! !
-!ClassBrowserAbstract categoriesFor: #isEditableMethod:!modes!public! !
-!ClassBrowserAbstract categoriesFor: #isFilterObjectMethods!public!refactoring!testing! !
-!ClassBrowserAbstract categoriesFor: #isInheritedMethod:!modes!public! !
-!ClassBrowserAbstract categoriesFor: #isInstanceMode!modes!private! !
-!ClassBrowserAbstract categoriesFor: #isInstanceMode:!modes!private! !
-!ClassBrowserAbstract categoriesFor: #isMethodFiltrate:!private!testing! !
-!ClassBrowserAbstract categoriesFor: #isMethodVisible:!private!testing! !
-!ClassBrowserAbstract categoriesFor: #isModified!public!testing! !
-!ClassBrowserAbstract categoriesFor: #isShowInheritedMethods!public!refactoring!testing! !
-!ClassBrowserAbstract categoriesFor: #isSourceCardVisible!private!testing! !
-!ClassBrowserAbstract categoriesFor: #killVisitTimer!helpers!private! !
-!ClassBrowserAbstract categoriesFor: #loadedPlugins!accessing!public! !
-!ClassBrowserAbstract categoriesFor: #method!accessing!public! !
-!ClassBrowserAbstract categoriesFor: #method:!accessing!public! !
-!ClassBrowserAbstract categoriesFor: #method:ifAbsent:!accessing!public! !
-!ClassBrowserAbstract categoriesFor: #methodCategories!accessing!private! !
-!ClassBrowserAbstract categoriesFor: #methodCategories:!accessing!private! !
-!ClassBrowserAbstract categoriesFor: #methodProtocols!accessing!private! !
-!ClassBrowserAbstract categoriesFor: #methodProtocols:!accessing!public! !
-!ClassBrowserAbstract categoriesFor: #methodsMatching:!helpers!private! !
-!ClassBrowserAbstract categoriesFor: #modifiedModel:!accessing!public! !
-!ClassBrowserAbstract categoriesFor: #newMethod!commands!public! !
-!ClassBrowserAbstract categoriesFor: #onBrowserCardChanged!event handling!private! !
-!ClassBrowserAbstract categoriesFor: #onCategory:renameTo:accept:!event handling!private! !
-!ClassBrowserAbstract categoriesFor: #onCategorySelected!event handling!private! !
-!ClassBrowserAbstract categoriesFor: #onClassCategorized:!event handling!private! !
-!ClassBrowserAbstract categoriesFor: #onClassModeChanged!event handling!private! !
-!ClassBrowserAbstract categoriesFor: #onClassRepackaged:from:to:!event handling!private! !
-!ClassBrowserAbstract categoriesFor: #onClassSelected!event handling!private! !
-!ClassBrowserAbstract categoriesFor: #onClassSelectionChanging:!event handling!private! !
-!ClassBrowserAbstract categoriesFor: #onClassUpdated:!event handling!private! !
-!ClassBrowserAbstract categoriesFor: #onCloseRequested:!event handling!private! !
-!ClassBrowserAbstract categoriesFor: #onDragCategory:!event handling!private! !
-!ClassBrowserAbstract categoriesFor: #onDragMethodsCut:!event handling!private! !
-!ClassBrowserAbstract categoriesFor: #onDragOverCategory:!event handling!private! !
-!ClassBrowserAbstract categoriesFor: #onDragOverMethod:!event handling!private! !
-!ClassBrowserAbstract categoriesFor: #onDragOverMode:!event handling!private! !
-!ClassBrowserAbstract categoriesFor: #onDragProtocol:!event handling!private! !
-!ClassBrowserAbstract categoriesFor: #onDragVariableRefs:!event handling!private! !
-!ClassBrowserAbstract categoriesFor: #onDropOverCategory:!event handling!private! !
-!ClassBrowserAbstract categoriesFor: #onDropOverMethods:!event handling!private! !
-!ClassBrowserAbstract categoriesFor: #onDropOverMode:!event handling!private! !
-!ClassBrowserAbstract categoriesFor: #onFilterCardChanged!event handling!private! !
-!ClassBrowserAbstract categoriesFor: #onFilterSelectionChanging:!event handling!private! !
-!ClassBrowserAbstract categoriesFor: #onMethodAdded:!event handling!private! !
-!ClassBrowserAbstract categoriesFor: #onMethodCategorized:!event handling!private! !
-!ClassBrowserAbstract categoriesFor: #onMethodListDoubleClicked:!event handling!private! !
-!ClassBrowserAbstract categoriesFor: #onMethodRemoved:!event handling!private! !
-!ClassBrowserAbstract categoriesFor: #onMethodRepackaged:from:to:!event handling!private! !
-!ClassBrowserAbstract categoriesFor: #onMethodSelected!event handling!private! !
-!ClassBrowserAbstract categoriesFor: #onModeSelectionChanged!event handling!private! !
-!ClassBrowserAbstract categoriesFor: #onPackageDoubleClicked:!event handling!private! !
-!ClassBrowserAbstract categoriesFor: #onPromptToSaveChanges:!helpers!private! !
-!ClassBrowserAbstract categoriesFor: #onPromptToSaveClassChanges:!helpers!private! !
-!ClassBrowserAbstract categoriesFor: #onPromptToSaveMethodChanges:!helpers!private! !
-!ClassBrowserAbstract categoriesFor: #onProtocolRemoved:!event handling!private! !
-!ClassBrowserAbstract categoriesFor: #onProtocolSelected!event handling!private! !
-!ClassBrowserAbstract categoriesFor: #onProtocolUpdated:!event handling!private! !
-!ClassBrowserAbstract categoriesFor: #onRenameInstVar:to:!event handling!private! !
-!ClassBrowserAbstract categoriesFor: #onRenameInstVar:to:accept:!event handling!private! !
-!ClassBrowserAbstract categoriesFor: #onRenameMethodProtocol:to:accept:!event handling!private! !
-!ClassBrowserAbstract categoriesFor: #onRepackaged:!event handling!private! !
-!ClassBrowserAbstract categoriesFor: #onStatusDoubleClicked:!event handling!private! !
-!ClassBrowserAbstract categoriesFor: #onTimerTick:!event handling!private! !
-!ClassBrowserAbstract categoriesFor: #onTipTextRequired:!event handling!private! !
-!ClassBrowserAbstract categoriesFor: #onVariableSelected!event handling!private! !
-!ClassBrowserAbstract categoriesFor: #onViewOpened!event handling!private! !
-!ClassBrowserAbstract categoriesFor: #packageForNewMethod!operations!private! !
-!ClassBrowserAbstract categoriesFor: #packageNames:!accessing!public! !
-!ClassBrowserAbstract categoriesFor: #packages:!accessing!public! !
-!ClassBrowserAbstract categoriesFor: #parseContext!accessing!public! !
-!ClassBrowserAbstract categoriesFor: #parseTree!accessing!private! !
-!ClassBrowserAbstract categoriesFor: #printCaptionForClass:on:!helpers!private! !
-!ClassBrowserAbstract categoriesFor: #printCaptionForMethod:on:!private!updating! !
-!ClassBrowserAbstract categoriesFor: #printClassTitle:on:!private!updating! !
-!ClassBrowserAbstract categoriesFor: #printShortCaptionForClass:on:!helpers!private! !
-!ClassBrowserAbstract categoriesFor: #promptToCopyChanges!commands!private! !
-!ClassBrowserAbstract categoriesFor: #promptToSaveChanges!commands!private! !
-!ClassBrowserAbstract categoriesFor: #protocols!accessing!public! !
-!ClassBrowserAbstract categoriesFor: #protocols:!accessing!public! !
-!ClassBrowserAbstract categoriesFor: #protocolsMethodFilter!accessing!private! !
-!ClassBrowserAbstract categoriesFor: #queryCommand:!commands!private! !
-!ClassBrowserAbstract categoriesFor: #recordMethodVisit!helpers!private! !
-!ClassBrowserAbstract categoriesFor: #reformatAll!commands!public! !
-!ClassBrowserAbstract categoriesFor: #removeMethod:fromCategory:!helpers!private! !
-!ClassBrowserAbstract categoriesFor: #removeMethod:fromProtocol:!helpers!private! !
-!ClassBrowserAbstract categoriesFor: #removeMethodCategory!commands!private! !
-!ClassBrowserAbstract categoriesFor: #removeMethodProtocol!commands!private! !
-!ClassBrowserAbstract categoriesFor: #removeMethodsInCategory!commands!private! !
-!ClassBrowserAbstract categoriesFor: #removeMethodsInProtocol!commands!private! !
-!ClassBrowserAbstract categoriesFor: #removePlugin:!accessing!public! !
-!ClassBrowserAbstract categoriesFor: #renameInstanceVariable!commands!private!refactoring! !
-!ClassBrowserAbstract categoriesFor: #renameIt!commands!public! !
-!ClassBrowserAbstract categoriesFor: #renameItCommand!constants!private! !
-!ClassBrowserAbstract categoriesFor: #renameMethodCategory!commands!private! !
-!ClassBrowserAbstract categoriesFor: #renameMethodCategory:to:!commands!public! !
-!ClassBrowserAbstract categoriesFor: #renameMethodCategoryInPlace!commands!private! !
-!ClassBrowserAbstract categoriesFor: #renameMethodProtocol!commands!private! !
-!ClassBrowserAbstract categoriesFor: #resetFor:!commands!private! !
-!ClassBrowserAbstract categoriesFor: #resetForFoundClass:!commands!private! !
-!ClassBrowserAbstract categoriesFor: #saveDefinition!operations!private! !
-!ClassBrowserAbstract categoriesFor: #saveNewMethod:!operations!private! !
-!ClassBrowserAbstract categoriesFor: #saveStateOn:!private!saved state! !
-!ClassBrowserAbstract categoriesFor: #searchEnvironment!commands!public! !
-!ClassBrowserAbstract categoriesFor: #searchForClass:!helpers!private! !
-!ClassBrowserAbstract categoriesFor: #searchForMethod:!helpers!private! !
-!ClassBrowserAbstract categoriesFor: #selectedClass!accessing!private! !
-!ClassBrowserAbstract categoriesFor: #selectedMethod!public! !
-!ClassBrowserAbstract categoriesFor: #selectedMethods!accessing!public! !
-!ClassBrowserAbstract categoriesFor: #selectedMethods:!accessing!public! !
-!ClassBrowserAbstract categoriesFor: #selectionEnvironment!accessing!private! !
-!ClassBrowserAbstract categoriesFor: #selectMethod:!browsing!private! !
-!ClassBrowserAbstract categoriesFor: #setInitialFocus!operations!public! !
-!ClassBrowserAbstract categoriesFor: #setMethodsFilter:!private!updating! !
-!ClassBrowserAbstract categoriesFor: #setVisitTimer!helpers!private! !
-!ClassBrowserAbstract categoriesFor: #shortCaption!accessing!public! !
-!ClassBrowserAbstract categoriesFor: #slideyPinNames!accessing!private! !
-!ClassBrowserAbstract categoriesFor: #sourceCardName!constants!private! !
-!ClassBrowserAbstract categoriesFor: #statusModel!accessing!private! !
-!ClassBrowserAbstract categoriesFor: #statusText:!accessing!private! !
-!ClassBrowserAbstract categoriesFor: #toggleFilterObjectMethods!commands!public! !
-!ClassBrowserAbstract categoriesFor: #toggleProtocolReadOnly!commands!public! !
-!ClassBrowserAbstract categoriesFor: #toggleShowInheritedMethods!commands!public! !
-!ClassBrowserAbstract categoriesFor: #updateCaption!public!updating! !
-!ClassBrowserAbstract categoriesFor: #updateCategories!private!updating! !
-!ClassBrowserAbstract categoriesFor: #updateClass:presenter:source:!helpers!private! !
-!ClassBrowserAbstract categoriesFor: #updateFilters!private!updating! !
-!ClassBrowserAbstract categoriesFor: #updateMethodsInCategory!private!updating! !
-!ClassBrowserAbstract categoriesFor: #updateMethodsInProtocol!private!updating! !
-!ClassBrowserAbstract categoriesFor: #updateMethodsReferencingVariables!private!updating! !
-!ClassBrowserAbstract categoriesFor: #updatePackage!private!updating! !
-!ClassBrowserAbstract categoriesFor: #updateProtocols!private!updating! !
-!ClassBrowserAbstract categoriesFor: #updateSourceEnablement!helpers!private! !
-!ClassBrowserAbstract categoriesFor: #updateVariables!private!updating! !
-!ClassBrowserAbstract categoriesFor: #validateProtocol:renameTo:!operations!private! !
-!ClassBrowserAbstract categoriesFor: #variables!accessing!private! !
-!ClassBrowserAbstract categoriesFor: #variablesFilter!accessing!private! !
-!ClassBrowserAbstract categoriesFor: #variablesIndices!accessing!private! !
-!ClassBrowserAbstract categoriesFor: #variablesMethodFilter!accessing!private! !
+!Tools.ClassBrowserAbstract categoriesFor: #accept!commands!public! !
+!Tools.ClassBrowserAbstract categoriesFor: #acceptItCommand!helpers!private! !
+!Tools.ClassBrowserAbstract categoriesFor: #actualClass!accessing!public! !
+!Tools.ClassBrowserAbstract categoriesFor: #actualClass:!accessing!public! !
+!Tools.ClassBrowserAbstract categoriesFor: #actualClass:ifAbsent:!accessing!public! !
+!Tools.ClassBrowserAbstract categoriesFor: #actualClassChain!accessing!private! !
+!Tools.ClassBrowserAbstract categoriesFor: #actualClassChainCategories!accessing!private! !
+!Tools.ClassBrowserAbstract categoriesFor: #actualClassChainMethods!helpers!private! !
+!Tools.ClassBrowserAbstract categoriesFor: #addCategoriesOfMethod:!helpers!private! !
+!Tools.ClassBrowserAbstract categoriesFor: #addMethod:toCategory:!operations!private! !
+!Tools.ClassBrowserAbstract categoriesFor: #addMethodCategory!commands!private! !
+!Tools.ClassBrowserAbstract categoriesFor: #addMethodProtocol!commands!private! !
+!Tools.ClassBrowserAbstract categoriesFor: #addProtocol:to:!commands!private! !
+!Tools.ClassBrowserAbstract categoriesFor: #addToCommandRoute:!commands!public! !
+!Tools.ClassBrowserAbstract categoriesFor: #allCategoriesOfMethod:!helpers!private! !
+!Tools.ClassBrowserAbstract categoriesFor: #allCategory!private!updating! !
+!Tools.ClassBrowserAbstract categoriesFor: #applyOptions!operations!options!private! !
+!Tools.ClassBrowserAbstract categoriesFor: #browseContainingText!commands!public! !
+!Tools.ClassBrowserAbstract categoriesFor: #browseDefinitionsMatching:in:!helpers!private! !
+!Tools.ClassBrowserAbstract categoriesFor: #browseHierarchy!commands!public! !
+!Tools.ClassBrowserAbstract categoriesFor: #browseInstVarReferences!commands!public! !
+!Tools.ClassBrowserAbstract categoriesFor: #browseIt!commands!public! !
+!Tools.ClassBrowserAbstract categoriesFor: #browseItCommand!helpers!private! !
+!Tools.ClassBrowserAbstract categoriesFor: #browseMessageDefinitionsIn:!commands!private! !
+!Tools.ClassBrowserAbstract categoriesFor: #browseMessageReferencesIn:!commands!private! !
+!Tools.ClassBrowserAbstract categoriesFor: #browseMethodCategory!commands!private! !
+!Tools.ClassBrowserAbstract categoriesFor: #browseMethodsIn:!operations!public! !
+!Tools.ClassBrowserAbstract categoriesFor: #browseOverriddenMethod!commands!public! !
+!Tools.ClassBrowserAbstract categoriesFor: #browseReferences!commands!public! !
+!Tools.ClassBrowserAbstract categoriesFor: #browseReferencesMatching:in:!helpers!private! !
+!Tools.ClassBrowserAbstract categoriesFor: #browserEnvironment!accessing!public! !
+!Tools.ClassBrowserAbstract categoriesFor: #browseSelectorsInProtocol!commands!private! !
+!Tools.ClassBrowserAbstract categoriesFor: #browseSystem!commands!public! !
+!Tools.ClassBrowserAbstract categoriesFor: #buildHistoryFutureMenu!helpers!menus!private! !
+!Tools.ClassBrowserAbstract categoriesFor: #buildHistoryMenu:command:!helpers!menus!private! !
+!Tools.ClassBrowserAbstract categoriesFor: #buildHistoryPastMenu!helpers!menus!private! !
+!Tools.ClassBrowserAbstract categoriesFor: #buildPopupForCommand:!event handling!private! !
+!Tools.ClassBrowserAbstract categoriesFor: #canSaveMethod!commands!private! !
+!Tools.ClassBrowserAbstract categoriesFor: #canSaveState!private!saved state! !
+!Tools.ClassBrowserAbstract categoriesFor: #cardsPresenter!accessing!private! !
+!Tools.ClassBrowserAbstract categoriesFor: #categories!accessing!private! !
+!Tools.ClassBrowserAbstract categoriesFor: #categoriesEnvironment!commands!private! !
+!Tools.ClassBrowserAbstract categoriesFor: #categoriesFilter!accessing!private! !
+!Tools.ClassBrowserAbstract categoriesFor: #categoriesMethodFilter!accessing!private! !
+!Tools.ClassBrowserAbstract categoriesFor: #category!accessing!public! !
+!Tools.ClassBrowserAbstract categoriesFor: #classDefinition!accessing!private! !
+!Tools.ClassBrowserAbstract categoriesFor: #classForNewMethod!operations!private! !
+!Tools.ClassBrowserAbstract categoriesFor: #classMethodFilter!accessing!private! !
+!Tools.ClassBrowserAbstract categoriesFor: #clearSelection!commands!private! !
+!Tools.ClassBrowserAbstract categoriesFor: #createAccessors!commands!private!refactoring! !
+!Tools.ClassBrowserAbstract categoriesFor: #createComponents!initializing!private! !
+!Tools.ClassBrowserAbstract categoriesFor: #createPlugins!initializing!public! !
+!Tools.ClassBrowserAbstract categoriesFor: #createSchematicWiring!initializing!public! !
+!Tools.ClassBrowserAbstract categoriesFor: #currentCard!accessing!public! !
+!Tools.ClassBrowserAbstract categoriesFor: #customDrawCategoryTree:!helpers!private! !
+!Tools.ClassBrowserAbstract categoriesFor: #customDrawProtocols:!helpers!private! !
+!Tools.ClassBrowserAbstract categoriesFor: #customDrawSelector:!helpers!private! !
+!Tools.ClassBrowserAbstract categoriesFor: #definitionCardName!constants!private! !
+!Tools.ClassBrowserAbstract categoriesFor: #deleteItCommand!helpers!private! !
+!Tools.ClassBrowserAbstract categoriesFor: #dropMethods:onto:!helpers!private! !
+!Tools.ClassBrowserAbstract categoriesFor: #emphasiseCategoryItem:isRelevant:!helpers!private! !
+!Tools.ClassBrowserAbstract categoriesFor: #emphasiseProtocolItem:isRelevant:!helpers!private! !
+!Tools.ClassBrowserAbstract categoriesFor: #ensureDefinitionVisible!operations!private! !
+!Tools.ClassBrowserAbstract categoriesFor: #ensureSourceVisible!operations!private! !
+!Tools.ClassBrowserAbstract categoriesFor: #hasClassSelected!public!refactoring!testing! !
+!Tools.ClassBrowserAbstract categoriesFor: #hasEditableMethodSelected!public!testing! !
+!Tools.ClassBrowserAbstract categoriesFor: #hasEditableMethodsSelected!public!testing! !
+!Tools.ClassBrowserAbstract categoriesFor: #hasFuture!public!testing! !
+!Tools.ClassBrowserAbstract categoriesFor: #hasMethodSelected!public!refactoring!testing! !
+!Tools.ClassBrowserAbstract categoriesFor: #hasPast!public!testing! !
+!Tools.ClassBrowserAbstract categoriesFor: #hierarchyOfCategory:!helpers!private! !
+!Tools.ClassBrowserAbstract categoriesFor: #historyClear!commands!public! !
+!Tools.ClassBrowserAbstract categoriesFor: #historySkip:!commands!private! !
+!Tools.ClassBrowserAbstract categoriesFor: #initialize!initializing!private! !
+!Tools.ClassBrowserAbstract categoriesFor: #inspectCollection:!helpers!private! !
+!Tools.ClassBrowserAbstract categoriesFor: #inspectInstanceVariables!commands!private! !
+!Tools.ClassBrowserAbstract categoriesFor: #inspectIt!commands!public! !
+!Tools.ClassBrowserAbstract categoriesFor: #inspectItCommand!helpers!private! !
+!Tools.ClassBrowserAbstract categoriesFor: #inspectMethodCategories!commands!private! !
+!Tools.ClassBrowserAbstract categoriesFor: #inspectMethodProtocols!commands!private! !
+!Tools.ClassBrowserAbstract categoriesFor: #isDefinitionCardVisible!private!testing! !
+!Tools.ClassBrowserAbstract categoriesFor: #isDisplayingCategories!commands!private! !
+!Tools.ClassBrowserAbstract categoriesFor: #isDisplayingProtocols!commands!private! !
+!Tools.ClassBrowserAbstract categoriesFor: #isDisplayingVariables!commands!private! !
+!Tools.ClassBrowserAbstract categoriesFor: #isEditableMethod:!modes!public! !
+!Tools.ClassBrowserAbstract categoriesFor: #isFilterObjectMethods!public!refactoring!testing! !
+!Tools.ClassBrowserAbstract categoriesFor: #isInheritedMethod:!modes!public! !
+!Tools.ClassBrowserAbstract categoriesFor: #isInstanceMode!modes!private! !
+!Tools.ClassBrowserAbstract categoriesFor: #isInstanceMode:!modes!private! !
+!Tools.ClassBrowserAbstract categoriesFor: #isMethodFiltrate:!private!testing! !
+!Tools.ClassBrowserAbstract categoriesFor: #isMethodVisible:!private!testing! !
+!Tools.ClassBrowserAbstract categoriesFor: #isModified!public!testing! !
+!Tools.ClassBrowserAbstract categoriesFor: #isShowInheritedMethods!public!refactoring!testing! !
+!Tools.ClassBrowserAbstract categoriesFor: #isSourceCardVisible!private!testing! !
+!Tools.ClassBrowserAbstract categoriesFor: #killVisitTimer!helpers!private! !
+!Tools.ClassBrowserAbstract categoriesFor: #loadedPlugins!accessing!public! !
+!Tools.ClassBrowserAbstract categoriesFor: #method!accessing!public! !
+!Tools.ClassBrowserAbstract categoriesFor: #method:!accessing!public! !
+!Tools.ClassBrowserAbstract categoriesFor: #method:ifAbsent:!accessing!public! !
+!Tools.ClassBrowserAbstract categoriesFor: #methodCategories!accessing!private! !
+!Tools.ClassBrowserAbstract categoriesFor: #methodCategories:!accessing!private! !
+!Tools.ClassBrowserAbstract categoriesFor: #methodProtocols!accessing!private! !
+!Tools.ClassBrowserAbstract categoriesFor: #methodProtocols:!accessing!public! !
+!Tools.ClassBrowserAbstract categoriesFor: #methodsMatching:!helpers!private! !
+!Tools.ClassBrowserAbstract categoriesFor: #modifiedModel:!accessing!public! !
+!Tools.ClassBrowserAbstract categoriesFor: #newMethod!commands!public! !
+!Tools.ClassBrowserAbstract categoriesFor: #onBrowserCardChanged!event handling!private! !
+!Tools.ClassBrowserAbstract categoriesFor: #onCategory:renameTo:accept:!event handling!private! !
+!Tools.ClassBrowserAbstract categoriesFor: #onCategorySelected!event handling!private! !
+!Tools.ClassBrowserAbstract categoriesFor: #onClassCategorized:!event handling!private! !
+!Tools.ClassBrowserAbstract categoriesFor: #onClassModeChanged!event handling!private! !
+!Tools.ClassBrowserAbstract categoriesFor: #onClassRepackaged:from:to:!event handling!private! !
+!Tools.ClassBrowserAbstract categoriesFor: #onClassSelected!event handling!private! !
+!Tools.ClassBrowserAbstract categoriesFor: #onClassSelectionChanging:!event handling!private! !
+!Tools.ClassBrowserAbstract categoriesFor: #onClassUpdated:!event handling!private! !
+!Tools.ClassBrowserAbstract categoriesFor: #onCloseRequested:!event handling!private! !
+!Tools.ClassBrowserAbstract categoriesFor: #onDragCategory:!event handling!private! !
+!Tools.ClassBrowserAbstract categoriesFor: #onDragMethodsCut:!event handling!private! !
+!Tools.ClassBrowserAbstract categoriesFor: #onDragOverCategory:!event handling!private! !
+!Tools.ClassBrowserAbstract categoriesFor: #onDragOverMethod:!event handling!private! !
+!Tools.ClassBrowserAbstract categoriesFor: #onDragOverMode:!event handling!private! !
+!Tools.ClassBrowserAbstract categoriesFor: #onDragProtocol:!event handling!private! !
+!Tools.ClassBrowserAbstract categoriesFor: #onDragVariableRefs:!event handling!private! !
+!Tools.ClassBrowserAbstract categoriesFor: #onDropOverCategory:!event handling!private! !
+!Tools.ClassBrowserAbstract categoriesFor: #onDropOverMethods:!event handling!private! !
+!Tools.ClassBrowserAbstract categoriesFor: #onDropOverMode:!event handling!private! !
+!Tools.ClassBrowserAbstract categoriesFor: #onFilterCardChanged!event handling!private! !
+!Tools.ClassBrowserAbstract categoriesFor: #onFilterSelectionChanging:!event handling!private! !
+!Tools.ClassBrowserAbstract categoriesFor: #onMethodAdded:!event handling!private! !
+!Tools.ClassBrowserAbstract categoriesFor: #onMethodCategorized:!event handling!private! !
+!Tools.ClassBrowserAbstract categoriesFor: #onMethodListDoubleClicked:!event handling!private! !
+!Tools.ClassBrowserAbstract categoriesFor: #onMethodRemoved:!event handling!private! !
+!Tools.ClassBrowserAbstract categoriesFor: #onMethodRepackaged:from:to:!event handling!private! !
+!Tools.ClassBrowserAbstract categoriesFor: #onMethodSelected!event handling!private! !
+!Tools.ClassBrowserAbstract categoriesFor: #onModeSelectionChanged!event handling!private! !
+!Tools.ClassBrowserAbstract categoriesFor: #onPackageDoubleClicked:!event handling!private! !
+!Tools.ClassBrowserAbstract categoriesFor: #onPromptToSaveChanges:!helpers!private! !
+!Tools.ClassBrowserAbstract categoriesFor: #onPromptToSaveClassChanges:!helpers!private! !
+!Tools.ClassBrowserAbstract categoriesFor: #onPromptToSaveMethodChanges:!helpers!private! !
+!Tools.ClassBrowserAbstract categoriesFor: #onProtocolRemoved:!event handling!private! !
+!Tools.ClassBrowserAbstract categoriesFor: #onProtocolSelected!event handling!private! !
+!Tools.ClassBrowserAbstract categoriesFor: #onProtocolUpdated:!event handling!private! !
+!Tools.ClassBrowserAbstract categoriesFor: #onRenameInstVar:to:!event handling!private! !
+!Tools.ClassBrowserAbstract categoriesFor: #onRenameInstVar:to:accept:!event handling!private! !
+!Tools.ClassBrowserAbstract categoriesFor: #onRenameMethodProtocol:to:accept:!event handling!private! !
+!Tools.ClassBrowserAbstract categoriesFor: #onRepackaged:!event handling!private! !
+!Tools.ClassBrowserAbstract categoriesFor: #onStatusDoubleClicked:!event handling!private! !
+!Tools.ClassBrowserAbstract categoriesFor: #onTimerTick:!event handling!private! !
+!Tools.ClassBrowserAbstract categoriesFor: #onTipTextRequired:!event handling!private! !
+!Tools.ClassBrowserAbstract categoriesFor: #onVariableSelected!event handling!private! !
+!Tools.ClassBrowserAbstract categoriesFor: #onViewOpened!event handling!private! !
+!Tools.ClassBrowserAbstract categoriesFor: #packageForNewMethod!operations!private! !
+!Tools.ClassBrowserAbstract categoriesFor: #packageNames:!accessing!public! !
+!Tools.ClassBrowserAbstract categoriesFor: #packages:!accessing!public! !
+!Tools.ClassBrowserAbstract categoriesFor: #parseContext!accessing!public! !
+!Tools.ClassBrowserAbstract categoriesFor: #parseTree!accessing!private! !
+!Tools.ClassBrowserAbstract categoriesFor: #printCaptionForClass:on:!helpers!private! !
+!Tools.ClassBrowserAbstract categoriesFor: #printCaptionForMethod:on:!private!updating! !
+!Tools.ClassBrowserAbstract categoriesFor: #printClassTitle:on:!private!updating! !
+!Tools.ClassBrowserAbstract categoriesFor: #printShortCaptionForClass:on:!helpers!private! !
+!Tools.ClassBrowserAbstract categoriesFor: #promptToCopyChanges!commands!private! !
+!Tools.ClassBrowserAbstract categoriesFor: #promptToSaveChanges!commands!private! !
+!Tools.ClassBrowserAbstract categoriesFor: #protocols!accessing!public! !
+!Tools.ClassBrowserAbstract categoriesFor: #protocols:!accessing!public! !
+!Tools.ClassBrowserAbstract categoriesFor: #protocolsMethodFilter!accessing!private! !
+!Tools.ClassBrowserAbstract categoriesFor: #queryCommand:!commands!private! !
+!Tools.ClassBrowserAbstract categoriesFor: #recordMethodVisit!helpers!private! !
+!Tools.ClassBrowserAbstract categoriesFor: #reformatAll!commands!public! !
+!Tools.ClassBrowserAbstract categoriesFor: #removeMethod:fromCategory:!helpers!private! !
+!Tools.ClassBrowserAbstract categoriesFor: #removeMethod:fromProtocol:!helpers!private! !
+!Tools.ClassBrowserAbstract categoriesFor: #removeMethodCategory!commands!private! !
+!Tools.ClassBrowserAbstract categoriesFor: #removeMethodProtocol!commands!private! !
+!Tools.ClassBrowserAbstract categoriesFor: #removeMethodsInCategory!commands!private! !
+!Tools.ClassBrowserAbstract categoriesFor: #removeMethodsInProtocol!commands!private! !
+!Tools.ClassBrowserAbstract categoriesFor: #removePlugin:!accessing!public! !
+!Tools.ClassBrowserAbstract categoriesFor: #renameInstanceVariable!commands!private!refactoring! !
+!Tools.ClassBrowserAbstract categoriesFor: #renameIt!commands!public! !
+!Tools.ClassBrowserAbstract categoriesFor: #renameItCommand!constants!private! !
+!Tools.ClassBrowserAbstract categoriesFor: #renameMethodCategory!commands!private! !
+!Tools.ClassBrowserAbstract categoriesFor: #renameMethodCategory:to:!commands!public! !
+!Tools.ClassBrowserAbstract categoriesFor: #renameMethodCategoryInPlace!commands!private! !
+!Tools.ClassBrowserAbstract categoriesFor: #renameMethodProtocol!commands!private! !
+!Tools.ClassBrowserAbstract categoriesFor: #resetFor:!commands!private! !
+!Tools.ClassBrowserAbstract categoriesFor: #resetForFoundClass:!commands!private! !
+!Tools.ClassBrowserAbstract categoriesFor: #saveDefinition!operations!private! !
+!Tools.ClassBrowserAbstract categoriesFor: #saveNewMethod:!operations!private! !
+!Tools.ClassBrowserAbstract categoriesFor: #saveStateOn:!private!saved state! !
+!Tools.ClassBrowserAbstract categoriesFor: #searchEnvironment!commands!public! !
+!Tools.ClassBrowserAbstract categoriesFor: #searchForClass:!helpers!private! !
+!Tools.ClassBrowserAbstract categoriesFor: #searchForMethod:!helpers!private! !
+!Tools.ClassBrowserAbstract categoriesFor: #selectedClass!accessing!private! !
+!Tools.ClassBrowserAbstract categoriesFor: #selectedMethod!public! !
+!Tools.ClassBrowserAbstract categoriesFor: #selectedMethods!accessing!public! !
+!Tools.ClassBrowserAbstract categoriesFor: #selectedMethods:!accessing!public! !
+!Tools.ClassBrowserAbstract categoriesFor: #selectionEnvironment!accessing!private! !
+!Tools.ClassBrowserAbstract categoriesFor: #selectMethod:!browsing!private! !
+!Tools.ClassBrowserAbstract categoriesFor: #setInitialFocus!operations!public! !
+!Tools.ClassBrowserAbstract categoriesFor: #setMethodsFilter:!private!updating! !
+!Tools.ClassBrowserAbstract categoriesFor: #setVisitTimer!helpers!private! !
+!Tools.ClassBrowserAbstract categoriesFor: #shortCaption!accessing!public! !
+!Tools.ClassBrowserAbstract categoriesFor: #slideyPinNames!accessing!private! !
+!Tools.ClassBrowserAbstract categoriesFor: #sourceCardName!constants!private! !
+!Tools.ClassBrowserAbstract categoriesFor: #statusModel!accessing!private! !
+!Tools.ClassBrowserAbstract categoriesFor: #statusText:!accessing!private! !
+!Tools.ClassBrowserAbstract categoriesFor: #toggleFilterObjectMethods!commands!public! !
+!Tools.ClassBrowserAbstract categoriesFor: #toggleProtocolReadOnly!commands!public! !
+!Tools.ClassBrowserAbstract categoriesFor: #toggleShowInheritedMethods!commands!public! !
+!Tools.ClassBrowserAbstract categoriesFor: #updateCaption!public!updating! !
+!Tools.ClassBrowserAbstract categoriesFor: #updateCategories!private!updating! !
+!Tools.ClassBrowserAbstract categoriesFor: #updateClass:presenter:source:!helpers!private! !
+!Tools.ClassBrowserAbstract categoriesFor: #updateFilters!private!updating! !
+!Tools.ClassBrowserAbstract categoriesFor: #updateMethodsInCategory!private!updating! !
+!Tools.ClassBrowserAbstract categoriesFor: #updateMethodsInProtocol!private!updating! !
+!Tools.ClassBrowserAbstract categoriesFor: #updateMethodsReferencingVariables!private!updating! !
+!Tools.ClassBrowserAbstract categoriesFor: #updatePackage!private!updating! !
+!Tools.ClassBrowserAbstract categoriesFor: #updateProtocols!private!updating! !
+!Tools.ClassBrowserAbstract categoriesFor: #updateSourceEnablement!helpers!private! !
+!Tools.ClassBrowserAbstract categoriesFor: #updateVariables!private!updating! !
+!Tools.ClassBrowserAbstract categoriesFor: #validateProtocol:renameTo:!operations!private! !
+!Tools.ClassBrowserAbstract categoriesFor: #variables!accessing!private! !
+!Tools.ClassBrowserAbstract categoriesFor: #variablesFilter!accessing!private! !
+!Tools.ClassBrowserAbstract categoriesFor: #variablesIndices!accessing!private! !
+!Tools.ClassBrowserAbstract categoriesFor: #variablesMethodFilter!accessing!private! !
 
-ClassBrowserAbstract methodProtocol: #methodBrowserHost attributes: #(#readOnly) selectors: #(#hasEditableMethodSelected #isEditableMethod: #parseContext #saveNewMethod:)!
+Tools.ClassBrowserAbstract methodProtocol: #methodBrowserHost attributes: #(#readOnly) selectors: #(#hasEditableMethodSelected #isEditableMethod: #parseContext #saveNewMethod:)!
 
-!ClassBrowserAbstract class methodsFor!
+!Tools.ClassBrowserAbstract class methodsFor!
 
 addPlugin: aClassBrowserPlugin 
 	^self plugins add: aClassBrowserPlugin!
@@ -2855,7 +2855,7 @@ plugins
 	"Answer the plugins installed by instances of the receiver"
 
 	plugins isNil ifTrue: [self plugins: self defaultPluginsCollection].
-	^SystemMetrics current hasInternetExplorerControl
+	^OS.SystemMetrics current hasInternetExplorerControl
 		ifTrue: [plugins]
 		ifFalse: 
 			["The CodeMentor plugin relies on the Internet Explorer control>"
@@ -2869,7 +2869,7 @@ plugins: anOrderedCollection
 publishedAspects
 	"Answer a <LookupTable> of the <Aspect>s published by the receiver."
 
-	^(super publishedAspects)
+	^super publishedAspects
 		add: (Aspect boolean: #canUseIdeaSpace);
 		add: (Aspect boolean: #wordWrapSource);
 		add: (Aspect boolean: #wordWrapDefinition);
@@ -2910,28 +2910,28 @@ wordWrapSource: aBoolean
 	"Sets the source word wrapping state for instances of the receiver to aBoolean."
 
 	MethodBrowser wordWrap: aBoolean! !
-!ClassBrowserAbstract class categoriesFor: #addPlugin:!initializing!private! !
-!ClassBrowserAbstract class categoriesFor: #availablePluginClasses!helpers!private! !
-!ClassBrowserAbstract class categoriesFor: #classCommentIcon!helpers!private! !
-!ClassBrowserAbstract class categoriesFor: #defaultAdditionalAccelerators!constants!private! !
-!ClassBrowserAbstract class categoriesFor: #defaultFilterObjectMethods!accessing!options!public! !
-!ClassBrowserAbstract class categoriesFor: #defaultFilterObjectMethods:!accessing!options!public! !
-!ClassBrowserAbstract class categoriesFor: #defaultPluginsCollection!helpers!private! !
-!ClassBrowserAbstract class categoriesFor: #defaultShowInheritedMethods!accessing!options!public! !
-!ClassBrowserAbstract class categoriesFor: #defaultShowInheritedMethods:!accessing!options!public! !
-!ClassBrowserAbstract class categoriesFor: #grayedMethodFadeFactor!options!public! !
-!ClassBrowserAbstract class categoriesFor: #grayedMethodFadeFactor:!options!public! !
-!ClassBrowserAbstract class categoriesFor: #historyListSize!accessing!public! !
-!ClassBrowserAbstract class categoriesFor: #historyListSize:!accessing!public! !
-!ClassBrowserAbstract class categoriesFor: #initialize!initializing!private! !
-!ClassBrowserAbstract class categoriesFor: #looseMethodColor!accessing!options!public! !
-!ClassBrowserAbstract class categoriesFor: #looseMethodColor:!accessing!options!public! !
-!ClassBrowserAbstract class categoriesFor: #plugins!accessing!public!wine fix! !
-!ClassBrowserAbstract class categoriesFor: #plugins:!accessing!public! !
-!ClassBrowserAbstract class categoriesFor: #publishedAspects!public! !
-!ClassBrowserAbstract class categoriesFor: #removePlugin:!initializing!private! !
-!ClassBrowserAbstract class categoriesFor: #wordWrapDefinition!accessing!options!public! !
-!ClassBrowserAbstract class categoriesFor: #wordWrapDefinition:!accessing!options!public! !
-!ClassBrowserAbstract class categoriesFor: #wordWrapSource!accessing!options!public! !
-!ClassBrowserAbstract class categoriesFor: #wordWrapSource:!accessing!options!public! !
+!Tools.ClassBrowserAbstract class categoriesFor: #addPlugin:!initializing!private! !
+!Tools.ClassBrowserAbstract class categoriesFor: #availablePluginClasses!helpers!private! !
+!Tools.ClassBrowserAbstract class categoriesFor: #classCommentIcon!helpers!private! !
+!Tools.ClassBrowserAbstract class categoriesFor: #defaultAdditionalAccelerators!constants!private! !
+!Tools.ClassBrowserAbstract class categoriesFor: #defaultFilterObjectMethods!accessing!options!public! !
+!Tools.ClassBrowserAbstract class categoriesFor: #defaultFilterObjectMethods:!accessing!options!public! !
+!Tools.ClassBrowserAbstract class categoriesFor: #defaultPluginsCollection!helpers!private! !
+!Tools.ClassBrowserAbstract class categoriesFor: #defaultShowInheritedMethods!accessing!options!public! !
+!Tools.ClassBrowserAbstract class categoriesFor: #defaultShowInheritedMethods:!accessing!options!public! !
+!Tools.ClassBrowserAbstract class categoriesFor: #grayedMethodFadeFactor!options!public! !
+!Tools.ClassBrowserAbstract class categoriesFor: #grayedMethodFadeFactor:!options!public! !
+!Tools.ClassBrowserAbstract class categoriesFor: #historyListSize!accessing!public! !
+!Tools.ClassBrowserAbstract class categoriesFor: #historyListSize:!accessing!public! !
+!Tools.ClassBrowserAbstract class categoriesFor: #initialize!initializing!private! !
+!Tools.ClassBrowserAbstract class categoriesFor: #looseMethodColor!accessing!options!public! !
+!Tools.ClassBrowserAbstract class categoriesFor: #looseMethodColor:!accessing!options!public! !
+!Tools.ClassBrowserAbstract class categoriesFor: #plugins!accessing!public!wine fix! !
+!Tools.ClassBrowserAbstract class categoriesFor: #plugins:!accessing!public! !
+!Tools.ClassBrowserAbstract class categoriesFor: #publishedAspects!public! !
+!Tools.ClassBrowserAbstract class categoriesFor: #removePlugin:!initializing!private! !
+!Tools.ClassBrowserAbstract class categoriesFor: #wordWrapDefinition!accessing!options!public! !
+!Tools.ClassBrowserAbstract class categoriesFor: #wordWrapDefinition:!accessing!options!public! !
+!Tools.ClassBrowserAbstract class categoriesFor: #wordWrapSource!accessing!options!public! !
+!Tools.ClassBrowserAbstract class categoriesFor: #wordWrapSource:!accessing!options!public! !
 

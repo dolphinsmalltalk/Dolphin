@@ -1,21 +1,21 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ValueDialog subclass: #PackagePrompter
+UI.ValueDialog subclass: #'Tools.PackagePrompter'
 	instanceVariableNames: 'packagesPresenter notPackagedPresenter defaultPackage validationBlock'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-PackagePrompter guid: (GUID fromString: '{ed9a3d68-797c-4678-adf9-520204c0023f}')!
-PackagePrompter comment: 'self show'!
-!PackagePrompter categoriesForClass!MVP-Presenters! !
-!PackagePrompter methodsFor!
+Tools.PackagePrompter guid: (Core.GUID fromString: '{ed9a3d68-797c-4678-adf9-520204c0023f}')!
+Tools.PackagePrompter comment: 'self show'!
+!Tools.PackagePrompter categoriesForClass!MVP-Presenters! !
+!Tools.PackagePrompter methodsFor!
 
 createComponents
 	"Create the presenters contained by the receiver"
 
 	super createComponents.
-	packagesPresenter := self add: ((PackageSelector new)
+	packagesPresenter := self add: (PackageSelector new
 						autoSelect: false;
 						yourself)
 				name: 'packages'.
@@ -83,18 +83,18 @@ validationBlock: aBlock
 	is valid. The OK button is not enabled until the validationBlock answers true."
 
 	validationBlock := aBlock! !
-!PackagePrompter categoriesFor: #createComponents!initializing!public! !
-!PackagePrompter categoriesFor: #createSchematicWiring!initializing!public! !
-!PackagePrompter categoriesFor: #defaultPackage:!accessing!private! !
-!PackagePrompter categoriesFor: #initialize!initializing!private! !
-!PackagePrompter categoriesFor: #onPackageSelected!event handling!public! !
-!PackagePrompter categoriesFor: #onViewOpened!event handling!public! !
-!PackagePrompter categoriesFor: #queryCommand:!commands!private! !
-!PackagePrompter categoriesFor: #toggleSetPackage!commands!public! !
-!PackagePrompter categoriesFor: #validationBlock!accessing!public! !
-!PackagePrompter categoriesFor: #validationBlock:!accessing!public! !
+!Tools.PackagePrompter categoriesFor: #createComponents!initializing!public! !
+!Tools.PackagePrompter categoriesFor: #createSchematicWiring!initializing!public! !
+!Tools.PackagePrompter categoriesFor: #defaultPackage:!accessing!private! !
+!Tools.PackagePrompter categoriesFor: #initialize!initializing!private! !
+!Tools.PackagePrompter categoriesFor: #onPackageSelected!event handling!public! !
+!Tools.PackagePrompter categoriesFor: #onViewOpened!event handling!public! !
+!Tools.PackagePrompter categoriesFor: #queryCommand:!commands!private! !
+!Tools.PackagePrompter categoriesFor: #toggleSetPackage!commands!public! !
+!Tools.PackagePrompter categoriesFor: #validationBlock!accessing!public! !
+!Tools.PackagePrompter categoriesFor: #validationBlock:!accessing!public! !
 
-!PackagePrompter class methodsFor!
+!Tools.PackagePrompter class methodsFor!
 
 defaultValidationBlock
 	^[:package | package notNil]!
@@ -110,10 +110,10 @@ resource_Default_view
 	DO NOT EDIT OR RECATEGORIZE THIS METHOD.
 
 	If you wish to modify this resource evaluate:
-	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Default_view)
+	Tools.ViewComposer openOn: (UI.ResourceIdentifier class: self selector: #resource_Default_view)
 	"
 
-	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.DialogView) 34 30 nil nil 8 #(13369344 65536) 416 nil 655878 ##(Smalltalk.ThemeColor) #dialog 328198 ##(Smalltalk.Point) 501 701 133 nil 263174 ##(Smalltalk.Font) nil true 524550 ##(Smalltalk.LOGFONTW) 8 #[244 255 255 255 0 0 0 0 0 0 0 0 0 0 0 0 144 1 0 0 0 0 0 0 3 2 1 34 83 0 101 0 103 0 111 0 101 0 32 0 85 0 73 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0] 498 193 193 nil 416 788230 ##(Smalltalk.BorderLayout) 21 17 410 ##(Smalltalk.CheckBox) 34 16 nil 416 34 2 8 1140924419 1 656 721990 2 ##(Smalltalk.ValueHolder) nil nil 1114118 ##(Smalltalk.NeverSearchPolicy) false nil nil 5 nil nil nil 656 nil 8 1915188384 852486 ##(Smalltalk.NullConverter) nil nil nil 983302 ##(Smalltalk.MessageSequence) 138 144 34 2 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 498 21 21 498 599 43 656 898 #text: 34 1 8 'Not packaged?' 656 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 10 0 0 0 10 0 0 0 53 1 0 0 31 0 0 0] 8 #() 498 193 193 nil 27 410 ##(Smalltalk.ReferenceView) 34 14 nil 416 34 2 8 1140850688 131073 1104 nil nil nil 5 nil nil nil 1104 1180230 1 ##(Smalltalk.ResourceIdentifier) ##(Smalltalk.Presenter) #resource_OK_Cancel_button_block nil 834 138 144 34 1 898 #createAt:extent: 34 2 498 21 763 498 599 61 1104 1026 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 10 0 0 0 125 1 0 0 53 1 0 0 155 1 0 0] 8 #() 1088 nil 27 nil nil 410 ##(Smalltalk.ReferenceView) 34 14 nil 416 34 2 8 1140850688 131073 1360 nil nil nil 5 nil nil nil 1360 1170 ##(Smalltalk.PackageSelector) #resource_Single_package_selector nil 834 138 144 34 1 898 #createAt:extent: 34 2 498 21 79 498 599 669 1360 1026 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 10 0 0 0 39 0 0 0 53 1 0 0 117 1 0 0] 1344 1088 nil 27 170 192 34 4 656 8 'unpackaged' 1360 8 'packages' 590342 ##(Smalltalk.Rectangle) 498 21 21 498 21 21 nil nil nil nil 12357 nil nil nil 498 501 311 1 nil nil 590598 ##(Smalltalk.Semaphore) nil nil 1 nil 8 2011052416 834 138 144 34 3 898 #createAt:extent: 34 2 498 1585 621 498 671 921 416 898 #text: 34 1 8 'Choose Package...' 416 898 #updateMenuBar 1344 416 1026 8 #[44 0 0 0 0 0 0 0 0 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 24 3 0 0 54 1 0 0 103 4 0 0 2 3 0 0] 34 3 1360 1104 656 1088 nil 27 )!
+	^#(#'!!STL' 4 985166 10 ##(UI.STBViewProxy) ##(UI.DialogView) 34 30 nil nil 8 #(13369344 65536) 416 nil 1245702 ##(Graphics.ThemeColor) #dialog 918022 ##(Graphics.Point) 501 701 133 nil 852998 ##(Graphics.Font) nil true 721158 ##(OS.LOGFONTW) 8 #[244 255 255 255 0 0 0 0 0 0 0 0 0 0 0 0 144 1 0 0 0 0 0 0 3 2 1 34 83 0 101 0 103 0 111 0 101 0 32 0 85 0 73 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0] 498 193 193 nil 416 984838 ##(UI.BorderLayout) 21 17 410 ##(UI.CheckBox) 34 16 nil 416 34 2 8 1140924419 1 656 918598 2 ##(UI.ValueHolder) nil nil 1572870 ##(Kernel.NeverSearchPolicy) false nil nil 7 nil nil nil 656 nil 8 1801347024 1049094 ##(UI.NullConverter) nil nil nil 1310982 ##(Core.MessageSequence) 138 144 34 2 1049350 ##(Core.MessageSend) #createAt:extent: 34 2 498 21 21 498 599 43 656 898 #text: 34 1 8 'Not packaged?' 656 1179910 ##(OS.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 10 0 0 0 10 0 0 0 53 1 0 0 31 0 0 0] 8 #() 498 193 193 nil 27 410 ##(UI.ReferenceView) 34 14 nil 416 34 2 8 1140850688 131073 1104 nil nil nil 7 nil nil nil 1104 1376838 1 ##(UI.ResourceIdentifier) ##(UI.Presenter) #resource_OK_Cancel_button_block nil 834 138 144 34 1 898 #createAt:extent: 34 2 498 21 763 498 599 61 1104 1026 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 10 0 0 0 125 1 0 0 53 1 0 0 155 1 0 0] 8 #() 1088 nil 27 nil nil 410 ##(UI.ReferenceView) 34 14 nil 416 34 2 8 1140850688 131073 1360 nil nil nil 7 nil nil nil 1360 1170 ##(Tools.PackageSelector) #resource_Single_package_selector nil 834 138 144 34 1 898 #createAt:extent: 34 2 498 21 79 498 599 669 1360 1026 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 10 0 0 0 39 0 0 0 53 1 0 0 117 1 0 0] 1344 1088 nil 27 170 192 34 4 656 8 'unpackaged' 1360 8 'packages' 1180166 ##(Graphics.Rectangle) 498 21 21 498 21 21 nil nil nil nil 25635 nil nil nil 498 501 311 1 nil nil 918278 ##(Core.Semaphore) nil nil 1 nil 8 1996777232 834 138 144 34 2 898 #createAt:extent: 34 2 498 6143 21 498 671 921 416 898 #text: 34 1 8 'Choose Package...' 416 1026 8 #[44 0 0 0 0 0 0 0 0 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 78 13 0 0 214 1 0 0] 34 3 1360 1104 656 1088 nil 27 )!
 
 showModalOn: aModel caption: aString default: aPackage 
 	"Creates an instance of the receiver with a default view and connected to aModel and the
@@ -139,9 +139,9 @@ showModalOn: aModel caption: aString default: aPackage validationBlock: aBlock
 		caption: aString;
 		validationBlock: aBlock;
 		showModal! !
-!PackagePrompter class categoriesFor: #defaultValidationBlock!constants!public! !
-!PackagePrompter class categoriesFor: #icon!accessing!constants!public! !
-!PackagePrompter class categoriesFor: #resource_Default_view!public!resources-views! !
-!PackagePrompter class categoriesFor: #showModalOn:caption:default:!instance creation!public! !
-!PackagePrompter class categoriesFor: #showModalOn:caption:default:validationBlock:!instance creation!public! !
+!Tools.PackagePrompter class categoriesFor: #defaultValidationBlock!constants!public! !
+!Tools.PackagePrompter class categoriesFor: #icon!accessing!constants!public! !
+!Tools.PackagePrompter class categoriesFor: #resource_Default_view!public!resources-views! !
+!Tools.PackagePrompter class categoriesFor: #showModalOn:caption:default:!instance creation!public! !
+!Tools.PackagePrompter class categoriesFor: #showModalOn:caption:default:validationBlock:!instance creation!public! !
 

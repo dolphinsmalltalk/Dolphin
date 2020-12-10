@@ -3,7 +3,7 @@
 COMInterface subclass: #IUnknown
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 IUnknown guid: (IID fromString: '{00000000-0000-0000-c000-000000000046}')!

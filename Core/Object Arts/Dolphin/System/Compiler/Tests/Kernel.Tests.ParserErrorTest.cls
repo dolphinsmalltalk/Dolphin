@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
 Kernel.Tests.AbstractParserErrorTest subclass: #'Kernel.Tests.ParserErrorTest'
-	instanceVariableNames: ''
+	instanceVariableNames: 'semanticAnalyserClass'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -40,7 +40,7 @@ parseExpression: aString in: aClass
 				onError: errorBlock.
 	^errors isEmpty
 		ifTrue: 
-			[Smalltalk.BrowserSemanticAnalyser
+			[semanticAnalyserClass
 				analyzeParseTree: ast
 				for: aClass
 				context: nil
@@ -58,7 +58,7 @@ parseMethod: aString in: aClass
 	"Don't perform semantic analysis if there are syntax errors"
 	^syntaxErrors isEmpty
 		ifTrue: 
-			[Smalltalk.BrowserSemanticAnalyser
+			[semanticAnalyserClass
 				analyzeParseTree: ast
 				for: aClass
 				context: nil
@@ -71,6 +71,10 @@ parserClass
 
 scannerClass
 	^Scanner!
+
+setUp
+	super setUp.
+	semanticAnalyserClass := StSemanticAnalyser!
 
 testErrorsBadCodePoint
 	#('$\x110000' '$\xFFFFFFFF') do: 
@@ -266,50 +270,23 @@ testErrorsTempsNotClosedRecovery
 	self assert: ast argumentNames asArray equals: #('a').
 	self assert: ast allTemporaryVariables isEmpty!
 
-testInfoHardBreakpoint
-	#(#testInfoHardBreakpoint #testInfoHardBreakpointInBlock) do: 
-			[:each | 
-			self 
-				parseMethodInfo: each
-				rangeBlock: 
-					[:source | 
-					| start |
-					start := source indexOfSubCollection: 'self halt'.
-					start to: start + 8]
-				code: CInfoHardBreakpoint]!
-
-testInfoSupersendsOther
-	#(#testInfoSupersendsOther) do: 
-			[:each | 
-			self 
-				parseMethodInfo: each
-				rangeBlock: 
-					[:source | 
-					| start |
-					start := source indexOfSubCollection: 'super'.
-					start 
-						to: (source 
-								nextIndexOf: Character cr
-								from: start
-								to: source size) - 1]
-				code: CInfoSupersendsOther]!
-
-testInfoUnreferencedArg
-	#(#testInfoUnreferencedArgBlock #testInfoUnreferencedArgMethod: #testInfoUnreferencedArgOptimizedBlock) 
-		do: 
-			[:each | 
-			self 
-				parseMethodInfo: each
-				rangeBlock: 
-					[:source | 
-					| start |
-					start := source lastIndexOf: $a.
-					start to: start]
-				code: CInfoUnreferencedArg]!
-
 testParserErrors
 	#(#('self foo. + 3' 11) #('#(' 3) #('self 0' 6) #('self asdf;;asfd' 11)) 
 		do: [:each | self parseError: each]!
+
+testWarningSelfSendNotImplemented
+	#{Tools.BrowserSemanticAnalyser} ifDefined: 
+			[:class |
+			semanticAnalyserClass := class.
+			super testWarningSelfSendNotImplemented]
+		ifNotDefined: [self skip]!
+
+testWarningSupersendNotImplemented
+	#{Tools.BrowserSemanticAnalyser} ifDefined: 
+			[:class |
+			semanticAnalyserClass := class.
+			super testWarningSupersendNotImplemented]
+		ifNotDefined: [self skip]!
 
 testWarningUnreachable
 	#(#testWarningUnreachable) do: 
@@ -322,39 +299,6 @@ testWarningUnreachable
 					start := source indexOf: $1.
 					start to: source size]
 				code: CWarnUnreachable]!
-
-testWarningUsesBooleanClass
-	#(#testWarningUsesTrue #testWarningUsesFalse) do: 
-			[:each |
-			self
-				parseMethodWarning: each
-				rangeBlock: 
-					[:source |
-					| start name |
-					name := each asPhrase subStrings last.
-					start := source indexOfSubCollection: name startingAt: each size + 1.
-					start to: start + name size - 1]
-				code: CWarnUsesBooleanClass]!
-
-testWarnMsgUnimplemented
-	#(#testWarnMsgUnimplementedBySelf #testWarnMsgUnimplementedBySuper #testWarnMsgUnimplementedByConst #testWarnMsgUnimplementedByNil)
-		do: 
-			[:each |
-			self
-				parseMethodWarning: each
-				rangeBlock: 
-					[:source |
-					| start name |
-					name := each asPhrase subStrings last.
-					start := source
-								findString: name
-								startingAt: each size + 1
-								ignoreCase: true.
-					start to: (source
-								nextIndexOf: $.
-								from: start
-								to: source size) - 1]
-				code: CWarnMsgUnimplemented]!
 
 testWarnNiladicExceptionHandler
 	#(#testWarnNiladicExceptionHandler) do: 
@@ -391,34 +335,6 @@ testWarnRestrictedSelector
 					1 to: signature trimBlanks size]
 				code: CWarnRestrictedSelector]!
 
-testWarnUndefinedSelector
-	#(#testWarnUndefinedSelector) do: 
-			[:each |
-			self
-				parseMethodWarning: each
-				rangeBlock: 
-					[:source |
-					| start |
-					start := source indexOfSubCollection: 'self'.
-					start to: (source
-								nextIndexOf: $.
-								from: start
-								to: source size) - 1]
-				code: CWarnUndefinedSelector]!
-
-testWarnUnimplementedAbstractMethod
-	#(#testWarnUnimplementedAbstractMethod) do: 
-			[:each |
-			self
-				parseMethodWarning: each
-				rangeBlock: 
-					[:source |
-					| start msg |
-					msg := 'self subclassResponsibility'.
-					start := source indexOfSubCollection: msg.
-					start to: start + msg size - 1]
-				code: CWarnUnimplementedAbstractMethod]!
-
 writtenNotReadRange: aString
 	| start |
 	start := aString lastIndexOf: $_.
@@ -431,6 +347,7 @@ writtenNotReadRange: aString
 !Kernel.Tests.ParserErrorTest categoriesFor: #parseMethod:in:!private! !
 !Kernel.Tests.ParserErrorTest categoriesFor: #parserClass!constants!private! !
 !Kernel.Tests.ParserErrorTest categoriesFor: #scannerClass!constants!private! !
+!Kernel.Tests.ParserErrorTest categoriesFor: #setUp!public!running! !
 !Kernel.Tests.ParserErrorTest categoriesFor: #testErrorsBadCodePoint!public!unit tests! !
 !Kernel.Tests.ParserErrorTest categoriesFor: #testErrorsExpectCodePoint!public!unit tests! !
 !Kernel.Tests.ParserErrorTest categoriesFor: #testErrorsLexicalBadNumber!public!unit tests! !
@@ -442,17 +359,12 @@ writtenNotReadRange: aString
 !Kernel.Tests.ParserErrorTest categoriesFor: #testErrorsQualifiedReferenceNotClosed!public!unit tests! !
 !Kernel.Tests.ParserErrorTest categoriesFor: #testErrorsQualifierReferenceEmpty!public!unit tests! !
 !Kernel.Tests.ParserErrorTest categoriesFor: #testErrorsTempsNotClosedRecovery!public!unit tests! !
-!Kernel.Tests.ParserErrorTest categoriesFor: #testInfoHardBreakpoint!public!unit tests! !
-!Kernel.Tests.ParserErrorTest categoriesFor: #testInfoSupersendsOther!public!unit tests! !
-!Kernel.Tests.ParserErrorTest categoriesFor: #testInfoUnreferencedArg!public!unit tests! !
 !Kernel.Tests.ParserErrorTest categoriesFor: #testParserErrors!public!unit tests! !
+!Kernel.Tests.ParserErrorTest categoriesFor: #testWarningSelfSendNotImplemented!private! !
+!Kernel.Tests.ParserErrorTest categoriesFor: #testWarningSupersendNotImplemented!private! !
 !Kernel.Tests.ParserErrorTest categoriesFor: #testWarningUnreachable!public!unit tests! !
-!Kernel.Tests.ParserErrorTest categoriesFor: #testWarningUsesBooleanClass!public!unit tests! !
-!Kernel.Tests.ParserErrorTest categoriesFor: #testWarnMsgUnimplemented!public!unit tests! !
 !Kernel.Tests.ParserErrorTest categoriesFor: #testWarnNiladicExceptionHandler!public!unit tests! !
 !Kernel.Tests.ParserErrorTest categoriesFor: #testWarnNonNiladicGuardedBlock!public!unit tests! !
 !Kernel.Tests.ParserErrorTest categoriesFor: #testWarnRestrictedSelector!public!unit tests! !
-!Kernel.Tests.ParserErrorTest categoriesFor: #testWarnUndefinedSelector!public!unit tests! !
-!Kernel.Tests.ParserErrorTest categoriesFor: #testWarnUnimplementedAbstractMethod!public!unit tests! !
 !Kernel.Tests.ParserErrorTest categoriesFor: #writtenNotReadRange:!helpers!private! !
 

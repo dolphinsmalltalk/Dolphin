@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Object subclass: #MethodCategorizationPolicy
+Core.Object subclass: #'Tools.MethodCategorizationPolicy'
 	instanceVariableNames: ''
 	classVariableNames: 'Default'
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-MethodCategorizationPolicy guid: (GUID fromString: '{87b4c4a1-026e-11d3-9fd7-00a0cc3e4a32}')!
-MethodCategorizationPolicy comment: ''!
-!MethodCategorizationPolicy categoriesForClass!System-Support! !
-!MethodCategorizationPolicy methodsFor!
+Tools.MethodCategorizationPolicy guid: (Core.GUID fromString: '{87b4c4a1-026e-11d3-9fd7-00a0cc3e4a32}')!
+Tools.MethodCategorizationPolicy comment: ''!
+!Tools.MethodCategorizationPolicy categoriesForClass!System-Support! !
+!Tools.MethodCategorizationPolicy methodsFor!
 
 allCategoriesOfSelector: selector
 	"Private - Answer a <Collection> of all the <methodCategory>s in which
@@ -141,19 +141,19 @@ superCategoriesOf: method
 					m := each compiledMethodAt: selector.
 					suggestions addAll: m categories]].
 	^suggestions! !
-!MethodCategorizationPolicy categoriesFor: #allCategoriesOfSelector:!enquiries!private! !
-!MethodCategorizationPolicy categoriesFor: #bestSuggestionFor:!enquiries!public! !
-!MethodCategorizationPolicy categoriesFor: #couldBeAccessor:!helpers!private! !
-!MethodCategorizationPolicy categoriesFor: #couldBeInitializer:!helpers!private! !
-!MethodCategorizationPolicy categoriesFor: #defaultCategories:!helpers!private! !
-!MethodCategorizationPolicy categoriesFor: #isReturnConstant:!helpers!private! !
-!MethodCategorizationPolicy categoriesFor: #prefixCategories!constants!private! !
-!MethodCategorizationPolicy categoriesFor: #suffixCategories!constants!private! !
-!MethodCategorizationPolicy categoriesFor: #suggestedPrivacyFor:!enquiries!private! !
-!MethodCategorizationPolicy categoriesFor: #suggestionsFor:!enquiries!public! !
-!MethodCategorizationPolicy categoriesFor: #superCategoriesOf:!helpers!private! !
+!Tools.MethodCategorizationPolicy categoriesFor: #allCategoriesOfSelector:!enquiries!private! !
+!Tools.MethodCategorizationPolicy categoriesFor: #bestSuggestionFor:!enquiries!public! !
+!Tools.MethodCategorizationPolicy categoriesFor: #couldBeAccessor:!helpers!private! !
+!Tools.MethodCategorizationPolicy categoriesFor: #couldBeInitializer:!helpers!private! !
+!Tools.MethodCategorizationPolicy categoriesFor: #defaultCategories:!helpers!private! !
+!Tools.MethodCategorizationPolicy categoriesFor: #isReturnConstant:!helpers!private! !
+!Tools.MethodCategorizationPolicy categoriesFor: #prefixCategories!constants!private! !
+!Tools.MethodCategorizationPolicy categoriesFor: #suffixCategories!constants!private! !
+!Tools.MethodCategorizationPolicy categoriesFor: #suggestedPrivacyFor:!enquiries!private! !
+!Tools.MethodCategorizationPolicy categoriesFor: #suggestionsFor:!enquiries!public! !
+!Tools.MethodCategorizationPolicy categoriesFor: #superCategoriesOf:!helpers!private! !
 
-!MethodCategorizationPolicy class methodsFor!
+!Tools.MethodCategorizationPolicy class methodsFor!
 
 default
 	"Answer the default instance of the receiver."
@@ -171,7 +171,7 @@ uninitialize
 	"Private - Uninitialize the receiver as it is about to be removed from the system."
 
 	Default := nil.! !
-!MethodCategorizationPolicy class categoriesFor: #default!instance creation!public! !
-!MethodCategorizationPolicy class categoriesFor: #initialize!initializing!private! !
-!MethodCategorizationPolicy class categoriesFor: #uninitialize!class hierarchy-removing!private! !
+!Tools.MethodCategorizationPolicy class categoriesFor: #default!instance creation!public! !
+!Tools.MethodCategorizationPolicy class categoriesFor: #initialize!initializing!private! !
+!Tools.MethodCategorizationPolicy class categoriesFor: #uninitialize!class hierarchy-removing!private! !
 

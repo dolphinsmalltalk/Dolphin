@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Core.Object subclass: #'UI.Scintilla.Tests.MockScintillaView'
+Core.Object subclass: #'Tools.Tests.MockScintillaView'
 	instanceVariableNames: 'lastStyled tokens text currentTextStyles styleIdMap'
 	classVariableNames: ''
 	imports: #(#{UI.Scintilla.ScintillaConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-UI.Scintilla.Tests.MockScintillaView guid: (Core.GUID fromString: '{50616a84-12e3-4960-b005-82a37278383b}')!
-UI.Scintilla.Tests.MockScintillaView comment: 'To set up:
+Tools.Tests.MockScintillaView guid: (Core.GUID fromString: '{50616a84-12e3-4960-b005-82a37278383b}')!
+Tools.Tests.MockScintillaView comment: 'To set up:
 
 	mock := MockScintillaView new.
 	mock textStyles: SmalltalkWorkspace defaultTextStyles
@@ -23,8 +23,8 @@ Then to style:
 		in: mock.
 	"Now can access the ''tokens''"
 	mock tokens'!
-!UI.Scintilla.Tests.MockScintillaView categoriesForClass!Kernel-Objects! !
-!UI.Scintilla.Tests.MockScintillaView methodsFor!
+!Tools.Tests.MockScintillaView categoriesForClass!Kernel-Objects! !
+!Tools.Tests.MockScintillaView methodsFor!
 
 applyStyle: aSymbol toNext: anInteger 
 	self styleNext: anInteger mask: ((self styleNamed: aSymbol) ifNil: [0] ifNotNil: [:style | style id])!
@@ -55,7 +55,7 @@ setCurrentTextStyles: aCollection
 			each basicId isNil ifTrue: [each basicId: availableStyles next].
 			newStylesByName at: each name put: each.
 			newStylesById at: each basicId put: each].
-	newStylesByName at: #normal ifAbsentPut: [TextStyle normal].
+	newStylesByName at: #normal ifAbsentPut: [Scintilla.TextStyle normal].
 	currentTextStyles := newStylesByName.
 	styleIdMap := newStylesById!
 
@@ -87,7 +87,7 @@ styleNext: anInteger mask: anInteger2
 styleWithId: anInteger
 	^styleIdMap at: anInteger
 		ifAbsent: 
-			[TextStyle new
+			[Scintilla.TextStyle new
 				name: anInteger;
 				yourself]!
 
@@ -124,20 +124,20 @@ tokens
 					[lastStyle := style.
 					answer addLast: {each first. style. self plainTextRange: each first}]].
 	^answer! !
-!UI.Scintilla.Tests.MockScintillaView categoriesFor: #applyStyle:toNext:!public!styling! !
-!UI.Scintilla.Tests.MockScintillaView categoriesFor: #characterAt:!public!unit tests! !
-!UI.Scintilla.Tests.MockScintillaView categoriesFor: #maxStyle!public!unit tests! !
-!UI.Scintilla.Tests.MockScintillaView categoriesFor: #plainTextFrom:to:!public!unit tests! !
-!UI.Scintilla.Tests.MockScintillaView categoriesFor: #plainTextRange:!accessing!public! !
-!UI.Scintilla.Tests.MockScintillaView categoriesFor: #setCurrentTextStyles:!private!style definition! !
-!UI.Scintilla.Tests.MockScintillaView categoriesFor: #setIndicator:from:length:!indicators!public! !
-!UI.Scintilla.Tests.MockScintillaView categoriesFor: #startStylingFrom:!public!unit tests! !
-!UI.Scintilla.Tests.MockScintillaView categoriesFor: #styleNamed:!accessing!public!styling! !
-!UI.Scintilla.Tests.MockScintillaView categoriesFor: #styleNext:mask:!public!unit tests! !
-!UI.Scintilla.Tests.MockScintillaView categoriesFor: #styleWithId:!accessing!public!style definition! !
-!UI.Scintilla.Tests.MockScintillaView categoriesFor: #stylingPosition!accessing!public! !
-!UI.Scintilla.Tests.MockScintillaView categoriesFor: #text:!public!unit tests! !
-!UI.Scintilla.Tests.MockScintillaView categoriesFor: #textLength!public!unit tests! !
-!UI.Scintilla.Tests.MockScintillaView categoriesFor: #textStyles:!public!unit tests! !
-!UI.Scintilla.Tests.MockScintillaView categoriesFor: #tokens!public!unit tests! !
+!Tools.Tests.MockScintillaView categoriesFor: #applyStyle:toNext:!public!styling! !
+!Tools.Tests.MockScintillaView categoriesFor: #characterAt:!public!unit tests! !
+!Tools.Tests.MockScintillaView categoriesFor: #maxStyle!public!unit tests! !
+!Tools.Tests.MockScintillaView categoriesFor: #plainTextFrom:to:!public!unit tests! !
+!Tools.Tests.MockScintillaView categoriesFor: #plainTextRange:!accessing!public! !
+!Tools.Tests.MockScintillaView categoriesFor: #setCurrentTextStyles:!private!style definition! !
+!Tools.Tests.MockScintillaView categoriesFor: #setIndicator:from:length:!indicators!public! !
+!Tools.Tests.MockScintillaView categoriesFor: #startStylingFrom:!public!unit tests! !
+!Tools.Tests.MockScintillaView categoriesFor: #styleNamed:!accessing!public!styling! !
+!Tools.Tests.MockScintillaView categoriesFor: #styleNext:mask:!public!unit tests! !
+!Tools.Tests.MockScintillaView categoriesFor: #styleWithId:!accessing!public!style definition! !
+!Tools.Tests.MockScintillaView categoriesFor: #stylingPosition!accessing!public! !
+!Tools.Tests.MockScintillaView categoriesFor: #text:!public!unit tests! !
+!Tools.Tests.MockScintillaView categoriesFor: #textLength!public!unit tests! !
+!Tools.Tests.MockScintillaView categoriesFor: #textStyles:!public!unit tests! !
+!Tools.Tests.MockScintillaView categoriesFor: #tokens!public!unit tests! !
 

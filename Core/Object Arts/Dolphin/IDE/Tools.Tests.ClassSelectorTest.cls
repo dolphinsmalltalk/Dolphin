@@ -1,16 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-UI.Tests.SelectableItemsTest subclass: #ClassSelectorTest
+UI.Tests.SelectableItemsTest subclass: #'Tools.Tests.ClassSelectorTest'
 	instanceVariableNames: 'packageA packageB packageC dolphinTestA dolphinTestB dolphinTestC dolphinTestD dolphinTestE dolphinTestF dolphinTestG dolphinTestH dolphinTestI'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ClassSelectorTest guid: (Core.GUID fromString: '{165b5ae1-4f70-45e2-94d3-cc4f11c068dc}')!
-ClassSelectorTest isNonInstantiable: true!
-ClassSelectorTest comment: ''!
-!ClassSelectorTest categoriesForClass!Unclassified! !
-!ClassSelectorTest methodsFor!
+Tools.Tests.ClassSelectorTest guid: (Core.GUID fromString: '{165b5ae1-4f70-45e2-94d3-cc4f11c068dc}')!
+Tools.Tests.ClassSelectorTest isNonInstantiable: true!
+Tools.Tests.ClassSelectorTest comment: ''!
+!Tools.Tests.ClassSelectorTest categoriesForClass!Unclassified! !
+!Tools.Tests.ClassSelectorTest methodsFor!
 
 create: aClassSymbol subclassOf: aClass
 	| newClass |
@@ -297,27 +297,27 @@ testSelection
 			self assertIsNil: presenter selectionOrNil.
 			self should: [presenter selection] raise: Error].
 	self removeClassesABC! !
-!ClassSelectorTest categoriesFor: #create:subclassOf:!helpers!private! !
-!ClassSelectorTest categoriesFor: #create:subclassOf:inPackage:!helpers!private! !
-!ClassSelectorTest categoriesFor: #createClassesABC!helpers!private! !
-!ClassSelectorTest categoriesFor: #createClassesDEF!helpers!private! !
-!ClassSelectorTest categoriesFor: #createClassesGHI!helpers!private! !
-!ClassSelectorTest categoriesFor: #removalOfSelectionLeaves:!helpers!private! !
-!ClassSelectorTest categoriesFor: #removeClassesABC!helpers!private! !
-!ClassSelectorTest categoriesFor: #removeClassesDEF!helpers!private! !
-!ClassSelectorTest categoriesFor: #removeClassesGHI!helpers!private! !
-!ClassSelectorTest categoriesFor: #removeClassesNamed:!helpers!private! !
-!ClassSelectorTest categoriesFor: #resetSelection!helpers!private! !
-!ClassSelectorTest categoriesFor: #setUp!public!Running! !
-!ClassSelectorTest categoriesFor: #tearDown!public!Running! !
-!ClassSelectorTest categoriesFor: #testAddRemove!public!unit tests! !
-!ClassSelectorTest categoriesFor: #testHierarchyMove!public!unit tests! !
-!ClassSelectorTest categoriesFor: #testPackageMove!public!unit tests! !
-!ClassSelectorTest categoriesFor: #testSelection!public!unit tests! !
+!Tools.Tests.ClassSelectorTest categoriesFor: #create:subclassOf:!helpers!private! !
+!Tools.Tests.ClassSelectorTest categoriesFor: #create:subclassOf:inPackage:!helpers!private! !
+!Tools.Tests.ClassSelectorTest categoriesFor: #createClassesABC!helpers!private! !
+!Tools.Tests.ClassSelectorTest categoriesFor: #createClassesDEF!helpers!private! !
+!Tools.Tests.ClassSelectorTest categoriesFor: #createClassesGHI!helpers!private! !
+!Tools.Tests.ClassSelectorTest categoriesFor: #removalOfSelectionLeaves:!helpers!private! !
+!Tools.Tests.ClassSelectorTest categoriesFor: #removeClassesABC!helpers!private! !
+!Tools.Tests.ClassSelectorTest categoriesFor: #removeClassesDEF!helpers!private! !
+!Tools.Tests.ClassSelectorTest categoriesFor: #removeClassesGHI!helpers!private! !
+!Tools.Tests.ClassSelectorTest categoriesFor: #removeClassesNamed:!helpers!private! !
+!Tools.Tests.ClassSelectorTest categoriesFor: #resetSelection!helpers!private! !
+!Tools.Tests.ClassSelectorTest categoriesFor: #setUp!public!Running! !
+!Tools.Tests.ClassSelectorTest categoriesFor: #tearDown!public!Running! !
+!Tools.Tests.ClassSelectorTest categoriesFor: #testAddRemove!public!unit tests! !
+!Tools.Tests.ClassSelectorTest categoriesFor: #testHierarchyMove!public!unit tests! !
+!Tools.Tests.ClassSelectorTest categoriesFor: #testPackageMove!public!unit tests! !
+!Tools.Tests.ClassSelectorTest categoriesFor: #testSelection!public!unit tests! !
 
-!ClassSelectorTest class methodsFor!
+!Tools.Tests.ClassSelectorTest class methodsFor!
 
 resources
 	^{Core.Tests.DolphinTestPackages}! !
-!ClassSelectorTest class categoriesFor: #resources!Accessing!public! !
+!Tools.Tests.ClassSelectorTest class categoriesFor: #resources!Accessing!public! !
 

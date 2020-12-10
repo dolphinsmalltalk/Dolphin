@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-KeyedAspect subclass: #InstVarAspect
+Tools.KeyedAspect subclass: #'Tools.InstVarAspect'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-InstVarAspect guid: (GUID fromString: '{c92cbde8-f3b1-4799-9a70-0f2b15a024fc}')!
-InstVarAspect comment: ''!
-!InstVarAspect categoriesForClass!Attribute-Definition! !
-!InstVarAspect methodsFor!
+Tools.InstVarAspect guid: (Core.GUID fromString: '{c92cbde8-f3b1-4799-9a70-0f2b15a024fc}')!
+Tools.InstVarAspect comment: ''!
+!Tools.InstVarAspect categoriesForClass!Attribute-Definition! !
+!Tools.InstVarAspect methodsFor!
 
 batchSize
 	"Answers the batch size of the receiver, i.e. the number of keyed elements to return at a time"
@@ -66,14 +66,14 @@ writeInto: subjectObject value: valueObject
 	to valueObject."
 
 	^subjectObject instVarAt: self key put: valueObject! !
-!InstVarAspect categoriesFor: #batchSize!constants!public! !
-!InstVarAspect categoriesFor: #canWriteInto:!private!testing! !
-!InstVarAspect categoriesFor: #displayAspectNameOf:on:!displaying!private! !
-!InstVarAspect categoriesFor: #displayAspectText:on:!displaying!private! !
-!InstVarAspect categoriesFor: #instVarName:!accessing!public! !
-!InstVarAspect categoriesFor: #nameIn:!accessing!private! !
-!InstVarAspect categoriesFor: #objectRefName:!helpers!private! !
-!InstVarAspect categoriesFor: #readFrom:!indirect accessing!private! !
-!InstVarAspect categoriesFor: #selectIn:!event handling!private! !
-!InstVarAspect categoriesFor: #writeInto:value:!indirect accessing!private! !
+!Tools.InstVarAspect categoriesFor: #batchSize!constants!public! !
+!Tools.InstVarAspect categoriesFor: #canWriteInto:!private!testing! !
+!Tools.InstVarAspect categoriesFor: #displayAspectNameOf:on:!displaying!private! !
+!Tools.InstVarAspect categoriesFor: #displayAspectText:on:!displaying!private! !
+!Tools.InstVarAspect categoriesFor: #instVarName:!accessing!public! !
+!Tools.InstVarAspect categoriesFor: #nameIn:!accessing!private! !
+!Tools.InstVarAspect categoriesFor: #objectRefName:!helpers!private! !
+!Tools.InstVarAspect categoriesFor: #readFrom:!indirect accessing!private! !
+!Tools.InstVarAspect categoriesFor: #selectIn:!event handling!private! !
+!Tools.InstVarAspect categoriesFor: #writeInto:value:!indirect accessing!private! !
 

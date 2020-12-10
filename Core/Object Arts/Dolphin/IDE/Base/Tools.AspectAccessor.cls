@@ -1,20 +1,20 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-UI.ValueAdaptor subclass: #AspectAccessor
+UI.ValueAdaptor subclass: #'Tools.AspectAccessor'
 	instanceVariableNames: 'aspectDescriptor'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-AspectAccessor guid: (Core.GUID fromString: '{87b4c67b-026e-11d3-9fd7-00a0cc3e4a32}')!
-AspectAccessor comment: 'Part of the PublishedAspectInspector framework. This is a <ValueAspectAdaptor> on a particular aspect of an object. It also holds an <Aspect> that describes the aspect so that sufficient information is available to be able to display or edit it within a presenter UI. An AspectAccessor instance is also capable of knowing it''s "parent" accessor. This allows instances to be manipulated by an <AspectAccessorTreeModel>.
+Tools.AspectAccessor guid: (Core.GUID fromString: '{87b4c67b-026e-11d3-9fd7-00a0cc3e4a32}')!
+Tools.AspectAccessor comment: 'Part of the PublishedAspectInspector framework. This is a <ValueAspectAdaptor> on a particular aspect of an object. It also holds an <Aspect> that describes the aspect so that sufficient information is available to be able to display or edit it within a presenter UI. An AspectAccessor instance is also capable of knowing it''s "parent" accessor. This allows instances to be manipulated by an <AspectAccessorTreeModel>.
 
 Instance Variables:
 	aspectDescriptor	<Aspect> the descriptor for the aspect being accessed.
 	parentAccessor	<AspectAccessor> the parent accessor or nil.
 '!
-!AspectAccessor categoriesForClass!MVP-Models! !
-!AspectAccessor methodsFor!
+!Tools.AspectAccessor categoriesForClass!MVP-Models! !
+!Tools.AspectAccessor methodsFor!
 
 <= anAspectAccessor
 	"Answer whether the receiver is 'less than' anAspectAccessor.
@@ -210,41 +210,41 @@ yourselfAspect
 	receiver's value."
 
 	^self value publishedAspects detect: [:each | each name == #yourself]! !
-!AspectAccessor categoriesFor: #<=!comparing!public! !
-!AspectAccessor categoriesFor: #=!comparing!public! !
-!AspectAccessor categoriesFor: #aspectDescriptor!accessing!private! !
-!AspectAccessor categoriesFor: #aspectDescriptor:!accessing!private! !
-!AspectAccessor categoriesFor: #aspectDisplayOn:!private! !
-!AspectAccessor categoriesFor: #canEdit!operations!public! !
-!AspectAccessor categoriesFor: #canGet!public!testing! !
-!AspectAccessor categoriesFor: #canImmediateAction!public!testing! !
-!AspectAccessor categoriesFor: #canNil!public!testing! !
-!AspectAccessor categoriesFor: #canSet!public!testing! !
-!AspectAccessor categoriesFor: #defaultComparisonPolicy!initializing!private! !
-!AspectAccessor categoriesFor: #displayOn:!displaying!public! !
-!AspectAccessor categoriesFor: #editedValue:!accessing!private! !
-!AspectAccessor categoriesFor: #editUsing:!operations!public! !
-!AspectAccessor categoriesFor: #getMutableValue!public! !
-!AspectAccessor categoriesFor: #hash!comparing!public! !
-!AspectAccessor categoriesFor: #immediateActionUsing:!operations!public! !
-!AspectAccessor categoriesFor: #isMutable!accessing!public! !
-!AspectAccessor categoriesFor: #isReadable!public! !
-!AspectAccessor categoriesFor: #name!accessing!public! !
-!AspectAccessor categoriesFor: #objectRef!accessing!private! !
-!AspectAccessor categoriesFor: #objectRefName!accessing!public! !
-!AspectAccessor categoriesFor: #selectIn:!event handling!private! !
-!AspectAccessor categoriesFor: #setSubject:aspectDescriptor:!initializing!private! !
-!AspectAccessor categoriesFor: #setValue:!accessing!private! !
-!AspectAccessor categoriesFor: #value!accessing!public! !
-!AspectAccessor categoriesFor: #valueIcon!accessing!public! !
-!AspectAccessor categoriesFor: #valueImage!accessing!public! !
-!AspectAccessor categoriesFor: #valueNameInfo!accessing!public! !
-!AspectAccessor categoriesFor: #valueNameOnly!accessing!public! !
-!AspectAccessor categoriesFor: #valueText!accessing!public! !
-!AspectAccessor categoriesFor: #valueTextOnly!accessing!public! !
-!AspectAccessor categoriesFor: #yourselfAspect!accessing!public! !
+!Tools.AspectAccessor categoriesFor: #<=!comparing!public! !
+!Tools.AspectAccessor categoriesFor: #=!comparing!public! !
+!Tools.AspectAccessor categoriesFor: #aspectDescriptor!accessing!private! !
+!Tools.AspectAccessor categoriesFor: #aspectDescriptor:!accessing!private! !
+!Tools.AspectAccessor categoriesFor: #aspectDisplayOn:!private! !
+!Tools.AspectAccessor categoriesFor: #canEdit!operations!public! !
+!Tools.AspectAccessor categoriesFor: #canGet!public!testing! !
+!Tools.AspectAccessor categoriesFor: #canImmediateAction!public!testing! !
+!Tools.AspectAccessor categoriesFor: #canNil!public!testing! !
+!Tools.AspectAccessor categoriesFor: #canSet!public!testing! !
+!Tools.AspectAccessor categoriesFor: #defaultComparisonPolicy!initializing!private! !
+!Tools.AspectAccessor categoriesFor: #displayOn:!displaying!public! !
+!Tools.AspectAccessor categoriesFor: #editedValue:!accessing!private! !
+!Tools.AspectAccessor categoriesFor: #editUsing:!operations!public! !
+!Tools.AspectAccessor categoriesFor: #getMutableValue!public! !
+!Tools.AspectAccessor categoriesFor: #hash!comparing!public! !
+!Tools.AspectAccessor categoriesFor: #immediateActionUsing:!operations!public! !
+!Tools.AspectAccessor categoriesFor: #isMutable!accessing!public! !
+!Tools.AspectAccessor categoriesFor: #isReadable!public! !
+!Tools.AspectAccessor categoriesFor: #name!accessing!public! !
+!Tools.AspectAccessor categoriesFor: #objectRef!accessing!private! !
+!Tools.AspectAccessor categoriesFor: #objectRefName!accessing!public! !
+!Tools.AspectAccessor categoriesFor: #selectIn:!event handling!private! !
+!Tools.AspectAccessor categoriesFor: #setSubject:aspectDescriptor:!initializing!private! !
+!Tools.AspectAccessor categoriesFor: #setValue:!accessing!private! !
+!Tools.AspectAccessor categoriesFor: #value!accessing!public! !
+!Tools.AspectAccessor categoriesFor: #valueIcon!accessing!public! !
+!Tools.AspectAccessor categoriesFor: #valueImage!accessing!public! !
+!Tools.AspectAccessor categoriesFor: #valueNameInfo!accessing!public! !
+!Tools.AspectAccessor categoriesFor: #valueNameOnly!accessing!public! !
+!Tools.AspectAccessor categoriesFor: #valueText!accessing!public! !
+!Tools.AspectAccessor categoriesFor: #valueTextOnly!accessing!public! !
+!Tools.AspectAccessor categoriesFor: #yourselfAspect!accessing!public! !
 
-!AspectAccessor class methodsFor!
+!Tools.AspectAccessor class methodsFor!
 
 new
 	"Private - An instance of this class requires parameters"
@@ -258,6 +258,6 @@ subject: anObject aspect: anAspect
 	^self basicNew
 		setSubject: anObject aspectDescriptor: anAspect;
 		yourself! !
-!AspectAccessor class categoriesFor: #new!instance creation!private! !
-!AspectAccessor class categoriesFor: #subject:aspect:!instance creation!public! !
+!Tools.AspectAccessor class categoriesFor: #new!instance creation!private! !
+!Tools.AspectAccessor class categoriesFor: #subject:aspect:!instance creation!public! !
 

@@ -1,14 +1,14 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-MethodCategory subclass: #VirtualMethodCategory
+Core.MethodCategory subclass: #'Tools.VirtualMethodCategory'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-VirtualMethodCategory guid: (GUID fromString: '{87b4c504-026e-11d3-9fd7-00a0cc3e4a32}')!
-VirtualMethodCategory isAbstract: true!
-VirtualMethodCategory comment: 'VirtualMethodCategory is the class of method categories whose membership is calculated on demand rather than looked up in the method catalogue of the method''s class. As virtual categories usually have no static record in the image, they typically carry no space overhead. This is a significant benefit for the privacy categories ''private'' and ''public'' (membership of which is determined by a bit flag in the method header), as every method in the system is in one or the other. The downside is that querying the membership of the category takes more time, although this is not likely to be noticeable in normal operation.
+Tools.VirtualMethodCategory guid: (Core.GUID fromString: '{87b4c504-026e-11d3-9fd7-00a0cc3e4a32}')!
+Tools.VirtualMethodCategory isNonInstantiable: true!
+Tools.VirtualMethodCategory comment: 'VirtualMethodCategory is the class of method categories whose membership is calculated on demand rather than looked up in the method catalogue of the method''s class. As virtual categories usually have no static record in the image, they typically carry no space overhead. This is a significant benefit for the privacy categories ''private'' and ''public'' (membership of which is determined by a bit flag in the method header), as every method in the system is in one or the other. The downside is that querying the membership of the category takes more time, although this is not likely to be noticeable in normal operation.
 
 VirtualMethodCategory itself is abstract, but provides much of the implementation for simple virtual categories, which typically need implement only #includesMethod:
 
@@ -19,8 +19,8 @@ Instance Variables:
 
 Class Variables:
 	None'!
-!VirtualMethodCategory categoriesForClass!System-Support! !
-!VirtualMethodCategory methodsFor!
+!Tools.VirtualMethodCategory categoriesForClass!System-Support! !
+!Tools.VirtualMethodCategory methodsFor!
 
 addMethodSilently: aCompiledMethod 
 	"Private - Add the <CompiledMethod> argument to the set of methods that are members
@@ -85,14 +85,14 @@ selectorsInBehavior: aBehavior
 	selectors := WriteStream on: (Array new: 8).
 	self methodsInBehavior: aBehavior do: [:each | selectors nextPut: each selector].
 	^selectors contents! !
-!VirtualMethodCategory categoriesFor: #addMethodSilently:!adding!private! !
-!VirtualMethodCategory categoriesFor: #behaviorsDo:!enumerating!public! !
-!VirtualMethodCategory categoriesFor: #includesBehavior:!enumerating!public! !
-!VirtualMethodCategory categoriesFor: #includesMethod:!public!testing! !
-!VirtualMethodCategory categoriesFor: #isSlowToEnumerate!public!testing! !
-!VirtualMethodCategory categoriesFor: #isVirtual!public!testing! !
-!VirtualMethodCategory categoriesFor: #methodsInBehavior:!enumerating!public! !
-!VirtualMethodCategory categoriesFor: #methodsInBehavior:do:!enumerating!public! !
-!VirtualMethodCategory categoriesFor: #removeMethodSilently:!private!removing! !
-!VirtualMethodCategory categoriesFor: #selectorsInBehavior:!enumerating!public! !
+!Tools.VirtualMethodCategory categoriesFor: #addMethodSilently:!adding!private! !
+!Tools.VirtualMethodCategory categoriesFor: #behaviorsDo:!enumerating!public! !
+!Tools.VirtualMethodCategory categoriesFor: #includesBehavior:!enumerating!public! !
+!Tools.VirtualMethodCategory categoriesFor: #includesMethod:!public!testing! !
+!Tools.VirtualMethodCategory categoriesFor: #isSlowToEnumerate!public!testing! !
+!Tools.VirtualMethodCategory categoriesFor: #isVirtual!public!testing! !
+!Tools.VirtualMethodCategory categoriesFor: #methodsInBehavior:!enumerating!public! !
+!Tools.VirtualMethodCategory categoriesFor: #methodsInBehavior:do:!enumerating!public! !
+!Tools.VirtualMethodCategory categoriesFor: #removeMethodSilently:!private!removing! !
+!Tools.VirtualMethodCategory categoriesFor: #selectorsInBehavior:!enumerating!public! !
 

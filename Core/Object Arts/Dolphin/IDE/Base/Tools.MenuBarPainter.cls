@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-MenuPainter subclass: #MenuBarPainter
+Tools.MenuPainter subclass: #'Tools.MenuBarPainter'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-MenuBarPainter guid: (GUID fromString: '{b83154cc-4e8d-4ee0-9b6e-b8c6826bab88}')!
-MenuBarPainter comment: ''!
-!MenuBarPainter categoriesForClass!Kernel-Objects! !
-!MenuBarPainter methodsFor!
+Tools.MenuBarPainter guid: (Core.GUID fromString: '{b83154cc-4e8d-4ee0-9b6e-b8c6826bab88}')!
+Tools.MenuBarPainter comment: ''!
+!Tools.MenuBarPainter categoriesForClass!Kernel-Objects! !
+!Tools.MenuBarPainter methodsFor!
 
 borderInset
 	"Private - Answer a <Rectangle> indicating the inset at each corner of the receiver filled by
@@ -93,15 +93,15 @@ paintSeparatorOn: aCanvas in: aRectangle
 		pen: Color highlight3d pen;
 		lineFrom: position + (1 @ 0) to: position + (1 @ cy)] 
 			ensure: [aCanvas pen: oldPen]! !
-!MenuBarPainter categoriesFor: #borderInset!constants!private! !
-!MenuBarPainter categoriesFor: #calculateGeometry:!public!updating! !
-!MenuBarPainter categoriesFor: #drawTextFlags!painting!private! !
-!MenuBarPainter categoriesFor: #insertBefore:position:canvas:!public!testing! !
-!MenuBarPainter categoriesFor: #itemHeight!constants!private! !
-!MenuBarPainter categoriesFor: #itemRect:using:!helpers!public! !
-!MenuBarPainter categoriesFor: #menuColor!private!tracking! !
-!MenuBarPainter categoriesFor: #offsetForSubmenu:canvas:!helpers!public! !
-!MenuBarPainter categoriesFor: #paintEdgeOn:in:!painting!private! !
-!MenuBarPainter categoriesFor: #paintItem:on:in:!painting!private! !
-!MenuBarPainter categoriesFor: #paintSeparatorOn:in:!painting!private! !
+!Tools.MenuBarPainter categoriesFor: #borderInset!constants!private! !
+!Tools.MenuBarPainter categoriesFor: #calculateGeometry:!public!updating! !
+!Tools.MenuBarPainter categoriesFor: #drawTextFlags!painting!private! !
+!Tools.MenuBarPainter categoriesFor: #insertBefore:position:canvas:!public!testing! !
+!Tools.MenuBarPainter categoriesFor: #itemHeight!constants!private! !
+!Tools.MenuBarPainter categoriesFor: #itemRect:using:!helpers!public! !
+!Tools.MenuBarPainter categoriesFor: #menuColor!private!tracking! !
+!Tools.MenuBarPainter categoriesFor: #offsetForSubmenu:canvas:!helpers!public! !
+!Tools.MenuBarPainter categoriesFor: #paintEdgeOn:in:!painting!private! !
+!Tools.MenuBarPainter categoriesFor: #paintItem:on:in:!painting!private! !
+!Tools.MenuBarPainter categoriesFor: #paintSeparatorOn:in:!painting!private! !
 

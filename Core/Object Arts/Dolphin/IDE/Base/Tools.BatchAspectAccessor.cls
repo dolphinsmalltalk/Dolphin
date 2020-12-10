@@ -1,16 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-AspectAccessor subclass: #BatchAspectAccessor
+Tools.AspectAccessor subclass: #'Tools.BatchAspectAccessor'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-BatchAspectAccessor guid: (GUID fromString: '{3a00a038-5f65-4669-9966-cbdf3d444a7e}')!
-BatchAspectAccessor isAbstract: true!
-BatchAspectAccessor comment: ''!
-!BatchAspectAccessor categoriesForClass!MVP-Models! !
-!BatchAspectAccessor methodsFor!
+Tools.BatchAspectAccessor guid: (Core.GUID fromString: '{3a00a038-5f65-4669-9966-cbdf3d444a7e}')!
+Tools.BatchAspectAccessor isNonInstantiable: true!
+Tools.BatchAspectAccessor comment: ''!
+!Tools.BatchAspectAccessor categoriesForClass!MVP-Models! !
+!Tools.BatchAspectAccessor methodsFor!
 
 aspectClass
 	^self subclassResponsibility!
@@ -59,18 +59,18 @@ value
 
 valueIcon
 	^self icon! !
-!BatchAspectAccessor categoriesFor: #aspectClass!accessing!public! !
-!BatchAspectAccessor categoriesFor: #batchSize!accessing!public! !
-!BatchAspectAccessor categoriesFor: #displayOn:!displaying!public! !
-!BatchAspectAccessor categoriesFor: #keys!accessing!public! !
-!BatchAspectAccessor categoriesFor: #nextBatch:!private! !
-!BatchAspectAccessor categoriesFor: #selectIn:!event handling!private! !
-!BatchAspectAccessor categoriesFor: #startKey!accessing!public! !
-!BatchAspectAccessor categoriesFor: #subjectIncludesKey:!accessing!private! !
-!BatchAspectAccessor categoriesFor: #value!accessing!public! !
-!BatchAspectAccessor categoriesFor: #valueIcon!accessing!public! !
+!Tools.BatchAspectAccessor categoriesFor: #aspectClass!accessing!public! !
+!Tools.BatchAspectAccessor categoriesFor: #batchSize!accessing!public! !
+!Tools.BatchAspectAccessor categoriesFor: #displayOn:!displaying!public! !
+!Tools.BatchAspectAccessor categoriesFor: #keys!accessing!public! !
+!Tools.BatchAspectAccessor categoriesFor: #nextBatch:!private! !
+!Tools.BatchAspectAccessor categoriesFor: #selectIn:!event handling!private! !
+!Tools.BatchAspectAccessor categoriesFor: #startKey!accessing!public! !
+!Tools.BatchAspectAccessor categoriesFor: #subjectIncludesKey:!accessing!private! !
+!Tools.BatchAspectAccessor categoriesFor: #value!accessing!public! !
+!Tools.BatchAspectAccessor categoriesFor: #valueIcon!accessing!public! !
 
-!BatchAspectAccessor class methodsFor!
+!Tools.BatchAspectAccessor class methodsFor!
 
 aspectBatchClass
 	^KeyedAspectBatch!
@@ -93,7 +93,7 @@ subject: anObject keys: aSequencedReadableCollection startingAt: startInteger ba
 				startingAt: startInteger
 				batchSize: sizeInteger
 				accessorClass: self)! !
-!BatchAspectAccessor class categoriesFor: #aspectBatchClass!public! !
-!BatchAspectAccessor class categoriesFor: #icon!constants!public! !
-!BatchAspectAccessor class categoriesFor: #subject:keys:startingAt:batchSize:!instance creation!public! !
+!Tools.BatchAspectAccessor class categoriesFor: #aspectBatchClass!public! !
+!Tools.BatchAspectAccessor class categoriesFor: #icon!constants!public! !
+!Tools.BatchAspectAccessor class categoriesFor: #subject:keys:startingAt:batchSize:!instance creation!public! !
 

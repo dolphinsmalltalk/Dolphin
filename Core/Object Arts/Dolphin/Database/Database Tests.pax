@@ -17,7 +17,6 @@ package setClassNames: #(
 
 package setPrerequisites: #(
 	'Database Connection Base'
-	'..\IDE\Base\Development System'
 	'..\Base\Dolphin'
 	'..\Base\Dolphin Base Tests'
 	'..\..\..\Contributions\Burning River\ExternalProcess\ExternalProcess'

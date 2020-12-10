@@ -1,17 +1,17 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-BasicInspector subclass: #AXInspector
+Tools.BasicInspector subclass: #'Tools.AXInspector'
 	instanceVariableNames: 'collection'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-AXInspector guid: (GUID fromString: '{c06f3b62-0868-11d3-93af-00a024ca708a}')!
-AXInspector comment: 'AXInspector is a <compositePresenter> that implements a specialised inspect facility onto a <IDispatch>. This attempts to display the IDispatch properties.
+Tools.AXInspector guid: (Core.GUID fromString: '{c06f3b62-0868-11d3-93af-00a024ca708a}')!
+Tools.AXInspector comment: 'AXInspector is a <compositePresenter> that implements a specialised inspect facility onto a <IDispatch>. This attempts to display the IDispatch properties.
 
 '!
-!AXInspector categoriesForClass!MVP-Presenters! !
-!AXInspector methodsFor!
+!Tools.AXInspector categoriesForClass!MVP-Presenters! !
+!Tools.AXInspector methodsFor!
 
 count
 	"Private - Answer the number of indexed variables in the receiver."
@@ -66,9 +66,9 @@ unableToDisplayVariableErrorFormatString
 	printed."
 
 	^'Unable to access or display <1s> [<3s>]'! !
-!AXInspector categoriesFor: #count!accessing!private! !
-!AXInspector categoriesFor: #getField:!accessing!private! !
-!AXInspector categoriesFor: #getFieldList!accessing!private! !
-!AXInspector categoriesFor: #setField:to:!accessing!private! !
-!AXInspector categoriesFor: #unableToDisplayVariableErrorFormatString!constants!private! !
+!Tools.AXInspector categoriesFor: #count!accessing!private! !
+!Tools.AXInspector categoriesFor: #getField:!accessing!private! !
+!Tools.AXInspector categoriesFor: #getFieldList!accessing!private! !
+!Tools.AXInspector categoriesFor: #setField:to:!accessing!private! !
+!Tools.AXInspector categoriesFor: #unableToDisplayVariableErrorFormatString!constants!private! !
 

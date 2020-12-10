@@ -1,23 +1,23 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-SmalltalkSystemIcon subclass: #SmalltalkSystemFolder
+Tools.SmalltalkSystemIcon subclass: #'Tools.SmalltalkSystemFolder'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-SmalltalkSystemFolder guid: (GUID fromString: '{87b4c6df-026e-11d3-9fd7-00a0cc3e4a32}')!
-SmalltalkSystemFolder comment: ''!
-!SmalltalkSystemFolder categoriesForClass!MVP-Models! !
-!SmalltalkSystemFolder methodsFor!
+Tools.SmalltalkSystemFolder guid: (Core.GUID fromString: '{87b4c6df-026e-11d3-9fd7-00a0cc3e4a32}')!
+Tools.SmalltalkSystemFolder comment: ''!
+!Tools.SmalltalkSystemFolder categoriesForClass!MVP-Models! !
+!Tools.SmalltalkSystemFolder methodsFor!
 
 isFolder
 	"Answers true if the receiver can hold contents"
 
 	^true! !
-!SmalltalkSystemFolder categoriesFor: #isFolder!accessing!public! !
+!Tools.SmalltalkSystemFolder categoriesFor: #isFolder!accessing!public! !
 
-!SmalltalkSystemFolder class methodsFor!
+!Tools.SmalltalkSystemFolder class methodsFor!
 
 description: aStringDescription
 	"Answers an instance of the receiver with a default icon and aStringDescription"
@@ -58,9 +58,9 @@ icon: anIcon description: aStringDescription helpId: helpId
 		description: aStringDescription
 		openBlock: [:presenter :object | presenter expand: object]
 		helpId: helpId! !
-!SmalltalkSystemFolder class categoriesFor: #description:!instance creation!public! !
-!SmalltalkSystemFolder class categoriesFor: #description:helpId:!instance creation!public! !
-!SmalltalkSystemFolder class categoriesFor: #icon!constants!public! !
-!SmalltalkSystemFolder class categoriesFor: #icon:description:!instance creation!public! !
-!SmalltalkSystemFolder class categoriesFor: #icon:description:helpId:!instance creation!public! !
+!Tools.SmalltalkSystemFolder class categoriesFor: #description:!instance creation!public! !
+!Tools.SmalltalkSystemFolder class categoriesFor: #description:helpId:!instance creation!public! !
+!Tools.SmalltalkSystemFolder class categoriesFor: #icon!constants!public! !
+!Tools.SmalltalkSystemFolder class categoriesFor: #icon:description:!instance creation!public! !
+!Tools.SmalltalkSystemFolder class categoriesFor: #icon:description:helpId:!instance creation!public! !
 

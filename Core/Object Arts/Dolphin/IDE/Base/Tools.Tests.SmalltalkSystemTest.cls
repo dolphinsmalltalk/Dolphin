@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Core.Tests.DolphinTest subclass: #SmalltalkSystemTest
+Core.Tests.DolphinTest subclass: #'Tools.Tests.SmalltalkSystemTest'
 	instanceVariableNames: 'devsys'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-SmalltalkSystemTest guid: (Core.GUID fromString: '{8ce20f6c-ccc5-4249-85e0-ef3888d589d7}')!
-SmalltalkSystemTest comment: ''!
-!SmalltalkSystemTest categoriesForClass!Unclassified! !
-!SmalltalkSystemTest methodsFor!
+Tools.Tests.SmalltalkSystemTest guid: (Core.GUID fromString: '{8ce20f6c-ccc5-4249-85e0-ef3888d589d7}')!
+Tools.Tests.SmalltalkSystemTest comment: ''!
+!Tools.Tests.SmalltalkSystemTest categoriesForClass!Unclassified! !
+!Tools.Tests.SmalltalkSystemTest methodsFor!
 
 setUp
 	devsys := Smalltalk developmentSystem!
@@ -19,19 +19,19 @@ testAllSelectorsImplementedIn
 	"Github #645"
 	env := Refactory.Browser.BrowserEnvironment new forPackages: {Object owningPackage. ImageStripper owningPackage}.
 	"Preconditions"
-	self assert: (env definesClass: MSG)
+	self assert: (env definesClass: OS.MSG)
 		description: 'Test inconclusive; package does not own expected class'.
-	self assert: (MSG dynamicSelectors includes: #x)
+	self assert: (OS.MSG dynamicSelectors includes: #x)
 		description: 'Test inconclusive; MSG does not have expected dynamic selector'.
 	self
 		assert: (ImageStripper >> #addReferencedViews:to: sendsSelector: #viewClass)
 		description: 'Test inconclusive; example unimplemented selector not sent'.
-	all := Smalltalk developmentSystem unimplementedSelectorsIn: env.
+	all := SmalltalkSystem current unimplementedSelectorsIn: env.
 	self assert: (all includes: #viewClass).
 	self deny: (all includes: #x).
 	env := Refactory.Browser.BrowserEnvironment new forPackages: {Object owningPackage.
 						(STBViewProxy >> #viewClass) owningPackage}.
-	all := Smalltalk developmentSystem unimplementedSelectorsIn: env.
+	all := SmalltalkSystem current unimplementedSelectorsIn: env.
 	self deny: (all includes: #viewClass)!
 
 testBuildSimpleSignature
@@ -188,10 +188,10 @@ wxy'.
 	jkl
 	mn op
 	q'! !
-!SmalltalkSystemTest categoriesFor: #setUp!public!Running! !
-!SmalltalkSystemTest categoriesFor: #testAllSelectorsImplementedIn!public!unit tests! !
-!SmalltalkSystemTest categoriesFor: #testBuildSimpleSignature!public!unit tests! !
-!SmalltalkSystemTest categoriesFor: #testDefaultInspectorClass!public!unit tests! !
-!SmalltalkSystemTest categoriesFor: #testNameForArgument!public!unit tests! !
-!SmalltalkSystemTest categoriesFor: #testWrapText!public!unit tests! !
+!Tools.Tests.SmalltalkSystemTest categoriesFor: #setUp!public!Running! !
+!Tools.Tests.SmalltalkSystemTest categoriesFor: #testAllSelectorsImplementedIn!public!unit tests! !
+!Tools.Tests.SmalltalkSystemTest categoriesFor: #testBuildSimpleSignature!public!unit tests! !
+!Tools.Tests.SmalltalkSystemTest categoriesFor: #testDefaultInspectorClass!public!unit tests! !
+!Tools.Tests.SmalltalkSystemTest categoriesFor: #testNameForArgument!public!unit tests! !
+!Tools.Tests.SmalltalkSystemTest categoriesFor: #testWrapText!public!unit tests! !
 

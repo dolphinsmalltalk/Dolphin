@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Category subclass: #IntermediateCategory
+Core.Category subclass: #'Tools.IntermediateCategory'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-IntermediateCategory guid: (GUID fromString: '{87b4c501-026e-11d3-9fd7-00a0cc3e4a32}')!
-IntermediateCategory comment: ''!
-!IntermediateCategory categoriesForClass!System-Support! !
-!IntermediateCategory methodsFor!
+Tools.IntermediateCategory guid: (Core.GUID fromString: '{87b4c501-026e-11d3-9fd7-00a0cc3e4a32}')!
+Tools.IntermediateCategory comment: ''!
+!Tools.IntermediateCategory categoriesForClass!System-Support! !
+!Tools.IntermediateCategory methodsFor!
 
 acceptsAdditions
 	"Answer whether new members can be added to the receiver.
@@ -68,24 +68,24 @@ removeClass: class
 	"Remove the <ClassDescription>, class, from the classes 'held' by the receiver."
 
 	^self shouldNotImplement! !
-!IntermediateCategory categoriesFor: #acceptsAdditions!public!testing! !
-!IntermediateCategory categoriesFor: #addClass:!adding!public! !
-!IntermediateCategory categoriesFor: #addMethod:!adding!public! !
-!IntermediateCategory categoriesFor: #addMethodSilently:!adding!private! !
-!IntermediateCategory categoriesFor: #contents!enumerating!public! !
-!IntermediateCategory categoriesFor: #includesMethod:!public!testing! !
-!IntermediateCategory categoriesFor: #isEmpty!public!testing! !
-!IntermediateCategory categoriesFor: #isIntermediate!private!testing! !
-!IntermediateCategory categoriesFor: #methodsInBehavior:!enumerating!public! !
-!IntermediateCategory categoriesFor: #methodsInBehavior:do:!enumerating!public! !
-!IntermediateCategory categoriesFor: #removeClass:!public!removing! !
+!Tools.IntermediateCategory categoriesFor: #acceptsAdditions!public!testing! !
+!Tools.IntermediateCategory categoriesFor: #addClass:!adding!public! !
+!Tools.IntermediateCategory categoriesFor: #addMethod:!adding!public! !
+!Tools.IntermediateCategory categoriesFor: #addMethodSilently:!adding!private! !
+!Tools.IntermediateCategory categoriesFor: #contents!enumerating!public! !
+!Tools.IntermediateCategory categoriesFor: #includesMethod:!public!testing! !
+!Tools.IntermediateCategory categoriesFor: #isEmpty!public!testing! !
+!Tools.IntermediateCategory categoriesFor: #isIntermediate!private!testing! !
+!Tools.IntermediateCategory categoriesFor: #methodsInBehavior:!enumerating!public! !
+!Tools.IntermediateCategory categoriesFor: #methodsInBehavior:do:!enumerating!public! !
+!Tools.IntermediateCategory categoriesFor: #removeClass:!public!removing! !
 
-!IntermediateCategory class methodsFor!
+!Tools.IntermediateCategory class methodsFor!
 
 name: categoryName
 	"Answer the subinstance of the receiver with the 
 	<readableString> name, categoryName."
 
 	^self newNamed: categoryName! !
-!IntermediateCategory class categoriesFor: #name:!instance creation!public! !
+!Tools.IntermediateCategory class categoriesFor: #name:!instance creation!public! !
 

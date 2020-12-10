@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ClassBrowserPlugin subclass: #ResourceListPlugin
+Tools.ClassBrowserPlugin subclass: #'Tools.ResourceListPlugin'
 	instanceVariableNames: 'resourcesPresenter flags'
 	classVariableNames: 'ShowInheritedResourcesMask ShowSubclassResourcesMask'
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ResourceListPlugin guid: (GUID fromString: '{9bf86123-58b4-42e2-bdf8-063f7e315276}')!
-ResourceListPlugin comment: 'ResourceListPlugin is a <classBrowserPlugin> that displays a list of the view resources associated with a class, optionally including those inherited from superclasses and/or those owned by subclasses.
+Tools.ResourceListPlugin guid: (Core.GUID fromString: '{9bf86123-58b4-42e2-bdf8-063f7e315276}')!
+Tools.ResourceListPlugin comment: 'ResourceListPlugin is a <classBrowserPlugin> that displays a list of the view resources associated with a class, optionally including those inherited from superclasses and/or those owned by subclasses.
 
 Instance Variables:
 	resourcesPresenter	<ResourceListPresenter>
@@ -18,8 +18,8 @@ Class Variables:
 	ShowInheritedResourcesMask		<integer>
 
 '!
-!ResourceListPlugin categoriesForClass!Browser-Plugins!MVP-Presenters! !
-!ResourceListPlugin methodsFor!
+!Tools.ResourceListPlugin categoriesForClass!Browser-Plugins!MVP-Presenters! !
+!Tools.ResourceListPlugin methodsFor!
 
 createComponents
 	"Private - Create the presenters contained by the receiver"
@@ -128,24 +128,24 @@ toggleShowSubclassResources
 	"Toggle between showing resources inherited from superclasses or not"
 
 	self isShowingSubclassResources: self isShowingSubclassResources not! !
-!ResourceListPlugin categoriesFor: #createComponents!commands!initializing!private! !
-!ResourceListPlugin categoriesFor: #createSchematicWiring!initializing!public! !
-!ResourceListPlugin categoriesFor: #defaultHelpId!constants!public! !
-!ResourceListPlugin categoriesFor: #displayOn:!displaying!public! !
-!ResourceListPlugin categoriesFor: #initialize!initializing!private! !
-!ResourceListPlugin categoriesFor: #isShowingInheritedResources!private!testing! !
-!ResourceListPlugin categoriesFor: #isShowingInheritedResources:!accessing!private! !
-!ResourceListPlugin categoriesFor: #isShowingSubclassResources!private!testing! !
-!ResourceListPlugin categoriesFor: #isShowingSubclassResources:!accessing!private! !
-!ResourceListPlugin categoriesFor: #onBrowserClassSelected!event handling!public! !
-!ResourceListPlugin categoriesFor: #onBrowserMethodSelected!event handling!private! !
-!ResourceListPlugin categoriesFor: #onShownInBrowser!event handling!public! !
-!ResourceListPlugin categoriesFor: #queryCommand:!commands!private! !
-!ResourceListPlugin categoriesFor: #showClassResources!private!updating! !
-!ResourceListPlugin categoriesFor: #toggleShowInheritedResources!commands!public! !
-!ResourceListPlugin categoriesFor: #toggleShowSubclassResources!commands!public! !
+!Tools.ResourceListPlugin categoriesFor: #createComponents!commands!initializing!private! !
+!Tools.ResourceListPlugin categoriesFor: #createSchematicWiring!initializing!public! !
+!Tools.ResourceListPlugin categoriesFor: #defaultHelpId!constants!public! !
+!Tools.ResourceListPlugin categoriesFor: #displayOn:!displaying!public! !
+!Tools.ResourceListPlugin categoriesFor: #initialize!initializing!private! !
+!Tools.ResourceListPlugin categoriesFor: #isShowingInheritedResources!private!testing! !
+!Tools.ResourceListPlugin categoriesFor: #isShowingInheritedResources:!accessing!private! !
+!Tools.ResourceListPlugin categoriesFor: #isShowingSubclassResources!private!testing! !
+!Tools.ResourceListPlugin categoriesFor: #isShowingSubclassResources:!accessing!private! !
+!Tools.ResourceListPlugin categoriesFor: #onBrowserClassSelected!event handling!public! !
+!Tools.ResourceListPlugin categoriesFor: #onBrowserMethodSelected!event handling!private! !
+!Tools.ResourceListPlugin categoriesFor: #onShownInBrowser!event handling!public! !
+!Tools.ResourceListPlugin categoriesFor: #queryCommand:!commands!private! !
+!Tools.ResourceListPlugin categoriesFor: #showClassResources!private!updating! !
+!Tools.ResourceListPlugin categoriesFor: #toggleShowInheritedResources!commands!public! !
+!Tools.ResourceListPlugin categoriesFor: #toggleShowSubclassResources!commands!public! !
 
-!ResourceListPlugin class methodsFor!
+!Tools.ResourceListPlugin class methodsFor!
 
 icon
 	"Answers an Icon that can be used to represent this class"
@@ -161,11 +161,11 @@ resource_Default_view
 	DO NOT EDIT OR RECATEGORIZE THIS METHOD.
 
 	If you wish to modify this resource evaluate:
-	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Default_view)
+	Tools.ViewComposer openOn: (UI.ResourceIdentifier class: self selector: #resource_Default_view)
 	"
 
-	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.ContainerView) 34 15 nil nil 34 2 8 1409286144 131073 416 nil nil nil 5 nil nil nil 416 788230 ##(Smalltalk.BorderLayout) 1 1 nil nil nil nil 410 ##(Smalltalk.ReferenceView) 34 14 nil 416 34 2 8 1140850688 131073 512 nil nil nil 5 265030 4 ##(Smalltalk.Menu) nil true 34 8 984134 2 ##(Smalltalk.CommandMenuItem) 2097153 1180998 4 ##(Smalltalk.CommandDescription) #editResource 8 '&Edit' 1 1 263494 3 ##(Smalltalk.Icon) nil true 1572870 ##(Smalltalk.ImageRelativeFileLocator) 8 'ViewComposer.ico' 2032142 ##(Smalltalk.STBExternalResourceLibraryProxy) 8 'dolphindr7.dll' nil nil nil 626 1 658 #browseReferences 8 'Browse &References' 1 1 nil nil nil 626 1 658 #showResource 8 '&Show' 1 1 706 nil true 752 8 'TestView.ico' 800 nil nil 626 1 658 #newView 8 '&New...' 1 1 nil nil nil 983366 1 ##(Smalltalk.DividerMenuItem) 4097 626 1 658 #deleteResource 8 '&Delete' 1 1 706 nil true 752 8 'EditClear.ico' 800 nil nil 1010 4097 578 nil true 34 7 626 1 658 #toggleShowInheritedResources 8 'Show I&nherited' 1 1 nil nil nil 626 1 658 #toggleShowSubclassResources 8 'Show &Subclass' 1 1 nil nil nil 1010 4097 626 1 658 #tileIconMode 8 '&Tiles' 1 1 nil nil nil 626 1 658 #largeIconMode 8 '&Icons' 1 1 nil nil nil 626 1025 658 #listMode 8 '&List' 1 1 nil nil nil 626 1025 658 #reportMode 8 '&Details' 1 1 nil nil nil 8 '&View' nil 134217729 nil nil nil nil nil 8 '' nil 134217729 nil nil nil nil nil nil nil 512 1180230 1 ##(Smalltalk.ResourceIdentifier) ##(Smalltalk.ResourceListPresenter) #resource_Package_view nil 983302 ##(Smalltalk.MessageSequence) 138 144 34 2 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 328198 ##(Smalltalk.Point) 1 1 1650 1061 501 512 1602 #contextMenu: 34 1 592 512 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 18 2 0 0 250 0 0 0] 8 #() 1650 193 193 nil 27 170 192 34 2 512 8 'resources' nil 1538 138 144 34 1 1602 #createAt:extent: 34 2 1650 3839 21 1650 1061 501 416 1730 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 127 7 0 0 10 0 0 0 145 9 0 0 4 1 0 0] 34 1 512 1792 nil 27 )! !
-!ResourceListPlugin class categoriesFor: #icon!constants!public! !
-!ResourceListPlugin class categoriesFor: #initialize!initializing!public! !
-!ResourceListPlugin class categoriesFor: #resource_Default_view!public!resources-views! !
+	^#(#'!!STL' 4 985166 10 ##(UI.STBViewProxy) ##(UI.ContainerView) 34 15 nil nil 34 2 8 1409286144 131073 416 nil nil nil 5 nil nil nil 416 984838 ##(UI.BorderLayout) 1 1 nil nil nil nil 410 ##(UI.ReferenceView) 34 14 nil 416 34 2 8 1140850688 131073 512 nil nil nil 5 461638 4 ##(UI.Menu) nil true 34 8 1180742 2 ##(UI.CommandMenuItem) 2097153 1377606 4 ##(UI.CommandDescription) #editResource 8 '&Edit' 1 1 853318 3 ##(Graphics.Icon) nil true 2031622 ##(Kernel.ImageRelativeFileLocator) 8 'ViewComposer.ico' 2490894 ##(Kernel.STBExternalResourceLibraryProxy) 8 'dolphindr7.dll' nil nil nil 626 1 658 #browseReferences 8 'Browse &References' 1 1 nil nil nil 626 1 658 #showResource 8 '&Show' 1 1 706 nil true 752 8 'TestView.ico' 800 nil nil 626 1 658 #newView 8 '&New...' 1 1 nil nil nil 1179974 1 ##(UI.DividerMenuItem) 4097 626 1 658 #deleteResource 8 '&Delete' 1 1 706 nil true 752 8 'EditClear.ico' 800 nil nil 1010 4097 578 nil true 34 7 626 1 658 #toggleShowInheritedResources 8 'Show I&nherited' 1 1 nil nil nil 626 1 658 #toggleShowSubclassResources 8 'Show &Subclass' 1 1 nil nil nil 1010 4097 626 1 658 #tileIconMode 8 '&Tiles' 1 1 nil nil nil 626 1 658 #largeIconMode 8 '&Icons' 1 1 nil nil nil 626 1025 658 #listMode 8 '&List' 1 1 nil nil nil 626 1025 658 #reportMode 8 '&Details' 1 1 nil nil nil 8 '&View' nil 134217729 nil nil nil nil nil 8 '' nil 134217729 nil nil nil nil nil nil nil 512 1376838 1 ##(UI.ResourceIdentifier) ##(Tools.ResourceListPresenter) #resource_Package_view nil 1310982 ##(Core.MessageSequence) 138 144 34 2 1049350 ##(Core.MessageSend) #createAt:extent: 34 2 918022 ##(Graphics.Point) 1 1 1650 1061 501 512 1602 #contextMenu: 34 1 592 512 1179910 ##(OS.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 18 2 0 0 250 0 0 0] 8 #() 1650 193 193 nil 27 170 192 34 2 512 8 'resources' nil 1538 138 144 34 1 1602 #createAt:extent: 34 2 1650 6143 21 1650 1061 501 416 1730 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 17 14 0 0 4 1 0 0] 34 1 512 1792 nil 27 )! !
+!Tools.ResourceListPlugin class categoriesFor: #icon!constants!public! !
+!Tools.ResourceListPlugin class categoriesFor: #initialize!initializing!public! !
+!Tools.ResourceListPlugin class categoriesFor: #resource_Default_view!public!resources-views! !
 

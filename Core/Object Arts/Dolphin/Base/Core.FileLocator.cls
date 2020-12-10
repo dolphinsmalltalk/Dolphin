@@ -127,10 +127,10 @@ installRelative: aFilenameString
 ! !
 !Core.FileLocator class categoriesFor: #absolute!accessing!public! !
 !Core.FileLocator class categoriesFor: #default!accessing!public! !
-!Core.FileLocator class categoriesFor: #folderRelative:!accessing!public! !
-!Core.FileLocator class categoriesFor: #imageFolderRelative:!accessing!public! !
+!Core.FileLocator class categoriesFor: #folderRelative:!instance creation!public! !
+!Core.FileLocator class categoriesFor: #imageFolderRelative:!instance creation!public! !
 !Core.FileLocator class categoriesFor: #imageRelative!accessing!public! !
-!Core.FileLocator class categoriesFor: #imageRelative:!accessing!public! !
+!Core.FileLocator class categoriesFor: #imageRelative:!instance creation!public! !
 !Core.FileLocator class categoriesFor: #installRelative!accessing!public! !
-!Core.FileLocator class categoriesFor: #installRelative:!accessing!public! !
+!Core.FileLocator class categoriesFor: #installRelative:!instance creation!public! !
 

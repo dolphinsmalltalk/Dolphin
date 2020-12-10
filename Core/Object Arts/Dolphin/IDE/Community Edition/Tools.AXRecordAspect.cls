@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-AXAutomationAspect subclass: #AXRecordAspect
+Tools.AXAutomationAspect subclass: #'Tools.AXRecordAspect'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-AXRecordAspect guid: (GUID fromString: '{0b80a2c6-1c74-4fe7-9a0e-b28bb197d120}')!
-AXRecordAspect comment: 'AXRecordAspect is a specialised <Aspect> for accessing properties of user-defined Automation structures (as represented by instances of <AXRecord>). It is an extension of the PublishedAspectorInspector framework.'!
-!AXRecordAspect categoriesForClass!Unclassified! !
-!AXRecordAspect methodsFor!
+Tools.AXRecordAspect guid: (Core.GUID fromString: '{0b80a2c6-1c74-4fe7-9a0e-b28bb197d120}')!
+Tools.AXRecordAspect comment: 'AXRecordAspect is a specialised <Aspect> for accessing properties of user-defined Automation structures (as represented by instances of <AXRecord>). It is an extension of the PublishedAspectorInspector framework.'!
+!Tools.AXRecordAspect categoriesForClass!Unclassified! !
+!Tools.AXRecordAspect methodsFor!
 
 defaultFlags
 	^super defaultFlags maskClear: MutableMask!
@@ -28,7 +28,7 @@ writeInto: subjectObject value: valueObject
 			[:ex |
 			MessageBox errorMsg: ex description
 				caption: ('Error setting field <1p>' expandMacrosWith: self name)]! !
-!AXRecordAspect categoriesFor: #defaultFlags!initializing!private! !
-!AXRecordAspect categoriesFor: #readFrom:!indirect accessing!public! !
-!AXRecordAspect categoriesFor: #writeInto:value:!indirect accessing!public! !
+!Tools.AXRecordAspect categoriesFor: #defaultFlags!initializing!private! !
+!Tools.AXRecordAspect categoriesFor: #readFrom:!indirect accessing!public! !
+!Tools.AXRecordAspect categoriesFor: #writeInto:value:!indirect accessing!public! !
 

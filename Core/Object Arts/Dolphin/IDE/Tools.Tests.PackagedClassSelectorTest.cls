@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ClassSelectorTest subclass: #PackagedClassSelectorTest
+Tools.Tests.ClassSelectorTest subclass: #'Tools.Tests.PackagedClassSelectorTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-PackagedClassSelectorTest guid: (Core.GUID fromString: '{85913f04-2759-4d36-864b-eac86b435a51}')!
-PackagedClassSelectorTest comment: ''!
-!PackagedClassSelectorTest categoriesForClass!Unclassified! !
-!PackagedClassSelectorTest methodsFor!
+Tools.Tests.PackagedClassSelectorTest guid: (Core.GUID fromString: '{85913f04-2759-4d36-864b-eac86b435a51}')!
+Tools.Tests.PackagedClassSelectorTest comment: ''!
+!Tools.Tests.PackagedClassSelectorTest categoriesForClass!Unclassified! !
+!Tools.Tests.PackagedClassSelectorTest methodsFor!
 
 assertContains: anObject
 	"Private - Asserts that the receiver contains anObject. We do this by trying to select the object since this allows
@@ -143,11 +143,11 @@ testFilteredPackagedHierarchyMove
 	"Tidy up"
 	self removeClassesDEF.
 	self removeClassesABC! !
-!PackagedClassSelectorTest categoriesFor: #assertContains:!helpers!private! !
-!PackagedClassSelectorTest categoriesFor: #classToTest!helpers!private! !
-!PackagedClassSelectorTest categoriesFor: #denyContains:!helpers!private! !
-!PackagedClassSelectorTest categoriesFor: #removalOfSelectionLeaves:!helpers!private! !
-!PackagedClassSelectorTest categoriesFor: #resetSelection!helpers!private! !
-!PackagedClassSelectorTest categoriesFor: #testFilteredPackageAddRemove!public!unit tests! !
-!PackagedClassSelectorTest categoriesFor: #testFilteredPackagedHierarchyMove!public!unit tests! !
+!Tools.Tests.PackagedClassSelectorTest categoriesFor: #assertContains:!helpers!private! !
+!Tools.Tests.PackagedClassSelectorTest categoriesFor: #classToTest!helpers!private! !
+!Tools.Tests.PackagedClassSelectorTest categoriesFor: #denyContains:!helpers!private! !
+!Tools.Tests.PackagedClassSelectorTest categoriesFor: #removalOfSelectionLeaves:!helpers!private! !
+!Tools.Tests.PackagedClassSelectorTest categoriesFor: #resetSelection!helpers!private! !
+!Tools.Tests.PackagedClassSelectorTest categoriesFor: #testFilteredPackageAddRemove!public!unit tests! !
+!Tools.Tests.PackagedClassSelectorTest categoriesFor: #testFilteredPackagedHierarchyMove!public!unit tests! !
 

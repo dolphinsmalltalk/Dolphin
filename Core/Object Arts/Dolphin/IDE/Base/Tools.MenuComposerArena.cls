@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ContainerView subclass: #MenuComposerArena
+UI.ContainerView subclass: #'Tools.MenuComposerArena'
 	instanceVariableNames: 'dragImageList dragPoint dragMenuIndex dragSource _unused'
 	classVariableNames: ''
-	poolDictionaries: 'CommCtrlConstants'
+	imports: #(#{OS.CommCtrlConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-MenuComposerArena guid: (GUID fromString: '{14be7036-54a3-4888-9a4a-b0166fd82776}')!
-MenuComposerArena comment: 'MenuComposerArena is used by the <MenuComposer> to contain the menus being edited. It''s main function is to support the drag and drop of menu items between the menu views, which are dynamically opened and closed.'!
-!MenuComposerArena categoriesForClass!MVP-Views! !
-!MenuComposerArena methodsFor!
+Tools.MenuComposerArena guid: (Core.GUID fromString: '{14be7036-54a3-4888-9a4a-b0166fd82776}')!
+Tools.MenuComposerArena comment: 'MenuComposerArena is used by the <MenuComposer> to contain the menus being edited. It''s main function is to support the drag and drop of menu items between the menu views, which are dynamically opened and closed.'!
+!Tools.MenuComposerArena categoriesForClass!MVP-Views! !
+!Tools.MenuComposerArena methodsFor!
 
 beginDrag: aMouseEvent of: anInteger in: aMenuComposerView
 	(MouseTracker forPresenter: self presenter
@@ -61,7 +61,7 @@ createDragImageList
 	bitmap := dragSource createDragImage: dragMenuIndex.
 	"We must use a device-dependent image list or the text/background may be lost when the icon
 	(if any) is painted, depending on the display driver."
-	dragImageList := WinImageList 
+	dragImageList := Graphics.ImageList 
 				newExtent: bitmap extent
 				depth: ILC_COLORDB
 				masked: false.
@@ -125,25 +125,24 @@ startTrackingAt: aPoint
 	self createDragImageList.
 	dragImageList dragEnter: self at: aPoint.
 	^aPoint! !
-!MenuComposerArena categoriesFor: #beginDrag:of:in:!helpers!private! !
-!MenuComposerArena categoriesFor: #cancelTrackingAt:!private!tracking! !
-!MenuComposerArena categoriesFor: #continueTrackingAt:from:!private!tracking! !
-!MenuComposerArena categoriesFor: #createDragImageList!private!tracking! !
-!MenuComposerArena categoriesFor: #endTrackingAt:!private!tracking! !
-!MenuComposerArena categoriesFor: #hideDragCursor!modes!private! !
-!MenuComposerArena categoriesFor: #onItemIn:selectedAtIndex:!event handling!private! !
-!MenuComposerArena categoriesFor: #showDragCursor!modes!private! !
-!MenuComposerArena categoriesFor: #startTrackingAt:!private!tracking! !
+!Tools.MenuComposerArena categoriesFor: #beginDrag:of:in:!helpers!private! !
+!Tools.MenuComposerArena categoriesFor: #cancelTrackingAt:!private!tracking! !
+!Tools.MenuComposerArena categoriesFor: #continueTrackingAt:from:!private!tracking! !
+!Tools.MenuComposerArena categoriesFor: #createDragImageList!private!tracking! !
+!Tools.MenuComposerArena categoriesFor: #endTrackingAt:!private!tracking! !
+!Tools.MenuComposerArena categoriesFor: #hideDragCursor!modes!private! !
+!Tools.MenuComposerArena categoriesFor: #onItemIn:selectedAtIndex:!event handling!private! !
+!Tools.MenuComposerArena categoriesFor: #showDragCursor!modes!private! !
+!Tools.MenuComposerArena categoriesFor: #startTrackingAt:!private!tracking! !
 
-MenuComposerArena methodProtocol: #mouseTrackerTarget attributes: #(#readOnly) selectors: #(#cancelTrackingAt: #continueTrackingAt:from: #endTrackingAt: #startTrackingAt:)!
+Tools.MenuComposerArena methodProtocol: #mouseTrackerTarget attributes: #(#readOnly) selectors: #(#cancelTrackingAt: #continueTrackingAt:from: #endTrackingAt: #startTrackingAt:)!
 
-!MenuComposerArena class methodsFor!
+!Tools.MenuComposerArena class methodsFor!
 
 icon
 	"Answers an <Icon> that can be used to represent this class."
 
-	^MenuComposer icon
-!
+	^MenuComposer icon!
 
 publishedEventsOfInstances
 	"Answer a Set of Symbols that describe the published events triggered
@@ -154,6 +153,6 @@ publishedEventsOfInstances
 		add: #itemFrom:at:droppedBefore:copy:;
 		yourself.
 ! !
-!MenuComposerArena class categoriesFor: #icon!constants!public! !
-!MenuComposerArena class categoriesFor: #publishedEventsOfInstances!events!public! !
+!Tools.MenuComposerArena class categoriesFor: #icon!constants!public! !
+!Tools.MenuComposerArena class categoriesFor: #publishedEventsOfInstances!events!public! !
 

@@ -19,23 +19,23 @@ System Browser - A class browser that includes a package filter, so that one can
 
 package basicPackageVersion: '6.2'.
 
-package basicScriptAt: #postinstall put: 'EnvironmentBrowserShell initializeTool'.
+package basicScriptAt: #postinstall put: 'Tools.EnvironmentBrowserShell initializeTool'.
 
 package setClassNames: #(
-	#{Smalltalk.AXControlBrowser}
-	#{Smalltalk.ChoosePackagedClassDialog}
-	#{Smalltalk.ClassDiagramPlugin}
-	#{Smalltalk.DebugInfoPlugin}
-	#{Smalltalk.Disassembler}
-	#{Smalltalk.EnvironmentBrowserShell}
-	#{Smalltalk.IdeaSpaceShell}
-	#{Smalltalk.PackagedClassSelector}
-	#{Smalltalk.PackagedResourceIdentifierDialog}
-	#{Smalltalk.ProcessMonitor}
-	#{Smalltalk.ProfessionalSmalltalkSystem}
-	#{Smalltalk.ResourceListPlugin}
-	#{Smalltalk.SystemBrowserShell}
-	#{Smalltalk.UnitTestPlugin}
+	#{Tools.AXControlBrowser}
+	#{Tools.ChoosePackagedClassDialog}
+	#{Tools.ClassDiagramPlugin}
+	#{Tools.DebugInfoPlugin}
+	#{Tools.Disassembler}
+	#{Tools.EnvironmentBrowserShell}
+	#{Tools.IdeaSpaceShell}
+	#{Tools.PackagedClassSelector}
+	#{Tools.PackagedResourceIdentifierDialog}
+	#{Tools.ProcessMonitor}
+	#{Tools.ProfessionalSmalltalkSystem}
+	#{Tools.ResourceListPlugin}
+	#{Tools.SystemBrowserShell}
+	#{Tools.UnitTestPlugin}
 ).
 
 package setMethodNames: #(
@@ -44,22 +44,22 @@ package setMethodNames: #(
 	#(#{Core.Metaclass} #correspondingTestCase)
 	#(#{Core.Process} #priorityName)
 	#(#{Kernel.ProcessorScheduler} #nameOfPriority:)
-	#(#{Smalltalk.PackageSelector} #browseDeployed)
-	#(#{Smalltalk.PackageSelector} #browsePackageSources)
-	#(#{Smalltalk.PackageSelector} #browseSources)
-	#(#{Smalltalk.SmalltalkSystem} #openIdeaSpace)
-	#(#{Smalltalk.SmalltalkSystem} #updateHelpMenus)
-	#(#{Smalltalk.SmalltalkToolShell} #addToNewIdeaSpace)
-	#(#{Smalltalk.SmalltalkToolShell} #browseSystem)
-	#(#{Smalltalk.SmalltalkToolShell} #destroy)
-	#(#{Smalltalk.SmalltalkToolShell} #dragToolToIdeaSpace)
-	#(#{Smalltalk.SmalltalkToolShell} #exit)
-	#(#{Smalltalk.SmalltalkToolShell class} #addToNewIdeaSpace:)
-	#(#{Smalltalk.SmalltalkToolShell class} #dragToolToIdeaSpace:)
-	#(#{Smalltalk.SmalltalkWorkspaceDocument} #addToNewIdeaSpace)
-	#(#{Smalltalk.SmalltalkWorkspaceDocument} #browseSources)
-	#(#{Smalltalk.SmalltalkWorkspaceDocument} #dragToolToIdeaSpace)
 	#(#{Smalltalk.StyledContainer class} #publishedAspectsOfInstances)
+	#(#{Tools.PackageSelector} #browseDeployed)
+	#(#{Tools.PackageSelector} #browsePackageSources)
+	#(#{Tools.PackageSelector} #browseSources)
+	#(#{Tools.SmalltalkSystem} #openIdeaSpace)
+	#(#{Tools.SmalltalkSystem} #updateHelpMenus)
+	#(#{Tools.SmalltalkToolShell} #addToNewIdeaSpace)
+	#(#{Tools.SmalltalkToolShell} #browseSystem)
+	#(#{Tools.SmalltalkToolShell} #destroy)
+	#(#{Tools.SmalltalkToolShell} #dragToolToIdeaSpace)
+	#(#{Tools.SmalltalkToolShell} #exit)
+	#(#{Tools.SmalltalkToolShell class} #addToNewIdeaSpace:)
+	#(#{Tools.SmalltalkToolShell class} #dragToolToIdeaSpace:)
+	#(#{Tools.SmalltalkWorkspaceDocument} #addToNewIdeaSpace)
+	#(#{Tools.SmalltalkWorkspaceDocument} #browseSources)
+	#(#{Tools.SmalltalkWorkspaceDocument} #dragToolToIdeaSpace)
 	#(#{UI.LinkButton class} #publishedAspectsOfInstances)
 	#(#{UI.SlideyInneyOuteyThing class} #example1)
 	#(#{UI.SlideyInneyOuteyThing class} #publishedAspectsOfInstances)
@@ -99,7 +99,7 @@ package setPrerequisites: #(
 	'..\..\MVP\Models\Value\Dolphin Value Models'
 	'..\..\ActiveX\COM\OLE COM'
 	'..\..\..\..\Contributions\Camp Smalltalk\SUnit\SUnit'
-	'..\..\..\..\Contributions\Camp Smalltalk\SUnit\SUnitLegacy'
+	'..\..\..\..\Contributions\Camp Smalltalk\SUnit\SUnitPreload'
 	'..\..\ActiveX\Shell\Windows Shell'
 	'..\..\ActiveX\Components\XML DOM\XML DOM'
 ).
@@ -108,61 +108,61 @@ package!
 
 "Class Definitions"!
 
-Kernel.InstructionInterpreter subclass: #Disassembler
+Kernel.InstructionInterpreter subclass: #'Tools.Disassembler'
 	instanceVariableNames: 'stream'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-CommunityEditionSmalltalkSystem subclass: #ProfessionalSmalltalkSystem
+Tools.CommunityEditionSmalltalkSystem subclass: #'Tools.ProfessionalSmalltalkSystem'
 	instanceVariableNames: 'systemBrowserClass ideaSpaceClass packagedResourceIdentifierDialogClass'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ClassBrowserPlugin subclass: #ClassDiagramPlugin
+Tools.ClassBrowserPlugin subclass: #'Tools.ClassDiagramPlugin'
 	instanceVariableNames: 'classesPresenter'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ClassBrowserPlugin subclass: #DebugInfoPlugin
+Tools.ClassBrowserPlugin subclass: #'Tools.DebugInfoPlugin'
 	instanceVariableNames: 'disassemblyPresenter sourcePresenter textMapPresenter toggleDebugPresenter toggleOptimisedPresenter method'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ClassBrowserPlugin subclass: #ResourceListPlugin
+Tools.ClassBrowserPlugin subclass: #'Tools.ResourceListPlugin'
 	instanceVariableNames: 'resourcesPresenter flags'
 	classVariableNames: 'ShowInheritedResourcesMask ShowSubclassResourcesMask'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ClassBrowserPlugin subclass: #UnitTestPlugin
+Tools.ClassBrowserPlugin subclass: #'Tools.UnitTestPlugin'
 	instanceVariableNames: 'result icon autoSwitchProcess defectsPresenter modePresenter detailsPresenter'
 	classVariableNames: 'AutoSwitchDelayMs ErrorColor FailColor NoTestsColor PassColor RunningColor'
-	imports: #()
+	imports: #(#{XProgramming.SUnit private})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ClassSelector subclass: #PackagedClassSelector
+Tools.ClassSelector subclass: #'Tools.PackagedClassSelector'
 	instanceVariableNames: 'packagesPresenter'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ResourceIdentifierDialog subclass: #PackagedResourceIdentifierDialog
+Tools.ResourceIdentifierDialog subclass: #'Tools.PackagedResourceIdentifierDialog'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ChooseClassDialog subclass: #ChoosePackagedClassDialog
+Tools.ChooseClassDialog subclass: #'Tools.ChoosePackagedClassDialog'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-SmalltalkToolShell subclass: #AXControlBrowser
+Tools.SmalltalkToolShell subclass: #'Tools.AXControlBrowser'
 	instanceVariableNames: 'site windowStatus inspector eventsPresenter flags traceWindow progId'
 	classVariableNames: ''
 	imports: #()
@@ -170,25 +170,25 @@ SmalltalkToolShell subclass: #AXControlBrowser
 	classConstants: {
 		'TraceMask' -> 16r1
 	}!
-SmalltalkToolShell subclass: #IdeaSpaceShell
+Tools.SmalltalkToolShell subclass: #'Tools.IdeaSpaceShell'
 	instanceVariableNames: 'cardsPresenter backgroundPresenter defaultMenuBar cardHistory filename'
 	classVariableNames: ''
 	imports: #(#{OS.Win32Constants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-SmalltalkToolShell subclass: #ProcessMonitor
+Tools.SmalltalkToolShell subclass: #'Tools.ProcessMonitor'
 	instanceVariableNames: 'listPresenter updateInterval'
 	classVariableNames: 'UpdateIntervals'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ClassBrowserAbstract subclass: #EnvironmentBrowserShell
+Tools.ClassBrowserAbstract subclass: #'Tools.EnvironmentBrowserShell'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ClassBrowserAbstract subclass: #SystemBrowserShell
+Tools.ClassBrowserAbstract subclass: #'Tools.SystemBrowserShell'
 	instanceVariableNames: ''
 	classVariableNames: 'AutoSelectPackages'
 	imports: #()
@@ -257,7 +257,40 @@ nameOfPriority: anInteger
 			at: anInteger ifAbsent: [#unknownPriority]! !
 !Kernel.ProcessorScheduler categoriesFor: #nameOfPriority:!enquiries!public! !
 
-!PackageSelector methodsFor!
+!StyledContainer class methodsFor!
+
+publishedAspectsOfInstances
+	"Answer a <LookupTable> of the <Aspect>s published by instances of the receiver."
+
+	| aspects |
+	aspects := super publishedAspectsOfInstances.
+	aspects
+		add: ((Tools.Aspect name: #styledPen
+					chooseFrom: #('nil' 'StyledPen solid' 'StyledPen dotted' 'StyledPen dashed' 'StyledPen dashDot' 'StyledPen dashDotDot'))
+					beImmutable;
+					isNullable: true;
+					yourself);
+		add: ((Tools.Aspect name: #styledShadow chooseFrom: #('nil' 'StyledShadow new'))
+					beImmutable;
+					isNullable: true;
+					yourself);
+		add: ((Tools.Aspect name: #styledBrush
+					chooseFrom: #('nil' 'StyledGradientBrush black' 'StyledGradientBrush white' 'StyledGradientBrush face3dTopToBottomFade' 'StyledGradientBrush face3dLeftToRightFade' 'StyledGradientBrush face3dTopLeftToBottomRightFade'))
+					isNullable: true;
+					yourself);
+		add: ((Tools.Aspect name: #cornerRadii)
+					isNullable: false;
+					beImmutable;
+					yourself);
+		add: (Tools.Aspect boolean: #isAntialiased);
+		add: ((Tools.Aspect collection: #edges addEvaluationFrom: #('#left' '#right' '#top' '#bottom'))
+					beImmutable;
+					isNullable: false;
+					yourself).
+	^aspects! !
+!StyledContainer class categoriesFor: #publishedAspectsOfInstances!constants!public! !
+
+!Tools.PackageSelector methodsFor!
 
 browseDeployed
 	"Open a new <EnvironmentBrowserShell> on the deployed application content as read from the stripper log."
@@ -284,11 +317,11 @@ browseSources
 	"Private - Open a browser on the sources for the currently selected package."
 
 	self browsePackageSources! !
-!PackageSelector categoriesFor: #browseDeployed!commands!public! !
-!PackageSelector categoriesFor: #browsePackageSources!commands!private! !
-!PackageSelector categoriesFor: #browseSources!commands!private! !
+!Tools.PackageSelector categoriesFor: #browseDeployed!commands!public! !
+!Tools.PackageSelector categoriesFor: #browsePackageSources!commands!private! !
+!Tools.PackageSelector categoriesFor: #browseSources!commands!private! !
 
-!SmalltalkSystem methodsFor!
+!Tools.SmalltalkSystem methodsFor!
 
 openIdeaSpace
 	"Create a new IdeaSpace by opening a template file"
@@ -321,10 +354,10 @@ updateHelpMenus
 					(menuBar findCommand: #help)
 						ifNotNil: [:oldHelpMenu | menuBar replaceItem: oldHelpMenu with: (Object fromBinaryStoreBytes: helpmenu)]].
 			true]! !
-!SmalltalkSystem categoriesFor: #openIdeaSpace!commands!public! !
-!SmalltalkSystem categoriesFor: #updateHelpMenus!private!utilities! !
+!Tools.SmalltalkSystem categoriesFor: #openIdeaSpace!commands!public! !
+!Tools.SmalltalkSystem categoriesFor: #updateHelpMenus!private!utilities! !
 
-!SmalltalkToolShell methodsFor!
+!Tools.SmalltalkToolShell methodsFor!
 
 addToNewIdeaSpace
 	^self class addToNewIdeaSpace: self!
@@ -348,18 +381,18 @@ exit
 
 	self isIdeaSpaceCard ifTrue: [^self ideaSpace closeCard: self].
 	^super exit! !
-!SmalltalkToolShell categoriesFor: #addToNewIdeaSpace!public! !
-!SmalltalkToolShell categoriesFor: #browseSystem!commands!public! !
-!SmalltalkToolShell categoriesFor: #destroy!commands!public! !
-!SmalltalkToolShell categoriesFor: #dragToolToIdeaSpace!public! !
-!SmalltalkToolShell categoriesFor: #exit!commands!public! !
+!Tools.SmalltalkToolShell categoriesFor: #addToNewIdeaSpace!public! !
+!Tools.SmalltalkToolShell categoriesFor: #browseSystem!commands!public! !
+!Tools.SmalltalkToolShell categoriesFor: #destroy!commands!public! !
+!Tools.SmalltalkToolShell categoriesFor: #dragToolToIdeaSpace!public! !
+!Tools.SmalltalkToolShell categoriesFor: #exit!commands!public! !
 
-!SmalltalkToolShell class methodsFor!
+!Tools.SmalltalkToolShell class methodsFor!
 
-addToNewIdeaSpace: aSmalltalkToolShell 
+addToNewIdeaSpace: aSmalltalkToolShell
 	IdeaSpaceShell show absorbCard: aSmalltalkToolShell!
 
-dragToolToIdeaSpace: aSmalltalkToolShell 
+dragToolToIdeaSpace: aSmalltalkToolShell
 	| shellFinder ideaSpaceFound |
 	shellFinder := VisualShellFinder for: IdeaSpaceShell.
 	shellFinder
@@ -369,10 +402,10 @@ dragToolToIdeaSpace: aSmalltalkToolShell
 	ideaSpaceFound := shellFinder value.
 	ideaSpaceFound isNil ifTrue: [^self].
 	ideaSpaceFound absorbCard: aSmalltalkToolShell! !
-!SmalltalkToolShell class categoriesFor: #addToNewIdeaSpace:!public! !
-!SmalltalkToolShell class categoriesFor: #dragToolToIdeaSpace:!public! !
+!Tools.SmalltalkToolShell class categoriesFor: #addToNewIdeaSpace:!public! !
+!Tools.SmalltalkToolShell class categoriesFor: #dragToolToIdeaSpace:!public! !
 
-!SmalltalkWorkspaceDocument methodsFor!
+!Tools.SmalltalkWorkspaceDocument methodsFor!
 
 addToNewIdeaSpace
 	^IdeaSpaceShell addToNewIdeaSpace: self!
@@ -384,42 +417,9 @@ browseSources
 
 dragToolToIdeaSpace
 	^IdeaSpaceShell dragToolToIdeaSpace: self! !
-!SmalltalkWorkspaceDocument categoriesFor: #addToNewIdeaSpace!public! !
-!SmalltalkWorkspaceDocument categoriesFor: #browseSources!commands!public! !
-!SmalltalkWorkspaceDocument categoriesFor: #dragToolToIdeaSpace!public! !
-
-!StyledContainer class methodsFor!
-
-publishedAspectsOfInstances
-	"Answer a <LookupTable> of the <Aspect>s published by instances of the receiver."
-
-	| aspects |
-	aspects := super publishedAspectsOfInstances.
-	aspects
-		add: ((Aspect name: #styledPen
-					chooseFrom: #('nil' 'StyledPen solid' 'StyledPen dotted' 'StyledPen dashed' 'StyledPen dashDot' 'StyledPen dashDotDot'))
-					beImmutable;
-					isNullable: true;
-					yourself);
-		add: ((Aspect name: #styledShadow chooseFrom: #('nil' 'StyledShadow new'))
-					beImmutable;
-					isNullable: true;
-					yourself);
-		add: ((Aspect name: #styledBrush
-					chooseFrom: #('nil' 'StyledGradientBrush black' 'StyledGradientBrush white' 'StyledGradientBrush face3dTopToBottomFade' 'StyledGradientBrush face3dLeftToRightFade' 'StyledGradientBrush face3dTopLeftToBottomRightFade'))
-					isNullable: true;
-					yourself);
-		add: ((Aspect name: #cornerRadii)
-					isNullable: false;
-					beImmutable;
-					yourself);
-		add: (Aspect boolean: #isAntialiased);
-		add: ((Aspect collection: #edges addEvaluationFrom: #('#left' '#right' '#top' '#bottom'))
-					beImmutable;
-					isNullable: false;
-					yourself).
-	^aspects! !
-!StyledContainer class categoriesFor: #publishedAspectsOfInstances!constants!public! !
+!Tools.SmalltalkWorkspaceDocument categoriesFor: #addToNewIdeaSpace!public! !
+!Tools.SmalltalkWorkspaceDocument categoriesFor: #browseSources!commands!public! !
+!Tools.SmalltalkWorkspaceDocument categoriesFor: #dragToolToIdeaSpace!public! !
 
 !UI.LinkButton class methodsFor!
 
@@ -429,8 +429,8 @@ publishedAspectsOfInstances
 	| answer |
 	answer := super publishedAspectsOfInstances.
 	answer
-		add: (Smalltalk.Aspect multilineString: #text);
-		add: (Smalltalk.Aspect name: #commandDescription) beReadOnly;
+		add: (Tools.Aspect multilineString: #text);
+		add: (Tools.Aspect name: #commandDescription) beReadOnly;
 		yourself.
 	^answer! !
 !UI.LinkButton class categoriesFor: #publishedAspectsOfInstances!constants!public! !
@@ -439,8 +439,9 @@ publishedAspectsOfInstances
 
 example1
 	"
-	self example1UI.SlideyInneyOuteyThing
+	self example1
 	"
+
 	| s cards tree l t |
 	s := SlideyInneyOuteyThing new showShell.
 	s isTrayResizable: true.
@@ -450,7 +451,7 @@ example1
 	s parentView layoutManager: ProportionalLayout new.
 	s parentView addSubView: Splitter new.
 	tree := cards addSubView: TreeView new.
-	tree model: Smalltalk.ClassHierarchyModel withAllClasses.
+	tree model: Tools.ClassHierarchyModel withAllClasses.
 	tree viewMode: #smallIcons.
 	t := s parentView addSubView: Scintilla.ScintillaView new.
 	t text: Object comment.
@@ -464,11 +465,11 @@ publishedAspectsOfInstances
 
 	| aspects |
 	aspects := super publishedAspectsOfInstances.
-	#(#layoutManager #isTransparent #isTabStop #isGroupStop #isDragSource #isDropTarget) 
+	#(#layoutManager #isTransparent #isTabStop #isGroupStop #isDragSource #isDropTarget)
 		do: [:each | aspects removeKey: each].
-	#(#isHiddenOnUnpin #isTrayResizable #isCardChangeAnimated) 
-		do: [:each | aspects add: (Smalltalk.Aspect boolean: each)].
-	aspects add: (Smalltalk.Aspect choice: #animation from: Animations keys asSortedCollection).
+	#(#isHiddenOnUnpin #isTrayResizable #isCardChangeAnimated)
+		do: [:each | aspects add: (Tools.Aspect boolean: each)].
+	aspects add: (Tools.Aspect choice: #animation from: Animations keys asSortedCollection).
 	^aspects! !
 !UI.SlideyInneyOuteyThing class categoriesFor: #example1!examples!public! !
 !UI.SlideyInneyOuteyThing class categoriesFor: #publishedAspectsOfInstances!constants!public! !
@@ -476,11 +477,11 @@ publishedAspectsOfInstances
 !UI.SysLinkView class methodsFor!
 
 publishedAspectsOfInstances
-    	"Answer a <LookupTable> of the <Aspect>s published by instances of the receiver."
-    
-    	^(super publishedAspectsOfInstances)
-    		add: (Smalltalk.Aspect multilineString: #text);
-    		yourself!
+	"Answer a <LookupTable> of the <Aspect>s published by instances of the receiver."
+
+	^super publishedAspectsOfInstances
+		add: (Tools.Aspect multilineString: #text);
+		yourself!
 
 publishedEventsOfInstances
     	"Answer a Set of Symbols that describe the published events triggered
@@ -500,10 +501,10 @@ resource_Idea_space_card_tools
 	DO NOT EDIT OR RECATEGORIZE THIS METHOD.
 
 	If you wish to modify this resource evaluate:
-	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Idea_space_card_tools)
+	Tools.ViewComposer openOn: (UI.ResourceIdentifier class: self selector: #resource_Idea_space_card_tools)
 	"
 
-	^#(#'!!STL' 4 788558 10 ##(UI.STBViewProxy) ##(UI.Toolbar) 34 25 nil nil 34 2 8 1409289036 131137 416 nil nil nil 517 nil nil nil 416 327686 ##(Smalltalk.Color) #default 8 1903898080 170 192 8 #() 170 192 34 10 51221 1115206 1 ##(UI.ToolbarIconButton) 416 1 1180998 4 ##(UI.CommandDescription) #cardHistoryForward 8 'Forward' 1 1 263494 3 ##(Smalltalk.Icon) nil true 1572870 ##(Smalltalk.ImageRelativeFileLocator) 8 'HistoryForward.ico' 2032142 ##(Smalltalk.STBExternalResourceLibraryProxy) 8 'dolphindr7.dll' nil 51221 51227 594 416 1 626 #closeCard 8 'Close This Card' 1 1 788806 1 ##(Smalltalk.TextTileIcon) $\x2716 nil nil nil nil nil 1 nil nil 51227 51223 594 416 1 626 #moveCardLeft 8 'Move Card Left' 1 1 850 $\x25C0 8 'Cambria' nil 482 #menuHilight nil nil 1 nil nil 51223 51219 594 416 1 626 #cardHistoryBack 8 'Back' 1 1 674 nil true 720 8 'HistoryBack.ico' 768 51219 51225 594 416 1 626 #moveCardRight 8 'Move Card Right' 1 1 850 $\x25B6 8 'Cambria' nil 960 nil nil 1 nil nil 51225 34 7 1049158 1 ##(UI.ToolbarSeparator) 416 1 976 608 1154 416 1 880 1056 800 nil nil 1 nil nil nil nil nil 983302 ##(Smalltalk.MessageSequence) 138 144 34 2 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 328198 ##(Smalltalk.Point) 3839 21 1314 263 51 416 1266 #updateSizePosted 544 416 983302 ##(OS.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 127 7 0 0 10 0 0 0 2 8 0 0 35 0 0 0] 8 #() 1314 193 193 nil 27)! !
+	^#(#'!!STL' 4 985166 10 ##(UI.STBViewProxy) ##(UI.Toolbar) 34 25 nil nil 34 2 8 1409289036 131137 416 nil nil nil 517 nil nil nil 416 917510 ##(Graphics.Color) #default 8 1801306032 170 192 8 #() 170 192 34 10 50415 1311814 1 ##(UI.ToolbarIconButton) 416 1 1377606 4 ##(UI.CommandDescription) #moveCardRight 8 'Move Card Right' 1 1 1378630 1 ##(Graphics.TextTileIcon) $\x25B6 8 'Cambria' nil 482 #menuHilight nil nil 1 nil nil 50415 50411 594 416 1 626 #cardHistoryForward 8 'Forward' 1 1 853318 3 ##(Graphics.Icon) nil true 2031622 ##(Kernel.ImageRelativeFileLocator) 8 'HistoryForward.ico' 2490894 ##(Kernel.STBExternalResourceLibraryProxy) 8 'dolphindr7.dll' nil 50411 50417 594 416 1 626 #closeCard 8 'Close This Card' 1 1 674 $\x2716 nil nil nil nil nil 1 nil nil 50417 50413 594 416 1 626 #moveCardLeft 8 'Move Card Left' 1 1 674 $\x25C0 8 'Cambria' nil 720 nil nil 1 nil nil 50413 50409 594 416 1 626 #cardHistoryBack 8 'Back' 1 1 786 nil true 832 8 'HistoryBack.ico' 880 50409 34 7 1245766 1 ##(UI.ToolbarSeparator) 416 1 1056 736 1154 416 1 976 608 912 nil nil 1 nil nil nil nil nil 1310982 ##(Core.MessageSequence) 138 144 34 1 1049350 ##(Core.MessageSend) #createAt:extent: 34 2 918022 ##(Graphics.Point) 6143 21 1314 263 51 416 1179910 ##(OS.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 130 12 0 0 35 0 0 0] 8 #() 1314 193 193 nil 27 )! !
 !UI.Toolbar class categoriesFor: #resource_Idea_space_card_tools!public!resources-views! !
 
 !XProgramming.SUnit.TestCase class methodsFor!

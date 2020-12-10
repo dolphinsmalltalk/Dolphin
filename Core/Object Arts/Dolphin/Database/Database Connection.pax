@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'Database Connection'.
-package paxVersion: 2;
+package paxVersion: 2.1;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk ODBC Database Connection Development Extensions
 Copyright (c) Object Arts Ltd, 1997-2003. Portions copyright CGI Group (Europe) Ltd, 1997.
@@ -20,16 +20,17 @@ ODBCTIMESTAMP defineTemplate.
 ODBCLibrary initialize.'.
 
 package setMethodNames: #(
-	#(#{DBAbstractRow} #publishedAspects)
-	#(#{DBResultSet} #debugPrintOn:)
-	#(#{DBResultSet} #publishedKeyedAspectsBatchSize)
-	#(#{DBResultSet class} #newInstanceAspect:class:)
-	#(#{DBResultSet class} #publishedAspectsOfInstances)
+	#(#{Smalltalk.DBAbstractRow} #publishedAspects)
+	#(#{Smalltalk.DBResultSet} #debugPrintOn:)
+	#(#{Smalltalk.DBResultSet} #publishedKeyedAspectsBatchSize)
+	#(#{Smalltalk.DBResultSet class} #newInstanceAspect:class:)
+	#(#{Smalltalk.DBResultSet class} #publishedAspectsOfInstances)
 ).
 
 package setPrerequisites: #(
 	'Database Connection Base'
 	'..\IDE\Base\Development System'
+	'..\IDE\Base\Development System (Deprecated)'
 ).
 
 package!
@@ -44,7 +45,7 @@ publishedAspects
 	| aspects |
 	aspects := self class publishedAspectsOfInstances.
 	self columns 
-		do: [:each | aspects add: ((self at: each name) newAspect: each name class: KeyedAspect)].
+		do: [:each | aspects add: ((self at: each name) newAspect: each name class: Tools.KeyedAspect)].
 	^aspects! !
 !DBAbstractRow categoriesFor: #publishedAspects!constants!development!public! !
 

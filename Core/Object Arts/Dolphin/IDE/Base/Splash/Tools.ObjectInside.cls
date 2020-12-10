@@ -1,17 +1,17 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Object subclass: #ObjectInside
+Core.Object subclass: #'Tools.ObjectInside'
 	instanceVariableNames: 'image edgePoints position scale rotation alpha color baseColor matrix'
 	classVariableNames: ''
-	poolDictionaries: 'GdiplusConstants'
+	imports: #(#{Graphics.Gdiplus.GdiplusConstants private} #{Graphics private})
 	classInstanceVariableNames: ''
 	classConstants: {
 		'EdgePointResolution' -> 16rA
 	}!
-ObjectInside guid: (GUID fromString: '{c019a761-9b1c-4f55-8dd3-66b8e8b2864f}')!
-ObjectInside comment: ''!
-!ObjectInside categoriesForClass!Kernel-Objects! !
-!ObjectInside methodsFor!
+Tools.ObjectInside guid: (Core.GUID fromString: '{c019a761-9b1c-4f55-8dd3-66b8e8b2864f}')!
+Tools.ObjectInside comment: ''!
+!Tools.ObjectInside categoriesForClass!Kernel-Objects! !
+!Tools.ObjectInside methodsFor!
 
 alpha
 	^alpha!
@@ -55,13 +55,13 @@ drawEdgePointsOn: aGdiplusGraphics
 drawOn: aGdiplusGraphics
 	| attributes extent |
 	extent := self extent.
-	attributes := GdiplusImageAttributes new.
+	attributes := Gdiplus.ImageAttributes new.
 	self color ifNotNil: [:col | attributes remapColor: self baseColor to: col].
 	self alpha
 		ifNotNil: 
 			[:alph |
 			| colorMatrix |
-			colorMatrix := GpColorMatrix identity.
+			colorMatrix := Gdiplus.GpColorMatrix identity.
 			colorMatrix atPoint: 4 @ 4 put: alph.
 			attributes colorMatrix: colorMatrix].
 	aGdiplusGraphics
@@ -92,7 +92,7 @@ findEdgePoints
 	height := image height.
 	width := image width.
 	argb := ByteArray new: 4.
-	gdipluslib := GdiplusLibrary default.
+	gdipluslib := Gdiplus.GdiplusLibrary default.
 	imageHandle := image asParameter.
 	0 to: height + EdgePointResolution
 		by: EdgePointResolution
@@ -131,7 +131,7 @@ initialize
 matrix
 	^matrix 
 		ifNil: 
-			[matrix := (GdiplusMatrix new)
+			[matrix := (Gdiplus.Matrix new)
 						translateTransform: self position;
 						rotateTransform: self rotation;
 						scaleTransform: self scale asPoint;
@@ -172,7 +172,7 @@ testCollisionIn: aGdiplusBitmap
 	| white color1 gdiplusLib bitmapHandle |
 	white := Color white argbCode asSDword.
 	color1 := ByteArray new: 4.
-	gdiplusLib := GdiplusLibrary default.
+	gdiplusLib := Gdiplus.GdiplusLibrary default.
 	bitmapHandle := aGdiplusBitmap asParameter.
 	^(self matrix transformPoints: self edgePoints) anySatisfy: 
 			[:each |
@@ -194,38 +194,38 @@ y
 
 y: aNumber
 	self position: self position x @ aNumber! !
-!ObjectInside categoriesFor: #alpha!accessing!public! !
-!ObjectInside categoriesFor: #alpha:!accessing!public! !
-!ObjectInside categoriesFor: #baseColor!accessing!public! !
-!ObjectInside categoriesFor: #baseColor:!accessing!public! !
-!ObjectInside categoriesFor: #center!accessing!public! !
-!ObjectInside categoriesFor: #color!accessing!public! !
-!ObjectInside categoriesFor: #color:!accessing!public! !
-!ObjectInside categoriesFor: #copy!copying!public! !
-!ObjectInside categoriesFor: #drawEdgePointsOn:!operations!public! !
-!ObjectInside categoriesFor: #drawOn:!operations!public! !
-!ObjectInside categoriesFor: #edgePoints!accessing!public! !
-!ObjectInside categoriesFor: #edgePoints:!accessing!public! !
-!ObjectInside categoriesFor: #extent!accessing!public! !
-!ObjectInside categoriesFor: #findEdgePoints!operations!private! !
-!ObjectInside categoriesFor: #image!private! !
-!ObjectInside categoriesFor: #initialize!private! !
-!ObjectInside categoriesFor: #matrix!accessing!operations!public! !
-!ObjectInside categoriesFor: #position!accessing!public! !
-!ObjectInside categoriesFor: #position:!accessing!public! !
-!ObjectInside categoriesFor: #resetMatrix!operations!public! !
-!ObjectInside categoriesFor: #rotation!accessing!public! !
-!ObjectInside categoriesFor: #rotation:!accessing!public! !
-!ObjectInside categoriesFor: #scale!accessing!public! !
-!ObjectInside categoriesFor: #scale:!accessing!public! !
-!ObjectInside categoriesFor: #setImage:!private! !
-!ObjectInside categoriesFor: #testCollisionIn:!accessing!public! !
-!ObjectInside categoriesFor: #x!accessing!public! !
-!ObjectInside categoriesFor: #x:!accessing!public! !
-!ObjectInside categoriesFor: #y!accessing!public! !
-!ObjectInside categoriesFor: #y:!accessing!public! !
+!Tools.ObjectInside categoriesFor: #alpha!accessing!public! !
+!Tools.ObjectInside categoriesFor: #alpha:!accessing!public! !
+!Tools.ObjectInside categoriesFor: #baseColor!accessing!public! !
+!Tools.ObjectInside categoriesFor: #baseColor:!accessing!public! !
+!Tools.ObjectInside categoriesFor: #center!accessing!public! !
+!Tools.ObjectInside categoriesFor: #color!accessing!public! !
+!Tools.ObjectInside categoriesFor: #color:!accessing!public! !
+!Tools.ObjectInside categoriesFor: #copy!copying!public! !
+!Tools.ObjectInside categoriesFor: #drawEdgePointsOn:!operations!public! !
+!Tools.ObjectInside categoriesFor: #drawOn:!operations!public! !
+!Tools.ObjectInside categoriesFor: #edgePoints!accessing!public! !
+!Tools.ObjectInside categoriesFor: #edgePoints:!accessing!public! !
+!Tools.ObjectInside categoriesFor: #extent!accessing!public! !
+!Tools.ObjectInside categoriesFor: #findEdgePoints!operations!private! !
+!Tools.ObjectInside categoriesFor: #image!private! !
+!Tools.ObjectInside categoriesFor: #initialize!private! !
+!Tools.ObjectInside categoriesFor: #matrix!accessing!operations!public! !
+!Tools.ObjectInside categoriesFor: #position!accessing!public! !
+!Tools.ObjectInside categoriesFor: #position:!accessing!public! !
+!Tools.ObjectInside categoriesFor: #resetMatrix!operations!public! !
+!Tools.ObjectInside categoriesFor: #rotation!accessing!public! !
+!Tools.ObjectInside categoriesFor: #rotation:!accessing!public! !
+!Tools.ObjectInside categoriesFor: #scale!accessing!public! !
+!Tools.ObjectInside categoriesFor: #scale:!accessing!public! !
+!Tools.ObjectInside categoriesFor: #setImage:!private! !
+!Tools.ObjectInside categoriesFor: #testCollisionIn:!accessing!public! !
+!Tools.ObjectInside categoriesFor: #x!accessing!public! !
+!Tools.ObjectInside categoriesFor: #x:!accessing!public! !
+!Tools.ObjectInside categoriesFor: #y!accessing!public! !
+!Tools.ObjectInside categoriesFor: #y:!accessing!public! !
 
-!ObjectInside class methodsFor!
+!Tools.ObjectInside class methodsFor!
 
 chooseFile
 	^self fromBytes: InternalBitmap chooseFile asByteArray.
@@ -244,10 +244,10 @@ fromImage: aGdiplusImage
 fromImage: aGdiplusImage scaledBy: aFloatScale 
 	| scaledBitmap |
 	aFloatScale = 1 ifTrue: [^self fromImage: aGdiplusImage].
-	scaledBitmap := GdiplusBitmap fromImage: aGdiplusImage scaledBy: aFloatScale.
+	scaledBitmap := Gdiplus.Bitmap fromImage: aGdiplusImage scaledBy: aFloatScale.
 	^self fromImage: scaledBitmap! !
-!ObjectInside class categoriesFor: #chooseFile!public! !
-!ObjectInside class categoriesFor: #fromBytes:!public! !
-!ObjectInside class categoriesFor: #fromImage:!public! !
-!ObjectInside class categoriesFor: #fromImage:scaledBy:!public! !
+!Tools.ObjectInside class categoriesFor: #chooseFile!public! !
+!Tools.ObjectInside class categoriesFor: #fromBytes:!public! !
+!Tools.ObjectInside class categoriesFor: #fromImage:!public! !
+!Tools.ObjectInside class categoriesFor: #fromImage:scaledBy:!public! !
 

@@ -202,7 +202,7 @@ initialize
 	"
 
 	Smalltalk developmentSystem
-		addAdditionalToolsFolderIcon: (Smalltalk.SmalltalkSystemIcon
+		addAdditionalToolsFolderIcon: (Tools.SmalltalkSystemIcon
 					show: self
 					description: self toolDescription
 					helpId: self toolsFolderHelpId);

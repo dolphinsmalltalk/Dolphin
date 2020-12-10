@@ -1,21 +1,21 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-SmalltalkToolShell subclass: #ClassHierarchyDiagram
+Tools.SmalltalkToolShell subclass: #'Tools.ClassHierarchyDiagram'
 	instanceVariableNames: 'classesPresenter commentPresenter'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ClassHierarchyDiagram guid: (GUID fromString: '{493664d4-3394-11d3-93bd-00a024ca708a}')!
-ClassHierarchyDiagram comment: 'ClassHierarchyDiagram is a <SmalltalkToolShell> that displays the current class hierarchy in a graphical format using a <MoenTreeView>.
+Tools.ClassHierarchyDiagram guid: (Core.GUID fromString: '{493664d4-3394-11d3-93bd-00a024ca708a}')!
+Tools.ClassHierarchyDiagram comment: 'ClassHierarchyDiagram is a <SmalltalkToolShell> that displays the current class hierarchy in a graphical format using a <MoenTreeView>.
 
 Instance Variables:
 	classesPresenter	<TreePresenter> displaying the class hierarchy.
 	commentPresenter	<SmalltalkWorkspace> displaying the comment of the selected class.
 
 '!
-!ClassHierarchyDiagram categoriesForClass!MVP-Presenters! !
-!ClassHierarchyDiagram methodsFor!
+!Tools.ClassHierarchyDiagram categoriesForClass!MVP-Presenters! !
+!Tools.ClassHierarchyDiagram methodsFor!
 
 canSaveState
 	"Private - Answer true if the receiver can successfully have it's state saved by #saveStateOn:. Some
@@ -60,15 +60,15 @@ onViewOpened
 
 searchForClass: aClass 
 	classesPresenter selection: aClass instanceClass ifAbsent: [super searchForClass: aClass]! !
-!ClassHierarchyDiagram categoriesFor: #canSaveState!private!saved state! !
-!ClassHierarchyDiagram categoriesFor: #createComponents!initializing!private! !
-!ClassHierarchyDiagram categoriesFor: #createSchematicWiring!initializing!private! !
-!ClassHierarchyDiagram categoriesFor: #defaultHelpId!public! !
-!ClassHierarchyDiagram categoriesFor: #onClassSelected!event handling!public! !
-!ClassHierarchyDiagram categoriesFor: #onViewOpened!event handling!private! !
-!ClassHierarchyDiagram categoriesFor: #searchForClass:!private! !
+!Tools.ClassHierarchyDiagram categoriesFor: #canSaveState!private!saved state! !
+!Tools.ClassHierarchyDiagram categoriesFor: #createComponents!initializing!private! !
+!Tools.ClassHierarchyDiagram categoriesFor: #createSchematicWiring!initializing!private! !
+!Tools.ClassHierarchyDiagram categoriesFor: #defaultHelpId!public! !
+!Tools.ClassHierarchyDiagram categoriesFor: #onClassSelected!event handling!public! !
+!Tools.ClassHierarchyDiagram categoriesFor: #onViewOpened!event handling!private! !
+!Tools.ClassHierarchyDiagram categoriesFor: #searchForClass:!private! !
 
-!ClassHierarchyDiagram class methodsFor!
+!Tools.ClassHierarchyDiagram class methodsFor!
 
 defaultAdditionalAccelerators
 	^super defaultAdditionalAccelerators 
@@ -98,7 +98,7 @@ initialize
 publishedAspects
 	"Answer a <LookupTable> of the <Aspect>s published by the receiver."
 
-	^(super publishedAspects)
+	^super publishedAspects
 		add: (Aspect boolean: #canUseIdeaSpace);
 		yourself!
 
@@ -107,18 +107,18 @@ resource_Default_view
 	DO NOT EDIT OR RECATEGORIZE THIS METHOD.
 
 	If you wish to modify this resource evaluate:
-	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Default_view)
+	Tools.ViewComposer openOn: (UI.ResourceIdentifier class: self selector: #resource_Default_view)
 	"
 
-	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.ShellView) 34 27 nil nil 8 #(13565952 65536) 416 nil 655878 ##(Smalltalk.ThemeColor) #toolBackground nil 517 nil nil nil 416 788230 ##(Smalltalk.BorderLayout) 1 1 410 ##(Smalltalk.Toolbar) 34 25 nil 416 34 2 8 1140853580 131073 528 nil nil nil 519 nil nil nil 528 327686 ##(Smalltalk.Color) #default 8 1877912960 170 192 34 6 410 ##(Smalltalk.ReferenceView) 34 14 nil 528 34 2 8 1140850688 131073 672 nil nil nil 7 nil nil nil 672 1180230 1 ##(Smalltalk.ResourceIdentifier) ##(Smalltalk.Toolbar) #resource_Image_tools nil 983302 ##(Smalltalk.MessageSequence) 138 144 34 1 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 328198 ##(Smalltalk.Point) 1 1 882 63 51 672 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 31 0 0 0 25 0 0 0] 8 #() 882 193 193 nil 27 8 'imageTools' 410 ##(Smalltalk.ReferenceView) 34 14 nil 528 34 2 8 1140850688 131073 1024 nil nil nil 7 nil nil nil 1024 738 ##(Smalltalk.Toolbar) #resource_Search_tools nil 770 138 144 34 1 834 #createAt:extent: 34 2 882 615 1 882 437 51 1024 930 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 51 1 0 0 0 0 0 0 13 2 0 0 25 0 0 0] 976 992 nil 27 8 'searchTools' 410 ##(Smalltalk.ReferenceView) 34 14 nil 528 34 2 8 1140850688 131073 1264 nil nil nil 7 nil nil nil 1264 738 ##(Smalltalk.Toolbar) #resource_Smalltalk_tools nil 770 138 144 34 1 834 #createAt:extent: 34 2 882 63 1 882 553 51 1264 930 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 31 0 0 0 0 0 0 0 51 1 0 0 25 0 0 0] 976 992 nil 27 8 'smalltalkTools' 170 192 976 138 144 976 nil nil 1 nil 882 33 33 nil nil 656198 1 ##(Smalltalk.FlowLayout) 1 1 1 770 138 144 34 1 834 #createAt:extent: 34 2 882 1 1 882 2369 51 528 930 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 160 4 0 0 25 0 0 0] 34 3 672 1264 1024 992 nil 27 nil nil nil 410 ##(Smalltalk.ReferenceView) 34 14 nil 416 34 2 8 1140850688 131073 1744 nil nil nil 7 nil nil nil 1744 738 ##(Smalltalk.ClassHierarchySelector) #resource_Moen_view nil 770 138 144 34 1 834 #createAt:extent: 34 2 882 1 51 882 2369 1485 1744 930 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 25 0 0 0 160 4 0 0 255 2 0 0] 976 992 nil 27 170 192 34 4 1744 8 'classes' 528 8 'toolbar' nil 461638 4 ##(Smalltalk.MenuBar) nil true 34 4 265030 4 ##(Smalltalk.Menu) nil true 34 8 984134 2 ##(Smalltalk.CommandMenuItem) 1 1180998 4 ##(Smalltalk.CommandDescription) #fileNew 8 '&New Workspace' 9373 1 263494 3 ##(Smalltalk.Icon) nil true 1572870 ##(Smalltalk.ImageRelativeFileLocator) 8 'NewWorkspace.ico' 2032142 ##(Smalltalk.STBExternalResourceLibraryProxy) 8 'dolphindr7.dll' nil nil nil 2130 1 2162 #fileOpen 8 '&Open Workspace...' 9375 1 2210 nil true 2256 8 'OpenWorkspace.ico' 2304 nil nil 2130 1 2162 #fileFileIn 8 '&File In...' 1 1 2210 nil true 2256 8 'FileIn.ico' 2304 nil nil 983366 1 ##(Smalltalk.DividerMenuItem) 4097 2130 1 2162 #saveImage 8 'Sa&ve Image' 1 1 2210 nil true 2256 8 'Snapshot.ico' 2304 nil nil 2130 1 2162 #smalltalkExit 8 'E&xit Dolphin' 1 1 2210 nil true 2256 8 'PowerSwitch.ico' 2304 nil nil 2498 4097 2130 1 2162 #exit 8 '&Close' 17639 1 788806 1 ##(Smalltalk.TextTileIcon) $\x2716 nil nil nil nil nil 1 nil nil nil nil 8 '&File' nil 134217729 nil nil 55491 nil nil 2082 nil true 8 #() 8 '&Tools' #toolsMenu 134217729 nil nil 55493 nil nil 2082 nil true 8 #() 8 'Wi&ndow' #windowMenu 134217729 nil nil 55495 nil nil 2082 nil true 34 15 2130 1 2162 #helpContents 8 '&Contents' 1025 1 2210 nil true 2256 8 'Help.ico' 2304 nil nil 2130 1 2162 #help 8 'On this &Tool' 1249 1 nil nil nil 2130 1 2162 #helpWhatsThis 8 'What''s This?' 5345 1 nil nil nil 2498 4097 2130 1 2162 #learnSmalltalk 8 'Learn Smalltalk' 1 1 2754 $\x1F393 nil 594 #orchid 594 #white nil nil 1 nil nil nil nil 2498 4097 2130 1 2162 #helpWhatsNew 8 'What''s &New' 1 1 nil nil nil 2130 1 2162 #helpGuidedTour 8 '&Guided Tour' 1 1 nil nil nil 2130 1 2162 #helpTutorials 8 'Tutorials' 1 1 nil nil nil 2498 4097 2130 1 2162 #objectArtsHomePage 8 'Object Arts Homepage' 1 1 2210 nil true 2256 8 '!!APPLICATION' 2304 nil nil 2130 1 2162 #dolphinNewsgroup 8 'Dolphin Newsgroup/Forum' 1 1 nil nil nil 2130 1 2162 #dolphinWikiWeb 8 'Dolphin WikiWeb' 1 1 nil nil nil 2498 4097 2130 1 2162 #aboutDolphin 8 '&About Dolphin Smalltalk' 1 1 2754 $\x1F42C nil nil 594 #darkSlateBlue nil nil 1 nil nil nil nil 8 '&Help' #help 134217729 nil nil nil nil nil 8 '' nil 134217729 nil nil nil nil nil nil nil nil 1 nil nil nil nil 1 nil nil 770 138 144 34 2 834 #createAt:extent: 34 2 882 6143 21 882 2401 1653 416 834 #text: 34 1 8 'Class Hierarchy Diagram' 416 930 8 #[44 0 0 0 0 0 0 0 0 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 175 16 0 0 68 3 0 0] 34 2 528 1744 992 nil 27 )!
+	^#(#'!!STL' 4 985166 10 ##(UI.STBViewProxy) ##(UI.ShellView) 34 27 nil nil 8 #(13565952 65536) 416 nil 1245702 ##(Graphics.ThemeColor) #toolBackground nil 517 nil nil nil 416 984838 ##(UI.BorderLayout) 1 1 410 ##(UI.Toolbar) 34 25 nil 416 34 2 8 1140853580 131073 528 nil nil nil 519 nil nil nil 528 917510 ##(Graphics.Color) #default 8 1801306032 170 192 34 6 410 ##(UI.ReferenceView) 34 14 nil 528 34 2 8 1140850688 131073 672 nil nil nil 7 nil nil nil 672 1376838 1 ##(UI.ResourceIdentifier) ##(UI.Toolbar) #resource_Smalltalk_tools nil 1310982 ##(Core.MessageSequence) 138 144 34 1 1049350 ##(Core.MessageSend) #createAt:extent: 34 2 918022 ##(Graphics.Point) 63 1 882 553 51 672 1179910 ##(OS.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 31 0 0 0 0 0 0 0 51 1 0 0 25 0 0 0] 8 #() 882 193 193 nil 27 8 'smalltalkTools' 410 ##(UI.ReferenceView) 34 14 nil 528 34 2 8 1140850688 131073 1024 nil nil nil 7 nil nil nil 1024 738 ##(UI.Toolbar) #resource_Search_tools nil 770 138 144 34 1 834 #createAt:extent: 34 2 882 615 1 882 437 51 1024 930 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 51 1 0 0 0 0 0 0 13 2 0 0 25 0 0 0] 976 992 nil 27 8 'searchTools' 410 ##(UI.ReferenceView) 34 14 nil 528 34 2 8 1140850688 131073 1264 nil nil nil 7 nil nil nil 1264 738 ##(UI.Toolbar) #resource_Image_tools nil 770 138 144 34 1 834 #createAt:extent: 34 2 882 1 1 882 63 51 1264 930 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 31 0 0 0 25 0 0 0] 976 992 nil 27 8 'imageTools' 170 192 976 138 144 976 nil nil 1 nil 882 33 33 nil nil 852806 1 ##(UI.FlowLayout) 1 1 1 770 138 144 34 1 834 #createAt:extent: 34 2 882 1 1 882 2369 51 528 930 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 160 4 0 0 25 0 0 0] 34 3 1264 672 1024 992 nil 27 nil nil nil 410 ##(UI.ReferenceView) 34 14 nil 416 34 2 8 1140850688 131073 1744 nil nil nil 7 nil nil nil 1744 738 ##(Tools.ClassHierarchySelector) #resource_Moen_view nil 770 138 144 34 1 834 #createAt:extent: 34 2 882 1 51 882 2369 1485 1744 930 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 25 0 0 0 160 4 0 0 255 2 0 0] 976 992 nil 27 170 192 34 4 1744 8 'classes' 528 8 'toolbar' nil 658246 4 ##(UI.MenuBar) nil true 34 4 461638 4 ##(UI.Menu) nil true 34 8 1180742 2 ##(UI.CommandMenuItem) 1 1377606 4 ##(UI.CommandDescription) #fileNew 8 '&New Workspace' 9373 1 853318 3 ##(Graphics.Icon) nil true 2031622 ##(Kernel.ImageRelativeFileLocator) 8 'NewWorkspace.ico' 2490894 ##(Kernel.STBExternalResourceLibraryProxy) 8 'dolphindr7.dll' nil nil nil 2130 1 2162 #fileOpen 8 '&Open Workspace...' 9375 1 2210 nil true 2256 8 'OpenWorkspace.ico' 2304 nil nil 2130 1 2162 #fileFileIn 8 '&File In...' 1 1 2210 nil true 2256 8 'FileIn.ico' 2304 nil nil 1179974 1 ##(UI.DividerMenuItem) 4097 2130 1 2162 #saveImage 8 'Sa&ve Image' 1 1 2210 nil true 2256 8 'Snapshot.ico' 2304 nil nil 2130 1 2162 #smalltalkExit 8 'E&xit Dolphin' 1 1 2210 nil true 2256 8 'PowerSwitch.ico' 2304 nil nil 2498 4097 2130 1 2162 #exit 8 '&Close' 17639 1 1378630 1 ##(Graphics.TextTileIcon) $\x2716 nil nil nil nil nil 1 nil nil nil nil 8 '&File' nil 134217729 nil nil 51399 nil nil 2082 nil true 8 #() 8 '&Tools' #toolsMenu 134217729 nil nil 51401 nil nil 2082 nil true 8 #() 8 'Wi&ndow' #windowMenu 134217729 nil nil 51403 nil nil 2082 nil true 34 15 2130 1 2162 #helpContents 8 '&Contents' 1025 1 2210 nil true 2256 8 'Help.ico' 2304 nil nil 2130 1 2162 #help 8 'On this &Tool' 1249 1 nil nil nil 2130 1 2162 #helpWhatsThis 8 'What''s This?' 5345 1 nil nil nil 2498 4097 2130 1 2162 #learnSmalltalk 8 'Learn Smalltalk' 1 1 2754 $\x1F393 nil 594 #orchid 594 #white nil nil 1 nil nil nil nil 2498 4097 2130 1 2162 #helpWhatsNew 8 'What''s &New' 1 1 nil nil nil 2130 1 2162 #helpGuidedTour 8 '&Guided Tour' 1 1 nil nil nil 2130 1 2162 #helpTutorials 8 'Tutorials' 1 1 nil nil nil 2498 4097 2130 1 2162 #objectArtsHomePage 8 'Object Arts Homepage' 1 1 2210 nil true 2256 8 '!!APPLICATION' 2304 nil nil 2130 1 2162 #dolphinNewsgroup 8 'Dolphin Newsgroup/Forum' 1 1 nil nil nil 2130 1 2162 #dolphinWikiWeb 8 'Dolphin WikiWeb' 1 1 nil nil nil 2498 4097 2130 1 2162 #aboutDolphin 8 '&About Dolphin Smalltalk' 1 1 2754 $\x1F42C nil nil 594 #darkSlateBlue nil nil 1 nil nil nil nil 8 '&Help' #help 134217729 nil nil 51427 nil nil 8 '' nil 134217729 nil nil nil nil nil nil nil nil 1 nil nil nil nil 1 nil nil 770 138 144 34 2 834 #createAt:extent: 34 2 882 6143 21 882 2401 1653 416 834 #text: 34 1 8 'Class Hierarchy Diagram' 416 930 8 #[44 0 0 0 0 0 0 0 0 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 175 16 0 0 68 3 0 0] 34 2 528 1744 992 nil 27 )!
 
 toolsFolderHelpId
 	^10590! !
-!ClassHierarchyDiagram class categoriesFor: #defaultAdditionalAccelerators!initializing!private! !
-!ClassHierarchyDiagram class categoriesFor: #displayOn:!displaying!public! !
-!ClassHierarchyDiagram class categoriesFor: #icon!constants!public! !
-!ClassHierarchyDiagram class categoriesFor: #initialize!initializing!private! !
-!ClassHierarchyDiagram class categoriesFor: #publishedAspects!public! !
-!ClassHierarchyDiagram class categoriesFor: #resource_Default_view!public!resources-views! !
-!ClassHierarchyDiagram class categoriesFor: #toolsFolderHelpId!public! !
+!Tools.ClassHierarchyDiagram class categoriesFor: #defaultAdditionalAccelerators!initializing!private! !
+!Tools.ClassHierarchyDiagram class categoriesFor: #displayOn:!displaying!public! !
+!Tools.ClassHierarchyDiagram class categoriesFor: #icon!constants!public! !
+!Tools.ClassHierarchyDiagram class categoriesFor: #initialize!initializing!private! !
+!Tools.ClassHierarchyDiagram class categoriesFor: #publishedAspects!public! !
+!Tools.ClassHierarchyDiagram class categoriesFor: #resource_Default_view!public!resources-views! !
+!Tools.ClassHierarchyDiagram class categoriesFor: #toolsFolderHelpId!public! !
 

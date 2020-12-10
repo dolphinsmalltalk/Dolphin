@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Object subclass: #SmalltalkSystemIcon
+Core.Object subclass: #'Tools.SmalltalkSystemIcon'
 	instanceVariableNames: 'openBlock icon description tool helpId'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-SmalltalkSystemIcon guid: (GUID fromString: '{87b4c4ba-026e-11d3-9fd7-00a0cc3e4a32}')!
-SmalltalkSystemIcon comment: ''!
-!SmalltalkSystemIcon categoriesForClass!MVP-Models! !
-!SmalltalkSystemIcon methodsFor!
+Tools.SmalltalkSystemIcon guid: (Core.GUID fromString: '{87b4c4ba-026e-11d3-9fd7-00a0cc3e4a32}')!
+Tools.SmalltalkSystemIcon comment: ''!
+!Tools.SmalltalkSystemIcon categoriesForClass!MVP-Models! !
+!Tools.SmalltalkSystemIcon methodsFor!
 
 = aSmalltalkSystemIcon
 	"Answer true if aSmalltalkSystemIcon is equal to (has the same description as) the receiver."
@@ -82,23 +82,23 @@ tool: aToolClass icon: anIcon description: aString openBlock: aMonadicValuable h
 
 whatsThis
 	SessionManager current whatsThis: self! !
-!SmalltalkSystemIcon categoriesFor: #=!comparing!public! !
-!SmalltalkSystemIcon categoriesFor: #description!accessing!public! !
-!SmalltalkSystemIcon categoriesFor: #hash!comparing!public! !
-!SmalltalkSystemIcon categoriesFor: #helpId!accessing!public! !
-!SmalltalkSystemIcon categoriesFor: #icon!accessing!public! !
-!SmalltalkSystemIcon categoriesFor: #isFolder!accessing!public! !
-!SmalltalkSystemIcon categoriesFor: #openBlock!accessing!private! !
-!SmalltalkSystemIcon categoriesFor: #openIn:!operations!public! !
-!SmalltalkSystemIcon categoriesFor: #printOn:!printing!public! !
-!SmalltalkSystemIcon categoriesFor: #tool!accessing!public! !
-!SmalltalkSystemIcon categoriesFor: #tool:!accessing!public! !
-!SmalltalkSystemIcon categoriesFor: #tool:icon:description:openBlock:helpId:!initializing!private! !
-!SmalltalkSystemIcon categoriesFor: #whatsThis!public! !
+!Tools.SmalltalkSystemIcon categoriesFor: #=!comparing!public! !
+!Tools.SmalltalkSystemIcon categoriesFor: #description!accessing!public! !
+!Tools.SmalltalkSystemIcon categoriesFor: #hash!comparing!public! !
+!Tools.SmalltalkSystemIcon categoriesFor: #helpId!accessing!public! !
+!Tools.SmalltalkSystemIcon categoriesFor: #icon!accessing!public! !
+!Tools.SmalltalkSystemIcon categoriesFor: #isFolder!accessing!public! !
+!Tools.SmalltalkSystemIcon categoriesFor: #openBlock!accessing!private! !
+!Tools.SmalltalkSystemIcon categoriesFor: #openIn:!operations!public! !
+!Tools.SmalltalkSystemIcon categoriesFor: #printOn:!printing!public! !
+!Tools.SmalltalkSystemIcon categoriesFor: #tool!accessing!public! !
+!Tools.SmalltalkSystemIcon categoriesFor: #tool:!accessing!public! !
+!Tools.SmalltalkSystemIcon categoriesFor: #tool:icon:description:openBlock:helpId:!initializing!private! !
+!Tools.SmalltalkSystemIcon categoriesFor: #whatsThis!public! !
 
-SmalltalkSystemIcon methodProtocol: #whatsThisHelp attributes: #(#readOnly) selectors: #(#helpId)!
+Tools.SmalltalkSystemIcon methodProtocol: #whatsThisHelp attributes: #(#readOnly) selectors: #(#helpId)!
 
-!SmalltalkSystemIcon class methodsFor!
+!Tools.SmalltalkSystemIcon class methodsFor!
 
 icon
 	"Answers an Icon that can be used to represent this class"
@@ -174,12 +174,12 @@ tool: aToolClass icon: anIcon description: aStringDescription openBlock: aDyadic
 		description: aStringDescription
 		openBlock: aDyadicValuable
 		helpId: anIntegerOrNil! !
-!SmalltalkSystemIcon class categoriesFor: #icon!constants!public! !
-!SmalltalkSystemIcon class categoriesFor: #icon:description:openBlock:!instance creation!public! !
-!SmalltalkSystemIcon class categoriesFor: #icon:description:openBlock:helpId:!instance creation!public! !
-!SmalltalkSystemIcon class categoriesFor: #new!instance creation!private! !
-!SmalltalkSystemIcon class categoriesFor: #show:description:!instance creation!public! !
-!SmalltalkSystemIcon class categoriesFor: #show:description:helpId:!instance creation!public! !
-!SmalltalkSystemIcon class categoriesFor: #showModal:description:!instance creation!public! !
-!SmalltalkSystemIcon class categoriesFor: #tool:icon:description:openBlock:helpId:!instance creation!public! !
+!Tools.SmalltalkSystemIcon class categoriesFor: #icon!constants!public! !
+!Tools.SmalltalkSystemIcon class categoriesFor: #icon:description:openBlock:!instance creation!public! !
+!Tools.SmalltalkSystemIcon class categoriesFor: #icon:description:openBlock:helpId:!instance creation!public! !
+!Tools.SmalltalkSystemIcon class categoriesFor: #new!instance creation!private! !
+!Tools.SmalltalkSystemIcon class categoriesFor: #show:description:!instance creation!public! !
+!Tools.SmalltalkSystemIcon class categoriesFor: #show:description:helpId:!instance creation!public! !
+!Tools.SmalltalkSystemIcon class categoriesFor: #showModal:description:!instance creation!public! !
+!Tools.SmalltalkSystemIcon class categoriesFor: #tool:icon:description:openBlock:helpId:!instance creation!public! !
 

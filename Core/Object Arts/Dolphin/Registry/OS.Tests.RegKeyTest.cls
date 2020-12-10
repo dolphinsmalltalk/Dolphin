@@ -132,7 +132,7 @@ testParentPath
 
 testScintillaTextStyleSerialization
 	| styles rehydratedStyles |
-	styles := Smalltalk.SmalltalkWorkspace textStyles asArray.
+	styles := Tools.SmalltalkWorkspace textStyles asArray.
 	styles storeUnderRegKey: testKey as: 'testScintillaTextStyleSerialization'.
 	rehydratedStyles := Object fromRegKey: (testKey at: 'testScintillaTextStyleSerialization').
 	self deny: rehydratedStyles identicalTo: styles.

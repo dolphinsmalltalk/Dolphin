@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Object subclass: #AXMethodName
+Core.Object subclass: #'Tools.AXMethodName'
 	instanceVariableNames: 'keywords argumentNames indices'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-AXMethodName guid: (GUID fromString: '{fdfdeb82-6021-4e02-9882-cc75d3a22b22}')!
-AXMethodName comment: ''!
-!AXMethodName categoriesForClass!Kernel-Objects! !
-!AXMethodName methodsFor!
+Tools.AXMethodName guid: (Core.GUID fromString: '{fdfdeb82-6021-4e02-9882-cc75d3a22b22}')!
+Tools.AXMethodName comment: ''!
+!Tools.AXMethodName categoriesForClass!Kernel-Objects! !
+!Tools.AXMethodName methodsFor!
 
 argumentCount
 	^argumentNames size!
@@ -69,29 +69,29 @@ setKeywords: keywordsCollection argumentNames: argsCollection indices: indexColl
 	argumentNames := argsCollection.
 	indices := indexCollection.
 	^self! !
-!AXMethodName categoriesFor: #argumentCount!accessing!public! !
-!AXMethodName categoriesFor: #argumentNames!accessing!public! !
-!AXMethodName categoriesFor: #indices!accessing!public! !
-!AXMethodName categoriesFor: #keywords!accessing!public! !
-!AXMethodName categoriesFor: #primary!accessing!public! !
-!AXMethodName categoriesFor: #printOn:!printing!public! !
-!AXMethodName categoriesFor: #printSelectorOn:!printing!public! !
-!AXMethodName categoriesFor: #printSignatureOn:!printing!public! !
-!AXMethodName categoriesFor: #selector!accessing!public! !
-!AXMethodName categoriesFor: #setKeywords:argumentNames:indices:!initializing!private! !
+!Tools.AXMethodName categoriesFor: #argumentCount!accessing!public! !
+!Tools.AXMethodName categoriesFor: #argumentNames!accessing!public! !
+!Tools.AXMethodName categoriesFor: #indices!accessing!public! !
+!Tools.AXMethodName categoriesFor: #keywords!accessing!public! !
+!Tools.AXMethodName categoriesFor: #primary!accessing!public! !
+!Tools.AXMethodName categoriesFor: #printOn:!printing!public! !
+!Tools.AXMethodName categoriesFor: #printSelectorOn:!printing!public! !
+!Tools.AXMethodName categoriesFor: #printSignatureOn:!printing!public! !
+!Tools.AXMethodName categoriesFor: #selector!accessing!public! !
+!Tools.AXMethodName categoriesFor: #setKeywords:argumentNames:indices:!initializing!private! !
 
-!AXMethodName class methodsFor!
+!Tools.AXMethodName class methodsFor!
 
 icon
 	"Answers an <Icon> that can be used to represent this class"
 
-	^AXTypeLibraryAnalyzer icon!
+	^Smalltalk.AXTypeLibraryAnalyzer icon!
 
 keywords: keywordsCollection argumentNames: argumentsCollection indices: indexCollection
 	^self new 
 		setKeywords: keywordsCollection
 		argumentNames: argumentsCollection
 		indices: indexCollection! !
-!AXMethodName class categoriesFor: #icon!constants!public! !
-!AXMethodName class categoriesFor: #keywords:argumentNames:indices:!instance creation!public! !
+!Tools.AXMethodName class categoriesFor: #icon!constants!public! !
+!Tools.AXMethodName class categoriesFor: #keywords:argumentNames:indices:!instance creation!public! !
 

@@ -1,21 +1,21 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-UI.SelectableItemsPresenter subclass: #PackageSelector
+UI.SelectableItemsPresenter subclass: #'Tools.PackageSelector'
 	instanceVariableNames: 'filterPresenter packagesPresenter autoSelect'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: 'commandQueryHandlers'
 	classConstants: {}!
-PackageSelector guid: (Core.GUID fromString: '{d41af949-f919-4f5f-986d-a50606ba68e9}')!
-PackageSelector comment: 'A PackageSelector is used to choose a Package from the complete set of packages available in the development system. It presents two panes; a hierarchical display of the folders in which the packages reside and a list of available packages. The folder display can be used as a filter to refine which packages are displayed in the list. When a folder is selected, only packages in the hierarchy beneath it are visible.
+Tools.PackageSelector guid: (Core.GUID fromString: '{d41af949-f919-4f5f-986d-a50606ba68e9}')!
+Tools.PackageSelector comment: 'A PackageSelector is used to choose a Package from the complete set of packages available in the development system. It presents two panes; a hierarchical display of the folders in which the packages reside and a list of available packages. The folder display can be used as a filter to refine which packages are displayed in the list. When a folder is selected, only packages in the hierarchy beneath it are visible.
 
 Instance Variables:
 	filterPresenter		<treePresenter> showing the folders in which packages reside
 	packagesPresenter		<listPresenter> showing the packages filtered by the selected folder
 
 '!
-!PackageSelector categoriesForClass!MVP-Presenters!MVP-Resources-Misc! !
-!PackageSelector methodsFor!
+!Tools.PackageSelector categoriesForClass!MVP-Presenters!MVP-Resources-Misc! !
+!Tools.PackageSelector methodsFor!
 
 aboutPackage
 	"Show an About box for the currently selected package"
@@ -77,7 +77,7 @@ autoSelect: aBoolean
 browseFolder
 	| folder |
 	folder := self selectedFolder.
-	[self systemModel browseFolder: folder] on: Win32Error
+	[self systemModel browseFolder: folder] on: OS.Win32Error
 		do: 
 			[:ex |
 			MessageBox errorMsg: ex messageText caption: ('Unable to browse <1p>...' expandMacrosWith: folder)]!
@@ -349,7 +349,7 @@ newPackage
 
 	| pathname dialog directory |
 	directory := File fullPathOf: self filter relativeTo: SessionManager current imageBase.
-	[File createDirectoryPath: directory] on: Win32Error
+	[File createDirectoryPath: directory] on: OS.Win32Error
 		do: 
 			[:ex |
 			"User probably doesn't have access rights"
@@ -944,91 +944,91 @@ uninstall: package
 	"Select nearest available folder in filter hierarchy"
 	[currentFolder notNil and: [(self filterPresenter selection: currentFolder ifAbsent: []) isNil]]
 		whileTrue: [currentFolder := currentFolder parent]! !
-!PackageSelector categoriesFor: #aboutPackage!commands!public! !
-!PackageSelector categoriesFor: #addClass!commands!public! !
-!PackageSelector categoriesFor: #addSharedVariable!commands!public! !
-!PackageSelector categoriesFor: #applicationEnvironment!public! !
-!PackageSelector categoriesFor: #autoSelect!accessing!public! !
-!PackageSelector categoriesFor: #autoSelect:!accessing!public! !
-!PackageSelector categoriesFor: #browseFolder!commands!public! !
-!PackageSelector categoriesFor: #browseIt!commands!public! !
-!PackageSelector categoriesFor: #browseItCommand!helpers!private! !
-!PackageSelector categoriesFor: #browsePackages!commands!public! !
-!PackageSelector categoriesFor: #browseUnimplemented!public! !
-!PackageSelector categoriesFor: #checkCanUninstall:!helpers!private! !
-!PackageSelector categoriesFor: #clearSelection!commands!private! !
-!PackageSelector categoriesFor: #commonFolder:!operations!private! !
-!PackageSelector categoriesFor: #confirmUninstall:!helpers!private! !
-!PackageSelector categoriesFor: #createComponents!initializing!private! !
-!PackageSelector categoriesFor: #createSchematicWiring!initializing!private! !
-!PackageSelector categoriesFor: #deleteItCommand!helpers!private! !
-!PackageSelector categoriesFor: #filter!accessing!public! !
-!PackageSelector categoriesFor: #filteredPackages!helpers!private! !
-!PackageSelector categoriesFor: #filterPresenter!accessing!private! !
-!PackageSelector categoriesFor: #folder!accessing!public! !
-!PackageSelector categoriesFor: #folderClass!constants!private! !
-!PackageSelector categoriesFor: #hasChangedPackages!private!testing! !
-!PackageSelector categoriesFor: #hasPackages!private!testing! !
-!PackageSelector categoriesFor: #hasSinglePackage!private!testing! !
-!PackageSelector categoriesFor: #initialize!initializing!private! !
-!PackageSelector categoriesFor: #inspectIt!commands!public! !
-!PackageSelector categoriesFor: #inspectPackage!commands!public! !
-!PackageSelector categoriesFor: #isEnabled:!accessing!public! !
-!PackageSelector categoriesFor: #isSaveablePackage:!private!testing! !
-!PackageSelector categoriesFor: #model:!public! !
-!PackageSelector categoriesFor: #newPackage!commands!public! !
-!PackageSelector categoriesFor: #okToSavePackage:!helpers!private! !
-!PackageSelector categoriesFor: #onDragOverFolder:!drag & drop!event handling!private! !
-!PackageSelector categoriesFor: #onDragOverPackage:!drag & drop!event handling!private! !
-!PackageSelector categoriesFor: #onDragPackages:!drag & drop!event handling!private! !
-!PackageSelector categoriesFor: #onDropOverFolder:!drag & drop!event handling!private! !
-!PackageSelector categoriesFor: #onDropOverPackage:!drag & drop!event handling!private! !
-!PackageSelector categoriesFor: #onFilterSelected!event handling!private! !
-!PackageSelector categoriesFor: #onPackageChanged:!event handling!private! !
-!PackageSelector categoriesFor: #onPackageChosen!event handling!private! !
-!PackageSelector categoriesFor: #onPackagesChanged!event handling!private! !
-!PackageSelector categoriesFor: #onSelectionChanged!event handling!private! !
-!PackageSelector categoriesFor: #onSelectionChanging:!private! !
-!PackageSelector categoriesFor: #onTipTextRequired:!event handling!private! !
-!PackageSelector categoriesFor: #onViewOpened!event handling!public! !
-!PackageSelector categoriesFor: #openPackage!commands!public! !
-!PackageSelector categoriesFor: #openPackageFile:!commands!private! !
-!PackageSelector categoriesFor: #operationAbortedSignal!constants!private! !
-!PackageSelector categoriesFor: #packageManager!constants!private! !
-!PackageSelector categoriesFor: #packages!accessing!private! !
-!PackageSelector categoriesFor: #packages:!accessing!private! !
-!PackageSelector categoriesFor: #packagesPresenter!accessing!private! !
-!PackageSelector categoriesFor: #promptToSavePackageChanges:!helpers!private! !
-!PackageSelector categoriesFor: #queryCommand:!commands!private! !
-!PackageSelector categoriesFor: #refresh!private!updating! !
-!PackageSelector categoriesFor: #removePackage!commands!public! !
-!PackageSelector categoriesFor: #resetChangeFlags!commands!public! !
-!PackageSelector categoriesFor: #resetForItem:!event handling!private! !
-!PackageSelector categoriesFor: #resetForItems:!operations!private! !
-!PackageSelector categoriesFor: #rootFolder!accessing!private! !
-!PackageSelector categoriesFor: #saveFileDialogTypes!constants!private! !
-!PackageSelector categoriesFor: #savePackageAs!commands!public! !
-!PackageSelector categoriesFor: #savePackageChanges!commands!public! !
-!PackageSelector categoriesFor: #savePackageChanges:!commands!public! !
-!PackageSelector categoriesFor: #savePackages!commands!public! !
-!PackageSelector categoriesFor: #savePackages:!commands!public! !
-!PackageSelector categoriesFor: #savePackages:toFolder:!helpers!private! !
-!PackageSelector categoriesFor: #selectableItems!accessing!private! !
-!PackageSelector categoriesFor: #selectedFolder!commands!public! !
-!PackageSelector categoriesFor: #selectedSourceObjects!accessing!private! !
-!PackageSelector categoriesFor: #selectionEnvironment!accessing!private! !
-!PackageSelector categoriesFor: #selectNoFolder!public! !
-!PackageSelector categoriesFor: #selectRootFolder!public! !
-!PackageSelector categoriesFor: #setAsDefaultPackage!commands!private! !
-!PackageSelector categoriesFor: #singlePackage!accessing!private! !
-!PackageSelector categoriesFor: #sourceControl!accessing!private! !
-!PackageSelector categoriesFor: #synchronizeFilter!commands!private! !
-!PackageSelector categoriesFor: #systemModel!accessing!private! !
-!PackageSelector categoriesFor: #testBrowserClass!constants!private! !
-!PackageSelector categoriesFor: #toggleUsingPAX!commands!public! !
-!PackageSelector categoriesFor: #uninstall:!commands!private! !
+!Tools.PackageSelector categoriesFor: #aboutPackage!commands!public! !
+!Tools.PackageSelector categoriesFor: #addClass!commands!public! !
+!Tools.PackageSelector categoriesFor: #addSharedVariable!commands!public! !
+!Tools.PackageSelector categoriesFor: #applicationEnvironment!public! !
+!Tools.PackageSelector categoriesFor: #autoSelect!accessing!public! !
+!Tools.PackageSelector categoriesFor: #autoSelect:!accessing!public! !
+!Tools.PackageSelector categoriesFor: #browseFolder!commands!public! !
+!Tools.PackageSelector categoriesFor: #browseIt!commands!public! !
+!Tools.PackageSelector categoriesFor: #browseItCommand!helpers!private! !
+!Tools.PackageSelector categoriesFor: #browsePackages!commands!public! !
+!Tools.PackageSelector categoriesFor: #browseUnimplemented!public! !
+!Tools.PackageSelector categoriesFor: #checkCanUninstall:!helpers!private! !
+!Tools.PackageSelector categoriesFor: #clearSelection!commands!private! !
+!Tools.PackageSelector categoriesFor: #commonFolder:!operations!private! !
+!Tools.PackageSelector categoriesFor: #confirmUninstall:!helpers!private! !
+!Tools.PackageSelector categoriesFor: #createComponents!initializing!private! !
+!Tools.PackageSelector categoriesFor: #createSchematicWiring!initializing!private! !
+!Tools.PackageSelector categoriesFor: #deleteItCommand!helpers!private! !
+!Tools.PackageSelector categoriesFor: #filter!accessing!public! !
+!Tools.PackageSelector categoriesFor: #filteredPackages!helpers!private! !
+!Tools.PackageSelector categoriesFor: #filterPresenter!accessing!private! !
+!Tools.PackageSelector categoriesFor: #folder!accessing!public! !
+!Tools.PackageSelector categoriesFor: #folderClass!constants!private! !
+!Tools.PackageSelector categoriesFor: #hasChangedPackages!private!testing! !
+!Tools.PackageSelector categoriesFor: #hasPackages!private!testing! !
+!Tools.PackageSelector categoriesFor: #hasSinglePackage!private!testing! !
+!Tools.PackageSelector categoriesFor: #initialize!initializing!private! !
+!Tools.PackageSelector categoriesFor: #inspectIt!commands!public! !
+!Tools.PackageSelector categoriesFor: #inspectPackage!commands!public! !
+!Tools.PackageSelector categoriesFor: #isEnabled:!accessing!public! !
+!Tools.PackageSelector categoriesFor: #isSaveablePackage:!private!testing! !
+!Tools.PackageSelector categoriesFor: #model:!public! !
+!Tools.PackageSelector categoriesFor: #newPackage!commands!public! !
+!Tools.PackageSelector categoriesFor: #okToSavePackage:!helpers!private! !
+!Tools.PackageSelector categoriesFor: #onDragOverFolder:!drag & drop!event handling!private! !
+!Tools.PackageSelector categoriesFor: #onDragOverPackage:!drag & drop!event handling!private! !
+!Tools.PackageSelector categoriesFor: #onDragPackages:!drag & drop!event handling!private! !
+!Tools.PackageSelector categoriesFor: #onDropOverFolder:!drag & drop!event handling!private! !
+!Tools.PackageSelector categoriesFor: #onDropOverPackage:!drag & drop!event handling!private! !
+!Tools.PackageSelector categoriesFor: #onFilterSelected!event handling!private! !
+!Tools.PackageSelector categoriesFor: #onPackageChanged:!event handling!private! !
+!Tools.PackageSelector categoriesFor: #onPackageChosen!event handling!private! !
+!Tools.PackageSelector categoriesFor: #onPackagesChanged!event handling!private! !
+!Tools.PackageSelector categoriesFor: #onSelectionChanged!event handling!private! !
+!Tools.PackageSelector categoriesFor: #onSelectionChanging:!private! !
+!Tools.PackageSelector categoriesFor: #onTipTextRequired:!event handling!private! !
+!Tools.PackageSelector categoriesFor: #onViewOpened!event handling!public! !
+!Tools.PackageSelector categoriesFor: #openPackage!commands!public! !
+!Tools.PackageSelector categoriesFor: #openPackageFile:!commands!private! !
+!Tools.PackageSelector categoriesFor: #operationAbortedSignal!constants!private! !
+!Tools.PackageSelector categoriesFor: #packageManager!constants!private! !
+!Tools.PackageSelector categoriesFor: #packages!accessing!private! !
+!Tools.PackageSelector categoriesFor: #packages:!accessing!private! !
+!Tools.PackageSelector categoriesFor: #packagesPresenter!accessing!private! !
+!Tools.PackageSelector categoriesFor: #promptToSavePackageChanges:!helpers!private! !
+!Tools.PackageSelector categoriesFor: #queryCommand:!commands!private! !
+!Tools.PackageSelector categoriesFor: #refresh!private!updating! !
+!Tools.PackageSelector categoriesFor: #removePackage!commands!public! !
+!Tools.PackageSelector categoriesFor: #resetChangeFlags!commands!public! !
+!Tools.PackageSelector categoriesFor: #resetForItem:!event handling!private! !
+!Tools.PackageSelector categoriesFor: #resetForItems:!operations!private! !
+!Tools.PackageSelector categoriesFor: #rootFolder!accessing!private! !
+!Tools.PackageSelector categoriesFor: #saveFileDialogTypes!constants!private! !
+!Tools.PackageSelector categoriesFor: #savePackageAs!commands!public! !
+!Tools.PackageSelector categoriesFor: #savePackageChanges!commands!public! !
+!Tools.PackageSelector categoriesFor: #savePackageChanges:!commands!public! !
+!Tools.PackageSelector categoriesFor: #savePackages!commands!public! !
+!Tools.PackageSelector categoriesFor: #savePackages:!commands!public! !
+!Tools.PackageSelector categoriesFor: #savePackages:toFolder:!helpers!private! !
+!Tools.PackageSelector categoriesFor: #selectableItems!accessing!private! !
+!Tools.PackageSelector categoriesFor: #selectedFolder!commands!public! !
+!Tools.PackageSelector categoriesFor: #selectedSourceObjects!accessing!private! !
+!Tools.PackageSelector categoriesFor: #selectionEnvironment!accessing!private! !
+!Tools.PackageSelector categoriesFor: #selectNoFolder!public! !
+!Tools.PackageSelector categoriesFor: #selectRootFolder!public! !
+!Tools.PackageSelector categoriesFor: #setAsDefaultPackage!commands!private! !
+!Tools.PackageSelector categoriesFor: #singlePackage!accessing!private! !
+!Tools.PackageSelector categoriesFor: #sourceControl!accessing!private! !
+!Tools.PackageSelector categoriesFor: #synchronizeFilter!commands!private! !
+!Tools.PackageSelector categoriesFor: #systemModel!accessing!private! !
+!Tools.PackageSelector categoriesFor: #testBrowserClass!constants!private! !
+!Tools.PackageSelector categoriesFor: #toggleUsingPAX!commands!public! !
+!Tools.PackageSelector categoriesFor: #uninstall:!commands!private! !
 
-!PackageSelector class methodsFor!
+!Tools.PackageSelector class methodsFor!
 
 defaultModel
 	"Answer a default model to be assigned to the receiver when it
@@ -1044,45 +1044,45 @@ resource_Choice_view
 	DO NOT EDIT OR RECATEGORIZE THIS METHOD.
 
 	If you wish to modify this resource evaluate:
-	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Choice_view)
+	Tools.ViewComposer openOn: (UI.ResourceIdentifier class: self selector: #resource_Choice_view)
 	"
 
-	^#(#'!!STL' 4 788558 10 ##(UI.STBViewProxy) ##(UI.ContainerView) 34 15 nil nil 34 2 8 1409286144 131073 416 nil nil nil 5 nil nil nil 416 1180166 ##(UI.ProportionalLayout) 170 176 34 4 410 ##(UI.ListView) 34 45 nil 416 34 2 8 1140920397 1025 544 590662 2 ##(Smalltalk.ListModel) 138 144 8 #() nil 1310726 ##(Smalltalk.IdentitySearchPolicy) 327686 ##(Smalltalk.Color) #default nil 21 265030 4 ##(UI.Menu) nil true 34 9 984134 2 ##(UI.CommandMenuItem) 1 1180998 4 ##(UI.CommandDescription) #synchronizeFilter 8 '&Goto Folder' 1 1 nil nil nil 983366 1 ##(UI.DividerMenuItem) 4097 786 1 818 #newPackage 8 '&New Package...' 1 1 nil nil nil 786 1 818 #savePackages 8 '&Save' 1 1 263494 3 ##(Smalltalk.Icon) nil true 1572870 ##(Smalltalk.ImageRelativeFileLocator) 8 'FileSave.ico' 2032142 ##(Smalltalk.STBExternalResourceLibraryProxy) 8 'dolphindr7.dll' nil nil nil 786 1 818 #savePackageAs 8 'Save &As...' 1 1 nil nil nil 738 nil true 34 10 786 1 818 #toggleUsingPAX 8 'Use PA&X Source Format' 1 1 nil nil nil 786 1 818 #browsePackageSources 8 'Bro&wse PAX Sources' 1 1 nil nil nil 866 4097 786 1 818 #checkOut 8 'Check Out &All' 1 1 nil nil nil 786 1 818 #checkOutChanges 8 'Check &Out Changes' 1 1 nil nil nil 786 1 818 #checkIn 8 'Check &In' 1 1 nil nil nil 866 4097 786 2097153 818 #savePackageChanges 8 'Save &Changes' 1 1 nil nil nil 866 4097 786 1 818 #resetChangeFlags 8 'Clear Change &Markers' 1 1 nil nil nil 8 'Sou&rce Control' #sourceControlMenu 1 nil nil nil nil nil 866 4097 786 1 818 #inspectPackage 8 '&Properties' 1 1 994 nil true 1040 8 'SMALLTALKOPTIONSFOLDER.ICO' 1088 nil nil 786 1 818 #aboutPackage 8 'Abou&t this Package...' 1 1 nil nil nil 8 '&Package' nil 134217729 nil nil nil nil nil nil nil 544 nil 8 1883852064 459270 ##(Smalltalk.Message) #name 8 #() ##(UI.IconicListAbstract) 1049926 1 ##(Graphics.IconImageManager) nil nil 787814 3 ##(Smalltalk.BlockClosure) 0 nil 1180966 ##(Smalltalk.CompiledExpression) 5 1 ##(Smalltalk.UndefinedObject) 8 'doIt' 8 '[:ctx | 
+	^#(#'!!STL' 4 985166 10 ##(UI.STBViewProxy) ##(UI.ContainerView) 34 15 nil nil 34 2 8 1409286144 131073 416 nil nil nil 5 nil nil nil 416 1376774 ##(UI.ProportionalLayout) 170 176 34 4 410 ##(UI.ListView) 34 45 nil 416 34 2 8 1140920397 1025 544 787270 2 ##(UI.ListModel) 138 144 8 #() nil 1769478 ##(Kernel.IdentitySearchPolicy) 917510 ##(Graphics.Color) #default nil 21 461638 4 ##(UI.Menu) nil true 34 9 1180742 2 ##(UI.CommandMenuItem) 1 1377606 4 ##(UI.CommandDescription) #synchronizeFilter 8 '&Goto Folder' 1 1 nil nil nil 1179974 1 ##(UI.DividerMenuItem) 4097 786 1 818 #newPackage 8 '&New Package...' 1 1 nil nil nil 786 1 818 #savePackages 8 '&Save' 1 1 853318 3 ##(Graphics.Icon) nil true 2031622 ##(Kernel.ImageRelativeFileLocator) 8 'FileSave.ico' 2490894 ##(Kernel.STBExternalResourceLibraryProxy) 8 'dolphindr7.dll' nil nil nil 786 1 818 #savePackageAs 8 'Save &As...' 1 1 nil nil nil 738 nil true 34 10 786 1 818 #toggleUsingPAX 8 'Use PA&X Source Format' 1 1 nil nil nil 786 1 818 #browsePackageSources 8 'Bro&wse PAX Sources' 1 1 nil nil nil 866 4097 786 1 818 #checkOut 8 'Check Out &All' 1 1 nil nil nil 786 1 818 #checkOutChanges 8 'Check &Out Changes' 1 1 nil nil nil 786 1 818 #checkIn 8 'Check &In' 1 1 nil nil nil 866 4097 786 2097153 818 #savePackageChanges 8 'Save &Changes' 1 1 nil nil nil 866 4097 786 1 818 #resetChangeFlags 8 'Clear Change &Markers' 1 1 nil nil nil 8 'Sou&rce Control' #sourceControlMenu 1 nil nil nil nil nil 866 4097 786 1 818 #inspectPackage 8 '&Properties' 1 1 994 nil true 1040 8 'SMALLTALKOPTIONSFOLDER.ICO' 1088 nil nil 786 1 818 #aboutPackage 8 'Abou&t this Package...' 1 1 nil nil nil 8 '&Package' nil 134217729 nil nil nil nil nil nil nil 544 nil 8 1801282304 786950 ##(Core.Message) #name 8 #() ##(UI.IconicListAbstract) 1639750 1 ##(Graphics.IconImageManager) nil nil 1246566 3 ##(Kernel.BlockClosure) 0 nil 1639718 ##(Kernel.CompiledExpression) 5 1 ##(Core.UndefinedObject) 8 'doIt' 8 '[:ctx | 
 ctx item isDefaultPackage ifTrue: [
-	ctx font beBold]]' 8 #[33 105 17 158 159 121 17 160 161 106 60 106] #item #isDefaultPackage #font #beBold 1872 7 257 nil nil nil nil 138 144 34 2 920646 5 ##(UI.ListViewColumn) 8 '' 41 #left nil 1858 0 nil 1890 3 1 ##(Smalltalk.UndefinedObject) 8 'doIt' 8 '[:x : y | x & y not ]' 8 #[31 105 233 1 158 177 106] #not #& 2048 7 513 nil 1778 #isChanged 8 #() nil 544 1858 0 nil 1890 4 1 ##(Smalltalk.UndefinedObject) 8 'doIt' 8 '[:x | x ifTrue: [Package changedIcon imageIndex]]' 8 #[32 105 17 121 45 159 160 106 60 106] 721414 ##(Smalltalk.Association) #Package ##(Smalltalk.Package) #changedIcon #imageIndex 2160 7 257 nil 1 nil nil 2002 8 'Packages' 689 #left ##(UI.BasicListAbstract) 1858 0 nil 1890 2 1 ##(Smalltalk.UndefinedObject) 8 'doIt' 8 '[:a :b | a name < b name]' 8 #[30 105 17 158 18 158 128 106] #name 2304 7 513 nil nil nil 544 ##(UI.IconicListAbstract) 3 nil 1858 0 nil 1890 5 1 ##(Smalltalk.UndefinedObject) 8 'doIt' 8 '[:ctx | 
+	ctx font beBold]]' 8 #[33 105 17 158 159 121 17 160 161 106 60 106] #item #isDefaultPackage #font #beBold 1872 7 257 nil nil nil nil 138 144 34 2 1117254 5 ##(UI.ListViewColumn) 8 '' 41 #left nil 1858 0 nil 1890 3 1 ##(Core.UndefinedObject) 8 'doIt' 8 '[:x : y | x & y not ]' 8 #[31 105 233 1 158 177 106] #not #& 2048 7 513 nil 1778 #isChanged 8 #() nil 544 1858 0 nil 1890 4 1 ##(Core.UndefinedObject) 8 'doIt' 8 '[:x | x ifTrue: [Package changedIcon imageIndex]]' 8 #[32 105 17 121 45 159 160 106 60 106] 1049094 ##(Core.Association) #Package ##(Kernel.Package) #changedIcon #imageIndex 2160 7 257 nil 1 nil nil 2002 8 'Packages' 689 #left ##(UI.BasicListAbstract) 1858 0 nil 1890 2 1 ##(Core.UndefinedObject) 8 'doIt' 8 '[:a :b | a name < b name]' 8 #[30 105 17 158 18 158 128 106] #name 2304 7 513 nil nil nil 544 ##(UI.IconicListAbstract) 3 nil 1858 0 nil 1890 5 1 ##(Core.UndefinedObject) 8 'doIt' 8 '[:ctx | 
 ctx item isDefaultPackage ifTrue: [
-	ctx font beBold]]' 8 #[33 105 17 158 159 121 17 160 161 106 60 106] #item #isDefaultPackage #font #beBold 2384 7 257 nil #report 656 nil 133221 nil 1 nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil 983302 ##(Smalltalk.MessageSequence) 138 144 34 2 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 328198 ##(Smalltalk.Point) 1 237 2578 737 229 544 2530 #contextMenu: 34 1 752 544 983302 ##(OS.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 118 0 0 0 112 1 0 0 232 0 0 0] 8 #() 2578 193 193 nil 35 3 410 ##(UI.TreeView) 34 27 nil 416 34 2 8 1140916771 1025 2736 590918 3 ##(UI.TreeModel) nil 688 525062 ##(UI.TreeNode) nil nil nil 170 192 656 720 nil 5 738 nil true 34 1 786 1 818 #newPackage 8 '&New Package...' 1 1 nil nil nil 8 '' nil 1 nil nil nil nil nil nil nil 2736 nil 8 1883652128 ##(UI.BasicListAbstract) ##(UI.IconicListAbstract) 1840 nil nil nil nil nil 170 176 656 nil #smallIcons 1 170 ##(Smalltalk.PluggableLookupTable) 656 2466 138 144 34 2 2530 #createAt:extent: 34 2 2578 1 1 2578 737 227 2736 2530 #contextMenu: 34 1 2880 2736 2658 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 112 1 0 0 113 0 0 0] 8 #() 2720 nil 27 3 true 170 192 34 4 544 8 'packages' 2736 8 'filter' nil 2466 138 144 34 1 2530 #createAt:extent: 34 2 2578 7039 21 2578 737 465 416 2658 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 191 13 0 0 10 0 0 0 47 15 0 0 242 0 0 0] 34 3 2736 410 ##(UI.Splitter) 34 12 nil 416 34 2 8 1140850688 1 3440 nil nil nil 517 nil nil nil 1510470 1 ##(UI.DraggableViewInteractor) 3440 nil 1 #left nil nil nil 2578 1 1 2578 9 9 nil 3536 nil 2466 138 144 34 1 2530 #createAt:extent: 34 2 2578 1 227 2578 737 11 3440 2658 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 113 0 0 0 112 1 0 0 118 0 0 0] 8 #() 2720 nil 27 544 2720 nil 27)!
+	ctx font beBold]]' 8 #[33 105 17 158 159 121 17 160 161 106 60 106] #item #isDefaultPackage #font #beBold 2384 7 257 nil #report 8 #() nil 133221 nil 1 nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil 1310982 ##(Core.MessageSequence) 138 144 34 2 1049350 ##(Core.MessageSend) #createAt:extent: 34 2 918022 ##(Graphics.Point) 1 237 2594 737 229 544 2546 #contextMenu: 34 1 752 544 1179910 ##(OS.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 118 0 0 0 112 1 0 0 232 0 0 0] 8 #() 2594 193 193 nil 35 3 410 ##(UI.TreeView) 34 27 nil 416 34 2 8 1140916771 1025 2752 787526 3 ##(UI.TreeModel) nil 688 721670 ##(UI.TreeNode) nil nil nil 170 192 656 720 nil 5 738 nil true 34 1 786 1 818 #newPackage 8 '&New Package...' 1 1 nil nil nil 8 '' nil 1 nil nil nil nil nil nil nil 2752 nil 8 1801125840 ##(UI.BasicListAbstract) ##(UI.IconicListAbstract) 1840 nil nil nil nil nil 170 176 656 nil #smallIcons 1 170 192 656 2482 138 144 34 2 2546 #createAt:extent: 34 2 2594 1 1 2594 737 227 2752 2546 #contextMenu: 34 1 2896 2752 2674 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 112 1 0 0 113 0 0 0] 8 #() 2736 nil 27 3 true 170 192 34 4 544 8 'packages' 2752 8 'filter' nil 2482 138 144 34 1 2546 #createAt:extent: 34 2 2594 6143 21 2594 737 465 416 2674 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 111 13 0 0 242 0 0 0] 34 3 2752 410 ##(UI.Splitter) 34 12 nil 416 34 2 8 1140850688 1 3456 nil nil nil 517 nil nil nil 1707078 1 ##(UI.DraggableViewInteractor) 3456 nil 1 #left nil nil nil 2594 1 1 2594 9 9 nil 3552 nil 2482 138 144 34 1 2546 #createAt:extent: 34 2 2594 1 227 2594 737 11 3456 2674 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 113 0 0 0 112 1 0 0 118 0 0 0] 8 #() 2736 nil 27 544 2736 nil 27 )!
 
 resource_Default_view
 	"Answer the literal data from which the 'Default view' resource can be reconstituted.
 	DO NOT EDIT OR RECATEGORIZE THIS METHOD.
 
 	If you wish to modify this resource evaluate:
-	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Default_view)
+	Tools.ViewComposer openOn: (UI.ResourceIdentifier class: self selector: #resource_Default_view)
 	"
 
-	^#(#'!!STL' 4 788558 10 ##(UI.STBViewProxy) ##(UI.ContainerView) 34 15 nil nil 34 2 8 1409286144 131073 416 nil nil nil 21 nil nil nil 416 1180166 ##(UI.ProportionalLayout) 170 176 34 4 410 ##(UI.ListView) 34 45 nil 416 34 2 8 1140920393 1025 544 590662 2 ##(Smalltalk.ListModel) 138 144 8 #() nil 1310726 ##(Smalltalk.IdentitySearchPolicy) 327686 ##(Smalltalk.Color) #default nil 29 265030 4 ##(UI.Menu) nil true 34 18 984134 2 ##(UI.CommandMenuItem) 1 1180998 4 ##(UI.CommandDescription) #newPackage 8 '&New Package...' 1 1 263494 3 ##(Smalltalk.Icon) nil true 1572870 ##(Smalltalk.ImageRelativeFileLocator) 8 'NewPackage.ico' 2032142 ##(Smalltalk.STBExternalResourceLibraryProxy) 8 'dolphindr7.dll' nil nil nil 786 1 818 #openPackage 8 '&Install Package...' 1 1 866 nil true 912 8 'FileOpen.ico' 960 nil nil 786 1 818 #removePackage 8 '&Uninstall Package' 1 1 nil nil nil 983366 1 ##(UI.DividerMenuItem) 4097 738 nil true 34 2 786 2097153 818 #addClass 8 '&Class...' 1 1 866 nil true 912 8 'Behavior.ico' 960 nil nil 786 1 818 #addSharedVariable 8 '&Global...' 1 1 nil nil nil 8 'Add Unco&mmitted' #addMenu 134217729 nil nil nil nil nil 786 1 818 #setAsDefaultPackage 8 'Set as De&fault Package' 1 1 nil nil nil 786 1 818 #synchronizeFilter 8 '&Goto Folder' 1 1 nil nil nil 1122 4097 786 1 818 #savePackages 8 '&Save Package' 1 1 866 nil true 912 8 'FileSave.ico' 960 nil nil 786 1 818 #savePackageChanges 8 'Save Package C&hanges' 1 1 nil nil nil 786 1 818 #savePackageAs 8 'Save Package &As...' 1 1 nil nil nil 1122 4097 786 1 818 #toggleUsingPAX 8 'Use PA&X Source Format' 1 1 nil nil nil 786 1 818 #browsePackageSources 8 'Bro&wse PAX Sources' 1 1 nil nil nil 1122 4097 738 nil true 34 4 786 2097153 818 #deploy 8 '&Deploy Executable...' 13445 1 nil nil nil 786 1 818 #browseDeployed 8 'Bro&wse Executable Manifest' 1 1 nil nil nil 1122 4097 786 1 818 #saveBinaryPackage 8 'Deploy &Binary Package...' 1 1 nil nil nil 8 '&Deployment' nil 134217729 866 nil true 912 8 'ApplicationDeploymentWizard.ico' 960 nil nil nil nil 1122 4097 786 1 818 #inspectPackage 8 'P&roperties' 1 1 866 nil true 912 8 'BasicInspector.ico' 960 nil nil 8 '&Package' nil 134217729 nil nil nil nil nil nil nil 544 nil 8 1883852064 ##(UI.BasicListAbstract) ##(UI.IconicListAbstract) 1049926 1 ##(Graphics.IconImageManager) nil nil 787814 3 ##(Smalltalk.BlockClosure) 0 nil 1180966 ##(Smalltalk.CompiledExpression) 5 1 ##(Smalltalk.UndefinedObject) 8 'doIt' 8 '[:ctx | 
+	^#(#'!!STL' 4 985166 10 ##(UI.STBViewProxy) ##(UI.ContainerView) 34 15 nil nil 34 2 8 1409286144 131073 416 nil nil nil 21 nil nil nil 416 1376774 ##(UI.ProportionalLayout) 170 176 34 4 410 ##(UI.ListView) 34 45 nil 416 34 2 8 1140920393 1025 544 787270 2 ##(UI.ListModel) 138 144 8 #() nil 1769478 ##(Kernel.IdentitySearchPolicy) 917510 ##(Graphics.Color) #default nil 29 461638 4 ##(UI.Menu) nil true 34 18 1180742 2 ##(UI.CommandMenuItem) 1 1377606 4 ##(UI.CommandDescription) #newPackage 8 '&New Package...' 1 1 853318 3 ##(Graphics.Icon) nil true 2031622 ##(Kernel.ImageRelativeFileLocator) 8 'NewPackage.ico' 2490894 ##(Kernel.STBExternalResourceLibraryProxy) 8 'dolphindr7.dll' nil nil nil 786 1 818 #openPackage 8 '&Install Package...' 1 1 866 nil true 912 8 'FileOpen.ico' 960 nil nil 786 1 818 #removePackage 8 '&Uninstall Package' 1 1 nil nil nil 1179974 1 ##(UI.DividerMenuItem) 4097 738 nil true 34 2 786 2097153 818 #addClass 8 '&Class...' 1 1 866 nil true 912 8 'Behavior.ico' 960 nil nil 786 1 818 #addSharedVariable 8 '&Global...' 1 1 nil nil nil 8 'Add Unco&mmitted' #addMenu 134217729 nil nil nil nil nil 786 1 818 #setAsDefaultPackage 8 'Set as De&fault Package' 1 1 nil nil nil 786 1 818 #synchronizeFilter 8 '&Goto Folder' 1 1 nil nil nil 1122 4097 786 1 818 #savePackages 8 '&Save Package' 1 1 866 nil true 912 8 'FileSave.ico' 960 nil nil 786 1 818 #savePackageChanges 8 'Save Package C&hanges' 1 1 nil nil nil 786 1 818 #savePackageAs 8 'Save Package &As...' 1 1 nil nil nil 1122 4097 786 1 818 #toggleUsingPAX 8 'Use PA&X Source Format' 1 1 nil nil nil 786 1 818 #browsePackageSources 8 'Bro&wse PAX Sources' 1 1 nil nil nil 1122 4097 738 nil true 34 4 786 2097153 818 #deploy 8 '&Deploy Executable...' 13445 1 nil nil nil 786 1 818 #browseDeployed 8 'Bro&wse Executable Manifest' 1 1 nil nil nil 1122 4097 786 1 818 #saveBinaryPackage 8 'Deploy &Binary Package...' 1 1 nil nil nil 8 '&Deployment' nil 134217729 866 nil true 912 8 'ApplicationDeploymentWizard.ico' 960 nil nil nil nil 1122 4097 786 1 818 #inspectPackage 8 'P&roperties' 1 1 866 nil true 912 8 'BasicInspector.ico' 960 nil nil 8 '&Package' nil 134217729 nil nil nil nil nil nil nil 544 nil 8 1801282304 ##(UI.BasicListAbstract) ##(UI.IconicListAbstract) 1639750 1 ##(Graphics.IconImageManager) nil nil 1246566 3 ##(Kernel.BlockClosure) 0 nil 1639718 ##(Kernel.CompiledExpression) 5 1 ##(Core.UndefinedObject) 8 'doIt' 8 '[:ctx | 
 ctx item isDefaultPackage ifTrue: [
-	ctx font beBold]]' 8 #[33 105 17 158 159 121 17 160 161 106 60 106] #item #isDefaultPackage #font #beBold 2160 7 257 nil 328198 ##(Smalltalk.Point) 65 65 nil nil 138 144 34 2 920646 5 ##(UI.ListViewColumn) 8 'Packages' 669 #left ##(UI.BasicListAbstract) 2146 0 nil 2178 2 1 ##(Smalltalk.UndefinedObject) 8 'doIt' 8 '[:a :b | a name < b name]' 8 #[30 105 17 158 18 158 128 106] #name 2368 7 513 nil nil nil 544 ##(UI.IconicListAbstract) 3 nil 2146 0 nil 2178 5 1 ##(Smalltalk.UndefinedObject) 8 'doIt' 8 '[:ctx | 
+	ctx font beBold]]' 8 #[33 105 17 158 159 121 17 160 161 106 60 106] #item #isDefaultPackage #font #beBold 2160 7 257 nil 918022 ##(Graphics.Point) 65 65 nil nil 138 144 34 2 1117254 5 ##(UI.ListViewColumn) 8 'Packages' 669 #left ##(UI.BasicListAbstract) 2146 0 nil 2178 2 1 ##(Core.UndefinedObject) 8 'doIt' 8 '[:a :b | a name < b name]' 8 #[30 105 17 158 18 158 128 106] #name 2368 7 513 nil nil nil 544 ##(UI.IconicListAbstract) 3 nil 2146 0 nil 2178 5 1 ##(Core.UndefinedObject) 8 'doIt' 8 '[:ctx | 
 ctx item isDefaultPackage ifTrue: [
-	ctx font beBold]]' 8 #[33 105 17 158 159 121 17 160 161 106 60 106] #item #isDefaultPackage #font #beBold 2448 7 257 nil 2322 8 '' 33 #left 2146 0 nil 2178 3 1 ##(Smalltalk.UndefinedObject) 8 'doIt' 8 '[:x | x ifTrue: [''Changed''] ifFalse: ['''']]' 8 #[31 105 17 119 29 106 30 106] 8 'Changed' 8 '' 2560 7 257 nil 2146 0 nil 2178 3 1 ##(Smalltalk.UndefinedObject) 8 'doIt' 8 '[:x : y | x & y not]' 8 #[31 105 233 1 158 177 106] #not #& 2672 7 513 nil 459270 ##(Smalltalk.Message) #isChanged 8 #() nil 544 2146 0 nil 2178 6 1 ##(Smalltalk.UndefinedObject) 8 'doIt' 8 '[:x | (x ifTrue: [Package changedIcon] ifFalse: [Icon blank]) imageIndex]' 8 #[34 105 17 120 45 159 111 47 161 162 106] 721414 ##(Smalltalk.Association) #Package ##(Smalltalk.Package) #changedIcon 2882 #Icon 864 #blank #imageIndex 2800 7 257 nil 1 nil nil #report 656 nil 133221 nil 1 nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil 983302 ##(Smalltalk.MessageSequence) 138 144 34 4 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 2258 1 221 2258 701 281 544 2994 #contextMenu: 34 1 752 544 2994 #text: 34 1 8 'Packages' 544 2994 #columnOrder: 34 1 8 #(2 1) 544 983302 ##(OS.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 110 0 0 0 94 1 0 0 250 0 0 0] 8 #() 2258 193 193 nil 35 9 410 ##(UI.TreeView) 34 27 nil 416 34 2 8 1140916771 1025 3280 590918 3 ##(UI.TreeModel) nil 688 525062 ##(UI.TreeNode) nil nil nil 170 192 656 720 nil 29 738 nil true 34 2 786 1 818 #browseFolder 8 '&Browse Folder' 1 1 nil nil nil 786 1 818 #newPackage 8 '&New Package...' 1 1 866 nil true 912 8 'NewPackage.ico' 960 nil nil 8 '' nil 134217729 nil nil nil nil nil nil nil 3280 nil 8 1883652128 ##(UI.BasicListAbstract) ##(UI.IconicListAbstract) 2128 nil nil nil nil nil 170 176 656 nil #smallIcons 1 170 ##(Smalltalk.PluggableLookupTable) 656 2930 138 144 34 2 2994 #createAt:extent: 34 2 2258 1 1 2258 701 211 3280 2994 #contextMenu: 34 1 3424 3280 3202 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 94 1 0 0 105 0 0 0] 8 #() 3264 nil 27 7 true 170 192 34 4 544 8 'packages' 3280 8 'filter' nil 2930 138 144 34 1 2994 #createAt:extent: 34 2 2258 7039 21 2258 701 501 416 3202 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 191 13 0 0 10 0 0 0 29 15 0 0 4 1 0 0] 34 3 3280 410 ##(UI.Splitter) 34 12 nil 416 34 2 8 1140850688 1 4064 nil nil nil 517 nil nil nil 1510470 1 ##(UI.DraggableViewInteractor) 4064 nil 1 #left nil nil nil 2258 1 1 2258 9 9 nil 4160 nil 2930 138 144 34 1 2994 #createAt:extent: 34 2 2258 1 211 2258 701 11 4064 3202 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 105 0 0 0 94 1 0 0 110 0 0 0] 8 #() 3264 nil 27 544 3264 nil 27)!
+	ctx font beBold]]' 8 #[33 105 17 158 159 121 17 160 161 106 60 106] #item #isDefaultPackage #font #beBold 2448 7 257 nil 2322 8 '' 33 #left 2146 0 nil 2178 3 1 ##(Core.UndefinedObject) 8 'doIt' 8 '[:x | x ifTrue: [''Changed''] ifFalse: ['''']]' 8 #[31 105 17 119 29 106 30 106] 8 'Changed' 8 '' 2560 7 257 nil 2146 0 nil 2178 3 1 ##(Core.UndefinedObject) 8 'doIt' 8 '[:x : y | x & y not]' 8 #[31 105 233 1 158 177 106] #not #& 2672 7 513 nil 786950 ##(Core.Message) #isChanged 8 #() nil 544 2146 0 nil 2178 6 1 ##(Core.UndefinedObject) 8 'doIt' 8 '[:x | (x ifTrue: [Package changedIcon] ifFalse: [Icon blank]) imageIndex]' 8 #[34 105 17 120 45 159 111 47 161 162 106] 1049094 ##(Core.Association) #Package ##(Kernel.Package) #changedIcon 2882 #Icon 864 #blank #imageIndex 2800 7 257 nil 1 nil nil #report 8 #() nil 133221 nil 1 nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil 1310982 ##(Core.MessageSequence) 138 144 34 4 1049350 ##(Core.MessageSend) #createAt:extent: 34 2 2258 1 221 2258 701 281 544 3010 #contextMenu: 34 1 752 544 3010 #text: 34 1 8 'Packages' 544 3010 #columnOrder: 34 1 8 #(2 1) 544 1179910 ##(OS.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 110 0 0 0 94 1 0 0 250 0 0 0] 8 #() 2258 193 193 nil 35 9 410 ##(UI.TreeView) 34 27 nil 416 34 2 8 1140916771 1025 3296 787526 3 ##(UI.TreeModel) nil 688 721670 ##(UI.TreeNode) nil nil nil 170 192 656 720 nil 29 738 nil true 34 2 786 1 818 #browseFolder 8 '&Browse Folder' 1 1 nil nil nil 786 1 818 #newPackage 8 '&New Package...' 1 1 866 nil true 912 8 'NewPackage.ico' 960 nil nil 8 '' nil 134217729 nil nil nil nil nil nil nil 3296 nil 8 1801125840 ##(UI.BasicListAbstract) ##(UI.IconicListAbstract) 2128 nil nil nil nil nil 170 176 656 nil #smallIcons 1 170 192 656 2946 138 144 34 2 3010 #createAt:extent: 34 2 2258 1 1 2258 701 211 3296 3010 #contextMenu: 34 1 3440 3296 3218 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 94 1 0 0 105 0 0 0] 8 #() 3280 nil 27 7 true 170 192 34 4 544 8 'packages' 3296 8 'filter' nil 2946 138 144 34 1 3010 #createAt:extent: 34 2 2258 6143 21 2258 701 501 416 3218 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 93 13 0 0 4 1 0 0] 34 3 3296 410 ##(UI.Splitter) 34 12 nil 416 34 2 8 1140850688 1 4080 nil nil nil 517 nil nil nil 1707078 1 ##(UI.DraggableViewInteractor) 4080 nil 1 #left nil nil nil 2258 1 1 2258 9 9 nil 4176 nil 2946 138 144 34 1 3010 #createAt:extent: 34 2 2258 1 211 2258 701 11 4080 3218 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 105 0 0 0 94 1 0 0 110 0 0 0] 8 #() 3280 nil 27 544 3280 nil 27 )!
 
 resource_Single_package_selector
 	"Answer the literal data from which the 'Single package selector' resource can be reconstituted.
 	DO NOT EDIT OR RECATEGORIZE THIS METHOD.
 
 	If you wish to modify this resource evaluate:
-	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Single_package_selector)
+	Tools.ViewComposer openOn: (UI.ResourceIdentifier class: self selector: #resource_Single_package_selector)
 	"
 
-	^#(#'!!STL' 4 788558 10 ##(UI.STBViewProxy) ##(UI.ContainerView) 34 15 nil nil 34 2 8 1409286144 131073 416 nil nil nil 21 nil nil nil 416 1180166 ##(UI.ProportionalLayout) 170 176 34 4 410 ##(UI.ListView) 34 45 nil 416 34 2 8 1140920397 1025 544 590662 2 ##(Smalltalk.ListModel) 138 144 8 #() nil 1310726 ##(Smalltalk.IdentitySearchPolicy) 327686 ##(Smalltalk.Color) #default nil 21 265030 4 ##(UI.Menu) nil true 34 19 984134 2 ##(UI.CommandMenuItem) 1 1180998 4 ##(UI.CommandDescription) #synchronizeFilter 8 '&Goto Folder' 1 1 nil nil nil 983366 1 ##(UI.DividerMenuItem) 4097 786 1 818 #setAsDefaultPackage 8 'Set as De&fault Package' 1 1 nil nil nil 738 nil true 34 2 786 2097153 818 #addClass 8 '&Class...' 1 1 263494 3 ##(Smalltalk.Icon) nil true 1572870 ##(Smalltalk.ImageRelativeFileLocator) 8 'Class.ico' 2032142 ##(Smalltalk.STBExternalResourceLibraryProxy) 8 'dolphindr7.dll' nil nil nil 786 1 818 #addSharedVariable 8 '&Global...' 1 1 nil nil nil 8 'Add Unco&mmitted' #addMenu 134217729 nil nil nil nil nil 866 4097 786 1 818 #newPackage 8 '&New Package...' 1 1 nil nil nil 786 1 818 #openPackage 8 '&Install Package...' 1 1 nil nil nil 786 1 818 #removePackage 8 '&Uninstall' 1 1 nil nil nil 866 4097 786 1 818 #savePackages 8 '&Save' 1 1 1026 nil true 1072 8 'FileSave.ico' 1120 nil nil 786 1 818 #savePackageAs 8 'Save &As...' 1 1 nil nil nil 866 4097 738 nil true 34 10 786 1 818 #toggleUsingPAX 8 'Use PA&X Source Format' 1 1 nil nil nil 786 2097153 818 #browsePackageSources 8 'Bro&wse PAX Sources' 1 1 nil nil nil 866 4097 786 1 818 #checkOut 8 'Check Out &All' 1 1 nil nil nil 786 1 818 #checkOutChanges 8 'Check &Out Changes' 1 1 nil nil nil 786 1 818 #checkIn 8 'Check &In' 1 1 nil nil nil 866 4097 786 1 818 #savePackageChanges 8 'Save &Changes' 1 1 nil nil nil 866 4097 786 1 818 #resetChangeFlags 8 'Clear Change &Markers' 1 1 nil nil nil 8 'Sou&rce Control' #sourceControlMenu 1 nil nil nil nil nil 866 4097 786 1 818 #deploy 8 '&Deploy Executable...' 1 1 nil nil nil 786 1 818 #saveBinaryPackage 8 'Deploy &Binary Package...' 1 1 nil nil nil 866 4097 786 1 818 #inspectPackage 8 '&Properties' 1 1 1026 nil true 1072 8 'SMALLTALKOPTIONSFOLDER.ICO' 1120 nil nil 786 1 818 #aboutPackage 8 'Abou&t this Package...' 1 1 nil nil nil 8 '&Package' nil 134217729 nil nil nil nil nil nil nil 544 nil 8 1883852064 459270 ##(Smalltalk.Message) #name 8 #() ##(UI.IconicListAbstract) 1049926 1 ##(Graphics.IconImageManager) nil nil 787814 3 ##(Smalltalk.BlockClosure) 0 nil 1180966 ##(Smalltalk.CompiledExpression) 5 1 ##(Smalltalk.UndefinedObject) 8 'doIt' 8 '[:ctx | ctx item isDefaultPackage ifTrue: [ctx font beBold]]' 8 #[33 105 17 158 159 121 17 160 161 106 60 106] #item #isDefaultPackage #font #beBold 2352 7 257 nil nil nil nil 138 144 34 2 920646 5 ##(UI.ListViewColumn) 8 '' 41 #left nil 2338 0 nil 2370 3 1 ##(Smalltalk.UndefinedObject) 8 'doIt' 8 '[:x : y | x & y not ]' 8 #[31 105 233 1 158 177 106] #not #& 2528 7 513 nil 2258 #isChanged 8 #() nil 544 2338 0 nil 2370 4 1 ##(Smalltalk.UndefinedObject) 8 'doIt' 8 '[:x | x ifTrue: [Package changedIcon imageIndex]]' 8 #[32 105 17 121 45 159 160 106 60 106] 721414 ##(Smalltalk.Association) #Package ##(Smalltalk.Package) #changedIcon #imageIndex 2640 7 257 nil 1 nil nil 2482 8 'Packages' 653 #left ##(UI.BasicListAbstract) 2338 0 nil 2370 2 1 ##(Smalltalk.UndefinedObject) 8 'doIt' 8 '[:a :b | a name < b name]' 8 #[30 105 17 158 18 158 128 106] #name 2784 7 513 nil nil nil 544 ##(UI.IconicListAbstract) 3 nil 2338 0 nil 2370 5 1 ##(Smalltalk.UndefinedObject) 8 'doIt' 8 '[:ctx | ctx item isDefaultPackage ifTrue: [ctx font beBold]]' 8 #[33 105 17 158 159 121 17 160 161 106 60 106] #item #isDefaultPackage #font #beBold 2864 7 257 nil #report 656 nil 133221 nil 1 nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil 983302 ##(Smalltalk.MessageSequence) 138 144 34 2 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 328198 ##(Smalltalk.Point) 1 221 3058 701 281 544 3010 #contextMenu: 34 1 752 544 983302 ##(OS.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 110 0 0 0 94 1 0 0 250 0 0 0] 8 #() 3058 193 193 nil 35 9 410 ##(UI.TreeView) 34 27 nil 416 34 2 8 1140916771 1025 3216 590918 3 ##(UI.TreeModel) nil 688 525062 ##(UI.TreeNode) nil nil nil 170 192 656 720 nil 5 738 nil true 34 1 786 1 818 #newPackage 8 '&New Package...' 1 1 nil nil nil 8 '' nil 1 nil nil nil nil nil nil nil 3216 nil 8 1883652128 ##(UI.BasicListAbstract) ##(UI.IconicListAbstract) 2320 nil nil nil nil nil 170 176 656 nil #smallIcons 1 170 ##(Smalltalk.PluggableLookupTable) 656 2946 138 144 34 2 3010 #createAt:extent: 34 2 3058 1 1 3058 701 211 3216 3010 #contextMenu: 34 1 3360 3216 3138 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 94 1 0 0 105 0 0 0] 8 #() 3200 nil 27 7 true 170 192 34 4 544 8 'packages' 3216 8 'filter' nil 2946 138 144 34 1 3010 #createAt:extent: 34 2 3058 7039 21 3058 701 501 416 3138 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 191 13 0 0 10 0 0 0 29 15 0 0 4 1 0 0] 34 3 3216 410 ##(UI.Splitter) 34 12 nil 416 34 2 8 1140850688 1 3920 nil nil nil 517 nil nil nil 1510470 1 ##(UI.DraggableViewInteractor) 3920 nil 1 #left nil nil nil 3058 1 1 3058 9 9 nil 4016 nil 2946 138 144 34 1 3010 #createAt:extent: 34 2 3058 1 211 3058 701 11 3920 3138 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 105 0 0 0 94 1 0 0 110 0 0 0] 8 #() 3200 nil 27 544 3200 nil 27)!
+	^#(#'!!STL' 4 985166 10 ##(UI.STBViewProxy) ##(UI.ContainerView) 34 15 nil nil 34 2 8 1409286144 131073 416 nil nil nil 21 nil nil nil 416 1376774 ##(UI.ProportionalLayout) 170 176 34 4 410 ##(UI.ListView) 34 45 nil 416 34 2 8 1140920397 1025 544 787270 2 ##(UI.ListModel) 138 144 8 #() nil 1769478 ##(Kernel.IdentitySearchPolicy) 917510 ##(Graphics.Color) #default nil 21 461638 4 ##(UI.Menu) nil true 34 19 1180742 2 ##(UI.CommandMenuItem) 1 1377606 4 ##(UI.CommandDescription) #synchronizeFilter 8 '&Goto Folder' 1 1 nil nil nil 1179974 1 ##(UI.DividerMenuItem) 4097 786 1 818 #setAsDefaultPackage 8 'Set as De&fault Package' 1 1 nil nil nil 738 nil true 34 2 786 2097153 818 #addClass 8 '&Class...' 1 1 853318 3 ##(Graphics.Icon) nil true 2031622 ##(Kernel.ImageRelativeFileLocator) 8 'Class.ico' 2490894 ##(Kernel.STBExternalResourceLibraryProxy) 8 'dolphindr7.dll' nil nil nil 786 1 818 #addSharedVariable 8 '&Global...' 1 1 nil nil nil 8 'Add Unco&mmitted' #addMenu 134217729 nil nil nil nil nil 866 4097 786 1 818 #newPackage 8 '&New Package...' 1 1 nil nil nil 786 1 818 #openPackage 8 '&Install Package...' 1 1 nil nil nil 786 1 818 #removePackage 8 '&Uninstall' 1 1 nil nil nil 866 4097 786 1 818 #savePackages 8 '&Save' 1 1 1026 nil true 1072 8 'FileSave.ico' 1120 nil nil 786 1 818 #savePackageAs 8 'Save &As...' 1 1 nil nil nil 866 4097 738 nil true 34 10 786 1 818 #toggleUsingPAX 8 'Use PA&X Source Format' 1 1 nil nil nil 786 2097153 818 #browsePackageSources 8 'Bro&wse PAX Sources' 1 1 nil nil nil 866 4097 786 1 818 #checkOut 8 'Check Out &All' 1 1 nil nil nil 786 1 818 #checkOutChanges 8 'Check &Out Changes' 1 1 nil nil nil 786 1 818 #checkIn 8 'Check &In' 1 1 nil nil nil 866 4097 786 1 818 #savePackageChanges 8 'Save &Changes' 1 1 nil nil nil 866 4097 786 1 818 #resetChangeFlags 8 'Clear Change &Markers' 1 1 nil nil nil 8 'Sou&rce Control' #sourceControlMenu 1 nil nil nil nil nil 866 4097 786 1 818 #deploy 8 '&Deploy Executable...' 1 1 nil nil nil 786 1 818 #saveBinaryPackage 8 'Deploy &Binary Package...' 1 1 nil nil nil 866 4097 786 1 818 #inspectPackage 8 '&Properties' 1 1 1026 nil true 1072 8 'SMALLTALKOPTIONSFOLDER.ICO' 1120 nil nil 786 1 818 #aboutPackage 8 'Abou&t this Package...' 1 1 nil nil nil 8 '&Package' nil 134217729 nil nil nil nil nil nil nil 544 nil 8 1801282304 786950 ##(Core.Message) #name 8 #() ##(UI.IconicListAbstract) 1639750 1 ##(Graphics.IconImageManager) nil nil 1246566 3 ##(Kernel.BlockClosure) 0 nil 1639718 ##(Kernel.CompiledExpression) 5 1 ##(Core.UndefinedObject) 8 'doIt' 8 '[:ctx | ctx item isDefaultPackage ifTrue: [ctx font beBold]]' 8 #[33 105 17 158 159 121 17 160 161 106 60 106] #item #isDefaultPackage #font #beBold 2352 7 257 nil nil nil nil 138 144 34 2 1117254 5 ##(UI.ListViewColumn) 8 '' 41 #left nil 2338 0 nil 2370 3 1 ##(Core.UndefinedObject) 8 'doIt' 8 '[:x : y | x & y not ]' 8 #[31 105 233 1 158 177 106] #not #& 2528 7 513 nil 2258 #isChanged 8 #() nil 544 2338 0 nil 2370 4 1 ##(Core.UndefinedObject) 8 'doIt' 8 '[:x | x ifTrue: [Package changedIcon imageIndex]]' 8 #[32 105 17 121 45 159 160 106 60 106] 1049094 ##(Core.Association) #Package ##(Kernel.Package) #changedIcon #imageIndex 2640 7 257 nil 1 nil nil 2482 8 'Packages' 653 #left ##(UI.BasicListAbstract) 2338 0 nil 2370 2 1 ##(Core.UndefinedObject) 8 'doIt' 8 '[:a :b | a name < b name]' 8 #[30 105 17 158 18 158 128 106] #name 2784 7 513 nil nil nil 544 ##(UI.IconicListAbstract) 3 nil 2338 0 nil 2370 5 1 ##(Core.UndefinedObject) 8 'doIt' 8 '[:ctx | ctx item isDefaultPackage ifTrue: [ctx font beBold]]' 8 #[33 105 17 158 159 121 17 160 161 106 60 106] #item #isDefaultPackage #font #beBold 2864 7 257 nil #report 8 #() nil 133221 nil 1 nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil 1310982 ##(Core.MessageSequence) 138 144 34 2 1049350 ##(Core.MessageSend) #createAt:extent: 34 2 918022 ##(Graphics.Point) 1 221 3074 701 281 544 3026 #contextMenu: 34 1 752 544 1179910 ##(OS.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 110 0 0 0 94 1 0 0 250 0 0 0] 8 #() 3074 193 193 nil 35 9 410 ##(UI.TreeView) 34 27 nil 416 34 2 8 1140916771 1025 3232 787526 3 ##(UI.TreeModel) nil 688 721670 ##(UI.TreeNode) nil nil nil 170 192 656 720 nil 5 738 nil true 34 1 786 1 818 #newPackage 8 '&New Package...' 1 1 nil nil nil 8 '' nil 1 nil nil nil nil nil nil nil 3232 nil 8 1801125840 ##(UI.BasicListAbstract) ##(UI.IconicListAbstract) 2320 nil nil nil nil nil 170 176 656 nil #smallIcons 1 170 192 656 2962 138 144 34 2 3026 #createAt:extent: 34 2 3074 1 1 3074 701 211 3232 3026 #contextMenu: 34 1 3376 3232 3154 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 94 1 0 0 105 0 0 0] 8 #() 3216 nil 27 7 true 170 192 34 4 544 8 'packages' 3232 8 'filter' nil 2962 138 144 34 1 3026 #createAt:extent: 34 2 3074 6143 21 3074 701 501 416 3154 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 93 13 0 0 4 1 0 0] 34 3 3232 410 ##(UI.Splitter) 34 12 nil 416 34 2 8 1140850688 1 3936 nil nil nil 517 nil nil nil 1707078 1 ##(UI.DraggableViewInteractor) 3936 nil 1 #left nil nil nil 3074 1 1 3074 9 9 nil 4032 nil 2962 138 144 34 1 3026 #createAt:extent: 34 2 3074 1 211 3074 701 11 3936 3154 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 105 0 0 0 94 1 0 0 110 0 0 0] 8 #() 3216 nil 27 544 3216 nil 27 )!
 
 setCommandQueryHandlers: anArray 
 	commandQueryHandlers := anArray! !
-!PackageSelector class categoriesFor: #defaultModel!models!public! !
-!PackageSelector class categoriesFor: #getCommandQueryHandlers!accessing!private! !
-!PackageSelector class categoriesFor: #resource_Choice_view!public!resources-views! !
-!PackageSelector class categoriesFor: #resource_Default_view!public!resources-views! !
-!PackageSelector class categoriesFor: #resource_Single_package_selector!public!resources-views! !
-!PackageSelector class categoriesFor: #setCommandQueryHandlers:!accessing!private! !
+!Tools.PackageSelector class categoriesFor: #defaultModel!models!public! !
+!Tools.PackageSelector class categoriesFor: #getCommandQueryHandlers!accessing!private! !
+!Tools.PackageSelector class categoriesFor: #resource_Choice_view!public!resources-views! !
+!Tools.PackageSelector class categoriesFor: #resource_Default_view!public!resources-views! !
+!Tools.PackageSelector class categoriesFor: #resource_Single_package_selector!public!resources-views! !
+!Tools.PackageSelector class categoriesFor: #setCommandQueryHandlers:!accessing!private! !
 

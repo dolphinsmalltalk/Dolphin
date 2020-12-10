@@ -216,7 +216,7 @@ literalPrintOn: aWriteStream
 !Kernel.ProcessorScheduler methodsFor!
 
 literalPrintOn: aWriteStream
-	aWriteStream nextPutAll: '##(Smalltalk.Processor)'! !
+	aWriteStream nextPutAll: '##(Core.Processor)'! !
 !Kernel.ProcessorScheduler categoriesFor: #literalPrintOn:!public! !
 
 "End of package definition"!

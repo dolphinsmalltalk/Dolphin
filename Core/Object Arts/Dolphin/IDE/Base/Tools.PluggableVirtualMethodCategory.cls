@@ -1,21 +1,21 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-VirtualMethodCategory subclass: #PluggableVirtualMethodCategory
+Tools.VirtualMethodCategory subclass: #'Tools.PluggableVirtualMethodCategory'
 	instanceVariableNames: 'filter isSlowToEnumerate'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-PluggableVirtualMethodCategory guid: (Core.GUID fromString: '{cf4b4026-94a0-45e3-9949-2dca5b07b1e8}')!
-PluggableVirtualMethodCategory comment: 'PluggableMethodCategory is a virtual method category class the dynamically generated membership of which includes all methods that pass a configurable filter. See the class side #initialize method for examples.
+Tools.PluggableVirtualMethodCategory guid: (Core.GUID fromString: '{cf4b4026-94a0-45e3-9949-2dca5b07b1e8}')!
+Tools.PluggableVirtualMethodCategory comment: 'PluggableMethodCategory is a virtual method category class the dynamically generated membership of which includes all methods that pass a configurable filter. See the class side #initialize method for examples.
 
 Instance Variables:
 	filter	- <MonadicValuable> evaluated against each candidate method, expected to answer true/false to include/exclude that method.
 
 Class Variables:
 	None'!
-!PluggableVirtualMethodCategory categoriesForClass!System-Support! !
-!PluggableVirtualMethodCategory methodsFor!
+!Tools.PluggableVirtualMethodCategory categoriesForClass!System-Support! !
+!Tools.PluggableVirtualMethodCategory methodsFor!
 
 includesMethod: aCompiledMethod 
 	"Answer whether this category includes the <CompiledMethod> argument."
@@ -38,13 +38,13 @@ setFilter: aMonadicValuable
 setName: aString 
 	super setName: aString.
 	filter := [:each | true]! !
-!PluggableVirtualMethodCategory categoriesFor: #includesMethod:!public!testing! !
-!PluggableVirtualMethodCategory categoriesFor: #isSlowToEnumerate!public!testing! !
-!PluggableVirtualMethodCategory categoriesFor: #isSlowToEnumerate:!accessing!public! !
-!PluggableVirtualMethodCategory categoriesFor: #setFilter:!initializing!private! !
-!PluggableVirtualMethodCategory categoriesFor: #setName:!initializing!private! !
+!Tools.PluggableVirtualMethodCategory categoriesFor: #includesMethod:!public!testing! !
+!Tools.PluggableVirtualMethodCategory categoriesFor: #isSlowToEnumerate!public!testing! !
+!Tools.PluggableVirtualMethodCategory categoriesFor: #isSlowToEnumerate:!accessing!public! !
+!Tools.PluggableVirtualMethodCategory categoriesFor: #setFilter:!initializing!private! !
+!Tools.PluggableVirtualMethodCategory categoriesFor: #setName:!initializing!private! !
 
-!PluggableVirtualMethodCategory class methodsFor!
+!Tools.PluggableVirtualMethodCategory class methodsFor!
 
 initialize
 	"Private - Initialize the receiver.
@@ -85,7 +85,7 @@ uninitialize
 
 	#('compilation failures' 'primitives') 
 		do: [:each | self removePseud: self pseudPrefix , each]! !
-!PluggableVirtualMethodCategory class categoriesFor: #initialize!initializing!private! !
-!PluggableVirtualMethodCategory class categoriesFor: #newNamed:withFilter:!instance creation!public! !
-!PluggableVirtualMethodCategory class categoriesFor: #uninitialize!class hierarchy-removing!private! !
+!Tools.PluggableVirtualMethodCategory class categoriesFor: #initialize!initializing!private! !
+!Tools.PluggableVirtualMethodCategory class categoriesFor: #newNamed:withFilter:!instance creation!public! !
+!Tools.PluggableVirtualMethodCategory class categoriesFor: #uninitialize!class hierarchy-removing!private! !
 

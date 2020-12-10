@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-BasicInspector subclass: #StructureInspector
+Tools.BasicInspector subclass: #'Tools.StructureInspector'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-StructureInspector guid: (GUID fromString: '{87b4c697-026e-11d3-9fd7-00a0cc3e4a32}')!
-StructureInspector comment: 'StructureInspector is a <compositePresenter> that implements a specialised inspect facility onto a <ExternalStructure>. This allows the structure to be inspected via its name fields.'!
-!StructureInspector categoriesForClass!MVP-Presenters! !
-!StructureInspector methodsFor!
+Tools.StructureInspector guid: (Core.GUID fromString: '{87b4c697-026e-11d3-9fd7-00a0cc3e4a32}')!
+Tools.StructureInspector comment: 'StructureInspector is a <compositePresenter> that implements a specialised inspect facility onto a <ExternalStructure>. This allows the structure to be inspected via its name fields.'!
+!Tools.StructureInspector categoriesForClass!MVP-Presenters! !
+!Tools.StructureInspector methodsFor!
 
 fields
 	"Private - Answer the of fields in the field list (named and indexable instance variables), which appear 
@@ -42,8 +42,8 @@ setField: anInteger to: anObject
 				setField: (self variableNamesList at: anInteger + self headerSize)
 				value: anObject]
 		ifFalse: [super setField: anInteger to: anObject]! !
-!StructureInspector categoriesFor: #fields!accessing!private! !
-!StructureInspector categoriesFor: #getField:!accessing!private! !
-!StructureInspector categoriesFor: #getFieldList!accessing!private! !
-!StructureInspector categoriesFor: #setField:to:!accessing!private! !
+!Tools.StructureInspector categoriesFor: #fields!accessing!private! !
+!Tools.StructureInspector categoriesFor: #getField:!accessing!private! !
+!Tools.StructureInspector categoriesFor: #getFieldList!accessing!private! !
+!Tools.StructureInspector categoriesFor: #setField:to:!accessing!private! !
 

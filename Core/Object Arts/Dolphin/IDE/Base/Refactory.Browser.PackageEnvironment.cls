@@ -61,7 +61,7 @@ defaultLabel
 	^stream contents!
 
 definesClass: aClass
-	^packages includes: aClass owningPackage!
+	^packages identityIncludes: aClass owningPackage!
 
 definesLooseMethodsInClass: aClass
 	| className |
@@ -100,7 +100,7 @@ packages
 	^packages!
 
 packages: aCollection
-	packages := aCollection asSet!
+	packages := aCollection asArray!
 
 selectorsForClass: aClass do: aBlock
 	| classExtensions |
@@ -109,16 +109,16 @@ selectorsForClass: aClass do: aBlock
 		ifTrue: 
 			[classExtensions
 				ifNil: 
-					[aClass methodDictionary
+					["There are no loose methods in the class, so it must be entirely defined in its owning package - we can just enumerate the method dictionary"
+					aClass methodDictionary
 						keysDo: [:each | (environment includesSelector: each in: aClass) ifTrue: [aBlock value: each]]]
 				ifNotNil: 
-					[aClass methodDictionary keysDo: 
+					["The class has loose methods, which we must skip at this point (they are enumerated later)."
+					aClass methodDictionary keysDo: 
 							[:each |
 							((classExtensions includesKey: each) not and: [environment includesSelector: each in: aClass])
 								ifTrue: [aBlock value: each]]].
-			"If only one package in the environment, can skip enumeration of loose
-			methods since there cannot be any (a package cannot both define a class and
-			own loose methods of that class)"
+			"If only one package in the environment, can skip enumeration of loose methods since there cannot be any (a package cannot both define a class and own loose methods of that class)"
 			self isSinglePackage ifTrue: [^self]].
 	classExtensions isNil
 		ifTrue: 

@@ -1,12 +1,12 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ExternalAddress variableByteSubclass: #BSTR
+External.Address variableByteSubclass: #BSTR
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-BSTR guid: (GUID fromString: '{87b4c519-026e-11d3-9fd7-00a0cc3e4a32}')!
+BSTR guid: (Core.GUID fromString: '{87b4c519-026e-11d3-9fd7-00a0cc3e4a32}')!
 BSTR isIndirection: true!
 BSTR comment: 'BSTR is an external structure to represent the OLE Automation string type of the same name.
 

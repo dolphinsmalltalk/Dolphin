@@ -1,18 +1,18 @@
 ﻿| package |
 package := Package name: 'Seeing the Objects Inside'.
-package paxVersion: 2;
+package paxVersion: 2.1;
 	preDeclareClassesOnLoad: false;
 	basicComment: ''.
 
-package basicScriptAt: #postinstall put: 'Smalltalk developmentSystem aboutBoxClass: DolphinSplash'.
+package basicScriptAt: #postinstall put: 'Smalltalk developmentSystem aboutBoxClass: Tools.DolphinSplash'.
 package basicScriptAt: #preuninstall put: '| devsys |
 devsys := Smalltalk developmentSystem.
 devsys aboutBoxClass == DolphinSplash ifTrue: [devsys aboutBoxClass: nil]'.
 
 package setClassNames: #(
-	#{DolphinSplash}
-	#{ObjectInside}
-	#{SeeingTheObjectsInside}
+	#{Tools.DolphinSplash}
+	#{Tools.ObjectInside}
+	#{Tools.SeeingTheObjectsInside}
 ).
 
 package setPrerequisites: #(
@@ -32,24 +32,24 @@ package!
 
 "Class Definitions"!
 
-Object subclass: #ObjectInside
+Core.Object subclass: #'Tools.ObjectInside'
 	instanceVariableNames: 'image edgePoints position scale rotation alpha color baseColor matrix'
 	classVariableNames: ''
-	poolDictionaries: 'GdiplusConstants'
+	imports: #(#{Graphics.Gdiplus.GdiplusConstants private} #{Graphics private})
 	classInstanceVariableNames: ''
 	classConstants: {
 		'EdgePointResolution' -> 16rA
 	}!
-Splash subclass: #DolphinSplash
+UI.Splash subclass: #'Tools.DolphinSplash'
 	instanceVariableNames: 'objectsInside'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-GdiplusDoubleBufferedView subclass: #SeeingTheObjectsInside
+Graphics.Gdiplus.DoubleBufferedView subclass: #'Tools.SeeingTheObjectsInside'
 	instanceVariableNames: 'background dolphinOutline points sun stepProcess random insideObjectsScale dolphinIntensity textureMap objects dolphins dolphinInside splashDelay hintBubble startTime info baseScale'
 	classVariableNames: ''
-	poolDictionaries: 'GdiplusConstants'
+	imports: #(#{Graphics.Gdiplus.GdiplusConstants private} #{Graphics private})
 	classInstanceVariableNames: 'splashPlayTheGame difficultyLevel'
 	classConstants: {}!
 

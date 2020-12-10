@@ -1,16 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ProfessionalSmalltalkSystem subclass: #RefactoringSmalltalkSystem
+Tools.ProfessionalSmalltalkSystem subclass: #'Tools.RefactoringSmalltalkSystem'
 	instanceVariableNames: 'isOAD'
 	classVariableNames: 'RefactoringSignal'
 	imports: #(#{Refactory.Browser})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-RefactoringSmalltalkSystem guid: (Core.GUID fromString: '{e3e901a0-a7d5-401c-8230-885e9236d3b4}')!
-RefactoringSmalltalkSystem comment: 'RefactoringSmalltalkSystem extends SmalltalkSystem to support the refactorings available in the Refactoring Browser''s refactoring engine.
+Tools.RefactoringSmalltalkSystem guid: (Core.GUID fromString: '{e3e901a0-a7d5-401c-8230-885e9236d3b4}')!
+Tools.RefactoringSmalltalkSystem comment: 'RefactoringSmalltalkSystem extends SmalltalkSystem to support the refactorings available in the Refactoring Browser''s refactoring engine.
 '!
-!RefactoringSmalltalkSystem categoriesForClass!MVP-Models!System-Support! !
-!RefactoringSmalltalkSystem methodsFor!
+!Tools.RefactoringSmalltalkSystem categoriesForClass!MVP-Models!System-Support! !
+!Tools.RefactoringSmalltalkSystem methodsFor!
 
 abstractClassVariable: aString in: aClass within: aBrowserEnvironment
 	"Implement the 'Abstract Class Variable' class refactoring: 'Performs the create accessors refactoring 
@@ -194,13 +194,13 @@ browseMethodsInEnvironments: aCollectionOfBrowserEnvironment
 	self isOAD ifTrue: [self extendMethodBrowserMenus: browser].
 	^browser!
 
-browseSelectors: aCollection caption: aString environment: aBrowserEnvironment 
+browseSelectors: aCollection caption: aString environment: aBrowserEnvironment
 	| browser |
 	browser := MethodExplorerShell create.
 	browser
 		caption: aString;
 		searchEnvironment: aBrowserEnvironment.
-	aCollection 
+	aCollection
 		do: [:each | browser addSearch: (self referencesTo: each in: aBrowserEnvironment) under: nil].
 	^browser
 		show;
@@ -654,10 +654,10 @@ moveToComponent: aSelector in: aClass variable: aString
 				class: aClass
 				variable: aString) execute]!
 
-newCodeRefactoringToolFor: aMethodWorkspace 
+newCodeRefactoringToolFor: aMethodWorkspace
 	^CodeRefactoringTool forPresenter: aMethodWorkspace!
 
-newMethodRefactoringToolFor: aMethodBrowser 
+newMethodRefactoringToolFor: aMethodBrowser
 	^MethodRefactoringTool forPresenter: aMethodBrowser!
 
 nukeChangeHistory
@@ -681,7 +681,7 @@ promptForInitializationExpression: aString in: aClass caption: captionString
 				showModal.
 	^initializer!
 
-promptForMethodName: anRBMethodName caption: aString allowExisting: aBoolean 
+promptForMethodName: anRBMethodName caption: aString allowExisting: aBoolean
 	^(RenameMethodDialog createOn: anRBMethodName)
 		allowParameterRename: false;
 		allowExistingSelector: aBoolean;
@@ -1106,7 +1106,7 @@ renameVariable: aString to: newName in: aClass classVariable: aBoolean within: a
 						ifFalse: 
 							[aBoolean
 								ifTrue: [RenameClassVariableAndAccessorsRefactoring]
-								ifFalse: [RenameInstanceVariableAndAccessorsRefactoring]].
+								ifFalse: [Refactory.Browser.RenameInstanceVariableAndAccessorsRefactoring]].
 			model := RBNamespace onEnvironment: env.
 			refactoring := refactoringClass
 						model: model
@@ -1341,108 +1341,108 @@ validateRenameTemp: aStVariableNode to: aString in: aClass
 	((definingNode whoDefines: aString) notNil or: [definingNode allDefinedVariables includes: aString])
 		ifTrue: [refactoring refactoringError: ('<1p> is already defined' expandMacrosWith: aString)].
 	refactoring checkPreconditions! !
-!RefactoringSmalltalkSystem categoriesFor: #abstractClassVariable:in:within:!public!refactoring! !
-!RefactoringSmalltalkSystem categoriesFor: #abstractClassVariables:within:!public!refactoring! !
-!RefactoringSmalltalkSystem categoriesFor: #abstractInstanceVariable:in:within:!public!refactoring! !
-!RefactoringSmalltalkSystem categoriesFor: #abstractInstanceVariables:within:!public!refactoring! !
-!RefactoringSmalltalkSystem categoriesFor: #addClassVariable:to:!public!refactoring! !
-!RefactoringSmalltalkSystem categoriesFor: #addClassVariableTo:!public!refactoring! !
-!RefactoringSmalltalkSystem categoriesFor: #addFilteredMethod:forLintRule:!public!refactoring! !
-!RefactoringSmalltalkSystem categoriesFor: #addGlobalVariable:!public! !
-!RefactoringSmalltalkSystem categoriesFor: #addInstanceVariable:to:!public!refactoring! !
-!RefactoringSmalltalkSystem categoriesFor: #addInstanceVariableTo:!public!refactoring! !
-!RefactoringSmalltalkSystem categoriesFor: #addParameterName:initializer:!public!refactoring! !
-!RefactoringSmalltalkSystem categoriesFor: #addParameterToMethod:!commands!public!refactoring! !
-!RefactoringSmalltalkSystem categoriesFor: #addParameterToMethod:inPackages:caption:!public!refactoring! !
-!RefactoringSmalltalkSystem categoriesFor: #basicCreateSubclass:of:subclasses:!private!refactoring! !
-!RefactoringSmalltalkSystem categoriesFor: #browseMethodsIn:!browsing!public! !
-!RefactoringSmalltalkSystem categoriesFor: #browseMethodsInEnvironments:!browsing!public! !
-!RefactoringSmalltalkSystem categoriesFor: #browseSelectors:caption:environment:!browsing!private! !
-!RefactoringSmalltalkSystem categoriesFor: #canRefactor!public!testing! !
-!RefactoringSmalltalkSystem categoriesFor: #chooseMethodFromEnvironment:caption:!public! !
-!RefactoringSmalltalkSystem categoriesFor: #chooseSelectorInEnvironment:caption:!public! !
-!RefactoringSmalltalkSystem categoriesFor: #cloneClass:as:under:in:!private!refactoring! !
-!RefactoringSmalltalkSystem categoriesFor: #convertTemporaryToInstanceVariable:in:selector:!public!refactoring! !
-!RefactoringSmalltalkSystem categoriesFor: #convertToSibling:!public!refactoring! !
-!RefactoringSmalltalkSystem categoriesFor: #createInstanceVariableAccessors:in:within:!public!refactoring! !
-!RefactoringSmalltalkSystem categoriesFor: #createVariableAccessors:classVariables:within:!public!refactoring! !
-!RefactoringSmalltalkSystem categoriesFor: #duplicateOf:in:!helpers!private! !
-!RefactoringSmalltalkSystem categoriesFor: #duplicateSuperclassMethodsOf:!enquiries!private! !
-!RefactoringSmalltalkSystem categoriesFor: #executeVariableRefactoring:variables:within:!helpers!private!refactoring! !
-!RefactoringSmalltalkSystem categoriesFor: #extendMethodBrowserMenus:!browsing!private! !
-!RefactoringSmalltalkSystem categoriesFor: #extractMethod:from:in:!public!refactoring! !
-!RefactoringSmalltalkSystem categoriesFor: #extractToComponent:from:in:!public!refactoring! !
-!RefactoringSmalltalkSystem categoriesFor: #extractToTemporary:from:in:!public!refactoring! !
-!RefactoringSmalltalkSystem categoriesFor: #handleRefactoringError:!private!refactoring! !
-!RefactoringSmalltalkSystem categoriesFor: #handleRefactoringException:!private!refactoring! !
-!RefactoringSmalltalkSystem categoriesFor: #inlineAllSelfSendsOf:within:!public!refactoring! !
-!RefactoringSmalltalkSystem categoriesFor: #inlineMessage:inMethod:of:!public!refactoring! !
-!RefactoringSmalltalkSystem categoriesFor: #inlineParameter:from:in:!public!refactoring! !
-!RefactoringSmalltalkSystem categoriesFor: #inlineTemporary:from:in:!public!refactoring! !
-!RefactoringSmalltalkSystem categoriesFor: #isOAD!accessing!private!product! !
-!RefactoringSmalltalkSystem categoriesFor: #isOAD:!accessing!private!product! !
-!RefactoringSmalltalkSystem categoriesFor: #isValidClassVarName:for:!helpers!private!refactoring! !
-!RefactoringSmalltalkSystem categoriesFor: #isValidInstanceVariableName:for:!enquiries!helpers!private!refactoring! !
-!RefactoringSmalltalkSystem categoriesFor: #moveAllTempsToInnerScope:!public!refactoring! !
-!RefactoringSmalltalkSystem categoriesFor: #moveAllTempsToInnerScopeIn:!helpers!private!refactoring! !
-!RefactoringSmalltalkSystem categoriesFor: #moveAllTempsToInnerScopeIn:selector:!private!refactoring! !
-!RefactoringSmalltalkSystem categoriesFor: #moveTempToInnerScope:in:selector:!public!refactoring! !
-!RefactoringSmalltalkSystem categoriesFor: #moveToComponent:in:variable:!public!refactoring! !
-!RefactoringSmalltalkSystem categoriesFor: #newCodeRefactoringToolFor:!helpers!private!refactoring! !
-!RefactoringSmalltalkSystem categoriesFor: #newMethodRefactoringToolFor:!helpers!private!refactoring! !
-!RefactoringSmalltalkSystem categoriesFor: #nukeChangeHistory!private!refactoring! !
-!RefactoringSmalltalkSystem categoriesFor: #promptForInitializationExpression:in:caption:!private!refactoring! !
-!RefactoringSmalltalkSystem categoriesFor: #promptForMethodName:caption:allowExisting:!helpers!private!refactoring! !
-!RefactoringSmalltalkSystem categoriesFor: #promptForMethodRename:caption:allowExisting:!helpers!private!refactoring! !
-!RefactoringSmalltalkSystem categoriesFor: #promptForNewClassName:caption:!helpers!private! !
-!RefactoringSmalltalkSystem categoriesFor: #protectInstanceVariable:in:!public!refactoring! !
-!RefactoringSmalltalkSystem categoriesFor: #protectInstanceVariables:!public!refactoring! !
-!RefactoringSmalltalkSystem categoriesFor: #pullUpClassVariable:into:!public!refactoring! !
-!RefactoringSmalltalkSystem categoriesFor: #pullUpClassVariable:into:within:!public!refactoring! !
-!RefactoringSmalltalkSystem categoriesFor: #pullUpInstanceVariable:into:!public!refactoring! !
-!RefactoringSmalltalkSystem categoriesFor: #pullUpInstanceVariable:into:within:!public!refactoring! !
-!RefactoringSmalltalkSystem categoriesFor: #pushDownClassVariable:in:!public!refactoring! !
-!RefactoringSmalltalkSystem categoriesFor: #pushDownClassVariable:in:within:!public!refactoring! !
-!RefactoringSmalltalkSystem categoriesFor: #pushDownInstanceVariable:in:!public!refactoring! !
-!RefactoringSmalltalkSystem categoriesFor: #pushDownInstanceVariable:in:within:!public!refactoring! !
-!RefactoringSmalltalkSystem categoriesFor: #pushDownInstanceVariables:!public!refactoring! !
-!RefactoringSmalltalkSystem categoriesFor: #pushDownMethods:!public!refactoring! !
-!RefactoringSmalltalkSystem categoriesFor: #pushMethods:up:!private!refactoring! !
-!RefactoringSmalltalkSystem categoriesFor: #pushUpMethods:!public!refactoring! !
-!RefactoringSmalltalkSystem categoriesFor: #queryCommand:!commands!private! !
-!RefactoringSmalltalkSystem categoriesFor: #refactoringAborted!constants!private! !
-!RefactoringSmalltalkSystem categoriesFor: #refactoringError!constants!private! !
-!RefactoringSmalltalkSystem categoriesFor: #removeClassVariable:from:within:!public!refactoring! !
-!RefactoringSmalltalkSystem categoriesFor: #removeClassVariables:within:!public!refactoring! !
-!RefactoringSmalltalkSystem categoriesFor: #removeFilteredMethod:forLintRule:!public!refactoring! !
-!RefactoringSmalltalkSystem categoriesFor: #removeInstanceVariable:from:within:!public!refactoring! !
-!RefactoringSmalltalkSystem categoriesFor: #removeInstanceVariables:within:!public!refactoring! !
-!RefactoringSmalltalkSystem categoriesFor: #removeMethodsDuplicatedInSuperclassOf:!private!refactoring! !
-!RefactoringSmalltalkSystem categoriesFor: #removeMethodsIn:within:!commands!private! !
-!RefactoringSmalltalkSystem categoriesFor: #removeParameter:from:in:environment:!public!refactoring! !
-!RefactoringSmalltalkSystem categoriesFor: #renameClass:to:!public!refactoring! !
-!RefactoringSmalltalkSystem categoriesFor: #renameClassVariable:to:in:within:!private!refactoring! !
-!RefactoringSmalltalkSystem categoriesFor: #renameInstanceVariable:to:in:within:!private!refactoring! !
-!RefactoringSmalltalkSystem categoriesFor: #renameMethod:!public!refactoring! !
-!RefactoringSmalltalkSystem categoriesFor: #renameMethod:to:!public!refactoring! !
-!RefactoringSmalltalkSystem categoriesFor: #renameMethodReferences:!public!refactoring! !
-!RefactoringSmalltalkSystem categoriesFor: #renameMethodReferences:to:!private!refactoring! !
-!RefactoringSmalltalkSystem categoriesFor: #renameTemporary:to:in:selector:!public!refactoring! !
-!RefactoringSmalltalkSystem categoriesFor: #renameVariable:to:in:classVariable:within:!private!refactoring! !
-!RefactoringSmalltalkSystem categoriesFor: #safeRemoveClass:!public!refactoring! !
-!RefactoringSmalltalkSystem categoriesFor: #safeRemoveMethod:!public!refactoring! !
-!RefactoringSmalltalkSystem categoriesFor: #safeRemoveMethods:!public!refactoring! !
-!RefactoringSmalltalkSystem categoriesFor: #safeRemoveMethods:within:!private!refactoring! !
-!RefactoringSmalltalkSystem categoriesFor: #safeRemoveMethodsIn:within:!private!refactoring! !
-!RefactoringSmalltalkSystem categoriesFor: #safeRemoveSelectors:from:inEnvironment:!public!refactoring! !
-!RefactoringSmalltalkSystem categoriesFor: #scopeToRenameAccessorsFor:in:classVariable:within:!private!refactoring! !
-!RefactoringSmalltalkSystem categoriesFor: #selectTargetVariableOf:parseTree:!helpers!private!refactoring! !
-!RefactoringSmalltalkSystem categoriesFor: #validateRenameClass:to:!helpers!private! !
-!RefactoringSmalltalkSystem categoriesFor: #validateRenameClassVar:to:in:!helpers!private! !
-!RefactoringSmalltalkSystem categoriesFor: #validateRenameInstVar:to:in:!helpers!private! !
-!RefactoringSmalltalkSystem categoriesFor: #validateRenameTemp:to:in:!helpers!private!refactoring! !
+!Tools.RefactoringSmalltalkSystem categoriesFor: #abstractClassVariable:in:within:!public!refactoring! !
+!Tools.RefactoringSmalltalkSystem categoriesFor: #abstractClassVariables:within:!public!refactoring! !
+!Tools.RefactoringSmalltalkSystem categoriesFor: #abstractInstanceVariable:in:within:!public!refactoring! !
+!Tools.RefactoringSmalltalkSystem categoriesFor: #abstractInstanceVariables:within:!public!refactoring! !
+!Tools.RefactoringSmalltalkSystem categoriesFor: #addClassVariable:to:!public!refactoring! !
+!Tools.RefactoringSmalltalkSystem categoriesFor: #addClassVariableTo:!public!refactoring! !
+!Tools.RefactoringSmalltalkSystem categoriesFor: #addFilteredMethod:forLintRule:!public!refactoring! !
+!Tools.RefactoringSmalltalkSystem categoriesFor: #addGlobalVariable:!public! !
+!Tools.RefactoringSmalltalkSystem categoriesFor: #addInstanceVariable:to:!public!refactoring! !
+!Tools.RefactoringSmalltalkSystem categoriesFor: #addInstanceVariableTo:!public!refactoring! !
+!Tools.RefactoringSmalltalkSystem categoriesFor: #addParameterName:initializer:!public!refactoring! !
+!Tools.RefactoringSmalltalkSystem categoriesFor: #addParameterToMethod:!commands!public!refactoring! !
+!Tools.RefactoringSmalltalkSystem categoriesFor: #addParameterToMethod:inPackages:caption:!public!refactoring! !
+!Tools.RefactoringSmalltalkSystem categoriesFor: #basicCreateSubclass:of:subclasses:!private!refactoring! !
+!Tools.RefactoringSmalltalkSystem categoriesFor: #browseMethodsIn:!browsing!public! !
+!Tools.RefactoringSmalltalkSystem categoriesFor: #browseMethodsInEnvironments:!browsing!public! !
+!Tools.RefactoringSmalltalkSystem categoriesFor: #browseSelectors:caption:environment:!browsing!private! !
+!Tools.RefactoringSmalltalkSystem categoriesFor: #canRefactor!public!testing! !
+!Tools.RefactoringSmalltalkSystem categoriesFor: #chooseMethodFromEnvironment:caption:!public! !
+!Tools.RefactoringSmalltalkSystem categoriesFor: #chooseSelectorInEnvironment:caption:!public! !
+!Tools.RefactoringSmalltalkSystem categoriesFor: #cloneClass:as:under:in:!private!refactoring! !
+!Tools.RefactoringSmalltalkSystem categoriesFor: #convertTemporaryToInstanceVariable:in:selector:!public!refactoring! !
+!Tools.RefactoringSmalltalkSystem categoriesFor: #convertToSibling:!public!refactoring! !
+!Tools.RefactoringSmalltalkSystem categoriesFor: #createInstanceVariableAccessors:in:within:!public!refactoring! !
+!Tools.RefactoringSmalltalkSystem categoriesFor: #createVariableAccessors:classVariables:within:!public!refactoring! !
+!Tools.RefactoringSmalltalkSystem categoriesFor: #duplicateOf:in:!helpers!private! !
+!Tools.RefactoringSmalltalkSystem categoriesFor: #duplicateSuperclassMethodsOf:!enquiries!private! !
+!Tools.RefactoringSmalltalkSystem categoriesFor: #executeVariableRefactoring:variables:within:!helpers!private!refactoring! !
+!Tools.RefactoringSmalltalkSystem categoriesFor: #extendMethodBrowserMenus:!browsing!private! !
+!Tools.RefactoringSmalltalkSystem categoriesFor: #extractMethod:from:in:!public!refactoring! !
+!Tools.RefactoringSmalltalkSystem categoriesFor: #extractToComponent:from:in:!public!refactoring! !
+!Tools.RefactoringSmalltalkSystem categoriesFor: #extractToTemporary:from:in:!public!refactoring! !
+!Tools.RefactoringSmalltalkSystem categoriesFor: #handleRefactoringError:!private!refactoring! !
+!Tools.RefactoringSmalltalkSystem categoriesFor: #handleRefactoringException:!private!refactoring! !
+!Tools.RefactoringSmalltalkSystem categoriesFor: #inlineAllSelfSendsOf:within:!public!refactoring! !
+!Tools.RefactoringSmalltalkSystem categoriesFor: #inlineMessage:inMethod:of:!public!refactoring! !
+!Tools.RefactoringSmalltalkSystem categoriesFor: #inlineParameter:from:in:!public!refactoring! !
+!Tools.RefactoringSmalltalkSystem categoriesFor: #inlineTemporary:from:in:!public!refactoring! !
+!Tools.RefactoringSmalltalkSystem categoriesFor: #isOAD!accessing!private!product! !
+!Tools.RefactoringSmalltalkSystem categoriesFor: #isOAD:!accessing!private!product! !
+!Tools.RefactoringSmalltalkSystem categoriesFor: #isValidClassVarName:for:!helpers!private!refactoring! !
+!Tools.RefactoringSmalltalkSystem categoriesFor: #isValidInstanceVariableName:for:!enquiries!helpers!private!refactoring! !
+!Tools.RefactoringSmalltalkSystem categoriesFor: #moveAllTempsToInnerScope:!public!refactoring! !
+!Tools.RefactoringSmalltalkSystem categoriesFor: #moveAllTempsToInnerScopeIn:!helpers!private!refactoring! !
+!Tools.RefactoringSmalltalkSystem categoriesFor: #moveAllTempsToInnerScopeIn:selector:!private!refactoring! !
+!Tools.RefactoringSmalltalkSystem categoriesFor: #moveTempToInnerScope:in:selector:!public!refactoring! !
+!Tools.RefactoringSmalltalkSystem categoriesFor: #moveToComponent:in:variable:!public!refactoring! !
+!Tools.RefactoringSmalltalkSystem categoriesFor: #newCodeRefactoringToolFor:!helpers!private!refactoring! !
+!Tools.RefactoringSmalltalkSystem categoriesFor: #newMethodRefactoringToolFor:!helpers!private!refactoring! !
+!Tools.RefactoringSmalltalkSystem categoriesFor: #nukeChangeHistory!private!refactoring! !
+!Tools.RefactoringSmalltalkSystem categoriesFor: #promptForInitializationExpression:in:caption:!private!refactoring! !
+!Tools.RefactoringSmalltalkSystem categoriesFor: #promptForMethodName:caption:allowExisting:!helpers!private!refactoring! !
+!Tools.RefactoringSmalltalkSystem categoriesFor: #promptForMethodRename:caption:allowExisting:!helpers!private!refactoring! !
+!Tools.RefactoringSmalltalkSystem categoriesFor: #promptForNewClassName:caption:!helpers!private! !
+!Tools.RefactoringSmalltalkSystem categoriesFor: #protectInstanceVariable:in:!public!refactoring! !
+!Tools.RefactoringSmalltalkSystem categoriesFor: #protectInstanceVariables:!public!refactoring! !
+!Tools.RefactoringSmalltalkSystem categoriesFor: #pullUpClassVariable:into:!public!refactoring! !
+!Tools.RefactoringSmalltalkSystem categoriesFor: #pullUpClassVariable:into:within:!public!refactoring! !
+!Tools.RefactoringSmalltalkSystem categoriesFor: #pullUpInstanceVariable:into:!public!refactoring! !
+!Tools.RefactoringSmalltalkSystem categoriesFor: #pullUpInstanceVariable:into:within:!public!refactoring! !
+!Tools.RefactoringSmalltalkSystem categoriesFor: #pushDownClassVariable:in:!public!refactoring! !
+!Tools.RefactoringSmalltalkSystem categoriesFor: #pushDownClassVariable:in:within:!public!refactoring! !
+!Tools.RefactoringSmalltalkSystem categoriesFor: #pushDownInstanceVariable:in:!public!refactoring! !
+!Tools.RefactoringSmalltalkSystem categoriesFor: #pushDownInstanceVariable:in:within:!public!refactoring! !
+!Tools.RefactoringSmalltalkSystem categoriesFor: #pushDownInstanceVariables:!public!refactoring! !
+!Tools.RefactoringSmalltalkSystem categoriesFor: #pushDownMethods:!public!refactoring! !
+!Tools.RefactoringSmalltalkSystem categoriesFor: #pushMethods:up:!private!refactoring! !
+!Tools.RefactoringSmalltalkSystem categoriesFor: #pushUpMethods:!public!refactoring! !
+!Tools.RefactoringSmalltalkSystem categoriesFor: #queryCommand:!commands!private! !
+!Tools.RefactoringSmalltalkSystem categoriesFor: #refactoringAborted!constants!private! !
+!Tools.RefactoringSmalltalkSystem categoriesFor: #refactoringError!constants!private! !
+!Tools.RefactoringSmalltalkSystem categoriesFor: #removeClassVariable:from:within:!public!refactoring! !
+!Tools.RefactoringSmalltalkSystem categoriesFor: #removeClassVariables:within:!public!refactoring! !
+!Tools.RefactoringSmalltalkSystem categoriesFor: #removeFilteredMethod:forLintRule:!public!refactoring! !
+!Tools.RefactoringSmalltalkSystem categoriesFor: #removeInstanceVariable:from:within:!public!refactoring! !
+!Tools.RefactoringSmalltalkSystem categoriesFor: #removeInstanceVariables:within:!public!refactoring! !
+!Tools.RefactoringSmalltalkSystem categoriesFor: #removeMethodsDuplicatedInSuperclassOf:!private!refactoring! !
+!Tools.RefactoringSmalltalkSystem categoriesFor: #removeMethodsIn:within:!commands!private! !
+!Tools.RefactoringSmalltalkSystem categoriesFor: #removeParameter:from:in:environment:!public!refactoring! !
+!Tools.RefactoringSmalltalkSystem categoriesFor: #renameClass:to:!public!refactoring! !
+!Tools.RefactoringSmalltalkSystem categoriesFor: #renameClassVariable:to:in:within:!private!refactoring! !
+!Tools.RefactoringSmalltalkSystem categoriesFor: #renameInstanceVariable:to:in:within:!private!refactoring! !
+!Tools.RefactoringSmalltalkSystem categoriesFor: #renameMethod:!public!refactoring! !
+!Tools.RefactoringSmalltalkSystem categoriesFor: #renameMethod:to:!public!refactoring! !
+!Tools.RefactoringSmalltalkSystem categoriesFor: #renameMethodReferences:!public!refactoring! !
+!Tools.RefactoringSmalltalkSystem categoriesFor: #renameMethodReferences:to:!private!refactoring! !
+!Tools.RefactoringSmalltalkSystem categoriesFor: #renameTemporary:to:in:selector:!public!refactoring! !
+!Tools.RefactoringSmalltalkSystem categoriesFor: #renameVariable:to:in:classVariable:within:!private!refactoring! !
+!Tools.RefactoringSmalltalkSystem categoriesFor: #safeRemoveClass:!public!refactoring! !
+!Tools.RefactoringSmalltalkSystem categoriesFor: #safeRemoveMethod:!public!refactoring! !
+!Tools.RefactoringSmalltalkSystem categoriesFor: #safeRemoveMethods:!public!refactoring! !
+!Tools.RefactoringSmalltalkSystem categoriesFor: #safeRemoveMethods:within:!private!refactoring! !
+!Tools.RefactoringSmalltalkSystem categoriesFor: #safeRemoveMethodsIn:within:!private!refactoring! !
+!Tools.RefactoringSmalltalkSystem categoriesFor: #safeRemoveSelectors:from:inEnvironment:!public!refactoring! !
+!Tools.RefactoringSmalltalkSystem categoriesFor: #scopeToRenameAccessorsFor:in:classVariable:within:!private!refactoring! !
+!Tools.RefactoringSmalltalkSystem categoriesFor: #selectTargetVariableOf:parseTree:!helpers!private!refactoring! !
+!Tools.RefactoringSmalltalkSystem categoriesFor: #validateRenameClass:to:!helpers!private! !
+!Tools.RefactoringSmalltalkSystem categoriesFor: #validateRenameClassVar:to:in:!helpers!private! !
+!Tools.RefactoringSmalltalkSystem categoriesFor: #validateRenameInstVar:to:in:!helpers!private! !
+!Tools.RefactoringSmalltalkSystem categoriesFor: #validateRenameTemp:to:in:!helpers!private!refactoring! !
 
-!RefactoringSmalltalkSystem class methodsFor!
+!Tools.RefactoringSmalltalkSystem class methodsFor!
 
 initialize
 	"Private - Initialize the receiver on load (take over as the development system model)."
@@ -1459,6 +1459,6 @@ uninitialize
 		do: [:each | each value removeCommandQueryHandler: #queryRefactoringCommand:].
 	MethodCategory removeCategory: '*-RB fixes'.
 	self uninstallCurrent! !
-!RefactoringSmalltalkSystem class categoriesFor: #initialize!class hierarchy-removing!private! !
-!RefactoringSmalltalkSystem class categoriesFor: #uninitialize!class hierarchy-removing!private! !
+!Tools.RefactoringSmalltalkSystem class categoriesFor: #initialize!class hierarchy-removing!private! !
+!Tools.RefactoringSmalltalkSystem class categoriesFor: #uninitialize!class hierarchy-removing!private! !
 

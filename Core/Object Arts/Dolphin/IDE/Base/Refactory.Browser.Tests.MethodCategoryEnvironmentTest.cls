@@ -1,14 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Refactory.Browser.Tests.BrowserEnvironmentTest subclass: #MethodCategoryEnvironmentTest
+Refactory.Browser.Tests.BrowserEnvironmentTest subclass: #'Refactory.Browser.Tests.MethodCategoryEnvironmentTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-MethodCategoryEnvironmentTest guid: (GUID fromString: '{fc1f9c02-ad7f-4715-a48e-c9891c1c5c75}')!
-MethodCategoryEnvironmentTest comment: ''!
-!MethodCategoryEnvironmentTest categoriesForClass!Unclassified! !
-!MethodCategoryEnvironmentTest methodsFor!
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Refactory.Browser.Tests.MethodCategoryEnvironmentTest guid: (Core.GUID fromString: '{fc1f9c02-ad7f-4715-a48e-c9891c1c5c75}')!
+Refactory.Browser.Tests.MethodCategoryEnvironmentTest comment: ''!
+!Refactory.Browser.Tests.MethodCategoryEnvironmentTest categoriesForClass!Unclassified! !
+!Refactory.Browser.Tests.MethodCategoryEnvironmentTest methodsFor!
 
 testMethodCategoryEnvironment
 	| env selectors |
@@ -32,5 +33,5 @@ testMethodCategoryEnvironment
 	self assert: selectors size equals: 1.
 	self assert: (env includesSelector: #newSortBlock: in: SortAlgorithm class).
 	self deny: (env includesSelector: #icon in: SortAlgorithm class)! !
-!MethodCategoryEnvironmentTest categoriesFor: #testMethodCategoryEnvironment!public! !
+!Refactory.Browser.Tests.MethodCategoryEnvironmentTest categoriesFor: #testMethodCategoryEnvironment!public! !
 

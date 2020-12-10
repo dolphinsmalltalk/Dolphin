@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ClassBrowserPlugin subclass: #UnitTestPlugin
+Tools.ClassBrowserPlugin subclass: #'Tools.UnitTestPlugin'
 	instanceVariableNames: 'result icon autoSwitchProcess defectsPresenter modePresenter detailsPresenter'
 	classVariableNames: 'AutoSwitchDelayMs ErrorColor FailColor NoTestsColor PassColor RunningColor'
-	imports: #()
+	imports: #(#{XProgramming.SUnit private})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-UnitTestPlugin guid: (Core.GUID fromString: '{e8b10dcb-9855-41f7-95d2-a91639377d01}')!
-UnitTestPlugin comment: 'UnitTestPlugin is a <classBrowserPlugin> that provides SUnit test running facilities within a browser. The aim is to allow tests directly relevant to the current class being worked on in the browser to be run quickly and easily using a single hotkey or menu command. Failing tests can be isolated and run within the debugger. The UnitTestPlugin does not provide facilities to run large suites of tests comprising of more than one <TestCase>; this functionaility is left to the SUnitBrowser and TestRunner tools.
+Tools.UnitTestPlugin guid: (Core.GUID fromString: '{e8b10dcb-9855-41f7-95d2-a91639377d01}')!
+Tools.UnitTestPlugin comment: 'UnitTestPlugin is a <classBrowserPlugin> that provides SUnit test running facilities within a browser. The aim is to allow tests directly relevant to the current class being worked on in the browser to be run quickly and easily using a single hotkey or menu command. Failing tests can be isolated and run within the debugger. The UnitTestPlugin does not provide facilities to run large suites of tests comprising of more than one <TestCase>; this functionaility is left to the SUnitBrowser and TestRunner tools.
 
 When a class is selected in the browser, the UnitTestPlugin deterines if there is a <TestCase> subclass that can be associated with it. By default, ClassDescription>>correspondingTestCase is used to do this by simply appending ''Test'' to the name of the class. If the mapping between a class under test and its <TestCase> is not so straightforward it is alway possible to implement #correspondingTestCase as a class method that directly answers the correct <TestCase> subclass. Typically, if used, this class method would be installed as a loose method in the package containing the tests. 
 
@@ -33,8 +33,8 @@ Class Variables:
 	RunningColor		<color> which will be used as a background colour when tests are running
 	NoTestsColor		<color> which will be used as a background colour when no tests are available for the browser selection
 '!
-!UnitTestPlugin categoriesForClass!Browser-Plugins! !
-!UnitTestPlugin methodsFor!
+!Tools.UnitTestPlugin categoriesForClass!Browser-Plugins! !
+!Tools.UnitTestPlugin methodsFor!
 
 allContextMenus
 	| allMenus |
@@ -358,10 +358,7 @@ toggleToTestsClass
 	^self testClass = self browser actualClass ifTrue: [self classUnderTest] ifFalse: [self testClass]!
 
 toggleToTestsClassDescription
-	| gotoClass |
-	gotoClass := self toggleToTestsClass.
-	gotoClass isNil ifTrue: [^TestCase].
-	^gotoClass!
+	^self toggleToTestsClass ?? XProgramming.SUnit.TestCase!
 
 update: anObject
 	(anObject isKindOf: TestCase)
@@ -378,55 +375,55 @@ updateWindow
 		ifTrue: [self displayErrors]
 		ifFalse: [result hasFailures ifTrue: [self displayFail] ifFalse: [self displayPass]].
 	self updateDefects! !
-!UnitTestPlugin categoriesFor: #allContextMenus!helpers!private! !
-!UnitTestPlugin categoriesFor: #allMenuBarMenus!helpers!private! !
-!UnitTestPlugin categoriesFor: #classUnderTest!Accessing!private! !
-!UnitTestPlugin categoriesFor: #createComponents!initializing!private! !
-!UnitTestPlugin categoriesFor: #createSchematicWiring!helpers!private! !
-!UnitTestPlugin categoriesFor: #currentTestMethodSelectors!commands!private! !
-!UnitTestPlugin categoriesFor: #debugTest!commands!public! !
-!UnitTestPlugin categoriesFor: #debugTest:!operations!private! !
-!UnitTestPlugin categoriesFor: #defaultHelpId!constants!public! !
-!UnitTestPlugin categoriesFor: #displayColor:!private!Updating! !
-!UnitTestPlugin categoriesFor: #displayDefects:!private!Updating! !
-!UnitTestPlugin categoriesFor: #displayDetails:!private!Updating! !
-!UnitTestPlugin categoriesFor: #displayErrors!private!Updating! !
-!UnitTestPlugin categoriesFor: #displayFail!private!Updating! !
-!UnitTestPlugin categoriesFor: #displayMode:!private!Updating! !
-!UnitTestPlugin categoriesFor: #displayOn:!displaying!private! !
-!UnitTestPlugin categoriesFor: #displayPass!private!Updating! !
-!UnitTestPlugin categoriesFor: #displayReset!private!Updating! !
-!UnitTestPlugin categoriesFor: #displayRunning!private!Updating! !
-!UnitTestPlugin categoriesFor: #hasDefects!public!testing! !
-!UnitTestPlugin categoriesFor: #hasIndividualTests!public!Updating! !
-!UnitTestPlugin categoriesFor: #hasTestClass!public!Updating! !
-!UnitTestPlugin categoriesFor: #icon!accessing!public! !
-!UnitTestPlugin categoriesFor: #icon:!accessing!private! !
-!UnitTestPlugin categoriesFor: #installMenuCommands!helpers!private! !
-!UnitTestPlugin categoriesFor: #installTestCommandsInClassMenu:withAccelerator:!helpers!private! !
-!UnitTestPlugin categoriesFor: #installTestCommandsInMethodMenu:!helpers!private! !
-!UnitTestPlugin categoriesFor: #isBrowserLookingAtTestClass!private!testing! !
-!UnitTestPlugin categoriesFor: #onBrowserClassSelected!event handling!private! !
-!UnitTestPlugin categoriesFor: #onBrowserMethodSelected!event handling!private! !
-!UnitTestPlugin categoriesFor: #onViewOpened!event handling!private! !
-!UnitTestPlugin categoriesFor: #queryCommand:!commands!private! !
-!UnitTestPlugin categoriesFor: #refreshIcon!operations!private! !
-!UnitTestPlugin categoriesFor: #runIndividualTests!commands!public! !
-!UnitTestPlugin categoriesFor: #runSuite:!operations!private! !
-!UnitTestPlugin categoriesFor: #runTests!commands!public! !
-!UnitTestPlugin categoriesFor: #startAutoSwitchProcess!helpers!private! !
-!UnitTestPlugin categoriesFor: #stopAutoSwitchProcess!helpers!private! !
-!UnitTestPlugin categoriesFor: #testClass!Accessing!private! !
-!UnitTestPlugin categoriesFor: #testSuite!accessing!public! !
-!UnitTestPlugin categoriesFor: #testSuiteName!event handling!private! !
-!UnitTestPlugin categoriesFor: #toggleToTests!commands!public! !
-!UnitTestPlugin categoriesFor: #toggleToTestsClass!helpers!private! !
-!UnitTestPlugin categoriesFor: #toggleToTestsClassDescription!helpers!private! !
-!UnitTestPlugin categoriesFor: #update:!helpers!private! !
-!UnitTestPlugin categoriesFor: #updateDefects!private!Updating! !
-!UnitTestPlugin categoriesFor: #updateWindow!private!Updating! !
+!Tools.UnitTestPlugin categoriesFor: #allContextMenus!helpers!private! !
+!Tools.UnitTestPlugin categoriesFor: #allMenuBarMenus!helpers!private! !
+!Tools.UnitTestPlugin categoriesFor: #classUnderTest!Accessing!private! !
+!Tools.UnitTestPlugin categoriesFor: #createComponents!initializing!private! !
+!Tools.UnitTestPlugin categoriesFor: #createSchematicWiring!helpers!private! !
+!Tools.UnitTestPlugin categoriesFor: #currentTestMethodSelectors!commands!private! !
+!Tools.UnitTestPlugin categoriesFor: #debugTest!commands!public! !
+!Tools.UnitTestPlugin categoriesFor: #debugTest:!operations!private! !
+!Tools.UnitTestPlugin categoriesFor: #defaultHelpId!constants!public! !
+!Tools.UnitTestPlugin categoriesFor: #displayColor:!private!Updating! !
+!Tools.UnitTestPlugin categoriesFor: #displayDefects:!private!Updating! !
+!Tools.UnitTestPlugin categoriesFor: #displayDetails:!private!Updating! !
+!Tools.UnitTestPlugin categoriesFor: #displayErrors!private!Updating! !
+!Tools.UnitTestPlugin categoriesFor: #displayFail!private!Updating! !
+!Tools.UnitTestPlugin categoriesFor: #displayMode:!private!Updating! !
+!Tools.UnitTestPlugin categoriesFor: #displayOn:!displaying!private! !
+!Tools.UnitTestPlugin categoriesFor: #displayPass!private!Updating! !
+!Tools.UnitTestPlugin categoriesFor: #displayReset!private!Updating! !
+!Tools.UnitTestPlugin categoriesFor: #displayRunning!private!Updating! !
+!Tools.UnitTestPlugin categoriesFor: #hasDefects!public!testing! !
+!Tools.UnitTestPlugin categoriesFor: #hasIndividualTests!public!Updating! !
+!Tools.UnitTestPlugin categoriesFor: #hasTestClass!public!Updating! !
+!Tools.UnitTestPlugin categoriesFor: #icon!accessing!public! !
+!Tools.UnitTestPlugin categoriesFor: #icon:!accessing!private! !
+!Tools.UnitTestPlugin categoriesFor: #installMenuCommands!helpers!private! !
+!Tools.UnitTestPlugin categoriesFor: #installTestCommandsInClassMenu:withAccelerator:!helpers!private! !
+!Tools.UnitTestPlugin categoriesFor: #installTestCommandsInMethodMenu:!helpers!private! !
+!Tools.UnitTestPlugin categoriesFor: #isBrowserLookingAtTestClass!private!testing! !
+!Tools.UnitTestPlugin categoriesFor: #onBrowserClassSelected!event handling!private! !
+!Tools.UnitTestPlugin categoriesFor: #onBrowserMethodSelected!event handling!private! !
+!Tools.UnitTestPlugin categoriesFor: #onViewOpened!event handling!private! !
+!Tools.UnitTestPlugin categoriesFor: #queryCommand:!commands!private! !
+!Tools.UnitTestPlugin categoriesFor: #refreshIcon!operations!private! !
+!Tools.UnitTestPlugin categoriesFor: #runIndividualTests!commands!public! !
+!Tools.UnitTestPlugin categoriesFor: #runSuite:!operations!private! !
+!Tools.UnitTestPlugin categoriesFor: #runTests!commands!public! !
+!Tools.UnitTestPlugin categoriesFor: #startAutoSwitchProcess!helpers!private! !
+!Tools.UnitTestPlugin categoriesFor: #stopAutoSwitchProcess!helpers!private! !
+!Tools.UnitTestPlugin categoriesFor: #testClass!Accessing!private! !
+!Tools.UnitTestPlugin categoriesFor: #testSuite!accessing!public! !
+!Tools.UnitTestPlugin categoriesFor: #testSuiteName!event handling!private! !
+!Tools.UnitTestPlugin categoriesFor: #toggleToTests!commands!public! !
+!Tools.UnitTestPlugin categoriesFor: #toggleToTestsClass!helpers!private! !
+!Tools.UnitTestPlugin categoriesFor: #toggleToTestsClassDescription!helpers!private! !
+!Tools.UnitTestPlugin categoriesFor: #update:!helpers!private! !
+!Tools.UnitTestPlugin categoriesFor: #updateDefects!private!Updating! !
+!Tools.UnitTestPlugin categoriesFor: #updateWindow!private!Updating! !
 
-!UnitTestPlugin class methodsFor!
+!Tools.UnitTestPlugin class methodsFor!
 
 autoSwitchDelayMs
 	"Answer the number of milliseconds after which instances of the receiver will automatically switch
@@ -515,7 +512,7 @@ passColor: aColor
 publishedAspects
 	"Private - Answer a <LookupTable> of the <Aspect>s published by the receiver."
 
-	^(super publishedAspects)
+	^super publishedAspects
 		add: (Aspect integer: #autoSwitchDelayMs);
 		add: (Aspect color: #noTestsColor);
 		add: (Aspect color: #passColor);
@@ -528,36 +525,36 @@ resource_Default_view
 	DO NOT EDIT OR RECATEGORIZE THIS METHOD.
 
 	If you wish to modify this resource evaluate:
-	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Default_view)
+	Tools.ViewComposer openOn: (UI.ResourceIdentifier class: self selector: #resource_Default_view)
 	"
 
-	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.ContainerView) 34 15 nil nil 34 2 8 1409482752 131073 416 nil nil nil 5 nil nil nil 416 788230 ##(Smalltalk.BorderLayout) 1 1 410 ##(Smalltalk.PushButton) 34 20 nil 416 34 2 8 1140924416 1 512 nil 327686 ##(Smalltalk.Color) #silver 328198 ##(Smalltalk.Point) 177 57 5 nil 263174 ##(Smalltalk.Font) nil true 459014 ##(Smalltalk.LOGFONT) 8 #[243 255 255 255 0 0 0 0 0 0 0 0 0 0 0 0 144 1 0 0 0 0 0 0 3 2 1 34 65 114 105 97 108 0 68 132 66 49 15 1 0 0 196 53 15 1 2 0 144 39 0 0 0 0 191 0 253 85 63 1] 610 193 193 nil 512 nil 8 1903885040 1180998 4 ##(Smalltalk.CommandDescription) #runTests 8 'Run Tests' 9381 1 nil nil false nil nil nil 983302 ##(Smalltalk.MessageSequence) 138 144 34 3 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 610 1 1 610 969 49 512 866 #isEnabled: 8 #(false) 512 866 #text: 34 1 8 'Run Tests' 512 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 228 1 0 0 24 0 0 0] 8 #() 610 193 193 nil 29 nil nil nil 410 ##(Smalltalk.ContainerView) 34 15 nil 416 34 2 8 1140850688 131073 1104 nil 578 #darkOrange nil 5 nil nil nil 1104 482 1 1 nil 410 ##(Smalltalk.ContainerView) 34 15 nil 1104 34 2 8 1140850688 131073 1200 nil 578 #default nil 5 nil nil nil 1200 482 1 1 nil nil 410 ##(Smalltalk.PushButton) 34 20 nil 1200 34 2 8 1140924416 1 1296 nil nil nil 5 nil 642 nil true 674 8 #[243 255 255 255 0 0 0 0 0 0 0 0 0 0 0 0 144 1 0 0 0 0 0 0 3 2 1 34 65 114 105 97 108 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0] 610 193 193 nil 1296 nil 8 1903885040 754 #debugTest 8 'Debug' 1 1 nil nil false nil nil nil 802 138 144 34 3 866 #createAt:extent: 34 2 610 815 1 610 155 49 1296 866 #isEnabled: 8 #(false) 1296 866 #text: 34 1 8 'Debug' 1296 1026 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 151 1 0 0 0 0 0 0 228 1 0 0 24 0 0 0] 8 #() 1088 nil 29 nil 410 ##(Smalltalk.ComboBox) 34 17 nil 1200 34 2 8 1144063491 1 1712 590662 2 ##(Smalltalk.ListModel) 138 144 8 #() nil 1310726 ##(Smalltalk.IdentitySearchPolicy) nil nil 5 nil 642 nil true 674 8 #[243 255 255 255 0 0 0 0 0 0 0 0 0 0 0 0 144 1 0 0 0 0 0 0 3 2 1 34 65 114 105 97 108 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0] 610 193 193 nil 1712 nil 8 1903738896 ##(Smalltalk.BasicListAbstract) 1824 401 802 138 144 34 2 866 #createAt:extent: 34 2 610 1 1 610 815 49 1712 866 #isEnabled: 8 #(false) 1712 1026 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 151 1 0 0 24 0 0 0] 8 #() 1088 nil 27 170 192 34 4 1712 8 'defects' 1296 8 'debugButton' nil 802 138 144 34 1 866 #createAt:extent: 34 2 610 1 285 610 969 49 1200 1026 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 142 0 0 0 228 1 0 0 166 0 0 0] 34 2 1296 1712 1088 nil 27 nil nil 410 ##(Smalltalk.ContainerView) 34 15 nil 1104 34 2 8 1140850688 131073 2368 nil 1264 nil 5 nil nil nil 2368 482 1 1 410 ##(Smalltalk.StaticText) 34 16 nil 2368 34 2 8 1140850945 1 2448 nil nil 610 177 81 5 nil 642 nil true 674 8 #[208 255 255 255 0 0 0 0 0 0 0 0 0 0 0 0 188 2 0 0 0 0 0 0 3 2 1 49 67 111 117 114 105 101 114 32 78 101 119 0 83 0 118 97 0 114 105 102 0 39 0 0 0 0 191 0 253 85 63 1] 610 193 193 nil 2448 nil 8 1903849936 852486 ##(Smalltalk.NullConverter) nil nil true 802 138 144 34 2 866 #createAt:extent: 34 2 610 1 1 610 969 121 2448 866 #text: 34 1 8 'No Tests' 2448 1026 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 228 1 0 0 60 0 0 0] 8 #() 1088 nil 27 nil nil nil 410 ##(Smalltalk.StaticText) 34 16 nil 2368 34 2 8 1140850945 65 2848 nil nil nil 5 nil 642 nil true 674 8 #[240 255 255 255 0 0 0 0 0 0 0 0 0 0 0 0 188 2 0 0 0 0 0 0 3 2 1 34 65 114 105 97 108 0 68 132 66 49 15 1 0 0 196 53 15 1 2 0 144 39 0 0 0 0 191 0 253 85 63 1] 610 193 193 nil 2848 nil 8 1903849936 2610 nil nil nil 802 138 144 34 2 866 #createAt:extent: 34 2 610 1 121 610 969 165 2848 866 #text: 34 1 8 '...' 2848 1026 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 60 0 0 0 228 1 0 0 142 0 0 0] 8 #() 1088 nil 27 170 192 34 4 2448 8 'mode' 2848 8 'details' nil 802 138 144 34 1 866 #createAt:extent: 34 2 610 1 1 610 969 285 2368 1026 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 228 1 0 0 142 0 0 0] 34 2 2848 2448 1088 nil 27 170 192 34 2 2368 8 'colorField' 590342 ##(Smalltalk.Rectangle) 610 1 1 610 1 1 802 138 144 34 1 866 #createAt:extent: 34 2 610 1 49 610 969 333 1104 1026 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 24 0 0 0 228 1 0 0 190 0 0 0] 34 2 2368 1200 1088 nil 27 170 192 34 2 512 8 'runOne' nil 802 138 144 34 1 866 #createAt:extent: 34 2 610 3839 21 610 969 381 416 1026 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 127 7 0 0 10 0 0 0 99 9 0 0 200 0 0 0] 34 2 512 1104 1088 nil 27 )!
+	^#(#'!!STL' 4 985166 10 ##(UI.STBViewProxy) ##(UI.ContainerView) 34 15 nil nil 34 2 8 1409482752 131073 416 nil nil nil 5 nil nil nil 416 984838 ##(UI.BorderLayout) 1 1 410 ##(UI.PushButton) 34 20 nil 416 34 2 8 1140924416 1 512 nil 917510 ##(Graphics.Color) #silver 918022 ##(Graphics.Point) 177 57 5 nil 852998 ##(Graphics.Font) nil true 655622 ##(OS.LOGFONT) 8 #[243 255 255 255 0 0 0 0 0 0 0 0 0 0 0 0 144 1 0 0 0 0 0 0 3 2 1 34 65 114 105 97 108 0 68 132 66 49 15 1 0 0 196 53 15 1 2 0 144 39 0 0 0 0 191 0 253 85 63 1] 610 193 193 nil 512 nil 8 1801347024 1377606 4 ##(UI.CommandDescription) #runTests 8 'Run Tests' 9381 1 nil nil false nil nil nil 1310982 ##(Core.MessageSequence) 138 144 34 3 1049350 ##(Core.MessageSend) #createAt:extent: 34 2 610 1 1 610 969 49 512 866 #isEnabled: 8 #(false) 512 866 #text: 34 1 8 'Run Tests' 512 1179910 ##(OS.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 228 1 0 0 24 0 0 0] 8 #() 610 193 193 nil 29 nil nil nil 410 ##(UI.ContainerView) 34 15 nil 416 34 2 8 1140850688 131073 1104 nil 578 #darkOrange nil 5 nil nil nil 1104 482 1 1 nil 410 ##(UI.ContainerView) 34 15 nil 1104 34 2 8 1140850688 131073 1200 nil 578 #default nil 5 nil nil nil 1200 482 1 1 nil nil 410 ##(UI.PushButton) 34 20 nil 1200 34 2 8 1140924416 1 1296 nil nil nil 5 nil 642 nil true 674 8 #[243 255 255 255 0 0 0 0 0 0 0 0 0 0 0 0 144 1 0 0 0 0 0 0 3 2 1 34 65 114 105 97 108 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0] 610 193 193 nil 1296 nil 8 1801347024 754 #debugTest 8 'Debug' 1 1 nil nil false nil nil nil 802 138 144 34 3 866 #createAt:extent: 34 2 610 815 1 610 155 49 1296 866 #isEnabled: 8 #(false) 1296 866 #text: 34 1 8 'Debug' 1296 1026 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 151 1 0 0 0 0 0 0 228 1 0 0 24 0 0 0] 8 #() 1088 nil 29 nil 410 ##(UI.ComboBox) 34 17 nil 1200 34 2 8 1144063491 1 1712 787270 2 ##(UI.ListModel) 138 144 8 #() nil 1769478 ##(Kernel.IdentitySearchPolicy) nil nil 5 nil 642 nil true 674 8 #[243 255 255 255 0 0 0 0 0 0 0 0 0 0 0 0 144 1 0 0 0 0 0 0 3 2 1 34 65 114 105 97 108 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0] 610 193 193 nil 1712 nil 8 1801138208 ##(UI.BasicListAbstract) 8 #() 401 802 138 144 34 2 866 #createAt:extent: 34 2 610 1 1 610 815 49 1712 866 #isEnabled: 8 #(false) 1712 1026 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 151 1 0 0 24 0 0 0] 8 #() 1088 nil 27 170 192 34 4 1296 8 'debugButton' 1712 8 'defects' nil 802 138 144 34 1 866 #createAt:extent: 34 2 610 1 285 610 969 49 1200 1026 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 142 0 0 0 228 1 0 0 166 0 0 0] 34 2 1296 1712 1088 nil 27 nil nil 410 ##(UI.ContainerView) 34 15 nil 1104 34 2 8 1140850688 131073 2384 nil 1264 nil 5 nil nil nil 2384 482 1 1 410 ##(UI.StaticText) 34 16 nil 2384 34 2 8 1140850945 1 2464 nil nil 610 177 81 5 nil 642 nil true 674 8 #[208 255 255 255 0 0 0 0 0 0 0 0 0 0 0 0 188 2 0 0 0 0 0 0 3 2 1 49 67 111 117 114 105 101 114 32 78 101 119 0 83 0 118 97 0 114 105 102 0 39 0 0 0 0 191 0 253 85 63 1] 610 193 193 nil 2464 nil 8 1801195232 1049094 ##(UI.NullConverter) nil nil true 802 138 144 34 2 866 #createAt:extent: 34 2 610 1 1 610 969 121 2464 866 #text: 34 1 8 'No Tests' 2464 1026 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 228 1 0 0 60 0 0 0] 8 #() 1088 nil 27 nil nil nil 410 ##(UI.StaticText) 34 16 nil 2384 34 2 8 1140850945 65 2864 nil nil nil 5 nil 642 nil true 674 8 #[240 255 255 255 0 0 0 0 0 0 0 0 0 0 0 0 188 2 0 0 0 0 0 0 3 2 1 34 65 114 105 97 108 0 68 132 66 49 15 1 0 0 196 53 15 1 2 0 144 39 0 0 0 0 191 0 253 85 63 1] 610 193 193 nil 2864 nil 8 1801195232 2626 nil nil nil 802 138 144 34 2 866 #createAt:extent: 34 2 610 1 121 610 969 165 2864 866 #text: 34 1 8 '...' 2864 1026 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 60 0 0 0 228 1 0 0 142 0 0 0] 8 #() 1088 nil 27 170 192 34 4 2464 8 'mode' 2864 8 'details' nil 802 138 144 34 1 866 #createAt:extent: 34 2 610 1 1 610 969 285 2384 1026 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 228 1 0 0 142 0 0 0] 34 2 2864 2464 1088 nil 27 170 192 34 2 2384 8 'colorField' 1180166 ##(Graphics.Rectangle) 610 1 1 610 1 1 802 138 144 34 1 866 #createAt:extent: 34 2 610 1 49 610 969 333 1104 1026 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 24 0 0 0 228 1 0 0 190 0 0 0] 34 2 2384 1200 1088 nil 27 170 192 34 2 512 8 'runOne' nil 802 138 144 34 1 866 #createAt:extent: 34 2 610 6143 21 610 969 381 416 1026 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 227 13 0 0 200 0 0 0] 34 2 512 1104 1088 nil 27 )!
 
 runningColor
 	^RunningColor!
 
 runningColor: aColor 
 	RunningColor := aColor = Color default ifTrue: [self defaultRunningColor] ifFalse: [aColor]! !
-!UnitTestPlugin class categoriesFor: #autoSwitchDelayMs!accessing!public! !
-!UnitTestPlugin class categoriesFor: #autoSwitchDelayMs:!accessing!public! !
-!UnitTestPlugin class categoriesFor: #defaultAutoSwitchDelay!constants!private! !
-!UnitTestPlugin class categoriesFor: #defaultErrorColor!constants!private! !
-!UnitTestPlugin class categoriesFor: #defaultFailColor!constants!private! !
-!UnitTestPlugin class categoriesFor: #defaultNoTestsColor!private!Updating! !
-!UnitTestPlugin class categoriesFor: #defaultPassColor!constants!private! !
-!UnitTestPlugin class categoriesFor: #defaultRunningColor!constants!private! !
-!UnitTestPlugin class categoriesFor: #errorColor!accessing!public! !
-!UnitTestPlugin class categoriesFor: #errorColor:!accessing!public! !
-!UnitTestPlugin class categoriesFor: #failColor!accessing!public! !
-!UnitTestPlugin class categoriesFor: #failColor:!accessing!public! !
-!UnitTestPlugin class categoriesFor: #icon!constants!public! !
-!UnitTestPlugin class categoriesFor: #initialize!class initialization!private! !
-!UnitTestPlugin class categoriesFor: #noTestsColor!accessing!public! !
-!UnitTestPlugin class categoriesFor: #noTestsColor:!accessing!public! !
-!UnitTestPlugin class categoriesFor: #passColor!accessing!public! !
-!UnitTestPlugin class categoriesFor: #passColor:!accessing!public! !
-!UnitTestPlugin class categoriesFor: #publishedAspects!private! !
-!UnitTestPlugin class categoriesFor: #resource_Default_view!public!resources-views! !
-!UnitTestPlugin class categoriesFor: #runningColor!accessing!public! !
-!UnitTestPlugin class categoriesFor: #runningColor:!accessing!public! !
+!Tools.UnitTestPlugin class categoriesFor: #autoSwitchDelayMs!accessing!public! !
+!Tools.UnitTestPlugin class categoriesFor: #autoSwitchDelayMs:!accessing!public! !
+!Tools.UnitTestPlugin class categoriesFor: #defaultAutoSwitchDelay!constants!private! !
+!Tools.UnitTestPlugin class categoriesFor: #defaultErrorColor!constants!private! !
+!Tools.UnitTestPlugin class categoriesFor: #defaultFailColor!constants!private! !
+!Tools.UnitTestPlugin class categoriesFor: #defaultNoTestsColor!private!Updating! !
+!Tools.UnitTestPlugin class categoriesFor: #defaultPassColor!constants!private! !
+!Tools.UnitTestPlugin class categoriesFor: #defaultRunningColor!constants!private! !
+!Tools.UnitTestPlugin class categoriesFor: #errorColor!accessing!public! !
+!Tools.UnitTestPlugin class categoriesFor: #errorColor:!accessing!public! !
+!Tools.UnitTestPlugin class categoriesFor: #failColor!accessing!public! !
+!Tools.UnitTestPlugin class categoriesFor: #failColor:!accessing!public! !
+!Tools.UnitTestPlugin class categoriesFor: #icon!constants!public! !
+!Tools.UnitTestPlugin class categoriesFor: #initialize!class initialization!private! !
+!Tools.UnitTestPlugin class categoriesFor: #noTestsColor!accessing!public! !
+!Tools.UnitTestPlugin class categoriesFor: #noTestsColor:!accessing!public! !
+!Tools.UnitTestPlugin class categoriesFor: #passColor!accessing!public! !
+!Tools.UnitTestPlugin class categoriesFor: #passColor:!accessing!public! !
+!Tools.UnitTestPlugin class categoriesFor: #publishedAspects!private! !
+!Tools.UnitTestPlugin class categoriesFor: #resource_Default_view!public!resources-views! !
+!Tools.UnitTestPlugin class categoriesFor: #runningColor!accessing!public! !
+!Tools.UnitTestPlugin class categoriesFor: #runningColor:!accessing!public! !
 

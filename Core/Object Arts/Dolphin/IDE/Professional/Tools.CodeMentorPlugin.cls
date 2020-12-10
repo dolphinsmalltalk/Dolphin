@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-SmalllintPlugin subclass: #CodeMentorPlugin
+Tools.SmalllintPlugin subclass: #'Tools.CodeMentorPlugin'
 	instanceVariableNames: 'failuresPresenter infoSitePresenter infoBrowserPresenter progressPresenter checkerProcess rulesTreeModel isRefreshPending refreshMode'
 	classVariableNames: 'DefaultRefreshMode LintIconMap LintRulesDoc'
-	poolDictionaries: 'SHDocVwConstants'
+	imports: #(#{Smalltalk.SHDocVwConstants private})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-CodeMentorPlugin guid: (GUID fromString: '{b1e97c3c-3c35-43e0-99aa-97d69135e2ea}')!
-CodeMentorPlugin comment: 'CodeMentorPlugin is a <classBrowserPlugin> that tests the quality of code currently seen by a browser using Refactory Inc''s SmallLint package.  Since the time taken to perform the SmallLint analysis can be lengthy, the evaluation is performed in a background thread.
+Tools.CodeMentorPlugin guid: (Core.GUID fromString: '{b1e97c3c-3c35-43e0-99aa-97d69135e2ea}')!
+Tools.CodeMentorPlugin comment: 'CodeMentorPlugin is a <classBrowserPlugin> that tests the quality of code currently seen by a browser using Refactory Inc''s SmallLint package.  Since the time taken to perform the SmallLint analysis can be lengthy, the evaluation is performed in a background thread.
 
 Instance Variables:
 	failuresPresenter		<treePresenter> showing the hierarchy of failed rules
@@ -26,8 +26,8 @@ Class Variables:
 	DefaultRefreshMode	<Symbol>. The name of the default refresh/update mode.
 
 '!
-!CodeMentorPlugin categoriesForClass!Browser-Plugins!MVP-Presenters! !
-!CodeMentorPlugin methodsFor!
+!Tools.CodeMentorPlugin categoriesForClass!Browser-Plugins!MVP-Presenters! !
+!Tools.CodeMentorPlugin methodsFor!
 
 addFailedRule: aLintRule
 	| parentRule |
@@ -317,7 +317,7 @@ infoBrowserPresenter
 
 	infoBrowserPresenter isNil 
 		ifTrue: 
-			[infoBrowserPresenter := URLPresenter createIn: infoSitePresenter.
+			[infoBrowserPresenter := Smalltalk.URLPresenter createIn: infoSitePresenter.
 			[self infoBrowser readyState == READYSTATE_COMPLETE] 
 				whileFalse: [SessionManager inputState pumpMessages].
 			"Suppress the standard IE context menu"
@@ -666,76 +666,76 @@ stopCheckerProcess
 	self isBusy ifFalse: [^self].
 	checkerProcess terminate.
 	checkerProcess := nil! !
-!CodeMentorPlugin categoriesFor: #addFailedRule:!helpers!private! !
-!CodeMentorPlugin categoriesFor: #allRules!operations!private! !
-!CodeMentorPlugin categoriesFor: #applyTransform:!helpers!private! !
-!CodeMentorPlugin categoriesFor: #autoRefresh!operations!private! !
-!CodeMentorPlugin categoriesFor: #browseAllFailedMethods!commands!private! !
-!CodeMentorPlugin categoriesFor: #browseFailedClass:!commands!private! !
-!CodeMentorPlugin categoriesFor: #browseFailedMethodName:!commands!private! !
-!CodeMentorPlugin categoriesFor: #browseFailedMethods:!commands!private! !
-!CodeMentorPlugin categoriesFor: #clearFailures!operations!private! !
-!CodeMentorPlugin categoriesFor: #clearIgnoredRules!commands!public! !
-!CodeMentorPlugin categoriesFor: #createComponents!initializing!public! !
-!CodeMentorPlugin categoriesFor: #createSchematicWiring!initializing!public! !
-!CodeMentorPlugin categoriesFor: #defaultHelpId!constants!public! !
-!CodeMentorPlugin categoriesFor: #displayOn:!displaying!public! !
-!CodeMentorPlugin categoriesFor: #exportIgnoredRules!commands!public! !
-!CodeMentorPlugin categoriesFor: #failedClassesFor:!accessing!private! !
-!CodeMentorPlugin categoriesFor: #failedRule!commands!private! !
-!CodeMentorPlugin categoriesFor: #filteredRuleNames!accessing!private! !
-!CodeMentorPlugin categoriesFor: #filteredRules!accessing!public! !
-!CodeMentorPlugin categoriesFor: #filterInRules:!commands!private! !
-!CodeMentorPlugin categoriesFor: #filterOutRule!commands!public! !
-!CodeMentorPlugin categoriesFor: #filterOutRules:!commands!private! !
-!CodeMentorPlugin categoriesFor: #getRuleInfo:!helpers!private! !
-!CodeMentorPlugin categoriesFor: #htmlDescriptionFor:!helpers!private! !
-!CodeMentorPlugin categoriesFor: #htmlStyle!helpers!private! !
-!CodeMentorPlugin categoriesFor: #icon!accessing!public! !
-!CodeMentorPlugin categoriesFor: #importIgnoredRules!commands!public! !
-!CodeMentorPlugin categoriesFor: #indicateFailures:!operations!private! !
-!CodeMentorPlugin categoriesFor: #indicateStatus!operations!private! !
-!CodeMentorPlugin categoriesFor: #indicateSuccess!operations!private! !
-!CodeMentorPlugin categoriesFor: #infoBrowser!accessing!private! !
-!CodeMentorPlugin categoriesFor: #infoBrowserPresenter!accessing!private! !
-!CodeMentorPlugin categoriesFor: #initialize!initializing!private! !
-!CodeMentorPlugin categoriesFor: #isBusy!accessing!public! !
-!CodeMentorPlugin categoriesFor: #isFilterActive!commands!private! !
-!CodeMentorPlugin categoriesFor: #lintRuleFailuresBrowserClass!constants!private! !
-!CodeMentorPlugin categoriesFor: #lintRules!accessing!private! !
-!CodeMentorPlugin categoriesFor: #onBeforeNavigate2:URL:Flags:TargetFrameName:PostData:Headers:Cancel:!event handling!private! !
-!CodeMentorPlugin categoriesFor: #onBrowserEnvironmentSelected!event handling!private! !
-!CodeMentorPlugin categoriesFor: #onClassUpdated:!event handling!public! !
-!CodeMentorPlugin categoriesFor: #onFailureSelected!event handling!private! !
-!CodeMentorPlugin categoriesFor: #onGetCursor:!event handling!public! !
-!CodeMentorPlugin categoriesFor: #onLintRuleFilterChanged:!event handling!public! !
-!CodeMentorPlugin categoriesFor: #onMethodUpdated:!event handling!public! !
-!CodeMentorPlugin categoriesFor: #onShownInBrowser!event handling!public! !
-!CodeMentorPlugin categoriesFor: #onStartup!event handling!private! !
-!CodeMentorPlugin categoriesFor: #onStartup2!event handling!private! !
-!CodeMentorPlugin categoriesFor: #onViewClosed!event handling!public! !
-!CodeMentorPlugin categoriesFor: #onViewDestroyed!event handling!public! !
-!CodeMentorPlugin categoriesFor: #parentRuleOf:!helpers!private! !
-!CodeMentorPlugin categoriesFor: #printClassFailuresHtmlFor:on:!helpers!printing!private! !
-!CodeMentorPlugin categoriesFor: #printMethodFailuresHtmlFor:on:!helpers!printing!private! !
-!CodeMentorPlugin categoriesFor: #printTransformationRuleHtmlFor:on:!helpers!printing!private! !
-!CodeMentorPlugin categoriesFor: #queryCommand:!commands!private! !
-!CodeMentorPlugin categoriesFor: #refresh!commands!public! !
-!CodeMentorPlugin categoriesFor: #refreshIcon!operations!private! !
-!CodeMentorPlugin categoriesFor: #refreshMode!accessing!public! !
-!CodeMentorPlugin categoriesFor: #refreshMode:!accessing!public! !
-!CodeMentorPlugin categoriesFor: #refreshResults!commands!public! !
-!CodeMentorPlugin categoriesFor: #resetProgressBar!operations!private! !
-!CodeMentorPlugin categoriesFor: #rulesTreeModel!accessing!private! !
-!CodeMentorPlugin categoriesFor: #runLintChecks!operations!public! !
-!CodeMentorPlugin categoriesFor: #selectFilteredRules!commands!public! !
-!CodeMentorPlugin categoriesFor: #showDescriptionFor:!operations!private! !
-!CodeMentorPlugin categoriesFor: #smalltalkUrlTag!constants!private! !
-!CodeMentorPlugin categoriesFor: #splitName:!helpers!private! !
-!CodeMentorPlugin categoriesFor: #startCheckerProcess!operations!private! !
-!CodeMentorPlugin categoriesFor: #stopCheckerProcess!operations!private! !
+!Tools.CodeMentorPlugin categoriesFor: #addFailedRule:!helpers!private! !
+!Tools.CodeMentorPlugin categoriesFor: #allRules!operations!private! !
+!Tools.CodeMentorPlugin categoriesFor: #applyTransform:!helpers!private! !
+!Tools.CodeMentorPlugin categoriesFor: #autoRefresh!operations!private! !
+!Tools.CodeMentorPlugin categoriesFor: #browseAllFailedMethods!commands!private! !
+!Tools.CodeMentorPlugin categoriesFor: #browseFailedClass:!commands!private! !
+!Tools.CodeMentorPlugin categoriesFor: #browseFailedMethodName:!commands!private! !
+!Tools.CodeMentorPlugin categoriesFor: #browseFailedMethods:!commands!private! !
+!Tools.CodeMentorPlugin categoriesFor: #clearFailures!operations!private! !
+!Tools.CodeMentorPlugin categoriesFor: #clearIgnoredRules!commands!public! !
+!Tools.CodeMentorPlugin categoriesFor: #createComponents!initializing!public! !
+!Tools.CodeMentorPlugin categoriesFor: #createSchematicWiring!initializing!public! !
+!Tools.CodeMentorPlugin categoriesFor: #defaultHelpId!constants!public! !
+!Tools.CodeMentorPlugin categoriesFor: #displayOn:!displaying!public! !
+!Tools.CodeMentorPlugin categoriesFor: #exportIgnoredRules!commands!public! !
+!Tools.CodeMentorPlugin categoriesFor: #failedClassesFor:!accessing!private! !
+!Tools.CodeMentorPlugin categoriesFor: #failedRule!commands!private! !
+!Tools.CodeMentorPlugin categoriesFor: #filteredRuleNames!accessing!private! !
+!Tools.CodeMentorPlugin categoriesFor: #filteredRules!accessing!public! !
+!Tools.CodeMentorPlugin categoriesFor: #filterInRules:!commands!private! !
+!Tools.CodeMentorPlugin categoriesFor: #filterOutRule!commands!public! !
+!Tools.CodeMentorPlugin categoriesFor: #filterOutRules:!commands!private! !
+!Tools.CodeMentorPlugin categoriesFor: #getRuleInfo:!helpers!private! !
+!Tools.CodeMentorPlugin categoriesFor: #htmlDescriptionFor:!helpers!private! !
+!Tools.CodeMentorPlugin categoriesFor: #htmlStyle!helpers!private! !
+!Tools.CodeMentorPlugin categoriesFor: #icon!accessing!public! !
+!Tools.CodeMentorPlugin categoriesFor: #importIgnoredRules!commands!public! !
+!Tools.CodeMentorPlugin categoriesFor: #indicateFailures:!operations!private! !
+!Tools.CodeMentorPlugin categoriesFor: #indicateStatus!operations!private! !
+!Tools.CodeMentorPlugin categoriesFor: #indicateSuccess!operations!private! !
+!Tools.CodeMentorPlugin categoriesFor: #infoBrowser!accessing!private! !
+!Tools.CodeMentorPlugin categoriesFor: #infoBrowserPresenter!accessing!private! !
+!Tools.CodeMentorPlugin categoriesFor: #initialize!initializing!private! !
+!Tools.CodeMentorPlugin categoriesFor: #isBusy!accessing!public! !
+!Tools.CodeMentorPlugin categoriesFor: #isFilterActive!commands!private! !
+!Tools.CodeMentorPlugin categoriesFor: #lintRuleFailuresBrowserClass!constants!private! !
+!Tools.CodeMentorPlugin categoriesFor: #lintRules!accessing!private! !
+!Tools.CodeMentorPlugin categoriesFor: #onBeforeNavigate2:URL:Flags:TargetFrameName:PostData:Headers:Cancel:!event handling!private! !
+!Tools.CodeMentorPlugin categoriesFor: #onBrowserEnvironmentSelected!event handling!private! !
+!Tools.CodeMentorPlugin categoriesFor: #onClassUpdated:!event handling!public! !
+!Tools.CodeMentorPlugin categoriesFor: #onFailureSelected!event handling!private! !
+!Tools.CodeMentorPlugin categoriesFor: #onGetCursor:!event handling!public! !
+!Tools.CodeMentorPlugin categoriesFor: #onLintRuleFilterChanged:!event handling!public! !
+!Tools.CodeMentorPlugin categoriesFor: #onMethodUpdated:!event handling!public! !
+!Tools.CodeMentorPlugin categoriesFor: #onShownInBrowser!event handling!public! !
+!Tools.CodeMentorPlugin categoriesFor: #onStartup!event handling!private! !
+!Tools.CodeMentorPlugin categoriesFor: #onStartup2!event handling!private! !
+!Tools.CodeMentorPlugin categoriesFor: #onViewClosed!event handling!public! !
+!Tools.CodeMentorPlugin categoriesFor: #onViewDestroyed!event handling!public! !
+!Tools.CodeMentorPlugin categoriesFor: #parentRuleOf:!helpers!private! !
+!Tools.CodeMentorPlugin categoriesFor: #printClassFailuresHtmlFor:on:!helpers!printing!private! !
+!Tools.CodeMentorPlugin categoriesFor: #printMethodFailuresHtmlFor:on:!helpers!printing!private! !
+!Tools.CodeMentorPlugin categoriesFor: #printTransformationRuleHtmlFor:on:!helpers!printing!private! !
+!Tools.CodeMentorPlugin categoriesFor: #queryCommand:!commands!private! !
+!Tools.CodeMentorPlugin categoriesFor: #refresh!commands!public! !
+!Tools.CodeMentorPlugin categoriesFor: #refreshIcon!operations!private! !
+!Tools.CodeMentorPlugin categoriesFor: #refreshMode!accessing!public! !
+!Tools.CodeMentorPlugin categoriesFor: #refreshMode:!accessing!public! !
+!Tools.CodeMentorPlugin categoriesFor: #refreshResults!commands!public! !
+!Tools.CodeMentorPlugin categoriesFor: #resetProgressBar!operations!private! !
+!Tools.CodeMentorPlugin categoriesFor: #rulesTreeModel!accessing!private! !
+!Tools.CodeMentorPlugin categoriesFor: #runLintChecks!operations!public! !
+!Tools.CodeMentorPlugin categoriesFor: #selectFilteredRules!commands!public! !
+!Tools.CodeMentorPlugin categoriesFor: #showDescriptionFor:!operations!private! !
+!Tools.CodeMentorPlugin categoriesFor: #smalltalkUrlTag!constants!private! !
+!Tools.CodeMentorPlugin categoriesFor: #splitName:!helpers!private! !
+!Tools.CodeMentorPlugin categoriesFor: #startCheckerProcess!operations!private! !
+!Tools.CodeMentorPlugin categoriesFor: #stopCheckerProcess!operations!private! !
 
-!CodeMentorPlugin class methodsFor!
+!Tools.CodeMentorPlugin class methodsFor!
 
 busyIcon
 	^Icon fromId: 'LintWait.ico'!
@@ -847,7 +847,7 @@ lintRulesDoc
 
 	LintRulesDoc isNull 
 		ifTrue: 
-			[LintRulesDoc := (IXMLDOMDocument new)
+			[LintRulesDoc := (Smalltalk.IXMLDOMDocument new)
 						loadURL: self lintRulesDocURL;
 						yourself].
 	^LintRulesDoc!
@@ -863,8 +863,8 @@ lintWarningIcon
 publishedAspects
 	"Answer a <LookupTable> of the <Aspect>s published by the receiver."
 
-	^(super publishedAspects)
-		add: (Aspect 
+	^super publishedAspects
+		add: (Aspect
 					choice: #defaultRefreshMode
 					fromMap: self refreshModes
 					nullValue: nil);
@@ -879,10 +879,13 @@ refreshModes
 		isImmutable: true;
 		yourself)!
 
-report: failedRules for: environment
+report: failedRules for: aBrowserEnvionment
 	"Private - Report the current set of failed rules for the supplied browser environment to all observers"
 
-	self trigger: #report:for: with: failedRules with: environment!
+	self
+		trigger: #report:for:
+		with: failedRules
+		with: aBrowserEnvionment!
 
 resetFilters
 	"Private - Clear down all the Smalllint rule filters"
@@ -894,37 +897,37 @@ resource_Default_view
 	DO NOT EDIT OR RECATEGORIZE THIS METHOD.
 
 	If you wish to modify this resource evaluate:
-	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Default_view)
+	Tools.ViewComposer openOn: (UI.ResourceIdentifier class: self selector: #resource_Default_view)
 	"
 
-	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.ContainerView) 34 15 nil nil 34 2 8 1409286144 131073 416 nil nil nil 5 nil nil nil 416 788230 ##(Smalltalk.BorderLayout) 1 1 nil 410 ##(Smalltalk.ContainerView) 34 15 nil 416 34 2 8 1140850688 131073 512 nil nil nil 5 nil 263174 ##(Smalltalk.Font) nil true 524550 ##(Smalltalk.LOGFONTW) 8 #[244 255 255 255 0 0 0 0 0 0 0 0 0 0 0 0 144 1 0 0 0 0 0 0 3 2 1 34 83 0 101 0 103 0 111 0 101 0 32 0 85 0 73 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0] 328198 ##(Smalltalk.Point) 193 193 nil 512 482 11 1 nil nil 410 ##(Smalltalk.ComboBox) 34 17 nil 512 34 2 8 1144063491 1025 704 590662 2 ##(Smalltalk.ListModel) 138 144 8 #() nil 1310726 ##(Smalltalk.IdentitySearchPolicy) 327686 ##(Smalltalk.Color) #default nil 5 nil nil nil 704 nil 8 1903738896 ##(Smalltalk.BasicListAbstract) 816 401 983302 ##(Smalltalk.MessageSequence) 138 144 34 1 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 658 653 9 658 371 47 704 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 70 1 0 0 4 0 0 0 255 1 0 0 27 0 0 0] 8 #() 658 193 193 nil 27 410 ##(Smalltalk.PushButton) 34 20 nil 512 34 2 8 1140924416 1 1136 nil 880 nil 517 nil nil nil 1136 nil 8 1903885040 1180998 4 ##(Smalltalk.CommandDescription) #refresh 8 '&Update Now' 1 1 nil nil false nil nil nil 914 138 144 34 3 978 #createAt:extent: 34 2 658 11 9 658 171 47 1136 978 #isEnabled: 8 #(false) 1136 978 #text: 34 1 8 '&Update Now' 1136 1058 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 5 0 0 0 4 0 0 0 90 0 0 0 27 0 0 0] 8 #() 1120 nil 29 410 ##(Smalltalk.ProgressBar) 34 15 nil 512 34 2 8 1140850688 1 1504 721990 2 ##(Smalltalk.ValueHolder) nil nil 1114118 ##(Smalltalk.NeverSearchPolicy) 1 880 nil 5 nil nil nil 1504 nil 8 1903758288 852486 ##(Smalltalk.NullConverter) nil nil 914 138 144 34 2 978 #createAt:extent: 34 2 658 191 9 658 453 47 1504 978 #range: 34 1 525062 ##(Smalltalk.Interval) 1 201 3 1504 1058 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 95 0 0 0 4 0 0 0 65 1 0 0 27 0 0 0] 8 #() 1120 nil 27 170 192 34 4 704 8 'refreshMode' 1504 8 'progress' 590342 ##(Smalltalk.Rectangle) 658 11 9 658 9 7 914 138 144 34 1 978 #createAt:extent: 34 2 658 1 531 658 1031 61 512 1058 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 9 1 0 0 3 2 0 0 39 1 0 0] 34 3 1504 704 1136 1120 nil 27 nil nil 410 ##(Smalltalk.ContainerView) 34 15 nil 416 34 2 8 1140850688 131073 2192 nil nil nil 5 nil nil nil 2192 1180166 ##(Smalltalk.ProportionalLayout) 170 176 816 false 170 192 34 4 410 ##(Smalltalk.ContainerView) 34 15 nil 2192 34 2 8 1140850688 131073 2336 nil nil nil 5 nil nil nil 2336 656390 ##(Smalltalk.GridLayout) 3 1 1 1 170 192 816 nil 914 138 144 34 1 978 #createAt:extent: 34 2 658 521 1 658 511 531 2336 1058 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 4 1 0 0 0 0 0 0 3 2 0 0 9 1 0 0] 8 #() 1120 nil 27 8 'infoSite' 410 ##(Smalltalk.TreeView) 34 27 nil 2192 34 2 8 1140918818 1 2624 590918 3 ##(Smalltalk.TreeModel) nil 848 525062 ##(Smalltalk.TreeNode) nil nil nil 170 192 816 880 nil 5 265030 4 ##(Smalltalk.Menu) nil true 34 7 984134 2 ##(Smalltalk.CommandMenuItem) 1 1218 #filterOutRule 8 'Ignore this rule failure' 1 1 nil nil nil 2818 1 1218 #selectFilteredRules 8 'Show ignored rules...' 1 1 nil nil nil 983366 1 ##(Smalltalk.DividerMenuItem) 4097 2818 1 1218 #exportIgnoredRules 8 'Export all ignored rules...' 1 1 nil nil nil 2818 1 1218 #importIgnoredRules 8 'Import all ignored rules...' 1 1 nil nil nil 2930 4097 2818 1 1218 #clearIgnoredRules 8 'Clear all ignored rules' 1 1 nil nil nil 8 '' nil 1 nil nil nil nil nil nil nil 2624 nil 8 1903706176 ##(Smalltalk.BasicListAbstract) 787814 3 ##(Smalltalk.BlockClosure) 0 nil 1180966 ##(Smalltalk.CompiledExpression) 4 1 ##(Smalltalk.UndefinedObject) 8 'doIt' 8 '[:x | (CodeMentorPlugin lintIconOfRule: x) imageIndex]' 8 #[32 105 45 17 177 160 106] 721414 ##(Smalltalk.Association) #CodeMentorPlugin ##(Smalltalk.CodeMentorPlugin) #lintIconOfRule: #imageIndex 3168 7 257 nil 1049926 1 ##(Smalltalk.IconImageManager) nil nil nil 658 65 65 nil 170 176 816 nil #smallIcons 1 170 ##(Smalltalk.PluggableLookupTable) 816 914 138 144 34 2 978 #createAt:extent: 34 2 658 1 1 658 511 531 2624 978 #contextMenu: 34 1 2784 2624 1058 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 255 0 0 0 9 1 0 0] 8 #() 1120 nil 27 8 'failures' nil 914 138 144 34 1 978 #createAt:extent: 34 2 658 1 1 658 1031 531 2192 1058 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 3 2 0 0 9 1 0 0] 34 3 2624 410 ##(Smalltalk.Splitter) 34 12 nil 2192 34 2 8 1140850688 1 3744 nil nil nil 517 nil nil nil 1510470 1 ##(Smalltalk.DraggableViewInteractor) 3744 nil 1 #left nil nil nil 658 1 1 658 9 9 nil 3840 nil 914 138 144 34 1 978 #createAt:extent: 34 2 658 511 1 658 11 531 3744 1058 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 4 1 0 0 9 1 0 0] 8 #() 1120 nil 27 2336 1120 nil 27 170 192 816 nil 914 138 144 34 1 978 #createAt:extent: 34 2 658 3839 21 658 1031 591 416 1058 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 127 7 0 0 10 0 0 0 130 9 0 0 49 1 0 0] 34 2 2192 512 1120 nil 27 )!
+	^#(#'!!STL' 4 985166 10 ##(UI.STBViewProxy) ##(UI.ContainerView) 34 15 nil nil 34 2 8 1409286144 131073 416 nil nil nil 5 nil nil nil 416 984838 ##(UI.BorderLayout) 1 1 nil 410 ##(UI.ContainerView) 34 15 nil 416 34 2 8 1140850688 131073 512 nil nil nil 5 nil 852998 ##(Graphics.Font) nil true 721158 ##(OS.LOGFONTW) 8 #[244 255 255 255 0 0 0 0 0 0 0 0 0 0 0 0 144 1 0 0 0 0 0 0 3 2 1 34 83 0 101 0 103 0 111 0 101 0 32 0 85 0 73 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0] 918022 ##(Graphics.Point) 193 193 nil 512 482 11 1 nil nil 410 ##(UI.ComboBox) 34 17 nil 512 34 2 8 1144063491 1025 704 787270 2 ##(UI.ListModel) 138 144 8 #() nil 1769478 ##(Kernel.IdentitySearchPolicy) 917510 ##(Graphics.Color) #default nil 5 nil nil nil 704 nil 8 1801138208 ##(UI.BasicListAbstract) 8 #() 401 1310982 ##(Core.MessageSequence) 138 144 34 1 1049350 ##(Core.MessageSend) #createAt:extent: 34 2 658 653 9 658 371 47 704 1179910 ##(OS.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 70 1 0 0 4 0 0 0 255 1 0 0 27 0 0 0] 8 #() 658 193 193 nil 27 410 ##(UI.PushButton) 34 20 nil 512 34 2 8 1140924416 1 1152 nil 880 nil 517 nil nil nil 1152 nil 8 1801347024 1377606 4 ##(UI.CommandDescription) #refresh 8 '&Update Now' 1 1 nil nil false nil nil nil 930 138 144 34 3 994 #createAt:extent: 34 2 658 11 9 658 171 47 1152 994 #isEnabled: 8 #(false) 1152 994 #text: 34 1 8 '&Update Now' 1152 1074 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 5 0 0 0 4 0 0 0 90 0 0 0 27 0 0 0] 8 #() 1136 nil 29 410 ##(UI.ProgressBar) 34 15 nil 512 34 2 8 1140850688 1 1520 918598 2 ##(UI.ValueHolder) nil nil 1572870 ##(Kernel.NeverSearchPolicy) 1 880 nil 5 nil nil nil 1520 nil 8 1801010736 1049094 ##(UI.NullConverter) nil nil 930 138 144 34 2 994 #createAt:extent: 34 2 658 191 9 658 453 47 1520 994 #range: 34 1 852742 ##(Core.Interval) 1 201 3 1520 1074 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 95 0 0 0 4 0 0 0 65 1 0 0 27 0 0 0] 8 #() 1136 nil 27 170 192 34 4 704 8 'refreshMode' 1520 8 'progress' 1180166 ##(Graphics.Rectangle) 658 11 9 658 9 7 930 138 144 34 1 994 #createAt:extent: 34 2 658 1 531 658 1031 61 512 1074 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 9 1 0 0 3 2 0 0 39 1 0 0] 34 3 1520 704 1152 1136 nil 27 nil nil 410 ##(UI.ContainerView) 34 15 nil 416 34 2 8 1140850688 131073 2208 nil nil nil 5 nil nil nil 2208 1376774 ##(UI.ProportionalLayout) 170 176 816 false 170 192 34 4 410 ##(UI.ContainerView) 34 15 nil 2208 34 2 8 1140850688 131073 2352 nil nil nil 5 nil nil nil 2352 852998 ##(UI.GridLayout) 3 1 1 1 170 192 816 nil 930 138 144 34 1 994 #createAt:extent: 34 2 658 521 1 658 511 531 2352 1074 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 4 1 0 0 0 0 0 0 3 2 0 0 9 1 0 0] 8 #() 1136 nil 27 8 'infoSite' 410 ##(UI.TreeView) 34 27 nil 2208 34 2 8 1140918818 1 2640 787526 3 ##(UI.TreeModel) nil 848 721670 ##(UI.TreeNode) nil nil nil 170 192 816 880 nil 5 461638 4 ##(UI.Menu) nil true 34 7 1180742 2 ##(UI.CommandMenuItem) 1 1234 #filterOutRule 8 'Ignore this rule failure' 1 1 nil nil nil 2834 1 1234 #selectFilteredRules 8 'Show ignored rules...' 1 1 nil nil nil 1179974 1 ##(UI.DividerMenuItem) 4097 2834 1 1234 #exportIgnoredRules 8 'Export all ignored rules...' 1 1 nil nil nil 2834 1 1234 #importIgnoredRules 8 'Import all ignored rules...' 1 1 nil nil nil 2946 4097 2834 1 1234 #clearIgnoredRules 8 'Clear all ignored rules' 1 1 nil nil nil 8 '' nil 1 nil nil nil nil nil nil nil 2640 nil 8 1801125840 ##(UI.BasicListAbstract) 1246566 3 ##(Kernel.BlockClosure) 0 nil 1639718 ##(Kernel.CompiledExpression) 4 1 ##(Core.UndefinedObject) 8 'doIt' 8 '[:x | (CodeMentorPlugin lintIconOfRule: x) imageIndex]' 8 #[32 105 45 17 177 160 106] 1049094 ##(Core.Association) #'Tools.CodeMentorPlugin' ##(Tools.CodeMentorPlugin) #lintIconOfRule: #imageIndex 3184 7 257 nil 1639750 1 ##(Graphics.IconImageManager) nil nil nil 658 65 65 nil 170 176 816 nil #smallIcons 1 170 192 816 930 138 144 34 2 994 #createAt:extent: 34 2 658 1 1 658 511 531 2640 994 #contextMenu: 34 1 2800 2640 1074 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 255 0 0 0 9 1 0 0] 8 #() 1136 nil 27 8 'failures' nil 930 138 144 34 1 994 #createAt:extent: 34 2 658 1 1 658 1031 531 2208 1074 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 3 2 0 0 9 1 0 0] 34 3 2640 410 ##(UI.Splitter) 34 12 nil 2208 34 2 8 1140850688 1 3760 nil nil nil 517 nil nil nil 1707078 1 ##(UI.DraggableViewInteractor) 3760 nil 1 #left nil nil nil 658 1 1 658 9 9 nil 3856 nil 930 138 144 34 1 994 #createAt:extent: 34 2 658 511 1 658 11 531 3760 1074 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 4 1 0 0 9 1 0 0] 8 #() 1136 nil 27 2352 1136 nil 27 170 192 816 nil 930 138 144 34 1 994 #createAt:extent: 34 2 658 6143 21 658 1031 591 416 1074 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 2 14 0 0 49 1 0 0] 34 2 2208 512 1136 nil 27 )!
 
 sleepIcon
 	^Icon fromId: 'LintSleep.ico'! !
-!CodeMentorPlugin class categoriesFor: #busyIcon!constants!private! !
-!CodeMentorPlugin class categoriesFor: #defaultFilterFilename!accessing!private! !
-!CodeMentorPlugin class categoriesFor: #defaultFilterFileType!constants!private! !
-!CodeMentorPlugin class categoriesFor: #defaultRefreshMode!accessing!public! !
-!CodeMentorPlugin class categoriesFor: #defaultRefreshMode:!accessing!public! !
-!CodeMentorPlugin class categoriesFor: #exportFilters!operations!public! !
-!CodeMentorPlugin class categoriesFor: #filterFileTypes!constants!private! !
-!CodeMentorPlugin class categoriesFor: #icon!constants!public! !
-!CodeMentorPlugin class categoriesFor: #importFilters!operations!private! !
-!CodeMentorPlugin class categoriesFor: #initialize!initializing!private! !
-!CodeMentorPlugin class categoriesFor: #lintErrorIcon!constants!private! !
-!CodeMentorPlugin class categoriesFor: #lintIconMap!helpers!private! !
-!CodeMentorPlugin class categoriesFor: #lintIconOfRule:!helpers!private! !
-!CodeMentorPlugin class categoriesFor: #lintInfoIcon!constants!private! !
-!CodeMentorPlugin class categoriesFor: #lintPassIcon!constants!private! !
-!CodeMentorPlugin class categoriesFor: #lintPassRule!constants!private! !
-!CodeMentorPlugin class categoriesFor: #lintRules!accessing!private! !
-!CodeMentorPlugin class categoriesFor: #lintRulesDoc!accessing!private! !
-!CodeMentorPlugin class categoriesFor: #lintRulesDocURL!constants!private! !
-!CodeMentorPlugin class categoriesFor: #lintWarningIcon!constants!private! !
-!CodeMentorPlugin class categoriesFor: #publishedAspects!development!public! !
-!CodeMentorPlugin class categoriesFor: #refreshModes!constants!private! !
-!CodeMentorPlugin class categoriesFor: #report:for:!operations!private! !
-!CodeMentorPlugin class categoriesFor: #resetFilters!operations!private! !
-!CodeMentorPlugin class categoriesFor: #resource_Default_view!public!resources-views! !
-!CodeMentorPlugin class categoriesFor: #sleepIcon!constants!private! !
+!Tools.CodeMentorPlugin class categoriesFor: #busyIcon!constants!private! !
+!Tools.CodeMentorPlugin class categoriesFor: #defaultFilterFilename!accessing!private! !
+!Tools.CodeMentorPlugin class categoriesFor: #defaultFilterFileType!constants!private! !
+!Tools.CodeMentorPlugin class categoriesFor: #defaultRefreshMode!accessing!public! !
+!Tools.CodeMentorPlugin class categoriesFor: #defaultRefreshMode:!accessing!public! !
+!Tools.CodeMentorPlugin class categoriesFor: #exportFilters!operations!public! !
+!Tools.CodeMentorPlugin class categoriesFor: #filterFileTypes!constants!private! !
+!Tools.CodeMentorPlugin class categoriesFor: #icon!constants!public! !
+!Tools.CodeMentorPlugin class categoriesFor: #importFilters!operations!private! !
+!Tools.CodeMentorPlugin class categoriesFor: #initialize!initializing!private! !
+!Tools.CodeMentorPlugin class categoriesFor: #lintErrorIcon!constants!private! !
+!Tools.CodeMentorPlugin class categoriesFor: #lintIconMap!helpers!private! !
+!Tools.CodeMentorPlugin class categoriesFor: #lintIconOfRule:!helpers!private! !
+!Tools.CodeMentorPlugin class categoriesFor: #lintInfoIcon!constants!private! !
+!Tools.CodeMentorPlugin class categoriesFor: #lintPassIcon!constants!private! !
+!Tools.CodeMentorPlugin class categoriesFor: #lintPassRule!constants!private! !
+!Tools.CodeMentorPlugin class categoriesFor: #lintRules!accessing!private! !
+!Tools.CodeMentorPlugin class categoriesFor: #lintRulesDoc!accessing!private! !
+!Tools.CodeMentorPlugin class categoriesFor: #lintRulesDocURL!constants!private! !
+!Tools.CodeMentorPlugin class categoriesFor: #lintWarningIcon!constants!private! !
+!Tools.CodeMentorPlugin class categoriesFor: #publishedAspects!development!public! !
+!Tools.CodeMentorPlugin class categoriesFor: #refreshModes!constants!private! !
+!Tools.CodeMentorPlugin class categoriesFor: #report:for:!operations!private! !
+!Tools.CodeMentorPlugin class categoriesFor: #resetFilters!operations!private! !
+!Tools.CodeMentorPlugin class categoriesFor: #resource_Default_view!public!resources-views! !
+!Tools.CodeMentorPlugin class categoriesFor: #sleepIcon!constants!private! !
 

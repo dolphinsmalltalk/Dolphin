@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Core.Tests.DolphinTest subclass: #PackageBrowserShellTest
+Core.Tests.DolphinTest subclass: #'Tools.Tests.PackageBrowserShellTest'
 	instanceVariableNames: 'packageA packageB packageC dolphinTestA dolphinTestB dolphinTestC shell cardsPresenter classesPresenter methodsPresenter variablesPresenter resourcesPresenter dependencyPresenters methodAA methodAB methodAC methodBA methodBB methodCA'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-PackageBrowserShellTest guid: (Core.GUID fromString: '{c635384e-76c1-4b7d-b532-6a2ec1916dbe}')!
-PackageBrowserShellTest comment: ''!
-!PackageBrowserShellTest categoriesForClass!Unclassified! !
-!PackageBrowserShellTest methodsFor!
+Tools.Tests.PackageBrowserShellTest guid: (Core.GUID fromString: '{c635384e-76c1-4b7d-b532-6a2ec1916dbe}')!
+Tools.Tests.PackageBrowserShellTest comment: ''!
+!Tools.Tests.PackageBrowserShellTest categoriesForClass!Unclassified! !
+!Tools.Tests.PackageBrowserShellTest methodsFor!
 
 addRemoveRenameClasses
 	"Remove classes"
@@ -490,37 +490,37 @@ testRepackageMethods
 	self assertMethodsInSync.
 	methodsPresenter ensureVisible.
 	self assertMethodsInSync! !
-!PackageBrowserShellTest categoriesFor: #addRemoveRenameClasses!private!unit tests! !
-!PackageBrowserShellTest categoriesFor: #assertClassesInSync!private!unit tests! !
-!PackageBrowserShellTest categoriesFor: #assertCurrentCardInSync!private!unit tests! !
-!PackageBrowserShellTest categoriesFor: #assertDependencyCard:inSync:!private!unit tests! !
-!PackageBrowserShellTest categoriesFor: #assertMethodsInSync!private!unit tests! !
-!PackageBrowserShellTest categoriesFor: #assertResourcesInSync!private!unit tests! !
-!PackageBrowserShellTest categoriesFor: #assertVariablesInSync!private!unit tests! !
-!PackageBrowserShellTest categoriesFor: #create:subclassOf:!helpers!private! !
-!PackageBrowserShellTest categoriesFor: #create:subclassOf:inPackage:!helpers!private! !
-!PackageBrowserShellTest categoriesFor: #createClassesABC!helpers!private! !
-!PackageBrowserShellTest categoriesFor: #createGlobals!helpers!private! !
-!PackageBrowserShellTest categoriesFor: #createMethods!helpers!private! !
-!PackageBrowserShellTest categoriesFor: #currentCard!public!unit tests! !
-!PackageBrowserShellTest categoriesFor: #removeClass:!private!unit tests! !
-!PackageBrowserShellTest categoriesFor: #removeClasses!public!Running! !
-!PackageBrowserShellTest categoriesFor: #removeGlobals!public!Running! !
-!PackageBrowserShellTest categoriesFor: #renameClass!private!unit tests! !
-!PackageBrowserShellTest categoriesFor: #repackageClasses!private!unit tests! !
-!PackageBrowserShellTest categoriesFor: #resourceManager!constants!public! !
-!PackageBrowserShellTest categoriesFor: #setUp!public!Running! !
-!PackageBrowserShellTest categoriesFor: #showClassesPane!public!unit tests! !
-!PackageBrowserShellTest categoriesFor: #tearDown!public!Running! !
-!PackageBrowserShellTest categoriesFor: #testAddRemoveClasses!public!unit tests! !
-!PackageBrowserShellTest categoriesFor: #testAddRemoveMethods!public!unit tests! !
-!PackageBrowserShellTest categoriesFor: #testGlobals!public!unit tests! !
-!PackageBrowserShellTest categoriesFor: #testRepackageClasses!public!unit tests! !
-!PackageBrowserShellTest categoriesFor: #testRepackageMethods!public!unit tests! !
+!Tools.Tests.PackageBrowserShellTest categoriesFor: #addRemoveRenameClasses!private!unit tests! !
+!Tools.Tests.PackageBrowserShellTest categoriesFor: #assertClassesInSync!private!unit tests! !
+!Tools.Tests.PackageBrowserShellTest categoriesFor: #assertCurrentCardInSync!private!unit tests! !
+!Tools.Tests.PackageBrowserShellTest categoriesFor: #assertDependencyCard:inSync:!private!unit tests! !
+!Tools.Tests.PackageBrowserShellTest categoriesFor: #assertMethodsInSync!private!unit tests! !
+!Tools.Tests.PackageBrowserShellTest categoriesFor: #assertResourcesInSync!private!unit tests! !
+!Tools.Tests.PackageBrowserShellTest categoriesFor: #assertVariablesInSync!private!unit tests! !
+!Tools.Tests.PackageBrowserShellTest categoriesFor: #create:subclassOf:!helpers!private! !
+!Tools.Tests.PackageBrowserShellTest categoriesFor: #create:subclassOf:inPackage:!helpers!private! !
+!Tools.Tests.PackageBrowserShellTest categoriesFor: #createClassesABC!helpers!private! !
+!Tools.Tests.PackageBrowserShellTest categoriesFor: #createGlobals!helpers!private! !
+!Tools.Tests.PackageBrowserShellTest categoriesFor: #createMethods!helpers!private! !
+!Tools.Tests.PackageBrowserShellTest categoriesFor: #currentCard!public!unit tests! !
+!Tools.Tests.PackageBrowserShellTest categoriesFor: #removeClass:!private!unit tests! !
+!Tools.Tests.PackageBrowserShellTest categoriesFor: #removeClasses!public!Running! !
+!Tools.Tests.PackageBrowserShellTest categoriesFor: #removeGlobals!public!Running! !
+!Tools.Tests.PackageBrowserShellTest categoriesFor: #renameClass!private!unit tests! !
+!Tools.Tests.PackageBrowserShellTest categoriesFor: #repackageClasses!private!unit tests! !
+!Tools.Tests.PackageBrowserShellTest categoriesFor: #resourceManager!constants!public! !
+!Tools.Tests.PackageBrowserShellTest categoriesFor: #setUp!public!Running! !
+!Tools.Tests.PackageBrowserShellTest categoriesFor: #showClassesPane!public!unit tests! !
+!Tools.Tests.PackageBrowserShellTest categoriesFor: #tearDown!public!Running! !
+!Tools.Tests.PackageBrowserShellTest categoriesFor: #testAddRemoveClasses!public!unit tests! !
+!Tools.Tests.PackageBrowserShellTest categoriesFor: #testAddRemoveMethods!public!unit tests! !
+!Tools.Tests.PackageBrowserShellTest categoriesFor: #testGlobals!public!unit tests! !
+!Tools.Tests.PackageBrowserShellTest categoriesFor: #testRepackageClasses!public!unit tests! !
+!Tools.Tests.PackageBrowserShellTest categoriesFor: #testRepackageMethods!public!unit tests! !
 
-!PackageBrowserShellTest class methodsFor!
+!Tools.Tests.PackageBrowserShellTest class methodsFor!
 
 resources
 	^{Core.Tests.DolphinTestPackages}! !
-!PackageBrowserShellTest class categoriesFor: #resources!public! !
+!Tools.Tests.PackageBrowserShellTest class categoriesFor: #resources!public! !
 

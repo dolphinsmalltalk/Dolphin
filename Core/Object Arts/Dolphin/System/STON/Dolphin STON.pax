@@ -39,7 +39,6 @@ package setMethodNames: #(
 	#(#{Kernel.ProcessorScheduler class} #fromSton:)
 	#(#{Kernel.SingletonSearchPolicy} #stonOn:)
 	#(#{Kernel.SingletonSearchPolicy class} #stonName)
-	#(#{Smalltalk.SmalltalkSystem} #stonOn:)
 	#(#{STON class} #icon)
 	#(#{STON.CStyleCommentsSkipStream} #skipSeparators)
 	#(#{STON.CStyleCommentsSkipStream class} #icon)
@@ -52,6 +51,7 @@ package setMethodNames: #(
 	#(#{STON.StreamWriter class} #icon)
 	#(#{STON.Writer class} #icon)
 	#(#{STON.Writer class} #new)
+	#(#{Tools.SmalltalkSystem} #stonOn:)
 	#(#{UI.CardLayout class} #stonAllInstVarNames)
 	#(#{UI.ControlView class} #stonAllInstVarNames)
 	#(#{UI.FramingCalculation} #stonOn:)
@@ -382,12 +382,6 @@ stonName
 	^#SearchPolicy! !
 !Kernel.SingletonSearchPolicy class categoriesFor: #stonName!public!ston! !
 
-!SmalltalkSystem methodsFor!
-
-stonOn: stonWriter
-	stonWriter writeObject: self listSingleton: #current! !
-!SmalltalkSystem categoriesFor: #stonOn:!public!ston! !
-
 !STON class methodsFor!
 
 icon
@@ -465,6 +459,12 @@ new
 	^STON.DolphinWriter basicNew initialize! !
 !STON.Writer class categoriesFor: #icon!constants!public! !
 !STON.Writer class categoriesFor: #new!public! !
+
+!Tools.SmalltalkSystem methodsFor!
+
+stonOn: stonWriter
+	stonWriter writeObject: self listSingleton: #current! !
+!Tools.SmalltalkSystem categoriesFor: #stonOn:!public!ston! !
 
 !UI.CardLayout class methodsFor!
 

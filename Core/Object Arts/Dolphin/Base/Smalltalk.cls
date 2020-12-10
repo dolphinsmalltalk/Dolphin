@@ -78,7 +78,9 @@ declareVariable: aString
 developmentSystem
 	"Answer the current instance of <SmalltalkSystem> if installed, otherwise a <DeafObject>."
 
-	^#{SmalltalkSystem} valueOrNil ifNil: [DeafObject current] ifNotNil: [:devSys | devSys current]!
+	^#{Tools.SmalltalkSystem} valueOrNil
+		ifNil: [DeafObject current]
+		ifNotNil: [:devSys | devSys current]!
 
 getEvents
 	"Private - Answer the EventsCollection belonging to the receiver, or nil if the receiver

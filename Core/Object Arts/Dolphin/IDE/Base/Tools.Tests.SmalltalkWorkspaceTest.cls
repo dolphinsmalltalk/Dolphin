@@ -1,14 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-UI.Tests.PresenterTest subclass: #SmalltalkWorkspaceTest
+UI.Tests.PresenterTest subclass: #'Tools.Tests.SmalltalkWorkspaceTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-SmalltalkWorkspaceTest guid: (GUID fromString: '{6bb24dc3-1c9a-49ac-a5e2-143892b9350c}')!
-SmalltalkWorkspaceTest comment: ''!
-!SmalltalkWorkspaceTest categoriesForClass!Unclassified! !
-!SmalltalkWorkspaceTest methodsFor!
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Tools.Tests.SmalltalkWorkspaceTest guid: (Core.GUID fromString: '{6bb24dc3-1c9a-49ac-a5e2-143892b9350c}')!
+Tools.Tests.SmalltalkWorkspaceTest comment: ''!
+!Tools.Tests.SmalltalkWorkspaceTest categoriesForClass!Unclassified! !
+!Tools.Tests.SmalltalkWorkspaceTest methodsFor!
 
 classToTest
 	^SmalltalkWorkspace!
@@ -38,8 +39,8 @@ testReformatSourcePartial
 bar bar] value: #foo value: #bar'.
 	"No selection, cursor positioned after reformatted text"
 	self assert: presenter selectionRange equals: (31 to: 30)! !
-!SmalltalkWorkspaceTest categoriesFor: #classToTest!helpers!private! !
-!SmalltalkWorkspaceTest categoriesFor: #doReformatSource!helpers!private! !
-!SmalltalkWorkspaceTest categoriesFor: #testReformatSource!public!unit tests! !
-!SmalltalkWorkspaceTest categoriesFor: #testReformatSourcePartial!public!unit tests! !
+!Tools.Tests.SmalltalkWorkspaceTest categoriesFor: #classToTest!helpers!private! !
+!Tools.Tests.SmalltalkWorkspaceTest categoriesFor: #doReformatSource!helpers!private! !
+!Tools.Tests.SmalltalkWorkspaceTest categoriesFor: #testReformatSource!public!unit tests! !
+!Tools.Tests.SmalltalkWorkspaceTest categoriesFor: #testReformatSourcePartial!public!unit tests! !
 

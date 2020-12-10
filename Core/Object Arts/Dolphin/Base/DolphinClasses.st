@@ -50,6 +50,12 @@ Kernel.Namespace subclass: #Smalltalk
 	imports: #(#{Core} #{Kernel} #{Graphics} #{UI} #{OS} #{External})
 	classInstanceVariableNames: 'events allRoots allClasses classesByGuid'
 	classConstants: {}!
+Kernel.Namespace subclass: #Tools
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #(#{Core} #{UI private} #{Kernel private})
+	classInstanceVariableNames: ''
+	classConstants: {}!
 Kernel.Namespace subclass: #UI
 	instanceVariableNames: ''
 	classVariableNames: ''

@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Core.Tests.DolphinTest subclass: #IdeaSpaceShellTest
+Core.Tests.DolphinTest subclass: #'Tools.Tests.IdeaSpaceShellTest'
 	instanceVariableNames: 'ideaShell browserPlugins'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-IdeaSpaceShellTest guid: (Core.GUID fromString: '{2e6de900-c47f-4134-b038-b70cd1679c1c}')!
-IdeaSpaceShellTest comment: ''!
-!IdeaSpaceShellTest categoriesForClass!Unclassified! !
-!IdeaSpaceShellTest methodsFor!
+Tools.Tests.IdeaSpaceShellTest guid: (Core.GUID fromString: '{2e6de900-c47f-4134-b038-b70cd1679c1c}')!
+Tools.Tests.IdeaSpaceShellTest comment: ''!
+!Tools.Tests.IdeaSpaceShellTest categoriesForClass!Unclassified! !
+!Tools.Tests.IdeaSpaceShellTest methodsFor!
 
 create: aClassSymbol subclassOf: aClass
 	| newClass |
@@ -224,9 +224,9 @@ testHistoryRemove
 	self assert: hist isEmpty!
 
 testRemoveCard
-	| sb cb |
+	| sb |
 	sb := self newSystemBrowserCard.
-	cb := self newClassBrowserCard.
+	self newClassBrowserCard.
 	super assert: ideaShell cards size = 2.
 	sb exit.
 	super assert: ideaShell cards size = 1.
@@ -260,7 +260,7 @@ testSaveRestore
 
 	"Workspace"
 	ws := self newWorkspaceCard.
-	ws workspace evaluationPools: {Win32Constants. CommCtrlConstants}.
+	ws workspace evaluationPools: {OS.Win32Constants. OS.CommCtrlConstants}.
 	wsDocData := ws getDocumentData.
 	wsFilename := ws filename.
 	wsPools := ws workspace evaluationPools.
@@ -334,24 +334,24 @@ testSaveRestoreErrors
 	self should: [newIdeaShell configureFromSavedStateString: saveString]
 		raise: Compiler notificationClass.
 	newIdeaShell view destroy! !
-!IdeaSpaceShellTest categoriesFor: #create:subclassOf:!helpers!private! !
-!IdeaSpaceShellTest categoriesFor: #createThreeCards!helpers!private! !
-!IdeaSpaceShellTest categoriesFor: #newClassBrowserCard!private!unit tests! !
-!IdeaSpaceShellTest categoriesFor: #newEnvironmentBrowserCard!private!unit tests! !
-!IdeaSpaceShellTest categoriesFor: #newInspectorShellCard!private!unit tests! !
-!IdeaSpaceShellTest categoriesFor: #newSystemBrowserCard!private!unit tests! !
-!IdeaSpaceShellTest categoriesFor: #newViewBrowserCard!private!unit tests! !
-!IdeaSpaceShellTest categoriesFor: #newViewComposerCard!private!unit tests! !
-!IdeaSpaceShellTest categoriesFor: #newWorkspaceCard!private!unit tests! !
-!IdeaSpaceShellTest categoriesFor: #setUp!private!unit tests! !
-!IdeaSpaceShellTest categoriesFor: #tearDown!private!unit tests! !
-!IdeaSpaceShellTest categoriesFor: #testAbsorbCard!public!unit tests! !
-!IdeaSpaceShellTest categoriesFor: #testAbsorbedCardRemoval!public!unit tests! !
-!IdeaSpaceShellTest categoriesFor: #testBreakoutCard!public!unit tests! !
-!IdeaSpaceShellTest categoriesFor: #testBreakoutCardOrdering!public!unit tests! !
-!IdeaSpaceShellTest categoriesFor: #testHistoryRemove!public!unit tests! !
-!IdeaSpaceShellTest categoriesFor: #testRemoveCard!public!unit tests! !
-!IdeaSpaceShellTest categoriesFor: #testSaveRestore!public!unit tests! !
-!IdeaSpaceShellTest categoriesFor: #testSaveRestoreEmpty!public!unit tests! !
-!IdeaSpaceShellTest categoriesFor: #testSaveRestoreErrors!public!unit tests! !
+!Tools.Tests.IdeaSpaceShellTest categoriesFor: #create:subclassOf:!helpers!private! !
+!Tools.Tests.IdeaSpaceShellTest categoriesFor: #createThreeCards!helpers!private! !
+!Tools.Tests.IdeaSpaceShellTest categoriesFor: #newClassBrowserCard!private!unit tests! !
+!Tools.Tests.IdeaSpaceShellTest categoriesFor: #newEnvironmentBrowserCard!private!unit tests! !
+!Tools.Tests.IdeaSpaceShellTest categoriesFor: #newInspectorShellCard!private!unit tests! !
+!Tools.Tests.IdeaSpaceShellTest categoriesFor: #newSystemBrowserCard!private!unit tests! !
+!Tools.Tests.IdeaSpaceShellTest categoriesFor: #newViewBrowserCard!private!unit tests! !
+!Tools.Tests.IdeaSpaceShellTest categoriesFor: #newViewComposerCard!private!unit tests! !
+!Tools.Tests.IdeaSpaceShellTest categoriesFor: #newWorkspaceCard!private!unit tests! !
+!Tools.Tests.IdeaSpaceShellTest categoriesFor: #setUp!private!unit tests! !
+!Tools.Tests.IdeaSpaceShellTest categoriesFor: #tearDown!private!unit tests! !
+!Tools.Tests.IdeaSpaceShellTest categoriesFor: #testAbsorbCard!public!unit tests! !
+!Tools.Tests.IdeaSpaceShellTest categoriesFor: #testAbsorbedCardRemoval!public!unit tests! !
+!Tools.Tests.IdeaSpaceShellTest categoriesFor: #testBreakoutCard!public!unit tests! !
+!Tools.Tests.IdeaSpaceShellTest categoriesFor: #testBreakoutCardOrdering!public!unit tests! !
+!Tools.Tests.IdeaSpaceShellTest categoriesFor: #testHistoryRemove!public!unit tests! !
+!Tools.Tests.IdeaSpaceShellTest categoriesFor: #testRemoveCard!public!unit tests! !
+!Tools.Tests.IdeaSpaceShellTest categoriesFor: #testSaveRestore!public!unit tests! !
+!Tools.Tests.IdeaSpaceShellTest categoriesFor: #testSaveRestoreEmpty!public!unit tests! !
+!Tools.Tests.IdeaSpaceShellTest categoriesFor: #testSaveRestoreErrors!public!unit tests! !
 

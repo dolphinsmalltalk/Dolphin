@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-BasicInspector subclass: #SequenceableCollectionInspector
+Tools.BasicInspector subclass: #'Tools.SequenceableCollectionInspector'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-SequenceableCollectionInspector guid: (GUID fromString: '{87b4c696-026e-11d3-9fd7-00a0cc3e4a32}')!
-SequenceableCollectionInspector comment: 'SequenceableCollectionInspector is a <compositePresenter> that implements a specialised inspect facility onto a <SequenceableCollection>. This allows the collection to be inspected via its integer indices.'!
-!SequenceableCollectionInspector categoriesForClass!MVP-Presenters! !
-!SequenceableCollectionInspector methodsFor!
+Tools.SequenceableCollectionInspector guid: (Core.GUID fromString: '{87b4c696-026e-11d3-9fd7-00a0cc3e4a32}')!
+Tools.SequenceableCollectionInspector comment: 'SequenceableCollectionInspector is a <compositePresenter> that implements a specialised inspect facility onto a <SequenceableCollection>. This allows the collection to be inspected via its integer indices.'!
+!Tools.SequenceableCollectionInspector categoriesForClass!MVP-Presenters! !
+!Tools.SequenceableCollectionInspector methodsFor!
 
 getField: anInteger
 	"Private - Answer the field of the receiver's object which has the key at index
@@ -38,7 +38,7 @@ setField: anInteger to: anObject
 	anInteger > instSize 
 		ifTrue: [self selfField at: anInteger - instSize put: anObject]
 		ifFalse: [self selfField instVarAt: anInteger put: anObject]! !
-!SequenceableCollectionInspector categoriesFor: #getField:!accessing!private! !
-!SequenceableCollectionInspector categoriesFor: #getFieldList!accessing!private! !
-!SequenceableCollectionInspector categoriesFor: #setField:to:!accessing!private! !
+!Tools.SequenceableCollectionInspector categoriesFor: #getField:!accessing!private! !
+!Tools.SequenceableCollectionInspector categoriesFor: #getFieldList!accessing!private! !
+!Tools.SequenceableCollectionInspector categoriesFor: #setField:to:!accessing!private! !
 

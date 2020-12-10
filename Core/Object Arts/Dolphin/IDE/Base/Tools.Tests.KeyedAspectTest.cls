@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-DolphinTest subclass: #KeyedAspectTest
+Core.Tests.DolphinTest subclass: #'Tools.Tests.KeyedAspectTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-KeyedAspectTest guid: (GUID fromString: '{d76395c9-f61a-49dc-b5b1-87a2adf2020f}')!
-KeyedAspectTest comment: ''!
-!KeyedAspectTest categoriesForClass!Unclassified! !
-!KeyedAspectTest methodsFor!
+Tools.Tests.KeyedAspectTest guid: (Core.GUID fromString: '{d76395c9-f61a-49dc-b5b1-87a2adf2020f}')!
+Tools.Tests.KeyedAspectTest comment: ''!
+!Tools.Tests.KeyedAspectTest categoriesForClass!Unclassified! !
+!Tools.Tests.KeyedAspectTest methodsFor!
 
 collectionKeyedAspectsTest: subject
 	| aspects batchSize |
@@ -64,19 +64,19 @@ testDictionaryPublishedKeyedAspects
 	self dictionaryKeyedAspectsTest: Dictionary!
 
 testDWORDArrayPublishedKeyedAspects
-	self sequenceableCollectionKeyedAspectsTest: DWORDArray!
+	self sequenceableCollectionKeyedAspectsTest: External.DWORDArray!
 
 testLookupTablePublishedKeyedAspects
 	self dictionaryKeyedAspectsTest: LookupTable!
 
 testOrderedCollectionPublishedKeyedAspects
 	self sequenceableCollectionKeyedAspectsTest: OrderedCollection! !
-!KeyedAspectTest categoriesFor: #collectionKeyedAspectsTest:!helpers!private! !
-!KeyedAspectTest categoriesFor: #dictionaryKeyedAspectsTest:!helpers!private! !
-!KeyedAspectTest categoriesFor: #sequenceableCollectionKeyedAspectsTest:!helpers!private! !
-!KeyedAspectTest categoriesFor: #testArrayPublishedKeyedAspects!public!unit tests! !
-!KeyedAspectTest categoriesFor: #testDictionaryPublishedKeyedAspects!public!unit tests! !
-!KeyedAspectTest categoriesFor: #testDWORDArrayPublishedKeyedAspects!public!unit tests! !
-!KeyedAspectTest categoriesFor: #testLookupTablePublishedKeyedAspects!public!unit tests! !
-!KeyedAspectTest categoriesFor: #testOrderedCollectionPublishedKeyedAspects!public!unit tests! !
+!Tools.Tests.KeyedAspectTest categoriesFor: #collectionKeyedAspectsTest:!helpers!private! !
+!Tools.Tests.KeyedAspectTest categoriesFor: #dictionaryKeyedAspectsTest:!helpers!private! !
+!Tools.Tests.KeyedAspectTest categoriesFor: #sequenceableCollectionKeyedAspectsTest:!helpers!private! !
+!Tools.Tests.KeyedAspectTest categoriesFor: #testArrayPublishedKeyedAspects!public!unit tests! !
+!Tools.Tests.KeyedAspectTest categoriesFor: #testDictionaryPublishedKeyedAspects!public!unit tests! !
+!Tools.Tests.KeyedAspectTest categoriesFor: #testDWORDArrayPublishedKeyedAspects!public!unit tests! !
+!Tools.Tests.KeyedAspectTest categoriesFor: #testLookupTablePublishedKeyedAspects!public!unit tests! !
+!Tools.Tests.KeyedAspectTest categoriesFor: #testOrderedCollectionPublishedKeyedAspects!public!unit tests! !
 

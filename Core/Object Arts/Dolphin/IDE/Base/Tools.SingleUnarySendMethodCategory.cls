@@ -1,19 +1,19 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ReferencesCategory subclass: #SingleUnarySendMethodCategory
+Tools.ReferencesCategory subclass: #'Tools.SingleUnarySendMethodCategory'
 	instanceVariableNames: 'selector'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-SingleUnarySendMethodCategory guid: (GUID fromString: '{0adb321d-bb42-4acf-a21f-49b37095183a}')!
-SingleUnarySendMethodCategory comment: 'SingleUnarySendMethodCategory is the class of virtual method categories that dynamically determine their membership to include only those methods which are of a form where their body just sends one unary message to self, for example subclass responsibility methods such as:
+Tools.SingleUnarySendMethodCategory guid: (Core.GUID fromString: '{0adb321d-bb42-4acf-a21f-49b37095183a}')!
+Tools.SingleUnarySendMethodCategory comment: 'SingleUnarySendMethodCategory is the class of virtual method categories that dynamically determine their membership to include only those methods which are of a form where their body just sends one unary message to self, for example subclass responsibility methods such as:
 
 	blah
 		^self subclassResponsibility
 '!
-!SingleUnarySendMethodCategory categoriesForClass!System-Support! !
-!SingleUnarySendMethodCategory methodsFor!
+!Tools.SingleUnarySendMethodCategory categoriesForClass!System-Support! !
+!Tools.SingleUnarySendMethodCategory methodsFor!
 
 includesMethod: aCompiledMethod
 	"Answer whether the receiver includes the <CompiledMethod> argument. A method is considered
@@ -21,9 +21,9 @@ includesMethod: aCompiledMethod
 	nothing else."
 
 	^aCompiledMethod isSimpleSelfSend: literal! !
-!SingleUnarySendMethodCategory categoriesFor: #includesMethod:!public!testing! !
+!Tools.SingleUnarySendMethodCategory categoriesFor: #includesMethod:!public!testing! !
 
-!SingleUnarySendMethodCategory class methodsFor!
+!Tools.SingleUnarySendMethodCategory class methodsFor!
 
 initialize
 	"Private - Initialize the receiver.
@@ -34,6 +34,6 @@ initialize
 
 referenceSymbols
 	^#(#subclassResponsibility #shouldNotImplement)! !
-!SingleUnarySendMethodCategory class categoriesFor: #initialize!initializing!private! !
-!SingleUnarySendMethodCategory class categoriesFor: #referenceSymbols!constants!private! !
+!Tools.SingleUnarySendMethodCategory class categoriesFor: #initialize!initializing!private! !
+!Tools.SingleUnarySendMethodCategory class categoriesFor: #referenceSymbols!constants!private! !
 

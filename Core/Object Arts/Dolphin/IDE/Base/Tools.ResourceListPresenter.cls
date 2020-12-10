@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ListPresenter subclass: #ResourceListPresenter
+UI.ListPresenter subclass: #'Tools.ResourceListPresenter'
 	instanceVariableNames: 'filterBlock resourcesPresenter previewPresenter resourceIdModel'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ResourceListPresenter guid: (GUID fromString: '{87b4c6c8-026e-11d3-9fd7-00a0cc3e4a32}')!
-ResourceListPresenter comment: 'ResourceListPresenter implements a <listPresenter> used to display a list of <ResourceIdentifier>s. It adds the ability to source drag and drop operations for resources, and various commands to operate on resources such as showing them, editing them, browsing their owning class, etc.
+Tools.ResourceListPresenter guid: (Core.GUID fromString: '{87b4c6c8-026e-11d3-9fd7-00a0cc3e4a32}')!
+Tools.ResourceListPresenter comment: 'ResourceListPresenter implements a <listPresenter> used to display a list of <ResourceIdentifier>s. It adds the ability to source drag and drop operations for resources, and various commands to operate on resources such as showing them, editing them, browsing their owning class, etc.
 
 Instance Variables:
 	filterBlock			<monadicValuable> used as a discrimator to select resources for inclusion in the list.
@@ -17,8 +17,8 @@ Instance Variables:
 
 
 '!
-!ResourceListPresenter categoriesForClass!MVP-Presenters!MVP-Resources-IDE Tools!MVP-Resources-Misc! !
-!ResourceListPresenter methodsFor!
+!Tools.ResourceListPresenter categoriesForClass!MVP-Presenters!MVP-Resources-IDE Tools!MVP-Resources-Misc! !
+!Tools.ResourceListPresenter methodsFor!
 
 browseClass
 	"Open a new class browser, of the users preferred type, on the owning class of the selected
@@ -299,42 +299,42 @@ systemModel
 	"Private - Answer the development system model."
 
 	^Smalltalk developmentSystem! !
-!ResourceListPresenter categoriesFor: #browseClass!commands!public! !
-!ResourceListPresenter categoriesFor: #browseHierarchy!commands!public! !
-!ResourceListPresenter categoriesFor: #browseIt!commands!public! !
-!ResourceListPresenter categoriesFor: #browseReferences!commands!public! !
-!ResourceListPresenter categoriesFor: #browseSystem!commands!public! !
-!ResourceListPresenter categoriesFor: #caption!accessing!public! !
-!ResourceListPresenter categoriesFor: #clear!commands!public! !
-!ResourceListPresenter categoriesFor: #clearSelection!commands!public! !
-!ResourceListPresenter categoriesFor: #createComponents!initializing!public! !
-!ResourceListPresenter categoriesFor: #createSchematicWiring!initializing!public! !
-!ResourceListPresenter categoriesFor: #defaultSortBlock!constants!private!sorting! !
-!ResourceListPresenter categoriesFor: #deleteResource!commands!public! !
-!ResourceListPresenter categoriesFor: #editResource!commands!public! !
-!ResourceListPresenter categoriesFor: #filterBlock:!accessing!public! !
-!ResourceListPresenter categoriesFor: #imageFromResource:!helpers!private! !
-!ResourceListPresenter categoriesFor: #initialize!initializing!private! !
-!ResourceListPresenter categoriesFor: #model:!accessing!public! !
-!ResourceListPresenter categoriesFor: #onDragResource:!event handling!private! !
-!ResourceListPresenter categoriesFor: #onMethodAdded:!event handling!private! !
-!ResourceListPresenter categoriesFor: #onMethodRemoved:!event handling!private! !
-!ResourceListPresenter categoriesFor: #onResourceRepackaged:from:to:!event handling!private! !
-!ResourceListPresenter categoriesFor: #onResourceSelected!event handling!private! !
-!ResourceListPresenter categoriesFor: #passesFilter:!event handling!private! !
-!ResourceListPresenter categoriesFor: #queryCommand:!commands!private! !
-!ResourceListPresenter categoriesFor: #queryMoveResource:toPackage:!accessing!private! !
-!ResourceListPresenter categoriesFor: #refresh!operations!public! !
-!ResourceListPresenter categoriesFor: #resourceIdentifier!accessing!public! !
-!ResourceListPresenter categoriesFor: #resourcePackage!commands!public! !
-!ResourceListPresenter categoriesFor: #selectableItems!accessing!private! !
-!ResourceListPresenter categoriesFor: #showAllResources!filtering!public! !
-!ResourceListPresenter categoriesFor: #showResource!commands!public! !
-!ResourceListPresenter categoriesFor: #showResourcesOwnedByPackages:!filtering!public! !
-!ResourceListPresenter categoriesFor: #showResourcesReferencingView:!helpers!private! !
-!ResourceListPresenter categoriesFor: #systemModel!commands!private! !
+!Tools.ResourceListPresenter categoriesFor: #browseClass!commands!public! !
+!Tools.ResourceListPresenter categoriesFor: #browseHierarchy!commands!public! !
+!Tools.ResourceListPresenter categoriesFor: #browseIt!commands!public! !
+!Tools.ResourceListPresenter categoriesFor: #browseReferences!commands!public! !
+!Tools.ResourceListPresenter categoriesFor: #browseSystem!commands!public! !
+!Tools.ResourceListPresenter categoriesFor: #caption!accessing!public! !
+!Tools.ResourceListPresenter categoriesFor: #clear!commands!public! !
+!Tools.ResourceListPresenter categoriesFor: #clearSelection!commands!public! !
+!Tools.ResourceListPresenter categoriesFor: #createComponents!initializing!public! !
+!Tools.ResourceListPresenter categoriesFor: #createSchematicWiring!initializing!public! !
+!Tools.ResourceListPresenter categoriesFor: #defaultSortBlock!constants!private!sorting! !
+!Tools.ResourceListPresenter categoriesFor: #deleteResource!commands!public! !
+!Tools.ResourceListPresenter categoriesFor: #editResource!commands!public! !
+!Tools.ResourceListPresenter categoriesFor: #filterBlock:!accessing!public! !
+!Tools.ResourceListPresenter categoriesFor: #imageFromResource:!helpers!private! !
+!Tools.ResourceListPresenter categoriesFor: #initialize!initializing!private! !
+!Tools.ResourceListPresenter categoriesFor: #model:!accessing!public! !
+!Tools.ResourceListPresenter categoriesFor: #onDragResource:!event handling!private! !
+!Tools.ResourceListPresenter categoriesFor: #onMethodAdded:!event handling!private! !
+!Tools.ResourceListPresenter categoriesFor: #onMethodRemoved:!event handling!private! !
+!Tools.ResourceListPresenter categoriesFor: #onResourceRepackaged:from:to:!event handling!private! !
+!Tools.ResourceListPresenter categoriesFor: #onResourceSelected!event handling!private! !
+!Tools.ResourceListPresenter categoriesFor: #passesFilter:!event handling!private! !
+!Tools.ResourceListPresenter categoriesFor: #queryCommand:!commands!private! !
+!Tools.ResourceListPresenter categoriesFor: #queryMoveResource:toPackage:!accessing!private! !
+!Tools.ResourceListPresenter categoriesFor: #refresh!operations!public! !
+!Tools.ResourceListPresenter categoriesFor: #resourceIdentifier!accessing!public! !
+!Tools.ResourceListPresenter categoriesFor: #resourcePackage!commands!public! !
+!Tools.ResourceListPresenter categoriesFor: #selectableItems!accessing!private! !
+!Tools.ResourceListPresenter categoriesFor: #showAllResources!filtering!public! !
+!Tools.ResourceListPresenter categoriesFor: #showResource!commands!public! !
+!Tools.ResourceListPresenter categoriesFor: #showResourcesOwnedByPackages:!filtering!public! !
+!Tools.ResourceListPresenter categoriesFor: #showResourcesReferencingView:!helpers!private! !
+!Tools.ResourceListPresenter categoriesFor: #systemModel!commands!private! !
 
-!ResourceListPresenter class methodsFor!
+!Tools.ResourceListPresenter class methodsFor!
 
 defaultModel
 	"Answer a default model to be assigned to the receiver when it
@@ -352,20 +352,20 @@ resource_Default_view
 	DO NOT EDIT OR RECATEGORIZE THIS METHOD.
 
 	If you wish to modify this resource evaluate:
-	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Default_view)
+	Tools.ViewComposer openOn: (UI.ResourceIdentifier class: self selector: #resource_Default_view)
 	"
 
-	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.ContainerView) 34 15 nil nil 34 2 8 1409351680 131073 416 nil nil nil 5 265030 4 ##(Smalltalk.Menu) nil true 34 11 984134 2 ##(Smalltalk.CommandMenuItem) 1 1180998 4 ##(Smalltalk.CommandDescription) #browseHierarchy 8 '&Browse <1s>' 1 1 263494 3 ##(Smalltalk.Icon) nil true 1572870 ##(Smalltalk.ImageRelativeFileLocator) 8 'ClassBrowserShell.ico' 2032142 ##(Smalltalk.STBExternalResourceLibraryProxy) 8 'dolphindr7.dll' nil nil nil 530 1 562 #browseReferences 8 'Browse &References' 1 1 nil nil nil 983366 1 ##(Smalltalk.DividerMenuItem) 4097 530 1 562 #editResource 8 '&Edit' 9349 1 610 nil true 656 8 'ViewComposer.ico' 704 nil nil 530 1 562 #showResource 8 '&Show' 1 1 nil nil nil 530 1 562 #newView 8 '&New...' 1 1 nil nil nil 786 4097 530 1 562 #deleteResource 8 '&Delete...' 1 1 610 nil true 656 8 'EditClear.ico' 704 nil nil 786 4097 530 1 562 #resourcePackage 8 '&Package...' 1 1 nil nil nil 530 1 562 #categoryResource 8 'Categories...' 1 1 nil nil nil 8 '&View' nil 134217729 nil nil nil nil nil nil nil 416 1180166 ##(Smalltalk.ProportionalLayout) 170 176 34 4 410 ##(Smalltalk.ListView) 34 45 nil 416 34 2 8 1140854861 1025 1280 590662 2 ##(Smalltalk.ListModel) 138 144 8 #() nil 1310726 ##(Smalltalk.IdentitySearchPolicy) 327686 ##(Smalltalk.Color) #default nil 13 nil nil nil 1280 nil 8 1883852064 ##(Smalltalk.BasicListAbstract) ##(Smalltalk.IconicListAbstract) 1049926 1 ##(Smalltalk.IconImageManager) nil nil nil nil nil nil 138 144 34 1 920646 5 ##(Smalltalk.ListViewColumn) 8 'View Name' 561 #left nil 459270 ##(Smalltalk.Message) #<= 8 #() nil nil 1280 ##(Smalltalk.IconicListAbstract) 3 nil nil #report 1392 nil 133221 nil 1 nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil 983302 ##(Smalltalk.MessageSequence) 138 144 34 2 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 328198 ##(Smalltalk.Point) 1 1 1762 561 463 1280 1714 #text: 34 1 8 'View Name' 1280 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 24 1 0 0 231 0 0 0] 8 #() 1762 193 193 nil 35 524806 ##(Smalltalk.Fraction) 7 11 410 ##(Smalltalk.ContainerView) 34 15 nil 416 34 2 8 1140850688 393217 1968 nil nil nil 5 nil nil nil 1968 788230 ##(Smalltalk.BorderLayout) 1 1 410 ##(Smalltalk.StaticText) 34 16 nil 1968 34 2 8 1140850944 1 2064 nil nil nil 5 nil nil nil 2064 nil 8 1883797456 852486 ##(Smalltalk.NullConverter) nil nil nil 1650 138 144 34 2 1714 #createAt:extent: 34 2 1762 11 11 1762 537 39 2064 1714 #text: 34 1 8 ' Preview' 2064 1858 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 5 0 0 0 5 0 0 0 17 1 0 0 24 0 0 0] 8 #() 1920 nil 27 nil nil nil 410 ##(Smalltalk.ImageView) 34 21 nil 1968 34 2 8 1140850944 262209 2384 721990 2 ##(Smalltalk.ValueHolder) nil nil 1376774 ##(Smalltalk.PluggableSearchPolicy) 1602 #= 8 #() 1602 #hash 8 #() nil 1442 #applicationWorkspace nil 5 nil nil nil 2384 nil nil 2146 nil nil nil nil #scaleBestFit 1 590342 ##(Smalltalk.Rectangle) 1762 21 21 1762 21 21 nil 1650 138 144 34 1 1714 #createAt:extent: 34 2 1762 11 49 1762 537 247 2384 1858 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 5 0 0 0 24 0 0 0 17 1 0 0 147 0 0 0] 8 #() 1920 nil 27 170 192 34 2 2384 8 'preview' 2610 1762 11 11 1762 11 11 1650 138 144 34 1 1714 #createAt:extent: 34 2 1762 1 473 1762 561 309 1968 1858 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 236 0 0 0 24 1 0 0 134 1 0 0] 34 2 2064 2384 1920 nil 27 1938 5 11 true 170 192 34 2 1280 8 'resources' nil 1650 138 144 34 2 1714 #createAt:extent: 34 2 1762 7039 21 1762 561 781 416 1714 #contextMenu: 34 1 496 416 1858 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 191 13 0 0 10 0 0 0 215 14 0 0 144 1 0 0] 34 3 1280 410 ##(Smalltalk.Splitter) 34 12 nil 416 34 2 8 1140850688 1 3344 nil nil nil 517 nil nil nil 1510470 1 ##(Smalltalk.DraggableViewInteractor) 3344 nil 1 #left nil nil nil 1762 1 1 1762 9 9 nil 3440 nil 1650 138 144 34 1 1714 #createAt:extent: 34 2 1762 1 463 1762 561 11 3344 1858 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 231 0 0 0 24 1 0 0 236 0 0 0] 8 #() 1920 nil 27 1968 1920 nil 27 )!
+	^#(#'!!STL' 4 985166 10 ##(UI.STBViewProxy) ##(UI.ContainerView) 34 15 nil nil 34 2 8 1409351680 131073 416 nil nil nil 5 461638 4 ##(UI.Menu) nil true 34 11 1180742 2 ##(UI.CommandMenuItem) 1 1377606 4 ##(UI.CommandDescription) #browseHierarchy 8 '&Browse <1s>' 1 1 853318 3 ##(Graphics.Icon) nil true 2031622 ##(Kernel.ImageRelativeFileLocator) 8 'ClassBrowserShell.ico' 2490894 ##(Kernel.STBExternalResourceLibraryProxy) 8 'dolphindr7.dll' nil nil nil 530 1 562 #browseReferences 8 'Browse &References' 1 1 nil nil nil 1179974 1 ##(UI.DividerMenuItem) 4097 530 1 562 #editResource 8 '&Edit' 9349 1 610 nil true 656 8 'ViewComposer.ico' 704 nil nil 530 1 562 #showResource 8 '&Show' 1 1 nil nil nil 530 1 562 #newView 8 '&New...' 1 1 nil nil nil 786 4097 530 1 562 #deleteResource 8 '&Delete...' 1 1 610 nil true 656 8 'EditClear.ico' 704 nil nil 786 4097 530 1 562 #resourcePackage 8 '&Package...' 1 1 nil nil nil 530 1 562 #categoryResource 8 'Categories...' 1 1 nil nil nil 8 '&View' nil 134217729 nil nil nil nil nil nil nil 416 1376774 ##(UI.ProportionalLayout) 170 176 34 4 410 ##(UI.ListView) 34 45 nil 416 34 2 8 1140854861 1025 1280 787270 2 ##(UI.ListModel) 138 144 8 #() nil 1769478 ##(Kernel.IdentitySearchPolicy) 917510 ##(Graphics.Color) #default nil 13 nil nil nil 1280 nil 8 1801282304 ##(UI.BasicListAbstract) ##(UI.IconicListAbstract) 1639750 1 ##(Graphics.IconImageManager) nil nil nil nil nil nil 138 144 34 1 1117254 5 ##(UI.ListViewColumn) 8 'View Name' 561 #left nil 786950 ##(Core.Message) #<= 8 #() nil nil 1280 ##(UI.IconicListAbstract) 3 nil nil #report 8 #() nil 133221 nil 1 nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil 1310982 ##(Core.MessageSequence) 138 144 34 2 1049350 ##(Core.MessageSend) #createAt:extent: 34 2 918022 ##(Graphics.Point) 1 1 1778 561 463 1280 1730 #text: 34 1 8 'View Name' 1280 1179910 ##(OS.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 24 1 0 0 231 0 0 0] 8 #() 1778 193 193 nil 35 852486 ##(Core.Fraction) 7 11 410 ##(UI.ContainerView) 34 15 nil 416 34 2 8 1140850688 393217 1984 nil nil nil 5 nil nil nil 1984 984838 ##(UI.BorderLayout) 1 1 410 ##(UI.StaticText) 34 16 nil 1984 34 2 8 1140850944 1 2080 nil nil nil 5 nil nil nil 2080 nil 8 1801195232 1049094 ##(UI.NullConverter) nil nil nil 1666 138 144 34 2 1730 #createAt:extent: 34 2 1778 11 11 1778 537 39 2080 1730 #text: 34 1 8 ' Preview' 2080 1874 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 5 0 0 0 5 0 0 0 17 1 0 0 24 0 0 0] 8 #() 1936 nil 27 nil nil nil 410 ##(UI.ImageView) 34 21 nil 1984 34 2 8 1140850944 262209 2400 918598 2 ##(UI.ValueHolder) nil nil 1704454 ##(Core.PluggableSearchPolicy) 1602 #= 8 #() 1602 #hash 8 #() nil 1442 #applicationWorkspace nil 5 nil nil nil 2400 nil nil 2162 nil nil nil nil #scaleBestFit 1 1180166 ##(Graphics.Rectangle) 1778 21 21 1778 21 21 nil 1666 138 144 34 1 1730 #createAt:extent: 34 2 1778 11 49 1778 537 247 2400 1874 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 5 0 0 0 24 0 0 0 17 1 0 0 147 0 0 0] 8 #() 1936 nil 27 170 192 34 2 2400 8 'preview' 2626 1778 11 11 1778 11 11 1666 138 144 34 1 1730 #createAt:extent: 34 2 1778 1 473 1778 561 309 1984 1874 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 236 0 0 0 24 1 0 0 134 1 0 0] 34 2 2080 2400 1936 nil 27 1954 5 11 true 170 192 34 2 1280 8 'resources' nil 1666 138 144 34 2 1730 #createAt:extent: 34 2 1778 6143 21 1778 561 781 416 1730 #contextMenu: 34 1 496 416 1874 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 23 13 0 0 144 1 0 0] 34 3 1280 410 ##(UI.Splitter) 34 12 nil 416 34 2 8 1140850688 1 3360 nil nil nil 517 nil nil nil 1707078 1 ##(UI.DraggableViewInteractor) 3360 nil 1 #left nil nil nil 1778 1 1 1778 9 9 nil 3456 nil 1666 138 144 34 1 1730 #createAt:extent: 34 2 1778 1 463 1778 561 11 3360 1874 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 231 0 0 0 24 1 0 0 236 0 0 0] 8 #() 1936 nil 27 1984 1936 nil 27 )!
 
 resource_Package_view
 	"Answer the literal data from which the 'Package view' resource can be reconstituted.
 	DO NOT EDIT OR RECATEGORIZE THIS METHOD.
 
 	If you wish to modify this resource evaluate:
-	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Package_view)
+	Tools.ViewComposer openOn: (UI.ResourceIdentifier class: self selector: #resource_Package_view)
 	"
 
-	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.ContainerView) 34 15 nil nil 34 2 8 1409351680 131073 416 nil nil nil 5 nil nil nil 416 1180166 ##(Smalltalk.ProportionalLayout) 170 176 34 4 410 ##(Smalltalk.ContainerView) 34 15 nil 416 34 2 8 1140850688 393217 544 nil nil nil 5 nil nil nil 544 788230 ##(Smalltalk.BorderLayout) 1 1 410 ##(Smalltalk.StaticText) 34 16 nil 544 34 2 8 1140850944 1 640 nil nil nil 5 nil nil nil 640 nil 8 1883797456 852486 ##(Smalltalk.NullConverter) nil nil nil 983302 ##(Smalltalk.MessageSequence) 138 144 34 2 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 328198 ##(Smalltalk.Point) 1 1 866 393 39 640 818 #text: 34 1 8 '   Preview' 640 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 196 0 0 0 19 0 0 0] 8 #() 866 193 193 nil 27 nil nil nil 410 ##(Smalltalk.ImageView) 34 21 nil 544 34 2 8 1140850944 262209 1040 721990 2 ##(Smalltalk.ValueHolder) nil nil 1376774 ##(Smalltalk.PluggableSearchPolicy) 459270 ##(Smalltalk.Message) #= 8 #() 1170 #hash 8 #() nil 327686 ##(Smalltalk.Color) #applicationWorkspace nil 5 nil nil nil 1040 nil nil 722 nil nil nil nil #scaleBestFit 1 590342 ##(Smalltalk.Rectangle) 866 21 21 866 21 21 nil 754 138 144 34 1 818 #createAt:extent: 34 2 866 1 39 866 393 609 1040 962 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 19 0 0 0 196 0 0 0 67 1 0 0] 8 #() 1024 nil 27 170 192 34 2 1040 8 'preview' nil 754 138 144 34 1 818 #createAt:extent: 34 2 866 785 1 866 397 651 544 962 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 136 1 0 0 0 0 0 0 78 2 0 0 69 1 0 0] 34 2 640 1040 1024 nil 27 524806 ##(Smalltalk.Fraction) 105 155 410 ##(Smalltalk.ListView) 34 45 nil 416 34 2 8 1140854857 1025 1760 590662 2 ##(Smalltalk.ListModel) 138 144 8 #() nil 1310726 ##(Smalltalk.IdentitySearchPolicy) 1250 #default nil 13 nil nil nil 1760 nil 8 1883852064 ##(Smalltalk.BasicListAbstract) ##(Smalltalk.IconicListAbstract) 1049926 1 ##(Smalltalk.IconImageManager) nil nil nil nil nil nil 138 144 34 2 920646 5 ##(Smalltalk.ListViewColumn) 8 'View Name' 389 #left nil 1170 #<= 8 #() nil nil 1760 ##(Smalltalk.IconicListAbstract) 3 nil nil 2018 8 'Package' 387 #left ##(Smalltalk.BasicListAbstract) 787814 3 ##(Smalltalk.BlockClosure) 0 nil 1180966 ##(Smalltalk.CompiledExpression) 2 1 ##(Smalltalk.UndefinedObject) 8 'doIt' 8 '[:a :b | a name < b name]' 8 #[30 105 17 158 18 158 128 106] #name 2144 7 513 nil 1170 #owningPackage 8 #() nil 1760 nil 3 nil nil #report 1872 nil 133221 nil 1 nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil 754 138 144 34 2 818 #createAt:extent: 34 2 866 1 1 866 775 651 1760 818 #text: 34 1 8 'View Name' 1760 962 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 131 1 0 0 69 1 0 0] 8 #() 1024 nil 35 1730 205 155 false 170 192 34 2 1760 8 'resources' nil 754 138 144 34 1 818 #createAt:extent: 34 2 866 7039 21 866 1181 651 416 962 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 191 13 0 0 10 0 0 0 13 16 0 0 79 1 0 0] 34 3 1760 410 ##(Smalltalk.Splitter) 34 12 nil 416 34 2 8 1140850688 1 2704 nil nil nil 517 nil nil nil 1510470 1 ##(Smalltalk.DraggableViewInteractor) 2704 nil 1 #left nil nil nil 866 1 1 866 9 9 nil 2800 nil 754 138 144 34 1 818 #createAt:extent: 34 2 866 775 1 866 11 651 2704 962 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 131 1 0 0 0 0 0 0 136 1 0 0 69 1 0 0] 8 #() 1024 nil 27 544 1024 nil 27 )!
+	^#(#'!!STL' 4 985166 10 ##(UI.STBViewProxy) ##(UI.ContainerView) 34 15 nil nil 34 2 8 1409351680 131073 416 nil nil nil 5 nil nil nil 416 1376774 ##(UI.ProportionalLayout) 170 176 34 4 410 ##(UI.ListView) 34 45 nil 416 34 2 8 1140854857 1025 544 787270 2 ##(UI.ListModel) 138 144 8 #() nil 1769478 ##(Kernel.IdentitySearchPolicy) 917510 ##(Graphics.Color) #default nil 13 nil nil nil 544 nil 8 1801282304 ##(UI.BasicListAbstract) ##(UI.IconicListAbstract) 1639750 1 ##(Graphics.IconImageManager) nil nil nil nil nil nil 138 144 34 2 1117254 5 ##(UI.ListViewColumn) 8 'View Name' 389 #left nil 786950 ##(Core.Message) #<= 8 #() nil nil 544 ##(UI.IconicListAbstract) 3 nil nil 818 8 'Package' 387 #left ##(UI.BasicListAbstract) 1246566 3 ##(Kernel.BlockClosure) 0 nil 1639718 ##(Kernel.CompiledExpression) 2 1 ##(Core.UndefinedObject) 8 'doIt' 8 '[:a :b | a name < b name]' 8 #[30 105 17 158 18 158 128 106] #name 960 7 513 nil 866 #owningPackage 8 #() nil 544 nil 3 nil nil #report 8 #() nil 133221 nil 1 nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil 1310982 ##(Core.MessageSequence) 138 144 34 2 1049350 ##(Core.MessageSend) #createAt:extent: 34 2 918022 ##(Graphics.Point) 1 1 1218 775 651 544 1170 #text: 34 1 8 'View Name' 544 1179910 ##(OS.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 131 1 0 0 69 1 0 0] 8 #() 1218 193 193 nil 35 852486 ##(Core.Fraction) 205 155 410 ##(UI.ContainerView) 34 15 nil 416 34 2 8 1140850688 393217 1424 nil nil nil 5 nil nil nil 1424 984838 ##(UI.BorderLayout) 1 1 410 ##(UI.StaticText) 34 16 nil 1424 34 2 8 1140850944 1 1520 nil nil nil 5 nil nil nil 1520 nil 8 1801195232 1049094 ##(UI.NullConverter) nil nil nil 1106 138 144 34 2 1170 #createAt:extent: 34 2 1218 1 1 1218 393 39 1520 1170 #text: 34 1 8 '   Preview' 1520 1314 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 196 0 0 0 19 0 0 0] 8 #() 1376 nil 27 nil nil nil 410 ##(UI.ImageView) 34 21 nil 1424 34 2 8 1140850944 262209 1840 918598 2 ##(UI.ValueHolder) nil nil 1704454 ##(Core.PluggableSearchPolicy) 866 #= 8 #() 866 #hash 8 #() nil 706 #applicationWorkspace nil 5 nil nil nil 1840 nil nil 1602 nil nil nil nil #scaleBestFit 1 1180166 ##(Graphics.Rectangle) 1218 21 21 1218 21 21 nil 1106 138 144 34 1 1170 #createAt:extent: 34 2 1218 1 39 1218 393 609 1840 1314 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 19 0 0 0 196 0 0 0 67 1 0 0] 8 #() 1376 nil 27 170 192 34 2 1840 8 'preview' nil 1106 138 144 34 1 1170 #createAt:extent: 34 2 1218 785 1 1218 397 651 1424 1314 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 136 1 0 0 0 0 0 0 78 2 0 0 69 1 0 0] 34 2 1520 1840 1376 nil 27 1394 105 155 false 170 192 34 2 544 8 'resources' nil 1106 138 144 34 1 1170 #createAt:extent: 34 2 1218 6143 21 1218 1181 651 416 1314 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 77 14 0 0 79 1 0 0] 34 3 544 410 ##(UI.Splitter) 34 12 nil 416 34 2 8 1140850688 1 2720 nil nil nil 517 nil nil nil 1707078 1 ##(UI.DraggableViewInteractor) 2720 nil 1 #left nil nil nil 1218 1 1 1218 9 9 nil 2816 nil 1106 138 144 34 1 1170 #createAt:extent: 34 2 1218 775 1 1218 11 651 2720 1314 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 131 1 0 0 0 0 0 0 136 1 0 0 69 1 0 0] 8 #() 1376 nil 27 1424 1376 nil 27 )!
 
 showResourcesReferencingView: aResourceIdentifier
 	| browser |
@@ -373,9 +373,9 @@ showResourcesReferencingView: aResourceIdentifier
 	browser showResourcesReferencingView: aResourceIdentifier.
 	browser topShell caption: ('Resources referencing <1p>' expandMacrosWith: aResourceIdentifier).
 	^browser! !
-!ResourceListPresenter class categoriesFor: #defaultModel!models!public! !
-!ResourceListPresenter class categoriesFor: #icon!constants!public! !
-!ResourceListPresenter class categoriesFor: #resource_Default_view!public!resources-views! !
-!ResourceListPresenter class categoriesFor: #resource_Package_view!public!resources-views! !
-!ResourceListPresenter class categoriesFor: #showResourcesReferencingView:!instance creation!public! !
+!Tools.ResourceListPresenter class categoriesFor: #defaultModel!models!public! !
+!Tools.ResourceListPresenter class categoriesFor: #icon!constants!public! !
+!Tools.ResourceListPresenter class categoriesFor: #resource_Default_view!public!resources-views! !
+!Tools.ResourceListPresenter class categoriesFor: #resource_Package_view!public!resources-views! !
+!Tools.ResourceListPresenter class categoriesFor: #showResourcesReferencingView:!instance creation!public! !
 

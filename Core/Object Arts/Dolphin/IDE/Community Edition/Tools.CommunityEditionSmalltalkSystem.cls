@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-SmalltalkSystem subclass: #CommunityEditionSmalltalkSystem
+Tools.SmalltalkSystem subclass: #'Tools.CommunityEditionSmalltalkSystem'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-CommunityEditionSmalltalkSystem guid: (GUID fromString: '{fe94a239-c422-4a02-a575-5e7923ce1d63}')!
-CommunityEditionSmalltalkSystem comment: ''!
-!CommunityEditionSmalltalkSystem categoriesForClass!MVP-Models! !
-!CommunityEditionSmalltalkSystem methodsFor!
+Tools.CommunityEditionSmalltalkSystem guid: (Core.GUID fromString: '{fe94a239-c422-4a02-a575-5e7923ce1d63}')!
+Tools.CommunityEditionSmalltalkSystem comment: ''!
+!Tools.CommunityEditionSmalltalkSystem categoriesForClass!MVP-Models! !
+!Tools.CommunityEditionSmalltalkSystem methodsFor!
 
 initializeSystemFolder
 	super initializeSystemFolder.
@@ -23,9 +23,9 @@ initializeSystemFolder
 					description: 'User Preferences'
 					openBlock: [:folder :item | self inspectSystemOptions]
 					helpId: 10580)! !
-!CommunityEditionSmalltalkSystem categoriesFor: #initializeSystemFolder!initializing!private! !
+!Tools.CommunityEditionSmalltalkSystem categoriesFor: #initializeSystemFolder!initializing!private! !
 
-!CommunityEditionSmalltalkSystem class methodsFor!
+!Tools.CommunityEditionSmalltalkSystem class methodsFor!
 
 initialize
 	"Private - Initialize the receiver on load (take over as the development system model)."
@@ -48,8 +48,8 @@ uninstallCurrent
 			[(self superclass basicNew)
 				initializeFrom: Current;
 				become: Current]! !
-!CommunityEditionSmalltalkSystem class categoriesFor: #initialize!initializing!private! !
-!CommunityEditionSmalltalkSystem class categoriesFor: #installCurrent!initializing!private! !
-!CommunityEditionSmalltalkSystem class categoriesFor: #uninitialize!class hierarchy-removing!private! !
-!CommunityEditionSmalltalkSystem class categoriesFor: #uninstallCurrent!class hierarchy-removing!private! !
+!Tools.CommunityEditionSmalltalkSystem class categoriesFor: #initialize!initializing!private! !
+!Tools.CommunityEditionSmalltalkSystem class categoriesFor: #installCurrent!initializing!private! !
+!Tools.CommunityEditionSmalltalkSystem class categoriesFor: #uninitialize!class hierarchy-removing!private! !
+!Tools.CommunityEditionSmalltalkSystem class categoriesFor: #uninstallCurrent!class hierarchy-removing!private! !
 

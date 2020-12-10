@@ -115,6 +115,7 @@ package setClassNames: #(
 	#{Kernel.Tests.ClassBuilderTest}
 	#{Kernel.Tests.ClassBuilderTestClasses}
 	#{Kernel.Tests.CommandLineTest}
+	#{Kernel.Tests.CompiledMethodTest}
 	#{Kernel.Tests.DefaultSortAlgorithmTest}
 	#{Kernel.Tests.EqualitySearchPolicyTest}
 	#{Kernel.Tests.EventMessageSendTest}
@@ -139,6 +140,7 @@ package setClassNames: #(
 	#{Kernel.Tests.STBTest}
 	#{Kernel.Tests.SystemNamespaceTest}
 	#{Kernel.Tests.VariableBindingTest}
+	#{Kernel.Tests.VMTest}
 	#{OS.Tests}
 	#{OS.Tests.DiskVolumeInformationTest}
 	#{OS.Tests.FILETIMETest}
@@ -150,13 +152,13 @@ package setClassNames: #(
 ).
 
 package setMethodNames: #(
-	#(#{Smalltalk.SmalltalkSystem} #baselinedSlowTests)
-	#(#{Smalltalk.SmalltalkSystem} #regressionTestsLogFilename)
-	#(#{Smalltalk.SmalltalkSystem} #regressionTestSuite)
-	#(#{Smalltalk.SmalltalkSystem} #runRegressionTests)
-	#(#{Smalltalk.SmalltalkSystem} #runRegressionTests:logTo:verbose:)
-	#(#{Smalltalk.SmalltalkSystem} #setTestAttributes:id:name:duration:tests:failures:errors:skipped:)
-	#(#{Smalltalk.SmalltalkSystem} #writeJunitTestLog:result:)
+	#(#{Tools.SmalltalkSystem} #baselinedSlowTests)
+	#(#{Tools.SmalltalkSystem} #regressionTestsLogFilename)
+	#(#{Tools.SmalltalkSystem} #regressionTestSuite)
+	#(#{Tools.SmalltalkSystem} #runRegressionTests)
+	#(#{Tools.SmalltalkSystem} #runRegressionTests:logTo:verbose:)
+	#(#{Tools.SmalltalkSystem} #setTestAttributes:id:name:duration:tests:failures:errors:skipped:)
+	#(#{Tools.SmalltalkSystem} #writeJunitTestLog:result:)
 ).
 
 package setVariableNames: #(
@@ -311,6 +313,12 @@ Core.Tests.DolphinTest subclass: #'Core.Tests.ClassDescriptionTest'
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Core.Tests.DolphinTest subclass: #'Core.Tests.CollectionTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Core.Tests.DolphinTest subclass: #'Kernel.Tests.CompiledMethodTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -578,6 +586,12 @@ Core.Tests.DolphinTest subclass: #'Core.Tests.UndefinedObjectTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Core.Tests.DolphinTest subclass: #'Kernel.Tests.VMTest'
+	instanceVariableNames: 'expiryHandler'
+	classVariableNames: ''
+	imports: #(#{OS.CRTConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Kernel.Tests.AbstractBindingReferenceTest subclass: #'Kernel.Tests.BindingReferenceTest'
@@ -1050,7 +1064,7 @@ Smalltalk.DolphinTest := Core.Tests.DolphinTest!
 
 "Loose Methods"!
 
-!SmalltalkSystem methodsFor!
+!Tools.SmalltalkSystem methodsFor!
 
 baselinedSlowTests
 	| laggards |
@@ -1121,7 +1135,7 @@ setTestAttributes: suitesNode id: idInteger name: suiteName duration: aDuration 
 writeJunitTestLog: aTestSuite result: aTestResult
 	| doc suitesNode currentId currentClass suiteNode classTests classErrors classFailures classSkipped classElapsed caseAttribs suiteName testsInteger errorsInteger failuresInteger skippedInteger duration |
 	suiteName := aTestSuite name ?? 'RegressionTests'.
-	doc := IXMLDOMDocument3 new.
+	doc := Smalltalk.IXMLDOMDocument3 new.
 	suitesNode := doc addElement: 'testsuites'.
 	duration := aTestResult duration.
 	testsInteger := aTestResult runCount.
@@ -1224,13 +1238,13 @@ writeJunitTestLog: aTestSuite result: aTestResult
 				stem: suiteName
 				extension: 'xml').
 	doc free! !
-!SmalltalkSystem categoriesFor: #baselinedSlowTests!accessing!public! !
-!SmalltalkSystem categoriesFor: #regressionTestsLogFilename!public!tests! !
-!SmalltalkSystem categoriesFor: #regressionTestSuite!private!tests! !
-!SmalltalkSystem categoriesFor: #runRegressionTests!public!tests! !
-!SmalltalkSystem categoriesFor: #runRegressionTests:logTo:verbose:!public!tests! !
-!SmalltalkSystem categoriesFor: #setTestAttributes:id:name:duration:tests:failures:errors:skipped:!helpers!private! !
-!SmalltalkSystem categoriesFor: #writeJunitTestLog:result:!helpers!private! !
+!Tools.SmalltalkSystem categoriesFor: #baselinedSlowTests!accessing!public! !
+!Tools.SmalltalkSystem categoriesFor: #regressionTestsLogFilename!public!tests! !
+!Tools.SmalltalkSystem categoriesFor: #regressionTestSuite!private!tests! !
+!Tools.SmalltalkSystem categoriesFor: #runRegressionTests!public!tests! !
+!Tools.SmalltalkSystem categoriesFor: #runRegressionTests:logTo:verbose:!public!tests! !
+!Tools.SmalltalkSystem categoriesFor: #setTestAttributes:id:name:duration:tests:failures:errors:skipped:!helpers!private! !
+!Tools.SmalltalkSystem categoriesFor: #writeJunitTestLog:result:!helpers!private! !
 
 "End of package definition"!
 

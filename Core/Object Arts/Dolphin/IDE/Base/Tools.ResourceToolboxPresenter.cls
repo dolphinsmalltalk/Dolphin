@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ListPresenter subclass: #ResourceToolboxPresenter
+UI.ListPresenter subclass: #'Tools.ResourceToolboxPresenter'
 	instanceVariableNames: 'categoriesPresenter resourcesPresenter iconMap'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ResourceToolboxPresenter guid: (GUID fromString: '{9b3e71d1-8684-48c9-b045-890f2cd430e6}')!
-ResourceToolboxPresenter comment: ''!
-!ResourceToolboxPresenter categoriesForClass!MVP-Resources-IDE Tools! !
-!ResourceToolboxPresenter methodsFor!
+Tools.ResourceToolboxPresenter guid: (Core.GUID fromString: '{9b3e71d1-8684-48c9-b045-890f2cd430e6}')!
+Tools.ResourceToolboxPresenter comment: ''!
+!Tools.ResourceToolboxPresenter categoriesForClass!MVP-Resources-IDE Tools! !
+!Tools.ResourceToolboxPresenter methodsFor!
 
 add: aResourceIdentifier toCategory: aString 
 	(ClassCategory name: self resourceCategoryPrefix , aString) 
@@ -59,12 +59,12 @@ createComponents
 	"Private - Create the presenters contained by the receiver"
 
 	super createComponents.
-	categoriesPresenter := self 
+	categoriesPresenter := self
 				add: ListPresenter new
 				name: 'categories'
 				helpId: 10848.
 	categoriesPresenter model searchPolicy: SearchPolicy equality.
-	resourcesPresenter := self 
+	resourcesPresenter := self
 				add: ResourceListPresenter new
 				name: 'resources'
 				helpId: 10849!
@@ -247,43 +247,43 @@ systemModel
 	"Private - Answer the development system model."
 
 	^Smalltalk developmentSystem! !
-!ResourceToolboxPresenter categoriesFor: #add:toCategory:!operations!private! !
-!ResourceToolboxPresenter categoriesFor: #addResourceIdentifierFor:!helpers!private! !
-!ResourceToolboxPresenter categoriesFor: #caption!accessing!public! !
-!ResourceToolboxPresenter categoriesFor: #categoriesPresenter!accessing!private! !
-!ResourceToolboxPresenter categoriesFor: #categorizeResource!commands!public! !
-!ResourceToolboxPresenter categoriesFor: #configureColumns!helpers!private! !
-!ResourceToolboxPresenter categoriesFor: #createComponents!initializing!private! !
-!ResourceToolboxPresenter categoriesFor: #createSchematicWiring!initializing!private! !
-!ResourceToolboxPresenter categoriesFor: #imageForCategory:!helpers!private! !
-!ResourceToolboxPresenter categoriesFor: #initialize!initializing!private! !
-!ResourceToolboxPresenter categoriesFor: #localResourceCategoriesOf:!helpers!private! !
-!ResourceToolboxPresenter categoriesFor: #move:toCategory:!operations!private! !
-!ResourceToolboxPresenter categoriesFor: #onCategorySelected!private! !
-!ResourceToolboxPresenter categoriesFor: #onDragOverCategory:!private! !
-!ResourceToolboxPresenter categoriesFor: #onDropOverCategory:!private! !
-!ResourceToolboxPresenter categoriesFor: #onMethodAdded:!private! !
-!ResourceToolboxPresenter categoriesFor: #onMethodRemoved:!private! !
-!ResourceToolboxPresenter categoriesFor: #onViewOpened!private! !
-!ResourceToolboxPresenter categoriesFor: #queryCommand:!commands!private! !
-!ResourceToolboxPresenter categoriesFor: #refresh!private!updating! !
-!ResourceToolboxPresenter categoriesFor: #refreshResourceList!private!updating! !
-!ResourceToolboxPresenter categoriesFor: #remove:fromCategory:!operations!private! !
-!ResourceToolboxPresenter categoriesFor: #removeResourceIdentifierFor:!helpers!private! !
-!ResourceToolboxPresenter categoriesFor: #resetForItem:!event handling!private! !
-!ResourceToolboxPresenter categoriesFor: #resetIconMap!helpers!private! !
-!ResourceToolboxPresenter categoriesFor: #resourceCategories!accessing!public! !
-!ResourceToolboxPresenter categoriesFor: #resourceCategoriesOf:!helpers!private! !
-!ResourceToolboxPresenter categoriesFor: #resourceCategoryPrefix!constants!private! !
-!ResourceToolboxPresenter categoriesFor: #resourceClasses!accessing!public! !
-!ResourceToolboxPresenter categoriesFor: #resourceClassesWithCategories:!helpers!public! !
-!ResourceToolboxPresenter categoriesFor: #resourceIdentifiers!accessing!public! !
-!ResourceToolboxPresenter categoriesFor: #resourcesPresenter!accessing!private! !
-!ResourceToolboxPresenter categoriesFor: #selectableItems!accessing!private! !
-!ResourceToolboxPresenter categoriesFor: #selectCategory:!accessing!public! !
-!ResourceToolboxPresenter categoriesFor: #systemModel!commands!private! !
+!Tools.ResourceToolboxPresenter categoriesFor: #add:toCategory:!operations!private! !
+!Tools.ResourceToolboxPresenter categoriesFor: #addResourceIdentifierFor:!helpers!private! !
+!Tools.ResourceToolboxPresenter categoriesFor: #caption!accessing!public! !
+!Tools.ResourceToolboxPresenter categoriesFor: #categoriesPresenter!accessing!private! !
+!Tools.ResourceToolboxPresenter categoriesFor: #categorizeResource!commands!public! !
+!Tools.ResourceToolboxPresenter categoriesFor: #configureColumns!helpers!private! !
+!Tools.ResourceToolboxPresenter categoriesFor: #createComponents!initializing!private! !
+!Tools.ResourceToolboxPresenter categoriesFor: #createSchematicWiring!initializing!private! !
+!Tools.ResourceToolboxPresenter categoriesFor: #imageForCategory:!helpers!private! !
+!Tools.ResourceToolboxPresenter categoriesFor: #initialize!initializing!private! !
+!Tools.ResourceToolboxPresenter categoriesFor: #localResourceCategoriesOf:!helpers!private! !
+!Tools.ResourceToolboxPresenter categoriesFor: #move:toCategory:!operations!private! !
+!Tools.ResourceToolboxPresenter categoriesFor: #onCategorySelected!private! !
+!Tools.ResourceToolboxPresenter categoriesFor: #onDragOverCategory:!private! !
+!Tools.ResourceToolboxPresenter categoriesFor: #onDropOverCategory:!private! !
+!Tools.ResourceToolboxPresenter categoriesFor: #onMethodAdded:!private! !
+!Tools.ResourceToolboxPresenter categoriesFor: #onMethodRemoved:!private! !
+!Tools.ResourceToolboxPresenter categoriesFor: #onViewOpened!private! !
+!Tools.ResourceToolboxPresenter categoriesFor: #queryCommand:!commands!private! !
+!Tools.ResourceToolboxPresenter categoriesFor: #refresh!private!updating! !
+!Tools.ResourceToolboxPresenter categoriesFor: #refreshResourceList!private!updating! !
+!Tools.ResourceToolboxPresenter categoriesFor: #remove:fromCategory:!operations!private! !
+!Tools.ResourceToolboxPresenter categoriesFor: #removeResourceIdentifierFor:!helpers!private! !
+!Tools.ResourceToolboxPresenter categoriesFor: #resetForItem:!event handling!private! !
+!Tools.ResourceToolboxPresenter categoriesFor: #resetIconMap!helpers!private! !
+!Tools.ResourceToolboxPresenter categoriesFor: #resourceCategories!accessing!public! !
+!Tools.ResourceToolboxPresenter categoriesFor: #resourceCategoriesOf:!helpers!private! !
+!Tools.ResourceToolboxPresenter categoriesFor: #resourceCategoryPrefix!constants!private! !
+!Tools.ResourceToolboxPresenter categoriesFor: #resourceClasses!accessing!public! !
+!Tools.ResourceToolboxPresenter categoriesFor: #resourceClassesWithCategories:!helpers!public! !
+!Tools.ResourceToolboxPresenter categoriesFor: #resourceIdentifiers!accessing!public! !
+!Tools.ResourceToolboxPresenter categoriesFor: #resourcesPresenter!accessing!private! !
+!Tools.ResourceToolboxPresenter categoriesFor: #selectableItems!accessing!private! !
+!Tools.ResourceToolboxPresenter categoriesFor: #selectCategory:!accessing!public! !
+!Tools.ResourceToolboxPresenter categoriesFor: #systemModel!commands!private! !
 
-!ResourceToolboxPresenter class methodsFor!
+!Tools.ResourceToolboxPresenter class methodsFor!
 
 defaultModel
 	"Private - Answer a default model to be assigned to the receiver when it
@@ -301,15 +301,15 @@ resource_Default_view
 	DO NOT EDIT OR RECATEGORIZE THIS METHOD.
 
 	If you wish to modify this resource evaluate:
-	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Default_view)
+	Tools.ViewComposer openOn: (UI.ResourceIdentifier class: self selector: #resource_Default_view)
 	"
 
-	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.ContainerView) 34 15 nil nil 34 2 8 1409286144 131073 416 nil nil nil 1029 nil nil nil 416 788230 ##(Smalltalk.BorderLayout) 1 1 nil nil nil 410 ##(Smalltalk.ListView) 34 45 nil 416 34 2 8 1140937032 1089 512 590662 2 ##(Smalltalk.ListModel) 138 144 8 #() nil 1310726 ##(Smalltalk.IdentitySearchPolicy) nil nil 21 nil nil nil 512 nil 8 1883852064 459270 ##(Smalltalk.Message) #displayString 8 #() 787814 3 ##(Smalltalk.BlockClosure) 0 nil 918822 ##(Smalltalk.CompiledMethod) 2 3 ##(Smalltalk.IconicListAbstract) #defaultGetImageBlock 579403299 8 #[30 105 226 0 106] #iconImageIndex 752 7 257 nil 1049926 1 ##(Smalltalk.IconImageManager) nil nil nil 328198 ##(Smalltalk.Point) 65 65 nil nil 138 144 34 1 920646 5 ##(Smalltalk.ListViewColumn) 8 'Column 1' 201 #left 690 #displayString 8 #() 690 #<= 976 nil nil 512 nil 3 nil nil #largeIcons 624 850 145 145 2081 nil 1 nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil 983302 ##(Smalltalk.MessageSequence) 138 144 34 2 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 850 1 1 850 441 921 512 1090 #text: 34 1 8 'Column 1' 512 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 220 0 0 0 204 1 0 0] 8 #() 850 193 193 nil 35 410 ##(Smalltalk.ReferenceView) 34 14 nil 416 34 2 8 1140850688 393217 1296 nil nil nil 5 nil nil nil 1296 1180230 1 ##(Smalltalk.ResourceIdentifier) ##(Smalltalk.ResourceListPresenter) #resource_Default_view nil 1026 138 144 34 1 1090 #createAt:extent: 34 2 850 441 1 850 561 921 1296 1218 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 220 0 0 0 0 0 0 0 244 1 0 0 204 1 0 0] 624 1280 nil 27 170 192 34 4 1296 8 'resources' 512 8 'categories' nil 1026 138 144 34 1 1090 #createAt:extent: 34 2 850 7039 21 850 1001 921 416 1218 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 191 13 0 0 10 0 0 0 179 15 0 0 214 1 0 0] 34 2 512 1296 1280 nil 27 )!
+	^#(#'!!STL' 4 985166 10 ##(UI.STBViewProxy) ##(UI.ContainerView) 34 15 nil nil 34 2 8 1409286144 131073 416 nil nil nil 1029 nil nil nil 416 984838 ##(UI.BorderLayout) 1 1 nil nil nil 410 ##(UI.ListView) 34 45 nil 416 34 2 8 1140937032 1089 512 787270 2 ##(UI.ListModel) 138 144 8 #() nil 1769478 ##(Kernel.IdentitySearchPolicy) nil nil 21 nil nil nil 512 nil 8 1801282304 786950 ##(Core.Message) #displayString 8 #() 1246566 3 ##(Kernel.BlockClosure) 0 nil 1377574 ##(Kernel.CompiledMethod) 2 3 ##(UI.IconicListAbstract) #defaultGetImageBlock 579403299 8 #[30 105 226 0 106] #iconImageIndex 752 7 257 nil 1639750 1 ##(Graphics.IconImageManager) nil nil nil 918022 ##(Graphics.Point) 65 65 nil nil 138 144 34 1 1117254 5 ##(UI.ListViewColumn) 8 'Column 1' 201 #left 690 #displayString 8 #() 690 #<= 976 nil nil 512 nil 3 nil nil #largeIcons 8 #() 850 145 145 2081 nil 1 nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil 1310982 ##(Core.MessageSequence) 138 144 34 2 1049350 ##(Core.MessageSend) #createAt:extent: 34 2 850 1 1 850 441 921 512 1106 #text: 34 1 8 'Column 1' 512 1179910 ##(OS.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 220 0 0 0 204 1 0 0] 8 #() 850 193 193 nil 35 410 ##(UI.ReferenceView) 34 14 nil 416 34 2 8 1140850688 393217 1312 nil nil nil 5 nil nil nil 1312 1376838 1 ##(UI.ResourceIdentifier) ##(Tools.ResourceListPresenter) #resource_Default_view nil 1042 138 144 34 1 1106 #createAt:extent: 34 2 850 441 1 850 561 921 1312 1234 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 220 0 0 0 0 0 0 0 244 1 0 0 204 1 0 0] 624 1296 nil 27 170 192 34 4 512 8 'categories' 1312 8 'resources' nil 1042 138 144 34 1 1106 #createAt:extent: 34 2 850 6143 21 850 1001 921 416 1234 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 243 13 0 0 214 1 0 0] 34 2 512 1312 1296 nil 27 )!
 
 resourceManager
 	^SessionManager current resourceManager! !
-!ResourceToolboxPresenter class categoriesFor: #defaultModel!models!private! !
-!ResourceToolboxPresenter class categoriesFor: #icon!constants!public! !
-!ResourceToolboxPresenter class categoriesFor: #resource_Default_view!public!resources-views! !
-!ResourceToolboxPresenter class categoriesFor: #resourceManager!constants!public! !
+!Tools.ResourceToolboxPresenter class categoriesFor: #defaultModel!models!private! !
+!Tools.ResourceToolboxPresenter class categoriesFor: #icon!constants!public! !
+!Tools.ResourceToolboxPresenter class categoriesFor: #resource_Default_view!public!resources-views! !
+!Tools.ResourceToolboxPresenter class categoriesFor: #resourceManager!constants!public! !
 

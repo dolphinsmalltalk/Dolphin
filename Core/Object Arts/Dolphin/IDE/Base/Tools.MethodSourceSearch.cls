@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-MethodSearch subclass: #MethodSourceSearch
+Tools.MethodSearch subclass: #'Tools.MethodSourceSearch'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-MethodSourceSearch guid: (GUID fromString: '{6f058c96-c1bf-4fb5-a2c3-b82976045e6a}')!
-MethodSourceSearch comment: ''!
-!MethodSourceSearch categoriesForClass!Kernel-Objects! !
-!MethodSourceSearch methodsFor!
+Tools.MethodSourceSearch guid: (Core.GUID fromString: '{6f058c96-c1bf-4fb5-a2c3-b82976045e6a}')!
+Tools.MethodSourceSearch comment: ''!
+!Tools.MethodSourceSearch categoriesForClass!Kernel-Objects! !
+!Tools.MethodSourceSearch methodsFor!
 
 methodFilter: aMonadicValuable 
 	^[:each | each getSource ifNil: [false] ifNotNil: [:src | aMonadicValuable value: src]]!
@@ -52,9 +52,9 @@ wildcardReferenceFilter
 	match := self wildcardMatchPattern.
 	ignoreCase := findDetails isCaseSensitive not.
 	^[:text | match match: text ignoreCase: ignoreCase]! !
-!MethodSourceSearch categoriesFor: #methodFilter:!helpers!private! !
-!MethodSourceSearch categoriesFor: #methodReferenceFilter!helpers!private! !
-!MethodSourceSearch categoriesFor: #regexpReferenceFilter!helpers!private! !
-!MethodSourceSearch categoriesFor: #simpleReferenceFilter!helpers!private! !
-!MethodSourceSearch categoriesFor: #wildcardReferenceFilter!helpers!private! !
+!Tools.MethodSourceSearch categoriesFor: #methodFilter:!helpers!private! !
+!Tools.MethodSourceSearch categoriesFor: #methodReferenceFilter!helpers!private! !
+!Tools.MethodSourceSearch categoriesFor: #regexpReferenceFilter!helpers!private! !
+!Tools.MethodSourceSearch categoriesFor: #simpleReferenceFilter!helpers!private! !
+!Tools.MethodSourceSearch categoriesFor: #wildcardReferenceFilter!helpers!private! !
 

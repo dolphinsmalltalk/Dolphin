@@ -32,11 +32,10 @@ addScopesForMethod: aCompiledMethod
 	self addScope: (BrowserEnvironment new
 				forClasses: {aCompiledMethod methodClass. aCompiledMethod methodClass class})
 		name: 'Class'.
-	self addScope: (BrowserEnvironment new forClass: self methodClass
-				selectors: {aCompiledMethod selector})
+	self
+		addScope: (BrowserEnvironment new forClass: self methodClass selectors: {aCompiledMethod selector})
 		name: 'Method'.
-	self addScope: (BrowserEnvironment new
-				forClassHierarchyFrom: aCompiledMethod methodClass)
+	self addScope: (BrowserEnvironment new forClassHierarchyFrom: aCompiledMethod methodClass)
 		name: 'Hierarchy'.
 	package := aCompiledMethod owningPackage.
 	package isNil ifTrue: [^self].

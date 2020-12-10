@@ -1,21 +1,21 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-VirtualMethodCategory subclass: #UnclassifiedMethodsCategory
+Tools.VirtualMethodCategory subclass: #'Tools.UnclassifiedMethodsCategory'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-UnclassifiedMethodsCategory guid: (GUID fromString: '{87b4c508-026e-11d3-9fd7-00a0cc3e4a32}')!
-UnclassifiedMethodsCategory comment: 'ReferencesCategory is a virtual method categories class which dynamically determines its membership to be those methods which are categorized only in other virtual categories, i.e. those methods which have not been specifically allocated a category.
+Tools.UnclassifiedMethodsCategory guid: (Core.GUID fromString: '{87b4c508-026e-11d3-9fd7-00a0cc3e4a32}')!
+Tools.UnclassifiedMethodsCategory comment: 'ReferencesCategory is a virtual method categories class which dynamically determines its membership to be those methods which are categorized only in other virtual categories, i.e. those methods which have not been specifically allocated a category.
 
 Instance Variables:
 	None
 
 Class Variables:
 	None'!
-!UnclassifiedMethodsCategory categoriesForClass!System-Support! !
-!UnclassifiedMethodsCategory methodsFor!
+!Tools.UnclassifiedMethodsCategory categoriesForClass!System-Support! !
+!Tools.UnclassifiedMethodsCategory methodsFor!
 
 acceptsAdditions
 	"Answer whether methods can be added to the receiver.
@@ -58,12 +58,12 @@ methodsInBehavior: aBehavior do: aMonadicValuable
 		ifFalse: 
 			[(dict keys difference: classified) 
 				do: [:each | aMonadicValuable value: (aBehavior compiledMethodAt: each)]]! !
-!UnclassifiedMethodsCategory categoriesFor: #acceptsAdditions!public!testing! !
-!UnclassifiedMethodsCategory categoriesFor: #addMethodSilently:!adding!private! !
-!UnclassifiedMethodsCategory categoriesFor: #includesMethod:!public!testing! !
-!UnclassifiedMethodsCategory categoriesFor: #methodsInBehavior:do:!enumerating!public! !
+!Tools.UnclassifiedMethodsCategory categoriesFor: #acceptsAdditions!public!testing! !
+!Tools.UnclassifiedMethodsCategory categoriesFor: #addMethodSilently:!adding!private! !
+!Tools.UnclassifiedMethodsCategory categoriesFor: #includesMethod:!public!testing! !
+!Tools.UnclassifiedMethodsCategory categoriesFor: #methodsInBehavior:do:!enumerating!public! !
 
-!UnclassifiedMethodsCategory class methodsFor!
+!Tools.UnclassifiedMethodsCategory class methodsFor!
 
 initialize
 	"Private - Initialize the receiver.
@@ -81,6 +81,6 @@ uninitialize
 	"Private - Uninitialize the receiver as it is about to be removed from the system."
 
 	self removePseud: self unclassifiedName! !
-!UnclassifiedMethodsCategory class categoriesFor: #initialize!initializing!private! !
-!UnclassifiedMethodsCategory class categoriesFor: #uninitialize!class hierarchy-removing!private! !
+!Tools.UnclassifiedMethodsCategory class categoriesFor: #initialize!initializing!private! !
+!Tools.UnclassifiedMethodsCategory class categoriesFor: #uninitialize!class hierarchy-removing!private! !
 

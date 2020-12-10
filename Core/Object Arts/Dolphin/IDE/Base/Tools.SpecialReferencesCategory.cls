@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ReferencesCategory subclass: #SpecialReferencesCategory
+Tools.ReferencesCategory subclass: #'Tools.SpecialReferencesCategory'
 	instanceVariableNames: 'index'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-SpecialReferencesCategory guid: (GUID fromString: '{e9a4ed98-09ed-452e-9fe6-e59ae77dcfde}')!
-SpecialReferencesCategory comment: ''!
-!SpecialReferencesCategory categoriesForClass!System-Support! !
-!SpecialReferencesCategory methodsFor!
+Tools.SpecialReferencesCategory guid: (Core.GUID fromString: '{e9a4ed98-09ed-452e-9fe6-e59ae77dcfde}')!
+Tools.SpecialReferencesCategory comment: ''!
+!Tools.SpecialReferencesCategory categoriesForClass!System-Support! !
+!Tools.SpecialReferencesCategory methodsFor!
 
 includesMethod: aCompiledMethod 
 	"Answer whether the receiver includes the <CompiledMethod> argument.
@@ -22,6 +22,6 @@ index: anInteger
 	"Private - Set the special selector index."
 
 	index := anInteger! !
-!SpecialReferencesCategory categoriesFor: #includesMethod:!public!testing! !
-!SpecialReferencesCategory categoriesFor: #index:!accessing!private! !
+!Tools.SpecialReferencesCategory categoriesFor: #includesMethod:!public!testing! !
+!Tools.SpecialReferencesCategory categoriesFor: #index:!accessing!private! !
 

@@ -1,16 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ClassBrowserPlugin subclass: #SmalllintPlugin
+Tools.ClassBrowserPlugin subclass: #'Tools.SmalllintPlugin'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #(#{Refactory.Browser private})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-SmalllintPlugin guid: (GUID fromString: '{321fcbfb-84d2-40ae-bf8f-f4b816723a1b}')!
-SmalllintPlugin isAbstract: true!
-SmalllintPlugin comment: ''!
-!SmalllintPlugin categoriesForClass!MVP-Presenters! !
-!SmalllintPlugin methodsFor!
+Tools.SmalllintPlugin guid: (Core.GUID fromString: '{321fcbfb-84d2-40ae-bf8f-f4b816723a1b}')!
+Tools.SmalllintPlugin isNonInstantiable: true!
+Tools.SmalllintPlugin comment: ''!
+!Tools.SmalllintPlugin categoriesForClass!MVP-Presenters! !
+!Tools.SmalllintPlugin methodsFor!
 
 browserEnvironment
 	^self browser selectionEnvironment!
@@ -57,8 +57,8 @@ runRule: aLintRule
 			progress showModal]
 		ifFalse: [Cursor wait showWhile: [checker run]]!
 
-runTransformation: aTransformationRule 
-	(self runRule: aTransformationRule) isNil 
+runTransformation: aTransformationRule
+	(self runRule: aTransformationRule) isNil
 		ifFalse: [RewriteChangesBrowser showOn: aTransformationRule changes]!
 
 status: text 
@@ -68,11 +68,11 @@ systemModel
 	"Private - Answer the development system model."
 
 	^Smalltalk developmentSystem! !
-!SmalllintPlugin categoriesFor: #browserEnvironment!operations!private! !
-!SmalllintPlugin categoriesFor: #checkerForRule:environment:!helpers!private! !
-!SmalllintPlugin categoriesFor: #methodFilterForRule:inEnvironment:!helpers!private! !
-!SmalllintPlugin categoriesFor: #runRule:!helpers!private! !
-!SmalllintPlugin categoriesFor: #runTransformation:!helpers!private! !
-!SmalllintPlugin categoriesFor: #status:!operations!private! !
-!SmalllintPlugin categoriesFor: #systemModel!commands!private! !
+!Tools.SmalllintPlugin categoriesFor: #browserEnvironment!operations!private! !
+!Tools.SmalllintPlugin categoriesFor: #checkerForRule:environment:!helpers!private! !
+!Tools.SmalllintPlugin categoriesFor: #methodFilterForRule:inEnvironment:!helpers!private! !
+!Tools.SmalllintPlugin categoriesFor: #runRule:!helpers!private! !
+!Tools.SmalllintPlugin categoriesFor: #runTransformation:!helpers!private! !
+!Tools.SmalllintPlugin categoriesFor: #status:!operations!private! !
+!Tools.SmalllintPlugin categoriesFor: #systemModel!commands!private! !
 

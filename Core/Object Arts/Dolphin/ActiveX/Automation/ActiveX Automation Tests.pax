@@ -15,10 +15,13 @@ package setClassNames: #(
 package setMethodNames: #(
 	#(#{External.Tests.AddressTest} #testBSTRFromAddress)
 	#(#{External.Tests.FunctionDescriptorTest} #testComPtrs)
+	#(#{External.Tests.StructureTest} #testExtendedErrorInfo)
 ).
 
 package setPrerequisites: #(
 	'ActiveX Automation'
+	'..\Components\Scripting\ActiveX Scripting'
+	'..\ActiveX Tests'
 	'..\..\..\Samples\ActiveX\Random\COM Random Stream'
 	'..\..\Base\Dolphin'
 	'..\..\Base\Dolphin Base Tests'
@@ -80,6 +83,25 @@ testComPtrs
 		valueType: ExtCallArgSTRUCT
 		refType: ExtCallArgCOMPTR! !
 !External.Tests.FunctionDescriptorTest categoriesFor: #testComPtrs!public!unit tests! !
+
+!External.Tests.StructureTest methodsFor!
+
+testExtendedErrorInfo
+	"Tests that extended error info is accessed on failed external API calls through COM interfaces if the target object supports it."
+
+	| script errorInfo error |
+	script := Smalltalk.IScriptControl new.
+	self assert: script supportsErrorInfo.
+	errorInfo := [script eval: '1+2'] on: HRESULTError do: [:ex | ex errorInfo].
+	self assert: errorInfo notNil.
+	self assert: errorInfo source equals: 'ScriptControl'.
+	self assert: errorInfo guid equals: Smalltalk.IScriptControl guid.
+	script free.
+	error := [script eval: '1+2'] on: HRESULTError do: [:ex | ex].
+	self assertIsNil: error errorInfo.
+	self assert: error hresult
+		equals: (HRESULT fromPrimitiveFailureCode: _PrimitiveFailureCode.InvalidPointer)! !
+!External.Tests.StructureTest categoriesFor: #testExtendedErrorInfo!public!unit tests! !
 
 "End of package definition"!
 

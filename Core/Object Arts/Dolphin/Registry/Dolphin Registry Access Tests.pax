@@ -1,0 +1,30 @@
+﻿| package |
+package := Package name: 'Dolphin Registry Access Tests'.
+package paxVersion: 2.1;
+	basicComment: ''.
+
+
+package setClassNames: #(
+	#{OS.Tests.RegKeyTest}
+).
+
+package setPrerequisites: #(
+	'..\IDE\Base\Development System'
+	'..\Base\Dolphin'
+	'..\Base\Dolphin Base Tests'
+	'Dolphin Registry Access'
+).
+
+package!
+
+"Class Definitions"!
+
+Core.Tests.DolphinTest subclass: #'OS.Tests.RegKeyTest'
+	instanceVariableNames: 'testKey'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+"End of package definition"!
+

@@ -1,16 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-InspectorAbstract subclass: #AspectInspector
+Tools.InspectorAbstract subclass: #'Tools.AspectInspector'
 	instanceVariableNames: 'aspectTreePresenter'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: 'treeUpdateMode treeHasGridLines'
 	classConstants: {}!
-AspectInspector guid: (GUID fromString: '{3a705749-14d8-4cd1-9b4e-ccf02a0218de}')!
-AspectInspector isAbstract: true!
-AspectInspector comment: ''!
-!AspectInspector categoriesForClass!MVP-Presenters! !
-!AspectInspector methodsFor!
+Tools.AspectInspector guid: (Core.GUID fromString: '{3a705749-14d8-4cd1-9b4e-ccf02a0218de}')!
+Tools.AspectInspector isNonInstantiable: true!
+Tools.AspectInspector comment: ''!
+!Tools.AspectInspector categoriesForClass!MVP-Presenters! !
+!Tools.AspectInspector methodsFor!
 
 aspectAccessor
 	"Private - Answer the <InstVarAccesor> for the selected variable"
@@ -220,38 +220,38 @@ setAspectValue: anObject
 	instance variable name to anObject."
 
 	^self subclassResponsibility! !
-!AspectInspector categoriesFor: #aspectAccessor!accessing!private! !
-!AspectInspector categoriesFor: #aspectAccessor:!public! !
-!AspectInspector categoriesFor: #aspectTreePresenter!public! !
-!AspectInspector categoriesFor: #aspectValue!accessing!private! !
-!AspectInspector categoriesFor: #beLargeIcons!operations!public! !
-!AspectInspector categoriesFor: #beSmallIcons!operations!public! !
-!AspectInspector categoriesFor: #canNilAspect!operations!private! !
-!AspectInspector categoriesFor: #canSetAspect!operations!private! !
-!AspectInspector categoriesFor: #copyAspect!commands!public! !
-!AspectInspector categoriesFor: #copyOfAccessorValue:!accessing!private! !
-!AspectInspector categoriesFor: #createComponents!initializing!public! !
-!AspectInspector categoriesFor: #createSchematicWiring!initializing!public! !
-!AspectInspector categoriesFor: #expandBatchAccessor:!event handling!private! !
-!AspectInspector categoriesFor: #inspecteeSelection!accessing!private! !
-!AspectInspector categoriesFor: #inspectReferences!commands!public! !
-!AspectInspector categoriesFor: #model:!accessing!public! !
-!AspectInspector categoriesFor: #nilAspect!commands!public! !
-!AspectInspector categoriesFor: #onAspectSelected!event handling!private! !
-!AspectInspector categoriesFor: #onDragObjectRef:!event handling!private! !
-!AspectInspector categoriesFor: #onViewAvailable!event handling!public! !
-!AspectInspector categoriesFor: #onViewOpened!event handling!public! !
-!AspectInspector categoriesFor: #pasteAspect!commands!public! !
-!AspectInspector categoriesFor: #queryCommand:!commands!private! !
-!AspectInspector categoriesFor: #refresh!commands!public! !
-!AspectInspector categoriesFor: #setAspectValue:!accessing!private! !
+!Tools.AspectInspector categoriesFor: #aspectAccessor!accessing!private! !
+!Tools.AspectInspector categoriesFor: #aspectAccessor:!public! !
+!Tools.AspectInspector categoriesFor: #aspectTreePresenter!public! !
+!Tools.AspectInspector categoriesFor: #aspectValue!accessing!private! !
+!Tools.AspectInspector categoriesFor: #beLargeIcons!operations!public! !
+!Tools.AspectInspector categoriesFor: #beSmallIcons!operations!public! !
+!Tools.AspectInspector categoriesFor: #canNilAspect!operations!private! !
+!Tools.AspectInspector categoriesFor: #canSetAspect!operations!private! !
+!Tools.AspectInspector categoriesFor: #copyAspect!commands!public! !
+!Tools.AspectInspector categoriesFor: #copyOfAccessorValue:!accessing!private! !
+!Tools.AspectInspector categoriesFor: #createComponents!initializing!public! !
+!Tools.AspectInspector categoriesFor: #createSchematicWiring!initializing!public! !
+!Tools.AspectInspector categoriesFor: #expandBatchAccessor:!event handling!private! !
+!Tools.AspectInspector categoriesFor: #inspecteeSelection!accessing!private! !
+!Tools.AspectInspector categoriesFor: #inspectReferences!commands!public! !
+!Tools.AspectInspector categoriesFor: #model:!accessing!public! !
+!Tools.AspectInspector categoriesFor: #nilAspect!commands!public! !
+!Tools.AspectInspector categoriesFor: #onAspectSelected!event handling!private! !
+!Tools.AspectInspector categoriesFor: #onDragObjectRef:!event handling!private! !
+!Tools.AspectInspector categoriesFor: #onViewAvailable!event handling!public! !
+!Tools.AspectInspector categoriesFor: #onViewOpened!event handling!public! !
+!Tools.AspectInspector categoriesFor: #pasteAspect!commands!public! !
+!Tools.AspectInspector categoriesFor: #queryCommand:!commands!private! !
+!Tools.AspectInspector categoriesFor: #refresh!commands!public! !
+!Tools.AspectInspector categoriesFor: #setAspectValue:!accessing!private! !
 
-!AspectInspector class methodsFor!
+!Tools.AspectInspector class methodsFor!
 
 publishedAspects
 	"Answer a <LookupTable> of the <Aspect>s published by the receiver."
 
-	^(super publishedAspects)
+	^super publishedAspects
 		add: (Aspect choice: #treeUpdateMode from: TreeView updateModes);
 		add: (Aspect boolean: #treeHasGridLines);
 		yourself!
@@ -281,10 +281,10 @@ treeUpdateMode
 
 treeUpdateMode: aSymbol
 	treeUpdateMode := aSymbol! !
-!AspectInspector class categoriesFor: #publishedAspects!public! !
-!AspectInspector class categoriesFor: #registerAsToolWith:!operations!public! !
-!AspectInspector class categoriesFor: #treeHasGridLines!accessing!private! !
-!AspectInspector class categoriesFor: #treeHasGridLines:!accessing!private! !
-!AspectInspector class categoriesFor: #treeUpdateMode!accessing!private! !
-!AspectInspector class categoriesFor: #treeUpdateMode:!accessing!private! !
+!Tools.AspectInspector class categoriesFor: #publishedAspects!public! !
+!Tools.AspectInspector class categoriesFor: #registerAsToolWith:!operations!public! !
+!Tools.AspectInspector class categoriesFor: #treeHasGridLines!accessing!private! !
+!Tools.AspectInspector class categoriesFor: #treeHasGridLines:!accessing!private! !
+!Tools.AspectInspector class categoriesFor: #treeUpdateMode!accessing!private! !
+!Tools.AspectInspector class categoriesFor: #treeUpdateMode:!accessing!private! !
 

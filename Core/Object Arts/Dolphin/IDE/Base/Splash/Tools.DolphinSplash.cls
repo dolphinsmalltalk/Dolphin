@@ -1,19 +1,19 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Splash subclass: #DolphinSplash
+UI.Splash subclass: #'Tools.DolphinSplash'
 	instanceVariableNames: 'objectsInside'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-DolphinSplash guid: (GUID fromString: '{87b4c724-026e-11d3-9fd7-00a0cc3e4a32}')!
-DolphinSplash comment: 'DolphinSplash is the Dolphin development system''s spash screen. It extends <Splash> to use a titleless dialog frame and to overlap the Dolphin version information and legal copyright notice onto the splash screen graphic.
+Tools.DolphinSplash guid: (Core.GUID fromString: '{87b4c724-026e-11d3-9fd7-00a0cc3e4a32}')!
+Tools.DolphinSplash comment: 'DolphinSplash is the Dolphin development system''s spash screen. It extends <Splash> to use a titleless dialog frame and to overlap the Dolphin version information and legal copyright notice onto the splash screen graphic.
 
 To display the splash screen, evaluate:
 
 self new show'!
-!DolphinSplash categoriesForClass!MVP-Views! !
-!DolphinSplash methodsFor!
+!Tools.DolphinSplash categoriesForClass!MVP-Views! !
+!Tools.DolphinSplash methodsFor!
 
 animationDuration
 	"Private - Answer the duration (in ms) of the splash animation"
@@ -68,17 +68,17 @@ showWindow
 	self class canDisplay 
 		ifTrue: [super showWindow]
 		ifFalse: [Canvas forDesktop colorDepth < 16 ifTrue: [self give256ColorDisplayWarning]]! !
-!DolphinSplash categoriesFor: #animationDuration!constants!private! !
-!DolphinSplash categoriesFor: #defaultExtent!accessing!public! !
-!DolphinSplash categoriesFor: #defaultSplashDelay!constants!public! !
-!DolphinSplash categoriesFor: #defaultWindowStyle!constants!private! !
-!DolphinSplash categoriesFor: #give256ColorDisplayWarning!operations!private! !
-!DolphinSplash categoriesFor: #objectsInside!accessing!private! !
-!DolphinSplash categoriesFor: #onCreated:!event handling!private! !
-!DolphinSplash categoriesFor: #onPaintRequired:!event handling!private! !
-!DolphinSplash categoriesFor: #showWindow!operations!private! !
+!Tools.DolphinSplash categoriesFor: #animationDuration!constants!private! !
+!Tools.DolphinSplash categoriesFor: #defaultExtent!accessing!public! !
+!Tools.DolphinSplash categoriesFor: #defaultSplashDelay!constants!public! !
+!Tools.DolphinSplash categoriesFor: #defaultWindowStyle!constants!private! !
+!Tools.DolphinSplash categoriesFor: #give256ColorDisplayWarning!operations!private! !
+!Tools.DolphinSplash categoriesFor: #objectsInside!accessing!private! !
+!Tools.DolphinSplash categoriesFor: #onCreated:!event handling!private! !
+!Tools.DolphinSplash categoriesFor: #onPaintRequired:!event handling!private! !
+!Tools.DolphinSplash categoriesFor: #showWindow!operations!private! !
 
-!DolphinSplash class methodsFor!
+!Tools.DolphinSplash class methodsFor!
 
 canDisplay
 	"Answer true if an instance of the receiver can be correctly displayed"
@@ -89,7 +89,7 @@ canDisplay
 	| desktopCanvas |
 	desktopCanvas := Canvas forDesktop.
 	^(desktopCanvas colorDepth > 8 and: [desktopCanvas extent >= (800 @ 600)]) 
-		and: [SystemMetrics current supportsAlphaBlending]!
+		and: [OS.SystemMetrics current supportsAlphaBlending]!
 
 publishedAspects
 	"Answer a <LookupTable> of the <Aspect>s published by instances of the receiver."
@@ -101,10 +101,10 @@ publishedAspects
 splashPlayTheGame
 	^SeeingTheObjectsInside splashPlayTheGame!
 
-splashPlayTheGame: aBoolean 
+splashPlayTheGame: aBoolean
 	SeeingTheObjectsInside splashPlayTheGame: aBoolean! !
-!DolphinSplash class categoriesFor: #canDisplay!accessing!public! !
-!DolphinSplash class categoriesFor: #publishedAspects!public! !
-!DolphinSplash class categoriesFor: #splashPlayTheGame!accessing!public! !
-!DolphinSplash class categoriesFor: #splashPlayTheGame:!accessing!public! !
+!Tools.DolphinSplash class categoriesFor: #canDisplay!accessing!public! !
+!Tools.DolphinSplash class categoriesFor: #publishedAspects!public! !
+!Tools.DolphinSplash class categoriesFor: #splashPlayTheGame!accessing!public! !
+!Tools.DolphinSplash class categoriesFor: #splashPlayTheGame:!accessing!public! !
 

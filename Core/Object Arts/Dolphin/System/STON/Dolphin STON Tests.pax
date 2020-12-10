@@ -44,7 +44,6 @@ package setMethodNames: #(
 ).
 
 package setPrerequisites: #(
-	'..\..\IDE\Base\Development System'
 	'..\..\Base\Dolphin'
 	'..\..\Base\Dolphin Base Tests'
 	'..\..\Base\Dolphin Legacy Date & Time'
@@ -225,9 +224,7 @@ testProcessor
 
 testSearchPolicy
 	| objects |
-	objects := {SearchPolicy always.
-				SearchPolicy identity.
-				Smalltalk.CompiledMethodSearchPolicy current}.
+	objects := {SearchPolicy always. SearchPolicy identity. SearchPolicy method}.
 	self serializeAndMaterialize: objects!
 
 testSystemDictionary

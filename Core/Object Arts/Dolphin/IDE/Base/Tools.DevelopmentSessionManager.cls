@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-GUISessionManager subclass: #DevelopmentSessionManager
+UI.GUISessionManager subclass: #'Tools.DevelopmentSessionManager'
 	instanceVariableNames: 'imageStamp installationDirectory backupOnImageSave productDetails showSplashAtStartup'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-DevelopmentSessionManager guid: (GUID fromString: '{5902537a-8d40-49c3-94f3-2cd287656c38}')!
-DevelopmentSessionManager comment: ''!
-!DevelopmentSessionManager categoriesForClass!System-Support! !
-!DevelopmentSessionManager methodsFor!
+Tools.DevelopmentSessionManager guid: (Core.GUID fromString: '{5902537a-8d40-49c3-94f3-2cd287656c38}')!
+Tools.DevelopmentSessionManager comment: ''!
+!Tools.DevelopmentSessionManager categoriesForClass!System-Support! !
+!Tools.DevelopmentSessionManager methodsFor!
 
 advanceImageVersionMinor
 	"Advance the minor component of the images version number."
@@ -709,88 +709,88 @@ versionString
 	special := self productVersionSpecial.
 	special notEmpty ifTrue: [verString := verString , ' ' , special].
 	^'<1s> <2d>' expandMacrosWith: self applicationShortName with: verString! !
-!DevelopmentSessionManager categoriesFor: #advanceImageVersionMinor!operations-saving!public! !
-!DevelopmentSessionManager categoriesFor: #allowDuplicate!operations-startup!public! !
-!DevelopmentSessionManager categoriesFor: #appIdString!constants!public! !
-!DevelopmentSessionManager categoriesFor: #applicationName!constants!public! !
-!DevelopmentSessionManager categoriesFor: #applicationShortName!constants!public! !
-!DevelopmentSessionManager categoriesFor: #backupOnImageSave!accessing!public! !
-!DevelopmentSessionManager categoriesFor: #backupOnImageSave:!accessing!public! !
-!DevelopmentSessionManager categoriesFor: #bootInfo!patching!public! !
-!DevelopmentSessionManager categoriesFor: #bootInfo:!patching!public! !
-!DevelopmentSessionManager categoriesFor: #canPlaySounds!accessing!public! !
-!DevelopmentSessionManager categoriesFor: #closeAllHelp!operations!public! !
-!DevelopmentSessionManager categoriesFor: #commandLineParser!helpers!private! !
-!DevelopmentSessionManager categoriesFor: #free!public!realizing/unrealizing! !
-!DevelopmentSessionManager categoriesFor: #getInstallationDirectory!helpers!private! !
-!DevelopmentSessionManager categoriesFor: #imageStamp!accessing!public! !
-!DevelopmentSessionManager categoriesFor: #imageStamp:!accessing!private! !
-!DevelopmentSessionManager categoriesFor: #imageVersionMinor:!accessing!private! !
-!DevelopmentSessionManager categoriesFor: #initialize!public! !
-!DevelopmentSessionManager categoriesFor: #initializeFromSessionManager:!initializing!private! !
-!DevelopmentSessionManager categoriesFor: #installationDirectory!constants!public! !
-!DevelopmentSessionManager categoriesFor: #isBinaryLooseMethodInstallationAllowed!private!testing! !
-!DevelopmentSessionManager categoriesFor: #isDLL!private!testing! !
-!DevelopmentSessionManager categoriesFor: #isEmbedded!public!testing! !
-!DevelopmentSessionManager categoriesFor: #isOAD!accessing!private!product! !
-!DevelopmentSessionManager categoriesFor: #keepAlive!idling!operations-shutdown!public! !
-!DevelopmentSessionManager categoriesFor: #lastSerialNumberRegistryKeyFor:!accessing!private!product! !
-!DevelopmentSessionManager categoriesFor: #lastSerialNumberRegistryKeyPre61!accessing!private!product! !
-!DevelopmentSessionManager categoriesFor: #logComment:!operations-logging!public! !
-!DevelopmentSessionManager categoriesFor: #logError:!operations-logging!public! !
-!DevelopmentSessionManager categoriesFor: #mainShellClass!constants!public! !
-!DevelopmentSessionManager categoriesFor: #myDolphinUrl!private! !
-!DevelopmentSessionManager categoriesFor: #onExit!event handling!public! !
-!DevelopmentSessionManager categoriesFor: #onQueryEndSession:!event handling!public! !
-!DevelopmentSessionManager categoriesFor: #onQueryWindowsShutdown!event handling!public! !
-!DevelopmentSessionManager categoriesFor: #onUnhandledWarning:!event handling!public! !
-!DevelopmentSessionManager categoriesFor: #onUserBreak!event handling!private! !
-!DevelopmentSessionManager categoriesFor: #open:!operations-startup!private! !
-!DevelopmentSessionManager categoriesFor: #openFd:mode:!operations!private! !
-!DevelopmentSessionManager categoriesFor: #openPackage:!operations-startup!private! !
-!DevelopmentSessionManager categoriesFor: #openSources!operations-source files!private! !
-!DevelopmentSessionManager categoriesFor: #openWorkspace:!operations-startup!private! !
-!DevelopmentSessionManager categoriesFor: #openXmlFile:!operations-startup!private! !
-!DevelopmentSessionManager categoriesFor: #parseCmdLineFlags!operations-startup!private! !
-!DevelopmentSessionManager categoriesFor: #patchLevel!patching!public! !
-!DevelopmentSessionManager categoriesFor: #patchLevel:!patching!private! !
-!DevelopmentSessionManager categoriesFor: #playImageSaveSound!operations-sounds!private! !
-!DevelopmentSessionManager categoriesFor: #playStartupSound!operations-sounds!private! !
-!DevelopmentSessionManager categoriesFor: #popupHelpFile!constants!public! !
-!DevelopmentSessionManager categoriesFor: #preStart!operations-startup!private! !
-!DevelopmentSessionManager categoriesFor: #primaryStartup!operations-startup!private! !
-!DevelopmentSessionManager categoriesFor: #processCommandLine!helpers!private! !
-!DevelopmentSessionManager categoriesFor: #productDetails!accessing!private!product! !
-!DevelopmentSessionManager categoriesFor: #productDetails:!accessing!private!product! !
-!DevelopmentSessionManager categoriesFor: #productMajorVersion!accessing!product!public! !
-!DevelopmentSessionManager categoriesFor: #productRegistryKey!accessing!product!public! !
-!DevelopmentSessionManager categoriesFor: #productRegistryVersion!accessing!private!product! !
-!DevelopmentSessionManager categoriesFor: #productVersion!accessing!product!public! !
-!DevelopmentSessionManager categoriesFor: #productVersionSpecial!accessing!product!public! !
-!DevelopmentSessionManager categoriesFor: #registeredSerialNumber!accessing!private!product! !
-!DevelopmentSessionManager categoriesFor: #registeredSerialNumber:!accessing!private!product! !
-!DevelopmentSessionManager categoriesFor: #resetPatchLevel!patching!private! !
-!DevelopmentSessionManager categoriesFor: #resourcesLocatorForClass:!private! !
-!DevelopmentSessionManager categoriesFor: #retire!public! !
-!DevelopmentSessionManager categoriesFor: #saveImageDefault!operations-saving!private! !
-!DevelopmentSessionManager categoriesFor: #saveImageTo:!operations-saving!private! !
-!DevelopmentSessionManager categoriesFor: #saveSessionState!operations!public! !
-!DevelopmentSessionManager categoriesFor: #sentinelName!constants!public! !
-!DevelopmentSessionManager categoriesFor: #showSplash!operations!public! !
-!DevelopmentSessionManager categoriesFor: #shutdown!operations-shutdown!public! !
-!DevelopmentSessionManager categoriesFor: #snapshot!operations-saving!private! !
-!DevelopmentSessionManager categoriesFor: #snapshot:!operations-saving!public! !
-!DevelopmentSessionManager categoriesFor: #splashShellClass!constants!private! !
-!DevelopmentSessionManager categoriesFor: #splashShellClass:!constants!private! !
-!DevelopmentSessionManager categoriesFor: #splashShowAtStartup!accessing!public! !
-!DevelopmentSessionManager categoriesFor: #splashShowAtStartup:!accessing!public! !
-!DevelopmentSessionManager categoriesFor: #tertiaryStartup!operations-startup!public! !
-!DevelopmentSessionManager categoriesFor: #traceStream!accessing!private! !
-!DevelopmentSessionManager categoriesFor: #unhandledException:!exceptions!private! !
-!DevelopmentSessionManager categoriesFor: #versionInfo!accessing-version!public! !
-!DevelopmentSessionManager categoriesFor: #versionString!accessing!public! !
+!Tools.DevelopmentSessionManager categoriesFor: #advanceImageVersionMinor!operations-saving!public! !
+!Tools.DevelopmentSessionManager categoriesFor: #allowDuplicate!operations-startup!public! !
+!Tools.DevelopmentSessionManager categoriesFor: #appIdString!constants!public! !
+!Tools.DevelopmentSessionManager categoriesFor: #applicationName!constants!public! !
+!Tools.DevelopmentSessionManager categoriesFor: #applicationShortName!constants!public! !
+!Tools.DevelopmentSessionManager categoriesFor: #backupOnImageSave!accessing!public! !
+!Tools.DevelopmentSessionManager categoriesFor: #backupOnImageSave:!accessing!public! !
+!Tools.DevelopmentSessionManager categoriesFor: #bootInfo!patching!public! !
+!Tools.DevelopmentSessionManager categoriesFor: #bootInfo:!patching!public! !
+!Tools.DevelopmentSessionManager categoriesFor: #canPlaySounds!accessing!public! !
+!Tools.DevelopmentSessionManager categoriesFor: #closeAllHelp!operations!public! !
+!Tools.DevelopmentSessionManager categoriesFor: #commandLineParser!helpers!private! !
+!Tools.DevelopmentSessionManager categoriesFor: #free!public!realizing/unrealizing! !
+!Tools.DevelopmentSessionManager categoriesFor: #getInstallationDirectory!helpers!private! !
+!Tools.DevelopmentSessionManager categoriesFor: #imageStamp!accessing!public! !
+!Tools.DevelopmentSessionManager categoriesFor: #imageStamp:!accessing!private! !
+!Tools.DevelopmentSessionManager categoriesFor: #imageVersionMinor:!accessing!private! !
+!Tools.DevelopmentSessionManager categoriesFor: #initialize!public! !
+!Tools.DevelopmentSessionManager categoriesFor: #initializeFromSessionManager:!initializing!private! !
+!Tools.DevelopmentSessionManager categoriesFor: #installationDirectory!constants!public! !
+!Tools.DevelopmentSessionManager categoriesFor: #isBinaryLooseMethodInstallationAllowed!private!testing! !
+!Tools.DevelopmentSessionManager categoriesFor: #isDLL!private!testing! !
+!Tools.DevelopmentSessionManager categoriesFor: #isEmbedded!public!testing! !
+!Tools.DevelopmentSessionManager categoriesFor: #isOAD!accessing!private!product! !
+!Tools.DevelopmentSessionManager categoriesFor: #keepAlive!idling!operations-shutdown!public! !
+!Tools.DevelopmentSessionManager categoriesFor: #lastSerialNumberRegistryKeyFor:!accessing!private!product! !
+!Tools.DevelopmentSessionManager categoriesFor: #lastSerialNumberRegistryKeyPre61!accessing!private!product! !
+!Tools.DevelopmentSessionManager categoriesFor: #logComment:!operations-logging!public! !
+!Tools.DevelopmentSessionManager categoriesFor: #logError:!operations-logging!public! !
+!Tools.DevelopmentSessionManager categoriesFor: #mainShellClass!constants!public! !
+!Tools.DevelopmentSessionManager categoriesFor: #myDolphinUrl!private! !
+!Tools.DevelopmentSessionManager categoriesFor: #onExit!event handling!public! !
+!Tools.DevelopmentSessionManager categoriesFor: #onQueryEndSession:!event handling!public! !
+!Tools.DevelopmentSessionManager categoriesFor: #onQueryWindowsShutdown!event handling!public! !
+!Tools.DevelopmentSessionManager categoriesFor: #onUnhandledWarning:!event handling!public! !
+!Tools.DevelopmentSessionManager categoriesFor: #onUserBreak!event handling!private! !
+!Tools.DevelopmentSessionManager categoriesFor: #open:!operations-startup!private! !
+!Tools.DevelopmentSessionManager categoriesFor: #openFd:mode:!operations!private! !
+!Tools.DevelopmentSessionManager categoriesFor: #openPackage:!operations-startup!private! !
+!Tools.DevelopmentSessionManager categoriesFor: #openSources!operations-source files!private! !
+!Tools.DevelopmentSessionManager categoriesFor: #openWorkspace:!operations-startup!private! !
+!Tools.DevelopmentSessionManager categoriesFor: #openXmlFile:!operations-startup!private! !
+!Tools.DevelopmentSessionManager categoriesFor: #parseCmdLineFlags!operations-startup!private! !
+!Tools.DevelopmentSessionManager categoriesFor: #patchLevel!patching!public! !
+!Tools.DevelopmentSessionManager categoriesFor: #patchLevel:!patching!private! !
+!Tools.DevelopmentSessionManager categoriesFor: #playImageSaveSound!operations-sounds!private! !
+!Tools.DevelopmentSessionManager categoriesFor: #playStartupSound!operations-sounds!private! !
+!Tools.DevelopmentSessionManager categoriesFor: #popupHelpFile!constants!public! !
+!Tools.DevelopmentSessionManager categoriesFor: #preStart!operations-startup!private! !
+!Tools.DevelopmentSessionManager categoriesFor: #primaryStartup!operations-startup!private! !
+!Tools.DevelopmentSessionManager categoriesFor: #processCommandLine!helpers!private! !
+!Tools.DevelopmentSessionManager categoriesFor: #productDetails!accessing!private!product! !
+!Tools.DevelopmentSessionManager categoriesFor: #productDetails:!accessing!private!product! !
+!Tools.DevelopmentSessionManager categoriesFor: #productMajorVersion!accessing!product!public! !
+!Tools.DevelopmentSessionManager categoriesFor: #productRegistryKey!accessing!product!public! !
+!Tools.DevelopmentSessionManager categoriesFor: #productRegistryVersion!accessing!private!product! !
+!Tools.DevelopmentSessionManager categoriesFor: #productVersion!accessing!product!public! !
+!Tools.DevelopmentSessionManager categoriesFor: #productVersionSpecial!accessing!product!public! !
+!Tools.DevelopmentSessionManager categoriesFor: #registeredSerialNumber!accessing!private!product! !
+!Tools.DevelopmentSessionManager categoriesFor: #registeredSerialNumber:!accessing!private!product! !
+!Tools.DevelopmentSessionManager categoriesFor: #resetPatchLevel!patching!private! !
+!Tools.DevelopmentSessionManager categoriesFor: #resourcesLocatorForClass:!private! !
+!Tools.DevelopmentSessionManager categoriesFor: #retire!public! !
+!Tools.DevelopmentSessionManager categoriesFor: #saveImageDefault!operations-saving!private! !
+!Tools.DevelopmentSessionManager categoriesFor: #saveImageTo:!operations-saving!private! !
+!Tools.DevelopmentSessionManager categoriesFor: #saveSessionState!operations!public! !
+!Tools.DevelopmentSessionManager categoriesFor: #sentinelName!constants!public! !
+!Tools.DevelopmentSessionManager categoriesFor: #showSplash!operations!public! !
+!Tools.DevelopmentSessionManager categoriesFor: #shutdown!operations-shutdown!public! !
+!Tools.DevelopmentSessionManager categoriesFor: #snapshot!operations-saving!private! !
+!Tools.DevelopmentSessionManager categoriesFor: #snapshot:!operations-saving!public! !
+!Tools.DevelopmentSessionManager categoriesFor: #splashShellClass!constants!private! !
+!Tools.DevelopmentSessionManager categoriesFor: #splashShellClass:!constants!private! !
+!Tools.DevelopmentSessionManager categoriesFor: #splashShowAtStartup!accessing!public! !
+!Tools.DevelopmentSessionManager categoriesFor: #splashShowAtStartup:!accessing!public! !
+!Tools.DevelopmentSessionManager categoriesFor: #tertiaryStartup!operations-startup!public! !
+!Tools.DevelopmentSessionManager categoriesFor: #traceStream!accessing!private! !
+!Tools.DevelopmentSessionManager categoriesFor: #unhandledException:!exceptions!private! !
+!Tools.DevelopmentSessionManager categoriesFor: #versionInfo!accessing-version!public! !
+!Tools.DevelopmentSessionManager categoriesFor: #versionString!accessing!public! !
 
-!DevelopmentSessionManager class methodsFor!
+!Tools.DevelopmentSessionManager class methodsFor!
 
 icon
 	"Answer an icon for the receiver and its instances."
@@ -802,6 +802,6 @@ imageExtension
 	should be associated with this particular image."
 
 	^'img7'! !
-!DevelopmentSessionManager class categoriesFor: #icon!constants!public! !
-!DevelopmentSessionManager class categoriesFor: #imageExtension!constants!public! !
+!Tools.DevelopmentSessionManager class categoriesFor: #icon!constants!public! !
+!Tools.DevelopmentSessionManager class categoriesFor: #imageExtension!constants!public! !
 

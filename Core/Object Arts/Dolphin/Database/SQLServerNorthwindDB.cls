@@ -21,8 +21,7 @@ connectString
 
 createDatabase
 	| sql cmd process |
-	sql := (PackageRelativeFileLocator package: self class owningPackage)
-				localFileSpecFor: 'Northwind.sql'.
+	sql := self class owningPackage fileLocator localFileSpecFor: 'Northwind.sql'.
 	cmd := 'sqlcmd -S <1d> -U <2d> -P <3d> -i "<4d>"'
 				expandMacrosWith: self serverName
 				with: self uid

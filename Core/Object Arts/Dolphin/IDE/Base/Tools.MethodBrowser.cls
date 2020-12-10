@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-UI.ListPresenter subclass: #MethodBrowser
+UI.ListPresenter subclass: #'Tools.MethodBrowser'
 	instanceVariableNames: 'methodsPresenter sourcePresenter filter searchEnvironment refactoringTool versionModel'
 	classVariableNames: 'AdditionalAccelerators AutoFormat InfoTips WordWrap'
 	imports: #(#{Kernel.CompilerFlags})
 	classInstanceVariableNames: 'commandQueryHandlers'
 	classConstants: {}!
-MethodBrowser guid: (Core.GUID fromString: '{87b4c68d-026e-11d3-9fd7-00a0cc3e4a32}')!
-MethodBrowser comment: 'MethodBrowser is a <compositePresenter> used to display a <collection> of <CompiledMethod>s. The browser can be instantiated and then filled with methods using #methods: aspect, the value of which must be a <BrowserEnvironment>. The methods defined in the environment are enumerated and displayed in the browser list.
+Tools.MethodBrowser guid: (Core.GUID fromString: '{87b4c68d-026e-11d3-9fd7-00a0cc3e4a32}')!
+Tools.MethodBrowser comment: 'MethodBrowser is a <compositePresenter> used to display a <collection> of <CompiledMethod>s. The browser can be instantiated and then filled with methods using #methods: aspect, the value of which must be a <BrowserEnvironment>. The methods defined in the environment are enumerated and displayed in the browser list.
 
 Example:
 	MethodBrowser show methods: BrowserEnvironment new.
@@ -28,8 +28,8 @@ Class Variables:
 	InfoTips				<boolean> indicating whether method info tips (showing category information) should be displayed. If nil then configured by view.
 
 '!
-!MethodBrowser categoriesForClass!MVP-Presenters!MVP-Resources-IDE Tools! !
-!MethodBrowser methodsFor!
+!Tools.MethodBrowser categoriesForClass!MVP-Presenters!MVP-Resources-IDE Tools! !
+!Tools.MethodBrowser methodsFor!
 
 addMethods: aCollectionOfMethods toCategory: aMethodCategory 
 	aMethodCategory addMethods: aCollectionOfMethods.
@@ -94,7 +94,7 @@ browseDefinitionsMatching: aMethodSearch in: aBrowserEnvironment
 	self routeCommand: (CommandDescription
 				command: (Message selector: #browseMethodsInEnvironments: argument: definitions))!
 
-browseDefinitionsOfSelector: aSymbol in: aBrowserEnvironment 
+browseDefinitionsOfSelector: aSymbol in: aBrowserEnvironment
 	"Private - Opens a MethodBrowser on all the methods whose selectors match the specified
 	<readableString> pattern in the scope of the specified <BrowserEnvironment>."
 
@@ -241,7 +241,7 @@ browseReferencesToGlobal
 	(self systemModel promptForReferencesToGlobal: self selectedWord in: self searchEnvironment) 
 		ifNotNil: [:env | self browseMethodsIn: env]!
 
-browseReferencesToLiteral: anObject in: aBrowserEnvironment 
+browseReferencesToLiteral: anObject in: aBrowserEnvironment
 	"Private - Opens a MethodBrowser on all the methods that refer to aString from their literal frames
 	(aString is normally a symbolic selector), within the scope of the specified
 	<BrowserEnvironment>."
@@ -473,7 +473,7 @@ findNextMatch
 
 	sourcePresenter view basicFindNext!
 
-findSelector: aSelector 
+findSelector: aSelector
 	"Set the String to search for in the receivers source to be one that describes aSelector"
 
 	aSelector isNil ifTrue: [^self].
@@ -1070,134 +1070,134 @@ updateMethodVersion
 
 versionModel
 	^versionModel! !
-!MethodBrowser categoriesFor: #addMethods:toCategory:!commands!private! !
-!MethodBrowser categoriesFor: #addToCommandRoute:!commands!public! !
-!MethodBrowser categoriesFor: #applyOptions!operations!options!public! !
-!MethodBrowser categoriesFor: #browseCompilationFailures!browsing!commands!public! !
-!MethodBrowser categoriesFor: #browseCompilationIssues!browsing!commands!public! !
-!MethodBrowser categoriesFor: #browseContainingText!browsing!commands!public! !
-!MethodBrowser categoriesFor: #browseDefinitions!browsing!commands!public! !
-!MethodBrowser categoriesFor: #browseDefinitionsMatching:in:!browsing!private! !
-!MethodBrowser categoriesFor: #browseDefinitionsOfSelector:in:!browsing!private! !
-!MethodBrowser categoriesFor: #browseHierarchy!browsing!commands!public! !
-!MethodBrowser categoriesFor: #browseIt!browsing!commands!public! !
-!MethodBrowser categoriesFor: #browseItCommand!browsing!helpers!private! !
-!MethodBrowser categoriesFor: #browseMessage!commands!public! !
-!MethodBrowser categoriesFor: #browseMessageDefinitions!commands!public! !
-!MethodBrowser categoriesFor: #browseMessageDefinitions:in:!browsing!private! !
-!MethodBrowser categoriesFor: #browseMessageReferences!commands!public! !
-!MethodBrowser categoriesFor: #browseMessageReferences:in:!browsing!private! !
-!MethodBrowser categoriesFor: #browseMessagesIn:!browsing!private! !
-!MethodBrowser categoriesFor: #browseMessagesMatching:in:!browsing!private! !
-!MethodBrowser categoriesFor: #browseMethodClasses!browsing!commands!public! !
-!MethodBrowser categoriesFor: #browseMethodInheritanceChain!browsing!commands!public! !
-!MethodBrowser categoriesFor: #browseMethodPackages!browsing!commands!public! !
-!MethodBrowser categoriesFor: #browseMethodsIn:!browsing!private! !
-!MethodBrowser categoriesFor: #browseMethodsMatching:in:!browsing!private! !
-!MethodBrowser categoriesFor: #browsePackages!browsing!commands!public! !
-!MethodBrowser categoriesFor: #browseReferences!browsing!commands!public! !
-!MethodBrowser categoriesFor: #browseReferencesMatching:in:!browsing!private! !
-!MethodBrowser categoriesFor: #browseReferencesToGlobal!browsing!commands!public! !
-!MethodBrowser categoriesFor: #browseReferencesToLiteral:in:!browsing!private! !
-!MethodBrowser categoriesFor: #browserEnvironment!accessing!public! !
-!MethodBrowser categoriesFor: #browseSystem!browsing!commands!public! !
-!MethodBrowser categoriesFor: #browseVariableReferences:in:!browsing!private! !
-!MethodBrowser categoriesFor: #buildAddCategoryMenu:!menus!private! !
-!MethodBrowser categoriesFor: #buildParseTree!helpers!private! !
-!MethodBrowser categoriesFor: #buildRemoveCategoryMenu:!menus!private! !
-!MethodBrowser categoriesFor: #canSaveMethod!helpers!private!testing! !
-!MethodBrowser categoriesFor: #categorizeMethods!commands!public! !
-!MethodBrowser categoriesFor: #clearErrors!operations!public! !
-!MethodBrowser categoriesFor: #clearSelection!commands!public! !
-!MethodBrowser categoriesFor: #commandPolicy!accessing!public! !
-!MethodBrowser categoriesFor: #createComponents!initializing!public! !
-!MethodBrowser categoriesFor: #createSchematicWiring!initializing!public! !
-!MethodBrowser categoriesFor: #customDrawMethodClass:!helpers!private! !
-!MethodBrowser categoriesFor: #customDrawSelector:!helpers!private! !
-!MethodBrowser categoriesFor: #deleteItCommand!helpers!private! !
-!MethodBrowser categoriesFor: #enableSource:!modes!private! !
-!MethodBrowser categoriesFor: #ensureSourceVisible!operations!public! !
-!MethodBrowser categoriesFor: #errorModel!accessing!public! !
-!MethodBrowser categoriesFor: #errorModel:!accessing!public! !
-!MethodBrowser categoriesFor: #evaluationContext!accessing!private! !
-!MethodBrowser categoriesFor: #filter!accessing!public! !
-!MethodBrowser categoriesFor: #filter:!accessing!public! !
-!MethodBrowser categoriesFor: #findDetails:!accessing!public! !
-!MethodBrowser categoriesFor: #findNextMatch!commands!public!searching! !
-!MethodBrowser categoriesFor: #findSelector:!public!searching! !
-!MethodBrowser categoriesFor: #hasEditableMethodSelected!public!testing! !
-!MethodBrowser categoriesFor: #hasEditableMethodsSelected!public!testing! !
-!MethodBrowser categoriesFor: #hasMethods!public!testing! !
-!MethodBrowser categoriesFor: #hasMethodSelected!public!testing! !
-!MethodBrowser categoriesFor: #hasMethodsSelected!public!testing! !
-!MethodBrowser categoriesFor: #initialize!initializing!private! !
-!MethodBrowser categoriesFor: #inspectIt!commands!public! !
-!MethodBrowser categoriesFor: #isEditableMethod:!public!testing! !
-!MethodBrowser categoriesFor: #isModified!public!testing! !
-!MethodBrowser categoriesFor: #isSourceReadOnly!private!testing! !
-!MethodBrowser categoriesFor: #list:!accessing!public! !
-!MethodBrowser categoriesFor: #method!accessing!public! !
-!MethodBrowser categoriesFor: #method:!accessing!public! !
-!MethodBrowser categoriesFor: #methodCategorizationPolicy!constants!private! !
-!MethodBrowser categoriesFor: #methodPackage!commands!public! !
-!MethodBrowser categoriesFor: #methods:!accessing!public! !
-!MethodBrowser categoriesFor: #methodsPresenter!accessing!private! !
-!MethodBrowser categoriesFor: #model:!accessing!public! !
-!MethodBrowser categoriesFor: #modifiedModel!accessing!public! !
-!MethodBrowser categoriesFor: #modifiedModel:!accessing!public! !
-!MethodBrowser categoriesFor: #newMethod!commands!public! !
-!MethodBrowser categoriesFor: #noMethodsView!accessing!private! !
-!MethodBrowser categoriesFor: #onAboutToDisplayMenu:!event handling!menus!public! !
-!MethodBrowser categoriesFor: #onCloseRequested:!event handling!public! !
-!MethodBrowser categoriesFor: #onDrag:!event handling!public! !
-!MethodBrowser categoriesFor: #onDragCut:!event handling!private! !
-!MethodBrowser categoriesFor: #onDragOver:!event handling!private! !
-!MethodBrowser categoriesFor: #onDropOver:!event handling!private! !
-!MethodBrowser categoriesFor: #onMethod:updatedTo:!event handling!private! !
-!MethodBrowser categoriesFor: #onMethodAdded:!event handling!private! !
-!MethodBrowser categoriesFor: #onMethodCategorized:!event handling!private! !
-!MethodBrowser categoriesFor: #onMethodRemoved:!event handling!private! !
-!MethodBrowser categoriesFor: #onMethodSelected!event handling!private! !
-!MethodBrowser categoriesFor: #onMethodSelectionChanging:!event handling!private! !
-!MethodBrowser categoriesFor: #onMethodUpdated:!event handling!private! !
-!MethodBrowser categoriesFor: #onPromptToSaveChanges:!private!testing! !
-!MethodBrowser categoriesFor: #onTipTextRequired:!event handling!private! !
-!MethodBrowser categoriesFor: #onViewClosed!event handling!public! !
-!MethodBrowser categoriesFor: #onViewOpened!event handling!public! !
-!MethodBrowser categoriesFor: #parseContext!accessing!public! !
-!MethodBrowser categoriesFor: #parseTree!helpers!private! !
-!MethodBrowser categoriesFor: #promptToCopyChanges!event handling!public! !
-!MethodBrowser categoriesFor: #promptToSaveChanges!helpers!private! !
-!MethodBrowser categoriesFor: #queryCommand:!commands!private! !
-!MethodBrowser categoriesFor: #refactoringTool!accessing!public! !
-!MethodBrowser categoriesFor: #refactoringTool:!accessing!private! !
-!MethodBrowser categoriesFor: #removeMethod!commands!public! !
-!MethodBrowser categoriesFor: #saveMethod:in:categories:package:!operations!private! !
-!MethodBrowser categoriesFor: #saveNewMethod:!helpers!public! !
-!MethodBrowser categoriesFor: #searchEnvironment!accessing!public! !
-!MethodBrowser categoriesFor: #searchEnvironment:!accessing!public! !
-!MethodBrowser categoriesFor: #selectableItems!accessing!private! !
-!MethodBrowser categoriesFor: #selectedMethod!accessing!public! !
-!MethodBrowser categoriesFor: #selectedMethods!accessing!public! !
-!MethodBrowser categoriesFor: #selectedNode!accessing!private! !
-!MethodBrowser categoriesFor: #selectedWord!accessing!public! !
-!MethodBrowser categoriesFor: #selection:ifAbsent:!accessing!public! !
-!MethodBrowser categoriesFor: #selectionEnvironment!accessing!public! !
-!MethodBrowser categoriesFor: #selectMethod:!operations!public! !
-!MethodBrowser categoriesFor: #setInitialFocus!operations!public! !
-!MethodBrowser categoriesFor: #sortBlock!accessing!private! !
-!MethodBrowser categoriesFor: #sortBlock:!accessing!private! !
-!MethodBrowser categoriesFor: #source!accessing!public! !
-!MethodBrowser categoriesFor: #sourceControl!constants!public! !
-!MethodBrowser categoriesFor: #sourcePresenter!accessing!private! !
-!MethodBrowser categoriesFor: #sourcePresenter:!accessing!private! !
-!MethodBrowser categoriesFor: #sourceSelection!accessing!public! !
-!MethodBrowser categoriesFor: #systemModel!accessing!private! !
-!MethodBrowser categoriesFor: #togglePrivate!commands!private! !
-!MethodBrowser categoriesFor: #updateMethodVersion!event handling!private! !
-!MethodBrowser categoriesFor: #versionModel!accessing!public! !
+!Tools.MethodBrowser categoriesFor: #addMethods:toCategory:!commands!private! !
+!Tools.MethodBrowser categoriesFor: #addToCommandRoute:!commands!public! !
+!Tools.MethodBrowser categoriesFor: #applyOptions!operations!options!public! !
+!Tools.MethodBrowser categoriesFor: #browseCompilationFailures!browsing!commands!public! !
+!Tools.MethodBrowser categoriesFor: #browseCompilationIssues!browsing!commands!public! !
+!Tools.MethodBrowser categoriesFor: #browseContainingText!browsing!commands!public! !
+!Tools.MethodBrowser categoriesFor: #browseDefinitions!browsing!commands!public! !
+!Tools.MethodBrowser categoriesFor: #browseDefinitionsMatching:in:!browsing!private! !
+!Tools.MethodBrowser categoriesFor: #browseDefinitionsOfSelector:in:!browsing!private! !
+!Tools.MethodBrowser categoriesFor: #browseHierarchy!browsing!commands!public! !
+!Tools.MethodBrowser categoriesFor: #browseIt!browsing!commands!public! !
+!Tools.MethodBrowser categoriesFor: #browseItCommand!browsing!helpers!private! !
+!Tools.MethodBrowser categoriesFor: #browseMessage!commands!public! !
+!Tools.MethodBrowser categoriesFor: #browseMessageDefinitions!commands!public! !
+!Tools.MethodBrowser categoriesFor: #browseMessageDefinitions:in:!browsing!private! !
+!Tools.MethodBrowser categoriesFor: #browseMessageReferences!commands!public! !
+!Tools.MethodBrowser categoriesFor: #browseMessageReferences:in:!browsing!private! !
+!Tools.MethodBrowser categoriesFor: #browseMessagesIn:!browsing!private! !
+!Tools.MethodBrowser categoriesFor: #browseMessagesMatching:in:!browsing!private! !
+!Tools.MethodBrowser categoriesFor: #browseMethodClasses!browsing!commands!public! !
+!Tools.MethodBrowser categoriesFor: #browseMethodInheritanceChain!browsing!commands!public! !
+!Tools.MethodBrowser categoriesFor: #browseMethodPackages!browsing!commands!public! !
+!Tools.MethodBrowser categoriesFor: #browseMethodsIn:!browsing!private! !
+!Tools.MethodBrowser categoriesFor: #browseMethodsMatching:in:!browsing!private! !
+!Tools.MethodBrowser categoriesFor: #browsePackages!browsing!commands!public! !
+!Tools.MethodBrowser categoriesFor: #browseReferences!browsing!commands!public! !
+!Tools.MethodBrowser categoriesFor: #browseReferencesMatching:in:!browsing!private! !
+!Tools.MethodBrowser categoriesFor: #browseReferencesToGlobal!browsing!commands!public! !
+!Tools.MethodBrowser categoriesFor: #browseReferencesToLiteral:in:!browsing!private! !
+!Tools.MethodBrowser categoriesFor: #browserEnvironment!accessing!public! !
+!Tools.MethodBrowser categoriesFor: #browseSystem!browsing!commands!public! !
+!Tools.MethodBrowser categoriesFor: #browseVariableReferences:in:!browsing!private! !
+!Tools.MethodBrowser categoriesFor: #buildAddCategoryMenu:!menus!private! !
+!Tools.MethodBrowser categoriesFor: #buildParseTree!helpers!private! !
+!Tools.MethodBrowser categoriesFor: #buildRemoveCategoryMenu:!menus!private! !
+!Tools.MethodBrowser categoriesFor: #canSaveMethod!helpers!private!testing! !
+!Tools.MethodBrowser categoriesFor: #categorizeMethods!commands!public! !
+!Tools.MethodBrowser categoriesFor: #clearErrors!operations!public! !
+!Tools.MethodBrowser categoriesFor: #clearSelection!commands!public! !
+!Tools.MethodBrowser categoriesFor: #commandPolicy!accessing!public! !
+!Tools.MethodBrowser categoriesFor: #createComponents!initializing!public! !
+!Tools.MethodBrowser categoriesFor: #createSchematicWiring!initializing!public! !
+!Tools.MethodBrowser categoriesFor: #customDrawMethodClass:!helpers!private! !
+!Tools.MethodBrowser categoriesFor: #customDrawSelector:!helpers!private! !
+!Tools.MethodBrowser categoriesFor: #deleteItCommand!helpers!private! !
+!Tools.MethodBrowser categoriesFor: #enableSource:!modes!private! !
+!Tools.MethodBrowser categoriesFor: #ensureSourceVisible!operations!public! !
+!Tools.MethodBrowser categoriesFor: #errorModel!accessing!public! !
+!Tools.MethodBrowser categoriesFor: #errorModel:!accessing!public! !
+!Tools.MethodBrowser categoriesFor: #evaluationContext!accessing!private! !
+!Tools.MethodBrowser categoriesFor: #filter!accessing!public! !
+!Tools.MethodBrowser categoriesFor: #filter:!accessing!public! !
+!Tools.MethodBrowser categoriesFor: #findDetails:!accessing!public! !
+!Tools.MethodBrowser categoriesFor: #findNextMatch!commands!public!searching! !
+!Tools.MethodBrowser categoriesFor: #findSelector:!public!searching! !
+!Tools.MethodBrowser categoriesFor: #hasEditableMethodSelected!public!testing! !
+!Tools.MethodBrowser categoriesFor: #hasEditableMethodsSelected!public!testing! !
+!Tools.MethodBrowser categoriesFor: #hasMethods!public!testing! !
+!Tools.MethodBrowser categoriesFor: #hasMethodSelected!public!testing! !
+!Tools.MethodBrowser categoriesFor: #hasMethodsSelected!public!testing! !
+!Tools.MethodBrowser categoriesFor: #initialize!initializing!private! !
+!Tools.MethodBrowser categoriesFor: #inspectIt!commands!public! !
+!Tools.MethodBrowser categoriesFor: #isEditableMethod:!public!testing! !
+!Tools.MethodBrowser categoriesFor: #isModified!public!testing! !
+!Tools.MethodBrowser categoriesFor: #isSourceReadOnly!private!testing! !
+!Tools.MethodBrowser categoriesFor: #list:!accessing!public! !
+!Tools.MethodBrowser categoriesFor: #method!accessing!public! !
+!Tools.MethodBrowser categoriesFor: #method:!accessing!public! !
+!Tools.MethodBrowser categoriesFor: #methodCategorizationPolicy!constants!private! !
+!Tools.MethodBrowser categoriesFor: #methodPackage!commands!public! !
+!Tools.MethodBrowser categoriesFor: #methods:!accessing!public! !
+!Tools.MethodBrowser categoriesFor: #methodsPresenter!accessing!private! !
+!Tools.MethodBrowser categoriesFor: #model:!accessing!public! !
+!Tools.MethodBrowser categoriesFor: #modifiedModel!accessing!public! !
+!Tools.MethodBrowser categoriesFor: #modifiedModel:!accessing!public! !
+!Tools.MethodBrowser categoriesFor: #newMethod!commands!public! !
+!Tools.MethodBrowser categoriesFor: #noMethodsView!accessing!private! !
+!Tools.MethodBrowser categoriesFor: #onAboutToDisplayMenu:!event handling!menus!public! !
+!Tools.MethodBrowser categoriesFor: #onCloseRequested:!event handling!public! !
+!Tools.MethodBrowser categoriesFor: #onDrag:!event handling!public! !
+!Tools.MethodBrowser categoriesFor: #onDragCut:!event handling!private! !
+!Tools.MethodBrowser categoriesFor: #onDragOver:!event handling!private! !
+!Tools.MethodBrowser categoriesFor: #onDropOver:!event handling!private! !
+!Tools.MethodBrowser categoriesFor: #onMethod:updatedTo:!event handling!private! !
+!Tools.MethodBrowser categoriesFor: #onMethodAdded:!event handling!private! !
+!Tools.MethodBrowser categoriesFor: #onMethodCategorized:!event handling!private! !
+!Tools.MethodBrowser categoriesFor: #onMethodRemoved:!event handling!private! !
+!Tools.MethodBrowser categoriesFor: #onMethodSelected!event handling!private! !
+!Tools.MethodBrowser categoriesFor: #onMethodSelectionChanging:!event handling!private! !
+!Tools.MethodBrowser categoriesFor: #onMethodUpdated:!event handling!private! !
+!Tools.MethodBrowser categoriesFor: #onPromptToSaveChanges:!private!testing! !
+!Tools.MethodBrowser categoriesFor: #onTipTextRequired:!event handling!private! !
+!Tools.MethodBrowser categoriesFor: #onViewClosed!event handling!public! !
+!Tools.MethodBrowser categoriesFor: #onViewOpened!event handling!public! !
+!Tools.MethodBrowser categoriesFor: #parseContext!accessing!public! !
+!Tools.MethodBrowser categoriesFor: #parseTree!helpers!private! !
+!Tools.MethodBrowser categoriesFor: #promptToCopyChanges!event handling!public! !
+!Tools.MethodBrowser categoriesFor: #promptToSaveChanges!helpers!private! !
+!Tools.MethodBrowser categoriesFor: #queryCommand:!commands!private! !
+!Tools.MethodBrowser categoriesFor: #refactoringTool!accessing!public! !
+!Tools.MethodBrowser categoriesFor: #refactoringTool:!accessing!private! !
+!Tools.MethodBrowser categoriesFor: #removeMethod!commands!public! !
+!Tools.MethodBrowser categoriesFor: #saveMethod:in:categories:package:!operations!private! !
+!Tools.MethodBrowser categoriesFor: #saveNewMethod:!helpers!public! !
+!Tools.MethodBrowser categoriesFor: #searchEnvironment!accessing!public! !
+!Tools.MethodBrowser categoriesFor: #searchEnvironment:!accessing!public! !
+!Tools.MethodBrowser categoriesFor: #selectableItems!accessing!private! !
+!Tools.MethodBrowser categoriesFor: #selectedMethod!accessing!public! !
+!Tools.MethodBrowser categoriesFor: #selectedMethods!accessing!public! !
+!Tools.MethodBrowser categoriesFor: #selectedNode!accessing!private! !
+!Tools.MethodBrowser categoriesFor: #selectedWord!accessing!public! !
+!Tools.MethodBrowser categoriesFor: #selection:ifAbsent:!accessing!public! !
+!Tools.MethodBrowser categoriesFor: #selectionEnvironment!accessing!public! !
+!Tools.MethodBrowser categoriesFor: #selectMethod:!operations!public! !
+!Tools.MethodBrowser categoriesFor: #setInitialFocus!operations!public! !
+!Tools.MethodBrowser categoriesFor: #sortBlock!accessing!private! !
+!Tools.MethodBrowser categoriesFor: #sortBlock:!accessing!private! !
+!Tools.MethodBrowser categoriesFor: #source!accessing!public! !
+!Tools.MethodBrowser categoriesFor: #sourceControl!constants!public! !
+!Tools.MethodBrowser categoriesFor: #sourcePresenter!accessing!private! !
+!Tools.MethodBrowser categoriesFor: #sourcePresenter:!accessing!private! !
+!Tools.MethodBrowser categoriesFor: #sourceSelection!accessing!public! !
+!Tools.MethodBrowser categoriesFor: #systemModel!accessing!private! !
+!Tools.MethodBrowser categoriesFor: #togglePrivate!commands!private! !
+!Tools.MethodBrowser categoriesFor: #updateMethodVersion!event handling!private! !
+!Tools.MethodBrowser categoriesFor: #versionModel!accessing!public! !
 
-!MethodBrowser class methodsFor!
+!Tools.MethodBrowser class methodsFor!
 
 autoFormat
 	^AutoFormat!
@@ -1239,7 +1239,7 @@ initialize
 publishedAspects
 	"Answer a <LookupTable> of the <Aspect>s published by the receiver."
 
-	^(super publishedAspects)
+	^super publishedAspects
 		add: (Aspect dictionary: #acceleratorKeyBindings) beImmutable;
 		add: ((Aspect boolean: #hasInfoTips)
 					isNullable: true;
@@ -1261,36 +1261,36 @@ resource_Class_browser_method_list
 	DO NOT EDIT OR RECATEGORIZE THIS METHOD.
 
 	If you wish to modify this resource evaluate:
-	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Class_browser_method_list)
+	Tools.ViewComposer openOn: (UI.ResourceIdentifier class: self selector: #resource_Class_browser_method_list)
 	"
 
-	^#(#'!!STL' 4 788558 10 ##(UI.STBViewProxy) ##(UI.ListView) 34 45 nil nil 34 2 8 1409355849 1 416 590662 2 ##(Smalltalk.ListModel) 138 144 8 #() nil 1310726 ##(Smalltalk.IdentitySearchPolicy) 327686 ##(Smalltalk.Color) #default nil 29 265030 4 ##(UI.Menu) nil true 34 15 610 nil true 8 #() 8 'De&finitions of' #definitionsMenu 1 nil nil nil nil nil 610 nil true 8 #() 8 '&References to' #referencesMenu 1 nil nil nil nil nil 610 nil true 34 13 984134 2 ##(UI.CommandMenuItem) 1 1180998 4 ##(UI.CommandDescription) #browseReferencesToGlobal 8 'References to Global...' 1 1 nil nil nil 786 1 818 #browseContainingText 8 'C&ontaining Text...' 1 1 263494 3 ##(Smalltalk.Icon) nil true 1572870 ##(Smalltalk.ImageRelativeFileLocator) 8 'SearchText.ico' 2032142 ##(Smalltalk.STBExternalResourceLibraryProxy) 8 'dolphindr7.dll' nil nil nil 786 1 818 #browseMethodCategory 8 'Cate&gory...' 1 1 914 nil true 960 8 'Category.ico' 1008 nil nil 786 1 818 #browseCompilationFailures 8 'Compilation &Failures' 1 1 nil nil nil 983366 1 ##(UI.DividerMenuItem) 4097 786 1 818 #browseMethodPackages 8 'Package <s>' 1 1 914 nil true 960 8 'Package.ico' 1008 nil nil 786 1 818 #browseMethodClasses 8 'Class <s>' 1 1 nil nil nil 1170 4097 786 1 818 #browseMethodHistory 8 '&Change History' 1 1 914 nil true 960 8 'MethodHistory.ico' 1008 nil nil 786 1 818 #browseAllChangedMethods 8 '&All Changed Methods' 1 1 nil nil nil 1170 4097 786 1 818 #browseMethodInheritanceChain 8 '&Inheritance Chain' 1 1 nil nil nil 786 1 818 #browseOverriddenMethod 8 'Goto &Superclass Definition' 1 1 nil nil nil 8 '&Browse other' nil 134217729 nil nil nil nil nil 1170 4097 786 1 818 #newMethod 8 '&New' 1 1 914 nil true 960 8 'NewMethod.ico' 1008 nil nil 786 1 818 #removeMethod 8 '&Delete' 1 1 914 nil true 960 8 'EditClear.ico' 1008 nil nil 610 nil true 34 17 786 1 818 #renameMethod 8 'Re&name' 1 1 914 nil true 960 8 'Rename.ico' 1008 nil nil 786 1 818 #renameMethodReferences 8 'Rename Re&ferences...' 1 1 nil nil nil 786 1 818 #safeRemoveMethods 8 'Rem&ove' 1 1 nil nil nil 1170 4097 786 1 818 #addParameter 8 'Add &Parameter...' 1 1 nil nil nil 610 nil true 8 #() 8 'Remo&ve Parameter' #removeParameterMenu 134217729 nil nil nil nil nil 610 nil true 8 #() 8 'Rena&me Parameter' #renameParameterMenu 134217729 nil nil nil nil nil 610 nil true 8 #() 8 '&Inline Parameter' #inlineParameterMenu 134217729 nil nil nil nil nil 1170 4097 610 nil true 8 #() 8 'Rename &Temporary' #renameTempMenu 134217729 nil nil nil nil nil 610 nil true 8 #() 8 'Convert Temp to Inst. Var.' #convertTempToInstVarMenu 134217729 nil nil nil nil nil 1170 4097 786 1 818 #inlineAllSelfSends 8 'Inline &Self Sends' 1 1 nil nil nil 786 1 818 #pushUpMethods 8 'Push &Up' 9325 1 nil nil nil 786 1 818 #pushDownMethods 8 'Push &Down' 9327 1 nil nil nil 786 1 818 #overrideMethods 8 'Ove&rride <1d>' 1 1 nil nil nil 786 1 818 #moveMethod 8 'Move to &Component...' 1 1 nil nil nil 8 'Refactorin&gs' #methodRefactoringsMenu 134217729 914 nil true 960 8 'Refactoring.ico' 1008 nil nil nil nil 1170 4097 786 1 818 #methodPackage 8 '&Package...' 1 1 914 nil true 960 8 'Package.ico' 1008 nil nil 610 nil true 8 #() 8 'Add to &Category' #addCategoryMenu 134217729 nil nil nil nil nil 610 nil true 8 #() 8 'Re&move from Category' #removeCategoryMenu 134217729 nil nil nil nil nil 786 1 818 #togglePrivate 8 'Pri&vate' 1 1 nil nil nil 1170 4097 786 1 818 #toggleFilterObjectMethods 8 'Filter &Object Methods' 1 1 nil nil nil 786 1 818 #toggleShowInheritedMethods 8 'Show &Inherited Methods' 1 1 nil nil nil 8 '&Method' nil 134217729 nil nil nil nil nil nil nil 416 nil 8 1883852064 459270 ##(Smalltalk.Message) #selector 8 #() ##(UI.IconicListAbstract) 1049926 1 ##(Graphics.IconImageManager) nil 2994 #infoTip 8 #() 787814 3 ##(Smalltalk.BlockClosure) 0 nil 1180966 ##(Smalltalk.CompiledExpression) 4 1 3104 8 'doIt' 8 '[:ctx | ctx view parentPresenter parentPresenter customDrawSelector: ctx]' 8 #[32 105 226 0 159 159 17 178 106] #view #parentPresenter #customDrawSelector: 3120 7 257 nil nil nil nil 138 144 34 3 920646 5 ##(UI.ListViewColumn) 8 'Methods' 431 #left ##(UI.BasicListAbstract) 2994 #<= 8 #() 2994 #selector 8 #() nil 416 nil 3 nil 3120 3250 8 '' 33 #center 721670 ##(Smalltalk.MessageSend) #empty 8 #() 16 3106 0 nil 3138 3 1 ##(Smalltalk.UndefinedObject) 8 'doIt' 8 '[:m1 :m2 | 
+	^#(#'!!STL' 4 985166 10 ##(UI.STBViewProxy) ##(UI.ListView) 34 45 nil nil 34 2 8 1409355849 1 416 787270 2 ##(UI.ListModel) 138 144 8 #() nil 1769478 ##(Kernel.IdentitySearchPolicy) 917510 ##(Graphics.Color) #default nil 29 461638 4 ##(UI.Menu) nil true 34 15 610 nil true 8 #() 8 'De&finitions of' #definitionsMenu 1 nil nil nil nil nil 610 nil true 8 #() 8 '&References to' #referencesMenu 1 nil nil nil nil nil 610 nil true 34 13 1180742 2 ##(UI.CommandMenuItem) 1 1377606 4 ##(UI.CommandDescription) #browseReferencesToGlobal 8 'References to Global...' 1 1 nil nil nil 786 1 818 #browseContainingText 8 'C&ontaining Text...' 1 1 853318 3 ##(Graphics.Icon) nil true 2031622 ##(Kernel.ImageRelativeFileLocator) 8 'SearchText.ico' 2490894 ##(Kernel.STBExternalResourceLibraryProxy) 8 'dolphindr7.dll' nil nil nil 786 1 818 #browseMethodCategory 8 'Cate&gory...' 1 1 914 nil true 960 8 'Category.ico' 1008 nil nil 786 1 818 #browseCompilationFailures 8 'Compilation &Failures' 1 1 nil nil nil 1179974 1 ##(UI.DividerMenuItem) 4097 786 1 818 #browseMethodPackages 8 'Package <s>' 1 1 914 nil true 960 8 'Package.ico' 1008 nil nil 786 1 818 #browseMethodClasses 8 'Class <s>' 1 1 nil nil nil 1170 4097 786 1 818 #browseMethodHistory 8 '&Change History' 1 1 914 nil true 960 8 'MethodHistory.ico' 1008 nil nil 786 1 818 #browseAllChangedMethods 8 '&All Changed Methods' 1 1 nil nil nil 1170 4097 786 1 818 #browseMethodInheritanceChain 8 '&Inheritance Chain' 1 1 nil nil nil 786 1 818 #browseOverriddenMethod 8 'Goto &Superclass Definition' 1 1 nil nil nil 8 '&Browse other' nil 134217729 nil nil nil nil nil 1170 4097 786 1 818 #newMethod 8 '&New' 1 1 914 nil true 960 8 'NewMethod.ico' 1008 nil nil 786 1 818 #removeMethod 8 '&Delete' 1 1 914 nil true 960 8 'EditClear.ico' 1008 nil nil 610 nil true 34 17 786 1 818 #renameMethod 8 'Re&name' 1 1 914 nil true 960 8 'Rename.ico' 1008 nil nil 786 1 818 #renameMethodReferences 8 'Rename Re&ferences...' 1 1 nil nil nil 786 1 818 #safeRemoveMethods 8 'Rem&ove' 1 1 nil nil nil 1170 4097 786 1 818 #addParameter 8 'Add &Parameter...' 1 1 nil nil nil 610 nil true 8 #() 8 'Remo&ve Parameter' #removeParameterMenu 134217729 nil nil nil nil nil 610 nil true 8 #() 8 'Rena&me Parameter' #renameParameterMenu 134217729 nil nil nil nil nil 610 nil true 8 #() 8 '&Inline Parameter' #inlineParameterMenu 134217729 nil nil nil nil nil 1170 4097 610 nil true 8 #() 8 'Rename &Temporary' #renameTempMenu 134217729 nil nil nil nil nil 610 nil true 8 #() 8 'Convert Temp to Inst. Var.' #convertTempToInstVarMenu 134217729 nil nil nil nil nil 1170 4097 786 1 818 #inlineAllSelfSends 8 'Inline &Self Sends' 1 1 nil nil nil 786 1 818 #pushUpMethods 8 'Push &Up' 9325 1 nil nil nil 786 1 818 #pushDownMethods 8 'Push &Down' 9327 1 nil nil nil 786 1 818 #overrideMethods 8 'Ove&rride <1d>' 1 1 nil nil nil 786 1 818 #moveMethod 8 'Move to &Component...' 1 1 nil nil nil 8 'Refactorin&gs' #methodRefactoringsMenu 134217729 914 nil true 960 8 'Refactoring.ico' 1008 nil nil nil nil 1170 4097 786 1 818 #methodPackage 8 '&Package...' 1 1 914 nil true 960 8 'Package.ico' 1008 nil nil 610 nil true 8 #() 8 'Add to &Category' #addCategoryMenu 134217729 nil nil nil nil nil 610 nil true 8 #() 8 'Re&move from Category' #removeCategoryMenu 134217729 nil nil nil nil nil 786 1 818 #togglePrivate 8 'Pri&vate' 1 1 nil nil nil 1170 4097 786 1 818 #toggleFilterObjectMethods 8 'Filter &Object Methods' 1 1 nil nil nil 786 1 818 #toggleShowInheritedMethods 8 'Show &Inherited Methods' 1 1 nil nil nil 8 '&Method' nil 134217729 nil nil nil nil nil nil nil 416 nil 8 1801282304 786950 ##(Core.Message) #selector 8 #() ##(UI.IconicListAbstract) 1639750 1 ##(Graphics.IconImageManager) nil 2994 #infoTip 8 #() 1246566 3 ##(Kernel.BlockClosure) 0 nil 1639718 ##(Kernel.CompiledExpression) 4 1 3104 8 'doIt' 8 '[:ctx | ctx view parentPresenter parentPresenter customDrawSelector: ctx]' 8 #[32 105 226 0 159 159 17 178 106] #view #parentPresenter #customDrawSelector: 3120 7 257 nil nil nil nil 138 144 34 3 1117254 5 ##(UI.ListViewColumn) 8 'Methods' 431 #left ##(UI.BasicListAbstract) 2994 #<= 8 #() 2994 #selector 8 #() nil 416 nil 3 nil 3120 3250 8 '' 33 #center 1049350 ##(Core.MessageSend) #empty 8 #() 16 3106 0 nil 3138 3 1 ##(Core.UndefinedObject) 8 'doIt' 8 '[:m1 :m2 | 
 m1 isOverride = m2 isOverride 
 	ifTrue: [m1 selector <= m2 selector]
-	ifFalse: [m1 isOverride]]' 8 #[31 105 17 158 18 158 132 123 17 159 18 159 130 106 17 158 106] #isOverride #selector 3440 7 513 nil nil nil 416 3106 0 nil 3138 7 1 ##(Smalltalk.UndefinedObject) 8 'doIt' 8 '[:each | 
+	ifFalse: [m1 isOverride]]' 8 #[31 105 17 158 18 158 132 123 17 159 18 159 130 106 17 158 106] #isOverride #selector 3440 7 513 nil nil nil 416 3106 0 nil 3138 7 1 ##(Core.UndefinedObject) 8 'doIt' 8 '[:each | 
 (each isOverride ifTrue: [CompiledMethod overriddenIcon] ifFalse: [Icon blank]) 
-	imageIndex]' 8 #[35 105 17 158 120 46 160 111 48 162 163 106] #isOverride 721414 ##(Smalltalk.Association) #CompiledMethod ##(Smalltalk.CompiledMethod) #overriddenIcon 3602 #Icon 912 #blank #imageIndex 3520 7 257 nil 1 nil nil 3250 8 '' 33 #center nil 3106 0 nil 3138 3 1 ##(Smalltalk.UndefinedObject) 8 'doIt' 8 '[:m1 :m2 | m1 isPublic = m2 isPublic ifTrue: [m1 selector <= m2 selector] ifFalse: [m1 isPublic]]' 8 #[31 105 17 158 18 158 132 123 17 159 18 159 130 106 17 158 106] #isPublic #selector 3680 7 513 nil nil nil 416 ##(UI.IconicListAbstract) 1 nil nil #report 528 nil 133221 nil 1 nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil 983302 ##(Smalltalk.MessageSequence) 138 144 34 4 3394 #createAt:extent: 34 2 328198 ##(Smalltalk.Point) 7039 21 3858 503 233 416 3394 #contextMenu: 34 1 624 416 3394 #text: 34 1 8 'Methods' 416 3394 #columnOrder: 34 1 8 #(2 3 1) 416 983302 ##(OS.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 191 13 0 0 10 0 0 0 186 14 0 0 126 0 0 0] 8 #() 3858 193 193 nil 35)!
+	imageIndex]' 8 #[35 105 17 158 120 46 160 111 48 162 163 106] #isOverride 1049094 ##(Core.Association) #CompiledMethod ##(Kernel.CompiledMethod) #overriddenIcon 3602 #Icon 912 #blank #imageIndex 3520 7 257 nil 1 nil nil 3250 8 '' 33 #center nil 3106 0 nil 3138 3 1 ##(Core.UndefinedObject) 8 'doIt' 8 '[:m1 :m2 | m1 isPublic = m2 isPublic ifTrue: [m1 selector <= m2 selector] ifFalse: [m1 isPublic]]' 8 #[31 105 17 158 18 158 132 123 17 159 18 159 130 106 17 158 106] #isPublic #selector 3680 7 513 nil nil nil 416 ##(UI.IconicListAbstract) 1 nil nil #report 8 #() nil 133221 nil 1 nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil 1310982 ##(Core.MessageSequence) 138 144 34 4 3394 #createAt:extent: 34 2 918022 ##(Graphics.Point) 6143 21 3874 503 233 416 3394 #contextMenu: 34 1 624 416 3394 #text: 34 1 8 'Methods' 416 3394 #columnOrder: 34 1 8 #(2 3 1) 416 1179910 ##(OS.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 250 12 0 0 126 0 0 0] 8 #() 3874 193 193 nil 35 )!
 
 resource_Default_view
 	"Answer the literal data from which the 'Default view' resource can be reconstituted.
 	DO NOT EDIT OR RECATEGORIZE THIS METHOD.
 
 	If you wish to modify this resource evaluate:
-	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Default_view)
+	Tools.ViewComposer openOn: (UI.ResourceIdentifier class: self selector: #resource_Default_view)
 	"
 
-	^#(#'!!STL' 4 788558 10 ##(UI.STBViewProxy) ##(UI.ContainerView) 34 15 nil nil 34 2 8 1409286144 131073 416 nil nil nil 5 nil nil nil 416 1180166 ##(UI.ProportionalLayout) 138 ##(Smalltalk.Dictionary) 34 1 721414 ##(Smalltalk.Association) 410 ##(UI.Splitter) 34 12 nil 416 34 2 8 1140850688 1 576 nil nil nil 517 nil nil nil 1510470 1 ##(UI.DraggableViewInteractor) 576 nil 1 #left nil nil nil 328198 ##(Smalltalk.Point) 1 1 674 9 9 nil 688 nil 983302 ##(Smalltalk.MessageSequence) 138 144 34 1 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 674 1 351 674 1271 11 576 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 175 0 0 0 123 2 0 0 180 0 0 0] 8 #() 674 193 193 nil 27 1 true 170 192 34 4 410 ##(Smalltalk.ReferenceView) 34 14 nil 416 34 2 8 1140850688 131073 976 nil nil nil 5 nil nil nil 976 1180230 1 ##(Smalltalk.ResourceIdentifier) ##(Smalltalk.MethodBrowser) #resource_Method_browser_method_list nil 722 138 144 34 1 786 #createAt:extent: 34 2 674 1 1 674 1271 351 976 866 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 123 2 0 0 175 0 0 0] 8 #() 928 nil 27 8 'methodsList' 410 ##(Smalltalk.ReferenceView) 34 14 nil 416 34 2 8 1140916224 131073 1248 nil nil nil 5 nil nil nil 1248 1042 ##(Smalltalk.MethodWorkspace) #resource_Default_view nil 722 138 144 34 1 786 #createAt:extent: 34 2 674 1 361 674 1271 351 1248 866 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 180 0 0 0 123 2 0 0 99 1 0 0] 1216 928 nil 27 8 'source' nil 722 138 144 34 1 786 #createAt:extent: 34 2 674 3839 21 674 1271 711 416 866 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 127 7 0 0 10 0 0 0 250 9 0 0 109 1 0 0] 34 3 976 576 1248 928 nil 27)!
+	^#(#'!!STL' 4 985166 10 ##(UI.STBViewProxy) ##(UI.ContainerView) 34 15 nil nil 34 2 8 1409286144 131073 416 nil nil nil 5 nil nil nil 416 1376774 ##(UI.ProportionalLayout) 138 ##(Core.Dictionary) 34 1 1049094 ##(Core.Association) 410 ##(UI.Splitter) 34 12 nil 416 34 2 8 1140850688 1 576 nil nil nil 517 nil nil nil 1707078 1 ##(UI.DraggableViewInteractor) 576 nil 1 #left nil nil nil 918022 ##(Graphics.Point) 1 1 674 9 9 nil 688 nil 1310982 ##(Core.MessageSequence) 138 144 34 1 1049350 ##(Core.MessageSend) #createAt:extent: 34 2 674 1 351 674 1271 11 576 1179910 ##(OS.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 175 0 0 0 123 2 0 0 180 0 0 0] 8 #() 674 193 193 nil 27 1 true 170 192 34 4 410 ##(UI.ReferenceView) 34 14 nil 416 34 2 8 1140916224 131073 976 nil nil nil 5 nil nil nil 976 1376838 1 ##(UI.ResourceIdentifier) ##(Tools.MethodWorkspace) #resource_Default_view nil 722 138 144 34 1 786 #createAt:extent: 34 2 674 1 361 674 1271 351 976 866 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 180 0 0 0 123 2 0 0 99 1 0 0] 8 #() 928 nil 27 8 'source' 410 ##(UI.ReferenceView) 34 14 nil 416 34 2 8 1140850688 131073 1248 nil nil nil 5 nil nil nil 1248 1042 ##(Tools.MethodBrowser) #resource_Method_browser_method_list nil 722 138 144 34 1 786 #createAt:extent: 34 2 674 1 1 674 1271 351 1248 866 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 123 2 0 0 175 0 0 0] 1216 928 nil 27 8 'methodsList' nil 722 138 144 34 1 786 #createAt:extent: 34 2 674 6143 21 674 1271 711 416 866 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 122 14 0 0 109 1 0 0] 34 3 1248 576 976 928 nil 27 )!
 
 resource_Method_browser_method_list
 	"Answer the literal data from which the 'Method browser method list' resource can be reconstituted.
 	DO NOT EDIT OR RECATEGORIZE THIS METHOD.
 
 	If you wish to modify this resource evaluate:
-	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Method_browser_method_list)
+	Tools.ViewComposer openOn: (UI.ResourceIdentifier class: self selector: #resource_Method_browser_method_list)
 	"
 
-	^#(#'!!STL' 4 788558 10 ##(UI.STBViewProxy) ##(UI.WizardCardContainer) 34 15 nil nil 34 2 8 1409286144 131073 416 nil nil nil 5 265030 4 ##(UI.Menu) nil true 34 11 482 nil true 8 #() 8 'De&finitions of' #definitionsMenu 1 nil nil nil nil nil 482 nil true 8 #() 8 '&References to' #referencesMenu 1 nil nil nil nil nil 482 nil true 34 10 984134 2 ##(UI.CommandMenuItem) 1 1180998 4 ##(UI.CommandDescription) #browseReferencesToGlobal 8 'R&eferences to Global...' 1 1 nil nil nil 658 1 690 #browseContainingText 8 'C&ontaining Text...' 1 1 263494 3 ##(Smalltalk.Icon) nil true 1572870 ##(Kernel.ImageRelativeFileLocator) 8 'SearchText.ico' 2032142 ##(Kernel.STBExternalResourceLibraryProxy) 8 'dolphindr7.dll' nil nil nil 658 1 690 #browseMethodCategory 8 'Cate&gory...' 1 1 nil nil nil 658 1 690 #browseCompilationFailures 8 'Compilation &Failures' 1 1 nil nil nil 983366 1 ##(UI.DividerMenuItem) 4097 658 1 690 #browseMethodPackages 8 '&Package <s>' 1 1 786 nil true 832 8 'PackageBrowserShell.ico' 880 nil nil 658 1 690 #browseMethodClasses 8 '&Class <s>' 1 1 786 nil true 832 8 'ClassBrowserShell.ico' 880 nil nil 1010 4097 658 1 690 #browseMethodHistory 8 'Change &History' 1 1 786 nil true 832 8 'MethodHistory.ico' 880 nil nil 658 1 690 #browseAllChangedMethods 8 '&All Changed Methods' 1 1 nil nil nil 8 '&Browse other' nil 134217729 nil nil nil nil nil 1010 4097 658 1 690 #removeMethod 8 '&Delete' 1 1 786 nil true 832 8 'EditClear.ico' 880 nil nil 482 nil true 34 17 658 1 690 #renameMethod 8 'Re&name' 1 1 nil nil nil 658 1 690 #renameMethodReferences 8 'Rename Re&ferences...' 1 1 nil nil nil 658 1 690 #safeRemoveMethods 8 'Rem&ove' 1 1 nil nil nil 1010 4097 658 1 690 #addParameter 8 'Add &Parameter...' 1 1 nil nil nil 482 nil true 8 #() 8 'Remo&ve Parameter' #removeParameterMenu 134217729 nil nil nil nil nil 482 nil true 8 #() 8 'Rena&me Parameter' #renameParameterMenu 134217729 nil nil nil nil nil 482 nil true 8 #() 8 '&Inline Parameter' #inlineParameterMenu 134217729 nil nil nil nil nil 1010 4097 482 nil true 8 #() 8 'Rename &Temporary' #renameTempMenu 134217729 nil nil nil nil nil 482 nil true 8 #() 8 'Conv&ert Temp to Inst. Var.' #convertTempToInstVarMenu 134217729 nil nil nil nil nil 1010 4097 658 1 690 #inlineAllSelfSends 8 'Inline &Self Sends' 1 1 nil nil nil 658 1 690 #pushUpMethods 8 'Push &Up' 9325 1 nil nil nil 658 1 690 #pushDownMethods 8 'Push &Down' 9327 1 nil nil nil 658 1 690 #overrideMethods 8 'Ove&rride <1d>' 1 1 nil nil nil 658 1 690 #moveMethod 8 'Move to &Component...' 1 1 nil nil nil 8 'Refactorin&gs' #methodRefactoringsMenu 134217729 786 nil true 832 8 'Refactoring.ico' 880 nil nil nil nil 1010 4097 658 1 690 #methodPackage 8 '&Package...' 1 1 786 nil true 832 8 'Package.ico' 880 nil nil 482 nil true 8 #() 8 'Add to &Category' #addCategoryMenu 134217729 nil nil nil nil nil 482 nil true 8 #() 8 'Re&move from Category' #removeCategoryMenu 134217729 nil nil nil nil nil 658 1 690 #togglePrivate 8 'Pri&vate' 1 1 nil nil nil 8 '&Method' nil 134217729 nil nil nil nil nil nil nil 416 656710 1 ##(UI.CardLayout) 138 144 34 2 721414 ##(Core.Association) 3 410 ##(UI.ListView) 34 45 nil 416 34 2 8 1140920393 1 2608 590662 2 ##(Smalltalk.ListModel) 138 144 8 #() nil 1310726 ##(Kernel.IdentitySearchPolicy) 327686 ##(Smalltalk.Color) #default nil 13 nil nil nil 2608 nil 8 1920618720 459270 ##(Core.Message) #displayString 8 #() ##(UI.ListView) 1049926 1 ##(Graphics.IconImageManager) nil nil nil nil nil nil 138 144 34 5 920646 5 ##(UI.ListViewColumn) 8 'Selector' 335 #left 2818 #selector 8 #() 787814 3 ##(Kernel.BlockClosure) 0 nil 1180966 ##(Kernel.CompiledExpression) 2 1 ##(Core.UndefinedObject) 8 'doIt' 8 '[:a :b | a selector <= b selector]' 8 #[30 105 226 0 226 32 130 106] #selector 3024 7 513 nil nil nil 2608 nil 1 2818 #infoTip 8 #() 3010 0 nil 3042 4 1 3008 8 'doIt' 8 '[:ctx | ctx view parentPresenter customDrawSelector: ctx]' 8 #[32 105 226 0 159 17 178 106] #view #parentPresenter #customDrawSelector: 3152 7 257 nil 2930 8 'Class' 333 #left 2818 #name 8 #() 2818 #<= 8 #() 2818 #methodClass 8 #() nil 2608 ##(UI.IconicListAbstract) 1 nil 3010 0 nil 3042 4 1 3008 8 'doIt' 8 '[:ctx | ctx view parentPresenter customDrawMethodClass: ctx]' 8 #[32 105 226 0 159 17 178 106] #view #parentPresenter #customDrawMethodClass: 3360 7 257 nil 2930 8 'Namespace' 301 #left 2818 #displayString 8 #() 3010 0 nil 3042 2 1 2816 8 'doIt' 8 '[:a :b | a printString <= b printString]' 8 #[30 105 226 0 226 32 130 106] #printString 3504 7 513 nil 2818 #environment 3488 nil 2608 nil 1 nil nil 2930 8 'Package' 65 #left 2818 #name 8 #() 3010 0 nil 3042 2 1 ##(Core.UndefinedObject) 8 'doIt' 8 '[:a :b | a name <= b name]' 8 #[30 105 226 0 226 32 130 106] #name 3664 7 513 nil 2818 #owningPackage 8 #() nil 2608 ##(UI.IconicListAbstract) 3 nil nil 2930 8 '' 33 #center nil 3010 0 nil 3042 3 1 ##(Core.UndefinedObject) 8 'doIt' 8 '[:m1 :m2 | m1 isPublic = m2 isPublic ifTrue: [m1 selector <= m2 selector] ifFalse: [m1 isPublic]]' 8 #[31 105 17 158 18 158 132 123 17 159 18 159 130 106 17 158 106] #isPublic #selector 3808 7 513 nil nil nil 2608 ##(UI.IconicListAbstract) 1 nil nil #report 8 #() nil 133221 nil 1 nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil 983302 ##(Core.MessageSequence) 138 144 34 3 721670 ##(Core.MessageSend) #createAt:extent: 34 2 328198 ##(Graphics.Point) 1 1 4018 971 421 2608 3970 #text: 34 1 8 'Selector' 2608 3970 #columnOrder: 34 1 8 #(5 1 2 3 4) 2608 983302 ##(OS.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 229 1 0 0 210 0 0 0] 8 #() 4018 193 193 nil 35 2578 5 410 ##(UI.StaticText) 34 16 nil 416 34 2 8 1140850945 1 4256 nil 2770 #window nil 5 nil nil nil 4256 nil 8 1920531648 852486 ##(UI.NullConverter) nil nil nil 3906 138 144 34 3 3970 #createAt:extent: 34 2 4018 1 1 4018 971 421 4256 3970 #isEnabled: 8 #(false) 4256 3970 #text: 34 1 8 '
-There are no methods to browse' 4256 4162 8 #[44 0 0 0 0 0 0 0 0 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 229 1 0 0 210 0 0 0] 8 #() 4224 nil 27 2608 nil nil nil 170 192 34 4 4256 8 'noMethodsText' 2608 8 'methods' nil 3906 138 144 34 2 3970 #createAt:extent: 34 2 4018 6143 21 4018 971 421 416 3970 #contextMenu: 34 1 496 416 4162 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 228 13 0 0 220 0 0 0] 34 2 2608 4256 4224 nil 27)!
+	^#(#'!!STL' 4 985166 10 ##(UI.STBViewProxy) ##(UI.WizardCardContainer) 34 15 nil nil 34 2 8 1409286144 131073 416 nil nil nil 5 461638 4 ##(UI.Menu) nil true 34 11 482 nil true 8 #() 8 'De&finitions of' #definitionsMenu 1 nil nil nil nil nil 482 nil true 8 #() 8 '&References to' #referencesMenu 1 nil nil nil nil nil 482 nil true 34 10 1180742 2 ##(UI.CommandMenuItem) 1 1377606 4 ##(UI.CommandDescription) #browseReferencesToGlobal 8 'R&eferences to Global...' 1 1 nil nil nil 658 1 690 #browseContainingText 8 'C&ontaining Text...' 1 1 853318 3 ##(Graphics.Icon) nil true 2031622 ##(Kernel.ImageRelativeFileLocator) 8 'SearchText.ico' 2490894 ##(Kernel.STBExternalResourceLibraryProxy) 8 'dolphindr7.dll' nil nil nil 658 1 690 #browseMethodCategory 8 'Cate&gory...' 1 1 nil nil nil 658 1 690 #browseCompilationFailures 8 'Compilation &Failures' 1 1 nil nil nil 1179974 1 ##(UI.DividerMenuItem) 4097 658 1 690 #browseMethodPackages 8 '&Package <s>' 1 1 786 nil true 832 8 'PackageBrowserShell.ico' 880 nil nil 658 1 690 #browseMethodClasses 8 '&Class <s>' 1 1 786 nil true 832 8 'ClassBrowserShell.ico' 880 nil nil 1010 4097 658 1 690 #browseMethodHistory 8 'Change &History' 1 1 786 nil true 832 8 'MethodHistory.ico' 880 nil nil 658 1 690 #browseAllChangedMethods 8 '&All Changed Methods' 1 1 nil nil nil 8 '&Browse other' nil 134217729 nil nil nil nil nil 1010 4097 658 1 690 #removeMethod 8 '&Delete' 1 1 786 nil true 832 8 'EditClear.ico' 880 nil nil 482 nil true 34 17 658 1 690 #renameMethod 8 'Re&name' 1 1 nil nil nil 658 1 690 #renameMethodReferences 8 'Rename Re&ferences...' 1 1 nil nil nil 658 1 690 #safeRemoveMethods 8 'Rem&ove' 1 1 nil nil nil 1010 4097 658 1 690 #addParameter 8 'Add &Parameter...' 1 1 nil nil nil 482 nil true 8 #() 8 'Remo&ve Parameter' #removeParameterMenu 134217729 nil nil nil nil nil 482 nil true 8 #() 8 'Rena&me Parameter' #renameParameterMenu 134217729 nil nil nil nil nil 482 nil true 8 #() 8 '&Inline Parameter' #inlineParameterMenu 134217729 nil nil nil nil nil 1010 4097 482 nil true 8 #() 8 'Rename &Temporary' #renameTempMenu 134217729 nil nil nil nil nil 482 nil true 8 #() 8 'Conv&ert Temp to Inst. Var.' #convertTempToInstVarMenu 134217729 nil nil nil nil nil 1010 4097 658 1 690 #inlineAllSelfSends 8 'Inline &Self Sends' 1 1 nil nil nil 658 1 690 #pushUpMethods 8 'Push &Up' 9325 1 nil nil nil 658 1 690 #pushDownMethods 8 'Push &Down' 9327 1 nil nil nil 658 1 690 #overrideMethods 8 'Ove&rride <1d>' 1 1 nil nil nil 658 1 690 #moveMethod 8 'Move to &Component...' 1 1 nil nil nil 8 'Refactorin&gs' #methodRefactoringsMenu 134217729 786 nil true 832 8 'Refactoring.ico' 880 nil nil nil nil 1010 4097 658 1 690 #methodPackage 8 '&Package...' 1 1 786 nil true 832 8 'Package.ico' 880 nil nil 482 nil true 8 #() 8 'Add to &Category' #addCategoryMenu 134217729 nil nil nil nil nil 482 nil true 8 #() 8 'Re&move from Category' #removeCategoryMenu 134217729 nil nil nil nil nil 658 1 690 #togglePrivate 8 'Pri&vate' 1 1 nil nil nil 8 '&Method' nil 134217729 nil nil nil nil nil nil nil 416 853318 1 ##(UI.CardLayout) 138 144 34 2 1049094 ##(Core.Association) 3 410 ##(UI.ListView) 34 45 nil 416 34 2 8 1140920393 1 2608 787270 2 ##(UI.ListModel) 138 144 8 #() nil 1769478 ##(Kernel.IdentitySearchPolicy) 917510 ##(Graphics.Color) #default nil 13 nil nil nil 2608 nil 8 1878549248 786950 ##(Core.Message) #displayString 8 #() ##(UI.ListView) 1639750 1 ##(Graphics.IconImageManager) nil nil nil nil nil nil 138 144 34 5 1117254 5 ##(UI.ListViewColumn) 8 'Selector' 335 #left 2818 #selector 8 #() 1246566 3 ##(Kernel.BlockClosure) 0 nil 1639718 ##(Kernel.CompiledExpression) 2 1 ##(Core.UndefinedObject) 8 'doIt' 8 '[:a :b | a selector <= b selector]' 8 #[30 105 226 0 226 32 130 106] #selector 3024 7 513 nil nil nil 2608 nil 1 2818 #infoTip 8 #() 3010 0 nil 3042 4 1 3008 8 'doIt' 8 '[:ctx | ctx view parentPresenter customDrawSelector: ctx]' 8 #[32 105 226 0 159 17 178 106] #view #parentPresenter #customDrawSelector: 3152 7 257 nil 2930 8 'Class' 333 #left 2818 #name 8 #() 2818 #<= 8 #() 2818 #methodClass 8 #() nil 2608 ##(UI.IconicListAbstract) 1 nil 3010 0 nil 3042 4 1 3008 8 'doIt' 8 '[:ctx | ctx view parentPresenter customDrawMethodClass: ctx]' 8 #[32 105 226 0 159 17 178 106] #view #parentPresenter #customDrawMethodClass: 3360 7 257 nil 2930 8 'Namespace' 301 #left 2818 #fullName 2720 3010 0 nil 3042 2 1 3008 8 'doIt' 8 '[:a :b | a fullName <= b fullName ]' 8 #[30 105 226 0 226 32 130 106] #fullName 3488 7 513 nil 2818 #environment 8 #() nil 2608 nil 1 nil nil 2930 8 'Package' 65 #left 2818 #name 8 #() 3010 0 nil 3042 2 1 ##(Core.UndefinedObject) 8 'doIt' 8 '[:a :b | a name <= b name]' 8 #[30 105 226 0 226 32 130 106] #name 3664 7 513 nil 2818 #owningPackage 8 #() nil 2608 ##(UI.IconicListAbstract) 3 nil nil 2930 8 '' 33 #center nil 3010 0 nil 3042 3 1 ##(Core.UndefinedObject) 8 'doIt' 8 '[:m1 :m2 | m1 isPublic = m2 isPublic ifTrue: [m1 selector <= m2 selector] ifFalse: [m1 isPublic]]' 8 #[31 105 17 158 18 158 132 123 17 159 18 159 130 106 17 158 106] #isPublic #selector 3808 7 513 nil nil nil 2608 ##(UI.IconicListAbstract) 1 nil nil #report 8 #() nil 133221 nil 1 nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil 1310982 ##(Core.MessageSequence) 138 144 34 3 1049350 ##(Core.MessageSend) #createAt:extent: 34 2 918022 ##(Graphics.Point) 1 1 4018 971 421 2608 3970 #text: 34 1 8 'Selector' 2608 3970 #columnOrder: 34 1 8 #(5 1 2 3 4) 2608 1179910 ##(OS.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 229 1 0 0 210 0 0 0] 8 #() 4018 193 193 nil 35 2578 5 410 ##(UI.StaticText) 34 16 nil 416 34 2 8 1140850945 1 4256 nil 2770 #window nil 5 nil nil nil 4256 nil 8 1878462176 1049094 ##(UI.NullConverter) nil nil nil 3906 138 144 34 3 3970 #createAt:extent: 34 2 4018 1 1 4018 971 421 4256 3970 #isEnabled: 8 #(false) 4256 3970 #text: 34 1 8 '
+There are no methods to browse' 4256 4162 8 #[44 0 0 0 0 0 0 0 0 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 229 1 0 0 210 0 0 0] 8 #() 4224 nil 27 2608 nil nil nil 170 192 34 4 4256 8 'noMethodsText' 2608 8 'methods' nil 3906 138 144 34 2 3970 #createAt:extent: 34 2 4018 6143 21 4018 971 421 416 3970 #contextMenu: 34 1 496 416 4162 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 228 13 0 0 220 0 0 0] 34 2 2608 4256 4224 nil 27 )!
 
 setAdditionalKeyBindings: anArray
 	AdditionalAccelerators := anArray!
@@ -1307,22 +1307,22 @@ wordWrap: aBoolean
 	"Sets the word wrapping state for instances of the receiver to aBoolean."
 
 	WordWrap := aBoolean! !
-!MethodBrowser class categoriesFor: #autoFormat!accessing!public! !
-!MethodBrowser class categoriesFor: #autoFormat:!accessing!public! !
-!MethodBrowser class categoriesFor: #defaultModel!models!public! !
-!MethodBrowser class categoriesFor: #getAdditionalKeyBindings!accessing!private! !
-!MethodBrowser class categoriesFor: #getCommandQueryHandlers!accessing!private! !
-!MethodBrowser class categoriesFor: #hasInfoTips!accessing!options!public! !
-!MethodBrowser class categoriesFor: #hasInfoTips:!accessing!options!public! !
-!MethodBrowser class categoriesFor: #icon!constants!public! !
-!MethodBrowser class categoriesFor: #initialize!initializing!private! !
-!MethodBrowser class categoriesFor: #publishedAspects!public! !
-!MethodBrowser class categoriesFor: #publishedEventsOfInstances!events!public! !
-!MethodBrowser class categoriesFor: #resource_Class_browser_method_list!public!resources-views! !
-!MethodBrowser class categoriesFor: #resource_Default_view!public!resources-views! !
-!MethodBrowser class categoriesFor: #resource_Method_browser_method_list!public!resources-views! !
-!MethodBrowser class categoriesFor: #setAdditionalKeyBindings:!accessing!private! !
-!MethodBrowser class categoriesFor: #setCommandQueryHandlers:!accessing!private! !
-!MethodBrowser class categoriesFor: #wordWrap!accessing!options!public! !
-!MethodBrowser class categoriesFor: #wordWrap:!accessing!options!public! !
+!Tools.MethodBrowser class categoriesFor: #autoFormat!accessing!public! !
+!Tools.MethodBrowser class categoriesFor: #autoFormat:!accessing!public! !
+!Tools.MethodBrowser class categoriesFor: #defaultModel!models!public! !
+!Tools.MethodBrowser class categoriesFor: #getAdditionalKeyBindings!accessing!private! !
+!Tools.MethodBrowser class categoriesFor: #getCommandQueryHandlers!accessing!private! !
+!Tools.MethodBrowser class categoriesFor: #hasInfoTips!accessing!options!public! !
+!Tools.MethodBrowser class categoriesFor: #hasInfoTips:!accessing!options!public! !
+!Tools.MethodBrowser class categoriesFor: #icon!constants!public! !
+!Tools.MethodBrowser class categoriesFor: #initialize!initializing!private! !
+!Tools.MethodBrowser class categoriesFor: #publishedAspects!public! !
+!Tools.MethodBrowser class categoriesFor: #publishedEventsOfInstances!events!public! !
+!Tools.MethodBrowser class categoriesFor: #resource_Class_browser_method_list!public!resources-views! !
+!Tools.MethodBrowser class categoriesFor: #resource_Default_view!public!resources-views! !
+!Tools.MethodBrowser class categoriesFor: #resource_Method_browser_method_list!public!resources-views! !
+!Tools.MethodBrowser class categoriesFor: #setAdditionalKeyBindings:!accessing!private! !
+!Tools.MethodBrowser class categoriesFor: #setCommandQueryHandlers:!accessing!private! !
+!Tools.MethodBrowser class categoriesFor: #wordWrap!accessing!options!public! !
+!Tools.MethodBrowser class categoriesFor: #wordWrap:!accessing!options!public! !
 

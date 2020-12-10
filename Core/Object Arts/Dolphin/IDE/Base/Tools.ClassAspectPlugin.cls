@@ -1,16 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ClassBrowserPlugin subclass: #ClassAspectPlugin
+Tools.ClassBrowserPlugin subclass: #'Tools.ClassAspectPlugin'
 	instanceVariableNames: 'textPresenter originalText currentClass'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ClassAspectPlugin guid: (GUID fromString: '{310dd22a-ce36-4a0a-ba51-44a6014bd35b}')!
-ClassAspectPlugin isAbstract: true!
-ClassAspectPlugin comment: 'ClassAspectPlugin is an abstract class of <classBrowserPlugin>s that allow editing of a textual aspect of a class in a workspace. '!
-!ClassAspectPlugin categoriesForClass!Browser-Plugins! !
-!ClassAspectPlugin methodsFor!
+Tools.ClassAspectPlugin guid: (Core.GUID fromString: '{310dd22a-ce36-4a0a-ba51-44a6014bd35b}')!
+Tools.ClassAspectPlugin isNonInstantiable: true!
+Tools.ClassAspectPlugin comment: 'ClassAspectPlugin is an abstract class of <classBrowserPlugin>s that allow editing of a textual aspect of a class in a workspace. '!
+!Tools.ClassAspectPlugin categoriesForClass!Browser-Plugins! !
+!Tools.ClassAspectPlugin methodsFor!
 
 accept
 	"Save the text to the class."
@@ -180,29 +180,29 @@ systemUpdateEvent
 
 textPresenterClass
 	^Smalltalk developmentSystem workspaceClass! !
-!ClassAspectPlugin categoriesFor: #accept!commands!public! !
-!ClassAspectPlugin categoriesFor: #applyOptions!options!private! !
-!ClassAspectPlugin categoriesFor: #aspect!constants!private! !
-!ClassAspectPlugin categoriesFor: #backgroundUpdate!private!updating! !
-!ClassAspectPlugin categoriesFor: #caption!constants!private! !
-!ClassAspectPlugin categoriesFor: #createComponents!initializing!private! !
-!ClassAspectPlugin categoriesFor: #createSchematicWiring!initializing!public! !
-!ClassAspectPlugin categoriesFor: #currentClassUpdated!event handling!private! !
-!ClassAspectPlugin categoriesFor: #defaultHelpId!constants!public! !
-!ClassAspectPlugin categoriesFor: #displayOn:!displaying!public! !
-!ClassAspectPlugin categoriesFor: #foregroundUpdate!private!updating! !
-!ClassAspectPlugin categoriesFor: #icon!accessing!public! !
-!ClassAspectPlugin categoriesFor: #isModified!public!testing! !
-!ClassAspectPlugin categoriesFor: #modifiedModel!accessing!public! !
-!ClassAspectPlugin categoriesFor: #newAspectBufferOn:!helpers!private! !
-!ClassAspectPlugin categoriesFor: #onBrowserClassSelected!event handling!private! !
-!ClassAspectPlugin categoriesFor: #onBrowserMethodSelected!event handling!private! !
-!ClassAspectPlugin categoriesFor: #onClassUpdated:!event handling!private! !
-!ClassAspectPlugin categoriesFor: #onShownInBrowser!event handling!private! !
-!ClassAspectPlugin categoriesFor: #promptToOverwrite!helpers!private! !
-!ClassAspectPlugin categoriesFor: #promptToSaveClassChanges:!helpers!public! !
-!ClassAspectPlugin categoriesFor: #queryCommand:!commands!private! !
-!ClassAspectPlugin categoriesFor: #refreshIcon!private!updating! !
-!ClassAspectPlugin categoriesFor: #systemUpdateEvent!constants!private! !
-!ClassAspectPlugin categoriesFor: #textPresenterClass!initializing!private! !
+!Tools.ClassAspectPlugin categoriesFor: #accept!commands!public! !
+!Tools.ClassAspectPlugin categoriesFor: #applyOptions!options!private! !
+!Tools.ClassAspectPlugin categoriesFor: #aspect!constants!private! !
+!Tools.ClassAspectPlugin categoriesFor: #backgroundUpdate!private!updating! !
+!Tools.ClassAspectPlugin categoriesFor: #caption!constants!private! !
+!Tools.ClassAspectPlugin categoriesFor: #createComponents!initializing!private! !
+!Tools.ClassAspectPlugin categoriesFor: #createSchematicWiring!initializing!public! !
+!Tools.ClassAspectPlugin categoriesFor: #currentClassUpdated!event handling!private! !
+!Tools.ClassAspectPlugin categoriesFor: #defaultHelpId!constants!public! !
+!Tools.ClassAspectPlugin categoriesFor: #displayOn:!displaying!public! !
+!Tools.ClassAspectPlugin categoriesFor: #foregroundUpdate!private!updating! !
+!Tools.ClassAspectPlugin categoriesFor: #icon!accessing!public! !
+!Tools.ClassAspectPlugin categoriesFor: #isModified!public!testing! !
+!Tools.ClassAspectPlugin categoriesFor: #modifiedModel!accessing!public! !
+!Tools.ClassAspectPlugin categoriesFor: #newAspectBufferOn:!helpers!private! !
+!Tools.ClassAspectPlugin categoriesFor: #onBrowserClassSelected!event handling!private! !
+!Tools.ClassAspectPlugin categoriesFor: #onBrowserMethodSelected!event handling!private! !
+!Tools.ClassAspectPlugin categoriesFor: #onClassUpdated:!event handling!private! !
+!Tools.ClassAspectPlugin categoriesFor: #onShownInBrowser!event handling!private! !
+!Tools.ClassAspectPlugin categoriesFor: #promptToOverwrite!helpers!private! !
+!Tools.ClassAspectPlugin categoriesFor: #promptToSaveClassChanges:!helpers!public! !
+!Tools.ClassAspectPlugin categoriesFor: #queryCommand:!commands!private! !
+!Tools.ClassAspectPlugin categoriesFor: #refreshIcon!private!updating! !
+!Tools.ClassAspectPlugin categoriesFor: #systemUpdateEvent!constants!private! !
+!Tools.ClassAspectPlugin categoriesFor: #textPresenterClass!initializing!private! !
 

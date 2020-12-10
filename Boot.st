@@ -30,16 +30,16 @@ productName := SessionManager current argv at: 3 ifAbsent: [ | p |
 	"We'll need MVP bits in order to be able to display the choice prompter for the image version to boot"
 	Package manager install: 'Core\Object Arts\Dolphin\MVP\Presenters\Prompters\Dolphin Choice Prompter.pax'.
 	p := (Smalltalk at: #ChoicePrompter)
-		choices: (DolphinProduct allSubclasses reject: [:each | each isAbstract]) 
+		choices: (Tools.DolphinProduct allSubclasses reject: [:each | each isAbstract]) 
 		caption: 'Product to boot...'.
 	p isNil ifTrue: [SessionManager current quit: -1].
 	isPrompted := true.
 	p name].
 
-[product := Smalltalk at: productName asSymbol ifAbsent: [ | path |
+[product := Tools at: productName asSymbol ifAbsent: [ | path |
 	path := SessionManager current argv at: 4.
 	Package manager install: path.
-	Smalltalk at: productName asSymbol].
+	Tools at: productName asSymbol].
 SessionManager current saveImage: (File fullPathOf: product shortProductName).
 Notification signal: 'Booting ', product name.
 product boot] on: Error do: [:ex | 
@@ -51,7 +51,7 @@ ExternalStructure allSubclasses do: [:e | e ensureDefined]!
 
 SessionManager current bootFinished!
 
-DevelopmentSessionManager installNew!
+Tools.DevelopmentSessionManager installNew!
 
 SessionManager current defaultResourceLibrary loadFlags: 0!
 

@@ -1,14 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-DolphinTest subclass: #MenuPainterTest
+Core.Tests.DolphinTest subclass: #'Tools.Tests.MenuPainterTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-MenuPainterTest guid: (GUID fromString: '{3118e3fb-ce52-409f-9738-275074c5c9a6}')!
-MenuPainterTest comment: ''!
-!MenuPainterTest categoriesForClass!Unclassified! !
-!MenuPainterTest methodsFor!
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Tools.Tests.MenuPainterTest guid: (Core.GUID fromString: '{3118e3fb-ce52-409f-9738-275074c5c9a6}')!
+Tools.Tests.MenuPainterTest comment: ''!
+!Tools.Tests.MenuPainterTest categoriesForClass!Unclassified! !
+!Tools.Tests.MenuPainterTest methodsFor!
 
 subjectClass
 	^PopupMenuPainter!
@@ -27,6 +28,6 @@ testSplitMenuText
 	self assert: (subject splitMenuText: 'c&&ab') equals: #('c&&ab' '' '').
 	self assert: (subject splitMenuText: '🐬&&&🍺🐬') equals: #('🐬&&' '🍺' '🐬').
 	self assert: (subject splitMenuText: '') equals: #('' '' '')! !
-!MenuPainterTest categoriesFor: #subjectClass!constants!private! !
-!MenuPainterTest categoriesFor: #testSplitMenuText!public! !
+!Tools.Tests.MenuPainterTest categoriesFor: #subjectClass!constants!private! !
+!Tools.Tests.MenuPainterTest categoriesFor: #testSplitMenuText!public! !
 

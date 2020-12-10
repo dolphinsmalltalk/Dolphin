@@ -1,12 +1,12 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-DolphinTest subclass: #XMLDOMNodeTest
+Core.Tests.DolphinTest subclass: #XMLDOMNodeTest
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-XMLDOMNodeTest guid: (GUID fromString: '{956b7839-a2fb-47f1-9c74-2aacae4bdffb}')!
+XMLDOMNodeTest guid: (Core.GUID fromString: '{956b7839-a2fb-47f1-9c74-2aacae4bdffb}')!
 XMLDOMNodeTest comment: ''!
 !XMLDOMNodeTest categoriesForClass!Unclassified! !
 !XMLDOMNodeTest methodsFor!

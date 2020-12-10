@@ -26,7 +26,6 @@ package setMethodNames: #(
 
 package setPrerequisites: #(
 	'..\..\..\Base\Dolphin'
-	'..\..\..\Base\Deprecated\Dolphin Base (Old Names)'
 	'Dolphin Common Dialogs'
 	'..\..\Base\Dolphin MVP Base'
 	'..\..\..\ActiveX\COM\OLE COM'

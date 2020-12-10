@@ -617,10 +617,10 @@ composePath: aPathString stem: aStemString extension: anExtensionString
 composePath: path subPath: subpath
 	"Composes a full pathname from path and subpath components."
 
-	| fullName |
-	fullName := self pathBuffer.
+	| buffer |
+	buffer := self pathBuffer.
 	^ShlwapiLibrary default
-		pathCombine: fullName
+		pathCombine: buffer
 		lpszDir: path
 		lpszFile: subpath!
 

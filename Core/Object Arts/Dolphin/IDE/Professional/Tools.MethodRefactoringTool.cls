@@ -1,18 +1,18 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-RefactoringTool subclass: #MethodRefactoringTool
+Tools.RefactoringTool subclass: #'Tools.MethodRefactoringTool'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-MethodRefactoringTool guid: (GUID fromString: '{10c7f39b-1ac8-431a-bdc8-4ed608d35a1c}')!
-MethodRefactoringTool comment: 'MethodRefactoringTool implements method refactorings for a browser.
+Tools.MethodRefactoringTool guid: (Core.GUID fromString: '{10c7f39b-1ac8-431a-bdc8-4ed608d35a1c}')!
+Tools.MethodRefactoringTool comment: 'MethodRefactoringTool implements method refactorings for a browser.
 
 There are a number of browser (or browser like tools) that display lists of methods and which support method level refactorings, for example the class & method browsers, the debugger (where the list of methods is those on the stack), and the package browser. This class encapsulates method-level refactoring behaviour so that it does not need to be duplicated in all those places.
 '!
-!MethodRefactoringTool categoriesForClass!Unclassified! !
-!MethodRefactoringTool methodsFor!
+!Tools.MethodRefactoringTool categoriesForClass!Unclassified! !
+!Tools.MethodRefactoringTool methodsFor!
 
 addParameter
 	"Command to invoke the Add Parameter to Method refactoring."
@@ -210,23 +210,23 @@ safeRemoveMethods
 
 	presenter performMethodsRefactoring: [:methods | self systemModel safeRemoveMethods: methods]
 		name: 'Safe Remove Methods'! !
-!MethodRefactoringTool categoriesFor: #addParameter!commands!public!refactoring! !
-!MethodRefactoringTool categoriesFor: #allMethodTemps!event handling!menus!public! !
-!MethodRefactoringTool categoriesFor: #buildTempsMenu:command:identifiers:!helpers!menus!private! !
-!MethodRefactoringTool categoriesFor: #canPushDownMethods!public!refactoring!testing! !
-!MethodRefactoringTool categoriesFor: #canPushUpMethods!public!refactoring!testing! !
-!MethodRefactoringTool categoriesFor: #inlineAllSelfSends!commands!private!refactoring! !
-!MethodRefactoringTool categoriesFor: #methodArguments!event handling!menus!public! !
-!MethodRefactoringTool categoriesFor: #methodTemps!event handling!menus!public! !
-!MethodRefactoringTool categoriesFor: #moveMethod!commands!private!refactoring! !
-!MethodRefactoringTool categoriesFor: #onAboutToDisplayMenu:!event handling!menus!public! !
-!MethodRefactoringTool categoriesFor: #pushDownMethods!commands!private!refactoring! !
-!MethodRefactoringTool categoriesFor: #pushMethods:!public!refactoring! !
-!MethodRefactoringTool categoriesFor: #pushUpMethods!commands!public!refactoring! !
-!MethodRefactoringTool categoriesFor: #queryCommand:command:!commands!private! !
-!MethodRefactoringTool categoriesFor: #renameItCommand!constants!private!refactoring! !
-!MethodRefactoringTool categoriesFor: #renameMethod!public!refactoring! !
-!MethodRefactoringTool categoriesFor: #renameMethod:!commands!public!refactoring! !
-!MethodRefactoringTool categoriesFor: #renameMethodReferences!commands!public!refactoring! !
-!MethodRefactoringTool categoriesFor: #safeRemoveMethods!commands!public!refactoring! !
+!Tools.MethodRefactoringTool categoriesFor: #addParameter!commands!public!refactoring! !
+!Tools.MethodRefactoringTool categoriesFor: #allMethodTemps!event handling!menus!public! !
+!Tools.MethodRefactoringTool categoriesFor: #buildTempsMenu:command:identifiers:!helpers!menus!private! !
+!Tools.MethodRefactoringTool categoriesFor: #canPushDownMethods!public!refactoring!testing! !
+!Tools.MethodRefactoringTool categoriesFor: #canPushUpMethods!public!refactoring!testing! !
+!Tools.MethodRefactoringTool categoriesFor: #inlineAllSelfSends!commands!private!refactoring! !
+!Tools.MethodRefactoringTool categoriesFor: #methodArguments!event handling!menus!public! !
+!Tools.MethodRefactoringTool categoriesFor: #methodTemps!event handling!menus!public! !
+!Tools.MethodRefactoringTool categoriesFor: #moveMethod!commands!private!refactoring! !
+!Tools.MethodRefactoringTool categoriesFor: #onAboutToDisplayMenu:!event handling!menus!public! !
+!Tools.MethodRefactoringTool categoriesFor: #pushDownMethods!commands!private!refactoring! !
+!Tools.MethodRefactoringTool categoriesFor: #pushMethods:!public!refactoring! !
+!Tools.MethodRefactoringTool categoriesFor: #pushUpMethods!commands!public!refactoring! !
+!Tools.MethodRefactoringTool categoriesFor: #queryCommand:command:!commands!private! !
+!Tools.MethodRefactoringTool categoriesFor: #renameItCommand!constants!private!refactoring! !
+!Tools.MethodRefactoringTool categoriesFor: #renameMethod!public!refactoring! !
+!Tools.MethodRefactoringTool categoriesFor: #renameMethod:!commands!public!refactoring! !
+!Tools.MethodRefactoringTool categoriesFor: #renameMethodReferences!commands!public!refactoring! !
+!Tools.MethodRefactoringTool categoriesFor: #safeRemoveMethods!commands!public!refactoring! !
 

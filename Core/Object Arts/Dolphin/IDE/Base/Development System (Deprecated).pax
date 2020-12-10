@@ -1,0 +1,81 @@
+﻿| package |
+package := Package name: 'Development System (Deprecated)'.
+package paxVersion: 2.1;
+	basicComment: 'Dolphin Smalltalk Development System - Deprecated content
+
+This package contains obsolete tools from the IDE and variables aliasing old global names to new namespaced names.'.
+
+
+package setVariableNames: #(
+	#{Smalltalk.Aspect}
+	#{Smalltalk.ClassBrowserAbstract}
+	#{Smalltalk.ClassHierarchyPresenter}
+	#{Smalltalk.Debugger}
+	#{Smalltalk.MethodBrowserShell}
+	#{Smalltalk.MethodWorkspace}
+	#{Smalltalk.SmalltalkExpressionStyler}
+	#{Smalltalk.SmalltalkMethodStyler}
+	#{Smalltalk.SmalltalkSystem}
+	#{Smalltalk.SmalltalkSystemIcon}
+	#{Smalltalk.SmalltalkToolShell}
+	#{Smalltalk.SmalltalkWorkspace}
+	#{Smalltalk.SmalltalkWorkspaceDocument}
+	#{Smalltalk.ViewComposer}
+).
+
+package setAliasVariableNames: #(
+	#{Smalltalk.Aspect}
+	#{Smalltalk.ClassBrowserAbstract}
+	#{Smalltalk.ClassHierarchyPresenter}
+	#{Smalltalk.Debugger}
+	#{Smalltalk.MethodBrowserShell}
+	#{Smalltalk.MethodWorkspace}
+	#{Smalltalk.SmalltalkExpressionStyler}
+	#{Smalltalk.SmalltalkMethodStyler}
+	#{Smalltalk.SmalltalkSystem}
+	#{Smalltalk.SmalltalkSystemIcon}
+	#{Smalltalk.SmalltalkToolShell}
+	#{Smalltalk.SmalltalkWorkspace}
+	#{Smalltalk.SmalltalkWorkspaceDocument}
+	#{Smalltalk.ViewComposer}
+).
+
+package setPrerequisites: #(
+	'Development System'
+).
+
+package!
+
+"Variable Aliases"!
+
+Smalltalk.Aspect := Tools.Aspect!
+
+Smalltalk.ClassBrowserAbstract := Tools.ClassBrowserAbstract!
+
+Smalltalk.ClassHierarchyPresenter := Tools.ClassHierarchySelector!
+
+Smalltalk.Debugger := Tools.Debugger!
+
+Smalltalk.MethodBrowserShell := Tools.MethodBrowserShell!
+
+Smalltalk.MethodWorkspace := Tools.MethodWorkspace!
+
+Smalltalk.SmalltalkExpressionStyler := Tools.SmalltalkExpressionStyler!
+
+Smalltalk.SmalltalkMethodStyler := Tools.SmalltalkMethodStyler!
+
+Smalltalk.SmalltalkSystem := Tools.SmalltalkSystem!
+
+Smalltalk.SmalltalkSystemIcon := Tools.SmalltalkSystemIcon!
+
+Smalltalk.SmalltalkToolShell := Tools.SmalltalkToolShell!
+
+Smalltalk.SmalltalkWorkspace := Tools.SmalltalkWorkspace!
+
+Smalltalk.SmalltalkWorkspaceDocument := Tools.SmalltalkWorkspaceDocument!
+
+Smalltalk.ViewComposer := Tools.ViewComposer!
+
+
+"End of package definition"!
+

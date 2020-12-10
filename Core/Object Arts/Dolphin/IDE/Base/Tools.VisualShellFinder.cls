@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Object subclass: #VisualShellFinder
+Core.Object subclass: #'Tools.VisualShellFinder'
 	instanceVariableNames: 'mouseTracker foundObject foundCursor notFoundCursor shellClassFilter'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-VisualShellFinder guid: (GUID fromString: '{69da66cc-5c94-4f46-893b-41ba51969fb8}')!
-VisualShellFinder comment: ''!
-!VisualShellFinder categoriesForClass!Kernel-Objects! !
-!VisualShellFinder methodsFor!
+Tools.VisualShellFinder guid: (Core.GUID fromString: '{69da66cc-5c94-4f46-893b-41ba51969fb8}')!
+Tools.VisualShellFinder comment: ''!
+!Tools.VisualShellFinder categoriesForClass!Kernel-Objects! !
+!Tools.VisualShellFinder methodsFor!
 
 cancelTrackingAt: aPoint
 	"Private - This is an auto-generated target implementation for the protocol <mouseTrackerTarget>"
@@ -77,25 +77,25 @@ visualShellAt: aPoint
 	self shellClassFilter isNil ifTrue: [^shell].
 	self shellClassFilter detect: [:each | shell isKindOf: each] ifNone: [^nil].
 	^shell! !
-!VisualShellFinder categoriesFor: #cancelTrackingAt:!private!tracking! !
-!VisualShellFinder categoriesFor: #continueTrackingAt:from:!private!tracking! !
-!VisualShellFinder categoriesFor: #defaultFoundCursor!constants!public! !
-!VisualShellFinder categoriesFor: #defaultNotFoundCursor!constants!public! !
-!VisualShellFinder categoriesFor: #endTrackingAt:!private!tracking! !
-!VisualShellFinder categoriesFor: #findObject!commands!public! !
-!VisualShellFinder categoriesFor: #foundCursor:!accessing!public! !
-!VisualShellFinder categoriesFor: #initialize!private! !
-!VisualShellFinder categoriesFor: #notFoundCursor:!accessing!public! !
-!VisualShellFinder categoriesFor: #setCursor:!private!tracking! !
-!VisualShellFinder categoriesFor: #shellClassFilter!accessing!public! !
-!VisualShellFinder categoriesFor: #shellClassFilter:!accessing!public! !
-!VisualShellFinder categoriesFor: #startTrackingAt:!private!tracking! !
-!VisualShellFinder categoriesFor: #value!public! !
-!VisualShellFinder categoriesFor: #visualShellAt:!helpers!public! !
+!Tools.VisualShellFinder categoriesFor: #cancelTrackingAt:!private!tracking! !
+!Tools.VisualShellFinder categoriesFor: #continueTrackingAt:from:!private!tracking! !
+!Tools.VisualShellFinder categoriesFor: #defaultFoundCursor!constants!public! !
+!Tools.VisualShellFinder categoriesFor: #defaultNotFoundCursor!constants!public! !
+!Tools.VisualShellFinder categoriesFor: #endTrackingAt:!private!tracking! !
+!Tools.VisualShellFinder categoriesFor: #findObject!commands!public! !
+!Tools.VisualShellFinder categoriesFor: #foundCursor:!accessing!public! !
+!Tools.VisualShellFinder categoriesFor: #initialize!private! !
+!Tools.VisualShellFinder categoriesFor: #notFoundCursor:!accessing!public! !
+!Tools.VisualShellFinder categoriesFor: #setCursor:!private!tracking! !
+!Tools.VisualShellFinder categoriesFor: #shellClassFilter!accessing!public! !
+!Tools.VisualShellFinder categoriesFor: #shellClassFilter:!accessing!public! !
+!Tools.VisualShellFinder categoriesFor: #startTrackingAt:!private!tracking! !
+!Tools.VisualShellFinder categoriesFor: #value!public! !
+!Tools.VisualShellFinder categoriesFor: #visualShellAt:!helpers!public! !
 
-VisualShellFinder methodProtocol: #mouseTrackerTarget attributes: #(#readOnly) selectors: #(#cancelTrackingAt: #continueTrackingAt:from: #endTrackingAt: #startTrackingAt:)!
+Tools.VisualShellFinder methodProtocol: #mouseTrackerTarget attributes: #(#readOnly) selectors: #(#cancelTrackingAt: #continueTrackingAt:from: #endTrackingAt: #startTrackingAt:)!
 
-!VisualShellFinder class methodsFor!
+!Tools.VisualShellFinder class methodsFor!
 
 for: aShellClass 
 	^self forAnyOf: (Set with: aShellClass)!
@@ -107,7 +107,7 @@ forAnyOf: aSetOfShellClasses
 
 new
 	^super new initialize! !
-!VisualShellFinder class categoriesFor: #for:!public! !
-!VisualShellFinder class categoriesFor: #forAnyOf:!public! !
-!VisualShellFinder class categoriesFor: #new!public! !
+!Tools.VisualShellFinder class categoriesFor: #for:!public! !
+!Tools.VisualShellFinder class categoriesFor: #forAnyOf:!public! !
+!Tools.VisualShellFinder class categoriesFor: #new!public! !
 

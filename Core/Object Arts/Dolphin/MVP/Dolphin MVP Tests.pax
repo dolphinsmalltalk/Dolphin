@@ -633,7 +633,7 @@ testRectangleReadWrite
 
 testResourceReadWrite
 	| rid shell shell1 shell2 in contents1 contents2 |
-	rid := UI.ResourceIdentifier class: UI.Shell name: 'Default view'.
+	rid := UI.ResourceIdentifier class: Tools.ClassBrowserShell name: 'Default view'.
 	
 	[shell := rid loadWithContext: UI.View desktop.
 	contents1 := self writeLiteralsFor: shell.

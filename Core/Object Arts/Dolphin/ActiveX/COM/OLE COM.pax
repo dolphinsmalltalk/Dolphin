@@ -154,7 +154,7 @@ Core.Object subclass: #COMInterfaceImp
 Core.Object subclass: #COMObjectStub
 	instanceVariableNames: 'cookie object count interfaces outerUnknown'
 	classVariableNames: 'IdentityRegistry'
-	imports: #(#{OS.Win32Errors})
+	imports: #(#{OS.Win32Errors private})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Core.SequenceableCollection subclass: #OLEEnumerator
@@ -250,7 +250,7 @@ Core.GUID variableByteSubclass: #IID
 External.Structure subclass: #COMInterface
 	instanceVariableNames: 'implementor'
 	classVariableNames: 'InterfaceClasses'
-	imports: #(#{Smalltalk.OLEConstants} #{OS.Win32Constants} #{OS.Win32Errors})
+	imports: #(#{Smalltalk.OLEConstants private} #{OS.Win32Constants private} #{OS.Win32Errors private})
 	classInstanceVariableNames: 'argSizes functions typeLib'
 	classConstants: {
 		'_OffsetOf_argSizes' -> 16r4.
@@ -261,7 +261,7 @@ External.Structure subclass: #COMInterface
 External.Structure subclass: #OLEStructure
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{Smalltalk.OLEConstants})
+	imports: #(#{Smalltalk.OLEConstants private})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 COMInterface subclass: #IUnknown

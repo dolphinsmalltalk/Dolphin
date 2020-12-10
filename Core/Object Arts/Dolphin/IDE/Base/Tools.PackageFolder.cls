@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Folder subclass: #PackageFolder
+UI.Folder subclass: #'Tools.PackageFolder'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-PackageFolder guid: (GUID fromString: '{78425858-c3b5-4314-847a-772ff5268a84}')!
-PackageFolder comment: ''!
-!PackageFolder categoriesForClass!MVP-Models! !
-!PackageFolder methodsFor!
+Tools.PackageFolder guid: (Core.GUID fromString: '{78425858-c3b5-4314-847a-772ff5268a84}')!
+Tools.PackageFolder comment: ''!
+!Tools.PackageFolder categoriesForClass!MVP-Models! !
+!Tools.PackageFolder methodsFor!
 
 icon
 	"Answer an <Icon> to use when representing the receiver"
@@ -27,11 +27,11 @@ rootName
 	"Private - Answer the name to use for the folder at the root of the current image hierarchy"
 
 	^'$'! !
-!PackageFolder categoriesFor: #icon!constants!public! !
-!PackageFolder categoriesFor: #isDolphinFolder!private!testing! !
-!PackageFolder categoriesFor: #rootName!constants!private! !
+!Tools.PackageFolder categoriesFor: #icon!constants!public! !
+!Tools.PackageFolder categoriesFor: #isDolphinFolder!private!testing! !
+!Tools.PackageFolder categoriesFor: #rootName!constants!private! !
 
-!PackageFolder class methodsFor!
+!Tools.PackageFolder class methodsFor!
 
 dolphinRoot
 	"Answer an instance of the receiver representing the current dolphin package hierarchy"
@@ -45,7 +45,7 @@ forPackage: aPackage
 	"Answer an instance of the receiver for the folder of aPackage"
 
 	^self pathname: aPackage packageFolder! !
-!PackageFolder class categoriesFor: #dolphinRoot!instance creation!public! !
-!PackageFolder class categoriesFor: #dolphinRootPathname!constants!instance creation!public! !
-!PackageFolder class categoriesFor: #forPackage:!instance creation!public! !
+!Tools.PackageFolder class categoriesFor: #dolphinRoot!instance creation!public! !
+!Tools.PackageFolder class categoriesFor: #dolphinRootPathname!constants!instance creation!public! !
+!Tools.PackageFolder class categoriesFor: #forPackage:!instance creation!public! !
 

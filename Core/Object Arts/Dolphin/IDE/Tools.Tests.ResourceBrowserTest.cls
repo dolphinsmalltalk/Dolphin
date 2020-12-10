@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Core.Tests.DolphinTest subclass: #ResourceBrowserTest
+Core.Tests.DolphinTest subclass: #'Tools.Tests.ResourceBrowserTest'
 	instanceVariableNames: 'resourceBrowser testClass'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ResourceBrowserTest guid: (Core.GUID fromString: '{8d888ba2-f5b7-402c-9bff-e88b2cde2fab}')!
-ResourceBrowserTest comment: ''!
-!ResourceBrowserTest categoriesForClass!Unclassified! !
-!ResourceBrowserTest methodsFor!
+Tools.Tests.ResourceBrowserTest guid: (Core.GUID fromString: '{8d888ba2-f5b7-402c-9bff-e88b2cde2fab}')!
+Tools.Tests.ResourceBrowserTest comment: ''!
+!Tools.Tests.ResourceBrowserTest categoriesForClass!Unclassified! !
+!Tools.Tests.ResourceBrowserTest methodsFor!
 
 getShellResource
 	^(ResourceIdentifier class: Shell) resource!
@@ -63,13 +63,13 @@ testBasicContents
 	self assert: self resourceList size > 100.
 	self assert: (self resourceList includes: (ResourceIdentifier class: Shell)).
 	self assert: (self resourceList includes: (ResourceIdentifier class: SystemBrowserShell))! !
-!ResourceBrowserTest categoriesFor: #getShellResource!private!unit tests! !
-!ResourceBrowserTest categoriesFor: #resourceBrowser!private!unit tests! !
-!ResourceBrowserTest categoriesFor: #resourceDisplayList!private!unit tests! !
-!ResourceBrowserTest categoriesFor: #resourceList!private!unit tests! !
-!ResourceBrowserTest categoriesFor: #resourceToolboxPresenter!private!unit tests! !
-!ResourceBrowserTest categoriesFor: #setUp!private!unit tests! !
-!ResourceBrowserTest categoriesFor: #tearDown!private!unit tests! !
-!ResourceBrowserTest categoriesFor: #testAddRemoveResource!public!unit tests! !
-!ResourceBrowserTest categoriesFor: #testBasicContents!public!unit tests! !
+!Tools.Tests.ResourceBrowserTest categoriesFor: #getShellResource!private!unit tests! !
+!Tools.Tests.ResourceBrowserTest categoriesFor: #resourceBrowser!private!unit tests! !
+!Tools.Tests.ResourceBrowserTest categoriesFor: #resourceDisplayList!private!unit tests! !
+!Tools.Tests.ResourceBrowserTest categoriesFor: #resourceList!private!unit tests! !
+!Tools.Tests.ResourceBrowserTest categoriesFor: #resourceToolboxPresenter!private!unit tests! !
+!Tools.Tests.ResourceBrowserTest categoriesFor: #setUp!private!unit tests! !
+!Tools.Tests.ResourceBrowserTest categoriesFor: #tearDown!private!unit tests! !
+!Tools.Tests.ResourceBrowserTest categoriesFor: #testAddRemoveResource!public!unit tests! !
+!Tools.Tests.ResourceBrowserTest categoriesFor: #testBasicContents!public!unit tests! !
 

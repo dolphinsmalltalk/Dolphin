@@ -1,20 +1,20 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-TreeModel subclass: #CategoryTreeModel
+UI.TreeModel subclass: #'Tools.CategoryTreeModel'
 	instanceVariableNames: 'title'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-CategoryTreeModel guid: (GUID fromString: '{87b4c671-026e-11d3-9fd7-00a0cc3e4a32}')!
-CategoryTreeModel comment: 'CategoryTreeModel represents a <treeModel> holding <Category> objects.
+Tools.CategoryTreeModel guid: (Core.GUID fromString: '{87b4c671-026e-11d3-9fd7-00a0cc3e4a32}')!
+Tools.CategoryTreeModel comment: 'CategoryTreeModel represents a <treeModel> holding <Category> objects.
 
 Instance Variables:
 	title	<IntermediateCategory> the root of the tree.
 
 '!
-!CategoryTreeModel categoriesForClass!MVP-Models! !
-!CategoryTreeModel methodsFor!
+!Tools.CategoryTreeModel categoriesForClass!MVP-Models! !
+!Tools.CategoryTreeModel methodsFor!
 
 addCategory: aCategory
 	"Private - Adds aCategory and all of its parent categories to the receiver. 
@@ -62,14 +62,14 @@ title: category
 	"Set the topmost node of the tree to be the specified <Category>"
 
 	title := category! !
-!CategoryTreeModel categoriesFor: #addCategory:!adding!private! !
-!CategoryTreeModel categoriesFor: #list:!accessing!public! !
-!CategoryTreeModel categoriesFor: #title!accessing!public! !
-!CategoryTreeModel categoriesFor: #title:!accessing!public! !
+!Tools.CategoryTreeModel categoriesFor: #addCategory:!adding!private! !
+!Tools.CategoryTreeModel categoriesFor: #list:!accessing!public! !
+!Tools.CategoryTreeModel categoriesFor: #title!accessing!public! !
+!Tools.CategoryTreeModel categoriesFor: #title:!accessing!public! !
 
-!CategoryTreeModel class methodsFor!
+!Tools.CategoryTreeModel class methodsFor!
 
 defaultSearchPolicy
 	^SearchPolicy equality! !
-!CategoryTreeModel class categoriesFor: #defaultSearchPolicy!constants!public! !
+!Tools.CategoryTreeModel class categoriesFor: #defaultSearchPolicy!constants!public! !
 

@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Shell subclass: #TranscriptShell
+UI.Shell subclass: #'UI.TranscriptShell'
 	instanceVariableNames: 'outputWindow buffer bufferProtect'
 	classVariableNames: 'DefaultExtent FlashOnOutput'
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-TranscriptShell guid: (GUID fromString: '{87b4c6c5-026e-11d3-9fd7-00a0cc3e4a32}')!
-TranscriptShell comment: 'TranscriptShell is a <SmalltalkToolShell> that implements the Transcript notification logging window.
+UI.TranscriptShell guid: (Core.GUID fromString: '{87b4c6c5-026e-11d3-9fd7-00a0cc3e4a32}')!
+UI.TranscriptShell comment: 'TranscriptShell is a <SmalltalkToolShell> that implements the Transcript notification logging window.
 
 Note that although TranscriptShell is a development tool, it is not dependent on the Development System package to operate. Among the Dolphin development tools it is unusual in that its model is not SmalltalkSystem, which means that it has to reproduce some of the functionality normally implemented there.
 
@@ -17,8 +17,8 @@ Instance Variables:
 	bufferProtect		<Mutex> protecting the buffer.
 
 '!
-!TranscriptShell categoriesForClass!MVP-Presenters!MVP-Resources-IDE Tools! !
-!TranscriptShell methodsFor!
+!UI.TranscriptShell categoriesForClass!MVP-Presenters!MVP-Resources-IDE Tools! !
+!UI.TranscriptShell methodsFor!
 
 << anObject
 	"Store the argument, or the elements of the argument if it is a <collection>, as the next element or elements of the receiver."
@@ -326,58 +326,58 @@ updateWindow
 
 visit: anObject do: aNiladicValuable
 	aNiladicValuable value! !
-!TranscriptShell categoriesFor: #<<!public! !
-!TranscriptShell categoriesFor: #addToCommandRoute:!commands!public! !
-!TranscriptShell categoriesFor: #alertUser!operations!private! !
-!TranscriptShell categoriesFor: #basicPrint:!printing!private! !
-!TranscriptShell categoriesFor: #clear!initializing!public! !
-!TranscriptShell categoriesFor: #clearAll!initializing!public! !
-!TranscriptShell categoriesFor: #close!operations!public! !
-!TranscriptShell categoriesFor: #contents!accessing!public! !
-!TranscriptShell categoriesFor: #cr!adding!public! !
-!TranscriptShell categoriesFor: #createComponents!initializing!public! !
-!TranscriptShell categoriesFor: #createSchematicWiring!initializing!public! !
-!TranscriptShell categoriesFor: #crtab!adding!public! !
-!TranscriptShell categoriesFor: #crtab:!adding!public! !
-!TranscriptShell categoriesFor: #defaultHelpId!public! !
-!TranscriptShell categoriesFor: #display:!printing!public! !
-!TranscriptShell categoriesFor: #fileFileIn!commands!public! !
-!TranscriptShell categoriesFor: #flush!buffer!public! !
-!TranscriptShell categoriesFor: #forgetSize!commands!public! !
-!TranscriptShell categoriesFor: #hasOutputWindow!accessing!private! !
-!TranscriptShell categoriesFor: #initialize!initializing!private! !
-!TranscriptShell categoriesFor: #isEmpty!public!testing! !
-!TranscriptShell categoriesFor: #locale!accessing!public! !
-!TranscriptShell categoriesFor: #next:put:!operations!public! !
-!TranscriptShell categoriesFor: #next:putAll:startingAt:!accessing!public! !
-!TranscriptShell categoriesFor: #nextPut:!adding!public! !
-!TranscriptShell categoriesFor: #nextPutAll:!adding!public! !
-!TranscriptShell categoriesFor: #notEmpty!public!testing! !
-!TranscriptShell categoriesFor: #onCloseRequested:!event handling!public! !
-!TranscriptShell categoriesFor: #onViewOpened!event handling!private! !
-!TranscriptShell categoriesFor: #onViewRestored:!event handling!public! !
-!TranscriptShell categoriesFor: #position!accessing!public! !
-!TranscriptShell categoriesFor: #position:!accessing!public! !
-!TranscriptShell categoriesFor: #print:!printing!public! !
-!TranscriptShell categoriesFor: #queryCommand:!commands!private! !
-!TranscriptShell categoriesFor: #rememberThisSize!commands!public! !
-!TranscriptShell categoriesFor: #reset!positioning!public! !
-!TranscriptShell categoriesFor: #setToEnd!operations!public! !
-!TranscriptShell categoriesFor: #show!operations!public! !
-!TranscriptShell categoriesFor: #show:!printing!public! !
-!TranscriptShell categoriesFor: #smalltalkFilesType!constants!private! !
-!TranscriptShell categoriesFor: #space!adding!public! !
-!TranscriptShell categoriesFor: #stbSaveOn:!binary filing!public! !
-!TranscriptShell categoriesFor: #tab!accessing!public! !
-!TranscriptShell categoriesFor: #tab:!accessing!public! !
-!TranscriptShell categoriesFor: #updateWindow!private!updating! !
-!TranscriptShell categoriesFor: #visit:do:!public! !
+!UI.TranscriptShell categoriesFor: #<<!public! !
+!UI.TranscriptShell categoriesFor: #addToCommandRoute:!commands!public! !
+!UI.TranscriptShell categoriesFor: #alertUser!operations!private! !
+!UI.TranscriptShell categoriesFor: #basicPrint:!printing!private! !
+!UI.TranscriptShell categoriesFor: #clear!initializing!public! !
+!UI.TranscriptShell categoriesFor: #clearAll!initializing!public! !
+!UI.TranscriptShell categoriesFor: #close!operations!public! !
+!UI.TranscriptShell categoriesFor: #contents!accessing!public! !
+!UI.TranscriptShell categoriesFor: #cr!adding!public! !
+!UI.TranscriptShell categoriesFor: #createComponents!initializing!public! !
+!UI.TranscriptShell categoriesFor: #createSchematicWiring!initializing!public! !
+!UI.TranscriptShell categoriesFor: #crtab!adding!public! !
+!UI.TranscriptShell categoriesFor: #crtab:!adding!public! !
+!UI.TranscriptShell categoriesFor: #defaultHelpId!public! !
+!UI.TranscriptShell categoriesFor: #display:!printing!public! !
+!UI.TranscriptShell categoriesFor: #fileFileIn!commands!public! !
+!UI.TranscriptShell categoriesFor: #flush!buffer!public! !
+!UI.TranscriptShell categoriesFor: #forgetSize!commands!public! !
+!UI.TranscriptShell categoriesFor: #hasOutputWindow!accessing!private! !
+!UI.TranscriptShell categoriesFor: #initialize!initializing!private! !
+!UI.TranscriptShell categoriesFor: #isEmpty!public!testing! !
+!UI.TranscriptShell categoriesFor: #locale!accessing!public! !
+!UI.TranscriptShell categoriesFor: #next:put:!operations!public! !
+!UI.TranscriptShell categoriesFor: #next:putAll:startingAt:!accessing!public! !
+!UI.TranscriptShell categoriesFor: #nextPut:!adding!public! !
+!UI.TranscriptShell categoriesFor: #nextPutAll:!adding!public! !
+!UI.TranscriptShell categoriesFor: #notEmpty!public!testing! !
+!UI.TranscriptShell categoriesFor: #onCloseRequested:!event handling!public! !
+!UI.TranscriptShell categoriesFor: #onViewOpened!event handling!private! !
+!UI.TranscriptShell categoriesFor: #onViewRestored:!event handling!public! !
+!UI.TranscriptShell categoriesFor: #position!accessing!public! !
+!UI.TranscriptShell categoriesFor: #position:!accessing!public! !
+!UI.TranscriptShell categoriesFor: #print:!printing!public! !
+!UI.TranscriptShell categoriesFor: #queryCommand:!commands!private! !
+!UI.TranscriptShell categoriesFor: #rememberThisSize!commands!public! !
+!UI.TranscriptShell categoriesFor: #reset!positioning!public! !
+!UI.TranscriptShell categoriesFor: #setToEnd!operations!public! !
+!UI.TranscriptShell categoriesFor: #show!operations!public! !
+!UI.TranscriptShell categoriesFor: #show:!printing!public! !
+!UI.TranscriptShell categoriesFor: #smalltalkFilesType!constants!private! !
+!UI.TranscriptShell categoriesFor: #space!adding!public! !
+!UI.TranscriptShell categoriesFor: #stbSaveOn:!binary filing!public! !
+!UI.TranscriptShell categoriesFor: #tab!accessing!public! !
+!UI.TranscriptShell categoriesFor: #tab:!accessing!public! !
+!UI.TranscriptShell categoriesFor: #updateWindow!private!updating! !
+!UI.TranscriptShell categoriesFor: #visit:do:!public! !
 
-TranscriptShell methodProtocol: #puttableStream attributes: #(#ansi #readOnly) selectors: #(#cr #flush #nextPut: #nextPutAll: #space #tab)!
-TranscriptShell methodProtocol: #sequencedStream attributes: #(#ansi #readOnly) selectors: #(#close #contents #isEmpty #position #position: #reset #setToEnd)!
-TranscriptShell methodProtocol: #Transcript attributes: #(#ansi #readOnly) selectors: #(#cr #flush #nextPut: #nextPutAll: #space #tab)!
+UI.TranscriptShell methodProtocol: #puttableStream attributes: #(#ansi #readOnly) selectors: #(#cr #flush #nextPut: #nextPutAll: #space #tab)!
+UI.TranscriptShell methodProtocol: #sequencedStream attributes: #(#ansi #readOnly) selectors: #(#close #contents #isEmpty #position #position: #reset #setToEnd)!
+UI.TranscriptShell methodProtocol: #Transcript attributes: #(#ansi #readOnly) selectors: #(#cr #flush #nextPut: #nextPutAll: #space #tab)!
 
-!TranscriptShell class methodsFor!
+!UI.TranscriptShell class methodsFor!
 
 create
 	"Answers an instance of the receiver with a default view.
@@ -481,27 +481,27 @@ resource_Default_view
 	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Default_view)
 	"
 
-	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.ShellView) 34 27 nil nil 8 #(13565952 65536) 416 nil 327686 ##(Smalltalk.Color) #default 328198 ##(Smalltalk.Point) 1079 655 549 265030 4 ##(Smalltalk.Menu) nil true 34 8 984134 2 ##(Smalltalk.CommandMenuItem) 1 1180998 4 ##(Smalltalk.CommandDescription) #copySelection 8 '&Copy' 9351 1 263494 3 ##(Smalltalk.Icon) nil true 1572870 ##(Smalltalk.ImageRelativeFileLocator) 8 'EditCopy.ico' 2032142 ##(Smalltalk.STBExternalResourceLibraryProxy) 8 'dolphindr7.dll' nil nil nil 578 1 610 #selectAll 8 'Select &All' 8323 1 nil nil nil 578 1 610 #clearAll 8 'Clea&r' 1 1 658 nil true 704 8 'ClearDocument.ico' 752 nil nil 983366 1 ##(Smalltalk.DividerMenuItem) 4097 578 1 610 #find 8 '&Find...' 9357 1 658 nil true 704 47 746 8 'shell32.dll' nil nil nil 578 1 610 #findNext 8 'Find &Next' 1253 1 658 nil true 704 8 'FindNext.ico' 752 nil nil 914 4097 578 1 610 #toggleWordWrap 8 '&Word Wrap' 1 1 nil nil nil 8 '&Edit' nil 134217729 nil nil nil nil nil nil nil 416 788230 ##(Smalltalk.BorderLayout) 1 1 nil nil nil nil 410 ##(Smalltalk.MultilineTextEdit) 34 16 nil 416 34 2 8 1143013700 262145 1232 nil 466 #window nil 23 nil nil nil 1232 nil 8 1892929408 852486 ##(Smalltalk.NullConverter) nil 8 '' 3 983302 ##(Smalltalk.MessageSequence) 138 144 34 3 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 498 1 1 498 1047 537 1232 1442 #setMarginWidths: 34 1 8 #(3 3) 1232 1442 #textLimit: 34 1 8 4294967295 1232 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 11 2 0 0 12 1 0 0] 8 #() 498 193 193 nil 27 170 192 34 2 1232 8 'workspace' nil 461638 4 ##(Smalltalk.MenuBar) nil true 34 5 530 nil true 34 9 578 1 610 #fileNew 8 '&New Workspace' 9373 1 658 nil true 704 8 'NewWorkspace.ico' 752 nil nil 578 1 610 #fileOpen 8 '&Open Workspace...' 9375 1 658 nil true 704 8 'OpenWorkspace.ico' 752 nil nil 578 1 610 #fileFileIn 8 '&File In...' 1 1 nil nil nil 914 4097 578 1 610 #saveImage 8 'Sa&ve Image' 1 1 658 nil true 704 8 'Snapshot.ico' 752 nil nil 578 1 610 #saveImageAs 8 'Save Image As...' 1 1 nil nil nil 578 1 610 #compressChanges 8 '&Compress Changes' 1 1 nil nil nil 914 4097 578 1 610 #smalltalkExit 8 'E&xit Dolphin' 1 1 658 nil true 704 8 'PowerSwitch.ico' 752 nil nil 8 '&File' nil 134217729 nil nil 36919 nil nil 530 nil true 34 8 578 1 610 #cr 8 'New&line' 1 1 nil nil nil 914 4097 578 1 610 #copySelection 8 '&Copy' 9351 1 658 nil true 704 8 'EditCopy.ico' 752 nil nil 578 1 610 #selectAll 8 'Select &All' 9347 1 nil nil nil 578 1 610 #clearAll 8 'Clea&r' 9393 1 658 nil true 704 8 'ClearDocument.ico' 752 nil nil 914 4097 578 1 610 #editFind 8 '&Find...' 9357 1 658 nil true 704 47 1008 nil nil 578 1 610 #findNext 8 'Find &Next' 1253 1 658 nil true 704 8 'FindNext.ico' 752 nil nil 8 '&Edit' nil 134217729 nil nil 36933 nil nil 530 nil true 8 #() 8 '&Tools' #toolsMenu 134217729 nil nil 36935 nil nil 530 nil true 8 #() 8 'Wi&ndow' #windowMenu 134217729 nil nil 36937 nil nil 530 nil true 34 6 578 1 610 #help 8 '&Help on this tool' 1249 1 658 nil true 704 8 'Help.ico' 752 nil nil 914 4097 578 1 610 #guidedTour 8 '&Guided tour' 1 1 nil nil nil 578 1 610 #educationCenter 8 '&Education centre' 1 1 nil nil nil 914 4097 578 1 610 #aboutDolphin 8 '&About Dolphin Smalltalk' 1 1 nil nil nil 8 '&Help' nil 134217729 nil nil 36947 nil nil 8 '' nil 134217729 nil nil nil nil nil nil nil nil 1 nil nil nil nil 1 nil nil 1378 138 144 34 3 1442 #createAt:extent: 34 2 498 6143 21 498 1079 655 416 1442 #contextMenu: 34 1 544 416 1442 #text: 34 1 8 'System Transcript' 416 1618 8 #[44 0 0 0 0 0 0 0 0 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 26 14 0 0 81 1 0 0] 34 1 1232 1680 nil 27 )!
+	^#(#'!!STL' 4 788558 10 ##(UI.STBViewProxy) ##(UI.ShellView) 34 27 nil nil 8 #(13565952 65536) 416 nil 327686 ##(Graphics.Color) #default 328198 ##(Graphics.Point) 1079 655 549 265030 4 ##(UI.Menu) nil true 34 8 984134 2 ##(UI.CommandMenuItem) 1 1180998 4 ##(UI.CommandDescription) #copySelection 8 '&Copy' 9351 1 263494 3 ##(Graphics.Icon) nil true 1572870 ##(Kernel.ImageRelativeFileLocator) 8 'EditCopy.ico' 2032142 ##(Kernel.STBExternalResourceLibraryProxy) 8 'dolphindr7.dll' nil nil nil 578 1 610 #selectAll 8 'Select &All' 8323 1 nil nil nil 578 1 610 #clearAll 8 'Clea&r' 1 1 658 nil true 704 8 'ClearDocument.ico' 752 nil nil 983366 1 ##(UI.DividerMenuItem) 4097 578 1 610 #find 8 '&Find...' 9357 1 658 nil true 704 47 746 8 'shell32.dll' nil nil nil 578 1 610 #findNext 8 'Find &Next' 1253 1 658 nil true 704 8 'FindNext.ico' 752 nil nil 914 4097 578 1 610 #toggleWordWrap 8 '&Word Wrap' 1 1 nil nil nil 8 '&Edit' nil 134217729 nil nil nil nil nil nil nil 416 788230 ##(UI.BorderLayout) 1 1 nil nil nil nil 410 ##(UI.MultilineTextEdit) 34 16 nil 416 34 2 8 1143013700 262145 1232 nil 466 #window nil 23 nil nil nil 1232 nil 8 1892929408 852486 ##(UI.NullConverter) nil 8 '' 3 983302 ##(Core.MessageSequence) 138 144 34 3 721670 ##(Core.MessageSend) #createAt:extent: 34 2 498 1 1 498 1047 537 1232 1442 #setMarginWidths: 34 1 8 #(3 3) 1232 1442 #textLimit: 34 1 8 4294967295 1232 983302 ##(OS.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 11 2 0 0 12 1 0 0] 8 #() 498 193 193 nil 27 170 192 34 2 1232 8 'workspace' nil 461638 4 ##(UI.MenuBar) nil true 34 5 530 nil true 34 9 578 1 610 #fileNew 8 '&New Workspace' 9373 1 658 nil true 704 8 'NewWorkspace.ico' 752 nil nil 578 1 610 #fileOpen 8 '&Open Workspace...' 9375 1 658 nil true 704 8 'OpenWorkspace.ico' 752 nil nil 578 1 610 #fileFileIn 8 '&File In...' 1 1 nil nil nil 914 4097 578 1 610 #saveImage 8 'Sa&ve Image' 1 1 658 nil true 704 8 'Snapshot.ico' 752 nil nil 578 1 610 #saveImageAs 8 'Save Image As...' 1 1 nil nil nil 578 1 610 #compressChanges 8 '&Compress Changes' 1 1 nil nil nil 914 4097 578 1 610 #smalltalkExit 8 'E&xit Dolphin' 1 1 658 nil true 704 8 'PowerSwitch.ico' 752 nil nil 8 '&File' nil 134217729 nil nil 36919 nil nil 530 nil true 34 8 578 1 610 #cr 8 'New&line' 1 1 nil nil nil 914 4097 578 1 610 #copySelection 8 '&Copy' 9351 1 658 nil true 704 8 'EditCopy.ico' 752 nil nil 578 1 610 #selectAll 8 'Select &All' 9347 1 nil nil nil 578 1 610 #clearAll 8 'Clea&r' 9393 1 658 nil true 704 8 'ClearDocument.ico' 752 nil nil 914 4097 578 1 610 #editFind 8 '&Find...' 9357 1 658 nil true 704 47 1008 nil nil 578 1 610 #findNext 8 'Find &Next' 1253 1 658 nil true 704 8 'FindNext.ico' 752 nil nil 8 '&Edit' nil 134217729 nil nil 36933 nil nil 530 nil true 8 #() 8 '&Tools' #toolsMenu 134217729 nil nil 36935 nil nil 530 nil true 8 #() 8 'Wi&ndow' #windowMenu 134217729 nil nil 36937 nil nil 530 nil true 34 6 578 1 610 #help 8 '&Help on this tool' 1249 1 658 nil true 704 8 'Help.ico' 752 nil nil 914 4097 578 1 610 #guidedTour 8 '&Guided tour' 1 1 nil nil nil 578 1 610 #educationCenter 8 '&Education centre' 1 1 nil nil nil 914 4097 578 1 610 #aboutDolphin 8 '&About Dolphin Smalltalk' 1 1 nil nil nil 8 '&Help' nil 134217729 nil nil 36947 nil nil 8 '' nil 134217729 nil nil nil nil nil nil nil nil 1 nil nil nil nil 1 nil nil 1378 138 144 34 3 1442 #createAt:extent: 34 2 498 6143 21 498 1079 655 416 1442 #contextMenu: 34 1 544 416 1442 #text: 34 1 8 'System Transcript' 416 1618 8 #[44 0 0 0 0 0 0 0 0 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 26 14 0 0 81 1 0 0] 34 1 1232 1680 nil 27 )!
 
 uninitialize
 	"Private - This is a singleton class so free the single instance to
 	allow clean removal from the system."
 
 	self free! !
-!TranscriptShell class categoriesFor: #create!instance creation!public! !
-!TranscriptShell class categoriesFor: #current!instance creation!public! !
-!TranscriptShell class categoriesFor: #default!instance creation!public! !
-!TranscriptShell class categoriesFor: #defaultExtent!options!public! !
-!TranscriptShell class categoriesFor: #defaultExtent:!options!public! !
-!TranscriptShell class categoriesFor: #defaultView!constants!public! !
-!TranscriptShell class categoriesFor: #displayOn:!displaying!public! !
-!TranscriptShell class categoriesFor: #flashOnOutput!options!public! !
-!TranscriptShell class categoriesFor: #flashOnOutput:!options!public! !
-!TranscriptShell class categoriesFor: #free!public!realizing/unrealizing! !
-!TranscriptShell class categoriesFor: #icon!constants!public! !
-!TranscriptShell class categoriesFor: #initialize!development!initializing!private! !
-!TranscriptShell class categoriesFor: #onStartup!events-session!private! !
-!TranscriptShell class categoriesFor: #reset!operations!private! !
-!TranscriptShell class categoriesFor: #resource_Default_view!public!resources-views! !
-!TranscriptShell class categoriesFor: #uninitialize!class hierarchy-removing!private! !
+!UI.TranscriptShell class categoriesFor: #create!instance creation!public! !
+!UI.TranscriptShell class categoriesFor: #current!instance creation!public! !
+!UI.TranscriptShell class categoriesFor: #default!instance creation!public! !
+!UI.TranscriptShell class categoriesFor: #defaultExtent!options!public! !
+!UI.TranscriptShell class categoriesFor: #defaultExtent:!options!public! !
+!UI.TranscriptShell class categoriesFor: #defaultView!constants!public! !
+!UI.TranscriptShell class categoriesFor: #displayOn:!displaying!public! !
+!UI.TranscriptShell class categoriesFor: #flashOnOutput!options!public! !
+!UI.TranscriptShell class categoriesFor: #flashOnOutput:!options!public! !
+!UI.TranscriptShell class categoriesFor: #free!public!realizing/unrealizing! !
+!UI.TranscriptShell class categoriesFor: #icon!constants!public! !
+!UI.TranscriptShell class categoriesFor: #initialize!development!initializing!private! !
+!UI.TranscriptShell class categoriesFor: #onStartup!events-session!private! !
+!UI.TranscriptShell class categoriesFor: #reset!operations!private! !
+!UI.TranscriptShell class categoriesFor: #resource_Default_view!public!resources-views! !
+!UI.TranscriptShell class categoriesFor: #uninitialize!class hierarchy-removing!private! !
 

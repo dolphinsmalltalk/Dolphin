@@ -477,28 +477,6 @@ testEvaluationOrder
 	i := 2.
 	self assert: (3 between: i and: (i := 4))!
 
-testExtCallArgBstr
-	"Note that BSTR is one of the FFI parameter types that may cause the VM to perform a type conversion that allocates memory, and as such cannot be used safely in overlapped calls unless the calling code is careful to perform all conversions to BSTR from Smalltalk strings in advance with #asBSTR"
-
-	| beers olelib |
-	olelib := Smalltalk.OLEAutLibrary default.
-	{''. 'a'. '£2'. 'a' , (String with: Character null) , 'b'} do: 
-			[:each |
-			| subject expected actual |
-			expected := each asUtf16String size.
-			actual := olelib sysStringLen: each.
-			self assert: actual equals: expected.
-			subject := each asUtf8String.
-			actual := olelib sysStringLen: subject.
-			self assert: actual equals: expected.
-			subject := each asUtf16String.
-			actual := olelib sysStringLen: subject.
-			self assert: actual equals: expected].
-	"Like most string length functions, SysStringLen reports the number of code units, not the number of characters"
-	beers := Utf8String fromByteArray: #[16rF0 16r9F 16r8D 16rBB].
-	self assert: (olelib sysStringLen: beers) equals: 2.
-	self assert: (olelib sysStringLen: beers asUtf16String) equals: 2!
-
 testExtCallArgLppvoid
 	"Regression test for https://github.com/dolphinsmalltalk/Dolphin/issues/940
 	The issue was intermittent failure of some Active-X related tests that were passing out (and in some cases handling incoming) pointers to buffers that were arrays of pointers and doing so by taking the address of the buffer (yielding an integer) before calling the function with an lppvoid argument type.
@@ -759,8 +737,8 @@ testImmutableBufferAtPuts
 testImmutableInstVarAtPut
 	| instances |
 	instances := OrderedCollection withAll: self immutableTestSubjects.
-	"The compiler test class has a lot of named iv's"
-	instances add: (CompilerTestClasses current testClass new
+	"Package has a lot of named iv's"
+	instances add: (Package new
 				isImmutable: true;
 				yourself).
 	"Sets have named and indexable variables"
@@ -2113,12 +2091,14 @@ testPrimitiveMakePoint
 			[:i |
 			method := self
 						createPrimitiveMethod: primitiveIndex
-						in: Graphics.Point3D class
+						in: Interval class
 						argCount: i.
-			expected := Graphics.Point3D basicNew.
+			expected := Interval basicNew.
 			1 to: i do: [:j | expected instVarAt: j put: j].
-			result := method value: Graphics.Point3D withArguments: (1 to: i) asArray.
-			self assert: result equals: expected].
+			result := method value: Interval withArguments: (1 to: i) asArray.
+			self assert: result start equals: expected start.
+			self assert: result stop equals: expected stop.
+			self assert: result step equals: expected step].
 	"Indexable type with fixed fields too, e.g. Context"
 	0 to: 4
 		do: 
@@ -2202,7 +2182,7 @@ testPrimitiveNewInitializedFailure
 				argCount: 3.
 	"Only valid for pointer classes"
 	self assert: (method value: Array withArguments: #(1 2 3)) equals: #(1 2 3).
-	self assert: (method value: Graphics.Point withArguments: #(1 2 3)) equals: 'WrongNumberOfArgs'.
+	self assert: (method value: Association withArguments: #(1 2 3)) equals: 'WrongNumberOfArgs'.
 	self assert: (method value: MessageSendAbstract withArguments: #(1 2 3)) equals: 'NonInstantiable'.
 	self assert: (method value: ByteArray withArguments: #(1 2 3)) equals: 'ObjectTypeMismatch'!
 
@@ -3158,6 +3138,7 @@ verifyExtCallCrtFault: aBoolean
 
 verifyExtCallFpFault: aBoolean
 	| method exceptions fpFault |
+	Float reset.
 	method := self compile: ('sqrt: arg %<<1?overlap :>stdcall: double sqrt double> ^_failureCode'
 						expandMacrosWith: aBoolean)
 				in: CRTLibrary.
@@ -3599,7 +3580,6 @@ verifyPrimitiveNextPutAllOnUtfStrings: method
 !Kernel.Tests.VMTest categoriesFor: #testCRTFault!public!unit tests! !
 !Kernel.Tests.VMTest categoriesFor: #testDwordAtOffsetPut!public!unit tests! !
 !Kernel.Tests.VMTest categoriesFor: #testEvaluationOrder!public!unit tests! !
-!Kernel.Tests.VMTest categoriesFor: #testExtCallArgBstr!public!unit tests! !
 !Kernel.Tests.VMTest categoriesFor: #testExtCallArgLppvoid!public!unit tests! !
 !Kernel.Tests.VMTest categoriesFor: #testExtCallArgLpwstr!public!unit tests! !
 !Kernel.Tests.VMTest categoriesFor: #testExtCallCrtFault!public! !

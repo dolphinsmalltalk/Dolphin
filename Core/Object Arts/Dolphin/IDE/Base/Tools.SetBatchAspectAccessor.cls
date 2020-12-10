@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-IndexedInstVarBatchAccessor subclass: #SetBatchAspectAccessor
+Tools.IndexedInstVarBatchAccessor subclass: #'Tools.SetBatchAspectAccessor'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-SetBatchAspectAccessor guid: (GUID fromString: '{cacfd817-4dcb-46be-bba9-bcb1585438f2}')!
-SetBatchAspectAccessor comment: ''!
-!SetBatchAspectAccessor categoriesForClass!MVP-Models! !
-!SetBatchAspectAccessor methodsFor!
+Tools.SetBatchAspectAccessor guid: (Core.GUID fromString: '{cacfd817-4dcb-46be-bba9-bcb1585438f2}')!
+Tools.SetBatchAspectAccessor comment: ''!
+!Tools.SetBatchAspectAccessor categoriesForClass!MVP-Models! !
+!Tools.SetBatchAspectAccessor methodsFor!
 
 aspectClass
 	^BasicKeyedAspect!
@@ -30,6 +30,6 @@ getBatchAccessors
 			i := i + 1].
 	(self nextBatch: i) ifNotNil: [:nextBatch | accessors add: nextBatch].
 	^accessors! !
-!SetBatchAspectAccessor categoriesFor: #aspectClass!public! !
-!SetBatchAspectAccessor categoriesFor: #getBatchAccessors!public! !
+!Tools.SetBatchAspectAccessor categoriesFor: #aspectClass!public! !
+!Tools.SetBatchAspectAccessor categoriesFor: #getBatchAccessors!public! !
 

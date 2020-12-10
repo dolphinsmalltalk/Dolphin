@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-MethodBrowserShell subclass: #LintRuleFailuresBrowserShell
+Tools.MethodBrowserShell subclass: #'Tools.LintRuleFailuresBrowserShell'
 	instanceVariableNames: 'lintRule'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-LintRuleFailuresBrowserShell guid: (GUID fromString: '{1f17dd01-e9d4-4f6b-a722-e0f62aed9b74}')!
-LintRuleFailuresBrowserShell comment: ''!
-!LintRuleFailuresBrowserShell categoriesForClass!MVP-Presenters! !
-!LintRuleFailuresBrowserShell methodsFor!
+Tools.LintRuleFailuresBrowserShell guid: (Core.GUID fromString: '{1f17dd01-e9d4-4f6b-a722-e0f62aed9b74}')!
+Tools.LintRuleFailuresBrowserShell comment: ''!
+!Tools.LintRuleFailuresBrowserShell categoriesForClass!MVP-Presenters! !
+!Tools.LintRuleFailuresBrowserShell methodsFor!
 
 addToCommandRoute: route
 	super addToCommandRoute: route.
@@ -56,15 +56,15 @@ removeMethod
 	index := self browser selectionsByIndex first.
 	self browser model removeAll: methods.
 	self browser selectionByIndex: index ifAbsent: []! !
-!LintRuleFailuresBrowserShell categoriesFor: #addToCommandRoute:!commands!public! !
-!LintRuleFailuresBrowserShell categoriesFor: #lintRule!accessing!public! !
-!LintRuleFailuresBrowserShell categoriesFor: #lintRule:!accessing!public! !
-!LintRuleFailuresBrowserShell categoriesFor: #queryCommand:!commands!private! !
-!LintRuleFailuresBrowserShell categoriesFor: #removeMethod!commands!public! !
+!Tools.LintRuleFailuresBrowserShell categoriesFor: #addToCommandRoute:!commands!public! !
+!Tools.LintRuleFailuresBrowserShell categoriesFor: #lintRule!accessing!public! !
+!Tools.LintRuleFailuresBrowserShell categoriesFor: #lintRule:!accessing!public! !
+!Tools.LintRuleFailuresBrowserShell categoriesFor: #queryCommand:!commands!private! !
+!Tools.LintRuleFailuresBrowserShell categoriesFor: #removeMethod!commands!public! !
 
-!LintRuleFailuresBrowserShell class methodsFor!
+!Tools.LintRuleFailuresBrowserShell class methodsFor!
 
 initialize
 	self canUseIdeaSpace: true! !
-!LintRuleFailuresBrowserShell class categoriesFor: #initialize!initializing!private! !
+!Tools.LintRuleFailuresBrowserShell class categoriesFor: #initialize!initializing!private! !
 

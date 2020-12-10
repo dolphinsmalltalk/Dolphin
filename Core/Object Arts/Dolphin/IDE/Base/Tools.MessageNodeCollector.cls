@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-StParseNodeVisitor subclass: #MessageNodeCollector
+Kernel.ParseNodeVisitor subclass: #'Tools.MessageNodeCollector'
 	instanceVariableNames: 'messages'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-MessageNodeCollector guid: (GUID fromString: '{b98dfe2a-9aa1-44c8-aa19-91e7c68513de}')!
-MessageNodeCollector comment: 'MessageNodeCollector is a <StParseNodeVisitor>s that builds an ordered collection of the StMessageNode (message sends) it encounters while walking  a parse tree. Its purpose is to allow one to enumerate all messages sent by a method.'!
-!MessageNodeCollector categoriesForClass!System-Compiler! !
-!MessageNodeCollector methodsFor!
+Tools.MessageNodeCollector guid: (Core.GUID fromString: '{b98dfe2a-9aa1-44c8-aa19-91e7c68513de}')!
+Tools.MessageNodeCollector comment: 'MessageNodeCollector is a <StParseNodeVisitor>s that builds an ordered collection of the StMessageNode (message sends) it encounters while walking  a parse tree. Its purpose is to allow one to enumerate all messages sent by a method.'!
+!Tools.MessageNodeCollector categoriesForClass!System-Compiler! !
+!Tools.MessageNodeCollector methodsFor!
 
 initialize
 	messages := OrderedCollection new!
@@ -20,15 +20,15 @@ messages
 visitMessageNode: aMessageNode
 	messages addLast: aMessageNode.
 	super visitMessageNode: aMessageNode! !
-!MessageNodeCollector categoriesFor: #initialize!initializing!private! !
-!MessageNodeCollector categoriesFor: #messages!accessing!public! !
-!MessageNodeCollector categoriesFor: #visitMessageNode:!public!visitor/double dispatching! !
+!Tools.MessageNodeCollector categoriesFor: #initialize!initializing!private! !
+!Tools.MessageNodeCollector categoriesFor: #messages!accessing!public! !
+!Tools.MessageNodeCollector categoriesFor: #visitMessageNode:!public!visitor/double dispatching! !
 
-!MessageNodeCollector class methodsFor!
+!Tools.MessageNodeCollector class methodsFor!
 
 messagesSentBy: anStProgramNode 
 	^(self new)
 		visitNode: anStProgramNode;
 		messages! !
-!MessageNodeCollector class categoriesFor: #messagesSentBy:!enquiries!public! !
+!Tools.MessageNodeCollector class categoriesFor: #messagesSentBy:!enquiries!public! !
 

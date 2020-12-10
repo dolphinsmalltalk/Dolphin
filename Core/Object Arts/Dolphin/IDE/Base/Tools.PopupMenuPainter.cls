@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-MenuPainter subclass: #PopupMenuPainter
+Tools.MenuPainter subclass: #'Tools.PopupMenuPainter'
 	instanceVariableNames: 'itemWidth textOffset submenuOffset acceleratorOffset'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-PopupMenuPainter guid: (GUID fromString: '{bebdf8c9-6967-41d3-92af-046ec7b3bff7}')!
-PopupMenuPainter comment: ''!
-!PopupMenuPainter categoriesForClass!Kernel-Objects! !
-!PopupMenuPainter methodsFor!
+Tools.PopupMenuPainter guid: (Core.GUID fromString: '{bebdf8c9-6967-41d3-92af-046ec7b3bff7}')!
+Tools.PopupMenuPainter comment: ''!
+!Tools.PopupMenuPainter categoriesForClass!Kernel-Objects! !
+!Tools.PopupMenuPainter methodsFor!
 
 borderInset
 	"Private - Answer a <Rectangle> indicating the inset at each corner of the receiver filled by the
@@ -127,32 +127,32 @@ paintItemAccelerator: aMenuItem on: aCanvas in: aRectangle
 		in: aRectangle
 		flags: self drawTextFlags | ##(DT_NOPREFIX | DT_RIGHT)!
 
-paintSeparatorOn: aCanvas in: aRectangle 
+paintSeparatorOn: aCanvas in: aRectangle
 	"Private - Paint a menu item separator in the specified Rectangle."
 
 	| offset |
 	offset := textOffset - SystemMetrics current paddedBorderThickness.
-	UserLibrary default 
+	UserLibrary default
 		drawEdge: aCanvas asParameter
-		qrc: (RECT 
+		qrc: (RECTL
 				left: aRectangle left + offset
 				top: aRectangle centerY
 				right: aRectangle right - 1
 				bottom: aRectangle bottom)
 		edge: EDGE_ETCHED
 		grfFlags: BF_TOP! !
-!PopupMenuPainter categoriesFor: #borderInset!constants!private! !
-!PopupMenuPainter categoriesFor: #calculateGeometry:!public!updating! !
-!PopupMenuPainter categoriesFor: #dividerHeight!constants!private! !
-!PopupMenuPainter categoriesFor: #gutterWidth!constants!private! !
-!PopupMenuPainter categoriesFor: #heightOfItem:!accessing!private! !
-!PopupMenuPainter categoriesFor: #insertBefore:position:canvas:!public!testing! !
-!PopupMenuPainter categoriesFor: #itemHeight!constants!private! !
-!PopupMenuPainter categoriesFor: #itemRect:using:!accessing!public! !
-!PopupMenuPainter categoriesFor: #menuColor!constants!private! !
-!PopupMenuPainter categoriesFor: #offsetForSubmenu:canvas:!accessing!public! !
-!PopupMenuPainter categoriesFor: #paintEdgeOn:in:!painting!private! !
-!PopupMenuPainter categoriesFor: #paintItem:on:in:!painting!private! !
-!PopupMenuPainter categoriesFor: #paintItemAccelerator:on:in:!painting!private! !
-!PopupMenuPainter categoriesFor: #paintSeparatorOn:in:!painting!private! !
+!Tools.PopupMenuPainter categoriesFor: #borderInset!constants!private! !
+!Tools.PopupMenuPainter categoriesFor: #calculateGeometry:!public!updating! !
+!Tools.PopupMenuPainter categoriesFor: #dividerHeight!constants!private! !
+!Tools.PopupMenuPainter categoriesFor: #gutterWidth!constants!private! !
+!Tools.PopupMenuPainter categoriesFor: #heightOfItem:!accessing!private! !
+!Tools.PopupMenuPainter categoriesFor: #insertBefore:position:canvas:!public!testing! !
+!Tools.PopupMenuPainter categoriesFor: #itemHeight!constants!private! !
+!Tools.PopupMenuPainter categoriesFor: #itemRect:using:!accessing!public! !
+!Tools.PopupMenuPainter categoriesFor: #menuColor!constants!private! !
+!Tools.PopupMenuPainter categoriesFor: #offsetForSubmenu:canvas:!accessing!public! !
+!Tools.PopupMenuPainter categoriesFor: #paintEdgeOn:in:!painting!private! !
+!Tools.PopupMenuPainter categoriesFor: #paintItem:on:in:!painting!private! !
+!Tools.PopupMenuPainter categoriesFor: #paintItemAccelerator:on:in:!painting!private! !
+!Tools.PopupMenuPainter categoriesFor: #paintSeparatorOn:in:!painting!private! !
 

@@ -1,25 +1,25 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-XProgramming.SUnit.TestCase subclass: #RewriteTestCase
+XProgramming.SUnit.TestCase subclass: #'Refactory.Browser.Tests.RewriteTestCase'
 	instanceVariableNames: 'env'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-RewriteTestCase guid: (Core.GUID fromString: '{6a77c1e6-2f15-4abc-9442-261f617e5ba1}')!
-RewriteTestCase comment: ''!
-!RewriteTestCase categoriesForClass!Unclassified! !
-!RewriteTestCase methodsFor!
+Refactory.Browser.Tests.RewriteTestCase guid: (Core.GUID fromString: '{6a77c1e6-2f15-4abc-9442-261f617e5ba1}')!
+Refactory.Browser.Tests.RewriteTestCase comment: ''!
+!Refactory.Browser.Tests.RewriteTestCase categoriesForClass!Unclassified! !
+!Refactory.Browser.Tests.RewriteTestCase methodsFor!
 
 setUp
-	env := Refactory.Browser.BrowserEnvironment new.
-	env := env forClasses: {Animal. Animal class}.
+	env := BrowserEnvironment new.
+	env := env forClasses: {Smalltalk.Animal. Smalltalk.Animal class}.
 	env := env referencesTo: #notify:caption:!
 
 testEnvironment
 	self
-		assert: (env includesSelector: #ask in: Animal);
-		assert: (env includesSelector: #playGame in: Animal class);
+		assert: (env includesSelector: #ask in: Smalltalk.Animal);
+		assert: (env includesSelector: #playGame in: Smalltalk.Animal class);
 		deny: env isEmpty!
 
 testFindReplace
@@ -37,14 +37,14 @@ testTransformationRule
 	| find replace rule |
 	find := '``@receiver notify: ``@arg caption: ``@arg1 '.
 	replace := 'self notify: ``@arg caption: ``@arg1'.
-	rule := Refactory.Browser.TransformationRule
+	rule := TransformationRule
 				rewrite: {{find. replace}}
 				methods: false
 				name: 'Transform'.
-	Refactory.Browser.SmalllintChecker runRule: rule onEnvironment: env.
+	SmalllintChecker runRule: rule onEnvironment: env.
 	self deny: rule changes changes isEmpty! !
-!RewriteTestCase categoriesFor: #setUp!public!unit tests! !
-!RewriteTestCase categoriesFor: #testEnvironment!public!unit tests! !
-!RewriteTestCase categoriesFor: #testFindReplace!public!unit tests! !
-!RewriteTestCase categoriesFor: #testTransformationRule!public!unit tests! !
+!Refactory.Browser.Tests.RewriteTestCase categoriesFor: #setUp!public!unit tests! !
+!Refactory.Browser.Tests.RewriteTestCase categoriesFor: #testEnvironment!public!unit tests! !
+!Refactory.Browser.Tests.RewriteTestCase categoriesFor: #testFindReplace!public!unit tests! !
+!Refactory.Browser.Tests.RewriteTestCase categoriesFor: #testTransformationRule!public!unit tests! !
 

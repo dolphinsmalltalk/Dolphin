@@ -18,7 +18,7 @@ connectString
 
 createDatabase
 	| source |
-	source := (PackageRelativeFileLocator package: self class owningPackage) localFileSpecFor: 'Northwind.mdb'.
+	source := self class owningPackage fileLocator localFileSpecFor: 'Northwind.mdb'.
 	filename := File composePath: File tempPath subPath: 'Northwind.mdb'.
 	File copy: source to: filename.
 	(File isWriteable: filename) ifFalse: [File isWriteable: filename set: true].

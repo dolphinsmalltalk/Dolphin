@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-UI.Tests.SelectableItemsTest subclass: #PackageSelectorTest
+UI.Tests.SelectableItemsTest subclass: #'Tools.Tests.PackageSelectorTest'
 	instanceVariableNames: 'packageA'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-PackageSelectorTest guid: (Core.GUID fromString: '{eb6a3732-7f1e-4c12-b050-6446fcbde374}')!
-PackageSelectorTest comment: ''!
-!PackageSelectorTest categoriesForClass!Unclassified! !
-!PackageSelectorTest methodsFor!
+Tools.Tests.PackageSelectorTest guid: (Core.GUID fromString: '{eb6a3732-7f1e-4c12-b050-6446fcbde374}')!
+Tools.Tests.PackageSelectorTest comment: ''!
+!Tools.Tests.PackageSelectorTest categoriesForClass!Unclassified! !
+!Tools.Tests.PackageSelectorTest methodsFor!
 
 classToTest
 	^PackageSelector!
@@ -48,9 +48,9 @@ testFilter
 		selectRootFolder.
 	self assert: presenter autoSelect.
 	self assert: presenter selections asSet equals: Package manager packages asSet! !
-!PackageSelectorTest categoriesFor: #classToTest!helpers!private! !
-!PackageSelectorTest categoriesFor: #createPackage:!helpers!private! !
-!PackageSelectorTest categoriesFor: #removePackage:!helpers!private! !
-!PackageSelectorTest categoriesFor: #tearDown!private! !
-!PackageSelectorTest categoriesFor: #testFilter!public! !
+!Tools.Tests.PackageSelectorTest categoriesFor: #classToTest!helpers!private! !
+!Tools.Tests.PackageSelectorTest categoriesFor: #createPackage:!helpers!private! !
+!Tools.Tests.PackageSelectorTest categoriesFor: #removePackage:!helpers!private! !
+!Tools.Tests.PackageSelectorTest categoriesFor: #tearDown!private! !
+!Tools.Tests.PackageSelectorTest categoriesFor: #testFilter!public! !
 

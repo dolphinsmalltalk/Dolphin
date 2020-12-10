@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-BatchAspectAccessor subclass: #KeyedAspectBatchAccessor
+Tools.BatchAspectAccessor subclass: #'Tools.KeyedAspectBatchAccessor'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-KeyedAspectBatchAccessor guid: (GUID fromString: '{1be03af7-5614-4c9c-832d-a3c368804e02}')!
-KeyedAspectBatchAccessor comment: 'Part of the PublishedAspectorInspector framework. KeyedAspectBatchAccessors are used to give access to a group of <KeyedAspectAccessors> for elements of a keyed collection. Batching the accessors up in this way allows the PAI to only display a certain number of elements at a time. This can substantially improve performance when displaying large (or slow to access) collections.'!
-!KeyedAspectBatchAccessor categoriesForClass!MVP-Models! !
-!KeyedAspectBatchAccessor methodsFor!
+Tools.KeyedAspectBatchAccessor guid: (Core.GUID fromString: '{1be03af7-5614-4c9c-832d-a3c368804e02}')!
+Tools.KeyedAspectBatchAccessor comment: 'Part of the PublishedAspectorInspector framework. KeyedAspectBatchAccessors are used to give access to a group of <KeyedAspectAccessors> for elements of a keyed collection. Batching the accessors up in this way allows the PAI to only display a certain number of elements at a time. This can substantially improve performance when displaying large (or slow to access) collections.'!
+!Tools.KeyedAspectBatchAccessor categoriesForClass!MVP-Models! !
+!Tools.KeyedAspectBatchAccessor methodsFor!
 
 aspectClass
 	^KeyedAspect!
@@ -43,11 +43,11 @@ publishedAspects
 	for this node (without this one gets a + and can expand it)."
 
 	^LookupTable new! !
-!KeyedAspectBatchAccessor categoriesFor: #aspectClass!public! !
-!KeyedAspectBatchAccessor categoriesFor: #getBatchAccessors!accessing!public! !
-!KeyedAspectBatchAccessor categoriesFor: #publishedAspects!constants!public! !
+!Tools.KeyedAspectBatchAccessor categoriesFor: #aspectClass!public! !
+!Tools.KeyedAspectBatchAccessor categoriesFor: #getBatchAccessors!accessing!public! !
+!Tools.KeyedAspectBatchAccessor categoriesFor: #publishedAspects!constants!public! !
 
-!KeyedAspectBatchAccessor class methodsFor!
+!Tools.KeyedAspectBatchAccessor class methodsFor!
 
 subject: anObject batchSize: sizeInteger
 	"Answers an instance of the receiver that is an interface onto a range of
@@ -58,5 +58,5 @@ subject: anObject batchSize: sizeInteger
 		keys: anObject keys
 		startingAt: 1
 		batchSize: sizeInteger! !
-!KeyedAspectBatchAccessor class categoriesFor: #subject:batchSize:!instance creation!public! !
+!Tools.KeyedAspectBatchAccessor class categoriesFor: #subject:batchSize:!instance creation!public! !
 

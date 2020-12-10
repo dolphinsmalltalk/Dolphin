@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-SmalltalkToolShell subclass: #AXControlBrowser
+Tools.SmalltalkToolShell subclass: #'Tools.AXControlBrowser'
 	instanceVariableNames: 'site windowStatus inspector eventsPresenter flags traceWindow progId'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'TraceMask' -> 16r1
 	}!
-AXControlBrowser guid: (GUID fromString: '{e2e33600-aa60-11d3-b376-080046056106}')!
-AXControlBrowser comment: 'AXControlBrowser is a simple Active-X control (OCX) browser and test environment.
+Tools.AXControlBrowser guid: (Core.GUID fromString: '{e2e33600-aa60-11d3-b376-080046056106}')!
+Tools.AXControlBrowser comment: 'AXControlBrowser is a simple Active-X control (OCX) browser and test environment.
 
 AXControlBrowser show
 
@@ -20,8 +20,8 @@ Instance Variables:
 	eventsPresenter	<ListPresenter>. List of events in the control''s default source interface.
 
 '!
-!AXControlBrowser categoriesForClass!MVP-Presenters! !
-!AXControlBrowser methodsFor!
+!Tools.AXControlBrowser categoriesForClass!MVP-Presenters! !
+!Tools.AXControlBrowser methodsFor!
 
 about
 	"Pop up the controls about box"
@@ -91,7 +91,7 @@ controlHelp
 						expandMacrosWith: tiControl name))
 					ifTrue: [self browseIDLOfTypeLib: typeLib]]
 		ifFalse: 
-			[[ShellLibrary default shellOpen: filename] on: Win32Error
+			[[OS.ShellLibrary default shellOpen: filename] on: OS.Win32Error
 				do: [:e | MessageBox errorMsg: e messageText caption: 'Unabled to open help file: ' , filename]]!
 
 controlProperties
@@ -115,8 +115,8 @@ createComponents
 	"Create the presenters contained by the receiver"
 
 	super createComponents.
-	inspector  := self add: PublishedAspectInspector new name: 'inspector'.
-	eventsPresenter := self add: ListPresenter new name: 'eventNames'	!
+	inspector := self add: PublishedAspectInspector new name: 'inspector'.
+	eventsPresenter := self add: ListPresenter new name: 'eventNames'!
 
 createSchematicWiring
 	"Create the trigger wiring for the receiver"
@@ -136,10 +136,11 @@ fileNewControl
 
 	| host |
 	host := self controlSite.
-	progId := AXControlSite chooseControl: host progId.
-	progId notNil ifTrue: [
-		self progId: progId.
-		host setFocus]!
+	progId := Smalltalk.AXControlSite chooseControl: host progId.
+	progId notNil
+		ifTrue: 
+			[self progId: progId.
+			host setFocus]!
 
 initialize
 	"Private - Initialize the receiver"
@@ -336,42 +337,42 @@ updateControlInfo
 				list: (funcs collect: [:f | f selector -> f printIDL]);
 				view enable]
 		ifFalse: [eventsPresenter clear; view disable]! !
-!AXControlBrowser categoriesFor: #about!commands!public! !
-!AXControlBrowser categoriesFor: #browseIDL!commands!public! !
-!AXControlBrowser categoriesFor: #browseIDLOfTypeLib:!commands!public! !
-!AXControlBrowser categoriesFor: #chooseAmbientBackcolor!commands!public! !
-!AXControlBrowser categoriesFor: #chooseAmbientFont!commands!public! !
-!AXControlBrowser categoriesFor: #chooseAmbientForecolor!commands!public! !
-!AXControlBrowser categoriesFor: #controlHelp!commands!public! !
-!AXControlBrowser categoriesFor: #controlProperties!commands!public! !
-!AXControlBrowser categoriesFor: #controlSite!accessing!public! !
-!AXControlBrowser categoriesFor: #copyEventName!commands!public! !
-!AXControlBrowser categoriesFor: #createComponents!initializing!public! !
-!AXControlBrowser categoriesFor: #createSchematicWiring!initializing!public! !
-!AXControlBrowser categoriesFor: #editProperties!commands!public! !
-!AXControlBrowser categoriesFor: #fileNewControl!commands!public! !
-!AXControlBrowser categoriesFor: #initialize!initializing!private! !
-!AXControlBrowser categoriesFor: #inspectControl!commands!public! !
-!AXControlBrowser categoriesFor: #isTracingEvents!commands!public! !
-!AXControlBrowser categoriesFor: #isTracingEvents:!accessing!public! !
-!AXControlBrowser categoriesFor: #onDragEvent:!event handling!public! !
-!AXControlBrowser categoriesFor: #onEvent:withArguments:!event handling!private! !
-!AXControlBrowser categoriesFor: #onPropertyChanged:!event handling!private! !
-!AXControlBrowser categoriesFor: #onPropertyChanging:accept:!event handling!private! !
-!AXControlBrowser categoriesFor: #onViewOpened!event handling!public! !
-!AXControlBrowser categoriesFor: #progId:!operations!public! !
-!AXControlBrowser categoriesFor: #queryCommand:!commands!private! !
-!AXControlBrowser categoriesFor: #toggleAllowShowUI!commands!public! !
-!AXControlBrowser categoriesFor: #toggleAllowWindowless!commands!public! !
-!AXControlBrowser categoriesFor: #toggleDesignMode!commands!public! !
-!AXControlBrowser categoriesFor: #toggleDisplayAsDefault!commands!public! !
-!AXControlBrowser categoriesFor: #toggleEventTracing!commands!public! !
-!AXControlBrowser categoriesFor: #toggleFireControlEvents!commands!public! !
-!AXControlBrowser categoriesFor: #toggleFirePropertyNotifications!commands!public! !
-!AXControlBrowser categoriesFor: #trace:!operations!private! !
-!AXControlBrowser categoriesFor: #updateControlInfo!operations!private! !
+!Tools.AXControlBrowser categoriesFor: #about!commands!public! !
+!Tools.AXControlBrowser categoriesFor: #browseIDL!commands!public! !
+!Tools.AXControlBrowser categoriesFor: #browseIDLOfTypeLib:!commands!public! !
+!Tools.AXControlBrowser categoriesFor: #chooseAmbientBackcolor!commands!public! !
+!Tools.AXControlBrowser categoriesFor: #chooseAmbientFont!commands!public! !
+!Tools.AXControlBrowser categoriesFor: #chooseAmbientForecolor!commands!public! !
+!Tools.AXControlBrowser categoriesFor: #controlHelp!commands!public! !
+!Tools.AXControlBrowser categoriesFor: #controlProperties!commands!public! !
+!Tools.AXControlBrowser categoriesFor: #controlSite!accessing!public! !
+!Tools.AXControlBrowser categoriesFor: #copyEventName!commands!public! !
+!Tools.AXControlBrowser categoriesFor: #createComponents!initializing!public! !
+!Tools.AXControlBrowser categoriesFor: #createSchematicWiring!initializing!public! !
+!Tools.AXControlBrowser categoriesFor: #editProperties!commands!public! !
+!Tools.AXControlBrowser categoriesFor: #fileNewControl!commands!public! !
+!Tools.AXControlBrowser categoriesFor: #initialize!initializing!private! !
+!Tools.AXControlBrowser categoriesFor: #inspectControl!commands!public! !
+!Tools.AXControlBrowser categoriesFor: #isTracingEvents!commands!public! !
+!Tools.AXControlBrowser categoriesFor: #isTracingEvents:!accessing!public! !
+!Tools.AXControlBrowser categoriesFor: #onDragEvent:!event handling!public! !
+!Tools.AXControlBrowser categoriesFor: #onEvent:withArguments:!event handling!private! !
+!Tools.AXControlBrowser categoriesFor: #onPropertyChanged:!event handling!private! !
+!Tools.AXControlBrowser categoriesFor: #onPropertyChanging:accept:!event handling!private! !
+!Tools.AXControlBrowser categoriesFor: #onViewOpened!event handling!public! !
+!Tools.AXControlBrowser categoriesFor: #progId:!operations!public! !
+!Tools.AXControlBrowser categoriesFor: #queryCommand:!commands!private! !
+!Tools.AXControlBrowser categoriesFor: #toggleAllowShowUI!commands!public! !
+!Tools.AXControlBrowser categoriesFor: #toggleAllowWindowless!commands!public! !
+!Tools.AXControlBrowser categoriesFor: #toggleDesignMode!commands!public! !
+!Tools.AXControlBrowser categoriesFor: #toggleDisplayAsDefault!commands!public! !
+!Tools.AXControlBrowser categoriesFor: #toggleEventTracing!commands!public! !
+!Tools.AXControlBrowser categoriesFor: #toggleFireControlEvents!commands!public! !
+!Tools.AXControlBrowser categoriesFor: #toggleFirePropertyNotifications!commands!public! !
+!Tools.AXControlBrowser categoriesFor: #trace:!operations!private! !
+!Tools.AXControlBrowser categoriesFor: #updateControlInfo!operations!private! !
 
-!AXControlBrowser class methodsFor!
+!Tools.AXControlBrowser class methodsFor!
 
 displayOn: aPuttableStream
 	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that an end-user might want to see."
@@ -381,7 +382,7 @@ displayOn: aPuttableStream
 icon
 	"Answers an Icon that can be used to represent this class."
 
-	^AXControlSite icon!
+	^Smalltalk.AXControlSite icon!
 
 initialize
 	"Private - Initialize the receiver. Register the tools folder icon with SmalltalkSystem.
@@ -390,13 +391,16 @@ initialize
 	"
 
 	Smalltalk developmentSystem
-		addAdditionalToolsFolderIcon: (SmalltalkSystemIcon show: self description: self displayString helpId: self toolsFolderHelpId );
+		addAdditionalToolsFolderIcon: (SmalltalkSystemIcon
+					show: self
+					description: self displayString
+					helpId: self toolsFolderHelpId);
 		registerTool: self!
 
 publishedAspects
 	"Answer a <LookupTable> of the <Aspect>s published by the receiver."
 
-	^(super publishedAspects)
+	^super publishedAspects
 		add: (Aspect choice: #defaultView from: self resourceNames);
 		yourself!
 
@@ -405,17 +409,17 @@ resource_Default_view
 	DO NOT EDIT OR RECATEGORIZE THIS METHOD.
 
 	If you wish to modify this resource evaluate:
-	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Default_view)
+	Tools.ViewComposer openOn: (UI.ResourceIdentifier class: self selector: #resource_Default_view)
 	"
 
-	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.ShellView) 34 27 nil nil 8 #(13565952 65536) 416 nil 655878 ##(Smalltalk.ThemeColor) #toolBackground nil 517 nil nil nil 416 788230 ##(Smalltalk.BorderLayout) 1 1 nil 410 ##(Smalltalk.StatusBar) 34 18 nil 416 34 2 8 1140850956 1 528 nil nil nil 7 nil 263174 ##(Smalltalk.Font) nil true 459014 ##(Smalltalk.LOGFONT) 8 #[243 255 255 255 0 0 0 0 0 0 0 0 0 0 0 0 144 1 0 0 0 0 0 0 3 2 1 34 65 114 105 97 108 0 183 4 128 213 87 1 0 0 204 53 87 1 3 0 34 59 0 0 0 0 15 1 31 86 135 1] 328198 ##(Smalltalk.Point) 193 193 nil 528 nil 8 1877614448 170 192 34 2 853766 ##(Smalltalk.StatusBarItem) 1 201 528 nil ##(Smalltalk.BasicListAbstract) ##(Smalltalk.IconicListAbstract) nil 8 'windowStatus' 34 1 768 1115142 ##(Smalltalk.StatusBarNullItem) 513 1 528 nil nil 983302 ##(Smalltalk.MessageSequence) 138 144 34 1 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 674 1 639 674 1169 45 528 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 63 1 0 0 72 2 0 0 85 1 0 0] 8 #() 674 193 193 nil 27 nil nil 410 ##(Smalltalk.ContainerView) 34 15 nil 416 34 2 8 1174405120 131073 1072 nil nil nil 7 nil nil nil 1072 1180166 ##(Smalltalk.ProportionalLayout) 170 176 34 6 410 ##(Smalltalk.ContainerView) 34 15 nil 1072 34 2 8 1140850688 131073 1200 nil nil nil 7 nil nil nil 1200 1138 170 176 34 4 410 ##(Smalltalk.ReferenceView) 34 14 nil 1200 34 2 8 1140850688 131073 1312 nil nil nil 7 nil nil nil 1312 1180230 1 ##(Smalltalk.ResourceIdentifier) ##(Smalltalk.PublishedAspectInspector) #resource_Default_view nil 850 138 144 34 1 914 #createAt:extent: 34 2 674 1 1 674 811 185 1312 994 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 149 1 0 0 92 0 0 0] 8 #() 1056 nil 27 141 410 ##(Smalltalk.ListView) 34 45 nil 1200 34 2 8 1140936773 262145 1568 590662 2 ##(Smalltalk.ListModel) 138 144 1552 nil 1310726 ##(Smalltalk.IdentitySearchPolicy) 327686 ##(Smalltalk.Color) #default nil 15 265030 4 ##(Smalltalk.Menu) nil true 34 1 984134 2 ##(Smalltalk.CommandMenuItem) 2097153 1180998 4 ##(Smalltalk.CommandDescription) #copyEventName 8 '&Copy' 1 1 nil nil nil 8 '' nil 134217729 nil nil nil nil nil nil nil 1568 nil 8 1877889248 459270 ##(Smalltalk.Message) #selector 8 #() nil 1049926 1 ##(Smalltalk.IconImageManager) nil 1906 #printIDL 8 #() nil nil nil nil 138 144 34 1 920646 5 ##(Smalltalk.ListViewColumn) 8 '' 341 #left 1906 #key 8 #() 1906 #<= 8 #() nil nil 1568 nil 3 1906 #value 2112 nil #report 8 #() nil 133121 nil 1 nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil 850 138 144 34 2 914 #createAt:extent: 34 2 674 821 1 674 349 185 1568 914 #contextMenu: 34 1 1760 1568 994 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 154 1 0 0 0 0 0 0 72 2 0 0 92 0 0 0] 8 #() 1056 nil 35 61 false 170 192 34 4 1312 8 'inspector' 1568 8 'eventNames' nil 850 138 144 34 1 914 #createAt:extent: 34 2 674 1 349 674 1169 185 1200 994 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 174 0 0 0 72 2 0 0 10 1 0 0] 34 3 1312 410 ##(Smalltalk.Splitter) 34 12 nil 1200 34 2 8 1140850688 1 2608 nil nil nil 519 nil nil nil 1510470 1 ##(Smalltalk.DraggableViewInteractor) 2608 nil 1 #left nil nil nil 674 1 1 674 9 9 nil 2704 nil 850 138 144 34 1 914 #createAt:extent: 34 2 674 811 1 674 11 185 2608 994 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 149 1 0 0 0 0 0 0 154 1 0 0 92 0 0 0] 8 #() 1056 nil 27 1568 1056 nil 27 61 410 ##(Smalltalk.AXControlSite) 34 25 nil 1072 34 2 8 1073741824 262145 2896 nil 1728 nil 7 nil nil nil 2896 nil 537193943 8 'mshtml:<h2>Active-X Control Browser</h2>This browser allows you to load various ActiveX controls and to inspects their methods, properties and events. Choose <I>File/New (Ctrl+N)</I> to bring up a list of controls available on your computer.<h4>Copyright © Object Arts Ltd, 2000</h4>' 590854 ##(Smalltalk.IDispatch) nil nil 1378630 1 ##(Smalltalk.TKindDispatchAnalyzer) 656134 ##(Smalltalk.ITypeInfo2) nil nil 525062 ##(Smalltalk.TYPEATTR) nil 3024 3056 nil 1378630 2 ##(Smalltalk.AXTypeLibraryAnalyzer) 590342 ##(Smalltalk.ITypeLib2) nil nil 2049 524550 ##(Smalltalk.TLIBATTR) 8 #[197 241 80 48 181 152 207 17 187 130 0 170 0 189 206 11 0 0 0 0 1 0 0 0 4 0 0 0 8 0 0 128] nil nil nil nil 170 176 34 6 8 'PROPVARIANT' #VARIANT 8 'GUID' #GUID 8 'RemotableHandle' #ExternalHandle nil nil nil 1329 nil nil nil nil 918022 ##(Smalltalk.IDolphinAxHost) nil nil 722438 ##(Smalltalk.AXEventSink) 170 176 34 76 8 -2147418100 #onselectstart 8 -2147418099 #onerrorupdate 2073 #oncontrolselect 8 -2147418101 #ondragstart -1217 #onreadystatechange 2047 #oncontextmenu 2099 #onfocusout -1203 #onkeydown 2075 #onselectionchange 8 -2147418098 #ondatasetchanged 2089 #onactivate 8 -2147418097 #ondataavailable -1201 #ondblclick 8 -2147418093 #onpropertychange 8 -2147418105 #onrowenter -1213 #onmouseup 2091 #ondeactivate -1199 #onclick 8 -2147418078 #oncellchange 2053 #onstop -1211 #onmousemove 2067 #onmousewheel 8 -2147418079 #onrowsinserted 8 -2147418102 #onhelp 8 -2147418106 #onrowexit 2055 #onbeforeeditfocus -1209 #onmousedown 2095 #onbeforeactivate 8 -2147418104 #onmouseover 8 -2147418108 #onbeforeupdate 8 -2147418096 #ondatasetcomplete 8 -2147418107 #onafterupdate 8 -2147418103 #onmouseout 2069 #onbeforedeactivate -1207 #onkeyup 2097 #onfocusin 8 -2147418080 #onrowsdelete -1205 #onkeypress 2896 1049094 ##(Smalltalk.IConnectionPoint) nil nil 500684257 3010 3042 nil nil 3074 nil 3696 3712 nil 3106 3138 nil nil 2049 3170 8 #[197 241 80 48 181 152 207 17 187 130 0 170 0 189 206 11 0 0 0 0 1 0 0 0 4 0 0 0 8 0 0 128] nil nil nil nil 170 176 34 6 8 'PROPVARIANT' #VARIANT 8 'GUID' #GUID 8 'RemotableHandle' #ExternalHandle nil nil 262198 ##(Smalltalk.GUID) 16 96 242 80 48 181 152 207 17 187 130 0 170 0 189 206 11 1279 nil nil nil 1 3787 170 176 8 #(-525 #ReadyState) 1508358 ##(Smalltalk.IAxWinAmbientDispatchEx) nil nil nil nil 524806 ##(Smalltalk.IUnknown) nil nil nil nil nil 850 138 144 34 3 914 #createAt:extent: 34 2 674 1 1 674 1169 339 2896 914 #restoreAmbientProperties 1552 2896 914 #controlBinaryStoreBytes: 34 1 8 #[118 0 101 0 45 0 88 0 32 0 67 0 111 0 110 0 116 0 114 0 111 0 108 0 32 0 66 0 114 0 111 0 119 0 115 0 101 0 114 0 60 0 47 0 104 0 50 0 62 0 84 0 104 0 105 0 115 0 32 0 98 0 114 0 111 0 119 0 115 0 101 0 114 0 32 0 97 0 108 0 108 0 111 0 119 0 115 0 32 0 121 0 111 0 117 0 32 0 116 0 111 0 32 0 108 0 111 0 97 0 100 0 32 0 118 0 97 0 114 0 105 0 111 0 117 0 115 0 32 0 65 0 99 0 116 0 105 0 118 0 101 0 88 0 32 0 99 0 111 0 110 0 116 0 114 0 111 0 108 0 115 0 32 0 97 0 110 0 100 0 32 0 116 0 111 0 32 0 105 0 110 0 115 0 112 0 101 0 99 0 116 0 115 0 32 0 116 0 104 0 101 0 105 0 114 0 32 0 109 0 101 0 116 0 104 0 111 0 100 0 115 0 44 0 32 0 112 0 114 0 111 0 112 0 101 0 114 0 116 0 105 0 101 0 115 0 32 0 97 0 110 0 100 0 32 0 101 0 118 0 101 0 110 0 116 0 115 0 46 0 32 0 67 0 104 0 111 0 111 0 115 0 101 0 32 0 60 0 73 0 62 0 70 0 105 0 108 0 101 0 47 0 78 0 101 0 119 0 32 0 40 0 67 0 116 0 114 0 108 0 43 0 78 0 41 0 60 0 47 0 73 0 62 0 32 0 116 0 111 0 32 0 98 0 114 0 105 0 110 0 103 0 32 0 117 0 112 0 32 0 97 0 32 0 108 0 105 0 115 0 116 0 32 0 111 0 102 0 32 0 99 0 111 0 110 0 116 0 114 0 111 0 108 0 115 0 32 0 97 0 118 0 97 0 105 0 108 0 97 0 98 0 108 0 101 0 32 0 111 0 110 0 32 0 121 0 111 0 117 0 114 0 32 0 99 0 111 0 109 0 112 0 117 0 116 0 101 0 114 0 46 0 60 0 104 0 52 0 62 0 67 0 111 0 112 0 121 0 114 0 105 0 103 0 104 0 116 0 32 0 169 0 32 0 79 0 98 0 106 0 101 0 99 0 116 0 32 0 65 0 114 0 116 0 115 0 32 0 76 0 116 0 100 0 44 0 32 0 50 0 48 0 48 0 48 0 60 0 47 0 104 0 52 0 62 0] 2896 994 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 72 2 0 0 169 0 0 0] 8 #() 1056 nil 27 111 410 ##(Smalltalk.MultilineTextEdit) 34 16 nil 1072 34 2 8 1142952260 262145 4240 nil 1714 #white nil 7 1746 nil true 34 4 1794 1 1826 #copySelection 8 '&Copy' 1 1 nil nil nil 983366 1 ##(Smalltalk.DividerMenuItem) 4097 1794 1 1826 #selectAll 8 '&Select All' 1 1 nil nil nil 1794 1 1826 #clear 8 'Clea&r' 1 1 nil nil nil 8 '' nil 134217729 nil nil nil nil nil nil nil 4240 nil 8 1877945776 852486 ##(Smalltalk.NullConverter) nil nil 11 850 138 144 34 2 914 #createAt:extent: 34 2 674 1 543 674 1169 97 4240 914 #contextMenu: 34 1 4320 4240 994 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 15 1 0 0 72 2 0 0 63 1 0 0] 8 #() 1056 nil 27 31 true 170 192 34 4 4240 8 'trace' 2896 8 'site' nil 850 138 144 34 1 914 #createAt:extent: 34 2 674 1 1 674 1169 639 1072 994 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 72 2 0 0 63 1 0 0] 34 5 2896 410 ##(Smalltalk.Splitter) 34 12 nil 1072 34 2 8 1140850688 1 5008 nil nil nil 519 nil nil nil 2674 5008 nil 1 #left nil nil nil 2704 2720 nil 2704 nil 850 138 144 34 1 914 #createAt:extent: 34 2 674 1 339 674 1169 11 5008 994 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 169 0 0 0 72 2 0 0 174 0 0 0] 8 #() 1056 nil 27 1200 410 ##(Smalltalk.Splitter) 34 12 nil 1072 34 2 8 1140850688 1 5248 nil nil nil 519 nil nil nil 2674 5248 nil 1 #left nil nil nil 2704 2720 nil 2704 nil 850 138 144 34 1 914 #createAt:extent: 34 2 674 1 533 674 1169 11 5248 994 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 10 1 0 0 72 2 0 0 15 1 0 0] 8 #() 1056 nil 27 4240 1056 nil 27 170 192 1552 nil 461638 4 ##(Smalltalk.MenuBar) nil true 34 7 1746 nil true 34 3 1794 1 1826 #fileNewControl 8 '&New...' 9373 1 nil nil nil 4402 4097 1794 1 1826 #exit 8 '&Close' 17639 1 788806 1 ##(Smalltalk.TextTileIcon) $\x2716 nil nil nil nil nil 1 nil nil nil nil 8 '&File' nil 134217729 nil nil 54379 nil nil 1746 nil true 34 6 1794 1 1826 #cutSelection 8 'Cu&t' 1 1 263494 3 ##(Smalltalk.Icon) nil true 1572870 ##(Smalltalk.ImageRelativeFileLocator) 8 'EditCut.ico' 2032142 ##(Smalltalk.STBExternalResourceLibraryProxy) 8 'dolphindr7.dll' nil nil nil 1794 1 1826 #copySelection 8 '&Copy' 1 1 5826 nil true 5872 8 'EditCopy.ico' 5920 nil nil 1794 1 1826 #pasteClipboard 8 '&Paste' 1 1 5826 nil true 5872 8 'EditPaste.ico' 5920 nil nil 1794 1 1826 #clearSelection 8 'De&lete' 1 1 5826 nil true 5872 8 'EditClear.ico' 5920 nil nil 4402 4097 1794 1 1826 #editProperties 8 'P&roperties' 1267 1 nil nil nil 8 '&Edit' nil 134217729 nil nil 54391 nil nil 1746 nil true 34 6 1794 1 1826 #browseIt 8 '&Browse It' 9349 1 5826 nil true 5872 8 'ClassBrowserShell.ico' 5920 nil nil 1794 1 1826 #displayIt 8 '&Display It' 9353 1 5826 nil true 5872 8 'DisplayIt.ico' 5920 nil nil 1794 1 1826 #printIt 8 '&Print It' 9377 1 5826 nil true 5872 8 'PrintIt.ico' 5920 nil nil 1794 1 1826 #evaluateIt 8 '&Evaluate It' 9355 1 5826 nil true 5872 8 'EvaluateIt.ico' 5920 nil nil 1794 1 1826 #inspectIt 8 '&Inspect It' 9363 1 5826 nil true 5872 8 'BasicInspector.ico' 5920 nil nil 1794 1 1826 #debugIt 8 'Deb&ug It' 1269 1 5826 nil true 5872 8 'Debugger.ico' 5920 nil nil 8 '&Workspace' nil 134217729 nil nil 54405 nil nil 1746 nil true 34 7 1794 1 1826 #toggleAllowWindowless 8 'Allow &Windowless' 1 1 nil nil nil 1794 1 1826 #toggleAllowShowUI 8 'Allow Show &UI' 1 1 nil nil nil 1794 1 1826 #toggleDisplayAsDefault 8 'Display as &Default' 1 1 nil nil nil 1794 1 1826 #toggleDesignMode 8 'Design &Mode' 1 1 nil nil nil 4402 4097 1746 nil true 34 3 1794 1 1826 #toggleFireControlEvents 8 '&Enable' 1 1 nil nil nil 1794 1 1826 #toggleFirePropertyNotifications 8 '&Property Notifications' 1 1 nil nil nil 1794 1 1826 #toggleEventTracing 8 '&Trace' 1 1 nil nil nil 8 '&Events' nil 134217729 nil nil 54421 nil nil 1746 nil true 34 3 1794 1 1826 #chooseAmbientForecolor 8 'Foreground &Color' 1 1 nil nil nil 1794 1 1826 #chooseAmbientBackcolor 8 '&Background Color' 1 1 nil nil nil 1794 1 1826 #chooseAmbientFont 8 '&Font' 1 1 nil nil nil 8 '&Ambient' nil 134217729 nil nil 54429 nil nil 8 '&Options' nil 134217729 nil nil 54431 nil nil 1746 nil true 8 #() 8 '&Tools' #toolsMenu 134217729 nil nil 54433 nil nil 1746 nil true 8 #() 8 'Wi&ndow' #windowMenu 134217729 nil nil 54435 nil nil 1746 nil true 34 15 1794 1 1826 #helpContents 8 '&Contents' 1025 1 5826 nil true 5872 8 'Help.ico' 5920 nil nil 1794 1 1826 #help 8 'On this &Tool' 1249 1 nil nil nil 1794 1 1826 #helpWhatsThis 8 'What''s This?' 5345 1 nil nil nil 4402 4097 1794 1 1826 #learnSmalltalk 8 'Learn Smalltalk' 1 1 5698 $\x1F393 nil 1714 #orchid 4304 nil nil 1 nil nil nil nil 4402 4097 1794 1 1826 #helpWhatsNew 8 'What''s &New' 1 1 nil nil nil 1794 1 1826 #helpGuidedTour 8 '&Guided Tour' 1 1 nil nil nil 1794 1 1826 #helpTutorials 8 'Tutorials' 1 1 nil nil nil 4402 4097 1794 1 1826 #objectArtsHomePage 8 'Object Arts Homepage' 1 1 5826 nil true 5872 8 '!!APPLICATION' 5920 nil nil 1794 1 1826 #dolphinNewsgroup 8 'Dolphin Newsgroup/Forum' 1 1 nil nil nil 1794 1 1826 #dolphinWikiWeb 8 'Dolphin WikiWeb' 1 1 nil nil nil 4402 4097 1794 1 1826 #aboutDolphin 8 '&About Dolphin Smalltalk' 1 1 5698 $\x1F42C nil nil 1714 #darkSlateBlue nil nil 1 nil nil nil nil 8 '&Help' #help 134217729 nil nil nil nil nil 8 '' nil 134217729 nil nil nil nil nil nil nil nil 1 nil nil nil nil 1 nil nil 850 138 144 34 2 914 #createAt:extent: 34 2 674 6143 21 674 1201 801 416 914 #text: 34 1 8 'Active-X Control Browser' 416 994 8 #[44 0 0 0 0 0 0 0 0 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 87 14 0 0 154 1 0 0] 34 2 1072 528 1056 nil 27 )!
+	^#(#'!!STL' 4 985166 10 ##(UI.STBViewProxy) ##(UI.ShellView) 34 27 nil nil 8 #(13565952 65536) 416 nil 1245702 ##(Graphics.ThemeColor) #toolBackground nil 549 nil nil nil 416 984838 ##(UI.BorderLayout) 1 1 nil 410 ##(UI.StatusBar) 34 18 nil 416 34 2 8 1140850956 1 528 nil nil nil 7 nil 852998 ##(Graphics.Font) nil true 655622 ##(OS.LOGFONT) 8 #[243 255 255 255 0 0 0 0 0 0 0 0 0 0 0 0 144 1 0 0 0 0 0 0 3 2 1 34 65 114 105 97 108 0 183 4 128 213 87 1 0 0 204 53 87 1 3 0 34 59 0 0 0 0 15 1 31 86 135 1] 918022 ##(Graphics.Point) 193 193 nil 528 nil 8 1801004784 170 192 34 2 1050374 ##(UI.StatusBarItem) 1 201 528 nil ##(UI.BasicListAbstract) ##(UI.IconicListAbstract) nil 8 'windowStatus' 34 1 768 1311750 ##(UI.StatusBarNullItem) 513 1 528 nil nil 1310982 ##(Core.MessageSequence) 138 144 34 1 1049350 ##(Core.MessageSend) #createAt:extent: 34 2 674 1 639 674 1169 45 528 1179910 ##(OS.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 63 1 0 0 72 2 0 0 85 1 0 0] 8 #() 674 193 193 nil 27 nil nil 410 ##(UI.ContainerView) 34 15 nil 416 34 2 8 1174405120 131073 1072 nil nil nil 7 nil nil nil 1072 1376774 ##(UI.ProportionalLayout) 170 176 34 6 410 ##(Smalltalk.AXControlSite) 34 25 nil 1072 34 2 8 1073741824 262145 1200 nil 917510 ##(Graphics.Color) #default nil 7 nil nil nil 1200 nil 537194055 8 'mshtml:<h2>Active-X Control Browser</h2>This browser allows you to load various ActiveX controls and to inspects their methods, properties and events. Choose <I>File/New (Ctrl+N)</I> to bring up a list of controls available on your computer.<h4>Copyright © Object Arts Ltd, 2000</h4>' 1246214 ##(Smalltalk.IDispatch) nil nil 2033990 1 ##(Smalltalk.TKindDispatchAnalyzer) 1311494 ##(Smalltalk.ITypeInfo2) nil nil 1180422 ##(Smalltalk.TYPEATTR) nil 1360 1392 nil 2033990 2 ##(Smalltalk.AXTypeLibraryAnalyzer) 1245702 ##(Smalltalk.ITypeLib2) nil nil 2049 1179910 ##(Smalltalk.TLIBATTR) 8 #[197 241 80 48 181 152 207 17 187 130 0 170 0 189 206 11 0 0 0 0 1 0 0 0 4 0 0 0 8 0 0 0] nil nil nil nil 170 176 34 6 8 'PROPVARIANT' 1508870 ##(Kernel.BindingReference) 8 'VARIANT' 34 1 1632 1440 1 1442886 2 ##(Kernel.VariableBinding) #VARIANT ##(Smalltalk.VARIANT) ##(Smalltalk) 1 4351 8 'GUID' 1602 8 'GUID' 34 1 1728 1440 1 1666 #GUID ##(Core.GUID) ##(Core) 1 4351 8 'RemotableHandle' 1602 8 'ExternalHandle' 34 1 1808 1440 1 1666 #ExternalHandle ##(External.Handle) ##(Smalltalk) 1 4351 nil nil nil 1329 nil nil nil nil 1573382 ##(Smalltalk.IDolphinAxHost) nil nil 1377798 ##(Smalltalk.AXEventSink) 170 176 34 76 8 -2147418100 #onselectstart 8 -2147418099 #onerrorupdate 2073 #oncontrolselect 8 -2147418101 #ondragstart -1217 #onreadystatechange 2047 #oncontextmenu 2099 #onfocusout -1203 #onkeydown 2075 #onselectionchange 8 -2147418098 #ondatasetchanged 2089 #onactivate 8 -2147418097 #ondataavailable -1201 #ondblclick 8 -2147418093 #onpropertychange 8 -2147418105 #onrowenter -1213 #onmouseup 2091 #ondeactivate -1199 #onclick 8 -2147418078 #oncellchange 2053 #onstop -1211 #onmousemove 2067 #onmousewheel 8 -2147418079 #onrowsinserted 8 -2147418102 #onhelp 8 -2147418106 #onrowexit 2055 #onbeforeeditfocus -1209 #onmousedown 2095 #onbeforeactivate 8 -2147418104 #onmouseover 8 -2147418108 #onbeforeupdate 8 -2147418096 #ondatasetcomplete 8 -2147418107 #onafterupdate 8 -2147418103 #onmouseout 2069 #onbeforedeactivate -1207 #onkeyup 2097 #onfocusin 8 -2147418080 #onrowsdelete -1205 #onkeypress 1200 1704454 ##(Smalltalk.IConnectionPoint) nil nil 172623009 1346 1378 nil nil 1410 nil 2256 2272 nil 1456 nil 589878 ##(Core.GUID) 16 96 242 80 48 181 152 207 17 187 130 0 170 0 189 206 11 1279 nil nil nil 1 3787 170 176 8 #(1005 #activeElement -525 #ReadyState) 2163718 ##(Smalltalk.IAxWinAmbientDispatchEx) nil nil nil nil 1180166 ##(Smalltalk.IUnknown) nil nil nil nil nil 850 138 144 34 3 914 #createAt:extent: 34 2 674 1 1 674 1169 339 1200 914 #restoreAmbientProperties 8 #() 1200 914 #controlBinaryStoreBytes: 34 1 8 #[60 0 104 0 50 0 62 0 65 0 99 0 116 0 105 0 118 0 101 0 45 0 88 0 32 0 67 0 111 0 110 0 116 0 114 0 111 0 108 0 32 0 66 0 114 0 111 0 119 0 115 0 101 0 114 0 60 0 47 0 104 0 50 0 62 0 84 0 104 0 105 0 115 0 32 0 98 0 114 0 111 0 119 0 115 0 101 0 114 0 32 0 97 0 108 0 108 0 111 0 119 0 115 0 32 0 121 0 111 0 117 0 32 0 116 0 111 0 32 0 108 0 111 0 97 0 100 0 32 0 118 0 97 0 114 0 105 0 111 0 117 0 115 0 32 0 65 0 99 0 116 0 105 0 118 0 101 0 88 0 32 0 99 0 111 0 110 0 116 0 114 0 111 0 108 0 115 0 32 0 97 0 110 0 100 0 32 0 116 0 111 0 32 0 105 0 110 0 115 0 112 0 101 0 99 0 116 0 115 0 32 0 116 0 104 0 101 0 105 0 114 0 32 0 109 0 101 0 116 0 104 0 111 0 100 0 115 0 44 0 32 0 112 0 114 0 111 0 112 0 101 0 114 0 116 0 105 0 101 0 115 0 32 0 97 0 110 0 100 0 32 0 101 0 118 0 101 0 110 0 116 0 115 0 46 0 32 0 67 0 104 0 111 0 111 0 115 0 101 0 32 0 60 0 73 0 62 0 70 0 105 0 108 0 101 0 47 0 78 0 101 0 119 0 32 0 40 0 67 0 116 0 114 0 108 0 43 0 78 0 41 0 60 0 47 0 73 0 62 0 32 0 116 0 111 0 32 0 98 0 114 0 105 0 110 0 103 0 32 0 117 0 112 0 32 0 97 0 32 0 108 0 105 0 115 0 116 0 32 0 111 0 102 0 32 0 99 0 111 0 110 0 116 0 114 0 111 0 108 0 115 0 32 0 97 0 118 0 97 0 105 0 108 0 97 0 98 0 108 0 101 0 32 0 111 0 110 0 32 0 121 0 111 0 117 0 114 0 32 0 99 0 111 0 109 0 112 0 117 0 116 0 101 0 114 0 46 0 60 0 104 0 52 0 62 0 67 0 111 0 112 0 121 0 114 0 105 0 103 0 104 0 116 0 32 0 169 0 32 0 79 0 98 0 106 0 101 0 99 0 116 0 32 0 65 0 114 0 116 0 115 0 32 0 76 0 116 0 100 0 44 0 32 0 50 0 48 0 48 0 48 0 60 0 47 0 104 0 52 0 62 0] 1200 994 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 72 2 0 0 169 0 0 0] 8 #() 1056 nil 27 111 410 ##(UI.ContainerView) 34 15 nil 1072 34 2 8 1140850688 131073 2672 nil nil nil 7 nil nil nil 2672 1138 170 176 34 4 410 ##(UI.ListView) 34 45 nil 2672 34 2 8 1140936773 262145 2784 787270 2 ##(UI.ListModel) 138 144 2560 nil 1769478 ##(Kernel.IdentitySearchPolicy) 1280 nil 15 461638 4 ##(UI.Menu) nil true 34 1 1180742 2 ##(UI.CommandMenuItem) 2097153 1377606 4 ##(UI.CommandDescription) #copyEventName 8 '&Copy' 1 1 nil nil nil 8 '' nil 134217729 nil nil nil nil nil nil nil 2784 nil 8 1801282304 786950 ##(Core.Message) #selector 8 #() nil 1639750 1 ##(Graphics.IconImageManager) nil 3090 #printIDL 8 #() nil nil nil nil 138 144 34 1 1117254 5 ##(UI.ListViewColumn) 8 '' 341 #left 3090 #key 8 #() 3090 #<= 8 #() nil nil 2784 nil 3 3090 #value 3296 nil #report 8 #() nil 133121 nil 1 nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil 850 138 144 34 2 914 #createAt:extent: 34 2 674 821 1 674 349 185 2784 914 #contextMenu: 34 1 2944 2784 994 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 154 1 0 0 0 0 0 0 72 2 0 0 92 0 0 0] 8 #() 1056 nil 35 61 410 ##(UI.ReferenceView) 34 14 nil 2672 34 2 8 1140850688 131073 3568 nil nil nil 7 nil nil nil 3568 1376838 1 ##(UI.ResourceIdentifier) ##(Tools.PublishedAspectInspector) #resource_Default_view nil 850 138 144 34 1 914 #createAt:extent: 34 2 674 1 1 674 811 185 3568 994 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 149 1 0 0 92 0 0 0] 2560 1056 nil 27 141 false 170 192 34 4 2784 8 'eventNames' 3568 8 'inspector' nil 850 138 144 34 1 914 #createAt:extent: 34 2 674 1 349 674 1169 185 2672 994 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 174 0 0 0 72 2 0 0 10 1 0 0] 34 3 3568 410 ##(UI.Splitter) 34 12 nil 2672 34 2 8 1140850688 1 4032 nil nil nil 519 nil nil nil 1707078 1 ##(UI.DraggableViewInteractor) 4032 nil 1 #left nil nil nil 674 1 1 674 9 9 nil 4128 nil 850 138 144 34 1 914 #createAt:extent: 34 2 674 811 1 674 11 185 4032 994 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 149 1 0 0 0 0 0 0 154 1 0 0 92 0 0 0] 8 #() 1056 nil 27 2784 1056 nil 27 61 410 ##(UI.MultilineTextEdit) 34 16 nil 1072 34 2 8 1142952260 262145 4320 nil 1266 #white nil 7 2930 nil true 34 4 2978 1 3010 #copySelection 8 '&Copy' 1 1 nil nil nil 1179974 1 ##(UI.DividerMenuItem) 4097 2978 1 3010 #selectAll 8 '&Select All' 1 1 nil nil nil 2978 1 3010 #clear 8 'Clea&r' 1 1 nil nil nil 8 '' nil 134217729 nil nil nil nil nil nil nil 4320 nil 8 1801338832 1049094 ##(UI.NullConverter) nil nil 11 850 138 144 34 2 914 #createAt:extent: 34 2 674 1 543 674 1169 97 4320 914 #contextMenu: 34 1 4400 4320 994 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 15 1 0 0 72 2 0 0 63 1 0 0] 8 #() 1056 nil 27 31 true 170 192 34 4 4320 8 'trace' 1200 8 'site' nil 850 138 144 34 1 914 #createAt:extent: 34 2 674 1 1 674 1169 639 1072 994 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 72 2 0 0 63 1 0 0] 34 5 1200 410 ##(UI.Splitter) 34 12 nil 1072 34 2 8 1140850688 1 5088 nil nil nil 519 nil nil nil 4098 5088 nil 1 #left nil nil nil 4128 4144 nil 4128 nil 850 138 144 34 1 914 #createAt:extent: 34 2 674 1 339 674 1169 11 5088 994 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 169 0 0 0 72 2 0 0 174 0 0 0] 8 #() 1056 nil 27 2672 410 ##(UI.Splitter) 34 12 nil 1072 34 2 8 1140850688 1 5328 nil nil nil 519 nil nil nil 4098 5328 nil 1 #left nil nil nil 4128 4144 nil 4128 nil 850 138 144 34 1 914 #createAt:extent: 34 2 674 1 533 674 1169 11 5328 994 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 10 1 0 0 72 2 0 0 15 1 0 0] 8 #() 1056 nil 27 4320 1056 nil 27 170 192 2560 nil 658246 4 ##(UI.MenuBar) nil true 34 7 2930 nil true 34 3 2978 1 3010 #fileNewControl 8 '&New...' 9373 1 nil nil nil 4482 4097 2978 1 3010 #exit 8 '&Close' 17639 1 1378630 1 ##(Graphics.TextTileIcon) $\x2716 nil nil nil nil nil 1 nil nil nil nil 8 '&File' nil 134217729 nil nil 54723 nil nil 2930 nil true 34 6 2978 1 3010 #cutSelection 8 'Cu&t' 1 1 853318 3 ##(Graphics.Icon) nil true 2031622 ##(Kernel.ImageRelativeFileLocator) 8 'EditCut.ico' 2490894 ##(Kernel.STBExternalResourceLibraryProxy) 8 'dolphindr7.dll' nil nil nil 2978 1 3010 #copySelection 8 '&Copy' 1 1 5906 nil true 5952 8 'EditCopy.ico' 6000 nil nil 2978 1 3010 #pasteClipboard 8 '&Paste' 1 1 5906 nil true 5952 8 'EditPaste.ico' 6000 nil nil 2978 1 3010 #clearSelection 8 'De&lete' 1 1 5906 nil true 5952 8 'EditClear.ico' 6000 nil nil 4482 4097 2978 1 3010 #editProperties 8 'P&roperties' 1267 1 nil nil nil 8 '&Edit' nil 134217729 nil nil 54735 nil nil 2930 nil true 34 6 2978 1 3010 #browseIt 8 '&Browse It' 9349 1 5906 nil true 5952 8 'ClassBrowserShell.ico' 6000 nil nil 2978 1 3010 #displayIt 8 '&Display It' 9353 1 5906 nil true 5952 8 'DisplayIt.ico' 6000 nil nil 2978 1 3010 #printIt 8 '&Print It' 9377 1 5906 nil true 5952 8 'PrintIt.ico' 6000 nil nil 2978 1 3010 #evaluateIt 8 '&Evaluate It' 9355 1 5906 nil true 5952 8 'EvaluateIt.ico' 6000 nil nil 2978 1 3010 #inspectIt 8 '&Inspect It' 9363 1 5906 nil true 5952 8 'BasicInspector.ico' 6000 nil nil 2978 1 3010 #debugIt 8 'Deb&ug It' 1269 1 5906 nil true 5952 8 'Debugger.ico' 6000 nil nil 8 '&Workspace' nil 134217729 nil nil 54749 nil nil 2930 nil true 34 7 2978 1 3010 #toggleAllowWindowless 8 'Allow &Windowless' 1 1 nil nil nil 2978 1 3010 #toggleAllowShowUI 8 'Allow Show &UI' 1 1 nil nil nil 2978 1 3010 #toggleDisplayAsDefault 8 'Display as &Default' 1 1 nil nil nil 2978 1 3010 #toggleDesignMode 8 'Design &Mode' 1 1 nil nil nil 4482 4097 2930 nil true 34 3 2978 1 3010 #toggleFireControlEvents 8 '&Enable' 1 1 nil nil nil 2978 1 3010 #toggleFirePropertyNotifications 8 '&Property Notifications' 1 1 nil nil nil 2978 1 3010 #toggleEventTracing 8 '&Trace' 1 1 nil nil nil 8 '&Events' nil 134217729 nil nil 54765 nil nil 2930 nil true 34 3 2978 1 3010 #chooseAmbientForecolor 8 'Foreground &Color' 1 1 nil nil nil 2978 1 3010 #chooseAmbientBackcolor 8 '&Background Color' 1 1 nil nil nil 2978 1 3010 #chooseAmbientFont 8 '&Font' 1 1 nil nil nil 8 '&Ambient' nil 134217729 nil nil 54773 nil nil 8 '&Options' nil 134217729 nil nil 54775 nil nil 2930 nil true 8 #() 8 '&Tools' #toolsMenu 134217729 nil nil 54777 nil nil 2930 nil true 8 #() 8 'Wi&ndow' #windowMenu 134217729 nil nil 54779 nil nil 2930 nil true 34 15 2978 1 3010 #helpContents 8 '&Contents' 1025 1 5906 nil true 5952 8 'Help.ico' 6000 nil nil 2978 1 3010 #help 8 'On this &Tool' 1249 1 nil nil nil 2978 1 3010 #helpWhatsThis 8 'What''s This?' 5345 1 nil nil nil 4482 4097 2978 1 3010 #learnSmalltalk 8 'Learn Smalltalk' 1 1 5778 $\x1F393 nil 1266 #orchid 4384 nil nil 1 nil nil nil nil 4482 4097 2978 1 3010 #helpWhatsNew 8 'What''s &New' 1 1 nil nil nil 2978 1 3010 #helpGuidedTour 8 '&Guided Tour' 1 1 nil nil nil 2978 1 3010 #helpTutorials 8 'Tutorials' 1 1 nil nil nil 4482 4097 2978 1 3010 #objectArtsHomePage 8 'Object Arts Homepage' 1 1 5906 nil true 5952 8 '!!APPLICATION' 6000 nil nil 2978 1 3010 #dolphinNewsgroup 8 'Dolphin Newsgroup/Forum' 1 1 nil nil nil 2978 1 3010 #dolphinWikiWeb 8 'Dolphin WikiWeb' 1 1 nil nil nil 4482 4097 2978 1 3010 #aboutDolphin 8 '&About Dolphin Smalltalk' 1 1 5778 $\x1F42C nil nil 1266 #darkSlateBlue nil nil 1 nil nil nil nil 8 '&Help' #help 134217729 nil nil 54803 nil nil 8 '' nil 134217729 nil nil nil nil nil nil nil nil 1 nil nil nil nil 1 nil nil 850 138 144 34 2 914 #createAt:extent: 34 2 674 6143 21 674 1201 801 416 914 #text: 34 1 8 'Active-X Control Browser' 416 994 8 #[44 0 0 0 0 0 0 0 0 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 87 14 0 0 154 1 0 0] 34 2 1072 528 1056 nil 27)!
 
 toolsFolderHelpId
 	^10603! !
-!AXControlBrowser class categoriesFor: #displayOn:!displaying!public! !
-!AXControlBrowser class categoriesFor: #icon!constants!public! !
-!AXControlBrowser class categoriesFor: #initialize!initializing!must strip!private! !
-!AXControlBrowser class categoriesFor: #publishedAspects!public! !
-!AXControlBrowser class categoriesFor: #resource_Default_view!public!resources-views! !
-!AXControlBrowser class categoriesFor: #toolsFolderHelpId!constants!public! !
+!Tools.AXControlBrowser class categoriesFor: #displayOn:!displaying!public! !
+!Tools.AXControlBrowser class categoriesFor: #icon!constants!public! !
+!Tools.AXControlBrowser class categoriesFor: #initialize!initializing!must strip!private! !
+!Tools.AXControlBrowser class categoriesFor: #publishedAspects!public! !
+!Tools.AXControlBrowser class categoriesFor: #resource_Default_view!public!resources-views! !
+!Tools.AXControlBrowser class categoriesFor: #toolsFolderHelpId!constants!public! !
 

@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-CommunityEditionSmalltalkSystem subclass: #ProfessionalSmalltalkSystem
+Tools.CommunityEditionSmalltalkSystem subclass: #'Tools.ProfessionalSmalltalkSystem'
 	instanceVariableNames: 'systemBrowserClass ideaSpaceClass packagedResourceIdentifierDialogClass'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ProfessionalSmalltalkSystem guid: (GUID fromString: '{ff97cec8-db85-4932-b9c0-163380844b27}')!
-ProfessionalSmalltalkSystem comment: ''!
-!ProfessionalSmalltalkSystem categoriesForClass!MVP-Models! !
-!ProfessionalSmalltalkSystem methodsFor!
+Tools.ProfessionalSmalltalkSystem guid: (Core.GUID fromString: '{ff97cec8-db85-4932-b9c0-163380844b27}')!
+Tools.ProfessionalSmalltalkSystem comment: ''!
+!Tools.ProfessionalSmalltalkSystem categoriesForClass!MVP-Models! !
+!Tools.ProfessionalSmalltalkSystem methodsFor!
 
 browseDeployedPackage: aPackage
 	self browseDeploymentLog: aPackage imageStripper logFileName!
@@ -18,7 +18,7 @@ browseDeploymentLog: aString
 	self browseEnvironment: (self
 				browserEnvFromDeploymentLog: (FileLocator imageRelative localFileSpecFor: aString))!
 
-browseEnvironment: aBrowserEnvironment 
+browseEnvironment: aBrowserEnvironment
 	"Open an Environment Browser Shell on all classes and methods included in the specified <BrowserEnvironment>."
 
 	^EnvironmentBrowserShell onEnvironment: aBrowserEnvironment!
@@ -42,7 +42,7 @@ browseSystemPackages: aCollection
 		yourself!
 
 classBrowserClasses
-	^Set 
+	^Set
 		with: self hierarchyBrowserClass
 		with: self systemBrowserClass
 		with: EnvironmentBrowserShell!
@@ -51,7 +51,7 @@ classChooserClass
 	classChooserClass isNil ifTrue: [classChooserClass := ChoosePackagedClassDialog].
 	^classChooserClass!
 
-disassembleMethod: aCompiledCode 
+disassembleMethod: aCompiledCode
 	^(Disassembler method: aCompiledCode) fullDisassembly!
 
 ideaSpaceClass
@@ -72,12 +72,12 @@ newIdeaSpace
 
 openDeploymentLog: aString
 	| dom |
-	dom := IXMLDOMDocument new.
+	dom := Smalltalk.IXMLDOMDocument new.
 	dom loadURL: 'file://' , aString.
 	^dom!
 
 packagedResourceIdentifierDialogClass
-	packagedResourceIdentifierDialogClass isNil 
+	packagedResourceIdentifierDialogClass isNil
 		ifTrue: [packagedResourceIdentifierDialogClass := PackagedResourceIdentifierDialog].
 	^packagedResourceIdentifierDialogClass!
 
@@ -126,29 +126,29 @@ systemBrowserClass: toolClass
 	to be used by default in the development environment."
 
 	systemBrowserClass := toolClass! !
-!ProfessionalSmalltalkSystem categoriesFor: #browseDeployedPackage:!helpers!public! !
-!ProfessionalSmalltalkSystem categoriesFor: #browseDeploymentLog:!helpers!public! !
-!ProfessionalSmalltalkSystem categoriesFor: #browseEnvironment:!browsing!public! !
-!ProfessionalSmalltalkSystem categoriesFor: #browserEnvFromDeploymentLog:!helpers!private! !
-!ProfessionalSmalltalkSystem categoriesFor: #browseSources!commands!public! !
-!ProfessionalSmalltalkSystem categoriesFor: #browseSystemOnMethod:!browsing!public! !
-!ProfessionalSmalltalkSystem categoriesFor: #browseSystemPackages:!browsing!public! !
-!ProfessionalSmalltalkSystem categoriesFor: #classBrowserClasses!accessing!public! !
-!ProfessionalSmalltalkSystem categoriesFor: #classChooserClass!options!public! !
-!ProfessionalSmalltalkSystem categoriesFor: #disassembleMethod:!public! !
-!ProfessionalSmalltalkSystem categoriesFor: #ideaSpaceClass!accessing!public! !
-!ProfessionalSmalltalkSystem categoriesFor: #ideaSpaceClass:!accessing!public! !
-!ProfessionalSmalltalkSystem categoriesFor: #newIdeaSpace!commands!public! !
-!ProfessionalSmalltalkSystem categoriesFor: #openDeploymentLog:!helpers!private! !
-!ProfessionalSmalltalkSystem categoriesFor: #packagedResourceIdentifierDialogClass!options!public! !
-!ProfessionalSmalltalkSystem categoriesFor: #packagedResourceIdentifierDialogClass:!accessing!public! !
-!ProfessionalSmalltalkSystem categoriesFor: #publishedAspects!constants!public! !
-!ProfessionalSmalltalkSystem categoriesFor: #queryCommand:!commands!private! !
-!ProfessionalSmalltalkSystem categoriesFor: #recompileDiffs:!public! !
-!ProfessionalSmalltalkSystem categoriesFor: #systemBrowserClass!accessing!public! !
-!ProfessionalSmalltalkSystem categoriesFor: #systemBrowserClass:!accessing!public! !
+!Tools.ProfessionalSmalltalkSystem categoriesFor: #browseDeployedPackage:!helpers!public! !
+!Tools.ProfessionalSmalltalkSystem categoriesFor: #browseDeploymentLog:!helpers!public! !
+!Tools.ProfessionalSmalltalkSystem categoriesFor: #browseEnvironment:!browsing!public! !
+!Tools.ProfessionalSmalltalkSystem categoriesFor: #browserEnvFromDeploymentLog:!helpers!private! !
+!Tools.ProfessionalSmalltalkSystem categoriesFor: #browseSources!commands!public! !
+!Tools.ProfessionalSmalltalkSystem categoriesFor: #browseSystemOnMethod:!browsing!public! !
+!Tools.ProfessionalSmalltalkSystem categoriesFor: #browseSystemPackages:!browsing!public! !
+!Tools.ProfessionalSmalltalkSystem categoriesFor: #classBrowserClasses!accessing!public! !
+!Tools.ProfessionalSmalltalkSystem categoriesFor: #classChooserClass!options!public! !
+!Tools.ProfessionalSmalltalkSystem categoriesFor: #disassembleMethod:!public! !
+!Tools.ProfessionalSmalltalkSystem categoriesFor: #ideaSpaceClass!accessing!public! !
+!Tools.ProfessionalSmalltalkSystem categoriesFor: #ideaSpaceClass:!accessing!public! !
+!Tools.ProfessionalSmalltalkSystem categoriesFor: #newIdeaSpace!commands!public! !
+!Tools.ProfessionalSmalltalkSystem categoriesFor: #openDeploymentLog:!helpers!private! !
+!Tools.ProfessionalSmalltalkSystem categoriesFor: #packagedResourceIdentifierDialogClass!options!public! !
+!Tools.ProfessionalSmalltalkSystem categoriesFor: #packagedResourceIdentifierDialogClass:!accessing!public! !
+!Tools.ProfessionalSmalltalkSystem categoriesFor: #publishedAspects!constants!public! !
+!Tools.ProfessionalSmalltalkSystem categoriesFor: #queryCommand:!commands!private! !
+!Tools.ProfessionalSmalltalkSystem categoriesFor: #recompileDiffs:!public! !
+!Tools.ProfessionalSmalltalkSystem categoriesFor: #systemBrowserClass!accessing!public! !
+!Tools.ProfessionalSmalltalkSystem categoriesFor: #systemBrowserClass:!accessing!public! !
 
-!ProfessionalSmalltalkSystem class methodsFor!
+!Tools.ProfessionalSmalltalkSystem class methodsFor!
 
 initialize
 	"Private - Initialize the receiver on load (take over as the development system model)."
@@ -165,7 +165,7 @@ publishedAspectsOfInstances
 
 	| aspects |
 	aspects := super publishedAspectsOfInstances.
-	#(#packagedResourceIdentifierDialogClass #ideaSpaceClass #systemBrowserClass) 
+	#(#packagedResourceIdentifierDialogClass #ideaSpaceClass #systemBrowserClass)
 		do: [:each | aspects add: (Aspect name: each)].
 	^aspects!
 
@@ -180,9 +180,9 @@ uninstallCurrent
 			[(self superclass basicNew)
 				initializeFrom: Current;
 				become: Current]! !
-!ProfessionalSmalltalkSystem class categoriesFor: #initialize!initializing!private! !
-!ProfessionalSmalltalkSystem class categoriesFor: #installCurrent!initializing!private! !
-!ProfessionalSmalltalkSystem class categoriesFor: #publishedAspectsOfInstances!public! !
-!ProfessionalSmalltalkSystem class categoriesFor: #uninitialize!class hierarchy-removing!private! !
-!ProfessionalSmalltalkSystem class categoriesFor: #uninstallCurrent!class hierarchy-removing!private! !
+!Tools.ProfessionalSmalltalkSystem class categoriesFor: #initialize!initializing!private! !
+!Tools.ProfessionalSmalltalkSystem class categoriesFor: #installCurrent!initializing!private! !
+!Tools.ProfessionalSmalltalkSystem class categoriesFor: #publishedAspectsOfInstances!public! !
+!Tools.ProfessionalSmalltalkSystem class categoriesFor: #uninitialize!class hierarchy-removing!private! !
+!Tools.ProfessionalSmalltalkSystem class categoriesFor: #uninstallCurrent!class hierarchy-removing!private! !
 

@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Aspect subclass: #KeyedAspect
+Tools.Aspect subclass: #'Tools.KeyedAspect'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-KeyedAspect guid: (GUID fromString: '{87b4c4d9-026e-11d3-9fd7-00a0cc3e4a32}')!
-KeyedAspect comment: 'Part of the PublishedAspectorInspector framework. KeyedAspect instances are used to describe the published aspects of a keyed collection. Typically these are accessed via #at: and #at:put: messages as governed by the KeyedAspectAccessor class.'!
-!KeyedAspect categoriesForClass!Attribute-Definition! !
-!KeyedAspect methodsFor!
+Tools.KeyedAspect guid: (Core.GUID fromString: '{87b4c4d9-026e-11d3-9fd7-00a0cc3e4a32}')!
+Tools.KeyedAspect comment: 'Part of the PublishedAspectorInspector framework. KeyedAspect instances are used to describe the published aspects of a keyed collection. Typically these are accessed via #at: and #at:put: messages as governed by the KeyedAspectAccessor class.'!
+!Tools.KeyedAspect categoriesForClass!Attribute-Definition! !
+!Tools.KeyedAspect methodsFor!
 
 = comperand
 	"Answer whether the receiver is considered equal to the <Object>, comperand."
@@ -50,21 +50,21 @@ writeInto: subjectObject value: valueObject
 	to valueObject."
 
 	^subjectObject at: self key put: valueObject! !
-!KeyedAspect categoriesFor: #=!comparing!public! !
-!KeyedAspect categoriesFor: #displayAspectNameOf:on:!displaying!private! !
-!KeyedAspect categoriesFor: #displayAspectText:on:!displaying!private! !
-!KeyedAspect categoriesFor: #getSelector!accessing!private! !
-!KeyedAspect categoriesFor: #hash!comparing!public! !
-!KeyedAspect categoriesFor: #objectRefName:!helpers!private! !
-!KeyedAspect categoriesFor: #putSelector!accessing!private! !
-!KeyedAspect categoriesFor: #readFrom:!indirect accessing!private! !
-!KeyedAspect categoriesFor: #writeInto:value:!indirect accessing!private! !
+!Tools.KeyedAspect categoriesFor: #=!comparing!public! !
+!Tools.KeyedAspect categoriesFor: #displayAspectNameOf:on:!displaying!private! !
+!Tools.KeyedAspect categoriesFor: #displayAspectText:on:!displaying!private! !
+!Tools.KeyedAspect categoriesFor: #getSelector!accessing!private! !
+!Tools.KeyedAspect categoriesFor: #hash!comparing!public! !
+!Tools.KeyedAspect categoriesFor: #objectRefName:!helpers!private! !
+!Tools.KeyedAspect categoriesFor: #putSelector!accessing!private! !
+!Tools.KeyedAspect categoriesFor: #readFrom:!indirect accessing!private! !
+!Tools.KeyedAspect categoriesFor: #writeInto:value:!indirect accessing!private! !
 
-!KeyedAspect class methodsFor!
+!Tools.KeyedAspect class methodsFor!
 
 key: aKey 
 	"Answer an instance of the receiver created with aKey"
 
 	^self name: aKey! !
-!KeyedAspect class categoriesFor: #key:!instance creation!public! !
+!Tools.KeyedAspect class categoriesFor: #key:!instance creation!public! !
 

@@ -32,19 +32,19 @@ package setClassNames: #(
 	#{Refactory.Browser.RBScopedMethodName}
 	#{Refactory.Browser.RenameMethodReferencesRefactoring}
 	#{Refactory.Browser.SmalllintCachingContext}
-	#{Smalltalk.CodeMentorPlugin}
-	#{Smalltalk.CodeRefactoringTool}
-	#{Smalltalk.CodeRewriterPlugin}
-	#{Smalltalk.ConvertToSiblingDialog}
-	#{Smalltalk.LintRuleFailuresBrowserShell}
-	#{Smalltalk.MethodNameDialog}
-	#{Smalltalk.MethodRefactoringTool}
-	#{Smalltalk.RefactoringSmalltalkSystem}
-	#{Smalltalk.RefactoringTool}
-	#{Smalltalk.RenameAccessorsDialog}
-	#{Smalltalk.RenameMethodDialog}
-	#{Smalltalk.RewriteChangesBrowser}
-	#{Smalltalk.SmalllintPlugin}
+	#{Tools.CodeMentorPlugin}
+	#{Tools.CodeRefactoringTool}
+	#{Tools.CodeRewriterPlugin}
+	#{Tools.ConvertToSiblingDialog}
+	#{Tools.LintRuleFailuresBrowserShell}
+	#{Tools.MethodNameDialog}
+	#{Tools.MethodRefactoringTool}
+	#{Tools.RefactoringSmalltalkSystem}
+	#{Tools.RefactoringTool}
+	#{Tools.RenameAccessorsDialog}
+	#{Tools.RenameMethodDialog}
+	#{Tools.RewriteChangesBrowser}
+	#{Tools.SmalllintPlugin}
 ).
 
 package setMethodNames: #(
@@ -109,10 +109,14 @@ package setMethodNames: #(
 	#(#{Refactory.Browser.RemoveInstanceVariableRefactoring class} #displayPrefix)
 	#(#{Refactory.Browser.RemoveMethodRefactoring} #displayOn:)
 	#(#{Refactory.Browser.RemoveParameterRefactoring} #displayOn:)
+	#(#{Refactory.Browser.RenameAccessorsForVariableRefactoring} #displayOn:)
+	#(#{Refactory.Browser.RenameAccessorsForVariableRefactoring class} #displayPrefix)
+	#(#{Refactory.Browser.RenameAccessorsForVariableRefactoring class} #icon)
 	#(#{Refactory.Browser.RenameClassRefactoring} #displayOn:)
 	#(#{Refactory.Browser.RenameClassVariableRefactoring} #displayOn:)
 	#(#{Refactory.Browser.RenameClassVariableRefactoring class} #displayPrefix)
 	#(#{Refactory.Browser.RenameClassVariableRefactoring class} #icon)
+	#(#{Refactory.Browser.RenameInstanceVariableAndAccessorsRefactoring} #displayOn:)
 	#(#{Refactory.Browser.RenameInstanceVariableRefactoring} #displayOn:)
 	#(#{Refactory.Browser.RenameInstanceVariableRefactoring class} #displayPrefix)
 	#(#{Refactory.Browser.RenameInstanceVariableRefactoring class} #icon)
@@ -129,87 +133,83 @@ package setMethodNames: #(
 	#(#{Refactory.Browser.VariableRefactoring} #displayOn:)
 	#(#{Refactory.Browser.VariableRefactoring} #displayPrefix)
 	#(#{Refactory.Browser.VariableRefactoring class} #displayPrefix)
-	#(#{Smalltalk.ClassBrowserAbstract} #abstractInstanceVariables)
-	#(#{Smalltalk.ClassBrowserAbstract} #methodRefactoringTool)
-	#(#{Smalltalk.ClassBrowserAbstract} #methodsToOverride)
-	#(#{Smalltalk.ClassBrowserAbstract} #overrideMethods)
-	#(#{Smalltalk.ClassBrowserAbstract} #protectInstanceVariables)
-	#(#{Smalltalk.ClassBrowserAbstract} #pushDownInstanceVariables)
-	#(#{Smalltalk.ClassBrowserAbstract} #pushDownMethods)
-	#(#{Smalltalk.ClassBrowserAbstract} #pushMethods:)
-	#(#{Smalltalk.ClassBrowserAbstract} #pushUpMethods)
-	#(#{Smalltalk.ClassBrowserAbstract} #queryRefactoringCommand:)
-	#(#{Smalltalk.ClassBrowserAbstract} #removeInstanceVariables)
-	#(#{Smalltalk.ClassBrowserAbstract} #renameMethod)
-	#(#{Smalltalk.ClassBrowserAbstract} #selectedOverridableMethods)
-	#(#{Smalltalk.ClassSelector} #abstractClassVariables)
-	#(#{Smalltalk.ClassSelector} #abstractInstanceVariables)
-	#(#{Smalltalk.ClassSelector} #addClassVariable)
-	#(#{Smalltalk.ClassSelector} #addInstanceVariable)
-	#(#{Smalltalk.ClassSelector} #buildInstVarMenu:selectors:)
-	#(#{Smalltalk.ClassSelector} #buildPullUpVariablesMenu:)
-	#(#{Smalltalk.ClassSelector} #buildVariablesMenu:instVarSelectors:classVarSelectors:)
-	#(#{Smalltalk.ClassSelector} #cloneClass:under:changes:)
-	#(#{Smalltalk.ClassSelector} #convertToSibling)
-	#(#{Smalltalk.ClassSelector} #createClassVariableAccessors)
-	#(#{Smalltalk.ClassSelector} #populateClassVarMenu:selectors:)
-	#(#{Smalltalk.ClassSelector} #populateInstVarMenu:selectors:)
-	#(#{Smalltalk.ClassSelector} #populatePullUpVariableMenu:forClass:command:classVariables:ifTooMany:)
-	#(#{Smalltalk.ClassSelector} #populateRefactoringMenu:)
-	#(#{Smalltalk.ClassSelector} #protectInstanceVariables)
-	#(#{Smalltalk.ClassSelector} #pullUpClassVariables)
-	#(#{Smalltalk.ClassSelector} #pullUpInstanceVariables)
-	#(#{Smalltalk.ClassSelector} #pullUpVariableNamePairs:for:maximum:)
-	#(#{Smalltalk.ClassSelector} #pushDownClassVariables)
-	#(#{Smalltalk.ClassSelector} #pushDownInstanceVariables)
-	#(#{Smalltalk.ClassSelector} #queryRefactoringCommand:)
-	#(#{Smalltalk.ClassSelector} #removeClassVariables)
-	#(#{Smalltalk.ClassSelector} #removeDuplicateMethods)
-	#(#{Smalltalk.ClassSelector} #removeInstanceVariables)
-	#(#{Smalltalk.ClassSelector} #safeRemoveClass)
-	#(#{Smalltalk.Debugger} #canMoveMethods)
-	#(#{Smalltalk.Debugger} #hasRefactorableMethodSelected)
-	#(#{Smalltalk.Debugger} #performMethodRefactoring:)
-	#(#{Smalltalk.Debugger} #performMethodRenameRefactoring:)
-	#(#{Smalltalk.MethodBrowser} #canMoveMethods)
-	#(#{Smalltalk.MethodBrowser} #hasRefactorableMethodSelected)
-	#(#{Smalltalk.MethodBrowser} #performMethodRefactoring:)
-	#(#{Smalltalk.MethodBrowser} #performMethodRenameRefactoring:)
-	#(#{Smalltalk.MethodBrowser} #performMethodsRefactoring:name:)
-	#(#{Smalltalk.MethodWorkspace} #canRefactor)
-	#(#{Smalltalk.MethodWorkspace} #executeRefactoring:)
-	#(#{Smalltalk.MethodWorkspace} #executeRefactoring:with:)
-	#(#{Smalltalk.MethodWorkspace} #fontOfStyle:)
-	#(#{Smalltalk.MethodWorkspace} #performCodeRefactoring:)
-	#(#{Smalltalk.MethodWorkspace} #performMethodRefactoring:)
-	#(#{Smalltalk.MethodWorkspace} #performMethodRenameRefactoring:)
-	#(#{Smalltalk.MethodWorkspace} #renameVariable:operation:validationBlock:)
-	#(#{Smalltalk.PackageBrowserShell} #addParameter)
-	#(#{Smalltalk.PackageBrowserShell} #addParameterTo:)
-	#(#{Smalltalk.PackageBrowserShell} #addParameterToMethod)
-	#(#{Smalltalk.PackageBrowserShell} #chooseMethodsForRefactoring:)
-	#(#{Smalltalk.PackageBrowserShell} #hasRefactorableMethodSelected)
-	#(#{Smalltalk.PackageBrowserShell} #parseTree)
-	#(#{Smalltalk.PackageBrowserShell} #performMethodRenameRefactoring:)
-	#(#{Smalltalk.PackageBrowserShell} #performMethodsRefactoring:name:)
-	#(#{Smalltalk.PackageBrowserShell} #promptForMethodName:caption:allowExisting:)
-	#(#{Smalltalk.PackageBrowserShell} #queryRefactoringCommand:)
-	#(#{Smalltalk.PackageBrowserShell} #removeParameter)
-	#(#{Smalltalk.PackageBrowserShell} #renameLooseMethod)
-	#(#{Smalltalk.PackageBrowserShell} #renameLooseMethodReferences)
-	#(#{Smalltalk.PackageBrowserShell} #renameMethod)
-	#(#{Smalltalk.PackageBrowserShell} #renameMethodReferences:)
-	#(#{Smalltalk.PackageBrowserShell} #safeRemoveMethod)
-	#(#{Smalltalk.PackageBrowserShell} #safeRemoveMethods)
-	#(#{Smalltalk.PackageSelector} #moveAllTempsToInnerScope)
-	#(#{Smalltalk.PackageSelector} #queryRefactoringCommand:)
-	#(#{Smalltalk.PackageSelector} #removeDuplicateMethods)
-	#(#{Smalltalk.RenameAccessorsForVariableRefactoring} #displayOn:)
-	#(#{Smalltalk.RenameAccessorsForVariableRefactoring class} #displayPrefix)
-	#(#{Smalltalk.RenameAccessorsForVariableRefactoring class} #icon)
-	#(#{Smalltalk.RenameInstanceVariableAndAccessorsRefactoring} #displayOn:)
-	#(#{Smalltalk.SmalltalkToolShell} #chooseMethodForRefactoring:)
-	#(#{Smalltalk.SmalltalkToolShell} #queryRefactoringCommand:)
+	#(#{Tools.ClassBrowserAbstract} #abstractInstanceVariables)
+	#(#{Tools.ClassBrowserAbstract} #methodRefactoringTool)
+	#(#{Tools.ClassBrowserAbstract} #methodsToOverride)
+	#(#{Tools.ClassBrowserAbstract} #overrideMethods)
+	#(#{Tools.ClassBrowserAbstract} #protectInstanceVariables)
+	#(#{Tools.ClassBrowserAbstract} #pushDownInstanceVariables)
+	#(#{Tools.ClassBrowserAbstract} #pushDownMethods)
+	#(#{Tools.ClassBrowserAbstract} #pushMethods:)
+	#(#{Tools.ClassBrowserAbstract} #pushUpMethods)
+	#(#{Tools.ClassBrowserAbstract} #queryRefactoringCommand:)
+	#(#{Tools.ClassBrowserAbstract} #removeInstanceVariables)
+	#(#{Tools.ClassBrowserAbstract} #renameMethod)
+	#(#{Tools.ClassBrowserAbstract} #selectedOverridableMethods)
+	#(#{Tools.ClassSelector} #abstractClassVariables)
+	#(#{Tools.ClassSelector} #abstractInstanceVariables)
+	#(#{Tools.ClassSelector} #addClassVariable)
+	#(#{Tools.ClassSelector} #addInstanceVariable)
+	#(#{Tools.ClassSelector} #buildInstVarMenu:selectors:)
+	#(#{Tools.ClassSelector} #buildPullUpVariablesMenu:)
+	#(#{Tools.ClassSelector} #buildVariablesMenu:instVarSelectors:classVarSelectors:)
+	#(#{Tools.ClassSelector} #cloneClass:under:changes:)
+	#(#{Tools.ClassSelector} #convertToSibling)
+	#(#{Tools.ClassSelector} #createClassVariableAccessors)
+	#(#{Tools.ClassSelector} #populateClassVarMenu:selectors:)
+	#(#{Tools.ClassSelector} #populateInstVarMenu:selectors:)
+	#(#{Tools.ClassSelector} #populatePullUpVariableMenu:forClass:command:classVariables:ifTooMany:)
+	#(#{Tools.ClassSelector} #populateRefactoringMenu:)
+	#(#{Tools.ClassSelector} #protectInstanceVariables)
+	#(#{Tools.ClassSelector} #pullUpClassVariables)
+	#(#{Tools.ClassSelector} #pullUpInstanceVariables)
+	#(#{Tools.ClassSelector} #pullUpVariableNamePairs:for:maximum:)
+	#(#{Tools.ClassSelector} #pushDownClassVariables)
+	#(#{Tools.ClassSelector} #pushDownInstanceVariables)
+	#(#{Tools.ClassSelector} #queryRefactoringCommand:)
+	#(#{Tools.ClassSelector} #removeClassVariables)
+	#(#{Tools.ClassSelector} #removeDuplicateMethods)
+	#(#{Tools.ClassSelector} #removeInstanceVariables)
+	#(#{Tools.ClassSelector} #safeRemoveClass)
+	#(#{Tools.Debugger} #canMoveMethods)
+	#(#{Tools.Debugger} #hasRefactorableMethodSelected)
+	#(#{Tools.Debugger} #performMethodRefactoring:)
+	#(#{Tools.Debugger} #performMethodRenameRefactoring:)
+	#(#{Tools.MethodBrowser} #canMoveMethods)
+	#(#{Tools.MethodBrowser} #hasRefactorableMethodSelected)
+	#(#{Tools.MethodBrowser} #performMethodRefactoring:)
+	#(#{Tools.MethodBrowser} #performMethodRenameRefactoring:)
+	#(#{Tools.MethodBrowser} #performMethodsRefactoring:name:)
+	#(#{Tools.MethodWorkspace} #canRefactor)
+	#(#{Tools.MethodWorkspace} #executeRefactoring:)
+	#(#{Tools.MethodWorkspace} #executeRefactoring:with:)
+	#(#{Tools.MethodWorkspace} #fontOfStyle:)
+	#(#{Tools.MethodWorkspace} #performCodeRefactoring:)
+	#(#{Tools.MethodWorkspace} #performMethodRefactoring:)
+	#(#{Tools.MethodWorkspace} #performMethodRenameRefactoring:)
+	#(#{Tools.MethodWorkspace} #renameVariable:operation:validationBlock:)
+	#(#{Tools.PackageBrowserShell} #addParameter)
+	#(#{Tools.PackageBrowserShell} #addParameterTo:)
+	#(#{Tools.PackageBrowserShell} #addParameterToMethod)
+	#(#{Tools.PackageBrowserShell} #chooseMethodsForRefactoring:)
+	#(#{Tools.PackageBrowserShell} #hasRefactorableMethodSelected)
+	#(#{Tools.PackageBrowserShell} #parseTree)
+	#(#{Tools.PackageBrowserShell} #performMethodRenameRefactoring:)
+	#(#{Tools.PackageBrowserShell} #performMethodsRefactoring:name:)
+	#(#{Tools.PackageBrowserShell} #promptForMethodName:caption:allowExisting:)
+	#(#{Tools.PackageBrowserShell} #queryRefactoringCommand:)
+	#(#{Tools.PackageBrowserShell} #removeParameter)
+	#(#{Tools.PackageBrowserShell} #renameLooseMethod)
+	#(#{Tools.PackageBrowserShell} #renameLooseMethodReferences)
+	#(#{Tools.PackageBrowserShell} #renameMethod)
+	#(#{Tools.PackageBrowserShell} #renameMethodReferences:)
+	#(#{Tools.PackageBrowserShell} #safeRemoveMethod)
+	#(#{Tools.PackageBrowserShell} #safeRemoveMethods)
+	#(#{Tools.PackageSelector} #moveAllTempsToInnerScope)
+	#(#{Tools.PackageSelector} #queryRefactoringCommand:)
+	#(#{Tools.PackageSelector} #removeDuplicateMethods)
+	#(#{Tools.SmalltalkToolShell} #chooseMethodForRefactoring:)
+	#(#{Tools.SmalltalkToolShell} #queryRefactoringCommand:)
 ).
 
 package setPrerequisites: #(
@@ -245,7 +245,6 @@ package setPrerequisites: #(
 	'..\..\..\..\Contributions\Refactory\Refactoring Browser\Change Objects\RBChangeObjects'
 	'..\..\..\..\Contributions\Refactory\Refactoring Browser\Environments\RBEnvironments'
 	'..\..\..\..\Contributions\Refactory\RBNamespaces'
-	'..\..\..\..\Contributions\Refactory\RBOldNames'
 	'..\..\..\..\Contributions\Refactory\Refactoring Browser\Parser\RBParser'
 	'..\..\..\..\Contributions\Refactory\Refactoring Browser\Refactorings\RBRefactorings'
 	'..\..\..\..\Contributions\Refactory\Refactoring Browser\SmallLint\RBSmallLint'
@@ -259,67 +258,67 @@ package!
 
 "Class Definitions"!
 
-Core.Object subclass: #RefactoringTool
+Core.Object subclass: #'Tools.RefactoringTool'
 	instanceVariableNames: 'presenter'
 	classVariableNames: ''
-	imports: #()
+	imports: #(#{Refactory.Browser private})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ProfessionalSmalltalkSystem subclass: #RefactoringSmalltalkSystem
+Tools.ProfessionalSmalltalkSystem subclass: #'Tools.RefactoringSmalltalkSystem'
 	instanceVariableNames: 'isOAD'
 	classVariableNames: 'RefactoringSignal'
 	imports: #(#{Refactory.Browser})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ClassBrowserPlugin subclass: #SmalllintPlugin
+Tools.ClassBrowserPlugin subclass: #'Tools.SmalllintPlugin'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #()
+	imports: #(#{Refactory.Browser private})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-SmalllintPlugin subclass: #CodeMentorPlugin
+Tools.SmalllintPlugin subclass: #'Tools.CodeMentorPlugin'
 	instanceVariableNames: 'failuresPresenter infoSitePresenter infoBrowserPresenter progressPresenter checkerProcess rulesTreeModel isRefreshPending refreshMode'
 	classVariableNames: 'DefaultRefreshMode LintIconMap LintRulesDoc'
-	imports: #(#{Smalltalk.SHDocVwConstants})
+	imports: #(#{Smalltalk.SHDocVwConstants private})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-SmalllintPlugin subclass: #CodeRewriterPlugin
+Tools.SmalllintPlugin subclass: #'Tools.CodeRewriterPlugin'
 	instanceVariableNames: 'searchTextPresenter replaceTextPresenter isMethodPresenter'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-UI.Dialog subclass: #ConvertToSiblingDialog
+UI.Dialog subclass: #'Tools.ConvertToSiblingDialog'
 	instanceVariableNames: 'classNamePresenter subclassesPresenter statusModel'
 	classVariableNames: ''
-	imports: #()
+	imports: #(#{Refactory.Browser private})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-UI.Dialog subclass: #MethodNameDialog
+UI.Dialog subclass: #'Tools.MethodNameDialog'
 	instanceVariableNames: 'selectorPresenter parametersPresenter parameterNamesPresenter'
 	classVariableNames: ''
-	imports: #()
+	imports: #(#{Refactory.Browser private})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-MethodNameDialog subclass: #RenameMethodDialog
+Tools.MethodNameDialog subclass: #'Tools.RenameMethodDialog'
 	instanceVariableNames: 'scopePresenter scopeDescriptionPresenter allowExistingSelector'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-UI.ValueDialog subclass: #RenameAccessorsDialog
+UI.ValueDialog subclass: #'Tools.RenameAccessorsDialog'
 	instanceVariableNames: 'selectorsPresenter scopePresenter'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-SmalltalkToolShell subclass: #RewriteChangesBrowser
+Tools.SmalltalkToolShell subclass: #'Tools.RewriteChangesBrowser'
 	instanceVariableNames: 'changesPresenter differencesPresenter compositeChange'
 	classVariableNames: ''
-	imports: #()
+	imports: #(#{Refactory.Browser private})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-MethodBrowserShell subclass: #LintRuleFailuresBrowserShell
+Tools.MethodBrowserShell subclass: #'Tools.LintRuleFailuresBrowserShell'
 	instanceVariableNames: 'lintRule'
 	classVariableNames: ''
 	imports: #()
@@ -343,13 +342,13 @@ Refactory.Browser.RenameMethodRefactoring subclass: #'Refactory.Browser.RenameMe
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-RefactoringTool subclass: #CodeRefactoringTool
+Tools.RefactoringTool subclass: #'Tools.CodeRefactoringTool'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #(#{Kernel.ParseErrorCodes})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-RefactoringTool subclass: #MethodRefactoringTool
+Tools.RefactoringTool subclass: #'Tools.MethodRefactoringTool'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -513,18 +512,16 @@ publishedAspects
 
 	| answer |
 	answer := self class publishedAspectsOfInstances.
-	self result isClassEnvironment 
-		ifTrue: 
-			[answer add: ((Smalltalk.Aspect collection: #failedClasses)
+	self result isClassEnvironment
+		ifTrue: [answer add: ((Tools.Aspect collection: #failedClasses)
 						beReadOnly;
 						yourself)]
-		ifFalse: 
-			[answer add: ((Smalltalk.Aspect collection: #failedMethods)
+		ifFalse: [answer add: ((Tools.Aspect collection: #failedMethods)
 						beReadOnly;
 						yourself)].
-	self searchStrings notEmpty 
+	self searchStrings notEmpty
 		ifTrue: 
-			[answer add: ((Smalltalk.Aspect sequenceableCollection: #searchStrings)
+			[answer add: ((Tools.Aspect sequenceableCollection: #searchStrings)
 						beReadOnly;
 						yourself)].
 	^answer!
@@ -706,7 +703,7 @@ getOptionMethodName: anRBMethodName
 										nextPut: $:].
 							stream contents].
 			anRBMethodName selector: mname asSymbol].
-	^(Smalltalk.MethodNameDialog showModalOn: anRBMethodName) isNil ifFalse: [anRBMethodName]! !
+	^(Tools.MethodNameDialog showModalOn: anRBMethodName) isNil ifFalse: [anRBMethodName]! !
 !Refactory.Browser.MethodRefactoring categoriesFor: #getOptionMethodName:!options!public! !
 
 !Refactory.Browser.MoveMethodRefactoring methodsFor!
@@ -950,6 +947,27 @@ displayOn: aPuttableStream
 		print: oldSelector! !
 !Refactory.Browser.RemoveParameterRefactoring categoriesFor: #displayOn:!displaying!public! !
 
+!Refactory.Browser.RenameAccessorsForVariableRefactoring methodsFor!
+
+displayOn: aPuttableStream
+	"Append to the <puttableStream> argument a String whose characters are a representation of the receiver that an end-user might want to see."
+
+	super displayOn: aPuttableStream.
+	aPuttableStream
+		nextPutAll: ' to ';
+		print: newName! !
+!Refactory.Browser.RenameAccessorsForVariableRefactoring categoriesFor: #displayOn:!displaying!public! !
+
+!Refactory.Browser.RenameAccessorsForVariableRefactoring class methodsFor!
+
+displayPrefix
+	^'Rename accessors for'!
+
+icon
+	^self renameIcon! !
+!Refactory.Browser.RenameAccessorsForVariableRefactoring class categoriesFor: #displayPrefix!displaying!public! !
+!Refactory.Browser.RenameAccessorsForVariableRefactoring class categoriesFor: #icon!constants!public! !
+
 !Refactory.Browser.RenameClassRefactoring methodsFor!
 
 displayOn: aPuttableStream
@@ -982,6 +1000,21 @@ icon
 	^self renameIcon! !
 !Refactory.Browser.RenameClassVariableRefactoring class categoriesFor: #displayPrefix!displaying!public! !
 !Refactory.Browser.RenameClassVariableRefactoring class categoriesFor: #icon!constants!public! !
+
+!Refactory.Browser.RenameInstanceVariableAndAccessorsRefactoring methodsFor!
+
+displayOn: aPuttableStream
+	"Append to the <puttableStream> argument a String whose characters are a representation of the receiver that an end-user might want to see."
+
+	aPuttableStream
+		nextPutAll: self displayPrefix;
+		space;
+		print: class;
+		nextPut: $.;
+		nextPutAll: variableName;
+		nextPutAll: ' (and accessors) to ';
+		print: newName! !
+!Refactory.Browser.RenameInstanceVariableAndAccessorsRefactoring categoriesFor: #displayOn:!displaying!public! !
 
 !Refactory.Browser.RenameInstanceVariableRefactoring methodsFor!
 
@@ -1181,7 +1214,7 @@ displayPrefix
 	^self subclassResponsibility! !
 !Refactory.Browser.VariableRefactoring class categoriesFor: #displayPrefix!constants!displaying!public! !
 
-!ClassBrowserAbstract methodsFor!
+!Tools.ClassBrowserAbstract methodsFor!
 
 abstractInstanceVariables
 	"Private - Invoke the 'Abstract Instance Variable' refactoring on the currently selected variables."
@@ -1331,21 +1364,21 @@ selectedOverridableMethods
 	| class |
 	class := self actualClass.
 	^self selectedMethods reject: [:each | each methodClass == class]! !
-!ClassBrowserAbstract categoriesFor: #abstractInstanceVariables!commands!private!refactoring! !
-!ClassBrowserAbstract categoriesFor: #methodRefactoringTool!commands!private!refactoring! !
-!ClassBrowserAbstract categoriesFor: #methodsToOverride!helpers!private! !
-!ClassBrowserAbstract categoriesFor: #overrideMethods!commands!private!refactoring! !
-!ClassBrowserAbstract categoriesFor: #protectInstanceVariables!commands!private!refactoring! !
-!ClassBrowserAbstract categoriesFor: #pushDownInstanceVariables!commands!public!refactoring! !
-!ClassBrowserAbstract categoriesFor: #pushDownMethods!commands!public!refactoring! !
-!ClassBrowserAbstract categoriesFor: #pushMethods:!commands!private!refactoring! !
-!ClassBrowserAbstract categoriesFor: #pushUpMethods!commands!public!refactoring! !
-!ClassBrowserAbstract categoriesFor: #queryRefactoringCommand:!commands!private!refactoring! !
-!ClassBrowserAbstract categoriesFor: #removeInstanceVariables!public!refactoring! !
-!ClassBrowserAbstract categoriesFor: #renameMethod!accessing!private! !
-!ClassBrowserAbstract categoriesFor: #selectedOverridableMethods!accessing!private! !
+!Tools.ClassBrowserAbstract categoriesFor: #abstractInstanceVariables!commands!private!refactoring! !
+!Tools.ClassBrowserAbstract categoriesFor: #methodRefactoringTool!commands!private!refactoring! !
+!Tools.ClassBrowserAbstract categoriesFor: #methodsToOverride!helpers!private! !
+!Tools.ClassBrowserAbstract categoriesFor: #overrideMethods!commands!private!refactoring! !
+!Tools.ClassBrowserAbstract categoriesFor: #protectInstanceVariables!commands!private!refactoring! !
+!Tools.ClassBrowserAbstract categoriesFor: #pushDownInstanceVariables!commands!public!refactoring! !
+!Tools.ClassBrowserAbstract categoriesFor: #pushDownMethods!commands!public!refactoring! !
+!Tools.ClassBrowserAbstract categoriesFor: #pushMethods:!commands!private!refactoring! !
+!Tools.ClassBrowserAbstract categoriesFor: #pushUpMethods!commands!public!refactoring! !
+!Tools.ClassBrowserAbstract categoriesFor: #queryRefactoringCommand:!commands!private!refactoring! !
+!Tools.ClassBrowserAbstract categoriesFor: #removeInstanceVariables!public!refactoring! !
+!Tools.ClassBrowserAbstract categoriesFor: #renameMethod!accessing!private! !
+!Tools.ClassBrowserAbstract categoriesFor: #selectedOverridableMethods!accessing!private! !
 
-!ClassSelector methodsFor!
+!Tools.ClassSelector methodsFor!
 
 abstractClassVariables
 	"Invoke the 'Abstract Class Variable' refactoring on the users choice of class variables.
@@ -1754,33 +1787,33 @@ safeRemoveClass
 	and any subclasses are removable (i.e. invoke the 'Remove Class' refactoring)."
 
 	self systemModel safeRemoveClass: self selection! !
-!ClassSelector categoriesFor: #abstractClassVariables!commands!public!refactoring! !
-!ClassSelector categoriesFor: #abstractInstanceVariables!commands!public!refactoring! !
-!ClassSelector categoriesFor: #addClassVariable!commands!private!refactoring! !
-!ClassSelector categoriesFor: #addInstanceVariable!commands!private!refactoring! !
-!ClassSelector categoriesFor: #buildInstVarMenu:selectors:!menus!private!refactoring! !
-!ClassSelector categoriesFor: #buildPullUpVariablesMenu:!menus!private!refactoring! !
-!ClassSelector categoriesFor: #buildVariablesMenu:instVarSelectors:classVarSelectors:!menus!private!refactoring! !
-!ClassSelector categoriesFor: #cloneClass:under:changes:!private! !
-!ClassSelector categoriesFor: #convertToSibling!commands!public!refactoring! !
-!ClassSelector categoriesFor: #createClassVariableAccessors!commands!public!refactoring! !
-!ClassSelector categoriesFor: #populateClassVarMenu:selectors:!menus!private!refactoring! !
-!ClassSelector categoriesFor: #populateInstVarMenu:selectors:!menus!private!refactoring! !
-!ClassSelector categoriesFor: #populatePullUpVariableMenu:forClass:command:classVariables:ifTooMany:!menus!private!refactoring! !
-!ClassSelector categoriesFor: #populateRefactoringMenu:!menus!private!refactoring! !
-!ClassSelector categoriesFor: #protectInstanceVariables!commands!public!refactoring! !
-!ClassSelector categoriesFor: #pullUpClassVariables!commands!public!refactoring! !
-!ClassSelector categoriesFor: #pullUpInstanceVariables!commands!public!refactoring! !
-!ClassSelector categoriesFor: #pullUpVariableNamePairs:for:maximum:!menus!private!refactoring! !
-!ClassSelector categoriesFor: #pushDownClassVariables!commands!public!refactoring! !
-!ClassSelector categoriesFor: #pushDownInstanceVariables!commands!public!refactoring! !
-!ClassSelector categoriesFor: #queryRefactoringCommand:!commands!private! !
-!ClassSelector categoriesFor: #removeClassVariables!commands!public!refactoring! !
-!ClassSelector categoriesFor: #removeDuplicateMethods!commands!private!refactoring! !
-!ClassSelector categoriesFor: #removeInstanceVariables!commands!public!refactoring! !
-!ClassSelector categoriesFor: #safeRemoveClass!commands!public!refactoring! !
+!Tools.ClassSelector categoriesFor: #abstractClassVariables!commands!public!refactoring! !
+!Tools.ClassSelector categoriesFor: #abstractInstanceVariables!commands!public!refactoring! !
+!Tools.ClassSelector categoriesFor: #addClassVariable!commands!private!refactoring! !
+!Tools.ClassSelector categoriesFor: #addInstanceVariable!commands!private!refactoring! !
+!Tools.ClassSelector categoriesFor: #buildInstVarMenu:selectors:!menus!private!refactoring! !
+!Tools.ClassSelector categoriesFor: #buildPullUpVariablesMenu:!menus!private!refactoring! !
+!Tools.ClassSelector categoriesFor: #buildVariablesMenu:instVarSelectors:classVarSelectors:!menus!private!refactoring! !
+!Tools.ClassSelector categoriesFor: #cloneClass:under:changes:!private! !
+!Tools.ClassSelector categoriesFor: #convertToSibling!commands!public!refactoring! !
+!Tools.ClassSelector categoriesFor: #createClassVariableAccessors!commands!public!refactoring! !
+!Tools.ClassSelector categoriesFor: #populateClassVarMenu:selectors:!menus!private!refactoring! !
+!Tools.ClassSelector categoriesFor: #populateInstVarMenu:selectors:!menus!private!refactoring! !
+!Tools.ClassSelector categoriesFor: #populatePullUpVariableMenu:forClass:command:classVariables:ifTooMany:!menus!private!refactoring! !
+!Tools.ClassSelector categoriesFor: #populateRefactoringMenu:!menus!private!refactoring! !
+!Tools.ClassSelector categoriesFor: #protectInstanceVariables!commands!public!refactoring! !
+!Tools.ClassSelector categoriesFor: #pullUpClassVariables!commands!public!refactoring! !
+!Tools.ClassSelector categoriesFor: #pullUpInstanceVariables!commands!public!refactoring! !
+!Tools.ClassSelector categoriesFor: #pullUpVariableNamePairs:for:maximum:!menus!private!refactoring! !
+!Tools.ClassSelector categoriesFor: #pushDownClassVariables!commands!public!refactoring! !
+!Tools.ClassSelector categoriesFor: #pushDownInstanceVariables!commands!public!refactoring! !
+!Tools.ClassSelector categoriesFor: #queryRefactoringCommand:!commands!private! !
+!Tools.ClassSelector categoriesFor: #removeClassVariables!commands!public!refactoring! !
+!Tools.ClassSelector categoriesFor: #removeDuplicateMethods!commands!private!refactoring! !
+!Tools.ClassSelector categoriesFor: #removeInstanceVariables!commands!public!refactoring! !
+!Tools.ClassSelector categoriesFor: #safeRemoveClass!commands!public!refactoring! !
 
-!Debugger methodsFor!
+!Tools.Debugger methodsFor!
 
 canMoveMethods
 	#todo.	"Not currently supported in the debugger because it rewrites the caller, which complicates the unwind"
@@ -1809,12 +1842,12 @@ performMethodRenameRefactoring: aMonadicValuable
 	home isNil ifTrue: [^self].
 	sender := home sender.
 	(sender notNil and: [sender isRestartable]) ifTrue: [self restartMethodFrame: sender]! !
-!Debugger categoriesFor: #canMoveMethods!commands!private!refactoring! !
-!Debugger categoriesFor: #hasRefactorableMethodSelected!public!refactoring!testing! !
-!Debugger categoriesFor: #performMethodRefactoring:!helpers!public!refactoring! !
-!Debugger categoriesFor: #performMethodRenameRefactoring:!helpers!private!refactoring! !
+!Tools.Debugger categoriesFor: #canMoveMethods!commands!private!refactoring! !
+!Tools.Debugger categoriesFor: #hasRefactorableMethodSelected!public!refactoring!testing! !
+!Tools.Debugger categoriesFor: #performMethodRefactoring:!helpers!public!refactoring! !
+!Tools.Debugger categoriesFor: #performMethodRenameRefactoring:!helpers!private!refactoring! !
 
-!MethodBrowser methodsFor!
+!Tools.MethodBrowser methodsFor!
 
 canMoveMethods
 	^self hasRefactorableMethodSelected!
@@ -1843,13 +1876,13 @@ performMethodRenameRefactoring: aMonadicValuable
 performMethodsRefactoring: aMonadicValuable name: aString 
 	self promptToSaveChanges ifFalse: [^self].
 	^sourcePresenter executeRefactoring: aMonadicValuable with: self selectedMethods! !
-!MethodBrowser categoriesFor: #canMoveMethods!helpers!private!refactoring! !
-!MethodBrowser categoriesFor: #hasRefactorableMethodSelected!private!refactoring!testing! !
-!MethodBrowser categoriesFor: #performMethodRefactoring:!helpers!public!refactoring! !
-!MethodBrowser categoriesFor: #performMethodRenameRefactoring:!helpers!private!refactoring! !
-!MethodBrowser categoriesFor: #performMethodsRefactoring:name:!helpers!private!refactoring! !
+!Tools.MethodBrowser categoriesFor: #canMoveMethods!helpers!private!refactoring! !
+!Tools.MethodBrowser categoriesFor: #hasRefactorableMethodSelected!private!refactoring!testing! !
+!Tools.MethodBrowser categoriesFor: #performMethodRefactoring:!helpers!public!refactoring! !
+!Tools.MethodBrowser categoriesFor: #performMethodRenameRefactoring:!helpers!private!refactoring! !
+!Tools.MethodBrowser categoriesFor: #performMethodsRefactoring:name:!helpers!private!refactoring! !
 
-!MethodWorkspace methodsFor!
+!Tools.MethodWorkspace methodsFor!
 
 canRefactor
 	^self isEditable and: 
@@ -1914,16 +1947,16 @@ renameVariable: aStVariableNode operation: operationBlock validationBlock: valid
 		ifNotNil: 
 			[:newName |
 			newName = name ifFalse: [self performMethodRefactoring: [:method | operationBlock value: newName]]]! !
-!MethodWorkspace categoriesFor: #canRefactor!public!refactoring!testing! !
-!MethodWorkspace categoriesFor: #executeRefactoring:!helpers!private!refactoring! !
-!MethodWorkspace categoriesFor: #executeRefactoring:with:!helpers!private!refactoring! !
-!MethodWorkspace categoriesFor: #fontOfStyle:!operations!private!refactoring! !
-!MethodWorkspace categoriesFor: #performCodeRefactoring:!helpers!private!refactoring! !
-!MethodWorkspace categoriesFor: #performMethodRefactoring:!helpers!private!refactoring! !
-!MethodWorkspace categoriesFor: #performMethodRenameRefactoring:!helpers!private!refactoring! !
-!MethodWorkspace categoriesFor: #renameVariable:operation:validationBlock:!operations!private!refactoring! !
+!Tools.MethodWorkspace categoriesFor: #canRefactor!public!refactoring!testing! !
+!Tools.MethodWorkspace categoriesFor: #executeRefactoring:!helpers!private!refactoring! !
+!Tools.MethodWorkspace categoriesFor: #executeRefactoring:with:!helpers!private!refactoring! !
+!Tools.MethodWorkspace categoriesFor: #fontOfStyle:!operations!private!refactoring! !
+!Tools.MethodWorkspace categoriesFor: #performCodeRefactoring:!helpers!private!refactoring! !
+!Tools.MethodWorkspace categoriesFor: #performMethodRefactoring:!helpers!private!refactoring! !
+!Tools.MethodWorkspace categoriesFor: #performMethodRenameRefactoring:!helpers!private!refactoring! !
+!Tools.MethodWorkspace categoriesFor: #renameVariable:operation:validationBlock:!operations!private!refactoring! !
 
-!PackageBrowserShell methodsFor!
+!Tools.PackageBrowserShell methodsFor!
 
 addParameter
 	"Private - Command to invoke the Add Parameter to Method refactoring, prompting the user for 
@@ -2087,25 +2120,25 @@ safeRemoveMethods
 	considered as part of the decision as to whether it will be safe to remove the method)."
 
 	self model safeRemoveMethods: self selectedMethods within: self selectionEnvironment! !
-!PackageBrowserShell categoriesFor: #addParameter!commands!private!refactoring! !
-!PackageBrowserShell categoriesFor: #addParameterTo:!private!refactoring! !
-!PackageBrowserShell categoriesFor: #addParameterToMethod!commands!public!refactoring! !
-!PackageBrowserShell categoriesFor: #chooseMethodsForRefactoring:!private!refactoring! !
-!PackageBrowserShell categoriesFor: #hasRefactorableMethodSelected!private!refactoring!testing! !
-!PackageBrowserShell categoriesFor: #parseTree!commands!private! !
-!PackageBrowserShell categoriesFor: #performMethodRenameRefactoring:!helpers!private!refactoring! !
-!PackageBrowserShell categoriesFor: #performMethodsRefactoring:name:!private! !
-!PackageBrowserShell categoriesFor: #promptForMethodName:caption:allowExisting:!helpers!private!refactoring! !
-!PackageBrowserShell categoriesFor: #queryRefactoringCommand:!commands!private!refactoring! !
-!PackageBrowserShell categoriesFor: #removeParameter!commands!private!refactoring! !
-!PackageBrowserShell categoriesFor: #renameLooseMethod!commands!private!refactoring! !
-!PackageBrowserShell categoriesFor: #renameLooseMethodReferences!commands!private!refactoring! !
-!PackageBrowserShell categoriesFor: #renameMethod!commands!public!refactoring! !
-!PackageBrowserShell categoriesFor: #renameMethodReferences:!operations!private!refactoring! !
-!PackageBrowserShell categoriesFor: #safeRemoveMethod!commands!public!refactoring! !
-!PackageBrowserShell categoriesFor: #safeRemoveMethods!commands!public!refactoring! !
+!Tools.PackageBrowserShell categoriesFor: #addParameter!commands!private!refactoring! !
+!Tools.PackageBrowserShell categoriesFor: #addParameterTo:!private!refactoring! !
+!Tools.PackageBrowserShell categoriesFor: #addParameterToMethod!commands!public!refactoring! !
+!Tools.PackageBrowserShell categoriesFor: #chooseMethodsForRefactoring:!private!refactoring! !
+!Tools.PackageBrowserShell categoriesFor: #hasRefactorableMethodSelected!private!refactoring!testing! !
+!Tools.PackageBrowserShell categoriesFor: #parseTree!commands!private! !
+!Tools.PackageBrowserShell categoriesFor: #performMethodRenameRefactoring:!helpers!private!refactoring! !
+!Tools.PackageBrowserShell categoriesFor: #performMethodsRefactoring:name:!private! !
+!Tools.PackageBrowserShell categoriesFor: #promptForMethodName:caption:allowExisting:!helpers!private!refactoring! !
+!Tools.PackageBrowserShell categoriesFor: #queryRefactoringCommand:!commands!private!refactoring! !
+!Tools.PackageBrowserShell categoriesFor: #removeParameter!commands!private!refactoring! !
+!Tools.PackageBrowserShell categoriesFor: #renameLooseMethod!commands!private!refactoring! !
+!Tools.PackageBrowserShell categoriesFor: #renameLooseMethodReferences!commands!private!refactoring! !
+!Tools.PackageBrowserShell categoriesFor: #renameMethod!commands!public!refactoring! !
+!Tools.PackageBrowserShell categoriesFor: #renameMethodReferences:!operations!private!refactoring! !
+!Tools.PackageBrowserShell categoriesFor: #safeRemoveMethod!commands!public!refactoring! !
+!Tools.PackageBrowserShell categoriesFor: #safeRemoveMethods!commands!public!refactoring! !
 
-!PackageSelector methodsFor!
+!Tools.PackageSelector methodsFor!
 
 moveAllTempsToInnerScope
 	(MessageBox
@@ -2148,47 +2181,11 @@ removeDuplicateMethods
 							devsys removeMethodsDuplicatedInSuperclassOf: eachClass]]])
 		caption: 'Remove Methods Duplicating Superclass'' from Package(s)...';
 		showModal! !
-!PackageSelector categoriesFor: #moveAllTempsToInnerScope!commands!private!refactoring! !
-!PackageSelector categoriesFor: #queryRefactoringCommand:!commands!private!refactoring! !
-!PackageSelector categoriesFor: #removeDuplicateMethods!development!private! !
+!Tools.PackageSelector categoriesFor: #moveAllTempsToInnerScope!commands!private!refactoring! !
+!Tools.PackageSelector categoriesFor: #queryRefactoringCommand:!commands!private!refactoring! !
+!Tools.PackageSelector categoriesFor: #removeDuplicateMethods!development!private! !
 
-!RenameAccessorsForVariableRefactoring methodsFor!
-
-displayOn: aPuttableStream
-	"Append to the <puttableStream> argument a String whose characters are a representation of the receiver that an end-user might want to see."
-
-	super displayOn: aPuttableStream.
-	aPuttableStream
-		nextPutAll: ' to ';
-		print: newName! !
-!RenameAccessorsForVariableRefactoring categoriesFor: #displayOn:!displaying!public! !
-
-!RenameAccessorsForVariableRefactoring class methodsFor!
-
-displayPrefix
-	^'Rename accessors for'!
-
-icon
-	^self renameIcon! !
-!RenameAccessorsForVariableRefactoring class categoriesFor: #displayPrefix!displaying!public! !
-!RenameAccessorsForVariableRefactoring class categoriesFor: #icon!constants!public! !
-
-!RenameInstanceVariableAndAccessorsRefactoring methodsFor!
-
-displayOn: aPuttableStream
-	"Append to the <puttableStream> argument a String whose characters are a representation of the receiver that an end-user might want to see."
-
-	aPuttableStream
-		nextPutAll: self displayPrefix;
-		space;
-		print: class;
-		nextPut: $.;
-		nextPutAll: variableName;
-		nextPutAll: ' (and accessors) to ';
-		print: newName! !
-!RenameInstanceVariableAndAccessorsRefactoring categoriesFor: #displayOn:!displaying!public! !
-
-!SmalltalkToolShell methodsFor!
+!Tools.SmalltalkToolShell methodsFor!
 
 chooseMethodForRefactoring: aString 
 	^self systemModel chooseMethodFromEnvironment: self selectionEnvironment caption: aString!
@@ -2198,8 +2195,8 @@ queryRefactoringCommand: aCommandQuery
 	into the <CommandQuery>."
 
 	^false! !
-!SmalltalkToolShell categoriesFor: #chooseMethodForRefactoring:!private!refactoring! !
-!SmalltalkToolShell categoriesFor: #queryRefactoringCommand:!commands!private!refactoring! !
+!Tools.SmalltalkToolShell categoriesFor: #chooseMethodForRefactoring:!private!refactoring! !
+!Tools.SmalltalkToolShell categoriesFor: #queryRefactoringCommand:!commands!private!refactoring! !
 
 "End of package definition"!
 

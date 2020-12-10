@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-SmalltalkToolShell subclass: #ProcessMonitor
+Tools.SmalltalkToolShell subclass: #'Tools.ProcessMonitor'
 	instanceVariableNames: 'listPresenter updateInterval'
 	classVariableNames: 'UpdateIntervals'
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ProcessMonitor guid: (GUID fromString: '{71fe0342-5801-4ae5-a04d-a99350724251}')!
-ProcessMonitor comment: 'ProcessMonitor is a <SmalltalkSystemTool> that displays a dynamically updating list of the running Processes (threads) on the system, including information such as the process'' names, priorities, state, and the method they are currently executing. Menu commands are available to debug, inspect, terminate, and change the priorities of the running processes. ProcessMonitor can be used to help with debugging, and is also an excellent way of learning about how processes are used in Dolphin.
+Tools.ProcessMonitor guid: (Core.GUID fromString: '{71fe0342-5801-4ae5-a04d-a99350724251}')!
+Tools.ProcessMonitor comment: 'ProcessMonitor is a <SmalltalkSystemTool> that displays a dynamically updating list of the running Processes (threads) on the system, including information such as the process'' names, priorities, state, and the method they are currently executing. Menu commands are available to debug, inspect, terminate, and change the priorities of the running processes. ProcessMonitor can be used to help with debugging, and is also an excellent way of learning about how processes are used in Dolphin.
 
 All of the system processes can be safely terminated or debugged, as Dolphin will simply start new ones when it notices that they are not available. However changing the priorities of these processes (with the exception of the main UI process) is likely to make the system unstable, and so this is not permitted. User processes can be manipulated in any manner desired.
 
@@ -27,8 +27,8 @@ Class Variables:
 	UpdateIntervals		<IdentityDictionary>. Map between update speeds and corresponding interval in mS, or nil for paused.
 
 '!
-!ProcessMonitor categoriesForClass!MVP-Presenters! !
-!ProcessMonitor methodsFor!
+!Tools.ProcessMonitor categoriesForClass!MVP-Presenters! !
+!Tools.ProcessMonitor methodsFor!
 
 createComponents
 	"Create the presenters contained by the receiver"
@@ -234,32 +234,32 @@ updateInterval: aDuration
 
 	updateInterval := aDuration.
 	self setTimer! !
-!ProcessMonitor categoriesFor: #createComponents!initializing!public! !
-!ProcessMonitor categoriesFor: #createSchematicWiring!initializing!public! !
-!ProcessMonitor categoriesFor: #debugIt!commands!public! !
-!ProcessMonitor categoriesFor: #defaultHelpId!constants!public! !
-!ProcessMonitor categoriesFor: #inspectIt!commands!public! !
-!ProcessMonitor categoriesFor: #isSystemProcess:!enquiries!public! !
-!ProcessMonitor categoriesFor: #onProcess:renameTo:accept:!event handling!private! !
-!ProcessMonitor categoriesFor: #onStartup!event handling!private! !
-!ProcessMonitor categoriesFor: #onTimerTick:!event handling!public! !
-!ProcessMonitor categoriesFor: #onViewDestroyed!event handling!public! !
-!ProcessMonitor categoriesFor: #onViewOpened!event handling!public! !
-!ProcessMonitor categoriesFor: #pause!helpers!private! !
-!ProcessMonitor categoriesFor: #process!accessing!private! !
-!ProcessMonitor categoriesFor: #process:!accessing!private! !
-!ProcessMonitor categoriesFor: #queryCommand:!commands!private! !
-!ProcessMonitor categoriesFor: #refresh!commands!private! !
-!ProcessMonitor categoriesFor: #renameIt!commands!public! !
-!ProcessMonitor categoriesFor: #setLowerPriority:!commands!public! !
-!ProcessMonitor categoriesFor: #setPriority:!commands!public! !
-!ProcessMonitor categoriesFor: #setSpeed:!commands!public! !
-!ProcessMonitor categoriesFor: #setTimer!helpers!private! !
-!ProcessMonitor categoriesFor: #terminateProcess!commands!public! !
-!ProcessMonitor categoriesFor: #updateInterval!accessing!private! !
-!ProcessMonitor categoriesFor: #updateInterval:!accessing!private! !
+!Tools.ProcessMonitor categoriesFor: #createComponents!initializing!public! !
+!Tools.ProcessMonitor categoriesFor: #createSchematicWiring!initializing!public! !
+!Tools.ProcessMonitor categoriesFor: #debugIt!commands!public! !
+!Tools.ProcessMonitor categoriesFor: #defaultHelpId!constants!public! !
+!Tools.ProcessMonitor categoriesFor: #inspectIt!commands!public! !
+!Tools.ProcessMonitor categoriesFor: #isSystemProcess:!enquiries!public! !
+!Tools.ProcessMonitor categoriesFor: #onProcess:renameTo:accept:!event handling!private! !
+!Tools.ProcessMonitor categoriesFor: #onStartup!event handling!private! !
+!Tools.ProcessMonitor categoriesFor: #onTimerTick:!event handling!public! !
+!Tools.ProcessMonitor categoriesFor: #onViewDestroyed!event handling!public! !
+!Tools.ProcessMonitor categoriesFor: #onViewOpened!event handling!public! !
+!Tools.ProcessMonitor categoriesFor: #pause!helpers!private! !
+!Tools.ProcessMonitor categoriesFor: #process!accessing!private! !
+!Tools.ProcessMonitor categoriesFor: #process:!accessing!private! !
+!Tools.ProcessMonitor categoriesFor: #queryCommand:!commands!private! !
+!Tools.ProcessMonitor categoriesFor: #refresh!commands!private! !
+!Tools.ProcessMonitor categoriesFor: #renameIt!commands!public! !
+!Tools.ProcessMonitor categoriesFor: #setLowerPriority:!commands!public! !
+!Tools.ProcessMonitor categoriesFor: #setPriority:!commands!public! !
+!Tools.ProcessMonitor categoriesFor: #setSpeed:!commands!public! !
+!Tools.ProcessMonitor categoriesFor: #setTimer!helpers!private! !
+!Tools.ProcessMonitor categoriesFor: #terminateProcess!commands!public! !
+!Tools.ProcessMonitor categoriesFor: #updateInterval!accessing!private! !
+!Tools.ProcessMonitor categoriesFor: #updateInterval:!accessing!private! !
 
-!ProcessMonitor class methodsFor!
+!Tools.ProcessMonitor class methodsFor!
 
 defaultUpdateInterval
 	"Answer the default number of milliseconds between the refreshes in instances
@@ -304,7 +304,7 @@ initialize
 publishedAspects
 	"Answer a <LookupTable> of the <Aspect>s published by the receiver."
 
-	^(super publishedAspects)
+	^super publishedAspects
 		add: ((Aspect integer: #defaultUpdateInterval)
 					isNullable: false;
 					yourself);
@@ -315,10 +315,10 @@ resource_Default_view
 	DO NOT EDIT OR RECATEGORIZE THIS METHOD.
 
 	If you wish to modify this resource evaluate:
-	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Default_view)
+	Tools.ViewComposer openOn: (UI.ResourceIdentifier class: self selector: #resource_Default_view)
 	"
 
-	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.ShellView) 34 27 nil nil 8 #(13565952 65536) 416 nil 327686 ##(Smalltalk.Color) #default 328198 ##(Smalltalk.Point) 1021 411 517 nil 263174 ##(Smalltalk.Font) nil true 524550 ##(Smalltalk.LOGFONTW) 8 #[245 255 255 255 0 0 0 0 0 0 0 0 0 0 0 0 144 1 0 0 0 0 0 0 3 2 1 34 83 0 101 0 103 0 111 0 101 0 32 0 85 0 73 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0] 498 193 193 nil 416 788230 ##(Smalltalk.BorderLayout) 1 1 nil nil nil nil 410 ##(Smalltalk.ListView) 34 45 nil 416 34 2 8 1140916301 1 656 590662 2 ##(Smalltalk.ListModel) 138 144 8 #() nil 1310726 ##(Smalltalk.IdentitySearchPolicy) 480 nil 7 265030 4 ##(Smalltalk.Menu) nil true 34 7 984134 2 ##(Smalltalk.CommandMenuItem) 1 1180998 4 ##(Smalltalk.CommandDescription) #terminateProcess 8 '&Terminate' 1 1 nil nil nil 866 1 898 #debugIt 8 '&Debug' 1 1 263494 3 ##(Smalltalk.Icon) nil true 1572870 ##(Smalltalk.ImageRelativeFileLocator) 8 'Debugger.ico' 2032142 ##(Smalltalk.STBExternalResourceLibraryProxy) 8 'dolphindr7.dll' nil nil nil 866 1 898 #inspectIt 8 '&Inspect' 1 1 994 nil true 1040 8 'BasicInspector.ico' 1088 nil nil 983366 1 ##(Smalltalk.DividerMenuItem) 4097 818 nil true 34 5 866 1025 898 459270 ##(Smalltalk.Message) #setPriority: 8 #(#lowIOPriority) 8 '&High' 1 1 nil nil nil 866 1025 898 1298 #setPriority: 8 #(#userInterruptPriority) 8 '&Above Normal' 1 1 nil nil nil 866 1025 898 1298 #setPriority: 8 #(#userSchedulingPriority) 8 '&Normal' 1 1 nil nil nil 866 1025 898 1298 #setLowerPriority: 8 #(#userBackgroundPriority) 8 '&Below Normal' 1 1 nil nil nil 866 1025 898 1298 #setLowerPriority: 8 #(#systemBackgroundPriority) 8 '&Low' 1 1 nil nil nil 8 '&Set Priority' #priorityMenu 134217729 nil nil nil nil nil 1202 4097 866 1 898 #renameIt 8 '&Rename...' 1 1 nil nil nil 8 '' nil 134217729 nil nil nil nil nil nil nil 656 nil 8 1877889248 ##(Smalltalk.BasicListAbstract) nil 1049926 1 ##(Smalltalk.IconImageManager) nil nil nil nil nil nil 138 144 34 7 920646 5 ##(Smalltalk.ListViewColumn) 8 'Name' 261 #left ##(Smalltalk.BasicListAbstract) 1298 #<= 8 #() 787814 3 ##(Smalltalk.BlockClosure) 0 nil 1180966 ##(Smalltalk.CompiledExpression) 3 1 ##(Smalltalk.UndefinedObject) 8 'doIt' 8 '[:process | process name displayString]' 8 #[31 105 17 158 159 106] #name #displayString 1952 7 257 nil nil 656 nil 1 nil nil 1858 8 'Id' 73 #left ##(Smalltalk.BasicListAbstract) 1298 #<= 8 #() 1298 #id 8 #() nil 656 nil 1 nil nil 1858 8 'State' 101 #right ##(Smalltalk.BasicListAbstract) 1298 #<= 8 #() 1298 #state 8 #() nil 656 nil 1 nil nil 1858 8 'Priority' 93 #right ##(Smalltalk.BasicListAbstract) 1298 #< 8 #() 1298 #priority 2224 nil 656 nil 1 nil nil 1858 8 'Size' 81 #right ##(Smalltalk.BasicListAbstract) 1298 #<= 8 #() 1298 #size 2224 nil 656 nil 1 nil nil 1858 8 'Calls' 77 #right ##(Smalltalk.BasicListAbstract) 1298 #<= 8 #() 1298 #callbackDepth 2224 nil 656 nil 1 nil nil 1858 8 'Executing' 301 #left 1938 0 nil 1970 5 1 ##(Smalltalk.UndefinedObject) 8 'doIt' 8 '[:process | process isActive ifTrue: [''...''] ifFalse: [process suspendedFrame displayString]]' 8 #[33 105 17 158 119 30 106 17 160 161 106] #isActive 8 '...' #suspendedFrame #displayString 2512 7 257 nil 1938 0 nil 1970 3 1 ##(Smalltalk.UndefinedObject) 8 'doIt' 8 '[:a :b | a topFrame displayString < b topFrame displayString]' 8 #[31 105 17 158 159 18 158 159 128 106] #topFrame #displayString 2608 7 513 nil nil nil 656 nil 3 nil nil #report 8 #() nil 131169 nil 1 nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil 983302 ##(Smalltalk.MessageSequence) 138 144 34 3 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 498 1 1 498 989 293 656 2770 #contextMenu: 34 1 832 656 2770 #text: 34 1 8 'Name' 656 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 238 1 0 0 146 0 0 0] 8 #() 498 193 193 nil 35 170 192 34 2 656 8 'list' nil 461638 4 ##(Smalltalk.MenuBar) nil true 34 7 818 nil true 34 1 866 1 898 #exit 8 '&Close' 17639 1 788806 1 ##(Smalltalk.TextTileIcon) $\x2716 nil nil nil nil nil 1 nil nil nil nil 8 '&File' nil 134217729 nil nil 57701 nil nil 818 nil true 34 7 866 1 898 #terminateProcess 8 '&Terminate' 1 1 nil nil nil 866 1 898 #debugIt 8 '&Debug' 1269 1 1008 nil nil 866 1 898 #inspectIt 8 '&Inspect' 9363 1 1168 nil nil 1202 4097 818 nil true 34 5 866 1025 898 1298 #setPriority: 8 #(#lowIOPriority) 8 '&High' 1 1 nil nil nil 866 1025 898 1298 #setPriority: 8 #(#userInterruptPriority) 8 '&Above Normal' 1 1 nil nil nil 866 1025 898 1298 #setPriority: 8 #(#userSchedulingPriority) 8 '&Normal' 1 1 nil nil nil 866 1025 898 1298 #setLowerPriority: 8 #(#userBackgroundPriority) 8 '&Below Normal' 1 1 nil nil nil 866 1025 898 1298 #setLowerPriority: 8 #(#systemBackgroundPriority) 8 '&Low' 1 1 nil nil nil 8 '&Set Priority' #priorityMenu 134217729 nil nil 57719 nil nil 1202 4097 866 1 898 #renameIt 8 '&Rename' 1251 1 nil nil nil 8 '&Process' nil 134217729 nil nil 57723 nil nil 866 1 898 #refresh 8 '&Refresh!!' 1 1 nil nil nil 818 nil true 34 1 818 nil true 34 4 866 1025 898 1298 #setSpeed: 8 #(#high) 8 '&High' 1 1 nil nil nil 866 2098177 898 1298 #setSpeed: 8 #(#default) 8 '&Normal' 1 1 nil nil nil 866 1025 898 1298 #setSpeed: 8 #(#low) 8 '&Low' 1 1 nil nil nil 866 1025 898 1298 #setSpeed: 8 #(#pause) 8 '&Paused' 1 1 nil nil nil 8 '&Update Speed' nil 134217729 nil nil 57735 nil nil 8 '&View' nil 134217729 nil nil 57737 nil nil 818 nil true 8 #() 8 '&Tools' #toolsMenu 134217729 nil nil 57739 nil nil 818 nil true 8 #() 8 'Wi&ndow' #windowMenu 134217729 nil nil 57741 nil nil 818 nil true 34 15 866 1 898 #helpContents 8 '&Contents' 1025 1 994 nil true 1040 8 'Help.ico' 1088 nil nil 866 1 898 #help 8 'On this &Tool' 1249 1 nil nil nil 866 1 898 #helpWhatsThis 8 'What''s This?' 5345 1 nil nil nil 1202 4097 866 1 898 #learnSmalltalk 8 'Learn Smalltalk' 1 1 3186 $\x1F393 nil 466 #orchid 466 #white nil nil 1 nil nil nil nil 1202 4097 866 1 898 #helpWhatsNew 8 'What''s &New' 1 1 nil nil nil 866 1 898 #helpGuidedTour 8 '&Guided Tour' 1 1 nil nil nil 866 1 898 #helpTutorials 8 'Tutorials' 1 1 nil nil nil 1202 4097 866 1 898 #objectArtsHomePage 8 'Object Arts Homepage' 1 1 994 nil true 1040 8 '!!APPLICATION' 1088 nil nil 866 1 898 #dolphinNewsgroup 8 'Dolphin Newsgroup/Forum' 1 1 nil nil nil 866 1 898 #dolphinWikiWeb 8 'Dolphin WikiWeb' 1 1 nil nil nil 1202 4097 866 1 898 #aboutDolphin 8 '&About Dolphin Smalltalk' 1 1 3186 $\x1F42C nil nil 466 #darkSlateBlue nil nil 1 nil nil nil nil 8 '&Help' #help 134217729 nil nil nil nil nil 8 '' nil 134217729 nil nil nil nil nil nil nil nil 1 nil nil nil nil 1 nil nil 2706 138 144 34 2 2770 #createAt:extent: 34 2 498 6143 21 498 1021 411 416 2770 #text: 34 1 8 'Process Monitor' 416 2930 8 #[44 0 0 0 0 0 0 0 0 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 253 13 0 0 215 0 0 0] 34 1 656 2992 nil 27 )!
+	^#(#'!!STL' 4 985166 10 ##(UI.STBViewProxy) ##(UI.ShellView) 34 27 nil nil 8 #(13565952 65536) 416 nil 917510 ##(Graphics.Color) #default 918022 ##(Graphics.Point) 1021 411 517 nil 852998 ##(Graphics.Font) nil true 721158 ##(OS.LOGFONTW) 8 #[245 255 255 255 0 0 0 0 0 0 0 0 0 0 0 0 144 1 0 0 0 0 0 0 3 2 1 34 83 0 101 0 103 0 111 0 101 0 32 0 85 0 73 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0] 498 193 193 nil 416 984838 ##(UI.BorderLayout) 1 1 nil nil nil nil 410 ##(UI.ListView) 34 45 nil 416 34 2 8 1140916301 1 656 787270 2 ##(UI.ListModel) 138 144 8 #() nil 1769478 ##(Kernel.IdentitySearchPolicy) 480 nil 7 461638 4 ##(UI.Menu) nil true 34 7 1180742 2 ##(UI.CommandMenuItem) 1 1377606 4 ##(UI.CommandDescription) #terminateProcess 8 '&Terminate' 1 1 nil nil nil 866 1 898 #debugIt 8 '&Debug' 1 1 853318 3 ##(Graphics.Icon) nil true 2031622 ##(Kernel.ImageRelativeFileLocator) 8 'Debugger.ico' 2490894 ##(Kernel.STBExternalResourceLibraryProxy) 8 'dolphindr7.dll' nil nil nil 866 1 898 #inspectIt 8 '&Inspect' 1 1 994 nil true 1040 8 'BasicInspector.ico' 1088 nil nil 1179974 1 ##(UI.DividerMenuItem) 4097 818 nil true 34 5 866 1025 898 786950 ##(Core.Message) #setPriority: 8 #(#lowIOPriority) 8 '&High' 1 1 nil nil nil 866 1025 898 1298 #setPriority: 8 #(#userInterruptPriority) 8 '&Above Normal' 1 1 nil nil nil 866 1025 898 1298 #setPriority: 8 #(#userSchedulingPriority) 8 '&Normal' 1 1 nil nil nil 866 1025 898 1298 #setLowerPriority: 8 #(#userBackgroundPriority) 8 '&Below Normal' 1 1 nil nil nil 866 1025 898 1298 #setLowerPriority: 8 #(#systemBackgroundPriority) 8 '&Low' 1 1 nil nil nil 8 '&Set Priority' #priorityMenu 134217729 nil nil nil nil nil 1202 4097 866 1 898 #renameIt 8 '&Rename...' 1 1 nil nil nil 8 '' nil 134217729 nil nil nil nil nil nil nil 656 nil 8 1801282304 ##(UI.BasicListAbstract) nil 1639750 1 ##(Graphics.IconImageManager) nil nil nil nil nil nil 138 144 34 7 1117254 5 ##(UI.ListViewColumn) 8 'Name' 261 #left ##(UI.BasicListAbstract) 1298 #<= 8 #() 1246566 3 ##(Kernel.BlockClosure) 0 nil 1639718 ##(Kernel.CompiledExpression) 3 1 ##(Core.UndefinedObject) 8 'doIt' 8 '[:process | process name displayString]' 8 #[31 105 17 158 159 106] #name #displayString 1952 7 257 nil nil 656 nil 1 nil nil 1858 8 'Id' 73 #left ##(UI.BasicListAbstract) 1298 #<= 8 #() 1298 #id 8 #() nil 656 nil 1 nil nil 1858 8 'State' 101 #right ##(UI.BasicListAbstract) 1298 #<= 8 #() 1298 #state 8 #() nil 656 nil 1 nil nil 1858 8 'Priority' 93 #right ##(UI.BasicListAbstract) 1298 #< 8 #() 1298 #priority 2224 nil 656 nil 1 nil nil 1858 8 'Size' 81 #right ##(UI.BasicListAbstract) 1298 #<= 8 #() 1298 #size 2224 nil 656 nil 1 nil nil 1858 8 'Calls' 77 #right ##(UI.BasicListAbstract) 1298 #<= 8 #() 1298 #callbackDepth 2224 nil 656 nil 1 nil nil 1858 8 'Executing' 301 #left 1938 0 nil 1970 5 1 ##(Core.UndefinedObject) 8 'doIt' 8 '[:process | process isActive ifTrue: [''...''] ifFalse: [process suspendedFrame displayString]]' 8 #[33 105 17 158 119 30 106 17 160 161 106] #isActive 8 '...' #suspendedFrame #displayString 2512 7 257 nil 1938 0 nil 1970 3 1 ##(Core.UndefinedObject) 8 'doIt' 8 '[:a :b | a topFrame displayString < b topFrame displayString]' 8 #[31 105 17 158 159 18 158 159 128 106] #topFrame #displayString 2608 7 513 nil nil nil 656 nil 3 nil nil #report 8 #() nil 131169 nil 1 nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil 1310982 ##(Core.MessageSequence) 138 144 34 3 1049350 ##(Core.MessageSend) #createAt:extent: 34 2 498 1 1 498 989 293 656 2770 #contextMenu: 34 1 832 656 2770 #text: 34 1 8 'Name' 656 1179910 ##(OS.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 238 1 0 0 146 0 0 0] 8 #() 498 193 193 nil 35 170 192 34 2 656 8 'list' nil 658246 4 ##(UI.MenuBar) nil true 34 7 818 nil true 34 1 866 1 898 #exit 8 '&Close' 17639 1 1378630 1 ##(Graphics.TextTileIcon) $\x2716 nil nil nil nil nil 1 nil nil nil nil 8 '&File' nil 134217729 nil nil 50257 nil nil 818 nil true 34 7 866 1 898 #terminateProcess 8 '&Terminate' 1 1 nil nil nil 866 1 898 #debugIt 8 '&Debug' 1269 1 1008 nil nil 866 1 898 #inspectIt 8 '&Inspect' 9363 1 1168 nil nil 1202 4097 818 nil true 34 5 866 1025 898 1298 #setPriority: 8 #(#lowIOPriority) 8 '&High' 1 1 nil nil nil 866 1025 898 1298 #setPriority: 8 #(#userInterruptPriority) 8 '&Above Normal' 1 1 nil nil nil 866 1025 898 1298 #setPriority: 8 #(#userSchedulingPriority) 8 '&Normal' 1 1 nil nil nil 866 1025 898 1298 #setLowerPriority: 8 #(#userBackgroundPriority) 8 '&Below Normal' 1 1 nil nil nil 866 1025 898 1298 #setLowerPriority: 8 #(#systemBackgroundPriority) 8 '&Low' 1 1 nil nil nil 8 '&Set Priority' #priorityMenu 134217729 nil nil 50275 nil nil 1202 4097 866 1 898 #renameIt 8 '&Rename' 1251 1 nil nil nil 8 '&Process' nil 134217729 nil nil 50279 nil nil 866 1 898 #refresh 8 '&Refresh!!' 1 1 nil nil nil 818 nil true 34 1 818 nil true 34 4 866 1025 898 1298 #setSpeed: 8 #(#high) 8 '&High' 1 1 nil nil nil 866 2098177 898 1298 #setSpeed: 8 #(#default) 8 '&Normal' 1 1 nil nil nil 866 1025 898 1298 #setSpeed: 8 #(#low) 8 '&Low' 1 1 nil nil nil 866 1025 898 1298 #setSpeed: 8 #(#pause) 8 '&Paused' 1 1 nil nil nil 8 '&Update Speed' nil 134217729 nil nil 50291 nil nil 8 '&View' nil 134217729 nil nil 50293 nil nil 818 nil true 8 #() 8 '&Tools' #toolsMenu 134217729 nil nil 50295 nil nil 818 nil true 8 #() 8 'Wi&ndow' #windowMenu 134217729 nil nil 50297 nil nil 818 nil true 34 15 866 1 898 #helpContents 8 '&Contents' 1025 1 994 nil true 1040 8 'Help.ico' 1088 nil nil 866 1 898 #help 8 'On this &Tool' 1249 1 nil nil nil 866 1 898 #helpWhatsThis 8 'What''s This?' 5345 1 nil nil nil 1202 4097 866 1 898 #learnSmalltalk 8 'Learn Smalltalk' 1 1 3186 $\x1F393 nil 466 #orchid 466 #white nil nil 1 nil nil nil nil 1202 4097 866 1 898 #helpWhatsNew 8 'What''s &New' 1 1 nil nil nil 866 1 898 #helpGuidedTour 8 '&Guided Tour' 1 1 nil nil nil 866 1 898 #helpTutorials 8 'Tutorials' 1 1 nil nil nil 1202 4097 866 1 898 #objectArtsHomePage 8 'Object Arts Homepage' 1 1 994 nil true 1040 8 '!!APPLICATION' 1088 nil nil 866 1 898 #dolphinNewsgroup 8 'Dolphin Newsgroup/Forum' 1 1 nil nil nil 866 1 898 #dolphinWikiWeb 8 'Dolphin WikiWeb' 1 1 nil nil nil 1202 4097 866 1 898 #aboutDolphin 8 '&About Dolphin Smalltalk' 1 1 3186 $\x1F42C nil nil 466 #darkSlateBlue nil nil 1 nil nil nil nil 8 '&Help' #help 134217729 nil nil 50321 nil nil 8 '' nil 134217729 nil nil nil nil nil nil nil nil 1 nil nil nil nil 1 nil nil 2706 138 144 34 2 2770 #createAt:extent: 34 2 498 6143 21 498 1021 411 416 2770 #text: 34 1 8 'Process Monitor' 416 2930 8 #[44 0 0 0 0 0 0 0 0 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 253 13 0 0 215 0 0 0] 34 1 656 2992 nil 27 )!
 
 reuseIfOpen
 	"Answers true if an already open instance of the receiver should be reused instead of
@@ -331,13 +331,13 @@ reuseIfOpen
 
 toolsFolderHelpId
 	^10597! !
-!ProcessMonitor class categoriesFor: #defaultUpdateInterval!options!public! !
-!ProcessMonitor class categoriesFor: #defaultUpdateInterval:!options!public! !
-!ProcessMonitor class categoriesFor: #displayOn:!displaying!public! !
-!ProcessMonitor class categoriesFor: #icon!constants!public! !
-!ProcessMonitor class categoriesFor: #initialize!initializing!private! !
-!ProcessMonitor class categoriesFor: #publishedAspects!public! !
-!ProcessMonitor class categoriesFor: #resource_Default_view!public!resources-views! !
-!ProcessMonitor class categoriesFor: #reuseIfOpen!accessing!public! !
-!ProcessMonitor class categoriesFor: #toolsFolderHelpId!constants!public! !
+!Tools.ProcessMonitor class categoriesFor: #defaultUpdateInterval!options!public! !
+!Tools.ProcessMonitor class categoriesFor: #defaultUpdateInterval:!options!public! !
+!Tools.ProcessMonitor class categoriesFor: #displayOn:!displaying!public! !
+!Tools.ProcessMonitor class categoriesFor: #icon!constants!public! !
+!Tools.ProcessMonitor class categoriesFor: #initialize!initializing!private! !
+!Tools.ProcessMonitor class categoriesFor: #publishedAspects!public! !
+!Tools.ProcessMonitor class categoriesFor: #resource_Default_view!public!resources-views! !
+!Tools.ProcessMonitor class categoriesFor: #reuseIfOpen!accessing!public! !
+!Tools.ProcessMonitor class categoriesFor: #toolsFolderHelpId!constants!public! !
 

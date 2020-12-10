@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-UI.SelectableItemsPresenter subclass: #ClassSelector
+UI.SelectableItemsPresenter subclass: #'Tools.ClassSelector'
 	instanceVariableNames: 'flags classesPresenter searchEnvironment'
 	classVariableNames: ''
 	imports: #()
@@ -9,8 +9,9 @@ UI.SelectableItemsPresenter subclass: #ClassSelector
 		'ClassModeMask' -> 16r1.
 		'ShowFullNamesMask' -> 16r2
 	}!
-ClassSelector guid: (Core.GUID fromString: '{cb9d5680-134d-4c0b-9052-ad4536946a49}')!
-ClassSelector comment: 'A ClassSelector is an abstract class used to implement the common behaviour for selecting a class from the Smalltalk class hierarchy. It also provides the ability to source and sink drag and drop operations. Dropping a class object onto another class in the tree will change the superclass of the dropped class. A drop of a <CompiledMethod> will copy or move the method to the class under the drop, maintaining its existing method categories. Class objects may also be dragged from a ClassHierarchySelector in a variety of formats: as <Class> objects, as <String> definitions, or as a chunk format definitions.
+Tools.ClassSelector guid: (Core.GUID fromString: '{cb9d5680-134d-4c0b-9052-ad4536946a49}')!
+Tools.ClassSelector isNonInstantiable: true!
+Tools.ClassSelector comment: 'A ClassSelector is an abstract class used to implement the common behaviour for selecting a class from the Smalltalk class hierarchy. It also provides the ability to source and sink drag and drop operations. Dropping a class object onto another class in the tree will change the superclass of the dropped class. A drop of a <CompiledMethod> will copy or move the method to the class under the drop, maintaining its existing method categories. Class objects may also be dragged from a ClassHierarchySelector in a variety of formats: as <Class> objects, as <String> definitions, or as a chunk format definitions.
 
 Note that a ClassSelector maintains whether it is in ''''class'''' (actually metaclass) or ''''instance'''' mode. A number of commands and operations supported by the receiver can be applied to either <Metaclass> or <Class> objects, and which is operated on is determined by the selection and the mode. See #actualClass and its references.
 
@@ -19,8 +20,8 @@ Instance Variables:
 
 Class Variables:
 	ClassModeMask	<integer>. Masks flags inst. var. to determine if in class mode.'!
-!ClassSelector categoriesForClass!MVP-Presenters! !
-!ClassSelector methodsFor!
+!Tools.ClassSelector categoriesForClass!MVP-Presenters! !
+!Tools.ClassSelector methodsFor!
 
 actualClass
 	"Answer the actual class selected in the receiver after taking account
@@ -852,89 +853,89 @@ toggleShowFullNames
 	self isShowingFullNames: self isShowingFullNames not.
 	classesPresenter selectableItems view getTextBlock: (Message
 				selector: (self isShowingFullNames ifTrue: [#fullName] ifFalse: [#unqualifiedName]))! !
-!ClassSelector categoriesFor: #actualClass!accessing!public! !
-!ClassSelector categoriesFor: #actualClass:!accessing!public! !
-!ClassSelector categoriesFor: #actualClass:ifAbsent:!accessing!public! !
-!ClassSelector categoriesFor: #browseChangedMethods!commands!public! !
-!ClassSelector categoriesFor: #browseClass!commands!public! !
-!ClassSelector categoriesFor: #browseClassPackage!commands!public! !
-!ClassSelector categoriesFor: #browseClassReferences!commands!public! !
-!ClassSelector categoriesFor: #browseClassVariables!commands!public! !
-!ClassSelector categoriesFor: #browseHierarchy!commands!public! !
-!ClassSelector categoriesFor: #browseInstanceVariables!commands!public! !
-!ClassSelector categoriesFor: #browseIt!commands!public! !
-!ClassSelector categoriesFor: #browseItCommand!helpers!private! !
-!ClassSelector categoriesFor: #browsePackages!commands!public! !
-!ClassSelector categoriesFor: #browsePublishedAspects!commands!public! !
-!ClassSelector categoriesFor: #browsePublishedEvents!commands!public! !
-!ClassSelector categoriesFor: #browseReferences!commands!public! !
-!ClassSelector categoriesFor: #browserEnvironment!public! !
-!ClassSelector categoriesFor: #browseSystem!commands!public! !
-!ClassSelector categoriesFor: #buildAllVariablesMenu:!menus!private! !
-!ClassSelector categoriesFor: #buildViewsMenu:command:!menus!private! !
-!ClassSelector categoriesFor: #canRefactor!public!testing! !
-!ClassSelector categoriesFor: #categorizeClass!commands!public! !
-!ClassSelector categoriesFor: #chooseVariables:caption:!commands!private!refactoring! !
-!ClassSelector categoriesFor: #classPackage!commands!public! !
-!ClassSelector categoriesFor: #clearSelection!commands!private! !
-!ClassSelector categoriesFor: #copyClass!commands!private! !
-!ClassSelector categoriesFor: #createInstanceVariableAccessors!commands!public!refactoring! !
-!ClassSelector categoriesFor: #createSchematicWiring!initializing!public! !
-!ClassSelector categoriesFor: #createVariableAccessors:!commands!public!refactoring! !
-!ClassSelector categoriesFor: #deleteClassHierarchy!commands!private! !
-!ClassSelector categoriesFor: #deleteItCommand!helpers!private! !
-!ClassSelector categoriesFor: #dropClass:onto:changes:!operations!private! !
-!ClassSelector categoriesFor: #dropMethod:onto:changes:!helpers!private! !
-!ClassSelector categoriesFor: #editView:!commands!public! !
-!ClassSelector categoriesFor: #fileInClass!commands!public! !
-!ClassSelector categoriesFor: #fileOutClass!commands!public! !
-!ClassSelector categoriesFor: #findClass!commands!public! !
-!ClassSelector categoriesFor: #initialize!initializing!private! !
-!ClassSelector categoriesFor: #inspectIt!commands!public! !
-!ClassSelector categoriesFor: #isInstanceMode!modes!public! !
-!ClassSelector categoriesFor: #isInstanceMode:!modes!public! !
-!ClassSelector categoriesFor: #isShowingFullNames!modes!public! !
-!ClassSelector categoriesFor: #isShowingFullNames:!modes!public! !
-!ClassSelector categoriesFor: #maximumVariableMenuEntries!menus!private! !
-!ClassSelector categoriesFor: #model:!accessing!public! !
-!ClassSelector categoriesFor: #newView!commands!public! !
-!ClassSelector categoriesFor: #onAboutToDisplayMenu:!event handling!menus!public! !
-!ClassSelector categoriesFor: #onAboutToRenameClass:!event handling!private! !
-!ClassSelector categoriesFor: #onClass:renamedTo:!event handling!public! !
-!ClassSelector categoriesFor: #onClass:renameTo:accept:!event handling!public! !
-!ClassSelector categoriesFor: #onDrag:!event handling!private! !
-!ClassSelector categoriesFor: #onDragOver:!event handling!private! !
-!ClassSelector categoriesFor: #onDropOver:!event handling!private! !
-!ClassSelector categoriesFor: #onSelectionChanged!event handling!public! !
-!ClassSelector categoriesFor: #onSelectionChanging:!event handling!public! !
-!ClassSelector categoriesFor: #onTipTextRequired:!event handling!private! !
-!ClassSelector categoriesFor: #packages:!accessing!public! !
-!ClassSelector categoriesFor: #performDropChanges:target:!helpers!private! !
-!ClassSelector categoriesFor: #permitSelectionChange!helpers!private! !
-!ClassSelector categoriesFor: #populateVarMenu:class:command:variables:format:!menus!private! !
-!ClassSelector categoriesFor: #queryCommand:!commands!private! !
-!ClassSelector categoriesFor: #queryMoveClass:toPackage:!operations!private! !
-!ClassSelector categoriesFor: #renameClass!commands!private!refactoring! !
-!ClassSelector categoriesFor: #renameClassVariable!commands!private!refactoring! !
-!ClassSelector categoriesFor: #renameInstanceVariable!commands!private!refactoring! !
-!ClassSelector categoriesFor: #searchEnvironment!commands!private! !
-!ClassSelector categoriesFor: #searchEnvironment:!public! !
-!ClassSelector categoriesFor: #selectableItems!accessing!private! !
-!ClassSelector categoriesFor: #selectionEnvironment!accessing!private! !
-!ClassSelector categoriesFor: #setInitialFocus!operations!public! !
-!ClassSelector categoriesFor: #showPresenter:!commands!public! !
-!ClassSelector categoriesFor: #sourceControl!accessing!private! !
-!ClassSelector categoriesFor: #systemModel!commands!private! !
-!ClassSelector categoriesFor: #testBrowserClass!constants!private! !
-!ClassSelector categoriesFor: #toggleShowFullNames!commands!private!refactoring! !
+!Tools.ClassSelector categoriesFor: #actualClass!accessing!public! !
+!Tools.ClassSelector categoriesFor: #actualClass:!accessing!public! !
+!Tools.ClassSelector categoriesFor: #actualClass:ifAbsent:!accessing!public! !
+!Tools.ClassSelector categoriesFor: #browseChangedMethods!commands!public! !
+!Tools.ClassSelector categoriesFor: #browseClass!commands!public! !
+!Tools.ClassSelector categoriesFor: #browseClassPackage!commands!public! !
+!Tools.ClassSelector categoriesFor: #browseClassReferences!commands!public! !
+!Tools.ClassSelector categoriesFor: #browseClassVariables!commands!public! !
+!Tools.ClassSelector categoriesFor: #browseHierarchy!commands!public! !
+!Tools.ClassSelector categoriesFor: #browseInstanceVariables!commands!public! !
+!Tools.ClassSelector categoriesFor: #browseIt!commands!public! !
+!Tools.ClassSelector categoriesFor: #browseItCommand!helpers!private! !
+!Tools.ClassSelector categoriesFor: #browsePackages!commands!public! !
+!Tools.ClassSelector categoriesFor: #browsePublishedAspects!commands!public! !
+!Tools.ClassSelector categoriesFor: #browsePublishedEvents!commands!public! !
+!Tools.ClassSelector categoriesFor: #browseReferences!commands!public! !
+!Tools.ClassSelector categoriesFor: #browserEnvironment!public! !
+!Tools.ClassSelector categoriesFor: #browseSystem!commands!public! !
+!Tools.ClassSelector categoriesFor: #buildAllVariablesMenu:!menus!private! !
+!Tools.ClassSelector categoriesFor: #buildViewsMenu:command:!menus!private! !
+!Tools.ClassSelector categoriesFor: #canRefactor!public!testing! !
+!Tools.ClassSelector categoriesFor: #categorizeClass!commands!public! !
+!Tools.ClassSelector categoriesFor: #chooseVariables:caption:!commands!private!refactoring! !
+!Tools.ClassSelector categoriesFor: #classPackage!commands!public! !
+!Tools.ClassSelector categoriesFor: #clearSelection!commands!private! !
+!Tools.ClassSelector categoriesFor: #copyClass!commands!private! !
+!Tools.ClassSelector categoriesFor: #createInstanceVariableAccessors!commands!public!refactoring! !
+!Tools.ClassSelector categoriesFor: #createSchematicWiring!initializing!public! !
+!Tools.ClassSelector categoriesFor: #createVariableAccessors:!commands!public!refactoring! !
+!Tools.ClassSelector categoriesFor: #deleteClassHierarchy!commands!private! !
+!Tools.ClassSelector categoriesFor: #deleteItCommand!helpers!private! !
+!Tools.ClassSelector categoriesFor: #dropClass:onto:changes:!operations!private! !
+!Tools.ClassSelector categoriesFor: #dropMethod:onto:changes:!helpers!private! !
+!Tools.ClassSelector categoriesFor: #editView:!commands!public! !
+!Tools.ClassSelector categoriesFor: #fileInClass!commands!public! !
+!Tools.ClassSelector categoriesFor: #fileOutClass!commands!public! !
+!Tools.ClassSelector categoriesFor: #findClass!commands!public! !
+!Tools.ClassSelector categoriesFor: #initialize!initializing!private! !
+!Tools.ClassSelector categoriesFor: #inspectIt!commands!public! !
+!Tools.ClassSelector categoriesFor: #isInstanceMode!modes!public! !
+!Tools.ClassSelector categoriesFor: #isInstanceMode:!modes!public! !
+!Tools.ClassSelector categoriesFor: #isShowingFullNames!modes!public! !
+!Tools.ClassSelector categoriesFor: #isShowingFullNames:!modes!public! !
+!Tools.ClassSelector categoriesFor: #maximumVariableMenuEntries!menus!private! !
+!Tools.ClassSelector categoriesFor: #model:!accessing!public! !
+!Tools.ClassSelector categoriesFor: #newView!commands!public! !
+!Tools.ClassSelector categoriesFor: #onAboutToDisplayMenu:!event handling!menus!public! !
+!Tools.ClassSelector categoriesFor: #onAboutToRenameClass:!event handling!private! !
+!Tools.ClassSelector categoriesFor: #onClass:renamedTo:!event handling!public! !
+!Tools.ClassSelector categoriesFor: #onClass:renameTo:accept:!event handling!public! !
+!Tools.ClassSelector categoriesFor: #onDrag:!event handling!private! !
+!Tools.ClassSelector categoriesFor: #onDragOver:!event handling!private! !
+!Tools.ClassSelector categoriesFor: #onDropOver:!event handling!private! !
+!Tools.ClassSelector categoriesFor: #onSelectionChanged!event handling!public! !
+!Tools.ClassSelector categoriesFor: #onSelectionChanging:!event handling!public! !
+!Tools.ClassSelector categoriesFor: #onTipTextRequired:!event handling!private! !
+!Tools.ClassSelector categoriesFor: #packages:!accessing!public! !
+!Tools.ClassSelector categoriesFor: #performDropChanges:target:!helpers!private! !
+!Tools.ClassSelector categoriesFor: #permitSelectionChange!helpers!private! !
+!Tools.ClassSelector categoriesFor: #populateVarMenu:class:command:variables:format:!menus!private! !
+!Tools.ClassSelector categoriesFor: #queryCommand:!commands!private! !
+!Tools.ClassSelector categoriesFor: #queryMoveClass:toPackage:!operations!private! !
+!Tools.ClassSelector categoriesFor: #renameClass!commands!private!refactoring! !
+!Tools.ClassSelector categoriesFor: #renameClassVariable!commands!private!refactoring! !
+!Tools.ClassSelector categoriesFor: #renameInstanceVariable!commands!private!refactoring! !
+!Tools.ClassSelector categoriesFor: #searchEnvironment!commands!private! !
+!Tools.ClassSelector categoriesFor: #searchEnvironment:!public! !
+!Tools.ClassSelector categoriesFor: #selectableItems!accessing!private! !
+!Tools.ClassSelector categoriesFor: #selectionEnvironment!accessing!private! !
+!Tools.ClassSelector categoriesFor: #setInitialFocus!operations!public! !
+!Tools.ClassSelector categoriesFor: #showPresenter:!commands!public! !
+!Tools.ClassSelector categoriesFor: #sourceControl!accessing!private! !
+!Tools.ClassSelector categoriesFor: #systemModel!commands!private! !
+!Tools.ClassSelector categoriesFor: #testBrowserClass!constants!private! !
+!Tools.ClassSelector categoriesFor: #toggleShowFullNames!commands!private!refactoring! !
 
-!ClassSelector class methodsFor!
+!Tools.ClassSelector class methodsFor!
 
 getCommandQueryHandlers
 	^commandQueryHandlers!
 
 setCommandQueryHandlers: anArray 
 	commandQueryHandlers := anArray! !
-!ClassSelector class categoriesFor: #getCommandQueryHandlers!accessing!private! !
-!ClassSelector class categoriesFor: #setCommandQueryHandlers:!accessing!private! !
+!Tools.ClassSelector class categoriesFor: #getCommandQueryHandlers!accessing!private! !
+!Tools.ClassSelector class categoriesFor: #setCommandQueryHandlers:!accessing!private! !
 

@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-AnonymousKeyedAspect subclass: #BasicKeyedAspect
+Tools.AnonymousKeyedAspect subclass: #'Tools.BasicKeyedAspect'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-BasicKeyedAspect guid: (GUID fromString: '{493bbe17-de57-4c11-8d61-e0494b76a1f6}')!
-BasicKeyedAspect comment: 'Part of the PublishedAspectorInspector framework. BasicKeyedAspect instances are used to describe the published aspects of an object that can be accessed via #basicAt: and #basicAt:put: messages as governed by the BasicKeyedAspectAccessor class'!
-!BasicKeyedAspect categoriesForClass!Attribute-Definition! !
-!BasicKeyedAspect methodsFor!
+Tools.BasicKeyedAspect guid: (Core.GUID fromString: '{493bbe17-de57-4c11-8d61-e0494b76a1f6}')!
+Tools.BasicKeyedAspect comment: 'Part of the PublishedAspectorInspector framework. BasicKeyedAspect instances are used to describe the published aspects of an object that can be accessed via #basicAt: and #basicAt:put: messages as governed by the BasicKeyedAspectAccessor class'!
+!Tools.BasicKeyedAspect categoriesForClass!Attribute-Definition! !
+!Tools.BasicKeyedAspect methodsFor!
 
 getSelector
 	"Private - Answers the selector used for getting the aspect value from the subject"
@@ -28,8 +28,8 @@ writeInto: subjectObject value: valueObject
 	to valueObject."
 
 	^subjectObject basicAt: self key put: valueObject! !
-!BasicKeyedAspect categoriesFor: #getSelector!accessing!private! !
-!BasicKeyedAspect categoriesFor: #putSelector!accessing!private! !
-!BasicKeyedAspect categoriesFor: #readFrom:!indirect accessing!private! !
-!BasicKeyedAspect categoriesFor: #writeInto:value:!indirect accessing!private! !
+!Tools.BasicKeyedAspect categoriesFor: #getSelector!accessing!private! !
+!Tools.BasicKeyedAspect categoriesFor: #putSelector!accessing!private! !
+!Tools.BasicKeyedAspect categoriesFor: #readFrom:!indirect accessing!private! !
+!Tools.BasicKeyedAspect categoriesFor: #writeInto:value:!indirect accessing!private! !
 

@@ -1,16 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-DialogView subclass: #WalkbackDialog
+UI.DialogView subclass: #'Tools.WalkbackDialog'
 	instanceVariableNames: 'callStack resumable caption debuggable'
 	classVariableNames: 'Commands'
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'CallStackId' -> 16r3E9.
 		'IconId' -> 16r3F1
 	}!
-WalkbackDialog guid: (GUID fromString: '{87b4c723-026e-11d3-9fd7-00a0cc3e4a32}')!
-WalkbackDialog comment: '
+Tools.WalkbackDialog guid: (Core.GUID fromString: '{87b4c723-026e-11d3-9fd7-00a0cc3e4a32}')!
+Tools.WalkbackDialog comment: '
 Instance Variables:
 	callStack		<readableString> containing the walkback trace.
 	resumable		<boolean> indicating if the process is resumable.
@@ -25,8 +25,8 @@ Class Variables:
 	KillId		<integer> ID of the "kill" button.
 
 '!
-!WalkbackDialog categoriesForClass!MVP-Views! !
-!WalkbackDialog methodsFor!
+!Tools.WalkbackDialog categoriesForClass!MVP-Views! !
+!Tools.WalkbackDialog methodsFor!
 
 actualBackcolor
 	"Private - Answer the <Color> to be applied as the receiver's background colour. If the
@@ -163,22 +163,22 @@ wmSize: message wParam: wParam lParam: lParam
 	#todo "Resize the controls".
 	^nil
 ! !
-!WalkbackDialog categoriesFor: #actualBackcolor!accessing!private! !
-!WalkbackDialog categoriesFor: #callStack:!accessing!public! !
-!WalkbackDialog categoriesFor: #caption:!accessing!public! !
-!WalkbackDialog categoriesFor: #copyWalkbackToClipboard!commands!public! !
-!WalkbackDialog categoriesFor: #debuggable:!accessing!public! !
-!WalkbackDialog categoriesFor: #defaultExtent!constants!public! !
-!WalkbackDialog categoriesFor: #onInitDialog!event handling!private! !
-!WalkbackDialog categoriesFor: #primHookWindowCreate:!helpers!private! !
-!WalkbackDialog categoriesFor: #resumable:!accessing!public! !
-!WalkbackDialog categoriesFor: #runModalLoop!operations!private! !
-!WalkbackDialog categoriesFor: #templateId!constants!private! !
-!WalkbackDialog categoriesFor: #unhookWindowCreate:!operations!private! !
-!WalkbackDialog categoriesFor: #wmCommand:wParam:lParam:!event handling-win32!public! !
-!WalkbackDialog categoriesFor: #wmSize:wParam:lParam:!event handling-win32!private! !
+!Tools.WalkbackDialog categoriesFor: #actualBackcolor!accessing!private! !
+!Tools.WalkbackDialog categoriesFor: #callStack:!accessing!public! !
+!Tools.WalkbackDialog categoriesFor: #caption:!accessing!public! !
+!Tools.WalkbackDialog categoriesFor: #copyWalkbackToClipboard!commands!public! !
+!Tools.WalkbackDialog categoriesFor: #debuggable:!accessing!public! !
+!Tools.WalkbackDialog categoriesFor: #defaultExtent!constants!public! !
+!Tools.WalkbackDialog categoriesFor: #onInitDialog!event handling!private! !
+!Tools.WalkbackDialog categoriesFor: #primHookWindowCreate:!helpers!private! !
+!Tools.WalkbackDialog categoriesFor: #resumable:!accessing!public! !
+!Tools.WalkbackDialog categoriesFor: #runModalLoop!operations!private! !
+!Tools.WalkbackDialog categoriesFor: #templateId!constants!private! !
+!Tools.WalkbackDialog categoriesFor: #unhookWindowCreate:!operations!private! !
+!Tools.WalkbackDialog categoriesFor: #wmCommand:wParam:lParam:!event handling-win32!public! !
+!Tools.WalkbackDialog categoriesFor: #wmSize:wParam:lParam:!event handling-win32!private! !
 
-!WalkbackDialog class methodsFor!
+!Tools.WalkbackDialog class methodsFor!
 
 initialize
 	"Private - Initialize the receiver's class variables.
@@ -194,5 +194,5 @@ initialize
 				shrink;
 				isImmutable: true;
 				yourself)! !
-!WalkbackDialog class categoriesFor: #initialize!initializing!private! !
+!Tools.WalkbackDialog class categoriesFor: #initialize!initializing!private! !
 

@@ -23,14 +23,14 @@ package basicPackageVersion: '6.2'.
 
 
 package setClassNames: #(
-	#{Smalltalk.AXAutomationAspect}
-	#{Smalltalk.AXComponentWizard}
-	#{Smalltalk.AXInspector}
-	#{Smalltalk.AXMethodName}
-	#{Smalltalk.AXRecordAspect}
-	#{Smalltalk.AXTypeLibraryPrompter}
-	#{Smalltalk.AXTypeLibRegistration}
-	#{Smalltalk.DispatchAspect}
+	#{Tools.AXAutomationAspect}
+	#{Tools.AXComponentWizard}
+	#{Tools.AXInspector}
+	#{Tools.AXMethodName}
+	#{Tools.AXRecordAspect}
+	#{Tools.AXTypeLibraryPrompter}
+	#{Tools.AXTypeLibRegistration}
+	#{Tools.DispatchAspect}
 ).
 
 package setMethodNames: #(
@@ -552,7 +552,6 @@ package setPrerequisites: #(
 	'..\..\ActiveX\Automation\ActiveX Automation'
 	'..\Base\Development System'
 	'..\..\Base\Dolphin'
-	'..\..\Base\Deprecated\Dolphin Base (Old Names)'
 	'..\..\MVP\Base\Dolphin Basic Geometry'
 	'..\..\MVP\Presenters\Boolean\Dolphin Boolean Presenter'
 	'..\..\MVP\Views\Cards\Dolphin Card Containers'
@@ -580,49 +579,49 @@ package!
 
 "Class Definitions"!
 
-Core.Object subclass: #AXMethodName
+Core.Object subclass: #'Tools.AXMethodName'
 	instanceVariableNames: 'keywords argumentNames indices'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Core.Object subclass: #AXTypeLibRegistration
+Core.Object subclass: #'Tools.AXTypeLibRegistration'
 	instanceVariableNames: 'description guidString versionString minor major'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Aspect subclass: #AXAutomationAspect
+Tools.Aspect subclass: #'Tools.AXAutomationAspect'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-AXAutomationAspect subclass: #AXRecordAspect
+Tools.AXAutomationAspect subclass: #'Tools.AXRecordAspect'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-AXAutomationAspect subclass: #DispatchAspect
+Tools.AXAutomationAspect subclass: #'Tools.DispatchAspect'
 	instanceVariableNames: 'dispid'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-UI.ValueDialog subclass: #AXTypeLibraryPrompter
+UI.ValueDialog subclass: #'Tools.AXTypeLibraryPrompter'
 	instanceVariableNames: 'typeLibs path guidPresenter'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-SmalltalkToolShell subclass: #AXComponentWizard
+Tools.SmalltalkToolShell subclass: #'Tools.AXComponentWizard'
 	instanceVariableNames: 'typeLibs types description guid globalName prefix packageName forcePackage cards libraryName libraryPath prefixClasses buffer typelibGlobal constantsPoolName highLevelWrappers classComments tracing defineProtocols defineFunctionTables lowercaseIdentifiers verboseTracing'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-BasicInspector subclass: #AXInspector
+Tools.BasicInspector subclass: #'Tools.AXInspector'
 	instanceVariableNames: 'collection'
 	classVariableNames: ''
 	imports: #()
@@ -1898,14 +1897,14 @@ proputrefWrapperPrefix
 
 	^'set'!
 
-rawMethodNameForFunction: aFUNCDESC 
+rawMethodNameForFunction: aFUNCDESC
 	"Private - Answer an <AXMethodName> describing the selector keywords
 	and argument names to be used for a raw wrapper method for the function
 	described by the <FUNCDESC> argument."
 
 	| name |
 	name := aFUNCDESC methodName.
-	^AXMethodName 
+	^Tools.AXMethodName
 		keywords: (self mungeSelectorKeywords: name keywords forMember: aFUNCDESC)
 		argumentNames: name argumentNames
 		indices: name indices!
@@ -2046,7 +2045,7 @@ buildMethodName: aFUNCDESC defaultOptionals: aBoolean
 
 			"Now get a unique primary keyword which doesn't clash with one of the reserved selectors"
 			keywords := self reinventBadSelector: keywords member: aFUNCDESC].
-	^AXMethodName
+	^Tools.AXMethodName
 		keywords: keywords
 		argumentNames: argumentNames
 		indices: indices!
@@ -2558,9 +2557,9 @@ newAspectForMember: anAxMemberDesc ppb: anIPerPropertyBrowsing
 	name := anAxMemberDesc name.
 	vartype := anAxMemberDesc tdesc vartype.
 	aspect := (map isNil or: [map isEmpty])
-				ifTrue: [(VARIANT classForVT: vartype) newInstanceAspect: name class: DispatchAspect]
+				ifTrue: [(VARIANT classForVT: vartype) newInstanceAspect: name class: Tools.DispatchAspect]
 				ifFalse: 
-					[DispatchAspect
+					[Tools.DispatchAspect
 						choice: name
 						fromMap: map
 						nullValue: (vartype == VT_BSTR ifTrue: [''])].
@@ -2752,7 +2751,7 @@ reservedSelectors
 
 wrapMethodComment: aString
 	| tab |
-	tab := SmalltalkWorkspace defaultTabWidth.
+	tab := Tools.SmalltalkWorkspace defaultTabWidth.
 	^Smalltalk developmentSystem
 		wrapText: aString
 		indent: tab
@@ -2839,8 +2838,8 @@ overridableIUnknownSelectors
 publishedAspectsOfInstances
 	"Answer a <LookupTable> of the <Aspect>s published by instances of the receiver."
 
-	^(super publishedAspectsOfInstances)
-		add: (Aspect sequenceableCollection: #methods) beReadOnly;
+	^super publishedAspectsOfInstances
+		add: (Tools.Aspect sequenceableCollection: #methods) beReadOnly;
 		yourself!
 
 reservedDispSelectors
@@ -2949,8 +2948,8 @@ printIDLOn: target indent: tabs
 publishedAspectsOfInstances
 	"Answer a <LookupTable> of the <Aspect>s published by instances of the receiver."
 
-	^(super publishedAspectsOfInstances)
-		add: (Aspect multilineString: #printIDL);
+	^super publishedAspectsOfInstances
+		add: (Tools.Aspect multilineString: #printIDL);
 		yourself! !
 !AXMemberDesc class categoriesFor: #publishedAspectsOfInstances!constants!public! !
 
@@ -2964,7 +2963,7 @@ publishedAspects
 	self isNull
 		ifFalse: 
 			[self getValidFields
-				do: [:each | aspects add: ((self getField: each) newAspect: each class: AXRecordAspect)]].
+				do: [:each | aspects add: ((self getField: each) newAspect: each class: Tools.AXRecordAspect)]].
 	^aspects! !
 !AXRecord categoriesFor: #publishedAspects!accessing!public! !
 
@@ -2981,7 +2980,7 @@ conformsToRequiredProtocols: binding
 determineNewBase: baseClass forExistingWrapper: existingClass
 	| existingSuper |
 	existingSuper := existingClass superclass.
-	^existingSuper == ExternalStructure ifTrue: [baseClass] ifFalse: [existingSuper]!
+	^existingSuper == External.Structure ifTrue: [baseClass] ifFalse: [existingSuper]!
 
 generateClassSide: aClass
 	self generateDefineFields.
@@ -3247,13 +3246,13 @@ printNamedFieldDefinition: aVARDESC offset: anInteger prefix: aString hidden: aB
 icon
 	"Answers an <Icon> that can be used to represent this class"
 
-	^ExternalStructure icon!
+	^External.Structure icon!
 
 publishedAspectsOfInstances
 	"Answer a <LookupTable> of the <Aspect>s published by instances of the receiver."
 
-	^(super publishedAspectsOfInstances)
-		add: (Aspect sequenceableCollection: #members) beReadOnly;
+	^super publishedAspectsOfInstances
+		add: (Tools.Aspect sequenceableCollection: #members) beReadOnly;
 		yourself! !
 !AXStructureTypeAnalyzer class categoriesFor: #icon!constants!public! !
 !AXStructureTypeAnalyzer class categoriesFor: #publishedAspectsOfInstances!constants!public! !
@@ -4016,8 +4015,8 @@ You can Ignore this warning, but it is suggested that you check the location of 
 publishedAspectsOfInstances
 	"Answer a <LookupTable> of the <Aspect>s published by instances of the receiver."
 
-	^(super publishedAspectsOfInstances)
-		add: (Aspect multilineString: #printIDL) beReadOnly;
+	^super publishedAspectsOfInstances
+		add: (Tools.Aspect multilineString: #printIDL) beReadOnly;
 		yourself! !
 !AXTypeInfoAnalyzer class categoriesFor: #publishedAspectsOfInstances!constants!public! !
 
@@ -4499,7 +4498,7 @@ constantsPoolName: identifier
 !
 
 defaultPackageFolder
-	^PackageFolder dolphinRootPathname , 'Object Arts\Dolphin\ActiveX\Components'!
+	^Tools.PackageFolder dolphinRootPathname , 'Object Arts\Dolphin\ActiveX\Components'!
 
 definesSymbolicConstants
 	^self enums notEmpty 
@@ -5133,23 +5132,23 @@ open
 publishedAspectsOfInstances
 	"Answer a <LookupTable> of the <Aspect>s published by instances of the receiver."
 
-	^(super publishedAspectsOfInstances)
-		add: (Aspect boolean: #prefixGlobalNames);
-		add: (Aspect boolean: #defineFunctionTables);
-		add: (Aspect boolean: #defineMethodProtocols);
-		add: (Aspect string: #prefix);
-		add: (Aspect string: #constantsPoolName);
-		add: (Aspect choice: #highLevelWrappers from: self highLevelWrapperStyles);
-		add: (Aspect choice: #classComments from: self classCommentStyles);
-		add: (Aspect choice: #tracing from: self tracingStyles);
-		add: (Aspect name: #aliasMap);
-		add: (Aspect sequenceableCollection: #interfaces) beReadOnly;
-		add: (Aspect sequenceableCollection: #coclasses) beReadOnly;
-		add: (Aspect sequenceableCollection: #enums) beReadOnly;
-		add: (Aspect sequenceableCollection: #modules) beReadOnly;
-		add: (Aspect sequenceableCollection: #namedStructs) beReadOnly;
-		add: (Aspect sequenceableCollection: #namedUnions) beReadOnly;
-		add: (Aspect sequenceableCollection: #typedefs) beReadOnly;
+	^super publishedAspectsOfInstances
+		add: (Tools.Aspect boolean: #prefixGlobalNames);
+		add: (Tools.Aspect boolean: #defineFunctionTables);
+		add: (Tools.Aspect boolean: #defineMethodProtocols);
+		add: (Tools.Aspect string: #prefix);
+		add: (Tools.Aspect string: #constantsPoolName);
+		add: (Tools.Aspect choice: #highLevelWrappers from: self highLevelWrapperStyles);
+		add: (Tools.Aspect choice: #classComments from: self classCommentStyles);
+		add: (Tools.Aspect choice: #tracing from: self tracingStyles);
+		add: (Tools.Aspect name: #aliasMap);
+		add: (Tools.Aspect sequenceableCollection: #interfaces) beReadOnly;
+		add: (Tools.Aspect sequenceableCollection: #coclasses) beReadOnly;
+		add: (Tools.Aspect sequenceableCollection: #enums) beReadOnly;
+		add: (Tools.Aspect sequenceableCollection: #modules) beReadOnly;
+		add: (Tools.Aspect sequenceableCollection: #namedStructs) beReadOnly;
+		add: (Tools.Aspect sequenceableCollection: #namedUnions) beReadOnly;
+		add: (Tools.Aspect sequenceableCollection: #typedefs) beReadOnly;
 		yourself!
 
 registerTypeLib
@@ -5200,7 +5199,7 @@ typeLibRegistrations
 					description := vk value.
 					(description notNil and: [description notEmpty])
 						ifTrue: 
-							[list add: (AXTypeLibRegistration
+							[list add: (Tools.AXTypeLibRegistration
 										description: description
 										guidString: g
 										versionString: v)]]].
@@ -5413,7 +5412,7 @@ buildMethodName
 							argumentNames at: j put: param].
 					j := j + 1].
 			self reinventBadVarNames: argumentNames].
-	^AXMethodName
+	^Tools.AXMethodName
 		keywords: keywords
 		argumentNames: argumentNames
 		indices: indices!
@@ -5527,7 +5526,7 @@ alternateInspectorClass
 	"Answer the class of inspector to be used when the user requests to inspect
     	the receiver with the Shift key held down."
 
-	^AXInspector!
+	^Tools.AXInspector!
 
 aspectDisplayOn: aStream
 	"Private - Append a single-line textual representatin of the receiver to the <puttableStream>
@@ -5994,21 +5993,21 @@ printIDLBodyOn: target indent: tabs
 publishedAspectsOfInstances
 	"Answer a <LookupTable> of the <Aspect>s published by instances of the receiver."
 
-	^(super publishedAspectsOfInstances)
-		add: (Aspect sequenceableCollection: #interfaces) beReadOnly;
+	^super publishedAspectsOfInstances
+		add: (Tools.Aspect sequenceableCollection: #interfaces) beReadOnly;
 		yourself! !
 !TKindCoclassAnalyzer class categoriesFor: #publishedAspectsOfInstances!constants!public! !
 
 !TKindDispatchAnalyzer methodsFor!
 
 buildPropertyAccessorName: aVARDESC
-	^AXMethodName
+	^Tools.AXMethodName
 		keywords: (self reinventBadSelector: {self identifierFrom: aVARDESC name} member: aVARDESC)
 		argumentNames: #()
 		indices: #()!
 
 buildPropertyMutatorName: aVARDESC
-	^AXMethodName
+	^Tools.AXMethodName
 		keywords: (self reinventBadSelector: {(self identifierFrom: aVARDESC name) , ':'} member: aVARDESC)
 		argumentNames: #('newVal')
 		indices: #(1)!
@@ -6510,8 +6509,8 @@ icon
 publishedAspectsOfInstances
 	"Answer a <LookupTable> of the <Aspect>s published by instances of the receiver."
 
-	^(super publishedAspectsOfInstances)
-		add: (Aspect sequenceableCollection: #properties) beReadOnly;
+	^super publishedAspectsOfInstances
+		add: (Tools.Aspect sequenceableCollection: #properties) beReadOnly;
 		yourself! !
 !TKindDispatchAnalyzer class categoriesFor: #icon!constants!public! !
 !TKindDispatchAnalyzer class categoriesFor: #publishedAspectsOfInstances!constants!public! !
@@ -6605,8 +6604,8 @@ removeOldWrappers: aClass
 publishedAspectsOfInstances
 	"Answer a <LookupTable> of the <Aspect>s published by instances of the receiver."
 
-	^(super publishedAspectsOfInstances)
-		add: (Aspect sequenceableCollection: #constants) beReadOnly;
+	^super publishedAspectsOfInstances
+		add: (Tools.Aspect sequenceableCollection: #constants) beReadOnly;
 		yourself! !
 !TKindEnumAnalyzer class categoriesFor: #publishedAspectsOfInstances!constants!public! !
 
@@ -7057,7 +7056,7 @@ rawMethodNameForFunction: aFUNCDESC
 					with: keywords
 					startingAt: 2;
 				yourself.
-	^AXMethodName
+	^Tools.AXMethodName
 		keywords: (self reinventBadSelector: keywords member: aFUNCDESC)
 		argumentNames: name argumentNames
 		indices: name indices! !
@@ -7276,8 +7275,8 @@ icon
 publishedAspectsOfInstances
 	"Answer a <LookupTable> of the <Aspect>s published by instances of the receiver."
 
-	^(super publishedAspectsOfInstances)
-		add: (Aspect dictionary: #functionsByName) beReadOnly;
+	^super publishedAspectsOfInstances
+		add: (Tools.Aspect dictionary: #functionsByName) beReadOnly;
 		yourself! !
 !TKindModuleAnalyzer class categoriesFor: #icon!constants!public! !
 !TKindModuleAnalyzer class categoriesFor: #publishedAspectsOfInstances!constants!public! !

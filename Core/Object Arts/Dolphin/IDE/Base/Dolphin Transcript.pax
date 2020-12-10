@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'Dolphin Transcript'.
-package paxVersion: 2;
+package paxVersion: 2.1;
 	preDeclareClassesOnLoad: false;
 	basicComment: ''.
 
@@ -8,7 +8,7 @@ package basicPackageVersion: '6.2'.
 
 
 package setClassNames: #(
-	#{TranscriptShell}
+	#{UI.TranscriptShell}
 ).
 
 package setPrerequisites: #(
@@ -24,10 +24,10 @@ package!
 
 "Class Definitions"!
 
-Shell subclass: #TranscriptShell
+UI.Shell subclass: #'UI.TranscriptShell'
 	instanceVariableNames: 'outputWindow buffer bufferProtect'
 	classVariableNames: 'DefaultExtent FlashOnOutput'
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 

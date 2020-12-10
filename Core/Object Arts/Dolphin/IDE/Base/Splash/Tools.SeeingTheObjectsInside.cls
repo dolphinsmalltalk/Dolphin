@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-GdiplusDoubleBufferedView subclass: #SeeingTheObjectsInside
+Graphics.Gdiplus.DoubleBufferedView subclass: #'Tools.SeeingTheObjectsInside'
 	instanceVariableNames: 'background dolphinOutline points sun stepProcess random insideObjectsScale dolphinIntensity textureMap objects dolphins dolphinInside splashDelay hintBubble startTime info baseScale'
 	classVariableNames: ''
-	poolDictionaries: 'GdiplusConstants'
+	imports: #(#{Graphics.Gdiplus.GdiplusConstants private} #{Graphics private})
 	classInstanceVariableNames: 'splashPlayTheGame difficultyLevel'
 	classConstants: {}!
-SeeingTheObjectsInside guid: (GUID fromString: '{66a4dee3-a72c-4a2f-a14f-bffd6813ceef}')!
-SeeingTheObjectsInside comment: '"Seeing the Objects Inside" is the Dolphin tag line. The implication is that the fine grained approach of Smalltalk helps you, as a developer, to find the objects (and  classes) in your problem domain more easily than you can in many other languages. The SeeingTheObjectsInside class is intended to be a fun way to represent this idea as a game that can be played as part of the Dolphin splash screen. Try to find the hidden Dolphin object inside the larger Dolphin outline. Once found, click on it to dismiss the splash.
+Tools.SeeingTheObjectsInside guid: (Core.GUID fromString: '{66a4dee3-a72c-4a2f-a14f-bffd6813ceef}')!
+Tools.SeeingTheObjectsInside comment: '"Seeing the Objects Inside" is the Dolphin tag line. The implication is that the fine grained approach of Smalltalk helps you, as a developer, to find the objects (and  classes) in your problem domain more easily than you can in many other languages. The SeeingTheObjectsInside class is intended to be a fun way to represent this idea as a game that can be played as part of the Dolphin splash screen. Try to find the hidden Dolphin object inside the larger Dolphin outline. Once found, click on it to dismiss the splash.
 
 If you are a very busy and important person who just doesn''t have time to play a game each time you start an image, it can be disabled from within user preferences. Go to User Preferences/Development System/splashPlayTheGame and set this to false. Save the image to persist the setting.
 
@@ -16,8 +16,8 @@ You can run a standalone version of the game outside of the splash by evaluating
 SeeingTheObjectsInside show
 
 '!
-!SeeingTheObjectsInside categoriesForClass!Unclassified! !
-!SeeingTheObjectsInside methodsFor!
+!Tools.SeeingTheObjectsInside categoriesForClass!Unclassified! !
+!Tools.SeeingTheObjectsInside methodsFor!
 
 addInsideObject: anObject minScale: minScale maxScale: maxScale
 	"Private - Adds an object and finds a position for it"
@@ -39,7 +39,7 @@ background
 			[background := self splashBitmap.
 			self baseStyle = 1
 				ifFalse: 
-					[background := GdiplusBitmap fromImage: background
+					[background := Gdiplus.Bitmap fromImage: background
 								centeredIn: (background extent * self baseScale) rounded]]!
 
 baseScale
@@ -81,10 +81,10 @@ dolphinMinScale
 dolphinOutline
 	^dolphinOutline 
 		ifNil: 
-			[dolphinOutline := GdiplusBitmap fromFile: 'Resources\DolphinOutline.png'
+			[dolphinOutline := Gdiplus.Bitmap fromFile: 'Resources\DolphinOutline.png'
 						usingLocator: FileLocator installRelative.
 			self baseStyle = 1 
-				ifFalse: [dolphinOutline := GdiplusBitmap fromImage: dolphinOutline scaledBy: self baseScale]]!
+				ifFalse: [dolphinOutline := Gdiplus.Bitmap fromImage: dolphinOutline scaledBy: self baseScale]]!
 
 dolphinSplashBackcolor
 	"Private - The ambient background colour in the Dolphin splash bitmap as shipped. We could pull a pixel out of the bitmap, but that is very slow, so it is hard coded below."
@@ -96,9 +96,9 @@ dolphinSplashBackcolor
 
 drawInfoTextOn: graphics
 	| fontCopyright brush stringFormat |
-	brush := GdiplusSolidBrush color: Color white.
-	fontCopyright := GdiplusFont name: 'Arial' pointSize: 9.
-	stringFormat := GdiplusStringFormat genericDefault.
+	brush := Gdiplus.SolidBrush color: Color white.
+	fontCopyright := Gdiplus.Font name: 'Arial' pointSize: 9.
+	stringFormat := Gdiplus.StringFormat genericDefault.
 	graphics
 		textRenderingHint: TextRenderingHintAntiAlias;
 		drawString: info
@@ -224,7 +224,7 @@ isPointInDolphin: aPoint
 loadTextureMap: mapName
 	| textureFileName mapFileName texture map scale |
 	textureFileName := 'Resources\' , (File default: mapName extension: 'png').
-	texture := GdiplusBitmap fromFile: textureFileName usingLocator: FileLocator installRelative.
+	texture := Gdiplus.Bitmap fromFile: textureFileName usingLocator: FileLocator installRelative.
 	mapFileName := 'Resources\' , (File default: mapName extension: 'txt').
 	map := FileStream read: (FileLocator installRelative localFileSpecFor: mapFileName) text: true.
 	textureMap := LookupTable new.
@@ -235,7 +235,7 @@ loadTextureMap: mapName
 			elements := $, split: map nextLine.
 			pos := elements second trimBlanks asNumber @ elements third trimBlanks asNumber.
 			ext := elements fourth trimBlanks asNumber @ elements fifth trimBlanks asNumber.
-			bm := GdiplusBitmap fromImage: texture crop: (pos extent: ext).
+			bm := Gdiplus.Bitmap fromImage: texture crop: (pos extent: ext).
 			textureMap at: elements first put: (ObjectInside fromImage: bm scaledBy: baseScale)].
 	sun := textureMap removeKey: 'SeeingTheObjects.png'.
 	dolphins := {textureMap removeKey: 'Dolphin1.png'. textureMap removeKey: 'Dolphin2.png'}.
@@ -417,51 +417,51 @@ stopStepProcess
 
 sunPosition
 	^(612 @ 98) * self baseScale! !
-!SeeingTheObjectsInside categoriesFor: #addInsideObject:minScale:maxScale:!private! !
-!SeeingTheObjectsInside categoriesFor: #background!accessing!private! !
-!SeeingTheObjectsInside categoriesFor: #baseScale!constants!public! !
-!SeeingTheObjectsInside categoriesFor: #defaultExtent!accessing!private! !
-!SeeingTheObjectsInside categoriesFor: #dismiss!event handling!private! !
-!SeeingTheObjectsInside categoriesFor: #dolphinInsideBaseColor!constants!public! !
-!SeeingTheObjectsInside categoriesFor: #dolphinInsideIntensityColor!constants!public! !
-!SeeingTheObjectsInside categoriesFor: #dolphinInsideIntensityPeriod!constants!operations!public! !
-!SeeingTheObjectsInside categoriesFor: #dolphinInsideIntensityTime!constants!operations!public! !
-!SeeingTheObjectsInside categoriesFor: #dolphinMaxScale!public! !
-!SeeingTheObjectsInside categoriesFor: #dolphinMinScale!public! !
-!SeeingTheObjectsInside categoriesFor: #dolphinOutline!accessing!private! !
-!SeeingTheObjectsInside categoriesFor: #dolphinSplashBackcolor!constants!private! !
-!SeeingTheObjectsInside categoriesFor: #drawInfoTextOn:!operations!private! !
-!SeeingTheObjectsInside categoriesFor: #elapsedTime!operations!public! !
-!SeeingTheObjectsInside categoriesFor: #fill!event handling!private! !
-!SeeingTheObjectsInside categoriesFor: #frameRate!constants!public! !
-!SeeingTheObjectsInside categoriesFor: #hasHintBubble!event handling!private!testing! !
-!SeeingTheObjectsInside categoriesFor: #initialize!initializing!private! !
-!SeeingTheObjectsInside categoriesFor: #insideObjectMaxScale!constants!public! !
-!SeeingTheObjectsInside categoriesFor: #insideObjectMinScale!constants!public! !
-!SeeingTheObjectsInside categoriesFor: #insideObjectScaleInPeriod!constants!operations!public! !
-!SeeingTheObjectsInside categoriesFor: #isActionPoint:!event handling!private! !
-!SeeingTheObjectsInside categoriesFor: #isPointInDolphin:!event handling!private!testing! !
-!SeeingTheObjectsInside categoriesFor: #loadTextureMap:!accessing!private! !
-!SeeingTheObjectsInside categoriesFor: #onDestroyed!event handling!private! !
-!SeeingTheObjectsInside categoriesFor: #onGetCursor:!event handling!private! !
-!SeeingTheObjectsInside categoriesFor: #onLeftButtonPressed:!event handling!private! !
-!SeeingTheObjectsInside categoriesFor: #onViewCreated!event handling!private! !
-!SeeingTheObjectsInside categoriesFor: #originalBitmapExtent!constants!public! !
-!SeeingTheObjectsInside categoriesFor: #pointResolution!constants!public! !
-!SeeingTheObjectsInside categoriesFor: #points!accessing!private! !
-!SeeingTheObjectsInside categoriesFor: #random!operations!private! !
-!SeeingTheObjectsInside categoriesFor: #randomFrom:!private! !
-!SeeingTheObjectsInside categoriesFor: #render!operations!private! !
-!SeeingTheObjectsInside categoriesFor: #showHintBubble!private! !
-!SeeingTheObjectsInside categoriesFor: #splashBitmap!helpers!private! !
-!SeeingTheObjectsInside categoriesFor: #startStepProcess!initializing!private! !
-!SeeingTheObjectsInside categoriesFor: #step!operations!public! !
-!SeeingTheObjectsInside categoriesFor: #stepDolphinInsideIntensity!operations!private! !
-!SeeingTheObjectsInside categoriesFor: #stepInsideObjectsScale!operations!private! !
-!SeeingTheObjectsInside categoriesFor: #stopStepProcess!initializing!private! !
-!SeeingTheObjectsInside categoriesFor: #sunPosition!constants!public! !
+!Tools.SeeingTheObjectsInside categoriesFor: #addInsideObject:minScale:maxScale:!private! !
+!Tools.SeeingTheObjectsInside categoriesFor: #background!accessing!private! !
+!Tools.SeeingTheObjectsInside categoriesFor: #baseScale!constants!public! !
+!Tools.SeeingTheObjectsInside categoriesFor: #defaultExtent!accessing!private! !
+!Tools.SeeingTheObjectsInside categoriesFor: #dismiss!event handling!private! !
+!Tools.SeeingTheObjectsInside categoriesFor: #dolphinInsideBaseColor!constants!public! !
+!Tools.SeeingTheObjectsInside categoriesFor: #dolphinInsideIntensityColor!constants!public! !
+!Tools.SeeingTheObjectsInside categoriesFor: #dolphinInsideIntensityPeriod!constants!operations!public! !
+!Tools.SeeingTheObjectsInside categoriesFor: #dolphinInsideIntensityTime!constants!operations!public! !
+!Tools.SeeingTheObjectsInside categoriesFor: #dolphinMaxScale!public! !
+!Tools.SeeingTheObjectsInside categoriesFor: #dolphinMinScale!public! !
+!Tools.SeeingTheObjectsInside categoriesFor: #dolphinOutline!accessing!private! !
+!Tools.SeeingTheObjectsInside categoriesFor: #dolphinSplashBackcolor!constants!private! !
+!Tools.SeeingTheObjectsInside categoriesFor: #drawInfoTextOn:!operations!private! !
+!Tools.SeeingTheObjectsInside categoriesFor: #elapsedTime!operations!public! !
+!Tools.SeeingTheObjectsInside categoriesFor: #fill!event handling!private! !
+!Tools.SeeingTheObjectsInside categoriesFor: #frameRate!constants!public! !
+!Tools.SeeingTheObjectsInside categoriesFor: #hasHintBubble!event handling!private!testing! !
+!Tools.SeeingTheObjectsInside categoriesFor: #initialize!initializing!private! !
+!Tools.SeeingTheObjectsInside categoriesFor: #insideObjectMaxScale!constants!public! !
+!Tools.SeeingTheObjectsInside categoriesFor: #insideObjectMinScale!constants!public! !
+!Tools.SeeingTheObjectsInside categoriesFor: #insideObjectScaleInPeriod!constants!operations!public! !
+!Tools.SeeingTheObjectsInside categoriesFor: #isActionPoint:!event handling!private! !
+!Tools.SeeingTheObjectsInside categoriesFor: #isPointInDolphin:!event handling!private!testing! !
+!Tools.SeeingTheObjectsInside categoriesFor: #loadTextureMap:!accessing!private! !
+!Tools.SeeingTheObjectsInside categoriesFor: #onDestroyed!event handling!private! !
+!Tools.SeeingTheObjectsInside categoriesFor: #onGetCursor:!event handling!private! !
+!Tools.SeeingTheObjectsInside categoriesFor: #onLeftButtonPressed:!event handling!private! !
+!Tools.SeeingTheObjectsInside categoriesFor: #onViewCreated!event handling!private! !
+!Tools.SeeingTheObjectsInside categoriesFor: #originalBitmapExtent!constants!public! !
+!Tools.SeeingTheObjectsInside categoriesFor: #pointResolution!constants!public! !
+!Tools.SeeingTheObjectsInside categoriesFor: #points!accessing!private! !
+!Tools.SeeingTheObjectsInside categoriesFor: #random!operations!private! !
+!Tools.SeeingTheObjectsInside categoriesFor: #randomFrom:!private! !
+!Tools.SeeingTheObjectsInside categoriesFor: #render!operations!private! !
+!Tools.SeeingTheObjectsInside categoriesFor: #showHintBubble!private! !
+!Tools.SeeingTheObjectsInside categoriesFor: #splashBitmap!helpers!private! !
+!Tools.SeeingTheObjectsInside categoriesFor: #startStepProcess!initializing!private! !
+!Tools.SeeingTheObjectsInside categoriesFor: #step!operations!public! !
+!Tools.SeeingTheObjectsInside categoriesFor: #stepDolphinInsideIntensity!operations!private! !
+!Tools.SeeingTheObjectsInside categoriesFor: #stepInsideObjectsScale!operations!private! !
+!Tools.SeeingTheObjectsInside categoriesFor: #stopStepProcess!initializing!private! !
+!Tools.SeeingTheObjectsInside categoriesFor: #sunPosition!constants!public! !
 
-!SeeingTheObjectsInside class methodsFor!
+!Tools.SeeingTheObjectsInside class methodsFor!
 
 canDisplay
 	"Answer true if an instance of the receiver can be correctly displayed"
@@ -472,14 +472,14 @@ canDisplay
 	| desktopCanvas |
 	desktopCanvas := Canvas forDesktop.
 	^(desktopCanvas colorDepth > 8 and: [desktopCanvas extent >= (800 @ 600)]) 
-		and: [SystemMetrics current supportsAlphaBlending]!
+		and: [OS.SystemMetrics current supportsAlphaBlending]!
 
 splashPlayTheGame
 	^splashPlayTheGame ifNil: [splashPlayTheGame := false]!
 
 splashPlayTheGame: aBoolean 
 	splashPlayTheGame := aBoolean! !
-!SeeingTheObjectsInside class categoriesFor: #canDisplay!accessing!public! !
-!SeeingTheObjectsInside class categoriesFor: #splashPlayTheGame!public! !
-!SeeingTheObjectsInside class categoriesFor: #splashPlayTheGame:!public! !
+!Tools.SeeingTheObjectsInside class categoriesFor: #canDisplay!accessing!public! !
+!Tools.SeeingTheObjectsInside class categoriesFor: #splashPlayTheGame!public! !
+!Tools.SeeingTheObjectsInside class categoriesFor: #splashPlayTheGame:!public! !
 

@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Refactory.Browser.Tests.BrowserEnvironmentTest subclass: #PluggableEnvironmentTest
+Refactory.Browser.Tests.BrowserEnvironmentTest subclass: #'Refactory.Browser.Tests.PluggableEnvironmentTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-PluggableEnvironmentTest guid: (Core.GUID fromString: '{42174aca-9bf1-402a-843a-d752822b7893}')!
-PluggableEnvironmentTest comment: ''!
-!PluggableEnvironmentTest categoriesForClass!Unclassified! !
-!PluggableEnvironmentTest methodsFor!
+Refactory.Browser.Tests.PluggableEnvironmentTest guid: (Core.GUID fromString: '{42174aca-9bf1-402a-843a-d752822b7893}')!
+Refactory.Browser.Tests.PluggableEnvironmentTest comment: ''!
+!Refactory.Browser.Tests.PluggableEnvironmentTest categoriesForClass!Unclassified! !
+!Refactory.Browser.Tests.PluggableEnvironmentTest methodsFor!
 
 testReferencesTo
 	| printString env |
@@ -25,5 +25,5 @@ testReferencesTo
 	self universalTestFor: printString.
 	self assert: printString numberSelectors equals: (env referencesTo: #printString) numberSelectors.
 	self assert: printString numberClasses equals: (env referencesTo: #printString) numberClasses! !
-!PluggableEnvironmentTest categoriesFor: #testReferencesTo!public!unit tests! !
+!Refactory.Browser.Tests.PluggableEnvironmentTest categoriesFor: #testReferencesTo!public!unit tests! !
 

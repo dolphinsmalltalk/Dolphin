@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-VirtualMethodCategory subclass: #ReferencesCategory
+Tools.VirtualMethodCategory subclass: #'Tools.ReferencesCategory'
 	instanceVariableNames: 'literal'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ReferencesCategory guid: (GUID fromString: '{87b4c507-026e-11d3-9fd7-00a0cc3e4a32}')!
-ReferencesCategory comment: 'ReferencesCategory is the class of virtual method categories which dynamically determines their membership to include only those methods which reference a particular object from their literal frame.
+Tools.ReferencesCategory guid: (Core.GUID fromString: '{87b4c507-026e-11d3-9fd7-00a0cc3e4a32}')!
+Tools.ReferencesCategory comment: 'ReferencesCategory is the class of virtual method categories which dynamically determines their membership to include only those methods which reference a particular object from their literal frame.
 
 ReferencesCategory has (sub)instances such as the ''*-subclass responsibility'' category, but you can create your own references categories by following the examples in the class #initialize method.
 
@@ -16,8 +16,8 @@ Instance Variables:
 
 Class Variables:
 	None'!
-!ReferencesCategory categoriesForClass!System-Support! !
-!ReferencesCategory methodsFor!
+!Tools.ReferencesCategory categoriesForClass!System-Support! !
+!Tools.ReferencesCategory methodsFor!
 
 includesMethod: aCompiledMethod 
 	"Answer whether the receiver includes the <CompiledMethod> argument.
@@ -30,10 +30,10 @@ literal: anObject
 	"Set the literal, references to which define membership of this category."
 
 	literal := anObject! !
-!ReferencesCategory categoriesFor: #includesMethod:!public!testing! !
-!ReferencesCategory categoriesFor: #literal:!accessing!public! !
+!Tools.ReferencesCategory categoriesFor: #includesMethod:!public!testing! !
+!Tools.ReferencesCategory categoriesFor: #literal:!accessing!public! !
 
-!ReferencesCategory class methodsFor!
+!Tools.ReferencesCategory class methodsFor!
 
 createDefaultInstances
 	self referenceSymbols do: 
@@ -76,9 +76,9 @@ uninitialize
 	"Private - Uninitialize the receiver as it is about to be removed from the system."
 
 	self referenceSymbols do: [:each | self removePseud: self pseudPrefix , each asPhrase asLowercase]! !
-!ReferencesCategory class categoriesFor: #createDefaultInstances!initializing!private! !
-!ReferencesCategory class categoriesFor: #initialize!initializing!private! !
-!ReferencesCategory class categoriesFor: #newNamed:literal:!public! !
-!ReferencesCategory class categoriesFor: #referenceSymbols!constants!private! !
-!ReferencesCategory class categoriesFor: #uninitialize!class hierarchy-removing!private! !
+!Tools.ReferencesCategory class categoriesFor: #createDefaultInstances!initializing!private! !
+!Tools.ReferencesCategory class categoriesFor: #initialize!initializing!private! !
+!Tools.ReferencesCategory class categoriesFor: #newNamed:literal:!public! !
+!Tools.ReferencesCategory class categoriesFor: #referenceSymbols!constants!private! !
+!Tools.ReferencesCategory class categoriesFor: #uninitialize!class hierarchy-removing!private! !
 

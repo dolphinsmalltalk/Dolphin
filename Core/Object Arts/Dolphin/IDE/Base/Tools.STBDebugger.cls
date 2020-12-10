@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-STBInFiler subclass: #STBDebugger
+Kernel.STBInFiler subclass: #'Tools.STBDebugger'
 	instanceVariableNames: 'indentLevel traceStream printOffsets'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-STBDebugger guid: (GUID fromString: '{87b4c6e9-026e-11d3-9fd7-00a0cc3e4a32}')!
-STBDebugger comment: 'The <STBDebugger> is an <STBInFiler> that prints an indented trace of the contents of the STB file it is reading as it proceeds.
+Tools.STBDebugger guid: (Core.GUID fromString: '{87b4c6e9-026e-11d3-9fd7-00a0cc3e4a32}')!
+Tools.STBDebugger comment: 'The <STBDebugger> is an <STBInFiler> that prints an indented trace of the contents of the STB file it is reading as it proceeds.
 It is useful for debugging issues with serialized objects..
 
 For example to view the contents of a view resource, one can proceed as follows:
@@ -17,8 +17,8 @@ For example to view the contents of a view resource, one can proceed as follows:
 	in next.
 	in traceStream contents.	"Display-it"
 '!
-!STBDebugger categoriesForClass!System-Binary storage! !
-!STBDebugger methodsFor!
+!Tools.STBDebugger categoriesForClass!System-Binary storage! !
+!Tools.STBDebugger methodsFor!
 
 basicNext
 	"Private - Answer the next object from the receiver's stream."
@@ -166,13 +166,13 @@ traceStream
 
 traceStream: aPuttableStream 
 	traceStream := aPuttableStream! !
-!STBDebugger categoriesFor: #basicNext!accessing!private! !
-!STBDebugger categoriesFor: #initialize!initializing!private! !
-!STBDebugger categoriesFor: #next!accessing!public! !
-!STBDebugger categoriesFor: #objectAt:!accessing!private! !
-!STBDebugger categoriesFor: #printOffsets!accessing!public! !
-!STBDebugger categoriesFor: #printOffsets:!accessing!public! !
-!STBDebugger categoriesFor: #readObjectOfClass:format:!operations!private! !
-!STBDebugger categoriesFor: #traceStream!accessing!public! !
-!STBDebugger categoriesFor: #traceStream:!accessing!public! !
+!Tools.STBDebugger categoriesFor: #basicNext!accessing!private! !
+!Tools.STBDebugger categoriesFor: #initialize!initializing!private! !
+!Tools.STBDebugger categoriesFor: #next!accessing!public! !
+!Tools.STBDebugger categoriesFor: #objectAt:!accessing!private! !
+!Tools.STBDebugger categoriesFor: #printOffsets!accessing!public! !
+!Tools.STBDebugger categoriesFor: #printOffsets:!accessing!public! !
+!Tools.STBDebugger categoriesFor: #readObjectOfClass:format:!operations!private! !
+!Tools.STBDebugger categoriesFor: #traceStream!accessing!public! !
+!Tools.STBDebugger categoriesFor: #traceStream:!accessing!public! !
 

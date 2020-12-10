@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Object subclass: #Grabber
+Core.Object subclass: #'Tools.Grabber'
 	instanceVariableNames: 'rectangle aspect constrain view composer'
 	classVariableNames: 'Cursors'
-	poolDictionaries: 'Win32Constants'
+	imports: #(#{OS.Win32Constants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Grabber guid: (GUID fromString: '{7024e3c5-a46a-47fb-a7c0-e17bcf414e66}')!
-Grabber comment: ''!
-!Grabber categoriesForClass!Unclassified! !
-!Grabber methodsFor!
+Tools.Grabber guid: (Core.GUID fromString: '{7024e3c5-a46a-47fb-a7c0-e17bcf414e66}')!
+Tools.Grabber comment: ''!
+!Tools.Grabber categoriesForClass!Unclassified! !
+!Tools.Grabber methodsFor!
 
 alignWithView
 	"Private - Computes the boundary rectangle for the receiver to align with
@@ -217,37 +217,37 @@ view: aView aspect: anAspectSymbol composer: aViewComposer
 	aspect := anAspectSymbol.
 	composer := aViewComposer.
 	self alignWithView! !
-!Grabber categoriesFor: #alignWithView!operations!public! !
-!Grabber categoriesFor: #arena!accessing!public! !
-!Grabber categoriesFor: #aspect!accessing!public! !
-!Grabber categoriesFor: #beHorizontalOnly!accessing!public! !
-!Grabber categoriesFor: #beVerticalOnly!accessing!public! !
-!Grabber categoriesFor: #calculateViewRectangleFor:!operations!public! !
-!Grabber categoriesFor: #cancelTrackingAt:!private!tracking! !
-!Grabber categoriesFor: #constrainPoint:!geometry!private! !
-!Grabber categoriesFor: #containsPoint:!public!testing! !
-!Grabber categoriesFor: #continueTrackingAt:from:!private!tracking! !
-!Grabber categoriesFor: #cursor!accessing!public! !
-!Grabber categoriesFor: #cursors!accessing!private! !
-!Grabber categoriesFor: #defaultColor!constants!private! !
-!Grabber categoriesFor: #defaultExtent!constants!private! !
-!Grabber categoriesFor: #draw!drawing!public! !
-!Grabber categoriesFor: #drawTrackingAt:!private!tracking! !
-!Grabber categoriesFor: #endTrackingAt:!private!tracking! !
-!Grabber categoriesFor: #eraseTrackingAt:!private!tracking! !
-!Grabber categoriesFor: #grid!accessing!public! !
-!Grabber categoriesFor: #invalidate!drawing!private! !
-!Grabber categoriesFor: #isHorizontalOnly!accessing!public! !
-!Grabber categoriesFor: #isVerticalOnly!accessing!public! !
-!Grabber categoriesFor: #rectangle!accessing!private! !
-!Grabber categoriesFor: #setAspect!accessing!private! !
-!Grabber categoriesFor: #startTrackingAt:!private!tracking! !
-!Grabber categoriesFor: #status!public! !
-!Grabber categoriesFor: #trackMouseFrom:!public!tracking! !
-!Grabber categoriesFor: #view!accessing!public! !
-!Grabber categoriesFor: #view:aspect:composer:!initializing!private! !
+!Tools.Grabber categoriesFor: #alignWithView!operations!public! !
+!Tools.Grabber categoriesFor: #arena!accessing!public! !
+!Tools.Grabber categoriesFor: #aspect!accessing!public! !
+!Tools.Grabber categoriesFor: #beHorizontalOnly!accessing!public! !
+!Tools.Grabber categoriesFor: #beVerticalOnly!accessing!public! !
+!Tools.Grabber categoriesFor: #calculateViewRectangleFor:!operations!public! !
+!Tools.Grabber categoriesFor: #cancelTrackingAt:!private!tracking! !
+!Tools.Grabber categoriesFor: #constrainPoint:!geometry!private! !
+!Tools.Grabber categoriesFor: #containsPoint:!public!testing! !
+!Tools.Grabber categoriesFor: #continueTrackingAt:from:!private!tracking! !
+!Tools.Grabber categoriesFor: #cursor!accessing!public! !
+!Tools.Grabber categoriesFor: #cursors!accessing!private! !
+!Tools.Grabber categoriesFor: #defaultColor!constants!private! !
+!Tools.Grabber categoriesFor: #defaultExtent!constants!private! !
+!Tools.Grabber categoriesFor: #draw!drawing!public! !
+!Tools.Grabber categoriesFor: #drawTrackingAt:!private!tracking! !
+!Tools.Grabber categoriesFor: #endTrackingAt:!private!tracking! !
+!Tools.Grabber categoriesFor: #eraseTrackingAt:!private!tracking! !
+!Tools.Grabber categoriesFor: #grid!accessing!public! !
+!Tools.Grabber categoriesFor: #invalidate!drawing!private! !
+!Tools.Grabber categoriesFor: #isHorizontalOnly!accessing!public! !
+!Tools.Grabber categoriesFor: #isVerticalOnly!accessing!public! !
+!Tools.Grabber categoriesFor: #rectangle!accessing!private! !
+!Tools.Grabber categoriesFor: #setAspect!accessing!private! !
+!Tools.Grabber categoriesFor: #startTrackingAt:!private!tracking! !
+!Tools.Grabber categoriesFor: #status!public! !
+!Tools.Grabber categoriesFor: #trackMouseFrom:!public!tracking! !
+!Tools.Grabber categoriesFor: #view!accessing!public! !
+!Tools.Grabber categoriesFor: #view:aspect:composer:!initializing!private! !
 
-!Grabber class methodsFor!
+!Tools.Grabber class methodsFor!
 
 cursors
 	"Private - Answer the Cursors class variable."
@@ -316,13 +316,13 @@ view: aView aspect: anAspectSymbol composer: aViewComposer
 			aspect: anAspectSymbol
 			composer: aViewComposer;
 		yourself! !
-!Grabber class categoriesFor: #cursors!accessing!private! !
-!Grabber class categoriesFor: #defaultExtent!constants!private! !
-!Grabber class categoriesFor: #initialize!initializing!private! !
-!Grabber class categoriesFor: #new!instance creation!private! !
-!Grabber class categoriesFor: #onStartup!event handling!private! !
-!Grabber class categoriesFor: #publishedEventsOfInstances!events!private! !
-!Grabber class categoriesFor: #uninitialize!class hierarchy-removing!private! !
-!Grabber class categoriesFor: #view:aspect:arena:grid:status:!instance creation!public! !
-!Grabber class categoriesFor: #view:aspect:composer:!instance creation!public! !
+!Tools.Grabber class categoriesFor: #cursors!accessing!private! !
+!Tools.Grabber class categoriesFor: #defaultExtent!constants!private! !
+!Tools.Grabber class categoriesFor: #initialize!initializing!private! !
+!Tools.Grabber class categoriesFor: #new!instance creation!private! !
+!Tools.Grabber class categoriesFor: #onStartup!event handling!private! !
+!Tools.Grabber class categoriesFor: #publishedEventsOfInstances!events!private! !
+!Tools.Grabber class categoriesFor: #uninitialize!class hierarchy-removing!private! !
+!Tools.Grabber class categoriesFor: #view:aspect:arena:grid:status:!instance creation!public! !
+!Tools.Grabber class categoriesFor: #view:aspect:composer:!instance creation!public! !
 

@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Core.Tests.DolphinTest subclass: #VersionResourceTest
+Core.Tests.DolphinTest subclass: #'OS.Tests.VersionResourceTest'
 	instanceVariableNames: 'updatePath sourceModule sourceSize sourceBytes'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-VersionResourceTest guid: (Core.GUID fromString: '{a475b032-cef9-4aa6-affe-32b7dc1c4640}')!
-VersionResourceTest comment: ''!
-!VersionResourceTest categoriesForClass!Unclassified! !
-!VersionResourceTest methodsFor!
+OS.Tests.VersionResourceTest guid: (Core.GUID fromString: '{a475b032-cef9-4aa6-affe-32b7dc1c4640}')!
+OS.Tests.VersionResourceTest comment: ''!
+!OS.Tests.VersionResourceTest categoriesForClass!Unclassified! !
+!OS.Tests.VersionResourceTest methodsFor!
 
 assertResource: res atVersion: newVersion
 	self assert: res fileVersion equals: newVersion.
@@ -94,13 +94,13 @@ testVersionStrings
 	self assertResource: res atVersion: newVersion.
 	res bumpProductVersion.
 	self assertResource: res atVersion: '101.202.304.404'! !
-!VersionResourceTest categoriesFor: #assertResource:atVersion:!public!unit tests! !
-!VersionResourceTest categoriesFor: #assertVersionResource:equalTo:!private!unit tests! !
-!VersionResourceTest categoriesFor: #modifyVersionResource:!public!unit tests! !
-!VersionResourceTest categoriesFor: #setUp!private!Running! !
-!VersionResourceTest categoriesFor: #sourcePath!constants!private! !
-!VersionResourceTest categoriesFor: #tearDown!private!Running! !
-!VersionResourceTest categoriesFor: #testRoundTripUnpackPack!public!unit tests! !
-!VersionResourceTest categoriesFor: #testRoundTripUpdate!public!unit tests! !
-!VersionResourceTest categoriesFor: #testVersionStrings!public!unit tests! !
+!OS.Tests.VersionResourceTest categoriesFor: #assertResource:atVersion:!public!unit tests! !
+!OS.Tests.VersionResourceTest categoriesFor: #assertVersionResource:equalTo:!private!unit tests! !
+!OS.Tests.VersionResourceTest categoriesFor: #modifyVersionResource:!public!unit tests! !
+!OS.Tests.VersionResourceTest categoriesFor: #setUp!private!Running! !
+!OS.Tests.VersionResourceTest categoriesFor: #sourcePath!constants!private! !
+!OS.Tests.VersionResourceTest categoriesFor: #tearDown!private!Running! !
+!OS.Tests.VersionResourceTest categoriesFor: #testRoundTripUnpackPack!public!unit tests! !
+!OS.Tests.VersionResourceTest categoriesFor: #testRoundTripUpdate!public!unit tests! !
+!OS.Tests.VersionResourceTest categoriesFor: #testVersionStrings!public!unit tests! !
 

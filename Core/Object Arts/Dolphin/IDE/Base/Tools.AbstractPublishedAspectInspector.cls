@@ -1,16 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-AspectInspector subclass: #AbstractPublishedAspectInspector
+Tools.AspectInspector subclass: #'Tools.AbstractPublishedAspectInspector'
 	instanceVariableNames: 'aspectValueHolder aspectPresenter isRootAspectVisible isSingleLevelOnly'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-AbstractPublishedAspectInspector guid: (GUID fromString: '{f1cdcdf4-e0b8-4070-953a-c17010bab8ad}')!
-AbstractPublishedAspectInspector isAbstract: true!
-AbstractPublishedAspectInspector comment: ''!
-!AbstractPublishedAspectInspector categoriesForClass!MVP-Presenters! !
-!AbstractPublishedAspectInspector methodsFor!
+Tools.AbstractPublishedAspectInspector guid: (Core.GUID fromString: '{f1cdcdf4-e0b8-4070-953a-c17010bab8ad}')!
+Tools.AbstractPublishedAspectInspector isNonInstantiable: true!
+Tools.AbstractPublishedAspectInspector comment: ''!
+!Tools.AbstractPublishedAspectInspector categoriesForClass!MVP-Presenters! !
+!Tools.AbstractPublishedAspectInspector methodsFor!
 
 addToCommandRoute: route 
 	"Private - Update the <OrderedCollection>, path, with the receiver's contribution to the command path
@@ -115,10 +115,10 @@ editAspect
 
 	self aspectAccessor editUsing: aspectPresenter!
 
-getAspectsFor: anObject 
+getAspectsFor: anObject
 	^[anObject publishedAspects] on: Error
 		do: 
-			[:ex | 
+			[:ex |
 			ex toTrace.
 			LookupTable with: (Aspect name: #yourself)]!
 
@@ -366,39 +366,39 @@ testForEditButtonClickAt: aPoint
 			self assert: [hit iItem = (aspectListTree selectionByIndex - 1)].
 			aspectAccessor := aspectListTree objectFromHandle: hit iItem + 1.
 			aspectAccessor canEdit ifTrue: [aspectAccessor editUsing: aspectPresenter]]! !
-!AbstractPublishedAspectInspector categoriesFor: #addToCommandRoute:!private! !
-!AbstractPublishedAspectInspector categoriesFor: #aspectChanged:!private!updating! !
-!AbstractPublishedAspectInspector categoriesFor: #aspectChanged:of:!private!updating! !
-!AbstractPublishedAspectInspector categoriesFor: #aspectTree!event handling!private! !
-!AbstractPublishedAspectInspector categoriesFor: #buildNewAspectTree!private!updating! !
-!AbstractPublishedAspectInspector categoriesFor: #createSchematicWiring!initializing!private! !
-!AbstractPublishedAspectInspector categoriesFor: #createValueHolderFor:!private! !
-!AbstractPublishedAspectInspector categoriesFor: #displayOn:!displaying!public! !
-!AbstractPublishedAspectInspector categoriesFor: #editAspect!operations!public! !
-!AbstractPublishedAspectInspector categoriesFor: #getAspectsFor:!private! !
-!AbstractPublishedAspectInspector categoriesFor: #getSubAspectAccessorsFor:!helpers!private! !
-!AbstractPublishedAspectInspector categoriesFor: #getSubAspectsFor:!helpers!private! !
-!AbstractPublishedAspectInspector categoriesFor: #initialize!private! !
-!AbstractPublishedAspectInspector categoriesFor: #isRootAspectVisible!public! !
-!AbstractPublishedAspectInspector categoriesFor: #isRootAspectVisible:!public! !
-!AbstractPublishedAspectInspector categoriesFor: #isSingleLevelOnly!public! !
-!AbstractPublishedAspectInspector categoriesFor: #isSingleLevelOnly:!public! !
-!AbstractPublishedAspectInspector categoriesFor: #onAspectActioned!event handling!private! !
-!AbstractPublishedAspectInspector categoriesFor: #onAspectValueChanged:!event handling!private! !
-!AbstractPublishedAspectInspector categoriesFor: #onLeftButtonPressed:!private! !
-!AbstractPublishedAspectInspector categoriesFor: #onValueChanged!accessing!private! !
-!AbstractPublishedAspectInspector categoriesFor: #propagate:!helpers!private! !
-!AbstractPublishedAspectInspector categoriesFor: #queryCommand:!commands!private! !
-!AbstractPublishedAspectInspector categoriesFor: #refresh!commands!public!updating! !
-!AbstractPublishedAspectInspector categoriesFor: #refreshAccessor:!event handling!private! !
-!AbstractPublishedAspectInspector categoriesFor: #selectionPath!accessing!private! !
-!AbstractPublishedAspectInspector categoriesFor: #selectionPath:!accessing!private! !
-!AbstractPublishedAspectInspector categoriesFor: #setAspectValue:!commands!private! !
-!AbstractPublishedAspectInspector categoriesFor: #setMutableValueOf:into:!private! !
-!AbstractPublishedAspectInspector categoriesFor: #sortAspects:!private! !
-!AbstractPublishedAspectInspector categoriesFor: #testForEditButtonClickAt:!private! !
+!Tools.AbstractPublishedAspectInspector categoriesFor: #addToCommandRoute:!private! !
+!Tools.AbstractPublishedAspectInspector categoriesFor: #aspectChanged:!private!updating! !
+!Tools.AbstractPublishedAspectInspector categoriesFor: #aspectChanged:of:!private!updating! !
+!Tools.AbstractPublishedAspectInspector categoriesFor: #aspectTree!event handling!private! !
+!Tools.AbstractPublishedAspectInspector categoriesFor: #buildNewAspectTree!private!updating! !
+!Tools.AbstractPublishedAspectInspector categoriesFor: #createSchematicWiring!initializing!private! !
+!Tools.AbstractPublishedAspectInspector categoriesFor: #createValueHolderFor:!private! !
+!Tools.AbstractPublishedAspectInspector categoriesFor: #displayOn:!displaying!public! !
+!Tools.AbstractPublishedAspectInspector categoriesFor: #editAspect!operations!public! !
+!Tools.AbstractPublishedAspectInspector categoriesFor: #getAspectsFor:!private! !
+!Tools.AbstractPublishedAspectInspector categoriesFor: #getSubAspectAccessorsFor:!helpers!private! !
+!Tools.AbstractPublishedAspectInspector categoriesFor: #getSubAspectsFor:!helpers!private! !
+!Tools.AbstractPublishedAspectInspector categoriesFor: #initialize!private! !
+!Tools.AbstractPublishedAspectInspector categoriesFor: #isRootAspectVisible!public! !
+!Tools.AbstractPublishedAspectInspector categoriesFor: #isRootAspectVisible:!public! !
+!Tools.AbstractPublishedAspectInspector categoriesFor: #isSingleLevelOnly!public! !
+!Tools.AbstractPublishedAspectInspector categoriesFor: #isSingleLevelOnly:!public! !
+!Tools.AbstractPublishedAspectInspector categoriesFor: #onAspectActioned!event handling!private! !
+!Tools.AbstractPublishedAspectInspector categoriesFor: #onAspectValueChanged:!event handling!private! !
+!Tools.AbstractPublishedAspectInspector categoriesFor: #onLeftButtonPressed:!private! !
+!Tools.AbstractPublishedAspectInspector categoriesFor: #onValueChanged!accessing!private! !
+!Tools.AbstractPublishedAspectInspector categoriesFor: #propagate:!helpers!private! !
+!Tools.AbstractPublishedAspectInspector categoriesFor: #queryCommand:!commands!private! !
+!Tools.AbstractPublishedAspectInspector categoriesFor: #refresh!commands!public!updating! !
+!Tools.AbstractPublishedAspectInspector categoriesFor: #refreshAccessor:!event handling!private! !
+!Tools.AbstractPublishedAspectInspector categoriesFor: #selectionPath!accessing!private! !
+!Tools.AbstractPublishedAspectInspector categoriesFor: #selectionPath:!accessing!private! !
+!Tools.AbstractPublishedAspectInspector categoriesFor: #setAspectValue:!commands!private! !
+!Tools.AbstractPublishedAspectInspector categoriesFor: #setMutableValueOf:into:!private! !
+!Tools.AbstractPublishedAspectInspector categoriesFor: #sortAspects:!private! !
+!Tools.AbstractPublishedAspectInspector categoriesFor: #testForEditButtonClickAt:!private! !
 
-!AbstractPublishedAspectInspector class methodsFor!
+!Tools.AbstractPublishedAspectInspector class methodsFor!
 
 publishedEventsOfInstances
 	^(super publishedEventsOfInstances)
@@ -410,10 +410,10 @@ resource_Vertical_view
 	DO NOT EDIT OR RECATEGORIZE THIS METHOD.
 
 	If you wish to modify this resource evaluate:
-	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Vertical_view)
+	Tools.ViewComposer openOn: (UI.ResourceIdentifier class: self selector: #resource_Vertical_view)
 	"
 
-	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.ContainerView) 34 15 nil nil 34 2 8 1409286144 131073 416 nil nil nil 5 nil nil nil 416 1180166 ##(Smalltalk.ProportionalLayout) 138 ##(Smalltalk.Dictionary) 34 3 721414 ##(Smalltalk.Association) 410 ##(Smalltalk.Splitter) 34 12 nil 416 34 2 8 1140850688 1 576 nil nil nil 517 nil nil nil 1510470 1 ##(Smalltalk.DraggableViewInteractor) 576 nil 1 #left nil nil nil 328198 ##(Smalltalk.Point) 1 1 674 9 9 nil 688 nil 983302 ##(Smalltalk.MessageSequence) 138 144 34 1 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 674 1 287 674 661 11 576 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 143 0 0 0 74 1 0 0 148 0 0 0] 8 #() 674 193 193 nil 27 1 546 410 ##(Smalltalk.CardContainer) 34 16 nil 416 34 2 8 1140850688 131073 960 nil nil nil 5 nil nil nil 960 656710 1 ##(Smalltalk.CardLayout) 138 144 8 #() nil nil nil nil 170 192 1072 nil 410 ##(Smalltalk.TabViewXP) 34 28 nil 960 34 2 8 1140916866 1 1104 590662 2 ##(Smalltalk.ListModel) 138 144 1072 nil 1310726 ##(Smalltalk.IdentitySearchPolicy) nil nil 1 nil nil nil 1104 nil 8 1883957920 787814 3 ##(Smalltalk.BlockClosure) 0 nil 1180966 ##(Smalltalk.CompiledExpression) 1 83886081 ##(Smalltalk.UndefinedObject) 8 'doIt' 8 '[:x | nil]' 8 #[29 105 60 106] 1280 7 257 nil ##(Smalltalk.IconicListAbstract) 1049926 1 ##(Smalltalk.IconImageManager) nil nil nil nil nil #smallIcons nil nil nil nil nil 722 138 144 34 2 786 #createAt:extent: 34 2 674 1 1 674 661 45 1104 786 #tcmSetExtendedStyle:dwExStyle: 8 #(-1 0) 1104 866 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 74 1 0 0 22 0 0 0] 8 #() 928 nil 27 722 138 144 34 1 786 #createAt:extent: 34 2 674 1 297 674 661 45 960 866 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 148 0 0 0 74 1 0 0 170 0 0 0] 34 1 1104 928 nil 27 327734 ##(Smalltalk.Float) 8 51 51 51 51 51 51 211 63 546 410 ##(Smalltalk.ListTreeView) 34 59 nil 416 34 2 8 1140953421 1 1808 1170 138 144 1072 nil 1232 327686 ##(Smalltalk.Color) #default nil 13 265030 4 ##(Smalltalk.Menu) nil true 34 12 984134 2 ##(Smalltalk.CommandMenuItem) 1 1180998 4 ##(Smalltalk.CommandDescription) #inspectIt 8 '&Inspect' 1 1 263494 3 ##(Smalltalk.Icon) nil true 1572870 ##(Smalltalk.ImageRelativeFileLocator) 8 'BasicInspector.ico' 2032142 ##(Smalltalk.STBExternalResourceLibraryProxy) 8 'dolphindr7.dll' nil nil nil 1986 1 2018 #inspectReferences 8 'Inspect &References' 1 1 nil nil nil 983366 1 ##(Smalltalk.DividerMenuItem) 4097 1986 1 2018 #browseIt 8 '&Browse It' 1 1 2066 nil true 2112 8 'ClassBrowserShell.ico' 2160 nil nil 2242 4097 1986 1 2018 #copyAspect 8 '&Copy' 1 1 nil nil nil 1986 1 2018 #pasteAspect 8 '&Paste <1d>' 1 1 nil nil nil 2242 4097 1986 1 2018 #editAspect 8 '&Edit' 1 1 nil nil nil 1986 1 2018 #nilAspect 8 'Set to &Nil' 1 1 nil nil nil 2242 4097 1986 1 2018 #refresh 8 'Re&fresh' 1 1 nil nil nil 8 '&Workspace' nil 134217729 nil nil nil nil nil nil nil 1808 nil 8 1883852064 459270 ##(Smalltalk.Message) #valueText 8 #() nil 1392 nil nil nil nil nil nil 138 144 34 3 920646 5 ##(Smalltalk.ListViewColumn) 8 'Published Aspect' 307 #left 1266 0 nil 1298 2 1 1264 8 'doIt' 8 '[:x | x valueNameOnly ]' 8 #[30 105 226 0 106] #valueNameOnly 2800 7 257 nil 2674 #<= 8 #() nil nil 1808 nil 3 1266 0 nil 1298 2 1 1264 8 'doIt' 8 '[:x | x valueNameInfo]' 8 #[30 105 226 0 106] #valueNameInfo 2912 7 257 nil nil 2754 8 'Value' 307 #left 1266 0 nil 1298 2 1 1264 8 'doIt' 8 '[:x | x valueTextOnly ]' 8 #[30 105 226 0 106] #valueTextOnly 3024 7 257 nil 2674 #<= 2896 nil nil 1808 1266 0 nil 1298 2 1 1264 8 'doIt' 8 '[:x | x valueImage ]' 8 #[30 105 226 0 106] #valueImage 3120 7 257 nil 3 nil nil 2754 8 '' 41 #center 2674 #displayString 8 #() 2674 #<= 3248 nil nil 1808 1266 0 nil 1298 3 1 1264 8 'doIt' 8 '[:x | PropertyInspector editButtonImageIndexFor: x ]' 8 #[31 105 29 17 177 106] ##(Smalltalk.PropertyInspector) #editButtonImageIndexFor: 3280 7 257 nil 1 nil nil #report 1072 nil 133479 674 129 129 1 nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil false 1050438 3 ##(Smalltalk.VirtualTreeModel) nil 1232 138 144 1072 nil nil 1266 0 nil 918822 ##(Smalltalk.CompiledMethod) 2 3 3376 #defaultHasChildrenBlock 508791331 8 #[252 1 0 0 1 4 0 65 176 159 106 105] #childrenOf: #notEmpty 17 257 3392 1266 0 nil 3442 1 83886083 3376 #defaultFilterBlock 508773827 8 #[29 105 17 157 106] 3488 7 257 nil nil 138 ##(Smalltalk.PluggableSet) 1072 138 ##(Smalltalk.IdentitySet) 1072 13 5 nil nil nil nil nil nil nil 722 138 144 34 3 786 #createAt:extent: 34 2 674 1 1 674 661 287 1808 786 #contextMenu: 34 1 1952 1808 786 #text: 34 1 8 'Published Aspect' 1808 866 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 74 1 0 0 143 0 0 0] 8 #() 928 nil 2029 5 true 170 192 34 4 1808 8 'aspects' 960 8 'display' nil 722 138 144 34 1 786 #createAt:extent: 34 2 674 7039 21 674 661 341 416 866 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 191 13 0 0 10 0 0 0 9 15 0 0 180 0 0 0] 34 3 1808 576 960 928 nil 27 )!
+	^#(#'!!STL' 4 985166 10 ##(UI.STBViewProxy) ##(UI.ContainerView) 34 15 nil nil 34 2 8 1409286144 131073 416 nil nil nil 5 nil nil nil 416 1376774 ##(UI.ProportionalLayout) 138 ##(Core.Dictionary) 34 3 1049094 ##(Core.Association) 410 ##(UI.CardContainer) 34 16 nil 416 34 2 8 1140850688 131073 576 nil nil nil 5 nil nil nil 576 853318 1 ##(UI.CardLayout) 138 144 8 #() nil nil nil nil 170 192 688 nil 410 ##(UI.TabViewXP) 34 28 nil 576 34 2 8 1140916866 1 720 787270 2 ##(UI.ListModel) 138 144 688 nil 1769478 ##(Kernel.IdentitySearchPolicy) nil nil 1 nil nil nil 720 nil 8 1801049728 1246566 3 ##(Kernel.BlockClosure) 0 nil 1639718 ##(Kernel.CompiledExpression) 1 83886081 ##(Core.UndefinedObject) 8 'doIt' 8 '[:x | nil]' 8 #[29 105 60 106] 896 7 257 nil ##(UI.IconicListAbstract) 1639750 1 ##(Graphics.IconImageManager) nil nil nil nil nil #smallIcons nil nil nil nil nil 1310982 ##(Core.MessageSequence) 138 144 34 2 1049350 ##(Core.MessageSend) #createAt:extent: 34 2 918022 ##(Graphics.Point) 1 1 1138 661 45 720 1090 #tcmSetExtendedStyle:dwExStyle: 8 #(-1 0) 720 1179910 ##(OS.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 74 1 0 0 22 0 0 0] 8 #() 1138 193 193 nil 27 1026 138 144 34 1 1090 #createAt:extent: 34 2 1138 1 297 1138 661 45 576 1218 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 148 0 0 0 74 1 0 0 170 0 0 0] 34 1 720 1280 nil 27 655414 ##(Core.Float) 8 51 51 51 51 51 51 211 63 546 410 ##(UI.Splitter) 34 12 nil 416 34 2 8 1140850688 1 1504 nil nil nil 517 nil nil nil 1707078 1 ##(UI.DraggableViewInteractor) 1504 nil 1 #left nil nil nil 1138 1 1 1138 9 9 nil 1600 nil 1026 138 144 34 1 1090 #createAt:extent: 34 2 1138 1 287 1138 661 11 1504 1218 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 143 0 0 0 74 1 0 0 148 0 0 0] 8 #() 1280 nil 27 1 546 410 ##(UI.ListTreeView) 34 59 nil 416 34 2 8 1140953421 1 1808 786 138 144 688 nil 848 917510 ##(Graphics.Color) #default nil 13 461638 4 ##(UI.Menu) nil true 34 12 1180742 2 ##(UI.CommandMenuItem) 1 1377606 4 ##(UI.CommandDescription) #inspectIt 8 '&Inspect' 1 1 853318 3 ##(Graphics.Icon) nil true 2031622 ##(Kernel.ImageRelativeFileLocator) 8 'BasicInspector.ico' 2490894 ##(Kernel.STBExternalResourceLibraryProxy) 8 'dolphindr7.dll' nil nil nil 1986 1 2018 #inspectReferences 8 'Inspect &References' 1 1 nil nil nil 1179974 1 ##(UI.DividerMenuItem) 4097 1986 1 2018 #browseIt 8 '&Browse It' 1 1 2066 nil true 2112 8 'ClassBrowserShell.ico' 2160 nil nil 2242 4097 1986 1 2018 #copyAspect 8 '&Copy' 1 1 nil nil nil 1986 1 2018 #pasteAspect 8 '&Paste <1d>' 1 1 nil nil nil 2242 4097 1986 1 2018 #editAspect 8 '&Edit' 1 1 nil nil nil 1986 1 2018 #nilAspect 8 'Set to &Nil' 1 1 nil nil nil 2242 4097 1986 1 2018 #refresh 8 'Re&fresh' 1 1 nil nil nil 8 '&Workspace' nil 134217729 nil nil nil nil nil nil nil 1808 nil 8 1801282304 786950 ##(Core.Message) #valueText 8 #() nil 1008 nil nil nil nil nil nil 138 144 34 3 1117254 5 ##(UI.ListViewColumn) 8 'Published Aspect' 307 #left 882 0 nil 914 2 1 880 8 'doIt' 8 '[:x | x valueNameOnly ]' 8 #[30 105 226 0 106] #valueNameOnly 2800 7 257 nil 2674 #<= 8 #() nil nil 1808 nil 3 882 0 nil 914 2 1 880 8 'doIt' 8 '[:x | x valueNameInfo]' 8 #[30 105 226 0 106] #valueNameInfo 2912 7 257 nil nil 2754 8 'Value' 307 #left 882 0 nil 914 2 1 880 8 'doIt' 8 '[:x | x valueTextOnly ]' 8 #[30 105 226 0 106] #valueTextOnly 3024 7 257 nil 2674 #<= 2896 nil nil 1808 882 0 nil 914 2 1 880 8 'doIt' 8 '[:x | x valueImage ]' 8 #[30 105 226 0 106] #valueImage 3120 7 257 nil 3 nil nil 2754 8 '' 41 #center 2674 #displayString 8 #() 2674 #<= 3248 nil nil 1808 882 0 nil 914 3 1 880 8 'doIt' 8 '[:x | PropertyInspector editButtonImageIndexFor: x ]' 8 #[31 105 29 17 177 106] ##(Tools.PropertyInspector) #editButtonImageIndexFor: 3280 7 257 nil 1 nil nil #report 8 #() nil 133479 1138 129 129 1 nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil false 1247046 3 ##(UI.VirtualTreeModel) nil 848 138 144 688 nil nil 882 0 nil 1377574 ##(Kernel.CompiledMethod) 2 3 3392 #defaultHasChildrenBlock 508791331 8 #[252 1 0 0 1 4 0 65 176 159 106 105] #childrenOf: #notEmpty 17 257 3408 882 0 nil 3458 1 83886083 3392 #defaultFilterBlock 508773827 8 #[29 105 17 157 106] 3504 7 257 nil nil 138 ##(Core.PluggableSet) 688 138 ##(Core.IdentitySet) 688 13 5 nil nil nil nil nil nil nil 1026 138 144 34 3 1090 #createAt:extent: 34 2 1138 1 1 1138 661 287 1808 1090 #contextMenu: 34 1 1952 1808 1090 #text: 34 1 8 'Published Aspect' 1808 1218 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 74 1 0 0 143 0 0 0] 8 #() 1280 nil 2029 5 true 170 192 34 4 576 8 'display' 1808 8 'aspects' nil 1026 138 144 34 1 1090 #createAt:extent: 34 2 1138 6143 21 1138 661 341 416 1218 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 73 13 0 0 180 0 0 0] 34 3 1808 1504 576 1280 nil 27 )!
 
 shellOn: anObject
 	"Open an Inspector shell displaying on anObject. 
@@ -421,13 +421,13 @@ shellOn: anObject
 
 	| inspector shell |
 	shell := InspectorShell create.
-	shell caption: 'Inspecting ', anObject basicPrintString.
+	shell caption: 'Inspecting ' , anObject basicPrintString.
 	inspector := self createIn: shell on: (ValueHolder with: anObject).
 	inspector view arrangement: #center.
 	shell view validateLayout.
 	shell show setInitialFocus.
 	^inspector! !
-!AbstractPublishedAspectInspector class categoriesFor: #publishedEventsOfInstances!events!public! !
-!AbstractPublishedAspectInspector class categoriesFor: #resource_Vertical_view!public!resources-views! !
-!AbstractPublishedAspectInspector class categoriesFor: #shellOn:!instance creation!public! !
+!Tools.AbstractPublishedAspectInspector class categoriesFor: #publishedEventsOfInstances!events!public! !
+!Tools.AbstractPublishedAspectInspector class categoriesFor: #resource_Vertical_view!public!resources-views! !
+!Tools.AbstractPublishedAspectInspector class categoriesFor: #shellOn:!instance creation!public! !
 

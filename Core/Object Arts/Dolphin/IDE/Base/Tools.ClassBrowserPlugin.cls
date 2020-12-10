@@ -1,18 +1,18 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Presenter subclass: #ClassBrowserPlugin
+UI.Presenter subclass: #'Tools.ClassBrowserPlugin'
 	instanceVariableNames: ''
 	classVariableNames: 'DefaultPlugins'
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ClassBrowserPlugin guid: (GUID fromString: '{4e71c848-3d94-41f6-8ce9-66d437619a5f}')!
-ClassBrowserPlugin isAbstract: true!
-ClassBrowserPlugin comment: '<ClassBrowserPluginAbstract> is the abstract superclass that implements the basic <classBrowserPlugin> protocol to support plug-in views for class browsers. The plug-ins are appended to the standard set of tabbed cards in the lower half of the browser and can be displayed by selecting the appropriate tab. Each browser class maintains an <OrderedCollection> of plug-ins that will be installed when instances of the browser are created. This collection can be modified through the User Preferences for that browser.
+Tools.ClassBrowserPlugin guid: (Core.GUID fromString: '{4e71c848-3d94-41f6-8ce9-66d437619a5f}')!
+Tools.ClassBrowserPlugin isNonInstantiable: true!
+Tools.ClassBrowserPlugin comment: '<ClassBrowserPluginAbstract> is the abstract superclass that implements the basic <classBrowserPlugin> protocol to support plug-in views for class browsers. The plug-ins are appended to the standard set of tabbed cards in the lower half of the browser and can be displayed by selecting the appropriate tab. Each browser class maintains an <OrderedCollection> of plug-ins that will be installed when instances of the browser are created. This collection can be modified through the User Preferences for that browser.
 
 When a plug-in is created it is assigned the class browser to which it is attached as its model. From this, the plug-in can observe events in the browser (such as #classSelected, #methodSelected, #packageSelected etc) and use these to initiate the rendition of its own display. In situations where creating this rendition may be a time consuming process, the plug-in may choose to defer this step until its card is actually made visible in the browser. This can be intercepted by overriding #onShownInBrowser.'!
-!ClassBrowserPlugin categoriesForClass!MVP-Presenters!MVP-Resources-IDE Tools! !
-!ClassBrowserPlugin methodsFor!
+!Tools.ClassBrowserPlugin categoriesForClass!MVP-Presenters!MVP-Resources-IDE Tools! !
+!Tools.ClassBrowserPlugin methodsFor!
 
 applyOptions!
 
@@ -74,22 +74,22 @@ promptToSaveClassChanges: aSelectionChangingEvent
 	selection change can continue."
 
 	^true! !
-!ClassBrowserPlugin categoriesFor: #applyOptions!options!private! !
-!ClassBrowserPlugin categoriesFor: #browser!accessing!public! !
-!ClassBrowserPlugin categoriesFor: #createSchematicWiring!initializing!private! !
-!ClassBrowserPlugin categoriesFor: #destroy!public!realizing/unrealizing! !
-!ClassBrowserPlugin categoriesFor: #displayOn:!displaying!public! !
-!ClassBrowserPlugin categoriesFor: #isCurrentCard!event handling!public! !
-!ClassBrowserPlugin categoriesFor: #isModified!public!testing! !
-!ClassBrowserPlugin categoriesFor: #modifiedModel!accessing!public! !
-!ClassBrowserPlugin categoriesFor: #onBrowserCardChanged!event handling!private! !
-!ClassBrowserPlugin categoriesFor: #onShownInBrowser!event handling!private! !
-!ClassBrowserPlugin categoriesFor: #onViewOpened!event handling!private! !
-!ClassBrowserPlugin categoriesFor: #promptToSaveClassChanges:!helpers!public! !
+!Tools.ClassBrowserPlugin categoriesFor: #applyOptions!options!private! !
+!Tools.ClassBrowserPlugin categoriesFor: #browser!accessing!public! !
+!Tools.ClassBrowserPlugin categoriesFor: #createSchematicWiring!initializing!private! !
+!Tools.ClassBrowserPlugin categoriesFor: #destroy!public!realizing/unrealizing! !
+!Tools.ClassBrowserPlugin categoriesFor: #displayOn:!displaying!public! !
+!Tools.ClassBrowserPlugin categoriesFor: #isCurrentCard!event handling!public! !
+!Tools.ClassBrowserPlugin categoriesFor: #isModified!public!testing! !
+!Tools.ClassBrowserPlugin categoriesFor: #modifiedModel!accessing!public! !
+!Tools.ClassBrowserPlugin categoriesFor: #onBrowserCardChanged!event handling!private! !
+!Tools.ClassBrowserPlugin categoriesFor: #onShownInBrowser!event handling!private! !
+!Tools.ClassBrowserPlugin categoriesFor: #onViewOpened!event handling!private! !
+!Tools.ClassBrowserPlugin categoriesFor: #promptToSaveClassChanges:!helpers!public! !
 
-ClassBrowserPlugin methodProtocol: #classBrowserPlugin attributes: #(#readOnly) selectors: #(#browser #isCurrentCard #onShownInBrowser)!
+Tools.ClassBrowserPlugin methodProtocol: #classBrowserPlugin attributes: #(#readOnly) selectors: #(#browser #isCurrentCard #onShownInBrowser)!
 
-!ClassBrowserPlugin class methodsFor!
+!Tools.ClassBrowserPlugin class methodsFor!
 
 uninitialize
 	"Private - Un-register the receiver by removing it from any plugins list.
@@ -111,7 +111,7 @@ uninitializeBeforeRemove
 unregisterFromAllBrowsers
 	ClassBrowserAbstract allSubclasses do: [:each | each removePlugin: self].
 	self primAllInstances do: [:each | each destroy]! !
-!ClassBrowserPlugin class categoriesFor: #uninitialize!class hierarchy-removing!private! !
-!ClassBrowserPlugin class categoriesFor: #uninitializeBeforeRemove!class hierarchy-removing!private! !
-!ClassBrowserPlugin class categoriesFor: #unregisterFromAllBrowsers!initializing!private! !
+!Tools.ClassBrowserPlugin class categoriesFor: #uninitialize!class hierarchy-removing!private! !
+!Tools.ClassBrowserPlugin class categoriesFor: #uninitializeBeforeRemove!class hierarchy-removing!private! !
+!Tools.ClassBrowserPlugin class categoriesFor: #unregisterFromAllBrowsers!initializing!private! !
 

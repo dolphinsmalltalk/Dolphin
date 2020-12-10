@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'Dolphin Community Edition Tools'.
-package paxVersion: 2;
+package paxVersion: 2.1;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk Community Edition Additional Tools.
 Copyright (c) Object Arts Ltd, 1999-2005
@@ -22,20 +22,20 @@ package basicPackageVersion: '6.1'.
 
 
 package setClassNames: #(
-	#{ClassHierarchyDiagram}
-	#{CommunityEditionSmalltalkSystem}
-	#{PoolDictionariesShell}
-	#{ProtocolBrowserShell}
-	#{SourceBrowser}
-	#{UserPreferencesShell}
+	#{Tools.ClassHierarchyDiagram}
+	#{Tools.CommunityEditionSmalltalkSystem}
+	#{Tools.PoolDictionariesShell}
+	#{Tools.ProtocolBrowserShell}
+	#{Tools.SourceBrowser}
+	#{Tools.UserPreferencesShell}
 ).
 
 package setMethodNames: #(
-	#(#{ClassBrowserAbstract} #browseMethodProtocol)
-	#(#{ITEMIDLIST class} #publishedAspectsOfInstances)
-	#(#{SmalltalkSystem} #inspectPoolDictionaries)
-	#(#{SmalltalkSystem} #inspectSystemOptions)
-	#(#{Toolbar class} #resource_Protocol_tools)
+	#(#{OS.ITEMIDLIST class} #publishedAspectsOfInstances)
+	#(#{Tools.ClassBrowserAbstract} #browseMethodProtocol)
+	#(#{Tools.SmalltalkSystem} #inspectPoolDictionaries)
+	#(#{Tools.SmalltalkSystem} #inspectSystemOptions)
+	#(#{UI.Toolbar class} #resource_Protocol_tools)
 ).
 
 package setPrerequisites: #(
@@ -59,6 +59,7 @@ package setPrerequisites: #(
 	'..\..\MVP\Models\Tree\Dolphin Tree Models'
 	'..\..\MVP\Type Converters\Dolphin Type Converters'
 	'..\..\MVP\Models\Value\Dolphin Value Models'
+	'..\..\ActiveX\Shell\Windows Shell'
 	'..\..\ActiveX\Shell\Windows Shell Namespace'
 ).
 
@@ -66,46 +67,57 @@ package!
 
 "Class Definitions"!
 
-SmalltalkSystem subclass: #CommunityEditionSmalltalkSystem
+Tools.SmalltalkSystem subclass: #'Tools.CommunityEditionSmalltalkSystem'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-SmalltalkToolShell subclass: #ClassHierarchyDiagram
+Tools.SmalltalkToolShell subclass: #'Tools.ClassHierarchyDiagram'
 	instanceVariableNames: 'classesPresenter commentPresenter'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-SmalltalkToolShell subclass: #PoolDictionariesShell
+Tools.SmalltalkToolShell subclass: #'Tools.PoolDictionariesShell'
 	instanceVariableNames: 'dictionariesPresenter'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-SmalltalkToolShell subclass: #ProtocolBrowserShell
+Tools.SmalltalkToolShell subclass: #'Tools.ProtocolBrowserShell'
 	instanceVariableNames: 'protocolsPresenter selectorsPresenter classesPresenter'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-SmalltalkToolShell subclass: #SourceBrowser
+Tools.SmalltalkToolShell subclass: #'Tools.SourceBrowser'
 	instanceVariableNames: 'listPresenter changedOnly refreshBlock packagesFilter statusModel'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-SmalltalkToolShell subclass: #UserPreferencesShell
+Tools.SmalltalkToolShell subclass: #'Tools.UserPreferencesShell'
 	instanceVariableNames: 'preferencesPresenter'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 
 "Loose Methods"!
 
-!ClassBrowserAbstract methodsFor!
+!OS.ITEMIDLIST class methodsFor!
+
+publishedAspectsOfInstances
+	"Answer a <LookupTable> of the <Aspect>s published by instances of the receiver."
+
+	^super publishedAspectsOfInstances
+		add: (Tools.Aspect integer: #getSize);
+		add: (Tools.Aspect boolean: #isSingle);
+		yourself! !
+!OS.ITEMIDLIST class categoriesFor: #publishedAspectsOfInstances!must strip!public! !
+
+!Tools.ClassBrowserAbstract methodsFor!
 
 browseMethodProtocol
 	"Private - Browse the currently selected protocol."
@@ -113,27 +125,15 @@ browseMethodProtocol
 	self model browseProtocols 
 		protocol: self protocols first;
 		actualClass: self actualClass! !
-!ClassBrowserAbstract categoriesFor: #browseMethodProtocol!commands!private! !
+!Tools.ClassBrowserAbstract categoriesFor: #browseMethodProtocol!commands!private! !
 
-!ITEMIDLIST class methodsFor!
-
-publishedAspectsOfInstances
-	"Answer a <LookupTable> of the <Aspect>s published by instances of the receiver."
-
-	^(super publishedAspectsOfInstances)
-		add: (Smalltalk.Aspect integer: #getSize);
-		add: (Smalltalk.Aspect boolean: #isSingle);
-		yourself! !
-!ITEMIDLIST class categoriesFor: #publishedAspectsOfInstances!must strip!public! !
-
-!SmalltalkSystem methodsFor!
+!Tools.SmalltalkSystem methodsFor!
 
 inspectPoolDictionaries
 	"Opens an inspector on the available pool dictionaries"
 
 	| inspector |
-	inspector := PublishedAspectInspector 
-				shellOn: self availablePools asOrderedCollection.
+	inspector := PublishedAspectInspector shellOn: self availablePools asOrderedCollection.
 	inspector topShell caption: 'Available Pool Dictionaries'.
 	^inspector!
 
@@ -141,21 +141,21 @@ inspectSystemOptions
 	"Open a TwoLevelInspector on the system options."
 
 	^UserPreferencesShell showOn: self systemOptions! !
-!SmalltalkSystem categoriesFor: #inspectPoolDictionaries!initializing!public! !
-!SmalltalkSystem categoriesFor: #inspectSystemOptions!commands!public! !
+!Tools.SmalltalkSystem categoriesFor: #inspectPoolDictionaries!initializing!public! !
+!Tools.SmalltalkSystem categoriesFor: #inspectSystemOptions!commands!public! !
 
-!Toolbar class methodsFor!
+!UI.Toolbar class methodsFor!
 
 resource_Protocol_tools
 	"Answer the literal data from which the 'Protocol tools' resource can be reconstituted.
 	DO NOT EDIT OR RECATEGORIZE THIS METHOD.
 
 	If you wish to modify this resource evaluate:
-	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Protocol_tools)
+	Tools.ViewComposer openOn: (UI.ResourceIdentifier class: self selector: #resource_Protocol_tools)
 	"
 
-	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.Toolbar) 34 25 nil nil 34 2 8 1409289036 131137 416 nil nil nil 517 nil nil nil 416 327686 ##(Smalltalk.Color) #default 8 1903898080 170 192 8 #() 170 192 34 4 51215 1115206 1 ##(Smalltalk.ToolbarIconButton) 416 1 1180998 4 ##(Smalltalk.CommandDescription) #toggleReadOnly 8 'Lock/unlock protocol' 1 1 263494 3 ##(Smalltalk.Icon) nil true 1572870 ##(Smalltalk.ImageRelativeFileLocator) 8 'Mutex.ico' 2032142 ##(Smalltalk.STBExternalResourceLibraryProxy) 8 'dolphindr7.dll' nil 51215 51217 594 416 1 626 #toggleANSI 8 'Toggle ANSI status' 1 1 788806 1 ##(Smalltalk.TextTileIcon) $\x1F5FD 8 'Segoe UI Emoji' nil nil nil nil 1 nil nil 51217 34 3 608 800 1049158 1 ##(Smalltalk.ToolbarSeparator) 416 1 nil nil 1 nil nil nil nil nil 983302 ##(Smalltalk.MessageSequence) 138 144 34 2 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 328198 ##(Smalltalk.Point) 3839 21 1058 111 51 416 1010 #updateSizePosted 544 416 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 127 7 0 0 10 0 0 0 182 7 0 0 35 0 0 0] 8 #() 1058 193 193 nil 27 )! !
-!Toolbar class categoriesFor: #resource_Protocol_tools!public!resources-views! !
+	^#(#'!!STL' 4 985166 10 ##(UI.STBViewProxy) ##(UI.Toolbar) 34 25 nil nil 34 2 8 1409289036 131137 416 nil nil nil 517 nil nil nil 416 917510 ##(Graphics.Color) #default 8 1801306032 170 192 8 #() 170 192 34 4 51611 1311814 1 ##(UI.ToolbarIconButton) 416 1 1377606 4 ##(UI.CommandDescription) #toggleReadOnly 8 'Lock/unlock protocol' 1 1 853318 3 ##(Graphics.Icon) nil true 2031622 ##(Kernel.ImageRelativeFileLocator) 8 'Mutex.ico' 2490894 ##(Kernel.STBExternalResourceLibraryProxy) 8 'dolphindr7.dll' nil 51611 51613 594 416 1 626 #toggleANSI 8 'Toggle ANSI status' 1 1 1378630 1 ##(Graphics.TextTileIcon) $\x1F5FD 8 'Segoe UI Emoji' nil nil nil nil 1 nil nil 51613 34 3 608 800 1245766 1 ##(UI.ToolbarSeparator) 416 1 nil nil 1 nil nil nil nil nil 1310982 ##(Core.MessageSequence) 138 144 34 1 1049350 ##(Core.MessageSend) #createAt:extent: 34 2 918022 ##(Graphics.Point) 6143 21 1058 111 51 416 1179910 ##(OS.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 54 12 0 0 35 0 0 0] 8 #() 1058 193 193 nil 27 )! !
+!UI.Toolbar class categoriesFor: #resource_Protocol_tools!public!resources-views! !
 
 "End of package definition"!
 

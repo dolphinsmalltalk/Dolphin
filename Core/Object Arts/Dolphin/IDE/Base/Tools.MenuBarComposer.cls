@@ -1,19 +1,19 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-MenuComposer subclass: #MenuBarComposer
+Tools.MenuComposer subclass: #'Tools.MenuBarComposer'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-MenuBarComposer guid: (GUID fromString: '{87b4c6b8-026e-11d3-9fd7-00a0cc3e4a32}')!
-MenuBarComposer comment: 'MenuComposer is a <valueDialogPresenter> that can be used to edit a <MenuBar> held in its <valueModel>.'!
-!MenuBarComposer categoriesForClass!MVP-Presenters! !
-!MenuBarComposer class methodsFor!
+Tools.MenuBarComposer guid: (Core.GUID fromString: '{87b4c6b8-026e-11d3-9fd7-00a0cc3e4a32}')!
+Tools.MenuBarComposer comment: 'MenuComposer is a <valueDialogPresenter> that can be used to edit a <MenuBar> held in its <valueModel>.'!
+!Tools.MenuBarComposer categoriesForClass!MVP-Presenters! !
+!Tools.MenuBarComposer class methodsFor!
 
 menuClass
 	"Private - Answer the base menu class that instances of the receiver will edit|"
 
 	^MenuBar! !
-!MenuBarComposer class categoriesFor: #menuClass!models!private! !
+!Tools.MenuBarComposer class categoriesFor: #menuClass!models!private! !
 

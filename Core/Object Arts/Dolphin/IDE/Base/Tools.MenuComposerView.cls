@@ -1,20 +1,20 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-View subclass: #MenuComposerView
+UI.View subclass: #'Tools.MenuComposerView'
 	instanceVariableNames: 'selectionIndex painter'
 	classVariableNames: ''
-	poolDictionaries: 'Win32Constants'
+	imports: #(#{OS.Win32Constants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-MenuComposerView guid: (GUID fromString: '{87b4c710-026e-11d3-9fd7-00a0cc3e4a32}')!
-MenuComposerView comment: 'MenuComposerView is an abstract superclass for a <valueView> used to emulate a <Menu> in the <MenuComposer>.
+Tools.MenuComposerView guid: (Core.GUID fromString: '{87b4c710-026e-11d3-9fd7-00a0cc3e4a32}')!
+Tools.MenuComposerView comment: 'MenuComposerView is an abstract superclass for a <valueView> used to emulate a <Menu> in the <MenuComposer>.
 
 Instance Variables:
 	selectionIndex		<integer> holding the index of the currently selected menu item.
 	painter			<menuPainter> responsible for rendering the emulated menu being composed.
 '!
-!MenuComposerView categoriesForClass!MVP-Views! !
-!MenuComposerView methodsFor!
+!Tools.MenuComposerView categoriesForClass!MVP-Views! !
+!Tools.MenuComposerView methodsFor!
 
 arena
 	^self creationParentView!
@@ -163,36 +163,35 @@ wmSysChar: message wParam: wParam lParam: lParam
 		ifFalse: 
 			[self arena onItemIn: self selectedAtIndex: selected.
 			0]! !
-!MenuComposerView categoriesFor: #arena!accessing!private! !
-!MenuComposerView categoriesFor: #conflictingAccelerators:!accessing!public! !
-!MenuComposerView categoriesFor: #createDragImage:!public!tracking! !
-!MenuComposerView categoriesFor: #defaultWindowStyle!constants!private! !
-!MenuComposerView categoriesFor: #evaluateWithCanvas:!private!testing! !
-!MenuComposerView categoriesFor: #hasSelection!public!testing! !
-!MenuComposerView categoriesFor: #indexOfItem:!private!searching! !
-!MenuComposerView categoriesFor: #initialize!initializing!private! !
-!MenuComposerView categoriesFor: #insertBefore:position:canvas:!public!testing! !
-!MenuComposerView categoriesFor: #itemAt:!private!searching! !
-!MenuComposerView categoriesFor: #itemRect:!public! !
-!MenuComposerView categoriesFor: #menu!accessing!public! !
-!MenuComposerView categoriesFor: #onEraseRequired:!event handling!painting!public! !
-!MenuComposerView categoriesFor: #onInputMaskRequired:!event handling!public! !
-!MenuComposerView categoriesFor: #onLeftButtonDoubleClicked:!event handling!public! !
-!MenuComposerView categoriesFor: #onPaintRequired:!event handling!painting!public! !
-!MenuComposerView categoriesFor: #originForSubmenu:!accessing!public! !
-!MenuComposerView categoriesFor: #refreshContents!public!updating! !
-!MenuComposerView categoriesFor: #selectionByIndex!public!selection! !
-!MenuComposerView categoriesFor: #selectionByIndex:!public!selection! !
-!MenuComposerView categoriesFor: #selectionOrNil!public!selection! !
-!MenuComposerView categoriesFor: #wmSysChar:wParam:lParam:!event handling-win32!private! !
+!Tools.MenuComposerView categoriesFor: #arena!accessing!private! !
+!Tools.MenuComposerView categoriesFor: #conflictingAccelerators:!accessing!public! !
+!Tools.MenuComposerView categoriesFor: #createDragImage:!public!tracking! !
+!Tools.MenuComposerView categoriesFor: #defaultWindowStyle!constants!private! !
+!Tools.MenuComposerView categoriesFor: #evaluateWithCanvas:!private!testing! !
+!Tools.MenuComposerView categoriesFor: #hasSelection!public!testing! !
+!Tools.MenuComposerView categoriesFor: #indexOfItem:!private!searching! !
+!Tools.MenuComposerView categoriesFor: #initialize!initializing!private! !
+!Tools.MenuComposerView categoriesFor: #insertBefore:position:canvas:!public!testing! !
+!Tools.MenuComposerView categoriesFor: #itemAt:!private!searching! !
+!Tools.MenuComposerView categoriesFor: #itemRect:!public! !
+!Tools.MenuComposerView categoriesFor: #menu!accessing!public! !
+!Tools.MenuComposerView categoriesFor: #onEraseRequired:!event handling!painting!public! !
+!Tools.MenuComposerView categoriesFor: #onInputMaskRequired:!event handling!public! !
+!Tools.MenuComposerView categoriesFor: #onLeftButtonDoubleClicked:!event handling!public! !
+!Tools.MenuComposerView categoriesFor: #onPaintRequired:!event handling!painting!public! !
+!Tools.MenuComposerView categoriesFor: #originForSubmenu:!accessing!public! !
+!Tools.MenuComposerView categoriesFor: #refreshContents!public!updating! !
+!Tools.MenuComposerView categoriesFor: #selectionByIndex!public!selection! !
+!Tools.MenuComposerView categoriesFor: #selectionByIndex:!public!selection! !
+!Tools.MenuComposerView categoriesFor: #selectionOrNil!public!selection! !
+!Tools.MenuComposerView categoriesFor: #wmSysChar:wParam:lParam:!event handling-win32!private! !
 
-!MenuComposerView class methodsFor!
+!Tools.MenuComposerView class methodsFor!
 
 icon
 	"Answers an <Icon> that can be used to represent this class."
 
-	^MenuComposer icon
-!
+	^MenuComposer icon!
 
 publishedEventsOfInstances
 	"Answer a Set of Symbols that describe the published events triggered
@@ -202,6 +201,6 @@ publishedEventsOfInstances
 		add: #actionPerformed;
 		yourself.
 ! !
-!MenuComposerView class categoriesFor: #icon!constants!public! !
-!MenuComposerView class categoriesFor: #publishedEventsOfInstances!events!public! !
+!Tools.MenuComposerView class categoriesFor: #icon!constants!public! !
+!Tools.MenuComposerView class categoriesFor: #publishedEventsOfInstances!events!public! !
 

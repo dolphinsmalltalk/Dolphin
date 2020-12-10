@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-UI.VirtualTreeModel subclass: #ClassHierarchyModel
+UI.VirtualTreeModel subclass: #'Tools.ClassHierarchyModel'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ClassHierarchyModel guid: (Core.GUID fromString: '{87b4c673-026e-11d3-9fd7-00a0cc3e4a32}')!
-ClassHierarchyModel comment: 'ClassHierarchyModel implements a <treeModel> representing the hierarchy (or a subset of it) of <Class>es in the system.'!
-!ClassHierarchyModel categoriesForClass!MVP-Models! !
-!ClassHierarchyModel methodsFor!
+Tools.ClassHierarchyModel guid: (Core.GUID fromString: '{87b4c673-026e-11d3-9fd7-00a0cc3e4a32}')!
+Tools.ClassHierarchyModel comment: 'ClassHierarchyModel implements a <treeModel> representing the hierarchy (or a subset of it) of <Class>es in the system.'!
+!Tools.ClassHierarchyModel categoriesForClass!MVP-Models! !
+!Tools.ClassHierarchyModel methodsFor!
 
 approxSize
 	"Private - Answer the approximate size of the receiver.
@@ -55,20 +55,20 @@ setRoots: aCollection
 
 	super setRoots: aCollection.
 	self observeEnvironment! !
-!ClassHierarchyModel categoriesFor: #approxSize!accessing!private! !
-!ClassHierarchyModel categoriesFor: #defaultGetChildrenBlock!initializing!private! !
-!ClassHierarchyModel categoriesFor: #defaultGetParentBlock!initializing!private! !
-!ClassHierarchyModel categoriesFor: #observeEnvironment!initializing!private! !
-!ClassHierarchyModel categoriesFor: #onClassAdded:!event handling!public! !
-!ClassHierarchyModel categoriesFor: #onClassRemoved:!event handling!public! !
-!ClassHierarchyModel categoriesFor: #onClassUpdated:!event handling!public! !
-!ClassHierarchyModel categoriesFor: #setRoots:!initializing!private! !
+!Tools.ClassHierarchyModel categoriesFor: #approxSize!accessing!private! !
+!Tools.ClassHierarchyModel categoriesFor: #defaultGetChildrenBlock!initializing!private! !
+!Tools.ClassHierarchyModel categoriesFor: #defaultGetParentBlock!initializing!private! !
+!Tools.ClassHierarchyModel categoriesFor: #observeEnvironment!initializing!private! !
+!Tools.ClassHierarchyModel categoriesFor: #onClassAdded:!event handling!public! !
+!Tools.ClassHierarchyModel categoriesFor: #onClassRemoved:!event handling!public! !
+!Tools.ClassHierarchyModel categoriesFor: #onClassUpdated:!event handling!public! !
+!Tools.ClassHierarchyModel categoriesFor: #setRoots:!initializing!private! !
 
-!ClassHierarchyModel class methodsFor!
+!Tools.ClassHierarchyModel class methodsFor!
 
 withAllClasses
 	"Answer an instance of the receiver on the entire class hiearchy"
 
 	^self withRoots: Smalltalk allRoots! !
-!ClassHierarchyModel class categoriesFor: #withAllClasses!instance creation!public! !
+!Tools.ClassHierarchyModel class categoriesFor: #withAllClasses!instance creation!public! !
 

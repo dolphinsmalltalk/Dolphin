@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ValuePresenter subclass: #BasicInspector
+UI.ValuePresenter subclass: #'Tools.BasicInspector'
 	instanceVariableNames: 'variableNamesPresenter sourcePresenter'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-BasicInspector guid: (GUID fromString: '{87b4c68b-026e-11d3-9fd7-00a0cc3e4a32}')!
-BasicInspector comment: 'BasicInspector is a <compositePresenter> that implements a generic inspect facility onto any <Object>.
+Tools.BasicInspector guid: (Core.GUID fromString: '{87b4c68b-026e-11d3-9fd7-00a0cc3e4a32}')!
+Tools.BasicInspector comment: 'BasicInspector is a <compositePresenter> that implements a generic inspect facility onto any <Object>.
 
 Example:
 SmalltalkSystem current basicInspect
@@ -18,8 +18,8 @@ Instance Variables:
 
 
 '!
-!BasicInspector categoriesForClass!MVP-Presenters! !
-!BasicInspector methodsFor!
+!Tools.BasicInspector categoriesForClass!MVP-Presenters! !
+!Tools.BasicInspector methodsFor!
 
 accept
 	"Saves the current source as the value of the selected variable of the
@@ -390,49 +390,49 @@ variableNamesList
 	inspected objects variables."
 
 	^variableNamesPresenter list! !
-!BasicInspector categoriesFor: #accept!commands!public! !
-!BasicInspector categoriesFor: #browseClass!commands!private! !
-!BasicInspector categoriesFor: #browseHierarchy!commands!private! !
-!BasicInspector categoriesFor: #browseIt!commands!public! !
-!BasicInspector categoriesFor: #browseObject!accessing!private! !
-!BasicInspector categoriesFor: #browseSystem!commands!public! !
-!BasicInspector categoriesFor: #createComponents!initializing!public! !
-!BasicInspector categoriesFor: #createSchematicWiring!initializing!public! !
-!BasicInspector categoriesFor: #currentField!accessing!private! !
-!BasicInspector categoriesFor: #errorModel:!accessing!public! !
-!BasicInspector categoriesFor: #extraFields!accessing!private! !
-!BasicInspector categoriesFor: #fieldIndexFromVariableIndex:!accessing!private! !
-!BasicInspector categoriesFor: #fields!accessing!private! !
-!BasicInspector categoriesFor: #getField:!accessing!private! !
-!BasicInspector categoriesFor: #getFieldExtra:!accessing!private! !
-!BasicInspector categoriesFor: #getFieldList!accessing!private! !
-!BasicInspector categoriesFor: #headerList!accessing!private! !
-!BasicInspector categoriesFor: #headerSize!accessing!private! !
-!BasicInspector categoriesFor: #infoTipForVariable:!accessing!public! !
-!BasicInspector categoriesFor: #inspectIt!commands!public! !
-!BasicInspector categoriesFor: #inspectReferences!commands!public! !
-!BasicInspector categoriesFor: #model:!accessing!public! !
-!BasicInspector categoriesFor: #nilVariable!commands!private! !
-!BasicInspector categoriesFor: #object!accessing!public! !
-!BasicInspector categoriesFor: #object:!accessing!public! !
-!BasicInspector categoriesFor: #onValueChanged!accessing!public! !
-!BasicInspector categoriesFor: #onVariableNameSelected!event handling!private! !
-!BasicInspector categoriesFor: #onViewOpened!event handling!public! !
-!BasicInspector categoriesFor: #queryCommand:!commands!private! !
-!BasicInspector categoriesFor: #refresh!commands!private! !
-!BasicInspector categoriesFor: #selfField!accessing!private! !
-!BasicInspector categoriesFor: #setField:to:!accessing!private! !
-!BasicInspector categoriesFor: #source!accessing!public! !
-!BasicInspector categoriesFor: #systemModel!accessing!private! !
-!BasicInspector categoriesFor: #unableToDisplayVariableErrorFormatString!constants!private! !
-!BasicInspector categoriesFor: #variable!accessing!public! !
-!BasicInspector categoriesFor: #variableAtIndex:!accessing!private! !
-!BasicInspector categoriesFor: #variableIndex!accessing!private! !
-!BasicInspector categoriesFor: #variableName!accessing!private! !
-!BasicInspector categoriesFor: #variableName:!accessing!private! !
-!BasicInspector categoriesFor: #variableNamesList!accessing!public! !
+!Tools.BasicInspector categoriesFor: #accept!commands!public! !
+!Tools.BasicInspector categoriesFor: #browseClass!commands!private! !
+!Tools.BasicInspector categoriesFor: #browseHierarchy!commands!private! !
+!Tools.BasicInspector categoriesFor: #browseIt!commands!public! !
+!Tools.BasicInspector categoriesFor: #browseObject!accessing!private! !
+!Tools.BasicInspector categoriesFor: #browseSystem!commands!public! !
+!Tools.BasicInspector categoriesFor: #createComponents!initializing!public! !
+!Tools.BasicInspector categoriesFor: #createSchematicWiring!initializing!public! !
+!Tools.BasicInspector categoriesFor: #currentField!accessing!private! !
+!Tools.BasicInspector categoriesFor: #errorModel:!accessing!public! !
+!Tools.BasicInspector categoriesFor: #extraFields!accessing!private! !
+!Tools.BasicInspector categoriesFor: #fieldIndexFromVariableIndex:!accessing!private! !
+!Tools.BasicInspector categoriesFor: #fields!accessing!private! !
+!Tools.BasicInspector categoriesFor: #getField:!accessing!private! !
+!Tools.BasicInspector categoriesFor: #getFieldExtra:!accessing!private! !
+!Tools.BasicInspector categoriesFor: #getFieldList!accessing!private! !
+!Tools.BasicInspector categoriesFor: #headerList!accessing!private! !
+!Tools.BasicInspector categoriesFor: #headerSize!accessing!private! !
+!Tools.BasicInspector categoriesFor: #infoTipForVariable:!accessing!public! !
+!Tools.BasicInspector categoriesFor: #inspectIt!commands!public! !
+!Tools.BasicInspector categoriesFor: #inspectReferences!commands!public! !
+!Tools.BasicInspector categoriesFor: #model:!accessing!public! !
+!Tools.BasicInspector categoriesFor: #nilVariable!commands!private! !
+!Tools.BasicInspector categoriesFor: #object!accessing!public! !
+!Tools.BasicInspector categoriesFor: #object:!accessing!public! !
+!Tools.BasicInspector categoriesFor: #onValueChanged!accessing!public! !
+!Tools.BasicInspector categoriesFor: #onVariableNameSelected!event handling!private! !
+!Tools.BasicInspector categoriesFor: #onViewOpened!event handling!public! !
+!Tools.BasicInspector categoriesFor: #queryCommand:!commands!private! !
+!Tools.BasicInspector categoriesFor: #refresh!commands!private! !
+!Tools.BasicInspector categoriesFor: #selfField!accessing!private! !
+!Tools.BasicInspector categoriesFor: #setField:to:!accessing!private! !
+!Tools.BasicInspector categoriesFor: #source!accessing!public! !
+!Tools.BasicInspector categoriesFor: #systemModel!accessing!private! !
+!Tools.BasicInspector categoriesFor: #unableToDisplayVariableErrorFormatString!constants!private! !
+!Tools.BasicInspector categoriesFor: #variable!accessing!public! !
+!Tools.BasicInspector categoriesFor: #variableAtIndex:!accessing!private! !
+!Tools.BasicInspector categoriesFor: #variableIndex!accessing!private! !
+!Tools.BasicInspector categoriesFor: #variableName!accessing!private! !
+!Tools.BasicInspector categoriesFor: #variableName:!accessing!private! !
+!Tools.BasicInspector categoriesFor: #variableNamesList!accessing!public! !
 
-!BasicInspector class methodsFor!
+!Tools.BasicInspector class methodsFor!
 
 headerList
 	"Answer an OrderedCollection of associations between prefix attributes and selectors
@@ -460,10 +460,10 @@ resource_Default_view
 	DO NOT EDIT OR RECATEGORIZE THIS METHOD.
 
 	If you wish to modify this resource evaluate:
-	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Default_view)
+	Tools.ViewComposer openOn: (UI.ResourceIdentifier class: self selector: #resource_Default_view)
 	"
 
-	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.ContainerView) 34 15 nil nil 34 2 8 1409286144 131073 416 nil nil nil 5 nil nil nil 416 788230 ##(Smalltalk.BorderLayout) 1 1 nil nil nil nil 410 ##(Smalltalk.ContainerView) 34 15 nil 416 34 2 8 1140850688 131073 512 nil nil nil 5 nil nil nil 512 1180166 ##(Smalltalk.ProportionalLayout) 138 ##(Smalltalk.Dictionary) 34 3 721414 ##(Smalltalk.Association) 410 ##(Smalltalk.ReferenceView) 34 14 nil 512 34 2 8 1140850688 131073 672 nil nil nil 5 nil nil nil 672 1180230 1 ##(Smalltalk.ResourceIdentifier) ##(Smalltalk.SmalltalkWorkspace) #resource_Default_view nil 983302 ##(Smalltalk.MessageSequence) 138 144 34 1 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 328198 ##(Smalltalk.Point) 459 1 882 901 591 672 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 229 0 0 0 0 0 0 0 167 2 0 0 39 1 0 0] 8 #() 882 193 193 nil 27 5 642 410 ##(Smalltalk.Splitter) 34 12 nil 512 34 2 8 1140850688 1 1024 nil nil nil 517 nil nil nil 1510470 1 ##(Smalltalk.DraggableViewInteractor) 1024 nil 1 #left nil nil nil 882 1 1 882 9 9 nil 1120 nil 770 138 144 34 1 834 #createAt:extent: 34 2 882 449 1 882 11 591 1024 930 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 224 0 0 0 0 0 0 0 229 0 0 0 39 1 0 0] 8 #() 992 nil 27 1 642 410 ##(Smalltalk.ListView) 34 45 nil 512 34 2 8 1140936781 1025 1328 590662 2 ##(Smalltalk.ListModel) 138 144 976 nil 1310726 ##(Smalltalk.IdentitySearchPolicy) 327686 ##(Smalltalk.Color) #default nil 5 265030 4 ##(Smalltalk.Menu) nil true 34 8 984134 2 ##(Smalltalk.CommandMenuItem) 1 1180998 4 ##(Smalltalk.CommandDescription) #inspectIt 8 '&Inspect' 1 1 263494 3 ##(Smalltalk.Icon) nil true 1572870 ##(Smalltalk.ImageRelativeFileLocator) 8 'BasicInspector.ico' 2032142 ##(Smalltalk.STBExternalResourceLibraryProxy) 8 'dolphindr7.dll' nil nil nil 1554 1 1586 #inspectReferences 8 'Inspect &References' 1 1 nil nil nil 983366 1 ##(Smalltalk.DividerMenuItem) 4097 1554 1 1586 #nilVariable 8 'Set to &Nil' 1 1 nil nil nil 1810 4097 1554 1 1586 #browseIt 8 '&Browse It' 1 1 1634 nil true 1680 8 'ClassBrowserShell.ico' 1728 nil nil 1810 4097 1554 1 1586 #refresh 8 'Re&fresh' 1 1 nil nil nil 8 '&Inspect' nil 1 nil nil nil nil nil nil nil 1328 nil 8 1883852064 ##(Smalltalk.BasicListAbstract) nil 1049926 1 ##(Smalltalk.IconImageManager) nil nil nil nil nil nil 138 144 34 1 920646 5 ##(Smalltalk.ListViewColumn) 8 '' 441 #left ##(Smalltalk.BasicListAbstract) 459270 ##(Smalltalk.Message) #<= 8 #() nil nil 1328 nil 3 nil nil #report 976 nil 133217 nil 1 nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil 770 138 144 34 2 834 #createAt:extent: 34 2 882 1 1 882 449 591 1328 834 #contextMenu: 34 1 1520 1328 930 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 224 0 0 0 39 1 0 0] 8 #() 992 nil 35 3 false 170 192 34 4 672 8 'source' 1328 8 'variablenames' nil 770 138 144 34 1 834 #createAt:extent: 34 2 882 1 1 882 1359 591 512 930 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 167 2 0 0 39 1 0 0] 34 3 1328 1024 672 992 nil 27 170 192 976 nil 770 138 144 34 1 834 #createAt:extent: 34 2 882 7039 21 882 1359 591 416 930 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 191 13 0 0 10 0 0 0 102 16 0 0 49 1 0 0] 34 1 512 992 nil 27 )!
+	^#(#'!!STL' 4 985166 10 ##(UI.STBViewProxy) ##(UI.ContainerView) 34 15 nil nil 34 2 8 1409286144 131073 416 nil nil nil 5 nil nil nil 416 984838 ##(UI.BorderLayout) 1 1 nil nil nil nil 410 ##(UI.ContainerView) 34 15 nil 416 34 2 8 1140850688 131073 512 nil nil nil 5 nil nil nil 512 1376774 ##(UI.ProportionalLayout) 138 ##(Core.Dictionary) 34 3 1049094 ##(Core.Association) 410 ##(UI.ReferenceView) 34 14 nil 512 34 2 8 1140850688 131073 672 nil nil nil 5 nil nil nil 672 1376838 1 ##(UI.ResourceIdentifier) ##(Tools.SmalltalkWorkspace) #resource_Default_view nil 1310982 ##(Core.MessageSequence) 138 144 34 1 1049350 ##(Core.MessageSend) #createAt:extent: 34 2 918022 ##(Graphics.Point) 459 1 882 901 591 672 1179910 ##(OS.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 229 0 0 0 0 0 0 0 167 2 0 0 39 1 0 0] 8 #() 882 193 193 nil 27 5 642 410 ##(UI.Splitter) 34 12 nil 512 34 2 8 1140850688 1 1024 nil nil nil 517 nil nil nil 1707078 1 ##(UI.DraggableViewInteractor) 1024 nil 1 #left nil nil nil 882 1 1 882 9 9 nil 1120 nil 770 138 144 34 1 834 #createAt:extent: 34 2 882 449 1 882 11 591 1024 930 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 224 0 0 0 0 0 0 0 229 0 0 0 39 1 0 0] 8 #() 992 nil 27 1 642 410 ##(UI.ListView) 34 45 nil 512 34 2 8 1140936781 1025 1328 787270 2 ##(UI.ListModel) 138 144 976 nil 1769478 ##(Kernel.IdentitySearchPolicy) 917510 ##(Graphics.Color) #default nil 5 461638 4 ##(UI.Menu) nil true 34 8 1180742 2 ##(UI.CommandMenuItem) 1 1377606 4 ##(UI.CommandDescription) #inspectIt 8 '&Inspect' 1 1 853318 3 ##(Graphics.Icon) nil true 2031622 ##(Kernel.ImageRelativeFileLocator) 8 'BasicInspector.ico' 2490894 ##(Kernel.STBExternalResourceLibraryProxy) 8 'dolphindr7.dll' nil nil nil 1554 1 1586 #inspectReferences 8 'Inspect &References' 1 1 nil nil nil 1179974 1 ##(UI.DividerMenuItem) 4097 1554 1 1586 #nilVariable 8 'Set to &Nil' 1 1 nil nil nil 1810 4097 1554 1 1586 #browseIt 8 '&Browse It' 1 1 1634 nil true 1680 8 'ClassBrowserShell.ico' 1728 nil nil 1810 4097 1554 1 1586 #refresh 8 'Re&fresh' 1 1 nil nil nil 8 '&Inspect' nil 1 nil nil nil nil nil nil nil 1328 nil 8 1801282304 ##(UI.BasicListAbstract) nil 1639750 1 ##(Graphics.IconImageManager) nil nil nil nil nil nil 138 144 34 1 1117254 5 ##(UI.ListViewColumn) 8 '' 441 #left ##(UI.BasicListAbstract) 786950 ##(Core.Message) #<= 8 #() nil nil 1328 nil 3 nil nil #report 8 #() nil 133217 nil 1 nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil 770 138 144 34 2 834 #createAt:extent: 34 2 882 1 1 882 449 591 1328 834 #contextMenu: 34 1 1520 1328 930 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 224 0 0 0 39 1 0 0] 8 #() 992 nil 35 3 false 170 192 34 4 672 8 'source' 1328 8 'variablenames' nil 770 138 144 34 1 834 #createAt:extent: 34 2 882 1 1 882 1359 591 512 930 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 167 2 0 0 39 1 0 0] 34 3 1328 1024 672 992 nil 27 170 192 976 nil 770 138 144 34 1 834 #createAt:extent: 34 2 882 6143 21 882 1359 591 416 930 8 #[44 0 0 0 0 0 0 0 0 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 166 14 0 0 49 1 0 0] 34 1 512 992 nil 27 )!
 
 shellOn: anObject
 	"Open an Inspector shell displaying on anObject. 
@@ -471,15 +471,15 @@ shellOn: anObject
 
 	| inspector shell |
 	shell := InspectorShell create.
-	shell caption:  self displayString , ' on ',  anObject basicPrintString.
+	shell caption: self displayString , ' on ' , anObject basicPrintString.
 	inspector := self createIn: shell on: (ValueHolder with: anObject).
 	inspector view arrangement: #center.
 	shell view validateLayout.
 	shell show setInitialFocus.
 	^inspector! !
-!BasicInspector class categoriesFor: #headerList!constants!public! !
-!BasicInspector class categoriesFor: #icon!constants!public! !
-!BasicInspector class categoriesFor: #publishedEventsOfInstances!events!public! !
-!BasicInspector class categoriesFor: #resource_Default_view!public!resources-views! !
-!BasicInspector class categoriesFor: #shellOn:!instance creation!public! !
+!Tools.BasicInspector class categoriesFor: #headerList!constants!public! !
+!Tools.BasicInspector class categoriesFor: #icon!constants!public! !
+!Tools.BasicInspector class categoriesFor: #publishedEventsOfInstances!events!public! !
+!Tools.BasicInspector class categoriesFor: #resource_Default_view!public!resources-views! !
+!Tools.BasicInspector class categoriesFor: #shellOn:!instance creation!public! !
 

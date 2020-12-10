@@ -192,7 +192,7 @@ testDSNlessConnection
 
 	| c connStr locator |
 	c := DBConnection new.
-	locator := PackageRelativeFileLocator package: self class owningPackage.
+	locator := self class owningPackage fileLocator.
 	connStr := 'DRIVER={Microsoft Access Driver (*.mdb)};DBQ=<1s>' 
 				expandMacrosWith: (locator localFileSpecFor: 'Northwind.mdb')
 				with: locator basePath.

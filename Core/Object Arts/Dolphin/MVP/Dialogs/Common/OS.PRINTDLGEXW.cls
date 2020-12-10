@@ -369,7 +369,7 @@ defineFields
 		defineField: #lpPrintTemplateName type: (PointerField type: Utf16String);
 		defineField: #lpCallback type: (PointerField type: Smalltalk.IUnknown);
 		defineField: #nPropertyPages type: DWORDField new;
-		defineField: #lphPropertyPages type: (PointerField type: Smalltalk.ExternalHandle);
+		defineField: #lphPropertyPages type: (PointerField type: Handle);
 		defineField: #nStartPage type: DWORDField new;
 		defineField: #dwResultAction type: DWORDField new!
 

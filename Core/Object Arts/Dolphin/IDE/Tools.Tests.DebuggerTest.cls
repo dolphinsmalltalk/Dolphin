@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Core.Tests.DolphinTest subclass: #DebuggerTest
+Core.Tests.DolphinTest subclass: #'Tools.Tests.DebuggerTest'
 	instanceVariableNames: 'process savedShowWalkbacks savedView'
 	classVariableNames: ''
 	imports: #(#{Kernel.OpcodePool})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-DebuggerTest guid: (Core.GUID fromString: '{29cfd485-34b1-41d6-a030-30d1fe5a9edd}')!
-DebuggerTest comment: ''!
-!DebuggerTest categoriesForClass!Unclassified! !
-!DebuggerTest methodsFor!
+Tools.Tests.DebuggerTest guid: (Core.GUID fromString: '{29cfd485-34b1-41d6-a030-30d1fe5a9edd}')!
+Tools.Tests.DebuggerTest comment: ''!
+!Tools.Tests.DebuggerTest categoriesForClass!Unclassified! !
+!Tools.Tests.DebuggerTest methodsFor!
 
 setUp
 	CompiledCode initializeInfoCache.
@@ -68,8 +68,8 @@ testRemapIPOfSendSelf
 	"Test remapping of the instruction in the middle of the block"
 	byte := debugMethod byteCodes at: startIP + 3.
 	self assert: (byte = Pop or: [byte = PopPushSelf])! !
-!DebuggerTest categoriesFor: #setUp!private!unit tests! !
-!DebuggerTest categoriesFor: #tearDown!private!unit tests! !
-!DebuggerTest categoriesFor: #testNoShowWalkbacks!public!unit tests! !
-!DebuggerTest categoriesFor: #testRemapIPOfSendSelf!public!unit tests! !
+!Tools.Tests.DebuggerTest categoriesFor: #setUp!private!unit tests! !
+!Tools.Tests.DebuggerTest categoriesFor: #tearDown!private!unit tests! !
+!Tools.Tests.DebuggerTest categoriesFor: #testNoShowWalkbacks!public!unit tests! !
+!Tools.Tests.DebuggerTest categoriesFor: #testRemapIPOfSendSelf!public!unit tests! !
 

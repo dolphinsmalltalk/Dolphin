@@ -7,28 +7,28 @@ package paxVersion: 2.1;
 
 package setClassNames: #(
 	#{Refactory.Browser.Tests.AddMethodChangeTest}
-	#{Smalltalk.ClassBrowserAbstractTest}
-	#{Smalltalk.ClassBrowserTest}
-	#{Smalltalk.ClassHierarchySelectorTest}
-	#{Smalltalk.ClassListSelectorTest}
-	#{Smalltalk.ClassSelectorTest}
-	#{Smalltalk.ClosedCommandDescriptionIssueDialog}
-	#{Smalltalk.ClosedCommandDescriptionTest}
-	#{Smalltalk.CodeMentorTest}
-	#{Smalltalk.DebuggerTest}
-	#{Smalltalk.IdeaSpaceShellTest}
-	#{Smalltalk.MethodWorkspaceTest}
-	#{Smalltalk.PackageBrowserShellTest}
-	#{Smalltalk.PackagedClassSelectorTest}
-	#{Smalltalk.PackageFolderTest}
-	#{Smalltalk.PackageManagerTest}
-	#{Smalltalk.PackageSelectorTest}
-	#{Smalltalk.PublishedAspectInspectorTest}
-	#{Smalltalk.ResourceBrowserTest}
-	#{Smalltalk.SmalltalkStylerTest}
-	#{Smalltalk.SmalltalkSystemShellTest}
-	#{Smalltalk.SystemBrowserTest}
-	#{Smalltalk.ViewComposerTest}
+	#{Tools.Tests.ClassBrowserAbstractTest}
+	#{Tools.Tests.ClassBrowserTest}
+	#{Tools.Tests.ClassHierarchySelectorTest}
+	#{Tools.Tests.ClassListSelectorTest}
+	#{Tools.Tests.ClassSelectorTest}
+	#{Tools.Tests.ClosedCommandDescriptionIssueDialog}
+	#{Tools.Tests.ClosedCommandDescriptionTest}
+	#{Tools.Tests.CodeMentorTest}
+	#{Tools.Tests.DebuggerTest}
+	#{Tools.Tests.IdeaSpaceShellTest}
+	#{Tools.Tests.MethodWorkspaceTest}
+	#{Tools.Tests.PackageBrowserShellTest}
+	#{Tools.Tests.PackagedClassSelectorTest}
+	#{Tools.Tests.PackageFolderTest}
+	#{Tools.Tests.PackageManagerTest}
+	#{Tools.Tests.PackageSelectorTest}
+	#{Tools.Tests.PublishedAspectInspectorTest}
+	#{Tools.Tests.ResourceBrowserTest}
+	#{Tools.Tests.SmalltalkStylerTest}
+	#{Tools.Tests.SmalltalkSystemShellTest}
+	#{Tools.Tests.SystemBrowserTest}
+	#{Tools.Tests.ViewComposerTest}
 ).
 
 package setPrerequisites: #(
@@ -43,14 +43,14 @@ package setPrerequisites: #(
 	'Professional\Dolphin Professional Tools'
 	'Professional\Dolphin Refactoring Browser'
 	'..\MVP\Views\Scintilla\Dolphin Scintilla View'
+	'..\MVP\Views\Scintilla\Dolphin Scintilla View Tests'
 	'..\MVP\Presenters\Text\Dolphin Text Presenter'
 	'..\MVP\Presenters\Tree\Dolphin Tree Presenter'
 	'..\..\..\Contributions\IDB\IDB Method History'
 	'..\..\..\Contributions\Refactory\Refactoring Browser\Change Objects\RBChangeObjects'
-	'..\..\..\Contributions\Refactory\RBOldNames'
+	'..\..\..\Contributions\Refactory\Refactoring Browser\Environments\RBEnvironments'
 	'..\..\..\Contributions\Refactory\Refactoring Browser\Tests\RBTestMethods'
 	'..\..\..\Contributions\Camp Smalltalk\SUnit\SUnit'
-	'..\..\..\Contributions\Camp Smalltalk\SUnit\SUnitLegacy'
 	'..\ActiveX\Components\XML DOM\XML DOM'
 ).
 
@@ -58,13 +58,13 @@ package!
 
 "Class Definitions"!
 
-UI.Dialog subclass: #ClosedCommandDescriptionIssueDialog
+UI.Dialog subclass: #'Tools.Tests.ClosedCommandDescriptionIssueDialog'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-XProgramming.SUnit.TestCase subclass: #ClosedCommandDescriptionTest
+XProgramming.SUnit.TestCase subclass: #'Tools.Tests.ClosedCommandDescriptionTest'
 	instanceVariableNames: 'dialog'
 	classVariableNames: ''
 	imports: #()
@@ -76,121 +76,121 @@ Core.Tests.DolphinTest subclass: #'Refactory.Browser.Tests.AddMethodChangeTest'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Core.Tests.DolphinTest subclass: #ClassBrowserAbstractTest
+Core.Tests.DolphinTest subclass: #'Tools.Tests.ClassBrowserAbstractTest'
 	instanceVariableNames: 'browser methodsPresenter packageA plugins'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Core.Tests.DolphinTest subclass: #CodeMentorTest
+Core.Tests.DolphinTest subclass: #'Tools.Tests.CodeMentorTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Core.Tests.DolphinTest subclass: #DebuggerTest
+Core.Tests.DolphinTest subclass: #'Tools.Tests.DebuggerTest'
 	instanceVariableNames: 'process savedShowWalkbacks savedView'
 	classVariableNames: ''
 	imports: #(#{Kernel.OpcodePool})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Core.Tests.DolphinTest subclass: #IdeaSpaceShellTest
+Core.Tests.DolphinTest subclass: #'Tools.Tests.IdeaSpaceShellTest'
 	instanceVariableNames: 'ideaShell browserPlugins'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Core.Tests.DolphinTest subclass: #PackageBrowserShellTest
+Core.Tests.DolphinTest subclass: #'Tools.Tests.PackageBrowserShellTest'
 	instanceVariableNames: 'packageA packageB packageC dolphinTestA dolphinTestB dolphinTestC shell cardsPresenter classesPresenter methodsPresenter variablesPresenter resourcesPresenter dependencyPresenters methodAA methodAB methodAC methodBA methodBB methodCA'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Core.Tests.DolphinTest subclass: #PackageManagerTest
+Core.Tests.DolphinTest subclass: #'Tools.Tests.PackageManagerTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Core.Tests.DolphinTest subclass: #PublishedAspectInspectorTest
+Core.Tests.DolphinTest subclass: #'Tools.Tests.PublishedAspectInspectorTest'
 	instanceVariableNames: 'inspector treePresenter displayPresenter'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Core.Tests.DolphinTest subclass: #ResourceBrowserTest
+Core.Tests.DolphinTest subclass: #'Tools.Tests.ResourceBrowserTest'
 	instanceVariableNames: 'resourceBrowser testClass'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Core.Tests.DolphinTest subclass: #SmalltalkStylerTest
+Core.Tests.DolphinTest subclass: #'Tools.Tests.SmalltalkStylerTest'
 	instanceVariableNames: 'mock scintilla'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Core.Tests.DolphinTest subclass: #SmalltalkSystemShellTest
+Core.Tests.DolphinTest subclass: #'Tools.Tests.SmalltalkSystemShellTest'
 	instanceVariableNames: 'systemShell'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Core.Tests.DolphinTest subclass: #ViewComposerTest
+Core.Tests.DolphinTest subclass: #'Tools.Tests.ViewComposerTest'
 	instanceVariableNames: 'vc sampleClass'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ClassBrowserAbstractTest subclass: #ClassBrowserTest
+Tools.Tests.ClassBrowserAbstractTest subclass: #'Tools.Tests.ClassBrowserTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ClassBrowserAbstractTest subclass: #SystemBrowserTest
+Tools.Tests.ClassBrowserAbstractTest subclass: #'Tools.Tests.SystemBrowserTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-UI.Tests.FolderTest subclass: #PackageFolderTest
+UI.Tests.FolderTest subclass: #'Tools.Tests.PackageFolderTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-UI.Tests.PresenterTest subclass: #MethodWorkspaceTest
+UI.Tests.PresenterTest subclass: #'Tools.Tests.MethodWorkspaceTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-UI.Tests.SelectableItemsTest subclass: #ClassSelectorTest
+UI.Tests.SelectableItemsTest subclass: #'Tools.Tests.ClassSelectorTest'
 	instanceVariableNames: 'packageA packageB packageC dolphinTestA dolphinTestB dolphinTestC dolphinTestD dolphinTestE dolphinTestF dolphinTestG dolphinTestH dolphinTestI'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-UI.Tests.SelectableItemsTest subclass: #PackageSelectorTest
+UI.Tests.SelectableItemsTest subclass: #'Tools.Tests.PackageSelectorTest'
 	instanceVariableNames: 'packageA'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ClassSelectorTest subclass: #ClassHierarchySelectorTest
+Tools.Tests.ClassSelectorTest subclass: #'Tools.Tests.ClassHierarchySelectorTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ClassSelectorTest subclass: #ClassListSelectorTest
+Tools.Tests.ClassSelectorTest subclass: #'Tools.Tests.ClassListSelectorTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ClassSelectorTest subclass: #PackagedClassSelectorTest
+Tools.Tests.ClassSelectorTest subclass: #'Tools.Tests.PackagedClassSelectorTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

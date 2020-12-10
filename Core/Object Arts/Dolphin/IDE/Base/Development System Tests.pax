@@ -6,29 +6,34 @@ package paxVersion: 2.1;
 
 
 package setClassNames: #(
-	#{Kernel.Tests.CompiledMethodTest}
-	#{Kernel.Tests.VMTest}
-	#{OS.Tests.RegKeyTest}
-	#{Smalltalk.ImageListViewTest}
-	#{Smalltalk.KeyedAspectTest}
-	#{Smalltalk.MenuPainterTest}
-	#{Smalltalk.MethodCategoryEnvironmentTest}
-	#{Smalltalk.PackageEnvironmentTest}
-	#{Smalltalk.PluggableEnvironmentTest}
-	#{Smalltalk.ProductReleaseTest}
-	#{Smalltalk.RewriteTestCase}
-	#{Smalltalk.SmalltalkSystemTest}
-	#{Smalltalk.SmalltalkWorkspaceTest}
-	#{Smalltalk.VersionResourceTest}
+	#{OS.Tests.VersionResourceTest}
+	#{Refactory.Browser.Tests.MethodCategoryEnvironmentTest}
+	#{Refactory.Browser.Tests.PackageEnvironmentTest}
+	#{Refactory.Browser.Tests.PluggableEnvironmentTest}
+	#{Refactory.Browser.Tests.RewriteTestCase}
 	#{Smalltalk.XMLDOMNodeTest}
-	#{UI.Scintilla.Tests.MockScintillaView}
-	#{UI.Scintilla.Tests.StStyler}
+	#{Tools.Tests}
+	#{Tools.Tests.ImageListViewTest}
+	#{Tools.Tests.KeyedAspectTest}
+	#{Tools.Tests.MenuPainterTest}
+	#{Tools.Tests.MockScintillaView}
+	#{Tools.Tests.ProductReleaseTest}
+	#{Tools.Tests.SmalltalkSystemTest}
+	#{Tools.Tests.SmalltalkWorkspaceTest}
+	#{Tools.Tests.StStyler}
 ).
 
 package setMethodNames: #(
 	#(#{External.Tests.INTEGERTest} #testPrintOnNull)
 	#(#{External.Tests.INTEGERTest} #testPrintOnSigned)
 	#(#{External.Tests.INTEGERTest} #testPrintOnUnsigned)
+	#(#{Kernel.Tests.ParserErrorTest} #testInfoHardBreakpoint)
+	#(#{Kernel.Tests.ParserErrorTest} #testInfoSupersendsOther)
+	#(#{Kernel.Tests.ParserErrorTest} #testInfoUnreferencedArg)
+	#(#{Kernel.Tests.ParserErrorTest} #testWarningUsesBooleanClass)
+	#(#{Kernel.Tests.ParserErrorTest} #testWarnMsgUnimplemented)
+	#(#{Kernel.Tests.ParserErrorTest} #testWarnUndefinedSelector)
+	#(#{Kernel.Tests.ParserErrorTest} #testWarnUnimplementedAbstractMethod)
 	#(#{UI.Scintilla.Tests.ScintillaViewTest} #testTokensFromTo)
 	#(#{UI.Tests.BorderLayoutTest} #testResourceBrowserPreview)
 ).
@@ -38,21 +43,20 @@ package setPrerequisites: #(
 	'Development System'
 	'..\..\Base\Dolphin'
 	'..\..\Base\Dolphin Base Tests'
-	'..\..\MVP\Base\Dolphin Basic Geometry'
 	'..\..\MVP\Dialogs\Common\Dolphin Common Dialogs'
 	'..\..\MVP\Base\Dolphin MVP Base'
 	'..\..\MVP\Dolphin MVP Tests'
-	'..\..\Registry\Dolphin Registry Access'
 	'..\..\MVP\Views\Scintilla\Dolphin Scintilla View'
 	'..\..\MVP\Views\Scintilla\Tests\Dolphin Scintilla View Tests'
 	'..\..\Lagoon\Lagoon Image Stripper'
-	'..\..\ActiveX\COM\OLE COM'
 	'..\..\..\..\Contributions\Refactory\Refactoring Browser\Environments\RBEnvironments'
 	'..\..\..\..\Contributions\Refactory\Refactoring Browser\SmallLint\RBSmallLint'
+	'..\..\..\..\Contributions\Refactory\Refactoring Browser\Tests\RBTestMethods'
 	'..\..\..\..\Contributions\Refactory\Refactoring Browser\Tests\RBTests'
 	'..\..\System\Compiler\Tests\Smalltalk Compiler Tests'
 	'..\..\System\Compiler\Smalltalk Parser'
 	'..\..\..\..\Contributions\Camp Smalltalk\SUnit\SUnit'
+	'..\..\..\..\Contributions\Camp Smalltalk\SUnit\SUnitPreload'
 	'..\..\ActiveX\Components\XML DOM\XML DOM'
 ).
 
@@ -60,70 +64,58 @@ package!
 
 "Class Definitions"!
 
-Core.Object subclass: #'UI.Scintilla.Tests.MockScintillaView'
+Tools subclass: #'Tools.Tests'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #(#{XProgramming.SUnit})
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Core.Object subclass: #'Tools.Tests.MockScintillaView'
 	instanceVariableNames: 'lastStyled tokens text currentTextStyles styleIdMap'
 	classVariableNames: ''
 	imports: #(#{UI.Scintilla.ScintillaConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Kernel.ParseNodeVisitor subclass: #'UI.Scintilla.Tests.StStyler'
+Kernel.ParseNodeVisitor subclass: #'Tools.Tests.StStyler'
 	instanceVariableNames: 'view arrayDepth'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-XProgramming.SUnit.TestCase subclass: #RewriteTestCase
+XProgramming.SUnit.TestCase subclass: #'Refactory.Browser.Tests.RewriteTestCase'
 	instanceVariableNames: 'env'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Core.Tests.DolphinTest subclass: #'Kernel.Tests.CompiledMethodTest'
+Core.Tests.DolphinTest subclass: #'Tools.Tests.KeyedAspectTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Core.Tests.DolphinTest subclass: #KeyedAspectTest
+Core.Tests.DolphinTest subclass: #'Tools.Tests.MenuPainterTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Core.Tests.DolphinTest subclass: #MenuPainterTest
+Core.Tests.DolphinTest subclass: #'Tools.Tests.ProductReleaseTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Core.Tests.DolphinTest subclass: #ProductReleaseTest
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-Core.Tests.DolphinTest subclass: #'OS.Tests.RegKeyTest'
-	instanceVariableNames: 'testKey'
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-Core.Tests.DolphinTest subclass: #SmalltalkSystemTest
+Core.Tests.DolphinTest subclass: #'Tools.Tests.SmalltalkSystemTest'
 	instanceVariableNames: 'devsys'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Core.Tests.DolphinTest subclass: #VersionResourceTest
+Core.Tests.DolphinTest subclass: #'OS.Tests.VersionResourceTest'
 	instanceVariableNames: 'updatePath sourceModule sourceSize sourceBytes'
 	classVariableNames: ''
 	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-Core.Tests.DolphinTest subclass: #'Kernel.Tests.VMTest'
-	instanceVariableNames: 'expiryHandler'
-	classVariableNames: ''
-	imports: #(#{OS.CRTConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Core.Tests.DolphinTest subclass: #XMLDOMNodeTest
@@ -132,31 +124,31 @@ Core.Tests.DolphinTest subclass: #XMLDOMNodeTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-UI.Tests.PresenterTest subclass: #SmalltalkWorkspaceTest
+UI.Tests.PresenterTest subclass: #'Tools.Tests.SmalltalkWorkspaceTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-UI.Tests.ImageViewAbstractTest subclass: #ImageListViewTest
+UI.Tests.ImageViewAbstractTest subclass: #'Tools.Tests.ImageListViewTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Refactory.Browser.Tests.BrowserEnvironmentTest subclass: #MethodCategoryEnvironmentTest
+Refactory.Browser.Tests.BrowserEnvironmentTest subclass: #'Refactory.Browser.Tests.MethodCategoryEnvironmentTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Refactory.Browser.Tests.BrowserEnvironmentTest subclass: #PackageEnvironmentTest
+Refactory.Browser.Tests.BrowserEnvironmentTest subclass: #'Refactory.Browser.Tests.PackageEnvironmentTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Refactory.Browser.Tests.BrowserEnvironmentTest subclass: #PluggableEnvironmentTest
+Refactory.Browser.Tests.BrowserEnvironmentTest subclass: #'Refactory.Browser.Tests.PluggableEnvironmentTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -185,13 +177,131 @@ testPrintOnUnsigned
 !External.Tests.INTEGERTest categoriesFor: #testPrintOnSigned!public!unit tests! !
 !External.Tests.INTEGERTest categoriesFor: #testPrintOnUnsigned!public!unit tests! !
 
+!Kernel.Tests.ParserErrorTest methodsFor!
+
+testInfoHardBreakpoint
+	semanticAnalyserClass := Tools.BrowserSemanticAnalyser.
+	#(#testInfoHardBreakpoint #testInfoHardBreakpointInBlock) do: 
+			[:each | 
+			self 
+				parseMethodInfo: each
+				rangeBlock: 
+					[:source | 
+					| start |
+					start := source indexOfSubCollection: 'self halt'.
+					start to: start + 8]
+				code: CInfoHardBreakpoint]!
+
+testInfoSupersendsOther
+	semanticAnalyserClass := Tools.BrowserSemanticAnalyser.
+	#(#testInfoSupersendsOther) do: 
+			[:each | 
+			self 
+				parseMethodInfo: each
+				rangeBlock: 
+					[:source | 
+					| start |
+					start := source indexOfSubCollection: 'super'.
+					start 
+						to: (source 
+								nextIndexOf: Character cr
+								from: start
+								to: source size) - 1]
+				code: CInfoSupersendsOther]!
+
+testInfoUnreferencedArg
+	semanticAnalyserClass := Tools.BrowserSemanticAnalyser.
+	#(#testInfoUnreferencedArgBlock #testInfoUnreferencedArgMethod: #testInfoUnreferencedArgOptimizedBlock) 
+		do: 
+			[:each | 
+			self 
+				parseMethodInfo: each
+				rangeBlock: 
+					[:source | 
+					| start |
+					start := source lastIndexOf: $a.
+					start to: start]
+				code: CInfoUnreferencedArg]!
+
+testWarningUsesBooleanClass
+	semanticAnalyserClass := Tools.BrowserSemanticAnalyser.
+	#(#testWarningUsesTrue #testWarningUsesFalse) do: 
+			[:each |
+			self
+				parseMethodWarning: each
+				rangeBlock: 
+					[:source |
+					| start name |
+					name := each asPhrase subStrings last.
+					start := source indexOfSubCollection: name startingAt: each size + 1.
+					start to: start + name size - 1]
+				code: CWarnUsesBooleanClass]!
+
+testWarnMsgUnimplemented
+	semanticAnalyserClass := Tools.BrowserSemanticAnalyser.
+	#(#testWarnMsgUnimplementedBySelf #testWarnMsgUnimplementedBySuper #testWarnMsgUnimplementedByConst #testWarnMsgUnimplementedByNil)
+		do: 
+			[:each |
+			self
+				parseMethodWarning: each
+				rangeBlock: 
+					[:source |
+					| start name |
+					name := each asPhrase subStrings last.
+					start := source
+								findString: name
+								startingAt: each size + 1
+								ignoreCase: true.
+					start to: (source
+								nextIndexOf: $.
+								from: start
+								to: source size) - 1]
+				code: CWarnMsgUnimplemented]!
+
+testWarnUndefinedSelector
+	semanticAnalyserClass := Tools.BrowserSemanticAnalyser.
+	#(#testWarnUndefinedSelector) do: 
+			[:each |
+			self
+				parseMethodWarning: each
+				rangeBlock: 
+					[:source |
+					| start |
+					start := source indexOfSubCollection: 'self'.
+					start to: (source
+								nextIndexOf: $.
+								from: start
+								to: source size) - 1]
+				code: CWarnUndefinedSelector]!
+
+testWarnUnimplementedAbstractMethod
+	semanticAnalyserClass := Tools.BrowserSemanticAnalyser.
+	#(#testWarnUnimplementedAbstractMethod) do: 
+			[:each |
+			self
+				parseMethodWarning: each
+				rangeBlock: 
+					[:source |
+					| start msg |
+					msg := 'self subclassResponsibility'.
+					start := source indexOfSubCollection: msg.
+					start to: start + msg size - 1]
+				code: CWarnUnimplementedAbstractMethod]! !
+!Kernel.Tests.ParserErrorTest categoriesFor: #testInfoHardBreakpoint!public!unit tests! !
+!Kernel.Tests.ParserErrorTest categoriesFor: #testInfoSupersendsOther!public!unit tests! !
+!Kernel.Tests.ParserErrorTest categoriesFor: #testInfoUnreferencedArg!public!unit tests! !
+!Kernel.Tests.ParserErrorTest categoriesFor: #testWarningUsesBooleanClass!public!unit tests! !
+!Kernel.Tests.ParserErrorTest categoriesFor: #testWarnMsgUnimplemented!public!unit tests! !
+!Kernel.Tests.ParserErrorTest categoriesFor: #testWarnUndefinedSelector!public!unit tests! !
+!Kernel.Tests.ParserErrorTest categoriesFor: #testWarnUnimplementedAbstractMethod!public!unit tests! !
+
 !UI.Scintilla.Tests.ScintillaViewTest methodsFor!
 
 testTokensFromTo
 	| tokens expected styler |
-	presenter textStyles: Smalltalk.SmalltalkWorkspace textStyles.
-	presenter stylerClass: Smalltalk.SmalltalkExpressionStyler.
-	styler := StStyler new.
+	presenter textStyles: Tools.SmalltalkWorkspace textStyles.
+	presenter stylerClass: Tools.SmalltalkExpressionStyler.
+	styler := Tools.Tests.StStyler new.
 	#('' ' ' ' 	 ' ' a' 'a ' ' a ' ' a #a' 'a #a ' ' a #a ' ' a #a 1.2 '''' ''blah blah'' (') do: 
 			[:text |
 			presenter text: text.
@@ -208,7 +318,7 @@ testResourceBrowserPreview
 	"#1758"
 
 	| resourceId resourceView bmp toolbox resources |
-	resourceId := ResourceIdentifier class: Smalltalk.ResourceBrowser name: 'Default view'.
+	resourceId := ResourceIdentifier class: Tools.ResourceBrowser name: 'Default view'.
 	resourceView := 
 			[Smalltalk developmentSystem loadViewResource: resourceId resource inContext: View desktop]
 					on: Error

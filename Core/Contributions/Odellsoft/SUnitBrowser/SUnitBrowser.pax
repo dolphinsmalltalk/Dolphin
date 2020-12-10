@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'SUnitBrowser'.
-package paxVersion: 2;
+package paxVersion: 2.1;
 	basicComment: 'SUnit Browser for Dolphin Smalltalk 4.0/5.0 - Version 3.1.5RC1
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
@@ -66,26 +66,27 @@ package basicPackageVersion: '3.1.5 RC1'.
 
 
 package setClassNames: #(
-	#{SUnitAbsBrowser}
-	#{SUnitAbsWrapper}
-	#{SUnitBrowser}
-	#{SUnitResourceBrowser}
-	#{SUnitStatusTextWrapper}
-	#{SUnitTestCaseWrapper}
-	#{SUnitTestResourceWrapper}
+	#{Smalltalk.SUnitAbsBrowser}
+	#{Smalltalk.SUnitAbsWrapper}
+	#{Smalltalk.SUnitBrowser}
+	#{Smalltalk.SUnitResourceBrowser}
+	#{Smalltalk.SUnitStatusTextWrapper}
+	#{Smalltalk.SUnitTestCaseWrapper}
+	#{Smalltalk.SUnitTestResourceWrapper}
 ).
 
 package setMethodNames: #(
-	#(#{ClassSelector} #browseTests)
-	#(#{ClassSelector} #buildTestSuite)
-	#(#{PackageSelector} #browseTests)
-	#(#{PackageSelector} #buildTestSuite)
-	#(#{Toolbar class} #resource_SUnitBrowser_Resource_browser_toolbar)
-	#(#{Toolbar class} #resource_SUnitBrowser_toolbar)
+	#(#{Tools.ClassSelector} #browseTests)
+	#(#{Tools.ClassSelector} #buildTestSuite)
+	#(#{Tools.PackageSelector} #browseTests)
+	#(#{Tools.PackageSelector} #buildTestSuite)
+	#(#{UI.Toolbar class} #resource_SUnitBrowser_Resource_browser_toolbar)
+	#(#{UI.Toolbar class} #resource_SUnitBrowser_toolbar)
 ).
 
 package setPrerequisites: #(
 	'..\..\..\Object Arts\Dolphin\IDE\Base\Development System'
+	'..\..\..\Object Arts\Dolphin\IDE\Base\Development System (Deprecated)'
 	'..\..\..\Object Arts\Dolphin\Base\Dolphin'
 	'..\..\..\Object Arts\Dolphin\MVP\Base\Dolphin Basic Geometry'
 	'..\..\..\Object Arts\Dolphin\MVP\Views\Common Controls\Dolphin Common Controls'
@@ -100,7 +101,7 @@ package setPrerequisites: #(
 	'..\..\Refactory\Refactoring Browser\Environments\RBEnvironments'
 	'..\..\Camp Smalltalk\SUnit\SUnit'
 	'SUnitBrowserModelApp'
-	'..\..\Camp Smalltalk\SUnit\SUnitUI'
+	'..\..\Camp Smalltalk\SUnit\SUnitLegacy'
 	'..\..\..\Object Arts\Dolphin\ActiveX\Shell\Windows Shell'
 ).
 
@@ -108,52 +109,52 @@ package!
 
 "Class Definitions"!
 
-Object subclass: #SUnitAbsWrapper
+Core.Object subclass: #SUnitAbsWrapper
 	instanceVariableNames: 'model subject'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-SmalltalkToolShell subclass: #SUnitAbsBrowser
+Tools.SmalltalkToolShell subclass: #SUnitAbsBrowser
 	instanceVariableNames: 'listModel labelTextPresenter listPresenter statusTextPresenter'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 SUnitAbsBrowser subclass: #SUnitBrowser
 	instanceVariableNames: 'testCaseListModel showAllTextPresenter testCaseListPresenter'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 SUnitAbsBrowser subclass: #SUnitResourceBrowser
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 SUnitAbsWrapper subclass: #SUnitStatusTextWrapper
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 SUnitAbsWrapper subclass: #SUnitTestCaseWrapper
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 SUnitAbsWrapper subclass: #SUnitTestResourceWrapper
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 
 "Loose Methods"!
 
-!ClassSelector methodsFor!
+!Tools.ClassSelector methodsFor!
 
 browseTests
 	"Open an SUnit Test Browser on the selected Test Case."
@@ -163,7 +164,7 @@ browseTests
 buildTestSuite
 	| parentEnvironment testEnvironment suite classSelections |
 	classSelections := self selectionEnvironment.
-	suite := TestSuite named: ('Tests in <1p>' expandMacrosWith: classSelections).
+	suite := XProgramming.SUnit.TestSuite named: ('Tests in <1p>' expandMacrosWith: classSelections).
 	parentEnvironment := classSelections environment.
 	testEnvironment := classSelections.
 	classSelections classesDo: 
@@ -179,10 +180,10 @@ buildTestSuite
 			suite
 				addTests: (classSuite allTests select: [:eachTest | eachClass canUnderstand: eachTest selector])].
 	^suite! !
-!ClassSelector categoriesFor: #browseTests!commands!public! !
-!ClassSelector categoriesFor: #buildTestSuite!commands!public! !
+!Tools.ClassSelector categoriesFor: #browseTests!commands!public! !
+!Tools.ClassSelector categoriesFor: #buildTestSuite!commands!public! !
 
-!PackageSelector methodsFor!
+!Tools.PackageSelector methodsFor!
 
 browseTests
 	"Open an SUnit Test Browser on the selected Test Case."
@@ -192,8 +193,8 @@ browseTests
 buildTestSuite
 	| packages suite parentEnvironment testEnvironment classSelections |
 	packages := self selectionEnvironment.
-	suite := TestSuite named: ('Tests in <1p>' expandMacrosWith: packages).
-	classSelections := TestCase allSubclasses
+	suite := XProgramming.SUnit.TestSuite named: ('Tests in <1p>' expandMacrosWith: packages).
+	classSelections := XProgramming.SUnit.TestCase allSubclasses
 				select: [:eachClass | eachClass isAbstract not and: [packages includesClass: eachClass]].
 	parentEnvironment := Refactory.Browser.BrowserEnvironment new forClasses: classSelections.
 	testEnvironment := Refactory.Browser.BrowserEnvironment new forClasses: classSelections.
@@ -210,10 +211,10 @@ buildTestSuite
 			suite
 				addTests: (classSuite allTests select: [:eachTest | eachClass canUnderstand: eachTest selector])].
 	^suite! !
-!PackageSelector categoriesFor: #browseTests!commands!public! !
-!PackageSelector categoriesFor: #buildTestSuite!commands!public! !
+!Tools.PackageSelector categoriesFor: #browseTests!commands!public! !
+!Tools.PackageSelector categoriesFor: #buildTestSuite!commands!public! !
 
-!Toolbar class methodsFor!
+!UI.Toolbar class methodsFor!
 
 resource_SUnitBrowser_Resource_browser_toolbar
 	"Answer the literal data from which the 'SUnitBrowser Resource browser toolbar' resource can be reconstituted.
@@ -234,8 +235,8 @@ resource_SUnitBrowser_toolbar
 	"
 
 	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.Toolbar) 34 25 nil nil 34 2 8 1140853580 131137 416 nil 327686 ##(Smalltalk.Color) #default nil 519 nil nil nil 416 496 8 1903898080 nil 170 192 34 14 48841 1246790 1 ##(Smalltalk.ToolbarBitmapButton) 416 1 1180998 4 ##(Smalltalk.CommandDescription) #runAll 8 'Run All' 1 1 nil 48841 395334 3 ##(Smalltalk.Bitmap) nil true 1572870 ##(Smalltalk.ImageRelativeFileLocator) 8 'Tools.bmp' 2032142 ##(Smalltalk.STBExternalResourceLibraryProxy) 8 'dolphindr7.dll' nil nil 71 328198 ##(Smalltalk.Point) 1857 33 51 48851 1246790 1 ##(Smalltalk.ToolbarSystemButton) 416 1 594 #delete 8 'Delete' 1 1 nil 48851 1 11 48847 562 416 1 594 #step 8 'Step' 1 1 nil 48847 656 43 48843 562 416 1 594 #runSelected 8 'Run Selected' 1 1 nil 48843 656 83 48853 802 416 1 594 #reset 8 'Reset' 1 1 nil 48853 1 9 48849 562 416 1 594 #inspectSelected 8 'Inspect' 1 1 nil 48849 656 59 48845 562 416 1 594 #debug 8 'Debug' 1 1 nil 48845 656 15 34 11 576 912 1049158 1 ##(Smalltalk.ToolbarSeparator) 416 1 1056 864 1122 416 1 1008 1122 416 1 816 1122 416 1 960 nil nil 1 nil 770 33 33 nil nil nil 983302 ##(Smalltalk.MessageSequence) 138 144 34 2 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 770 3839 21 770 387 51 416 1282 #updateSizePosted 8 #() 416 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 127 7 0 0 10 0 0 0 64 8 0 0 35 0 0 0] 8 #() 770 193 193 nil 27 )! !
-!Toolbar class categoriesFor: #resource_SUnitBrowser_Resource_browser_toolbar!public!resources-views! !
-!Toolbar class categoriesFor: #resource_SUnitBrowser_toolbar!public!resources-views! !
+!UI.Toolbar class categoriesFor: #resource_SUnitBrowser_Resource_browser_toolbar!public!resources-views! !
+!UI.Toolbar class categoriesFor: #resource_SUnitBrowser_toolbar!public!resources-views! !
 
 "End of package definition"!
 

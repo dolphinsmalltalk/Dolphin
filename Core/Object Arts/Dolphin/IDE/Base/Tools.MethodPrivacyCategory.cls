@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-VirtualMethodCategory subclass: #MethodPrivacyCategory
+Tools.VirtualMethodCategory subclass: #'Tools.MethodPrivacyCategory'
 	instanceVariableNames: 'privacy'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-MethodPrivacyCategory guid: (GUID fromString: '{87b4c505-026e-11d3-9fd7-00a0cc3e4a32}')!
-MethodPrivacyCategory comment: 'MethodPrivacyCategory is a virtual method category class used to dynamically group private/public methods.
+Tools.MethodPrivacyCategory guid: (Core.GUID fromString: '{87b4c505-026e-11d3-9fd7-00a0cc3e4a32}')!
+Tools.MethodPrivacyCategory comment: 'MethodPrivacyCategory is a virtual method category class used to dynamically group private/public methods.
 
 This class has two instances representing the ''private'' and ''public'' categories.
 
@@ -18,8 +18,8 @@ Instance Variables:
 
 Class Variables:
 	None'!
-!MethodPrivacyCategory categoriesForClass!System-Support! !
-!MethodPrivacyCategory methodsFor!
+!Tools.MethodPrivacyCategory categoriesForClass!System-Support! !
+!Tools.MethodPrivacyCategory methodsFor!
 
 acceptsAdditions
 	"Answer whether methods can be added to the receiver.
@@ -61,15 +61,15 @@ removeMethodSilently: aCompiledMethod
 	methods that are members of the receiver, and make no fuss about it."
 
 	aCompiledMethod isPrivate: privacy not! !
-!MethodPrivacyCategory categoriesFor: #acceptsAdditions!public!testing! !
-!MethodPrivacyCategory categoriesFor: #addMethodSilently:!adding!private! !
-!MethodPrivacyCategory categoriesFor: #includesMethod:!public!testing! !
-!MethodPrivacyCategory categoriesFor: #isPrivacy!private!testing! !
-!MethodPrivacyCategory categoriesFor: #isPseud!public!testing! !
-!MethodPrivacyCategory categoriesFor: #privacy:!accessing!private! !
-!MethodPrivacyCategory categoriesFor: #removeMethodSilently:!private!removing! !
+!Tools.MethodPrivacyCategory categoriesFor: #acceptsAdditions!public!testing! !
+!Tools.MethodPrivacyCategory categoriesFor: #addMethodSilently:!adding!private! !
+!Tools.MethodPrivacyCategory categoriesFor: #includesMethod:!public!testing! !
+!Tools.MethodPrivacyCategory categoriesFor: #isPrivacy!private!testing! !
+!Tools.MethodPrivacyCategory categoriesFor: #isPseud!public!testing! !
+!Tools.MethodPrivacyCategory categoriesFor: #privacy:!accessing!private! !
+!Tools.MethodPrivacyCategory categoriesFor: #removeMethodSilently:!private!removing! !
 
-!MethodPrivacyCategory class methodsFor!
+!Tools.MethodPrivacyCategory class methodsFor!
 
 initialize
 	"Private - Initialize the receiver's class variables, etc.
@@ -91,6 +91,6 @@ uninitialize
 	"Private - Uninitialize the receiver as it is about to be removed from the system."
 
 	Public := Private := nil! !
-!MethodPrivacyCategory class categoriesFor: #initialize!initializing!private! !
-!MethodPrivacyCategory class categoriesFor: #uninitialize!class hierarchy-removing!private! !
+!Tools.MethodPrivacyCategory class categoriesFor: #initialize!initializing!private! !
+!Tools.MethodPrivacyCategory class categoriesFor: #uninitialize!class hierarchy-removing!private! !
 

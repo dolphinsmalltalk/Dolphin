@@ -15,10 +15,14 @@ package setClassNames: #(
 	#{Smalltalk.XmlFormatterTest}
 ).
 
+package setMethodNames: #(
+	#(#{Kernel.Tests.VMTest} #testExtCallArgBstr)
+).
+
 package setPrerequisites: #(
 	'Automation\ActiveX Automation'
 	'Connection Points\ActiveX Connection Points'
-	'Components\ADO\ADODB'
+	'Components\ADO\ADODB (Deprecated)'
 	'..\Database\Database Tests'
 	'..\Base\Dolphin'
 	'..\Base\Dolphin Base Tests'
@@ -81,6 +85,33 @@ XProgramming.SUnit.TestResource subclass: #TestTypelib
 	imports: #(#{OS.Win32Constants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
+"Loose Methods"!
+
+!Kernel.Tests.VMTest methodsFor!
+
+testExtCallArgBstr
+	"Note that BSTR is one of the FFI parameter types that may cause the VM to perform a type conversion that allocates memory, and as such cannot be used safely in overlapped calls unless the calling code is careful to perform all conversions to BSTR from Smalltalk strings in advance with #asBSTR"
+
+	| beers olelib |
+	olelib := OS.COM.OLEAutLibrary default.
+	{''. 'a'. '£2'. 'a' , (String with: Character null) , 'b'} do: 
+			[:each |
+			| subject expected actual |
+			expected := each asUtf16String size.
+			actual := olelib sysStringLen: each.
+			self assert: actual equals: expected.
+			subject := each asUtf8String.
+			actual := olelib sysStringLen: subject.
+			self assert: actual equals: expected.
+			subject := each asUtf16String.
+			actual := olelib sysStringLen: subject.
+			self assert: actual equals: expected].
+	"Like most string length functions, SysStringLen reports the number of code units, not the number of characters"
+	beers := Utf8String fromByteArray: #[16rF0 16r9F 16r8D 16rBB].
+	self assert: (olelib sysStringLen: beers) equals: 2.
+	self assert: (olelib sysStringLen: beers asUtf16String) equals: 2! !
+!Kernel.Tests.VMTest categoriesFor: #testExtCallArgBstr!public!unit tests! !
 
 "End of package definition"!
 

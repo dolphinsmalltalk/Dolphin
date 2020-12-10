@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-RefactoringTool subclass: #CodeRefactoringTool
+Tools.RefactoringTool subclass: #'Tools.CodeRefactoringTool'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'SmalltalkParseErrorCodes'
+	imports: #(#{Kernel.ParseErrorCodes})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-CodeRefactoringTool guid: (GUID fromString: '{9f149efa-c85c-464f-8eb3-43de901960b3}')!
-CodeRefactoringTool comment: '.CodeRefactoringTool implements code refactorings for a code workspace. Its container will typically be a <MethodWorkspace>.
+Tools.CodeRefactoringTool guid: (Core.GUID fromString: '{9f149efa-c85c-464f-8eb3-43de901960b3}')!
+Tools.CodeRefactoringTool comment: '.CodeRefactoringTool implements code refactorings for a code workspace. Its container will typically be a <MethodWorkspace>.
 
 CodeRefactoringTool implements the following refactorings:
 	Convert to Instance Variable
@@ -26,8 +26,8 @@ CodeRefactoringTool implements the following refactorings:
 	Rename Message*
 
 *Can rename messages sent to self, super, static variables and literals, and when hosted in the debugger temporaries and instance variables as well, i.e. where the type of the receiver is known so that the method to rename can be located.'!
-!CodeRefactoringTool categoriesForClass!Unclassified! !
-!CodeRefactoringTool methodsFor!
+!Tools.CodeRefactoringTool categoriesForClass!Unclassified! !
+!Tools.CodeRefactoringTool methodsFor!
 
 addClassVariable: aStVariableNode to: aClass 
 	self systemModel addClassVariable: aStVariableNode name to: aClass.
@@ -97,13 +97,14 @@ convertTempToInstVar
 
 	self convertTempToInstVar: self selectedNode!
 
-createClassForVariable: aStVariableNode 
+createClassForVariable: aStVariableNode
 	| dialog |
-	dialog := CreateSubclassDialog newSubclassOf: Object inPackage: presenter parseContext owningPackage.
+	dialog := CreateSubclassDialog newSubclassOf: Object
+				inPackage: presenter parseContext owningPackage.
 	dialog subclassName: aStVariableNode name.
 	dialog showModal.
 	dialog answer isNil ifTrue: [^self].
-	self systemModel 
+	self systemModel
 		createSubclass: dialog subclassName asSymbol
 		of: dialog superclass
 		package: dialog package
@@ -791,59 +792,59 @@ stubTextFor: aStMessageNode inClass: aClass
 		crtab;
 		nextPutAll: body.
 	^source contents! !
-!CodeRefactoringTool categoriesFor: #addClassVariable:to:!commands!private! !
-!CodeRefactoringTool categoriesFor: #addGlobalVariable:!commands!private! !
-!CodeRefactoringTool categoriesFor: #addInstanceVariable:to:!commands!private! !
-!CodeRefactoringTool categoriesFor: #addParameterCommand!commands!private!refactoring! !
-!CodeRefactoringTool categoriesFor: #addParameterToMessage!commands!public!refactoring! !
-!CodeRefactoringTool categoriesFor: #canPerformCodeRefactoring!private!refactoring! !
-!CodeRefactoringTool categoriesFor: #canRenameNode!private!refactoring! !
-!CodeRefactoringTool categoriesFor: #changeSignature:in:operation:title:!helpers!private! !
-!CodeRefactoringTool categoriesFor: #changeSignatureCommandFor:in:operation:title:!helpers!private!refactoring! !
-!CodeRefactoringTool categoriesFor: #contextBindingFor:!private!refactoring! !
-!CodeRefactoringTool categoriesFor: #convertTempToInstVar!commands!public!refactoring! !
-!CodeRefactoringTool categoriesFor: #createClassForVariable:!autocorrection!private! !
-!CodeRefactoringTool categoriesFor: #declareAllUndeclaredVariablesAsTemps!commands!private! !
-!CodeRefactoringTool categoriesFor: #declareTemporary:!commands!private! !
-!CodeRefactoringTool categoriesFor: #emitKeywordSignatureFor:in:on:!helpers!private! !
-!CodeRefactoringTool categoriesFor: #extractionRange!helpers!private!refactoring! !
-!CodeRefactoringTool categoriesFor: #extractMethod!commands!public!refactoring! !
-!CodeRefactoringTool categoriesFor: #extractToComponent!commands!public!refactoring! !
-!CodeRefactoringTool categoriesFor: #extractToTemporary!commands!public!refactoring! !
-!CodeRefactoringTool categoriesFor: #findAssignmentsToTemp:!helpers!private! !
-!CodeRefactoringTool categoriesFor: #hasUndeclaredVariables!autocorrection!private! !
-!CodeRefactoringTool categoriesFor: #implementMessage:!commands!private!refactoring! !
-!CodeRefactoringTool categoriesFor: #implementMessage:inClass:!commands!private!refactoring! !
-!CodeRefactoringTool categoriesFor: #inlineMessage!commands!public!refactoring! !
-!CodeRefactoringTool categoriesFor: #inlineParameter!commands!public!refactoring! !
-!CodeRefactoringTool categoriesFor: #inlineTemporary!commands!public!refactoring! !
-!CodeRefactoringTool categoriesFor: #inlineTemporary:in:!private!refactoring! !
-!CodeRefactoringTool categoriesFor: #isLocalVariable:!helpers!private! !
-!CodeRefactoringTool categoriesFor: #moveTempToInnerScope!public!refactoring! !
-!CodeRefactoringTool categoriesFor: #nameForArgument:!helpers!private! !
-!CodeRefactoringTool categoriesFor: #onAboutToDisplayMenu:!event handling!public! !
-!CodeRefactoringTool categoriesFor: #populateAutoCorrectMenu:!autocorrection!private! !
-!CodeRefactoringTool categoriesFor: #populateAutoCorrectMenu:forMessage:!autocorrection!private! !
-!CodeRefactoringTool categoriesFor: #populateAutoCorrectMenu:forUndefinedVar:!autocorrection!private! !
-!CodeRefactoringTool categoriesFor: #populateAutoCorrectMenu:forVariable:!autocorrection!private! !
-!CodeRefactoringTool categoriesFor: #populateImplementMenu:!helpers!private! !
-!CodeRefactoringTool categoriesFor: #populateImplementMenu:forMessage:!helpers!private! !
-!CodeRefactoringTool categoriesFor: #queryCommand:command:!commands!private! !
-!CodeRefactoringTool categoriesFor: #queryRenameCommand:command:!commands!private! !
-!CodeRefactoringTool categoriesFor: #removeParameter!commands!public!refactoring! !
-!CodeRefactoringTool categoriesFor: #removeTempDecl:!autocorrection!commands!private! !
-!CodeRefactoringTool categoriesFor: #renameClass:!helpers!private! !
-!CodeRefactoringTool categoriesFor: #renameClassVariable:!private!refactoring! !
-!CodeRefactoringTool categoriesFor: #renameInstanceVariable:!private!refactoring! !
-!CodeRefactoringTool categoriesFor: #renameItCommand!private!refactoring! !
-!CodeRefactoringTool categoriesFor: #renameMessage!commands!public!refactoring! !
-!CodeRefactoringTool categoriesFor: #renameMessageCommand!commands!private!refactoring! !
-!CodeRefactoringTool categoriesFor: #renameNode!commands!public!refactoring! !
-!CodeRefactoringTool categoriesFor: #renameTemporary:!operations!private!refactoring! !
-!CodeRefactoringTool categoriesFor: #renameVariable!commands!public!refactoring! !
-!CodeRefactoringTool categoriesFor: #renameVariableCommand:!commands!private!refactoring! !
-!CodeRefactoringTool categoriesFor: #selectedErrorRange!accessing!private!refactoring! !
-!CodeRefactoringTool categoriesFor: #selectedMethod!accessing!private! !
-!CodeRefactoringTool categoriesFor: #selectedNode!accessing!private!refactoring! !
-!CodeRefactoringTool categoriesFor: #stubTextFor:inClass:!helpers!private! !
+!Tools.CodeRefactoringTool categoriesFor: #addClassVariable:to:!commands!private! !
+!Tools.CodeRefactoringTool categoriesFor: #addGlobalVariable:!commands!private! !
+!Tools.CodeRefactoringTool categoriesFor: #addInstanceVariable:to:!commands!private! !
+!Tools.CodeRefactoringTool categoriesFor: #addParameterCommand!commands!private!refactoring! !
+!Tools.CodeRefactoringTool categoriesFor: #addParameterToMessage!commands!public!refactoring! !
+!Tools.CodeRefactoringTool categoriesFor: #canPerformCodeRefactoring!private!refactoring! !
+!Tools.CodeRefactoringTool categoriesFor: #canRenameNode!private!refactoring! !
+!Tools.CodeRefactoringTool categoriesFor: #changeSignature:in:operation:title:!helpers!private! !
+!Tools.CodeRefactoringTool categoriesFor: #changeSignatureCommandFor:in:operation:title:!helpers!private!refactoring! !
+!Tools.CodeRefactoringTool categoriesFor: #contextBindingFor:!private!refactoring! !
+!Tools.CodeRefactoringTool categoriesFor: #convertTempToInstVar!commands!public!refactoring! !
+!Tools.CodeRefactoringTool categoriesFor: #createClassForVariable:!autocorrection!private! !
+!Tools.CodeRefactoringTool categoriesFor: #declareAllUndeclaredVariablesAsTemps!commands!private! !
+!Tools.CodeRefactoringTool categoriesFor: #declareTemporary:!commands!private! !
+!Tools.CodeRefactoringTool categoriesFor: #emitKeywordSignatureFor:in:on:!helpers!private! !
+!Tools.CodeRefactoringTool categoriesFor: #extractionRange!helpers!private!refactoring! !
+!Tools.CodeRefactoringTool categoriesFor: #extractMethod!commands!public!refactoring! !
+!Tools.CodeRefactoringTool categoriesFor: #extractToComponent!commands!public!refactoring! !
+!Tools.CodeRefactoringTool categoriesFor: #extractToTemporary!commands!public!refactoring! !
+!Tools.CodeRefactoringTool categoriesFor: #findAssignmentsToTemp:!helpers!private! !
+!Tools.CodeRefactoringTool categoriesFor: #hasUndeclaredVariables!autocorrection!private! !
+!Tools.CodeRefactoringTool categoriesFor: #implementMessage:!commands!private!refactoring! !
+!Tools.CodeRefactoringTool categoriesFor: #implementMessage:inClass:!commands!private!refactoring! !
+!Tools.CodeRefactoringTool categoriesFor: #inlineMessage!commands!public!refactoring! !
+!Tools.CodeRefactoringTool categoriesFor: #inlineParameter!commands!public!refactoring! !
+!Tools.CodeRefactoringTool categoriesFor: #inlineTemporary!commands!public!refactoring! !
+!Tools.CodeRefactoringTool categoriesFor: #inlineTemporary:in:!private!refactoring! !
+!Tools.CodeRefactoringTool categoriesFor: #isLocalVariable:!helpers!private! !
+!Tools.CodeRefactoringTool categoriesFor: #moveTempToInnerScope!public!refactoring! !
+!Tools.CodeRefactoringTool categoriesFor: #nameForArgument:!helpers!private! !
+!Tools.CodeRefactoringTool categoriesFor: #onAboutToDisplayMenu:!event handling!public! !
+!Tools.CodeRefactoringTool categoriesFor: #populateAutoCorrectMenu:!autocorrection!private! !
+!Tools.CodeRefactoringTool categoriesFor: #populateAutoCorrectMenu:forMessage:!autocorrection!private! !
+!Tools.CodeRefactoringTool categoriesFor: #populateAutoCorrectMenu:forUndefinedVar:!autocorrection!private! !
+!Tools.CodeRefactoringTool categoriesFor: #populateAutoCorrectMenu:forVariable:!autocorrection!private! !
+!Tools.CodeRefactoringTool categoriesFor: #populateImplementMenu:!helpers!private! !
+!Tools.CodeRefactoringTool categoriesFor: #populateImplementMenu:forMessage:!helpers!private! !
+!Tools.CodeRefactoringTool categoriesFor: #queryCommand:command:!commands!private! !
+!Tools.CodeRefactoringTool categoriesFor: #queryRenameCommand:command:!commands!private! !
+!Tools.CodeRefactoringTool categoriesFor: #removeParameter!commands!public!refactoring! !
+!Tools.CodeRefactoringTool categoriesFor: #removeTempDecl:!autocorrection!commands!private! !
+!Tools.CodeRefactoringTool categoriesFor: #renameClass:!helpers!private! !
+!Tools.CodeRefactoringTool categoriesFor: #renameClassVariable:!private!refactoring! !
+!Tools.CodeRefactoringTool categoriesFor: #renameInstanceVariable:!private!refactoring! !
+!Tools.CodeRefactoringTool categoriesFor: #renameItCommand!private!refactoring! !
+!Tools.CodeRefactoringTool categoriesFor: #renameMessage!commands!public!refactoring! !
+!Tools.CodeRefactoringTool categoriesFor: #renameMessageCommand!commands!private!refactoring! !
+!Tools.CodeRefactoringTool categoriesFor: #renameNode!commands!public!refactoring! !
+!Tools.CodeRefactoringTool categoriesFor: #renameTemporary:!operations!private!refactoring! !
+!Tools.CodeRefactoringTool categoriesFor: #renameVariable!commands!public!refactoring! !
+!Tools.CodeRefactoringTool categoriesFor: #renameVariableCommand:!commands!private!refactoring! !
+!Tools.CodeRefactoringTool categoriesFor: #selectedErrorRange!accessing!private!refactoring! !
+!Tools.CodeRefactoringTool categoriesFor: #selectedMethod!accessing!private! !
+!Tools.CodeRefactoringTool categoriesFor: #selectedNode!accessing!private!refactoring! !
+!Tools.CodeRefactoringTool categoriesFor: #stubTextFor:inClass:!helpers!private! !
 

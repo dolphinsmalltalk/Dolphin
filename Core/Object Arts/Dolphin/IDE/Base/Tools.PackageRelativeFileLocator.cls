@@ -1,17 +1,17 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-RelativeFileLocator subclass: #PackageRelativeFileLocator
+Kernel.RelativeFileLocator subclass: #'Tools.PackageRelativeFileLocator'
 	instanceVariableNames: 'packageName'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-PackageRelativeFileLocator guid: (GUID fromString: '{01881ac6-d4ec-4fc2-be62-f07236be9753}')!
-PackageRelativeFileLocator comment: 'PackageRelativeFileLocator is a <RelativeFileLocator> that can be used to map between an absolute path and a path relative to a certain package''s directory. At runtime (i.e. in a deployed application from which packages have been stripped) PackageRelativeFileLocator''s behave in the same way as <ImageRelativeFileLocator>s.
+Tools.PackageRelativeFileLocator guid: (Core.GUID fromString: '{01881ac6-d4ec-4fc2-be62-f07236be9753}')!
+Tools.PackageRelativeFileLocator comment: 'PackageRelativeFileLocator is a <RelativeFileLocator> that can be used to map between an absolute path and a path relative to a certain package''s directory. At runtime (i.e. in a deployed application from which packages have been stripped) PackageRelativeFileLocator''s behave in the same way as <ImageRelativeFileLocator>s.
 
 Thanks to Chris Uppal for the original idea behind this class.'!
-!PackageRelativeFileLocator categoriesForClass!System-Support! !
-!PackageRelativeFileLocator methodsFor!
+!Tools.PackageRelativeFileLocator categoriesForClass!System-Support! !
+!Tools.PackageRelativeFileLocator methodsFor!
 
 basePath
 	^self package ifNil: [super basePath] ifNotNil: [:pkg | pkg path]!
@@ -28,12 +28,12 @@ packageName
 
 setPackageName: aString 
 	packageName := aString! !
-!PackageRelativeFileLocator categoriesFor: #basePath!accessing!public! !
-!PackageRelativeFileLocator categoriesFor: #package!accessing!public! !
-!PackageRelativeFileLocator categoriesFor: #packageName!accessing!public! !
-!PackageRelativeFileLocator categoriesFor: #setPackageName:!initializing!private! !
+!Tools.PackageRelativeFileLocator categoriesFor: #basePath!accessing!public! !
+!Tools.PackageRelativeFileLocator categoriesFor: #package!accessing!public! !
+!Tools.PackageRelativeFileLocator categoriesFor: #packageName!accessing!public! !
+!Tools.PackageRelativeFileLocator categoriesFor: #setPackageName:!initializing!private! !
 
-!PackageRelativeFileLocator class methodsFor!
+!Tools.PackageRelativeFileLocator class methodsFor!
 
 package: aPackage 
 	"Answer a new instance of the receiver for locating files relative to the folder containing
@@ -50,6 +50,6 @@ packageNamed: aString
 	^(super new)
 		setPackageName: aString;
 		yourself! !
-!PackageRelativeFileLocator class categoriesFor: #package:!instance creation!public! !
-!PackageRelativeFileLocator class categoriesFor: #packageNamed:!instance creation!public! !
+!Tools.PackageRelativeFileLocator class categoriesFor: #package:!instance creation!public! !
+!Tools.PackageRelativeFileLocator class categoriesFor: #packageNamed:!instance creation!public! !
 

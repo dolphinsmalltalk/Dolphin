@@ -1,14 +1,14 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Object subclass: #RefactoringTool
+Core.Object subclass: #'Tools.RefactoringTool'
 	instanceVariableNames: 'presenter'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #(#{Refactory.Browser private})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-RefactoringTool guid: (GUID fromString: '{838c8c37-c249-4db4-b324-65cb5babdc40}')!
-RefactoringTool isAbstract: true!
-RefactoringTool comment: 'RefactoringTool is the abstract class of plugins used to add refactoring functionality to browsers and other coding tools in the Dolphin IDE.
+Tools.RefactoringTool guid: (Core.GUID fromString: '{838c8c37-c249-4db4-b324-65cb5babdc40}')!
+Tools.RefactoringTool isNonInstantiable: true!
+Tools.RefactoringTool comment: 'RefactoringTool is the abstract class of plugins used to add refactoring functionality to browsers and other coding tools in the Dolphin IDE.
 
 Note that RefactoringTool is neither a presenter nor a model, but it is a <commandTarget>.
 
@@ -16,8 +16,8 @@ Instance Variables:
 	presenter		<presenter> hosting the refactoring tool. Its type will depend on the subclass.
 
 '!
-!RefactoringTool categoriesForClass!Unclassified! !
-!RefactoringTool methodsFor!
+!Tools.RefactoringTool categoriesForClass!Unclassified! !
+!Tools.RefactoringTool methodsFor!
 
 convertTempToInstVar: aStVariableNode 
 	"Private - Command to invoke the 'Convert to Instance Variable' code refactoring
@@ -108,27 +108,27 @@ setPresenter: aPresenter
 
 systemModel
 	^Smalltalk developmentSystem! !
-!RefactoringTool categoriesFor: #convertTempToInstVar:!public!refactoring! !
-!RefactoringTool categoriesFor: #inlineParameter:!private!refactoring! !
-!RefactoringTool categoriesFor: #onAboutToDisplayMenu:!event handling!public! !
-!RefactoringTool categoriesFor: #parseTree!accessing!private! !
-!RefactoringTool categoriesFor: #queryCommand:!commands!public! !
-!RefactoringTool categoriesFor: #queryCommand:command:!commands!private! !
-!RefactoringTool categoriesFor: #removeParameter:!operations!private!refactoring! !
-!RefactoringTool categoriesFor: #removeParameter:from:!operations!private!refactoring! !
-!RefactoringTool categoriesFor: #renameIt!commands!public!refactoring! !
-!RefactoringTool categoriesFor: #renameItCommand!private!refactoring! !
-!RefactoringTool categoriesFor: #renameTemporary:!operations!private!refactoring! !
-!RefactoringTool categoriesFor: #setPresenter:!initializing!private! !
-!RefactoringTool categoriesFor: #systemModel!constants!public! !
+!Tools.RefactoringTool categoriesFor: #convertTempToInstVar:!public!refactoring! !
+!Tools.RefactoringTool categoriesFor: #inlineParameter:!private!refactoring! !
+!Tools.RefactoringTool categoriesFor: #onAboutToDisplayMenu:!event handling!public! !
+!Tools.RefactoringTool categoriesFor: #parseTree!accessing!private! !
+!Tools.RefactoringTool categoriesFor: #queryCommand:!commands!public! !
+!Tools.RefactoringTool categoriesFor: #queryCommand:command:!commands!private! !
+!Tools.RefactoringTool categoriesFor: #removeParameter:!operations!private!refactoring! !
+!Tools.RefactoringTool categoriesFor: #removeParameter:from:!operations!private!refactoring! !
+!Tools.RefactoringTool categoriesFor: #renameIt!commands!public!refactoring! !
+!Tools.RefactoringTool categoriesFor: #renameItCommand!private!refactoring! !
+!Tools.RefactoringTool categoriesFor: #renameTemporary:!operations!private!refactoring! !
+!Tools.RefactoringTool categoriesFor: #setPresenter:!initializing!private! !
+!Tools.RefactoringTool categoriesFor: #systemModel!constants!public! !
 
-RefactoringTool methodProtocol: #commandTarget attributes: #(#readOnly) selectors: #(#queryCommand:)!
+Tools.RefactoringTool methodProtocol: #commandTarget attributes: #(#readOnly) selectors: #(#queryCommand:)!
 
-!RefactoringTool class methodsFor!
+!Tools.RefactoringTool class methodsFor!
 
 forPresenter: aPresenter 
 	^(self new)
 		setPresenter: aPresenter;
 		yourself! !
-!RefactoringTool class categoriesFor: #forPresenter:!instance creation!public! !
+!Tools.RefactoringTool class categoriesFor: #forPresenter:!instance creation!public! !
 

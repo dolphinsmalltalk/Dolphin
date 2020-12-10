@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Object subclass: #MethodSearch
+Core.Object subclass: #'Tools.MethodSearch'
 	instanceVariableNames: 'findDetails regexp literal'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'IgnoreCaseMask' -> 16r1
 	}!
-MethodSearch guid: (GUID fromString: '{702ae94a-b32c-4d97-b2a5-8080cf67e3b4}')!
-MethodSearch comment: 'SelectorSearch represents the information and behaviour necessary to filter the methods of the system according to whether they define or reference a message selector matching specified criteria. This can include regular expression matching when the ''VBScript Regular Expressions'' package is loaded.
+Tools.MethodSearch guid: (Core.GUID fromString: '{702ae94a-b32c-4d97-b2a5-8080cf67e3b4}')!
+Tools.MethodSearch comment: 'SelectorSearch represents the information and behaviour necessary to filter the methods of the system according to whether they define or reference a message selector matching specified criteria. This can include regular expression matching when the ''VBScript Regular Expressions'' package is loaded.
 
 Instance Variables:
 	findDetails		<FindDetails> holding search information (usually entered into the AdvancedFindDialog).
@@ -19,8 +19,8 @@ Class Variables:
 	IgnoreCaseMask		<integer>
 
 '!
-!MethodSearch categoriesForClass!Kernel-Objects! !
-!MethodSearch methodsFor!
+!Tools.MethodSearch categoriesForClass!Kernel-Objects! !
+!Tools.MethodSearch methodsFor!
 
 findDetails
 	"Answer an <AdvancedFindDetails> configured to find the selectors against which the receiver matches."
@@ -122,7 +122,7 @@ regularExpression
 
 	regexp isNull 
 		ifTrue: 
-			[regexp := IRegExp new.
+			[regexp := Smalltalk.IRegExp new.
 			regexp
 				pattern: findDetails pattern;
 				ignoreCase: findDetails isCaseSensitive not].
@@ -174,28 +174,28 @@ wildcardReferenceFilter
 	match := self wildcardMatchPattern.
 	ignoreCase := findDetails isCaseSensitive not.
 	^self literalSymbolsFilter: [:each | match match: each ignoreCase: ignoreCase]! !
-!MethodSearch categoriesFor: #findDetails!accessing!public! !
-!MethodSearch categoriesFor: #findDetails:!accessing!public! !
-!MethodSearch categoriesFor: #initialize!initializing!public! !
-!MethodSearch categoriesFor: #literal!public! !
-!MethodSearch categoriesFor: #literal:!accessing!public! !
-!MethodSearch categoriesFor: #literalDefinitionFilter!helpers!private! !
-!MethodSearch categoriesFor: #literalSymbolsFilter:!helpers!private! !
-!MethodSearch categoriesFor: #methodDefinitionFilter!helpers!private! !
-!MethodSearch categoriesFor: #methodReferenceFilter!helpers!private! !
-!MethodSearch categoriesFor: #pattern!accessing!public! !
-!MethodSearch categoriesFor: #pattern:!accessing!public! !
-!MethodSearch categoriesFor: #regexpDefinitionFilter!helpers!private! !
-!MethodSearch categoriesFor: #regexpReferenceFilter!helpers!private! !
-!MethodSearch categoriesFor: #regularExpression!accessing!private! !
-!MethodSearch categoriesFor: #searchMode!accessing!public! !
-!MethodSearch categoriesFor: #searchMode:!accessing!public! !
-!MethodSearch categoriesFor: #simpleReferenceFilter!helpers!private! !
-!MethodSearch categoriesFor: #wildcardDefinitionFilter!helpers!private! !
-!MethodSearch categoriesFor: #wildcardMatchPattern!helpers!private! !
-!MethodSearch categoriesFor: #wildcardReferenceFilter!helpers!private! !
+!Tools.MethodSearch categoriesFor: #findDetails!accessing!public! !
+!Tools.MethodSearch categoriesFor: #findDetails:!accessing!public! !
+!Tools.MethodSearch categoriesFor: #initialize!initializing!public! !
+!Tools.MethodSearch categoriesFor: #literal!public! !
+!Tools.MethodSearch categoriesFor: #literal:!accessing!public! !
+!Tools.MethodSearch categoriesFor: #literalDefinitionFilter!helpers!private! !
+!Tools.MethodSearch categoriesFor: #literalSymbolsFilter:!helpers!private! !
+!Tools.MethodSearch categoriesFor: #methodDefinitionFilter!helpers!private! !
+!Tools.MethodSearch categoriesFor: #methodReferenceFilter!helpers!private! !
+!Tools.MethodSearch categoriesFor: #pattern!accessing!public! !
+!Tools.MethodSearch categoriesFor: #pattern:!accessing!public! !
+!Tools.MethodSearch categoriesFor: #regexpDefinitionFilter!helpers!private! !
+!Tools.MethodSearch categoriesFor: #regexpReferenceFilter!helpers!private! !
+!Tools.MethodSearch categoriesFor: #regularExpression!accessing!private! !
+!Tools.MethodSearch categoriesFor: #searchMode!accessing!public! !
+!Tools.MethodSearch categoriesFor: #searchMode:!accessing!public! !
+!Tools.MethodSearch categoriesFor: #simpleReferenceFilter!helpers!private! !
+!Tools.MethodSearch categoriesFor: #wildcardDefinitionFilter!helpers!private! !
+!Tools.MethodSearch categoriesFor: #wildcardMatchPattern!helpers!private! !
+!Tools.MethodSearch categoriesFor: #wildcardReferenceFilter!helpers!private! !
 
-!MethodSearch class methodsFor!
+!Tools.MethodSearch class methodsFor!
 
 new
 	^super new initialize!
@@ -216,9 +216,9 @@ newPattern: aString
 
 newSelector: aSymbol 
 	^self newLiteral: aSymbol asSymbol! !
-!MethodSearch class categoriesFor: #new!instance creation!public! !
-!MethodSearch class categoriesFor: #newFindDetails:!instance creation!public! !
-!MethodSearch class categoriesFor: #newLiteral:!instance creation!public! !
-!MethodSearch class categoriesFor: #newPattern:!instance creation!public! !
-!MethodSearch class categoriesFor: #newSelector:!instance creation!public! !
+!Tools.MethodSearch class categoriesFor: #new!instance creation!public! !
+!Tools.MethodSearch class categoriesFor: #newFindDetails:!instance creation!public! !
+!Tools.MethodSearch class categoriesFor: #newLiteral:!instance creation!public! !
+!Tools.MethodSearch class categoriesFor: #newPattern:!instance creation!public! !
+!Tools.MethodSearch class categoriesFor: #newSelector:!instance creation!public! !
 

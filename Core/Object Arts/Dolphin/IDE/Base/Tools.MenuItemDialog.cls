@@ -1,13 +1,14 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Dialog subclass: #MenuItemDialog
+UI.Dialog subclass: #'Tools.MenuItemDialog'
 	instanceVariableNames: 'titlePresenter commandPresenter iconPresenter imageModel iconIdPresenter inspector cardsPresenter'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-MenuItemDialog guid: (GUID fromString: '{ec0e406d-75f7-437d-8d69-34cfd92846b7}')!
-MenuItemDialog comment: 'MenuItemDialog is the abstract class of <dialogPresenter>s used to edit menu entries.
+Tools.MenuItemDialog guid: (Core.GUID fromString: '{ec0e406d-75f7-437d-8d69-34cfd92846b7}')!
+Tools.MenuItemDialog isNonInstantiable: true!
+Tools.MenuItemDialog comment: 'MenuItemDialog is the abstract class of <dialogPresenter>s used to edit menu entries.
 
 Instance Variables:
 	titlePresenter		<TextPresenter> for the #title aspect.
@@ -16,8 +17,8 @@ Instance Variables:
 	imageModel			<ValueAspectAdaptor>
 	iconIdPresenter		<TextPresenter>
 '!
-!MenuItemDialog categoriesForClass!Unclassified! !
-!MenuItemDialog methodsFor!
+!Tools.MenuItemDialog categoriesForClass!Unclassified! !
+!Tools.MenuItemDialog methodsFor!
 
 chooseIcon
 	Icon choose ifNotNil: [:icon | imageModel value: icon]!
@@ -33,8 +34,7 @@ createComponents
 	commandPresenter := self add: TextPresenter new name: 'command'.
 	iconPresenter := self add: ImagePresenter new name: 'icon'.
 	iconIdPresenter := self add: TextPresenter new name: 'iconId'.
-	inspector := self add: PublishedAspectInspector new name: 'inspector'
-!
+	inspector := self add: PublishedAspectInspector new name: 'inspector'!
 
 createSchematicWiring
 	super createSchematicWiring.
@@ -85,22 +85,22 @@ queryCommand: aCommandQuery
 			[aCommandQuery isEnabled: imageModel value notNil.
 			^true].
 	^super queryCommand: aCommandQuery ! !
-!MenuItemDialog categoriesFor: #chooseIcon!commands!private! !
-!MenuItemDialog categoriesFor: #clearIcon!commands!private! !
-!MenuItemDialog categoriesFor: #createComponents!public! !
-!MenuItemDialog categoriesFor: #createSchematicWiring!initializing!public! !
-!MenuItemDialog categoriesFor: #model:!public! !
-!MenuItemDialog categoriesFor: #onCardChanged!event handling!private! !
-!MenuItemDialog categoriesFor: #onInspecteeChanged!event handling!private! !
-!MenuItemDialog categoriesFor: #onViewOpened!event handling!public! !
-!MenuItemDialog categoriesFor: #queryCommand:!public! !
+!Tools.MenuItemDialog categoriesFor: #chooseIcon!commands!private! !
+!Tools.MenuItemDialog categoriesFor: #clearIcon!commands!private! !
+!Tools.MenuItemDialog categoriesFor: #createComponents!public! !
+!Tools.MenuItemDialog categoriesFor: #createSchematicWiring!initializing!public! !
+!Tools.MenuItemDialog categoriesFor: #model:!public! !
+!Tools.MenuItemDialog categoriesFor: #onCardChanged!event handling!private! !
+!Tools.MenuItemDialog categoriesFor: #onInspecteeChanged!event handling!private! !
+!Tools.MenuItemDialog categoriesFor: #onViewOpened!event handling!public! !
+!Tools.MenuItemDialog categoriesFor: #queryCommand:!public! !
 
-!MenuItemDialog class methodsFor!
+!Tools.MenuItemDialog class methodsFor!
 
 icon
 	"Answers an Icon that can be used to represent this class."
 
 	^Menu icon
 ! !
-!MenuItemDialog class categoriesFor: #icon!constants!public! !
+!Tools.MenuItemDialog class categoriesFor: #icon!constants!public! !
 

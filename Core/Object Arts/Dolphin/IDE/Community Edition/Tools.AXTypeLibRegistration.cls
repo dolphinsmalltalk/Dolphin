@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Object subclass: #AXTypeLibRegistration
+Core.Object subclass: #'Tools.AXTypeLibRegistration'
 	instanceVariableNames: 'description guidString versionString minor major'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-AXTypeLibRegistration guid: (GUID fromString: '{187aaa33-6992-4cfc-bac1-e8a4cb9ea0f9}')!
-AXTypeLibRegistration comment: 'AXTypeLibRegistration is a simple class to hold registration information for a type library which might not yet be loaded.
+Tools.AXTypeLibRegistration guid: (Core.GUID fromString: '{187aaa33-6992-4cfc-bac1-e8a4cb9ea0f9}')!
+Tools.AXTypeLibRegistration comment: 'AXTypeLibRegistration is a simple class to hold registration information for a type library which might not yet be loaded.
 
 Instance Variables:
 	description		<String>
@@ -15,8 +15,8 @@ Instance Variables:
 	versionString	<String>
 
 '!
-!AXTypeLibRegistration categoriesForClass!Unclassified! !
-!AXTypeLibRegistration methodsFor!
+!Tools.AXTypeLibRegistration categoriesForClass!Unclassified! !
+!Tools.AXTypeLibRegistration methodsFor!
 
 < operand
 	"Answer whether the receiver collates before the <AXTypeLibRegistration>, 
@@ -87,19 +87,19 @@ versionString
 	"Answer the version string from the typelib's registration details."
 
 	^versionString! !
-!AXTypeLibRegistration categoriesFor: #<!comparing!public! !
-!AXTypeLibRegistration categoriesFor: #<=!comparing!public! !
-!AXTypeLibRegistration categoriesFor: #=!comparing!public! !
-!AXTypeLibRegistration categoriesFor: #buildVersionNumbers!accessing!helpers!private! !
-!AXTypeLibRegistration categoriesFor: #description!accessing!public! !
-!AXTypeLibRegistration categoriesFor: #description:guidString:versionString:!initializing!private! !
-!AXTypeLibRegistration categoriesFor: #hash!comparing!public! !
-!AXTypeLibRegistration categoriesFor: #libid!accessing!public! !
-!AXTypeLibRegistration categoriesFor: #majorVersion!accessing!public! !
-!AXTypeLibRegistration categoriesFor: #minorVersion!accessing!public! !
-!AXTypeLibRegistration categoriesFor: #versionString!accessing!public! !
+!Tools.AXTypeLibRegistration categoriesFor: #<!comparing!public! !
+!Tools.AXTypeLibRegistration categoriesFor: #<=!comparing!public! !
+!Tools.AXTypeLibRegistration categoriesFor: #=!comparing!public! !
+!Tools.AXTypeLibRegistration categoriesFor: #buildVersionNumbers!accessing!helpers!private! !
+!Tools.AXTypeLibRegistration categoriesFor: #description!accessing!public! !
+!Tools.AXTypeLibRegistration categoriesFor: #description:guidString:versionString:!initializing!private! !
+!Tools.AXTypeLibRegistration categoriesFor: #hash!comparing!public! !
+!Tools.AXTypeLibRegistration categoriesFor: #libid!accessing!public! !
+!Tools.AXTypeLibRegistration categoriesFor: #majorVersion!accessing!public! !
+!Tools.AXTypeLibRegistration categoriesFor: #minorVersion!accessing!public! !
+!Tools.AXTypeLibRegistration categoriesFor: #versionString!accessing!public! !
 
-!AXTypeLibRegistration class methodsFor!
+!Tools.AXTypeLibRegistration class methodsFor!
 
 description: dString guidString: gString versionString: vString
 	"Answer a new instance of the receiver for the specified typelib registration details."
@@ -111,7 +111,7 @@ description: dString guidString: gString versionString: vString
 icon
 	"Answers an <Icon> that can be used to represent this class"
 
-	^AXTypeLibraryAnalyzer icon! !
-!AXTypeLibRegistration class categoriesFor: #description:guidString:versionString:!instance creation!public! !
-!AXTypeLibRegistration class categoriesFor: #icon!constants!public! !
+	^Smalltalk.AXTypeLibraryAnalyzer icon! !
+!Tools.AXTypeLibRegistration class categoriesFor: #description:guidString:versionString:!instance creation!public! !
+!Tools.AXTypeLibRegistration class categoriesFor: #icon!constants!public! !
 

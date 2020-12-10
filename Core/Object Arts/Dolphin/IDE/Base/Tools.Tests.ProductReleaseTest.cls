@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-DolphinTest subclass: #ProductReleaseTest
+Core.Tests.DolphinTest subclass: #'Tools.Tests.ProductReleaseTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ProductReleaseTest guid: (GUID fromString: '{685d25f7-ba9b-419b-af63-61526013895c}')!
-ProductReleaseTest comment: ''!
-!ProductReleaseTest categoriesForClass!Unclassified! !
-!ProductReleaseTest methodsFor!
+Tools.Tests.ProductReleaseTest guid: (Core.GUID fromString: '{685d25f7-ba9b-419b-af63-61526013895c}')!
+Tools.Tests.ProductReleaseTest comment: ''!
+!Tools.Tests.ProductReleaseTest categoriesForClass!Unclassified! !
+!Tools.Tests.ProductReleaseTest methodsFor!
 
 checkNoClass: aSymbol
 	self specialAssert: (Smalltalk lookup: aSymbol) isNil!
@@ -26,9 +26,12 @@ specialAssert: aBoolean
 testCompilationFailures
 	| failed |
 	failed := '*-compilation failures' asMethodCategory methods.
-	self assert: failed asArray equals: #()! !
-!ProductReleaseTest categoriesFor: #checkNoClass:!public!unit tests! !
-!ProductReleaseTest categoriesFor: #isReleased!private!unit tests! !
-!ProductReleaseTest categoriesFor: #specialAssert:!private!unit tests! !
-!ProductReleaseTest categoriesFor: #testCompilationFailures!public!unit tests! !
+	self assert: failed asArray equals: #()
+	"
+	(Refactory.Browser.BrowserEnvironment new forMethods: failed) browse
+	"! !
+!Tools.Tests.ProductReleaseTest categoriesFor: #checkNoClass:!public!unit tests! !
+!Tools.Tests.ProductReleaseTest categoriesFor: #isReleased!private!unit tests! !
+!Tools.Tests.ProductReleaseTest categoriesFor: #specialAssert:!private!unit tests! !
+!Tools.Tests.ProductReleaseTest categoriesFor: #testCompilationFailures!public!unit tests! !
 

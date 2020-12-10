@@ -602,7 +602,7 @@ printDefinitionOn: aPuttableStream
 printFullNameOn: aPuttableStream
 	name
 		ifNil: [self printOn: aPuttableStream]
-		ifNotNil: [self printNameOn: aPuttableStream relativeTo: Root]!
+		ifNotNil: [aPuttableStream nextPutAll: fullName]!
 
 printNameOn: aPuttableStream relativeTo: outerNamespace
 	(self environment isNil or: [environment == outerNamespace])

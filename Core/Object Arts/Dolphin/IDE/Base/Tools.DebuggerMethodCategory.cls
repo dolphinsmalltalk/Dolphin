@@ -1,19 +1,19 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-MethodCategory subclass: #DebuggerMethodCategory
+Core.MethodCategory subclass: #'Tools.DebuggerMethodCategory'
 	instanceVariableNames: 'mask'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-DebuggerMethodCategory guid: (GUID fromString: '{424b6561-1ba5-4a45-b1e3-6936f126dcd5}')!
-DebuggerMethodCategory comment: ''!
-!DebuggerMethodCategory categoriesForClass!System-Support! !
-!DebuggerMethodCategory methodsFor!
+Tools.DebuggerMethodCategory guid: (Core.GUID fromString: '{424b6561-1ba5-4a45-b1e3-6936f126dcd5}')!
+Tools.DebuggerMethodCategory comment: ''!
+!Tools.DebuggerMethodCategory categoriesForClass!System-Support! !
+!Tools.DebuggerMethodCategory methodsFor!
 
-addMethodSilently: aCompiledMethod 
+addMethodSilently: aCompiledMethod
 	super addMethodSilently: aCompiledMethod.
-	Debugger 
+	Debugger
 		skipSelector: aCompiledMethod selector
 		of: aCompiledMethod methodClass
 		maskSet: mask!
@@ -24,18 +24,18 @@ mask
 mask: anObject
 	mask := anObject!
 
-removeMethodSilently: aCompiledMethod 
-	Debugger 
+removeMethodSilently: aCompiledMethod
+	Debugger
 		skipSelector: aCompiledMethod selector
 		of: aCompiledMethod methodClass
 		maskClear: mask.
 	super removeMethodSilently: aCompiledMethod! !
-!DebuggerMethodCategory categoriesFor: #addMethodSilently:!adding!private! !
-!DebuggerMethodCategory categoriesFor: #mask!accessing!public! !
-!DebuggerMethodCategory categoriesFor: #mask:!accessing!private! !
-!DebuggerMethodCategory categoriesFor: #removeMethodSilently:!private!removing! !
+!Tools.DebuggerMethodCategory categoriesFor: #addMethodSilently:!adding!private! !
+!Tools.DebuggerMethodCategory categoriesFor: #mask!accessing!public! !
+!Tools.DebuggerMethodCategory categoriesFor: #mask:!accessing!private! !
+!Tools.DebuggerMethodCategory categoriesFor: #removeMethodSilently:!private!removing! !
 
-!DebuggerMethodCategory class methodsFor!
+!Tools.DebuggerMethodCategory class methodsFor!
 
 initialize
 	| steppedThrough stepThrough stepOver steppedOver |
@@ -53,5 +53,5 @@ initialize
 		at: stepOver name put: stepOver.
 	steppedThrough do: [:each | stepThrough addMethodSilently: each].
 	steppedOver do: [:each | stepOver addMethodSilently: each]! !
-!DebuggerMethodCategory class categoriesFor: #initialize!public! !
+!Tools.DebuggerMethodCategory class categoriesFor: #initialize!public! !
 
