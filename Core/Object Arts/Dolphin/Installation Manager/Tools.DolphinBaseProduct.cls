@@ -144,11 +144,10 @@ contents
 		add: #('Core\Contributions\Solutions Software\SSW EditableListView Demo.pax' #plain #imageBased);
 		yourself.
 		
-	"STON"
+	"STON - extras"
 	contents
-		add: #('Core\Contributions\svenc\STON\STON-Core.pax' #plain #imageBased);
-		add: #('Core\Contributions\svenc\STON\STON-Text support.pax' #plain #imageBased);
-		add: #('Core\Object Arts\Dolphin\System\STON\Dolphin STON.pax' #plain #imageBased);
+		add: #('Core\Object Arts\Dolphin\System\STON\Dolphin STON-Json.pax' #plain #imageBased);
+		add: #('Core\Object Arts\Dolphin\System\STON\Dolphin STON-MVP.pax' #plain #imageBased);
 		yourself.
 
 	^contents!

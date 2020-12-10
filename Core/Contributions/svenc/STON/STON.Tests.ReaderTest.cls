@@ -49,7 +49,7 @@ testClassWithUnderscore
 	cls := Object newAnonymousSubclass.
 	cls setName: #A_B_C123AnonClass environment: nil.
 	data := STON toString: cls new.
-	reader := STON.Reader on: data readStream.
+	reader := Reader on: data readStream.
 	(reader instVarNamed: #classes) at: cls name put: cls.
 	self assert: reader next class equals: cls!
 
@@ -149,7 +149,7 @@ testDictionaryWithComplexKeys
 				at: #(#foo) put: 2;
 				yourself.
 	"allowing complex map keys used to be optional, now it is always the default"
-	reader := STON.Reader on: '{true:1,[#foo]:2}' readStream.
+	reader := Reader on: '{true:1,[#foo]:2}' readStream.
 	self assert: reader next equals: collection!
 
 testDictionaryWithIndirectReferenceKeys
@@ -179,7 +179,7 @@ testDictionaryWithReferenceKeys
 
 testError
 	#('foo' '{foo:}' '{foo,}' '[1,]' '+1' ']' '#' '' '  ' '	' 'nul' 'tru' 'fals')
-		do: [:each | self should: [self materialize: each] raise: STON.ReaderError]!
+		do: [:each | self should: [self materialize: each] raise: ReaderError]!
 
 testFloat
 	self assert: ((self materialize: '1.5') closeTo: 1.5).
@@ -207,11 +207,11 @@ testIdentityDictionary
 	self assert: (self materialize: 'IdentityDictionary{}') equals: IdentityDictionary new!
 
 testIllegalCharacterEscapes
-	self should: [STON fromString: '''\a'''] raise: STON.ReaderError.
-	self should: [STON fromString: '''\u'''] raise: STON.ReaderError.
-	self should: [STON fromString: '''\u00'''] raise: STON.ReaderError.
-	self should: [STON fromString: '''\u000'''] raise: STON.ReaderError.
-	self should: [STON fromString: '''\*'''] raise: STON.ReaderError!
+	self should: [STON fromString: '''\a'''] raise: ReaderError.
+	self should: [STON fromString: '''\u'''] raise: ReaderError.
+	self should: [STON fromString: '''\u00'''] raise: ReaderError.
+	self should: [STON fromString: '''\u000'''] raise: ReaderError.
+	self should: [STON fromString: '''\*'''] raise: ReaderError!
 
 testInteger
 	self assert: (self materialize: '1') equals: 1.
@@ -402,7 +402,7 @@ testTime
 testUnknownClasses
 	| input object |
 	input := 'FooBar { #foo : 1, #bar : true }'.
-	self should: [self materialize: input] raise: STON.ReaderError.
+	self should: [self materialize: input] raise: ReaderError.
 	object := STON reader
 				acceptUnknownClasses: true;
 				on: input readStream;

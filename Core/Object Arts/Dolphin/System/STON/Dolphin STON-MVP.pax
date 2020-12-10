@@ -1,0 +1,222 @@
+﻿| package |
+package := Package name: 'Dolphin STON-MVP'.
+package paxVersion: 2.1;
+	preDeclareClassesOnLoad: false;
+	basicComment: 'Dolphin STON support
+Copyright (c) Object Arts Ltd, 2019'.
+
+
+package setMethodNames: #(
+	#(#{Graphics.Color} #stonContainSubObjects)
+	#(#{Graphics.Color} #stonOn:)
+	#(#{Graphics.Color class} #fromSton:)
+	#(#{Graphics.Color class} #stonName)
+	#(#{Graphics.GraphicsTool class} #stonAllInstVarNames)
+	#(#{Graphics.IconImageManager} #stonOn:)
+	#(#{Graphics.IconImageManager class} #fromSton:)
+	#(#{Graphics.Point} #stonOn:)
+	#(#{Graphics.Point class} #fromSton:)
+	#(#{UI.CardLayout class} #stonAllInstVarNames)
+	#(#{UI.ControlView class} #stonAllInstVarNames)
+	#(#{UI.FramingCalculation} #stonOn:)
+	#(#{UI.FramingCalculation class} #fromSton:)
+	#(#{UI.ReferenceView} #stonExtras)
+	#(#{UI.ReferenceView class} #stonAllInstVarNames)
+	#(#{UI.Scintilla.ScintillaView class} #stonAllInstVarNames)
+	#(#{UI.Toolbar class} #stonAllInstVarNames)
+	#(#{UI.View} #stonExtras)
+	#(#{UI.View} #stonOn:)
+	#(#{UI.View class} #stonAllInstVarNames)
+).
+
+package setPrerequisites: #(
+	'..\..\Base\Dolphin'
+	'..\..\MVP\Base\Dolphin Basic Geometry'
+	'..\..\MVP\Views\Cards\Dolphin Card Containers'
+	'..\..\MVP\Views\Control Bars\Dolphin Control Bars'
+	'..\..\MVP\Base\Dolphin MVP Base'
+	'..\..\MVP\Views\Scintilla\Dolphin Scintilla View'
+).
+
+package!
+
+"Loose Methods"!
+
+!Graphics.Color methodsFor!
+
+stonContainSubObjects
+	^ false!
+
+stonOn: stonWriter
+	"We have to replace the STON-Core implementation because Dolphin's Color representation is different to Pharo's."
+
+	self name
+		ifNil: 
+			[stonWriter writeObject: self
+				streamMap: 
+					[:map |
+					map
+						at: #red put: (self normalizedRed roundTo: 0.001);
+						at: #green put: (self normalizedGreen roundTo: 0.001);
+						at: #blue put: (self normalizedBlue roundTo: 0.001);
+						at: #alpha put: (self normalizedAlpha roundTo: 0.001)]]
+		ifNotNil: [:name | stonWriter writeObject: self listSingleton: name]! !
+!Graphics.Color categoriesFor: #stonContainSubObjects!public!ston! !
+!Graphics.Color categoriesFor: #stonOn:!public!ston! !
+
+!Graphics.Color class methodsFor!
+
+fromSton: stonReader
+	"We have to replace the STON-Core implementation because Dolphin's Color representation is different to Pharo's."
+
+	^stonReader isList
+		ifTrue: [self named: stonReader parseListSingleton]
+		ifFalse: 
+			[| values |
+			values := stonReader parseMap.
+			self
+				alpha: (values at: #alpha) * 255
+				red: (values at: #red) * 255
+				green: (values at: #green) * 255
+				blue: (values at: #blue) * 255]!
+
+stonName
+	^#Color! !
+!Graphics.Color class categoriesFor: #fromSton:!public!ston! !
+!Graphics.Color class categoriesFor: #stonName!public!ston! !
+
+!Graphics.GraphicsTool class methodsFor!
+
+stonAllInstVarNames
+	"Override to exclude the handle and ownsHandle instance variable as we never want to serialize these."
+
+	^self == ##(self) ifTrue: [#()] ifFalse: [superclass stonAllInstVarNames , self instVarNames]! !
+!Graphics.GraphicsTool class categoriesFor: #stonAllInstVarNames!public!ston! !
+
+!Graphics.IconImageManager methodsFor!
+
+stonOn: stonWriter
+	stonWriter 
+		writeObject: self 
+		do: []! !
+!Graphics.IconImageManager categoriesFor: #stonOn:!public!ston! !
+
+!Graphics.IconImageManager class methodsFor!
+
+fromSton: stonReader
+	^self current! !
+!Graphics.IconImageManager class categoriesFor: #fromSton:!public! !
+
+!Graphics.Point methodsFor!
+
+stonOn: stonWriter
+	stonWriter writeObject: self streamShortList: [ :array |
+		array add: x; add: y ]! !
+!Graphics.Point categoriesFor: #stonOn:!public!ston! !
+
+!Graphics.Point class methodsFor!
+
+fromSton: stonReader
+	"Point class>>new in Dolphin answers the immutable singleton zero instance, so we need to special case."
+
+	| answer |
+	answer := self basicNew.
+	stonReader parseListDo: 
+			[:each :index |
+			index == 1 ifTrue: [answer x: each].
+			index == 2 ifTrue: [answer y: each]].
+	^answer! !
+!Graphics.Point class categoriesFor: #fromSton:!public! !
+
+!UI.CardLayout class methodsFor!
+
+stonAllInstVarNames
+	"Override to exclude the number of instance variables we never want to serialize."
+
+	^superclass stonAllInstVarNames
+		, ##(self instVarNames reject: [:each | each = 'events' or: [each beginsWith: '_unused']])! !
+!UI.CardLayout class categoriesFor: #stonAllInstVarNames!public! !
+
+!UI.ControlView class methodsFor!
+
+stonAllInstVarNames
+	"Override to exclude the number of instance variables we never want to serialize."
+
+	^super stonAllInstVarNames copyWithout: 'oldWndProc'! !
+!UI.ControlView class categoriesFor: #stonAllInstVarNames!public!ston! !
+
+!UI.FramingCalculation methodsFor!
+
+stonOn: stonWriter
+	stonWriter writeObject: self listSingleton: name! !
+!UI.FramingCalculation categoriesFor: #stonOn:!public!ston! !
+
+!UI.FramingCalculation class methodsFor!
+
+fromSton: stonReader
+	#todo. "Perform is a security risk - provide a lookup table."
+	^self perform: stonReader parseListSingleton! !
+!UI.FramingCalculation class categoriesFor: #fromSton:!public!ston! !
+
+!UI.ReferenceView methodsFor!
+
+stonExtras
+	^{#state -> self state}! !
+!UI.ReferenceView categoriesFor: #stonExtras!public!ston! !
+
+!UI.ReferenceView class methodsFor!
+
+stonAllInstVarNames
+	"Override to exclude the number of instance variables we never want to serialize."
+
+	^super stonAllInstVarNames copyWithout: 'referee'! !
+!UI.ReferenceView class categoriesFor: #stonAllInstVarNames!public! !
+
+!UI.Scintilla.ScintillaView class methodsFor!
+
+stonAllInstVarNames
+	"Override to exclude the number of instance variables we never want to serialize."
+
+	^super stonAllInstVarNames copyWithout: 'styleIdMap'! !
+!UI.Scintilla.ScintillaView class categoriesFor: #stonAllInstVarNames!public! !
+
+!UI.Toolbar class methodsFor!
+
+stonAllInstVarNames
+	"Override to exclude the number of instance variables we never want to serialize."
+
+	^super stonAllInstVarNames copyWithoutAll: #('idMap' 'bitmapsStart')! !
+!UI.Toolbar class categoriesFor: #stonAllInstVarNames!public! !
+
+!UI.View methodsFor!
+
+stonExtras
+	^{#state -> self state. #subViews -> self subViews}!
+
+stonOn: stonWriter
+	"At present this is more experiment than anything useful. To show the potential though try Display-It on the following in a workspace:
+
+			shell := View desktop.
+			resourceView := Smalltalk developmentSystem loadViewResource: (ResourceIdentifier class: ClassBrowserShell selector: #resource_Default_view) resource inContext: shell. 
+			ston := STON toStringPretty: resourceView.
+			resourceView destroy.
+			ston.
+	"
+
+	stonWriter writeObject: self extra: self stonExtras! !
+!UI.View categoriesFor: #stonExtras!public!ston! !
+!UI.View categoriesFor: #stonOn:!public!ston! !
+
+!UI.View class methodsFor!
+
+stonAllInstVarNames
+	"Override to exclude the number of instance variables we never want to serialize."
+
+	^self == ##(self)
+		ifTrue: 
+			[#('creationStyle' 'model' 'backcolor' 'preferredExtent' 'flags' 'contextMenu' 'font' 'interactor')	"'presenter'"]
+		ifFalse: [superclass stonAllInstVarNames , self instVarNames]! !
+!UI.View class categoriesFor: #stonAllInstVarNames!public!ston! !
+
+"End of package definition"!
+

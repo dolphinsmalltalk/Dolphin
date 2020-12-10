@@ -100,15 +100,15 @@ testDatesAndTimes
 
 testDomainObject
 	| object objects |
-	object := STON.Tests.TestDomainObject dummy.
+	object := TestDomainObject dummy.
 	self serializeAndMaterialize: object.
 	objects := STON listClass
-				streamContents: [:stream | 10 timesRepeat: [stream nextPut: STON.Tests.TestDomainObject dummy]].
+				streamContents: [:stream | 10 timesRepeat: [stream nextPut: TestDomainObject dummy]].
 	self serializeAndMaterialize: objects.
 	objects := STON mapClass new.
 	10 timesRepeat: 
 			[| newObject |
-			newObject := STON.Tests.TestDomainObject dummy.
+			newObject := TestDomainObject dummy.
 			objects at: newObject integer put: newObject].
 	self serializeAndMaterialize: objects!
 
@@ -254,29 +254,29 @@ testSymbols
 
 testUser
 	| user users |
-	user := STON.Tests.STONTestUser dummy.
+	user := STONTestUser dummy.
 	self serializeAndMaterialize: user.
 	users := STON listClass
-				streamContents: [:stream | 10 timesRepeat: [stream nextPut: STON.Tests.STONTestUser dummy]].
+				streamContents: [:stream | 10 timesRepeat: [stream nextPut: STONTestUser dummy]].
 	self serializeAndMaterialize: users.
 	users := STON mapClass new.
 	10 timesRepeat: 
 			[| newUser |
-			newUser := STON.Tests.STONTestUser dummy.
+			newUser := STONTestUser dummy.
 			users at: newUser username put: newUser].
 	self serializeAndMaterialize: users!
 
 testUser2
 	| user users |
-	user := STON.Tests.STONTestUser2 dummy.
+	user := STONTestUser2 dummy.
 	self serializeAndMaterialize: user.
 	users := STON listClass
-				streamContents: [:stream | 10 timesRepeat: [stream nextPut: STON.Tests.STONTestUser2 dummy]].
+				streamContents: [:stream | 10 timesRepeat: [stream nextPut: STONTestUser2 dummy]].
 	self serializeAndMaterialize: users.
 	users := STON mapClass new.
 	10 timesRepeat: 
 			[| newUser |
-			newUser := STON.Tests.STONTestUser2 dummy.
+			newUser := STONTestUser2 dummy.
 			users at: newUser username put: newUser].
 	self serializeAndMaterialize: users!
 

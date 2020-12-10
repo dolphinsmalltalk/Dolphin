@@ -1,13 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
 Core.Object subclass: #'STON.Reader'
-	instanceVariableNames: 'readStream objects classes unresolvedReferences stringStream acceptUnknownClasses newLine convertNewLines'
-	classVariableNames: 'NotFound'
+	instanceVariableNames: 'readStream objects classes stringStream acceptUnknownClasses newLine convertNewLines classInstVarMaps currentCharacter objectProperties renamedClasses'
+	classVariableNames: 'EscapeChars'
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: {
+		'HexDigitValues' -> #(nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil 16r0 16r1 16r2 16r3 16r4 16r5 16r6 16r7 16r8 16r9 nil nil nil nil nil nil nil 16rA 16rB 16rC 16rD 16rE 16rF nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil 16rA 16rB 16rC 16rD 16rE 16rF)
+	}!
 STON.Reader guid: (Core.GUID fromString: '{d393ea51-a9cb-4a9f-bdc2-477e3bb22712}')!
-STON.Reader comment: 'STONReader materializes objects using the Smalltalk Object Notation format.
+STON.Reader comment: 'STON.Reader materializes objects using the Smalltalk Object Notation format.
 
 This parser is backwards compatible with standard JSON.
 
@@ -20,18 +22,19 @@ Customization options are:
 	if true, any unescaped EOL sequence CR, LF or CRLF inside strings or symbols is read and converted as the chosen EOL sequence
 	if false, CR, LF and CRLF are read unmodified
 - newLine <String> default is String cr
-	sequence to use as EOL'!
+	sequence to use as EOL
+
+h2. Dolphin Specifics
+
+We dispense with the naïve approach of patching up forward references encountered during the deserialization process by walking the objects as this quickly heads off into bits of the Object graph that were referenced from the STON serialisation, but not included in it. The `stonContainsSubObjects` mechanism is too simplistic and error prone to prevent this in all but very constrained object graphs with a known set of classes. It''s also rather slow. Neither of these things are suitable characteristics for a general purpose object serialization mechanism. To top it all, it isn''t actually necessary as the graph can only contain backwards references, never forwards references, as a function of the way it is built by visiting objects recursively. The numbered cross references in a STON stream are most often referencing a previously seen object that is known and recorded in the objects list and so which can be resolved immediately on encountering the reference. The corner case is where the object is not known because it is still being parsed and the reference is internal (only `parseObject` can encounter these cases). The design of the `fromSton:` API means that the materialised object instance is created without the reader''s immediate knowledge, so any internal refs will not be resolvable until after the `fromSton:` for the object being parsed has returned. In that case we can patch them up with `become:` if we can be very certain that the object is new and unshared. There is potential danger in using a swapping `become:` for classes that use the normal STON object representation, but which create some sort of external reference while the object itself is being instantiated (e.g. a registry for sharing), and which may internal references. For these we I have added a specific mechanism for the class side `fromSton:` to call back to the reader and replace the reference created by parseObject (see `STON.Reader>>#registerNewObject:`). This is not necessary for any of the standard `fromSton:` implementations, or any of the custom implementations to date.'!
 !STON.Reader categoriesForClass!STON-Core-Reader! !
 !STON.Reader methodsFor!
 
-acceptUnknownClasses: boolean
-	acceptUnknownClasses := boolean!
-
-allowComplexMapKeys: boolean
-	"Private - This is a no-op, this used to be an option, but it is now always enabled"!
+acceptUnknownClasses: aBoolean
+	acceptUnknownClasses := aBoolean!
 
 atEnd
-	^ readStream atEnd!
+	^currentCharacter isNil!
 
 close
 	readStream ifNotNil: [
@@ -41,71 +44,78 @@ close
 consumeWhitespace
 	"Strip whitespaces from the input stream."
 
-	[ readStream atEnd not and: [ readStream peek isSeparator ] ]
-		whileTrue: [ readStream next ]!
+	[(currentCharacter ?? $\0) isSeparator] whileTrue: [currentCharacter := readStream nextAvailable]!
 
-convertNewLines: boolean
+convertNewLines: aBoolean
 	"Private - When true, any newline CR, LF or CRLF read unescaped inside strings or symbols 
 	will be converted to the newline convention chosen, see #newLine:
-	The default is false, not doing any convertions."
-	
-	convertNewLines := boolean!
+	The default is false, not doing any conversions."
+
+	convertNewLines := aBoolean!
 
 error: aString
-	| streamPosition |
-	"Remain compatible with streams that don't understand #position"
-	streamPosition := [readStream position] on: MessageNotUnderstood do: [nil].
-	^ReaderError signal: aString streamPosition: streamPosition!
+	^ReaderError signal: aString
+		streamPosition: (readStream isPositionable ifTrue: [readStream position])!
 
 expectChar: character
-	"Expect character and consume input and optional whitespace at the end,
-	 throw an error otherwise."
+	"Expect character and consume input and optional whitespace at the end, throw an error otherwise."
 
-	(self matchChar: character)
-		ifFalse: [ self error: character asString, ' expected' ]!
+	currentCharacter == character
+		ifTrue: 
+			[currentCharacter := readStream nextAvailable.
+			self consumeWhitespace]
+		ifFalse: [self error: character asString , ' expected']!
 
 initialize
-	super initialize.
 	objects := IdentityDictionary new.
 	classes := IdentityDictionary new.
 	acceptUnknownClasses := convertNewLines := false.
-	newLine := String cr.
-	unresolvedReferences := 0!
+	newLine := String lineDelimiter.
+	objects := OrderedCollection new: 32.
 
-isClassChar: char
-	^ 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_' includes: char!
+	"Initialization specified to this class."
+	stringStream := String writeStream: 32.
+	classInstVarMaps := IdentityDictionary new!
 
-isClassStartChar: char
-	^ 'ABCDEFGHIJKLMNOPQRSTUVWXYZ' includes: char!
+instVarMapFor: aClass
+	^classInstVarMaps at: aClass
+		ifAbsentPut: 
+			[| map |
+			map := LookupTable new.
+			aClass allInstVarNames keysAndValuesDo: [:eachKey :eachValue | map at: eachValue put: eachKey].
+			map]!
+
+isClassChar: aCharacter
+	^aCharacter == $.
+		or: ['_ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz01234567890' identityIncludes: aCharacter]!
+
+isClassStartChar: aCharacter
+	"Would be nice to use the Scanner classification table here, but that creates an undesirable dependency."
+
+	^'_ABCDEFGHIJKLMNOPQRSTUVWXYZ' identityIncludes: aCharacter!
+
+isList
+	^currentCharacter == $[!
 
 isSimpleSymbolChar: char
 	^char isLetter or: ['0123456789-_./' includes: char]!
 
-lookupClass: name
-	Smalltalk globals at: name ifPresent: [:class | ^class].
-	^classes at: name
-		ifAbsentPut: 
-			[Object allSubclasses detect: [:class | class isMeta not and: [class stonName = name]]
-				ifNone: [NotFound signalFor: name]]!
+lookupClass: aSymbol
+	^(Smalltalk fullBindingFor: aSymbol)
+		ifNotNil: [:binding | binding value]
+		ifNil: [classes at: aSymbol ifAbsentPut: [(self renamedClasses lookup: aSymbol) ?? aSymbol]]!
 
 match: string do: block
-	"Try to read and consume string and execute block if successful.
-	Else do nothing (but do not back up)"
-
-	(string allSatisfy: [ :each | readStream peekFor: each ])
-		ifTrue: [ 
-			self consumeWhitespace.
-			block value ]!
+	self shouldNotImplement!
 
 matchChar: character
 	"Tries to match character, consume input and 
 	answer true if successful and consumes whitespace at the end."
 
-	^ (readStream peekFor: character)
-		ifTrue: [ 
+	^currentCharacter == character and: 
+			[currentCharacter := readStream nextAvailable.
 			self consumeWhitespace.
-			true ]
-		ifFalse: [ false ]!
+			true]!
 
 newLine: string
 	"Private - Set the newline convention to be used when converting newlines, see #convertNewLines"
@@ -115,63 +125,50 @@ newLine: string
 newReference
 	| index reference |
 	index := objects size + 1.
-	reference := STON.Reference index: index.
-	objects at: index put: reference.
+	reference := Reference index: index.
+	objects addLast: reference.
 	^reference!
 
 next
-	| object |
 	self consumeWhitespace.
-	object := self parseValue.
-	unresolvedReferences > 0
-		ifTrue: [ self processSubObjectsOf: object ].
-	unresolvedReferences = 0
-		ifFalse: [ self error: 'Inconsistent reference resolution' ].
-	^ object!
+	^self parseValue!
+
+objectProperties
+	^objectProperties ifNil: [objectProperties := IdentityDictionary new]!
 
 on: aReadStream
-	readStream := aReadStream!
+	readStream := aReadStream.
+	currentCharacter := readStream nextAvailable!
 
 optimizeForLargeStructures
-	self class environment
-		at: #FLLargeIdentityDictionary
-		ifPresent: [ :identityDictionaryClass | objects := identityDictionaryClass new ]!
-
-parseCharacter
-	| char |
-	^ (char := readStream next) = $\
-		ifTrue: [ self parseEscapedCharacter ]
-		ifFalse: [ char ]!
+!
 
 parseCharacterConvertingNewLinesOn: writeStream
 	| char |
-	(char := readStream next) = $\
+	char := currentCharacter.
+	currentCharacter := readStream nextAvailable.
+	char == $\
 		ifTrue: [writeStream nextPut: self parseEscapedCharacter]
 		ifFalse: 
-			[char = Character lf
+			[char == $\n
 				ifTrue: [writeStream nextPutAll: newLine]
 				ifFalse: 
-					[char = Character cr
+					[char == $\r
 						ifTrue: 
-							[readStream peekFor: Character lf.
+							[self peekFor: $\n.
 							writeStream nextPutAll: newLine]
 						ifFalse: [writeStream nextPut: char]]]!
 
 parseCharacterHex
-	| value codePoint |
+	| value |
 	value := self parseCharacterHex4Value.
-	(value < 16rD800 or: [value > 16rDBFF])
-		ifTrue: [codePoint := value]
-		ifFalse: 
-			[| leadSurrogate trailSurrogate |
-			"Characters not in the Basic Multilingual Plane are encoded as a UTF-16 surrogate pair"
+	^Character codePoint: ((value < 16rD800 or: [value > 16rDBFF])
+				ifTrue: [value]
+				ifFalse: 
+					["Characters not in the Basic Multilingual Plane are encoded as a UTF-16 surrogate pair"
 
-			"See https://tools.ietf.org/html/rfc7159#section-7"
-			leadSurrogate := value.
-			trailSurrogate := self parseTrailingSurrogateHexEscape.
-			codePoint := (leadSurrogate - 16rD800) * 16r400 + (trailSurrogate - 16rDC00).
-			codePoint := 16r10000 + codePoint].
-	^Character codePoint: codePoint!
+					"See https://tools.ietf.org/html/rfc7159#section-7"
+					16r10000 + ((value - 16rD800) * 16r400 + (self parseTrailingSurrogateHexEscape - 16rDC00))])!
 
 parseCharacterHex4Value
 	| value |
@@ -182,24 +179,33 @@ parseCharacterHex4Value
 
 parseCharacterHexDigit
 	| digit |
-	readStream atEnd ifFalse: [ 
-		digit := readStream next asInteger.
-		(digit between: "$0" 48 and: "$9" 57)
-			ifTrue: [ ^ digit - 48 ].
-		(digit between: "$A" 65 and: "$F" 70)
-			ifTrue: [ ^ digit - 55 ].
-		(digit between: "$a" 97 and: "$f" 102)
-			ifTrue: [ ^ digit - 87 ] ].
+	currentCharacter
+		ifNotNil: 
+			[digit := HexDigitValues lookup: currentCharacter code + 1.
+			currentCharacter := readStream nextAvailable.
+			digit isNil ifFalse: [^digit]].
 	self error: 'hex-digit expected'!
 
 parseClass
-	| className |
-	className := self stringStreamContents: [ :stream |
-		[ readStream atEnd not and: [ self isClassChar: readStream peek ] ] whileTrue: [ 
-			stream nextPut: readStream next ] ].
+	stringStream reset.
+	
+	[stringStream nextPut: currentCharacter.
+	self isClassChar: (currentCharacter := readStream nextAvailable)]
+			whileTrue.
 	self consumeWhitespace.
-	^ self lookupClass: className asSymbol
-	!
+	^self lookupClass: stringStream contents asSymbol!
+
+parseConstant
+	"Private - Parse and consume either true|false|nil|null."
+
+	stringStream reset.
+	[currentCharacter notNil and: [currentCharacter isLowerCase]] whileTrue: 
+			[stringStream nextPut: currentCharacter.
+			currentCharacter := readStream nextAvailable].
+	self consumeWhitespace.
+	^##(LookupTable withAll: {'true' -> true. 'false' -> false. 'nil' -> nil. 'null' -> nil})
+		at: stringStream contents
+		ifAbsent: [self error: 'invalid input']!
 
 parseConstantDo: block
 	"Private - Parse and consume either true|false|nil|null and execute block 
@@ -225,42 +231,49 @@ parseConstantDo: block
 
 parseEscapedCharacter
 	| char |
-	char := readStream next.
-	(#($' $" $/ $\) includes: char) ifTrue: [^char].
-	char = $b ifTrue: [^Character backspace].
-	char = $f ifTrue: [^Character newPage].
-	char = $n ifTrue: [^Character lf].
-	char = $r ifTrue: [^Character cr].
-	char = $t ifTrue: [^Character tab].
-	char = $u ifTrue: [^self parseCharacterHex].
-	self error: 'invalid escape character \' , (String with: char).
-	^char!
+	char := currentCharacter.
+	currentCharacter := readStream nextAvailable.
+	char == $u ifTrue: [^self parseCharacterHex].
+	(EscapeChars lookup: char) ifNotNil: [:ch | ^ch].
+	self error: 'invalid escape character \' , (String with: char)!
 
 parseList
-	| reference array |
-	reference := self newReference.
-	array := STON listClass streamContents: [:stream | self parseListDo: [:each | stream nextPut: each]].
-	self setReference: reference to: array.
-	^array!
+	| array stream |
+	self expectChar: $[.
+	array := STON listClass new.
+	self storeReference: array.
+	(self matchChar: $]) ifTrue: [^array].
+	stream := array writeStream.
+	[currentCharacter isNil] whileFalse: 
+			[stream nextPut: self parseValue.
+			(self matchChar: $])
+				ifTrue: 
+					[array resize: stream position.
+					^array].
+			self expectChar: $,].
+	self error: 'end of list expected'.
+	^self!
 
 parseListDo: block
 	| index |
 	self expectChar: $[.
-	(self matchChar: $]) ifTrue: [ ^ self ]. "short cut for empty lists"
+	(self matchChar: $]) ifTrue: [^self].	"short cut for empty lists"
 	index := 1.
-	[ readStream atEnd ] whileFalse: [
-		block cull: self parseValue cull: index.
-		(self matchChar: $]) ifTrue: [ ^ self ].
-		index := index + 1.
-		self expectChar: $, ].
+	[currentCharacter isNil] whileFalse: 
+			[block cull: self parseValue cull: index.
+			(self matchChar: $]) ifTrue: [^self].
+			index := index + 1.
+			self expectChar: $,].
 	self error: 'end of list expected'!
 
 parseListSingleton
+	"Overriden to reduce overhead."
+
 	| value |
-	value := nil.
-	self parseListDo: [ :each :index |
-		index = 1 ifTrue: [ value := each ] ].
-	^ value!
+	self expectChar: $[.
+	value := self parseValue.
+	self expectChar: $].
+	^value!
 
 parseMap
 	| map |
@@ -271,165 +284,162 @@ parseMap
 
 parseMapDo: block
 	self expectChar: ${.
-	(self matchChar: $}) ifTrue: [ ^ self ]. "short cut for empty maps"
-	[ readStream atEnd ] whileFalse: [ | name value |
-		name := self parseSimpleValue.
-		self expectChar: $:.
-		value := self parseValue.
-		block value: name value: value.
-		"The above is a more efficient way to say 'self parseValue' and using the returned association"
-		(self matchChar: $}) ifTrue: [ ^ self ].
-		self expectChar: $, ].
+	(self matchChar: $}) ifTrue: [^self].	"short cut for empty maps"
+	[currentCharacter isNil] whileFalse: 
+			[| name value |
+			name := self parseSimpleValue.
+			self expectChar: $:.
+			value := self parseValue.
+			block value: name value: value.
+			"The above is a more efficient way to say 'self parseValue' and using the returned association"
+			(self matchChar: $}) ifTrue: [^self].
+			self expectChar: $,].
 	self error: 'end of map expected'!
 
-parseMapOrListRepresentation
-	"Private - Parse either a map or list to be used as a representation, not considering it as a referenceable object"
-
-	readStream atEnd
-		ifFalse: 
-			[readStream peek = ${
-				ifTrue: 
-					[| map |
-					map := STON mapClass new.
-					self parseMapDo: [:key :value | map at: key put: value].
-					^map].
-			readStream peek = $[
-				ifTrue: [^STON listClass streamContents: [:stream | self parseListDo: [:each | stream nextPut: each]]]].
-	self error: 'invalid input'!
-
 parseNamedInstVarsFor: anObject
-	self parseMapDo: [ :instVarName :value |
-		anObject instVarNamed: instVarName put: value ]!
+	| instVars |
+	instVars := self instVarMapFor: anObject class.
+	self parseMapDo: 
+			[:name :value |
+			(instVars lookup: name asString)
+				ifNil: 
+					["Store extra state for later"
+					(self objectProperties at: anObject ifAbsentPut: [IdentityDictionary new]) at: name put: value]
+				ifNotNil: [:i | anObject instVarAt: i put: value]]!
 
 parseNumber
 	| negated number |
-	negated := readStream peekFor: $-.
+	negated := self peekFor: $-.
 	number := self parseNumberInteger.
-	(readStream peekFor: $/)
+	(self peekFor: $/)
 		ifTrue: 
 			[number := Fraction numerator: number denominator: self parseNumberInteger.
-			(readStream peekFor: $s)
+			(self peekFor: $s)
 				ifTrue: [number := ScaledDecimal newFromNumber: number scale: self parseNumberInteger]]
 		ifFalse: 
-			[(readStream peekFor: $.) ifTrue: [number := number + self parseNumberFraction].
-			((readStream peekFor: $e) or: [readStream peekFor: $E])
-				ifTrue: [number := number * self parseNumberExponent]].
+			[(self peekFor: $.) ifTrue: [number := number + self parseNumberFraction].
+			(currentCharacter == $e or: [currentCharacter == $E])
+				ifTrue: 
+					[currentCharacter := readStream nextAvailable.
+					number := number * self parseNumberExponent]].
 	negated ifTrue: [number := number negated].
 	self consumeWhitespace.
 	^number!
 
 parseNumberExponent
-	| number negated |
-	number := 0.
-	(negated := readStream peekFor: $-)
-		ifFalse: [ readStream peekFor: $+ ].
-	[ readStream atEnd not and: [ readStream peek isDigit ] ]
-		whileTrue: [ number := 10 * number + readStream next digitValue ].
-	negated
-		ifTrue: [ number := number negated ].
-	^ 10 raisedTo: number!
+	^10 raisedTo: ((self peekFor: $-)
+				ifTrue: [self parseNumberInteger * -1]
+				ifFalse: 
+					[self peekFor: $+.
+					self parseNumberInteger])!
 
 parseNumberFraction
-	| number power |
+	"Private - Parse the fraction part of a floating point number."
+
+	| number power digit |
 	number := 0.
-	power := 1.0.
-	[ readStream atEnd not and: [ readStream peek isDigit ] ] whileTrue: [
-		number := 10 * number + readStream next digitValue.
-		power := power * 10.0 ].
-	^ number / power!
+	power := 1.
+	[(digit := (currentCharacter ?? $\0) digitValue) >= 0 and: [digit < 10]] whileTrue: 
+			[number := 10 * number + digit.
+			power := power * 10.
+			currentCharacter := readStream nextAvailable].
+	^number / power asFloat!
 
 parseNumberInteger
-	| number |
+	| number digit |
 	number := 0.
-	[ readStream atEnd not and: [ readStream peek isDigit ] ] whileTrue: [ 
-		number := 10 * number + readStream next digitValue ].
-	^ number!
+	[(digit := (currentCharacter ?? $\0) digitValue) >= 0 and: [digit < 10]] whileTrue: 
+			[number := 10 * number + digit.
+			currentCharacter := readStream nextAvailable].
+	^number!
 
 parseObject
 	| targetClass reference object |
-	
-	[reference := self newReference.
+	reference := self newReference.
 	targetClass := self parseClass.
-	object := targetClass fromSton: self.
-	self setReference: reference to: object]
-			on: NotFound
-			do: 
-				[:notFound |
-				acceptUnknownClasses
-					ifTrue: 
-						[object := STON mapClass new.
-						self storeReference: object.
-						self parseMapDo: [:key :value | object at: key put: value].
-						object at: STON classNameKey put: notFound object]
-					ifFalse: [self error: 'Cannot resolve class named ' , notFound object printString]].
+	targetClass isSymbol
+		ifFalse: 
+			[object := targetClass fromSton: self.
+			"If the object has internal references then it must be a new object, and so should be safe to #become:. If it is a class that has overridden toSton: and fromSton: to materialize as some pre-existing instance, then it cannot contain internal references, and so the pre-created reference will have a zero ref-count. The check for #stonContainsSubObjects is, strictly speaking, unnecessary. If it were safe, we could use just that, but it is too easy to forget to implement it. It would be safer if the Object implementation returned false."
+			(reference refCount > 0 and: [object stonContainSubObjects])
+				ifTrue: 
+					[reference become: object.
+					^reference]
+				ifFalse: [self setReference: reference to: object]]
+		ifTrue: 
+			[acceptUnknownClasses
+				ifTrue: 
+					[object := STON mapClass new.
+					self storeReference: object.
+					self parseMapDo: [:key :value | object at: key put: value].
+					object at: STON classNameKey put: targetClass]
+				ifFalse: [self error: 'Cannot resolve class named ' , targetClass]].
 	^object!
 
 parseReference
-	| index |
+	| index object |
 	self expectChar: $@.
 	index := self parseNumberInteger.
 	self consumeWhitespace.
-	unresolvedReferences := unresolvedReferences + 1.
-	^STON.Reference index: index!
+	"References can only ever be backwards, so we'll have seen this object before (or it will be in the process of being constructed)"
+	object := objects at: index.
+	object isStonReference ifTrue: [object addReference].
+	^object!
 
 parseSimpleValue
-	| char |
-	readStream atEnd ifFalse: [ 
-		(self isClassStartChar: (char := readStream peek)) 
-			ifTrue: [ ^ self parseObject ].
-		char = ${
-			ifTrue: [ ^ self parseMap ].
-		char = $[
-			ifTrue: [ ^ self parseList ].
-		(char = $' or: [ char = $" ])
-			ifTrue: [ ^ self parseString ].
-		char = $#
-			ifTrue: [ ^ self parseSymbol ].
-		char = $@
-			ifTrue: [ ^ self parseReference ].
-		(char = $- or: [ char isDigit ])
-			ifTrue: [ ^ self parseNumber ].
-		self parseConstantDo: [ :value | ^ value ] ].
+	currentCharacter isNil
+		ifFalse: 
+			[(self isClassStartChar: currentCharacter) ifTrue: [^self parseObject].
+			currentCharacter == ${ ifTrue: [^self parseMap].
+			currentCharacter == $[ ifTrue: [^self parseList].
+			(currentCharacter == $' or: [currentCharacter == $"]) ifTrue: [^self parseString].
+			currentCharacter == $# ifTrue: [^self parseSymbol].
+			currentCharacter == $@ ifTrue: [^self parseReference].
+			(currentCharacter == $- or: [currentCharacter isDigit]) ifTrue: [^self parseNumber].
+			^self parseConstant].
 	self error: 'invalid input'!
 
 parseString
 	^ self parseStringInternal!
 
 parseStringInternal
-	| result delimiter |
-	delimiter := readStream next.
-	(delimiter = $' or: [ delimiter = $" ])
-		ifFalse: [ self error: ''' or " expected' ].
-	result := self
-		stringStreamContents: [ :stream | 
-			convertNewLines
-				ifTrue: [ 
-					[ readStream atEnd or: [ readStream peek = delimiter ] ] 
-						whileFalse: [ self parseCharacterConvertingNewLinesOn: stream ] ]
-				ifFalse: [ 
-					[ readStream atEnd or: [ readStream peek = delimiter ] ] 
-						whileFalse: [ stream nextPut: self parseCharacter ] ] ].
+	| delimiter |
+	delimiter := currentCharacter.
+	currentCharacter := readStream nextAvailable.
+	stringStream reset.
+	convertNewLines
+		ifTrue: 
+			[[(currentCharacter ?? delimiter) == delimiter]
+				whileFalse: [self parseCharacterConvertingNewLinesOn: stringStream]]
+		ifFalse: 
+			[[(currentCharacter ?? delimiter) == delimiter] whileFalse: 
+					[| char |
+					char := currentCharacter.
+					currentCharacter := readStream nextAvailable.
+					stringStream nextPut: (char == $\ ifTrue: [self parseEscapedCharacter] ifFalse: [char])]].
 	self expectChar: delimiter.
-	^ result!
+	^stringStream contents!
 
 parseSymbol
 	| string |
-	self expectChar: $#.
-	readStream peek = $'
-		ifTrue: [ ^ self parseStringInternal asSymbol ].
-	string := self stringStreamContents: [ :stream |
-		[ readStream atEnd not and: [ self isSimpleSymbolChar: readStream peek ] ] whileTrue: [
-			stream nextPut: readStream next ] ].
+	currentCharacter := readStream nextAvailable.
+	currentCharacter == $' ifTrue: [^self parseStringInternal asSymbol].
+	stringStream reset.
+	[self isSimpleSymbolChar: currentCharacter ?? $\0] whileTrue: 
+			[stringStream nextPut: currentCharacter.
+			currentCharacter := readStream nextAvailable.
+			self].
+	string := stringStream contents.
 	string isEmpty
-		ifFalse: [ 
-			self consumeWhitespace.
-			^ string asSymbol ].
+		ifFalse: 
+			[self consumeWhitespace.
+			^string asSymbol].
 	self error: 'unexpected input'!
 
 parseTrailingSurrogateHexEscape
-	(readStream next = $\ and: [ readStream next = $u ])
-		ifTrue: [ ^ self parseCharacterHex4Value ]
-		ifFalse: [ self error: 'trailing surrogate hex escape expected' ]!
+	^((self peekFor: $\) and: [self peekFor: $u])
+		ifTrue: [self parseCharacterHex4Value]
+		ifFalse: [self error: 'trailing surrogate hex escape expected']!
 
 parseValue
 	| value |
@@ -438,47 +448,44 @@ parseValue
 		ifTrue: [STON associationClass key: value value: self parseValue]
 		ifFalse: [value]!
 
-processSubObjectsOf: object
-	| unresolvedReferencesCount |
-	unresolvedReferencesCount := unresolvedReferences.
-	object stonProcessSubObjects: [ :each | 
-		each isStonReference
-			ifTrue: [ self resolveReference: each ]
-			ifFalse: [ 
-				each stonContainSubObjects
-					ifTrue: [ self processSubObjectsOf: each ]
-					ifFalse: [ each ] ] ].
-	unresolvedReferencesCount > unresolvedReferences
-		ifTrue: [ object stonPostReferenceResolution ].
-	^ object!
+peekFor: aCharacter
+	^currentCharacter == aCharacter and: 
+			[currentCharacter := readStream nextAvailable.
+			true]!
+
+registerNewObject: anObject
+	"Classes that create external references, e.g. a table of shared instances, when instantiating objects should call this method to replace the temporary STONReference in the parsed objects list.
+	This removes the need to patch up any internal references later."
+
+	| index existing |
+	index := objects size.
+	existing := objects at: index.
+	existing == anObject ifTrue: [^self].
+	(existing isStonReference and: [existing index == index])
+		ifFalse: [^self error: 'Newly created object should be registered before parsing sub-objects'].
+	objects at: index put: anObject!
+
+renamedClasses
+	^renamedClasses
+		ifNil: 
+			[| renamed |
+			renamed := IdentityDictionary new.
+			Smalltalk allClasses do: 
+					[:each |
+					((each class includesSelector: #stonName) and: [each stonName ~~ each fullName])
+						ifTrue: [renamed at: each stonName put: each]].
+			renamedClasses := renamed]!
 
 reset
-	unresolvedReferences := 0.
 	objects removeAll!
-
-resolveReference: reference
-	unresolvedReferences := unresolvedReferences - 1.
-	^ self resolveReferenceIndex: reference index!
-
-resolveReferenceIndex: index
-	^ objects at: index!
 
 setReference: reference to: object
 	objects at: reference index put: object!
 
 storeReference: object
-	| index |
-	index := objects size + 1.
-	objects at: index put: object.
-	^ index!
-
-stringStreamContents: block
-	stringStream ifNil: [stringStream := (String new: 32) writeStream].
-	stringStream reset.
-	block value: stringStream.
-	^stringStream contents! !
+	objects addLast: object.
+	^objects size! !
 !STON.Reader categoriesFor: #acceptUnknownClasses:!initialize/release!private! !
-!STON.Reader categoriesFor: #allowComplexMapKeys:!initialize/release!private! !
 !STON.Reader categoriesFor: #atEnd!private!testing! !
 !STON.Reader categoriesFor: #close!initialize/release!private! !
 !STON.Reader categoriesFor: #consumeWhitespace!helpers!private! !
@@ -486,57 +493,95 @@ stringStreamContents: block
 !STON.Reader categoriesFor: #error:!error handling!private! !
 !STON.Reader categoriesFor: #expectChar:!helpers!private! !
 !STON.Reader categoriesFor: #initialize!initialize/release!private! !
+!STON.Reader categoriesFor: #instVarMapFor:!private! !
 !STON.Reader categoriesFor: #isClassChar:!helpers!private! !
 !STON.Reader categoriesFor: #isClassStartChar:!helpers!private! !
+!STON.Reader categoriesFor: #isList!public!testing! !
 !STON.Reader categoriesFor: #isSimpleSymbolChar:!helpers!private! !
 !STON.Reader categoriesFor: #lookupClass:!helpers!private! !
 !STON.Reader categoriesFor: #match:do:!helpers!private! !
 !STON.Reader categoriesFor: #matchChar:!helpers!private! !
 !STON.Reader categoriesFor: #newLine:!initialize/release!private! !
 !STON.Reader categoriesFor: #newReference!helpers!private! !
-!STON.Reader categoriesFor: #next!helpers!public! !
+!STON.Reader categoriesFor: #next!public! !
+!STON.Reader categoriesFor: #objectProperties!private! !
 !STON.Reader categoriesFor: #on:!initialize/release!private! !
 !STON.Reader categoriesFor: #optimizeForLargeStructures!initialize/release!private! !
-!STON.Reader categoriesFor: #parseCharacter!parsing-internal!private! !
-!STON.Reader categoriesFor: #parseCharacterConvertingNewLinesOn:!parsing-internal!private! !
+!STON.Reader categoriesFor: #parseCharacterConvertingNewLinesOn:!parsing!private! !
 !STON.Reader categoriesFor: #parseCharacterHex!helpers!private! !
 !STON.Reader categoriesFor: #parseCharacterHex4Value!helpers!private! !
-!STON.Reader categoriesFor: #parseCharacterHexDigit!parsing-internal!private! !
-!STON.Reader categoriesFor: #parseClass!parsing-internal!private! !
+!STON.Reader categoriesFor: #parseCharacterHexDigit!parsing!private! !
+!STON.Reader categoriesFor: #parseClass!parsing!private! !
+!STON.Reader categoriesFor: #parseConstant!parsing!private! !
 !STON.Reader categoriesFor: #parseConstantDo:!parsing-internal!private! !
-!STON.Reader categoriesFor: #parseEscapedCharacter!parsing-internal!private! !
+!STON.Reader categoriesFor: #parseEscapedCharacter!parsing!private! !
 !STON.Reader categoriesFor: #parseList!parsing!private! !
 !STON.Reader categoriesFor: #parseListDo:!parsing!private! !
 !STON.Reader categoriesFor: #parseListSingleton!parsing!private! !
 !STON.Reader categoriesFor: #parseMap!parsing!private! !
 !STON.Reader categoriesFor: #parseMapDo:!parsing!private! !
-!STON.Reader categoriesFor: #parseMapOrListRepresentation!parsing!private! !
 !STON.Reader categoriesFor: #parseNamedInstVarsFor:!parsing!private! !
-!STON.Reader categoriesFor: #parseNumber!parsing-internal!private! !
-!STON.Reader categoriesFor: #parseNumberExponent!parsing-internal!private! !
-!STON.Reader categoriesFor: #parseNumberFraction!parsing-internal!private! !
-!STON.Reader categoriesFor: #parseNumberInteger!parsing-internal!private! !
+!STON.Reader categoriesFor: #parseNumber!parsing!private! !
+!STON.Reader categoriesFor: #parseNumberExponent!parsing!private! !
+!STON.Reader categoriesFor: #parseNumberFraction!parsing!private! !
+!STON.Reader categoriesFor: #parseNumberInteger!parsing!private! !
 !STON.Reader categoriesFor: #parseObject!parsing!private! !
-!STON.Reader categoriesFor: #parseReference!parsing-internal!private! !
+!STON.Reader categoriesFor: #parseReference!public! !
 !STON.Reader categoriesFor: #parseSimpleValue!parsing!private! !
 !STON.Reader categoriesFor: #parseString!parsing-internal!private! !
-!STON.Reader categoriesFor: #parseStringInternal!parsing-internal!private! !
-!STON.Reader categoriesFor: #parseSymbol!parsing-internal!private! !
-!STON.Reader categoriesFor: #parseTrailingSurrogateHexEscape!helpers!private! !
+!STON.Reader categoriesFor: #parseStringInternal!parsing!private! !
+!STON.Reader categoriesFor: #parseSymbol!parsing!private! !
+!STON.Reader categoriesFor: #parseTrailingSurrogateHexEscape!parsing!private! !
 !STON.Reader categoriesFor: #parseValue!parsing!private! !
-!STON.Reader categoriesFor: #processSubObjectsOf:!helpers!private! !
+!STON.Reader categoriesFor: #peekFor:!operations!private! !
+!STON.Reader categoriesFor: #registerNewObject:!parsing!private! !
+!STON.Reader categoriesFor: #renamedClasses!helpers!private! !
 !STON.Reader categoriesFor: #reset!initialize/release!private! !
-!STON.Reader categoriesFor: #resolveReference:!helpers!private! !
-!STON.Reader categoriesFor: #resolveReferenceIndex:!helpers!private! !
 !STON.Reader categoriesFor: #setReference:to:!helpers!private! !
 !STON.Reader categoriesFor: #storeReference:!helpers!private! !
-!STON.Reader categoriesFor: #stringStreamContents:!helpers!private! !
 
 !STON.Reader class methodsFor!
+
+icon
+	"Answers an Icon that can be used to represent this class"
+
+	^STON icon!
+
+initialize
+	| escapeChars |
+	escapeChars := IdentityDictionary new.
+	Character.EscapeChars
+		keysAndValuesDo: [:i :c | c ifNotNil: [escapeChars at: c put: (Character value: i - 1)]].
+	"STON doesn't support the \a escape, so remove that."
+	escapeChars removeKey: $a.
+	#($' $" $/ $\) do: [:ch | escapeChars at: ch put: ch].
+	self addClassConstant: 'EscapeChars'
+		value: (escapeChars
+				shrink;
+				isImmutable: true;
+				yourself).
+	self initializeHexDigitValues!
+
+initializeHexDigitValues
+	| digitValues |
+	digitValues := Array new: $f codePoint + 1.
+	$0 codePoint to: $9 codePoint do: [:each | digitValues at: each + 1 put: each - ##($0 codePoint)].
+	$A codePoint to: $F codePoint
+		do: [:each | digitValues at: each + 1 put: each - ##($A codePoint - 10)].
+	$a codePoint to: $f codePoint
+		do: [:each | digitValues at: each + 1 put: each - ##($a codePoint - 10)].
+	self addClassConstant: 'HexDigitValues' value: digitValues!
+
+new
+	^self basicNew initialize!
 
 on: readStream
 	^ self new
 		on: readStream;
 		yourself! !
+!STON.Reader class categoriesFor: #icon!constants!public! !
+!STON.Reader class categoriesFor: #initialize!private! !
+!STON.Reader class categoriesFor: #initializeHexDigitValues!initializing!private! !
+!STON.Reader class categoriesFor: #new!instance creation!private! !
 !STON.Reader class categoriesFor: #on:!instance creation!public! !
 

@@ -1,13 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
 Core.Object subclass: #'STON.Writer'
-	instanceVariableNames: 'writeStream prettyPrint stonCharacters newLine asciiOnly jsonMode keepNewLines referencePolicy level objects'
-	classVariableNames: 'STONCharacters STONSimpleSymbolCharacters'
+	instanceVariableNames: 'writeStream prettyPrint stonCharacters newLine asciiOnly keepNewLines referencePolicy level objects classInstVarMaps stringQuote'
+	classVariableNames: 'ExtendedCharacters'
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: {
+		'STONCharacters' -> #(nil nil nil nil nil nil nil nil '\b' '\t' '\n' nil '\f' '\r' nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil #pass #pass #pass #pass #pass #pass #pass '\''' #pass #pass #pass #pass #pass #pass #pass #pass #pass #pass #pass #pass #pass #pass #pass #pass #pass #pass #pass #pass #pass #pass #pass #pass #pass #pass #pass #pass #pass #pass #pass #pass #pass #pass #pass #pass #pass #pass #pass #pass #pass #pass #pass #pass #pass #pass #pass #pass #pass #pass #pass #pass '\\' #pass #pass #pass #pass #pass #pass #pass #pass #pass #pass #pass #pass #pass #pass #pass #pass #pass #pass #pass #pass #pass #pass #pass #pass #pass #pass #pass #pass #pass #pass #pass #pass #pass #pass).
+		'STONSimpleSymbolCharacters' -> #[1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1]
+	}!
 STON.Writer guid: (Core.GUID fromString: '{ad80eebc-c783-428d-8dbf-ebde1ffe8ddf}')!
-STON.Writer comment: 'STONWriter serializes objects using the Smalltalk Object Notation format. 
+STON.Writer comment: 'STON.Writer serializes objects using the Smalltalk Object Notation format. 
 
 Customization options are:
 
@@ -50,21 +53,18 @@ encodeCharacter: char
 	| code encoding |
 	"STONCharacters contains for the lower 127 characters (codes 0 to 126) either nil (unknown), 
 	#pass (output as is, clean ASCII characters) or a full escape string"
-	((code := char codePoint) < 127 and: [ (encoding := self stonCharacters at: code + 1) notNil ])
-		ifTrue: [ 
-			(encoding = #pass or: [ jsonMode and: [ char = $' ] ])
-				ifTrue: [ writeStream nextPut: char ]
-				ifFalse: [ writeStream nextPutAll: encoding ] ]
-		ifFalse: [
-			"always escape Latin1 C1 controls, or when asciiOnly is true" 
-			(code > 16r9F and: [ asciiOnly not ])
-				ifTrue: [ writeStream nextPut: char ]
-				ifFalse: [ self escapeUnicode: code ] ]
-!
+	((code := char codePoint) < 127 and: [(encoding := stonCharacters at: code + 1) notNil])
+		ifTrue: 
+			[(encoding = #pass or: [char == $' and: [self jsonMode]])
+				ifTrue: [writeStream nextPut: char]
+				ifFalse: [writeStream nextPutAll: encoding]]
+		ifFalse: 
+			["always escape Latin1 C1 controls, or when asciiOnly is true"
+			(code > 16r9F and: [asciiOnly not])
+				ifTrue: [writeStream nextPut: char]
+				ifFalse: [self escapeUnicode: code]]!
 
 encodeKey: key value: value
-	(jsonMode and: [ key isString not ])
-		ifTrue: [ self error: 'JSON key names in objects must be strings' ].
 	self nextPut: key.
 	self prettyPrintSpace.
 	writeStream nextPut: $:.
@@ -102,39 +102,37 @@ encodeMap: pairs
 			self newlineIndent].
 	writeStream nextPut: $}!
 
-encodeString: string
-	writeStream nextPut: (jsonMode ifTrue: [ $" ] ifFalse: [ $' ]).
+encodeString: aString
+	writeStream nextPut: stringQuote.
 	keepNewLines
-		ifTrue: [ 
-			self encodeStringKeepingNewLines: string ]
-		ifFalse: [ 
-			string do: [ :each | self encodeCharacter: each ] ].
-	writeStream nextPut: (jsonMode ifTrue: [ $" ] ifFalse: [ $' ])!
+		ifTrue: [self encodeStringKeepingNewLines: aString]
+		ifFalse: [aString do: [:ch | self encodeCharacter: ch]].
+	writeStream nextPut: stringQuote!
 
 encodeStringKeepingNewLines: string
 	| input char |
 	input := string readStream.
 	[input atEnd] whileFalse: 
 			[char := input next.
-			char = Character lf
+			char == $\n
 				ifTrue: [writeStream nextPutAll: newLine]
 				ifFalse: 
-					[char = Character cr
+					[char == $\r
 						ifTrue: 
-							[input peekFor: Character lf.
+							[input peekFor: $\n.
 							writeStream nextPutAll: newLine]
 						ifFalse: [self encodeCharacter: char]]]!
 
 error: aString
-	^STON.WriterError signal: aString!
+	^WriterError signal: aString!
 
 escape: char with: anObject
 	"Instruct me to escape char with object, either a replacement string or #pass"
 	
 	"self escape: $/ with: '\/'."
 	
-	self assert: (anObject isString | (anObject == #pass)).
-	self assert: char isOctetCharacter.
+	self assert: [anObject isString | (anObject == #pass)].
+	self assert: [char isAtomic].
 	self writeableStonCharacters at: char codePoint + 1 put: anObject!
 
 escapeUnicode: codePoint
@@ -162,39 +160,38 @@ indentedDo: block
 	level := level - 1!
 
 initialize
-	super initialize.
 	stonCharacters := STONCharacters.
 	prettyPrint := false.
-	newLine := String cr.
+	newLine := String lineDelimiter.
 	level := 0.
 	referencePolicy := #normal.
-	jsonMode := keepNewLines := asciiOnly := false.
-	objects := IdentityDictionary new!
+	keepNewLines := asciiOnly := false.
+	objects := IdentityDictionary new.
+	classInstVarMaps := IdentityDictionary new.
+	stonCharacters := STONCharacters.
+	stringQuote := $'!
 
-isSimpleSymbol: symbol
-	(symbol isEmpty or: [ symbol isWideString ]) 
-		ifTrue: [ ^ false ].
-	^ (symbol class 
-		findFirstInString: symbol 
-		inSet: STONSimpleSymbolCharacters 
-		startingAt: 1) = 0
+instVarMapFor: aClass
+	^classInstVarMaps at: aClass
+		ifAbsentPut: 
+			[| names |
+			names := aClass stonAllInstVarNames asSet.
+			"The 'map' is an actually array of all named inst vars, with nils in the slots of those not to be stored"
+			aClass allInstVarNames collect: [:each | (names includes: each) ifTrue: [each]]]!
 
-!
+isSimpleSymbol: aSymbol
+	"In Dolphin Symbols are always potentially 'wide strings' in that they are Utf8Strings, and may or may not contain extended characters."
+
+	| count |
+	count := aSymbol size.
+	count == 0 ifTrue: [^false].
+	"The acceptable simple symbol characters in STON are all ASCII, so any surrogate code unit we encounter will be considered a non-simple symbol character. Consequently we can perform this check by iterating through the code units, rather than streaming the characters."
+	1 to: count
+		do: [:i | (STONSimpleSymbolCharacters at: (aSymbol basicAt: i) + 1) == 0 ifFalse: [^false]].
+	^true!
 
 jsonMode
-
-	^ jsonMode !
-
-jsonMode: boolean
-	(jsonMode := boolean)
-		ifTrue: [ 
-			self
-				escape: $' with: #pass;
-				escape: $" with: '\"' ]
-		ifFalse: [ 
-			self
-				escape: $" with: #pass;
-				escape: $' with: '\''' ]!
+	^false!
 
 keepNewLines: boolean
 	"If true, any newline CR, LF or CRLF inside strings or symbols will not be escaped
@@ -255,9 +252,6 @@ shortListElementSeparator
 	self prettyPrintSpace
 !
 
-stonCharacters
-	^ stonCharacters ifNil: [ stonCharacters := STONCharacters ]!
-
 with: object do: block
 	| index |
 	referencePolicy = #ignore 
@@ -273,16 +267,12 @@ with: object do: block
 			block value ]!
 
 writeableStonCharacters
-	^ self stonCharacters == STONCharacters
-		ifTrue: [ stonCharacters := stonCharacters copy ]
-		ifFalse: [ stonCharacters ]!
+	^stonCharacters == STONCharacters
+		ifTrue: [stonCharacters := stonCharacters copy]
+		ifFalse: [stonCharacters]!
 
 writeAssociation: association
-	jsonMode
-		ifTrue: [ self error: 'wrong object class for JSON mode' ].
-	self 
-		encodeKey: association key 
-		value: association value!
+	self encodeKey: association key value: association value!
 
 writeBoolean: boolean
 	writeStream print: boolean!
@@ -291,12 +281,10 @@ writeFloat: float
 	writeStream print: float!
 
 writeFraction: fraction
-	jsonMode
-		ifTrue: [ self writeFloat: fraction asFloat ]
-		ifFalse: [ writeStream
-				print: fraction numerator;
-				nextPut: $/;
-				print: fraction denominator ]!
+	writeStream
+		print: fraction numerator;
+		nextPut: $/;
+		print: fraction denominator!
 
 writeInteger: integer
 	writeStream print: integer!
@@ -310,33 +298,42 @@ writeMap: hashedCollection
 		self encodeMap: hashedCollection ]!
 
 writeNull
-	jsonMode
-		ifTrue: [ writeStream nextPutAll: 'null' ]
-		ifFalse: [ writeStream print: nil ]!
+	writeStream print: nil!
 
 writeObject: anObject
-	| instanceVariableNames |
-	(instanceVariableNames := anObject class stonAllInstVarNames) isEmpty
-		ifTrue: [ 
-			self writeObject: anObject do: [ self encodeMap: #() ] ]
-		ifFalse: [ 
-			self writeObject: anObject streamMap: [ :dictionary | 
-				instanceVariableNames do: [ :each | 
-					(anObject instVarNamed: each)
-						ifNotNil: [ :value | 
-							dictionary at: each asSymbol put: value ]
-						ifNil: [ 
-							anObject stonShouldWriteNilInstVars 
-								ifTrue: [ dictionary at: each asSymbol put: nil ] ] ] ] ]!
+	"Override to use cached instance variable names"
+
+	self writeObject: anObject extra: #()!
 
 writeObject: anObject do: block
-	(jsonMode and: [anObject class ~= STON listClass and: [anObject class ~= STON mapClass]])
-		ifTrue: [self error: 'wrong object class for JSON mode'].
 	self with: anObject
 		do: 
 			[writeStream nextPutAll: anObject class stonName.
 			self prettyPrintSpace.
 			block value]!
+
+writeObject: anObject extra: extraPairs
+	"Override to use cached instance variable names"
+
+	| names |
+	names := self instVarMapFor: anObject class.
+	(names isEmpty and: [extraPairs isEmpty])
+		ifTrue: [self writeObject: anObject do: [self encodeMap: #()]]
+		ifFalse: 
+			[self writeObject: anObject
+				streamMap: 
+					[:dictionary |
+					"The map is an array of all inst var names with nil entries for those inst vars that should be skipped. Since the array is in inst var order, we can just enumerate over it by index and avoid the need to map from names to indices."
+					1 to: names size
+						do: 
+							[:i |
+							(names at: i)
+								ifNotNil: 
+									[:each |
+									(anObject instVarAt: i)
+										ifNotNil: [:value | dictionary at: each asSymbol put: value]
+										ifNil: [anObject stonShouldWriteNilInstVars ifTrue: [dictionary at: each asSymbol put: nil]]]].
+					extraPairs do: [:each | dictionary at: each key put: each value]]]!
 
 writeObject: object listSingleton: element
 	self writeObject: object do: [
@@ -348,8 +345,6 @@ writeObject: object listSingleton: element
 		writeStream nextPut: $] ]!
 
 writeObject: anObject named: stonName do: block
-	(jsonMode and: [anObject class ~= STON listClass and: [anObject class ~= STON mapClass]])
-		ifTrue: [self error: 'wrong object class for JSON mode'].
 	self with: anObject
 		do: 
 			[writeStream nextPutAll: stonName.
@@ -369,7 +364,7 @@ writeObject: object streamList: block
 	self writeObject: object
 		do: 
 			[| listWriter |
-			listWriter := STON.ListWriter on: self.
+			listWriter := ListWriter on: self.
 			writeStream nextPut: $[.
 			self indentedDo: 
 					[self newlineIndent.
@@ -381,7 +376,7 @@ writeObject: object streamMap: block
 	self writeObject: object
 		do: 
 			[| mapWriter |
-			mapWriter := STON.MapWriter on: self.
+			mapWriter := MapWriter on: self.
 			writeStream nextPut: ${.
 			self indentedDo: 
 					[self newlineIndent.
@@ -393,7 +388,7 @@ writeObject: object streamShortList: block
 	self writeObject: object
 		do: 
 			[| listWriter |
-			listWriter := STON.ShortListWriter on: self.
+			listWriter := ShortListWriter on: self.
 			writeStream nextPut: $[.
 			self indentedDo: 
 					[self prettyPrintSpace.
@@ -407,29 +402,21 @@ writeReference: index
 		print: index!
 
 writeScaledDecimal: scaledDecimal
-	jsonMode
-		ifTrue: [ self writeFloat: scaledDecimal asFloat ]
-		ifFalse: [ writeStream
-				print: scaledDecimal numerator;
-				nextPut: $/;
-				print: scaledDecimal denominator;
-				nextPut: $s;
-				print: scaledDecimal scale ]!
+	writeStream
+		print: scaledDecimal numerator;
+		nextPut: $/;
+		print: scaledDecimal denominator;
+		nextPut: $s;
+		print: scaledDecimal scale!
 
 writeString: string
 	self encodeString: string!
 
 writeSymbol: symbol
-	jsonMode
-		ifTrue: [
-			self writeString: symbol ]
-		ifFalse: [
-			writeStream nextPut: $#.
-			(self isSimpleSymbol: symbol)
-				ifTrue: [
-					writeStream nextPutAll: symbol ]
-				ifFalse: [
-					self encodeString: symbol ] ]! !
+	writeStream nextPut: $#.
+	(self isSimpleSymbol: symbol)
+		ifTrue: [writeStream nextPutAll: symbol]
+		ifFalse: [self encodeString: symbol]! !
 !STON.Writer categoriesFor: #asciiOnly:!initialize/release!public! !
 !STON.Writer categoriesFor: #close!initialize/release!public! !
 !STON.Writer categoriesFor: #encodeCharacter:!private! !
@@ -443,10 +430,10 @@ writeSymbol: symbol
 !STON.Writer categoriesFor: #escapeUnicode:!initialize/release!public! !
 !STON.Writer categoriesFor: #escapeUnicode4:!private! !
 !STON.Writer categoriesFor: #indentedDo:!private! !
-!STON.Writer categoriesFor: #initialize!initialize/release!public! !
+!STON.Writer categoriesFor: #initialize!initialize/release!private! !
+!STON.Writer categoriesFor: #instVarMapFor:!public! !
 !STON.Writer categoriesFor: #isSimpleSymbol:!private! !
 !STON.Writer categoriesFor: #jsonMode!initialize/release!public! !
-!STON.Writer categoriesFor: #jsonMode:!initialize/release!public! !
 !STON.Writer categoriesFor: #keepNewLines:!initialize/release!public! !
 !STON.Writer categoriesFor: #listElementSeparator!private! !
 !STON.Writer categoriesFor: #mapElementSeparator!private! !
@@ -460,9 +447,8 @@ writeSymbol: symbol
 !STON.Writer categoriesFor: #referencePolicy:!initialize/release!public! !
 !STON.Writer categoriesFor: #reset!initialize/release!public! !
 !STON.Writer categoriesFor: #shortListElementSeparator!private! !
-!STON.Writer categoriesFor: #stonCharacters!private! !
 !STON.Writer categoriesFor: #with:do:!private! !
-!STON.Writer categoriesFor: #writeableStonCharacters!public!writing! !
+!STON.Writer categoriesFor: #writeableStonCharacters!private!writing! !
 !STON.Writer categoriesFor: #writeAssociation:!public!writing! !
 !STON.Writer categoriesFor: #writeBoolean:!public!writing! !
 !STON.Writer categoriesFor: #writeFloat:!public!writing! !
@@ -473,6 +459,7 @@ writeSymbol: symbol
 !STON.Writer categoriesFor: #writeNull!public!writing! !
 !STON.Writer categoriesFor: #writeObject:!public!writing! !
 !STON.Writer categoriesFor: #writeObject:do:!public!writing! !
+!STON.Writer categoriesFor: #writeObject:extra:!public! !
 !STON.Writer categoriesFor: #writeObject:listSingleton:!public!writing! !
 !STON.Writer categoriesFor: #writeObject:named:do:!public!writing! !
 !STON.Writer categoriesFor: #writeObject:named:listSingleton:!public!writing! !
@@ -486,42 +473,55 @@ writeSymbol: symbol
 
 !STON.Writer class methodsFor!
 
+icon
+	"Answers an Icon that can be used to represent this class"
+
+	^self environment icon!
+
 initialize
-	"Modification timestamp 20170131"
-	
 	self initializeSTONCharacters.
 	self initializeSTONSimpleSymbolCharacters!
 
 initializeSTONCharacters
-	| escapes |
-	STONCharacters := Array new: 127.
-	32 to: 126 do: [:each | STONCharacters at: each + 1 put: #pass].
+	| escapes chars |
+	chars := Array new: 127.
+	32 to: 126 do: [:each | chars at: each + 1 put: #pass].
 	"This is the minimal STON set of named escapes"
 	escapes := #(8 '\b' 9 '\t' 10 '\n' 12 '\f' 13 '\r' 39 '\''' 92 '\\').
-	escapes pairsDo: [:code :escape | STONCharacters at: code + 1 put: escape]!
+	escapes pairsDo: [:code :escape | chars at: code + 1 put: escape].
+	chars isImmutable: true.
+	self addClassConstant: 'STONCharacters' value: chars!
 
 initializeSTONSimpleSymbolCharacters
 	"STONSimpleSymbolCharacters asArray collectWithIndex: [ :each :index |
 		each isZero ifTrue: [ (index - 1) asCharacter ] ]."
 
-	STONSimpleSymbolCharacters := ByteArray new: 256 withAll: 1.
+	| chars |
+	chars := ByteArray new: 256 withAll: 1.
 	1 to: 256
 		do: 
 			[:each |
 			| char |
 			char := (each - 1) asCharacter.
-			(self isSimpleSymbolChar: char) ifTrue: [STONSimpleSymbolCharacters at: each put: 0]]!
+			(self isSimpleSymbolChar: char) ifTrue: [chars at: each put: 0]].
+	chars isImmutable: true.
+	self addClassConstant: 'STONSimpleSymbolCharacters' value: chars!
 
 isSimpleSymbolChar: char
 	^ 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-_./' includes: char!
+
+new
+	^self basicNew initialize!
 
 on: writeStream
 	^ self new
 		on: writeStream;
 		yourself! !
+!STON.Writer class categoriesFor: #icon!constants!public! !
 !STON.Writer class categoriesFor: #initialize!class initialization!public! !
 !STON.Writer class categoriesFor: #initializeSTONCharacters!class initialization!public! !
 !STON.Writer class categoriesFor: #initializeSTONSimpleSymbolCharacters!class initialization!public! !
 !STON.Writer class categoriesFor: #isSimpleSymbolChar:!private! !
+!STON.Writer class categoriesFor: #new!public! !
 !STON.Writer class categoriesFor: #on:!instance creation!public! !
 

@@ -73,6 +73,8 @@ contents
 		add: #('Core\Object Arts\Dolphin\Base\Deprecated\Dolphin Base (Old Names).pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\Base\Dolphin Message Box.pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\Base\Dolphin Source Fileout.pax' #plain #imageBased);
+		add: #('Core\Object Arts\Dolphin\System\STON\Dolphin STON-Core.pax' #plain #imageBased);
+		add: #('Core\Object Arts\Dolphin\Base\Dolphin Source Package Fileout.pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\Base\Dolphin Conformant Array Fields.pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\Base\Dolphin Legacy Date & Time.pax' #plain #imageBase);
 		add: #('Core\Object Arts\Dolphin\Base\Deprecated\Dolphin Base (Deprecated).pax' #plain #imageBased);

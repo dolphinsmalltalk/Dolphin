@@ -48,6 +48,11 @@ fromStream: stream
 fromString: string
 	^STON fromString: string!
 
+icon
+	"Answers an Icon that can be used to represent this class"
+
+	^STON icon!
+
 put: object onStream: stream
 	STON put: object asJsonOnStream: stream!
 
@@ -61,6 +66,7 @@ toStringPretty: object
 	^STON toJsonStringPretty: object! !
 !STON.JSON class categoriesFor: #fromStream:!convenience!public! !
 !STON.JSON class categoriesFor: #fromString:!convenience!public! !
+!STON.JSON class categoriesFor: #icon!constants!public! !
 !STON.JSON class categoriesFor: #put:onStream:!convenience!public! !
 !STON.JSON class categoriesFor: #put:onStreamPretty:!convenience!public! !
 !STON.JSON class categoriesFor: #toString:!convenience!public! !

@@ -188,25 +188,11 @@ fromString: string
 fromStringWithComments: string
 	^ self fromStreamWithComments: string readStream!
 
-jsonWriter
-	^ Writer new
-			jsonMode: true;
-			referencePolicy: #error;
-			yourself!
-
 listClass
 	^ Array!
 
 mapClass
 	^ Dictionary!
-
-put: object asJsonOnStream: stream
-	(self jsonWriter on: stream) nextPut: object!
-
-put: object asJsonOnStreamPretty: stream
-	(self jsonWriter on: stream)
-		prettyPrint: true; 
-		nextPut: object!
 
 put: object onStream: stream
 	(self writer on: stream) nextPut: object!
@@ -219,13 +205,8 @@ put: object onStreamPretty: stream
 reader
 	^ Reader new!
 
-toJsonString: object
-	^ String streamContents: [ :stream |
-		self put: object asJsonOnStream: stream ]!
-
-toJsonStringPretty: object
-	^ String streamContents: [ :stream |
-		self put: object asJsonOnStreamPretty: stream ]!
+readFrom: aReadStream
+	^self fromStream: aReadStream!
 
 toString: object
 	^ String streamContents: [ :stream |
@@ -239,21 +220,17 @@ writer
 	^Writer new! !
 !STON class categoriesFor: #associationClass!accessing!public! !
 !STON class categoriesFor: #classNameKey!accessing!public! !
-!STON class categoriesFor: #fromStream:!convencience!public! !
-!STON class categoriesFor: #fromStreamWithComments:!convencience!public! !
-!STON class categoriesFor: #fromString:!convencience!public! !
-!STON class categoriesFor: #fromStringWithComments:!convencience!public! !
-!STON class categoriesFor: #jsonWriter!accessing!public! !
+!STON class categoriesFor: #fromStream:!convenience!public! !
+!STON class categoriesFor: #fromStreamWithComments:!convenience!public! !
+!STON class categoriesFor: #fromString:!convenience!public! !
+!STON class categoriesFor: #fromStringWithComments:!convenience!public! !
 !STON class categoriesFor: #listClass!accessing!public! !
 !STON class categoriesFor: #mapClass!accessing!public! !
-!STON class categoriesFor: #put:asJsonOnStream:!convencience!public! !
-!STON class categoriesFor: #put:asJsonOnStreamPretty:!convencience!public! !
-!STON class categoriesFor: #put:onStream:!convencience!public! !
-!STON class categoriesFor: #put:onStreamPretty:!convencience!public! !
+!STON class categoriesFor: #put:onStream:!convenience!public! !
+!STON class categoriesFor: #put:onStreamPretty:!convenience!public! !
 !STON class categoriesFor: #reader!accessing!public! !
-!STON class categoriesFor: #toJsonString:!convencience!public! !
-!STON class categoriesFor: #toJsonStringPretty:!convencience!public! !
-!STON class categoriesFor: #toString:!convencience!public! !
-!STON class categoriesFor: #toStringPretty:!convencience!public! !
+!STON class categoriesFor: #readFrom:!convenience!public! !
+!STON class categoriesFor: #toString:!convenience!public! !
+!STON class categoriesFor: #toStringPretty:!convenience!public! !
 !STON class categoriesFor: #writer!accessing!public! !
 

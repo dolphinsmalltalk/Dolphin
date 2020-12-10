@@ -13,7 +13,7 @@ STON.Tests.WriteReadCommentsTest comment: 'Unit test writing and reading of comm
 
 materialize: string
 	^STON reader
-		on: (STON.CStyleCommentsSkipStream on: string readStream);
+		on: (CStyleCommentsSkipStream on: string readStream);
 		optimizeForLargeStructures;
 		next!
 

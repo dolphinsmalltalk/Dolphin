@@ -107,6 +107,7 @@ package setMethodNames: #(
 	#(#{OS.TIME_ZONE_INFORMATION class} #icon)
 	#(#{Root class} #icon)
 	#(#{Smalltalk class} #icon)
+	#(#{STON class} #icon)
 	#(#{Tools class} #icon)
 	#(#{UI class} #icon)
 	#(#{UI.AbstractCardContainer class} #icon)
@@ -131,6 +132,7 @@ package setPrerequisites: #(
 	'..\..\Base\Dolphin Legacy Date & Time'
 	'..\Base\Dolphin MVP Base'
 	'..\Presenters\Radio\Dolphin Radio Buttons'
+	'..\..\System\STON\Dolphin STON-Core'
 	'Dolphin Text Tile Icons'
 ).
 
@@ -1001,8 +1003,9 @@ icon
 icon
 	"Answers an Icon that can be used to represent this class."
 
-	^##((Graphics.TextTileIcon text: $\x2130 fontName: 'Georgia')
-		yourself)! !
+	"The commonly accepted symbol for the Universal Set is 'U', but it's too boring and so we use the alternate script ℰ."
+
+	^##(Graphics.TextTileIcon text: $\x2130 fontName: 'Georgia')! !
 !Root class categoriesFor: #icon!constants!public! !
 
 !Smalltalk class methodsFor!
@@ -1012,6 +1015,14 @@ icon
 
 	^##(self) defaultIcon! !
 !Smalltalk class categoriesFor: #icon!constants!public! !
+
+!STON class methodsFor!
+
+icon
+	"Answers an Icon that can be used to represent this class"
+
+	^self defaultIcon! !
+!STON class categoriesFor: #icon!constants!public! !
 
 !Tools class methodsFor!
 

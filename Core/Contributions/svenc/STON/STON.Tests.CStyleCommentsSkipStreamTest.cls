@@ -13,7 +13,7 @@ STON.Tests.CStyleCommentsSkipStreamTest comment: ''!
 
 testBlockReading
 	| input buffer |
-	input := STON.CStyleCommentsSkipStream on: 'abc/*comment*/def' readStream.
+	input := CStyleCommentsSkipStream on: 'abc/*comment*/def' readStream.
 	buffer := String new: 6.
 	self assert: (input
 				readInto: buffer
@@ -27,7 +27,7 @@ testBlockReading
 				count: 4)
 		equals: 2.
 	self assert: buffer equals: 'abcdef'.
-	input := STON.CStyleCommentsSkipStream on: 'abc//comment\def' withCRs readStream.
+	input := CStyleCommentsSkipStream on: 'abc//comment\def' withCRs readStream.
 	buffer := String new: 6.
 	self assert: (input
 				readInto: buffer
@@ -38,54 +38,50 @@ testBlockReading
 	self assert: input atEnd!
 
 testCommentInString
-	self assert: (STON.CStyleCommentsSkipStream on: '''/*comment*/''' readStream) upToEnd
+	self assert: (CStyleCommentsSkipStream on: '''/*comment*/''' readStream) upToEnd
 		equals: '''/*comment*/'''.
-	self assert: (STON.CStyleCommentsSkipStream on: '{''foo'':''/*comment*/bar''}' readStream) upToEnd
+	self assert: (CStyleCommentsSkipStream on: '{''foo'':''/*comment*/bar''}' readStream) upToEnd
 		equals: '{''foo'':''/*comment*/bar''}'.
-	self assert: (STON.CStyleCommentsSkipStream on: '{''foo'':''//comment\''bar''}' readStream) upToEnd
+	self assert: (CStyleCommentsSkipStream on: '{''foo'':''//comment\''bar''}' readStream) upToEnd
 		equals: '{''foo'':''//comment\''bar''}'.
-	self assert: (STON.CStyleCommentsSkipStream on: '{"foo":"/*comment*/bar"}' readStream) upToEnd
+	self assert: (CStyleCommentsSkipStream on: '{"foo":"/*comment*/bar"}' readStream) upToEnd
 		equals: '{"foo":"/*comment*/bar"}'.
-	self assert: (STON.CStyleCommentsSkipStream on: '{"foo":"//comment\"bar"}' readStream) upToEnd
+	self assert: (CStyleCommentsSkipStream on: '{"foo":"//comment\"bar"}' readStream) upToEnd
 		equals: '{"foo":"//comment\"bar"}'!
 
 testMultiLineComment
-	self assert: (STON.CStyleCommentsSkipStream on: 'foo\//comment\bar' withCRs readStream) upToEnd
+	self assert: (CStyleCommentsSkipStream on: 'foo\//comment\bar' withCRs readStream) upToEnd
 		equals: 'foo\bar' withCRs.
-	self assert: (STON.CStyleCommentsSkipStream on: 'foo\//comment\bar' withCRs readStream) nextLine
+	self assert: (CStyleCommentsSkipStream on: 'foo\//comment\bar' withCRs readStream) nextLine
 		equals: 'foo'.
-	self assert: ((STON.CStyleCommentsSkipStream on: 'foo\//comment\bar' withCRs readStream)
+	self assert: ((CStyleCommentsSkipStream on: 'foo\//comment\bar' withCRs readStream)
 				nextLine;
 				nextLine)
 		equals: 'bar'.
-	self assert: (STON.CStyleCommentsSkipStream on: '//comment' readStream) atEnd!
+	self assert: (CStyleCommentsSkipStream on: '//comment' readStream) atEnd!
 
 testNonComment
-	self assert: (STON.CStyleCommentsSkipStream on: 'foo' readStream) upToEnd equals: 'foo'.
-	self assert: (STON.CStyleCommentsSkipStream on: 'foo' readStream) nextLine equals: 'foo'.
-	self deny: (STON.CStyleCommentsSkipStream on: 'foo' readStream) atEnd.
-	self assert: (STON.CStyleCommentsSkipStream on: '' readStream) atEnd!
+	self assert: (CStyleCommentsSkipStream on: 'foo' readStream) upToEnd equals: 'foo'.
+	self assert: (CStyleCommentsSkipStream on: 'foo' readStream) nextLine equals: 'foo'.
+	self deny: (CStyleCommentsSkipStream on: 'foo' readStream) atEnd.
+	self assert: (CStyleCommentsSkipStream on: '' readStream) atEnd!
 
 testSingleLineComment
-	self assert: (STON.CStyleCommentsSkipStream on: 'foo/*comment*/bar' readStream) upToEnd
-		equals: 'foobar'.
-	self assert: (STON.CStyleCommentsSkipStream on: 'foo/*comment*/bar' readStream) nextLine
-		equals: 'foobar'.
-	self deny: (STON.CStyleCommentsSkipStream on: 'foo/*comment*/bar' readStream) atEnd.
-	self assert: (STON.CStyleCommentsSkipStream on: '/*comment*/' readStream) atEnd!
+	self assert: (CStyleCommentsSkipStream on: 'foo/*comment*/bar' readStream) upToEnd equals: 'foobar'.
+	self assert: (CStyleCommentsSkipStream on: 'foo/*comment*/bar' readStream) nextLine equals: 'foobar'.
+	self deny: (CStyleCommentsSkipStream on: 'foo/*comment*/bar' readStream) atEnd.
+	self assert: (CStyleCommentsSkipStream on: '/*comment*/' readStream) atEnd!
 
 testSTON
 	"Comments are processed first and totally removed.
 	They are not even whitespace (not that whitespace is relevant in STON)."
 
-	self assert: (STON fromStream: (STON.CStyleCommentsSkipStream on: '123/*comment*/456' readStream))
+	self assert: (STON fromStream: (CStyleCommentsSkipStream on: '123/*comment*/456' readStream))
 		equals: 123456.
-	self assert: (STON fromStream: (STON.CStyleCommentsSkipStream on: '/*comment*/''abcd''' readStream))
+	self assert: (STON fromStream: (CStyleCommentsSkipStream on: '/*comment*/''abcd''' readStream))
 		equals: 'abcd'.
-	self assert: (STON fromStream: (STON.CStyleCommentsSkipStream on: '123//456' readStream))
-		equals: 123.
-	self should: [STON fromStream: (STON.CStyleCommentsSkipStream on: '//456' readStream)]
-		raise: STON.ReaderError! !
+	self assert: (STON fromStream: (CStyleCommentsSkipStream on: '123//456' readStream)) equals: 123.
+	self should: [STON fromStream: (CStyleCommentsSkipStream on: '//456' readStream)] raise: ReaderError! !
 !STON.Tests.CStyleCommentsSkipStreamTest categoriesFor: #testBlockReading!public!testing! !
 !STON.Tests.CStyleCommentsSkipStreamTest categoriesFor: #testCommentInString!public!testing! !
 !STON.Tests.CStyleCommentsSkipStreamTest categoriesFor: #testMultiLineComment!public!testing! !

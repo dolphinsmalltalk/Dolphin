@@ -49,8 +49,13 @@ package setPrerequisites: #(
 	'..\..\Base\Dolphin Legacy Date & Time'
 	'..\..\MVP\Base\Dolphin MVP Base'
 	'..\Random\Dolphin Random Stream'
-	'..\..\..\..\Contributions\svenc\STON\STON-Core'
+	'Dolphin STON-Core'
+	'Dolphin STON-MVP'
 	'..\..\..\..\Contributions\svenc\STON\STON-Tests'
+).
+
+package setManualPrerequisites: #(
+	'Dolphin STON-MVP'
 ).
 
 package!
@@ -143,11 +148,11 @@ testColorInvalid
 
 	self
 		should: [self materialize: 'Color[#red,#blue]']
-		raise: STON.ReaderError
+		raise: ReaderError
 		matching: [:ex | ex description = 'At character 11: ] expected'].
 	self
 		should: [self materialize: 'Color[]']
-		raise: STON.ReaderError
+		raise: ReaderError
 		matching: [:ex | ex description = 'At character 7: invalid input']!
 
 testReferenceCycle2
@@ -172,7 +177,7 @@ testSymbolMultiByte
 icon
 	"Answers an Icon that can be used to represent this class"
 
-	^STON.Tests.STONTest icon! !
+	^STONTest icon! !
 !STON.Tests.STONTestUser class categoriesFor: #icon!constants!public! !
 
 !STON.Tests.TestDomainObject class methodsFor!
@@ -180,7 +185,7 @@ icon
 icon
 	"Answers an Icon that can be used to represent this class"
 
-	^STON.Tests.STONTest icon! !
+	^STONTest icon! !
 !STON.Tests.TestDomainObject class categoriesFor: #icon!constants!public! !
 
 !STON.Tests.TestKnownObject class methodsFor!
@@ -188,7 +193,7 @@ icon
 icon
 	"Answers an Icon that can be used to represent this class"
 
-	^STON.Tests.STONTest icon! !
+	^STONTest icon! !
 !STON.Tests.TestKnownObject class categoriesFor: #icon!constants!public! !
 
 !STON.Tests.WriteReadTest methodsFor!

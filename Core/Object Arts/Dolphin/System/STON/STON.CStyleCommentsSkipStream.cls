@@ -47,23 +47,25 @@ consumeToCommentEnd
 	[ stream atEnd or: [ stream next = $* and: [ stream peekFor: $/ ] ] ] whileFalse!
 
 consumeToEOL
+	"Override to use #nextAvailable rather than #next"
+
 	| eol char |
 	eol := false.
 	[eol] whileFalse: 
-			[char := stream next.
-			(char isNil or: [char = Character lf])
+			[char := stream nextAvailable.
+			(char isNil or: [char == $\n])
 				ifTrue: [eol := true]
 				ifFalse: 
-					[char = Character cr
+					[char == $\r
 						ifTrue: 
 							[eol := true.
-							stream peekFor: Character lf]]]!
+							stream peekFor: $\n]]]!
 
 escape
 	"Return true when we previously read a backslash escape inside a string, 
 	so that the next string delimiter should be returned as is"
-	
-	^ escape = true!
+
+	^escape!
 
 handleStringDelimiter: char
 	self escape
@@ -78,11 +80,14 @@ handleStringDelimiter: char
 
 insideString
 	"Return true when we are currently inside a string where comments should be ignored."
-	
-	^ (delimiter = $') | (delimiter = $")!
+
+	^delimiter == $' or: [delimiter == $"]!
 
 isBinary
 	^ false!
+
+isPositionable
+	^stream isPositionable!
 
 next
 	^ peekedCharacter
@@ -124,6 +129,15 @@ next: requestedCount into: collection startingAt: offset
 		ifTrue: [ collection ]
 		ifFalse: [ collection copyFrom: 1 to: offset + readCount - 1 ]!
 
+nextAvailable
+	^peekedCharacter
+		ifNil: [stream atEnd ifFalse: [self nextNonCommentChar]]
+		ifNotNil: 
+			[| character |
+			character := peekedCharacter.
+			peekedCharacter := nil.
+			character]!
+
 nextLine
 	"Read a CR, LF or CRLF terminated line, returning the contents of the line without the EOL. Return nil when the receiver is #atEnd."
 
@@ -134,35 +148,36 @@ nextLine
 			eol := false.
 			[eol] whileFalse: 
 					[char := self next.
-					(char isNil or: [char = Character lf])
+					(char isNil or: [char == $\n])
 						ifTrue: [eol := true]
 						ifFalse: 
-							[char = Character cr
+							[char == $\r
 								ifTrue: 
 									[eol := true.
-									self peekFor: Character lf]
+									self peekFor: $\n]
 								ifFalse: [out nextPut: char]]]]!
 
 nextNonCommentChar
 	| char |
-	char := stream next.
-	(self insideString and: [ char = $\ ])
-		ifTrue: [ 
-			escape := true. 
-			^ char ].
-	(char = $') | (char = $")
-		ifTrue: [ 
-			^ self handleStringDelimiter: char ].
-	escape := false. 
-	^ (char = $/ and: [ self insideString not and: [ (stream peek = $/) | (stream peek = $*) ] ])
-		ifTrue: [ 
-			self consumeComment.
-			stream next ]
-		ifFalse: [ char ]
-!
+	char := stream nextAvailable.
+	(self insideString and: [char == $\])
+		ifTrue: 
+			[escape := true.
+			^char].
+	(char == $' or: [char == $"]) ifTrue: [^self handleStringDelimiter: char].
+	escape := false.
+	^(char == $/
+		and: [self insideString not and: 
+					[| ch |
+					(ch := stream peek) == $/ or: [ch == $*]]])
+			ifTrue: 
+				[self consumeComment.
+				stream nextAvailable]
+			ifFalse: [char]!
 
 on: readStream
-	stream := readStream!
+	stream := readStream.
+	escape := false!
 
 peek
 	^ peekedCharacter
@@ -203,6 +218,9 @@ readInto: collection startingAt: offset count: requestedCount
 skip: count
 	count timesRepeat: [ self next ]!
 
+skipSeparators
+	^stream skipSeparators!
+
 upTo: anObject 	
 	^ self collectionSpecies 
 		streamContents: [ :out | | element |
@@ -226,10 +244,12 @@ wrappedStream
 !STON.CStyleCommentsSkipStream categoriesFor: #handleStringDelimiter:!private! !
 !STON.CStyleCommentsSkipStream categoriesFor: #insideString!private! !
 !STON.CStyleCommentsSkipStream categoriesFor: #isBinary!public!testing! !
+!STON.CStyleCommentsSkipStream categoriesFor: #isPositionable!public! !
 !STON.CStyleCommentsSkipStream categoriesFor: #next!accessing!public! !
 !STON.CStyleCommentsSkipStream categoriesFor: #next:!accessing!public! !
 !STON.CStyleCommentsSkipStream categoriesFor: #next:into:!accessing!public! !
 !STON.CStyleCommentsSkipStream categoriesFor: #next:into:startingAt:!accessing!public! !
+!STON.CStyleCommentsSkipStream categoriesFor: #nextAvailable!public! !
 !STON.CStyleCommentsSkipStream categoriesFor: #nextLine!accessing!public! !
 !STON.CStyleCommentsSkipStream categoriesFor: #nextNonCommentChar!private! !
 !STON.CStyleCommentsSkipStream categoriesFor: #on:!initialize/release!public! !
@@ -238,15 +258,22 @@ wrappedStream
 !STON.CStyleCommentsSkipStream categoriesFor: #position!accessing!public! !
 !STON.CStyleCommentsSkipStream categoriesFor: #readInto:startingAt:count:!accessing!public! !
 !STON.CStyleCommentsSkipStream categoriesFor: #skip:!accessing!public! !
+!STON.CStyleCommentsSkipStream categoriesFor: #skipSeparators!public! !
 !STON.CStyleCommentsSkipStream categoriesFor: #upTo:!accessing!public! !
 !STON.CStyleCommentsSkipStream categoriesFor: #upToEnd!accessing!public! !
 !STON.CStyleCommentsSkipStream categoriesFor: #wrappedStream!accessing!public! !
 
 !STON.CStyleCommentsSkipStream class methodsFor!
 
+icon
+	"Answers an Icon that can be used to represent this class"
+
+	^STON icon!
+
 on: readStream
 	^ self new
 		on: readStream;
 		yourself! !
+!STON.CStyleCommentsSkipStream class categoriesFor: #icon!constants!public! !
 !STON.CStyleCommentsSkipStream class categoriesFor: #on:!instance creation!public! !
 

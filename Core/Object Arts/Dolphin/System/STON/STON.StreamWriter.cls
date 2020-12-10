@@ -23,6 +23,11 @@ on: stonWriter
 
 !STON.StreamWriter class methodsFor!
 
+icon
+	"Answers an Icon that can be used to represent this class"
+
+	^STON icon!
+
 new
 	^super new initialize!
 
@@ -30,6 +35,7 @@ on: stonWriter
 	^ self new
 		on: stonWriter;
 		yourself! !
+!STON.StreamWriter class categoriesFor: #icon!constants!public! !
 !STON.StreamWriter class categoriesFor: #new!public! !
 !STON.StreamWriter class categoriesFor: #on:!instance creation!public! !
 

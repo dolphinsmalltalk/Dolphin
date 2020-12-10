@@ -1,0 +1,778 @@
+﻿| package |
+package := Package name: 'Dolphin Source Package Fileout'.
+package paxVersion: 2.1;
+	basicComment: 'Dolphin Source Package Fileout
+Copyright (c) Object Arts Ltd. 1997-2016
+
+Support for filing out packages in individual source file (.pax) format'.
+
+package basicScriptAt: #postinstall put: '(MethodProtocol name: #sourceObject)
+	addAllSelectors: #(#canFileOut #fileOut #fileOutName #isChanged #isChanged: #owningPackage);
+	addClass: Class;
+	addClass: Package'.
+
+package setMethodNames: #(
+	#(#{Core.Class} #canFileOut)
+	#(#{Core.Class} #fileOut)
+	#(#{Kernel.Package} #allFileOutNames)
+	#(#{Kernel.Package} #beNotUsingPAX)
+	#(#{Kernel.Package} #beUsingPAX)
+	#(#{Kernel.Package} #canFileOut)
+	#(#{Kernel.Package} #checkTimestamps)
+	#(#{Kernel.Package} #createPackagePath)
+	#(#{Kernel.Package} #dotPacPath)
+	#(#{Kernel.Package} #fileModificationTime)
+	#(#{Kernel.Package} #fileOut)
+	#(#{Kernel.Package} #fileOutAll)
+	#(#{Kernel.Package} #fileOutAllChanged)
+	#(#{Kernel.Package} #fileOutAllOn:)
+	#(#{Kernel.Package} #fileOutBinaryVariableNamesOn:)
+	#(#{Kernel.Package} #fileOutBinaryVariables)
+	#(#{Kernel.Package} #fileOutBootDefinitions)
+	#(#{Kernel.Package} #fileOutClassDefinitionsOn:)
+	#(#{Kernel.Package} #fileOutClassesOn:)
+	#(#{Kernel.Package} #fileOutLooseMethodsOn:)
+	#(#{Kernel.Package} #fileOutMethodsOfClass:on:)
+	#(#{Kernel.Package} #fileOutNames)
+	#(#{Kernel.Package} #fileOutOn:)
+	#(#{Kernel.Package} #fileOutSourceVariableNamesOn:)
+	#(#{Kernel.Package} #fileOutVariableAliasesOn:)
+	#(#{Kernel.Package} #isRenegade)
+	#(#{Kernel.Package} #isUsingPAX)
+	#(#{Kernel.Package} #isUsingPAX:)
+	#(#{Kernel.Package} #save)
+	#(#{Kernel.Package} #saveAs:)
+	#(#{Kernel.Package} #saveChanges)
+	#(#{Kernel.Package} #savePAC)
+	#(#{Kernel.Package} #savePAX)
+	#(#{Kernel.Package} #savePAXAboutBlockOn:)
+	#(#{Kernel.Package} #savePAXChunkOn:)
+	#(#{Kernel.Package} #savePAXCollection:initializer:on:)
+	#(#{Kernel.Package} #savePAXManualPrerequisitesOn:)
+	#(#{Kernel.Package} #savePAXNames:initializer:on:)
+	#(#{Kernel.Package} #savePAXNamesOn:)
+	#(#{Kernel.Package} #savePAXPackageOn:)
+	#(#{Kernel.Package} #savePAXPackageVersionOn:)
+	#(#{Kernel.Package} #savePAXPrerequisiteNamesOn:)
+	#(#{Kernel.Package} #savePAXScriptsOn:)
+	#(#{Kernel.Package} #savePAXStripperBytesOn:)
+	#(#{Kernel.Package} #savePAXUntracedVariablesOn:)
+	#(#{Kernel.Package} #savePAXVariableNamesOn:)
+	#(#{Kernel.Package} #saveSingleFilePackage)
+	#(#{Kernel.Package} #toggleUsingPAX)
+	#(#{Kernel.Package} #updateTimestamp)
+	#(#{Kernel.SourceFiler} #fileOutBinaryVariable:)
+	#(#{Kernel.SourceFiler} #storeCommentString:forPackage:)
+	#(#{Kernel.SourceManager} #fileOutPackagedClass:)
+	#(#{Kernel.SourceManager} #fileOutPackagedClass:to:)
+).
+
+package setPrerequisites: #(
+	'Dolphin'
+	'Dolphin Message Box'
+	'..\System\STON\Dolphin STON-Core'
+).
+
+package!
+
+"Loose Methods"!
+
+!Core.Class methodsFor!
+
+canFileOut
+	"Answer true if the receiver can be filed out. At this stage we just check to ensure that
+	the file out file is writeable"
+
+	^File isWriteable: self fileOutName!
+
+fileOut
+	"File out the receiver's definition to a class file in the receiver's
+	package directory."
+
+	self sourceManager fileOutPackagedClass: self! !
+!Core.Class categoriesFor: #canFileOut!public!source filing! !
+!Core.Class categoriesFor: #fileOut!public!source filing! !
+
+!Kernel.Package methodsFor!
+
+allFileOutNames
+	"Private - Answers an OrderedCollection of the source filenames for the receiver and all of its 
+	contents when in PAX source mode. Note that the PAX filename is alway last in the collection."
+
+	| answer |
+	answer := OrderedCollection new.
+	self allSourceObjectsDo: [:each | answer add: each fileOutName].
+	^answer!
+
+beNotUsingPAX
+	"Place the receiver into a mode where it is not using PAX source files.
+	This simply involves deleting any PAX source files that currently exist. Without the
+	presence of a same named PAX file, the receiver assumes it is operating in
+	non-PAX mode for all future save operations."
+
+	| msg names |
+	self isUsingPAX ifFalse: [^self].
+	names := self allFileOutNames.
+	msg := 'Placing this package into PAC mode will delete <2p> PAX source files in the<n>directory <3s>.<n><n>Are you sure that you wish to proceed?'
+				expandMacrosWith: self name
+				with: names size
+				with: self path.
+	(UI.MessageBox confirm: msg caption: ('Convert <1p> to PAC mode...' expandMacrosWith: self name))
+		ifTrue: [names do: [:each | (File exists: each) ifTrue: [File delete: each]]]!
+
+beUsingPAX
+	"Place the receiver into a mode where it is using PAX source files.
+	This simply involves creating the PAX source files for the first time. With the
+	presence of a same named PAX file, the receiver assumes it is operating in
+	PAX mode for all future save operations."
+
+	| msg |
+	self isUsingPAX ifTrue: [^self].
+	msg := 'Placing this package into PAX source mode will create <1p> source files<n>in the directory <2s>.<n><n>Are you sure that you wish to proceed?'
+				expandMacrosWith: self allSourceObjects size
+				with: self path.
+	(UI.MessageBox confirm: msg caption: ('Convert <1p> to PAX mode...' expandMacrosWith: self name))
+		ifTrue: [self fileOutAll]!
+
+canFileOut
+	"Answer true if the receiver can be filed out. At this stage we just check to ensure that
+	all the file out names associated with the PAX file are writeable."
+
+	^self fileOutNames allSatisfy: [:each | File isWriteable: each]!
+
+checkTimestamps
+	"Compare the timestamp cached when the package was installed against the timestamp of the
+	package file. If the package file has been modified since the package was loaded, then warn
+	the user to avoid inadvertent overwrites of later package versions causing loss of changes."
+
+	| mb warning |
+	(CheckTimestamps and: [self isRenegade]) ifFalse: [^self].
+	mb := UI.MessageBox new.
+	mb
+		uniqueId: [self] method displayString;
+		isSuppressible: true.
+	warning := 'The package <1s> has been modified outside this image since it was loaded or last saved.
+
+	Package timestamp:	 <2d>
+	File modification time: <3d>
+
+If you proceed and save it from this image then you may lose changes that have been written from another session. If you are not sure it is recommended that you cancel this operation and check whether there are unstaged changes in your workspace with your preferred git tooling. 
+
+Alternatively you can proceed and overwrite any changes on disk. You can also choose to suppress this warning so it is not shown again, however if you do so then in future modified files will be overwritten regardless of the choice that you make now.'
+				expandMacrosWithArguments: {self name.
+						self timestamp.
+						FILETIME fromInteger: self fileModificationTime}
+				locale: Locale smalltalk.
+	mb okCancel.
+	(mb warning: warning) == #cancel ifTrue: [OperationAborted signal]!
+
+createPackagePath
+	"Private - Create the directory where the receiver resides on disk"
+
+	File createDirectoryPath: (File splitPathFrom: self fileOutName)!
+
+dotPacPath
+	^File path: self packageFileName extension: self class packageExtension!
+
+fileModificationTime
+	"Private - Answer the modification time of the receiver's package file on disk as the
+	<integer> number of 100-nanosecond intervals since 12:00 A.M. January 1, 1601 UTC (i.e. a
+	Win32 FILETIME), or 0 if it does not currently exist."
+
+	| fileName |
+	fileName := self isSystemPackage
+				ifTrue: [self classDefinitionsFileName]
+				ifFalse: [self isUsingPAX ifTrue: [self fileOutName] ifFalse: [self packageFileName]].
+	^(File lastWriteTime: fileName) ifNil: [0] ifNotNil: [:filetime | filetime asInteger]!
+
+fileOut
+	"Private - File out a definition of the receiver to source files. Normally this
+	involves saving a PAX file except in the case where the receiver is a system package
+	when separate class and resource definitions files are saved instead."
+
+	self isSystemPackage 
+		ifFalse: 
+			[self
+				savePAC;
+				savePAX;
+				versionIfRequired]
+		ifTrue: [self fileOutBootDefinitions].
+	self updateTimestamp.
+	self isChanged: false!
+
+fileOutAll
+	"Fileout the receiver to a PAX file and all out it's associated source files.
+	The .PAC file is also saved when the .PAX is created in order to ensure that
+	the two remain in sync."
+
+	self allSourceObjectsDo: [:each | each fileOut]!
+
+fileOutAllChanged
+	"Fileout the changed source objects in the receiver"
+
+	self allSourceObjectsDo: [:each | each isChanged ifTrue: [each fileOut]]!
+
+fileOutAllOn: aSourceFiler
+	self fileOutOn: aSourceFiler.
+	self
+		fileOutSourceVariableNamesOn: aSourceFiler;
+		fileOutClassesOn: aSourceFiler;
+		fileOutBinaryVariableNamesOn: aSourceFiler!
+
+fileOutBinaryVariableNamesOn: aSourceFiler
+	"Private - File out the binary representation of the receiver's non-<sourceObject> variables onto the <SourceFiler> argument. Binary variables are saved as the literal representation of their #binaryStoreBytes.  This is used in the single-file .PAC format."
+
+	aSourceFiler
+		emitComment: 'Binary Variables';
+		cr.
+	self binaryVariableNames asSortedCollection do: 
+			[:var |
+			aSourceFiler
+				fileOutBinaryVariable: var;
+				cr]!
+
+fileOutBinaryVariables
+	"Private - File out binary variables to individual .ston files.
+	This is used in the multi-file .PAX format to avoid binary merge conflicts in the main PAX."
+
+	self binaryVariableNames - self aliasVariableNames do: 
+			[:each |
+			| stream |
+			stream := FileStream write: (self fileNameForBinaryVariable: each extension: 'ston') text: true.
+			STON put: each value onStreamPretty: stream.
+			stream close]!
+
+fileOutBootDefinitions
+	"Private - If this is a system package then only write out .st files capable of defining
+	the classes independently of the PAX. These are required by the Dolphin boot process.
+	Note that the base system package cannot contain any resources."
+
+	| filer |
+	filer := self sourceManager newSourceFiler: self classDefinitionsFileName.
+	[self fileOutClassDefinitionsOn: filer] ensure: [filer close]!
+
+fileOutClassDefinitionsOn: aSourceFiler
+	"Private - Append the text definitions of the receivers owned classes to aFileStream.
+	This should produce the minimal amount of information to create a new class when 
+	loaded in (i.e. only the basic definitions are emitted)."
+
+	| classes |
+	classes := self classesInHierarchyOrder.
+	classes isEmpty ifTrue: [^self].
+	aSourceFiler
+		emitComment: 'Class Definitions';
+		cr.
+	"The namespaces should be defined first as these may be referenced by other class definitions, then SharedPools, then all other classes."
+	classes do: 
+			[:each |
+			((each inheritsFrom: Namespace) and: [(each inheritsFrom: SharedPool) not])
+				ifTrue: [aSourceFiler fileOutBasicDefinitionOfClass: each]].
+	classes
+		do: [:each | (each inheritsFrom: SharedPool) ifTrue: [aSourceFiler fileOutBasicDefinitionOfClass: each]].
+	classes
+		do: [:each | (each inheritsFrom: Namespace) ifFalse: [aSourceFiler fileOutBasicDefinitionOfClass: each]].
+	aSourceFiler cr!
+
+fileOutClassesOn: aSourceFiler
+	"Private - Append definitions of all the classes owned by the receiver to the <SourceFiler>, aSourceFiler.
+	Note that the classes are filed out in class hierarchy order to avoid creating forward references and to create a consistently ordered source file that can be effectively diff'd."
+
+	| classes |
+	classes := self classesInHierarchyOrder.
+	classes isEmpty ifTrue: [^self].
+	aSourceFiler
+		emitComment: 'Classes';
+		cr.
+	classes do: 
+			[:aClass |
+			aSourceFiler fileOutAttributesOfClass: aClass.
+			self fileOutMethodsOfClass: aClass on: aSourceFiler.
+			self fileOutMethodsOfClass: aClass class on: aSourceFiler]!
+
+fileOutLooseMethodsOn: aSourceFiler
+	"Private - File out the loose methods owned by the receiver to the <SourceFiler> argument."
+
+	| loose |
+	loose := self methods.
+	loose isEmpty ifTrue: [^self].
+	aSourceFiler
+		emitComment: 'Loose Methods';
+		cr.
+	aSourceFiler fileOutMethods: loose!
+
+fileOutMethodsOfClass: aClass on: aSourceFiler 
+	"Private - Append any definitions of the classes methods which
+	are not owned by another package to the <puttableStream>, target."
+
+	| methods |
+	methods := self methodsOfClass: aClass.
+	methods size = aClass methodDictionary size 
+		ifTrue: 
+			["The common case is that all methods of the class also belong to the this package..."
+
+			aSourceFiler fileOutAllMethodsOfBehavior: aClass]
+		ifFalse: 
+			["...but if some methods are not owned by this package we have more work to do"
+
+			| selectors prereqs addBlock |
+			selectors := methods collect: [:m | m selector].
+			aSourceFiler fileOutMessages: selectors ofBehavior: aClass.
+
+			"File out the intersection of the immediate protocols of the class and those of this
+			and prerequisite packages' methods"
+
+			"First add all selectors in the superclass chain which are in this package or one of its
+			pre-requisites into the set of available selectors."
+			prereqs := self prerequisites.
+			addBlock := 
+					[:e :p | 
+					selectors addAll: ((p methodsOfClass: e) collect: [:m | m selector])].
+			prereqs do: [:p | addBlock value: aClass value: p].
+			aClass allSuperclassesDo: 
+					[:e | 
+					addBlock value: e value: self.
+					prereqs do: [:p | addBlock value: e value: p]].
+			#todo.	"File out partial protocols, although tools should prevent protocols being split across packages really"
+			aSourceFiler fileOutProtocols: (aClass protocols 
+						select: [:p | (p selectors difference: selectors) isEmpty])
+				ofBehavior: aClass]!
+
+fileOutNames
+	"Private - Answers a set of the source filenames for the receiver when in the multi-file
+	(.PAX) source mode. This contains pathnames used to store the PAX file and each of the
+	binary globals, etc. It does not include the source files for the	<sourceObject>s held by the 
+	receiver."
+
+	^self isSystemPackage
+		ifTrue: [Set with: self classDefinitionsFileName]
+		ifFalse: 
+			[Set new
+				add: self fileOutName;
+				addAll: (self binaryVariableNames
+							collect: [:each | self fileNameForBinaryVariable: each extension: 'ston']);
+				yourself]!
+
+fileOutOn: aSourceFiler
+	"Append the definition of the receiver in PAX format onto the
+	<SourceFiler> argument. This does not file out the source files of the 
+	receiver's contents."
+
+	self savePAXChunkOn: aSourceFiler.
+	self fileOutClassDefinitionsOn: aSourceFiler.
+	self fileOutVariableAliasesOn: aSourceFiler.
+	self fileOutLooseMethodsOn: aSourceFiler.
+	aSourceFiler
+		emitComment: 'End of package definition';
+		cr!
+
+fileOutSourceVariableNamesOn: aSourceFiler
+	"Private - File out the text representation of the receiver's globals onto the
+	<puttableStream>, stream. This is used in the single-file .PAC format."
+
+	| names |
+	names := self sourceVariableNames.
+	names isEmpty ifTrue: [^self].
+	aSourceFiler
+		emitComment: 'Source Variables';
+		cr.
+	names asSortedCollection do: 
+			[:var |
+			var value fileOutOn: aSourceFiler.
+			aSourceFiler cr]!
+
+fileOutVariableAliasesOn: aSourceFiler
+	"Private - File out the text representation of the receiver's global aliases onto the
+	<puttableStream>, stream."
+
+	| names |
+	names := self aliasVariableNames.
+	names isEmpty ifTrue: [^self].
+	aSourceFiler
+		emitComment: 'Variable Aliases';
+		cr.
+	names asSortedCollection
+		do: [:var | aSourceFiler fileOutExpression: var asString , ' := ' , var value fullName].
+	aSourceFiler cr!
+
+isRenegade
+	"Answer whether the receiver was loaded (or last saved) before its source representation in the file system.
+	An example of where a package might be a renegade is if it has been modified and saved from another image."
+
+	| lastWriteTime |
+	lastWriteTime := self fileModificationTime.
+	^lastWriteTime > timestamp!
+
+isUsingPAX
+	"Answer true if the receiver is using PAX mode. If a PAX file of the same name as the
+	receiver exists on disk then both PAC and PAX files are saved simultaneously."
+
+	^self isSystemPackage or: [File exists: self fileOutName]!
+
+isUsingPAX: aBoolean
+	"Place the receiver into a mode where it is using PAX source format according to aBoolean."
+
+	self assert: [self isSystemPackage not].
+	aBoolean 
+		ifTrue: [ self beUsingPAX ]
+		ifFalse: [ self beNotUsingPAX ]!
+
+save
+	"Save the receiver to a single PAC file. This includes all of the source for the receiver's contents.
+	If the receiver is operating in PAX source mode then all of the source files are also
+	filed out, including a .PAX definition. Answer whether the package was actually saved.
+	This is the implementation behind the Package Browser's 'Save' command."
+
+	self isUsingPAX ifTrue: [self fileOutAll] ifFalse: [self saveSingleFilePackage].
+	^true!
+
+saveAs: aString 
+	self manager renamePackage: self to: aString.
+	self save!
+
+saveChanges
+	"Save the receiver, if changed. This includes all of the source for the receiver's contents.
+	If the receiver is operating in PAX source mode then all of the changed source files are
+	also filed out. including a .PAX definition. Answer whether the package was actually saved.
+	This is the implementation behind the Package Browser's 'Save Changes' command."
+
+	self isChanged ifFalse: [^self].
+	self isUsingPAX 
+		ifTrue: 
+			[self fileOutAllChanged.
+			self isChanged: false]
+		ifFalse: [self saveSingleFilePackage]!
+
+savePAC
+	"Private - File out a definition of the receiver and all the objects it owns to a single
+	text .PAC file. Any binary objects (views, non-<sourceObject> globals) are saved as a
+	printed representation of their STB'd binary store bytes."
+
+	| filer |
+	self okToSaveOrDeploy.
+	self checkTimestamps.
+	self createPackagePath.
+	"This event can be hooked to backup the old package before it is overwritten, etc"
+	self manager trigger: #aboutToSave: with: self.
+	filer := self sourceManager sourceFilerOn: (FileStream write: self dotPacPath).
+	[self fileOutAllOn: filer] ensure: [filer close]!
+
+savePAX
+	"Private - File out a definition of the receiver to a .PAX source file. This does not file
+	out the source files of the receiver's contents."
+
+	"Implementation Note: All fileouts use case sensitive collation in order to avoid problem of order
+	switches for same named identifiers with different case, which can cause a line-based source
+	management system to detect a change where there isn't one."
+
+	| filer |
+	self createPackagePath.
+	filer := self sourceManager sourceFilerOn: (FileStream write: self fileOutName).
+	[self fileOutOn: filer] ensure: [filer close].
+
+	"We must also file out the binary globals at this stage, as they are not <sourceObject>s."
+	self fileOutBinaryVariables!
+
+savePAXAboutBlockOn: stream 
+	aboutBlock isNil ifTrue: [^self].
+	stream nextPutAll: 'package aboutBlockBytes: '.
+	aboutBlock binaryStoreBytes base64StoreOn: stream.
+	stream
+		nextPut: $.;
+		cr!
+
+savePAXChunkOn: aSourceFiler
+	"Private - File out the receiver's package description stream in PAX source file format
+	to the <puttableStream>, stream. This is in the form of a chunk which, when re-evaluated,
+	creates an equivalent package description in a state which can be used for comparision
+	or loading, etc. None of the code in the package, with the exception of the package scripts,
+	is included. None of the code, including the package scripts, is evaluated."
+
+	| stream |
+	stream := String smalltalkWriteStream: 1024.
+	self
+		savePAXPackageOn: stream;
+		savePAXPackageVersionOn: stream;
+		savePAXAboutBlockOn: stream;
+		savePAXStripperBytesOn: stream;
+		savePAXScriptsOn: stream;
+		savePAXNamesOn: stream;
+		savePAXVariableNamesOn: stream;
+		savePAXPrerequisiteNamesOn: stream;
+		savePAXManualPrerequisitesOn: stream;
+		savePAXUntracedVariablesOn: stream.
+
+	"Finish off the stream by answering the package loaded"
+	stream nextPutAll: 'package'.
+	aSourceFiler fileOutExpression: stream contents!
+
+savePAXCollection: aSequencedReadableCollection initializer: aSymbol on: aPuttableStream
+	aSequencedReadableCollection isEmpty ifTrue: [^self].
+	aPuttableStream
+		nextPutAll: 'package ';
+		display: aSymbol;
+		nextPutAll: ' #(';
+		cr.
+	aSequencedReadableCollection do: 
+			[:each |
+			aPuttableStream
+				tab;
+				print: each;
+				cr].
+	aPuttableStream
+		nextPutAll: ').';
+		cr;
+		cr!
+
+savePAXManualPrerequisitesOn: aPuttableStream
+	"Private - File out the names of any manually configured pre-requisite packages of the receiver onto the <puttableStream> argument."
+
+	self
+		savePAXCollection: self manualPrerequisites
+		initializer: #setManualPrerequisites:
+		on: aPuttableStream!
+
+savePAXNames: aCollectionOfBindingReferences initializer: aSymbol on: aPuttableStream
+	self
+		savePAXCollection: aCollectionOfBindingReferences asSortedCollection
+		initializer: aSymbol
+		on: aPuttableStream!
+
+savePAXNamesOn: aPuttableStream
+	"Private - File out the PAX source file representation of the class names, loose method  names, and variable names, onto the <puttableStream> argument, in ascending order of their printable representation."
+
+	self
+		savePAXNames: self classNames
+		initializer: #setClassNames:
+		on: aPuttableStream.
+	self
+		savePAXCollection: (self methodNames asSortedCollection collect: [:each | {each className. each selector}])
+		initializer: #setMethodNames:
+		on: aPuttableStream.
+	self
+		savePAXNames: self variableNames
+		initializer: #setVariableNames:
+		on: aPuttableStream!
+
+savePAXPackageOn: aPuttableStream
+	"Private - Save the basic details of the receiver in the PAX source file representation onto the <puttableStream> argument."
+
+	"Create package and set some basic attributes"
+
+	aPuttableStream
+		nextPutAll: '| package |';
+		cr;
+		nextPutAll: 'package := ';
+		print: self class;
+		space;
+		nextPutAll: #name:;
+		space;
+		print: self name;
+		nextPut: $.;
+		cr;
+		nextPutAll: 'package ';
+		nextPutAll: #paxVersion:;
+		space;
+		print: self paxVersion;
+		nextPut: $;;
+		crtab.
+	preDeclareClassesOnLoad
+		ifNotNil: 
+			[aPuttableStream
+				nextPutAll: #preDeclareClassesOnLoad:;
+				space;
+				print: preDeclareClassesOnLoad;
+				nextPut: $;;
+				crtab].
+	aPuttableStream
+		nextPutAll: #basicComment:;
+		space;
+		print: self comment;
+		nextPut: $.;
+		cr;
+		cr!
+
+savePAXPackageVersionOn: aStream 
+	"Private - Save Package Version - this is the version of the package, not the file out format"
+
+	packageVersion isNil ifTrue: [^self].
+	aStream
+		nextPutAll: 'package ';
+		nextPutAll: #basicPackageVersion:;
+		space;
+		print: self packageVersion;
+		nextPut: $.;
+		cr;
+		cr!
+
+savePAXPrerequisiteNamesOn: aPuttableStream
+	"Private - File out names of the pre-requisite packages of the receiver onto the onto the <puttableStream> argument in ascending order."
+
+	| basePath |
+	basePath := self path.
+	self
+		savePAXCollection: ((self prerequisites asSortedCollection: [:a :b | a name <==> b name < 0])
+				collect: [:each | File removeExtension: (File relativePathOf: each packageFileName to: basePath)])
+		initializer: #setPrerequisites:
+		on: aPuttableStream!
+
+savePAXScriptsOn: target 
+	"Private - File out the PAX source file representation of the receiver's scripts
+	onto the <puttableStream>, target.
+	Implementation Note: The scripts are installed using #basicScriptAt:put: to
+	avoid the package being flagged as changed and the consequent transmission 
+	of a change event."
+
+	self scripts keys asSortedCollection do: 
+			[:each | 
+			target
+				nextPutAll: 'package basicScriptAt: ';
+				print: each;
+				nextPutAll: ' put: ';
+				print: (self scriptAt: each);
+				nextPut: $.;
+				cr].
+	target cr!
+
+savePAXStripperBytesOn: stream 
+	"Private - File out the PAX source file representation of the receiver's 
+	image stripper bytes (if any) onto the <puttableStream>, target."
+
+	imageStripperBytes isNil ifTrue: [^self].
+	stream nextPutAll: 'package imageStripperBytes: '.
+	imageStripperBytes base64StoreOn: stream.
+	stream
+		nextPut: $.;
+		cr!
+
+savePAXUntracedVariablesOn: aWriteStream
+	self
+		savePAXNames: self untracedVariables asSortedCollection
+		initializer: #setUntracedVariables:
+		on: aWriteStream!
+
+savePAXVariableNamesOn: aPuttableStream
+	"Private - File out the PAX source file expressions to record the names of the non-source globals owned by the receiver."
+
+	self
+		savePAXNames: self binaryVariableNames
+			initializer: #setBinaryVariableNames:
+			on: aPuttableStream;
+		savePAXNames: self aliasVariableNames
+			initializer: #setAliasVariableNames:
+			on: aPuttableStream!
+
+saveSingleFilePackage
+	"Save the receiver and all owned objects to a single .PAC file.
+	The complementary message to save a multi-file package is #fileOutAll."
+
+	self savePAC.
+	self updateTimestamp.
+	self resetChangeFlags!
+
+toggleUsingPAX
+	"Toggles the use of PAX mode."
+
+	^self isUsingPAX: self isUsingPAX not!
+
+updateTimestamp
+	"Private - Synchronise the receiver's timestamp with its source file."
+
+	timestamp := self fileModificationTime! !
+!Kernel.Package categoriesFor: #allFileOutNames!accessing!private!source filing! !
+!Kernel.Package categoriesFor: #beNotUsingPAX!modes!public! !
+!Kernel.Package categoriesFor: #beUsingPAX!modes!public! !
+!Kernel.Package categoriesFor: #canFileOut!public!source filing! !
+!Kernel.Package categoriesFor: #checkTimestamps!helpers!private! !
+!Kernel.Package categoriesFor: #createPackagePath!private!source filing! !
+!Kernel.Package categoriesFor: #dotPacPath!helpers!private! !
+!Kernel.Package categoriesFor: #fileModificationTime!helpers!private! !
+!Kernel.Package categoriesFor: #fileOut!public!source filing! !
+!Kernel.Package categoriesFor: #fileOutAll!public!source filing! !
+!Kernel.Package categoriesFor: #fileOutAllChanged!public!source filing! !
+!Kernel.Package categoriesFor: #fileOutAllOn:!public!source filing! !
+!Kernel.Package categoriesFor: #fileOutBinaryVariableNamesOn:!private!source filing! !
+!Kernel.Package categoriesFor: #fileOutBinaryVariables!private!source filing! !
+!Kernel.Package categoriesFor: #fileOutBootDefinitions!private!source filing! !
+!Kernel.Package categoriesFor: #fileOutClassDefinitionsOn:!private!source filing! !
+!Kernel.Package categoriesFor: #fileOutClassesOn:!private!source filing! !
+!Kernel.Package categoriesFor: #fileOutLooseMethodsOn:!private!source filing! !
+!Kernel.Package categoriesFor: #fileOutMethodsOfClass:on:!private!source filing! !
+!Kernel.Package categoriesFor: #fileOutNames!private!source filing! !
+!Kernel.Package categoriesFor: #fileOutOn:!public!source filing! !
+!Kernel.Package categoriesFor: #fileOutSourceVariableNamesOn:!private!source filing! !
+!Kernel.Package categoriesFor: #fileOutVariableAliasesOn:!private!source filing! !
+!Kernel.Package categoriesFor: #isRenegade!public!testing! !
+!Kernel.Package categoriesFor: #isUsingPAX!public!testing! !
+!Kernel.Package categoriesFor: #isUsingPAX:!accessing!public! !
+!Kernel.Package categoriesFor: #save!commands!public! !
+!Kernel.Package categoriesFor: #saveAs:!commands!public! !
+!Kernel.Package categoriesFor: #saveChanges!operations!public! !
+!Kernel.Package categoriesFor: #savePAC!helpers!private! !
+!Kernel.Package categoriesFor: #savePAX!private!source filing-pax! !
+!Kernel.Package categoriesFor: #savePAXAboutBlockOn:!private!source filing-pax! !
+!Kernel.Package categoriesFor: #savePAXChunkOn:!private!source filing-pax! !
+!Kernel.Package categoriesFor: #savePAXCollection:initializer:on:!private!source filing-pax! !
+!Kernel.Package categoriesFor: #savePAXManualPrerequisitesOn:!private!source filing-pax! !
+!Kernel.Package categoriesFor: #savePAXNames:initializer:on:!private!source filing-pax! !
+!Kernel.Package categoriesFor: #savePAXNamesOn:!private!source filing-pax! !
+!Kernel.Package categoriesFor: #savePAXPackageOn:!private!source filing-pax! !
+!Kernel.Package categoriesFor: #savePAXPackageVersionOn:!private!source filing-pax! !
+!Kernel.Package categoriesFor: #savePAXPrerequisiteNamesOn:!private!source filing-pax! !
+!Kernel.Package categoriesFor: #savePAXScriptsOn:!private!source filing-pax! !
+!Kernel.Package categoriesFor: #savePAXStripperBytesOn:!private!source filing-pax! !
+!Kernel.Package categoriesFor: #savePAXUntracedVariablesOn:!private!source filing-pax! !
+!Kernel.Package categoriesFor: #savePAXVariableNamesOn:!private!source filing-pax! !
+!Kernel.Package categoriesFor: #saveSingleFilePackage!public!source filing! !
+!Kernel.Package categoriesFor: #toggleUsingPAX!commands!public! !
+!Kernel.Package categoriesFor: #updateTimestamp!helpers!private! !
+
+!Kernel.SourceFiler methodsFor!
+
+fileOutBinaryVariable: aBindingReference
+	"File out the text representation of the non-<sourceObject> which is the value of the <VariableBinding> referred to by the argument onto the receiver's source stream."
+
+	^self subclassResponsibility!
+
+storeCommentString: aString forPackage: aPackage
+	"Save the <readableString>, aString, as the comment text for the <Package>, aPackage, to the
+	receiver's source stream encoding the position and index into the package's source
+	descriptor so that the comment may be retrieved later."
+
+	^self subclassResponsibility! !
+!Kernel.SourceFiler categoriesFor: #fileOutBinaryVariable:!public!source filing! !
+!Kernel.SourceFiler categoriesFor: #storeCommentString:forPackage:!public!source filing! !
+
+!Kernel.SourceManager methodsFor!
+
+fileOutPackagedClass: aClass
+	"File out aClass via the package mechanism. The class is filed out to the same directory as the
+	package which contains it. Only the methods contained in this package are included in the 
+	generated file and following this call the class and its methods are marked as unchanged."
+
+	self fileOutPackagedClass: aClass to: aClass fileOutName.
+	!
+
+fileOutPackagedClass: aClass to: aFileName 
+	"File out aClass via the package mechanism. The class is filed out to aFileName.
+	Only the methods contained in this package are included in the 
+	generated file and following this call the class and its methods are marked as unchanged."
+
+	| package filer |
+	package := self packageManager packageOfClass: aClass.
+	package isNil 
+		ifTrue: 
+			["Not in any package so just file out normally"
+			^self fileOut: aClass to: aFileName].
+	filer := self newSourceFiler: aFileName.
+	filer fileOutDefinitionOfClass: aClass.
+	package fileOutMethodsOfClass: aClass on: filer.
+	package fileOutMethodsOfClass: aClass class on: filer.
+	filer close.
+
+	"Flag the class as being saved, i.e. no longer changed"
+	aClass isChanged: false! !
+!Kernel.SourceManager categoriesFor: #fileOutPackagedClass:!public!source filing! !
+!Kernel.SourceManager categoriesFor: #fileOutPackagedClass:to:!public!source filing! !
+
+"End of package definition"!
+

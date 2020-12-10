@@ -1,0 +1,115 @@
+﻿| package |
+package := Package name: 'Dolphin STON-Json'.
+package paxVersion: 2.1;
+	basicComment: 'Dolphin STON-Json
+Copyright (c) Object Arts Ltd, 2019. Portions Copyright (C) 2012 Sven Van Caekenberghe 
+
+Json support extracted from STON-Core, the original comment and license for which are below.
+
+---
+
+# STON - Smalltalk Object Notation
+
+[!![Build Status](https://travis-ci.org/svenvc/ston.svg?branch=master)](https://travis-ci.org/svenvc/ston)
+
+
+A lightweight text-based, human-readable data interchange format 
+for class-based object-oriented languages like Smalltalk.
+It can be used to serialize domain level objects, 
+either for persistency or network transport. 
+As its name suggests, it is based on JSON (Javascript Object Notation). 
+It adds symbols as a primitive value, class tags for object values and references. 
+Implementations for Pharo Smalltalk, Squeak and Gemstone Smalltalk are available.
+
+
+## Documentation
+
+The original [Smalltalk Object Notation](https://github.com/svenvc/ston/blob/master/ston-paper.md) paper
+
+The Pharo Enterprise book [STON](https://ci.inria.fr/pharo-contribution/job/EnterprisePharoBook/lastSuccessfulBuild/artifact/book-result/STON/STON.html) chapter
+
+The most formal description is [The STON Specification](https://github.com/svenvc/ston/blob/master/ston-spec.md)
+
+*Sven Van Caekenberghe* 
+[MIT Licensed](https://github.com/svenvc/ston/blob/master/license.txt)
+
+----
+
+MIT License
+
+Copyright (C) 2012 Sven Van Caekenberghe
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.'.
+
+
+package setClassNames: #(
+	#{STON.JSON}
+	#{STON.JsonWriter}
+).
+
+package setMethodNames: #(
+	#(#{STON class} #jsonWriter)
+	#(#{STON class} #put:asJsonOnStream:)
+	#(#{STON class} #put:asJsonOnStreamPretty:)
+	#(#{STON class} #toJsonString:)
+	#(#{STON class} #toJsonStringPretty:)
+).
+
+package setPrerequisites: #(
+	'..\..\Base\Dolphin'
+	'Dolphin STON-Core'
+).
+
+package!
+
+"Class Definitions"!
+
+Core.Object subclass: #'STON.JSON'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+STON.Writer subclass: #'STON.JsonWriter'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+"Loose Methods"!
+
+!STON class methodsFor!
+
+jsonWriter
+	^JsonWriter new
+		referencePolicy: #error;
+		yourself!
+
+put: object asJsonOnStream: stream
+	(self jsonWriter on: stream) nextPut: object!
+
+put: object asJsonOnStreamPretty: stream
+	(self jsonWriter on: stream)
+		prettyPrint: true; 
+		nextPut: object!
+
+toJsonString: object
+	^ String streamContents: [ :stream |
+		self put: object asJsonOnStream: stream ]!
+
+toJsonStringPretty: object
+	^ String streamContents: [ :stream |
+		self put: object asJsonOnStreamPretty: stream ]! !
+!STON class categoriesFor: #jsonWriter!accessing!public! !
+!STON class categoriesFor: #put:asJsonOnStream:!convenience!public! !
+!STON class categoriesFor: #put:asJsonOnStreamPretty:!convenience!public! !
+!STON class categoriesFor: #toJsonString:!convenience!public! !
+!STON class categoriesFor: #toJsonStringPretty:!convenience!public! !
+
+"End of package definition"!
+

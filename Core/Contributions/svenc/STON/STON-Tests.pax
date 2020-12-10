@@ -41,7 +41,8 @@ package setPrerequisites: #(
 	'..\..\..\Object Arts\Dolphin\Base\Dolphin Collection Arithmetic'
 	'..\..\..\Object Arts\Dolphin\Base\Dolphin Legacy Date & Time'
 	'..\..\..\Object Arts\Dolphin\MVP\Base\Dolphin MVP Base'
-	'STON-Core'
+	'..\..\..\Object Arts\Dolphin\System\STON\Dolphin STON-Core'
+	'..\..\..\Object Arts\Dolphin\System\STON\Dolphin STON-Json'
 	'..\..\Camp Smalltalk\SUnit\SUnit'
 	'..\..\Camp Smalltalk\SUnit\SUnitPreload'
 ).

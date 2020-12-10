@@ -97,6 +97,15 @@ minute
 
 	^seconds // 60 \\ 60!
 
+print24: hr24Boolean showSeconds: secsBoolean on: aWriteStream
+	| format |
+	format := hr24Boolean ifTrue: ['HH:mm'] ifFalse: ['hh:mm'].
+	secsBoolean ifTrue: [format := format , ':ssfffffffff'].
+	^Locale smalltalk
+		printTime: self
+		on: aWriteStream
+		format: format!
+
 printOn: aStream
 	"Append, to the <puttableStream>, aStream, a string whose characters are those that a developer might expect to see for this <Time>"
 
@@ -165,6 +174,7 @@ subtractTime: aTimeOrDate
 !Core.Time categoriesFor: #hour24!accessing!public! !
 !Core.Time categoriesFor: #millisecond!accessing!public! !
 !Core.Time categoriesFor: #minute!accessing!public! !
+!Core.Time categoriesFor: #print24:showSeconds:on:!public!ston! !
 !Core.Time categoriesFor: #printOn:!printing!public! !
 !Core.Time categoriesFor: #printOn:format:!printing!public! !
 !Core.Time categoriesFor: #printStringFormat:!printing!public! !

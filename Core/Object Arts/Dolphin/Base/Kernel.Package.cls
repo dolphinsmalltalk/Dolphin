@@ -544,13 +544,13 @@ fileInScript: aSymbol
 					ensure: [self becomeA: originalClass]]
 		ifNotDefined: [self evaluateScript: aSymbol source: aString]!
 
-fileNameForBinaryVariable: globalName
+fileNameForBinaryVariable: globalName extension: aString
 	"Private - Answer a filename for storing the binary globalName."
 
 	^File
 		composePath: self path
 		stem: globalName asString
-		extension: self class binaryVariableExtension!
+		extension: aString!
 
 fileNameForSourceGlobal: globalName
 	"Private - Answer a filename for storing the source globalObject."
@@ -558,7 +558,7 @@ fileNameForSourceGlobal: globalName
 	^File
 		composePath: self path
 		stem: globalName asString
-		extension: self class sourceGlobalExtension!
+		extension: self sourceGlobalExtension!
 
 fileOutName
 	"Answer the pathname used to store the PAX file for the sources of the receiver"
@@ -790,12 +790,26 @@ load
 loadBinaryVariables
 	"Private - Load each of the receiver's binary variables from their individual STB files."
 
-	(self propertyAt: #binaryVariables ifAbsent: [#()]) do: 
-			[:each |
-			| globalStream |
-			globalStream := FileStream read: (self fileNameForBinaryVariable: each) text: false.
-			each declare: (Object binaryReadFrom: globalStream).
-			globalStream close]!
+	| varNames ston |
+	varNames := self propertyAt: #binaryVariables ifAbsent: [].
+	varNames isNil ifTrue: [^self].
+	self paxVersion < 2.1
+		ifTrue: 
+			[varNames do: 
+					[:each |
+					| globalStream |
+					globalStream := FileStream read: (self fileNameForBinaryVariable: each extension: 'stb') text: false.
+					each declare: (Object binaryReadFrom: globalStream).
+					globalStream close]]
+		ifFalse: 
+			["We have a chicken-and-egg problem in that we need STON to load packages with binary variables, but STON is not part of the base system. This means that any packages loaded up to and including the STON packages cannot contain any binary variables."
+			ston := #{STON} value.
+			varNames do: 
+					[:each |
+					| globalStream |
+					globalStream := FileStream read: (self fileNameForBinaryVariable: each extension: 'ston') text: true.
+					each declare: (ston readFrom: globalStream).
+					globalStream close]]!
 
 loadPAC
 	"Private - Load all the objects owned by the receiver. This assumes that all prerequisite
@@ -1422,6 +1436,11 @@ sourceDescriptor
 sourceDescriptor: anObject
 	comment := anObject!
 
+sourceGlobalExtension
+	"Private - Answer the file extension for the files to which source globals are stored."
+
+	^ 'st'!
+
 sourceManager
 	"Answer the receiver's source manager."
 
@@ -1865,7 +1884,7 @@ If you experience subsequent problems please contact the package supplier for an
 !Kernel.Package categoriesFor: #evaluateScript:source:!private!source filing! !
 !Kernel.Package categoriesFor: #fileInClasses!private!source filing! !
 !Kernel.Package categoriesFor: #fileInScript:!private!source filing! !
-!Kernel.Package categoriesFor: #fileNameForBinaryVariable:!helpers!private! !
+!Kernel.Package categoriesFor: #fileNameForBinaryVariable:extension:!helpers!private! !
 !Kernel.Package categoriesFor: #fileNameForSourceGlobal:!helpers!private! !
 !Kernel.Package categoriesFor: #fileOutName!public!source filing! !
 !Kernel.Package categoriesFor: #getEvents!accessing!private! !
@@ -1973,6 +1992,7 @@ If you experience subsequent problems please contact the package supplier for an
 !Kernel.Package categoriesFor: #shrink!private! !
 !Kernel.Package categoriesFor: #sourceDescriptor!accessing!private! !
 !Kernel.Package categoriesFor: #sourceDescriptor:!accessing!private! !
+!Kernel.Package categoriesFor: #sourceGlobalExtension!constants!private! !
 !Kernel.Package categoriesFor: #sourceManager!accessing!public! !
 !Kernel.Package categoriesFor: #sourceVariableNames!accessing!private! !
 !Kernel.Package categoriesFor: #stbSaveOn:!binary filing!public! !
@@ -2011,11 +2031,6 @@ If you experience subsequent problems please contact the package supplier for an
 
 binaryPacLoader: aDyadicValuable
 	BinaryPacLoader := aDyadicValuable!
-
-binaryVariableExtension
-	"Private - Answer the file extension for the files to which binary globals are stored."
-
-	^'stb'!
 
 clashSignal
 	"Private - Answer the <Signal> which is raised should overlapping/clashing membership
@@ -2154,11 +2169,6 @@ readFrom: pacStream
 	| chunk |
 	chunk := (ChunkSourceFiler on: pacStream) nextChunk.
 	^(Compiler evaluate: chunk) upgrade!
-
-sourceGlobalExtension
-	"Private - Answer the file extension for the files to which source globals are stored."
-
-	^ 'st'!
 
 sourcePackageExtension
 	"Private - Answer the file extension for the file to which sources for an instance of the
@@ -2364,7 +2374,6 @@ unsaveableSignal
 
 	^UnsaveableSignal! !
 !Kernel.Package class categoriesFor: #binaryPacLoader:!accessing!private! !
-!Kernel.Package class categoriesFor: #binaryVariableExtension!constants!private! !
 !Kernel.Package class categoriesFor: #clashSignal!constants!private! !
 !Kernel.Package class categoriesFor: #defaultSortBlock!constants!public! !
 !Kernel.Package class categoriesFor: #errorInvalidPACFile:!exceptions!private! !
@@ -2383,7 +2392,6 @@ unsaveableSignal
 !Kernel.Package class categoriesFor: #preDeclareClassesOnLoad!accessing!public! !
 !Kernel.Package class categoriesFor: #preDeclareClassesOnLoad:!accessing!public! !
 !Kernel.Package class categoriesFor: #readFrom:!instance creation!private! !
-!Kernel.Package class categoriesFor: #sourceGlobalExtension!constants!private! !
 !Kernel.Package class categoriesFor: #sourcePackageExtension!constants!private! !
 !Kernel.Package class categoriesFor: #stbConvertFrom:!binary filing!public! !
 !Kernel.Package class categoriesFor: #stbConvertFromVersion0:!binary filing!private! !

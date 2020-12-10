@@ -480,6 +480,7 @@ package setMethodNames: #(
 	#(#{OS.COM.TypeInfoObject class} #highLevelWrapperStyleMap)
 	#(#{OS.COM.TypeInfoObject class} #highLevelWrapperStyles)
 	#(#{OS.COM.TypeInfoObject class} #icon)
+	#(#{OS.COM.TypeInfoObject class} #stonAllInstVarNames)
 	#(#{OS.COM.TypeInfoObject class} #tracingStyleMap)
 	#(#{OS.COM.TypeInfoObject class} #tracingStyles)
 	#(#{OS.COM.TypeLibDocumentation} #idlAttributes)
@@ -534,6 +535,7 @@ package setMethodNames: #(
 	#(#{OS.COM.TypeLibraryAnalyzer class} #open)
 	#(#{OS.COM.TypeLibraryAnalyzer class} #publishedAspectsOfInstances)
 	#(#{OS.COM.TypeLibraryAnalyzer class} #registerTypeLib)
+	#(#{OS.COM.TypeLibraryAnalyzer class} #stonAllInstVarNames)
 	#(#{OS.COM.TypeLibraryAnalyzer class} #superclassClashSignal)
 	#(#{OS.COM.TypeLibraryAnalyzer class} #typeLibRegistrations)
 	#(#{OS.COM.VARDESC} #printIDLOn:indent:)
@@ -6473,6 +6475,11 @@ icon
 
 	^TypeLibraryAnalyzer icon!
 
+stonAllInstVarNames
+	"Override to exclude the number of instance variables we never want to serialize."
+
+	^super stonAllInstVarNames copyWithout: 'tlbInterface'!
+
 tracingStyleMap
 	TracingStyleMap isNil
 		ifTrue: 
@@ -6497,6 +6504,7 @@ tracingStyles
 !OS.COM.TypeInfoObject class categoriesFor: #highLevelWrapperStyleMap!accessing!private! !
 !OS.COM.TypeInfoObject class categoriesFor: #highLevelWrapperStyles!initializing!private! !
 !OS.COM.TypeInfoObject class categoriesFor: #icon!constants!public! !
+!OS.COM.TypeInfoObject class categoriesFor: #stonAllInstVarNames!public! !
 !OS.COM.TypeInfoObject class categoriesFor: #tracingStyleMap!accessing!private! !
 !OS.COM.TypeInfoObject class categoriesFor: #tracingStyles!initializing!private! !
 
@@ -7243,6 +7251,11 @@ registerTypeLib
 					caption: 'Unable to register type library...';
 					errorMsg: each description]!
 
+stonAllInstVarNames
+	"Override to exclude the number of instance variables we never want to serialize."
+
+	^super stonAllInstVarNames copyWithout: 'typeAnalyzers'!
+
 superclassClashSignal
 	"Answer the <exceptionSelector>/<exceptionSignaler> which can be signalled to
 	when an inheritance mismatch is detected."
@@ -7287,6 +7300,7 @@ typeLibRegistrations
 !OS.COM.TypeLibraryAnalyzer class categoriesFor: #open!instance creation!public! !
 !OS.COM.TypeLibraryAnalyzer class categoriesFor: #publishedAspectsOfInstances!constants!public! !
 !OS.COM.TypeLibraryAnalyzer class categoriesFor: #registerTypeLib!helpers!public! !
+!OS.COM.TypeLibraryAnalyzer class categoriesFor: #stonAllInstVarNames!public! !
 !OS.COM.TypeLibraryAnalyzer class categoriesFor: #superclassClashSignal!constants!examples!public! !
 !OS.COM.TypeLibraryAnalyzer class categoriesFor: #typeLibRegistrations!enquiries!private! !
 

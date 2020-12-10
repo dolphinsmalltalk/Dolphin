@@ -3971,6 +3971,9 @@ stbSaveOn: anSTBOutFiler
 
 	anSTBOutFiler saveObject: self as: (STBSingletonProxy forClass: self class)!
 
+stonOn: stonWriter
+	stonWriter writeObject: self listSingleton: #current!
+
 suggestedWord: aString
 	| start stream suggestion |
 	suggestion := aString isEmpty ifTrue: [Clipboard current getTextOrEmpty] ifFalse: [aString].
@@ -4606,6 +4609,7 @@ wrapText: aString toWidth: max indent: colInteger tabWidth: tabInteger
 !Tools.SmalltalkSystem categoriesFor: #splashShowAtStartup!accessing!public! !
 !Tools.SmalltalkSystem categoriesFor: #splashShowAtStartup:!accessing!public! !
 !Tools.SmalltalkSystem categoriesFor: #stbSaveOn:!binary filing!public! !
+!Tools.SmalltalkSystem categoriesFor: #stonOn:!public!ston! !
 !Tools.SmalltalkSystem categoriesFor: #suggestedWord:!helpers!private! !
 !Tools.SmalltalkSystem categoriesFor: #systemEnvironment!commands!private! !
 !Tools.SmalltalkSystem categoriesFor: #systemFolder!accessing!public! !
