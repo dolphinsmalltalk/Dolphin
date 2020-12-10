@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'Dolphin IDE Extension Example'.
-package paxVersion: 2;
+package paxVersion: 2.1;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk IDE Extension Sample. 
 Copyright (c) Object Arts Ltd, 2002.
@@ -16,11 +16,11 @@ These extensions can be turned on and off independently as options under ''Objec
 
 
 package setClassNames: #(
-	#{OAIDEExtensions}
+	#{Tools.OAIDEExtensions}
 ).
 
 package setMethodNames: #(
-	#(#{ClassCommentPlugin} #emitClassLayoutDescription)
+	#(#{Tools.ClassCommentPlugin} #emitClassLayoutDescription)
 ).
 
 package setPrerequisites: #(
@@ -38,10 +38,10 @@ package!
 
 "Class Definitions"!
 
-Object subclass: #OAIDEExtensions
+Core.Object subclass: #'Tools.OAIDEExtensions'
 	instanceVariableNames: 'flags'
 	classVariableNames: 'Current'
-	poolDictionaries: 'SHDocVwConstants'
+	imports: #(#{Smalltalk.SHDocVwConstants private})
 	classInstanceVariableNames: ''
 	classConstants: {
 		'ClassCommentTemplateMask' -> 16r1.
@@ -50,7 +50,7 @@ Object subclass: #OAIDEExtensions
 
 "Loose Methods"!
 
-!ClassCommentPlugin methodsFor!
+!Tools.ClassCommentPlugin methodsFor!
 
 emitClassLayoutDescription
 	"Emits a description of the instance variables for the context class at the
@@ -63,7 +63,7 @@ emitClassLayoutDescription
 		on: Error
 		do: [:ex | MessageBox errorMsg: ex description].
 	desc isNil ifFalse: [textPresenter replaceSelection: desc]! !
-!ClassCommentPlugin categoriesFor: #emitClassLayoutDescription!commands!development!public! !
+!Tools.ClassCommentPlugin categoriesFor: #emitClassLayoutDescription!commands!development!public! !
 
 "End of package definition"!
 

@@ -1,16 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Object subclass: #OAIDEExtensions
+Core.Object subclass: #'Tools.OAIDEExtensions'
 	instanceVariableNames: 'flags'
 	classVariableNames: 'Current'
-	poolDictionaries: 'SHDocVwConstants'
+	imports: #(#{Smalltalk.SHDocVwConstants private})
 	classInstanceVariableNames: ''
 	classConstants: {
 		'ClassCommentTemplateMask' -> 16r1.
 		'KeyHelpMask' -> 16r2
 	}!
-OAIDEExtensions guid: (GUID fromString: '{7803cf6a-7f63-44a5-80a6-feb5e0af07a2}')!
-OAIDEExtensions comment: 'Class to host Object Arts extensions to the standard Dolphin IDE tools.
+Tools.OAIDEExtensions guid: (Core.GUID fromString: '{7803cf6a-7f63-44a5-80a6-feb5e0af07a2}')!
+Tools.OAIDEExtensions comment: 'Class to host Object Arts extensions to the standard Dolphin IDE tools.
 
 This is mainly intended as a sample to demonstrate how to implement IDE extensions in Dolphin. It illustrates:
 - how to intercept the opening of new tools of particular classes (i.e. hooking the class #viewOpened: event) 
@@ -18,11 +18,11 @@ This is mainly intended as a sample to demonstrate how to implement IDE extensio
 - using <ClosedCommandDescription>s to build "closed" commands that are pre-targeted at a particular receiver and which can manage their own enablement/disablement state.
 - registering with the system to appear in ''User Preferences'' so that extensions can be enabled and disabled by the user.
 - use of the IE web browser control to display generated HTML.'!
-!OAIDEExtensions categoriesForClass!Kernel-Objects! !
-!OAIDEExtensions methodsFor!
+!Tools.OAIDEExtensions categoriesForClass!Kernel-Objects! !
+!Tools.OAIDEExtensions methodsFor!
 
 allToolClasses
-	^SmalltalkToolShell allSubclasses copyWith: SmalltalkWorkspaceDocument!
+	^Tools.SmalltalkToolShell allSubclasses copyWith: Tools.SmalltalkWorkspaceDocument!
 
 allVisibleSubViewsOf: aView do: aMonadicValuable 
 	"Enumerate the visible sub-views of aView."
@@ -68,14 +68,14 @@ browseKeyBindingsOfShell: aShellView
 		largeIcon: (Icon fromId: 'HotKey.ico');
 		isPersistentView: false.
 	shell caption: ('<1d> Key Bindings' expandMacrosWith: aShellView presenter class).
-	presenter := URLPresenter createIn: shell.
+	presenter := Smalltalk.URLPresenter createIn: shell.
 	shell show.
 	browser := presenter view controlDispatch.
 	stream reset.
 	self streamHtml: stream intoBrowser: browser!
 
 classBrowserClasses
-	^ClassBrowserAbstract allSubclasses!
+	^Tools.ClassBrowserAbstract allSubclasses!
 
 displayOn: aPuttableStream
 	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that an end-user might want to see."
@@ -94,15 +94,16 @@ enableKeyBindingsHelp
 enableKeyBindingsHelp: aBoolean
 	flags := flags mask: KeyHelpMask set: aBoolean!
 
-extendClassCommentMenu: aClassBrowserAbstract 
+extendClassCommentMenu: aClassBrowserAbstract
 	| commentWorkspaceMenu plugin |
-	plugin := aClassBrowserAbstract loadedPlugins detect: [:each | each isKindOf: ClassCommentPlugin]
+	plugin := aClassBrowserAbstract loadedPlugins
+				detect: [:each | each isKindOf: Tools.ClassCommentPlugin]
 				ifNone: [].
 	plugin isNil ifTrue: [^self].
 	commentWorkspaceMenu := (plugin presenterNamed: 'text') view contextMenu.
 	commentWorkspaceMenu
 		addSeparator;
-		addCommandDescription: (ClosedCommandDescription 
+		addCommandDescription: (ClosedCommandDescription
 					command: #emitClassLayoutDescription
 					description: 'Emit Class Layout Description'
 					queryBlock: [:query | query isEnabled: plugin browser hasClassSelected]
@@ -166,10 +167,10 @@ onBrowserOpened: aClassBrowserAbstract
 		ifTrue: [[self extendClassCommentMenu: aClassBrowserAbstract] postToMessageQueue].
 	self onToolOpened: aClassBrowserAbstract!
 
-onClassAdded: aClass 
-	(aClass inheritsFrom: SmalltalkToolShell) 
+onClassAdded: aClass
+	(aClass inheritsFrom: Tools.SmalltalkToolShell)
 		ifTrue: 
-			[(aClass inheritsFrom: ClassBrowserAbstract) 
+			[(aClass inheritsFrom: Tools.ClassBrowserAbstract)
 				ifTrue: [self observeBrowserClass: aClass]
 				ifFalse: [self observeToolClass: aClass]]!
 
@@ -282,9 +283,9 @@ release
 streamHtml: aStream intoBrowser: browser 
 	| doc docStream |
 	doc := browser document.
-	docStream := doc queryInterface: IPersistStreamInit.
+	docStream := doc queryInterface: Smalltalk.IPersistStreamInit.
 	docStream initNew.
-	docStream readFrom: (aStream queryInterface: IStream)!
+	docStream readFrom: (aStream queryInterface: Smalltalk.IStream)!
 
 variableDescriptionsFor: aClass
 	"Private - Answers a <readableString> that describes the instance variables and
@@ -366,35 +367,35 @@ variableDescriptionsFor: aClass
 						cr].
 			stream cr].
 	^stream contents! !
-!OAIDEExtensions categoriesFor: #allToolClasses!constants!private! !
-!OAIDEExtensions categoriesFor: #allVisibleSubViewsOf:do:!helpers!private! !
-!OAIDEExtensions categoriesFor: #baseProtocolFor:named:!development!private! !
-!OAIDEExtensions categoriesFor: #browseKeyBindingsOfShell:!operations!private! !
-!OAIDEExtensions categoriesFor: #classBrowserClasses!constants!private! !
-!OAIDEExtensions categoriesFor: #displayOn:!initializing!public! !
-!OAIDEExtensions categoriesFor: #enableClassCommentTemplate!accessing!public! !
-!OAIDEExtensions categoriesFor: #enableClassCommentTemplate:!accessing!public! !
-!OAIDEExtensions categoriesFor: #enableKeyBindingsHelp!accessing!public! !
-!OAIDEExtensions categoriesFor: #enableKeyBindingsHelp:!accessing!public! !
-!OAIDEExtensions categoriesFor: #extendClassCommentMenu:!event handling!private! !
-!OAIDEExtensions categoriesFor: #extendHelpMenu:!helpers!private! !
-!OAIDEExtensions categoriesFor: #initialize!initializing!private! !
-!OAIDEExtensions categoriesFor: #nonClassBrowserTools!accessing!private! !
-!OAIDEExtensions categoriesFor: #observeBrowserClass:!initializing!private! !
-!OAIDEExtensions categoriesFor: #observeSystemEvents!initializing!private! !
-!OAIDEExtensions categoriesFor: #observeToolClass:!initializing!private! !
-!OAIDEExtensions categoriesFor: #observeToolEvents!initializing!private! !
-!OAIDEExtensions categoriesFor: #onBrowserOpened:!event handling!private! !
-!OAIDEExtensions categoriesFor: #onClassAdded:!event handling!private! !
-!OAIDEExtensions categoriesFor: #onToolOpened:!event handling!private! !
-!OAIDEExtensions categoriesFor: #printHtmlDescriptionOfKeyBindingsForShell:on:!helpers!private! !
-!OAIDEExtensions categoriesFor: #printHtmlTableOfKeyBindingsForView:on:inUse:!helpers!private! !
-!OAIDEExtensions categoriesFor: #printInlineStyleSheetOn:!private! !
-!OAIDEExtensions categoriesFor: #release!dependency!private! !
-!OAIDEExtensions categoriesFor: #streamHtml:intoBrowser:!operations!private! !
-!OAIDEExtensions categoriesFor: #variableDescriptionsFor:!development!private! !
+!Tools.OAIDEExtensions categoriesFor: #allToolClasses!constants!private! !
+!Tools.OAIDEExtensions categoriesFor: #allVisibleSubViewsOf:do:!helpers!private! !
+!Tools.OAIDEExtensions categoriesFor: #baseProtocolFor:named:!development!private! !
+!Tools.OAIDEExtensions categoriesFor: #browseKeyBindingsOfShell:!operations!private! !
+!Tools.OAIDEExtensions categoriesFor: #classBrowserClasses!constants!private! !
+!Tools.OAIDEExtensions categoriesFor: #displayOn:!initializing!public! !
+!Tools.OAIDEExtensions categoriesFor: #enableClassCommentTemplate!accessing!public! !
+!Tools.OAIDEExtensions categoriesFor: #enableClassCommentTemplate:!accessing!public! !
+!Tools.OAIDEExtensions categoriesFor: #enableKeyBindingsHelp!accessing!public! !
+!Tools.OAIDEExtensions categoriesFor: #enableKeyBindingsHelp:!accessing!public! !
+!Tools.OAIDEExtensions categoriesFor: #extendClassCommentMenu:!event handling!private! !
+!Tools.OAIDEExtensions categoriesFor: #extendHelpMenu:!helpers!private! !
+!Tools.OAIDEExtensions categoriesFor: #initialize!initializing!private! !
+!Tools.OAIDEExtensions categoriesFor: #nonClassBrowserTools!accessing!private! !
+!Tools.OAIDEExtensions categoriesFor: #observeBrowserClass:!initializing!private! !
+!Tools.OAIDEExtensions categoriesFor: #observeSystemEvents!initializing!private! !
+!Tools.OAIDEExtensions categoriesFor: #observeToolClass:!initializing!private! !
+!Tools.OAIDEExtensions categoriesFor: #observeToolEvents!initializing!private! !
+!Tools.OAIDEExtensions categoriesFor: #onBrowserOpened:!event handling!private! !
+!Tools.OAIDEExtensions categoriesFor: #onClassAdded:!event handling!private! !
+!Tools.OAIDEExtensions categoriesFor: #onToolOpened:!event handling!private! !
+!Tools.OAIDEExtensions categoriesFor: #printHtmlDescriptionOfKeyBindingsForShell:on:!helpers!private! !
+!Tools.OAIDEExtensions categoriesFor: #printHtmlTableOfKeyBindingsForView:on:inUse:!helpers!private! !
+!Tools.OAIDEExtensions categoriesFor: #printInlineStyleSheetOn:!private! !
+!Tools.OAIDEExtensions categoriesFor: #release!dependency!private! !
+!Tools.OAIDEExtensions categoriesFor: #streamHtml:intoBrowser:!operations!private! !
+!Tools.OAIDEExtensions categoriesFor: #variableDescriptionsFor:!development!private! !
 
-!OAIDEExtensions class methodsFor!
+!Tools.OAIDEExtensions class methodsFor!
 
 current
 	^Current!
@@ -419,9 +420,9 @@ onPreStripImage
 publishedAspectsOfInstances
 	"Answer a <LookupTable> of the <Aspect>s published by instances of the receiver."
 
-	^(super publishedAspectsOfInstances)
-		add: (Aspect boolean: #enableKeyBindingsHelp);
-		add: (Aspect boolean: #enableClassCommentTemplate);
+	^super publishedAspectsOfInstances
+		add: (Tools.Aspect boolean: #enableKeyBindingsHelp);
+		add: (Tools.Aspect boolean: #enableClassCommentTemplate);
 		yourself!
 
 uninitialize
@@ -432,10 +433,10 @@ uninitialize
 	Current isNil ifTrue: [^self].
 	Current release.
 	Current := nil! !
-!OAIDEExtensions class categoriesFor: #current!accessing!public! !
-!OAIDEExtensions class categoriesFor: #initialize!initializing!public! !
-!OAIDEExtensions class categoriesFor: #new!instance creation!public! !
-!OAIDEExtensions class categoriesFor: #onPreStripImage!class hierarchy-removing!private! !
-!OAIDEExtensions class categoriesFor: #publishedAspectsOfInstances!constants!development!public! !
-!OAIDEExtensions class categoriesFor: #uninitialize!class hierarchy-removing!public! !
+!Tools.OAIDEExtensions class categoriesFor: #current!accessing!public! !
+!Tools.OAIDEExtensions class categoriesFor: #initialize!initializing!public! !
+!Tools.OAIDEExtensions class categoriesFor: #new!instance creation!public! !
+!Tools.OAIDEExtensions class categoriesFor: #onPreStripImage!class hierarchy-removing!private! !
+!Tools.OAIDEExtensions class categoriesFor: #publishedAspectsOfInstances!constants!development!public! !
+!Tools.OAIDEExtensions class categoriesFor: #uninitialize!class hierarchy-removing!public! !
 
