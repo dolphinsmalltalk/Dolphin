@@ -15,7 +15,7 @@ package basicPackageVersion: '6.2'.
 
 
 package setClassNames: #(
-	#{Smalltalk.ApplicationDeploymentWizard}
+	#{Tools.ApplicationDeploymentWizard}
 ).
 
 package setMethodNames: #(
@@ -23,50 +23,50 @@ package setMethodNames: #(
 	#(#{Kernel.Package} #hasImageStripper)
 	#(#{Kernel.Package} #imageStripper)
 	#(#{Kernel.Package} #rehydrateImageStripper:)
-	#(#{Smalltalk.BasicImageStripper} #getEvents)
-	#(#{Smalltalk.BasicImageStripper} #postCopy)
-	#(#{Smalltalk.BasicImageStripper} #setEvents:)
-	#(#{Smalltalk.ImageStripper} #canDeploy)
-	#(#{Smalltalk.ImageStripper} #compileExternalStructures:)
-	#(#{Smalltalk.ImageStripper} #defaultSessionManagerClass)
-	#(#{Smalltalk.ImageStripper} #deploy)
-	#(#{Smalltalk.ImageStripper} #editCustomOptions)
-	#(#{Smalltalk.ImageStripper} #executableName:)
-	#(#{Smalltalk.ImageStripper} #ignoreViewReferences:)
-	#(#{Smalltalk.ImageStripper} #includeManifestResource:)
-	#(#{Smalltalk.ImageStripper} #initialize)
-	#(#{Smalltalk.ImageStripper} #isToGo:)
-	#(#{Smalltalk.ImageStripper} #isUnattended:)
-	#(#{Smalltalk.ImageStripper} #logReferencesToClasses:)
-	#(#{Smalltalk.ImageStripper} #preserveAspectSetters:)
-	#(#{Smalltalk.ImageStripper} #preStripScript:)
-	#(#{Smalltalk.ImageStripper} #queryCommand:)
-	#(#{Smalltalk.ImageStripper} #retainInstVarNames:)
-	#(#{Smalltalk.ImageStripper} #rootPackage:)
-	#(#{Smalltalk.ImageStripper} #runtimeSessionManagerClass:)
-	#(#{Smalltalk.ImageStripper} #snapshotType:)
-	#(#{Smalltalk.ImageStripper} #stripClassBuilder:)
-	#(#{Smalltalk.ImageStripper} #stripClassGuids:)
-	#(#{Smalltalk.ImageStripper} #stripClassInfo:)
-	#(#{Smalltalk.ImageStripper} #stripDeprecatedMethods:)
-	#(#{Smalltalk.ImageStripper} #stripDuplicateBytecodes:)
-	#(#{Smalltalk.ImageStripper} #stripDuplicateStrings:)
-	#(#{Smalltalk.ImageStripper} #stripRedundantClasses:)
-	#(#{Smalltalk.ImageStripper} #stripRedundantMethods:)
-	#(#{Smalltalk.ImageStripper} #stripRedundantPackages:)
-	#(#{Smalltalk.ImageStripper} #stripRedundantResources:)
-	#(#{Smalltalk.ImageStripper} #stripShouldNotImplement:)
-	#(#{Smalltalk.ImageStripper} #stripSubclassResponsibility:)
-	#(#{Smalltalk.ImageStripper} #stubFilePath:)
-	#(#{Smalltalk.ImageStripper} #versionResource:)
-	#(#{Smalltalk.ImageStripper} #writeLogFile:)
-	#(#{Smalltalk.ImageStripper class} #for:)
-	#(#{Smalltalk.ImageStripper class} #publishedAspectsOfInstances)
-	#(#{Smalltalk.ImageStripper class} #stbConvertFrom:)
-	#(#{Smalltalk.ImageStripper class} #stbVersion)
-	#(#{Smalltalk.PackageSelector} #deploy)
-	#(#{Smalltalk.VersionResource class} #publishedAspectsOfInstances)
-	#(#{Smalltalk.VS_VERSION_INFO_HEADER} #printOn:)
+	#(#{OS.VersionResource class} #publishedAspectsOfInstances)
+	#(#{OS.VS_VERSION_INFO_HEADER} #printOn:)
+	#(#{Tools.BasicImageStripper} #getEvents)
+	#(#{Tools.BasicImageStripper} #postCopy)
+	#(#{Tools.BasicImageStripper} #setEvents:)
+	#(#{Tools.ImageStripper} #canDeploy)
+	#(#{Tools.ImageStripper} #compileExternalStructures:)
+	#(#{Tools.ImageStripper} #defaultSessionManagerClass)
+	#(#{Tools.ImageStripper} #deploy)
+	#(#{Tools.ImageStripper} #editCustomOptions)
+	#(#{Tools.ImageStripper} #executableName:)
+	#(#{Tools.ImageStripper} #ignoreViewReferences:)
+	#(#{Tools.ImageStripper} #includeManifestResource:)
+	#(#{Tools.ImageStripper} #initialize)
+	#(#{Tools.ImageStripper} #isToGo:)
+	#(#{Tools.ImageStripper} #isUnattended:)
+	#(#{Tools.ImageStripper} #logReferencesToClasses:)
+	#(#{Tools.ImageStripper} #preserveAspectSetters:)
+	#(#{Tools.ImageStripper} #preStripScript:)
+	#(#{Tools.ImageStripper} #queryCommand:)
+	#(#{Tools.ImageStripper} #retainInstVarNames:)
+	#(#{Tools.ImageStripper} #rootPackage:)
+	#(#{Tools.ImageStripper} #runtimeSessionManagerClass:)
+	#(#{Tools.ImageStripper} #snapshotType:)
+	#(#{Tools.ImageStripper} #stripClassBuilder:)
+	#(#{Tools.ImageStripper} #stripClassGuids:)
+	#(#{Tools.ImageStripper} #stripClassInfo:)
+	#(#{Tools.ImageStripper} #stripDeprecatedMethods:)
+	#(#{Tools.ImageStripper} #stripDuplicateBytecodes:)
+	#(#{Tools.ImageStripper} #stripDuplicateStrings:)
+	#(#{Tools.ImageStripper} #stripRedundantClasses:)
+	#(#{Tools.ImageStripper} #stripRedundantMethods:)
+	#(#{Tools.ImageStripper} #stripRedundantPackages:)
+	#(#{Tools.ImageStripper} #stripRedundantResources:)
+	#(#{Tools.ImageStripper} #stripShouldNotImplement:)
+	#(#{Tools.ImageStripper} #stripSubclassResponsibility:)
+	#(#{Tools.ImageStripper} #stubFilePath:)
+	#(#{Tools.ImageStripper} #versionResource:)
+	#(#{Tools.ImageStripper} #writeLogFile:)
+	#(#{Tools.ImageStripper class} #for:)
+	#(#{Tools.ImageStripper class} #publishedAspectsOfInstances)
+	#(#{Tools.ImageStripper class} #stbConvertFrom:)
+	#(#{Tools.ImageStripper class} #stbVersion)
+	#(#{Tools.PackageSelector} #deploy)
 ).
 
 package setPrerequisites: #(
@@ -98,7 +98,7 @@ package!
 
 "Class Definitions"!
 
-UI.ValueDialog subclass: #ApplicationDeploymentWizard
+UI.ValueDialog subclass: #'Tools.ApplicationDeploymentWizard'
 	instanceVariableNames: 'imageStripperClass executableName executablePath1 executablePath2 rootPackage runtimeSessionManagerClass stripRedundantMethods stripDeprecatedMethods stripShouldNotImplement stripRedundantPackages stripRedundantClasses preserveAspectSetters stripDuplicateStrings stripDuplicateBytecodes stripClassInfo retainInstVarNames stripClassGuids stripClassBuilder unused stripRedundantResources compileExternalStructures writeLogFile preStripScriptWorkspace preStripScriptErrors logFileName logReferencesToClasses stepsView isToGo stripSubclassResponsibility'
 	classVariableNames: 'SaveImageOnDeploy'
 	imports: #()
@@ -126,7 +126,7 @@ imageStripper
 	ImageStripper class installed, we hold the stripper as a binary filed out ByteArray in imageStripperBytes.
 	We reconstitute this here."
 
-	^self rehydrateImageStripper: Smalltalk.ImageStripper!
+	^self rehydrateImageStripper: Tools.ImageStripper!
 
 rehydrateImageStripper: stripperClass 
 	| stripper |
@@ -145,7 +145,34 @@ rehydrateImageStripper: stripperClass
 !Kernel.Package categoriesFor: #imageStripper!accessing!public! !
 !Kernel.Package categoriesFor: #rehydrateImageStripper:!accessing!private! !
 
-!BasicImageStripper methodsFor!
+!OS.VersionResource class methodsFor!
+
+publishedAspectsOfInstances
+	"Answer a <LookupTable> of the <Aspect>s published by instances of the receiver."
+
+	^super publishedAspectsOfInstances
+		add: (Tools.Aspect string: #fileVersion);
+		add: (Tools.Aspect string: #productVersion);
+		add: (Tools.Aspect name: #stringTables);
+		add: (Tools.Aspect name: #translations);
+		yourself! !
+!OS.VersionResource class categoriesFor: #publishedAspectsOfInstances!constants!development!public! !
+
+!OS.VS_VERSION_INFO_HEADER methodsFor!
+
+printOn: target
+	target
+		basicPrint: self;
+		nextPut: $(;
+		nextPutAll: self key;
+		nextPutAll: ', wLength = '; print: self wLength;
+		nextPutAll: ', wValueLength='; print: self wValueLength;
+		nextPutAll: ', wType='; print: self wType;
+		nextPut: $)
+	! !
+!OS.VS_VERSION_INFO_HEADER categoriesFor: #printOn:!printing!public! !
+
+!Tools.BasicImageStripper methodsFor!
 
 getEvents
 	"Private - Answer the EventsCollection belonging to the receiver, or nil if the receiver
@@ -165,11 +192,11 @@ setEvents: anEventsCollectionOrNil
 	Answer the receiver."
 
 	events := anEventsCollectionOrNil! !
-!BasicImageStripper categoriesFor: #getEvents!events!private! !
-!BasicImageStripper categoriesFor: #postCopy!copying!public! !
-!BasicImageStripper categoriesFor: #setEvents:!events!private! !
+!Tools.BasicImageStripper categoriesFor: #getEvents!events!private! !
+!Tools.BasicImageStripper categoriesFor: #postCopy!copying!public! !
+!Tools.BasicImageStripper categoriesFor: #setEvents:!events!private! !
 
-!ImageStripper methodsFor!
+!Tools.ImageStripper methodsFor!
 
 canDeploy
 	"Answer true if the receiver is currently in a state where it can be deployed."
@@ -393,42 +420,42 @@ writeLogFile: aBoolean
 	to aBoolean."
 
 	flags := flags mask: WriteLogMask set: aBoolean! !
-!ImageStripper categoriesFor: #canDeploy!public!testing! !
-!ImageStripper categoriesFor: #compileExternalStructures:!accessing!public! !
-!ImageStripper categoriesFor: #defaultSessionManagerClass!accessing!public! !
-!ImageStripper categoriesFor: #deploy!operations!public! !
-!ImageStripper categoriesFor: #editCustomOptions!accessing!public! !
-!ImageStripper categoriesFor: #executableName:!accessing!public! !
-!ImageStripper categoriesFor: #ignoreViewReferences:!accessing!public! !
-!ImageStripper categoriesFor: #includeManifestResource:!accessing!public! !
-!ImageStripper categoriesFor: #initialize!initializing!private! !
-!ImageStripper categoriesFor: #isToGo:!accessing!public! !
-!ImageStripper categoriesFor: #isUnattended:!accessing!public! !
-!ImageStripper categoriesFor: #logReferencesToClasses:!accessing!public! !
-!ImageStripper categoriesFor: #preserveAspectSetters:!accessing!public! !
-!ImageStripper categoriesFor: #preStripScript:!accessing!public! !
-!ImageStripper categoriesFor: #queryCommand:!commands!private! !
-!ImageStripper categoriesFor: #retainInstVarNames:!accessing!public! !
-!ImageStripper categoriesFor: #rootPackage:!accessing!public! !
-!ImageStripper categoriesFor: #runtimeSessionManagerClass:!accessing!public! !
-!ImageStripper categoriesFor: #snapshotType:!accessing!public! !
-!ImageStripper categoriesFor: #stripClassBuilder:!accessing!public! !
-!ImageStripper categoriesFor: #stripClassGuids:!accessing!public! !
-!ImageStripper categoriesFor: #stripClassInfo:!accessing!public! !
-!ImageStripper categoriesFor: #stripDeprecatedMethods:!accessing!public! !
-!ImageStripper categoriesFor: #stripDuplicateBytecodes:!accessing!public! !
-!ImageStripper categoriesFor: #stripDuplicateStrings:!accessing!public! !
-!ImageStripper categoriesFor: #stripRedundantClasses:!accessing!public! !
-!ImageStripper categoriesFor: #stripRedundantMethods:!accessing!public! !
-!ImageStripper categoriesFor: #stripRedundantPackages:!accessing!public! !
-!ImageStripper categoriesFor: #stripRedundantResources:!accessing!public! !
-!ImageStripper categoriesFor: #stripShouldNotImplement:!accessing!public! !
-!ImageStripper categoriesFor: #stripSubclassResponsibility:!accessing!public! !
-!ImageStripper categoriesFor: #stubFilePath:!accessing!public! !
-!ImageStripper categoriesFor: #versionResource:!accessing!private! !
-!ImageStripper categoriesFor: #writeLogFile:!accessing!public! !
+!Tools.ImageStripper categoriesFor: #canDeploy!public!testing! !
+!Tools.ImageStripper categoriesFor: #compileExternalStructures:!accessing!public! !
+!Tools.ImageStripper categoriesFor: #defaultSessionManagerClass!accessing!public! !
+!Tools.ImageStripper categoriesFor: #deploy!operations!public! !
+!Tools.ImageStripper categoriesFor: #editCustomOptions!accessing!public! !
+!Tools.ImageStripper categoriesFor: #executableName:!accessing!public! !
+!Tools.ImageStripper categoriesFor: #ignoreViewReferences:!accessing!public! !
+!Tools.ImageStripper categoriesFor: #includeManifestResource:!accessing!public! !
+!Tools.ImageStripper categoriesFor: #initialize!initializing!private! !
+!Tools.ImageStripper categoriesFor: #isToGo:!accessing!public! !
+!Tools.ImageStripper categoriesFor: #isUnattended:!accessing!public! !
+!Tools.ImageStripper categoriesFor: #logReferencesToClasses:!accessing!public! !
+!Tools.ImageStripper categoriesFor: #preserveAspectSetters:!accessing!public! !
+!Tools.ImageStripper categoriesFor: #preStripScript:!accessing!public! !
+!Tools.ImageStripper categoriesFor: #queryCommand:!commands!private! !
+!Tools.ImageStripper categoriesFor: #retainInstVarNames:!accessing!public! !
+!Tools.ImageStripper categoriesFor: #rootPackage:!accessing!public! !
+!Tools.ImageStripper categoriesFor: #runtimeSessionManagerClass:!accessing!public! !
+!Tools.ImageStripper categoriesFor: #snapshotType:!accessing!public! !
+!Tools.ImageStripper categoriesFor: #stripClassBuilder:!accessing!public! !
+!Tools.ImageStripper categoriesFor: #stripClassGuids:!accessing!public! !
+!Tools.ImageStripper categoriesFor: #stripClassInfo:!accessing!public! !
+!Tools.ImageStripper categoriesFor: #stripDeprecatedMethods:!accessing!public! !
+!Tools.ImageStripper categoriesFor: #stripDuplicateBytecodes:!accessing!public! !
+!Tools.ImageStripper categoriesFor: #stripDuplicateStrings:!accessing!public! !
+!Tools.ImageStripper categoriesFor: #stripRedundantClasses:!accessing!public! !
+!Tools.ImageStripper categoriesFor: #stripRedundantMethods:!accessing!public! !
+!Tools.ImageStripper categoriesFor: #stripRedundantPackages:!accessing!public! !
+!Tools.ImageStripper categoriesFor: #stripRedundantResources:!accessing!public! !
+!Tools.ImageStripper categoriesFor: #stripShouldNotImplement:!accessing!public! !
+!Tools.ImageStripper categoriesFor: #stripSubclassResponsibility:!accessing!public! !
+!Tools.ImageStripper categoriesFor: #stubFilePath:!accessing!public! !
+!Tools.ImageStripper categoriesFor: #versionResource:!accessing!private! !
+!Tools.ImageStripper categoriesFor: #writeLogFile:!accessing!public! !
 
-!ImageStripper class methodsFor!
+!Tools.ImageStripper class methodsFor!
 
 for: aPackage
 	"Answers an instance of the receiver suitable for stripping aPackage"
@@ -464,17 +491,17 @@ stbConvertFrom: anSTBClassFormat
 		6: runFlags added and spare inst vars added"
 
 	^
-	[:data | 
+	[:data |
 	| newInstance ver |
 	newInstance := self basicNew.
 	ver := anSTBClassFormat version.
-	ver < 2 
+	ver < 2
 		ifTrue: [1 to: data size do: [:i | newInstance instVarAt: i + 1 put: (data at: i)]]
 		ifFalse: [1 to: data size do: [:i | newInstance instVarAt: i put: (data at: i)]].
-	ver < 3 
+	ver < 3
 		ifTrue: 
-			["Former stripRedundantClasses boolean slot now used for flags variable to hold all booleans"
-			| stripClasses base var flags |
+			[| stripClasses base var flags |
+			"Former stripRedundantClasses boolean slot now used for flags variable to hold all booleans"
 			var := ImageStripper indexOfInstVar: 'flags'.
 			stripClasses := newInstance instVarAt: var.
 
@@ -485,13 +512,13 @@ stbConvertFrom: anSTBClassFormat
 
 			"Convert former boolean vars to individual bits in the flags variable."
 			base := self superclass instSize.
-			#(5 6 7 8 9 10 13) 
+			#(5 6 7 8 9 10 13)
 				with: #(#stripRedundantMethods: #preserveAspectSetters: #stripDuplicateStrings: #compileExternalStructures: #writeLogFile: #stripClassInfo: #retainInstVarNames:)
 				do: 
-					[:i :setter | 
+					[:i :setter |
 					newInstance perform: setter with: (newInstance instVarAt: i + base).
 					newInstance instVarAt: i + base put: nil]].
-	ver < 4 
+	ver < 4
 		ifTrue: 
 			["Default is now 'To Go' deployment"
 			newInstance isToGo: true].
@@ -501,46 +528,18 @@ stbVersion
 	"Answer the current binary filer version number for instances of the receiver."
 
 	^6! !
-!ImageStripper class categoriesFor: #for:!instance creation!public! !
-!ImageStripper class categoriesFor: #publishedAspectsOfInstances!development!public! !
-!ImageStripper class categoriesFor: #stbConvertFrom:!binary filing!development!public! !
-!ImageStripper class categoriesFor: #stbVersion!binary filing!development!public! !
+!Tools.ImageStripper class categoriesFor: #for:!instance creation!public! !
+!Tools.ImageStripper class categoriesFor: #publishedAspectsOfInstances!development!public! !
+!Tools.ImageStripper class categoriesFor: #stbConvertFrom:!binary filing!development!public! !
+!Tools.ImageStripper class categoriesFor: #stbVersion!binary filing!development!public! !
 
-!PackageSelector methodsFor!
+!Tools.PackageSelector methodsFor!
 
 deploy
 	"Open a new Application Deployment Wizard on the image stripper of the current package."
 
-	ApplicationDeploymentWizard showModalOn: (self singlePackage aspectValue: #imageStripper).
-! !
-!PackageSelector categoriesFor: #deploy!commands!public! !
-
-!VersionResource class methodsFor!
-
-publishedAspectsOfInstances
-	"Answer a <LookupTable> of the <Aspect>s published by instances of the receiver."
-
-	^(super publishedAspectsOfInstances)
-		add: (Aspect string: #fileVersion);
-		add: (Aspect string: #productVersion);
-		add: (Aspect name: #stringTables);
-		add: (Aspect name: #translations);
-		yourself! !
-!VersionResource class categoriesFor: #publishedAspectsOfInstances!constants!development!public! !
-
-!VS_VERSION_INFO_HEADER methodsFor!
-
-printOn: target
-	target
-		basicPrint: self;
-		nextPut: $(;
-		nextPutAll: self key;
-		nextPutAll: ', wLength = '; print: self wLength;
-		nextPutAll: ', wValueLength='; print: self wValueLength;
-		nextPutAll: ', wType='; print: self wType;
-		nextPut: $)
-	! !
-!VS_VERSION_INFO_HEADER categoriesFor: #printOn:!printing!public! !
+	ApplicationDeploymentWizard showModalOn: (self singlePackage aspectValue: #imageStripper)! !
+!Tools.PackageSelector categoriesFor: #deploy!commands!public! !
 
 "End of package definition"!
 

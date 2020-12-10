@@ -1,16 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-RuntimeSessionManager subclass: #ProtectedProductSessionManager
+UI.RuntimeSessionManager subclass: #'UI.ProtectedProductSessionManager'
 	instanceVariableNames: 'encryptedClasses'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ProtectedProductSessionManager guid: (GUID fromString: '{a90c2f6f-8f92-4493-995a-1ec18066d054}')!
-ProtectedProductSessionManager isAbstract: true!
-ProtectedProductSessionManager comment: ''!
-!ProtectedProductSessionManager categoriesForClass!Unclassified! !
-!ProtectedProductSessionManager methodsFor!
+UI.ProtectedProductSessionManager guid: (Core.GUID fromString: '{a90c2f6f-8f92-4493-995a-1ec18066d054}')!
+UI.ProtectedProductSessionManager isNonInstantiable: true!
+UI.ProtectedProductSessionManager comment: ''!
+!UI.ProtectedProductSessionManager categoriesForClass!Unclassified! !
+!UI.ProtectedProductSessionManager methodsFor!
 
 encryptedClasses
 	"Answer classes owned by the receiver that will be encrypted in the deployed executable."
@@ -135,26 +135,26 @@ unlock
 		unlockClasses: self encryptedClasses
 		using: sn.
 ! !
-!ProtectedProductSessionManager categoriesFor: #encryptedClasses!accessing!public! !
-!ProtectedProductSessionManager categoriesFor: #encryptedClasses:!accessing!private! !
-!ProtectedProductSessionManager categoriesFor: #encryptedPackageNames!accessing!public! !
-!ProtectedProductSessionManager categoriesFor: #initialize!initializing!private! !
-!ProtectedProductSessionManager categoriesFor: #initializeFromSessionManager:!initializing!private! !
-!ProtectedProductSessionManager categoriesFor: #isSafeToEncrypt:!helpers!private! !
-!ProtectedProductSessionManager categoriesFor: #lock!operations!public! !
-!ProtectedProductSessionManager categoriesFor: #main!operations!public! !
-!ProtectedProductSessionManager categoriesFor: #productRegistrationKey!constants!public! !
-!ProtectedProductSessionManager categoriesFor: #promptForSerialNumber!operations!public! !
-!ProtectedProductSessionManager categoriesFor: #serialNumberClass!constants!public! !
-!ProtectedProductSessionManager categoriesFor: #shouldEncryptMetaclasses!constants!public!testing! !
-!ProtectedProductSessionManager categoriesFor: #unlock!operations!public! !
+!UI.ProtectedProductSessionManager categoriesFor: #encryptedClasses!accessing!public! !
+!UI.ProtectedProductSessionManager categoriesFor: #encryptedClasses:!accessing!private! !
+!UI.ProtectedProductSessionManager categoriesFor: #encryptedPackageNames!accessing!public! !
+!UI.ProtectedProductSessionManager categoriesFor: #initialize!initializing!private! !
+!UI.ProtectedProductSessionManager categoriesFor: #initializeFromSessionManager:!initializing!private! !
+!UI.ProtectedProductSessionManager categoriesFor: #isSafeToEncrypt:!helpers!private! !
+!UI.ProtectedProductSessionManager categoriesFor: #lock!operations!public! !
+!UI.ProtectedProductSessionManager categoriesFor: #main!operations!public! !
+!UI.ProtectedProductSessionManager categoriesFor: #productRegistrationKey!constants!public! !
+!UI.ProtectedProductSessionManager categoriesFor: #promptForSerialNumber!operations!public! !
+!UI.ProtectedProductSessionManager categoriesFor: #serialNumberClass!constants!public! !
+!UI.ProtectedProductSessionManager categoriesFor: #shouldEncryptMetaclasses!constants!public!testing! !
+!UI.ProtectedProductSessionManager categoriesFor: #unlock!operations!public! !
 
-!ProtectedProductSessionManager class methodsFor!
+!UI.ProtectedProductSessionManager class methodsFor!
 
 isSafeToEncryptWithProductProtection
 	"Answer whether it is save to encrypt the receiver's methods as part of the
 	the deployment of a Protected Product application."
 
 	^ false.! !
-!ProtectedProductSessionManager class categoriesFor: #isSafeToEncryptWithProductProtection!constants!public!testing! !
+!UI.ProtectedProductSessionManager class categoriesFor: #isSafeToEncryptWithProductProtection!constants!public!testing! !
 

@@ -1,21 +1,21 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Win32Structure subclass: #VS_VERSION_INFO_HEADER
+OS.Win32Structure subclass: #'OS.VS_VERSION_INFO_HEADER'
 	instanceVariableNames: 'key valueOffset'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_wLength' -> 16r0.
 		'_OffsetOf_wType' -> 16r4.
 		'_OffsetOf_wValueLength' -> 16r2
 	}!
-VS_VERSION_INFO_HEADER guid: (GUID fromString: '{efc64c05-aa07-41b8-ba73-60f7974c6e3f}')!
-VS_VERSION_INFO_HEADER comment: 'VS_VERSION_INFO_HEADER is an ExternalStructure class to represent the headers for version resource blocks. It is not a real Win32 structure.
+OS.VS_VERSION_INFO_HEADER guid: (Core.GUID fromString: '{efc64c05-aa07-41b8-ba73-60f7974c6e3f}')!
+OS.VS_VERSION_INFO_HEADER comment: 'VS_VERSION_INFO_HEADER is an ExternalStructure class to represent the headers for version resource blocks. It is not a real Win32 structure.
 
 See the VersionResource class.'!
-!VS_VERSION_INFO_HEADER categoriesForClass!External-Data-Structured-Win32! !
-!VS_VERSION_INFO_HEADER methodsFor!
+!OS.VS_VERSION_INFO_HEADER categoriesForClass!External-Data-Structured-Win32! !
+!OS.VS_VERSION_INFO_HEADER methodsFor!
 
 childrenOffset
 	"Answer the offset into the resource block pointed at by the receiver at which the 
@@ -78,18 +78,18 @@ wValueLength
 	"Answer the <Integer> value of the receiver's 'wValueLength' field."
 
 	^bytes wordAtOffset: _OffsetOf_wValueLength! !
-!VS_VERSION_INFO_HEADER categoriesFor: #childrenOffset!accessing!public! !
-!VS_VERSION_INFO_HEADER categoriesFor: #key!accessing!public! !
-!VS_VERSION_INFO_HEADER categoriesFor: #szKey!accessing!private! !
-!VS_VERSION_INFO_HEADER categoriesFor: #valueBytes!accessing!public! !
-!VS_VERSION_INFO_HEADER categoriesFor: #valueDWORDs!accessing!public! !
-!VS_VERSION_INFO_HEADER categoriesFor: #valueOffset!accessing!public! !
-!VS_VERSION_INFO_HEADER categoriesFor: #valueString!accessing!public! !
-!VS_VERSION_INFO_HEADER categoriesFor: #wLength!**compiled accessors**!public! !
-!VS_VERSION_INFO_HEADER categoriesFor: #wType!**compiled accessors**!public! !
-!VS_VERSION_INFO_HEADER categoriesFor: #wValueLength!**compiled accessors**!public! !
+!OS.VS_VERSION_INFO_HEADER categoriesFor: #childrenOffset!accessing!public! !
+!OS.VS_VERSION_INFO_HEADER categoriesFor: #key!accessing!public! !
+!OS.VS_VERSION_INFO_HEADER categoriesFor: #szKey!accessing!private! !
+!OS.VS_VERSION_INFO_HEADER categoriesFor: #valueBytes!accessing!public! !
+!OS.VS_VERSION_INFO_HEADER categoriesFor: #valueDWORDs!accessing!public! !
+!OS.VS_VERSION_INFO_HEADER categoriesFor: #valueOffset!accessing!public! !
+!OS.VS_VERSION_INFO_HEADER categoriesFor: #valueString!accessing!public! !
+!OS.VS_VERSION_INFO_HEADER categoriesFor: #wLength!**compiled accessors**!public! !
+!OS.VS_VERSION_INFO_HEADER categoriesFor: #wType!**compiled accessors**!public! !
+!OS.VS_VERSION_INFO_HEADER categoriesFor: #wValueLength!**compiled accessors**!public! !
 
-!VS_VERSION_INFO_HEADER class methodsFor!
+!OS.VS_VERSION_INFO_HEADER class methodsFor!
 
 defineFields
 	"Private - Define the layout of the Win32 VS_VERSION_INFO_HEADER structure.
@@ -105,6 +105,6 @@ defineFields
 
 getFieldNames
 	^#(#wLength #wValueLength #wType)! !
-!VS_VERSION_INFO_HEADER class categoriesFor: #defineFields!private!template definition! !
-!VS_VERSION_INFO_HEADER class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.VS_VERSION_INFO_HEADER class categoriesFor: #defineFields!private!template definition! !
+!OS.VS_VERSION_INFO_HEADER class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

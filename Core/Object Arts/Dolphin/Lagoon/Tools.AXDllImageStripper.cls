@@ -1,17 +1,17 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ImageStripper subclass: #AXDllImageStripper
+Tools.ImageStripper subclass: #'Tools.AXDllImageStripper'
 	instanceVariableNames: 'typeLibPath'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-AXDllImageStripper guid: (GUID fromString: '{e6c57f56-c672-49b5-8157-893092e6eb6f}')!
-AXDllImageStripper comment: 'AXDllImageStripper is a specialized <ImageStripper> for stripping and deploying in-process ActiveX/COM component DLLs.
+Tools.AXDllImageStripper guid: (Core.GUID fromString: '{e6c57f56-c672-49b5-8157-893092e6eb6f}')!
+Tools.AXDllImageStripper comment: 'AXDllImageStripper is a specialized <ImageStripper> for stripping and deploying in-process ActiveX/COM component DLLs.
 
 See the ''ActiveX In-Process Server Kit'' package comment for further details.'!
-!AXDllImageStripper categoriesForClass!Unclassified! !
-!AXDllImageStripper methodsFor!
+!Tools.AXDllImageStripper categoriesForClass!Unclassified! !
+!Tools.AXDllImageStripper methodsFor!
 
 defaultSessionManagerClass
 	"Answer the default class of SessionManager to be installed into the 
@@ -50,7 +50,7 @@ requiredPackageNames
 stubFile
 	"Answers the stub file to be used by the receiver"
 
-	^COMInterfaceImp inprocSurrogate: self isToGo!
+	^Smalltalk.COMInterfaceImp inprocSurrogate: self isToGo!
 
 typeLibPath
 	"Answer a <readableString>, being the path of the typelibrary file (.tlb) that is to be bound into 
@@ -80,24 +80,24 @@ updateTypelibResource: anExternalHandle
 	tlbPath := self typeLibPath.
 	tlbPath isNil ifTrue: [^self].
 	resourceBytes := (FileStream read: tlbPath text: false) contents.
-	(KernelLibrary default
+	(OS.KernelLibrary default
 		updateResource: anExternalHandle
 		lpType: 'TYPELIB' asUtf16String
 		lpName: 1
 		wLanguage: 0 
 		lpData: resourceBytes
 		cbData: resourceBytes size)
-			ifFalse: [KernelLibrary default systemError]! !
-!AXDllImageStripper categoriesFor: #defaultSessionManagerClass!constants!public! !
-!AXDllImageStripper categoriesFor: #prepareToStrip!operations!public! !
-!AXDllImageStripper categoriesFor: #requiredPackageNames!accessing!public! !
-!AXDllImageStripper categoriesFor: #stubFile!accessing!public! !
-!AXDllImageStripper categoriesFor: #typeLibPath!accessing!public! !
-!AXDllImageStripper categoriesFor: #typeLibPath:!accessing!public! !
-!AXDllImageStripper categoriesFor: #updateStubResources:!operations!private! !
-!AXDllImageStripper categoriesFor: #updateTypelibResource:!operations!private! !
+			ifFalse: [OS.KernelLibrary default systemError]! !
+!Tools.AXDllImageStripper categoriesFor: #defaultSessionManagerClass!constants!public! !
+!Tools.AXDllImageStripper categoriesFor: #prepareToStrip!operations!public! !
+!Tools.AXDllImageStripper categoriesFor: #requiredPackageNames!accessing!public! !
+!Tools.AXDllImageStripper categoriesFor: #stubFile!accessing!public! !
+!Tools.AXDllImageStripper categoriesFor: #typeLibPath!accessing!public! !
+!Tools.AXDllImageStripper categoriesFor: #typeLibPath:!accessing!public! !
+!Tools.AXDllImageStripper categoriesFor: #updateStubResources:!operations!private! !
+!Tools.AXDllImageStripper categoriesFor: #updateTypelibResource:!operations!private! !
 
-!AXDllImageStripper class methodsFor!
+!Tools.AXDllImageStripper class methodsFor!
 
 defaultOptions
 	"Private - Answer the default set of flags set up in new of converted instances of the receiver."
@@ -111,9 +111,9 @@ publishedAspectsOfInstances
 	package pre-requisites are calculated otherwise the Development System remains
 	a pre-req. of the ADK due to the references to development classes herein."
 
-	^(super publishedAspectsOfInstances)
+	^super publishedAspectsOfInstances
 		add: (Aspect fileSave: #typeLibPath);
 		yourself! !
-!AXDllImageStripper class categoriesFor: #defaultOptions!constants!development!private! !
-!AXDllImageStripper class categoriesFor: #publishedAspectsOfInstances!constants!development!must strip!public! !
+!Tools.AXDllImageStripper class categoriesFor: #defaultOptions!constants!development!private! !
+!Tools.AXDllImageStripper class categoriesFor: #publishedAspectsOfInstances!constants!development!must strip!public! !
 

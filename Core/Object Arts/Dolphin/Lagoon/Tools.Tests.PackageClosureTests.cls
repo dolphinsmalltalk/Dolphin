@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-DolphinTest subclass: #PackageClosureTests
+Core.Tests.DolphinTest subclass: #'Tools.Tests.PackageClosureTests'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #(#{Refactory.Browser private})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-PackageClosureTests guid: (GUID fromString: '{d6f6b8a7-9e40-4fa0-a52c-d92bcafeeebf}')!
-PackageClosureTests comment: ''!
-!PackageClosureTests categoriesForClass!Unclassified! !
-!PackageClosureTests methodsFor!
+Tools.Tests.PackageClosureTests guid: (Core.GUID fromString: '{d6f6b8a7-9e40-4fa0-a52c-d92bcafeeebf}')!
+Tools.Tests.PackageClosureTests comment: ''!
+!Tools.Tests.PackageClosureTests categoriesForClass!Unclassified! !
+!Tools.Tests.PackageClosureTests methodsFor!
 
 consoleAppUnimplemented
 	"Private - Expected missing selectors in a console app:
@@ -33,7 +33,7 @@ environmentForAppDeployment: aCollectionOfPackages
 	env := env & (BrowserEnvironment new forClasses: removedClasses) not.
 	"Finally, certain categories of method and specific methods are forcibly removed, or we assume (for the purposes of the test) that these will be removed as unused"
 	devMethods := BrowserEnvironment new
-				forMethodCategories: ImageStripper developmentMethodCategoryNames
+				forMethodCategories: Tools.ImageStripper developmentMethodCategoryNames
 						, ImageStripper classBuildingMethodCategoryNames , ImageStripper classRemovingMethodCategoryNames
 						, #('class initialization' 'template definition' 'source filing' 'source filing-methods' 'compiling' 'categories-accessing' 'categories-removing' 'categories-adding' 'categories-testing' 'source filing-class definition').
 	"We can speed things up a bit by taking a snapshot of the devMethods environment."
@@ -69,14 +69,14 @@ simpleGuiAppUnimplementedMessages
 testCommandLineHelloWorld
 	"Tests predicted unimplemented messages of a minimal console application. Note that the actual set will be less and can be determined by deploying the application with deployment logging enabled, and looking at the UnimplementedMesages element in the resulting log. In the case of 'Hello World' the unimplemented message set should actually be empty when deploying."
 
-	self verifyPackageClosure: (self environmentForAppDeployment: {CommandLineHelloWorld owningPackage})
+	self verifyPackageClosure: (self environmentForAppDeployment: {Smalltalk.CommandLineHelloWorld owningPackage})
 		missing: self consoleAppUnimplemented!
 
 testEtchASketch
 	"Etch-a-sketch uses an InternalIcon, and STB."
 
 	| env |
-	env := self environmentForAppDeployment: {EtchASketch owningPackage}.
+	env := self environmentForAppDeployment: {Smalltalk.EtchASketch owningPackage}.
 	self verifyPackageClosure: env missing: #(#ttmRelayEvent: #defineTemplate #evaluate:).
 	"This isn't necessarily sufficient for InternalIcon, etc, to survive into the deployed app, but is necessary for that to be so."
 	self assert: (env includesClass: InternalIcon).
@@ -93,20 +93,20 @@ testHelloWorld
 		- recompileDefinition - sent from base package, but before the development package which defines it is unloaded
 		- ttmRelayEvent: - only sent (from MVP base) if the Dolphin ToolTips package is loaded"
 
-	self verifyPackageClosure: (self environmentForAppDeployment: {HelloWorld owningPackage})
+	self verifyPackageClosure: (self environmentForAppDeployment: {Smalltalk.HelloWorld owningPackage})
 		missing: self simpleGuiAppUnimplementedMessages!
 
 testNotepad
 	"Ideally the set of missing selectors would be empty and reasonable effort has been made to reduce this to a small set. Some of the missing methods contributed by the base package will still be missing, but others are present because Hello World is a GUI app and pulls in the base MVP packages that define those methods."
 
-	self verifyPackageClosure: (self environmentForAppDeployment: {Notepad owningPackage})
+	self verifyPackageClosure: (self environmentForAppDeployment: {Smalltalk.Notepad owningPackage})
 		missing: self simpleGuiAppUnimplementedMessages!
 
 testRegEdit
 	"Regedit uses List and Tree views"
 
 	| env |
-	env := self environmentForAppDeployment: {RegEdit owningPackage}.
+	env := self environmentForAppDeployment: {Smalltalk.RegEdit owningPackage}.
 	self verifyPackageClosure: env missing: self simpleGuiAppUnimplementedMessages!
 
 testSystemPackage
@@ -126,15 +126,15 @@ verifyPackageClosure: aBrowserEnvironment missing: aCollectionOfSymbols
 	"To debug this, open an env browser on the deployment scope as follows:
 		aBrowserEnvironment openEditor.
 	The call graph to unimplemented messages can then be investigated starting with the Method/Browse other/All unimplemented command"! !
-!PackageClosureTests categoriesFor: #consoleAppUnimplemented!constants!private! !
-!PackageClosureTests categoriesFor: #environmentForAppDeployment:!helpers!private! !
-!PackageClosureTests categoriesFor: #environmentForPackageClosure:!helpers!private! !
-!PackageClosureTests categoriesFor: #simpleGuiAppUnimplementedMessages!constants!private! !
-!PackageClosureTests categoriesFor: #testCommandLineHelloWorld!public!unit tests! !
-!PackageClosureTests categoriesFor: #testEtchASketch!public!unit tests! !
-!PackageClosureTests categoriesFor: #testHelloWorld!public!unit tests! !
-!PackageClosureTests categoriesFor: #testNotepad!public!unit tests! !
-!PackageClosureTests categoriesFor: #testRegEdit!public!unit tests! !
-!PackageClosureTests categoriesFor: #testSystemPackage!public!unit tests! !
-!PackageClosureTests categoriesFor: #verifyPackageClosure:missing:!helpers!private! !
+!Tools.Tests.PackageClosureTests categoriesFor: #consoleAppUnimplemented!constants!private! !
+!Tools.Tests.PackageClosureTests categoriesFor: #environmentForAppDeployment:!helpers!private! !
+!Tools.Tests.PackageClosureTests categoriesFor: #environmentForPackageClosure:!helpers!private! !
+!Tools.Tests.PackageClosureTests categoriesFor: #simpleGuiAppUnimplementedMessages!constants!private! !
+!Tools.Tests.PackageClosureTests categoriesFor: #testCommandLineHelloWorld!public!unit tests! !
+!Tools.Tests.PackageClosureTests categoriesFor: #testEtchASketch!public!unit tests! !
+!Tools.Tests.PackageClosureTests categoriesFor: #testHelloWorld!public!unit tests! !
+!Tools.Tests.PackageClosureTests categoriesFor: #testNotepad!public!unit tests! !
+!Tools.Tests.PackageClosureTests categoriesFor: #testRegEdit!public!unit tests! !
+!Tools.Tests.PackageClosureTests categoriesFor: #testSystemPackage!public!unit tests! !
+!Tools.Tests.PackageClosureTests categoriesFor: #verifyPackageClosure:missing:!helpers!private! !
 

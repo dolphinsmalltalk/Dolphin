@@ -1,17 +1,17 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-SessionManager subclass: #AXDllSessionManager
+Core.SessionManager subclass: #'Kernel.AXDllSessionManager'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-AXDllSessionManager guid: (GUID fromString: '{56681788-e7fe-4454-8973-c3d801c5f034}')!
-AXDllSessionManager comment: 'AXDllSessionManager is the class of <SessionManager>s used to manage the life-cycle of a deployed Active-X/COM component DLL that has no GUI elements.
+Kernel.AXDllSessionManager guid: (Core.GUID fromString: '{56681788-e7fe-4454-8973-c3d801c5f034}')!
+Kernel.AXDllSessionManager comment: 'AXDllSessionManager is the class of <SessionManager>s used to manage the life-cycle of a deployed Active-X/COM component DLL that has no GUI elements.
 
 Use this class of SessionManager when deploying your Active-X DLL if it is a non-visual component.'!
-!AXDllSessionManager categoriesForClass!Unclassified! !
-!AXDllSessionManager methodsFor!
+!Kernel.AXDllSessionManager categoriesForClass!Unclassified! !
+!Kernel.AXDllSessionManager methodsFor!
 
 basicTertiaryStartup
 	"Perform fundamental tertiary system startup operations."
@@ -52,13 +52,13 @@ unhandledException: anException
 		self quit: -1].
 	"Resume execution"
 	^anException! !
-!AXDllSessionManager categoriesFor: #basicTertiaryStartup!operations-startup!public! !
-!AXDllSessionManager categoriesFor: #keepAlive!idling!public! !
-!AXDllSessionManager categoriesFor: #openConsoleStreams!operations!private! !
-!AXDllSessionManager categoriesFor: #startUI!operations-startup!public! !
-!AXDllSessionManager categoriesFor: #unhandledException:!exceptions!private! !
+!Kernel.AXDllSessionManager categoriesFor: #basicTertiaryStartup!operations-startup!public! !
+!Kernel.AXDllSessionManager categoriesFor: #keepAlive!idling!public! !
+!Kernel.AXDllSessionManager categoriesFor: #openConsoleStreams!operations!private! !
+!Kernel.AXDllSessionManager categoriesFor: #startUI!operations-startup!public! !
+!Kernel.AXDllSessionManager categoriesFor: #unhandledException:!exceptions!private! !
 
-!AXDllSessionManager class methodsFor!
+!Kernel.AXDllSessionManager class methodsFor!
 
 icon
 	"Answers an Icon that can be used to represent this class"
@@ -80,8 +80,8 @@ isRuntime
 	(as opposed to development, or abstract)."
 
 	^true! !
-!AXDllSessionManager class categoriesFor: #icon!constants!development!must strip!public! !
-!AXDllSessionManager class categoriesFor: #imageExtension!constants!public! !
-!AXDllSessionManager class categoriesFor: #isDLL!private!testing! !
-!AXDllSessionManager class categoriesFor: #isRuntime!public!testing! !
+!Kernel.AXDllSessionManager class categoriesFor: #icon!constants!development!must strip!public! !
+!Kernel.AXDllSessionManager class categoriesFor: #imageExtension!constants!public! !
+!Kernel.AXDllSessionManager class categoriesFor: #isDLL!private!testing! !
+!Kernel.AXDllSessionManager class categoriesFor: #isRuntime!public!testing! !
 

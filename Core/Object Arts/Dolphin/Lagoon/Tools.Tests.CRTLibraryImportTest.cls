@@ -1,18 +1,18 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-DolphinTest subclass: #CRTLibraryImportTest
+Core.Tests.DolphinTest subclass: #'Tools.Tests.CRTLibraryImportTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-CRTLibraryImportTest guid: (GUID fromString: '{a3836ac0-e09a-4f44-b33f-3f87f52f2098}')!
-CRTLibraryImportTest comment: ''!
-!CRTLibraryImportTest categoriesForClass!SUnit! !
-!CRTLibraryImportTest methodsFor!
+Tools.Tests.CRTLibraryImportTest guid: (Core.GUID fromString: '{a3836ac0-e09a-4f44-b33f-3f87f52f2098}')!
+Tools.Tests.CRTLibraryImportTest comment: ''!
+!Tools.Tests.CRTLibraryImportTest categoriesForClass!SUnit! !
+!Tools.Tests.CRTLibraryImportTest methodsFor!
 
 devOnlyCrtFunctions
-	^((MethodCategory deprecatedMethods methodsInBehavior: CRTLibrary) select: [:each | each isKindOf: ExternalMethod])
+	^((MethodCategory deprecatedMethods methodsInBehavior: OS.CRTLibrary) select: [:each | each isKindOf: External.ExternalMethod])
 		collect: [:each | each functionName]!
 
 minimumVmVersion
@@ -45,7 +45,7 @@ testStubCrtExports
 			l := External.DynamicLinkLibrary open: f.
 			
 			[| unexported |
-			procs := (CRTLibrary selectMethods: [:each | each isExternalCall])
+			procs := (OS.CRTLibrary selectMethods: [:each | each isExternalCall])
 						collect: [:each | each functionName].
 			missing := procs select: [:each | (l getProcAddress: each asAnsiString ifAbsent: []) isNil].
 			unexported := missing difference: expected.
@@ -60,8 +60,8 @@ testStubCrtExports
 						separatedBy: [desc nextPutAll: ', '].
 					desc contents]]
 					ensure: [l close]]! !
-!CRTLibraryImportTest categoriesFor: #devOnlyCrtFunctions!constants!private! !
-!CRTLibraryImportTest categoriesFor: #minimumVmVersion!accessing!public! !
-!CRTLibraryImportTest categoriesFor: #stubNames!constants!private! !
-!CRTLibraryImportTest categoriesFor: #testStubCrtExports!public!unit tests! !
+!Tools.Tests.CRTLibraryImportTest categoriesFor: #devOnlyCrtFunctions!constants!private! !
+!Tools.Tests.CRTLibraryImportTest categoriesFor: #minimumVmVersion!accessing!public! !
+!Tools.Tests.CRTLibraryImportTest categoriesFor: #stubNames!constants!private! !
+!Tools.Tests.CRTLibraryImportTest categoriesFor: #testStubCrtExports!public!unit tests! !
 

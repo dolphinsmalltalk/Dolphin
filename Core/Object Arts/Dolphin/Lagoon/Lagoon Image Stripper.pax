@@ -13,11 +13,11 @@ package basicPackageVersion: '6.2'.
 
 
 package setClassNames: #(
-	#{Smalltalk.BasicImageStripper}
-	#{Smalltalk.ImageStripper}
-	#{Smalltalk.ImageStripperProgress}
-	#{Smalltalk.VersionResource}
-	#{Smalltalk.VS_VERSION_INFO_HEADER}
+	#{OS.VersionResource}
+	#{OS.VS_VERSION_INFO_HEADER}
+	#{Tools.BasicImageStripper}
+	#{Tools.ImageStripper}
+	#{Tools.ImageStripperProgress}
 ).
 
 package setMethodNames: #(
@@ -29,23 +29,22 @@ package setMethodNames: #(
 
 package setPrerequisites: #(
 	'..\Base\Dolphin'
-	'..\Base\Deprecated\Dolphin Base (Old Names)'
 ).
 
 package!
 
 "Class Definitions"!
 
-Core.Object subclass: #BasicImageStripper
+Core.Object subclass: #'Tools.BasicImageStripper'
 	instanceVariableNames: 'events'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Core.Object subclass: #ImageStripperProgress
+Core.Object subclass: #'Tools.ImageStripperProgress'
 	instanceVariableNames: 'handle oldWndProc progressProcess progressRange progress status cursor'
 	classVariableNames: 'MessageMap'
-	imports: #(#{OS.Win32Constants})
+	imports: #(#{OS.Win32Constants private} #{OS private})
 	classInstanceVariableNames: ''
 	classConstants: {
 		'CaptionId' -> 16r3F9.
@@ -53,13 +52,13 @@ Core.Object subclass: #ImageStripperProgress
 		'ProgressId' -> 16r3F7.
 		'StatusId' -> 16r3F8
 	}!
-Core.Object subclass: #VersionResource
+Core.Object subclass: #'OS.VersionResource'
 	instanceVariableNames: 'fixedInfo stringTables translations'
 	classVariableNames: ''
 	imports: #(#{OS.Win32Constants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-BasicImageStripper subclass: #ImageStripper
+Tools.BasicImageStripper subclass: #'Tools.ImageStripper'
 	instanceVariableNames: 'rootPackageName executableName runtimeSessionManagerClass flags preStripScript versionResource potentialAspectSetters stubFilePath logStream elementStack developmentClasses preservedMessages snapshotType rootClasses supersentMethods potentialAspectGetters notifier runFlags _unused20 _unused21 _unused22'
 	classVariableNames: ''
 	imports: #(#{OS.MessageBoxConstants} #{OS.Win32Constants})
@@ -96,7 +95,7 @@ BasicImageStripper subclass: #ImageStripper
 		'UnattendedMask' -> 16r1000000.
 		'WriteLogMask' -> 16r400
 	}!
-OS.Win32Structure subclass: #VS_VERSION_INFO_HEADER
+OS.Win32Structure subclass: #'OS.VS_VERSION_INFO_HEADER'
 	instanceVariableNames: 'key valueOffset'
 	classVariableNames: ''
 	imports: #()

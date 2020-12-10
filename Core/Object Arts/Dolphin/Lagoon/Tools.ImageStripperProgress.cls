@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Object subclass: #ImageStripperProgress
+Core.Object subclass: #'Tools.ImageStripperProgress'
 	instanceVariableNames: 'handle oldWndProc progressProcess progressRange progress status cursor'
 	classVariableNames: 'MessageMap'
-	poolDictionaries: 'Win32Constants'
+	imports: #(#{OS.Win32Constants private} #{OS private})
 	classInstanceVariableNames: ''
 	classConstants: {
 		'CaptionId' -> 16r3F9.
@@ -11,8 +11,8 @@ Object subclass: #ImageStripperProgress
 		'ProgressId' -> 16r3F7.
 		'StatusId' -> 16r3F8
 	}!
-ImageStripperProgress guid: (GUID fromString: '{3645214b-fff1-40c6-91d4-32740d2f6a66}')!
-ImageStripperProgress comment: 'ImageStripperProgress is a <topPresenter> used by the <ImageStripper> to display the progress of an image stripping operation.
+Tools.ImageStripperProgress guid: (Core.GUID fromString: '{3645214b-fff1-40c6-91d4-32740d2f6a66}')!
+Tools.ImageStripperProgress comment: 'ImageStripperProgress is a <topPresenter> used by the <ImageStripper> to display the progress of an image stripping operation.
 
 Instance Variables:
 	status			<TextEdit> describing the current stripping operation
@@ -22,8 +22,8 @@ Instance Variables:
 	monitorProgressPeriod	<Integer> number of milliseconds between progress monitoring periods
 
 '!
-!ImageStripperProgress categoriesForClass!Unclassified! !
-!ImageStripperProgress methodsFor!
+!Tools.ImageStripperProgress categoriesForClass!Unclassified! !
+!Tools.ImageStripperProgress methodsFor!
 
 addToCommandRoute: route
 	"Update the <OrderedCollection>, path, with the receiver's contribution to the command path
@@ -382,53 +382,53 @@ wmSetCursor: message wParam: wParam lParam: lParam
 	"Set the wait cursor"
 	UserLibrary default setCursor: cursor. 
 	^0.! !
-!ImageStripperProgress categoriesFor: #addToCommandRoute:!commands!public! !
-!ImageStripperProgress categoriesFor: #asParameter!converting!public! !
-!ImageStripperProgress categoriesFor: #beActive!operations!public! !
-!ImageStripperProgress categoriesFor: #currentProgress!operations!private! !
-!ImageStripperProgress categoriesFor: #defaultWindowProcessing:wParam:lParam:!dispatching!private! !
-!ImageStripperProgress categoriesFor: #defaultWindowStyle!constants!private! !
-!ImageStripperProgress categoriesFor: #destroy!public!realizing/unrealizing! !
-!ImageStripperProgress categoriesFor: #detail:!accessing!public! !
-!ImageStripperProgress categoriesFor: #dispatchMessage:wParam:lParam:!dispatching!private! !
-!ImageStripperProgress categoriesFor: #enterIdle!event handling-win32!private! !
-!ImageStripperProgress categoriesFor: #fontChanged!private!updating! !
-!ImageStripperProgress categoriesFor: #forecolorChanged!private!updating! !
-!ImageStripperProgress categoriesFor: #forkProgressMonitor!operations!private! !
-!ImageStripperProgress categoriesFor: #getItemHandle:ifAbsent:!hierarchy!private! !
-!ImageStripperProgress categoriesFor: #isEnabled!private!testing! !
-!ImageStripperProgress categoriesFor: #isEnabled:!accessing!public! !
-!ImageStripperProgress categoriesFor: #isPersistentView!public!testing! !
-!ImageStripperProgress categoriesFor: #isView!public!testing! !
-!ImageStripperProgress categoriesFor: #isWindowVisible!public!testing! !
-!ImageStripperProgress categoriesFor: #monitorProgressPeriod!constants!private! !
-!ImageStripperProgress categoriesFor: #onStartup!event handling!public! !
-!ImageStripperProgress categoriesFor: #parentPresenter!presenter!public! !
-!ImageStripperProgress categoriesFor: #presenter!accessing!public! !
-!ImageStripperProgress categoriesFor: #preTranslateMessage:!dispatching!public! !
-!ImageStripperProgress categoriesFor: #primHookWindowCreate:!helpers!private! !
-!ImageStripperProgress categoriesFor: #progress:!accessing!must not strip!private! !
-!ImageStripperProgress categoriesFor: #progressRange!operations!private! !
-!ImageStripperProgress categoriesFor: #resourceLib!constants!public! !
-!ImageStripperProgress categoriesFor: #setItem:font:!accessing!private! !
-!ImageStripperProgress categoriesFor: #setItem:text:!accessing!private! !
-!ImageStripperProgress categoriesFor: #show!operations!public! !
-!ImageStripperProgress categoriesFor: #status:!accessing!public! !
-!ImageStripperProgress categoriesFor: #stopProcess!helpers!private! !
-!ImageStripperProgress categoriesFor: #subclassWindow:!operations!private! !
-!ImageStripperProgress categoriesFor: #template!constants!public! !
-!ImageStripperProgress categoriesFor: #update!drawing!public! !
-!ImageStripperProgress categoriesFor: #validateUserInterface!operations!public! !
-!ImageStripperProgress categoriesFor: #wmClose:wParam:lParam:!event handling-win32!private! !
-!ImageStripperProgress categoriesFor: #wmCreate:wParam:lParam:!event handling-win32!private! !
-!ImageStripperProgress categoriesFor: #wmCtlColor:wParam:lParam:!event handling-win32!private! !
-!ImageStripperProgress categoriesFor: #wmInitDialog:wParam:lParam:!event handling-win32!private! !
-!ImageStripperProgress categoriesFor: #wmNcDestroy:wParam:lParam:!event handling-win32!private! !
-!ImageStripperProgress categoriesFor: #wmSetCursor:wParam:lParam:!event handling-win32!private! !
+!Tools.ImageStripperProgress categoriesFor: #addToCommandRoute:!commands!public! !
+!Tools.ImageStripperProgress categoriesFor: #asParameter!converting!public! !
+!Tools.ImageStripperProgress categoriesFor: #beActive!operations!public! !
+!Tools.ImageStripperProgress categoriesFor: #currentProgress!operations!private! !
+!Tools.ImageStripperProgress categoriesFor: #defaultWindowProcessing:wParam:lParam:!dispatching!private! !
+!Tools.ImageStripperProgress categoriesFor: #defaultWindowStyle!constants!private! !
+!Tools.ImageStripperProgress categoriesFor: #destroy!public!realizing/unrealizing! !
+!Tools.ImageStripperProgress categoriesFor: #detail:!accessing!public! !
+!Tools.ImageStripperProgress categoriesFor: #dispatchMessage:wParam:lParam:!dispatching!private! !
+!Tools.ImageStripperProgress categoriesFor: #enterIdle!event handling-win32!private! !
+!Tools.ImageStripperProgress categoriesFor: #fontChanged!private!updating! !
+!Tools.ImageStripperProgress categoriesFor: #forecolorChanged!private!updating! !
+!Tools.ImageStripperProgress categoriesFor: #forkProgressMonitor!operations!private! !
+!Tools.ImageStripperProgress categoriesFor: #getItemHandle:ifAbsent:!hierarchy!private! !
+!Tools.ImageStripperProgress categoriesFor: #isEnabled!private!testing! !
+!Tools.ImageStripperProgress categoriesFor: #isEnabled:!accessing!public! !
+!Tools.ImageStripperProgress categoriesFor: #isPersistentView!public!testing! !
+!Tools.ImageStripperProgress categoriesFor: #isView!public!testing! !
+!Tools.ImageStripperProgress categoriesFor: #isWindowVisible!public!testing! !
+!Tools.ImageStripperProgress categoriesFor: #monitorProgressPeriod!constants!private! !
+!Tools.ImageStripperProgress categoriesFor: #onStartup!event handling!public! !
+!Tools.ImageStripperProgress categoriesFor: #parentPresenter!presenter!public! !
+!Tools.ImageStripperProgress categoriesFor: #presenter!accessing!public! !
+!Tools.ImageStripperProgress categoriesFor: #preTranslateMessage:!dispatching!public! !
+!Tools.ImageStripperProgress categoriesFor: #primHookWindowCreate:!helpers!private! !
+!Tools.ImageStripperProgress categoriesFor: #progress:!accessing!must not strip!private! !
+!Tools.ImageStripperProgress categoriesFor: #progressRange!operations!private! !
+!Tools.ImageStripperProgress categoriesFor: #resourceLib!constants!public! !
+!Tools.ImageStripperProgress categoriesFor: #setItem:font:!accessing!private! !
+!Tools.ImageStripperProgress categoriesFor: #setItem:text:!accessing!private! !
+!Tools.ImageStripperProgress categoriesFor: #show!operations!public! !
+!Tools.ImageStripperProgress categoriesFor: #status:!accessing!public! !
+!Tools.ImageStripperProgress categoriesFor: #stopProcess!helpers!private! !
+!Tools.ImageStripperProgress categoriesFor: #subclassWindow:!operations!private! !
+!Tools.ImageStripperProgress categoriesFor: #template!constants!public! !
+!Tools.ImageStripperProgress categoriesFor: #update!drawing!public! !
+!Tools.ImageStripperProgress categoriesFor: #validateUserInterface!operations!public! !
+!Tools.ImageStripperProgress categoriesFor: #wmClose:wParam:lParam:!event handling-win32!private! !
+!Tools.ImageStripperProgress categoriesFor: #wmCreate:wParam:lParam:!event handling-win32!private! !
+!Tools.ImageStripperProgress categoriesFor: #wmCtlColor:wParam:lParam:!event handling-win32!private! !
+!Tools.ImageStripperProgress categoriesFor: #wmInitDialog:wParam:lParam:!event handling-win32!private! !
+!Tools.ImageStripperProgress categoriesFor: #wmNcDestroy:wParam:lParam:!event handling-win32!private! !
+!Tools.ImageStripperProgress categoriesFor: #wmSetCursor:wParam:lParam:!event handling-win32!private! !
 
-ImageStripperProgress methodProtocol: #window attributes: #(#readOnly) selectors: #(#asParameter #destroy #dispatchMessage:wParam:lParam: #enterIdle #isPersistentView #isWindowVisible #onStartup #preTranslateMessage: #subclassWindow:)!
+Tools.ImageStripperProgress methodProtocol: #window attributes: #(#readOnly) selectors: #(#asParameter #destroy #dispatchMessage:wParam:lParam: #enterIdle #isPersistentView #isWindowVisible #onStartup #preTranslateMessage: #subclassWindow:)!
 
-!ImageStripperProgress class methodsFor!
+!Tools.ImageStripperProgress class methodsFor!
 
 initialize
 	"Private - Initialize the receiver's class variables.
@@ -457,7 +457,7 @@ onPreStripImage
 
 show
 	^self new show! !
-!ImageStripperProgress class categoriesFor: #initialize!initializing!must not strip!public! !
-!ImageStripperProgress class categoriesFor: #onPreStripImage!private! !
-!ImageStripperProgress class categoriesFor: #show!operations!public! !
+!Tools.ImageStripperProgress class categoriesFor: #initialize!initializing!must not strip!public! !
+!Tools.ImageStripperProgress class categoriesFor: #onPreStripImage!private! !
+!Tools.ImageStripperProgress class categoriesFor: #show!operations!public! !
 

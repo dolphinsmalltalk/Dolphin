@@ -6,11 +6,12 @@ package paxVersion: 2.1;
 
 
 package setClassNames: #(
-	#{Smalltalk.CRTLibraryImportTest}
-	#{Smalltalk.PackageClosureTests}
+	#{Tools.Tests.CRTLibraryImportTest}
+	#{Tools.Tests.PackageClosureTests}
 ).
 
 package setPrerequisites: #(
+	'..\IDE\Base\Development System Tests'
 	'..\Base\Dolphin'
 	'..\Base\Deprecated\Dolphin Base (Old Names)'
 	'..\Base\Dolphin Base Tests'
@@ -20,7 +21,8 @@ package setPrerequisites: #(
 	'..\MVP\Icons\Internal Bitmaps and Icons'
 	'Lagoon Image Stripper'
 	'..\..\Samples\MVP\Notepad\Notepad'
-	'..\..\..\Contributions\Refactory\RBOldNames'
+	'..\..\..\Contributions\Refactory\Refactoring Browser\Environments\RBEnvironments'
+	'..\..\..\Contributions\Refactory\RBNamespaces'
 	'..\..\Samples\MVP\RegEdit\RegEdit'
 ).
 
@@ -28,16 +30,16 @@ package!
 
 "Class Definitions"!
 
-Core.Tests.DolphinTest subclass: #CRTLibraryImportTest
+Core.Tests.DolphinTest subclass: #'Tools.Tests.CRTLibraryImportTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Core.Tests.DolphinTest subclass: #PackageClosureTests
+Core.Tests.DolphinTest subclass: #'Tools.Tests.PackageClosureTests'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #()
+	imports: #(#{Refactory.Browser private})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 

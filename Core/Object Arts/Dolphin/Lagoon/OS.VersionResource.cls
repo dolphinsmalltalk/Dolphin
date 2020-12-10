@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Object subclass: #VersionResource
+Core.Object subclass: #'OS.VersionResource'
 	instanceVariableNames: 'fixedInfo stringTables translations'
 	classVariableNames: ''
-	poolDictionaries: 'Win32Constants'
+	imports: #(#{OS.Win32Constants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-VersionResource guid: (GUID fromString: '{b76ab5bc-4ba7-40d2-88fe-6a76d28fc30b}')!
-VersionResource comment: ''!
-!VersionResource categoriesForClass!System-Support! !
-!VersionResource methodsFor!
+OS.VersionResource guid: (Core.GUID fromString: '{b76ab5bc-4ba7-40d2-88fe-6a76d28fc30b}')!
+OS.VersionResource comment: ''!
+!OS.VersionResource categoriesForClass!System-Support! !
+!OS.VersionResource methodsFor!
 
 bumpProductVersion
 	| decodedVersion |
@@ -131,14 +131,14 @@ translations: anOrderedCollection
 
 	translations := anOrderedCollection!
 
-unpack: anExternalAddress 
+unpack: anExternalAddress
 	"Private - Unpack the version resource into its constituents."
 
 	| vsVersionInfo versionInfoSize offset |
 	offset := 0.
 	vsVersionInfo := VS_VERSION_INFO_HEADER fromAddress: anExternalAddress.
 	self assert: [vsVersionInfo key = 'VS_VERSION_INFO'].
-	fixedInfo := VS_FIXEDFILEINFO 
+	fixedInfo := VS_FIXEDFILEINFO
 				fromBytes: (ByteArray fromAddress: anExternalAddress asInteger + vsVersionInfo valueOffset
 						length: vsVersionInfo wValueLength).
 	offset := vsVersionInfo childrenOffset.
@@ -150,15 +150,15 @@ unpack: anExternalAddress
 			infoBlock := VS_VERSION_INFO_HEADER fromAddress: anExternalAddress asInteger + offset.
 			self assert: [infoBlock wLength > 0].
 			key := infoBlock key.
-			key = 'StringFileInfo' 
+			key = 'StringFileInfo'
 				ifTrue: [self unpackStringFileInfo: infoBlock]
 				ifFalse: 
-					[key = 'VarFileInfo' 
+					[key = 'VarFileInfo'
 						ifTrue: [self unpackVarFileInfo: infoBlock]
 						ifFalse: [Notification signal: 'Unrecognised version resource block of type ' , key]].
 			offset := offset + infoBlock wLength roundUpTo: 4]!
 
-unpackStringFileInfo: aZVersionBlockHeader 
+unpackStringFileInfo: aZVersionBlockHeader
 	"Private - Unpack a StringFileInfo block."
 
 	| base length offset |
@@ -170,17 +170,15 @@ unpackStringFileInfo: aZVersionBlockHeader
 	[offset < length] whileTrue: 
 			[| stringTableHeader |
 			self assert: [offset \\ 4 = 0].
-			stringTableHeader := VS_VERSION_INFO_HEADER 
-						fromAddress: base asInteger + offset.
+			stringTableHeader := VS_VERSION_INFO_HEADER fromAddress: base asInteger + offset.
 			self unpackStringTable: stringTableHeader.
 			offset := offset + stringTableHeader wLength roundUpTo: 4]!
 
-unpackStringTable: aZVersionBlockHeader 
+unpackStringTable: aZVersionBlockHeader
 	"Private - Unpack a StringTable block."
 
 	| base length offset strings |
-	strings := self stringTables at: aZVersionBlockHeader key
-				ifAbsentPut: [LookupTable new].
+	strings := self stringTables at: aZVersionBlockHeader key ifAbsentPut: [LookupTable new].
 	base := aZVersionBlockHeader yourAddress asInteger.
 	length := aZVersionBlockHeader wLength.
 	offset := aZVersionBlockHeader childrenOffset.
@@ -197,7 +195,7 @@ unpackVar: aVS_INFO_HEADER
 	varPairs := aVS_INFO_HEADER valueDWORDs.
 	self translations add: varPairs copy!
 
-unpackVarFileInfo: aZVersionBlockHeader 
+unpackVarFileInfo: aZVersionBlockHeader
 	"Private - Unpack a VarFileInfo block."
 
 	| base length offset |
@@ -376,42 +374,42 @@ writeVersionInfoTo: aWriteStream
 	self stringTables notEmpty ifTrue: [self writeStringFileInfoTo: aWriteStream].
 	self translations notEmpty ifTrue: [self writeVarFileInfoTo: aWriteStream].
 	self writeBlockSizeTo: aWriteStream at: blockStart! !
-!VersionResource categoriesFor: #bumpProductVersion!operations!public! !
-!VersionResource categoriesFor: #decodeVersionString:!helpers!private! !
-!VersionResource categoriesFor: #fileVersion!accessing!public! !
-!VersionResource categoriesFor: #fileVersion:!accessing!public! !
-!VersionResource categoriesFor: #fixedInfo!accessing!public! !
-!VersionResource categoriesFor: #initialize!initializing!private! !
-!VersionResource categoriesFor: #languageId!accessing!public! !
-!VersionResource categoriesFor: #pack!operations!private! !
-!VersionResource categoriesFor: #productVersion!accessing!public! !
-!VersionResource categoriesFor: #productVersion:!accessing!public! !
-!VersionResource categoriesFor: #readFromModule:!initializing!public! !
-!VersionResource categoriesFor: #setFileVersions:!accessing!private! !
-!VersionResource categoriesFor: #setProductVersions:!accessing!private! !
-!VersionResource categoriesFor: #stringTables!accessing!public! !
-!VersionResource categoriesFor: #stringTables:!accessing!public! !
-!VersionResource categoriesFor: #translations!accessing!public! !
-!VersionResource categoriesFor: #translations:!accessing!public! !
-!VersionResource categoriesFor: #unpack:!operations!public! !
-!VersionResource categoriesFor: #unpackStringFileInfo:!helpers!public! !
-!VersionResource categoriesFor: #unpackStringTable:!helpers!public! !
-!VersionResource categoriesFor: #unpackVar:!helpers!private! !
-!VersionResource categoriesFor: #unpackVarFileInfo:!helpers!public! !
-!VersionResource categoriesFor: #updateFile:!operations!public! !
-!VersionResource categoriesFor: #updateResource:!operations!public! !
-!VersionResource categoriesFor: #writeBinaryHeaderTo:key:value:!helpers!private! !
-!VersionResource categoriesFor: #writeBlockSizeTo:at:!helpers!private! !
-!VersionResource categoriesFor: #writeHeaderTo:type:key:value:length:!helpers!private! !
-!VersionResource categoriesFor: #writeStringFileInfoTo:!helpers!private! !
-!VersionResource categoriesFor: #writeStrings:to:!helpers!private! !
-!VersionResource categoriesFor: #writeStringTablesTo:!helpers!private! !
-!VersionResource categoriesFor: #writeTextHeaderTo:key:value:!helpers!private! !
-!VersionResource categoriesFor: #writeTranslationsTo:!helpers!private! !
-!VersionResource categoriesFor: #writeVarFileInfoTo:!helpers!private! !
-!VersionResource categoriesFor: #writeVersionInfoTo:!helpers!private! !
+!OS.VersionResource categoriesFor: #bumpProductVersion!operations!public! !
+!OS.VersionResource categoriesFor: #decodeVersionString:!helpers!private! !
+!OS.VersionResource categoriesFor: #fileVersion!accessing!public! !
+!OS.VersionResource categoriesFor: #fileVersion:!accessing!public! !
+!OS.VersionResource categoriesFor: #fixedInfo!accessing!public! !
+!OS.VersionResource categoriesFor: #initialize!initializing!private! !
+!OS.VersionResource categoriesFor: #languageId!accessing!public! !
+!OS.VersionResource categoriesFor: #pack!operations!private! !
+!OS.VersionResource categoriesFor: #productVersion!accessing!public! !
+!OS.VersionResource categoriesFor: #productVersion:!accessing!public! !
+!OS.VersionResource categoriesFor: #readFromModule:!initializing!public! !
+!OS.VersionResource categoriesFor: #setFileVersions:!accessing!private! !
+!OS.VersionResource categoriesFor: #setProductVersions:!accessing!private! !
+!OS.VersionResource categoriesFor: #stringTables!accessing!public! !
+!OS.VersionResource categoriesFor: #stringTables:!accessing!public! !
+!OS.VersionResource categoriesFor: #translations!accessing!public! !
+!OS.VersionResource categoriesFor: #translations:!accessing!public! !
+!OS.VersionResource categoriesFor: #unpack:!operations!public! !
+!OS.VersionResource categoriesFor: #unpackStringFileInfo:!helpers!public! !
+!OS.VersionResource categoriesFor: #unpackStringTable:!helpers!public! !
+!OS.VersionResource categoriesFor: #unpackVar:!helpers!private! !
+!OS.VersionResource categoriesFor: #unpackVarFileInfo:!helpers!public! !
+!OS.VersionResource categoriesFor: #updateFile:!operations!public! !
+!OS.VersionResource categoriesFor: #updateResource:!operations!public! !
+!OS.VersionResource categoriesFor: #writeBinaryHeaderTo:key:value:!helpers!private! !
+!OS.VersionResource categoriesFor: #writeBlockSizeTo:at:!helpers!private! !
+!OS.VersionResource categoriesFor: #writeHeaderTo:type:key:value:length:!helpers!private! !
+!OS.VersionResource categoriesFor: #writeStringFileInfoTo:!helpers!private! !
+!OS.VersionResource categoriesFor: #writeStrings:to:!helpers!private! !
+!OS.VersionResource categoriesFor: #writeStringTablesTo:!helpers!private! !
+!OS.VersionResource categoriesFor: #writeTextHeaderTo:key:value:!helpers!private! !
+!OS.VersionResource categoriesFor: #writeTranslationsTo:!helpers!private! !
+!OS.VersionResource categoriesFor: #writeVarFileInfoTo:!helpers!private! !
+!OS.VersionResource categoriesFor: #writeVersionInfoTo:!helpers!private! !
 
-!VersionResource class methodsFor!
+!OS.VersionResource class methodsFor!
 
 forModule: anExternalResourceLibrary 
 	"Answer a new instance of the receiver which can be used to query the version
@@ -455,8 +453,8 @@ getVersionResourceOfModule: anExternalResourceLibrary
 
 new
 	^super new initialize! !
-!VersionResource class categoriesFor: #forModule:!instance creation!public! !
-!VersionResource class categoriesFor: #forPath:!instance creation!public! !
-!VersionResource class categoriesFor: #getVersionResourceOfModule:!enquiries!private! !
-!VersionResource class categoriesFor: #new!instance creation!public! !
+!OS.VersionResource class categoriesFor: #forModule:!instance creation!public! !
+!OS.VersionResource class categoriesFor: #forPath:!instance creation!public! !
+!OS.VersionResource class categoriesFor: #getVersionResourceOfModule:!enquiries!private! !
+!OS.VersionResource class categoriesFor: #new!instance creation!public! !
 

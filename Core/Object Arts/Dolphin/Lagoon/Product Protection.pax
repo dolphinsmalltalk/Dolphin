@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'Product Protection'.
-package paxVersion: 2;
+package paxVersion: 2.1;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk Product Protection Package.
 Copyright (c) Object Arts Ltd, 2002-2005.
@@ -28,7 +28,7 @@ package basicPackageVersion: '6.0'.
 
 
 package setClassNames: #(
-	#{ProtectedProductSessionManager}
+	#{UI.ProtectedProductSessionManager}
 ).
 
 package setPrerequisites: #(
@@ -43,10 +43,10 @@ package!
 
 "Class Definitions"!
 
-RuntimeSessionManager subclass: #ProtectedProductSessionManager
+UI.RuntimeSessionManager subclass: #'UI.ProtectedProductSessionManager'
 	instanceVariableNames: 'encryptedClasses'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 

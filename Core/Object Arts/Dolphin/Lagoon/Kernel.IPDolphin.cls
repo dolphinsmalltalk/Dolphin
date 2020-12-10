@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-COMInterfaceImp subclass: #IPDolphin
+COMInterfaceImp subclass: #'Kernel.IPDolphin'
 	instanceVariableNames: 'plugHole coclasses'
 	classVariableNames: 'Current'
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-IPDolphin guid: (GUID fromString: '{b115d2d8-5a00-4a5e-8615-109a3332690f}')!
-IPDolphin comment: 'IPDolphin is the singleton class whose instance hosts the main inbound COM interface, <IIPPlugHole> from the Dolphin in-process COM DLL stub. It is responsible for initialization and shutdown of the image, and ultimately for implementing the DllGetClassObject, DllCanUnloadNow, DllRegisterServer and DllUnregisterServer functions that are exported by the stub.
+Kernel.IPDolphin guid: (Core.GUID fromString: '{b115d2d8-5a00-4a5e-8615-109a3332690f}')!
+Kernel.IPDolphin comment: 'IPDolphin is the singleton class whose instance hosts the main inbound COM interface, <IIPPlugHole> from the Dolphin in-process COM DLL stub. It is responsible for initialization and shutdown of the image, and ultimately for implementing the DllGetClassObject, DllCanUnloadNow, DllRegisterServer and DllUnregisterServer functions that are exported by the stub.
 
 Once a Dolphin in-proc COM DLL has been loaded, inbound calls to the DllXXX functions in the stub are forwarded here.
 
@@ -19,17 +19,17 @@ Class Variables:
 	Current		<IPDolphin>. Singleton instance.
 
 '!
-!IPDolphin categoriesForClass!Unclassified! !
-!IPDolphin methodsFor!
+!Kernel.IPDolphin categoriesForClass!Unclassified! !
+!Kernel.IPDolphin methodsFor!
 
 canUnloadNow
 	"Answer whether it is OK to unload the in-proc. image now."
 
-	COMClassFactory lockCount > 0 ifTrue: [^false].
+	Smalltalk.COMClassFactory lockCount > 0 ifTrue: [^false].
 	#todo.	"Need a neater way to do this - at the moment need to look for COM objects are not the receiver to decide
 			whether should stay up. Need to maintain a count and let those types of object adjust it so that they are 
 			ignored?"
-	COMObjectStub registry keysDo: [:e | e ~~ self ifTrue: [^false]].
+	Smalltalk.COMObjectStub registry keysDo: [:e | e ~~ self ifTrue: [^false]].
 	^true!
 
 CanUnloadNow 
@@ -71,8 +71,8 @@ GetClassObject: rclsid riid: riid ppv: ppv
 
 	ppv value: 0.
 	self coclasses at: rclsid ifPresent: [:coclass | | factory punk ifClass |
-		factory := COMClassFactory on: coclass clsid: rclsid.
-		ifClass := COMInterface classForIID: riid ifNone: [^E_NOINTERFACE].
+		factory := Smalltalk.COMClassFactory on: coclass clsid: rclsid.
+		ifClass := Smalltalk.COMInterface classForIID: riid ifNone: [^E_NOINTERFACE].
 		punk := factory queryInterface: ifClass ifNone: [^E_NOINTERFACE].
 		ppv value: punk detach.
 		^S_OK].
@@ -108,7 +108,7 @@ OnShutdown
 	SessionManager current isEmbedded 
 		ifFalse: 
 			[| mb |
-			mb := MessageBox new.
+			mb := UI.MessageBox new.
 			mb beTaskModal.
 			(mb confirm: 'You are about to exit Dolphin Smalltalk
 Do you wish to save the image?') 
@@ -129,10 +129,10 @@ onStartup
 	| unkOuter |
 	coclasses := nil.
 	plugHole := nil.
-	(unkOuter := SessionManager current outer) notNull 
+	(unkOuter := SessionManager current outer) notNull
 		ifTrue: 
 			[plugHole := unkOuter queryInterface: IIPPlugHole.
-			plugHole isNull 
+			plugHole isNull
 				ifFalse: 
 					[| if |
 					if := self queryInterface: IIPDolphin.
@@ -163,7 +163,7 @@ RegisterServer
 supportedInterfaces
 	"Answer the set of interface classes supported by the receiver."
 
-	^#(##(IIPDolphin))!
+	^{IIPDolphin}!
 
 UnregisterServer 
 	"Private - The DLLUnregisterServer() function of the in-proc DLL has been called.
@@ -182,22 +182,22 @@ UnregisterServer
 
 	^hr
 ! !
-!IPDolphin categoriesFor: #canUnloadNow!COM Interfaces-IInProcDolphin!public! !
-!IPDolphin categoriesFor: #CanUnloadNow!COM Interfaces-IInProcDolphin!private! !
-!IPDolphin categoriesFor: #coclasses!enumerating!private! !
-!IPDolphin categoriesFor: #GetClassObject:riid:ppv:!COM Interfaces-IInProcDolphin!private! !
-!IPDolphin categoriesFor: #initialize!initializing!private! !
-!IPDolphin categoriesFor: #OnInitialize!COM Interfaces-IInProcDolphin!private! !
-!IPDolphin categoriesFor: #OnShutdown!COM Interfaces-IInProcDolphin!private! !
-!IPDolphin categoriesFor: #onStartup!events-session!private! !
-!IPDolphin categoriesFor: #pullPlug!operations!private! !
-!IPDolphin categoriesFor: #RegisterServer!COM Interfaces-IInProcDolphin!private! !
-!IPDolphin categoriesFor: #supportedInterfaces!constants!public! !
-!IPDolphin categoriesFor: #UnregisterServer!COM Interfaces-IInProcDolphin!private! !
+!Kernel.IPDolphin categoriesFor: #canUnloadNow!COM Interfaces-IInProcDolphin!public! !
+!Kernel.IPDolphin categoriesFor: #CanUnloadNow!COM Interfaces-IInProcDolphin!private! !
+!Kernel.IPDolphin categoriesFor: #coclasses!enumerating!private! !
+!Kernel.IPDolphin categoriesFor: #GetClassObject:riid:ppv:!COM Interfaces-IInProcDolphin!private! !
+!Kernel.IPDolphin categoriesFor: #initialize!initializing!private! !
+!Kernel.IPDolphin categoriesFor: #OnInitialize!COM Interfaces-IInProcDolphin!private! !
+!Kernel.IPDolphin categoriesFor: #OnShutdown!COM Interfaces-IInProcDolphin!private! !
+!Kernel.IPDolphin categoriesFor: #onStartup!events-session!private! !
+!Kernel.IPDolphin categoriesFor: #pullPlug!operations!private! !
+!Kernel.IPDolphin categoriesFor: #RegisterServer!COM Interfaces-IInProcDolphin!private! !
+!Kernel.IPDolphin categoriesFor: #supportedInterfaces!constants!public! !
+!Kernel.IPDolphin categoriesFor: #UnregisterServer!COM Interfaces-IInProcDolphin!private! !
 
-IPDolphin methodProtocol: #'IPDolphin.IInProcDolphin' attributes: #(#readOnly) selectors: #(#CanUnloadNow #GetClassObject:riid:ppv: #OnInitialize #OnShutdown #RegisterServer #UnregisterServer)!
+Kernel.IPDolphin methodProtocol: #'IPDolphin.IInProcDolphin' attributes: #(#readOnly) selectors: #(#CanUnloadNow #GetClassObject:riid:ppv: #OnInitialize #OnShutdown #RegisterServer #UnregisterServer)!
 
-!IPDolphin class methodsFor!
+!Kernel.IPDolphin class methodsFor!
 
 current
 	"Answer the singleton instance of the receiver."
@@ -228,9 +228,9 @@ uninitialize
 	"Private - Uninitialize the receiver as it is about to be removed from the system."
 
 	self reset.! !
-!IPDolphin class categoriesFor: #current!instance creation!public! !
-!IPDolphin class categoriesFor: #initialize!initializing!private! !
-!IPDolphin class categoriesFor: #new!object creation!private! !
-!IPDolphin class categoriesFor: #reset!instance creation!private! !
-!IPDolphin class categoriesFor: #uninitialize!class hierarchy-removing!private! !
+!Kernel.IPDolphin class categoriesFor: #current!instance creation!public! !
+!Kernel.IPDolphin class categoriesFor: #initialize!initializing!private! !
+!Kernel.IPDolphin class categoriesFor: #new!object creation!private! !
+!Kernel.IPDolphin class categoriesFor: #reset!instance creation!private! !
+!Kernel.IPDolphin class categoriesFor: #uninitialize!class hierarchy-removing!private! !
 
