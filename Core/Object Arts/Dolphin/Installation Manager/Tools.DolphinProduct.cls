@@ -1,16 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Core.Object subclass: #DolphinProduct
+Core.Object subclass: #'Tools.DolphinProduct'
 	instanceVariableNames: 'versionMask encryptedClasses'
 	classVariableNames: 'Current EditionsMap'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-DolphinProduct guid: (Core.GUID fromString: '{0bcc007b-10ed-40ce-940e-83882e2f70d8}')!
-DolphinProduct isNonInstantiable: true!
-DolphinProduct comment: ''!
-!DolphinProduct categoriesForClass!System-Support! !
-!DolphinProduct methodsFor!
+Tools.DolphinProduct guid: (Core.GUID fromString: '{0bcc007b-10ed-40ce-940e-83882e2f70d8}')!
+Tools.DolphinProduct isNonInstantiable: true!
+Tools.DolphinProduct comment: ''!
+!Tools.DolphinProduct categoriesForClass!System-Support! !
+!Tools.DolphinProduct methodsFor!
 
 allPackages
 	"Answer an <OrderedCollection> of Packages associated with the receiver. This includes
@@ -78,11 +78,11 @@ contents
 		add: #('Core\Object Arts\Dolphin\Base\Deprecated\Dolphin Base (Deprecated).pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\Base\Dolphin Anonymous Classes.pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\Base\Dolphin Command-line Parser.pax' #plain #imageBased);
+		add: #('Core\Object Arts\Dolphin\System\Compiler\Smalltalk Parser.pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\Base\Dolphin SizeIs Fields.pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\System\Filer\Dolphin Literal Filer.pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\Registry\Dolphin Registry Access.pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\System\Base64\Dolphin Base64.pax' #plain #imageBased);
-		add: #('Core\Object Arts\Dolphin\System\Compiler\Smalltalk Parser.pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\System\Compiler\Smalltalk Parser (Old Names).pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\System\Compiler\Smalltalk Compiler.pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\System\Recent\Dolphin Recent Menu.pax' #plain #imageBased);
@@ -134,24 +134,12 @@ contents
 		add: #('Core\Object Arts\Dolphin\MVP\Views\Sliding Tray\Dolphin Slidey-Inney-Outey Thing.pax' #plain #imageBased);
 		yourself.
 
-	"Load up the Transcript - still dependent upon RichTextEdit at present"
+	"Load up the Transcript"
 	answer
 		add: #('Core\Object Arts\Dolphin\MVP\Dialogs\Progress\Dolphin Progress Dialog.pax' #plain #imageBased);
-		add: #('Core\Object Arts\Dolphin\MVP\Presenters\Text\Dolphin Rich Text Presenter.pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\IDE\Base\Dolphin Transcript.pax' #plain #imageBased);
 		yourself.
 
-	"The development system itself"
-	answer
-		add: #('Core\Object Arts\Dolphin\System\Trace\Debug Trace Stream.pax' #plain #imageBased);
-		add: #('Core\Contributions\Refactory\RBNamespaces.pax' #plain #imageBased);
-		add: #('Core\Contributions\Refactory\Refactoring Browser\Parser\RBParser.pax' #plain #imageBased);
-		add: #('Core\Contributions\Refactory\Refactoring Browser\Environments\RBEnvironments.pax' #plain #imageBased);
-		add: #('Core\Contributions\Refactory\Refactoring Browser\Change Objects\RBChangeObjects.pax' #plain #imageBased);
-		add: #('Core\Object Arts\Dolphin\IDE\Base\Development System.pax' #plain #imageBased);
-		yourself.
-
-	"Hmmm, try and break dependency of Installation Manager on the development system"
 	answer
 		add: #('Core\Object Arts\Internal\Installation Manager\Dolphin Products.pax' #plain #imageBased);
 		yourself.
@@ -415,58 +403,58 @@ versionMask: anInteger
 
 warnOfUnlistedContent
 ! !
-!DolphinProduct categoriesFor: #allPackages!accessing!public! !
-!DolphinProduct categoriesFor: #basicLoad!operations!private! !
-!DolphinProduct categoriesFor: #beCurrent!operations!public! !
-!DolphinProduct categoriesFor: #boot!operations!private! !
-!DolphinProduct categoriesFor: #calcSystemFolderExtentFor:!helpers!private! !
-!DolphinProduct categoriesFor: #contents!accessing!public! !
-!DolphinProduct categoriesFor: #defaultSystemFolderColor!constants!private! !
-!DolphinProduct categoriesFor: #defaultSystemFolderExtent!constants!private! !
-!DolphinProduct categoriesFor: #diskBasedPackages!accessing!private! !
-!DolphinProduct categoriesFor: #displayOn:!printing!public! !
-!DolphinProduct categoriesFor: #encryptedClasses!accessing!public! !
-!DolphinProduct categoriesFor: #encryptedClasses:!accessing!private! !
-!DolphinProduct categoriesFor: #encryptedPackageNames!accessing!public! !
-!DolphinProduct categoriesFor: #foldLiterals!private! !
-!DolphinProduct categoriesFor: #fullName!accessing!public! !
-!DolphinProduct categoriesFor: #imageLevel!constants!public! !
-!DolphinProduct categoriesFor: #installProductDetails!operations!private! !
-!DolphinProduct categoriesFor: #installProductSounds!operations!private! !
-!DolphinProduct categoriesFor: #installSplash!private! !
-!DolphinProduct categoriesFor: #installSystemFolderOptions!operations!private! !
-!DolphinProduct categoriesFor: #installSystemFolderOptions:!private! !
-!DolphinProduct categoriesFor: #isSafeToEncrypt:!operations!public! !
-!DolphinProduct categoriesFor: #load!operations!public! !
-!DolphinProduct categoriesFor: #loadAndShrink!operations!public! !
-!DolphinProduct categoriesFor: #loadShrinkAndCompress!operations!public! !
-!DolphinProduct categoriesFor: #majorVersion!accessing!public! !
-!DolphinProduct categoriesFor: #minorVersion!accessing!public! !
-!DolphinProduct categoriesFor: #name!accessing!public! !
-!DolphinProduct categoriesFor: #packageNames!accessing!public! !
-!DolphinProduct categoriesFor: #packagePaths!accessing!public! !
-!DolphinProduct categoriesFor: #packages!accessing!public! !
-!DolphinProduct categoriesFor: #preShrink!private! !
-!DolphinProduct categoriesFor: #printOn:!printing!public! !
-!DolphinProduct categoriesFor: #productDetails!accessing!public! !
-!DolphinProduct categoriesFor: #productLevel!constants!public! !
-!DolphinProduct categoriesFor: #removeUnlistedPackages!operations!private! !
-!DolphinProduct categoriesFor: #resizeSymbolTable!operations!public! !
-!DolphinProduct categoriesFor: #shortProductName!accessing!public! !
-!DolphinProduct categoriesFor: #shouldEncryptMetaclasses!constants!public!testing! !
-!DolphinProduct categoriesFor: #shrink!operations!public! !
-!DolphinProduct categoriesFor: #shrinkEventsRegister!operations!private! !
-!DolphinProduct categoriesFor: #shrinkHashedCollections!operations!private! !
-!DolphinProduct categoriesFor: #uninstallPackage:!operations!private! !
-!DolphinProduct categoriesFor: #unlistedContentException!operations!public! !
-!DolphinProduct categoriesFor: #unlistedPrerequisites!public! !
-!DolphinProduct categoriesFor: #unwantedClasses!constants!public! !
-!DolphinProduct categoriesFor: #version!accessing!public! !
-!DolphinProduct categoriesFor: #versionMask!accessing!private! !
-!DolphinProduct categoriesFor: #versionMask:!accessing!initializing!private! !
-!DolphinProduct categoriesFor: #warnOfUnlistedContent!operations!private! !
+!Tools.DolphinProduct categoriesFor: #allPackages!accessing!public! !
+!Tools.DolphinProduct categoriesFor: #basicLoad!operations!private! !
+!Tools.DolphinProduct categoriesFor: #beCurrent!operations!public! !
+!Tools.DolphinProduct categoriesFor: #boot!operations!private! !
+!Tools.DolphinProduct categoriesFor: #calcSystemFolderExtentFor:!helpers!private! !
+!Tools.DolphinProduct categoriesFor: #contents!accessing!public! !
+!Tools.DolphinProduct categoriesFor: #defaultSystemFolderColor!constants!private! !
+!Tools.DolphinProduct categoriesFor: #defaultSystemFolderExtent!constants!private! !
+!Tools.DolphinProduct categoriesFor: #diskBasedPackages!accessing!private! !
+!Tools.DolphinProduct categoriesFor: #displayOn:!printing!public! !
+!Tools.DolphinProduct categoriesFor: #encryptedClasses!accessing!public! !
+!Tools.DolphinProduct categoriesFor: #encryptedClasses:!accessing!private! !
+!Tools.DolphinProduct categoriesFor: #encryptedPackageNames!accessing!public! !
+!Tools.DolphinProduct categoriesFor: #foldLiterals!private! !
+!Tools.DolphinProduct categoriesFor: #fullName!accessing!public! !
+!Tools.DolphinProduct categoriesFor: #imageLevel!constants!public! !
+!Tools.DolphinProduct categoriesFor: #installProductDetails!operations!private! !
+!Tools.DolphinProduct categoriesFor: #installProductSounds!operations!private! !
+!Tools.DolphinProduct categoriesFor: #installSplash!private! !
+!Tools.DolphinProduct categoriesFor: #installSystemFolderOptions!operations!private! !
+!Tools.DolphinProduct categoriesFor: #installSystemFolderOptions:!private! !
+!Tools.DolphinProduct categoriesFor: #isSafeToEncrypt:!operations!public! !
+!Tools.DolphinProduct categoriesFor: #load!operations!public! !
+!Tools.DolphinProduct categoriesFor: #loadAndShrink!operations!public! !
+!Tools.DolphinProduct categoriesFor: #loadShrinkAndCompress!operations!public! !
+!Tools.DolphinProduct categoriesFor: #majorVersion!accessing!public! !
+!Tools.DolphinProduct categoriesFor: #minorVersion!accessing!public! !
+!Tools.DolphinProduct categoriesFor: #name!accessing!public! !
+!Tools.DolphinProduct categoriesFor: #packageNames!accessing!public! !
+!Tools.DolphinProduct categoriesFor: #packagePaths!accessing!public! !
+!Tools.DolphinProduct categoriesFor: #packages!accessing!public! !
+!Tools.DolphinProduct categoriesFor: #preShrink!private! !
+!Tools.DolphinProduct categoriesFor: #printOn:!printing!public! !
+!Tools.DolphinProduct categoriesFor: #productDetails!accessing!public! !
+!Tools.DolphinProduct categoriesFor: #productLevel!constants!public! !
+!Tools.DolphinProduct categoriesFor: #removeUnlistedPackages!operations!private! !
+!Tools.DolphinProduct categoriesFor: #resizeSymbolTable!operations!public! !
+!Tools.DolphinProduct categoriesFor: #shortProductName!accessing!public! !
+!Tools.DolphinProduct categoriesFor: #shouldEncryptMetaclasses!constants!public!testing! !
+!Tools.DolphinProduct categoriesFor: #shrink!operations!public! !
+!Tools.DolphinProduct categoriesFor: #shrinkEventsRegister!operations!private! !
+!Tools.DolphinProduct categoriesFor: #shrinkHashedCollections!operations!private! !
+!Tools.DolphinProduct categoriesFor: #uninstallPackage:!operations!private! !
+!Tools.DolphinProduct categoriesFor: #unlistedContentException!operations!public! !
+!Tools.DolphinProduct categoriesFor: #unlistedPrerequisites!public! !
+!Tools.DolphinProduct categoriesFor: #unwantedClasses!constants!public! !
+!Tools.DolphinProduct categoriesFor: #version!accessing!public! !
+!Tools.DolphinProduct categoriesFor: #versionMask!accessing!private! !
+!Tools.DolphinProduct categoriesFor: #versionMask:!accessing!initializing!private! !
+!Tools.DolphinProduct categoriesFor: #warnOfUnlistedContent!operations!private! !
 
-!DolphinProduct class methodsFor!
+!Tools.DolphinProduct class methodsFor!
 
 boot
 	"Loads an instance of the receiver"
@@ -606,25 +594,25 @@ versionMask: versionMask
 	^(super new)
 		versionMask: versionMask;
 		yourself! !
-!DolphinProduct class categoriesFor: #boot!operations!public! !
-!DolphinProduct class categoriesFor: #current!accessing!public! !
-!DolphinProduct class categoriesFor: #errorInvalidProductDescription:!exceptions!public! !
-!DolphinProduct class categoriesFor: #fromString:!instance creation!public! !
-!DolphinProduct class categoriesFor: #icon!constants!public! !
-!DolphinProduct class categoriesFor: #initialize!initializing!private! !
-!DolphinProduct class categoriesFor: #loadAndShrink!operations!public! !
-!DolphinProduct class categoriesFor: #new!instance creation!public! !
-!DolphinProduct class categoriesFor: #ofImageLevel:!instance creation!private! !
-!DolphinProduct class categoriesFor: #ofSerialNumber:!instance creation!private! !
-!DolphinProduct class categoriesFor: #packages:under:encrypted:!private! !
-!DolphinProduct class categoriesFor: #pacsUnder:encrypted:!private! !
-!DolphinProduct class categoriesFor: #paxesUnder:encrypted:!private! !
-!DolphinProduct class categoriesFor: #productLevel!constants!private! !
-!DolphinProduct class categoriesFor: #productMask!accessing!private! !
-!DolphinProduct class categoriesFor: #productName!accessing!public! !
-!DolphinProduct class categoriesFor: #productPrefix!instance creation!public! !
-!DolphinProduct class categoriesFor: #release!operations!public! !
-!DolphinProduct class categoriesFor: #shortProductName!accessing!public! !
-!DolphinProduct class categoriesFor: #version:!instance creation!public! !
-!DolphinProduct class categoriesFor: #versionMask:!instance creation!private! !
+!Tools.DolphinProduct class categoriesFor: #boot!operations!public! !
+!Tools.DolphinProduct class categoriesFor: #current!accessing!public! !
+!Tools.DolphinProduct class categoriesFor: #errorInvalidProductDescription:!exceptions!public! !
+!Tools.DolphinProduct class categoriesFor: #fromString:!instance creation!public! !
+!Tools.DolphinProduct class categoriesFor: #icon!constants!public! !
+!Tools.DolphinProduct class categoriesFor: #initialize!initializing!private! !
+!Tools.DolphinProduct class categoriesFor: #loadAndShrink!operations!public! !
+!Tools.DolphinProduct class categoriesFor: #new!instance creation!public! !
+!Tools.DolphinProduct class categoriesFor: #ofImageLevel:!instance creation!private! !
+!Tools.DolphinProduct class categoriesFor: #ofSerialNumber:!instance creation!private! !
+!Tools.DolphinProduct class categoriesFor: #packages:under:encrypted:!private! !
+!Tools.DolphinProduct class categoriesFor: #pacsUnder:encrypted:!private! !
+!Tools.DolphinProduct class categoriesFor: #paxesUnder:encrypted:!private! !
+!Tools.DolphinProduct class categoriesFor: #productLevel!constants!private! !
+!Tools.DolphinProduct class categoriesFor: #productMask!accessing!private! !
+!Tools.DolphinProduct class categoriesFor: #productName!accessing!public! !
+!Tools.DolphinProduct class categoriesFor: #productPrefix!instance creation!public! !
+!Tools.DolphinProduct class categoriesFor: #release!operations!public! !
+!Tools.DolphinProduct class categoriesFor: #shortProductName!accessing!public! !
+!Tools.DolphinProduct class categoriesFor: #version:!instance creation!public! !
+!Tools.DolphinProduct class categoriesFor: #versionMask:!instance creation!private! !
 

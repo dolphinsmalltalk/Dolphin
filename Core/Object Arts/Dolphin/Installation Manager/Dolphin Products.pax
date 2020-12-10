@@ -8,11 +8,11 @@ package basicPackageVersion: '6.1.27'.
 
 
 package setClassNames: #(
-	#{Smalltalk.DolphinBaseProduct}
-	#{Smalltalk.DolphinCommunityEdition}
-	#{Smalltalk.DolphinCoreProduct}
-	#{Smalltalk.DolphinProduct}
-	#{Smalltalk.DolphinProfessional}
+	#{Tools.DolphinBaseProduct}
+	#{Tools.DolphinCommunityEdition}
+	#{Tools.DolphinCoreProduct}
+	#{Tools.DolphinProduct}
+	#{Tools.DolphinProfessional}
 ).
 
 package setPrerequisites: #(
@@ -23,31 +23,31 @@ package!
 
 "Class Definitions"!
 
-Core.Object subclass: #DolphinProduct
+Core.Object subclass: #'Tools.DolphinProduct'
 	instanceVariableNames: 'versionMask encryptedClasses'
 	classVariableNames: 'Current EditionsMap'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-DolphinProduct subclass: #DolphinCoreProduct
+Tools.DolphinProduct subclass: #'Tools.DolphinCoreProduct'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-DolphinCoreProduct subclass: #DolphinBaseProduct
+Tools.DolphinCoreProduct subclass: #'Tools.DolphinBaseProduct'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-DolphinBaseProduct subclass: #DolphinCommunityEdition
+Tools.DolphinBaseProduct subclass: #'Tools.DolphinCommunityEdition'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-DolphinBaseProduct subclass: #DolphinProfessional
+Tools.DolphinBaseProduct subclass: #'Tools.DolphinProfessional'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

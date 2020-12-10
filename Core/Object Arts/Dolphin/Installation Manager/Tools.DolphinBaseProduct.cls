@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-DolphinCoreProduct subclass: #DolphinBaseProduct
+Tools.DolphinCoreProduct subclass: #'Tools.DolphinBaseProduct'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-DolphinBaseProduct guid: (Core.GUID fromString: '{2a3b6d22-63cb-4287-905e-8221eb59e17d}')!
-DolphinBaseProduct comment: ''!
-!DolphinBaseProduct categoriesForClass!System-Support! !
-!DolphinBaseProduct methodsFor!
+Tools.DolphinBaseProduct guid: (Core.GUID fromString: '{2a3b6d22-63cb-4287-905e-8221eb59e17d}')!
+Tools.DolphinBaseProduct comment: ''!
+!Tools.DolphinBaseProduct categoriesForClass!System-Support! !
+!Tools.DolphinBaseProduct methodsFor!
 
 calcSystemFolderExtentFor: aPoint 
 	"Answer a system folder extent that will yield the specified extent for the folder list
@@ -176,12 +176,12 @@ warnOfUnlistedContent
 			[self unlistedContentException
 				signal: 'The deployed image will include the following unlisted pre-requisite packages: '
 						, unlistedContent displayString]! !
-!DolphinBaseProduct categoriesFor: #calcSystemFolderExtentFor:!helpers!private! !
-!DolphinBaseProduct categoriesFor: #contents!accessing!public! !
-!DolphinBaseProduct categoriesFor: #fullName!accessing!public! !
-!DolphinBaseProduct categoriesFor: #warnOfUnlistedContent!operations!private! !
+!Tools.DolphinBaseProduct categoriesFor: #calcSystemFolderExtentFor:!helpers!private! !
+!Tools.DolphinBaseProduct categoriesFor: #contents!accessing!public! !
+!Tools.DolphinBaseProduct categoriesFor: #fullName!accessing!public! !
+!Tools.DolphinBaseProduct categoriesFor: #warnOfUnlistedContent!operations!private! !
 
-!DolphinBaseProduct class methodsFor!
+!Tools.DolphinBaseProduct class methodsFor!
 
 productName
 	"Answer the product name"
@@ -192,6 +192,6 @@ shortProductName
 	"Answer the abbreviated product name"
 	
 	^'DBASE'! !
-!DolphinBaseProduct class categoriesFor: #productName!accessing!public! !
-!DolphinBaseProduct class categoriesFor: #shortProductName!accessing!public! !
+!Tools.DolphinBaseProduct class categoriesFor: #productName!accessing!public! !
+!Tools.DolphinBaseProduct class categoriesFor: #shortProductName!accessing!public! !
 

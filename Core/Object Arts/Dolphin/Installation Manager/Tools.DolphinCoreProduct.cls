@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-DolphinProduct subclass: #DolphinCoreProduct
+Tools.DolphinProduct subclass: #'Tools.DolphinCoreProduct'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-DolphinCoreProduct guid: (Core.GUID fromString: '{610c5616-617f-4b75-9c31-7589f234a3c2}')!
-DolphinCoreProduct comment: ''!
-!DolphinCoreProduct categoriesForClass!System-Support! !
-!DolphinCoreProduct methodsFor!
+Tools.DolphinCoreProduct guid: (Core.GUID fromString: '{610c5616-617f-4b75-9c31-7589f234a3c2}')!
+Tools.DolphinCoreProduct comment: ''!
+!Tools.DolphinCoreProduct categoriesForClass!System-Support! !
+!Tools.DolphinCoreProduct methodsFor!
 
 contents
 	"Answer the list of package contents of the receiver"
@@ -19,6 +19,7 @@ contents
 
 	"Base"
 	contents
+		add: #('Core\Object Arts\Dolphin\MVP\Presenters\Text\Dolphin Rich Text Presenter.pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\MVP\Views\SysLink\Dolphin SysLink Control.pax' #encrypted #imageBased);
 		add: #('Core\Contributions\Refactory\Refactoring Browser\Formatters\RBFormatters.pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\System\Announcements\Dolphin Announcements.pax' #plain #imageBased);
@@ -54,7 +55,17 @@ contents
 	contents
 		add: #('Core\Object Arts\Dolphin\MVP\Icons\Dolphin Text Tile Icons.pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\MVP\Icons\Dolphin Base Icons.pax' #plain #imageBased);
-		add: #('Core\Object Arts\Dolphin\MVP\Icons\Internal Bitmaps and Icons\Internal Bitmaps and Icons.pax' #plain #imageBased);
+		add: #('Core\Object Arts\Dolphin\MVP\Icons\Internal Bitmaps and Icons.pax' #plain #imageBased);
+		yourself.
+
+	"The base development system"
+	contents
+		add: #('Core\Object Arts\Dolphin\System\Trace\Debug Trace Stream.pax' #plain #imageBased);
+		add: #('Core\Contributions\Refactory\RBNamespaces.pax' #plain #imageBased);
+		add: #('Core\Contributions\Refactory\Refactoring Browser\Parser\RBParser.pax' #plain #imageBased);
+		add: #('Core\Contributions\Refactory\Refactoring Browser\Environments\RBEnvironments.pax' #plain #imageBased);
+		add: #('Core\Contributions\Refactory\Refactoring Browser\Change Objects\RBChangeObjects.pax' #plain #imageBased);
+		add: #('Core\Object Arts\Dolphin\IDE\Base\Development System.pax' #plain #imageBased);
 		yourself.
 
 	"Additional development tools"
@@ -70,6 +81,7 @@ contents
 		add: #('Core\Object Arts\Dolphin\MVP\Deprecated\Dolphin MVP (Deprecated).pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\MVP\Views\Scintilla\Dolphin Scintilla View (Old Names).pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\MVP\Views\Scintilla\Dolphin Scintilla View (Deprecated).pax' #plain #imageBased);
+		add: #('Core\Object Arts\Dolphin\IDE\Base\Development System (Deprecated).pax' #plain #imageBased);
 		yourself.
 
 	"Add-ons"
@@ -118,12 +130,12 @@ fullName
 	"Answer the full product name associated with the receiver"
 
 	^'Dolphin Smalltalk Core'! !
-!DolphinCoreProduct categoriesFor: #contents!accessing!public! !
-!DolphinCoreProduct categoriesFor: #defaultSystemFolderColor!constants!private! !
-!DolphinCoreProduct categoriesFor: #defaultSystemFolderExtent!constants!private! !
-!DolphinCoreProduct categoriesFor: #fullName!accessing!public! !
+!Tools.DolphinCoreProduct categoriesFor: #contents!accessing!public! !
+!Tools.DolphinCoreProduct categoriesFor: #defaultSystemFolderColor!constants!private! !
+!Tools.DolphinCoreProduct categoriesFor: #defaultSystemFolderExtent!constants!private! !
+!Tools.DolphinCoreProduct categoriesFor: #fullName!accessing!public! !
 
-!DolphinCoreProduct class methodsFor!
+!Tools.DolphinCoreProduct class methodsFor!
 
 productLevel
 	"Private - Answer the product ID for the receiver"
@@ -139,7 +151,7 @@ shortProductName
 	"Answer the abbreviated product name"
 	
 	^'DCORE'! !
-!DolphinCoreProduct class categoriesFor: #productLevel!constants!private! !
-!DolphinCoreProduct class categoriesFor: #productName!accessing!public! !
-!DolphinCoreProduct class categoriesFor: #shortProductName!accessing!public! !
+!Tools.DolphinCoreProduct class categoriesFor: #productLevel!constants!private! !
+!Tools.DolphinCoreProduct class categoriesFor: #productName!accessing!public! !
+!Tools.DolphinCoreProduct class categoriesFor: #shortProductName!accessing!public! !
 

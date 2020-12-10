@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-DolphinBaseProduct subclass: #DolphinCommunityEdition
+Tools.DolphinBaseProduct subclass: #'Tools.DolphinCommunityEdition'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-DolphinCommunityEdition guid: (GUID fromString: '{97ac6bc9-3516-42c9-845b-a5ed3579f331}')!
-DolphinCommunityEdition comment: ''!
-!DolphinCommunityEdition categoriesForClass!System-Support! !
-!DolphinCommunityEdition methodsFor!
+Tools.DolphinCommunityEdition guid: (Core.GUID fromString: '{97ac6bc9-3516-42c9-845b-a5ed3579f331}')!
+Tools.DolphinCommunityEdition comment: ''!
+!Tools.DolphinCommunityEdition categoriesForClass!System-Support! !
+!Tools.DolphinCommunityEdition methodsFor!
 
 defaultSystemFolderExtent
 	^760 @ 355!
@@ -26,11 +26,11 @@ preShrink
 	because they contain references to Lagoon, which only belongs in DolphinProfessional"
 
 	self packages do: [:each | each imageStripperBytes: nil]! !
-!DolphinCommunityEdition categoriesFor: #defaultSystemFolderExtent!private! !
-!DolphinCommunityEdition categoriesFor: #fullName!accessing!public! !
-!DolphinCommunityEdition categoriesFor: #preShrink!private! !
+!Tools.DolphinCommunityEdition categoriesFor: #defaultSystemFolderExtent!private! !
+!Tools.DolphinCommunityEdition categoriesFor: #fullName!accessing!public! !
+!Tools.DolphinCommunityEdition categoriesFor: #preShrink!private! !
 
-!DolphinCommunityEdition class methodsFor!
+!Tools.DolphinCommunityEdition class methodsFor!
 
 productLevel
 	"Private - Answer the product ID for the receiver"
@@ -46,7 +46,7 @@ shortProductName
 	"Answer the abbreviated product name"
 	
 	^'DCE'! !
-!DolphinCommunityEdition class categoriesFor: #productLevel!constants!private! !
-!DolphinCommunityEdition class categoriesFor: #productName!accessing!public! !
-!DolphinCommunityEdition class categoriesFor: #shortProductName!accessing!public! !
+!Tools.DolphinCommunityEdition class categoriesFor: #productLevel!constants!private! !
+!Tools.DolphinCommunityEdition class categoriesFor: #productName!accessing!public! !
+!Tools.DolphinCommunityEdition class categoriesFor: #shortProductName!accessing!public! !
 

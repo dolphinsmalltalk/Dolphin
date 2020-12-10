@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-DolphinBaseProduct subclass: #DolphinProfessional
+Tools.DolphinBaseProduct subclass: #'Tools.DolphinProfessional'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-DolphinProfessional guid: (Core.GUID fromString: '{48eec5bd-f329-471a-99d8-41ffd76f7f98}')!
-DolphinProfessional comment: ''!
-!DolphinProfessional categoriesForClass!System-Support! !
-!DolphinProfessional methodsFor!
+Tools.DolphinProfessional guid: (Core.GUID fromString: '{48eec5bd-f329-471a-99d8-41ffd76f7f98}')!
+Tools.DolphinProfessional comment: ''!
+!Tools.DolphinProfessional categoriesForClass!System-Support! !
+!Tools.DolphinProfessional methodsFor!
 
 contents
 	"Answer the list of package contents owned by the receiver"
@@ -84,11 +84,11 @@ fullName
 	"Answer the full product name associated with the receiver"
 
 	^'Dolphin Smalltalk Professional'! !
-!DolphinProfessional categoriesFor: #contents!accessing!public! !
-!DolphinProfessional categoriesFor: #defaultSystemFolderExtent!private! !
-!DolphinProfessional categoriesFor: #fullName!accessing!public! !
+!Tools.DolphinProfessional categoriesFor: #contents!accessing!public! !
+!Tools.DolphinProfessional categoriesFor: #defaultSystemFolderExtent!private! !
+!Tools.DolphinProfessional categoriesFor: #fullName!accessing!public! !
 
-!DolphinProfessional class methodsFor!
+!Tools.DolphinProfessional class methodsFor!
 
 developmentClasses
 	"Answer a <collection> containing all development classes."
@@ -122,8 +122,8 @@ shortProductName
 	"Answer the abbreviated product name"
 	
 	^'DPRO'! !
-!DolphinProfessional class categoriesFor: #developmentClasses!public! !
-!DolphinProfessional class categoriesFor: #productLevel!constants!private! !
-!DolphinProfessional class categoriesFor: #productName!accessing!public! !
-!DolphinProfessional class categoriesFor: #shortProductName!accessing!public! !
+!Tools.DolphinProfessional class categoriesFor: #developmentClasses!public! !
+!Tools.DolphinProfessional class categoriesFor: #productLevel!constants!private! !
+!Tools.DolphinProfessional class categoriesFor: #productName!accessing!public! !
+!Tools.DolphinProfessional class categoriesFor: #shortProductName!accessing!public! !
 
