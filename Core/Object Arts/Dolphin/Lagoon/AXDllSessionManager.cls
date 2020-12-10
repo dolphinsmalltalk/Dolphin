@@ -63,7 +63,7 @@ unhandledException: anException
 icon
 	"Answers an Icon that can be used to represent this class"
 
-	^ExternalLibrary icon!
+	^External.DynamicLinkLibrary icon!
 
 imageExtension
 	"Answer the suffix for an executable image file"

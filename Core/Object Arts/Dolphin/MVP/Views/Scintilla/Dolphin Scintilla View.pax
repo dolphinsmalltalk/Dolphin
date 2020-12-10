@@ -1434,7 +1434,7 @@ Core.Object subclass: #ScintillaStyler
 	imports: #(#{ScintillaConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-External.Library subclass: #ScintillaLibrary
+External.DynamicLinkLibrary subclass: #ScintillaLibrary
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

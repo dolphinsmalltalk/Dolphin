@@ -440,7 +440,7 @@ testNextOtherNonCharactersUtf8
 	5.3.2  U+FFFF = ef bf bf"
 
 	"stdio streams will just consume the U+FFFF, so we might get either 2 or 3 chars read here."
-	count := self streamClass == External.StdioFileStream ifTrue: [2] ifFalse: [3].
+	count := self streamClass == OS.StdioFileStream ifTrue: [2] ifFalse: [3].
 	self assert: (self verifyNonChars: #('efbefe' 'efbfbf')) equals: count.
 
 	"5.3.3  U+FDD0 .. U+FDEF"

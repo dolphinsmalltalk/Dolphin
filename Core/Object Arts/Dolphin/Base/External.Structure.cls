@@ -834,7 +834,7 @@ pointerClass
 
 recompileReferences
 	"Private - Recompile all directly referencing external call methods that might need to
-	change if the receiver's size changes such any External.Library FFI methods that reference
+	change if the receiver's size changes such any External.DynamicLinkLibrary FFI methods that reference
 	the class and might be passing/returning by value (the calling conventions vary depending on
 	the structure length), AND any External.Structure methods that might be using static
 	expressions to get the byte-size."
@@ -848,7 +848,7 @@ recompileReferences
 	Notification signal: ('Recompiling references to <1p> (size <2p>)...' expandMacrosWith: self
 				with: self basicByteSize).
 	pred := self referenceFilterFor: binding.
-	Library
+	DynamicLinkLibrary
 		allMethodsDo: [:each | (each isExternalCall and: [pred value: each]) ifTrue: [each recompile]].
 	Structure allMethodsDo: 
 			[:each |

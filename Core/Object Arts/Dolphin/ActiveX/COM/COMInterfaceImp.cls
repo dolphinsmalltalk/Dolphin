@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Object subclass: #COMInterfaceImp
+Core.Object subclass: #COMInterfaceImp
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'OLEConstants Win32Errors'
+	imports: #(#{Smalltalk.OLEConstants} #{OS.Win32Errors})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-COMInterfaceImp guid: (GUID fromString: '{87b4c467-026e-11d3-9fd7-00a0cc3e4a32}')!
-COMInterfaceImp isAbstract: true!
+COMInterfaceImp guid: (Core.GUID fromString: '{87b4c467-026e-11d3-9fd7-00a0cc3e4a32}')!
+COMInterfaceImp isNonInstantiable: true!
 COMInterfaceImp comment: 'COMInterfaceImp is an abstract class which provides the basic implementation for a COM object such as interface querying (i.e. implements #queryInterface:ifNone: sent by the framework when a previously unencountered interface is requested of the COM object), factory registration, CLSID access, and aggregation.
 
 Note that, although it is convenient, it is not necessary for a COM server object to be a subclass of this class: any Dolphin object can be a COM object. The COM framework provides a wrapper class, COMObjectStub, which takes care of the boilerplate implementation details, and hence the responsibilities here are few and simple. The only message sent by framework to a COM server object is #queryInterface:ifNone:, and even that is optional. If your class sits more happily elsewhere in the hierarchy then this class is a suitable reference for implementing COM support directly in your class.
@@ -217,9 +217,9 @@ registerAsInProcServer: aRegKey
 registerAsLocalServer: aRegKey
 	| commandLine sesh |
 	commandLine := String writeStream.
-	commandLine nextPutAll: (External.Library moduleFileName: nil).
+	commandLine nextPutAll: (External.DynamicLinkLibrary moduleFileName: nil).
 	sesh := SessionManager current.
-	sesh isRuntime 
+	sesh isRuntime
 		ifFalse: 
 			[commandLine
 				space;

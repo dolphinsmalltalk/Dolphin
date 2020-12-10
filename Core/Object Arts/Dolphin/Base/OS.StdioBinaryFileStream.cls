@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-External.StdioFileStream subclass: #'External.StdioBinaryFileStream'
+OS.StdioFileStream subclass: #'OS.StdioBinaryFileStream'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-External.StdioBinaryFileStream guid: (Core.GUID fromString: '{70295d5a-b304-43e4-aa04-c800a93858d4}')!
-External.StdioBinaryFileStream comment: ''!
-!External.StdioBinaryFileStream categoriesForClass!Collections-Streams! !
-!External.StdioBinaryFileStream methodsFor!
+OS.StdioBinaryFileStream guid: (Core.GUID fromString: '{70295d5a-b304-43e4-aa04-c800a93858d4}')!
+OS.StdioBinaryFileStream comment: ''!
+!OS.StdioBinaryFileStream categoriesForClass!Collections-Streams! !
+!OS.StdioBinaryFileStream methodsFor!
 
 contentsSpecies
 	"Private - Answer the class of Object to be used when answering collections of elements
@@ -84,17 +84,17 @@ upToEnd
 	"Implementation Note: Override to provide a more efficient implementation by reading the bytes as a block."
 
 	^self basicNext: self size - self position! !
-!External.StdioBinaryFileStream categoriesFor: #contentsSpecies!constants!private! !
-!External.StdioBinaryFileStream categoriesFor: #externalType!accessing!public! !
-!External.StdioBinaryFileStream categoriesFor: #next!accessing!public! !
-!External.StdioBinaryFileStream categoriesFor: #next:putAll:startingAt:!accessing!public! !
-!External.StdioBinaryFileStream categoriesFor: #nextLine!accessing!public! !
-!External.StdioBinaryFileStream categoriesFor: #peek!accessing!public! !
-!External.StdioBinaryFileStream categoriesFor: #peekFor:!accessing!public! !
-!External.StdioBinaryFileStream categoriesFor: #translationMode!constants!private! !
-!External.StdioBinaryFileStream categoriesFor: #upToEnd!accessing!public! !
+!OS.StdioBinaryFileStream categoriesFor: #contentsSpecies!constants!private! !
+!OS.StdioBinaryFileStream categoriesFor: #externalType!accessing!public! !
+!OS.StdioBinaryFileStream categoriesFor: #next!accessing!public! !
+!OS.StdioBinaryFileStream categoriesFor: #next:putAll:startingAt:!accessing!public! !
+!OS.StdioBinaryFileStream categoriesFor: #nextLine!accessing!public! !
+!OS.StdioBinaryFileStream categoriesFor: #peek!accessing!public! !
+!OS.StdioBinaryFileStream categoriesFor: #peekFor:!accessing!public! !
+!OS.StdioBinaryFileStream categoriesFor: #translationMode!constants!private! !
+!OS.StdioBinaryFileStream categoriesFor: #upToEnd!accessing!public! !
 
-!External.StdioBinaryFileStream class methodsFor!
+!OS.StdioBinaryFileStream class methodsFor!
 
 encodingMode
 	^$b!
@@ -104,6 +104,6 @@ encodingType
 	Although this ought to be #binary at this level (untranslated binary being the most general), for historical compatibility it is not."
 
 	^#binary! !
-!External.StdioBinaryFileStream class categoriesFor: #encodingMode!constants!private! !
-!External.StdioBinaryFileStream class categoriesFor: #encodingType!constants!public! !
+!OS.StdioBinaryFileStream class categoriesFor: #encodingMode!constants!private! !
+!OS.StdioBinaryFileStream class categoriesFor: #encodingType!constants!public! !
 

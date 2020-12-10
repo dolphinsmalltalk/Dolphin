@@ -63,7 +63,7 @@ package setMethodNames: #(
 	#(#{Core.TimeStamp} #time:)
 	#(#{Core.UndefinedObject} #subclass:instanceVariableNames:classVariableNames:poolDictionaries:)
 	#(#{Core.UndefinedObject} #subclass:instanceVariableNames:classVariableNames:poolDictionaries:category:)
-	#(#{External.Library} #invalidCall)
+	#(#{External.DynamicLinkLibrary} #invalidCall)
 	#(#{External.Structure} #do:)
 	#(#{External.Structure} #do:separatedBy:)
 	#(#{Kernel.ByteCodeDispatcher} #byteCodeSegments)
@@ -634,14 +634,14 @@ subclass: aClassSymbol instanceVariableNames: instVarString classVariableNames: 
 !Core.UndefinedObject categoriesFor: #subclass:instanceVariableNames:classVariableNames:poolDictionaries:!class hierarchy-adding!public! !
 !Core.UndefinedObject categoriesFor: #subclass:instanceVariableNames:classVariableNames:poolDictionaries:category:!class hierarchy-adding!public! !
 
-!External.Library methodsFor!
+!External.DynamicLinkLibrary methodsFor!
 
 invalidCall
 	"The primitive failure code is now an implicit temp of the primitive method, and so must be passed. The instance variable of Process formerly used to store the failure code is no longer used."
 
 	Notification deprecated.
 	^self invalidCall: Failed! !
-!External.Library categoriesFor: #invalidCall!exceptions!public! !
+!External.DynamicLinkLibrary categoriesFor: #invalidCall!exceptions!public! !
 
 !External.Structure methodsFor!
 

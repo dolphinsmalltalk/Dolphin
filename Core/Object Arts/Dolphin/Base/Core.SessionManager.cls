@@ -95,7 +95,7 @@ argv
 			"Open code the access to the array of strings to reduce base system dependencies on external struct classes"
 			lppstr := lib argv.
 			lppstr isNull
-				ifTrue: [argv at: 1 put: (External.Library moduleFileName: nil)]
+				ifTrue: [argv at: 1 put: (External.DynamicLinkLibrary moduleFileName: nil)]
 				ifFalse: 
 					[1 to: argc
 						do: 
@@ -155,7 +155,7 @@ basicShutdown
 	self comShutdown.
 	#{Delay} ifDefined: [:d | d onExit].
 	inputState onExit.
-	External.Library onExit.
+	External.DynamicLinkLibrary onExit.
 	KernelLibrary default closeHandle: sentry!
 
 basicStdioStreams
@@ -229,7 +229,7 @@ consoleStreamClass
 	"Answer the class of stdio stream to use for stdin, stdout, and/or stderr when connected to the console.
 	UTF-16 streams are more efficient when reading/writing from the console than UTF-8, as they minimize translations between encodings (the CRT functions and underlying Windows APIs use wide characters)."
 
-	^External.StdioUtf16FileStream!
+	^OS.StdioUtf16FileStream!
 
 createInputState
 	inputState := self inputStateClass newFromOld: inputState!
@@ -297,7 +297,7 @@ exit: anInteger
 fileStreamClass
 	"Answer the class of stdio stream to use for stdin, stdout, stderr when redirected to a file or pipe, as opposed to being connected to the console. We assume UTF-8 should be read/written, i.e. if stdin is redirected to a file it is assumed the file is UTF-8 encoded, and likewise any output to a redirected stdout/stderr will be written in UTF-8. This may not be correct for any particular app or usage, so override if necessary."
 
-	^External.StdioUtf8FileStream!
+	^OS.StdioUtf8FileStream!
 
 forkMain
 	"Start a new main process appropriate for the session.
@@ -796,7 +796,7 @@ openLibraries
 	"Private - Open the base set of external libraries (ExternalLibrary>>onStartup must
 	open the PermanentLibraries)."
 
-	External.Library onStartup!
+	External.DynamicLinkLibrary onStartup!
 
 openStdErr
 	^self openFd: 2 mode: #append!
@@ -1160,7 +1160,7 @@ userName
 versionInfo
 	"Answer the <VersionInfo> for this session, extracted from the host executable."
 
-	^VersionInfo forPath: (External.Library moduleFileName: nil)!
+	^VersionInfo forPath: (External.DynamicLinkLibrary moduleFileName: nil)!
 
 whatsThis: object 
 	self subclassResponsibility!

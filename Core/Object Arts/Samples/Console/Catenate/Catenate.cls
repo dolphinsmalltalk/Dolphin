@@ -1,12 +1,12 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ConsoleSessionManager subclass: #Catenate
+Kernel.ConsoleSessionManager subclass: #Catenate
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Catenate guid: (GUID fromString: '{8004fa9a-2326-4df3-8107-51cfcd06d5c9}')!
+Catenate guid: (Core.GUID fromString: '{8004fa9a-2326-4df3-8107-51cfcd06d5c9}')!
 Catenate comment: 'Catenate is a sample command line application that performs the same function as the Unix ''cat'' and DOS ''type'' commands (i.e. it copies the contents of the files specified on its command line to the standard output stream).'!
 !Catenate categoriesForClass!Unclassified! !
 !Catenate methodsFor!

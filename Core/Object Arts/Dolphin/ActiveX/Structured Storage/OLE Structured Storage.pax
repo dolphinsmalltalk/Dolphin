@@ -132,7 +132,7 @@ Kernel.SharedPool subclass: #OLEStructuredStorageConstants
 COMInterfaceImp subclass: #OLELockBytesAbstract
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{OLEStructuredStorageConstants})
+	imports: #(#{Smalltalk.OLEStructuredStorageConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 OLELockBytesAbstract subclass: #OLELockBytes
@@ -147,7 +147,7 @@ OLELockBytesAbstract subclass: #OLELockFileBytes
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-External.Library subclass: #URLMonLibrary
+External.DynamicLinkLibrary subclass: #URLMonLibrary
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -156,7 +156,7 @@ External.Library subclass: #URLMonLibrary
 IUnknown subclass: #ILockBytes
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{OLEStructuredStorageConstants})
+	imports: #(#{Smalltalk.OLEStructuredStorageConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 IUnknown subclass: #IRootStorage
@@ -168,13 +168,13 @@ IUnknown subclass: #IRootStorage
 IUnknown subclass: #ISequentialStream
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{OLEStructuredStorageConstants})
+	imports: #(#{Smalltalk.OLEStructuredStorageConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 IUnknown subclass: #IStorage
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{OLEStructuredStorageConstants})
+	imports: #(#{Smalltalk.OLEStructuredStorageConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 ISequentialStream subclass: #IStream
@@ -186,7 +186,7 @@ ISequentialStream subclass: #IStream
 OLEFinalizableStructure subclass: #STATSTG
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{OLEStructuredStorageConstants})
+	imports: #(#{Smalltalk.OLEStructuredStorageConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_atime' -> 16r20.

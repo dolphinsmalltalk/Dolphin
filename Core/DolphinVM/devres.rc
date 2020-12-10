@@ -157,6 +157,8 @@ DOWNARROW.ICO           ICON                    "Res\\DownArrow.ico"
 
 DURATION.ICO            ICON                    "Res\\Duration.ico"
 
+DYNAMICLINKLIBRARY.ICO  ICON                    "Res\\ExternalLibrary.ico"
+
 EDITCLEAR.ICO           ICON                    "Res\\EditDelete.ico"
 
 EDITCOPY.ICO            ICON                    "Res\\EditCopy.ico"
@@ -184,8 +186,6 @@ EXCEPTION.ICO           ICON                    "Res\\Exception.ico"
 EXTENT.ICO              ICON                    "res\\EXTENT.ICO"
 
 EXTERNAL.ICO            ICON                    "res\\ExternalNamespace.ICO"
-
-LIBRARY.ICO				ICON                    "Res\\ExternalLibrary.ico"
 
 FILE.ICO				ICON					"Res\File.ico"
 

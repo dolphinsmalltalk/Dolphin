@@ -1633,6 +1633,48 @@ UI.DragDropSession subclass: #'UI.InternalDragDropSession'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+External.DynamicLinkLibrary subclass: #'OS.CommCtrlLibrary'
+	instanceVariableNames: ''
+	classVariableNames: 'InitFlags'
+	imports: #(#{OS.CommCtrlConstants})
+	classInstanceVariableNames: ''
+	classConstants: {}!
+External.DynamicLinkLibrary subclass: #'OS.DwmApiLibrary'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+External.DynamicLinkLibrary subclass: #'OS.HTMLHelpLibrary'
+	instanceVariableNames: 'cookie'
+	classVariableNames: ''
+	imports: #(#{OS.HTMLHelpConstants})
+	classInstanceVariableNames: ''
+	classConstants: {}!
+External.DynamicLinkLibrary subclass: #'OS.ThemeLibrary'
+	instanceVariableNames: ''
+	classVariableNames: 'IsAppThemed'
+	imports: #(#{OS.ThemeConstants})
+	classInstanceVariableNames: ''
+	classConstants: {}!
+External.PermanentLibrary subclass: #'OS.GDILibrary'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+OS.ThemeLibrary subclass: #'OS.MockThemeLibrary'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+OS.ThemeLibrary subclass: #'OS.VistaThemeLibrary'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
 UI.Event subclass: #'UI.LabelEditEvent'
 	instanceVariableNames: 'cancel item object text'
 	classVariableNames: ''
@@ -1929,48 +1971,6 @@ UI.LayoutManager subclass: #'UI.LinearLayout'
 	classConstants: {}!
 UI.LinearLayout subclass: #'UI.ProportionalLayout'
 	instanceVariableNames: 'proportions isVertical'
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-External.Library subclass: #'OS.CommCtrlLibrary'
-	instanceVariableNames: ''
-	classVariableNames: 'InitFlags'
-	imports: #(#{OS.CommCtrlConstants})
-	classInstanceVariableNames: ''
-	classConstants: {}!
-External.Library subclass: #'OS.DwmApiLibrary'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-External.Library subclass: #'OS.HTMLHelpLibrary'
-	instanceVariableNames: 'cookie'
-	classVariableNames: ''
-	imports: #(#{OS.HTMLHelpConstants})
-	classInstanceVariableNames: ''
-	classConstants: {}!
-External.Library subclass: #'OS.ThemeLibrary'
-	instanceVariableNames: ''
-	classVariableNames: 'IsAppThemed'
-	imports: #(#{OS.ThemeConstants})
-	classInstanceVariableNames: ''
-	classConstants: {}!
-External.PermanentLibrary subclass: #'OS.GDILibrary'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-OS.ThemeLibrary subclass: #'OS.MockThemeLibrary'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-OS.ThemeLibrary subclass: #'OS.VistaThemeLibrary'
-	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''

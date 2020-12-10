@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-External.StdioUnicodeFileStream subclass: #'External.StdioUtf8FileStream'
+OS.StdioUnicodeFileStream subclass: #'OS.StdioUtf8FileStream'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-External.StdioUtf8FileStream guid: (Core.GUID fromString: '{c1c28046-101f-4bf6-92f9-e30cea1e8d82}')!
-External.StdioUtf8FileStream comment: ''!
-!External.StdioUtf8FileStream categoriesForClass!Collections-Streams! !
-!External.StdioUtf8FileStream methodsFor!
+OS.StdioUtf8FileStream guid: (Core.GUID fromString: '{c1c28046-101f-4bf6-92f9-e30cea1e8d82}')!
+OS.StdioUtf8FileStream comment: ''!
+!OS.StdioUtf8FileStream categoriesForClass!Collections-Streams! !
+!OS.StdioUtf8FileStream methodsFor!
 
 basicNext: anInteger
 	^(super basicNext: anInteger) asUtf8String!
@@ -62,18 +62,18 @@ upToEnd
 	the current position to the end)."
 
 	^super upToEnd asUtf8String! !
-!External.StdioUtf8FileStream categoriesFor: #basicNext:!accessing!private! !
-!External.StdioUtf8FileStream categoriesFor: #contents!accessing!public! !
-!External.StdioUtf8FileStream categoriesFor: #contentsSpecies!constants!private! !
-!External.StdioUtf8FileStream categoriesFor: #position!accessing!public! !
-!External.StdioUtf8FileStream categoriesFor: #position:!positioning!public! !
-!External.StdioUtf8FileStream categoriesFor: #size!accessing!public! !
-!External.StdioUtf8FileStream categoriesFor: #translationMode!constants!private! !
-!External.StdioUtf8FileStream categoriesFor: #upToEnd!accessing!public! !
+!OS.StdioUtf8FileStream categoriesFor: #basicNext:!accessing!private! !
+!OS.StdioUtf8FileStream categoriesFor: #contents!accessing!public! !
+!OS.StdioUtf8FileStream categoriesFor: #contentsSpecies!constants!private! !
+!OS.StdioUtf8FileStream categoriesFor: #position!accessing!public! !
+!OS.StdioUtf8FileStream categoriesFor: #position:!positioning!public! !
+!OS.StdioUtf8FileStream categoriesFor: #size!accessing!public! !
+!OS.StdioUtf8FileStream categoriesFor: #translationMode!constants!private! !
+!OS.StdioUtf8FileStream categoriesFor: #upToEnd!accessing!public! !
 
-!External.StdioUtf8FileStream class methodsFor!
+!OS.StdioUtf8FileStream class methodsFor!
 
 encodingType
 	^#utf8! !
-!External.StdioUtf8FileStream class categoriesFor: #encodingType!constants!public! !
+!OS.StdioUtf8FileStream class categoriesFor: #encodingType!constants!public! !
 

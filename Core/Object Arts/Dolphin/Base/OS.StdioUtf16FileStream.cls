@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-External.StdioUnicodeFileStream subclass: #'External.StdioUtf16FileStream'
+OS.StdioUnicodeFileStream subclass: #'OS.StdioUtf16FileStream'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-External.StdioUtf16FileStream guid: (Core.GUID fromString: '{59d77acf-50ff-4508-a672-0eaf7422f32a}')!
-External.StdioUtf16FileStream comment: ''!
-!External.StdioUtf16FileStream categoriesForClass!Collections-Streams! !
-!External.StdioUtf16FileStream methodsFor!
+OS.StdioUtf16FileStream guid: (Core.GUID fromString: '{59d77acf-50ff-4508-a672-0eaf7422f32a}')!
+OS.StdioUtf16FileStream comment: ''!
+!OS.StdioUtf16FileStream categoriesForClass!Collections-Streams! !
+!OS.StdioUtf16FileStream methodsFor!
 
 contentsSpecies
 	"Private - Answer the class of Object to be used when answering collections of elements
@@ -33,8 +33,8 @@ size
 	"Answer the size of the file in wide characters, excluding the BOM."
 
 	^super size - offset bitShift: -1! !
-!External.StdioUtf16FileStream categoriesFor: #contentsSpecies!constants!private! !
-!External.StdioUtf16FileStream categoriesFor: #position!accessing!public! !
-!External.StdioUtf16FileStream categoriesFor: #position:!positioning!public! !
-!External.StdioUtf16FileStream categoriesFor: #size!accessing!public! !
+!OS.StdioUtf16FileStream categoriesFor: #contentsSpecies!constants!private! !
+!OS.StdioUtf16FileStream categoriesFor: #position!accessing!public! !
+!OS.StdioUtf16FileStream categoriesFor: #position:!positioning!public! !
+!OS.StdioUtf16FileStream categoriesFor: #size!accessing!public! !
 

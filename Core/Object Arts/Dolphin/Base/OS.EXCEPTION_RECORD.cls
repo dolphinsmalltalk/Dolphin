@@ -83,7 +83,7 @@ moduleFileName
 		virtualQuery: self ExceptionAddress
 		lpBuffer: buf
 		dwLength: buf size) == 0
-		ifFalse: [External.Library moduleFileName: (buf uintPtrAtOffset: VMConstants.IntPtrSize)]!
+		ifFalse: [DynamicLinkLibrary moduleFileName: (buf uintPtrAtOffset: VMConstants.IntPtrSize)]!
 
 NumberParameters
 	"Answer the <Integer> value of the receiver's 'NumberParameters' field."

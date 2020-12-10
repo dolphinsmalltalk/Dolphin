@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-External.Library subclass: #'Graphics.Gdiplus.GdiplusLibrary'
+External.DynamicLinkLibrary subclass: #'Graphics.Gdiplus.GdiplusLibrary'
 	instanceVariableNames: 'token'
 	classVariableNames: ''
 	imports: #(#{Graphics.Gdiplus.GdiplusConstants})

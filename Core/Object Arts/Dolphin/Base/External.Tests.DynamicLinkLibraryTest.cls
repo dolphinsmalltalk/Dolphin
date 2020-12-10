@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Core.Tests.DolphinTest subclass: #'External.Tests.LibraryTest'
+Core.Tests.DolphinTest subclass: #'External.Tests.DynamicLinkLibraryTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-External.Tests.LibraryTest guid: (Core.GUID fromString: '{52518745-7c3c-4567-8599-3090af0e6567}')!
-External.Tests.LibraryTest comment: ''!
-!External.Tests.LibraryTest categoriesForClass!Unclassified! !
-!External.Tests.LibraryTest methodsFor!
+External.Tests.DynamicLinkLibraryTest guid: (Core.GUID fromString: '{52518745-7c3c-4567-8599-3090af0e6567}')!
+External.Tests.DynamicLinkLibraryTest comment: ''!
+!External.Tests.DynamicLinkLibraryTest categoriesForClass!Unclassified! !
+!External.Tests.DynamicLinkLibraryTest methodsFor!
 
 makeTestMethodFrom: anExternalMethod overlapped: aBoolean 
 	^aBoolean 
@@ -88,9 +88,9 @@ verifyInvalidCallArguments: aBoolean
 		should: [apiCall value: gdiLibrary default withArguments: #(nil 0 0 0 0 0 0 0 0 nil nil 0 's')]
 		raise: HRESULTError
 		matching: [:ex | ex hresult = (HRESULT fromPrimitiveFailureCode: _PrimitiveFailureCode.InvalidParameter)]! !
-!External.Tests.LibraryTest categoriesFor: #makeTestMethodFrom:overlapped:!helpers!private! !
-!External.Tests.LibraryTest categoriesFor: #testInvalidCallArguments!public!unit tests! !
-!External.Tests.LibraryTest categoriesFor: #testInvalidOverlappedCallArguments!public!unit tests! !
-!External.Tests.LibraryTest categoriesFor: #testSingletonSerialisation!public!unit tests! !
-!External.Tests.LibraryTest categoriesFor: #verifyInvalidCallArguments:!helpers!private! !
+!External.Tests.DynamicLinkLibraryTest categoriesFor: #makeTestMethodFrom:overlapped:!helpers!private! !
+!External.Tests.DynamicLinkLibraryTest categoriesFor: #testInvalidCallArguments!public!unit tests! !
+!External.Tests.DynamicLinkLibraryTest categoriesFor: #testInvalidOverlappedCallArguments!public!unit tests! !
+!External.Tests.DynamicLinkLibraryTest categoriesFor: #testSingletonSerialisation!public!unit tests! !
+!External.Tests.DynamicLinkLibraryTest categoriesFor: #verifyInvalidCallArguments:!helpers!private! !
 

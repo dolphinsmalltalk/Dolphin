@@ -61,6 +61,7 @@ package setMethodNames: #(
 	#(#{External.DWORD class} #arrayType)
 	#(#{External.DWORD class} #fieldType)
 	#(#{External.DWORDBytes class} #fieldType)
+	#(#{External.DynamicLinkLibrary} #DllRegisterServer)
 	#(#{External.ExternalArray class} #arrayType)
 	#(#{External.ExternalArray class} #fieldType)
 	#(#{External.ExternalArray class} #fieldType:indirections:)
@@ -83,7 +84,6 @@ package setMethodNames: #(
 	#(#{External.INT_PTR class} #fieldType)
 	#(#{External.IntegerBytes class} #fieldType)
 	#(#{External.IntegerBytes class} #printStructField:indirections:on:)
-	#(#{External.Library} #DllRegisterServer)
 	#(#{External.POINT} #printOn:)
 	#(#{External.PointerArray class} #fieldType)
 	#(#{External.PointerArray class} #pointerFieldType)
@@ -991,6 +991,13 @@ fieldType
 	^DWORDField! !
 !External.DWORDBytes class categoriesFor: #fieldType!constants!development!private! !
 
+!External.DynamicLinkLibrary methodsFor!
+
+DllRegisterServer
+	<stdcall: hresult DllRegisterServer>
+	^self invalidCall: _failureCode! !
+!External.DynamicLinkLibrary categoriesFor: #DllRegisterServer!operations!private! !
+
 !External.ExternalArray class methodsFor!
 
 arrayType
@@ -1208,13 +1215,6 @@ printStructField: aVARDESC indirections: anInteger on: aPuttableStream
 		on: aPuttableStream! !
 !External.IntegerBytes class categoriesFor: #fieldType!constants!development!private! !
 !External.IntegerBytes class categoriesFor: #printStructField:indirections:on:!private! !
-
-!External.Library methodsFor!
-
-DllRegisterServer
-	<stdcall: hresult DllRegisterServer>
-	^self invalidCall: _failureCode! !
-!External.Library categoriesFor: #DllRegisterServer!operations!private! !
 
 !External.POINT methodsFor!
 
@@ -7271,7 +7271,7 @@ printRawMethodBody: aFUNCDESC name: anAXMethodName on: aPuttableStream
 icon
 	"Answers an <Icon> that can be used to represent this class"
 
-	^ExternalLibrary icon!
+	^External.DynamicLinkLibrary icon!
 
 publishedAspectsOfInstances
 	"Answer a <LookupTable> of the <Aspect>s published by instances of the receiver."

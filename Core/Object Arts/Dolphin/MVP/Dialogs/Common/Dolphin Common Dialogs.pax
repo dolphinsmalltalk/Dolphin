@@ -150,7 +150,7 @@ Kernel.SharedPool subclass: #'OS.CommonDialogConstants'
 		'OFN_SHAREWARN' -> 16r0.
 		'OFN_SHOWHELP' -> 16r10
 	}!
-External.Library subclass: #'OS.ComDlgLibrary'
+External.DynamicLinkLibrary subclass: #'OS.ComDlgLibrary'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

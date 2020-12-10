@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ExternalLibrary subclass: #OLEAutLibrary
+External.DynamicLinkLibrary subclass: #OLEAutLibrary
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''

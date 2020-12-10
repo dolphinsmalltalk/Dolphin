@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-External.Library subclass: #Msimg32Library
+External.DynamicLinkLibrary subclass: #Msimg32Library
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

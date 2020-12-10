@@ -88,16 +88,15 @@ package setClassNames: #(
 	#{External.Tests.DescriptorTest}
 	#{External.Tests.DOUBLEArrayTest}
 	#{External.Tests.DWORDArrayTest}
+	#{External.Tests.DynamicLinkLibraryTest}
 	#{External.Tests.ExternalArrayTest}
 	#{External.Tests.ExternalFieldTest}
 	#{External.Tests.FLOATArrayTest}
 	#{External.Tests.GenericExternalArrayTest}
 	#{External.Tests.GUIDTest}
 	#{External.Tests.INTEGERTest}
-	#{External.Tests.LibraryTest}
 	#{External.Tests.ResourceLibraryTest}
 	#{External.Tests.SDWORDArrayTest}
-	#{External.Tests.StdioFileStreamTest}
 	#{External.Tests.StructureArrayFieldTest}
 	#{External.Tests.StructureArrayPointerFieldTest}
 	#{External.Tests.StructureArrayTest}
@@ -145,6 +144,7 @@ package setClassNames: #(
 	#{OS.Tests.FILETIMETest}
 	#{OS.Tests.HRESULTTest}
 	#{OS.Tests.ShlwapiLibraryTest}
+	#{OS.Tests.StdioFileStreamTest}
 	#{OS.Tests.WindowsLocaleTest}
 	#{Smalltalk.PoolConstantsDictionaryTest}
 ).
@@ -181,6 +181,7 @@ package setPrerequisites: #(
 	'..\System\Random\Dolphin Random Stream'
 	'..\Registry\Dolphin Registry Access'
 	'..\..\..\Contributions\Camp Smalltalk\SUnit\OA SUnit Extensions'
+	'..\ActiveX\COM\OLE COM'
 	'..\System\Compiler\Smalltalk Parser'
 	'..\..\..\Contributions\Camp Smalltalk\SUnit\SUnit'
 	'..\..\..\Contributions\Camp Smalltalk\SUnit\SUnitPreload'
@@ -351,6 +352,12 @@ Core.Tests.DolphinTest subclass: #'Core.Tests.DurationTest'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+Core.Tests.DolphinTest subclass: #'External.Tests.DynamicLinkLibraryTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
 Core.Tests.DolphinTest subclass: #'Kernel.Tests.EventMessageSendTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -417,18 +424,6 @@ Core.Tests.DolphinTest subclass: #'External.Tests.INTEGERTest'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Core.Tests.DolphinTest subclass: #'External.Tests.LibraryTest'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-Core.Tests.DolphinTest subclass: #'Core.Tests.LinkTest'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
 Core.Tests.DolphinTest subclass: #'Core.Tests.LocaleTest'
 	instanceVariableNames: 'savedLocale'
 	classVariableNames: ''
@@ -441,12 +436,6 @@ Core.Tests.DolphinTest subclass: #'Kernel.Tests.MemoryManagerTest'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Core.Tests.DolphinTest subclass: #'Core.Tests.MessageTest'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
 Core.Tests.DolphinTest subclass: #'Core.Tests.MethodCategoryTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -454,6 +443,12 @@ Core.Tests.DolphinTest subclass: #'Core.Tests.MethodCategoryTest'
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Core.Tests.DolphinTest subclass: #'Core.Tests.NumberTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Core.Tests.DolphinTest subclass: #'Core.Tests.LinkTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -472,6 +467,12 @@ Core.Tests.DolphinTest subclass: #'Core.Tests.PackageTest'
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Core.Tests.DolphinTest subclass: #PoolConstantsDictionaryTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Core.Tests.DolphinTest subclass: #'Core.Tests.MessageTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -537,12 +538,6 @@ Core.Tests.DolphinTest subclass: #'Core.Tests.SortAlgorithmTest'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Core.Tests.DolphinTest subclass: #'Kernel.Tests.StackFrameTest'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
 Core.Tests.DolphinTest subclass: #'Kernel.Tests.STBTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -562,6 +557,12 @@ Core.Tests.DolphinTest subclass: #'External.Tests.StructureTest'
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Core.Tests.DolphinTest subclass: #'Core.Tests.TimeStampTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Core.Tests.DolphinTest subclass: #'Kernel.Tests.StackFrameTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -987,7 +988,7 @@ Core.Tests.AbstractFileStreamTest subclass: #'Core.Tests.FileStreamTest'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Core.Tests.AbstractFileStreamTest subclass: #'External.Tests.StdioFileStreamTest'
+Core.Tests.AbstractFileStreamTest subclass: #'OS.Tests.StdioFileStreamTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

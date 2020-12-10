@@ -74,7 +74,7 @@ onCloseConsole
 	self quit: -1!
 
 openStdErr
-	^External.StdioUtf8FileStream fromHandle: VMLibrary default stderr!
+	^OS.StdioUtf8FileStream fromHandle: VMLibrary default stderr!
 
 openStdIn
 	^self attachFd: 0 stream: VMLibrary default stdin!

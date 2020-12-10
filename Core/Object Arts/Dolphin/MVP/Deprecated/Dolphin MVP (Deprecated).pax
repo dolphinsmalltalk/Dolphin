@@ -168,7 +168,7 @@ Core.Object subclass: #ComparisonPolicy
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-External.Library subclass: #Msimg32Library
+External.DynamicLinkLibrary subclass: #Msimg32Library
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

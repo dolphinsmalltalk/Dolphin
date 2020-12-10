@@ -426,7 +426,7 @@ forPath: path
 	which does not have an extension, so must use ExternalLibrary"
 
 	| lib answer |
-	lib := ExternalLibrary open: path.
+	lib := DynamicLinkLibrary open: path.
 	answer := self forModule: lib.
 	lib close.
 	^answer!

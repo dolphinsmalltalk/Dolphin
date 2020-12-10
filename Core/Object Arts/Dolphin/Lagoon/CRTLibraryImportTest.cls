@@ -42,7 +42,7 @@ testStubCrtExports
 			[:eachStubName |
 			| f l procs missing |
 			f := FileLocator installRelative localFileSpecFor: eachStubName.
-			l := ExternalLibrary open: f.
+			l := External.DynamicLinkLibrary open: f.
 			
 			[| unexported |
 			procs := (CRTLibrary selectMethods: [:each | each isExternalCall])

@@ -223,6 +223,18 @@ COMEnumerator subclass: #COMInterfaceEnumerator
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+External.DynamicLinkLibrary subclass: #OLEAutLibrary
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+External.DynamicLinkLibrary subclass: #OLELibrary
+	instanceVariableNames: 'comOnly'
+	classVariableNames: 'DefaultIMalloc'
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
 Core.GUID variableByteSubclass: #CLSID
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -232,18 +244,6 @@ Core.GUID variableByteSubclass: #CLSID
 Core.GUID variableByteSubclass: #IID
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-External.Library subclass: #OLEAutLibrary
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-External.Library subclass: #OLELibrary
-	instanceVariableNames: 'comOnly'
-	classVariableNames: 'DefaultIMalloc'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!

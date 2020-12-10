@@ -52,7 +52,7 @@ Kernel.SharedPool subclass: #'OS.WinCryptConstants'
 		'CRYPTPROTECTMEMORY_SAME_LOGON' -> 16r2.
 		'CRYPTPROTECTMEMORY_SAME_PROCESS' -> 16r0
 	}!
-External.Library subclass: #'OS.Crypt32Library'
+External.DynamicLinkLibrary subclass: #'OS.Crypt32Library'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #(#{OS.WinCryptConstants})

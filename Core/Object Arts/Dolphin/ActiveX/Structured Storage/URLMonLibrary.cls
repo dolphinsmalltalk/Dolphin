@@ -1,12 +1,12 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ExternalLibrary subclass: #URLMonLibrary
+External.DynamicLinkLibrary subclass: #URLMonLibrary
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-URLMonLibrary guid: (GUID fromString: '{08630ee6-54c6-11d3-bdd1-004005a6900b}')!
+URLMonLibrary guid: (Core.GUID fromString: '{08630ee6-54c6-11d3-bdd1-004005a6900b}')!
 URLMonLibrary comment: ''!
 !URLMonLibrary categoriesForClass!External-Libraries-Win32! !
 !URLMonLibrary methodsFor!

@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-External.Library subclass: #'Kernel.CompilerLibrary'
+External.DynamicLinkLibrary subclass: #'Kernel.CompilerLibrary'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

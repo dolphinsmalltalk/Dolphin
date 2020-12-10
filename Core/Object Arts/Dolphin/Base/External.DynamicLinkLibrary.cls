@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Core.Object subclass: #'External.Library'
+Core.Object subclass: #'External.DynamicLinkLibrary'
 	instanceVariableNames: 'handle'
 	classVariableNames: ''
 	imports: #(#{OS.Win32Constants private} #{OS.Win32Errors private} #{Kernel._PrimitiveFailureCode private})
 	classInstanceVariableNames: 'default'
 	classConstants: {}!
-External.Library guid: (Core.GUID fromString: '{87b4c488-026e-11d3-9fd7-00a0cc3e4a32}')!
-External.Library comment: 'ExternalLibrary is the class of objects which represent shared, external, function libraries (i.e. DLLs). Each DLL is represented by a separate subclass, with the methods of that subclass corresponding to functions exported from the DLL. The functions are a special form of primitive method (actually instances of <ExternalMethod>) containing the additional type information needed to interface to statically typed functions. The functions are invoked by sending Smalltalk messages int the normal way, with these being translated by the VM external call primitive to the actual function invocations. The VM coerces the Smalltalk objects passed as arguments to appropriate native types following certain rules (see below). The external call primitive will fail if a type mismatch occurs, and normally this will result in an InvalidExternalCall exception being raised (assuming the #invalidCall method has not been overridden).
+External.DynamicLinkLibrary guid: (Core.GUID fromString: '{87b4c488-026e-11d3-9fd7-00a0cc3e4a32}')!
+External.DynamicLinkLibrary comment: '`DynamicLinkLibrary` is the class of objects which represent shared, external, function libraries (i.e. DLLs). Each DLL is represented by a separate subclass, with the methods of that subclass corresponding to functions exported from the DLL. The functions are a special form of primitive method (actually instances of <External.ExternalMethod>) containing the additional type information needed to interface to statically typed functions. The functions are invoked by sending Smalltalk messages int the normal way, with these being translated by the VM external call primitive to the actual function invocations. The VM coerces the Smalltalk objects passed as arguments to appropriate native types following certain rules (see below). The external call primitive will fail if a type mismatch occurs, and normally this will result in an InvalidExternalCall exception being raised (assuming the #invalidCall method has not been overridden).
 
-External library classes are typically singletons, with the instances representing an "open" (usable) instance of the DLL. The singleton instances are accessible through the class #default method. The libraries are loaded lazily, on demand (but see <PermanentLibrary>).
+Dynamic-link library classes are typically singletons, with the instances representing an "open" (usable) instance of the DLL. The singleton instances are accessible through the class #default method. The libraries are loaded lazily, on demand (but see <External.PermanentLibrary>).
 
 The external call primitive supports the two most commonly used calling conventions:
 
@@ -116,8 +116,8 @@ The argument/return types (and coercions) supported are:
 		externally stored value as its first instance variable.
 	
 Note that in general, the UndefinedObject, nil, is interchangeable with 0, or NULL, when interfacing with external library functions. Nullness can be tested with the #isNull message, with the UndefinedObject and SmallInteger zero answering true.'!
-!External.Library categoriesForClass!External-Libraries! !
-!External.Library methodsFor!
+!External.DynamicLinkLibrary categoriesForClass!External-Libraries! !
+!External.DynamicLinkLibrary methodsFor!
 
 asParameter
 	"Answer the receiver in a form appropriate for passing to an external
@@ -299,32 +299,32 @@ versionString
 	(typically N.N Build N, but see #versionFormatString)."
 
 	^self versionInfo formatVersionString: self versionFormatString! !
-!External.Library categoriesFor: #asParameter!converting!public! !
-!External.Library categoriesFor: #basicOpen:!private!realizing/unrealizing! !
-!External.Library categoriesFor: #close!public!realizing/unrealizing! !
-!External.Library categoriesFor: #fileName!accessing!public! !
-!External.Library categoriesFor: #formatMessage:with:!accessing!public! !
-!External.Library categoriesFor: #getProcAddress:!accessing!private! !
-!External.Library categoriesFor: #getProcAddress:ifAbsent:!accessing!private! !
-!External.Library categoriesFor: #handle!accessing!private! !
-!External.Library categoriesFor: #handle:!accessing!private! !
-!External.Library categoriesFor: #invalidArgErrorClass!constants!private! !
-!External.Library categoriesFor: #invalidCall:!exceptions!public! !
-!External.Library categoriesFor: #isOpen!public!testing! !
-!External.Library categoriesFor: #loadFlags!constants!private! !
-!External.Library categoriesFor: #loadString:!accessing!public! !
-!External.Library categoriesFor: #moduleFileName!accessing!private! !
-!External.Library categoriesFor: #open!private!realizing/unrealizing! !
-!External.Library categoriesFor: #open:!private!realizing/unrealizing! !
-!External.Library categoriesFor: #printOn:!printing!public! !
-!External.Library categoriesFor: #stbSaveOn:!binary filing!public! !
-!External.Library categoriesFor: #systemError!exceptions!public! !
-!External.Library categoriesFor: #systemError:!exceptions!public! !
-!External.Library categoriesFor: #versionFormatString!constants!private! !
-!External.Library categoriesFor: #versionInfo!accessing-version!public! !
-!External.Library categoriesFor: #versionString!accessing-version!public! !
+!External.DynamicLinkLibrary categoriesFor: #asParameter!converting!public! !
+!External.DynamicLinkLibrary categoriesFor: #basicOpen:!private!realizing/unrealizing! !
+!External.DynamicLinkLibrary categoriesFor: #close!public!realizing/unrealizing! !
+!External.DynamicLinkLibrary categoriesFor: #fileName!accessing!public! !
+!External.DynamicLinkLibrary categoriesFor: #formatMessage:with:!accessing!public! !
+!External.DynamicLinkLibrary categoriesFor: #getProcAddress:!accessing!private! !
+!External.DynamicLinkLibrary categoriesFor: #getProcAddress:ifAbsent:!accessing!private! !
+!External.DynamicLinkLibrary categoriesFor: #handle!accessing!private! !
+!External.DynamicLinkLibrary categoriesFor: #handle:!accessing!private! !
+!External.DynamicLinkLibrary categoriesFor: #invalidArgErrorClass!constants!private! !
+!External.DynamicLinkLibrary categoriesFor: #invalidCall:!exceptions!public! !
+!External.DynamicLinkLibrary categoriesFor: #isOpen!public!testing! !
+!External.DynamicLinkLibrary categoriesFor: #loadFlags!constants!private! !
+!External.DynamicLinkLibrary categoriesFor: #loadString:!accessing!public! !
+!External.DynamicLinkLibrary categoriesFor: #moduleFileName!accessing!private! !
+!External.DynamicLinkLibrary categoriesFor: #open!private!realizing/unrealizing! !
+!External.DynamicLinkLibrary categoriesFor: #open:!private!realizing/unrealizing! !
+!External.DynamicLinkLibrary categoriesFor: #printOn:!printing!public! !
+!External.DynamicLinkLibrary categoriesFor: #stbSaveOn:!binary filing!public! !
+!External.DynamicLinkLibrary categoriesFor: #systemError!exceptions!public! !
+!External.DynamicLinkLibrary categoriesFor: #systemError:!exceptions!public! !
+!External.DynamicLinkLibrary categoriesFor: #versionFormatString!constants!private! !
+!External.DynamicLinkLibrary categoriesFor: #versionInfo!accessing-version!public! !
+!External.DynamicLinkLibrary categoriesFor: #versionString!accessing-version!public! !
 
-!External.Library class methodsFor!
+!External.DynamicLinkLibrary class methodsFor!
 
 clear
 	"Private - Clear down cached external function addresses from previous runs. 
@@ -477,25 +477,25 @@ versionInfo
 	"Answer a <VersionInfo> containing the version details from the receiver."
 
 	^VersionInfo forPath: self fileName! !
-!External.Library class categoriesFor: #clear!initializing!private! !
-!External.Library class categoriesFor: #closeAllDefaults!finalizing!private! !
-!External.Library class categoriesFor: #closeDefault!private!realizing/unrealizing! !
-!External.Library class categoriesFor: #default!accessing!instance creation!public! !
-!External.Library class categoriesFor: #default:!accessing!public! !
-!External.Library class categoriesFor: #fileName!constants!public! !
-!External.Library class categoriesFor: #fromHandle:!instance creation!public! !
-!External.Library class categoriesFor: #initializeAfterBinaryLoad!initializing!private! !
-!External.Library class categoriesFor: #load:flags:!private!realizing/unrealizing! !
-!External.Library class categoriesFor: #moduleFileName:!helpers!private! !
-!External.Library class categoriesFor: #onExit!finalizing!private! !
-!External.Library class categoriesFor: #onPreStripImage!class hierarchy-removing!private! !
-!External.Library class categoriesFor: #onStartup!event handling!private! !
-!External.Library class categoriesFor: #onStartup2!event handling!private! !
-!External.Library class categoriesFor: #open!instance creation!public! !
-!External.Library class categoriesFor: #open:!instance creation!public! !
-!External.Library class categoriesFor: #openDefault!instance creation!private!realizing/unrealizing! !
-!External.Library class categoriesFor: #stbReadFrom:format:!binary filing!public! !
-!External.Library class categoriesFor: #uninitialize!class hierarchy-removing!private! !
-!External.Library class categoriesFor: #uninitializeBeforeRemove!class hierarchy-removing!private! !
-!External.Library class categoriesFor: #versionInfo!accessing-version!public! !
+!External.DynamicLinkLibrary class categoriesFor: #clear!initializing!private! !
+!External.DynamicLinkLibrary class categoriesFor: #closeAllDefaults!finalizing!private! !
+!External.DynamicLinkLibrary class categoriesFor: #closeDefault!private!realizing/unrealizing! !
+!External.DynamicLinkLibrary class categoriesFor: #default!accessing!instance creation!public! !
+!External.DynamicLinkLibrary class categoriesFor: #default:!accessing!public! !
+!External.DynamicLinkLibrary class categoriesFor: #fileName!constants!public! !
+!External.DynamicLinkLibrary class categoriesFor: #fromHandle:!instance creation!public! !
+!External.DynamicLinkLibrary class categoriesFor: #initializeAfterBinaryLoad!initializing!private! !
+!External.DynamicLinkLibrary class categoriesFor: #load:flags:!private!realizing/unrealizing! !
+!External.DynamicLinkLibrary class categoriesFor: #moduleFileName:!helpers!private! !
+!External.DynamicLinkLibrary class categoriesFor: #onExit!finalizing!private! !
+!External.DynamicLinkLibrary class categoriesFor: #onPreStripImage!class hierarchy-removing!private! !
+!External.DynamicLinkLibrary class categoriesFor: #onStartup!event handling!private! !
+!External.DynamicLinkLibrary class categoriesFor: #onStartup2!event handling!private! !
+!External.DynamicLinkLibrary class categoriesFor: #open!instance creation!public! !
+!External.DynamicLinkLibrary class categoriesFor: #open:!instance creation!public! !
+!External.DynamicLinkLibrary class categoriesFor: #openDefault!instance creation!private!realizing/unrealizing! !
+!External.DynamicLinkLibrary class categoriesFor: #stbReadFrom:format:!binary filing!public! !
+!External.DynamicLinkLibrary class categoriesFor: #uninitialize!class hierarchy-removing!private! !
+!External.DynamicLinkLibrary class categoriesFor: #uninitializeBeforeRemove!class hierarchy-removing!private! !
+!External.DynamicLinkLibrary class categoriesFor: #versionInfo!accessing-version!public! !
 

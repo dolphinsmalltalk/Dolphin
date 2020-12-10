@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Core.Tests.AbstractFileStreamTest subclass: #'External.Tests.StdioFileStreamTest'
+Core.Tests.AbstractFileStreamTest subclass: #'OS.Tests.StdioFileStreamTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-External.Tests.StdioFileStreamTest guid: (Core.GUID fromString: '{d3e882fd-385f-45ec-b975-c31f9e777b4b}')!
-External.Tests.StdioFileStreamTest comment: ''!
-!External.Tests.StdioFileStreamTest categoriesForClass!Unclassified! !
-!External.Tests.StdioFileStreamTest methodsFor!
+OS.Tests.StdioFileStreamTest guid: (Core.GUID fromString: '{d3e882fd-385f-45ec-b975-c31f9e777b4b}')!
+OS.Tests.StdioFileStreamTest comment: ''!
+!OS.Tests.StdioFileStreamTest categoriesForClass!Unclassified! !
+!OS.Tests.StdioFileStreamTest methodsFor!
 
 bufferSize
 	^128!
@@ -154,24 +154,24 @@ testNextLineUpToEof
 			actual := filestream nextLine.
 			self assert: actual equals: expected.
 			filestream close]! !
-!External.Tests.StdioFileStreamTest categoriesFor: #bufferSize!constants!private! !
-!External.Tests.StdioFileStreamTest categoriesFor: #maxPosition!constants!private! !
-!External.Tests.StdioFileStreamTest categoriesFor: #streamClass!helpers!private! !
-!External.Tests.StdioFileStreamTest categoriesFor: #streamOnFile:type:!helpers!private! !
-!External.Tests.StdioFileStreamTest categoriesFor: #strings!constants!private! !
-!External.Tests.StdioFileStreamTest categoriesFor: #subjectCollection:!helpers!public! !
-!External.Tests.StdioFileStreamTest categoriesFor: #testCharacterTranslation!public!unit tests! !
-!External.Tests.StdioFileStreamTest categoriesFor: #testFromHandleOnDevice!public!unit tests! !
-!External.Tests.StdioFileStreamTest categoriesFor: #testFromHandleOnFile!public!unit tests! !
-!External.Tests.StdioFileStreamTest categoriesFor: #testFromHandleOnPipe!public!unit tests! !
-!External.Tests.StdioFileStreamTest categoriesFor: #testNextLineCrOnly!public!unit tests! !
-!External.Tests.StdioFileStreamTest categoriesFor: #testNextLineUpToEof!public!unit tests! !
+!OS.Tests.StdioFileStreamTest categoriesFor: #bufferSize!constants!private! !
+!OS.Tests.StdioFileStreamTest categoriesFor: #maxPosition!constants!private! !
+!OS.Tests.StdioFileStreamTest categoriesFor: #streamClass!helpers!private! !
+!OS.Tests.StdioFileStreamTest categoriesFor: #streamOnFile:type:!helpers!private! !
+!OS.Tests.StdioFileStreamTest categoriesFor: #strings!constants!private! !
+!OS.Tests.StdioFileStreamTest categoriesFor: #subjectCollection:!helpers!public! !
+!OS.Tests.StdioFileStreamTest categoriesFor: #testCharacterTranslation!public!unit tests! !
+!OS.Tests.StdioFileStreamTest categoriesFor: #testFromHandleOnDevice!public!unit tests! !
+!OS.Tests.StdioFileStreamTest categoriesFor: #testFromHandleOnFile!public!unit tests! !
+!OS.Tests.StdioFileStreamTest categoriesFor: #testFromHandleOnPipe!public!unit tests! !
+!OS.Tests.StdioFileStreamTest categoriesFor: #testNextLineCrOnly!public!unit tests! !
+!OS.Tests.StdioFileStreamTest categoriesFor: #testNextLineUpToEof!public!unit tests! !
 
-!External.Tests.StdioFileStreamTest class methodsFor!
+!OS.Tests.StdioFileStreamTest class methodsFor!
 
 allTestSelectors
 	| roCategory |
 	roCategory := 'strict utf8' asMethodCategory.
 	^super allTestSelectors reject: [:each | roCategory includesMethod: (self lookupMethod: each)]! !
-!External.Tests.StdioFileStreamTest class categoriesFor: #allTestSelectors!Accessing!public! !
+!OS.Tests.StdioFileStreamTest class categoriesFor: #allTestSelectors!Accessing!public! !
 

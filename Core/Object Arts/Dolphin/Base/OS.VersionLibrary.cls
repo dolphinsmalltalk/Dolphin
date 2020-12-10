@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-External.Library subclass: #'OS.VersionLibrary'
+External.DynamicLinkLibrary subclass: #'OS.VersionLibrary'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

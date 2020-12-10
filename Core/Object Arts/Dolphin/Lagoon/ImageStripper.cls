@@ -390,7 +390,7 @@ closeChangeLog
 closeExternalLibraries
 	"Private - Close all default sub-instances of <ExternalLibrary>s."
 
-	ExternalLibrary closeAllDefaults!
+	External.DynamicLinkLibrary closeAllDefaults!
 
 closeLog
 	[elementStack isEmpty] whileFalse: 

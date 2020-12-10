@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-External.Library subclass: #'OS.Crypt32Library'
+External.DynamicLinkLibrary subclass: #'OS.Crypt32Library'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #(#{OS.WinCryptConstants})

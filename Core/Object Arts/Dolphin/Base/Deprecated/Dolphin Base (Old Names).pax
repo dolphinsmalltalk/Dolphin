@@ -63,7 +63,7 @@ Smalltalk.ExternalInteger := External.INTEGER!
 
 Smalltalk.ExternalIntegerBytes := External.IntegerBytes!
 
-Smalltalk.ExternalLibrary := External.Library!
+Smalltalk.ExternalLibrary := External.DynamicLinkLibrary!
 
 Smalltalk.ExternalMemory := External.Memory!
 

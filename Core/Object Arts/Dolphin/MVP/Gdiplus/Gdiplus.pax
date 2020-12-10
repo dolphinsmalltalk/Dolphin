@@ -1149,6 +1149,12 @@ Core.Object subclass: #'Graphics.Gdiplus.Initializer'
 	imports: #(#{Graphics.Gdiplus.GdiplusConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+External.DynamicLinkLibrary subclass: #'Graphics.Gdiplus.GdiplusLibrary'
+	instanceVariableNames: 'token'
+	classVariableNames: ''
+	imports: #(#{Graphics.Gdiplus.GdiplusConstants})
+	classInstanceVariableNames: ''
+	classConstants: {}!
 Core.Error subclass: #'Graphics.Gdiplus.GdiplusError'
 	instanceVariableNames: 'win32Error'
 	classVariableNames: ''
@@ -1569,12 +1575,6 @@ Graphics.Gdiplus.StringFormatInitializer subclass: #'Graphics.Gdiplus.StringForm
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-External.Library subclass: #'Graphics.Gdiplus.GdiplusLibrary'
-	instanceVariableNames: 'token'
-	classVariableNames: ''
-	imports: #(#{Graphics.Gdiplus.GdiplusConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 External.Structure subclass: #'Graphics.Gdiplus.ENHMETAHEADER3'

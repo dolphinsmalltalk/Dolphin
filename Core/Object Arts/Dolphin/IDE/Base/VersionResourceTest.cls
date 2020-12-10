@@ -39,7 +39,7 @@ setUp
 	| pVer header |
 	updatePath := File temporaryFilename.
 	File copy: self sourcePath to: updatePath.
-	sourceModule := External.Library open: self sourcePath.
+	sourceModule := DynamicLinkLibrary open: self sourcePath.
 	pVer := VersionResource getVersionResourceOfModule: sourceModule.
 	header := VS_VERSION_INFO_HEADER fromAddress: pVer.
 	sourceSize := header wLength.
