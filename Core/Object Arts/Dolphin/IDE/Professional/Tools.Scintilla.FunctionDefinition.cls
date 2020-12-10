@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ScintillaDef subclass: #ScintillaFunctionDef
+Tools.Scintilla.InterfaceDefinition subclass: #'Tools.Scintilla.FunctionDefinition'
 	instanceVariableNames: 'funcType returnType lParam wParam returnTypeName'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ScintillaFunctionDef guid: (GUID fromString: '{1c19ff8a-f7a5-4f32-ad24-5ddb1990984f}')!
-ScintillaFunctionDef comment: ''!
-!ScintillaFunctionDef categoriesForClass!Development! !
-!ScintillaFunctionDef methodsFor!
+Tools.Scintilla.FunctionDefinition guid: (Core.GUID fromString: '{1c19ff8a-f7a5-4f32-ad24-5ddb1990984f}')!
+Tools.Scintilla.FunctionDefinition comment: ''!
+!Tools.Scintilla.FunctionDefinition categoriesForClass!Development! !
+!Tools.Scintilla.FunctionDefinition methodsFor!
 
 constPrefix
 	^'SCI_'!
@@ -249,7 +249,7 @@ makeParam: anArray
 			[(##(#('bytes' 'space' 'lines' 'columns' 'relative') asSet) includes: paramName)
 				or: [paramName beginsWith: 'length']])
 		or: [paramTypeName = 'line' and: [paramName = 'lines']]) ifTrue: [paramTypeName := 'int'].
-	^ScintillaParam newName: paramName typeName: paramTypeName!
+	^Tools.Scintilla.ParameterDefinition newName: paramName typeName: paramTypeName!
 
 name
 	^name!
@@ -965,8 +965,7 @@ retType: aString
 	returnTypeName := self remappedReturnTypes at: constName ifAbsent: [aString]!
 
 returnType
-	^returnType ifNil: [returnType := ScintillaTypeRef named: returnTypeName]
-!
+	^returnType ifNil: [returnType := Tools.Scintilla.TypeReference named: returnTypeName]!
 
 selector
 	selector ifNotNil: [^selector].
@@ -1004,45 +1003,45 @@ stringResultsCountNull
 
 wParam: anArray
 	wParam := self makeParam: anArray! !
-!ScintillaFunctionDef categoriesFor: #constPrefix!initializing!private! !
-!ScintillaFunctionDef categoriesFor: #defaultReturnValue!accessing!private! !
-!ScintillaFunctionDef categoriesFor: #displayOn:!displaying!public! !
-!ScintillaFunctionDef categoriesFor: #emitBasicNullLParamFunctionOn:!generating!private! !
-!ScintillaFunctionDef categoriesFor: #emitBasicWParamLParamFunctionOn:!generating!private! !
-!ScintillaFunctionDef categoriesFor: #emitCommentOn:!helpers!private! !
-!ScintillaFunctionDef categoriesFor: #emitCommentString:on:!helpers!private! !
-!ScintillaFunctionDef categoriesFor: #emitMethodBodyOn:!generating!private! !
-!ScintillaFunctionDef categoriesFor: #emitMethodPreambleOn:!helpers!private! !
-!ScintillaFunctionDef categoriesFor: #emitMethodTextOn:!generating!public! !
-!ScintillaFunctionDef categoriesFor: #emitNullLParamFunctionOn:!generating!private! !
-!ScintillaFunctionDef categoriesFor: #emitNullNullFunctionOn:!generating!private! !
-!ScintillaFunctionDef categoriesFor: #emitScintillaCallOn:!generating!private! !
-!ScintillaFunctionDef categoriesFor: #emitStringResultFunctionOn:!generating!private! !
-!ScintillaFunctionDef categoriesFor: #emitWParamLParamFunctionOn:!helpers!private! !
-!ScintillaFunctionDef categoriesFor: #emitWParamNullFunctionOn:!generating!private! !
-!ScintillaFunctionDef categoriesFor: #emitWParamStringResultFunctionOn:!generating!private! !
-!ScintillaFunctionDef categoriesFor: #fixedClassStringResults!accessing!constants!private! !
-!ScintillaFunctionDef categoriesFor: #funcType:!accessing!private! !
-!ScintillaFunctionDef categoriesFor: #hasReturnValue!helpers!public! !
-!ScintillaFunctionDef categoriesFor: #hasStringResult!helpers!private! !
-!ScintillaFunctionDef categoriesFor: #isCommand!helpers!private! !
-!ScintillaFunctionDef categoriesFor: #isFunction!public!testing! !
-!ScintillaFunctionDef categoriesFor: #isPrivate!private!testing! !
-!ScintillaFunctionDef categoriesFor: #isPropGet!public!testing! !
-!ScintillaFunctionDef categoriesFor: #isPropSet!public!testing! !
-!ScintillaFunctionDef categoriesFor: #lParam:!accessing!private! !
-!ScintillaFunctionDef categoriesFor: #makeParam:!accessing!private! !
-!ScintillaFunctionDef categoriesFor: #name!accessing!public! !
-!ScintillaFunctionDef categoriesFor: #printOn:!printing!public! !
-!ScintillaFunctionDef categoriesFor: #remappedReturnTypes!private! !
-!ScintillaFunctionDef categoriesFor: #renamedFunctions!constants!private! !
-!ScintillaFunctionDef categoriesFor: #retType:!accessing!private! !
-!ScintillaFunctionDef categoriesFor: #returnType!accessing!public! !
-!ScintillaFunctionDef categoriesFor: #selector!generating!private! !
-!ScintillaFunctionDef categoriesFor: #stringResultsCountNull!constants!private! !
-!ScintillaFunctionDef categoriesFor: #wParam:!accessing!private! !
+!Tools.Scintilla.FunctionDefinition categoriesFor: #constPrefix!initializing!private! !
+!Tools.Scintilla.FunctionDefinition categoriesFor: #defaultReturnValue!accessing!private! !
+!Tools.Scintilla.FunctionDefinition categoriesFor: #displayOn:!displaying!public! !
+!Tools.Scintilla.FunctionDefinition categoriesFor: #emitBasicNullLParamFunctionOn:!generating!private! !
+!Tools.Scintilla.FunctionDefinition categoriesFor: #emitBasicWParamLParamFunctionOn:!generating!private! !
+!Tools.Scintilla.FunctionDefinition categoriesFor: #emitCommentOn:!helpers!private! !
+!Tools.Scintilla.FunctionDefinition categoriesFor: #emitCommentString:on:!helpers!private! !
+!Tools.Scintilla.FunctionDefinition categoriesFor: #emitMethodBodyOn:!generating!private! !
+!Tools.Scintilla.FunctionDefinition categoriesFor: #emitMethodPreambleOn:!helpers!private! !
+!Tools.Scintilla.FunctionDefinition categoriesFor: #emitMethodTextOn:!generating!public! !
+!Tools.Scintilla.FunctionDefinition categoriesFor: #emitNullLParamFunctionOn:!generating!private! !
+!Tools.Scintilla.FunctionDefinition categoriesFor: #emitNullNullFunctionOn:!generating!private! !
+!Tools.Scintilla.FunctionDefinition categoriesFor: #emitScintillaCallOn:!generating!private! !
+!Tools.Scintilla.FunctionDefinition categoriesFor: #emitStringResultFunctionOn:!generating!private! !
+!Tools.Scintilla.FunctionDefinition categoriesFor: #emitWParamLParamFunctionOn:!helpers!private! !
+!Tools.Scintilla.FunctionDefinition categoriesFor: #emitWParamNullFunctionOn:!generating!private! !
+!Tools.Scintilla.FunctionDefinition categoriesFor: #emitWParamStringResultFunctionOn:!generating!private! !
+!Tools.Scintilla.FunctionDefinition categoriesFor: #fixedClassStringResults!accessing!constants!private! !
+!Tools.Scintilla.FunctionDefinition categoriesFor: #funcType:!accessing!private! !
+!Tools.Scintilla.FunctionDefinition categoriesFor: #hasReturnValue!helpers!public! !
+!Tools.Scintilla.FunctionDefinition categoriesFor: #hasStringResult!helpers!private! !
+!Tools.Scintilla.FunctionDefinition categoriesFor: #isCommand!helpers!private! !
+!Tools.Scintilla.FunctionDefinition categoriesFor: #isFunction!public!testing! !
+!Tools.Scintilla.FunctionDefinition categoriesFor: #isPrivate!private!testing! !
+!Tools.Scintilla.FunctionDefinition categoriesFor: #isPropGet!public!testing! !
+!Tools.Scintilla.FunctionDefinition categoriesFor: #isPropSet!public!testing! !
+!Tools.Scintilla.FunctionDefinition categoriesFor: #lParam:!accessing!private! !
+!Tools.Scintilla.FunctionDefinition categoriesFor: #makeParam:!accessing!private! !
+!Tools.Scintilla.FunctionDefinition categoriesFor: #name!accessing!public! !
+!Tools.Scintilla.FunctionDefinition categoriesFor: #printOn:!printing!public! !
+!Tools.Scintilla.FunctionDefinition categoriesFor: #remappedReturnTypes!private! !
+!Tools.Scintilla.FunctionDefinition categoriesFor: #renamedFunctions!constants!private! !
+!Tools.Scintilla.FunctionDefinition categoriesFor: #retType:!accessing!private! !
+!Tools.Scintilla.FunctionDefinition categoriesFor: #returnType!accessing!public! !
+!Tools.Scintilla.FunctionDefinition categoriesFor: #selector!generating!private! !
+!Tools.Scintilla.FunctionDefinition categoriesFor: #stringResultsCountNull!constants!private! !
+!Tools.Scintilla.FunctionDefinition categoriesFor: #wParam:!accessing!private! !
 
-!ScintillaFunctionDef class methodsFor!
+!Tools.Scintilla.FunctionDefinition class methodsFor!
 
 tokens: anArray 
 	| func |
@@ -1050,5 +1049,5 @@ tokens: anArray
 	func wParam: (anArray at: 4).
 	func lParam: (anArray at: 5).
 	^func! !
-!ScintillaFunctionDef class categoriesFor: #tokens:!instance creation!public! !
+!Tools.Scintilla.FunctionDefinition class categoriesFor: #tokens:!instance creation!public! !
 

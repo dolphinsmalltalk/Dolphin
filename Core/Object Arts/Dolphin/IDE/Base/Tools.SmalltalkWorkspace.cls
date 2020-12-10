@@ -684,11 +684,11 @@ highlightCompilationErrors: anInteger
 	annotations := OrderedCollection new.
 	compilationErrors do: 
 			[:each |
-			indicators add: (Scintilla.Indicator
+			indicators add: (UI.Scintilla.Indicator
 						styleName: each severityClass name
 						range: each range + anInteger
 						tag: each).
-			annotations add: (Scintilla.Annotation
+			annotations add: (UI.Scintilla.Annotation
 						line: each line
 						text: ('<1s>: <2s>' expandMacrosWith: each severityName with: each errorMessage)
 						style: each severityClass name)].
@@ -729,7 +729,7 @@ identifiersStartingWith: aString maxItems: anInteger
 	(ignoreCase or: [aString isEmpty or: [aString first isUppercase not]])
 		ifTrue: 
 			[(#(nil true false) select: filter)
-				do: [:each | accum value: (Scintilla.ListItem text: each printString icon: each icon)].
+				do: [:each | accum value: (UI.Scintilla.ListItem text: each printString icon: each icon)].
 			(#('thisContext' 'super' 'self') select: filter) do: accum.
 			self allDefinedVariablesDo: selectVars.
 			self selfClass allInstVarNames do: selectVars].
@@ -918,7 +918,7 @@ messagesForToken: anAssociation startingWith: aString maxItems: anInteger
 				ifTrue: 
 					[selectors add: each.
 					selectors size > anInteger ifTrue: [^#()]]].
-	^selectors collect: [:each | Scintilla.ListItem text: each icon: icon]!
+	^selectors collect: [:each | UI.Scintilla.ListItem text: each icon: icon]!
 
 modifiedModel
 	^modifiedModel!
@@ -1729,8 +1729,8 @@ customEditorKeyBindings
 	bindings := KeyBindings asOrderedCollection.
 	self additionalKeyBindings do: 
 			[:each |
-			(Scintilla.ScintillaView.DefaultKeyBindings includesKey: each acceleratorKey)
-				ifTrue: [bindings add: (Scintilla.KeyBinding newAcceleratorKey: each acceleratorKey message: SCI_NULL)]].
+			(UI.Scintilla.ScintillaView.DefaultKeyBindings includesKey: each acceleratorKey)
+				ifTrue: [bindings add: (UI.Scintilla.KeyBinding newAcceleratorKey: each acceleratorKey message: SCI_NULL)]].
 	^bindings!
 
 defaultAdditionalAccelerators
@@ -1773,8 +1773,8 @@ defaultEditorKeyBindings
 	"Answer any differences from standard Scintilla key bindings to apply by default in workspaces.
 	Note that the defaultAdditionalAccelerators will also supplant any Scintilla commands normally associated with those key bindings."
 
-	^{Scintilla.KeyBinding newChord: 'CTRL+SHIFT+D'
-			message: Scintilla.ScintillaConstants.SCI_SELECTIONDUPLICATE}!
+	^{UI.Scintilla.KeyBinding newChord: 'CTRL+SHIFT+D'
+			message: UI.Scintilla.ScintillaConstants.SCI_SELECTIONDUPLICATE}!
 
 defaultFont
 	"Answer the default  font to use for instances of the receiver"
@@ -1792,36 +1792,36 @@ defaultIndicatorStyles
 	"Answer the default indicators styles to be used in workspaces."
 
 	^OrderedCollection new
-		add: (Scintilla.IndicatorStyle new
+		add: (UI.Scintilla.IndicatorStyle new
 					forecolor: Color commonGreen;
 					style: #hidden;
 					name: #Notification;
 					yourself);
-		add: (Scintilla.IndicatorStyle new
+		add: (UI.Scintilla.IndicatorStyle new
 					forecolor: Color blue;
 					style: #squiggle;
 					name: #Warning;
 					yourself);
-		add: (Scintilla.IndicatorStyle new
+		add: (UI.Scintilla.IndicatorStyle new
 					forecolor: Color red;
 					style: #squiggle;
 					name: #Error;
 					yourself);
-		add: (Scintilla.IndicatorStyle new
+		add: (UI.Scintilla.IndicatorStyle new
 					alpha: 40;
 					foreAlpha: 65;
 					forecolor: Color darkCyan;
 					style: #straightBox;
 					name: #braceHighlight;
 					yourself);
-		add: (Scintilla.IndicatorStyle new
+		add: (UI.Scintilla.IndicatorStyle new
 					alpha: 55;
 					foreAlpha: 128;
 					forecolor: Color red;
 					style: #straightBox;
 					name: #braceMismatch;
 					yourself);
-		add: (Scintilla.IndicatorStyle new
+		add: (UI.Scintilla.IndicatorStyle new
 					alpha: 15;
 					style: #roundBox;
 					name: #secondarySelection;
@@ -1872,7 +1872,7 @@ defaultTabWidth: anInteger
 
 defaultTextStyle
 	| style |
-	style := Scintilla.TextStyle new.
+	style := UI.Scintilla.TextStyle new.
 	self defaultBackcolor ifNotNil: [:color | style backcolor: color].
 	^style
 		font: self actualFont;
@@ -1890,112 +1890,112 @@ defaultTextStyles
 	| answer |
 	answer := IdentityDictionary new.
 	answer
-		add: ((Scintilla.TextStyle name: #illegal)
+		add: ((UI.Scintilla.TextStyle name: #illegal)
 					description: 'Illegal characters, e.g. £';
 					forecolor: Color red;
 					isBold: true;
 					yourself);
-		add: ((Scintilla.TextStyle name: #comment)
+		add: ((UI.Scintilla.TextStyle name: #comment)
 					description: 'Comments in method source';
 					forecolor: Color commonGreen;
 					isItalic: true;
 					yourself);
-		add: ((Scintilla.TextStyle name: #identifier)
+		add: ((UI.Scintilla.TextStyle name: #identifier)
 					description: 'Variables references (instance, temporary and class)';
 					yourself);
-		add: ((Scintilla.TextStyle name: #argDecl)
+		add: ((UI.Scintilla.TextStyle name: #argDecl)
 					description: 'Argument declaration in method signature';
 					isItalic: true;
 					isBold: true;
 					yourself);
-		add: ((Scintilla.TextStyle name: #blockArgDecl)
+		add: ((UI.Scintilla.TextStyle name: #blockArgDecl)
 					description: 'Block argument declaration';
 					isItalic: true;
 					yourself);
-		add: ((Scintilla.TextStyle name: #tempDecl)
+		add: ((UI.Scintilla.TextStyle name: #tempDecl)
 					description: 'Temporary variable declaration';
 					isItalic: true;
 					yourself);
-		add: ((Scintilla.TextStyle name: #unarySelector)
+		add: ((UI.Scintilla.TextStyle name: #unarySelector)
 					description: 'Unary selectors (method signature)';
 					forecolor: Color blue;
 					isBold: true;
 					yourself);
-		add: ((Scintilla.TextStyle name: #unaryMessage)
+		add: ((UI.Scintilla.TextStyle name: #unaryMessage)
 					description: 'Unary (no argument) messages';
 					forecolor: Color blue;
 					yourself);
-		add: ((Scintilla.TextStyle name: #binarySelector)
+		add: ((UI.Scintilla.TextStyle name: #binarySelector)
 					description: 'Binary in-fix selectors such as + and - (method signature)';
 					forecolor: Color blue;
 					isBold: true;
 					yourself);
-		add: ((Scintilla.TextStyle name: #binaryMessage)
+		add: ((UI.Scintilla.TextStyle name: #binaryMessage)
 					description: 'Binary in-fix messages such as + and -';
 					forecolor: Color blue;
 					yourself);
-		add: ((Scintilla.TextStyle name: #keywordSelector)
+		add: ((UI.Scintilla.TextStyle name: #keywordSelector)
 					description: 'Components of multi-keyword message selectors';
 					forecolor: Color blue;
 					isBold: true;
 					yourself);
-		add: ((Scintilla.TextStyle name: #keywordMessage)
+		add: ((UI.Scintilla.TextStyle name: #keywordMessage)
 					description: 'Components of multi-keyword message selectors';
 					forecolor: Color blue;
 					yourself);
-		add: ((Scintilla.TextStyle name: #literalPseudo)
+		add: ((UI.Scintilla.TextStyle name: #literalPseudo)
 					description: 'The literal constants true, false and nil';
 					forecolor: Color teal;
 					yourself);
-		add: ((Scintilla.TextStyle name: #literalNumber)
+		add: ((UI.Scintilla.TextStyle name: #literalNumber)
 					description: 'Numeric literal constants, e.g. 1.2e6';
 					forecolor: Color maroon;
 					yourself);
-		add: ((Scintilla.TextStyle name: #literalString)
+		add: ((UI.Scintilla.TextStyle name: #literalString)
 					description: 'Literal string constants, e.g. ''abc''';
 					forecolor: Color purple;
 					yourself);
-		add: ((Scintilla.TextStyle name: #literalSymbol)
+		add: ((UI.Scintilla.TextStyle name: #literalSymbol)
 					description: 'Literal symbol constants, e.g. #abc';
 					forecolor: Color navy;
 					yourself);
-		add: ((Scintilla.TextStyle name: #literalCharacter)
+		add: ((UI.Scintilla.TextStyle name: #literalCharacter)
 					description: 'Literal character constants, e.g. $A';
 					forecolor: Color navy;
 					yourself);
-		add: ((Scintilla.TextStyle name: #literalBytes)
+		add: ((UI.Scintilla.TextStyle name: #literalBytes)
 					description: 'Literal byte arrays, e.g. #[0 1 2]';
 					forecolor: Color olive;
 					yourself);
-		add: ((Scintilla.TextStyle name: #literalBindingReference)
+		add: ((UI.Scintilla.TextStyle name: #literalBindingReference)
 					description: 'Literal binding references, e.g. #{Object}';
 					isItalic: true;
 					yourself);
-		add: ((Scintilla.TextStyle name: #assignment)
+		add: ((UI.Scintilla.TextStyle name: #assignment)
 					description: 'Assignment operation, i.e. :=';
 					isItalic: true;
 					yourself);
-		add: ((Scintilla.TextStyle name: #tempOpenBar)
+		add: ((UI.Scintilla.TextStyle name: #tempOpenBar)
 					description: 'Temporary declarations opening bar';
 					isItalic: true;
 					yourself);
-		add: ((Scintilla.TextStyle name: #tempCloseBar)
+		add: ((UI.Scintilla.TextStyle name: #tempCloseBar)
 					description: 'Temporary declarations closing bar';
 					isItalic: true;
 					yourself);
-		add: ((Scintilla.TextStyle name: #specialCharacter)
+		add: ((UI.Scintilla.TextStyle name: #specialCharacter)
 					description: 'Special characters, e.g. normal and block parentheses';
 					yourself);
-		add: ((Scintilla.TextStyle name: #literalArray)
+		add: ((UI.Scintilla.TextStyle name: #literalArray)
 					description: 'Opening/closing token of literal array, i.e. #()';
 					weight: SC_WEIGHT_SEMIBOLD;
 					yourself);
-		add: ((Scintilla.TextStyle name: #tag)
+		add: ((UI.Scintilla.TextStyle name: #tag)
 					description: 'Primitive or external call tag, e.g. <primitive: 1>';
 					forecolor: Color gray;
 					isItalic: true;
 					yourself);
-		add: ((Scintilla.TextStyle name: #whitespace)
+		add: ((UI.Scintilla.TextStyle name: #whitespace)
 					description: 'Whitespace, when visible';
 					forecolor: Color silver;
 					yourself);
@@ -2004,8 +2004,8 @@ defaultTextStyles
 	"Scintilla pre-defined styles - note how #normal style inherits font of the view (which in turn should be the default system font).
 	braces and mismatch braces are styled using indicators now (see defaultIndicatorStyles)"
 	answer
-		add: Scintilla.TextStyle normal yourself;
-		add: ((Scintilla.TextStyle name: #indentGuide)
+		add: UI.Scintilla.TextStyle normal yourself;
+		add: ((UI.Scintilla.TextStyle name: #indentGuide)
 					description: 'Indentation guides, when visible';
 					forecolor: Color gray;
 					yourself);
@@ -2028,13 +2028,13 @@ defaultUnaryReturnTypes
 editorKeyBindings
 	"Answer the full set of editor key bindings. This only includes the Scintilla commands and is constructed from the default Scintilla key bindings and any workspace overrides."
 
-	^(Scintilla.ScintillaView mergeKeyBindings: KeyBindings)
+	^(UI.Scintilla.ScintillaView mergeKeyBindings: KeyBindings)
 		asSortedCollection: [:a :b | a commandSymbol <= b commandSymbol]!
 
 editorKeyBindings: aCollectionOfScintillaKeyBindings
 	KeyBindings := aCollectionOfScintillaKeyBindings
 				ifNil: [self defaultEditorKeyBindings]
-				ifNotNil: [Scintilla.ScintillaView unmergeKeyBindings: aCollectionOfScintillaKeyBindings]!
+				ifNotNil: [UI.Scintilla.ScintillaView unmergeKeyBindings: aCollectionOfScintillaKeyBindings]!
 
 fontQuality
 	^FontQuality ?? #lcdOptimized!
@@ -2069,7 +2069,7 @@ indicatorStyles: aCollectionOfScintillaIndicatorStyles
 
 indicatorStylesAspect
 	^(Aspect sequenceableCollection: #indicatorStyles
-		addEvaluationFrom: {Scintilla.IndicatorStyle name , ' new'})
+		addEvaluationFrom: {UI.Scintilla.IndicatorStyle name , ' new'})
 		beImmutable;
 		yourself!
 
@@ -2167,14 +2167,14 @@ publishedAspects
 		do: [:each | answer add: (Aspect integer: each)].
 	#(#defaultBackcolor #defaultCaretColor) do: [:each | answer add: (Aspect color: each)].
 	^answer
-		add: (Aspect choice: #annotationMode from: Scintilla.ScintillaView annotationModes);
-		add: (Aspect choice: #wrapIndentMode from: Scintilla.ScintillaView wrapIndentModes);
+		add: (Aspect choice: #annotationMode from: UI.Scintilla.ScintillaView annotationModes);
+		add: (Aspect choice: #wrapIndentMode from: UI.Scintilla.ScintillaView wrapIndentModes);
 		add: (Aspect sequenceableCollection: #editorKeyBindings
-					addEvaluationFrom: {Scintilla.KeyBinding name , ' new'}) beImmutable;
+					addEvaluationFrom: {UI.Scintilla.KeyBinding name , ' new'}) beImmutable;
 		add: (Aspect dictionary: #acceleratorKeyBindings) beImmutable;
 		add: self textStylesAspect;
 		add: self indicatorStylesAspect;
-		add: (Aspect choice: #fontQuality from: Scintilla.ScintillaView fontQualities);
+		add: (Aspect choice: #fontQuality from: UI.Scintilla.ScintillaView fontQualities);
 		add: (Aspect font: #defaultFont);
 		yourself!
 
@@ -2219,7 +2219,7 @@ textStylesAspect
 	^(Aspect name: #textStyles
 		presenterBlock: 
 			[:p :m |
-			(Scintilla.StylesCollectionPresenter createIn: p on: m)
+			(UI.Scintilla.StylesCollectionPresenter createIn: p on: m)
 				defaultStyle: self defaultTextStyle;
 				yourself])
 		beImmutable;

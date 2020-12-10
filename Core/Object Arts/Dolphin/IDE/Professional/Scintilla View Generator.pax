@@ -9,64 +9,69 @@ It is suggested that you run the generator in preview mode, which is the default
 
 
 package setClassNames: #(
-	#{Smalltalk.ScintillaDef}
-	#{Smalltalk.ScintillaEventDef}
-	#{Smalltalk.ScintillaFunctionDef}
-	#{Smalltalk.ScintillaParam}
-	#{Smalltalk.ScintillaTypeRef}
-	#{Smalltalk.ScintillaViewGenerator}
+	#{Tools.Scintilla}
+	#{Tools.Scintilla.EventDefinition}
+	#{Tools.Scintilla.FunctionDefinition}
+	#{Tools.Scintilla.InterfaceDefinition}
+	#{Tools.Scintilla.ParameterDefinition}
+	#{Tools.Scintilla.ScintillaViewGenerator}
+	#{Tools.Scintilla.TypeReference}
 ).
 
 package setPrerequisites: #(
 	'..\..\Base\Dolphin'
-	'..\..\Base\Deprecated\Dolphin Base (Old Names)'
 	'..\..\MVP\Dialogs\Common\Dolphin Common Dialogs'
-	'..\..\Base\Deprecated\Dolphin Legacy Package Support'
 	'..\..\MVP\Base\Dolphin MVP Base'
 	'Dolphin Refactoring Browser'
 	'..\..\MVP\Presenters\Text\Dolphin Rich Text Presenter'
 	'..\..\MVP\Views\Scintilla\Dolphin Scintilla View'
 	'..\..\MVP\Presenters\Text\Dolphin Text Presenter'
-	'..\..\..\..\Contributions\Refactory\RBOldNames'
+	'..\..\..\..\Contributions\Refactory\Refactoring Browser\Change Objects\RBChangeObjects'
 	'..\..\..\..\Contributions\Refactory\Refactoring Browser\Refactorings\RBRefactorings'
-	'..\..\System\Compiler\Smalltalk Parser (Old Names)'
+	'..\..\System\Compiler\Smalltalk Parser'
 ).
 
 package!
 
 "Class Definitions"!
 
-Core.Object subclass: #ScintillaDef
+Tools subclass: #'Tools.Scintilla'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Core.Object subclass: #'Tools.Scintilla.InterfaceDefinition'
 	instanceVariableNames: 'id name isDeprecated comment selector constName'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Core.Object subclass: #ScintillaParam
+Core.Object subclass: #'Tools.Scintilla.ParameterDefinition'
 	instanceVariableNames: 'name typeName typeRef'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Core.Object subclass: #ScintillaTypeRef
+Core.Object subclass: #'Tools.Scintilla.ScintillaViewGenerator'
+	instanceVariableNames: 'events commentQueue lexerConstantPrefixes previewChanges commands parsingDeprecated namespace constantsPool generatedSelectors aliases functions'
+	classVariableNames: ''
+	imports: #(#{UI.Scintilla})
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Core.Object subclass: #'Tools.Scintilla.TypeReference'
 	instanceVariableNames: 'name objectClass byRef toMessage fromMessage default'
 	classVariableNames: 'TypeMap'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Core.Object subclass: #ScintillaViewGenerator
-	instanceVariableNames: 'events commentQueue lexerConstantPrefixes previewChanges commands parsingDeprecated namespace constantsPool generatedSelectors aliases functions'
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-ScintillaDef subclass: #ScintillaEventDef
+Tools.Scintilla.InterfaceDefinition subclass: #'Tools.Scintilla.EventDefinition'
 	instanceVariableNames: 'args'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ScintillaDef subclass: #ScintillaFunctionDef
+Tools.Scintilla.InterfaceDefinition subclass: #'Tools.Scintilla.FunctionDefinition'
 	instanceVariableNames: 'funcType returnType lParam wParam returnTypeName'
 	classVariableNames: ''
 	imports: #()

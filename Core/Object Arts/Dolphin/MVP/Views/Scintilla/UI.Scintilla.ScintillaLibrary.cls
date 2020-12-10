@@ -54,7 +54,7 @@ fileName
 versionString
 	"Answer the version of the Scintilla control for which this library was generated."
 
-	^'4.4.4'! !
+	^'4.4.5'! !
 !UI.Scintilla.ScintillaLibrary class categoriesFor: #fileName!constants!public! !
 !UI.Scintilla.ScintillaLibrary class categoriesFor: #versionString!**auto generated**!constants!public!scintilla interface! !
 

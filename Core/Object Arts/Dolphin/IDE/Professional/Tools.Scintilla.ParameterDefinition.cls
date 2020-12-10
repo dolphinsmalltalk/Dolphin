@@ -1,14 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Object subclass: #ScintillaParam
+Core.Object subclass: #'Tools.Scintilla.ParameterDefinition'
 	instanceVariableNames: 'name typeName typeRef'
 	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-ScintillaParam guid: (GUID fromString: '{c2e4de9a-2733-4744-a2e1-c18af7a172d1}')!
-ScintillaParam comment: ''!
-!ScintillaParam categoriesForClass!Kernel-Objects! !
-!ScintillaParam methodsFor!
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Tools.Scintilla.ParameterDefinition guid: (Core.GUID fromString: '{c2e4de9a-2733-4744-a2e1-c18af7a172d1}')!
+Tools.Scintilla.ParameterDefinition comment: ''!
+!Tools.Scintilla.ParameterDefinition categoriesForClass!Kernel-Objects! !
+!Tools.Scintilla.ParameterDefinition methodsFor!
 
 displayOn: aStream
 	aStream display: self type; space; nextPutAll: name!
@@ -40,27 +41,27 @@ setName: nameString typeName: typeString
 	typeName := typeString!
 
 type
-	^typeRef ifNil: [typeRef := ScintillaTypeRef named: typeName]!
+	^typeRef ifNil: [typeRef := Tools.Scintilla.TypeReference named: typeName]!
 
 typeName
 	^typeName! !
-!ScintillaParam categoriesFor: #displayOn:!displaying!public! !
-!ScintillaParam categoriesFor: #emitOutParam:on:!generating!private! !
-!ScintillaParam categoriesFor: #isUnused!generating!helpers!public! !
-!ScintillaParam categoriesFor: #name!initializing!private! !
-!ScintillaParam categoriesFor: #parameterName!helpers!private! !
-!ScintillaParam categoriesFor: #setName:typeName:!initializing!private! !
-!ScintillaParam categoriesFor: #type!initializing!private! !
-!ScintillaParam categoriesFor: #typeName!public! !
+!Tools.Scintilla.ParameterDefinition categoriesFor: #displayOn:!displaying!public! !
+!Tools.Scintilla.ParameterDefinition categoriesFor: #emitOutParam:on:!generating!private! !
+!Tools.Scintilla.ParameterDefinition categoriesFor: #isUnused!generating!helpers!public! !
+!Tools.Scintilla.ParameterDefinition categoriesFor: #name!initializing!private! !
+!Tools.Scintilla.ParameterDefinition categoriesFor: #parameterName!helpers!private! !
+!Tools.Scintilla.ParameterDefinition categoriesFor: #setName:typeName:!initializing!private! !
+!Tools.Scintilla.ParameterDefinition categoriesFor: #type!initializing!private! !
+!Tools.Scintilla.ParameterDefinition categoriesFor: #typeName!public! !
 
-!ScintillaParam class methodsFor!
+!Tools.Scintilla.ParameterDefinition class methodsFor!
 
 icon
-	^ScintillaView icon!
+	^UI.Scintilla.ScintillaView icon!
 
 newName: nameString typeName: typeString
 	^self new
 		setName: nameString typeName: typeString! !
-!ScintillaParam class categoriesFor: #icon!constants!development!public! !
-!ScintillaParam class categoriesFor: #newName:typeName:!instance creation!public! !
+!Tools.Scintilla.ParameterDefinition class categoriesFor: #icon!constants!development!public! !
+!Tools.Scintilla.ParameterDefinition class categoriesFor: #newName:typeName:!instance creation!public! !
 

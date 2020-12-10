@@ -1,25 +1,25 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Core.Object subclass: #ScintillaViewGenerator
+Core.Object subclass: #'Tools.Scintilla.ScintillaViewGenerator'
 	instanceVariableNames: 'events commentQueue lexerConstantPrefixes previewChanges commands parsingDeprecated namespace constantsPool generatedSelectors aliases functions'
 	classVariableNames: ''
-	imports: #()
+	imports: #(#{UI.Scintilla})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ScintillaViewGenerator guid: (Core.GUID fromString: '{babb8e5d-5ee9-43b2-a88b-0959484c008e}')!
-ScintillaViewGenerator comment: 'This class reads the Scintilla.iface definition and autogenerates wrapper methods into the ScintillaView class, and defines constants in the ScintillaConstants pool.
+Tools.Scintilla.ScintillaViewGenerator guid: (Core.GUID fromString: '{babb8e5d-5ee9-43b2-a88b-0959484c008e}')!
+Tools.Scintilla.ScintillaViewGenerator comment: 'This class reads the Scintilla.iface definition and autogenerates wrapper methods into the ScintillaView class, and defines constants in the ScintillaConstants pool.
 
 The parsing is not sophisticated, but adequate for purpose.
 
 self new parseFile'!
-!ScintillaViewGenerator categoriesForClass!Development! !
-!ScintillaViewGenerator methodsFor!
+!Tools.Scintilla.ScintillaViewGenerator categoriesForClass!Development! !
+!Tools.Scintilla.ScintillaViewGenerator methodsFor!
 
 applyChanges
-	RefactoryChangeManager instance performChange: namespace changes.
+	Refactory.Browser.RefactoryChangeManager instance performChange: namespace changes.
 	ScintillaView owningPackage packageVersion: ScintillaLibrary versionString.
 	self scintillaViewClass initializeNotificationMap.
-	ScintillaKeyBinding initializeCommands!
+	KeyBinding initializeCommands!
 
 autoGenCategoryName
 	"Private - Answer the name of the special method category for auto-generated
@@ -45,7 +45,7 @@ browseChanges
 compile: aString selector: aSymbol in: targetClass categories: aCollectionOfMethodCategory 
 	| source allCategories |
 	(generatedSelectors at: targetClass ifAbsentPut: [Set new]) add: aSymbol.
-	source := (SmalltalkParser parseMethod: aString) formattedCode.
+	source := (Parser parseMethod: aString) formattedCode.
 	((targetClass includesSelector: aSymbol) and: [(targetClass sourceCodeAt: aSymbol) = source]) 
 		ifTrue: [^self].
 	allCategories := aCollectionOfMethodCategory 
@@ -76,10 +76,10 @@ defineAdditionalConstants
 
 defineConstantsPool
 	##(SharedPool
-		subclass: #ScintillaConstants
+		subclass: #'UI.Scintilla.ScintillaConstants'
 		instanceVariableNames: ''
 		classVariableNames: ''
-		poolDictionaries: ''
+		imports: #()
 		classInstanceVariableNames: ''
 		classConstants: {'ANNOTATION_BOXED' -> 2.
 				'ANNOTATION_HIDDEN' -> 0.
@@ -649,6 +649,7 @@ defineConstantsPool
 				'SCI_GETMOUSESELECTIONRECTANGULARSWITCH' -> 2669.
 				'SCI_GETMOUSEWHEELCAPTURES' -> 2697.
 				'SCI_GETMOVEEXTENDSSELECTION' -> 2706.
+				'SCI_GETMULTIEDGECOLUMN' -> 2749.
 				'SCI_GETMULTIPASTE' -> 2615.
 				'SCI_GETMULTIPLESELECTION' -> 2564.
 				'SCI_GETNAMEDSTYLES' -> 4029.
@@ -1374,7 +1375,7 @@ generateCommandMap
 	self
 		compile: stream contents
 		selector: selector
-		in: ScintillaKeyBinding class
+		in: KeyBinding class
 		categories: self autoGenMethodCategories , {'private'. 'development'}!
 
 generateConstantsPool
@@ -1383,10 +1384,10 @@ generateConstantsPool
 	stream
 		nextPutAll: #defineConstantsPool;
 		cr;
-		nextPutAll: '##(SharedPool subclass: #ScintillaConstants
+		nextPutAll: '##(SharedPool subclass: #''UI.Scintilla.ScintillaConstants''
 	instanceVariableNames: ''''
 	classVariableNames: ''''
-	poolDictionaries: ''''
+	imports: #()
 	classInstanceVariableNames: ''''
 	classConstants: {';
 		cr.
@@ -1400,7 +1401,7 @@ generateConstantsPool
 				cr].
 	stream nextPutAll: '})'.
 	changes := namespace changes.
-	source := (SmalltalkParser parseMethod: stream contents) formattedCode.
+	source := (Parser parseMethod: stream contents) formattedCode.
 	((self class includesSelector: #defineConstantsPool) not
 		or: [source ~= (self class sourceCodeAt: #defineConstantsPool)])
 			ifTrue: 
@@ -1639,7 +1640,7 @@ initialize
 	parsingDeprecated := false.
 	namespace := Refactory.Browser.RBNamespace new.
 	generatedSelectors := LookupTable new.
-	constantsPool := PoolConstantsDictionary new.
+	constantsPool := Dictionary new.
 	aliases := LookupTable new.
 	functions := OrderedCollection new!
 
@@ -1668,12 +1669,12 @@ parseEnum: aReadableStream
 	| typeName prefix |
 	typeName := aReadableStream upTo: $=.
 	prefix := aReadableStream nextWord.
-	ScintillaTypeRef declareEnum: typeName
+	TypeReference declareEnum: typeName
 !
 
 parseEvent: aReadableStream 
 	| event |
-	event := (ScintillaEventDef tokens: (self splitDefinition: aReadableStream))
+	event := (EventDefinition tokens: (self splitDefinition: aReadableStream))
 				comment: self getAndResetCommentQueue;
 				isDeprecated: parsingDeprecated;
 				yourself.
@@ -1692,9 +1693,8 @@ parseFile
 
 parseFile: aFileName
 	| cFile |
-	self constantsPool removeAllKeys: self constantsPool keys.
 	self defineAdditionalConstants.
-	ScintillaTypeRef resetTypeMap.
+	TypeReference resetTypeMap.
 	cFile := FileStream read: aFileName.
 	[cFile atEnd] whileFalse: [self parseLine: cFile nextLine].
 	cFile close.
@@ -1717,7 +1717,7 @@ parseFileComment: aReadableStream
 
 parseFunction: aReadableStream type: aString
 	| func |
-	func := (ScintillaFunctionDef tokens: (self splitDefinition: aReadableStream))
+	func := (FunctionDefinition tokens: (self splitDefinition: aReadableStream))
 				funcType: aString;
 				isDeprecated: parsingDeprecated;
 				comment: self getAndResetCommentQueue;
@@ -1966,54 +1966,54 @@ updateLibVersion
 		selector: #versionString
 		in: ScintillaLibrary class
 		categories: (self autoGenMethodCategories copyWith: 'constants')! !
-!ScintillaViewGenerator categoriesFor: #applyChanges!helpers!private! !
-!ScintillaViewGenerator categoriesFor: #autoGenCategoryName!constants!private! !
-!ScintillaViewGenerator categoriesFor: #autoGenEventCategories!constants!private! !
-!ScintillaViewGenerator categoriesFor: #autoGenMethodCategories!constants!private! !
-!ScintillaViewGenerator categoriesFor: #browseChanges!helpers!private! !
-!ScintillaViewGenerator categoriesFor: #compile:selector:in:categories:!private! !
-!ScintillaViewGenerator categoriesFor: #compileMethod:source:!helpers!private! !
-!ScintillaViewGenerator categoriesFor: #compileMethod:source:categories:!helpers!private! !
-!ScintillaViewGenerator categoriesFor: #constantsPool!helpers!private! !
-!ScintillaViewGenerator categoriesFor: #defineAdditionalConstants!helpers!private! !
-!ScintillaViewGenerator categoriesFor: #defineConstantsPool!**auto generated**!development!public! !
-!ScintillaViewGenerator categoriesFor: #generateCommandMap!generating!private! !
-!ScintillaViewGenerator categoriesFor: #generateConstantsPool!operations!private! !
-!ScintillaViewGenerator categoriesFor: #generateEventHandler:!helpers!private! !
-!ScintillaViewGenerator categoriesFor: #generateFunction:!generating!private! !
-!ScintillaViewGenerator categoriesFor: #generateFunctions!accessing!generating!private! !
-!ScintillaViewGenerator categoriesFor: #generateNotificationMap!generating!private! !
-!ScintillaViewGenerator categoriesFor: #getAndResetCommentQueue!helpers!private! !
-!ScintillaViewGenerator categoriesFor: #ignoredMessages!constants!private! !
-!ScintillaViewGenerator categoriesFor: #initialize!helpers!initializing!public! !
-!ScintillaViewGenerator categoriesFor: #isIgnoredConstant:!helpers!private! !
-!ScintillaViewGenerator categoriesFor: #parseAlias:!helpers!private! !
-!ScintillaViewGenerator categoriesFor: #parseCategory:!helpers!private! !
-!ScintillaViewGenerator categoriesFor: #parseEnum:!helpers!private! !
-!ScintillaViewGenerator categoriesFor: #parseEvent:!helpers!private! !
-!ScintillaViewGenerator categoriesFor: #parseFile!helpers!public! !
-!ScintillaViewGenerator categoriesFor: #parseFile:!helpers!private! !
-!ScintillaViewGenerator categoriesFor: #parseFileComment:!helpers!private! !
-!ScintillaViewGenerator categoriesFor: #parseFunction:type:!helpers!private! !
-!ScintillaViewGenerator categoriesFor: #parseInterfaceComment:!helpers!private! !
-!ScintillaViewGenerator categoriesFor: #parseLex:!helpers!private! !
-!ScintillaViewGenerator categoriesFor: #parseLine:!helpers!private! !
-!ScintillaViewGenerator categoriesFor: #parseShBang:!helpers!private! !
-!ScintillaViewGenerator categoriesFor: #parseValue:!helpers!private! !
-!ScintillaViewGenerator categoriesFor: #previewChanges:!public! !
-!ScintillaViewGenerator categoriesFor: #removeStaleAutoGeneratedMethods!helpers!private! !
-!ScintillaViewGenerator categoriesFor: #sciCommands!constants!private! !
-!ScintillaViewGenerator categoriesFor: #scintillaViewClass!constants!private! !
-!ScintillaViewGenerator categoriesFor: #splitDefinition:!private! !
-!ScintillaViewGenerator categoriesFor: #updateLibVersion!accessing!private! !
+!Tools.Scintilla.ScintillaViewGenerator categoriesFor: #applyChanges!helpers!private! !
+!Tools.Scintilla.ScintillaViewGenerator categoriesFor: #autoGenCategoryName!constants!private! !
+!Tools.Scintilla.ScintillaViewGenerator categoriesFor: #autoGenEventCategories!constants!private! !
+!Tools.Scintilla.ScintillaViewGenerator categoriesFor: #autoGenMethodCategories!constants!private! !
+!Tools.Scintilla.ScintillaViewGenerator categoriesFor: #browseChanges!helpers!private! !
+!Tools.Scintilla.ScintillaViewGenerator categoriesFor: #compile:selector:in:categories:!private! !
+!Tools.Scintilla.ScintillaViewGenerator categoriesFor: #compileMethod:source:!helpers!private! !
+!Tools.Scintilla.ScintillaViewGenerator categoriesFor: #compileMethod:source:categories:!helpers!private! !
+!Tools.Scintilla.ScintillaViewGenerator categoriesFor: #constantsPool!helpers!private! !
+!Tools.Scintilla.ScintillaViewGenerator categoriesFor: #defineAdditionalConstants!helpers!private! !
+!Tools.Scintilla.ScintillaViewGenerator categoriesFor: #defineConstantsPool!**auto generated**!development!public! !
+!Tools.Scintilla.ScintillaViewGenerator categoriesFor: #generateCommandMap!generating!private! !
+!Tools.Scintilla.ScintillaViewGenerator categoriesFor: #generateConstantsPool!operations!private! !
+!Tools.Scintilla.ScintillaViewGenerator categoriesFor: #generateEventHandler:!helpers!private! !
+!Tools.Scintilla.ScintillaViewGenerator categoriesFor: #generateFunction:!generating!private! !
+!Tools.Scintilla.ScintillaViewGenerator categoriesFor: #generateFunctions!accessing!generating!private! !
+!Tools.Scintilla.ScintillaViewGenerator categoriesFor: #generateNotificationMap!generating!private! !
+!Tools.Scintilla.ScintillaViewGenerator categoriesFor: #getAndResetCommentQueue!helpers!private! !
+!Tools.Scintilla.ScintillaViewGenerator categoriesFor: #ignoredMessages!constants!private! !
+!Tools.Scintilla.ScintillaViewGenerator categoriesFor: #initialize!helpers!initializing!public! !
+!Tools.Scintilla.ScintillaViewGenerator categoriesFor: #isIgnoredConstant:!helpers!private! !
+!Tools.Scintilla.ScintillaViewGenerator categoriesFor: #parseAlias:!helpers!private! !
+!Tools.Scintilla.ScintillaViewGenerator categoriesFor: #parseCategory:!helpers!private! !
+!Tools.Scintilla.ScintillaViewGenerator categoriesFor: #parseEnum:!helpers!private! !
+!Tools.Scintilla.ScintillaViewGenerator categoriesFor: #parseEvent:!helpers!private! !
+!Tools.Scintilla.ScintillaViewGenerator categoriesFor: #parseFile!helpers!public! !
+!Tools.Scintilla.ScintillaViewGenerator categoriesFor: #parseFile:!helpers!private! !
+!Tools.Scintilla.ScintillaViewGenerator categoriesFor: #parseFileComment:!helpers!private! !
+!Tools.Scintilla.ScintillaViewGenerator categoriesFor: #parseFunction:type:!helpers!private! !
+!Tools.Scintilla.ScintillaViewGenerator categoriesFor: #parseInterfaceComment:!helpers!private! !
+!Tools.Scintilla.ScintillaViewGenerator categoriesFor: #parseLex:!helpers!private! !
+!Tools.Scintilla.ScintillaViewGenerator categoriesFor: #parseLine:!helpers!private! !
+!Tools.Scintilla.ScintillaViewGenerator categoriesFor: #parseShBang:!helpers!private! !
+!Tools.Scintilla.ScintillaViewGenerator categoriesFor: #parseValue:!helpers!private! !
+!Tools.Scintilla.ScintillaViewGenerator categoriesFor: #previewChanges:!public! !
+!Tools.Scintilla.ScintillaViewGenerator categoriesFor: #removeStaleAutoGeneratedMethods!helpers!private! !
+!Tools.Scintilla.ScintillaViewGenerator categoriesFor: #sciCommands!constants!private! !
+!Tools.Scintilla.ScintillaViewGenerator categoriesFor: #scintillaViewClass!constants!private! !
+!Tools.Scintilla.ScintillaViewGenerator categoriesFor: #splitDefinition:!private! !
+!Tools.Scintilla.ScintillaViewGenerator categoriesFor: #updateLibVersion!accessing!private! !
 
-!ScintillaViewGenerator class methodsFor!
+!Tools.Scintilla.ScintillaViewGenerator class methodsFor!
 
 icon
 	^ScintillaView icon!
 
 new
 	^super new initialize! !
-!ScintillaViewGenerator class categoriesFor: #icon!constants!development!public! !
-!ScintillaViewGenerator class categoriesFor: #new!instance creation!public! !
+!Tools.Scintilla.ScintillaViewGenerator class categoriesFor: #icon!constants!development!public! !
+!Tools.Scintilla.ScintillaViewGenerator class categoriesFor: #new!instance creation!public! !
 

@@ -76,7 +76,7 @@ defaultBackcolor: aColor
 	(Color named: #commentWorkspace) actualColor: aColor!
 
 defaultTextStyles
-	^Scintilla.ScintillaView markdownTextStyles!
+	^UI.Scintilla.ScintillaView markdownTextStyles!
 
 grayedIcon
 	"Answer the <Icon> to be used on the class comment tab when there is no class comment."

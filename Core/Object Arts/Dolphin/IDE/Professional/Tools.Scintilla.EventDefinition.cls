@@ -1,14 +1,15 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
-ScintillaDef subclass: #ScintillaEventDef
+Tools.Scintilla.InterfaceDefinition subclass: #'Tools.Scintilla.EventDefinition'
 	instanceVariableNames: 'args'
 	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-ScintillaEventDef guid: (GUID fromString: '{fdf0c39c-6309-4219-a64c-07355e04671c}')!
-ScintillaEventDef comment: ''!
-!ScintillaEventDef categoriesForClass!Development! !
-!ScintillaEventDef methodsFor!
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Tools.Scintilla.EventDefinition guid: (Core.GUID fromString: '{fdf0c39c-6309-4219-a64c-07355e04671c}')!
+Tools.Scintilla.EventDefinition comment: ''!
+!Tools.Scintilla.EventDefinition categoriesForClass!Development! !
+!Tools.Scintilla.EventDefinition methodsFor!
 
 args: anArrayOfArray 
 	args := anArrayOfArray!
@@ -49,13 +50,13 @@ id: anInteger name: nameString retType: aString
 
 retType: aString 
 	self assert: [aString = 'void']! !
-!ScintillaEventDef categoriesFor: #args:!private! !
-!ScintillaEventDef categoriesFor: #constPrefix!constants!initializing!private! !
-!ScintillaEventDef categoriesFor: #generateHandlerOn:!helpers!private! !
-!ScintillaEventDef categoriesFor: #id:name:retType:!initializing!private! !
-!ScintillaEventDef categoriesFor: #retType:!accessing!private! !
+!Tools.Scintilla.EventDefinition categoriesFor: #args:!private! !
+!Tools.Scintilla.EventDefinition categoriesFor: #constPrefix!constants!initializing!private! !
+!Tools.Scintilla.EventDefinition categoriesFor: #generateHandlerOn:!helpers!private! !
+!Tools.Scintilla.EventDefinition categoriesFor: #id:name:retType:!initializing!private! !
+!Tools.Scintilla.EventDefinition categoriesFor: #retType:!accessing!private! !
 
-!ScintillaEventDef class methodsFor!
+!Tools.Scintilla.EventDefinition class methodsFor!
 
 tokens: anArray 
 	| evt |
@@ -65,5 +66,5 @@ tokens: anArray
 				retType: (anArray at: 1).
 	evt args: (anArray copyFrom: 4).
 	^evt! !
-!ScintillaEventDef class categoriesFor: #tokens:!instance creation!public! !
+!Tools.Scintilla.EventDefinition class categoriesFor: #tokens:!instance creation!public! !
 

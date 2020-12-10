@@ -1,14 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Object subclass: #ScintillaTypeRef
+Core.Object subclass: #'Tools.Scintilla.TypeReference'
 	instanceVariableNames: 'name objectClass byRef toMessage fromMessage default'
 	classVariableNames: 'TypeMap'
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-ScintillaTypeRef guid: (GUID fromString: '{c10bac58-803f-49da-939e-1f2522b7856d}')!
-ScintillaTypeRef comment: ''!
-!ScintillaTypeRef categoriesForClass!Development! !
-!ScintillaTypeRef methodsFor!
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Tools.Scintilla.TypeReference guid: (Core.GUID fromString: '{c10bac58-803f-49da-939e-1f2522b7856d}')!
+Tools.Scintilla.TypeReference comment: ''!
+!Tools.Scintilla.TypeReference categoriesForClass!Development! !
+!Tools.Scintilla.TypeReference methodsFor!
 
 byRef
 	^byRef!
@@ -69,21 +70,21 @@ toMessage: anObject
 
 toScintilla
 	^toMessage! !
-!ScintillaTypeRef categoriesFor: #byRef!accessing!public! !
-!ScintillaTypeRef categoriesFor: #default!accessing!private! !
-!ScintillaTypeRef categoriesFor: #default:!accessing!private! !
-!ScintillaTypeRef categoriesFor: #displayOn:!displaying!public! !
-!ScintillaTypeRef categoriesFor: #emitReturnConversionAround:on:!generating!private! !
-!ScintillaTypeRef categoriesFor: #fromMessage:!accessing!public! !
-!ScintillaTypeRef categoriesFor: #isVoid!accessing!public! !
-!ScintillaTypeRef categoriesFor: #name!accessing!public! !
-!ScintillaTypeRef categoriesFor: #name:objectClass:byRef:!instance creation!private! !
-!ScintillaTypeRef categoriesFor: #objectClass!accessing!public! !
-!ScintillaTypeRef categoriesFor: #printOn:!printing!public! !
-!ScintillaTypeRef categoriesFor: #toMessage:!accessing!private! !
-!ScintillaTypeRef categoriesFor: #toScintilla!accessing!public! !
+!Tools.Scintilla.TypeReference categoriesFor: #byRef!accessing!public! !
+!Tools.Scintilla.TypeReference categoriesFor: #default!accessing!private! !
+!Tools.Scintilla.TypeReference categoriesFor: #default:!accessing!private! !
+!Tools.Scintilla.TypeReference categoriesFor: #displayOn:!displaying!public! !
+!Tools.Scintilla.TypeReference categoriesFor: #emitReturnConversionAround:on:!generating!private! !
+!Tools.Scintilla.TypeReference categoriesFor: #fromMessage:!accessing!public! !
+!Tools.Scintilla.TypeReference categoriesFor: #isVoid!accessing!public! !
+!Tools.Scintilla.TypeReference categoriesFor: #name!accessing!public! !
+!Tools.Scintilla.TypeReference categoriesFor: #name:objectClass:byRef:!instance creation!private! !
+!Tools.Scintilla.TypeReference categoriesFor: #objectClass!accessing!public! !
+!Tools.Scintilla.TypeReference categoriesFor: #printOn:!printing!public! !
+!Tools.Scintilla.TypeReference categoriesFor: #toMessage:!accessing!private! !
+!Tools.Scintilla.TypeReference categoriesFor: #toScintilla!accessing!public! !
 
-!ScintillaTypeRef class methodsFor!
+!Tools.Scintilla.TypeReference class methodsFor!
 
 declareEnum: aString
 	TypeMap at: aString
@@ -95,7 +96,7 @@ declareEnum: aString
 				yourself)!
 
 icon
-	^ScintillaView icon!
+	^UI.Scintilla.ScintillaView icon!
 
 initialize
 	"
@@ -167,7 +168,7 @@ resetTypeMap
 				at: 'textrange'
 					put: ((self
 							name: 'textrange'
-							objectClass: TEXTRANGE
+							objectClass: OS.TEXTRANGE
 							byRef: true)
 							fromMessage: #fromAddress:;
 							yourself);
@@ -179,7 +180,7 @@ resetTypeMap
 				at: 'pointer'
 					put: (self
 							name: 'pointer'
-							objectClass: ExternalAddress
+							objectClass: External.Address
 							byRef: true);
 				at: 'colour'
 					put: ((self
@@ -197,20 +198,20 @@ resetTypeMap
 				at: 'findtext'
 					put: (self
 							name: 'findtext'
-							objectClass: FINDTEXTEX
+							objectClass: OS.FINDTEXTEX
 							byRef: true);
 				at: 'formatrange'
 					put: ((self
 							name: 'formatrange'
-							objectClass: FORMATRANGE
+							objectClass: OS.FORMATRANGE
 							byRef: true)
 							fromMessage: #fromAddress:;
 							yourself);
 				yourself! !
-!ScintillaTypeRef class categoriesFor: #declareEnum:!constants!public! !
-!ScintillaTypeRef class categoriesFor: #icon!constants!development!public! !
-!ScintillaTypeRef class categoriesFor: #initialize!constants!private! !
-!ScintillaTypeRef class categoriesFor: #name:objectClass:byRef:!instance creation!private! !
-!ScintillaTypeRef class categoriesFor: #named:!public! !
-!ScintillaTypeRef class categoriesFor: #resetTypeMap!constants!private! !
+!Tools.Scintilla.TypeReference class categoriesFor: #declareEnum:!constants!public! !
+!Tools.Scintilla.TypeReference class categoriesFor: #icon!constants!development!public! !
+!Tools.Scintilla.TypeReference class categoriesFor: #initialize!constants!private! !
+!Tools.Scintilla.TypeReference class categoriesFor: #name:objectClass:byRef:!instance creation!private! !
+!Tools.Scintilla.TypeReference class categoriesFor: #named:!public! !
+!Tools.Scintilla.TypeReference class categoriesFor: #resetTypeMap!constants!private! !
 

@@ -5370,7 +5370,7 @@ rotateSelection
 				wParam: 0
 				lParam: 0]!
 
-sciAddRefDocument: docExternalAddress
+sciAddRefDocument: docAddress
 	"Private - Extend life of document."
 
 	this
@@ -5379,7 +5379,7 @@ sciAddRefDocument: docExternalAddress
 				directFunction: this
 				msg: SCI_ADDREFDOCUMENT
 				wParam: 0
-				lpParam: docExternalAddress]!
+				lpParam: docAddress]!
 
 sciAddSelection: caretInteger anchor: anchorInteger
 	"Private - Add a selection"
@@ -5520,10 +5520,10 @@ sciAnnotationGetStyles: lineInteger
 						wParam: lineInteger - 1
 						lpParam: nil].
 	^len = 0
-		ifTrue: [ByteArray empty]
+		ifTrue: [Core.ByteArray empty]
 		ifFalse: 
 			[| result |
-			result := ByteArray newFixed: len.
+			result := Core.ByteArray newFixed: len.
 			Library
 				directFunction: this
 				msg: SCI_ANNOTATIONGETSTYLES
@@ -6794,6 +6794,18 @@ sciGetMouseSelectionRectangularSwitch
 				wParam: 0
 				lParam: 0) asBoolean]!
 
+sciGetMultiEdgeColumn: whichInteger
+	"Private - Get multi edge positions."
+
+	^this
+		ifNil: [0]
+		ifNotNil: 
+			[(Library
+				directFunction: this
+				msg: SCI_GETMULTIEDGECOLUMN
+				wParam: whichInteger
+				lParam: 0) + 1]!
+
 sciGetMultiPaste
 	"Private - Retrieve the effect of pasting when there are multiple selections."
 
@@ -7148,10 +7160,10 @@ sciGetSubStyleBases
 						wParam: 0
 						lpParam: nil].
 	^len = 0
-		ifTrue: [ByteArray empty]
+		ifTrue: [Core.ByteArray empty]
 		ifFalse: 
 			[| result |
-			result := ByteArray newFixed: len.
+			result := Core.ByteArray newFixed: len.
 			Library
 				directFunction: this
 				msg: SCI_GETSUBSTYLEBASES
@@ -7554,10 +7566,10 @@ sciMarginGetStyles: lineInteger
 						wParam: lineInteger - 1
 						lpParam: nil].
 	^len = 0
-		ifTrue: [ByteArray empty]
+		ifTrue: [Core.ByteArray empty]
 		ifFalse: 
 			[| result |
-			result := ByteArray newFixed: len.
+			result := Core.ByteArray newFixed: len.
 			Library
 				directFunction: this
 				msg: SCI_MARGINGETSTYLES
@@ -7947,7 +7959,7 @@ sciPositionRelativeCodeUnits: posInteger relative: relativeInteger
 				wParam: posInteger - 1
 				lParam: relativeInteger]!
 
-sciPrivateLexerCall: operationInteger pointer: pointerExternalAddress
+sciPrivateLexerCall: operationInteger pointer: pointerAddress
 	"Private - For private communication between an application and a known lexer."
 
 	^this
@@ -7956,7 +7968,7 @@ sciPrivateLexerCall: operationInteger pointer: pointerExternalAddress
 				directFunction: this
 				msg: SCI_PRIVATELEXERCALL
 				wParam: operationInteger
-				lpParam: pointerExternalAddress]!
+				lpParam: pointerAddress]!
 
 sciPropertyNames
 	"Private - Retrieve a '\n' separated list of properties understood by the current lexer.
@@ -8029,7 +8041,7 @@ sciReleaseAllExtendedStyles
 				wParam: 0
 				lParam: 0]!
 
-sciReleaseDocument: docExternalAddress
+sciReleaseDocument: docAddress
 	"Private - Release a reference to the document, deleting document if it fades to black."
 
 	this
@@ -8038,7 +8050,7 @@ sciReleaseDocument: docExternalAddress
 				directFunction: this
 				msg: SCI_RELEASEDOCUMENT
 				wParam: 0
-				lpParam: docExternalAddress]!
+				lpParam: docAddress]!
 
 sciReleaseLineCharacterIndex: lineCharacterIndexInteger
 	"Private - Decrease use count of line character index and remove if 0."
@@ -8342,7 +8354,7 @@ sciSetControlCharSymbol: symbolInteger
 				wParam: symbolInteger
 				lParam: 0]!
 
-sciSetDocPointer: docExternalAddress
+sciSetDocPointer: docAddress
 	"Private - Change the document object used."
 
 	this
@@ -8351,7 +8363,7 @@ sciSetDocPointer: docExternalAddress
 				directFunction: this
 				msg: SCI_SETDOCPOINTER
 				wParam: 0
-				lpParam: docExternalAddress]!
+				lpParam: docAddress]!
 
 sciSetEdgeColour: edgeColourColor
 	"Private - Change the colour used in edge indication."
@@ -8490,7 +8502,7 @@ sciSetIdleStyling: idleStylingInteger
 				wParam: idleStylingInteger
 				lParam: 0]!
 
-sciSetILexer: ilexerExternalAddress
+sciSetILexer: ilexerAddress
 	"Private - Set the lexer from an ILexer*."
 
 	this
@@ -8499,7 +8511,7 @@ sciSetILexer: ilexerExternalAddress
 				directFunction: this
 				msg: SCI_SETILEXER
 				wParam: 0
-				lpParam: ilexerExternalAddress]!
+				lpParam: ilexerAddress]!
 
 sciSetIMEInteraction: imeInteractionInteger
 	"Private - Choose to display the IME in a window or inline."
@@ -9205,10 +9217,10 @@ sciTargetAsUTF8
 						wParam: 0
 						lpParam: nil].
 	^len = 0
-		ifTrue: [Utf8String empty]
+		ifTrue: [Core.Utf8String empty]
 		ifFalse: 
 			[| result |
-			result := Utf8String newFixed: len.
+			result := Core.Utf8String newFixed: len.
 			Library
 				directFunction: this
 				msg: SCI_TARGETASUTF8
@@ -11960,6 +11972,7 @@ zoomOut
 !UI.Scintilla.ScintillaView categoriesFor: #sciGetMargins!**auto generated**!margins!private!scintilla interface! !
 !UI.Scintilla.ScintillaView categoriesFor: #sciGetMaxLineState!**auto generated**!private!scintilla interface!styling! !
 !UI.Scintilla.ScintillaView categoriesFor: #sciGetMouseSelectionRectangularSwitch!**auto generated**!multiple selection and virtual space!private!scintilla interface! !
+!UI.Scintilla.ScintillaView categoriesFor: #sciGetMultiEdgeColumn:!**auto generated**!private!scintilla interface! !
 !UI.Scintilla.ScintillaView categoriesFor: #sciGetMultiPaste!**auto generated**!multiple selection and virtual space!private!scintilla interface! !
 !UI.Scintilla.ScintillaView categoriesFor: #sciGetNamedStyles!**auto generated**!lexer-style metadata!private!scintilla interface! !
 !UI.Scintilla.ScintillaView categoriesFor: #sciGetNextTabStop:x:!**auto generated**!private!scintilla interface!tabs & indentation guides! !
