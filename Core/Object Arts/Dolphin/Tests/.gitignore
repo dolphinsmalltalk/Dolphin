@@ -1,3 +1,6 @@
 CompilerTestClass.cls
 CompilerTestClasses.pax
 MustBeBooleanTest*.*
+ClassBuilderTest*.*
+ClassWithAbstractMethod*.cls
+BehaviorTestClasses.pax
