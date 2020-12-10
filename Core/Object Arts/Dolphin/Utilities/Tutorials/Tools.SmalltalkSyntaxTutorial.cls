@@ -1,21 +1,19 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-AbstractTutorial subclass: #SmalltalkSyntaxTutorial
+Tools.AbstractTutorial subclass: #'Tools.SmalltalkSyntaxTutorial'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-SmalltalkSyntaxTutorial guid: (GUID fromString: '{3692cc24-6c4c-4441-a0f0-ea8235ac2d25}')!
-SmalltalkSyntaxTutorial comment: 'The default ProfStef tutorial to learn Smalltalk syntax'!
-!SmalltalkSyntaxTutorial categoriesForClass!Kernel-Objects! !
-!SmalltalkSyntaxTutorial methodsFor!
+Tools.SmalltalkSyntaxTutorial guid: (Core.GUID fromString: '{3692cc24-6c4c-4441-a0f0-ea8235ac2d25}')!
+Tools.SmalltalkSyntaxTutorial comment: 'The default ProfStef tutorial to learn Smalltalk syntax'!
+!Tools.SmalltalkSyntaxTutorial categoriesForClass!Kernel-Objects! !
+!Tools.SmalltalkSyntaxTutorial methodsFor!
 
 basicTypesArray
-	^ Lesson
-title: 'Basic types: Array' 
-contents: 
-'"Literal arrays are created at parse time:"
+	^Tools.Lesson title: 'Basic types: Array'
+		contents: '"Literal arrays are created at parse time:"
 
 #(1 2 3).
 
@@ -27,14 +25,11 @@ contents:
 
 #(''hello'' ''Dolphin'') at: 2.
 
-ProfStef next.'
-!
+ProfStef next.'!
 
 basicTypesCharacters
-	^ Lesson
-title: 'Basic types: Characters' 
-contents: 
-'"A Character can be instantiated using $ operator:"
+	^Tools.Lesson title: 'Basic types: Characters'
+		contents: '"A Character can be instantiated using $ operator:"
 
 $A.
 
@@ -54,14 +49,11 @@ Character byteCharacterSet.
 
 $\x1F42C asString.
 
-ProfStef next.'
-!
+ProfStef next.'!
 
 basicTypesNumbers
-	^ Lesson
-title: 'Basic types: Numbers' 
-contents: 
-'"You now know how to execute Smalltalk code. 
+	^Tools.Lesson title: 'Basic types: Numbers'
+		contents: '"You now know how to execute Smalltalk code. 
 
 Now let''s talk about basic objects.
 
@@ -92,14 +84,11 @@ Display these ones:"
 
 (1 + 3) odd.
 
-ProfStef next.'
-!
+ProfStef next.'!
 
 basicTypesString
-	^ Lesson
-title: 'Basic types: Strings' 
-contents: 
-'"A String is a collection of characters. Use single quotes to create a String object. Display these expressions:"
+	^Tools.Lesson title: 'Basic types: Strings'
+		contents: '"A String is a collection of characters. Use single quotes to create a String object. Display these expressions:"
 
 ''ProfStef''.
 
@@ -117,14 +106,11 @@ contents:
 
 ''ProfStef'', '' is cool''.
 
-ProfStef next.'
-!
+ProfStef next.'!
 
 basicTypesSymbol
-	^ Lesson
-title: 'Basic types: Symbols' 
-contents: 
-'"A Symbol is a special String which is guaranteed to be globally unique. 
+	^Tools.Lesson title: 'Basic types: Symbols'
+		contents: '"A Symbol is a special String which is guaranteed to be globally unique. 
 
 There is one and only one Symbol #ProfStef. There may be several ''ProfStef'' String objects.
 
@@ -139,14 +125,11 @@ There is one and only one Symbol #ProfStef. There may be several ''ProfStef'' St
 (2 displayString) asSymbol == (2 displayString) asSymbol.
 
 
-(Smalltalk at: #ProfStef) next.'
-!
+(Smalltalk at: #ProfStef) next.'!
 
 blocks
-	^ Lesson
-title: 'Blocks' 
-contents: 
-'"Cascade is cool !! Let''s talk about blocks.
+	^Tools.Lesson title: 'Blocks'
+		contents: '"Cascade is cool !! Let''s talk about blocks.
 
 Blocks are anonymous methods that can be stored into variables and executed on demand.
 
@@ -170,14 +153,11 @@ Here is a block that adds 2 to its argument (its argument is named x):"
 
 [:x :y| x + y] value:3 value:5.
 
-[ProfStef next] value.'
-!
+[ProfStef next] value.'!
 
 blocksAssignation
-	^ Lesson
-title: 'Block assignation' 
-contents: 
-'"Blocks can be assigned to a variable then executed later.
+	^Tools.Lesson title: 'Block assignation'
+		contents: '"Blocks can be assigned to a variable then executed later.
 
 Note that |b| is the declaration of a variable named ''b'' and that '':='' assigns a value to a variable.
 
@@ -188,14 +168,11 @@ b := [:x | x+2].
 b value: 12.
 
 
-ProfStef next.'
-!
+ProfStef next.'!
 
 conditionals
-	^ Lesson
-title: 'Conditionals' 
-contents: 
-'"Conditionals are just messages sent to Boolean objects"
+	^Tools.Lesson title: 'Conditionals'
+		contents: '"Conditionals are just messages sent to Boolean objects"
 
 1 < 2
   ifTrue: [100]
@@ -211,26 +188,21 @@ Transcript show.
 	ifTrue: [Transcript show: ''maybe there''''s a bug ....'']
 	ifFalse: [Transcript show: ''Everything''''s cool: 3 is less than 10''].
 
-3 = 3 ifTrue: [ProfStef next].'.
-!
+3 = 3 ifTrue: [ProfStef next].'!
 
 debugger
-	^ Lesson
-title: 'Debugger' 
-contents: '"The Debugger may be the most famous tool of Smalltalk environments. 
+	^Tools.Lesson title: 'Debugger'
+		contents: '"The Debugger may be the most famous tool of Smalltalk environments. 
 
 The following code will open the debugger. Either hit Go or step through the code to the next lesson.
 
 self halt. ProfStef default next.
 
- '
-!
+ '!
 
-displaying 
-	^ Lesson
-title: 'Evaluating Vs Displaying: Displaying' 
-contents: 
-'"Now you''re an Evaluate It master !! Let''s talk about displaying results.
+displaying
+	^Tools.Lesson title: 'Evaluating Vs Displaying: Displaying'
+		contents: '"Now you''re an Evaluate It master !! Let''s talk about displaying results.
 It''s an Evaluate It which displays the result next to the expression you''ve selected.
 For example, select the text below, and click on ''DisplayIt'':"
 
@@ -248,11 +220,10 @@ TimeStamp current date.
 
 TimeStamp current time.
 
-ProfStef next.'
-!
+ProfStef next.'!
 
 dolphinEnvironment
-	^Lesson title: 'Dolphin environment'
+	^Tools.Lesson title: 'Dolphin environment'
 		contents: '"Every Smalltalk system is full of objects.
 There are windows, text, numbers, dates, colors, points and much more.
 You can interact with objects in a much more direct way than is possible with other programming languages.
@@ -274,7 +245,7 @@ ProfStef superclass browse.
 ProfStef next.'!
 
 evaluatingVsDisplaying
-	^Lesson title: 'Evaluating vs Displaying: Evaluating'
+	^Tools.Lesson title: 'Evaluating vs Displaying: Evaluating'
 		contents: '"Cool !! (I like to say Cooool :) ).
 You''ve just executed a Smalltalk expression.
 More precisely, you sent the message ''next'' to ProfStef class (it''s me !!).
@@ -293,7 +264,7 @@ MessageBox notify: ''hello world!!''.
 ProfStef next.'!
 
 instantiation
-	^Lesson title: 'Instantiation'
+	^Tools.Lesson title: 'Instantiation'
 		contents: '"Objects are instances of their class. Usually, we send the message #new to a class for creating an instance of this class.
 
 For example, let''s create an instance of the class OrderedCollection"
@@ -325,10 +296,8 @@ Transcript show: aCollection printString; cr.
 ProfStef next'!
 
 iterators
-	^ Lesson
-title: 'Iterators' 
-contents: 
-'"The message do: is sent to a collection of objects (Array, Dictionary, String, etc), evaluating the block for each element.
+	^Tools.Lesson title: 'Iterators'
+		contents: '"The message do: is sent to a collection of objects (Array, Dictionary, String, etc), evaluating the block for each element.
 
 Here we want to print all the numbers on the Transcript (a console)"
 
@@ -352,14 +321,11 @@ Here we want to print all the numbers on the Transcript (a console)"
      separatedBy: [Transcript show: ''.''].
 
 
-(Smalltalk allClasses select: [:eachClass | eachClass name = #ProfStef]) do: [:eachProfstef | eachProfstef next].'
-!
+(Smalltalk allClasses select: [:eachClass | eachClass name = #ProfStef]) do: [:eachProfstef | eachProfstef next].'!
 
 loops
-	^ Lesson
-title: 'Loops' 
-contents: 
-'"Loops are high-level collection iterators, implemented as regular methods."
+	^Tools.Lesson title: 'Loops'
+		contents: '"Loops are high-level collection iterators, implemented as regular methods."
 
 "Basic loops:
   to:do:
@@ -373,14 +339,11 @@ contents:
 100 to: 0 by: -2 do: 
     [:i | Transcript show: i displayString; cr].
 
-1 to: 1 do: [:i | ProfStef next].'
-!
+1 to: 1 do: [:i | ProfStef next].'!
 
 mathematicalPrecedence
-	^ Lesson
-title: 'Mathematical precedence'
-contents: 
-'"Traditional precedence rules from mathematics do not follow in Smalltalk."
+	^Tools.Lesson title: 'Mathematical precedence'
+		contents: '"Traditional precedence rules from mathematics do not follow in Smalltalk."
 
 2 * 10 + 2.
 
@@ -398,14 +361,11 @@ Remember that all messages always follow a simple left-to-right precedence rule,
 
 8 - (5 / 2).
 
-ProfStef next.'
-!
+ProfStef next.'!
 
 messageSyntaxBinary
-	^ Lesson
-title: 'Message syntax: Binary messages' 
-contents: 
-'"Binary messages have the following form:
+	^Tools.Lesson title: 'Message syntax: Binary messages'
+		contents: '"Binary messages have the following form:
     anObject + anotherObject"
 
 3 * 2.
@@ -424,14 +384,11 @@ true & false.
 
 ''ab'', ''cd''.
 
-ProfStef next.'
-!
+ProfStef next.'!
 
 messageSyntaxCascade
-	^ Lesson
-title: 'Message syntax: Cascade' 
-contents: 
-'"; is the cascade operator. It''s useful to send message to the SAME receiver
+	^Tools.Lesson title: 'Message syntax: Cascade'
+		contents: '"; is the cascade operator. It''s useful to send message to the SAME receiver
 Open a Transcript (like a console):"
 
 Transcript show.
@@ -452,25 +409,19 @@ Transcript
 "You can close the Transcript window now.
 Try to go to the next lesson by writing a cascade of two ''next'' messages:"
 
-ProfStef'.
-!
+ProfStef'!
 
 messageSyntaxCascadeShouldNotBeHere
-	^ Lesson
-title: 'Lost ?' 
-contents: 
-'"Hey, you should not be here !!!! 
+	^Tools.Lesson title: 'Lost ?'
+		contents: '"Hey, you should not be here !!!! 
 
 Go back and use a cascade !!"
 
-ProfStef previous.'.
-!
+ProfStef previous.'!
 
 messageSyntaxExecutionOrder
-	^ Lesson
-title: 'Message syntax: Execution order' 
-contents: 
-'"Unary messages are executed first, then binary messages and finally keyword messages:
+	^Tools.Lesson title: 'Message syntax: Execution order'
+		contents: '"Unary messages are executed first, then binary messages and finally keyword messages:
     Unary > Binary > Keywords"
 
 2.5 + 3.8 rounded.
@@ -487,27 +438,21 @@ contents:
 
 -12345 negated displayString reverse.
 
-ProfStef next.'
-!
+ProfStef next.'!
 
 messageSyntaxExecutionOrderParentheses
-	^ Lesson
-title: 'Message syntax: Parentheses'
-contents: 
-'"Use parentheses to change order of evaluation"
+	^Tools.Lesson title: 'Message syntax: Parentheses'
+		contents: '"Use parentheses to change order of evaluation"
 
 (2.5 + 3.8) rounded.
 
 (3 max: 2) + 2.
 
-ProfStef next.'
-!
+ProfStef next.'!
 
 messageSyntaxKeyword
-	^ Lesson
-title: 'Message syntax: Keyword messages' 
-contents: 
-'"Keyword Messages are messages with arguments. They have the following form:
+	^Tools.Lesson title: 'Message syntax: Keyword messages'
+		contents: '"Keyword Messages are messages with arguments. They have the following form:
     anObject akey: anotherObject akey2: anotherObject2"
 
 ''Smalltalk development is a good deal of pain'' copyFrom: 1 to: 36
@@ -525,14 +470,11 @@ Array
 	with: 2
 	with: ''Smalltalk''.
 	
-ProfStef perform: ''next''.'
-!
+ProfStef perform: ''next''.'!
 
 messageSyntaxUnary
-	^ Lesson
-title: 'Message syntax: Unary messages' 
-contents: 
-'"Messages are sent to objects. There are three types of message: Unary, Binary and Keyword.
+	^Tools.Lesson title: 'Message syntax: Unary messages'
+		contents: '"Messages are sent to objects. There are three types of message: Unary, Binary and Keyword.
 
 Unary messages have the following form:
     anObject aMessage 
@@ -549,18 +491,15 @@ Float pi.
 
 "And of course: "
 
-ProfStef next.'
-!
+ProfStef next.'!
 
 name	
 	^'Prof Stef Says - Let''s Learn Smalltalk'
 !
 
 reflection
-	^ Lesson
-title: 'Reflection' 
-contents: 
-'"You can inspect and change the system at runtime.
+	^Tools.Lesson title: 'Reflection'
+		contents: '"You can inspect and change the system at runtime.
 
 Take a look at the source code of the method #and: of the class Boolean:"
 
@@ -580,14 +519,11 @@ ProfStef class compile: ''goToNextLesson ProfStef next.''
 
 "Wow!! I can''t wait to use my new method!!"
 
-ProfStef goToNextLesson.'
-!
+ProfStef goToNextLesson.'!
 
 reflectionContinued
-	^ Lesson
-title: 'Reflection continued' 
-contents: 
-'"So cool, isn''t it ?  Before going further, let''s remove this method:"
+	^Tools.Lesson title: 'Reflection continued'
+		contents: '"So cool, isn''t it ?  Before going further, let''s remove this method:"
 
 ProfStef class compiledMethodAt: #goToNextLesson.
 
@@ -600,63 +536,56 @@ ProfStef class methodAt: #goToNextLesson.
 
 "Then move forward:"
 
-ProfStef perform: #next'
-!
+ProfStef perform: #next'!
 
 tableOfContents
 	^#(#welcome #evaluatingVsDisplaying #displaying #basicTypesNumbers #basicTypesCharacters #basicTypesString #basicTypesSymbol #basicTypesArray #messageSyntaxUnary #messageSyntaxBinary #messageSyntaxKeyword #messageSyntaxExecutionOrder #messageSyntaxExecutionOrderParentheses #mathematicalPrecedence #messageSyntaxCascade #messageSyntaxCascadeShouldNotBeHere #blocks #blocksAssignation #conditionals #loops #iterators #instantiation #reflection #reflectionContinued #dolphinEnvironment #debugger #theEnd)!
 
 theEnd
-	^ Lesson
-title: 'The End !!' 
-contents: 
-'"This tutorial is done. Enjoy programming Smalltalk with Dolphin. 
+	^Tools.Lesson title: 'The End !!'
+		contents: '"This tutorial is done. Enjoy programming Smalltalk with Dolphin. 
 
 You can run this tutorial again by evaluating: ProfStef go.
 
 See you soon !!"
-'
-!
+'!
 
 welcome
-	^ Lesson
-title: 'Welcome' 
-contents: 
-'"Hello!! I''m Professor Stef. 
+	^Tools.Lesson title: 'Welcome'
+		contents: '"Hello!! I''m Professor Stef. 
 
 You must want me to help you learn Smalltalk.
 
 So let''s go to the first lesson.  Select the text below and click on the ''EvaluateIt'' button"
 
-ProfStef next.'
-! !
-!SmalltalkSyntaxTutorial categoriesFor: #basicTypesArray!pages!public! !
-!SmalltalkSyntaxTutorial categoriesFor: #basicTypesCharacters!pages!public! !
-!SmalltalkSyntaxTutorial categoriesFor: #basicTypesNumbers!pages!public! !
-!SmalltalkSyntaxTutorial categoriesFor: #basicTypesString!pages!public! !
-!SmalltalkSyntaxTutorial categoriesFor: #basicTypesSymbol!pages!public! !
-!SmalltalkSyntaxTutorial categoriesFor: #blocks!pages!public! !
-!SmalltalkSyntaxTutorial categoriesFor: #blocksAssignation!pages!public! !
-!SmalltalkSyntaxTutorial categoriesFor: #conditionals!pages!public! !
-!SmalltalkSyntaxTutorial categoriesFor: #debugger!pages!public! !
-!SmalltalkSyntaxTutorial categoriesFor: #displaying!pages!public! !
-!SmalltalkSyntaxTutorial categoriesFor: #dolphinEnvironment!pages!public! !
-!SmalltalkSyntaxTutorial categoriesFor: #evaluatingVsDisplaying!pages!public! !
-!SmalltalkSyntaxTutorial categoriesFor: #instantiation!pages!public! !
-!SmalltalkSyntaxTutorial categoriesFor: #iterators!pages!public! !
-!SmalltalkSyntaxTutorial categoriesFor: #loops!pages!public! !
-!SmalltalkSyntaxTutorial categoriesFor: #mathematicalPrecedence!pages!public! !
-!SmalltalkSyntaxTutorial categoriesFor: #messageSyntaxBinary!pages!public! !
-!SmalltalkSyntaxTutorial categoriesFor: #messageSyntaxCascade!pages!public! !
-!SmalltalkSyntaxTutorial categoriesFor: #messageSyntaxCascadeShouldNotBeHere!pages!public! !
-!SmalltalkSyntaxTutorial categoriesFor: #messageSyntaxExecutionOrder!pages!public! !
-!SmalltalkSyntaxTutorial categoriesFor: #messageSyntaxExecutionOrderParentheses!pages!public! !
-!SmalltalkSyntaxTutorial categoriesFor: #messageSyntaxKeyword!pages!public! !
-!SmalltalkSyntaxTutorial categoriesFor: #messageSyntaxUnary!pages!public! !
-!SmalltalkSyntaxTutorial categoriesFor: #name!accessing!public! !
-!SmalltalkSyntaxTutorial categoriesFor: #reflection!pages!public! !
-!SmalltalkSyntaxTutorial categoriesFor: #reflectionContinued!pages!public! !
-!SmalltalkSyntaxTutorial categoriesFor: #tableOfContents!contents!public! !
-!SmalltalkSyntaxTutorial categoriesFor: #theEnd!pages!public! !
-!SmalltalkSyntaxTutorial categoriesFor: #welcome!pages!public! !
+ProfStef next.'! !
+!Tools.SmalltalkSyntaxTutorial categoriesFor: #basicTypesArray!pages!public! !
+!Tools.SmalltalkSyntaxTutorial categoriesFor: #basicTypesCharacters!pages!public! !
+!Tools.SmalltalkSyntaxTutorial categoriesFor: #basicTypesNumbers!pages!public! !
+!Tools.SmalltalkSyntaxTutorial categoriesFor: #basicTypesString!pages!public! !
+!Tools.SmalltalkSyntaxTutorial categoriesFor: #basicTypesSymbol!pages!public! !
+!Tools.SmalltalkSyntaxTutorial categoriesFor: #blocks!pages!public! !
+!Tools.SmalltalkSyntaxTutorial categoriesFor: #blocksAssignation!pages!public! !
+!Tools.SmalltalkSyntaxTutorial categoriesFor: #conditionals!pages!public! !
+!Tools.SmalltalkSyntaxTutorial categoriesFor: #debugger!pages!public! !
+!Tools.SmalltalkSyntaxTutorial categoriesFor: #displaying!pages!public! !
+!Tools.SmalltalkSyntaxTutorial categoriesFor: #dolphinEnvironment!pages!public! !
+!Tools.SmalltalkSyntaxTutorial categoriesFor: #evaluatingVsDisplaying!pages!public! !
+!Tools.SmalltalkSyntaxTutorial categoriesFor: #instantiation!pages!public! !
+!Tools.SmalltalkSyntaxTutorial categoriesFor: #iterators!pages!public! !
+!Tools.SmalltalkSyntaxTutorial categoriesFor: #loops!pages!public! !
+!Tools.SmalltalkSyntaxTutorial categoriesFor: #mathematicalPrecedence!pages!public! !
+!Tools.SmalltalkSyntaxTutorial categoriesFor: #messageSyntaxBinary!pages!public! !
+!Tools.SmalltalkSyntaxTutorial categoriesFor: #messageSyntaxCascade!pages!public! !
+!Tools.SmalltalkSyntaxTutorial categoriesFor: #messageSyntaxCascadeShouldNotBeHere!pages!public! !
+!Tools.SmalltalkSyntaxTutorial categoriesFor: #messageSyntaxExecutionOrder!pages!public! !
+!Tools.SmalltalkSyntaxTutorial categoriesFor: #messageSyntaxExecutionOrderParentheses!pages!public! !
+!Tools.SmalltalkSyntaxTutorial categoriesFor: #messageSyntaxKeyword!pages!public! !
+!Tools.SmalltalkSyntaxTutorial categoriesFor: #messageSyntaxUnary!pages!public! !
+!Tools.SmalltalkSyntaxTutorial categoriesFor: #name!accessing!public! !
+!Tools.SmalltalkSyntaxTutorial categoriesFor: #reflection!pages!public! !
+!Tools.SmalltalkSyntaxTutorial categoriesFor: #reflectionContinued!pages!public! !
+!Tools.SmalltalkSyntaxTutorial categoriesFor: #tableOfContents!contents!public! !
+!Tools.SmalltalkSyntaxTutorial categoriesFor: #theEnd!pages!public! !
+!Tools.SmalltalkSyntaxTutorial categoriesFor: #welcome!pages!public! !
 

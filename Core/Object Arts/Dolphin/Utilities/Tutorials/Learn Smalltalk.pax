@@ -1,17 +1,17 @@
 ﻿| package |
 package := Package name: 'Learn Smalltalk'.
-package paxVersion: 2;
+package paxVersion: 2.1;
 	preDeclareClassesOnLoad: false;
 	basicComment: ''.
 
 
 package setClassNames: #(
-	#{ProfStef}
-	#{SmalltalkSyntaxTutorial}
+	#{Tools.ProfStef}
+	#{Tools.SmalltalkSyntaxTutorial}
 ).
 
 package setMethodNames: #(
-	#(#{SmalltalkSystem} #learnSmalltalk)
+	#(#{Tools.SmalltalkSystem} #learnSmalltalk)
 ).
 
 package setPrerequisites: #(
@@ -24,28 +24,28 @@ package!
 
 "Class Definitions"!
 
-AbstractTutorial subclass: #SmalltalkSyntaxTutorial
+Tools.AbstractTutorial subclass: #'Tools.SmalltalkSyntaxTutorial'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-TutorialPlayer subclass: #ProfStef
+Tools.TutorialPlayer subclass: #'Tools.ProfStef'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: 'default'
 	classConstants: {}!
 
 "Loose Methods"!
 
-!SmalltalkSystem methodsFor!
+!Tools.SmalltalkSystem methodsFor!
 
 learnSmalltalk
 	"Open the Learn Smalltalk tutorial"
 
-	ProfStef show! !
-!SmalltalkSystem categoriesFor: #learnSmalltalk!commands!operations!public! !
+	Tools.ProfStef show! !
+!Tools.SmalltalkSystem categoriesFor: #learnSmalltalk!commands!operations!public! !
 
 "End of package definition"!
 

@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Object subclass: #Lesson
+Core.Object subclass: #'Tools.Lesson'
 	instanceVariableNames: 'title contents'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Lesson guid: (GUID fromString: '{430b4d82-364a-44fc-9c2b-5b546c048ef9}')!
-Lesson comment: ''!
-!Lesson categoriesForClass!Unclassified! !
-!Lesson methodsFor!
+Tools.Lesson guid: (Core.GUID fromString: '{430b4d82-364a-44fc-9c2b-5b546c048ef9}')!
+Tools.Lesson comment: ''!
+!Tools.Lesson categoriesForClass!Unclassified! !
+!Tools.Lesson methodsFor!
 
 contents
 	^ contents ifNil: [contents := '']
@@ -26,21 +26,21 @@ title
 title: aString
 	title := aString
 ! !
-!Lesson categoriesFor: #contents!accessing!public! !
-!Lesson categoriesFor: #contents:!accessing!public! !
-!Lesson categoriesFor: #title!accessing!public! !
-!Lesson categoriesFor: #title:!accessing!public! !
+!Tools.Lesson categoriesFor: #contents!accessing!public! !
+!Tools.Lesson categoriesFor: #contents:!accessing!public! !
+!Tools.Lesson categoriesFor: #title!accessing!public! !
+!Tools.Lesson categoriesFor: #title:!accessing!public! !
 
-!Lesson class methodsFor!
+!Tools.Lesson class methodsFor!
 
 icon
-	^AbstractTutorial icon!
+	^Tools.AbstractTutorial icon!
 
 title: aTitle contents: someContents
 	^ (self new)
 		title: aTitle;
 		contents: someContents
 ! !
-!Lesson class categoriesFor: #icon!constants!public! !
-!Lesson class categoriesFor: #title:contents:!instance creation!public! !
+!Tools.Lesson class categoriesFor: #icon!constants!public! !
+!Tools.Lesson class categoriesFor: #title:contents:!instance creation!public! !
 

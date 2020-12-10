@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-TutorialPlayer subclass: #ProfStef
+Tools.TutorialPlayer subclass: #'Tools.ProfStef'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: 'default'
 	classConstants: {}!
-ProfStef guid: (GUID fromString: '{60f1ec8a-daba-4ccb-bbe6-a35d8192215a}')!
-ProfStef comment: 'A ProfStef is the Smalltalk teacher. To start the tutorial, evaluate:
+Tools.ProfStef guid: (Core.GUID fromString: '{60f1ec8a-daba-4ccb-bbe6-a35d8192215a}')!
+Tools.ProfStef comment: 'A ProfStef is the Smalltalk teacher. To start the tutorial, evaluate:
 ProfStef go.
 
 To go to the next lesson evaluate:
@@ -18,22 +18,22 @@ ProfStef goOn: MyOwnTutorial
 
 To see a table of contents with all defined tutorials:
 ProfStef contents'!
-!ProfStef categoriesForClass!Unclassified! !
-!ProfStef methodsFor!
+!Tools.ProfStef categoriesForClass!Unclassified! !
+!Tools.ProfStef methodsFor!
 
 onViewDestroyed
 	super onViewDestroyed.
 	self class reset! !
-!ProfStef categoriesFor: #onViewDestroyed!event handling!private! !
+!Tools.ProfStef categoriesFor: #onViewDestroyed!event handling!private! !
 
-!ProfStef class methodsFor!
+!Tools.ProfStef class methodsFor!
 
 default 
 	^ default ifNil: [default := super show]
 !
 
-defaultModel 	
-	^SmalltalkSyntaxTutorial new!
+defaultModel
+	^Tools.SmalltalkSyntaxTutorial new!
 
 first
 	"Move to the first lesson. We post to the input queue to avoid issues
@@ -75,13 +75,13 @@ show
 	profStef := self default.
 	profStef view beActive.
 	^profStef! !
-!ProfStef class categoriesFor: #default!initialize!public! !
-!ProfStef class categoriesFor: #defaultModel!public! !
-!ProfStef class categoriesFor: #first!navigation!public! !
-!ProfStef class categoriesFor: #go!navigation!public! !
-!ProfStef class categoriesFor: #initialize!public! !
-!ProfStef class categoriesFor: #next!navigation!public! !
-!ProfStef class categoriesFor: #previous!navigation!public! !
-!ProfStef class categoriesFor: #reset!initialize!private! !
-!ProfStef class categoriesFor: #show!initialize!public! !
+!Tools.ProfStef class categoriesFor: #default!initialize!public! !
+!Tools.ProfStef class categoriesFor: #defaultModel!public! !
+!Tools.ProfStef class categoriesFor: #first!navigation!public! !
+!Tools.ProfStef class categoriesFor: #go!navigation!public! !
+!Tools.ProfStef class categoriesFor: #initialize!public! !
+!Tools.ProfStef class categoriesFor: #next!navigation!public! !
+!Tools.ProfStef class categoriesFor: #previous!navigation!public! !
+!Tools.ProfStef class categoriesFor: #reset!initialize!private! !
+!Tools.ProfStef class categoriesFor: #show!initialize!public! !
 

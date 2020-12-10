@@ -1,14 +1,14 @@
 ﻿| package |
 package := Package name: 'Tutorial Player'.
-package paxVersion: 2;
+package paxVersion: 2.1;
 	preDeclareClassesOnLoad: false;
 	basicComment: ''.
 
 
 package setClassNames: #(
-	#{AbstractTutorial}
-	#{Lesson}
-	#{TutorialPlayer}
+	#{Tools.AbstractTutorial}
+	#{Tools.Lesson}
+	#{Tools.TutorialPlayer}
 ).
 
 package setPrerequisites: #(
@@ -29,22 +29,22 @@ package!
 
 "Class Definitions"!
 
-Object subclass: #AbstractTutorial
+Core.Object subclass: #'Tools.AbstractTutorial'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Object subclass: #Lesson
+Core.Object subclass: #'Tools.Lesson'
 	instanceVariableNames: 'title contents'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Shell subclass: #TutorialPlayer
+UI.Shell subclass: #'Tools.TutorialPlayer'
 	instanceVariableNames: 'tutorialPosition tutorial title workspace'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 
