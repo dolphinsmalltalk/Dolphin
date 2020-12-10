@@ -1,17 +1,17 @@
 ﻿| package |
 package := Package name: 'SUnit'.
-package paxVersion: 2;
+package paxVersion: 2.1;
 	preDeclareClassesOnLoad: false;
 	basicComment: ''.
 
 
 package setClassNames: #(
-	#{TestCase}
-	#{TestCaseResult}
-	#{TestResource}
-	#{TestResult}
-	#{TestSkip}
-	#{TestSuite}
+	#{XProgramming.SUnit.TestCase}
+	#{XProgramming.SUnit.TestCaseResult}
+	#{XProgramming.SUnit.TestResource}
+	#{XProgramming.SUnit.TestResult}
+	#{XProgramming.SUnit.TestSkip}
+	#{XProgramming.SUnit.TestSuite}
 ).
 
 package setPrerequisites: #(
@@ -23,37 +23,37 @@ package!
 
 "Class Definitions"!
 
-Object subclass: #TestCase
+Core.Object subclass: #'XProgramming.SUnit.TestCase'
 	instanceVariableNames: 'testSelector'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Object subclass: #TestCaseResult
+Core.Object subclass: #'XProgramming.SUnit.TestCaseResult'
 	instanceVariableNames: 'case outcome duration signal stacktrace ip testMethod'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Object subclass: #TestResource
+Core.Object subclass: #'XProgramming.SUnit.TestResource'
 	instanceVariableNames: 'name description'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: 'current'
 	classConstants: {}!
-Object subclass: #TestResult
+Core.Object subclass: #'XProgramming.SUnit.TestResult'
 	instanceVariableNames: 'results failures errors passed skipped duration'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Object subclass: #TestSuite
+Core.Object subclass: #'XProgramming.SUnit.TestSuite'
 	instanceVariableNames: 'tests resources name'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Notification subclass: #TestSkip
+Core.Notification subclass: #'XProgramming.SUnit.TestSkip'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

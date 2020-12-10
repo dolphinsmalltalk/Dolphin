@@ -98,7 +98,6 @@ package setPrerequisites: #(
 	'..\..\ActiveX\COM\OLE COM'
 	'..\..\..\..\Contributions\Camp Smalltalk\SUnit\SUnit'
 	'..\..\..\..\Contributions\Camp Smalltalk\SUnit\SUnitLegacy'
-	'..\..\..\..\Contributions\Camp Smalltalk\SUnit\SUnitPreload'
 	'..\..\ActiveX\Shell\Windows Shell'
 	'..\..\ActiveX\Components\XML DOM\XML DOM'
 ).
@@ -140,7 +139,7 @@ ClassBrowserPlugin subclass: #ResourceListPlugin
 ClassBrowserPlugin subclass: #UnitTestPlugin
 	instanceVariableNames: 'result icon autoSwitchProcess defectsPresenter modePresenter detailsPresenter'
 	classVariableNames: 'AutoSwitchDelayMs ErrorColor FailColor NoTestsColor PassColor RunningColor'
-	imports: #(#{XProgramming.SUnit})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 ClassSelector subclass: #PackagedClassSelector
@@ -172,7 +171,7 @@ SmalltalkToolShell subclass: #AXControlBrowser
 SmalltalkToolShell subclass: #IdeaSpaceShell
 	instanceVariableNames: 'cardsPresenter backgroundPresenter defaultMenuBar cardHistory filename'
 	classVariableNames: ''
-	imports: #(#{Win32Constants})
+	imports: #(#{OS.Win32Constants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 SmalltalkToolShell subclass: #ProcessMonitor

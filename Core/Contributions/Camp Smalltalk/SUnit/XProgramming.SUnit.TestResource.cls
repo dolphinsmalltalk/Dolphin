@@ -1,16 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Object subclass: #TestResource
+Core.Object subclass: #'XProgramming.SUnit.TestResource'
 	instanceVariableNames: 'name description'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: 'current'
 	classConstants: {}!
-TestResource guid: (GUID fromString: '{69aeb725-622f-43db-a9c7-095932055892}')!
-TestResource isAbstract: true!
-TestResource comment: ''!
-!TestResource categoriesForClass!Unclassified! !
-!TestResource methodsFor!
+XProgramming.SUnit.TestResource guid: (Core.GUID fromString: '{69aeb725-622f-43db-a9c7-095932055892}')!
+XProgramming.SUnit.TestResource isNonInstantiable: true!
+XProgramming.SUnit.TestResource comment: ''!
+!XProgramming.SUnit.TestResource categoriesForClass!Unclassified! !
+!XProgramming.SUnit.TestResource methodsFor!
 
 description
 	description isNil ifTrue: [^''].
@@ -50,19 +50,19 @@ setUp
 tearDown
 	"Does nothing. Subclasses should override this
 	to tear down their resource"! !
-!TestResource categoriesFor: #description!Accessing!public! !
-!TestResource categoriesFor: #description:!Accessing!public! !
-!TestResource categoriesFor: #initialize!Init / Release!public! !
-!TestResource categoriesFor: #isAvailable!public!Testing! !
-!TestResource categoriesFor: #isUnavailable!public!Testing! !
-!TestResource categoriesFor: #name!Accessing!public! !
-!TestResource categoriesFor: #name:!Accessing!public! !
-!TestResource categoriesFor: #printOn:!Printing!public! !
-!TestResource categoriesFor: #resources!public! !
-!TestResource categoriesFor: #setUp!public!Running! !
-!TestResource categoriesFor: #tearDown!public!Running! !
+!XProgramming.SUnit.TestResource categoriesFor: #description!Accessing!public! !
+!XProgramming.SUnit.TestResource categoriesFor: #description:!Accessing!public! !
+!XProgramming.SUnit.TestResource categoriesFor: #initialize!Init / Release!public! !
+!XProgramming.SUnit.TestResource categoriesFor: #isAvailable!public!Testing! !
+!XProgramming.SUnit.TestResource categoriesFor: #isUnavailable!public!Testing! !
+!XProgramming.SUnit.TestResource categoriesFor: #name!Accessing!public! !
+!XProgramming.SUnit.TestResource categoriesFor: #name:!Accessing!public! !
+!XProgramming.SUnit.TestResource categoriesFor: #printOn:!Printing!public! !
+!XProgramming.SUnit.TestResource categoriesFor: #resources!public! !
+!XProgramming.SUnit.TestResource categoriesFor: #setUp!public!Running! !
+!XProgramming.SUnit.TestResource categoriesFor: #tearDown!public!Running! !
 
-!TestResource class methodsFor!
+!XProgramming.SUnit.TestResource class methodsFor!
 
 current
 	current isNil ifTrue: [current := self new].
@@ -91,12 +91,12 @@ resources
 
 signalInitializationError
 	^TestResult signalErrorWith: 'Resource ' , self name , ' could not be initialized'! !
-!TestResource class categoriesFor: #current!Accessing!public! !
-!TestResource class categoriesFor: #current:!Accessing!public! !
-!TestResource class categoriesFor: #isAvailable!public!Testing! !
-!TestResource class categoriesFor: #isUnavailable!public!Testing! !
-!TestResource class categoriesFor: #new!Creation!public! !
-!TestResource class categoriesFor: #reset!Creation!public! !
-!TestResource class categoriesFor: #resources!public! !
-!TestResource class categoriesFor: #signalInitializationError!public!Running! !
+!XProgramming.SUnit.TestResource class categoriesFor: #current!Accessing!public! !
+!XProgramming.SUnit.TestResource class categoriesFor: #current:!Accessing!public! !
+!XProgramming.SUnit.TestResource class categoriesFor: #isAvailable!public!Testing! !
+!XProgramming.SUnit.TestResource class categoriesFor: #isUnavailable!public!Testing! !
+!XProgramming.SUnit.TestResource class categoriesFor: #new!Creation!public! !
+!XProgramming.SUnit.TestResource class categoriesFor: #reset!Creation!public! !
+!XProgramming.SUnit.TestResource class categoriesFor: #resources!public! !
+!XProgramming.SUnit.TestResource class categoriesFor: #signalInitializationError!public!Running! !
 

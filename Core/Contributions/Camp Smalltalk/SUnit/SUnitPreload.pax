@@ -1,26 +1,20 @@
 ﻿| package |
 package := Package name: 'SUnitPreload'.
-package paxVersion: 2;
+package paxVersion: 2.1;
 	preDeclareClassesOnLoad: false;
 	basicComment: ''.
 
 
 package setClassNames: #(
-	#{ResumableTestFailure}
-	#{SUnitNameResolver}
-	#{TestFailure}
+	#{XProgramming}
+	#{XProgramming.SUnit}
+	#{XProgramming.SUnit.ResumableTestFailure}
+	#{XProgramming.SUnit.SUnitNameResolver}
+	#{XProgramming.SUnit.TestFailure}
 ).
 
 package setMethodNames: #(
-	#(#{Exception} #sunitExitWith:)
-).
-
-package setVariableNames: #(
-	#{SUnitDelay}
-).
-
-package setAliasVariableNames: #(
-	#{SUnitDelay}
+	#(#{Core.Exception} #sunitExitWith:)
 ).
 
 package setPrerequisites: #(
@@ -31,37 +25,44 @@ package!
 
 "Class Definitions"!
 
-Object subclass: #SUnitNameResolver
+Kernel.Namespace subclass: #XProgramming
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #(#{Core})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Error subclass: #TestFailure
+XProgramming subclass: #'XProgramming.SUnit'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-TestFailure subclass: #ResumableTestFailure
+Core.Object subclass: #'XProgramming.SUnit.SUnitNameResolver'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-
-"Variable Aliases"!
-
-SUnitDelay := Delay!
-
+Core.Error subclass: #'XProgramming.SUnit.TestFailure'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+XProgramming.SUnit.TestFailure subclass: #'XProgramming.SUnit.ResumableTestFailure'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
 
 "Loose Methods"!
 
-!Exception methodsFor!
+!Core.Exception methodsFor!
 
 sunitExitWith: aValue
 	self return: aValue! !
-!Exception categoriesFor: #sunitExitWith:!Camp Smalltalk!handler responses!public! !
+!Core.Exception categoriesFor: #sunitExitWith:!Camp Smalltalk!handler responses!public! !
 
 "End of package definition"!
 

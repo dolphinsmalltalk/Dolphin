@@ -1,17 +1,17 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Object subclass: #SUnitNameResolver
+Core.Object subclass: #'XProgramming.SUnit.SUnitNameResolver'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-SUnitNameResolver guid: (GUID fromString: '{786377a2-4134-11d4-907e-00e09803abef}')!
-SUnitNameResolver comment: ''!
-!SUnitNameResolver categoriesForClass!SUnitPreload! !
-!SUnitNameResolver class methodsFor!
+XProgramming.SUnit.SUnitNameResolver guid: (Core.GUID fromString: '{786377a2-4134-11d4-907e-00e09803abef}')!
+XProgramming.SUnit.SUnitNameResolver comment: ''!
+!XProgramming.SUnit.SUnitNameResolver categoriesForClass!SUnitPreload! !
+!XProgramming.SUnit.SUnitNameResolver class methodsFor!
 
 classNamed: aSymbol
 	^aSymbol asQualifiedReference valueOrNil! !
-!SUnitNameResolver class categoriesFor: #classNamed:!Camp Smalltalk!public! !
+!XProgramming.SUnit.SUnitNameResolver class categoriesFor: #classNamed:!Camp Smalltalk!public! !
 

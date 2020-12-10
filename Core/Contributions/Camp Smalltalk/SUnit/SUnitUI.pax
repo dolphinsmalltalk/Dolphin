@@ -1,16 +1,23 @@
 ﻿| package |
 package := Package name: 'SUnitUI'.
-package paxVersion: 2;
+package paxVersion: 2.1;
 	preDeclareClassesOnLoad: false;
 	basicComment: ''.
 
 
 package setClassNames: #(
-	#{TestRunner}
+	#{XProgramming.SUnit.TestRunner}
 ).
 
 package setMethodNames: #(
-	#(#{TestCase class} #icon)
+	#(#{XProgramming class} #icon)
+	#(#{XProgramming.SUnit class} #icon)
+	#(#{XProgramming.SUnit.TestCase class} #icon)
+	#(#{XProgramming.SUnit.TestCaseResult class} #icon)
+	#(#{XProgramming.SUnit.TestResource class} #icon)
+	#(#{XProgramming.SUnit.TestResult class} #icon)
+	#(#{XProgramming.SUnit.TestRunLogger class} #icon)
+	#(#{XProgramming.SUnit.TestSuite class} #icon)
 ).
 
 package setPrerequisites: #(
@@ -22,31 +29,89 @@ package setPrerequisites: #(
 	'..\..\..\Object Arts\Dolphin\MVP\Base\Dolphin MVP Base'
 	'..\..\..\Object Arts\Dolphin\MVP\Icons\Dolphin Text Tile Icons'
 	'..\..\..\Object Arts\Dolphin\MVP\Type Converters\Dolphin Type Converters'
+	'OA SUnit Extensions'
 	'SUnit'
+	'SUnitPreload'
 ).
 
 package!
 
 "Class Definitions"!
 
-Shell subclass: #TestRunner
+UI.Shell subclass: #'XProgramming.SUnit.TestRunner'
 	instanceVariableNames: 'result lastPass'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 
 "Loose Methods"!
 
-!TestCase class methodsFor!
+!XProgramming class methodsFor!
+
+icon
+	"Answers an Icon that can be used to represent this class."
+
+	^##(Graphics.TextTileIcon text: 'XP' fontName: 'Bauhaus 93')! !
+!XProgramming class categoriesFor: #icon!constants!public! !
+
+!XProgramming.SUnit class methodsFor!
 
 icon
 	"Answers an Icon that can be used to represent this class, the emoji 🧪"
 
-	^##((TextTileIcon text: $\x1F9EA fontName: 'Segoe UI Emoji')
-		textcolor: Color lightSeaGreen;
+	^TestCase icon! !
+!XProgramming.SUnit class categoriesFor: #icon!constants!public! !
+
+!XProgramming.SUnit.TestCase class methodsFor!
+
+icon
+	"Answers an Icon that can be used to represent this class, the emoji 🧪"
+
+	^##((Graphics.TextTileIcon text: $\x1F9EA fontName: 'Segoe UI Emoji')
+		textcolor: Graphics.Color lightSeaGreen;
 		yourself)! !
-!TestCase class categoriesFor: #icon!constants!public! !
+!XProgramming.SUnit.TestCase class categoriesFor: #icon!constants!public! !
+
+!XProgramming.SUnit.TestCaseResult class methodsFor!
+
+icon
+	"Answers an Icon that can be used to represent this class, the emoji 🧪"
+
+	^TestCase icon! !
+!XProgramming.SUnit.TestCaseResult class categoriesFor: #icon!constants!public! !
+
+!XProgramming.SUnit.TestResource class methodsFor!
+
+icon
+	"Answers an Icon that can be used to represent this class, the emoji 🧪"
+
+	^TestCase icon! !
+!XProgramming.SUnit.TestResource class categoriesFor: #icon!constants!public! !
+
+!XProgramming.SUnit.TestResult class methodsFor!
+
+icon
+	"Answers an Icon that can be used to represent this class, the emoji 🧪"
+
+	^TestCase icon! !
+!XProgramming.SUnit.TestResult class categoriesFor: #icon!constants!public! !
+
+!XProgramming.SUnit.TestRunLogger class methodsFor!
+
+icon
+	"Answers an Icon that can be used to represent this class, the emoji 🧪"
+
+	^TestCase icon! !
+!XProgramming.SUnit.TestRunLogger class categoriesFor: #icon!constants!public! !
+
+!XProgramming.SUnit.TestSuite class methodsFor!
+
+icon
+	"Answers an Icon that can be used to represent this class, the emoji 🧪"
+
+	^TestCase icon! !
+!XProgramming.SUnit.TestSuite class categoriesFor: #icon!constants!public! !
 
 "End of package definition"!
 

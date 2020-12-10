@@ -1,16 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Object subclass: #TestRunLogger
+Core.Object subclass: #'XProgramming.SUnit.TestRunLogger'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-TestRunLogger guid: (GUID fromString: '{00fd980b-da74-44be-888f-6735ffb8e96b}')!
-TestRunLogger isAbstract: true!
-TestRunLogger comment: ''!
-!TestRunLogger categoriesForClass!Kernel-Objects! !
-!TestRunLogger methodsFor!
+XProgramming.SUnit.TestRunLogger guid: (Core.GUID fromString: '{00fd980b-da74-44be-888f-6735ffb8e96b}')!
+XProgramming.SUnit.TestRunLogger isNonInstantiable: true!
+XProgramming.SUnit.TestRunLogger comment: ''!
+!XProgramming.SUnit.TestRunLogger categoriesForClass!Kernel-Objects! !
+!XProgramming.SUnit.TestRunLogger methodsFor!
 
 finishedCase: aSymbol
 	^self subclassResponsibility!
@@ -28,9 +28,9 @@ startingCase: aTestCase
 
 startingRun: aTestSuite
 ! !
-!TestRunLogger categoriesFor: #finishedCase:!logging!public! !
-!TestRunLogger categoriesFor: #finishedRun:knownSlowTests:!helpers!logging!public! !
-!TestRunLogger categoriesFor: #slowTestThreshold!helpers!private! !
-!TestRunLogger categoriesFor: #startingCase:!logging!public! !
-!TestRunLogger categoriesFor: #startingRun:!logging!public! !
+!XProgramming.SUnit.TestRunLogger categoriesFor: #finishedCase:!logging!public! !
+!XProgramming.SUnit.TestRunLogger categoriesFor: #finishedRun:knownSlowTests:!helpers!logging!public! !
+!XProgramming.SUnit.TestRunLogger categoriesFor: #slowTestThreshold!helpers!private! !
+!XProgramming.SUnit.TestRunLogger categoriesFor: #startingCase:!logging!public! !
+!XProgramming.SUnit.TestRunLogger categoriesFor: #startingRun:!logging!public! !
 

@@ -1,0 +1,49 @@
+﻿| package |
+package := Package name: 'SUnitLegacy'.
+package paxVersion: 2.1;
+	basicComment: ''.
+
+
+package setVariableNames: #(
+	#{Smalltalk.SUnitNameResolver}
+	#{Smalltalk.TestCase}
+	#{Smalltalk.TestResource}
+	#{Smalltalk.TestResult}
+	#{Smalltalk.TestRunner}
+	#{Smalltalk.TestSuite}
+).
+
+package setAliasVariableNames: #(
+	#{Smalltalk.SUnitNameResolver}
+	#{Smalltalk.TestCase}
+	#{Smalltalk.TestResource}
+	#{Smalltalk.TestResult}
+	#{Smalltalk.TestRunner}
+	#{Smalltalk.TestSuite}
+).
+
+package setPrerequisites: #(
+	'SUnit'
+	'SUnitPreload'
+	'SUnitUI'
+).
+
+package!
+
+"Variable Aliases"!
+
+Smalltalk.SUnitNameResolver := XProgramming.SUnit.SUnitNameResolver!
+
+Smalltalk.TestCase := XProgramming.SUnit.TestCase!
+
+Smalltalk.TestResource := XProgramming.SUnit.TestResource!
+
+Smalltalk.TestResult := XProgramming.SUnit.TestResult!
+
+Smalltalk.TestRunner := XProgramming.SUnit.TestRunner!
+
+Smalltalk.TestSuite := XProgramming.SUnit.TestSuite!
+
+
+"End of package definition"!
+

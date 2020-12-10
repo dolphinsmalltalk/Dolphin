@@ -1,11 +1,11 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Notification subclass: #TestSkip
+Core.Notification subclass: #'XProgramming.SUnit.TestSkip'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-TestSkip guid: (GUID fromString: '{f01e4933-7af2-431b-ac17-ef0c4ff0e42b}')!
-TestSkip comment: ''!
-!TestSkip categoriesForClass!Kernel-Exception Handling! !
+XProgramming.SUnit.TestSkip guid: (Core.GUID fromString: '{f01e4933-7af2-431b-ac17-ef0c4ff0e42b}')!
+XProgramming.SUnit.TestSkip comment: ''!
+!XProgramming.SUnit.TestSkip categoriesForClass!Kernel-Exception Handling! !

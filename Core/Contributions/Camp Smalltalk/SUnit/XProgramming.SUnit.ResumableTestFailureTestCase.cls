@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-TestCase subclass: #ResumableTestFailureTestCase
+XProgramming.SUnit.TestCase subclass: #'XProgramming.SUnit.ResumableTestFailureTestCase'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ResumableTestFailureTestCase guid: (GUID fromString: '{e9e5d84b-1ac0-46b4-ae21-c00825895f1f}')!
-ResumableTestFailureTestCase comment: ''!
-!ResumableTestFailureTestCase categoriesForClass!SUnit! !
-!ResumableTestFailureTestCase methodsFor!
+XProgramming.SUnit.ResumableTestFailureTestCase guid: (Core.GUID fromString: '{e9e5d84b-1ac0-46b4-ae21-c00825895f1f}')!
+XProgramming.SUnit.ResumableTestFailureTestCase comment: ''!
+!XProgramming.SUnit.ResumableTestFailureTestCase categoriesForClass!SUnit! !
+!XProgramming.SUnit.ResumableTestFailureTestCase methodsFor!
 
 errorTest
 	^1 zork!
@@ -47,11 +47,11 @@ testResumable
 				yourself.
 	result := suite run.
 	self assert: result failures size equals: 2! !
-!ResumableTestFailureTestCase categoriesFor: #errorTest!public!Running! !
-!ResumableTestFailureTestCase categoriesFor: #failureLog!public!Running! !
-!ResumableTestFailureTestCase categoriesFor: #isLogging!public!Running! !
-!ResumableTestFailureTestCase categoriesFor: #okTest!public!Running! !
-!ResumableTestFailureTestCase categoriesFor: #regularTestFailureTest!public!Running! !
-!ResumableTestFailureTestCase categoriesFor: #resumableTestFailureTest!public!Running! !
-!ResumableTestFailureTestCase categoriesFor: #testResumable!public!Running! !
+!XProgramming.SUnit.ResumableTestFailureTestCase categoriesFor: #errorTest!public!Running! !
+!XProgramming.SUnit.ResumableTestFailureTestCase categoriesFor: #failureLog!public!Running! !
+!XProgramming.SUnit.ResumableTestFailureTestCase categoriesFor: #isLogging!public!Running! !
+!XProgramming.SUnit.ResumableTestFailureTestCase categoriesFor: #okTest!public!Running! !
+!XProgramming.SUnit.ResumableTestFailureTestCase categoriesFor: #regularTestFailureTest!public!Running! !
+!XProgramming.SUnit.ResumableTestFailureTestCase categoriesFor: #resumableTestFailureTest!public!Running! !
+!XProgramming.SUnit.ResumableTestFailureTestCase categoriesFor: #testResumable!public!Running! !
 

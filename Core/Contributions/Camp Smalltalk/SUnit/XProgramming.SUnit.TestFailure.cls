@@ -1,11 +1,11 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Error subclass: #TestFailure
+Core.Error subclass: #'XProgramming.SUnit.TestFailure'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-TestFailure guid: (GUID fromString: '{5e967942-0810-11d4-a876-0050da643bf9}')!
-TestFailure comment: ''!
-!TestFailure categoriesForClass!SUnitPreload! !
+XProgramming.SUnit.TestFailure guid: (Core.GUID fromString: '{5e967942-0810-11d4-a876-0050da643bf9}')!
+XProgramming.SUnit.TestFailure comment: ''!
+!XProgramming.SUnit.TestFailure categoriesForClass!SUnitPreload! !

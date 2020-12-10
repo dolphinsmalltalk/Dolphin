@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Object subclass: #TestResult
+Core.Object subclass: #'XProgramming.SUnit.TestResult'
 	instanceVariableNames: 'results failures errors passed skipped duration'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-TestResult guid: (GUID fromString: '{5e96793b-0810-11d4-a876-0050da643bf9}')!
-TestResult comment: ''!
-!TestResult categoriesForClass!SUnit! !
-!TestResult methodsFor!
+XProgramming.SUnit.TestResult guid: (Core.GUID fromString: '{5e96793b-0810-11d4-a876-0050da643bf9}')!
+XProgramming.SUnit.TestResult comment: ''!
+!XProgramming.SUnit.TestResult categoriesForClass!SUnit! !
+!XProgramming.SUnit.TestResult methodsFor!
 
 addError: aTestCase signal: anException
 	results at: aTestCase put: (TestCaseResult case: aTestCase error: anException).
@@ -51,7 +51,7 @@ displayAttributes: aCollection on: aStream
 						display: each last]]!
 
 displayOn: aPuttableStream
-	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that an end-user might want to see."
+	"Append to the <puttableStream> argument a String whose characters are a representation of the receiver that an end-user might want to see."
 
 	| runCount passedCount |
 	runCount := self runCount.
@@ -174,49 +174,48 @@ tests
 		addAll: self errors;
 		addAll: self defects;
 		yourself! !
-!TestResult categoriesFor: #addError:signal:!adding!private! !
-!TestResult categoriesFor: #addFailure:signal:!adding!private! !
-!TestResult categoriesFor: #addPass:duration:!adding!private! !
-!TestResult categoriesFor: #addSkip:signal:!adding!private! !
-!TestResult categoriesFor: #correctCount!accessing!public! !
-!TestResult categoriesFor: #defects!accessing!public! !
-!TestResult categoriesFor: #displayAttributes:on:!printing!public! !
-!TestResult categoriesFor: #displayOn:!printing!public! !
-!TestResult categoriesFor: #duration!accessing!public! !
-!TestResult categoriesFor: #duration:!accessing!public! !
-!TestResult categoriesFor: #errorCount!accessing!public! !
-!TestResult categoriesFor: #errors!accessing!public! !
-!TestResult categoriesFor: #failureCount!accessing!public! !
-!TestResult categoriesFor: #failures!accessing!public! !
-!TestResult categoriesFor: #hasErrors!public!testing! !
-!TestResult categoriesFor: #hasFailures!public!testing! !
-!TestResult categoriesFor: #hasPassed!public!testing! !
-!TestResult categoriesFor: #initialize!initializing!public! !
-!TestResult categoriesFor: #isError:!public!testing! !
-!TestResult categoriesFor: #isFailure:!public!testing! !
-!TestResult categoriesFor: #isPassed:!public!testing! !
-!TestResult categoriesFor: #isSkipped:!public!testing! !
-!TestResult categoriesFor: #passed!accessing!public! !
-!TestResult categoriesFor: #passedCount!accessing!public! !
-!TestResult categoriesFor: #printOn:!public! !
-!TestResult categoriesFor: #resultFor:!accessing!public! !
-!TestResult categoriesFor: #results!accessing!public! !
-!TestResult categoriesFor: #runCase:!public!running! !
-!TestResult categoriesFor: #runCount!accessing!public! !
-!TestResult categoriesFor: #skipped!accessing!public! !
-!TestResult categoriesFor: #skippedCount!accessing!public! !
-!TestResult categoriesFor: #tests!accessing!public! !
+!XProgramming.SUnit.TestResult categoriesFor: #addError:signal:!adding!private! !
+!XProgramming.SUnit.TestResult categoriesFor: #addFailure:signal:!adding!private! !
+!XProgramming.SUnit.TestResult categoriesFor: #addPass:duration:!adding!private! !
+!XProgramming.SUnit.TestResult categoriesFor: #addSkip:signal:!adding!private! !
+!XProgramming.SUnit.TestResult categoriesFor: #correctCount!accessing!public! !
+!XProgramming.SUnit.TestResult categoriesFor: #defects!accessing!public! !
+!XProgramming.SUnit.TestResult categoriesFor: #displayAttributes:on:!printing!public! !
+!XProgramming.SUnit.TestResult categoriesFor: #displayOn:!printing!public! !
+!XProgramming.SUnit.TestResult categoriesFor: #duration!accessing!public! !
+!XProgramming.SUnit.TestResult categoriesFor: #duration:!accessing!public! !
+!XProgramming.SUnit.TestResult categoriesFor: #errorCount!accessing!public! !
+!XProgramming.SUnit.TestResult categoriesFor: #errors!accessing!public! !
+!XProgramming.SUnit.TestResult categoriesFor: #failureCount!accessing!public! !
+!XProgramming.SUnit.TestResult categoriesFor: #failures!accessing!public! !
+!XProgramming.SUnit.TestResult categoriesFor: #hasErrors!public!testing! !
+!XProgramming.SUnit.TestResult categoriesFor: #hasFailures!public!testing! !
+!XProgramming.SUnit.TestResult categoriesFor: #hasPassed!public!testing! !
+!XProgramming.SUnit.TestResult categoriesFor: #initialize!initializing!public! !
+!XProgramming.SUnit.TestResult categoriesFor: #isError:!public!testing! !
+!XProgramming.SUnit.TestResult categoriesFor: #isFailure:!public!testing! !
+!XProgramming.SUnit.TestResult categoriesFor: #isPassed:!public!testing! !
+!XProgramming.SUnit.TestResult categoriesFor: #isSkipped:!public!testing! !
+!XProgramming.SUnit.TestResult categoriesFor: #passed!accessing!public! !
+!XProgramming.SUnit.TestResult categoriesFor: #passedCount!accessing!public! !
+!XProgramming.SUnit.TestResult categoriesFor: #printOn:!public! !
+!XProgramming.SUnit.TestResult categoriesFor: #resultFor:!accessing!public! !
+!XProgramming.SUnit.TestResult categoriesFor: #results!accessing!public! !
+!XProgramming.SUnit.TestResult categoriesFor: #runCase:!public!running! !
+!XProgramming.SUnit.TestResult categoriesFor: #runCount!accessing!public! !
+!XProgramming.SUnit.TestResult categoriesFor: #skipped!accessing!public! !
+!XProgramming.SUnit.TestResult categoriesFor: #skippedCount!accessing!public! !
+!XProgramming.SUnit.TestResult categoriesFor: #tests!accessing!public! !
 
-!TestResult class methodsFor!
+!XProgramming.SUnit.TestResult class methodsFor!
 
 error
 	^self exError!
 
 exError
 	"Change for Dialect"
-	^Error
 
-	!
+	^Error!
 
 failure
 	^TestFailure!
@@ -235,12 +234,12 @@ signalFailureWith: aString
 
 skip
 	^TestSkip! !
-!TestResult class categoriesFor: #error!Exceptions!public! !
-!TestResult class categoriesFor: #exError!Exceptions!public! !
-!TestResult class categoriesFor: #failure!Exceptions!public! !
-!TestResult class categoriesFor: #new!Init / Release!public! !
-!TestResult class categoriesFor: #resumableFailure!Exceptions!public! !
-!TestResult class categoriesFor: #signalErrorWith:!Exceptions!public! !
-!TestResult class categoriesFor: #signalFailureWith:!Exceptions!public! !
-!TestResult class categoriesFor: #skip!Exceptions!public! !
+!XProgramming.SUnit.TestResult class categoriesFor: #error!Exceptions!public! !
+!XProgramming.SUnit.TestResult class categoriesFor: #exError!Exceptions!public! !
+!XProgramming.SUnit.TestResult class categoriesFor: #failure!Exceptions!public! !
+!XProgramming.SUnit.TestResult class categoriesFor: #new!Init / Release!public! !
+!XProgramming.SUnit.TestResult class categoriesFor: #resumableFailure!Exceptions!public! !
+!XProgramming.SUnit.TestResult class categoriesFor: #signalErrorWith:!Exceptions!public! !
+!XProgramming.SUnit.TestResult class categoriesFor: #signalFailureWith:!Exceptions!public! !
+!XProgramming.SUnit.TestResult class categoriesFor: #skip!Exceptions!public! !
 

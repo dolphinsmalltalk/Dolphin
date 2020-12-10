@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-TestCase subclass: #SimpleTestResourceTestCase
+XProgramming.SUnit.TestCase subclass: #'XProgramming.SUnit.SimpleTestResourceTestCase'
 	instanceVariableNames: 'resource'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-SimpleTestResourceTestCase guid: (GUID fromString: '{8998ffb7-787b-4da1-99fd-2f92b2c4e993}')!
-SimpleTestResourceTestCase comment: ''!
-!SimpleTestResourceTestCase categoriesForClass!SUnit! !
-!SimpleTestResourceTestCase methodsFor!
+XProgramming.SUnit.SimpleTestResourceTestCase guid: (Core.GUID fromString: '{8998ffb7-787b-4da1-99fd-2f92b2c4e993}')!
+XProgramming.SUnit.SimpleTestResourceTestCase comment: ''!
+!XProgramming.SUnit.SimpleTestResourceTestCase categoriesForClass!SUnit! !
+!XProgramming.SUnit.SimpleTestResourceTestCase methodsFor!
 
 dummy
 	self assert: true!
@@ -47,18 +47,20 @@ testResourcesCollection
 	| collection |
 	collection := self resources.
 	self assert: collection size equals: 1! !
-!SimpleTestResourceTestCase categoriesFor: #dummy!public! !
-!SimpleTestResourceTestCase categoriesFor: #error!public! !
-!SimpleTestResourceTestCase categoriesFor: #fail!public! !
-!SimpleTestResourceTestCase categoriesFor: #setRun!public! !
-!SimpleTestResourceTestCase categoriesFor: #setUp!public! !
-!SimpleTestResourceTestCase categoriesFor: #testRan!public! !
-!SimpleTestResourceTestCase categoriesFor: #testResourceInitRelease!public! !
-!SimpleTestResourceTestCase categoriesFor: #testResourcesCollection!public! !
+!XProgramming.SUnit.SimpleTestResourceTestCase categoriesFor: #dummy!public! !
+!XProgramming.SUnit.SimpleTestResourceTestCase categoriesFor: #error!public! !
+!XProgramming.SUnit.SimpleTestResourceTestCase categoriesFor: #fail!public! !
+!XProgramming.SUnit.SimpleTestResourceTestCase categoriesFor: #setRun!public! !
+!XProgramming.SUnit.SimpleTestResourceTestCase categoriesFor: #setUp!public! !
+!XProgramming.SUnit.SimpleTestResourceTestCase categoriesFor: #testRan!public! !
+!XProgramming.SUnit.SimpleTestResourceTestCase categoriesFor: #testResourceInitRelease!public! !
+!XProgramming.SUnit.SimpleTestResourceTestCase categoriesFor: #testResourcesCollection!public! !
 
-!SimpleTestResourceTestCase class methodsFor!
+!XProgramming.SUnit.SimpleTestResourceTestCase class methodsFor!
 
 resources
-	^Set new add: SimpleTestResource; yourself! !
-!SimpleTestResourceTestCase class categoriesFor: #resources!public! !
+	^Set new
+		add: SimpleTestResource;
+		yourself! !
+!XProgramming.SUnit.SimpleTestResourceTestCase class categoriesFor: #resources!public! !
 

@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Object subclass: #TestCaseResult
+Core.Object subclass: #'XProgramming.SUnit.TestCaseResult'
 	instanceVariableNames: 'case outcome duration signal stacktrace ip testMethod'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-TestCaseResult guid: (GUID fromString: '{a233feef-eabb-4fa9-9cf3-09531d206233}')!
-TestCaseResult comment: 'Represents the results of executing an individual <TestCase>'!
-!TestCaseResult categoriesForClass!SUnit! !
-!TestCaseResult methodsFor!
+XProgramming.SUnit.TestCaseResult guid: (Core.GUID fromString: '{a233feef-eabb-4fa9-9cf3-09531d206233}')!
+XProgramming.SUnit.TestCaseResult comment: 'Represents the results of executing an individual <TestCase>'!
+!XProgramming.SUnit.TestCaseResult categoriesForClass!SUnit! !
+!XProgramming.SUnit.TestCaseResult methodsFor!
 
 captureDiagnostics: anException
 	| frame stackStream |
@@ -77,7 +77,7 @@ printSourceOn: aStream
 	| map entry range source |
 	testMethod ifNil: [^self].
 	map := testMethod textMap.
-	entry := map at: (StackFrame findIP: ip inTextMap: map).
+	entry := map at: (Kernel.StackFrame findIP: ip inTextMap: map).
 	range := entry value.
 	range isEmpty ifTrue: [range := range start to: range start].
 	source := testMethod getSource.
@@ -115,19 +115,19 @@ stacktrace
 	"Answer the stacktrace capture when the test failed/errored, or nil if the test passed."
 
 	^stacktrace! !
-!TestCaseResult categoriesFor: #captureDiagnostics:!initializing!private! !
-!TestCaseResult categoriesFor: #case!accessing!public! !
-!TestCaseResult categoriesFor: #diagnostic!accessing!public! !
-!TestCaseResult categoriesFor: #displayOn:!displaying!public! !
-!TestCaseResult categoriesFor: #duration!accessing!public! !
-!TestCaseResult categoriesFor: #outcome!accessing!public! !
-!TestCaseResult categoriesFor: #printSourceOn:!printing!private! !
-!TestCaseResult categoriesFor: #setCase:duration:!initializing!private! !
-!TestCaseResult categoriesFor: #setCase:outcome:signal:!initializing!private! !
-!TestCaseResult categoriesFor: #signal!accessing!public! !
-!TestCaseResult categoriesFor: #stacktrace!accessing!public! !
+!XProgramming.SUnit.TestCaseResult categoriesFor: #captureDiagnostics:!initializing!private! !
+!XProgramming.SUnit.TestCaseResult categoriesFor: #case!accessing!public! !
+!XProgramming.SUnit.TestCaseResult categoriesFor: #diagnostic!accessing!public! !
+!XProgramming.SUnit.TestCaseResult categoriesFor: #displayOn:!printing!private! !
+!XProgramming.SUnit.TestCaseResult categoriesFor: #duration!accessing!public! !
+!XProgramming.SUnit.TestCaseResult categoriesFor: #outcome!accessing!public! !
+!XProgramming.SUnit.TestCaseResult categoriesFor: #printSourceOn:!printing!private! !
+!XProgramming.SUnit.TestCaseResult categoriesFor: #setCase:duration:!initializing!private! !
+!XProgramming.SUnit.TestCaseResult categoriesFor: #setCase:outcome:signal:!initializing!private! !
+!XProgramming.SUnit.TestCaseResult categoriesFor: #signal!accessing!public! !
+!XProgramming.SUnit.TestCaseResult categoriesFor: #stacktrace!accessing!public! !
 
-!TestCaseResult class methodsFor!
+!XProgramming.SUnit.TestCaseResult class methodsFor!
 
 case: aTestCase duration: anInteger
 	^self new setCase: aTestCase duration: anInteger!
@@ -149,8 +149,8 @@ case: aTestCase skipped: aTestSkip
 		setCase: aTestCase
 		outcome: #skipped
 		signal: aTestSkip! !
-!TestCaseResult class categoriesFor: #case:duration:!instance creation!public! !
-!TestCaseResult class categoriesFor: #case:error:!instance creation!public! !
-!TestCaseResult class categoriesFor: #case:failure:!instance creation!public! !
-!TestCaseResult class categoriesFor: #case:skipped:!instance creation!public! !
+!XProgramming.SUnit.TestCaseResult class categoriesFor: #case:duration:!instance creation!public! !
+!XProgramming.SUnit.TestCaseResult class categoriesFor: #case:error:!instance creation!public! !
+!XProgramming.SUnit.TestCaseResult class categoriesFor: #case:failure:!instance creation!public! !
+!XProgramming.SUnit.TestCaseResult class categoriesFor: #case:skipped:!instance creation!public! !
 

@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-TestCase subclass: #ExampleSetTest
+XProgramming.SUnit.TestCase subclass: #'XProgramming.SUnit.ExampleSetTest'
 	instanceVariableNames: 'full empty'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ExampleSetTest guid: (GUID fromString: '{5e96793d-0810-11d4-a876-0050da643bf9}')!
-ExampleSetTest comment: ''!
-!ExampleSetTest categoriesForClass!SUnitTests! !
-!ExampleSetTest methodsFor!
+XProgramming.SUnit.ExampleSetTest guid: (Core.GUID fromString: '{5e96793d-0810-11d4-a876-0050da643bf9}')!
+XProgramming.SUnit.ExampleSetTest comment: ''!
+!XProgramming.SUnit.ExampleSetTest categoriesForClass!SUnitTests! !
+!XProgramming.SUnit.ExampleSetTest methodsFor!
 
 setUp
 	empty := Set new.
@@ -24,12 +24,8 @@ testGrow
 	self assert: empty size equals: 100!
 
 testIllegal
-	self 
-		should: [empty at: 5] 
-		raise: TestResult error.
-	self 
-		should: [empty at: 5 put: #abc] 
-		raise: TestResult error!
+	self should: [empty at: 5] raise: TestResult error.
+	self should: [empty at: 5 put: #abc] raise: TestResult error!
 
 testIncludes
 	self assert: (full includes: 5).
@@ -45,11 +41,11 @@ testRemove
 	full remove: 5.
 	self assert: (full includes: #abc).
 	self deny: (full includes: 5)! !
-!ExampleSetTest categoriesFor: #setUp!public!Running! !
-!ExampleSetTest categoriesFor: #testAdd!public!Testing! !
-!ExampleSetTest categoriesFor: #testGrow!public!Testing! !
-!ExampleSetTest categoriesFor: #testIllegal!public!Testing! !
-!ExampleSetTest categoriesFor: #testIncludes!public!Testing! !
-!ExampleSetTest categoriesFor: #testOccurrences!public!Testing! !
-!ExampleSetTest categoriesFor: #testRemove!public!Testing! !
+!XProgramming.SUnit.ExampleSetTest categoriesFor: #setUp!public!Running! !
+!XProgramming.SUnit.ExampleSetTest categoriesFor: #testAdd!public!Testing! !
+!XProgramming.SUnit.ExampleSetTest categoriesFor: #testGrow!public!Testing! !
+!XProgramming.SUnit.ExampleSetTest categoriesFor: #testIllegal!public!Testing! !
+!XProgramming.SUnit.ExampleSetTest categoriesFor: #testIncludes!public!Testing! !
+!XProgramming.SUnit.ExampleSetTest categoriesFor: #testOccurrences!public!Testing! !
+!XProgramming.SUnit.ExampleSetTest categoriesFor: #testRemove!public!Testing! !
 

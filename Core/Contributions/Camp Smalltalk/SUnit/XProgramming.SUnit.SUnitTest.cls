@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-TestCase subclass: #SUnitTest
+XProgramming.SUnit.TestCase subclass: #'XProgramming.SUnit.SUnitTest'
 	instanceVariableNames: 'hasRun hasSetup hasRanOnce'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-SUnitTest guid: (GUID fromString: '{5e96793e-0810-11d4-a876-0050da643bf9}')!
-SUnitTest comment: ''!
-!SUnitTest categoriesForClass!SUnitTests! !
-!SUnitTest methodsFor!
+XProgramming.SUnit.SUnitTest guid: (Core.GUID fromString: '{5e96793e-0810-11d4-a876-0050da643bf9}')!
+XProgramming.SUnit.SUnitTest comment: ''!
+!XProgramming.SUnit.SUnitTest categoriesForClass!SUnitTests! !
+!XProgramming.SUnit.SUnitTest methodsFor!
 
 assertForTestResult: aResult runCount: aRunCount passed: aPassedCount failed: aFailureCount errors: anErrorCount skipped: anInteger
 	self
@@ -61,9 +61,12 @@ testDefects
 		skipped: 0!
 
 testDialectLocalizedException
-	self should: [TestResult signalFailureWith: 'Foo'] raise: TestResult failure.
-	self should: [TestResult signalErrorWith: 'Foo'] raise: TestResult error.
-	self shouldnt: [TestResult signalErrorWith: 'Foo'] raise: TestResult failure.!
+	self should: [TestResult signalFailureWith: 'Foo']
+		raise: TestResult failure.
+	self should: [TestResult signalErrorWith: 'Foo']
+		raise: TestResult error.
+	self shouldnt: [TestResult signalErrorWith: 'Foo']
+		raise: TestResult failure!
 
 testError
 	| case result |
@@ -122,7 +125,7 @@ testResult
 		skipped: 0!
 
 testRunning
-	(SUnitDelay forMicroseconds: 20) wait!
+	(Delay forMicroseconds: 20) wait!
 
 testShould
 	self should: [true].
@@ -154,35 +157,35 @@ testSuite
 		failed: 1
 		errors: 1
 		skipped: 0! !
-!SUnitTest categoriesFor: #assertForTestResult:runCount:passed:failed:errors:skipped:!helpers!public! !
-!SUnitTest categoriesFor: #error!helpers!private! !
-!SUnitTest categoriesFor: #fail!helpers!private! !
-!SUnitTest categoriesFor: #hasRun!Accessing!public! !
-!SUnitTest categoriesFor: #hasSetup!Accessing!public! !
-!SUnitTest categoriesFor: #noop!helpers!private! !
-!SUnitTest categoriesFor: #setRun!helpers!private! !
-!SUnitTest categoriesFor: #setUp!public!Running! !
-!SUnitTest categoriesFor: #skipped!helpers!private! !
-!SUnitTest categoriesFor: #testAssert!public!Testing! !
-!SUnitTest categoriesFor: #testDefects!public!Testing! !
-!SUnitTest categoriesFor: #testDialectLocalizedException!public!Testing! !
-!SUnitTest categoriesFor: #testError!public!Testing! !
-!SUnitTest categoriesFor: #testException!public!Testing! !
-!SUnitTest categoriesFor: #testFail!public!Testing! !
-!SUnitTest categoriesFor: #testIsNotRerunOnDebug!public!Testing! !
-!SUnitTest categoriesFor: #testRan!public!Testing! !
-!SUnitTest categoriesFor: #testRanOnlyOnce!public!Testing! !
-!SUnitTest categoriesFor: #testResult!public!Testing! !
-!SUnitTest categoriesFor: #testRunning!public!Testing! !
-!SUnitTest categoriesFor: #testShould!public!Testing! !
-!SUnitTest categoriesFor: #testSkip!public!Testing! !
-!SUnitTest categoriesFor: #testSuite!public!Testing! !
+!XProgramming.SUnit.SUnitTest categoriesFor: #assertForTestResult:runCount:passed:failed:errors:skipped:!helpers!public! !
+!XProgramming.SUnit.SUnitTest categoriesFor: #error!helpers!private! !
+!XProgramming.SUnit.SUnitTest categoriesFor: #fail!helpers!private! !
+!XProgramming.SUnit.SUnitTest categoriesFor: #hasRun!Accessing!public! !
+!XProgramming.SUnit.SUnitTest categoriesFor: #hasSetup!Accessing!public! !
+!XProgramming.SUnit.SUnitTest categoriesFor: #noop!helpers!private! !
+!XProgramming.SUnit.SUnitTest categoriesFor: #setRun!helpers!private! !
+!XProgramming.SUnit.SUnitTest categoriesFor: #setUp!public!Running! !
+!XProgramming.SUnit.SUnitTest categoriesFor: #skipped!helpers!private! !
+!XProgramming.SUnit.SUnitTest categoriesFor: #testAssert!public!Testing! !
+!XProgramming.SUnit.SUnitTest categoriesFor: #testDefects!public!Testing! !
+!XProgramming.SUnit.SUnitTest categoriesFor: #testDialectLocalizedException!public!Testing! !
+!XProgramming.SUnit.SUnitTest categoriesFor: #testError!public!Testing! !
+!XProgramming.SUnit.SUnitTest categoriesFor: #testException!public!Testing! !
+!XProgramming.SUnit.SUnitTest categoriesFor: #testFail!public!Testing! !
+!XProgramming.SUnit.SUnitTest categoriesFor: #testIsNotRerunOnDebug!public!Testing! !
+!XProgramming.SUnit.SUnitTest categoriesFor: #testRan!public!Testing! !
+!XProgramming.SUnit.SUnitTest categoriesFor: #testRanOnlyOnce!public!Testing! !
+!XProgramming.SUnit.SUnitTest categoriesFor: #testResult!public!Testing! !
+!XProgramming.SUnit.SUnitTest categoriesFor: #testRunning!public!Testing! !
+!XProgramming.SUnit.SUnitTest categoriesFor: #testShould!public!Testing! !
+!XProgramming.SUnit.SUnitTest categoriesFor: #testSkip!public!Testing! !
+!XProgramming.SUnit.SUnitTest categoriesFor: #testSuite!public!Testing! !
 
-!SUnitTest class methodsFor!
+!XProgramming.SUnit.SUnitTest class methodsFor!
 
 shouldInheritSelectors
 	"answer true to inherit selectors from superclasses"
 
 	^false! !
-!SUnitTest class categoriesFor: #shouldInheritSelectors!public!Testing! !
+!XProgramming.SUnit.SUnitTest class categoriesFor: #shouldInheritSelectors!public!Testing! !
 

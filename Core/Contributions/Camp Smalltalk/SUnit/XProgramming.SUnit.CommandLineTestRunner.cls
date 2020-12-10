@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Object subclass: #CommandLineTestRunner
+Core.Object subclass: #'XProgramming.SUnit.CommandLineTestRunner'
 	instanceVariableNames: 'results lastCase loggers verbose'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-CommandLineTestRunner guid: (GUID fromString: '{69cae7cc-de76-4748-bc30-e39048ddbb3c}')!
-CommandLineTestRunner comment: ''!
-!CommandLineTestRunner categoriesForClass!Kernel-Objects! !
-!CommandLineTestRunner methodsFor!
+XProgramming.SUnit.CommandLineTestRunner guid: (Core.GUID fromString: '{69cae7cc-de76-4748-bc30-e39048ddbb3c}')!
+XProgramming.SUnit.CommandLineTestRunner comment: ''!
+!XProgramming.SUnit.CommandLineTestRunner categoriesForClass!Kernel-Objects! !
+!XProgramming.SUnit.CommandLineTestRunner methodsFor!
 
 addLogger: aTestRunLogger
 	loggers addLast: aTestRunLogger!
@@ -78,24 +78,24 @@ update: anObject with: argument from: originator
 
 verbose: aBoolean
 	verbose := aBoolean! !
-!CommandLineTestRunner categoriesFor: #addLogger:!initializing!private! !
-!CommandLineTestRunner categoriesFor: #finishRun:knownSlowTests:!operations!private! !
-!CommandLineTestRunner categoriesFor: #initialize!initializing!private! !
-!CommandLineTestRunner categoriesFor: #logFinishedCase:!private!updating! !
-!CommandLineTestRunner categoriesFor: #logStartingCase:!logging!private! !
-!CommandLineTestRunner categoriesFor: #logStartingRun:!logging!private! !
-!CommandLineTestRunner categoriesFor: #newStdOutLogger!logging!private! !
-!CommandLineTestRunner categoriesFor: #result!accessing!public! !
-!CommandLineTestRunner categoriesFor: #resultFor:!helpers!private! !
-!CommandLineTestRunner categoriesFor: #runSuite:!operations!public! !
-!CommandLineTestRunner categoriesFor: #runSuite:knownSlowTests:!operations!public! !
-!CommandLineTestRunner categoriesFor: #startRun:!operations!private! !
-!CommandLineTestRunner categoriesFor: #update:with:from:!private!updating! !
-!CommandLineTestRunner categoriesFor: #verbose:!accessing!public! !
+!XProgramming.SUnit.CommandLineTestRunner categoriesFor: #addLogger:!initializing!private! !
+!XProgramming.SUnit.CommandLineTestRunner categoriesFor: #finishRun:knownSlowTests:!operations!private! !
+!XProgramming.SUnit.CommandLineTestRunner categoriesFor: #initialize!initializing!private! !
+!XProgramming.SUnit.CommandLineTestRunner categoriesFor: #logFinishedCase:!private!updating! !
+!XProgramming.SUnit.CommandLineTestRunner categoriesFor: #logStartingCase:!logging!private! !
+!XProgramming.SUnit.CommandLineTestRunner categoriesFor: #logStartingRun:!logging!private! !
+!XProgramming.SUnit.CommandLineTestRunner categoriesFor: #newStdOutLogger!logging!private! !
+!XProgramming.SUnit.CommandLineTestRunner categoriesFor: #result!accessing!public! !
+!XProgramming.SUnit.CommandLineTestRunner categoriesFor: #resultFor:!helpers!private! !
+!XProgramming.SUnit.CommandLineTestRunner categoriesFor: #runSuite:!operations!public! !
+!XProgramming.SUnit.CommandLineTestRunner categoriesFor: #runSuite:knownSlowTests:!operations!public! !
+!XProgramming.SUnit.CommandLineTestRunner categoriesFor: #startRun:!operations!private! !
+!XProgramming.SUnit.CommandLineTestRunner categoriesFor: #update:with:from:!private!updating! !
+!XProgramming.SUnit.CommandLineTestRunner categoriesFor: #verbose:!accessing!public! !
 
-!CommandLineTestRunner class methodsFor!
+!XProgramming.SUnit.CommandLineTestRunner class methodsFor!
 
 new
 	^super new initialize! !
-!CommandLineTestRunner class categoriesFor: #new!instance creation!public! !
+!XProgramming.SUnit.CommandLineTestRunner class categoriesFor: #new!instance creation!public! !
 

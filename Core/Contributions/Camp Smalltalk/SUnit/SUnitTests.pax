@@ -1,24 +1,24 @@
 ﻿| package |
 package := Package name: 'SUnitTests'.
-package paxVersion: 2;
+package paxVersion: 2.1;
 	preDeclareClassesOnLoad: false;
 	basicComment: ''.
 
 
 package setClassNames: #(
-	#{ExampleSetTest}
-	#{ResumableTestFailureTestCase}
-	#{SimpleTestResource}
-	#{SimpleTestResourceTestCase}
-	#{SUnitTest}
+	#{XProgramming.SUnit.ExampleSetTest}
+	#{XProgramming.SUnit.ResumableTestFailureTestCase}
+	#{XProgramming.SUnit.SimpleTestResource}
+	#{XProgramming.SUnit.SimpleTestResourceTestCase}
+	#{XProgramming.SUnit.SUnitTest}
 ).
 
 package setVariableNames: #(
-	#{ExampleTestResource}
+	#{XProgramming.SUnit.ExampleTestResource}
 ).
 
 package setAliasVariableNames: #(
-	#{ExampleTestResource}
+	#{XProgramming.SUnit.ExampleTestResource}
 ).
 
 package setPrerequisites: #(
@@ -31,40 +31,40 @@ package!
 
 "Class Definitions"!
 
-TestCase subclass: #ExampleSetTest
+XProgramming.SUnit.TestCase subclass: #'XProgramming.SUnit.ExampleSetTest'
 	instanceVariableNames: 'full empty'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-TestCase subclass: #ResumableTestFailureTestCase
+XProgramming.SUnit.TestCase subclass: #'XProgramming.SUnit.ResumableTestFailureTestCase'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-TestCase subclass: #SimpleTestResourceTestCase
+XProgramming.SUnit.TestCase subclass: #'XProgramming.SUnit.SimpleTestResourceTestCase'
 	instanceVariableNames: 'resource'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-TestCase subclass: #SUnitTest
+XProgramming.SUnit.TestCase subclass: #'XProgramming.SUnit.SUnitTest'
 	instanceVariableNames: 'hasRun hasSetup hasRanOnce'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-TestResource subclass: #SimpleTestResource
+XProgramming.SUnit.TestResource subclass: #'XProgramming.SUnit.SimpleTestResource'
 	instanceVariableNames: 'runningState hasRun hasSetup hasRanOnce'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 
 "Variable Aliases"!
 
-ExampleTestResource := SimpleTestResource!
+XProgramming.SUnit.ExampleTestResource := XProgramming.SUnit.SimpleTestResource!
 
 
 "End of package definition"!

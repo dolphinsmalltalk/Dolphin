@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-TestRunLogger subclass: #TestRunConsoleLogger
+XProgramming.SUnit.TestRunLogger subclass: #'XProgramming.SUnit.TestRunConsoleLogger'
 	instanceVariableNames: 'stream timings'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-TestRunConsoleLogger guid: (GUID fromString: '{c279d11f-90f1-4fe3-bfa6-09a2d85a208e}')!
-TestRunConsoleLogger comment: ''!
-!TestRunConsoleLogger categoriesForClass!Kernel-Objects! !
-!TestRunConsoleLogger methodsFor!
+XProgramming.SUnit.TestRunConsoleLogger guid: (Core.GUID fromString: '{c279d11f-90f1-4fe3-bfa6-09a2d85a208e}')!
+XProgramming.SUnit.TestRunConsoleLogger comment: ''!
+!XProgramming.SUnit.TestRunConsoleLogger categoriesForClass!Kernel-Objects! !
+!XProgramming.SUnit.TestRunConsoleLogger methodsFor!
 
 finishedCase: aTestCaseResult
 	stream
@@ -86,7 +86,7 @@ summarizeFailures: aTestResult
 summarizeTimings: aTestResult baseline: aCollection threshold: aDuration
 	| laggards newLaggards |
 	laggards := (aTestResult results select: [:each | each duration >= aDuration])
-				asSortedCollectionUsing: (MergesortAlgorithm sortBlock: [:a :b | a duration > b duration]).
+				asSortedCollectionUsing: (SortAlgorithm mergeSort: [:a :b | a duration > b duration]).
 	newLaggards := laggards reject: [:each | aCollection includes: each case].
 	newLaggards size > 0 ifFalse: [^self].
 	stream
@@ -106,19 +106,19 @@ summarizeTimings: aTestResult baseline: aCollection threshold: aDuration
 				tab;
 				print: each case;
 				cr]! !
-!TestRunConsoleLogger categoriesFor: #finishedCase:!logging!public! !
-!TestRunConsoleLogger categoriesFor: #finishedRun:knownSlowTests:!logging!public! !
-!TestRunConsoleLogger categoriesFor: #startingCase:!logging!public! !
-!TestRunConsoleLogger categoriesFor: #startingRun:!logging!public! !
-!TestRunConsoleLogger categoriesFor: #stream:!accessing!private! !
-!TestRunConsoleLogger categoriesFor: #summarizeFailures:!helpers!private! !
-!TestRunConsoleLogger categoriesFor: #summarizeTimings:baseline:threshold:!helpers!private! !
+!XProgramming.SUnit.TestRunConsoleLogger categoriesFor: #finishedCase:!logging!public! !
+!XProgramming.SUnit.TestRunConsoleLogger categoriesFor: #finishedRun:knownSlowTests:!logging!public! !
+!XProgramming.SUnit.TestRunConsoleLogger categoriesFor: #startingCase:!logging!public! !
+!XProgramming.SUnit.TestRunConsoleLogger categoriesFor: #startingRun:!logging!public! !
+!XProgramming.SUnit.TestRunConsoleLogger categoriesFor: #stream:!accessing!private! !
+!XProgramming.SUnit.TestRunConsoleLogger categoriesFor: #summarizeFailures:!helpers!private! !
+!XProgramming.SUnit.TestRunConsoleLogger categoriesFor: #summarizeTimings:baseline:threshold:!helpers!private! !
 
-!TestRunConsoleLogger class methodsFor!
+!XProgramming.SUnit.TestRunConsoleLogger class methodsFor!
 
 on: aPuttableStream
 	^(self new)
 		stream: aPuttableStream;
 		yourself! !
-!TestRunConsoleLogger class categoriesFor: #on:!public! !
+!XProgramming.SUnit.TestRunConsoleLogger class categoriesFor: #on:!public! !
 
