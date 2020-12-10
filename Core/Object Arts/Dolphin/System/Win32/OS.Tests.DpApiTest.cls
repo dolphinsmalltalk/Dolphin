@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-DolphinTest subclass: #DpApiTest
+Core.Tests.DolphinTest subclass: #'OS.Tests.DpApiTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-DpApiTest guid: (GUID fromString: '{9165806d-c1a3-45e6-bf08-54ea3a21b04c}')!
-DpApiTest comment: ''!
-!DpApiTest categoriesForClass!Unclassified! !
-!DpApiTest methodsFor!
+OS.Tests.DpApiTest guid: (Core.GUID fromString: '{9165806d-c1a3-45e6-bf08-54ea3a21b04c}')!
+OS.Tests.DpApiTest comment: ''!
+!OS.Tests.DpApiTest categoriesForClass!Unclassified! !
+!OS.Tests.DpApiTest methodsFor!
 
 testProtectUnprotectData
 	#('' 'a' 'abc' #[] #[0] #[128 255 1]) do: [:each | self verifyRoundTrip: each]!
@@ -37,6 +37,6 @@ verifyRoundTrip: aByteObject
 		should: [Crypt32Library unprotectData: encryptedExtra additionalEntropy: #[4 5 6]]
 		raise: Win32Error
 		matching: [:ex | ex tag statusCode = Win32Errors.ERROR_INVALID_DATA]! !
-!DpApiTest categoriesFor: #testProtectUnprotectData!public!unit tests! !
-!DpApiTest categoriesFor: #verifyRoundTrip:!helpers!private! !
+!OS.Tests.DpApiTest categoriesFor: #testProtectUnprotectData!public!unit tests! !
+!OS.Tests.DpApiTest categoriesFor: #verifyRoundTrip:!helpers!private! !
 

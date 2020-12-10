@@ -1,14 +1,14 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Object subclass: #FileSystemChangeReader
+Core.Object subclass: #'OS.FileSystemChangeReader'
 	instanceVariableNames: 'handle directory watchSubDirs notificationMask callback buffer overlapStruct filters'
 	classVariableNames: 'FileIOCompletionRoutineDescriptor'
-	poolDictionaries: 'FileSystemWatcherConstants Win32Constants Win32Errors'
+	imports: #(#{OS.Win32Constants} #{OS.FileSystemWatcherConstants} #{OS.Win32Errors})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-FileSystemChangeReader guid: (GUID fromString: '{d46a38a5-966c-4e12-a910-00936a4993bd}')!
-FileSystemChangeReader isAbstract: true!
-FileSystemChangeReader comment: 'FileSystemChangeReader is a class of objects that can be used to monitor the file system for changes occurring in a specified directory, and (optionally) its sub-directories. The directory can reside on the local computer, a network drive, or a remote computer, as long as the computers concerned are not running Windows 9x (which does not support the necessary Win32 API).
+OS.FileSystemChangeReader guid: (Core.GUID fromString: '{d46a38a5-966c-4e12-a910-00936a4993bd}')!
+OS.FileSystemChangeReader isNonInstantiable: true!
+OS.FileSystemChangeReader comment: 'FileSystemChangeReader is a class of objects that can be used to monitor the file system for changes occurring in a specified directory, and (optionally) its sub-directories. The directory can reside on the local computer, a network drive, or a remote computer, as long as the computers concerned are not running Windows 9x (which does not support the necessary Win32 API).
 
 FileSystemChangeReader employs the ReadDirectoryChangesW API to request directory monitoring, and uses Win32 overlapped I/O in conjunction with asynchronous procedure calls to receive the notifications. By utilising Dolphin''s generic callback mechanism overlapped I/O APCs are simple and efficient, however because they are received when Dolphin enters an alertable wait state, they will normally be processed by the idle process when it issues a MsgWaitForMultipleObjectsEx call to quiesce the system. 
 
@@ -35,8 +35,8 @@ The #watchSubDirs flag allows control over whether the watcher will also monitor
 It is possible to mask out certain change events (which one might want to do if monitoring a frequently updated directory), or receive more detailed changes events (such as changes to file sizes, and even the time of last access) by setting the #notificationMask. By default a FileSystemWatcher will report the addition, modification, removal and renaming of files.
 
 N.B. If you monitor a directory such as c:\Windows\ or : c:\Windows\System32, you may start to receive so many notifications that system performance is impacted.  It is advisable to consider carefully before monitoring any directory.'!
-!FileSystemChangeReader categoriesForClass!Kernel-Objects! !
-!FileSystemChangeReader methodsFor!
+!OS.FileSystemChangeReader categoriesForClass!Kernel-Objects! !
+!OS.FileSystemChangeReader methodsFor!
 
 addFilter: aString 
 	self filters: (self filters copyWith: aString)!
@@ -51,12 +51,12 @@ changeWatchProperty: aNiladicValuable
 
 createCallback
 	overlapStruct := OVERLAPPED new.
-	callback := ExternalCallback block: 
-					[:dwErrorCode :dwNumberOfBytesTransfered :lpOverlapped | 
+	callback := Callback block: 
+					[:dwErrorCode :dwNumberOfBytesTransfered :lpOverlapped |
 					dwErrorCode = 0 ifFalse: [self processError: dwErrorCode].
 					dwNumberOfBytesTransfered > 0 ifTrue: [self processNotifications].
 					"Need to read again to get the next set of notifications... handle null if closed"
-					handle notNull 
+					handle notNull
 						ifTrue: [self readDirectoryChanges ifFalse: [self processError: KernelLibrary default getLastError]]]
 				descriptor: FileIOCompletionRoutineDescriptor!
 
@@ -98,8 +98,8 @@ free
 	callback free.
 	callback := nil!
 
-freeDirectoryHandle: anExternalHandle 
-	(KernelLibrary default)
+freeDirectoryHandle: anExternalHandle
+	KernelLibrary default
 		cancelIo: anExternalHandle;
 		closeHandle: anExternalHandle!
 
@@ -111,7 +111,7 @@ getDirectoryHandle
 	is because we don't receive any notification if the directory is deleted after we start
 	monitoring, so we would be blissfully unaware."
 
-	handle := KernelLibrary default 
+	handle := KernelLibrary default
 				createFile: directory
 				dwDesiredAccess: FILE_LIST_DIRECTORY
 				dwSharedMode: FILE_SHARE_READ | FILE_SHARE_WRITE
@@ -231,7 +231,7 @@ notifySize: aBoolean
 	self changeWatchProperty: 
 			[self notificationMask: (self notificationMask mask: FILE_NOTIFY_CHANGE_SIZE set: aBoolean)]!
 
-processError: anInteger 
+processError: anInteger
 	buffer := nil.
 	KernelLibrary default closeHandle: handle.
 	handle := nil.
@@ -247,7 +247,7 @@ processNotifications
 
 readDirectoryChanges
 	self assert: [handle notNull].
-	^(KernelLibrary default 
+	^(KernelLibrary default
 		readDirectoryChangesW: handle
 		lpBuffer: buffer
 		nBufferLength: buffer size
@@ -260,9 +260,9 @@ readDirectoryChanges
 removeFilter: aString 
 	self filters: (self filters copyWithout: aString)!
 
-shouldNotifyChange: anAssociation 
+shouldNotifyChange: anAssociation
 	^anAssociation fileNames anySatisfy: 
-			[:eachPath | 
+			[:eachPath |
 			self filters anySatisfy: [:eachFilter | eachFilter match: (File splitFilenameFrom: eachPath)]]!
 
 startMonitoring
@@ -288,7 +288,7 @@ stopMonitoring
 
 	| wasMonitoring |
 	wasMonitoring := handle notNull.
-	wasMonitoring 
+	wasMonitoring
 		ifTrue: 
 			[| fh |
 			self beUnfinalizable.
@@ -312,18 +312,18 @@ unpackNotifications
 	address := buffer yourAddress.
 	struct := FILE_NOTIFY_INFORMATION fromAddress: address.
 	last := nil.
+	
 	[| code fileName |
 	fileName := struct FileName asString.
-
 	code := struct Action.
 	next := FileSystemChange code: code fileName: fileName.
-	last = next 
+	last = next
 		ifFalse: 
-			[code == 5 
+			[code == 5
 				ifTrue: [last fileNames: last fileNames , next fileNames]
 				ifFalse: [notifications addLast: next]].
 	offset := struct NextEntryOffset.
-	offset = 0] 
+	offset = 0]
 			whileFalse: 
 				[last := next.
 				address := address + offset.
@@ -339,55 +339,55 @@ watchSubDirs: aBoolean
 	"Set whether the receiver monitors sub-directories of the main watch directory for changes."
 
 	self changeWatchProperty: [watchSubDirs := aBoolean]! !
-!FileSystemChangeReader categoriesFor: #addFilter:!accessing!private! !
-!FileSystemChangeReader categoriesFor: #bufferSize!constants!private! !
-!FileSystemChangeReader categoriesFor: #changeWatchProperty:!helpers!private! !
-!FileSystemChangeReader categoriesFor: #createCallback!helpers!private! !
-!FileSystemChangeReader categoriesFor: #defaultNotificationMask!constants!private! !
-!FileSystemChangeReader categoriesFor: #directory!accessing!public! !
-!FileSystemChangeReader categoriesFor: #directory:!accessing!public! !
-!FileSystemChangeReader categoriesFor: #filters!accessing!public! !
-!FileSystemChangeReader categoriesFor: #filters:!accessing!public! !
-!FileSystemChangeReader categoriesFor: #filterString!accessing!public! !
-!FileSystemChangeReader categoriesFor: #filterString:!accessing!public! !
-!FileSystemChangeReader categoriesFor: #free!public!realizing/unrealizing! !
-!FileSystemChangeReader categoriesFor: #freeDirectoryHandle:!helpers!private!realizing/unrealizing! !
-!FileSystemChangeReader categoriesFor: #getDirectoryHandle!helpers!private!realizing/unrealizing! !
-!FileSystemChangeReader categoriesFor: #handleError:!helpers!private! !
-!FileSystemChangeReader categoriesFor: #handleNotifications:!helpers!private! !
-!FileSystemChangeReader categoriesFor: #initialize!initializing!private! !
-!FileSystemChangeReader categoriesFor: #isMonitoring!public!testing! !
-!FileSystemChangeReader categoriesFor: #isMonitoring:!accessing!public! !
-!FileSystemChangeReader categoriesFor: #notificationMask!accessing!public! !
-!FileSystemChangeReader categoriesFor: #notificationMask:!accessing!public! !
-!FileSystemChangeReader categoriesFor: #notifyAttributes!public!testing! !
-!FileSystemChangeReader categoriesFor: #notifyAttributes:!accessing!public! !
-!FileSystemChangeReader categoriesFor: #notifyCreationTime!public!testing! !
-!FileSystemChangeReader categoriesFor: #notifyCreationTime:!accessing!public! !
-!FileSystemChangeReader categoriesFor: #notifyDirectoryName!public!testing! !
-!FileSystemChangeReader categoriesFor: #notifyDirectoryName:!accessing!public! !
-!FileSystemChangeReader categoriesFor: #notifyFileName!public!testing! !
-!FileSystemChangeReader categoriesFor: #notifyFileName:!accessing!public! !
-!FileSystemChangeReader categoriesFor: #notifyLastAccess!public!testing! !
-!FileSystemChangeReader categoriesFor: #notifyLastAccess:!accessing!public! !
-!FileSystemChangeReader categoriesFor: #notifyLastWrite!public!testing! !
-!FileSystemChangeReader categoriesFor: #notifyLastWrite:!accessing!public! !
-!FileSystemChangeReader categoriesFor: #notifySecurity!public!testing! !
-!FileSystemChangeReader categoriesFor: #notifySecurity:!accessing!public! !
-!FileSystemChangeReader categoriesFor: #notifySize!public!testing! !
-!FileSystemChangeReader categoriesFor: #notifySize:!accessing!public! !
-!FileSystemChangeReader categoriesFor: #processError:!accessing!private! !
-!FileSystemChangeReader categoriesFor: #processNotifications!helpers!private! !
-!FileSystemChangeReader categoriesFor: #readDirectoryChanges!helpers!private! !
-!FileSystemChangeReader categoriesFor: #removeFilter:!accessing!public! !
-!FileSystemChangeReader categoriesFor: #shouldNotifyChange:!helpers!private! !
-!FileSystemChangeReader categoriesFor: #startMonitoring!operations!public! !
-!FileSystemChangeReader categoriesFor: #stopMonitoring!public!realizing/unrealizing! !
-!FileSystemChangeReader categoriesFor: #unpackNotifications!helpers!private! !
-!FileSystemChangeReader categoriesFor: #watchSubDirs!accessing!public! !
-!FileSystemChangeReader categoriesFor: #watchSubDirs:!accessing!public! !
+!OS.FileSystemChangeReader categoriesFor: #addFilter:!accessing!private! !
+!OS.FileSystemChangeReader categoriesFor: #bufferSize!constants!private! !
+!OS.FileSystemChangeReader categoriesFor: #changeWatchProperty:!helpers!private! !
+!OS.FileSystemChangeReader categoriesFor: #createCallback!helpers!private! !
+!OS.FileSystemChangeReader categoriesFor: #defaultNotificationMask!constants!private! !
+!OS.FileSystemChangeReader categoriesFor: #directory!accessing!public! !
+!OS.FileSystemChangeReader categoriesFor: #directory:!accessing!public! !
+!OS.FileSystemChangeReader categoriesFor: #filters!accessing!public! !
+!OS.FileSystemChangeReader categoriesFor: #filters:!accessing!public! !
+!OS.FileSystemChangeReader categoriesFor: #filterString!accessing!public! !
+!OS.FileSystemChangeReader categoriesFor: #filterString:!accessing!public! !
+!OS.FileSystemChangeReader categoriesFor: #free!public!realizing/unrealizing! !
+!OS.FileSystemChangeReader categoriesFor: #freeDirectoryHandle:!helpers!private!realizing/unrealizing! !
+!OS.FileSystemChangeReader categoriesFor: #getDirectoryHandle!helpers!private!realizing/unrealizing! !
+!OS.FileSystemChangeReader categoriesFor: #handleError:!helpers!private! !
+!OS.FileSystemChangeReader categoriesFor: #handleNotifications:!helpers!private! !
+!OS.FileSystemChangeReader categoriesFor: #initialize!initializing!private! !
+!OS.FileSystemChangeReader categoriesFor: #isMonitoring!public!testing! !
+!OS.FileSystemChangeReader categoriesFor: #isMonitoring:!accessing!public! !
+!OS.FileSystemChangeReader categoriesFor: #notificationMask!accessing!public! !
+!OS.FileSystemChangeReader categoriesFor: #notificationMask:!accessing!public! !
+!OS.FileSystemChangeReader categoriesFor: #notifyAttributes!public!testing! !
+!OS.FileSystemChangeReader categoriesFor: #notifyAttributes:!accessing!public! !
+!OS.FileSystemChangeReader categoriesFor: #notifyCreationTime!public!testing! !
+!OS.FileSystemChangeReader categoriesFor: #notifyCreationTime:!accessing!public! !
+!OS.FileSystemChangeReader categoriesFor: #notifyDirectoryName!public!testing! !
+!OS.FileSystemChangeReader categoriesFor: #notifyDirectoryName:!accessing!public! !
+!OS.FileSystemChangeReader categoriesFor: #notifyFileName!public!testing! !
+!OS.FileSystemChangeReader categoriesFor: #notifyFileName:!accessing!public! !
+!OS.FileSystemChangeReader categoriesFor: #notifyLastAccess!public!testing! !
+!OS.FileSystemChangeReader categoriesFor: #notifyLastAccess:!accessing!public! !
+!OS.FileSystemChangeReader categoriesFor: #notifyLastWrite!public!testing! !
+!OS.FileSystemChangeReader categoriesFor: #notifyLastWrite:!accessing!public! !
+!OS.FileSystemChangeReader categoriesFor: #notifySecurity!public!testing! !
+!OS.FileSystemChangeReader categoriesFor: #notifySecurity:!accessing!public! !
+!OS.FileSystemChangeReader categoriesFor: #notifySize!public!testing! !
+!OS.FileSystemChangeReader categoriesFor: #notifySize:!accessing!public! !
+!OS.FileSystemChangeReader categoriesFor: #processError:!accessing!private! !
+!OS.FileSystemChangeReader categoriesFor: #processNotifications!helpers!private! !
+!OS.FileSystemChangeReader categoriesFor: #readDirectoryChanges!helpers!private! !
+!OS.FileSystemChangeReader categoriesFor: #removeFilter:!accessing!public! !
+!OS.FileSystemChangeReader categoriesFor: #shouldNotifyChange:!helpers!private! !
+!OS.FileSystemChangeReader categoriesFor: #startMonitoring!operations!public! !
+!OS.FileSystemChangeReader categoriesFor: #stopMonitoring!public!realizing/unrealizing! !
+!OS.FileSystemChangeReader categoriesFor: #unpackNotifications!helpers!private! !
+!OS.FileSystemChangeReader categoriesFor: #watchSubDirs!accessing!public! !
+!OS.FileSystemChangeReader categoriesFor: #watchSubDirs:!accessing!public! !
 
-!FileSystemChangeReader class methodsFor!
+!OS.FileSystemChangeReader class methodsFor!
 
 directory: aString 
 	^(self new)
@@ -401,7 +401,7 @@ initialize
 		LPOVERLAPPED lpOverlapped
 	);"
 
-	FileIOCompletionRoutineDescriptor := ExternalDescriptor argumentTypes: 'DWORD DWORD OVERLAPPED*'!
+	FileIOCompletionRoutineDescriptor := External.Descriptor argumentTypes: 'DWORD DWORD OVERLAPPED*'!
 
 monitorDirectory: aString 
 	^(self directory: aString)
@@ -423,9 +423,9 @@ publishedEventsOfInstances
 		add: #fileModified:;
 		add: #fileRenamedFrom:to:;
 		yourself! !
-!FileSystemChangeReader class categoriesFor: #directory:!instance creation!public! !
-!FileSystemChangeReader class categoriesFor: #initialize!initializing!public! !
-!FileSystemChangeReader class categoriesFor: #monitorDirectory:!instance creation!public! !
-!FileSystemChangeReader class categoriesFor: #new!public! !
-!FileSystemChangeReader class categoriesFor: #publishedEventsOfInstances!events!public! !
+!OS.FileSystemChangeReader class categoriesFor: #directory:!instance creation!public! !
+!OS.FileSystemChangeReader class categoriesFor: #initialize!initializing!public! !
+!OS.FileSystemChangeReader class categoriesFor: #monitorDirectory:!instance creation!public! !
+!OS.FileSystemChangeReader class categoriesFor: #new!public! !
+!OS.FileSystemChangeReader class categoriesFor: #publishedEventsOfInstances!events!public! !
 

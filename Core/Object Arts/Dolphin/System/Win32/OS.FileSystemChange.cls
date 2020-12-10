@@ -1,17 +1,17 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Object subclass: #FileSystemChange
+Core.Object subclass: #'OS.FileSystemChange'
 	instanceVariableNames: 'time code fileNames'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'ActionMap' -> #(#fileAdded: #fileRemoved: #fileModified: #fileRenamedFrom:to: 5)
+		'ActionMap' -> #(#fileAdded: #fileRemoved: #fileModified: #fileRenamedFrom:to: 16r5)
 	}!
-FileSystemChange guid: (GUID fromString: '{ad5f4ada-4f26-46de-a418-b5a0e0c6b937}')!
-FileSystemChange comment: ''!
-!FileSystemChange categoriesForClass!Kernel-Objects! !
-!FileSystemChange methodsFor!
+OS.FileSystemChange guid: (Core.GUID fromString: '{ad5f4ada-4f26-46de-a418-b5a0e0c6b937}')!
+OS.FileSystemChange comment: ''!
+!OS.FileSystemChange categoriesForClass!Kernel-Objects! !
+!OS.FileSystemChange methodsFor!
 
 = aFileSystemChange 
 	^self species == aFileSystemChange species 
@@ -44,19 +44,19 @@ setCode: anInteger fileName: aString
 	time := FILETIME now.
 	code := anInteger.
 	fileNames := {aString}! !
-!FileSystemChange categoriesFor: #=!comparing!public! !
-!FileSystemChange categoriesFor: #action!public! !
-!FileSystemChange categoriesFor: #code!accessing!private! !
-!FileSystemChange categoriesFor: #fileNames!accessing!public! !
-!FileSystemChange categoriesFor: #fileNames:!accessing!public! !
-!FileSystemChange categoriesFor: #printOn:!public! !
-!FileSystemChange categoriesFor: #setCode:fileName:!initializing!private! !
+!OS.FileSystemChange categoriesFor: #=!comparing!public! !
+!OS.FileSystemChange categoriesFor: #action!public! !
+!OS.FileSystemChange categoriesFor: #code!accessing!private! !
+!OS.FileSystemChange categoriesFor: #fileNames!accessing!public! !
+!OS.FileSystemChange categoriesFor: #fileNames:!accessing!public! !
+!OS.FileSystemChange categoriesFor: #printOn:!public! !
+!OS.FileSystemChange categoriesFor: #setCode:fileName:!initializing!private! !
 
-!FileSystemChange class methodsFor!
+!OS.FileSystemChange class methodsFor!
 
 code: anInteger fileName: aString 
 	^(self new)
 		setCode: anInteger fileName: aString;
 		yourself! !
-!FileSystemChange class categoriesFor: #code:fileName:!instance creation!public! !
+!OS.FileSystemChange class categoriesFor: #code:fileName:!instance creation!public! !
 

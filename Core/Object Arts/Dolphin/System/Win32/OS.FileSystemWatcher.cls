@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-FileSystemChangeReader subclass: #FileSystemWatcher
+OS.FileSystemChangeReader subclass: #'OS.FileSystemWatcher'
 	instanceVariableNames: 'events'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-FileSystemWatcher guid: (GUID fromString: '{eb4cdf52-701c-4505-9872-8bfce6c37830}')!
-FileSystemWatcher comment: 'FileSystemWatcher is a FileSystemChangeReader that publishes the file-system changes it detects as Smalltalk events on the main UI thread.
+OS.FileSystemWatcher guid: (Core.GUID fromString: '{eb4cdf52-701c-4505-9872-8bfce6c37830}')!
+OS.FileSystemWatcher comment: 'FileSystemWatcher is a FileSystemChangeReader that publishes the file-system changes it detects as Smalltalk events on the main UI thread.
 
 Clients of the FileSystemWatcher can register to receive the following events:
 	
@@ -23,8 +23,8 @@ Note that the #fileRemoved: event is received when a file is deleted, or when it
 From observation it seems that saving a file typically results in two consecutive file modification events. This might be due to the way applications save files, but it is the case with commonly used editors such as Notepad. The FileSystemWatcher makes no attempt to filter these (apparently) duplication notifications - it is the applications responsibility to apply whatever filtering is appropriate. File Save (As) operations may result in the creation of temporary files too. Creating a new folder in Windows Explorer results in an initial {#fileAdded:, ''New Folder''} event, and subsequently a rename event (assuming one renames the folder away from the default name).
 
 See the superclass comment for details of how to set up a FileSystemWatcher.'!
-!FileSystemWatcher categoriesForClass!Kernel-Objects! !
-!FileSystemWatcher methodsFor!
+!OS.FileSystemWatcher categoriesForClass!Kernel-Objects! !
+!OS.FileSystemWatcher methodsFor!
 
 getEvents
 	"Private - Answer the EventsCollection belonging to the receiver, or nil if the receiver
@@ -38,13 +38,13 @@ handleError: anInteger
 handleNotifications: aSequencedReadableCollection 
 	[self informObservers: aSequencedReadableCollection] postToMessageQueue!
 
-informObservers: aSequencedReadableCollection 
+informObservers: aSequencedReadableCollection
 	"Private - Inform observers of the file system changes. Note that this must be done in the context of
 	the main process, yet it is very likely that the APC is processed by the idle process when
 	it calls MsgWaitForMultipleObjectsEx to quiesce the system."
 
 	aSequencedReadableCollection do: 
-			[:each | 
+			[:each |
 			self trigger: each action
 				withArguments: (each fileNames collect: [:eachPath | File composePath: directory subPath: eachPath])]!
 
@@ -67,15 +67,15 @@ stbSaveOn: anSTBOutFiler
 
 	anSTBOutFiler override: events with: nil.
 	super stbSaveOn: anSTBOutFiler.! !
-!FileSystemWatcher categoriesFor: #getEvents!events!private! !
-!FileSystemWatcher categoriesFor: #handleError:!helpers!private! !
-!FileSystemWatcher categoriesFor: #handleNotifications:!private! !
-!FileSystemWatcher categoriesFor: #informObservers:!helpers!private! !
-!FileSystemWatcher categoriesFor: #postCopy!copying!public! !
-!FileSystemWatcher categoriesFor: #setEvents:!events!private! !
-!FileSystemWatcher categoriesFor: #stbSaveOn:!binary filing!public! !
+!OS.FileSystemWatcher categoriesFor: #getEvents!events!private! !
+!OS.FileSystemWatcher categoriesFor: #handleError:!helpers!private! !
+!OS.FileSystemWatcher categoriesFor: #handleNotifications:!private! !
+!OS.FileSystemWatcher categoriesFor: #informObservers:!helpers!private! !
+!OS.FileSystemWatcher categoriesFor: #postCopy!copying!public! !
+!OS.FileSystemWatcher categoriesFor: #setEvents:!events!private! !
+!OS.FileSystemWatcher categoriesFor: #stbSaveOn:!binary filing!public! !
 
-!FileSystemWatcher class methodsFor!
+!OS.FileSystemWatcher class methodsFor!
 
 initialize
 	"VOID CALLBACK FileIOCompletionRoutine(
@@ -84,6 +84,6 @@ initialize
 		LPOVERLAPPED lpOverlapped
 	);"
 
-	FileIOCompletionRoutineDescriptor := ExternalDescriptor argumentTypes: 'DWORD DWORD OVERLAPPED*'! !
-!FileSystemWatcher class categoriesFor: #initialize!initializing!public! !
+	FileIOCompletionRoutineDescriptor := External.Descriptor argumentTypes: 'DWORD DWORD OVERLAPPED*'! !
+!OS.FileSystemWatcher class categoriesFor: #initialize!initializing!public! !
 

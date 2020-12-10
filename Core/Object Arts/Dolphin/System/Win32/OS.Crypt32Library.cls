@@ -1,21 +1,21 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ExternalLibrary subclass: #Crypt32Library
+External.Library subclass: #'OS.Crypt32Library'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'WinCryptConstants'
+	imports: #(#{OS.WinCryptConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Crypt32Library guid: (GUID fromString: '{02c78993-ba10-47a1-953f-63f60b7693ab}')!
-Crypt32Library comment: 'Crypt32Library is the <ExternalLibrary> class to represent the dynamic link library, ''Crypt32.dll''.It was generated generated from type information in the ''Win32 API'' library. It contains methods for each of the functions defined by the corresponding module in that type library.
+OS.Crypt32Library guid: (Core.GUID fromString: '{02c78993-ba10-47a1-953f-63f60b7693ab}')!
+OS.Crypt32Library comment: 'Crypt32Library is the <ExternalLibrary> class to represent the dynamic link library, ''Crypt32.dll''.It was generated generated from type information in the ''Win32 API'' library. It contains methods for each of the functions defined by the corresponding module in that type library.
 
 The type library contains the following helpstring for this module
 	"Crypto API"
 
 Warning: This comment was automatically generated from the module''s type information, but any changes made here will not be overwritten if the wrapper class is regenerated.
 '!
-!Crypt32Library categoriesForClass!Win32-Modules! !
-!Crypt32Library methodsFor!
+!OS.Crypt32Library categoriesForClass!Win32-Modules! !
+!OS.Crypt32Library methodsFor!
 
 cryptProtectData: pDataIn szDataDescr: szDataDescr pOptionalEntropy: pOptionalEntropy pvReserved: pvReserved pPromptStruct: pPromptStruct dwFlags: dwFlags pDataOut: pDataOut
 	"Invoke the CryptProtectData() function of the module wrapped by the receiver.
@@ -68,12 +68,12 @@ cryptUnprotectMemory: pDataIn cbDataIn: cbDataIn dwFlags: dwFlags
 
 	<stdcall: bool CryptUnprotectMemory void* dword dword>
 	^self invalidCall: _failureCode! !
-!Crypt32Library categoriesFor: #cryptProtectData:szDataDescr:pOptionalEntropy:pvReserved:pPromptStruct:dwFlags:pDataOut:!**auto generated**!public! !
-!Crypt32Library categoriesFor: #cryptProtectMemory:cbDataIn:dwFlags:!**auto generated**!public! !
-!Crypt32Library categoriesFor: #cryptUnprotectData:ppszDataDescr:pOptionalEntropy:pvReserved:pPromptStruct:dwFlags:pDataOut:!**auto generated**!public! !
-!Crypt32Library categoriesFor: #cryptUnprotectMemory:cbDataIn:dwFlags:!**auto generated**!public! !
+!OS.Crypt32Library categoriesFor: #cryptProtectData:szDataDescr:pOptionalEntropy:pvReserved:pPromptStruct:dwFlags:pDataOut:!**auto generated**!public! !
+!OS.Crypt32Library categoriesFor: #cryptProtectMemory:cbDataIn:dwFlags:!**auto generated**!public! !
+!OS.Crypt32Library categoriesFor: #cryptUnprotectData:ppszDataDescr:pOptionalEntropy:pvReserved:pPromptStruct:dwFlags:pDataOut:!**auto generated**!public! !
+!OS.Crypt32Library categoriesFor: #cryptUnprotectMemory:cbDataIn:dwFlags:!**auto generated**!public! !
 
-!Crypt32Library class methodsFor!
+!OS.Crypt32Library class methodsFor!
 
 example1
 	| encrypted decrypted original |
@@ -167,7 +167,7 @@ unprotectData: aByteObject additionalEntropy: aByteArrayOrNil machineWide: aBool
 	flags := WinCryptConstants.CRYPTPROTECT_UI_FORBIDDEN.
 	aBoolean ifTrue: [flags := flags | WinCryptConstants.CRYPTPROTECT_LOCAL_MACHINE].
 	description := aByteObject class name asUtf16String.
-	description := ExternalAddress new.
+	description := Address new.
 	entropy := aByteArrayOrNil ifNotNil: [CRYPTOAPI_BLOB fromBytes: aByteArrayOrNil].
 	(self default
 		cryptUnprotectData: encrypted
@@ -186,12 +186,12 @@ unprotectData: aByteObject additionalEntropy: aByteArrayOrNil machineWide: aBool
 				to: size.
 	unencrypted free.
 	^answer! !
-!Crypt32Library class categoriesFor: #example1!examples!must strip!public! !
-!Crypt32Library class categoriesFor: #fileName!**auto generated**!constants!public! !
-!Crypt32Library class categoriesFor: #protectData:!operations!public! !
-!Crypt32Library class categoriesFor: #protectData:additionalEntropy:!operations!public! !
-!Crypt32Library class categoriesFor: #protectData:additionalEntropy:machineWide:!operations!public! !
-!Crypt32Library class categoriesFor: #unprotectData:!operations!public! !
-!Crypt32Library class categoriesFor: #unprotectData:additionalEntropy:!operations!public! !
-!Crypt32Library class categoriesFor: #unprotectData:additionalEntropy:machineWide:!operations!public! !
+!OS.Crypt32Library class categoriesFor: #example1!examples!must strip!public! !
+!OS.Crypt32Library class categoriesFor: #fileName!**auto generated**!constants!public! !
+!OS.Crypt32Library class categoriesFor: #protectData:!operations!public! !
+!OS.Crypt32Library class categoriesFor: #protectData:additionalEntropy:!operations!public! !
+!OS.Crypt32Library class categoriesFor: #protectData:additionalEntropy:machineWide:!operations!public! !
+!OS.Crypt32Library class categoriesFor: #unprotectData:!operations!public! !
+!OS.Crypt32Library class categoriesFor: #unprotectData:additionalEntropy:!operations!public! !
+!OS.Crypt32Library class categoriesFor: #unprotectData:additionalEntropy:machineWide:!operations!public! !
 

@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-SharedPool subclass: #MMFConstants
+Kernel.SharedPool subclass: #'OS.MMFConstants'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -26,6 +26,7 @@ SharedPool subclass: #MMFConstants
 		'SEC_NOCACHE' -> 16r10000000.
 		'SEC_RESERVE' -> 16r4000000
 	}!
-MMFConstants guid: (GUID fromString: '{f837fc43-e1a2-43b0-9726-37c308613aa0}')!
-MMFConstants comment: ''!
-!MMFConstants categoriesForClass!Unclassified! !
+OS.MMFConstants guid: (Core.GUID fromString: '{f837fc43-e1a2-43b0-9726-37c308613aa0}')!
+OS.MMFConstants isNonInstantiable: true!
+OS.MMFConstants comment: ''!
+!OS.MMFConstants categoriesForClass!Unclassified! !

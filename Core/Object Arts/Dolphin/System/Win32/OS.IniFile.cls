@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-IniFileAbstract subclass: #IniFile
+OS.IniFileAbstract subclass: #'OS.IniFile'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-IniFile guid: (GUID fromString: '{c373c097-bfde-42ca-968c-28008b7eff49}')!
-IniFile comment: 'Implements <abstractDictionary> over a Windows .ini file'!
-!IniFile categoriesForClass!Unclassified! !
-!IniFile methodsFor!
+OS.IniFile guid: (Core.GUID fromString: '{c373c097-bfde-42ca-968c-28008b7eff49}')!
+OS.IniFile comment: 'Implements <abstractDictionary> over a Windows .ini file'!
+!OS.IniFile categoriesForClass!Unclassified! !
+!OS.IniFile methodsFor!
 
 at: aString ifAbsent: aNiladicValuable
 	"Answer the <IniFileSection> in the received named by the <String> argument.  If there is no such section,
@@ -101,11 +101,11 @@ removeKey: aString ifAbsent: aNiladicValuable
 		writePrivateProfileSection: key
 		lpString: nil
 		lpFileName: filename) ifTrue: [value] ifFalse: [Win32Error signal]! !
-!IniFile categoriesFor: #at:ifAbsent:!accessing!public! !
-!IniFile categoriesFor: #at:put:!adding!public! !
-!IniFile categoriesFor: #getValue:!accessing!private! !
-!IniFile categoriesFor: #hasSectionNamed:!accessing!private! !
-!IniFile categoriesFor: #includesKey:!accessing!public! !
-!IniFile categoriesFor: #keysDo:!enumerating!public! !
-!IniFile categoriesFor: #removeKey:ifAbsent:!public!removing! !
+!OS.IniFile categoriesFor: #at:ifAbsent:!accessing!public! !
+!OS.IniFile categoriesFor: #at:put:!adding!public! !
+!OS.IniFile categoriesFor: #getValue:!accessing!private! !
+!OS.IniFile categoriesFor: #hasSectionNamed:!accessing!private! !
+!OS.IniFile categoriesFor: #includesKey:!accessing!public! !
+!OS.IniFile categoriesFor: #keysDo:!enumerating!public! !
+!OS.IniFile categoriesFor: #removeKey:ifAbsent:!public!removing! !
 

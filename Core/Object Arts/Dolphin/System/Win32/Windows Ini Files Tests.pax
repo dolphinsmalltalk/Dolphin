@@ -1,14 +1,14 @@
 ﻿| package |
 package := Package name: 'Windows Ini Files Tests'.
-package paxVersion: 2;
+package paxVersion: 2.1;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Tests for Dolphin Smalltalk Windows Ini Files
 Copyright (c) Object Arts Ltd, 2017-18'.
 
 
 package setClassNames: #(
-	#{IniFileTest}
-	#{IniFileTestResource}
+	#{OS.Tests.IniFileTest}
+	#{OS.Tests.IniFileTestResource}
 ).
 
 package setPrerequisites: #(
@@ -22,16 +22,16 @@ package!
 
 "Class Definitions"!
 
-DolphinTest subclass: #IniFileTest
+Core.Tests.DolphinTest subclass: #'OS.Tests.IniFileTest'
 	instanceVariableNames: 'iniFile'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-TestResource subclass: #IniFileTestResource
+XProgramming.SUnit.TestResource subclass: #'OS.Tests.IniFileTestResource'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 

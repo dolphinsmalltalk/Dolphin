@@ -1,0 +1,29 @@
+﻿| package |
+package := Package name: 'Dolphin File System Info'.
+package paxVersion: 2.1;
+	basicComment: 'Dolphin Smalltalk File System Information
+Copyright © Object Arts Ltd. 1997-2018
+'.
+
+
+package setClassNames: #(
+	#{OS.DiskVolumeInformation}
+).
+
+package setPrerequisites: #(
+	'..\..\Base\Dolphin'
+).
+
+package!
+
+"Class Definitions"!
+
+Core.Object subclass: #'OS.DiskVolumeInformation'
+	instanceVariableNames: 'path rootPath label serialNumber maxComponentLength fileSystemFlags fileSystemName sectorsPerCluster bytesPerSector freeClusters totalClusters freeBytes totalBytes totalFreeBytes'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+"End of package definition"!
+

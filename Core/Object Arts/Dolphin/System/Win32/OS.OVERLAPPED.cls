@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ExternalStructure subclass: #OVERLAPPED
+External.Structure subclass: #'OS.OVERLAPPED'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_hEvent' -> 16r10.
@@ -13,8 +13,8 @@ ExternalStructure subclass: #OVERLAPPED
 		'_OffsetOf_OffsetHigh' -> 16rC.
 		'_OffsetOf_Pointer' -> 16r8
 	}!
-OVERLAPPED guid: (GUID fromString: '{301c9a7a-d4b4-42d5-895d-e658d212df5b}')!
-OVERLAPPED comment: '<OVERLAPPED> is an <ExternalStructure> class to wrap the struct ''Win32.OVERLAPPED'' from type information in the ''Win32 API'' library.
+OS.OVERLAPPED guid: (Core.GUID fromString: '{301c9a7a-d4b4-42d5-895d-e658d212df5b}')!
+OS.OVERLAPPED comment: '<OVERLAPPED> is an <ExternalStructure> class to wrap the struct ''Win32.OVERLAPPED'' from type information in the ''Win32 API'' library.
 
 The type library contains the following helpstring for this struct
 	"Contains information used in asynchronous (or overlapped) input and output (I/O)."
@@ -37,8 +37,8 @@ struct tagOVERLAPPED {
 	[helpstring("A handle to the event that will be set to a signaled state by the system when the operation has completed.")] HANDLE hEvent;
 } OVERLAPPED;
 '!
-!OVERLAPPED categoriesForClass!Win32-Structs! !
-!OVERLAPPED methodsFor!
+!OS.OVERLAPPED categoriesForClass!Win32-Structs! !
+!OS.OVERLAPPED methodsFor!
 
 hEvent
 	"Answer the <ExternalHandle> value of the receiver's 'hEvent' field."
@@ -79,16 +79,16 @@ OffsetHigh: anInteger
 	"Set the receiver's 'OffsetHigh' field to the value of the argument, anInteger"
 
 	bytes dwordAtOffset: _OffsetOf_OffsetHigh put: anInteger! !
-!OVERLAPPED categoriesFor: #hEvent!**compiled accessors**!public! !
-!OVERLAPPED categoriesFor: #hEvent:!**compiled accessors**!public! !
-!OVERLAPPED categoriesFor: #Internal!**compiled accessors**!public! !
-!OVERLAPPED categoriesFor: #InternalHigh!**compiled accessors**!public! !
-!OVERLAPPED categoriesFor: #Offset!**compiled accessors**!public! !
-!OVERLAPPED categoriesFor: #Offset:!**compiled accessors**!public! !
-!OVERLAPPED categoriesFor: #OffsetHigh!**compiled accessors**!public! !
-!OVERLAPPED categoriesFor: #OffsetHigh:!**compiled accessors**!public! !
+!OS.OVERLAPPED categoriesFor: #hEvent!**compiled accessors**!public! !
+!OS.OVERLAPPED categoriesFor: #hEvent:!**compiled accessors**!public! !
+!OS.OVERLAPPED categoriesFor: #Internal!**compiled accessors**!public! !
+!OS.OVERLAPPED categoriesFor: #InternalHigh!**compiled accessors**!public! !
+!OS.OVERLAPPED categoriesFor: #Offset!**compiled accessors**!public! !
+!OS.OVERLAPPED categoriesFor: #Offset:!**compiled accessors**!public! !
+!OS.OVERLAPPED categoriesFor: #OffsetHigh!**compiled accessors**!public! !
+!OS.OVERLAPPED categoriesFor: #OffsetHigh:!**compiled accessors**!public! !
 
-!OVERLAPPED class methodsFor!
+!OS.OVERLAPPED class methodsFor!
 
 defineFields
 	"Define the fields of the OVERLAPPED structure.
@@ -111,16 +111,28 @@ defineFields
 "
 
 	self
-		defineField: #Internal type: UINT_PTRField new beReadOnly offset: 0;
-		defineField: #InternalHigh type: UINT_PTRField new beReadOnly offset: 4;
-		defineField: #Offset type: DWORDField new offset: 8;
-		defineField: #OffsetHigh type: DWORDField new offset: 12;
-		defineField: #Pointer type: LPVOIDField new beFiller offset: 8;
-		defineField: #hEvent type: HANDLEField new offset: 16.
+		defineField: #Internal
+			type: UINT_PTRField new beReadOnly
+			offset: 0;
+		defineField: #InternalHigh
+			type: UINT_PTRField new beReadOnly
+			offset: 4;
+		defineField: #Offset
+			type: DWORDField new
+			offset: 8;
+		defineField: #OffsetHigh
+			type: DWORDField new
+			offset: 12;
+		defineField: #Pointer
+			type: LPVOIDField new beFiller
+			offset: 8;
+		defineField: #hEvent
+			type: HANDLEField new
+			offset: 16.
 	self byteSize: 20!
 
 getFieldNames
 	^#(#Internal #InternalHigh #Offset #OffsetHigh #hEvent)! !
-!OVERLAPPED class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!OVERLAPPED class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.OVERLAPPED class categoriesFor: #defineFields!**auto generated**!public!template definition! !
+!OS.OVERLAPPED class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

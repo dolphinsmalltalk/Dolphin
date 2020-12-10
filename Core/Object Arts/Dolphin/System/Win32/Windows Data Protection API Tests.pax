@@ -1,12 +1,12 @@
 ﻿| package |
 package := Package name: 'Windows Data Protection API Tests'.
-package paxVersion: 2;
+package paxVersion: 2.1;
 	preDeclareClassesOnLoad: false;
 	basicComment: ''.
 
 
 package setClassNames: #(
-	#{DpApiTest}
+	#{OS.Tests.DpApiTest}
 ).
 
 package setPrerequisites: #(
@@ -19,10 +19,10 @@ package!
 
 "Class Definitions"!
 
-DolphinTest subclass: #DpApiTest
+Core.Tests.DolphinTest subclass: #'OS.Tests.DpApiTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 

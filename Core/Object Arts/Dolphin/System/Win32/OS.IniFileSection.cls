@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-IniFileAbstract subclass: #IniFileSection
+OS.IniFileAbstract subclass: #'OS.IniFileSection'
 	instanceVariableNames: 'name'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-IniFileSection guid: (GUID fromString: '{958fca51-c92d-44e7-bba0-cfb419fa5b11}')!
-IniFileSection comment: 'Implements <abstractDictionary> over a named section of a Windows .ini file'!
-!IniFileSection categoriesForClass!Unclassified! !
-!IniFileSection methodsFor!
+OS.IniFileSection guid: (Core.GUID fromString: '{958fca51-c92d-44e7-bba0-cfb419fa5b11}')!
+OS.IniFileSection comment: 'Implements <abstractDictionary> over a named section of a Windows .ini file'!
+!OS.IniFileSection categoriesForClass!Unclassified! !
+!OS.IniFileSection methodsFor!
 
 = comparand
 	"Answer whether the receiver and the <Object>, comparand, are considered equivalent."
@@ -64,7 +64,7 @@ hash
 
 keysClass
 	"Private - Answer the class of Collection to be used for collecting the keys of the receiver"
-	
+
 	^Set!
 
 keysDo: operation
@@ -121,23 +121,23 @@ removeKey: aString ifAbsent: aNiladicValuable
 setFilename: filenameString section: sectionNameString
 	filename := filenameString asUtf16String.
 	name := sectionNameString asUtf16String shallowCopy! !
-!IniFileSection categoriesFor: #=!comparing!public! !
-!IniFileSection categoriesFor: #at:ifAbsent:!adding!public! !
-!IniFileSection categoriesFor: #at:put:!adding!public! !
-!IniFileSection categoriesFor: #errorNilKey!exceptions!private! !
-!IniFileSection categoriesFor: #getValue:!accessing!public! !
-!IniFileSection categoriesFor: #hash!comparing!public! !
-!IniFileSection categoriesFor: #keysClass!constants!private! !
-!IniFileSection categoriesFor: #keysDo:!enumerating!public! !
-!IniFileSection categoriesFor: #name!accessing!public! !
-!IniFileSection categoriesFor: #printOn:!printing!public! !
-!IniFileSection categoriesFor: #removeKey:ifAbsent:!public!removing! !
-!IniFileSection categoriesFor: #setFilename:section:!initializing!private! !
+!OS.IniFileSection categoriesFor: #=!comparing!public! !
+!OS.IniFileSection categoriesFor: #at:ifAbsent:!adding!public! !
+!OS.IniFileSection categoriesFor: #at:put:!adding!public! !
+!OS.IniFileSection categoriesFor: #errorNilKey!exceptions!private! !
+!OS.IniFileSection categoriesFor: #getValue:!accessing!public! !
+!OS.IniFileSection categoriesFor: #hash!comparing!public! !
+!OS.IniFileSection categoriesFor: #keysClass!constants!private! !
+!OS.IniFileSection categoriesFor: #keysDo:!enumerating!public! !
+!OS.IniFileSection categoriesFor: #name!accessing!public! !
+!OS.IniFileSection categoriesFor: #printOn:!printing!public! !
+!OS.IniFileSection categoriesFor: #removeKey:ifAbsent:!public!removing! !
+!OS.IniFileSection categoriesFor: #setFilename:section:!initializing!private! !
 
-!IniFileSection class methodsFor!
+!OS.IniFileSection class methodsFor!
 
 open: filenameString section: sectionNameString
 	^self new
 		setFilename: filenameString section: sectionNameString! !
-!IniFileSection class categoriesFor: #open:section:!public! !
+!OS.IniFileSection class categoriesFor: #open:section:!public! !
 

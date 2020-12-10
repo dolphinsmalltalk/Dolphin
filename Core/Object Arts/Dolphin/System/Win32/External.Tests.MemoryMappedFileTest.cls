@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-DolphinTest subclass: #MemoryMappedFileTest
+Core.Tests.DolphinTest subclass: #'External.Tests.MemoryMappedFileTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-MemoryMappedFileTest guid: (GUID fromString: '{c5e2483c-650a-4155-a15c-2c4a79201f0c}')!
-MemoryMappedFileTest comment: ''!
-!MemoryMappedFileTest categoriesForClass!Kernel-Objects! !
-!MemoryMappedFileTest methodsFor!
+External.Tests.MemoryMappedFileTest guid: (Core.GUID fromString: '{c5e2483c-650a-4155-a15c-2c4a79201f0c}')!
+External.Tests.MemoryMappedFileTest comment: ''!
+!External.Tests.MemoryMappedFileTest categoriesForClass!Kernel-Objects! !
+!External.Tests.MemoryMappedFileTest methodsFor!
 
 testDoubleArray
 	| data array file fname mmf view array2 f |
@@ -60,7 +60,7 @@ testMaximumSize
 		should: [array at: count]
 		raise: GPFault
 		description: 'Wrote to deallocated memory mapped file'.
-	(MemoryManager current)
+	MemoryManager current
 		collectGarbage;
 		administerLastRites.
 	file := FileStream read: fname text: false.
@@ -86,7 +86,7 @@ testReadOnly
 	view free.
 	mmf free.
 	File delete: fname! !
-!MemoryMappedFileTest categoriesFor: #testDoubleArray!public! !
-!MemoryMappedFileTest categoriesFor: #testMaximumSize!public! !
-!MemoryMappedFileTest categoriesFor: #testReadOnly!public! !
+!External.Tests.MemoryMappedFileTest categoriesFor: #testDoubleArray!public! !
+!External.Tests.MemoryMappedFileTest categoriesFor: #testMaximumSize!public! !
+!External.Tests.MemoryMappedFileTest categoriesFor: #testReadOnly!public! !
 

@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-SharedPool subclass: #FileSystemWatcherConstants
+Kernel.SharedPool subclass: #'OS.FileSystemWatcherConstants'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -20,6 +20,7 @@ SharedPool subclass: #FileSystemWatcherConstants
 		'FILE_NOTIFY_CHANGE_SECURITY' -> 16r100.
 		'FILE_NOTIFY_CHANGE_SIZE' -> 16r8
 	}!
-FileSystemWatcherConstants guid: (GUID fromString: '{b7763e83-4cda-4ba5-9352-abe5707f10a2}')!
-FileSystemWatcherConstants comment: ''!
-!FileSystemWatcherConstants categoriesForClass!Unclassified! !
+OS.FileSystemWatcherConstants guid: (Core.GUID fromString: '{b7763e83-4cda-4ba5-9352-abe5707f10a2}')!
+OS.FileSystemWatcherConstants isNonInstantiable: true!
+OS.FileSystemWatcherConstants comment: ''!
+!OS.FileSystemWatcherConstants categoriesForClass!Unclassified! !

@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Object subclass: #MemoryMappedFile
+Core.Object subclass: #'External.MemoryMappedFile'
 	instanceVariableNames: 'file name handle maximumSize ownsFile'
 	classVariableNames: ''
-	poolDictionaries: 'MMFConstants Win32Constants'
+	imports: #(#{OS.MMFConstants} #{OS.Win32Constants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-MemoryMappedFile guid: (GUID fromString: '{87c4eee1-16f8-422b-b9e6-2e1c2963affd}')!
-MemoryMappedFile comment: 'MemoryMappedFile is an abstraction over the Win32 Memory-Mapped File API.
+External.MemoryMappedFile guid: (Core.GUID fromString: '{87c4eee1-16f8-422b-b9e6-2e1c2963affd}')!
+External.MemoryMappedFile comment: 'MemoryMappedFile is an abstraction over the Win32 Memory-Mapped File API.
 
 Instance Variables:
 	file				<File> the file which the receiver maps into memory.
@@ -17,8 +17,8 @@ Instance Variables:
 	ownsFile		<boolean>. Whether or not the mapping opened the file (and should therefore close it when free''d)
 
 '!
-!MemoryMappedFile categoriesForClass!Kernel-Objects! !
-!MemoryMappedFile methodsFor!
+!External.MemoryMappedFile categoriesForClass!Kernel-Objects! !
+!External.MemoryMappedFile methodsFor!
 
 asParameter
 	"Answer the receiver in a form suitable for passing to an external function
@@ -50,7 +50,7 @@ basicFree
 createMapping
 	"Private - Create the file mapping and answer its handle."
 
-	^(KernelLibrary default 
+	^(KernelLibrary default
 		createFileMapping: file asParameter
 		lpAttributes: nil
 		flProtect: (self isReadOnly ifTrue: [PAGE_READONLY] ifFalse: [PAGE_READWRITE])
@@ -123,18 +123,18 @@ setFile: aFile owned: aBoolean name: aString
 	ownsFile := aBoolean.
 	name := aString.
 	maximumSize := 0! !
-!MemoryMappedFile categoriesFor: #asParameter!converting!public! !
-!MemoryMappedFile categoriesFor: #basicFree!private!realizing/unrealizing! !
-!MemoryMappedFile categoriesFor: #createMapping!helpers!private! !
-!MemoryMappedFile categoriesFor: #free!public!realizing/unrealizing! !
-!MemoryMappedFile categoriesFor: #isReadOnly!helpers!public!testing! !
-!MemoryMappedFile categoriesFor: #mapView!operations!public! !
-!MemoryMappedFile categoriesFor: #mapViewFrom:to:!operations!public! !
-!MemoryMappedFile categoriesFor: #maximumSize!accessing!public! !
-!MemoryMappedFile categoriesFor: #maximumSize:!accessing!public! !
-!MemoryMappedFile categoriesFor: #setFile:owned:name:!initializing!private! !
+!External.MemoryMappedFile categoriesFor: #asParameter!converting!public! !
+!External.MemoryMappedFile categoriesFor: #basicFree!private!realizing/unrealizing! !
+!External.MemoryMappedFile categoriesFor: #createMapping!helpers!private! !
+!External.MemoryMappedFile categoriesFor: #free!public!realizing/unrealizing! !
+!External.MemoryMappedFile categoriesFor: #isReadOnly!helpers!public!testing! !
+!External.MemoryMappedFile categoriesFor: #mapView!operations!public! !
+!External.MemoryMappedFile categoriesFor: #mapViewFrom:to:!operations!public! !
+!External.MemoryMappedFile categoriesFor: #maximumSize!accessing!public! !
+!External.MemoryMappedFile categoriesFor: #maximumSize:!accessing!public! !
+!External.MemoryMappedFile categoriesFor: #setFile:owned:name:!initializing!private! !
 
-!MemoryMappedFile class methodsFor!
+!External.MemoryMappedFile class methodsFor!
 
 icon
 	^File icon!
@@ -168,15 +168,15 @@ open: aString mode: aSymbol
 
 	^self open: aString mode: aSymbol check: true!
 
-open: aString mode: aSymbol check: aBoolean 
+open: aString mode: aSymbol check: aBoolean
 	"Open a file for exclusive read and/or write memory-mapped access. The mode symbol, aSymbol,
 	determines what file opening mode to use when opening the file. The check flag, aBoolean,
 	determines whether or not errors are reported (see File>>open:mode:check:share: for the
 	rules). Note that we always open files for mapping in exclusive mode (see MSDN topic 'Create
 	a File Mapping Object')."
 
-	^(self basicNew)
-		setFile: (File 
+	^self basicNew
+		setFile: (File
 					open: aString
 					mode: aSymbol
 					check: aBoolean
@@ -184,10 +184,10 @@ open: aString mode: aSymbol check: aBoolean
 			owned: true
 			name: nil;
 		yourself! !
-!MemoryMappedFile class categoriesFor: #icon!constants!public! !
-!MemoryMappedFile class categoriesFor: #onFile:!instance creation!public! !
-!MemoryMappedFile class categoriesFor: #onFile:named:!instance creation!public! !
-!MemoryMappedFile class categoriesFor: #open:!instance creation!public! !
-!MemoryMappedFile class categoriesFor: #open:mode:!instance creation!public! !
-!MemoryMappedFile class categoriesFor: #open:mode:check:!instance creation!public! !
+!External.MemoryMappedFile class categoriesFor: #icon!constants!public! !
+!External.MemoryMappedFile class categoriesFor: #onFile:!instance creation!public! !
+!External.MemoryMappedFile class categoriesFor: #onFile:named:!instance creation!public! !
+!External.MemoryMappedFile class categoriesFor: #open:!instance creation!public! !
+!External.MemoryMappedFile class categoriesFor: #open:mode:!instance creation!public! !
+!External.MemoryMappedFile class categoriesFor: #open:mode:check:!instance creation!public! !
 

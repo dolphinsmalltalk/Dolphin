@@ -1,16 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Collection subclass: #IniFileAbstract
+Core.Collection subclass: #'OS.IniFileAbstract'
 	instanceVariableNames: 'filename'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-IniFileAbstract guid: (GUID fromString: '{581771ef-b10d-40c8-a590-a926f4a57f5c}')!
-IniFileAbstract isAbstract: true!
-IniFileAbstract comment: ''!
-!IniFileAbstract categoriesForClass!Unclassified! !
-!IniFileAbstract methodsFor!
+OS.IniFileAbstract guid: (Core.GUID fromString: '{581771ef-b10d-40c8-a590-a926f4a57f5c}')!
+OS.IniFileAbstract isNonInstantiable: true!
+OS.IniFileAbstract comment: ''!
+!OS.IniFileAbstract categoriesForClass!Unclassified! !
+!OS.IniFileAbstract methodsFor!
 
 = comparand
 	"Answer whether the receiver and the <Object>, comparand, are considered equivalent."
@@ -246,44 +246,44 @@ values
 	values := Array writeStream.
 	self do: [:each | values nextPut: each].
 	^values contents! !
-!IniFileAbstract categoriesFor: #=!comparing!public! !
-!IniFileAbstract categoriesFor: #add:!adding!public! !
-!IniFileAbstract categoriesFor: #associationAt:!accessing!public! !
-!IniFileAbstract categoriesFor: #associationAt:ifAbsent:!accessing!public! !
-!IniFileAbstract categoriesFor: #associations!accessing!public! !
-!IniFileAbstract categoriesFor: #associationsDo:!enumerating!public! !
-!IniFileAbstract categoriesFor: #at:!accessing!public! !
-!IniFileAbstract categoriesFor: #at:ifAbsent:!accessing!public! !
-!IniFileAbstract categoriesFor: #at:ifAbsentPut:!accessing!public! !
-!IniFileAbstract categoriesFor: #at:put:!adding!public! !
-!IniFileAbstract categoriesFor: #collect:!enumerating!public! !
-!IniFileAbstract categoriesFor: #copySize!copying!private! !
-!IniFileAbstract categoriesFor: #countElements!accessing!private! !
-!IniFileAbstract categoriesFor: #do:!enumerating!public! !
-!IniFileAbstract categoriesFor: #errorKeyNotFound:!exceptions!private! !
-!IniFileAbstract categoriesFor: #filename!accessing!public! !
-!IniFileAbstract categoriesFor: #filename:!initializing!private! !
-!IniFileAbstract categoriesFor: #getValue:!accessing!private! !
-!IniFileAbstract categoriesFor: #hash!comparing!public! !
-!IniFileAbstract categoriesFor: #includesKey:!public!searching! !
-!IniFileAbstract categoriesFor: #isEmpty!public!testing! !
-!IniFileAbstract categoriesFor: #keyAtValue:!accessing!public! !
-!IniFileAbstract categoriesFor: #keyAtValue:ifAbsent:!accessing!public! !
-!IniFileAbstract categoriesFor: #keys!accessing!public! !
-!IniFileAbstract categoriesFor: #keysAndValuesDo:!enumerating!public! !
-!IniFileAbstract categoriesFor: #keysDo:!enumerating!public! !
-!IniFileAbstract categoriesFor: #lookup:!accessing!public! !
-!IniFileAbstract categoriesFor: #removeAllKeys:!accessing!public! !
-!IniFileAbstract categoriesFor: #removeAllKeys:ifAbsent:!public!removing! !
-!IniFileAbstract categoriesFor: #removeKey:!public!removing! !
-!IniFileAbstract categoriesFor: #removeKey:ifAbsent:!public!removing! !
-!IniFileAbstract categoriesFor: #select:!enumerating!public! !
-!IniFileAbstract categoriesFor: #species!accessing!public! !
-!IniFileAbstract categoriesFor: #values!accessing!public! !
+!OS.IniFileAbstract categoriesFor: #=!comparing!public! !
+!OS.IniFileAbstract categoriesFor: #add:!adding!public! !
+!OS.IniFileAbstract categoriesFor: #associationAt:!accessing!public! !
+!OS.IniFileAbstract categoriesFor: #associationAt:ifAbsent:!accessing!public! !
+!OS.IniFileAbstract categoriesFor: #associations!accessing!public! !
+!OS.IniFileAbstract categoriesFor: #associationsDo:!enumerating!public! !
+!OS.IniFileAbstract categoriesFor: #at:!accessing!public! !
+!OS.IniFileAbstract categoriesFor: #at:ifAbsent:!accessing!public! !
+!OS.IniFileAbstract categoriesFor: #at:ifAbsentPut:!accessing!public! !
+!OS.IniFileAbstract categoriesFor: #at:put:!adding!public! !
+!OS.IniFileAbstract categoriesFor: #collect:!enumerating!public! !
+!OS.IniFileAbstract categoriesFor: #copySize!copying!private! !
+!OS.IniFileAbstract categoriesFor: #countElements!accessing!private! !
+!OS.IniFileAbstract categoriesFor: #do:!enumerating!public! !
+!OS.IniFileAbstract categoriesFor: #errorKeyNotFound:!exceptions!private! !
+!OS.IniFileAbstract categoriesFor: #filename!accessing!public! !
+!OS.IniFileAbstract categoriesFor: #filename:!initializing!private! !
+!OS.IniFileAbstract categoriesFor: #getValue:!accessing!private! !
+!OS.IniFileAbstract categoriesFor: #hash!comparing!public! !
+!OS.IniFileAbstract categoriesFor: #includesKey:!public!searching! !
+!OS.IniFileAbstract categoriesFor: #isEmpty!public!testing! !
+!OS.IniFileAbstract categoriesFor: #keyAtValue:!accessing!public! !
+!OS.IniFileAbstract categoriesFor: #keyAtValue:ifAbsent:!accessing!public! !
+!OS.IniFileAbstract categoriesFor: #keys!accessing!public! !
+!OS.IniFileAbstract categoriesFor: #keysAndValuesDo:!enumerating!public! !
+!OS.IniFileAbstract categoriesFor: #keysDo:!enumerating!public! !
+!OS.IniFileAbstract categoriesFor: #lookup:!accessing!public! !
+!OS.IniFileAbstract categoriesFor: #removeAllKeys:!accessing!public! !
+!OS.IniFileAbstract categoriesFor: #removeAllKeys:ifAbsent:!public!removing! !
+!OS.IniFileAbstract categoriesFor: #removeKey:!public!removing! !
+!OS.IniFileAbstract categoriesFor: #removeKey:ifAbsent:!public!removing! !
+!OS.IniFileAbstract categoriesFor: #select:!enumerating!public! !
+!OS.IniFileAbstract categoriesFor: #species!accessing!public! !
+!OS.IniFileAbstract categoriesFor: #values!accessing!public! !
 
-IniFileAbstract methodProtocol: #abstractDictionary attributes: #(#ansi #readOnly) selectors: #(#addAll: #allSatisfy: #anySatisfy: #asArray #asBag #asByteArray #asOrderedCollection #asSet #asSortedCollection #asSortedCollection: #at: #at:ifAbsent: #at:ifAbsentPut: #at:put: #collect: #detect: #detect:ifNone: #do: #do:separatedBy: #includes: #includesKey: #inject:into: #isEmpty #keyAtValue: #keyAtValue:ifAbsent: #keys #keysAndValuesDo: #keysDo: #notEmpty #occurrencesOf: #rehash #reject: #removeAllKeys: #removeAllKeys:ifAbsent: #removeKey: #removeKey:ifAbsent: #select: #size #values)!
+OS.IniFileAbstract methodProtocol: #abstractDictionary attributes: #(#ansi #readOnly) selectors: #(#addAll: #allSatisfy: #anySatisfy: #asArray #asBag #asByteArray #asOrderedCollection #asSet #asSortedCollection #asSortedCollection: #at: #at:ifAbsent: #at:ifAbsentPut: #at:put: #collect: #detect: #detect:ifNone: #do: #do:separatedBy: #includes: #includesKey: #inject:into: #isEmpty #keyAtValue: #keyAtValue:ifAbsent: #keys #keysAndValuesDo: #keysDo: #notEmpty #occurrencesOf: #rehash #reject: #removeAllKeys: #removeAllKeys:ifAbsent: #removeKey: #removeKey:ifAbsent: #select: #size #values)!
 
-!IniFileAbstract class methodsFor!
+!OS.IniFileAbstract class methodsFor!
 
 open: aString
 	"Answer the the new instance of the receiver for reading/writing the .ini file 
@@ -291,5 +291,5 @@ open: aString
 
 	^self new 
 		filename: aString! !
-!IniFileAbstract class categoriesFor: #open:!instance creation!public! !
+!OS.IniFileAbstract class categoriesFor: #open:!instance creation!public! !
 

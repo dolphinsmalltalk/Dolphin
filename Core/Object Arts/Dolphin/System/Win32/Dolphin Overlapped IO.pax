@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'Dolphin Overlapped IO'.
-package paxVersion: 2;
+package paxVersion: 2.1;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk Win32 Overlapped I/O
 Copyright (c) Object Arts Ltd, 2004
@@ -11,15 +11,15 @@ package basicPackageVersion: '6.1'.
 
 
 package setClassNames: #(
-	#{OVERLAPPED}
+	#{OS.OVERLAPPED}
 ).
 
 package setMethodNames: #(
-	#(#{KernelLibrary} #cancelIo:)
-	#(#{KernelLibrary} #createIoCompletionPort:existingCompletionPort:completionKey:numberOfConcurrentThreads:)
-	#(#{KernelLibrary} #getOverlappedResult:lpOverlapped:lpNumberOfBytesTransferred:bWait:)
-	#(#{KernelLibrary} #getQueuedCompletionStatus:lpNumberOfBytesTransferred:lpCompletionKey:lpOverlapped:dwMilliseconds:)
-	#(#{KernelLibrary} #postQueuedCompletionStatus:dwNumberOfBytesTransferred:dwCompletionKey:lpOverlapped:)
+	#(#{OS.KernelLibrary} #cancelIo:)
+	#(#{OS.KernelLibrary} #createIoCompletionPort:existingCompletionPort:completionKey:numberOfConcurrentThreads:)
+	#(#{OS.KernelLibrary} #getOverlappedResult:lpOverlapped:lpNumberOfBytesTransferred:bWait:)
+	#(#{OS.KernelLibrary} #getQueuedCompletionStatus:lpNumberOfBytesTransferred:lpCompletionKey:lpOverlapped:dwMilliseconds:)
+	#(#{OS.KernelLibrary} #postQueuedCompletionStatus:dwNumberOfBytesTransferred:dwCompletionKey:lpOverlapped:)
 ).
 
 package setPrerequisites: #(
@@ -30,10 +30,10 @@ package!
 
 "Class Definitions"!
 
-ExternalStructure subclass: #OVERLAPPED
+External.Structure subclass: #'OS.OVERLAPPED'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_hEvent' -> 16r10.
@@ -46,7 +46,7 @@ ExternalStructure subclass: #OVERLAPPED
 
 "Loose Methods"!
 
-!KernelLibrary methodsFor!
+!OS.KernelLibrary methodsFor!
 
 cancelIo: hFile
 	"Invoke the CancelIo() function of the module wrapped by the receiver.
@@ -110,11 +110,11 @@ postQueuedCompletionStatus: completionPort dwNumberOfBytesTransferred: dwNumberO
 
 	<stdcall: sdword PostQueuedCompletionStatus sdword dword dword OVERLAPPED*>
 	^self invalidCall: _failureCode! !
-!KernelLibrary categoriesFor: #cancelIo:!**auto generated**!public! !
-!KernelLibrary categoriesFor: #createIoCompletionPort:existingCompletionPort:completionKey:numberOfConcurrentThreads:!**auto generated**!public! !
-!KernelLibrary categoriesFor: #getOverlappedResult:lpOverlapped:lpNumberOfBytesTransferred:bWait:!**auto generated**!public! !
-!KernelLibrary categoriesFor: #getQueuedCompletionStatus:lpNumberOfBytesTransferred:lpCompletionKey:lpOverlapped:dwMilliseconds:!**auto generated**!public! !
-!KernelLibrary categoriesFor: #postQueuedCompletionStatus:dwNumberOfBytesTransferred:dwCompletionKey:lpOverlapped:!**auto generated**!public! !
+!OS.KernelLibrary categoriesFor: #cancelIo:!**auto generated**!public! !
+!OS.KernelLibrary categoriesFor: #createIoCompletionPort:existingCompletionPort:completionKey:numberOfConcurrentThreads:!**auto generated**!public! !
+!OS.KernelLibrary categoriesFor: #getOverlappedResult:lpOverlapped:lpNumberOfBytesTransferred:bWait:!**auto generated**!public! !
+!OS.KernelLibrary categoriesFor: #getQueuedCompletionStatus:lpNumberOfBytesTransferred:lpCompletionKey:lpOverlapped:dwMilliseconds:!**auto generated**!public! !
+!OS.KernelLibrary categoriesFor: #postQueuedCompletionStatus:dwNumberOfBytesTransferred:dwCompletionKey:lpOverlapped:!**auto generated**!public! !
 
 "End of package definition"!
 

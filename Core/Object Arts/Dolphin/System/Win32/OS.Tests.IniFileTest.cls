@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-DolphinTest subclass: #IniFileTest
+Core.Tests.DolphinTest subclass: #'OS.Tests.IniFileTest'
 	instanceVariableNames: 'iniFile'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-IniFileTest guid: (GUID fromString: '{5fc93855-8e32-4463-9906-50705ecb9acc}')!
-IniFileTest comment: ''!
-!IniFileTest categoriesForClass!Unclassified! !
-!IniFileTest methodsFor!
+OS.Tests.IniFileTest guid: (Core.GUID fromString: '{5fc93855-8e32-4463-9906-50705ecb9acc}')!
+OS.Tests.IniFileTest comment: ''!
+!OS.Tests.IniFileTest categoriesForClass!Unclassified! !
+!OS.Tests.IniFileTest methodsFor!
 
 fileResource
 	^IniFileTestResource current!
@@ -226,28 +226,28 @@ testValues
 	self assert: sections fourth values equals: #('NoSectionNoKeyValue').
 	subject := self makeEmptyIniFile.
 	self assert: subject values isEmpty! !
-!IniFileTest categoriesFor: #fileResource!accessing!private! !
-!IniFileTest categoriesFor: #makeEmptyIniFile!helpers!private! !
-!IniFileTest categoriesFor: #makeIniFile!helpers!private! !
-!IniFileTest categoriesFor: #makeModifiableIniFile!helpers!private! !
-!IniFileTest categoriesFor: #tearDown!private!running! !
-!IniFileTest categoriesFor: #testAdd!public!unit tests! !
-!IniFileTest categoriesFor: #testAsByteArray!public!unit tests! !
-!IniFileTest categoriesFor: #testAt!public!unit tests! !
-!IniFileTest categoriesFor: #testAtIfAbsentPut!public!unit tests! !
-!IniFileTest categoriesFor: #testAtPut!public!unit tests! !
-!IniFileTest categoriesFor: #testCollect!public!unit tests! !
-!IniFileTest categoriesFor: #testIncludesKey!public!unit tests! !
-!IniFileTest categoriesFor: #testIsEmpty!public!unit tests! !
-!IniFileTest categoriesFor: #testKeys!public!unit tests! !
-!IniFileTest categoriesFor: #testLookup!public!unit tests! !
-!IniFileTest categoriesFor: #testRemoveAllKeys!public!unit tests! !
-!IniFileTest categoriesFor: #testRemoveKey!public!unit tests! !
-!IniFileTest categoriesFor: #testValues!public!unit tests! !
+!OS.Tests.IniFileTest categoriesFor: #fileResource!accessing!private! !
+!OS.Tests.IniFileTest categoriesFor: #makeEmptyIniFile!helpers!private! !
+!OS.Tests.IniFileTest categoriesFor: #makeIniFile!helpers!private! !
+!OS.Tests.IniFileTest categoriesFor: #makeModifiableIniFile!helpers!private! !
+!OS.Tests.IniFileTest categoriesFor: #tearDown!private!running! !
+!OS.Tests.IniFileTest categoriesFor: #testAdd!public!unit tests! !
+!OS.Tests.IniFileTest categoriesFor: #testAsByteArray!public!unit tests! !
+!OS.Tests.IniFileTest categoriesFor: #testAt!public!unit tests! !
+!OS.Tests.IniFileTest categoriesFor: #testAtIfAbsentPut!public!unit tests! !
+!OS.Tests.IniFileTest categoriesFor: #testAtPut!public!unit tests! !
+!OS.Tests.IniFileTest categoriesFor: #testCollect!public!unit tests! !
+!OS.Tests.IniFileTest categoriesFor: #testIncludesKey!public!unit tests! !
+!OS.Tests.IniFileTest categoriesFor: #testIsEmpty!public!unit tests! !
+!OS.Tests.IniFileTest categoriesFor: #testKeys!public!unit tests! !
+!OS.Tests.IniFileTest categoriesFor: #testLookup!public!unit tests! !
+!OS.Tests.IniFileTest categoriesFor: #testRemoveAllKeys!public!unit tests! !
+!OS.Tests.IniFileTest categoriesFor: #testRemoveKey!public!unit tests! !
+!OS.Tests.IniFileTest categoriesFor: #testValues!public!unit tests! !
 
-!IniFileTest class methodsFor!
+!OS.Tests.IniFileTest class methodsFor!
 
 resources
 	^{IniFileTestResource}! !
-!IniFileTest class categoriesFor: #resources!accessing!public! !
+!OS.Tests.IniFileTest class categoriesFor: #resources!accessing!public! !
 

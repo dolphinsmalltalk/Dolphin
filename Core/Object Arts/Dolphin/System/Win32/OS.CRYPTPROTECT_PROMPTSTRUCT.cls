@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Win32Structure subclass: #CRYPTPROTECT_PROMPTSTRUCT
+OS.Win32Structure subclass: #'OS.CRYPTPROTECT_PROMPTSTRUCT'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_dwPromptFlags' -> 16r4.
@@ -11,8 +11,8 @@ Win32Structure subclass: #CRYPTPROTECT_PROMPTSTRUCT
 		'_OffsetOf_hwndApp' -> 16r8.
 		'_OffsetOf_szPrompt' -> 16rC
 	}!
-CRYPTPROTECT_PROMPTSTRUCT guid: (GUID fromString: '{870680a4-0d5d-45b2-88b4-74774c010bc5}')!
-CRYPTPROTECT_PROMPTSTRUCT comment: '<CRYPTPROTECT_PROMPTSTRUCT> is an <ExternalStructure> class to wrap the struct ''Win32.CRYPTPROTECT_PROMPTSTRUCT'' from type information in the ''Win32 API'' library.
+OS.CRYPTPROTECT_PROMPTSTRUCT guid: (Core.GUID fromString: '{870680a4-0d5d-45b2-88b4-74774c010bc5}')!
+OS.CRYPTPROTECT_PROMPTSTRUCT comment: '<CRYPTPROTECT_PROMPTSTRUCT> is an <ExternalStructure> class to wrap the struct ''Win32.CRYPTPROTECT_PROMPTSTRUCT'' from type information in the ''Win32 API'' library.
 
 The type library contains no documentation for this struct
 
@@ -24,8 +24,8 @@ typedef
 struct tagCRYPTPROTECT_PROMPTSTRUCT {
 } CRYPTPROTECT_PROMPTSTRUCT;
 '!
-!CRYPTPROTECT_PROMPTSTRUCT categoriesForClass!Win32-Structs! !
-!CRYPTPROTECT_PROMPTSTRUCT methodsFor!
+!OS.CRYPTPROTECT_PROMPTSTRUCT categoriesForClass!Win32-Structs! !
+!OS.CRYPTPROTECT_PROMPTSTRUCT methodsFor!
 
 dwPromptFlags
 	"Answer the <Integer> value of the receiver's 'dwPromptFlags' field."
@@ -61,15 +61,15 @@ szPrompt: anUtf16String
 	"Set the receiver's 'szPrompt' field to the value of the argument, anUtf16String"
 
 	bytes uintPtrAtOffset: _OffsetOf_szPrompt put: anUtf16String yourAddress! !
-!CRYPTPROTECT_PROMPTSTRUCT categoriesFor: #dwPromptFlags!**compiled accessors**!public! !
-!CRYPTPROTECT_PROMPTSTRUCT categoriesFor: #dwPromptFlags:!**compiled accessors**!public! !
-!CRYPTPROTECT_PROMPTSTRUCT categoriesFor: #dwSize:!**compiled accessors**!public! !
-!CRYPTPROTECT_PROMPTSTRUCT categoriesFor: #hwndApp!**compiled accessors**!public! !
-!CRYPTPROTECT_PROMPTSTRUCT categoriesFor: #hwndApp:!**compiled accessors**!public! !
-!CRYPTPROTECT_PROMPTSTRUCT categoriesFor: #szPrompt!**compiled accessors**!public! !
-!CRYPTPROTECT_PROMPTSTRUCT categoriesFor: #szPrompt:!**compiled accessors**!public! !
+!OS.CRYPTPROTECT_PROMPTSTRUCT categoriesFor: #dwPromptFlags!**compiled accessors**!public! !
+!OS.CRYPTPROTECT_PROMPTSTRUCT categoriesFor: #dwPromptFlags:!**compiled accessors**!public! !
+!OS.CRYPTPROTECT_PROMPTSTRUCT categoriesFor: #dwSize:!**compiled accessors**!public! !
+!OS.CRYPTPROTECT_PROMPTSTRUCT categoriesFor: #hwndApp!**compiled accessors**!public! !
+!OS.CRYPTPROTECT_PROMPTSTRUCT categoriesFor: #hwndApp:!**compiled accessors**!public! !
+!OS.CRYPTPROTECT_PROMPTSTRUCT categoriesFor: #szPrompt!**compiled accessors**!public! !
+!OS.CRYPTPROTECT_PROMPTSTRUCT categoriesFor: #szPrompt:!**compiled accessors**!public! !
 
-!CRYPTPROTECT_PROMPTSTRUCT class methodsFor!
+!OS.CRYPTPROTECT_PROMPTSTRUCT class methodsFor!
 
 defineFields
 	"Define the fields of the CRYPTPROTECT_PROMPTSTRUCT structure.
@@ -86,14 +86,22 @@ defineFields
 "
 
 	self
-		defineField: #dwSize type: DWORDField new beWriteOnly offset: 0;
-		defineField: #dwPromptFlags type: DWORDField new offset: 4;
-		defineField: #hwndApp type: HANDLEField new offset: 8;
-		defineField: #szPrompt type: (PointerField type: Utf16String) offset: 12.
+		defineField: #dwSize
+			type: DWORDField new beWriteOnly
+			offset: 0;
+		defineField: #dwPromptFlags
+			type: DWORDField new
+			offset: 4;
+		defineField: #hwndApp
+			type: HANDLEField new
+			offset: 8;
+		defineField: #szPrompt
+			type: (PointerField type: Utf16String)
+			offset: 12.
 	self byteSize: 16!
 
 getFieldNames
 	^#(#dwSize #dwPromptFlags #hwndApp #szPrompt)! !
-!CRYPTPROTECT_PROMPTSTRUCT class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!CRYPTPROTECT_PROMPTSTRUCT class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.CRYPTPROTECT_PROMPTSTRUCT class categoriesFor: #defineFields!**auto generated**!public!template definition! !
+!OS.CRYPTPROTECT_PROMPTSTRUCT class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

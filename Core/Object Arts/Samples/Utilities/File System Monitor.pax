@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'File System Monitor'.
-package paxVersion: 2;
+package paxVersion: 2.1;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk File System Monitor Sample
 Copyright (c) Object Arts Ltd, 2005.
@@ -11,12 +11,12 @@ FileSystemMonitor show'.
 
 
 package setClassNames: #(
-	#{FileSystemMonitor}
-	#{FileSystemMonitorSessionManager}
+	#{Smalltalk.FileSystemMonitor}
+	#{Smalltalk.FileSystemMonitorSessionManager}
 ).
 
 package setMethodNames: #(
-	#(#{FileSystemChangeReader class} #icon)
+	#(#{OS.FileSystemChangeReader class} #icon)
 ).
 
 package setPrerequisites: #(
@@ -39,26 +39,26 @@ package!
 
 "Class Definitions"!
 
-Shell subclass: #FileSystemMonitor
+UI.Shell subclass: #FileSystemMonitor
 	instanceVariableNames: 'directoryName notifyAttributes notifyDirectoryName notifyCreateTime notifyFileName notifyLastAccess notifyLastWrite notifySecurity notifySize filters includeSubDirs changeList'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-RuntimeSessionManager subclass: #FileSystemMonitorSessionManager
+UI.RuntimeSessionManager subclass: #FileSystemMonitorSessionManager
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 
 "Loose Methods"!
 
-!FileSystemChangeReader class methodsFor!
+!OS.FileSystemChangeReader class methodsFor!
 
 icon
-	^FileSystemMonitor icon! !
-!FileSystemChangeReader class categoriesFor: #icon!initializing!public! !
+	^Smalltalk.FileSystemMonitor icon! !
+!OS.FileSystemChangeReader class categoriesFor: #icon!initializing!public! !
 
 "End of package definition"!
 

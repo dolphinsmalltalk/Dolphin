@@ -1,22 +1,21 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-TestResource subclass: #IniFileTestResource
+XProgramming.SUnit.TestResource subclass: #'OS.Tests.IniFileTestResource'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-IniFileTestResource guid: (GUID fromString: '{8e42730b-5040-4528-ae15-41e9f153c025}')!
-IniFileTestResource comment: ''!
-!IniFileTestResource categoriesForClass!Unclassified! !
-!IniFileTestResource methodsFor!
+OS.Tests.IniFileTestResource guid: (Core.GUID fromString: '{8e42730b-5040-4528-ae15-41e9f153c025}')!
+OS.Tests.IniFileTestResource comment: ''!
+!OS.Tests.IniFileTestResource categoriesForClass!Unclassified! !
+!OS.Tests.IniFileTestResource methodsFor!
 
 emptyFile
 	^self fileLocator localFileSpecFor: 'empty.ini'!
 
 fileLocator
-	^FolderRelativeFileLocator 
-		basePath: (FileLocator imageRelative localFileSpecFor: 'Resources\Tests\IniFiles\')!
+	^FileLocator imageFolderRelative: 'Resources\Tests\IniFiles\'!
 
 iniFile1
 	^self fileLocator localFileSpecFor: '1.ini'!
@@ -45,9 +44,9 @@ S3Key1=123
 tearDown
 	super tearDown.
 	(File exists: self fileLocator basePath) ifTrue: [[File deleteDirectory: self fileLocator basePath] on: Error do: [:ex | ]]! !
-!IniFileTestResource categoriesFor: #emptyFile!public! !
-!IniFileTestResource categoriesFor: #fileLocator!accessing!public! !
-!IniFileTestResource categoriesFor: #iniFile1!accessing!public! !
-!IniFileTestResource categoriesFor: #setUp!public!setup! !
-!IniFileTestResource categoriesFor: #tearDown!public!setup! !
+!OS.Tests.IniFileTestResource categoriesFor: #emptyFile!public! !
+!OS.Tests.IniFileTestResource categoriesFor: #fileLocator!accessing!public! !
+!OS.Tests.IniFileTestResource categoriesFor: #iniFile1!accessing!public! !
+!OS.Tests.IniFileTestResource categoriesFor: #setUp!public!setup! !
+!OS.Tests.IniFileTestResource categoriesFor: #tearDown!public!setup! !
 

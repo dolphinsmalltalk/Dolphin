@@ -1,16 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ExternalAddress variableByteSubclass: #MemoryMappedFileView
+External.Address variableByteSubclass: #'External.MemoryMappedFileView'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-MemoryMappedFileView guid: (GUID fromString: '{ff57d052-5958-43e6-ab68-add0ac6bcb64}')!
-MemoryMappedFileView isIndirection: true!
-MemoryMappedFileView comment: 'MemoryMappedFileView is an <ExternalAddress> that represents a view onto a block of bytes from a memory-mapped file. It can be treated much like a normal pointer.'!
-!MemoryMappedFileView categoriesForClass!External-Data-Unstructured! !
-!MemoryMappedFileView methodsFor!
+External.MemoryMappedFileView guid: (Core.GUID fromString: '{ff57d052-5958-43e6-ab68-add0ac6bcb64}')!
+External.MemoryMappedFileView isIndirection: true!
+External.MemoryMappedFileView comment: 'MemoryMappedFileView is an <ExternalAddress> that represents a view onto a block of bytes from a memory-mapped file. It can be treated much like a normal pointer.'!
+!External.MemoryMappedFileView categoriesForClass!External-Data-Unstructured! !
+!External.MemoryMappedFileView methodsFor!
 
 basicFree
 	"Private - Free external resources held by the receiver."
@@ -34,7 +34,7 @@ free
 		self beUnfinalizable.
 		self basicFree.
 		self clear]! !
-!MemoryMappedFileView categoriesFor: #basicFree!private!realizing/unrealizing! !
-!MemoryMappedFileView categoriesFor: #flush!operations!public! !
-!MemoryMappedFileView categoriesFor: #free!public!realizing/unrealizing! !
+!External.MemoryMappedFileView categoriesFor: #basicFree!private!realizing/unrealizing! !
+!External.MemoryMappedFileView categoriesFor: #flush!operations!public! !
+!External.MemoryMappedFileView categoriesFor: #free!public!realizing/unrealizing! !
 
