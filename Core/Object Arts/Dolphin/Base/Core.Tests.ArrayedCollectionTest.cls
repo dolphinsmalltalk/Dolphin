@@ -1,16 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-SequenceableCollectionTest subclass: #ArrayedCollectionTest
+Core.Tests.SequenceableCollectionTest subclass: #'Core.Tests.ArrayedCollectionTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ArrayedCollectionTest guid: (GUID fromString: '{48d15c8e-983b-48d0-8c62-51b644ba6bdb}')!
-ArrayedCollectionTest isAbstract: true!
-ArrayedCollectionTest comment: ''!
-!ArrayedCollectionTest categoriesForClass!Unclassified! !
-!ArrayedCollectionTest methodsFor!
+Core.Tests.ArrayedCollectionTest guid: (Core.GUID fromString: '{48d15c8e-983b-48d0-8c62-51b644ba6bdb}')!
+Core.Tests.ArrayedCollectionTest isNonInstantiable: true!
+Core.Tests.ArrayedCollectionTest comment: ''!
+!Core.Tests.ArrayedCollectionTest categoriesForClass!Unclassified! !
+!Core.Tests.ArrayedCollectionTest methodsFor!
 
 testReplaceIdentityWith
 	| a rep |
@@ -24,5 +24,5 @@ testReplaceIdentityWith
 	self assert: a equals: (self newCollection: #($0 $2 $0 $3 $0)).
 	a replaceIdentity: (self assimilate: $6) with: rep.
 	self assert: a equals: (self newCollection: #($0 $2 $0 $3 $0 $0))! !
-!ArrayedCollectionTest categoriesFor: #testReplaceIdentityWith!public!unit tests! !
+!Core.Tests.ArrayedCollectionTest categoriesFor: #testReplaceIdentityWith!public!unit tests! !
 

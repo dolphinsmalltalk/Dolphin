@@ -1,19 +1,19 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-TestCase subclass: #DolphinTest
+XProgramming.SUnit.TestCase subclass: #'Core.Tests.DolphinTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-DolphinTest guid: (GUID fromString: '{6444f9c6-8a25-4f8a-bade-5f08d7c882be}')!
-DolphinTest isAbstract: true!
-DolphinTest comment: ''!
-!DolphinTest categoriesForClass!Unclassified! !
-!DolphinTest methodsFor!
+Core.Tests.DolphinTest guid: (Core.GUID fromString: '{6444f9c6-8a25-4f8a-bade-5f08d7c882be}')!
+Core.Tests.DolphinTest isNonInstantiable: true!
+Core.Tests.DolphinTest comment: ''!
+!Core.Tests.DolphinTest categoriesForClass!Unclassified! !
+!Core.Tests.DolphinTest methodsFor!
 
-assertIs: cloneObject deepCopyOf: sourceObject 
-	self 
+assertIs: cloneObject deepCopyOf: sourceObject
+	self
 		assertIs: cloneObject
 		deepCopyOf: sourceObject
 		visited: IdentityDictionary new!
@@ -79,24 +79,26 @@ shouldRaiseZeroDivide: aBlock
 	| raised |
 	Float reset.
 	raised := false.
-	aBlock 
-		on: ZeroDivide do: [:e | raised := true]
-		on: HRESULTError do: [:e | e hresult asInteger = -2147352558 ifTrue: [raised := true]].
+	aBlock
+		on: ZeroDivide
+		do: [:e | raised := true]
+		on: OS.HRESULTError
+		do: [:e | e hresult asInteger = -2147352558 ifTrue: [raised := true]].
 	self assert: raised!
 
 versionFromParts: versionNumbers
 	^versionNumbers inject: 0 into: [:sum :each | (sum << 16) + each]! !
-!DolphinTest categoriesFor: #assertIs:deepCopyOf:!public!unit tests! !
-!DolphinTest categoriesFor: #assertIs:deepCopyOf:visited:!private!unit tests! !
-!DolphinTest categoriesFor: #compare:to:epsilon:!comparing!public! !
-!DolphinTest categoriesFor: #createPackage:!helpers!public! !
-!DolphinTest categoriesFor: #createTestPackage!helpers!public! !
-!DolphinTest categoriesFor: #failureLog!Accessing!public! !
-!DolphinTest categoriesFor: #isAtLeastVmVersion:!private!testing! !
-!DolphinTest categoriesFor: #isLogging!Accessing!public! !
-!DolphinTest categoriesFor: #isOnline!public!unit tests! !
-!DolphinTest categoriesFor: #methodContextClass!constants!private! !
-!DolphinTest categoriesFor: #runKnownBug:test:!public!unit tests! !
-!DolphinTest categoriesFor: #shouldRaiseZeroDivide:!Accessing!public! !
-!DolphinTest categoriesFor: #versionFromParts:!public!unit tests! !
+!Core.Tests.DolphinTest categoriesFor: #assertIs:deepCopyOf:!public!unit tests! !
+!Core.Tests.DolphinTest categoriesFor: #assertIs:deepCopyOf:visited:!private!unit tests! !
+!Core.Tests.DolphinTest categoriesFor: #compare:to:epsilon:!comparing!public! !
+!Core.Tests.DolphinTest categoriesFor: #createPackage:!helpers!public! !
+!Core.Tests.DolphinTest categoriesFor: #createTestPackage!helpers!public! !
+!Core.Tests.DolphinTest categoriesFor: #failureLog!Accessing!public! !
+!Core.Tests.DolphinTest categoriesFor: #isAtLeastVmVersion:!private!testing! !
+!Core.Tests.DolphinTest categoriesFor: #isLogging!Accessing!public! !
+!Core.Tests.DolphinTest categoriesFor: #isOnline!public!unit tests! !
+!Core.Tests.DolphinTest categoriesFor: #methodContextClass!constants!private! !
+!Core.Tests.DolphinTest categoriesFor: #runKnownBug:test:!public!unit tests! !
+!Core.Tests.DolphinTest categoriesFor: #shouldRaiseZeroDivide:!Accessing!public! !
+!Core.Tests.DolphinTest categoriesFor: #versionFromParts:!public!unit tests! !
 

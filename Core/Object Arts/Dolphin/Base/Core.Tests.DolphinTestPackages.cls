@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-DolphinTestResource subclass: #DolphinTestPackages
+Core.Tests.DolphinTestResource subclass: #'Core.Tests.DolphinTestPackages'
 	instanceVariableNames: 'a b c'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-DolphinTestPackages guid: (GUID fromString: '{b3de54cd-bdd2-4043-9a29-0b80a02adcc1}')!
-DolphinTestPackages comment: ''!
-!DolphinTestPackages categoriesForClass!Unclassified! !
-!DolphinTestPackages methodsFor!
+Core.Tests.DolphinTestPackages guid: (Core.GUID fromString: '{b3de54cd-bdd2-4043-9a29-0b80a02adcc1}')!
+Core.Tests.DolphinTestPackages comment: ''!
+!Core.Tests.DolphinTestPackages categoriesForClass!Unclassified! !
+!Core.Tests.DolphinTestPackages methodsFor!
 
 a
 	^a!
@@ -49,11 +49,11 @@ tearDown
 					Package manager removePackage: each]].
 	a := b := c := nil.
 	super tearDown! !
-!DolphinTestPackages categoriesFor: #a!accessing!public! !
-!DolphinTestPackages categoriesFor: #b!accessing!public! !
-!DolphinTestPackages categoriesFor: #c!accessing!public! !
-!DolphinTestPackages categoriesFor: #isAvailable!public!Testing! !
-!DolphinTestPackages categoriesFor: #isUnavailable!public!Testing! !
-!DolphinTestPackages categoriesFor: #setUp!Init / Release!public! !
-!DolphinTestPackages categoriesFor: #tearDown!public!Running! !
+!Core.Tests.DolphinTestPackages categoriesFor: #a!accessing!public! !
+!Core.Tests.DolphinTestPackages categoriesFor: #b!accessing!public! !
+!Core.Tests.DolphinTestPackages categoriesFor: #c!accessing!public! !
+!Core.Tests.DolphinTestPackages categoriesFor: #isAvailable!public!Testing! !
+!Core.Tests.DolphinTestPackages categoriesFor: #isUnavailable!public!Testing! !
+!Core.Tests.DolphinTestPackages categoriesFor: #setUp!Init / Release!public! !
+!Core.Tests.DolphinTestPackages categoriesFor: #tearDown!public!Running! !
 

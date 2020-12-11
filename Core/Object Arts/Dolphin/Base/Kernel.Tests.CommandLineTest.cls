@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-TestCase subclass: #CommandLineTest
+XProgramming.SUnit.TestCase subclass: #'Kernel.Tests.CommandLineTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-CommandLineTest guid: (GUID fromString: '{3a8a3bc5-3ef6-46c1-933b-754c6b06457e}')!
-CommandLineTest comment: ''!
-!CommandLineTest categoriesForClass!SUnit! !
-!CommandLineTest methodsFor!
+Kernel.Tests.CommandLineTest guid: (Core.GUID fromString: '{3a8a3bc5-3ef6-46c1-933b-754c6b06457e}')!
+Kernel.Tests.CommandLineTest comment: ''!
+!Kernel.Tests.CommandLineTest categoriesForClass!SUnit! !
+!Kernel.Tests.CommandLineTest methodsFor!
 
 test_getOpt_01
 	"http://www.gnu.org/software/libc/manual/html_node/Example-of-Getopt.html"
@@ -22,10 +22,10 @@ test_getOpt_01
 test_getOpt_02
 	"http://www.gnu.org/software/libc/manual/html_node/Example-of-Getopt.html"
 
-	| commandLine x |
+	| commandLine |
 	commandLine := CommandLine argv: #('Dolphin7.exe' 'DPRO.img7' '-a' '-b').
 	self
-		assert: (x := commandLine getOpt: 'abc:') identicalTo: $a;
+		assert: (commandLine getOpt: 'abc:') identicalTo: $a;
 		assertIsNil: commandLine optArg;
 		assert: (commandLine getOpt: 'abc:') identicalTo: $b;
 		assertIsNil: commandLine optArg;
@@ -147,10 +147,10 @@ test_getOpt_12
 	"http://www.gnu.org/software/libc/manual/html_node/Using-Getopt.html
 	Missing required option argument"
 
-	| commandLine x |
+	| commandLine |
 	commandLine := CommandLine argv: #('Dolphin7.exe' 'DPRO.img7' '-c').
 	self
-		assert: (x := commandLine getOpt: 'abc:') identicalTo: $?;
+		assert: (commandLine getOpt: 'abc:') identicalTo: $?;
 		assert: commandLine optOpt equals: $c;
 		assertIsNil: commandLine optArg;
 		assertIsNil: (commandLine getOpt: 'abc:');
@@ -490,43 +490,43 @@ testUnrecognizedOption
 			raise: CommandLineError;
 		yourself.
 ! !
-!CommandLineTest categoriesFor: #test_getOpt_01!getopt protocol!public! !
-!CommandLineTest categoriesFor: #test_getOpt_02!getopt protocol!public! !
-!CommandLineTest categoriesFor: #test_getOpt_03!getopt protocol!public! !
-!CommandLineTest categoriesFor: #test_getOpt_04!getopt protocol!public! !
-!CommandLineTest categoriesFor: #test_getOpt_05!getopt protocol!public! !
-!CommandLineTest categoriesFor: #test_getOpt_06!getopt protocol!public! !
-!CommandLineTest categoriesFor: #test_getOpt_07!getopt protocol!public! !
-!CommandLineTest categoriesFor: #test_getOpt_08!getopt protocol!public! !
-!CommandLineTest categoriesFor: #test_getOpt_09!getopt protocol!public! !
-!CommandLineTest categoriesFor: #test_getOpt_10!getopt protocol!public! !
-!CommandLineTest categoriesFor: #test_getOpt_11!getopt protocol!public! !
-!CommandLineTest categoriesFor: #test_getOpt_12!getopt protocol!public! !
-!CommandLineTest categoriesFor: #test_getOpt_13!getopt protocol!public! !
-!CommandLineTest categoriesFor: #test_getOpt_14!getopt protocol!public! !
-!CommandLineTest categoriesFor: #testAccessors!public! !
-!CommandLineTest categoriesFor: #testBlockNoArgument!block!public! !
-!CommandLineTest categoriesFor: #testBlockOptionalArgumentAbsent!block!public! !
-!CommandLineTest categoriesFor: #testBlockOptionalArgumentPresent!block!public! !
-!CommandLineTest categoriesFor: #testBlockRequiredArgumentPresent!block!public! !
-!CommandLineTest categoriesFor: #testLongAmbiguousOption!errors!public! !
-!CommandLineTest categoriesFor: #testLongEquals!long tests!public! !
-!CommandLineTest categoriesFor: #testLongMissingRequiredArgument!errors!public! !
-!CommandLineTest categoriesFor: #testLongNoArgument!long tests!public! !
-!CommandLineTest categoriesFor: #testLongOptionalArgumentAbsent!long tests!public! !
-!CommandLineTest categoriesFor: #testLongOptionalArgumentPresent!long tests!public! !
-!CommandLineTest categoriesFor: #testLongOptionEmptyArgument!errors!public! !
-!CommandLineTest categoriesFor: #testLongRequiredArgumentPresent!long tests!public! !
-!CommandLineTest categoriesFor: #testLongUnexpectedArgument!errors!public! !
-!CommandLineTest categoriesFor: #testLongUnexpectedOption!errors!public! !
-!CommandLineTest categoriesFor: #testMissingRequiredArgument!errors!public! !
-!CommandLineTest categoriesFor: #testPartialLong!long tests!public! !
-!CommandLineTest categoriesFor: #testRepeatBlockOptionalArgumentAbsent!block!public! !
-!CommandLineTest categoriesFor: #testRepeatBlockOptionalArgumentPresent!block!public! !
-!CommandLineTest categoriesFor: #testRepeatShortBlockNoArgument!block!public! !
-!CommandLineTest categoriesFor: #testShortBlockNoArgument!block!public! !
-!CommandLineTest categoriesFor: #testShortBlockOptionalArgumentAbsent!block!public! !
-!CommandLineTest categoriesFor: #testShortBlockRequiredArgumentPresent!block!public! !
-!CommandLineTest categoriesFor: #testSlashPrefix!public! !
-!CommandLineTest categoriesFor: #testUnrecognizedOption!errors!public! !
+!Kernel.Tests.CommandLineTest categoriesFor: #test_getOpt_01!getopt protocol!public! !
+!Kernel.Tests.CommandLineTest categoriesFor: #test_getOpt_02!getopt protocol!public! !
+!Kernel.Tests.CommandLineTest categoriesFor: #test_getOpt_03!getopt protocol!public! !
+!Kernel.Tests.CommandLineTest categoriesFor: #test_getOpt_04!getopt protocol!public! !
+!Kernel.Tests.CommandLineTest categoriesFor: #test_getOpt_05!getopt protocol!public! !
+!Kernel.Tests.CommandLineTest categoriesFor: #test_getOpt_06!getopt protocol!public! !
+!Kernel.Tests.CommandLineTest categoriesFor: #test_getOpt_07!getopt protocol!public! !
+!Kernel.Tests.CommandLineTest categoriesFor: #test_getOpt_08!getopt protocol!public! !
+!Kernel.Tests.CommandLineTest categoriesFor: #test_getOpt_09!getopt protocol!public! !
+!Kernel.Tests.CommandLineTest categoriesFor: #test_getOpt_10!getopt protocol!public! !
+!Kernel.Tests.CommandLineTest categoriesFor: #test_getOpt_11!getopt protocol!public! !
+!Kernel.Tests.CommandLineTest categoriesFor: #test_getOpt_12!getopt protocol!public! !
+!Kernel.Tests.CommandLineTest categoriesFor: #test_getOpt_13!getopt protocol!public! !
+!Kernel.Tests.CommandLineTest categoriesFor: #test_getOpt_14!getopt protocol!public! !
+!Kernel.Tests.CommandLineTest categoriesFor: #testAccessors!public! !
+!Kernel.Tests.CommandLineTest categoriesFor: #testBlockNoArgument!block!public! !
+!Kernel.Tests.CommandLineTest categoriesFor: #testBlockOptionalArgumentAbsent!block!public! !
+!Kernel.Tests.CommandLineTest categoriesFor: #testBlockOptionalArgumentPresent!block!public! !
+!Kernel.Tests.CommandLineTest categoriesFor: #testBlockRequiredArgumentPresent!block!public! !
+!Kernel.Tests.CommandLineTest categoriesFor: #testLongAmbiguousOption!errors!public! !
+!Kernel.Tests.CommandLineTest categoriesFor: #testLongEquals!long tests!public! !
+!Kernel.Tests.CommandLineTest categoriesFor: #testLongMissingRequiredArgument!errors!public! !
+!Kernel.Tests.CommandLineTest categoriesFor: #testLongNoArgument!long tests!public! !
+!Kernel.Tests.CommandLineTest categoriesFor: #testLongOptionalArgumentAbsent!long tests!public! !
+!Kernel.Tests.CommandLineTest categoriesFor: #testLongOptionalArgumentPresent!long tests!public! !
+!Kernel.Tests.CommandLineTest categoriesFor: #testLongOptionEmptyArgument!errors!public! !
+!Kernel.Tests.CommandLineTest categoriesFor: #testLongRequiredArgumentPresent!long tests!public! !
+!Kernel.Tests.CommandLineTest categoriesFor: #testLongUnexpectedArgument!errors!public! !
+!Kernel.Tests.CommandLineTest categoriesFor: #testLongUnexpectedOption!errors!public! !
+!Kernel.Tests.CommandLineTest categoriesFor: #testMissingRequiredArgument!errors!public! !
+!Kernel.Tests.CommandLineTest categoriesFor: #testPartialLong!long tests!public! !
+!Kernel.Tests.CommandLineTest categoriesFor: #testRepeatBlockOptionalArgumentAbsent!block!public! !
+!Kernel.Tests.CommandLineTest categoriesFor: #testRepeatBlockOptionalArgumentPresent!block!public! !
+!Kernel.Tests.CommandLineTest categoriesFor: #testRepeatShortBlockNoArgument!block!public! !
+!Kernel.Tests.CommandLineTest categoriesFor: #testShortBlockNoArgument!block!public! !
+!Kernel.Tests.CommandLineTest categoriesFor: #testShortBlockOptionalArgumentAbsent!block!public! !
+!Kernel.Tests.CommandLineTest categoriesFor: #testShortBlockRequiredArgumentPresent!block!public! !
+!Kernel.Tests.CommandLineTest categoriesFor: #testSlashPrefix!public! !
+!Kernel.Tests.CommandLineTest categoriesFor: #testUnrecognizedOption!errors!public! !
 

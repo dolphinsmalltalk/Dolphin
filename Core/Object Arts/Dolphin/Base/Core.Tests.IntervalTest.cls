@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-SequenceableCollectionTest subclass: #IntervalTest
+Core.Tests.SequenceableCollectionTest subclass: #'Core.Tests.IntervalTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-IntervalTest guid: (GUID fromString: '{73485185-925f-48a9-bdf0-df459c5acb25}')!
-IntervalTest comment: ''!
-!IntervalTest categoriesForClass!Unclassified! !
-!IntervalTest methodsFor!
+Core.Tests.IntervalTest guid: (Core.GUID fromString: '{73485185-925f-48a9-bdf0-df459c5acb25}')!
+Core.Tests.IntervalTest comment: ''!
+!Core.Tests.IntervalTest categoriesForClass!Unclassified! !
+!Core.Tests.IntervalTest methodsFor!
 
 assimilate: anObject 
 	^anObject asInteger!
@@ -209,22 +209,22 @@ testStoreOn
 			expr := each storeString.
 			copy := Compiler evaluate: expr.
 			self assert: copy equals: each]! !
-!IntervalTest categoriesFor: #assimilate:!public!unit tests! !
-!IntervalTest categoriesFor: #assimilateResultElement:!helpers!private! !
-!IntervalTest categoriesFor: #collectionClass!helpers!private! !
-!IntervalTest categoriesFor: #newCollection:!private!unit tests! !
-!IntervalTest categoriesFor: #testCollect!public!unit tests! !
-!IntervalTest categoriesFor: #testEquals!public!testing! !
-!IntervalTest categoriesFor: #testEquals2!public!testing! !
-!IntervalTest categoriesFor: #testEquals3!public!testing! !
-!IntervalTest categoriesFor: #testEquals4!public!testing! !
-!IntervalTest categoriesFor: #testEquals5!public!testing! !
-!IntervalTest categoriesFor: #testEquals6!public!unit tests! !
-!IntervalTest categoriesFor: #testFromToBy!public!unit tests! !
-!IntervalTest categoriesFor: #testIncludes!public!unit tests! !
-!IntervalTest categoriesFor: #testIsEmpty!public!unit tests! !
-!IntervalTest categoriesFor: #testPrintString!public!unit tests! !
-!IntervalTest categoriesFor: #testReplaceFromToWithStartingAt!public!unit tests! !
-!IntervalTest categoriesFor: #testResize!public!unit tests! !
-!IntervalTest categoriesFor: #testStoreOn!public!unit tests! !
+!Core.Tests.IntervalTest categoriesFor: #assimilate:!public!unit tests! !
+!Core.Tests.IntervalTest categoriesFor: #assimilateResultElement:!helpers!private! !
+!Core.Tests.IntervalTest categoriesFor: #collectionClass!helpers!private! !
+!Core.Tests.IntervalTest categoriesFor: #newCollection:!private!unit tests! !
+!Core.Tests.IntervalTest categoriesFor: #testCollect!public!unit tests! !
+!Core.Tests.IntervalTest categoriesFor: #testEquals!public!testing! !
+!Core.Tests.IntervalTest categoriesFor: #testEquals2!public!testing! !
+!Core.Tests.IntervalTest categoriesFor: #testEquals3!public!testing! !
+!Core.Tests.IntervalTest categoriesFor: #testEquals4!public!testing! !
+!Core.Tests.IntervalTest categoriesFor: #testEquals5!public!testing! !
+!Core.Tests.IntervalTest categoriesFor: #testEquals6!public!unit tests! !
+!Core.Tests.IntervalTest categoriesFor: #testFromToBy!public!unit tests! !
+!Core.Tests.IntervalTest categoriesFor: #testIncludes!public!unit tests! !
+!Core.Tests.IntervalTest categoriesFor: #testIsEmpty!public!unit tests! !
+!Core.Tests.IntervalTest categoriesFor: #testPrintString!public!unit tests! !
+!Core.Tests.IntervalTest categoriesFor: #testReplaceFromToWithStartingAt!public!unit tests! !
+!Core.Tests.IntervalTest categoriesFor: #testResize!public!unit tests! !
+!Core.Tests.IntervalTest categoriesFor: #testStoreOn!public!unit tests! !
 

@@ -1,58 +1,18 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-LocaleTest subclass: #WindowsLocaleTest
+Core.Tests.LocaleTest subclass: #'OS.Tests.WindowsLocaleTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-WindowsLocaleTest guid: (GUID fromString: '{1cc6ee0d-11ce-44fd-940d-7126f73516ba}')!
-WindowsLocaleTest comment: ''!
-!WindowsLocaleTest categoriesForClass!Unclassified! !
-!WindowsLocaleTest methodsFor!
+OS.Tests.WindowsLocaleTest guid: (Core.GUID fromString: '{1cc6ee0d-11ce-44fd-940d-7126f73516ba}')!
+OS.Tests.WindowsLocaleTest comment: ''!
+!OS.Tests.WindowsLocaleTest categoriesForClass!Unclassified! !
+!OS.Tests.WindowsLocaleTest methodsFor!
 
 defaultSubject
 	^Locale named: 'en-GB'!
-
-testDisplayFloatOnNegativeModes
-	| info subject format |
-	"Different negative number mode (2)"
-	subject := Locale lcid: 1050.
-	self assert: (subject printFloat: -0.0) equals: '0,00'.
-	self assert: (subject printFloat: -1.25) equals: '- 1,25'.
-	self assert: (subject printFloat: -0.0001) equals: '0,00'.
-	self assert: (subject printFloat: -123456789.123456789) equals: '- 123.456.789,12'.
-	"Negative infinity does not seem to be represented consistently with respect to the normal negative sign conventions in this locale. The value is direct from Windows"
-	self assert: (subject printFloat: Float negativeInfinity) equals: '-∞'.
-
-	"Different negative number mode (3)"
-	subject := Locale lcid: 1065.
-	self assert: (subject printFloat: -0.0) equals: '0/00'.
-	self assert: (subject printFloat: -1.25) equals: '1/25-'.
-	self assert: (subject printFloat: -0.0001) equals: '0/00'.
-	self assert: (subject printFloat: -123456789.123456789) equals: '123,456,789/12-'.
-	"Ditto re: Negative infinity, which is supplied by Windows with an inconsistent representation."
-	self assert: (subject printFloat: Float negativeInfinity) equals: '-∞'.
-
-	"Fake up the other modes - zero is bracketed"
-	subject := Locale lcid: 1033.
-	format := subject numberFormat copy.
-	format negativeNumberMode: 0.
-	self assert: (subject printFloat: -0.0 format: format) equals: '0.00'.
-	self assert: (subject printFloat: -1.25 format: format) equals: '(1.25)'.
-	self assert: (subject printFloat: -0.0001 format: format) equals: '0.00'.
-	self assert: (subject printFloat: -123456789.123456789 format: format) equals: '(123,456,789.12)'.
-
-	"Mode 4 is trailing minus after space"
-	format negativeNumberMode: 4.
-	self assert: (subject printFloat: -0.0 format: format) equals: '0.00'.
-	self assert: (subject printFloat: -1.25 format: format) equals: '1.25 -'.
-	self assert: (subject printFloat: -0.0001 format: format) equals: '0.00'.
-	self assert: (subject printFloat: -123456789.123456789 format: format) equals: '123,456,789.12 -'!
-
-testEnglishName
-	#(1033 'English' 2057 'English' 1034 'Spanish' 1106 'Welsh' 11274 'Spanish') pairsDo: [:lcid :language |
-		self assert: (Locale lcid: lcid) englishLanguageName equals: language]!
 
 testDisplayFloatOn
 	| subject |
@@ -110,6 +70,46 @@ testDisplayFloatOn
 						actual := pair first displayString: subject.
 						self assert: actual equals: pair second]]!
 
+testDisplayFloatOnNegativeModes
+	| info subject format |
+	"Different negative number mode (2)"
+	subject := Locale lcid: 1050.
+	self assert: (subject printFloat: -0.0) equals: '0,00'.
+	self assert: (subject printFloat: -1.25) equals: '- 1,25'.
+	self assert: (subject printFloat: -0.0001) equals: '0,00'.
+	self assert: (subject printFloat: -123456789.123456789) equals: '- 123.456.789,12'.
+	"Negative infinity does not seem to be represented consistently with respect to the normal negative sign conventions in this locale. The value is direct from Windows"
+	self assert: (subject printFloat: Float negativeInfinity) equals: '-∞'.
+
+	"Different negative number mode (3)"
+	subject := Locale lcid: 1065.
+	self assert: (subject printFloat: -0.0) equals: '0/00'.
+	self assert: (subject printFloat: -1.25) equals: '1/25-'.
+	self assert: (subject printFloat: -0.0001) equals: '0/00'.
+	self assert: (subject printFloat: -123456789.123456789) equals: '123,456,789/12-'.
+	"Ditto re: Negative infinity, which is supplied by Windows with an inconsistent representation."
+	self assert: (subject printFloat: Float negativeInfinity) equals: '-∞'.
+
+	"Fake up the other modes - zero is bracketed"
+	subject := Locale lcid: 1033.
+	format := subject numberFormat copy.
+	format negativeNumberMode: 0.
+	self assert: (subject printFloat: -0.0 format: format) equals: '0.00'.
+	self assert: (subject printFloat: -1.25 format: format) equals: '(1.25)'.
+	self assert: (subject printFloat: -0.0001 format: format) equals: '0.00'.
+	self assert: (subject printFloat: -123456789.123456789 format: format) equals: '(123,456,789.12)'.
+
+	"Mode 4 is trailing minus after space"
+	format negativeNumberMode: 4.
+	self assert: (subject printFloat: -0.0 format: format) equals: '0.00'.
+	self assert: (subject printFloat: -1.25 format: format) equals: '1.25 -'.
+	self assert: (subject printFloat: -0.0001 format: format) equals: '0.00'.
+	self assert: (subject printFloat: -123456789.123456789 format: format) equals: '123,456,789.12 -'!
+
+testEnglishName
+	#('smalltalk' 'English' 'en-US' 'English' 'en-GB' 'English' 'es-ES_tradnl' 'Spanish' 'cy-GB' 'Welsh' 'es-AR' 'Spanish')
+		pairsDo: [:lcid :language | self assert: (Locale named: lcid) englishLanguageName equals: language]!
+
 testPrintFloatGrouping
 	"Test printing with different number grouping."
 
@@ -163,11 +163,11 @@ testPrintNoLeadingZero
 	format hasLeadingZero: false.
 	self assert: (subject printFloat: 1234567890.123 format: format) equals: '1,234,567,890.12'.
 	self assert: (subject printFloat: 0.123 format: format) equals: '.12'! !
-!WindowsLocaleTest categoriesFor: #defaultSubject!helpers!private! !
-!WindowsLocaleTest categoriesFor: #testDisplayFloatOnNegativeModes!public!unit tests! !
-!WindowsLocaleTest categoriesFor: #testEnglishName!public!unit tests! !
-!WindowsLocaleTest categoriesFor: #testPrintFloat!public!unit tests! !
-!WindowsLocaleTest categoriesFor: #testPrintFloatGrouping!public!unit tests! !
-!WindowsLocaleTest categoriesFor: #testPrintFloatSeparators!public!unit tests! !
-!WindowsLocaleTest categoriesFor: #testPrintNoLeadingZero!public!unit tests! !
+!OS.Tests.WindowsLocaleTest categoriesFor: #defaultSubject!helpers!private! !
+!OS.Tests.WindowsLocaleTest categoriesFor: #testDisplayFloatOn!public!unit tests! !
+!OS.Tests.WindowsLocaleTest categoriesFor: #testDisplayFloatOnNegativeModes!public!unit tests! !
+!OS.Tests.WindowsLocaleTest categoriesFor: #testEnglishName!public!unit tests! !
+!OS.Tests.WindowsLocaleTest categoriesFor: #testPrintFloatGrouping!public!unit tests! !
+!OS.Tests.WindowsLocaleTest categoriesFor: #testPrintFloatSeparators!public!unit tests! !
+!OS.Tests.WindowsLocaleTest categoriesFor: #testPrintNoLeadingZero!public!unit tests! !
 

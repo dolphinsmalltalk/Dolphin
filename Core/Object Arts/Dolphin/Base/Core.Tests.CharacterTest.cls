@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-DolphinTest subclass: #CharacterTest
+Core.Tests.DolphinTest subclass: #'Core.Tests.CharacterTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-CharacterTest guid: (GUID fromString: '{b5b1b518-3a55-4441-9aa3-32c87f1aedba}')!
-CharacterTest comment: ''!
-!CharacterTest categoriesForClass!Tests-Magnitude-General! !
-!CharacterTest methodsFor!
+Core.Tests.CharacterTest guid: (Core.GUID fromString: '{b5b1b518-3a55-4441-9aa3-32c87f1aedba}')!
+Core.Tests.CharacterTest comment: ''!
+!Core.Tests.CharacterTest categoriesForClass!Tests-Magnitude-General! !
+!Core.Tests.CharacterTest methodsFor!
 
 nonCharacters
 	"Private - Unicode non-characters - see https://www.unicode.org/faq/private_use.html"
@@ -114,7 +114,8 @@ testClassCodePoint
 	self assert: ch codePoint equals: 16rFFFD.
 	self assert: ch encoding equals: #utf32.
 	"Utf-16 surrogates, not code points"
-	#(16rD800 16rDB7F 16rDB80 16rDBFF 16rDC00 16rDCFF 16rDF80 16rDFFF) do: [:i | self should: [Character codePoint: (i << 16) + 16rFFFE] raise: Error].
+	#(16rD800 16rDB7F 16rDB80 16rDBFF 16rDC00 16rDCFF 16rDF80 16rDFFF)
+		do: [:i | self should: [Character codePoint: (i << 16) + 16rFFFE] raise: Error].
 	"Valid code points but not valid characters"
 	16rFDD0 to: 16rFDEF do: [:i | self should: [Character codePoint: (i << 16) + 16rFFFE] raise: Error].
 	(0 to: 16) do: 
@@ -367,7 +368,7 @@ testIsUtf16SurrogateTests
 			self deny: ch isUtf16Surrogate.
 			self deny: ch isUtf16Lead.
 			self deny: ch isUtf16Trail].
-	nonchars , {-1. Win32Constants.MAX_UCSCHAR + 1} do: 
+	nonchars , {-1. OS.Win32Constants.MAX_UCSCHAR + 1} do: 
 			[:each |
 			self deny: (Character isValidUtf16CodeUnit: each).
 			self deny: (Character isValidCodePoint: each).
@@ -438,10 +439,8 @@ testIsUtf8SurrogateTests
 testPrintString
 	self assert: $a printString equals: '$a'.
 	self assert: $a printString equals: '$a'.
-	(1 to: 6) , (14 to: 32) do: 
-			[:i |
-			self assert: (Character codePoint: i) printString
-				equals: '$\x' , (i printStringBase: 16)].
+	(1 to: 6) , (14 to: 32)
+		do: [:i | self assert: (Character codePoint: i) printString equals: '$\x' , (i printStringBase: 16)].
 	(33 to: 126) do: [:i | self deny: ((Character codePoint: i) printString beginsWith: '$\x')].
 	self assert: (Character codePoint: 0) printString equals: '$\0'.
 	self assert: (Character codePoint: 7) printString equals: '$\a'.
@@ -495,30 +494,30 @@ testStb
 	bytes := Character dolphin binaryStoreBytes.
 	rehydrated := Object fromBinaryStoreBytes: bytes.
 	self assert: rehydrated equals: Character dolphin! !
-!CharacterTest categoriesFor: #nonCharacters!constants!private! !
-!CharacterTest categoriesFor: #testAnsiValue!public!unit tests! !
-!CharacterTest categoriesFor: #testAsciiValue!public!unit tests! !
-!CharacterTest categoriesFor: #testAsLowercase!public!unit tests! !
-!CharacterTest categoriesFor: #testAsUppercase!public!unit tests! !
-!CharacterTest categoriesFor: #testAsUtf16String!public!unit tests! !
-!CharacterTest categoriesFor: #testAsUtf8String!public!unit tests! !
-!CharacterTest categoriesFor: #testClassCodePoint!public!unit tests! !
-!CharacterTest categoriesFor: #testClassNewCode!public! !
-!CharacterTest categoriesFor: #testCodePoint!public!unit tests! !
-!CharacterTest categoriesFor: #testDigitValue!public!unit tests! !
-!CharacterTest categoriesFor: #testEquals!public!unit tests! !
-!CharacterTest categoriesFor: #testIdentity!public!unit tests! !
-!CharacterTest categoriesFor: #testIsAlphaNumeric!public!unit tests! !
-!CharacterTest categoriesFor: #testIsControl!public!unit tests! !
-!CharacterTest categoriesFor: #testIsDigit!public!unit tests! !
-!CharacterTest categoriesFor: #testIsHexDigit!public!unit tests! !
-!CharacterTest categoriesFor: #testIsLowercase!public!unit tests! !
-!CharacterTest categoriesFor: #testIsPunctuation!public!unit tests! !
-!CharacterTest categoriesFor: #testIsUppercase!public!unit tests! !
-!CharacterTest categoriesFor: #testIsUtf16SurrogateTests!public!unit tests! !
-!CharacterTest categoriesFor: #testIsUtf8SurrogateTests!public!unit tests! !
-!CharacterTest categoriesFor: #testPrintString!public!unit tests! !
-!CharacterTest categoriesFor: #testSize!public!unit tests! !
-!CharacterTest categoriesFor: #testSplit!public!unit tests! !
-!CharacterTest categoriesFor: #testStb!public!unit tests! !
+!Core.Tests.CharacterTest categoriesFor: #nonCharacters!constants!private! !
+!Core.Tests.CharacterTest categoriesFor: #testAnsiValue!public!unit tests! !
+!Core.Tests.CharacterTest categoriesFor: #testAsciiValue!public!unit tests! !
+!Core.Tests.CharacterTest categoriesFor: #testAsLowercase!public!unit tests! !
+!Core.Tests.CharacterTest categoriesFor: #testAsUppercase!public!unit tests! !
+!Core.Tests.CharacterTest categoriesFor: #testAsUtf16String!public!unit tests! !
+!Core.Tests.CharacterTest categoriesFor: #testAsUtf8String!public!unit tests! !
+!Core.Tests.CharacterTest categoriesFor: #testClassCodePoint!public!unit tests! !
+!Core.Tests.CharacterTest categoriesFor: #testClassNewCode!public! !
+!Core.Tests.CharacterTest categoriesFor: #testCodePoint!public!unit tests! !
+!Core.Tests.CharacterTest categoriesFor: #testDigitValue!public!unit tests! !
+!Core.Tests.CharacterTest categoriesFor: #testEquals!public!unit tests! !
+!Core.Tests.CharacterTest categoriesFor: #testIdentity!public!unit tests! !
+!Core.Tests.CharacterTest categoriesFor: #testIsAlphaNumeric!public!unit tests! !
+!Core.Tests.CharacterTest categoriesFor: #testIsControl!public!unit tests! !
+!Core.Tests.CharacterTest categoriesFor: #testIsDigit!public!unit tests! !
+!Core.Tests.CharacterTest categoriesFor: #testIsHexDigit!public!unit tests! !
+!Core.Tests.CharacterTest categoriesFor: #testIsLowercase!public!unit tests! !
+!Core.Tests.CharacterTest categoriesFor: #testIsPunctuation!public!unit tests! !
+!Core.Tests.CharacterTest categoriesFor: #testIsUppercase!public!unit tests! !
+!Core.Tests.CharacterTest categoriesFor: #testIsUtf16SurrogateTests!public!unit tests! !
+!Core.Tests.CharacterTest categoriesFor: #testIsUtf8SurrogateTests!public!unit tests! !
+!Core.Tests.CharacterTest categoriesFor: #testPrintString!public!unit tests! !
+!Core.Tests.CharacterTest categoriesFor: #testSize!public!unit tests! !
+!Core.Tests.CharacterTest categoriesFor: #testSplit!public!unit tests! !
+!Core.Tests.CharacterTest categoriesFor: #testStb!public!unit tests! !
 

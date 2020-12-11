@@ -1,18 +1,18 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-DolphinTest subclass: #UndefinedObjectTest
+Core.Tests.DolphinTest subclass: #'Core.Tests.UndefinedObjectTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-UndefinedObjectTest guid: (GUID fromString: '{9c1b04d8-3338-4b9a-b561-5482f01a3bae}')!
-UndefinedObjectTest comment: 'This is the unit test for the class UndefinedObject. Unit tests are a good way to exercise the functionality of your system in a repeatable and automatic manner. They are therefore recommended if you plan to release anything. For more information, see: 
+Core.Tests.UndefinedObjectTest guid: (Core.GUID fromString: '{9c1b04d8-3338-4b9a-b561-5482f01a3bae}')!
+Core.Tests.UndefinedObjectTest comment: 'This is the unit test for the class UndefinedObject. Unit tests are a good way to exercise the functionality of your system in a repeatable and automatic manner. They are therefore recommended if you plan to release anything. For more information, see: 
 	- http://www.c2.com/cgi/wiki?UnitTest
 	- http://minnow.cc.gatech.edu/squeak/1547
 	- the sunit class category'!
-!UndefinedObjectTest categoriesForClass!Tests-Kernel-Objects! !
-!UndefinedObjectTest methodsFor!
+!Core.Tests.UndefinedObjectTest categoriesForClass!Tests-Kernel-Objects! !
+!Core.Tests.UndefinedObjectTest methodsFor!
 
 testClone
 	self assert: nil copy identicalTo: nil!
@@ -63,18 +63,18 @@ testStoreOn
 	nil storeOn: stream.
 	string := stream contents.
 	self assert: (Compiler evaluate: string) equals: nil! !
-!UndefinedObjectTest categoriesFor: #testClone!public!testing / copying! !
-!UndefinedObjectTest categoriesFor: #testDeepCopy!public!testing / copying! !
-!UndefinedObjectTest categoriesFor: #testIfNil!public!testing / testing! !
-!UndefinedObjectTest categoriesFor: #testIfNilIfNotNil!public!testing / testing! !
-!UndefinedObjectTest categoriesFor: #testIfNotNil!public!testing / testing! !
-!UndefinedObjectTest categoriesFor: #testIfNotNilIfNil!public!testing / testing! !
-!UndefinedObjectTest categoriesFor: #testIsLiteral!public!testing / testing! !
-!UndefinedObjectTest categoriesFor: #testIsNil!public!testing / testing! !
-!UndefinedObjectTest categoriesFor: #testIsSelfEvaluating!public!testing / testing! !
-!UndefinedObjectTest categoriesFor: #testNew!public!unit tests! !
-!UndefinedObjectTest categoriesFor: #testNotNil!public!testing / testing! !
-!UndefinedObjectTest categoriesFor: #testPrintOn!public!testing / printing! !
-!UndefinedObjectTest categoriesFor: #testShallowCopy!public!testing / copying! !
-!UndefinedObjectTest categoriesFor: #testStoreOn!public!testing / printing! !
+!Core.Tests.UndefinedObjectTest categoriesFor: #testClone!public!testing / copying! !
+!Core.Tests.UndefinedObjectTest categoriesFor: #testDeepCopy!public!testing / copying! !
+!Core.Tests.UndefinedObjectTest categoriesFor: #testIfNil!public!testing / testing! !
+!Core.Tests.UndefinedObjectTest categoriesFor: #testIfNilIfNotNil!public!testing / testing! !
+!Core.Tests.UndefinedObjectTest categoriesFor: #testIfNotNil!public!testing / testing! !
+!Core.Tests.UndefinedObjectTest categoriesFor: #testIfNotNilIfNil!public!testing / testing! !
+!Core.Tests.UndefinedObjectTest categoriesFor: #testIsLiteral!public!testing / testing! !
+!Core.Tests.UndefinedObjectTest categoriesFor: #testIsNil!public!testing / testing! !
+!Core.Tests.UndefinedObjectTest categoriesFor: #testIsSelfEvaluating!public!testing / testing! !
+!Core.Tests.UndefinedObjectTest categoriesFor: #testNew!public!unit tests! !
+!Core.Tests.UndefinedObjectTest categoriesFor: #testNotNil!public!testing / testing! !
+!Core.Tests.UndefinedObjectTest categoriesFor: #testPrintOn!public!testing / printing! !
+!Core.Tests.UndefinedObjectTest categoriesFor: #testShallowCopy!public!testing / copying! !
+!Core.Tests.UndefinedObjectTest categoriesFor: #testStoreOn!public!testing / printing! !
 

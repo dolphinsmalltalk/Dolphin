@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-DolphinTest subclass: #TimeStampTest
+Core.Tests.DolphinTest subclass: #'Core.Tests.TimeStampTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-TimeStampTest guid: (GUID fromString: '{152f98a5-e614-445f-bb23-7db28a4d01b8}')!
-TimeStampTest comment: ''!
-!TimeStampTest categoriesForClass!Unclassified! !
-!TimeStampTest methodsFor!
+Core.Tests.TimeStampTest guid: (Core.GUID fromString: '{152f98a5-e614-445f-bb23-7db28a4d01b8}')!
+Core.Tests.TimeStampTest comment: ''!
+!Core.Tests.TimeStampTest categoriesForClass!Unclassified! !
+!Core.Tests.TimeStampTest methodsFor!
 
 currentTimeStamp
 	"Remove millisecond precision."
@@ -84,7 +84,7 @@ testFromSeconds
 
 testFromSYSTEMTIME
 	| ts sysTime |
-	sysTime := SYSTEMTIME now.
+	sysTime := OS.SYSTEMTIME now.
 	ts := TimeStamp fromSYSTEMTIME: sysTime.
 	self assert: ts date dayOfMonth equals: sysTime wDay.
 	self assert: ts date month equals: sysTime wMonth.
@@ -94,13 +94,13 @@ testFromSYSTEMTIME
 	self assert: ts time second truncated equals: sysTime wSecond.
 	self assert: ts time millisecond equals: sysTime wMilliseconds.
 	self assert: sysTime asTimeStamp equals: ts! !
-!TimeStampTest categoriesFor: #currentTimeStamp!helpers!private! !
-!TimeStampTest categoriesFor: #testAddSeconds!public! !
-!TimeStampTest categoriesFor: #testAsMilliseconds!public! !
-!TimeStampTest categoriesFor: #testAsSeconds!public! !
-!TimeStampTest categoriesFor: #testCurrentUTC!public! !
-!TimeStampTest categoriesFor: #testDateTime!public!unit tests! !
-!TimeStampTest categoriesFor: #testFromMilliseconds!public! !
-!TimeStampTest categoriesFor: #testFromSeconds!public! !
-!TimeStampTest categoriesFor: #testFromSYSTEMTIME!public! !
+!Core.Tests.TimeStampTest categoriesFor: #currentTimeStamp!helpers!private! !
+!Core.Tests.TimeStampTest categoriesFor: #testAddSeconds!public! !
+!Core.Tests.TimeStampTest categoriesFor: #testAsMilliseconds!public! !
+!Core.Tests.TimeStampTest categoriesFor: #testAsSeconds!public! !
+!Core.Tests.TimeStampTest categoriesFor: #testCurrentUTC!public! !
+!Core.Tests.TimeStampTest categoriesFor: #testDateTime!public!unit tests! !
+!Core.Tests.TimeStampTest categoriesFor: #testFromMilliseconds!public! !
+!Core.Tests.TimeStampTest categoriesFor: #testFromSeconds!public! !
+!Core.Tests.TimeStampTest categoriesFor: #testFromSYSTEMTIME!public! !
 

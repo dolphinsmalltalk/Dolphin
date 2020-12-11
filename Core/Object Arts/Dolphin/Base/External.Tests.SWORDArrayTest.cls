@@ -1,17 +1,17 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ExternalArrayTest subclass: #SWORDArrayTest
+External.Tests.ExternalArrayTest subclass: #'External.Tests.SWORDArrayTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-SWORDArrayTest guid: (GUID fromString: '{899ffc53-86db-45b3-ae91-d517e2148fcb}')!
-SWORDArrayTest comment: ''!
-!SWORDArrayTest categoriesForClass!Unclassified! !
-!SWORDArrayTest methodsFor!
+External.Tests.SWORDArrayTest guid: (Core.GUID fromString: '{899ffc53-86db-45b3-ae91-d517e2148fcb}')!
+External.Tests.SWORDArrayTest comment: ''!
+!External.Tests.SWORDArrayTest categoriesForClass!Unclassified! !
+!External.Tests.SWORDArrayTest methodsFor!
 
 arrayClass
 	^SWORDArray! !
-!SWORDArrayTest categoriesFor: #arrayClass!constants!private! !
+!External.Tests.SWORDArrayTest categoriesFor: #arrayClass!constants!private! !
 

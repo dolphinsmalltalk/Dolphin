@@ -1,16 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-DolphinCollectionTest subclass: #SequenceableCollectionTest
+Core.Tests.CollectionTest subclass: #'Core.Tests.SequenceableCollectionTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-SequenceableCollectionTest guid: (GUID fromString: '{4c32dbcc-4044-442b-95d9-d6e8ad2396cf}')!
-SequenceableCollectionTest isAbstract: true!
-SequenceableCollectionTest comment: ''!
-!SequenceableCollectionTest categoriesForClass!Unclassified! !
-!SequenceableCollectionTest methodsFor!
+Core.Tests.SequenceableCollectionTest guid: (Core.GUID fromString: '{4c32dbcc-4044-442b-95d9-d6e8ad2396cf}')!
+Core.Tests.SequenceableCollectionTest isNonInstantiable: true!
+Core.Tests.SequenceableCollectionTest comment: ''!
+!Core.Tests.SequenceableCollectionTest categoriesForClass!Unclassified! !
+!Core.Tests.SequenceableCollectionTest methodsFor!
 
 assimilateResultElement: anObject
 	^self assimilate: anObject!
@@ -862,44 +862,44 @@ verifyIndexOfAnyOf: searchFor startingAt: startInteger in: searchee is: foundInt
 	self assert: (searchee indexOfAnyOf: searchFor startingAt: startInteger) equals: foundInteger.
 	self assert: (searchee indexOfAnyOf: searchFor asArray startingAt: startInteger)
 		equals: foundInteger! !
-!SequenceableCollectionTest categoriesFor: #assimilateResultElement:!helpers!private! !
-!SequenceableCollectionTest categoriesFor: #byteArrayForSequence:!helpers!private! !
-!SequenceableCollectionTest categoriesFor: #newCopy:!helpers!private! !
-!SequenceableCollectionTest categoriesFor: #newEmptyCollection:!helpers!private! !
-!SequenceableCollectionTest categoriesFor: #newNumericArray:!helpers!private! !
-!SequenceableCollectionTest categoriesFor: #newUnsortedCollection:!helpers!private! !
-!SequenceableCollectionTest categoriesFor: #testAsByteArray!public!unit tests! !
-!SequenceableCollectionTest categoriesFor: #testAt!public!unit tests! !
-!SequenceableCollectionTest categoriesFor: #testBeginsWith!public!unit tests! !
-!SequenceableCollectionTest categoriesFor: #testBinarySearch!public!unit tests! !
-!SequenceableCollectionTest categoriesFor: #testConcatenation!public!unit tests! !
-!SequenceableCollectionTest categoriesFor: #testCopyFromTo!public!unit tests! !
-!SequenceableCollectionTest categoriesFor: #testCopyReplaceAllWith!public!unit tests! !
-!SequenceableCollectionTest categoriesFor: #testCopyWithAtIndex!public!unit tests! !
-!SequenceableCollectionTest categoriesFor: #testCopyWithoutIndex!public!unit tests! !
-!SequenceableCollectionTest categoriesFor: #testEndsWith!public!unit tests! !
-!SequenceableCollectionTest categoriesFor: #testFindFirst!public!unit tests! !
-!SequenceableCollectionTest categoriesFor: #testFirst!public!unit tests! !
-!SequenceableCollectionTest categoriesFor: #testFirstColon!public!unit tests! !
-!SequenceableCollectionTest categoriesFor: #testFromToKeysAndValuesDo!public!unit tests! !
-!SequenceableCollectionTest categoriesFor: #testFromToKeysAndValuesDo2!public!unit tests! !
-!SequenceableCollectionTest categoriesFor: #testIdentityIncludes!public!unit tests! !
-!SequenceableCollectionTest categoriesFor: #testIncludes!public!unit tests! !
-!SequenceableCollectionTest categoriesFor: #testIncludesAnyOf!public!unit tests! !
-!SequenceableCollectionTest categoriesFor: #testIndexOfAnyOfStartingAt!public!unit tests! !
-!SequenceableCollectionTest categoriesFor: #testLast!public!unit tests! !
-!SequenceableCollectionTest categoriesFor: #testLastColon!public!unit tests! !
-!SequenceableCollectionTest categoriesFor: #testMixedConcatenation!public!unit tests! !
-!SequenceableCollectionTest categoriesFor: #testReplaceFromToWithStartingAt!public!unit tests! !
-!SequenceableCollectionTest categoriesFor: #testResize!public!unit tests! !
-!SequenceableCollectionTest categoriesFor: #testReverse!public!unit tests! !
-!SequenceableCollectionTest categoriesFor: #testReversedFromTo!public!unit tests! !
-!SequenceableCollectionTest categoriesFor: #testSelectAll!public!unit tests! !
-!SequenceableCollectionTest categoriesFor: #testSelectEveryOther!public!unit tests! !
-!SequenceableCollectionTest categoriesFor: #testSelectNone!public!unit tests! !
-!SequenceableCollectionTest categoriesFor: #testSelectOne!public!unit tests! !
-!SequenceableCollectionTest categoriesFor: #unsortedCollectionClass!constants!private! !
-!SequenceableCollectionTest categoriesFor: #verifyConcatenation:with:!helpers!private! !
-!SequenceableCollectionTest categoriesFor: #verifyConcatenationResult:of:with:!helpers!private! !
-!SequenceableCollectionTest categoriesFor: #verifyIndexOfAnyOf:startingAt:in:is:!helpers!private! !
+!Core.Tests.SequenceableCollectionTest categoriesFor: #assimilateResultElement:!helpers!private! !
+!Core.Tests.SequenceableCollectionTest categoriesFor: #byteArrayForSequence:!helpers!private! !
+!Core.Tests.SequenceableCollectionTest categoriesFor: #newCopy:!helpers!private! !
+!Core.Tests.SequenceableCollectionTest categoriesFor: #newEmptyCollection:!helpers!private! !
+!Core.Tests.SequenceableCollectionTest categoriesFor: #newNumericArray:!helpers!private! !
+!Core.Tests.SequenceableCollectionTest categoriesFor: #newUnsortedCollection:!helpers!private! !
+!Core.Tests.SequenceableCollectionTest categoriesFor: #testAsByteArray!public!unit tests! !
+!Core.Tests.SequenceableCollectionTest categoriesFor: #testAt!public!unit tests! !
+!Core.Tests.SequenceableCollectionTest categoriesFor: #testBeginsWith!public!unit tests! !
+!Core.Tests.SequenceableCollectionTest categoriesFor: #testBinarySearch!public!unit tests! !
+!Core.Tests.SequenceableCollectionTest categoriesFor: #testConcatenation!public!unit tests! !
+!Core.Tests.SequenceableCollectionTest categoriesFor: #testCopyFromTo!public!unit tests! !
+!Core.Tests.SequenceableCollectionTest categoriesFor: #testCopyReplaceAllWith!public!unit tests! !
+!Core.Tests.SequenceableCollectionTest categoriesFor: #testCopyWithAtIndex!public!unit tests! !
+!Core.Tests.SequenceableCollectionTest categoriesFor: #testCopyWithoutIndex!public!unit tests! !
+!Core.Tests.SequenceableCollectionTest categoriesFor: #testEndsWith!public!unit tests! !
+!Core.Tests.SequenceableCollectionTest categoriesFor: #testFindFirst!public!unit tests! !
+!Core.Tests.SequenceableCollectionTest categoriesFor: #testFirst!public!unit tests! !
+!Core.Tests.SequenceableCollectionTest categoriesFor: #testFirstColon!public!unit tests! !
+!Core.Tests.SequenceableCollectionTest categoriesFor: #testFromToKeysAndValuesDo!public!unit tests! !
+!Core.Tests.SequenceableCollectionTest categoriesFor: #testFromToKeysAndValuesDo2!public!unit tests! !
+!Core.Tests.SequenceableCollectionTest categoriesFor: #testIdentityIncludes!public!unit tests! !
+!Core.Tests.SequenceableCollectionTest categoriesFor: #testIncludes!public!unit tests! !
+!Core.Tests.SequenceableCollectionTest categoriesFor: #testIncludesAnyOf!public!unit tests! !
+!Core.Tests.SequenceableCollectionTest categoriesFor: #testIndexOfAnyOfStartingAt!public!unit tests! !
+!Core.Tests.SequenceableCollectionTest categoriesFor: #testLast!public!unit tests! !
+!Core.Tests.SequenceableCollectionTest categoriesFor: #testLastColon!public!unit tests! !
+!Core.Tests.SequenceableCollectionTest categoriesFor: #testMixedConcatenation!public!unit tests! !
+!Core.Tests.SequenceableCollectionTest categoriesFor: #testReplaceFromToWithStartingAt!public!unit tests! !
+!Core.Tests.SequenceableCollectionTest categoriesFor: #testResize!public!unit tests! !
+!Core.Tests.SequenceableCollectionTest categoriesFor: #testReverse!public!unit tests! !
+!Core.Tests.SequenceableCollectionTest categoriesFor: #testReversedFromTo!public!unit tests! !
+!Core.Tests.SequenceableCollectionTest categoriesFor: #testSelectAll!public!unit tests! !
+!Core.Tests.SequenceableCollectionTest categoriesFor: #testSelectEveryOther!public!unit tests! !
+!Core.Tests.SequenceableCollectionTest categoriesFor: #testSelectNone!public!unit tests! !
+!Core.Tests.SequenceableCollectionTest categoriesFor: #testSelectOne!public!unit tests! !
+!Core.Tests.SequenceableCollectionTest categoriesFor: #unsortedCollectionClass!constants!private! !
+!Core.Tests.SequenceableCollectionTest categoriesFor: #verifyConcatenation:with:!helpers!private! !
+!Core.Tests.SequenceableCollectionTest categoriesFor: #verifyConcatenationResult:of:with:!helpers!private! !
+!Core.Tests.SequenceableCollectionTest categoriesFor: #verifyIndexOfAnyOf:startingAt:in:is:!helpers!private! !
 

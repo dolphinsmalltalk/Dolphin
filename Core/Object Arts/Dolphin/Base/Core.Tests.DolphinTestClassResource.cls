@@ -1,16 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-DolphinTestResource subclass: #DolphinTestClassResource
+Core.Tests.DolphinTestResource subclass: #'Core.Tests.DolphinTestClassResource'
 	instanceVariableNames: 'package'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-DolphinTestClassResource guid: (GUID fromString: '{e358c277-08b0-4ffe-9f5a-c41be358f898}')!
-DolphinTestClassResource isAbstract: true!
-DolphinTestClassResource comment: ''!
-!DolphinTestClassResource categoriesForClass!Unclassified! !
-!DolphinTestClassResource methodsFor!
+Core.Tests.DolphinTestClassResource guid: (Core.GUID fromString: '{e358c277-08b0-4ffe-9f5a-c41be358f898}')!
+Core.Tests.DolphinTestClassResource isNonInstantiable: true!
+Core.Tests.DolphinTestClassResource comment: ''!
+!Core.Tests.DolphinTestClassResource categoriesForClass!Unclassified! !
+!Core.Tests.DolphinTestClassResource methodsFor!
 
 compileAccessorsFor: aClass 
 	aClass instVarNames do: 
@@ -71,16 +71,16 @@ setUp
 tearDown
 	super tearDown.
 	self destroyPackage! !
-!DolphinTestClassResource categoriesFor: #compileAccessorsFor:!Init / Release!private! !
-!DolphinTestClassResource categoriesFor: #compileMethods!accessing!public! !
-!DolphinTestClassResource categoriesFor: #createClass:superclass:instVars:pools:classVars:!Init / Release!private! !
-!DolphinTestClassResource categoriesFor: #createClasses!Init / Release!private! !
-!DolphinTestClassResource categoriesFor: #createPackage!Init / Release!private! !
-!DolphinTestClassResource categoriesFor: #createPool:!Init / Release!private! !
-!DolphinTestClassResource categoriesFor: #createPools!Init / Release!private! !
-!DolphinTestClassResource categoriesFor: #destroyPackage!Init / Release!private! !
-!DolphinTestClassResource categoriesFor: #package!public! !
-!DolphinTestClassResource categoriesFor: #packageName!private!unit tests! !
-!DolphinTestClassResource categoriesFor: #setUp!Init / Release!public! !
-!DolphinTestClassResource categoriesFor: #tearDown!public!Running! !
+!Core.Tests.DolphinTestClassResource categoriesFor: #compileAccessorsFor:!Init / Release!private! !
+!Core.Tests.DolphinTestClassResource categoriesFor: #compileMethods!accessing!public! !
+!Core.Tests.DolphinTestClassResource categoriesFor: #createClass:superclass:instVars:pools:classVars:!Init / Release!private! !
+!Core.Tests.DolphinTestClassResource categoriesFor: #createClasses!Init / Release!private! !
+!Core.Tests.DolphinTestClassResource categoriesFor: #createPackage!Init / Release!private! !
+!Core.Tests.DolphinTestClassResource categoriesFor: #createPool:!Init / Release!private! !
+!Core.Tests.DolphinTestClassResource categoriesFor: #createPools!Init / Release!private! !
+!Core.Tests.DolphinTestClassResource categoriesFor: #destroyPackage!Init / Release!private! !
+!Core.Tests.DolphinTestClassResource categoriesFor: #package!public! !
+!Core.Tests.DolphinTestClassResource categoriesFor: #packageName!private!unit tests! !
+!Core.Tests.DolphinTestClassResource categoriesFor: #setUp!Init / Release!public! !
+!Core.Tests.DolphinTestClassResource categoriesFor: #tearDown!public!Running! !
 

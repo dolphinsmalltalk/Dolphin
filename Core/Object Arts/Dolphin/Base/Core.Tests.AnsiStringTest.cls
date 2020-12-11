@@ -1,17 +1,17 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-StringTest subclass: #AnsiStringTest
+Core.Tests.StringTest subclass: #'Core.Tests.AnsiStringTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-AnsiStringTest guid: (GUID fromString: '{c1474b06-e77d-41d7-ad4d-10d5114f8471}')!
-AnsiStringTest comment: 'Tests AnsiString.'!
-!AnsiStringTest categoriesForClass!Unclassified! !
-!AnsiStringTest methodsFor!
+Core.Tests.AnsiStringTest guid: (Core.GUID fromString: '{c1474b06-e77d-41d7-ad4d-10d5114f8471}')!
+Core.Tests.AnsiStringTest comment: 'Tests AnsiString.'!
+!Core.Tests.AnsiStringTest categoriesForClass!Unclassified! !
+!Core.Tests.AnsiStringTest methodsFor!
 
-assimilate: each 
+assimilate: each
 	^Character ansiValue: each asInteger!
 
 assimilateString: aString
@@ -119,13 +119,13 @@ testMatch
 	#('**' 'f**' 'f**o' 'f*' '*f*' 'f#*' 'f##' '*oo' '#oo' '*o*' '#o#' '#o*' '*o#' 'fo*' 'fo#' '*foo*' '###' '*#' 'f*#' 'f*#o')
 		do: [:each | self assert: (each match: 'foo')].
 	#('bar' 'foo#' '#foo' '*foo#' '#foo*' '*bar*') do: [:each | self deny: (each match: 'foo')]! !
-!AnsiStringTest categoriesFor: #assimilate:!helpers!private! !
-!AnsiStringTest categoriesFor: #assimilateString:!helpers!private! !
-!AnsiStringTest categoriesFor: #collectionClass!helpers!private! !
-!AnsiStringTest categoriesFor: #testAsPhrase!public!unit tests! !
-!AnsiStringTest categoriesFor: #testBeginsWithIgnoreCase!public!unit tests! !
-!AnsiStringTest categoriesFor: #testClassWith!public! !
-!AnsiStringTest categoriesFor: #testCopyReplaceAllWith!public!unit tests! !
-!AnsiStringTest categoriesFor: #testIndexOfSubCollectionStartingAtGPF!public!unit tests! !
-!AnsiStringTest categoriesFor: #testMatch!public!unit tests! !
+!Core.Tests.AnsiStringTest categoriesFor: #assimilate:!helpers!private! !
+!Core.Tests.AnsiStringTest categoriesFor: #assimilateString:!helpers!private! !
+!Core.Tests.AnsiStringTest categoriesFor: #collectionClass!helpers!private! !
+!Core.Tests.AnsiStringTest categoriesFor: #testAsPhrase!public!unit tests! !
+!Core.Tests.AnsiStringTest categoriesFor: #testBeginsWithIgnoreCase!public!unit tests! !
+!Core.Tests.AnsiStringTest categoriesFor: #testClassWith!public! !
+!Core.Tests.AnsiStringTest categoriesFor: #testCopyReplaceAllWith!public!unit tests! !
+!Core.Tests.AnsiStringTest categoriesFor: #testIndexOfSubCollectionStartingAtGPF!public!unit tests! !
+!Core.Tests.AnsiStringTest categoriesFor: #testMatch!public!unit tests! !
 

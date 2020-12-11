@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-SearchPolicyTest subclass: #IdentitySearchPolicyTest
+Core.Tests.SearchPolicyTest subclass: #'Kernel.Tests.IdentitySearchPolicyTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-IdentitySearchPolicyTest guid: (GUID fromString: '{05134366-7e1d-469d-98b0-5b757f38592b}')!
-IdentitySearchPolicyTest comment: ''!
-!IdentitySearchPolicyTest categoriesForClass!Unclassified! !
-!IdentitySearchPolicyTest methodsFor!
+Kernel.Tests.IdentitySearchPolicyTest guid: (Core.GUID fromString: '{05134366-7e1d-469d-98b0-5b757f38592b}')!
+Kernel.Tests.IdentitySearchPolicyTest comment: ''!
+!Kernel.Tests.IdentitySearchPolicyTest categoriesForClass!Unclassified! !
+!Kernel.Tests.IdentitySearchPolicyTest methodsFor!
 
 policyClass
 	^IdentitySearchPolicy!
@@ -34,6 +34,6 @@ testCompareWith
 	self assert: (policy compare: 'hash' with: 'hash' copy) not.
 	self assert: (policy compare: $a with: $a).
 	self assert: (policy compare: $a with: $b) not! !
-!IdentitySearchPolicyTest categoriesFor: #policyClass!public!unit tests! !
-!IdentitySearchPolicyTest categoriesFor: #testCompareWith!public!unit tests! !
+!Kernel.Tests.IdentitySearchPolicyTest categoriesFor: #policyClass!public!unit tests! !
+!Kernel.Tests.IdentitySearchPolicyTest categoriesFor: #testCompareWith!public!unit tests! !
 

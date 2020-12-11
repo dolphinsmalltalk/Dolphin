@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-AbstractDictionaryTest subclass: #MethodDictionaryTest
+Core.Tests.AbstractDictionaryTest subclass: #'Kernel.Tests.MethodDictionaryTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-MethodDictionaryTest guid: (GUID fromString: '{d47df8c5-dba6-468f-8bf4-4211e21a132b}')!
-MethodDictionaryTest comment: ''!
-!MethodDictionaryTest categoriesForClass!Unclassified! !
-!MethodDictionaryTest methodsFor!
+Kernel.Tests.MethodDictionaryTest guid: (Core.GUID fromString: '{d47df8c5-dba6-468f-8bf4-4211e21a132b}')!
+Kernel.Tests.MethodDictionaryTest comment: ''!
+!Kernel.Tests.MethodDictionaryTest categoriesForClass!Unclassified! !
+!Kernel.Tests.MethodDictionaryTest methodsFor!
 
 collectionClass
 	^MethodDictionary!
@@ -56,9 +56,9 @@ testMaintainsLoadFactor
 			self assert: actualSize equals: expectedSize.
 			self assert: actualSlots / 2 <= minimumSlots.
 			self assert: actualSlots equals: expectedSlots]! !
-!MethodDictionaryTest categoriesFor: #collectionClass!helpers!private! !
-!MethodDictionaryTest categoriesFor: #key3Value!private! !
-!MethodDictionaryTest categoriesFor: #loadFactor!constants!private! !
-!MethodDictionaryTest categoriesFor: #testClassSizeFor!public!unit tests! !
-!MethodDictionaryTest categoriesFor: #testMaintainsLoadFactor!public!unit tests! !
+!Kernel.Tests.MethodDictionaryTest categoriesFor: #collectionClass!helpers!private! !
+!Kernel.Tests.MethodDictionaryTest categoriesFor: #key3Value!private! !
+!Kernel.Tests.MethodDictionaryTest categoriesFor: #loadFactor!constants!private! !
+!Kernel.Tests.MethodDictionaryTest categoriesFor: #testClassSizeFor!public!unit tests! !
+!Kernel.Tests.MethodDictionaryTest categoriesFor: #testMaintainsLoadFactor!public!unit tests! !
 

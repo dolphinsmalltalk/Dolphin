@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-GUIDTest subclass: #CLSIDTest
+External.Tests.GUIDTest subclass: #CLSIDTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''

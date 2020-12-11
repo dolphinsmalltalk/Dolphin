@@ -1,18 +1,19 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ExternalFieldTest subclass: #ArrayPointerFieldTest
+External.Tests.ExternalFieldTest subclass: #'External.Tests.ArrayPointerFieldTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-ArrayPointerFieldTest guid: (GUID fromString: '{a0c1a616-8f49-45e5-9a9e-f968b315ce71}')!
-ArrayPointerFieldTest comment: ''!
-!ArrayPointerFieldTest categoriesForClass!Unclassified! !
-!ArrayPointerFieldTest methodsFor!
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+External.Tests.ArrayPointerFieldTest guid: (Core.GUID fromString: '{a0c1a616-8f49-45e5-9a9e-f968b315ce71}')!
+External.Tests.ArrayPointerFieldTest comment: ''!
+!External.Tests.ArrayPointerFieldTest categoriesForClass!Unclassified! !
+!External.Tests.ArrayPointerFieldTest methodsFor!
 
 testGenerateAccessorsForSizedString
 	| structClass actual expected string struct |
-	structClass := ExternalStructure newAnonymousSubclass.
+	structClass := Structure newAnonymousSubclass.
 	structClass class
 		basicCompile: 'defineFields
 		self defineField: #Test
@@ -23,7 +24,7 @@ testGenerateAccessorsForSizedString
 			offset: 4'.
 	structClass recompileDefinition.
 	actual := (structClass compiledMethodAt: #Test:) parseTree.
-	expected := SmalltalkParser
+	expected := Parser
 				parseMethod: 'Test: aString bytes uintPtrAtOffset: _OffsetOf_Test put: aString yourAddress. self Size: aString size'.
 	self assert: actual equals: expected.
 	"Write a string with embedded null terminator so we can check it reads back using the size."
@@ -45,7 +46,7 @@ testGenerateAccessorsForSizedString
 
 testGenerateAccessorsForSizeIsExpression
 	| structClass actual expected string struct |
-	structClass := ExternalStructure newAnonymousSubclass.
+	structClass := Structure newAnonymousSubclass.
 	structClass class
 		basicCompile: 'defineFields
 		self defineField: #Test
@@ -56,7 +57,7 @@ testGenerateAccessorsForSizeIsExpression
 			offset: 0'.
 	structClass recompileDefinition.
 	actual := (structClass compiledMethodAt: #Test:) parseTree.
-	expected := SmalltalkParser
+	expected := Parser
 				parseMethod: 'Test: anUtf16String bytes uintPtrAtOffset: _OffsetOf_Test put: anUtf16String yourAddress. self Size: anUtf16String size << 1'.
 	self assert: actual equals: expected.
 	"Write a string with embedded null terminator so we can check it reads back using the size."
@@ -75,6 +76,6 @@ testGenerateAccessorsForSizeIsExpression
 	struct Test: string.
 	self assert: struct Size equals: string size * 2.
 	self assert: struct Test equals: string! !
-!ArrayPointerFieldTest categoriesFor: #testGenerateAccessorsForSizedString!public! !
-!ArrayPointerFieldTest categoriesFor: #testGenerateAccessorsForSizeIsExpression!public! !
+!External.Tests.ArrayPointerFieldTest categoriesFor: #testGenerateAccessorsForSizedString!public! !
+!External.Tests.ArrayPointerFieldTest categoriesFor: #testGenerateAccessorsForSizeIsExpression!public! !
 

@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-DolphinTest subclass: #GUIDTest
+Core.Tests.DolphinTest subclass: #'External.Tests.GUIDTest'
 	instanceVariableNames: ''
 	classVariableNames: 'Default'
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-GUIDTest guid: (GUID fromString: '{e1371d2f-b622-4825-b412-b44260477b09}')!
-GUIDTest comment: ''!
-!GUIDTest categoriesForClass!Tests-Network-UUID! !
-!GUIDTest methodsFor!
+External.Tests.GUIDTest guid: (Core.GUID fromString: '{e1371d2f-b622-4825-b412-b44260477b09}')!
+External.Tests.GUIDTest comment: ''!
+!External.Tests.GUIDTest categoriesForClass!Tests-Network-UUID! !
+!External.Tests.GUIDTest methodsFor!
 
 assertNull: guid
 	self assert: guid size equals: 16.
@@ -122,18 +122,18 @@ testUniqueness
 	generated := Set new: size.
 	size timesRepeat: [generated add: self subjectClass newUnique].
 	self assert: generated size equals: size! !
-!GUIDTest categoriesFor: #assertNull:!helpers!private! !
-!GUIDTest categoriesFor: #subjectClass!constants!private! !
-!GUIDTest categoriesFor: #testAsByteArray!public!unit tests! !
-!GUIDTest categoriesFor: #testAsInteger!public!unit tests! !
-!GUIDTest categoriesFor: #testComparison!public!unit tests! !
-!GUIDTest categoriesFor: #testDisplayString!constants!public! !
-!GUIDTest categoriesFor: #testFromString!public!unit tests! !
-!GUIDTest categoriesFor: #testFromStringNull!public!unit tests! !
-!GUIDTest categoriesFor: #testIsSelfEvaluating!public!unit tests! !
-!GUIDTest categoriesFor: #testNewUnique!public!unit tests! !
-!GUIDTest categoriesFor: #testNull!public!unit tests! !
-!GUIDTest categoriesFor: #testOrder!public!unit tests! !
-!GUIDTest categoriesFor: #testStoreOn!public!unit tests! !
-!GUIDTest categoriesFor: #testUniqueness!public!unit tests! !
+!External.Tests.GUIDTest categoriesFor: #assertNull:!helpers!private! !
+!External.Tests.GUIDTest categoriesFor: #subjectClass!constants!private! !
+!External.Tests.GUIDTest categoriesFor: #testAsByteArray!public!unit tests! !
+!External.Tests.GUIDTest categoriesFor: #testAsInteger!public!unit tests! !
+!External.Tests.GUIDTest categoriesFor: #testComparison!public!unit tests! !
+!External.Tests.GUIDTest categoriesFor: #testDisplayString!constants!public! !
+!External.Tests.GUIDTest categoriesFor: #testFromString!public!unit tests! !
+!External.Tests.GUIDTest categoriesFor: #testFromStringNull!public!unit tests! !
+!External.Tests.GUIDTest categoriesFor: #testIsSelfEvaluating!public!unit tests! !
+!External.Tests.GUIDTest categoriesFor: #testNewUnique!public!unit tests! !
+!External.Tests.GUIDTest categoriesFor: #testNull!public!unit tests! !
+!External.Tests.GUIDTest categoriesFor: #testOrder!public!unit tests! !
+!External.Tests.GUIDTest categoriesFor: #testStoreOn!public!unit tests! !
+!External.Tests.GUIDTest categoriesFor: #testUniqueness!public!unit tests! !
 

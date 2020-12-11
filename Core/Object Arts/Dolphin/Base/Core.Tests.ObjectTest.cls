@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-DolphinTest subclass: #ObjectTest
+Core.Tests.DolphinTest subclass: #'Core.Tests.ObjectTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ObjectTest guid: (GUID fromString: '{0699f873-06b5-439d-adcb-6642d40c7360}')!
-ObjectTest comment: ''!
-!ObjectTest categoriesForClass!Unclassified! !
-!ObjectTest methodsFor!
+Core.Tests.ObjectTest guid: (Core.GUID fromString: '{0699f873-06b5-439d-adcb-6642d40c7360}')!
+Core.Tests.ObjectTest comment: ''!
+!Core.Tests.ObjectTest categoriesForClass!Unclassified! !
+!Core.Tests.ObjectTest methodsFor!
 
 newEventSource
 	^Object new!
@@ -56,14 +56,14 @@ testEventCollectionWeakness
 	source := self newEventSource.
 	target := Object new.
 	source when: #error: sendTo: target.
-	self should: [source trigger: #error: with: 'goo goo ga ga'] raise: Error matching: [:ex | ex messageText = 'goo goo ga ga'].
+	self
+		should: [source trigger: #error: with: 'goo goo ga ga']
+		raise: Error
+		matching: [:ex | ex messageText = 'goo goo ga ga'].
 	target := nil.
 	MemoryManager current collectGarbage.
 	self shouldnt: [source trigger: #error: with: 'ignored'] raise: Error.
-	self assert: (source events at: #error:) isEmpty.
-
-	
-!
+	self assert: (source events at: #error:) isEmpty!
 
 testIfNilAndIfNotNil
 	| obj evaluated |
@@ -329,20 +329,20 @@ verifyWeakRegistry: aWeakIdentitDictionary
 	self assert: aWeakIdentitDictionary countElements equals: aWeakIdentitDictionary size.
 	self assert: aWeakIdentitDictionary hasWeakKeys.
 	self deny: aWeakIdentitDictionary hasWeakValues! !
-!ObjectTest categoriesFor: #newEventSource!helpers!private! !
-!ObjectTest categoriesFor: #testAssert!public!testing / error handling! !
-!ObjectTest categoriesFor: #testBecome!public!unit tests! !
-!ObjectTest categoriesFor: #testDeepCopy!public!unit tests! !
-!ObjectTest categoriesFor: #testEventCollectionWeakness!public!unit tests! !
-!ObjectTest categoriesFor: #testIfNilAndIfNotNil!public!unit tests! !
-!ObjectTest categoriesFor: #testNilCoalesce!public!unit tests! !
-!ObjectTest categoriesFor: #testObjectDependentsRegistry!public!unit tests! !
-!ObjectTest categoriesFor: #testObjectEventRegistry!public!unit tests! !
-!ObjectTest categoriesFor: #testObjectPropertyManager!public!unit tests! !
-!ObjectTest categoriesFor: #testOneArgEvent!public!unit tests! !
-!ObjectTest categoriesFor: #testRemoveEventsTriggeredFor!public!unit tests! !
-!ObjectTest categoriesFor: #testThreeArgEvent!public!unit tests! !
-!ObjectTest categoriesFor: #testTwoArgEvent!public!unit tests! !
-!ObjectTest categoriesFor: #testZeroArgEvent!public!unit tests! !
-!ObjectTest categoriesFor: #verifyWeakRegistry:!public!unit tests! !
+!Core.Tests.ObjectTest categoriesFor: #newEventSource!helpers!private! !
+!Core.Tests.ObjectTest categoriesFor: #testAssert!public!testing / error handling! !
+!Core.Tests.ObjectTest categoriesFor: #testBecome!public!unit tests! !
+!Core.Tests.ObjectTest categoriesFor: #testDeepCopy!public!unit tests! !
+!Core.Tests.ObjectTest categoriesFor: #testEventCollectionWeakness!public!unit tests! !
+!Core.Tests.ObjectTest categoriesFor: #testIfNilAndIfNotNil!public!unit tests! !
+!Core.Tests.ObjectTest categoriesFor: #testNilCoalesce!public!unit tests! !
+!Core.Tests.ObjectTest categoriesFor: #testObjectDependentsRegistry!public!unit tests! !
+!Core.Tests.ObjectTest categoriesFor: #testObjectEventRegistry!public!unit tests! !
+!Core.Tests.ObjectTest categoriesFor: #testObjectPropertyManager!public!unit tests! !
+!Core.Tests.ObjectTest categoriesFor: #testOneArgEvent!public!unit tests! !
+!Core.Tests.ObjectTest categoriesFor: #testRemoveEventsTriggeredFor!public!unit tests! !
+!Core.Tests.ObjectTest categoriesFor: #testThreeArgEvent!public!unit tests! !
+!Core.Tests.ObjectTest categoriesFor: #testTwoArgEvent!public!unit tests! !
+!Core.Tests.ObjectTest categoriesFor: #testZeroArgEvent!public!unit tests! !
+!Core.Tests.ObjectTest categoriesFor: #verifyWeakRegistry:!public!unit tests! !
 

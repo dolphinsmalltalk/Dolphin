@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-DolphinTest subclass: #BagTest
+Core.Tests.DolphinTest subclass: #'Core.Tests.BagTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-BagTest guid: (GUID fromString: '{31d1ecfc-cd30-4437-906f-69585c9e9c94}')!
-BagTest comment: ''!
-!BagTest categoriesForClass!Unclassified! !
-!BagTest methodsFor!
+Core.Tests.BagTest guid: (Core.GUID fromString: '{31d1ecfc-cd30-4437-906f-69585c9e9c94}')!
+Core.Tests.BagTest comment: ''!
+!Core.Tests.BagTest categoriesForClass!Unclassified! !
+!Core.Tests.BagTest methodsFor!
 
 testDeepCopy
 	| bag |
@@ -19,5 +19,5 @@ testDeepCopy
 			copy := bag deepCopy.
 			any := copy detect: [:each | true].
 			self assert: (copy includes: any)]! !
-!BagTest categoriesFor: #testDeepCopy!public! !
+!Core.Tests.BagTest categoriesFor: #testDeepCopy!public! !
 

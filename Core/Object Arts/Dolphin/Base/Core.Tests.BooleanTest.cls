@@ -1,46 +1,22 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-DolphinTest subclass: #BooleanTest
+Core.Tests.DolphinTest subclass: #'Core.Tests.BooleanTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-BooleanTest guid: (GUID fromString: '{5aa57122-600d-4018-870d-8425b90179b2}')!
-BooleanTest comment: ''!
-!BooleanTest categoriesForClass!Unclassified! !
-!BooleanTest methodsFor!
+Core.Tests.BooleanTest guid: (Core.GUID fromString: '{5aa57122-600d-4018-870d-8425b90179b2}')!
+Core.Tests.BooleanTest isNonInstantiable: true!
+Core.Tests.BooleanTest comment: ''!
+!Core.Tests.BooleanTest categoriesForClass!Unclassified! !
+!Core.Tests.BooleanTest methodsFor!
 
-testEvaluatingConjunction
-	self deny: false & false.
-	self deny: false & true.
-	self deny: true & false.
-	self assert: true & true.
-	self should: [true & [false]] raise: Error.
-	self should: [false & 1] raise: Error.
-	self should: [true & 'a'] raise: Error!
-
-testEvaluatingDisjunction
-	self deny: (false | false).
-	self assert: (false | true).
-	self assert: (true | false).
-	self assert: (true | true).
-	self should: [true | [false]] raise: Error.
-	self should: [false | 1] raise: Error.
-	self should: [true | 'a'] raise: Error!
+subjectClass
+	^self subclassResponsibility!
 
 testNew
-	self should: [Boolean new] raise: TestResult error.
-	self should: [True new] raise: TestResult error.
-	self should: [False new] raise: TestResult error!
-
-testXor
-	self assert: (true xor: false).
-	self assert: (false xor: true).
-	self deny: (false xor: false).
-	self deny: (true xor: true)! !
-!BooleanTest categoriesFor: #testEvaluatingConjunction!public!unit tests! !
-!BooleanTest categoriesFor: #testEvaluatingDisjunction!public!unit tests! !
-!BooleanTest categoriesFor: #testNew!public!testing! !
-!BooleanTest categoriesFor: #testXor!public!unit tests! !
+	self should: [self subjectClass new] raise: Error! !
+!Core.Tests.BooleanTest categoriesFor: #subjectClass!constants!private! !
+!Core.Tests.BooleanTest categoriesFor: #testNew!public!testing! !
 

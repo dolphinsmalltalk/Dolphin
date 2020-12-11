@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-SearchPolicyTest subclass: #EqualitySearchPolicyTest
+Core.Tests.SearchPolicyTest subclass: #'Kernel.Tests.EqualitySearchPolicyTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-EqualitySearchPolicyTest guid: (GUID fromString: '{753e6e11-d8ca-4aa8-a751-8b5031838d22}')!
-EqualitySearchPolicyTest comment: ''!
-!EqualitySearchPolicyTest categoriesForClass!Unclassified! !
-!EqualitySearchPolicyTest methodsFor!
+Kernel.Tests.EqualitySearchPolicyTest guid: (Core.GUID fromString: '{753e6e11-d8ca-4aa8-a751-8b5031838d22}')!
+Kernel.Tests.EqualitySearchPolicyTest comment: ''!
+!Kernel.Tests.EqualitySearchPolicyTest categoriesForClass!Unclassified! !
+!Kernel.Tests.EqualitySearchPolicyTest methodsFor!
 
 policyClass
 	^EqualitySearchPolicy!
@@ -33,6 +33,6 @@ testCompareWith
 	self deny: (policy compare: #hash with: #identityHash).
 	self assert: (policy compare: $a with: $a).
 	self assert: (policy compare: $a with: $b) not! !
-!EqualitySearchPolicyTest categoriesFor: #policyClass!public!unit tests! !
-!EqualitySearchPolicyTest categoriesFor: #testCompareWith!public!unit tests! !
+!Kernel.Tests.EqualitySearchPolicyTest categoriesFor: #policyClass!public!unit tests! !
+!Kernel.Tests.EqualitySearchPolicyTest categoriesFor: #testCompareWith!public!unit tests! !
 

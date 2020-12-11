@@ -1,68 +1,93 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-DolphinTest subclass: #FalseTest
+Core.Tests.BooleanTest subclass: #'Core.Tests.FalseTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-FalseTest guid: (GUID fromString: '{99f97009-5267-45fd-913e-d80674f965fa}')!
-FalseTest comment: 'This is the unit test for the class False. Unit tests are a good way to exercise the functionality of your system in a repeatable and automatic manner. They are therefore recommended if you plan to release anything. For more information, see: 
+Core.Tests.FalseTest guid: (Core.GUID fromString: '{99f97009-5267-45fd-913e-d80674f965fa}')!
+Core.Tests.FalseTest comment: 'This is the unit test for the class False. Unit tests are a good way to exercise the functionality of your system in a repeatable and automatic manner. They are therefore recommended if you plan to release anything. For more information, see: 
 	- http://www.c2.com/cgi/wiki?UnitTest
 	- http://minnow.cc.gatech.edu/squeak/1547
 	- the sunit class category
 '!
-!FalseTest categoriesForClass!Tests-Kernel-Objects! !
-!FalseTest methodsFor!
+!Core.Tests.FalseTest categoriesForClass!Tests-Kernel-Objects! !
+!Core.Tests.FalseTest methodsFor!
 
-testAnd
-	self assert: (false and: ['alternativeBlock']) equals: false!
+subjectClass
+	^#{False} value!
 
-testAND
-	self assert: false & true equals: false.
-	self assert: false & false equals: false!
+testEvaluatingConjunction
+	self deny: false & false.
+	self deny: false & true.
+	self should: [false & 1] raise: Error!
+
+testEvaluatingDisjunction
+	self deny: (false | false).
+	self assert: (false | true).
+	self should: [false | 1] raise: Error!
 
 testIfFalse
-	self should: [(false ifFalse: ['alternativeBlock']) = 'alternativeBlock']!
+	self assert: (false ifFalse: ['alternativeBlock']) equals: 'alternativeBlock'.
+	self assert: (false perform: #ifFalse: with: ['alternativeBlock']) equals: 'alternativeBlock'!
 
 testIfFalseIfTrue
 	self assert: (false ifFalse: ['falseAlternativeBlock'] ifTrue: ['trueAlternativeBlock'])
+		equals: 'falseAlternativeBlock'.
+	self assert: (false
+				perform: #ifFalse:ifTrue:
+				with: ['falseAlternativeBlock']
+				with: ['trueAlternativeBlock'])
 		equals: 'falseAlternativeBlock'!
 
 testIfTrue
-	self assert: (false ifTrue: ['alternativeBlock']) equals: nil!
+	self assertIsNil: (false ifTrue: ['alternativeBlock']).
+	self assertIsNil: (false perform: #ifTrue: with: ['alternativeBlock'])!
 
 testIfTrueIfFalse
 	self assert: (false ifTrue: ['trueAlternativeBlock'] ifFalse: ['falseAlternativeBlock'])
+		equals: 'falseAlternativeBlock'.
+	self assert: (false
+				perform: #ifTrue:ifFalse:
+				with: ['trueAlternativeBlock']
+				with: ['falseAlternativeBlock'])
 		equals: 'falseAlternativeBlock'!
 
-testNew
-	self should: [False new] raise: TestResult error!
+testNonEvaluatingConjunction
+	| evaluated |
+	evaluated := false.
+	self deny: (false and: [evaluated := true]).
+	self deny: evaluated.
+	self deny: (false perform: #and: with: [evaluated := true]).
+	self deny: evaluated!
+
+testNonEvaluatingDisjunction
+	self assert: (false or: ['alternativeBlock']) equals: 'alternativeBlock'.
+	self assert: (false perform: #or: with: ['alternativeBlock']) equals: 'alternativeBlock'!
 
 testNot
-	self should: [false not = true]!
-
-testOr
-	self assert: (false or: ['alternativeBlock']) equals: 'alternativeBlock'!
-
-testOR
-	self assert: false | true equals: true.
-	self assert: false | false equals: false!
+	self assert: false not!
 
 testPrintOn
 	| stream |
 	stream := String writeStream.
 	false printOn: stream.
-	self assert: stream contents equals: 'false'! !
-!FalseTest categoriesFor: #testAnd!public!testing! !
-!FalseTest categoriesFor: #testAND!public!testing! !
-!FalseTest categoriesFor: #testIfFalse!public!testing! !
-!FalseTest categoriesFor: #testIfFalseIfTrue!public!testing! !
-!FalseTest categoriesFor: #testIfTrue!public!testing! !
-!FalseTest categoriesFor: #testIfTrueIfFalse!public!testing! !
-!FalseTest categoriesFor: #testNew!public!testing! !
-!FalseTest categoriesFor: #testNot!public!testing! !
-!FalseTest categoriesFor: #testOr!public!testing! !
-!FalseTest categoriesFor: #testOR!public!testing! !
-!FalseTest categoriesFor: #testPrintOn!public!testing! !
+	self assert: stream contents equals: 'false'!
+
+testXor
+	self assert: (false xor: true).
+	self deny: (false xor: false)! !
+!Core.Tests.FalseTest categoriesFor: #subjectClass!constants!public! !
+!Core.Tests.FalseTest categoriesFor: #testEvaluatingConjunction!public!unit tests! !
+!Core.Tests.FalseTest categoriesFor: #testEvaluatingDisjunction!public!unit tests! !
+!Core.Tests.FalseTest categoriesFor: #testIfFalse!public!testing! !
+!Core.Tests.FalseTest categoriesFor: #testIfFalseIfTrue!public!testing! !
+!Core.Tests.FalseTest categoriesFor: #testIfTrue!public!testing! !
+!Core.Tests.FalseTest categoriesFor: #testIfTrueIfFalse!public!testing! !
+!Core.Tests.FalseTest categoriesFor: #testNonEvaluatingConjunction!public!testing! !
+!Core.Tests.FalseTest categoriesFor: #testNonEvaluatingDisjunction!public!testing! !
+!Core.Tests.FalseTest categoriesFor: #testNot!public!testing! !
+!Core.Tests.FalseTest categoriesFor: #testPrintOn!public!testing! !
+!Core.Tests.FalseTest categoriesFor: #testXor!public!unit tests! !
 

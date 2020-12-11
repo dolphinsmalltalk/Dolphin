@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-DolphinTestClassResource subclass: #BehaviorTestClasses
+Core.Tests.DolphinTestClassResource subclass: #'Core.Tests.BehaviorTestClasses'
 	instanceVariableNames: 'classWithAbstractMethod1 classWithAbstractMethod2'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-BehaviorTestClasses guid: (GUID fromString: '{bc98a827-49e3-4ce3-902e-fa6452944374}')!
-BehaviorTestClasses comment: ''!
-!BehaviorTestClasses categoriesForClass!Unclassified! !
-!BehaviorTestClasses methodsFor!
+Core.Tests.BehaviorTestClasses guid: (Core.GUID fromString: '{bc98a827-49e3-4ce3-902e-fa6452944374}')!
+Core.Tests.BehaviorTestClasses comment: ''!
+!Core.Tests.BehaviorTestClasses categoriesForClass!Unclassified! !
+!Core.Tests.BehaviorTestClasses methodsFor!
 
 classWithAbstractMethod1
 	^classWithAbstractMethod1!
@@ -44,9 +44,9 @@ isAvailable
 tearDown
 	super tearDown.
 	classWithAbstractMethod1 := classWithAbstractMethod2 := nil! !
-!BehaviorTestClasses categoriesFor: #classWithAbstractMethod1!accessing!public! !
-!BehaviorTestClasses categoriesFor: #classWithAbstractMethod2!accessing!public! !
-!BehaviorTestClasses categoriesFor: #createClasses!public!unit tests! !
-!BehaviorTestClasses categoriesFor: #isAvailable!public!Testing! !
-!BehaviorTestClasses categoriesFor: #tearDown!public!Running! !
+!Core.Tests.BehaviorTestClasses categoriesFor: #classWithAbstractMethod1!accessing!public! !
+!Core.Tests.BehaviorTestClasses categoriesFor: #classWithAbstractMethod2!accessing!public! !
+!Core.Tests.BehaviorTestClasses categoriesFor: #createClasses!public!unit tests! !
+!Core.Tests.BehaviorTestClasses categoriesFor: #isAvailable!public!Testing! !
+!Core.Tests.BehaviorTestClasses categoriesFor: #tearDown!public!Running! !
 

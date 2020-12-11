@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-DolphinTest subclass: #STBTest
+Core.Tests.DolphinTest subclass: #'Kernel.Tests.STBTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-STBTest guid: (GUID fromString: '{0e66d9d1-027f-4559-a87a-33e13ae709b8}')!
-STBTest comment: ''!
-!STBTest categoriesForClass!Unclassified! !
-!STBTest methodsFor!
+Kernel.Tests.STBTest guid: (Core.GUID fromString: '{0e66d9d1-027f-4559-a87a-33e13ae709b8}')!
+Kernel.Tests.STBTest comment: ''!
+!Kernel.Tests.STBTest categoriesForClass!Unclassified! !
+!Kernel.Tests.STBTest methodsFor!
 
 testByteArray
 	"#1483"
@@ -67,11 +67,11 @@ testNonExistentClass
 	testClass removeFromSystem.
 	testClass := nil.
 	rehydrated := Object fromBinaryStoreBytes: dessicated.
-	(Smalltalk lookup: #ClassStub)
-		ifNil: 
+	#{ClassStub}
+		ifDefined: [:classStub | self assert: rehydrated classLocator key equals: 'STBTest_TestClass']
+		ifNotDefined: 
 			["The class cannot be found so will be resolved to nil. Ought to be an error really, but this is the historic behavior."
-			self assert: rehydrated isNil]
-		ifNotNil: [:classStub | self assert: rehydrated classLocator key equals: 'STBTest_TestClass']]
+			self assert: rehydrated isNil]]
 			ensure: [#{STBTest_TestClass} ifDefined: [:c | c removeFromSystem]]!
 
 testSortedCollection
@@ -132,14 +132,14 @@ testTranscript
 	t := Object fromBinaryStoreBytes: stb.
 	self assert: t identityHash equals: i.
 	self assert: t identicalTo: Transcript! !
-!STBTest categoriesFor: #testByteArray!public!unit tests! !
-!STBTest categoriesFor: #testCharacters!public!unit tests! !
-!STBTest categoriesFor: #testEmptyStream!public!unit tests! !
-!STBTest categoriesFor: #testExistentClass!public!unit tests! !
-!STBTest categoriesFor: #testInvalidStream!public!unit tests! !
-!STBTest categoriesFor: #testNonExistentClass!public!unit tests! !
-!STBTest categoriesFor: #testSortedCollection!public!unit tests! !
-!STBTest categoriesFor: #testStrings!public!unit tests! !
-!STBTest categoriesFor: #testSymbols!public!unit tests! !
-!STBTest categoriesFor: #testTranscript!public!unit tests! !
+!Kernel.Tests.STBTest categoriesFor: #testByteArray!public!unit tests! !
+!Kernel.Tests.STBTest categoriesFor: #testCharacters!public!unit tests! !
+!Kernel.Tests.STBTest categoriesFor: #testEmptyStream!public!unit tests! !
+!Kernel.Tests.STBTest categoriesFor: #testExistentClass!public!unit tests! !
+!Kernel.Tests.STBTest categoriesFor: #testInvalidStream!public!unit tests! !
+!Kernel.Tests.STBTest categoriesFor: #testNonExistentClass!public!unit tests! !
+!Kernel.Tests.STBTest categoriesFor: #testSortedCollection!public!unit tests! !
+!Kernel.Tests.STBTest categoriesFor: #testStrings!public!unit tests! !
+!Kernel.Tests.STBTest categoriesFor: #testSymbols!public!unit tests! !
+!Kernel.Tests.STBTest categoriesFor: #testTranscript!public!unit tests! !
 

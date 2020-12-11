@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-DolphinTest subclass: #SemaphoreTest
+Core.Tests.DolphinTest subclass: #'Core.Tests.SemaphoreTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-SemaphoreTest guid: (GUID fromString: '{b3d4af7f-c066-4ac2-8421-722762fe6ec9}')!
-SemaphoreTest comment: ''!
-!SemaphoreTest categoriesForClass!Unclassified! !
-!SemaphoreTest methodsFor!
+Core.Tests.SemaphoreTest guid: (Core.GUID fromString: '{b3d4af7f-c066-4ac2-8421-722762fe6ec9}')!
+Core.Tests.SemaphoreTest comment: ''!
+!Core.Tests.SemaphoreTest categoriesForClass!Unclassified! !
+!Core.Tests.SemaphoreTest methodsFor!
 
 testCriticalEarlyTermination
 	| s p |
@@ -25,5 +25,5 @@ testCriticalEarlyTermination
 	Processor sleep: 10 milliseconds.
 	"The Semaphore should have been released."
 	self assert: s excessSignals identicalTo: 1! !
-!SemaphoreTest categoriesFor: #testCriticalEarlyTermination!public!unit tests! !
+!Core.Tests.SemaphoreTest categoriesFor: #testCriticalEarlyTermination!public!unit tests! !
 

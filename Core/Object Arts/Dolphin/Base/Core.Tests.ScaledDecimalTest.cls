@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-DolphinTest subclass: #ScaledDecimalTest
+Core.Tests.DolphinTest subclass: #'Core.Tests.ScaledDecimalTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ScaledDecimalTest guid: (GUID fromString: '{dfe00781-39f5-4b43-ba15-861976d2ff7c}')!
-ScaledDecimalTest comment: ''!
-!ScaledDecimalTest categoriesForClass!Unclassified! !
-!ScaledDecimalTest methodsFor!
+Core.Tests.ScaledDecimalTest guid: (Core.GUID fromString: '{dfe00781-39f5-4b43-ba15-861976d2ff7c}')!
+Core.Tests.ScaledDecimalTest comment: ''!
+!Core.Tests.ScaledDecimalTest categoriesForClass!Unclassified! !
+!Core.Tests.ScaledDecimalTest methodsFor!
 
 literalInstances
 	^{1.00s2}!
@@ -226,12 +226,13 @@ testRaisedToInteger
 
 testReadFrom
 	"This is related to http://bugs.squeak.org/view.php?id=6779"
-	
+
 	self skip: 'Needs fixing; Dolphin answers a Float, when it shouldn''t'.
 	self should: [(ScaledDecimal readFrom: '5.3' readStream) isKindOf: ScaledDecimal]
 		description: 'Reading a ScaledDecimal should answer a ScaledDecimal'.
-	self should: [((ScaledDecimal readFrom: '5.3' readStream) asScaledDecimal: 1) = (53/10 asScaledDecimal: 1)]
-		description: 'ScaledDecimal readFrom: should not use Float intermediate because it would introduce round off errors'.!
+	self should: 
+			[((ScaledDecimal readFrom: '5.3' readStream) asScaledDecimal: 1) = (53 / 10 asScaledDecimal: 1)]
+		description: 'ScaledDecimal readFrom: should not use Float intermediate because it would introduce round off errors'!
 
 testRounded
 	self assert: (1999 / 1000s2) printString equals: '2.00s'.
@@ -274,33 +275,33 @@ testZeroRaisedToInteger
 	self assert: (0.0s1 raisedToInteger: 1) scale equals: 1.
 	self assert: (0.0s1 raisedToInteger: 2) equals: 0.
 	self assert: (0.0s1 raisedToInteger: 2) scale equals: 1! !
-!ScaledDecimalTest categoriesFor: #literalInstances!helpers!private! !
-!ScaledDecimalTest categoriesFor: #nonLiteralInstances!helpers!private! !
-!ScaledDecimalTest categoriesFor: #testAsNumber!public!unit tests! !
-!ScaledDecimalTest categoriesFor: #testAsNumberNegatedWithoutDecimalPoint!public!unit tests! !
-!ScaledDecimalTest categoriesFor: #testAsNumberNegatedWithoutDecimalPoint2!public!unit tests! !
-!ScaledDecimalTest categoriesFor: #testAsNumberWithExtendedScale!public!unit tests! !
-!ScaledDecimalTest categoriesFor: #testAsNumberWithoutDecimalPoint!public!unit tests! !
-!ScaledDecimalTest categoriesFor: #testAsNumberWithoutDecimalPoint2!public!unit tests! !
-!ScaledDecimalTest categoriesFor: #testAsNumberWithRadix!public!unit tests! !
-!ScaledDecimalTest categoriesFor: #testAsNumberWithSuperfluousDecimalPoint!public!unit tests! !
-!ScaledDecimalTest categoriesFor: #testCoercion!public!unit tests! !
-!ScaledDecimalTest categoriesFor: #testConvertFromFloat!public!unit tests! !
-!ScaledDecimalTest categoriesFor: #testConvertFromFraction!public!unit tests! !
-!ScaledDecimalTest categoriesFor: #testConvertFromIntegerWithScale!public!unit tests! !
-!ScaledDecimalTest categoriesFor: #testExactNthRoot!public!unit tests! !
-!ScaledDecimalTest categoriesFor: #testExactSqrt!public!unit tests! !
-!ScaledDecimalTest categoriesFor: #testInexactNthRoot!public!unit tests! !
-!ScaledDecimalTest categoriesFor: #testInexactSqrt!public!unit tests! !
-!ScaledDecimalTest categoriesFor: #testIsLiteral!public!unit tests! !
-!ScaledDecimalTest categoriesFor: #testIsSelfEvaluating!public!unit tests! !
-!ScaledDecimalTest categoriesFor: #testLiteral!public!unit tests! !
-!ScaledDecimalTest categoriesFor: #testOneRaisedToInteger!public!unit tests! !
-!ScaledDecimalTest categoriesFor: #testPrintString!public!unit tests! !
-!ScaledDecimalTest categoriesFor: #testRaisedToInteger!public!unit tests! !
-!ScaledDecimalTest categoriesFor: #testReadFrom!public!unit tests! !
-!ScaledDecimalTest categoriesFor: #testRounded!public!unit tests! !
-!ScaledDecimalTest categoriesFor: #testScaleExtension!public!unit tests! !
-!ScaledDecimalTest categoriesFor: #testStoreOnRoundTrip!public!unit tests! !
-!ScaledDecimalTest categoriesFor: #testZeroRaisedToInteger!public!unit tests! !
+!Core.Tests.ScaledDecimalTest categoriesFor: #literalInstances!helpers!private! !
+!Core.Tests.ScaledDecimalTest categoriesFor: #nonLiteralInstances!helpers!private! !
+!Core.Tests.ScaledDecimalTest categoriesFor: #testAsNumber!public!unit tests! !
+!Core.Tests.ScaledDecimalTest categoriesFor: #testAsNumberNegatedWithoutDecimalPoint!public!unit tests! !
+!Core.Tests.ScaledDecimalTest categoriesFor: #testAsNumberNegatedWithoutDecimalPoint2!public!unit tests! !
+!Core.Tests.ScaledDecimalTest categoriesFor: #testAsNumberWithExtendedScale!public!unit tests! !
+!Core.Tests.ScaledDecimalTest categoriesFor: #testAsNumberWithoutDecimalPoint!public!unit tests! !
+!Core.Tests.ScaledDecimalTest categoriesFor: #testAsNumberWithoutDecimalPoint2!public!unit tests! !
+!Core.Tests.ScaledDecimalTest categoriesFor: #testAsNumberWithRadix!public!unit tests! !
+!Core.Tests.ScaledDecimalTest categoriesFor: #testAsNumberWithSuperfluousDecimalPoint!public!unit tests! !
+!Core.Tests.ScaledDecimalTest categoriesFor: #testCoercion!public!unit tests! !
+!Core.Tests.ScaledDecimalTest categoriesFor: #testConvertFromFloat!public!unit tests! !
+!Core.Tests.ScaledDecimalTest categoriesFor: #testConvertFromFraction!public!unit tests! !
+!Core.Tests.ScaledDecimalTest categoriesFor: #testConvertFromIntegerWithScale!public!unit tests! !
+!Core.Tests.ScaledDecimalTest categoriesFor: #testExactNthRoot!public!unit tests! !
+!Core.Tests.ScaledDecimalTest categoriesFor: #testExactSqrt!public!unit tests! !
+!Core.Tests.ScaledDecimalTest categoriesFor: #testInexactNthRoot!public!unit tests! !
+!Core.Tests.ScaledDecimalTest categoriesFor: #testInexactSqrt!public!unit tests! !
+!Core.Tests.ScaledDecimalTest categoriesFor: #testIsLiteral!public!unit tests! !
+!Core.Tests.ScaledDecimalTest categoriesFor: #testIsSelfEvaluating!public!unit tests! !
+!Core.Tests.ScaledDecimalTest categoriesFor: #testLiteral!public!unit tests! !
+!Core.Tests.ScaledDecimalTest categoriesFor: #testOneRaisedToInteger!public!unit tests! !
+!Core.Tests.ScaledDecimalTest categoriesFor: #testPrintString!public!unit tests! !
+!Core.Tests.ScaledDecimalTest categoriesFor: #testRaisedToInteger!public!unit tests! !
+!Core.Tests.ScaledDecimalTest categoriesFor: #testReadFrom!public!unit tests! !
+!Core.Tests.ScaledDecimalTest categoriesFor: #testRounded!public!unit tests! !
+!Core.Tests.ScaledDecimalTest categoriesFor: #testScaleExtension!public!unit tests! !
+!Core.Tests.ScaledDecimalTest categoriesFor: #testStoreOnRoundTrip!public!unit tests! !
+!Core.Tests.ScaledDecimalTest categoriesFor: #testZeroRaisedToInteger!public!unit tests! !
 

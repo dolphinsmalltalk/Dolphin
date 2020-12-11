@@ -1,46 +1,47 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-DolphinTest subclass: #PackageTest
+Core.Tests.DolphinTest subclass: #'Core.Tests.PackageTest'
 	instanceVariableNames: 'loadedPackages checkTimestamps'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-PackageTest guid: (GUID fromString: '{0bcde90d-a936-43ee-9e4a-2bdec39abf2a}')!
-PackageTest comment: ''!
-!PackageTest categoriesForClass!Unclassified! !
-!PackageTest methodsFor!
+Core.Tests.PackageTest guid: (Core.GUID fromString: '{0bcde90d-a936-43ee-9e4a-2bdec39abf2a}')!
+Core.Tests.PackageTest comment: ''!
+!Core.Tests.PackageTest categoriesForClass!Unclassified! !
+!Core.Tests.PackageTest methodsFor!
 
 checkNoTestPackageContents
 	| scribbleClass |
-	self deny: #{ScribbleTest} isDefined.
-	scribbleClass := #{Scribble} value.
+	self deny: #{Smalltalk.ScribbleTest} isDefined.
+	scribbleClass := #{Smalltalk.Scribble} value.
 	self assertIsNil: (scribbleClass compiledMethodAt: #looseA ifAbsent: []).
 	self assertIsNil: (scribbleClass compiledMethodAt: #looseC ifAbsent: []).
-	self assertIsNil: (scribbleClass class compiledMethodAt: #resource_Scribble_test ifAbsent: [])!
+	self assertIsNil: (scribbleClass class compiledMethodAt: #resource_Scribble_test ifAbsent: []).
+	self deny: (SharedPool allSubclasses anySatisfy: [:each | each name = #ScribbleTestSourceGlobal])!
 
 checkTestPackageContents
 	| scribbleTestPackage scribbleTestClass scribbleTest scribbleTestResourceMethod scribbleTestDefaultViewId scribbleTestViewId scribbleClass resourceIds |
 	scribbleTestPackage := loadedPackages first.
 	self assert: (scribbleTestPackage name beginsWith: 'ScribbleTest').
 	self verifyPackageElementNamesAreAbsolute: scribbleTestPackage.
-	scribbleTestClass := #{ScribbleTest} value.
+	scribbleTestClass := #{Smalltalk.ScribbleTest} value.
 	self assert: (scribbleTestPackage classes identityIncludes: scribbleTestClass).
 	scribbleTestResourceMethod := scribbleTestClass class
 				compiledMethodAt: #resource_Default_scribble_test_view.
 	self assert: scribbleTestResourceMethod owningPackage equals: scribbleTestPackage.
-	scribbleClass := #{Scribble} value.
+	scribbleClass := #{Smalltalk.Scribble} value.
 	self assert: (scribbleClass compiledMethodAt: #looseA) owningPackage equals: scribbleTestPackage.
 	self assert: (scribbleClass compiledMethodAt: #looseC) owningPackage equals: scribbleTestPackage.
 	self assert: (scribbleClass class compiledMethodAt: #resource_Scribble_test) owningPackage
 		equals: scribbleTestPackage.
 	resourceIds := scribbleTestPackage allResourceIdentifiers.
 	self assert: resourceIds size equals: 2.
-	scribbleTestDefaultViewId := ResourceIdentifier class: scribbleTestClass
+	scribbleTestDefaultViewId := UI.ResourceIdentifier class: scribbleTestClass
 				name: 'Default scribble test view'.
 	self assert: (resourceIds includes: scribbleTestDefaultViewId).
 	self assert: scribbleTestDefaultViewId owningPackage equals: scribbleTestPackage.
-	scribbleTestViewId := ResourceIdentifier class: scribbleClass name: 'Scribble test'.
+	scribbleTestViewId := UI.ResourceIdentifier class: scribbleClass name: 'Scribble test'.
 	self assert: (resourceIds includes: scribbleTestViewId).
 	self assert: scribbleTestViewId owningPackage equals: scribbleTestPackage.
 	
@@ -202,13 +203,14 @@ b2xwaGluZHIwMDUuZGxsAAAAAA==''))!!
 
 '!
 
-filenameFor: aString 
+filenameFor: aString
 	^FileLocator installRelative localFileSpecFor: 'Resources\Tests\' , aString!
 
-loadAndTestPackage: filename 
+loadAndTestPackage: filename
 	self checkNoTestPackageContents.
 	loadedPackages := Package manager install: (self filenameFor: filename).
-	self checkTestPackageContents!
+	self checkTestPackageContents
+!
 
 loadTestAndUninstallPackage: filename
 	self loadAndTestPackage: filename.
@@ -274,15 +276,20 @@ testLoad70Pax
 	| scribbleTestPackage aliasName binaryVariableName sourceVariableName testPool |
 	self loadAndTestPackage: 'ScribbleTestPackages\7.0\ScribbleTest7.pax'.
 	scribbleTestPackage := loadedPackages first.
-	aliasName := 'AliasToScribbleTest' asQualifiedReference.
+	aliasName := 'Smalltalk.AliasToScribbleTest' asQualifiedReference.
 	self assert: scribbleTestPackage aliasVariableNames asArray equals: {aliasName}.
-	self assert: aliasName value identicalTo: #{ScribbleTest} value.
-	binaryVariableName := 'ScribbleTestBinaryGlobal' asQualifiedReference.
+	self assert: aliasName value identicalTo: #{Smalltalk.ScribbleTest} value.
+	self assert: (scribbleTestPackage manager packageOfVariableNamed: aliasName)
+		identicalTo: scribbleTestPackage.
+	binaryVariableName := 'Smalltalk.ScribbleTestBinaryGlobal' asQualifiedReference.
 	self assert: scribbleTestPackage binaryVariableNames asArray equals: {binaryVariableName}.
+	self assert: (scribbleTestPackage manager packageOfVariableNamed: binaryVariableName)
+		identicalTo: scribbleTestPackage.
 	self assert: binaryVariableName value equals: #('Scribble').
-	sourceVariableName := 'ScribbleTestSourceGlobal' asQualifiedReference.
-
+	self assert: scribbleTestPackage sourceVariableNames asArray equals: #().
+	sourceVariableName := 'Smalltalk.ScribbleTestSourceGlobal' asQualifiedReference.
 	"We should still find the class binding among the packaged variables"
+	self assert: (scribbleTestPackage manager packageOfVariableNamed: sourceVariableName) identicalTo: scribbleTestPackage.
 	self assert: (scribbleTestPackage classNames includes: sourceVariableName).
 	testPool := sourceVariableName value.
 	self assert: testPool isKindOf: SharedPool class.
@@ -293,13 +300,13 @@ testLoad72Pax
 	| scribbleTestPackage aliasName binaryVariableName sourceVariableName testPool |
 	self loadAndTestPackage: 'ScribbleTestPackages\7.2\ScribbleTest72.pax'.
 	scribbleTestPackage := loadedPackages first.
-	aliasName := 'AliasToScribbleTest' asQualifiedReference.
+	aliasName := 'Smalltalk.AliasToScribbleTest' asQualifiedReference.
 	self assert: scribbleTestPackage aliasVariableNames asArray equals: {aliasName}.
-	self assert: aliasName value identicalTo: #{ScribbleTest} value.
-	binaryVariableName := 'ScribbleTestBinaryGlobal' asQualifiedReference.
+	self assert: aliasName value identicalTo: #{Smalltalk.ScribbleTest} value.
+	binaryVariableName := 'Smalltalk.ScribbleTestBinaryGlobal' asQualifiedReference.
 	self assert: scribbleTestPackage binaryVariableNames asArray equals: {binaryVariableName}.
 	self assert: binaryVariableName value equals: #('Scribble').
-	sourceVariableName := 'ScribbleTestSourceGlobal' asQualifiedReference.
+	sourceVariableName := 'Smalltalk.ScribbleTestSourceGlobal' asQualifiedReference.
 	self assert: scribbleTestPackage sourceVariableNames asArray equals: #().
 	self assert: (scribbleTestPackage classNames includes: sourceVariableName).
 	testPool := sourceVariableName value.
@@ -308,9 +315,10 @@ testLoad72Pax
 	self checkNoTestPackageContents!
 
 testLoadedPackagesAreWellFormed
-	Package manager packages do: [:each |
-		self verifyPackageElementNamesAreAbsolute: each.
-		self verifyPackageElementsExist: each]!
+	Package manager packages do: 
+			[:each |
+			self verifyPackageElementNamesAreAbsolute: each.
+			self verifyPackageElementsExist: each]!
 
 testLooseResourceIdentifiers
 	| all loose notLoose |
@@ -351,29 +359,29 @@ verifyPackageElementsExist: aPackage
 		value := each value.
 		self assert: value owningPackage identicalTo: aPackage].
 	aPackage untracedVariables do: [:each | self assert: each isDefined]! !
-!PackageTest categoriesFor: #checkNoTestPackageContents!helpers!private! !
-!PackageTest categoriesFor: #checkTestPackageContents!helpers!private! !
-!PackageTest categoriesFor: #d5ForwardRefTestPacContents!constants!private! !
-!PackageTest categoriesFor: #filenameFor:!helpers!private! !
-!PackageTest categoriesFor: #loadAndTestPackage:!helpers!private! !
-!PackageTest categoriesFor: #loadTestAndUninstallPackage:!helpers!private! !
-!PackageTest categoriesFor: #setUp!private!running! !
-!PackageTest categoriesFor: #tearDown!private!running! !
-!PackageTest categoriesFor: #testBehaviorFromName!public!unit tests! !
-!PackageTest categoriesFor: #testForwardRefLoadPac!public!unit tests! !
-!PackageTest categoriesFor: #testLoad21Pac!public!unit tests! !
-!PackageTest categoriesFor: #testLoad40Pac!public!unit tests! !
-!PackageTest categoriesFor: #testLoad40Pax!public!unit tests! !
-!PackageTest categoriesFor: #testLoad51Pac!public!unit tests! !
-!PackageTest categoriesFor: #testLoad51Pax!public!unit tests! !
-!PackageTest categoriesFor: #testLoad60Pac!public!unit tests! !
-!PackageTest categoriesFor: #testLoad60Pax!public!unit tests! !
-!PackageTest categoriesFor: #testLoad70Pax!public!unit tests! !
-!PackageTest categoriesFor: #testLoad72Pax!public!unit tests! !
-!PackageTest categoriesFor: #testLoadedPackagesAreWellFormed!public!unit tests! !
-!PackageTest categoriesFor: #testLooseResourceIdentifiers!public! !
-!PackageTest categoriesFor: #testTimestampInitialized!public!unit tests! !
-!PackageTest categoriesFor: #uninstallTestPackages!helpers!public! !
-!PackageTest categoriesFor: #verifyPackageElementNamesAreAbsolute:!helpers!private! !
-!PackageTest categoriesFor: #verifyPackageElementsExist:!helpers!private! !
+!Core.Tests.PackageTest categoriesFor: #checkNoTestPackageContents!helpers!private! !
+!Core.Tests.PackageTest categoriesFor: #checkTestPackageContents!helpers!private! !
+!Core.Tests.PackageTest categoriesFor: #d5ForwardRefTestPacContents!constants!private! !
+!Core.Tests.PackageTest categoriesFor: #filenameFor:!helpers!private! !
+!Core.Tests.PackageTest categoriesFor: #loadAndTestPackage:!helpers!private! !
+!Core.Tests.PackageTest categoriesFor: #loadTestAndUninstallPackage:!helpers!private! !
+!Core.Tests.PackageTest categoriesFor: #setUp!private!running! !
+!Core.Tests.PackageTest categoriesFor: #tearDown!private!running! !
+!Core.Tests.PackageTest categoriesFor: #testBehaviorFromName!public!unit tests! !
+!Core.Tests.PackageTest categoriesFor: #testForwardRefLoadPac!public!unit tests! !
+!Core.Tests.PackageTest categoriesFor: #testLoad21Pac!public!unit tests! !
+!Core.Tests.PackageTest categoriesFor: #testLoad40Pac!public!unit tests! !
+!Core.Tests.PackageTest categoriesFor: #testLoad40Pax!public!unit tests! !
+!Core.Tests.PackageTest categoriesFor: #testLoad51Pac!public!unit tests! !
+!Core.Tests.PackageTest categoriesFor: #testLoad51Pax!public!unit tests! !
+!Core.Tests.PackageTest categoriesFor: #testLoad60Pac!public!unit tests! !
+!Core.Tests.PackageTest categoriesFor: #testLoad60Pax!public!unit tests! !
+!Core.Tests.PackageTest categoriesFor: #testLoad70Pax!public!unit tests! !
+!Core.Tests.PackageTest categoriesFor: #testLoad72Pax!public!unit tests! !
+!Core.Tests.PackageTest categoriesFor: #testLoadedPackagesAreWellFormed!public!unit tests! !
+!Core.Tests.PackageTest categoriesFor: #testLooseResourceIdentifiers!public! !
+!Core.Tests.PackageTest categoriesFor: #testTimestampInitialized!public!unit tests! !
+!Core.Tests.PackageTest categoriesFor: #uninstallTestPackages!private!running! !
+!Core.Tests.PackageTest categoriesFor: #verifyPackageElementNamesAreAbsolute:!helpers!private! !
+!Core.Tests.PackageTest categoriesFor: #verifyPackageElementsExist:!helpers!private! !
 

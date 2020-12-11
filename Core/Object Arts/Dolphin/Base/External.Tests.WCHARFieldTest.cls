@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ExternalFieldTest subclass: #WCHARFieldTest
+External.Tests.ExternalFieldTest subclass: #'External.Tests.WCHARFieldTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-WCHARFieldTest guid: (GUID fromString: '{5fae7240-e0b0-4632-b957-750ef821559c}')!
-WCHARFieldTest comment: ''!
-!WCHARFieldTest categoriesForClass!Unclassified! !
-!WCHARFieldTest methodsFor!
+External.Tests.WCHARFieldTest guid: (Core.GUID fromString: '{5fae7240-e0b0-4632-b957-750ef821559c}')!
+External.Tests.WCHARFieldTest comment: ''!
+!External.Tests.WCHARFieldTest categoriesForClass!Unclassified! !
+!External.Tests.WCHARFieldTest methodsFor!
 
 testReadFrom
 	| struct dolphinString char subject |
@@ -41,6 +41,6 @@ testWriteInto
 	subject writeInto: struct value: (dolphinString at: 2).
 	actual := Utf16String fromByteArray: struct bytes.
 	self assert: actual equals: dolphinString! !
-!WCHARFieldTest categoriesFor: #testReadFrom!public! !
-!WCHARFieldTest categoriesFor: #testWriteInto!public! !
+!External.Tests.WCHARFieldTest categoriesFor: #testReadFrom!public! !
+!External.Tests.WCHARFieldTest categoriesFor: #testWriteInto!public! !
 

@@ -1,16 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-DolphinTest subclass: #DolphinCollectionTest
+Core.Tests.DolphinTest subclass: #'Core.Tests.CollectionTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-DolphinCollectionTest guid: (GUID fromString: '{c0608062-bc41-43cf-aefc-c89e6b500e6d}')!
-DolphinCollectionTest isAbstract: true!
-DolphinCollectionTest comment: ''!
-!DolphinCollectionTest categoriesForClass!Unclassified! !
-!DolphinCollectionTest methodsFor!
+Core.Tests.CollectionTest guid: (Core.GUID fromString: '{c0608062-bc41-43cf-aefc-c89e6b500e6d}')!
+Core.Tests.CollectionTest isNonInstantiable: true!
+Core.Tests.CollectionTest comment: ''!
+!Core.Tests.CollectionTest categoriesForClass!Unclassified! !
+!Core.Tests.CollectionTest methodsFor!
 
 assimilate: anObject
 	^anObject!
@@ -148,15 +148,15 @@ testFold
 			[:i |
 			result := (1 to: i) fold: [:product :each | product * each].
 			self assert: result equals: i factorial]! !
-!DolphinCollectionTest categoriesFor: #assimilate:!private!unit tests! !
-!DolphinCollectionTest categoriesFor: #assimilateElements:!helpers!private! !
-!DolphinCollectionTest categoriesFor: #collectionClass!constants!private! !
-!DolphinCollectionTest categoriesFor: #newCollection:!helpers!private! !
-!DolphinCollectionTest categoriesFor: #shouldnt:implement:!helpers!private! !
-!DolphinCollectionTest categoriesFor: #testAllSatisfy!public!unit tests! !
-!DolphinCollectionTest categoriesFor: #testAnyone!public!unit tests! !
-!DolphinCollectionTest categoriesFor: #testAnySatisfy!public!unit tests! !
-!DolphinCollectionTest categoriesFor: #testCount!public!unit tests! !
-!DolphinCollectionTest categoriesFor: #testDistinct!public!unit tests! !
-!DolphinCollectionTest categoriesFor: #testFold!public!unit tests! !
+!Core.Tests.CollectionTest categoriesFor: #assimilate:!private!unit tests! !
+!Core.Tests.CollectionTest categoriesFor: #assimilateElements:!helpers!private! !
+!Core.Tests.CollectionTest categoriesFor: #collectionClass!constants!private! !
+!Core.Tests.CollectionTest categoriesFor: #newCollection:!helpers!private! !
+!Core.Tests.CollectionTest categoriesFor: #shouldnt:implement:!helpers!private! !
+!Core.Tests.CollectionTest categoriesFor: #testAllSatisfy!public!unit tests! !
+!Core.Tests.CollectionTest categoriesFor: #testAnyone!public!unit tests! !
+!Core.Tests.CollectionTest categoriesFor: #testAnySatisfy!public!unit tests! !
+!Core.Tests.CollectionTest categoriesFor: #testCount!public!unit tests! !
+!Core.Tests.CollectionTest categoriesFor: #testDistinct!public!unit tests! !
+!Core.Tests.CollectionTest categoriesFor: #testFold!public!unit tests! !
 

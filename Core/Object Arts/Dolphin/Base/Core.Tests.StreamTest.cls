@@ -1,16 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-DolphinTest subclass: #StreamTest
+Core.Tests.DolphinTest subclass: #'Core.Tests.StreamTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-StreamTest guid: (GUID fromString: '{f1611eb3-2c1c-491e-a814-c62dcdce0fff}')!
-StreamTest isAbstract: true!
-StreamTest comment: ''!
-!StreamTest categoriesForClass!Unclassified! !
-!StreamTest methodsFor!
+Core.Tests.StreamTest guid: (Core.GUID fromString: '{f1611eb3-2c1c-491e-a814-c62dcdce0fff}')!
+Core.Tests.StreamTest isNonInstantiable: true!
+Core.Tests.StreamTest comment: ''!
+!Core.Tests.StreamTest categoriesForClass!Unclassified! !
+!Core.Tests.StreamTest methodsFor!
 
 closeTempStream: aStream
 	"Private - Clean up the temporary stream argument."!
@@ -22,7 +22,7 @@ streamOn: aString
 	"Private - Answer a <gettableStream> of the type the receiver is testing, on the <String> argument."
 
 	^self streamClass on: aString! !
-!StreamTest categoriesFor: #closeTempStream:!helpers!private! !
-!StreamTest categoriesFor: #streamClass!helpers!private! !
-!StreamTest categoriesFor: #streamOn:!helpers!private! !
+!Core.Tests.StreamTest categoriesFor: #closeTempStream:!helpers!private! !
+!Core.Tests.StreamTest categoriesFor: #streamClass!helpers!private! !
+!Core.Tests.StreamTest categoriesFor: #streamOn:!helpers!private! !
 

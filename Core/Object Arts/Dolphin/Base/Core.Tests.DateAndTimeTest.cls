@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-DolphinTest subclass: #DateAndTimeTest
+Core.Tests.DolphinTest subclass: #'Core.Tests.DateAndTimeTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-DateAndTimeTest guid: (GUID fromString: '{833a97bb-3e1a-4dcb-a1db-181457c09c0f}')!
-DateAndTimeTest comment: ''!
-!DateAndTimeTest categoriesForClass!Unclassified! !
-!DateAndTimeTest methodsFor!
+Core.Tests.DateAndTimeTest guid: (Core.GUID fromString: '{833a97bb-3e1a-4dcb-a1db-181457c09c0f}')!
+Core.Tests.DateAndTimeTest comment: ''!
+!Core.Tests.DateAndTimeTest categoriesForClass!Unclassified! !
+!Core.Tests.DateAndTimeTest methodsFor!
 
 canonicalInstance
 	^DateAndTime
@@ -18,11 +18,12 @@ canonicalInstance
 		day: 29
 		hour: 12
 		minute: 59
-		second: 59+(666666666/1000000000)
+		second: 59 + (666666666 / 1000000000)
 		offset: -12.5 hours!
 
 julianEpoch
 	"Noon, November 24, 4714 BC"
+
 	^DateAndTime
 		year: -4713
 		month: 11
@@ -87,25 +88,41 @@ testAsDate
 	| subject |
 	subject := self canonicalInstance.
 	"Note that the offset is ignored - the date is not adjusted to local time"
-	self assert: subject asDate equals: (Date newDay: 29 monthIndex: 2 year: 2000)!
+	self assert: subject asDate
+		equals: (Date
+				newDay: 29
+				monthIndex: 2
+				year: 2000)!
 
 testAsSeconds
 	"For compatibility with traditional Smalltalk Dates, we use the same epoch as the base for asSeconds, i.e. 1st Jan 1901"
 
 	| subject date |
-	subject := (DateAndTime year: 1901 month: 1 day: 1 offset: Duration zero).
+	subject := DateAndTime
+				year: 1901
+				month: 1
+				day: 1
+				offset: Duration zero.
 	self assert: subject asSeconds equals: 0.
-
-	subject := (DateAndTime year: 1901 month: 1 day: 1 offset: 1 hours).
+	subject := DateAndTime
+				year: 1901
+				month: 1
+				day: 1
+				offset: 1 hours.
 	self assert: subject asSeconds equals: -3600.
 
 	"Check for the same epoch as Date>>asSeconds"
 	subject := DateAndTime fromString: '2019-04-13T09:42:43.634+00:00'.
-	date := Date year: 2019 month: 04 day: 13.
-	self assert: (subject asSeconds truncated - date asSeconds) equals: subject seconds truncated.
-
-	self assert: (DateAndTime year: 1970 day: 1 offset: 0 hours) asSeconds equals:  2177452800
-!
+	date := Date
+				year: 2019
+				month: 04
+				day: 13.
+	self assert: subject asSeconds truncated - date asSeconds equals: subject seconds truncated.
+	self assert: (DateAndTime
+				year: 1970
+				day: 1
+				offset: 0 hours) asSeconds
+		equals: 2177452800!
 
 testAsSYSTEMTIME
 	| subject actual |
@@ -144,9 +161,7 @@ testAsTime
 testAsUnixTime
 	| subject |
 	subject := DateAndTime fromString: '2019-04-12T18:49:17+00:00'.
-	self assert: subject asUnixTime truncated equals: 1555094957
-
-!
+	self assert: subject asUnixTime truncated equals: 1555094957!
 
 testAsUTC
 	| subject |
@@ -159,7 +174,7 @@ testAsUTC
 				day: 01
 				hour: 01
 				minute: 29
-				second: 59 + (666666666/1000000000)
+				second: 59 + (666666666 / 1000000000)
 				offset: 0 hours)!
 
 testDayOfMonth
@@ -224,7 +239,7 @@ testFromString
 
 testFromSYSTEMTIME
 	| ts sysTime |
-	sysTime := SYSTEMTIME now.
+	sysTime := OS.SYSTEMTIME now.
 	ts := DateAndTime fromSYSTEMTIME: sysTime.
 	self assert: ts dayOfMonth equals: sysTime wDay.
 	self assert: ts month equals: sysTime wMonth.
@@ -248,7 +263,14 @@ testHour
 				equals: each]!
 
 testHour12
-	self assert: (DateAndTime year: 2000 day: 60 hour: 0 minute: 59 second: 59) hour12 equals: 12.
+	self
+		assert: (DateAndTime
+				year: 2000
+				day: 60
+				hour: 0
+				minute: 59
+				second: 59) hour12
+		equals: 12.
 	1 to: 12
 		do: 
 			[:each |
@@ -270,8 +292,7 @@ testHour12
 						hour: each
 						minute: 59
 						second: 59) hour12
-				equals: each - 12].
-!
+				equals: each - 12]!
 
 testHour24
 	0 to: 23
@@ -319,7 +340,7 @@ testJulianDate
 				second: 0
 				offset: 0 hours) julianDate
 				roundTo: 1e-6.
-	self assert: subject equals: 2456293520833/1e6!
+	self assert: subject equals: 2456293520833 / 1e6!
 
 testJulianDayNumber
 	"see https://en.wikipedia.org/wiki/Julian_day."
@@ -347,10 +368,22 @@ testJulianDayNumber
 	self assert: (subject + 24 hours - 1 nanoseconds) julianDayNumber equals: 2451545.
 
 	"Noon on the Unix epoch is JDN 2440588"
-	self assert: ((DateAndTime year: 1970 day: 1 offset: 0 hours) + 12 hours) julianDayNumber equals: 2440588.
+	self
+		assert: ((DateAndTime
+				year: 1970
+				day: 1
+				offset: 0 hours) + 12 hours) julianDayNumber
+		equals: 2440588.
 
 	"An example at 2pm local time at UTC+2"
-	subject := DateAndTime year: 2011 month: 7 day: 29 hour: 14 minute: 0 second: 0 offset: 2 hours.
+	subject := DateAndTime
+				year: 2011
+				month: 7
+				day: 29
+				hour: 14
+				minute: 0
+				second: 0
+				offset: 2 hours.
 	self assert: subject julianDayNumber equals: 2455772.
 	self assert: (subject - 1 nanoseconds) julianDayNumber equals: 2455771!
 
@@ -361,11 +394,12 @@ testLilianDayNumber
 	"On the day this page was written, the wikipedia page example was for 00:34, Friday, April 12, 2019 (UTC)"
 	subject := DateAndTime fromString: '2019-04-12T00:34:00+00:00'.
 	self assert: subject lilianDayNumber equals: 159426.
-
-	subject := DateAndTime year: 1582 month: 10 day: 15 offset: Duration zero.
-	self assert: subject lilianDayNumber equals: 1.
-
-!
+	subject := DateAndTime
+				year: 1582
+				month: 10
+				day: 15
+				offset: Duration zero.
+	self assert: subject lilianDayNumber equals: 1!
 
 testMeridianAbbreviation
 	self assert: self canonicalInstance meridianAbbreviation equals: Locale default pmDesignator.
@@ -430,29 +464,65 @@ testOffsetBy
 				offset: 0 hours.
 	"Is early the next morning in India"
 	subject2 := subject1 offset: 5.5 hours.
-	self assert: subject2 equals: (DateAndTime fromString: '1966-06-08T05:29:59+05:30').
-!
+	self assert: subject2 equals: (DateAndTime fromString: '1966-06-08T05:29:59+05:30')!
 
 testPrintOn
 	| subject |
 	self assert: self canonicalInstance printString equals: ' 2000-02-29T12:59:59.666666666-12:30'.
-	self assert: (DateAndTime year: -1 day: 1 hour: 1 minute: 1 second: 1 offset: 1 hours) printString equals: '-0001-01-01T01:01:01+01:00'.
-	self assert: (DateAndTime year: -1 day: 59 hour: 23 minute: 35 second: 0 offset: 13 hours) printString equals: '-0001-02-28T23:35:00+13:00'.
-	
+	self
+		assert: (DateAndTime
+				year: -1
+				day: 1
+				hour: 1
+				minute: 1
+				second: 1
+				offset: 1 hours) printString
+		equals: '-0001-01-01T01:01:01+01:00'.
+	self
+		assert: (DateAndTime
+				year: -1
+				day: 59
+				hour: 23
+				minute: 35
+				second: 0
+				offset: 13 hours) printString
+		equals: '-0001-02-28T23:35:00+13:00'.
+
 	"ANSI examples"
-	subject := DateAndTime year: -1199 month: 1 day: 5 hour: 20 minute: 33 second: (14 seconds + 321 milliseconds) asSeconds offset: -5 hours.
+	subject := DateAndTime
+				year: -1199
+				month: 1
+				day: 5
+				hour: 20
+				minute: 33
+				second: (14 seconds + 321 milliseconds) asSeconds
+				offset: -5 hours.
 	self assert: subject printString equals: '-1199-01-05T20:33:14.321-05:00'.
-	subject := DateAndTime year: 2001 day: 1 offset: 0 hours.
-	self assert: subject printString equals: ' 2001-01-01T00:00:00+00:00'.
-!
+	subject := DateAndTime
+				year: 2001
+				day: 1
+				offset: 0 hours.
+	self assert: subject printString equals: ' 2001-01-01T00:00:00+00:00'!
 
 testRataDie
-	self assert: (DateAndTime year: 1 month: 1 day: 1) rataDie equals: 1.
+	self assert: (DateAndTime
+				year: 1
+				month: 1
+				day: 1) rataDie equals: 1.
 	"ISO year 0 is actually year 1 BC"
-	self assert: (DateAndTime year: 0 month: 1 day: 1) rataDie equals: -365.
-	self assert: (DateAndTime year: 0 month: 12 day: 31) rataDie equals: 0.
+	self assert: (DateAndTime
+				year: 0
+				month: 1
+				day: 1) rataDie equals: -365.
+	self assert: (DateAndTime
+				year: 0
+				month: 12
+				day: 31) rataDie equals: 0.
 	"A routine example in a leap year, but before the end of feb"
-	self assert: (DateAndTime year: 2010 month: 2 day: 25) rataDie equals: 733828.!
+	self assert: (DateAndTime
+				year: 2010
+				month: 2
+				day: 25) rataDie equals: 733828!
 
 testSecond
 	self assert: self canonicalInstance second equals: 59 + (666666666/1000000000)!
@@ -524,13 +594,10 @@ testStbConvertFrom0
 	 "
 
 	| bytes dat string |
-	bytes := #[33 83 84 66 32 52 32 6 3 11 0 68 97 116 101 65 110 100 84 
-		105 109 101 131 127 22 0 6 2 8 0 70 114 97 99 116 105 111 110 183 
-		217 116 4 209 7 0 0 33 59 255 255].	"Obtained from the code above"
+	bytes := #[33 83 84 66 32 52 32 6 3 11 0 68 97 116 101 65 110 100 84 105 109 101 131 127 22 0 6 2 8 0 70 114 97 99 116 105 111 110 183 217 116 4 209 7 0 0 33 59 255 255].	"Obtained from the code above"
 	dat := DateAndTime fromBinaryStoreBytes: bytes.
 	string := dat printString.
-	self assert: string = ' 2019-06-07T10:23:03.387-07:00'.	"What is with the leading space?"
-!
+	self assert: string = ' 2019-06-07T10:23:03.387-07:00'	"What is with the leading space?"!
 
 testStoreOn
 	| now stored collection |
@@ -619,7 +686,8 @@ testYearMonthDayHourMinuteSecondOffset
 
 testYearMonthDayHourMinuteSecondOffsetErrors
 	| subject1 subject2 |
-	#(#(2019 13 1 12 15 31 0) #(2019 2 29 12 15 31 0) #(2000 1 1 24 59 59 0) #(2000 1 1 23 60 59 0) #(2000 1 1 23 59 60 0) #(2000 1 1 23 59 59 24)) do: 
+	#(#(2019 13 1 12 15 31 0) #(2019 2 29 12 15 31 0) #(2000 1 1 24 59 59 0) #(2000 1 1 23 60 59 0) #(2000 1 1 23 59 60 0) #(2000 1 1 23 59 59 24))
+		do: 
 			[:each |
 			self should: 
 					[DateAndTime
@@ -660,47 +728,47 @@ testYearMonthDayHourMinuteSecondOffsetErrors
 	"However they are really different time points."
 	self deny: subject1 equals: subject2.
 	self deny: subject1 asSeconds equals: subject2 asSeconds! !
-!DateAndTimeTest categoriesFor: #canonicalInstance!constants!private! !
-!DateAndTimeTest categoriesFor: #julianEpoch!constants!private! !
-!DateAndTimeTest categoriesFor: #testAddDuration!public! !
-!DateAndTimeTest categoriesFor: #testAsDate!public!unit tests! !
-!DateAndTimeTest categoriesFor: #testAsSeconds!public!unit tests! !
-!DateAndTimeTest categoriesFor: #testAsSYSTEMTIME!public!unit tests! !
-!DateAndTimeTest categoriesFor: #testAsSYSTEMTIMEInvalidMilliseconds!public!unit tests! !
-!DateAndTimeTest categoriesFor: #testAsTime!public!unit tests! !
-!DateAndTimeTest categoriesFor: #testAsUnixTime!public!unit tests! !
-!DateAndTimeTest categoriesFor: #testAsUTC!public!unit tests! !
-!DateAndTimeTest categoriesFor: #testDayOfMonth!public!unit tests! !
-!DateAndTimeTest categoriesFor: #testDayOfWeek!public!unit tests! !
-!DateAndTimeTest categoriesFor: #testDayOfWeekAbbreviation!public!unit tests! !
-!DateAndTimeTest categoriesFor: #testDayOfWeekName!public!unit tests! !
-!DateAndTimeTest categoriesFor: #testDayOfYear!public!unit tests! !
-!DateAndTimeTest categoriesFor: #testFromString!public!unit tests! !
-!DateAndTimeTest categoriesFor: #testFromSYSTEMTIME!public! !
-!DateAndTimeTest categoriesFor: #testHour!public!unit tests! !
-!DateAndTimeTest categoriesFor: #testHour12!public!unit tests! !
-!DateAndTimeTest categoriesFor: #testHour24!public!unit tests! !
-!DateAndTimeTest categoriesFor: #testIsLeapYear!public!unit tests! !
-!DateAndTimeTest categoriesFor: #testJulianDate!public!unit tests! !
-!DateAndTimeTest categoriesFor: #testJulianDayNumber!public!unit tests! !
-!DateAndTimeTest categoriesFor: #testLilianDayNumber!public!unit tests! !
-!DateAndTimeTest categoriesFor: #testMeridianAbbreviation!public!unit tests! !
-!DateAndTimeTest categoriesFor: #testMidnight!public!unit tests! !
-!DateAndTimeTest categoriesFor: #testMinute!public!unit tests! !
-!DateAndTimeTest categoriesFor: #testMonth!public!unit tests! !
-!DateAndTimeTest categoriesFor: #testMonthAbbreviation!public!unit tests! !
-!DateAndTimeTest categoriesFor: #testMonthName!public!unit tests! !
-!DateAndTimeTest categoriesFor: #testNowUtc!public!unit tests! !
-!DateAndTimeTest categoriesFor: #testOffset!public!unit tests! !
-!DateAndTimeTest categoriesFor: #testOffsetBy!public!unit tests! !
-!DateAndTimeTest categoriesFor: #testPrintOn!public!unit tests! !
-!DateAndTimeTest categoriesFor: #testRataDie!public!unit tests! !
-!DateAndTimeTest categoriesFor: #testSecond!public!unit tests! !
-!DateAndTimeTest categoriesFor: #testStbConvertFrom!public!unit tests! !
-!DateAndTimeTest categoriesFor: #testStbConvertFrom0!public!unit tests! !
-!DateAndTimeTest categoriesFor: #testStoreOn!public!testing! !
-!DateAndTimeTest categoriesFor: #testToday!public!unit tests! !
-!DateAndTimeTest categoriesFor: #testYearMonthDay!public!unit tests! !
-!DateAndTimeTest categoriesFor: #testYearMonthDayHourMinuteSecondOffset!public!unit tests! !
-!DateAndTimeTest categoriesFor: #testYearMonthDayHourMinuteSecondOffsetErrors!public!unit tests! !
+!Core.Tests.DateAndTimeTest categoriesFor: #canonicalInstance!constants!private! !
+!Core.Tests.DateAndTimeTest categoriesFor: #julianEpoch!constants!private! !
+!Core.Tests.DateAndTimeTest categoriesFor: #testAddDuration!public! !
+!Core.Tests.DateAndTimeTest categoriesFor: #testAsDate!public!unit tests! !
+!Core.Tests.DateAndTimeTest categoriesFor: #testAsSeconds!public!unit tests! !
+!Core.Tests.DateAndTimeTest categoriesFor: #testAsSYSTEMTIME!public!unit tests! !
+!Core.Tests.DateAndTimeTest categoriesFor: #testAsSYSTEMTIMEInvalidMilliseconds!public!unit tests! !
+!Core.Tests.DateAndTimeTest categoriesFor: #testAsTime!public!unit tests! !
+!Core.Tests.DateAndTimeTest categoriesFor: #testAsUnixTime!public!unit tests! !
+!Core.Tests.DateAndTimeTest categoriesFor: #testAsUTC!public!unit tests! !
+!Core.Tests.DateAndTimeTest categoriesFor: #testDayOfMonth!public!unit tests! !
+!Core.Tests.DateAndTimeTest categoriesFor: #testDayOfWeek!public!unit tests! !
+!Core.Tests.DateAndTimeTest categoriesFor: #testDayOfWeekAbbreviation!public!unit tests! !
+!Core.Tests.DateAndTimeTest categoriesFor: #testDayOfWeekName!public!unit tests! !
+!Core.Tests.DateAndTimeTest categoriesFor: #testDayOfYear!public!unit tests! !
+!Core.Tests.DateAndTimeTest categoriesFor: #testFromString!public!unit tests! !
+!Core.Tests.DateAndTimeTest categoriesFor: #testFromSYSTEMTIME!public! !
+!Core.Tests.DateAndTimeTest categoriesFor: #testHour!public!unit tests! !
+!Core.Tests.DateAndTimeTest categoriesFor: #testHour12!public!unit tests! !
+!Core.Tests.DateAndTimeTest categoriesFor: #testHour24!public!unit tests! !
+!Core.Tests.DateAndTimeTest categoriesFor: #testIsLeapYear!public!unit tests! !
+!Core.Tests.DateAndTimeTest categoriesFor: #testJulianDate!public!unit tests! !
+!Core.Tests.DateAndTimeTest categoriesFor: #testJulianDayNumber!public!unit tests! !
+!Core.Tests.DateAndTimeTest categoriesFor: #testLilianDayNumber!public!unit tests! !
+!Core.Tests.DateAndTimeTest categoriesFor: #testMeridianAbbreviation!public!unit tests! !
+!Core.Tests.DateAndTimeTest categoriesFor: #testMidnight!public!unit tests! !
+!Core.Tests.DateAndTimeTest categoriesFor: #testMinute!public!unit tests! !
+!Core.Tests.DateAndTimeTest categoriesFor: #testMonth!public!unit tests! !
+!Core.Tests.DateAndTimeTest categoriesFor: #testMonthAbbreviation!public!unit tests! !
+!Core.Tests.DateAndTimeTest categoriesFor: #testMonthName!public!unit tests! !
+!Core.Tests.DateAndTimeTest categoriesFor: #testNowUtc!public!unit tests! !
+!Core.Tests.DateAndTimeTest categoriesFor: #testOffset!public!unit tests! !
+!Core.Tests.DateAndTimeTest categoriesFor: #testOffsetBy!public!unit tests! !
+!Core.Tests.DateAndTimeTest categoriesFor: #testPrintOn!public!unit tests! !
+!Core.Tests.DateAndTimeTest categoriesFor: #testRataDie!public!unit tests! !
+!Core.Tests.DateAndTimeTest categoriesFor: #testSecond!public!unit tests! !
+!Core.Tests.DateAndTimeTest categoriesFor: #testStbConvertFrom!public!unit tests! !
+!Core.Tests.DateAndTimeTest categoriesFor: #testStbConvertFrom0!public!unit tests! !
+!Core.Tests.DateAndTimeTest categoriesFor: #testStoreOn!public!testing! !
+!Core.Tests.DateAndTimeTest categoriesFor: #testToday!public!unit tests! !
+!Core.Tests.DateAndTimeTest categoriesFor: #testYearMonthDay!public!unit tests! !
+!Core.Tests.DateAndTimeTest categoriesFor: #testYearMonthDayHourMinuteSecondOffset!public!unit tests! !
+!Core.Tests.DateAndTimeTest categoriesFor: #testYearMonthDayHourMinuteSecondOffsetErrors!public!unit tests! !
 

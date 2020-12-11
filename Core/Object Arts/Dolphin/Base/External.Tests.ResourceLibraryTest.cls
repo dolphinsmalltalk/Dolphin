@@ -1,18 +1,18 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-DolphinTest subclass: #ExternalResourceLibraryTest
+Core.Tests.DolphinTest subclass: #'External.Tests.ResourceLibraryTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ExternalResourceLibraryTest guid: (GUID fromString: '{53144b4f-aa74-4ab2-a1c5-7b9c8f0fffec}')!
-ExternalResourceLibraryTest comment: ''!
-!ExternalResourceLibraryTest categoriesForClass!Unclassified! !
-!ExternalResourceLibraryTest methodsFor!
+External.Tests.ResourceLibraryTest guid: (Core.GUID fromString: '{53144b4f-aa74-4ab2-a1c5-7b9c8f0fffec}')!
+External.Tests.ResourceLibraryTest comment: ''!
+!External.Tests.ResourceLibraryTest categoriesForClass!Unclassified! !
+!External.Tests.ResourceLibraryTest methodsFor!
 
 testLibrariesRegister
-	self deny: ExternalResourceLibrary.Libraries hasWeakKeys.
-	self assert: ExternalResourceLibrary.Libraries hasWeakValues.! !
-!ExternalResourceLibraryTest categoriesFor: #testLibrariesRegister!public! !
+	self deny: ResourceLibrary.Libraries hasWeakKeys.
+	self assert: ResourceLibrary.Libraries hasWeakValues.! !
+!External.Tests.ResourceLibraryTest categoriesFor: #testLibrariesRegister!public! !
 

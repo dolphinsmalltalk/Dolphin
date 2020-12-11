@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-PositionableStreamTest subclass: #ReadWriteStreamTest
+Core.Tests.PositionableStreamTest subclass: #'Core.Tests.ReadWriteStreamTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ReadWriteStreamTest guid: (GUID fromString: '{575c0e65-e28f-4acb-a9c8-8294fa8503a3}')!
-ReadWriteStreamTest comment: ''!
-!ReadWriteStreamTest categoriesForClass!Unclassified! !
-!ReadWriteStreamTest methodsFor!
+Core.Tests.ReadWriteStreamTest guid: (Core.GUID fromString: '{575c0e65-e28f-4acb-a9c8-8294fa8503a3}')!
+Core.Tests.ReadWriteStreamTest comment: ''!
+!Core.Tests.ReadWriteStreamTest categoriesForClass!Unclassified! !
+!Core.Tests.ReadWriteStreamTest methodsFor!
 
 streamClass
 	^ReadWriteStream!
@@ -56,9 +56,9 @@ testResetAfterWrite
 	stream reset.
 	self assert: stream next equals: $a.
 	self closeTempStream: stream! !
-!ReadWriteStreamTest categoriesFor: #streamClass!helpers!private! !
-!ReadWriteStreamTest categoriesFor: #streamOn:!helpers!private! !
-!ReadWriteStreamTest categoriesFor: #testIsEmpty!public!unit tests! !
-!ReadWriteStreamTest categoriesFor: #testNextColon!public!unit tests! !
-!ReadWriteStreamTest categoriesFor: #testResetAfterWrite!public!unit tests! !
+!Core.Tests.ReadWriteStreamTest categoriesFor: #streamClass!helpers!private! !
+!Core.Tests.ReadWriteStreamTest categoriesFor: #streamOn:!helpers!private! !
+!Core.Tests.ReadWriteStreamTest categoriesFor: #testIsEmpty!public!unit tests! !
+!Core.Tests.ReadWriteStreamTest categoriesFor: #testNextColon!public!unit tests! !
+!Core.Tests.ReadWriteStreamTest categoriesFor: #testResetAfterWrite!public!unit tests! !
 

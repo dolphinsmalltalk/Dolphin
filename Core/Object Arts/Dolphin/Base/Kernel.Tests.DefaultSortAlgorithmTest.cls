@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-SortAlgorithmTest subclass: #DefaultSortAlgorithmTest
+Core.Tests.SortAlgorithmTest subclass: #'Kernel.Tests.DefaultSortAlgorithmTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-DefaultSortAlgorithmTest guid: (GUID fromString: '{71c746e5-ead8-4695-8835-1778d1ca56fd}')!
-DefaultSortAlgorithmTest comment: ''!
-!DefaultSortAlgorithmTest categoriesForClass!Unclassified! !
-!DefaultSortAlgorithmTest methodsFor!
+Kernel.Tests.DefaultSortAlgorithmTest guid: (Core.GUID fromString: '{71c746e5-ead8-4695-8835-1778d1ca56fd}')!
+Kernel.Tests.DefaultSortAlgorithmTest comment: ''!
+!Kernel.Tests.DefaultSortAlgorithmTest categoriesForClass!Unclassified! !
+!Kernel.Tests.DefaultSortAlgorithmTest methodsFor!
 
 add: aCollection sortBlock: block
 	| duration sorted collection |
@@ -51,7 +51,7 @@ sort: aCollection sortBlock: block
 	self assertSorted: sorted.
 	self add: aCollection sortBlock: block.
 	^sorted! !
-!DefaultSortAlgorithmTest categoriesFor: #add:sortBlock:!helpers!private! !
-!DefaultSortAlgorithmTest categoriesFor: #algorithmToTest!private!unit tests! !
-!DefaultSortAlgorithmTest categoriesFor: #sort:sortBlock:!helpers!private! !
+!Kernel.Tests.DefaultSortAlgorithmTest categoriesFor: #add:sortBlock:!helpers!private! !
+!Kernel.Tests.DefaultSortAlgorithmTest categoriesFor: #algorithmToTest!private!unit tests! !
+!Kernel.Tests.DefaultSortAlgorithmTest categoriesFor: #sort:sortBlock:!helpers!private! !
 

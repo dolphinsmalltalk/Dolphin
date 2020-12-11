@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-DolphinTest subclass: #BehaviorTest
+Core.Tests.DolphinTest subclass: #'Core.Tests.BehaviorTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-BehaviorTest guid: (GUID fromString: '{157f8981-4d21-430b-bbec-c8b53e6a6f56}')!
-BehaviorTest comment: ''!
-!BehaviorTest categoriesForClass!Unclassified! !
-!BehaviorTest methodsFor!
+Core.Tests.BehaviorTest guid: (Core.GUID fromString: '{157f8981-4d21-430b-bbec-c8b53e6a6f56}')!
+Core.Tests.BehaviorTest comment: ''!
+!Core.Tests.BehaviorTest categoriesForClass!Unclassified! !
+!Core.Tests.BehaviorTest methodsFor!
 
 testHasAbstractMethods
 	| subject |
@@ -22,6 +22,24 @@ testHasAbstractMethods
 	"#577: There was a false positive in Behavior"
 	self deny: Behavior hasAbstractMethods.
 	self assert: ClassDescription hasAbstractMethods!
+
+testIncludesBehavior
+	self assert: (SmallInteger includesBehavior: SmallInteger).
+	self assert: (SmallInteger includesBehavior: Integer).
+	self assert: (SmallInteger includesBehavior: Number).
+	self assert: (SmallInteger includesBehavior: Object).
+	self assert: (SmallInteger includesBehavior: nil).
+	self deny: (SmallInteger includesBehavior: SmallInteger class).
+	self deny: (SmallInteger includesBehavior: Float)!
+
+testInheritsFrom
+	self deny: (SmallInteger inheritsFrom: SmallInteger).
+	self assert: (SmallInteger inheritsFrom:Integer).
+	self assert: (SmallInteger inheritsFrom:Number).
+	self assert: (SmallInteger inheritsFrom:Object).
+	self assert: (SmallInteger inheritsFrom: nil).
+	self deny: (SmallInteger inheritsFrom: SmallInteger class).
+	self deny: (SmallInteger inheritsFrom: Float)!
 
 testIsAbstract
 	self assert: BehaviorTestClasses current classWithAbstractMethod1 isAbstract.
@@ -47,7 +65,7 @@ testIsNonInstantiable
 
 testUnderstoodSelectors
 	self assert: Association understoodSelectors equals: Association selectors.
-	self assert: (MSGBOXPARAMSW understoodSelectors difference: MSGBOXPARAMSW selectors) asArray
+	self assert: (OS.MSGBOXPARAMSW understoodSelectors difference: OS.MSGBOXPARAMSW selectors) asArray
 		equals: #(#dwLanguageId:).
 	self assertIsNil: (IntrosortAlgorithm class instVarNamed: 'methodDictionary').
 	self assert: IntrosortAlgorithm class understoodSelectors isEmpty!
@@ -63,15 +81,17 @@ testWhichMethodsOnlySelfSend
 		equals: #(#returnSendSelfSpecial).
 	self assert: ((subject whichMethodsOnlySelfSend: #value) collect: [:each | each selector]) asArray
 		equals: #(#sendSelfSpecial)! !
-!BehaviorTest categoriesFor: #testHasAbstractMethods!public! !
-!BehaviorTest categoriesFor: #testIsAbstract!public! !
-!BehaviorTest categoriesFor: #testIsNonInstantiable!public! !
-!BehaviorTest categoriesFor: #testUnderstoodSelectors!public! !
-!BehaviorTest categoriesFor: #testWhichMethodsOnlySelfSend!public! !
+!Core.Tests.BehaviorTest categoriesFor: #testHasAbstractMethods!public! !
+!Core.Tests.BehaviorTest categoriesFor: #testIncludesBehavior!public! !
+!Core.Tests.BehaviorTest categoriesFor: #testInheritsFrom!public! !
+!Core.Tests.BehaviorTest categoriesFor: #testIsAbstract!public! !
+!Core.Tests.BehaviorTest categoriesFor: #testIsNonInstantiable!public! !
+!Core.Tests.BehaviorTest categoriesFor: #testUnderstoodSelectors!public! !
+!Core.Tests.BehaviorTest categoriesFor: #testWhichMethodsOnlySelfSend!public! !
 
-!BehaviorTest class methodsFor!
+!Core.Tests.BehaviorTest class methodsFor!
 
 resources
 	^{BehaviorTestClasses}! !
-!BehaviorTest class categoriesFor: #resources!Accessing!public! !
+!Core.Tests.BehaviorTest class categoriesFor: #resources!Accessing!public! !
 

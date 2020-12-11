@@ -1,17 +1,17 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-SortAlgorithmTest subclass: #HeapsortAlgorithmTest
+Core.Tests.SortAlgorithmTest subclass: #'Kernel.Tests.HeapsortAlgorithmTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-HeapsortAlgorithmTest guid: (GUID fromString: '{7d774650-ec2f-46fa-acae-1f6c9a99ab42}')!
-HeapsortAlgorithmTest comment: ''!
-!HeapsortAlgorithmTest categoriesForClass!Unclassified! !
-!HeapsortAlgorithmTest methodsFor!
+Kernel.Tests.HeapsortAlgorithmTest guid: (Core.GUID fromString: '{7d774650-ec2f-46fa-acae-1f6c9a99ab42}')!
+Kernel.Tests.HeapsortAlgorithmTest comment: ''!
+!Kernel.Tests.HeapsortAlgorithmTest categoriesForClass!Unclassified! !
+!Kernel.Tests.HeapsortAlgorithmTest methodsFor!
 
 algorithmToTest
 	^HeapsortAlgorithm! !
-!HeapsortAlgorithmTest categoriesFor: #algorithmToTest!private!unit tests! !
+!Kernel.Tests.HeapsortAlgorithmTest categoriesFor: #algorithmToTest!private!unit tests! !
 

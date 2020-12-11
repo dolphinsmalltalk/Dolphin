@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-DolphinTest subclass: #EventMessageSendTest
+Core.Tests.DolphinTest subclass: #'Kernel.Tests.EventMessageSendTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-EventMessageSendTest guid: (GUID fromString: '{d55436fd-a2dc-4d79-a1c1-c8b5351a6ef1}')!
-EventMessageSendTest comment: ''!
-!EventMessageSendTest categoriesForClass!Tests-Kernel-Objects! !
-!EventMessageSendTest methodsFor!
+Kernel.Tests.EventMessageSendTest guid: (Core.GUID fromString: '{d55436fd-a2dc-4d79-a1c1-c8b5351a6ef1}')!
+Kernel.Tests.EventMessageSendTest comment: ''!
+!Kernel.Tests.EventMessageSendTest categoriesForClass!Tests-Kernel-Objects! !
+!Kernel.Tests.EventMessageSendTest methodsFor!
 
 testNoArguments
 	| m |
@@ -18,7 +18,7 @@ testNoArguments
 
 testOneArgument
 	| m |
-	m := EventMessageSend 
+	m := EventMessageSend
 				receiver: Array
 				selector: #with:
 				argument: 1.
@@ -42,15 +42,15 @@ testReceiverWithGC
 
 testTwoArguments
 	| m |
-	m := EventMessageSend 
+	m := EventMessageSend
 				receiver: Array
 				selector: #with:with:
 				arguments: #(1 2).
 	MemoryManager current collectGarbage.
 	self should: [m value = #(1 2)]! !
-!EventMessageSendTest categoriesFor: #testNoArguments!public!testing! !
-!EventMessageSendTest categoriesFor: #testOneArgument!public!testing! !
-!EventMessageSendTest categoriesFor: #testOneArgumentWithGC!public!testing! !
-!EventMessageSendTest categoriesFor: #testReceiverWithGC!public!testing! !
-!EventMessageSendTest categoriesFor: #testTwoArguments!public!testing! !
+!Kernel.Tests.EventMessageSendTest categoriesFor: #testNoArguments!public!testing! !
+!Kernel.Tests.EventMessageSendTest categoriesFor: #testOneArgument!public!testing! !
+!Kernel.Tests.EventMessageSendTest categoriesFor: #testOneArgumentWithGC!public!testing! !
+!Kernel.Tests.EventMessageSendTest categoriesFor: #testReceiverWithGC!public!testing! !
+!Kernel.Tests.EventMessageSendTest categoriesFor: #testTwoArguments!public!testing! !
 

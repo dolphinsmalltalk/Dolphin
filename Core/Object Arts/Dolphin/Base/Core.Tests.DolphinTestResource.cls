@@ -1,16 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-TestResource subclass: #DolphinTestResource
+XProgramming.SUnit.TestResource subclass: #'Core.Tests.DolphinTestResource'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-DolphinTestResource guid: (GUID fromString: '{1b75ff3b-eede-45ce-9144-898de51c1f3e}')!
-DolphinTestResource isAbstract: true!
-DolphinTestResource comment: ''!
-!DolphinTestResource categoriesForClass!Unclassified! !
-!DolphinTestResource methodsFor!
+Core.Tests.DolphinTestResource guid: (Core.GUID fromString: '{1b75ff3b-eede-45ce-9144-898de51c1f3e}')!
+Core.Tests.DolphinTestResource isNonInstantiable: true!
+Core.Tests.DolphinTestResource comment: ''!
+!Core.Tests.DolphinTestResource categoriesForClass!Unclassified! !
+!Core.Tests.DolphinTestResource methodsFor!
 
 createPackage: aString
 	| package |
@@ -20,7 +20,8 @@ createPackage: aString
 
 setUp
 	super setUp.
-	Package manager defaultPackage isNil ifFalse: [self error: 'Creating test classes with the default package set is a bad idea']! !
-!DolphinTestResource categoriesFor: #createPackage:!helpers!private! !
-!DolphinTestResource categoriesFor: #setUp!Init / Release!public! !
+	Package manager defaultPackage isNil
+		ifFalse: [self error: 'Creating test classes with the default package set is a bad idea']! !
+!Core.Tests.DolphinTestResource categoriesFor: #createPackage:!helpers!private! !
+!Core.Tests.DolphinTestResource categoriesFor: #setUp!Init / Release!public! !
 

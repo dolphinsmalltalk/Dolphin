@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-SearchPolicyTest subclass: #CaseInsensitiveSearchPolicyTest
+Core.Tests.SearchPolicyTest subclass: #'Kernel.Tests.CaseInsensitiveSearchPolicyTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-CaseInsensitiveSearchPolicyTest guid: (GUID fromString: '{9f0abf77-47aa-49cb-8b9b-96343696cb2e}')!
-CaseInsensitiveSearchPolicyTest comment: ''!
-!CaseInsensitiveSearchPolicyTest categoriesForClass!Unclassified! !
-!CaseInsensitiveSearchPolicyTest methodsFor!
+Kernel.Tests.CaseInsensitiveSearchPolicyTest guid: (Core.GUID fromString: '{9f0abf77-47aa-49cb-8b9b-96343696cb2e}')!
+Kernel.Tests.CaseInsensitiveSearchPolicyTest comment: ''!
+!Kernel.Tests.CaseInsensitiveSearchPolicyTest categoriesForClass!Unclassified! !
+!Kernel.Tests.CaseInsensitiveSearchPolicyTest methodsFor!
 
 policyClass
 	^CaseInsensitiveSearchPolicy!
@@ -22,6 +22,6 @@ testCompareWith
 	self deny: (policy compare: 'a' with: 'b').
 	self deny: (policy compare: 'a' with: 'ab').
 ! !
-!CaseInsensitiveSearchPolicyTest categoriesFor: #policyClass!private!unit tests! !
-!CaseInsensitiveSearchPolicyTest categoriesFor: #testCompareWith!public!unit tests! !
+!Kernel.Tests.CaseInsensitiveSearchPolicyTest categoriesFor: #policyClass!private!unit tests! !
+!Kernel.Tests.CaseInsensitiveSearchPolicyTest categoriesFor: #testCompareWith!public!unit tests! !
 

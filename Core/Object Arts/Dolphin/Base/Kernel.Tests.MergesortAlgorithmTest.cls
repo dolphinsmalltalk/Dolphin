@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-StableSortAlgorithmTest subclass: #MergesortAlgorithmTest
+Kernel.Tests.StableSortAlgorithmTest subclass: #'Kernel.Tests.MergesortAlgorithmTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-MergesortAlgorithmTest guid: (GUID fromString: '{0b95c1d0-7833-43d1-9d22-fa3129287940}')!
-MergesortAlgorithmTest comment: ''!
-!MergesortAlgorithmTest categoriesForClass!Unclassified! !
-!MergesortAlgorithmTest methodsFor!
+Kernel.Tests.MergesortAlgorithmTest guid: (Core.GUID fromString: '{0b95c1d0-7833-43d1-9d22-fa3129287940}')!
+Kernel.Tests.MergesortAlgorithmTest comment: ''!
+!Kernel.Tests.MergesortAlgorithmTest categoriesForClass!Unclassified! !
+!Kernel.Tests.MergesortAlgorithmTest methodsFor!
 
 algorithmToTest
 	^MergesortAlgorithm!
@@ -21,6 +21,6 @@ testTempArrayLargeEnough
 	60 timesRepeat: [sorted removeFirst].
 	sorted addAll: (130 to: 200).
 	self assertSorted: sorted! !
-!MergesortAlgorithmTest categoriesFor: #algorithmToTest!private!unit tests! !
-!MergesortAlgorithmTest categoriesFor: #testTempArrayLargeEnough!public!unit tests! !
+!Kernel.Tests.MergesortAlgorithmTest categoriesFor: #algorithmToTest!private!unit tests! !
+!Kernel.Tests.MergesortAlgorithmTest categoriesFor: #testTempArrayLargeEnough!public!unit tests! !
 

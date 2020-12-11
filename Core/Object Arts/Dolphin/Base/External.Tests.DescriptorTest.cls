@@ -1,30 +1,25 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-DolphinTest subclass: #ExternalDescriptorTest
+Core.Tests.DolphinTest subclass: #'External.Tests.DescriptorTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'ExtCallArgTypes'
+	imports: #(#{External.ExtCallArgTypes})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ExternalDescriptorTest guid: (GUID fromString: '{d809ef14-78cf-4e10-8dc1-0249d46b4b5f}')!
-ExternalDescriptorTest comment: ''!
-!ExternalDescriptorTest categoriesForClass!Unclassified! !
-!ExternalDescriptorTest methodsFor!
+External.Tests.DescriptorTest guid: (Core.GUID fromString: '{d809ef14-78cf-4e10-8dc1-0249d46b4b5f}')!
+External.Tests.DescriptorTest comment: ''!
+!External.Tests.DescriptorTest categoriesForClass!Unclassified! !
+!External.Tests.DescriptorTest methodsFor!
 
 externalTypes
-	| typeTable |
-	typeTable := ExternalDescriptor classPool at: 'ExternalValueTypes'.
-	^typeTable!
-
-newDescriptor: source 
-	^ExternalDescriptor newFromString: source!
+	^Descriptor.ValueTypes!
 
 parseStructArg: structClass valueType: typeCodeOrName refType: ptrCodeOrName
 	"First pass-by-value"
 
 	| source desc argTypes |
 	source := 'cdecl: void ' , structClass name.
-	desc := self newDescriptor: source.
+	desc := Descriptor newFromString: source environment: Smalltalk.
 	argTypes := desc argumentTypes.
 	self assert: argTypes size equals: 1.
 	desc argumentsDo: 
@@ -32,12 +27,12 @@ parseStructArg: structClass valueType: typeCodeOrName refType: ptrCodeOrName
 			| type |
 			type := typeCodeOrName isInteger
 						ifTrue: [typeCodeOrName]
-						ifFalse: [ExternalDescriptor typeFromName: typeCodeOrName].
+						ifFalse: [Descriptor typeFromName: typeCodeOrName].
 			self assert: eachType identicalTo: type.
 			self assert: eachClass identicalTo: structClass].
 	"Now pass-by-ref"
 	source := source , '*'.
-	desc := self newDescriptor: source.
+	desc := Descriptor newFromString: source environment: Smalltalk.
 	argTypes := desc argumentTypes.
 	self assert: argTypes size equals: 1.
 	desc argumentsDo: 
@@ -45,42 +40,42 @@ parseStructArg: structClass valueType: typeCodeOrName refType: ptrCodeOrName
 			| type |
 			type := ptrCodeOrName isInteger
 						ifTrue: [ptrCodeOrName]
-						ifFalse: [ExternalDescriptor typeFromName: ptrCodeOrName].
+						ifFalse: [Descriptor typeFromName: ptrCodeOrName].
 			self assert: eachType identicalTo: type.
 			self assert: eachClass identicalTo: structClass]!
 
 testBuiltins
 	| typeTable typeNames |
 	typeTable := self externalTypes.
-	typeNames := ExternalDescriptor classPool at: 'TypeNames'.
-	(typeTable reject: [:each | ExternalDescriptor typeHasArgument: each]) keysAndValuesDo: 
+	typeNames := Descriptor.TypeNames.
+	(typeTable reject: [:each | Descriptor typeHasArgument: each]) keysAndValuesDo: 
 			[:eachKey :eachValue |
 			| argTypes source desc |
 			source := 'cdecl: void ' , eachKey.
-			desc := self newDescriptor: source.
+			desc := Descriptor newFromString: source environment: External.
 			argTypes := desc argumentTypes.
 			self assert: argTypes size equals: 1.
 			self assert: eachValue isInteger.
 			self assert: argTypes first equals: (typeNames at: eachValue + 1).
 			source := source , '*'.
 			eachKey = 'lppvoid'
-				ifTrue: [self should: [self newDescriptor: source] raise: Error]
+				ifTrue: [self should: [Descriptor newFromString: source environment: External] raise: Error]
 				ifFalse: 
 					[| refType |
 					"Single indirection"
-					desc := self newDescriptor: source.
+					desc := Descriptor newFromString: source environment: Smalltalk.
 					argTypes := desc argumentTypes.
 					self assert: argTypes size equals: 1.
-					refType := ExternalDescriptor referenceTypeFor: eachValue.
+					refType := Descriptor referenceTypeFor: eachValue.
 					refType isInteger
 						ifTrue: [self assert: argTypes first equals: (typeNames at: refType + 1)]
 						ifFalse: [argTypes first beginsWith: refType].
 					"Double indirection"
 					source := source , '*'.
 					refType == ExtCallArgLPPVOID
-						ifTrue: [self should: [self newDescriptor: source] raise: Error]
+						ifTrue: [self should: [Descriptor newFromString: source environment: External] raise: Error]
 						ifFalse: 
-							[desc := self newDescriptor: source.
+							[desc := Descriptor newFromString: source environment: External.
 							argTypes := desc argumentTypes.
 							self assert: argTypes size equals: 1.
 							self assert: argTypes first equals: 'lppvoid']]]!
@@ -93,7 +88,7 @@ testIndirections
 			[:each |
 			| argTypes |
 			source := 'cdecl: void ' , each.
-			desc := self newDescriptor: source.
+			desc := Descriptor newFromString: source environment: Smalltalk.
 			argTypes := desc argumentTypes.
 			self assert: argTypes size equals: 1.
 			self assert: argTypes first equals: 'lppvoid'].
@@ -102,11 +97,11 @@ testIndirections
 	#('lpvoid' 'LPVOID' 'BSTR') do: 
 			[:each |
 			source := 'cdecl: void ' , each , '**'.
-			self should: [self newDescriptor: source] raise: Error].
+			self should: [Descriptor newFromString: source environment: Smalltalk] raise: Error].
 
 	"lppvoid cannot be further indirected"
 	source := 'cdecl: lppvoid*'.
-	self should: [self newDescriptor: source] raise: Error.
+	self should: [Descriptor newFromString: source environment: Smalltalk] raise: Error.
 
 	"Test all classes with an implied level of indirection correctly parsed as lppvoid for <class>*"
 	(Smalltalk allClasses select: [:each | each isIndirection]) do: 
@@ -117,11 +112,11 @@ testIndirections
 			self assert: argTypes size equals: 1.
 			self assert: argTypes first equals: 'lppvoid'.
 			source := source , '*'.
-			self should: [self newDescriptor: source] raise: Error]!
+			self should: [Descriptor newFromString: source environment: Smalltalk] raise: Error]!
 
 testSharedRegister
-	self deny: ExternalDescriptor.Shared hasWeakKeys.
-	self assert: ExternalDescriptor.Shared hasWeakValues!
+	self deny: Descriptor.Shared hasWeakKeys.
+	self assert: Descriptor.Shared hasWeakValues!
 
 testSmokeTest
 	"Verify that the compiler is parsing the descriptors in the same way as ExternalDescriptor by
@@ -131,20 +126,20 @@ testSmokeTest
 			[:each |
 			| desc text |
 			text := each descriptor description.
-			desc := self newDescriptor: (text copyWithout: $,).
+			desc := Descriptor newFromString: (text copyWithout: $,) environment: each methodClass environment.
 			self assert: text equals: desc description]!
 
 testStruct4
 	| valueTypes |
 	self assert: DWORD byteSize equals: 4.
-	valueTypes := ExternalDescriptor.ExternalValueTypes.
+	valueTypes := Descriptor.ValueTypes.
 	
-	[ExternalDescriptor.ExternalValueTypes := LookupTable with: 'void' -> 0.
+	[Descriptor.ValueTypes := LookupTable with: 'void' -> 0.
 	self
 		parseStructArg: DWORD
 		valueType: ExtCallArgSTRUCT4
 		refType: ExtCallArgLP]
-			ensure: [ExternalDescriptor.ExternalValueTypes := valueTypes]!
+			ensure: [Descriptor.ValueTypes := valueTypes]!
 
 testStruct8
 	self assert: FILETIME byteSize equals: 8.
@@ -159,14 +154,13 @@ testStructs
 		parseStructArg: _FPIEEE_VALUE
 		valueType: ExtCallArgSTRUCT
 		refType: ExtCallArgLP! !
-!ExternalDescriptorTest categoriesFor: #externalTypes!accessing!private! !
-!ExternalDescriptorTest categoriesFor: #newDescriptor:!private!unit tests! !
-!ExternalDescriptorTest categoriesFor: #parseStructArg:valueType:refType:!private!unit tests! !
-!ExternalDescriptorTest categoriesFor: #testBuiltins!public!unit tests! !
-!ExternalDescriptorTest categoriesFor: #testIndirections!public!unit tests! !
-!ExternalDescriptorTest categoriesFor: #testSharedRegister!public!unit tests! !
-!ExternalDescriptorTest categoriesFor: #testSmokeTest!public!unit tests! !
-!ExternalDescriptorTest categoriesFor: #testStruct4!public!unit tests! !
-!ExternalDescriptorTest categoriesFor: #testStruct8!public!unit tests! !
-!ExternalDescriptorTest categoriesFor: #testStructs!public!unit tests! !
+!External.Tests.DescriptorTest categoriesFor: #externalTypes!accessing!private! !
+!External.Tests.DescriptorTest categoriesFor: #parseStructArg:valueType:refType:!private!unit tests! !
+!External.Tests.DescriptorTest categoriesFor: #testBuiltins!public!unit tests! !
+!External.Tests.DescriptorTest categoriesFor: #testIndirections!public!unit tests! !
+!External.Tests.DescriptorTest categoriesFor: #testSharedRegister!public!unit tests! !
+!External.Tests.DescriptorTest categoriesFor: #testSmokeTest!public!unit tests! !
+!External.Tests.DescriptorTest categoriesFor: #testStruct4!public!unit tests! !
+!External.Tests.DescriptorTest categoriesFor: #testStruct8!public!unit tests! !
+!External.Tests.DescriptorTest categoriesFor: #testStructs!public!unit tests! !
 

@@ -1,21 +1,21 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ExternalArrayTest subclass: #FLOATArrayTest
+External.Tests.ExternalArrayTest subclass: #'External.Tests.FLOATArrayTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-FLOATArrayTest guid: (GUID fromString: '{fa2c5d39-ea1c-431f-8a0d-f4fe888c1305}')!
-FLOATArrayTest comment: ''!
-!FLOATArrayTest categoriesForClass!Unclassified! !
-!FLOATArrayTest methodsFor!
+External.Tests.FLOATArrayTest guid: (Core.GUID fromString: '{fa2c5d39-ea1c-431f-8a0d-f4fe888c1305}')!
+External.Tests.FLOATArrayTest comment: ''!
+!External.Tests.FLOATArrayTest categoriesForClass!Unclassified! !
+!External.Tests.FLOATArrayTest methodsFor!
 
 arrayClass
 	^FLOATArray!
 
 elementFromValue: anObject 
 	^anObject asFloat! !
-!FLOATArrayTest categoriesFor: #arrayClass!constants!private! !
-!FLOATArrayTest categoriesFor: #elementFromValue:!private!unit tests! !
+!External.Tests.FLOATArrayTest categoriesFor: #arrayClass!constants!private! !
+!External.Tests.FLOATArrayTest categoriesFor: #elementFromValue:!private!unit tests! !
 

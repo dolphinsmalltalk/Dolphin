@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-DolphinTest subclass: #AssociationTest
+Core.Tests.DolphinTest subclass: #'Core.Tests.AssociationTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-AssociationTest guid: (GUID fromString: '{c99d4b53-db6c-4b09-9f2a-7a914d14a0d1}')!
-AssociationTest comment: ''!
-!AssociationTest categoriesForClass!Unclassified! !
-!AssociationTest methodsFor!
+Core.Tests.AssociationTest guid: (Core.GUID fromString: '{c99d4b53-db6c-4b09-9f2a-7a914d14a0d1}')!
+Core.Tests.AssociationTest comment: ''!
+!Core.Tests.AssociationTest categoriesForClass!Unclassified! !
+!Core.Tests.AssociationTest methodsFor!
 
 testIsSelfEvaluating
 	| subject |
@@ -28,6 +28,6 @@ testPrintOn
 	subject key: #a.
 	subject value: subject.
 	self assert: subject printString equals: '#a -> ... a cyclic ref to an Association...'! !
-!AssociationTest categoriesFor: #testIsSelfEvaluating!public! !
-!AssociationTest categoriesFor: #testPrintOn!public! !
+!Core.Tests.AssociationTest categoriesFor: #testIsSelfEvaluating!public! !
+!Core.Tests.AssociationTest categoriesFor: #testPrintOn!public! !
 

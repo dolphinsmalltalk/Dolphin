@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-OrderedCollectionTest subclass: #SortedCollectionTest
+Core.Tests.OrderedCollectionTest subclass: #'Core.Tests.SortedCollectionTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-SortedCollectionTest guid: (GUID fromString: '{5ae7c3bc-62c7-454a-9917-c6accd854be1}')!
-SortedCollectionTest comment: ''!
-!SortedCollectionTest categoriesForClass!Unclassified! !
-!SortedCollectionTest methodsFor!
+Core.Tests.SortedCollectionTest guid: (Core.GUID fromString: '{5ae7c3bc-62c7-454a-9917-c6accd854be1}')!
+Core.Tests.SortedCollectionTest comment: ''!
+!Core.Tests.SortedCollectionTest categoriesForClass!Unclassified! !
+!Core.Tests.SortedCollectionTest methodsFor!
 
 collectionClass
 	^SortedCollection!
@@ -29,7 +29,7 @@ testAddFirst
 testBinaryIncludes
 	| searchee |
 	searchee := self newCollection: 'abc'.
-	self assert: (searchee binaryIncludes:  (self assimilate: $a)).
+	self assert: (searchee binaryIncludes: (self assimilate: $a)).
 	self assert: (searchee binaryIncludes: (self assimilate: $b)).
 	self assert: (searchee binaryIncludes: (self assimilate: $c)).
 	self deny: (searchee binaryIncludes: (self assimilate: $A)).
@@ -70,17 +70,17 @@ verifyConcatenation: b with: a
 		ifTrue: [self assert: ((a symmetricDifference: result) noDifference: b)]
 		ifFalse: [super verifyConcatenation: b with: a].
 	^result! !
-!SortedCollectionTest categoriesFor: #collectionClass!constants!private! !
-!SortedCollectionTest categoriesFor: #testAddAllFirst!public!unit tests! !
-!SortedCollectionTest categoriesFor: #testAddAllFirst2!public!unit tests! !
-!SortedCollectionTest categoriesFor: #testAddAllLast!public!unit tests! !
-!SortedCollectionTest categoriesFor: #testAddFirst!public!unit tests! !
-!SortedCollectionTest categoriesFor: #testBinaryIncludes!public!unit tests! !
-!SortedCollectionTest categoriesFor: #testCopyReplaceAllWith!public!unit tests! !
-!SortedCollectionTest categoriesFor: #testCopyWithAtIndex!public!unit tests! !
-!SortedCollectionTest categoriesFor: #testReplaceFromToWithStartingAt!public!unit tests! !
-!SortedCollectionTest categoriesFor: #testResize!public!unit tests! !
-!SortedCollectionTest categoriesFor: #testStrongTalkTests!public!unit tests! !
-!SortedCollectionTest categoriesFor: #unsortedCollectionClass!constants!private! !
-!SortedCollectionTest categoriesFor: #verifyConcatenation:with:!public!unit tests! !
+!Core.Tests.SortedCollectionTest categoriesFor: #collectionClass!constants!private! !
+!Core.Tests.SortedCollectionTest categoriesFor: #testAddAllFirst!public!unit tests! !
+!Core.Tests.SortedCollectionTest categoriesFor: #testAddAllFirst2!public!unit tests! !
+!Core.Tests.SortedCollectionTest categoriesFor: #testAddAllLast!public!unit tests! !
+!Core.Tests.SortedCollectionTest categoriesFor: #testAddFirst!public!unit tests! !
+!Core.Tests.SortedCollectionTest categoriesFor: #testBinaryIncludes!public!unit tests! !
+!Core.Tests.SortedCollectionTest categoriesFor: #testCopyReplaceAllWith!public!unit tests! !
+!Core.Tests.SortedCollectionTest categoriesFor: #testCopyWithAtIndex!public!unit tests! !
+!Core.Tests.SortedCollectionTest categoriesFor: #testReplaceFromToWithStartingAt!public!unit tests! !
+!Core.Tests.SortedCollectionTest categoriesFor: #testResize!public!unit tests! !
+!Core.Tests.SortedCollectionTest categoriesFor: #testStrongTalkTests!public!unit tests! !
+!Core.Tests.SortedCollectionTest categoriesFor: #unsortedCollectionClass!constants!private! !
+!Core.Tests.SortedCollectionTest categoriesFor: #verifyConcatenation:with:!helpers!public! !
 

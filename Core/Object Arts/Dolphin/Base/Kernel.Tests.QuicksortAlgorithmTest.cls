@@ -1,17 +1,17 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-SortAlgorithmTest subclass: #QuicksortAlgorithmTest
+Core.Tests.SortAlgorithmTest subclass: #'Kernel.Tests.QuicksortAlgorithmTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-QuicksortAlgorithmTest guid: (GUID fromString: '{2236a686-ca88-4ad4-9eef-5378f717f2a8}')!
-QuicksortAlgorithmTest comment: ''!
-!QuicksortAlgorithmTest categoriesForClass!Unclassified! !
-!QuicksortAlgorithmTest methodsFor!
+Kernel.Tests.QuicksortAlgorithmTest guid: (Core.GUID fromString: '{2236a686-ca88-4ad4-9eef-5378f717f2a8}')!
+Kernel.Tests.QuicksortAlgorithmTest comment: ''!
+!Kernel.Tests.QuicksortAlgorithmTest categoriesForClass!Unclassified! !
+!Kernel.Tests.QuicksortAlgorithmTest methodsFor!
 
 algorithmToTest
 	^QuicksortAlgorithm! !
-!QuicksortAlgorithmTest categoriesFor: #algorithmToTest!private!unit tests! !
+!Kernel.Tests.QuicksortAlgorithmTest categoriesFor: #algorithmToTest!private!unit tests! !
 

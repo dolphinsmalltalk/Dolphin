@@ -1,16 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-DolphinTest subclass: #IntegerTest
+Core.Tests.DolphinTest subclass: #'Core.Tests.IntegerTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-IntegerTest guid: (GUID fromString: '{025b6e24-5e2b-49b1-9f4b-55b831a5aef3}')!
-IntegerTest isAbstract: true!
-IntegerTest comment: ''!
-!IntegerTest categoriesForClass!Unclassified! !
-!IntegerTest methodsFor!
+Core.Tests.IntegerTest guid: (Core.GUID fromString: '{025b6e24-5e2b-49b1-9f4b-55b831a5aef3}')!
+Core.Tests.IntegerTest isNonInstantiable: true!
+Core.Tests.IntegerTest comment: ''!
+!Core.Tests.IntegerTest categoriesForClass!Unclassified! !
+!Core.Tests.IntegerTest methodsFor!
 
 canonicalInstance
 	^self subclassResponsibility!
@@ -103,14 +103,14 @@ testTwoComplementRightShift
 	self should: 
 			[(small bitShift: -1) ~= (small + 1 bitShift: -1) 
 				== ((large bitShift: -1) ~= (large + 1 bitShift: -1))]! !
-!IntegerTest categoriesFor: #canonicalInstance!constants!private! !
-!IntegerTest categoriesFor: #testClassReadFromRadix!public!unit tests! !
-!IntegerTest categoriesFor: #testFactorial!public!unit tests! !
-!IntegerTest categoriesFor: #testIndexedAccess!public!unit tests! !
-!IntegerTest categoriesFor: #testIsInteger!public!unit tests! !
-!IntegerTest categoriesFor: #testIsPowerOfTwo!public!unit tests! !
-!IntegerTest categoriesFor: #testNew!public!unit tests! !
-!IntegerTest categoriesFor: #testPrimesUpTo!public!unit tests! !
-!IntegerTest categoriesFor: #testSetBit!public!unit tests! !
-!IntegerTest categoriesFor: #testTwoComplementRightShift!public!unit tests! !
+!Core.Tests.IntegerTest categoriesFor: #canonicalInstance!constants!private! !
+!Core.Tests.IntegerTest categoriesFor: #testClassReadFromRadix!public!unit tests! !
+!Core.Tests.IntegerTest categoriesFor: #testFactorial!public!unit tests! !
+!Core.Tests.IntegerTest categoriesFor: #testIndexedAccess!public!unit tests! !
+!Core.Tests.IntegerTest categoriesFor: #testIsInteger!public!unit tests! !
+!Core.Tests.IntegerTest categoriesFor: #testIsPowerOfTwo!public!unit tests! !
+!Core.Tests.IntegerTest categoriesFor: #testNew!public!unit tests! !
+!Core.Tests.IntegerTest categoriesFor: #testPrimesUpTo!public!unit tests! !
+!Core.Tests.IntegerTest categoriesFor: #testSetBit!public!unit tests! !
+!Core.Tests.IntegerTest categoriesFor: #testTwoComplementRightShift!public!unit tests! !
 

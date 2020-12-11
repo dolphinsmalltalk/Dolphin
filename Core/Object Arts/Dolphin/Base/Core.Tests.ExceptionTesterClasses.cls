@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-DolphinTestClassResource subclass: #ExceptionTesterClasses
+Core.Tests.DolphinTestClassResource subclass: #'Core.Tests.ExceptionTesterClasses'
 	instanceVariableNames: 'testNotificationClass resumableErrorClass testErrorClass'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ExceptionTesterClasses guid: (GUID fromString: '{b20c60c4-bfd3-4bd6-b2c9-15a04318e517}')!
-ExceptionTesterClasses comment: ''!
-!ExceptionTesterClasses categoriesForClass!Unclassified! !
-!ExceptionTesterClasses methodsFor!
+Core.Tests.ExceptionTesterClasses guid: (Core.GUID fromString: '{b20c60c4-bfd3-4bd6-b2c9-15a04318e517}')!
+Core.Tests.ExceptionTesterClasses comment: ''!
+!Core.Tests.ExceptionTesterClasses categoriesForClass!Unclassified! !
+!Core.Tests.ExceptionTesterClasses methodsFor!
 
 createClasses
 	testNotificationClass := self
@@ -47,10 +47,10 @@ testErrorClass
 
 testNotificationClass
 	^testNotificationClass! !
-!ExceptionTesterClasses categoriesFor: #createClasses!Init / Release!public! !
-!ExceptionTesterClasses categoriesFor: #isAvailable!public!Testing! !
-!ExceptionTesterClasses categoriesFor: #resumableErrorClass!accessing!public! !
-!ExceptionTesterClasses categoriesFor: #tearDown!public!Running! !
-!ExceptionTesterClasses categoriesFor: #testErrorClass!accessing!public! !
-!ExceptionTesterClasses categoriesFor: #testNotificationClass!accessing!public! !
+!Core.Tests.ExceptionTesterClasses categoriesFor: #createClasses!Init / Release!public! !
+!Core.Tests.ExceptionTesterClasses categoriesFor: #isAvailable!public!Testing! !
+!Core.Tests.ExceptionTesterClasses categoriesFor: #resumableErrorClass!accessing!public! !
+!Core.Tests.ExceptionTesterClasses categoriesFor: #tearDown!public!Running! !
+!Core.Tests.ExceptionTesterClasses categoriesFor: #testErrorClass!accessing!public! !
+!Core.Tests.ExceptionTesterClasses categoriesFor: #testNotificationClass!accessing!public! !
 

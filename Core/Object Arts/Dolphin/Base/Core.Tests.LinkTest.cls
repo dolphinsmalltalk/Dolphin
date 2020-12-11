@@ -1,14 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-DolphinTest subclass: #LinkTest
+Core.Tests.DolphinTest subclass: #'Core.Tests.LinkTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-LinkTest guid: (GUID fromString: '{761927ef-cc81-4a3e-b25a-0eef922c3370}')!
-LinkTest comment: ''!
-!LinkTest categoriesForClass!Unclassified! !
-!LinkTest methodsFor!
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Core.Tests.LinkTest guid: (Core.GUID fromString: '{761927ef-cc81-4a3e-b25a-0eef922c3370}')!
+Core.Tests.LinkTest comment: ''!
+!Core.Tests.LinkTest categoriesForClass!Unclassified! !
+!Core.Tests.LinkTest methodsFor!
 
 testClassNextLink
 	| link1 link2 link3 originalMethod testMethod |
@@ -23,5 +24,5 @@ testClassNextLink
 	"Invoke the method directly so we don't need to install it."
 	link1 := testMethod value: Link withArguments: {link2}.
 	self assert: link1 nextLink identicalTo: link2! !
-!LinkTest categoriesFor: #testClassNextLink!public!unit tests! !
+!Core.Tests.LinkTest categoriesFor: #testClassNextLink!public!unit tests! !
 

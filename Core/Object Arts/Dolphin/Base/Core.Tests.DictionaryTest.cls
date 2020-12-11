@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-AbstractDictionaryTest subclass: #DictionaryTest
+Core.Tests.AbstractDictionaryTest subclass: #'Core.Tests.DictionaryTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-DictionaryTest guid: (GUID fromString: '{733b8918-1913-46df-995e-67541bd596aa}')!
-DictionaryTest comment: ''!
-!DictionaryTest categoriesForClass!Unclassified! !
-!DictionaryTest methodsFor!
+Core.Tests.DictionaryTest guid: (Core.GUID fromString: '{733b8918-1913-46df-995e-67541bd596aa}')!
+Core.Tests.DictionaryTest comment: ''!
+!Core.Tests.DictionaryTest categoriesForClass!Unclassified! !
+!Core.Tests.DictionaryTest methodsFor!
 
 collectionClass
 	^Dictionary!
@@ -34,7 +34,7 @@ testAtIfAbsentPutValue
 	self assert: dictionary size identicalTo: initialSize + 1.
 	self assert: (dictionary at: f ifAbsentPutValue: 2) identicalTo: f.
 	self assert: dictionary size identicalTo: initialSize + 1! !
-!DictionaryTest categoriesFor: #collectionClass!helpers!private! !
-!DictionaryTest categoriesFor: #testAllInstancesValid!public!unit tests! !
-!DictionaryTest categoriesFor: #testAtIfAbsentPutValue!public!unit tests! !
+!Core.Tests.DictionaryTest categoriesFor: #collectionClass!helpers!private! !
+!Core.Tests.DictionaryTest categoriesFor: #testAllInstancesValid!public!unit tests! !
+!Core.Tests.DictionaryTest categoriesFor: #testAtIfAbsentPutValue!public!unit tests! !
 

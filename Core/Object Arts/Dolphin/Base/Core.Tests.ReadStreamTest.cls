@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-PositionableStreamTest subclass: #ReadStreamTest
+Core.Tests.PositionableStreamTest subclass: #'Core.Tests.ReadStreamTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ReadStreamTest guid: (GUID fromString: '{29dd0ab5-9ebf-496f-aef0-ffc5ba1c2017}')!
-ReadStreamTest comment: ''!
-!ReadStreamTest categoriesForClass!Unclassified! !
-!ReadStreamTest methodsFor!
+Core.Tests.ReadStreamTest guid: (Core.GUID fromString: '{29dd0ab5-9ebf-496f-aef0-ffc5ba1c2017}')!
+Core.Tests.ReadStreamTest comment: ''!
+!Core.Tests.ReadStreamTest categoriesForClass!Unclassified! !
+!Core.Tests.ReadStreamTest methodsFor!
 
 streamClass
 	^ReadStream!
@@ -25,11 +25,11 @@ testPositionBoundsError
 	| stream pos |
 	pos := 5.
 	stream := self streamOn: String new.
-	self 
+	self
 		should: [stream position: pos]
 		raise: BoundsError
 		matching: [:e | e receiver == stream and: [e tag == 5]]! !
-!ReadStreamTest categoriesFor: #streamClass!helpers!private! !
-!ReadStreamTest categoriesFor: #streamWith:!helpers!private! !
-!ReadStreamTest categoriesFor: #testPositionBoundsError!public!unit tests! !
+!Core.Tests.ReadStreamTest categoriesFor: #streamClass!helpers!private! !
+!Core.Tests.ReadStreamTest categoriesFor: #streamWith:!helpers!private! !
+!Core.Tests.ReadStreamTest categoriesFor: #testPositionBoundsError!public!unit tests! !
 

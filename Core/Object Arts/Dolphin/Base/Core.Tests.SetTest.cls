@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-DolphinCollectionTest subclass: #SetTest
+Core.Tests.CollectionTest subclass: #'Core.Tests.SetTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-SetTest guid: (GUID fromString: '{2108692a-0ee3-46ea-a9d6-46b3227871c6}')!
-SetTest comment: ''!
-!SetTest categoriesForClass!Unclassified! !
-!SetTest methodsFor!
+Core.Tests.SetTest guid: (Core.GUID fromString: '{2108692a-0ee3-46ea-a9d6-46b3227871c6}')!
+Core.Tests.SetTest comment: ''!
+!Core.Tests.SetTest categoriesForClass!Unclassified! !
+!Core.Tests.SetTest methodsFor!
 
 assertCommutativelyEqual: aSet other: anotherSet
 	self assert: aSet equals: anotherSet.
@@ -217,28 +217,28 @@ testShallowCopy
 	copy := set shallowCopy.
 	self assertIs: copy shallowCopyOf: set.
 	self assertValidSet: copy! !
-!SetTest categoriesFor: #assertCommutativelyEqual:other:!helpers!private! !
-!SetTest categoriesFor: #assertIs:shallowCopyOf:!private!unit tests! !
-!SetTest categoriesFor: #assertValidSet:!private!unit tests! !
-!SetTest categoriesFor: #collectionClass!helpers!private! !
-!SetTest categoriesFor: #denyCommutativelyEqual:other:!helpers!private! !
-!SetTest categoriesFor: #elements!public!unit tests! !
-!SetTest categoriesFor: #loadFactor!constants!private! !
-!SetTest categoriesFor: #minimumCapacity!constants!private! !
-!SetTest categoriesFor: #newEmpty!helpers!private! !
-!SetTest categoriesFor: #newSet!private!unit tests! !
-!SetTest categoriesFor: #newSet:!private!unit tests! !
-!SetTest categoriesFor: #setSizes!public!unit tests! !
-!SetTest categoriesFor: #testAddIfAbsent!public! !
-!SetTest categoriesFor: #testAllHealthy!public! !
-!SetTest categoriesFor: #testAllInstancesValid!public!unit tests! !
-!SetTest categoriesFor: #testClassSizeFor!public!unit tests! !
-!SetTest categoriesFor: #testCopy!public!unit tests! !
-!SetTest categoriesFor: #testDeepCopy!public!unit tests! !
-!SetTest categoriesFor: #testEquals!public!unit tests! !
-!SetTest categoriesFor: #testIncludes!public!unit tests! !
-!SetTest categoriesFor: #testMaintainsLoadFactor!public!unit tests! !
-!SetTest categoriesFor: #testNil!public!unit tests! !
-!SetTest categoriesFor: #testRemove!public!unit tests! !
-!SetTest categoriesFor: #testShallowCopy!public!unit tests! !
+!Core.Tests.SetTest categoriesFor: #assertCommutativelyEqual:other:!helpers!private! !
+!Core.Tests.SetTest categoriesFor: #assertIs:shallowCopyOf:!private!unit tests! !
+!Core.Tests.SetTest categoriesFor: #assertValidSet:!private!unit tests! !
+!Core.Tests.SetTest categoriesFor: #collectionClass!helpers!private! !
+!Core.Tests.SetTest categoriesFor: #denyCommutativelyEqual:other:!helpers!private! !
+!Core.Tests.SetTest categoriesFor: #elements!public!unit tests! !
+!Core.Tests.SetTest categoriesFor: #loadFactor!constants!private! !
+!Core.Tests.SetTest categoriesFor: #minimumCapacity!constants!private! !
+!Core.Tests.SetTest categoriesFor: #newEmpty!helpers!private! !
+!Core.Tests.SetTest categoriesFor: #newSet!private!unit tests! !
+!Core.Tests.SetTest categoriesFor: #newSet:!private!unit tests! !
+!Core.Tests.SetTest categoriesFor: #setSizes!public!unit tests! !
+!Core.Tests.SetTest categoriesFor: #testAddIfAbsent!public! !
+!Core.Tests.SetTest categoriesFor: #testAllHealthy!public! !
+!Core.Tests.SetTest categoriesFor: #testAllInstancesValid!public!unit tests! !
+!Core.Tests.SetTest categoriesFor: #testClassSizeFor!public!unit tests! !
+!Core.Tests.SetTest categoriesFor: #testCopy!public!unit tests! !
+!Core.Tests.SetTest categoriesFor: #testDeepCopy!public!unit tests! !
+!Core.Tests.SetTest categoriesFor: #testEquals!public!unit tests! !
+!Core.Tests.SetTest categoriesFor: #testIncludes!public!unit tests! !
+!Core.Tests.SetTest categoriesFor: #testMaintainsLoadFactor!public!unit tests! !
+!Core.Tests.SetTest categoriesFor: #testNil!public!unit tests! !
+!Core.Tests.SetTest categoriesFor: #testRemove!public!unit tests! !
+!Core.Tests.SetTest categoriesFor: #testShallowCopy!public!unit tests! !
 

@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-DolphinTest subclass: #FILETIMETest
+Core.Tests.DolphinTest subclass: #'OS.Tests.FILETIMETest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-FILETIMETest guid: (GUID fromString: '{60160261-ed86-485b-834c-ef305dad3be9}')!
-FILETIMETest comment: ''!
-!FILETIMETest categoriesForClass!Unclassified! !
-!FILETIMETest methodsFor!
+OS.Tests.FILETIMETest guid: (Core.GUID fromString: '{60160261-ed86-485b-834c-ef305dad3be9}')!
+OS.Tests.FILETIMETest comment: ''!
+!OS.Tests.FILETIMETest categoriesForClass!Unclassified! !
+!OS.Tests.FILETIMETest methodsFor!
 
 assertFromIntegerInvertible: anInteger
 	self assert: (FILETIME fromInteger: anInteger) asInteger equals: (anInteger bitAnd: 2 ** 64 - 1)!
@@ -27,6 +27,6 @@ testFromInteger
 	self assertFromIntegerInvertible: -2 ** 31.
 	self assertFromIntegerInvertible: -2 ** 32.
 	self assertFromIntegerInvertible: -2 ** 63! !
-!FILETIMETest categoriesFor: #assertFromIntegerInvertible:!helpers!private! !
-!FILETIMETest categoriesFor: #testFromInteger!public!unit tests! !
+!OS.Tests.FILETIMETest categoriesFor: #assertFromIntegerInvertible:!helpers!private! !
+!OS.Tests.FILETIMETest categoriesFor: #testFromInteger!public!unit tests! !
 

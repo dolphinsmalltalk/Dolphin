@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-DolphinTest subclass: #FileTest
+Core.Tests.DolphinTest subclass: #'Core.Tests.FileTest'
 	instanceVariableNames: 'tempFile'
 	classVariableNames: ''
-	poolDictionaries: 'Win32Constants'
+	imports: #(#{OS.Win32Constants} #{OS.CRTConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-FileTest guid: (GUID fromString: '{26ae9922-21e2-489a-845c-3c1dc1c2a3cf}')!
-FileTest comment: ''!
-!FileTest categoriesForClass!Unclassified! !
-!FileTest methodsFor!
+Core.Tests.FileTest guid: (Core.GUID fromString: '{26ae9922-21e2-489a-845c-3c1dc1c2a3cf}')!
+Core.Tests.FileTest comment: ''!
+!Core.Tests.FileTest categoriesForClass!Unclassified! !
+!Core.Tests.FileTest methodsFor!
 
 buildTestPathOfLength: anInteger
 	| maxPath |
@@ -25,86 +25,102 @@ buildTestPathOfLength: anInteger
 createTestDirectories
 	| dir |
 	File createDirectoryPath: 'c:\FileTest1\EmptyLeaf'.
-
 	dir := 'c:\FileTest1\LeafWithFile\'.
 	File createDirectoryPath: dir.
-	(FileStream write: dir, 'Blah.txt') nextPutAll: 'Blah'; close.
-
+	(FileStream write: dir , 'Blah.txt')
+		nextPutAll: 'Blah';
+		close.
 	dir := 'c:\FileTest1\LeafWithFiles\'.
 	File createDirectoryPath: dir.
-	(FileStream write: dir, 'Blah1.txt') nextPutAll: 'Blah'; close.
-	(FileStream write: dir, 'Blah2.txt') nextPutAll: 'Blah blah'; close.
-
+	(FileStream write: dir , 'Blah1.txt')
+		nextPutAll: 'Blah';
+		close.
+	(FileStream write: dir , 'Blah2.txt')
+		nextPutAll: 'Blah blah';
+		close.
 	File createDirectoryPath: 'c:\FileTest1\BranchWithEmptyLeaf\EmptyLeaf1'.
-
 	dir := 'c:\FileTest1\BranchWithEmptyLeaves\'.
-	File createDirectoryPath: dir, 'EmptyLeaf1'.
-	File createDirectoryPath: dir, 'EmptyLeaf2'.
-
+	File createDirectoryPath: dir , 'EmptyLeaf1'.
+	File createDirectoryPath: dir , 'EmptyLeaf2'.
 	dir := 'c:\FileTest1\BranchWithEmptyLeafAndFile\'.
-	File createDirectoryPath: dir, '\EmptyLeaf1'.
-	(FileStream write: dir, 'blah.txt') nextPutAll: 'Blah blah blah'; close.
-
+	File createDirectoryPath: dir , '\EmptyLeaf1'.
+	(FileStream write: dir , 'blah.txt')
+		nextPutAll: 'Blah blah blah';
+		close.
 	dir := 'c:\FileTest1\BranchWithEmptyLeafAndFiles\'.
-	File createDirectoryPath: dir, 'EmptyLeaf1'.
-	(FileStream write: dir, 'blah1.txt') nextPutAll: 'Blah blah blah'; close.
-	(FileStream write: dir, 'blah2.txt') nextPutAll: 'Blah blah blah'; close.
-
+	File createDirectoryPath: dir , 'EmptyLeaf1'.
+	(FileStream write: dir , 'blah1.txt')
+		nextPutAll: 'Blah blah blah';
+		close.
+	(FileStream write: dir , 'blah2.txt')
+		nextPutAll: 'Blah blah blah';
+		close.
 	dir := 'c:\FileTest1\BranchWithEmptyLeavesAndFile\'.
-	File createDirectoryPath: dir, 'EmptyLeaf1'.
-	File createDirectoryPath: dir, 'EmptyLeaf2'.
-	(FileStream write: dir, 'blah.txt') nextPutAll: 'Blah blah blah'; close.
-
+	File createDirectoryPath: dir , 'EmptyLeaf1'.
+	File createDirectoryPath: dir , 'EmptyLeaf2'.
+	(FileStream write: dir , 'blah.txt')
+		nextPutAll: 'Blah blah blah';
+		close.
 	dir := 'c:\FileTest1\BranchWithEmptyLeavesAndFiles\'.
-	File createDirectoryPath: dir, 'EmptyLeaf1'.
-	File createDirectoryPath: dir, 'EmptyLeaf2'.
-	(FileStream write: dir, 'blah1.txt') nextPutAll: 'Blah blah blah'; close.
-	(FileStream write: dir, 'blah2.txt') nextPutAll: 'Blah blah blah'; close.
-
+	File createDirectoryPath: dir , 'EmptyLeaf1'.
+	File createDirectoryPath: dir , 'EmptyLeaf2'.
+	(FileStream write: dir , 'blah1.txt')
+		nextPutAll: 'Blah blah blah';
+		close.
+	(FileStream write: dir , 'blah2.txt')
+		nextPutAll: 'Blah blah blah';
+		close.
 	dir := 'c:\FileTest1\BranchWithLeafWithFile\'.
 	File createDirectoryPath: dir.
-	File createDirectoryPath: dir, 'LeafWithFile'.
-	(FileStream write: dir, '\LeafWithFile\blah.txt') nextPutAll: 'Blah blah blah'; close.
-
+	File createDirectoryPath: dir , 'LeafWithFile'.
+	(FileStream write: dir , '\LeafWithFile\blah.txt')
+		nextPutAll: 'Blah blah blah';
+		close.
 	dir := 'c:\FileTest1\BranchWithLeafWithFiles🐬\'.
 	File createDirectoryPath: dir.
-	File createDirectoryPath: dir, 'LeafWithFiles'.
-	(FileStream write: dir, '\LeafWithFiles\blah1.txt') nextPutAll: 'Blah blah blah'; close.
-	(FileStream write: dir, '\LeafWithFiles\blah2.txt') nextPutAll: 'Blah blah blah'; close.
+	File createDirectoryPath: dir , 'LeafWithFiles'.
+	(FileStream write: dir , '\LeafWithFiles\blah1.txt')
+		nextPutAll: 'Blah blah blah';
+		close.
+	(FileStream write: dir , '\LeafWithFiles\blah2.txt')
+		nextPutAll: 'Blah blah blah';
+		close!
 
-!
-
-deleteDirectory: aString 
+deleteDirectory: aString
 	self assert: (File isDirectory: aString).
 	File deleteDirectory: aString.
-	self assert: (File exists: aString) not.!
+	self assert: (File exists: aString) not!
 
 deleteTestDirectories
 	File deleteDirectory: 'c:\FileTest1\'!
 
+maxFname
+	^_MAX_FNAME!
+
+maxPath
+	^File maxPath!
+
 printFilenameOfLength: anInteger on: path
 	(1 to: anInteger) do: [:i | path nextPut: (Character codePoint: $a codePoint + (i % 10))].
 	path nextPut: $..
-	(1 to: CRTConstants._MAX_EXT - 1)
-		do: [:i | path nextPut: (Character codePoint: $a codePoint + (i % 10))]!
+	(1 to: _MAX_EXT - 1) do: [:i | path nextPut: (Character codePoint: $a codePoint + (i % 10))]!
 
 relativePathOf: a to: b
 	^File relativePathOf: a to: b!
 
-removeDirectory: aString 
+removeDirectory: aString
 	"Private - This stub method was auto-generated by the Dolphin debugger and remains to be correctly implemented."
 
 	self assert: (File isDirectory: aString).
 	File removeDirectory: aString.
-	self assert: (File exists: aString) not.
-!
+	self assert: (File exists: aString) not!
 
 tearDown
-	[self deleteTestDirectories] on: Win32Error do: [:e | ].
+	[self deleteTestDirectories] on: OS.Win32Error do: [:e | ].
 	tempFile
 		ifNotNil: [
 			[tempFile close.
-			File delete: tempFile name] on: Win32Error do: [:e | ]]!
+			File delete: tempFile name] on: OS.Win32Error do: [:e | ]]!
 
 test64BitSeek
 	"Tests #755"
@@ -156,8 +172,7 @@ test64BitSeek
 		raise: FileException
 		matching: [:ex | ex statusCode = 131	"ERROR_NEGATIVE_SEEK"].
 	pointer := tempFile seek: dist negated sense: FILE_CURRENT.
-	self assert: pointer equals: 0.
-!
+	self assert: pointer equals: 0!
 
 testClassAppendPathSeparator
 	"N.B. To path is assumed to be a directory only if it has a trailing slash, *otherwise the last portion is ignored*"
@@ -201,7 +216,7 @@ testClassDefaultExtension
 
 testClassPathExtension
 	| s s2 |
-	#(#('' '' '') #('' 'a' '.a') #('' '.a' '.a') #('a' '' 'a') #('a.' '' 'a') #('a' 'b' 'a.b') #('a' '.b' 'a.b') #('a.b' 'c' 'a.c') #('a.exe' '.dll' 'a.dll') #('c:' 'bat' 'c:.bat') #('\' '.cmd' '\.cmd') #('ab\cd.exe' 'dll' 'ab\cd.dll') #('a\' 'b' 'a\.b') #('a.b' '' 'a') #('\a\b\.c' '' '\a\b\') #('a.longlonglonglongextension' '.evenlongerlonglonglonglongextension' 'a.evenlongerlonglonglonglongextension') #('c:\wibble\wobble' '.blah' 'c:\wibble\wobble.blah') #('文字化け.txt' '你🐬好' '文字化け.你🐬好') #('文字化け.你🐬好' '.txt' '文字化け.txt') )
+	#(#('' '' '') #('' 'a' '.a') #('' '.a' '.a') #('a' '' 'a') #('a.' '' 'a') #('a' 'b' 'a.b') #('a' '.b' 'a.b') #('a.b' 'c' 'a.c') #('a.exe' '.dll' 'a.dll') #('c:' 'bat' 'c:.bat') #('\' '.cmd' '\.cmd') #('ab\cd.exe' 'dll' 'ab\cd.dll') #('a\' 'b' 'a\.b') #('a.b' '' 'a') #('\a\b\.c' '' '\a\b\') #('a.longlonglonglongextension' '.evenlongerlonglonglonglongextension' 'a.evenlongerlonglonglonglongextension') #('c:\wibble\wobble' '.blah' 'c:\wibble\wobble.blah') #('文字化け.txt' '你🐬好' '文字化け.你🐬好') #('文字化け.你🐬好' '.txt' '文字化け.txt'))
 		do: 
 			[:each |
 			| actual |
@@ -280,11 +295,11 @@ testClassRelativePathOfTo
 
 testCommonPrefixOfAnd
 	self
-		assert: ((File commonPrefixOf: KernelLibrary default moduleFileName
-				and: UserLibrary default moduleFileName) sameAs: SessionManager current systemDirectory).
+		assert: ((File commonPrefixOf: OS.KernelLibrary default moduleFileName
+				and: OS.UserLibrary default moduleFileName) sameAs: SessionManager current systemDirectory).
 	self
-		assert: (File commonPrefixOf: 'D:\dev\Dolphin\DolphinVM7.DLL'
-				and: 'C:\dev\Dolphin\DolphinVM7.DLL') isEmpty!
+		assert: (File commonPrefixOf: 'D:\dev\Dolphin\DolphinVM7.DLL' and: 'C:\dev\Dolphin\DolphinVM7.DLL')
+				isEmpty!
 
 testDeleteDirectory
 	self createTestDirectories.
@@ -309,7 +324,7 @@ testForDirectoriesIn
 	self deny: (all includes: '.').
 	self deny: (all includes: '..').
 	all do: 
-			[:each | 
+			[:each |
 			| dirPath |
 			dirPath := File composePath: windir subPath: each.
 			self assert: (File isDirectory: dirPath)]!
@@ -333,7 +348,7 @@ testMakePath
 	self assert: (File makePath: #('' '' '' 'txt')) equals: '.txt'.
 	"Shouldn't matter if the filename is notionally too long"
 	filename := String writeStream.
-	self printFilenameOfLength: CRTConstants._MAX_FNAME * 2 on: filename.
+	self printFilenameOfLength: self maxFname * 2 on: filename.
 	filename := filename contents.
 	split := filename subStrings: $..
 	self assert: (File makePath: {nil. nil. split first. split second}) equals: filename!
@@ -341,23 +356,20 @@ testMakePath
 testPathName
 	| expected actual |
 	"We'll get a long path name"
-	expected := '\\?\', (File change: SessionManager current imageFileName extension: 'chg').
+	expected := '\\?\' , (File change: SessionManager current imageFileName extension: 'chg').
 	actual := SourceManager default changesStream file pathName.
 	self assert: actual equals: expected!
 
 testRemoveDirectory
 	self createTestDirectories.
-	
 	self removeDirectory: 'c:\FileTest1\EmptyLeaf'.
 	self removeDirectory: 'c:\FileTest1\BranchWithEmptyLeaf\EmptyLeaf1'.
 	self removeDirectory: 'c:\FileTest1\BranchWithEmptyLeaves\EmptyLeaf1'.
 	self removeDirectory: 'c:\FileTest1\BranchWithEmptyLeaves\EmptyLeaf2'.
 	self removeDirectory: 'c:\FileTest1\BranchWithEmptyLeaves\'.
 	"Presense of sub-directories or files should prevent remove working"
-	self should: [File removeDirectory: 'c:\FileTest1\LeafWithFile\'] raise: Win32Error.
-	self should: [File removeDirectory: 'c:\FileTest1\BranchWithEmptyLeaves\'] raise: Win32Error.
-
-!
+	self should: [File removeDirectory: 'c:\FileTest1\LeafWithFile\'] raise: OS.Win32Error.
+	self should: [File removeDirectory: 'c:\FileTest1\BranchWithEmptyLeaves\'] raise: OS.Win32Error!
 
 testRemoveExtension
 	| path |
@@ -373,11 +385,11 @@ testRemoveExtension
 	self assert: (File removeExtension: 'c:/a/b.txt') equals: 'c:/a/b'.
 	path := String writeStream.
 	path nextPutAll: 'c:\'.
-	self printFilenameOfLength: CRTConstants._MAX_FNAME on: path.
+	self printFilenameOfLength: self maxFname on: path.
 	path := path contents.
 	self assert: (File removeExtension: path) equals: (path subStrings: $.) first.
 	"Doesn't matter if the path is notionally too long"
-	path := self buildTestPathOfLength: CRTConstants._MAX_PATH * 2.
+	path := self buildTestPathOfLength: self maxPath * 2.
 	self assert: (File removeExtension: path) equals: (path subStrings: $.) first!
 
 testRemovePathDelimiter
@@ -403,7 +415,7 @@ testShortPath
 	self skipIfCiBuild.
 	sysdir := SessionManager current systemDirectory.
 	self assert: (File shortPathOf: sysdir) asAnsiString equals: sysdir.
-	tmpDir := File tempPath , GUID newUnique asString, Character dolphin asUtf8String.
+	tmpDir := File tempPath , GUID newUnique asString , Character dolphin asUtf8String.
 	tmpFile := File composePath: tmpDir subPath: $\x1F595 asUtf8String , '.txt'.
 	File createDirectory: tmpDir.
 	
@@ -414,15 +426,14 @@ testShortPath
 	"This will fail if the short name still includes unicode"
 	short := short asAnsiString.
 	self assert: (File exists: short)]
-			ensure: [File deleteDirectory: tmpDir]
-!
+			ensure: [File deleteDirectory: tmpDir]!
 
 testSniffEncoding
 	tempFile := File temporary.
 	{Utf16String.Bom.
 		Utf16String.Bom , 'even' asAnsiString asByteArray.
 		Utf16String.Bom , Character dolphin asUtf8String asByteArray.
-		('a ' asAnsiString, Character dolphin asUtf16String) asByteArray.
+		('a ' asAnsiString , Character dolphin asUtf16String) asByteArray.
 		'a £' asUtf16String asByteArray} do: 
 				[:each |
 				tempFile
@@ -480,16 +491,16 @@ testSplitExtensionFrom
 	self assert: (File splitExtensionFrom: '1234.1234.exe') equals: 'exe'.
 	self assert: (File splitExtensionFrom: 'a.b\c') equals: ''.
 	self assert: (File splitExtensionFrom: 'a.b\') equals: ''.
-	path := self buildTestPathOfLength: CRTConstants._MAX_PATH.
+	path := self buildTestPathOfLength: self maxPath.
 	self assert: (File splitExtensionFrom: path) equals: 'txt'.
 	"The CRT functions works even if the path is too long because we ignore everything but the extension"
 	path := path , 'x'.
 	self assert: (File splitExtensionFrom: path) equals: 'txtx'.
-	path := self buildTestPathOfLength: CRTConstants._MAX_PATH * 2.
+	path := self buildTestPathOfLength: self maxPath * 2.
 	self assert: (File splitExtensionFrom: path) equals: 'txt'.
 	"Try a very filename with very long extension (of max length)."
 	path := String writeStream.
-	self printFilenameOfLength: CRTConstants._MAX_FNAME * 2 on: path.
+	self printFilenameOfLength: self maxFname * 2 on: path.
 	path := path contents.
 	ext := (path subStrings: $.) last.
 	self assert: (File splitExtensionFrom: path) equals: ext.
@@ -513,12 +524,12 @@ testSplitFilenameFrom
 	self assert: (File splitFilenameFrom: '1234.1234.exe') equals: '1234.1234.exe'.
 	self assert: (File splitFilenameFrom: 'a.b\c') equals: 'c'.
 	self assert: (File splitFilenameFrom: 'a.b\') equals: ''.
-	path := self buildTestPathOfLength: CRTConstants._MAX_PATH.
+	path := self buildTestPathOfLength: self maxPath.
 	self assert: (File splitFilenameFrom: path) equals: (path subStrings: $\) last.
 	"Try a very long filename (> max length), this will still work."
 	path := String writeStream.
 	path nextPutAll: 'c:\'.
-	self printFilenameOfLength: CRTConstants._MAX_FNAME * 2 on: path.
+	self printFilenameOfLength: self maxFname * 2 on: path.
 	path := path contents.
 	self assert: (File splitFilenameFrom: path) equals: (path copyFrom: 4)!
 
@@ -537,39 +548,41 @@ testSplitStemFrom
 	self assert: (File splitStemFrom: '1234.1234.exe') equals: '1234.1234'.
 	self assert: (File splitStemFrom: 'a.b\c') equals: 'c'.
 	self assert: (File splitStemFrom: 'a.b\') equals: ''.
-	path := self buildTestPathOfLength: CRTConstants._MAX_PATH.
+	path := self buildTestPathOfLength: self maxPath.
 	self assert: (File splitStemFrom: path) equals: ((path subStrings: $\) last upTo: $.).
 	"Try a very long filename (> max length), this will still work."
 	path := String writeStream.
 	path nextPutAll: 'c:\'.
-	self printFilenameOfLength: CRTConstants._MAX_FNAME * 2 on: path.
+	self printFilenameOfLength: self maxFname * 2 on: path.
 	path := path contents.
 	self assert: (File splitStemFrom: path) equals: ((path copyFrom: 4) upTo: $.)! !
-!FileTest categoriesFor: #buildTestPathOfLength:!helpers!private! !
-!FileTest categoriesFor: #createTestDirectories!helpers!private! !
-!FileTest categoriesFor: #deleteDirectory:!helpers!public! !
-!FileTest categoriesFor: #deleteTestDirectories!private!Running! !
-!FileTest categoriesFor: #printFilenameOfLength:on:!helpers!private! !
-!FileTest categoriesFor: #relativePathOf:to:!helpers!public! !
-!FileTest categoriesFor: #removeDirectory:!helpers!private! !
-!FileTest categoriesFor: #tearDown!private!Running! !
-!FileTest categoriesFor: #test64BitSeek!public!unit tests! !
-!FileTest categoriesFor: #testClassAppendPathSeparator!public!unit tests! !
-!FileTest categoriesFor: #testClassDefaultExtension!public!unit tests! !
-!FileTest categoriesFor: #testClassPathExtension!public!unit tests! !
-!FileTest categoriesFor: #testClassRelativePathOfTo!public!unit tests! !
-!FileTest categoriesFor: #testCommonPrefixOfAnd!public!unit tests! !
-!FileTest categoriesFor: #testDeleteDirectory!public!unit tests! !
-!FileTest categoriesFor: #testForDirectoriesIn!public!unit tests! !
-!FileTest categoriesFor: #testMakePath!public!unit tests! !
-!FileTest categoriesFor: #testPathName!public!unit tests! !
-!FileTest categoriesFor: #testRemoveDirectory!public!unit tests! !
-!FileTest categoriesFor: #testRemoveExtension!public!unit tests! !
-!FileTest categoriesFor: #testRemovePathDelimiter!public!unit tests! !
-!FileTest categoriesFor: #testShortPath!public!unit tests! !
-!FileTest categoriesFor: #testSniffEncoding!public!unit tests! !
-!FileTest categoriesFor: #testSplitDriveFrom!public!unit tests! !
-!FileTest categoriesFor: #testSplitExtensionFrom!public!unit tests! !
-!FileTest categoriesFor: #testSplitFilenameFrom!public!unit tests! !
-!FileTest categoriesFor: #testSplitStemFrom!public!unit tests! !
+!Core.Tests.FileTest categoriesFor: #buildTestPathOfLength:!helpers!private! !
+!Core.Tests.FileTest categoriesFor: #createTestDirectories!helpers!private! !
+!Core.Tests.FileTest categoriesFor: #deleteDirectory:!helpers!public! !
+!Core.Tests.FileTest categoriesFor: #deleteTestDirectories!private!Running! !
+!Core.Tests.FileTest categoriesFor: #maxFname!public!unit tests! !
+!Core.Tests.FileTest categoriesFor: #maxPath!public!unit tests! !
+!Core.Tests.FileTest categoriesFor: #printFilenameOfLength:on:!helpers!private! !
+!Core.Tests.FileTest categoriesFor: #relativePathOf:to:!helpers!public! !
+!Core.Tests.FileTest categoriesFor: #removeDirectory:!helpers!private! !
+!Core.Tests.FileTest categoriesFor: #tearDown!private!Running! !
+!Core.Tests.FileTest categoriesFor: #test64BitSeek!public!unit tests! !
+!Core.Tests.FileTest categoriesFor: #testClassAppendPathSeparator!public!unit tests! !
+!Core.Tests.FileTest categoriesFor: #testClassDefaultExtension!public!unit tests! !
+!Core.Tests.FileTest categoriesFor: #testClassPathExtension!public!unit tests! !
+!Core.Tests.FileTest categoriesFor: #testClassRelativePathOfTo!public!unit tests! !
+!Core.Tests.FileTest categoriesFor: #testCommonPrefixOfAnd!public!unit tests! !
+!Core.Tests.FileTest categoriesFor: #testDeleteDirectory!public!unit tests! !
+!Core.Tests.FileTest categoriesFor: #testForDirectoriesIn!public!unit tests! !
+!Core.Tests.FileTest categoriesFor: #testMakePath!public!unit tests! !
+!Core.Tests.FileTest categoriesFor: #testPathName!public!unit tests! !
+!Core.Tests.FileTest categoriesFor: #testRemoveDirectory!public!unit tests! !
+!Core.Tests.FileTest categoriesFor: #testRemoveExtension!public!unit tests! !
+!Core.Tests.FileTest categoriesFor: #testRemovePathDelimiter!public!unit tests! !
+!Core.Tests.FileTest categoriesFor: #testShortPath!public!unit tests! !
+!Core.Tests.FileTest categoriesFor: #testSniffEncoding!public!unit tests! !
+!Core.Tests.FileTest categoriesFor: #testSplitDriveFrom!public!unit tests! !
+!Core.Tests.FileTest categoriesFor: #testSplitExtensionFrom!public!unit tests! !
+!Core.Tests.FileTest categoriesFor: #testSplitFilenameFrom!public!unit tests! !
+!Core.Tests.FileTest categoriesFor: #testSplitStemFrom!public!unit tests! !
 

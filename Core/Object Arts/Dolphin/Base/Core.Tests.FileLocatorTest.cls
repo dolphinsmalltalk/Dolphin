@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-DolphinTest subclass: #FileLocatorTest
+Core.Tests.DolphinTest subclass: #'Core.Tests.FileLocatorTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-FileLocatorTest guid: (GUID fromString: '{635f7234-ba5a-4a72-97b1-40d81990cad7}')!
-FileLocatorTest comment: ''!
-!FileLocatorTest categoriesForClass!Unclassified! !
-!FileLocatorTest methodsFor!
+Core.Tests.FileLocatorTest guid: (Core.GUID fromString: '{635f7234-ba5a-4a72-97b1-40d81990cad7}')!
+Core.Tests.FileLocatorTest comment: ''!
+!Core.Tests.FileLocatorTest categoriesForClass!Unclassified! !
+!Core.Tests.FileLocatorTest methodsFor!
 
 testImageRelativeFileLocator
 	| locator relative fullpath |
@@ -99,7 +99,7 @@ literalStoreArray
 
 	| singletons array bytes |
 	singletons := {FileLocator absolute. FileLocator imageRelative. FileLocator installRelative}.
-	array := #(#'!!STL' 3 98 3 1114638 ##(Smalltalk.STBSingletonProxy) 8 ##(Smalltalk.AbsoluteFileLocator) 8 #current 426 8 ##(Smalltalk.ImageRelativeFileLocator) 464 426 8 ##(Smalltalk.InstallRelativeFileLocator) 464).
+	array := #(#'!!STL' 3 98 3 1114638 ##(Smalltalk.STBSingletonProxy) 8 ##(Kernel.AbsoluteFileLocator) 8 #current 426 8 ##(Kernel.ImageRelativeFileLocator) 464 426 8 ##(Kernel.InstallRelativeFileLocator) 464).
 	self assert: ((Object fromLiteralStoreArray: array) asIdentitySet - singletons) isEmpty.
 	array := singletons literalStoreArray.
 	self assert: ((Object fromLiteralStoreArray: array) asIdentitySet - singletons) isEmpty.
@@ -107,7 +107,7 @@ literalStoreArray
 	self assert: ((Object fromBinaryStoreBytes: bytes) asIdentitySet - singletons) isEmpty.
 	bytes := singletons binaryStoreBytes.
 	self assert: ((Object fromBinaryStoreBytes: bytes) asIdentitySet - singletons) isEmpty! !
-!FileLocatorTest categoriesFor: #testImageRelativeFileLocator!public!unit tests! !
-!FileLocatorTest categoriesFor: #testInstallRelativeFileLocator!public!unit tests! !
-!FileLocatorTest categoriesFor: #testSingletonSerialisation!public!unit tests! !
+!Core.Tests.FileLocatorTest categoriesFor: #testImageRelativeFileLocator!public!unit tests! !
+!Core.Tests.FileLocatorTest categoriesFor: #testInstallRelativeFileLocator!public!unit tests! !
+!Core.Tests.FileLocatorTest categoriesFor: #testSingletonSerialisation!public!unit tests! !
 

@@ -16,6 +16,8 @@ Package manager
 	install: 'Core\Object Arts\Dolphin\System\Win32\Dolphin MMF Tests.pax';
 	install: 'Core\Object Arts\Dolphin\System\Win32\Windows Data Protection API Tests.pax';
 	install: 'Core\Object Arts\Dolphin\System\Win32\Windows Ini Files Tests.pax';
+	install: 'Core\Object Arts\Dolphin\Database\Database Tests.pax';
+	install: 'Core\Object Arts\Dolphin\ActiveX\ActiveX Tests.pax';
 	install: 'Core\Object Arts\Dolphin\ActiveX\Automation\ActiveX Automation Tests.pax';
 	install: 'Core\Object Arts\Dolphin\IDE\Base\Development System Tests.pax';
 	install: 'Core\Object Arts\Dolphin\System\Compiler\Tests\Smalltalk Parser Tests.pax';
@@ -24,7 +26,5 @@ Package manager
 	install: 'Core\Contributions\Solutions Software\Tests\SSW EditableListView Tests.pax';
 	install: 'Core\Object Arts\Dolphin\Sockets\Dolphin Sockets Tests.pax';
 	install: 'Core\Object Arts\Dolphin\System\STON\Dolphin STON Tests.pax';
-	install: 'Core\Object Arts\Dolphin\Database\Database Tests.pax';
-	install: 'Core\Object Arts\Dolphin\ActiveX\ActiveX Tests.pax';
 	yourself.
 !

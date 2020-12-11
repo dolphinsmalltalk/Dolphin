@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-DolphinTest subclass: #SignalTest
+Core.Tests.DolphinTest subclass: #'Core.Tests.SignalTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-SignalTest guid: (GUID fromString: '{d8a6340d-1716-4ae1-883b-2e16c7812667}')!
-SignalTest comment: ''!
-!SignalTest categoriesForClass!Unclassified! !
-!SignalTest methodsFor!
+Core.Tests.SignalTest guid: (Core.GUID fromString: '{d8a6340d-1716-4ae1-883b-2e16c7812667}')!
+Core.Tests.SignalTest comment: ''!
+!Core.Tests.SignalTest categoriesForClass!Unclassified! !
+!Core.Tests.SignalTest methodsFor!
 
 testMessageText
 	| signal text |
@@ -18,5 +18,5 @@ testMessageText
 	self assert: text equals: 'Wibble'.
 	text := [signal signal: 'Wobble'] on: signal do: [:ex | ex messageText].
 	self assert: text equals: 'Wobble'! !
-!SignalTest categoriesFor: #testMessageText!public!unit tests! !
+!Core.Tests.SignalTest categoriesFor: #testMessageText!public!unit tests! !
 

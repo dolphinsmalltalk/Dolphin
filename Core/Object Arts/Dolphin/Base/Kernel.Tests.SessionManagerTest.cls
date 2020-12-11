@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-DolphinTest subclass: #SessionManagerTest
+Core.Tests.DolphinTest subclass: #'Kernel.Tests.SessionManagerTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-SessionManagerTest guid: (GUID fromString: '{06f1fe94-5aa1-43f9-9d5c-1d4de4f5b519}')!
-SessionManagerTest comment: ''!
-!SessionManagerTest categoriesForClass!Unclassified! !
-!SessionManagerTest methodsFor!
+Kernel.Tests.SessionManagerTest guid: (Core.GUID fromString: '{06f1fe94-5aa1-43f9-9d5c-1d4de4f5b519}')!
+Kernel.Tests.SessionManagerTest comment: ''!
+!Kernel.Tests.SessionManagerTest categoriesForClass!Unclassified! !
+!Kernel.Tests.SessionManagerTest methodsFor!
 
 testComputerName
 	"Assumes that getenv: is working"
@@ -46,10 +46,10 @@ testWindowsDirectory
 	actual := SessionManager current windowsDirectory.
 	self assert: (File isDirectory: actual).
 	self assert: (actual sameAs: windows)! !
-!SessionManagerTest categoriesFor: #testComputerName!public!unit tests! !
-!SessionManagerTest categoriesFor: #testDocumentsDirectory!public!unit tests! !
-!SessionManagerTest categoriesFor: #testGetEnv!public!unit tests! !
-!SessionManagerTest categoriesFor: #testSystemDirectory!public!unit tests! !
-!SessionManagerTest categoriesFor: #testUsername!public!unit tests! !
-!SessionManagerTest categoriesFor: #testWindowsDirectory!public!unit tests! !
+!Kernel.Tests.SessionManagerTest categoriesFor: #testComputerName!public!unit tests! !
+!Kernel.Tests.SessionManagerTest categoriesFor: #testDocumentsDirectory!public!unit tests! !
+!Kernel.Tests.SessionManagerTest categoriesFor: #testGetEnv!public!unit tests! !
+!Kernel.Tests.SessionManagerTest categoriesFor: #testSystemDirectory!public!unit tests! !
+!Kernel.Tests.SessionManagerTest categoriesFor: #testUsername!public!unit tests! !
+!Kernel.Tests.SessionManagerTest categoriesFor: #testWindowsDirectory!public!unit tests! !
 

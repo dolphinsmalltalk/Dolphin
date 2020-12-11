@@ -1,14 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-DolphinTest subclass: #DelayTest
+Core.Tests.DolphinTest subclass: #'Core.Tests.DelayTest'
 	instanceVariableNames: 'delay startTime'
 	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-DelayTest guid: (GUID fromString: '{0b7c6875-1051-4b80-b137-cd1c02754bcd}')!
-DelayTest comment: ''!
-!DelayTest categoriesForClass!Unclassified! !
-!DelayTest methodsFor!
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Core.Tests.DelayTest guid: (Core.GUID fromString: '{0b7c6875-1051-4b80-b137-cd1c02754bcd}')!
+Core.Tests.DelayTest comment: ''!
+!Core.Tests.DelayTest categoriesForClass!Unclassified! !
+!Core.Tests.DelayTest methodsFor!
 
 expectDelay: expectedDuration for: nowMicroseconds
 	| elapsed delta |
@@ -103,7 +104,7 @@ testSimultaneousWaitAndSignal
 	signalFinished := true]
 			forkAt: Processor userInterruptPriority.	"Will block on AccessProtect in #cancel too, but higher priority"
 	Delay.AccessProtect signal.	"Allow the bug to unfold"
-	KernelLibrary default sleep: 10.	"Wait for both processes above to finish, without using the Delay mechanism"
+	OS.KernelLibrary default sleep: 10.	"Wait for both processes above to finish, without using the Delay mechanism"
 	self expectDelay: 0 milliseconds for: endTime.	"Process should not have actually waited on the delay"
 	self assertIsNil: waitError.
 	self assert: signalFinished.
@@ -116,16 +117,16 @@ testSimultaneousWaitAndSignalWithOtherLongerDelay
 testSimultaneousWaitAndSignalWithOtherShorterDelay
 	[(Delay forMilliseconds: 15) wait] forkAt: Processor userInterruptPriority.
 	self testSimultaneousWaitAndSignal! !
-!DelayTest categoriesFor: #expectDelay:for:!helpers!private! !
-!DelayTest categoriesFor: #setUp!private!running! !
-!DelayTest categoriesFor: #tearDown!private!running! !
-!DelayTest categoriesFor: #testBasicWait!public!unit tests! !
-!DelayTest categoriesFor: #testCancel!public!unit tests! !
-!DelayTest categoriesFor: #testCancelWithOtherShorterDelay!public!unit tests! !
-!DelayTest categoriesFor: #testSchedulingMultipleDelays!public!unit tests! !
-!DelayTest categoriesFor: #testSchedulingMultipleDelaysLongerFirst!public!unit tests! !
-!DelayTest categoriesFor: #testSignal!public!unit tests! !
-!DelayTest categoriesFor: #testSimultaneousWaitAndSignal!public!unit tests! !
-!DelayTest categoriesFor: #testSimultaneousWaitAndSignalWithOtherLongerDelay!public!unit tests! !
-!DelayTest categoriesFor: #testSimultaneousWaitAndSignalWithOtherShorterDelay!public!unit tests! !
+!Core.Tests.DelayTest categoriesFor: #expectDelay:for:!helpers!private! !
+!Core.Tests.DelayTest categoriesFor: #setUp!private!running! !
+!Core.Tests.DelayTest categoriesFor: #tearDown!private!running! !
+!Core.Tests.DelayTest categoriesFor: #testBasicWait!public!unit tests! !
+!Core.Tests.DelayTest categoriesFor: #testCancel!public!unit tests! !
+!Core.Tests.DelayTest categoriesFor: #testCancelWithOtherShorterDelay!public!unit tests! !
+!Core.Tests.DelayTest categoriesFor: #testSchedulingMultipleDelays!public!unit tests! !
+!Core.Tests.DelayTest categoriesFor: #testSchedulingMultipleDelaysLongerFirst!public!unit tests! !
+!Core.Tests.DelayTest categoriesFor: #testSignal!public!unit tests! !
+!Core.Tests.DelayTest categoriesFor: #testSimultaneousWaitAndSignal!public!unit tests! !
+!Core.Tests.DelayTest categoriesFor: #testSimultaneousWaitAndSignalWithOtherLongerDelay!public!unit tests! !
+!Core.Tests.DelayTest categoriesFor: #testSimultaneousWaitAndSignalWithOtherShorterDelay!public!unit tests! !
 

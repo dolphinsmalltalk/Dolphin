@@ -1,18 +1,18 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Utf8StringTest subclass: #SymbolTest
+Core.Tests.Utf8StringTest subclass: #'Core.Tests.SymbolTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-SymbolTest guid: (GUID fromString: '{da460501-580d-4216-8409-405ab77a12aa}')!
-SymbolTest comment: 'This is the unit test for the class Symbol. Unit tests are a good way to exercise the functionality of your system in a repeatable and automatic manner. They are therefore recommended if you plan to release anything. For more information, see: 
+Core.Tests.SymbolTest guid: (Core.GUID fromString: '{da460501-580d-4216-8409-405ab77a12aa}')!
+Core.Tests.SymbolTest comment: 'This is the unit test for the class Symbol. Unit tests are a good way to exercise the functionality of your system in a repeatable and automatic manner. They are therefore recommended if you plan to release anything. For more information, see: 
 	- http://www.c2.com/cgi/wiki?UnitTest
 	- http://minnow.cc.gatech.edu/squeak/1547
 	- the sunit class category'!
-!SymbolTest categoriesForClass!Unclassified! !
-!SymbolTest methodsFor!
+!Core.Tests.SymbolTest categoriesForClass!Unclassified! !
+!Core.Tests.SymbolTest methodsFor!
 
 assimilateString: aString
 	^aString asSymbol!
@@ -88,15 +88,15 @@ testPrintString
 			| print sym |
 			sym := each asSymbol.
 			"Sanity check"
-			self assert: (SmalltalkScanner isSelector: sym).
+			self assert: (Scanner isSelector: sym).
 			print := sym printString.
 			self deny: (print includes: $')].
 	"Quoted, e.g. integers, and symbols containing other syntactically relevant characters"
 	#('' '1' 'A#' 'PL/M' '::' '!!STL' 'Object class' 'reply-to') do: 
 			[:each |
-			"Sanity check"
 			| print |
-			self deny: (SmalltalkScanner isSelector: each).
+			"Sanity check"
+			self deny: (Scanner isSelector: each).
 			"Should print quoted"
 			print := each asSymbol printString.
 			self assert: (print second == $' and: [print last == $'])]!
@@ -120,21 +120,21 @@ testResize
 
 testSymbolTable
 	Symbol.Table do: [:each | self assert: (each isNil or: [each isWeak])]! !
-!SymbolTest categoriesFor: #assimilateString:!helpers!private! !
-!SymbolTest categoriesFor: #collectionClass!helpers!private! !
-!SymbolTest categoriesFor: #newCollection:!helpers!private! !
-!SymbolTest categoriesFor: #newCopy:!helpers!private! !
-!SymbolTest categoriesFor: #newEmptyCollection:!public! !
-!SymbolTest categoriesFor: #testAsString!helpers!public! !
-!SymbolTest categoriesFor: #testAtPut!public!unit tests! !
-!SymbolTest categoriesFor: #testEncodeOnPut!public!unit tests! !
-!SymbolTest categoriesFor: #testInstVarAtPut!public!unit tests! !
-!SymbolTest categoriesFor: #testKeywords!public!unit tests! !
-!SymbolTest categoriesFor: #testPrintLiteral!public!unit tests! !
-!SymbolTest categoriesFor: #testPrintString!helpers!public! !
-!SymbolTest categoriesFor: #testRefersToLiteral!public!unit tests! !
-!SymbolTest categoriesFor: #testReplaceFromToWithStartingAt!public!unit tests! !
-!SymbolTest categoriesFor: #testReplaceIdentityWith!public!unit tests! !
-!SymbolTest categoriesFor: #testResize!public!unit tests! !
-!SymbolTest categoriesFor: #testSymbolTable!public!unit tests! !
+!Core.Tests.SymbolTest categoriesFor: #assimilateString:!helpers!private! !
+!Core.Tests.SymbolTest categoriesFor: #collectionClass!helpers!private! !
+!Core.Tests.SymbolTest categoriesFor: #newCollection:!helpers!private! !
+!Core.Tests.SymbolTest categoriesFor: #newCopy:!helpers!private! !
+!Core.Tests.SymbolTest categoriesFor: #newEmptyCollection:!public! !
+!Core.Tests.SymbolTest categoriesFor: #testAsString!helpers!public! !
+!Core.Tests.SymbolTest categoriesFor: #testAtPut!public!unit tests! !
+!Core.Tests.SymbolTest categoriesFor: #testEncodeOnPut!public!unit tests! !
+!Core.Tests.SymbolTest categoriesFor: #testInstVarAtPut!public!unit tests! !
+!Core.Tests.SymbolTest categoriesFor: #testKeywords!public!unit tests! !
+!Core.Tests.SymbolTest categoriesFor: #testPrintLiteral!public!unit tests! !
+!Core.Tests.SymbolTest categoriesFor: #testPrintString!helpers!public! !
+!Core.Tests.SymbolTest categoriesFor: #testRefersToLiteral!public!unit tests! !
+!Core.Tests.SymbolTest categoriesFor: #testReplaceFromToWithStartingAt!public!unit tests! !
+!Core.Tests.SymbolTest categoriesFor: #testReplaceIdentityWith!public!unit tests! !
+!Core.Tests.SymbolTest categoriesFor: #testResize!public!unit tests! !
+!Core.Tests.SymbolTest categoriesFor: #testSymbolTable!public!unit tests! !
 

@@ -1,18 +1,19 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ExternalFieldTest subclass: #StructureArrayPointerFieldTest
+External.Tests.ExternalFieldTest subclass: #'External.Tests.StructureArrayPointerFieldTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-StructureArrayPointerFieldTest guid: (GUID fromString: '{05db20c0-4d73-4853-8820-50302b095632}')!
-StructureArrayPointerFieldTest comment: ''!
-!StructureArrayPointerFieldTest categoriesForClass!Unclassified! !
-!StructureArrayPointerFieldTest methodsFor!
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+External.Tests.StructureArrayPointerFieldTest guid: (Core.GUID fromString: '{05db20c0-4d73-4853-8820-50302b095632}')!
+External.Tests.StructureArrayPointerFieldTest comment: ''!
+!External.Tests.StructureArrayPointerFieldTest categoriesForClass!Unclassified! !
+!External.Tests.StructureArrayPointerFieldTest methodsFor!
 
 testGenerateAccessorsForSizedArray
 	| structClass actual expected data struct |
-	structClass := ExternalStructure newAnonymousSubclass.
+	structClass := Structure newAnonymousSubclass.
 	structClass class
 		basicCompile: 'defineFields
 		self defineField: #Test
@@ -23,7 +24,7 @@ testGenerateAccessorsForSizedArray
 			offset: 4'.
 	structClass recompileDefinition.
 	actual := (structClass compiledMethodAt: #Test:) parseTree.
-	expected := SmalltalkParser
+	expected := Parser
 				parseMethod: 'Test: aStructureArray bytes uintPtrAtOffset: _OffsetOf_Test put: aStructureArray yourAddress. self Size: aStructureArray size'.
 	self assert: actual equals: expected.
 
@@ -45,5 +46,5 @@ testGenerateAccessorsForSizedArray
 	struct Test: data.
 	self assert: struct Size equals: 2.
 	self assert: struct Test equals: data! !
-!StructureArrayPointerFieldTest categoriesFor: #testGenerateAccessorsForSizedArray!public! !
+!External.Tests.StructureArrayPointerFieldTest categoriesFor: #testGenerateAccessorsForSizedArray!public! !
 

@@ -1,16 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ExternalArrayTest subclass: #GenericExternalArrayTest
+External.Tests.ExternalArrayTest subclass: #'External.Tests.GenericExternalArrayTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-GenericExternalArrayTest guid: (GUID fromString: '{69952948-3aa8-44c5-956f-8731aa221d5f}')!
-GenericExternalArrayTest isAbstract: true!
-GenericExternalArrayTest comment: ''!
-!GenericExternalArrayTest categoriesForClass!Unclassified! !
-!GenericExternalArrayTest methodsFor!
+External.Tests.GenericExternalArrayTest guid: (Core.GUID fromString: '{69952948-3aa8-44c5-956f-8731aa221d5f}')!
+External.Tests.GenericExternalArrayTest isNonInstantiable: true!
+External.Tests.GenericExternalArrayTest comment: ''!
+!External.Tests.GenericExternalArrayTest categoriesForClass!Unclassified! !
+!External.Tests.GenericExternalArrayTest methodsFor!
 
 arrayValueString: eachValue
 	^eachValue displayString!
@@ -18,7 +18,7 @@ arrayValueString: eachValue
 elementClassNames
 	^#(#SWORD #SDWORD #FLOAT #DOUBLE #CURRENCY #BSTR #HRESULT #VARIANT_BOOL #VARIANT #DECIMAL #SBYTE #BYTE)!
 
-elementFromValue: anObject
+elementFromValue: anObject 
 	^self numericElementClass fromObject: anObject!
 
 elementToValue: element 
@@ -39,11 +39,11 @@ testInvalidLength
 	"#1051."
 
 	self should: [self arrayClass length: -1 elementClass: DWORD] raise: Error! !
-!GenericExternalArrayTest categoriesFor: #arrayValueString:!private!unit tests! !
-!GenericExternalArrayTest categoriesFor: #elementClassNames!constants!private! !
-!GenericExternalArrayTest categoriesFor: #elementFromValue:!private!unit tests! !
-!GenericExternalArrayTest categoriesFor: #elementToValue:!private!unit tests! !
-!GenericExternalArrayTest categoriesFor: #numericElementClass!constants!private! !
-!GenericExternalArrayTest categoriesFor: #testElementSize!public!unit tests! !
-!GenericExternalArrayTest categoriesFor: #testInvalidLength!public!unit tests! !
+!External.Tests.GenericExternalArrayTest categoriesFor: #arrayValueString:!private!unit tests! !
+!External.Tests.GenericExternalArrayTest categoriesFor: #elementClassNames!constants!private! !
+!External.Tests.GenericExternalArrayTest categoriesFor: #elementFromValue:!private!unit tests! !
+!External.Tests.GenericExternalArrayTest categoriesFor: #elementToValue:!private!unit tests! !
+!External.Tests.GenericExternalArrayTest categoriesFor: #numericElementClass!constants!private! !
+!External.Tests.GenericExternalArrayTest categoriesFor: #testElementSize!public!unit tests! !
+!External.Tests.GenericExternalArrayTest categoriesFor: #testInvalidLength!public!unit tests! !
 

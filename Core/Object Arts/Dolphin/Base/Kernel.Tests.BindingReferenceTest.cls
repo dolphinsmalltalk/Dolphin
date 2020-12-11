@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-AbstractBindingReferenceTest subclass: #BindingReferenceTest
+Kernel.Tests.AbstractBindingReferenceTest subclass: #'Kernel.Tests.BindingReferenceTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-BindingReferenceTest guid: (GUID fromString: '{bc0780da-05e7-464d-af4f-48755f8f8d52}')!
-BindingReferenceTest comment: ''!
-!BindingReferenceTest categoriesForClass!Unclassified! !
-!BindingReferenceTest methodsFor!
+Kernel.Tests.BindingReferenceTest guid: (Core.GUID fromString: '{bc0780da-05e7-464d-af4f-48755f8f8d52}')!
+Kernel.Tests.BindingReferenceTest comment: ''!
+!Kernel.Tests.BindingReferenceTest categoriesForClass!Unclassified! !
+!Kernel.Tests.BindingReferenceTest methodsFor!
 
 subjectClass
 	^BindingReference!
@@ -17,8 +17,8 @@ subjectClass
 testAsQualifiedReference
 	| object |
 	super testAsQualifiedReference.
-	object := self subjectClass path: #(#Object).
-	self assert: 'Object' asQualifiedReference equals: object.
+	object := self subjectClass path: #(#'Core.Object').
+	self assert: #'Core.Object' asQualifiedReference equals: object.
 	"Although these two binding refs would resolve to the same binding, they are not equivalent as one has a more specific path."
 	self deny: 'Smalltalk.Object' asQualifiedReference equals: object.
 	self assert: object asQualifiedReference identicalTo: object.
@@ -38,8 +38,8 @@ testLessOrEqual
 	b := self newTestSubjectWithPathString: 'Core.object'.
 	self assert: a <= a meta.
 	self deny: a <= b meta! !
-!BindingReferenceTest categoriesFor: #subjectClass!constants!private! !
-!BindingReferenceTest categoriesFor: #testAsQualifiedReference!public! !
-!BindingReferenceTest categoriesFor: #testIsValidGlobalName!public!unit tests! !
-!BindingReferenceTest categoriesFor: #testLessOrEqual!public!unit tests! !
+!Kernel.Tests.BindingReferenceTest categoriesFor: #subjectClass!constants!private! !
+!Kernel.Tests.BindingReferenceTest categoriesFor: #testAsQualifiedReference!public! !
+!Kernel.Tests.BindingReferenceTest categoriesFor: #testIsValidGlobalName!public!unit tests! !
+!Kernel.Tests.BindingReferenceTest categoriesFor: #testLessOrEqual!public!unit tests! !
 

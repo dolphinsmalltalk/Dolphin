@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-DolphinTest subclass: #ShlwapiLibraryTest
+Core.Tests.DolphinTest subclass: #'OS.Tests.ShlwapiLibraryTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ShlwapiLibraryTest guid: (GUID fromString: '{daf20828-d81b-4fb2-ada8-0607b224c723}')!
-ShlwapiLibraryTest comment: ''!
-!ShlwapiLibraryTest categoriesForClass!Unclassified! !
-!ShlwapiLibraryTest methodsFor!
+OS.Tests.ShlwapiLibraryTest guid: (Core.GUID fromString: '{daf20828-d81b-4fb2-ada8-0607b224c723}')!
+OS.Tests.ShlwapiLibraryTest comment: ''!
+!OS.Tests.ShlwapiLibraryTest categoriesForClass!Unclassified! !
+!OS.Tests.ShlwapiLibraryTest methodsFor!
 
 testPathCompactPathEx
 	| buf |
@@ -20,5 +20,5 @@ testPathCompactPathEx
 				cchMax: buf size - 1
 				dwFlags: 0).
 	self assert: buf trimNulls equals: 'c:\dolphin\'! !
-!ShlwapiLibraryTest categoriesFor: #testPathCompactPathEx!public!unit tests! !
+!OS.Tests.ShlwapiLibraryTest categoriesFor: #testPathCompactPathEx!public!unit tests! !
 

@@ -1,17 +1,17 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-UtfEncodedStringTest subclass: #Utf16StringTest
+Core.Tests.UtfEncodedStringTest subclass: #'Core.Tests.Utf16StringTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Utf16StringTest guid: (GUID fromString: '{e12792f7-8bb1-44b6-84ca-e8a620c9bc70}')!
-Utf16StringTest comment: ''!
-!Utf16StringTest categoriesForClass!Unclassified! !
-!Utf16StringTest methodsFor!
+Core.Tests.Utf16StringTest guid: (Core.GUID fromString: '{e12792f7-8bb1-44b6-84ca-e8a620c9bc70}')!
+Core.Tests.Utf16StringTest comment: ''!
+!Core.Tests.Utf16StringTest categoriesForClass!Unclassified! !
+!Core.Tests.Utf16StringTest methodsFor!
 
-assimilate: each 
+assimilate: each
 	^Character utf16Value: each asInteger!
 
 assimilateString: aString
@@ -37,7 +37,7 @@ decodeTestCases
 	^#($\0 $\x7F $\x80 $\x7FF $\x800 $\xFFFD $\x10000 $\x1F42C $\x1FFFD)!
 
 testAssociations
-	| subject actual |
+	| subject |
 	subject := self assimilateString: 'a£文🐬1🍺'.
 	self assert: subject associations
 		equals: {1 -> $a. 2 -> $£. 3 -> $\x6587. 4 -> $\x1F42C. 6 -> $1. 7 -> $\x1F37A}!
@@ -98,16 +98,16 @@ testUtf8StringConversion
 	self assert: bstr asArray equals: wideString asArray.
 	self assert: bstr asUtf16String equals: wideString.
 	self assert: bstr asUtf8String equals: byteString! !
-!Utf16StringTest categoriesFor: #assimilate:!helpers!private! !
-!Utf16StringTest categoriesFor: #assimilateString:!helpers!private! !
-!Utf16StringTest categoriesFor: #byteArrayForSequence:!helpers!private! !
-!Utf16StringTest categoriesFor: #collectionClass!helpers!private! !
-!Utf16StringTest categoriesFor: #decodeIncompleteContinuations!constants!private! !
-!Utf16StringTest categoriesFor: #decodeInvalidContinuations!constants!private! !
-!Utf16StringTest categoriesFor: #decodeTestCases!constants!private! !
-!Utf16StringTest categoriesFor: #testAssociations!public!unit tests! !
-!Utf16StringTest categoriesFor: #testCopyWithAtIndex!public!unit tests! !
-!Utf16StringTest categoriesFor: #testKeys!public!unit tests! !
-!Utf16StringTest categoriesFor: #testMixedConcatenation!public! !
-!Utf16StringTest categoriesFor: #testUtf8StringConversion!public!unit tests! !
+!Core.Tests.Utf16StringTest categoriesFor: #assimilate:!helpers!private! !
+!Core.Tests.Utf16StringTest categoriesFor: #assimilateString:!helpers!private! !
+!Core.Tests.Utf16StringTest categoriesFor: #byteArrayForSequence:!helpers!private! !
+!Core.Tests.Utf16StringTest categoriesFor: #collectionClass!helpers!private! !
+!Core.Tests.Utf16StringTest categoriesFor: #decodeIncompleteContinuations!constants!private! !
+!Core.Tests.Utf16StringTest categoriesFor: #decodeInvalidContinuations!constants!private! !
+!Core.Tests.Utf16StringTest categoriesFor: #decodeTestCases!constants!private! !
+!Core.Tests.Utf16StringTest categoriesFor: #testAssociations!public!unit tests! !
+!Core.Tests.Utf16StringTest categoriesFor: #testCopyWithAtIndex!public!unit tests! !
+!Core.Tests.Utf16StringTest categoriesFor: #testKeys!public!unit tests! !
+!Core.Tests.Utf16StringTest categoriesFor: #testMixedConcatenation!public! !
+!Core.Tests.Utf16StringTest categoriesFor: #testUtf8StringConversion!public!unit tests! !
 

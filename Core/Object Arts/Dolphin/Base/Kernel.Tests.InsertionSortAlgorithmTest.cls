@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-StableSortAlgorithmTest subclass: #InsertionSortAlgorithmTest
+Kernel.Tests.StableSortAlgorithmTest subclass: #'Kernel.Tests.InsertionSortAlgorithmTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-InsertionSortAlgorithmTest guid: (GUID fromString: '{6bc1bf9a-866d-4812-9e23-a22fa19d54c6}')!
-InsertionSortAlgorithmTest comment: ''!
-!InsertionSortAlgorithmTest categoriesForClass!Unclassified! !
-!InsertionSortAlgorithmTest methodsFor!
+Kernel.Tests.InsertionSortAlgorithmTest guid: (Core.GUID fromString: '{6bc1bf9a-866d-4812-9e23-a22fa19d54c6}')!
+Kernel.Tests.InsertionSortAlgorithmTest comment: ''!
+!Kernel.Tests.InsertionSortAlgorithmTest categoriesForClass!Unclassified! !
+!Kernel.Tests.InsertionSortAlgorithmTest methodsFor!
 
 algorithmToTest
 	^InsertionSortAlgorithm!
@@ -18,6 +18,6 @@ integerSortSize
 	"Insertion sort is very slow, so be a bit less ambitious"
 
 	^500! !
-!InsertionSortAlgorithmTest categoriesFor: #algorithmToTest!private!unit tests! !
-!InsertionSortAlgorithmTest categoriesFor: #integerSortSize!constants!private! !
+!Kernel.Tests.InsertionSortAlgorithmTest categoriesFor: #algorithmToTest!private!unit tests! !
+!Kernel.Tests.InsertionSortAlgorithmTest categoriesFor: #integerSortSize!constants!private! !
 

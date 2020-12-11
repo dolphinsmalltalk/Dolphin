@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-UtfEncodedStringTest subclass: #Utf8StringTest
+Core.Tests.UtfEncodedStringTest subclass: #'Core.Tests.Utf8StringTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Utf8StringTest guid: (GUID fromString: '{cc364a8d-e3ae-493e-8856-3f10c847c10d}')!
-Utf8StringTest comment: ''!
-!Utf8StringTest categoriesForClass!Unclassified! !
-!Utf8StringTest methodsFor!
+Core.Tests.Utf8StringTest guid: (Core.GUID fromString: '{cc364a8d-e3ae-493e-8856-3f10c847c10d}')!
+Core.Tests.Utf8StringTest comment: ''!
+!Core.Tests.Utf8StringTest categoriesForClass!Unclassified! !
+!Core.Tests.Utf8StringTest methodsFor!
 
 assimilateString: aString
 	^aString asUtf8String!
@@ -96,23 +96,23 @@ testEncodedSizeOf
 			ch := Character codePoint: cp ifInvalid: [Character newCode: Character.Utf32Mask | cp].
 			self assert: (subject encodedSizeOf: ch) equals: bytes].
 	"The maximum Unicode code point is a non-character."
-	max := Character newCode: Character.Utf32Mask | Win32Constants.MAX_UCSCHAR.
+	max := Character newCode: Character.Utf32Mask | OS.Win32Constants.MAX_UCSCHAR.
 	self assert: (subject encodedSizeOf: max) equals: 4!
 
 testKeys
 	| subject |
 	subject := self assimilateString: 'a£文🐬1🍺'.
 	self assert: subject keys equals: #(1 2 4 7 11 12)! !
-!Utf8StringTest categoriesFor: #assimilateString:!helpers!private! !
-!Utf8StringTest categoriesFor: #collectionClass!helpers!private! !
-!Utf8StringTest categoriesFor: #decodeIncompleteContinuations!constants!private! !
-!Utf8StringTest categoriesFor: #decodeInvalidContinuations!constants!private! !
-!Utf8StringTest categoriesFor: #decodeTestCases!constants!private! !
-!Utf8StringTest categoriesFor: #testAssociations!public!unit tests! !
-!Utf8StringTest categoriesFor: #testCopyWith!public!unit tests! !
-!Utf8StringTest categoriesFor: #testCopyWithAtIndex!public!unit tests! !
-!Utf8StringTest categoriesFor: #testDecodeNextFrom5and6Byte!public! !
-!Utf8StringTest categoriesFor: #testDecodeNextFromOverlong!public! !
-!Utf8StringTest categoriesFor: #testEncodedSizeOf!public! !
-!Utf8StringTest categoriesFor: #testKeys!public!unit tests! !
+!Core.Tests.Utf8StringTest categoriesFor: #assimilateString:!helpers!private! !
+!Core.Tests.Utf8StringTest categoriesFor: #collectionClass!helpers!private! !
+!Core.Tests.Utf8StringTest categoriesFor: #decodeIncompleteContinuations!constants!private! !
+!Core.Tests.Utf8StringTest categoriesFor: #decodeInvalidContinuations!constants!private! !
+!Core.Tests.Utf8StringTest categoriesFor: #decodeTestCases!constants!private! !
+!Core.Tests.Utf8StringTest categoriesFor: #testAssociations!public!unit tests! !
+!Core.Tests.Utf8StringTest categoriesFor: #testCopyWith!public!unit tests! !
+!Core.Tests.Utf8StringTest categoriesFor: #testCopyWithAtIndex!public!unit tests! !
+!Core.Tests.Utf8StringTest categoriesFor: #testDecodeNextFrom5and6Byte!public! !
+!Core.Tests.Utf8StringTest categoriesFor: #testDecodeNextFromOverlong!public! !
+!Core.Tests.Utf8StringTest categoriesFor: #testEncodedSizeOf!public! !
+!Core.Tests.Utf8StringTest categoriesFor: #testKeys!public!unit tests! !
 

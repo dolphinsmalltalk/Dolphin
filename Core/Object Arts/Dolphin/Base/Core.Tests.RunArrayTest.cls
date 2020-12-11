@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ArrayedCollectionTest subclass: #RunArrayTest
+Core.Tests.ArrayedCollectionTest subclass: #'Core.Tests.RunArrayTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-RunArrayTest guid: (GUID fromString: '{656416ed-47db-44fd-a18d-124febcc1ddf}')!
-RunArrayTest comment: ''!
-!RunArrayTest categoriesForClass!Unclassified! !
-!RunArrayTest methodsFor!
+Core.Tests.RunArrayTest guid: (Core.GUID fromString: '{656416ed-47db-44fd-a18d-124febcc1ddf}')!
+Core.Tests.RunArrayTest comment: ''!
+!Core.Tests.RunArrayTest categoriesForClass!Unclassified! !
+!Core.Tests.RunArrayTest methodsFor!
 
 collectionClass
 	^RunArray!
@@ -22,8 +22,8 @@ testReplaceIdentityWith
 
 testResize
 	self shouldnt: [super testResize] implement: #resize:! !
-!RunArrayTest categoriesFor: #collectionClass!helpers!private! !
-!RunArrayTest categoriesFor: #testReplaceFromToWithStartingAt!public! !
-!RunArrayTest categoriesFor: #testReplaceIdentityWith!public! !
-!RunArrayTest categoriesFor: #testResize!public!unit tests! !
+!Core.Tests.RunArrayTest categoriesFor: #collectionClass!helpers!private! !
+!Core.Tests.RunArrayTest categoriesFor: #testReplaceFromToWithStartingAt!public! !
+!Core.Tests.RunArrayTest categoriesFor: #testReplaceIdentityWith!public! !
+!Core.Tests.RunArrayTest categoriesFor: #testResize!public!unit tests! !
 

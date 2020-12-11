@@ -584,7 +584,8 @@ named: aString
 	^self lcid: lcid!
 
 reset
-	UserDefault := SystemDefault := nil!
+	SystemDefault := nil.
+	self userDefault: nil!
 
 systemLocales: anInteger 
 	"Private - Answer a collection of system locales, depending on the flags argument, anInteger."

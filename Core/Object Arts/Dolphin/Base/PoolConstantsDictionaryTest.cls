@@ -1,12 +1,12 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-DolphinTest subclass: #PoolConstantsDictionaryTest
+Core.Tests.DolphinTest subclass: #PoolConstantsDictionaryTest
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-PoolConstantsDictionaryTest guid: (GUID fromString: '{9c4827fc-93b3-4424-bec2-99f6bd7d76e9}')!
+PoolConstantsDictionaryTest guid: (Core.GUID fromString: '{9c4827fc-93b3-4424-bec2-99f6bd7d76e9}')!
 PoolConstantsDictionaryTest comment: ''!
 !PoolConstantsDictionaryTest categoriesForClass!Unclassified! !
 !PoolConstantsDictionaryTest methodsFor!
@@ -44,8 +44,8 @@ testRemoveKeyString
 	self assert: (dictionary removeKey: 'key') identicalTo: 1.
 	self should: [dictionary removeKey: 'key'] raise: NotFoundError! !
 !PoolConstantsDictionaryTest categoriesFor: #key3Value!private! !
-!PoolConstantsDictionaryTest categoriesFor: #newDictionary!helpers!public! !
-!PoolConstantsDictionaryTest categoriesFor: #newEmpty!helpers!public! !
+!PoolConstantsDictionaryTest categoriesFor: #newDictionary!private!unit tests! !
+!PoolConstantsDictionaryTest categoriesFor: #newEmpty!private!unit tests! !
 !PoolConstantsDictionaryTest categoriesFor: #testAtIfAbsentString!public!unit tests! !
 !PoolConstantsDictionaryTest categoriesFor: #testIncludesKey!public!unit tests! !
 !PoolConstantsDictionaryTest categoriesFor: #testRemoveKeyString!public!unit tests! !

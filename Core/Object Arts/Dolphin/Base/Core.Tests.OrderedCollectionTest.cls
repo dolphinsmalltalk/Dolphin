@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-SequencedGrowableCollectionTest subclass: #OrderedCollectionTest
+Core.Tests.SequencedGrowableCollectionTest subclass: #'Core.Tests.OrderedCollectionTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-OrderedCollectionTest guid: (GUID fromString: '{c951706f-236d-4671-b849-626652dda25e}')!
-OrderedCollectionTest comment: ''!
-!OrderedCollectionTest categoriesForClass!Unclassified! !
-!OrderedCollectionTest methodsFor!
+Core.Tests.OrderedCollectionTest guid: (Core.GUID fromString: '{c951706f-236d-4671-b849-626652dda25e}')!
+Core.Tests.OrderedCollectionTest comment: ''!
+!Core.Tests.OrderedCollectionTest categoriesForClass!Unclassified! !
+!Core.Tests.OrderedCollectionTest methodsFor!
 
 collectionClass
 	^OrderedCollection!
@@ -341,13 +341,13 @@ testStrongTalkTests
 				addLast: 1;
 				addLast: 3;
 				yourself)! !
-!OrderedCollectionTest categoriesFor: #collectionClass!constants!private! !
-!OrderedCollectionTest categoriesFor: #newCollection:!helpers!private! !
-!OrderedCollectionTest categoriesFor: #testFindFirst2!public!unit tests! !
-!OrderedCollectionTest categoriesFor: #testFirst2!public!unit tests! !
-!OrderedCollectionTest categoriesFor: #testFromToKeysAndValuesDo3!public!unit tests! !
-!OrderedCollectionTest categoriesFor: #testLast2!public!unit tests! !
-!OrderedCollectionTest categoriesFor: #testResize!public!unit tests! !
-!OrderedCollectionTest categoriesFor: #testSetSize!public!unit tests! !
-!OrderedCollectionTest categoriesFor: #testStrongTalkTests!public!testing! !
+!Core.Tests.OrderedCollectionTest categoriesFor: #collectionClass!constants!private! !
+!Core.Tests.OrderedCollectionTest categoriesFor: #newCollection:!helpers!private! !
+!Core.Tests.OrderedCollectionTest categoriesFor: #testFindFirst2!public!unit tests! !
+!Core.Tests.OrderedCollectionTest categoriesFor: #testFirst2!public!unit tests! !
+!Core.Tests.OrderedCollectionTest categoriesFor: #testFromToKeysAndValuesDo3!public!unit tests! !
+!Core.Tests.OrderedCollectionTest categoriesFor: #testLast2!public!unit tests! !
+!Core.Tests.OrderedCollectionTest categoriesFor: #testResize!public!unit tests! !
+!Core.Tests.OrderedCollectionTest categoriesFor: #testSetSize!public!unit tests! !
+!Core.Tests.OrderedCollectionTest categoriesFor: #testStrongTalkTests!public!testing! !
 

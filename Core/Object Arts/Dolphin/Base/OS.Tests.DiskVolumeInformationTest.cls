@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-DolphinTest subclass: #DiskVolumeInformationTest
+Core.Tests.DolphinTest subclass: #'OS.Tests.DiskVolumeInformationTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-DiskVolumeInformationTest guid: (GUID fromString: '{b920c262-99c0-49b9-8710-57611ad81543}')!
-DiskVolumeInformationTest comment: ''!
-!DiskVolumeInformationTest categoriesForClass!Unclassified! !
-!DiskVolumeInformationTest methodsFor!
+OS.Tests.DiskVolumeInformationTest guid: (Core.GUID fromString: '{b920c262-99c0-49b9-8710-57611ad81543}')!
+OS.Tests.DiskVolumeInformationTest comment: ''!
+!OS.Tests.DiskVolumeInformationTest categoriesForClass!Unclassified! !
+!OS.Tests.DiskVolumeInformationTest methodsFor!
 
 testFileSystemFlags
 	| subject |
@@ -17,5 +17,5 @@ testFileSystemFlags
 	self deny: subject fileSystemFlags equals: 0.
 	self skipUnless: [subject fileSystemName = 'NTFS'].
 	self assert: subject isSparseFileCapable! !
-!DiskVolumeInformationTest categoriesFor: #testFileSystemFlags!public! !
+!OS.Tests.DiskVolumeInformationTest categoriesFor: #testFileSystemFlags!public! !
 

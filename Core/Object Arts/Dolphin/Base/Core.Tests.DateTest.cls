@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-DolphinTest subclass: #DateTest
+Core.Tests.DolphinTest subclass: #'Core.Tests.DateTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-DateTest guid: (GUID fromString: '{b7ce73f6-9c8d-428d-8aae-86653eb3cf12}')!
-DateTest comment: ''!
-!DateTest categoriesForClass!Unclassified! !
-!DateTest methodsFor!
+Core.Tests.DateTest guid: (Core.GUID fromString: '{b7ce73f6-9c8d-428d-8aae-86653eb3cf12}')!
+Core.Tests.DateTest comment: ''!
+!Core.Tests.DateTest categoriesForClass!Unclassified! !
+!Core.Tests.DateTest methodsFor!
 
 testFromDays
 	| date today originalMethod testMethod date2 |
@@ -71,15 +71,18 @@ testStoreOn
 
 testYyyymmdd
 	| subject |
-	subject := Date newDay: 1 monthIndex: 2 year: 3.
+	subject := Date
+				newDay: 1
+				monthIndex: 2
+				year: 3.
 	self assert: subject yyyymmdd equals: '0003-02-01'.
-	subject := Date year: -5 month: 2 day: 28.
-	self assert: subject yyyymmdd equals: '-0005-02-28'.
-
-
-	! !
-!DateTest categoriesFor: #testFromDays!public!unit tests! !
-!DateTest categoriesFor: #testFromSeconds!public!unit tests! !
-!DateTest categoriesFor: #testStoreOn!public!testing! !
-!DateTest categoriesFor: #testYyyymmdd!public!unit tests! !
+	subject := Date
+				year: -5
+				month: 2
+				day: 28.
+	self assert: subject yyyymmdd equals: '-0005-02-28'! !
+!Core.Tests.DateTest categoriesFor: #testFromDays!public!unit tests! !
+!Core.Tests.DateTest categoriesFor: #testFromSeconds!public!unit tests! !
+!Core.Tests.DateTest categoriesFor: #testStoreOn!public!testing! !
+!Core.Tests.DateTest categoriesFor: #testYyyymmdd!public!unit tests! !
 

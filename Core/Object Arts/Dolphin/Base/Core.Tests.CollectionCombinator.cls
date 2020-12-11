@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Object subclass: #CollectionCombinator
+Core.Object subclass: #'Core.Tests.CollectionCombinator'
 	instanceVariableNames: 'resultProcessingBlock collectionOfArrays buffer'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-CollectionCombinator guid: (GUID fromString: '{569a1b4b-4d9d-4ddb-ab24-54771e8598e6}')!
-CollectionCombinator comment: 'For a collection of collections, enumerate all elements of the cartesian product. The code shows how recursion is used to implement variable nesting of loops.
+Core.Tests.CollectionCombinator guid: (Core.GUID fromString: '{569a1b4b-4d9d-4ddb-ab24-54771e8598e6}')!
+Core.Tests.CollectionCombinator comment: 'For a collection of collections, enumerate all elements of the cartesian product. The code shows how recursion is used to implement variable nesting of loops.
 The cartesian product is usually a huge collection, that should not be kept in memory. Therefore the user of the class has to provide a block with one argument that is called each time a tuple is constructed. When possible, that block should not build a collection of all these tuples, but should immediately drop unsuitable tuples. 
 To get a first impression, try this with ''inspect it'':
 
@@ -22,8 +22,8 @@ To get a first impression, try this with ''inspect it'':
          processWith: [:item |result addLast: item].
     result
          '!
-!CollectionCombinator categoriesForClass!BlockCLosures-Tests! !
-!CollectionCombinator methodsFor!
+!Core.Tests.CollectionCombinator categoriesForClass!BlockCLosures-Tests! !
+!Core.Tests.CollectionCombinator methodsFor!
 
 combineFromIdx: myIdx
 
@@ -40,14 +40,13 @@ combineFromIdx: myIdx
   " The buffer is a shared object and its contents are later changed. It is therefore necessary to make a copy. "!
 
 forArrays: anArray processWith: aBlock
-
- "  anArray is a kind of a sequenceable collection of arrays.
+	"  anArray is a kind of a sequenceable collection of arrays.
     aBlock is a block with one argument, that is used to process a  tuple immediately after it is constructed. "
-  collectionOfArrays := anArray.
-  resultProcessingBlock := aBlock.
-  buffer := Array new: anArray size.
-  self combineFromIdx: 1
-   ! !
-!CollectionCombinator categoriesFor: #combineFromIdx:!helpers!private! !
-!CollectionCombinator categoriesFor: #forArrays:processWith:!helpers!private! !
+
+	collectionOfArrays := anArray.
+	resultProcessingBlock := aBlock.
+	buffer := Array new: anArray size.
+	self combineFromIdx: 1! !
+!Core.Tests.CollectionCombinator categoriesFor: #combineFromIdx:!helpers!private! !
+!Core.Tests.CollectionCombinator categoriesFor: #forArrays:processWith:!helpers!private! !
 

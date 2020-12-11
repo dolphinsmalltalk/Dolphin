@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-DolphinTest subclass: #BlockClosureTest
+Core.Tests.DolphinTest subclass: #'Kernel.Tests.BlockClosureTest'
 	instanceVariableNames: 'x'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-BlockClosureTest guid: (GUID fromString: '{346b84aa-d94e-4ee6-9461-5195ef00255b}')!
-BlockClosureTest comment: ''!
-!BlockClosureTest categoriesForClass!Unclassified! !
-!BlockClosureTest methodsFor!
+Kernel.Tests.BlockClosureTest guid: (Core.GUID fromString: '{346b84aa-d94e-4ee6-9461-5195ef00255b}')!
+Kernel.Tests.BlockClosureTest comment: ''!
+!Kernel.Tests.BlockClosureTest categoriesForClass!Unclassified! !
+!Kernel.Tests.BlockClosureTest methodsFor!
 
 blockWithCopiedValue: anObject
 	^[anObject]!
@@ -72,50 +72,50 @@ testCopyingBlock
 
 testCull
 	[] cull: 1.
-	[:x | ] cull: 1.
-	self should: [[:x :y | ] cull: 1] raise: Error.
-	self should: [[:x :y :z | ] cull: 1] raise: Error.
-	self should: [[:x :y :z :a | ] cull: 1] raise: Error.
-	self should: [[:x :y :z :a :b | ] cull: 1] raise: Error.
+	[:a | ] cull: 1.
+	self should: [[:a :b | ] cull: 1] raise: Error.
+	self should: [[:a :b :c | ] cull: 1] raise: Error.
+	self should: [[:a :b :c :d | ] cull: 1] raise: Error.
+	self should: [[:a :b :c :d :e | ] cull: 1] raise: Error.
 	self assert: ([0] cull: 1) equals: 0.
-	self assert: ([:x | x] cull: 1) equals: 1!
+	self assert: ([:a | a] cull: 1) equals: 1!
 
 testCullCull
 	[] cull: 1 cull: 2.
-	[:x | ] cull: 1 cull: 2.
-	[:x :y | ] cull: 1 cull: 2.
-	self should: [[:x :y :z | ] cull: 1 cull: 2] raise: Error.
-	self should: [[:x :y :z :a | ] cull: 1 cull: 2] raise: Error.
-	self should: [[:x :y :z :a :b | ] cull: 1 cull: 2] raise: Error.
+	[:a | ] cull: 1 cull: 2.
+	[:a :b | ] cull: 1 cull: 2.
+	self should: [[:a :b :c | ] cull: 1 cull: 2] raise: Error.
+	self should: [[:a :b :c :d | ] cull: 1 cull: 2] raise: Error.
+	self should: [[:a :b :c :d :e | ] cull: 1 cull: 2] raise: Error.
 	self assert: ([0] cull: 1 cull: 2) equals: 0.
-	self assert: ([:x | x] cull: 1 cull: 2) equals: 1.
-	self assert: ([:x :y | y] cull: 1 cull: 2) equals: 2!
+	self assert: ([:a | a] cull: 1 cull: 2) equals: 1.
+	self assert: ([:a :b | b] cull: 1 cull: 2) equals: 2!
 
 testCullCullCull
 	[]
 		cull: 1
 		cull: 2
 		cull: 3.
-	[:x | ]
+	[:a | ]
 		cull: 1
 		cull: 2
 		cull: 3.
-	[:x :y | ]
+	[:a :b | ]
 		cull: 1
 		cull: 2
 		cull: 3.
-	[:x :y :z | ]
+	[:a :b :c | ]
 		cull: 1
 		cull: 2
 		cull: 3.
 	self should: 
-			[[:x :y :z :a | ]
+			[[:a :b :c :d | ]
 				cull: 1
 				cull: 2
 				cull: 3]
 		raise: Error.
 	self should: 
-			[[:x :y :z :a :b | ]
+			[[:a :b :c :d :e | ]
 				cull: 1
 				cull: 2
 				cull: 3]
@@ -125,17 +125,17 @@ testCullCullCull
 				cull: 2
 				cull: 3)
 		equals: 0.
-	self assert: ([:x | x]
+	self assert: ([:a | a]
 				cull: 1
 				cull: 2
 				cull: 3)
 		equals: 1.
-	self assert: ([:x :y | y]
+	self assert: ([:a :b | b]
 				cull: 1
 				cull: 2
 				cull: 3)
 		equals: 2.
-	self assert: ([:x :y :z | z]
+	self assert: ([:a :b :c | c]
 				cull: 1
 				cull: 2
 				cull: 3)
@@ -147,28 +147,28 @@ testCullCullCullCull
 		cull: 2
 		cull: 3
 		cull: 4.
-	[:x | ]
+	[:a | ]
 		cull: 1
 		cull: 2
 		cull: 3
 		cull: 4.
-	[:x :y | ]
+	[:a :b | ]
 		cull: 1
 		cull: 2
 		cull: 3
 		cull: 4.
-	[:x :y :z | ]
+	[:a :b :c | ]
 		cull: 1
 		cull: 2
 		cull: 3
 		cull: 4.
-	[:x :y :z :a | ]
+	[:a :b :c :d | ]
 		cull: 1
 		cull: 2
 		cull: 3
 		cull: 4.
 	self should: 
-			[[:x :y :z :a :b | ]
+			[[:a :b :c :d :e | ]
 				cull: 1
 				cull: 2
 				cull: 3
@@ -180,25 +180,25 @@ testCullCullCullCull
 				cull: 3
 				cull: 4)
 		equals: 0.
-	self assert: ([:x | x]
+	self assert: ([:a | a]
 				cull: 1
 				cull: 2
 				cull: 3
 				cull: 4)
 		equals: 1.
-	self assert: ([:x :y | y]
+	self assert: ([:a :b | b]
 				cull: 1
 				cull: 2
 				cull: 3
 				cull: 4)
 		equals: 2.
-	self assert: ([:x :y :z | z]
+	self assert: ([:a :b :c | c]
 				cull: 1
 				cull: 2
 				cull: 3
 				cull: 4)
 		equals: 3.
-	self assert: ([:x :y :z :a | a]
+	self assert: ([:a :b :c :d | d]
 				cull: 1
 				cull: 2
 				cull: 3
@@ -330,22 +330,22 @@ testValueWithArguments
 		should: [[:i | 3 + 4] valueWithArguments: #(1 2)]
 		raise: Error
 		matching: [:err | err description = 'Block expects 1 argument(s), 2 given']! !
-!BlockClosureTest categoriesFor: #blockWithCopiedValue:!helpers!private! !
-!BlockClosureTest categoriesFor: #nestedReturn!helpers!private! !
-!BlockClosureTest categoriesFor: #nestedReturn1!helpers!private! !
-!BlockClosureTest categoriesFor: #nestedReturn2!helpers!private! !
-!BlockClosureTest categoriesFor: #nestedReturn3!helpers!private! !
-!BlockClosureTest categoriesFor: #testCopyingBlock!public!unit tests! !
-!BlockClosureTest categoriesFor: #testCull!public!tests / evaluating! !
-!BlockClosureTest categoriesFor: #testCullCull!public!tests / evaluating! !
-!BlockClosureTest categoriesFor: #testCullCullCull!public!tests / evaluating! !
-!BlockClosureTest categoriesFor: #testCullCullCullCull!public!tests / evaluating! !
-!BlockClosureTest categoriesFor: #testEmptyBlock!public!unit tests! !
-!BlockClosureTest categoriesFor: #testEnsure!public!unit tests! !
-!BlockClosureTest categoriesFor: #testEqualityOfBlocksFromSameMethod!public!unit tests! !
-!BlockClosureTest categoriesFor: #testNesting!public!unit tests! !
-!BlockClosureTest categoriesFor: #testNoArguments!public!unit tests! !
-!BlockClosureTest categoriesFor: #testOneArgument!public!unit tests! !
-!BlockClosureTest categoriesFor: #testRecursiveBlock!public!unit tests! !
-!BlockClosureTest categoriesFor: #testValueWithArguments!public!unit tests! !
+!Kernel.Tests.BlockClosureTest categoriesFor: #blockWithCopiedValue:!helpers!private! !
+!Kernel.Tests.BlockClosureTest categoriesFor: #nestedReturn!helpers!private! !
+!Kernel.Tests.BlockClosureTest categoriesFor: #nestedReturn1!helpers!private! !
+!Kernel.Tests.BlockClosureTest categoriesFor: #nestedReturn2!helpers!private! !
+!Kernel.Tests.BlockClosureTest categoriesFor: #nestedReturn3!helpers!private! !
+!Kernel.Tests.BlockClosureTest categoriesFor: #testCopyingBlock!public!unit tests! !
+!Kernel.Tests.BlockClosureTest categoriesFor: #testCull!public!tests / evaluating! !
+!Kernel.Tests.BlockClosureTest categoriesFor: #testCullCull!public!tests / evaluating! !
+!Kernel.Tests.BlockClosureTest categoriesFor: #testCullCullCull!public!tests / evaluating! !
+!Kernel.Tests.BlockClosureTest categoriesFor: #testCullCullCullCull!public!tests / evaluating! !
+!Kernel.Tests.BlockClosureTest categoriesFor: #testEmptyBlock!public!unit tests! !
+!Kernel.Tests.BlockClosureTest categoriesFor: #testEnsure!public!unit tests! !
+!Kernel.Tests.BlockClosureTest categoriesFor: #testEqualityOfBlocksFromSameMethod!public!unit tests! !
+!Kernel.Tests.BlockClosureTest categoriesFor: #testNesting!public!unit tests! !
+!Kernel.Tests.BlockClosureTest categoriesFor: #testNoArguments!public!unit tests! !
+!Kernel.Tests.BlockClosureTest categoriesFor: #testOneArgument!public!unit tests! !
+!Kernel.Tests.BlockClosureTest categoriesFor: #testRecursiveBlock!public!unit tests! !
+!Kernel.Tests.BlockClosureTest categoriesFor: #testValueWithArguments!public!unit tests! !
 

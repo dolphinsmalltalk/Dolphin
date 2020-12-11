@@ -139,7 +139,7 @@ dict keysAndValuesDo: [ :protocolGroupName :groupProtocols |
 	class := class select: [ :each || symbol |
 		symbol := Symbol findInterned: each.
 		symbol notNil 
-			and: [ (Smalltalk at: symbol ifAbsent: [ nil ]) notNil ]
+			and: [ (symbol asQualifiedReference valueOrNil) notNil ]
 	].
 
 	ProtocolSpec

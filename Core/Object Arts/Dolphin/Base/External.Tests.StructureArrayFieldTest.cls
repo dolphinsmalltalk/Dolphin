@@ -1,14 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ExternalFieldTest subclass: #StructureArrayFieldTest
+External.Tests.ExternalFieldTest subclass: #'External.Tests.StructureArrayFieldTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-StructureArrayFieldTest guid: (GUID fromString: '{643619b7-e103-4887-bc6b-533f1a9c1d98}')!
-StructureArrayFieldTest comment: ''!
-!StructureArrayFieldTest categoriesForClass!Unclassified! !
-!StructureArrayFieldTest methodsFor!
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+External.Tests.StructureArrayFieldTest guid: (Core.GUID fromString: '{643619b7-e103-4887-bc6b-533f1a9c1d98}')!
+External.Tests.StructureArrayFieldTest comment: ''!
+!External.Tests.StructureArrayFieldTest categoriesForClass!Unclassified! !
+!External.Tests.StructureArrayFieldTest methodsFor!
 
 testReadFrom
 	| struct struct2 subject |
@@ -25,6 +26,6 @@ testWriteInto
 	subject offset: 8.
 	subject writeInto: struct value: (DWORDArray withAll: #(10 11 12 13)) bytes.
 	self assert: struct asArray equals: {0 @ 0. 10 @ 11. 12 @ 13. 0 @ 0}! !
-!StructureArrayFieldTest categoriesFor: #testReadFrom!public! !
-!StructureArrayFieldTest categoriesFor: #testWriteInto!public! !
+!External.Tests.StructureArrayFieldTest categoriesFor: #testReadFrom!public! !
+!External.Tests.StructureArrayFieldTest categoriesFor: #testWriteInto!public! !
 

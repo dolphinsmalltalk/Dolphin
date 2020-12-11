@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-DolphinTest subclass: #ExternalLibraryTest
+Core.Tests.DolphinTest subclass: #'External.Tests.LibraryTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ExternalLibraryTest guid: (GUID fromString: '{52518745-7c3c-4567-8599-3090af0e6567}')!
-ExternalLibraryTest comment: ''!
-!ExternalLibraryTest categoriesForClass!Unclassified! !
-!ExternalLibraryTest methodsFor!
+External.Tests.LibraryTest guid: (Core.GUID fromString: '{52518745-7c3c-4567-8599-3090af0e6567}')!
+External.Tests.LibraryTest comment: ''!
+!External.Tests.LibraryTest categoriesForClass!Unclassified! !
+!External.Tests.LibraryTest methodsFor!
 
 makeTestMethodFrom: anExternalMethod overlapped: aBoolean 
 	^aBoolean 
@@ -27,7 +27,7 @@ testInvalidOverlappedCallArguments
 testSingletonSerialisation
 	| singletons array bytes |
 	singletons := {KernelLibrary default. VersionLibrary default. UserLibrary default}.
-	array := #(#'!!STL' 3 98 3 1114638 ##(Smalltalk.STBSingletonProxy) 8 ##(Smalltalk.KernelLibrary) 8 #default 426 8 ##(Smalltalk.VersionLibrary) 464 426 8 ##(Smalltalk.UserLibrary) 464).
+	array := #(#'!!STL' 3 98 3 1114638 ##(Kernel.STBSingletonProxy) 8 ##(OS.KernelLibrary) 8 #default 426 8 ##(OS.VersionLibrary) 464 426 8 ##(UserLibrary) 464).
 	self assert: ((Object fromLiteralStoreArray: array) asIdentitySet - singletons) isEmpty.
 	array := singletons literalStoreArray.
 	self assert: ((Object fromLiteralStoreArray: array) asIdentitySet - singletons) isEmpty.
@@ -37,7 +37,7 @@ testSingletonSerialisation
 	self assert: ((Object fromBinaryStoreBytes: bytes) asIdentitySet - singletons) isEmpty!
 
 verifyInvalidCallArguments: aBoolean
-	| apiCall errorClass obj |
+	| apiCall errorClass obj gdiLibrary |
 	obj := Object new.
 	errorClass := KernelLibrary default invalidArgErrorClass.
 	apiCall := self makeTestMethodFrom: KernelLibrary >> #outputDebugString: overlapped: aBoolean.
@@ -56,7 +56,7 @@ verifyInvalidCallArguments: aBoolean
 		matching: 
 			[:ex |
 			ex hresult = (HRESULT fromPrimitiveFailureCode: _PrimitiveFailureCode.InvalidParameter2)
-				and: [ex argument == obj and: [ex type = (WIN32_FIND_DATAW name , '*')]]].
+				and: [ex argument == obj and: [ex type = (WIN32_FIND_DATAW fullName , '*')]]].
 	apiCall := self makeTestMethodFrom: UserLibrary >> #fillRect:lprc:hbr: overlapped: aBoolean.
 	self
 		should: [apiCall value: UserLibrary default withArguments: {obj. ByteArray newFixed: 16. nil}]
@@ -71,7 +71,7 @@ verifyInvalidCallArguments: aBoolean
 		matching: 
 			[:ex |
 			ex hresult = (HRESULT fromPrimitiveFailureCode: _PrimitiveFailureCode.InvalidParameter2)
-				and: [ex argument == obj and: [ex type = 'RECT*']]].
+				and: [ex argument == obj and: [ex type = 'OS.RECTL*']]].
 	self
 		should: [apiCall value: UserLibrary default withArguments: {nil. ByteArray newFixed: 16. obj}]
 		raise: errorClass
@@ -80,16 +80,17 @@ verifyInvalidCallArguments: aBoolean
 			ex hresult = (HRESULT fromPrimitiveFailureCode: _PrimitiveFailureCode.InvalidParameter3)
 				and: [ex argument == obj and: [ex type = 'handle']]].
 	"The rare case of an API with more than 12 parameters, and the error is in the 13th"
-	apiCall := self makeTestMethodFrom: GDILibrary
+	gdiLibrary := #{OS.GDILibrary} value.
+	apiCall := self makeTestMethodFrom: gdiLibrary
 						>> #stretchDIBits:xDest:yDest:nDestWidth:nDestHeight:xSrc:ySrc:nSrcWidth:nSrcHeight:lpBits:lpBitsInfo:iUsage:dwRop:
 				overlapped: aBoolean.
 	self
-		should: [apiCall value: GDILibrary default withArguments: #(nil 0 0 0 0 0 0 0 0 nil nil 0 's')]
+		should: [apiCall value: gdiLibrary default withArguments: #(nil 0 0 0 0 0 0 0 0 nil nil 0 's')]
 		raise: HRESULTError
 		matching: [:ex | ex hresult = (HRESULT fromPrimitiveFailureCode: _PrimitiveFailureCode.InvalidParameter)]! !
-!ExternalLibraryTest categoriesFor: #makeTestMethodFrom:overlapped:!helpers!private! !
-!ExternalLibraryTest categoriesFor: #testInvalidCallArguments!public!unit tests! !
-!ExternalLibraryTest categoriesFor: #testInvalidOverlappedCallArguments!public!unit tests! !
-!ExternalLibraryTest categoriesFor: #testSingletonSerialisation!public!unit tests! !
-!ExternalLibraryTest categoriesFor: #verifyInvalidCallArguments:!helpers!private! !
+!External.Tests.LibraryTest categoriesFor: #makeTestMethodFrom:overlapped:!helpers!private! !
+!External.Tests.LibraryTest categoriesFor: #testInvalidCallArguments!public!unit tests! !
+!External.Tests.LibraryTest categoriesFor: #testInvalidOverlappedCallArguments!public!unit tests! !
+!External.Tests.LibraryTest categoriesFor: #testSingletonSerialisation!public!unit tests! !
+!External.Tests.LibraryTest categoriesFor: #verifyInvalidCallArguments:!helpers!private! !
 

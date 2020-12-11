@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-IntegerTest subclass: #SmallIntegerTest
+Core.Tests.IntegerTest subclass: #'Core.Tests.SmallIntegerTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-SmallIntegerTest guid: (GUID fromString: '{3fc98bda-cdeb-45ea-a355-2968f5fd5e3a}')!
-SmallIntegerTest comment: ''!
-!SmallIntegerTest categoriesForClass!Unclassified! !
-!SmallIntegerTest methodsFor!
+Core.Tests.SmallIntegerTest guid: (Core.GUID fromString: '{3fc98bda-cdeb-45ea-a355-2968f5fd5e3a}')!
+Core.Tests.SmallIntegerTest comment: ''!
+!Core.Tests.SmallIntegerTest categoriesForClass!Unclassified! !
+!Core.Tests.SmallIntegerTest methodsFor!
 
 canonicalInstance
 	^123!
@@ -299,43 +299,43 @@ testSubtract
 	"Coercion to float"
 
 	self assert: (5 - 2.125 equals: 2.875)! !
-!SmallIntegerTest categoriesFor: #canonicalInstance!public!unit tests! !
-!SmallIntegerTest categoriesFor: #testAbs!public!unit tests! !
-!SmallIntegerTest categoriesFor: #testAllMask!public!unit tests! !
-!SmallIntegerTest categoriesFor: #testAnyMask!public!unit tests! !
-!SmallIntegerTest categoriesFor: #testBasicNew!public!unit tests! !
-!SmallIntegerTest categoriesFor: #testBitAnd!public!unit tests! !
-!SmallIntegerTest categoriesFor: #testBitOr!public!unit tests! !
-!SmallIntegerTest categoriesFor: #testBitShift!public!unit tests! !
-!SmallIntegerTest categoriesFor: #testDecimalDigitLength!public!unit tests! !
-!SmallIntegerTest categoriesFor: #testDigitLength!public!unit tests! !
-!SmallIntegerTest categoriesFor: #testDivide!public!unit tests! !
-!SmallIntegerTest categoriesFor: #testEven!public!unit tests! !
-!SmallIntegerTest categoriesFor: #testExp10!public!unit tests! !
-!SmallIntegerTest categoriesFor: #testGcd!public!unit tests! !
-!SmallIntegerTest categoriesFor: #testHighBit!public!unit tests! !
-!SmallIntegerTest categoriesFor: #testIntegerDivide!public!unit tests! !
-!SmallIntegerTest categoriesFor: #testLargeSmallComparisons!public!unit tests! !
-!SmallIntegerTest categoriesFor: #testLcm!public!unit tests! !
-!SmallIntegerTest categoriesFor: #testLowBit!public!unit tests! !
-!SmallIntegerTest categoriesFor: #testMaxVal!public!unit tests! !
-!SmallIntegerTest categoriesFor: #testMinMax!public!unit tests! !
-!SmallIntegerTest categoriesFor: #testMinVal!public!unit tests! !
-!SmallIntegerTest categoriesFor: #testModulo!public!unit tests! !
-!SmallIntegerTest categoriesFor: #testNew!public!unit tests! !
-!SmallIntegerTest categoriesFor: #testNoMask!public!unit tests! !
-!SmallIntegerTest categoriesFor: #testNumberOfDigitsInBase!public!unit tests! !
-!SmallIntegerTest categoriesFor: #testOverflow!public!unit tests! !
-!SmallIntegerTest categoriesFor: #testPrimesUpTo!public!unit tests! !
-!SmallIntegerTest categoriesFor: #testPrintString!public!unit tests! !
-!SmallIntegerTest categoriesFor: #testPrintStringRadix!public!unit tests! !
-!SmallIntegerTest categoriesFor: #testQuo!public!unit tests! !
-!SmallIntegerTest categoriesFor: #testRaisedToInteger!public!unit tests! !
-!SmallIntegerTest categoriesFor: #testReciprocal!public!unit tests! !
-!SmallIntegerTest categoriesFor: #testRem!public!unit tests! !
-!SmallIntegerTest categoriesFor: #testSubtract!public!unit tests! !
+!Core.Tests.SmallIntegerTest categoriesFor: #canonicalInstance!public!unit tests! !
+!Core.Tests.SmallIntegerTest categoriesFor: #testAbs!public!unit tests! !
+!Core.Tests.SmallIntegerTest categoriesFor: #testAllMask!public!unit tests! !
+!Core.Tests.SmallIntegerTest categoriesFor: #testAnyMask!public!unit tests! !
+!Core.Tests.SmallIntegerTest categoriesFor: #testBasicNew!public!unit tests! !
+!Core.Tests.SmallIntegerTest categoriesFor: #testBitAnd!public!unit tests! !
+!Core.Tests.SmallIntegerTest categoriesFor: #testBitOr!public!unit tests! !
+!Core.Tests.SmallIntegerTest categoriesFor: #testBitShift!public!unit tests! !
+!Core.Tests.SmallIntegerTest categoriesFor: #testDecimalDigitLength!public!unit tests! !
+!Core.Tests.SmallIntegerTest categoriesFor: #testDigitLength!public!unit tests! !
+!Core.Tests.SmallIntegerTest categoriesFor: #testDivide!public!unit tests! !
+!Core.Tests.SmallIntegerTest categoriesFor: #testEven!public!unit tests! !
+!Core.Tests.SmallIntegerTest categoriesFor: #testExp10!public!unit tests! !
+!Core.Tests.SmallIntegerTest categoriesFor: #testGcd!public!unit tests! !
+!Core.Tests.SmallIntegerTest categoriesFor: #testHighBit!public!unit tests! !
+!Core.Tests.SmallIntegerTest categoriesFor: #testIntegerDivide!public!unit tests! !
+!Core.Tests.SmallIntegerTest categoriesFor: #testLargeSmallComparisons!public!unit tests! !
+!Core.Tests.SmallIntegerTest categoriesFor: #testLcm!public!unit tests! !
+!Core.Tests.SmallIntegerTest categoriesFor: #testLowBit!public!unit tests! !
+!Core.Tests.SmallIntegerTest categoriesFor: #testMaxVal!public!unit tests! !
+!Core.Tests.SmallIntegerTest categoriesFor: #testMinMax!public!unit tests! !
+!Core.Tests.SmallIntegerTest categoriesFor: #testMinVal!public!unit tests! !
+!Core.Tests.SmallIntegerTest categoriesFor: #testModulo!public!unit tests! !
+!Core.Tests.SmallIntegerTest categoriesFor: #testNew!public!unit tests! !
+!Core.Tests.SmallIntegerTest categoriesFor: #testNoMask!public!unit tests! !
+!Core.Tests.SmallIntegerTest categoriesFor: #testNumberOfDigitsInBase!public!unit tests! !
+!Core.Tests.SmallIntegerTest categoriesFor: #testOverflow!public!unit tests! !
+!Core.Tests.SmallIntegerTest categoriesFor: #testPrimesUpTo!public!unit tests! !
+!Core.Tests.SmallIntegerTest categoriesFor: #testPrintString!public!unit tests! !
+!Core.Tests.SmallIntegerTest categoriesFor: #testPrintStringRadix!public!unit tests! !
+!Core.Tests.SmallIntegerTest categoriesFor: #testQuo!public!unit tests! !
+!Core.Tests.SmallIntegerTest categoriesFor: #testRaisedToInteger!public!unit tests! !
+!Core.Tests.SmallIntegerTest categoriesFor: #testReciprocal!public!unit tests! !
+!Core.Tests.SmallIntegerTest categoriesFor: #testRem!public!unit tests! !
+!Core.Tests.SmallIntegerTest categoriesFor: #testSubtract!public!unit tests! !
 
-!SmallIntegerTest class methodsFor!
+!Core.Tests.SmallIntegerTest class methodsFor!
 
 bitShiftTestCases
 	| highBit |
@@ -447,7 +447,6 @@ moduloTestCases
 				{SmallInteger maximum. SmallInteger minimum - 1. -2}.
 				{SmallInteger maximum. SmallInteger minimum + 1. 0}.
 				{SmallInteger maximum. 2.0. 1.0}.
-
 				{SmallInteger minimum. 1. 0}.
 				{SmallInteger minimum. -1. 0}.
 				{SmallInteger minimum. 2. 0}.
@@ -463,7 +462,6 @@ moduloTestCases
 				{SmallInteger minimum. SmallInteger maximum + 1. 0}.
 				{SmallInteger minimum. SmallInteger maximum + 2. 1}.
 				{SmallInteger minimum. 3.0. 2.0}.
-
 				{16r3FFFFFFF. Float pi. 1.4762530326843262}.
 				{16r3FFFFFFF. Float pi negated. -1.665339708328247}.
 				{-16r40000000. Float pi. 0.6653397083282471}.
@@ -491,8 +489,8 @@ quoTestCases
 				{-16r40000000. Float pi negated. 341782637}.
 				{16r3FFFFFFF. Float pi. 341782637}.
 				{16r3FFFFFFF. Float pi negated. -341782637}}! !
-!SmallIntegerTest class categoriesFor: #bitShiftTestCases!constants!public! !
-!SmallIntegerTest class categoriesFor: #integerDivideTestCases!constants!public! !
-!SmallIntegerTest class categoriesFor: #moduloTestCases!constants!public! !
-!SmallIntegerTest class categoriesFor: #quoTestCases!constants!public! !
+!Core.Tests.SmallIntegerTest class categoriesFor: #bitShiftTestCases!constants!public! !
+!Core.Tests.SmallIntegerTest class categoriesFor: #integerDivideTestCases!constants!public! !
+!Core.Tests.SmallIntegerTest class categoriesFor: #moduloTestCases!constants!public! !
+!Core.Tests.SmallIntegerTest class categoriesFor: #quoTestCases!constants!public! !
 

@@ -1,16 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-SequenceableCollectionTest subclass: #SequencedGrowableCollectionTest
+Core.Tests.SequenceableCollectionTest subclass: #'Core.Tests.SequencedGrowableCollectionTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-SequencedGrowableCollectionTest guid: (GUID fromString: '{7c5c4663-14ac-4420-85af-2c2644e54463}')!
-SequencedGrowableCollectionTest isAbstract: true!
-SequencedGrowableCollectionTest comment: ''!
-!SequencedGrowableCollectionTest categoriesForClass!Unclassified! !
-!SequencedGrowableCollectionTest methodsFor!
+Core.Tests.SequencedGrowableCollectionTest guid: (Core.GUID fromString: '{7c5c4663-14ac-4420-85af-2c2644e54463}')!
+Core.Tests.SequencedGrowableCollectionTest isNonInstantiable: true!
+Core.Tests.SequencedGrowableCollectionTest comment: ''!
+!Core.Tests.SequencedGrowableCollectionTest categoriesForClass!Unclassified! !
+!Core.Tests.SequencedGrowableCollectionTest methodsFor!
 
 testAddAllFirst
 	| sequence |
@@ -162,9 +162,9 @@ testCopyWithoutIndex
 						removeFirst;
 						yourself.
 			self assert: (subject copyWithoutIndex: each second) equals: (self newCollection: each third)]! !
-!SequencedGrowableCollectionTest categoriesFor: #testAddAllFirst!public!unit tests! !
-!SequencedGrowableCollectionTest categoriesFor: #testAddAllFirst2!public!unit tests! !
-!SequencedGrowableCollectionTest categoriesFor: #testAddAllLast!public!unit tests! !
-!SequencedGrowableCollectionTest categoriesFor: #testAddFirst!public!unit tests! !
-!SequencedGrowableCollectionTest categoriesFor: #testCopyWithoutIndex!public!unit tests! !
+!Core.Tests.SequencedGrowableCollectionTest categoriesFor: #testAddAllFirst!public!unit tests! !
+!Core.Tests.SequencedGrowableCollectionTest categoriesFor: #testAddAllFirst2!public!unit tests! !
+!Core.Tests.SequencedGrowableCollectionTest categoriesFor: #testAddAllLast!public!unit tests! !
+!Core.Tests.SequencedGrowableCollectionTest categoriesFor: #testAddFirst!public!unit tests! !
+!Core.Tests.SequencedGrowableCollectionTest categoriesFor: #testCopyWithoutIndex!public!unit tests! !
 

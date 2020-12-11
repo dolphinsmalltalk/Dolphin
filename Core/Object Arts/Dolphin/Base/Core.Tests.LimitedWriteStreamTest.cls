@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-WriteStreamTest subclass: #LimitedWriteStreamTest
+Core.Tests.WriteStreamTest subclass: #'Core.Tests.LimitedWriteStreamTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-LimitedWriteStreamTest guid: (GUID fromString: '{9744cad5-27af-421d-a0ce-d2c7d68cf05d}')!
-LimitedWriteStreamTest comment: ''!
-!LimitedWriteStreamTest categoriesForClass!Unclassified! !
-!LimitedWriteStreamTest methodsFor!
+Core.Tests.LimitedWriteStreamTest guid: (Core.GUID fromString: '{9744cad5-27af-421d-a0ce-d2c7d68cf05d}')!
+Core.Tests.LimitedWriteStreamTest comment: ''!
+!Core.Tests.LimitedWriteStreamTest categoriesForClass!Unclassified! !
+!Core.Tests.LimitedWriteStreamTest methodsFor!
 
 streamClass
 	^LimitedWriteStream!
@@ -239,18 +239,18 @@ testWithFromTo
 				assert: stream position equals: self stringSize * 2;
 				assert: stream contents equals: self string , self string;
 				assert: overLimit]! !
-!LimitedWriteStreamTest categoriesFor: #streamClass!helpers!private! !
-!LimitedWriteStreamTest categoriesFor: #testLimit!public!unit tests! !
-!LimitedWriteStreamTest categoriesFor: #testLimitBlock!public!unit tests! !
-!LimitedWriteStreamTest categoriesFor: #testNextColonPut!public!unit tests! !
-!LimitedWriteStreamTest categoriesFor: #testNextPut!public!unit tests! !
-!LimitedWriteStreamTest categoriesFor: #testNextPutAll!public!unit tests! !
-!LimitedWriteStreamTest categoriesFor: #testNextPutAllThroughLimit!public!unit tests! !
-!LimitedWriteStreamTest categoriesFor: #testOn!public!unit tests! !
-!LimitedWriteStreamTest categoriesFor: #testOnFromTo!public!unit tests! !
-!LimitedWriteStreamTest categoriesFor: #testOnLimitLimitBlock!public!unit tests! !
-!LimitedWriteStreamTest categoriesFor: #testOverFileStream!public!unit tests! !
-!LimitedWriteStreamTest categoriesFor: #testRecursionDetection!public!unit tests! !
-!LimitedWriteStreamTest categoriesFor: #testWith!public! !
-!LimitedWriteStreamTest categoriesFor: #testWithFromTo!public! !
+!Core.Tests.LimitedWriteStreamTest categoriesFor: #streamClass!helpers!private! !
+!Core.Tests.LimitedWriteStreamTest categoriesFor: #testLimit!public!unit tests! !
+!Core.Tests.LimitedWriteStreamTest categoriesFor: #testLimitBlock!public!unit tests! !
+!Core.Tests.LimitedWriteStreamTest categoriesFor: #testNextColonPut!public!unit tests! !
+!Core.Tests.LimitedWriteStreamTest categoriesFor: #testNextPut!public!unit tests! !
+!Core.Tests.LimitedWriteStreamTest categoriesFor: #testNextPutAll!public!unit tests! !
+!Core.Tests.LimitedWriteStreamTest categoriesFor: #testNextPutAllThroughLimit!public!unit tests! !
+!Core.Tests.LimitedWriteStreamTest categoriesFor: #testOn!public!unit tests! !
+!Core.Tests.LimitedWriteStreamTest categoriesFor: #testOnFromTo!public!unit tests! !
+!Core.Tests.LimitedWriteStreamTest categoriesFor: #testOnLimitLimitBlock!public!unit tests! !
+!Core.Tests.LimitedWriteStreamTest categoriesFor: #testOverFileStream!public!unit tests! !
+!Core.Tests.LimitedWriteStreamTest categoriesFor: #testRecursionDetection!public!unit tests! !
+!Core.Tests.LimitedWriteStreamTest categoriesFor: #testWith!public! !
+!Core.Tests.LimitedWriteStreamTest categoriesFor: #testWithFromTo!public! !
 

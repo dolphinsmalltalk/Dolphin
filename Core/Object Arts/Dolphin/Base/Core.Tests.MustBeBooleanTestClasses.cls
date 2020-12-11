@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-DolphinTestClassResource subclass: #MustBeBooleanTestClasses
+Core.Tests.DolphinTestClassResource subclass: #'Core.Tests.MustBeBooleanTestClasses'
 	instanceVariableNames: 'trueClass falseClass'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-MustBeBooleanTestClasses guid: (GUID fromString: '{7a283553-a0fa-4c3f-8502-7d21d0babca4}')!
-MustBeBooleanTestClasses comment: ''!
-!MustBeBooleanTestClasses categoriesForClass!Unclassified! !
-!MustBeBooleanTestClasses methodsFor!
+Core.Tests.MustBeBooleanTestClasses guid: (Core.GUID fromString: '{7a283553-a0fa-4c3f-8502-7d21d0babca4}')!
+Core.Tests.MustBeBooleanTestClasses comment: ''!
+!Core.Tests.MustBeBooleanTestClasses categoriesForClass!Unclassified! !
+!Core.Tests.MustBeBooleanTestClasses methodsFor!
 
 createClasses
 	trueClass := self
@@ -39,9 +39,9 @@ tearDown
 
 trueClass
 	^trueClass! !
-!MustBeBooleanTestClasses categoriesFor: #createClasses!public!unit tests! !
-!MustBeBooleanTestClasses categoriesFor: #falseClass!accessing!public! !
-!MustBeBooleanTestClasses categoriesFor: #isAvailable!public!Testing! !
-!MustBeBooleanTestClasses categoriesFor: #tearDown!public!Running! !
-!MustBeBooleanTestClasses categoriesFor: #trueClass!accessing!public! !
+!Core.Tests.MustBeBooleanTestClasses categoriesFor: #createClasses!public!unit tests! !
+!Core.Tests.MustBeBooleanTestClasses categoriesFor: #falseClass!accessing!public! !
+!Core.Tests.MustBeBooleanTestClasses categoriesFor: #isAvailable!public!Testing! !
+!Core.Tests.MustBeBooleanTestClasses categoriesFor: #tearDown!public!Running! !
+!Core.Tests.MustBeBooleanTestClasses categoriesFor: #trueClass!accessing!public! !
 

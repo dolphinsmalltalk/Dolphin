@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-DolphinTest subclass: #MemoryManagerTest
+Core.Tests.DolphinTest subclass: #'Kernel.Tests.MemoryManagerTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-MemoryManagerTest guid: (GUID fromString: '{088afee2-2321-4479-b639-9f5fdc0e4418}')!
-MemoryManagerTest comment: ''!
-!MemoryManagerTest categoriesForClass!Unclassified! !
-!MemoryManagerTest methodsFor!
+Kernel.Tests.MemoryManagerTest guid: (Core.GUID fromString: '{088afee2-2321-4479-b639-9f5fdc0e4418}')!
+Kernel.Tests.MemoryManagerTest comment: ''!
+!Kernel.Tests.MemoryManagerTest categoriesForClass!Unclassified! !
+!Kernel.Tests.MemoryManagerTest methodsFor!
 
 testBytesUsedByObject
 	| meman granularity |
@@ -54,6 +54,6 @@ testOtOverflow
 	subject compact.
 	1 to: max do: [:i | objects at: i put: Object new].
 	self assert: events notEmpty! !
-!MemoryManagerTest categoriesFor: #testBytesUsedByObject!public!unit tests! !
-!MemoryManagerTest categoriesFor: #testOtOverflow!public!unit tests! !
+!Kernel.Tests.MemoryManagerTest categoriesFor: #testBytesUsedByObject!public!unit tests! !
+!Kernel.Tests.MemoryManagerTest categoriesFor: #testOtOverflow!public!unit tests! !
 

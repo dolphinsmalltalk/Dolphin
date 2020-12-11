@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ArrayedCollectionTest subclass: #ArrayTest
+Core.Tests.ArrayedCollectionTest subclass: #'Core.Tests.ArrayTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ArrayTest guid: (GUID fromString: '{e642efa8-51b6-4f91-a4a0-e83c824052d6}')!
-ArrayTest comment: ''!
-!ArrayTest categoriesForClass!Unclassified! !
-!ArrayTest methodsFor!
+Core.Tests.ArrayTest guid: (Core.GUID fromString: '{e642efa8-51b6-4f91-a4a0-e83c824052d6}')!
+Core.Tests.ArrayTest comment: ''!
+!Core.Tests.ArrayTest categoriesForClass!Unclassified! !
+!Core.Tests.ArrayTest methodsFor!
 
 collectionClass
 	^Array!
@@ -42,7 +42,7 @@ testIsSelfEvaluating
 testLiteralStoreOn
 	| stream subject storeString rehydrated stlArray |
 	stream := Array writeStream.
-	subject := {Object. 1. 's'. {ArrayTest}}.
+	subject := {Object. 1. 's'. {Core.Tests.ArrayTest}}.
 	subject literalStoreOn: stream.
 	stlArray := stream contents.
 	stream := String writeStream.
@@ -191,17 +191,17 @@ testWithWithWithWithWith
 	"Invoke the method directly so we don't need to install it."
 	array2 := testMethod value: Array withArguments: #(1 2 3 4 5).
 	self assert: array2 equals: array! !
-!ArrayTest categoriesFor: #collectionClass!helpers!private! !
-!ArrayTest categoriesFor: #testCyclicRefPrinting!public! !
-!ArrayTest categoriesFor: #testIsLiteral!public!unit tests! !
-!ArrayTest categoriesFor: #testIsSelfEvaluating!public!unit tests! !
-!ArrayTest categoriesFor: #testLiteralStoreOn!public!unit tests! !
-!ArrayTest categoriesFor: #testLiteralStoreString!public!unit tests! !
-!ArrayTest categoriesFor: #testMixedConcatenation!public! !
-!ArrayTest categoriesFor: #testNonLiteralStoreOn!public!unit tests! !
-!ArrayTest categoriesFor: #testWith!public!unit tests! !
-!ArrayTest categoriesFor: #testWithWith!public!unit tests! !
-!ArrayTest categoriesFor: #testWithWithWith!public!unit tests! !
-!ArrayTest categoriesFor: #testWithWithWithWith!public!unit tests! !
-!ArrayTest categoriesFor: #testWithWithWithWithWith!public!unit tests! !
+!Core.Tests.ArrayTest categoriesFor: #collectionClass!helpers!private! !
+!Core.Tests.ArrayTest categoriesFor: #testCyclicRefPrinting!public! !
+!Core.Tests.ArrayTest categoriesFor: #testIsLiteral!public!unit tests! !
+!Core.Tests.ArrayTest categoriesFor: #testIsSelfEvaluating!public!unit tests! !
+!Core.Tests.ArrayTest categoriesFor: #testLiteralStoreOn!public!unit tests! !
+!Core.Tests.ArrayTest categoriesFor: #testLiteralStoreString!public!unit tests! !
+!Core.Tests.ArrayTest categoriesFor: #testMixedConcatenation!public! !
+!Core.Tests.ArrayTest categoriesFor: #testNonLiteralStoreString!public!unit tests! !
+!Core.Tests.ArrayTest categoriesFor: #testWith!public!unit tests! !
+!Core.Tests.ArrayTest categoriesFor: #testWithWith!public!unit tests! !
+!Core.Tests.ArrayTest categoriesFor: #testWithWithWith!public!unit tests! !
+!Core.Tests.ArrayTest categoriesFor: #testWithWithWithWith!public!unit tests! !
+!Core.Tests.ArrayTest categoriesFor: #testWithWithWithWithWith!public!unit tests! !
 

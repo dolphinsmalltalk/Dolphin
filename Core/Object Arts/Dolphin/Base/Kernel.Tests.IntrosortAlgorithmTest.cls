@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-SortAlgorithmTest subclass: #IntrosortAlgorithmTest
+Core.Tests.SortAlgorithmTest subclass: #'Kernel.Tests.IntrosortAlgorithmTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-IntrosortAlgorithmTest guid: (GUID fromString: '{95f49310-1090-4e7e-a46e-bc962a8ec984}')!
-IntrosortAlgorithmTest comment: ''!
-!IntrosortAlgorithmTest categoriesForClass!Unclassified! !
-!IntrosortAlgorithmTest methodsFor!
+Kernel.Tests.IntrosortAlgorithmTest guid: (Core.GUID fromString: '{95f49310-1090-4e7e-a46e-bc962a8ec984}')!
+Kernel.Tests.IntrosortAlgorithmTest comment: ''!
+!Kernel.Tests.IntrosortAlgorithmTest categoriesForClass!Unclassified! !
+!Kernel.Tests.IntrosortAlgorithmTest methodsFor!
 
 algorithmToTest
 	^IntrosortAlgorithm!
@@ -27,6 +27,6 @@ testNewSortBlock
 	"Invoke the method directly so we don't need to install it."
 	algo2 := testMethod value: self algorithmToTest withArguments: {block}.
 	self assert: algo2 sortBlock identicalTo: block! !
-!IntrosortAlgorithmTest categoriesFor: #algorithmToTest!private!unit tests! !
-!IntrosortAlgorithmTest categoriesFor: #testNewSortBlock!public!unit tests! !
+!Kernel.Tests.IntrosortAlgorithmTest categoriesFor: #algorithmToTest!private!unit tests! !
+!Kernel.Tests.IntrosortAlgorithmTest categoriesFor: #testNewSortBlock!public!unit tests! !
 

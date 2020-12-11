@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-SearchPolicyTest subclass: #AlwaysSearchPolicyTest
+Core.Tests.SearchPolicyTest subclass: #'Kernel.Tests.AlwaysSearchPolicyTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-AlwaysSearchPolicyTest guid: (GUID fromString: '{260acd79-36cb-42b0-b7ff-86b9991ebe0f}')!
-AlwaysSearchPolicyTest comment: ''!
-!AlwaysSearchPolicyTest categoriesForClass!Unclassified! !
-!AlwaysSearchPolicyTest methodsFor!
+Kernel.Tests.AlwaysSearchPolicyTest guid: (Core.GUID fromString: '{260acd79-36cb-42b0-b7ff-86b9991ebe0f}')!
+Kernel.Tests.AlwaysSearchPolicyTest comment: ''!
+!Kernel.Tests.AlwaysSearchPolicyTest categoriesForClass!Unclassified! !
+!Kernel.Tests.AlwaysSearchPolicyTest methodsFor!
 
 policyClass
 	^AlwaysSearchPolicy!
@@ -31,6 +31,6 @@ testCompareWith
 	self assert: (policy compare: #hash with: #identityHash).
 	self assert: (policy compare: $a with: $a).
 	self assert: (policy compare: $a with: $b)! !
-!AlwaysSearchPolicyTest categoriesFor: #policyClass!private!unit tests! !
-!AlwaysSearchPolicyTest categoriesFor: #testCompareWith!public!unit tests! !
+!Kernel.Tests.AlwaysSearchPolicyTest categoriesFor: #policyClass!private!unit tests! !
+!Kernel.Tests.AlwaysSearchPolicyTest categoriesFor: #testCompareWith!public!unit tests! !
 

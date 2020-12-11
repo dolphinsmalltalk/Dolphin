@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-DolphinTest subclass: #ProcessTest
+Core.Tests.DolphinTest subclass: #'Core.Tests.ProcessTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ProcessTest guid: (GUID fromString: '{3601a8c6-de0f-4218-a7df-40838259fc47}')!
-ProcessTest comment: ''!
-!ProcessTest categoriesForClass!Unclassified! !
-!ProcessTest methodsFor!
+Core.Tests.ProcessTest guid: (Core.GUID fromString: '{3601a8c6-de0f-4218-a7df-40838259fc47}')!
+Core.Tests.ProcessTest comment: ''!
+!Core.Tests.ProcessTest categoriesForClass!Unclassified! !
+!Core.Tests.ProcessTest methodsFor!
 
 assertBlock: copyBlockClosure in: copyProcess2 isCopyOf: srcBlockClosure in: sourceProcess2 visited: anIdentitySet
 	(anIdentitySet includes: copyBlockClosure) ifTrue: [^true].
@@ -164,47 +164,46 @@ assertExceptionHandler: copyExceptionHandler in: copyProcess2 isCopyOf: srcExcep
 				visited: anIdentitySet].
 	^true!
 
-assertObject: copyArg in: copyProcess2 isOrIsCopyOf: srcArg in: sourceProcess2 visited: anIdentitySet 
+assertObject: copyArg in: copyProcess2 isOrIsCopyOf: srcArg in: sourceProcess2 visited: anIdentitySet
 	| class |
 	class := srcArg class.
-	class == BlockClosure 
+	class == BlockClosure
 		ifTrue: 
-			[^self 
+			[^self
 				assertBlock: copyArg
 				in: copyProcess2
 				isCopyOf: srcArg
 				in: sourceProcess2
 				visited: anIdentitySet].
-	class == self methodContextClass 
+	class == self methodContextClass
 		ifTrue: 
-			[^self 
+			[^self
 				assertContext: copyArg
 				in: copyProcess2
 				isCopyOf: srcArg
 				in: sourceProcess2
 				visited: anIdentitySet].
-	(class inheritsFrom: ExceptionHandlerAbstract) 
+	(class inheritsFrom: ExceptionHandlerAbstract)
 		ifTrue: 
-			[^self 
+			[^self
 				assertExceptionHandler: copyArg
 				in: copyProcess2
 				isCopyOf: srcArg
 				in: sourceProcess2
 				visited: anIdentitySet].
-	self 
-		assert: ((copyArg == copyProcess2 and: [srcArg == sourceProcess2]) or: [copyArg == srcArg])!
+	self assert: ((copyArg == copyProcess2 and: [srcArg == sourceProcess2]) or: [copyArg == srcArg])!
 
-assertOuterContext: copyOuter in: copyProcess2 isCopyOf: srcOuter in: sourceProcess2 visited: anIdentitySet 
-	^copyOuter class == BlockClosure 
+assertOuterContext: copyOuter in: copyProcess2 isCopyOf: srcOuter in: sourceProcess2 visited: anIdentitySet
+	^copyOuter class == BlockClosure
 		ifTrue: 
-			[self 
+			[self
 				assertBlock: copyOuter
 				in: copyProcess2
 				isCopyOf: srcOuter
 				in: sourceProcess2
 				visited: anIdentitySet]
 		ifFalse: 
-			[self 
+			[self
 				assertContext: copyOuter
 				in: copyProcess2
 				isCopyOf: srcOuter
@@ -217,13 +216,13 @@ assertProcess: copyProcess2 copiedCorrectlyFrom: sourceProcess2 below: aStackFra
 	copyTopFrame := copyProcess2 topFrame.
 	self assertStack: copyTopFrame copiedCorrectlyFrom: srcTopFrame!
 
-assertStack: copyTopFrame copiedCorrectlyFrom: srcTopFrame 
+assertStack: copyTopFrame copiedCorrectlyFrom: srcTopFrame
 	| srcFrame visited copyFrame |
 	srcFrame := srcTopFrame.
 	copyFrame := copyTopFrame.
 	visited := IdentitySet new.
 	[srcFrame isNil] whileFalse: 
-			[self 
+			[self
 				assertStackFrame: copyFrame
 				isCopyOf: srcFrame
 				visited: visited.
@@ -292,11 +291,11 @@ isMemTopDown
 	If this mode is enabled, then we don't need to try and push process allocations over the 2Gb boundary, as actually we may end up doing the reverse."
 
 	| allocationPreference |
-	allocationPreference := (RegKey localMachineRoot
+	allocationPreference := (OS.RegKey localMachineRoot
 				at: 'System\CurrentControlSet\Control\Session Manager\Memory Management')
 				mode: #read;
 				valueAt: 'AllocationPreference' ifAbsent: [0].
-	^allocationPreference allMask: Win32Constants.MEM_TOP_DOWN!
+	^allocationPreference allMask: OS.Win32Constants.MEM_TOP_DOWN!
 
 testAsStackPointer
 	{0 -> 0.
@@ -345,8 +344,8 @@ testCopyExceptionHandlers
 					[self assert: (shared at: #copyProcess) state identicalTo: #suspended.
 					self assertStack: (shared at: #copyProcess) topFrame sender
 						copiedCorrectlyFrom: (shared at: #sourceProcess) topFrame sender].
-			HRESULTError signalWith: -1]
-					on: HRESULTError
+			OS.HRESULTError signalWith: -1]
+					on: OS.HRESULTError
 					do: [:ex | ex return: Processor activeProcess identityHash]).
 	Processor activeProcess debugStream
 		print: Processor activeProcess id;
@@ -502,15 +501,15 @@ testLargeAddress
 	self assert: value first equals: expected!
 
 testOverlappedErrno
-	self assert: (CRTLibrary nonblocking chmod: '' pmode: 0) < 0.
+	self assert: (OS.CRTLibrary nonblocking chmod: '' pmode: 0) < 0.
 	self assert: Processor activeProcess errno equals: 2!
 
 testOverlappedLastError
 	| temp1 temp2 |
-	KernelLibrary default setLastError: 0.
-	self assert: KernelLibrary default getLastError equals: 0.
-	KernelLibrary default threadSetLastError: 0.
-	self assert: KernelLibrary default threadGetLastError equals: 0.
+	OS.KernelLibrary default setLastError: 0.
+	self assert: OS.KernelLibrary default getLastError equals: 0.
+	OS.KernelLibrary default threadSetLastError: 0.
+	self assert: OS.KernelLibrary default threadGetLastError equals: 0.
 	temp1 := File temporaryFilename.
 	temp2 := File temporaryFilename.
 	File
@@ -518,11 +517,11 @@ testOverlappedLastError
 		delete: temp2.
 	self
 		should: [File copy: temp1 to: temp2]
-		raise: Win32Error
+		raise: OS.Win32Error
 		matching: [:ex | ex statusCode = 2].
 	self assert: Processor activeProcess lastError equals: 2.
-	self assert: KernelLibrary default getLastError equals: 0.
-	self assert: KernelLibrary default threadGetLastError equals: 2!
+	self assert: OS.KernelLibrary default getLastError equals: 0.
+	self assert: OS.KernelLibrary default threadGetLastError equals: 2!
 
 testSchedulerTermination
 	| process sema gotHere sema2 |
@@ -533,7 +532,7 @@ testSchedulerTermination
 			[sema signal.
 			sema2 wait.
 			"will be suspended here"
-			gotHere := true	"e.g., we must *never* get here"] 
+			gotHere := true	"e.g., we must *never* get here"]
 					forkAt: Processor activeProcess priority.
 	sema wait.	"until process gets scheduled"
 	process terminate.
@@ -564,49 +563,49 @@ testUnwindFromActiveProcess
 	process := 
 			[sema critical: 
 					[self deny: sema excessSignals > 0.
-					Processor activeProcess terminate]] 
+					Processor activeProcess terminate]]
 					forkAt: Processor userInterruptPriority.
-	self assert: sema excessSignals > 0!
+	self assert: sema excessSignals > 0.
+	self assert: process isDead!
 
 testUnwindFromForeignProcess
 	| sema process |
 	sema := Semaphore forMutualExclusion.
 	self assert: sema excessSignals > 0.
-	process := 
-			[sema critical: 
+	process := [sema critical: 
 					[self deny: sema excessSignals > 0.
-					sema wait	"deadlock"]] 
-					forkAt: Processor userInterruptPriority.
+					sema wait	"deadlock"]]
+				forkAt: Processor userInterruptPriority.
 	self deny: sema excessSignals > 0.
 	"This is for illustration only - the BlockCannotReturn cannot 
 	be handled here (it's truncated already)"
 	self shouldnt: [process terminate] raise: Error.
 	self assert: sema excessSignals > 0! !
-!ProcessTest categoriesFor: #assertBlock:in:isCopyOf:in:visited:!helpers!private! !
-!ProcessTest categoriesFor: #assertBlockFrame:isCopyOf:visited:!helpers!private! !
-!ProcessTest categoriesFor: #assertContext:in:isCopyOf:in:visited:!helpers!private! !
-!ProcessTest categoriesFor: #assertContextFrame:isCopyOf:visited:!helpers!private! !
-!ProcessTest categoriesFor: #assertDisparateEnvironments:source:!helpers!private! !
-!ProcessTest categoriesFor: #assertExceptionHandler:in:isCopyOf:in:visited:!helpers!private! !
-!ProcessTest categoriesFor: #assertObject:in:isOrIsCopyOf:in:visited:!helpers!private! !
-!ProcessTest categoriesFor: #assertOuterContext:in:isCopyOf:in:visited:!helpers!private! !
-!ProcessTest categoriesFor: #assertProcess:copiedCorrectlyFrom:below:!helpers!private! !
-!ProcessTest categoriesFor: #assertStack:copiedCorrectlyFrom:!helpers!private! !
-!ProcessTest categoriesFor: #assertStackFrame:isCopyOf:visited:!helpers!private! !
-!ProcessTest categoriesFor: #forkNested:!helpers!private! !
-!ProcessTest categoriesFor: #forkWaiterOn:sharing:!helpers!private! !
-!ProcessTest categoriesFor: #isMemTopDown!helpers!private! !
-!ProcessTest categoriesFor: #testAsStackPointer!public!unit tests! !
-!ProcessTest categoriesFor: #testCopy!public!unit tests! !
-!ProcessTest categoriesFor: #testCopyExceptionHandlers!public!unit tests! !
-!ProcessTest categoriesFor: #testCopyNestedBlocks!public!unit tests! !
-!ProcessTest categoriesFor: #testCopyWhileUnwinding!public!unit tests! !
-!ProcessTest categoriesFor: #testForkedBlockHomeFrame!public!unit tests! !
-!ProcessTest categoriesFor: #testLargeAddress!public!unit tests! !
-!ProcessTest categoriesFor: #testOverlappedErrno!public!unit tests! !
-!ProcessTest categoriesFor: #testOverlappedLastError!public!unit tests! !
-!ProcessTest categoriesFor: #testSchedulerTermination!public!tests! !
-!ProcessTest categoriesFor: #testSeparateContexts!public!unit tests! !
-!ProcessTest categoriesFor: #testUnwindFromActiveProcess!public!tests! !
-!ProcessTest categoriesFor: #testUnwindFromForeignProcess!public!tests! !
+!Core.Tests.ProcessTest categoriesFor: #assertBlock:in:isCopyOf:in:visited:!helpers!private! !
+!Core.Tests.ProcessTest categoriesFor: #assertBlockFrame:isCopyOf:visited:!helpers!private! !
+!Core.Tests.ProcessTest categoriesFor: #assertContext:in:isCopyOf:in:visited:!helpers!private! !
+!Core.Tests.ProcessTest categoriesFor: #assertContextFrame:isCopyOf:visited:!helpers!private! !
+!Core.Tests.ProcessTest categoriesFor: #assertDisparateEnvironments:source:!helpers!private! !
+!Core.Tests.ProcessTest categoriesFor: #assertExceptionHandler:in:isCopyOf:in:visited:!helpers!private! !
+!Core.Tests.ProcessTest categoriesFor: #assertObject:in:isOrIsCopyOf:in:visited:!helpers!private! !
+!Core.Tests.ProcessTest categoriesFor: #assertOuterContext:in:isCopyOf:in:visited:!helpers!private! !
+!Core.Tests.ProcessTest categoriesFor: #assertProcess:copiedCorrectlyFrom:below:!helpers!private! !
+!Core.Tests.ProcessTest categoriesFor: #assertStack:copiedCorrectlyFrom:!helpers!private! !
+!Core.Tests.ProcessTest categoriesFor: #assertStackFrame:isCopyOf:visited:!helpers!private! !
+!Core.Tests.ProcessTest categoriesFor: #forkNested:!helpers!private! !
+!Core.Tests.ProcessTest categoriesFor: #forkWaiterOn:sharing:!helpers!private! !
+!Core.Tests.ProcessTest categoriesFor: #isMemTopDown!helpers!private! !
+!Core.Tests.ProcessTest categoriesFor: #testAsStackPointer!public!unit tests! !
+!Core.Tests.ProcessTest categoriesFor: #testCopy!public!unit tests! !
+!Core.Tests.ProcessTest categoriesFor: #testCopyExceptionHandlers!public!unit tests! !
+!Core.Tests.ProcessTest categoriesFor: #testCopyNestedBlocks!public!unit tests! !
+!Core.Tests.ProcessTest categoriesFor: #testCopyWhileUnwinding!public!unit tests! !
+!Core.Tests.ProcessTest categoriesFor: #testForkedBlockHomeFrame!public!unit tests! !
+!Core.Tests.ProcessTest categoriesFor: #testLargeAddress!public!unit tests! !
+!Core.Tests.ProcessTest categoriesFor: #testOverlappedErrno!public!unit tests! !
+!Core.Tests.ProcessTest categoriesFor: #testOverlappedLastError!public!unit tests! !
+!Core.Tests.ProcessTest categoriesFor: #testSchedulerTermination!public!tests! !
+!Core.Tests.ProcessTest categoriesFor: #testSeparateContexts!public!unit tests! !
+!Core.Tests.ProcessTest categoriesFor: #testUnwindFromActiveProcess!public!tests! !
+!Core.Tests.ProcessTest categoriesFor: #testUnwindFromForeignProcess!public!tests! !
 

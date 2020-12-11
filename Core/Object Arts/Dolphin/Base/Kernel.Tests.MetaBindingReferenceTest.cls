@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-AbstractBindingReferenceTest subclass: #MetaBindingReferenceTest
+Kernel.Tests.AbstractBindingReferenceTest subclass: #'Kernel.Tests.MetaBindingReferenceTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-MetaBindingReferenceTest guid: (GUID fromString: '{fd978d4f-c029-4293-a636-297a14b7fa15}')!
-MetaBindingReferenceTest comment: ''!
-!MetaBindingReferenceTest categoriesForClass!Unclassified! !
-!MetaBindingReferenceTest methodsFor!
+Kernel.Tests.MetaBindingReferenceTest guid: (Core.GUID fromString: '{fd978d4f-c029-4293-a636-297a14b7fa15}')!
+Kernel.Tests.MetaBindingReferenceTest comment: ''!
+!Kernel.Tests.MetaBindingReferenceTest categoriesForClass!Unclassified! !
+!Kernel.Tests.MetaBindingReferenceTest methodsFor!
 
 printStringTestCases
 	^#(#(#(#Object) '#{Object class}') #(#('A' 'B' 'C') '#{A.B.C class}'))!
@@ -40,19 +40,20 @@ testRefersToLiteral
 	"A BindingReference matches literals for the same path..."
 
 	"self assert: (Object class fullyQualifiedReference refersToLiteral: (self subjectClass pathString: 'Object'))."
+
 	".. and the binding to which it would resolve ..."
+
 	self assert: (#{Object class} refersToLiteral: Object binding).
 	"... but not the target value."
-	self deny: (#{Object class} refersToLiteral: #{Object class} value).
-!
+	self deny: (#{Object class} refersToLiteral: #{Object class} value)!
 
 valueOfBinding: aVariableBinding
 	^aVariableBinding value class! !
-!MetaBindingReferenceTest categoriesFor: #printStringTestCases!constants!private! !
-!MetaBindingReferenceTest categoriesFor: #subjectClass!constants!private! !
-!MetaBindingReferenceTest categoriesFor: #testInstance!public!unit tests! !
-!MetaBindingReferenceTest categoriesFor: #testLessOrEqual!public!unit tests! !
-!MetaBindingReferenceTest categoriesFor: #testMeta!public!unit tests! !
-!MetaBindingReferenceTest categoriesFor: #testRefersToLiteral!public!unit tests! !
-!MetaBindingReferenceTest categoriesFor: #valueOfBinding:!helpers!private! !
+!Kernel.Tests.MetaBindingReferenceTest categoriesFor: #printStringTestCases!constants!private! !
+!Kernel.Tests.MetaBindingReferenceTest categoriesFor: #subjectClass!constants!private! !
+!Kernel.Tests.MetaBindingReferenceTest categoriesFor: #testInstance!public!unit tests! !
+!Kernel.Tests.MetaBindingReferenceTest categoriesFor: #testLessOrEqual!public!unit tests! !
+!Kernel.Tests.MetaBindingReferenceTest categoriesFor: #testMeta!public!unit tests! !
+!Kernel.Tests.MetaBindingReferenceTest categoriesFor: #testRefersToLiteral!public!unit tests! !
+!Kernel.Tests.MetaBindingReferenceTest categoriesFor: #valueOfBinding:!helpers!private! !
 

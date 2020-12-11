@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-AbstractFileStreamTest subclass: #FileStreamTest
+Core.Tests.AbstractFileStreamTest subclass: #'Core.Tests.FileStreamTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-FileStreamTest guid: (GUID fromString: '{773617be-f790-4ae5-9ed9-f1ea47cbf664}')!
-FileStreamTest comment: ''!
-!FileStreamTest categoriesForClass!Unclassified! !
-!FileStreamTest methodsFor!
+Core.Tests.FileStreamTest guid: (Core.GUID fromString: '{773617be-f790-4ae5-9ed9-f1ea47cbf664}')!
+Core.Tests.FileStreamTest comment: ''!
+!Core.Tests.FileStreamTest categoriesForClass!Unclassified! !
+!Core.Tests.FileStreamTest methodsFor!
 
 assertBufferEmptyOrDirty: fs 
 	| pos |
@@ -71,7 +71,7 @@ testFileTimes
 	"Tests that file accesor exists and that #lastWriteTime works (for patch #1397)"
 
 	| now file |
-	now := FILETIME now.
+	now := OS.FILETIME now.
 	filestream := self streamClass write: tempFileName.
 	file := filestream file.
 	self assert: file lastWriteTime asInteger >= now asInteger!
@@ -95,15 +95,15 @@ testOwnsFile
 	subject := FileStream read: self class fileOutName.
 	self assert: subject ownsFile.
 	file := subject file.
-	self assert: file handle isKindOf: ExternalHandle.
+	self assert: file handle isKindOf: External.Handle.
 	subject close.
 	self assertIsNil: file handle.
 	file open.
-	self assert: file handle isKindOf: ExternalHandle.
+	self assert: file handle isKindOf: External.Handle.
 	subject := FileStream on: file.
 	self deny: subject ownsFile.
 	subject close.
-	self assert: file handle isKindOf: ExternalHandle.
+	self assert: file handle isKindOf: External.Handle.
 	file close!
 
 testSingleByteOverflow
@@ -188,20 +188,20 @@ testWritePastEnd
 	actual := filestream upToEnd.
 	expected := expected contents.
 	self assert: actual equals: expected! !
-!FileStreamTest categoriesFor: #assertBufferEmptyOrDirty:!private!unit tests! !
-!FileStreamTest categoriesFor: #assertBufferEmptyOrDirty:size:!helpers!private! !
-!FileStreamTest categoriesFor: #bufferSize!constants!private! !
-!FileStreamTest categoriesFor: #maxPosition!constants!private! !
-!FileStreamTest categoriesFor: #maxSize!constants!private! !
-!FileStreamTest categoriesFor: #streamClass!helpers!private! !
-!FileStreamTest categoriesFor: #streamClassSupportsUtf16!helpers!private! !
-!FileStreamTest categoriesFor: #streamOn:!helpers!private! !
-!FileStreamTest categoriesFor: #streamOnFile:type:!helpers!private! !
-!FileStreamTest categoriesFor: #tearDownTempStream!helpers!private! !
-!FileStreamTest categoriesFor: #testFileTimes!public!unit tests! !
-!FileStreamTest categoriesFor: #testNextAvailableColonWithPaging!public!unit tests! !
-!FileStreamTest categoriesFor: #testOwnsFile!public! !
-!FileStreamTest categoriesFor: #testSingleByteOverflow!public!unit tests! !
-!FileStreamTest categoriesFor: #testVeryLargeSparseFile!public!unit tests! !
-!FileStreamTest categoriesFor: #testWritePastEnd!public!unit tests! !
+!Core.Tests.FileStreamTest categoriesFor: #assertBufferEmptyOrDirty:!private!unit tests! !
+!Core.Tests.FileStreamTest categoriesFor: #assertBufferEmptyOrDirty:size:!helpers!private! !
+!Core.Tests.FileStreamTest categoriesFor: #bufferSize!constants!private! !
+!Core.Tests.FileStreamTest categoriesFor: #maxPosition!constants!private! !
+!Core.Tests.FileStreamTest categoriesFor: #maxSize!constants!private! !
+!Core.Tests.FileStreamTest categoriesFor: #streamClass!helpers!private! !
+!Core.Tests.FileStreamTest categoriesFor: #streamClassSupportsUtf16!helpers!private! !
+!Core.Tests.FileStreamTest categoriesFor: #streamOn:!helpers!private! !
+!Core.Tests.FileStreamTest categoriesFor: #streamOnFile:type:!helpers!private! !
+!Core.Tests.FileStreamTest categoriesFor: #tearDownTempStream!helpers!private! !
+!Core.Tests.FileStreamTest categoriesFor: #testFileTimes!public!unit tests! !
+!Core.Tests.FileStreamTest categoriesFor: #testNextAvailableColonWithPaging!public!unit tests! !
+!Core.Tests.FileStreamTest categoriesFor: #testOwnsFile!public! !
+!Core.Tests.FileStreamTest categoriesFor: #testSingleByteOverflow!public!unit tests! !
+!Core.Tests.FileStreamTest categoriesFor: #testVeryLargeSparseFile!public!unit tests! !
+!Core.Tests.FileStreamTest categoriesFor: #testWritePastEnd!public!unit tests! !
 

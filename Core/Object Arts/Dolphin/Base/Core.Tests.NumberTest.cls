@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-DolphinTest subclass: #NumberTest
+Core.Tests.DolphinTest subclass: #'Core.Tests.NumberTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-NumberTest guid: (GUID fromString: '{12458306-5b30-4c48-8c24-aed051baabd0}')!
-NumberTest comment: 'SUnitBrowser openOnTestCase: self'!
-!NumberTest categoriesForClass!Unclassified! !
-!NumberTest methodsFor!
+Core.Tests.NumberTest guid: (Core.GUID fromString: '{12458306-5b30-4c48-8c24-aed051baabd0}')!
+Core.Tests.NumberTest comment: 'SUnitBrowser openOnTestCase: self'!
+!Core.Tests.NumberTest categoriesForClass!Unclassified! !
+!Core.Tests.NumberTest methodsFor!
 
 scan: aString value: anInteger class: aClass
 	| source result |
@@ -268,11 +268,11 @@ testRoundUpTo
 	self assert: (21.5 roundUpTo: 9) equals: 27.
 	self assert: (21.5 roundUpTo: 10) equals: 30.
 	self assert: (1.4 @ 2.6 roundUpTo: 1 @ 2) equals: 2 @ 4! !
-!NumberTest categoriesFor: #scan:value:class:!helpers!private! !
-!NumberTest categoriesFor: #scanNoSeparator:value:next:!private!unit tests! !
-!NumberTest categoriesFor: #testClassReadFromColonFloats!public!unit tests! !
-!NumberTest categoriesFor: #testClassReadFromColonFractions!public!unit tests! !
-!NumberTest categoriesFor: #testClassReadFromColonIntegers!public!unit tests! !
-!NumberTest categoriesFor: #testClassReadFromColonScaledDecimals!public!unit tests! !
-!NumberTest categoriesFor: #testRoundUpTo!public!unit tests! !
+!Core.Tests.NumberTest categoriesFor: #scan:value:class:!helpers!private! !
+!Core.Tests.NumberTest categoriesFor: #scanNoSeparator:value:next:!private!unit tests! !
+!Core.Tests.NumberTest categoriesFor: #testClassReadFromColonFloats!public!unit tests! !
+!Core.Tests.NumberTest categoriesFor: #testClassReadFromColonFractions!public!unit tests! !
+!Core.Tests.NumberTest categoriesFor: #testClassReadFromColonIntegers!public!unit tests! !
+!Core.Tests.NumberTest categoriesFor: #testClassReadFromColonScaledDecimals!public!unit tests! !
+!Core.Tests.NumberTest categoriesFor: #testRoundUpTo!public!unit tests! !
 

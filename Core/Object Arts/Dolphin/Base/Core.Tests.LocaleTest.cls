@@ -1,16 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-DolphinTest subclass: #LocaleTest
+Core.Tests.DolphinTest subclass: #'Core.Tests.LocaleTest'
 	instanceVariableNames: 'savedLocale'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-LocaleTest guid: (GUID fromString: '{85b9dbfa-a1e2-46f3-ae44-d016f209b03b}')!
-LocaleTest isAbstract: true!
-LocaleTest comment: ''!
-!LocaleTest categoriesForClass!Unclassified! !
-!LocaleTest methodsFor!
+Core.Tests.LocaleTest guid: (Core.GUID fromString: '{85b9dbfa-a1e2-46f3-ae44-d016f209b03b}')!
+Core.Tests.LocaleTest isNonInstantiable: true!
+Core.Tests.LocaleTest comment: ''!
+!Core.Tests.LocaleTest categoriesForClass!Unclassified! !
+!Core.Tests.LocaleTest methodsFor!
 
 defaultSubject
 	^self subclassResponsibility!
@@ -22,7 +22,10 @@ setUp
 	Locale userDefault: (Locale named: 'hi-IN')!
 
 tearDown
-	savedLocale ifNotNil: [Locale userDefault: savedLocale. savedLocale := nil].
+	savedLocale
+		ifNotNil: 
+			[Locale userDefault: savedLocale.
+			savedLocale := nil].
 	super tearDown!
 
 testDisplayFloatOn
@@ -34,7 +37,7 @@ testPrimary
 	self assert: (Locale named: 'en-GB') primary equals: (Locale named: 'en-US').
 	self assert: (Locale named: 'fr-CA') primary equals: (Locale named: 'fr-FR').
 	self assert: Locale invariant primary equals: Locale invariant.
-	self assert: (Locale lcid: WinNlsConstants.LOCALE_CUSTOM_DEFAULT) primary
+	self assert: (Locale lcid: OS.NlsConstants.LOCALE_CUSTOM_DEFAULT) primary
 		equals: Locale userDefault primary.
 	self assert: Locale smalltalk primary equals: (Locale named: 'en-US')!
 
@@ -47,7 +50,8 @@ testPrintDateTimeOnFormat
 				minute: 26
 				second: 21 + (827 / 1000).
 	subject := self defaultSubject.
-	expected := '6:26 ', subject pmDesignator, ' (and 21.827 seconds) on Sunday, 7 of April 2019 somewhere'.
+	expected := '6:26 ' , subject pmDesignator
+				, ' (and 21.827 seconds) on Sunday, 7 of April 2019 somewhere'.
 	{now. now asParameter. TimeStamp fromDateAndTime: now} do: 
 			[:each |
 			| actual |
@@ -121,21 +125,21 @@ testPrintFloatNumDigits
 			format NumDigits: each.
 			self
 				should: [subject printFloat: 0.0123456789 format: format]
-				raise: Win32Error
-				matching: [:ex | ex tag = (HRESULT win32Error: Win32Errors.ERROR_INVALID_PARAMETER)]]!
+				raise: OS.Win32Error
+				matching: [:ex | ex tag = (OS.HRESULT win32Error: OS.Win32Errors.ERROR_INVALID_PARAMETER)]]!
 
 testPrintFloatSeparators
 	"Test printing with specific decimal and group separators."
 
 	self subclassResponsibility! !
-!LocaleTest categoriesFor: #defaultSubject!helpers!private! !
-!LocaleTest categoriesFor: #setUp!private!running! !
-!LocaleTest categoriesFor: #tearDown!private!running! !
-!LocaleTest categoriesFor: #testDisplayFloatOn!public!unit tests! !
-!LocaleTest categoriesFor: #testPrimary!public!unit tests! !
-!LocaleTest categoriesFor: #testPrintDateTimeOnFormat!public!unit tests! !
-!LocaleTest categoriesFor: #testPrintDurationOnFormat!public!unit tests! !
-!LocaleTest categoriesFor: #testPrintFloatGrouping!public!unit tests! !
-!LocaleTest categoriesFor: #testPrintFloatNumDigits!public!unit tests! !
-!LocaleTest categoriesFor: #testPrintFloatSeparators!public!unit tests! !
+!Core.Tests.LocaleTest categoriesFor: #defaultSubject!helpers!private! !
+!Core.Tests.LocaleTest categoriesFor: #setUp!private!running! !
+!Core.Tests.LocaleTest categoriesFor: #tearDown!private!running! !
+!Core.Tests.LocaleTest categoriesFor: #testDisplayFloatOn!public!unit tests! !
+!Core.Tests.LocaleTest categoriesFor: #testPrimary!public!unit tests! !
+!Core.Tests.LocaleTest categoriesFor: #testPrintDateTimeOnFormat!public!unit tests! !
+!Core.Tests.LocaleTest categoriesFor: #testPrintDurationOnFormat!public!unit tests! !
+!Core.Tests.LocaleTest categoriesFor: #testPrintFloatGrouping!public!unit tests! !
+!Core.Tests.LocaleTest categoriesFor: #testPrintFloatNumDigits!public!unit tests! !
+!Core.Tests.LocaleTest categoriesFor: #testPrintFloatSeparators!public!unit tests! !
 

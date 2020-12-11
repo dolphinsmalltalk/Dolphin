@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-DolphinTest subclass: #FloatTest
+Core.Tests.DolphinTest subclass: #'Core.Tests.FloatTest'
 	instanceVariableNames: 'fpeMask'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-FloatTest guid: (GUID fromString: '{b2b95b67-e8f3-4991-a4b4-94edc5e83f28}')!
-FloatTest comment: ''!
-!FloatTest categoriesForClass!Unclassified! !
-!FloatTest methodsFor!
+Core.Tests.FloatTest guid: (Core.GUID fromString: '{b2b95b67-e8f3-4991-a4b4-94edc5e83f28}')!
+Core.Tests.FloatTest comment: ''!
+!Core.Tests.FloatTest categoriesForClass!Unclassified! !
+!Core.Tests.FloatTest methodsFor!
 
 assertFloat: result equals: aFloat
 	aFloat isNaN ifTrue: [self assert: result isNaN] ifFalse: [self assert: result equals: aFloat]!
@@ -56,37 +56,37 @@ printString: aFloat significantFigures: anInteger
 
 setUp
 	"Ensure the default exception mask is set. Certain tests will temporarily change the exception mask to verify behaviour with/without certain exceptions masked."
+
 	fpeMask := Float exceptionMask: Process.DefaultFpControl.
 	Float reset.
-	super setUp.
-
-!
+	super setUp!
 
 shouldRaiseInvalidOperation: aBlock
 	| mask exceptions invalid result status2 result2 |
 	Float reset.
 	exceptions := OrderedCollection new.
 	mask := Float exceptionMask.
-	Float exceptionMask: (mask maskClear: CRTConstants._EM_INVALID).
+	Float exceptionMask: (mask maskClear: OS.CRTConstants._EM_INVALID).
 	result := aBlock on: ArithmeticError
 				do: 
 					[:e |
 					exceptions addLast: e.
 					e resume].
-	invalid := exceptions anySatisfy: [:e | 
-		"We map InvalidOperation with divide operation and operand2 = 0, to ZeroDivide"
-		(e isKindOf: ZeroDivide) or: [e _ieeeRecord causeNames includes: #InvalidOperation]].
+	invalid := exceptions anySatisfy: 
+					[:e |
+					"We map InvalidOperation with divide operation and operand2 = 0, to ZeroDivide"
+					(e isKindOf: ZeroDivide) or: [e _ieeeRecord causeNames includes: #InvalidOperation]].
 	self assert: invalid
 		description: 'Test operation did not raise expected FP Invalid Operation exception'.
 	self assert: result isNaN.
 
 	"Repeat with all exceptions masked. This is the normal setting in Dolphin now and may cause the CRT functions to use an SSE2 implementation"
-	Float exceptionMask: CRTConstants._MCW_EM.
+	Float exceptionMask: OS.CRTConstants._MCW_EM.
 	self assert: Float statusFlags equals: 0.
 	"With all FP exceptions masked we expect a NaN continuation value for invalid operations."
 	result2 := aBlock value.
 	status2 := Float statusFlags.
-	self assert: (status2 allMask: CRTConstants._SW_INVALID)
+	self assert: (status2 allMask: OS.CRTConstants._SW_INVALID)
 		description: 'Test operation did not notify Invalid Operation with all exceptions masked.'.
 	self assert: result2 isNaN!
 
@@ -96,28 +96,28 @@ shouldRaiseOverflow: aBlock
 shouldRaiseOverflow: aBlock withContinuation: aFloat
 	| raised result1 status2 result2 |
 	raised := false.
-	Float exceptionMask: (CRTConstants._MCW_EM maskClear: CRTConstants._EM_OVERFLOW).
+	Float exceptionMask: (OS.CRTConstants._MCW_EM maskClear: OS.CRTConstants._EM_OVERFLOW).
 	result1 := aBlock
 				on: FloatingPointException
 				do: 
 					[:e |
 					e isOverflow ifTrue: [raised := true].
 					e resume]
-				on: HRESULTError
+				on: OS.HRESULTError
 				do: 
 					[:e |
-					e hresult asInteger = AXAutomationErrors.DISP_E_OVERFLOW ifTrue: [raised := true].
+					e hresult asInteger = -2147352566 "DISP_E_OVERFLOW" ifTrue: [raised := true].
 					e resume].
 	"Repeat the operation with overflow masked to check that overflow condition 'notification'
 	is available, and the correct continuation result is returned."
-	Float exceptionMask: CRTConstants._MCW_EM.
+	Float exceptionMask: OS.CRTConstants._MCW_EM.
 	result2 := aBlock value.
 	status2 := Float statusFlags.
 	"Now check the results are as expected"
 	self assert: raised
 		description: 'Test operation did not raise expected FP overflow exception when unmasked'.
 	self assert: result1 equals: aFloat.
-	self assert: (status2 allMask: CRTConstants._SW_OVERFLOW)
+	self assert: (status2 allMask: OS.CRTConstants._SW_OVERFLOW)
 		description: 'Test operation did not notify FP overflow with overflow masked.'.
 	self assert: result2 equals: aFloat!
 
@@ -126,24 +126,24 @@ shouldRaiseUnderflow: aBlock
 	Float reset.
 	raised := false.
 	mask := Float exceptionMask.
-	Float exceptionMask: (mask maskClear: CRTConstants._EM_UNDERFLOW).
+	Float exceptionMask: (mask maskClear: OS.CRTConstants._EM_UNDERFLOW).
 	
 	[aBlock on: FloatingPointException do: [:e | e isUnderflow ifTrue: [raised := true]].
 	"Repeat the operation with overflow masked to check that overflow condition 'notification'
 	is available, and the correct continuation result is returned."
-	Float exceptionMask: (mask maskSet: CRTConstants._EM_UNDERFLOW).
+	Float exceptionMask: (mask maskSet: OS.CRTConstants._EM_UNDERFLOW).
 	result1 := aBlock value.
 	status1 := Float statusFlags.
 	"Finally repeat with all exceptions masked (because the CRT functions often behave differently and use an SSE2 implementation)"
-	Float exceptionMask: CRTConstants._MCW_EM.
+	Float exceptionMask: OS.CRTConstants._MCW_EM.
 	result2 := aBlock value.
 	status2 := Float statusFlags]
 			ensure: [Float exceptionMask: mask].
 	self assert: raised description: 'Test operation did not raise expected FP underflow exception'.
-	self assert: (status1 allMask: CRTConstants._SW_UNDERFLOW)
+	self assert: (status1 allMask: OS.CRTConstants._SW_UNDERFLOW)
 		description: 'Test operation did not notify FP underflow with underflow masked.'.
 	Float denormalized ifTrue: [self assert: result1 isZero] ifFalse: [self assert: result1 isDenormal].
-	self assert: (status2 allMask: CRTConstants._SW_UNDERFLOW)
+	self assert: (status2 allMask: OS.CRTConstants._SW_UNDERFLOW)
 		description: 'Test operation did not notify FP underflow with all exceptions masked.'.
 	self assert: result2 isZero!
 
@@ -154,13 +154,13 @@ shouldRaiseZeroDivide: aBlock status: anInteger withContinuations: anArrayOfFloa
 	| result2 mask result exceptions1 exceptions2 pair |
 	result := result2 := nil.
 	Float reset.
-	self assert: (Float statusFlags bitAnd: CRTConstants._SW_INEXACT bitInvert) equals: 0.
+	self assert: (Float statusFlags bitAnd: OS.CRTConstants._SW_INEXACT bitInvert) equals: 0.
 	exceptions1 := OrderedCollection new.
 	exceptions2 := OrderedCollection new.
 
 	"We will first evaluate with zero divide and invalid operation unmasked to see if we get an FP exception"
-	mask := Float exceptionMask: (CRTConstants._MCW_EM
-						maskClear: CRTConstants._EM_ZERODIVIDE | CRTConstants._EM_INVALID).
+	mask := Float exceptionMask: (OS.CRTConstants._MCW_EM
+						maskClear: OS.CRTConstants._EM_ZERODIVIDE | OS.CRTConstants._EM_INVALID).
 	
 	[result := aBlock on: ArithmeticError
 				do: 
@@ -168,7 +168,7 @@ shouldRaiseZeroDivide: aBlock status: anInteger withContinuations: anArrayOfFloa
 					exceptions1 addLast: Float statusFlags -> e.
 					e resume].
 	"Evaluate with everything masked"
-	Float exceptionMask: CRTConstants._MCW_EM.
+	Float exceptionMask: OS.CRTConstants._MCW_EM.
 	result2 := [aBlock value] on: ArithmeticError
 				do: 
 					[:e |
@@ -197,7 +197,7 @@ shouldRaiseZeroDivide: aBlock withContinuation: aFloat
 shouldRaiseZeroDivide: aBlock withContinuations: anArrayOfFloat
 	self
 		shouldRaiseZeroDivide: aBlock
-		status: CRTConstants._SW_ZERODIVIDE | CRTConstants._SW_INVALID
+		status: OS.CRTConstants._SW_ZERODIVIDE | OS.CRTConstants._SW_INVALID
 		withContinuations: anArrayOfFloat!
 
 successor: aFloat
@@ -205,6 +205,7 @@ successor: aFloat
 
 tearDown
 	"Be careful not to leave a test FPE mask"
+
 	Float exceptionMask: fpeMask.
 	Float reset.
 	super tearDown!
@@ -296,8 +297,7 @@ testArcTan2
 	self infinities do: [:each | self assert: (each arcTan: 0) equals: pi / 2 * each sign].
 	self assert: (100 arcTan: Float negativeInfinity) equals: pi.
 	self assert: (100 arcTan: Float infinity) isZero.
-	self assert: (100 arcTan: Float nan) isNaN.
-!
+	self assert: (100 arcTan: Float nan) isNaN!
 
 testAsInteger
 	"By the ANSI definition this should be the same as #rounded for a <Float>, not #truncated"
@@ -409,32 +409,25 @@ testDivideByZero
 	self assert: (Float nan / -0.0) isNaN!
 
 testEqualsColon
-	
 	self assert: (0.0 equals: 0.0000000001).
 	self assert: (0.0 equals: -0.0000000001).
 	self assert: (0.0000000001 equals: 0.0).
 	self assert: (-0.0000000001 equals: 0.0).
 	self assert: (0.0 equals: 0.0000000009).
 	self assert: (0.0 equals: 0.000000009) not.
-
 	self assert: (Float fmin equals: 0.0).
 	self assert: (0.0 equals: Float fmin).
-
-	self assert: ((Float fmin *2) equals: Float fmin).
-	self assert: ((Float fmin *2) equals: 1e-10).
-	self assert: ((Float fmin *2) equals: 1e-8) not.
-
+	self assert: (Float fmin * 2 equals: Float fmin).
+	self assert: (Float fmin * 2 equals: 1e-10).
+	self assert: (Float fmin * 2 equals: 1e-8) not.
 	self assert: (1.123456789e308 equals: 1.1234567891e308).
 	self assert: (1.1234567891e308 equals: 1.123456789e308).
 	self assert: (1.123456788e308 equals: 1.123456789e308).
-	self assert:(1.12345678e308 equals: 1.12345679e308) not.
-
+	self assert: (1.12345678e308 equals: 1.12345679e308) not.
 	self assert: (1.123456789e20 equals: 1.1234567899e20).
 	self assert: (1.123456799e20 equals: 1.123456789e20) not.
-
 	self deny: (Float nan equals: 1.0).
-	self deny: (Float nan equals: Float nan) 
-!
+	self deny: (Float nan equals: Float nan)!
 
 testEqualsZero
 	self assert: 0.0 equals: 0.
@@ -651,14 +644,14 @@ testFractionPart
 	self assert: Float nan fractionPart isNaN!
 
 testGreaterThanInteger
-	|  notGreaterThanZero |
+	| notGreaterThanZero |
 	notGreaterThanZero := {Float negativeInfinity.
-		Float nan.
-		Float fmax negated.
-		Float fminDenormalized negated.
-		Float fminNormalized negated.
-		0.0.
-		-0.0}.
+				Float nan.
+				Float fmax negated.
+				Float fminDenormalized negated.
+				Float fminNormalized negated.
+				0.0.
+				-0.0}.
 	notGreaterThanZero do: [:each | self deny: each > 0].
 	self deny: 1.9 > 2.
 	self assert: 2.1 > 2.
@@ -766,7 +759,6 @@ testIntegerComparisons
 		16rFFFFFFFF.
 		2 ** Float precision - 1.
 		2 ** Float precision.
-		"Some larger integers will be equal, if they can be represented without loss of precision"
 		2 ** 63.
 		2 ** 64.
 		-16r4000000000000000.
@@ -775,12 +767,14 @@ testIntegerComparisons
 				[:each |
 				self assert: each asFloat equals: each.
 				self assert: each hash isKindOf: SmallInteger.
-				self assert: each asFloat hash equals: each hash]!
+				self assert: each asFloat hash equals: each hash]
+	"Some larger integers will be equal, if they can be represented without loss of precision"!
 
 testIntegerComparisonsImprecise
 	"Regression test for #772"
 
 	"self skipUnless: [self isAtLeastVmVersion: #(2016 7 1 7)]."
+
 	{2 ** Float precision + 1.
 		(2 ** Float precision) negated - 1.
 		16r100000000000004.
@@ -921,7 +915,7 @@ testLessThanInteger
 testLn
 	self assert: Float e ln equals: 1.0.
 	self assert: Float fmax ln equals: 709.782712893384.
-	self assert: Float fminNormalized ln equals:  -708.3964185322641.
+	self assert: Float fminNormalized ln equals: -708.3964185322641.
 	self assert: Float infinity ln equals: Float infinity.
 	self zeroes
 		do: [:each | self shouldRaiseZeroDivide: [each ln] withContinuation: Float negativeInfinity].
@@ -970,7 +964,7 @@ testNegated
 	self assert: Float infinity negated equals: Float negativeInfinity.
 	self assert: Float negativeInfinity negated equals: Float infinity.
 	Float denormalized
-		ifTrue: [self assert: Float fminDenormalized negated equals: Float fminDenormalized * -1].!
+		ifTrue: [self assert: Float fminDenormalized negated equals: Float fminDenormalized * -1]!
 
 testNegative
 	| negativeCases positiveCases |
@@ -1103,7 +1097,7 @@ testPrintOnDecimalPlacesZeroes
 	self assert: (self printString: Float zero decimalPlaces: 2) equals: '0.00'.
 	self assert: (self printString: Float negativeZero decimalPlaces: 0) equals: '-0'.
 	self assert: (self printString: Float negativeZero decimalPlaces: 1) equals: '-0.0'.
-	self assert: (self printString: Float negativeZero decimalPlaces: 3) equals: '-0.000'.!
+	self assert: (self printString: Float negativeZero decimalPlaces: 3) equals: '-0.000'!
 
 testPrintOnSignificantFigures
 	self assert: (self printString: Float pi significantFigures: 0) equals: '0.0'.
@@ -1291,7 +1285,7 @@ testReciprocal
 	self assert: Float pi reciprocal reciprocal equals: Float pi!
 
 testRounded
-	| x y int r |
+	| x y int |
 	self assert: 1.5 rounded equals: 2.0.
 	self assert: 0.5 rounded equals: 1.0.
 	self assert: -1.5 rounded equals: -2.0.
@@ -1401,8 +1395,7 @@ testSin
 	self assertNegativeZero: -0.0 sin.
 	self assert: ((Float pi / 6) sin roundTo: Float.SignificantDifference) equals: 0.5.
 	self infinities do: [:each | self shouldRaiseInvalidOperation: [each sin]].
-	self assert: Float nan sin isNaN.
-!
+	self assert: Float nan sin isNaN!
 
 testSqrt
 	| actual |
@@ -1465,101 +1458,100 @@ testTruncated
 		equals: -179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368!
 
 testUnderflow
-	self shouldRaiseUnderflow: [Float fmin * 0.1]
-!
+	self shouldRaiseUnderflow: [Float fmin * 0.1]!
 
 zeroes
 	^#(-0.0 0.0)! !
-!FloatTest categoriesFor: #assertFloat:equals:!helpers!private! !
-!FloatTest categoriesFor: #assertNegativeZero:!helpers!private! !
-!FloatTest categoriesFor: #continuationValues!constants!private! !
-!FloatTest categoriesFor: #finiteSignificand:!helpers!private! !
-!FloatTest categoriesFor: #infinities!constants!private! !
-!FloatTest categoriesFor: #normals!constants!private! !
-!FloatTest categoriesFor: #predecessor:!helpers!private! !
-!FloatTest categoriesFor: #printString:decimalPlaces:!helpers!private! !
-!FloatTest categoriesFor: #printString:significantFigures:!helpers!private! !
-!FloatTest categoriesFor: #setUp!private!Running! !
-!FloatTest categoriesFor: #shouldRaiseInvalidOperation:!helpers!private! !
-!FloatTest categoriesFor: #shouldRaiseOverflow:!helpers!private! !
-!FloatTest categoriesFor: #shouldRaiseOverflow:withContinuation:!helpers!private! !
-!FloatTest categoriesFor: #shouldRaiseUnderflow:!helpers!private! !
-!FloatTest categoriesFor: #shouldRaiseZeroDivide:!helpers!private! !
-!FloatTest categoriesFor: #shouldRaiseZeroDivide:status:withContinuations:!helpers!private! !
-!FloatTest categoriesFor: #shouldRaiseZeroDivide:withContinuation:!helpers!private! !
-!FloatTest categoriesFor: #shouldRaiseZeroDivide:withContinuations:!helpers!private! !
-!FloatTest categoriesFor: #successor:!helpers!private! !
-!FloatTest categoriesFor: #tearDown!private!Running! !
-!FloatTest categoriesFor: #testAbs!public!unit tests! !
-!FloatTest categoriesFor: #testAdd!public!unit tests! !
-!FloatTest categoriesFor: #testArcCos!public!unit tests! !
-!FloatTest categoriesFor: #testArcSin!public!unit tests! !
-!FloatTest categoriesFor: #testArcTan!public!unit tests! !
-!FloatTest categoriesFor: #testArcTan2!public!unit tests! !
-!FloatTest categoriesFor: #testAsInteger!public!unit tests! !
-!FloatTest categoriesFor: #testAsTrueFraction!public!unit tests! !
-!FloatTest categoriesFor: #testCeiling!public!unit tests! !
-!FloatTest categoriesFor: #testCopy!public!unit tests! !
-!FloatTest categoriesFor: #testCos!public!unit tests! !
-!FloatTest categoriesFor: #testDenormalsAsTrueFraction!public!unit tests! !
-!FloatTest categoriesFor: #testDivideByZero!public!Testing!unit tests! !
-!FloatTest categoriesFor: #testEqualsColon!public!unit tests! !
-!FloatTest categoriesFor: #testEqualsZero!public!unit tests! !
-!FloatTest categoriesFor: #testExp!public!unit tests! !
-!FloatTest categoriesFor: #testExponent!public!unit tests! !
-!FloatTest categoriesFor: #testFloatCharacterization!public!unit tests! !
-!FloatTest categoriesFor: #testFloor!public!unit tests! !
-!FloatTest categoriesFor: #testFloorLog2!public!unit tests! !
-!FloatTest categoriesFor: #testFractionAsFloat!public!Testing!unit tests! !
-!FloatTest categoriesFor: #testFractionComparisons!public!unit tests! !
-!FloatTest categoriesFor: #testFractionPart!public!unit tests! !
-!FloatTest categoriesFor: #testGreaterThanInteger!public!unit tests! !
-!FloatTest categoriesFor: #testHash!public!unit tests! !
-!FloatTest categoriesFor: #testInfinityComparisons!public!unit tests! !
-!FloatTest categoriesFor: #testIntegerAsFloat!public!Testing!unit tests! !
-!FloatTest categoriesFor: #testIntegerComparisons!public!unit tests! !
-!FloatTest categoriesFor: #testIntegerComparisonsImprecise!public!unit tests! !
-!FloatTest categoriesFor: #testIntegerPart!public!unit tests! !
-!FloatTest categoriesFor: #testIsFinite!public!unit tests! !
-!FloatTest categoriesFor: #testIsInfinite!public!unit tests! !
-!FloatTest categoriesFor: #testIsLiteral!public!unit tests! !
-!FloatTest categoriesFor: #testIsNan!public!unit tests! !
-!FloatTest categoriesFor: #testIsSelfEvaluating!public!unit tests! !
-!FloatTest categoriesFor: #testIsZero!public!unit tests! !
-!FloatTest categoriesFor: #testLessThanFraction!public!unit tests! !
-!FloatTest categoriesFor: #testLessThanInteger!public!unit tests! !
-!FloatTest categoriesFor: #testLn!public!unit tests! !
-!FloatTest categoriesFor: #testLog!public!unit tests! !
-!FloatTest categoriesFor: #testNaNComparisons!public!unit tests! !
-!FloatTest categoriesFor: #testNegated!public!unit tests! !
-!FloatTest categoriesFor: #testNegative!public!unit tests! !
-!FloatTest categoriesFor: #testOverflow!public!unit tests! !
-!FloatTest categoriesFor: #testPredecessorSuccessor!public!unit tests! !
-!FloatTest categoriesFor: #testPrintOnDecimalPlaces!public!unit tests! !
-!FloatTest categoriesFor: #testPrintOnDecimalPlacesFmax!public!unit tests! !
-!FloatTest categoriesFor: #testPrintOnDecimalPlacesFmin!public!unit tests! !
-!FloatTest categoriesFor: #testPrintOnDecimalPlacesInfinities!public!unit tests! !
-!FloatTest categoriesFor: #testPrintOnDecimalPlacesNans!public!unit tests! !
-!FloatTest categoriesFor: #testPrintOnDecimalPlacesZeroes!public!unit tests! !
-!FloatTest categoriesFor: #testPrintOnSignificantFigures!public!unit tests! !
-!FloatTest categoriesFor: #testPrintString!public!unit tests! !
-!FloatTest categoriesFor: #testPrintStringAndReadBack!public!unit tests! !
-!FloatTest categoriesFor: #testRaisedTo!public!unit tests! !
-!FloatTest categoriesFor: #testRaisedToInteger!public!unit tests! !
-!FloatTest categoriesFor: #testReadFrom!public!unit tests! !
-!FloatTest categoriesFor: #testReciprocal!public!unit tests! !
-!FloatTest categoriesFor: #testRounded!public!unit tests! !
-!FloatTest categoriesFor: #testSign!public!unit tests! !
-!FloatTest categoriesFor: #testSignificandAsInteger!public!unit tests! !
-!FloatTest categoriesFor: #testSin!public!unit tests! !
-!FloatTest categoriesFor: #testSqrt!public!unit tests! !
-!FloatTest categoriesFor: #testStoreOn!public!unit tests! !
-!FloatTest categoriesFor: #testTimesTwoPower!public!Testing!unit tests! !
-!FloatTest categoriesFor: #testTruncated!public!unit tests! !
-!FloatTest categoriesFor: #testUnderflow!public!unit tests! !
-!FloatTest categoriesFor: #zeroes!constants!private! !
+!Core.Tests.FloatTest categoriesFor: #assertFloat:equals:!helpers!private! !
+!Core.Tests.FloatTest categoriesFor: #assertNegativeZero:!helpers!private! !
+!Core.Tests.FloatTest categoriesFor: #continuationValues!constants!private! !
+!Core.Tests.FloatTest categoriesFor: #finiteSignificand:!helpers!private! !
+!Core.Tests.FloatTest categoriesFor: #infinities!constants!private! !
+!Core.Tests.FloatTest categoriesFor: #normals!constants!private! !
+!Core.Tests.FloatTest categoriesFor: #predecessor:!helpers!private! !
+!Core.Tests.FloatTest categoriesFor: #printString:decimalPlaces:!helpers!private! !
+!Core.Tests.FloatTest categoriesFor: #printString:significantFigures:!helpers!private! !
+!Core.Tests.FloatTest categoriesFor: #setUp!private!Running! !
+!Core.Tests.FloatTest categoriesFor: #shouldRaiseInvalidOperation:!helpers!private! !
+!Core.Tests.FloatTest categoriesFor: #shouldRaiseOverflow:!helpers!private! !
+!Core.Tests.FloatTest categoriesFor: #shouldRaiseOverflow:withContinuation:!helpers!private! !
+!Core.Tests.FloatTest categoriesFor: #shouldRaiseUnderflow:!helpers!private! !
+!Core.Tests.FloatTest categoriesFor: #shouldRaiseZeroDivide:!helpers!private! !
+!Core.Tests.FloatTest categoriesFor: #shouldRaiseZeroDivide:status:withContinuations:!helpers!private! !
+!Core.Tests.FloatTest categoriesFor: #shouldRaiseZeroDivide:withContinuation:!helpers!private! !
+!Core.Tests.FloatTest categoriesFor: #shouldRaiseZeroDivide:withContinuations:!helpers!private! !
+!Core.Tests.FloatTest categoriesFor: #successor:!helpers!private! !
+!Core.Tests.FloatTest categoriesFor: #tearDown!private!Running! !
+!Core.Tests.FloatTest categoriesFor: #testAbs!public!unit tests! !
+!Core.Tests.FloatTest categoriesFor: #testAdd!public!unit tests! !
+!Core.Tests.FloatTest categoriesFor: #testArcCos!public!unit tests! !
+!Core.Tests.FloatTest categoriesFor: #testArcSin!public!unit tests! !
+!Core.Tests.FloatTest categoriesFor: #testArcTan!public!unit tests! !
+!Core.Tests.FloatTest categoriesFor: #testArcTan2!public!unit tests! !
+!Core.Tests.FloatTest categoriesFor: #testAsInteger!public!unit tests! !
+!Core.Tests.FloatTest categoriesFor: #testAsTrueFraction!public!unit tests! !
+!Core.Tests.FloatTest categoriesFor: #testCeiling!public!unit tests! !
+!Core.Tests.FloatTest categoriesFor: #testCopy!public!unit tests! !
+!Core.Tests.FloatTest categoriesFor: #testCos!public!unit tests! !
+!Core.Tests.FloatTest categoriesFor: #testDenormalsAsTrueFraction!public!unit tests! !
+!Core.Tests.FloatTest categoriesFor: #testDivideByZero!public!Testing!unit tests! !
+!Core.Tests.FloatTest categoriesFor: #testEqualsColon!public!unit tests! !
+!Core.Tests.FloatTest categoriesFor: #testEqualsZero!public!unit tests! !
+!Core.Tests.FloatTest categoriesFor: #testExp!public!unit tests! !
+!Core.Tests.FloatTest categoriesFor: #testExponent!public!unit tests! !
+!Core.Tests.FloatTest categoriesFor: #testFloatCharacterization!public!unit tests! !
+!Core.Tests.FloatTest categoriesFor: #testFloor!public!unit tests! !
+!Core.Tests.FloatTest categoriesFor: #testFloorLog2!public!unit tests! !
+!Core.Tests.FloatTest categoriesFor: #testFractionAsFloat!public!Testing!unit tests! !
+!Core.Tests.FloatTest categoriesFor: #testFractionComparisons!public!unit tests! !
+!Core.Tests.FloatTest categoriesFor: #testFractionPart!public!unit tests! !
+!Core.Tests.FloatTest categoriesFor: #testGreaterThanInteger!public!unit tests! !
+!Core.Tests.FloatTest categoriesFor: #testHash!public!unit tests! !
+!Core.Tests.FloatTest categoriesFor: #testInfinityComparisons!public!unit tests! !
+!Core.Tests.FloatTest categoriesFor: #testIntegerAsFloat!public!Testing!unit tests! !
+!Core.Tests.FloatTest categoriesFor: #testIntegerComparisons!public!unit tests! !
+!Core.Tests.FloatTest categoriesFor: #testIntegerComparisonsImprecise!public!unit tests! !
+!Core.Tests.FloatTest categoriesFor: #testIntegerPart!public!unit tests! !
+!Core.Tests.FloatTest categoriesFor: #testIsFinite!public!unit tests! !
+!Core.Tests.FloatTest categoriesFor: #testIsInfinite!public!unit tests! !
+!Core.Tests.FloatTest categoriesFor: #testIsLiteral!public!unit tests! !
+!Core.Tests.FloatTest categoriesFor: #testIsNan!public!unit tests! !
+!Core.Tests.FloatTest categoriesFor: #testIsSelfEvaluating!public!unit tests! !
+!Core.Tests.FloatTest categoriesFor: #testIsZero!public!unit tests! !
+!Core.Tests.FloatTest categoriesFor: #testLessThanFraction!public!unit tests! !
+!Core.Tests.FloatTest categoriesFor: #testLessThanInteger!public!unit tests! !
+!Core.Tests.FloatTest categoriesFor: #testLn!public!unit tests! !
+!Core.Tests.FloatTest categoriesFor: #testLog!public!unit tests! !
+!Core.Tests.FloatTest categoriesFor: #testNaNComparisons!public!unit tests! !
+!Core.Tests.FloatTest categoriesFor: #testNegated!public!unit tests! !
+!Core.Tests.FloatTest categoriesFor: #testNegative!public!unit tests! !
+!Core.Tests.FloatTest categoriesFor: #testOverflow!public!unit tests! !
+!Core.Tests.FloatTest categoriesFor: #testPredecessorSuccessor!public!unit tests! !
+!Core.Tests.FloatTest categoriesFor: #testPrintOnDecimalPlaces!public!unit tests! !
+!Core.Tests.FloatTest categoriesFor: #testPrintOnDecimalPlacesFmax!public!unit tests! !
+!Core.Tests.FloatTest categoriesFor: #testPrintOnDecimalPlacesFmin!public!unit tests! !
+!Core.Tests.FloatTest categoriesFor: #testPrintOnDecimalPlacesInfinities!public!unit tests! !
+!Core.Tests.FloatTest categoriesFor: #testPrintOnDecimalPlacesNans!public!unit tests! !
+!Core.Tests.FloatTest categoriesFor: #testPrintOnDecimalPlacesZeroes!public!unit tests! !
+!Core.Tests.FloatTest categoriesFor: #testPrintOnSignificantFigures!public!unit tests! !
+!Core.Tests.FloatTest categoriesFor: #testPrintString!public!unit tests! !
+!Core.Tests.FloatTest categoriesFor: #testPrintStringAndReadBack!public!unit tests! !
+!Core.Tests.FloatTest categoriesFor: #testRaisedTo!public!unit tests! !
+!Core.Tests.FloatTest categoriesFor: #testRaisedToInteger!public!unit tests! !
+!Core.Tests.FloatTest categoriesFor: #testReadFrom!public!unit tests! !
+!Core.Tests.FloatTest categoriesFor: #testReciprocal!public!unit tests! !
+!Core.Tests.FloatTest categoriesFor: #testRounded!public!unit tests! !
+!Core.Tests.FloatTest categoriesFor: #testSign!public!unit tests! !
+!Core.Tests.FloatTest categoriesFor: #testSignificandAsInteger!public!unit tests! !
+!Core.Tests.FloatTest categoriesFor: #testSin!public!unit tests! !
+!Core.Tests.FloatTest categoriesFor: #testSqrt!public!unit tests! !
+!Core.Tests.FloatTest categoriesFor: #testStoreOn!public!unit tests! !
+!Core.Tests.FloatTest categoriesFor: #testTimesTwoPower!public!Testing!unit tests! !
+!Core.Tests.FloatTest categoriesFor: #testTruncated!public!unit tests! !
+!Core.Tests.FloatTest categoriesFor: #testUnderflow!public!unit tests! !
+!Core.Tests.FloatTest categoriesFor: #zeroes!constants!private! !
 
-!FloatTest class methodsFor!
+!Core.Tests.FloatTest class methodsFor!
 
 predecessor: aFloat
 	| ulp |
@@ -1591,7 +1583,7 @@ ulp: aFloat
 	^exponent < Float emin
 		ifTrue: [Float fminDenormalized]
 		ifFalse: [Float epsilon timesTwoPower: exponent]! !
-!FloatTest class categoriesFor: #predecessor:!helpers!private! !
-!FloatTest class categoriesFor: #successor:!helpers!private! !
-!FloatTest class categoriesFor: #ulp:!helpers!private! !
+!Core.Tests.FloatTest class categoriesFor: #predecessor:!helpers!private! !
+!Core.Tests.FloatTest class categoriesFor: #successor:!helpers!private! !
+!Core.Tests.FloatTest class categoriesFor: #ulp:!helpers!private! !
 

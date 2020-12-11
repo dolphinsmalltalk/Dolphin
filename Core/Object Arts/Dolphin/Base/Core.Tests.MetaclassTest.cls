@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ClassDescriptionTest subclass: #MetaclassTest
+Core.Tests.ClassDescriptionTest subclass: #'Core.Tests.MetaclassTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-MetaclassTest guid: (GUID fromString: '{0643eed4-cf1f-4bfa-84f5-4af3a05fe655}')!
-MetaclassTest comment: ''!
-!MetaclassTest categoriesForClass!Unclassified! !
-!MetaclassTest methodsFor!
+Core.Tests.MetaclassTest guid: (Core.GUID fromString: '{0643eed4-cf1f-4bfa-84f5-4af3a05fe655}')!
+Core.Tests.MetaclassTest comment: ''!
+!Core.Tests.MetaclassTest categoriesForClass!Unclassified! !
+!Core.Tests.MetaclassTest methodsFor!
 
 allClassHierarchyInstancesDo: aMonadicValuable
 	Smalltalk allRoots do: [:root | root class withAllSubclassesDo: aMonadicValuable]!
@@ -61,20 +61,22 @@ testInstances
 	self assert: shadows asArray equals: #()!
 
 testLessOrEqual
-	self assert: ArithmeticError class <= ArithmeticError class description: 'Metaclasses must be <= to themselves'.
-	self deny: ArithmeticError class <= ArithmeticError description: 'Metaclasses should sort after their instance classes'.
-	self assert: ArithmeticError class <= ArithmeticValue class .
+	self assert: ArithmeticError class <= ArithmeticError class
+		description: 'Metaclasses must be <= to themselves'.
+	self deny: ArithmeticError class <= ArithmeticError
+		description: 'Metaclasses should sort after their instance classes'.
+	self assert: ArithmeticError class <= ArithmeticValue class.
 	self assert: ArithmeticError class <= ArithmeticValue.
 	self deny: ArithmeticValue class <= ArithmeticError.
-	self deny: ArithmeticValue class <= ArithmeticError class.!
+	self deny: ArithmeticValue class <= ArithmeticError class!
 
 testName
 	Smalltalk allRoots do: 
 			[:root |
 			root class
 				allSubclassesDo: [:each | self assert: each name equals: each instanceClass name , ' class']]! !
-!MetaclassTest categoriesFor: #allClassHierarchyInstancesDo:!helpers!private! !
-!MetaclassTest categoriesFor: #testInstances!public!unit tests! !
-!MetaclassTest categoriesFor: #testLessOrEqual!public!unit tests! !
-!MetaclassTest categoriesFor: #testName!public!unit tests! !
+!Core.Tests.MetaclassTest categoriesFor: #allClassHierarchyInstancesDo:!helpers!private! !
+!Core.Tests.MetaclassTest categoriesFor: #testInstances!public!unit tests! !
+!Core.Tests.MetaclassTest categoriesFor: #testLessOrEqual!public!unit tests! !
+!Core.Tests.MetaclassTest categoriesFor: #testName!public!unit tests! !
 

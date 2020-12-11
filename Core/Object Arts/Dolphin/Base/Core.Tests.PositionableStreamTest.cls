@@ -1,16 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-StreamTest subclass: #PositionableStreamTest
+Core.Tests.StreamTest subclass: #'Core.Tests.PositionableStreamTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-PositionableStreamTest guid: (GUID fromString: '{3abcc3a3-be2b-417d-bdb7-cf6a64cc2c6b}')!
-PositionableStreamTest isAbstract: true!
-PositionableStreamTest comment: ''!
-!PositionableStreamTest categoriesForClass!Unclassified! !
-!PositionableStreamTest methodsFor!
+Core.Tests.PositionableStreamTest guid: (Core.GUID fromString: '{3abcc3a3-be2b-417d-bdb7-cf6a64cc2c6b}')!
+Core.Tests.PositionableStreamTest isNonInstantiable: true!
+Core.Tests.PositionableStreamTest comment: ''!
+!Core.Tests.PositionableStreamTest categoriesForClass!Unclassified! !
+!Core.Tests.PositionableStreamTest methodsFor!
 
 arrayedCollections
 	^self strings, self byteArrays, self arrays!
@@ -178,7 +178,7 @@ testMarkusKuhnUtf8
 	"Should be able to read every character, even if invalid"
 	[stream atEnd] whileFalse: [stream next].
 	bytes := File readAllBytes: testFilePath.
-	text := Utf16String fromBytes: bytes codePage: WinNlsConstants.CP_UTF8.
+	text := Utf16String fromBytes: bytes codePage: OS.NlsConstants.CP_UTF8.
 	self assert: stream contents equals: text.
 	stream reset.
 	self assert: stream upToEnd equals: text.
@@ -300,19 +300,16 @@ testNextInto
 	self shouldnt: [stream nextInto: result] raise: endOfStream.
 	self assert: result equals: #(1 2).
 	self closeTempStream: stream.
-
 	stream := self streamOn: #[1 2 3].
 	result := Array new: 3.
 	self shouldnt: [stream nextInto: result] raise: endOfStream.
 	self assert: result equals: #(1 2 3).
 	self closeTempStream: stream.
-
 	stream := self streamOn: #[1 2 3 4 5 6 7 8 9].
 	result := Array new: 4.
 	self shouldnt: [stream nextInto: result] raise: endOfStream.
 	self assert: result equals: #(1 2 3 4).
 	self closeTempStream: stream.
-
 	stream := self streamOn: #[1 2 3 4 5 6 7 8 9].
 	result := Array new: 5.
 	stream next: 2.
@@ -324,8 +321,7 @@ testNextInto
 	stream := self streamOn: #[1 2 3].
 	result := Array new: 5.
 	self should: [stream nextInto: result] raise: endOfStream.
-	self closeTempStream: stream.
-!
+	self closeTempStream: stream!
 
 testNextLine
 	"No line delimiters"
@@ -444,7 +440,7 @@ testNextOtherNonCharactersUtf8
 	5.3.2  U+FFFF = ef bf bf"
 
 	"stdio streams will just consume the U+FFFF, so we might get either 2 or 3 chars read here."
-	count := self streamClass == StdioFileStream ifTrue: [2] ifFalse: [3].
+	count := self streamClass == External.StdioFileStream ifTrue: [2] ifFalse: [3].
 	self assert: (self verifyNonChars: #('efbefe' 'efbfbf')) equals: count.
 
 	"5.3.3  U+FDD0 .. U+FDEF"
@@ -483,8 +479,7 @@ testNextOverlongUtf8
 	5 timesRepeat: 
 			[self assert: subject next equals: Character replacement.
 			self assert: subject next equals: Character lf].
-	self closeTempStream: subject.
-!
+	self closeTempStream: subject!
 
 testNextPut
 	self writeableCollections do: 
@@ -581,16 +576,19 @@ testReverseContents
 	self closeTempStream: stream.
 	stream := self streamWith: '¡Hola!!'.
 	self assert: stream reverseContents equals: '!!aloH¡'.
+	self closeTempStream: stream.
+	stream := self streamWith: #[].
+	self assert: stream reverseContents isEmpty.
+	self closeTempStream: stream.
+	stream := self streamWith: #[1 2 3].
+	self assert: stream reverseContents equals: #[3 2 1].
 	self closeTempStream: stream!
 
 testSkipSeparators
 	| chars stream |
-	
 	chars := '1 2 	3
 4 €£🐬' copyWith: $\f.
-
 	stream := self streamOn: chars.
-
 	stream reset.
 	self assert: stream skipSeparators.
 	self assert: stream peek equals: $1.
@@ -603,7 +601,7 @@ testSkipSeparators
 	self assert: stream skipSeparators.
 	self assert: stream next equals: $4.
 	self assert: stream skipSeparators.
-	self assert: stream next equals: $€.
+	self assert: stream next equals: $\x20AC.
 	self assert: stream skipSeparators.
 	self assert: stream next equals: $£.
 	self assert: stream skipSeparators.
@@ -612,7 +610,6 @@ testSkipSeparators
 	self deny: stream skipSeparators.
 	self assert: stream atEnd.
 	self deny: stream skipSeparators.
-
 	self closeTempStream: stream!
 
 testSkipToAllColon
@@ -909,51 +906,51 @@ writeOperationNotImplemented: aBlock
 		should: aBlock
 		raise: Error
 		matching: [:ex | ex description = 'The stream is not writeable']! !
-!PositionableStreamTest categoriesFor: #arrayedCollections!private!unit tests! !
-!PositionableStreamTest categoriesFor: #arrays!private!unit tests! !
-!PositionableStreamTest categoriesFor: #byteArrays!private!unit tests! !
-!PositionableStreamTest categoriesFor: #collections!private!unit tests! !
-!PositionableStreamTest categoriesFor: #intervals!private!unit tests! !
-!PositionableStreamTest categoriesFor: #newStream!helpers!private! !
-!PositionableStreamTest categoriesFor: #orderedCollections!private!unit tests! !
-!PositionableStreamTest categoriesFor: #readOperationNotImplemented:!private!unit tests! !
-!PositionableStreamTest categoriesFor: #runArrays!private!unit tests! !
-!PositionableStreamTest categoriesFor: #streamClassSupportsPointers!helpers!private! !
-!PositionableStreamTest categoriesFor: #streamClassSupportsUtf16!helpers!private! !
-!PositionableStreamTest categoriesFor: #streamOn:!helpers!private! !
-!PositionableStreamTest categoriesFor: #streamOnBytes:type:!helpers!private! !
-!PositionableStreamTest categoriesFor: #streamOnFile:type:!helpers!private! !
-!PositionableStreamTest categoriesFor: #streamWith:!helpers!private! !
-!PositionableStreamTest categoriesFor: #strings!constants!private! !
-!PositionableStreamTest categoriesFor: #subjectCollection:!public! !
-!PositionableStreamTest categoriesFor: #testBasicNext!public!unit tests! !
-!PositionableStreamTest categoriesFor: #testContents!public!unit tests! !
-!PositionableStreamTest categoriesFor: #testEncodedSizeOf!public!unit tests! !
-!PositionableStreamTest categoriesFor: #testEncoding!gettableStream only!public!strict utf8!unit tests! !
-!PositionableStreamTest categoriesFor: #testMarkusKuhnUtf8!gettableStream only!public! !
-!PositionableStreamTest categoriesFor: #testNew!public!testing! !
-!PositionableStreamTest categoriesFor: #testNext!public!unit tests! !
-!PositionableStreamTest categoriesFor: #testNextAvailable!public!unit tests! !
-!PositionableStreamTest categoriesFor: #testNextAvailableColon!public!unit tests! !
-!PositionableStreamTest categoriesFor: #testNextColon!public!unit tests! !
-!PositionableStreamTest categoriesFor: #testNextIllegalUtf8CodePositions!gettableStream only!public!unit tests! !
-!PositionableStreamTest categoriesFor: #testNextInto!public!unit tests! !
-!PositionableStreamTest categoriesFor: #testNextLine!gettableStream only!public!unit tests! !
-!PositionableStreamTest categoriesFor: #testNextLineCrOnly!gettableStream only!public!unit tests! !
-!PositionableStreamTest categoriesFor: #testNextLongUtf8Encodings!gettableStream only!public!strict utf8!unit tests! !
-!PositionableStreamTest categoriesFor: #testNextOtherNonCharactersUtf8!gettableStream only!public!unit tests! !
-!PositionableStreamTest categoriesFor: #testNextOverlongUtf8!gettableStream only!public!strict utf8!unit tests! !
-!PositionableStreamTest categoriesFor: #testNextPut!public!unit tests! !
-!PositionableStreamTest categoriesFor: #testNextWord!public!unit tests! !
-!PositionableStreamTest categoriesFor: #testPeekFor!public!unit tests! !
-!PositionableStreamTest categoriesFor: #testReverseContents!public!unit tests! !
-!PositionableStreamTest categoriesFor: #testSkipSeparators!gettableStream only!public!unit tests! !
-!PositionableStreamTest categoriesFor: #testSkipToAllColon!gettableStream only!public!unit tests! !
-!PositionableStreamTest categoriesFor: #testUpTo!public!unit tests! !
-!PositionableStreamTest categoriesFor: #testUpToAllColon!public!unit tests! !
-!PositionableStreamTest categoriesFor: #testUpToEnd!public!unit tests! !
-!PositionableStreamTest categoriesFor: #testUpToUtf!gettableStream only!public! !
-!PositionableStreamTest categoriesFor: #verifyNonChars:!public! !
-!PositionableStreamTest categoriesFor: #writeableCollections!private!unit tests! !
-!PositionableStreamTest categoriesFor: #writeOperationNotImplemented:!private!unit tests! !
+!Core.Tests.PositionableStreamTest categoriesFor: #arrayedCollections!private!unit tests! !
+!Core.Tests.PositionableStreamTest categoriesFor: #arrays!private!unit tests! !
+!Core.Tests.PositionableStreamTest categoriesFor: #byteArrays!private!unit tests! !
+!Core.Tests.PositionableStreamTest categoriesFor: #collections!private!unit tests! !
+!Core.Tests.PositionableStreamTest categoriesFor: #intervals!private!unit tests! !
+!Core.Tests.PositionableStreamTest categoriesFor: #newStream!helpers!private! !
+!Core.Tests.PositionableStreamTest categoriesFor: #orderedCollections!private!unit tests! !
+!Core.Tests.PositionableStreamTest categoriesFor: #readOperationNotImplemented:!private!unit tests! !
+!Core.Tests.PositionableStreamTest categoriesFor: #runArrays!private!unit tests! !
+!Core.Tests.PositionableStreamTest categoriesFor: #streamClassSupportsPointers!helpers!private! !
+!Core.Tests.PositionableStreamTest categoriesFor: #streamClassSupportsUtf16!helpers!private! !
+!Core.Tests.PositionableStreamTest categoriesFor: #streamOn:!helpers!private! !
+!Core.Tests.PositionableStreamTest categoriesFor: #streamOnBytes:type:!helpers!private! !
+!Core.Tests.PositionableStreamTest categoriesFor: #streamOnFile:type:!helpers!private! !
+!Core.Tests.PositionableStreamTest categoriesFor: #streamWith:!helpers!private! !
+!Core.Tests.PositionableStreamTest categoriesFor: #strings!constants!private! !
+!Core.Tests.PositionableStreamTest categoriesFor: #subjectCollection:!public! !
+!Core.Tests.PositionableStreamTest categoriesFor: #testBasicNext!public!unit tests! !
+!Core.Tests.PositionableStreamTest categoriesFor: #testContents!public!unit tests! !
+!Core.Tests.PositionableStreamTest categoriesFor: #testEncodedSizeOf!public!unit tests! !
+!Core.Tests.PositionableStreamTest categoriesFor: #testEncoding!gettableStream only!public!strict utf8!unit tests! !
+!Core.Tests.PositionableStreamTest categoriesFor: #testMarkusKuhnUtf8!gettableStream only!public! !
+!Core.Tests.PositionableStreamTest categoriesFor: #testNew!public!testing! !
+!Core.Tests.PositionableStreamTest categoriesFor: #testNext!public!unit tests! !
+!Core.Tests.PositionableStreamTest categoriesFor: #testNextAvailable!public!unit tests! !
+!Core.Tests.PositionableStreamTest categoriesFor: #testNextAvailableColon!public!unit tests! !
+!Core.Tests.PositionableStreamTest categoriesFor: #testNextColon!public!unit tests! !
+!Core.Tests.PositionableStreamTest categoriesFor: #testNextIllegalUtf8CodePositions!gettableStream only!public!unit tests! !
+!Core.Tests.PositionableStreamTest categoriesFor: #testNextInto!public!unit tests! !
+!Core.Tests.PositionableStreamTest categoriesFor: #testNextLine!gettableStream only!public!unit tests! !
+!Core.Tests.PositionableStreamTest categoriesFor: #testNextLineCrOnly!gettableStream only!public!unit tests! !
+!Core.Tests.PositionableStreamTest categoriesFor: #testNextLongUtf8Encodings!gettableStream only!public!strict utf8!unit tests! !
+!Core.Tests.PositionableStreamTest categoriesFor: #testNextOtherNonCharactersUtf8!gettableStream only!public!unit tests! !
+!Core.Tests.PositionableStreamTest categoriesFor: #testNextOverlongUtf8!gettableStream only!public!strict utf8!unit tests! !
+!Core.Tests.PositionableStreamTest categoriesFor: #testNextPut!public!unit tests! !
+!Core.Tests.PositionableStreamTest categoriesFor: #testNextWord!public!unit tests! !
+!Core.Tests.PositionableStreamTest categoriesFor: #testPeekFor!public!unit tests! !
+!Core.Tests.PositionableStreamTest categoriesFor: #testReverseContents!public!unit tests! !
+!Core.Tests.PositionableStreamTest categoriesFor: #testSkipSeparators!gettableStream only!public!unit tests! !
+!Core.Tests.PositionableStreamTest categoriesFor: #testSkipToAllColon!gettableStream only!public!unit tests! !
+!Core.Tests.PositionableStreamTest categoriesFor: #testUpTo!public!unit tests! !
+!Core.Tests.PositionableStreamTest categoriesFor: #testUpToAllColon!public!unit tests! !
+!Core.Tests.PositionableStreamTest categoriesFor: #testUpToEnd!public!unit tests! !
+!Core.Tests.PositionableStreamTest categoriesFor: #testUpToUtf!gettableStream only!public! !
+!Core.Tests.PositionableStreamTest categoriesFor: #verifyNonChars:!public! !
+!Core.Tests.PositionableStreamTest categoriesFor: #writeableCollections!private!unit tests! !
+!Core.Tests.PositionableStreamTest categoriesFor: #writeOperationNotImplemented:!private!unit tests! !
 

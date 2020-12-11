@@ -1,21 +1,20 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-DolphinTest subclass: #PropertyManagerTest
+Core.Tests.DolphinTest subclass: #'Kernel.Tests.PropertyManagerTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-PropertyManagerTest guid: (GUID fromString: '{fb569e34-0ebf-4ccd-abc2-4739486156f3}')!
-PropertyManagerTest comment: ''!
-!PropertyManagerTest categoriesForClass!Unclassified! !
-!PropertyManagerTest methodsFor!
+Kernel.Tests.PropertyManagerTest guid: (Core.GUID fromString: '{fb569e34-0ebf-4ccd-abc2-4739486156f3}')!
+Kernel.Tests.PropertyManagerTest comment: ''!
+!Kernel.Tests.PropertyManagerTest categoriesForClass!Unclassified! !
+!Kernel.Tests.PropertyManagerTest methodsFor!
 
 testRegisterIsWeaklyKeyed
 	| subject |
 	subject := PropertyManager new.
 	self assert: subject register hasWeakKeys.
-	self deny: subject register hasWeakValues
-! !
-!PropertyManagerTest categoriesFor: #testRegisterIsWeaklyKeyed!public! !
+	self deny: subject register hasWeakValues! !
+!Kernel.Tests.PropertyManagerTest categoriesFor: #testRegisterIsWeaklyKeyed!public! !
 

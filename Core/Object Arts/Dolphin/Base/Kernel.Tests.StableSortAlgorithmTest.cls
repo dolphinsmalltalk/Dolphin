@@ -1,12 +1,12 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-SortAlgorithmTest subclass: #StableSortAlgorithmTest
+Core.Tests.SortAlgorithmTest subclass: #'Kernel.Tests.StableSortAlgorithmTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-StableSortAlgorithmTest guid: (GUID fromString: '{8720de2b-a524-4ff9-bfcb-e58828a59138}')!
-StableSortAlgorithmTest isAbstract: true!
-StableSortAlgorithmTest comment: ''!
-!StableSortAlgorithmTest categoriesForClass!Unclassified! !
+Kernel.Tests.StableSortAlgorithmTest guid: (Core.GUID fromString: '{8720de2b-a524-4ff9-bfcb-e58828a59138}')!
+Kernel.Tests.StableSortAlgorithmTest isNonInstantiable: true!
+Kernel.Tests.StableSortAlgorithmTest comment: ''!
+!Kernel.Tests.StableSortAlgorithmTest categoriesForClass!Unclassified! !

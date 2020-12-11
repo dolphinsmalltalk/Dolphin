@@ -1,16 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-DolphinCollectionTest subclass: #AbstractDictionaryTest
+Core.Tests.CollectionTest subclass: #'Core.Tests.AbstractDictionaryTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-AbstractDictionaryTest guid: (GUID fromString: '{5d8b76ad-dcc1-44ff-8a2a-cf5e50c4b434}')!
-AbstractDictionaryTest isAbstract: true!
-AbstractDictionaryTest comment: ''!
-!AbstractDictionaryTest categoriesForClass!Unclassified! !
-!AbstractDictionaryTest methodsFor!
+Core.Tests.AbstractDictionaryTest guid: (Core.GUID fromString: '{5d8b76ad-dcc1-44ff-8a2a-cf5e50c4b434}')!
+Core.Tests.AbstractDictionaryTest isNonInstantiable: true!
+Core.Tests.AbstractDictionaryTest comment: ''!
+!Core.Tests.AbstractDictionaryTest categoriesForClass!Unclassified! !
+!Core.Tests.AbstractDictionaryTest methodsFor!
 
 assertCommutativelyEqual: aDictionary other: anotherDictionary
 	self assert: aDictionary equals: anotherDictionary.
@@ -84,7 +84,7 @@ testAtIfAbsentPut
 testAtIfAbsentPutModifyingCollection
 	"Test at:ifAbsentPut: when modifying the collection in the block"
 
-	| keys key3 key1 key2 dictionary i |
+	| keys key3 key1 key2 dictionary |
 	dictionary := self newEmpty.
 	key1 := self makeKey: $a.
 
@@ -239,27 +239,27 @@ testStrongTalkTests
 	d removeAssociation: #bubba -> #that ifAbsent: [new := true].
 	self checkValidity: d.
 	self assert: new]
-			on: ConfirmationRequiredWarning
+			on: UI.ConfirmationRequiredWarning
 			do: [:ex | ex refuse]! !
-!AbstractDictionaryTest categoriesFor: #assertCommutativelyEqual:other:!helpers!private! !
-!AbstractDictionaryTest categoriesFor: #checkValidity:!benchmarking!private! !
-!AbstractDictionaryTest categoriesFor: #collectionClass!helpers!private! !
-!AbstractDictionaryTest categoriesFor: #denyCommutativelyEqual:other:!helpers!private! !
-!AbstractDictionaryTest categoriesFor: #key3Value!private! !
-!AbstractDictionaryTest categoriesFor: #makeKey:!helpers!private! !
-!AbstractDictionaryTest categoriesFor: #newCollection:!helpers!private! !
-!AbstractDictionaryTest categoriesFor: #newDictionary!private!unit tests! !
-!AbstractDictionaryTest categoriesFor: #newEmpty!helpers!public! !
-!AbstractDictionaryTest categoriesFor: #testAssociationsDo!public!unit tests! !
-!AbstractDictionaryTest categoriesFor: #testAtIfAbsent!public!unit tests! !
-!AbstractDictionaryTest categoriesFor: #testAtIfAbsentPut!public!unit tests! !
-!AbstractDictionaryTest categoriesFor: #testAtIfAbsentPutModifyingCollection!public!unit tests! !
-!AbstractDictionaryTest categoriesFor: #testAtIfAbsentPutValue!public!unit tests! !
-!AbstractDictionaryTest categoriesFor: #testCyclicRefPrinting!public! !
-!AbstractDictionaryTest categoriesFor: #testDeepCopy!public!unit tests! !
-!AbstractDictionaryTest categoriesFor: #testEquals!public!unit tests! !
-!AbstractDictionaryTest categoriesFor: #testIncludesKey!public!unit tests! !
-!AbstractDictionaryTest categoriesFor: #testNilKey!public!unit tests! !
-!AbstractDictionaryTest categoriesFor: #testRemoveKey!public!unit tests! !
-!AbstractDictionaryTest categoriesFor: #testStrongTalkTests!benchmarking!public! !
+!Core.Tests.AbstractDictionaryTest categoriesFor: #assertCommutativelyEqual:other:!helpers!private! !
+!Core.Tests.AbstractDictionaryTest categoriesFor: #checkValidity:!benchmarking!private! !
+!Core.Tests.AbstractDictionaryTest categoriesFor: #collectionClass!helpers!private! !
+!Core.Tests.AbstractDictionaryTest categoriesFor: #denyCommutativelyEqual:other:!helpers!private! !
+!Core.Tests.AbstractDictionaryTest categoriesFor: #key3Value!private! !
+!Core.Tests.AbstractDictionaryTest categoriesFor: #makeKey:!helpers!private! !
+!Core.Tests.AbstractDictionaryTest categoriesFor: #newCollection:!helpers!private! !
+!Core.Tests.AbstractDictionaryTest categoriesFor: #newDictionary!private!unit tests! !
+!Core.Tests.AbstractDictionaryTest categoriesFor: #newEmpty!helpers!public! !
+!Core.Tests.AbstractDictionaryTest categoriesFor: #testAssociationsDo!public!unit tests! !
+!Core.Tests.AbstractDictionaryTest categoriesFor: #testAtIfAbsent!public!unit tests! !
+!Core.Tests.AbstractDictionaryTest categoriesFor: #testAtIfAbsentPut!public!unit tests! !
+!Core.Tests.AbstractDictionaryTest categoriesFor: #testAtIfAbsentPutModifyingCollection!public!unit tests! !
+!Core.Tests.AbstractDictionaryTest categoriesFor: #testAtIfAbsentPutValue!public!unit tests! !
+!Core.Tests.AbstractDictionaryTest categoriesFor: #testCyclicRefPrinting!public! !
+!Core.Tests.AbstractDictionaryTest categoriesFor: #testDeepCopy!public!unit tests! !
+!Core.Tests.AbstractDictionaryTest categoriesFor: #testEquals!public!unit tests! !
+!Core.Tests.AbstractDictionaryTest categoriesFor: #testIncludesKey!public!unit tests! !
+!Core.Tests.AbstractDictionaryTest categoriesFor: #testNilKey!public!unit tests! !
+!Core.Tests.AbstractDictionaryTest categoriesFor: #testRemoveKey!public!unit tests! !
+!Core.Tests.AbstractDictionaryTest categoriesFor: #testStrongTalkTests!benchmarking!public! !
 

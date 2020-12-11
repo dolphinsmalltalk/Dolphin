@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ArrayedCollectionTest subclass: #ByteArrayTest
+Core.Tests.ArrayedCollectionTest subclass: #'Core.Tests.ByteArrayTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ByteArrayTest guid: (GUID fromString: '{f83d3bb0-c4b4-4f92-9d89-fd89e6e25da1}')!
-ByteArrayTest comment: ''!
-!ByteArrayTest categoriesForClass!Unclassified! !
-!ByteArrayTest methodsFor!
+Core.Tests.ByteArrayTest guid: (Core.GUID fromString: '{f83d3bb0-c4b4-4f92-9d89-fd89e6e25da1}')!
+Core.Tests.ByteArrayTest comment: ''!
+!Core.Tests.ByteArrayTest categoriesForClass!Unclassified! !
+!Core.Tests.ByteArrayTest methodsFor!
 
 assimilate: anObject 
 	^anObject asInteger!
@@ -33,7 +33,7 @@ testBasicDwordAtOffsetPut
 			[:each |
 			array basicDwordAtOffset: 0 put: each.
 			self assert: (array dwordAtOffset: 0) equals: each.
-			array basicDwordAtOffset: 0 put: (DWORD fromInteger: each).
+			array basicDwordAtOffset: 0 put: (External.DWORD fromInteger: each).
 			self assert: (array dwordAtOffset: 0) equals: each].
 	self should: [array basicDwordAtOffset: 0 put: -16r80000001] raise: Error.
 	self should: [array basicDwordAtOffset: 0 put: 16rFFFFFFFF + 1] raise: Error!
@@ -48,7 +48,7 @@ testDwordAtOffsetPut
 			[:each |
 			array dwordAtOffset: 0 put: each.
 			self assert: (array dwordAtOffset: 0) equals: each.
-			array dwordAtOffset: 0 put: (DWORD fromInteger: each).
+			array dwordAtOffset: 0 put: (External.DWORD fromInteger: each).
 			self assert: (array dwordAtOffset: 0) equals: each].
 	self should: [array dwordAtOffset: 0 put: -16r80000001] raise: Error.
 	self should: [array dwordAtOffset: 0 put: 16rFFFFFFFF + 1] raise: Error!
@@ -127,7 +127,6 @@ testSbyteAtOffsetPut
 			self assert: (array at: 1) equals: (each bitAnd: 255)]!
 
 testSDwordAtOffsetPut
-
 	| array |
 	array := ByteArray new: 4.
 	self assert: (array sdwordAtOffset: 0) equals: 0.
@@ -135,7 +134,7 @@ testSDwordAtOffsetPut
 			[:each |
 			array sdwordAtOffset: 0 put: each.
 			self assert: (array sdwordAtOffset: 0) equals: each.
-			array sdwordAtOffset: 0 put: (SDWORD fromInteger: each).
+			array sdwordAtOffset: 0 put: (External.SDWORD fromInteger: each).
 			self assert: (array sdwordAtOffset: 0) equals: each].
 	self should: [array sdwordAtOffset: 0 put: -16r80000001] raise: Error.
 	self should: [array sdwordAtOffset: 0 put: 16r80000000] raise: Error!
@@ -150,28 +149,28 @@ testWordAtOffsetPut
 			[:each |
 			array wordAtOffset: 0 put: each.
 			self assert: (array wordAtOffset: 0) equals: each.
-			array wordAtOffset: 0 put: (WORD fromInteger: each).
+			array wordAtOffset: 0 put: (External.WORD fromInteger: each).
 			self assert: (array wordAtOffset: 0) equals: each].
 	{-16r8001. 16rFFFF + 1} do: 
 			[:each |
 			self
 				should: [array wordAtOffset: 0 put: each]
-				raise: HRESULTError
-				matching: [:ex | ex hresult = (HRESULT fromPrimitiveFailureCode: _PrimitiveFailureCode.IntegerOutOfRange)]]!
+				raise: OS.HRESULTError
+				matching: [:ex | ex hresult = (OS.HRESULT fromPrimitiveFailureCode: _PrimitiveFailureCode.IntegerOutOfRange)]]!
 
 wordValues
 	^#(16r0 16r1 16r7F 16r80 16r7FFF 16r8000 16rFFFE 16rFFFF)! !
-!ByteArrayTest categoriesFor: #assimilate:!public!unit tests! !
-!ByteArrayTest categoriesFor: #collectionClass!helpers!private! !
-!ByteArrayTest categoriesFor: #dwordValues!constants!private! !
-!ByteArrayTest categoriesFor: #sdwordValues!constants!private! !
-!ByteArrayTest categoriesFor: #testBasicDwordAtOffsetPut!public!unit tests! !
-!ByteArrayTest categoriesFor: #testDwordAtOffsetPut!public!unit tests! !
-!ByteArrayTest categoriesFor: #testFromHexString!public! !
-!ByteArrayTest categoriesFor: #testMixedConcatenation!public! !
-!ByteArrayTest categoriesFor: #testSbyteAtOffset!public!unit tests! !
-!ByteArrayTest categoriesFor: #testSbyteAtOffsetPut!public!unit tests! !
-!ByteArrayTest categoriesFor: #testSDwordAtOffsetPut!public!unit tests! !
-!ByteArrayTest categoriesFor: #testWordAtOffsetPut!public!unit tests! !
-!ByteArrayTest categoriesFor: #wordValues!constants!private! !
+!Core.Tests.ByteArrayTest categoriesFor: #assimilate:!public!unit tests! !
+!Core.Tests.ByteArrayTest categoriesFor: #collectionClass!helpers!private! !
+!Core.Tests.ByteArrayTest categoriesFor: #dwordValues!constants!private! !
+!Core.Tests.ByteArrayTest categoriesFor: #sdwordValues!constants!private! !
+!Core.Tests.ByteArrayTest categoriesFor: #testBasicDwordAtOffsetPut!public!unit tests! !
+!Core.Tests.ByteArrayTest categoriesFor: #testDwordAtOffsetPut!public!unit tests! !
+!Core.Tests.ByteArrayTest categoriesFor: #testFromHexString!public! !
+!Core.Tests.ByteArrayTest categoriesFor: #testMixedConcatenation!public! !
+!Core.Tests.ByteArrayTest categoriesFor: #testSbyteAtOffset!public!unit tests! !
+!Core.Tests.ByteArrayTest categoriesFor: #testSbyteAtOffsetPut!public!unit tests! !
+!Core.Tests.ByteArrayTest categoriesFor: #testSDwordAtOffsetPut!public!unit tests! !
+!Core.Tests.ByteArrayTest categoriesFor: #testWordAtOffsetPut!public!unit tests! !
+!Core.Tests.ByteArrayTest categoriesFor: #wordValues!constants!private! !
 

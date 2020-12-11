@@ -1,16 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-DolphinTest subclass: #ExternalArrayTest
+Core.Tests.DolphinTest subclass: #'External.Tests.ExternalArrayTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ExternalArrayTest guid: (GUID fromString: '{356dac42-9b9c-4970-87d2-bfd4846fafa4}')!
-ExternalArrayTest isAbstract: true!
-ExternalArrayTest comment: ''!
-!ExternalArrayTest categoriesForClass!Unclassified! !
-!ExternalArrayTest methodsFor!
+External.Tests.ExternalArrayTest guid: (Core.GUID fromString: '{356dac42-9b9c-4970-87d2-bfd4846fafa4}')!
+External.Tests.ExternalArrayTest isNonInstantiable: true!
+External.Tests.ExternalArrayTest comment: ''!
+!External.Tests.ExternalArrayTest categoriesForClass!Unclassified! !
+!External.Tests.ExternalArrayTest methodsFor!
 
 arrayClass
 	^self subclassResponsibility!
@@ -204,14 +204,14 @@ testWithDo
 				matching: [:ex | ex description = 'collections are of different sizes']].
 	subject := self newNumericArray: 0.
 	subject with: (1 to: 0) do: [:a :b | self assert: false]! !
-!ExternalArrayTest categoriesFor: #arrayClass!constants!private! !
-!ExternalArrayTest categoriesFor: #arrayValueString:!private!unit tests! !
-!ExternalArrayTest categoriesFor: #canonicalizeValue:!private!unit tests! !
-!ExternalArrayTest categoriesFor: #elementFromValue:!private!unit tests! !
-!ExternalArrayTest categoriesFor: #elementToValue:!private!unit tests! !
-!ExternalArrayTest categoriesFor: #newArrayOfIntegers:!helpers!private! !
-!ExternalArrayTest categoriesFor: #newNumericArray:!helpers!private! !
-!ExternalArrayTest categoriesFor: #testAtAndAtPut!public!unit tests! !
-!ExternalArrayTest categoriesFor: #testFromToKeysAndValuesDo!public!unit tests! !
-!ExternalArrayTest categoriesFor: #testWithDo!public!unit tests! !
+!External.Tests.ExternalArrayTest categoriesFor: #arrayClass!constants!private! !
+!External.Tests.ExternalArrayTest categoriesFor: #arrayValueString:!private!unit tests! !
+!External.Tests.ExternalArrayTest categoriesFor: #canonicalizeValue:!private!unit tests! !
+!External.Tests.ExternalArrayTest categoriesFor: #elementFromValue:!private!unit tests! !
+!External.Tests.ExternalArrayTest categoriesFor: #elementToValue:!private!unit tests! !
+!External.Tests.ExternalArrayTest categoriesFor: #newArrayOfIntegers:!helpers!private! !
+!External.Tests.ExternalArrayTest categoriesFor: #newNumericArray:!helpers!private! !
+!External.Tests.ExternalArrayTest categoriesFor: #testAtAndAtPut!public!unit tests! !
+!External.Tests.ExternalArrayTest categoriesFor: #testFromToKeysAndValuesDo!public!unit tests! !
+!External.Tests.ExternalArrayTest categoriesFor: #testWithDo!public!unit tests! !
 

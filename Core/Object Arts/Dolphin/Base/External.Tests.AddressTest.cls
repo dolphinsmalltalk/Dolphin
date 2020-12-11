@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-DolphinTest subclass: #ExternalAddressTest
+Core.Tests.DolphinTest subclass: #'External.Tests.AddressTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ExternalAddressTest guid: (GUID fromString: '{55d8e17d-e5d8-4060-b20d-34dd8826180f}')!
-ExternalAddressTest comment: ''!
-!ExternalAddressTest categoriesForClass!Unclassified! !
-!ExternalAddressTest methodsFor!
+External.Tests.AddressTest guid: (Core.GUID fromString: '{55d8e17d-e5d8-4060-b20d-34dd8826180f}')!
+External.Tests.AddressTest comment: ''!
+!External.Tests.AddressTest categoriesForClass!Unclassified! !
+!External.Tests.AddressTest methodsFor!
 
 stringFromAddressTestClass: aStringClass
 	| abc abc2 |
@@ -22,10 +22,10 @@ stringFromAddressTestClass: aStringClass
 	self assert: abc2 asString equals: 'abc'!
 
 testExternalAddressAtAddress
-	self assert: (ExternalAddress fromAddress: 1) asInteger equals: 1!
+	self assert: (External.Address fromAddress: 1) asInteger equals: 1!
 
 testExternalAddressFromAddress
-	self assert: (ExternalAddress fromAddress: 1) asInteger equals: 1!
+	self assert: (External.Address fromAddress: 1) asInteger equals: 1!
 
 testREFGUIDfromAddress
 	| g ref |
@@ -41,9 +41,9 @@ testStringsFromAddress
 			self stringFromAddressTestClass: each.
 			self assertIsNil: (each fromAddress: nil).
 			self assertIsNil: (each fromAddress: 0)]! !
-!ExternalAddressTest categoriesFor: #stringFromAddressTestClass:!helpers!public! !
-!ExternalAddressTest categoriesFor: #testExternalAddressAtAddress!public!unit tests! !
-!ExternalAddressTest categoriesFor: #testExternalAddressFromAddress!public!unit tests! !
-!ExternalAddressTest categoriesFor: #testREFGUIDfromAddress!public!unit tests! !
-!ExternalAddressTest categoriesFor: #testStringsFromAddress!public!unit tests! !
+!External.Tests.AddressTest categoriesFor: #stringFromAddressTestClass:!helpers!public! !
+!External.Tests.AddressTest categoriesFor: #testExternalAddressAtAddress!public!unit tests! !
+!External.Tests.AddressTest categoriesFor: #testExternalAddressFromAddress!public!unit tests! !
+!External.Tests.AddressTest categoriesFor: #testREFGUIDfromAddress!public!unit tests! !
+!External.Tests.AddressTest categoriesFor: #testStringsFromAddress!public!unit tests! !
 

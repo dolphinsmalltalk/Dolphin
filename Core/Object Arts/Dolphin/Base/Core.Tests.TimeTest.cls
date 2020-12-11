@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-DolphinTest subclass: #TimeTest
+Core.Tests.DolphinTest subclass: #'Core.Tests.TimeTest'
 	instanceVariableNames: 'savedLocale'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-TimeTest guid: (GUID fromString: '{5eb1cd02-030d-4b2f-b1df-b06465e5bb19}')!
-TimeTest comment: ''!
-!TimeTest categoriesForClass!Unclassified! !
-!TimeTest methodsFor!
+Core.Tests.TimeTest guid: (Core.GUID fromString: '{5eb1cd02-030d-4b2f-b1df-b06465e5bb19}')!
+Core.Tests.TimeTest comment: ''!
+!Core.Tests.TimeTest categoriesForClass!Unclassified! !
+!Core.Tests.TimeTest methodsFor!
 
 comparePrintStreamFor: time hr24: hr24 showSeconds: showSeconds expected: expected
 	| output aStream fmt |
@@ -39,7 +39,10 @@ setUp
 	Locale userDefault: (Locale named: 'en-US')!
 
 tearDown
-	savedLocale ifNotNil: [Locale userDefault: savedLocale. savedLocale := nil].
+	savedLocale
+		ifNotNil: 
+			[Locale userDefault: savedLocale.
+			savedLocale := nil].
 	super tearDown!
 
 testAsSYSTEMTIME
@@ -98,14 +101,14 @@ testClassReadFrom
 	self assert: (Time fromString: '00:00:00.1') asMilliseconds equals: 100.
 	self assert: (Time fromString: '00:00:00.0') asMilliseconds equals: 0.
 	self assert: (Time fromString: '00:00:00.999') asMilliseconds equals: 999.
-	self assert: (Time fromString: '00:00:00.9994') asMilliseconds equals: 9994/10.
-	self assert: (Time fromString: '00:00:00.9995') asMilliseconds equals: 9995/10.
+	self assert: (Time fromString: '00:00:00.9994') asMilliseconds equals: 9994 / 10.
+	self assert: (Time fromString: '00:00:00.9995') asMilliseconds equals: 9995 / 10.
 	self assert: (Time fromString: '00:00:00.01') asMilliseconds equals: 10.
 	self assert: (Time fromString: '00:00:00.001') asMilliseconds equals: 1.
-	self assert: (Time fromString: '00:00:00.0014') asMilliseconds equals: 14/10.
-	self assert: (Time fromString: '00:00:00.00049') asMilliseconds equals: 49/100.
-	self assert: (Time fromString: '00:00:00.0005') asMilliseconds equals: 5/10.
-	self assert: (Time fromString: '00:00:00.0015') asMilliseconds equals: 15/10.
+	self assert: (Time fromString: '00:00:00.0014') asMilliseconds equals: 14 / 10.
+	self assert: (Time fromString: '00:00:00.00049') asMilliseconds equals: 49 / 100.
+	self assert: (Time fromString: '00:00:00.0005') asMilliseconds equals: 5 / 10.
+	self assert: (Time fromString: '00:00:00.0015') asMilliseconds equals: 15 / 10.
 	self assert: (Time readFrom: '11:59:59:999' readStream) asMilliseconds
 		equals: 60 * 60 * 12 * 1000 - 1.
 	self assert: (Time readFrom: '23:59:59:999' readStream) asMilliseconds
@@ -127,7 +130,8 @@ testClassReadFrom
 	self should: [Time fromString: '00:00:00.-1'] raise: Error!
 
 testFromDuration
-	self assert: (Time fromDuration: (Duration
+	self
+		assert: (Time fromDuration: (Duration
 						days: -10
 						hours: -1
 						minutes: -2
@@ -137,7 +141,8 @@ testFromDuration
 				minute: 57
 				second: 57).
 	self assert: (Time fromDuration: 0 hours) equals: (Time fromSeconds: 0).
-	self assert: (Time fromDuration: (Duration
+	self
+		assert: (Time fromDuration: (Duration
 						days: 25
 						hours: 12
 						minutes: 15
@@ -164,7 +169,7 @@ testHours
 	self hoursShould: 23 for: -86401!
 
 testMilliseconds
-	(Time canUnderstand: #milliseconds) 
+	(Time canUnderstand: #milliseconds)
 		ifFalse: 
 			["Introduced in D6"
 			^self].
@@ -232,22 +237,22 @@ testPrintOnFormat
 testPrintPositiveTime
 	| time1 |
 	time1 := Time fromSeconds: 1 * 3600 + (0 * 60) + 0.
-	self 
+	self
 		comparePrintStreamFor: time1
 		hr24: false
 		showSeconds: false
 		expected: '1:00 AM'.
-	self 
+	self
 		comparePrintStreamFor: time1
 		hr24: false
 		showSeconds: true
 		expected: '1:00.00 AM'.
-	self 
+	self
 		comparePrintStreamFor: time1
 		hr24: true
 		showSeconds: false
 		expected: '01:00'.
-	self 
+	self
 		comparePrintStreamFor: time1
 		hr24: true
 		showSeconds: true
@@ -283,24 +288,24 @@ testStoreOn
 						second: 58).
 	stored := collection storeString.
 	self assert: (Compiler evaluate: stored) equals: collection! !
-!TimeTest categoriesFor: #comparePrintStreamFor:hr24:showSeconds:expected:!comparing!private! !
-!TimeTest categoriesFor: #hoursShould:for:!comparing!private! !
-!TimeTest categoriesFor: #millisecondsShould:for:!comparing!private! !
-!TimeTest categoriesFor: #minutesShould:for:!comparing!private! !
-!TimeTest categoriesFor: #secondsShould:for:!comparing!private! !
-!TimeTest categoriesFor: #setUp!private!running! !
-!TimeTest categoriesFor: #tearDown!private!running! !
-!TimeTest categoriesFor: #testAsSYSTEMTIME!public!unit tests! !
-!TimeTest categoriesFor: #testAsSYSTEMTIMEInvalidMilliseconds!public!unit tests! !
-!TimeTest categoriesFor: #testClassReadFrom!public!unit tests! !
-!TimeTest categoriesFor: #testFromDuration!public!testing! !
-!TimeTest categoriesFor: #testHours!public!testing! !
-!TimeTest categoriesFor: #testMilliseconds!public!testing! !
-!TimeTest categoriesFor: #testMinutes!public!testing! !
-!TimeTest categoriesFor: #testPrintNegativeTime!public!testing! !
-!TimeTest categoriesFor: #testPrintOnFormat!public!unit tests! !
-!TimeTest categoriesFor: #testPrintPositiveTime!public!testing! !
-!TimeTest categoriesFor: #testSeconds!public!testing! !
-!TimeTest categoriesFor: #testStb!public!testing! !
-!TimeTest categoriesFor: #testStoreOn!public!testing! !
+!Core.Tests.TimeTest categoriesFor: #comparePrintStreamFor:hr24:showSeconds:expected:!comparing!private! !
+!Core.Tests.TimeTest categoriesFor: #hoursShould:for:!comparing!private! !
+!Core.Tests.TimeTest categoriesFor: #millisecondsShould:for:!comparing!private! !
+!Core.Tests.TimeTest categoriesFor: #minutesShould:for:!comparing!private! !
+!Core.Tests.TimeTest categoriesFor: #secondsShould:for:!comparing!private! !
+!Core.Tests.TimeTest categoriesFor: #setUp!private!running! !
+!Core.Tests.TimeTest categoriesFor: #tearDown!private!running! !
+!Core.Tests.TimeTest categoriesFor: #testAsSYSTEMTIME!public!unit tests! !
+!Core.Tests.TimeTest categoriesFor: #testAsSYSTEMTIMEInvalidMilliseconds!public!unit tests! !
+!Core.Tests.TimeTest categoriesFor: #testClassReadFrom!public!unit tests! !
+!Core.Tests.TimeTest categoriesFor: #testFromDuration!public!testing! !
+!Core.Tests.TimeTest categoriesFor: #testHours!public!testing! !
+!Core.Tests.TimeTest categoriesFor: #testMilliseconds!public!testing! !
+!Core.Tests.TimeTest categoriesFor: #testMinutes!public!testing! !
+!Core.Tests.TimeTest categoriesFor: #testPrintNegativeTime!public!testing! !
+!Core.Tests.TimeTest categoriesFor: #testPrintOnFormat!public!unit tests! !
+!Core.Tests.TimeTest categoriesFor: #testPrintPositiveTime!public!testing! !
+!Core.Tests.TimeTest categoriesFor: #testSeconds!public!testing! !
+!Core.Tests.TimeTest categoriesFor: #testStb!public!testing! !
+!Core.Tests.TimeTest categoriesFor: #testStoreOn!public!testing! !
 

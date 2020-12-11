@@ -1,21 +1,21 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ArrayedCollectionTest subclass: #StringTest
+Core.Tests.ArrayedCollectionTest subclass: #'Core.Tests.StringTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-StringTest guid: (GUID fromString: '{262b323f-d574-423e-8571-63b1fab0d021}')!
-StringTest isAbstract: true!
-StringTest comment: ''!
-!StringTest categoriesForClass!Unclassified! !
-!StringTest methodsFor!
+Core.Tests.StringTest guid: (Core.GUID fromString: '{262b323f-d574-423e-8571-63b1fab0d021}')!
+Core.Tests.StringTest isNonInstantiable: true!
+Core.Tests.StringTest comment: ''!
+!Core.Tests.StringTest categoriesForClass!Unclassified! !
+!Core.Tests.StringTest methodsFor!
 
 afterTestCases
 	^#(#('ab' $a $b) #('ca£d' $a $£) #('ca£d' $£ $d))!
 
-assimilate: each 
+assimilate: each
 	^Character codePoint: each asInteger!
 
 assimilateString: aString
@@ -48,7 +48,7 @@ indexOfTestCases
 lengthTestCases
 	^#(#('' 0) #('a' 1) #('ab' 2) #('oña' 3) #('£€' 2))!
 
-newNumericArray: anInteger 
+newNumericArray: anInteger
 	^self newCollection: ((1 to: anInteger) collect: [:each | Character digitValue: each])!
 
 reverseTestCases
@@ -615,6 +615,7 @@ testRefersToLiteral
 testReverse
 	"Tests reversing a variety of 1, 2, 3 and 4 byte encodings"
 
+	super testReverse.
 	self reverseTestCases do: 
 			[:each |
 			| subject expected actual |
@@ -625,6 +626,31 @@ testReverse
 			"Reverse it back"
 			actual := actual reverse.
 			self assert: actual equals: subject]!
+
+testReversedFromTo
+	"Tests reversing a variety of 1, 2, 3 and 4 byte encodings"
+
+	| lenFirst lenLast |
+	super testReversedFromTo.
+	self reverseTestCases do: 
+			[:each |
+			| subject expected actual chars |
+			subject := self assimilateString: each first.
+			expected := self assimilateString: each last.
+			actual := subject reversedFrom: 1 to: subject size.
+			self assert: actual equals: expected.
+			"Reverse it back"
+			actual := actual reversedFrom: 1 to: subject size.
+			self assert: actual equals: subject.
+			chars := subject asArray.
+			chars size > 2
+				ifTrue: 
+					[lenFirst := subject encodedSizeOf: chars first.
+					lenLast := subject encodedSizeOf: chars last.
+					actual := subject reversedFrom: 1 + lenFirst to: subject size - lenLast.
+					expected := self newCollection: (chars copyFrom: 2 to: chars size - 1) reverse.
+					self assert: actual equals: expected].
+			self assert: (subject reversedFrom: subject size + 1 to: subject size) isEmpty]!
 
 testReverseDo
 	self reverseTestCases do: 
@@ -778,7 +804,7 @@ testStreamUtfRoundTrip
 testSubStringsByCharacter
 	"Test revised subStrings: behavior for single character delimiter (symmetric with respect to leading/trailing separators)."
 
-	| empty sep |
+	| empty |
 	empty := self collectionClass empty.
 	self assert: (empty subStrings: $-) equals: (#() collect: [:e | self assimilateString: e]).
 	self assert: ('-' subStrings: $-) equals: {empty. empty}.
@@ -939,27 +965,30 @@ testUrlEncoded
 	| unreserved reserved |
 	unreserved := 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-._~'.
 	reserved := ':/?#[]@!!$&''()*+,;='.
-	
+
 	"Unreserved shouldn't be encoded"
 	self assert: (self collectionClass withAll: unreserved) urlEncoded equals: unreserved.
 	"Reserved should allways be encoded when used for some other purpose."
-	self assert: (self collectionClass withAll: reserved) urlEncoded equals: '%3A%2F%3F%23%5B%5D%40%21%24%26%27%28%29%2A%2B%2C%3B%3D'.
+	self assert: (self collectionClass withAll: reserved) urlEncoded
+		equals: '%3A%2F%3F%23%5B%5D%40%21%24%26%27%28%29%2A%2B%2C%3B%3D'.
 	self assert: (self collectionClass with: Character space) urlEncoded equals: '%20'.
 	self assert: (self collectionClass with: $%) urlEncoded equals: '%25'.
 	self assert: (self collectionClass withAll: String lineDelimiter) urlEncoded equals: '%0D%0A'.
 	"Other common characters found in urls."
-	self assert: (self collectionClass withAll: '"<>\^`{|}') urlEncoded equals: '%22%3C%3E%5C%5E%60%7B%7C%7D'.
+	self assert: (self collectionClass withAll: '"<>\^`{|}') urlEncoded
+		equals: '%22%3C%3E%5C%5E%60%7B%7C%7D'.
 	"Some unicode"
-	self assert: '🐬 cañón CAÑÓN' urlEncoded equals: '%F0%9F%90%AC%20ca%C3%B1%C3%B3n%20CA%C3%91%C3%93N'.
-	self assert: '🐬 cañón CAÑÓN' asUtf16String urlEncoded equals: '%F0%9F%90%AC%20ca%C3%B1%C3%B3n%20CA%C3%91%C3%93N'.
+	self assert: '🐬 cañón CAÑÓN' urlEncoded
+		equals: '%F0%9F%90%AC%20ca%C3%B1%C3%B3n%20CA%C3%91%C3%93N'.
+	self assert: '🐬 cañón CAÑÓN' asUtf16String urlEncoded
+		equals: '%F0%9F%90%AC%20ca%C3%B1%C3%B3n%20CA%C3%91%C3%93N'.
 	self assert: '日本語' urlEncoded equals: '%E6%97%A5%E6%9C%AC%E8%AA%9E'.
 	"Test reversions"
 	self assert: '🐬 cañón CAÑÓN' urlEncoded urlDecoded equals: '🐬 cañón CAÑÓN'.
 	self assert: String lineDelimiter urlEncoded urlDecoded equals: String lineDelimiter.
 	self assert: ' ' urlEncoded urlDecoded equals: ' '.
 	self assert: (self collectionClass withAll: unreserved) urlEncoded urlDecoded equals: unreserved.
-	self assert: (self collectionClass withAll: reserved) urlEncoded urlDecoded equals: reserved.
-!
+	self assert: (self collectionClass withAll: reserved) urlEncoded urlDecoded equals: reserved!
 
 testWithAll
 	self withAllTestCases do: 
@@ -1022,58 +1051,59 @@ verifyConcatenationResult: resultString of: receiverString with: argumentString
 
 withAllTestCases
 	^#(#('') #('a') #('abc') #('£€') #(#($a $£ $1 $\x20AC) 'a£1€'))! !
-!StringTest categoriesFor: #afterTestCases!constants!private! !
-!StringTest categoriesFor: #assimilate:!helpers!private! !
-!StringTest categoriesFor: #assimilateString:!helpers!private! !
-!StringTest categoriesFor: #beforeTestCases!constants!private! !
-!StringTest categoriesFor: #caseConversionCases!constants!private! !
-!StringTest categoriesFor: #equalityTestCases!constants!private! !
-!StringTest categoriesFor: #findActualIndicesOf:in:!helpers!private! !
-!StringTest categoriesFor: #indexOfTestCases!constants!private! !
-!StringTest categoriesFor: #lengthTestCases!constants!private! !
-!StringTest categoriesFor: #newNumericArray:!helpers!private! !
-!StringTest categoriesFor: #reverseTestCases!constants!private! !
-!StringTest categoriesFor: #testAfter!public!unit tests! !
-!StringTest categoriesFor: #testAsByteArray!public!unit tests! !
-!StringTest categoriesFor: #testAt!public!unit tests! !
-!StringTest categoriesFor: #testBefore!public!unit tests! !
-!StringTest categoriesFor: #testBeginsWithEmbeddedNulls!public!unit tests! !
-!StringTest categoriesFor: #testBeginsWithMixedEncodings!public!unit tests! !
-!StringTest categoriesFor: #testBinarySelectorExpandMacrosWith!public!unit tests! !
-!StringTest categoriesFor: #testBinarySelectorExpandMacrosWithArguments!public!unit tests! !
-!StringTest categoriesFor: #testBinarySelectorExpandMacrosWithCollection!public!unit tests! !
-!StringTest categoriesFor: #testCapitalized!public!unit tests! !
-!StringTest categoriesFor: #testCaseConversions!public!unit tests! !
-!StringTest categoriesFor: #testClassFromAddress!public!unit tests! !
-!StringTest categoriesFor: #testClassReadFrom!public!unit tests! !
-!StringTest categoriesFor: #testCopyWithout!public! !
-!StringTest categoriesFor: #testEmpty!public!testing / accessing! !
-!StringTest categoriesFor: #testEquals!public!unit tests! !
-!StringTest categoriesFor: #testExpandMacrosWith!public!unit tests! !
-!StringTest categoriesFor: #testExpandMacrosWithArguments!public!unit tests! !
-!StringTest categoriesFor: #testFindStringStartingAt!public!unit tests! !
-!StringTest categoriesFor: #testFindStringStartingAtIgnoreCase!public!unit tests! !
-!StringTest categoriesFor: #testHash!public!unit tests! !
-!StringTest categoriesFor: #testIndexOfStartingAt!public!unit tests! !
-!StringTest categoriesFor: #testInvalidComparisons!public!unit tests! !
-!StringTest categoriesFor: #testLastIndexOf!public!unit tests! !
-!StringTest categoriesFor: #testLength!public!unit tests! !
-!StringTest categoriesFor: #testLines!public!unit tests! !
-!StringTest categoriesFor: #testMutableCopy!public!unit tests! !
-!StringTest categoriesFor: #testRefersToLiteral!public!unit tests! !
-!StringTest categoriesFor: #testReverse!public!unit tests! !
-!StringTest categoriesFor: #testReverseDo!public!unit tests! !
-!StringTest categoriesFor: #testSplitByCharacterArray!public!unit tests! !
-!StringTest categoriesFor: #testSplitByString!public!unit tests! !
-!StringTest categoriesFor: #testSplitSingle!public!unit tests! !
-!StringTest categoriesFor: #testStreamUtfRoundTrip!public!unit tests! !
-!StringTest categoriesFor: #testSubStringsByCharacter!public!unit tests! !
-!StringTest categoriesFor: #testSubStringsByString!public!unit tests! !
-!StringTest categoriesFor: #testTrimNulls!public!unit tests! !
-!StringTest categoriesFor: #testUrlDecoded!public!unit tests! !
-!StringTest categoriesFor: #testUrlEncoded!public!unit tests! !
-!StringTest categoriesFor: #testWithAll!public!unit tests! !
-!StringTest categoriesFor: #testWithNormalizedLineDelimiters!public!unit tests! !
-!StringTest categoriesFor: #verifyConcatenationResult:of:with:!helpers!private! !
-!StringTest categoriesFor: #withAllTestCases!constants!private! !
+!Core.Tests.StringTest categoriesFor: #afterTestCases!constants!private! !
+!Core.Tests.StringTest categoriesFor: #assimilate:!helpers!private! !
+!Core.Tests.StringTest categoriesFor: #assimilateString:!helpers!private! !
+!Core.Tests.StringTest categoriesFor: #beforeTestCases!constants!private! !
+!Core.Tests.StringTest categoriesFor: #caseConversionCases!constants!private! !
+!Core.Tests.StringTest categoriesFor: #equalityTestCases!constants!private! !
+!Core.Tests.StringTest categoriesFor: #findActualIndicesOf:in:!helpers!private! !
+!Core.Tests.StringTest categoriesFor: #indexOfTestCases!constants!private! !
+!Core.Tests.StringTest categoriesFor: #lengthTestCases!constants!private! !
+!Core.Tests.StringTest categoriesFor: #newNumericArray:!helpers!private! !
+!Core.Tests.StringTest categoriesFor: #reverseTestCases!constants!private! !
+!Core.Tests.StringTest categoriesFor: #testAfter!public!unit tests! !
+!Core.Tests.StringTest categoriesFor: #testAsByteArray!public!unit tests! !
+!Core.Tests.StringTest categoriesFor: #testAt!public!unit tests! !
+!Core.Tests.StringTest categoriesFor: #testBefore!public!unit tests! !
+!Core.Tests.StringTest categoriesFor: #testBeginsWithEmbeddedNulls!public!unit tests! !
+!Core.Tests.StringTest categoriesFor: #testBeginsWithMixedEncodings!public!unit tests! !
+!Core.Tests.StringTest categoriesFor: #testBinarySelectorExpandMacrosWith!public!unit tests! !
+!Core.Tests.StringTest categoriesFor: #testBinarySelectorExpandMacrosWithArguments!public!unit tests! !
+!Core.Tests.StringTest categoriesFor: #testBinarySelectorExpandMacrosWithCollection!public!unit tests! !
+!Core.Tests.StringTest categoriesFor: #testCapitalized!public!unit tests! !
+!Core.Tests.StringTest categoriesFor: #testCaseConversions!public!unit tests! !
+!Core.Tests.StringTest categoriesFor: #testClassFromAddress!public!unit tests! !
+!Core.Tests.StringTest categoriesFor: #testClassReadFrom!public!unit tests! !
+!Core.Tests.StringTest categoriesFor: #testCopyWithout!public!unit tests! !
+!Core.Tests.StringTest categoriesFor: #testEmpty!public!unit tests! !
+!Core.Tests.StringTest categoriesFor: #testEquals!public!unit tests! !
+!Core.Tests.StringTest categoriesFor: #testExpandMacrosWith!public!unit tests! !
+!Core.Tests.StringTest categoriesFor: #testExpandMacrosWithArguments!public!unit tests! !
+!Core.Tests.StringTest categoriesFor: #testFindStringStartingAt!public!unit tests! !
+!Core.Tests.StringTest categoriesFor: #testFindStringStartingAtIgnoreCase!public!unit tests! !
+!Core.Tests.StringTest categoriesFor: #testHash!public!unit tests! !
+!Core.Tests.StringTest categoriesFor: #testIndexOfStartingAt!public!unit tests! !
+!Core.Tests.StringTest categoriesFor: #testInvalidComparisons!public!unit tests! !
+!Core.Tests.StringTest categoriesFor: #testLastIndexOf!public!unit tests! !
+!Core.Tests.StringTest categoriesFor: #testLength!public!unit tests! !
+!Core.Tests.StringTest categoriesFor: #testLines!public!unit tests! !
+!Core.Tests.StringTest categoriesFor: #testMutableCopy!public!unit tests! !
+!Core.Tests.StringTest categoriesFor: #testRefersToLiteral!public!unit tests! !
+!Core.Tests.StringTest categoriesFor: #testReverse!public!unit tests! !
+!Core.Tests.StringTest categoriesFor: #testReversedFromTo!public!unit tests! !
+!Core.Tests.StringTest categoriesFor: #testReverseDo!public!unit tests! !
+!Core.Tests.StringTest categoriesFor: #testSplitByCharacterArray!public!unit tests! !
+!Core.Tests.StringTest categoriesFor: #testSplitByString!public!unit tests! !
+!Core.Tests.StringTest categoriesFor: #testSplitSingle!public!unit tests! !
+!Core.Tests.StringTest categoriesFor: #testStreamUtfRoundTrip!public!unit tests! !
+!Core.Tests.StringTest categoriesFor: #testSubStringsByCharacter!public!unit tests! !
+!Core.Tests.StringTest categoriesFor: #testSubStringsByString!public!unit tests! !
+!Core.Tests.StringTest categoriesFor: #testTrimNulls!public!unit tests! !
+!Core.Tests.StringTest categoriesFor: #testUrlDecoded!public!unit tests! !
+!Core.Tests.StringTest categoriesFor: #testUrlEncoded!public!unit tests! !
+!Core.Tests.StringTest categoriesFor: #testWithAll!public!unit tests! !
+!Core.Tests.StringTest categoriesFor: #testWithNormalizedLineDelimiters!public!unit tests! !
+!Core.Tests.StringTest categoriesFor: #verifyConcatenationResult:of:with:!helpers!private! !
+!Core.Tests.StringTest categoriesFor: #withAllTestCases!constants!private! !
 

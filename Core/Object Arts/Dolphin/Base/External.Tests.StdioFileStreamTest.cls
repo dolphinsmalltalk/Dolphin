@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-AbstractFileStreamTest subclass: #StdioFileStreamTest
+Core.Tests.AbstractFileStreamTest subclass: #'External.Tests.StdioFileStreamTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-StdioFileStreamTest guid: (GUID fromString: '{d3e882fd-385f-45ec-b975-c31f9e777b4b}')!
-StdioFileStreamTest comment: ''!
-!StdioFileStreamTest categoriesForClass!Unclassified! !
-!StdioFileStreamTest methodsFor!
+External.Tests.StdioFileStreamTest guid: (Core.GUID fromString: '{d3e882fd-385f-45ec-b975-c31f9e777b4b}')!
+External.Tests.StdioFileStreamTest comment: ''!
+!External.Tests.StdioFileStreamTest categoriesForClass!Unclassified! !
+!External.Tests.StdioFileStreamTest methodsFor!
 
 bufferSize
 	^128!
@@ -88,7 +88,7 @@ testFromHandleOnFile
 	written := 'Hello world'.
 	filestream nextPutAll: written.
 	filestream close.
-	handle := ExternalHandle new.
+	handle := Handle new.
 	errno := CRTLibrary default
 				_wfopen_s: handle
 				filename: tempFileName
@@ -105,8 +105,8 @@ testFromHandleOnPipe
 	"Test that a StdioFileStream instantiated by StdioFileStream class>>fromHandle: on a pipe is non-blocking."
 
 	| pipeIn pipeOut streams |
-	pipeIn := ExternalHandle new.
-	pipeOut := ExternalHandle new.
+	pipeIn := Handle new.
+	pipeOut := Handle new.
 	KernelLibrary default
 		createPipe: pipeIn
 		hWritePipe: pipeOut
@@ -154,24 +154,24 @@ testNextLineUpToEof
 			actual := filestream nextLine.
 			self assert: actual equals: expected.
 			filestream close]! !
-!StdioFileStreamTest categoriesFor: #bufferSize!constants!private! !
-!StdioFileStreamTest categoriesFor: #maxPosition!constants!private! !
-!StdioFileStreamTest categoriesFor: #streamClass!helpers!private! !
-!StdioFileStreamTest categoriesFor: #streamOnFile:type:!helpers!private! !
-!StdioFileStreamTest categoriesFor: #strings!constants!private! !
-!StdioFileStreamTest categoriesFor: #subjectCollection:!public! !
-!StdioFileStreamTest categoriesFor: #testCharacterTranslation!public!unit tests! !
-!StdioFileStreamTest categoriesFor: #testFromHandleOnDevice!public! !
-!StdioFileStreamTest categoriesFor: #testFromHandleOnFile!public! !
-!StdioFileStreamTest categoriesFor: #testFromHandleOnPipe!public! !
-!StdioFileStreamTest categoriesFor: #testNextLineCrOnly!public!unit tests! !
-!StdioFileStreamTest categoriesFor: #testNextLineUpToEof!public!unit tests! !
+!External.Tests.StdioFileStreamTest categoriesFor: #bufferSize!constants!private! !
+!External.Tests.StdioFileStreamTest categoriesFor: #maxPosition!constants!private! !
+!External.Tests.StdioFileStreamTest categoriesFor: #streamClass!helpers!private! !
+!External.Tests.StdioFileStreamTest categoriesFor: #streamOnFile:type:!helpers!private! !
+!External.Tests.StdioFileStreamTest categoriesFor: #strings!constants!private! !
+!External.Tests.StdioFileStreamTest categoriesFor: #subjectCollection:!helpers!public! !
+!External.Tests.StdioFileStreamTest categoriesFor: #testCharacterTranslation!public!unit tests! !
+!External.Tests.StdioFileStreamTest categoriesFor: #testFromHandleOnDevice!public!unit tests! !
+!External.Tests.StdioFileStreamTest categoriesFor: #testFromHandleOnFile!public!unit tests! !
+!External.Tests.StdioFileStreamTest categoriesFor: #testFromHandleOnPipe!public!unit tests! !
+!External.Tests.StdioFileStreamTest categoriesFor: #testNextLineCrOnly!public!unit tests! !
+!External.Tests.StdioFileStreamTest categoriesFor: #testNextLineUpToEof!public!unit tests! !
 
-!StdioFileStreamTest class methodsFor!
+!External.Tests.StdioFileStreamTest class methodsFor!
 
 allTestSelectors
 	| roCategory |
 	roCategory := 'strict utf8' asMethodCategory.
 	^super allTestSelectors reject: [:each | roCategory includesMethod: (self lookupMethod: each)]! !
-!StdioFileStreamTest class categoriesFor: #allTestSelectors!Accessing!public! !
+!External.Tests.StdioFileStreamTest class categoriesFor: #allTestSelectors!Accessing!public! !
 

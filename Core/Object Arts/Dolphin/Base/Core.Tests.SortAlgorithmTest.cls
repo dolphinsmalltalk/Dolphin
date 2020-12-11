@@ -1,16 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-DolphinTest subclass: #SortAlgorithmTest
+Core.Tests.DolphinTest subclass: #'Core.Tests.SortAlgorithmTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-SortAlgorithmTest guid: (GUID fromString: '{50fde7dc-5db4-4eda-9ee2-61882b8ee3e5}')!
-SortAlgorithmTest isAbstract: true!
-SortAlgorithmTest comment: ''!
-!SortAlgorithmTest categoriesForClass!Unclassified! !
-!SortAlgorithmTest methodsFor!
+Core.Tests.SortAlgorithmTest guid: (Core.GUID fromString: '{50fde7dc-5db4-4eda-9ee2-61882b8ee3e5}')!
+Core.Tests.SortAlgorithmTest isNonInstantiable: true!
+Core.Tests.SortAlgorithmTest comment: ''!
+!Core.Tests.SortAlgorithmTest categoriesForClass!Unclassified! !
+!Core.Tests.SortAlgorithmTest methodsFor!
 
 add: aCollection sortBlock: block
 	| duration sorted comp collection |
@@ -62,13 +62,13 @@ bigStringSort
 integerSortSize
 	^2000!
 
-newAscending: anInteger 
+newAscending: anInteger
 	| s |
 	s := SortedCollection new: anInteger.
 	s algorithm: self algorithmToTest new.
 	^s!
 
-newDescending: anInteger 
+newDescending: anInteger
 	| s |
 	s := SortedCollection new: anInteger.
 	s algorithm: (self algorithmToTest sortBlock: [:a :b | a >= b]).
@@ -99,7 +99,7 @@ sort: aCollection sortBlock: block
 	self add: aCollection sortBlock: block.
 	^sorted!
 
-sortMagnitudes: collection 
+sortMagnitudes: collection
 	self sort: collection sortBlock: SortedCollection defaultSortBlock.	"<= comparison"
 	"< comparison"
 	self sort: collection sortBlock: [:a :b | a < b].
@@ -233,7 +233,7 @@ testPartialSort
 	algorithm := self algorithmToTest new.
 	self partialSort: (19 to: 1 by: -1) using: algorithm.
 	r := Random new.
-	#(1 2 3 4 5 7 10 11 13 17 19 23 29 30 53) 
+	#(1 2 3 4 5 7 10 11 13 17 19 23 29 30 53)
 		do: [:each | self partialSort: (r next: each) using: algorithm]!
 
 testRandomSort
@@ -243,7 +243,7 @@ testRandomSort
 	r := Random new.
 	1 to: 200
 		do: 
-			[:i | 
+			[:i |
 			| collection |
 			collection := (r next: i) collect: [:e | (e * i) rounded].
 			self sortMagnitudes: collection]!
@@ -258,22 +258,22 @@ testSortIntegers
 	self sortMagnitudes: collection.
 	collection := 1 to: self integerSortSize.
 	self sortMagnitudes: collection! !
-!SortAlgorithmTest categoriesFor: #add:sortBlock:!helpers!private! !
-!SortAlgorithmTest categoriesFor: #algorithmToTest!private!unit tests! !
-!SortAlgorithmTest categoriesFor: #assertSorted:!helpers!private! !
-!SortAlgorithmTest categoriesFor: #assertSorted:by:!helpers!private! !
-!SortAlgorithmTest categoriesFor: #bigStringSort!private!unit tests! !
-!SortAlgorithmTest categoriesFor: #integerSortSize!constants!private! !
-!SortAlgorithmTest categoriesFor: #newAscending:!private!unit tests! !
-!SortAlgorithmTest categoriesFor: #newDescending:!private!unit tests! !
-!SortAlgorithmTest categoriesFor: #partialSort:using:!private!testing! !
-!SortAlgorithmTest categoriesFor: #sort:sortBlock:!helpers!private! !
-!SortAlgorithmTest categoriesFor: #sortMagnitudes:!private!unit tests! !
-!SortAlgorithmTest categoriesFor: #testAdd!public!unit tests! !
-!SortAlgorithmTest categoriesFor: #testDefault!public!testing! !
-!SortAlgorithmTest categoriesFor: #testExtremeSortBlocks!public!unit tests! !
-!SortAlgorithmTest categoriesFor: #testIncludes!public!unit tests! !
-!SortAlgorithmTest categoriesFor: #testPartialSort!public!testing! !
-!SortAlgorithmTest categoriesFor: #testRandomSort!public!unit tests! !
-!SortAlgorithmTest categoriesFor: #testSortIntegers!public!unit tests! !
+!Core.Tests.SortAlgorithmTest categoriesFor: #add:sortBlock:!helpers!private! !
+!Core.Tests.SortAlgorithmTest categoriesFor: #algorithmToTest!private!unit tests! !
+!Core.Tests.SortAlgorithmTest categoriesFor: #assertSorted:!helpers!private! !
+!Core.Tests.SortAlgorithmTest categoriesFor: #assertSorted:by:!helpers!private! !
+!Core.Tests.SortAlgorithmTest categoriesFor: #bigStringSort!private!unit tests! !
+!Core.Tests.SortAlgorithmTest categoriesFor: #integerSortSize!constants!private! !
+!Core.Tests.SortAlgorithmTest categoriesFor: #newAscending:!private!unit tests! !
+!Core.Tests.SortAlgorithmTest categoriesFor: #newDescending:!private!unit tests! !
+!Core.Tests.SortAlgorithmTest categoriesFor: #partialSort:using:!private!testing! !
+!Core.Tests.SortAlgorithmTest categoriesFor: #sort:sortBlock:!helpers!private! !
+!Core.Tests.SortAlgorithmTest categoriesFor: #sortMagnitudes:!private!unit tests! !
+!Core.Tests.SortAlgorithmTest categoriesFor: #testAdd!public!unit tests! !
+!Core.Tests.SortAlgorithmTest categoriesFor: #testDefault!public!testing! !
+!Core.Tests.SortAlgorithmTest categoriesFor: #testExtremeSortBlocks!public!unit tests! !
+!Core.Tests.SortAlgorithmTest categoriesFor: #testIncludes!public!unit tests! !
+!Core.Tests.SortAlgorithmTest categoriesFor: #testPartialSort!public!testing! !
+!Core.Tests.SortAlgorithmTest categoriesFor: #testRandomSort!public!unit tests! !
+!Core.Tests.SortAlgorithmTest categoriesFor: #testSortIntegers!public!unit tests! !
 
