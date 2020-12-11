@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-AbstractTextEditTest subclass: #TextEditTest
+UI.Tests.AbstractTextEditTest subclass: #'UI.Tests.TextEditTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-TextEditTest guid: (GUID fromString: '{5237b507-a634-4555-81af-e15822492437}')!
-TextEditTest comment: ''!
-!TextEditTest categoriesForClass!Unclassified! !
-!TextEditTest methodsFor!
+UI.Tests.TextEditTest guid: (Core.GUID fromString: '{5237b507-a634-4555-81af-e15822492437}')!
+UI.Tests.TextEditTest comment: ''!
+!UI.Tests.TextEditTest categoriesForClass!Unclassified! !
+!UI.Tests.TextEditTest methodsFor!
 
 classToTest
 	^TextEdit!
@@ -44,8 +44,8 @@ testCalculateExtent
 
 text
 	^'The quick brown fox jumped over the lazy dog'! !
-!TextEditTest categoriesFor: #classToTest!helpers!private! !
-!TextEditTest categoriesFor: #margins!private!unit tests! !
-!TextEditTest categoriesFor: #testCalculateExtent!public! !
-!TextEditTest categoriesFor: #text!constants!private! !
+!UI.Tests.TextEditTest categoriesFor: #classToTest!helpers!private! !
+!UI.Tests.TextEditTest categoriesFor: #margins!private!unit tests! !
+!UI.Tests.TextEditTest categoriesFor: #testCalculateExtent!public! !
+!UI.Tests.TextEditTest categoriesFor: #text!private!unit tests! !
 

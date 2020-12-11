@@ -1,18 +1,18 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-DolphinTest subclass: #ColorTest
+Core.Tests.DolphinTest subclass: #'Graphics.Tests.ColorTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ColorTest guid: (GUID fromString: '{7b5098b5-74d7-46c5-99de-ae2e0558fe5c}')!
-ColorTest comment: ''!
-!ColorTest categoriesForClass!Unclassified! !
-!ColorTest methodsFor!
+Graphics.Tests.ColorTest guid: (Core.GUID fromString: '{7b5098b5-74d7-46c5-99de-ae2e0558fe5c}')!
+Graphics.Tests.ColorTest comment: ''!
+!Graphics.Tests.ColorTest categoriesForClass!Unclassified! !
+!Graphics.Tests.ColorTest methodsFor!
 
 shouldRaiseNotARealColorError: aNiladicValuable
-	self should: aNiladicValuable raise: Error matching: [:ex | ex description equals: 'Cannot convert to an RGB'].!
+	self should: aNiladicValuable raise: Error matching: [:ex | ex description = 'Cannot convert to an RGB'].!
 
 testActualColor
 	| subject |
@@ -48,7 +48,7 @@ testAsColorRef
 	self assert: Color orchid asColorRef identicalTo: Color orchid.
 	self assert: IndexedColor brown asColorRef equals: Color olive.
 	self assert: Color none asColorRef identicalTo: Color none.
-	self assert: Color default asColorRef identicalTo: Color default .
+	self assert: Color default asColorRef identicalTo: Color default.
 	"Alpha of ARGB is lost"
 	self assert: (Color orchid alpha: 99) asColorRef equals: Color orchid!
 
@@ -93,17 +93,21 @@ testBrush
 				height: 8
 				depth: 32.
 	rect := 0 @ 0 corner: bmp extent.
-	{Color white. Color yellow alpha: 100. Color black. Color orchid. IndexedColor brown. Color face3d} do: 
-			[:each |
-			| brush |
-			brush := each brush.
-			bmp canvas fillRectangle: rect brush: brush.
-			self assert: (bmp canvas pixelAt: 0 @ 0) equals: each asRGB].
+	{Color white.
+		Color yellow alpha: 100.
+		Color black.
+		Color orchid.
+		IndexedColor brown.
+		Color face3d} do: 
+				[:each |
+				| brush |
+				brush := each brush.
+				bmp canvas fillRectangle: rect brush: brush.
+				self assert: (bmp canvas pixelAt: 0 @ 0) equals: each asRGB].
 	current := bmp canvas pixelAt: 0 @ 0.
 	bmp canvas fillRectangle: rect brush: Color none brush.
 	self assert: (bmp canvas pixelAt: 0 @ 0) equals: current.
-	self shouldRaiseNotARealColorError: [Color default brush].
-!
+	self shouldRaiseNotARealColorError: [Color default brush]!
 
 testChroma
 	{Color red. Color blue. Color green} do: [:each | self assert: each chroma equals: 1].
@@ -144,8 +148,7 @@ testClassWhite
 	self assert: Color white isKindOf: RGB.
 	self assert: Color white code equals: 16rFFFFFF.
 	self assert: IndexedColor white isKindOf: IndexedColor.
-	self assert: IndexedColor white rgbCode equals: 16rFFFFFF.
-!
+	self assert: IndexedColor white rgbCode equals: 16rFFFFFF!
 
 testConversions
 	"The virtual colours 'none' and 'default' do not relate to any particular colour in general, only in context."
@@ -217,11 +220,27 @@ testEquals
 						and: [Color default ~= each and: [each ~= Color none and: [Color none ~= each]]]])!
 
 testFaded
-	self assert: Color red faded equals: (RGB r: 255 g: 128 b: 128).
-	self assert: Color orchid faded equals: (RGB r: 237 g: 184 b: 235).
-	self assert: IndexedColor brown faded equals: (RGB r: 192 g: 192 b: 128).
-	self assert: (Color orchid alpha: 100) faded equals: (ARGB a: 100 r: 237 g: 184 b: 235).
-!
+	self assert: Color red faded
+		equals: (RGB
+				r: 255
+				g: 128
+				b: 128).
+	self assert: Color orchid faded
+		equals: (RGB
+				r: 237
+				g: 184
+				b: 235).
+	self assert: IndexedColor brown faded
+		equals: (RGB
+				r: 192
+				g: 192
+				b: 128).
+	self assert: (Color orchid alpha: 100) faded
+		equals: (ARGB
+				a: 100
+				r: 237
+				g: 184
+				b: 235)!
 
 testGreen
 	self assert: Color green green equals: 255.
@@ -248,7 +267,7 @@ testHash
 	self assert: (IndexedColor.InstancesByIndex allSatisfy: [:each | each hash ~= Color default hash])!
 
 testHls
-	| hls actual expected |
+	| hls actual |
 	self assert: (Color
 				h: 0
 				s: 1
@@ -294,7 +313,7 @@ testHue
 				r: 128
 				g: 128
 				b: 255) hue equals: 240.
-	self assert: IndexedColor yellow hue equals: 60.0.!
+	self assert: IndexedColor yellow hue equals: 60.0!
 
 testIntensity
 	| halfOrchid |
@@ -310,8 +329,7 @@ testIntensity
 	self assert: ((Color orchid alpha: 100) intensity: 0.5) equals: (halfOrchid alpha: 100).
 	self assert: (Color face3d intensity: 0.75) equals: (Color face3d asRGB intensity: 0.75).
 	self assert: (IndexedColor yellow intensity: 0.5) equals: Color olive.
-	self assert: (Color none intensity: 0.5) equals: (Color gray alpha: 0)
-!
+	self assert: (Color none intensity: 0.5) equals: (Color gray alpha: 0)!
 
 testIsDefault
 	self deny: Color orchid isDefault.
@@ -394,22 +412,29 @@ testNormalizedRed
 	self assert: Color window normalizedRed equals: Color window asRGB normalizedRed!
 
 testPen
-	| bmp rect current |
+	| bmp rect |
 	bmp := DIBSection
 				width: 8
 				height: 8
 				depth: 32.
 	rect := 0 @ 0 corner: bmp extent.
-	{Color white. Color yellow alpha: 100. Color black. Color orchid. IndexedColor brown. Color face3d} do: 
-			[:each |
-			| pen |
-			pen := each pen.
-			bmp canvas 
-				pen: pen;
-				lineFrom: 0@0 to: 7@7.
-			self assert: (bmp canvas pixelAt: 1 @ 1) equals: each asRGB].
+	{Color white.
+		Color yellow alpha: 100.
+		Color black.
+		Color orchid.
+		IndexedColor brown.
+		Color face3d} do: 
+				[:each |
+				| pen |
+				pen := each pen.
+				bmp canvas
+					pen: pen;
+					lineFrom: 0 @ 0 to: 7 @ 7.
+				self assert: (bmp canvas pixelAt: 1 @ 1) equals: each asRGB].
 	bmp canvas fillRectangle: rect brush: Color red brush.
-	bmp canvas pen: Color none pen; lineFrom: 0@0 to: 7@7.
+	bmp canvas
+		pen: Color none pen;
+		lineFrom: 0 @ 0 to: 7 @ 7.
 	"Drawing with the null pen should do not change the bitmap"
 	self assert: (bmp canvas pixelAt: 1 @ 1) equals: Color red.
 	"Default color is not a real Color and only meaningful as an instruction to some control to use its default colour. It cannot be used to create a Pen."
@@ -437,8 +462,7 @@ testRgb
 	self assert: Color orchid rgb equals: #(16rDA 16r70 16rD6).
 	self assert: Color none rgb equals: Color white rgb.
 	self shouldRaiseNotARealColorError: [Color default rgb].
-	self assert: IndexedColor darkCyan rgb equals: #(16r00 16r80 16r80)
-!
+	self assert: IndexedColor darkCyan rgb equals: #(16r00 16r80 16r80)!
 
 testRgbCode
 	self assert: Color white rgbCode equals: 16rFFFFFF.
@@ -491,15 +515,16 @@ testSingletons
 testStlRoundTrip
 	| subject stl rehydrated |
 	"Various types of named colour"
-	{Color red. Color face3d. Color named: #smalltalkSystem. Color none. Color default}
-		do: [:each | | array |
-			array := (Object fromLiteralStoreArray: {each. 'blah'. each} literalStoreArray).
+	{Color red. Color face3d. Color named: #smalltalkSystem. Color none. Color default} do: 
+			[:each |
+			| array |
+			array := Object fromLiteralStoreArray: {each. 'blah'. each} literalStoreArray.
 			self assert: array first identicalTo: each.
 			self assert: array last identicalTo: each].
 	subject := IndexedColor gray.
 	stl := {subject. Color silver. subject} literalStoreArray.
-	self assert: stl equals: #(#'!!STL' 4 34 3 327686 ##(Color) #silver 418 #silver 418 #silver).
-	rehydrated := (Object fromLiteralStoreArray: stl) .
+	"self assert: stl equals: #(#'!!STL' 4 34 3 327686 ##(Color) #silver 418 #silver 418 #silver)."
+	rehydrated := Object fromLiteralStoreArray: stl.
 	self assert: rehydrated first identicalTo: Color silver.
 	self assert: rehydrated last identicalTo: Color silver.
 
@@ -524,47 +549,46 @@ testStlRoundTrip
 	rehydrated := Object fromLiteralStoreArray: subject literalStoreArray.
 	self assert: rehydrated isKindOf: PluggableColor.
 	self assert: rehydrated equals: subject.
-	self assert: rehydrated actualColor identicalTo: Color window
-! !
-!ColorTest categoriesFor: #shouldRaiseNotARealColorError:!helpers!private! !
-!ColorTest categoriesFor: #testActualColor!public!unit tests! !
-!ColorTest categoriesFor: #testAlpha!public!unit tests! !
-!ColorTest categoriesFor: #testArgbCode!public!unit tests! !
-!ColorTest categoriesFor: #testAsColorRef!public!unit tests! !
-!ColorTest categoriesFor: #testAsCOLORREF!public!unit tests! !
-!ColorTest categoriesFor: #testAsRGB!public!unit tests! !
-!ColorTest categoriesFor: #testBlue!public!unit tests! !
-!ColorTest categoriesFor: #testBrightness!public!unit tests! !
-!ColorTest categoriesFor: #testBrush!public!unit tests! !
-!ColorTest categoriesFor: #testChroma!public!unit tests! !
-!ColorTest categoriesFor: #testClassBlack!public!unit tests! !
-!ColorTest categoriesFor: #testClassBrightness!public!unit tests! !
-!ColorTest categoriesFor: #testClassFromArray!public! !
-!ColorTest categoriesFor: #testClassFromHtmlSpec!public! !
-!ColorTest categoriesFor: #testClassWhite!public!unit tests! !
-!ColorTest categoriesFor: #testConversions!public!unit tests! !
-!ColorTest categoriesFor: #testEquals!public!unit tests! !
-!ColorTest categoriesFor: #testFaded!public!unit tests! !
-!ColorTest categoriesFor: #testGreen!public!unit tests! !
-!ColorTest categoriesFor: #testHash!public!unit tests! !
-!ColorTest categoriesFor: #testHls!public!unit tests! !
-!ColorTest categoriesFor: #testHsv!public!unit tests! !
-!ColorTest categoriesFor: #testHue!public!unit tests! !
-!ColorTest categoriesFor: #testIntensity!public!unit tests! !
-!ColorTest categoriesFor: #testIsDefault!public!unit tests! !
-!ColorTest categoriesFor: #testIsGrayscale!public!unit tests! !
-!ColorTest categoriesFor: #testIsNone!public!unit tests! !
-!ColorTest categoriesFor: #testIsTransparent!public!unit tests! !
-!ColorTest categoriesFor: #testNormalizedAlpha!public!unit tests! !
-!ColorTest categoriesFor: #testNormalizedBlue!public!unit tests! !
-!ColorTest categoriesFor: #testNormalizedGreen!public!unit tests! !
-!ColorTest categoriesFor: #testNormalizedRed!public!unit tests! !
-!ColorTest categoriesFor: #testPen!public!unit tests! !
-!ColorTest categoriesFor: #testPrintString!public!unit tests! !
-!ColorTest categoriesFor: #testRed!public!unit tests! !
-!ColorTest categoriesFor: #testRgb!public!unit tests! !
-!ColorTest categoriesFor: #testRgbCode!public!unit tests! !
-!ColorTest categoriesFor: #testRGBNamedColors!public!unit tests! !
-!ColorTest categoriesFor: #testSingletons!public!unit tests! !
-!ColorTest categoriesFor: #testStlRoundTrip!public! !
+	self assert: rehydrated actualColor identicalTo: Color window! !
+!Graphics.Tests.ColorTest categoriesFor: #shouldRaiseNotARealColorError:!helpers!private! !
+!Graphics.Tests.ColorTest categoriesFor: #testActualColor!public!unit tests! !
+!Graphics.Tests.ColorTest categoriesFor: #testAlpha!public!unit tests! !
+!Graphics.Tests.ColorTest categoriesFor: #testArgbCode!public!unit tests! !
+!Graphics.Tests.ColorTest categoriesFor: #testAsColorRef!public!unit tests! !
+!Graphics.Tests.ColorTest categoriesFor: #testAsCOLORREF!public!unit tests! !
+!Graphics.Tests.ColorTest categoriesFor: #testAsRGB!public!unit tests! !
+!Graphics.Tests.ColorTest categoriesFor: #testBlue!public!unit tests! !
+!Graphics.Tests.ColorTest categoriesFor: #testBrightness!public!unit tests! !
+!Graphics.Tests.ColorTest categoriesFor: #testBrush!public!unit tests! !
+!Graphics.Tests.ColorTest categoriesFor: #testChroma!public!unit tests! !
+!Graphics.Tests.ColorTest categoriesFor: #testClassBlack!public!unit tests! !
+!Graphics.Tests.ColorTest categoriesFor: #testClassBrightness!public!unit tests! !
+!Graphics.Tests.ColorTest categoriesFor: #testClassFromArray!public! !
+!Graphics.Tests.ColorTest categoriesFor: #testClassFromHtmlSpec!public! !
+!Graphics.Tests.ColorTest categoriesFor: #testClassWhite!public!unit tests! !
+!Graphics.Tests.ColorTest categoriesFor: #testConversions!public!unit tests! !
+!Graphics.Tests.ColorTest categoriesFor: #testEquals!public!unit tests! !
+!Graphics.Tests.ColorTest categoriesFor: #testFaded!public!unit tests! !
+!Graphics.Tests.ColorTest categoriesFor: #testGreen!public!unit tests! !
+!Graphics.Tests.ColorTest categoriesFor: #testHash!public!unit tests! !
+!Graphics.Tests.ColorTest categoriesFor: #testHls!public!unit tests! !
+!Graphics.Tests.ColorTest categoriesFor: #testHsv!public!unit tests! !
+!Graphics.Tests.ColorTest categoriesFor: #testHue!public!unit tests! !
+!Graphics.Tests.ColorTest categoriesFor: #testIntensity!public!unit tests! !
+!Graphics.Tests.ColorTest categoriesFor: #testIsDefault!public!unit tests! !
+!Graphics.Tests.ColorTest categoriesFor: #testIsGrayscale!public!unit tests! !
+!Graphics.Tests.ColorTest categoriesFor: #testIsNone!public!unit tests! !
+!Graphics.Tests.ColorTest categoriesFor: #testIsTransparent!public!unit tests! !
+!Graphics.Tests.ColorTest categoriesFor: #testNormalizedAlpha!public!unit tests! !
+!Graphics.Tests.ColorTest categoriesFor: #testNormalizedBlue!public!unit tests! !
+!Graphics.Tests.ColorTest categoriesFor: #testNormalizedGreen!public!unit tests! !
+!Graphics.Tests.ColorTest categoriesFor: #testNormalizedRed!public!unit tests! !
+!Graphics.Tests.ColorTest categoriesFor: #testPen!public!unit tests! !
+!Graphics.Tests.ColorTest categoriesFor: #testPrintString!public!unit tests! !
+!Graphics.Tests.ColorTest categoriesFor: #testRed!public!unit tests! !
+!Graphics.Tests.ColorTest categoriesFor: #testRgb!public!unit tests! !
+!Graphics.Tests.ColorTest categoriesFor: #testRgbCode!public!unit tests! !
+!Graphics.Tests.ColorTest categoriesFor: #testRGBNamedColors!public!unit tests! !
+!Graphics.Tests.ColorTest categoriesFor: #testSingletons!public!unit tests! !
+!Graphics.Tests.ColorTest categoriesFor: #testStlRoundTrip!public! !
 

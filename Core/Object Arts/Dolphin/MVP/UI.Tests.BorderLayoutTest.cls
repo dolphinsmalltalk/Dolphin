@@ -1,17 +1,17 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-LayoutManagerTest subclass: #BorderLayoutTest
+UI.Tests.LayoutManagerTest subclass: #'UI.Tests.BorderLayoutTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-BorderLayoutTest guid: (GUID fromString: '{67c32a2b-adf6-4987-95fa-c9bb9b7a4e9c}')!
-BorderLayoutTest comment: ''!
-!BorderLayoutTest categoriesForClass!Unclassified! !
-!BorderLayoutTest methodsFor!
+UI.Tests.BorderLayoutTest guid: (Core.GUID fromString: '{67c32a2b-adf6-4987-95fa-c9bb9b7a4e9c}')!
+UI.Tests.BorderLayoutTest comment: ''!
+!UI.Tests.BorderLayoutTest categoriesForClass!Unclassified! !
+!UI.Tests.BorderLayoutTest methodsFor!
 
 layoutManagerClass
 	^BorderLayout! !
-!BorderLayoutTest categoriesFor: #layoutManagerClass!private!unit tests! !
+!UI.Tests.BorderLayoutTest categoriesFor: #layoutManagerClass!private!unit tests! !
 

@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-LayoutManagerTest subclass: #FlowLayoutTest
+UI.Tests.LayoutManagerTest subclass: #'UI.Tests.FlowLayoutTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-FlowLayoutTest guid: (GUID fromString: '{b71be04a-a575-4722-a8b1-c57127768758}')!
-FlowLayoutTest comment: ''!
-!FlowLayoutTest categoriesForClass!Unclassified! !
-!FlowLayoutTest methodsFor!
+UI.Tests.FlowLayoutTest guid: (Core.GUID fromString: '{b71be04a-a575-4722-a8b1-c57127768758}')!
+UI.Tests.FlowLayoutTest comment: ''!
+!UI.Tests.FlowLayoutTest categoriesForClass!Unclassified! !
+!UI.Tests.FlowLayoutTest methodsFor!
 
 layoutManagerClass
 	^FlowLayout!
@@ -81,7 +81,7 @@ testWrap
 			shell extent: shell extent - (each @ 0).
 			shell update.
 			1 to: 4 do: [:i | self assert: (children at: i) position equals: 0 @ ((i - 1) * (cy + vGap))]]! !
-!FlowLayoutTest categoriesFor: #layoutManagerClass!private!unit tests! !
-!FlowLayoutTest categoriesFor: #testVerticalCentreing!public!unit tests! !
-!FlowLayoutTest categoriesFor: #testWrap!public!unit tests! !
+!UI.Tests.FlowLayoutTest categoriesFor: #layoutManagerClass!private!unit tests! !
+!UI.Tests.FlowLayoutTest categoriesFor: #testVerticalCentreing!public!unit tests! !
+!UI.Tests.FlowLayoutTest categoriesFor: #testWrap!public!unit tests! !
 

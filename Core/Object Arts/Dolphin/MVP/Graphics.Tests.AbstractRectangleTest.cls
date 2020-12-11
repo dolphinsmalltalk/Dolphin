@@ -1,15 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-DolphinTest subclass: #AbstractRectangleTest
+Core.Tests.DolphinTest subclass: #'Graphics.Tests.AbstractRectangleTest'
 	instanceVariableNames: 'desktop oddDesktop unary'
 	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-AbstractRectangleTest guid: (GUID fromString: '{87bd8e07-c183-4124-a098-05b9e73fbd86}')!
-AbstractRectangleTest isAbstract: true!
-AbstractRectangleTest comment: ''!
-!AbstractRectangleTest categoriesForClass!Unclassified! !
-!AbstractRectangleTest methodsFor!
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Graphics.Tests.AbstractRectangleTest guid: (Core.GUID fromString: '{87bd8e07-c183-4124-a098-05b9e73fbd86}')!
+Graphics.Tests.AbstractRectangleTest isNonInstantiable: true!
+Graphics.Tests.AbstractRectangleTest comment: ''!
+!Graphics.Tests.AbstractRectangleTest categoriesForClass!Unclassified! !
+!Graphics.Tests.AbstractRectangleTest methodsFor!
 
 setUp
 	"Note that desktop is always a fixed size to make writing the tests easier"
@@ -61,15 +62,15 @@ testTop
 
 testWidth
 	self assert: oddDesktop width equals: 1280! !
-!AbstractRectangleTest categoriesFor: #setUp!public!Running! !
-!AbstractRectangleTest categoriesFor: #subjectClass!constants!private! !
-!AbstractRectangleTest categoriesFor: #testBottom!public!unit tests! !
-!AbstractRectangleTest categoriesFor: #testCenter!public!unit tests! !
-!AbstractRectangleTest categoriesFor: #testCenterX!public!unit tests! !
-!AbstractRectangleTest categoriesFor: #testHeight!public!unit tests! !
-!AbstractRectangleTest categoriesFor: #testLeft!public!unit tests! !
-!AbstractRectangleTest categoriesFor: #testOriginCorner!public!unit tests! !
-!AbstractRectangleTest categoriesFor: #testRight!public!unit tests! !
-!AbstractRectangleTest categoriesFor: #testTop!public!unit tests! !
-!AbstractRectangleTest categoriesFor: #testWidth!public!unit tests! !
+!Graphics.Tests.AbstractRectangleTest categoriesFor: #setUp!public!Running! !
+!Graphics.Tests.AbstractRectangleTest categoriesFor: #subjectClass!constants!private! !
+!Graphics.Tests.AbstractRectangleTest categoriesFor: #testBottom!public!unit tests! !
+!Graphics.Tests.AbstractRectangleTest categoriesFor: #testCenter!public!unit tests! !
+!Graphics.Tests.AbstractRectangleTest categoriesFor: #testCenterX!public!unit tests! !
+!Graphics.Tests.AbstractRectangleTest categoriesFor: #testHeight!public!unit tests! !
+!Graphics.Tests.AbstractRectangleTest categoriesFor: #testLeft!public!unit tests! !
+!Graphics.Tests.AbstractRectangleTest categoriesFor: #testOriginCorner!public!unit tests! !
+!Graphics.Tests.AbstractRectangleTest categoriesFor: #testRight!public!unit tests! !
+!Graphics.Tests.AbstractRectangleTest categoriesFor: #testTop!public!unit tests! !
+!Graphics.Tests.AbstractRectangleTest categoriesFor: #testWidth!public!unit tests! !
 

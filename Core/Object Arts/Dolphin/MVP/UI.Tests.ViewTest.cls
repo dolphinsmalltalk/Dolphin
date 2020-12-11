@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-PresenterTest subclass: #ViewTest
+UI.Tests.PresenterTest subclass: #'UI.Tests.ViewTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ViewTest guid: (GUID fromString: '{cf223394-a19e-45f9-a270-551c288901ef}')!
-ViewTest comment: ''!
-!ViewTest categoriesForClass!Unclassified! !
-!ViewTest methodsFor!
+UI.Tests.ViewTest guid: (Core.GUID fromString: '{cf223394-a19e-45f9-a270-551c288901ef}')!
+UI.Tests.ViewTest comment: ''!
+!UI.Tests.ViewTest categoriesForClass!Unclassified! !
+!UI.Tests.ViewTest methodsFor!
 
 classToTest
 	^TextPresenter!
@@ -40,8 +40,9 @@ testRecreateMaintainsModelConnection
 	presenter view hasBorder: true.
 	presenter model value: 'bbb'.
 	"If this fails, then the view did not receive a #valueChanged event from the model"
-	self assert: presenter view value equals: 'bbb'! !
-!ViewTest categoriesFor: #classToTest!helpers!private! !
-!ViewTest categoriesFor: #testFontChangePropagation!public!unit tests! !
-!ViewTest categoriesFor: #testRecreateMaintainsModelConnection!public!unit tests! !
+	self assert: presenter view value equals: 'bbb'.
+	presenter topShell exit! !
+!UI.Tests.ViewTest categoriesFor: #classToTest!helpers!private! !
+!UI.Tests.ViewTest categoriesFor: #testFontChangePropagation!public!unit tests! !
+!UI.Tests.ViewTest categoriesFor: #testRecreateMaintainsModelConnection!public!unit tests! !
 

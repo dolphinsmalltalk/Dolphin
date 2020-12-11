@@ -1,97 +1,101 @@
 ﻿| package |
 package := Package name: 'Dolphin MVP Tests'.
-package paxVersion: 2;
+package paxVersion: 2.1;
 	preDeclareClassesOnLoad: false;
 	basicComment: ''.
 
 
 package setClassNames: #(
-	#{AbstractContainerViewTest}
-	#{AbstractPointTest}
-	#{AbstractRectangleTest}
-	#{AbstractTextEditTest}
-	#{AcceleratorTableTest}
-	#{ARGBTest}
-	#{BorderLayoutTest}
-	#{BrushTest}
-	#{CanvasTest}
-	#{ChoicePresenterTest}
-	#{ClipboardTest}
-	#{ColorDialogTest}
-	#{ColorTest}
-	#{CommandDescriptionTest}
-	#{ContainerViewTest}
-	#{DifferencesPresenterTest}
-	#{EvaluationConverterTest}
-	#{ExternalPointTest}
-	#{ExternalRectangleTest}
-	#{FileDialogTest}
-	#{FlowLayoutTest}
-	#{FolderTest}
-	#{FramingLayoutTest}
-	#{GridLayoutTest}
-	#{IconTest}
-	#{ImageViewAbstractTest}
-	#{ImageViewTest}
-	#{LayoutManagerTest}
-	#{LinkButtonTest}
-	#{ListBoxTest}
-	#{ListControlTest}
-	#{ListPresenterTest}
-	#{ListViewTest}
-	#{MockScintillaView}
-	#{MoenTreeViewTest}
-	#{MoenTreeViewTest2}
-	#{MultilineTextEditTest}
-	#{MultipleSelectionListBoxTest}
-	#{MultipleSelectionListViewTest}
-	#{MultiSelectListBoxTest}
-	#{MultiSelectListViewTest}
-	#{PluggableColorTest}
-	#{Point3DTest}
-	#{POINTLTest}
-	#{POINTSTest}
-	#{PointTest}
-	#{PresenterTest}
-	#{ProportionalLayoutTest}
-	#{PushButtonTest}
-	#{RadioButtonSetPresenterTest}
-	#{RectangleTest}
-	#{RECTLTest}
-	#{ReferenceViewTest}
-	#{ResourceIdentifierTest}
-	#{RichTextEditTest}
-	#{ScintillaIndicatorTest}
-	#{ScintillaLexerMetadataTest}
-	#{ScintillaLexerPropertyTest}
-	#{ScintillaViewTest}
-	#{ScrollingDecoratorTest}
-	#{SelectableItemsTest}
-	#{SelectableListItemsTest}
-	#{SelectableTreeItemsTest}
-	#{SingleSelectListBoxTest}
-	#{SingleSelectListViewTest}
-	#{SliderTest}
-	#{StaticPathTest}
-	#{StaticTextTest}
-	#{StyledContainerTest}
-	#{TabViewTest}
-	#{TabViewXPTest}
-	#{TextEditTest}
-	#{ThemeColorTest}
-	#{TreePresenterTest}
-	#{TreeViewTest}
-	#{TypeConverterTest}
-	#{ValueConverterTest}
-	#{ViewTest}
-	#{VirtualColorTest}
-	#{WindowsEventTest}
+	#{External.Tests.POINTTest}
+	#{External.Tests.RECTTest}
+	#{Graphics.Tests.AbstractPointTest}
+	#{Graphics.Tests.AbstractRectangleTest}
+	#{Graphics.Tests.ARGBTest}
+	#{Graphics.Tests.BitmapTest}
+	#{Graphics.Tests.BrushTest}
+	#{Graphics.Tests.CanvasTest}
+	#{Graphics.Tests.ColorTest}
+	#{Graphics.Tests.IconTest}
+	#{Graphics.Tests.PluggableColorTest}
+	#{Graphics.Tests.Point3DTest}
+	#{Graphics.Tests.PointTest}
+	#{Graphics.Tests.RectangleTest}
+	#{Graphics.Tests.ThemeColorTest}
+	#{Graphics.Tests.VirtualColorTest}
+	#{OS.Tests.POINTLTest}
+	#{OS.Tests.POINTSTest}
+	#{OS.Tests.RECTLTest}
+	#{UI.Tests}
+	#{UI.Tests.AbstractContainerViewTest}
+	#{UI.Tests.AbstractKeyboardTest}
+	#{UI.Tests.AbstractTextEditTest}
+	#{UI.Tests.AcceleratorTableTest}
+	#{UI.Tests.BorderLayoutTest}
+	#{UI.Tests.ChoicePresenterTest}
+	#{UI.Tests.ClipboardTest}
+	#{UI.Tests.ColorDialogTest}
+	#{UI.Tests.CommandDescriptionTest}
+	#{UI.Tests.ContainerViewTest}
+	#{UI.Tests.DifferencesPresenterTest}
+	#{UI.Tests.EvaluationConverterTest}
+	#{UI.Tests.FileDialogTest}
+	#{UI.Tests.FlowLayoutTest}
+	#{UI.Tests.FolderTest}
+	#{UI.Tests.FramingLayoutTest}
+	#{UI.Tests.GridLayoutTest}
+	#{UI.Tests.ImageViewAbstractTest}
+	#{UI.Tests.ImageViewTest}
+	#{UI.Tests.KeyboardTest}
+	#{UI.Tests.LayoutManagerTest}
+	#{UI.Tests.LinkButtonTest}
+	#{UI.Tests.ListBoxTest}
+	#{UI.Tests.ListControlTest}
+	#{UI.Tests.ListPresenterTest}
+	#{UI.Tests.ListViewTest}
+	#{UI.Tests.MockScintillaView}
+	#{UI.Tests.MoenTreeViewTest}
+	#{UI.Tests.MoenTreeViewTest2}
+	#{UI.Tests.MultilineTextEditTest}
+	#{UI.Tests.MultipleSelectionListBoxTest}
+	#{UI.Tests.MultipleSelectionListViewTest}
+	#{UI.Tests.MultiSelectListBoxTest}
+	#{UI.Tests.MultiSelectListViewTest}
+	#{UI.Tests.PresenterTest}
+	#{UI.Tests.ProportionalLayoutTest}
+	#{UI.Tests.PushButtonTest}
+	#{UI.Tests.RadioButtonSetPresenterTest}
+	#{UI.Tests.ReferenceViewTest}
+	#{UI.Tests.ResourceIdentifierTest}
+	#{UI.Tests.RichTextEditTest}
+	#{UI.Tests.ScintillaIndicatorTest}
+	#{UI.Tests.ScintillaLexerMetadataTest}
+	#{UI.Tests.ScintillaLexerPropertyTest}
+	#{UI.Tests.ScintillaViewTest}
+	#{UI.Tests.ScrollingDecoratorTest}
+	#{UI.Tests.SelectableItemsTest}
+	#{UI.Tests.SelectableListItemsTest}
+	#{UI.Tests.SelectableTreeItemsTest}
+	#{UI.Tests.SingleSelectListBoxTest}
+	#{UI.Tests.SingleSelectListViewTest}
+	#{UI.Tests.SliderTest}
+	#{UI.Tests.StaticPathTest}
+	#{UI.Tests.StaticTextTest}
+	#{UI.Tests.StyledContainerTest}
+	#{UI.Tests.TabViewTest}
+	#{UI.Tests.TabViewXPTest}
+	#{UI.Tests.TextEditTest}
+	#{UI.Tests.TreePresenterTest}
+	#{UI.Tests.TreeViewTest}
+	#{UI.Tests.TypeConverterTest}
+	#{UI.Tests.ValueConverterTest}
+	#{UI.Tests.ViewTest}
+	#{UI.Tests.WindowsEventTest}
 ).
 
 package setMethodNames: #(
-	#(#{STLFilerTest} #testRectangleReadWrite)
-	#(#{STLFilerTest} #testResourceReadWrite)
-	#(#{STLFilerTest} #testShellReadWrite)
+	#(#{Kernel.Tests.STLFilerTest} #testRectangleReadWrite)
+	#(#{Kernel.Tests.STLFilerTest} #testResourceReadWrite)
+	#(#{Kernel.Tests.STLFilerTest} #testShellReadWrite)
 ).
 
 package setPrerequisites: #(
@@ -130,501 +134,533 @@ package setPrerequisites: #(
 	'Presenters\Tree\Dolphin Tree Presenter'
 	'Type Converters\Dolphin Type Converters'
 	'Models\Value\Dolphin Value Models'
+	'..\..\..\Contributions\Camp Smalltalk\SUnit\SUnit'
+	'..\..\..\Contributions\Camp Smalltalk\SUnit\SUnitPreload'
+).
+
+package setManualPrerequisites: #(
+	'Dolphin Anonymous Classes'
 ).
 
 package!
 
 "Class Definitions"!
 
-Object subclass: #MockScintillaView
+UI subclass: #'UI.Tests'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #(#{XProgramming.SUnit})
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Core.Object subclass: #'UI.Tests.MockScintillaView'
 	instanceVariableNames: 'lastStyled tokens text currentTextStyles styleIdMap'
 	classVariableNames: ''
-	poolDictionaries: 'ScintillaConstants'
+	imports: #(#{Smalltalk.ScintillaConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-DolphinTest subclass: #AbstractContainerViewTest
+Core.Tests.DolphinTest subclass: #'UI.Tests.AbstractContainerViewTest'
 	instanceVariableNames: 'containerView'
 	classVariableNames: ''
-	poolDictionaries: 'Win32Constants'
+	imports: #(#{OS.Win32Constants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-DolphinTest subclass: #AbstractPointTest
+Core.Tests.DolphinTest subclass: #'UI.Tests.AbstractKeyboardTest'
+	instanceVariableNames: 'savedLayout'
+	classVariableNames: ''
+	imports: #(#{OS.Win32Constants})
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Core.Tests.DolphinTest subclass: #'Graphics.Tests.AbstractPointTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-DolphinTest subclass: #AbstractRectangleTest
+Core.Tests.DolphinTest subclass: #'Graphics.Tests.AbstractRectangleTest'
 	instanceVariableNames: 'desktop oddDesktop unary'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-DolphinTest subclass: #ARGBTest
+Core.Tests.DolphinTest subclass: #'Graphics.Tests.ARGBTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-DolphinTest subclass: #BrushTest
+Core.Tests.DolphinTest subclass: #'Graphics.Tests.BitmapTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'Win32Constants'
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-DolphinTest subclass: #CanvasTest
+Core.Tests.DolphinTest subclass: #'Graphics.Tests.BrushTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #(#{OS.Win32Constants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-DolphinTest subclass: #ClipboardTest
+Core.Tests.DolphinTest subclass: #'Graphics.Tests.CanvasTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-DolphinTest subclass: #ColorDialogTest
+Core.Tests.DolphinTest subclass: #'UI.Tests.ClipboardTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-DolphinTest subclass: #ColorTest
+Core.Tests.DolphinTest subclass: #'UI.Tests.ColorDialogTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-DolphinTest subclass: #CommandDescriptionTest
+Core.Tests.DolphinTest subclass: #'Graphics.Tests.ColorTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Core.Tests.DolphinTest subclass: #'UI.Tests.CommandDescriptionTest'
 	instanceVariableNames: 'savedKeyboardLayout'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-DolphinTest subclass: #EvaluationConverterTest
+Core.Tests.DolphinTest subclass: #'UI.Tests.EvaluationConverterTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-DolphinTest subclass: #FileDialogTest
+Core.Tests.DolphinTest subclass: #'UI.Tests.FileDialogTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-DolphinTest subclass: #FolderTest
+Core.Tests.DolphinTest subclass: #'UI.Tests.FolderTest'
 	instanceVariableNames: 'c windows system root oa'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-DolphinTest subclass: #IconTest
+Core.Tests.DolphinTest subclass: #'Graphics.Tests.IconTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-DolphinTest subclass: #LayoutManagerTest
+Core.Tests.DolphinTest subclass: #'UI.Tests.LayoutManagerTest'
 	instanceVariableNames: 'shell'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-DolphinTest subclass: #MoenTreeViewTest
+Core.Tests.DolphinTest subclass: #'UI.Tests.MoenTreeViewTest'
 	instanceVariableNames: 'treeModel treeView nodeA nodeB nodeC nodeD nodeE nodeF shell scroller useShell'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-DolphinTest subclass: #MultipleSelectionListBoxTest
+Core.Tests.DolphinTest subclass: #'UI.Tests.MultipleSelectionListBoxTest'
 	instanceVariableNames: 'box'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-DolphinTest subclass: #Point3DTest
+Core.Tests.DolphinTest subclass: #'Graphics.Tests.Point3DTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-DolphinTest subclass: #PresenterTest
+Core.Tests.DolphinTest subclass: #'UI.Tests.PresenterTest'
 	instanceVariableNames: 'presenter'
 	classVariableNames: ''
-	poolDictionaries: 'Win32Constants'
+	imports: #(#{OS.Win32Constants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-DolphinTest subclass: #PushButtonTest
+Core.Tests.DolphinTest subclass: #'UI.Tests.PushButtonTest'
 	instanceVariableNames: 'shell shellButtonA shellButtonB dialog dialogButtonA dialogButtonB'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-DolphinTest subclass: #RadioButtonSetPresenterTest
+Core.Tests.DolphinTest subclass: #'UI.Tests.RadioButtonSetPresenterTest'
 	instanceVariableNames: 'radioSet'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-DolphinTest subclass: #ResourceIdentifierTest
+Core.Tests.DolphinTest subclass: #'UI.Tests.ResourceIdentifierTest'
 	instanceVariableNames: 'tempViewResource'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-DolphinTest subclass: #ScintillaIndicatorTest
+Core.Tests.DolphinTest subclass: #'UI.Tests.ScintillaIndicatorTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-DolphinTest subclass: #ScintillaLexerMetadataTest
+Core.Tests.DolphinTest subclass: #'UI.Tests.ScintillaLexerMetadataTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-DolphinTest subclass: #TypeConverterTest
+Core.Tests.DolphinTest subclass: #'UI.Tests.TypeConverterTest'
 	instanceVariableNames: 'edit'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-DolphinTest subclass: #ValueConverterTest
+Core.Tests.DolphinTest subclass: #'UI.Tests.ValueConverterTest'
 	instanceVariableNames: 'converter value startTime newTime changed'
 	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-DolphinTest subclass: #VirtualColorTest
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-DolphinTest subclass: #WindowsEventTest
+Core.Tests.DolphinTest subclass: #'Graphics.Tests.VirtualColorTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-AbstractContainerViewTest subclass: #ContainerViewTest
+Core.Tests.DolphinTest subclass: #'UI.Tests.WindowsEventTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'Win32Constants'
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-AbstractContainerViewTest subclass: #StyledContainerTest
+UI.Tests.AbstractContainerViewTest subclass: #'UI.Tests.ContainerViewTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #(#{OS.Win32Constants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-AbstractKeyboardTest subclass: #AcceleratorTableTest
+UI.Tests.AbstractContainerViewTest subclass: #'UI.Tests.StyledContainerTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-AbstractPointTest subclass: #ExternalPointTest
+UI.Tests.AbstractKeyboardTest subclass: #'UI.Tests.AcceleratorTableTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-AbstractPointTest subclass: #PointTest
+UI.Tests.AbstractKeyboardTest subclass: #'UI.Tests.KeyboardTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ExternalPointTest subclass: #POINTLTest
+Graphics.Tests.AbstractPointTest subclass: #'Graphics.Tests.PointTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ExternalPointTest subclass: #POINTSTest
+Graphics.Tests.AbstractPointTest subclass: #'External.Tests.POINTTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #(#{Graphics private})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-AbstractRectangleTest subclass: #ExternalRectangleTest
+External.Tests.POINTTest subclass: #'OS.Tests.POINTLTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-AbstractRectangleTest subclass: #RectangleTest
+External.Tests.POINTTest subclass: #'OS.Tests.POINTSTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ExternalRectangleTest subclass: #RECTLTest
+Graphics.Tests.AbstractRectangleTest subclass: #'Graphics.Tests.RectangleTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-LayoutManagerTest subclass: #BorderLayoutTest
+Graphics.Tests.AbstractRectangleTest subclass: #'External.Tests.RECTTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-LayoutManagerTest subclass: #FlowLayoutTest
+External.Tests.RECTTest subclass: #'OS.Tests.RECTLTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-LayoutManagerTest subclass: #FramingLayoutTest
+UI.Tests.LayoutManagerTest subclass: #'UI.Tests.BorderLayoutTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-LayoutManagerTest subclass: #GridLayoutTest
+UI.Tests.LayoutManagerTest subclass: #'UI.Tests.FlowLayoutTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-LayoutManagerTest subclass: #ProportionalLayoutTest
+UI.Tests.LayoutManagerTest subclass: #'UI.Tests.FramingLayoutTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-MultipleSelectionListBoxTest subclass: #MultipleSelectionListViewTest
+UI.Tests.LayoutManagerTest subclass: #'UI.Tests.GridLayoutTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-PresenterTest subclass: #AbstractTextEditTest
+UI.Tests.LayoutManagerTest subclass: #'UI.Tests.ProportionalLayoutTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-PresenterTest subclass: #ChoicePresenterTest
+UI.Tests.MultipleSelectionListBoxTest subclass: #'UI.Tests.MultipleSelectionListViewTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-PresenterTest subclass: #DifferencesPresenterTest
+UI.Tests.PresenterTest subclass: #'UI.Tests.AbstractTextEditTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-PresenterTest subclass: #ImageViewAbstractTest
+UI.Tests.PresenterTest subclass: #'UI.Tests.ChoicePresenterTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-PresenterTest subclass: #LinkButtonTest
+UI.Tests.PresenterTest subclass: #'UI.Tests.DifferencesPresenterTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-PresenterTest subclass: #ReferenceViewTest
+UI.Tests.PresenterTest subclass: #'UI.Tests.ImageViewAbstractTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-PresenterTest subclass: #ScrollingDecoratorTest
+UI.Tests.PresenterTest subclass: #'UI.Tests.LinkButtonTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-PresenterTest subclass: #SelectableItemsTest
+UI.Tests.PresenterTest subclass: #'UI.Tests.ReferenceViewTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-PresenterTest subclass: #SliderTest
+UI.Tests.PresenterTest subclass: #'UI.Tests.ScrollingDecoratorTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-PresenterTest subclass: #StaticPathTest
+UI.Tests.PresenterTest subclass: #'UI.Tests.SelectableItemsTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-PresenterTest subclass: #StaticTextTest
+UI.Tests.PresenterTest subclass: #'UI.Tests.SliderTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-PresenterTest subclass: #ViewTest
+UI.Tests.PresenterTest subclass: #'UI.Tests.StaticPathTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-AbstractTextEditTest subclass: #MultilineTextEditTest
+UI.Tests.PresenterTest subclass: #'UI.Tests.StaticTextTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-AbstractTextEditTest subclass: #TextEditTest
+UI.Tests.PresenterTest subclass: #'UI.Tests.ViewTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-MultilineTextEditTest subclass: #RichTextEditTest
+UI.Tests.AbstractTextEditTest subclass: #'UI.Tests.MultilineTextEditTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+UI.Tests.AbstractTextEditTest subclass: #'UI.Tests.TextEditTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+UI.Tests.MultilineTextEditTest subclass: #'UI.Tests.RichTextEditTest'
 	instanceVariableNames: 'savedLocale'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-MultilineTextEditTest subclass: #ScintillaViewTest
+UI.Tests.MultilineTextEditTest subclass: #'UI.Tests.ScintillaViewTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'ScintillaConstants'
+	imports: #(#{Smalltalk.ScintillaConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ImageViewAbstractTest subclass: #ImageViewTest
+UI.Tests.ImageViewAbstractTest subclass: #'UI.Tests.ImageViewTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-SelectableItemsTest subclass: #SelectableListItemsTest
+UI.Tests.SelectableItemsTest subclass: #'UI.Tests.SelectableListItemsTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-SelectableItemsTest subclass: #SelectableTreeItemsTest
+UI.Tests.SelectableItemsTest subclass: #'UI.Tests.SelectableTreeItemsTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-SelectableListItemsTest subclass: #ListControlTest
+UI.Tests.SelectableListItemsTest subclass: #'UI.Tests.ListControlTest'
 	instanceVariableNames: 'selectionChanged selectionChanging timedout events clicks'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-SelectableListItemsTest subclass: #ListPresenterTest
+UI.Tests.SelectableListItemsTest subclass: #'UI.Tests.ListPresenterTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-SelectableListItemsTest subclass: #TabViewTest
+UI.Tests.SelectableListItemsTest subclass: #'UI.Tests.TabViewTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ListControlTest subclass: #ListBoxTest
+UI.Tests.ListControlTest subclass: #'UI.Tests.ListBoxTest'
 	instanceVariableNames: 'lbnSelChange'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ListControlTest subclass: #ListViewTest
+UI.Tests.ListControlTest subclass: #'UI.Tests.ListViewTest'
 	instanceVariableNames: 'nmClick'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ListBoxTest subclass: #MultiSelectListBoxTest
+UI.Tests.ListBoxTest subclass: #'UI.Tests.MultiSelectListBoxTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ListBoxTest subclass: #SingleSelectListBoxTest
+UI.Tests.ListBoxTest subclass: #'UI.Tests.SingleSelectListBoxTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ListViewTest subclass: #MultiSelectListViewTest
+UI.Tests.ListViewTest subclass: #'UI.Tests.MultiSelectListViewTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ListViewTest subclass: #SingleSelectListViewTest
+UI.Tests.ListViewTest subclass: #'UI.Tests.SingleSelectListViewTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'ListViewConstants'
+	imports: #(#{OS.ListViewConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-TabViewTest subclass: #TabViewXPTest
+UI.Tests.TabViewTest subclass: #'UI.Tests.TabViewXPTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-SelectableTreeItemsTest subclass: #MoenTreeViewTest2
+UI.Tests.SelectableTreeItemsTest subclass: #'UI.Tests.MoenTreeViewTest2'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-SelectableTreeItemsTest subclass: #TreePresenterTest
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-SelectableTreeItemsTest subclass: #TreeViewTest
+UI.Tests.SelectableTreeItemsTest subclass: #'UI.Tests.TreePresenterTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ScintillaLexerMetadataTest subclass: #ScintillaLexerPropertyTest
+UI.Tests.SelectableTreeItemsTest subclass: #'UI.Tests.TreeViewTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-VirtualColorTest subclass: #PluggableColorTest
+UI.Tests.ScintillaLexerMetadataTest subclass: #'UI.Tests.ScintillaLexerPropertyTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-VirtualColorTest subclass: #ThemeColorTest
+Graphics.Tests.VirtualColorTest subclass: #'Graphics.Tests.PluggableColorTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Graphics.Tests.VirtualColorTest subclass: #'Graphics.Tests.ThemeColorTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 
 "Loose Methods"!
 
-!STLFilerTest methodsFor!
+!Kernel.Tests.STLFilerTest methodsFor!
 
 testRectangleReadWrite
 	| contents myRectangle answer |
 	myRectangle := 50 @ 50 extent: 200 @ 200.
 	contents := self checkSimpleReadWriteOf: myRectangle.
-	self assert: (contents includes: Rectangle).
-	self assert: (contents includes: Point).
+	self assert: (contents includes: Graphics.Rectangle).
+	self assert: (contents includes: Graphics.Point).
 
 	"Check that muliple references are identical"
 	answer := self simpleReadWriteOf: {myRectangle. myRectangle}.
@@ -633,20 +669,20 @@ testRectangleReadWrite
 
 testResourceReadWrite
 	| rid shell shell1 shell2 in contents1 contents2 |
-	rid := ResourceIdentifier class: Shell name: 'Default view'.
+	rid := UI.ResourceIdentifier class: UI.Shell name: 'Default view'.
 	
-	[shell := rid loadWithContext: View desktop.
+	[shell := rid loadWithContext: UI.View desktop.
 	contents1 := self writeLiteralsFor: shell.
 	in := STLInFiler on: contents1 readStream.
-	in context: View desktop.
+	in context: UI.View desktop.
 	shell1 := in next.
-	self assert: shell1 isKindOf: ShellView.
+	self assert: shell1 isKindOf: UI.ShellView.
 	self assert: shell1 isOpen.
 	contents2 := self writeLiteralsFor: shell1.
 	in := STLInFiler on: contents2 readStream.
-	in context: View desktop.
+	in context: UI.View desktop.
 	shell2 := in next.
-	self assert: shell2 isKindOf: ShellView.
+	self assert: shell2 isKindOf: UI.ShellView.
 	self assert: shell2 isOpen.
 	self assert: contents1 size equals: contents2 size]
 			ensure: 
@@ -656,14 +692,13 @@ testResourceReadWrite
 
 testShellReadWrite
 	| shell1 shell2 |
-	shell1 := ShellView show.
-	[shell2 := self simpleReadWriteOf: shell1 context: View desktop] ensure: 
+	shell1 := UI.ShellView show.
+	[shell2 := self simpleReadWriteOf: shell1 context: UI.View desktop] ensure: 
 			[shell1 destroy.
-			shell2 destroy].
-! !
-!STLFilerTest categoriesFor: #testRectangleReadWrite!public!unit tests! !
-!STLFilerTest categoriesFor: #testResourceReadWrite!public!unit tests! !
-!STLFilerTest categoriesFor: #testShellReadWrite!public!unit tests! !
+			shell2 destroy]! !
+!Kernel.Tests.STLFilerTest categoriesFor: #testRectangleReadWrite!public!unit tests! !
+!Kernel.Tests.STLFilerTest categoriesFor: #testResourceReadWrite!public!unit tests! !
+!Kernel.Tests.STLFilerTest categoriesFor: #testShellReadWrite!public!unit tests! !
 
 "End of package definition"!
 

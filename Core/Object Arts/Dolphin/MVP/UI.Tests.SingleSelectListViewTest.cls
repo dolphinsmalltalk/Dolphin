@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ListViewTest subclass: #SingleSelectListViewTest
+UI.Tests.ListViewTest subclass: #'UI.Tests.SingleSelectListViewTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'ListViewConstants'
+	imports: #(#{OS.ListViewConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-SingleSelectListViewTest guid: (GUID fromString: '{176c59b9-4286-4753-8320-c9b5da469d9e}')!
-SingleSelectListViewTest comment: ''!
-!SingleSelectListViewTest categoriesForClass!Unclassified! !
-!SingleSelectListViewTest methodsFor!
+UI.Tests.SingleSelectListViewTest guid: (Core.GUID fromString: '{176c59b9-4286-4753-8320-c9b5da469d9e}')!
+UI.Tests.SingleSelectListViewTest comment: ''!
+!UI.Tests.SingleSelectListViewTest categoriesForClass!Unclassified! !
+!UI.Tests.SingleSelectListViewTest methodsFor!
 
 sortSelections
 	^#(50)!
@@ -36,6 +36,6 @@ testSelectionModeChange
 	self assert: presenter selectionByIndex equals: caret.
 	presenter view selectionsByIndex: #(1 2).
 	self assert: presenter selectionsByIndex equals: #(1)! !
-!SingleSelectListViewTest categoriesFor: #sortSelections!private!unit tests! !
-!SingleSelectListViewTest categoriesFor: #testSelectionModeChange!public!unit tests! !
+!UI.Tests.SingleSelectListViewTest categoriesFor: #sortSelections!private!unit tests! !
+!UI.Tests.SingleSelectListViewTest categoriesFor: #testSelectionModeChange!public!unit tests! !
 

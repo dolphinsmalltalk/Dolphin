@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-AbstractRectangleTest subclass: #RectangleTest
+Graphics.Tests.AbstractRectangleTest subclass: #'Graphics.Tests.RectangleTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-RectangleTest guid: (GUID fromString: '{aceafc61-24f9-482c-a8e7-0aff0e7fcc85}')!
-RectangleTest comment: ''!
-!RectangleTest categoriesForClass!Unclassified! !
-!RectangleTest methodsFor!
+Graphics.Tests.RectangleTest guid: (Core.GUID fromString: '{aceafc61-24f9-482c-a8e7-0aff0e7fcc85}')!
+Graphics.Tests.RectangleTest comment: ''!
+!Graphics.Tests.RectangleTest categoriesForClass!Unclassified! !
+!Graphics.Tests.RectangleTest methodsFor!
 
 subjectClass
 	^Rectangle!
@@ -44,7 +44,7 @@ testInsetBy
 	self assert: (desktop insetBy: 1 @ 2) equals: (1 @ 2 corner: 1279 @ 1022).
 	self assert: ((1 @ 2 corner: 3 @ 4) insetBy: (2 @ 0 corner: 0 @ 0)) equals: (3 @ 2 corner: 3 @ 4).
 	#todo	"Add more insetBy: <Rectangle> tests"! !
-!RectangleTest categoriesFor: #subjectClass!constants!private! !
-!RectangleTest categoriesFor: #testAreasOutside!public!unit tests! !
-!RectangleTest categoriesFor: #testInsetBy!public!unit tests! !
+!Graphics.Tests.RectangleTest categoriesFor: #subjectClass!constants!private! !
+!Graphics.Tests.RectangleTest categoriesFor: #testAreasOutside!public!unit tests! !
+!Graphics.Tests.RectangleTest categoriesFor: #testInsetBy!public!unit tests! !
 

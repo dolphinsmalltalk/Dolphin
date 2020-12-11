@@ -1,14 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-DolphinTest subclass: #BitmapTest
+Core.Tests.DolphinTest subclass: #'Graphics.Tests.BitmapTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: #()
-	classInstanceVariableNames: ''!
-BitmapTest guid: (GUID fromString: '{e775dfbb-e3db-47cd-aec2-8b0ebe5b7498}')!
-BitmapTest comment: ''!
-!BitmapTest categoriesForClass!Unclassified! !
-!BitmapTest methodsFor!
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Graphics.Tests.BitmapTest guid: (Core.GUID fromString: '{e775dfbb-e3db-47cd-aec2-8b0ebe5b7498}')!
+Graphics.Tests.BitmapTest comment: ''!
+!Graphics.Tests.BitmapTest categoriesForClass!Unclassified! !
+!Graphics.Tests.BitmapTest methodsFor!
 
 testAsColorKeyedBitmap
 	| subject colorKeyed result canvas |
@@ -21,5 +22,5 @@ testAsColorKeyedBitmap
 	canvas erase.
 	colorKeyed drawOn: canvas.
 	self assert: (canvas pixelAt: Point zero) equals: Color black! !
-!BitmapTest categoriesFor: #testAsColorKeyedBitmap!private!unit tests! !
+!Graphics.Tests.BitmapTest categoriesFor: #testAsColorKeyedBitmap!private!unit tests! !
 

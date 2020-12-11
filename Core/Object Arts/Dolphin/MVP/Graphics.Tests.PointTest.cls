@@ -1,18 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-AbstractPointTest subclass: #PointTest
+Graphics.Tests.AbstractPointTest subclass: #'Graphics.Tests.PointTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-PointTest guid: (GUID fromString: '{98f92001-3f3a-4296-8a76-5e67f93030a6}')!
-PointTest comment: 'This is the unit test for the class Point. Unit tests are a good way to exercise the functionality of your system in a repeatable and automatic manner. They are therefore recommended if you plan to release anything. For more information, see: 
-	- http://www.c2.com/cgi/wiki?UnitTest
-	- http://minnow.cc.gatech.edu/squeak/1547
-	- the sunit class category'!
-!PointTest categoriesForClass!Unclassified! !
-!PointTest methodsFor!
+Graphics.Tests.PointTest guid: (Core.GUID fromString: '{98f92001-3f3a-4296-8a76-5e67f93030a6}')!
+Graphics.Tests.PointTest comment: ''!
+!Graphics.Tests.PointTest categoriesForClass!Unclassified! !
+!Graphics.Tests.PointTest methodsFor!
 
 subjectClass
 	^Point!
@@ -44,9 +41,9 @@ testStrictlyPositive
 	self assert: (self subjectClass x: 1 y: 1) strictlyPositive.
 	self deny: (self subjectClass x: 1 y: -1) strictlyPositive.
 	self deny: (self subjectClass x: -1 y: 1) strictlyPositive! !
-!PointTest categoriesFor: #subjectClass!constants!private! !
-!PointTest categoriesFor: #testAbs!public!unit tests! !
-!PointTest categoriesFor: #testEquals!public!unit tests! !
-!PointTest categoriesFor: #testIsZero!public!unit tests! !
-!PointTest categoriesFor: #testStrictlyPositive!public!unit tests! !
+!Graphics.Tests.PointTest categoriesFor: #subjectClass!constants!private! !
+!Graphics.Tests.PointTest categoriesFor: #testAbs!public!unit tests! !
+!Graphics.Tests.PointTest categoriesFor: #testEquals!public!unit tests! !
+!Graphics.Tests.PointTest categoriesFor: #testIsZero!public!unit tests! !
+!Graphics.Tests.PointTest categoriesFor: #testStrictlyPositive!public!unit tests! !
 

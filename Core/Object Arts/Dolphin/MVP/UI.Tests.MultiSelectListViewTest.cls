@@ -1,22 +1,22 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ListViewTest subclass: #MultiSelectListViewTest
+UI.Tests.ListViewTest subclass: #'UI.Tests.MultiSelectListViewTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-MultiSelectListViewTest guid: (GUID fromString: '{67f073df-d832-4f4f-a5c1-57d8730e3515}')!
-MultiSelectListViewTest comment: ''!
-!MultiSelectListViewTest categoriesForClass!Unclassified! !
-!MultiSelectListViewTest methodsFor!
+UI.Tests.MultiSelectListViewTest guid: (Core.GUID fromString: '{67f073df-d832-4f4f-a5c1-57d8730e3515}')!
+UI.Tests.MultiSelectListViewTest comment: ''!
+!UI.Tests.MultiSelectListViewTest categoriesForClass!Unclassified! !
+!UI.Tests.MultiSelectListViewTest methodsFor!
 
 initializePresenter
 	super initializePresenter.
 	presenter view isMultiSelect: true!
 
 marqueeSelectionEventsToItem: anInteger
-	| downEvent targetPos mouseEvents x |
+	| downEvent targetPos mouseEvents |
 	downEvent := self mouseDownEventOnItem: 0 buttons: {#left}.
 	targetPos := (presenter itemRect: anInteger) origin + 5.
 	mouseEvents := Array writeStream.
@@ -24,15 +24,15 @@ marqueeSelectionEventsToItem: anInteger
 	"It seems the minimum number of WM_MOUSEMOVEs we can get away with is two; one a small distance away from the start point, and another at the target position.
 	Note that for mouse moves Windows updates the posted event to convert the co-ords to client co-ords, so we must supply them as screen co-ords)"
 	mouseEvents nextPut: (MouseEvent
-						window: presenter
-						message: WM_MOUSEMOVE
-						wParam: downEvent wParam
-						lParam: (presenter mapPointToScreen: downEvent position - 5) asDword).
+				window: presenter
+				message: WM_MOUSEMOVE
+				wParam: downEvent wParam
+				lParam: (presenter mapPointToScreen: downEvent position - 5) asDword).
 	mouseEvents nextPut: (MouseEvent
-						window: presenter
-						message: WM_MOUSEMOVE
-						wParam: downEvent wParam
-						lParam: (presenter mapPointToScreen: targetPos) asDword).
+				window: presenter
+				message: WM_MOUSEMOVE
+				wParam: downEvent wParam
+				lParam: (presenter mapPointToScreen: targetPos) asDword).
 	mouseEvents nextPut: ((self mouseUpForMouseDown: downEvent)
 				lParam: targetPos asDword;
 				yourself).
@@ -120,9 +120,7 @@ testEventsFromMarqueeSelectionChange
 	changing := events second.
 	self assert: changing isKindOf: SelectionChangingEvent.
 	self assert: changing oldSelections equals: #(8).
-	self assert: changing newSelections equals: #(9 10).
-
-!
+	self assert: changing newSelections equals: #(9 10)!
 
 testNewSelectionsCtrlShiftClickAdditive
 	| event |
@@ -163,11 +161,11 @@ testNewSelectionsShiftClickWithSelectionMark
 			self verifySelectionsFromMouseDown: event equals: #(3 4 5)].
 	event := self mouseDownEventOnItem: 3 buttons: #(#left #shift).
 	self verifySelectionsFromMouseDown: event equals: #(3)! !
-!MultiSelectListViewTest categoriesFor: #initializePresenter!public!Running! !
-!MultiSelectListViewTest categoriesFor: #marqueeSelectionEventsToItem:!helpers!private! !
-!MultiSelectListViewTest categoriesFor: #sortSelections!private!unit tests! !
-!MultiSelectListViewTest categoriesFor: #testEventsFromMarqueeSelectionChange!public!unit tests! !
-!MultiSelectListViewTest categoriesFor: #testNewSelectionsCtrlShiftClickAdditive!public!unit tests! !
-!MultiSelectListViewTest categoriesFor: #testNewSelectionsCtrlShiftClickSubtractive!public!unit tests! !
-!MultiSelectListViewTest categoriesFor: #testNewSelectionsShiftClickWithSelectionMark!public!unit tests! !
+!UI.Tests.MultiSelectListViewTest categoriesFor: #initializePresenter!public!Running! !
+!UI.Tests.MultiSelectListViewTest categoriesFor: #marqueeSelectionEventsToItem:!helpers!private! !
+!UI.Tests.MultiSelectListViewTest categoriesFor: #sortSelections!private!unit tests! !
+!UI.Tests.MultiSelectListViewTest categoriesFor: #testEventsFromMarqueeSelectionChange!public!unit tests! !
+!UI.Tests.MultiSelectListViewTest categoriesFor: #testNewSelectionsCtrlShiftClickAdditive!public!unit tests! !
+!UI.Tests.MultiSelectListViewTest categoriesFor: #testNewSelectionsCtrlShiftClickSubtractive!public!unit tests! !
+!UI.Tests.MultiSelectListViewTest categoriesFor: #testNewSelectionsShiftClickWithSelectionMark!public!unit tests! !
 

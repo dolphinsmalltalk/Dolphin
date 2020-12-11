@@ -1,16 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-DolphinTest subclass: #LayoutManagerTest
+Core.Tests.DolphinTest subclass: #'UI.Tests.LayoutManagerTest'
 	instanceVariableNames: 'shell'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-LayoutManagerTest guid: (GUID fromString: '{a94f94cc-98cb-4a2e-801e-7c115e70d1f8}')!
-LayoutManagerTest isAbstract: true!
-LayoutManagerTest comment: ''!
-!LayoutManagerTest categoriesForClass!Unclassified! !
-!LayoutManagerTest methodsFor!
+UI.Tests.LayoutManagerTest guid: (Core.GUID fromString: '{a94f94cc-98cb-4a2e-801e-7c115e70d1f8}')!
+UI.Tests.LayoutManagerTest isNonInstantiable: true!
+UI.Tests.LayoutManagerTest comment: ''!
+!UI.Tests.LayoutManagerTest categoriesForClass!Unclassified! !
+!UI.Tests.LayoutManagerTest methodsFor!
 
 layoutManagerClass
 	^self subclassResponsibility!
@@ -26,7 +26,7 @@ setUp
 
 tearDown
 	shell notNil ifTrue: [shell destroy]! !
-!LayoutManagerTest categoriesFor: #layoutManagerClass!private!unit tests! !
-!LayoutManagerTest categoriesFor: #setUp!public!unit tests! !
-!LayoutManagerTest categoriesFor: #tearDown!public!unit tests! !
+!UI.Tests.LayoutManagerTest categoriesFor: #layoutManagerClass!private!unit tests! !
+!UI.Tests.LayoutManagerTest categoriesFor: #setUp!public!unit tests! !
+!UI.Tests.LayoutManagerTest categoriesFor: #tearDown!public!unit tests! !
 

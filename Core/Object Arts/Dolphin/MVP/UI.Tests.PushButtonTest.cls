@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-DolphinTest subclass: #PushButtonTest
+Core.Tests.DolphinTest subclass: #'UI.Tests.PushButtonTest'
 	instanceVariableNames: 'shell shellButtonA shellButtonB dialog dialogButtonA dialogButtonB'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-PushButtonTest guid: (GUID fromString: '{e927fec8-865b-4be1-928d-fd9eb29c16c4}')!
-PushButtonTest comment: ''!
-!PushButtonTest categoriesForClass!Unclassified! !
-!PushButtonTest methodsFor!
+UI.Tests.PushButtonTest guid: (Core.GUID fromString: '{e927fec8-865b-4be1-928d-fd9eb29c16c4}')!
+UI.Tests.PushButtonTest comment: ''!
+!UI.Tests.PushButtonTest categoriesForClass!Unclassified! !
+!UI.Tests.PushButtonTest methodsFor!
 
 assertButton: aPushButton isDefault: aBoolean
 	self assert: aPushButton isDefault equals: aBoolean.
@@ -20,13 +20,9 @@ setUp
 	shell := ShellView show.
 	shellButtonA := shell addSubView: PushButton new.
 	shellButtonB := shell addSubView: PushButton new.
-
 	dialog := DialogView show.
 	dialogButtonA := dialog addSubView: PushButton new.
-	dialogButtonB := dialog addSubView: PushButton new.
-
-	
-!
+	dialogButtonB := dialog addSubView: PushButton new!
 
 tearDown
 	shell destroy.
@@ -76,10 +72,10 @@ tryDefaultButtonsA: buttonA B: buttonB
 	buttonB isDefault: false.
 	self assertButton: buttonA isDefault: true.
 	self assertButton: buttonB isDefault: false! !
-!PushButtonTest categoriesFor: #assertButton:isDefault:!helpers!private! !
-!PushButtonTest categoriesFor: #setUp!public!running! !
-!PushButtonTest categoriesFor: #tearDown!public!running! !
-!PushButtonTest categoriesFor: #testDialogDefaultButtons!public!unit tests! !
-!PushButtonTest categoriesFor: #testShellDefaultButtons!public!unit tests! !
-!PushButtonTest categoriesFor: #tryDefaultButtonsA:B:!private!unit tests! !
+!UI.Tests.PushButtonTest categoriesFor: #assertButton:isDefault:!helpers!private! !
+!UI.Tests.PushButtonTest categoriesFor: #setUp!public!running! !
+!UI.Tests.PushButtonTest categoriesFor: #tearDown!public!running! !
+!UI.Tests.PushButtonTest categoriesFor: #testDialogDefaultButtons!public!unit tests! !
+!UI.Tests.PushButtonTest categoriesFor: #testShellDefaultButtons!public!unit tests! !
+!UI.Tests.PushButtonTest categoriesFor: #tryDefaultButtonsA:B:!private!unit tests! !
 

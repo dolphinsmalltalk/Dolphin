@@ -1,16 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-DolphinTest subclass: #PresenterTest
+Core.Tests.DolphinTest subclass: #'UI.Tests.PresenterTest'
 	instanceVariableNames: 'presenter'
 	classVariableNames: ''
-	poolDictionaries: 'Win32Constants'
+	imports: #(#{OS.Win32Constants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-PresenterTest guid: (GUID fromString: '{80e6f4ef-64d4-40f6-857c-5b74578eb87b}')!
-PresenterTest isAbstract: true!
-PresenterTest comment: ''!
-!PresenterTest categoriesForClass!Unclassified! !
-!PresenterTest methodsFor!
+UI.Tests.PresenterTest guid: (Core.GUID fromString: '{80e6f4ef-64d4-40f6-857c-5b74578eb87b}')!
+UI.Tests.PresenterTest isNonInstantiable: true!
+UI.Tests.PresenterTest comment: ''!
+!UI.Tests.PresenterTest categoriesForClass!Unclassified! !
+!UI.Tests.PresenterTest methodsFor!
 
 classToTest
 	^self subclassResponsibility!
@@ -52,10 +52,10 @@ tearDown
 
 waitForInputIdle
 	SessionManager inputState pumpMessages! !
-!PresenterTest categoriesFor: #classToTest!helpers!private! !
-!PresenterTest categoriesFor: #initializePresenter!public!Running! !
-!PresenterTest categoriesFor: #leftClickAt:!private!unit tests! !
-!PresenterTest categoriesFor: #setUp!public!Running! !
-!PresenterTest categoriesFor: #tearDown!public!Running! !
-!PresenterTest categoriesFor: #waitForInputIdle!private!unit tests! !
+!UI.Tests.PresenterTest categoriesFor: #classToTest!helpers!private! !
+!UI.Tests.PresenterTest categoriesFor: #initializePresenter!public!Running! !
+!UI.Tests.PresenterTest categoriesFor: #leftClickAt:!private!unit tests! !
+!UI.Tests.PresenterTest categoriesFor: #setUp!public!Running! !
+!UI.Tests.PresenterTest categoriesFor: #tearDown!public!Running! !
+!UI.Tests.PresenterTest categoriesFor: #waitForInputIdle!private!unit tests! !
 

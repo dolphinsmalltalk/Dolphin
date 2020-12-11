@@ -1,22 +1,22 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-PresenterTest subclass: #ReferenceViewTest
+UI.Tests.PresenterTest subclass: #'UI.Tests.ReferenceViewTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ReferenceViewTest guid: (GUID fromString: '{a38c1b83-5cc7-4717-8bc4-29b681abe8f9}')!
-ReferenceViewTest isAbstract: true!
-ReferenceViewTest comment: ''!
-!ReferenceViewTest categoriesForClass!Unclassified! !
-!ReferenceViewTest methodsFor!
+UI.Tests.ReferenceViewTest guid: (Core.GUID fromString: '{a38c1b83-5cc7-4717-8bc4-29b681abe8f9}')!
+UI.Tests.ReferenceViewTest isNonInstantiable: true!
+UI.Tests.ReferenceViewTest comment: ''!
+!UI.Tests.ReferenceViewTest categoriesForClass!Unclassified! !
+!UI.Tests.ReferenceViewTest methodsFor!
 
 classToTest
 	^self subclassResponsibility!
 
 initializePresenter
-	presenter := ReferenceView 
+	presenter := ReferenceView
 				resourceIdentifier: (ResourceIdentifier class: Presenter name: 'OK Cancel button block').
 	presenter showShell!
 
@@ -30,7 +30,7 @@ testRecreate
 	presenter recreate.
 	self assert: presenter subViews size equals: 1.
 	self assert: presenter referee hasBorder! !
-!ReferenceViewTest categoriesFor: #classToTest!helpers!private! !
-!ReferenceViewTest categoriesFor: #initializePresenter!public!Running! !
-!ReferenceViewTest categoriesFor: #testRecreate!public!unit tests! !
+!UI.Tests.ReferenceViewTest categoriesFor: #classToTest!helpers!private! !
+!UI.Tests.ReferenceViewTest categoriesFor: #initializePresenter!public!Running! !
+!UI.Tests.ReferenceViewTest categoriesFor: #testRecreate!public!unit tests! !
 

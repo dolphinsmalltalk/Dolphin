@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-DolphinTest subclass: #MultipleSelectionListBoxTest
+Core.Tests.DolphinTest subclass: #'UI.Tests.MultipleSelectionListBoxTest'
 	instanceVariableNames: 'box'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-MultipleSelectionListBoxTest guid: (GUID fromString: '{29849786-386a-43f0-a24e-f1970727a83b}')!
-MultipleSelectionListBoxTest comment: 'Test that the behaviour of the deprecated MultipleSelectionListBox class retains its legacy features in the refactored ListControlView hierarchy.'!
-!MultipleSelectionListBoxTest categoriesForClass!Unclassified! !
-!MultipleSelectionListBoxTest methodsFor!
+UI.Tests.MultipleSelectionListBoxTest guid: (Core.GUID fromString: '{29849786-386a-43f0-a24e-f1970727a83b}')!
+UI.Tests.MultipleSelectionListBoxTest comment: 'Test that the behaviour of the deprecated MultipleSelectionListBox class retains its legacy features in the refactored ListControlView hierarchy.'!
+!UI.Tests.MultipleSelectionListBoxTest categoriesForClass!Unclassified! !
+!UI.Tests.MultipleSelectionListBoxTest methodsFor!
 
 assertAllSelectionAre: anArray
 	self assert: box selection equals: anArray.
@@ -18,7 +18,7 @@ assertAllSelectionAre: anArray
 	self assert: (box selectionIfNone: [#()]) equals: anArray!
 
 classToTest
-	^MultipleSelectionListBox!
+	^Smalltalk.MultipleSelectionListBox!
 
 setUp
 	super setUp.
@@ -185,7 +185,7 @@ testSelectionIfAbsent
 								with: [:nope | missing := nope]]
 				trigger: #selectionChanged
 				against: box.
-			self assert: box selections equals: (selections select: [:each | each between: 1 and: 6]).
+			self assert: box selections equals: (selections select: [:eachSel | eachSel between: 1 and: 6]).
 			self assert: missing asArray equals: #(8).
 			self assert: answer identicalTo: missing.
 
@@ -207,11 +207,11 @@ testSelectionIfAbsent
 						with: [self assert: false]]
 				trigger: #selectionChanged
 				against: box]! !
-!MultipleSelectionListBoxTest categoriesFor: #assertAllSelectionAre:!helpers!private! !
-!MultipleSelectionListBoxTest categoriesFor: #classToTest!constants!private! !
-!MultipleSelectionListBoxTest categoriesFor: #setUp!public!Running! !
-!MultipleSelectionListBoxTest categoriesFor: #tearDown!public!Running! !
-!MultipleSelectionListBoxTest categoriesFor: #testSelection!public!unit tests! !
-!MultipleSelectionListBoxTest categoriesFor: #testSelectionCacheUpdated!public!unit tests! !
-!MultipleSelectionListBoxTest categoriesFor: #testSelectionIfAbsent!public!unit tests! !
+!UI.Tests.MultipleSelectionListBoxTest categoriesFor: #assertAllSelectionAre:!helpers!private! !
+!UI.Tests.MultipleSelectionListBoxTest categoriesFor: #classToTest!constants!private! !
+!UI.Tests.MultipleSelectionListBoxTest categoriesFor: #setUp!public!Running! !
+!UI.Tests.MultipleSelectionListBoxTest categoriesFor: #tearDown!public!Running! !
+!UI.Tests.MultipleSelectionListBoxTest categoriesFor: #testSelection!public!unit tests! !
+!UI.Tests.MultipleSelectionListBoxTest categoriesFor: #testSelectionCacheUpdated!public!unit tests! !
+!UI.Tests.MultipleSelectionListBoxTest categoriesFor: #testSelectionIfAbsent!public!unit tests! !
 

@@ -1,15 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-AbstractPointTest subclass: #ExternalPointTest
+Graphics.Tests.AbstractPointTest subclass: #'External.Tests.POINTTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-ExternalPointTest guid: (GUID fromString: '{9f425d20-35a5-4ddb-892b-1be3b6997ee3}')!
-ExternalPointTest isAbstract: true!
-ExternalPointTest comment: ''!
-!ExternalPointTest categoriesForClass!Unclassified! !
-!ExternalPointTest methodsFor!
+	imports: #(#{Graphics private})
+	classInstanceVariableNames: ''
+	classConstants: {}!
+External.Tests.POINTTest guid: (Core.GUID fromString: '{9f425d20-35a5-4ddb-892b-1be3b6997ee3}')!
+External.Tests.POINTTest isNonInstantiable: true!
+External.Tests.POINTTest comment: ''!
+!External.Tests.POINTTest categoriesForClass!Unclassified! !
+!External.Tests.POINTTest methodsFor!
 
 testAsDword
 	| dword subject |
@@ -32,7 +33,7 @@ testValue
 	self assert: point class equals: Point.
 	self assert: point x equals: 101.
 	self assert: point y equals: 202! !
-!ExternalPointTest categoriesFor: #testAsDword!public!unit tests! !
-!ExternalPointTest categoriesFor: #testAsObject!public!unit tests! !
-!ExternalPointTest categoriesFor: #testValue!public!unit tests! !
+!External.Tests.POINTTest categoriesFor: #testAsDword!public!unit tests! !
+!External.Tests.POINTTest categoriesFor: #testAsObject!public!unit tests! !
+!External.Tests.POINTTest categoriesFor: #testValue!public!unit tests! !
 

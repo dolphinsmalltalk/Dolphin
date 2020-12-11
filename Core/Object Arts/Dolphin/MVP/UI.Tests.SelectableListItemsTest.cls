@@ -1,16 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-SelectableItemsTest subclass: #SelectableListItemsTest
+UI.Tests.SelectableItemsTest subclass: #'UI.Tests.SelectableListItemsTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-SelectableListItemsTest guid: (GUID fromString: '{48f12746-e517-4013-8077-973b1d783f60}')!
-SelectableListItemsTest isAbstract: true!
-SelectableListItemsTest comment: ''!
-!SelectableListItemsTest categoriesForClass!Unclassified! !
-!SelectableListItemsTest methodsFor!
+UI.Tests.SelectableListItemsTest guid: (Core.GUID fromString: '{48f12746-e517-4013-8077-973b1d783f60}')!
+UI.Tests.SelectableListItemsTest isNonInstantiable: true!
+UI.Tests.SelectableListItemsTest comment: ''!
+!UI.Tests.SelectableListItemsTest categoriesForClass!Unclassified! !
+!UI.Tests.SelectableListItemsTest methodsFor!
 
 autoSelectsFirst
 	^false!
@@ -346,17 +346,17 @@ testUpdateSelectedObject
 		shouldnt: [presenter selectionByIndex: 2]
 		trigger: #selectionChanging:
 		against: presenter! !
-!SelectableListItemsTest categoriesFor: #autoSelectsFirst!private!testing! !
-!SelectableListItemsTest categoriesFor: #objectsToTest!helpers!private! !
-!SelectableListItemsTest categoriesFor: #removingResetsSelection!private!testing! !
-!SelectableListItemsTest categoriesFor: #testAddDoesNotChangeSelection!public!unit tests! !
-!SelectableListItemsTest categoriesFor: #testAddRemove!public!unit tests! !
-!SelectableListItemsTest categoriesFor: #testRemoveAllSelection!public!unit tests! !
-!SelectableListItemsTest categoriesFor: #testRemoveDoesNotAffectSelection!public!unit tests! !
-!SelectableListItemsTest categoriesFor: #testRemoveSelection!public!unit tests! !
-!SelectableListItemsTest categoriesFor: #testResetSelection!public!unit tests! !
-!SelectableListItemsTest categoriesFor: #testSelection!public!unit tests! !
-!SelectableListItemsTest categoriesFor: #testSelectionByIndex!public!unit tests! !
-!SelectableListItemsTest categoriesFor: #testSetTextBlockDoesNotAffectSelection!public!unit tests! !
-!SelectableListItemsTest categoriesFor: #testUpdateSelectedObject!public!unit tests! !
+!UI.Tests.SelectableListItemsTest categoriesFor: #autoSelectsFirst!private!testing! !
+!UI.Tests.SelectableListItemsTest categoriesFor: #objectsToTest!helpers!private! !
+!UI.Tests.SelectableListItemsTest categoriesFor: #removingResetsSelection!private!testing! !
+!UI.Tests.SelectableListItemsTest categoriesFor: #testAddDoesNotChangeSelection!public!unit tests! !
+!UI.Tests.SelectableListItemsTest categoriesFor: #testAddRemove!public!unit tests! !
+!UI.Tests.SelectableListItemsTest categoriesFor: #testRemoveAllSelection!public!unit tests! !
+!UI.Tests.SelectableListItemsTest categoriesFor: #testRemoveDoesNotAffectSelection!public!unit tests! !
+!UI.Tests.SelectableListItemsTest categoriesFor: #testRemoveSelection!public!unit tests! !
+!UI.Tests.SelectableListItemsTest categoriesFor: #testResetSelection!public!unit tests! !
+!UI.Tests.SelectableListItemsTest categoriesFor: #testSelection!public!unit tests! !
+!UI.Tests.SelectableListItemsTest categoriesFor: #testSelectionByIndex!public!unit tests! !
+!UI.Tests.SelectableListItemsTest categoriesFor: #testSetTextBlockDoesNotAffectSelection!public!unit tests! !
+!UI.Tests.SelectableListItemsTest categoriesFor: #testUpdateSelectedObject!public!unit tests! !
 

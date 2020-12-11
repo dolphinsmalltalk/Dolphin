@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-PresenterTest subclass: #StaticPathTest
+UI.Tests.PresenterTest subclass: #'UI.Tests.StaticPathTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-StaticPathTest guid: (GUID fromString: '{50b65118-29ff-4b14-b17a-56e21a6fefca}')!
-StaticPathTest comment: ''!
-!StaticPathTest categoriesForClass!Unclassified! !
-!StaticPathTest methodsFor!
+UI.Tests.StaticPathTest guid: (Core.GUID fromString: '{50b65118-29ff-4b14-b17a-56e21a6fefca}')!
+UI.Tests.StaticPathTest comment: ''!
+!UI.Tests.StaticPathTest categoriesForClass!Unclassified! !
+!UI.Tests.StaticPathTest methodsFor!
 
 classToTest
 	^StaticPath!
@@ -46,7 +46,7 @@ testLayout
 	presenter ensureLayoutValid.
 	displayedText := presenter getWindowText.
 	self assert: (displayedText indexOfSubCollection: '...') identicalTo: 0! !
-!StaticPathTest categoriesFor: #classToTest!helpers!private! !
-!StaticPathTest categoriesFor: #testCalculateExtent!public! !
-!StaticPathTest categoriesFor: #testLayout!public!unit tests! !
+!UI.Tests.StaticPathTest categoriesFor: #classToTest!helpers!private! !
+!UI.Tests.StaticPathTest categoriesFor: #testCalculateExtent!public!unit tests! !
+!UI.Tests.StaticPathTest categoriesFor: #testLayout!public!unit tests! !
 

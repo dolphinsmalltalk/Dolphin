@@ -1,23 +1,23 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-DolphinTest subclass: #AbstractContainerViewTest
+Core.Tests.DolphinTest subclass: #'UI.Tests.AbstractContainerViewTest'
 	instanceVariableNames: 'containerView'
 	classVariableNames: ''
-	poolDictionaries: 'Win32Constants'
+	imports: #(#{OS.Win32Constants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-AbstractContainerViewTest guid: (GUID fromString: '{79c3a28a-ce43-49e3-a030-adb99de3efea}')!
-AbstractContainerViewTest isAbstract: true!
-AbstractContainerViewTest comment: ''!
-!AbstractContainerViewTest categoriesForClass!Unclassified! !
-!AbstractContainerViewTest methodsFor!
+UI.Tests.AbstractContainerViewTest guid: (Core.GUID fromString: '{79c3a28a-ce43-49e3-a030-adb99de3efea}')!
+UI.Tests.AbstractContainerViewTest isNonInstantiable: true!
+UI.Tests.AbstractContainerViewTest comment: ''!
+!UI.Tests.AbstractContainerViewTest categoriesForClass!Unclassified! !
+!UI.Tests.AbstractContainerViewTest methodsFor!
 
 backgroundColor
 	"Private - Answer the background color we will test with. This shuld be different from that of the parent window background"
 
 	^Color red!
 
-bitmapOfPrintView: aContainerView 
+bitmapOfPrintView: aContainerView
 	^Bitmap fromView: aContainerView!
 
 borderColor
@@ -57,11 +57,11 @@ checkPoints: aPointsArray inBitmap: bitmap color: color
 	ImagePresenter showOn: bitmap
 	"
 
-	| bitmapCanvas requiredColor foundColorValue |
+	| bitmapCanvas requiredColor |
 	bitmapCanvas := bitmap canvas.
 	requiredColor := color asRGB.
 	aPointsArray
-		do: [:each | self assert: (foundColorValue := bitmapCanvas pixelAt: each) equals: requiredColor]!
+		do: [:each | self assert: (bitmapCanvas pixelAt: each) equals: requiredColor]!
 
 checkRectangle: rect inBitmap: bitmap color: color
 	"
@@ -106,7 +106,7 @@ testNcCalcSize
 	"Border off - simple text"
 
 	| rect params ret parentRect |
-	rect := RECT fromRectangle: containerView rectangle.
+	rect := RECTL fromRectangle: containerView rectangle.
 	self assert: rect asRectangle equals: self initialParentRect.
 	ret := containerView
 				sendMessage: WM_NCCALCSIZE
@@ -118,7 +118,7 @@ testNcCalcSize
 	"Border off advanced test"
 	params := NCCALCSIZE_PARAMS new.
 	parentRect := containerView rectangle.
-	params rgrc at: 1 put: (RECT fromRectangle: parentRect).
+	params rgrc at: 1 put: (RECTL fromRectangle: parentRect).
 	ret := containerView
 				sendMessage: WM_NCCALCSIZE
 				wParam: true asParameter
@@ -127,7 +127,7 @@ testNcCalcSize
 
 	"Border on simple test"
 	containerView hasBorder: true.
-	rect := RECT fromRectangle: containerView rectangle.
+	rect := RECTL fromRectangle: containerView rectangle.
 	self assert: rect asRectangle equals: self initialParentRect.
 	ret := containerView
 				sendMessage: WM_NCCALCSIZE
@@ -140,7 +140,7 @@ testNcCalcSize
 	"Border on advanced test"
 	params := NCCALCSIZE_PARAMS new.
 	parentRect := containerView rectangle.
-	params rgrc at: 1 put: (RECT fromRectangle: parentRect).
+	params rgrc at: 1 put: (RECTL fromRectangle: parentRect).
 	ret := containerView
 				sendMessage: WM_NCCALCSIZE
 				wParam: true asParameter
@@ -172,20 +172,20 @@ waitForScreenUpdate
 	"5 timesRepeat: 
 			[SessionManager current inputState pumpMessages.
 			Processor sleep: 100]"! !
-!AbstractContainerViewTest categoriesFor: #backgroundColor!private! !
-!AbstractContainerViewTest categoriesFor: #bitmapOfPrintView:!helpers!private! !
-!AbstractContainerViewTest categoriesFor: #borderColor!private! !
-!AbstractContainerViewTest categoriesFor: #borderRectangleOf:!private! !
-!AbstractContainerViewTest categoriesFor: #checkBorderedNcRectangle:!private! !
-!AbstractContainerViewTest categoriesFor: #checkPoints:inBitmap:color:!private! !
-!AbstractContainerViewTest categoriesFor: #checkRectangle:inBitmap:color:!private! !
-!AbstractContainerViewTest categoriesFor: #containerClass!private! !
-!AbstractContainerViewTest categoriesFor: #initialParentExtent!private!Running! !
-!AbstractContainerViewTest categoriesFor: #initialParentRect!private!Running! !
-!AbstractContainerViewTest categoriesFor: #setUp!public!Running! !
-!AbstractContainerViewTest categoriesFor: #tearDown!public!Running! !
-!AbstractContainerViewTest categoriesFor: #testBorderedNcRectangle!public! !
-!AbstractContainerViewTest categoriesFor: #testNcCalcSize!public! !
-!AbstractContainerViewTest categoriesFor: #testNonBorderedNcRectangle!public! !
-!AbstractContainerViewTest categoriesFor: #waitForScreenUpdate!private! !
+!UI.Tests.AbstractContainerViewTest categoriesFor: #backgroundColor!private! !
+!UI.Tests.AbstractContainerViewTest categoriesFor: #bitmapOfPrintView:!helpers!private! !
+!UI.Tests.AbstractContainerViewTest categoriesFor: #borderColor!private! !
+!UI.Tests.AbstractContainerViewTest categoriesFor: #borderRectangleOf:!private! !
+!UI.Tests.AbstractContainerViewTest categoriesFor: #checkBorderedNcRectangle:!private! !
+!UI.Tests.AbstractContainerViewTest categoriesFor: #checkPoints:inBitmap:color:!private! !
+!UI.Tests.AbstractContainerViewTest categoriesFor: #checkRectangle:inBitmap:color:!private! !
+!UI.Tests.AbstractContainerViewTest categoriesFor: #containerClass!private! !
+!UI.Tests.AbstractContainerViewTest categoriesFor: #initialParentExtent!private!Running! !
+!UI.Tests.AbstractContainerViewTest categoriesFor: #initialParentRect!private!Running! !
+!UI.Tests.AbstractContainerViewTest categoriesFor: #setUp!public!Running! !
+!UI.Tests.AbstractContainerViewTest categoriesFor: #tearDown!public!Running! !
+!UI.Tests.AbstractContainerViewTest categoriesFor: #testBorderedNcRectangle!public! !
+!UI.Tests.AbstractContainerViewTest categoriesFor: #testNcCalcSize!public! !
+!UI.Tests.AbstractContainerViewTest categoriesFor: #testNonBorderedNcRectangle!public! !
+!UI.Tests.AbstractContainerViewTest categoriesFor: #waitForScreenUpdate!private! !
 

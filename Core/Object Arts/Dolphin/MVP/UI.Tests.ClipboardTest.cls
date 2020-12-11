@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-DolphinTest subclass: #ClipboardTest
+Core.Tests.DolphinTest subclass: #'UI.Tests.ClipboardTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ClipboardTest guid: (GUID fromString: '{ea86f353-088f-4e28-b4db-bdb8b09e5e82}')!
-ClipboardTest comment: ''!
-!ClipboardTest categoriesForClass!Unclassified! !
-!ClipboardTest methodsFor!
+UI.Tests.ClipboardTest guid: (Core.GUID fromString: '{ea86f353-088f-4e28-b4db-bdb8b09e5e82}')!
+UI.Tests.ClipboardTest comment: ''!
+!UI.Tests.ClipboardTest categoriesForClass!Unclassified! !
+!UI.Tests.ClipboardTest methodsFor!
 
 sampleAnsiString
 	^Character byteCharacterSet copyFrom: 2!
@@ -65,8 +65,7 @@ testAvailableFormatsStrings
 	"But Windows will not convert RTF to strings or vice versa"
 	self sampleRichText copyToClipboard.
 	actual := Clipboard current availableFormats.
-	self assert: actual equals: #(#RichText).
-!
+	self assert: actual equals: #(#RichText)!
 
 testBitmap
 	| actual expected |
@@ -115,19 +114,19 @@ testUtf8String
 	"We'll get back UTF-16, but the content should be the same."
 	actual := Clipboard current getText.
 	self assert: actual equals: utf8! !
-!ClipboardTest categoriesFor: #sampleAnsiString!constants!private! !
-!ClipboardTest categoriesFor: #sampleBitmap!constants!private! !
-!ClipboardTest categoriesFor: #sampleDIBSection!constants!private! !
-!ClipboardTest categoriesFor: #sampleRichText!constants!private! !
-!ClipboardTest categoriesFor: #sampleUnicodeString!constants!private! !
-!ClipboardTest categoriesFor: #setUp!private!running! !
-!ClipboardTest categoriesFor: #tearDown!private!running! !
-!ClipboardTest categoriesFor: #testAnsiString!public!unit tests! !
-!ClipboardTest categoriesFor: #testAvailableFormatsBitmaps!public!unit tests! !
-!ClipboardTest categoriesFor: #testAvailableFormatsStrings!public!unit tests! !
-!ClipboardTest categoriesFor: #testBitmap!public!unit tests! !
-!ClipboardTest categoriesFor: #testDIBSection!public!unit tests! !
-!ClipboardTest categoriesFor: #testRichText!public!unit tests! !
-!ClipboardTest categoriesFor: #testUtf16String!public!unit tests! !
-!ClipboardTest categoriesFor: #testUtf8String!public!unit tests! !
+!UI.Tests.ClipboardTest categoriesFor: #sampleAnsiString!constants!private! !
+!UI.Tests.ClipboardTest categoriesFor: #sampleBitmap!constants!private! !
+!UI.Tests.ClipboardTest categoriesFor: #sampleDIBSection!constants!private! !
+!UI.Tests.ClipboardTest categoriesFor: #sampleRichText!constants!private! !
+!UI.Tests.ClipboardTest categoriesFor: #sampleUnicodeString!constants!private! !
+!UI.Tests.ClipboardTest categoriesFor: #setUp!private!running! !
+!UI.Tests.ClipboardTest categoriesFor: #tearDown!private!running! !
+!UI.Tests.ClipboardTest categoriesFor: #testAnsiString!public!unit tests! !
+!UI.Tests.ClipboardTest categoriesFor: #testAvailableFormatsBitmaps!public!unit tests! !
+!UI.Tests.ClipboardTest categoriesFor: #testAvailableFormatsStrings!public!unit tests! !
+!UI.Tests.ClipboardTest categoriesFor: #testBitmap!public!unit tests! !
+!UI.Tests.ClipboardTest categoriesFor: #testDIBSection!public!unit tests! !
+!UI.Tests.ClipboardTest categoriesFor: #testRichText!public!unit tests! !
+!UI.Tests.ClipboardTest categoriesFor: #testUtf16String!public!unit tests! !
+!UI.Tests.ClipboardTest categoriesFor: #testUtf8String!public!unit tests! !
 

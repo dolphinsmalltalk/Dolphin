@@ -1,16 +1,17 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ExternalRectangleTest subclass: #RECTLTest
+External.Tests.RECTTest subclass: #'OS.Tests.RECTLTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-RECTLTest guid: (GUID fromString: '{b9abab45-a64b-49f6-a20d-b3750487cc16}')!
-RECTLTest comment: ''!
-!RECTLTest categoriesForClass!Unclassified! !
-!RECTLTest methodsFor!
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+OS.Tests.RECTLTest guid: (Core.GUID fromString: '{b9abab45-a64b-49f6-a20d-b3750487cc16}')!
+OS.Tests.RECTLTest comment: ''!
+!OS.Tests.RECTLTest categoriesForClass!Unclassified! !
+!OS.Tests.RECTLTest methodsFor!
 
 subjectClass
 	^RECTL! !
-!RECTLTest categoriesFor: #subjectClass!constants!private! !
+!OS.Tests.RECTLTest categoriesFor: #subjectClass!constants!private! !
 

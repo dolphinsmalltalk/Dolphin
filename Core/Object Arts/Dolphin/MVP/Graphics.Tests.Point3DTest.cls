@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-DolphinTest subclass: #Point3DTest
+Core.Tests.DolphinTest subclass: #'Graphics.Tests.Point3DTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Point3DTest guid: (GUID fromString: '{e1ecedad-639e-42fc-b8a0-04911e61fcb5}')!
-Point3DTest comment: 'Test the Point3D class'!
-!Point3DTest categoriesForClass!Unclassified! !
-!Point3DTest methodsFor!
+Graphics.Tests.Point3DTest guid: (Core.GUID fromString: '{e1ecedad-639e-42fc-b8a0-04911e61fcb5}')!
+Graphics.Tests.Point3DTest comment: 'Test the Point3D class'!
+!Graphics.Tests.Point3DTest categoriesForClass!Unclassified! !
+!Graphics.Tests.Point3DTest methodsFor!
 
 testAsPoint
 	| result |
@@ -36,7 +36,7 @@ testNew
 	self assert: new y identicalTo: 0.
 	self assert: new z identicalTo: 0.
 	self assert: new equals: Point3D zero! !
-!Point3DTest categoriesFor: #testAsPoint!public!unit tests! !
-!Point3DTest categoriesFor: #testEquals!public!unit tests! !
-!Point3DTest categoriesFor: #testNew!public!unit tests! !
+!Graphics.Tests.Point3DTest categoriesFor: #testAsPoint!public!unit tests! !
+!Graphics.Tests.Point3DTest categoriesFor: #testEquals!public!unit tests! !
+!Graphics.Tests.Point3DTest categoriesFor: #testNew!public!unit tests! !
 

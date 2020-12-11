@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-SelectableTreeItemsTest subclass: #TreeViewTest
+UI.Tests.SelectableTreeItemsTest subclass: #'UI.Tests.TreeViewTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-TreeViewTest guid: (GUID fromString: '{9f22e0fe-4151-461c-a92a-f1d9f25e6605}')!
-TreeViewTest comment: ''!
-!TreeViewTest categoriesForClass!Unclassified! !
-!TreeViewTest methodsFor!
+UI.Tests.TreeViewTest guid: (Core.GUID fromString: '{9f22e0fe-4151-461c-a92a-f1d9f25e6605}')!
+UI.Tests.TreeViewTest comment: ''!
+!UI.Tests.TreeViewTest categoriesForClass!Unclassified! !
+!UI.Tests.TreeViewTest methodsFor!
 
 classToTest
 	^TreeView!
@@ -27,7 +27,7 @@ paintTree
 				update]!
 
 refreshTree: aSymbol
-	| tvItem child root text |
+	| child root text |
 	presenter hasLinesAtRoot: true.
 	presenter view updateMode: aSymbol.
 	root := '1' -> 1.
@@ -36,7 +36,6 @@ refreshTree: aSymbol
 	presenter model add: child asChildOf: root.
 	presenter view expandAll: root.
 	self paintTree.
-	tvItem := self getItemText: root.
 	text := root displayString.
 	self assert: (self getItemText: root) equals: text.
 	root value: 3.
@@ -80,8 +79,7 @@ testCollapseTwoLevels
 	self paintTree
 		deny: (presenter isExpanded: '1');
 		deny: (presenter isExpanded: '1.1');
-		yourself.
-!
+		yourself!
 
 testRefreshTreeDynamic
 	self refreshTree: #dynamic!
@@ -97,10 +95,10 @@ testRefreshTreeStatic
 	self refreshTree: #static!
 
 testSelectionSetter
-	| object1 object2 |
+	| object1 |
 	object1 := '1'.
 	presenter model: (TreeModel withRoots: {object1} searchPolicy: SearchPolicy equality).
-	self assert: (object2 := presenter selection: object1) identicalTo: object1!
+	self assert: (presenter selection: object1) identicalTo: object1!
 
 testSelectionsPreservedOnRecreate
 	| root child |
@@ -127,17 +125,17 @@ testSetTextBlockDoesNotAffectSelection
 			presenter view updateMode: each.
 			super testSetTextBlockDoesNotAffectSelection.
 			presenter view model clear]! !
-!TreeViewTest categoriesFor: #classToTest!helpers!private! !
-!TreeViewTest categoriesFor: #getItemText:!helpers!private! !
-!TreeViewTest categoriesFor: #paintTree!helpers!private! !
-!TreeViewTest categoriesFor: #refreshTree:!helpers!private! !
-!TreeViewTest categoriesFor: #testCollapseOneLevel!public!unit tests! !
-!TreeViewTest categoriesFor: #testCollapseTwoLevels!public!unit tests! !
-!TreeViewTest categoriesFor: #testRefreshTreeDynamic!public!unit tests! !
-!TreeViewTest categoriesFor: #testRefreshTreeLazy!public!unit tests! !
-!TreeViewTest categoriesFor: #testRefreshTreeStatic!public!unit tests! !
-!TreeViewTest categoriesFor: #testSelectionSetter!public!unit tests! !
-!TreeViewTest categoriesFor: #testSelectionsPreservedOnRecreate!public!unit tests! !
-!TreeViewTest categoriesFor: #testSetImageBlockDoesNotAffectSelection!public!unit tests! !
-!TreeViewTest categoriesFor: #testSetTextBlockDoesNotAffectSelection!public!unit tests! !
+!UI.Tests.TreeViewTest categoriesFor: #classToTest!helpers!private! !
+!UI.Tests.TreeViewTest categoriesFor: #getItemText:!helpers!private! !
+!UI.Tests.TreeViewTest categoriesFor: #paintTree!helpers!private! !
+!UI.Tests.TreeViewTest categoriesFor: #refreshTree:!helpers!private! !
+!UI.Tests.TreeViewTest categoriesFor: #testCollapseOneLevel!public!unit tests! !
+!UI.Tests.TreeViewTest categoriesFor: #testCollapseTwoLevels!public!unit tests! !
+!UI.Tests.TreeViewTest categoriesFor: #testRefreshTreeDynamic!public!unit tests! !
+!UI.Tests.TreeViewTest categoriesFor: #testRefreshTreeLazy!public!unit tests! !
+!UI.Tests.TreeViewTest categoriesFor: #testRefreshTreeStatic!public!unit tests! !
+!UI.Tests.TreeViewTest categoriesFor: #testSelectionSetter!public!unit tests! !
+!UI.Tests.TreeViewTest categoriesFor: #testSelectionsPreservedOnRecreate!public!unit tests! !
+!UI.Tests.TreeViewTest categoriesFor: #testSetImageBlockDoesNotAffectSelection!public!unit tests! !
+!UI.Tests.TreeViewTest categoriesFor: #testSetTextBlockDoesNotAffectSelection!public!unit tests! !
 

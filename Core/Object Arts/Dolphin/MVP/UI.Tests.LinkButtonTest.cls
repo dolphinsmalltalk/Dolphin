@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-PresenterTest subclass: #LinkButtonTest
+UI.Tests.PresenterTest subclass: #'UI.Tests.LinkButtonTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-LinkButtonTest guid: (GUID fromString: '{2af000e8-54bd-40b6-8dc6-d0014babc42c}')!
-LinkButtonTest comment: ''!
-!LinkButtonTest categoriesForClass!Unclassified! !
-!LinkButtonTest methodsFor!
+UI.Tests.LinkButtonTest guid: (Core.GUID fromString: '{2af000e8-54bd-40b6-8dc6-d0014babc42c}')!
+UI.Tests.LinkButtonTest comment: ''!
+!UI.Tests.LinkButtonTest categoriesForClass!Unclassified! !
+!UI.Tests.LinkButtonTest methodsFor!
 
 classToTest
 	^LinkButton!
@@ -52,8 +52,8 @@ testQueryCommandEnablement
 		invalidateUserInterface;
 		validateUserInterface.
 	self assert: presenter isEnabled! !
-!LinkButtonTest categoriesFor: #classToTest!helpers!private! !
-!LinkButtonTest categoriesFor: #testClickLinkFiresCommand!public!unit tests! !
-!LinkButtonTest categoriesFor: #testGetSetText!public!unit tests! !
-!LinkButtonTest categoriesFor: #testQueryCommandEnablement!public!unit tests! !
+!UI.Tests.LinkButtonTest categoriesFor: #classToTest!helpers!private! !
+!UI.Tests.LinkButtonTest categoriesFor: #testClickLinkFiresCommand!public!unit tests! !
+!UI.Tests.LinkButtonTest categoriesFor: #testGetSetText!public!unit tests! !
+!UI.Tests.LinkButtonTest categoriesFor: #testQueryCommandEnablement!public!unit tests! !
 

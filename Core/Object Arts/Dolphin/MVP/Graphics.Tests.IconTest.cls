@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-DolphinTest subclass: #IconTest
+Core.Tests.DolphinTest subclass: #'Graphics.Tests.IconTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-IconTest guid: (GUID fromString: '{96d9e7d9-8086-4706-b958-791a85a4e86c}')!
-IconTest comment: ''!
-!IconTest categoriesForClass!Unclassified! !
-!IconTest methodsFor!
+Graphics.Tests.IconTest guid: (Core.GUID fromString: '{96d9e7d9-8086-4706-b958-791a85a4e86c}')!
+Graphics.Tests.IconTest comment: ''!
+!Graphics.Tests.IconTest categoriesForClass!Unclassified! !
+!Graphics.Tests.IconTest methodsFor!
 
 testImageIndexDoesntRealize
 	"A test for #2270. Ensure that #imageIndex won't realize an icon that has previously been added to an ImageManager"
@@ -20,5 +20,5 @@ testImageIndexDoesntRealize
 	self assertIsNil: icon basicHandle.
 	icon imageIndex.
 	self assertIsNil: icon basicHandle! !
-!IconTest categoriesFor: #testImageIndexDoesntRealize!public! !
+!Graphics.Tests.IconTest categoriesFor: #testImageIndexDoesntRealize!public! !
 

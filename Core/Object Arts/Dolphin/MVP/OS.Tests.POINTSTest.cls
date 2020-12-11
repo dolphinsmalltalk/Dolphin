@@ -1,16 +1,17 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ExternalPointTest subclass: #POINTSTest
+External.Tests.POINTTest subclass: #'OS.Tests.POINTSTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-POINTSTest guid: (GUID fromString: '{e0771f6e-c3db-4a2b-9c85-bfebc2b2913b}')!
-POINTSTest comment: ''!
-!POINTSTest categoriesForClass!Unclassified! !
-!POINTSTest methodsFor!
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+OS.Tests.POINTSTest guid: (Core.GUID fromString: '{e0771f6e-c3db-4a2b-9c85-bfebc2b2913b}')!
+OS.Tests.POINTSTest comment: ''!
+!OS.Tests.POINTSTest categoriesForClass!Unclassified! !
+!OS.Tests.POINTSTest methodsFor!
 
 subjectClass
 	^POINTS! !
-!POINTSTest categoriesFor: #subjectClass!constants!private! !
+!OS.Tests.POINTSTest categoriesFor: #subjectClass!constants!private! !
 

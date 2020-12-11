@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-DolphinTest subclass: #CanvasTest
+Core.Tests.DolphinTest subclass: #'Graphics.Tests.CanvasTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-CanvasTest guid: (GUID fromString: '{f582d7b1-304e-45af-a9fd-315ee37dd609}')!
-CanvasTest comment: ''!
-!CanvasTest categoriesForClass!Unclassified! !
-!CanvasTest methodsFor!
+Graphics.Tests.CanvasTest guid: (Core.GUID fromString: '{f582d7b1-304e-45af-a9fd-315ee37dd609}')!
+Graphics.Tests.CanvasTest comment: ''!
+!Graphics.Tests.CanvasTest categoriesForClass!Unclassified! !
+!Graphics.Tests.CanvasTest methodsFor!
 
 testFont
 	"#1390"
@@ -55,6 +55,6 @@ testOutlineTextMetrics
 			self assert: otm fullName equals: 'Microsoft Comic Sans'].
 	self assert: otm faceName equals: font name.
 	self assert: otm familyName equals: font name! !
-!CanvasTest categoriesFor: #testFont!public!unit tests! !
-!CanvasTest categoriesFor: #testOutlineTextMetrics!public!unit tests! !
+!Graphics.Tests.CanvasTest categoriesFor: #testFont!public!unit tests! !
+!Graphics.Tests.CanvasTest categoriesFor: #testOutlineTextMetrics!public!unit tests! !
 

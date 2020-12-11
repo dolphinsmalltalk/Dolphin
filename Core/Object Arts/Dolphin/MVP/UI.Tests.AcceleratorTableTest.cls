@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-AbstractKeyboardTest subclass: #AcceleratorTableTest
+UI.Tests.AbstractKeyboardTest subclass: #'UI.Tests.AcceleratorTableTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-AcceleratorTableTest guid: (GUID fromString: '{ffc00c13-8da5-4b75-b82d-f96bba254efe}')!
-AcceleratorTableTest comment: ''!
-!AcceleratorTableTest categoriesForClass!Unclassified! !
-!AcceleratorTableTest methodsFor!
+UI.Tests.AcceleratorTableTest guid: (Core.GUID fromString: '{ffc00c13-8da5-4b75-b82d-f96bba254efe}')!
+UI.Tests.AcceleratorTableTest comment: ''!
+!UI.Tests.AcceleratorTableTest categoriesForClass!Unclassified! !
+!UI.Tests.AcceleratorTableTest methodsFor!
 
 numMultCode
 	^(FVIRTKEY | FALT) << 9 | VK_MULTIPLY!
@@ -54,8 +54,8 @@ testKeycodeFromStringAlphaNumerics
 	"for alphanumerics, the keycode corresponds with the ascii code point"
 
 	"Use the US keyboard layout so that this test at least will run on the CI build"
-	self skipUnless: [self setCurrentKeyboardLayout: '00000409'].
 
+	self skipUnless: [self setCurrentKeyboardLayout: '00000409'].
 	($A codePoint to: $Z codePoint) , ($0 codePoint to: $9 codePoint) do: 
 			[:each |
 			| code keyString |
@@ -68,8 +68,7 @@ testKeycodeFromStringAlphaNumerics
 			self assert: code | (FSHIFT << 9) equals: (AcceleratorTable keyCodeFromString: 'Shift+' , keyString).
 			self assert: code | (FALT << 9) equals: (AcceleratorTable keyCodeFromString: 'Alt+' , keyString).
 			self assert: code | ((FSHIFT | FCONTROL) << 9)
-				equals: (AcceleratorTable keyCodeFromString: 'cTrl+sHift+' , keyString)].
-!
+				equals: (AcceleratorTable keyCodeFromString: 'cTrl+sHift+' , keyString)]!
 
 testRoundTrippingInvariantKeyNames
 	| invariant |
@@ -86,9 +85,9 @@ testRoundTrippingKeyNames
 	localised := AcceleratorTable keyStringFromCode: self numMultCode.
 	self assert: localised equals: 'Alt+Num *'.
 	self assert: (AcceleratorTable keyCodeFromString: localised) equals: self numMultCode! !
-!AcceleratorTableTest categoriesFor: #numMultCode!constants!private! !
-!AcceleratorTableTest categoriesFor: #testKeycodeFromString!public!unit tests! !
-!AcceleratorTableTest categoriesFor: #testKeycodeFromStringAlphaNumerics!public!unit tests! !
-!AcceleratorTableTest categoriesFor: #testRoundTrippingInvariantKeyNames!public!unit tests! !
-!AcceleratorTableTest categoriesFor: #testRoundTrippingKeyNames!public!unit tests! !
+!UI.Tests.AcceleratorTableTest categoriesFor: #numMultCode!constants!private! !
+!UI.Tests.AcceleratorTableTest categoriesFor: #testKeycodeFromString!public!unit tests! !
+!UI.Tests.AcceleratorTableTest categoriesFor: #testKeycodeFromStringAlphaNumerics!public!unit tests! !
+!UI.Tests.AcceleratorTableTest categoriesFor: #testRoundTrippingInvariantKeyNames!public!unit tests! !
+!UI.Tests.AcceleratorTableTest categoriesFor: #testRoundTrippingKeyNames!public!unit tests! !
 

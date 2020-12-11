@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-DolphinTest subclass: #FolderTest
+Core.Tests.DolphinTest subclass: #'UI.Tests.FolderTest'
 	instanceVariableNames: 'c windows system root oa'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-FolderTest guid: (GUID fromString: '{8b810291-5941-433e-a94c-b16bc3505368}')!
-FolderTest comment: ''!
-!FolderTest categoriesForClass!Unclassified! !
-!FolderTest methodsFor!
+UI.Tests.FolderTest guid: (Core.GUID fromString: '{8b810291-5941-433e-a94c-b16bc3505368}')!
+UI.Tests.FolderTest comment: ''!
+!UI.Tests.FolderTest categoriesForClass!Unclassified! !
+!UI.Tests.FolderTest methodsFor!
 
 folderClass
 	^Folder!
@@ -49,10 +49,10 @@ testParent
 	empty := Folder pathname: ''.
 	self assert: subject equals: empty.
 	self assertIsNil: empty parent! !
-!FolderTest categoriesFor: #folderClass!constants!private! !
-!FolderTest categoriesFor: #rootFolder!public!unit tests! !
-!FolderTest categoriesFor: #setUp!public!Running! !
-!FolderTest categoriesFor: #testFolderName!public!unit tests! !
-!FolderTest categoriesFor: #testName!public!unit tests! !
-!FolderTest categoriesFor: #testParent!public! !
+!UI.Tests.FolderTest categoriesFor: #folderClass!constants!private! !
+!UI.Tests.FolderTest categoriesFor: #rootFolder!public!unit tests! !
+!UI.Tests.FolderTest categoriesFor: #setUp!public!Running! !
+!UI.Tests.FolderTest categoriesFor: #testFolderName!public!unit tests! !
+!UI.Tests.FolderTest categoriesFor: #testName!public!unit tests! !
+!UI.Tests.FolderTest categoriesFor: #testParent!public!unit tests! !
 

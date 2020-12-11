@@ -1,15 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-PresenterTest subclass: #ImageViewAbstractTest
+UI.Tests.PresenterTest subclass: #'UI.Tests.ImageViewAbstractTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-ImageViewAbstractTest guid: (GUID fromString: '{ed83beab-fa00-4772-a8d4-fcf6e16c948a}')!
-ImageViewAbstractTest isAbstract: true!
-ImageViewAbstractTest comment: ''!
-!ImageViewAbstractTest categoriesForClass!Unclassified! !
-!ImageViewAbstractTest methodsFor!
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+UI.Tests.ImageViewAbstractTest guid: (Core.GUID fromString: '{ed83beab-fa00-4772-a8d4-fcf6e16c948a}')!
+UI.Tests.ImageViewAbstractTest isNonInstantiable: true!
+UI.Tests.ImageViewAbstractTest comment: ''!
+!UI.Tests.ImageViewAbstractTest categoriesForClass!Unclassified! !
+!UI.Tests.ImageViewAbstractTest methodsFor!
 
 image
 	^self subclassResponsibility!
@@ -50,7 +51,7 @@ testInvalidateOnResize
 				lpRect: rect
 				bErase: false).
 	self assert: rect extent equals: extent * 2 - (50 @ 100)! !
-!ImageViewAbstractTest categoriesFor: #image!private!Running! !
-!ImageViewAbstractTest categoriesFor: #setUp!private!Running! !
-!ImageViewAbstractTest categoriesFor: #testInvalidateOnResize!public! !
+!UI.Tests.ImageViewAbstractTest categoriesFor: #image!private!Running! !
+!UI.Tests.ImageViewAbstractTest categoriesFor: #setUp!private!Running! !
+!UI.Tests.ImageViewAbstractTest categoriesFor: #testInvalidateOnResize!public! !
 

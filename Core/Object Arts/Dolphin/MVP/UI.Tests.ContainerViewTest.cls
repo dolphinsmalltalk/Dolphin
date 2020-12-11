@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-AbstractContainerViewTest subclass: #ContainerViewTest
+UI.Tests.AbstractContainerViewTest subclass: #'UI.Tests.ContainerViewTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'Win32Constants'
+	imports: #(#{OS.Win32Constants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ContainerViewTest guid: (GUID fromString: '{4e892cf1-595a-44ad-9a6d-0c319b32d174}')!
-ContainerViewTest comment: ''!
-!ContainerViewTest categoriesForClass!Unclassified! !
-!ContainerViewTest methodsFor!
+UI.Tests.ContainerViewTest guid: (Core.GUID fromString: '{4e892cf1-595a-44ad-9a6d-0c319b32d174}')!
+UI.Tests.ContainerViewTest comment: ''!
+!UI.Tests.ContainerViewTest categoriesForClass!Unclassified! !
+!UI.Tests.ContainerViewTest methodsFor!
 
 containerClass
 	^ContainerView!
@@ -40,6 +40,6 @@ test1PixBorderPrint
 		checkRectangle: ((self borderRectangleOf: containerView) insetBy: 1 asPoint)
 		inBitmap: printBitmap
 		color: self backgroundColor! !
-!ContainerViewTest categoriesFor: #containerClass!private! !
-!ContainerViewTest categoriesFor: #test1PixBorderPrint!public! !
+!UI.Tests.ContainerViewTest categoriesFor: #containerClass!private! !
+!UI.Tests.ContainerViewTest categoriesFor: #test1PixBorderPrint!public! !
 

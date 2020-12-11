@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-PresenterTest subclass: #SliderTest
+UI.Tests.PresenterTest subclass: #'UI.Tests.SliderTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-SliderTest guid: (GUID fromString: '{7befb3d7-8dc5-4dbb-92c2-7edaab76f305}')!
-SliderTest comment: ''!
-!SliderTest categoriesForClass!Unclassified! !
-!SliderTest methodsFor!
+UI.Tests.SliderTest guid: (Core.GUID fromString: '{7befb3d7-8dc5-4dbb-92c2-7edaab76f305}')!
+UI.Tests.SliderTest comment: ''!
+!UI.Tests.SliderTest categoriesForClass!Unclassified! !
+!UI.Tests.SliderTest methodsFor!
 
 classToTest
 	^Slider!
@@ -29,6 +29,6 @@ testRange
 							range := start to: stop by: step.
 							presenter range: range.
 							self assert: presenter range equals: range]]]! !
-!SliderTest categoriesFor: #classToTest!helpers!private! !
-!SliderTest categoriesFor: #testRange!public!unit tests! !
+!UI.Tests.SliderTest categoriesFor: #classToTest!helpers!private! !
+!UI.Tests.SliderTest categoriesFor: #testRange!public!unit tests! !
 

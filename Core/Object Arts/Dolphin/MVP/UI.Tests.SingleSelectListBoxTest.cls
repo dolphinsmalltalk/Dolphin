@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ListBoxTest subclass: #SingleSelectListBoxTest
+UI.Tests.ListBoxTest subclass: #'UI.Tests.SingleSelectListBoxTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-SingleSelectListBoxTest guid: (GUID fromString: '{8e5a59a5-f500-4d07-9ea2-b1019c9302b2}')!
-SingleSelectListBoxTest comment: ''!
-!SingleSelectListBoxTest categoriesForClass!Unclassified! !
-!SingleSelectListBoxTest methodsFor!
+UI.Tests.SingleSelectListBoxTest guid: (Core.GUID fromString: '{8e5a59a5-f500-4d07-9ea2-b1019c9302b2}')!
+UI.Tests.SingleSelectListBoxTest comment: ''!
+!UI.Tests.SingleSelectListBoxTest categoriesForClass!Unclassified! !
+!UI.Tests.SingleSelectListBoxTest methodsFor!
 
 testSelectionModeChange
 	| objects |
@@ -47,11 +47,11 @@ testSelectionModeChange
 		against: presenter.
 	"#115: Changing list box selection mode fails if there are selections"
 	self assert: presenter view selectionsByIndex equals: #(2)! !
-!SingleSelectListBoxTest categoriesFor: #testSelectionModeChange!public!unit tests! !
+!UI.Tests.SingleSelectListBoxTest categoriesFor: #testSelectionModeChange!public!unit tests! !
 
-!SingleSelectListBoxTest class methodsFor!
+!UI.Tests.SingleSelectListBoxTest class methodsFor!
 
 classToTest
 	^ListPresenter! !
-!SingleSelectListBoxTest class categoriesFor: #classToTest!helpers!private! !
+!UI.Tests.SingleSelectListBoxTest class categoriesFor: #classToTest!helpers!private! !
 

@@ -1,16 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-SelectableItemsTest subclass: #SelectableTreeItemsTest
+UI.Tests.SelectableItemsTest subclass: #'UI.Tests.SelectableTreeItemsTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-SelectableTreeItemsTest guid: (GUID fromString: '{cccec658-6b6a-4d9f-a9ac-2701da23a46e}')!
-SelectableTreeItemsTest isAbstract: true!
-SelectableTreeItemsTest comment: ''!
-!SelectableTreeItemsTest categoriesForClass!Unclassified! !
-!SelectableTreeItemsTest methodsFor!
+UI.Tests.SelectableTreeItemsTest guid: (Core.GUID fromString: '{cccec658-6b6a-4d9f-a9ac-2701da23a46e}')!
+UI.Tests.SelectableTreeItemsTest isNonInstantiable: true!
+UI.Tests.SelectableTreeItemsTest comment: ''!
+!UI.Tests.SelectableTreeItemsTest categoriesForClass!Unclassified! !
+!UI.Tests.SelectableTreeItemsTest methodsFor!
 
 addAllObjects: objects 
 	objects do: [:each | self treeModel add: each asChildOf: each superclass].
@@ -27,7 +27,7 @@ addRoot: anObject
 	self treeModel addRoot: anObject!
 
 objectsToTest
-	^(OrderedCollection new)
+	^OrderedCollection new
 		add: Object;
 		add: View;
 		add: Behavior;
@@ -225,15 +225,15 @@ testSetTextBlockDoesNotAffectSelection
 
 treeModel
 	^presenter model! !
-!SelectableTreeItemsTest categoriesFor: #addAllObjects:!private!unit tests! !
-!SelectableTreeItemsTest categoriesFor: #addAllTestObjects!private!unit tests! !
-!SelectableTreeItemsTest categoriesFor: #addRoot:!public!unit tests! !
-!SelectableTreeItemsTest categoriesFor: #objectsToTest!helpers!private! !
-!SelectableTreeItemsTest categoriesFor: #testAddRemove!public!unit tests! !
-!SelectableTreeItemsTest categoriesFor: #testHierarchyMove!public!unit tests! !
-!SelectableTreeItemsTest categoriesFor: #testSelection!public!unit tests! !
-!SelectableTreeItemsTest categoriesFor: #testSelectionChangeTriggeredOnRemove!public!unit tests! !
-!SelectableTreeItemsTest categoriesFor: #testSetImageBlockDoesNotAffectSelection!public!unit tests! !
-!SelectableTreeItemsTest categoriesFor: #testSetTextBlockDoesNotAffectSelection!public!unit tests! !
-!SelectableTreeItemsTest categoriesFor: #treeModel!public!unit tests! !
+!UI.Tests.SelectableTreeItemsTest categoriesFor: #addAllObjects:!private!unit tests! !
+!UI.Tests.SelectableTreeItemsTest categoriesFor: #addAllTestObjects!private!unit tests! !
+!UI.Tests.SelectableTreeItemsTest categoriesFor: #addRoot:!public!unit tests! !
+!UI.Tests.SelectableTreeItemsTest categoriesFor: #objectsToTest!helpers!private! !
+!UI.Tests.SelectableTreeItemsTest categoriesFor: #testAddRemove!public!unit tests! !
+!UI.Tests.SelectableTreeItemsTest categoriesFor: #testHierarchyMove!public!unit tests! !
+!UI.Tests.SelectableTreeItemsTest categoriesFor: #testSelection!public!unit tests! !
+!UI.Tests.SelectableTreeItemsTest categoriesFor: #testSelectionChangeTriggeredOnRemove!public!unit tests! !
+!UI.Tests.SelectableTreeItemsTest categoriesFor: #testSetImageBlockDoesNotAffectSelection!public!unit tests! !
+!UI.Tests.SelectableTreeItemsTest categoriesFor: #testSetTextBlockDoesNotAffectSelection!public!unit tests! !
+!UI.Tests.SelectableTreeItemsTest categoriesFor: #treeModel!public!unit tests! !
 

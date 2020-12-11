@@ -1,16 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ListControlTest subclass: #ListBoxTest
+UI.Tests.ListControlTest subclass: #'UI.Tests.ListBoxTest'
 	instanceVariableNames: 'lbnSelChange'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ListBoxTest guid: (GUID fromString: '{0cceab03-640d-4bd6-8e8c-1da96bf288d2}')!
-ListBoxTest isAbstract: true!
-ListBoxTest comment: ''!
-!ListBoxTest categoriesForClass!Unclassified! !
-!ListBoxTest methodsFor!
+UI.Tests.ListBoxTest guid: (Core.GUID fromString: '{0cceab03-640d-4bd6-8e8c-1da96bf288d2}')!
+UI.Tests.ListBoxTest isNonInstantiable: true!
+UI.Tests.ListBoxTest comment: ''!
+!UI.Tests.ListBoxTest categoriesForClass!Unclassified! !
+!UI.Tests.ListBoxTest methodsFor!
 
 classToTest
 	^ListBox!
@@ -23,14 +23,12 @@ setupClickIntercept
 	"Convert the ListBox to an instance of an anonymous subclass with an override of lbnSelChange handler that allows us to intercept the notifications."
 	anonClass := ListBox newAnonymousSubclass.
 	presenter view becomeA: anonClass.
-	method := anonClass
-				compile: 'lbnSelChange
+	method := anonClass compile: 'lbnSelChange
 		#placeholder value.
 		^super lbnSelChange'.
 	self assert: (method literalAt: 1) equals: #placeholder.
 	lbnSelChange := [clicks addLast: #()].
-	method whileMutableDo: 
-			[method literalAt: 1 put: [lbnSelChange value]]!
+	method whileMutableDo: [method literalAt: 1 put: [lbnSelChange value]]!
 
 testNewSelectionsClickOutsideListWithModifiers
 	| event selection expected |
@@ -50,9 +48,9 @@ testNewSelectionsClickOutsideListWithModifiers
 
 verifyClicks: anArray
 	self assert: clicks size equals: anArray size! !
-!ListBoxTest categoriesFor: #classToTest!helpers!private! !
-!ListBoxTest categoriesFor: #newSelectionAfterLeftClickOutsideList:!helpers!private! !
-!ListBoxTest categoriesFor: #setupClickIntercept!private! !
-!ListBoxTest categoriesFor: #testNewSelectionsClickOutsideListWithModifiers!public!unit tests! !
-!ListBoxTest categoriesFor: #verifyClicks:!helpers!private! !
+!UI.Tests.ListBoxTest categoriesFor: #classToTest!helpers!private! !
+!UI.Tests.ListBoxTest categoriesFor: #newSelectionAfterLeftClickOutsideList:!helpers!private! !
+!UI.Tests.ListBoxTest categoriesFor: #setupClickIntercept!private! !
+!UI.Tests.ListBoxTest categoriesFor: #testNewSelectionsClickOutsideListWithModifiers!public!unit tests! !
+!UI.Tests.ListBoxTest categoriesFor: #verifyClicks:!helpers!private! !
 

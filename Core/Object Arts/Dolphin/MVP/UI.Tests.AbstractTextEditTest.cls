@@ -1,15 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-PresenterTest subclass: #AbstractTextEditTest
+UI.Tests.PresenterTest subclass: #'UI.Tests.AbstractTextEditTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-AbstractTextEditTest guid: (GUID fromString: '{823252e0-79ac-489c-ac11-ca4151d3e1c3}')!
-AbstractTextEditTest isAbstract: true!
-AbstractTextEditTest comment: ''!
-!AbstractTextEditTest categoriesForClass!Unclassified! !
-!AbstractTextEditTest methodsFor!
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+UI.Tests.AbstractTextEditTest guid: (Core.GUID fromString: '{3f7e7558-eb69-4b84-a91f-de5dba0c2d10}')!
+UI.Tests.AbstractTextEditTest isNonInstantiable: true!
+UI.Tests.AbstractTextEditTest comment: ''!
+!UI.Tests.AbstractTextEditTest categoriesForClass!Unclassified! !
+!UI.Tests.AbstractTextEditTest methodsFor!
 
 margins
 	^self subclassResponsibility!
@@ -47,8 +48,8 @@ testPositionOfChar
 
 text
 	^self subclassResponsibility! !
-!AbstractTextEditTest categoriesFor: #margins!private!unit tests! !
-!AbstractTextEditTest categoriesFor: #nonProportionalFont!constants!private! !
-!AbstractTextEditTest categoriesFor: #testPositionOfChar!public!unit tests! !
-!AbstractTextEditTest categoriesFor: #text!constants!private! !
+!UI.Tests.AbstractTextEditTest categoriesFor: #margins!constants!private! !
+!UI.Tests.AbstractTextEditTest categoriesFor: #nonProportionalFont!constants!private! !
+!UI.Tests.AbstractTextEditTest categoriesFor: #testPositionOfChar!public!unit tests! !
+!UI.Tests.AbstractTextEditTest categoriesFor: #text!constants!private! !
 

@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-DolphinTest subclass: #RadioButtonSetPresenterTest
+Core.Tests.DolphinTest subclass: #'UI.Tests.RadioButtonSetPresenterTest'
 	instanceVariableNames: 'radioSet'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-RadioButtonSetPresenterTest guid: (GUID fromString: '{0b5f0660-ff27-42a8-a388-e35b1b76b3e4}')!
-RadioButtonSetPresenterTest comment: ''!
-!RadioButtonSetPresenterTest categoriesForClass!Unclassified! !
-!RadioButtonSetPresenterTest methodsFor!
+UI.Tests.RadioButtonSetPresenterTest guid: (Core.GUID fromString: '{0b5f0660-ff27-42a8-a388-e35b1b76b3e4}')!
+UI.Tests.RadioButtonSetPresenterTest comment: ''!
+!UI.Tests.RadioButtonSetPresenterTest categoriesForClass!Unclassified! !
+!UI.Tests.RadioButtonSetPresenterTest methodsFor!
 
 selectedButton
 	| selected |
@@ -77,12 +77,12 @@ testValueSelection
 	radioSet value: nil.
 	self assertIsNil: radioSet value.
 	self assertIsNil: self selectedButton! !
-!RadioButtonSetPresenterTest categoriesFor: #selectedButton!private!unit tests! !
-!RadioButtonSetPresenterTest categoriesFor: #selectedButtons!private!unit tests! !
-!RadioButtonSetPresenterTest categoriesFor: #setUp!public!running! !
-!RadioButtonSetPresenterTest categoriesFor: #tearDown!public!running! !
-!RadioButtonSetPresenterTest categoriesFor: #testDisableEnableAll!public!unit tests! !
-!RadioButtonSetPresenterTest categoriesFor: #testEvents!public!unit tests! !
-!RadioButtonSetPresenterTest categoriesFor: #testInitialValue!public!unit tests! !
-!RadioButtonSetPresenterTest categoriesFor: #testValueSelection!public!unit tests! !
+!UI.Tests.RadioButtonSetPresenterTest categoriesFor: #selectedButton!private!unit tests! !
+!UI.Tests.RadioButtonSetPresenterTest categoriesFor: #selectedButtons!private!unit tests! !
+!UI.Tests.RadioButtonSetPresenterTest categoriesFor: #setUp!public!running! !
+!UI.Tests.RadioButtonSetPresenterTest categoriesFor: #tearDown!public!running! !
+!UI.Tests.RadioButtonSetPresenterTest categoriesFor: #testDisableEnableAll!public!unit tests! !
+!UI.Tests.RadioButtonSetPresenterTest categoriesFor: #testEvents!public!unit tests! !
+!UI.Tests.RadioButtonSetPresenterTest categoriesFor: #testInitialValue!public!unit tests! !
+!UI.Tests.RadioButtonSetPresenterTest categoriesFor: #testValueSelection!public!unit tests! !
 

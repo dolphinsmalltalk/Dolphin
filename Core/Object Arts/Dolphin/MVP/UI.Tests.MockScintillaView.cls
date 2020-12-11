@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Object subclass: #MockScintillaView
+Core.Object subclass: #'UI.Tests.MockScintillaView'
 	instanceVariableNames: 'lastStyled tokens text currentTextStyles styleIdMap'
 	classVariableNames: ''
-	poolDictionaries: 'ScintillaConstants'
+	imports: #(#{Smalltalk.ScintillaConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-MockScintillaView guid: (GUID fromString: '{50616a84-12e3-4960-b005-82a37278383b}')!
-MockScintillaView comment: 'To set up:
+UI.Tests.MockScintillaView guid: (Core.GUID fromString: '{50616a84-12e3-4960-b005-82a37278383b}')!
+UI.Tests.MockScintillaView comment: 'To set up:
 
 	mock := MockScintillaView new.
 	mock textStyles: SmalltalkWorkspace defaultTextStyles
@@ -23,8 +23,8 @@ Then to style:
 		in: mock.
 	"Now can access the ''tokens''"
 	mock tokens'!
-!MockScintillaView categoriesForClass!Kernel-Objects! !
-!MockScintillaView methodsFor!
+!UI.Tests.MockScintillaView categoriesForClass!Kernel-Objects! !
+!UI.Tests.MockScintillaView methodsFor!
 
 applyStyle: aSymbol toNext: anInteger 
 	self styleNext: anInteger mask: ((self styleNamed: aSymbol) ifNil: [0] ifNotNil: [:style | style id])!
@@ -55,7 +55,7 @@ setCurrentTextStyles: aCollection
 			each basicId isNil ifTrue: [each basicId: availableStyles next].
 			newStylesByName at: each name put: each.
 			newStylesById at: each basicId put: each].
-	newStylesByName at: #normal ifAbsentPut: [ScintillaTextStyle normal].
+	newStylesByName at: #normal ifAbsentPut: [Smalltalk.ScintillaTextStyle normal].
 	currentTextStyles := newStylesByName.
 	styleIdMap := newStylesById!
 
@@ -87,7 +87,7 @@ styleNext: anInteger mask: anInteger2
 styleWithId: anInteger 
 	^styleIdMap at: anInteger
 		ifAbsent: 
-			[(ScintillaTextStyle new)
+			[(Smalltalk.ScintillaTextStyle new)
 				name: anInteger;
 				yourself]!
 
@@ -124,20 +124,20 @@ tokens
 					[lastStyle := style.
 					answer addLast: {each first. style. self plainTextRange: each first}]].
 	^answer! !
-!MockScintillaView categoriesFor: #applyStyle:toNext:!public!styling! !
-!MockScintillaView categoriesFor: #characterAt:!public!unit tests! !
-!MockScintillaView categoriesFor: #maxStyle!public!unit tests! !
-!MockScintillaView categoriesFor: #plainTextFrom:to:!public!unit tests! !
-!MockScintillaView categoriesFor: #plainTextRange:!accessing!public! !
-!MockScintillaView categoriesFor: #setCurrentTextStyles:!private!style definition! !
-!MockScintillaView categoriesFor: #setIndicator:from:length:!indicators!public! !
-!MockScintillaView categoriesFor: #startStylingFrom:!public!unit tests! !
-!MockScintillaView categoriesFor: #styleNamed:!accessing!public!styling! !
-!MockScintillaView categoriesFor: #styleNext:mask:!public!unit tests! !
-!MockScintillaView categoriesFor: #styleWithId:!accessing!public!style definition! !
-!MockScintillaView categoriesFor: #stylingPosition!accessing!public! !
-!MockScintillaView categoriesFor: #text:!public!unit tests! !
-!MockScintillaView categoriesFor: #textLength!public!unit tests! !
-!MockScintillaView categoriesFor: #textStyles:!public!unit tests! !
-!MockScintillaView categoriesFor: #tokens!public!unit tests! !
+!UI.Tests.MockScintillaView categoriesFor: #applyStyle:toNext:!public!styling! !
+!UI.Tests.MockScintillaView categoriesFor: #characterAt:!public!unit tests! !
+!UI.Tests.MockScintillaView categoriesFor: #maxStyle!public!unit tests! !
+!UI.Tests.MockScintillaView categoriesFor: #plainTextFrom:to:!public!unit tests! !
+!UI.Tests.MockScintillaView categoriesFor: #plainTextRange:!accessing!public! !
+!UI.Tests.MockScintillaView categoriesFor: #setCurrentTextStyles:!private!style definition! !
+!UI.Tests.MockScintillaView categoriesFor: #setIndicator:from:length:!indicators!public! !
+!UI.Tests.MockScintillaView categoriesFor: #startStylingFrom:!public!unit tests! !
+!UI.Tests.MockScintillaView categoriesFor: #styleNamed:!accessing!public!styling! !
+!UI.Tests.MockScintillaView categoriesFor: #styleNext:mask:!public!unit tests! !
+!UI.Tests.MockScintillaView categoriesFor: #styleWithId:!accessing!public!style definition! !
+!UI.Tests.MockScintillaView categoriesFor: #stylingPosition!accessing!public! !
+!UI.Tests.MockScintillaView categoriesFor: #text:!public!unit tests! !
+!UI.Tests.MockScintillaView categoriesFor: #textLength!public!unit tests! !
+!UI.Tests.MockScintillaView categoriesFor: #textStyles:!public!unit tests! !
+!UI.Tests.MockScintillaView categoriesFor: #tokens!public!unit tests! !
 

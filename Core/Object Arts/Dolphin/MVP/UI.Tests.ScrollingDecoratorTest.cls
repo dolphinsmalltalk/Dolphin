@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-PresenterTest subclass: #ScrollingDecoratorTest
+UI.Tests.PresenterTest subclass: #'UI.Tests.ScrollingDecoratorTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ScrollingDecoratorTest guid: (GUID fromString: '{67f9d5dd-3f9b-4f9f-9d72-207bdf40d661}')!
-ScrollingDecoratorTest comment: ''!
-!ScrollingDecoratorTest categoriesForClass!Unclassified! !
-!ScrollingDecoratorTest methodsFor!
+UI.Tests.ScrollingDecoratorTest guid: (Core.GUID fromString: '{67f9d5dd-3f9b-4f9f-9d72-207bdf40d661}')!
+UI.Tests.ScrollingDecoratorTest comment: ''!
+!UI.Tests.ScrollingDecoratorTest categoriesForClass!Unclassified! !
+!UI.Tests.ScrollingDecoratorTest methodsFor!
 
 classToTest
 	^ScrollingDecorator!
@@ -17,7 +17,7 @@ classToTest
 initializePresenter
 	super initializePresenter.
 	presenter backcolor: Color dialog.
-	presenter addSubView: ((ContainerView new)
+	presenter addSubView: (ContainerView new
 				backcolor: Color blue;
 				yourself).
 	presenter layoutManager shouldStretchToFit: false!
@@ -58,11 +58,11 @@ testSubViewResizeSmallerThanParent
 	presenter subViews first extent: 50 @ 50.
 	presenter layout.
 	self assert: presenter subViews first extent equals: 50 @ 50! !
-!ScrollingDecoratorTest categoriesFor: #classToTest!helpers!private! !
-!ScrollingDecoratorTest categoriesFor: #initializePresenter!public!Running! !
-!ScrollingDecoratorTest categoriesFor: #testMultipleSubViews!public!unit tests! !
-!ScrollingDecoratorTest categoriesFor: #testResizeLargeAndSmall!public!unit tests! !
-!ScrollingDecoratorTest categoriesFor: #testResizeToNothing!public!unit tests! !
-!ScrollingDecoratorTest categoriesFor: #testSubViewResizeLargerThanParent!public!unit tests! !
-!ScrollingDecoratorTest categoriesFor: #testSubViewResizeSmallerThanParent!public!unit tests! !
+!UI.Tests.ScrollingDecoratorTest categoriesFor: #classToTest!helpers!private! !
+!UI.Tests.ScrollingDecoratorTest categoriesFor: #initializePresenter!public!Running! !
+!UI.Tests.ScrollingDecoratorTest categoriesFor: #testMultipleSubViews!public!unit tests! !
+!UI.Tests.ScrollingDecoratorTest categoriesFor: #testResizeLargeAndSmall!public!unit tests! !
+!UI.Tests.ScrollingDecoratorTest categoriesFor: #testResizeToNothing!public!unit tests! !
+!UI.Tests.ScrollingDecoratorTest categoriesFor: #testSubViewResizeLargerThanParent!public!unit tests! !
+!UI.Tests.ScrollingDecoratorTest categoriesFor: #testSubViewResizeSmallerThanParent!public!unit tests! !
 

@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-DolphinTest subclass: #TypeConverterTest
+Core.Tests.DolphinTest subclass: #'UI.Tests.TypeConverterTest'
 	instanceVariableNames: 'edit'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-TypeConverterTest guid: (GUID fromString: '{a68a6616-456e-4a7f-85e0-50d168d1a828}')!
-TypeConverterTest comment: ''!
-!TypeConverterTest categoriesForClass!Unclassified! !
-!TypeConverterTest methodsFor!
+UI.Tests.TypeConverterTest guid: (Core.GUID fromString: '{a68a6616-456e-4a7f-85e0-50d168d1a828}')!
+UI.Tests.TypeConverterTest comment: ''!
+!UI.Tests.TypeConverterTest categoriesForClass!Unclassified! !
+!UI.Tests.TypeConverterTest methodsFor!
 
 setUp
 	edit := TextEdit show!
@@ -102,12 +102,12 @@ testLeftNullValue
 		updateModel.
 	self assertIsNil: edit model value.
 	self assert: edit text isEmpty	"#1257"! !
-!TypeConverterTest categoriesFor: #setUp!public!unit tests! !
-!TypeConverterTest categoriesFor: #tearDown!public!unit tests! !
-!TypeConverterTest categoriesFor: #testInvalidBooleanFormat!public!unit tests! !
-!TypeConverterTest categoriesFor: #testInvalidDateFormat!public!unit tests! !
-!TypeConverterTest categoriesFor: #testInvalidDurationFormat!public!unit tests! !
-!TypeConverterTest categoriesFor: #testInvalidNumberFormat!public!unit tests! !
-!TypeConverterTest categoriesFor: #testInvalidTimeFormat!public!unit tests! !
-!TypeConverterTest categoriesFor: #testLeftNullValue!public!unit tests! !
+!UI.Tests.TypeConverterTest categoriesFor: #setUp!public!unit tests! !
+!UI.Tests.TypeConverterTest categoriesFor: #tearDown!public!unit tests! !
+!UI.Tests.TypeConverterTest categoriesFor: #testInvalidBooleanFormat!public!unit tests! !
+!UI.Tests.TypeConverterTest categoriesFor: #testInvalidDateFormat!public!unit tests! !
+!UI.Tests.TypeConverterTest categoriesFor: #testInvalidDurationFormat!public!unit tests! !
+!UI.Tests.TypeConverterTest categoriesFor: #testInvalidNumberFormat!public!unit tests! !
+!UI.Tests.TypeConverterTest categoriesFor: #testInvalidTimeFormat!public!unit tests! !
+!UI.Tests.TypeConverterTest categoriesFor: #testLeftNullValue!public!unit tests! !
 

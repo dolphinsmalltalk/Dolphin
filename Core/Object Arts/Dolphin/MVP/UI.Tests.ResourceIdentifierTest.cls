@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-DolphinTest subclass: #ResourceIdentifierTest
+Core.Tests.DolphinTest subclass: #'UI.Tests.ResourceIdentifierTest'
 	instanceVariableNames: 'tempViewResource'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ResourceIdentifierTest guid: (GUID fromString: '{1e647bf5-1b62-4e30-af83-80b9bfbe65ad}')!
-ResourceIdentifierTest comment: ''!
-!ResourceIdentifierTest categoriesForClass!Unclassified! !
-!ResourceIdentifierTest methodsFor!
+UI.Tests.ResourceIdentifierTest guid: (Core.GUID fromString: '{1e647bf5-1b62-4e30-af83-80b9bfbe65ad}')!
+UI.Tests.ResourceIdentifierTest comment: ''!
+!UI.Tests.ResourceIdentifierTest categoriesForClass!Unclassified! !
+!UI.Tests.ResourceIdentifierTest methodsFor!
 
 createResourceNamed: aString for: aView on: aPresenterClass
 	| filer rid resource |
@@ -20,8 +20,7 @@ createResourceNamed: aString for: aView on: aPresenterClass
 	resource := filer stream contents.
 	rid := ResourceIdentifier class: aPresenterClass name: aString.
 	rid assign: resource.
-	^rid
-!
+	^rid!
 
 setUp
 	| shellView filer |
@@ -58,27 +57,31 @@ testDeserializeAll
 
 	ResourceIdentifier allResourceIdentifiers do: [:each | each hiddenObjects]!
 
-testReferenceViewRemoved
+testReferenceToNonExistentView
 	| childRid parentRid paretView anonPresenterClass anonMetaclass |
-
-	anonPresenterClass :=  AnonymousClassBuilder new createNewClass.
-	anonPresenterClass superclass: Presenter.
+	anonPresenterClass := Presenter newAnonymousSubclass.
 	anonMetaclass := anonPresenterClass class.
-	childRid := self createResourceNamed: 'Test view issue990' for: ContainerView new create on: anonPresenterClass.
-
+	childRid := self
+				createResourceNamed: 'Test view issue990'
+				for: ContainerView new create
+				on: anonPresenterClass.
 	paretView := ShellView new create.
 	paretView addSubView: (ReferenceView resourceIdentifier: childRid).
-	parentRid := self createResourceNamed: 'Parent Test view issue990' for: paretView on: anonPresenterClass.
-
+	parentRid := self
+				createResourceNamed: 'Parent Test view issue990'
+				for: paretView
+				on: anonPresenterClass.
 	anonMetaclass removeSelector: #resource_Test_view_issue990 ifAbsent: [].
 	self assert: (anonMetaclass respondsTo: #resource_Test_view_issue990) not.
-
-	self should: [childRid hiddenObjects] raise: Error matching: [:err | err description = 'Resource [a subclass of Presenter>>resource_Test_view_issue990] does not exist'].
-
+	self
+		should: [childRid hiddenObjects]
+		raise: Error
+		matching: 
+			[:err |
+			err description
+				= 'Resource [a subclass of UI.Presenter>>#resource_Test_view_issue990] does not exist'].
 	anonMetaclass removeSelector: #resource_Parent_Test_view_issue990 ifAbsent: [].
-
-	self assert: (anonMetaclass respondsTo: #resource_Parent_Test_view_issue990) not.
-	!
+	self assert: (anonMetaclass respondsTo: #resource_Parent_Test_view_issue990) not!
 
 testResourceSelector
 	| rid selector |
@@ -87,12 +90,22 @@ testResourceSelector
 	self assert: selector identicalTo: #resource_Default_view.
 	self assert: (rid class nameFromSelector: selector) equals: rid name.
 	rid := ResourceIdentifier class: self class name: '1Default:view'.
-	self assert: (rid class selectorFromName: rid name) identicalTo: #resource_1Defaultview! !
-!ResourceIdentifierTest categoriesFor: #createResourceNamed:for:on:!private!unit tests! !
-!ResourceIdentifierTest categoriesFor: #setUp!private!unit tests! !
-!ResourceIdentifierTest categoriesFor: #tempViewResource!private!unit tests! !
-!ResourceIdentifierTest categoriesFor: #testAssignResource!public!unit tests! !
-!ResourceIdentifierTest categoriesFor: #testDeserializeAll!public!unit tests! !
-!ResourceIdentifierTest categoriesFor: #testReferenceViewRemoved!public!unit tests! !
-!ResourceIdentifierTest categoriesFor: #testResourceSelector!public!unit tests! !
+	self assert: (rid class selectorFromName: rid name) identicalTo: #resource_1Defaultview!
+
+testStoreOn
+	| rid restored storeString |
+	rid := ResourceIdentifier class: self class name: 'Default view'.
+	storeString := rid storeString.
+	self assert: storeString
+		equals: '(UI.ResourceIdentifier class: ' , self class fullName , ' name: ''Default view'')'.
+	restored := Compiler evaluate: storeString.
+	self assert: restored equals: rid! !
+!UI.Tests.ResourceIdentifierTest categoriesFor: #createResourceNamed:for:on:!helpers!private! !
+!UI.Tests.ResourceIdentifierTest categoriesFor: #setUp!private!unit tests! !
+!UI.Tests.ResourceIdentifierTest categoriesFor: #tempViewResource!private!unit tests! !
+!UI.Tests.ResourceIdentifierTest categoriesFor: #testAssignResource!public!unit tests! !
+!UI.Tests.ResourceIdentifierTest categoriesFor: #testDeserializeAll!public!unit tests! !
+!UI.Tests.ResourceIdentifierTest categoriesFor: #testReferenceToNonExistentView!public!unit tests! !
+!UI.Tests.ResourceIdentifierTest categoriesFor: #testResourceSelector!public!unit tests! !
+!UI.Tests.ResourceIdentifierTest categoriesFor: #testStoreOn!public!unit tests! !
 

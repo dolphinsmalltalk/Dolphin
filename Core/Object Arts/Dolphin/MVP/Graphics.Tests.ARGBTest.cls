@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-DolphinTest subclass: #ARGBTest
+Core.Tests.DolphinTest subclass: #'Graphics.Tests.ARGBTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ARGBTest guid: (GUID fromString: '{b9d1b1c9-fb62-46e9-a7d5-6807f64e5314}')!
-ARGBTest comment: ''!
-!ARGBTest categoriesForClass!Unclassified! !
-!ARGBTest methodsFor!
+Graphics.Tests.ARGBTest guid: (Core.GUID fromString: '{b9d1b1c9-fb62-46e9-a7d5-6807f64e5314}')!
+Graphics.Tests.ARGBTest comment: ''!
+!Graphics.Tests.ARGBTest categoriesForClass!Unclassified! !
+!Graphics.Tests.ARGBTest methodsFor!
 
 assertComponents: anArray isCode: anInteger
 	"Private - Test the multiple constructors"
@@ -52,9 +52,21 @@ testConstructionValues
 
 testEquality
 	| model |
-	model := ARGB r: 255 g: 0 b: 0.
-	self assert: model equals: (ARGB r: 255 g: 0 b: 0).
-	self deny: model equals: (ARGB a: 1 r: 255 g: 0 b: 0).
+	model := ARGB
+				r: 255
+				g: 0
+				b: 0.
+	self assert: model
+		equals: (ARGB
+				r: 255
+				g: 0
+				b: 0).
+	self deny: model
+		equals: (ARGB
+				a: 1
+				r: 255
+				g: 0
+				b: 0).
 	model hash!
 
 testFromArgbCode
@@ -105,10 +117,10 @@ testStbRoundTrip
 	rehydrated := Object fromBinaryStoreBytes: bytes.
 	self assert: rehydrated class identicalTo: ARGB.
 	self assert: rehydrated equals: subject! !
-!ARGBTest categoriesFor: #assertComponents:isCode:!asserting!private! !
-!ARGBTest categoriesFor: #testConstructionValues!public!unit tests! !
-!ARGBTest categoriesFor: #testEquality!public!unit tests! !
-!ARGBTest categoriesFor: #testFromArgbCode!public!unit tests! !
-!ARGBTest categoriesFor: #testPrintString!public!unit tests! !
-!ARGBTest categoriesFor: #testStbRoundTrip!public!unit tests! !
+!Graphics.Tests.ARGBTest categoriesFor: #assertComponents:isCode:!asserting!private! !
+!Graphics.Tests.ARGBTest categoriesFor: #testConstructionValues!public!unit tests! !
+!Graphics.Tests.ARGBTest categoriesFor: #testEquality!public!unit tests! !
+!Graphics.Tests.ARGBTest categoriesFor: #testFromArgbCode!public!unit tests! !
+!Graphics.Tests.ARGBTest categoriesFor: #testPrintString!public!unit tests! !
+!Graphics.Tests.ARGBTest categoriesFor: #testStbRoundTrip!public!unit tests! !
 

@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-DolphinTest subclass: #MoenTreeViewTest
+Core.Tests.DolphinTest subclass: #'UI.Tests.MoenTreeViewTest'
 	instanceVariableNames: 'treeModel treeView nodeA nodeB nodeC nodeD nodeE nodeF shell scroller useShell'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-MoenTreeViewTest guid: (GUID fromString: '{547f1350-3d63-4e8c-9ea3-e13001609555}')!
-MoenTreeViewTest comment: 'SUnitBrowser openOnTestCase: self'!
-!MoenTreeViewTest categoriesForClass!Unclassified! !
-!MoenTreeViewTest methodsFor!
+UI.Tests.MoenTreeViewTest guid: (Core.GUID fromString: '{547f1350-3d63-4e8c-9ea3-e13001609555}')!
+UI.Tests.MoenTreeViewTest comment: 'SUnitBrowser openOnTestCase: self'!
+!UI.Tests.MoenTreeViewTest categoriesForClass!Unclassified! !
+!UI.Tests.MoenTreeViewTest methodsFor!
 
 assertChildNode: node
 	self deny: node parent identicalTo: treeView anchorNode.
@@ -105,8 +105,7 @@ assertUnlinkedNode: aMoenTreeNode
 	self assertIsNil: (treeView findNodeForObject: aMoenTreeNode object)!
 
 createModel
-	treeModel := TreeModel withRoots: #('A' 'B' 'C' 'D' 'E' 'F')
-				searchPolicy: SearchPolicy equality.
+	treeModel := TreeModel withRoots: #('A' 'B' 'C' 'D' 'E' 'F') searchPolicy: SearchPolicy equality.
 	treeModel
 		add: 'BA' asChildOf: 'B';
 		add: 'CA' asChildOf: 'C';
@@ -117,7 +116,7 @@ createModel
 		add: 'EA' asChildOf: 'E';
 		add: 'EB' asChildOf: 'E'
 
-"
+	"
 A
 B - BA
 C - CA - CAA
@@ -987,7 +986,7 @@ runCase
 	super runCase!
 
 setUp
-	useShell 
+	useShell
 		ifTrue: 
 			[shell := ShellView new create.
 			shell layoutManager: BorderLayout new.
@@ -1229,52 +1228,52 @@ testRemoveSelection
 	treeModel remove: 'A'.
 	"Selection moves to parent"
 	self assert: treeView selection equals: 'ROOT2'! !
-!MoenTreeViewTest categoriesFor: #assertChildNode:!helpers!private! !
-!MoenTreeViewTest categoriesFor: #assertCollapsedChild:!helpers!private! !
-!MoenTreeViewTest categoriesFor: #assertCollapsedRoot:!helpers!private! !
-!MoenTreeViewTest categoriesFor: #assertCorrectlyPopulatedNode:!helpers!private! !
-!MoenTreeViewTest categoriesFor: #assertExpandedRoot:!helpers!private! !
-!MoenTreeViewTest categoriesFor: #assertInitialState!helpers!private! !
-!MoenTreeViewTest categoriesFor: #assertNodeInTree:!helpers!private! !
-!MoenTreeViewTest categoriesFor: #assertPopulatedChild:!helpers!private! !
-!MoenTreeViewTest categoriesFor: #assertPopulatedRoot:!helpers!private! !
-!MoenTreeViewTest categoriesFor: #assertRootNode:!helpers!private! !
-!MoenTreeViewTest categoriesFor: #assertRootsInOrder!helpers!private! !
-!MoenTreeViewTest categoriesFor: #assertUnexpandedChild:!helpers!private! !
-!MoenTreeViewTest categoriesFor: #assertUnexpandedNode:!helpers!private! !
-!MoenTreeViewTest categoriesFor: #assertUnexpandedRoot:!helpers!private! !
-!MoenTreeViewTest categoriesFor: #assertUnlinkedNode:!helpers!private! !
-!MoenTreeViewTest categoriesFor: #createModel!helpers!private! !
-!MoenTreeViewTest categoriesFor: #createTree!helpers!private! !
-!MoenTreeViewTest categoriesFor: #createView!helpers!private! !
-!MoenTreeViewTest categoriesFor: #destroyTree!private!Running! !
-!MoenTreeViewTest categoriesFor: #moveChild:of:toRoot:!helpers!private! !
-!MoenTreeViewTest categoriesFor: #moveChild:of:toUnexpandedRoot:!helpers!private! !
-!MoenTreeViewTest categoriesFor: #moveChild:toChildlessRoot:!helpers!private! !
-!MoenTreeViewTest categoriesFor: #moveChild:toRootWithChildren:!helpers!private! !
-!MoenTreeViewTest categoriesFor: #moveChildToUnexpandedRoot:!helpers!private! !
-!MoenTreeViewTest categoriesFor: #moveRoots:toRoots:!helpers!private! !
-!MoenTreeViewTest categoriesFor: #moveRootsToUnexpandedRoots:!helpers!private! !
-!MoenTreeViewTest categoriesFor: #moveUnexpandedChild:toUnexpandedRoot:!helpers!private! !
-!MoenTreeViewTest categoriesFor: #moveUnexpandedChildOfUnexpandedParentToRoot:!helpers!private! !
-!MoenTreeViewTest categoriesFor: #moveUnexpandedChildToRoot:target:!helpers!private! !
-!MoenTreeViewTest categoriesFor: #moveUnexpandedChildToUnexpandedChild!helpers!private! !
-!MoenTreeViewTest categoriesFor: #moveUnexpandedRoot:toUnexpandedRoot:!helpers!private! !
-!MoenTreeViewTest categoriesFor: #moveUnexpandedRootsToRoots:!helpers!private! !
-!MoenTreeViewTest categoriesFor: #moveUnexpandedRootsToUnexpandedChildren!helpers!private! !
-!MoenTreeViewTest categoriesFor: #runCase!public!Running! !
-!MoenTreeViewTest categoriesFor: #setUp!helpers!public! !
-!MoenTreeViewTest categoriesFor: #tearDown!public!Running! !
-!MoenTreeViewTest categoriesFor: #testMoveChildToChildlessRoot!public!unit tests! !
-!MoenTreeViewTest categoriesFor: #testMoveChildToRootWithChildren!public!unit tests! !
-!MoenTreeViewTest categoriesFor: #testMoveChildToUnexpandedRoot!public!unit tests! !
-!MoenTreeViewTest categoriesFor: #testMoveRootsToRoots!public!unit tests! !
-!MoenTreeViewTest categoriesFor: #testMoveRootsToUnexpandedRoots!public!unit tests! !
-!MoenTreeViewTest categoriesFor: #testMoveSelectionDown!public!unit tests! !
-!MoenTreeViewTest categoriesFor: #testMoveUnexpandedChildToRoot!public!unit tests! !
-!MoenTreeViewTest categoriesFor: #testMoveUnexpandedChildToUnexpandedRoot!public!unit tests! !
-!MoenTreeViewTest categoriesFor: #testMoveUnexpandedRootsToRoots!public!unit tests! !
-!MoenTreeViewTest categoriesFor: #testMoveUnexpandedRootsToUnexpandedChildren!public!unit tests! !
-!MoenTreeViewTest categoriesFor: #testMoveUnexpandedRootsToUnexpandedRoots!public!unit tests! !
-!MoenTreeViewTest categoriesFor: #testRemoveSelection!public!unit tests! !
+!UI.Tests.MoenTreeViewTest categoriesFor: #assertChildNode:!helpers!private! !
+!UI.Tests.MoenTreeViewTest categoriesFor: #assertCollapsedChild:!helpers!private! !
+!UI.Tests.MoenTreeViewTest categoriesFor: #assertCollapsedRoot:!helpers!private! !
+!UI.Tests.MoenTreeViewTest categoriesFor: #assertCorrectlyPopulatedNode:!helpers!private! !
+!UI.Tests.MoenTreeViewTest categoriesFor: #assertExpandedRoot:!helpers!private! !
+!UI.Tests.MoenTreeViewTest categoriesFor: #assertInitialState!helpers!private! !
+!UI.Tests.MoenTreeViewTest categoriesFor: #assertNodeInTree:!helpers!private! !
+!UI.Tests.MoenTreeViewTest categoriesFor: #assertPopulatedChild:!helpers!private! !
+!UI.Tests.MoenTreeViewTest categoriesFor: #assertPopulatedRoot:!helpers!private! !
+!UI.Tests.MoenTreeViewTest categoriesFor: #assertRootNode:!helpers!private! !
+!UI.Tests.MoenTreeViewTest categoriesFor: #assertRootsInOrder!helpers!private! !
+!UI.Tests.MoenTreeViewTest categoriesFor: #assertUnexpandedChild:!helpers!private! !
+!UI.Tests.MoenTreeViewTest categoriesFor: #assertUnexpandedNode:!helpers!private! !
+!UI.Tests.MoenTreeViewTest categoriesFor: #assertUnexpandedRoot:!helpers!private! !
+!UI.Tests.MoenTreeViewTest categoriesFor: #assertUnlinkedNode:!helpers!private! !
+!UI.Tests.MoenTreeViewTest categoriesFor: #createModel!helpers!private! !
+!UI.Tests.MoenTreeViewTest categoriesFor: #createTree!helpers!private! !
+!UI.Tests.MoenTreeViewTest categoriesFor: #createView!helpers!private! !
+!UI.Tests.MoenTreeViewTest categoriesFor: #destroyTree!private!Running! !
+!UI.Tests.MoenTreeViewTest categoriesFor: #moveChild:of:toRoot:!helpers!private! !
+!UI.Tests.MoenTreeViewTest categoriesFor: #moveChild:of:toUnexpandedRoot:!helpers!private! !
+!UI.Tests.MoenTreeViewTest categoriesFor: #moveChild:toChildlessRoot:!helpers!private! !
+!UI.Tests.MoenTreeViewTest categoriesFor: #moveChild:toRootWithChildren:!helpers!private! !
+!UI.Tests.MoenTreeViewTest categoriesFor: #moveChildToUnexpandedRoot:!helpers!private! !
+!UI.Tests.MoenTreeViewTest categoriesFor: #moveRoots:toRoots:!helpers!private! !
+!UI.Tests.MoenTreeViewTest categoriesFor: #moveRootsToUnexpandedRoots:!helpers!private! !
+!UI.Tests.MoenTreeViewTest categoriesFor: #moveUnexpandedChild:toUnexpandedRoot:!helpers!private! !
+!UI.Tests.MoenTreeViewTest categoriesFor: #moveUnexpandedChildOfUnexpandedParentToRoot:!helpers!private! !
+!UI.Tests.MoenTreeViewTest categoriesFor: #moveUnexpandedChildToRoot:target:!helpers!private! !
+!UI.Tests.MoenTreeViewTest categoriesFor: #moveUnexpandedChildToUnexpandedChild!helpers!private! !
+!UI.Tests.MoenTreeViewTest categoriesFor: #moveUnexpandedRoot:toUnexpandedRoot:!helpers!private! !
+!UI.Tests.MoenTreeViewTest categoriesFor: #moveUnexpandedRootsToRoots:!helpers!private! !
+!UI.Tests.MoenTreeViewTest categoriesFor: #moveUnexpandedRootsToUnexpandedChildren!helpers!private! !
+!UI.Tests.MoenTreeViewTest categoriesFor: #runCase!public!Running! !
+!UI.Tests.MoenTreeViewTest categoriesFor: #setUp!helpers!public! !
+!UI.Tests.MoenTreeViewTest categoriesFor: #tearDown!public!Running! !
+!UI.Tests.MoenTreeViewTest categoriesFor: #testMoveChildToChildlessRoot!public!unit tests! !
+!UI.Tests.MoenTreeViewTest categoriesFor: #testMoveChildToRootWithChildren!public!unit tests! !
+!UI.Tests.MoenTreeViewTest categoriesFor: #testMoveChildToUnexpandedRoot!public!unit tests! !
+!UI.Tests.MoenTreeViewTest categoriesFor: #testMoveRootsToRoots!public!unit tests! !
+!UI.Tests.MoenTreeViewTest categoriesFor: #testMoveRootsToUnexpandedRoots!public!unit tests! !
+!UI.Tests.MoenTreeViewTest categoriesFor: #testMoveSelectionDown!public!unit tests! !
+!UI.Tests.MoenTreeViewTest categoriesFor: #testMoveUnexpandedChildToRoot!public!unit tests! !
+!UI.Tests.MoenTreeViewTest categoriesFor: #testMoveUnexpandedChildToUnexpandedRoot!public!unit tests! !
+!UI.Tests.MoenTreeViewTest categoriesFor: #testMoveUnexpandedRootsToRoots!public!unit tests! !
+!UI.Tests.MoenTreeViewTest categoriesFor: #testMoveUnexpandedRootsToUnexpandedChildren!public!unit tests! !
+!UI.Tests.MoenTreeViewTest categoriesFor: #testMoveUnexpandedRootsToUnexpandedRoots!public!unit tests! !
+!UI.Tests.MoenTreeViewTest categoriesFor: #testRemoveSelection!public!unit tests! !
 

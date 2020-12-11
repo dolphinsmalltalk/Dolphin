@@ -1,16 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-PresenterTest subclass: #SelectableItemsTest
+UI.Tests.PresenterTest subclass: #'UI.Tests.SelectableItemsTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-SelectableItemsTest guid: (GUID fromString: '{eb11681e-441a-44d4-af4c-de1ea399a79e}')!
-SelectableItemsTest isAbstract: true!
-SelectableItemsTest comment: ''!
-!SelectableItemsTest categoriesForClass!Unclassified! !
-!SelectableItemsTest methodsFor!
+UI.Tests.SelectableItemsTest guid: (Core.GUID fromString: '{eb11681e-441a-44d4-af4c-de1ea399a79e}')!
+UI.Tests.SelectableItemsTest isNonInstantiable: true!
+UI.Tests.SelectableItemsTest comment: ''!
+!UI.Tests.SelectableItemsTest categoriesForClass!Unclassified! !
+!UI.Tests.SelectableItemsTest methodsFor!
 
 assertContains: anObject
 	"Private - Asserts that the receiver contains anObject. We do this by trying to select the object since this allows
@@ -30,6 +30,6 @@ denyContains: anObject
 	sel := presenter selectionOrNil.
 	[self should: [presenter selection: anObject] raise: NotFoundError] 
 		ensure: [presenter selectionOrNil: sel]! !
-!SelectableItemsTest categoriesFor: #assertContains:!helpers!private! !
-!SelectableItemsTest categoriesFor: #denyContains:!helpers!private! !
+!UI.Tests.SelectableItemsTest categoriesFor: #assertContains:!helpers!private! !
+!UI.Tests.SelectableItemsTest categoriesFor: #denyContains:!helpers!private! !
 

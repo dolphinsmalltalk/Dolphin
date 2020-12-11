@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-DolphinTest subclass: #WindowsEventTest
+Core.Tests.DolphinTest subclass: #'UI.Tests.WindowsEventTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-WindowsEventTest guid: (GUID fromString: '{08ec4909-75d4-4bef-bbb8-0f443b78f834}')!
-WindowsEventTest comment: ''!
-!WindowsEventTest categoriesForClass!Unclassified! !
-!WindowsEventTest methodsFor!
+UI.Tests.WindowsEventTest guid: (Core.GUID fromString: '{08ec4909-75d4-4bef-bbb8-0f443b78f834}')!
+UI.Tests.WindowsEventTest comment: ''!
+!UI.Tests.WindowsEventTest categoriesForClass!Unclassified! !
+!UI.Tests.WindowsEventTest methodsFor!
 
 newEvent: anInteger
 	^WindowsEvent
@@ -38,7 +38,7 @@ testPrintString
 	instance := self newEvent: 999.
 	self assert: instance printString
 		equals: ('a WindowsEvent(<1p> 16r3E7 3 4)' expandMacrosWith: instance window)! !
-!WindowsEventTest categoriesFor: #newEvent:!private!unit tests! !
-!WindowsEventTest categoriesFor: #testInstanceCreation!public!unit tests! !
-!WindowsEventTest categoriesFor: #testPrintString!public!unit tests! !
+!UI.Tests.WindowsEventTest categoriesFor: #newEvent:!private!unit tests! !
+!UI.Tests.WindowsEventTest categoriesFor: #testInstanceCreation!public!unit tests! !
+!UI.Tests.WindowsEventTest categoriesFor: #testPrintString!public!unit tests! !
 

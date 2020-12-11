@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-DolphinTest subclass: #BrushTest
+Core.Tests.DolphinTest subclass: #'Graphics.Tests.BrushTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'Win32Constants'
+	imports: #(#{OS.Win32Constants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-BrushTest guid: (GUID fromString: '{1128ddc3-7330-4539-bc63-7a60b93fe7bc}')!
-BrushTest comment: ''!
-!BrushTest categoriesForClass!Unclassified! !
-!BrushTest methodsFor!
+Graphics.Tests.BrushTest guid: (Core.GUID fromString: '{1128ddc3-7330-4539-bc63-7a60b93fe7bc}')!
+Graphics.Tests.BrushTest comment: ''!
+!Graphics.Tests.BrushTest categoriesForClass!Unclassified! !
+!Graphics.Tests.BrushTest methodsFor!
 
 testBitmapBrush
 	| bmp bmp2 brush pels1 extent pels2 |
@@ -26,7 +26,7 @@ testBitmapBrush
 	brush := Brush bitmap: bmp.
 	"Comment out the next line, and the test will run without patch #1052"
 	bmp := nil.
-	MemoryManager current
+	Kernel.MemoryManager current
 		collectGarbage;
 		administerLastRites.
 	bmp2 canvas
@@ -93,8 +93,8 @@ testStbConversion2
 				b: 250).
 	self assert: brush logBrush hatch equals: HS_BDIAGONAL.
 	self assert: brush logBrush style equals: BS_HATCHED! !
-!BrushTest categoriesFor: #testBitmapBrush!public!unit tests! !
-!BrushTest categoriesFor: #testPrintString!public!unit tests! !
-!BrushTest categoriesFor: #testStbConversion!public!unit tests! !
-!BrushTest categoriesFor: #testStbConversion2!public!unit tests! !
+!Graphics.Tests.BrushTest categoriesFor: #testBitmapBrush!public!unit tests! !
+!Graphics.Tests.BrushTest categoriesFor: #testPrintString!public!unit tests! !
+!Graphics.Tests.BrushTest categoriesFor: #testStbConversion!public!unit tests! !
+!Graphics.Tests.BrushTest categoriesFor: #testStbConversion2!public!unit tests! !
 

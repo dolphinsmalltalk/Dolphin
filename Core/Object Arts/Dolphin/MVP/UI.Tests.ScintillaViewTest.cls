@@ -1,18 +1,18 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-MultilineTextEditTest subclass: #ScintillaViewTest
+UI.Tests.MultilineTextEditTest subclass: #'UI.Tests.ScintillaViewTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'ScintillaConstants'
+	imports: #(#{Smalltalk.ScintillaConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ScintillaViewTest guid: (GUID fromString: '{3c6fbe95-74e0-4325-97e1-82f12133d503}')!
-ScintillaViewTest comment: ''!
-!ScintillaViewTest categoriesForClass!Unclassified! !
-!ScintillaViewTest methodsFor!
+UI.Tests.ScintillaViewTest guid: (Core.GUID fromString: '{3c6fbe95-74e0-4325-97e1-82f12133d503}')!
+UI.Tests.ScintillaViewTest comment: ''!
+!UI.Tests.ScintillaViewTest categoriesForClass!Unclassified! !
+!UI.Tests.ScintillaViewTest methodsFor!
 
 classToTest
-	^ScintillaView!
+	^Smalltalk.ScintillaView!
 
 initializePresenter
 	| margins |
@@ -99,30 +99,30 @@ testImmersiveColorSetChange
 
 testLanguages
 	| lingos |
-	lingos := ScintillaView lexerLanguages.
+	lingos := Smalltalk.ScintillaView lexerLanguages.
 	lingos do: [:each | each notNil ifTrue: [presenter view lexer: each]]!
 
 testOverrideDefaultKeyBindings
 	| bindings code expectedDiffs binding actualBindings |
-	bindings := ScintillaView.DefaultKeyBindings copy.
+	bindings := Smalltalk.ScintillaView.DefaultKeyBindings copy.
 	expectedDiffs := Set new.
 	"Remove a key binding"
 	code := AcceleratorTable keyCodeFromInvariantString: 'PGDOWN'.
 	self assert: (bindings includesKey: code).
 	bindings removeKey: code.
 	expectedDiffs
-		add: (ScintillaKeyBinding newAcceleratorKey: code message: ScintillaConstants.SCI_NULL).
+		add: (Smalltalk.ScintillaKeyBinding newAcceleratorKey: code message: Smalltalk.ScintillaConstants.SCI_NULL).
 	"Add a binding"
 	code := AcceleratorTable keyCodeFromInvariantString: 'CTRL+J'.
 	self deny: (bindings includesKey: code).
-	binding := ScintillaKeyBinding newAcceleratorKey: code
-				message: ScintillaConstants.SCI_SELECTIONDUPLICATE.
+	binding := Smalltalk.ScintillaKeyBinding newAcceleratorKey: code
+				message: Smalltalk.ScintillaConstants.SCI_SELECTIONDUPLICATE.
 	bindings at: code put: binding.
 	expectedDiffs add: binding.
 	"Update a binding"
 	code := AcceleratorTable keyCodeFromInvariantString: 'CTRL+D'.
 	self assert: (bindings includesKey: code).
-	binding := ScintillaKeyBinding newAcceleratorKey: code message: ScintillaConstants.SCI_PAGEDOWN.
+	binding := Smalltalk.ScintillaKeyBinding newAcceleratorKey: code message: Smalltalk.ScintillaConstants.SCI_PAGEDOWN.
 	bindings at: code put: binding.
 	expectedDiffs add: binding.
 
@@ -139,15 +139,15 @@ testSetGetAnnotations
 	presenter text: self text.
 	annotations := OrderedCollection new.
 	annotations
-		add: (ScintillaAnnotation
+		add: (Smalltalk.ScintillaAnnotation
 					line: 1
 					text: 'Wobble'
 					style: #Error);
-		add: (ScintillaAnnotation
+		add: (Smalltalk.ScintillaAnnotation
 					line: 2
 					text: 'Wibble'
 					style: #Warning);
-		add: (ScintillaAnnotation
+		add: (Smalltalk.ScintillaAnnotation
 					line: 1
 					text: 'Blah'
 					style: #Notification).
@@ -157,20 +157,20 @@ testSetGetAnnotations
 testStateRestoral
 	| indicStyle1 indicStyle2 |
 	"At the moment, just checking that the non-container indicators are reset on state restoral as regression test for #1085"
-	indicStyle1:= ScintillaIndicatorStyle view: presenter index: INDICATOR_CONTAINER - 1.
+	indicStyle1:= Smalltalk.ScintillaIndicatorStyle view: presenter index: INDICATOR_CONTAINER - 1.
 	self assert: indicStyle1 style equals: #hidden.
 	presenter recreate.
-	indicStyle2 := ScintillaIndicatorStyle view: presenter index: INDICATOR_CONTAINER - 1.
+	indicStyle2 := Smalltalk.ScintillaIndicatorStyle view: presenter index: INDICATOR_CONTAINER - 1.
 	self assert: indicStyle2 style equals: #hidden.
 ! !
-!ScintillaViewTest categoriesFor: #classToTest!helpers!private! !
-!ScintillaViewTest categoriesFor: #initializePresenter!public!Running! !
-!ScintillaViewTest categoriesFor: #margins!private!unit tests! !
-!ScintillaViewTest categoriesFor: #testCallTipColors!public!unit tests! !
-!ScintillaViewTest categoriesFor: #testFindStringStartingAt!public!unit tests! !
-!ScintillaViewTest categoriesFor: #testImmersiveColorSetChange!public!unit tests! !
-!ScintillaViewTest categoriesFor: #testLanguages!public!unit tests! !
-!ScintillaViewTest categoriesFor: #testOverrideDefaultKeyBindings!public!unit tests! !
-!ScintillaViewTest categoriesFor: #testSetGetAnnotations!public!unit tests! !
-!ScintillaViewTest categoriesFor: #testStateRestoral!public!unit tests! !
+!UI.Tests.ScintillaViewTest categoriesFor: #classToTest!helpers!private! !
+!UI.Tests.ScintillaViewTest categoriesFor: #initializePresenter!public!Running! !
+!UI.Tests.ScintillaViewTest categoriesFor: #margins!private!unit tests! !
+!UI.Tests.ScintillaViewTest categoriesFor: #testCallTipColors!public!unit tests! !
+!UI.Tests.ScintillaViewTest categoriesFor: #testFindStringStartingAt!public!unit tests! !
+!UI.Tests.ScintillaViewTest categoriesFor: #testImmersiveColorSetChange!public!unit tests! !
+!UI.Tests.ScintillaViewTest categoriesFor: #testLanguages!public!unit tests! !
+!UI.Tests.ScintillaViewTest categoriesFor: #testOverrideDefaultKeyBindings!public!unit tests! !
+!UI.Tests.ScintillaViewTest categoriesFor: #testSetGetAnnotations!public!unit tests! !
+!UI.Tests.ScintillaViewTest categoriesFor: #testStateRestoral!public!unit tests! !
 

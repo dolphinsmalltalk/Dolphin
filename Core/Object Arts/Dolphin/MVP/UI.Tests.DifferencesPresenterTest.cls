@@ -1,14 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-PresenterTest subclass: #DifferencesPresenterTest
+UI.Tests.PresenterTest subclass: #'UI.Tests.DifferencesPresenterTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-DifferencesPresenterTest guid: (GUID fromString: '{ff71a471-024e-4959-8607-399cdf4faf2a}')!
-DifferencesPresenterTest comment: ''!
-!DifferencesPresenterTest categoriesForClass!Unclassified! !
-!DifferencesPresenterTest methodsFor!
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+UI.Tests.DifferencesPresenterTest guid: (Core.GUID fromString: '{ff71a471-024e-4959-8607-399cdf4faf2a}')!
+UI.Tests.DifferencesPresenterTest comment: ''!
+!UI.Tests.DifferencesPresenterTest categoriesForClass!Unclassified! !
+!UI.Tests.DifferencesPresenterTest methodsFor!
 
 classToTest
 	^DifferencesPresenter!
@@ -29,6 +30,6 @@ baz'.
 	presenter comparisonMode: #line.
 	items := presenter itemsFrom: str.
 	self assert: items asArray equals: #('foo bar' 'baz')! !
-!DifferencesPresenterTest categoriesFor: #classToTest!helpers!private! !
-!DifferencesPresenterTest categoriesFor: #testItemsFrom!public! !
+!UI.Tests.DifferencesPresenterTest categoriesFor: #classToTest!helpers!private! !
+!UI.Tests.DifferencesPresenterTest categoriesFor: #testItemsFrom!public! !
 

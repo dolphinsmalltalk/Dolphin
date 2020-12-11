@@ -1,14 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-TabViewTest subclass: #TabViewXPTest
+UI.Tests.TabViewTest subclass: #'UI.Tests.TabViewXPTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-TabViewXPTest guid: (GUID fromString: '{f55d0ba3-f595-4d2c-bfc2-65de737b4fcb}')!
-TabViewXPTest comment: ''!
-!TabViewXPTest categoriesForClass!Unclassified! !
-!TabViewXPTest methodsFor!
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+UI.Tests.TabViewXPTest guid: (Core.GUID fromString: '{f55d0ba3-f595-4d2c-bfc2-65de737b4fcb}')!
+UI.Tests.TabViewXPTest comment: ''!
+!UI.Tests.TabViewXPTest categoriesForClass!Unclassified! !
+!UI.Tests.TabViewXPTest methodsFor!
 
 classToTest
 	^TabViewXP!
@@ -22,11 +23,9 @@ testLabelWithAmpersand
 	rect := presenter itemRect: 3.
 	text := self objectsToTest at: 3.
 	"About time we did a port of MethodWrappers really"
-	anon := Canvas newAnonymousSubclass.
-	anon basicClassPool: (anon classPool
-				at: 'DrawnText' put: nil;
-				at: 'Rect' put: nil;
-				yourself).
+	anon := (ClassBuilder forAnonymousSubclassOf: Canvas)
+				classVariableString: 'DrawnText Rect';
+				createNewClass.
 	anon
 		basicCompile: 'formatText: aString in: aRectangle flags: anInteger
 		"Double the size to avoid any chance of buffer overrun"
@@ -36,7 +35,10 @@ testLabelWithAmpersand
 	canvas := presenter canvas.
 	canvas becomeAn: anon.
 	canvas font: presenter actualFont.
-	extent := canvas textExtent: text width: 0 flags: DT_SINGLELINE.
+	extent := canvas
+				textExtent: text
+				width: 0
+				flags: DT_SINGLELINE.
 	presenter
 		paintLabel: 3
 		on: canvas
@@ -47,6 +49,6 @@ testLabelWithAmpersand
 	self assert: actual equals: expected.
 	actual := (anon classPool at: 'Rect') extent.
 	self assert: actual equals: extent! !
-!TabViewXPTest categoriesFor: #classToTest!helpers!private! !
-!TabViewXPTest categoriesFor: #testLabelWithAmpersand!public! !
+!UI.Tests.TabViewXPTest categoriesFor: #classToTest!helpers!private! !
+!UI.Tests.TabViewXPTest categoriesFor: #testLabelWithAmpersand!public! !
 

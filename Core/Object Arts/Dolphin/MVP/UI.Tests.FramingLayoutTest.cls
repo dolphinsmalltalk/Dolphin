@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-LayoutManagerTest subclass: #FramingLayoutTest
+UI.Tests.LayoutManagerTest subclass: #'UI.Tests.FramingLayoutTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-FramingLayoutTest guid: (GUID fromString: '{fa16fdd5-bd9e-4198-bc61-f33e43c14edc}')!
-FramingLayoutTest comment: ''!
-!FramingLayoutTest categoriesForClass!Unclassified! !
-!FramingLayoutTest methodsFor!
+UI.Tests.FramingLayoutTest guid: (Core.GUID fromString: '{fa16fdd5-bd9e-4198-bc61-f33e43c14edc}')!
+UI.Tests.FramingLayoutTest comment: ''!
+!UI.Tests.FramingLayoutTest categoriesForClass!Unclassified! !
+!UI.Tests.FramingLayoutTest methodsFor!
 
 layoutManagerClass
 	^FramingLayout!
@@ -26,21 +26,21 @@ testCircularEdgeConstraint
 
 testFramingCalculationSerialisation
 	| proxyFormatArray proxyFormatBytes |
-	proxyFormatArray := #(#'!!STL' 3 202 208 98 16 1114638 ##(Smalltalk.STBSingletonProxy) 8 ##(Smalltalk.FramingCalculation) 8 #centerRelativeParentHeight 442 464 8 #centerRelativeParentWidth 442 464 8 #fixedParentBottom 442 464 8 #fixedParentLeft 442 464 8 #fixedParentRight 442 464 8 #fixedParentTop 442 464 8 #fixedPreviousBottom 442 464 8 #fixedPreviousLeft 442 464 8 #fixedPreviousRight 442 464 8 #fixedPreviousTop 442 464 8 #fixedViewBottom 442 464 8 #fixedViewLeft 442 464 8 #fixedViewRight 442 464 8 #fixedViewTop 442 464 8 #relativeParentHeight 442 464 8 #relativeParentWidth).
-	self 
-		assert: ((Object fromLiteralStoreArray: proxyFormatArray) asIdentitySet 
+	proxyFormatArray := #(#'!!STL' 3 202 208 98 16 1114638 ##(Smalltalk.STBSingletonProxy) 8 ##(UI.FramingCalculation) 8 #centerRelativeParentHeight 442 464 8 #centerRelativeParentWidth 442 464 8 #fixedParentBottom 442 464 8 #fixedParentLeft 442 464 8 #fixedParentRight 442 464 8 #fixedParentTop 442 464 8 #fixedPreviousBottom 442 464 8 #fixedPreviousLeft 442 464 8 #fixedPreviousRight 442 464 8 #fixedPreviousTop 442 464 8 #fixedViewBottom 442 464 8 #fixedViewLeft 442 464 8 #fixedViewRight 442 464 8 #fixedViewTop 442 464 8 #relativeParentHeight 442 464 8 #relativeParentWidth).
+	self
+		assert: ((Object fromLiteralStoreArray: proxyFormatArray) asIdentitySet
 				- FramingCalculation allCalculations) isEmpty.
 	proxyFormatArray := FramingCalculation allCalculations literalStoreArray.
-	self 
-		assert: ((Object fromLiteralStoreArray: proxyFormatArray) asIdentitySet 
+	self
+		assert: ((Object fromLiteralStoreArray: proxyFormatArray) asIdentitySet
 				- FramingCalculation allCalculations) isEmpty.
 	proxyFormatBytes := #[33 83 84 66 32 51 32 202 0 0 0 208 0 0 0 98 0 0 0 16 0 0 0 14 2 17 0 83 84 66 83 105 110 103 108 101 116 111 110 80 114 111 120 121 154 0 0 0 82 0 0 0 16 0 0 0 68 111 108 112 104 105 110 32 77 86 80 32 66 97 115 101 82 0 0 0 18 0 0 0 70 114 97 109 105 110 103 67 97 108 99 117 108 97 116 105 111 110 178 0 0 0 26 0 0 0 99 101 110 116 101 114 82 101 108 97 116 105 118 101 80 97 114 101 110 116 72 101 105 103 104 116 186 1 0 0 208 1 0 0 178 0 0 0 25 0 0 0 99 101 110 116 101 114 82 101 108 97 116 105 118 101 80 97 114 101 110 116 87 105 100 116 104 186 1 0 0 208 1 0 0 178 0 0 0 17 0 0 0 102 105 120 101 100 80 97 114 101 110 116 66 111 116 116 111 109 186 1 0 0 208 1 0 0 178 0 0 0 15 0 0 0 102 105 120 101 100 80 97 114 101 110 116 76 101 102 116 186 1 0 0 208 1 0 0 178 0 0 0 16 0 0 0 102 105 120 101 100 80 97 114 101 110 116 82 105 103 104 116 186 1 0 0 208 1 0 0 178 0 0 0 14 0 0 0 102 105 120 101 100 80 97 114 101 110 116 84 111 112 186 1 0 0 208 1 0 0 178 0 0 0 19 0 0 0 102 105 120 101 100 80 114 101 118 105 111 117 115 66 111 116 116 111 109 186 1 0 0 208 1 0 0 178 0 0 0 17 0 0 0 102 105 120 101 100 80 114 101 118 105 111 117 115 76 101 102 116 186 1 0 0 208 1 0 0 178 0 0 0 18 0 0 0 102 105 120 101 100 80 114 101 118 105 111 117 115 82 105 103 104 116 186 1 0 0 208 1 0 0 178 0 0 0 16 0 0 0 102 105 120 101 100 80 114 101 118 105 111 117 115 84 111 112 186 1 0 0 208 1 0 0 178 0 0 0 15 0 0 0 102 105 120 101 100 86 105 101 119 66 111 116 116 111 109 186 1 0 0 208 1 0 0 178 0 0 0 13 0 0 0 102 105 120 101 100 86 105 101 119 76 101 102 116 186 1 0 0 208 1 0 0 178 0 0 0 14 0 0 0 102 105 120 101 100 86 105 101 119 82 105 103 104 116 186 1 0 0 208 1 0 0 178 0 0 0 12 0 0 0 102 105 120 101 100 86 105 101 119 84 111 112 186 1 0 0 208 1 0 0 178 0 0 0 20 0 0 0 114 101 108 97 116 105 118 101 80 97 114 101 110 116 72 101 105 103 104 116 186 1 0 0 208 1 0 0 178 0 0 0 19 0 0 0 114 101 108 97 116 105 118 101 80 97 114 101 110 116 87 105 100 116 104].
-	self 
-		assert: ((Object fromBinaryStoreBytes: proxyFormatBytes) asIdentitySet 
+	self
+		assert: ((Object fromBinaryStoreBytes: proxyFormatBytes) asIdentitySet
 				- FramingCalculation allCalculations) isEmpty.
 	proxyFormatBytes := FramingCalculation allCalculations binaryStoreBytes.
-	self 
-		assert: ((Object fromBinaryStoreBytes: proxyFormatBytes) asIdentitySet 
+	self
+		assert: ((Object fromBinaryStoreBytes: proxyFormatBytes) asIdentitySet
 				- FramingCalculation allCalculations) isEmpty!
 
 testResizeParentRelative
@@ -93,8 +93,8 @@ testResizeParentRelative
 				+ 5.
 	shell extent: (shell calcExtentFromClientExtent: marginExtents).
 	self assert: button rectangle extent equals: 5 @ 5! !
-!FramingLayoutTest categoriesFor: #layoutManagerClass!private!unit tests! !
-!FramingLayoutTest categoriesFor: #testCircularEdgeConstraint!public!unit tests! !
-!FramingLayoutTest categoriesFor: #testFramingCalculationSerialisation!public!unit tests! !
-!FramingLayoutTest categoriesFor: #testResizeParentRelative!public!unit tests! !
+!UI.Tests.FramingLayoutTest categoriesFor: #layoutManagerClass!private!unit tests! !
+!UI.Tests.FramingLayoutTest categoriesFor: #testCircularEdgeConstraint!public!unit tests! !
+!UI.Tests.FramingLayoutTest categoriesFor: #testFramingCalculationSerialisation!public!unit tests! !
+!UI.Tests.FramingLayoutTest categoriesFor: #testResizeParentRelative!public!unit tests! !
 

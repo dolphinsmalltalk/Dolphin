@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-SelectableListItemsTest subclass: #TabViewTest
+UI.Tests.SelectableListItemsTest subclass: #'UI.Tests.TabViewTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-TabViewTest guid: (GUID fromString: '{3fd7f1ae-aff6-4a24-b35e-d6e810433b8c}')!
-TabViewTest comment: ''!
-!TabViewTest categoriesForClass!Unclassified! !
-!TabViewTest methodsFor!
+UI.Tests.TabViewTest guid: (Core.GUID fromString: '{3fd7f1ae-aff6-4a24-b35e-d6e810433b8c}')!
+UI.Tests.TabViewTest comment: ''!
+!UI.Tests.TabViewTest categoriesForClass!Unclassified! !
+!UI.Tests.TabViewTest methodsFor!
 
 addTestTabs
 	| objects |
@@ -47,10 +47,10 @@ testSetTextImageDoesNotAffectSelection
 		shouldnt: [presenter selectionByIndex: 2]
 		trigger: #selectionChanging:
 		against: presenter! !
-!TabViewTest categoriesFor: #addTestTabs!helpers!private! !
-!TabViewTest categoriesFor: #autoSelectsFirst!private!testing! !
-!TabViewTest categoriesFor: #classToTest!helpers!private! !
-!TabViewTest categoriesFor: #removingResetsSelection!public!testing! !
-!TabViewTest categoriesFor: #testSelectionsPreservedOnRecreate!public!unit tests! !
-!TabViewTest categoriesFor: #testSetTextImageDoesNotAffectSelection!public!unit tests! !
+!UI.Tests.TabViewTest categoriesFor: #addTestTabs!helpers!private! !
+!UI.Tests.TabViewTest categoriesFor: #autoSelectsFirst!private!testing! !
+!UI.Tests.TabViewTest categoriesFor: #classToTest!helpers!private! !
+!UI.Tests.TabViewTest categoriesFor: #removingResetsSelection!public!testing! !
+!UI.Tests.TabViewTest categoriesFor: #testSelectionsPreservedOnRecreate!public!unit tests! !
+!UI.Tests.TabViewTest categoriesFor: #testSetTextImageDoesNotAffectSelection!public!unit tests! !
 

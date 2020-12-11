@@ -1,17 +1,17 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-SelectableTreeItemsTest subclass: #MoenTreeViewTest2
+UI.Tests.SelectableTreeItemsTest subclass: #'UI.Tests.MoenTreeViewTest2'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-MoenTreeViewTest2 guid: (GUID fromString: '{fe4b1b34-22de-4a95-8ba2-05b2f076c51e}')!
-MoenTreeViewTest2 comment: 'SUnitBrowser openOnTestCase: self'!
-!MoenTreeViewTest2 categoriesForClass!Unclassified! !
-!MoenTreeViewTest2 methodsFor!
+UI.Tests.MoenTreeViewTest2 guid: (Core.GUID fromString: '{fe4b1b34-22de-4a95-8ba2-05b2f076c51e}')!
+UI.Tests.MoenTreeViewTest2 comment: 'SUnitBrowser openOnTestCase: self'!
+!UI.Tests.MoenTreeViewTest2 categoriesForClass!Unclassified! !
+!UI.Tests.MoenTreeViewTest2 methodsFor!
 
 classToTest
 	^MoenTreeView! !
-!MoenTreeViewTest2 categoriesFor: #classToTest!helpers!private! !
+!UI.Tests.MoenTreeViewTest2 categoriesFor: #classToTest!helpers!private! !
 

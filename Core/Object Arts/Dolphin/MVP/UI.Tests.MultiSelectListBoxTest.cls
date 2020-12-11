@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ListBoxTest subclass: #MultiSelectListBoxTest
+UI.Tests.ListBoxTest subclass: #'UI.Tests.MultiSelectListBoxTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-MultiSelectListBoxTest guid: (GUID fromString: '{fb3d047d-54ac-4e72-8544-a555167d6af9}')!
-MultiSelectListBoxTest comment: 'Test a ListBox in multi-select mode. Inherited tests will exercise the single-selection protocols. As of D6 these should behave for a multi-select list in teh same way as they do for a single-select list.'!
-!MultiSelectListBoxTest categoriesForClass!Unclassified! !
-!MultiSelectListBoxTest methodsFor!
+UI.Tests.MultiSelectListBoxTest guid: (Core.GUID fromString: '{fb3d047d-54ac-4e72-8544-a555167d6af9}')!
+UI.Tests.MultiSelectListBoxTest comment: 'Test a ListBox in multi-select mode. Inherited tests will exercise the single-selection protocols. As of D6 these should behave for a multi-select list in teh same way as they do for a single-select list.'!
+!UI.Tests.MultiSelectListBoxTest categoriesForClass!Unclassified! !
+!UI.Tests.MultiSelectListBoxTest methodsFor!
 
 initializePresenter
 	super initializePresenter.
@@ -92,9 +92,9 @@ testNewSelectionsToggleMode
 	"Modifiers disable right clicks"
 	#(#(#control #right) #(#shift #right) #(#control #shift #right))
 		do: [:each | self verifySelectionsFromMouseDown: (self mouseDownEventOnItem: 7 buttons: each) equals: #(1 3 5)]! !
-!MultiSelectListBoxTest categoriesFor: #initializePresenter!private!Running! !
-!MultiSelectListBoxTest categoriesFor: #testNewSelectionsCtrlShiftClickAdditive!public!unit tests! !
-!MultiSelectListBoxTest categoriesFor: #testNewSelectionsCtrlShiftClickSubtractive!public!unit tests! !
-!MultiSelectListBoxTest categoriesFor: #testNewSelectionsShiftClickWithSelectionMark!public!unit tests! !
-!MultiSelectListBoxTest categoriesFor: #testNewSelectionsToggleMode!public!unit tests! !
+!UI.Tests.MultiSelectListBoxTest categoriesFor: #initializePresenter!private!Running! !
+!UI.Tests.MultiSelectListBoxTest categoriesFor: #testNewSelectionsCtrlShiftClickAdditive!public!unit tests! !
+!UI.Tests.MultiSelectListBoxTest categoriesFor: #testNewSelectionsCtrlShiftClickSubtractive!public!unit tests! !
+!UI.Tests.MultiSelectListBoxTest categoriesFor: #testNewSelectionsShiftClickWithSelectionMark!public!unit tests! !
+!UI.Tests.MultiSelectListBoxTest categoriesFor: #testNewSelectionsToggleMode!public!unit tests! !
 

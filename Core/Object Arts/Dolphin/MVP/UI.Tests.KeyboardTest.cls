@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-AbstractKeyboardTest subclass: #KeyboardTest
+UI.Tests.AbstractKeyboardTest subclass: #'UI.Tests.KeyboardTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-KeyboardTest guid: (GUID fromString: '{9cecaad7-bd3c-4b84-aff3-bbf32cb900fc}')!
-KeyboardTest comment: ''!
-!KeyboardTest categoriesForClass!Unclassified! !
-!KeyboardTest methodsFor!
+UI.Tests.KeyboardTest guid: (Core.GUID fromString: '{9cecaad7-bd3c-4b84-aff3-bbf32cb900fc}')!
+UI.Tests.KeyboardTest comment: ''!
+!UI.Tests.KeyboardTest categoriesForClass!Unclassified! !
+!UI.Tests.KeyboardTest methodsFor!
 
 testInvariantMap
 	| invariant delete |
@@ -22,5 +22,5 @@ testInvariantMap
 			keyName := invariant keyNameFromVKey: each value ifNone: [].
 			self assert: keyName equals: each key].
 	self assert: ((invariant keyNameFromVKey: delete ifNone: []) beginsWith: 'DEL')! !
-!KeyboardTest categoriesFor: #testInvariantMap!public! !
+!UI.Tests.KeyboardTest categoriesFor: #testInvariantMap!public! !
 

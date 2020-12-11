@@ -1,14 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-PresenterTest subclass: #StaticTextTest
+UI.Tests.PresenterTest subclass: #'UI.Tests.StaticTextTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-StaticTextTest guid: (GUID fromString: '{92e427a0-a55c-4346-a3a1-68b30ee8a1a9}')!
-StaticTextTest comment: ''!
-!StaticTextTest categoriesForClass!Unclassified! !
-!StaticTextTest methodsFor!
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+UI.Tests.StaticTextTest guid: (Core.GUID fromString: '{92e427a0-a55c-4346-a3a1-68b30ee8a1a9}')!
+UI.Tests.StaticTextTest comment: ''!
+!UI.Tests.StaticTextTest categoriesForClass!Unclassified! !
+!UI.Tests.StaticTextTest methodsFor!
 
 classToTest
 	^StaticText!
@@ -74,7 +75,7 @@ lines'.
 	self assert: actual y equals: expected y.
 	"The width calculated by the GDI GetTextExtentPoint32 function is slightly different than the DrawTextEx calculation used by the control (and now#calculateExtent:) so we don't expect a precise result"
 	self assert: (actual x - expected x) abs < 3! !
-!StaticTextTest categoriesFor: #classToTest!helpers!private! !
-!StaticTextTest categoriesFor: #testCalculateExtentMultiline!public! !
-!StaticTextTest categoriesFor: #testCalculateExtentSimple!public! !
+!UI.Tests.StaticTextTest categoriesFor: #classToTest!helpers!private! !
+!UI.Tests.StaticTextTest categoriesFor: #testCalculateExtentMultiline!public! !
+!UI.Tests.StaticTextTest categoriesFor: #testCalculateExtentSimple!public! !
 

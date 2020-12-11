@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-MultilineTextEditTest subclass: #RichTextEditTest
+UI.Tests.MultilineTextEditTest subclass: #'UI.Tests.RichTextEditTest'
 	instanceVariableNames: 'savedLocale'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-RichTextEditTest guid: (GUID fromString: '{bc34bf3f-4b1c-44a8-9c0c-b25db1e72469}')!
-RichTextEditTest comment: ''!
-!RichTextEditTest categoriesForClass!Unclassified! !
-!RichTextEditTest methodsFor!
+UI.Tests.RichTextEditTest guid: (Core.GUID fromString: '{bc34bf3f-4b1c-44a8-9c0c-b25db1e72469}')!
+UI.Tests.RichTextEditTest comment: ''!
+!UI.Tests.RichTextEditTest categoriesForClass!Unclassified! !
+!UI.Tests.RichTextEditTest methodsFor!
 
 classToTest
 	^RichTextEdit!
@@ -143,13 +143,13 @@ text
 	"As of v2.0 of the RichEdit control, it strips out CRs internally, and so positions will be out relative to the original text"
 
 	^'Ḽơᶉëᶆ ȋṕšᶙṁ ḍỡḽǭᵳ ʂǐť ӓṁệẗ, ĉṓɲṩḙċťᶒțûɾ ấɖḯƥĭṩčįɳġ ḝłįʈ'! !
-!RichTextEditTest categoriesFor: #classToTest!helpers!private! !
-!RichTextEditTest categoriesFor: #margins!private!unit tests! !
-!RichTextEditTest categoriesFor: #nonProportionalFont!constants!private! !
-!RichTextEditTest categoriesFor: #setUp!private!unit tests! !
-!RichTextEditTest categoriesFor: #tearDown!private!running! !
-!RichTextEditTest categoriesFor: #testCharNearestPosition!public!unit tests! !
-!RichTextEditTest categoriesFor: #testStreamInAnsiText!public!unit tests! !
-!RichTextEditTest categoriesFor: #testStreamInUtfText!public!unit tests! !
-!RichTextEditTest categoriesFor: #text!public! !
+!UI.Tests.RichTextEditTest categoriesFor: #classToTest!helpers!private! !
+!UI.Tests.RichTextEditTest categoriesFor: #margins!private!unit tests! !
+!UI.Tests.RichTextEditTest categoriesFor: #nonProportionalFont!constants!private! !
+!UI.Tests.RichTextEditTest categoriesFor: #setUp!private!unit tests! !
+!UI.Tests.RichTextEditTest categoriesFor: #tearDown!private!running! !
+!UI.Tests.RichTextEditTest categoriesFor: #testCharNearestPosition!public!unit tests! !
+!UI.Tests.RichTextEditTest categoriesFor: #testStreamInAnsiText!public!unit tests! !
+!UI.Tests.RichTextEditTest categoriesFor: #testStreamInUtfText!public!unit tests! !
+!UI.Tests.RichTextEditTest categoriesFor: #text!public! !
 

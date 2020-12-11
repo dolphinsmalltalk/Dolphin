@@ -1,15 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-DolphinTest subclass: #AbstractPointTest
+Core.Tests.DolphinTest subclass: #'Graphics.Tests.AbstractPointTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-AbstractPointTest guid: (GUID fromString: '{a0f6e2b2-8bd1-44bc-b0ad-3343d7aa2c0f}')!
-AbstractPointTest isAbstract: true!
-AbstractPointTest comment: ''!
-!AbstractPointTest categoriesForClass!Unclassified! !
-!AbstractPointTest methodsFor!
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Graphics.Tests.AbstractPointTest guid: (Core.GUID fromString: '{a0f6e2b2-8bd1-44bc-b0ad-3343d7aa2c0f}')!
+Graphics.Tests.AbstractPointTest isNonInstantiable: true!
+Graphics.Tests.AbstractPointTest comment: ''!
+!Graphics.Tests.AbstractPointTest categoriesForClass!Unclassified! !
+!Graphics.Tests.AbstractPointTest methodsFor!
 
 subjectClass
 	^self subclassResponsibility!
@@ -36,7 +37,7 @@ testMakePoint
 	point2 := testMethod value: self subjectClass withArguments: #(101 202).
 	self assert: point2 x equals: 101.
 	self assert: point2 y equals: 202! !
-!AbstractPointTest categoriesFor: #subjectClass!constants!private! !
-!AbstractPointTest categoriesFor: #testAsPoint!public!unit tests! !
-!AbstractPointTest categoriesFor: #testMakePoint!public!unit tests! !
+!Graphics.Tests.AbstractPointTest categoriesFor: #subjectClass!constants!private! !
+!Graphics.Tests.AbstractPointTest categoriesFor: #testAsPoint!public!unit tests! !
+!Graphics.Tests.AbstractPointTest categoriesFor: #testMakePoint!public!unit tests! !
 
