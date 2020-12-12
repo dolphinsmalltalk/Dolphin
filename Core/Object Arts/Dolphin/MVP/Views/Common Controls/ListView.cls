@@ -122,6 +122,15 @@ addOrUpdate: aBoolean nonVirtualItems: aSequenceableCollection afterIndex: anInt
 						indent: 0.
 					self lvmSetItem: lvItem]]!
 
+adjustForStaticEdgeBug: aRectangle
+	"#1063: If we have a static edge but no other edge style, the view behaves as though it
+	is slightly smaller than the reported client width for the purposes of calculating if scrollbars
+	are shown. Adjust the available width a little to prevent this."
+
+	(self hasStaticEdge and: [(self hasClientEdge or: [self hasBorder]) not])
+		ifTrue: [aRectangle corner: aRectangle corner - 2].
+	^aRectangle!
+
 allColumns
 	"Answer an <sequencedReadableCollection> of all the columns in the view including
 	the primary column."
@@ -170,7 +179,8 @@ autoResizeColumns
 	"Private - Attempt to share the available width in the receiver between all automagically resizeable
 	columns. This only has a visible effect in #report mode, or if the list is subsequently switched to report mode."
 
-	self isReportMode ifTrue: [self autoResizeColumns: self clientWidth]!
+	self isReportMode
+		ifTrue: [self autoResizeColumns: (self adjustForStaticEdgeBug: self clientRectangle) width]!
 
 autoResizeColumns: clientWidth
 	"Private - Attempt to share the specified <integer> width (which must be the client width of the view,
@@ -188,10 +198,6 @@ autoResizeColumns: clientWidth
 				ifFalse: [fixedWidth := fixedWidth + (self lvmGetColumnWidth: eachKey - 1)]].
 	autoCols == 0 ifTrue: [^self].
 	remainingWidth := clientWidth - fixedWidth.
-	"#1063: If we have a static edge but no other edge style, using the full reported client width
-	results in a scrollbar for some reason. Adjust the available width a little to prevent this."
-	(self hasStaticEdge and: [(self hasClientEdge or: [self hasBorder]) not])
-		ifTrue: [remainingWidth := remainingWidth - 2].
 	remainingWidth <= 0 ifTrue: [^self].
 	"Split the available width between the auto columns - note the use of fractional arithmetic to avoid accumulating a rounding error"
 	idealWidth := remainingWidth / autoCols.
@@ -1760,22 +1766,17 @@ onPositionChanged: aPositionEvent
 
 	(aPositionEvent isClientAreaChanged and: [self isReportMode])
 		ifTrue: 
-			[| clientWidth requiredHeight count |
-			clientWidth := (self calcClientRectangleFromRectangle: aPositionEvent rectangle) width.
+			[| clientRect clientWidth count |
+			clientRect := self
+						adjustForStaticEdgeBug: (self calcClientRectangleFromRectangle: aPositionEvent rectangle).
+			clientWidth := clientRect width.
 			count := self itemCount.
-			"We cannot use LVM_APPROXIMATEVIEWRECT on its own,
-			as it will overflow for large numbers of items. Instead we use it to account for
-			the height of the column header and any borders/edge styles, then compute
-			the height of the items separately."
-			requiredHeight := (self
-						lvmApproximateViewRect: 0
-						cx: aPositionEvent width
-						cy: aPositionEvent height) y
-						- SystemMetrics current scrollbarHeight.
 			count > 0
-				ifTrue: [requiredHeight := requiredHeight + (self itemRect: count) bottom - (self itemRect: 1) top].
-			requiredHeight > aPositionEvent height
-				ifTrue: [clientWidth := clientWidth - SystemMetrics current scrollbarWidth].
+				ifTrue: 
+					[| requiredHeight |
+					requiredHeight := self lvmGetOrigin y + (self itemRect: count) bottom.
+					requiredHeight > clientRect height
+						ifTrue: [clientWidth := clientWidth - SystemMetrics current scrollbarWidth]].
 			self autoResizeColumns: clientWidth].
 	^super onPositionChanged: aPositionEvent!
 
@@ -2273,6 +2274,7 @@ wantCustomDrawItemNotifications: pNMHDR
 !ListView categoriesFor: #addColumn:!adding!columns!public! !
 !ListView categoriesFor: #addColumn:atIndex:!adding!columns!public! !
 !ListView categoriesFor: #addOrUpdate:nonVirtualItems:afterIndex:!private!updating! !
+!ListView categoriesFor: #adjustForStaticEdgeBug:!helpers!private! !
 !ListView categoriesFor: #allColumns!columns!public! !
 !ListView categoriesFor: #anchorIndex!public!selection! !
 !ListView categoriesFor: #anchorIndex:!public!selection! !
