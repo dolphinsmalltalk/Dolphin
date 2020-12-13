@@ -1764,7 +1764,7 @@ onPositionChanged: aPositionEvent
 	control, as that is when it updates scrollbars which can cause the horizontal scrollbar to
 	briefly flicker if the column widths are not adjusted beforehand (#2103)."
 
-	(aPositionEvent isClientAreaChanged and: [self isReportMode])
+	(aPositionEvent isResize and: [self isReportMode])
 		ifTrue: 
 			[| clientRect clientWidth count |
 			clientRect := self
