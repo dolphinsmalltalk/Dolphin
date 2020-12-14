@@ -28,7 +28,7 @@ Follow these instructions to create the product image and launch Dolphin Smallta
 
 * The master branch is on the bleeding edge and may represent an unstable state, although the tests should always be passing. If you want a stable build then you may want to go back at least to the last tagged version.
 
-* Next you will need to build the binaries as described above, or fetch the VM binaries. For convenience a batch file, `FetchVM.CMD` is supplied and, providing you have PowerShell scripting enabled, you can just double-click this to pull the correct version of the VM down from GitHub. Alternatively, you can right click on the `FetchVM.ps1` file and choose _Run with PowerShell_, which does not require scripting to be explicitly enabled in Windows. If you supply a parameter to either of these script files you can choose to fetch an alternative VM version to the default (not usually recommended).
+* Next you will need to build the binaries as described above, or fetch the VM binaries. For convenience a batch file, `FetchVM.CMD` is supplied that will determine the correct VM version and invoke the helper PowerShell script `FetchVM.ps1` to download it. If you want to download an alternative VM (which is not usually recommended) then this can be done by invoking `FetchVM.ps1` with a parameter..
 
 * Before proceeding you will also need to pull the boot image from github large file storage. To do this execute `git lfs pull`.
 
