@@ -74,9 +74,6 @@ setUpForSelectionTesting
 	super setUpForSelectionTesting.
 	presenter view viewMode: #list!
 
-skip1071
-	self skip: 'Disabled until #1071 is fixed'!
-
 sortSelections
 	^self subclassResponsibility!
 
@@ -94,7 +91,6 @@ test1071
 	self assert: lv lvmGetOrigin equals: Point zero!
 
 testAutoResizeColumns
-	self skip1071.
 	presenter viewMode: #report.
 	"One column, full width"
 	self verifyColumnWidths: #(196).
@@ -124,7 +120,6 @@ testAutoResizeColumnsPositionChangedAddingScrollbar
 	self verifyColumnWidths: {196 - SystemMetrics current scrollbarWidth}!
 
 testAutoResizeColumnsWithChangedBorderStyles
-	self skip1071.
 	presenter viewMode: #report.
 	self verifyColumnWidths: #(196).
 	"Static edge adds an additional 1px on each side"
@@ -366,7 +361,6 @@ verifyColumnWidths: widths
 !ListViewTest categoriesFor: #setColumns:!helpers!private! !
 !ListViewTest categoriesFor: #setupClickIntercept!private! !
 !ListViewTest categoriesFor: #setUpForSelectionTesting!helpers!private! !
-!ListViewTest categoriesFor: #skip1071!helpers!private! !
 !ListViewTest categoriesFor: #sortSelections!helpers!public! !
 !ListViewTest categoriesFor: #test1071!public!unit tests! !
 !ListViewTest categoriesFor: #testAutoResizeColumns!public!unit tests! !
