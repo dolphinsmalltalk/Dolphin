@@ -65,15 +65,16 @@ addColumn: newColumn
  
 !
 
-addColumn: newColumn atIndex: columnIndex 
+addColumn: newColumn atIndex: columnIndex
 	"Insert the <ListViewColumn>, newColumn, into the receiver
 	at the <integer> index columnIndex, shifting the positions of all 
 	subsequent columns up by one. Answers the inserted column."
 
-	lastClickedColIndex notNil 
+	lastClickedColIndex notNil
 		ifTrue: [lastClickedColIndex >= columnIndex ifTrue: [lastClickedColIndex := lastClickedColIndex + 1]].
 	columns add: newColumn beforeIndex: columnIndex.
 	self basicAddColumn: newColumn atIndex: columnIndex.
+	self autoResizeColumns.
 	self invalidateLayout.
 	self updateAll.
 	^newColumn!
@@ -2046,7 +2047,8 @@ setViewMode: aSymbol
 setWidthOfColumn: colIndexInteger to: widthInteger
 	"Set the width of the column identified by itemIndex to anInteger."
 
-	self lvmSetColumnWidth: colIndexInteger-1 to: widthInteger.
+	self lvmSetColumnWidth: colIndexInteger - 1 to: widthInteger.
+	self autoResizeColumns.
 	self invalidateLayout!
 
 showDropHighlight: item

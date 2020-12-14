@@ -95,14 +95,14 @@ testAutoResizeColumns
 	"One column, full width"
 	self verifyColumnWidths: #(196).
 	"Resizes given the addition of another column"
-	presenter addColumn width: 50.
-	self verifyColumnWidths: #(146 50).
+	presenter addColumn.
+	self verifyColumnWidths: #(96 100).
 	"Two auto-resize columns share non-fixed space equally"
 	presenter addColumn isAutoResize: true.
-	self verifyColumnWidths: #(73 50 73).
+	self verifyColumnWidths: #(48 100 48).
 	"Rounding errors do not accumulate"
-	presenter columnsList second width: 51.
-	self verifyColumnWidths: #(73 51 72)!
+	presenter columnsList second width: 101.
+	self verifyColumnWidths: #(48 101 47)!
 
 testAutoResizeColumnsPositionChangedAddingScrollbar
 	| shellNCHeight |
