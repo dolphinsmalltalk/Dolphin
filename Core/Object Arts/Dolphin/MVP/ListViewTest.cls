@@ -80,6 +80,19 @@ skip1071
 sortSelections
 	^self subclassResponsibility!
 
+test1071
+	"Tests that reducing the number of items in a list that is scrolled down with auto-sizing columns does not corrupt the scroll offset."
+
+	| lv |
+	lv := presenter view.
+	lv viewMode: #report.
+	lv addColumn isAutoResize: true.
+	lv model list: (1 to: 100).
+	self assert: lv lvmGetOrigin equals: Point zero.
+	lv ensureVisible: 100.
+	lv model list: (1 to: 5).
+	self assert: lv lvmGetOrigin equals: Point zero!
+
 testAutoResizeColumns
 	self skip1071.
 	presenter viewMode: #report.
@@ -355,6 +368,7 @@ verifyColumnWidths: widths
 !ListViewTest categoriesFor: #setUpForSelectionTesting!helpers!private! !
 !ListViewTest categoriesFor: #skip1071!helpers!private! !
 !ListViewTest categoriesFor: #sortSelections!helpers!public! !
+!ListViewTest categoriesFor: #test1071!public!unit tests! !
 !ListViewTest categoriesFor: #testAutoResizeColumns!public!unit tests! !
 !ListViewTest categoriesFor: #testAutoResizeColumnsPositionChangedAddingScrollbar!public!unit tests! !
 !ListViewTest categoriesFor: #testAutoResizeColumnsWithChangedBorderStyles!public!unit tests! !
