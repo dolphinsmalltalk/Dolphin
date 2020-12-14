@@ -1,14 +1,16 @@
 # Powershell script to pull the VM files from GitHub into the current folder.
-# Edit the following to match the version of the VM that is compatible with this image
+# Either invoke with a VMversion parameter specifying the version you want to download, 
+# or use FetchVM.cmd, which will query git to determine the correct version.
 
 param 
 (
-    [string]$VMversion="v7.1.4"
+    [string]$VMversion
 )
 
 # Override Powershell's default use of TLS1.0 for web requests; this is insecure and no longer works with GitHub
 [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
 
+if(-not($VMVersion)) { Throw “VMVersion required (hint: Use/see fetchvm.cmd)” }
 
 Try 
 {
