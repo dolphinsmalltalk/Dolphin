@@ -111,7 +111,10 @@ testAutoResizeColumns
 	self verifyColumnWidths: #(48 100 48).
 	"Rounding errors do not accumulate"
 	presenter columnsList second width: 101.
-	self verifyColumnWidths: #(48 101 47)!
+	self verifyColumnWidths: #(48 101 47).
+	"Resizes when a column is removed"
+	presenter removeColumnAtIndex: 3.
+	self verifyColumnWidths: #(95 101)!
 
 testAutoResizeColumnsPositionChangedAddingScrollbar
 	| shellNCHeight |

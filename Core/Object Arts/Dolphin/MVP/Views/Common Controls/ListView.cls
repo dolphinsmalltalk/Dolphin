@@ -1886,19 +1886,18 @@ removeColumn: aListViewColumn
 
 	self removeColumnAtIndex: (self allColumns indexOf: aListViewColumn)!
 
-removeColumnAtIndex: columnIndex 
+removeColumnAtIndex: columnIndex
 	"Remove the Column at columnIndex with all its subitems."
 
-	lastClickedColIndex isNil 
+	lastClickedColIndex isNil
 		ifFalse: 
-			[columnIndex = lastClickedColIndex 
+			[columnIndex = lastClickedColIndex
 				ifTrue: [lastClickedColIndex := nil]
-				ifFalse: 
-					[columnIndex < lastClickedColIndex 
-						ifTrue: [lastClickedColIndex := lastClickedColIndex - 1]]].
+				ifFalse: [columnIndex < lastClickedColIndex ifTrue: [lastClickedColIndex := lastClickedColIndex - 1]]].
 	(columns removeAtIndex: columnIndex) parent: nil.
 	self basicRemoveColumnAtIndex: columnIndex.
 	self
+		autoResizeColumns;
 		invalidate;
 		update!
 
