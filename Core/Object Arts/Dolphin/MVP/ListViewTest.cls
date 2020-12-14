@@ -14,6 +14,15 @@ ListViewTest comment: ''!
 classToTest
 	^ListView!
 
+forceColumnResize
+	| width |
+	"Force the view to auto-resize its columns. Force this to happen as the result of a resize event,
+	as this has a different implementation than simply sending #autoResizeColumns."
+	width := presenter width.
+	presenter
+		width: width + 1;
+		width: width!
+
 getColumns
 	| answer |
 	answer := OrderedCollection new.
@@ -124,16 +133,19 @@ testAutoResizeColumnsWithChangedBorderStyles
 	self verifyColumnWidths: #(196).
 	"Static edge adds an additional 1px on each side"
 	presenter hasStaticEdge: true.
+	self forceColumnResize.
 	self verifyColumnWidths: #(194).
 	"This is a special case--we might expect to see 198 here, but when
 	static edge is the *only* border style, the columns must total 2px less
 	than the actual client width or a scrollbar appears."
 	presenter hasClientEdge: false.
+	self forceColumnResize.
 	self verifyColumnWidths: #(196).
 	"Giving the control a border stops this strange behavior,
 	resulting in no actual change in width even though the
 	visual thickness of the border increases by 1px."
 	presenter hasBorder: true.
+	self forceColumnResize.
 	self verifyColumnWidths: #(196)!
 
 testAutoResizeColumnsWithLargeNumberOfItems
@@ -354,6 +366,7 @@ verifyClicks: anArray
 verifyColumnWidths: widths
 	presenter columnsList with: widths do: [:col :width | self assert: col width equals: width]! !
 !ListViewTest categoriesFor: #classToTest!helpers!private! !
+!ListViewTest categoriesFor: #forceColumnResize!helpers!private! !
 !ListViewTest categoriesFor: #getColumns!helpers!private! !
 !ListViewTest categoriesFor: #getItem:!helpers!private! !
 !ListViewTest categoriesFor: #newSelectionAfterLeftClickOutsideList:!constants!private! !
