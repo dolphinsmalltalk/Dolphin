@@ -19,26 +19,6 @@ allocationLength
 
 	^super allocationLength - 1!
 
-printElementSizeExpressionBodyOn: aWriteStream 
-	aWriteStream display: self arrayClass elementSize!
-
-printFieldSizeExpressionOn: aWriteStream
-	| charSize |
-	charSize := self arrayClass elementSize.
-	charSize > 1
-		ifTrue: 
-			[self emitStaticExpression: 
-					[:stream |
-					stream
-						display: self allocationLength;
-						nextPutAll: ' * ';
-						display: charSize]
-				on: aWriteStream]
-		ifFalse: [aWriteStream display: self allocationLength]!
-
-printStaticElementSizeExpressionOn: aWriteStream
-	self printElementSizeExpressionBodyOn: aWriteStream!
-
 readFrom: anExternalStructure
 	"Private - Answer a <String> which is a copy of the null-terminated string embedded in the
 	<ExternalStructure> argument at the receiver's offset."
@@ -59,9 +39,6 @@ writeInto: bytes value: anObject
 	"We need 2 null-terminator bytes for a wide-char string of course"
 	1 to: elemSize do: [:i | bytes at: offset + size + i put: 0]! !
 !External.StringField categoriesFor: #allocationLength!accessing!private! !
-!External.StringField categoriesFor: #printElementSizeExpressionBodyOn:!automatic generation!private! !
-!External.StringField categoriesFor: #printFieldSizeExpressionOn:!automatic generation!private! !
-!External.StringField categoriesFor: #printStaticElementSizeExpressionOn:!automatic generation!private! !
 !External.StringField categoriesFor: #readFrom:!indirect accessing!private! !
 !External.StringField categoriesFor: #writeInto:value:!indirect accessing!private! !
 

@@ -41,12 +41,12 @@ getElementCountOf: anExternalField in: anExternalStructure
 lengthField: aSymbol
 	lengthField := aSymbol!
 
-printElementCountExpressionFor: anExternalField on: aWriteStream
-	aWriteStream
+printElementCountExpressionFor: anExternalField on: aCodeGenerationContext
+	aCodeGenerationContext writeStream
 		nextPutAll: 'self ';
 		display: lengthField!
 
-printSetSizeFor: anExternalField on: aWriteStream
+printSetSizeFor: anExternalField on: aCodeGenerationContext
 	"Private - Print a statement to set the length field corresponding to this field."
 
 	| structClass setter |
@@ -54,7 +54,7 @@ printSetSizeFor: anExternalField on: aWriteStream
 	setter := self setLengthSelector.
 	((structClass template includesKey: lengthField) or: [structClass canUnderstand: setter])
 		ifTrue: 
-			[aWriteStream
+			[aCodeGenerationContext writeStream
 				nextPutAll: 'self ';
 				display: setter;
 				space;

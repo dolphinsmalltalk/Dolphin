@@ -1,8 +1,8 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
 OS.COM.TypeInfoObject subclass: #'OS.COM.TypeLibraryAnalyzer'
-	instanceVariableNames: 'attributes namespaceName packageName libVariableName constantsPoolName aliasMap typeAnalyzers'
-	classVariableNames: 'TypeLibs'
+	instanceVariableNames: 'attributes namespaceName packageName _unused7 constantsPoolName aliasMap typeAnalyzers'
+	classVariableNames: 'StandardAliases TypeLibs'
 	imports: #(#{OS.Win32Constants} #{OS.COM.AutomationErrors})
 	classInstanceVariableNames: ''
 	classConstants: {}!
@@ -114,12 +114,11 @@ customInterfaces
 	^self selectTypes: [:t | t typekind == TKIND_INTERFACE and: [t isDual not]]!
 
 defaultGenerationFlags
-	"Answer a set of default AXTypeGenerationFlags to control code generation by
-	the receiver.
-	By default turn off MethodProtocol generation, as we rarely need to implement
-	interfaces, it is much more normal to just call them."
+	"Answer a set of default AXTypeGenerationFlags to control code generation by the receiver.
+	By default turn off MethodProtocol generation, as we rarely need to implement interfaces, it is much more normal to just call them.
+	We also turn off the generation of a typelib variable and libraryAndIndex methods to refer back to the typelib object. These are not normally needed."
 
-	^LowercaseIdentifiers!
+	^LowercaseIdentifiers | NoTypeLib!
 
 dispatchableInterfaces
 	"Answer a <collection> of all the interfaces in the receiver 
@@ -149,7 +148,7 @@ documentation
 		do: 
 			[:ex |
 			TypeLibDocumentation new
-				name: libVariableName
+				name: self packageName
 				helpstring: ex messageText
 				helpcontext: 0
 				helpfile: '']!
@@ -291,12 +290,7 @@ initializeAfterLoad
 initializeAliasMap
 	"Empty the receiver's alias map of any aliases previously set up by the user."
 
-	aliasMap := LookupTable new
-				at: 'GUID' put: GUID asQualifiedReference;
-				at: 'PROPVARIANT' put: VARIANT asQualifiedReference;
-				at: 'RemotableHandle' put: Handle asQualifiedReference;
-				at: 'FILETIME' put: FILETIME asQualifiedReference;
-				yourself	"A lot of libraries pull in GUID it seems - this avoid a guid clash warning"!
+	aliasMap := LookupTable new!
 
 interfaces
 	"Answer a <sequencedReadableCollection> of all the interfaces 
@@ -308,12 +302,6 @@ interfaces
 	(an example is the IRecFields interface in the ADO 2.5 library)."
 
 	^self selectTypes: [:t | | tk | tk := t typekind. tk == TKIND_INTERFACE or: [tk == TKIND_DISPATCH]]!
-
-isInstalled
-	"Answer whether the receiver is actually installed (and loadable) on the host machine."
-
-	[self asParameter] on: HRESULTError do: [:e | ^false].
-	^true!
 
 isName: aString 
 	"Answer whether specified string is the name of a member in the receiver."
@@ -362,10 +350,14 @@ names
 	^(1 to: self typeInfoCount) collect: [:i | lib nameAt: i]!
 
 namespaceName
-	^namespaceName ifNil: [namespaceName := (self variableNameFrom: self name) asQualifiedReference]!
+	^namespaceName
+		ifNil: 
+			[self namespaceName: (self variableNameFrom: self name).
+			namespaceName]!
 
 namespaceName: aBindingReference
-	namespaceName := aBindingReference!
+	namespaceName := aBindingReference asQualifiedReference.
+	binding := nil!
 
 path
 	"Answer the receiver's path if correctly registered, otherwise an empty string."
@@ -396,8 +388,7 @@ reset
 	some information gathered during previous generation runs (mainly the global bindings
 	associated with individual types) will be lost."
 
-	self clearCachedAnalyzers.
-	constantsPoolName := nil!
+	self clearCachedAnalyzers!
 
 selectTypeKind: typekind
 	"Private - Answer a <sequencedReadableCollection> of each of the elements of
@@ -420,7 +411,7 @@ setTypeLib: anITypeLib attributes: aTLIBATTR
 	tlbInterface := anITypeLib.
 	attributes := aTLIBATTR.
 	generationFlags := self defaultGenerationFlags.
-	namespaceName := self variableNameFrom: self name.
+	self namespaceName: (self variableNameFrom: self name).
 	self initializeAliasMap!
 
 sourceInterfaces
@@ -464,12 +455,12 @@ suggestBindingForType: userType
 	All built-in types are expected to have a GUID, but the null case is handled. If either GUID
 	is null then it is not regarded as a mismatch, even if the other is non-null."
 
-	| typeGuid suggestedName nsBinding |
+	| typeGuid suggestedName nsBinding ns |
 	suggestedName := userType suggestedGlobalName.
 
 	"If its in the alias map, then we answer that regardless - caller should check suitable"
-	self aliasMap at: suggestedName asString
-		ifPresent: 
+	(self aliasFor: suggestedName asString)
+		ifNotNil: 
 			[:alias |
 			^alias bindingOrNil
 				ifNil: 
@@ -481,12 +472,36 @@ suggestBindingForType: userType
 	typeGuid := userType guid.
 	(typeGuid notNil and: [typeGuid notNull])
 		ifTrue: [(self classBindingForGuid: typeGuid) ifNotNil: [:var | ^var]].
-	nsBinding := self namespaceBinding.
-	nsBinding notNil ifTrue: [(nsBinding value localBindingFor: suggestedName) ifNotNil: [:var | ^var]].
+	nsBinding := self suggestedBinding.
+	ns := nsBinding value.
+	ns ifNotNil: [(ns localBindingFor: suggestedName) ifNotNil: [:var | ^var]].
 
 	"Not currently defined, or defined but _may_ not be correct object, so suggest name"
 	^(VariableBinding key: suggestedName value: nil)
-		environment: (nsBinding ifNil: [Smalltalk] ifNotNil: [nsBinding value]);
+		environment: (ns ifNil: [Smalltalk]);
+		yourself!
+
+suggestedBinding
+	^binding
+		ifNil: 
+			[| ref |
+			ref := self namespaceName.
+			(binding := ref bindingOrNil)
+				ifNil: 
+					[(VariableBinding key: ref unqualifiedName value: nil)
+						environment: ref namespace;
+						yourself]]!
+
+suggestedConstantsPoolBinding
+	| customPoolName nsBinding |
+	customPoolName := self constantsPoolName.
+	nsBinding := self suggestedBinding.
+	(customPoolName isNil or: [customPoolName isEmpty]) ifTrue: [^nsBinding].
+	self definesSymbolicConstants ifFalse: [^nil].
+	nsBinding value
+		ifNotNil: [:env | (env localBindingFor: customPoolName) ifNotNil: [:poolBinding | ^poolBinding]].
+	^(VariableBinding key: customPoolName value: nil)
+		environment: nsBinding value;
 		yourself!
 
 typeAnalyzerAt: index
@@ -538,8 +553,7 @@ uninitialize
 	"Private - The receiver's global is being uninstalled from the system, tidy up
 	anything which might cause embarassment later on."
 
-	self reset.
-	libVariableName := nil!
+	self reset!
 
 unions
 	"Answer a <sequencedReadableCollection> of all the unions described in the receiver."
@@ -576,7 +590,7 @@ vtblInterfaces
 !OS.COM.TypeLibraryAnalyzer categoriesFor: #basicName!accessing!public! !
 !OS.COM.TypeLibraryAnalyzer categoriesFor: #basicTypeInfoAt:!accessing!private! !
 !OS.COM.TypeLibraryAnalyzer categoriesFor: #buildTypeAnalyzers!accessing!private! !
-!OS.COM.TypeLibraryAnalyzer categoriesFor: #classBindingForGuid:!private! !
+!OS.COM.TypeLibraryAnalyzer categoriesFor: #classBindingForGuid:!helpers!private! !
 !OS.COM.TypeLibraryAnalyzer categoriesFor: #clearCachedAnalyzers!initializing!public! !
 !OS.COM.TypeLibraryAnalyzer categoriesFor: #coclasses!enumerating!public! !
 !OS.COM.TypeLibraryAnalyzer categoriesFor: #customInterfaces!enumerating!public! !
@@ -590,13 +604,12 @@ vtblInterfaces
 !OS.COM.TypeLibraryAnalyzer categoriesFor: #dualInterfaces!enumerating!public! !
 !OS.COM.TypeLibraryAnalyzer categoriesFor: #enums!enumerating!public! !
 !OS.COM.TypeLibraryAnalyzer categoriesFor: #find:count:!public!searching! !
-!OS.COM.TypeLibraryAnalyzer categoriesFor: #fullNameFor:!public! !
+!OS.COM.TypeLibraryAnalyzer categoriesFor: #fullNameFor:!helpers!public! !
 !OS.COM.TypeLibraryAnalyzer categoriesFor: #getLibAttr!accessing!private! !
 !OS.COM.TypeLibraryAnalyzer categoriesFor: #hash!comparing!public! !
 !OS.COM.TypeLibraryAnalyzer categoriesFor: #initializeAfterLoad!initializing!public! !
 !OS.COM.TypeLibraryAnalyzer categoriesFor: #initializeAliasMap!initializing!public! !
 !OS.COM.TypeLibraryAnalyzer categoriesFor: #interfaces!enumerating!public! !
-!OS.COM.TypeLibraryAnalyzer categoriesFor: #isInstalled!public!testing! !
 !OS.COM.TypeLibraryAnalyzer categoriesFor: #isName:!accessing!public! !
 !OS.COM.TypeLibraryAnalyzer categoriesFor: #isRegistered!public!testing! !
 !OS.COM.TypeLibraryAnalyzer categoriesFor: #libid!accessing!public! !
@@ -605,8 +618,8 @@ vtblInterfaces
 !OS.COM.TypeLibraryAnalyzer categoriesFor: #namedStructs!enumerating!public! !
 !OS.COM.TypeLibraryAnalyzer categoriesFor: #namedUnions!enumerating!public! !
 !OS.COM.TypeLibraryAnalyzer categoriesFor: #names!enumerating!public! !
-!OS.COM.TypeLibraryAnalyzer categoriesFor: #namespaceName!public! !
-!OS.COM.TypeLibraryAnalyzer categoriesFor: #namespaceName:!public! !
+!OS.COM.TypeLibraryAnalyzer categoriesFor: #namespaceName!accessing!public! !
+!OS.COM.TypeLibraryAnalyzer categoriesFor: #namespaceName:!accessing!public! !
 !OS.COM.TypeLibraryAnalyzer categoriesFor: #path!accessing!public! !
 !OS.COM.TypeLibraryAnalyzer categoriesFor: #realize!private!realizing/unrealizing! !
 !OS.COM.TypeLibraryAnalyzer categoriesFor: #registration!accessing!public! !
@@ -618,6 +631,8 @@ vtblInterfaces
 !OS.COM.TypeLibraryAnalyzer categoriesFor: #stbSaveOn:!binary filing!public! !
 !OS.COM.TypeLibraryAnalyzer categoriesFor: #structs!enumerating!public! !
 !OS.COM.TypeLibraryAnalyzer categoriesFor: #suggestBindingForType:!constants!private! !
+!OS.COM.TypeLibraryAnalyzer categoriesFor: #suggestedBinding!private! !
+!OS.COM.TypeLibraryAnalyzer categoriesFor: #suggestedConstantsPoolBinding!private! !
 !OS.COM.TypeLibraryAnalyzer categoriesFor: #typeAnalyzerAt:!accessing!public! !
 !OS.COM.TypeLibraryAnalyzer categoriesFor: #typeAnalyzers!accessing!private! !
 !OS.COM.TypeLibraryAnalyzer categoriesFor: #typedefs!enumerating!public! !
@@ -660,11 +675,18 @@ initialize
 		AXTypeLibraryAnalyzer initialize
 	"
 
-	SessionManager current 
+	SessionManager current
 		when: #sessionStarted
 		send: #onStartup
 		to: self.
-	TypeLibs isNil ifTrue: [TypeLibs := WeakLookupTable new]!
+	TypeLibs isNil ifTrue: [TypeLibs := WeakLookupTable new].
+	StandardAliases := LookupTable new.
+	#(#{Core.GUID} #{OS.COM.VARIANT} #{OS.FILETIME} #{OS.LARGE_INTEGER} #{OS.ULARGE_INTEGER} #{OS.SECURITY_ATTRIBUTES} #{OS.LARGE_INTEGER} #{OS.COM.STATSTG})
+		do: [:each | StandardAliases at: each unqualifiedName put: each].
+	StandardAliases
+		at: 'PROPVARIANT' put: #{OS.COM.VARIANT};
+		at: 'RemotableHandle' put: #{External.Handle};
+		at: 'RECT' put: #{OS.RECTL}!
 
 load: libid major: verMajor minor: verMinor locale: locale
 	"Answer a new instance of the receiver on the registered type library

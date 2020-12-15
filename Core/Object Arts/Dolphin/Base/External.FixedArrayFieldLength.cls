@@ -33,10 +33,10 @@ isFixedSize
 
 	^true!
 
-printElementCountExpressionFor: anExternalField on: aWriteStream
-	aWriteStream print: elementCount!
+printElementCountExpressionFor: anExternalField on: aCodeGenerationContext
+	aCodeGenerationContext writeStream print: elementCount!
 
-printSetSizeFor: structClass on: aWriteStream
+printSetSizeFor: structClass on: aCodeGenerationContext
 	"Private - Print a statement to set the length field corresponding to this field."
 
 	"Only relevant to conformant/sized subclasses."

@@ -34,12 +34,6 @@ elementSize
 
 	^self fieldClass elementSize!
 
-printElementSizeExpressionBodyOn: aWriteStream 
-	aWriteStream
-		display: self elementClass;
-		space;
-		display: #basicByteSize!
-
 readFrom: aStructure
 	"Private - Answer a <StructureArray> of the receiver's field class which references the array of structures embedded in the <External.Structure> argument at the receiver's offset."
 
@@ -60,7 +54,6 @@ valueType
 !External.StructureArrayField categoriesFor: #arrayClass!constants!private! !
 !External.StructureArrayField categoriesFor: #elementClass!accessing!private! !
 !External.StructureArrayField categoriesFor: #elementSize!accessing!private! !
-!External.StructureArrayField categoriesFor: #printElementSizeExpressionBodyOn:!automatic generation!private! !
 !External.StructureArrayField categoriesFor: #readFrom:!indirect accessing!private! !
 !External.StructureArrayField categoriesFor: #valueParameterName!automatic generation!constants!development!private! !
 !External.StructureArrayField categoriesFor: #valueType!accessing!private! !

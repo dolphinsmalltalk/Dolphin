@@ -65,29 +65,6 @@ length
 	Notification deprecated.
 	^self allocationLength!
 
-printElementSizeExpressionBodyOn: stream 
-	stream
-		display: self arrayClass;
-		space;
-		display: #elementSize!
-
-printFieldSizeExpressionBodyOn: aWriteStream
-	arrayLength printElementCountExpressionFor: self on: aWriteStream.
-	aWriteStream nextPutAll: ' * '.
-	self isFixedSize
-		ifTrue: [self printElementSizeExpressionBodyOn: aWriteStream]
-		ifFalse: [self printStaticElementSizeExpressionOn: aWriteStream]!
-
-printFieldSizeExpressionOn: aWriteStream 
-	self isFixedSize 
-		ifTrue: 
-			[self emitStaticExpression: [:stream | self printFieldSizeExpressionBodyOn: stream] on: aWriteStream]
-		ifFalse: [self printFieldSizeExpressionBodyOn: aWriteStream]!
-
-printStaticElementSizeExpressionOn: aWriteStream
-	self emitStaticExpression: [:stream | self printElementSizeExpressionBodyOn: stream]
-		on: aWriteStream!
-
 readFrom: aStructure
 	"Private - Answer a byte-object array of the type described by the receiver, and of the size described by the receiver. Normally this will be an <ExternalArray> reference to the data in the <Structure> argument at the receiver's offset, but it can be an object of any class that responds to the #fromAddress:length: instance creation message, e.g. a <ByteArray> or a <String>, which both create a copy of the data."
 
@@ -122,10 +99,6 @@ writeInto: aStructure value: aByteObject
 !External.ArrayField categoriesFor: #elementSizeSelector!automatic generation!constants!private! !
 !External.ArrayField categoriesFor: #isFixedSize!private!testing! !
 !External.ArrayField categoriesFor: #length!accessing!private! !
-!External.ArrayField categoriesFor: #printElementSizeExpressionBodyOn:!automatic generation!private! !
-!External.ArrayField categoriesFor: #printFieldSizeExpressionBodyOn:!automatic generation!private! !
-!External.ArrayField categoriesFor: #printFieldSizeExpressionOn:!automatic generation!private! !
-!External.ArrayField categoriesFor: #printStaticElementSizeExpressionOn:!automatic generation!private! !
 !External.ArrayField categoriesFor: #readFrom:!indirect accessing!private! !
 !External.ArrayField categoriesFor: #writeInto:value:!indirect accessing!private! !
 

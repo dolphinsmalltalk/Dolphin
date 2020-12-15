@@ -185,6 +185,11 @@ isPrivate
 isPrivate: aBoolean
 	self subclassResponsibility!
 
+isQualifiedName
+	"Answer whether the receiver is a name with more than one component."
+
+	^self path size > 1!
+
 literalTextStyle
 	^#literalBindingReference!
 
@@ -232,6 +237,10 @@ printOn: aStream
 		display: self.
 	self isPrivate ifTrue: [aStream nextPutAll: ' private'].
 	aStream nextPut: $}!
+
+private
+	self isPrivate: true.
+	^self!
 
 refersToLiteral: anObject
 	"Private - Answer whether the receiver is a reference to the literal argument.
@@ -324,6 +333,7 @@ valueOrNil
 !Kernel.AbstractBindingReference categoriesFor: #isMeta!public!testing! !
 !Kernel.AbstractBindingReference categoriesFor: #isPrivate!public!testing! !
 !Kernel.AbstractBindingReference categoriesFor: #isPrivate:!accessing!public! !
+!Kernel.AbstractBindingReference categoriesFor: #isQualifiedName!public!testing! !
 !Kernel.AbstractBindingReference categoriesFor: #literalTextStyle!constants!public! !
 !Kernel.AbstractBindingReference categoriesFor: #meta!converting!public! !
 !Kernel.AbstractBindingReference categoriesFor: #namespace!operations!public! !
@@ -332,6 +342,7 @@ valueOrNil
 !Kernel.AbstractBindingReference categoriesFor: #path!accessing!public! !
 !Kernel.AbstractBindingReference categoriesFor: #pathString!accessing!public! !
 !Kernel.AbstractBindingReference categoriesFor: #printOn:!printing!public! !
+!Kernel.AbstractBindingReference categoriesFor: #private!converting!public! !
 !Kernel.AbstractBindingReference categoriesFor: #refersToLiteral:!private!testing! !
 !Kernel.AbstractBindingReference categoriesFor: #shortName!accessing!public! !
 !Kernel.AbstractBindingReference categoriesFor: #simpleName!accessing!public! !

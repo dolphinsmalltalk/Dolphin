@@ -2212,7 +2212,10 @@ Core.Object variableByteSubclass: #'Core.GUID'
 	classVariableNames: 'Null'
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: {
+		'ByteSize' -> 16r10.
+		'StringSize' -> 16r26
+	}!
 Core.Object subclass: #'Kernel.InputState'
 	instanceVariableNames: 'inputSemaphore idler idleTimer main windows deferredActions lastWindow wakeupEvent msgWindow queueStatusMask'
 	classVariableNames: 'MaxIdleSleep SamplingInterval UserInterruptSignal'

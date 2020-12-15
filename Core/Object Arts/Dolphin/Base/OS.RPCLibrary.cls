@@ -11,6 +11,11 @@ OS.RPCLibrary comment: ''!
 !OS.RPCLibrary categoriesForClass!External-Libraries-Win32! !
 !OS.RPCLibrary methodsFor!
 
+invalidCall: anInteger
+	"Private - An invalid external call was attempted through one of the receiver's methods. The argument is the failure code from the external call primitive, which in the case of the RPCLibrary can be a non-zero RPC_STATUS return code from the function call."
+
+	^anInteger < 0 ifTrue: [super invalidCall: anInteger] ifFalse: [RPCError signalWith: anInteger]!
+
 rpcStringFree: lppstr
 	"Free a character string allocated by the RPC library.
 		RPC_STATUS RPC_ENTRY RpcStringFree( 
@@ -50,17 +55,7 @@ uuidFromString: uuid uuid: lppstr
 			UUID *  Uuid	
 		);"
 
-	<stdcall: sdword UuidFromStringA char* void*>
-	^self invalidCall: _failureCode!
-
-uuidHash: uuid status: status
-	"
-		unsigned short RPC_ENTRY UuidHash( 
-			UUID *  Uuid, 	
-			RPC_STATUS *  Status	
-		);"
-
-	<stdcall: word UuidHash void* dword*>
+	<stdcall: errno UuidFromStringA char* void*>
 	^self invalidCall: _failureCode!
 
 uuidToString: uuid stringUuid: lppstr
@@ -70,13 +65,13 @@ uuidToString: uuid stringUuid: lppstr
 			unsigned char **  StringUuid	
 		);"
 
-	<stdcall: sdword UuidToStringA void* char**>
+	<stdcall: errno UuidToStringA void* char**>
 	^self invalidCall: _failureCode! !
+!OS.RPCLibrary categoriesFor: #invalidCall:!exceptions!private! !
 !OS.RPCLibrary categoriesFor: #rpcStringFree:!primitives!public!win32 functions-rpc! !
 !OS.RPCLibrary categoriesFor: #uuidCompare:uuid2:status:!primitives!public!win32 functions-rpc! !
 !OS.RPCLibrary categoriesFor: #uuidCreate:!primitives!public!win32 functions-rpc! !
 !OS.RPCLibrary categoriesFor: #uuidFromString:uuid:!primitives!public!win32 functions-rpc! !
-!OS.RPCLibrary categoriesFor: #uuidHash:status:!primitives!public!win32 functions-rpc! !
 !OS.RPCLibrary categoriesFor: #uuidToString:stringUuid:!primitives!public!win32 functions-rpc! !
 
 !OS.RPCLibrary class methodsFor!

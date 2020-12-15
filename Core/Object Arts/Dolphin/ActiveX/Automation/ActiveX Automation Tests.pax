@@ -90,12 +90,12 @@ testExtendedErrorInfo
 	"Tests that extended error info is accessed on failed external API calls through COM interfaces if the target object supports it."
 
 	| script errorInfo error |
-	script := Smalltalk.IScriptControl new.
+	script := MSScriptControl.IScriptControl new.
 	self assert: script supportsErrorInfo.
 	errorInfo := [script eval: '1+2'] on: HRESULTError do: [:ex | ex errorInfo].
 	self assert: errorInfo notNil.
 	self assert: errorInfo source equals: 'ScriptControl'.
-	self assert: errorInfo guid equals: Smalltalk.IScriptControl guid.
+	self assert: errorInfo guid equals: MSScriptControl.IScriptControl guid.
 	script free.
 	error := [script eval: '1+2'] on: HRESULTError do: [:ex | ex].
 	self assertIsNil: error errorInfo.

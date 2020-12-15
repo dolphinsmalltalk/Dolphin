@@ -28,7 +28,7 @@ buildLengthReader: anExternalField
 
 buildLengthWriter: anExternalField
 	| expr varName |
-	expr := String writeStream.
+	expr := anExternalField structClass newCodeGenerationContext.
 	varName := '__struct'.
 	self
 		printSetSizeIsExpression: self sizeIsExpression
@@ -39,7 +39,7 @@ buildLengthWriter: anExternalField
 	^expr isEmpty
 		ifTrue: [[:struct :value | value]]
 		ifFalse: 
-			[expr := String writeStream
+			[expr := String smalltalkWriteStream
 						nextPutAll: '[:';
 						nextPutAll: varName;
 						nextPutAll: ' :';
@@ -72,19 +72,19 @@ invertSizeIsExpression: aParseTree paramName: aString
 			^nil].
 	^assignment solveFor: variables first name!
 
-printElementCountExpressionFor: anExternalField on: aWriteStream
+printElementCountExpressionFor: anExternalField on: aCodeGenerationContext
 	(SizeIsExpressionFormatter structClass: anExternalField structClass variable: 'self')
 		format: self sizeIsExpression
-		on: aWriteStream!
+		on: aCodeGenerationContext writeStream!
 
-printSetSizeFor: anExternalField on: aWriteStream
+printSetSizeFor: anExternalField on: aCodeGenerationContext
 	self
 		printSetSizeIsExpression: self sizeIsExpression
 		for: anExternalField
 		variable: 'self'
-		on: aWriteStream!
+		on: aCodeGenerationContext!
 
-printSetSizeIsExpression: anStProgramNode for: anExternalField variable: aString on: aWriteStream
+printSetSizeIsExpression: anStProgramNode for: anExternalField variable: aString on: aCodeGenerationContext
 	| expr setter structClass sizeFieldName |
 	expr := self invertSizeIsExpression: anStProgramNode paramName: anExternalField valueParameterName.
 	sizeFieldName := expr variable name.
@@ -92,14 +92,15 @@ printSetSizeIsExpression: anStProgramNode for: anExternalField variable: aString
 	structClass := anExternalField structClass.
 	((structClass template includesKey: sizeFieldName) or: [structClass canUnderstand: setter])
 		ifTrue: 
-			[aWriteStream
+			[| stream |
+			stream := aCodeGenerationContext writeStream.
+			stream
 				nextPutAll: aString;
 				space;
 				display: setter;
 				space.
-			(SizeIsExpressionFormatter structClass: structClass variable: aString) format: expr value
-				on: aWriteStream.
-			aWriteStream
+			(SizeIsExpressionFormatter structClass: structClass variable: aString) format: expr value on: stream.
+			stream
 				nextPut: $.;
 				crtab]!
 

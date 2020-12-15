@@ -151,6 +151,9 @@ oInst
 
 	^bytes dwordAtOffset: _OffsetOf_oInst!
 
+value
+	^self lpvarValue value!
+
 varkind
 	"Answer the <Integer> value of the receiver's 'varkind' field."
 
@@ -180,6 +183,7 @@ wVarFlags
 !OS.COM.VARDESC categoriesFor: #lpvarValue!**compiled accessors**!public! !
 !OS.COM.VARDESC categoriesFor: #memid!**compiled accessors**!public! !
 !OS.COM.VARDESC categoriesFor: #oInst!**compiled accessors**!public! !
+!OS.COM.VARDESC categoriesFor: #value!accessing!public! !
 !OS.COM.VARDESC categoriesFor: #varkind!**compiled accessors**!public! !
 !OS.COM.VARDESC categoriesFor: #wVarFlags!**compiled accessors**!public! !
 

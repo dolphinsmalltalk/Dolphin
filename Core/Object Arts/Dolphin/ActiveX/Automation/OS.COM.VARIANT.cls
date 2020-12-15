@@ -11,7 +11,7 @@ OS.COM.FinalizableStructure subclass: #'OS.COM.VARIANT'
 		'_OffsetOf_wReserved1' -> 16r2.
 		'_OffsetOf_wReserved2' -> 16r4.
 		'_OffsetOf_wReserved3' -> 16r6.
-		'VTClasses' -> #(#{UndefinedObject} nil #{SWORD} #{SDWORD} #{FLOAT} #{DOUBLE} #{CURRENCY} #{DATE} #{BSTR} #{IDispatch} #{HRESULT} #{VARIANT_BOOL} #{VARIANT} #{IUnknown} #{DECIMAL} nil #{SBYTE} #{BYTE} #{WORD} #{DWORD} #{LARGE_INTEGER} #{ULARGE_INTEGER} #{SDWORD} #{DWORD} #{VOID} #{HRESULT} #{Address} #{SAFEARRAY} #{External.Array} #{Record} #{String} #{Utf16String} nil nil nil nil #{Structure} nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil #{FILETIME} nil nil nil nil nil nil #{DWORD} #{CLSID}).
+		'VTClasses' -> #(#{UndefinedObject} nil #{SWORD} #{SDWORD} #{FLOAT} #{DOUBLE} #{CURRENCY} #{DATE} #{BSTR} #{IDispatch} #{HRESULT} #{VARIANT_BOOL} #{VARIANT} #{IUnknown} #{DECIMAL} nil #{SBYTE} #{BYTE} #{WORD} #{DWORD} #{LARGE_INTEGER} #{ULARGE_INTEGER} #{SDWORD} #{DWORD} #{VOID} #{HRESULT} #{Address} #{SAFEARRAY} #{External.Array} #{Record} #{AnsiString} #{Utf16String} nil nil nil nil #{Structure} nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil #{FILETIME} nil nil nil nil nil nil #{DWORD} #{CLSID}).
 		'VTNames' -> #(#nil #null #sword #sdword #float #double #cy #date #bstr #dispatch #hresult #varbool #variant #unknown #decimal #badVarType #sbyte #byte #word #dword #sqword #qword #sdword #dword #void #hresult #lpvoid #safearray #carray #typedef #lpstr #lpwstr #badVarType #badVarType #badVarType #badVarType #struct #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #filetime #blob #stream #storage #streamed_object #stored_object #blob_object #cf #clsid)
 	}!
 OS.COM.VARIANT guid: (Core.GUID fromString: '{c06f3b65-0868-11d3-93af-00a024ca708a}')!
@@ -1074,7 +1074,7 @@ initializeVTClasses
 		at: VT_I4+1			put: #{SDWORD};		"32-bit signed integer"
 		at: VT_I8+1			put: #{LARGE_INTEGER};	"64-bit signed integer - supported type on WinXP"
 		at: VT_INT+1			put: #{SDWORD};		"signed machine dependent integer - TYPEDESC only"
-		at: VT_LPSTR+1			put: #{String};		"Null-terminated ANSI string - OLE Property Sets and TYPEDESC only"
+		at: VT_LPSTR+1			put: #{AnsiString};		"Null-terminated ANSI string - OLE Property Sets and TYPEDESC only"
 		at: VT_LPWSTR+1		put: #{Utf16String};	"Null-terminated UTF16 string - OLE Property Sets and TYPEDESC only"
 		"at: VT_NULL+1			put: #{UndefinedObject};	""SQL Null (i.e. nil)"
 		at: VT_PTR+1			put: #{Address};	"Pointer type - TYPEDESC only"

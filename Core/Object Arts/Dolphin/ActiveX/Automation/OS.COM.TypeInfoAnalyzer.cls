@@ -217,6 +217,18 @@ guid
 	guid isNil ifTrue: [guid := super guid].
 	^guid!
 
+hasConstantsGeneratedAs: aNamespace
+	^self constants allSatisfy: 
+			[:each |
+			| var |
+			var := aNamespace localBindingFor: each name.
+			var notNil and: [var value = each value]]!
+
+hasFunctions
+	"Answer whether the receiver defines any functions."
+
+	^self attributes cFuncs ~~ 0!
+
 hash
 	"Answer the <integer> hash value for the receiver."
 
@@ -250,21 +262,16 @@ isDual
 
 !
 
+isGeneratedAs: aClass
+	^self hasFunctions not
+		or: [aClass methodDictionary notEmpty or: [aClass class methodDictionary notEmpty]]!
+
 isHidden
 	"Answer whether the receiver is describing a type which should
 	not be displayed in type library browsers.
 	Applicable to all typekinds."
 
 	^self tlbInterface isHidden!
-
-isInstalled
-	"Answer whether the receiver has been generated into a class in this image"
-
-	^self isVariableDefined and: 
-			[| class |
-			class := self programObject.
-			self functions isEmpty
-				or: [class methodDictionary notEmpty or: [class class methodDictionary notEmpty]]]!
 
 isStructure
 	"Answer whether the receiver describes a struct or union type."
@@ -279,7 +286,14 @@ isUnion
 isVariableDefined
 	"Answer whether a global has already been defined for the receiver."
 
-	^self binding value notNil!
+	| class |
+	class := self binding value.
+	^class notNil and: 
+			[class class isMeta and: 
+					[class guid = self guid or: 
+							[| nsName |
+							nsName := self typeLib namespaceName.
+							class fullyQualifiedReference = nsName or: [class environment fullyQualifiedReference = nsName]]]]!
 
 nameOfID: memid
 	"Answer a <readableString> name for the member of the 
@@ -432,14 +446,16 @@ vt
 !OS.COM.TypeInfoAnalyzer categoriesFor: #getNamesOfMember:count:!accessing!private! !
 !OS.COM.TypeInfoAnalyzer categoriesFor: #getRefType:!accessing!private! !
 !OS.COM.TypeInfoAnalyzer categoriesFor: #guid!accessing!public! !
+!OS.COM.TypeInfoAnalyzer categoriesFor: #hasConstantsGeneratedAs:!private!testing! !
+!OS.COM.TypeInfoAnalyzer categoriesFor: #hasFunctions!public!testing! !
 !OS.COM.TypeInfoAnalyzer categoriesFor: #hash!comparing!public! !
 !OS.COM.TypeInfoAnalyzer categoriesFor: #idOfName:ifAbsent:!accessing!public! !
 !OS.COM.TypeInfoAnalyzer categoriesFor: #includeIDLInClassComment!constants!private! !
 !OS.COM.TypeInfoAnalyzer categoriesFor: #index!constants!public! !
 !OS.COM.TypeInfoAnalyzer categoriesFor: #isDispatchable!public!testing! !
 !OS.COM.TypeInfoAnalyzer categoriesFor: #isDual!public!testing! !
+!OS.COM.TypeInfoAnalyzer categoriesFor: #isGeneratedAs:!private!testing! !
 !OS.COM.TypeInfoAnalyzer categoriesFor: #isHidden!public!testing! !
-!OS.COM.TypeInfoAnalyzer categoriesFor: #isInstalled!public!testing! !
 !OS.COM.TypeInfoAnalyzer categoriesFor: #isStructure!public!testing! !
 !OS.COM.TypeInfoAnalyzer categoriesFor: #isUnion!public!testing! !
 !OS.COM.TypeInfoAnalyzer categoriesFor: #isVariableDefined!public!testing! !

@@ -2,7 +2,7 @@
 
 Core.Object subclass: #'OS.COM.TypeInfoObject'
 	instanceVariableNames: 'tlbInterface generationFlags binding'
-	classVariableNames: 'ClassCommentStyleMap GuidClash HighLevelWrapperStyleMap SuperclassClash TracingStyleMap'
+	classVariableNames: 'ClassCommentStyleMap GuidClash HighLevelWrapperStyleMap NamespaceClash SuperclassClash TracingStyleMap'
 	imports: #(#{OS.COM.AutomationConstants} #{OS.COM.TypeGenerationFlags})
 	classInstanceVariableNames: ''
 	classConstants: {}!
@@ -85,11 +85,6 @@ isHidden
 
 	^self attributes isHidden!
 
-isInstalled
-	"Answer whether the receiver has been generated into a global (normally a class) in this image"
-
-	^self subclassResponsibility!
-
 isNull
 	"Answer whether the receiver is a null external data item
 	(that is, a null pointer, or a nilled out structure)."
@@ -146,7 +141,6 @@ variableName
 !OS.COM.TypeInfoObject categoriesFor: #helpfile!accessing!public! !
 !OS.COM.TypeInfoObject categoriesFor: #helpstring!accessing!public! !
 !OS.COM.TypeInfoObject categoriesFor: #isHidden!public!testing! !
-!OS.COM.TypeInfoObject categoriesFor: #isInstalled!public!testing! !
 !OS.COM.TypeInfoObject categoriesFor: #isNull!public!testing! !
 !OS.COM.TypeInfoObject categoriesFor: #isRestricted!public!testing! !
 !OS.COM.TypeInfoObject categoriesFor: #name!accessing!public! !

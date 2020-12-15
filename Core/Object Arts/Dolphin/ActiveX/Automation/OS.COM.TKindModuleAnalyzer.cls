@@ -46,6 +46,12 @@ getDllEntry: funcDesc
 includeIDLInClassComment
 	^false!
 
+isGeneratedAs: aClass
+	^(super isGeneratedAs: aClass) and: [self hasConstantsGeneratedAs: aClass]!
+
+suggestedBinding
+	^self hasFunctions ifTrue: [super suggestedBinding] ifFalse: [self typeLib suggestedBinding]!
+
 suggestedGlobalName
 	"Private - Answer a <readableString> name suggested as the (unprefixed) for a global
 	generated to represent the receiver's type."
@@ -55,6 +61,8 @@ suggestedGlobalName
 !OS.COM.TKindModuleAnalyzer categoriesFor: #dllNameIfNone:!accessing!public! !
 !OS.COM.TKindModuleAnalyzer categoriesFor: #getDllEntry:!accessing!private! !
 !OS.COM.TKindModuleAnalyzer categoriesFor: #includeIDLInClassComment!constants!private! !
+!OS.COM.TKindModuleAnalyzer categoriesFor: #isGeneratedAs:!private!testing! !
+!OS.COM.TKindModuleAnalyzer categoriesFor: #suggestedBinding!accessing!private! !
 !OS.COM.TKindModuleAnalyzer categoriesFor: #suggestedGlobalName!accessing!private! !
 
 !OS.COM.TKindModuleAnalyzer class methodsFor!

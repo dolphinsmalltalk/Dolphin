@@ -21,6 +21,20 @@ baseClass
 
 	^self shouldNotImplement!
 
+binding
+	"Private - Answer the global binding (or the proposed global binding) for the receiver.
+	Notes: 
+	1) The global binding is not saved down until actually generated as we want
+	to keep in step with any changes in the class library prefix.
+	2) If we find that the global binding is outdated (i.e. the global no longer exists), then 
+	we must reset."
+
+	binding notNil
+		ifTrue: 
+			["Find or clear (if removed) the current binding"
+			self binding: (self environment localBindingFor: binding key)].
+	^binding ifNil: [self typeLib constantsPoolBinding]!
+
 constants
 	"Answer <sequencedReadableCollection> of VARDESCs describing the 
 	member variables of the receiver's structure (assumes it is a structure -
@@ -28,19 +42,23 @@ constants
 
 	^self variables!
 
+isGeneratedAs: aNamespace
+	^self hasConstantsGeneratedAs: aNamespace!
+
 name
 	"Answer a <readableString> name for the receiver, retrieved from the
 	documentation."
 	
 	^self nameSansTag!
 
-suggestedGlobalName
-	"Private - Answer a <readableString> name suggested as the (unprefixed) for a global
-	generated to represent the receiver's type.
-	Implementation Note: All enums are generated into the same pool, so the global is shared
-	and under a name related to the library, not the receiver."
+suggestedBinding
+	^self typeLib suggestedConstantsPoolBinding!
 
-	^self typeLib name, 'Constants'!
+suggestedGlobalName
+	"Private - Answer a <readableString> name suggested as the (unprefixed) for a global generated to represent the receiver's type.
+	Implementation Note: All enums are generated into the namespace for the type library, so the global is shared and under a name related to the library, not the receiver."
+
+	^self typeLib namespaceName!
 
 vt
 	"Answer a variant type code (a member of VARENUM) which describes the type
@@ -49,8 +67,11 @@ vt
 
 	^VT_I4! !
 !OS.COM.TKindEnumAnalyzer categoriesFor: #baseClass!constants!private! !
+!OS.COM.TKindEnumAnalyzer categoriesFor: #binding!accessing!private! !
 !OS.COM.TKindEnumAnalyzer categoriesFor: #constants!enumerating!public! !
+!OS.COM.TKindEnumAnalyzer categoriesFor: #isGeneratedAs:!private!testing! !
 !OS.COM.TKindEnumAnalyzer categoriesFor: #name!accessing!public! !
+!OS.COM.TKindEnumAnalyzer categoriesFor: #suggestedBinding!accessing!private! !
 !OS.COM.TKindEnumAnalyzer categoriesFor: #suggestedGlobalName!accessing!private! !
 !OS.COM.TKindEnumAnalyzer categoriesFor: #vt!constants!public! !
 

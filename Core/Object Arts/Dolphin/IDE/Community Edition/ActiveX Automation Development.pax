@@ -37,21 +37,21 @@ package setMethodNames: #(
 	#(#{Core.ByteArray class} #fieldType)
 	#(#{Core.ByteArray class} #fieldType:indirections:)
 	#(#{Core.ByteArray class} #pointerFieldType)
-	#(#{Core.ByteArray class} #printStructField:indirections:on:in:)
+	#(#{Core.ByteArray class} #printStructField:indirections:on:)
 	#(#{Core.GUID class} #arrayType:)
 	#(#{Core.GUID class} #elementType:)
 	#(#{Core.GUID class} #newToClipboard)
 	#(#{Core.GUID class} #printMethodArgument:elemdesc:indirections:on:for:)
-	#(#{Core.GUID class} #printStructField:indirections:on:in:)
+	#(#{Core.GUID class} #printStructField:indirections:on:)
 	#(#{Core.String class} #arrayType)
 	#(#{Core.String class} #arrayType:)
 	#(#{Core.String class} #elementType:)
 	#(#{Core.String class} #printMethodArgument:elemdesc:indirections:on:for:)
-	#(#{Core.String class} #printStructField:indirections:on:in:)
+	#(#{Core.String class} #printStructField:indirections:on:)
 	#(#{Core.Utf16String class} #printMethodArgument:elemdesc:indirections:on:for:)
 	#(#{External.Address class} #fieldType)
-	#(#{External.ArrayField class} #printVariable:type:indirections:on:in:)
-	#(#{External.ArrayPointerField class} #printVariable:type:indirections:on:in:)
+	#(#{External.ArrayField class} #printVariable:type:indirections:on:)
+	#(#{External.ArrayPointerField class} #printVariable:type:indirections:on:)
 	#(#{External.BOOL class} #fieldType)
 	#(#{External.BOOLEAN class} #fieldType)
 	#(#{External.BYTE class} #arrayType)
@@ -66,13 +66,13 @@ package setMethodNames: #(
 	#(#{External.ExternalArray class} #fieldType)
 	#(#{External.ExternalArray class} #fieldType:indirections:)
 	#(#{External.ExternalArray class} #pointerFieldType)
-	#(#{External.ExternalArray class} #printStructField:indirections:on:in:)
-	#(#{External.Field class} #printArrayField:length:on:in:)
-	#(#{External.Field class} #printArrayField:type:on:in:)
-	#(#{External.Field class} #printConformantArrayLength:on:in:)
+	#(#{External.ExternalArray class} #printStructField:indirections:on:)
+	#(#{External.Field class} #printArrayField:length:on:)
+	#(#{External.Field class} #printArrayField:type:on:)
+	#(#{External.Field class} #printConformantArrayLength:on:)
 	#(#{External.Field class} #printFixedArrayLength:on:)
-	#(#{External.Field class} #printTypedField:on:in:)
-	#(#{External.Field class} #printVariable:type:indirections:on:in:)
+	#(#{External.Field class} #printTypedField:on:)
+	#(#{External.Field class} #printVariable:type:indirections:on:)
 	#(#{External.Field class} #warningMultiDimensionArray:)
 	#(#{External.FLOAT class} #arrayType)
 	#(#{External.FLOAT class} #fieldType)
@@ -83,12 +83,12 @@ package setMethodNames: #(
 	#(#{External.INT_PTR class} #arrayType)
 	#(#{External.INT_PTR class} #fieldType)
 	#(#{External.IntegerBytes class} #fieldType)
-	#(#{External.IntegerBytes class} #printStructField:indirections:on:in:)
+	#(#{External.IntegerBytes class} #printStructField:indirections:on:)
 	#(#{External.POINT} #printOn:)
 	#(#{External.PointerArray class} #fieldType)
 	#(#{External.PointerArray class} #pointerFieldType)
-	#(#{External.PointerArrayField class} #printVariable:type:indirections:on:in:)
-	#(#{External.PointerField class} #printVariable:type:indirections:on:in:)
+	#(#{External.PointerArrayField class} #printVariable:type:indirections:on:)
+	#(#{External.PointerField class} #printVariable:type:indirections:on:)
 	#(#{External.QWORD class} #fieldType)
 	#(#{External.SBYTE class} #arrayType)
 	#(#{External.SBYTE class} #fieldType)
@@ -103,14 +103,14 @@ package setMethodNames: #(
 	#(#{External.Structure class} #printDefaultValue:on:)
 	#(#{External.Structure class} #printMethodArgument:elemdesc:indirections:on:for:)
 	#(#{External.Structure class} #printOptionalParameter:on:for:)
-	#(#{External.Structure class} #printStructField:indirections:on:in:)
+	#(#{External.Structure class} #printStructField:indirections:on:)
 	#(#{External.Structure class} #printWrappedValue:on:for:)
 	#(#{External.Structure class} #unspecifiedParameterValue)
 	#(#{External.StructureArray class} #fieldType)
 	#(#{External.StructureArray class} #pointerFieldType)
-	#(#{External.StructureArrayField class} #printVariable:type:indirections:on:in:)
-	#(#{External.StructureArrayPointerField class} #printVariable:type:indirections:on:in:)
-	#(#{External.StructureField class} #printVariable:type:indirections:on:in:)
+	#(#{External.StructureArrayField class} #printVariable:type:indirections:on:)
+	#(#{External.StructureArrayPointerField class} #printVariable:type:indirections:on:)
+	#(#{External.StructureField class} #printVariable:type:indirections:on:)
 	#(#{External.SWORD class} #arrayType)
 	#(#{External.SWORD class} #fieldType)
 	#(#{External.UINT_PTR class} #arrayType)
@@ -174,6 +174,7 @@ package setMethodNames: #(
 	#(#{OS.COM.FUNCDESC} #buildMethodName)
 	#(#{OS.COM.FUNCDESC} #displayOn:)
 	#(#{OS.COM.FUNCDESC} #generate)
+	#(#{OS.COM.FUNCDESC} #generateWrapper)
 	#(#{OS.COM.FUNCDESC} #hasAnswer)
 	#(#{OS.COM.FUNCDESC} #hasMultipleOutputs)
 	#(#{OS.COM.FUNCDESC} #hasOptionalInputs)
@@ -292,7 +293,7 @@ package setMethodNames: #(
 	#(#{OS.COM.StructureTypeAnalyzer} #printAnonymousStruct:offset:prefix:hidden:on:)
 	#(#{OS.COM.StructureTypeAnalyzer} #printClassCommentPreambleOn:)
 	#(#{OS.COM.StructureTypeAnalyzer} #printFieldDefinition:offset:prefix:hidden:on:)
-	#(#{OS.COM.StructureTypeAnalyzer} #printFieldDefinitionsOn:offset:prefix:hidden:)
+	#(#{OS.COM.StructureTypeAnalyzer} #printFieldDefinitionsOn:offset:hidden:)
 	#(#{OS.COM.StructureTypeAnalyzer} #printIDLBodyOn:indent:)
 	#(#{OS.COM.StructureTypeAnalyzer} #printIDLForVariablesOn:indent:)
 	#(#{OS.COM.StructureTypeAnalyzer} #printIDLOn:indent:)
@@ -336,11 +337,11 @@ package setMethodNames: #(
 	#(#{OS.COM.TKindDispatchAnalyzer} #printRawPropPutBody:name:on:)
 	#(#{OS.COM.TKindDispatchAnalyzer class} #icon)
 	#(#{OS.COM.TKindDispatchAnalyzer class} #publishedAspectsOfInstances)
-	#(#{OS.COM.TKindEnumAnalyzer} #constantsPool)
 	#(#{OS.COM.TKindEnumAnalyzer} #generateInstanceSide:)
 	#(#{OS.COM.TKindEnumAnalyzer} #generateVariableDefinition:)
 	#(#{OS.COM.TKindEnumAnalyzer} #idlAttributes)
 	#(#{OS.COM.TKindEnumAnalyzer} #idlKeyword)
+	#(#{OS.COM.TKindEnumAnalyzer} #isInstalled)
 	#(#{OS.COM.TKindEnumAnalyzer} #printIDLBodyOn:indent:)
 	#(#{OS.COM.TKindEnumAnalyzer} #printIDLOn:indent:)
 	#(#{OS.COM.TKindEnumAnalyzer} #removeOldWrappers:)
@@ -370,6 +371,7 @@ package setMethodNames: #(
 	#(#{OS.COM.TKindModuleAnalyzer} #areWrappersRequired)
 	#(#{OS.COM.TKindModuleAnalyzer} #generateClassFilename)
 	#(#{OS.COM.TKindModuleAnalyzer} #generateClassSide:)
+	#(#{OS.COM.TKindModuleAnalyzer} #generateConstants)
 	#(#{OS.COM.TKindModuleAnalyzer} #generateInstanceSide:)
 	#(#{OS.COM.TKindModuleAnalyzer} #generateMethodWrappers)
 	#(#{OS.COM.TKindModuleAnalyzer} #generateWrapper)
@@ -406,7 +408,6 @@ package setMethodNames: #(
 	#(#{OS.COM.TypeInfoAnalyzer} #compileRawMethod:categories:)
 	#(#{OS.COM.TypeInfoAnalyzer} #compileTestingMethod:)
 	#(#{OS.COM.TypeInfoAnalyzer} #conformsToRequiredProtocols:)
-	#(#{OS.COM.TypeInfoAnalyzer} #constantsPool)
 	#(#{OS.COM.TypeInfoAnalyzer} #determineNewBase:forExistingWrapper:)
 	#(#{OS.COM.TypeInfoAnalyzer} #emitComment:on:)
 	#(#{OS.COM.TypeInfoAnalyzer} #generate)
@@ -414,7 +415,6 @@ package setMethodNames: #(
 	#(#{OS.COM.TypeInfoAnalyzer} #generateClassComment)
 	#(#{OS.COM.TypeInfoAnalyzer} #generateClassDefinition:imports:)
 	#(#{OS.COM.TypeInfoAnalyzer} #generateClassSide:)
-	#(#{OS.COM.TypeInfoAnalyzer} #generateConstants)
 	#(#{OS.COM.TypeInfoAnalyzer} #generateConstantsIntoPool:)
 	#(#{OS.COM.TypeInfoAnalyzer} #generateInstanceSide:)
 	#(#{OS.COM.TypeInfoAnalyzer} #generateVariableDefinition)
@@ -427,6 +427,8 @@ package setMethodNames: #(
 	#(#{OS.COM.TypeInfoAnalyzer} #identifierFrom:)
 	#(#{OS.COM.TypeInfoAnalyzer} #idlTypeOfVT:)
 	#(#{OS.COM.TypeInfoAnalyzer} #isClassCheck:)
+	#(#{OS.COM.TypeInfoAnalyzer} #isInstalled)
+	#(#{OS.COM.TypeInfoAnalyzer} #namespaceClashPrompt:)
 	#(#{OS.COM.TypeInfoAnalyzer} #packageCheck:)
 	#(#{OS.COM.TypeInfoAnalyzer} #printAutoGenMethodPostambleOn:)
 	#(#{OS.COM.TypeInfoAnalyzer} #printClass:on:)
@@ -445,7 +447,6 @@ package setMethodNames: #(
 	#(#{OS.COM.TypeInfoObject} #basicIdlAttributes)
 	#(#{OS.COM.TypeInfoObject} #classComments)
 	#(#{OS.COM.TypeInfoObject} #classComments:)
-	#(#{OS.COM.TypeInfoObject} #constantsPool)
 	#(#{OS.COM.TypeInfoObject} #customAttributes)
 	#(#{OS.COM.TypeInfoObject} #defineFunctionTables)
 	#(#{OS.COM.TypeInfoObject} #defineFunctionTables:)
@@ -463,10 +464,12 @@ package setMethodNames: #(
 	#(#{OS.COM.TypeInfoObject} #highLevelWrappers:)
 	#(#{OS.COM.TypeInfoObject} #idlAttributes)
 	#(#{OS.COM.TypeInfoObject} #idlKeyword)
+	#(#{OS.COM.TypeInfoObject} #isInstalled)
 	#(#{OS.COM.TypeInfoObject} #isTraceOnly)
 	#(#{OS.COM.TypeInfoObject} #isTracing)
 	#(#{OS.COM.TypeInfoObject} #isTracingVerbose)
 	#(#{OS.COM.TypeInfoObject} #isTracingVerbose:)
+	#(#{OS.COM.TypeInfoObject} #namespaceClashSignal)
 	#(#{OS.COM.TypeInfoObject} #namespaceImports)
 	#(#{OS.COM.TypeInfoObject} #packageCheck:)
 	#(#{OS.COM.TypeInfoObject} #printAttributeList:on:)
@@ -485,6 +488,7 @@ package setMethodNames: #(
 	#(#{OS.COM.TypeInfoObject class} #highLevelWrapperStyleMap)
 	#(#{OS.COM.TypeInfoObject class} #highLevelWrapperStyles)
 	#(#{OS.COM.TypeInfoObject class} #icon)
+	#(#{OS.COM.TypeInfoObject class} #namespaceClashSignal)
 	#(#{OS.COM.TypeInfoObject class} #stonAllInstVarNames)
 	#(#{OS.COM.TypeInfoObject class} #tracingStyleMap)
 	#(#{OS.COM.TypeInfoObject class} #tracingStyles)
@@ -493,9 +497,9 @@ package setMethodNames: #(
 	#(#{OS.COM.TypeLibraryAnalyzer} #addAlias:forType:)
 	#(#{OS.COM.TypeLibraryAnalyzer} #addClassToPackage:)
 	#(#{OS.COM.TypeLibraryAnalyzer} #addVariableToPackage:)
+	#(#{OS.COM.TypeLibraryAnalyzer} #aliasFor:)
 	#(#{OS.COM.TypeLibraryAnalyzer} #binding)
 	#(#{OS.COM.TypeLibraryAnalyzer} #checkConformanceOfExistingPool:)
-	#(#{OS.COM.TypeLibraryAnalyzer} #constantsPool)
 	#(#{OS.COM.TypeLibraryAnalyzer} #constantsPoolBinding)
 	#(#{OS.COM.TypeLibraryAnalyzer} #constantsPoolName)
 	#(#{OS.COM.TypeLibraryAnalyzer} #constantsPoolName:)
@@ -514,13 +518,16 @@ package setMethodNames: #(
 	#(#{OS.COM.TypeLibraryAnalyzer} #generateInterfaceWrapper:)
 	#(#{OS.COM.TypeLibraryAnalyzer} #generateInterfaceWrapper:name:flags:)
 	#(#{OS.COM.TypeLibraryAnalyzer} #generateInterfaceWrappers)
+	#(#{OS.COM.TypeLibraryAnalyzer} #generateNamespace)
 	#(#{OS.COM.TypeLibraryAnalyzer} #generateTypelibGlobal)
 	#(#{OS.COM.TypeLibraryAnalyzer} #generateTypelibGlobal:)
 	#(#{OS.COM.TypeLibraryAnalyzer} #generateWrapper:name:flags:)
 	#(#{OS.COM.TypeLibraryAnalyzer} #idlAttributes)
 	#(#{OS.COM.TypeLibraryAnalyzer} #idlHelpAttributes:)
 	#(#{OS.COM.TypeLibraryAnalyzer} #idlKeyword)
+	#(#{OS.COM.TypeLibraryAnalyzer} #isInstalled)
 	#(#{OS.COM.TypeLibraryAnalyzer} #isPoolCheck:)
+	#(#{OS.COM.TypeLibraryAnalyzer} #maybeChangeNamespaceOf:)
 	#(#{OS.COM.TypeLibraryAnalyzer} #moveClassToPackage:)
 	#(#{OS.COM.TypeLibraryAnalyzer} #namespaceBinding)
 	#(#{OS.COM.TypeLibraryAnalyzer} #namespaceImports)
@@ -529,7 +536,6 @@ package setMethodNames: #(
 	#(#{OS.COM.TypeLibraryAnalyzer} #packageCheck:)
 	#(#{OS.COM.TypeLibraryAnalyzer} #packageName)
 	#(#{OS.COM.TypeLibraryAnalyzer} #packageName:)
-	#(#{OS.COM.TypeLibraryAnalyzer} #prefix:)
 	#(#{OS.COM.TypeLibraryAnalyzer} #prefixGlobalNames)
 	#(#{OS.COM.TypeLibraryAnalyzer} #printIDLForwardRefsOn:indent:)
 	#(#{OS.COM.TypeLibraryAnalyzer} #printIDLOn:indent:)
@@ -630,8 +636,8 @@ UI.ValueDialog subclass: #'Tools.AXTypeLibraryPrompter'
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Tools.SmalltalkToolShell subclass: #'Tools.AXComponentWizard'
-	instanceVariableNames: 'typeLibs types description guid globalName namespaceName packageName forcePackage cards libraryName libraryPath buffer typelibGlobal constantsPoolName highLevelWrappers classComments tracing defineProtocols defineFunctionTables lowercaseIdentifiers verboseTracing'
-	classVariableNames: ''
+	instanceVariableNames: 'typeLibs types description guid namespaceName packageName forcePackage cards libraryName libraryPath buffer generateTypelib typelibVariableName constantsPoolName highLevelWrappers classComments tracing defineProtocols defineFunctionTables lowercaseIdentifiers verboseTracing showStandard'
+	classVariableNames: 'StandardEnums StandardInterfaces StandardStructs'
 	imports: #(#{OS.COM private})
 	classInstanceVariableNames: ''
 	classConstants: {}!
@@ -662,19 +668,18 @@ fieldType: aVARDESC indirections: anInteger
 pointerFieldType
 	^External.ArrayPointerField!
 
-printStructField: aVARDESC indirections: anInteger on: aPuttableStream in: aNamespace
-	"Private - Print a structure field definition message onto the <puttableStream> argument, for the for the C-array of bytes variable described by the <VARDESC> argument, with the specified <integer> number of indirections."
+printStructField: aVARDESC indirections: anInteger on: aCodeGenerationContext
+	"Private - Print a structure field definition message onto the <CodeGenerationContext> argument, for the for the C-array of bytes variable described by the <VARDESC> argument, with the specified <integer> number of indirections."
 
 	(self fieldType: aVARDESC indirections: anInteger)
 		printVariable: aVARDESC
 		type: self
 		indirections: anInteger
-		on: aPuttableStream
-		in: aNamespace! !
+		on: aCodeGenerationContext! !
 !Core.ByteArray class categoriesFor: #fieldType!constants!private! !
 !Core.ByteArray class categoriesFor: #fieldType:indirections:!constants!private! !
 !Core.ByteArray class categoriesFor: #pointerFieldType!constants!private! !
-!Core.ByteArray class categoriesFor: #printStructField:indirections:on:in:!private! !
+!Core.ByteArray class categoriesFor: #printStructField:indirections:on:!private! !
 
 !Core.GUID class methodsFor!
 
@@ -695,7 +700,7 @@ newToClipboard
 
 	| answer |
 	answer := self newUnique.
-	(answer asString copyFrom: 2 to: 37) copyToClipboard.
+	answer idlString copyToClipboard.
 	^answer!
 
 printMethodArgument: aString elemdesc: anELEMDESC indirections: anInteger on: aPuttableStream for: anAPIInfoAnalyzer
@@ -738,8 +743,8 @@ printMethodArgument: aString elemdesc: anELEMDESC indirections: anInteger on: aP
 			["Input only, just pass the GUID"
 			aPuttableStream nextPutAll: aString]!
 
-printStructField: aVARDESC indirections: anInteger on: aPuttableStream in: aNamespace
-	"Private - Print a structure field definition message onto the <puttableStream> argument, for the Guid variable described by the <VARDESC> argument, with the specified <integer> number of indirections."
+printStructField: aVARDESC indirections: anInteger on: aCodeGenerationContext
+	"Private - Print a structure field definition message onto the <CodeGenerationContext> argument, for the Guid variable described by the <VARDESC> argument, with the specified <integer> number of indirections."
 
 	"Implementation Note: Copy <External.Structure>'s implementation."
 
@@ -747,13 +752,12 @@ printStructField: aVARDESC indirections: anInteger on: aPuttableStream in: aName
 		printVariable: aVARDESC
 		type: self
 		indirections: anInteger
-		on: aPuttableStream
-		in: aNamespace! !
+		on: aCodeGenerationContext! !
 !Core.GUID class categoriesFor: #arrayType:!constants!private! !
 !Core.GUID class categoriesFor: #elementType:!constants!private! !
 !Core.GUID class categoriesFor: #newToClipboard!public! !
 !Core.GUID class categoriesFor: #printMethodArgument:elemdesc:indirections:on:for:!private! !
-!Core.GUID class categoriesFor: #printStructField:indirections:on:in:!private! !
+!Core.GUID class categoriesFor: #printStructField:indirections:on:!private! !
 
 !Core.String class methodsFor!
 
@@ -832,30 +836,35 @@ printMethodArgument: aString elemdesc: anELEMDESC indirections: anInteger on: aP
 								space;
 								display: #new]]]!
 
-printStructField: aVARDESC indirections: anInteger on: aPuttableStream in: aNamespace
-	"Private - Print a structure field definition message onto the <puttableStream> argument, for the variable described by the <VARDESC> argument, with the specified <integer> number of indirections."
+printStructField: aVARDESC indirections: anInteger on: aCodeGenerationContext
+	"Private - Print a structure field definition message onto the <CodeGenerationContext> argument, for the variable described by the <VARDESC> argument, with the specified <integer> number of indirections."
 
 	aVARDESC tdesc arrayDesc
 		ifNil: 
-			["a [string] type in the IDL, e.g. an LPSTR, our could be an array of chars, or pointer to array of chars."
-			(aVARDESC isConformant ifTrue: [External.ArrayPointerField] ifFalse: [External.PointerField])
+			[| fieldType indirections |
+			"a [string] type in the IDL, e.g. an LPSTR, our could be an array of chars, or pointer to array of chars."
+			indirections := anInteger.
+			aVARDESC isConformant
+				ifTrue: 
+					[fieldType := External.ArrayPointerField.
+					indirections := indirections - 1]
+				ifFalse: [fieldType := External.PointerField].
+			fieldType
 				printVariable: aVARDESC
-				type: (anInteger < 2 ifTrue: [self] ifFalse: [self pointerType])
+				type: (indirections < 1 ifTrue: [self] ifFalse: [self pointerType])
 				indirections: anInteger
-				on: aPuttableStream
-				in: aNamespace]
+				on: aCodeGenerationContext]
 		ifNotNil: 
 			[self assert: [anInteger == 0].
 			External.StringField
 				printArrayField: aVARDESC
 				type: self
-				on: aPuttableStream
-				in: aNamespace]! !
+				on: aCodeGenerationContext]! !
 !Core.String class categoriesFor: #arrayType!constants!private! !
 !Core.String class categoriesFor: #arrayType:!constants!private! !
 !Core.String class categoriesFor: #elementType:!constants!private! !
 !Core.String class categoriesFor: #printMethodArgument:elemdesc:indirections:on:for:!private! !
-!Core.String class categoriesFor: #printStructField:indirections:on:in:!private! !
+!Core.String class categoriesFor: #printStructField:indirections:on:!private! !
 
 !Core.Utf16String class methodsFor!
 
@@ -888,8 +897,8 @@ fieldType
 
 !External.ArrayField class methodsFor!
 
-printVariable: aVARDESC type: aClass indirections: anInteger on: aPuttableStream in: aNamespace
-	"Private - Print a structure field definition message onto the <puttableStream> argument, for the variable described by the <VARDESC> argument, with the specified <integer> number of indirections."
+printVariable: aVARDESC type: aClass indirections: anInteger on: aCodeGenerationContext
+	"Private - Print a structure field definition message onto the <CodeGenerationContext> argument, for the variable described by the <VARDESC> argument, with the specified <integer> number of indirections."
 
 	self assert: 
 			["Instances of the receiver describe fields that are embedded arrays (not pointers to arrays)."
@@ -897,14 +906,13 @@ printVariable: aVARDESC type: aClass indirections: anInteger on: aPuttableStream
 	self
 		printArrayField: aVARDESC
 		type: aClass
-		on: aPuttableStream
-		in: aNamespace! !
-!External.ArrayField class categoriesFor: #printVariable:type:indirections:on:in:!private! !
+		on: aCodeGenerationContext! !
+!External.ArrayField class categoriesFor: #printVariable:type:indirections:on:!private! !
 
 !External.ArrayPointerField class methodsFor!
 
-printVariable: aVARDESC type: aClass indirections: anInteger on: aPuttableStream in: aNamespace
-	"Private - Print a structure field definition message onto the <puttableStream> argument, for the variable described by the <VARDESC> argument, with the specified <integer> number of indirections."
+printVariable: aVARDESC type: aClass indirections: anInteger on: aCodeGenerationContext
+	"Private - Print a structure field definition message onto the <CodeGenerationContext> argument, for the variable described by the <VARDESC> argument, with the specified <integer> number of indirections."
 
 	self assert: 
 			["Instances of the receiver describe fields that are embedded fixed arrays (not pointers to array, and not conformant arrays)."
@@ -912,9 +920,8 @@ printVariable: aVARDESC type: aClass indirections: anInteger on: aPuttableStream
 	self
 		printArrayField: aVARDESC
 		type: aClass arrayType
-		on: aPuttableStream
-		in: aNamespace! !
-!External.ArrayPointerField class categoriesFor: #printVariable:type:indirections:on:in:!private! !
+		on: aCodeGenerationContext! !
+!External.ArrayPointerField class categoriesFor: #printVariable:type:indirections:on:!private! !
 
 !External.BOOL class methodsFor!
 
@@ -1020,81 +1027,69 @@ fieldType: aVARDESC indirections: anInteger
 pointerFieldType
 	^ArrayPointerField!
 
-printStructField: aVARDESC indirections: anInteger on: aPuttableStream in: aNamespace
-	"Private - Print a structure field definition message onto the <puttableStream> argument, for the array variable described by the <VARDESC> argument, with the specified <integer> number of indirections."
+printStructField: aVARDESC indirections: anInteger on: aCodeGenerationContext
+	"Private - Print a structure field definition message onto the <CodeGenerationContext> argument, for the array variable described by the <VARDESC> argument, with the specified <integer> number of indirections."
 
 	(self fieldType: aVARDESC indirections: anInteger)
 		printVariable: aVARDESC
 		type: self
 		indirections: anInteger
-		on: aPuttableStream
-		in: aNamespace! !
+		on: aCodeGenerationContext! !
 !External.ExternalArray class categoriesFor: #arrayType!constants!private! !
 !External.ExternalArray class categoriesFor: #fieldType!constants!private! !
 !External.ExternalArray class categoriesFor: #fieldType:indirections:!private! !
 !External.ExternalArray class categoriesFor: #pointerFieldType!constants!private! !
-!External.ExternalArray class categoriesFor: #printStructField:indirections:on:in:!private! !
+!External.ExternalArray class categoriesFor: #printStructField:indirections:on:!private! !
 
 !External.Field class methodsFor!
 
-printArrayField: elementOrArrayClass length: sizeisObject on: aPuttableStream in: aNamespace
-	aPuttableStream nextPut: $(.
-	self
-		printClassReference: self
-		from: aNamespace
-		on: aPuttableStream.
-	aPuttableStream nextPutAll: ' type: '.
-	self
-		printClassReference: elementOrArrayClass
-		from: aNamespace
-		on: aPuttableStream.
-	aPuttableStream
+printArrayField: elementOrArrayClass length: sizeisObject on: aCodeGenerationContext
+	| stream |
+	stream := aCodeGenerationContext writeStream.
+	stream nextPut: $(.
+	aCodeGenerationContext printClass: self.
+	stream nextPutAll: ' type: '.
+	aCodeGenerationContext printClass: elementOrArrayClass.
+	stream
 		nextPutAll: ' length: ';
 		print: sizeisObject;
 		nextPut: $)!
 
-printArrayField: aVARDESC type: extClass on: aPuttableStream in: aNamespace
-	aPuttableStream
+printArrayField: aVARDESC type: extClass on: aCodeGenerationContext
+	| stream |
+	stream := aCodeGenerationContext writeStream.
+	stream
 		nextPut: $(;
 		print: self;
 		nextPutAll: ' type: '.
-	self
-		printClassReference: extClass
-		from: aNamespace
-		on: aPuttableStream.
+	aCodeGenerationContext printClass: extClass.
 	aVARDESC isConformant
-		ifTrue: 
-			[self
-				printConformantArrayLength: aVARDESC
-				on: aPuttableStream
-				in: aNamespace]
-		ifFalse: [self printFixedArrayLength: aVARDESC on: aPuttableStream].
-	aPuttableStream nextPut: $)!
+		ifTrue: [self printConformantArrayLength: aVARDESC on: aCodeGenerationContext]
+		ifFalse: [self printFixedArrayLength: aVARDESC on: stream].
+	stream nextPut: $)!
 
-printConformantArrayLength: aVARDESC on: aPuttableStream in: aNamespace
-	| sizeIs |
+printConformantArrayLength: aVARDESC on: aCodeGenerationContext
+	| sizeIs stream |
+	stream := aCodeGenerationContext writeStream.
 	sizeIs := Parser parseExpression: (aVARDESC customAttributes at: #size_is) value.
 	sizeIs isVariable
 		ifTrue: 
 			["Simple size_is expression which names another field, e.g. size_is(cbBytes)."
-			aPuttableStream
+			stream
 				nextPutAll: ' lengthField: ';
 				print: sizeIs name asSymbol]
 		ifFalse: 
 			[(sizeIs isLiteralNode and: [sizeIs value isInteger])
 				ifTrue: 
 					["e.g. size_is(5) - redundant and should be a fixed array, but support it."
-					aPuttableStream
+					stream
 						nextPutAll: ' length: ';
 						print: sizeIs value]
 				ifFalse: 
 					["Complex size_is expression, e.g. size_is(cbBytes >> 1 - 1)"
-					aPuttableStream nextPutAll: ' arrayLength: ('.
-					self
-						printClassReference: SizeIsArrayFieldLength
-						from: aNamespace
-						on: aPuttableStream.
-					aPuttableStream
+					stream nextPutAll: ' arrayLength: ('.
+					aCodeGenerationContext printClass: SizeIsArrayFieldLength.
+					stream
 						space;
 						display: #sizeIs:;
 						space;
@@ -1109,41 +1104,34 @@ printFixedArrayLength: aVARDESC on: aPuttableStream
 		nextPutAll: ' length: ';
 		print: arrayDesc elementCount!
 
-printTypedField: extClass on: aPuttableStream in: aNamespace
-	aPuttableStream nextPut: $(.
-	self
-		printClassReference: self
-		from: aNamespace
-		on: aPuttableStream.
-	aPuttableStream
+printTypedField: extClass on: aCodeGenerationContext
+	| stream |
+	stream := aCodeGenerationContext writeStream.
+	stream nextPut: $(.
+	aCodeGenerationContext printClass: self.
+	stream
 		space;
 		nextPutAll: #type:;
 		space.
-	self
-		printClassReference: extClass
-		from: aNamespace
-		on: aPuttableStream.
-	aPuttableStream nextPut: $)!
+	aCodeGenerationContext printClass: extClass.
+	stream nextPut: $)!
 
-printVariable: aVARDESC type: aClass indirections: anInteger on: aPuttableStream in: aNamespace
+printVariable: aVARDESC type: aClass indirections: anInteger on: aCodeGenerationContext
 	"Private - Print a structure field definition message onto the <puttableStream> argument, for the variable described by the <VARDESC> argument, with the specified <integer> number of indirections."
 
-	self
-		printClassReference: self
-		from: aNamespace
-		on: aPuttableStream.
-	aPuttableStream nextPutAll: ' new'!
+	aCodeGenerationContext printClass: self.
+	aCodeGenerationContext writeStream nextPutAll: ' new'!
 
 warningMultiDimensionArray: aVARDESC
 	Warning
 		signal: 'Multi-dimensioned byte array treated as single-dimensioned: ' , aVARDESC printString! !
-!External.Field class categoriesFor: #printArrayField:length:on:in:!private! !
-!External.Field class categoriesFor: #printArrayField:type:on:in:!private! !
-!External.Field class categoriesFor: #printConformantArrayLength:on:in:!private! !
-!External.Field class categoriesFor: #printFixedArrayLength:on:!private! !
-!External.Field class categoriesFor: #printTypedField:on:in:!private! !
-!External.Field class categoriesFor: #printVariable:type:indirections:on:in:!private! !
-!External.Field class categoriesFor: #warningMultiDimensionArray:!private! !
+!External.Field class categoriesFor: #printArrayField:length:on:!generating!private! !
+!External.Field class categoriesFor: #printArrayField:type:on:!generating!private! !
+!External.Field class categoriesFor: #printConformantArrayLength:on:!generating!private! !
+!External.Field class categoriesFor: #printFixedArrayLength:on:!generating!private! !
+!External.Field class categoriesFor: #printTypedField:on:!generating!private! !
+!External.Field class categoriesFor: #printVariable:type:indirections:on:!generating!private! !
+!External.Field class categoriesFor: #warningMultiDimensionArray:!generating!private! !
 
 !External.FLOAT class methodsFor!
 
@@ -1223,8 +1211,8 @@ fieldType
 fieldType
 	^self subclassResponsibility!
 
-printStructField: aVARDESC indirections: anInteger on: aPuttableStream in: aNamespace
-	"Private - Print a structure field definition message onto the <puttableStream> argument, for the array variable described by the <VARDESC> argument, with the specified <integer> number of indirections."
+printStructField: aVARDESC indirections: anInteger on: aCodeGenerationContext
+	"Private - Print a structure field definition message onto the <CodeGenerationContext> argument, for the array variable described by the <VARDESC> argument, with the specified <integer> number of indirections."
 
 	"Implementation Note: Copy <ExternalStructure>'s implementation."
 
@@ -1232,10 +1220,9 @@ printStructField: aVARDESC indirections: anInteger on: aPuttableStream in: aName
 		printVariable: aVARDESC
 		type: self
 		indirections: anInteger
-		on: aPuttableStream
-		in: aNamespace! !
+		on: aCodeGenerationContext! !
 !External.IntegerBytes class categoriesFor: #fieldType!constants!development!private! !
-!External.IntegerBytes class categoriesFor: #printStructField:indirections:on:in:!private! !
+!External.IntegerBytes class categoriesFor: #printStructField:indirections:on:!private! !
 
 !External.POINT methodsFor!
 
@@ -1259,8 +1246,8 @@ pointerFieldType
 
 !External.PointerArrayField class methodsFor!
 
-printVariable: aVARDESC type: aClass indirections: anInteger on: aPuttableStream in: aNamespace
-	"Private - Print a structure field definition message onto the <puttableStream> argument, for the variable described by the <VARDESC> argument, with the specified <integer> number of indirections.
+printVariable: aVARDESC type: aClass indirections: anInteger on: aCodeGenerationContext
+	"Private - Print a structure field definition message onto the <CodeGenerationContext> argument, for the variable described by the <VARDESC> argument, with the specified <integer> number of indirections.
 	In this case the field must be a pointer to a fixed-length array, so we need to determine the length and element class by looking these up from the typeinfo."
 
 	| arrayDesc elemIndirs elemclassdesc elemType |
@@ -1282,20 +1269,16 @@ printVariable: aVARDESC type: aClass indirections: anInteger on: aPuttableStream
 				ifTrue: [elemType elementClass byteSize == 2 ifTrue: [Utf16String] ifFalse: [String]]
 				ifFalse: [elemType])
 		length: arrayDesc elementCount
-		on: aPuttableStream
-		in: aNamespace! !
-!External.PointerArrayField class categoriesFor: #printVariable:type:indirections:on:in:!private! !
+		on: aCodeGenerationContext! !
+!External.PointerArrayField class categoriesFor: #printVariable:type:indirections:on:!private! !
 
 !External.PointerField class methodsFor!
 
-printVariable: aVARDESC type: aClass indirections: anInteger on: aPuttableStream in: aNamespace
+printVariable: aVARDESC type: aClass indirections: anInteger on: aCodeGenerationContext
 	"Private - Generate a structure field definition message onto the specified <puttableStream> for the pointer-to-conformant-array field described by the <VARDESC>, aVARDESC, with the specified number of <integer> indirections."
 
-	self
-		printTypedField: aClass
-		on: aPuttableStream
-		in: aNamespace! !
-!External.PointerField class categoriesFor: #printVariable:type:indirections:on:in:!private! !
+	self printTypedField: aClass on: aCodeGenerationContext! !
+!External.PointerField class categoriesFor: #printVariable:type:indirections:on:!private! !
 
 !External.QWORD class methodsFor!
 
@@ -1447,15 +1430,14 @@ printOptionalParameter: anELEMDESC on: aPuttableStream for: anAPIInfoAnalyzer
 				for: anAPIInfoAnalyzer]
 		ifFalse: [self printDefaultValue: defaultValue on: aPuttableStream]!
 
-printStructField: aVARDESC indirections: anInteger on: aPuttableStream in: aNamespace
-	"Private - Print a structure field definition message onto the <puttableStream> argument, for the structure variable described by the <VARDESC> argument, with the specified <integer> number of indirections."
+printStructField: aVARDESC indirections: anInteger on: aCodeGenerationContext
+	"Private - Print a structure field definition message onto the <CodeGenerationContext> argument, for the structure variable described by the <VARDESC> argument, with the specified <integer> number of indirections."
 
 	(self fieldType: aVARDESC indirections: anInteger)
 		printVariable: aVARDESC
 		type: self
 		indirections: anInteger
-		on: aPuttableStream
-		in: aNamespace!
+		on: aCodeGenerationContext!
 
 printWrappedValue: aVARIANT on: aPuttableStream for: anAPIInfoAnalyzer
 	aPuttableStream nextPut: $(.
@@ -1485,7 +1467,7 @@ unspecifiedParameterValue
 !External.Structure class categoriesFor: #printDefaultValue:on:!helpers!private! !
 !External.Structure class categoriesFor: #printMethodArgument:elemdesc:indirections:on:for:!private! !
 !External.Structure class categoriesFor: #printOptionalParameter:on:for:!helpers!private! !
-!External.Structure class categoriesFor: #printStructField:indirections:on:in:!private! !
+!External.Structure class categoriesFor: #printStructField:indirections:on:!private! !
 !External.Structure class categoriesFor: #printWrappedValue:on:for:!helpers!private! !
 !External.Structure class categoriesFor: #unspecifiedParameterValue!helpers!private! !
 
@@ -1501,7 +1483,7 @@ pointerFieldType
 
 !External.StructureArrayField class methodsFor!
 
-printVariable: aVARDESC type: extClass indirections: anInteger on: aPuttableStream in: aNamespace
+printVariable: aVARDESC type: extClass indirections: anInteger on: aCodeGenerationContext
 	"Private - Print a structure field definition message onto the <puttableStream> argument, for the variable described by the <VARDESC> argument, with the specified <integer> number of indirections."
 
 	| arrayDesc elemclassdesc |
@@ -1517,14 +1499,13 @@ printVariable: aVARDESC type: extClass indirections: anInteger on: aPuttableStre
 	self
 		printArrayField: aVARDESC
 		type: elemclassdesc key
-		on: aPuttableStream
-		in: aNamespace! !
-!External.StructureArrayField class categoriesFor: #printVariable:type:indirections:on:in:!private! !
+		on: aCodeGenerationContext! !
+!External.StructureArrayField class categoriesFor: #printVariable:type:indirections:on:!private! !
 
 !External.StructureArrayPointerField class methodsFor!
 
-printVariable: aVARDESC type: aClass indirections: anInteger on: aPuttableStream in: aNamespace
-	"Private - Print a structure field definition message onto the <puttableStream> argument, for the variable described by the <VARDESC> argument, with the specified <integer> number of indirections."
+printVariable: aVARDESC type: aClass indirections: anInteger on: aCodeGenerationContext
+	"Private - Print a structure field definition message onto the <CodeGenerationContext> argument, for the variable described by the <VARDESC> argument, with the specified <integer> number of indirections."
 
 	self assert: 
 			["Instances of the receiver describe fields that are embedded fixed arrays (not pointers to array, and not conformant arrays)."
@@ -1532,20 +1513,16 @@ printVariable: aVARDESC type: aClass indirections: anInteger on: aPuttableStream
 	self
 		printArrayField: aVARDESC
 		type: aClass
-		on: aPuttableStream
-		in: aNamespace! !
-!External.StructureArrayPointerField class categoriesFor: #printVariable:type:indirections:on:in:!private! !
+		on: aCodeGenerationContext! !
+!External.StructureArrayPointerField class categoriesFor: #printVariable:type:indirections:on:!private! !
 
 !External.StructureField class methodsFor!
 
-printVariable: aVARDESC type: aClass indirections: anInteger on: aPuttableStream in: aNamespace
-	"Private - Generate a structure field definition message onto the specified <puttableStream> for the pointer-to-conformant-array field described by the <VARDESC>, aVARDESC, with the specified number of <integer> indirections."
+printVariable: aVARDESC type: aClass indirections: anInteger on: aCodeGenerationContext
+	"Private - Generate a structure field definition message onto the specified <CodeGenerationContext> for the pointer-to-conformant-array field described by the <VARDESC>, aVARDESC, with the specified number of <integer> indirections."
 
-	self
-		printTypedField: aClass
-		on: aPuttableStream
-		in: aNamespace! !
-!External.StructureField class categoriesFor: #printVariable:type:indirections:on:in:!private! !
+	self printTypedField: aClass on: aCodeGenerationContext! !
+!External.StructureField class categoriesFor: #printVariable:type:indirections:on:!private! !
 
 !External.SWORD class methodsFor!
 
@@ -2201,6 +2178,9 @@ displayOn: aPuttable
 generate
 	self analyzer generateMethodWrappers: self!
 
+generateWrapper
+	self analyzer generateMethodWrappers: self!
+
 hasAnswer
 	^self isPropSet not and: [self hasReturnValue]!
 
@@ -2277,6 +2257,7 @@ reinventBadVarNames: anOrderedCollection
 !OS.COM.FUNCDESC categoriesFor: #buildMethodName!private! !
 !OS.COM.FUNCDESC categoriesFor: #displayOn:!printing!public! !
 !OS.COM.FUNCDESC categoriesFor: #generate!private! !
+!OS.COM.FUNCDESC categoriesFor: #generateWrapper!accessing!private! !
 !OS.COM.FUNCDESC categoriesFor: #hasAnswer!private! !
 !OS.COM.FUNCDESC categoriesFor: #hasMultipleOutputs!private!testing! !
 !OS.COM.FUNCDESC categoriesFor: #hasOptionalInputs!accessing!private! !
@@ -2777,7 +2758,7 @@ generateDefaultMethod: aFUNCDESC wrapping: anAXMethodName
 generateInitializeTypeLib
 	"Private - Generate the #initializeTypeLib method for a COM interface wrapper."
 
-	| target lib variableName |
+	| target lib |
 	(self canGenerateClassMessage: #initializeTypeLib) ifFalse: [^nil].
 	target := String writeStream.
 	lib := self typeLib.
@@ -2790,11 +2771,9 @@ generateInitializeTypeLib
 		nextPutAll: self variableName;
 		nextPutAll: ' initializeTypeLib'.
 	self printAutoGenMethodPostambleOn: target.
-	"Avoid generating typelib global"
-	variableName := self isTraceOnly ifTrue: [lib variableName] ifFalse: [lib binding key].
 	target
 		nextPutAll: 'typeLib := ';
-		nextPutAll: variableName.
+		nextPutAll: lib variableName.
 	self compileClassMethod: target contents categories: self classInitializerCategories!
 
 generateInstanceSide: aClass
@@ -3605,9 +3584,10 @@ generateClassSide: aClass
 generateDefineFields
 	"Private - Generate the #defineFields method for a structure wrapper."
 
-	| target idl |
+	| context target idl |
 	(self canGenerateClassMessage: #defineFields) ifFalse: [^nil].
-	target := String writeStream.
+	context := self programObject newCodeGenerationContext.
+	target := context writeStream.
 	target
 		nextPutAll: #defineFields;
 		crtab;
@@ -3616,8 +3596,9 @@ generateDefineFields
 		nextPutAll: self name;
 		nextPutAll: ' structure.';
 		cr;
-		crtab;
-		nextPutAll: self variableName;
+		crtab.
+	context printClass: context targetClass.
+	target
 		nextPutAll: ' compileDefinition';
 		cr;
 		cr.
@@ -3626,9 +3607,8 @@ generateDefineFields
 	self emitComment: idl contents on: target.
 	self printAutoGenMethodPostambleOn: target.
 	self
-		printFieldDefinitionsOn: target
+		printFieldDefinitionsOn: context
 		offset: 0
-		prefix: ''
 		hidden: false.
 	target
 		nextPut: $.;
@@ -3676,7 +3656,7 @@ generateVariableDefinition: aVariableBinding
 generateWrapper
 	^(BuiltIns lookup: self guid) ifNil: [super generateWrapper]!
 
-printAnonymousStruct: aVARDESC offset: anInteger prefix: aString hidden: aBoolean on: aWriteStream
+printAnonymousStruct: aVARDESC offset: anInteger prefix: aString hidden: aBoolean on: aCodeGenerationContext
 	| hidden prefix offset structTypeInfo |
 	structTypeInfo := aVARDESC tdesc realTypeInfo.
 	offset := anInteger + aVARDESC oInst.
@@ -3689,30 +3669,27 @@ printAnonymousStruct: aVARDESC offset: anInteger prefix: aString hidden: aBoolea
 				offset: offset
 				prefix: prefix
 				hidden: hidden
-				on: aWriteStream]
+				on: aCodeGenerationContext]
 		separatedBy: 
-			[aWriteStream
+			[aCodeGenerationContext writeStream
 				nextPut: $;;
 				crtab: 2]!
 
-printClassCommentPreambleOn: target
-	"Private - Print a comment preamble appropriate for the receiver onto the 
-	<puttableStream>, target."
+printClassCommentPreambleOn: aPuttableStream
+	"Private - Print a comment preamble appropriate for the receiver onto the <puttableStream> argument."
 
-	| lib |
-	lib := self typeLib.
-	target
+	aPuttableStream
 		nextPut: $`;
 		nextPutAll: self variableName;
-		nextPutAll: '` is an `ExternalStructure` class to wrap the ';
+		nextPutAll: '` is an `External.Structure` class to wrap the ';
 		nextPutAll: self idlKeyword;
 		space;
 		print: self fullyQualifiedName;
 		nextPutAll: ' from type information in the ''';
-		nextPutAll: lib helpstring;
+		nextPutAll: self typeLib helpstring;
 		nextPutAll: ''' library.'!
 
-printFieldDefinition: aVARDESC offset: anInteger prefix: aString hidden: aBoolean on: aPuttableStream
+printFieldDefinition: aVARDESC offset: anInteger prefix: aString hidden: aBoolean on: aCodeGenerationContext
 	aVARDESC tdesc isAnonymous
 		ifTrue: 
 			[self
@@ -3720,56 +3697,57 @@ printFieldDefinition: aVARDESC offset: anInteger prefix: aString hidden: aBoolea
 				offset: anInteger
 				prefix: aString
 				hidden: aBoolean
-				on: aPuttableStream]
+				on: aCodeGenerationContext]
 		ifFalse: 
 			[self
 				printNamedFieldDefinition: aVARDESC
 				offset: anInteger
 				prefix: aString
 				hidden: aBoolean
-				on: aPuttableStream]!
+				on: aCodeGenerationContext]!
 
-printFieldDefinitionsOn: aPuttableStream offset: anInteger prefix: aString hidden: aBoolean
-	| hidden vars firstField first |
+printFieldDefinitionsOn: aCodeGenerationContext offset: anInteger hidden: aBoolean
+	| hidden vars firstField first stream |
 	hidden := aBoolean or: [self isHidden].
 	vars := self variables.
 	firstField := vars first.
 	first := true.
+	stream := aCodeGenerationContext writeStream.
 	(firstField isAnonymous and: [firstField tdesc isAnonymous not])
 		ifTrue: 
-			[aPuttableStream
+			[stream
 				nextPutAll: 'super defineFields.';
 				crtab]
 		ifFalse: 
-			[aPuttableStream
+			[stream
 				nextPutAll: 'self';
 				crtab: 2.
 			self
 				printFieldDefinition: firstField
 				offset: anInteger
-				prefix: aString
+				prefix: ''
 				hidden: hidden
-				on: aPuttableStream.
+				on: aCodeGenerationContext.
 			first := false].
 	2 to: vars size
 		do: 
 			[:i |
 			first
 				ifTrue: 
-					[aPuttableStream
+					[stream
 						nextPutAll: 'self';
 						crtab: 2.
 					first := false]
 				ifFalse: 
-					[aPuttableStream
+					[stream
 						nextPut: $;;
 						crtab: 2].
 			self
 				printFieldDefinition: (vars at: i)
 				offset: anInteger
-				prefix: aString
+				prefix: ''
 				hidden: hidden
-				on: aPuttableStream]!
+				on: aCodeGenerationContext]!
 
 printIDLBodyOn: aPuttableStream indent: anInteger 
 	"Private - Print the IDL description for the receiver on the <puttableStream>, target."
@@ -3808,35 +3786,35 @@ printIDLOn: target indent: tabs
 	self printIDLAttributesOn: target indent: -1.
 	self printIDLBodyOn: target indent: tabs!
 
-printNamedFieldDefinition: aVARDESC offset: anInteger prefix: aString hidden: aBoolean on: aPuttableStream
-	| classdesc |
-	aPuttableStream
+printNamedFieldDefinition: aVARDESC offset: anInteger prefix: aString hidden: aBoolean on: aCodeGenerationContext
+	| classdesc stream |
+	stream := aCodeGenerationContext writeStream.
+	stream
 		nextPutAll: 'defineField: #';
 		nextPutAll: aString;
 		nextPutAll: aVARDESC name;
 		nextPutAll: ' type: '.
 	classdesc := aVARDESC classDesc.
 	(aVARDESC isStringField
-		ifTrue: [classdesc key elementSize == 2 ifTrue: [Utf16String] ifFalse: [String]]
+		ifTrue: [classdesc key elementSize == 2 ifTrue: [Utf16String] ifFalse: [AnsiString]]
 		ifFalse: [classdesc key])
 			printStructField: aVARDESC
 			indirections: classdesc value
-			on: aPuttableStream
-			in: self environment.
+			on: aCodeGenerationContext.
 	#(#(#isReadOnly #beReadOnly) #(#isNonBrowsable #beNonBrowsable) #(#isRestricted #beWriteOnly)) do: 
 			[:each |
 			(aVARDESC perform: each first)
 				ifTrue: 
-					[aPuttableStream
+					[stream
 						space;
 						nextPutAll: each second]].
 	(aBoolean or: [aVARDESC isHidden])
 		ifTrue: 
-			[aPuttableStream
+			[stream
 				space;
 				nextPutAll: #beFiller].
 	"The offset is explicitly set in case typelib using special packing"
-	aPuttableStream
+	stream
 		nextPutAll: ' offset: ';
 		print: anInteger + aVARDESC oInst! !
 !OS.COM.StructureTypeAnalyzer categoriesFor: #conformsToRequiredProtocols:!private!testing! !
@@ -3850,7 +3828,7 @@ printNamedFieldDefinition: aVARDESC offset: anInteger prefix: aString hidden: aB
 !OS.COM.StructureTypeAnalyzer categoriesFor: #printAnonymousStruct:offset:prefix:hidden:on:!private! !
 !OS.COM.StructureTypeAnalyzer categoriesFor: #printClassCommentPreambleOn:!printing!private! !
 !OS.COM.StructureTypeAnalyzer categoriesFor: #printFieldDefinition:offset:prefix:hidden:on:!private! !
-!OS.COM.StructureTypeAnalyzer categoriesFor: #printFieldDefinitionsOn:offset:prefix:hidden:!private! !
+!OS.COM.StructureTypeAnalyzer categoriesFor: #printFieldDefinitionsOn:offset:hidden:!private! !
 !OS.COM.StructureTypeAnalyzer categoriesFor: #printIDLBodyOn:indent:!printing-IDL!private! !
 !OS.COM.StructureTypeAnalyzer categoriesFor: #printIDLForVariablesOn:indent:!printing-IDL!private! !
 !OS.COM.StructureTypeAnalyzer categoriesFor: #printIDLOn:indent:!printing-IDL!public! !
@@ -4502,20 +4480,12 @@ publishedAspectsOfInstances
 
 !OS.COM.TKindEnumAnalyzer methodsFor!
 
-constantsPool
-	^self typeLib constantsPoolBinding value!
-
 generateInstanceSide: aPoolConstantsDictionary 
 	self generateConstantsIntoPool: aPoolConstantsDictionary!
 
 generateVariableDefinition: aVariableBinding
-	"Private - Generate a minimal definition of the receiver which will enable it to be seen,
-	if not heard, in the development environment. Answer the object generated (in this case a 	<PoolConstantsDictionary>)."
-
-	| var |
-	var := self typeLib constantsPoolBinding.
-	self assert: [var notNil].
-	^var value!
+	self assert: [aVariableBinding = self typeLib constantsPoolBinding].
+	^aVariableBinding value!
 
 idlAttributes
 	"Private - Answer a <sequencedReadableCollection> of IDL-style attributes
@@ -4531,6 +4501,12 @@ idlKeyword
 	described by the receiver, e.g. dispinterface."
 
 	^'enum'!
+
+isInstalled
+	^self typeLib isInstalled and: 
+			[| var |
+			var := self suggestedBinding.
+			var value notNil and: [self isGeneratedAs: var value]]!
 
 printIDLBodyOn: aPuttableStream indent: anInteger
 	"Private - Print the IDL description for the receiver on the <puttableStream>, target."
@@ -4575,11 +4551,11 @@ printIDLOn: target indent: tabs
 
 removeOldWrappers: aClass
 	"Nothing to remove in this case"! !
-!OS.COM.TKindEnumAnalyzer categoriesFor: #constantsPool!public! !
 !OS.COM.TKindEnumAnalyzer categoriesFor: #generateInstanceSide:!private! !
 !OS.COM.TKindEnumAnalyzer categoriesFor: #generateVariableDefinition:!private! !
 !OS.COM.TKindEnumAnalyzer categoriesFor: #idlAttributes!printing-IDL!private! !
 !OS.COM.TKindEnumAnalyzer categoriesFor: #idlKeyword!constants!private! !
+!OS.COM.TKindEnumAnalyzer categoriesFor: #isInstalled!private!testing! !
 !OS.COM.TKindEnumAnalyzer categoriesFor: #printIDLBodyOn:indent:!printing-IDL!private! !
 !OS.COM.TKindEnumAnalyzer categoriesFor: #printIDLOn:indent:!printing-IDL!public! !
 !OS.COM.TKindEnumAnalyzer categoriesFor: #removeOldWrappers:!private! !
@@ -5094,6 +5070,9 @@ generateClassSide: aClass
 	self generateClassFilename.
 	self generateClassComment!
 
+generateConstants
+	self generateConstantsIntoPool: self binding value!
+
 generateInstanceSide: aClass
 	self generateMethodWrappers!
 
@@ -5109,7 +5088,7 @@ generateWrapper
 	Answer the object generated (in this case a <COMInterface> subclass)."
 
 	| class |
-	class := self functions notEmpty ifTrue: [super generateWrapper].
+	class := self hasFunctions ifTrue: [super generateWrapper].
 	self generateConstants.
 	^class!
 
@@ -5230,6 +5209,7 @@ printRawMethodBody: aFUNCDESC name: anAXMethodName on: aPuttableStream
 !OS.COM.TKindModuleAnalyzer categoriesFor: #areWrappersRequired!private!testing! !
 !OS.COM.TKindModuleAnalyzer categoriesFor: #generateClassFilename!private! !
 !OS.COM.TKindModuleAnalyzer categoriesFor: #generateClassSide:!private! !
+!OS.COM.TKindModuleAnalyzer categoriesFor: #generateConstants!public! !
 !OS.COM.TKindModuleAnalyzer categoriesFor: #generateInstanceSide:!private! !
 !OS.COM.TKindModuleAnalyzer categoriesFor: #generateMethodWrappers!private! !
 !OS.COM.TKindModuleAnalyzer categoriesFor: #generateWrapper!private! !
@@ -5439,9 +5419,6 @@ conformsToRequiredProtocols: aVariableBinding
 
 	^aVariableBinding value inheritsFrom: self baseClass!
 
-constantsPool
-	^self typeLib constantsPool!
-
 determineNewBase: baseClass forExistingWrapper: existingClass 
 	"Answer the superclass for the wrapper class generated by the receiver when 
 	modifying an existing wrapper class. By default the existing superclass is
@@ -5465,11 +5442,13 @@ generate
 	by the receiver. Handle any name or guid clashes by popping appropriate
 	"
 
-	^[self basicGenerate] 
+	^[self basicGenerate]
 		on: self guidClashSignal
 		do: [:e | self handleClash: e response: (self guidClashPrompt: e tag)]
 		on: self typeLib superclassClashSignal
-		do: [:e | self handleClash: e response: (self superclassClashPrompt: e tag)]!
+		do: [:e | self handleClash: e response: (self superclassClashPrompt: e tag)]
+		on: self typeLib namespaceClashSignal
+		do: [:e | self handleClash: e response: (self namespaceClashPrompt: e tag)]!
 
 generateAs: aString flags: anInteger
 	"Generate a new global object with the <readableString> name, global,
@@ -5546,19 +5525,14 @@ generateClassDefinition: aVariableBinding imports: anArray
 generateClassSide: aClass
 	"By default, do nothing."!
 
-generateConstants
-	| pool |
-	pool := self constantsPool.
-	self generateConstantsIntoPool: pool!
-
-generateConstantsIntoPool: aSharedPool
+generateConstantsIntoPool: aNamespace
 	(self generationFlags anyMask: Verbose)
 		ifTrue: 
-			[Notification signal: ('Generating constants for <1s> <2s> into pool <3s>'
+			[Notification signal: ('Generating constants for <1s> <2s> into <3s>'
 						expandMacrosWith: self idlKeyword
 						with: self name
-						with: aSharedPool name)].
-	self constants do: [:each | aSharedPool at: each name put: each lpvarValue value]!
+						with: aNamespace fullName)].
+	self constants do: [:each | aNamespace addClassConstant: each name value: each lpvarValue value]!
 
 generateInstanceSide: aClass
 	"By default, do nothing. To be overridden by subclasses where necessary."!
@@ -5701,6 +5675,38 @@ Press OK to suggest an alternative name for the <3s>, or Cancel to abort.'
 	resp := mb open.
 	resp == #cancel ifTrue: [self abortGeneration].
 	^false	"Binding not acceptable - please try a new one"!
+
+isInstalled
+	"Answer whether the receiver has been generated into a class in this image"
+
+	^self isVariableDefined and: [self isGeneratedAs: self programObject]!
+
+namespaceClashPrompt: aClass
+	| type mb environment |
+	type := self idlKeyword.
+	mb := UI.MessageBox new.
+	mb iconStyle: #warning.
+	environment := self typeLib environment.
+	mb
+		text: ('The class <1d> is in a different namespace to the target namespace ''<2d>''.
+
+The class can be renamed into the target namespace, or left in its existing namespace.
+
+Press Yes to rename the class to <3d>.
+Press No to keep the existing class name <1d>.
+Press Cancel to quit.'
+				expandMacrosWith: aClass fullName
+				with: environment
+				with: (BindingReference pathString: aClass unqualifiedName home: environment)
+						asFullyQualifiedReference).
+	mb
+		buttonStyle: #yesNoCancel;
+		defaultButton: 2.
+	mb caption: ('Dolphin Type Library Analyzer: Generating <1s> <2s>.<3d>'
+				expandMacrosWith: type
+				with: self typeLib name
+				with: self).
+	^##(LookupTable withAll: {#yes -> #ignore. #no -> #retry. #cancel -> #abort}) at: mb open!
 
 packageCheck: anAssociation
 	"Private - The receiver's variable is already present, check to make sure it it in the same package,
@@ -5972,7 +5978,6 @@ You can Ignore this warning, but it is suggested that you check the location of 
 !OS.COM.TypeInfoAnalyzer categoriesFor: #compileRawMethod:categories:!private! !
 !OS.COM.TypeInfoAnalyzer categoriesFor: #compileTestingMethod:!private! !
 !OS.COM.TypeInfoAnalyzer categoriesFor: #conformsToRequiredProtocols:!private!testing! !
-!OS.COM.TypeInfoAnalyzer categoriesFor: #constantsPool!public! !
 !OS.COM.TypeInfoAnalyzer categoriesFor: #determineNewBase:forExistingWrapper:!private! !
 !OS.COM.TypeInfoAnalyzer categoriesFor: #emitComment:on:!helpers!printing!private! !
 !OS.COM.TypeInfoAnalyzer categoriesFor: #generate!public! !
@@ -5980,7 +5985,6 @@ You can Ignore this warning, but it is suggested that you check the location of 
 !OS.COM.TypeInfoAnalyzer categoriesFor: #generateClassComment!private! !
 !OS.COM.TypeInfoAnalyzer categoriesFor: #generateClassDefinition:imports:!private! !
 !OS.COM.TypeInfoAnalyzer categoriesFor: #generateClassSide:!private! !
-!OS.COM.TypeInfoAnalyzer categoriesFor: #generateConstants!public! !
 !OS.COM.TypeInfoAnalyzer categoriesFor: #generateConstantsIntoPool:!private! !
 !OS.COM.TypeInfoAnalyzer categoriesFor: #generateInstanceSide:!private! !
 !OS.COM.TypeInfoAnalyzer categoriesFor: #generateVariableDefinition!private! !
@@ -5993,6 +5997,8 @@ You can Ignore this warning, but it is suggested that you check the location of 
 !OS.COM.TypeInfoAnalyzer categoriesFor: #identifierFrom:!helpers!private! !
 !OS.COM.TypeInfoAnalyzer categoriesFor: #idlTypeOfVT:!helpers!private! !
 !OS.COM.TypeInfoAnalyzer categoriesFor: #isClassCheck:!private! !
+!OS.COM.TypeInfoAnalyzer categoriesFor: #isInstalled!public!testing! !
+!OS.COM.TypeInfoAnalyzer categoriesFor: #namespaceClashPrompt:!private! !
 !OS.COM.TypeInfoAnalyzer categoriesFor: #packageCheck:!private! !
 !OS.COM.TypeInfoAnalyzer categoriesFor: #printAutoGenMethodPostambleOn:!printing!private! !
 !OS.COM.TypeInfoAnalyzer categoriesFor: #printClass:on:!accessing!private! !
@@ -6054,9 +6060,6 @@ classComments: aSymbol
 	flags := self generationFlags maskClear: CommentStyleMask.
 	self generationFlags: (flags 
 				maskSet: (self class classCommentStyleMap at: aSymbol ifAbsent: [0]))!
-
-constantsPool
-	^self subclassResponsibility!
 
 customAttributes
 	"Private - Answer an <abstractDictionary> of the custom attributes defined against this type.
@@ -6177,6 +6180,11 @@ idlKeyword
 
 	^self subclassResponsibility!
 
+isInstalled
+	"Answer whether the receiver has been generated into a program object (normally a class) in this image."
+
+	^self subclassResponsibility!
+
 isTraceOnly
 	"Private - Answer whether compilation is disabled."
 
@@ -6193,6 +6201,12 @@ isTracingVerbose
 
 isTracingVerbose: aBoolean 
 	generationFlags := generationFlags mask: Verbose set: aBoolean!
+
+namespaceClashSignal
+	"Answer the <exceptionSelector>/<exceptionSignaler> which can be signalled to	when a clashing Namespace is detected."
+
+	^self class namespaceClashSignal
+!
 
 namespaceImports
 	"Private - Answer a <collection> of the shared pool names to be used when 
@@ -6295,7 +6309,6 @@ tracing: aSymbol
 !OS.COM.TypeInfoObject categoriesFor: #basicIdlAttributes!printing-IDL!private! !
 !OS.COM.TypeInfoObject categoriesFor: #classComments!accessing!public! !
 !OS.COM.TypeInfoObject categoriesFor: #classComments:!accessing!public! !
-!OS.COM.TypeInfoObject categoriesFor: #constantsPool!public! !
 !OS.COM.TypeInfoObject categoriesFor: #customAttributes!printing-IDL!private! !
 !OS.COM.TypeInfoObject categoriesFor: #defineFunctionTables!accessing!public! !
 !OS.COM.TypeInfoObject categoriesFor: #defineFunctionTables:!accessing!public! !
@@ -6313,10 +6326,12 @@ tracing: aSymbol
 !OS.COM.TypeInfoObject categoriesFor: #highLevelWrappers:!accessing!public! !
 !OS.COM.TypeInfoObject categoriesFor: #idlAttributes!printing-IDL!private! !
 !OS.COM.TypeInfoObject categoriesFor: #idlKeyword!constants!private! !
+!OS.COM.TypeInfoObject categoriesFor: #isInstalled!public!testing! !
 !OS.COM.TypeInfoObject categoriesFor: #isTraceOnly!private!testing! !
 !OS.COM.TypeInfoObject categoriesFor: #isTracing!private!testing! !
 !OS.COM.TypeInfoObject categoriesFor: #isTracingVerbose!accessing!public! !
 !OS.COM.TypeInfoObject categoriesFor: #isTracingVerbose:!accessing!public! !
+!OS.COM.TypeInfoObject categoriesFor: #namespaceClashSignal!constants!public! !
 !OS.COM.TypeInfoObject categoriesFor: #namespaceImports!constants!private! !
 !OS.COM.TypeInfoObject categoriesFor: #packageCheck:!helpers!private! !
 !OS.COM.TypeInfoObject categoriesFor: #printAttributeList:on:!printing-IDL!private! !
@@ -6378,6 +6393,13 @@ icon
 
 	^TypeLibraryAnalyzer icon!
 
+namespaceClashSignal
+	"Answer the <exceptionSelector>/<exceptionSignaler> which can be signalled to	when an existing class is in a different namespace."
+
+	NamespaceClash isNil
+		ifTrue: [NamespaceClash := WarningSignal description: 'Namespace clash generating %1'].
+	^NamespaceClash!
+
 stonAllInstVarNames
 	"Override to exclude the number of instance variables we never want to serialize."
 
@@ -6407,6 +6429,7 @@ tracingStyles
 !OS.COM.TypeInfoObject class categoriesFor: #highLevelWrapperStyleMap!accessing!private! !
 !OS.COM.TypeInfoObject class categoriesFor: #highLevelWrapperStyles!initializing!private! !
 !OS.COM.TypeInfoObject class categoriesFor: #icon!constants!public! !
+!OS.COM.TypeInfoObject class categoriesFor: #namespaceClashSignal!constants!examples!public! !
 !OS.COM.TypeInfoObject class categoriesFor: #stonAllInstVarNames!public! !
 !OS.COM.TypeInfoObject class categoriesFor: #tracingStyleMap!accessing!private! !
 !OS.COM.TypeInfoObject class categoriesFor: #tracingStyles!initializing!private! !
@@ -6445,74 +6468,42 @@ addVariableToPackage: aVariableBinding
 
 	Package manager addVariableNamed: aVariableBinding fullyQualifiedReference to: self package!
 
+aliasFor: aString
+	^(self aliasMap lookup: aString) ifNil: [StandardAliases lookup: aString]!
+
 binding
 	"Private - Answer the VariableBinding for the variable being generated for the receiver."
 
-	| name |
-	name := self variableName.
-	self assert: [self isTraceOnly not].
-	^(Root localBindingFor: name)
-		ifNil: 
-			[| var |
-			var := Root addClassVariable: name value: self.
-			self package addVariableNamed: name.
-			var]
-		ifNotNil: 
-			[:var |
-			"Ensure the binding is actually referring to the receiver"
-			var value: self]!
+	^binding ifNil: [self suggestedBinding]!
 
-checkConformanceOfExistingPool: binding
-	"Private - Check that the existing global with the specified binding is suitable
-	for use as the receiver's constants pool. Answers whether the global should
-	be used, or an attempt should be made to find another one."
+checkConformanceOfExistingPool: aVariableBinding
+	"Private - Check that the existing variable with the specified binding is suitable for use as the receiver's constants pool. Answers whether the binding should be used, or an attempt should be made to find another one."
 
-	^(self isPoolCheck: binding)
-		and: [self packageCheck: binding]!
-
-constantsPool
-	"Private - Answer the <SharedPool> subclass containing all constants (enumerations) defined in the receiver, or nil if none. The pool is generated if it doesn't already exist."
-
-	^self constantsPoolBinding
-		ifNotNil: 
-			[:var |
-			| pool |
-			pool := var value.
-			pool isEmpty ifTrue: [self generateConstantsIntoPool: var].
-			pool]!
+	^(self isPoolCheck: aVariableBinding) and: [self packageCheck: aVariableBinding]!
 
 constantsPoolBinding
-	"Private - Answer a <VariableBinding> which is the actual binding for the receiver's constants pool that contains all constants (enumerations) defined in the receiver. Answer nil if there is no pool because there are no constants."
-
-	| var |
-	self assert: [self isTraceOnly not].
-	constantsPoolName := (constantsPoolName isNil and: [self enums isEmpty])
-				ifTrue: ['']
-				ifFalse: [self constantsPoolName].
-	constantsPoolName isEmpty ifTrue: [^nil].
-	var := self resolveExistingPool: constantsPoolName.
-	var value isNil
+	| customPoolName poolBinding |
+	customPoolName := self constantsPoolName.
+	(customPoolName isNil or: [customPoolName isEmpty]) ifTrue: [^self namespaceBinding].
+	self definesSymbolicConstants ifFalse: [^nil].
+	poolBinding := self resolveExistingPool: customPoolName.
+	poolBinding value isNil
 		ifTrue: 
-			[var value: (SharedPool subclass: var key).
-			self addVariableToPackage: var	"key"].
-	constantsPoolName := var key.
-	^var!
+			[poolBinding := (SharedPool subclass: poolBinding fullName asSymbol) binding.
+			self addVariableToPackage: poolBinding].
+	constantsPoolName := poolBinding key.
+	^poolBinding!
 
 constantsPoolName
-	"Answer the name of the <SharedPool> class into which all all of the constants and enumerated type values defined in this type library are to be placed. If not cast in stone already, answer the name that would likely be used if the pool were generated."
+	"Answer the name of the <SharedPool> into which all all of the constants and enumerated type values defined in this type library are to be placed. 
+	If nil or empty then any constants/enums are generated into the Namespace for the type library, which should generally be the preferred option."
 
-	^constantsPoolName isNil
-		ifFalse: [constantsPoolName]
-		ifTrue: [self fullNameFor: (self variableNameFrom: self name , 'Constants')]!
+	^constantsPoolName!
 
-constantsPoolName: identifier
-	"Set the <Symbol> name of the <PoolConstantsDictionary> into which all all 
-	of the constants and enumerated type values defined in this type library are to be
-	placed. This accessor is provided so that the default name generation scheme
-	(#<LibName>Constants) can be replaced on an instance specific basis."
+constantsPoolName: aString
+	"Set the name of the <SharedPool> into which all of the constants and enumerated type values defined in this type library are to be placed."
 
-	constantsPoolName := identifier.
-!
+	constantsPoolName := aString!
 
 defaultNamespaceImports
 	"Private - Answer a <sequencedReadableCollection> of the namespaces to be imported into the generated namespace by default."
@@ -6527,13 +6518,7 @@ definesSymbolicConstants
 		or: [self modules anySatisfy: [:eachModule | eachModule constants notEmpty]]!
 
 environment
-	self namespaceBinding
-		ifNil: 
-			[binding := (self
-						generateClass: self namespaceName
-						for: self
-						imports: self namespaceImports) binding].
-	^binding value!
+	^self namespaceBinding value!
 
 fullyQualifiedName
 	^Root fullNameFor: self namespaceName!
@@ -6563,7 +6548,8 @@ generateClass: aVariableBinding for: aTypeInfoObject imports: anArray
 	var := aTypeInfoObject resolveExistingClass: aVariableBinding.
 	"Record any name that differs from suggestion in the alias map so that we can regenerate later to the same name
 	 without prompting the user again, and without having to keep the cached analyzers hanging around."
-	var ~~ aVariableBinding ifTrue: [self addAlias: var fullyQualifiedReference forType: aTypeInfoObject].
+	var ~~ aVariableBinding
+		ifTrue: [self addAlias: var fullyQualifiedReference forType: aTypeInfoObject].
 	existingClass := var value.
 	existingClass isNil
 		ifTrue: 
@@ -6572,7 +6558,9 @@ generateClass: aVariableBinding for: aTypeInfoObject imports: anArray
 					[Notification
 						signal: 'Generating new class ' , var fullName , ' to wrap ' , aTypeInfoObject fullyQualifiedName]]
 		ifFalse: 
-			["It may we be that this is already perfect"
+			[existingClass environment ~~ self environment
+				ifTrue: [var := self maybeChangeNamespaceOf: existingClass].
+			"It may we be that this is already perfect"
 			((imports difference: existingClass imports) isEmpty and: [existingClass superclass == baseClass])
 				ifTrue: 
 					[aTypeInfoObject binding: var.
@@ -6581,7 +6569,6 @@ generateClass: aVariableBinding for: aTypeInfoObject imports: anArray
 				ifTrue: 
 					[Notification signal: 'Modifying existing class ' , existingClass name , ' to wrap '
 								, aTypeInfoObject fullyQualifiedName].
-
 			"Need to re-generate, but try and preserved existing details"
 			imports := existingClass imports union: imports.
 			classVars := existingClass classVariableString.
@@ -6608,24 +6595,21 @@ generateClass: aVariableBinding for: aTypeInfoObject imports: anArray
 	existingClass isNil ifTrue: [self addClassToPackage: class].
 	^class!
 
-generateConstantsIntoPool: aVariableBinding
-	"Private - Generate the receiver's constants into the <PoolConstantsDictionary>, pool."
+generateConstantsIntoPool: aNamespace
+	"Private - Generate the receiver's constants into the <Namespace> argument."
 
-	| poolName pool |
-	poolName := aVariableBinding key.
-	pool := aVariableBinding value.
-	self enums do: [:each | each generateAs: poolName flags: 0].
-	^pool!
+	| poolName |
+	poolName := aNamespace name.
+	self enums do: [:each | each generateAs: poolName flags: 0]!
 
 generateConstantsPool
-	"Generate and answer a <SharedPool> containing all of the enumerated type values defined in this type library. If the dictionary already exists, then its contents are rewritten (any existing key-value pairs may remain if the keys do not clash)."
+	"Generate and answer a <Namespace> containing all of the enumerated type values defined in this type library. If the Namespace already exists, then its constants are rewritten (any existing key-value pairs may remain if the keys do not clash)."
 
-	| var pool |
-	var := self constantsPoolBinding.
-	[pool := var isNil ifFalse: [self generateConstantsIntoPool: var]] on: OperationAborted
-		do: [:e | e toTrace].
+	| ns |
+	ns := self environment.
+	[self generateConstantsIntoPool: ns] on: OperationAborted do: [:e | e toTrace].
 	self reset.
-	^pool!
+	^ns!
 
 generateDispatchWrapper: dispName
 	"Generate a new subclass of IDispatch which wraps the properties and methods
@@ -6671,9 +6655,20 @@ generateInterfaceWrappers
 	"Reset to clear away analyzers, some global binding may be lost, but alias collection maintains most"
 	self reset!
 
+generateNamespace
+	| ref class |
+	ref := self namespaceName.
+	class := (ref isQualifiedName ifTrue: [ref namespace] ifFalse: [Namespace])
+				subclass: ref asSymbol
+				instanceVariableNames: ''
+				classVariableNames: ''
+				imports: self namespaceImports.
+	self addClassToPackage: class.
+	^class!
+
 generateTypelibGlobal
-	"Answer whether the receiver will generate a global to associate with itself and reference that
-	global from generated wrapper classes. This is handy for maintaining analyzer settings in a
+	"Answer whether the receiver will generate a static variable to associate with itself and reference that
+	variable from generated wrapper classes. This is handy for maintaining analyzer settings in a
 	package wrapping a component and is recommended in most cases."
 
 	^(self generationFlags allMask: NoTypeLib) not!
@@ -6705,18 +6700,23 @@ idlHelpAttributes: docs
 idlKeyword
 	^'library'!
 
-isPoolCheck: binding
-	"Private - Check that the global binding represented by the <Association>, binding, refers to a 
-	pool dictionary, and if not prompt for user action."
+isInstalled
+	"Answer whether the receiver is actually installed (and loadable) on the host machine."
 
-	| global resp mb |
-	global := binding value.
-	(global isBehavior and: [global inheritsFrom: SharedPool]) ifTrue: [^true].
+	[self asParameter] on: HRESULTError do: [:e | ^false].
+	^true!
+
+isPoolCheck: aVariableBinding
+	"Private - Check that the specified <VaraibleBinding> refers to a shared pool, and if not prompt for user action."
+
+	| programObject resp mb |
+	programObject := aVariableBinding value.
+	(programObject inheritsFrom: SharedPool) ifTrue: [^true].
 	mb := UI.MessageBox new.
 	mb iconStyle: #warning.
 	mb
-		text: ('Pool name <1p> clashes with an existing global which is not a SharedPool.<n><n>Press OK to suggest an alternative name for the constants pool, or Cancel to abort.'
-				expandMacrosWith: binding key).
+		text: ('Pool name <1p> clashes with an existing variable which is not a SharedPool.<n><n>Press OK to suggest an alternative name for the constants pool, or Cancel to abort.'
+				expandMacrosWith: aVariableBinding key).
 	mb
 		caption: ('Dolphin Type Library Analyzer: Generating <1s> constants pool' expandMacrosWith: self name).
 	mb buttonStyle: #okCancel.
@@ -6724,24 +6724,39 @@ isPoolCheck: binding
 	resp == #cancel ifTrue: [self abortGeneration].
 	^false	"Binding not acceptable - please try a new one"!
 
+maybeChangeNamespaceOf: existingClass
+	(self namespaceClashSignal signalWith: existingClass)
+		ifTrue: 
+			[Smalltalk developmentSystem renameClass: existingClass
+				to: (BindingReference pathString: existingClass unqualifiedName home: self environment)
+						asFullyQualifiedReference asSymbol].
+	^existingClass binding!
+
 moveClassToPackage: class
 	"Private - Move the specified class to the package associated with the receiver."
 
 	Package manager addClass: class to: self package!
 
 namespaceBinding
-	^binding ifNil: [binding := self namespaceName asQualifiedReference bindingOrNil]!
+	binding
+		ifNil: 
+			[| typelibVarName ns |
+			binding := self namespaceName bindingOrNil.
+			binding ifNil: [binding := self generateNamespace binding].
+			self generateTypelibGlobal
+				ifTrue: 
+					[typelibVarName := self variableName.
+					ns := binding value.
+					ns at: typelibVarName put: self.
+					self package addVariableNamed: (BindingReference pathString: typelibVarName home: ns)]].
+	^binding!
 
 namespaceImports
 	"Private - Answer a <collection> of the shared variable names to be used for wrapper classes generated out
 	of the receiver, e.g. COMInterface subclasses. The shared pool will be generated if it doesn't currently 
 	exist."
 
-	| imports poolName |
-	imports := self defaultNamespaceImports.
-	poolName := self constantsPoolName.
-	poolName isEmpty ifFalse: [imports := imports copyWith: {poolName asQualifiedReference private}].
-	^imports!
+	^self defaultNamespaceImports!
 
 package
 	"Answer the package into which wrapper classes for the receiver should be generated.
@@ -6762,16 +6777,15 @@ package: parcel
 	
 	self packageName: parcel name!
 
-packageCheck: anAssociation
-	"Private - The receiver's global is already present, check to make sure it it in the same package,
-	and if not ask the user whether or not to relocate it. Note that this method never answers false,
-	so the user never gets a chance to try a different name."
+packageCheck: aVariableBinding
+	"Private - Verify that an existing variable is in the package into which artefacts are being generated, and if not ask the user whether or not to relocate it. 
+	Note that this method never answers false, so the user never gets a chance to try a different name."
 
-	| global myPackage hisPackage |
-	global := anAssociation value.
+	| programObject myPackage hisPackage |
+	programObject := aVariableBinding value.
 	myPackage := self packageName.
-	hisPackage := global owningPackage name.
-	myPackage = hisPackage
+	hisPackage := programObject owningPackage name.
+	myPackage == hisPackage
 		ifFalse: 
 			[| resp mb |
 			mb := UI.MessageBox new.
@@ -6779,19 +6793,18 @@ packageCheck: anAssociation
 				iconStyle: #warning;
 				buttonStyle: #yesNoCancel.
 			mb
-				text: ('The shared pool <1s> already exists in the <2p> package.
+				text: ('The variable <1s> already exists in the <2p> package.
 
 Would you like to move it to the <3p> package?
 
 Press Yes to move the class, No to leave it where it is, or Cancel to abort'
-						expandMacrosWith: anAssociation key
+						expandMacrosWith: aVariableBinding key
 						with: hisPackage
 						with: myPackage).
-			mb
-				caption: ('Dolphin Type Library Analyzer: Generating <1s> constants pool' expandMacrosWith: self name).
+			mb caption: ('Dolphin Type Library Analyzer: Generating <1s>...' expandMacrosWith: self name).
 			resp := mb open.
 			resp == #cancel ifTrue: [self abortGeneration].
-			resp == #yes ifTrue: [self addVariableToPackage: anAssociation]].
+			resp == #yes ifTrue: [self addVariableToPackage: aVariableBinding]].
 	^true!
 
 packageName
@@ -6808,11 +6821,6 @@ packageName: aString
 	should be generated to <readableString> aString."
 
 	packageName := aString!
-
-prefix: aString
-	"Set the name of the namespace into which the classes will be generated."
-
-	namespaceName := self variableNameFrom: aString!
 
 prefixGlobalNames
 	"Answer whether generated globals (e.g. classes) will be prefixed."
@@ -6913,28 +6921,33 @@ printOn: aStream
 	aStream
 		basicPrint: self;
 		nextPut: $(.
-	tlbInterface isNull ifTrue: [aStream print: libVariableName] ifFalse: [aStream print: self name].
+	tlbInterface isNull ifTrue: [aStream display: namespaceName] ifFalse: [aStream print: self name].
 	aStream nextPut: $)!
 
-resolveExistingPool: poolName
+resolveExistingPool: aString
 	"Private - Attempt to locate an existing constants pool which belongs to the receiver
 	starting with the <readableString> name, poolName, but prompting the user for further
 	global names if necessary. Answer an <Association> which is either an existing global
 	variable binding, or a suggested new name and nil value."
 
-	| env newName var |
+	| env newName poolBinding |
 	env := self environment.
-	newName := poolName.
+	newName := aString.
 	
-	[newName := newName asQualifiedReference.
-	var := env bindingOrNil ifNil: [^newName -> nil].
-	self checkConformanceOfExistingPool: var]
+	[newName := newName asSymbol.
+	poolBinding := env localBindingFor: newName.
+	poolBinding
+		ifNil: 
+			[^(VariableBinding key: newName value: nil)
+				environment: env;
+				yourself].
+	self checkConformanceOfExistingPool: poolBinding]
 			whileFalse: 
 				[newName := UI.Prompter
 							on: newName , '_'
-							prompt: 'Please enter a new global name for the pool'
-							caption: ('Generating <1s> constants pool' expandMacrosWith: self name)].
-	^var!
+							prompt: 'Please enter a new name for the pool in <1s>' << env name
+							caption: 'Generating <1s> constants pool' << self name].
+	^poolBinding!
 
 superclassClashSignal
 	"Answer the <exceptionSelector>/<exceptionSignaler> which can be signalled to
@@ -6943,44 +6956,29 @@ superclassClashSignal
 	^self class superclassClashSignal!
 
 variableName
-	"Private - Answer a (non-clashing) variable name for the receiver."
+	"Private - Answer a (non-clashing) variable name for the typelib variable to be installed in the namespace generated for the receiver."
 
-	libVariableName isNil
-		ifTrue: 
-			[| stem libid |
-			stem := self variableNameFrom: self name.
-			(stem endsWith: 'Lib') ifFalse: [stem := stem , 'Lib'].
-			libVariableName := stem asSymbol.
-			libid := self guid.
-			self isTraceOnly
-				ifFalse: 
-					[| suffix |
-					suffix := 0.
-					
-					[| glob |
-					glob := Root at: libVariableName ifAbsent: [^libVariableName].
-					(glob respondsTo: #guid) not or: [glob guid ~= libid]]
-							whileTrue: 
-								[suffix := suffix + 1.
-								libVariableName := (stem , suffix printString) asSymbol]]].
-	^libVariableName! !
+	| stem |
+	stem := self variableNameFrom: self name.
+	(stem endsWith: 'Lib') ifFalse: [stem := stem , 'Lib'].
+	^stem asSymbol! !
 !OS.COM.TypeLibraryAnalyzer categoriesFor: #addAlias:forType:!accessing!public! !
 !OS.COM.TypeLibraryAnalyzer categoriesFor: #addClassToPackage:!helpers!private! !
 !OS.COM.TypeLibraryAnalyzer categoriesFor: #addVariableToPackage:!must strip!private! !
+!OS.COM.TypeLibraryAnalyzer categoriesFor: #aliasFor:!helpers!private! !
 !OS.COM.TypeLibraryAnalyzer categoriesFor: #binding!accessing!private! !
-!OS.COM.TypeLibraryAnalyzer categoriesFor: #checkConformanceOfExistingPool:!helpers!private! !
-!OS.COM.TypeLibraryAnalyzer categoriesFor: #constantsPool!accessing!private! !
-!OS.COM.TypeLibraryAnalyzer categoriesFor: #constantsPoolBinding!accessing!private! !
+!OS.COM.TypeLibraryAnalyzer categoriesFor: #checkConformanceOfExistingPool:!public!testing! !
+!OS.COM.TypeLibraryAnalyzer categoriesFor: #constantsPoolBinding!private! !
 !OS.COM.TypeLibraryAnalyzer categoriesFor: #constantsPoolName!accessing!public! !
 !OS.COM.TypeLibraryAnalyzer categoriesFor: #constantsPoolName:!accessing!public! !
 !OS.COM.TypeLibraryAnalyzer categoriesFor: #defaultNamespaceImports!accessing!private! !
 !OS.COM.TypeLibraryAnalyzer categoriesFor: #defaultPackageFolder!accessing!public! !
 !OS.COM.TypeLibraryAnalyzer categoriesFor: #definesSymbolicConstants!private!updating! !
 !OS.COM.TypeLibraryAnalyzer categoriesFor: #environment!accessing!public! !
-!OS.COM.TypeLibraryAnalyzer categoriesFor: #fullyQualifiedName!public! !
+!OS.COM.TypeLibraryAnalyzer categoriesFor: #fullyQualifiedName!accessing!public! !
 !OS.COM.TypeLibraryAnalyzer categoriesFor: #generatableInterfaces!enumerating!public! !
 !OS.COM.TypeLibraryAnalyzer categoriesFor: #generatableModules!enumerating!public! !
-!OS.COM.TypeLibraryAnalyzer categoriesFor: #generateClass:for:imports:!private! !
+!OS.COM.TypeLibraryAnalyzer categoriesFor: #generateClass:for:imports:!generating!private! !
 !OS.COM.TypeLibraryAnalyzer categoriesFor: #generateConstantsIntoPool:!operations!private! !
 !OS.COM.TypeLibraryAnalyzer categoriesFor: #generateConstantsPool!operations!public! !
 !OS.COM.TypeLibraryAnalyzer categoriesFor: #generateDispatchWrapper:!operations!public! !
@@ -6988,27 +6986,29 @@ variableName
 !OS.COM.TypeLibraryAnalyzer categoriesFor: #generateInterfaceWrapper:!operations!public! !
 !OS.COM.TypeLibraryAnalyzer categoriesFor: #generateInterfaceWrapper:name:flags:!operations!public! !
 !OS.COM.TypeLibraryAnalyzer categoriesFor: #generateInterfaceWrappers!operations!public! !
+!OS.COM.TypeLibraryAnalyzer categoriesFor: #generateNamespace!generating!public! !
 !OS.COM.TypeLibraryAnalyzer categoriesFor: #generateTypelibGlobal!accessing!public! !
 !OS.COM.TypeLibraryAnalyzer categoriesFor: #generateTypelibGlobal:!accessing!public! !
 !OS.COM.TypeLibraryAnalyzer categoriesFor: #generateWrapper:name:flags:!operations!public! !
 !OS.COM.TypeLibraryAnalyzer categoriesFor: #idlAttributes!printing-IDL!private! !
 !OS.COM.TypeLibraryAnalyzer categoriesFor: #idlHelpAttributes:!printing-IDL!private! !
 !OS.COM.TypeLibraryAnalyzer categoriesFor: #idlKeyword!constants!private! !
-!OS.COM.TypeLibraryAnalyzer categoriesFor: #isPoolCheck:!private!testing! !
+!OS.COM.TypeLibraryAnalyzer categoriesFor: #isInstalled!public!testing! !
+!OS.COM.TypeLibraryAnalyzer categoriesFor: #isPoolCheck:!public!testing! !
+!OS.COM.TypeLibraryAnalyzer categoriesFor: #maybeChangeNamespaceOf:!generating!private! !
 !OS.COM.TypeLibraryAnalyzer categoriesFor: #moveClassToPackage:!helpers!private! !
-!OS.COM.TypeLibraryAnalyzer categoriesFor: #namespaceBinding!accessing!private! !
+!OS.COM.TypeLibraryAnalyzer categoriesFor: #namespaceBinding!accessing!public! !
 !OS.COM.TypeLibraryAnalyzer categoriesFor: #namespaceImports!accessing!private! !
 !OS.COM.TypeLibraryAnalyzer categoriesFor: #package!accessing!public! !
 !OS.COM.TypeLibraryAnalyzer categoriesFor: #package:!accessing!public! !
 !OS.COM.TypeLibraryAnalyzer categoriesFor: #packageCheck:!helpers!private! !
 !OS.COM.TypeLibraryAnalyzer categoriesFor: #packageName!accessing!public! !
 !OS.COM.TypeLibraryAnalyzer categoriesFor: #packageName:!accessing!public! !
-!OS.COM.TypeLibraryAnalyzer categoriesFor: #prefix:!accessing!public! !
 !OS.COM.TypeLibraryAnalyzer categoriesFor: #prefixGlobalNames!accessing!public! !
 !OS.COM.TypeLibraryAnalyzer categoriesFor: #printIDLForwardRefsOn:indent:!printing!public! !
 !OS.COM.TypeLibraryAnalyzer categoriesFor: #printIDLOn:indent:!printing!public! !
 !OS.COM.TypeLibraryAnalyzer categoriesFor: #printOn:!printing!public! !
-!OS.COM.TypeLibraryAnalyzer categoriesFor: #resolveExistingPool:!helpers!private! !
+!OS.COM.TypeLibraryAnalyzer categoriesFor: #resolveExistingPool:!private! !
 !OS.COM.TypeLibraryAnalyzer categoriesFor: #superclassClashSignal!constants!public! !
 !OS.COM.TypeLibraryAnalyzer categoriesFor: #variableName!accessing!private! !
 
@@ -7198,7 +7198,6 @@ publishedAspectsOfInstances
 		add: (Tools.Aspect boolean: #defineFunctionTables);
 		add: (Tools.Aspect boolean: #defineMethodProtocols);
 		add: (Tools.Aspect string: #namespaceName);
-		add: (Tools.Aspect string: #constantsPoolName);
 		add: (Tools.Aspect choice: #highLevelWrappers from: self highLevelWrapperStyles);
 		add: (Tools.Aspect choice: #classComments from: self classCommentStyles);
 		add: (Tools.Aspect choice: #tracing from: self tracingStyles);
@@ -7232,7 +7231,7 @@ registerTypeLib
 stonAllInstVarNames
 	"Override to exclude the number of instance variables we never want to serialize."
 
-	^super stonAllInstVarNames copyWithout: 'typeAnalyzers'!
+	^#('generationFlags' 'binding' 'attributes' 'namespaceName' 'packageName' 'aliasMap')!
 
 superclassClashSignal
 	"Answer the <exceptionSelector>/<exceptionSignaler> which can be signalled to
@@ -7278,7 +7277,7 @@ typeLibRegistrations
 !OS.COM.TypeLibraryAnalyzer class categoriesFor: #open!instance creation!public! !
 !OS.COM.TypeLibraryAnalyzer class categoriesFor: #publishedAspectsOfInstances!constants!public! !
 !OS.COM.TypeLibraryAnalyzer class categoriesFor: #registerTypeLib!helpers!public! !
-!OS.COM.TypeLibraryAnalyzer class categoriesFor: #stonAllInstVarNames!public! !
+!OS.COM.TypeLibraryAnalyzer class categoriesFor: #stonAllInstVarNames!public!ston! !
 !OS.COM.TypeLibraryAnalyzer class categoriesFor: #superclassClashSignal!constants!examples!public! !
 !OS.COM.TypeLibraryAnalyzer class categoriesFor: #typeLibRegistrations!enquiries!private! !
 

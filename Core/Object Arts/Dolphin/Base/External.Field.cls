@@ -38,11 +38,6 @@ byteSize
 
 	^self subclassResponsibility!
 
-emitStaticExpression: operation on: aWriteStream 
-	aWriteStream nextPutAll: '##('.
-	operation value: aWriteStream.
-	aWriteStream nextPut: $)!
-
 isFiller
 	"Private - Answer whether the receiver is a filler field."
 
@@ -88,7 +83,6 @@ valueType
 !External.Field categoriesFor: #alignment!constants!public! !
 !External.Field categoriesFor: #beFiller!modes!public! !
 !External.Field categoriesFor: #byteSize!accessing!private! !
-!External.Field categoriesFor: #emitStaticExpression:on:!automatic generation!private! !
 !External.Field categoriesFor: #isFiller!private!testing! !
 !External.Field categoriesFor: #isFixedSize!private!testing! !
 !External.Field categoriesFor: #offset!accessing!private! !

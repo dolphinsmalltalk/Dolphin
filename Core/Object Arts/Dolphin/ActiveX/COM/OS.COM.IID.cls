@@ -38,6 +38,6 @@ initialize
 		IID initialize
 	"
 
-	self extraInstanceSpec: self byteSize! !
+	self extraInstanceSpec: ByteSize! !
 !OS.COM.IID class categoriesFor: #initialize!development!initializing!private! !
 

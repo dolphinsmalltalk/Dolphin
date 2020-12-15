@@ -5,7 +5,10 @@ Core.Object variableByteSubclass: #'Core.GUID'
 	classVariableNames: 'Null'
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: {
+		'ByteSize' -> 16r10.
+		'StringSize' -> 16r26
+	}!
 Core.GUID guid: (Core.GUID fromString: '{87b4c48f-026e-11d3-9fd7-00a0cc3e4a32}')!
 Core.GUID comment: 'GUID is the class of 128-bit Globally Unique Identifiers (guids) which are used wherever a unique identifier is required in COM, for example to identify specific coclasses and interfaces.
 
@@ -44,11 +47,11 @@ asByteArray
 	"Answer the raw contents of the receiver as a ByteArray."
 
 	| answer |
-	answer := ByteArray new: 16.
+	answer := ByteArray new: ByteSize.
 	self
 		replaceBytesOf: answer
 		from: 1
-		to: 16
+		to: ByteSize
 		startingAt: 1.
 	^answer!
 
@@ -63,22 +66,24 @@ asObject
 	^self!
 
 asString
-	"Answer a string representation of the receiver.
-	Implementation Note: We want to use the standard COM string
-	representation, so we need to add curly brackets. We could use the 
-	COM function, but that would mean creating a dependency on 
-	OLELibrary."
+	"Answer a string representation of the receiver."
 
-	| sz |
-	sz := self stringSize.
-	^(String new: sz)
-		at: 1 put: ${;
-		replaceFrom: 2
-			to: sz - 1
-			with: self idlString
-			startingAt: 1;
-		at: sz put: $};
-		yourself!
+	"Implementation Note: We want to use the standard COM string representation, so we need to add curly brackets. We could use the COM function, but that would mean creating a dependency on OLELibrary."
+
+	| pSz lib string |
+	pSz := External.Address new.
+	lib := OS.RPCLibrary default.
+	lib uuidToString: self stringUuid: pSz.
+	string := (Utf8String new: StringSize)
+				at: 1 put: ${;
+				replaceFrom: 2
+					to: ##(StringSize - 1)
+					with: pSz
+					startingAt: 1;
+				at: StringSize put: $};
+				yourself.
+	lib rpcStringFree: pSz.
+	^string!
 
 displayOn: aPuttableStream
 	"Append to the <puttableStream> argument a String whose characters are a representation of the receiver that an end-user might want to see.
@@ -104,12 +109,12 @@ idlString
 		self newUnique idlString
 	"
 
-	| pSz answer status |
+	| pSz lib answer |
 	pSz := External.Address new.
-	(status := OS.RPCLibrary default uuidToString: self stringUuid: pSz) == 0
-		ifFalse: [OS.RPCError signal: status].
-	answer := AnsiString fromAddress: pSz.
-	OS.RPCLibrary default rpcStringFree: pSz.
+	lib := OS.RPCLibrary default.
+	lib uuidToString: self stringUuid: pSz.
+	answer := Utf8String fromAddress: pSz.
+	lib rpcStringFree: pSz.
 	^answer!
 
 isNull
@@ -177,7 +182,7 @@ species
 stringSize
 	"Answer the number of characters in a GUID string."
 
-	^38!
+	^StringSize!
 
 value: guidBytes
 	"Set the raw binary value of the receiver from those of the argument."
@@ -231,12 +236,12 @@ atAddress: anAddress
 	^self fromAddress: anAddress!
 
 basicByteSize
-	^16!
+	^ByteSize!
 
 byteSize
 	"Answer the size in bytes of this structure"
 
-	^self basicByteSize!
+	^ByteSize!
 
 clear: addressOrBytes
 	"Finalize an instance of the structure which instances of the receiver wrap
@@ -272,7 +277,7 @@ elementSize
 	"Private - Answer the size (in bytes) of the structure the receiver represents
 	when used as an array element."
 
-	^self byteSize!
+	^ByteSize!
 
 fromAddress: ptr
 	"Answer a new instance of the receiver with contents copied from
@@ -280,32 +285,28 @@ fromAddress: ptr
 
 	^ptr asExternalAddress
 		replaceBytesOf: self newNull
-		from: 1 to: 16 startingAt: 1!
+		from: 1 to: ByteSize startingAt: 1!
 
 fromBytes: guidBytes
 	"Answer a new instance of the receiver which is a copy of the specified bytes."
 
-	^guidBytes replaceBytesOf: self newNull from: 1 to: self byteSize startingAt: 1
+	^guidBytes replaceBytesOf: self newNull from: 1 to: ByteSize startingAt: 1
 !
 
 fromIdlString: aString
-	"Answer a new instance of the receiver instantiated from the argument, aString,
-	which is in IDL format."
+	"Answer a new instance of the receiver instantiated from the argument, aString, which is in IDL format, e.g. '87b4c48f-026e-11d3-9fd7-00a0cc3e4a32'"
 
-	| answer status |
+	| answer |
 	answer := self newNull.
-	(status := OS.RPCLibrary default uuidFromString: aString uuid: answer) == 0
-		ifFalse: [OS.RPCError signalWith: status].
+	OS.RPCLibrary default uuidFromString: aString uuid: answer.
 	^answer!
 
 fromString: aString
-	"Answer a new instance of the receiver instantiated from the argument, aString, which is in Microsoft™ GUID format."
+	"Answer a new instance of the receiver instantiated from the argument, aString, which is in Microsoft™ GUID format, e.g. '{87b4c48f-026e-11d3-9fd7-00a0cc3e4a32}'"
 
-	| answer status |
+	| answer |
 	answer := self newNull.
-	status := OS.RPCLibrary default uuidFromString: (aString copyFrom: 2 to: aString size - 1)
-				uuid: answer.
-	status == 0 ifFalse: [OS.RPCError signalWith: status].
+	OS.RPCLibrary default uuidFromString: (aString copyFrom: 2 to: aString size - 1) uuid: answer.
 	^answer!
 
 init: addressOrBytes
@@ -316,13 +317,13 @@ initialize
 	"Private - Initialize the receiver's class variables.
 		GUID initialize
 	"
-	self extraInstanceSpec: self byteSize.
+	self extraInstanceSpec: ByteSize.
 	VMLibrary default registryAt: self name put: self!
 
 new
 	"Answer a new, null, instance of the receiver."
 
-	^self new: self byteSize!
+	^self new: ByteSize!
 
 newBuffer
 	"Answer a new instance containing its own buffer."
@@ -333,22 +334,21 @@ newBuffer
 newNull
 	"Answer a new, null, instance of the receiver."
 
-	^self new: self byteSize!
+	^self new: ByteSize!
 
 newUnique
 	"Answer a new instance of the receiver generated using the standard
 	algorithm (i.e. the answer should be unique)."
 
 	| answer |
-	answer := self newNull.
+	answer := self new: ByteSize.
 	OS.RPCLibrary default uuidCreate: answer.
 	^answer!
 
 null
 	"Answer a null instance of the receiver."
 
-	Null isNil ifTrue: [Null := self newNull].
-	^Null!
+	^Null ifNil: [Null := self newNull]!
 
 onPreStripImage
 	"Private - Tidy up the receiver's lazily initialized class vars in preparation for image stripping."
