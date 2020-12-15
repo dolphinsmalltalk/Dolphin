@@ -12,7 +12,6 @@
 	#namespaceName : 'ADODB',
 	#packageName : 'ADODB',
 	#libVariableName : #ADODBLib,
-	#constantsPoolName : #ADODBConstants,
 	#aliasMap : LookupTable {
 		'GUID' : #GUID,
 		'PROPVARIANT' : #VARIANT,

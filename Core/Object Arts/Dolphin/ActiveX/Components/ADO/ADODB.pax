@@ -32,7 +32,6 @@ package setClassNames: #(
 	#{ADODB.ADOCommandConstruction}
 	#{ADODB.ADOConnectionConstruction}
 	#{ADODB.ADOConnectionConstruction15}
-	#{ADODB.ADODBConstants}
 	#{ADODB.ADODynaCollection}
 	#{ADODB.ADORecordConstruction}
 	#{ADODB.ADORecordsetConstruction}
@@ -80,13 +79,7 @@ package!
 Kernel.Namespace subclass: #ADODB
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{OS.COM private} #{OS private} #{ADODB.ADODBConstants private})
-	classInstanceVariableNames: ''
-	classConstants: {}!
-Kernel.SharedPool subclass: #'ADODB.ADODBConstants'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
+	imports: #(#{OS.COM private} #{OS private})
 	classInstanceVariableNames: ''
 	classConstants: {
 		'adAddNew' -> 16r1000400.
@@ -163,6 +156,7 @@ Kernel.SharedPool subclass: #'ADODB.ADODBConstants'
 		'adErrCantCreate' -> 16rE8D.
 		'adErrCatalogNotSet' -> 16rEA3.
 		'adErrColumnNotOnThisRow' -> 16rE8E.
+		'adErrConnectionStringTooLong' -> 16rEAA.
 		'adErrDataConversion' -> 16rD5D.
 		'adErrDataOverflow' -> 16rE89.
 		'adErrDelResOutOfScope' -> 16rE9A.
@@ -201,6 +195,7 @@ Kernel.SharedPool subclass: #'ADODB.ADODBConstants'
 		'adErrPropNotSupported' -> 16rEA2.
 		'adErrProviderFailed' -> 16rBB8.
 		'adErrProviderNotFound' -> 16rE7A.
+		'adErrProviderNotSpecified' -> 16rEA9.
 		'adErrReadFile' -> 16rBBB.
 		'adErrResourceExists' -> 16rE93.
 		'adErrResourceLocked' -> 16rE92.
@@ -217,6 +212,8 @@ Kernel.SharedPool subclass: #'ADODB.ADODBConstants'
 		'adErrVolumeNotFound' -> 16rE95.
 		'adErrWriteFile' -> 16rBBC.
 		'adExecuteNoRecords' -> 16r80.
+		'adExecuteRecord' -> 16r800.
+		'adExecuteStream' -> 16r400.
 		'adFailIfNotExists' -> -16r1.
 		'adFieldAlreadyExists' -> 16r1A.
 		'adFieldBadStatus' -> 16rC.
@@ -309,9 +306,11 @@ Kernel.SharedPool subclass: #'ADODB.ADODBConstants'
 		'adNumeric' -> 16r83.
 		'adOpenAsync' -> 16r1000.
 		'adOpenDynamic' -> 16r2.
+		'adOpenExecuteCommand' -> 16r10000.
 		'adOpenForwardOnly' -> 16r0.
 		'adOpenIfExists' -> 16r2000000.
 		'adOpenKeyset' -> 16r1.
+		'adOpenOutput' -> 16r800000.
 		'adOpenRecordUnspecified' -> -16r1.
 		'adOpenSource' -> 16r800000.
 		'adOpenStatic' -> 16r3.
@@ -397,6 +396,7 @@ Kernel.SharedPool subclass: #'ADODB.ADODBConstants'
 		'adRsnUpdate' -> 16r3.
 		'adSaveCreateNotExist' -> 16r1.
 		'adSaveCreateOverWrite' -> 16r2.
+		'adSchemaActions' -> 16r29.
 		'adSchemaAsserts' -> 16r0.
 		'adSchemaCatalogs' -> 16r1.
 		'adSchemaCharacterSets' -> 16r2.
@@ -405,6 +405,7 @@ Kernel.SharedPool subclass: #'ADODB.ADODBConstants'
 		'adSchemaColumnPrivileges' -> 16rD.
 		'adSchemaColumns' -> 16r4.
 		'adSchemaColumnsDomainUsage' -> 16rB.
+		'adSchemaCommands' -> 16r2A.
 		'adSchemaConstraintColumnUsage' -> 16r6.
 		'adSchemaConstraintTableUsage' -> 16r7.
 		'adSchemaCubes' -> 16r20.
@@ -412,6 +413,7 @@ Kernel.SharedPool subclass: #'ADODB.ADODBConstants'
 		'adSchemaDBInfoLiterals' -> 16r1F.
 		'adSchemaDimensions' -> 16r21.
 		'adSchemaForeignKeys' -> 16r1B.
+		'adSchemaFunctions' -> 16r28.
 		'adSchemaHierarchies' -> 16r22.
 		'adSchemaIndexes' -> 16rC.
 		'adSchemaKeyColumnUsage' -> 16r8.
@@ -428,6 +430,7 @@ Kernel.SharedPool subclass: #'ADODB.ADODBConstants'
 		'adSchemaReferentialConstraints' -> 16r9.
 		'adSchemaReferentialContraints' -> 16r9.
 		'adSchemaSchemata' -> 16r11.
+		'adSchemaSets' -> 16r2B.
 		'adSchemaSQLLanguages' -> 16r12.
 		'adSchemaStatistics' -> 16r13.
 		'adSchemaTableConstraints' -> 16rA.

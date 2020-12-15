@@ -63,7 +63,7 @@ Smalltalk.ADODB_Recordset := ADODB._Recordset!
 
 Smalltalk.ADODB_Stream := ADODB._Stream!
 
-Smalltalk.ADODBConstants := ADODB.ADODBConstants!
+Smalltalk.ADODBConstants := ADODB!
 
 Smalltalk.ADODBError := ADODB.Error!
 
