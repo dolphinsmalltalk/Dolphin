@@ -3,7 +3,7 @@
 OS.COM.IDispatch subclass: #'WinHttp.IWinHttpRequest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{WinHttp.WinHttpConstants})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 WinHttp.IWinHttpRequest guid: (OS.COM.IID fromString: '{016fe2ec-b2c8-45f8-b23b-39e53a75396b}')!

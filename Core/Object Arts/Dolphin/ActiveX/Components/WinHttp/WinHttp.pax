@@ -27,7 +27,6 @@ package setClassNames: #(
 	#{WinHttp}
 	#{WinHttp.IWinHttpRequest}
 	#{WinHttp.IWinHttpRequestEvents}
-	#{WinHttp.WinHttpConstants}
 ).
 
 package setVariableNames: #(
@@ -52,13 +51,7 @@ package!
 Kernel.Namespace subclass: #WinHttp
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{OS.COM private} #{OS private} #{WinHttp.WinHttpConstants})
-	classInstanceVariableNames: ''
-	classConstants: {}!
-Kernel.SharedPool subclass: #'WinHttp.WinHttpConstants'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
+	imports: #(#{OS.COM private} #{OS private})
 	classInstanceVariableNames: ''
 	classConstants: {
 		'AutoLogonPolicy_Always' -> 16r0.
@@ -99,13 +92,13 @@ Kernel.SharedPool subclass: #'WinHttp.WinHttpConstants'
 OS.COM.IUnknown subclass: #'WinHttp.IWinHttpRequestEvents'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{WinHttp.WinHttpConstants})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 OS.COM.IDispatch subclass: #'WinHttp.IWinHttpRequest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{WinHttp.WinHttpConstants})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 

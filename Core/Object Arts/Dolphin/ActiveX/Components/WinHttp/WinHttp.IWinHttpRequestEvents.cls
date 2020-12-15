@@ -3,7 +3,7 @@
 OS.COM.IUnknown subclass: #'WinHttp.IWinHttpRequestEvents'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{WinHttp.WinHttpConstants})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 WinHttp.IWinHttpRequestEvents guid: (OS.COM.IID fromString: '{f97f4e15-b787-4212-80d1-d380cbbf982e}')!

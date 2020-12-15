@@ -12,7 +12,6 @@
 	#namespaceName : 'WinHttp',
 	#packageName : 'WinHttp',
 	#libVariableName : #WinHttpLib,
-	#constantsPoolName : #WinHttpConstants,
 	#aliasMap : LookupTable {
 		'GUID' : #GUID,
 		'PROPVARIANT' : #VARIANT,
