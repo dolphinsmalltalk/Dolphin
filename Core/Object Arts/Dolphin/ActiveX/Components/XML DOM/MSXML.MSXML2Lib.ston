@@ -18,7 +18,6 @@
 	},
 	#packageName : 'XML DOM',
 	#libVariableName : #MSXML2Lib,
-	#constantsPoolName : #MSXMLConstants,
 	#aliasMap : LookupTable {
 		'FILETIME' : BindingReference {
 			#pathString : 'OS.FILETIME',
