@@ -905,7 +905,7 @@ validateImports
 							[namespace := fullRef value.
 							namespace class isMeta ifFalse: [self error: 'Invalid import: ' , each printString]]
 						ifFalse: 
-							[Warning signal: ('Imported namespace <1p> does not exist.' expandMacrosWith: fullRef asString).
+							[Warning signal: ('Imported namespace <1p> does not currently exist.' expandMacrosWith: fullRef asString).
 							namespace := fullRef asSymbol].
 					namespace asQualifiedReference
 						isPrivate: private;

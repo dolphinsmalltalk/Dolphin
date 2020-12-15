@@ -114,7 +114,8 @@ onPreSaveImage
 onUnhandledWarning: aWarning
 	self stderr
 		nextPutAll: aWarning description;
-		cr!
+		cr;
+		flush!
 
 openConsole
 	self
