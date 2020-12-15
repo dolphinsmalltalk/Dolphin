@@ -29,7 +29,6 @@ package basicPackageVersion: '6.0'.
 
 package setClassNames: #(
 	#{CDO}
-	#{CDO.CDOConstants}
 	#{CDO.IBodyPart}
 	#{CDO.IBodyParts}
 	#{CDO.IConfiguration}
@@ -69,100 +68,311 @@ package!
 Kernel.Namespace subclass: #CDO
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{OS.COM private} #{OS private} #{CDO.CDOConstants private})
-	classInstanceVariableNames: ''
-	classConstants: {}!
-Kernel.SharedPool subclass: #'CDO.CDOConstants'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
+	imports: #(#{OS.COM private} #{OS private})
 	classInstanceVariableNames: ''
 	classConstants: {
+		'CDO_E_ADOSTREAM_NOT_BOUND' -> -16r7FFBFDD4.
+		'CDO_E_ARGUMENT1' -> -16r7FFBC000.
+		'CDO_E_ARGUMENT2' -> -16r7FFBBFFF.
+		'CDO_E_ARGUMENT3' -> -16r7FFBBFFE.
+		'CDO_E_ARGUMENT4' -> -16r7FFBBFFD.
+		'CDO_E_ARGUMENT5' -> -16r7FFBBFFC.
+		'CDO_E_AUTHENTICATION_FAILURE' -> -16r7FFBFDEB.
+		'CDO_E_BAD_ATTENDEE_DATA' -> -16r7FFBFDCB.
+		'CDO_E_BAD_DATA' -> -16r7FFBFDD7.
+		'CDO_E_BAD_SENDER' -> -16r7FFBFDCD.
+		'CDO_E_BAD_TASKTYPE_ONASSIGN' -> -16r7FFBFDC9.
+		'CDO_E_CONNECTION_DROPPED' -> -16r7FFBFDEE.
+		'CDO_E_CONTENTPROPXML_CONVERT_FAILED' -> -16r7FFBFDD0.
+		'CDO_E_CONTENTPROPXML_NOT_FOUND' -> -16r7FFBFDD3.
+		'CDO_E_CONTENTPROPXML_PARSE_FAILED' -> -16r7FFBFDD1.
+		'CDO_E_CONTENTPROPXML_WRONG_CHARSET' -> -16r7FFBFDD2.
+		'CDO_E_DIRECTORIES_UNREACHABLE' -> -16r7FFBFDCE.
+		'CDO_E_FAILED_TO_CONNECT' -> -16r7FFBFDED.
+		'CDO_E_FROM_MISSING' -> -16r7FFBFDF3.
+		'CDO_E_HTTP_FAILED' -> -16r7FFBFDE6.
+		'CDO_E_HTTP_FORBIDDEN' -> -16r7FFBFDE7.
+		'CDO_E_HTTP_NOT_FOUND' -> -16r7FFBFDE8.
+		'CDO_E_INACTIVE' -> -16r7FFBFDFA.
+		'CDO_E_INVALID_CHARSET' -> -16r7FFBFDD5.
+		'CDO_E_INVALID_CONTENT_TYPE' -> -16r7FFBFDEA.
+		'CDO_E_INVALID_ENCODING_FOR_MULTIPART' -> -16r7FFBFDE4.
+		'CDO_E_INVALID_ENCODING_TYPE' -> -16r7FF331E3.
+		'CDO_E_INVALID_POST' -> -16r7FFBFDEC.
+		'CDO_E_INVALID_POST_OPTION' -> -16r7FFBFDDF.
+		'CDO_E_INVALID_PROPERTYNAME' -> -16r7FFBFDFC.
+		'CDO_E_INVALID_SEND_OPTION' -> -16r7FFBFDE0.
+		'CDO_E_LOGON_FAILURE' -> -16r7FFBFDE9.
+		'CDO_E_MULTIPART_NO_DATA' -> -16r7FFBFDE5.
+		'CDO_E_NNTP_POST_FAILED' -> -16r7FFBFDF0.
+		'CDO_E_NNTP_SERVER_REQUIRED' -> -16r7FFBFDF5.
+		'CDO_E_NO_DEFAULT_DROP_DIR' -> -16r7FFBFDF7.
+		'CDO_E_NO_DIRECTORIES_SPECIFIED' -> -16r7FFBFDCF.
+		'CDO_E_NO_METHOD' -> -16r7FFBFDDC.
+		'CDO_E_NO_PICKUP_DIR' -> -16r7FFBFDDE.
+		'CDO_E_NO_SUPPORT_FOR_OBJECTS' -> -16r7FFBFDF9.
+		'CDO_E_NOT_ALL_DELETED' -> -16r7FFBFDDD.
+		'CDO_E_NOT_ASSIGNEDTO_USER' -> -16r7FFBFDC8.
+		'CDO_E_NOT_AVAILABLE' -> -16r7FFBFDF8.
+		'CDO_E_NOT_FOUND' -> -16r7FF331FB.
+		'CDO_E_NOT_OPENED' -> -16r7FFBFDFE.
+		'CDO_E_OUTOFDATE' -> -16r7FFBFDC7.
+		'CDO_E_PROP_CANNOT_DELETE' -> -16r7FFBFDD8.
+		'CDO_E_PROP_NONHEADER' -> -16r7FFBFDD6.
+		'CDO_E_PROP_NOT_FOUND' -> -16r7FFBFDE2.
+		'CDO_E_PROP_READONLY' -> -16r7FFBFDD9.
+		'CDO_E_PROP_UNSUPPORTED' -> -16r7FFBFDFB.
+		'CDO_E_RECIPIENT_MISSING' -> -16r7FFBFDF4.
+		'CDO_E_RECIPIENTS_REJECTED' -> -16r7FFBFDF1.
+		'CDO_E_ROLE_NOMORE_AVAILABLE' -> -16r7FFBFDCA.
+		'CDO_E_SELF_BINDING' -> -16r7FFBFDCC.
+		'CDO_E_SENDER_REJECTED' -> -16r7FFBFDF2.
+		'CDO_E_SMTP_SEND_FAILED' -> -16r7FFBFDEF.
+		'CDO_E_SMTP_SERVER_REQUIRED' -> -16r7FFBFDF6.
+		'CDO_E_UNCAUGHT_EXCEPTION' -> -16r7FFBFDFF.
+		'CDO_E_UNSAFE_OPERATION' -> -16r7FFBFDE3.
+		'CDO_E_UNSUPPORTED_DATASOURCE' -> -16r7FFBFDFD.
+		'cdo7bit' -> '7bit'.
+		'cdo8bit' -> '8bit'.
 		'cdoAbuDhabi' -> 16r18.
 		'cdoAdelaide' -> 16r13.
+		'cdoAdelaideCommonwealthGames2006' -> 16r4F.
+		'cdoAdoStream' -> '_Stream'.
 		'cdoAlaska' -> 16rE.
 		'cdoAlmaty' -> 16r2E.
 		'cdoAnonymous' -> 16r0.
+		'cdoApproved' -> 'urn:schemas:mailheader:approved'.
+		'cdoArab' -> 16r4A.
 		'cdoArizona' -> 16r26.
+		'cdoArrivalTime' -> 'http://schemas.microsoft.com/cdo/smtpenvelope/arrivaltime'.
 		'cdoAthens' -> 16r7.
 		'cdoAtlanticCanada' -> 16r9.
+		'cdoAttachmentFilename' -> 'urn:schemas:httpmail:attachmentfilename'.
+		'cdoAutoPromoteBodyParts' -> 'http://schemas.microsoft.com/cdo/configuration/autopromotebodyparts'.
 		'cdoAzores' -> 16r1D.
 		'cdoBaghdad' -> 16r1A.
 		'cdoBangkok' -> 16r16.
+		'cdoBase64' -> 'base64'.
 		'cdoBasic' -> 16r1.
+		'cdoBcc' -> 'urn:schemas:httpmail:bcc'.
 		'cdoBeijing' -> 16r2D.
 		'cdoBerlin' -> 16r4.
+		'cdoBIG5' -> 'big5'.
+		'cdoBinary' -> 'binary'.
 		'cdoBogota' -> 16r23.
 		'cdoBombay' -> 16r17.
 		'cdoBrasilia' -> 16r8.
 		'cdoBrisbane' -> 16r12.
 		'cdoBuenosAires' -> 16r20.
 		'cdoCairo' -> 16r31.
+		'cdoCanberraCommonwealthGames2006' -> 16r4E.
+		'cdoCapeVerde' -> 16r35.
 		'cdoCaracas' -> 16r21.
+		'cdoCaucasus' -> 16r36.
+		'cdoCc' -> 'urn:schemas:httpmail:cc'.
 		'cdoCentral' -> 16rB.
+		'cdoCentralAmerica' -> 16r37.
+		'cdoChihuahua' -> 16r4D.
+		'cdoClientIPAddress' -> 'http://schemas.microsoft.com/cdo/smtpenvelope/clientipaddress'.
+		'cdoComment' -> 'urn:schemas:mailheader:comment'.
 		'cdoCompanyConfidential' -> 16r3.
+		'cdoContentBase' -> 'urn:schemas:mailheader:content-base'.
+		'cdoContentClass' -> 'DAV:contentclass'.
+		'cdoContentDescription' -> 'urn:schemas:mailheader:content-description'.
+		'cdoContentDisposition' -> 'urn:schemas:mailheader:content-disposition'.
+		'cdoContentDispositionType' -> 'urn:schemas:httpmail:content-disposition-type'.
+		'cdoContentId' -> 'urn:schemas:mailheader:content-id'.
+		'cdoContentLanguage' -> 'urn:schemas:mailheader:content-language'.
+		'cdoContentLocation' -> 'urn:schemas:mailheader:content-location'.
+		'cdoContentMediaType' -> 'urn:schemas:httpmail:content-media-type'.
+		'cdoContentTransferEncoding' -> 'urn:schemas:mailheader:content-transfer-encoding'.
+		'cdoContentType' -> 'urn:schemas:mailheader:content-type'.
+		'cdoControl' -> 'urn:schemas:mailheader:control'.
 		'cdoDarwin' -> 16r2C.
+		'cdoDate' -> 'urn:schemas:httpmail:date'.
+		'cdoDateReceived' -> 'urn:schemas:httpmail:datereceived'.
 		'cdoDefaults' -> -16r1.
+		'cdoDhaka' -> 16r47.
+		'cdoDisposition' -> 'urn:schemas:mailheader:disposition'.
+		'cdoDispositionNotificationTo' -> 'urn:schemas:mailheader:disposition-notification-to'.
+		'cdoDistribution' -> 'urn:schemas:mailheader:distribution'.
 		'cdoDSNDefault' -> 16r0.
 		'cdoDSNDelay' -> 16r8.
 		'cdoDSNFailure' -> 16r2.
 		'cdoDSNNever' -> 16r1.
 		'cdoDSNSuccess' -> 16r4.
 		'cdoDSNSuccessFailOrDelay' -> 16rE.
+		'cdoEastAfrica' -> 16r38.
 		'cdoEastern' -> 16rA.
 		'cdoEasternEurope' -> 16r5.
+		'cdoEkaterinburg' -> 16r3A.
 		'cdoEniwetok' -> 16r27.
+		'cdoEUC_JP' -> 'euc-jp'.
+		'cdoEUC_KR' -> 'euc-kr'.
+		'cdoExpires' -> 'urn:schemas:mailheader:expires'.
 		'cdoFiji' -> 16r28.
+		'cdoFloating' -> 16r34.
+		'cdoFlushBuffersOnWrite' -> 'http://schemas.microsoft.com/cdo/configuration/flushbuffersonwrite'.
+		'cdoFollowupTo' -> 'urn:schemas:mailheader:followup-to'.
+		'cdoFrom' -> 'urn:schemas:httpmail:from'.
+		'cdoGB2312' -> 'gb2312'.
+		'cdoGetContentType' -> 'DAV:getcontenttype'.
+		'cdoGif' -> 'image/gif'.
 		'cdoGMT' -> 16r1.
+		'cdoGreenland' -> 16r3C.
 		'cdoGuam' -> 16r2B.
 		'cdoHarare' -> 16r32.
+		'cdoHasAttachment' -> 'urn:schemas:httpmail:hasattachment'.
 		'cdoHawaii' -> 16rF.
+		'cdoHelsinki' -> 16r3B.
 		'cdoHigh' -> 16r2.
 		'cdoHobart' -> 16r2A.
-		'cdoHongKong' -> 16r15.
+		'cdoHobartCommonwealthGames2006' -> 16r50.
+		'cdoHTMLDescription' -> 'urn:schemas:httpmail:htmldescription'.
+		'cdoHTTPCookies' -> 'http://schemas.microsoft.com/cdo/configuration/httpcookies'.
+		'cdoIBodyPart' -> 'IBodyPart'.
+		'cdoIConfiguration' -> 'IConfiguration'.
+		'cdoIDataSource' -> 'IDataSource'.
 		'cdoIIS' -> 16r1.
+		'cdoIMessage' -> 'IMessage'.
+		'cdoImportance' -> 'urn:schemas:httpmail:importance'.
 		'cdoIndiana' -> 16r22.
-		'cdoInvalidTimeZone' -> 16r34.
+		'cdoInReplyTo' -> 'urn:schemas:mailheader:in-reply-to'.
+		'cdoInvalidTimeZone' -> 16r52.
+		'cdoIrkutsk' -> 16r3F.
 		'cdoIslamabad' -> 16r2F.
+		'cdoISO_2022_JP' -> 'iso-2022-jp'.
+		'cdoISO_2022_KR' -> 'iso-2022-kr'.
+		'cdoISO_8859_1' -> 'iso-8859-1'.
+		'cdoISO_8859_15' -> 'iso-8859-15'.
+		'cdoISO_8859_2' -> 'iso-8859-2'.
+		'cdoISO_8859_3' -> 'iso-8859-3'.
+		'cdoISO_8859_4' -> 'iso-8859-4'.
+		'cdoISO_8859_5' -> 'iso-8859-5'.
+		'cdoISO_8859_6' -> 'iso-8859-6'.
+		'cdoISO_8859_7' -> 'iso-8859-7'.
+		'cdoISO_8859_8' -> 'iso-8859-8'.
+		'cdoISO_8859_9' -> 'iso-8859-9'.
 		'cdoIsrael' -> 16r1B.
+		'cdoIStream' -> 'IStream'.
+		'cdoJpeg' -> 'image/jpeg'.
 		'cdoKabul' -> 16r30.
-		'cdoLisbon' -> 16r2.
+		'cdoKeywords' -> 'urn:schemas-microsoft-com:office:office#Keywords'.
+		'cdoKOI8_R' -> 'koi8-r'.
+		'cdoKrasnoyarsk' -> 16r40.
+		'cdoLanguageCode' -> 'http://schemas.microsoft.com/cdo/configuration/languagecode'.
+		'cdoLines' -> 'urn:schemas:mailheader:lines'.
 		'cdoLow' -> 16r0.
+		'cdoMacBinHex40' -> 'mac-binhex40'.
 		'cdoMagadan' -> 16r29.
+		'cdoMelbourne' -> 16r39.
+		'cdoMessageExternalBody' -> 'message/external-body'.
+		'cdoMessageId' -> 'urn:schemas:mailheader:message-id'.
+		'cdoMessagePartial' -> 'message/partial'.
+		'cdoMessageRFC822' -> 'message/rfc822'.
+		'cdoMessageStatus' -> 'http://schemas.microsoft.com/cdo/smtpenvelope/messagestatus'.
 		'cdoMexicoCity' -> 16r25.
 		'cdoMidAtlantic' -> 16r1E.
 		'cdoMidwayIsland' -> 16r10.
+		'cdoMIMEVersion' -> 'urn:schemas:mailheader:mime-version'.
 		'cdoMonrovia' -> 16r1F.
 		'cdoMoscow' -> 16r33.
 		'cdoMountain' -> 16rC.
+		'cdoMultipartAlternative' -> 'multipart/alternative'.
+		'cdoMultipartDigest' -> 'multipart/digest'.
+		'cdoMultipartMixed' -> 'multipart/mixed'.
+		'cdoMultipartRelated' -> 'multipart/related'.
+		'cdoNepal' -> 16r3E.
 		'cdoNewfoundland' -> 16r1C.
+		'cdoNewsgroupList' -> 'http://schemas.microsoft.com/cdo/nntpenvelope/newsgrouplist'.
+		'cdoNewsgroups' -> 'urn:schemas:mailheader:newsgroups'.
+		'cdoNNTPAccountName' -> 'http://schemas.microsoft.com/cdo/configuration/nntpaccountname'.
+		'cdoNNTPAuthenticate' -> 'http://schemas.microsoft.com/cdo/configuration/nntpauthenticate'.
+		'cdoNNTPConnectionTimeout' -> 'http://schemas.microsoft.com/cdo/configuration/nntpconnectiontimeout'.
+		'cdoNNTPProcessing' -> 'http://schemas.microsoft.com/cdo/nntpenvelope/nntpprocessing'.
+		'cdoNNTPServer' -> 'http://schemas.microsoft.com/cdo/configuration/nntpserver'.
+		'cdoNNTPServerPickupDirectory' -> 'http://schemas.microsoft.com/cdo/configuration/nntpserverpickupdirectory'.
+		'cdoNNTPServerPort' -> 'http://schemas.microsoft.com/cdo/configuration/nntpserverport'.
+		'cdoNNTPUseSSL' -> 'http://schemas.microsoft.com/cdo/configuration/nntpusessl'.
 		'cdoNormal' -> 16r1.
+		'cdoNormalizedSubject' -> 'urn:schemas:httpmail:normalizedsubject'.
+		'cdoNSConfiguration' -> 'http://schemas.microsoft.com/cdo/configuration/'.
+		'cdoNSContacts' -> 'urn:schemas:contacts:'.
+		'cdoNSHTTPMail' -> 'urn:schemas:httpmail:'.
+		'cdoNSMailHeader' -> 'urn:schemas:mailheader:'.
+		'cdoNSNNTPEnvelope' -> 'http://schemas.microsoft.com/cdo/nntpenvelope/'.
+		'cdoNSSMTPEnvelope' -> 'http://schemas.microsoft.com/cdo/smtpenvelope/'.
 		'cdoNTLM' -> 16r2.
+		'cdoOrganization' -> 'urn:schemas:mailheader:organization'.
+		'cdoOriginalRecipient' -> 'urn:schemas:mailheader:original-recipient'.
 		'cdoOutlookExpress' -> 16r2.
 		'cdoPacific' -> 16rD.
 		'cdoParis' -> 16r3.
+		'cdoPath' -> 'urn:schemas:mailheader:path'.
 		'cdoPersonal' -> 16r1.
+		'cdoPerth' -> 16r49.
+		'cdoPickupFileName' -> 'http://schemas.microsoft.com/cdo/smtpenvelope/pickupfilename'.
+		'cdoPostEmailAddress' -> 'http://schemas.microsoft.com/cdo/configuration/postemailaddress'.
+		'cdoPostingVersion' -> 'urn:schemas:mailheader:posting-version'.
 		'cdoPostMessage' -> 16r1.
+		'cdoPostPassword' -> 'http://schemas.microsoft.com/cdo/configuration/postpassword'.
+		'cdoPostUserName' -> 'http://schemas.microsoft.com/cdo/configuration/postusername'.
+		'cdoPostUserReplyEmailAddress' -> 'http://schemas.microsoft.com/cdo/configuration/postuserreplyemailaddress'.
+		'cdoPostUsingMethod' -> 'http://schemas.microsoft.com/cdo/configuration/postusing'.
 		'cdoPostUsingPickup' -> 16r1.
 		'cdoPostUsingPort' -> 16r2.
 		'cdoPrague' -> 16r6.
+		'cdoPriority' -> 'urn:schemas:httpmail:priority'.
 		'cdoPriorityNonUrgent' -> -16r1.
 		'cdoPriorityNormal' -> 16r0.
 		'cdoPriorityUrgent' -> 16r1.
 		'cdoPrivate' -> 16r2.
 		'cdoProcessControl' -> 16r2.
 		'cdoProcessModerator' -> 16r4.
+		'cdoQuotedPrintable' -> 'quoted-printable'.
+		'cdoRangoon' -> 16r3D.
+		'cdoReceived' -> 'urn:schemas:mailheader:received'.
+		'cdoRecipientList' -> 'http://schemas.microsoft.com/cdo/smtpenvelope/recipientlist'.
+		'cdoReferences' -> 'urn:schemas:mailheader:references'.
 		'cdoRefTypeId' -> 16r0.
 		'cdoRefTypeLocation' -> 16r1.
+		'cdoRelayVersion' -> 'urn:schemas:mailheader:relay-version'.
+		'cdoReplyTo' -> 'urn:schemas:httpmail:reply-to'.
+		'cdoReturnPath' -> 'urn:schemas:mailheader:return-path'.
+		'cdoReturnReceiptTo' -> 'urn:schemas:mailheader:return-receipt-to'.
 		'cdoRunNextSink' -> 16r0.
+		'cdoSantiago' -> 16r41.
+		'cdoSarajevo' -> 16r2.
 		'cdoSaskatchewan' -> 16r24.
+		'cdoSaveSentItems' -> 'http://schemas.microsoft.com/cdo/configuration/savesentitems'.
+		'cdoSendEmailAddress' -> 'http://schemas.microsoft.com/cdo/configuration/sendemailaddress'.
+		'cdoSender' -> 'urn:schemas:httpmail:sender'.
+		'cdoSenderEmailAddress' -> 'http://schemas.microsoft.com/cdo/smtpenvelope/senderemailaddress'.
+		'cdoSendPassword' -> 'http://schemas.microsoft.com/cdo/configuration/sendpassword'.
+		'cdoSendUserName' -> 'http://schemas.microsoft.com/cdo/configuration/sendusername'.
+		'cdoSendUserReplyEmailAddress' -> 'http://schemas.microsoft.com/cdo/configuration/senduserreplyemailaddress'.
+		'cdoSendUsingMethod' -> 'http://schemas.microsoft.com/cdo/configuration/sendusing'.
 		'cdoSendUsingPickup' -> 16r1.
 		'cdoSendUsingPort' -> 16r2.
+		'cdoSensitivity' -> 'http://schemas.microsoft.com/exchange/sensitivity'.
 		'cdoSensitivityNone' -> 16r0.
+		'cdoSeoul' -> 16r48.
+		'cdoShift_JIS' -> 'shift-jis'.
+		'cdoSingapore' -> 16r15.
 		'cdoSkipRemainingSinks' -> 16r1.
+		'cdoSMTPAccountName' -> 'http://schemas.microsoft.com/cdo/configuration/smtpaccountname'.
+		'cdoSMTPAuthenticate' -> 'http://schemas.microsoft.com/cdo/configuration/smtpauthenticate'.
+		'cdoSMTPConnectionTimeout' -> 'http://schemas.microsoft.com/cdo/configuration/smtpconnectiontimeout'.
+		'cdoSMTPServer' -> 'http://schemas.microsoft.com/cdo/configuration/smtpserver'.
+		'cdoSMTPServerPickupDirectory' -> 'http://schemas.microsoft.com/cdo/configuration/smtpserverpickupdirectory'.
+		'cdoSMTPServerPort' -> 'http://schemas.microsoft.com/cdo/configuration/smtpserverport'.
+		'cdoSMTPUseSSL' -> 'http://schemas.microsoft.com/cdo/configuration/smtpusessl'.
+		'cdoSriLanka' -> 16r42.
 		'cdoStatAbortDelivery' -> 16r2.
 		'cdoStatBadMail' -> 16r3.
 		'cdoStatSuccess' -> 16r0.
+		'cdoSubject' -> 'urn:schemas:httpmail:subject'.
+		'cdoSummary' -> 'urn:schemas:mailheader:summary'.
 		'cdoSuppressAll' -> 16r1F.
 		'cdoSuppressBGSounds' -> 16r2.
 		'cdoSuppressFrames' -> 16r4.
@@ -170,10 +380,36 @@ Kernel.SharedPool subclass: #'CDO.CDOConstants'
 		'cdoSuppressNone' -> 16r0.
 		'cdoSuppressObjects' -> 16r8.
 		'cdoSuppressStyleSheets' -> 16r10.
+		'cdoSydney2000' -> 16r4C.
+		'cdoTaipei' -> 16r4B.
 		'cdoTehran' -> 16r19.
+		'cdoTextDescription' -> 'urn:schemas:httpmail:textdescription'.
+		'cdoTextHTML' -> 'text/html'.
+		'cdoTextPlain' -> 'text/plain'.
+		'cdoThreadIndex' -> 'urn:schemas:mailheader:thread-index'.
+		'cdoThreadTopic' -> 'urn:schemas:httpmail:thread-topic'.
+		'cdoTijuana' -> 16r51.
+		'cdoTimeZoneIDURN' -> 'urn:schemas:calendar:timezoneid'.
+		'cdoTo' -> 'urn:schemas:httpmail:to'.
 		'cdoTokyo' -> 16r14.
+		'cdoTonga' -> 16r43.
+		'cdoURLGetLatestVersion' -> 'http://schemas.microsoft.com/cdo/configuration/urlgetlatestversion'.
+		'cdoURLProxyBypass' -> 'http://schemas.microsoft.com/cdo/configuration/urlproxybypass'.
+		'cdoURLProxyServer' -> 'http://schemas.microsoft.com/cdo/configuration/urlproxyserver'.
+		'cdoUS_ASCII' -> 'us-ascii'.
+		'cdoUseMessageResponseText' -> 'http://schemas.microsoft.com/cdo/configuration/usemessageresponsetext'.
 		'cdoUTC' -> 16r0.
-		'cdoWellington' -> 16r11
+		'cdoUTF_7' -> 'utf-7'.
+		'cdoUTF_8' -> 'utf-8'.
+		'cdoUuencode' -> 'uuencode'.
+		'cdoVladivostok' -> 16r44.
+		'cdoWellington' -> 16r11.
+		'cdoWestCentralAfrica' -> 16r45.
+		'cdoXFidelity' -> 'urn:schemas:mailheader:x-cdostreamhighfidelity'.
+		'cdoXMailer' -> 'urn:schemas:mailheader:x-mailer'.
+		'cdoXref' -> 'urn:schemas:mailheader:xref'.
+		'cdoXUnsent' -> 'urn:schemas:mailheader:x-unsent'.
+		'cdoYakutsk' -> 16r46
 	}!
 OS.COM.IDispatch subclass: #'CDO.IBodyPart'
 	instanceVariableNames: ''
