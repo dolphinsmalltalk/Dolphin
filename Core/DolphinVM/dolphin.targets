@@ -11,11 +11,11 @@
       <Output TaskParameter="Lines" PropertyName="GitTag"/>
     </ReadLinesFromFile>
     <PropertyGroup>
-	  <DolphinVersion>2016.$(GitTag.SubString(1, $([MSBuild]::Subtract($(GitTag.IndexOf('-')), 1))))</DolphinVersion>
+	    <DolphinVersion>2016.$([System.Text.RegularExpressions.Regex]::Match($(GitTag), '(?:v)?(\d+\.\d+.\d+)').Groups.get_Item(1))</DolphinVersion>
     </PropertyGroup>
     <Message Importance="Normal" Text="Building Dolphin version $(DolphinVersion)" />
     <Delete Files="$(IntDir)version.txt"/>
-    <Message Importance="High" Text="Generating version.h for tag $(GitTag)..." />
+    <Message Importance="High" Text="Generating version.h for tag $(GitTag), version $(DolphinVersion)" />
     <ItemGroup>
       <VersionHeaderLines Include="// This file generated on $([System.DateTime]::Now)" />
       <VersionHeaderLines Include="#define DOLPHIN_ASSEMBLY_VERSION &quot;$(DolphinVersion)&quot;" />
