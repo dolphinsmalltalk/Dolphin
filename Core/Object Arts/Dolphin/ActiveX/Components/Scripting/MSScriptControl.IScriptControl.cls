@@ -1,24 +1,23 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-IDispatch subclass: #IScriptControl
+OS.COM.IDispatch subclass: #'MSScriptControl.IScriptControl'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'MSScriptControlConstants'
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-IScriptControl guid: (IID fromString: '{0e59f1d3-1fbe-11d0-8ff2-00a0d10038bc}')!
-IScriptControl comment: '<IScriptControl> is a wrapper class for the COM interface ''MSScriptControl.IScriptControl'' generated from type information in the ''Microsoft Script Control 1.0'' library. It contains methods to invoke the member functions exposed by that interface.
+MSScriptControl.IScriptControl guid: (OS.COM.IID fromString: '{0e59f1d3-1fbe-11d0-8ff2-00a0d10038bc}')!
+MSScriptControl.IScriptControl comment: '<IScriptControl> is a wrapper class for the COM interface ''MSScriptControl.IScriptControl'' generated from type information in the ''Microsoft Script Control 1.0'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains the following helpstring for this interface:
 	"Control to host scripting engines that understand the ActiveX Scripting interface"'!
-!IScriptControl categoriesForClass!COM-Interfaces!MSScriptControl-Interfaces! !
-!IScriptControl methodsFor!
+!MSScriptControl.IScriptControl categoriesForClass!COM-Interfaces!MSScriptControl-Interfaces! !
+!MSScriptControl.IScriptControl methodsFor!
 
 _aboutBox
 	"Invoke the _AboutBox() method of the COM object."
 
-	^self _AboutBox
-!
+	^self _AboutBox!
 
 _AboutBox
 	"Private - Invoke the _AboutBox() method of the COM object.
@@ -32,8 +31,7 @@ addCode: code
 	"Invoke the AddCode() method of the COM object.
 	Helpstring: Add code to the global module"
 
-	^self AddCode: code
-!
+	^self AddCode: code!
 
 AddCode: code
 	"Private - Invoke the AddCode() method of the COM object.
@@ -50,9 +48,9 @@ addObject: name object: object
 	Default values are passed for all optional parameters."
 
 	^self
-		 addObject: name
-		 object: object
-		 addMembers: false!
+		addObject: name
+		object: object
+		addMembers: false!
 
 addObject: name object: object addMembers: addMembers
 	"Invoke the AddObject() method of the COM object.
@@ -61,8 +59,7 @@ addObject: name object: object addMembers: addMembers
 	^self
 		AddObject: name
 		Object: object
-		AddMembers: addMembers
-!
+		AddMembers: addMembers!
 
 AddObject: name Object: object AddMembers: addMembers
 	"Private - Invoke the AddObject() method of the COM object.
@@ -81,17 +78,15 @@ allowUI
 	Helpstring: Enable or disable display of the UI"
 
 	| answer |
-	answer := (VARIANT_BOOL new).
+	answer := VARIANT_BOOL new.
 	self get_AllowUI: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 allowUI: pfAllowUI
 	"Set the 'AllowUI' property of the receiver to the <varbool> value of the argument.
 	Helpstring: Enable or disable display of the UI"
 
-	self put_AllowUI: pfAllowUI
-!
+	self put_AllowUI: pfAllowUI!
 
 codeObject
 	"Answer the <IDispatch> value of the 'CodeObject' property of the receiver.
@@ -100,8 +95,7 @@ codeObject
 	| answer |
 	answer := IDispatch newPointer.
 	self get_CodeObject: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 error
 	"Answer the <IScriptError> value of the 'Error' property of the receiver.
@@ -110,20 +104,16 @@ error
 	| answer |
 	answer := IScriptError newPointer.
 	self get_Error: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 eval: expression
-	"Answer the <VARIANT> result of invoking the Eval() method of the COM object.
+	"Answer the <variant> result of invoking the Eval() method of the COM object.
 	Helpstring: Evaluate an expression within the context of the global module"
 
 	| answer |
 	answer := VARIANT new.
-	self
-		Eval: expression
-		pvarResult: answer.
-	^answer asObject
-!
+	self Eval: expression pvarResult: answer.
+	^answer asObject!
 
 Eval: expression pvarResult: pvarResult
 	"Private - Invoke the Eval() method of the COM object.
@@ -140,8 +130,7 @@ executeStatement: statement
 	"Invoke the ExecuteStatement() method of the COM object.
 	Helpstring: Execute a statement within the context of the global module"
 
-	^self ExecuteStatement: statement
-!
+	^self ExecuteStatement: statement!
 
 ExecuteStatement: statement
 	"Private - Invoke the ExecuteStatement() method of the COM object.
@@ -260,15 +249,13 @@ language
 	| answer |
 	answer := BSTR new.
 	self get_Language: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 language: pbstrLanguage
 	"Set the 'Language' property of the receiver to the <bstr> value of the argument.
 	Helpstring: Language engine to use"
 
-	self put_Language: pbstrLanguage
-!
+	self put_Language: pbstrLanguage!
 
 modules
 	"Answer the <IScriptModuleCollection> value of the 'Modules' property of the receiver.
@@ -277,8 +264,7 @@ modules
 	| answer |
 	answer := IScriptModuleCollection newPointer.
 	self get_Modules: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 procedures
 	"Answer the <IScriptProcedureCollection> value of the 'Procedures' property of the receiver.
@@ -287,8 +273,7 @@ procedures
 	| answer |
 	answer := IScriptProcedureCollection newPointer.
 	self get_Procedures: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 put_AllowUI: pfAllowUI
 	"Private - Set the value of the 'AllowUI' property of the object wrapped by the 
@@ -354,8 +339,7 @@ reset
 	"Invoke the Reset() method of the COM object.
 	Helpstring: Reset the scripting engine to a newly created state"
 
-	^self Reset
-!
+	^self Reset!
 
 Reset
 	"Private - Invoke the Reset() method of the COM object.
@@ -367,7 +351,7 @@ Reset
 	^self invalidCall: _failureCode!
 
 run: procedureName parameters: parameters
-	"Answer the <VARIANT> result of invoking the Run() method of the COM object.
+	"Answer the <variant> result of invoking the Run() method of the COM object.
 	Helpstring: Call a procedure defined in the global module"
 
 	| answer |
@@ -376,8 +360,7 @@ run: procedureName parameters: parameters
 		Run: procedureName
 		Parameters: parameters asSAFEARRAY
 		pvarResult: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 Run: procedureName Parameters: parameters pvarResult: pvarResult
 	"Private - Invoke the Run() method of the COM object.
@@ -396,124 +379,116 @@ sitehWnd
 	Helpstring: hWnd used as a parent for displaying UI"
 
 	| answer |
-	answer := (SDWORD new).
+	answer := SDWORD new.
 	self get_SitehWnd: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 sitehWnd: phwnd
 	"Set the 'SitehWnd' property of the receiver to the <sdword> value of the argument.
 	Helpstring: hWnd used as a parent for displaying UI"
 
-	self put_SitehWnd: phwnd
-!
+	self put_SitehWnd: phwnd!
 
 state
 	"Answer the <sdword> value of the 'State' property of the receiver.
 	Helpstring: State of the control"
 
 	| answer |
-	answer := (SDWORD new).
+	answer := SDWORD new.
 	self get_State: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 state: pssState
 	"Set the 'State' property of the receiver to the <sdword> value of the argument.
 	Helpstring: State of the control"
 
-	self put_State: pssState
-!
+	self put_State: pssState!
 
 timeout
 	"Answer the <sdword> value of the 'Timeout' property of the receiver.
 	Helpstring: Length of time in milliseconds that a script can execute before being considered hung"
 
 	| answer |
-	answer := (SDWORD new).
+	answer := SDWORD new.
 	self get_Timeout: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 timeout: plMilleseconds
 	"Set the 'Timeout' property of the receiver to the <sdword> value of the argument.
 	Helpstring: Length of time in milliseconds that a script can execute before being considered hung"
 
-	self put_Timeout: plMilleseconds
-!
+	self put_Timeout: plMilleseconds!
 
 useSafeSubset
 	"Answer the <varbool> value of the 'UseSafeSubset' property of the receiver.
 	Helpstring: Force script to execute in safe mode and disallow potentially harmful actions"
 
 	| answer |
-	answer := (VARIANT_BOOL new).
+	answer := VARIANT_BOOL new.
 	self get_UseSafeSubset: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 useSafeSubset: pfUseSafeSubset
 	"Set the 'UseSafeSubset' property of the receiver to the <varbool> value of the argument.
 	Helpstring: Force script to execute in safe mode and disallow potentially harmful actions"
 
-	self put_UseSafeSubset: pfUseSafeSubset
-! !
-!IScriptControl categoriesFor: #_aboutBox!**auto generated**!methods!public! !
-!IScriptControl categoriesFor: #_AboutBox!**auto generated**!COM Interfaces-IScriptControl!private! !
-!IScriptControl categoriesFor: #addCode:!**auto generated**!methods!public! !
-!IScriptControl categoriesFor: #AddCode:!**auto generated**!COM Interfaces-IScriptControl!private! !
-!IScriptControl categoriesFor: #addObject:object:!**auto generated**!methods!public! !
-!IScriptControl categoriesFor: #addObject:object:addMembers:!**auto generated**!methods!public! !
-!IScriptControl categoriesFor: #AddObject:Object:AddMembers:!**auto generated**!COM Interfaces-IScriptControl!private! !
-!IScriptControl categoriesFor: #allowUI!**auto generated**!properties!public! !
-!IScriptControl categoriesFor: #allowUI:!**auto generated**!properties!public! !
-!IScriptControl categoriesFor: #codeObject!**auto generated**!properties!public! !
-!IScriptControl categoriesFor: #error!**auto generated**!properties!public! !
-!IScriptControl categoriesFor: #eval:!**auto generated**!methods!public! !
-!IScriptControl categoriesFor: #Eval:pvarResult:!**auto generated**!COM Interfaces-IScriptControl!private! !
-!IScriptControl categoriesFor: #executeStatement:!**auto generated**!methods!public! !
-!IScriptControl categoriesFor: #ExecuteStatement:!**auto generated**!COM Interfaces-IScriptControl!private! !
-!IScriptControl categoriesFor: #get_AllowUI:!**auto generated**!COM Interfaces-IScriptControl!private! !
-!IScriptControl categoriesFor: #get_CodeObject:!**auto generated**!COM Interfaces-IScriptControl!private! !
-!IScriptControl categoriesFor: #get_Error:!**auto generated**!COM Interfaces-IScriptControl!private! !
-!IScriptControl categoriesFor: #get_Language:!**auto generated**!COM Interfaces-IScriptControl!private! !
-!IScriptControl categoriesFor: #get_Modules:!**auto generated**!COM Interfaces-IScriptControl!private! !
-!IScriptControl categoriesFor: #get_Procedures:!**auto generated**!COM Interfaces-IScriptControl!private! !
-!IScriptControl categoriesFor: #get_SitehWnd:!**auto generated**!COM Interfaces-IScriptControl!private! !
-!IScriptControl categoriesFor: #get_State:!**auto generated**!COM Interfaces-IScriptControl!private! !
-!IScriptControl categoriesFor: #get_Timeout:!**auto generated**!COM Interfaces-IScriptControl!private! !
-!IScriptControl categoriesFor: #get_UseSafeSubset:!**auto generated**!COM Interfaces-IScriptControl!private! !
-!IScriptControl categoriesFor: #isExtensible!**auto generated**!public!testing! !
-!IScriptControl categoriesFor: #isVBCollection!**auto generated**!public!testing! !
-!IScriptControl categoriesFor: #language!**auto generated**!properties!public! !
-!IScriptControl categoriesFor: #language:!**auto generated**!properties!public! !
-!IScriptControl categoriesFor: #modules!**auto generated**!properties!public! !
-!IScriptControl categoriesFor: #procedures!**auto generated**!properties!public! !
-!IScriptControl categoriesFor: #put_AllowUI:!**auto generated**!COM Interfaces-IScriptControl!private! !
-!IScriptControl categoriesFor: #put_Language:!**auto generated**!COM Interfaces-IScriptControl!private! !
-!IScriptControl categoriesFor: #put_SitehWnd:!**auto generated**!COM Interfaces-IScriptControl!private! !
-!IScriptControl categoriesFor: #put_State:!**auto generated**!COM Interfaces-IScriptControl!private! !
-!IScriptControl categoriesFor: #put_Timeout:!**auto generated**!COM Interfaces-IScriptControl!private! !
-!IScriptControl categoriesFor: #put_UseSafeSubset:!**auto generated**!COM Interfaces-IScriptControl!private! !
-!IScriptControl categoriesFor: #reset!**auto generated**!methods!public! !
-!IScriptControl categoriesFor: #Reset!**auto generated**!COM Interfaces-IScriptControl!private! !
-!IScriptControl categoriesFor: #run:parameters:!**auto generated**!methods!public! !
-!IScriptControl categoriesFor: #Run:Parameters:pvarResult:!**auto generated**!COM Interfaces-IScriptControl!private! !
-!IScriptControl categoriesFor: #sitehWnd!**auto generated**!properties!public! !
-!IScriptControl categoriesFor: #sitehWnd:!**auto generated**!properties!public! !
-!IScriptControl categoriesFor: #state!**auto generated**!properties!public! !
-!IScriptControl categoriesFor: #state:!**auto generated**!properties!public! !
-!IScriptControl categoriesFor: #timeout!**auto generated**!properties!public! !
-!IScriptControl categoriesFor: #timeout:!**auto generated**!properties!public! !
-!IScriptControl categoriesFor: #useSafeSubset!**auto generated**!properties!public! !
-!IScriptControl categoriesFor: #useSafeSubset:!**auto generated**!properties!public! !
+	self put_UseSafeSubset: pfUseSafeSubset! !
+!MSScriptControl.IScriptControl categoriesFor: #_aboutBox!**auto generated**!methods!public! !
+!MSScriptControl.IScriptControl categoriesFor: #_AboutBox!**auto generated**!COM Interfaces-IScriptControl!private! !
+!MSScriptControl.IScriptControl categoriesFor: #addCode:!**auto generated**!methods!public! !
+!MSScriptControl.IScriptControl categoriesFor: #AddCode:!**auto generated**!COM Interfaces-IScriptControl!private! !
+!MSScriptControl.IScriptControl categoriesFor: #addObject:object:!**auto generated**!methods!public! !
+!MSScriptControl.IScriptControl categoriesFor: #addObject:object:addMembers:!**auto generated**!methods!public! !
+!MSScriptControl.IScriptControl categoriesFor: #AddObject:Object:AddMembers:!**auto generated**!COM Interfaces-IScriptControl!private! !
+!MSScriptControl.IScriptControl categoriesFor: #allowUI!**auto generated**!properties!public! !
+!MSScriptControl.IScriptControl categoriesFor: #allowUI:!**auto generated**!properties!public! !
+!MSScriptControl.IScriptControl categoriesFor: #codeObject!**auto generated**!properties!public! !
+!MSScriptControl.IScriptControl categoriesFor: #error!**auto generated**!properties!public! !
+!MSScriptControl.IScriptControl categoriesFor: #eval:!**auto generated**!methods!public! !
+!MSScriptControl.IScriptControl categoriesFor: #Eval:pvarResult:!**auto generated**!COM Interfaces-IScriptControl!private! !
+!MSScriptControl.IScriptControl categoriesFor: #executeStatement:!**auto generated**!methods!public! !
+!MSScriptControl.IScriptControl categoriesFor: #ExecuteStatement:!**auto generated**!COM Interfaces-IScriptControl!private! !
+!MSScriptControl.IScriptControl categoriesFor: #get_AllowUI:!**auto generated**!COM Interfaces-IScriptControl!private! !
+!MSScriptControl.IScriptControl categoriesFor: #get_CodeObject:!**auto generated**!COM Interfaces-IScriptControl!private! !
+!MSScriptControl.IScriptControl categoriesFor: #get_Error:!**auto generated**!COM Interfaces-IScriptControl!private! !
+!MSScriptControl.IScriptControl categoriesFor: #get_Language:!**auto generated**!COM Interfaces-IScriptControl!private! !
+!MSScriptControl.IScriptControl categoriesFor: #get_Modules:!**auto generated**!COM Interfaces-IScriptControl!private! !
+!MSScriptControl.IScriptControl categoriesFor: #get_Procedures:!**auto generated**!COM Interfaces-IScriptControl!private! !
+!MSScriptControl.IScriptControl categoriesFor: #get_SitehWnd:!**auto generated**!COM Interfaces-IScriptControl!private! !
+!MSScriptControl.IScriptControl categoriesFor: #get_State:!**auto generated**!COM Interfaces-IScriptControl!private! !
+!MSScriptControl.IScriptControl categoriesFor: #get_Timeout:!**auto generated**!COM Interfaces-IScriptControl!private! !
+!MSScriptControl.IScriptControl categoriesFor: #get_UseSafeSubset:!**auto generated**!COM Interfaces-IScriptControl!private! !
+!MSScriptControl.IScriptControl categoriesFor: #isExtensible!**auto generated**!public!testing! !
+!MSScriptControl.IScriptControl categoriesFor: #isVBCollection!**auto generated**!public!testing! !
+!MSScriptControl.IScriptControl categoriesFor: #language!**auto generated**!properties!public! !
+!MSScriptControl.IScriptControl categoriesFor: #language:!**auto generated**!properties!public! !
+!MSScriptControl.IScriptControl categoriesFor: #modules!**auto generated**!properties!public! !
+!MSScriptControl.IScriptControl categoriesFor: #procedures!**auto generated**!properties!public! !
+!MSScriptControl.IScriptControl categoriesFor: #put_AllowUI:!**auto generated**!COM Interfaces-IScriptControl!private! !
+!MSScriptControl.IScriptControl categoriesFor: #put_Language:!**auto generated**!COM Interfaces-IScriptControl!private! !
+!MSScriptControl.IScriptControl categoriesFor: #put_SitehWnd:!**auto generated**!COM Interfaces-IScriptControl!private! !
+!MSScriptControl.IScriptControl categoriesFor: #put_State:!**auto generated**!COM Interfaces-IScriptControl!private! !
+!MSScriptControl.IScriptControl categoriesFor: #put_Timeout:!**auto generated**!COM Interfaces-IScriptControl!private! !
+!MSScriptControl.IScriptControl categoriesFor: #put_UseSafeSubset:!**auto generated**!COM Interfaces-IScriptControl!private! !
+!MSScriptControl.IScriptControl categoriesFor: #reset!**auto generated**!methods!public! !
+!MSScriptControl.IScriptControl categoriesFor: #Reset!**auto generated**!COM Interfaces-IScriptControl!private! !
+!MSScriptControl.IScriptControl categoriesFor: #run:parameters:!**auto generated**!methods!public! !
+!MSScriptControl.IScriptControl categoriesFor: #Run:Parameters:pvarResult:!**auto generated**!COM Interfaces-IScriptControl!private! !
+!MSScriptControl.IScriptControl categoriesFor: #sitehWnd!**auto generated**!properties!public! !
+!MSScriptControl.IScriptControl categoriesFor: #sitehWnd:!**auto generated**!properties!public! !
+!MSScriptControl.IScriptControl categoriesFor: #state!**auto generated**!properties!public! !
+!MSScriptControl.IScriptControl categoriesFor: #state:!**auto generated**!properties!public! !
+!MSScriptControl.IScriptControl categoriesFor: #timeout!**auto generated**!properties!public! !
+!MSScriptControl.IScriptControl categoriesFor: #timeout:!**auto generated**!properties!public! !
+!MSScriptControl.IScriptControl categoriesFor: #useSafeSubset!**auto generated**!properties!public! !
+!MSScriptControl.IScriptControl categoriesFor: #useSafeSubset:!**auto generated**!properties!public! !
 
-!IScriptControl class methodsFor!
+!MSScriptControl.IScriptControl class methodsFor!
 
 clsid
 	"Private - Answer the CLSID of the coclass (ScriptControl) for which the receiver is the default interface."
 
-	^CLSID fromString: '{0E59F1D5-1FBE-11D0-8FF2-00A0D10038BC}'
+	^CLSID fromString: '{0e59f1d5-1fbe-11d0-8ff2-00a0d10038bc}'
 !
 
 defineFunctions
@@ -572,7 +547,7 @@ initializeTypeLib
 		IScriptControl initializeTypeLib"
 
 	typeLib := MSScriptControlLib! !
-!IScriptControl class categoriesFor: #clsid!**auto generated**!constants!private! !
-!IScriptControl class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
-!IScriptControl class categoriesFor: #initializeTypeLib!**auto generated**!initializing!private! !
+!MSScriptControl.IScriptControl class categoriesFor: #clsid!**auto generated**!constants!private! !
+!MSScriptControl.IScriptControl class categoriesFor: #defineFunctions!**auto generated**!initializing!private! !
+!MSScriptControl.IScriptControl class categoriesFor: #initializeTypeLib!**auto generated**!initializing!private! !
 

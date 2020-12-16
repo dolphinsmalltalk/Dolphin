@@ -1,0 +1,21 @@
+﻿OS.COM.TypeLibraryAnalyzer {
+	#generationFlags : 0,
+	#binding : VariableBinding {
+		#key : #MSScriptControl,
+		#value : Class [ #MSScriptControl ],
+		#environment : Class [ #Root ],
+		#flags : 0
+	},
+	#attributes : OS.COM.TLIBATTR {
+		#bytes : ByteArray [ 'd2f1590ebe1fd0118ff200a0d10038bc00000000010000000100000008000000' ]
+	},
+	#namespaceName : BindingReference {
+		#pathString : 'MSScriptControl',
+		#path : [
+			'MSScriptControl'
+		],
+		#flags : 0
+	},
+	#packageName : 'ActiveX Scripting',
+	#aliasMap : LookupTable { }
+}

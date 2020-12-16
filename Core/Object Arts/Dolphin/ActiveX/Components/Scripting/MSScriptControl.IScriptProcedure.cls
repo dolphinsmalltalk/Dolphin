@@ -1,19 +1,19 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-IDispatch subclass: #IScriptProcedure
+OS.COM.IDispatch subclass: #'MSScriptControl.IScriptProcedure'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'MSScriptControlConstants'
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-IScriptProcedure guid: (IID fromString: '{70841c73-067d-11d0-95d8-00a02463ab28}')!
-IScriptProcedure comment: '<IScriptProcedure> is a wrapper class for the COM interface ''MSScriptControl.IScriptProcedure'' generated from type information in the ''Microsoft Script Control 1.0'' library. It contains methods to invoke the member functions exposed by that interface.
+MSScriptControl.IScriptProcedure guid: (OS.COM.IID fromString: '{70841c73-067d-11d0-95d8-00a02463ab28}')!
+MSScriptControl.IScriptProcedure comment: '<IScriptProcedure> is a wrapper class for the COM interface ''MSScriptControl.IScriptProcedure'' generated from type information in the ''Microsoft Script Control 1.0'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains the following helpstring for this interface:
 	"Describes a procedure"
 '!
-!IScriptProcedure categoriesForClass!COM-Interfaces!MSScriptControl-Interfaces! !
-!IScriptProcedure methodsFor!
+!MSScriptControl.IScriptProcedure categoriesForClass!COM-Interfaces!MSScriptControl-Interfaces! !
+!MSScriptControl.IScriptProcedure methodsFor!
 
 get_HasReturnValue: pfHasReturnValue
 	"Private - Get the value of the 'HasReturnValue' property of the receiver.
@@ -47,10 +47,9 @@ hasReturnValue
 	Helpstring: True if procedure returns a value"
 
 	| answer |
-	answer := (VARIANT_BOOL new).
+	answer := VARIANT_BOOL new.
 	self get_HasReturnValue: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 isExtensible
 	"Answer whether the receiver may add methods at run-time."
@@ -69,41 +68,38 @@ name
 	| answer |
 	answer := BSTR new.
 	self get_Name: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 numArgs
 	"Answer the <sdword> value of the 'NumArgs' property of the receiver.
 	Helpstring: Number of arguments that are expected"
 
 	| answer |
-	answer := (SDWORD new).
+	answer := SDWORD new.
 	self get_NumArgs: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 value
 	"Answer the <bstr> value of the 'Name' property of the receiver.
 	This is the default value (DISPID_VALUE) property of the receiver."
 
-	^self name
-! !
-!IScriptProcedure categoriesFor: #get_HasReturnValue:!**auto generated**!COM Interfaces-IScriptProcedure!private! !
-!IScriptProcedure categoriesFor: #get_Name:!**auto generated**!COM Interfaces-IScriptProcedure!private! !
-!IScriptProcedure categoriesFor: #get_NumArgs:!**auto generated**!COM Interfaces-IScriptProcedure!private! !
-!IScriptProcedure categoriesFor: #hasReturnValue!**auto generated**!properties!public! !
-!IScriptProcedure categoriesFor: #isExtensible!**auto generated**!public!testing! !
-!IScriptProcedure categoriesFor: #isVBCollection!**auto generated**!public!testing! !
-!IScriptProcedure categoriesFor: #name!**auto generated**!properties!public! !
-!IScriptProcedure categoriesFor: #numArgs!**auto generated**!properties!public! !
-!IScriptProcedure categoriesFor: #value!**auto generated**!properties!public! !
+	^self name! !
+!MSScriptControl.IScriptProcedure categoriesFor: #get_HasReturnValue:!**auto generated**!COM Interfaces-IScriptProcedure!private! !
+!MSScriptControl.IScriptProcedure categoriesFor: #get_Name:!**auto generated**!COM Interfaces-IScriptProcedure!private! !
+!MSScriptControl.IScriptProcedure categoriesFor: #get_NumArgs:!**auto generated**!COM Interfaces-IScriptProcedure!private! !
+!MSScriptControl.IScriptProcedure categoriesFor: #hasReturnValue!**auto generated**!properties!public! !
+!MSScriptControl.IScriptProcedure categoriesFor: #isExtensible!**auto generated**!public!testing! !
+!MSScriptControl.IScriptProcedure categoriesFor: #isVBCollection!**auto generated**!public!testing! !
+!MSScriptControl.IScriptProcedure categoriesFor: #name!**auto generated**!properties!public! !
+!MSScriptControl.IScriptProcedure categoriesFor: #numArgs!**auto generated**!properties!public! !
+!MSScriptControl.IScriptProcedure categoriesFor: #value!**auto generated**!properties!public! !
 
-!IScriptProcedure class methodsFor!
+!MSScriptControl.IScriptProcedure class methodsFor!
 
 clsid
 	"Private - Answer the CLSID of the coclass (Procedure) for which the receiver is the default interface."
 
-	^CLSID fromString: '{0E59F1DA-1FBE-11D0-8FF2-00A0D10038BC}'
+	^CLSID fromString: '{0e59f1da-1fbe-11d0-8ff2-00a0d10038bc}'
 !
 
 defineFunctions
@@ -124,7 +120,7 @@ initializeTypeLib
 		IScriptProcedure initializeTypeLib"
 
 	typeLib := MSScriptControlLib! !
-!IScriptProcedure class categoriesFor: #clsid!**auto generated**!constants!private! !
-!IScriptProcedure class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
-!IScriptProcedure class categoriesFor: #initializeTypeLib!**auto generated**!initializing!private! !
+!MSScriptControl.IScriptProcedure class categoriesFor: #clsid!**auto generated**!constants!private! !
+!MSScriptControl.IScriptProcedure class categoriesFor: #defineFunctions!**auto generated**!initializing!private! !
+!MSScriptControl.IScriptProcedure class categoriesFor: #initializeTypeLib!**auto generated**!initializing!private! !
 

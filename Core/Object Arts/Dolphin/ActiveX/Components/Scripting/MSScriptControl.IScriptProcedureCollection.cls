@@ -1,19 +1,19 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-IDispatch subclass: #IScriptProcedureCollection
+OS.COM.IDispatch subclass: #'MSScriptControl.IScriptProcedureCollection'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'MSScriptControlConstants'
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-IScriptProcedureCollection guid: (IID fromString: '{70841c71-067d-11d0-95d8-00a02463ab28}')!
-IScriptProcedureCollection comment: '<IScriptProcedureCollection> is a wrapper class for the COM interface ''MSScriptControl.IScriptProcedureCollection'' generated from type information in the ''Microsoft Script Control 1.0'' library. It contains methods to invoke the member functions exposed by that interface.
+MSScriptControl.IScriptProcedureCollection guid: (OS.COM.IID fromString: '{70841c71-067d-11d0-95d8-00a02463ab28}')!
+MSScriptControl.IScriptProcedureCollection comment: '<IScriptProcedureCollection> is a wrapper class for the COM interface ''MSScriptControl.IScriptProcedureCollection'' generated from type information in the ''Microsoft Script Control 1.0'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains the following helpstring for this interface:
 	"Collection of procedures"
 '!
-!IScriptProcedureCollection categoriesForClass!COM-Interfaces!MSScriptControl-Interfaces! !
-!IScriptProcedureCollection methodsFor!
+!MSScriptControl.IScriptProcedureCollection categoriesForClass!COM-Interfaces!MSScriptControl-Interfaces! !
+!MSScriptControl.IScriptProcedureCollection methodsFor!
 
 _newEnum
 	"Answer the <IUnknown> value of the '_NewEnum' property of the receiver."
@@ -21,18 +21,16 @@ _newEnum
 	| answer |
 	answer := IUnknown newPointer.
 	self get__NewEnum: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 count
 	"Answer the <sdword> value of the 'Count' property of the receiver.
 	Helpstring: Number of procedures"
 
 	| answer |
-	answer := (SDWORD new).
+	answer := SDWORD new.
 	self get_Count: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 get__NewEnum: ppenumProcedures
 	"Private - Get the value of the '_NewEnum' property of the receiver.
@@ -78,26 +76,23 @@ item: index
 
 	| answer |
 	answer := IScriptProcedure newPointer.
-	self
-		get_Item: index asVariant
-		ppdispProcedure: answer.
-	^answer asObject
-! !
-!IScriptProcedureCollection categoriesFor: #_newEnum!**auto generated**!properties!public! !
-!IScriptProcedureCollection categoriesFor: #count!**auto generated**!properties!public! !
-!IScriptProcedureCollection categoriesFor: #get__NewEnum:!**auto generated**!COM Interfaces-IScriptProcedureCollection!private! !
-!IScriptProcedureCollection categoriesFor: #get_Count:!**auto generated**!COM Interfaces-IScriptProcedureCollection!private! !
-!IScriptProcedureCollection categoriesFor: #get_Item:ppdispProcedure:!**auto generated**!COM Interfaces-IScriptProcedureCollection!private! !
-!IScriptProcedureCollection categoriesFor: #isExtensible!**auto generated**!public!testing! !
-!IScriptProcedureCollection categoriesFor: #isVBCollection!**auto generated**!public!testing! !
-!IScriptProcedureCollection categoriesFor: #item:!**auto generated**!properties!public! !
+	self get_Item: index asVariant ppdispProcedure: answer.
+	^answer asObject! !
+!MSScriptControl.IScriptProcedureCollection categoriesFor: #_newEnum!**auto generated**!properties!public! !
+!MSScriptControl.IScriptProcedureCollection categoriesFor: #count!**auto generated**!properties!public! !
+!MSScriptControl.IScriptProcedureCollection categoriesFor: #get__NewEnum:!**auto generated**!COM Interfaces-IScriptProcedureCollection!private! !
+!MSScriptControl.IScriptProcedureCollection categoriesFor: #get_Count:!**auto generated**!COM Interfaces-IScriptProcedureCollection!private! !
+!MSScriptControl.IScriptProcedureCollection categoriesFor: #get_Item:ppdispProcedure:!**auto generated**!COM Interfaces-IScriptProcedureCollection!private! !
+!MSScriptControl.IScriptProcedureCollection categoriesFor: #isExtensible!**auto generated**!public!testing! !
+!MSScriptControl.IScriptProcedureCollection categoriesFor: #isVBCollection!**auto generated**!public!testing! !
+!MSScriptControl.IScriptProcedureCollection categoriesFor: #item:!**auto generated**!properties!public! !
 
-!IScriptProcedureCollection class methodsFor!
+!MSScriptControl.IScriptProcedureCollection class methodsFor!
 
 clsid
 	"Private - Answer the CLSID of the coclass (Procedures) for which the receiver is the default interface."
 
-	^CLSID fromString: '{0E59F1DB-1FBE-11D0-8FF2-00A0D10038BC}'
+	^CLSID fromString: '{0e59f1db-1fbe-11d0-8ff2-00a0d10038bc}'
 !
 
 defineFunctions
@@ -118,7 +113,7 @@ initializeTypeLib
 		IScriptProcedureCollection initializeTypeLib"
 
 	typeLib := MSScriptControlLib! !
-!IScriptProcedureCollection class categoriesFor: #clsid!**auto generated**!constants!private! !
-!IScriptProcedureCollection class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
-!IScriptProcedureCollection class categoriesFor: #initializeTypeLib!**auto generated**!initializing!private! !
+!MSScriptControl.IScriptProcedureCollection class categoriesFor: #clsid!**auto generated**!constants!private! !
+!MSScriptControl.IScriptProcedureCollection class categoriesFor: #defineFunctions!**auto generated**!initializing!private! !
+!MSScriptControl.IScriptProcedureCollection class categoriesFor: #initializeTypeLib!**auto generated**!initializing!private! !
 

@@ -1,26 +1,25 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-IDispatch subclass: #IScriptModule
+OS.COM.IDispatch subclass: #'MSScriptControl.IScriptModule'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'MSScriptControlConstants'
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-IScriptModule guid: (IID fromString: '{70841c70-067d-11d0-95d8-00a02463ab28}')!
-IScriptModule comment: '<IScriptModule> is a wrapper class for the COM interface ''MSScriptControl.IScriptModule'' generated from type information in the ''Microsoft Script Control 1.0'' library. It contains methods to invoke the member functions exposed by that interface.
+MSScriptControl.IScriptModule guid: (OS.COM.IID fromString: '{70841c70-067d-11d0-95d8-00a02463ab28}')!
+MSScriptControl.IScriptModule comment: '<IScriptModule> is a wrapper class for the COM interface ''MSScriptControl.IScriptModule'' generated from type information in the ''Microsoft Script Control 1.0'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains the following helpstring for this interface:
 	"Context in which functions can be defined and expressions can be evaluated"
 '!
-!IScriptModule categoriesForClass!COM-Interfaces!MSScriptControl-Interfaces! !
-!IScriptModule methodsFor!
+!MSScriptControl.IScriptModule categoriesForClass!COM-Interfaces!MSScriptControl-Interfaces! !
+!MSScriptControl.IScriptModule methodsFor!
 
 addCode: code
 	"Invoke the AddCode() method of the COM object.
 	Helpstring: Add code to the module"
 
-	^self AddCode: code
-!
+	^self AddCode: code!
 
 AddCode: code
 	"Private - Invoke the AddCode() method of the COM object.
@@ -39,20 +38,16 @@ codeObject
 	| answer |
 	answer := IDispatch newPointer.
 	self get_CodeObject: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 eval: expression
-	"Answer the <VARIANT> result of invoking the Eval() method of the COM object.
+	"Answer the <variant> result of invoking the Eval() method of the COM object.
 	Helpstring: Evaluate an expression within the context of the module"
 
 	| answer |
 	answer := VARIANT new.
-	self
-		Eval: expression
-		pvarResult: answer.
-	^answer asObject
-!
+	self Eval: expression pvarResult: answer.
+	^answer asObject!
 
 Eval: expression pvarResult: pvarResult
 	"Private - Invoke the Eval() method of the COM object.
@@ -69,8 +64,7 @@ executeStatement: statement
 	"Invoke the ExecuteStatement() method of the COM object.
 	Helpstring: Execute a statement within the context of the module"
 
-	^self ExecuteStatement: statement
-!
+	^self ExecuteStatement: statement!
 
 ExecuteStatement: statement
 	"Private - Invoke the ExecuteStatement() method of the COM object.
@@ -126,8 +120,7 @@ name
 	| answer |
 	answer := BSTR new.
 	self get_Name: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 procedures
 	"Answer the <IScriptProcedureCollection> value of the 'Procedures' property of the receiver.
@@ -136,11 +129,10 @@ procedures
 	| answer |
 	answer := IScriptProcedureCollection newPointer.
 	self get_Procedures: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 run: procedureName parameters: parameters
-	"Answer the <VARIANT> result of invoking the Run() method of the COM object.
+	"Answer the <variant> result of invoking the Run() method of the COM object.
 	Helpstring: Call a procedure defined in the module"
 
 	| answer |
@@ -149,8 +141,7 @@ run: procedureName parameters: parameters
 		Run: procedureName
 		Parameters: parameters asSAFEARRAY
 		pvarResult: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 Run: procedureName Parameters: parameters pvarResult: pvarResult
 	"Private - Invoke the Run() method of the COM object.
@@ -168,32 +159,31 @@ value
 	"Answer the <bstr> value of the 'Name' property of the receiver.
 	This is the default value (DISPID_VALUE) property of the receiver."
 
-	^self name
-! !
-!IScriptModule categoriesFor: #addCode:!**auto generated**!methods!public! !
-!IScriptModule categoriesFor: #AddCode:!**auto generated**!COM Interfaces-IScriptModule!private! !
-!IScriptModule categoriesFor: #codeObject!**auto generated**!properties!public! !
-!IScriptModule categoriesFor: #eval:!**auto generated**!methods!public! !
-!IScriptModule categoriesFor: #Eval:pvarResult:!**auto generated**!COM Interfaces-IScriptModule!private! !
-!IScriptModule categoriesFor: #executeStatement:!**auto generated**!methods!public! !
-!IScriptModule categoriesFor: #ExecuteStatement:!**auto generated**!COM Interfaces-IScriptModule!private! !
-!IScriptModule categoriesFor: #get_CodeObject:!**auto generated**!COM Interfaces-IScriptModule!private! !
-!IScriptModule categoriesFor: #get_Name:!**auto generated**!COM Interfaces-IScriptModule!private! !
-!IScriptModule categoriesFor: #get_Procedures:!**auto generated**!COM Interfaces-IScriptModule!private! !
-!IScriptModule categoriesFor: #isExtensible!**auto generated**!public!testing! !
-!IScriptModule categoriesFor: #isVBCollection!**auto generated**!public!testing! !
-!IScriptModule categoriesFor: #name!**auto generated**!properties!public! !
-!IScriptModule categoriesFor: #procedures!**auto generated**!properties!public! !
-!IScriptModule categoriesFor: #run:parameters:!**auto generated**!methods!public! !
-!IScriptModule categoriesFor: #Run:Parameters:pvarResult:!**auto generated**!COM Interfaces-IScriptModule!private! !
-!IScriptModule categoriesFor: #value!**auto generated**!properties!public! !
+	^self name! !
+!MSScriptControl.IScriptModule categoriesFor: #addCode:!**auto generated**!methods!public! !
+!MSScriptControl.IScriptModule categoriesFor: #AddCode:!**auto generated**!COM Interfaces-IScriptModule!private! !
+!MSScriptControl.IScriptModule categoriesFor: #codeObject!**auto generated**!properties!public! !
+!MSScriptControl.IScriptModule categoriesFor: #eval:!**auto generated**!methods!public! !
+!MSScriptControl.IScriptModule categoriesFor: #Eval:pvarResult:!**auto generated**!COM Interfaces-IScriptModule!private! !
+!MSScriptControl.IScriptModule categoriesFor: #executeStatement:!**auto generated**!methods!public! !
+!MSScriptControl.IScriptModule categoriesFor: #ExecuteStatement:!**auto generated**!COM Interfaces-IScriptModule!private! !
+!MSScriptControl.IScriptModule categoriesFor: #get_CodeObject:!**auto generated**!COM Interfaces-IScriptModule!private! !
+!MSScriptControl.IScriptModule categoriesFor: #get_Name:!**auto generated**!COM Interfaces-IScriptModule!private! !
+!MSScriptControl.IScriptModule categoriesFor: #get_Procedures:!**auto generated**!COM Interfaces-IScriptModule!private! !
+!MSScriptControl.IScriptModule categoriesFor: #isExtensible!**auto generated**!public!testing! !
+!MSScriptControl.IScriptModule categoriesFor: #isVBCollection!**auto generated**!public!testing! !
+!MSScriptControl.IScriptModule categoriesFor: #name!**auto generated**!properties!public! !
+!MSScriptControl.IScriptModule categoriesFor: #procedures!**auto generated**!properties!public! !
+!MSScriptControl.IScriptModule categoriesFor: #run:parameters:!**auto generated**!methods!public! !
+!MSScriptControl.IScriptModule categoriesFor: #Run:Parameters:pvarResult:!**auto generated**!COM Interfaces-IScriptModule!private! !
+!MSScriptControl.IScriptModule categoriesFor: #value!**auto generated**!properties!public! !
 
-!IScriptModule class methodsFor!
+!MSScriptControl.IScriptModule class methodsFor!
 
 clsid
 	"Private - Answer the CLSID of the coclass (Module) for which the receiver is the default interface."
 
-	^CLSID fromString: '{0E59F1DC-1FBE-11D0-8FF2-00A0D10038BC}'
+	^CLSID fromString: '{0e59f1dc-1fbe-11d0-8ff2-00a0d10038bc}'
 !
 
 defineFunctions
@@ -222,7 +212,7 @@ initializeTypeLib
 		IScriptModule initializeTypeLib"
 
 	typeLib := MSScriptControlLib! !
-!IScriptModule class categoriesFor: #clsid!**auto generated**!constants!private! !
-!IScriptModule class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
-!IScriptModule class categoriesFor: #initializeTypeLib!**auto generated**!initializing!private! !
+!MSScriptControl.IScriptModule class categoriesFor: #clsid!**auto generated**!constants!private! !
+!MSScriptControl.IScriptModule class categoriesFor: #defineFunctions!**auto generated**!initializing!private! !
+!MSScriptControl.IScriptModule class categoriesFor: #initializeTypeLib!**auto generated**!initializing!private! !
 

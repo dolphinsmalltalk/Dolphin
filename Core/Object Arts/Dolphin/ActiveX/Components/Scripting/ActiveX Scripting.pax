@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'ActiveX Scripting'.
-package paxVersion: 2;
+package paxVersion: 2.1;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk ActiveX Script Control Support. 
 Copyright (c) Object Arts Ltd, 2000.
@@ -16,23 +16,23 @@ package basicPackageVersion: '6.0'.
 
 
 package setClassNames: #(
-	#{ActiveXScriptlet}
-	#{IScriptControl}
-	#{IScriptError}
-	#{IScriptModule}
-	#{IScriptModuleCollection}
-	#{IScriptProcedure}
-	#{IScriptProcedureCollection}
-	#{MSScriptControlConstants}
-	#{SimpleAXScriptEditor}
+	#{MSScriptControl}
+	#{MSScriptControl.ActiveXScriptlet}
+	#{MSScriptControl.IScriptControl}
+	#{MSScriptControl.IScriptError}
+	#{MSScriptControl.IScriptModule}
+	#{MSScriptControl.IScriptModuleCollection}
+	#{MSScriptControl.IScriptProcedure}
+	#{MSScriptControl.IScriptProcedureCollection}
+	#{MSScriptControl.SimpleAXScriptEditor}
 ).
 
 package setVariableNames: #(
-	#{MSScriptControlLib}
+	#{MSScriptControl.MSScriptControlLib}
 ).
 
 package setBinaryVariableNames: #(
-	#{MSScriptControlLib}
+	#{MSScriptControl.MSScriptControlLib}
 ).
 
 package setPrerequisites: #(
@@ -46,7 +46,6 @@ package setPrerequisites: #(
 	'..\..\..\Base\Dolphin Message Box'
 	'..\..\..\MVP\Base\Dolphin MVP Base'
 	'..\..\..\MVP\Views\Scintilla\Dolphin Scintilla View'
-	'..\..\..\MVP\Views\Scintilla\Dolphin Scintilla View (Deprecated)'
 	'..\..\..\MVP\Presenters\Text\Dolphin Text Presenter'
 	'..\..\..\MVP\Type Converters\Dolphin Type Converters'
 	'..\..\..\MVP\Models\Value\Dolphin Value Models'
@@ -58,59 +57,61 @@ package!
 
 "Class Definitions"!
 
-SharedPool subclass: #MSScriptControlConstants
+Kernel.Namespace subclass: #MSScriptControl
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #()
+	imports: #(#{OS.COM private} #{OS private})
 	classInstanceVariableNames: ''
 	classConstants: {
 		'Connected' -> 16r1.
-		'Initialized' -> 16r0
+		'GlobalModule' -> 'Global'.
+		'Initialized' -> 16r0.
+		'NoTimeout' -> -16r1
 	}!
-Object subclass: #ActiveXScriptlet
+Core.Object subclass: #'MSScriptControl.ActiveXScriptlet'
 	instanceVariableNames: 'language expression procedures description globalBindings'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-IDispatch subclass: #IScriptControl
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #(#{MSScriptControlConstants})
-	classInstanceVariableNames: ''
-	classConstants: {}!
-IDispatch subclass: #IScriptError
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #(#{MSScriptControlConstants})
-	classInstanceVariableNames: ''
-	classConstants: {}!
-IDispatch subclass: #IScriptModule
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #(#{MSScriptControlConstants})
-	classInstanceVariableNames: ''
-	classConstants: {}!
-IDispatch subclass: #IScriptModuleCollection
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #(#{MSScriptControlConstants})
-	classInstanceVariableNames: ''
-	classConstants: {}!
-IDispatch subclass: #IScriptProcedure
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #(#{MSScriptControlConstants})
-	classInstanceVariableNames: ''
-	classConstants: {}!
-IDispatch subclass: #IScriptProcedureCollection
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #(#{MSScriptControlConstants})
-	classInstanceVariableNames: ''
-	classConstants: {}!
-Dialog subclass: #SimpleAXScriptEditor
+UI.Dialog subclass: #'MSScriptControl.SimpleAXScriptEditor'
 	instanceVariableNames: 'scriptControl languagePresenter scriptPresenter expressionPresenter resultPresenter filename descriptionPresenter'
+	classVariableNames: ''
+	imports: #(#{UI})
+	classInstanceVariableNames: ''
+	classConstants: {}!
+OS.COM.IDispatch subclass: #'MSScriptControl.IScriptControl'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+OS.COM.IDispatch subclass: #'MSScriptControl.IScriptError'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+OS.COM.IDispatch subclass: #'MSScriptControl.IScriptModule'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+OS.COM.IDispatch subclass: #'MSScriptControl.IScriptModuleCollection'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+OS.COM.IDispatch subclass: #'MSScriptControl.IScriptProcedure'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+OS.COM.IDispatch subclass: #'MSScriptControl.IScriptProcedureCollection'
+	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''

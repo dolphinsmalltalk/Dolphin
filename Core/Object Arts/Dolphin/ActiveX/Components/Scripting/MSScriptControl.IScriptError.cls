@@ -1,26 +1,25 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-IDispatch subclass: #IScriptError
+OS.COM.IDispatch subclass: #'MSScriptControl.IScriptError'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'MSScriptControlConstants'
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-IScriptError guid: (IID fromString: '{70841c78-067d-11d0-95d8-00a02463ab28}')!
-IScriptError comment: '<IScriptError> is a wrapper class for the COM interface ''MSScriptControl.IScriptError'' generated from type information in the ''Microsoft Script Control 1.0'' library. It contains methods to invoke the member functions exposed by that interface.
+MSScriptControl.IScriptError guid: (OS.COM.IID fromString: '{70841c78-067d-11d0-95d8-00a02463ab28}')!
+MSScriptControl.IScriptError comment: '<IScriptError> is a wrapper class for the COM interface ''MSScriptControl.IScriptError'' generated from type information in the ''Microsoft Script Control 1.0'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains the following helpstring for this interface:
 	"Provides access to scripting error information"
 '!
-!IScriptError categoriesForClass!COM-Interfaces!MSScriptControl-Interfaces! !
-!IScriptError methodsFor!
+!MSScriptControl.IScriptError categoriesForClass!COM-Interfaces!MSScriptControl-Interfaces! !
+!MSScriptControl.IScriptError methodsFor!
 
 clear
 	"Invoke the Clear() method of the COM object.
 	Helpstring: Clear the script error"
 
-	^self Clear
-!
+	^self Clear!
 
 Clear
 	"Private - Invoke the Clear() method of the COM object.
@@ -36,10 +35,9 @@ column
 	Helpstring: Source code column position where the error occurred"
 
 	| answer |
-	answer := (SDWORD new).
+	answer := SDWORD new.
 	self get_Column: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 description
 	"Answer the <bstr> value of the 'Description' property of the receiver.
@@ -48,8 +46,7 @@ description
 	| answer |
 	answer := BSTR new.
 	self get_Description: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 get_Column: plColumn
 	"Private - Get the value of the 'Column' property of the receiver.
@@ -128,10 +125,9 @@ helpContext
 	Helpstring: Context ID for the topic with information on the error"
 
 	| answer |
-	answer := (SDWORD new).
+	answer := SDWORD new.
 	self get_HelpContext: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 helpFile
 	"Answer the <bstr> value of the 'HelpFile' property of the receiver.
@@ -140,8 +136,7 @@ helpFile
 	| answer |
 	answer := BSTR new.
 	self get_HelpFile: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 isExtensible
 	"Answer whether the receiver may add methods at run-time."
@@ -158,20 +153,18 @@ line
 	Helpstring: Source code line number where the error occurred"
 
 	| answer |
-	answer := (SDWORD new).
+	answer := SDWORD new.
 	self get_Line: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 number
 	"Answer the <sdword> value of the 'Number' property of the receiver.
 	Helpstring: Error number"
 
 	| answer |
-	answer := (SDWORD new).
+	answer := SDWORD new.
 	self get_Number: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 source
 	"Answer the <bstr> value of the 'Source' property of the receiver.
@@ -180,8 +173,7 @@ source
 	| answer |
 	answer := BSTR new.
 	self get_Source: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 text
 	"Answer the <bstr> value of the 'Text' property of the receiver.
@@ -190,41 +182,40 @@ text
 	| answer |
 	answer := BSTR new.
 	self get_Text: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 value
 	"Answer the special property which is the default value for the receiver."
 
 	^self description! !
-!IScriptError categoriesFor: #clear!**auto generated**!methods!public! !
-!IScriptError categoriesFor: #Clear!**auto generated**!COM Interfaces-IScriptError!private! !
-!IScriptError categoriesFor: #column!**auto generated**!properties!public! !
-!IScriptError categoriesFor: #description!**auto generated**!properties!public! !
-!IScriptError categoriesFor: #get_Column:!**auto generated**!COM Interfaces-IScriptError!private! !
-!IScriptError categoriesFor: #get_Description:!**auto generated**!COM Interfaces-IScriptError!private! !
-!IScriptError categoriesFor: #get_HelpContext:!**auto generated**!COM Interfaces-IScriptError!private! !
-!IScriptError categoriesFor: #get_HelpFile:!**auto generated**!COM Interfaces-IScriptError!private! !
-!IScriptError categoriesFor: #get_Line:!**auto generated**!COM Interfaces-IScriptError!private! !
-!IScriptError categoriesFor: #get_Number:!**auto generated**!COM Interfaces-IScriptError!private! !
-!IScriptError categoriesFor: #get_Source:!**auto generated**!COM Interfaces-IScriptError!private! !
-!IScriptError categoriesFor: #get_Text:!**auto generated**!COM Interfaces-IScriptError!private! !
-!IScriptError categoriesFor: #helpContext!**auto generated**!properties!public! !
-!IScriptError categoriesFor: #helpFile!**auto generated**!properties!public! !
-!IScriptError categoriesFor: #isExtensible!**auto generated**!public!testing! !
-!IScriptError categoriesFor: #isVBCollection!**auto generated**!public!testing! !
-!IScriptError categoriesFor: #line!**auto generated**!properties!public! !
-!IScriptError categoriesFor: #number!**auto generated**!properties!public! !
-!IScriptError categoriesFor: #source!**auto generated**!properties!public! !
-!IScriptError categoriesFor: #text!**auto generated**!properties!public! !
-!IScriptError categoriesFor: #value!accessing!properties!public! !
+!MSScriptControl.IScriptError categoriesFor: #clear!**auto generated**!methods!public! !
+!MSScriptControl.IScriptError categoriesFor: #Clear!**auto generated**!COM Interfaces-IScriptError!private! !
+!MSScriptControl.IScriptError categoriesFor: #column!**auto generated**!properties!public! !
+!MSScriptControl.IScriptError categoriesFor: #description!**auto generated**!properties!public! !
+!MSScriptControl.IScriptError categoriesFor: #get_Column:!**auto generated**!COM Interfaces-IScriptError!private! !
+!MSScriptControl.IScriptError categoriesFor: #get_Description:!**auto generated**!COM Interfaces-IScriptError!private! !
+!MSScriptControl.IScriptError categoriesFor: #get_HelpContext:!**auto generated**!COM Interfaces-IScriptError!private! !
+!MSScriptControl.IScriptError categoriesFor: #get_HelpFile:!**auto generated**!COM Interfaces-IScriptError!private! !
+!MSScriptControl.IScriptError categoriesFor: #get_Line:!**auto generated**!COM Interfaces-IScriptError!private! !
+!MSScriptControl.IScriptError categoriesFor: #get_Number:!**auto generated**!COM Interfaces-IScriptError!private! !
+!MSScriptControl.IScriptError categoriesFor: #get_Source:!**auto generated**!COM Interfaces-IScriptError!private! !
+!MSScriptControl.IScriptError categoriesFor: #get_Text:!**auto generated**!COM Interfaces-IScriptError!private! !
+!MSScriptControl.IScriptError categoriesFor: #helpContext!**auto generated**!properties!public! !
+!MSScriptControl.IScriptError categoriesFor: #helpFile!**auto generated**!properties!public! !
+!MSScriptControl.IScriptError categoriesFor: #isExtensible!**auto generated**!public!testing! !
+!MSScriptControl.IScriptError categoriesFor: #isVBCollection!**auto generated**!public!testing! !
+!MSScriptControl.IScriptError categoriesFor: #line!**auto generated**!properties!public! !
+!MSScriptControl.IScriptError categoriesFor: #number!**auto generated**!properties!public! !
+!MSScriptControl.IScriptError categoriesFor: #source!**auto generated**!properties!public! !
+!MSScriptControl.IScriptError categoriesFor: #text!**auto generated**!properties!public! !
+!MSScriptControl.IScriptError categoriesFor: #value!accessing!properties!public! !
 
-!IScriptError class methodsFor!
+!MSScriptControl.IScriptError class methodsFor!
 
 clsid
 	"Private - Answer the CLSID of the coclass (Error) for which the receiver is the default interface."
 
-	^CLSID fromString: '{0E59F1DE-1FBE-11D0-8FF2-00A0D10038BC}'
+	^CLSID fromString: '{0e59f1de-1fbe-11d0-8ff2-00a0d10038bc}'
 !
 
 defineFunctions
@@ -256,7 +247,7 @@ initializeTypeLib
 		IScriptError initializeTypeLib"
 
 	typeLib := MSScriptControlLib! !
-!IScriptError class categoriesFor: #clsid!**auto generated**!constants!private! !
-!IScriptError class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
-!IScriptError class categoriesFor: #initializeTypeLib!**auto generated**!initializing!private! !
+!MSScriptControl.IScriptError class categoriesFor: #clsid!**auto generated**!constants!private! !
+!MSScriptControl.IScriptError class categoriesFor: #defineFunctions!**auto generated**!initializing!private! !
+!MSScriptControl.IScriptError class categoriesFor: #initializeTypeLib!**auto generated**!initializing!private! !
 

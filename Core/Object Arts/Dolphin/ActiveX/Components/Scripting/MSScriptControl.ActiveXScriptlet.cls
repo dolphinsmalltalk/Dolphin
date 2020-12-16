@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Object subclass: #ActiveXScriptlet
+Core.Object subclass: #'MSScriptControl.ActiveXScriptlet'
 	instanceVariableNames: 'language expression procedures description globalBindings'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ActiveXScriptlet guid: (GUID fromString: '{9271a3a3-d270-11d3-93da-00a024ca708a}')!
-ActiveXScriptlet comment: 'ActiveXScriplet represents an executable piece of script code, e.g. in VBScript. 
+MSScriptControl.ActiveXScriptlet guid: (Core.GUID fromString: '{9271a3a3-d270-11d3-93da-00a024ca708a}')!
+MSScriptControl.ActiveXScriptlet comment: 'ActiveXScriplet represents an executable piece of script code, e.g. in VBScript. 
 
 It consists of a set of the name of the script language, the text of a set of procedures (may be empty), and an expression to be evaluated.
 
@@ -16,8 +16,8 @@ Instance Variables:
 	expression		<String>. Expression evaluated to get the value of the scriptlet.
 	procedures	<String>. Optional procedures to support the expression.
 '!
-!ActiveXScriptlet categoriesForClass!Unclassified! !
-!ActiveXScriptlet methodsFor!
+!MSScriptControl.ActiveXScriptlet categoriesForClass!Unclassified! !
+!MSScriptControl.ActiveXScriptlet methodsFor!
 
 = comparand
 	"Answer whether the receiver and the <Object>, comparand, 
@@ -109,34 +109,34 @@ value
 	"Evaluate the scriptlet."
 
 	| engine result |
-	engine := IScriptControl new.
+	engine := MSScriptControl.IScriptControl new.
 	engine
 		language: self language;
 		addCode: self procedures.
-	self globalBindings 
+	self globalBindings
 		keysAndValuesDo: [:eachKey :eachValue | engine addObject: eachKey object: (eachValue queryInterface: IDispatch)].
 	result := engine eval: self expression.
 	engine free.
 	^result! !
-!ActiveXScriptlet categoriesFor: #=!comparing!public! !
-!ActiveXScriptlet categoriesFor: #addGlobalBinding:!accessing!public! !
-!ActiveXScriptlet categoriesFor: #description!accessing!public! !
-!ActiveXScriptlet categoriesFor: #description:!accessing!public! !
-!ActiveXScriptlet categoriesFor: #displayOn:!displaying!public! !
-!ActiveXScriptlet categoriesFor: #expression!accessing!public! !
-!ActiveXScriptlet categoriesFor: #expression:!accessing!private! !
-!ActiveXScriptlet categoriesFor: #globalBindings!accessing!public! !
-!ActiveXScriptlet categoriesFor: #globalBindings:!accessing!public! !
-!ActiveXScriptlet categoriesFor: #initialize!initializing!private! !
-!ActiveXScriptlet categoriesFor: #language!accessing!public! !
-!ActiveXScriptlet categoriesFor: #language:!accessing!private! !
-!ActiveXScriptlet categoriesFor: #procedures!accessing!public! !
-!ActiveXScriptlet categoriesFor: #procedures:!accessing!private! !
-!ActiveXScriptlet categoriesFor: #removeGlobalBindings!initializing!public! !
-!ActiveXScriptlet categoriesFor: #setLanguage:expression:procedures:description:!initializing!private! !
-!ActiveXScriptlet categoriesFor: #value!evaluating!public! !
+!MSScriptControl.ActiveXScriptlet categoriesFor: #=!comparing!public! !
+!MSScriptControl.ActiveXScriptlet categoriesFor: #addGlobalBinding:!accessing!public! !
+!MSScriptControl.ActiveXScriptlet categoriesFor: #description!accessing!public! !
+!MSScriptControl.ActiveXScriptlet categoriesFor: #description:!accessing!public! !
+!MSScriptControl.ActiveXScriptlet categoriesFor: #displayOn:!displaying!public! !
+!MSScriptControl.ActiveXScriptlet categoriesFor: #expression!accessing!public! !
+!MSScriptControl.ActiveXScriptlet categoriesFor: #expression:!accessing!private! !
+!MSScriptControl.ActiveXScriptlet categoriesFor: #globalBindings!accessing!public! !
+!MSScriptControl.ActiveXScriptlet categoriesFor: #globalBindings:!accessing!public! !
+!MSScriptControl.ActiveXScriptlet categoriesFor: #initialize!initializing!private! !
+!MSScriptControl.ActiveXScriptlet categoriesFor: #language!accessing!public! !
+!MSScriptControl.ActiveXScriptlet categoriesFor: #language:!accessing!private! !
+!MSScriptControl.ActiveXScriptlet categoriesFor: #procedures!accessing!public! !
+!MSScriptControl.ActiveXScriptlet categoriesFor: #procedures:!accessing!private! !
+!MSScriptControl.ActiveXScriptlet categoriesFor: #removeGlobalBindings!initializing!public! !
+!MSScriptControl.ActiveXScriptlet categoriesFor: #setLanguage:expression:procedures:description:!initializing!private! !
+!MSScriptControl.ActiveXScriptlet categoriesFor: #value!evaluating!public! !
 
-!ActiveXScriptlet class methodsFor!
+!MSScriptControl.ActiveXScriptlet class methodsFor!
 
 language: languageName expression: expressionText procedures: proceduresText
 	"Use #language:expression:procedures:description: which allows description
@@ -164,7 +164,7 @@ new
 	which can be both read from and written to."
 
 	^super new initialize! !
-!ActiveXScriptlet class categoriesFor: #language:expression:procedures:!instance creation!public! !
-!ActiveXScriptlet class categoriesFor: #language:expression:procedures:description:!instance creation!public! !
-!ActiveXScriptlet class categoriesFor: #new!instance creation!public! !
+!MSScriptControl.ActiveXScriptlet class categoriesFor: #language:expression:procedures:!instance creation!public! !
+!MSScriptControl.ActiveXScriptlet class categoriesFor: #language:expression:procedures:description:!instance creation!public! !
+!MSScriptControl.ActiveXScriptlet class categoriesFor: #new!instance creation!public! !
 

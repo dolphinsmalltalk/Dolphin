@@ -1,19 +1,19 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-IDispatch subclass: #IScriptModuleCollection
+OS.COM.IDispatch subclass: #'MSScriptControl.IScriptModuleCollection'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'MSScriptControlConstants'
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-IScriptModuleCollection guid: (IID fromString: '{70841c6f-067d-11d0-95d8-00a02463ab28}')!
-IScriptModuleCollection comment: '<IScriptModuleCollection> is a wrapper class for the COM interface ''MSScriptControl.IScriptModuleCollection'' generated from type information in the ''Microsoft Script Control 1.0'' library. It contains methods to invoke the member functions exposed by that interface.
+MSScriptControl.IScriptModuleCollection guid: (OS.COM.IID fromString: '{70841c6f-067d-11d0-95d8-00a02463ab28}')!
+MSScriptControl.IScriptModuleCollection comment: '<IScriptModuleCollection> is a wrapper class for the COM interface ''MSScriptControl.IScriptModuleCollection'' generated from type information in the ''Microsoft Script Control 1.0'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains the following helpstring for this interface:
 	"Collection of modules"
 '!
-!IScriptModuleCollection categoriesForClass!COM-Interfaces!MSScriptControl-Interfaces! !
-!IScriptModuleCollection methodsFor!
+!MSScriptControl.IScriptModuleCollection categoriesForClass!COM-Interfaces!MSScriptControl-Interfaces! !
+!MSScriptControl.IScriptModuleCollection methodsFor!
 
 _newEnum
 	"Answer the <IUnknown> value of the '_NewEnum' property of the receiver."
@@ -21,16 +21,13 @@ _newEnum
 	| answer |
 	answer := IUnknown newPointer.
 	self get__NewEnum: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 add: name
 	"Answer the <IScriptModule> result of invoking the Add() method of the COM object.
 	Default values are passed for all optional parameters."
 
-	^self
-		 add: name
-		 object: VARIANT unspecified!
+	^self add: name object: VARIANT unspecified!
 
 add: name object: object
 	"Answer the <IScriptModule> result of invoking the Add() method of the COM object.
@@ -42,8 +39,7 @@ add: name object: object
 		Add: name
 		Object: object asVariant
 		ppmod: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 Add: name Object: object ppmod: ppmod
 	"Private - Invoke the Add() method of the COM object.
@@ -62,10 +58,9 @@ count
 	Helpstring: Number of modules"
 
 	| answer |
-	answer := (SDWORD new).
+	answer := SDWORD new.
 	self get_Count: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 get__NewEnum: ppenumContexts
 	"Private - Get the value of the '_NewEnum' property of the receiver.
@@ -111,29 +106,26 @@ item: index
 
 	| answer |
 	answer := IScriptModule newPointer.
-	self
-		get_Item: index asVariant
-		ppmod: answer.
-	^answer asObject
-! !
-!IScriptModuleCollection categoriesFor: #_newEnum!**auto generated**!properties!public! !
-!IScriptModuleCollection categoriesFor: #add:!**auto generated**!methods!public! !
-!IScriptModuleCollection categoriesFor: #add:object:!**auto generated**!methods!public! !
-!IScriptModuleCollection categoriesFor: #Add:Object:ppmod:!**auto generated**!COM Interfaces-IScriptModuleCollection!private! !
-!IScriptModuleCollection categoriesFor: #count!**auto generated**!properties!public! !
-!IScriptModuleCollection categoriesFor: #get__NewEnum:!**auto generated**!COM Interfaces-IScriptModuleCollection!private! !
-!IScriptModuleCollection categoriesFor: #get_Count:!**auto generated**!COM Interfaces-IScriptModuleCollection!private! !
-!IScriptModuleCollection categoriesFor: #get_Item:ppmod:!**auto generated**!COM Interfaces-IScriptModuleCollection!private! !
-!IScriptModuleCollection categoriesFor: #isExtensible!**auto generated**!public!testing! !
-!IScriptModuleCollection categoriesFor: #isVBCollection!**auto generated**!public!testing! !
-!IScriptModuleCollection categoriesFor: #item:!**auto generated**!properties!public! !
+	self get_Item: index asVariant ppmod: answer.
+	^answer asObject! !
+!MSScriptControl.IScriptModuleCollection categoriesFor: #_newEnum!**auto generated**!properties!public! !
+!MSScriptControl.IScriptModuleCollection categoriesFor: #add:!**auto generated**!methods!public! !
+!MSScriptControl.IScriptModuleCollection categoriesFor: #add:object:!**auto generated**!methods!public! !
+!MSScriptControl.IScriptModuleCollection categoriesFor: #Add:Object:ppmod:!**auto generated**!COM Interfaces-IScriptModuleCollection!private! !
+!MSScriptControl.IScriptModuleCollection categoriesFor: #count!**auto generated**!properties!public! !
+!MSScriptControl.IScriptModuleCollection categoriesFor: #get__NewEnum:!**auto generated**!COM Interfaces-IScriptModuleCollection!private! !
+!MSScriptControl.IScriptModuleCollection categoriesFor: #get_Count:!**auto generated**!COM Interfaces-IScriptModuleCollection!private! !
+!MSScriptControl.IScriptModuleCollection categoriesFor: #get_Item:ppmod:!**auto generated**!COM Interfaces-IScriptModuleCollection!private! !
+!MSScriptControl.IScriptModuleCollection categoriesFor: #isExtensible!**auto generated**!public!testing! !
+!MSScriptControl.IScriptModuleCollection categoriesFor: #isVBCollection!**auto generated**!public!testing! !
+!MSScriptControl.IScriptModuleCollection categoriesFor: #item:!**auto generated**!properties!public! !
 
-!IScriptModuleCollection class methodsFor!
+!MSScriptControl.IScriptModuleCollection class methodsFor!
 
 clsid
 	"Private - Answer the CLSID of the coclass (Modules) for which the receiver is the default interface."
 
-	^CLSID fromString: '{0E59F1DD-1FBE-11D0-8FF2-00A0D10038BC}'
+	^CLSID fromString: '{0e59f1dd-1fbe-11d0-8ff2-00a0d10038bc}'
 !
 
 defineFunctions
@@ -156,7 +148,7 @@ initializeTypeLib
 		IScriptModuleCollection initializeTypeLib"
 
 	typeLib := MSScriptControlLib! !
-!IScriptModuleCollection class categoriesFor: #clsid!**auto generated**!constants!private! !
-!IScriptModuleCollection class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
-!IScriptModuleCollection class categoriesFor: #initializeTypeLib!**auto generated**!initializing!private! !
+!MSScriptControl.IScriptModuleCollection class categoriesFor: #clsid!**auto generated**!constants!private! !
+!MSScriptControl.IScriptModuleCollection class categoriesFor: #defineFunctions!**auto generated**!initializing!private! !
+!MSScriptControl.IScriptModuleCollection class categoriesFor: #initializeTypeLib!**auto generated**!initializing!private! !
 
