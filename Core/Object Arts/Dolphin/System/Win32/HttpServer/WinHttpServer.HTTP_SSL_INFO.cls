@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-HttpServerStructure subclass: #HTTP_SSL_INFO
+WinHttpServer.HttpServerStructure subclass: #'WinHttpServer.HTTP_SSL_INFO'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_ConnectionKeySize' -> 16r2.
@@ -15,16 +15,16 @@ HttpServerStructure subclass: #HTTP_SSL_INFO
 		'_OffsetOf_ServerCertSubjectSize' -> 16r8.
 		'_OffsetOf_SslClientCertNegotiated' -> 16r18
 	}!
-HTTP_SSL_INFO guid: (GUID fromString: '{fd0d6f69-8afe-4748-a88b-9fb70593dfc8}')!
-HTTP_SSL_INFO comment: '<HTTP_SSL_INFO> is an <ExternalStructure> class to wrap the struct ''WinHttpServer.HTTP_SSL_INFO'' from type information in the ''Windows Http Server API'' library.
+WinHttpServer.HTTP_SSL_INFO guid: (Core.GUID fromString: '{fd0d6f69-8afe-4748-a88b-9fb70593dfc8}')!
+WinHttpServer.HTTP_SSL_INFO comment: '`HTTP_SSL_INFO` is an `External.Structure` class to wrap the struct ''WinHttpServer.HTTP_SSL_INFO'' from type information in the ''Windows Http Server API'' library.
 
 The type library contains the following helpstring for this struct
 	"Data computed during SSL handshake."
 
-** This comment was automatically generated from a type library. Delete this line to prevent any manual edits from being overwritten if the wrapper class is regenerated. **
+** This comment was automatically generated from a type library. Delete this line to prevent any manual edits from being overwritten if the wrapper class is regenerated.
 
 IDL definition follows:
-
+```
 typedef [uuid(fd0d6f69-8afe-4748-a88b-9fb70593dfc8), helpstring("Data computed during SSL handshake.")]
 struct tagHTTP_SSL_INFO {
 	[helpstring("The size, in bytes, of the public key used to sign the server certificate.")] USHORT ServerCertKeySize;
@@ -36,9 +36,10 @@ struct tagHTTP_SSL_INFO {
 	[helpstring("A pointer to an HTTP_SSL_CLIENT_CERT_INFO structure that specifies the client certificate.")] PHTTP_SSL_CLIENT_CERT_INFO pClientCertInfo;
 	[helpstring("If non-zero, indicates that the client certificate is already present locally.")] ULONG SslClientCertNegotiated;
 } HTTP_SSL_INFO;
+```
 '!
-!HTTP_SSL_INFO categoriesForClass!WinHttpServer-Structs! !
-!HTTP_SSL_INFO methodsFor!
+!WinHttpServer.HTTP_SSL_INFO categoriesForClass!WinHttpServer-Structs! !
+!WinHttpServer.HTTP_SSL_INFO methodsFor!
 
 ConnectionKeySize
 	"Answer the <Integer> value of the receiver's 'ConnectionKeySize' field."
@@ -123,24 +124,24 @@ SslClientCertNegotiated: anInteger
 	"Set the receiver's 'SslClientCertNegotiated' field to the value of the argument, anInteger"
 
 	bytes dwordAtOffset: _OffsetOf_SslClientCertNegotiated put: anInteger! !
-!HTTP_SSL_INFO categoriesFor: #ConnectionKeySize!**compiled accessors**!public! !
-!HTTP_SSL_INFO categoriesFor: #ConnectionKeySize:!**compiled accessors**!public! !
-!HTTP_SSL_INFO categoriesFor: #pClientCertInfo!**compiled accessors**!public! !
-!HTTP_SSL_INFO categoriesFor: #pClientCertInfo:!**compiled accessors**!public! !
-!HTTP_SSL_INFO categoriesFor: #pServerCertIssuer!**compiled accessors**!public! !
-!HTTP_SSL_INFO categoriesFor: #pServerCertIssuer:!**compiled accessors**!public! !
-!HTTP_SSL_INFO categoriesFor: #pServerCertSubject!**compiled accessors**!public! !
-!HTTP_SSL_INFO categoriesFor: #pServerCertSubject:!**compiled accessors**!public! !
-!HTTP_SSL_INFO categoriesFor: #ServerCertIssuerSize!**compiled accessors**!private! !
-!HTTP_SSL_INFO categoriesFor: #ServerCertIssuerSize:!**compiled accessors**!private! !
-!HTTP_SSL_INFO categoriesFor: #ServerCertKeySize!**compiled accessors**!public! !
-!HTTP_SSL_INFO categoriesFor: #ServerCertKeySize:!**compiled accessors**!public! !
-!HTTP_SSL_INFO categoriesFor: #ServerCertSubjectSize!**compiled accessors**!private! !
-!HTTP_SSL_INFO categoriesFor: #ServerCertSubjectSize:!**compiled accessors**!private! !
-!HTTP_SSL_INFO categoriesFor: #SslClientCertNegotiated!**compiled accessors**!public! !
-!HTTP_SSL_INFO categoriesFor: #SslClientCertNegotiated:!**compiled accessors**!public! !
+!WinHttpServer.HTTP_SSL_INFO categoriesFor: #ConnectionKeySize!**compiled accessors**!public! !
+!WinHttpServer.HTTP_SSL_INFO categoriesFor: #ConnectionKeySize:!**compiled accessors**!public! !
+!WinHttpServer.HTTP_SSL_INFO categoriesFor: #pClientCertInfo!**compiled accessors**!public! !
+!WinHttpServer.HTTP_SSL_INFO categoriesFor: #pClientCertInfo:!**compiled accessors**!public! !
+!WinHttpServer.HTTP_SSL_INFO categoriesFor: #pServerCertIssuer!**compiled accessors**!public! !
+!WinHttpServer.HTTP_SSL_INFO categoriesFor: #pServerCertIssuer:!**compiled accessors**!public! !
+!WinHttpServer.HTTP_SSL_INFO categoriesFor: #pServerCertSubject!**compiled accessors**!public! !
+!WinHttpServer.HTTP_SSL_INFO categoriesFor: #pServerCertSubject:!**compiled accessors**!public! !
+!WinHttpServer.HTTP_SSL_INFO categoriesFor: #ServerCertIssuerSize!**compiled accessors**!private! !
+!WinHttpServer.HTTP_SSL_INFO categoriesFor: #ServerCertIssuerSize:!**compiled accessors**!private! !
+!WinHttpServer.HTTP_SSL_INFO categoriesFor: #ServerCertKeySize!**compiled accessors**!public! !
+!WinHttpServer.HTTP_SSL_INFO categoriesFor: #ServerCertKeySize:!**compiled accessors**!public! !
+!WinHttpServer.HTTP_SSL_INFO categoriesFor: #ServerCertSubjectSize!**compiled accessors**!private! !
+!WinHttpServer.HTTP_SSL_INFO categoriesFor: #ServerCertSubjectSize:!**compiled accessors**!private! !
+!WinHttpServer.HTTP_SSL_INFO categoriesFor: #SslClientCertNegotiated!**compiled accessors**!public! !
+!WinHttpServer.HTTP_SSL_INFO categoriesFor: #SslClientCertNegotiated:!**compiled accessors**!public! !
 
-!HTTP_SSL_INFO class methodsFor!
+!WinHttpServer.HTTP_SSL_INFO class methodsFor!
 
 defineFields
 	"Define the fields of the HTTP_SSL_INFO structure.
@@ -173,6 +174,6 @@ defineFields
 
 getFieldNames
 	^#(#ServerCertKeySize #ConnectionKeySize #ServerCertIssuerSize #ServerCertSubjectSize #pServerCertIssuer #pServerCertSubject #pClientCertInfo #SslClientCertNegotiated)! !
-!HTTP_SSL_INFO class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!HTTP_SSL_INFO class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!WinHttpServer.HTTP_SSL_INFO class categoriesFor: #defineFields!**auto generated**!private!template definition! !
+!WinHttpServer.HTTP_SSL_INFO class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-HttpServerStructure subclass: #HTTP_SERVER_AUTHENTICATION_DIGEST_PARAMS
+WinHttpServer.HttpServerStructure subclass: #'WinHttpServer.HTTP_SERVER_AUTHENTICATION_DIGEST_PARAMS'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_DomainName' -> 16r4.
@@ -11,15 +11,15 @@ HttpServerStructure subclass: #HTTP_SERVER_AUTHENTICATION_DIGEST_PARAMS
 		'_OffsetOf_Realm' -> 16rC.
 		'_OffsetOf_RealmLength' -> 16r8
 	}!
-HTTP_SERVER_AUTHENTICATION_DIGEST_PARAMS guid: (GUID fromString: '{eed513f2-c404-408c-9ddb-f5d39020d426}')!
-HTTP_SERVER_AUTHENTICATION_DIGEST_PARAMS comment: '<HTTP_SERVER_AUTHENTICATION_DIGEST_PARAMS> is an <ExternalStructure> class to wrap the struct ''WinHttpServer.HTTP_SERVER_AUTHENTICATION_DIGEST_PARAMS'' from type information in the ''Windows Http Server API'' library.
+WinHttpServer.HTTP_SERVER_AUTHENTICATION_DIGEST_PARAMS guid: (Core.GUID fromString: '{eed513f2-c404-408c-9ddb-f5d39020d426}')!
+WinHttpServer.HTTP_SERVER_AUTHENTICATION_DIGEST_PARAMS comment: '`HTTP_SERVER_AUTHENTICATION_DIGEST_PARAMS` is an `External.Structure` class to wrap the struct ''WinHttpServer.HTTP_SERVER_AUTHENTICATION_DIGEST_PARAMS'' from type information in the ''Windows Http Server API'' library.
 
 The type library contains no documentation for this struct
 
-** This comment was automatically generated from a type library. Delete this line to prevent any manual edits from being overwritten if the wrapper class is regenerated. **
+** This comment was automatically generated from a type library. Delete this line to prevent any manual edits from being overwritten if the wrapper class is regenerated.
 
 IDL definition follows:
-
+```
 typedef [uuid(eed513f2-c404-408c-9ddb-f5d39020d426)]
 struct tagHTTP_SERVER_AUTHENTICATION_DIGEST_PARAMS {
 	USHORT DomainNameLength;
@@ -27,9 +27,10 @@ struct tagHTTP_SERVER_AUTHENTICATION_DIGEST_PARAMS {
 	USHORT RealmLength;
 	LPWSTR Realm;
 } HTTP_SERVER_AUTHENTICATION_DIGEST_PARAMS;
+```
 '!
-!HTTP_SERVER_AUTHENTICATION_DIGEST_PARAMS categoriesForClass!WinHttpServer-Structs! !
-!HTTP_SERVER_AUTHENTICATION_DIGEST_PARAMS methodsFor!
+!WinHttpServer.HTTP_SERVER_AUTHENTICATION_DIGEST_PARAMS categoriesForClass!WinHttpServer-Structs! !
+!WinHttpServer.HTTP_SERVER_AUTHENTICATION_DIGEST_PARAMS methodsFor!
 
 DomainName
 	"Answer the <Utf16String> value of the receiver's 'DomainName' field."
@@ -70,16 +71,16 @@ RealmLength: anInteger
 	"Set the receiver's 'RealmLength' field to the value of the argument, anInteger"
 
 	bytes wordAtOffset: _OffsetOf_RealmLength put: anInteger! !
-!HTTP_SERVER_AUTHENTICATION_DIGEST_PARAMS categoriesFor: #DomainName!**compiled accessors**!public! !
-!HTTP_SERVER_AUTHENTICATION_DIGEST_PARAMS categoriesFor: #DomainName:!**compiled accessors**!public! !
-!HTTP_SERVER_AUTHENTICATION_DIGEST_PARAMS categoriesFor: #DomainNameLength!**compiled accessors**!public! !
-!HTTP_SERVER_AUTHENTICATION_DIGEST_PARAMS categoriesFor: #DomainNameLength:!**compiled accessors**!public! !
-!HTTP_SERVER_AUTHENTICATION_DIGEST_PARAMS categoriesFor: #Realm!**compiled accessors**!public! !
-!HTTP_SERVER_AUTHENTICATION_DIGEST_PARAMS categoriesFor: #Realm:!**compiled accessors**!public! !
-!HTTP_SERVER_AUTHENTICATION_DIGEST_PARAMS categoriesFor: #RealmLength!**compiled accessors**!public! !
-!HTTP_SERVER_AUTHENTICATION_DIGEST_PARAMS categoriesFor: #RealmLength:!**compiled accessors**!public! !
+!WinHttpServer.HTTP_SERVER_AUTHENTICATION_DIGEST_PARAMS categoriesFor: #DomainName!**compiled accessors**!public! !
+!WinHttpServer.HTTP_SERVER_AUTHENTICATION_DIGEST_PARAMS categoriesFor: #DomainName:!**compiled accessors**!public! !
+!WinHttpServer.HTTP_SERVER_AUTHENTICATION_DIGEST_PARAMS categoriesFor: #DomainNameLength!**compiled accessors**!public! !
+!WinHttpServer.HTTP_SERVER_AUTHENTICATION_DIGEST_PARAMS categoriesFor: #DomainNameLength:!**compiled accessors**!public! !
+!WinHttpServer.HTTP_SERVER_AUTHENTICATION_DIGEST_PARAMS categoriesFor: #Realm!**compiled accessors**!public! !
+!WinHttpServer.HTTP_SERVER_AUTHENTICATION_DIGEST_PARAMS categoriesFor: #Realm:!**compiled accessors**!public! !
+!WinHttpServer.HTTP_SERVER_AUTHENTICATION_DIGEST_PARAMS categoriesFor: #RealmLength!**compiled accessors**!public! !
+!WinHttpServer.HTTP_SERVER_AUTHENTICATION_DIGEST_PARAMS categoriesFor: #RealmLength:!**compiled accessors**!public! !
 
-!HTTP_SERVER_AUTHENTICATION_DIGEST_PARAMS class methodsFor!
+!WinHttpServer.HTTP_SERVER_AUTHENTICATION_DIGEST_PARAMS class methodsFor!
 
 defineFields
 	"Define the fields of the HTTP_SERVER_AUTHENTICATION_DIGEST_PARAMS structure.
@@ -104,6 +105,6 @@ defineFields
 
 getFieldNames
 	^#(#DomainNameLength #DomainName #RealmLength #Realm)! !
-!HTTP_SERVER_AUTHENTICATION_DIGEST_PARAMS class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!HTTP_SERVER_AUTHENTICATION_DIGEST_PARAMS class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!WinHttpServer.HTTP_SERVER_AUTHENTICATION_DIGEST_PARAMS class categoriesFor: #defineFields!**auto generated**!private!template definition! !
+!WinHttpServer.HTTP_SERVER_AUTHENTICATION_DIGEST_PARAMS class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

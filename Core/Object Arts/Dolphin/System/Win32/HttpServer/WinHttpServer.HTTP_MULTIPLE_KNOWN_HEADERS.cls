@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-HttpServerStructure subclass: #HTTP_MULTIPLE_KNOWN_HEADERS
+WinHttpServer.HttpServerStructure subclass: #'WinHttpServer.HTTP_MULTIPLE_KNOWN_HEADERS'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_Flags' -> 16r4.
@@ -11,16 +11,16 @@ HttpServerStructure subclass: #HTTP_MULTIPLE_KNOWN_HEADERS
 		'_OffsetOf_KnownHeaderCount' -> 16r8.
 		'_OffsetOf_KnownHeaders' -> 16rC
 	}!
-HTTP_MULTIPLE_KNOWN_HEADERS guid: (GUID fromString: '{a12486b1-fdf5-4d31-a4b7-af9848ffe5c6}')!
-HTTP_MULTIPLE_KNOWN_HEADERS comment: '<HTTP_MULTIPLE_KNOWN_HEADERS> is an <ExternalStructure> class to wrap the struct ''WinHttpServer.HTTP_MULTIPLE_KNOWN_HEADERS'' from type information in the ''Windows Http Server API'' library.
+WinHttpServer.HTTP_MULTIPLE_KNOWN_HEADERS guid: (Core.GUID fromString: '{a12486b1-fdf5-4d31-a4b7-af9848ffe5c6}')!
+WinHttpServer.HTTP_MULTIPLE_KNOWN_HEADERS comment: '`HTTP_MULTIPLE_KNOWN_HEADERS` is an `External.Structure` class to wrap the struct ''WinHttpServer.HTTP_MULTIPLE_KNOWN_HEADERS'' from type information in the ''Windows Http Server API'' library.
 
 The type library contains the following helpstring for this struct
 	"This structure allows the provision of providing multiple known headers."
 
-** This comment was automatically generated from a type library. Delete this line to prevent any manual edits from being overwritten if the wrapper class is regenerated. **
+** This comment was automatically generated from a type library. Delete this line to prevent any manual edits from being overwritten if the wrapper class is regenerated.
 
 IDL definition follows:
-
+```
 typedef [uuid(a12486b1-fdf5-4d31-a4b7-af9848ffe5c6), helpstring("This structure allows the provision of providing multiple known headers.")]
 struct tagHTTP_MULTIPLE_KNOWN_HEADERS {
 	[helpstring("Known header id.")] HTTP_HEADER_ID HeaderId;
@@ -28,9 +28,10 @@ struct tagHTTP_MULTIPLE_KNOWN_HEADERS {
 	[helpstring("The number of elements in the array specified in the KnownHeaders member.")] USHORT KnownHeaderCount;
 	[helpstring("A pointer to the first element in the array of HTTP_KNOWN_HEADER structures."), size_is("KnownHeaderCount")] PHTTP_KNOWN_HEADER KnownHeaders;
 } HTTP_MULTIPLE_KNOWN_HEADERS;
+```
 '!
-!HTTP_MULTIPLE_KNOWN_HEADERS categoriesForClass!WinHttpServer-Structs! !
-!HTTP_MULTIPLE_KNOWN_HEADERS methodsFor!
+!WinHttpServer.HTTP_MULTIPLE_KNOWN_HEADERS categoriesForClass!WinHttpServer-Structs! !
+!WinHttpServer.HTTP_MULTIPLE_KNOWN_HEADERS methodsFor!
 
 Flags
 	"Answer the <Integer> value of the receiver's 'Flags' field."
@@ -75,16 +76,16 @@ KnownHeaders: aStructureArray
 
 	bytes uintPtrAtOffset: _OffsetOf_KnownHeaders put: aStructureArray yourAddress.
 	self KnownHeaderCount: aStructureArray size! !
-!HTTP_MULTIPLE_KNOWN_HEADERS categoriesFor: #Flags!**compiled accessors**!public! !
-!HTTP_MULTIPLE_KNOWN_HEADERS categoriesFor: #Flags:!**compiled accessors**!public! !
-!HTTP_MULTIPLE_KNOWN_HEADERS categoriesFor: #HeaderId!**compiled accessors**!public! !
-!HTTP_MULTIPLE_KNOWN_HEADERS categoriesFor: #HeaderId:!**compiled accessors**!public! !
-!HTTP_MULTIPLE_KNOWN_HEADERS categoriesFor: #KnownHeaderCount!**compiled accessors**!public! !
-!HTTP_MULTIPLE_KNOWN_HEADERS categoriesFor: #KnownHeaderCount:!**compiled accessors**!public! !
-!HTTP_MULTIPLE_KNOWN_HEADERS categoriesFor: #KnownHeaders!**compiled accessors**!public! !
-!HTTP_MULTIPLE_KNOWN_HEADERS categoriesFor: #KnownHeaders:!**compiled accessors**!public! !
+!WinHttpServer.HTTP_MULTIPLE_KNOWN_HEADERS categoriesFor: #Flags!**compiled accessors**!public! !
+!WinHttpServer.HTTP_MULTIPLE_KNOWN_HEADERS categoriesFor: #Flags:!**compiled accessors**!public! !
+!WinHttpServer.HTTP_MULTIPLE_KNOWN_HEADERS categoriesFor: #HeaderId!**compiled accessors**!public! !
+!WinHttpServer.HTTP_MULTIPLE_KNOWN_HEADERS categoriesFor: #HeaderId:!**compiled accessors**!public! !
+!WinHttpServer.HTTP_MULTIPLE_KNOWN_HEADERS categoriesFor: #KnownHeaderCount!**compiled accessors**!public! !
+!WinHttpServer.HTTP_MULTIPLE_KNOWN_HEADERS categoriesFor: #KnownHeaderCount:!**compiled accessors**!public! !
+!WinHttpServer.HTTP_MULTIPLE_KNOWN_HEADERS categoriesFor: #KnownHeaders!**compiled accessors**!public! !
+!WinHttpServer.HTTP_MULTIPLE_KNOWN_HEADERS categoriesFor: #KnownHeaders:!**compiled accessors**!public! !
 
-!HTTP_MULTIPLE_KNOWN_HEADERS class methodsFor!
+!WinHttpServer.HTTP_MULTIPLE_KNOWN_HEADERS class methodsFor!
 
 defineFields
 	"Define the fields of the HTTP_MULTIPLE_KNOWN_HEADERS structure.
@@ -109,6 +110,6 @@ defineFields
 
 getFieldNames
 	^#(#HeaderId #Flags #KnownHeaderCount #KnownHeaders)! !
-!HTTP_MULTIPLE_KNOWN_HEADERS class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!HTTP_MULTIPLE_KNOWN_HEADERS class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!WinHttpServer.HTTP_MULTIPLE_KNOWN_HEADERS class categoriesFor: #defineFields!**auto generated**!private!template definition! !
+!WinHttpServer.HTTP_MULTIPLE_KNOWN_HEADERS class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

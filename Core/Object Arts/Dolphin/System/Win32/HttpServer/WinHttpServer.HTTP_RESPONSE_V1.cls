@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-HttpServerStructure subclass: #HTTP_RESPONSE_V1
+WinHttpServer.HttpServerStructure subclass: #'WinHttpServer.HTTP_RESPONSE_V1'
 	instanceVariableNames: 'contentType content'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_EntityChunkCount' -> 16r110.
@@ -15,16 +15,16 @@ HttpServerStructure subclass: #HTTP_RESPONSE_V1
 		'_OffsetOf_StatusCode' -> 16r8.
 		'_OffsetOf_Version' -> 16r4
 	}!
-HTTP_RESPONSE_V1 guid: (GUID fromString: '{c23ac8a9-b97f-4aec-8096-91648573c429}')!
-HTTP_RESPONSE_V1 comment: '<HTTP_RESPONSE_V1> is an <ExternalStructure> class to wrap the struct ''WinHttpServer.HTTP_RESPONSE_V1'' from type information in the ''Windows Http Server API'' library.
+WinHttpServer.HTTP_RESPONSE_V1 guid: (Core.GUID fromString: '{c23ac8a9-b97f-4aec-8096-91648573c429}')!
+WinHttpServer.HTTP_RESPONSE_V1 comment: '`HTTP_RESPONSE_V1` is an `External.Structure` class to wrap the struct ''WinHttpServer.HTTP_RESPONSE_V1'' from type information in the ''Windows Http Server API'' library.
 
 The type library contains the following helpstring for this struct
 	"This structure describes an HTTP response (V1)."
 
-** This comment was automatically generated from a type library. Delete this line to prevent any manual edits from being overwritten if the wrapper class is regenerated. **
+** This comment was automatically generated from a type library. Delete this line to prevent any manual edits from being overwritten if the wrapper class is regenerated.
 
 IDL definition follows:
-
+```
 typedef [uuid(c23ac8a9-b97f-4aec-8096-91648573c429), helpstring("This structure describes an HTTP response (V1).")]
 struct tagHTTP_RESPONSE_V1 {
 	[helpstring("Response flags from the HTTP_RESPONSE_FLAGS_* constants.")] ULONG Flags;
@@ -36,9 +36,10 @@ struct tagHTTP_RESPONSE_V1 {
 	[nonbrowsable] USHORT EntityChunkCount;
 	[helpstring("pEntityChunks points to an array of EntityChunkCount HTTP_DATA_CHUNKs."), size_is("EntityChunkCount")] HTTP_DATA_CHUNK* pEntityChunks;
 } HTTP_RESPONSE_V1;
+```
 '!
-!HTTP_RESPONSE_V1 categoriesForClass!WinHttpServer-Structs! !
-!HTTP_RESPONSE_V1 methodsFor!
+!WinHttpServer.HTTP_RESPONSE_V1 categoriesForClass!WinHttpServer-Structs! !
+!WinHttpServer.HTTP_RESPONSE_V1 methodsFor!
 
 content: aByteObject
 	content := HTTP_DATA_CHUNK data: aByteObject.
@@ -144,27 +145,27 @@ Version: aHTTP_VERSION
 		from: ##(_OffsetOf_Version + 1)
 		to: ##(_OffsetOf_Version + HTTP_VERSION basicByteSize)
 		startingAt: 1! !
-!HTTP_RESPONSE_V1 categoriesFor: #content:!accessing!public! !
-!HTTP_RESPONSE_V1 categoriesFor: #contentType:!accessing!public! !
-!HTTP_RESPONSE_V1 categoriesFor: #EntityChunkCount!**compiled accessors**!private! !
-!HTTP_RESPONSE_V1 categoriesFor: #EntityChunkCount:!**compiled accessors**!private! !
-!HTTP_RESPONSE_V1 categoriesFor: #Flags!**compiled accessors**!public! !
-!HTTP_RESPONSE_V1 categoriesFor: #Flags:!**compiled accessors**!public! !
-!HTTP_RESPONSE_V1 categoriesFor: #Headers!**compiled accessors**!public! !
-!HTTP_RESPONSE_V1 categoriesFor: #Headers:!**compiled accessors**!public! !
-!HTTP_RESPONSE_V1 categoriesFor: #initialize!initializing!private! !
-!HTTP_RESPONSE_V1 categoriesFor: #pEntityChunks!**compiled accessors**!public! !
-!HTTP_RESPONSE_V1 categoriesFor: #pEntityChunks:!**compiled accessors**!public! !
-!HTTP_RESPONSE_V1 categoriesFor: #pReason!**compiled accessors**!public! !
-!HTTP_RESPONSE_V1 categoriesFor: #pReason:!**compiled accessors**!public! !
-!HTTP_RESPONSE_V1 categoriesFor: #ReasonLength!**compiled accessors**!private! !
-!HTTP_RESPONSE_V1 categoriesFor: #ReasonLength:!**compiled accessors**!private! !
-!HTTP_RESPONSE_V1 categoriesFor: #StatusCode!**compiled accessors**!public! !
-!HTTP_RESPONSE_V1 categoriesFor: #StatusCode:!**compiled accessors**!public! !
-!HTTP_RESPONSE_V1 categoriesFor: #Version!**compiled accessors**!public! !
-!HTTP_RESPONSE_V1 categoriesFor: #Version:!**compiled accessors**!public! !
+!WinHttpServer.HTTP_RESPONSE_V1 categoriesFor: #content:!accessing!public! !
+!WinHttpServer.HTTP_RESPONSE_V1 categoriesFor: #contentType:!accessing!public! !
+!WinHttpServer.HTTP_RESPONSE_V1 categoriesFor: #EntityChunkCount!**compiled accessors**!private! !
+!WinHttpServer.HTTP_RESPONSE_V1 categoriesFor: #EntityChunkCount:!**compiled accessors**!private! !
+!WinHttpServer.HTTP_RESPONSE_V1 categoriesFor: #Flags!**compiled accessors**!public! !
+!WinHttpServer.HTTP_RESPONSE_V1 categoriesFor: #Flags:!**compiled accessors**!public! !
+!WinHttpServer.HTTP_RESPONSE_V1 categoriesFor: #Headers!**compiled accessors**!public! !
+!WinHttpServer.HTTP_RESPONSE_V1 categoriesFor: #Headers:!**compiled accessors**!public! !
+!WinHttpServer.HTTP_RESPONSE_V1 categoriesFor: #initialize!initializing!private! !
+!WinHttpServer.HTTP_RESPONSE_V1 categoriesFor: #pEntityChunks!**compiled accessors**!public! !
+!WinHttpServer.HTTP_RESPONSE_V1 categoriesFor: #pEntityChunks:!**compiled accessors**!public! !
+!WinHttpServer.HTTP_RESPONSE_V1 categoriesFor: #pReason!**compiled accessors**!public! !
+!WinHttpServer.HTTP_RESPONSE_V1 categoriesFor: #pReason:!**compiled accessors**!public! !
+!WinHttpServer.HTTP_RESPONSE_V1 categoriesFor: #ReasonLength!**compiled accessors**!private! !
+!WinHttpServer.HTTP_RESPONSE_V1 categoriesFor: #ReasonLength:!**compiled accessors**!private! !
+!WinHttpServer.HTTP_RESPONSE_V1 categoriesFor: #StatusCode!**compiled accessors**!public! !
+!WinHttpServer.HTTP_RESPONSE_V1 categoriesFor: #StatusCode:!**compiled accessors**!public! !
+!WinHttpServer.HTTP_RESPONSE_V1 categoriesFor: #Version!**compiled accessors**!public! !
+!WinHttpServer.HTTP_RESPONSE_V1 categoriesFor: #Version:!**compiled accessors**!public! !
 
-!HTTP_RESPONSE_V1 class methodsFor!
+!WinHttpServer.HTTP_RESPONSE_V1 class methodsFor!
 
 defineFields
 	"Define the fields of the HTTP_RESPONSE_V1 structure.
@@ -197,6 +198,6 @@ defineFields
 
 getFieldNames
 	^#(#Flags #Version #StatusCode #ReasonLength #pReason #Headers #EntityChunkCount #pEntityChunks)! !
-!HTTP_RESPONSE_V1 class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!HTTP_RESPONSE_V1 class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!WinHttpServer.HTTP_RESPONSE_V1 class categoriesFor: #defineFields!**auto generated**!private!template definition! !
+!WinHttpServer.HTTP_RESPONSE_V1 class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

@@ -1,0 +1,21 @@
+﻿OS.COM.TypeLibraryAnalyzer {
+	#generationFlags : 1026,
+	#binding : VariableBinding {
+		#key : #WinHttpServer,
+		#value : Class [ #WinHttpServer ],
+		#environment : Class [ #Root ],
+		#flags : 0
+	},
+	#attributes : OS.COM.TLIBATTR {
+		#bytes : ByteArray [ 'f1330ddce6a8de41982430c8813495c100000000010000000200000008000000' ]
+	},
+	#namespaceName : BindingReference {
+		#pathString : 'WinHttpServer',
+		#path : [
+			'WinHttpServer'
+		],
+		#flags : 0
+	},
+	#packageName : 'Windows HTTP Server',
+	#aliasMap : LookupTable { }
+}

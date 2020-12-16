@@ -1,13 +1,92 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ExternalLibrary subclass: #HttpApiLibrary
+External.DynamicLinkLibrary subclass: #'WinHttpServer.HttpApiLibrary'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'WinHttpServerConsts'
+	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {}!
-HttpApiLibrary guid: (GUID fromString: '{06475580-47cf-4641-9eb7-96d83f2d2e96}')!
-HttpApiLibrary comment: 'HttpApiLibrary is the <ExternalLibrary> class to represent the dynamic link library, ''HttpApi.dll''.It was generated generated from type information in the ''Win32 API'' library. It contains methods for each of the functions defined by the corresponding module in that type library.
+	classConstants: {
+		'HTTP_AUTH_ENABLE_ALL' -> 16r1F.
+		'HTTP_AUTH_ENABLE_BASIC' -> 16r1.
+		'HTTP_AUTH_ENABLE_DIGEST' -> 16r2.
+		'HTTP_AUTH_ENABLE_KERBEROS' -> 16r10.
+		'HTTP_AUTH_ENABLE_NEGOTIATE' -> 16r8.
+		'HTTP_AUTH_ENABLE_NTLM' -> 16r4.
+		'HTTP_AUTH_EX_FLAG_CAPTURE_CREDENTIAL' -> 16r2.
+		'HTTP_AUTH_EX_FLAG_ENABLE_KERBEROS_CREDENTIAL_CACHING' -> 16r1.
+		'HTTP_BYTE_RANGE_TO_EOF' -> -16r1.
+		'HTTP_CHANNEL_BIND_CLIENT_SERVICE' -> 16r10.
+		'HTTP_CHANNEL_BIND_DOTLESS_SERVICE' -> 16r4.
+		'HTTP_CHANNEL_BIND_NO_SERVICE_NAME_CHECK' -> 16r2.
+		'HTTP_CHANNEL_BIND_PROXY' -> 16r1.
+		'HTTP_CHANNEL_BIND_PROXY_COHOSTING' -> 16r20.
+		'HTTP_CHANNEL_BIND_SECURE_CHANNEL_TOKEN' -> 16r8.
+		'HTTP_CREATE_REQUEST_QUEUE_FLAG_CONTROLLER' -> 16r2.
+		'HTTP_CREATE_REQUEST_QUEUE_FLAG_OPEN_EXISTING' -> 16r1.
+		'HTTP_FLUSH_RESPONSE_FLAG_RECURSIVE' -> 16r1.
+		'HTTP_INITIALIZE_CONFIG' -> 16r2.
+		'HTTP_INITIALIZE_SERVER' -> 16r1.
+		'HTTP_LIMIT_INFINITE' -> -16r1.
+		'HTTP_LOG_FIELD_BYTES_RECV' -> 16r2000.
+		'HTTP_LOG_FIELD_BYTES_SENT' -> 16r1000.
+		'HTTP_LOG_FIELD_CLIENT_IP' -> 16r4.
+		'HTTP_LOG_FIELD_CLIENT_PORT' -> 16r400000.
+		'HTTP_LOG_FIELD_COMPUTER_NAME' -> 16r20.
+		'HTTP_LOG_FIELD_COOKIE' -> 16r20000.
+		'HTTP_LOG_FIELD_DATE' -> 16r1.
+		'HTTP_LOG_FIELD_HOST' -> 16r100000.
+		'HTTP_LOG_FIELD_METHOD' -> 16r80.
+		'HTTP_LOG_FIELD_QUEUE_NAME' -> 16r4000000.
+		'HTTP_LOG_FIELD_REASON' -> 16r2000000.
+		'HTTP_LOG_FIELD_REFERER' -> 16r40000.
+		'HTTP_LOG_FIELD_SERVER_IP' -> 16r40.
+		'HTTP_LOG_FIELD_SERVER_PORT' -> 16r8000.
+		'HTTP_LOG_FIELD_SITE_ID' -> 16r1000000.
+		'HTTP_LOG_FIELD_SITE_NAME' -> 16r10.
+		'HTTP_LOG_FIELD_STATUS' -> 16r400.
+		'HTTP_LOG_FIELD_STREAM_ID' -> 16r8000000.
+		'HTTP_LOG_FIELD_SUB_STATUS' -> 16r200000.
+		'HTTP_LOG_FIELD_TIME' -> 16r2.
+		'HTTP_LOG_FIELD_TIME_TAKEN' -> 16r4000.
+		'HTTP_LOG_FIELD_URI' -> 16r800000.
+		'HTTP_LOG_FIELD_URI_QUERY' -> 16r200.
+		'HTTP_LOG_FIELD_URI_STEM' -> 16r100.
+		'HTTP_LOG_FIELD_USER_AGENT' -> 16r10000.
+		'HTTP_LOG_FIELD_USER_NAME' -> 16r8.
+		'HTTP_LOG_FIELD_VERSION' -> 16r80000.
+		'HTTP_LOG_FIELD_WIN32_STATUS' -> 16r800.
+		'HTTP_LOGGING_FLAG_LOCAL_TIME_ROLLOVER' -> 16r1.
+		'HTTP_LOGGING_FLAG_LOG_ERRORS_ONLY' -> 16r4.
+		'HTTP_LOGGING_FLAG_LOG_SUCCESS_ONLY' -> 16r8.
+		'HTTP_LOGGING_FLAG_USE_UTF8_CONVERSION' -> 16r2.
+		'HTTP_MAX_SERVER_QUEUE_LENGTH' -> 16r7FFFFFFF.
+		'HTTP_MIN_ALLOWED_BANDWIDTH_THROTTLING_RATE' -> 16r400.
+		'HTTP_MIN_ALLOWED_LOG_FILE_ROLLOVER_SIZE' -> 16r100000.
+		'HTTP_MIN_SERVER_QUEUE_LENGTH' -> 16r1.
+		'HTTP_RECEIVE_REQUEST_ENTITY_BODY_FLAG_FILL_BUFFER' -> 16r1.
+		'HTTP_RECEIVE_REQUEST_FLAG_COPY_BODY' -> 16r1.
+		'HTTP_RECEIVE_REQUEST_FLAG_FLUSH_BODY' -> 16r2.
+		'HTTP_RECEIVE_SECURE_CHANNEL_TOKEN' -> 16r1.
+		'HTTP_REQUEST_AUTH_FLAG_TOKEN_FOR_CACHED_CRED' -> 16r1.
+		'HTTP_REQUEST_FLAG_HTTP2' -> 16r4.
+		'HTTP_REQUEST_FLAG_IP_ROUTED' -> 16r2.
+		'HTTP_REQUEST_FLAG_MORE_ENTITY_BODY_EXISTS' -> 16r1.
+		'HTTP_RESPONSE_FLAG_MULTIPLE_ENCODINGS_AVAILABLE' -> 16r1.
+		'HTTP_RESPONSE_INFO_FLAGS_PRESERVE_ORDER' -> 16r1.
+		'HTTP_SEND_RESPONSE_FLAG_BUFFER_DATA' -> 16r4.
+		'HTTP_SEND_RESPONSE_FLAG_DISCONNECT' -> 16r1.
+		'HTTP_SEND_RESPONSE_FLAG_ENABLE_NAGLING' -> 16r8.
+		'HTTP_SEND_RESPONSE_FLAG_MORE_DATA' -> 16r2.
+		'HTTP_SEND_RESPONSE_FLAG_OPAQUE' -> 16r40.
+		'HTTP_SEND_RESPONSE_FLAG_PROCESS_RANGES' -> 16r20.
+		'HTTP_SERVICE_CONFIG_SSL_FLAG_NEGOTIATE_CLIENT_CERT' -> 16r2.
+		'HTTP_SERVICE_CONFIG_SSL_FLAG_NO_RAW_FILTER' -> 16r4.
+		'HTTP_SERVICE_CONFIG_SSL_FLAG_REJECT' -> 16r8.
+		'HTTP_SERVICE_CONFIG_SSL_FLAG_USE_DS_MAPPER' -> 16r1.
+		'HTTP_URL_FLAG_REMOVE_ALL' -> 16r1
+	}!
+WinHttpServer.HttpApiLibrary guid: (Core.GUID fromString: '{06475580-47cf-4641-9eb7-96d83f2d2e96}')!
+WinHttpServer.HttpApiLibrary comment: 'HttpApiLibrary is the <ExternalLibrary> class to represent the dynamic link library, ''HttpApi.dll''.It was generated generated from type information in the ''Win32 API'' library. It contains methods for each of the functions defined by the corresponding module in that type library.
 
 The type library contains the following helpstring for this module
 	"Windows HTTP Server API"
@@ -248,8 +327,8 @@ module HttpApi
 		[in]LPOVERLAPPED pOverlapped);
 };
 '!
-!HttpApiLibrary categoriesForClass!Win32-Modules! !
-!HttpApiLibrary methodsFor!
+!WinHttpServer.HttpApiLibrary categoriesForClass!Win32-Modules! !
+!WinHttpServer.HttpApiLibrary methodsFor!
 
 addUrl: aString toUrlGroup: anIntegerUrlGroupId
 	self checkReturnCode: (self
@@ -310,7 +389,7 @@ asyncSendHttpResponse: requestQueueHandle requestId: requestId flags: flags http
 
 bindQueue: anExternalHandle toUrlGroup: anIntegerGroupId
 	self setUrlGroup: anIntegerGroupId
-		property: ((HTTP_BINDING_INFO new)
+		property: (HTTP_BINDING_INFO new
 				requestQueueHandle: anExternalHandle;
 				yourself)!
 
@@ -326,7 +405,7 @@ close
 
 createRequestQueue: aString
 	| queue |
-	queue := ExternalHandle new.
+	queue := Handle new.
 	self checkReturnCode: (self
 				httpCreateRequestQueue: self class apiVersion
 				name: aString
@@ -336,7 +415,7 @@ createRequestQueue: aString
 	^queue!
 
 createServerSession
-	| sessionId ret |
+	| sessionId |
 	sessionId := ULARGE_INTEGER new.
 	self checkReturnCode: (self
 				httpCreateServerSession: self class apiVersion
@@ -345,7 +424,7 @@ createServerSession
 	^sessionId asInteger!
 
 createUrlGroup: anIntegerSessionId
-	| groupId ret |
+	| groupId |
 	groupId := ULARGE_INTEGER new.
 	self checkReturnCode: (self
 				httpCreateUrlGroup: anIntegerSessionId
@@ -482,7 +561,7 @@ httpDeleteServiceConfiguration: serviceHandle configId: configId pConfigInformat
 		ULONG __stdcall HttpDeleteServiceConfiguration(
 			[in]HANDLE ServiceHandle,
 			[in]HTTP_SERVICE_CONFIG_ID ConfigId,
-			[in]void* pConfigInformation,
+			[in]PVOID pConfigInformation,
 			[in]ULONG ConfigInformationLength,
 			[in]LPOVERLAPPED pOverlapped);"
 
@@ -534,7 +613,7 @@ httpQueryRequestQueueProperty: requestQueueProperty property: property propertyI
 		ULONG __stdcall HttpQueryRequestQueueProperty(
 			[in]HANDLE RequestQueueProperty,
 			[in]HTTP_SERVER_PROPERTY Property,
-			[out]void* PropertyInformation,
+			[out]PVOID PropertyInformation,
 			[in]ULONG PropertyInformationLength,
 			[in]ULONG Reserved1,
 			[out]ULONG* ReturnLength,
@@ -550,7 +629,7 @@ httpQueryServerSessionProperty: serverSessionId property: property propertyInfor
 		ULONG __stdcall HttpQueryServerSessionProperty(
 			[in]unsigned __int64 ServerSessionId,
 			[in]HTTP_SERVER_PROPERTY Property,
-			[out]void* PropertyInformation,
+			[out]PVOID PropertyInformation,
 			[in]ULONG PropertyInformationLength,
 			[out]ULONG* ReturnLength);"
 
@@ -564,9 +643,9 @@ httpQueryServiceConfiguration: serviceHandle configId: configId pInput: pInput i
 		ULONG __stdcall HttpQueryServiceConfiguration(
 			[in]HANDLE ServiceHandle,
 			[in]HTTP_SERVICE_CONFIG_ID ConfigId,
-			[in]void* pInput,
+			[in]PVOID pInput,
 			[in]ULONG InputLength,
-			[out]void* pOutput,
+			[out]PVOID pOutput,
 			[in]ULONG OutputLength,
 			[out]ULONG* pReturnLength,
 			[in]LPOVERLAPPED pOverlapped);"
@@ -581,7 +660,7 @@ httpQueryUrlGroupProperty: urlGroupId property: property propertyInformation: pr
 		ULONG __stdcall HttpQueryUrlGroupProperty(
 			[in]unsigned __int64 UrlGroupId,
 			[in]HTTP_SERVER_PROPERTY Property,
-			[out]void* PropertyInformation,
+			[out]PVOID PropertyInformation,
 			[in]ULONG PropertyInformationLength,
 			[out]ULONG* ReturnLength);"
 
@@ -595,7 +674,7 @@ httpReadFragmentFromCache: requestQueueHandle urlPrefix: urlPrefix byteRange: by
 			[in]HANDLE RequestQueueHandle,
 			[in]LPCWSTR UrlPrefix,
 			[in]PHTTP_BYTE_RANGE ByteRange,
-			[out]void* Buffer,
+			[out]PVOID Buffer,
 			[in]ULONG BufferLength,
 			[out]ULONG* BytesRead,
 			[in]LPOVERLAPPED OVERLAPPED);"
@@ -641,7 +720,7 @@ httpReceiveRequestEntityBody: requestQueueHandle requestId: requestId flags: fla
 			[in]HANDLE RequestQueueHandle,
 			[in]unsigned __int64 RequestId,
 			[in]ULONG Flags,
-			[out]void* EntityBuffer,
+			[out]PVOID EntityBuffer,
 			[in]ULONG EntityBufferLength,
 			[out]ULONG* BytesReturned,
 			[in]LPOVERLAPPED OVERLAPPED);"
@@ -706,7 +785,7 @@ httpSetRequestQueueProperty: requestQueueHandle property: property propertyInfor
 		ULONG __stdcall HttpSetRequestQueueProperty(
 			[in]HANDLE RequestQueueHandle,
 			[in]HTTP_SERVER_PROPERTY Property,
-			[in]void* PropertyInformation,
+			[in]PVOID PropertyInformation,
 			[in]ULONG PropertyInformationLength,
 			[in]ULONG Reserved1,
 			[in]PVOID Reserved2);"
@@ -721,7 +800,7 @@ httpSetServerSessionProperty: serverSessionId property: property propertyInforma
 		ULONG __stdcall HttpSetServerSessionProperty(
 			[in]unsigned __int64 ServerSessionId,
 			[in]HTTP_SERVER_PROPERTY Property,
-			[in]void* PropertyInformation,
+			[in]PVOID PropertyInformation,
 			[in]ULONG PropertyInformationLength);"
 
 	<stdcall: dword HttpSetServerSessionProperty qword sdword void* dword>
@@ -734,7 +813,7 @@ httpSetServiceConfiguration: serviceHandle configId: configId pConfigInformation
 		ULONG __stdcall HttpSetServiceConfiguration(
 			[in]HANDLE ServiceHandle,
 			[in]HTTP_SERVICE_CONFIG_ID ConfigId,
-			[in]void* pConfigInformation,
+			[in]PVOID pConfigInformation,
 			[in]ULONG ConfigInformationLength,
 			[in]LPOVERLAPPED pOverlapped);"
 
@@ -748,7 +827,7 @@ httpSetUrlGroupProperty: urlGroupId property: property propertyInformation: prop
 		ULONG __stdcall HttpSetUrlGroupProperty(
 			[in]unsigned __int64 UrlGroupId,
 			[in]HTTP_SERVER_PROPERTY Property,
-			[in]void* PropertyInformation,
+			[in]PVOID PropertyInformation,
 			[in]ULONG PropertyInformationLength);"
 
 	<stdcall: dword HttpSetUrlGroupProperty qword sdword void* dword>
@@ -837,7 +916,7 @@ querySession: sessionIdInteger property: propIdInteger
 				at: HttpServerChannelBindProperty + 1 put: HTTP_CHANNEL_BIND_INFO;
 				at: HttpServerProtectionLevelProperty + 1 put: nil;
 				yourself) at: propIdInteger + 1.
-	type isNil ifTrue: [^self error: 'Unable to query property ', propIdInteger printString].
+	type isNil ifTrue: [^self error: 'Unable to query property ' , propIdInteger printString].
 	buf := type new.
 	bufSize := DWORDBytes new.
 	ret := self
@@ -884,7 +963,7 @@ querySession: sessionIdInteger qosProperty: qosTypeInteger
 
 queryUrlGroup: urlGroupId qosSetting: anInteger
 	| query ret bufSize |
-	query := (HTTP_QOS_SETTING_INFO new)
+	query := HTTP_QOS_SETTING_INFO new
 				QosType: anInteger;
 				yourself.
 	bufSize := DWORDBytes new.
@@ -908,7 +987,7 @@ queryUrlGroup: urlGroupId qosSetting: anInteger
 	^query value!
 
 receiveRequest: anExternalHandle
-	^self receiveRequest: anExternalHandle flags: WinHttpServerConsts.HTTP_RECEIVE_REQUEST_FLAG_COPY_BODY!
+	^self receiveRequest: anExternalHandle flags: HTTP_RECEIVE_REQUEST_FLAG_COPY_BODY!
 
 receiveRequest: anExternalHandle flags: anInteger
 	| bytesReceived buf requestId |
@@ -951,7 +1030,7 @@ receiveRequestEntityBody: anExternalHandle requestId: requestId
 	ret := self
 				asyncReceiveHttpRequestEntityBody: anExternalHandle
 				requestId: requestId
-				flags: WinHttpServerConsts.HTTP_RECEIVE_REQUEST_ENTITY_BODY_FLAG_FILL_BUFFER
+				flags: HTTP_RECEIVE_REQUEST_ENTITY_BODY_FLAG_FILL_BUFFER
 				entityBuffer: buf
 				entityBufferLength: buf size
 				bytesReturned: bytesReceived
@@ -1014,63 +1093,63 @@ setUrlGroup: anIntegerGroupId property: aWinHttpPropertyInfo
 				property: aWinHttpPropertyInfo propertyId
 				propertyInformation: aWinHttpPropertyInfo
 				propertyInformationLength: aWinHttpPropertyInfo byteSize)! !
-!HttpApiLibrary categoriesFor: #addUrl:toUrlGroup:!operations!public! !
-!HttpApiLibrary categoriesFor: #asyncReceiveHttpRequest:requestId:flags:requestBuffer:requestBufferLength:bytesReturned:overlapped:!operations!public! !
-!HttpApiLibrary categoriesFor: #asyncReceiveHttpRequestEntityBody:requestId:flags:entityBuffer:entityBufferLength:bytesReturned:overlapped:!operations!public! !
-!HttpApiLibrary categoriesFor: #asyncSendHttpResponse:requestId:flags:httpResponse:cachePolicy:bytesSent:reserved2:reserved3:overlapped:logData:!operations!public! !
-!HttpApiLibrary categoriesFor: #bindQueue:toUrlGroup:!operations!public! !
-!HttpApiLibrary categoriesFor: #checkReturnCode:!helpers!private! !
-!HttpApiLibrary categoriesFor: #close!public!realizing/unrealizing! !
-!HttpApiLibrary categoriesFor: #createRequestQueue:!operations!public! !
-!HttpApiLibrary categoriesFor: #createServerSession!operations!public! !
-!HttpApiLibrary categoriesFor: #createUrlGroup:!operations!public! !
-!HttpApiLibrary categoriesFor: #httpAddFragmentToCache:urlPrefix:dataChunk:cachePolicy:overlapped:!**auto generated**!public! !
-!HttpApiLibrary categoriesFor: #httpAddUrlToUrlGroup:pFullyQualifiedUrl:urlContext:reserved:!**auto generated**!public! !
-!HttpApiLibrary categoriesFor: #httpCancelHttpRequest:requestId:overlapped:!**auto generated**!public! !
-!HttpApiLibrary categoriesFor: #httpCloseRequestQueue:!**auto generated**!public! !
-!HttpApiLibrary categoriesFor: #httpCloseServerSession:!**auto generated**!public! !
-!HttpApiLibrary categoriesFor: #httpCloseUrlGroup:!**auto generated**!public! !
-!HttpApiLibrary categoriesFor: #httpCreateRequestQueue:name:securityAttributes:flags:requestQueueHandle:!**auto generated**!public! !
-!HttpApiLibrary categoriesFor: #httpCreateServerSession:serverSessionId:reserved:!**auto generated**!public! !
-!HttpApiLibrary categoriesFor: #httpCreateUrlGroup:pUrlGroupId:reserved:!**auto generated**!public! !
-!HttpApiLibrary categoriesFor: #httpDeclarePush:requestId:verb:path:query:headers:!**auto generated**!public! !
-!HttpApiLibrary categoriesFor: #httpDeleteServiceConfiguration:configId:pConfigInformation:configInformationLength:pOverlapped:!**auto generated**!public! !
-!HttpApiLibrary categoriesFor: #httpFlushResponseCache:urlPrefix:flags:overlapped:!**auto generated**!public! !
-!HttpApiLibrary categoriesFor: #httpInitialize:flags:pReserved:!**auto generated**!public! !
-!HttpApiLibrary categoriesFor: #httpPrepareUrl:flags:url:preparedUrl:!**auto generated**!public! !
-!HttpApiLibrary categoriesFor: #httpQueryRequestQueueProperty:property:propertyInformation:propertyInformationLength:reserved1:returnLength:reserved2:!**auto generated**!public! !
-!HttpApiLibrary categoriesFor: #httpQueryServerSessionProperty:property:propertyInformation:propertyInformationLength:returnLength:!**auto generated**!public! !
-!HttpApiLibrary categoriesFor: #httpQueryServiceConfiguration:configId:pInput:inputLength:pOutput:outputLength:pReturnLength:pOverlapped:!**auto generated**!public! !
-!HttpApiLibrary categoriesFor: #httpQueryUrlGroupProperty:property:propertyInformation:propertyInformationLength:returnLength:!**auto generated**!public! !
-!HttpApiLibrary categoriesFor: #httpReadFragmentFromCache:urlPrefix:byteRange:buffer:bufferLength:bytesRead:overlapped:!**auto generated**!public! !
-!HttpApiLibrary categoriesFor: #httpReceiveClientCertificate:connectionId:flags:sslClientCertInfo:sslClientCertInfoSize:bytesReceived:overlapped:!**auto generated**!public! !
-!HttpApiLibrary categoriesFor: #httpReceiveHttpRequest:requestId:flags:requestBuffer:requestBufferLength:bytesReturned:overlapped:!**auto generated**!public! !
-!HttpApiLibrary categoriesFor: #httpReceiveRequestEntityBody:requestId:flags:entityBuffer:entityBufferLength:bytesReturned:overlapped:!**auto generated**!public! !
-!HttpApiLibrary categoriesFor: #httpRemoveUrlFromUrlGroup:pFullyQualifiedUrl:flags:!**auto generated**!public! !
-!HttpApiLibrary categoriesFor: #httpSendHttpResponse:requestId:flags:httpResponse:cachePolicy:bytesSent:reserved2:reserved3:overlapped:logData:!**auto generated**!public! !
-!HttpApiLibrary categoriesFor: #httpSendResponseEntityBody:requestId:flags:entityChunkCount:entityChunks:bytesSent:reserved1:reserved2:overlapped:logData:!**auto generated**!public! !
-!HttpApiLibrary categoriesFor: #httpSetRequestQueueProperty:property:propertyInformation:propertyInformationLength:reserved1:reserved2:!**auto generated**!public! !
-!HttpApiLibrary categoriesFor: #httpSetServerSessionProperty:property:propertyInformation:propertyInformationLength:!**auto generated**!public! !
-!HttpApiLibrary categoriesFor: #httpSetServiceConfiguration:configId:pConfigInformation:configInformationLength:pOverlapped:!**auto generated**!public! !
-!HttpApiLibrary categoriesFor: #httpSetUrlGroupProperty:property:propertyInformation:propertyInformationLength:!**auto generated**!public! !
-!HttpApiLibrary categoriesFor: #httpShutdownRequestQueue:!**auto generated**!public! !
-!HttpApiLibrary categoriesFor: #httpTerminate:pReserved:!**auto generated**!public! !
-!HttpApiLibrary categoriesFor: #httpWaitForDemandStart:overlapped:!**auto generated**!public! !
-!HttpApiLibrary categoriesFor: #httpWaitForDisconnect:connectionId:overlapped:!**auto generated**!public! !
-!HttpApiLibrary categoriesFor: #httpWaitForDisconnectEx:connectionId:reserved:overlapped:!**auto generated**!public! !
-!HttpApiLibrary categoriesFor: #initialize!initializing!private! !
-!HttpApiLibrary categoriesFor: #querySession:property:!operations!public! !
-!HttpApiLibrary categoriesFor: #querySession:qosProperty:!operations!public! !
-!HttpApiLibrary categoriesFor: #queryUrlGroup:qosSetting:!operations!public! !
-!HttpApiLibrary categoriesFor: #receiveRequest:!operations!public! !
-!HttpApiLibrary categoriesFor: #receiveRequest:flags:!operations!public! !
-!HttpApiLibrary categoriesFor: #receiveRequestEntityBody:requestId:!operations!public! !
-!HttpApiLibrary categoriesFor: #sendResponse:queue:id:!operations!public! !
-!HttpApiLibrary categoriesFor: #setQueue:property:!accessing!public! !
-!HttpApiLibrary categoriesFor: #setSession:property:!public! !
-!HttpApiLibrary categoriesFor: #setUrlGroup:property:!operations!public! !
+!WinHttpServer.HttpApiLibrary categoriesFor: #addUrl:toUrlGroup:!operations!public! !
+!WinHttpServer.HttpApiLibrary categoriesFor: #asyncReceiveHttpRequest:requestId:flags:requestBuffer:requestBufferLength:bytesReturned:overlapped:!operations!public! !
+!WinHttpServer.HttpApiLibrary categoriesFor: #asyncReceiveHttpRequestEntityBody:requestId:flags:entityBuffer:entityBufferLength:bytesReturned:overlapped:!operations!public! !
+!WinHttpServer.HttpApiLibrary categoriesFor: #asyncSendHttpResponse:requestId:flags:httpResponse:cachePolicy:bytesSent:reserved2:reserved3:overlapped:logData:!operations!public! !
+!WinHttpServer.HttpApiLibrary categoriesFor: #bindQueue:toUrlGroup:!operations!public! !
+!WinHttpServer.HttpApiLibrary categoriesFor: #checkReturnCode:!helpers!private! !
+!WinHttpServer.HttpApiLibrary categoriesFor: #close!public!realizing/unrealizing! !
+!WinHttpServer.HttpApiLibrary categoriesFor: #createRequestQueue:!operations!public! !
+!WinHttpServer.HttpApiLibrary categoriesFor: #createServerSession!operations!public! !
+!WinHttpServer.HttpApiLibrary categoriesFor: #createUrlGroup:!operations!public! !
+!WinHttpServer.HttpApiLibrary categoriesFor: #httpAddFragmentToCache:urlPrefix:dataChunk:cachePolicy:overlapped:!**auto generated**!public! !
+!WinHttpServer.HttpApiLibrary categoriesFor: #httpAddUrlToUrlGroup:pFullyQualifiedUrl:urlContext:reserved:!**auto generated**!public! !
+!WinHttpServer.HttpApiLibrary categoriesFor: #httpCancelHttpRequest:requestId:overlapped:!**auto generated**!public! !
+!WinHttpServer.HttpApiLibrary categoriesFor: #httpCloseRequestQueue:!**auto generated**!public! !
+!WinHttpServer.HttpApiLibrary categoriesFor: #httpCloseServerSession:!**auto generated**!public! !
+!WinHttpServer.HttpApiLibrary categoriesFor: #httpCloseUrlGroup:!**auto generated**!public! !
+!WinHttpServer.HttpApiLibrary categoriesFor: #httpCreateRequestQueue:name:securityAttributes:flags:requestQueueHandle:!**auto generated**!public! !
+!WinHttpServer.HttpApiLibrary categoriesFor: #httpCreateServerSession:serverSessionId:reserved:!**auto generated**!public! !
+!WinHttpServer.HttpApiLibrary categoriesFor: #httpCreateUrlGroup:pUrlGroupId:reserved:!**auto generated**!public! !
+!WinHttpServer.HttpApiLibrary categoriesFor: #httpDeclarePush:requestId:verb:path:query:headers:!**auto generated**!public! !
+!WinHttpServer.HttpApiLibrary categoriesFor: #httpDeleteServiceConfiguration:configId:pConfigInformation:configInformationLength:pOverlapped:!**auto generated**!public! !
+!WinHttpServer.HttpApiLibrary categoriesFor: #httpFlushResponseCache:urlPrefix:flags:overlapped:!**auto generated**!public! !
+!WinHttpServer.HttpApiLibrary categoriesFor: #httpInitialize:flags:pReserved:!**auto generated**!public! !
+!WinHttpServer.HttpApiLibrary categoriesFor: #httpPrepareUrl:flags:url:preparedUrl:!**auto generated**!public! !
+!WinHttpServer.HttpApiLibrary categoriesFor: #httpQueryRequestQueueProperty:property:propertyInformation:propertyInformationLength:reserved1:returnLength:reserved2:!**auto generated**!public! !
+!WinHttpServer.HttpApiLibrary categoriesFor: #httpQueryServerSessionProperty:property:propertyInformation:propertyInformationLength:returnLength:!**auto generated**!public! !
+!WinHttpServer.HttpApiLibrary categoriesFor: #httpQueryServiceConfiguration:configId:pInput:inputLength:pOutput:outputLength:pReturnLength:pOverlapped:!**auto generated**!public! !
+!WinHttpServer.HttpApiLibrary categoriesFor: #httpQueryUrlGroupProperty:property:propertyInformation:propertyInformationLength:returnLength:!**auto generated**!public! !
+!WinHttpServer.HttpApiLibrary categoriesFor: #httpReadFragmentFromCache:urlPrefix:byteRange:buffer:bufferLength:bytesRead:overlapped:!**auto generated**!public! !
+!WinHttpServer.HttpApiLibrary categoriesFor: #httpReceiveClientCertificate:connectionId:flags:sslClientCertInfo:sslClientCertInfoSize:bytesReceived:overlapped:!**auto generated**!public! !
+!WinHttpServer.HttpApiLibrary categoriesFor: #httpReceiveHttpRequest:requestId:flags:requestBuffer:requestBufferLength:bytesReturned:overlapped:!**auto generated**!public! !
+!WinHttpServer.HttpApiLibrary categoriesFor: #httpReceiveRequestEntityBody:requestId:flags:entityBuffer:entityBufferLength:bytesReturned:overlapped:!**auto generated**!public! !
+!WinHttpServer.HttpApiLibrary categoriesFor: #httpRemoveUrlFromUrlGroup:pFullyQualifiedUrl:flags:!**auto generated**!public! !
+!WinHttpServer.HttpApiLibrary categoriesFor: #httpSendHttpResponse:requestId:flags:httpResponse:cachePolicy:bytesSent:reserved2:reserved3:overlapped:logData:!**auto generated**!public! !
+!WinHttpServer.HttpApiLibrary categoriesFor: #httpSendResponseEntityBody:requestId:flags:entityChunkCount:entityChunks:bytesSent:reserved1:reserved2:overlapped:logData:!**auto generated**!public! !
+!WinHttpServer.HttpApiLibrary categoriesFor: #httpSetRequestQueueProperty:property:propertyInformation:propertyInformationLength:reserved1:reserved2:!**auto generated**!public! !
+!WinHttpServer.HttpApiLibrary categoriesFor: #httpSetServerSessionProperty:property:propertyInformation:propertyInformationLength:!**auto generated**!public! !
+!WinHttpServer.HttpApiLibrary categoriesFor: #httpSetServiceConfiguration:configId:pConfigInformation:configInformationLength:pOverlapped:!**auto generated**!public! !
+!WinHttpServer.HttpApiLibrary categoriesFor: #httpSetUrlGroupProperty:property:propertyInformation:propertyInformationLength:!**auto generated**!public! !
+!WinHttpServer.HttpApiLibrary categoriesFor: #httpShutdownRequestQueue:!**auto generated**!public! !
+!WinHttpServer.HttpApiLibrary categoriesFor: #httpTerminate:pReserved:!**auto generated**!public! !
+!WinHttpServer.HttpApiLibrary categoriesFor: #httpWaitForDemandStart:overlapped:!**auto generated**!public! !
+!WinHttpServer.HttpApiLibrary categoriesFor: #httpWaitForDisconnect:connectionId:overlapped:!**auto generated**!public! !
+!WinHttpServer.HttpApiLibrary categoriesFor: #httpWaitForDisconnectEx:connectionId:reserved:overlapped:!**auto generated**!public! !
+!WinHttpServer.HttpApiLibrary categoriesFor: #initialize!initializing!private! !
+!WinHttpServer.HttpApiLibrary categoriesFor: #querySession:property:!operations!public! !
+!WinHttpServer.HttpApiLibrary categoriesFor: #querySession:qosProperty:!operations!public! !
+!WinHttpServer.HttpApiLibrary categoriesFor: #queryUrlGroup:qosSetting:!operations!public! !
+!WinHttpServer.HttpApiLibrary categoriesFor: #receiveRequest:!operations!public! !
+!WinHttpServer.HttpApiLibrary categoriesFor: #receiveRequest:flags:!operations!public! !
+!WinHttpServer.HttpApiLibrary categoriesFor: #receiveRequestEntityBody:requestId:!operations!public! !
+!WinHttpServer.HttpApiLibrary categoriesFor: #sendResponse:queue:id:!operations!public! !
+!WinHttpServer.HttpApiLibrary categoriesFor: #setQueue:property:!accessing!public! !
+!WinHttpServer.HttpApiLibrary categoriesFor: #setSession:property:!public! !
+!WinHttpServer.HttpApiLibrary categoriesFor: #setUrlGroup:property:!operations!public! !
 
-!HttpApiLibrary class methodsFor!
+!WinHttpServer.HttpApiLibrary class methodsFor!
 
 apiVersion
 	"Answer the required Win32 Http Server API version in HTTPAPI_VERSION representation, i.e. a
@@ -1174,7 +1253,7 @@ example1
 			#todo	"Send a response"]
 					repeat]
 					fork.
-	MessageBox notify: ((String writeStream)
+	UI.MessageBox notify: ((String writeStream)
 				nextPutAll: 'Listening for HTTP requests on ';
 				display: urlPrefix;
 				nextPutAll: ' ... ';
@@ -1330,7 +1409,8 @@ example8
 				Format: HttpLoggingTypeW3C;
 				RolloverType: HttpLoggingRolloverSize;
 				RolloverSize: 1024 * 1024;
-				Fields: (HTTP_LOG_FIELD_DATE | HTTP_LOG_FIELD_TIME | HTTP_LOG_FIELD_CLIENT_IP | HTTP_LOG_FIELD_METHOD | HTTP_LOG_FIELD_URI);
+				Fields: HTTP_LOG_FIELD_DATE | HTTP_LOG_FIELD_TIME | HTTP_LOG_FIELD_CLIENT_IP | HTTP_LOG_FIELD_METHOD
+							| HTTP_LOG_FIELD_URI;
 				yourself).
 	^lib halt querySession: sessionId property: HttpServerLoggingProperty]
 			ensure: [lib httpCloseServerSession: sessionId]!
@@ -1342,7 +1422,7 @@ fileName
 !
 
 initFlags
-	^##(WinHttpServerConsts.HTTP_INITIALIZE_SERVER | WinHttpServerConsts.HTTP_INITIALIZE_CONFIG)!
+	^##(HTTP_INITIALIZE_SERVER | HTTP_INITIALIZE_CONFIG)!
 
 querySslCertInfo
 	"Example of calling config query API - Returns all SSL cert settings configured.
@@ -1429,15 +1509,15 @@ queryUrlAclInfo
 				answer addLast: buf.
 				count := count + 1].
 	^answer! !
-!HttpApiLibrary class categoriesFor: #apiVersion!constants!public! !
-!HttpApiLibrary class categoriesFor: #example1!examples!public! !
-!HttpApiLibrary class categoriesFor: #example3!examples!public! !
-!HttpApiLibrary class categoriesFor: #example4!examples!public! !
-!HttpApiLibrary class categoriesFor: #example6!examples!public! !
-!HttpApiLibrary class categoriesFor: #example7!examples!public! !
-!HttpApiLibrary class categoriesFor: #example8!examples!public! !
-!HttpApiLibrary class categoriesFor: #fileName!**auto generated**!constants!public! !
-!HttpApiLibrary class categoriesFor: #initFlags!constants!public! !
-!HttpApiLibrary class categoriesFor: #querySslCertInfo!examples!public! !
-!HttpApiLibrary class categoriesFor: #queryUrlAclInfo!examples!public! !
+!WinHttpServer.HttpApiLibrary class categoriesFor: #apiVersion!constants!public! !
+!WinHttpServer.HttpApiLibrary class categoriesFor: #example1!examples!public! !
+!WinHttpServer.HttpApiLibrary class categoriesFor: #example3!examples!public! !
+!WinHttpServer.HttpApiLibrary class categoriesFor: #example4!examples!public! !
+!WinHttpServer.HttpApiLibrary class categoriesFor: #example6!examples!public! !
+!WinHttpServer.HttpApiLibrary class categoriesFor: #example7!examples!public! !
+!WinHttpServer.HttpApiLibrary class categoriesFor: #example8!examples!public! !
+!WinHttpServer.HttpApiLibrary class categoriesFor: #fileName!**auto generated**!constants!private! !
+!WinHttpServer.HttpApiLibrary class categoriesFor: #initFlags!constants!public! !
+!WinHttpServer.HttpApiLibrary class categoriesFor: #querySslCertInfo!examples!public! !
+!WinHttpServer.HttpApiLibrary class categoriesFor: #queryUrlAclInfo!examples!public! !
 

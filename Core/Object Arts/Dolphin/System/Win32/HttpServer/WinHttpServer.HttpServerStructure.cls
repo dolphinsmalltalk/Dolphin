@@ -1,18 +1,18 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ExternalStructure subclass: #HttpServerStructure
+External.Structure subclass: #'WinHttpServer.HttpServerStructure'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'WinHttpServerConsts'
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-HttpServerStructure guid: (GUID fromString: '{20120606-4b34-448e-9c39-69371965b5b6}')!
-HttpServerStructure isAbstract: true!
-HttpServerStructure comment: ''!
-!HttpServerStructure categoriesForClass!External-Data-Structured! !
-!HttpServerStructure methodsFor!
+WinHttpServer.HttpServerStructure guid: (Core.GUID fromString: '{20120606-4b34-448e-9c39-69371965b5b6}')!
+WinHttpServer.HttpServerStructure isNonInstantiable: true!
+WinHttpServer.HttpServerStructure comment: ''!
+!WinHttpServer.HttpServerStructure categoriesForClass!External-Data-Structured! !
+!WinHttpServer.HttpServerStructure methodsFor!
 
 byteSize
 	^bytes class isIndirection ifTrue: [super byteSize] ifFalse: [bytes size]! !
-!HttpServerStructure categoriesFor: #byteSize!accessing!public! !
+!WinHttpServer.HttpServerStructure categoriesFor: #byteSize!accessing!public! !
 

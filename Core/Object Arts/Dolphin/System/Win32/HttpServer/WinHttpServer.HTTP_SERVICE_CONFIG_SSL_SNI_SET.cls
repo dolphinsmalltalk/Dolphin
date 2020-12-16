@@ -1,32 +1,33 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-HttpServerStructure subclass: #HTTP_SERVICE_CONFIG_SSL_SNI_SET
+WinHttpServer.HttpServerStructure subclass: #'WinHttpServer.HTTP_SERVICE_CONFIG_SSL_SNI_SET'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_KeyDesc' -> 16r0.
 		'_OffsetOf_ParamDesc' -> 16r88
 	}!
-HTTP_SERVICE_CONFIG_SSL_SNI_SET guid: (GUID fromString: '{4c2fb659-18f1-4258-beb7-2283ed27e94b}')!
-HTTP_SERVICE_CONFIG_SSL_SNI_SET comment: '<HTTP_SERVICE_CONFIG_SSL_SNI_SET> is an <ExternalStructure> class to wrap the struct ''WinHttpServer.HTTP_SERVICE_CONFIG_SSL_SNI_SET'' from type information in the ''Windows Http Server API'' library.
+WinHttpServer.HTTP_SERVICE_CONFIG_SSL_SNI_SET guid: (Core.GUID fromString: '{4c2fb659-18f1-4258-beb7-2283ed27e94b}')!
+WinHttpServer.HTTP_SERVICE_CONFIG_SSL_SNI_SET comment: '`HTTP_SERVICE_CONFIG_SSL_SNI_SET` is an `External.Structure` class to wrap the struct ''WinHttpServer.HTTP_SERVICE_CONFIG_SSL_SNI_SET'' from type information in the ''Windows Http Server API'' library.
 
 The type library contains the following helpstring for this struct
 	"Used by HttpSetServiceConfiguration() to add a new HttpServiceConfigSslSniCertInfo record to the SSL bindings list"
 
-** This comment was automatically generated from a type library. Delete this line to prevent any manual edits from being overwritten if the wrapper class is regenerated. **
+** This comment was automatically generated from a type library. Delete this line to prevent any manual edits from being overwritten if the wrapper class is regenerated.
 
 IDL definition follows:
-
+```
 typedef [uuid(4c2fb659-18f1-4258-beb7-2283ed27e94b), helpstring("Used by HttpSetServiceConfiguration() to add a new HttpServiceConfigSslSniCertInfo record to the SSL bindings list")]
 struct tagHTTP_SERVICE_CONFIG_SSL_SNI_SET {
 	HTTP_SERVICE_CONFIG_SSL_SNI_KEY KeyDesc;
 	HTTP_SERVICE_CONFIG_SSL_PARAM ParamDesc;
 } HTTP_SERVICE_CONFIG_SSL_SNI_SET;
+```
 '!
-!HTTP_SERVICE_CONFIG_SSL_SNI_SET categoriesForClass!WinHttpServer-Structs! !
-!HTTP_SERVICE_CONFIG_SSL_SNI_SET methodsFor!
+!WinHttpServer.HTTP_SERVICE_CONFIG_SSL_SNI_SET categoriesForClass!WinHttpServer-Structs! !
+!WinHttpServer.HTTP_SERVICE_CONFIG_SSL_SNI_SET methodsFor!
 
 KeyDesc
 	"Answer the <HTTP_SERVICE_CONFIG_SSL_SNI_KEY> value of the receiver's 'KeyDesc' field."
@@ -55,12 +56,12 @@ ParamDesc: aHTTP_SERVICE_CONFIG_SSL_PARAM
 		from: ##(_OffsetOf_ParamDesc + 1)
 		to: ##(_OffsetOf_ParamDesc + HTTP_SERVICE_CONFIG_SSL_PARAM basicByteSize)
 		startingAt: 1! !
-!HTTP_SERVICE_CONFIG_SSL_SNI_SET categoriesFor: #KeyDesc!**compiled accessors**!public! !
-!HTTP_SERVICE_CONFIG_SSL_SNI_SET categoriesFor: #KeyDesc:!**compiled accessors**!public! !
-!HTTP_SERVICE_CONFIG_SSL_SNI_SET categoriesFor: #ParamDesc!**compiled accessors**!public! !
-!HTTP_SERVICE_CONFIG_SSL_SNI_SET categoriesFor: #ParamDesc:!**compiled accessors**!public! !
+!WinHttpServer.HTTP_SERVICE_CONFIG_SSL_SNI_SET categoriesFor: #KeyDesc!**compiled accessors**!public! !
+!WinHttpServer.HTTP_SERVICE_CONFIG_SSL_SNI_SET categoriesFor: #KeyDesc:!**compiled accessors**!public! !
+!WinHttpServer.HTTP_SERVICE_CONFIG_SSL_SNI_SET categoriesFor: #ParamDesc!**compiled accessors**!public! !
+!WinHttpServer.HTTP_SERVICE_CONFIG_SSL_SNI_SET categoriesFor: #ParamDesc:!**compiled accessors**!public! !
 
-!HTTP_SERVICE_CONFIG_SSL_SNI_SET class methodsFor!
+!WinHttpServer.HTTP_SERVICE_CONFIG_SSL_SNI_SET class methodsFor!
 
 defineFields
 	"Define the fields of the HTTP_SERVICE_CONFIG_SSL_SNI_SET structure.
@@ -81,6 +82,6 @@ defineFields
 
 getFieldNames
 	^#(#KeyDesc #ParamDesc)! !
-!HTTP_SERVICE_CONFIG_SSL_SNI_SET class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!HTTP_SERVICE_CONFIG_SSL_SNI_SET class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!WinHttpServer.HTTP_SERVICE_CONFIG_SSL_SNI_SET class categoriesFor: #defineFields!**auto generated**!private!template definition! !
+!WinHttpServer.HTTP_SERVICE_CONFIG_SSL_SNI_SET class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

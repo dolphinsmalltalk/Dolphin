@@ -1,31 +1,32 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-HttpQosSetting subclass: #HTTP_CONNECTION_LIMIT_INFO
+WinHttpServer.HttpQosSetting subclass: #'WinHttpServer.HTTP_CONNECTION_LIMIT_INFO'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_MaxConnections' -> 16r4
 	}!
-HTTP_CONNECTION_LIMIT_INFO guid: (GUID fromString: '{6fca5840-1e00-4065-ad55-203bd079a117}')!
-HTTP_CONNECTION_LIMIT_INFO comment: '<HTTP_CONNECTION_LIMIT_INFO> is an <ExternalStructure> class to wrap the struct ''WinHttpServer.HTTP_CONNECTION_LIMIT_INFO'' from type information in the ''Windows Http Server API'' library.
+WinHttpServer.HTTP_CONNECTION_LIMIT_INFO guid: (Core.GUID fromString: '{6fca5840-1e00-4065-ad55-203bd079a117}')!
+WinHttpServer.HTTP_CONNECTION_LIMIT_INFO comment: '`HTTP_CONNECTION_LIMIT_INFO` is an `External.Structure` class to wrap the struct ''WinHttpServer.HTTP_CONNECTION_LIMIT_INFO'' from type information in the ''Windows Http Server API'' library.
 
 The type library contains the following helpstring for this struct
 	"Used to set or query the limit on the maximum number of outstanding connections for a URL Group."
 
-** This comment was automatically generated from a type library. Delete this line to prevent any manual edits from being overwritten if the wrapper class is regenerated. **
+** This comment was automatically generated from a type library. Delete this line to prevent any manual edits from being overwritten if the wrapper class is regenerated.
 
 IDL definition follows:
-
+```
 typedef [uuid(6fca5840-1e00-4065-ad55-203bd079a117), helpstring("Used to set or query the limit on the maximum number of outstanding connections for a URL Group.")]
 struct tagHTTP_CONNECTION_LIMIT_INFO {
 	[nonbrowsable] HTTP_PROPERTY_FLAGS;
 	ULONG MaxConnections;
 } HTTP_CONNECTION_LIMIT_INFO;
+```
 '!
-!HTTP_CONNECTION_LIMIT_INFO categoriesForClass!WinHttpServer-Structs! !
-!HTTP_CONNECTION_LIMIT_INFO methodsFor!
+!WinHttpServer.HTTP_CONNECTION_LIMIT_INFO categoriesForClass!WinHttpServer-Structs! !
+!WinHttpServer.HTTP_CONNECTION_LIMIT_INFO methodsFor!
 
 MaxConnections
 	"Answer the <Integer> value of the receiver's 'MaxConnections' field."
@@ -50,12 +51,12 @@ value: anInteger
 			[self
 				Present: true;
 				MaxConnections: anInteger]! !
-!HTTP_CONNECTION_LIMIT_INFO categoriesFor: #MaxConnections!**compiled accessors**!public! !
-!HTTP_CONNECTION_LIMIT_INFO categoriesFor: #MaxConnections:!**compiled accessors**!public! !
-!HTTP_CONNECTION_LIMIT_INFO categoriesFor: #value!accessing!public! !
-!HTTP_CONNECTION_LIMIT_INFO categoriesFor: #value:!accessing!public! !
+!WinHttpServer.HTTP_CONNECTION_LIMIT_INFO categoriesFor: #MaxConnections!**compiled accessors**!public! !
+!WinHttpServer.HTTP_CONNECTION_LIMIT_INFO categoriesFor: #MaxConnections:!**compiled accessors**!public! !
+!WinHttpServer.HTTP_CONNECTION_LIMIT_INFO categoriesFor: #value!accessing!public! !
+!WinHttpServer.HTTP_CONNECTION_LIMIT_INFO categoriesFor: #value:!accessing!public! !
 
-!HTTP_CONNECTION_LIMIT_INFO class methodsFor!
+!WinHttpServer.HTTP_CONNECTION_LIMIT_INFO class methodsFor!
 
 defineFields
 	"Define the fields of the HTTP_CONNECTION_LIMIT_INFO structure.
@@ -84,8 +85,8 @@ maxConnections: anInteger
 
 qosType
 	^HttpQosSettingTypeConnectionLimit! !
-!HTTP_CONNECTION_LIMIT_INFO class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!HTTP_CONNECTION_LIMIT_INFO class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!HTTP_CONNECTION_LIMIT_INFO class categoriesFor: #maxConnections:!public! !
-!HTTP_CONNECTION_LIMIT_INFO class categoriesFor: #qosType!constants!public! !
+!WinHttpServer.HTTP_CONNECTION_LIMIT_INFO class categoriesFor: #defineFields!**auto generated**!private!template definition! !
+!WinHttpServer.HTTP_CONNECTION_LIMIT_INFO class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!WinHttpServer.HTTP_CONNECTION_LIMIT_INFO class categoriesFor: #maxConnections:!public! !
+!WinHttpServer.HTTP_CONNECTION_LIMIT_INFO class categoriesFor: #qosType!constants!public! !
 

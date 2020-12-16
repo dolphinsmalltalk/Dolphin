@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-HttpServerStructure subclass: #HTTP_COOKED_URL
+WinHttpServer.HttpServerStructure subclass: #'WinHttpServer.HTTP_COOKED_URL'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_AbsPathLength' -> 16r4.
@@ -15,16 +15,16 @@ HttpServerStructure subclass: #HTTP_COOKED_URL
 		'_OffsetOf_pQueryString' -> 16r14.
 		'_OffsetOf_QueryStringLength' -> 16r6
 	}!
-HTTP_COOKED_URL guid: (GUID fromString: '{24928162-1798-46a3-b2c1-3c6ee66c08be}')!
-HTTP_COOKED_URL comment: '<HTTP_COOKED_URL> is an <ExternalStructure> class to wrap the struct ''WinHttpServer.HTTP_COOKED_URL'' from type information in the ''Windows Http Server API'' library.
+WinHttpServer.HTTP_COOKED_URL guid: (Core.GUID fromString: '{24928162-1798-46a3-b2c1-3c6ee66c08be}')!
+WinHttpServer.HTTP_COOKED_URL comment: '`HTTP_COOKED_URL` is an `External.Structure` class to wrap the struct ''WinHttpServer.HTTP_COOKED_URL'' from type information in the ''Windows Http Server API'' library.
 
 The type library contains the following helpstring for this struct
 	"The HTTP_COOKED_URL structure contains a validated, canonical, UTF-16 Unicode-encoded URL request string together with pointers into it and element lengths."
 
-** This comment was automatically generated from a type library. Delete this line to prevent any manual edits from being overwritten if the wrapper class is regenerated. **
+** This comment was automatically generated from a type library. Delete this line to prevent any manual edits from being overwritten if the wrapper class is regenerated.
 
 IDL definition follows:
-
+```
 typedef [uuid(24928162-1798-46a3-b2c1-3c6ee66c08be), helpstring("The HTTP_COOKED_URL structure contains a validated, canonical, UTF-16 Unicode-encoded URL request string together with pointers into it and element lengths.")]
 struct tagHTTP_COOKED_URL {
 	[nonbrowsable, readonly, helpstring("Size, in bytes, of the data pointed to by the pFullUrl member, not including a terminating null character.")] USHORT FullUrlLength;
@@ -36,9 +36,10 @@ struct tagHTTP_COOKED_URL {
 	[readonly, helpstring("Pointer to the third forward slash (''/'') in the string. In a UrlPrefix string, this is the slash immediately preceding the relativeUri element."), size_is("AbsPathLength>>1"), string] LPCWSTR pAbsPath;
 	[readonly, helpstring("Pointer to the first question mark (?) in the string, or NULL if there is none."), size_is("QueryStringLength>>1"), string] LPCWSTR pQueryString;
 } HTTP_COOKED_URL;
+```
 '!
-!HTTP_COOKED_URL categoriesForClass!WinHttpServer-Structs! !
-!HTTP_COOKED_URL methodsFor!
+!WinHttpServer.HTTP_COOKED_URL categoriesForClass!WinHttpServer-Structs! !
+!WinHttpServer.HTTP_COOKED_URL methodsFor!
 
 AbsPathLength
 	"Private - Answer the <Integer> value of the receiver's 'AbsPathLength' field."
@@ -80,16 +81,16 @@ QueryStringLength
 	"Private - Answer the <Integer> value of the receiver's 'QueryStringLength' field."
 
 	^bytes wordAtOffset: _OffsetOf_QueryStringLength! !
-!HTTP_COOKED_URL categoriesFor: #AbsPathLength!**compiled accessors**!private! !
-!HTTP_COOKED_URL categoriesFor: #FullUrlLength!**compiled accessors**!private! !
-!HTTP_COOKED_URL categoriesFor: #HostLength!**compiled accessors**!private! !
-!HTTP_COOKED_URL categoriesFor: #pAbsPath!**compiled accessors**!public! !
-!HTTP_COOKED_URL categoriesFor: #pFullUrl!**compiled accessors**!public! !
-!HTTP_COOKED_URL categoriesFor: #pHost!**compiled accessors**!public! !
-!HTTP_COOKED_URL categoriesFor: #pQueryString!**compiled accessors**!public! !
-!HTTP_COOKED_URL categoriesFor: #QueryStringLength!**compiled accessors**!private! !
+!WinHttpServer.HTTP_COOKED_URL categoriesFor: #AbsPathLength!**compiled accessors**!private! !
+!WinHttpServer.HTTP_COOKED_URL categoriesFor: #FullUrlLength!**compiled accessors**!private! !
+!WinHttpServer.HTTP_COOKED_URL categoriesFor: #HostLength!**compiled accessors**!private! !
+!WinHttpServer.HTTP_COOKED_URL categoriesFor: #pAbsPath!**compiled accessors**!public! !
+!WinHttpServer.HTTP_COOKED_URL categoriesFor: #pFullUrl!**compiled accessors**!public! !
+!WinHttpServer.HTTP_COOKED_URL categoriesFor: #pHost!**compiled accessors**!public! !
+!WinHttpServer.HTTP_COOKED_URL categoriesFor: #pQueryString!**compiled accessors**!public! !
+!WinHttpServer.HTTP_COOKED_URL categoriesFor: #QueryStringLength!**compiled accessors**!private! !
 
-!HTTP_COOKED_URL class methodsFor!
+!WinHttpServer.HTTP_COOKED_URL class methodsFor!
 
 defineFields
 	"Define the fields of the HTTP_COOKED_URL structure.
@@ -122,6 +123,6 @@ defineFields
 
 getFieldNames
 	^#(#FullUrlLength #HostLength #AbsPathLength #QueryStringLength #pFullUrl #pHost #pAbsPath #pQueryString)! !
-!HTTP_COOKED_URL class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!HTTP_COOKED_URL class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!WinHttpServer.HTTP_COOKED_URL class categoriesFor: #defineFields!**auto generated**!private!template definition! !
+!WinHttpServer.HTTP_COOKED_URL class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

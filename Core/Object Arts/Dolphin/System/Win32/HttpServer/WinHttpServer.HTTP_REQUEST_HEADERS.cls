@@ -1,31 +1,32 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-HTTP_HEADERS subclass: #HTTP_REQUEST_HEADERS
+WinHttpServer.HTTP_HEADERS subclass: #'WinHttpServer.HTTP_REQUEST_HEADERS'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'WinHttpServerConsts'
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_KnownHeaders' -> 16r10
 	}!
-HTTP_REQUEST_HEADERS guid: (GUID fromString: '{f762b6ac-f56f-4aeb-aca3-d6b628473c2c}')!
-HTTP_REQUEST_HEADERS comment: '<HTTP_REQUEST_HEADERS> is an <ExternalStructure> class to wrap the struct ''WinHttpServer.HTTP_REQUEST_HEADERS'' from type information in the ''Windows Http Server API'' library.
+WinHttpServer.HTTP_REQUEST_HEADERS guid: (Core.GUID fromString: '{f762b6ac-f56f-4aeb-aca3-d6b628473c2c}')!
+WinHttpServer.HTTP_REQUEST_HEADERS comment: '`HTTP_REQUEST_HEADERS` is an `External.Structure` class to wrap the struct ''WinHttpServer.HTTP_REQUEST_HEADERS'' from type information in the ''Windows Http Server API'' library.
 
 The type library contains the following helpstring for this struct
 	"Structure defining format of request headers."
 
-** This comment was automatically generated from a type library. Delete this line to prevent any manual edits from being overwritten if the wrapper class is regenerated. **
+** This comment was automatically generated from a type library. Delete this line to prevent any manual edits from being overwritten if the wrapper class is regenerated.
 
 IDL definition follows:
-
+```
 typedef [uuid(f762b6ac-f56f-4aeb-aca3-d6b628473c2c), helpstring("Structure defining format of request headers.")]
 struct tagHTTP_REQUEST_HEADERS {
 	HTTP_HEADERS;
 	[helpstring("Known request headers.")] HTTP_KNOWN_HEADER KnownHeaders[41];
 } HTTP_REQUEST_HEADERS;
+```
 '!
-!HTTP_REQUEST_HEADERS categoriesForClass!Win32-Structs! !
-!HTTP_REQUEST_HEADERS methodsFor!
+!WinHttpServer.HTTP_REQUEST_HEADERS categoriesForClass!Win32-Structs! !
+!WinHttpServer.HTTP_REQUEST_HEADERS methodsFor!
 
 KnownHeaders
 	"Answer the <StructureArray> value of the receiver's 'KnownHeaders' field."
@@ -45,10 +46,10 @@ KnownHeaders: aStructureArrayOfHTTP_KNOWN_HEADER
 		from: ##(_OffsetOf_KnownHeaders + 1)
 		to: _OffsetOf_KnownHeaders + size
 		startingAt: 1! !
-!HTTP_REQUEST_HEADERS categoriesFor: #KnownHeaders!**compiled accessors**!public! !
-!HTTP_REQUEST_HEADERS categoriesFor: #KnownHeaders:!**compiled accessors**!public! !
+!WinHttpServer.HTTP_REQUEST_HEADERS categoriesFor: #KnownHeaders!**compiled accessors**!public! !
+!WinHttpServer.HTTP_REQUEST_HEADERS categoriesFor: #KnownHeaders:!**compiled accessors**!public! !
 
-!HTTP_REQUEST_HEADERS class methodsFor!
+!WinHttpServer.HTTP_REQUEST_HEADERS class methodsFor!
 
 defineFields
 	"Define the fields of the HTTP_REQUEST_HEADERS structure.
@@ -114,7 +115,7 @@ indexToHeaderMap
 		at: HttpHeaderTranslate put: 'Translate';
 		at: HttpHeaderUserAgent put: 'User-Agent';
 		yourself)! !
-!HTTP_REQUEST_HEADERS class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!HTTP_REQUEST_HEADERS class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!HTTP_REQUEST_HEADERS class categoriesFor: #indexToHeaderMap!public! !
+!WinHttpServer.HTTP_REQUEST_HEADERS class categoriesFor: #defineFields!**auto generated**!private!template definition! !
+!WinHttpServer.HTTP_REQUEST_HEADERS class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!WinHttpServer.HTTP_REQUEST_HEADERS class categoriesFor: #indexToHeaderMap!public! !
 

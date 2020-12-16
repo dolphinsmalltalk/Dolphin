@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-HTTP_PROPERTY_FLAGS subclass: #HTTP_TIMEOUT_LIMIT_INFO
+WinHttpServer.HTTP_PROPERTY_FLAGS subclass: #'WinHttpServer.HTTP_TIMEOUT_LIMIT_INFO'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_DrainEntityBody' -> 16r6.
@@ -13,16 +13,16 @@ HTTP_PROPERTY_FLAGS subclass: #HTTP_TIMEOUT_LIMIT_INFO
 		'_OffsetOf_MinSendRate' -> 16r10.
 		'_OffsetOf_RequestQueue' -> 16r8
 	}!
-HTTP_TIMEOUT_LIMIT_INFO guid: (GUID fromString: '{7dae0007-41d0-4925-b425-a14d837d56d0}')!
-HTTP_TIMEOUT_LIMIT_INFO comment: '<HTTP_TIMEOUT_LIMIT_INFO> is an <ExternalStructure> class to wrap the struct ''WinHttpServer.HTTP_TIMEOUT_LIMIT_INFO'' from type information in the ''Windows Http Server API'' library.
+WinHttpServer.HTTP_TIMEOUT_LIMIT_INFO guid: (Core.GUID fromString: '{7dae0007-41d0-4925-b425-a14d837d56d0}')!
+WinHttpServer.HTTP_TIMEOUT_LIMIT_INFO comment: '`HTTP_TIMEOUT_LIMIT_INFO` is an `External.Structure` class to wrap the struct ''WinHttpServer.HTTP_TIMEOUT_LIMIT_INFO'' from type information in the ''Windows Http Server API'' library.
 
 The type library contains the following helpstring for this struct
 	"For manipulating application specific timeout settings. These timers run when there''s a request being processed on a connection and HTTPAPI has already associated the request with an application."
 
-** This comment was automatically generated from a type library. Delete this line to prevent any manual edits from being overwritten if the wrapper class is regenerated. **
+** This comment was automatically generated from a type library. Delete this line to prevent any manual edits from being overwritten if the wrapper class is regenerated.
 
 IDL definition follows:
-
+```
 typedef [uuid(7dae0007-41d0-4925-b425-a14d837d56d0), helpstring("For manipulating application specific timeout settings. These timers run when there''s a request being processed on a connection and HTTPAPI has already associated the request with an application.")]
 struct tagHTTP_TIMEOUT_LIMIT_INFO {
 	[helpstring("Flags specifying which properties are present.")] HTTP_PROPERTY_FLAGS;
@@ -33,9 +33,10 @@ struct tagHTTP_TIMEOUT_LIMIT_INFO {
 	[helpstring("The time, in seconds, allowed for the HTTP Server API to parse the request header.")] USHORT HeaderWait;
 	[helpstring("The minimum send rate, in bytes-per-second, for the response. The default response send rate is 150 bytes-per-second.")] ULONG MinSendRate;
 } HTTP_TIMEOUT_LIMIT_INFO;
+```
 '!
-!HTTP_TIMEOUT_LIMIT_INFO categoriesForClass!Win32-Structs! !
-!HTTP_TIMEOUT_LIMIT_INFO methodsFor!
+!WinHttpServer.HTTP_TIMEOUT_LIMIT_INFO categoriesForClass!Win32-Structs! !
+!WinHttpServer.HTTP_TIMEOUT_LIMIT_INFO methodsFor!
 
 DrainEntityBody
 	"Answer the <Integer> value of the receiver's 'DrainEntityBody' field."
@@ -96,20 +97,20 @@ RequestQueue: anInteger
 	"Set the receiver's 'RequestQueue' field to the value of the argument, anInteger"
 
 	bytes wordAtOffset: _OffsetOf_RequestQueue put: anInteger! !
-!HTTP_TIMEOUT_LIMIT_INFO categoriesFor: #DrainEntityBody!**compiled accessors**!public! !
-!HTTP_TIMEOUT_LIMIT_INFO categoriesFor: #DrainEntityBody:!**compiled accessors**!public! !
-!HTTP_TIMEOUT_LIMIT_INFO categoriesFor: #EntityBody!**compiled accessors**!public! !
-!HTTP_TIMEOUT_LIMIT_INFO categoriesFor: #EntityBody:!**compiled accessors**!public! !
-!HTTP_TIMEOUT_LIMIT_INFO categoriesFor: #HeaderWait!**compiled accessors**!public! !
-!HTTP_TIMEOUT_LIMIT_INFO categoriesFor: #HeaderWait:!**compiled accessors**!public! !
-!HTTP_TIMEOUT_LIMIT_INFO categoriesFor: #IdleConnection!**compiled accessors**!public! !
-!HTTP_TIMEOUT_LIMIT_INFO categoriesFor: #IdleConnection:!**compiled accessors**!public! !
-!HTTP_TIMEOUT_LIMIT_INFO categoriesFor: #MinSendRate!**compiled accessors**!public! !
-!HTTP_TIMEOUT_LIMIT_INFO categoriesFor: #MinSendRate:!**compiled accessors**!public! !
-!HTTP_TIMEOUT_LIMIT_INFO categoriesFor: #RequestQueue!**compiled accessors**!public! !
-!HTTP_TIMEOUT_LIMIT_INFO categoriesFor: #RequestQueue:!**compiled accessors**!public! !
+!WinHttpServer.HTTP_TIMEOUT_LIMIT_INFO categoriesFor: #DrainEntityBody!**compiled accessors**!public! !
+!WinHttpServer.HTTP_TIMEOUT_LIMIT_INFO categoriesFor: #DrainEntityBody:!**compiled accessors**!public! !
+!WinHttpServer.HTTP_TIMEOUT_LIMIT_INFO categoriesFor: #EntityBody!**compiled accessors**!public! !
+!WinHttpServer.HTTP_TIMEOUT_LIMIT_INFO categoriesFor: #EntityBody:!**compiled accessors**!public! !
+!WinHttpServer.HTTP_TIMEOUT_LIMIT_INFO categoriesFor: #HeaderWait!**compiled accessors**!public! !
+!WinHttpServer.HTTP_TIMEOUT_LIMIT_INFO categoriesFor: #HeaderWait:!**compiled accessors**!public! !
+!WinHttpServer.HTTP_TIMEOUT_LIMIT_INFO categoriesFor: #IdleConnection!**compiled accessors**!public! !
+!WinHttpServer.HTTP_TIMEOUT_LIMIT_INFO categoriesFor: #IdleConnection:!**compiled accessors**!public! !
+!WinHttpServer.HTTP_TIMEOUT_LIMIT_INFO categoriesFor: #MinSendRate!**compiled accessors**!public! !
+!WinHttpServer.HTTP_TIMEOUT_LIMIT_INFO categoriesFor: #MinSendRate:!**compiled accessors**!public! !
+!WinHttpServer.HTTP_TIMEOUT_LIMIT_INFO categoriesFor: #RequestQueue!**compiled accessors**!public! !
+!WinHttpServer.HTTP_TIMEOUT_LIMIT_INFO categoriesFor: #RequestQueue:!**compiled accessors**!public! !
 
-!HTTP_TIMEOUT_LIMIT_INFO class methodsFor!
+!WinHttpServer.HTTP_TIMEOUT_LIMIT_INFO class methodsFor!
 
 defineFields
 	"Define the fields of the HTTP_TIMEOUT_LIMIT_INFO structure.
@@ -143,7 +144,7 @@ getFieldNames
 
 propertyId
 	^HttpServerTimeoutsProperty! !
-!HTTP_TIMEOUT_LIMIT_INFO class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!HTTP_TIMEOUT_LIMIT_INFO class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!HTTP_TIMEOUT_LIMIT_INFO class categoriesFor: #propertyId!constants!public! !
+!WinHttpServer.HTTP_TIMEOUT_LIMIT_INFO class categoriesFor: #defineFields!**auto generated**!private!template definition! !
+!WinHttpServer.HTTP_TIMEOUT_LIMIT_INFO class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!WinHttpServer.HTTP_TIMEOUT_LIMIT_INFO class categoriesFor: #propertyId!constants!public! !
 

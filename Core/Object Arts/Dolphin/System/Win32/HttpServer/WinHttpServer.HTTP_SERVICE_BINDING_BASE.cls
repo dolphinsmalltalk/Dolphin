@@ -1,30 +1,31 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-HttpServerStructure subclass: #HTTP_SERVICE_BINDING_BASE
+WinHttpServer.HttpServerStructure subclass: #'WinHttpServer.HTTP_SERVICE_BINDING_BASE'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'WinHttpServerConsts'
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_Type' -> 16r0
 	}!
-HTTP_SERVICE_BINDING_BASE guid: (GUID fromString: '{80f84f87-9667-42d4-ace4-1004dfe14475}')!
-HTTP_SERVICE_BINDING_BASE comment: '<HTTP_SERVICE_BINDING_BASE> is an <ExternalStructure> class to wrap the struct ''WinHttpServer.HTTP_SERVICE_BINDING_BASE'' from type information in the ''Windows Http Server API'' library.
+WinHttpServer.HTTP_SERVICE_BINDING_BASE guid: (Core.GUID fromString: '{80f84f87-9667-42d4-ace4-1004dfe14475}')!
+WinHttpServer.HTTP_SERVICE_BINDING_BASE comment: '`HTTP_SERVICE_BINDING_BASE` is an `External.Structure` class to wrap the struct ''WinHttpServer.HTTP_SERVICE_BINDING_BASE'' from type information in the ''Windows Http Server API'' library.
 
 The type library contains the following helpstring for this struct
 	"Common base for the HTTP_SERVICE_BINDING_A structure and the HTTP_SERVICE_BINDING_W structure."
 
-** This comment was automatically generated from a type library. Delete this line to prevent any manual edits from being overwritten if the wrapper class is regenerated. **
+** This comment was automatically generated from a type library. Delete this line to prevent any manual edits from being overwritten if the wrapper class is regenerated.
 
 IDL definition follows:
-
+```
 typedef [uuid(80f84f87-9667-42d4-ace4-1004dfe14475), helpstring("Common base for the HTTP_SERVICE_BINDING_A structure and the HTTP_SERVICE_BINDING_W structure.")]
 struct tagHTTP_SERVICE_BINDING_BASE {
 	[helpstring("Indicates whether the data is in ASCII or Unicode.")] HTTP_SERVICE_BINDING_TYPE Type;
 } HTTP_SERVICE_BINDING_BASE;
+```
 '!
-!HTTP_SERVICE_BINDING_BASE categoriesForClass!WinHttpServer-Structs! !
-!HTTP_SERVICE_BINDING_BASE methodsFor!
+!WinHttpServer.HTTP_SERVICE_BINDING_BASE categoriesForClass!WinHttpServer-Structs! !
+!WinHttpServer.HTTP_SERVICE_BINDING_BASE methodsFor!
 
 Type
 	"Answer the <Integer> value of the receiver's 'Type' field."
@@ -35,10 +36,10 @@ Type: anInteger
 	"Set the receiver's 'Type' field to the value of the argument, anInteger"
 
 	bytes sdwordAtOffset: _OffsetOf_Type put: anInteger! !
-!HTTP_SERVICE_BINDING_BASE categoriesFor: #Type!**compiled accessors**!public! !
-!HTTP_SERVICE_BINDING_BASE categoriesFor: #Type:!**compiled accessors**!public! !
+!WinHttpServer.HTTP_SERVICE_BINDING_BASE categoriesFor: #Type!**compiled accessors**!public! !
+!WinHttpServer.HTTP_SERVICE_BINDING_BASE categoriesFor: #Type:!**compiled accessors**!public! !
 
-!HTTP_SERVICE_BINDING_BASE class methodsFor!
+!WinHttpServer.HTTP_SERVICE_BINDING_BASE class methodsFor!
 
 defineFields
 	"Define the fields of the HTTP_SERVICE_BINDING_BASE structure.
@@ -64,7 +65,7 @@ fromAddress: anAddress
 
 getFieldNames
 	^#(#Type)! !
-!HTTP_SERVICE_BINDING_BASE class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!HTTP_SERVICE_BINDING_BASE class categoriesFor: #fromAddress:!instance creation!public! !
-!HTTP_SERVICE_BINDING_BASE class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!WinHttpServer.HTTP_SERVICE_BINDING_BASE class categoriesFor: #defineFields!**auto generated**!private!template definition! !
+!WinHttpServer.HTTP_SERVICE_BINDING_BASE class categoriesFor: #fromAddress:!instance creation!public! !
+!WinHttpServer.HTTP_SERVICE_BINDING_BASE class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

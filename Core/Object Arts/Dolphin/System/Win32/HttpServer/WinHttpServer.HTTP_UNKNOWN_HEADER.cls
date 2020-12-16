@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-HttpServerStructure subclass: #HTTP_UNKNOWN_HEADER
+WinHttpServer.HttpServerStructure subclass: #'WinHttpServer.HTTP_UNKNOWN_HEADER'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_NameLength' -> 16r0.
@@ -11,16 +11,16 @@ HttpServerStructure subclass: #HTTP_UNKNOWN_HEADER
 		'_OffsetOf_pRawValue' -> 16r8.
 		'_OffsetOf_RawValueLength' -> 16r2
 	}!
-HTTP_UNKNOWN_HEADER guid: (GUID fromString: '{98a27339-73e3-4d54-baf2-915b818916b1}')!
-HTTP_UNKNOWN_HEADER comment: '<HTTP_UNKNOWN_HEADER> is an <ExternalStructure> class to wrap the struct ''WinHttpServer.HTTP_UNKNOWN_HEADER'' from type information in the ''Windows Http Server API'' library.
+WinHttpServer.HTTP_UNKNOWN_HEADER guid: (Core.GUID fromString: '{98a27339-73e3-4d54-baf2-915b818916b1}')!
+WinHttpServer.HTTP_UNKNOWN_HEADER comment: '`HTTP_UNKNOWN_HEADER` is an `External.Structure` class to wrap the struct ''WinHttpServer.HTTP_UNKNOWN_HEADER'' from type information in the ''Windows Http Server API'' library.
 
 The type library contains the following helpstring for this struct
 	"Structure defining format of an unknown header."
 
-** This comment was automatically generated from a type library. Delete this line to prevent any manual edits from being overwritten if the wrapper class is regenerated. **
+** This comment was automatically generated from a type library. Delete this line to prevent any manual edits from being overwritten if the wrapper class is regenerated.
 
 IDL definition follows:
-
+```
 typedef [uuid(98a27339-73e3-4d54-baf2-915b818916b1), helpstring("Structure defining format of an unknown header.")]
 struct tagHTTP_UNKNOWN_HEADER {
 	[nonbrowsable, helpstring("Size in bytes of Name not including terminating null")] USHORT NameLength;
@@ -28,9 +28,10 @@ struct tagHTTP_UNKNOWN_HEADER {
 	[helpstring("The header name (minus the '':'' character)"), size_is("NameLength"), string] LPCSTR pName;
 	[helpstring("The header value."), size_is("RawValueLength"), string] LPCSTR pRawValue;
 } HTTP_UNKNOWN_HEADER;
+```
 '!
-!HTTP_UNKNOWN_HEADER categoriesForClass!WinHttpServer-Structs! !
-!HTTP_UNKNOWN_HEADER methodsFor!
+!WinHttpServer.HTTP_UNKNOWN_HEADER categoriesForClass!WinHttpServer-Structs! !
+!WinHttpServer.HTTP_UNKNOWN_HEADER methodsFor!
 
 NameLength
 	"Private - Answer the <Integer> value of the receiver's 'NameLength' field."
@@ -73,16 +74,16 @@ RawValueLength: anInteger
 	"Set the receiver's 'RawValueLength' field to the value of the argument, anInteger"
 
 	bytes wordAtOffset: _OffsetOf_RawValueLength put: anInteger! !
-!HTTP_UNKNOWN_HEADER categoriesFor: #NameLength!**compiled accessors**!private! !
-!HTTP_UNKNOWN_HEADER categoriesFor: #NameLength:!**compiled accessors**!private! !
-!HTTP_UNKNOWN_HEADER categoriesFor: #pName!**compiled accessors**!public! !
-!HTTP_UNKNOWN_HEADER categoriesFor: #pName:!**compiled accessors**!public! !
-!HTTP_UNKNOWN_HEADER categoriesFor: #pRawValue!**compiled accessors**!public! !
-!HTTP_UNKNOWN_HEADER categoriesFor: #pRawValue:!**compiled accessors**!public! !
-!HTTP_UNKNOWN_HEADER categoriesFor: #RawValueLength!**compiled accessors**!private! !
-!HTTP_UNKNOWN_HEADER categoriesFor: #RawValueLength:!**compiled accessors**!private! !
+!WinHttpServer.HTTP_UNKNOWN_HEADER categoriesFor: #NameLength!**compiled accessors**!private! !
+!WinHttpServer.HTTP_UNKNOWN_HEADER categoriesFor: #NameLength:!**compiled accessors**!private! !
+!WinHttpServer.HTTP_UNKNOWN_HEADER categoriesFor: #pName!**compiled accessors**!public! !
+!WinHttpServer.HTTP_UNKNOWN_HEADER categoriesFor: #pName:!**compiled accessors**!public! !
+!WinHttpServer.HTTP_UNKNOWN_HEADER categoriesFor: #pRawValue!**compiled accessors**!public! !
+!WinHttpServer.HTTP_UNKNOWN_HEADER categoriesFor: #pRawValue:!**compiled accessors**!public! !
+!WinHttpServer.HTTP_UNKNOWN_HEADER categoriesFor: #RawValueLength!**compiled accessors**!private! !
+!WinHttpServer.HTTP_UNKNOWN_HEADER categoriesFor: #RawValueLength:!**compiled accessors**!private! !
 
-!HTTP_UNKNOWN_HEADER class methodsFor!
+!WinHttpServer.HTTP_UNKNOWN_HEADER class methodsFor!
 
 defineFields
 	"Define the fields of the HTTP_UNKNOWN_HEADER structure.
@@ -107,6 +108,6 @@ defineFields
 
 getFieldNames
 	^#(#NameLength #RawValueLength #pName #pRawValue)! !
-!HTTP_UNKNOWN_HEADER class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!HTTP_UNKNOWN_HEADER class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!WinHttpServer.HTTP_UNKNOWN_HEADER class categoriesFor: #defineFields!**auto generated**!private!template definition! !
+!WinHttpServer.HTTP_UNKNOWN_HEADER class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-HttpServerStructure subclass: #HTTP_SSL_CLIENT_CERT_INFO
+WinHttpServer.HttpServerStructure subclass: #'WinHttpServer.HTTP_SSL_CLIENT_CERT_INFO'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_CertDeniedByMapper' -> 16r10.
@@ -12,16 +12,16 @@ HttpServerStructure subclass: #HTTP_SSL_CLIENT_CERT_INFO
 		'_OffsetOf_pCertEncoded' -> 16r8.
 		'_OffsetOf_Token' -> 16rC
 	}!
-HTTP_SSL_CLIENT_CERT_INFO guid: (GUID fromString: '{2ea1d77c-9411-49f7-af99-3554a22fe89e}')!
-HTTP_SSL_CLIENT_CERT_INFO comment: '<HTTP_SSL_CLIENT_CERT_INFO> is an <ExternalStructure> class to wrap the struct ''WinHttpServer.HTTP_SSL_CLIENT_CERT_INFO'' from type information in the ''Windows Http Server API'' library.
+WinHttpServer.HTTP_SSL_CLIENT_CERT_INFO guid: (Core.GUID fromString: '{2ea1d77c-9411-49f7-af99-3554a22fe89e}')!
+WinHttpServer.HTTP_SSL_CLIENT_CERT_INFO comment: '`HTTP_SSL_CLIENT_CERT_INFO` is an `External.Structure` class to wrap the struct ''WinHttpServer.HTTP_SSL_CLIENT_CERT_INFO'' from type information in the ''Windows Http Server API'' library.
 
 The type library contains the following helpstring for this struct
 	"SSL Client certificate information."
 
-** This comment was automatically generated from a type library. Delete this line to prevent any manual edits from being overwritten if the wrapper class is regenerated. **
+** This comment was automatically generated from a type library. Delete this line to prevent any manual edits from being overwritten if the wrapper class is regenerated.
 
 IDL definition follows:
-
+```
 typedef [uuid(2ea1d77c-9411-49f7-af99-3554a22fe89e), helpstring("SSL Client certificate information.")]
 struct tagHTTP_SSL_CLIENT_CERT_INFO {
 	[helpstring("Flags that indicate whether the certificate is valid. ")] ULONG CertFlags;
@@ -30,9 +30,10 @@ struct tagHTTP_SSL_CLIENT_CERT_INFO {
 	[helpstring("A handle to an access token.")] HANDLE Token;
 	[hidden, custom(9d8468d2-88ea-4452-b32c-992c9937e29c, 0)] BOOLEAN CertDeniedByMapper;
 } HTTP_SSL_CLIENT_CERT_INFO;
+```
 '!
-!HTTP_SSL_CLIENT_CERT_INFO categoriesForClass!WinHttpServer-Structs! !
-!HTTP_SSL_CLIENT_CERT_INFO methodsFor!
+!WinHttpServer.HTTP_SSL_CLIENT_CERT_INFO categoriesForClass!WinHttpServer-Structs! !
+!WinHttpServer.HTTP_SSL_CLIENT_CERT_INFO methodsFor!
 
 CertEncodedSize
 	"Private - Answer the <Integer> value of the receiver's 'CertEncodedSize' field."
@@ -67,24 +68,24 @@ pCertEncoded: anExternalArray
 	self CertEncodedSize: anExternalArray size!
 
 Token
-	"Answer the <ExternalHandle> value of the receiver's 'Token' field."
+	"Answer the <Handle> value of the receiver's 'Token' field."
 
 	^(bytes uintPtrAtOffset: _OffsetOf_Token) asExternalHandle!
 
-Token: anExternalHandle
-	"Set the receiver's 'Token' field to the value of the argument, anExternalHandle"
+Token: aHandle
+	"Set the receiver's 'Token' field to the value of the argument, aHandle"
 
-	bytes uintPtrAtOffset: _OffsetOf_Token put: anExternalHandle! !
-!HTTP_SSL_CLIENT_CERT_INFO categoriesFor: #CertEncodedSize!**compiled accessors**!private! !
-!HTTP_SSL_CLIENT_CERT_INFO categoriesFor: #CertEncodedSize:!**compiled accessors**!private! !
-!HTTP_SSL_CLIENT_CERT_INFO categoriesFor: #CertFlags!**compiled accessors**!public! !
-!HTTP_SSL_CLIENT_CERT_INFO categoriesFor: #CertFlags:!**compiled accessors**!public! !
-!HTTP_SSL_CLIENT_CERT_INFO categoriesFor: #pCertEncoded!**compiled accessors**!public! !
-!HTTP_SSL_CLIENT_CERT_INFO categoriesFor: #pCertEncoded:!**compiled accessors**!public! !
-!HTTP_SSL_CLIENT_CERT_INFO categoriesFor: #Token!**compiled accessors**!public! !
-!HTTP_SSL_CLIENT_CERT_INFO categoriesFor: #Token:!**compiled accessors**!public! !
+	bytes uintPtrAtOffset: _OffsetOf_Token put: aHandle! !
+!WinHttpServer.HTTP_SSL_CLIENT_CERT_INFO categoriesFor: #CertEncodedSize!**compiled accessors**!private! !
+!WinHttpServer.HTTP_SSL_CLIENT_CERT_INFO categoriesFor: #CertEncodedSize:!**compiled accessors**!private! !
+!WinHttpServer.HTTP_SSL_CLIENT_CERT_INFO categoriesFor: #CertFlags!**compiled accessors**!public! !
+!WinHttpServer.HTTP_SSL_CLIENT_CERT_INFO categoriesFor: #CertFlags:!**compiled accessors**!public! !
+!WinHttpServer.HTTP_SSL_CLIENT_CERT_INFO categoriesFor: #pCertEncoded!**compiled accessors**!public! !
+!WinHttpServer.HTTP_SSL_CLIENT_CERT_INFO categoriesFor: #pCertEncoded:!**compiled accessors**!public! !
+!WinHttpServer.HTTP_SSL_CLIENT_CERT_INFO categoriesFor: #Token!**compiled accessors**!public! !
+!WinHttpServer.HTTP_SSL_CLIENT_CERT_INFO categoriesFor: #Token:!**compiled accessors**!public! !
 
-!HTTP_SSL_CLIENT_CERT_INFO class methodsFor!
+!WinHttpServer.HTTP_SSL_CLIENT_CERT_INFO class methodsFor!
 
 defineFields
 	"Define the fields of the HTTP_SSL_CLIENT_CERT_INFO structure.
@@ -111,6 +112,6 @@ defineFields
 
 getFieldNames
 	^#(#CertFlags #CertEncodedSize #pCertEncoded #Token)! !
-!HTTP_SSL_CLIENT_CERT_INFO class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!HTTP_SSL_CLIENT_CERT_INFO class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!WinHttpServer.HTTP_SSL_CLIENT_CERT_INFO class categoriesFor: #defineFields!**auto generated**!private!template definition! !
+!WinHttpServer.HTTP_SSL_CLIENT_CERT_INFO class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

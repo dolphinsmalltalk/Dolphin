@@ -1,33 +1,34 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-HTTP_SERVICE_BINDING_BASE subclass: #HTTP_SERVICE_BINDING_W
+WinHttpServer.HTTP_SERVICE_BINDING_BASE subclass: #'WinHttpServer.HTTP_SERVICE_BINDING_W'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_Buffer' -> 16r4.
 		'_OffsetOf_BufferSize' -> 16r8
 	}!
-HTTP_SERVICE_BINDING_W guid: (GUID fromString: '{9cd42842-29b3-4e02-b9dc-306b51f0166d}')!
-HTTP_SERVICE_BINDING_W comment: '<HTTP_SERVICE_BINDING_W> is an <ExternalStructure> class to wrap the struct ''WinHttpServer.HTTP_SERVICE_BINDING_W'' from type information in the ''Windows Http Server API'' library.
+WinHttpServer.HTTP_SERVICE_BINDING_W guid: (Core.GUID fromString: '{9cd42842-29b3-4e02-b9dc-306b51f0166d}')!
+WinHttpServer.HTTP_SERVICE_BINDING_W comment: '`HTTP_SERVICE_BINDING_W` is an `External.Structure` class to wrap the struct ''WinHttpServer.HTTP_SERVICE_BINDING_W'' from type information in the ''Windows Http Server API'' library.
 
 The type library contains the following helpstring for this struct
 	"Provides Service Principle Name (SPN) in Unicode."
 
-** This comment was automatically generated from a type library. Delete this line to prevent any manual edits from being overwritten if the wrapper class is regenerated. **
+** This comment was automatically generated from a type library. Delete this line to prevent any manual edits from being overwritten if the wrapper class is regenerated.
 
 IDL definition follows:
-
+```
 typedef [uuid(9cd42842-29b3-4e02-b9dc-306b51f0166d), helpstring("Provides Service Principle Name (SPN) in Unicode.")]
 struct tagHTTP_SERVICE_BINDING_W {
 	HTTP_SERVICE_BINDING_BASE;
 	[helpstring("A pointer to a buffer that represents the SPN."), size_is("BufferSize"), string] PWCHAR Buffer;
 	[nonbrowsable, helpstring("The length, in bytes, of the string in Buffer.")] ULONG BufferSize;
 } HTTP_SERVICE_BINDING_W;
+```
 '!
-!HTTP_SERVICE_BINDING_W categoriesForClass!Win32-Structs! !
-!HTTP_SERVICE_BINDING_W methodsFor!
+!WinHttpServer.HTTP_SERVICE_BINDING_W categoriesForClass!Win32-Structs! !
+!WinHttpServer.HTTP_SERVICE_BINDING_W methodsFor!
 
 Buffer
 	"Answer the <Utf16String> value of the receiver's 'Buffer' field."
@@ -49,12 +50,12 @@ BufferSize: anInteger
 	"Set the receiver's 'BufferSize' field to the value of the argument, anInteger"
 
 	bytes dwordAtOffset: _OffsetOf_BufferSize put: anInteger! !
-!HTTP_SERVICE_BINDING_W categoriesFor: #Buffer!**compiled accessors**!public! !
-!HTTP_SERVICE_BINDING_W categoriesFor: #Buffer:!**compiled accessors**!public! !
-!HTTP_SERVICE_BINDING_W categoriesFor: #BufferSize!**compiled accessors**!private! !
-!HTTP_SERVICE_BINDING_W categoriesFor: #BufferSize:!**compiled accessors**!private! !
+!WinHttpServer.HTTP_SERVICE_BINDING_W categoriesFor: #Buffer!**compiled accessors**!public! !
+!WinHttpServer.HTTP_SERVICE_BINDING_W categoriesFor: #Buffer:!**compiled accessors**!public! !
+!WinHttpServer.HTTP_SERVICE_BINDING_W categoriesFor: #BufferSize!**compiled accessors**!private! !
+!WinHttpServer.HTTP_SERVICE_BINDING_W categoriesFor: #BufferSize:!**compiled accessors**!private! !
 
-!HTTP_SERVICE_BINDING_W class methodsFor!
+!WinHttpServer.HTTP_SERVICE_BINDING_W class methodsFor!
 
 defineFields
 	"Define the fields of the HTTP_SERVICE_BINDING_W structure.
@@ -77,6 +78,6 @@ defineFields
 
 getFieldNames
 	^#(#Type #Buffer #BufferSize)! !
-!HTTP_SERVICE_BINDING_W class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!HTTP_SERVICE_BINDING_W class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!WinHttpServer.HTTP_SERVICE_BINDING_W class categoriesFor: #defineFields!**auto generated**!private!template definition! !
+!WinHttpServer.HTTP_SERVICE_BINDING_W class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

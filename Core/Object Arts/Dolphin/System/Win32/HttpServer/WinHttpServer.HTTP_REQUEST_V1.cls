@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-HttpServerStructure subclass: #HTTP_REQUEST_V1
+WinHttpServer.HttpServerStructure subclass: #'WinHttpServer.HTTP_REQUEST_V1'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'WinHttpServerConsts'
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_Address' -> 16r4C.
@@ -25,16 +25,16 @@ HttpServerStructure subclass: #HTTP_REQUEST_V1
 		'_OffsetOf_Verb' -> 16r24.
 		'_OffsetOf_Version' -> 16r20
 	}!
-HTTP_REQUEST_V1 guid: (GUID fromString: '{7927a79c-8c4e-423a-bf24-f1b36b4df5c4}')!
-HTTP_REQUEST_V1 comment: '<HTTP_REQUEST_V1> is an <ExternalStructure> class to wrap the struct ''WinHttpServer.HTTP_REQUEST_V1'' from type information in the ''Windows Http Server API'' library.
+WinHttpServer.HTTP_REQUEST_V1 guid: (Core.GUID fromString: '{7927a79c-8c4e-423a-bf24-f1b36b4df5c4}')!
+WinHttpServer.HTTP_REQUEST_V1 comment: '`HTTP_REQUEST_V1` is an `External.Structure` class to wrap the struct ''WinHttpServer.HTTP_REQUEST_V1'' from type information in the ''Windows Http Server API'' library.
 
 The type library contains the following helpstring for this struct
 	"Represents an incoming HTTP request (N.B. this is the V1, pre-Vista, structure)"
 
-** This comment was automatically generated from a type library. Delete this line to prevent any manual edits from being overwritten if the wrapper class is regenerated. **
+** This comment was automatically generated from a type library. Delete this line to prevent any manual edits from being overwritten if the wrapper class is regenerated.
 
 IDL definition follows:
-
+```
 typedef [uuid(7927a79c-8c4e-423a-bf24-f1b36b4df5c4), helpstring("Represents an incoming HTTP request (N.B. this is the V1, pre-Vista, structure)")]
 struct tagHTTP_REQUEST_V1 {
 	[helpstring("Request flags (see HTTP_REQUEST_FLAG_* definitions below).")] ULONG Flags;
@@ -56,9 +56,10 @@ struct tagHTTP_REQUEST_V1 {
 	[helpstring("Raw connection ID for an Secure Sockets Layer (SSL) request.")] unsigned __int64 RawConnectionId;
 	[helpstring("A pointer to an HTTP_SSL_INFO structure that contains Secure Sockets Layer (SSL) information about the connection on which the request was received.")] HTTP_SSL_INFO* pSslInfo;
 } HTTP_REQUEST_V1;
+```
 '!
-!HTTP_REQUEST_V1 categoriesForClass!WinHttpServer-Structs! !
-!HTTP_REQUEST_V1 methodsFor!
+!WinHttpServer.HTTP_REQUEST_V1 categoriesForClass!WinHttpServer-Structs! !
+!WinHttpServer.HTTP_REQUEST_V1 methodsFor!
 
 Address
 	"Answer the <PointerArray> value of the receiver's 'Address' field."
@@ -313,49 +314,49 @@ Version: aHTTP_VERSION
 		from: ##(_OffsetOf_Version + 1)
 		to: ##(_OffsetOf_Version + HTTP_VERSION basicByteSize)
 		startingAt: 1! !
-!HTTP_REQUEST_V1 categoriesFor: #Address!**compiled accessors**!public! !
-!HTTP_REQUEST_V1 categoriesFor: #Address:!**compiled accessors**!public! !
-!HTTP_REQUEST_V1 categoriesFor: #BytesReceived!**compiled accessors**!public! !
-!HTTP_REQUEST_V1 categoriesFor: #BytesReceived:!**compiled accessors**!public! !
-!HTTP_REQUEST_V1 categoriesFor: #ConnectionId!**compiled accessors**!public! !
-!HTTP_REQUEST_V1 categoriesFor: #ConnectionId:!**compiled accessors**!public! !
-!HTTP_REQUEST_V1 categoriesFor: #CookedUrl!**compiled accessors**!public! !
-!HTTP_REQUEST_V1 categoriesFor: #CookedUrl:!**compiled accessors**!public! !
-!HTTP_REQUEST_V1 categoriesFor: #EntityChunkCount!**compiled accessors**!private! !
-!HTTP_REQUEST_V1 categoriesFor: #EntityChunkCount:!**compiled accessors**!private! !
-!HTTP_REQUEST_V1 categoriesFor: #Flags!**compiled accessors**!public! !
-!HTTP_REQUEST_V1 categoriesFor: #Flags:!**compiled accessors**!public! !
-!HTTP_REQUEST_V1 categoriesFor: #Headers!**compiled accessors**!public! !
-!HTTP_REQUEST_V1 categoriesFor: #Headers:!**compiled accessors**!public! !
-!HTTP_REQUEST_V1 categoriesFor: #maxPrint!constants!private! !
-!HTTP_REQUEST_V1 categoriesFor: #nameOfVerb:!constants!public! !
-!HTTP_REQUEST_V1 categoriesFor: #pEntityChunks!**compiled accessors**!public! !
-!HTTP_REQUEST_V1 categoriesFor: #pEntityChunks:!**compiled accessors**!public! !
-!HTTP_REQUEST_V1 categoriesFor: #pRawUrl!**compiled accessors**!private! !
-!HTTP_REQUEST_V1 categoriesFor: #pRawUrl:!**compiled accessors**!private! !
-!HTTP_REQUEST_V1 categoriesFor: #printableFields!development!printing!private! !
-!HTTP_REQUEST_V1 categoriesFor: #printFields:on:!development!printing!private! !
-!HTTP_REQUEST_V1 categoriesFor: #pSslInfo!**compiled accessors**!public! !
-!HTTP_REQUEST_V1 categoriesFor: #pSslInfo:!**compiled accessors**!public! !
-!HTTP_REQUEST_V1 categoriesFor: #pUnknownVerb!**compiled accessors**!public! !
-!HTTP_REQUEST_V1 categoriesFor: #pUnknownVerb:!**compiled accessors**!public! !
-!HTTP_REQUEST_V1 categoriesFor: #RawConnectionId!**compiled accessors**!public! !
-!HTTP_REQUEST_V1 categoriesFor: #RawConnectionId:!**compiled accessors**!public! !
-!HTTP_REQUEST_V1 categoriesFor: #RawUrlLength!**compiled accessors**!private! !
-!HTTP_REQUEST_V1 categoriesFor: #RawUrlLength:!**compiled accessors**!private! !
-!HTTP_REQUEST_V1 categoriesFor: #RequestId!**compiled accessors**!public! !
-!HTTP_REQUEST_V1 categoriesFor: #RequestId:!**compiled accessors**!public! !
-!HTTP_REQUEST_V1 categoriesFor: #UnknownVerbLength!**compiled accessors**!private! !
-!HTTP_REQUEST_V1 categoriesFor: #UnknownVerbLength:!**compiled accessors**!private! !
-!HTTP_REQUEST_V1 categoriesFor: #UrlContext!**compiled accessors**!public! !
-!HTTP_REQUEST_V1 categoriesFor: #UrlContext:!**compiled accessors**!public! !
-!HTTP_REQUEST_V1 categoriesFor: #verb!accessing!public! !
-!HTTP_REQUEST_V1 categoriesFor: #Verb!**compiled accessors**!public! !
-!HTTP_REQUEST_V1 categoriesFor: #Verb:!**compiled accessors**!public! !
-!HTTP_REQUEST_V1 categoriesFor: #Version!**compiled accessors**!public! !
-!HTTP_REQUEST_V1 categoriesFor: #Version:!**compiled accessors**!public! !
+!WinHttpServer.HTTP_REQUEST_V1 categoriesFor: #Address!**compiled accessors**!public! !
+!WinHttpServer.HTTP_REQUEST_V1 categoriesFor: #Address:!**compiled accessors**!public! !
+!WinHttpServer.HTTP_REQUEST_V1 categoriesFor: #BytesReceived!**compiled accessors**!public! !
+!WinHttpServer.HTTP_REQUEST_V1 categoriesFor: #BytesReceived:!**compiled accessors**!public! !
+!WinHttpServer.HTTP_REQUEST_V1 categoriesFor: #ConnectionId!**compiled accessors**!public! !
+!WinHttpServer.HTTP_REQUEST_V1 categoriesFor: #ConnectionId:!**compiled accessors**!public! !
+!WinHttpServer.HTTP_REQUEST_V1 categoriesFor: #CookedUrl!**compiled accessors**!public! !
+!WinHttpServer.HTTP_REQUEST_V1 categoriesFor: #CookedUrl:!**compiled accessors**!public! !
+!WinHttpServer.HTTP_REQUEST_V1 categoriesFor: #EntityChunkCount!**compiled accessors**!private! !
+!WinHttpServer.HTTP_REQUEST_V1 categoriesFor: #EntityChunkCount:!**compiled accessors**!private! !
+!WinHttpServer.HTTP_REQUEST_V1 categoriesFor: #Flags!**compiled accessors**!public! !
+!WinHttpServer.HTTP_REQUEST_V1 categoriesFor: #Flags:!**compiled accessors**!public! !
+!WinHttpServer.HTTP_REQUEST_V1 categoriesFor: #Headers!**compiled accessors**!public! !
+!WinHttpServer.HTTP_REQUEST_V1 categoriesFor: #Headers:!**compiled accessors**!public! !
+!WinHttpServer.HTTP_REQUEST_V1 categoriesFor: #maxPrint!constants!private! !
+!WinHttpServer.HTTP_REQUEST_V1 categoriesFor: #nameOfVerb:!constants!public! !
+!WinHttpServer.HTTP_REQUEST_V1 categoriesFor: #pEntityChunks!**compiled accessors**!public! !
+!WinHttpServer.HTTP_REQUEST_V1 categoriesFor: #pEntityChunks:!**compiled accessors**!public! !
+!WinHttpServer.HTTP_REQUEST_V1 categoriesFor: #pRawUrl!**compiled accessors**!private! !
+!WinHttpServer.HTTP_REQUEST_V1 categoriesFor: #pRawUrl:!**compiled accessors**!private! !
+!WinHttpServer.HTTP_REQUEST_V1 categoriesFor: #printableFields!development!printing!private! !
+!WinHttpServer.HTTP_REQUEST_V1 categoriesFor: #printFields:on:!development!printing!private! !
+!WinHttpServer.HTTP_REQUEST_V1 categoriesFor: #pSslInfo!**compiled accessors**!public! !
+!WinHttpServer.HTTP_REQUEST_V1 categoriesFor: #pSslInfo:!**compiled accessors**!public! !
+!WinHttpServer.HTTP_REQUEST_V1 categoriesFor: #pUnknownVerb!**compiled accessors**!public! !
+!WinHttpServer.HTTP_REQUEST_V1 categoriesFor: #pUnknownVerb:!**compiled accessors**!public! !
+!WinHttpServer.HTTP_REQUEST_V1 categoriesFor: #RawConnectionId!**compiled accessors**!public! !
+!WinHttpServer.HTTP_REQUEST_V1 categoriesFor: #RawConnectionId:!**compiled accessors**!public! !
+!WinHttpServer.HTTP_REQUEST_V1 categoriesFor: #RawUrlLength!**compiled accessors**!private! !
+!WinHttpServer.HTTP_REQUEST_V1 categoriesFor: #RawUrlLength:!**compiled accessors**!private! !
+!WinHttpServer.HTTP_REQUEST_V1 categoriesFor: #RequestId!**compiled accessors**!public! !
+!WinHttpServer.HTTP_REQUEST_V1 categoriesFor: #RequestId:!**compiled accessors**!public! !
+!WinHttpServer.HTTP_REQUEST_V1 categoriesFor: #UnknownVerbLength!**compiled accessors**!private! !
+!WinHttpServer.HTTP_REQUEST_V1 categoriesFor: #UnknownVerbLength:!**compiled accessors**!private! !
+!WinHttpServer.HTTP_REQUEST_V1 categoriesFor: #UrlContext!**compiled accessors**!public! !
+!WinHttpServer.HTTP_REQUEST_V1 categoriesFor: #UrlContext:!**compiled accessors**!public! !
+!WinHttpServer.HTTP_REQUEST_V1 categoriesFor: #verb!accessing!public! !
+!WinHttpServer.HTTP_REQUEST_V1 categoriesFor: #Verb!**compiled accessors**!public! !
+!WinHttpServer.HTTP_REQUEST_V1 categoriesFor: #Verb:!**compiled accessors**!public! !
+!WinHttpServer.HTTP_REQUEST_V1 categoriesFor: #Version!**compiled accessors**!public! !
+!WinHttpServer.HTTP_REQUEST_V1 categoriesFor: #Version:!**compiled accessors**!public! !
 
-!HTTP_REQUEST_V1 class methodsFor!
+!WinHttpServer.HTTP_REQUEST_V1 class methodsFor!
 
 defineFields
 	"Define the fields of the HTTP_REQUEST_V1 structure.
@@ -408,6 +409,6 @@ defineFields
 
 getFieldNames
 	^#(#Flags #ConnectionId #RequestId #UrlContext #Version #Verb #UnknownVerbLength #RawUrlLength #pUnknownVerb #pRawUrl #CookedUrl #Address #Headers #BytesReceived #EntityChunkCount #pEntityChunks #RawConnectionId #pSslInfo)! !
-!HTTP_REQUEST_V1 class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!HTTP_REQUEST_V1 class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!WinHttpServer.HTTP_REQUEST_V1 class categoriesFor: #defineFields!**auto generated**!private!template definition! !
+!WinHttpServer.HTTP_REQUEST_V1 class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

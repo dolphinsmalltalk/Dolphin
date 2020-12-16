@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-HttpServerStructure subclass: #HTTP_SSL_PROTOCOL_INFO
+WinHttpServer.HttpServerStructure subclass: #'WinHttpServer.HTTP_SSL_PROTOCOL_INFO'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_CipherStrength' -> 16r8.
@@ -14,16 +14,16 @@ HttpServerStructure subclass: #HTTP_SSL_PROTOCOL_INFO
 		'_OffsetOf_KeyExchangeType' -> 16r14.
 		'_OffsetOf_Protocol' -> 16r0
 	}!
-HTTP_SSL_PROTOCOL_INFO guid: (GUID fromString: '{73784afd-f4e5-464e-b716-46ebb0c8c6d1}')!
-HTTP_SSL_PROTOCOL_INFO comment: '<HTTP_SSL_PROTOCOL_INFO> is an <ExternalStructure> class to wrap the struct ''WinHttpServer.HTTP_SSL_PROTOCOL_INFO'' from type information in the ''Windows Http Server API'' library.
+WinHttpServer.HTTP_SSL_PROTOCOL_INFO guid: (Core.GUID fromString: '{73784afd-f4e5-464e-b716-46ebb0c8c6d1}')!
+WinHttpServer.HTTP_SSL_PROTOCOL_INFO comment: '`HTTP_SSL_PROTOCOL_INFO` is an `External.Structure` class to wrap the struct ''WinHttpServer.HTTP_SSL_PROTOCOL_INFO'' from type information in the ''Windows Http Server API'' library.
 
 The type library contains the following helpstring for this struct
 	"HttpRequestInfoTypeSslProtocol payload. Contains basic information about the SSL/TLS protocol and cipher. See SecPkgContext_ConnectionInfo documentation for details."
 
-** This comment was automatically generated from a type library. Delete this line to prevent any manual edits from being overwritten if the wrapper class is regenerated. **
+** This comment was automatically generated from a type library. Delete this line to prevent any manual edits from being overwritten if the wrapper class is regenerated.
 
 IDL definition follows:
-
+```
 typedef [uuid(73784afd-f4e5-464e-b716-46ebb0c8c6d1), helpstring("HttpRequestInfoTypeSslProtocol payload. Contains basic information about the SSL/TLS protocol and cipher. See SecPkgContext_ConnectionInfo documentation for details.")]
 struct tagHTTP_SSL_PROTOCOL_INFO {
 	[readonly] ULONG Protocol;
@@ -34,9 +34,10 @@ struct tagHTTP_SSL_PROTOCOL_INFO {
 	[readonly] ULONG KeyExchangeType;
 	[readonly] ULONG KeyExchangeStrength;
 } HTTP_SSL_PROTOCOL_INFO;
+```
 '!
-!HTTP_SSL_PROTOCOL_INFO categoriesForClass!WinHttpServer-Structs! !
-!HTTP_SSL_PROTOCOL_INFO methodsFor!
+!WinHttpServer.HTTP_SSL_PROTOCOL_INFO categoriesForClass!WinHttpServer-Structs! !
+!WinHttpServer.HTTP_SSL_PROTOCOL_INFO methodsFor!
 
 CipherStrength
 	"Answer the <Integer> value of the receiver's 'CipherStrength' field."
@@ -72,15 +73,15 @@ Protocol
 	"Answer the <Integer> value of the receiver's 'Protocol' field."
 
 	^bytes dwordAtOffset: _OffsetOf_Protocol! !
-!HTTP_SSL_PROTOCOL_INFO categoriesFor: #CipherStrength!**compiled accessors**!public! !
-!HTTP_SSL_PROTOCOL_INFO categoriesFor: #CipherType!**compiled accessors**!public! !
-!HTTP_SSL_PROTOCOL_INFO categoriesFor: #HashStrength!**compiled accessors**!public! !
-!HTTP_SSL_PROTOCOL_INFO categoriesFor: #HashType!**compiled accessors**!public! !
-!HTTP_SSL_PROTOCOL_INFO categoriesFor: #KeyExchangeStrength!**compiled accessors**!public! !
-!HTTP_SSL_PROTOCOL_INFO categoriesFor: #KeyExchangeType!**compiled accessors**!public! !
-!HTTP_SSL_PROTOCOL_INFO categoriesFor: #Protocol!**compiled accessors**!public! !
+!WinHttpServer.HTTP_SSL_PROTOCOL_INFO categoriesFor: #CipherStrength!**compiled accessors**!public! !
+!WinHttpServer.HTTP_SSL_PROTOCOL_INFO categoriesFor: #CipherType!**compiled accessors**!public! !
+!WinHttpServer.HTTP_SSL_PROTOCOL_INFO categoriesFor: #HashStrength!**compiled accessors**!public! !
+!WinHttpServer.HTTP_SSL_PROTOCOL_INFO categoriesFor: #HashType!**compiled accessors**!public! !
+!WinHttpServer.HTTP_SSL_PROTOCOL_INFO categoriesFor: #KeyExchangeStrength!**compiled accessors**!public! !
+!WinHttpServer.HTTP_SSL_PROTOCOL_INFO categoriesFor: #KeyExchangeType!**compiled accessors**!public! !
+!WinHttpServer.HTTP_SSL_PROTOCOL_INFO categoriesFor: #Protocol!**compiled accessors**!public! !
 
-!HTTP_SSL_PROTOCOL_INFO class methodsFor!
+!WinHttpServer.HTTP_SSL_PROTOCOL_INFO class methodsFor!
 
 defineFields
 	"Define the fields of the HTTP_SSL_PROTOCOL_INFO structure.
@@ -111,6 +112,6 @@ defineFields
 
 getFieldNames
 	^#(#Protocol #CipherType #CipherStrength #HashType #HashStrength #KeyExchangeType #KeyExchangeStrength)! !
-!HTTP_SSL_PROTOCOL_INFO class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!HTTP_SSL_PROTOCOL_INFO class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!WinHttpServer.HTTP_SSL_PROTOCOL_INFO class categoriesFor: #defineFields!**auto generated**!private!template definition! !
+!WinHttpServer.HTTP_SSL_PROTOCOL_INFO class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

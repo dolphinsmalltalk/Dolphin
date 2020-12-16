@@ -1,32 +1,33 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-HttpServerStructure subclass: #HTTP_SERVICE_CONFIG_IP_LISTEN_PARAM
+WinHttpServer.HttpServerStructure subclass: #'WinHttpServer.HTTP_SERVICE_CONFIG_IP_LISTEN_PARAM'
 	instanceVariableNames: 'address'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_AddrLength' -> 16r0.
 		'_OffsetOf_pAddress' -> 16r4
 	}!
-HTTP_SERVICE_CONFIG_IP_LISTEN_PARAM guid: (GUID fromString: '{00a93e39-c011-4a5b-af4d-13f2df7a38d4}')!
-HTTP_SERVICE_CONFIG_IP_LISTEN_PARAM comment: '<HTTP_SERVICE_CONFIG_IP_LISTEN_PARAM> is an <ExternalStructure> class to wrap the struct ''WinHttpServer.HTTP_SERVICE_CONFIG_IP_LISTEN_PARAM'' from type information in the ''Windows Http Server API'' library.
+WinHttpServer.HTTP_SERVICE_CONFIG_IP_LISTEN_PARAM guid: (Core.GUID fromString: '{00a93e39-c011-4a5b-af4d-13f2df7a38d4}')!
+WinHttpServer.HTTP_SERVICE_CONFIG_IP_LISTEN_PARAM comment: '`HTTP_SERVICE_CONFIG_IP_LISTEN_PARAM` is an `External.Structure` class to wrap the struct ''WinHttpServer.HTTP_SERVICE_CONFIG_IP_LISTEN_PARAM'' from type information in the ''Windows Http Server API'' library.
 
 The type library contains the following helpstring for this struct
 	"Set/Delete IP Listen-Only List record. Used as a parameter to both HttpSetServiceConfiguration() and HttpDeleteServiceConfiguration() functions."
 
-** This comment was automatically generated from a type library. Delete this line to prevent any manual edits from being overwritten if the wrapper class is regenerated. **
+** This comment was automatically generated from a type library. Delete this line to prevent any manual edits from being overwritten if the wrapper class is regenerated.
 
 IDL definition follows:
-
+```
 typedef [uuid(00a93e39-c011-4a5b-af4d-13f2df7a38d4), helpstring("Set/Delete IP Listen-Only List record. Used as a parameter to both HttpSetServiceConfiguration() and HttpDeleteServiceConfiguration() functions.")]
 struct tagHTTP_SERVICE_CONFIG_IP_LISTEN_PARAM {
 	[nonbrowsable, helpstring("The size, in bytes, of the address pointed to by pAddress.")] USHORT AddrLength;
 	[helpstring("A pointer to an Internet Protocol (IP) address to be added to or deleted from the listen list.")] SOCKADDR* pAddress;
 } HTTP_SERVICE_CONFIG_IP_LISTEN_PARAM;
+```
 '!
-!HTTP_SERVICE_CONFIG_IP_LISTEN_PARAM categoriesForClass!WinHttpServer-Structs! !
-!HTTP_SERVICE_CONFIG_IP_LISTEN_PARAM methodsFor!
+!WinHttpServer.HTTP_SERVICE_CONFIG_IP_LISTEN_PARAM categoriesForClass!WinHttpServer-Structs! !
+!WinHttpServer.HTTP_SERVICE_CONFIG_IP_LISTEN_PARAM methodsFor!
 
 address
 	^address ifNil: [address := self pAddress]!
@@ -56,14 +57,14 @@ pAddress: aSOCKADDR
 	"Set the receiver's 'pAddress' field to the value of the argument, aSOCKADDR"
 
 	bytes uintPtrAtOffset: _OffsetOf_pAddress put: aSOCKADDR yourAddress! !
-!HTTP_SERVICE_CONFIG_IP_LISTEN_PARAM categoriesFor: #address!accessing!public! !
-!HTTP_SERVICE_CONFIG_IP_LISTEN_PARAM categoriesFor: #address:!accessing!public! !
-!HTTP_SERVICE_CONFIG_IP_LISTEN_PARAM categoriesFor: #AddrLength!**compiled accessors**!private! !
-!HTTP_SERVICE_CONFIG_IP_LISTEN_PARAM categoriesFor: #AddrLength:!**compiled accessors**!private! !
-!HTTP_SERVICE_CONFIG_IP_LISTEN_PARAM categoriesFor: #pAddress!**compiled accessors**!public! !
-!HTTP_SERVICE_CONFIG_IP_LISTEN_PARAM categoriesFor: #pAddress:!**compiled accessors**!public! !
+!WinHttpServer.HTTP_SERVICE_CONFIG_IP_LISTEN_PARAM categoriesFor: #address!accessing!public! !
+!WinHttpServer.HTTP_SERVICE_CONFIG_IP_LISTEN_PARAM categoriesFor: #address:!accessing!public! !
+!WinHttpServer.HTTP_SERVICE_CONFIG_IP_LISTEN_PARAM categoriesFor: #AddrLength!**compiled accessors**!private! !
+!WinHttpServer.HTTP_SERVICE_CONFIG_IP_LISTEN_PARAM categoriesFor: #AddrLength:!**compiled accessors**!private! !
+!WinHttpServer.HTTP_SERVICE_CONFIG_IP_LISTEN_PARAM categoriesFor: #pAddress!**compiled accessors**!public! !
+!WinHttpServer.HTTP_SERVICE_CONFIG_IP_LISTEN_PARAM categoriesFor: #pAddress:!**compiled accessors**!public! !
 
-!HTTP_SERVICE_CONFIG_IP_LISTEN_PARAM class methodsFor!
+!WinHttpServer.HTTP_SERVICE_CONFIG_IP_LISTEN_PARAM class methodsFor!
 
 defineFields
 	"Define the fields of the HTTP_SERVICE_CONFIG_IP_LISTEN_PARAM structure.
@@ -84,6 +85,6 @@ defineFields
 
 getFieldNames
 	^#(#AddrLength #pAddress)! !
-!HTTP_SERVICE_CONFIG_IP_LISTEN_PARAM class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!HTTP_SERVICE_CONFIG_IP_LISTEN_PARAM class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!WinHttpServer.HTTP_SERVICE_CONFIG_IP_LISTEN_PARAM class categoriesFor: #defineFields!**auto generated**!private!template definition! !
+!WinHttpServer.HTTP_SERVICE_CONFIG_IP_LISTEN_PARAM class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

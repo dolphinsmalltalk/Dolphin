@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-HttpServerStructure subclass: #HTTP_REQUEST_AUTH_INFO
+WinHttpServer.HttpServerStructure subclass: #'WinHttpServer.HTTP_REQUEST_AUTH_INFO'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_AccessToken' -> 16r10.
@@ -20,8 +20,8 @@ HttpServerStructure subclass: #HTTP_REQUEST_AUTH_INFO
 		'_OffsetOf_pPackageName' -> 16r30.
 		'_OffsetOf_SecStatus' -> 16r4
 	}!
-HTTP_REQUEST_AUTH_INFO guid: (GUID fromString: '{e0696c2e-1353-45e2-bdcc-a52b6142b827}')!
-HTTP_REQUEST_AUTH_INFO comment: '`HTTP_REQUEST_AUTH_INFO` is an `ExternalStructure` class to wrap the struct ''WinHttpServer.HTTP_REQUEST_AUTH_INFO'' from type information in the ''Windows Http Server API'' library.
+WinHttpServer.HTTP_REQUEST_AUTH_INFO guid: (Core.GUID fromString: '{e0696c2e-1353-45e2-bdcc-a52b6142b827}')!
+WinHttpServer.HTTP_REQUEST_AUTH_INFO comment: '`HTTP_REQUEST_AUTH_INFO` is an `External.Structure` class to wrap the struct ''WinHttpServer.HTTP_REQUEST_AUTH_INFO'' from type information in the ''Windows Http Server API'' library.
 
 The type library contains the following helpstring for this struct
 	"Authentication request info structure"
@@ -48,18 +48,18 @@ struct tagHTTP_REQUEST_AUTH_INFO {
 } HTTP_REQUEST_AUTH_INFO;
 ```
 '!
-!HTTP_REQUEST_AUTH_INFO categoriesForClass!WinHttpServer-Structs! !
-!HTTP_REQUEST_AUTH_INFO methodsFor!
+!WinHttpServer.HTTP_REQUEST_AUTH_INFO categoriesForClass!WinHttpServer-Structs! !
+!WinHttpServer.HTTP_REQUEST_AUTH_INFO methodsFor!
 
 AccessToken
-	"Answer the <ExternalHandle> value of the receiver's 'AccessToken' field."
+	"Answer the <Handle> value of the receiver's 'AccessToken' field."
 
 	^(bytes uintPtrAtOffset: _OffsetOf_AccessToken) asExternalHandle!
 
-AccessToken: anExternalHandle
-	"Set the receiver's 'AccessToken' field to the value of the argument, anExternalHandle"
+AccessToken: aHandle
+	"Set the receiver's 'AccessToken' field to the value of the argument, aHandle"
 
-	bytes uintPtrAtOffset: _OffsetOf_AccessToken put: anExternalHandle!
+	bytes uintPtrAtOffset: _OffsetOf_AccessToken put: aHandle!
 
 AuthStatus
 	"Answer the <Integer> value of the receiver's 'AuthStatus' field."
@@ -186,34 +186,34 @@ SecStatus: anInteger
 	"Set the receiver's 'SecStatus' field to the value of the argument, anInteger"
 
 	bytes sdwordAtOffset: _OffsetOf_SecStatus put: anInteger! !
-!HTTP_REQUEST_AUTH_INFO categoriesFor: #AccessToken!**compiled accessors**!public! !
-!HTTP_REQUEST_AUTH_INFO categoriesFor: #AccessToken:!**compiled accessors**!public! !
-!HTTP_REQUEST_AUTH_INFO categoriesFor: #AuthStatus!**compiled accessors**!public! !
-!HTTP_REQUEST_AUTH_INFO categoriesFor: #AuthStatus:!**compiled accessors**!public! !
-!HTTP_REQUEST_AUTH_INFO categoriesFor: #AuthType!**compiled accessors**!public! !
-!HTTP_REQUEST_AUTH_INFO categoriesFor: #AuthType:!**compiled accessors**!public! !
-!HTTP_REQUEST_AUTH_INFO categoriesFor: #ContextAttributes!**compiled accessors**!public! !
-!HTTP_REQUEST_AUTH_INFO categoriesFor: #ContextAttributes:!**compiled accessors**!public! !
-!HTTP_REQUEST_AUTH_INFO categoriesFor: #Flags!**compiled accessors**!public! !
-!HTTP_REQUEST_AUTH_INFO categoriesFor: #Flags:!**compiled accessors**!public! !
-!HTTP_REQUEST_AUTH_INFO categoriesFor: #MutualAuthDataLength!**compiled accessors**!private! !
-!HTTP_REQUEST_AUTH_INFO categoriesFor: #MutualAuthDataLength:!**compiled accessors**!private! !
-!HTTP_REQUEST_AUTH_INFO categoriesFor: #PackageNameLength!**compiled accessors**!private! !
-!HTTP_REQUEST_AUTH_INFO categoriesFor: #PackageNameLength:!**compiled accessors**!private! !
-!HTTP_REQUEST_AUTH_INFO categoriesFor: #PackedContext!**compiled accessors**!public! !
-!HTTP_REQUEST_AUTH_INFO categoriesFor: #PackedContext:!**compiled accessors**!public! !
-!HTTP_REQUEST_AUTH_INFO categoriesFor: #PackedContextLength!**compiled accessors**!private! !
-!HTTP_REQUEST_AUTH_INFO categoriesFor: #PackedContextLength:!**compiled accessors**!private! !
-!HTTP_REQUEST_AUTH_INFO categoriesFor: #PackedContextType!**compiled accessors**!public! !
-!HTTP_REQUEST_AUTH_INFO categoriesFor: #PackedContextType:!**compiled accessors**!public! !
-!HTTP_REQUEST_AUTH_INFO categoriesFor: #pMutualAuthData!**compiled accessors**!public! !
-!HTTP_REQUEST_AUTH_INFO categoriesFor: #pMutualAuthData:!**compiled accessors**!public! !
-!HTTP_REQUEST_AUTH_INFO categoriesFor: #pPackageName!**compiled accessors**!public! !
-!HTTP_REQUEST_AUTH_INFO categoriesFor: #pPackageName:!**compiled accessors**!public! !
-!HTTP_REQUEST_AUTH_INFO categoriesFor: #SecStatus!**compiled accessors**!public! !
-!HTTP_REQUEST_AUTH_INFO categoriesFor: #SecStatus:!**compiled accessors**!public! !
+!WinHttpServer.HTTP_REQUEST_AUTH_INFO categoriesFor: #AccessToken!**compiled accessors**!public! !
+!WinHttpServer.HTTP_REQUEST_AUTH_INFO categoriesFor: #AccessToken:!**compiled accessors**!public! !
+!WinHttpServer.HTTP_REQUEST_AUTH_INFO categoriesFor: #AuthStatus!**compiled accessors**!public! !
+!WinHttpServer.HTTP_REQUEST_AUTH_INFO categoriesFor: #AuthStatus:!**compiled accessors**!public! !
+!WinHttpServer.HTTP_REQUEST_AUTH_INFO categoriesFor: #AuthType!**compiled accessors**!public! !
+!WinHttpServer.HTTP_REQUEST_AUTH_INFO categoriesFor: #AuthType:!**compiled accessors**!public! !
+!WinHttpServer.HTTP_REQUEST_AUTH_INFO categoriesFor: #ContextAttributes!**compiled accessors**!public! !
+!WinHttpServer.HTTP_REQUEST_AUTH_INFO categoriesFor: #ContextAttributes:!**compiled accessors**!public! !
+!WinHttpServer.HTTP_REQUEST_AUTH_INFO categoriesFor: #Flags!**compiled accessors**!public! !
+!WinHttpServer.HTTP_REQUEST_AUTH_INFO categoriesFor: #Flags:!**compiled accessors**!public! !
+!WinHttpServer.HTTP_REQUEST_AUTH_INFO categoriesFor: #MutualAuthDataLength!**compiled accessors**!private! !
+!WinHttpServer.HTTP_REQUEST_AUTH_INFO categoriesFor: #MutualAuthDataLength:!**compiled accessors**!private! !
+!WinHttpServer.HTTP_REQUEST_AUTH_INFO categoriesFor: #PackageNameLength!**compiled accessors**!private! !
+!WinHttpServer.HTTP_REQUEST_AUTH_INFO categoriesFor: #PackageNameLength:!**compiled accessors**!private! !
+!WinHttpServer.HTTP_REQUEST_AUTH_INFO categoriesFor: #PackedContext!**compiled accessors**!public! !
+!WinHttpServer.HTTP_REQUEST_AUTH_INFO categoriesFor: #PackedContext:!**compiled accessors**!public! !
+!WinHttpServer.HTTP_REQUEST_AUTH_INFO categoriesFor: #PackedContextLength!**compiled accessors**!private! !
+!WinHttpServer.HTTP_REQUEST_AUTH_INFO categoriesFor: #PackedContextLength:!**compiled accessors**!private! !
+!WinHttpServer.HTTP_REQUEST_AUTH_INFO categoriesFor: #PackedContextType!**compiled accessors**!public! !
+!WinHttpServer.HTTP_REQUEST_AUTH_INFO categoriesFor: #PackedContextType:!**compiled accessors**!public! !
+!WinHttpServer.HTTP_REQUEST_AUTH_INFO categoriesFor: #pMutualAuthData!**compiled accessors**!public! !
+!WinHttpServer.HTTP_REQUEST_AUTH_INFO categoriesFor: #pMutualAuthData:!**compiled accessors**!public! !
+!WinHttpServer.HTTP_REQUEST_AUTH_INFO categoriesFor: #pPackageName!**compiled accessors**!public! !
+!WinHttpServer.HTTP_REQUEST_AUTH_INFO categoriesFor: #pPackageName:!**compiled accessors**!public! !
+!WinHttpServer.HTTP_REQUEST_AUTH_INFO categoriesFor: #SecStatus!**compiled accessors**!public! !
+!WinHttpServer.HTTP_REQUEST_AUTH_INFO categoriesFor: #SecStatus:!**compiled accessors**!public! !
 
-!HTTP_REQUEST_AUTH_INFO class methodsFor!
+!WinHttpServer.HTTP_REQUEST_AUTH_INFO class methodsFor!
 
 defineFields
 	"Define the fields of the HTTP_REQUEST_AUTH_INFO structure.
@@ -256,6 +256,6 @@ defineFields
 
 getFieldNames
 	^#(#AuthStatus #SecStatus #Flags #AuthType #AccessToken #ContextAttributes #PackedContextLength #PackedContextType #PackedContext #MutualAuthDataLength #pMutualAuthData #PackageNameLength #pPackageName)! !
-!HTTP_REQUEST_AUTH_INFO class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!HTTP_REQUEST_AUTH_INFO class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!WinHttpServer.HTTP_REQUEST_AUTH_INFO class categoriesFor: #defineFields!**auto generated**!private!template definition! !
+!WinHttpServer.HTTP_REQUEST_AUTH_INFO class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

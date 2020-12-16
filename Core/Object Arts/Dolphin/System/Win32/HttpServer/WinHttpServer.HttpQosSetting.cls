@@ -1,16 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-HTTP_PROPERTY_FLAGS subclass: #HttpQosSetting
+WinHttpServer.HTTP_PROPERTY_FLAGS subclass: #'WinHttpServer.HttpQosSetting'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-HttpQosSetting guid: (GUID fromString: '{9468481b-e27a-44f4-8468-2e5f2fdef275}')!
-HttpQosSetting isAbstract: true!
-HttpQosSetting comment: ''!
-!HttpQosSetting categoriesForClass!Win32-Structs! !
-!HttpQosSetting methodsFor!
+WinHttpServer.HttpQosSetting guid: (Core.GUID fromString: '{9468481b-e27a-44f4-8468-2e5f2fdef275}')!
+WinHttpServer.HttpQosSetting isNonInstantiable: true!
+WinHttpServer.HttpQosSetting comment: ''!
+!WinHttpServer.HttpQosSetting categoriesForClass!Win32-Structs! !
+!WinHttpServer.HttpQosSetting methodsFor!
 
 qosType
 	^self class qosType!
@@ -20,17 +20,17 @@ value
 
 value: anInteger
 	^self subclassResponsibility! !
-!HttpQosSetting categoriesFor: #qosType!constants!public! !
-!HttpQosSetting categoriesFor: #value!public! !
-!HttpQosSetting categoriesFor: #value:!public! !
+!WinHttpServer.HttpQosSetting categoriesFor: #qosType!constants!public! !
+!WinHttpServer.HttpQosSetting categoriesFor: #value!public! !
+!WinHttpServer.HttpQosSetting categoriesFor: #value:!public! !
 
-!HttpQosSetting class methodsFor!
+!WinHttpServer.HttpQosSetting class methodsFor!
 
 propertyId
 	^HttpServerQosProperty!
 
 qosType
 	^self subclassResponsibility! !
-!HttpQosSetting class categoriesFor: #propertyId!constants!public! !
-!HttpQosSetting class categoriesFor: #qosType!constants!public! !
+!WinHttpServer.HttpQosSetting class categoriesFor: #propertyId!constants!public! !
+!WinHttpServer.HttpQosSetting class categoriesFor: #qosType!constants!public! !
 

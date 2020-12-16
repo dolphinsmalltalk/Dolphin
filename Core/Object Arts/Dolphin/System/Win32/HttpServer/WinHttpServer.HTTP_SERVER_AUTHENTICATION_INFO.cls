@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-HTTP_PROPERTY_FLAGS subclass: #HTTP_SERVER_AUTHENTICATION_INFO
+WinHttpServer.HTTP_PROPERTY_FLAGS subclass: #'WinHttpServer.HTTP_SERVER_AUTHENTICATION_INFO'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_AuthSchemes' -> 16r4.
@@ -14,15 +14,15 @@ HTTP_PROPERTY_FLAGS subclass: #HTTP_SERVER_AUTHENTICATION_INFO
 		'_OffsetOf_ReceiveContextHandle' -> 16r9.
 		'_OffsetOf_ReceiveMutualAuth' -> 16r8
 	}!
-HTTP_SERVER_AUTHENTICATION_INFO guid: (GUID fromString: '{7f4599b6-bdfd-4a19-8a4a-a7fd55a9e207}')!
-HTTP_SERVER_AUTHENTICATION_INFO comment: '<HTTP_SERVER_AUTHENTICATION_INFO> is an <ExternalStructure> class to wrap the struct ''WinHttpServer.HTTP_SERVER_AUTHENTICATION_INFO'' from type information in the ''Windows Http Server API'' library.
+WinHttpServer.HTTP_SERVER_AUTHENTICATION_INFO guid: (Core.GUID fromString: '{7f4599b6-bdfd-4a19-8a4a-a7fd55a9e207}')!
+WinHttpServer.HTTP_SERVER_AUTHENTICATION_INFO comment: '`HTTP_SERVER_AUTHENTICATION_INFO` is an `External.Structure` class to wrap the struct ''WinHttpServer.HTTP_SERVER_AUTHENTICATION_INFO'' from type information in the ''Windows Http Server API'' library.
 
 The type library contains no documentation for this struct
 
-** This comment was automatically generated from a type library. Delete this line to prevent any manual edits from being overwritten if the wrapper class is regenerated. **
+** This comment was automatically generated from a type library. Delete this line to prevent any manual edits from being overwritten if the wrapper class is regenerated.
 
 IDL definition follows:
-
+```
 typedef [uuid(7f4599b6-bdfd-4a19-8a4a-a7fd55a9e207)]
 struct tagHTTP_SERVER_AUTHENTICATION_INFO {
 	HTTP_PROPERTY_FLAGS;
@@ -34,9 +34,10 @@ struct tagHTTP_SERVER_AUTHENTICATION_INFO {
 	HTTP_SERVER_AUTHENTICATION_DIGEST_PARAMS DigestParams;
 	HTTP_SERVER_AUTHENTICATION_BASIC_PARAMS BasicParams;
 } HTTP_SERVER_AUTHENTICATION_INFO;
+```
 '!
-!HTTP_SERVER_AUTHENTICATION_INFO categoriesForClass!Win32-Structs! !
-!HTTP_SERVER_AUTHENTICATION_INFO methodsFor!
+!WinHttpServer.HTTP_SERVER_AUTHENTICATION_INFO categoriesForClass!Win32-Structs! !
+!WinHttpServer.HTTP_SERVER_AUTHENTICATION_INFO methodsFor!
 
 AuthSchemes
 	"Answer the <Integer> value of the receiver's 'AuthSchemes' field."
@@ -115,22 +116,22 @@ ReceiveMutualAuth: aBoolean
 	"Set the receiver's 'ReceiveMutualAuth' field to the value of the argument, aBoolean"
 
 	bytes byteAtOffset: _OffsetOf_ReceiveMutualAuth put: aBoolean asParameter! !
-!HTTP_SERVER_AUTHENTICATION_INFO categoriesFor: #AuthSchemes!**compiled accessors**!public! !
-!HTTP_SERVER_AUTHENTICATION_INFO categoriesFor: #AuthSchemes:!**compiled accessors**!public! !
-!HTTP_SERVER_AUTHENTICATION_INFO categoriesFor: #BasicParams!**compiled accessors**!public! !
-!HTTP_SERVER_AUTHENTICATION_INFO categoriesFor: #BasicParams:!**compiled accessors**!public! !
-!HTTP_SERVER_AUTHENTICATION_INFO categoriesFor: #DigestParams!**compiled accessors**!public! !
-!HTTP_SERVER_AUTHENTICATION_INFO categoriesFor: #DigestParams:!**compiled accessors**!public! !
-!HTTP_SERVER_AUTHENTICATION_INFO categoriesFor: #DisableNTLMCredentialCaching!**compiled accessors**!public! !
-!HTTP_SERVER_AUTHENTICATION_INFO categoriesFor: #DisableNTLMCredentialCaching:!**compiled accessors**!public! !
-!HTTP_SERVER_AUTHENTICATION_INFO categoriesFor: #ExFlags!**compiled accessors**!public! !
-!HTTP_SERVER_AUTHENTICATION_INFO categoriesFor: #ExFlags:!**compiled accessors**!public! !
-!HTTP_SERVER_AUTHENTICATION_INFO categoriesFor: #ReceiveContextHandle!**compiled accessors**!public! !
-!HTTP_SERVER_AUTHENTICATION_INFO categoriesFor: #ReceiveContextHandle:!**compiled accessors**!public! !
-!HTTP_SERVER_AUTHENTICATION_INFO categoriesFor: #ReceiveMutualAuth!**compiled accessors**!public! !
-!HTTP_SERVER_AUTHENTICATION_INFO categoriesFor: #ReceiveMutualAuth:!**compiled accessors**!public! !
+!WinHttpServer.HTTP_SERVER_AUTHENTICATION_INFO categoriesFor: #AuthSchemes!**compiled accessors**!public! !
+!WinHttpServer.HTTP_SERVER_AUTHENTICATION_INFO categoriesFor: #AuthSchemes:!**compiled accessors**!public! !
+!WinHttpServer.HTTP_SERVER_AUTHENTICATION_INFO categoriesFor: #BasicParams!**compiled accessors**!public! !
+!WinHttpServer.HTTP_SERVER_AUTHENTICATION_INFO categoriesFor: #BasicParams:!**compiled accessors**!public! !
+!WinHttpServer.HTTP_SERVER_AUTHENTICATION_INFO categoriesFor: #DigestParams!**compiled accessors**!public! !
+!WinHttpServer.HTTP_SERVER_AUTHENTICATION_INFO categoriesFor: #DigestParams:!**compiled accessors**!public! !
+!WinHttpServer.HTTP_SERVER_AUTHENTICATION_INFO categoriesFor: #DisableNTLMCredentialCaching!**compiled accessors**!public! !
+!WinHttpServer.HTTP_SERVER_AUTHENTICATION_INFO categoriesFor: #DisableNTLMCredentialCaching:!**compiled accessors**!public! !
+!WinHttpServer.HTTP_SERVER_AUTHENTICATION_INFO categoriesFor: #ExFlags!**compiled accessors**!public! !
+!WinHttpServer.HTTP_SERVER_AUTHENTICATION_INFO categoriesFor: #ExFlags:!**compiled accessors**!public! !
+!WinHttpServer.HTTP_SERVER_AUTHENTICATION_INFO categoriesFor: #ReceiveContextHandle!**compiled accessors**!public! !
+!WinHttpServer.HTTP_SERVER_AUTHENTICATION_INFO categoriesFor: #ReceiveContextHandle:!**compiled accessors**!public! !
+!WinHttpServer.HTTP_SERVER_AUTHENTICATION_INFO categoriesFor: #ReceiveMutualAuth!**compiled accessors**!public! !
+!WinHttpServer.HTTP_SERVER_AUTHENTICATION_INFO categoriesFor: #ReceiveMutualAuth:!**compiled accessors**!public! !
 
-!HTTP_SERVER_AUTHENTICATION_INFO class methodsFor!
+!WinHttpServer.HTTP_SERVER_AUTHENTICATION_INFO class methodsFor!
 
 defineFields
 	"Define the fields of the HTTP_SERVER_AUTHENTICATION_INFO structure.
@@ -166,7 +167,7 @@ getFieldNames
 
 propertyId
 	^HttpServerAuthenticationProperty! !
-!HTTP_SERVER_AUTHENTICATION_INFO class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!HTTP_SERVER_AUTHENTICATION_INFO class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!HTTP_SERVER_AUTHENTICATION_INFO class categoriesFor: #propertyId!public! !
+!WinHttpServer.HTTP_SERVER_AUTHENTICATION_INFO class categoriesFor: #defineFields!**auto generated**!private!template definition! !
+!WinHttpServer.HTTP_SERVER_AUTHENTICATION_INFO class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!WinHttpServer.HTTP_SERVER_AUTHENTICATION_INFO class categoriesFor: #propertyId!public! !
 

@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-HttpServerStructure subclass: #HTTP_REQUEST_CHANNEL_BIND_STATUS
+WinHttpServer.HttpServerStructure subclass: #'WinHttpServer.HTTP_REQUEST_CHANNEL_BIND_STATUS'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_ChannelToken' -> 16r4.
@@ -11,15 +11,15 @@ HttpServerStructure subclass: #HTTP_REQUEST_CHANNEL_BIND_STATUS
 		'_OffsetOf_Flags' -> 16rC.
 		'_OffsetOf_ServiceName' -> 16r0
 	}!
-HTTP_REQUEST_CHANNEL_BIND_STATUS guid: (GUID fromString: '{2fc21c2a-e0c8-4c4c-a68f-e8270f8fbd2a}')!
-HTTP_REQUEST_CHANNEL_BIND_STATUS comment: '<HTTP_REQUEST_CHANNEL_BIND_STATUS> is an <ExternalStructure> class to wrap the struct ''WinHttpServer.HTTP_REQUEST_CHANNEL_BIND_STATUS'' from type information in the ''Windows Http Server API'' library.
+WinHttpServer.HTTP_REQUEST_CHANNEL_BIND_STATUS guid: (Core.GUID fromString: '{2fc21c2a-e0c8-4c4c-a68f-e8270f8fbd2a}')!
+WinHttpServer.HTTP_REQUEST_CHANNEL_BIND_STATUS comment: '`HTTP_REQUEST_CHANNEL_BIND_STATUS` is an `External.Structure` class to wrap the struct ''WinHttpServer.HTTP_REQUEST_CHANNEL_BIND_STATUS'' from type information in the ''Windows Http Server API'' library.
 
 The type library contains no documentation for this struct
 
-** This comment was automatically generated from a type library. Delete this line to prevent any manual edits from being overwritten if the wrapper class is regenerated. **
+** This comment was automatically generated from a type library. Delete this line to prevent any manual edits from being overwritten if the wrapper class is regenerated.
 
 IDL definition follows:
-
+```
 typedef [uuid(2fc21c2a-e0c8-4c4c-a68f-e8270f8fbd2a)]
 struct tagHTTP_REQUEST_CHANNEL_BIND_STATUS {
 	[helpstring("The service name from the client. This is populated if the request''s Channel Binding Token (CBT) is not configured to retrieve service names.")] HTTP_SERVICE_BINDING_BASE* ServiceName;
@@ -27,9 +27,10 @@ struct tagHTTP_REQUEST_CHANNEL_BIND_STATUS {
 	[nonbrowsable, helpstring("The length of the ChannelToken buffer in bytes.")] ULONG ChannelTokenSize;
 	[hidden, custom(9d8468d2-88ea-4452-b32c-992c9937e29c, 0)] ULONG Flags;
 } HTTP_REQUEST_CHANNEL_BIND_STATUS;
+```
 '!
-!HTTP_REQUEST_CHANNEL_BIND_STATUS categoriesForClass!WinHttpServer-Structs! !
-!HTTP_REQUEST_CHANNEL_BIND_STATUS methodsFor!
+!WinHttpServer.HTTP_REQUEST_CHANNEL_BIND_STATUS categoriesForClass!WinHttpServer-Structs! !
+!WinHttpServer.HTTP_REQUEST_CHANNEL_BIND_STATUS methodsFor!
 
 ChannelToken
 	"Answer the <ExternalArray> value of the receiver's 'ChannelToken' field."
@@ -62,14 +63,14 @@ ServiceName: aHTTP_SERVICE_BINDING_BASE
 	"Set the receiver's 'ServiceName' field to the value of the argument, aHTTP_SERVICE_BINDING_BASE"
 
 	bytes uintPtrAtOffset: _OffsetOf_ServiceName put: aHTTP_SERVICE_BINDING_BASE yourAddress! !
-!HTTP_REQUEST_CHANNEL_BIND_STATUS categoriesFor: #ChannelToken!**compiled accessors**!public! !
-!HTTP_REQUEST_CHANNEL_BIND_STATUS categoriesFor: #ChannelToken:!**compiled accessors**!public! !
-!HTTP_REQUEST_CHANNEL_BIND_STATUS categoriesFor: #ChannelTokenSize!**compiled accessors**!private! !
-!HTTP_REQUEST_CHANNEL_BIND_STATUS categoriesFor: #ChannelTokenSize:!**compiled accessors**!private! !
-!HTTP_REQUEST_CHANNEL_BIND_STATUS categoriesFor: #ServiceName!**compiled accessors**!public! !
-!HTTP_REQUEST_CHANNEL_BIND_STATUS categoriesFor: #ServiceName:!**compiled accessors**!public! !
+!WinHttpServer.HTTP_REQUEST_CHANNEL_BIND_STATUS categoriesFor: #ChannelToken!**compiled accessors**!public! !
+!WinHttpServer.HTTP_REQUEST_CHANNEL_BIND_STATUS categoriesFor: #ChannelToken:!**compiled accessors**!public! !
+!WinHttpServer.HTTP_REQUEST_CHANNEL_BIND_STATUS categoriesFor: #ChannelTokenSize!**compiled accessors**!private! !
+!WinHttpServer.HTTP_REQUEST_CHANNEL_BIND_STATUS categoriesFor: #ChannelTokenSize:!**compiled accessors**!private! !
+!WinHttpServer.HTTP_REQUEST_CHANNEL_BIND_STATUS categoriesFor: #ServiceName!**compiled accessors**!public! !
+!WinHttpServer.HTTP_REQUEST_CHANNEL_BIND_STATUS categoriesFor: #ServiceName:!**compiled accessors**!public! !
 
-!HTTP_REQUEST_CHANNEL_BIND_STATUS class methodsFor!
+!WinHttpServer.HTTP_REQUEST_CHANNEL_BIND_STATUS class methodsFor!
 
 defineFields
 	"Define the fields of the HTTP_REQUEST_CHANNEL_BIND_STATUS structure.
@@ -94,6 +95,6 @@ defineFields
 
 getFieldNames
 	^#(#ServiceName #ChannelToken #ChannelTokenSize)! !
-!HTTP_REQUEST_CHANNEL_BIND_STATUS class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!HTTP_REQUEST_CHANNEL_BIND_STATUS class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!WinHttpServer.HTTP_REQUEST_CHANNEL_BIND_STATUS class categoriesFor: #defineFields!**auto generated**!private!template definition! !
+!WinHttpServer.HTTP_REQUEST_CHANNEL_BIND_STATUS class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

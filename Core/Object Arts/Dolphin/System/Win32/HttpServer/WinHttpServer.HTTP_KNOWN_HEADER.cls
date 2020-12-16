@@ -1,16 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-HttpServerStructure subclass: #HTTP_KNOWN_HEADER
+WinHttpServer.HttpServerStructure subclass: #'WinHttpServer.HTTP_KNOWN_HEADER'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_pRawValue' -> 16r4.
 		'_OffsetOf_RawValueLength' -> 16r0
 	}!
-HTTP_KNOWN_HEADER guid: (GUID fromString: '{787c501e-95b2-4a23-9f7c-2dd856b8d51d}')!
-HTTP_KNOWN_HEADER comment: '`HTTP_KNOWN_HEADER` is an `ExternalStructure` class to wrap the struct ''WinHttpServer.HTTP_KNOWN_HEADER'' from type information in the ''Windows Http Server API'' library.
+WinHttpServer.HTTP_KNOWN_HEADER guid: (Core.GUID fromString: '{787c501e-95b2-4a23-9f7c-2dd856b8d51d}')!
+WinHttpServer.HTTP_KNOWN_HEADER comment: '`HTTP_KNOWN_HEADER` is an `External.Structure` class to wrap the struct ''WinHttpServer.HTTP_KNOWN_HEADER'' from type information in the ''Windows Http Server API'' library.
 
 The type library contains the following helpstring for this struct
 	"Structure defining format of a known HTTP header. Name is from HTTP_HEADER_ID."
@@ -26,8 +26,8 @@ struct tagHTTP_KNOWN_HEADER {
 } HTTP_KNOWN_HEADER;
 ```
 '!
-!HTTP_KNOWN_HEADER categoriesForClass!WinHttpServer-Structs! !
-!HTTP_KNOWN_HEADER methodsFor!
+!WinHttpServer.HTTP_KNOWN_HEADER categoriesForClass!WinHttpServer-Structs! !
+!WinHttpServer.HTTP_KNOWN_HEADER methodsFor!
 
 pRawValue
 	"Answer the <String> value of the receiver's 'pRawValue' field."
@@ -49,12 +49,12 @@ RawValueLength: anInteger
 	"Set the receiver's 'RawValueLength' field to the value of the argument, anInteger"
 
 	bytes wordAtOffset: _OffsetOf_RawValueLength put: anInteger! !
-!HTTP_KNOWN_HEADER categoriesFor: #pRawValue!**compiled accessors**!public! !
-!HTTP_KNOWN_HEADER categoriesFor: #pRawValue:!**compiled accessors**!public! !
-!HTTP_KNOWN_HEADER categoriesFor: #RawValueLength!**compiled accessors**!private! !
-!HTTP_KNOWN_HEADER categoriesFor: #RawValueLength:!**compiled accessors**!private! !
+!WinHttpServer.HTTP_KNOWN_HEADER categoriesFor: #pRawValue!**compiled accessors**!public! !
+!WinHttpServer.HTTP_KNOWN_HEADER categoriesFor: #pRawValue:!**compiled accessors**!public! !
+!WinHttpServer.HTTP_KNOWN_HEADER categoriesFor: #RawValueLength!**compiled accessors**!private! !
+!WinHttpServer.HTTP_KNOWN_HEADER categoriesFor: #RawValueLength:!**compiled accessors**!private! !
 
-!HTTP_KNOWN_HEADER class methodsFor!
+!WinHttpServer.HTTP_KNOWN_HEADER class methodsFor!
 
 defineFields
 	"Define the fields of the HTTP_KNOWN_HEADER structure.
@@ -75,6 +75,6 @@ defineFields
 
 getFieldNames
 	^#(#RawValueLength #pRawValue)! !
-!HTTP_KNOWN_HEADER class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!HTTP_KNOWN_HEADER class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!WinHttpServer.HTTP_KNOWN_HEADER class categoriesFor: #defineFields!**auto generated**!private!template definition! !
+!WinHttpServer.HTTP_KNOWN_HEADER class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 
