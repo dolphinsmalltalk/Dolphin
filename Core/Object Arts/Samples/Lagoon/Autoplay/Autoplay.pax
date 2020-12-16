@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'Autoplay'.
-package paxVersion: 2;
+package paxVersion: 2.1;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk Autoplay Sample. 
 Copyright (c) Object Arts Ltd, 2001-2002.
@@ -45,8 +45,8 @@ This specifies to run the autoplay executable (deployable from this package) to 
 
 
 package setClassNames: #(
-	#{Autoplay}
-	#{AutoplaySessionManager}
+	#{Smalltalk.Autoplay}
+	#{Smalltalk.AutoplaySessionManager}
 ).
 
 package setPrerequisites: #(
@@ -67,16 +67,16 @@ package!
 
 "Class Definitions"!
 
-Shell subclass: #Autoplay
+UI.Shell subclass: #Autoplay
 	instanceVariableNames: 'browser navigating pageExtent homePage'
 	classVariableNames: ''
-	poolDictionaries: 'SHDocVwConstants'
+	imports: #(#{SHDocVw private})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-RuntimeSessionManager subclass: #AutoplaySessionManager
+UI.RuntimeSessionManager subclass: #AutoplaySessionManager
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 

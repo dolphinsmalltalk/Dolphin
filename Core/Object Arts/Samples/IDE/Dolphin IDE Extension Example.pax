@@ -41,7 +41,7 @@ package!
 Core.Object subclass: #'Tools.OAIDEExtensions'
 	instanceVariableNames: 'flags'
 	classVariableNames: 'Current'
-	imports: #(#{Smalltalk.SHDocVwConstants private})
+	imports: #(#{SHDocVw private})
 	classInstanceVariableNames: ''
 	classConstants: {
 		'ClassCommentTemplateMask' -> 16r1.

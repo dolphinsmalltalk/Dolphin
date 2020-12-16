@@ -102,6 +102,7 @@ contents
 	"Deprecated pieces"
 	contents
 		add: #('Core\Object Arts\Dolphin\ActiveX\Deprecated\ActiveX (Deprecated).pax' #plain #imageBased);
+		add: #('Core\Object Arts\Dolphin\ActiveX\Components\SHDocVw\Internet Explorer (Old Names).pax' #plain #imageBased);
 		yourself.
 
 	"Add-ons"

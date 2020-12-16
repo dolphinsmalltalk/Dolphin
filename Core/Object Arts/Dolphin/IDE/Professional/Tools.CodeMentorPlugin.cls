@@ -3,7 +3,7 @@
 Tools.SmalllintPlugin subclass: #'Tools.CodeMentorPlugin'
 	instanceVariableNames: 'failuresPresenter infoSitePresenter infoBrowserPresenter progressPresenter checkerProcess rulesTreeModel isRefreshPending refreshMode'
 	classVariableNames: 'DefaultRefreshMode LintIconMap LintRulesDoc'
-	imports: #(#{Smalltalk.SHDocVwConstants private})
+	imports: #(#{SHDocVw private})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Tools.CodeMentorPlugin guid: (Core.GUID fromString: '{b1e97c3c-3c35-43e0-99aa-97d69135e2ea}')!
@@ -315,14 +315,14 @@ infoBrowserPresenter
 	"Private - Answer an HTML browser than can be used to display LintRule descriptions. We create this lazily
 	to avoid slowing down the opening of browsers that make use of the Code Mentor"
 
-	infoBrowserPresenter isNil 
+	infoBrowserPresenter isNil
 		ifTrue: 
-			[infoBrowserPresenter := Smalltalk.URLPresenter createIn: infoSitePresenter.
-			[self infoBrowser readyState == READYSTATE_COMPLETE] 
+			[infoBrowserPresenter := UI.URLPresenter createIn: infoSitePresenter.
+			[self infoBrowser readyState == READYSTATE_COMPLETE]
 				whileFalse: [SessionManager inputState pumpMessages].
 			"Suppress the standard IE context menu"
 			infoBrowserPresenter view allowContextMenu: false.
-			infoBrowserPresenter 
+			infoBrowserPresenter
 				when: #BeforeNavigate2:URL:Flags:TargetFrameName:PostData:Headers:Cancel:
 				send: #onBeforeNavigate2:URL:Flags:TargetFrameName:PostData:Headers:Cancel:
 				to: self].

@@ -1,0 +1,23 @@
+﻿OS.COM.TypeLibraryAnalyzer {
+	#generationFlags : 128,
+	#binding : VariableBinding {
+		#key : #SHDocVw,
+		#value : Class [ #SHDocVw ],
+		#environment : Class [ #Root ],
+		#flags : 0
+	},
+	#attributes : OS.COM.TLIBATTR {
+		#bytes : ByteArray [ 'c02ab2eac130cf11a7eb0000c05bae0b00000000010000000100010008000000' ]
+	},
+	#namespaceName : BindingReference {
+		#pathString : 'SHDocVw',
+		#path : [
+			'SHDocVw'
+		],
+		#flags : 0
+	},
+	#packageName : 'Internet Explorer',
+	#aliasMap : LookupTable {
+		#GUID : #GUID
+	}
+}

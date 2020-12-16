@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'Simple Web Browser'.
-package paxVersion: 2;
+package paxVersion: 2.1;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk Simple Web Browser Sample.
 Copyright (c) Object Arts Ltd, 2000.
@@ -17,8 +17,8 @@ NOTE: Please don''t try to display a page containing Dolphin Web Applets within 
 
 
 package setClassNames: #(
-	#{WebBrowserSessionManager}
-	#{WebBrowserShell}
+	#{Smalltalk.WebBrowserSessionManager}
+	#{Smalltalk.WebBrowserShell}
 ).
 
 package setPrerequisites: #(
@@ -47,16 +47,16 @@ package!
 
 "Class Definitions"!
 
-Shell subclass: #WebBrowserShell
+UI.Shell subclass: #WebBrowserShell
 	instanceVariableNames: 'address browser statusModel commandStates'
 	classVariableNames: ''
-	poolDictionaries: 'SHDocVwConstants'
+	imports: #(#{SHDocVw private})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-RuntimeSessionManager subclass: #WebBrowserSessionManager
+UI.RuntimeSessionManager subclass: #WebBrowserSessionManager
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 

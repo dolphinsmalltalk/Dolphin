@@ -279,7 +279,7 @@ Tools.ClassBrowserPlugin subclass: #'Tools.SmalllintPlugin'
 Tools.SmalllintPlugin subclass: #'Tools.CodeMentorPlugin'
 	instanceVariableNames: 'failuresPresenter infoSitePresenter infoBrowserPresenter progressPresenter checkerProcess rulesTreeModel isRefreshPending refreshMode'
 	classVariableNames: 'DefaultRefreshMode LintIconMap LintRulesDoc'
-	imports: #(#{Smalltalk.SHDocVwConstants private})
+	imports: #(#{SHDocVw private})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Tools.SmalllintPlugin subclass: #'Tools.CodeRewriterPlugin'

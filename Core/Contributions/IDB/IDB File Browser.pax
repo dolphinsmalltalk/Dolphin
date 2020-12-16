@@ -50,6 +50,7 @@ package setPrerequisites: #(
 	'..\..\Object Arts\Dolphin\MVP\Models\Value\Dolphin Value Models'
 	'IDB Common'
 	'..\..\Object Arts\Dolphin\ActiveX\Components\SHDocVw\Internet Explorer'
+	'..\..\Object Arts\Dolphin\ActiveX\Components\SHDocVw\Internet Explorer (Old Names)'
 	'..\..\Object Arts\Dolphin\ActiveX\COM\OLE COM'
 	'..\..\Object Arts\Dolphin\ActiveX\Components\Picture\OLE Picture'
 	'..\..\Object Arts\Dolphin\ActiveX\Shell\Windows Shell'

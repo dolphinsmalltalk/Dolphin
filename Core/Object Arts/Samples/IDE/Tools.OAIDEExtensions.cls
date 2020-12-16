@@ -3,7 +3,7 @@
 Core.Object subclass: #'Tools.OAIDEExtensions'
 	instanceVariableNames: 'flags'
 	classVariableNames: 'Current'
-	imports: #(#{Smalltalk.SHDocVwConstants private})
+	imports: #(#{SHDocVw private})
 	classInstanceVariableNames: ''
 	classConstants: {
 		'ClassCommentTemplateMask' -> 16r1.
@@ -62,13 +62,13 @@ browseKeyBindingsOfShell: aShellView
 	self printHtmlDescriptionOfKeyBindingsForShell: aShellView on: stream.
 	stream nextPutAll: '</BODY></HTML>'.
 	shell := Shell create.
-	(shell view)
+	shell view
 		extent: 430 @ 600;
 		layoutManager: GridLayout new;
 		largeIcon: (Icon fromId: 'HotKey.ico');
 		isPersistentView: false.
 	shell caption: ('<1d> Key Bindings' expandMacrosWith: aShellView presenter class).
-	presenter := Smalltalk.URLPresenter createIn: shell.
+	presenter := UI.URLPresenter createIn: shell.
 	shell show.
 	browser := presenter view controlDispatch.
 	stream reset.

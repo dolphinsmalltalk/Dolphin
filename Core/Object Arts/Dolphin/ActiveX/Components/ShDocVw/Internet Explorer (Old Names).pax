@@ -1,0 +1,31 @@
+﻿| package |
+package := Package name: 'Internet Explorer (Old Names)'.
+package paxVersion: 2.1;
+	basicComment: ''.
+
+
+package setVariableNames: #(
+	#{Smalltalk.IWebBrowser2}
+	#{Smalltalk.SHDocVwConstants}
+).
+
+package setAliasVariableNames: #(
+	#{Smalltalk.IWebBrowser2}
+	#{Smalltalk.SHDocVwConstants}
+).
+
+package setPrerequisites: #(
+	'Internet Explorer'
+).
+
+package!
+
+"Variable Aliases"!
+
+Smalltalk.IWebBrowser2 := SHDocVw.IWebBrowser2!
+
+Smalltalk.SHDocVwConstants := SHDocVw!
+
+
+"End of package definition"!
+
