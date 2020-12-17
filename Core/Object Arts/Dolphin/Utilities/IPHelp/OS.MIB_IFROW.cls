@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ExternalStructure subclass: #MIB_IFROW
+External.Structure subclass: #'OS.MIB_IFROW'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_bDescr' -> 16r25C.
@@ -31,8 +31,8 @@ ExternalStructure subclass: #MIB_IFROW
 		'_OffsetOf_dwType' -> 16r204.
 		'_OffsetOf_wszName' -> 16r0
 	}!
-MIB_IFROW guid: (GUID fromString: '{6ead7710-bab6-4715-a112-b56e9b66d9ee}')!
-MIB_IFROW comment: '<MIB_IFROW> is an <ExternalStructure> class to wrap the struct ''Win32.MIB_IFROW'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
+OS.MIB_IFROW guid: (Core.GUID fromString: '{6ead7710-bab6-4715-a112-b56e9b66d9ee}')!
+OS.MIB_IFROW comment: '<MIB_IFROW> is an <ExternalStructure> class to wrap the struct ''Win32.MIB_IFROW'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
 
@@ -68,8 +68,8 @@ struct tagMIB_IFROW {
 	BYTE bDescr[256];
 } MIB_IFROW;
 '!
-!MIB_IFROW categoriesForClass!Win32-Structs! !
-!MIB_IFROW methodsFor!
+!OS.MIB_IFROW categoriesForClass!Win32-Structs! !
+!OS.MIB_IFROW methodsFor!
 
 bDescr
 	"Answer the <ByteArray> value of the receiver's 'bDescr' field."
@@ -190,32 +190,32 @@ wszName
 	"Answer the <Utf16String> value of the receiver's 'wszName' field."
 
 	^Utf16String fromAddress: bytes yourAddress! !
-!MIB_IFROW categoriesFor: #bDescr!**compiled accessors**!public! !
-!MIB_IFROW categoriesFor: #bPhysAddr!**compiled accessors**!public! !
-!MIB_IFROW categoriesFor: #dwAdminStatus!**compiled accessors**!public! !
-!MIB_IFROW categoriesFor: #dwDescrLen!**compiled accessors**!public! !
-!MIB_IFROW categoriesFor: #dwIndex!**compiled accessors**!public! !
-!MIB_IFROW categoriesFor: #dwInDiscards!**compiled accessors**!public! !
-!MIB_IFROW categoriesFor: #dwInErrors!**compiled accessors**!public! !
-!MIB_IFROW categoriesFor: #dwInNUcastPkts!**compiled accessors**!public! !
-!MIB_IFROW categoriesFor: #dwInOctets!**compiled accessors**!public! !
-!MIB_IFROW categoriesFor: #dwInUcastPkts!**compiled accessors**!public! !
-!MIB_IFROW categoriesFor: #dwInUnknownProtos!**compiled accessors**!public! !
-!MIB_IFROW categoriesFor: #dwLastChange!**compiled accessors**!public! !
-!MIB_IFROW categoriesFor: #dwMtu!**compiled accessors**!public! !
-!MIB_IFROW categoriesFor: #dwOperStatus!**compiled accessors**!public! !
-!MIB_IFROW categoriesFor: #dwOutDiscards!**compiled accessors**!public! !
-!MIB_IFROW categoriesFor: #dwOutErrors!**compiled accessors**!public! !
-!MIB_IFROW categoriesFor: #dwOutNUcastPkts!**compiled accessors**!public! !
-!MIB_IFROW categoriesFor: #dwOutOctets!**compiled accessors**!public! !
-!MIB_IFROW categoriesFor: #dwOutQLen!**compiled accessors**!public! !
-!MIB_IFROW categoriesFor: #dwOutUcastPkts!**compiled accessors**!public! !
-!MIB_IFROW categoriesFor: #dwPhysAddrLen!**compiled accessors**!public! !
-!MIB_IFROW categoriesFor: #dwSpeed!**compiled accessors**!public! !
-!MIB_IFROW categoriesFor: #dwType!**compiled accessors**!public! !
-!MIB_IFROW categoriesFor: #wszName!**compiled accessors**!public! !
+!OS.MIB_IFROW categoriesFor: #bDescr!**compiled accessors**!public! !
+!OS.MIB_IFROW categoriesFor: #bPhysAddr!**compiled accessors**!public! !
+!OS.MIB_IFROW categoriesFor: #dwAdminStatus!**compiled accessors**!public! !
+!OS.MIB_IFROW categoriesFor: #dwDescrLen!**compiled accessors**!public! !
+!OS.MIB_IFROW categoriesFor: #dwIndex!**compiled accessors**!public! !
+!OS.MIB_IFROW categoriesFor: #dwInDiscards!**compiled accessors**!public! !
+!OS.MIB_IFROW categoriesFor: #dwInErrors!**compiled accessors**!public! !
+!OS.MIB_IFROW categoriesFor: #dwInNUcastPkts!**compiled accessors**!public! !
+!OS.MIB_IFROW categoriesFor: #dwInOctets!**compiled accessors**!public! !
+!OS.MIB_IFROW categoriesFor: #dwInUcastPkts!**compiled accessors**!public! !
+!OS.MIB_IFROW categoriesFor: #dwInUnknownProtos!**compiled accessors**!public! !
+!OS.MIB_IFROW categoriesFor: #dwLastChange!**compiled accessors**!public! !
+!OS.MIB_IFROW categoriesFor: #dwMtu!**compiled accessors**!public! !
+!OS.MIB_IFROW categoriesFor: #dwOperStatus!**compiled accessors**!public! !
+!OS.MIB_IFROW categoriesFor: #dwOutDiscards!**compiled accessors**!public! !
+!OS.MIB_IFROW categoriesFor: #dwOutErrors!**compiled accessors**!public! !
+!OS.MIB_IFROW categoriesFor: #dwOutNUcastPkts!**compiled accessors**!public! !
+!OS.MIB_IFROW categoriesFor: #dwOutOctets!**compiled accessors**!public! !
+!OS.MIB_IFROW categoriesFor: #dwOutQLen!**compiled accessors**!public! !
+!OS.MIB_IFROW categoriesFor: #dwOutUcastPkts!**compiled accessors**!public! !
+!OS.MIB_IFROW categoriesFor: #dwPhysAddrLen!**compiled accessors**!public! !
+!OS.MIB_IFROW categoriesFor: #dwSpeed!**compiled accessors**!public! !
+!OS.MIB_IFROW categoriesFor: #dwType!**compiled accessors**!public! !
+!OS.MIB_IFROW categoriesFor: #wszName!**compiled accessors**!public! !
 
-!MIB_IFROW class methodsFor!
+!OS.MIB_IFROW class methodsFor!
 
 defineFields
 	"Define the fields of the MIB_IFROW structure.
@@ -333,6 +333,6 @@ defineFields
 
 getFieldNames
 	^#(#wszName #dwIndex #dwType #dwMtu #dwSpeed #dwPhysAddrLen #bPhysAddr #dwAdminStatus #dwOperStatus #dwLastChange #dwInOctets #dwInUcastPkts #dwInNUcastPkts #dwInDiscards #dwInErrors #dwInUnknownProtos #dwOutOctets #dwOutUcastPkts #dwOutNUcastPkts #dwOutDiscards #dwOutErrors #dwOutQLen #dwDescrLen #bDescr)! !
-!MIB_IFROW class categoriesFor: #defineFields!initializing!public! !
-!MIB_IFROW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.MIB_IFROW class categoriesFor: #defineFields!initializing!public! !
+!OS.MIB_IFROW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

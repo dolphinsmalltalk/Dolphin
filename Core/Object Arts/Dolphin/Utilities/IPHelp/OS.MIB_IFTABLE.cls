@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-IpHlpApiTableStruct subclass: #MIB_IFTABLE
+OS.IpHlpApiTableStruct subclass: #'OS.MIB_IFTABLE'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_table' -> 16r4
 	}!
-MIB_IFTABLE guid: (GUID fromString: '{2ba815fb-13d2-4ab7-a138-15332adeb3bf}')!
-MIB_IFTABLE comment: '<MIB_IFTABLE> is an <ExternalStructure> class to wrap the struct ''Win32.MIB_IFTABLE'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
+OS.MIB_IFTABLE guid: (Core.GUID fromString: '{2ba815fb-13d2-4ab7-a138-15332adeb3bf}')!
+OS.MIB_IFTABLE comment: '<MIB_IFTABLE> is an <ExternalStructure> class to wrap the struct ''Win32.MIB_IFTABLE'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
 
@@ -23,8 +23,8 @@ struct tagMIB_IFTABLE {
 	MIB_IFROW table[1];
 } MIB_IFTABLE;
 '!
-!MIB_IFTABLE categoriesForClass!Win32-Structs! !
-!MIB_IFTABLE methodsFor!
+!OS.MIB_IFTABLE categoriesForClass!Win32-Structs! !
+!OS.MIB_IFTABLE methodsFor!
 
 table
 	"Answer the <StructureArray> value of the receiver's 'table' field."
@@ -33,9 +33,9 @@ table
 		fromAddress: bytes yourAddress + _OffsetOf_table
 		length: self dwNumEntries
 		elementClass: MIB_IFROW! !
-!MIB_IFTABLE categoriesFor: #table!**compiled accessors**!public! !
+!OS.MIB_IFTABLE categoriesFor: #table!**compiled accessors**!public! !
 
-!MIB_IFTABLE class methodsFor!
+!OS.MIB_IFTABLE class methodsFor!
 
 defineFields
 	"Define the fields of the MIB_IFTABLE structure.
@@ -49,7 +49,7 @@ defineFields
 "
 
 	super defineFields.
-	self 
+	self
 		defineField: #table
 		type: ((StructureArrayField type: MIB_IFROW lengthField: #dwNumEntries)
 				beReadOnly;
@@ -59,6 +59,6 @@ defineFields
 
 getFieldNames
 	^#(#dwNumEntries #table)! !
-!MIB_IFTABLE class categoriesFor: #defineFields!initializing!public! !
-!MIB_IFTABLE class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.MIB_IFTABLE class categoriesFor: #defineFields!initializing!public! !
+!OS.MIB_IFTABLE class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

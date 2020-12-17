@@ -1,16 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ExternalStructure subclass: #IP_UNIDIRECTIONAL_ADAPTER_ADDRESS
+External.Structure subclass: #'OS.IP_UNIDIRECTIONAL_ADAPTER_ADDRESS'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_Address' -> 16r4.
 		'_OffsetOf_NumAdapters' -> 16r0
 	}!
-IP_UNIDIRECTIONAL_ADAPTER_ADDRESS guid: (GUID fromString: '{7f8b1ec9-1399-47a6-94be-768366dac0dc}')!
-IP_UNIDIRECTIONAL_ADAPTER_ADDRESS comment: '<IP_UNIDIRECTIONAL_ADAPTER_ADDRESS> is an <ExternalStructure> class to wrap the struct ''Win32.IP_UNIDIRECTIONAL_ADAPTER_ADDRESS'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
+OS.IP_UNIDIRECTIONAL_ADAPTER_ADDRESS guid: (Core.GUID fromString: '{7f8b1ec9-1399-47a6-94be-768366dac0dc}')!
+OS.IP_UNIDIRECTIONAL_ADAPTER_ADDRESS comment: '<IP_UNIDIRECTIONAL_ADAPTER_ADDRESS> is an <ExternalStructure> class to wrap the struct ''Win32.IP_UNIDIRECTIONAL_ADAPTER_ADDRESS'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
 
@@ -24,8 +24,8 @@ struct tagIP_UNIDIRECTIONAL_ADAPTER_ADDRESS {
 	unsigned long Address[1];
 } IP_UNIDIRECTIONAL_ADAPTER_ADDRESS;
 '!
-!IP_UNIDIRECTIONAL_ADAPTER_ADDRESS categoriesForClass!Win32-Structs! !
-!IP_UNIDIRECTIONAL_ADAPTER_ADDRESS methodsFor!
+!OS.IP_UNIDIRECTIONAL_ADAPTER_ADDRESS categoriesForClass!Win32-Structs! !
+!OS.IP_UNIDIRECTIONAL_ADAPTER_ADDRESS methodsFor!
 
 Address
 	"Answer the <DWORDArray> value of the receiver's 'Address' field."
@@ -47,11 +47,11 @@ NumAdapters
 	"Answer the <Integer> value of the receiver's 'NumAdapters' field."
 
 	^bytes dwordAtOffset: _OffsetOf_NumAdapters! !
-!IP_UNIDIRECTIONAL_ADAPTER_ADDRESS categoriesFor: #Address!**compiled accessors**!public! !
-!IP_UNIDIRECTIONAL_ADAPTER_ADDRESS categoriesFor: #Address:!**compiled accessors**!public! !
-!IP_UNIDIRECTIONAL_ADAPTER_ADDRESS categoriesFor: #NumAdapters!**compiled accessors**!public! !
+!OS.IP_UNIDIRECTIONAL_ADAPTER_ADDRESS categoriesFor: #Address!**compiled accessors**!public! !
+!OS.IP_UNIDIRECTIONAL_ADAPTER_ADDRESS categoriesFor: #Address:!**compiled accessors**!public! !
+!OS.IP_UNIDIRECTIONAL_ADAPTER_ADDRESS categoriesFor: #NumAdapters!**compiled accessors**!public! !
 
-!IP_UNIDIRECTIONAL_ADAPTER_ADDRESS class methodsFor!
+!OS.IP_UNIDIRECTIONAL_ADAPTER_ADDRESS class methodsFor!
 
 defineFields
 	"Define the fields of the IP_UNIDIRECTIONAL_ADAPTER_ADDRESS structure.
@@ -71,6 +71,6 @@ defineFields
 
 getFieldNames
 	^#(#NumAdapters #Address)! !
-!IP_UNIDIRECTIONAL_ADAPTER_ADDRESS class categoriesFor: #defineFields!initializing!public! !
-!IP_UNIDIRECTIONAL_ADAPTER_ADDRESS class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.IP_UNIDIRECTIONAL_ADAPTER_ADDRESS class categoriesFor: #defineFields!initializing!public! !
+!OS.IP_UNIDIRECTIONAL_ADAPTER_ADDRESS class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

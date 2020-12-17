@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ExternalStructure subclass: #MIB_IPADDRROW
+External.Structure subclass: #'OS.MIB_IPADDRROW'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_dwAddr' -> 16r0.
@@ -14,8 +14,8 @@ ExternalStructure subclass: #MIB_IPADDRROW
 		'_OffsetOf_Unused1' -> 16r14.
 		'_OffsetOf_wType' -> 16r16
 	}!
-MIB_IPADDRROW guid: (GUID fromString: '{6b58a372-62e2-40b7-861b-d91fe418bacf}')!
-MIB_IPADDRROW comment: '<MIB_IPADDRROW> is an <ExternalStructure> class to wrap the struct ''Win32.MIB_IPADDRROW'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
+OS.MIB_IPADDRROW guid: (Core.GUID fromString: '{6b58a372-62e2-40b7-861b-d91fe418bacf}')!
+OS.MIB_IPADDRROW comment: '<MIB_IPADDRROW> is an <ExternalStructure> class to wrap the struct ''Win32.MIB_IPADDRROW'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
 
@@ -34,8 +34,8 @@ struct tagMIB_IPADDRROW {
 	unsigned short wType;
 } MIB_IPADDRROW;
 '!
-!MIB_IPADDRROW categoriesForClass!Win32-Structs! !
-!MIB_IPADDRROW methodsFor!
+!OS.MIB_IPADDRROW categoriesForClass!Win32-Structs! !
+!OS.MIB_IPADDRROW methodsFor!
 
 dwAddr
 	"Answer the <Integer> value of the receiver's 'dwAddr' field."
@@ -66,14 +66,14 @@ wType
 	"Answer the <Integer> value of the receiver's 'wType' field."
 
 	^bytes wordAtOffset: _OffsetOf_wType! !
-!MIB_IPADDRROW categoriesFor: #dwAddr!**compiled accessors**!public! !
-!MIB_IPADDRROW categoriesFor: #dwBCastAddr!**compiled accessors**!public! !
-!MIB_IPADDRROW categoriesFor: #dwIndex!**compiled accessors**!public! !
-!MIB_IPADDRROW categoriesFor: #dwMask!**compiled accessors**!public! !
-!MIB_IPADDRROW categoriesFor: #dwReasmSize!**compiled accessors**!public! !
-!MIB_IPADDRROW categoriesFor: #wType!**compiled accessors**!public! !
+!OS.MIB_IPADDRROW categoriesFor: #dwAddr!**compiled accessors**!public! !
+!OS.MIB_IPADDRROW categoriesFor: #dwBCastAddr!**compiled accessors**!public! !
+!OS.MIB_IPADDRROW categoriesFor: #dwIndex!**compiled accessors**!public! !
+!OS.MIB_IPADDRROW categoriesFor: #dwMask!**compiled accessors**!public! !
+!OS.MIB_IPADDRROW categoriesFor: #dwReasmSize!**compiled accessors**!public! !
+!OS.MIB_IPADDRROW categoriesFor: #wType!**compiled accessors**!public! !
 
-!MIB_IPADDRROW class methodsFor!
+!OS.MIB_IPADDRROW class methodsFor!
 
 defineFields
 	"Define the fields of the MIB_IPADDRROW structure.
@@ -117,6 +117,6 @@ defineFields
 
 getFieldNames
 	^#(#dwAddr #dwIndex #dwMask #dwBCastAddr #dwReasmSize #wType)! !
-!MIB_IPADDRROW class categoriesFor: #defineFields!initializing!public! !
-!MIB_IPADDRROW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.MIB_IPADDRROW class categoriesFor: #defineFields!initializing!public! !
+!OS.MIB_IPADDRROW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

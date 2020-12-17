@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ExternalStructure subclass: #MIB_IPSTATS
+External.Structure subclass: #'OS.MIB_IPSTATS'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_dwDefaultTTL' -> 16r4.
@@ -30,8 +30,8 @@ ExternalStructure subclass: #MIB_IPSTATS
 		'_OffsetOf_dwReasmTimeout' -> 16r34.
 		'_OffsetOf_dwRoutingDiscards' -> 16r28
 	}!
-MIB_IPSTATS guid: (GUID fromString: '{3390e082-4252-4d18-accb-16911c750fb8}')!
-MIB_IPSTATS comment: '<MIB_IPSTATS> is an <ExternalStructure> class to wrap the struct ''Win32.MIB_IPSTATS'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
+OS.MIB_IPSTATS guid: (Core.GUID fromString: '{3390e082-4252-4d18-accb-16911c750fb8}')!
+OS.MIB_IPSTATS comment: '<MIB_IPSTATS> is an <ExternalStructure> class to wrap the struct ''Win32.MIB_IPSTATS'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
 
@@ -66,8 +66,8 @@ struct tagMIB_IPSTATS {
 	unsigned long dwNumRoutes;
 } MIB_IPSTATS;
 '!
-!MIB_IPSTATS categoriesForClass!Win32-Structs! !
-!MIB_IPSTATS methodsFor!
+!OS.MIB_IPSTATS categoriesForClass!Win32-Structs! !
+!OS.MIB_IPSTATS methodsFor!
 
 dwDefaultTTL
 	"Answer the <Integer> value of the receiver's 'dwDefaultTTL' field."
@@ -183,31 +183,31 @@ dwRoutingDiscards
 	"Answer the <Integer> value of the receiver's 'dwRoutingDiscards' field."
 
 	^bytes dwordAtOffset: _OffsetOf_dwRoutingDiscards! !
-!MIB_IPSTATS categoriesFor: #dwDefaultTTL!**compiled accessors**!public! !
-!MIB_IPSTATS categoriesFor: #dwForwarding!**compiled accessors**!public! !
-!MIB_IPSTATS categoriesFor: #dwForwDatagrams!**compiled accessors**!public! !
-!MIB_IPSTATS categoriesFor: #dwFragCreates!**compiled accessors**!public! !
-!MIB_IPSTATS categoriesFor: #dwFragFails!**compiled accessors**!public! !
-!MIB_IPSTATS categoriesFor: #dwFragOks!**compiled accessors**!public! !
-!MIB_IPSTATS categoriesFor: #dwInAddrErrors!**compiled accessors**!public! !
-!MIB_IPSTATS categoriesFor: #dwInDelivers!**compiled accessors**!public! !
-!MIB_IPSTATS categoriesFor: #dwInDiscards!**compiled accessors**!public! !
-!MIB_IPSTATS categoriesFor: #dwInHdrErrors!**compiled accessors**!public! !
-!MIB_IPSTATS categoriesFor: #dwInReceives!**compiled accessors**!public! !
-!MIB_IPSTATS categoriesFor: #dwInUnknownProtos!**compiled accessors**!public! !
-!MIB_IPSTATS categoriesFor: #dwNumAddr!**compiled accessors**!public! !
-!MIB_IPSTATS categoriesFor: #dwNumIf!**compiled accessors**!public! !
-!MIB_IPSTATS categoriesFor: #dwNumRoutes!**compiled accessors**!public! !
-!MIB_IPSTATS categoriesFor: #dwOutDiscards!**compiled accessors**!public! !
-!MIB_IPSTATS categoriesFor: #dwOutNoRoutes!**compiled accessors**!public! !
-!MIB_IPSTATS categoriesFor: #dwOutRequests!**compiled accessors**!public! !
-!MIB_IPSTATS categoriesFor: #dwReasmFails!**compiled accessors**!public! !
-!MIB_IPSTATS categoriesFor: #dwReasmOks!**compiled accessors**!public! !
-!MIB_IPSTATS categoriesFor: #dwReasmReqds!**compiled accessors**!public! !
-!MIB_IPSTATS categoriesFor: #dwReasmTimeout!**compiled accessors**!public! !
-!MIB_IPSTATS categoriesFor: #dwRoutingDiscards!**compiled accessors**!public! !
+!OS.MIB_IPSTATS categoriesFor: #dwDefaultTTL!**compiled accessors**!public! !
+!OS.MIB_IPSTATS categoriesFor: #dwForwarding!**compiled accessors**!public! !
+!OS.MIB_IPSTATS categoriesFor: #dwForwDatagrams!**compiled accessors**!public! !
+!OS.MIB_IPSTATS categoriesFor: #dwFragCreates!**compiled accessors**!public! !
+!OS.MIB_IPSTATS categoriesFor: #dwFragFails!**compiled accessors**!public! !
+!OS.MIB_IPSTATS categoriesFor: #dwFragOks!**compiled accessors**!public! !
+!OS.MIB_IPSTATS categoriesFor: #dwInAddrErrors!**compiled accessors**!public! !
+!OS.MIB_IPSTATS categoriesFor: #dwInDelivers!**compiled accessors**!public! !
+!OS.MIB_IPSTATS categoriesFor: #dwInDiscards!**compiled accessors**!public! !
+!OS.MIB_IPSTATS categoriesFor: #dwInHdrErrors!**compiled accessors**!public! !
+!OS.MIB_IPSTATS categoriesFor: #dwInReceives!**compiled accessors**!public! !
+!OS.MIB_IPSTATS categoriesFor: #dwInUnknownProtos!**compiled accessors**!public! !
+!OS.MIB_IPSTATS categoriesFor: #dwNumAddr!**compiled accessors**!public! !
+!OS.MIB_IPSTATS categoriesFor: #dwNumIf!**compiled accessors**!public! !
+!OS.MIB_IPSTATS categoriesFor: #dwNumRoutes!**compiled accessors**!public! !
+!OS.MIB_IPSTATS categoriesFor: #dwOutDiscards!**compiled accessors**!public! !
+!OS.MIB_IPSTATS categoriesFor: #dwOutNoRoutes!**compiled accessors**!public! !
+!OS.MIB_IPSTATS categoriesFor: #dwOutRequests!**compiled accessors**!public! !
+!OS.MIB_IPSTATS categoriesFor: #dwReasmFails!**compiled accessors**!public! !
+!OS.MIB_IPSTATS categoriesFor: #dwReasmOks!**compiled accessors**!public! !
+!OS.MIB_IPSTATS categoriesFor: #dwReasmReqds!**compiled accessors**!public! !
+!OS.MIB_IPSTATS categoriesFor: #dwReasmTimeout!**compiled accessors**!public! !
+!OS.MIB_IPSTATS categoriesFor: #dwRoutingDiscards!**compiled accessors**!public! !
 
-!MIB_IPSTATS class methodsFor!
+!OS.MIB_IPSTATS class methodsFor!
 
 defineFields
 	"Define the fields of the MIB_IPSTATS structure.
@@ -269,6 +269,6 @@ defineFields
 
 getFieldNames
 	^#(#dwForwarding #dwDefaultTTL #dwInReceives #dwInHdrErrors #dwInAddrErrors #dwForwDatagrams #dwInUnknownProtos #dwInDiscards #dwInDelivers #dwOutRequests #dwRoutingDiscards #dwOutDiscards #dwOutNoRoutes #dwReasmTimeout #dwReasmReqds #dwReasmOks #dwReasmFails #dwFragOks #dwFragFails #dwFragCreates #dwNumIf #dwNumAddr #dwNumRoutes)! !
-!MIB_IPSTATS class categoriesFor: #defineFields!initializing!public! !
-!MIB_IPSTATS class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.MIB_IPSTATS class categoriesFor: #defineFields!initializing!public! !
+!OS.MIB_IPSTATS class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

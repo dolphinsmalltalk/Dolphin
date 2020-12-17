@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-SharedPool subclass: #IPHlpApiConstants
+Kernel.SharedPool subclass: #'OS.IPHlpApiConstants'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -726,6 +726,6 @@ SharedPool subclass: #IPHlpApiConstants
 		'WPSTYLE_STRETCH' -> 16r2.
 		'WPSTYLE_TILE' -> 16r1
 	}!
-IPHlpApiConstants guid: (GUID fromString: '{cf21fda9-e7be-4a8d-b79d-e49173e5c3cc}')!
-IPHlpApiConstants comment: ''!
-!IPHlpApiConstants categoriesForClass!Unclassified! !
+OS.IPHlpApiConstants guid: (Core.GUID fromString: '{cf21fda9-e7be-4a8d-b79d-e49173e5c3cc}')!
+OS.IPHlpApiConstants comment: ''!
+!OS.IPHlpApiConstants categoriesForClass!Unclassified! !

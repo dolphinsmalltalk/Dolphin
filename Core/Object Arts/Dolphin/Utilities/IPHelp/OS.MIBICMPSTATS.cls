@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ExternalStructure subclass: #MIBICMPSTATS
+External.Structure subclass: #'OS.MIBICMPSTATS'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_dwAddrMaskReps' -> 16r30.
@@ -20,8 +20,8 @@ ExternalStructure subclass: #MIBICMPSTATS
 		'_OffsetOf_dwTimestampReps' -> 16r28.
 		'_OffsetOf_dwTimestamps' -> 16r24
 	}!
-MIBICMPSTATS guid: (GUID fromString: '{2dac7cde-bfec-4391-a2e5-1ddf10a3c471}')!
-MIBICMPSTATS comment: '<MIBICMPSTATS> is an <ExternalStructure> class to wrap the struct ''Win32.MIBICMPSTATS'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
+OS.MIBICMPSTATS guid: (Core.GUID fromString: '{2dac7cde-bfec-4391-a2e5-1ddf10a3c471}')!
+OS.MIBICMPSTATS comment: '<MIBICMPSTATS> is an <ExternalStructure> class to wrap the struct ''Win32.MIBICMPSTATS'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
 
@@ -46,8 +46,8 @@ struct tagMIBICMPSTATS {
 	unsigned long dwAddrMaskReps;
 } MIBICMPSTATS;
 '!
-!MIBICMPSTATS categoriesForClass!Win32-Structs! !
-!MIBICMPSTATS methodsFor!
+!OS.MIBICMPSTATS categoriesForClass!Win32-Structs! !
+!OS.MIBICMPSTATS methodsFor!
 
 dwAddrMaskReps
 	"Answer the <Integer> value of the receiver's 'dwAddrMaskReps' field."
@@ -113,21 +113,21 @@ dwTimestamps
 	"Answer the <Integer> value of the receiver's 'dwTimestamps' field."
 
 	^bytes dwordAtOffset: _OffsetOf_dwTimestamps! !
-!MIBICMPSTATS categoriesFor: #dwAddrMaskReps!**compiled accessors**!public! !
-!MIBICMPSTATS categoriesFor: #dwAddrMasks!**compiled accessors**!public! !
-!MIBICMPSTATS categoriesFor: #dwDestUnreachs!**compiled accessors**!public! !
-!MIBICMPSTATS categoriesFor: #dwEchoReps!**compiled accessors**!public! !
-!MIBICMPSTATS categoriesFor: #dwEchos!**compiled accessors**!public! !
-!MIBICMPSTATS categoriesFor: #dwErrors!**compiled accessors**!public! !
-!MIBICMPSTATS categoriesFor: #dwMsgs!**compiled accessors**!public! !
-!MIBICMPSTATS categoriesFor: #dwParmProbs!**compiled accessors**!public! !
-!MIBICMPSTATS categoriesFor: #dwRedirects!**compiled accessors**!public! !
-!MIBICMPSTATS categoriesFor: #dwSrcQuenchs!**compiled accessors**!public! !
-!MIBICMPSTATS categoriesFor: #dwTimeExcds!**compiled accessors**!public! !
-!MIBICMPSTATS categoriesFor: #dwTimestampReps!**compiled accessors**!public! !
-!MIBICMPSTATS categoriesFor: #dwTimestamps!**compiled accessors**!public! !
+!OS.MIBICMPSTATS categoriesFor: #dwAddrMaskReps!**compiled accessors**!public! !
+!OS.MIBICMPSTATS categoriesFor: #dwAddrMasks!**compiled accessors**!public! !
+!OS.MIBICMPSTATS categoriesFor: #dwDestUnreachs!**compiled accessors**!public! !
+!OS.MIBICMPSTATS categoriesFor: #dwEchoReps!**compiled accessors**!public! !
+!OS.MIBICMPSTATS categoriesFor: #dwEchos!**compiled accessors**!public! !
+!OS.MIBICMPSTATS categoriesFor: #dwErrors!**compiled accessors**!public! !
+!OS.MIBICMPSTATS categoriesFor: #dwMsgs!**compiled accessors**!public! !
+!OS.MIBICMPSTATS categoriesFor: #dwParmProbs!**compiled accessors**!public! !
+!OS.MIBICMPSTATS categoriesFor: #dwRedirects!**compiled accessors**!public! !
+!OS.MIBICMPSTATS categoriesFor: #dwSrcQuenchs!**compiled accessors**!public! !
+!OS.MIBICMPSTATS categoriesFor: #dwTimeExcds!**compiled accessors**!public! !
+!OS.MIBICMPSTATS categoriesFor: #dwTimestampReps!**compiled accessors**!public! !
+!OS.MIBICMPSTATS categoriesFor: #dwTimestamps!**compiled accessors**!public! !
 
-!MIBICMPSTATS class methodsFor!
+!OS.MIBICMPSTATS class methodsFor!
 
 defineFields
 	"Define the fields of the MIBICMPSTATS structure.
@@ -195,6 +195,6 @@ defineFields
 
 getFieldNames
 	^#(#dwMsgs #dwErrors #dwDestUnreachs #dwTimeExcds #dwParmProbs #dwSrcQuenchs #dwRedirects #dwEchos #dwEchoReps #dwTimestamps #dwTimestampReps #dwAddrMasks #dwAddrMaskReps)! !
-!MIBICMPSTATS class categoriesFor: #defineFields!initializing!public! !
-!MIBICMPSTATS class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.MIBICMPSTATS class categoriesFor: #defineFields!initializing!public! !
+!OS.MIBICMPSTATS class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

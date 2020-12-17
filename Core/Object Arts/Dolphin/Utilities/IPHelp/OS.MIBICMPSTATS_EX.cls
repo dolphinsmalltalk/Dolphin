@@ -1,17 +1,17 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ExternalStructure subclass: #MIBICMPSTATS_EX
+External.Structure subclass: #'OS.MIBICMPSTATS_EX'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_dwErrors' -> 16r4.
 		'_OffsetOf_dwMsgs' -> 16r0.
 		'_OffsetOf_rgdwTypeCount' -> 16r8
 	}!
-MIBICMPSTATS_EX guid: (GUID fromString: '{82731d6f-0e73-4221-9881-7172ae7d82cd}')!
-MIBICMPSTATS_EX comment: '<MIBICMPSTATS_EX> is an <ExternalStructure> class to wrap the struct ''Win32.MIBICMPSTATS_EX'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
+OS.MIBICMPSTATS_EX guid: (Core.GUID fromString: '{82731d6f-0e73-4221-9881-7172ae7d82cd}')!
+OS.MIBICMPSTATS_EX comment: '<MIBICMPSTATS_EX> is an <ExternalStructure> class to wrap the struct ''Win32.MIBICMPSTATS_EX'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
 
@@ -26,8 +26,8 @@ struct tagMIBICMPSTATS_EX {
 	unsigned long rgdwTypeCount[256];
 } MIBICMPSTATS_EX;
 '!
-!MIBICMPSTATS_EX categoriesForClass!Win32-Structs! !
-!MIBICMPSTATS_EX methodsFor!
+!OS.MIBICMPSTATS_EX categoriesForClass!Win32-Structs! !
+!OS.MIBICMPSTATS_EX methodsFor!
 
 dwErrors
 	"Answer the <Integer> value of the receiver's 'dwErrors' field."
@@ -43,11 +43,11 @@ rgdwTypeCount
 	"Answer the <DWORDArray> value of the receiver's 'rgdwTypeCount' field."
 
 	^DWORDArray fromAddress: bytes yourAddress + _OffsetOf_rgdwTypeCount length: 256! !
-!MIBICMPSTATS_EX categoriesFor: #dwErrors!**compiled accessors**!public! !
-!MIBICMPSTATS_EX categoriesFor: #dwMsgs!**compiled accessors**!public! !
-!MIBICMPSTATS_EX categoriesFor: #rgdwTypeCount!**compiled accessors**!public! !
+!OS.MIBICMPSTATS_EX categoriesFor: #dwErrors!**compiled accessors**!public! !
+!OS.MIBICMPSTATS_EX categoriesFor: #dwMsgs!**compiled accessors**!public! !
+!OS.MIBICMPSTATS_EX categoriesFor: #rgdwTypeCount!**compiled accessors**!public! !
 
-!MIBICMPSTATS_EX class methodsFor!
+!OS.MIBICMPSTATS_EX class methodsFor!
 
 defineFields
 	"Define the fields of the MIBICMPSTATS_EX structure.
@@ -77,6 +77,6 @@ defineFields
 
 getFieldNames
 	^#(#dwMsgs #dwErrors #rgdwTypeCount)! !
-!MIBICMPSTATS_EX class categoriesFor: #defineFields!initializing!public! !
-!MIBICMPSTATS_EX class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.MIBICMPSTATS_EX class categoriesFor: #defineFields!initializing!public! !
+!OS.MIBICMPSTATS_EX class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

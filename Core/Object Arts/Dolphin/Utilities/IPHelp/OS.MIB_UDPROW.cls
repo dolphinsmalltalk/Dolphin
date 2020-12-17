@@ -1,16 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ExternalStructure subclass: #MIB_UDPROW
+External.Structure subclass: #'OS.MIB_UDPROW'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_dwLocalAddr' -> 16r0.
 		'_OffsetOf_dwLocalPort' -> 16r4
 	}!
-MIB_UDPROW guid: (GUID fromString: '{3247a36f-48e5-4e25-ae9a-2e76f029e521}')!
-MIB_UDPROW comment: '<MIB_UDPROW> is an <ExternalStructure> class to wrap the struct ''Win32.MIB_UDPROW'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
+OS.MIB_UDPROW guid: (Core.GUID fromString: '{3247a36f-48e5-4e25-ae9a-2e76f029e521}')!
+OS.MIB_UDPROW comment: '<MIB_UDPROW> is an <ExternalStructure> class to wrap the struct ''Win32.MIB_UDPROW'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
 
@@ -24,8 +24,8 @@ struct tagMIB_UDPROW {
 	unsigned long dwLocalPort;
 } MIB_UDPROW;
 '!
-!MIB_UDPROW categoriesForClass!Win32-Structs! !
-!MIB_UDPROW methodsFor!
+!OS.MIB_UDPROW categoriesForClass!Win32-Structs! !
+!OS.MIB_UDPROW methodsFor!
 
 dwLocalAddr
 	"Answer the <Integer> value of the receiver's 'dwLocalAddr' field."
@@ -36,10 +36,10 @@ dwLocalPort
 	"Answer the <Integer> value of the receiver's 'dwLocalPort' field."
 
 	^bytes dwordAtOffset: _OffsetOf_dwLocalPort! !
-!MIB_UDPROW categoriesFor: #dwLocalAddr!**compiled accessors**!public! !
-!MIB_UDPROW categoriesFor: #dwLocalPort!**compiled accessors**!public! !
+!OS.MIB_UDPROW categoriesFor: #dwLocalAddr!**compiled accessors**!public! !
+!OS.MIB_UDPROW categoriesFor: #dwLocalPort!**compiled accessors**!public! !
 
-!MIB_UDPROW class methodsFor!
+!OS.MIB_UDPROW class methodsFor!
 
 defineFields
 	"Define the fields of the MIB_UDPROW structure.
@@ -63,6 +63,6 @@ defineFields
 
 getFieldNames
 	^#(#dwLocalAddr #dwLocalPort)! !
-!MIB_UDPROW class categoriesFor: #defineFields!initializing!public! !
-!MIB_UDPROW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.MIB_UDPROW class categoriesFor: #defineFields!initializing!public! !
+!OS.MIB_UDPROW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ExternalStructure subclass: #MIB_IPFORWARDROW
+External.Structure subclass: #'OS.MIB_IPFORWARDROW'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_dwForwardAge' -> 16r1C.
@@ -21,8 +21,8 @@ ExternalStructure subclass: #MIB_IPFORWARDROW
 		'_OffsetOf_dwForwardProto' -> 16r18.
 		'_OffsetOf_dwForwardType' -> 16r14
 	}!
-MIB_IPFORWARDROW guid: (GUID fromString: '{4e46d963-9a91-4e1a-b1eb-a9597b841a59}')!
-MIB_IPFORWARDROW comment: '<MIB_IPFORWARDROW> is an <ExternalStructure> class to wrap the struct ''Win32.MIB_IPFORWARDROW'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
+OS.MIB_IPFORWARDROW guid: (Core.GUID fromString: '{4e46d963-9a91-4e1a-b1eb-a9597b841a59}')!
+OS.MIB_IPFORWARDROW comment: '<MIB_IPFORWARDROW> is an <ExternalStructure> class to wrap the struct ''Win32.MIB_IPFORWARDROW'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
 
@@ -48,8 +48,8 @@ struct tagMIB_IPFORWARDROW {
 	unsigned long dwForwardMetric5;
 } MIB_IPFORWARDROW;
 '!
-!MIB_IPFORWARDROW categoriesForClass!Win32-Structs! !
-!MIB_IPFORWARDROW methodsFor!
+!OS.MIB_IPFORWARDROW categoriesForClass!Win32-Structs! !
+!OS.MIB_IPFORWARDROW methodsFor!
 
 dwForwardAge
 	"Answer the <Integer> value of the receiver's 'dwForwardAge' field."
@@ -120,22 +120,22 @@ dwForwardType
 	"Answer the <Integer> value of the receiver's 'dwForwardType' field."
 
 	^bytes dwordAtOffset: _OffsetOf_dwForwardType! !
-!MIB_IPFORWARDROW categoriesFor: #dwForwardAge!**compiled accessors**!public! !
-!MIB_IPFORWARDROW categoriesFor: #dwForwardDest!**compiled accessors**!public! !
-!MIB_IPFORWARDROW categoriesFor: #dwForwardIfIndex!**compiled accessors**!public! !
-!MIB_IPFORWARDROW categoriesFor: #dwForwardMask!**compiled accessors**!public! !
-!MIB_IPFORWARDROW categoriesFor: #dwForwardMetric1!**compiled accessors**!public! !
-!MIB_IPFORWARDROW categoriesFor: #dwForwardMetric2!**compiled accessors**!public! !
-!MIB_IPFORWARDROW categoriesFor: #dwForwardMetric3!**compiled accessors**!public! !
-!MIB_IPFORWARDROW categoriesFor: #dwForwardMetric4!**compiled accessors**!public! !
-!MIB_IPFORWARDROW categoriesFor: #dwForwardMetric5!**compiled accessors**!public! !
-!MIB_IPFORWARDROW categoriesFor: #dwForwardNextHop!**compiled accessors**!public! !
-!MIB_IPFORWARDROW categoriesFor: #dwForwardNextHopAS!**compiled accessors**!public! !
-!MIB_IPFORWARDROW categoriesFor: #dwForwardPolicy!**compiled accessors**!public! !
-!MIB_IPFORWARDROW categoriesFor: #dwForwardProto!**compiled accessors**!public! !
-!MIB_IPFORWARDROW categoriesFor: #dwForwardType!**compiled accessors**!public! !
+!OS.MIB_IPFORWARDROW categoriesFor: #dwForwardAge!**compiled accessors**!public! !
+!OS.MIB_IPFORWARDROW categoriesFor: #dwForwardDest!**compiled accessors**!public! !
+!OS.MIB_IPFORWARDROW categoriesFor: #dwForwardIfIndex!**compiled accessors**!public! !
+!OS.MIB_IPFORWARDROW categoriesFor: #dwForwardMask!**compiled accessors**!public! !
+!OS.MIB_IPFORWARDROW categoriesFor: #dwForwardMetric1!**compiled accessors**!public! !
+!OS.MIB_IPFORWARDROW categoriesFor: #dwForwardMetric2!**compiled accessors**!public! !
+!OS.MIB_IPFORWARDROW categoriesFor: #dwForwardMetric3!**compiled accessors**!public! !
+!OS.MIB_IPFORWARDROW categoriesFor: #dwForwardMetric4!**compiled accessors**!public! !
+!OS.MIB_IPFORWARDROW categoriesFor: #dwForwardMetric5!**compiled accessors**!public! !
+!OS.MIB_IPFORWARDROW categoriesFor: #dwForwardNextHop!**compiled accessors**!public! !
+!OS.MIB_IPFORWARDROW categoriesFor: #dwForwardNextHopAS!**compiled accessors**!public! !
+!OS.MIB_IPFORWARDROW categoriesFor: #dwForwardPolicy!**compiled accessors**!public! !
+!OS.MIB_IPFORWARDROW categoriesFor: #dwForwardProto!**compiled accessors**!public! !
+!OS.MIB_IPFORWARDROW categoriesFor: #dwForwardType!**compiled accessors**!public! !
 
-!MIB_IPFORWARDROW class methodsFor!
+!OS.MIB_IPFORWARDROW class methodsFor!
 
 defineFields
 	"Define the fields of the MIB_IPFORWARDROW structure.
@@ -207,6 +207,6 @@ defineFields
 
 getFieldNames
 	^#(#dwForwardDest #dwForwardMask #dwForwardPolicy #dwForwardNextHop #dwForwardIfIndex #dwForwardType #dwForwardProto #dwForwardAge #dwForwardNextHopAS #dwForwardMetric1 #dwForwardMetric2 #dwForwardMetric3 #dwForwardMetric4 #dwForwardMetric5)! !
-!MIB_IPFORWARDROW class categoriesFor: #defineFields!initializing!public! !
-!MIB_IPFORWARDROW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.MIB_IPFORWARDROW class categoriesFor: #defineFields!initializing!public! !
+!OS.MIB_IPFORWARDROW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

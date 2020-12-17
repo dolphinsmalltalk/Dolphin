@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ExternalStructure subclass: #MIB_TCPSTATS
+External.Structure subclass: #'OS.MIB_TCPSTATS'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_dwActiveOpens' -> 16r10.
@@ -22,8 +22,8 @@ ExternalStructure subclass: #MIB_TCPSTATS
 		'_OffsetOf_dwRtoMax' -> 16r8.
 		'_OffsetOf_dwRtoMin' -> 16r4
 	}!
-MIB_TCPSTATS guid: (GUID fromString: '{99d7d43b-06c6-4c23-813c-06ca8119f081}')!
-MIB_TCPSTATS comment: '<MIB_TCPSTATS> is an <ExternalStructure> class to wrap the struct ''Win32.MIB_TCPSTATS'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
+OS.MIB_TCPSTATS guid: (Core.GUID fromString: '{99d7d43b-06c6-4c23-813c-06ca8119f081}')!
+OS.MIB_TCPSTATS comment: '<MIB_TCPSTATS> is an <ExternalStructure> class to wrap the struct ''Win32.MIB_TCPSTATS'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
 
@@ -50,8 +50,8 @@ struct tagMIB_TCPSTATS {
 	unsigned long dwNumConns;
 } MIB_TCPSTATS;
 '!
-!MIB_TCPSTATS categoriesForClass!Win32-Structs! !
-!MIB_TCPSTATS methodsFor!
+!OS.MIB_TCPSTATS categoriesForClass!Win32-Structs! !
+!OS.MIB_TCPSTATS methodsFor!
 
 dwActiveOpens
 	"Answer the <Integer> value of the receiver's 'dwActiveOpens' field."
@@ -127,23 +127,23 @@ dwRtoMin
 	"Answer the <Integer> value of the receiver's 'dwRtoMin' field."
 
 	^bytes dwordAtOffset: _OffsetOf_dwRtoMin! !
-!MIB_TCPSTATS categoriesFor: #dwActiveOpens!**compiled accessors**!public! !
-!MIB_TCPSTATS categoriesFor: #dwAttemptFails!**compiled accessors**!public! !
-!MIB_TCPSTATS categoriesFor: #dwCurrEstab!**compiled accessors**!public! !
-!MIB_TCPSTATS categoriesFor: #dwEstabResets!**compiled accessors**!public! !
-!MIB_TCPSTATS categoriesFor: #dwInErrs!**compiled accessors**!public! !
-!MIB_TCPSTATS categoriesFor: #dwInSegs!**compiled accessors**!public! !
-!MIB_TCPSTATS categoriesFor: #dwMaxConn!**compiled accessors**!public! !
-!MIB_TCPSTATS categoriesFor: #dwNumConns!**compiled accessors**!public! !
-!MIB_TCPSTATS categoriesFor: #dwOutRsts!**compiled accessors**!public! !
-!MIB_TCPSTATS categoriesFor: #dwOutSegs!**compiled accessors**!public! !
-!MIB_TCPSTATS categoriesFor: #dwPassiveOpens!**compiled accessors**!public! !
-!MIB_TCPSTATS categoriesFor: #dwRetransSegs!**compiled accessors**!public! !
-!MIB_TCPSTATS categoriesFor: #dwRtoAlgorithm!**compiled accessors**!public! !
-!MIB_TCPSTATS categoriesFor: #dwRtoMax!**compiled accessors**!public! !
-!MIB_TCPSTATS categoriesFor: #dwRtoMin!**compiled accessors**!public! !
+!OS.MIB_TCPSTATS categoriesFor: #dwActiveOpens!**compiled accessors**!public! !
+!OS.MIB_TCPSTATS categoriesFor: #dwAttemptFails!**compiled accessors**!public! !
+!OS.MIB_TCPSTATS categoriesFor: #dwCurrEstab!**compiled accessors**!public! !
+!OS.MIB_TCPSTATS categoriesFor: #dwEstabResets!**compiled accessors**!public! !
+!OS.MIB_TCPSTATS categoriesFor: #dwInErrs!**compiled accessors**!public! !
+!OS.MIB_TCPSTATS categoriesFor: #dwInSegs!**compiled accessors**!public! !
+!OS.MIB_TCPSTATS categoriesFor: #dwMaxConn!**compiled accessors**!public! !
+!OS.MIB_TCPSTATS categoriesFor: #dwNumConns!**compiled accessors**!public! !
+!OS.MIB_TCPSTATS categoriesFor: #dwOutRsts!**compiled accessors**!public! !
+!OS.MIB_TCPSTATS categoriesFor: #dwOutSegs!**compiled accessors**!public! !
+!OS.MIB_TCPSTATS categoriesFor: #dwPassiveOpens!**compiled accessors**!public! !
+!OS.MIB_TCPSTATS categoriesFor: #dwRetransSegs!**compiled accessors**!public! !
+!OS.MIB_TCPSTATS categoriesFor: #dwRtoAlgorithm!**compiled accessors**!public! !
+!OS.MIB_TCPSTATS categoriesFor: #dwRtoMax!**compiled accessors**!public! !
+!OS.MIB_TCPSTATS categoriesFor: #dwRtoMin!**compiled accessors**!public! !
 
-!MIB_TCPSTATS class methodsFor!
+!OS.MIB_TCPSTATS class methodsFor!
 
 defineFields
 	"Define the fields of the MIB_TCPSTATS structure.
@@ -219,6 +219,6 @@ defineFields
 
 getFieldNames
 	^#(#dwRtoAlgorithm #dwRtoMin #dwRtoMax #dwMaxConn #dwActiveOpens #dwPassiveOpens #dwAttemptFails #dwEstabResets #dwCurrEstab #dwInSegs #dwOutSegs #dwRetransSegs #dwInErrs #dwOutRsts #dwNumConns)! !
-!MIB_TCPSTATS class categoriesFor: #defineFields!initializing!public! !
-!MIB_TCPSTATS class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.MIB_TCPSTATS class categoriesFor: #defineFields!initializing!public! !
+!OS.MIB_TCPSTATS class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

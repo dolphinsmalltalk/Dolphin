@@ -1,17 +1,17 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ExternalStructure subclass: #IpHlpApiTableStruct
+External.Structure subclass: #'OS.IpHlpApiTableStruct'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_dwNumEntries' -> 16r0
 	}!
-IpHlpApiTableStruct guid: (GUID fromString: '{4571e3b9-bbac-4c7c-a961-a048818d482b}')!
-IpHlpApiTableStruct comment: ''!
-!IpHlpApiTableStruct categoriesForClass!External-Data-Structured! !
-!IpHlpApiTableStruct methodsFor!
+OS.IpHlpApiTableStruct guid: (Core.GUID fromString: '{4571e3b9-bbac-4c7c-a961-a048818d482b}')!
+OS.IpHlpApiTableStruct comment: ''!
+!OS.IpHlpApiTableStruct categoriesForClass!External-Data-Structured! !
+!OS.IpHlpApiTableStruct methodsFor!
 
 dwNumEntries
 	"Answer the <Integer> value of the receiver's 'dwNumEntries' field."
@@ -20,10 +20,10 @@ dwNumEntries
 
 table
 	^self subclassResponsibility! !
-!IpHlpApiTableStruct categoriesFor: #dwNumEntries!**compiled accessors**!public! !
-!IpHlpApiTableStruct categoriesFor: #table!accessing!public! !
+!OS.IpHlpApiTableStruct categoriesFor: #dwNumEntries!**compiled accessors**!public! !
+!OS.IpHlpApiTableStruct categoriesFor: #table!accessing!public! !
 
-!IpHlpApiTableStruct class methodsFor!
+!OS.IpHlpApiTableStruct class methodsFor!
 
 defineFields
 	"
@@ -34,6 +34,6 @@ defineFields
 
 getFieldNames
 	^#(#dwNumEntries)! !
-!IpHlpApiTableStruct class categoriesFor: #defineFields!initializing!public! !
-!IpHlpApiTableStruct class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.IpHlpApiTableStruct class categoriesFor: #defineFields!initializing!public! !
+!OS.IpHlpApiTableStruct class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

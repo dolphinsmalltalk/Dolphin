@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-IpHlpApiTableStruct subclass: #IP_ADAPTER_ORDER_MAP
+OS.IpHlpApiTableStruct subclass: #'OS.IP_ADAPTER_ORDER_MAP'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_table' -> 16r4
 	}!
-IP_ADAPTER_ORDER_MAP guid: (GUID fromString: '{975761ac-0340-468d-bae7-f24198e8f83a}')!
-IP_ADAPTER_ORDER_MAP comment: '<IP_ADAPTER_ORDER_MAP> is an <ExternalStructure> class to wrap the struct ''Win32.IP_ADAPTER_ORDER_MAP'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
+OS.IP_ADAPTER_ORDER_MAP guid: (Core.GUID fromString: '{975761ac-0340-468d-bae7-f24198e8f83a}')!
+OS.IP_ADAPTER_ORDER_MAP comment: '<IP_ADAPTER_ORDER_MAP> is an <ExternalStructure> class to wrap the struct ''Win32.IP_ADAPTER_ORDER_MAP'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
 
@@ -23,8 +23,8 @@ struct tagIP_ADAPTER_ORDER_MAP {
 	unsigned long AdapterOrder[1];
 } IP_ADAPTER_ORDER_MAP;
 '!
-!IP_ADAPTER_ORDER_MAP categoriesForClass!Win32-Structs! !
-!IP_ADAPTER_ORDER_MAP methodsFor!
+!OS.IP_ADAPTER_ORDER_MAP categoriesForClass!Win32-Structs! !
+!OS.IP_ADAPTER_ORDER_MAP methodsFor!
 
 table
 	"Answer the <StructureArray> value of the receiver's 'table' field."
@@ -33,9 +33,9 @@ table
 		fromAddress: bytes yourAddress + _OffsetOf_table
 		length: self dwNumEntries
 		elementClass: DWORD! !
-!IP_ADAPTER_ORDER_MAP categoriesFor: #table!**compiled accessors**!public! !
+!OS.IP_ADAPTER_ORDER_MAP categoriesFor: #table!**compiled accessors**!public! !
 
-!IP_ADAPTER_ORDER_MAP class methodsFor!
+!OS.IP_ADAPTER_ORDER_MAP class methodsFor!
 
 defineFields
 	"Define the fields of the IP_ADAPTER_ORDER_MAP structure.
@@ -59,6 +59,6 @@ defineFields
 
 getFieldNames
 	^#(#dwNumEntries #table)! !
-!IP_ADAPTER_ORDER_MAP class categoriesFor: #defineFields!initializing!public! !
-!IP_ADAPTER_ORDER_MAP class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.IP_ADAPTER_ORDER_MAP class categoriesFor: #defineFields!initializing!public! !
+!OS.IP_ADAPTER_ORDER_MAP class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-IpHlpApiTableStruct subclass: #MIB_IPADDRTABLE
+OS.IpHlpApiTableStruct subclass: #'OS.MIB_IPADDRTABLE'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_table' -> 16r4
 	}!
-MIB_IPADDRTABLE guid: (GUID fromString: '{cffa7131-3c9d-4864-9a6a-cfe3ff42a661}')!
-MIB_IPADDRTABLE comment: '<MIB_IPADDRTABLE> is an <ExternalStructure> class to wrap the struct ''Win32.MIB_IPADDRTABLE'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
+OS.MIB_IPADDRTABLE guid: (Core.GUID fromString: '{cffa7131-3c9d-4864-9a6a-cfe3ff42a661}')!
+OS.MIB_IPADDRTABLE comment: '<MIB_IPADDRTABLE> is an <ExternalStructure> class to wrap the struct ''Win32.MIB_IPADDRTABLE'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
 
@@ -23,8 +23,8 @@ struct tagMIB_IPADDRTABLE {
 	MIB_IPADDRROW table[1];
 } MIB_IPADDRTABLE;
 '!
-!MIB_IPADDRTABLE categoriesForClass!Win32-Structs! !
-!MIB_IPADDRTABLE methodsFor!
+!OS.MIB_IPADDRTABLE categoriesForClass!Win32-Structs! !
+!OS.MIB_IPADDRTABLE methodsFor!
 
 table
 	"Answer the <StructureArray> value of the receiver's 'table' field."
@@ -33,9 +33,9 @@ table
 		fromAddress: bytes yourAddress + _OffsetOf_table
 		length: self dwNumEntries
 		elementClass: MIB_IPADDRROW! !
-!MIB_IPADDRTABLE categoriesFor: #table!**compiled accessors**!public! !
+!OS.MIB_IPADDRTABLE categoriesFor: #table!**compiled accessors**!public! !
 
-!MIB_IPADDRTABLE class methodsFor!
+!OS.MIB_IPADDRTABLE class methodsFor!
 
 defineFields
 	"Define the fields of the MIB_IPADDRTABLE structure.
@@ -49,7 +49,7 @@ defineFields
 "
 
 	super defineFields.
-	self 
+	self
 		defineField: #table
 		type: ((StructureArrayField type: MIB_IPADDRROW lengthField: #dwNumEntries)
 				beReadOnly;
@@ -59,6 +59,6 @@ defineFields
 
 getFieldNames
 	^#(#dwNumEntries #table)! !
-!MIB_IPADDRTABLE class categoriesFor: #defineFields!initializing!public! !
-!MIB_IPADDRTABLE class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.MIB_IPADDRTABLE class categoriesFor: #defineFields!initializing!public! !
+!OS.MIB_IPADDRTABLE class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

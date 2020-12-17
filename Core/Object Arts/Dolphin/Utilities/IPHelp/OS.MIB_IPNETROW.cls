@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ExternalStructure subclass: #MIB_IPNETROW
+External.Structure subclass: #'OS.MIB_IPNETROW'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_bPhysAddr' -> 16r8.
@@ -12,8 +12,8 @@ ExternalStructure subclass: #MIB_IPNETROW
 		'_OffsetOf_dwPhysAddrLen' -> 16r4.
 		'_OffsetOf_dwType' -> 16r14
 	}!
-MIB_IPNETROW guid: (GUID fromString: '{5aa4fcea-d4da-49bb-a756-7ca522c111d3}')!
-MIB_IPNETROW comment: '<MIB_IPNETROW> is an <ExternalStructure> class to wrap the struct ''Win32.MIB_IPNETROW'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
+OS.MIB_IPNETROW guid: (Core.GUID fromString: '{5aa4fcea-d4da-49bb-a756-7ca522c111d3}')!
+OS.MIB_IPNETROW comment: '<MIB_IPNETROW> is an <ExternalStructure> class to wrap the struct ''Win32.MIB_IPNETROW'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
 
@@ -30,8 +30,8 @@ struct tagMIB_IPNETROW {
 	unsigned long dwType;
 } MIB_IPNETROW;
 '!
-!MIB_IPNETROW categoriesForClass!Win32-Structs! !
-!MIB_IPNETROW methodsFor!
+!OS.MIB_IPNETROW categoriesForClass!Win32-Structs! !
+!OS.MIB_IPNETROW methodsFor!
 
 bPhysAddr
 	"Answer the <ByteArray> value of the receiver's 'bPhysAddr' field."
@@ -57,13 +57,13 @@ dwType
 	"Answer the <Integer> value of the receiver's 'dwType' field."
 
 	^bytes dwordAtOffset: _OffsetOf_dwType! !
-!MIB_IPNETROW categoriesFor: #bPhysAddr!**compiled accessors**!public! !
-!MIB_IPNETROW categoriesFor: #dwAddr!**compiled accessors**!public! !
-!MIB_IPNETROW categoriesFor: #dwIndex!**compiled accessors**!public! !
-!MIB_IPNETROW categoriesFor: #dwPhysAddrLen!**compiled accessors**!public! !
-!MIB_IPNETROW categoriesFor: #dwType!**compiled accessors**!public! !
+!OS.MIB_IPNETROW categoriesFor: #bPhysAddr!**compiled accessors**!public! !
+!OS.MIB_IPNETROW categoriesFor: #dwAddr!**compiled accessors**!public! !
+!OS.MIB_IPNETROW categoriesFor: #dwIndex!**compiled accessors**!public! !
+!OS.MIB_IPNETROW categoriesFor: #dwPhysAddrLen!**compiled accessors**!public! !
+!OS.MIB_IPNETROW categoriesFor: #dwType!**compiled accessors**!public! !
 
-!MIB_IPNETROW class methodsFor!
+!OS.MIB_IPNETROW class methodsFor!
 
 defineFields
 	"Define the fields of the MIB_IPNETROW structure.
@@ -101,6 +101,6 @@ defineFields
 
 getFieldNames
 	^#(#dwIndex #dwPhysAddrLen #bPhysAddr #dwAddr #dwType)! !
-!MIB_IPNETROW class categoriesFor: #defineFields!initializing!public! !
-!MIB_IPNETROW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.MIB_IPNETROW class categoriesFor: #defineFields!initializing!public! !
+!OS.MIB_IPNETROW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

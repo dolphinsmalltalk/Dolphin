@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ExternalStructure subclass: #MIB_UDPSTATS
+External.Structure subclass: #'OS.MIB_UDPSTATS'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_dwInDatagrams' -> 16r0.
@@ -12,8 +12,8 @@ ExternalStructure subclass: #MIB_UDPSTATS
 		'_OffsetOf_dwNumAddrs' -> 16r10.
 		'_OffsetOf_dwOutDatagrams' -> 16rC
 	}!
-MIB_UDPSTATS guid: (GUID fromString: '{c9d1622e-d10d-4ba8-a634-acebf006ae2e}')!
-MIB_UDPSTATS comment: '<MIB_UDPSTATS> is an <ExternalStructure> class to wrap the struct ''Win32.MIB_UDPSTATS'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
+OS.MIB_UDPSTATS guid: (Core.GUID fromString: '{c9d1622e-d10d-4ba8-a634-acebf006ae2e}')!
+OS.MIB_UDPSTATS comment: '<MIB_UDPSTATS> is an <ExternalStructure> class to wrap the struct ''Win32.MIB_UDPSTATS'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
 
@@ -30,8 +30,8 @@ struct tagMIB_UDPSTATS {
 	unsigned long dwNumAddrs;
 } MIB_UDPSTATS;
 '!
-!MIB_UDPSTATS categoriesForClass!Win32-Structs! !
-!MIB_UDPSTATS methodsFor!
+!OS.MIB_UDPSTATS categoriesForClass!Win32-Structs! !
+!OS.MIB_UDPSTATS methodsFor!
 
 dwInDatagrams
 	"Answer the <Integer> value of the receiver's 'dwInDatagrams' field."
@@ -57,13 +57,13 @@ dwOutDatagrams
 	"Answer the <Integer> value of the receiver's 'dwOutDatagrams' field."
 
 	^bytes dwordAtOffset: _OffsetOf_dwOutDatagrams! !
-!MIB_UDPSTATS categoriesFor: #dwInDatagrams!**compiled accessors**!public! !
-!MIB_UDPSTATS categoriesFor: #dwInErrors!**compiled accessors**!public! !
-!MIB_UDPSTATS categoriesFor: #dwNoPorts!**compiled accessors**!public! !
-!MIB_UDPSTATS categoriesFor: #dwNumAddrs!**compiled accessors**!public! !
-!MIB_UDPSTATS categoriesFor: #dwOutDatagrams!**compiled accessors**!public! !
+!OS.MIB_UDPSTATS categoriesFor: #dwInDatagrams!**compiled accessors**!public! !
+!OS.MIB_UDPSTATS categoriesFor: #dwInErrors!**compiled accessors**!public! !
+!OS.MIB_UDPSTATS categoriesFor: #dwNoPorts!**compiled accessors**!public! !
+!OS.MIB_UDPSTATS categoriesFor: #dwNumAddrs!**compiled accessors**!public! !
+!OS.MIB_UDPSTATS categoriesFor: #dwOutDatagrams!**compiled accessors**!public! !
 
-!MIB_UDPSTATS class methodsFor!
+!OS.MIB_UDPSTATS class methodsFor!
 
 defineFields
 	"Define the fields of the MIB_UDPSTATS structure.
@@ -89,6 +89,6 @@ defineFields
 
 getFieldNames
 	^#(#dwInDatagrams #dwNoPorts #dwInErrors #dwOutDatagrams #dwNumAddrs)! !
-!MIB_UDPSTATS class categoriesFor: #defineFields!initializing!public! !
-!MIB_UDPSTATS class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.MIB_UDPSTATS class categoriesFor: #defineFields!initializing!public! !
+!OS.MIB_UDPSTATS class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

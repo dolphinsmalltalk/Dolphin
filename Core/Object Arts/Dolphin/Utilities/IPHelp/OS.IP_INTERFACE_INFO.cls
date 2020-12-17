@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-IpHlpApiTableStruct subclass: #IP_INTERFACE_INFO
+OS.IpHlpApiTableStruct subclass: #'OS.IP_INTERFACE_INFO'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_table' -> 16r4
 	}!
-IP_INTERFACE_INFO guid: (GUID fromString: '{e886246a-162e-4654-8719-d4c0477f0bf3}')!
-IP_INTERFACE_INFO comment: '<IP_INTERFACE_INFO> is an <ExternalStructure> class to wrap the struct ''Win32.IP_INTERFACE_INFO'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
+OS.IP_INTERFACE_INFO guid: (Core.GUID fromString: '{e886246a-162e-4654-8719-d4c0477f0bf3}')!
+OS.IP_INTERFACE_INFO comment: '<IP_INTERFACE_INFO> is an <ExternalStructure> class to wrap the struct ''Win32.IP_INTERFACE_INFO'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
 
@@ -23,8 +23,8 @@ struct tagIP_INTERFACE_INFO {
 	IP_ADAPTER_INDEX_MAP Adapter[1];
 } IP_INTERFACE_INFO;
 '!
-!IP_INTERFACE_INFO categoriesForClass!Win32-Structs! !
-!IP_INTERFACE_INFO methodsFor!
+!OS.IP_INTERFACE_INFO categoriesForClass!Win32-Structs! !
+!OS.IP_INTERFACE_INFO methodsFor!
 
 table
 	"Answer the <StructureArray> value of the receiver's 'table' field."
@@ -33,9 +33,9 @@ table
 		fromAddress: bytes yourAddress + _OffsetOf_table
 		length: self dwNumEntries
 		elementClass: IP_ADAPTER_INDEX_MAP! !
-!IP_INTERFACE_INFO categoriesFor: #table!**compiled accessors**!public! !
+!OS.IP_INTERFACE_INFO categoriesFor: #table!**compiled accessors**!public! !
 
-!IP_INTERFACE_INFO class methodsFor!
+!OS.IP_INTERFACE_INFO class methodsFor!
 
 defineFields
 	"Define the fields of the IP_INTERFACE_INFO structure.
@@ -49,7 +49,7 @@ defineFields
 "
 
 	super defineFields.
-	self 
+	self
 		defineField: #table
 		type: ((StructureArrayField type: IP_ADAPTER_INDEX_MAP lengthField: #dwNumEntries)
 				beReadOnly;
@@ -59,6 +59,6 @@ defineFields
 
 getFieldNames
 	^#(#dwNumEntries #table)! !
-!IP_INTERFACE_INFO class categoriesFor: #defineFields!initializing!public! !
-!IP_INTERFACE_INFO class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.IP_INTERFACE_INFO class categoriesFor: #defineFields!initializing!public! !
+!OS.IP_INTERFACE_INFO class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

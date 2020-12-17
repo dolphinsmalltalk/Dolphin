@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-MIB_TCPROW subclass: #MIB_TCPEXROW
+OS.MIB_TCPROW subclass: #'OS.MIB_TCPEXROW'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_dwProcessId' -> 16r14
 	}!
-MIB_TCPEXROW guid: (GUID fromString: '{f2b03657-a3d2-486f-9d24-d597de178487}')!
-MIB_TCPEXROW comment: '<MIB_TCPEXROW> is an <ExternalStructure> class to wrap the struct ''Win32.MIB_TCPEXROW'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
+OS.MIB_TCPEXROW guid: (Core.GUID fromString: '{f2b03657-a3d2-486f-9d24-d597de178487}')!
+OS.MIB_TCPEXROW comment: '<MIB_TCPEXROW> is an <ExternalStructure> class to wrap the struct ''Win32.MIB_TCPEXROW'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
 
@@ -27,16 +27,16 @@ struct tagMIB_TCPEXROW {
 	unsigned long dwProcessId;
 } MIB_TCPEXROW;
 '!
-!MIB_TCPEXROW categoriesForClass!Win32-Structs! !
-!MIB_TCPEXROW methodsFor!
+!OS.MIB_TCPEXROW categoriesForClass!Win32-Structs! !
+!OS.MIB_TCPEXROW methodsFor!
 
 dwProcessId
 	"Answer the <Integer> value of the receiver's 'dwProcessId' field."
 
 	^bytes dwordAtOffset: _OffsetOf_dwProcessId! !
-!MIB_TCPEXROW categoriesFor: #dwProcessId!**compiled accessors**!public! !
+!OS.MIB_TCPEXROW categoriesFor: #dwProcessId!**compiled accessors**!public! !
 
-!MIB_TCPEXROW class methodsFor!
+!OS.MIB_TCPEXROW class methodsFor!
 
 defineFields
 	"Define the fields of the MIB_TCPEXROW structure.
@@ -62,6 +62,6 @@ defineFields
 
 getFieldNames
 	^#(#dwState #dwLocalAddr #dwLocalPort #dwRemoteAddr #dwRemotePort #dwProcessId)! !
-!MIB_TCPEXROW class categoriesFor: #defineFields!initializing!public! !
-!MIB_TCPEXROW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.MIB_TCPEXROW class categoriesFor: #defineFields!initializing!public! !
+!OS.MIB_TCPEXROW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

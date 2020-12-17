@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ExternalStructure subclass: #IP_PER_ADAPTER_INFO
+External.Structure subclass: #'OS.IP_PER_ADAPTER_INFO'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_AutoconfigActive' -> 16r4.
@@ -11,8 +11,8 @@ ExternalStructure subclass: #IP_PER_ADAPTER_INFO
 		'_OffsetOf_CurrentDnsServer' -> 16r8.
 		'_OffsetOf_DnsServerList' -> 16rC
 	}!
-IP_PER_ADAPTER_INFO guid: (GUID fromString: '{e2022105-d714-4780-a2dc-5db76307f035}')!
-IP_PER_ADAPTER_INFO comment: '<IP_PER_ADAPTER_INFO> is an <ExternalStructure> class to wrap the struct ''Win32.IP_PER_ADAPTER_INFO'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
+OS.IP_PER_ADAPTER_INFO guid: (Core.GUID fromString: '{e2022105-d714-4780-a2dc-5db76307f035}')!
+OS.IP_PER_ADAPTER_INFO comment: '<IP_PER_ADAPTER_INFO> is an <ExternalStructure> class to wrap the struct ''Win32.IP_PER_ADAPTER_INFO'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
 
@@ -28,8 +28,8 @@ struct tagIP_PER_ADAPTER_INFO {
 	IP_ADDR_STRING DnsServerList;
 } IP_PER_ADAPTER_INFO;
 '!
-!IP_PER_ADAPTER_INFO categoriesForClass!Win32-Structs! !
-!IP_PER_ADAPTER_INFO methodsFor!
+!OS.IP_PER_ADAPTER_INFO categoriesForClass!Win32-Structs! !
+!OS.IP_PER_ADAPTER_INFO methodsFor!
 
 AutoconfigActive
 	"Answer the <Integer> value of the receiver's 'AutoconfigActive' field."
@@ -50,12 +50,12 @@ DnsServerList
 	"Answer the <IP_ADDR_STRING> value of the receiver's 'DnsServerList' field."
 
 	^IP_ADDR_STRING fromAddress: bytes yourAddress + _OffsetOf_DnsServerList! !
-!IP_PER_ADAPTER_INFO categoriesFor: #AutoconfigActive!**compiled accessors**!public! !
-!IP_PER_ADAPTER_INFO categoriesFor: #AutoconfigEnabled!**compiled accessors**!public! !
-!IP_PER_ADAPTER_INFO categoriesFor: #CurrentDnsServer!**compiled accessors**!public! !
-!IP_PER_ADAPTER_INFO categoriesFor: #DnsServerList!**compiled accessors**!public! !
+!OS.IP_PER_ADAPTER_INFO categoriesFor: #AutoconfigActive!**compiled accessors**!public! !
+!OS.IP_PER_ADAPTER_INFO categoriesFor: #AutoconfigEnabled!**compiled accessors**!public! !
+!OS.IP_PER_ADAPTER_INFO categoriesFor: #CurrentDnsServer!**compiled accessors**!public! !
+!OS.IP_PER_ADAPTER_INFO categoriesFor: #DnsServerList!**compiled accessors**!public! !
 
-!IP_PER_ADAPTER_INFO class methodsFor!
+!OS.IP_PER_ADAPTER_INFO class methodsFor!
 
 defineFields
 	"Define the fields of the IP_PER_ADAPTER_INFO structure.
@@ -91,6 +91,6 @@ defineFields
 
 getFieldNames
 	^#(#AutoconfigEnabled #AutoconfigActive #CurrentDnsServer #DnsServerList)! !
-!IP_PER_ADAPTER_INFO class categoriesFor: #defineFields!initializing!public! !
-!IP_PER_ADAPTER_INFO class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.IP_PER_ADAPTER_INFO class categoriesFor: #defineFields!initializing!public! !
+!OS.IP_PER_ADAPTER_INFO class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

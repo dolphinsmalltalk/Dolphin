@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-MIB_TCPTABLE subclass: #MIB_TCPEXTABLE
+OS.MIB_TCPTABLE subclass: #'OS.MIB_TCPEXTABLE'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-MIB_TCPEXTABLE guid: (GUID fromString: '{3582e317-1c8d-46de-b0aa-21ada27c614f}')!
-MIB_TCPEXTABLE comment: '<MIB_TCPEXTABLE> is an <ExternalStructure> class to wrap the struct ''Win32.MIB_TCPEXTABLE'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
+OS.MIB_TCPEXTABLE guid: (Core.GUID fromString: '{3582e317-1c8d-46de-b0aa-21ada27c614f}')!
+OS.MIB_TCPEXTABLE comment: '<MIB_TCPEXTABLE> is an <ExternalStructure> class to wrap the struct ''Win32.MIB_TCPEXTABLE'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
 
@@ -21,8 +21,8 @@ struct tagMIB_TCPEXTABLE {
 	MIB_TCPEXROW table[1];
 } MIB_TCPEXTABLE;
 '!
-!MIB_TCPEXTABLE categoriesForClass!Win32-Structs! !
-!MIB_TCPEXTABLE methodsFor!
+!OS.MIB_TCPEXTABLE categoriesForClass!Win32-Structs! !
+!OS.MIB_TCPEXTABLE methodsFor!
 
 table
 	"Answer the <StructureArray> value of the receiver's 'table' field."
@@ -31,9 +31,9 @@ table
 		fromAddress: bytes yourAddress + _OffsetOf_table
 		length: self dwNumEntries
 		elementClass: MIB_TCPEXROW! !
-!MIB_TCPEXTABLE categoriesFor: #table!**compiled accessors**!public! !
+!OS.MIB_TCPEXTABLE categoriesFor: #table!**compiled accessors**!public! !
 
-!MIB_TCPEXTABLE class methodsFor!
+!OS.MIB_TCPEXTABLE class methodsFor!
 
 defineFields
 	"Define the fields of the MIB_TCPEXTABLE structure.
@@ -57,5 +57,5 @@ defineFields
 					yourself)
 			offset: 4.
 	self byteSize: 28! !
-!MIB_TCPEXTABLE class categoriesFor: #defineFields!initializing!public! !
+!OS.MIB_TCPEXTABLE class categoriesFor: #defineFields!initializing!public! !
 

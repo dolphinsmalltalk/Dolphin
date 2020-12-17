@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ExternalStructure subclass: #IP_ADAPTER_INFO
+External.Structure subclass: #'OS.IP_ADAPTER_INFO'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_AdapterName' -> 16r8.
@@ -25,8 +25,8 @@ ExternalStructure subclass: #IP_ADAPTER_INFO
 		'_OffsetOf_SecondaryWinsServer' -> 16r250.
 		'_OffsetOf_type' -> 16r1A0
 	}!
-IP_ADAPTER_INFO guid: (GUID fromString: '{30f77c44-1f24-4b31-9311-dc3a730c4d4e}')!
-IP_ADAPTER_INFO comment: '<IP_ADAPTER_INFO> is an <ExternalStructure> class to wrap the struct ''Win32.IP_ADAPTER_INFO'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
+OS.IP_ADAPTER_INFO guid: (Core.GUID fromString: '{30f77c44-1f24-4b31-9311-dc3a730c4d4e}')!
+OS.IP_ADAPTER_INFO comment: '<IP_ADAPTER_INFO> is an <ExternalStructure> class to wrap the struct ''Win32.IP_ADAPTER_INFO'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
 
@@ -56,8 +56,8 @@ struct tagIP_ADAPTER_INFO {
 	long LeaseExpires;
 } IP_ADAPTER_INFO;
 '!
-!IP_ADAPTER_INFO categoriesForClass!Win32-Structs! !
-!IP_ADAPTER_INFO methodsFor!
+!OS.IP_ADAPTER_INFO categoriesForClass!Win32-Structs! !
+!OS.IP_ADAPTER_INFO methodsFor!
 
 AdapterName
 	"Answer the <AnsiString> value of the receiver's 'AdapterName' field."
@@ -148,26 +148,26 @@ type
 	"Answer the <Integer> value of the receiver's 'type' field."
 
 	^bytes dwordAtOffset: _OffsetOf_type! !
-!IP_ADAPTER_INFO categoriesFor: #AdapterName!**compiled accessors**!public! !
-!IP_ADAPTER_INFO categoriesFor: #Address!**compiled accessors**!public! !
-!IP_ADAPTER_INFO categoriesFor: #AddressLength!**compiled accessors**!public! !
-!IP_ADAPTER_INFO categoriesFor: #ComboIndex!**compiled accessors**!public! !
-!IP_ADAPTER_INFO categoriesFor: #CurrentIpAddress!**compiled accessors**!public! !
-!IP_ADAPTER_INFO categoriesFor: #Description!**compiled accessors**!public! !
-!IP_ADAPTER_INFO categoriesFor: #DhcpEnabled!**compiled accessors**!public! !
-!IP_ADAPTER_INFO categoriesFor: #DhcpServer!**compiled accessors**!public! !
-!IP_ADAPTER_INFO categoriesFor: #GatewayList!**compiled accessors**!public! !
-!IP_ADAPTER_INFO categoriesFor: #HaveWins!**compiled accessors**!public! !
-!IP_ADAPTER_INFO categoriesFor: #index!**compiled accessors**!public! !
-!IP_ADAPTER_INFO categoriesFor: #IpAddressList!**compiled accessors**!public! !
-!IP_ADAPTER_INFO categoriesFor: #LeaseExpires!**compiled accessors**!public! !
-!IP_ADAPTER_INFO categoriesFor: #LeaseObtained!**compiled accessors**!public! !
-!IP_ADAPTER_INFO categoriesFor: #Next!**compiled accessors**!public! !
-!IP_ADAPTER_INFO categoriesFor: #PrimaryWinsServer!**compiled accessors**!public! !
-!IP_ADAPTER_INFO categoriesFor: #SecondaryWinsServer!**compiled accessors**!public! !
-!IP_ADAPTER_INFO categoriesFor: #type!**compiled accessors**!public! !
+!OS.IP_ADAPTER_INFO categoriesFor: #AdapterName!**compiled accessors**!public! !
+!OS.IP_ADAPTER_INFO categoriesFor: #Address!**compiled accessors**!public! !
+!OS.IP_ADAPTER_INFO categoriesFor: #AddressLength!**compiled accessors**!public! !
+!OS.IP_ADAPTER_INFO categoriesFor: #ComboIndex!**compiled accessors**!public! !
+!OS.IP_ADAPTER_INFO categoriesFor: #CurrentIpAddress!**compiled accessors**!public! !
+!OS.IP_ADAPTER_INFO categoriesFor: #Description!**compiled accessors**!public! !
+!OS.IP_ADAPTER_INFO categoriesFor: #DhcpEnabled!**compiled accessors**!public! !
+!OS.IP_ADAPTER_INFO categoriesFor: #DhcpServer!**compiled accessors**!public! !
+!OS.IP_ADAPTER_INFO categoriesFor: #GatewayList!**compiled accessors**!public! !
+!OS.IP_ADAPTER_INFO categoriesFor: #HaveWins!**compiled accessors**!public! !
+!OS.IP_ADAPTER_INFO categoriesFor: #index!**compiled accessors**!public! !
+!OS.IP_ADAPTER_INFO categoriesFor: #IpAddressList!**compiled accessors**!public! !
+!OS.IP_ADAPTER_INFO categoriesFor: #LeaseExpires!**compiled accessors**!public! !
+!OS.IP_ADAPTER_INFO categoriesFor: #LeaseObtained!**compiled accessors**!public! !
+!OS.IP_ADAPTER_INFO categoriesFor: #Next!**compiled accessors**!public! !
+!OS.IP_ADAPTER_INFO categoriesFor: #PrimaryWinsServer!**compiled accessors**!public! !
+!OS.IP_ADAPTER_INFO categoriesFor: #SecondaryWinsServer!**compiled accessors**!public! !
+!OS.IP_ADAPTER_INFO categoriesFor: #type!**compiled accessors**!public! !
 
-!IP_ADAPTER_INFO class methodsFor!
+!OS.IP_ADAPTER_INFO class methodsFor!
 
 defineFields
 	"Define the fields of the IP_ADAPTER_INFO structure.
@@ -275,6 +275,6 @@ defineFields
 
 getFieldNames
 	^#(#Next #ComboIndex #AdapterName #Description #AddressLength #Address #index #type #DhcpEnabled #CurrentIpAddress #IpAddressList #GatewayList #DhcpServer #HaveWins #PrimaryWinsServer #SecondaryWinsServer #LeaseObtained #LeaseExpires)! !
-!IP_ADAPTER_INFO class categoriesFor: #defineFields!initializing!public! !
-!IP_ADAPTER_INFO class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.IP_ADAPTER_INFO class categoriesFor: #defineFields!initializing!public! !
+!OS.IP_ADAPTER_INFO class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

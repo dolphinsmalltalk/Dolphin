@@ -1,16 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ExternalStructure subclass: #IP_ADAPTER_INDEX_MAP
+External.Structure subclass: #'OS.IP_ADAPTER_INDEX_MAP'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_index' -> 16r0.
 		'_OffsetOf_Name' -> 16r4
 	}!
-IP_ADAPTER_INDEX_MAP guid: (GUID fromString: '{fc9307a0-b028-4f04-81c9-9d74847a63ef}')!
-IP_ADAPTER_INDEX_MAP comment: '<IP_ADAPTER_INDEX_MAP> is an <ExternalStructure> class to wrap the struct ''Win32.IP_ADAPTER_INDEX_MAP'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
+OS.IP_ADAPTER_INDEX_MAP guid: (Core.GUID fromString: '{fc9307a0-b028-4f04-81c9-9d74847a63ef}')!
+OS.IP_ADAPTER_INDEX_MAP comment: '<IP_ADAPTER_INDEX_MAP> is an <ExternalStructure> class to wrap the struct ''Win32.IP_ADAPTER_INDEX_MAP'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
 
@@ -24,8 +24,8 @@ struct tagIP_ADAPTER_INDEX_MAP {
 	unsigned short Name[128];
 } IP_ADAPTER_INDEX_MAP;
 '!
-!IP_ADAPTER_INDEX_MAP categoriesForClass!Win32-Structs! !
-!IP_ADAPTER_INDEX_MAP methodsFor!
+!OS.IP_ADAPTER_INDEX_MAP categoriesForClass!Win32-Structs! !
+!OS.IP_ADAPTER_INDEX_MAP methodsFor!
 
 index
 	"Answer the <Integer> value of the receiver's 'index' field."
@@ -36,10 +36,10 @@ Name
 	"Answer the <Utf16String> value of the receiver's 'Name' field."
 
 	^Utf16String fromAddress: bytes yourAddress + _OffsetOf_Name! !
-!IP_ADAPTER_INDEX_MAP categoriesFor: #index!**compiled accessors**!public! !
-!IP_ADAPTER_INDEX_MAP categoriesFor: #Name!**compiled accessors**!public! !
+!OS.IP_ADAPTER_INDEX_MAP categoriesFor: #index!**compiled accessors**!public! !
+!OS.IP_ADAPTER_INDEX_MAP categoriesFor: #Name!**compiled accessors**!public! !
 
-!IP_ADAPTER_INDEX_MAP class methodsFor!
+!OS.IP_ADAPTER_INDEX_MAP class methodsFor!
 
 defineFields
 	"Define the fields of the IP_ADAPTER_INDEX_MAP structure.
@@ -65,6 +65,6 @@ defineFields
 
 getFieldNames
 	^#(#index #Name)! !
-!IP_ADAPTER_INDEX_MAP class categoriesFor: #defineFields!initializing!public! !
-!IP_ADAPTER_INDEX_MAP class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.IP_ADAPTER_INDEX_MAP class categoriesFor: #defineFields!initializing!public! !
+!OS.IP_ADAPTER_INDEX_MAP class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

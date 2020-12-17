@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'IP Help API'.
-package paxVersion: 2;
+package paxVersion: 2.1;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk IP Helper Library Package
 Copyright (c) Object Arts Ltd, 2004
@@ -11,115 +11,115 @@ package basicPackageVersion: '6.1'.
 
 
 package setClassNames: #(
-	#{FIXED_INFO}
-	#{IP_ADAPTER_INDEX_MAP}
-	#{IP_ADAPTER_INFO}
-	#{IP_ADAPTER_ORDER_MAP}
-	#{IP_ADDR_STRING}
-	#{IP_INTERFACE_INFO}
-	#{IP_PER_ADAPTER_INFO}
-	#{IP_UNIDIRECTIONAL_ADAPTER_ADDRESS}
-	#{IPHlpApiConstants}
-	#{IpHlpApiTableStruct}
-	#{MIB_ICMP}
-	#{MIB_ICMP_EX}
-	#{MIB_IFNUMBER}
-	#{MIB_IFROW}
-	#{MIB_IFTABLE}
-	#{MIB_IPADDRROW}
-	#{MIB_IPADDRTABLE}
-	#{MIB_IPFORWARDROW}
-	#{MIB_IPFORWARDTABLE}
-	#{MIB_IPNETROW}
-	#{MIB_IPNETTABLE}
-	#{MIB_IPSTATS}
-	#{MIB_TCPEXROW}
-	#{MIB_TCPEXTABLE}
-	#{MIB_TCPROW}
-	#{MIB_TCPSTATS}
-	#{MIB_TCPTABLE}
-	#{MIB_UDPEXROW}
-	#{MIB_UDPEXTABLE}
-	#{MIB_UDPROW}
-	#{MIB_UDPSTATS}
-	#{MIB_UDPTABLE}
-	#{MIBICMPINFO}
-	#{MIBICMPSTATS}
-	#{MIBICMPSTATS_EX}
+	#{OS.FIXED_INFO}
+	#{OS.IP_ADAPTER_INDEX_MAP}
+	#{OS.IP_ADAPTER_INFO}
+	#{OS.IP_ADAPTER_ORDER_MAP}
+	#{OS.IP_ADDR_STRING}
+	#{OS.IP_INTERFACE_INFO}
+	#{OS.IP_PER_ADAPTER_INFO}
+	#{OS.IP_UNIDIRECTIONAL_ADAPTER_ADDRESS}
+	#{OS.IPHlpApiConstants}
+	#{OS.IpHlpApiTableStruct}
+	#{OS.MIB_ICMP}
+	#{OS.MIB_ICMP_EX}
+	#{OS.MIB_IFNUMBER}
+	#{OS.MIB_IFROW}
+	#{OS.MIB_IFTABLE}
+	#{OS.MIB_IPADDRROW}
+	#{OS.MIB_IPADDRTABLE}
+	#{OS.MIB_IPFORWARDROW}
+	#{OS.MIB_IPFORWARDTABLE}
+	#{OS.MIB_IPNETROW}
+	#{OS.MIB_IPNETTABLE}
+	#{OS.MIB_IPSTATS}
+	#{OS.MIB_TCPEXROW}
+	#{OS.MIB_TCPEXTABLE}
+	#{OS.MIB_TCPROW}
+	#{OS.MIB_TCPSTATS}
+	#{OS.MIB_TCPTABLE}
+	#{OS.MIB_UDPEXROW}
+	#{OS.MIB_UDPEXTABLE}
+	#{OS.MIB_UDPROW}
+	#{OS.MIB_UDPSTATS}
+	#{OS.MIB_UDPTABLE}
+	#{OS.MIBICMPINFO}
+	#{OS.MIBICMPSTATS}
+	#{OS.MIBICMPSTATS_EX}
 ).
 
 package setMethodNames: #(
-	#(#{IPHlpApiLibrary} #AddIPAddress:ipMask:ifIndex:nteContext:nteInstance:)
-	#(#{IPHlpApiLibrary} #AllocateAndGetTcpExTableFromStack:bOrder:heap:zero:flags:)
-	#(#{IPHlpApiLibrary} #AllocateAndGetUdpExTableFromStack:bOrder:heap:zero:flags:)
-	#(#{IPHlpApiLibrary} #CancelIPChangeNotify:)
-	#(#{IPHlpApiLibrary} #CreateIpForwardEntry:)
-	#(#{IPHlpApiLibrary} #CreateIpNetEntry:)
-	#(#{IPHlpApiLibrary} #CreateProxyArpEntry:dwMask:dwIfIndex:)
-	#(#{IPHlpApiLibrary} #DeleteIPAddress:)
-	#(#{IPHlpApiLibrary} #DeleteIpForwardEntry:)
-	#(#{IPHlpApiLibrary} #DeleteIpNetEntry:)
-	#(#{IPHlpApiLibrary} #DeleteProxyArpEntry:dwMask:dwIfIndex:)
-	#(#{IPHlpApiLibrary} #DisableMediaSense:pOverlapped:)
-	#(#{IPHlpApiLibrary} #EnableRouter:pOverlapped:)
-	#(#{IPHlpApiLibrary} #FlushIpNetTable:)
-	#(#{IPHlpApiLibrary} #GetAdapterIndex:ifIndex:)
-	#(#{IPHlpApiLibrary} #GetAdapterOrderMap)
-	#(#{IPHlpApiLibrary} #getAdaptersInfo)
-	#(#{IPHlpApiLibrary} #GetAdaptersInfo:pOutBufLen:)
-	#(#{IPHlpApiLibrary} #GetBestInterface:pdwBestIfIndex:)
-	#(#{IPHlpApiLibrary} #GetBestRoute:dwSourceAddr:pBestRoute:)
-	#(#{IPHlpApiLibrary} #GetFriendlyIfIndex:)
-	#(#{IPHlpApiLibrary} #getIcmpStatistics)
-	#(#{IPHlpApiLibrary} #GetIcmpStatistics:)
-	#(#{IPHlpApiLibrary} #GetIcmpStatisticsEx:dwFamily:)
-	#(#{IPHlpApiLibrary} #GetIfEntry:)
-	#(#{IPHlpApiLibrary} #getIfTable)
-	#(#{IPHlpApiLibrary} #GetIfTable:pdwSize:bOrder:)
-	#(#{IPHlpApiLibrary} #getInterfaceInfo)
-	#(#{IPHlpApiLibrary} #GetInterfaceInfo:dwOutBufLen:)
-	#(#{IPHlpApiLibrary} #getIpAddrTable)
-	#(#{IPHlpApiLibrary} #GetIpAddrTable:pdwSize:bOrder:)
-	#(#{IPHlpApiLibrary} #GetIpErrorString:buffer:size:)
-	#(#{IPHlpApiLibrary} #getIpForwardTable)
-	#(#{IPHlpApiLibrary} #GetIpForwardTable:pdwSize:bOrder:)
-	#(#{IPHlpApiLibrary} #getIpNetTable)
-	#(#{IPHlpApiLibrary} #GetIpNetTable:pdwSize:bOrder:)
-	#(#{IPHlpApiLibrary} #getIpStatistics)
-	#(#{IPHlpApiLibrary} #GetIpStatistics:)
-	#(#{IPHlpApiLibrary} #GetIpStatisticsEx:dwFamily:)
-	#(#{IPHlpApiLibrary} #GetNetworkParams:pOutBufLen:)
-	#(#{IPHlpApiLibrary} #GetNumberOfInterfaces:)
-	#(#{IPHlpApiLibrary} #getPerAdapterInfo:)
-	#(#{IPHlpApiLibrary} #GetPerAdapterInfo:pPerAdapterInfo:pOutBufLen:)
-	#(#{IPHlpApiLibrary} #GetRTTAndHopCount:hopCount:maxHops:rtt:)
-	#(#{IPHlpApiLibrary} #getTcpExTable)
-	#(#{IPHlpApiLibrary} #getTcpStatistics)
-	#(#{IPHlpApiLibrary} #GetTcpStatistics:)
-	#(#{IPHlpApiLibrary} #GetTcpStatisticsEx:dwFamily:)
-	#(#{IPHlpApiLibrary} #getTcpTable)
-	#(#{IPHlpApiLibrary} #GetTcpTable:pdwSize:bOrder:)
-	#(#{IPHlpApiLibrary} #getUdpStatistics)
-	#(#{IPHlpApiLibrary} #GetUdpStatistics:)
-	#(#{IPHlpApiLibrary} #GetUdpStatisticsEx:dwFamily:)
-	#(#{IPHlpApiLibrary} #getUdpTable)
-	#(#{IPHlpApiLibrary} #GetUdpTable:pdwSize:bOrder:)
-	#(#{IPHlpApiLibrary} #getUniDirectionalAdapterInfo)
-	#(#{IPHlpApiLibrary} #GetUniDirectionalAdapterInfo:dwOutBufLen:)
-	#(#{IPHlpApiLibrary} #IpReleaseAddress:)
-	#(#{IPHlpApiLibrary} #IpRenewAddress:)
-	#(#{IPHlpApiLibrary} #NhpAllocateAndGetInterfaceInfoFromStack:pdwCount:bOrder:hHeap:dwFlags:)
-	#(#{IPHlpApiLibrary} #NotifyAddrChange:overlapped:)
-	#(#{IPHlpApiLibrary} #NotifyRouteChange:overlapped:)
-	#(#{IPHlpApiLibrary} #RestoreMediaSense:lpdwEnableCount:)
-	#(#{IPHlpApiLibrary} #SendARP:srcIP:pMacAddr:phyAddrLen:)
-	#(#{IPHlpApiLibrary} #SetIfEntry:)
-	#(#{IPHlpApiLibrary} #SetIpForwardEntry:)
-	#(#{IPHlpApiLibrary} #SetIpNetEntry:)
-	#(#{IPHlpApiLibrary} #SetIpStatistics:)
-	#(#{IPHlpApiLibrary} #SetIpTTL:)
-	#(#{IPHlpApiLibrary} #SetTcpEntry:)
-	#(#{IPHlpApiLibrary} #UnenableRouter:lpdwEnableCount:)
+	#(#{OS.IPHlpApiLibrary} #AddIPAddress:ipMask:ifIndex:nteContext:nteInstance:)
+	#(#{OS.IPHlpApiLibrary} #AllocateAndGetTcpExTableFromStack:bOrder:heap:zero:flags:)
+	#(#{OS.IPHlpApiLibrary} #AllocateAndGetUdpExTableFromStack:bOrder:heap:zero:flags:)
+	#(#{OS.IPHlpApiLibrary} #CancelIPChangeNotify:)
+	#(#{OS.IPHlpApiLibrary} #CreateIpForwardEntry:)
+	#(#{OS.IPHlpApiLibrary} #CreateIpNetEntry:)
+	#(#{OS.IPHlpApiLibrary} #CreateProxyArpEntry:dwMask:dwIfIndex:)
+	#(#{OS.IPHlpApiLibrary} #DeleteIPAddress:)
+	#(#{OS.IPHlpApiLibrary} #DeleteIpForwardEntry:)
+	#(#{OS.IPHlpApiLibrary} #DeleteIpNetEntry:)
+	#(#{OS.IPHlpApiLibrary} #DeleteProxyArpEntry:dwMask:dwIfIndex:)
+	#(#{OS.IPHlpApiLibrary} #DisableMediaSense:pOverlapped:)
+	#(#{OS.IPHlpApiLibrary} #EnableRouter:pOverlapped:)
+	#(#{OS.IPHlpApiLibrary} #FlushIpNetTable:)
+	#(#{OS.IPHlpApiLibrary} #GetAdapterIndex:ifIndex:)
+	#(#{OS.IPHlpApiLibrary} #GetAdapterOrderMap)
+	#(#{OS.IPHlpApiLibrary} #getAdaptersInfo)
+	#(#{OS.IPHlpApiLibrary} #GetAdaptersInfo:pOutBufLen:)
+	#(#{OS.IPHlpApiLibrary} #GetBestInterface:pdwBestIfIndex:)
+	#(#{OS.IPHlpApiLibrary} #GetBestRoute:dwSourceAddr:pBestRoute:)
+	#(#{OS.IPHlpApiLibrary} #GetFriendlyIfIndex:)
+	#(#{OS.IPHlpApiLibrary} #getIcmpStatistics)
+	#(#{OS.IPHlpApiLibrary} #GetIcmpStatistics:)
+	#(#{OS.IPHlpApiLibrary} #GetIcmpStatisticsEx:dwFamily:)
+	#(#{OS.IPHlpApiLibrary} #GetIfEntry:)
+	#(#{OS.IPHlpApiLibrary} #getIfTable)
+	#(#{OS.IPHlpApiLibrary} #GetIfTable:pdwSize:bOrder:)
+	#(#{OS.IPHlpApiLibrary} #getInterfaceInfo)
+	#(#{OS.IPHlpApiLibrary} #GetInterfaceInfo:dwOutBufLen:)
+	#(#{OS.IPHlpApiLibrary} #getIpAddrTable)
+	#(#{OS.IPHlpApiLibrary} #GetIpAddrTable:pdwSize:bOrder:)
+	#(#{OS.IPHlpApiLibrary} #GetIpErrorString:buffer:size:)
+	#(#{OS.IPHlpApiLibrary} #getIpForwardTable)
+	#(#{OS.IPHlpApiLibrary} #GetIpForwardTable:pdwSize:bOrder:)
+	#(#{OS.IPHlpApiLibrary} #getIpNetTable)
+	#(#{OS.IPHlpApiLibrary} #GetIpNetTable:pdwSize:bOrder:)
+	#(#{OS.IPHlpApiLibrary} #getIpStatistics)
+	#(#{OS.IPHlpApiLibrary} #GetIpStatistics:)
+	#(#{OS.IPHlpApiLibrary} #GetIpStatisticsEx:dwFamily:)
+	#(#{OS.IPHlpApiLibrary} #GetNetworkParams:pOutBufLen:)
+	#(#{OS.IPHlpApiLibrary} #GetNumberOfInterfaces:)
+	#(#{OS.IPHlpApiLibrary} #getPerAdapterInfo:)
+	#(#{OS.IPHlpApiLibrary} #GetPerAdapterInfo:pPerAdapterInfo:pOutBufLen:)
+	#(#{OS.IPHlpApiLibrary} #GetRTTAndHopCount:hopCount:maxHops:rtt:)
+	#(#{OS.IPHlpApiLibrary} #getTcpExTable)
+	#(#{OS.IPHlpApiLibrary} #getTcpStatistics)
+	#(#{OS.IPHlpApiLibrary} #GetTcpStatistics:)
+	#(#{OS.IPHlpApiLibrary} #GetTcpStatisticsEx:dwFamily:)
+	#(#{OS.IPHlpApiLibrary} #getTcpTable)
+	#(#{OS.IPHlpApiLibrary} #GetTcpTable:pdwSize:bOrder:)
+	#(#{OS.IPHlpApiLibrary} #getUdpStatistics)
+	#(#{OS.IPHlpApiLibrary} #GetUdpStatistics:)
+	#(#{OS.IPHlpApiLibrary} #GetUdpStatisticsEx:dwFamily:)
+	#(#{OS.IPHlpApiLibrary} #getUdpTable)
+	#(#{OS.IPHlpApiLibrary} #GetUdpTable:pdwSize:bOrder:)
+	#(#{OS.IPHlpApiLibrary} #getUniDirectionalAdapterInfo)
+	#(#{OS.IPHlpApiLibrary} #GetUniDirectionalAdapterInfo:dwOutBufLen:)
+	#(#{OS.IPHlpApiLibrary} #IpReleaseAddress:)
+	#(#{OS.IPHlpApiLibrary} #IpRenewAddress:)
+	#(#{OS.IPHlpApiLibrary} #NhpAllocateAndGetInterfaceInfoFromStack:pdwCount:bOrder:hHeap:dwFlags:)
+	#(#{OS.IPHlpApiLibrary} #NotifyAddrChange:overlapped:)
+	#(#{OS.IPHlpApiLibrary} #NotifyRouteChange:overlapped:)
+	#(#{OS.IPHlpApiLibrary} #RestoreMediaSense:lpdwEnableCount:)
+	#(#{OS.IPHlpApiLibrary} #SendARP:srcIP:pMacAddr:phyAddrLen:)
+	#(#{OS.IPHlpApiLibrary} #SetIfEntry:)
+	#(#{OS.IPHlpApiLibrary} #SetIpForwardEntry:)
+	#(#{OS.IPHlpApiLibrary} #SetIpNetEntry:)
+	#(#{OS.IPHlpApiLibrary} #SetIpStatistics:)
+	#(#{OS.IPHlpApiLibrary} #SetIpTTL:)
+	#(#{OS.IPHlpApiLibrary} #SetTcpEntry:)
+	#(#{OS.IPHlpApiLibrary} #UnenableRouter:lpdwEnableCount:)
 ).
 
 package setPrerequisites: #(
@@ -132,7 +132,7 @@ package!
 
 "Class Definitions"!
 
-SharedPool subclass: #IPHlpApiConstants
+Kernel.SharedPool subclass: #'OS.IPHlpApiConstants'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -858,13 +858,13 @@ SharedPool subclass: #IPHlpApiConstants
 		'WPSTYLE_STRETCH' -> 16r2.
 		'WPSTYLE_TILE' -> 16r1
 	}!
-ExternalStructure subclass: #FIXED_INFO
+External.Structure subclass: #'OS.FIXED_INFO'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ExternalStructure subclass: #IP_ADAPTER_INDEX_MAP
+External.Structure subclass: #'OS.IP_ADAPTER_INDEX_MAP'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -873,7 +873,7 @@ ExternalStructure subclass: #IP_ADAPTER_INDEX_MAP
 		'_OffsetOf_index' -> 16r0.
 		'_OffsetOf_Name' -> 16r4
 	}!
-ExternalStructure subclass: #IP_ADAPTER_INFO
+External.Structure subclass: #'OS.IP_ADAPTER_INFO'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -898,7 +898,7 @@ ExternalStructure subclass: #IP_ADAPTER_INFO
 		'_OffsetOf_SecondaryWinsServer' -> 16r250.
 		'_OffsetOf_type' -> 16r1A0
 	}!
-ExternalStructure subclass: #IP_ADDR_STRING
+External.Structure subclass: #'OS.IP_ADDR_STRING'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -909,7 +909,7 @@ ExternalStructure subclass: #IP_ADDR_STRING
 		'_OffsetOf_IpMask' -> 16r14.
 		'_OffsetOf_Next' -> 16r0
 	}!
-ExternalStructure subclass: #IP_PER_ADAPTER_INFO
+External.Structure subclass: #'OS.IP_PER_ADAPTER_INFO'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -920,7 +920,7 @@ ExternalStructure subclass: #IP_PER_ADAPTER_INFO
 		'_OffsetOf_CurrentDnsServer' -> 16r8.
 		'_OffsetOf_DnsServerList' -> 16rC
 	}!
-ExternalStructure subclass: #IP_UNIDIRECTIONAL_ADAPTER_ADDRESS
+External.Structure subclass: #'OS.IP_UNIDIRECTIONAL_ADAPTER_ADDRESS'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -929,7 +929,7 @@ ExternalStructure subclass: #IP_UNIDIRECTIONAL_ADAPTER_ADDRESS
 		'_OffsetOf_Address' -> 16r4.
 		'_OffsetOf_NumAdapters' -> 16r0
 	}!
-ExternalStructure subclass: #IpHlpApiTableStruct
+External.Structure subclass: #'OS.IpHlpApiTableStruct'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -937,7 +937,7 @@ ExternalStructure subclass: #IpHlpApiTableStruct
 	classConstants: {
 		'_OffsetOf_dwNumEntries' -> 16r0
 	}!
-ExternalStructure subclass: #MIB_ICMP
+External.Structure subclass: #'OS.MIB_ICMP'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -945,7 +945,7 @@ ExternalStructure subclass: #MIB_ICMP
 	classConstants: {
 		'_OffsetOf_stats' -> 16r0
 	}!
-ExternalStructure subclass: #MIB_ICMP_EX
+External.Structure subclass: #'OS.MIB_ICMP_EX'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -954,7 +954,7 @@ ExternalStructure subclass: #MIB_ICMP_EX
 		'_OffsetOf_icmpInStats' -> 16r0.
 		'_OffsetOf_icmpOutStats' -> 16r408
 	}!
-ExternalStructure subclass: #MIB_IFNUMBER
+External.Structure subclass: #'OS.MIB_IFNUMBER'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -962,7 +962,7 @@ ExternalStructure subclass: #MIB_IFNUMBER
 	classConstants: {
 		'_OffsetOf_dwValue' -> 16r0
 	}!
-ExternalStructure subclass: #MIB_IFROW
+External.Structure subclass: #'OS.MIB_IFROW'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -993,7 +993,7 @@ ExternalStructure subclass: #MIB_IFROW
 		'_OffsetOf_dwType' -> 16r204.
 		'_OffsetOf_wszName' -> 16r0
 	}!
-ExternalStructure subclass: #MIB_IPADDRROW
+External.Structure subclass: #'OS.MIB_IPADDRROW'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -1007,7 +1007,7 @@ ExternalStructure subclass: #MIB_IPADDRROW
 		'_OffsetOf_Unused1' -> 16r14.
 		'_OffsetOf_wType' -> 16r16
 	}!
-ExternalStructure subclass: #MIB_IPFORWARDROW
+External.Structure subclass: #'OS.MIB_IPFORWARDROW'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -1028,7 +1028,7 @@ ExternalStructure subclass: #MIB_IPFORWARDROW
 		'_OffsetOf_dwForwardProto' -> 16r18.
 		'_OffsetOf_dwForwardType' -> 16r14
 	}!
-ExternalStructure subclass: #MIB_IPNETROW
+External.Structure subclass: #'OS.MIB_IPNETROW'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -1040,7 +1040,7 @@ ExternalStructure subclass: #MIB_IPNETROW
 		'_OffsetOf_dwPhysAddrLen' -> 16r4.
 		'_OffsetOf_dwType' -> 16r14
 	}!
-ExternalStructure subclass: #MIB_IPSTATS
+External.Structure subclass: #'OS.MIB_IPSTATS'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -1070,7 +1070,7 @@ ExternalStructure subclass: #MIB_IPSTATS
 		'_OffsetOf_dwReasmTimeout' -> 16r34.
 		'_OffsetOf_dwRoutingDiscards' -> 16r28
 	}!
-ExternalStructure subclass: #MIB_TCPROW
+External.Structure subclass: #'OS.MIB_TCPROW'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -1082,7 +1082,7 @@ ExternalStructure subclass: #MIB_TCPROW
 		'_OffsetOf_dwRemotePort' -> 16r10.
 		'_OffsetOf_dwState' -> 16r0
 	}!
-ExternalStructure subclass: #MIB_TCPSTATS
+External.Structure subclass: #'OS.MIB_TCPSTATS'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -1104,7 +1104,7 @@ ExternalStructure subclass: #MIB_TCPSTATS
 		'_OffsetOf_dwRtoMax' -> 16r8.
 		'_OffsetOf_dwRtoMin' -> 16r4
 	}!
-ExternalStructure subclass: #MIB_UDPROW
+External.Structure subclass: #'OS.MIB_UDPROW'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -1113,7 +1113,7 @@ ExternalStructure subclass: #MIB_UDPROW
 		'_OffsetOf_dwLocalAddr' -> 16r0.
 		'_OffsetOf_dwLocalPort' -> 16r4
 	}!
-ExternalStructure subclass: #MIB_UDPSTATS
+External.Structure subclass: #'OS.MIB_UDPSTATS'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -1125,7 +1125,7 @@ ExternalStructure subclass: #MIB_UDPSTATS
 		'_OffsetOf_dwNumAddrs' -> 16r10.
 		'_OffsetOf_dwOutDatagrams' -> 16rC
 	}!
-ExternalStructure subclass: #MIBICMPINFO
+External.Structure subclass: #'OS.MIBICMPINFO'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -1134,7 +1134,7 @@ ExternalStructure subclass: #MIBICMPINFO
 		'_OffsetOf_icmpInStats' -> 16r0.
 		'_OffsetOf_icmpOutStats' -> 16r34
 	}!
-ExternalStructure subclass: #MIBICMPSTATS
+External.Structure subclass: #'OS.MIBICMPSTATS'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -1154,7 +1154,7 @@ ExternalStructure subclass: #MIBICMPSTATS
 		'_OffsetOf_dwTimestampReps' -> 16r28.
 		'_OffsetOf_dwTimestamps' -> 16r24
 	}!
-ExternalStructure subclass: #MIBICMPSTATS_EX
+External.Structure subclass: #'OS.MIBICMPSTATS_EX'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -1164,7 +1164,7 @@ ExternalStructure subclass: #MIBICMPSTATS_EX
 		'_OffsetOf_dwMsgs' -> 16r0.
 		'_OffsetOf_rgdwTypeCount' -> 16r8
 	}!
-IpHlpApiTableStruct subclass: #IP_ADAPTER_ORDER_MAP
+OS.IpHlpApiTableStruct subclass: #'OS.IP_ADAPTER_ORDER_MAP'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -1172,7 +1172,7 @@ IpHlpApiTableStruct subclass: #IP_ADAPTER_ORDER_MAP
 	classConstants: {
 		'_OffsetOf_table' -> 16r4
 	}!
-IpHlpApiTableStruct subclass: #IP_INTERFACE_INFO
+OS.IpHlpApiTableStruct subclass: #'OS.IP_INTERFACE_INFO'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -1180,7 +1180,7 @@ IpHlpApiTableStruct subclass: #IP_INTERFACE_INFO
 	classConstants: {
 		'_OffsetOf_table' -> 16r4
 	}!
-IpHlpApiTableStruct subclass: #MIB_IFTABLE
+OS.IpHlpApiTableStruct subclass: #'OS.MIB_IFTABLE'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -1188,7 +1188,7 @@ IpHlpApiTableStruct subclass: #MIB_IFTABLE
 	classConstants: {
 		'_OffsetOf_table' -> 16r4
 	}!
-IpHlpApiTableStruct subclass: #MIB_IPADDRTABLE
+OS.IpHlpApiTableStruct subclass: #'OS.MIB_IPADDRTABLE'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -1196,7 +1196,7 @@ IpHlpApiTableStruct subclass: #MIB_IPADDRTABLE
 	classConstants: {
 		'_OffsetOf_table' -> 16r4
 	}!
-IpHlpApiTableStruct subclass: #MIB_IPFORWARDTABLE
+OS.IpHlpApiTableStruct subclass: #'OS.MIB_IPFORWARDTABLE'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -1204,7 +1204,7 @@ IpHlpApiTableStruct subclass: #MIB_IPFORWARDTABLE
 	classConstants: {
 		'_OffsetOf_table' -> 16r4
 	}!
-IpHlpApiTableStruct subclass: #MIB_IPNETTABLE
+OS.IpHlpApiTableStruct subclass: #'OS.MIB_IPNETTABLE'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -1212,7 +1212,7 @@ IpHlpApiTableStruct subclass: #MIB_IPNETTABLE
 	classConstants: {
 		'_OffsetOf_table' -> 16r4
 	}!
-IpHlpApiTableStruct subclass: #MIB_TCPTABLE
+OS.IpHlpApiTableStruct subclass: #'OS.MIB_TCPTABLE'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -1220,7 +1220,7 @@ IpHlpApiTableStruct subclass: #MIB_TCPTABLE
 	classConstants: {
 		'_OffsetOf_table' -> 16r4
 	}!
-IpHlpApiTableStruct subclass: #MIB_UDPTABLE
+OS.IpHlpApiTableStruct subclass: #'OS.MIB_UDPTABLE'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -1228,19 +1228,19 @@ IpHlpApiTableStruct subclass: #MIB_UDPTABLE
 	classConstants: {
 		'_OffsetOf_table' -> 16r4
 	}!
-MIB_TCPTABLE subclass: #MIB_TCPEXTABLE
+OS.MIB_TCPTABLE subclass: #'OS.MIB_TCPEXTABLE'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-MIB_UDPTABLE subclass: #MIB_UDPEXTABLE
+OS.MIB_UDPTABLE subclass: #'OS.MIB_UDPEXTABLE'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-MIB_TCPROW subclass: #MIB_TCPEXROW
+OS.MIB_TCPROW subclass: #'OS.MIB_TCPEXROW'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -1248,7 +1248,7 @@ MIB_TCPROW subclass: #MIB_TCPEXROW
 	classConstants: {
 		'_OffsetOf_dwProcessId' -> 16r14
 	}!
-MIB_UDPROW subclass: #MIB_UDPEXROW
+OS.MIB_UDPROW subclass: #'OS.MIB_UDPEXROW'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -1259,7 +1259,7 @@ MIB_UDPROW subclass: #MIB_UDPEXROW
 
 "Loose Methods"!
 
-!IPHlpApiLibrary methodsFor!
+!OS.IPHlpApiLibrary methodsFor!
 
 AddIPAddress: address ipMask: ipMask ifIndex: ifIndex nteContext: nteContext nteInstance: nteInstance
 	"Invoke the AddIPAddress() function of the module wrapped by the receiver.
@@ -1427,6 +1427,7 @@ getAdaptersInfo
 	"
 	self default getAdaptersInfo
 	"
+
 	| dwSize struct |
 	dwSize := DWORD new.
 	self GetAdaptersInfo: nil pOutBufLen: dwSize.
@@ -1520,12 +1521,12 @@ getIfTable
 
 	| struct err dwSize |
 	dwSize := DWORD new.
-	self 
+	self
 		GetIfTable: nil
 		pdwSize: dwSize
 		bOrder: TRUE.
 	struct := MIB_IFTABLE new: dwSize value.
-	err := self 
+	err := self
 				GetIfTable: struct
 				pdwSize: dwSize
 				bOrder: TRUE.
@@ -1572,12 +1573,12 @@ getIpAddrTable
 
 	| struct err dwSize |
 	dwSize := DWORD new.
-	self 
+	self
 		GetIpAddrTable: nil
 		pdwSize: dwSize
 		bOrder: TRUE.
 	struct := MIB_IPADDRTABLE new: dwSize value.
-	err := self 
+	err := self
 				GetIpAddrTable: struct
 				pdwSize: dwSize
 				bOrder: TRUE.
@@ -1613,12 +1614,12 @@ getIpForwardTable
 
 	| struct err dwSize |
 	dwSize := DWORD new.
-	self 
+	self
 		GetIpForwardTable: nil
 		pdwSize: dwSize
 		bOrder: TRUE.
 	struct := MIB_IPFORWARDTABLE new: dwSize value.
-	err := self 
+	err := self
 				GetIpForwardTable: struct
 				pdwSize: dwSize
 				bOrder: TRUE.
@@ -1643,12 +1644,12 @@ getIpNetTable
 
 	| struct err dwSize |
 	dwSize := DWORD new.
-	self 
+	self
 		GetIpNetTable: nil
 		pdwSize: dwSize
 		bOrder: TRUE.
 	struct := MIB_IPNETTABLE new: dwSize value.
-	err := self 
+	err := self
 				GetIpNetTable: struct
 				pdwSize: dwSize
 				bOrder: TRUE.
@@ -1715,7 +1716,7 @@ GetNumberOfInterfaces: pdwNumIf
 	<stdcall: dword GetNumberOfInterfaces  dword*>
 	^self invalidCall!
 
-getPerAdapterInfo: ifIndex 
+getPerAdapterInfo: ifIndex
 	"
 	self default getPerAdapterInfo: 3
 	"
@@ -1723,11 +1724,11 @@ getPerAdapterInfo: ifIndex
 	| struct dwSize error |
 	struct := IP_PER_ADAPTER_INFO new.
 	dwSize := DWORD fromInteger: struct byteSize.
-	error := self 
+	error := self
 				GetPerAdapterInfo: ifIndex
 				pPerAdapterInfo: struct
 				pOutBufLen: dwSize.
-	error == 0 
+	error == 0
 		ifFalse: 
 			[Win32Error signal: 'Error retrieving per-adapter info for ' , ifIndex printString with: error].
 	^struct!
@@ -1761,7 +1762,7 @@ getTcpExTable
 	"
 	| struct |
 	struct := MIB_TCPEXTABLE newHeapPointer.
-	self AllocateAndGetTcpExTableFromStack: struct bOrder: TRUE heap: ExternalMemory processHeap zero: 2 flags: 2.
+	self AllocateAndGetTcpExTableFromStack: struct bOrder: TRUE heap: Memory processHeap zero: 2 flags: 2.
 	^struct!
 
 getTcpStatistics
@@ -1802,13 +1803,13 @@ getTcpTable
 
 	| dwSize error tcpTable |
 	dwSize := DWORD new.
-	error := self 
+	error := self
 				GetTcpTable: nil
 				pdwSize: dwSize
 				bOrder: TRUE.
 	"		if( error !!= ERROR_INSUFFICIENT_BUFFER ) {"
 	tcpTable := MIB_TCPTABLE new: dwSize asInteger.
-	error := self 
+	error := self
 				GetTcpTable: tcpTable
 				pdwSize: dwSize
 				bOrder: TRUE.
@@ -1864,12 +1865,12 @@ getUdpTable
 
 	| dwSize error struct |
 	dwSize := DWORD new.
-	error := self 
+	error := self
 				GetUdpTable: nil
 				pdwSize: dwSize
 				bOrder: TRUE.
 	struct := MIB_UDPTABLE new: dwSize asInteger.
-	error := self 
+	error := self
 				GetUdpTable: struct
 				pdwSize: dwSize
 				bOrder: TRUE.
@@ -1891,6 +1892,7 @@ getUniDirectionalAdapterInfo
 	"
 	self default getUniDirectionalAdapterInfo
 	"
+
 	| dwSize struct error |
 	struct := IP_UNIDIRECTIONAL_ADAPTER_ADDRESS new.
 	dwSize := DWORD fromInteger: struct size.
@@ -2044,77 +2046,77 @@ UnenableRouter: pOverlapped lpdwEnableCount: lpdwEnableCount
 
 	<stdcall: dword UnenableRouter  OVERLAPPED* dword*>
 	^self invalidCall! !
-!IPHlpApiLibrary categoriesFor: #AddIPAddress:ipMask:ifIndex:nteContext:nteInstance:!**auto generated**!public! !
-!IPHlpApiLibrary categoriesFor: #AllocateAndGetTcpExTableFromStack:bOrder:heap:zero:flags:!**auto generated**!public! !
-!IPHlpApiLibrary categoriesFor: #AllocateAndGetUdpExTableFromStack:bOrder:heap:zero:flags:!**auto generated**!public! !
-!IPHlpApiLibrary categoriesFor: #CancelIPChangeNotify:!**auto generated**!public! !
-!IPHlpApiLibrary categoriesFor: #CreateIpForwardEntry:!**auto generated**!public! !
-!IPHlpApiLibrary categoriesFor: #CreateIpNetEntry:!**auto generated**!public! !
-!IPHlpApiLibrary categoriesFor: #CreateProxyArpEntry:dwMask:dwIfIndex:!**auto generated**!public! !
-!IPHlpApiLibrary categoriesFor: #DeleteIPAddress:!**auto generated**!public! !
-!IPHlpApiLibrary categoriesFor: #DeleteIpForwardEntry:!**auto generated**!public! !
-!IPHlpApiLibrary categoriesFor: #DeleteIpNetEntry:!**auto generated**!public! !
-!IPHlpApiLibrary categoriesFor: #DeleteProxyArpEntry:dwMask:dwIfIndex:!**auto generated**!public! !
-!IPHlpApiLibrary categoriesFor: #DisableMediaSense:pOverlapped:!**auto generated**!public! !
-!IPHlpApiLibrary categoriesFor: #EnableRouter:pOverlapped:!**auto generated**!public! !
-!IPHlpApiLibrary categoriesFor: #FlushIpNetTable:!**auto generated**!public! !
-!IPHlpApiLibrary categoriesFor: #GetAdapterIndex:ifIndex:!**auto generated**!public! !
-!IPHlpApiLibrary categoriesFor: #GetAdapterOrderMap!**auto generated**!public! !
-!IPHlpApiLibrary categoriesFor: #getAdaptersInfo!enquiries!public! !
-!IPHlpApiLibrary categoriesFor: #GetAdaptersInfo:pOutBufLen:!**auto generated**!public! !
-!IPHlpApiLibrary categoriesFor: #GetBestInterface:pdwBestIfIndex:!**auto generated**!public! !
-!IPHlpApiLibrary categoriesFor: #GetBestRoute:dwSourceAddr:pBestRoute:!**auto generated**!public! !
-!IPHlpApiLibrary categoriesFor: #GetFriendlyIfIndex:!**auto generated**!public! !
-!IPHlpApiLibrary categoriesFor: #getIcmpStatistics!enquiries!public! !
-!IPHlpApiLibrary categoriesFor: #GetIcmpStatistics:!**auto generated**!public! !
-!IPHlpApiLibrary categoriesFor: #GetIcmpStatisticsEx:dwFamily:!**auto generated**!public! !
-!IPHlpApiLibrary categoriesFor: #GetIfEntry:!**auto generated**!public! !
-!IPHlpApiLibrary categoriesFor: #getIfTable!enquiries!public! !
-!IPHlpApiLibrary categoriesFor: #GetIfTable:pdwSize:bOrder:!**auto generated**!public! !
-!IPHlpApiLibrary categoriesFor: #getInterfaceInfo!enquiries!public! !
-!IPHlpApiLibrary categoriesFor: #GetInterfaceInfo:dwOutBufLen:!**auto generated**!public! !
-!IPHlpApiLibrary categoriesFor: #getIpAddrTable!enquiries!public! !
-!IPHlpApiLibrary categoriesFor: #GetIpAddrTable:pdwSize:bOrder:!**auto generated**!public! !
-!IPHlpApiLibrary categoriesFor: #GetIpErrorString:buffer:size:!**auto generated**!public! !
-!IPHlpApiLibrary categoriesFor: #getIpForwardTable!enquiries!public! !
-!IPHlpApiLibrary categoriesFor: #GetIpForwardTable:pdwSize:bOrder:!**auto generated**!public! !
-!IPHlpApiLibrary categoriesFor: #getIpNetTable!enquiries!public! !
-!IPHlpApiLibrary categoriesFor: #GetIpNetTable:pdwSize:bOrder:!**auto generated**!public! !
-!IPHlpApiLibrary categoriesFor: #getIpStatistics!enquiries!public! !
-!IPHlpApiLibrary categoriesFor: #GetIpStatistics:!**auto generated**!public! !
-!IPHlpApiLibrary categoriesFor: #GetIpStatisticsEx:dwFamily:!**auto generated**!public! !
-!IPHlpApiLibrary categoriesFor: #GetNetworkParams:pOutBufLen:!**auto generated**!public! !
-!IPHlpApiLibrary categoriesFor: #GetNumberOfInterfaces:!**auto generated**!public! !
-!IPHlpApiLibrary categoriesFor: #getPerAdapterInfo:!enquiries!public! !
-!IPHlpApiLibrary categoriesFor: #GetPerAdapterInfo:pPerAdapterInfo:pOutBufLen:!**auto generated**!public! !
-!IPHlpApiLibrary categoriesFor: #GetRTTAndHopCount:hopCount:maxHops:rtt:!**auto generated**!public! !
-!IPHlpApiLibrary categoriesFor: #getTcpExTable!enquiries!public! !
-!IPHlpApiLibrary categoriesFor: #getTcpStatistics!enquiries!public! !
-!IPHlpApiLibrary categoriesFor: #GetTcpStatistics:!**auto generated**!public! !
-!IPHlpApiLibrary categoriesFor: #GetTcpStatisticsEx:dwFamily:!**auto generated**!public! !
-!IPHlpApiLibrary categoriesFor: #getTcpTable!enquiries!public! !
-!IPHlpApiLibrary categoriesFor: #GetTcpTable:pdwSize:bOrder:!**auto generated**!public! !
-!IPHlpApiLibrary categoriesFor: #getUdpStatistics!enquiries!public! !
-!IPHlpApiLibrary categoriesFor: #GetUdpStatistics:!**auto generated**!public! !
-!IPHlpApiLibrary categoriesFor: #GetUdpStatisticsEx:dwFamily:!**auto generated**!public! !
-!IPHlpApiLibrary categoriesFor: #getUdpTable!enquiries!public! !
-!IPHlpApiLibrary categoriesFor: #GetUdpTable:pdwSize:bOrder:!**auto generated**!public! !
-!IPHlpApiLibrary categoriesFor: #getUniDirectionalAdapterInfo!enquiries!public! !
-!IPHlpApiLibrary categoriesFor: #GetUniDirectionalAdapterInfo:dwOutBufLen:!**auto generated**!public! !
-!IPHlpApiLibrary categoriesFor: #IpReleaseAddress:!**auto generated**!public! !
-!IPHlpApiLibrary categoriesFor: #IpRenewAddress:!**auto generated**!public! !
-!IPHlpApiLibrary categoriesFor: #NhpAllocateAndGetInterfaceInfoFromStack:pdwCount:bOrder:hHeap:dwFlags:!**auto generated**!public! !
-!IPHlpApiLibrary categoriesFor: #NotifyAddrChange:overlapped:!**auto generated**!public! !
-!IPHlpApiLibrary categoriesFor: #NotifyRouteChange:overlapped:!**auto generated**!public! !
-!IPHlpApiLibrary categoriesFor: #RestoreMediaSense:lpdwEnableCount:!**auto generated**!public! !
-!IPHlpApiLibrary categoriesFor: #SendARP:srcIP:pMacAddr:phyAddrLen:!**auto generated**!public! !
-!IPHlpApiLibrary categoriesFor: #SetIfEntry:!**auto generated**!public! !
-!IPHlpApiLibrary categoriesFor: #SetIpForwardEntry:!**auto generated**!public! !
-!IPHlpApiLibrary categoriesFor: #SetIpNetEntry:!**auto generated**!public! !
-!IPHlpApiLibrary categoriesFor: #SetIpStatistics:!**auto generated**!public! !
-!IPHlpApiLibrary categoriesFor: #SetIpTTL:!**auto generated**!public! !
-!IPHlpApiLibrary categoriesFor: #SetTcpEntry:!**auto generated**!public! !
-!IPHlpApiLibrary categoriesFor: #UnenableRouter:lpdwEnableCount:!**auto generated**!public! !
+!OS.IPHlpApiLibrary categoriesFor: #AddIPAddress:ipMask:ifIndex:nteContext:nteInstance:!**auto generated**!public! !
+!OS.IPHlpApiLibrary categoriesFor: #AllocateAndGetTcpExTableFromStack:bOrder:heap:zero:flags:!**auto generated**!public! !
+!OS.IPHlpApiLibrary categoriesFor: #AllocateAndGetUdpExTableFromStack:bOrder:heap:zero:flags:!**auto generated**!public! !
+!OS.IPHlpApiLibrary categoriesFor: #CancelIPChangeNotify:!**auto generated**!public! !
+!OS.IPHlpApiLibrary categoriesFor: #CreateIpForwardEntry:!**auto generated**!public! !
+!OS.IPHlpApiLibrary categoriesFor: #CreateIpNetEntry:!**auto generated**!public! !
+!OS.IPHlpApiLibrary categoriesFor: #CreateProxyArpEntry:dwMask:dwIfIndex:!**auto generated**!public! !
+!OS.IPHlpApiLibrary categoriesFor: #DeleteIPAddress:!**auto generated**!public! !
+!OS.IPHlpApiLibrary categoriesFor: #DeleteIpForwardEntry:!**auto generated**!public! !
+!OS.IPHlpApiLibrary categoriesFor: #DeleteIpNetEntry:!**auto generated**!public! !
+!OS.IPHlpApiLibrary categoriesFor: #DeleteProxyArpEntry:dwMask:dwIfIndex:!**auto generated**!public! !
+!OS.IPHlpApiLibrary categoriesFor: #DisableMediaSense:pOverlapped:!**auto generated**!public! !
+!OS.IPHlpApiLibrary categoriesFor: #EnableRouter:pOverlapped:!**auto generated**!public! !
+!OS.IPHlpApiLibrary categoriesFor: #FlushIpNetTable:!**auto generated**!public! !
+!OS.IPHlpApiLibrary categoriesFor: #GetAdapterIndex:ifIndex:!**auto generated**!public! !
+!OS.IPHlpApiLibrary categoriesFor: #GetAdapterOrderMap!**auto generated**!public! !
+!OS.IPHlpApiLibrary categoriesFor: #getAdaptersInfo!enquiries!public! !
+!OS.IPHlpApiLibrary categoriesFor: #GetAdaptersInfo:pOutBufLen:!**auto generated**!public! !
+!OS.IPHlpApiLibrary categoriesFor: #GetBestInterface:pdwBestIfIndex:!**auto generated**!public! !
+!OS.IPHlpApiLibrary categoriesFor: #GetBestRoute:dwSourceAddr:pBestRoute:!**auto generated**!public! !
+!OS.IPHlpApiLibrary categoriesFor: #GetFriendlyIfIndex:!**auto generated**!public! !
+!OS.IPHlpApiLibrary categoriesFor: #getIcmpStatistics!enquiries!public! !
+!OS.IPHlpApiLibrary categoriesFor: #GetIcmpStatistics:!**auto generated**!public! !
+!OS.IPHlpApiLibrary categoriesFor: #GetIcmpStatisticsEx:dwFamily:!**auto generated**!public! !
+!OS.IPHlpApiLibrary categoriesFor: #GetIfEntry:!**auto generated**!public! !
+!OS.IPHlpApiLibrary categoriesFor: #getIfTable!enquiries!public! !
+!OS.IPHlpApiLibrary categoriesFor: #GetIfTable:pdwSize:bOrder:!**auto generated**!public! !
+!OS.IPHlpApiLibrary categoriesFor: #getInterfaceInfo!enquiries!public! !
+!OS.IPHlpApiLibrary categoriesFor: #GetInterfaceInfo:dwOutBufLen:!**auto generated**!public! !
+!OS.IPHlpApiLibrary categoriesFor: #getIpAddrTable!enquiries!public! !
+!OS.IPHlpApiLibrary categoriesFor: #GetIpAddrTable:pdwSize:bOrder:!**auto generated**!public! !
+!OS.IPHlpApiLibrary categoriesFor: #GetIpErrorString:buffer:size:!**auto generated**!public! !
+!OS.IPHlpApiLibrary categoriesFor: #getIpForwardTable!enquiries!public! !
+!OS.IPHlpApiLibrary categoriesFor: #GetIpForwardTable:pdwSize:bOrder:!**auto generated**!public! !
+!OS.IPHlpApiLibrary categoriesFor: #getIpNetTable!enquiries!public! !
+!OS.IPHlpApiLibrary categoriesFor: #GetIpNetTable:pdwSize:bOrder:!**auto generated**!public! !
+!OS.IPHlpApiLibrary categoriesFor: #getIpStatistics!enquiries!public! !
+!OS.IPHlpApiLibrary categoriesFor: #GetIpStatistics:!**auto generated**!public! !
+!OS.IPHlpApiLibrary categoriesFor: #GetIpStatisticsEx:dwFamily:!**auto generated**!public! !
+!OS.IPHlpApiLibrary categoriesFor: #GetNetworkParams:pOutBufLen:!**auto generated**!public! !
+!OS.IPHlpApiLibrary categoriesFor: #GetNumberOfInterfaces:!**auto generated**!public! !
+!OS.IPHlpApiLibrary categoriesFor: #getPerAdapterInfo:!enquiries!public! !
+!OS.IPHlpApiLibrary categoriesFor: #GetPerAdapterInfo:pPerAdapterInfo:pOutBufLen:!**auto generated**!public! !
+!OS.IPHlpApiLibrary categoriesFor: #GetRTTAndHopCount:hopCount:maxHops:rtt:!**auto generated**!public! !
+!OS.IPHlpApiLibrary categoriesFor: #getTcpExTable!enquiries!public! !
+!OS.IPHlpApiLibrary categoriesFor: #getTcpStatistics!enquiries!public! !
+!OS.IPHlpApiLibrary categoriesFor: #GetTcpStatistics:!**auto generated**!public! !
+!OS.IPHlpApiLibrary categoriesFor: #GetTcpStatisticsEx:dwFamily:!**auto generated**!public! !
+!OS.IPHlpApiLibrary categoriesFor: #getTcpTable!enquiries!public! !
+!OS.IPHlpApiLibrary categoriesFor: #GetTcpTable:pdwSize:bOrder:!**auto generated**!public! !
+!OS.IPHlpApiLibrary categoriesFor: #getUdpStatistics!enquiries!public! !
+!OS.IPHlpApiLibrary categoriesFor: #GetUdpStatistics:!**auto generated**!public! !
+!OS.IPHlpApiLibrary categoriesFor: #GetUdpStatisticsEx:dwFamily:!**auto generated**!public! !
+!OS.IPHlpApiLibrary categoriesFor: #getUdpTable!enquiries!public! !
+!OS.IPHlpApiLibrary categoriesFor: #GetUdpTable:pdwSize:bOrder:!**auto generated**!public! !
+!OS.IPHlpApiLibrary categoriesFor: #getUniDirectionalAdapterInfo!enquiries!public! !
+!OS.IPHlpApiLibrary categoriesFor: #GetUniDirectionalAdapterInfo:dwOutBufLen:!**auto generated**!public! !
+!OS.IPHlpApiLibrary categoriesFor: #IpReleaseAddress:!**auto generated**!public! !
+!OS.IPHlpApiLibrary categoriesFor: #IpRenewAddress:!**auto generated**!public! !
+!OS.IPHlpApiLibrary categoriesFor: #NhpAllocateAndGetInterfaceInfoFromStack:pdwCount:bOrder:hHeap:dwFlags:!**auto generated**!public! !
+!OS.IPHlpApiLibrary categoriesFor: #NotifyAddrChange:overlapped:!**auto generated**!public! !
+!OS.IPHlpApiLibrary categoriesFor: #NotifyRouteChange:overlapped:!**auto generated**!public! !
+!OS.IPHlpApiLibrary categoriesFor: #RestoreMediaSense:lpdwEnableCount:!**auto generated**!public! !
+!OS.IPHlpApiLibrary categoriesFor: #SendARP:srcIP:pMacAddr:phyAddrLen:!**auto generated**!public! !
+!OS.IPHlpApiLibrary categoriesFor: #SetIfEntry:!**auto generated**!public! !
+!OS.IPHlpApiLibrary categoriesFor: #SetIpForwardEntry:!**auto generated**!public! !
+!OS.IPHlpApiLibrary categoriesFor: #SetIpNetEntry:!**auto generated**!public! !
+!OS.IPHlpApiLibrary categoriesFor: #SetIpStatistics:!**auto generated**!public! !
+!OS.IPHlpApiLibrary categoriesFor: #SetIpTTL:!**auto generated**!public! !
+!OS.IPHlpApiLibrary categoriesFor: #SetTcpEntry:!**auto generated**!public! !
+!OS.IPHlpApiLibrary categoriesFor: #UnenableRouter:lpdwEnableCount:!**auto generated**!public! !
 
 "End of package definition"!
 

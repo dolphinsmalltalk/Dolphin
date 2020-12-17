@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ExternalStructure subclass: #MIB_TCPROW
+External.Structure subclass: #'OS.MIB_TCPROW'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_dwLocalAddr' -> 16r4.
@@ -12,8 +12,8 @@ ExternalStructure subclass: #MIB_TCPROW
 		'_OffsetOf_dwRemotePort' -> 16r10.
 		'_OffsetOf_dwState' -> 16r0
 	}!
-MIB_TCPROW guid: (GUID fromString: '{f066336f-3aa1-4146-8b59-29b9f4cd065b}')!
-MIB_TCPROW comment: '<MIB_TCPROW> is an <ExternalStructure> class to wrap the struct ''Win32.MIB_TCPROW'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
+OS.MIB_TCPROW guid: (Core.GUID fromString: '{f066336f-3aa1-4146-8b59-29b9f4cd065b}')!
+OS.MIB_TCPROW comment: '<MIB_TCPROW> is an <ExternalStructure> class to wrap the struct ''Win32.MIB_TCPROW'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
 
@@ -30,8 +30,8 @@ struct tagMIB_TCPROW {
 	unsigned long dwRemotePort;
 } MIB_TCPROW;
 '!
-!MIB_TCPROW categoriesForClass!Win32-Structs! !
-!MIB_TCPROW methodsFor!
+!OS.MIB_TCPROW categoriesForClass!Win32-Structs! !
+!OS.MIB_TCPROW methodsFor!
 
 displayOn: aPuttableStream
 	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that an end-user might want to see."
@@ -73,16 +73,16 @@ portName
 	| psrvent |
 	psrvent := WS2_32Library default getservbyport: self dwLocalPort proto: 'tcp'.
 	^psrvent isNull ifFalse: [psrvent s_name]! !
-!MIB_TCPROW categoriesFor: #displayOn:!public! !
-!MIB_TCPROW categoriesFor: #dwLocalAddr!**compiled accessors**!public! !
-!MIB_TCPROW categoriesFor: #dwLocalPort!**compiled accessors**!public! !
-!MIB_TCPROW categoriesFor: #dwRemoteAddr!**compiled accessors**!public! !
-!MIB_TCPROW categoriesFor: #dwRemotePort!**compiled accessors**!public! !
-!MIB_TCPROW categoriesFor: #dwState!**compiled accessors**!public! !
-!MIB_TCPROW categoriesFor: #port!accessing!public! !
-!MIB_TCPROW categoriesFor: #portName!accessing!public! !
+!OS.MIB_TCPROW categoriesFor: #displayOn:!public! !
+!OS.MIB_TCPROW categoriesFor: #dwLocalAddr!**compiled accessors**!public! !
+!OS.MIB_TCPROW categoriesFor: #dwLocalPort!**compiled accessors**!public! !
+!OS.MIB_TCPROW categoriesFor: #dwRemoteAddr!**compiled accessors**!public! !
+!OS.MIB_TCPROW categoriesFor: #dwRemotePort!**compiled accessors**!public! !
+!OS.MIB_TCPROW categoriesFor: #dwState!**compiled accessors**!public! !
+!OS.MIB_TCPROW categoriesFor: #port!accessing!public! !
+!OS.MIB_TCPROW categoriesFor: #portName!accessing!public! !
 
-!MIB_TCPROW class methodsFor!
+!OS.MIB_TCPROW class methodsFor!
 
 defineFields
 	"Define the fields of the MIB_TCPROW structure.
@@ -118,6 +118,6 @@ defineFields
 
 getFieldNames
 	^#(#dwState #dwLocalAddr #dwLocalPort #dwRemoteAddr #dwRemotePort)! !
-!MIB_TCPROW class categoriesFor: #defineFields!initializing!public! !
-!MIB_TCPROW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.MIB_TCPROW class categoriesFor: #defineFields!initializing!public! !
+!OS.MIB_TCPROW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

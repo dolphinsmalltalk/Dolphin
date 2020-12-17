@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ExternalStructure subclass: #IP_ADDR_STRING
+External.Structure subclass: #'OS.IP_ADDR_STRING'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_Context' -> 16r24.
@@ -11,8 +11,8 @@ ExternalStructure subclass: #IP_ADDR_STRING
 		'_OffsetOf_IpMask' -> 16r14.
 		'_OffsetOf_Next' -> 16r0
 	}!
-IP_ADDR_STRING guid: (GUID fromString: '{ba94c426-f5a5-47e8-b2c5-43d6c2456846}')!
-IP_ADDR_STRING comment: '<IP_ADDR_STRING> is an <ExternalStructure> class to wrap the struct ''Win32.IP_ADDR_STRING'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
+OS.IP_ADDR_STRING guid: (Core.GUID fromString: '{ba94c426-f5a5-47e8-b2c5-43d6c2456846}')!
+OS.IP_ADDR_STRING comment: '<IP_ADDR_STRING> is an <ExternalStructure> class to wrap the struct ''Win32.IP_ADDR_STRING'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
 
@@ -28,8 +28,8 @@ struct tagIP_ADDR_STRING {
 	unsigned long Context;
 } IP_ADDR_STRING;
 '!
-!IP_ADDR_STRING categoriesForClass!Win32-Structs! !
-!IP_ADDR_STRING methodsFor!
+!OS.IP_ADDR_STRING categoriesForClass!Win32-Structs! !
+!OS.IP_ADDR_STRING methodsFor!
 
 Context
 	"Answer the <Integer> value of the receiver's 'Context' field."
@@ -50,12 +50,12 @@ Next
 	"Answer the <IP_ADDR_STRING> value of the receiver's 'Next' field."
 
 	^IP_ADDR_STRING fromAddress: (bytes intPtrAtOffset: _OffsetOf_Next)! !
-!IP_ADDR_STRING categoriesFor: #Context!**compiled accessors**!public! !
-!IP_ADDR_STRING categoriesFor: #IpAddress!**compiled accessors**!public! !
-!IP_ADDR_STRING categoriesFor: #IpMask!**compiled accessors**!public! !
-!IP_ADDR_STRING categoriesFor: #Next!**compiled accessors**!public! !
+!OS.IP_ADDR_STRING categoriesFor: #Context!**compiled accessors**!public! !
+!OS.IP_ADDR_STRING categoriesFor: #IpAddress!**compiled accessors**!public! !
+!OS.IP_ADDR_STRING categoriesFor: #IpMask!**compiled accessors**!public! !
+!OS.IP_ADDR_STRING categoriesFor: #Next!**compiled accessors**!public! !
 
-!IP_ADDR_STRING class methodsFor!
+!OS.IP_ADDR_STRING class methodsFor!
 
 defineFields
 	"Define the fields of the IP_ADDR_STRING structure.
@@ -93,6 +93,6 @@ defineFields
 
 getFieldNames
 	^#(#Next #IpAddress #IpMask #Context)! !
-!IP_ADDR_STRING class categoriesFor: #defineFields!initializing!public! !
-!IP_ADDR_STRING class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.IP_ADDR_STRING class categoriesFor: #defineFields!initializing!public! !
+!OS.IP_ADDR_STRING class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

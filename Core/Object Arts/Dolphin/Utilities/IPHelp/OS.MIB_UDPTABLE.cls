@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-IpHlpApiTableStruct subclass: #MIB_UDPTABLE
+OS.IpHlpApiTableStruct subclass: #'OS.MIB_UDPTABLE'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_table' -> 16r4
 	}!
-MIB_UDPTABLE guid: (GUID fromString: '{49fa1814-6ebf-49d7-8eaf-86aa73efed72}')!
-MIB_UDPTABLE comment: '<MIB_UDPTABLE> is an <ExternalStructure> class to wrap the struct ''Win32.MIB_UDPTABLE'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
+OS.MIB_UDPTABLE guid: (Core.GUID fromString: '{49fa1814-6ebf-49d7-8eaf-86aa73efed72}')!
+OS.MIB_UDPTABLE comment: '<MIB_UDPTABLE> is an <ExternalStructure> class to wrap the struct ''Win32.MIB_UDPTABLE'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
 
@@ -23,8 +23,8 @@ struct tagMIB_UDPTABLE {
 	MIB_UDPROW table[1];
 } MIB_UDPTABLE;
 '!
-!MIB_UDPTABLE categoriesForClass!Win32-Structs! !
-!MIB_UDPTABLE methodsFor!
+!OS.MIB_UDPTABLE categoriesForClass!Win32-Structs! !
+!OS.MIB_UDPTABLE methodsFor!
 
 table
 	"Answer the <StructureArray> value of the receiver's 'table' field."
@@ -33,9 +33,9 @@ table
 		fromAddress: bytes yourAddress + _OffsetOf_table
 		length: self dwNumEntries
 		elementClass: MIB_UDPROW! !
-!MIB_UDPTABLE categoriesFor: #table!**compiled accessors**!public! !
+!OS.MIB_UDPTABLE categoriesFor: #table!**compiled accessors**!public! !
 
-!MIB_UDPTABLE class methodsFor!
+!OS.MIB_UDPTABLE class methodsFor!
 
 defineFields
 	"Define the fields of the MIB_UDPTABLE structure.
@@ -49,7 +49,7 @@ defineFields
 "
 
 	super defineFields.
-	self 
+	self
 		defineField: #table
 		type: ((StructureArrayField type: MIB_UDPROW lengthField: #dwNumEntries)
 				beReadOnly;
@@ -59,6 +59,6 @@ defineFields
 
 getFieldNames
 	^#(#dwNumEntries #table)! !
-!MIB_UDPTABLE class categoriesFor: #defineFields!initializing!public! !
-!MIB_UDPTABLE class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.MIB_UDPTABLE class categoriesFor: #defineFields!initializing!public! !
+!OS.MIB_UDPTABLE class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 
