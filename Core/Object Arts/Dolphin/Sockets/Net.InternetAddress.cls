@@ -1,18 +1,18 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Object subclass: #InternetAddress
+Core.Object subclass: #'Net.InternetAddress'
 	instanceVariableNames: 'host ipAddress'
 	classVariableNames: ''
-	poolDictionaries: 'WinSocketConstants'
+	imports: #(#{OS.WinSocketConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-InternetAddress guid: (GUID fromString: '{87b4c495-026e-11d3-9fd7-00a0cc3e4a32}')!
-InternetAddress comment: 'This class represents an Internet IP address. It can be created indirectly from the host name using the #host: class method or, if the IP address is known, from this using #ipAddress:, #fromString: or #readFrom:. 
+Net.InternetAddress guid: (Core.GUID fromString: '{87b4c495-026e-11d3-9fd7-00a0cc3e4a32}')!
+Net.InternetAddress comment: 'This class represents an Internet IP address. It can be created indirectly from the host name using the #host: class method or, if the IP address is known, from this using #ipAddress:, #fromString: or #readFrom:. 
 
 Since conversion from IP address to host name and vice versa requires a DNS or HOSTS lookup, the #ipAddress and #host accessors may lazily evaluate their answers if the information was not available when the instance was created. This is to save a potentially expensive DNS lookup during instantiation when it may not be appropriate or a TCP/IP connection may not be available. Note that a reverse lookup (ipAddress->host name) seems to be a particularly time consuming operation under Windows.
 '!
-!InternetAddress categoriesForClass!Windows Sockets! !
-!InternetAddress methodsFor!
+!Net.InternetAddress categoriesForClass!Windows Sockets! !
+!Net.InternetAddress methodsFor!
 
 asParameter
 	"Answer the receiver in a form suitable for passing to an external function."
@@ -35,10 +35,10 @@ host
 	This may be lazily evaluated if the receiver was initialized from an IP address and
 	in such cases will require a DNS lookup"
 
-	(host isNil and: [ipAddress notNil]) 
+	(host isNil and: [ipAddress notNil])
 		ifTrue: 
 			[| hostent |
-			hostent := WS2_32Library default 
+			hostent := WS2_32Library default
 						gethostbyaddr: ipAddress
 						len: ipAddress size
 						type: AF_INET.
@@ -82,17 +82,17 @@ printOn: aStream
 		nextPut: $(;
 		display: self;
 		nextPut: $)! !
-!InternetAddress categoriesFor: #asParameter!accessing!public! !
-!InternetAddress categoriesFor: #displayIPOn:!displaying!public! !
-!InternetAddress categoriesFor: #displayOn:!displaying!public! !
-!InternetAddress categoriesFor: #host!accessing!public! !
-!InternetAddress categoriesFor: #host:!accessing!private! !
-!InternetAddress categoriesFor: #ipAddress!accessing!public! !
-!InternetAddress categoriesFor: #ipAddress:!accessing!private! !
-!InternetAddress categoriesFor: #ipString!accessing!public! !
-!InternetAddress categoriesFor: #printOn:!printing!public! !
+!Net.InternetAddress categoriesFor: #asParameter!accessing!public! !
+!Net.InternetAddress categoriesFor: #displayIPOn:!displaying!public! !
+!Net.InternetAddress categoriesFor: #displayOn:!displaying!public! !
+!Net.InternetAddress categoriesFor: #host!accessing!public! !
+!Net.InternetAddress categoriesFor: #host:!accessing!private! !
+!Net.InternetAddress categoriesFor: #ipAddress!accessing!public! !
+!Net.InternetAddress categoriesFor: #ipAddress:!accessing!private! !
+!Net.InternetAddress categoriesFor: #ipString!accessing!public! !
+!Net.InternetAddress categoriesFor: #printOn:!printing!public! !
 
-!InternetAddress class methodsFor!
+!Net.InternetAddress class methodsFor!
 
 allForHost: aStringHostName
 	"Answer an Array of instances of the receiver for all the addresses of the host with
@@ -156,11 +156,11 @@ localHost
 	result := WS2_32Library default gethostname: hostName namelen: hostName size.
 	result = SOCKET_ERROR ifTrue: [^SocketError signal].
 	^self host: hostName trimNulls! !
-!InternetAddress class categoriesFor: #allForHost:!accessing!public! !
-!InternetAddress class categoriesFor: #fromIPString:!instance creation!public! !
-!InternetAddress class categoriesFor: #fromString:!instance creation!public! !
-!InternetAddress class categoriesFor: #host:!instance creation!public! !
-!InternetAddress class categoriesFor: #ipAddress:!instance creation!public! !
-!InternetAddress class categoriesFor: #isIPString:!public!testing! !
-!InternetAddress class categoriesFor: #localHost!instance creation!public! !
+!Net.InternetAddress class categoriesFor: #allForHost:!accessing!public! !
+!Net.InternetAddress class categoriesFor: #fromIPString:!instance creation!public! !
+!Net.InternetAddress class categoriesFor: #fromString:!instance creation!public! !
+!Net.InternetAddress class categoriesFor: #host:!instance creation!public! !
+!Net.InternetAddress class categoriesFor: #ipAddress:!instance creation!public! !
+!Net.InternetAddress class categoriesFor: #isIPString:!public!testing! !
+!Net.InternetAddress class categoriesFor: #localHost!instance creation!public! !
 

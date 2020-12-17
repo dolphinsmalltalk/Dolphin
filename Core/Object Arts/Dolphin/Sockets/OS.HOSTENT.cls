@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Win32Structure subclass: #HOSTENT
+OS.Win32Structure subclass: #'OS.HOSTENT'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'WinSocketConstants'
+	imports: #(#{OS.WinSocketConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_h_addr_list' -> 16rC.
@@ -12,8 +12,8 @@ Win32Structure subclass: #HOSTENT
 		'_OffsetOf_h_length' -> 16rA.
 		'_OffsetOf_h_name' -> 16r0
 	}!
-HOSTENT guid: (GUID fromString: '{87b4c5f4-026e-11d3-9fd7-00a0cc3e4a32}')!
-HOSTENT comment: '<HOSTENT> is an <ExternalStructure> class to wrap the struct ''Win32.HOSTENT'' from type information in the ''Win32 API'' library.
+OS.HOSTENT guid: (Core.GUID fromString: '{87b4c5f4-026e-11d3-9fd7-00a0cc3e4a32}')!
+OS.HOSTENT comment: '<HOSTENT> is an <ExternalStructure> class to wrap the struct ''Win32.HOSTENT'' from type information in the ''Win32 API'' library.
 
 The type library contains the following helpstring for this struct
 	"Stores information about a given host, such as host name, IPv4 address, and so forth. An application should never attempt to modify this structure or to free any of its components. Furthermore, only one copy of the hostent structure is allocated per thread."
@@ -31,8 +31,8 @@ struct tagHOSTENT {
 	[readonly, helpstring("A NULL-terminated list of addresses for the host. Addresses are returned in network byte order.")] void** h_addr_list;
 } HOSTENT;
 '!
-!HOSTENT categoriesForClass!Win32-Structs! !
-!HOSTENT methodsFor!
+!OS.HOSTENT categoriesForClass!Win32-Structs! !
+!OS.HOSTENT methodsFor!
 
 address
 	"Answer the primary <InternetAddress> for the receiver"
@@ -100,20 +100,20 @@ reifyNullTerminatedArray: list
 				[addresses add: (addressClass fromAddress: each) address.
 				i := i + VMConstants.IntPtrSize].
 	^addresses asArray! !
-!HOSTENT categoriesFor: #address!accessing!public! !
-!HOSTENT categoriesFor: #addressClass!helpers!private! !
-!HOSTENT categoriesFor: #allAddresses!accessing!public! !
-!HOSTENT categoriesFor: #allAliases!accessing!public! !
-!HOSTENT categoriesFor: #h_addr!accessing!public! !
-!HOSTENT categoriesFor: #h_addr_list!**compiled accessors**!public! !
-!HOSTENT categoriesFor: #h_addrtype!**compiled accessors**!public! !
-!HOSTENT categoriesFor: #h_aliases!**compiled accessors**!public! !
-!HOSTENT categoriesFor: #h_length!**compiled accessors**!public! !
-!HOSTENT categoriesFor: #h_name!**compiled accessors**!public! !
-!HOSTENT categoriesFor: #host!accessing!public! !
-!HOSTENT categoriesFor: #reifyNullTerminatedArray:!helpers!private! !
+!OS.HOSTENT categoriesFor: #address!accessing!public! !
+!OS.HOSTENT categoriesFor: #addressClass!helpers!private! !
+!OS.HOSTENT categoriesFor: #allAddresses!accessing!public! !
+!OS.HOSTENT categoriesFor: #allAliases!accessing!public! !
+!OS.HOSTENT categoriesFor: #h_addr!accessing!public! !
+!OS.HOSTENT categoriesFor: #h_addr_list!**compiled accessors**!public! !
+!OS.HOSTENT categoriesFor: #h_addrtype!**compiled accessors**!public! !
+!OS.HOSTENT categoriesFor: #h_aliases!**compiled accessors**!public! !
+!OS.HOSTENT categoriesFor: #h_length!**compiled accessors**!public! !
+!OS.HOSTENT categoriesFor: #h_name!**compiled accessors**!public! !
+!OS.HOSTENT categoriesFor: #host!accessing!public! !
+!OS.HOSTENT categoriesFor: #reifyNullTerminatedArray:!helpers!private! !
 
-!HOSTENT class methodsFor!
+!OS.HOSTENT class methodsFor!
 
 defineFields
 	"Define the fields of the HOSTENT structure.
@@ -149,8 +149,10 @@ host: aStringHostName
 
 	| answer |
 	answer := WS2_32Library default gethostbyname: aStringHostName asAnsiString.
-	^answer isNull ifTrue: [SocketError signalWith: Processor activeProcess lastError] ifFalse: [answer]! !
-!HOSTENT class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!HOSTENT class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!HOSTENT class categoriesFor: #host:!instance creation!public! !
+	^answer isNull
+		ifTrue: [Net.SocketError signalWith: Processor activeProcess lastError]
+		ifFalse: [answer]! !
+!OS.HOSTENT class categoriesFor: #defineFields!**auto generated**!public!template definition! !
+!OS.HOSTENT class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.HOSTENT class categoriesFor: #host:!instance creation!public! !
 

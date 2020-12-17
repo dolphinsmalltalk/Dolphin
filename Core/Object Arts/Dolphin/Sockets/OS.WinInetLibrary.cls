@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ExternalLibrary subclass: #WinInetLibrary
+External.DynamicLinkLibrary subclass: #'OS.WinInetLibrary'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-WinInetLibrary guid: (GUID fromString: '{96152a1d-1214-4ed9-82f2-10021d755f70}')!
-WinInetLibrary comment: ''!
-!WinInetLibrary categoriesForClass!External-Libraries-Win32! !
-!WinInetLibrary methodsFor!
+OS.WinInetLibrary guid: (Core.GUID fromString: '{96152a1d-1214-4ed9-82f2-10021d755f70}')!
+OS.WinInetLibrary comment: ''!
+!OS.WinInetLibrary categoriesForClass!External-Libraries-Win32! !
+!OS.WinInetLibrary methodsFor!
 
 internetCheckConnection: url dwFlags: flags dwReserved: reserved
 	"Allows an application to check if a connection to the Internet can be established.
@@ -51,16 +51,16 @@ ping: aURL
 	"Attempts to ping aURL. Answers true if a reply is received."
 
 	^self internetCheckConnection: aURL dwFlags: 1 dwReserved: 0! !
-!WinInetLibrary categoriesFor: #internetCheckConnection:dwFlags:dwReserved:!public!win32 functions-internet! !
-!WinInetLibrary categoriesFor: #internetGoOnline:hwndParent:dwReserved:!public!win32 functions-internet! !
-!WinInetLibrary categoriesFor: #internetOpen:dwAccessType:lpszProxyName:lpszProxyBypass:dwFlags:!public!win32 functions-internet! !
-!WinInetLibrary categoriesFor: #ping:!operations!public! !
+!OS.WinInetLibrary categoriesFor: #internetCheckConnection:dwFlags:dwReserved:!public!win32 functions-internet! !
+!OS.WinInetLibrary categoriesFor: #internetGoOnline:hwndParent:dwReserved:!public!win32 functions-internet! !
+!OS.WinInetLibrary categoriesFor: #internetOpen:dwAccessType:lpszProxyName:lpszProxyBypass:dwFlags:!public!win32 functions-internet! !
+!OS.WinInetLibrary categoriesFor: #ping:!operations!public! !
 
-!WinInetLibrary class methodsFor!
+!OS.WinInetLibrary class methodsFor!
 
 fileName
 	"Answer the file name of the external library which the receiver represents."
 
 	^'WinInet'! !
-!WinInetLibrary class categoriesFor: #fileName!constants!public! !
+!OS.WinInetLibrary class categoriesFor: #fileName!constants!public! !
 

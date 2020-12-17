@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ExternalLibrary subclass: #IPHlpApiLibrary
+External.DynamicLinkLibrary subclass: #'OS.IPHlpApiLibrary'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-IPHlpApiLibrary guid: (GUID fromString: '{a63698ae-5cef-4f53-bf10-c4a77a8b979a}')!
-IPHlpApiLibrary comment: 'IPHlpApiLibrary is the <ExternalLibrary> class to represent the dynamic link library, ''iphlpapi.DLL''.It was generated generated from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library. It contains methods for each of the functions defined by the corresponding module in that type library.
+OS.IPHlpApiLibrary guid: (Core.GUID fromString: '{a63698ae-5cef-4f53-bf10-c4a77a8b979a}')!
+OS.IPHlpApiLibrary comment: 'IPHlpApiLibrary is the <ExternalLibrary> class to represent the dynamic link library, ''iphlpapi.DLL''.It was generated generated from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library. It contains methods for each of the functions defined by the corresponding module in that type library.
 
 The type library contains the following helpstring for this module
 	"IP Helper Library"
@@ -238,8 +238,8 @@ module IPHlpApi
 		[in, out]unsigned long* Size);
 };
 '!
-!IPHlpApiLibrary categoriesForClass!Win32-Modules! !
-!IPHlpApiLibrary methodsFor!
+!OS.IPHlpApiLibrary categoriesForClass!Win32-Modules! !
+!OS.IPHlpApiLibrary methodsFor!
 
 parseNetworkString: networkString types: types addressInfo: addressInfo portNumber: portNumber prefixLength: prefixLength
 	"Invoke the ParseNetworkString() function of the module wrapped by the receiver.
@@ -254,14 +254,14 @@ parseNetworkString: networkString types: types addressInfo: addressInfo portNumb
 
 	<stdcall: dword ParseNetworkString lpwstr dword NET_ADDRESS_INFO* word* byte*>
 	^self invalidCall: _failureCode! !
-!IPHlpApiLibrary categoriesFor: #parseNetworkString:types:addressInfo:portNumber:prefixLength:!**auto generated**!public! !
+!OS.IPHlpApiLibrary categoriesFor: #parseNetworkString:types:addressInfo:portNumber:prefixLength:!**auto generated**!public! !
 
-!IPHlpApiLibrary class methodsFor!
+!OS.IPHlpApiLibrary class methodsFor!
 
 fileName
 	"Answer the host system file name for the library."
 
 	^'iphlpapi'
 ! !
-!IPHlpApiLibrary class categoriesFor: #fileName!**auto generated**!constants!public! !
+!OS.IPHlpApiLibrary class categoriesFor: #fileName!**auto generated**!constants!public! !
 

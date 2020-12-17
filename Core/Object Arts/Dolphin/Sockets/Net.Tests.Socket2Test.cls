@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-AbstractSocketTest subclass: #Socket2Test
+Net.Tests.AbstractSocketTest subclass: #'Net.Tests.Socket2Test'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Socket2Test guid: (GUID fromString: '{25407553-d303-4d50-ad3d-b05b28a27c47}')!
-Socket2Test comment: ''!
-!Socket2Test categoriesForClass!Unclassified! !
-!Socket2Test methodsFor!
+Net.Tests.Socket2Test guid: (Core.GUID fromString: '{25407553-d303-4d50-ad3d-b05b28a27c47}')!
+Net.Tests.Socket2Test comment: ''!
+!Net.Tests.Socket2Test categoriesForClass!Unclassified! !
+!Net.Tests.Socket2Test methodsFor!
 
 clientSocketClass
 	^Socket2!
@@ -34,7 +34,7 @@ testSTBMessages
 	"Wait for the connection to be accepted so that the inbound socket is available"
 	ready wait.
 	readStream := inbound readStream.
-	filer := STBInFiler on: readStream.
+	filer := Kernel.STBInFiler on: readStream.
 	
 	[| message |
 	message := filer next.
@@ -47,7 +47,7 @@ testSTBMessages
 	sockets add: outbound.
 	outbound connect.
 	sent := {#Object -> Object comment. Object class}.
-	outfiler := STBOutFiler on: outbound writeStream.
+	outfiler := Kernel.STBOutFiler on: outbound writeStream.
 	sent do: [:each | outfiler nextPut: each].
 	"We have to flush the stream before we close the socket or the data might never get written"
 	outfiler stream flush.
@@ -56,7 +56,7 @@ testSTBMessages
 	ready wait.
 	messages := messages asArray.
 	self assert: messages equals: sent! !
-!Socket2Test categoriesFor: #clientSocketClass!constants!private! !
-!Socket2Test categoriesFor: #serverSocketClass!constants!private!unit tests! !
-!Socket2Test categoriesFor: #testSTBMessages!public! !
+!Net.Tests.Socket2Test categoriesFor: #clientSocketClass!constants!private! !
+!Net.Tests.Socket2Test categoriesFor: #serverSocketClass!constants!private!unit tests! !
+!Net.Tests.Socket2Test categoriesFor: #testSTBMessages!public! !
 

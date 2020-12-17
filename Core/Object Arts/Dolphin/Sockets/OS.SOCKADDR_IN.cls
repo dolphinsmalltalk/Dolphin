@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-SOCKADDR subclass: #SOCKADDR_IN
+OS.SOCKADDR subclass: #'OS.SOCKADDR_IN'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_sin_addr' -> 16r4.
@@ -11,8 +11,8 @@ SOCKADDR subclass: #SOCKADDR_IN
 		'_OffsetOf_sin_port' -> 16r2.
 		'_OffsetOf_sin_zero' -> 16r8
 	}!
-SOCKADDR_IN guid: (GUID fromString: '{87b4c611-026e-11d3-9fd7-00a0cc3e4a32}')!
-SOCKADDR_IN comment: '<SOCKADDR_IN> is an <ExternalStructure> class to wrap the struct ''Win32.SOCKADDR_IN'' from type information in the ''Win32 API'' library.
+OS.SOCKADDR_IN guid: (Core.GUID fromString: '{87b4c611-026e-11d3-9fd7-00a0cc3e4a32}')!
+OS.SOCKADDR_IN comment: '<SOCKADDR_IN> is an <ExternalStructure> class to wrap the struct ''Win32.SOCKADDR_IN'' from type information in the ''Win32 API'' library.
 
 The type library contains the following helpstring for this struct
 	"Local or remote endpoint address in Internet family style (i.e. IPv4).  Except for the sin*_family parameter, contents are expressed in network byte order."
@@ -29,8 +29,8 @@ struct tagSOCKADDR_IN {
 	[hidden, helpstring("Padding to make structure the same size as SOCKADDR.")] BYTE sin_zero[8];
 } SOCKADDR_IN;
 '!
-!SOCKADDR_IN categoriesForClass!Win32-Structs! !
-!SOCKADDR_IN methodsFor!
+!OS.SOCKADDR_IN categoriesForClass!Win32-Structs! !
+!OS.SOCKADDR_IN methodsFor!
 
 port
 	"Answer the <integer> port number."
@@ -75,16 +75,16 @@ sin_port: anInteger
 	"Set the receiver's 'sin_port' field to the value of the argument, anInteger"
 
 	bytes wordAtOffset: _OffsetOf_sin_port put: anInteger! !
-!SOCKADDR_IN categoriesFor: #port!accessing!public! !
-!SOCKADDR_IN categoriesFor: #port:!accessing!public! !
-!SOCKADDR_IN categoriesFor: #sin_addr!**compiled accessors**!public! !
-!SOCKADDR_IN categoriesFor: #sin_addr:!**compiled accessors**!public! !
-!SOCKADDR_IN categoriesFor: #sin_family!**compiled accessors**!public! !
-!SOCKADDR_IN categoriesFor: #sin_family:!**compiled accessors**!public! !
-!SOCKADDR_IN categoriesFor: #sin_port!**compiled accessors**!public! !
-!SOCKADDR_IN categoriesFor: #sin_port:!**compiled accessors**!public! !
+!OS.SOCKADDR_IN categoriesFor: #port!accessing!public! !
+!OS.SOCKADDR_IN categoriesFor: #port:!accessing!public! !
+!OS.SOCKADDR_IN categoriesFor: #sin_addr!**compiled accessors**!public! !
+!OS.SOCKADDR_IN categoriesFor: #sin_addr:!**compiled accessors**!public! !
+!OS.SOCKADDR_IN categoriesFor: #sin_family!**compiled accessors**!public! !
+!OS.SOCKADDR_IN categoriesFor: #sin_family:!**compiled accessors**!public! !
+!OS.SOCKADDR_IN categoriesFor: #sin_port!**compiled accessors**!public! !
+!OS.SOCKADDR_IN categoriesFor: #sin_port:!**compiled accessors**!public! !
 
-!SOCKADDR_IN class methodsFor!
+!OS.SOCKADDR_IN class methodsFor!
 
 defineFields
 	"Define the fields of the SOCKADDR_IN structure.
@@ -101,14 +101,22 @@ defineFields
 "
 
 	self
-		defineField: #sin_family type: WORDField new offset: 0;
-		defineField: #sin_port type: WORDField new offset: 2;
-		defineField: #sin_addr type: (StructureField type: IN_ADDR) offset: 4;
-		defineField: #sin_zero type: (ArrayField type: ExternalArray length: 8) beFiller offset: 8.
+		defineField: #sin_family
+			type: WORDField new
+			offset: 0;
+		defineField: #sin_port
+			type: WORDField new
+			offset: 2;
+		defineField: #sin_addr
+			type: (StructureField type: IN_ADDR)
+			offset: 4;
+		defineField: #sin_zero
+			type: (ArrayField type: ExternalArray length: 8) beFiller
+			offset: 8.
 	self byteSize: 16!
 
 getFieldNames
 	^#(#sin_family #sin_port #sin_addr)! !
-!SOCKADDR_IN class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!SOCKADDR_IN class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.SOCKADDR_IN class categoriesFor: #defineFields!**auto generated**!public!template definition! !
+!OS.SOCKADDR_IN class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

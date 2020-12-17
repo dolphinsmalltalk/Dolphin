@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-AbstractIN_ADDR subclass: #IN_ADDR
+OS.AbstractIN_ADDR subclass: #'OS.IN_ADDR'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_s_addr' -> 16r0.
@@ -14,8 +14,8 @@ AbstractIN_ADDR subclass: #IN_ADDR
 		'_OffsetOf_s_w1' -> 16r0.
 		'_OffsetOf_s_w2' -> 16r2
 	}!
-IN_ADDR guid: (GUID fromString: '{87b4c5f6-026e-11d3-9fd7-00a0cc3e4a32}')!
-IN_ADDR comment: '<IN_ADDR> is an <ExternalStructure> class to wrap the struct ''Win32.IN_ADDR'' from type information in the ''Win32 API'' library.
+OS.IN_ADDR guid: (Core.GUID fromString: '{87b4c5f6-026e-11d3-9fd7-00a0cc3e4a32}')!
+OS.IN_ADDR comment: '`OS.IN_ADDR` is an `External.Structure` class to wrap the struct ''Win32.IN_ADDR'' from type information in the ''Win32 API'' library.
 
 The type library contains the following helpstring for this struct
 	"IPv4 Internet address. This is an ''on-wire'' format structure."
@@ -41,13 +41,13 @@ struct tagIN_ADDR {
 	};
 } IN_ADDR;
 '!
-!IN_ADDR categoriesForClass!Win32-Structs! !
-!IN_ADDR methodsFor!
+!OS.IN_ADDR categoriesForClass!Win32-Structs! !
+!OS.IN_ADDR methodsFor!
 
 address
 	"Answers the InternetAddress for the receiver"
 
-	^InternetAddress ipAddress: self!
+	^Net.InternetAddress ipAddress: self!
 
 address: anInternetAddress
 	"Sets the address for the receiver to anInternetAddress"
@@ -63,12 +63,12 @@ s_addr: anInteger
 	"Set the receiver's 's_addr' field to the value of the argument, anInteger"
 
 	bytes dwordAtOffset: _OffsetOf_s_addr put: anInteger! !
-!IN_ADDR categoriesFor: #address!accessing!public! !
-!IN_ADDR categoriesFor: #address:!accessing!public! !
-!IN_ADDR categoriesFor: #s_addr!**compiled accessors**!public! !
-!IN_ADDR categoriesFor: #s_addr:!**compiled accessors**!public! !
+!OS.IN_ADDR categoriesFor: #address!accessing!public! !
+!OS.IN_ADDR categoriesFor: #address:!accessing!public! !
+!OS.IN_ADDR categoriesFor: #s_addr!**compiled accessors**!public! !
+!OS.IN_ADDR categoriesFor: #s_addr:!**compiled accessors**!public! !
 
-!IN_ADDR class methodsFor!
+!OS.IN_ADDR class methodsFor!
 
 address: anInternetAddress 
 	^(self new)
@@ -113,8 +113,8 @@ defineFields
 
 getFieldNames
 	^#(#s_addr)! !
-!IN_ADDR class categoriesFor: #address:!instance creation!public! !
-!IN_ADDR class categoriesFor: #addressFamily!constants!public! !
-!IN_ADDR class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!IN_ADDR class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.IN_ADDR class categoriesFor: #address:!instance creation!public! !
+!OS.IN_ADDR class categoriesFor: #addressFamily!constants!public! !
+!OS.IN_ADDR class categoriesFor: #defineFields!**auto generated**!public!template definition! !
+!OS.IN_ADDR class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ExternalStructure subclass: #NET_ADDRESS_INFO
+External.Structure subclass: #'OS.NET_ADDRESS_INFO'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_Format' -> 16r0.
@@ -13,8 +13,8 @@ ExternalStructure subclass: #NET_ADDRESS_INFO
 		'_OffsetOf_NamedAddress_Address' -> 16r4.
 		'_OffsetOf_NamedAddress_Port' -> 16r204
 	}!
-NET_ADDRESS_INFO guid: (GUID fromString: '{0451c625-7a0f-4b75-ad7c-ea167ec0f47c}')!
-NET_ADDRESS_INFO comment: '<NET_ADDRESS_INFO> is an <ExternalStructure> class to wrap the struct ''Win32.NET_ADDRESS_INFO'' from type information in the ''Win32 API'' library.
+OS.NET_ADDRESS_INFO guid: (Core.GUID fromString: '{0451c625-7a0f-4b75-ad7c-ea167ec0f47c}')!
+OS.NET_ADDRESS_INFO comment: '<NET_ADDRESS_INFO> is an <ExternalStructure> class to wrap the struct ''Win32.NET_ADDRESS_INFO'' from type information in the ''Win32 API'' library.
 
 The type library contains the following helpstring for this struct
 	"Contains IP address information returned by the ParseNetworkString function."
@@ -37,8 +37,8 @@ struct tagNET_ADDRESS_INFO {
 	};
 } NET_ADDRESS_INFO;
 '!
-!NET_ADDRESS_INFO categoriesForClass!Win32-Structs! !
-!NET_ADDRESS_INFO methodsFor!
+!OS.NET_ADDRESS_INFO categoriesForClass!Win32-Structs! !
+!OS.NET_ADDRESS_INFO methodsFor!
 
 Format
 	"Answer the <Integer> value of the receiver's 'Format' field."
@@ -127,21 +127,21 @@ NamedAddress_Port: aWORDArray
 		from: ##(_OffsetOf_NamedAddress_Port + 1)
 		to: _OffsetOf_NamedAddress_Port + size
 		startingAt: 1! !
-!NET_ADDRESS_INFO categoriesFor: #Format!**compiled accessors**!public! !
-!NET_ADDRESS_INFO categoriesFor: #Format:!**compiled accessors**!public! !
-!NET_ADDRESS_INFO categoriesFor: #getValidFields!accessing!private! !
-!NET_ADDRESS_INFO categoriesFor: #IpAddress!**compiled accessors**!public! !
-!NET_ADDRESS_INFO categoriesFor: #IpAddress:!**compiled accessors**!public! !
-!NET_ADDRESS_INFO categoriesFor: #Ipv4Address!**compiled accessors**!public! !
-!NET_ADDRESS_INFO categoriesFor: #Ipv4Address:!**compiled accessors**!public! !
-!NET_ADDRESS_INFO categoriesFor: #Ipv6Address!**compiled accessors**!public! !
-!NET_ADDRESS_INFO categoriesFor: #Ipv6Address:!**compiled accessors**!public! !
-!NET_ADDRESS_INFO categoriesFor: #NamedAddress_Address!**compiled accessors**!public! !
-!NET_ADDRESS_INFO categoriesFor: #NamedAddress_Address:!**compiled accessors**!public! !
-!NET_ADDRESS_INFO categoriesFor: #NamedAddress_Port!**compiled accessors**!public! !
-!NET_ADDRESS_INFO categoriesFor: #NamedAddress_Port:!**compiled accessors**!public! !
+!OS.NET_ADDRESS_INFO categoriesFor: #Format!**compiled accessors**!public! !
+!OS.NET_ADDRESS_INFO categoriesFor: #Format:!**compiled accessors**!public! !
+!OS.NET_ADDRESS_INFO categoriesFor: #getValidFields!accessing!private! !
+!OS.NET_ADDRESS_INFO categoriesFor: #IpAddress!**compiled accessors**!public! !
+!OS.NET_ADDRESS_INFO categoriesFor: #IpAddress:!**compiled accessors**!public! !
+!OS.NET_ADDRESS_INFO categoriesFor: #Ipv4Address!**compiled accessors**!public! !
+!OS.NET_ADDRESS_INFO categoriesFor: #Ipv4Address:!**compiled accessors**!public! !
+!OS.NET_ADDRESS_INFO categoriesFor: #Ipv6Address!**compiled accessors**!public! !
+!OS.NET_ADDRESS_INFO categoriesFor: #Ipv6Address:!**compiled accessors**!public! !
+!OS.NET_ADDRESS_INFO categoriesFor: #NamedAddress_Address!**compiled accessors**!public! !
+!OS.NET_ADDRESS_INFO categoriesFor: #NamedAddress_Address:!**compiled accessors**!public! !
+!OS.NET_ADDRESS_INFO categoriesFor: #NamedAddress_Port!**compiled accessors**!public! !
+!OS.NET_ADDRESS_INFO categoriesFor: #NamedAddress_Port:!**compiled accessors**!public! !
 
-!NET_ADDRESS_INFO class methodsFor!
+!OS.NET_ADDRESS_INFO class methodsFor!
 
 defineFields
 	"Define the fields of the NET_ADDRESS_INFO structure.
@@ -164,16 +164,28 @@ defineFields
 "
 
 	self
-		defineField: #Format type: SDWORDField new offset: 0;
-		defineField: #NamedAddress_Address type: (ArrayField type: WORDArray length: 256) offset: 4;
-		defineField: #NamedAddress_Port type: (ArrayField type: WORDArray length: 6) offset: 516;
-		defineField: #Ipv4Address type: (StructureField type: SOCKADDR_IN) offset: 4;
-		defineField: #Ipv6Address type: (StructureField type: SOCKADDR_IN6) offset: 4;
-		defineField: #IpAddress type: (StructureField type: SOCKADDR) offset: 4.
+		defineField: #Format
+			type: SDWORDField new
+			offset: 0;
+		defineField: #NamedAddress_Address
+			type: (ArrayField type: WORDArray length: 256)
+			offset: 4;
+		defineField: #NamedAddress_Port
+			type: (ArrayField type: WORDArray length: 6)
+			offset: 516;
+		defineField: #Ipv4Address
+			type: (StructureField type: SOCKADDR_IN)
+			offset: 4;
+		defineField: #Ipv6Address
+			type: (StructureField type: SOCKADDR_IN6)
+			offset: 4;
+		defineField: #IpAddress
+			type: (StructureField type: SOCKADDR)
+			offset: 4.
 	self byteSize: 528!
 
 getFieldNames
 	^#(#Format)! !
-!NET_ADDRESS_INFO class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!NET_ADDRESS_INFO class categoriesFor: #getFieldNames!accessing!private! !
+!OS.NET_ADDRESS_INFO class categoriesFor: #defineFields!**auto generated**!public!template definition! !
+!OS.NET_ADDRESS_INFO class categoriesFor: #getFieldNames!accessing!private! !
 

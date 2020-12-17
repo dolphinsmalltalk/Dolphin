@@ -46,7 +46,7 @@ acceptCalls
 	"Private - Monitor the port for a connection request. If the port is already in use then we'll
 	receive an error and can display an 'Unable to receive calls' status message."
 
-	acceptSocket := [ServerSocket2 port: self incomingPort backlog: 0] on: SocketError
+	acceptSocket := [Net.ServerSocket2 port: self incomingPort backlog: 0] on: Net.SocketError
 				do: [:ex | nil].
 	self setAcceptStatus.
 	acceptSocket isNil ifFalse: [self forkAccepter]!
@@ -66,7 +66,7 @@ calleeAddress
 	"Answer the proposed connection address. If the address starts with a digit we'll assume
 	that it is an IP address. Otherwise let's assume a host name"
 
-	^InternetAddress fromString: calleeAddress value!
+	^Net.InternetAddress fromString: calleeAddress value!
 
 canConnect
 	"Answer true if the receiver could attempt a connect. This is the case if we are not already
@@ -80,7 +80,7 @@ canConnect
 	acceptSocket isNil ifTrue: [^true].
 	self incomingPort = self outgoingPort ifFalse: [^true].
 	"Check not attempting to connect to self..."
-	localHost := InternetAddress localHost.
+	localHost := Net.InternetAddress localHost.
 	^({localHost displayString asLowercase. localHost ipString. '127.0.0.1'. 'localhost'}
 		includes: addr displayString asLowercase) not!
 
@@ -105,7 +105,7 @@ connect
 	until some response is received from the connection request."
 
 	| sock |
-	sock := Socket2 port: self outgoingPort address: self calleeAddress.
+	sock := Net.Socket2 port: self outgoingPort address: self calleeAddress.
 	self status: #connecting.
 	self invalidateUserInterface.
 	self forkConnector: sock!
@@ -192,16 +192,16 @@ forkAccepter
 
 	
 	[| sock |
-	sock := [acceptSocket accept] on: SocketWaitCancelled
+	sock := [acceptSocket accept] on: Net.SocketWaitCancelled
 				do: 
-					[:ex | 
+					[:ex |
 					"Socket closed"
 					nil].
 	self dontAcceptCalls.
-	sock notNil ifTrue: [self enqueueConnected: sock]] 
+	sock notNil ifTrue: [self enqueueConnected: sock]]
 			fork!
 
-forkConnector: aSocket2 
+forkConnector: aSocket2
 	"Private - Start a background thread to connect to the remote peer. A background thread is used
 	 because the operation may take a while (particularly if it fails) and we don't want to block	
 	the main UI thread in the meantime. The thread will only run for the duration of the connection
@@ -211,11 +211,11 @@ forkConnector: aSocket2
 	
 	[
 	[aSocket2 connect.
-	self enqueueConnected: aSocket2] on: SocketError
+	self enqueueConnected: aSocket2] on: Net.SocketError
 			do: 
-				[:ex | 
+				[:ex |
 				SessionManager current logError: ex.
-				[self connectFailed: ex] postToMessageQueue]] 
+				[self connectFailed: ex] postToMessageQueue]]
 			fork!
 
 forkReceiverOn: aStream 
@@ -361,9 +361,9 @@ senderMain
 	filer nextPut: msg.
 	"The stream is buffered, so we have to flush it or the message won't get transmitted immediately"
 	filer stream flush.
-	filer reset] 
-			repeat] 
-			on: SocketError
+	filer reset]
+			repeat]
+			on: Net.SocketError
 			do: [:ex | ]!
 
 setAcceptStatus

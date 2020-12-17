@@ -1,16 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ExternalStructure subclass: #SOCKADDR
+External.Structure subclass: #'OS.SOCKADDR'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'WinSocketConstants'
+	imports: #(#{OS.WinSocketConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_sa_data' -> 16r2.
 		'_OffsetOf_sa_family' -> 16r0
 	}!
-SOCKADDR guid: (GUID fromString: '{0299d3de-9695-4177-9ce6-42ad495c8e57}')!
-SOCKADDR comment: '<SOCKADDR> is an <ExternalStructure> class to wrap the struct ''Win32.SOCKADDR'' from type information in the ''Win32 API'' library.
+OS.SOCKADDR guid: (Core.GUID fromString: '{0299d3de-9695-4177-9ce6-42ad495c8e57}')!
+OS.SOCKADDR comment: '<SOCKADDR> is an <ExternalStructure> class to wrap the struct ''Win32.SOCKADDR'' from type information in the ''Win32 API'' library.
 
 The type library contains the following helpstring for this struct
 	"Structure used by kernel to store most addresses."
@@ -25,8 +25,8 @@ struct tagSOCKADDR {
 	[hidden, helpstring("Up to 14 bytes of direct address (note in network order, not host order)")] char sa_data[14];
 } SOCKADDR;
 '!
-!SOCKADDR categoriesForClass!Win32-Structs! !
-!SOCKADDR methodsFor!
+!OS.SOCKADDR categoriesForClass!Win32-Structs! !
+!OS.SOCKADDR methodsFor!
 
 displayOn: aPuttableStream
 	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that an end-user might want to see.
@@ -42,7 +42,7 @@ displayOn: aPuttableStream
 		lpProtocolInfo: nil
 		lpszAddressString: buf
 		lpdwAddressStringLength: len) == 0
-		ifFalse: [SocketError signal].
+		ifFalse: [Net.SocketError signal].
 	aPuttableStream
 		next: len value - 1
 		putAll: buf
@@ -63,13 +63,13 @@ sa_family: anInteger
 	"Set the receiver's 'sa_family' field to the value of the argument, anInteger"
 
 	bytes wordAtOffset: _OffsetOf_sa_family put: anInteger! !
-!SOCKADDR categoriesFor: #displayOn:!displaying!public! !
-!SOCKADDR categoriesFor: #initialize!initializing!private! !
-!SOCKADDR categoriesFor: #printFieldsOn:!development!printing!private! !
-!SOCKADDR categoriesFor: #sa_family!**compiled accessors**!public! !
-!SOCKADDR categoriesFor: #sa_family:!**compiled accessors**!public! !
+!OS.SOCKADDR categoriesFor: #displayOn:!displaying!public! !
+!OS.SOCKADDR categoriesFor: #initialize!initializing!private! !
+!OS.SOCKADDR categoriesFor: #printFieldsOn:!development!printing!private! !
+!OS.SOCKADDR categoriesFor: #sa_family!**compiled accessors**!public! !
+!OS.SOCKADDR categoriesFor: #sa_family:!**compiled accessors**!public! !
 
-!SOCKADDR class methodsFor!
+!OS.SOCKADDR class methodsFor!
 
 addressFamily
 	^AF_INET!
@@ -130,9 +130,9 @@ fromString: aString
 
 getFieldNames
 	^#(#sa_family)! !
-!SOCKADDR class categoriesFor: #addressFamily!constants!public! !
-!SOCKADDR class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!SOCKADDR class categoriesFor: #fromAddress:!instance creation!public! !
-!SOCKADDR class categoriesFor: #fromString:!public! !
-!SOCKADDR class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.SOCKADDR class categoriesFor: #addressFamily!constants!public! !
+!OS.SOCKADDR class categoriesFor: #defineFields!**auto generated**!public!template definition! !
+!OS.SOCKADDR class categoriesFor: #fromAddress:!instance creation!public! !
+!OS.SOCKADDR class categoriesFor: #fromString:!public! !
+!OS.SOCKADDR class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

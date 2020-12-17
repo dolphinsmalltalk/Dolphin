@@ -1,16 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-DolphinTest subclass: #AbstractSocketTest
+Core.Tests.DolphinTest subclass: #'Net.Tests.AbstractSocketTest'
 	instanceVariableNames: 'sockets'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-AbstractSocketTest guid: (GUID fromString: '{4b35f00d-f9e0-442d-84fd-4721213f82fd}')!
-AbstractSocketTest isAbstract: true!
-AbstractSocketTest comment: ''!
-!AbstractSocketTest categoriesForClass!Unclassified! !
-!AbstractSocketTest methodsFor!
+Net.Tests.AbstractSocketTest guid: (Core.GUID fromString: '{4b35f00d-f9e0-442d-84fd-4721213f82fd}')!
+Net.Tests.AbstractSocketTest isNonInstantiable: true!
+Net.Tests.AbstractSocketTest comment: ''!
+!Net.Tests.AbstractSocketTest categoriesForClass!Unclassified! !
+!Net.Tests.AbstractSocketTest methodsFor!
 
 serverSocketClass
 	^self subclassResponsibility!
@@ -30,17 +30,17 @@ testQueryPort
 	| s |
 	s := self serverSocketClass port: 1000.
 	[self assert: s queryPort = 1000] ensure: [s close]! !
-!AbstractSocketTest categoriesFor: #serverSocketClass!constants!private! !
-!AbstractSocketTest categoriesFor: #setUp!private!running! !
-!AbstractSocketTest categoriesFor: #tearDown!private!running! !
-!AbstractSocketTest categoriesFor: #testQueryPort!public!unit tests! !
+!Net.Tests.AbstractSocketTest categoriesFor: #serverSocketClass!constants!private! !
+!Net.Tests.AbstractSocketTest categoriesFor: #setUp!private!running! !
+!Net.Tests.AbstractSocketTest categoriesFor: #tearDown!private!running! !
+!Net.Tests.AbstractSocketTest categoriesFor: #testQueryPort!public!unit tests! !
 
-!AbstractSocketTest class methodsFor!
+!Net.Tests.AbstractSocketTest class methodsFor!
 
 isAbstract
 	"Override to true if a TestCase subclass is Abstract and should not have
 	TestCase instances built from it"
 
 	^self == ##(self)! !
-!AbstractSocketTest class categoriesFor: #isAbstract!public!Testing! !
+!Net.Tests.AbstractSocketTest class categoriesFor: #isAbstract!public!Testing! !
 

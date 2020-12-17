@@ -1,17 +1,17 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Win32Structure subclass: #PROTOENT
+OS.Win32Structure subclass: #'OS.PROTOENT'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_p_aliases' -> 16r4.
 		'_OffsetOf_p_name' -> 16r0.
 		'_OffsetOf_p_proto' -> 16r8
 	}!
-PROTOENT guid: (GUID fromString: '{87b4c60a-026e-11d3-9fd7-00a0cc3e4a32}')!
-PROTOENT comment: '<PROTOENT> is an <ExternalStructure> class to wrap the struct ''Win32.PROTOENT'' from type information in the ''Win32 API'' library.
+OS.PROTOENT guid: (Core.GUID fromString: '{87b4c60a-026e-11d3-9fd7-00a0cc3e4a32}')!
+OS.PROTOENT comment: '<PROTOENT> is an <ExternalStructure> class to wrap the struct ''Win32.PROTOENT'' from type information in the ''Win32 API'' library.
 
 The type library contains the following helpstring for this struct
 	"The name and protocol numbers that correspond to a given protocol name. Applications must never attempt to modify this structure or to free any of its components. Furthermore, only one copy of this structure is allocated per thread."
@@ -27,8 +27,8 @@ struct tagPROTOENT {
 	[readonly, helpstring("Protocol number, in host byte order.")] short p_proto;
 } PROTOENT;
 '!
-!PROTOENT categoriesForClass!Win32-Structs! !
-!PROTOENT methodsFor!
+!OS.PROTOENT categoriesForClass!Win32-Structs! !
+!OS.PROTOENT methodsFor!
 
 aliases
 	"Answer an <Array> of <String>, being the alias names for the protocol."
@@ -66,13 +66,13 @@ protocol
 	| bigEndian |
 	bigEndian := self p_proto.
 	^(bigEndian << 8 bitOr: bigEndian >> 8) bitAnd: 16rFFFF! !
-!PROTOENT categoriesFor: #aliases!public! !
-!PROTOENT categoriesFor: #p_name!**compiled accessors**!public! !
-!PROTOENT categoriesFor: #p_proto!**compiled accessors**!public! !
-!PROTOENT categoriesFor: #printFieldsOn:!development!printing!private! !
-!PROTOENT categoriesFor: #protocol!public! !
+!OS.PROTOENT categoriesFor: #aliases!public! !
+!OS.PROTOENT categoriesFor: #p_name!**compiled accessors**!public! !
+!OS.PROTOENT categoriesFor: #p_proto!**compiled accessors**!public! !
+!OS.PROTOENT categoriesFor: #printFieldsOn:!development!printing!private! !
+!OS.PROTOENT categoriesFor: #protocol!public! !
 
-!PROTOENT class methodsFor!
+!OS.PROTOENT class methodsFor!
 
 defineFields
 	"Define the fields of the PROTOENT structure.
@@ -101,11 +101,11 @@ fromString: aString
 	| answer lib |
 	lib := WS2_32Library default.
 	answer := lib getprotobyname: aString.
-	^answer isNull ifTrue: [SocketError signalWith: lib wsaGetLastError] ifFalse: [answer]!
+	^answer isNull ifTrue: [Net.SocketError signalWith: lib wsaGetLastError] ifFalse: [answer]!
 
 getFieldNames
 	^#(#p_name #p_proto)! !
-!PROTOENT class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!PROTOENT class categoriesFor: #fromString:!public! !
-!PROTOENT class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.PROTOENT class categoriesFor: #defineFields!**auto generated**!public!template definition! !
+!OS.PROTOENT class categoriesFor: #fromString:!public! !
+!OS.PROTOENT class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

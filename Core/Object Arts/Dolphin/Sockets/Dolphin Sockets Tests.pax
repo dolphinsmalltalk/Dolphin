@@ -1,16 +1,17 @@
 ﻿| package |
 package := Package name: 'Dolphin Sockets Tests'.
-package paxVersion: 2;
+package paxVersion: 2.1;
 	preDeclareClassesOnLoad: false;
 	basicComment: ''.
 
 
 package setClassNames: #(
-	#{AbstractSocketTest}
-	#{InternetAddressTest}
-	#{Socket2Test}
-	#{SocketErrorTest}
-	#{SocketTest}
+	#{Net.Tests}
+	#{Net.Tests.AbstractSocketTest}
+	#{Net.Tests.InternetAddressTest}
+	#{Net.Tests.Socket2Test}
+	#{Net.Tests.SocketErrorTest}
+	#{Net.Tests.SocketTest}
 ).
 
 package setPrerequisites: #(
@@ -24,34 +25,40 @@ package!
 
 "Class Definitions"!
 
-DolphinTest subclass: #AbstractSocketTest
+Net subclass: #'Net.Tests'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Core.Tests.DolphinTest subclass: #'Net.Tests.AbstractSocketTest'
 	instanceVariableNames: 'sockets'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-DolphinTest subclass: #InternetAddressTest
+Core.Tests.DolphinTest subclass: #'Net.Tests.InternetAddressTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-DolphinTest subclass: #SocketErrorTest
+Core.Tests.DolphinTest subclass: #'Net.Tests.SocketErrorTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'WinSocketErrors'
+	imports: #(#{OS.WinSocketErrors})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-AbstractSocketTest subclass: #Socket2Test
+Net.Tests.AbstractSocketTest subclass: #'Net.Tests.Socket2Test'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-AbstractSocketTest subclass: #SocketTest
+Net.Tests.AbstractSocketTest subclass: #'Net.Tests.SocketTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 

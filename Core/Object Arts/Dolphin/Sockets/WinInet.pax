@@ -1,13 +1,13 @@
 ﻿| package |
 package := Package name: 'WinInet'.
-package paxVersion: 2;
+package paxVersion: 2.1;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk WinInet Library Wrapper
 Copyright (c) Object Arts Ltd, 1997-2006.'.
 
 
 package setClassNames: #(
-	#{WinInetLibrary}
+	#{OS.WinInetLibrary}
 ).
 
 package setPrerequisites: #(
@@ -18,10 +18,10 @@ package!
 
 "Class Definitions"!
 
-ExternalLibrary subclass: #WinInetLibrary
+External.DynamicLinkLibrary subclass: #'OS.WinInetLibrary'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 

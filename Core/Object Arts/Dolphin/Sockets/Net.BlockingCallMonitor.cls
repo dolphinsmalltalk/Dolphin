@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Object subclass: #BlockingCallMonitor
+Core.Object subclass: #'Net.BlockingCallMonitor'
 	instanceVariableNames: 'callBlock completionBlock errorBlock monitorProcess priority'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-BlockingCallMonitor guid: (GUID fromString: '{87b4c45b-026e-11d3-9fd7-00a0cc3e4a32}')!
-BlockingCallMonitor comment: 'This class can be used to monitor the progress of blocking calls running on a separate process.
+Net.BlockingCallMonitor guid: (Core.GUID fromString: '{87b4c45b-026e-11d3-9fd7-00a0cc3e4a32}')!
+Net.BlockingCallMonitor comment: 'This class can be used to monitor the progress of blocking calls running on a separate process.
 
 A BlockingCallMonitor instance can be configured to evaluate a particular block or monadic valuable (set using #callBlock:) on it''s own process. The process can be started using either #monitorOnce or #monitor depending on whether the call should be made once or repeatedly. It is expected that the call will block this process for a period of time. When the call does eventually complete, the BlockingCallMonitor is responsible for evaluating another block or monadic valuable (set using #completionBlock:). This is passed the result of the call as its argument. Should an error occur during the evaluation of the blocking call then the monitor will choose to evaluate its error block (set using #errorBlock:).
 
@@ -16,8 +16,8 @@ A BlockingCallMonitor must always be provided with a callBlock but does provide 
 By default, the monitor process is run at the same priority as the process that instantiated the BlockingCallMonitor object. This can, however, be changed using #priority: prior to commencement of monitoring. Once started, an active monitor process should always be terminated to ensure that the BlockingCallMonitor can be successfully garbage collected.
 
 This class is useful in situations where a known blocking call is to be made, either singly or repeatedly, and you need to be informed when the call has completed or signalled an error. It simplifies the requirement to start a backgound process to perform and monitor the call by encapulating it within a re-useable class.'!
-!BlockingCallMonitor categoriesForClass!Windows Sockets! !
-!BlockingCallMonitor methodsFor!
+!Net.BlockingCallMonitor categoriesForClass!Windows Sockets! !
+!Net.BlockingCallMonitor methodsFor!
 
 callBlock: aNiladicValuable 
 	"Set the valuable that is evaluated for the blocking call, to aNiladicValuable."
@@ -83,18 +83,18 @@ terminate
 			mp := monitorProcess.
 			monitorProcess := nil.
 			mp terminate]! !
-!BlockingCallMonitor categoriesFor: #callBlock:!accessing!public! !
-!BlockingCallMonitor categoriesFor: #completionBlock:!accessing!public! !
-!BlockingCallMonitor categoriesFor: #errorBlock:!accessing!public! !
-!BlockingCallMonitor categoriesFor: #initialize!initializing!private! !
-!BlockingCallMonitor categoriesFor: #makeCall!operations!private! !
-!BlockingCallMonitor categoriesFor: #monitor!operations!public! !
-!BlockingCallMonitor categoriesFor: #monitorOnce!operations!public! !
-!BlockingCallMonitor categoriesFor: #priority!accessing!public! !
-!BlockingCallMonitor categoriesFor: #priority:!accessing!public! !
-!BlockingCallMonitor categoriesFor: #terminate!operations!public! !
+!Net.BlockingCallMonitor categoriesFor: #callBlock:!accessing!public! !
+!Net.BlockingCallMonitor categoriesFor: #completionBlock:!accessing!public! !
+!Net.BlockingCallMonitor categoriesFor: #errorBlock:!accessing!public! !
+!Net.BlockingCallMonitor categoriesFor: #initialize!initializing!private! !
+!Net.BlockingCallMonitor categoriesFor: #makeCall!operations!private! !
+!Net.BlockingCallMonitor categoriesFor: #monitor!operations!public! !
+!Net.BlockingCallMonitor categoriesFor: #monitorOnce!operations!public! !
+!Net.BlockingCallMonitor categoriesFor: #priority!accessing!public! !
+!Net.BlockingCallMonitor categoriesFor: #priority:!accessing!public! !
+!Net.BlockingCallMonitor categoriesFor: #terminate!operations!public! !
 
-!BlockingCallMonitor class methodsFor!
+!Net.BlockingCallMonitor class methodsFor!
 
 callBlock: aMonadicValuable 
 	"Answer an instance of the receiver ready to monitor the blocking call to be evaluated 
@@ -116,7 +116,7 @@ publishedEventsOfInstances
 	^(super publishedEventsOfInstances)
 		add: #completedWith:;
 		yourself! !
-!BlockingCallMonitor class categoriesFor: #callBlock:!instance creation!public! !
-!BlockingCallMonitor class categoriesFor: #new!instance creation!public! !
-!BlockingCallMonitor class categoriesFor: #publishedEventsOfInstances!development!events!public! !
+!Net.BlockingCallMonitor class categoriesFor: #callBlock:!instance creation!public! !
+!Net.BlockingCallMonitor class categoriesFor: #new!instance creation!public! !
+!Net.BlockingCallMonitor class categoriesFor: #publishedEventsOfInstances!development!events!public! !
 

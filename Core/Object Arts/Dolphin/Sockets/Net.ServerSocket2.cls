@@ -1,17 +1,17 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-SocketAbstract2 subclass: #ServerSocket2
+Net.SocketAbstract2 subclass: #'Net.ServerSocket2'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ServerSocket2 guid: (GUID fromString: '{13ab65d3-5229-4982-9d9c-fb0a6fea8376}')!
-ServerSocket2 comment: 'This class is used by a server to listen for a connection request from a socket client. 
+Net.ServerSocket2 guid: (Core.GUID fromString: '{13ab65d3-5229-4982-9d9c-fb0a6fea8376}')!
+Net.ServerSocket2 comment: 'This class is used by a server to listen for a connection request from a socket client. 
 
 A ServerSocket2 is instantiated to listen on a particular port with a particular queue size for incoming client connections. Incoming connection requests will be acknowledged and placed on a queue waiting for the ServerSocket2 to accept them. This is done using #accept which then answers the socket for the next client connection in the queue. If the queue becomes full at any time because sufficient #accept calls have not been issued then additional client connections are rejected. The #accept call blocks the calling <Process> until an incoming connection request is available, and so should ideally be performed from a background process dedicated to the job.'!
-!ServerSocket2 categoriesForClass!Windows Sockets! !
-!ServerSocket2 methodsFor!
+!Net.ServerSocket2 categoriesForClass!Windows Sockets! !
+!Net.ServerSocket2 methodsFor!
 
 accept
 	"Start listening for a connection. This blocks the current process until a connection is accepted. 
@@ -22,12 +22,12 @@ accept
 	address := SOCKADDR_IN new.
 	length := DWORD new.
 	length value: address byteSize.
-	newDescriptor := WS2_32Library default 
+	newDescriptor := WS2_32Library default
 				accept: self asParameter
 				addr: address
 				addrlen: length.
 	newDescriptor = INVALID_SOCKET ifTrue: [self socketErrorOverlap].
-	^Socket2 
+	^Socket2
 		descriptor: newDescriptor
 		port: address sin_port
 		address: address sin_addr address!
@@ -53,21 +53,21 @@ bindPort: anInteger
 	self createOnPort: anInteger.
 	self bind!
 
-createOnPort: anInteger 
+createOnPort: anInteger
 	| dw |
 	self
 		port: anInteger;
 		create.
 	dw := DWORD fromInteger: 1.
 	"Set the re-use address option so can re-use server port without having to wait for timeout."
-	WS2_32Library default 
+	WS2_32Library default
 		setsockopt: self asParameter
 		level: SOL_SOCKET
 		optname: SO_REUSEADDR
 		optval: dw asParameter
 		optlen: dw byteSize!
 
-listen: anIntegerBacklog 
+listen: anIntegerBacklog
 	"Private - Listen for incoming connections. The receiver can acknowledge anIntegerBacklog
 	number of connection requests, placing each in a queue, before any are actually accepted 
 	using #accept."
@@ -80,14 +80,14 @@ preBindPort: anInteger
 	"Private - Same as #bindPort, but dont call bind."
 
 	self createOnPort: anInteger! !
-!ServerSocket2 categoriesFor: #accept!operations!public! !
-!ServerSocket2 categoriesFor: #bind!operations!private! !
-!ServerSocket2 categoriesFor: #bindPort:!operations!private! !
-!ServerSocket2 categoriesFor: #createOnPort:!helpers!private! !
-!ServerSocket2 categoriesFor: #listen:!operations!private! !
-!ServerSocket2 categoriesFor: #preBindPort:!public!swazoo! !
+!Net.ServerSocket2 categoriesFor: #accept!operations!public! !
+!Net.ServerSocket2 categoriesFor: #bind!operations!private! !
+!Net.ServerSocket2 categoriesFor: #bindPort:!operations!private! !
+!Net.ServerSocket2 categoriesFor: #createOnPort:!helpers!private! !
+!Net.ServerSocket2 categoriesFor: #listen:!operations!private! !
+!Net.ServerSocket2 categoriesFor: #preBindPort:!public!swazoo! !
 
-!ServerSocket2 class methodsFor!
+!Net.ServerSocket2 class methodsFor!
 
 defaultMaxPendingConnects
 	"Answer the default maximum number of pending connects that can be acknowledged 
@@ -120,9 +120,9 @@ port: anIntegerPort backlog: anIntegerBacklog
 		bind;
 		listen: anIntegerBacklog;
 		yourself! !
-!ServerSocket2 class categoriesFor: #defaultMaxPendingConnects!constants access!public! !
-!ServerSocket2 class categoriesFor: #new!instance creation!public! !
-!ServerSocket2 class categoriesFor: #newPort:!public! !
-!ServerSocket2 class categoriesFor: #port:!instance creation!public! !
-!ServerSocket2 class categoriesFor: #port:backlog:!instance creation!public! !
+!Net.ServerSocket2 class categoriesFor: #defaultMaxPendingConnects!constants access!public! !
+!Net.ServerSocket2 class categoriesFor: #new!instance creation!public! !
+!Net.ServerSocket2 class categoriesFor: #newPort:!public! !
+!Net.ServerSocket2 class categoriesFor: #port:!instance creation!public! !
+!Net.ServerSocket2 class categoriesFor: #port:backlog:!instance creation!public! !
 

@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Win32Structure subclass: #SERVENT
+OS.Win32Structure subclass: #'OS.SERVENT'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_s_aliases' -> 16r4.
@@ -11,8 +11,8 @@ Win32Structure subclass: #SERVENT
 		'_OffsetOf_s_port' -> 16r8.
 		'_OffsetOf_s_proto' -> 16rC
 	}!
-SERVENT guid: (GUID fromString: '{87b4c610-026e-11d3-9fd7-00a0cc3e4a32}')!
-SERVENT comment: '<SERVENT> is an <ExternalStructure> class to wrap the struct ''Win32.SERVENT'' from type information in the ''Win32 API'' library.
+OS.SERVENT guid: (Core.GUID fromString: '{87b4c610-026e-11d3-9fd7-00a0cc3e4a32}')!
+OS.SERVENT comment: '<SERVENT> is an <ExternalStructure> class to wrap the struct ''Win32.SERVENT'' from type information in the ''Win32 API'' library.
 
 The type library contains the following helpstring for this struct
 	"Used to store or return the name and service number for a given service name."
@@ -29,8 +29,8 @@ struct tagSERVENT {
 	[readonly, helpstring("The name of the protocol to use when contacting the service.")] LPCSTR s_proto;
 } SERVENT;
 '!
-!SERVENT categoriesForClass!Win32-Structs! !
-!SERVENT methodsFor!
+!OS.SERVENT categoriesForClass!Win32-Structs! !
+!OS.SERVENT methodsFor!
 
 aliases
 	"Answer an <Array> of <String>, being the alias names for the protocol."
@@ -71,14 +71,14 @@ s_proto
 	"Answer the <AnsiString> value of the receiver's 's_proto' field."
 
 	^AnsiString fromAddress: (bytes intPtrAtOffset: _OffsetOf_s_proto)! !
-!SERVENT categoriesFor: #aliases!public! !
-!SERVENT categoriesFor: #port!accessing!public! !
-!SERVENT categoriesFor: #printFieldsOn:!development!printing!private! !
-!SERVENT categoriesFor: #s_name!**compiled accessors**!public! !
-!SERVENT categoriesFor: #s_port!**compiled accessors**!public! !
-!SERVENT categoriesFor: #s_proto!**compiled accessors**!public! !
+!OS.SERVENT categoriesFor: #aliases!public! !
+!OS.SERVENT categoriesFor: #port!accessing!public! !
+!OS.SERVENT categoriesFor: #printFieldsOn:!development!printing!private! !
+!OS.SERVENT categoriesFor: #s_name!**compiled accessors**!public! !
+!OS.SERVENT categoriesFor: #s_port!**compiled accessors**!public! !
+!OS.SERVENT categoriesFor: #s_proto!**compiled accessors**!public! !
 
-!SERVENT class methodsFor!
+!OS.SERVENT class methodsFor!
 
 defineFields
 	"Define the fields of the SERVENT structure.
@@ -111,7 +111,7 @@ fromInteger: anInteger
 	"Flip port number into network order"
 	port := (anInteger << 8 bitOr: anInteger >> 8) bitAnd: 16rFFFF.
 	answer := lib getservbyport: port proto: nil.
-	^answer isNull ifTrue: [SocketError signalWith: lib wsaGetLastError] ifFalse: [answer]!
+	^answer isNull ifTrue: [Net.SocketError signalWith: lib wsaGetLastError] ifFalse: [answer]!
 
 fromString: aString
 	"Answer the static (per-thread) SERVENT instance populated with data for the named service.
@@ -121,12 +121,12 @@ fromString: aString
 	| answer lib |
 	lib := WS2_32Library default.
 	answer := lib getservbyname: aString proto: nil.
-	^answer isNull ifTrue: [SocketError signalWith: lib wsaGetLastError] ifFalse: [answer]!
+	^answer isNull ifTrue: [Net.SocketError signalWith: lib wsaGetLastError] ifFalse: [answer]!
 
 getFieldNames
 	^#(#s_name #s_port #s_proto)! !
-!SERVENT class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!SERVENT class categoriesFor: #fromInteger:!public! !
-!SERVENT class categoriesFor: #fromString:!public! !
-!SERVENT class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.SERVENT class categoriesFor: #defineFields!**auto generated**!public!template definition! !
+!OS.SERVENT class categoriesFor: #fromInteger:!public! !
+!OS.SERVENT class categoriesFor: #fromString:!public! !
+!OS.SERVENT class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

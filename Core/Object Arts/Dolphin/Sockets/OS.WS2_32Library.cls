@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ExternalLibrary subclass: #WS2_32Library
+External.DynamicLinkLibrary subclass: #'OS.WS2_32Library'
 	instanceVariableNames: 'wsaData'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-WS2_32Library guid: (GUID fromString: '{d368efd5-8705-4c18-ada5-9a1e95868480}')!
-WS2_32Library comment: 'WS2_32Library is the <ExternalLibrary> class to represent the dynamic link library, ''WS2_32.dll''.It was generated generated from type information in the ''Windows Sockets 2 Type Library'' library. It contains methods for each of the functions defined by the corresponding module in that type library.
+OS.WS2_32Library guid: (Core.GUID fromString: '{d368efd5-8705-4c18-ada5-9a1e95868480}')!
+OS.WS2_32Library comment: 'WS2_32Library is the <ExternalLibrary> class to represent the dynamic link library, ''WS2_32.dll''.It was generated generated from type information in the ''Windows Sockets 2 Type Library'' library. It contains methods for each of the functions defined by the corresponding module in that type library.
 
 This library contains functions pertaining to the use of TCP/IP sockets under Windows through the Sockets 2 (blocking) API.
 
@@ -531,8 +531,8 @@ module WS2_32 {
 		void* lpCompletionRoutine);
 };
 '!
-!WS2_32Library categoriesForClass!External-Libraries-Sockets!Windows Sockets! !
-!WS2_32Library methodsFor!
+!OS.WS2_32Library categoriesForClass!External-Libraries-Sockets!Windows Sockets! !
+!OS.WS2_32Library methodsFor!
 
 accept: s addr: addr addrlen: addrlen
 	"Invoke the accept() function of the module wrapped by the receiver.
@@ -735,7 +735,7 @@ initialize
 	res = 0
 		ifFalse: 
 			[wsaData := nil.
-			SocketError signalWith: res]!
+			Net.SocketError signalWith: res]!
 
 ioctlsocket: s cmd: cmd argp: argp
 	"Invoke the ioctlsocket() function of the module wrapped by the receiver.
@@ -913,50 +913,50 @@ wsaStartup: wVersionRequested lpWSAData: lpWSAData
 
 	<stdcall: sdword WSAStartup word WSADATA*>
 	^self invalidCall: _failureCode! !
-!WS2_32Library categoriesFor: #accept:addr:addrlen:!public!win32 functions-sockets library! !
-!WS2_32Library categoriesFor: #bind:name:namelen:!public!win32 functions-sockets library! !
-!WS2_32Library categoriesFor: #close!public!realizing/unrealizing! !
-!WS2_32Library categoriesFor: #closesocket:!public!win32 functions-sockets library! !
-!WS2_32Library categoriesFor: #connect:name:namelen:!public!win32 functions-sockets library! !
-!WS2_32Library categoriesFor: #gethostbyaddr:len:type:!public!win32 functions-sockets library! !
-!WS2_32Library categoriesFor: #gethostbyname:!public!win32 functions-sockets library! !
-!WS2_32Library categoriesFor: #gethostname:namelen:!public!win32 functions-sockets library! !
-!WS2_32Library categoriesFor: #getpeername:name:namelen:!public!win32 functions-sockets library! !
-!WS2_32Library categoriesFor: #getprotobyname:!public!win32 functions-sockets library! !
-!WS2_32Library categoriesFor: #getprotobynumber:!public!win32 functions-sockets library! !
-!WS2_32Library categoriesFor: #getservbyname:proto:!public!win32 functions-sockets library! !
-!WS2_32Library categoriesFor: #getservbyport:proto:!public!win32 functions-sockets library! !
-!WS2_32Library categoriesFor: #getsockname:name:namelen:!public!win32 functions-sockets library! !
-!WS2_32Library categoriesFor: #getsockopt:level:optname:optval:optlen:!**auto generated**!public! !
-!WS2_32Library categoriesFor: #htonl:!**auto generated**!public!win32 functions-sockets library! !
-!WS2_32Library categoriesFor: #htons:!**auto generated**!public!win32 functions-sockets library! !
-!WS2_32Library categoriesFor: #inet_addr:!public!win32 functions-sockets library! !
-!WS2_32Library categoriesFor: #inet_ntop:pAddr:pStringBuf:stringBufSize:!public!win32 functions-sockets library! !
-!WS2_32Library categoriesFor: #inet_pton:pszAddrString:pAddrBuf:!public!win32 functions-sockets library! !
-!WS2_32Library categoriesFor: #initialize!initializing!private! !
-!WS2_32Library categoriesFor: #ioctlsocket:cmd:argp:!**auto generated**!public! !
-!WS2_32Library categoriesFor: #listen:backlog:!**auto generated**!public! !
-!WS2_32Library categoriesFor: #ntohl:!**auto generated**!public!win32 functions-sockets library! !
-!WS2_32Library categoriesFor: #ntohs:!**auto generated**!public!win32 functions-sockets library! !
-!WS2_32Library categoriesFor: #recv:buf:len:flags:!public!win32 functions-sockets library! !
-!WS2_32Library categoriesFor: #recvfrom:buf:len:flags:from:fromlen:!public!win32 functions-sockets library! !
-!WS2_32Library categoriesFor: #select:readfds:writefds:exceptfds:timeout:!public!win32 functions-sockets library! !
-!WS2_32Library categoriesFor: #send:buf:len:flags:!public!win32 functions-sockets library! !
-!WS2_32Library categoriesFor: #sendto:buf:len:flags:to:tolen:!public!win32 functions-sockets library! !
-!WS2_32Library categoriesFor: #setsockopt:level:optname:optval:optlen:!public!win32 functions-sockets library! !
-!WS2_32Library categoriesFor: #shutdown:how:!**auto generated**!public!win32 functions-sockets library! !
-!WS2_32Library categoriesFor: #socket:type:protocol:!public!win32 functions-sockets library! !
-!WS2_32Library categoriesFor: #wsaAddressToStringA:dwAddressLength:lpProtocolInfo:lpszAddressString:lpdwAddressStringLength:!**auto generated**!public! !
-!WS2_32Library categoriesFor: #wsaCleanup!**auto generated**!public! !
-!WS2_32Library categoriesFor: #wsaGetLastError!**auto generated**!public! !
-!WS2_32Library categoriesFor: #wsaStartup:lpWSAData:!**auto generated**!public! !
+!OS.WS2_32Library categoriesFor: #accept:addr:addrlen:!public!win32 functions-sockets library! !
+!OS.WS2_32Library categoriesFor: #bind:name:namelen:!public!win32 functions-sockets library! !
+!OS.WS2_32Library categoriesFor: #close!public!realizing/unrealizing! !
+!OS.WS2_32Library categoriesFor: #closesocket:!public!win32 functions-sockets library! !
+!OS.WS2_32Library categoriesFor: #connect:name:namelen:!public!win32 functions-sockets library! !
+!OS.WS2_32Library categoriesFor: #gethostbyaddr:len:type:!public!win32 functions-sockets library! !
+!OS.WS2_32Library categoriesFor: #gethostbyname:!public!win32 functions-sockets library! !
+!OS.WS2_32Library categoriesFor: #gethostname:namelen:!public!win32 functions-sockets library! !
+!OS.WS2_32Library categoriesFor: #getpeername:name:namelen:!public!win32 functions-sockets library! !
+!OS.WS2_32Library categoriesFor: #getprotobyname:!public!win32 functions-sockets library! !
+!OS.WS2_32Library categoriesFor: #getprotobynumber:!public!win32 functions-sockets library! !
+!OS.WS2_32Library categoriesFor: #getservbyname:proto:!public!win32 functions-sockets library! !
+!OS.WS2_32Library categoriesFor: #getservbyport:proto:!public!win32 functions-sockets library! !
+!OS.WS2_32Library categoriesFor: #getsockname:name:namelen:!public!win32 functions-sockets library! !
+!OS.WS2_32Library categoriesFor: #getsockopt:level:optname:optval:optlen:!**auto generated**!public! !
+!OS.WS2_32Library categoriesFor: #htonl:!**auto generated**!public!win32 functions-sockets library! !
+!OS.WS2_32Library categoriesFor: #htons:!**auto generated**!public!win32 functions-sockets library! !
+!OS.WS2_32Library categoriesFor: #inet_addr:!public!win32 functions-sockets library! !
+!OS.WS2_32Library categoriesFor: #inet_ntop:pAddr:pStringBuf:stringBufSize:!public!win32 functions-sockets library! !
+!OS.WS2_32Library categoriesFor: #inet_pton:pszAddrString:pAddrBuf:!public!win32 functions-sockets library! !
+!OS.WS2_32Library categoriesFor: #initialize!initializing!private! !
+!OS.WS2_32Library categoriesFor: #ioctlsocket:cmd:argp:!**auto generated**!public! !
+!OS.WS2_32Library categoriesFor: #listen:backlog:!**auto generated**!public! !
+!OS.WS2_32Library categoriesFor: #ntohl:!**auto generated**!public!win32 functions-sockets library! !
+!OS.WS2_32Library categoriesFor: #ntohs:!**auto generated**!public!win32 functions-sockets library! !
+!OS.WS2_32Library categoriesFor: #recv:buf:len:flags:!public!win32 functions-sockets library! !
+!OS.WS2_32Library categoriesFor: #recvfrom:buf:len:flags:from:fromlen:!public!win32 functions-sockets library! !
+!OS.WS2_32Library categoriesFor: #select:readfds:writefds:exceptfds:timeout:!public!win32 functions-sockets library! !
+!OS.WS2_32Library categoriesFor: #send:buf:len:flags:!public!win32 functions-sockets library! !
+!OS.WS2_32Library categoriesFor: #sendto:buf:len:flags:to:tolen:!public!win32 functions-sockets library! !
+!OS.WS2_32Library categoriesFor: #setsockopt:level:optname:optval:optlen:!public!win32 functions-sockets library! !
+!OS.WS2_32Library categoriesFor: #shutdown:how:!**auto generated**!public!win32 functions-sockets library! !
+!OS.WS2_32Library categoriesFor: #socket:type:protocol:!public!win32 functions-sockets library! !
+!OS.WS2_32Library categoriesFor: #wsaAddressToStringA:dwAddressLength:lpProtocolInfo:lpszAddressString:lpdwAddressStringLength:!**auto generated**!public! !
+!OS.WS2_32Library categoriesFor: #wsaCleanup!**auto generated**!public! !
+!OS.WS2_32Library categoriesFor: #wsaGetLastError!**auto generated**!public! !
+!OS.WS2_32Library categoriesFor: #wsaStartup:lpWSAData:!**auto generated**!public! !
 
-!WS2_32Library class methodsFor!
+!OS.WS2_32Library class methodsFor!
 
 fileName
 	"Answer the host system file name of the external library which the 
 	receiver represents"
 
 	^'WS2_32'! !
-!WS2_32Library class categoriesFor: #fileName!constants!public! !
+!OS.WS2_32Library class categoriesFor: #fileName!constants!public! !
 

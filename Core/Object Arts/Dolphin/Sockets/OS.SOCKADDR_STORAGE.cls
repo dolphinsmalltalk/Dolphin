@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-SOCKADDR subclass: #SOCKADDR_STORAGE
+OS.SOCKADDR subclass: #'OS.SOCKADDR_STORAGE'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf___ss_align' -> 16r8.
@@ -11,8 +11,8 @@ SOCKADDR subclass: #SOCKADDR_STORAGE
 		'_OffsetOf___ss_pad2' -> 16r10.
 		'_OffsetOf_ss_family' -> 16r0
 	}!
-SOCKADDR_STORAGE guid: (GUID fromString: '{ff1980c9-d114-4e61-8569-e2ed5321209b}')!
-SOCKADDR_STORAGE comment: '<SOCKADDR_STORAGE> is an <ExternalStructure> class to wrap the struct ''Win32.SOCKADDR_STORAGE'' from type information in the ''Win32 API'' library.
+OS.SOCKADDR_STORAGE guid: (Core.GUID fromString: '{ff1980c9-d114-4e61-8569-e2ed5321209b}')!
+OS.SOCKADDR_STORAGE comment: '<SOCKADDR_STORAGE> is an <ExternalStructure> class to wrap the struct ''Win32.SOCKADDR_STORAGE'' from type information in the ''Win32 API'' library.
 
 The type library contains the following helpstring for this struct
 	"A generic structure that specifies a transport address"
@@ -29,8 +29,8 @@ struct tagSOCKADDR_STORAGE {
 	[hidden] BYTE __ss_pad2[112];
 } SOCKADDR_STORAGE;
 '!
-!SOCKADDR_STORAGE categoriesForClass!Win32-Structs! !
-!SOCKADDR_STORAGE class methodsFor!
+!OS.SOCKADDR_STORAGE categoriesForClass!Win32-Structs! !
+!OS.SOCKADDR_STORAGE class methodsFor!
 
 defineFields
 	"Define the fields of the SOCKADDR_STORAGE structure.
@@ -55,6 +55,6 @@ defineFields
 
 getFieldNames
 	^#()! !
-!SOCKADDR_STORAGE class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!SOCKADDR_STORAGE class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.SOCKADDR_STORAGE class categoriesFor: #defineFields!**auto generated**!public!template definition! !
+!OS.SOCKADDR_STORAGE class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

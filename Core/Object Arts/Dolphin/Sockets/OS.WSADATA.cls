@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Win32Structure subclass: #WSADATA
+OS.Win32Structure subclass: #'OS.WSADATA'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_iMaxSockets' -> 16r186.
@@ -14,8 +14,8 @@ Win32Structure subclass: #WSADATA
 		'_OffsetOf_wHighVersion' -> 16r2.
 		'_OffsetOf_wVersion' -> 16r0
 	}!
-WSADATA guid: (GUID fromString: '{ef5075d3-312c-49e0-b590-98987a18d0d2}')!
-WSADATA comment: '<WSADATA> is an <ExternalStructure> class to wrap the struct ''Win32.WSADATA'' from type information in the ''Win32 API'' library.
+OS.WSADATA guid: (Core.GUID fromString: '{ef5075d3-312c-49e0-b590-98987a18d0d2}')!
+OS.WSADATA comment: '<WSADATA> is an <ExternalStructure> class to wrap the struct ''Win32.WSADATA'' from type information in the ''Win32 API'' library.
 
 The type library contains no documentation for this struct
 
@@ -34,8 +34,8 @@ struct tagWSADATA {
 	[readonly, helpstring("A pointer to vendor-specific information. This member should be ignored for Windows Sockets version 2 and later.")] void* lpVendorInfo;
 } WSADATA;
 '!
-!WSADATA categoriesForClass!Win32-Structs! !
-!WSADATA methodsFor!
+!OS.WSADATA categoriesForClass!Win32-Structs! !
+!OS.WSADATA methodsFor!
 
 iMaxSockets
 	"Answer the <Integer> value of the receiver's 'iMaxSockets' field."
@@ -71,15 +71,15 @@ wVersion
 	"Answer the <Integer> value of the receiver's 'wVersion' field."
 
 	^bytes wordAtOffset: _OffsetOf_wVersion! !
-!WSADATA categoriesFor: #iMaxSockets!**compiled accessors**!public! !
-!WSADATA categoriesFor: #iMaxUdpDg!**compiled accessors**!public! !
-!WSADATA categoriesFor: #lpVendorInfo!**compiled accessors**!public! !
-!WSADATA categoriesFor: #szDescription!**compiled accessors**!public! !
-!WSADATA categoriesFor: #szSystemStatus!**compiled accessors**!public! !
-!WSADATA categoriesFor: #wHighVersion!**compiled accessors**!public! !
-!WSADATA categoriesFor: #wVersion!**compiled accessors**!public! !
+!OS.WSADATA categoriesFor: #iMaxSockets!**compiled accessors**!public! !
+!OS.WSADATA categoriesFor: #iMaxUdpDg!**compiled accessors**!public! !
+!OS.WSADATA categoriesFor: #lpVendorInfo!**compiled accessors**!public! !
+!OS.WSADATA categoriesFor: #szDescription!**compiled accessors**!public! !
+!OS.WSADATA categoriesFor: #szSystemStatus!**compiled accessors**!public! !
+!OS.WSADATA categoriesFor: #wHighVersion!**compiled accessors**!public! !
+!OS.WSADATA categoriesFor: #wVersion!**compiled accessors**!public! !
 
-!WSADATA class methodsFor!
+!OS.WSADATA class methodsFor!
 
 defineFields
 	"Define the fields of the WSADATA structure.
@@ -110,6 +110,6 @@ defineFields
 
 getFieldNames
 	^#(#wVersion #wHighVersion #szDescription #szSystemStatus #iMaxSockets #iMaxUdpDg #lpVendorInfo)! !
-!WSADATA class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!WSADATA class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.WSADATA class categoriesFor: #defineFields!**auto generated**!public!template definition! !
+!OS.WSADATA class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-SharedPool subclass: #WinSocketErrors
+Kernel.SharedPool subclass: #'OS.WinSocketErrors'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -69,6 +69,6 @@ SharedPool subclass: #WinSocketErrors
 		'WSATYPE_NOT_FOUND' -> 16r277D.
 		'WSAVERNOTSUPPORTED' -> 16r276C
 	}!
-WinSocketErrors guid: (GUID fromString: '{dd50fc7b-d07d-43c6-ba58-2f75c76f6a4f}')!
-WinSocketErrors comment: ''!
-!WinSocketErrors categoriesForClass!Unclassified! !
+OS.WinSocketErrors guid: (Core.GUID fromString: '{dd50fc7b-d07d-43c6-ba58-2f75c76f6a4f}')!
+OS.WinSocketErrors comment: ''!
+!OS.WinSocketErrors categoriesForClass!Unclassified! !

@@ -1,21 +1,21 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-SocketAbstract subclass: #Socket
+Net.SocketAbstract subclass: #'Net.Socket'
 	instanceVariableNames: 'address readSemaphore writeSemaphore connectSemaphore readStream writeStream'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Socket guid: (GUID fromString: '{87b4c6e1-026e-11d3-9fd7-00a0cc3e4a32}')!
-Socket comment: '** This class is part of the old asynchronous Sockets Connection package which has been superseded by the Dolphin Sockets package **
+Net.Socket guid: (Core.GUID fromString: '{87b4c6e1-026e-11d3-9fd7-00a0cc3e4a32}')!
+Net.Socket comment: '** This class is part of the old asynchronous Sockets Connection package which has been superseded by the Dolphin Sockets package **
 
 This class represents a socket for one end of a TCP/IP network communication link. Sockets can be instantiated to be associated with a specified port on a host computer at a given internet address. Once a connection is made using #connect the underlying communication mechanism uses a stream-based protocol rather than the alternative unreliable datagram-based protocol.
 
 When connected, a Socket can be used to transfer ByteArrays or (rather more inefficiently) individual bytes across the network using #sendByteArray:, #sendByte:, receiveByteArray: and #receiveByte: methods. For more flexible and efficient transfers, a Socket maintains buffered read and write streams that are accessible via the #readStream and #writeStream methods respectively. To transfer entire objects, an appropriate STBFiler may be opened on the streams. The #send: and #receive methods provide a default implementation for use when single or relatively infrequent object transfers are required.
 
 Most operations (connect, read or write) will block while waiting for data to arrive or be sent. In general such calls should be made from within a background process. It is, however,  possible to use a Socket from the main user interface process without blocking by making use of the #connected and  #dataRead events that are triggered.'!
-!Socket categoriesForClass!Windows Sockets! !
-!Socket methodsFor!
+!Net.Socket categoriesForClass!Windows Sockets! !
+!Net.Socket methodsFor!
 
 address
 	"Answer the InternetAddress of the host that the receiver is connected to"
@@ -31,14 +31,13 @@ basicConnect
 		sin_family: AF_INET;
 		port: self port;
 		sin_addr: (IN_ADDR address: self address).
-	result := WSockLibrary default 
+	result := WSockLibrary default
 				connect: self asParameter
 				name: socketAddress asParameter
 				namelen: socketAddress byteSize.
-	result = 0 
+	result = 0
 		ifFalse: 
-			["The call is overlapped, so any error that occurred will have been stored into the Process
-		 by the overlapped call primitive"
+			["The call is overlapped, so any error that occurred will have been stored into the Process by the overlapped call primitive"
 			SocketError signalWith: Processor activeProcess lastError].
 	self
 		registerDescriptor;
@@ -50,22 +49,22 @@ basicReceiveByte
 
 	^(self basicReceiveByteArray: 1) first!
 
-basicReceiveByteArray: anInteger 
+basicReceiveByteArray: anInteger
 	"Private - Reads anInteger bytes from the socket.
 	Answers a ByteArray representing the bytes read."
 
 	| bytesReceived byteArray |
 	byteArray := ByteArray new: anInteger.
-	bytesReceived := WSockLibrary default 
+	bytesReceived := WSockLibrary default
 				recv: self asParameter
 				buf: byteArray
 				len: byteArray size
 				flags: 0.
-	bytesReceived > 0 
+	bytesReceived > 0
 		ifTrue: 
 			["Success."
 			^byteArray copyFrom: 1 to: bytesReceived].
-	bytesReceived = 0 
+	bytesReceived = 0
 		ifTrue: 
 			["Socket has been closed."
 			SocketClosed signal].
@@ -77,11 +76,11 @@ basicSendByte: anInteger
 
 	^self basicSendByteArray: (ByteArray with: anInteger)!
 
-basicSendByteArray: aByteArray 
+basicSendByteArray: aByteArray
 	"Private - Sends aByteArray through the socket."
 
 	| result |
-	result := WSockLibrary default 
+	result := WSockLibrary default
 				send: self asParameter
 				buf: aByteArray
 				len: aByteArray size
@@ -114,7 +113,7 @@ connect
 	[| retry |
 	retry := false.
 	[result := self basicConnect] on: SocketWouldBlock do: [:e | retry := true].
-	retry] 
+	retry]
 			whileTrue: [self waitConnect].
 	^result!
 
@@ -133,7 +132,7 @@ hasInput
 	timeOut := ByteArray new: ##(4 * 2).
 	fdSet at: 1 put: 1.
 	fdSet dwordAtOffset: 4 put: self descriptor.
-	result := WSockLibrary default 
+	result := WSockLibrary default
 				select: 0
 				readfds: fdSet
 				writefds: nil
@@ -183,7 +182,7 @@ peerAddress
 	winSockAddr := SOCKADDR_IN new.
 	winSockAddrLen := SDWORD new.
 	winSockAddrLen value: winSockAddr byteSize.
-	result := WSockLibrary default 
+	result := WSockLibrary default
 				getpeername: self asParameter
 				name: winSockAddr
 				namelen: winSockAddrLen.
@@ -209,7 +208,7 @@ receive
 	socket then it will be more efficient to create your own STBInFiler onto the socket's 
 	readStream. This method blocks until the object is received"
 
-	^(STBInFiler on: self readStream) next!
+	^(Kernel.STBInFiler on: self readStream) next!
 
 receive: aByteArray 
 	"Compatiblity method with Socket2>>receive:"
@@ -231,7 +230,7 @@ receiveByte
 	[| retry |
 	retry := false.
 	[result := self basicReceiveByte] on: SocketWouldBlock do: [:e | retry := true].
-	retry] 
+	retry]
 			whileTrue: [self waitRead].
 	^result!
 
@@ -247,7 +246,7 @@ receiveByteArray: anInteger
 			received := buffer size].
 	^buffer!
 
-receiveByteArrayPartial: anInteger 
+receiveByteArrayPartial: anInteger
 	"Receive bytes from the socket up to a maxiumum of anInteger bytes
 	and answer this data as a ByteArray. This may answer a array with fewer bytes
 	than requested.	The current process is blocked until the operation has completed."
@@ -256,9 +255,8 @@ receiveByteArrayPartial: anInteger
 	
 	[| retry |
 	retry := false.
-	[result := self basicReceiveByteArray: anInteger] on: SocketWouldBlock
-		do: [:e | retry := true].
-	retry] 
+	[result := self basicReceiveByteArray: anInteger] on: SocketWouldBlock do: [:e | retry := true].
+	retry]
 			whileTrue: [self waitRead].
 	^result!
 
@@ -284,7 +282,7 @@ send: anObject
 	method. If you are intending to send many object through the socket then it will be more efficient 
 	to create your own STBOutFiler onto the socket's writeStream"
 
-	(STBOutFiler on: self writeStream) nextPut: anObject.
+	(Kernel.STBOutFiler on: self writeStream) nextPut: anObject.
 	self writeStream flush!
 
 send: aByteObject count: anInteger 
@@ -308,7 +306,7 @@ send: aByteObject count: countInteger startingAt: startInteger
 								count: countInteger - sent
 								startingAt: sent + startInteger)]!
 
-sendByte: anInteger 
+sendByte: anInteger
 	"Write a single byte with value anInteger to the socket. The current process is blocked until
 	the operation has completed."
 
@@ -317,7 +315,7 @@ sendByte: anInteger
 	[| retry |
 	retry := false.
 	[result := self basicSendByte: anInteger] on: SocketWouldBlock do: [:e | retry := true].
-	retry] 
+	retry]
 			whileTrue: [self waitWrite].
 	^result!
 
@@ -336,7 +334,7 @@ sendByteArray: aByteArray
 			sent := sent + ret].
 	^sent!
 
-sendByteArrayPartial: aByteArray 
+sendByteArrayPartial: aByteArray
 	"Private - Write aByteArray to the receiver. Answers the number of bytes
 	actually sent which may be less than the requested buffer size. 
 	The current process is blocked until the operation has completed."
@@ -345,9 +343,8 @@ sendByteArrayPartial: aByteArray
 	
 	[| retry |
 	retry := false.
-	[result := self basicSendByteArray: aByteArray] on: SocketWouldBlock
-		do: [:e | retry := true].
-	retry] 
+	[result := self basicSendByteArray: aByteArray] on: SocketWouldBlock do: [:e | retry := true].
+	retry]
 			whileTrue: [self waitWrite].
 	^result!
 
@@ -379,43 +376,43 @@ writeStream
 
 	writeStream isNil ifTrue: [writeStream := SocketWriteStream on: self].
 	^writeStream! !
-!Socket categoriesFor: #address!accessing!public! !
-!Socket categoriesFor: #basicConnect!operations!private! !
-!Socket categoriesFor: #basicReceiveByte!operations!private! !
-!Socket categoriesFor: #basicReceiveByteArray:!operations!private! !
-!Socket categoriesFor: #basicSendByte:!operations!private! !
-!Socket categoriesFor: #basicSendByteArray:!operations!private! !
-!Socket categoriesFor: #cancelWait!accessing!private! !
-!Socket categoriesFor: #connect!operations!public! !
-!Socket categoriesFor: #connectNoWait!operations!public! !
-!Socket categoriesFor: #hasInput!private!testing! !
-!Socket categoriesFor: #initialize!initializing!private! !
-!Socket categoriesFor: #onAsyncClose!event handling!private! !
-!Socket categoriesFor: #onAsyncConnect!event handling!private! !
-!Socket categoriesFor: #onAsyncRead!event handling!private! !
-!Socket categoriesFor: #onAsyncWrite!event handling!private! !
-!Socket categoriesFor: #peerAddress!accessing!public! !
-!Socket categoriesFor: #port:address:!initializing!private! !
-!Socket categoriesFor: #readStream!accessing!public! !
-!Socket categoriesFor: #receive!operations!public! !
-!Socket categoriesFor: #receive:!public! !
-!Socket categoriesFor: #receiveByte!operations!public! !
-!Socket categoriesFor: #receiveByteArray:!operations!public! !
-!Socket categoriesFor: #receiveByteArrayPartial:!operations!public! !
-!Socket categoriesFor: #receiveSome:count:startingAt:!public! !
-!Socket categoriesFor: #send:!operations!public! !
-!Socket categoriesFor: #send:count:!operations!public! !
-!Socket categoriesFor: #send:count:startingAt:!operations!public! !
-!Socket categoriesFor: #sendByte:!operations!public! !
-!Socket categoriesFor: #sendByteArray:!operations!public! !
-!Socket categoriesFor: #sendByteArrayPartial:!operations!private! !
-!Socket categoriesFor: #sendSome:count:startingAt:!private! !
-!Socket categoriesFor: #waitConnect!operations!private! !
-!Socket categoriesFor: #waitRead!operations!private! !
-!Socket categoriesFor: #waitWrite!operations!private! !
-!Socket categoriesFor: #writeStream!accessing!public! !
+!Net.Socket categoriesFor: #address!accessing!public! !
+!Net.Socket categoriesFor: #basicConnect!operations!private! !
+!Net.Socket categoriesFor: #basicReceiveByte!operations!private! !
+!Net.Socket categoriesFor: #basicReceiveByteArray:!operations!private! !
+!Net.Socket categoriesFor: #basicSendByte:!operations!private! !
+!Net.Socket categoriesFor: #basicSendByteArray:!operations!private! !
+!Net.Socket categoriesFor: #cancelWait!accessing!private! !
+!Net.Socket categoriesFor: #connect!operations!public! !
+!Net.Socket categoriesFor: #connectNoWait!operations!public! !
+!Net.Socket categoriesFor: #hasInput!private!testing! !
+!Net.Socket categoriesFor: #initialize!initializing!private! !
+!Net.Socket categoriesFor: #onAsyncClose!event handling!private! !
+!Net.Socket categoriesFor: #onAsyncConnect!event handling!private! !
+!Net.Socket categoriesFor: #onAsyncRead!event handling!private! !
+!Net.Socket categoriesFor: #onAsyncWrite!event handling!private! !
+!Net.Socket categoriesFor: #peerAddress!accessing!public! !
+!Net.Socket categoriesFor: #port:address:!initializing!private! !
+!Net.Socket categoriesFor: #readStream!accessing!public! !
+!Net.Socket categoriesFor: #receive!operations!public! !
+!Net.Socket categoriesFor: #receive:!public! !
+!Net.Socket categoriesFor: #receiveByte!operations!public! !
+!Net.Socket categoriesFor: #receiveByteArray:!operations!public! !
+!Net.Socket categoriesFor: #receiveByteArrayPartial:!operations!public! !
+!Net.Socket categoriesFor: #receiveSome:count:startingAt:!public! !
+!Net.Socket categoriesFor: #send:!operations!public! !
+!Net.Socket categoriesFor: #send:count:!operations!public! !
+!Net.Socket categoriesFor: #send:count:startingAt:!operations!public! !
+!Net.Socket categoriesFor: #sendByte:!operations!public! !
+!Net.Socket categoriesFor: #sendByteArray:!operations!public! !
+!Net.Socket categoriesFor: #sendByteArrayPartial:!operations!private! !
+!Net.Socket categoriesFor: #sendSome:count:startingAt:!private! !
+!Net.Socket categoriesFor: #waitConnect!operations!private! !
+!Net.Socket categoriesFor: #waitRead!operations!private! !
+!Net.Socket categoriesFor: #waitWrite!operations!private! !
+!Net.Socket categoriesFor: #writeStream!accessing!public! !
 
-!Socket class methodsFor!
+!Net.Socket class methodsFor!
 
 descriptor: anInteger port: anIntegerPort address: anInternetAddress 
 	"Answers a new instance of the receiver with socket descriptor anInteger."
@@ -442,13 +439,13 @@ port: anIntegerPort address: anInternetAddress
 		port: anIntegerPort address: anInternetAddress;
 		yourself!
 
-port: anIntegerPort host: aStringHostName 
+port: anIntegerPort host: aStringHostName
 	"Answers a new instance of the receiver with anIntegerPort and
 	aStringHostName."
 
 	^self port: anIntegerPort address: (InternetAddress host: aStringHostName)!
 
-port: anIntegerPort ipAddress: aByteArray 
+port: anIntegerPort ipAddress: aByteArray
 	"Answers a new instance of the receiver for anIntegerPort on the host identified by the
 	IP address in aByteArray"
 
@@ -462,10 +459,10 @@ publishedEventsOfInstances
 		add: #dataRead;
 		add: #connected;
 		yourself! !
-!Socket class categoriesFor: #descriptor:port:address:!instance creation!public! !
-!Socket class categoriesFor: #new!instance creation!private! !
-!Socket class categoriesFor: #port:address:!instance creation!public! !
-!Socket class categoriesFor: #port:host:!instance creation!public! !
-!Socket class categoriesFor: #port:ipAddress:!instance creation!public! !
-!Socket class categoriesFor: #publishedEventsOfInstances!development!events!public! !
+!Net.Socket class categoriesFor: #descriptor:port:address:!instance creation!public! !
+!Net.Socket class categoriesFor: #new!instance creation!private! !
+!Net.Socket class categoriesFor: #port:address:!instance creation!public! !
+!Net.Socket class categoriesFor: #port:host:!instance creation!public! !
+!Net.Socket class categoriesFor: #port:ipAddress:!instance creation!public! !
+!Net.Socket class categoriesFor: #publishedEventsOfInstances!development!events!public! !
 

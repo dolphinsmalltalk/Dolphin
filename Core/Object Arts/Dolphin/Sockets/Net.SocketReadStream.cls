@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ReadStream subclass: #SocketReadStream
+Core.ReadStream subclass: #'Net.SocketReadStream'
 	instanceVariableNames: 'socket'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-SocketReadStream guid: (GUID fromString: '{87b4c6fc-026e-11d3-9fd7-00a0cc3e4a32}')!
-SocketReadStream comment: 'This class represents a buffered read stream for receiving data across a Socket connection. The #next call will receive the next element from the stream and will block until there is data available. In order to avoid blocking (when executing on the user interface thread, for example) the #hasInput method may be used to check for the presence of available input before calling #next.'!
-!SocketReadStream categoriesForClass!Collections-Streams!Windows Sockets! !
-!SocketReadStream methodsFor!
+Net.SocketReadStream guid: (Core.GUID fromString: '{87b4c6fc-026e-11d3-9fd7-00a0cc3e4a32}')!
+Net.SocketReadStream comment: 'This class represents a buffered read stream for receiving data across a Socket connection. The #next call will receive the next element from the stream and will block until there is data available. In order to avoid blocking (when executing on the user interface thread, for example) the #hasInput method may be used to check for the presence of available input before calling #next.'!
+!Net.SocketReadStream categoriesForClass!Collections-Streams!Windows Sockets! !
+!Net.SocketReadStream methodsFor!
 
 atEnd
 	"Answer whether the receiver cannot access any more objects."
@@ -104,10 +104,10 @@ readPage
 	"Private - Read ahead, a whole page or as much input as is available, into the buffer."
 
 	readLimit := 
-			[socket 
+			[socket
 				receiveSome: collection
 				count: collection size
-				startingAt: 1] 
+				startingAt: 1]
 					on: SocketClosed
 					do: [:ex | 0].
 	position := 0!
@@ -153,27 +153,27 @@ upToEnd
 	remainder := self contentsSpecies writeStream: 128.
 	[self atEnd] whileFalse: [remainder nextPut: self next].
 	^remainder contents! !
-!SocketReadStream categoriesFor: #atEnd!public!testing! !
-!SocketReadStream categoriesFor: #basicNext:into:startingAt:!accessing!public! !
-!SocketReadStream categoriesFor: #contents!accessing!public! !
-!SocketReadStream categoriesFor: #hasInput!public!testing! !
-!SocketReadStream categoriesFor: #isBinary!public!testing! !
-!SocketReadStream categoriesFor: #isText!public!testing! !
-!SocketReadStream categoriesFor: #isText:!modes!public! !
-!SocketReadStream categoriesFor: #next!accessing!public! !
-!SocketReadStream categoriesFor: #next:into:startingAt:!accessing!public! !
-!SocketReadStream categoriesFor: #nextAvailable!public! !
-!SocketReadStream categoriesFor: #nextAvailable:!accessing!public! !
-!SocketReadStream categoriesFor: #on:!accessing!initializing!private! !
-!SocketReadStream categoriesFor: #readPage!operations!private! !
-!SocketReadStream categoriesFor: #setToEnd!positioning!public! !
-!SocketReadStream categoriesFor: #size!accessing!public! !
-!SocketReadStream categoriesFor: #socket!accessing!private! !
-!SocketReadStream categoriesFor: #socket:!accessing!private! !
-!SocketReadStream categoriesFor: #upTo:!accessing!public! !
-!SocketReadStream categoriesFor: #upToEnd!accessing!public! !
+!Net.SocketReadStream categoriesFor: #atEnd!public!testing! !
+!Net.SocketReadStream categoriesFor: #basicNext:into:startingAt:!accessing!public! !
+!Net.SocketReadStream categoriesFor: #contents!accessing!public! !
+!Net.SocketReadStream categoriesFor: #hasInput!public!testing! !
+!Net.SocketReadStream categoriesFor: #isBinary!public!testing! !
+!Net.SocketReadStream categoriesFor: #isText!public!testing! !
+!Net.SocketReadStream categoriesFor: #isText:!modes!public! !
+!Net.SocketReadStream categoriesFor: #next!accessing!public! !
+!Net.SocketReadStream categoriesFor: #next:into:startingAt:!accessing!public! !
+!Net.SocketReadStream categoriesFor: #nextAvailable!public! !
+!Net.SocketReadStream categoriesFor: #nextAvailable:!accessing!public! !
+!Net.SocketReadStream categoriesFor: #on:!accessing!initializing!private! !
+!Net.SocketReadStream categoriesFor: #readPage!operations!private! !
+!Net.SocketReadStream categoriesFor: #setToEnd!positioning!public! !
+!Net.SocketReadStream categoriesFor: #size!accessing!public! !
+!Net.SocketReadStream categoriesFor: #socket!accessing!private! !
+!Net.SocketReadStream categoriesFor: #socket:!accessing!private! !
+!Net.SocketReadStream categoriesFor: #upTo:!accessing!public! !
+!Net.SocketReadStream categoriesFor: #upToEnd!accessing!public! !
 
-!SocketReadStream class methodsFor!
+!Net.SocketReadStream class methodsFor!
 
 bufferSize
 	"Private - Answer the size of the buffer to be used."
@@ -193,7 +193,7 @@ on: aSocket text: aBoolean
 		socket: aSocket;
 		on: ((aBoolean ifTrue: [String] ifFalse: [ByteArray]) newFixed: self bufferSize);
 		yourself! !
-!SocketReadStream class categoriesFor: #bufferSize!constants!private! !
-!SocketReadStream class categoriesFor: #on:!instance creation!public! !
-!SocketReadStream class categoriesFor: #on:text:!instance creation!public! !
+!Net.SocketReadStream class categoriesFor: #bufferSize!constants!private! !
+!Net.SocketReadStream class categoriesFor: #on:!instance creation!public! !
+!Net.SocketReadStream class categoriesFor: #on:text:!instance creation!public! !
 

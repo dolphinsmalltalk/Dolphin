@@ -1,18 +1,18 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Object subclass: #SocketAbstract
+Core.Object subclass: #'Net.SocketAbstract'
 	instanceVariableNames: 'port descriptor asyncError events'
 	classVariableNames: 'AllSockets WaitingSemaphores'
-	poolDictionaries: 'WinSocketConstants'
+	imports: #(#{OS.WinSocketConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-SocketAbstract guid: (GUID fromString: '{87b4c4bb-026e-11d3-9fd7-00a0cc3e4a32}')!
-SocketAbstract isAbstract: true!
-SocketAbstract comment: '** This class is part of the old asynchronous Sockets Connection package which has been superseded by the Dolphin Sockets package **
+Net.SocketAbstract guid: (Core.GUID fromString: '{87b4c4bb-026e-11d3-9fd7-00a0cc3e4a32}')!
+Net.SocketAbstract isNonInstantiable: true!
+Net.SocketAbstract comment: '** This class is part of the old asynchronous Sockets Connection package which has been superseded by the Dolphin Sockets package **
 
 This class is the abstract superclass of all sockets classes for TCP/IP network communication.'!
-!SocketAbstract categoriesForClass!Windows Sockets! !
-!SocketAbstract methodsFor!
+!Net.SocketAbstract categoriesForClass!Windows Sockets! !
+!Net.SocketAbstract methodsFor!
 
 allowAsyncEvents
 	"Private - Use the services of the WinAsyncSocket singleton to handle
@@ -51,7 +51,7 @@ cancelWait
 close
 	"Close the socket."
 
-	self descriptor notNil 
+	self descriptor notNil
 		ifTrue: 
 			[WSockLibrary default closesocket: self descriptor.
 			self unregisterDescriptor.
@@ -60,7 +60,7 @@ close
 create
 	"Private - Create a new socket."
 
-	self descriptor: (WSockLibrary default 
+	self descriptor: (WSockLibrary default
 				socket: AF_INET
 				type: SOCK_STREAM
 				protocol: 0).
@@ -119,11 +119,11 @@ onAsyncClose
 	self cancelWait.
 	self trigger: #remoteSocketClosed!
 
-onAsyncError: errorCode 
+onAsyncError: errorCode
 	"Private - Handle the notification of an asynchronous error event."
 
 	| socketError |
-	socketError := (SocketError new)
+	socketError := SocketError new
 				tag: errorCode;
 				yourself.
 	self asyncError: socketError.
@@ -174,16 +174,16 @@ queryPort
 	or signal a socket error."
 
 	| name nameLength |
-	name := (SOCKADDR_IN new)
+	name := SOCKADDR_IN new
 				sin_family: AF_INET;
 				yourself.
-	nameLength := (SDWORD new)
+	nameLength := SDWORD new
 				value: name size;
 				yourself.
-	(WSockLibrary default 
+	(WSockLibrary default
 		getsockname: self asParameter
 		name: name
-		namelen: nameLength) < 0 
+		namelen: nameLength) < 0
 		ifTrue: [self error].
 	^name port!
 
@@ -216,38 +216,38 @@ waitOn: aSemaphore
 	self class waitingSemaphores add: aSemaphore.
 	[aSemaphore wait] ensure: [self class waitingSemaphores remove: aSemaphore ifAbsent: []].
 	self asyncError isNil ifFalse: [self asyncError signal]! !
-!SocketAbstract categoriesFor: #allowAsyncEvents!operations!private! !
-!SocketAbstract categoriesFor: #asParameter!converting!public! !
-!SocketAbstract categoriesFor: #asyncError!accessing!public! !
-!SocketAbstract categoriesFor: #asyncError:!accessing!private! !
-!SocketAbstract categoriesFor: #cancel!operations!public! !
-!SocketAbstract categoriesFor: #cancelWait!operations!private! !
-!SocketAbstract categoriesFor: #close!operations!public! !
-!SocketAbstract categoriesFor: #create!operations!private! !
-!SocketAbstract categoriesFor: #descriptor!accessing!private! !
-!SocketAbstract categoriesFor: #descriptor:!accessing!private! !
-!SocketAbstract categoriesFor: #error!exceptions!private! !
-!SocketAbstract categoriesFor: #finalize!finalizing!private! !
-!SocketAbstract categoriesFor: #getEvents!events!private! !
-!SocketAbstract categoriesFor: #initialize!initializing!private! !
-!SocketAbstract categoriesFor: #isOpen!public!testing! !
-!SocketAbstract categoriesFor: #onAsyncAccept!event handling!private! !
-!SocketAbstract categoriesFor: #onAsyncClose!event handling!private! !
-!SocketAbstract categoriesFor: #onAsyncError:!event handling!private! !
-!SocketAbstract categoriesFor: #onAsyncRead!event handling!private! !
-!SocketAbstract categoriesFor: #onAsyncWrite!event handling!private! !
-!SocketAbstract categoriesFor: #onShutdown!event handling!private! !
-!SocketAbstract categoriesFor: #onStartup!event handling!private! !
-!SocketAbstract categoriesFor: #port!accessing!public! !
-!SocketAbstract categoriesFor: #port:!accessing!private! !
-!SocketAbstract categoriesFor: #printOn:!printing!public! !
-!SocketAbstract categoriesFor: #queryPort!accessing!public! !
-!SocketAbstract categoriesFor: #registerDescriptor!operations!private! !
-!SocketAbstract categoriesFor: #setEvents:!events!private! !
-!SocketAbstract categoriesFor: #unregisterDescriptor!operations!private! !
-!SocketAbstract categoriesFor: #waitOn:!operations!private! !
+!Net.SocketAbstract categoriesFor: #allowAsyncEvents!operations!private! !
+!Net.SocketAbstract categoriesFor: #asParameter!converting!public! !
+!Net.SocketAbstract categoriesFor: #asyncError!accessing!public! !
+!Net.SocketAbstract categoriesFor: #asyncError:!accessing!private! !
+!Net.SocketAbstract categoriesFor: #cancel!operations!public! !
+!Net.SocketAbstract categoriesFor: #cancelWait!operations!private! !
+!Net.SocketAbstract categoriesFor: #close!operations!public! !
+!Net.SocketAbstract categoriesFor: #create!operations!private! !
+!Net.SocketAbstract categoriesFor: #descriptor!accessing!private! !
+!Net.SocketAbstract categoriesFor: #descriptor:!accessing!private! !
+!Net.SocketAbstract categoriesFor: #error!exceptions!private! !
+!Net.SocketAbstract categoriesFor: #finalize!finalizing!private! !
+!Net.SocketAbstract categoriesFor: #getEvents!events!private! !
+!Net.SocketAbstract categoriesFor: #initialize!initializing!private! !
+!Net.SocketAbstract categoriesFor: #isOpen!public!testing! !
+!Net.SocketAbstract categoriesFor: #onAsyncAccept!event handling!private! !
+!Net.SocketAbstract categoriesFor: #onAsyncClose!event handling!private! !
+!Net.SocketAbstract categoriesFor: #onAsyncError:!event handling!private! !
+!Net.SocketAbstract categoriesFor: #onAsyncRead!event handling!private! !
+!Net.SocketAbstract categoriesFor: #onAsyncWrite!event handling!private! !
+!Net.SocketAbstract categoriesFor: #onShutdown!event handling!private! !
+!Net.SocketAbstract categoriesFor: #onStartup!event handling!private! !
+!Net.SocketAbstract categoriesFor: #port!accessing!public! !
+!Net.SocketAbstract categoriesFor: #port:!accessing!private! !
+!Net.SocketAbstract categoriesFor: #printOn:!printing!public! !
+!Net.SocketAbstract categoriesFor: #queryPort!accessing!public! !
+!Net.SocketAbstract categoriesFor: #registerDescriptor!operations!private! !
+!Net.SocketAbstract categoriesFor: #setEvents:!events!private! !
+!Net.SocketAbstract categoriesFor: #unregisterDescriptor!operations!private! !
+!Net.SocketAbstract categoriesFor: #waitOn:!operations!private! !
 
-!SocketAbstract class methodsFor!
+!Net.SocketAbstract class methodsFor!
 
 addSocket: aSocket 
 	"Private - Adds aSocket to AllSockets.
@@ -325,14 +325,14 @@ waitingSemaphores
 
 	WaitingSemaphores isNil ifTrue: [WaitingSemaphores := SharedSet new].
 	^WaitingSemaphores! !
-!SocketAbstract class categoriesFor: #addSocket:!accessing!private! !
-!SocketAbstract class categoriesFor: #allSockets!accessing!private! !
-!SocketAbstract class categoriesFor: #fromDescriptor:!instance creation!public! !
-!SocketAbstract class categoriesFor: #initialize!initializing!private! !
-!SocketAbstract class categoriesFor: #onShutdown!event handling!private! !
-!SocketAbstract class categoriesFor: #onStartup!event handling!private! !
-!SocketAbstract class categoriesFor: #publishedEventsOfInstances!development!events!public! !
-!SocketAbstract class categoriesFor: #removeSocket:!accessing!private! !
-!SocketAbstract class categoriesFor: #uninitialize!class hierarchy-removing!private! !
-!SocketAbstract class categoriesFor: #waitingSemaphores!accessing!private! !
+!Net.SocketAbstract class categoriesFor: #addSocket:!accessing!private! !
+!Net.SocketAbstract class categoriesFor: #allSockets!accessing!private! !
+!Net.SocketAbstract class categoriesFor: #fromDescriptor:!instance creation!public! !
+!Net.SocketAbstract class categoriesFor: #initialize!initializing!private! !
+!Net.SocketAbstract class categoriesFor: #onShutdown!event handling!private! !
+!Net.SocketAbstract class categoriesFor: #onStartup!event handling!private! !
+!Net.SocketAbstract class categoriesFor: #publishedEventsOfInstances!development!events!public! !
+!Net.SocketAbstract class categoriesFor: #removeSocket:!accessing!private! !
+!Net.SocketAbstract class categoriesFor: #uninitialize!class hierarchy-removing!private! !
+!Net.SocketAbstract class categoriesFor: #waitingSemaphores!accessing!private! !
 

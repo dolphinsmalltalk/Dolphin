@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'Dolphin Sockets'.
-package paxVersion: 2;
+package paxVersion: 2.1;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk TCP/IP Sockets Support
 Copyright (c) Object Arts Ltd, 2002-2003
@@ -14,45 +14,51 @@ package basicPackageVersion: '6.1'.
 
 
 package setClassNames: #(
-	#{AbstractIN_ADDR}
-	#{FD_SET}
-	#{HOSTENT}
-	#{IN_ADDR}
-	#{IN6_ADDR}
-	#{InternetAddress}
-	#{IPHlpApiLibrary}
-	#{NET_ADDRESS_INFO}
-	#{PROTOENT}
-	#{SERVENT}
-	#{ServerSocket2}
-	#{SOCKADDR}
-	#{SOCKADDR_IN}
-	#{SOCKADDR_IN6}
-	#{SOCKADDR_STORAGE}
-	#{Socket2}
-	#{SocketAbstract2}
-	#{SocketClosed}
-	#{SocketError}
-	#{SocketReadStream}
-	#{SocketWaitCancelled}
-	#{SocketWriteStream}
-	#{TIMEVAL}
-	#{WinSocketConstants}
-	#{WinSocketErrors}
-	#{WS2_32Library}
-	#{WSADATA}
+	#{Net}
+	#{Net.InternetAddress}
+	#{Net.ServerSocket2}
+	#{Net.Socket2}
+	#{Net.SocketAbstract2}
+	#{Net.SocketClosed}
+	#{Net.SocketError}
+	#{Net.SocketReadStream}
+	#{Net.SocketWaitCancelled}
+	#{Net.SocketWriteStream}
+	#{OS.AbstractIN_ADDR}
+	#{OS.FD_SET}
+	#{OS.HOSTENT}
+	#{OS.IN_ADDR}
+	#{OS.IN6_ADDR}
+	#{OS.IPHlpApiLibrary}
+	#{OS.NET_ADDRESS_INFO}
+	#{OS.PROTOENT}
+	#{OS.SERVENT}
+	#{OS.SOCKADDR}
+	#{OS.SOCKADDR_IN}
+	#{OS.SOCKADDR_IN6}
+	#{OS.SOCKADDR_STORAGE}
+	#{OS.TIMEVAL}
+	#{OS.WinSocketConstants}
+	#{OS.WinSocketErrors}
+	#{OS.WS2_32Library}
+	#{OS.WSADATA}
 ).
 
 package setPrerequisites: #(
 	'..\Base\Dolphin'
-	'..\Base\Deprecated\Dolphin Base (Deprecated)'
 ).
 
 package!
 
 "Class Definitions"!
 
-SharedPool subclass: #WinSocketConstants
+Kernel.Namespace subclass: #Net
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #(#{Core} #{OS private})
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Kernel.SharedPool subclass: #'OS.WinSocketConstants'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -167,7 +173,7 @@ SharedPool subclass: #WinSocketConstants
 		'WSADESCRIPTION_LEN' -> 16r100.
 		'WSASYS_STATUS_LEN' -> 16r80
 	}!
-SharedPool subclass: #WinSocketErrors
+Kernel.SharedPool subclass: #'OS.WinSocketErrors'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -236,55 +242,79 @@ SharedPool subclass: #WinSocketErrors
 		'WSATYPE_NOT_FOUND' -> 16r277D.
 		'WSAVERNOTSUPPORTED' -> 16r276C
 	}!
-Object subclass: #InternetAddress
+Core.Object subclass: #'Net.InternetAddress'
 	instanceVariableNames: 'host ipAddress'
 	classVariableNames: ''
-	imports: #(#{WinSocketConstants})
+	imports: #(#{OS.WinSocketConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Object subclass: #SocketAbstract2
+Core.Object subclass: #'Net.SocketAbstract2'
 	instanceVariableNames: 'port descriptor'
 	classVariableNames: ''
-	imports: #(#{WinSocketConstants})
+	imports: #(#{OS.WinSocketConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Win32Error subclass: #SocketError
-	instanceVariableNames: ''
-	classVariableNames: 'ErrorClasses'
-	imports: #(#{WinSocketConstants} #{WinSocketErrors})
-	classInstanceVariableNames: ''
-	classConstants: {}!
-SocketError subclass: #SocketClosed
+External.DynamicLinkLibrary subclass: #'OS.IPHlpApiLibrary'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-SocketError subclass: #SocketWaitCancelled
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-ExternalLibrary subclass: #IPHlpApiLibrary
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-ExternalLibrary subclass: #WS2_32Library
+External.DynamicLinkLibrary subclass: #'OS.WS2_32Library'
 	instanceVariableNames: 'wsaData'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ExternalStructure subclass: #AbstractIN_ADDR
+OS.Win32Error subclass: #'Net.SocketError'
+	instanceVariableNames: ''
+	classVariableNames: 'ErrorClasses'
+	imports: #(#{OS.WinSocketConstants} #{OS.WinSocketErrors})
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Net.SocketError subclass: #'Net.SocketClosed'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ExternalStructure subclass: #FD_SET
+Net.SocketError subclass: #'Net.SocketWaitCancelled'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Net.SocketAbstract2 subclass: #'Net.ServerSocket2'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Net.SocketAbstract2 subclass: #'Net.Socket2'
+	instanceVariableNames: 'address readStream writeStream isText'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Core.ReadStream subclass: #'Net.SocketReadStream'
+	instanceVariableNames: 'socket'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Core.WriteStream subclass: #'Net.SocketWriteStream'
+	instanceVariableNames: 'socket dirty'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+External.Structure subclass: #'OS.AbstractIN_ADDR'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+External.Structure subclass: #'OS.FD_SET'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -293,7 +323,7 @@ ExternalStructure subclass: #FD_SET
 		'_OffsetOf_fd_array' -> 16r4.
 		'_OffsetOf_fd_count' -> 16r0
 	}!
-ExternalStructure subclass: #NET_ADDRESS_INFO
+External.Structure subclass: #'OS.NET_ADDRESS_INFO'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -306,16 +336,16 @@ ExternalStructure subclass: #NET_ADDRESS_INFO
 		'_OffsetOf_NamedAddress_Address' -> 16r4.
 		'_OffsetOf_NamedAddress_Port' -> 16r204
 	}!
-ExternalStructure subclass: #SOCKADDR
+External.Structure subclass: #'OS.SOCKADDR'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{WinSocketConstants})
+	imports: #(#{OS.WinSocketConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_sa_data' -> 16r2.
 		'_OffsetOf_sa_family' -> 16r0
 	}!
-ExternalStructure subclass: #TIMEVAL
+External.Structure subclass: #'OS.TIMEVAL'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -324,7 +354,7 @@ ExternalStructure subclass: #TIMEVAL
 		'_OffsetOf_tv_sec' -> 16r0.
 		'_OffsetOf_tv_usec' -> 16r4
 	}!
-AbstractIN_ADDR subclass: #IN_ADDR
+OS.AbstractIN_ADDR subclass: #'OS.IN_ADDR'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -338,7 +368,7 @@ AbstractIN_ADDR subclass: #IN_ADDR
 		'_OffsetOf_s_w1' -> 16r0.
 		'_OffsetOf_s_w2' -> 16r2
 	}!
-AbstractIN_ADDR subclass: #IN6_ADDR
+OS.AbstractIN_ADDR subclass: #'OS.IN6_ADDR'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -347,7 +377,7 @@ AbstractIN_ADDR subclass: #IN6_ADDR
 		'_OffsetOf_Bytes' -> 16r0.
 		'_OffsetOf_Words' -> 16r0
 	}!
-SOCKADDR subclass: #SOCKADDR_IN
+OS.SOCKADDR subclass: #'OS.SOCKADDR_IN'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -358,7 +388,7 @@ SOCKADDR subclass: #SOCKADDR_IN
 		'_OffsetOf_sin_port' -> 16r2.
 		'_OffsetOf_sin_zero' -> 16r8
 	}!
-SOCKADDR subclass: #SOCKADDR_IN6
+OS.SOCKADDR subclass: #'OS.SOCKADDR_IN6'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -371,7 +401,7 @@ SOCKADDR subclass: #SOCKADDR_IN6
 		'_OffsetOf_sin6_scope_id' -> 16r18.
 		'_OffsetOf_sin6_scope_struct' -> 16r18
 	}!
-SOCKADDR subclass: #SOCKADDR_STORAGE
+OS.SOCKADDR subclass: #'OS.SOCKADDR_STORAGE'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -382,10 +412,10 @@ SOCKADDR subclass: #SOCKADDR_STORAGE
 		'_OffsetOf___ss_pad2' -> 16r10.
 		'_OffsetOf_ss_family' -> 16r0
 	}!
-Win32Structure subclass: #HOSTENT
+OS.Win32Structure subclass: #'OS.HOSTENT'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{WinSocketConstants})
+	imports: #(#{OS.WinSocketConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_h_addr_list' -> 16rC.
@@ -394,7 +424,7 @@ Win32Structure subclass: #HOSTENT
 		'_OffsetOf_h_length' -> 16rA.
 		'_OffsetOf_h_name' -> 16r0
 	}!
-Win32Structure subclass: #PROTOENT
+OS.Win32Structure subclass: #'OS.PROTOENT'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -404,7 +434,7 @@ Win32Structure subclass: #PROTOENT
 		'_OffsetOf_p_name' -> 16r0.
 		'_OffsetOf_p_proto' -> 16r8
 	}!
-Win32Structure subclass: #SERVENT
+OS.Win32Structure subclass: #'OS.SERVENT'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -415,7 +445,7 @@ Win32Structure subclass: #SERVENT
 		'_OffsetOf_s_port' -> 16r8.
 		'_OffsetOf_s_proto' -> 16rC
 	}!
-Win32Structure subclass: #WSADATA
+OS.Win32Structure subclass: #'OS.WSADATA'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -429,30 +459,6 @@ Win32Structure subclass: #WSADATA
 		'_OffsetOf_wHighVersion' -> 16r2.
 		'_OffsetOf_wVersion' -> 16r0
 	}!
-SocketAbstract2 subclass: #ServerSocket2
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-SocketAbstract2 subclass: #Socket2
-	instanceVariableNames: 'address readStream writeStream isText'
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-ReadStream subclass: #SocketReadStream
-	instanceVariableNames: 'socket'
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-WriteStream subclass: #SocketWriteStream
-	instanceVariableNames: 'socket dirty'
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
 
 "End of package definition"!
 

@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-SOCKADDR subclass: #SOCKADDR_IN6
+OS.SOCKADDR subclass: #'OS.SOCKADDR_IN6'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_sin6_addr' -> 16r8.
@@ -13,8 +13,8 @@ SOCKADDR subclass: #SOCKADDR_IN6
 		'_OffsetOf_sin6_scope_id' -> 16r18.
 		'_OffsetOf_sin6_scope_struct' -> 16r18
 	}!
-SOCKADDR_IN6 guid: (GUID fromString: '{a989cfcf-96f5-40b8-9904-cb33f7c78940}')!
-SOCKADDR_IN6 comment: '<SOCKADDR_IN6> is an <ExternalStructure> class to wrap the struct ''Win32.SOCKADDR_IN6'' from type information in the ''Win32 API'' library.
+OS.SOCKADDR_IN6 guid: (Core.GUID fromString: '{a989cfcf-96f5-40b8-9904-cb33f7c78940}')!
+OS.SOCKADDR_IN6 comment: '<SOCKADDR_IN6> is an <ExternalStructure> class to wrap the struct ''Win32.SOCKADDR_IN6'' from type information in the ''Win32 API'' library.
 
 The type library contains the following helpstring for this struct
 	"Specifies a transport address and port for the AF_INET6 address family"
@@ -35,8 +35,8 @@ struct tagSOCKADDR_IN6 {
 	};
 } SOCKADDR_IN6;
 '!
-!SOCKADDR_IN6 categoriesForClass!Win32-Structs! !
-!SOCKADDR_IN6 methodsFor!
+!OS.SOCKADDR_IN6 categoriesForClass!Win32-Structs! !
+!OS.SOCKADDR_IN6 methodsFor!
 
 flowInfo
 	"Answer the <integer> flow info."
@@ -111,22 +111,22 @@ sin6_scope_id: anInteger
 	"Set the receiver's 'sin6_scope_id' field to the value of the argument, anInteger"
 
 	bytes dwordAtOffset: _OffsetOf_sin6_scope_id put: anInteger! !
-!SOCKADDR_IN6 categoriesFor: #flowInfo!accessing!public! !
-!SOCKADDR_IN6 categoriesFor: #flowInfo:!accessing!public! !
-!SOCKADDR_IN6 categoriesFor: #port!accessing!public! !
-!SOCKADDR_IN6 categoriesFor: #port:!accessing!public! !
-!SOCKADDR_IN6 categoriesFor: #sin6_addr!**compiled accessors**!public! !
-!SOCKADDR_IN6 categoriesFor: #sin6_addr:!**compiled accessors**!public! !
-!SOCKADDR_IN6 categoriesFor: #sin6_family!**compiled accessors**!public! !
-!SOCKADDR_IN6 categoriesFor: #sin6_family:!**compiled accessors**!public! !
-!SOCKADDR_IN6 categoriesFor: #sin6_flowinfo!**compiled accessors**!public! !
-!SOCKADDR_IN6 categoriesFor: #sin6_flowinfo:!**compiled accessors**!public! !
-!SOCKADDR_IN6 categoriesFor: #sin6_port!**compiled accessors**!public! !
-!SOCKADDR_IN6 categoriesFor: #sin6_port:!**compiled accessors**!public! !
-!SOCKADDR_IN6 categoriesFor: #sin6_scope_id!**compiled accessors**!public! !
-!SOCKADDR_IN6 categoriesFor: #sin6_scope_id:!**compiled accessors**!public! !
+!OS.SOCKADDR_IN6 categoriesFor: #flowInfo!accessing!public! !
+!OS.SOCKADDR_IN6 categoriesFor: #flowInfo:!accessing!public! !
+!OS.SOCKADDR_IN6 categoriesFor: #port!accessing!public! !
+!OS.SOCKADDR_IN6 categoriesFor: #port:!accessing!public! !
+!OS.SOCKADDR_IN6 categoriesFor: #sin6_addr!**compiled accessors**!public! !
+!OS.SOCKADDR_IN6 categoriesFor: #sin6_addr:!**compiled accessors**!public! !
+!OS.SOCKADDR_IN6 categoriesFor: #sin6_family!**compiled accessors**!public! !
+!OS.SOCKADDR_IN6 categoriesFor: #sin6_family:!**compiled accessors**!public! !
+!OS.SOCKADDR_IN6 categoriesFor: #sin6_flowinfo!**compiled accessors**!public! !
+!OS.SOCKADDR_IN6 categoriesFor: #sin6_flowinfo:!**compiled accessors**!public! !
+!OS.SOCKADDR_IN6 categoriesFor: #sin6_port!**compiled accessors**!public! !
+!OS.SOCKADDR_IN6 categoriesFor: #sin6_port:!**compiled accessors**!public! !
+!OS.SOCKADDR_IN6 categoriesFor: #sin6_scope_id!**compiled accessors**!public! !
+!OS.SOCKADDR_IN6 categoriesFor: #sin6_scope_id:!**compiled accessors**!public! !
 
-!SOCKADDR_IN6 class methodsFor!
+!OS.SOCKADDR_IN6 class methodsFor!
 
 addressFamily
 	^WinSocketConstants.AF_INET6!
@@ -150,18 +150,29 @@ defineFields
 "
 
 	self
-		
-		defineField: #sin6_family type: WORDField new offset: 0;
-		defineField: #sin6_port type: WORDField new offset: 2;
-		defineField: #sin6_flowinfo type: DWORDField new offset: 4;
-		defineField: #sin6_addr type: (StructureField type: IN6_ADDR) offset: 8;
-		defineField: #sin6_scope_id type: DWORDField new offset: 24;
-		defineField: #sin6_scope_struct type: DWORDField new beFiller offset: 24.
+		defineField: #sin6_family
+			type: WORDField new
+			offset: 0;
+		defineField: #sin6_port
+			type: WORDField new
+			offset: 2;
+		defineField: #sin6_flowinfo
+			type: DWORDField new
+			offset: 4;
+		defineField: #sin6_addr
+			type: (StructureField type: IN6_ADDR)
+			offset: 8;
+		defineField: #sin6_scope_id
+			type: DWORDField new
+			offset: 24;
+		defineField: #sin6_scope_struct
+			type: DWORDField new beFiller
+			offset: 24.
 	self byteSize: 28!
 
 getFieldNames
 	^#(#sin6_family #sin6_port #sin6_flowinfo #sin6_addr #sin6_scope_id)! !
-!SOCKADDR_IN6 class categoriesFor: #addressFamily!constants!public! !
-!SOCKADDR_IN6 class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!SOCKADDR_IN6 class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.SOCKADDR_IN6 class categoriesFor: #addressFamily!constants!public! !
+!OS.SOCKADDR_IN6 class categoriesFor: #defineFields!**auto generated**!public!template definition! !
+!OS.SOCKADDR_IN6 class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

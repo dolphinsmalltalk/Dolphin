@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-SharedPool subclass: #WinSocketConstants
+Kernel.SharedPool subclass: #'OS.WinSocketConstants'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -115,6 +115,6 @@ SharedPool subclass: #WinSocketConstants
 		'WSADESCRIPTION_LEN' -> 16r100.
 		'WSASYS_STATUS_LEN' -> 16r80
 	}!
-WinSocketConstants guid: (GUID fromString: '{607ae505-f0cf-4dd6-af63-236bff9d5b02}')!
-WinSocketConstants comment: ''!
-!WinSocketConstants categoriesForClass!Unclassified! !
+OS.WinSocketConstants guid: (Core.GUID fromString: '{607ae505-f0cf-4dd6-af63-236bff9d5b02}')!
+OS.WinSocketConstants comment: ''!
+!OS.WinSocketConstants categoriesForClass!Unclassified! !

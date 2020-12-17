@@ -1,16 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-AbstractIN_ADDR subclass: #IN6_ADDR
+OS.AbstractIN_ADDR subclass: #'OS.IN6_ADDR'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_Bytes' -> 16r0.
 		'_OffsetOf_Words' -> 16r0
 	}!
-IN6_ADDR guid: (GUID fromString: '{bebf4c25-ce63-4511-b68e-2434810fa9c3}')!
-IN6_ADDR comment: '<IN6_ADDR> is an <ExternalStructure> class to wrap the struct ''Win32.IN6_ADDR'' from type information in the ''Win32 API'' library.
+OS.IN6_ADDR guid: (Core.GUID fromString: '{bebf4c25-ce63-4511-b68e-2434810fa9c3}')!
+OS.IN6_ADDR comment: '`OS.IN6_ADDR` is an `External.Structure` class to wrap the struct ''Win32.IN6_ADDR'' from type information in the ''Win32 API'' library.
 
 The type library contains no documentation for this struct
 
@@ -26,8 +26,8 @@ struct tagIN6_ADDR {
 	};
 } IN6_ADDR;
 '!
-!IN6_ADDR categoriesForClass!Win32-Structs! !
-!IN6_ADDR methodsFor!
+!OS.IN6_ADDR categoriesForClass!Win32-Structs! !
+!OS.IN6_ADDR methodsFor!
 
 Bytes
 	"Answer the <ExternalArray> value of the receiver's 'Bytes' field."
@@ -44,10 +44,10 @@ Bytes: anExternalArray
 		from: ##(_OffsetOf_Bytes + 1)
 		to: size
 		startingAt: 1! !
-!IN6_ADDR categoriesFor: #Bytes!**compiled accessors**!public! !
-!IN6_ADDR categoriesFor: #Bytes:!**compiled accessors**!public! !
+!OS.IN6_ADDR categoriesFor: #Bytes!**compiled accessors**!public! !
+!OS.IN6_ADDR categoriesFor: #Bytes:!**compiled accessors**!public! !
 
-!IN6_ADDR class methodsFor!
+!OS.IN6_ADDR class methodsFor!
 
 addressFamily
 	^WinSocketConstants.AF_INET6!
@@ -73,7 +73,7 @@ defineFields
 
 getFieldNames
 	^#(#Bytes)! !
-!IN6_ADDR class categoriesFor: #addressFamily!constants!public! !
-!IN6_ADDR class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!IN6_ADDR class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.IN6_ADDR class categoriesFor: #addressFamily!constants!public! !
+!OS.IN6_ADDR class categoriesFor: #defineFields!**auto generated**!public!template definition! !
+!OS.IN6_ADDR class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

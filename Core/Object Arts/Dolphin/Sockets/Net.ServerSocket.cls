@@ -1,19 +1,19 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-SocketAbstract subclass: #ServerSocket
+Net.SocketAbstract subclass: #'Net.ServerSocket'
 	instanceVariableNames: 'acceptSemaphore'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ServerSocket guid: (GUID fromString: '{87b4c6e0-026e-11d3-9fd7-00a0cc3e4a32}')!
-ServerSocket comment: '** This class is part of the old asynchronous Sockets Connection package which has been superseded by the Dolphin Sockets package **
+Net.ServerSocket guid: (Core.GUID fromString: '{87b4c6e0-026e-11d3-9fd7-00a0cc3e4a32}')!
+Net.ServerSocket comment: '** This class is part of the old asynchronous Sockets Connection package which has been superseded by the Dolphin Sockets package **
 
 This class is used by a server to listen for a connection request from a client. 
 
 A ServerSocket is instantiated to listen on a particular port with a particular queue size for incoming client connections. Incoming connection requests will be acknowledged and placed on a queue waiting for the ServerSocket to accept them. This is done using #accept which then answers the socket for the next client connection in the queue. If the queue becomes full at any time because sufficient #accept calls have not been issued then additional client connections are rejected.'!
-!ServerSocket categoriesForClass!Windows Sockets! !
-!ServerSocket methodsFor!
+!Net.ServerSocket categoriesForClass!Windows Sockets! !
+!Net.ServerSocket methodsFor!
 
 accept
 	"Start listening for a connection. This blocks the current process until a connection is accepted. 
@@ -25,7 +25,7 @@ accept
 	[| retry |
 	retry := false.
 	[acceptedSocket := self basicAccept] on: SocketWouldBlock do: [:e | retry := true].
-	retry] 
+	retry]
 			whileTrue: [self waitAccept].
 	self trigger: #connectionAccepted: with: acceptedSocket.
 	^acceptedSocket!
@@ -45,12 +45,12 @@ basicAccept
 	address := SOCKADDR_IN new.
 	length := DWORD new.
 	length value: address byteSize.
-	newDescriptor := WSockLibrary default 
+	newDescriptor := WSockLibrary default
 				accept: self asParameter
 				addr: address asParameter
 				addrlen: length.
 	newDescriptor = INVALID_SOCKET ifTrue: [self error].
-	^Socket 
+	^Socket
 		descriptor: newDescriptor
 		port: address sin_port
 		address: address sin_addr address!
@@ -63,7 +63,7 @@ bind
 	socketAddress sin_family: AF_INET.
 	socketAddress sin_addr s_addr: INADDR_ANY.
 	socketAddress port: self port.
-	result := WSockLibrary default 
+	result := WSockLibrary default
 				bind: self asParameter
 				addr: socketAddress asParameter
 				namelen: socketAddress byteSize.
@@ -97,7 +97,7 @@ initialize
 	super initialize.
 	acceptSemaphore := Semaphore new!
 
-listen: anIntegerBacklog 
+listen: anIntegerBacklog
 	"Private - Listen for incoming connections. The receiver can acknowledge anIntegerBacklog
 	number of connection requests, placing each in a queue, before any are actually accepted 
 	using #accept."
@@ -115,19 +115,19 @@ waitAccept
 	"Private - Wait on the acceptSemaphore until a connection is accepted."
 
 	self waitOn: acceptSemaphore! !
-!ServerSocket categoriesFor: #accept!operations!public! !
-!ServerSocket categoriesFor: #acceptNoWait!operations!public! !
-!ServerSocket categoriesFor: #basicAccept!operations!private! !
-!ServerSocket categoriesFor: #bind!operations!private! !
-!ServerSocket categoriesFor: #bindPort:!operations!private! !
-!ServerSocket categoriesFor: #cancelWait!operations!private! !
-!ServerSocket categoriesFor: #close!operations!public! !
-!ServerSocket categoriesFor: #initialize!initializing!private! !
-!ServerSocket categoriesFor: #listen:!operations!private! !
-!ServerSocket categoriesFor: #onAsyncAccept!event handling!private! !
-!ServerSocket categoriesFor: #waitAccept!operations!private! !
+!Net.ServerSocket categoriesFor: #accept!operations!public! !
+!Net.ServerSocket categoriesFor: #acceptNoWait!operations!public! !
+!Net.ServerSocket categoriesFor: #basicAccept!operations!private! !
+!Net.ServerSocket categoriesFor: #bind!operations!private! !
+!Net.ServerSocket categoriesFor: #bindPort:!operations!private! !
+!Net.ServerSocket categoriesFor: #cancelWait!operations!private! !
+!Net.ServerSocket categoriesFor: #close!operations!public! !
+!Net.ServerSocket categoriesFor: #initialize!initializing!private! !
+!Net.ServerSocket categoriesFor: #listen:!operations!private! !
+!Net.ServerSocket categoriesFor: #onAsyncAccept!event handling!private! !
+!Net.ServerSocket categoriesFor: #waitAccept!operations!private! !
 
-!ServerSocket class methodsFor!
+!Net.ServerSocket class methodsFor!
 
 defaultMaxPendingConnects
 	"Answer the default maximum number of pending connects that can be acknowledged 
@@ -163,9 +163,9 @@ publishedEventsOfInstances
 	^(super publishedEventsOfInstances)
 		add: #connectionAccepted:;
 		yourself! !
-!ServerSocket class categoriesFor: #defaultMaxPendingConnects!constants access!public! !
-!ServerSocket class categoriesFor: #new!instance creation!public! !
-!ServerSocket class categoriesFor: #port:!instance creation!public! !
-!ServerSocket class categoriesFor: #port:backlog:!instance creation!public! !
-!ServerSocket class categoriesFor: #publishedEventsOfInstances!development!events!public! !
+!Net.ServerSocket class categoriesFor: #defaultMaxPendingConnects!constants access!public! !
+!Net.ServerSocket class categoriesFor: #new!instance creation!public! !
+!Net.ServerSocket class categoriesFor: #port:!instance creation!public! !
+!Net.ServerSocket class categoriesFor: #port:backlog:!instance creation!public! !
+!Net.ServerSocket class categoriesFor: #publishedEventsOfInstances!development!events!public! !
 

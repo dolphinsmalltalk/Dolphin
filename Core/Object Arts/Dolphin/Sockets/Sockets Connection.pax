@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'Sockets Connection'.
-package paxVersion: 2;
+package paxVersion: 2.1;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk TCP/IP Sockets Connection Support
 Copyright (c) Object Arts Ltd, 1997-2003. Portions copyright CGI Group (Europe) Ltd, 1997.
@@ -16,13 +16,13 @@ package basicPackageVersion: '6.1'.
 
 
 package setClassNames: #(
-	#{BlockingCallMonitor}
-	#{ServerSocket}
-	#{Socket}
-	#{SocketAbstract}
-	#{SocketWouldBlock}
-	#{WinAsyncSocket}
-	#{WSockLibrary}
+	#{Net.BlockingCallMonitor}
+	#{Net.ServerSocket}
+	#{Net.Socket}
+	#{Net.SocketAbstract}
+	#{Net.SocketWouldBlock}
+	#{OS.WinAsyncSocket}
+	#{OS.WSockLibrary}
 ).
 
 package setPrerequisites: #(
@@ -35,46 +35,46 @@ package!
 
 "Class Definitions"!
 
-Object subclass: #BlockingCallMonitor
+Core.Object subclass: #'Net.BlockingCallMonitor'
 	instanceVariableNames: 'callBlock completionBlock errorBlock monitorProcess priority'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Object subclass: #SocketAbstract
+Core.Object subclass: #'Net.SocketAbstract'
 	instanceVariableNames: 'port descriptor asyncError events'
 	classVariableNames: 'AllSockets WaitingSemaphores'
-	poolDictionaries: 'WinSocketConstants'
+	imports: #(#{OS.WinSocketConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-SocketError subclass: #SocketWouldBlock
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''
-	classConstants: {}!
-ExternalLibrary subclass: #WSockLibrary
+External.DynamicLinkLibrary subclass: #'OS.WSockLibrary'
 	instanceVariableNames: 'wsaData'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-SocketAbstract subclass: #ServerSocket
+Net.SocketError subclass: #'Net.SocketWouldBlock'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Net.SocketAbstract subclass: #'Net.ServerSocket'
 	instanceVariableNames: 'acceptSemaphore'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-SocketAbstract subclass: #Socket
+Net.SocketAbstract subclass: #'Net.Socket'
 	instanceVariableNames: 'address readSemaphore writeSemaphore connectSemaphore readStream writeStream'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-View subclass: #WinAsyncSocket
+UI.View subclass: #'OS.WinAsyncSocket'
 	instanceVariableNames: '_reserved1 _reserved2'
 	classVariableNames: 'DefaultInstance SocketMessageMap UserMessageMap WsaEvent WsaHostInfo'
-	poolDictionaries: 'WinSocketConstants'
+	imports: #(#{OS.WinSocketConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 

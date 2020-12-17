@@ -1,17 +1,17 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-WriteStream subclass: #SocketWriteStream
+Core.WriteStream subclass: #'Net.SocketWriteStream'
 	instanceVariableNames: 'socket dirty'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-SocketWriteStream guid: (GUID fromString: '{87b4c6fe-026e-11d3-9fd7-00a0cc3e4a32}')!
-SocketWriteStream comment: 'This class represents a buffered write stream for sending data across a Socket connection.
+Net.SocketWriteStream guid: (Core.GUID fromString: '{87b4c6fe-026e-11d3-9fd7-00a0cc3e4a32}')!
+Net.SocketWriteStream comment: 'This class represents a buffered write stream for sending data across a Socket connection.
 
 From an implementation perspective this class is similar to FileStream, in that it uses the inherited stream collection as a buffer, overridding certain operations to note when the buffer is dirty. Data is not sent to the underlying socket until the stream is explictily flushed, or the buffer overflows.'!
-!SocketWriteStream categoriesForClass!Collections-Streams!Windows Sockets! !
-!SocketWriteStream methodsFor!
+!Net.SocketWriteStream categoriesForClass!Collections-Streams!Windows Sockets! !
+!Net.SocketWriteStream methodsFor!
 
 close
 	"Write any outstanding changes to the socket and close it."
@@ -108,21 +108,21 @@ socket: aSocket
 	"Private - Sets the socket instance variable to aSocket."
 
 	socket := aSocket! !
-!SocketWriteStream categoriesFor: #close!operations!public! !
-!SocketWriteStream categoriesFor: #flush!buffer!public! !
-!SocketWriteStream categoriesFor: #growCollection!operations!private! !
-!SocketWriteStream categoriesFor: #isBinary!public!testing! !
-!SocketWriteStream categoriesFor: #isText!public!testing! !
-!SocketWriteStream categoriesFor: #isText:!modes!public! !
-!SocketWriteStream categoriesFor: #next:putAll:startingAt:!accessing!public! !
-!SocketWriteStream categoriesFor: #nextPut:!accessing!public! !
-!SocketWriteStream categoriesFor: #nextPutAll:!accessing!public! !
-!SocketWriteStream categoriesFor: #on:!initializing!private! !
-!SocketWriteStream categoriesFor: #primitiveNextPut:!accessing!private! !
-!SocketWriteStream categoriesFor: #socket!accessing!private! !
-!SocketWriteStream categoriesFor: #socket:!accessing!private! !
+!Net.SocketWriteStream categoriesFor: #close!operations!public! !
+!Net.SocketWriteStream categoriesFor: #flush!buffer!public! !
+!Net.SocketWriteStream categoriesFor: #growCollection!operations!private! !
+!Net.SocketWriteStream categoriesFor: #isBinary!public!testing! !
+!Net.SocketWriteStream categoriesFor: #isText!public!testing! !
+!Net.SocketWriteStream categoriesFor: #isText:!modes!public! !
+!Net.SocketWriteStream categoriesFor: #next:putAll:startingAt:!accessing!public! !
+!Net.SocketWriteStream categoriesFor: #nextPut:!accessing!public! !
+!Net.SocketWriteStream categoriesFor: #nextPutAll:!accessing!public! !
+!Net.SocketWriteStream categoriesFor: #on:!initializing!private! !
+!Net.SocketWriteStream categoriesFor: #primitiveNextPut:!accessing!private! !
+!Net.SocketWriteStream categoriesFor: #socket!accessing!private! !
+!Net.SocketWriteStream categoriesFor: #socket:!accessing!private! !
 
-!SocketWriteStream class methodsFor!
+!Net.SocketWriteStream class methodsFor!
 
 bufferSize
 	"Answer the size of the buffer to be used."
@@ -142,7 +142,7 @@ on: aSocket text: aBoolean
 		socket: aSocket;
 		on: ((aBoolean ifTrue: [String] ifFalse: [ByteArray]) newFixed: self bufferSize);
 		yourself! !
-!SocketWriteStream class categoriesFor: #bufferSize!constants!public! !
-!SocketWriteStream class categoriesFor: #on:!instance creation!public! !
-!SocketWriteStream class categoriesFor: #on:text:!instance creation!public! !
+!Net.SocketWriteStream class categoriesFor: #bufferSize!constants!public! !
+!Net.SocketWriteStream class categoriesFor: #on:!instance creation!public! !
+!Net.SocketWriteStream class categoriesFor: #on:text:!instance creation!public! !
 

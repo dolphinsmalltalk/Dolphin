@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-DolphinTest subclass: #InternetAddressTest
+Core.Tests.DolphinTest subclass: #'Net.Tests.InternetAddressTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-InternetAddressTest guid: (GUID fromString: '{3d606958-5c0e-4788-a978-70bf30cf372d}')!
-InternetAddressTest comment: ''!
-!InternetAddressTest categoriesForClass!Unclassified! !
-!InternetAddressTest methodsFor!
+Net.Tests.InternetAddressTest guid: (Core.GUID fromString: '{3d606958-5c0e-4788-a978-70bf30cf372d}')!
+Net.Tests.InternetAddressTest comment: ''!
+!Net.Tests.InternetAddressTest categoriesForClass!Unclassified! !
+!Net.Tests.InternetAddressTest methodsFor!
 
 testAllForHost
 	| addresses |
@@ -56,8 +56,8 @@ testLocalHost
 	self assert: local host asLowercase equals: computerName.
 	self assert: ((InternetAddress ipAddress: local ipAddress) host subStrings: $.) first asLowercase
 		equals: computerName! !
-!InternetAddressTest categoriesFor: #testAllForHost!public!unit tests! !
-!InternetAddressTest categoriesFor: #testHost!public!unit tests! !
-!InternetAddressTest categoriesFor: #testIsIPString!public!unit tests! !
-!InternetAddressTest categoriesFor: #testLocalHost!public!unit tests! !
+!Net.Tests.InternetAddressTest categoriesFor: #testAllForHost!public!unit tests! !
+!Net.Tests.InternetAddressTest categoriesFor: #testHost!public!unit tests! !
+!Net.Tests.InternetAddressTest categoriesFor: #testIsIPString!public!unit tests! !
+!Net.Tests.InternetAddressTest categoriesFor: #testLocalHost!public!unit tests! !
 
