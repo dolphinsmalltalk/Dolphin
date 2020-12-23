@@ -22,6 +22,9 @@ There are also the virtual colours, `ThemeColor` and `PluggableColor`, to repres
 
 	^self == aColor or: [aColor species == self species and: [aColor argbCode = self argbCode]]!
 
+actualColor
+	^self!
+
 adjustBrightness: aNumber
 	"Answer a new <Color> that is derived from this color but with the specified relative brightness."
 
@@ -352,6 +355,7 @@ stbSaveOn: anSTBOutFiler
 				register: self.
 			anSTBOutFiler nextPut: symbol]! !
 !Color categoriesFor: #=!comparing!public! !
+!Color categoriesFor: #actualColor!accessing!private! !
 !Color categoriesFor: #adjustBrightness:!public! !
 !Color categoriesFor: #adjustSaturation:brightness:!public! !
 !Color categoriesFor: #alpha!accessing!public! !

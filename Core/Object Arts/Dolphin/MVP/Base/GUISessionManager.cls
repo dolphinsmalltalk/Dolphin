@@ -84,6 +84,14 @@ isUnattended
 
 	^flags allMask: UnattendedMask!
 
+onSettingChanged: aSettingsChangeEvent
+	"Private - A system setting has been changed. This could be any of a wide range of things from a theme change,
+	regional settings, even policy. The notifications come in thick and fast because they are sent to every top-level
+	window. We consolidate them by queuing them up for coalescing any that arrive within a 1-second window."
+
+	settingsChanged add: {aSettingsChangeEvent area. aSettingsChangeEvent uiAction}.
+	inputState msgWindow setTimer: SettingsChangeTimerId interval: 1000!
+
 parseCmdLineFlags
 	| options |
 	super parseCmdLineFlags.
@@ -177,6 +185,7 @@ windowSystemStartup
 !GUISessionManager categoriesFor: #commandLineParser!helpers!private! !
 !GUISessionManager categoriesFor: #inputStateClass!constants!private! !
 !GUISessionManager categoriesFor: #isUnattended!public!testing! !
+!GUISessionManager categoriesFor: #onSettingChanged:!event handling!private! !
 !GUISessionManager categoriesFor: #parseCmdLineFlags!operations-startup!private! !
 !GUISessionManager categoriesFor: #resourceManager!accessing!public! !
 !GUISessionManager categoriesFor: #restoreWindowState!operations-startup!private! !

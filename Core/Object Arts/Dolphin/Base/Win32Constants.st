@@ -895,6 +895,8 @@ Win32Constants at: 'SPI_SETFLATMENU' put: 16r1023!
 Win32Constants at: 'SPI_SETICONTITLELOGFONT' put: 16r22!
 Win32Constants at: 'SPI_SETLISTBOXSMOOTHSCROLLING' put: 16r1007!
 Win32Constants at: 'SPI_SETNONCLIENTMETRICS' put: 16r2A!
+Win32Constants at: 'SPIF_SENDCHANGE' put: 16r2!
+Win32Constants at: 'SPIF_UPDATEINIFILE' put: 16r1!
 Win32Constants at: 'SRCAND' put: 16r8800C6!
 Win32Constants at: 'SRCCOPY' put: 16rCC0020!
 Win32Constants at: 'SRCINVERT' put: 16r660046!

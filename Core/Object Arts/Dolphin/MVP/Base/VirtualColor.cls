@@ -11,9 +11,6 @@ VirtualColor comment: '`VirtualColor` is the abstract class of `Color`s with an 
 !VirtualColor categoriesForClass!Drawing! !
 !VirtualColor methodsFor!
 
-actualColor
-	^self subclassResponsibility!
-
 argbCode
 	"Answer the receiver's colour value in 32-bit ARGB encoding with 8-bits per component in alpha, red, green, blue order."
 
@@ -43,7 +40,6 @@ rgbCode
 	"Answer the receiver's color value in 24-bit RGB encoding with 8-bits per component in (blue, green, red) order."
 
 	^self actualColor rgbCode! !
-!VirtualColor categoriesFor: #actualColor!accessing!private! !
 !VirtualColor categoriesFor: #argbCode!converting!public! !
 !VirtualColor categoriesFor: #asParameter!converting!public! !
 !VirtualColor categoriesFor: #asRGB!converting!public! !

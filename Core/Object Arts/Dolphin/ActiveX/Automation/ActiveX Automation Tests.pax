@@ -13,6 +13,7 @@ package classNames
 	yourself.
 
 package methodNames
+	add: #ExternalAddressTest -> #testBSTRFromAddress;
 	add: #ExternalDescriptorTest -> #testComPtrs;
 	yourself.
 
@@ -59,6 +60,17 @@ GenericExternalArrayTest subclass: #SAFEARRAYTest
 
 
 "Loose Methods"!
+
+!ExternalAddressTest methodsFor!
+
+testBSTRFromAddress
+	| empty |
+	self stringFromAddressTestClass: BSTR.
+	"By convention, a null BSTR is equivalent to the empty string"
+	empty := BSTR new.
+	self assert: (BSTR fromAddress: nil) equals: empty.
+	self assert: (BSTR fromAddress: 0) equals: empty! !
+!ExternalAddressTest categoriesFor: #testBSTRFromAddress!public!unit tests! !
 
 !ExternalDescriptorTest methodsFor!
 

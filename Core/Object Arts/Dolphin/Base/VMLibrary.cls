@@ -576,6 +576,14 @@ unsignedFromSigned: anInteger
 		ifTrue: [self errorIntegerMoreThan32Bits: anInteger]
 		ifFalse: [self invalidCall: _failureCode]!
 
+utf16StringFromAddress: pointer
+	"Private - Answer a new <Utf16String> instantiated from the null-terminated string pointed at by the argument."
+
+	<stdcall: lpwstr AnswerDWORD lpvoid>
+	| len |
+	len := KernelLibrary default lstrlenW: pointer.
+	^Utf16String fromAddress: pointer length: len!
+
 versionFormatString
 	"Private - Answer a String containing the version format used by the receiver."
 
@@ -644,6 +652,7 @@ versionFormatString
 !VMLibrary categoriesFor: #stringFromAddress:!helpers!private! !
 !VMLibrary categoriesFor: #unregisterObject:!accessing-registry!private! !
 !VMLibrary categoriesFor: #unsignedFromSigned:!helpers!private! !
+!VMLibrary categoriesFor: #utf16StringFromAddress:!helpers!private! !
 !VMLibrary categoriesFor: #versionFormatString!constants!private! !
 
 !VMLibrary class methodsFor!

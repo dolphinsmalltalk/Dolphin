@@ -20,7 +20,7 @@ ThemeColor comment: '`ThemeColor` is a class of `VirtualColor`s that provide a n
 !ThemeColor methodsFor!
 
 actualColor
-	^actualColor ?? Color window!
+	^(actualColor ?? Color window) actualColor!
 
 actualColor: aColor
 	actualColor := aColor!

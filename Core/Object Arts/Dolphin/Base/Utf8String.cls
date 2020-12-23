@@ -503,7 +503,8 @@ codePage
 fromAddress: anAddress
 	"Answer a new String instantiated from the null terminated string at anAddress."
 
-	^self fromAddress: anAddress length: (CRTLibrary default strlen: anAddress)!
+	^anAddress isNull
+		ifFalse: [self fromAddress: anAddress length: (CRTLibrary default strlen: anAddress)]!
 
 initialize
 	self extraInstanceSpec: EncodingUtf8.

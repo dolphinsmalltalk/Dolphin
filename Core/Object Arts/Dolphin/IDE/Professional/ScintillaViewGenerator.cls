@@ -1612,6 +1612,9 @@ ignoredMessages
 	"4.1.3: SCI_GET/SETCOMMANDEVENTS are not generated because we don't allow this to be changed (it must be false)"
 	ignoredMessages addAll: #('SCI_GETCOMMANDEVENTS' 'SCI_SETCOMMANDEVENTS').
 
+	"Call tip styles are managed using a text style."
+	ignoredMessages addAll: #('SCI_CALLTIPSETFORE' 'SCI_CALLTIPSETBACK').
+
 	ignoredMessages
 		shrink;
 		isImmutable: true;

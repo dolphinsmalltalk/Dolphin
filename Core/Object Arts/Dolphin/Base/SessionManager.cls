@@ -660,14 +660,6 @@ onQuit: anInteger
 	self trigger: #quitSessionRequested.
 	self queryEndSession ifTrue: [self quit: anInteger]!
 
-onSettingChanged: aWindowsEvent
-	"Private - A system setting has been changed. This could be any of a wide range of things from a theme change,
-	regional settings, even policy. The notifications come in thick and fast because they are sent to every top-level
-	window. We consolidate them by queuing them up for coalescing any that arrive within a 1-second window."
-
-	settingsChanged add: {Utf16String fromAddress: aWindowsEvent lParam. aWindowsEvent wParam}.
-	inputState msgWindow setTimer: SettingsChangeTimerId interval: 1000!
-
 onStartup: args
 	"Initialize the receiver immediately following system startup.
 	This is the main system initialization routine, and is responsible
@@ -1249,7 +1241,6 @@ windowsDirectory
 !SessionManager categoriesFor: #onPreSaveImage!event handling!private! !
 !SessionManager categoriesFor: #onQueryWindowsShutdown!event handling!public! !
 !SessionManager categoriesFor: #onQuit:!event handling!public! !
-!SessionManager categoriesFor: #onSettingChanged:!event handling!private! !
 !SessionManager categoriesFor: #onStartup:!event handling!public! !
 !SessionManager categoriesFor: #onTimeChanged:!event handling!private! !
 !SessionManager categoriesFor: #onTimer:!event handling!private! !
