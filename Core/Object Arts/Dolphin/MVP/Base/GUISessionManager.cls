@@ -76,6 +76,11 @@ commandLineParser
 		options: 'hq';
 		yourself!
 
+disableWindowGhosting
+	"Disable the Windows feature where if the process stops processing messages from the message queue for 5 seconds, it replaces all the top-level windows with so-called 'ghost' windows. For general applications this is probably not appropriate, but in some cases, such as a development system, the window ghosting is undesirable as it prevents the application receiving any asynchronous keyboard interrupt, and therefore prevents the Dolphin interrupt key sequence from being recognised, making runaway operations uninterruptable."
+
+	UserLibrary default disableProcessWindowsGhosting!
+
 inputStateClass
 	^GuiInputState!
 
@@ -183,6 +188,7 @@ windowSystemStartup
 !GUISessionManager categoriesFor: #clearSessionState!operations!public! !
 !GUISessionManager categoriesFor: #clearWindowState!operations-saving!private! !
 !GUISessionManager categoriesFor: #commandLineParser!helpers!private! !
+!GUISessionManager categoriesFor: #disableWindowGhosting!helpers!public! !
 !GUISessionManager categoriesFor: #inputStateClass!constants!private! !
 !GUISessionManager categoriesFor: #isUnattended!public!testing! !
 !GUISessionManager categoriesFor: #onSettingChanged:!event handling!private! !

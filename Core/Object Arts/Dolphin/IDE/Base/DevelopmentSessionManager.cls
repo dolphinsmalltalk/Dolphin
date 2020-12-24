@@ -662,6 +662,7 @@ tertiaryStartup
 
 	super tertiaryStartup.
 
+	self disableWindowGhosting.
 	"Flush any output accumulated in the transcript buffer during startup."
 	TranscriptShell current flush.
 	self mainShellClass onStartup.
