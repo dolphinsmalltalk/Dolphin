@@ -181,6 +181,7 @@ package classNames
 	add: #SelectionChangedEvent;
 	add: #SelectionChangeEvent;
 	add: #SelectionChangingEvent;
+	add: #SettingsChangeEvent;
 	add: #Shell;
 	add: #ShellView;
 	add: #SIZE;
@@ -673,6 +674,11 @@ WindowsEvent subclass: #PositionEvent
 	classInstanceVariableNames: ''!
 WindowsEvent subclass: #ScrollEvent
 	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+WindowsEvent subclass: #SettingsChangeEvent
+	instanceVariableNames: 'area'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!

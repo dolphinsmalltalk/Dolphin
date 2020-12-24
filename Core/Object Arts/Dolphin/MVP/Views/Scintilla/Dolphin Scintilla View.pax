@@ -42,6 +42,7 @@ package classNames
 	add: #QueryableScintillaAttribute;
 	add: #ScintillaAnnotation;
 	add: #ScintillaAttribute;
+	add: #ScintillaCallTipStyle;
 	add: #ScintillaColorPropertyDescriptor;
 	add: #ScintillaIndicator;
 	add: #ScintillaIndicatorStyle;
@@ -140,8 +141,8 @@ Object subclass: #ScintillaMarker
 	poolDictionaries: 'ScintillaConstants'
 	classInstanceVariableNames: ''!
 Object subclass: #ScintillaPropertyDescriptor
-	instanceVariableNames: 'getSelector defaultValue setMessage setSelector getMessage'
-	classVariableNames: ''
+	instanceVariableNames: 'getSelector defaultValue setMessage setSelector getMessage flags'
+	classVariableNames: 'AlwaysPrintMask'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 Object subclass: #ScintillaStyler
@@ -191,12 +192,17 @@ ScintillaAttribute subclass: #ScintillaTextStyle
 	classInstanceVariableNames: ''!
 QueryableScintillaAttribute subclass: #ScintillaIndicatorStyle
 	instanceVariableNames: 'forecolor style under name alpha hoverStyle hoverForecolor flags foreAlpha _reserved12'
-	classVariableNames: 'IndicatorStyles StyleNames'
+	classVariableNames: 'HoverForecolor HoverStyle IndicatorStyles StyleNames'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 QueryableScintillaAttribute subclass: #ScintillaMargin
 	instanceVariableNames: 'width type isSensitive mask cursorType backcolor'
 	classVariableNames: 'CursorTypes MarginTypes'
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ScintillaTextStyle subclass: #ScintillaCallTipStyle
+	instanceVariableNames: ''
+	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ScintillaLexerMetadata subclass: #ScintillaLexerNamedStyle
@@ -220,7 +226,7 @@ ScintillaStyler subclass: #NullScintillaStyler
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 MultilineTextEdit subclass: #ScintillaView
-	instanceVariableNames: 'this currentTextStyles styleIdMap styler markerDefinitions markers wordChars registeredImages modificationEventMask autoCStops autoCFillups whitespaceBackcolor whitespaceForecolor selectionBackcolor selectionForecolor indicators callTipTabWidth punctuation callTipHighlightColor braceChars whitespaces scFlags allTextStyles foldMarginColor foldMarginHiColor foldMarkerStyle foldFlags stringClass keyBindings indicatorStyles secondarySelectionForecolor secondarySelectionBackcolor annotationStyles _unused50'
+	instanceVariableNames: 'this currentTextStyles styleIdMap styler markerDefinitions markers wordChars registeredImages modificationEventMask autoCStops autoCFillups whitespaceBackcolor whitespaceForecolor selectionBackcolor selectionForecolor indicators callTipTabWidth punctuation callTipHighlightColor braceChars whitespaces scFlags allTextStyles foldMarginColor foldMarginHiColor foldMarkerStyle foldFlags stringClass keyBindings indicatorStyles secondarySelectionForecolor secondarySelectionBackcolor annotationStyles caretForecolor secondaryCaretForecolor edgeColor currentLineBackcolor activeHotspotForecolor activeHotspotBackcolor _unused56 _unused57 _unused58 _unused59 _unused60 _unused61 _unused62 _unused63 _unused64 _unused65'
 	classVariableNames: 'AnnotationStylesOffset BackgroundDwellEvents BraceHilightingMask CodePages DefaultCallTipTabWidth DefaultKeyBindings DefaultTextStyles FoldingMask Library MarginStylesOffset'
 	poolDictionaries: 'ScintillaConstants Win32Constants'
 	classInstanceVariableNames: ''!

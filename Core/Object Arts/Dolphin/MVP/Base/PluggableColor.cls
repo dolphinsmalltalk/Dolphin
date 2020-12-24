@@ -16,7 +16,7 @@ PluggableColor comment: '`PluggableColor` is the class of `Color`s that dynamica
 !PluggableColor methodsFor!
 
 actualColor
-	^valuable value!
+	^valuable value actualColor!
 
 printOn: aPuttableStream
 	self basicPrintOn: aPuttableStream!

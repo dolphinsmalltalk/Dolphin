@@ -139,6 +139,13 @@ forecolor: aColorOrNil
 	self invalidate.
 !
 
+getFont
+	"Private - Get the control's current font."
+
+	| hFont |
+	hFont := self sendMessage: WM_GETFONT.
+	^hFont == 0 ifTrue: [Font system] ifFalse: [Font fromHandle: hFont]!
+
 itemFromId: dwItemSpec 
 	"Private - Answers the sub-item of the receiver with the specified <integer> item spec,
 	or nil if there is no such item. This is only relevant to controls that contain visual elements
@@ -419,6 +426,7 @@ wmWindowPosChanged: message wParam: wParam lParam: lParam
 !ControlView categoriesFor: #fontChanged!public!updating! !
 !ControlView categoriesFor: #forecolor!accessing!public! !
 !ControlView categoriesFor: #forecolor:!accessing!public! !
+!ControlView categoriesFor: #getFont!accessing!private! !
 !ControlView categoriesFor: #itemFromId:!accessing!private! !
 !ControlView categoriesFor: #nmClick:!event handling-win32!private! !
 !ControlView categoriesFor: #nmCustomDraw:!event handling-win32!private! !

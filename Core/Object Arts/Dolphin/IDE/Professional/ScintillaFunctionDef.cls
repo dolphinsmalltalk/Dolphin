@@ -333,11 +333,9 @@ renamedFunctions
 		at: 'SCI_SETEMPTYSELECTION' put: #caretPosition:;
 		at: 'SCI_GETANCHOR' put: #anchorPosition;
 		at: 'SCI_SETANCHOR' put: #anchorPosition:;
-		at: 'SCI_GETCARETFORE' put: #caretForecolor;
 		at: 'SCI_GETCARETPERIOD' put: #caretPeriod;
 		at: 'SCI_SETCARETPERIOD' put: #caretPeriod:;
 		at: 'SCI_GETCARETWIDTH' put: #caretWidth;
-		at: 'SCI_GETCARETLINEBACK' put: #currentLineBackcolor;
 		at: 'SCI_GETCARETLINEBACKALPHA' put: #currentLineAlpha;
 		at: 'SCI_SETCARETLINEBACKALPHA' put: #currentLineAlpha:;
 		at: 'SCI_GETCARETLINEVISIBLE' put: #isCurrentLineHighlighted;
@@ -424,7 +422,6 @@ renamedFunctions
 		at: 'SCI_SETPRINTMAGNIFICATION' put: #printMagnification:;
 		at: 'SCI_CLEARALL' put: #clearAll;
 		at: 'SCI_EDITTOGGLEOVERTYPE' put: #toggleOvertype;
-		at: 'SCI_GETEDGECOLOUR' put: #edgeColor;
 		at: 'SCI_GETTWOPHASEDRAW' put: #isDrawingTwoPhase;
 		at: 'SCI_SETTWOPHASEDRAW' put: #isDrawingTwoPhase:;
 		at: 'SCI_SETREADONLY' put: #setReadOnly:;
@@ -447,8 +444,6 @@ renamedFunctions
 
 	"Hotspot"
 	renamedMessages
-		at: 'SCI_GETHOTSPOTACTIVEBACK' put: #activeHotspotBackcolor;
-		at: 'SCI_GETHOTSPOTACTIVEFORE' put: #activeHotspotForecolor;
 		at: 'SCI_GETHOTSPOTACTIVEUNDERLINE' put: #isActiveHotspotUnderlined;
 		at: 'SCI_SETHOTSPOTACTIVEUNDERLINE' put: #isActiveHotspotUnderlined:;
 		at: 'SCI_GETHOTSPOTSINGLELINE' put: #areHotspotsSingleLine;
@@ -654,7 +649,6 @@ renamedFunctions
 		at: 'SCI_GETADDITIONALSELALPHA' put: #secondarySelectionAlpha;
 		at: 'SCI_SETADDITIONALSELALPHA' put: #secondarySelectionAlpha:;
 		at: 'SCI_ROTATESELECTION' put: #rotateSelection;
-		at: 'SCI_GETADDITIONALCARETFORE' put: #secondaryCaretForecolor;
 		at: 'SCI_GETSELECTIONS' put: #selectionCount;
 		at: 'SCI_SWAPMAINANCHORCARET' put: #swapPrimarySelectionAnchorAndCaret;
 		at: 'SCI_VERTICALCENTRECARET' put: #centerCurrentLine;

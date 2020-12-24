@@ -1320,13 +1320,11 @@ font: aFontOrNil
 !
 
 fontChanged
-	"Private - The receiver's font has been changed. The default is to cause
-	the receiver ot repaint. Overidden by subclasses that need to apply the 
-	font to a Windows control"
+	"Private - The receiver's font has been changed. The default is to cause the receiver ot repaint. Should be overidden by subclasses that need to apply the  font to a Windows control"
 
-	self subViewsDo: [:each | each fontChanged ].
-	self invalidate; invalidateCalculatedExtent
-!
+	self
+		invalidate;
+		invalidateCalculatedExtent!
 
 forecolor
 	"Answers the foreground colour of the receiver.
@@ -2879,6 +2877,9 @@ printOn: aStream
 		print: self displayString;
 		nextPut: $)!
 
+propagateSettingsChange: aSettingsChangeEvent
+	self subViewsDo: [:each | each settingChanged: aSettingsChangeEvent]!
+
 queryCommand: aCommandQuery
 	"Private - Update aCommandQuery to indicates how a command would be processed.
 	if sent to the receiver. Answers whether the receiver recognised the command
@@ -3285,6 +3286,12 @@ setTimer: id interval: interval
 		nIDEvent: id
 		uElapse: interval
 		lpTimerFunc: nil) ~= 0!
+
+settingChanged: aSettingsChangeEvent
+	"Private - A system wide setting has been changed. Propagate the change event to all sub-views, and updated as required."
+
+	self propagateSettingsChange: aSettingsChangeEvent.
+	self updateSetting: aSettingsChangeEvent!
 
 setWindowExStyle: anInteger
 	"Private - Set the receiver's extended window style bits to anInteger."
@@ -3700,6 +3707,9 @@ updateModel
 	override this method to update the model if there have been
 	changes"
 !
+
+updateSetting: aSettingsChangeEvent
+	(font isNil and: [aSettingsChangeEvent isFontChange]) ifTrue: [self fontChanged]!
 
 usePreferredExtent
 	"Answers true if the receiver's preferred extent should be used by a layout manager when
@@ -4896,6 +4906,7 @@ zOrderTop
 !View categoriesFor: #previousSiblingView!hierarchy!public!sub views! !
 !View categoriesFor: #primHookWindowCreate:!helpers!private! !
 !View categoriesFor: #printOn:!development!printing!public! !
+!View categoriesFor: #propagateSettingsChange:!event handling!private! !
 !View categoriesFor: #queryCommand:!commands!private! !
 !View categoriesFor: #queryCommandRouteFor:!commands!private! !
 !View categoriesFor: #queryContextMenu!menus!public! !
@@ -4938,6 +4949,7 @@ zOrderTop
 !View categoriesFor: #setScrollInfo:bar:!accessing!private! !
 !View categoriesFor: #setStateRestoring!accessing!private! !
 !View categoriesFor: #setTimer:interval:!public!timers! !
+!View categoriesFor: #settingChanged:!event handling!private!updating! !
 !View categoriesFor: #setWindowExStyle:!accessing-styles!private! !
 !View categoriesFor: #setWindowLong:to:!accessing!private! !
 !View categoriesFor: #setWindowPosAfter:x:y:width:height:flags:!geometry!private! !
@@ -4978,6 +4990,7 @@ zOrderTop
 !View categoriesFor: #unregisterHotKeyId:!helpers!public! !
 !View categoriesFor: #update!drawing!public! !
 !View categoriesFor: #updateModel!public!updating! !
+!View categoriesFor: #updateSetting:!event handling!private!updating! !
 !View categoriesFor: #usePreferredExtent!accessing!public! !
 !View categoriesFor: #usePreferredExtent:!accessing!public! !
 !View categoriesFor: #validate!drawing!public! !

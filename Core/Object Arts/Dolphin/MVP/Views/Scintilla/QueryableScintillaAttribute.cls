@@ -17,7 +17,7 @@ QueryableScintillaAttribute comment: '`QueryableScintillaAttribute` is the abstr
 populateFromView: aScintillaView at: anInteger
 	id := anInteger.
 	view := nil.
-	self propertyMap do: [:each | each getAttribute: self ofView: aScintillaView].
+	self class propertyMap do: [:each | each getAttribute: self ofView: aScintillaView].
 	view := aScintillaView!
 
 postCopy

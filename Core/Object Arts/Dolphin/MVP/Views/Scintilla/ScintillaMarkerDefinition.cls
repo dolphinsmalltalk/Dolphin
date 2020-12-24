@@ -118,11 +118,6 @@ newForLine: anInteger
 
 	^ScintillaMarker definition: self line: anInteger!
 
-printableProperties
-	^(super printableProperties)
-		add: #glyphName;
-		yourself!
-
 selectionBackcolor
 	"Answer the background <Color> used to draw the marker when selector, or nil if the marker definition does not specify a selection background colour and the Scintilla default (red) should be used."
 
@@ -158,7 +153,6 @@ view: aScintillaView
 !ScintillaMarkerDefinition categoriesFor: #name!accessing!public! !
 !ScintillaMarkerDefinition categoriesFor: #name:!accessing!public! !
 !ScintillaMarkerDefinition categoriesFor: #newForLine:!adding!must not strip!public! !
-!ScintillaMarkerDefinition categoriesFor: #printableProperties!development!helpers!printing!private! !
 !ScintillaMarkerDefinition categoriesFor: #selectionBackcolor!accessing!colors!public! !
 !ScintillaMarkerDefinition categoriesFor: #selectionBackcolor:!accessing!colors!public! !
 !ScintillaMarkerDefinition categoriesFor: #storeableProperties!development!printing!private! !
@@ -285,10 +279,12 @@ buildPropertyMap
 					defaultValue: Color black
 					setMessage: SCI_MARKERSETFORE);
 		at: #glyphName
-			put: (ScintillaPropertyDescriptor
+			put: ((ScintillaPropertyDescriptor
 					getSelector: #code
 					defaultValue: 0
-					setMessage: SCI_MARKERDEFINE);
+					setMessage: SCI_MARKERDEFINE)
+					alwaysPrint: true;
+					yourself);
 		at: #alpha
 			put: (ScintillaPropertyDescriptor
 					getSelector: #alpha

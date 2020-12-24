@@ -661,11 +661,11 @@ onPreSaveImage
 
 	self isTopView ifTrue: [self propertyAt: #state put: self state]!
 
-onSettingChanged: aWindowsEvent
-	SessionManager current onSettingChanged: aWindowsEvent.
-	self presenter trigger: #settingChanged: with: aWindowsEvent.
-	(aWindowsEvent wParam = SPI_SETICONTITLELOGFONT and: [font isNil]) ifTrue: [self fontChanged].
-	^aWindowsEvent lResult!
+onSettingChanged: aSettingsChangeEvent
+	SessionManager current onSettingChanged: aSettingsChangeEvent.
+	self presenter trigger: #settingChanged: with: aSettingsChangeEvent.
+	self settingChanged: aSettingsChangeEvent.
+	^aSettingsChangeEvent lResult!
 
 onStateRestored
 	self updateMenuBar.
@@ -1130,7 +1130,7 @@ wmSetCursor: message wParam: wParam lParam: lParam
 wmSettingChange: message wParam: wParam lParam: lParam 
 	"Private - Handle the Win32 WM_SETTINGCHANGE message."
 
-	^self presenter onSettingChanged: (WindowsEvent 
+	^self presenter onSettingChanged: (SettingsChangeEvent 
 				window: self
 				message: message
 				wParam: wParam

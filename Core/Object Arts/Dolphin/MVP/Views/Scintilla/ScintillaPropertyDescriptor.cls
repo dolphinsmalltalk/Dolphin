@@ -1,11 +1,12 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #ScintillaPropertyDescriptor
-	instanceVariableNames: 'getSelector defaultValue setMessage setSelector getMessage'
-	classVariableNames: ''
+	instanceVariableNames: 'getSelector defaultValue setMessage setSelector getMessage flags'
+	classVariableNames: 'AlwaysPrintMask'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ScintillaPropertyDescriptor guid: (GUID fromString: '{49848e62-c4d7-4cba-b9f5-71b0bf864a2a}')!
+ScintillaPropertyDescriptor addClassConstant: 'AlwaysPrintMask' value: 16r1!
 ScintillaPropertyDescriptor comment: '`ScintillaPropertyDescriptor`s provide metadata for individually settable scalar properties of a `ScintillaView`, e.g. the background colour of a marker.
 
 ## Instance Variables:
@@ -14,11 +15,23 @@ ScintillaPropertyDescriptor comment: '`ScintillaPropertyDescriptor`s provide met
   `setMessage`		`<integer>` id of the message to send to the control to set the property value, e.g. SCI_SETMARKERSETBACK
   `setSelector`		`Symbol`. Mutator message to send to object that represents the composite Scintilla attribute in order to set a property value retrieved from the control.
   `setMessage`		`<iInteger>` id of the message to send to the control to get the property value, e.g. SCI_GETMARKERSETBACK
+  `flags`			`<integer>`
+
+## Class Variables:
+  `AlwaysPrintMask`		`<integer>` flags mask for `alwaysPrint` setting.
+
+
 
 
 '!
 !ScintillaPropertyDescriptor categoriesForClass!Kernel-Objects! !
 !ScintillaPropertyDescriptor methodsFor!
+
+alwaysPrint
+	^flags allMask: AlwaysPrintMask!
+
+alwaysPrint: aBoolean
+	flags := flags mask: AlwaysPrintMask set: aBoolean!
 
 getAttribute: aScintillaAttribute ofView: aScintillaView
 	| value |
@@ -33,6 +46,7 @@ getSelector: aSymbol defaultValue: anObject setMessage: anInteger
 	getSelector := aSymbol.
 	defaultValue := anObject.
 	setMessage := anInteger.
+	flags := 0.
 	^self!
 
 isDefaultValue: anObject
@@ -41,11 +55,21 @@ isDefaultValue: anObject
 lParamFromAttributeValue: value
 	^value asUIntPtr!
 
+printOn: aStream
+	"Append a short textual description of the receiver to aStream."
+
+	aStream
+		basicPrint: self;
+		nextPut: $(;
+		print: getSelector;
+		nextPut: $)!
+
 setAttribute: aScintillaAttribute ofView: aScintillaView initializing: aBoolean
-	"Initialize the property described by the receiver of the attribute, aScintillaAttribute, of the control, aScintillaView, but only if it specified as a non-default value."
+	"Set the property described by the receiver of the attribute, aScintillaAttribute, of the control, aScintillaView.
+	If the final boolean parameter is true, then the property is only set if the attribute has a non-default value."
 
 	| value |
-	value := self getAttributeValue: aScintillaAttribute.
+	value := aScintillaAttribute perform: getSelector.
 	aBoolean
 		ifTrue: [(value isNil or: [self isDefaultValue: value]) ifTrue: [^self]]
 		ifFalse: [value isNil ifTrue: [value := defaultValue]].
@@ -61,11 +85,14 @@ setSelector: aSymbol getMessage: anInteger
 
 valueFromLResult: anObject 
 	^anObject! !
+!ScintillaPropertyDescriptor categoriesFor: #alwaysPrint!public!testing! !
+!ScintillaPropertyDescriptor categoriesFor: #alwaysPrint:!accessing!public! !
 !ScintillaPropertyDescriptor categoriesFor: #getAttribute:ofView:!operations!private! !
 !ScintillaPropertyDescriptor categoriesFor: #getAttributeValue:!operations!private! !
 !ScintillaPropertyDescriptor categoriesFor: #getSelector:defaultValue:setMessage:!initializing!private! !
 !ScintillaPropertyDescriptor categoriesFor: #isDefaultValue:!operations!private! !
 !ScintillaPropertyDescriptor categoriesFor: #lParamFromAttributeValue:!helpers!private! !
+!ScintillaPropertyDescriptor categoriesFor: #printOn:!displaying!public! !
 !ScintillaPropertyDescriptor categoriesFor: #setAttribute:ofView:initializing:!helpers!private! !
 !ScintillaPropertyDescriptor categoriesFor: #setSelector:getMessage:!initializing!private! !
 !ScintillaPropertyDescriptor categoriesFor: #valueFromLResult:!helpers!private! !

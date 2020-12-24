@@ -124,6 +124,7 @@ package setPrerequisites: #(
 	'Base\Dolphin MVP Base'
 	'Presenters\Number\Dolphin Number Presenter'
 	'Presenters\Radio\Dolphin Radio Buttons'
+	'..\System\Random\Dolphin Random Stream'
 	'Presenters\Text\Dolphin Rich Text Presenter'
 	'Views\Scintilla\Dolphin Scintilla View'
 	'Views\Scrollbars\Dolphin Scrollbars'
@@ -275,11 +276,6 @@ DolphinTest subclass: #ValueConverterTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-DolphinTest subclass: #ViewTest
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
 DolphinTest subclass: #VirtualColorTest
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -425,6 +421,11 @@ PresenterTest subclass: #StaticTextTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+PresenterTest subclass: #ViewTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
 AbstractTextEditTest subclass: #MultilineTextEditTest
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -443,7 +444,7 @@ MultilineTextEditTest subclass: #RichTextEditTest
 MultilineTextEditTest subclass: #ScintillaViewTest
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	poolDictionaries: 'ScintillaConstants'
 	classInstanceVariableNames: ''!
 ImageViewAbstractTest subclass: #ImageViewTest
 	instanceVariableNames: ''

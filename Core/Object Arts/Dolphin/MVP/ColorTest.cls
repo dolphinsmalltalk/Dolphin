@@ -13,6 +13,17 @@ ColorTest comment: ''!
 shouldRaiseNotARealColorError: aNiladicValuable
 	self should: aNiladicValuable raise: Error matching: [:ex | ex description equals: 'Cannot convert to an RGB'].!
 
+testActualColor
+	| subject |
+	self assert: Color red actualColor identicalTo: Color red.
+	self assert: Color windowText actualColor identicalTo: Color windowText.
+	subject := PluggableColor with: [Color purple].
+	self assert: subject actualColor identicalTo: Color purple.
+	subject := ThemeColor name: #test actualColor: subject.
+	self assert: subject actualColor identicalTo: Color purple.
+	subject := ThemeColor name: #test actualColor: subject.
+	self assert: subject actualColor identicalTo: Color purple!
+
 testAlpha
 	self assert: Color red alpha equals: 255.
 	self assert: Color none alpha equals: 0.
@@ -515,6 +526,7 @@ testStlRoundTrip
 	self assert: rehydrated actualColor identicalTo: Color window
 ! !
 !ColorTest categoriesFor: #shouldRaiseNotARealColorError:!helpers!private! !
+!ColorTest categoriesFor: #testActualColor!public!unit tests! !
 !ColorTest categoriesFor: #testAlpha!public!unit tests! !
 !ColorTest categoriesFor: #testArgbCode!public!unit tests! !
 !ColorTest categoriesFor: #testAsColorRef!public!unit tests! !
