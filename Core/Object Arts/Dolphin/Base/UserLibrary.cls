@@ -149,6 +149,10 @@ destroyWindow: aWindowHandle
 	<stdcall: bool DestroyWindow handle>
 	^self invalidCall: _failureCode!
 
+disableProcessWindowsGhosting
+	<stdcall: void DisableProcessWindowsGhosting>
+	^self invalidCall: _failureCode!
+
 dispatchMessage: aMSG
 	"Dispatch a message to a window procedure.
 		LONG DispatchMessage(
@@ -756,6 +760,7 @@ vkKeyScan: aChar
 !UserLibrary categoriesFor: #defDlgProc:msg:wParam:lParam:!public!win32 functions-window procedure! !
 !UserLibrary categoriesFor: #defWindowProc:msg:wParam:lParam:!public!win32 functions-window procedure! !
 !UserLibrary categoriesFor: #destroyWindow:!public!win32 functions-window! !
+!UserLibrary categoriesFor: #disableProcessWindowsGhosting!public!win32 functions-message and message queue! !
 !UserLibrary categoriesFor: #dispatchMessage:!public!win32 functions-message and message queue! !
 !UserLibrary categoriesFor: #enableWindow:bEnable:!public!win32 functions-keyboard input! !
 !UserLibrary categoriesFor: #getActiveWindow!public!win32 functions-keyboard input! !

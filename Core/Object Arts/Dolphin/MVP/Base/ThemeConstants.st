@@ -416,6 +416,7 @@ ThemeConstants at: 'TMT_BACKGROUND' put: 16r642!
 ThemeConstants at: 'TMT_BGFILL' put: 16r89D!
 ThemeConstants at: 'TMT_BGTYPE' put: 16rFA1!
 ThemeConstants at: 'TMT_BLENDCOLOR' put: 16r138B!
+ThemeConstants at: 'TMT_BODYTEXTCOLOR' put: 16rEF3!
 ThemeConstants at: 'TMT_BOOL' put: 16rCB!
 ThemeConstants at: 'TMT_BORDERCOLOR' put: 16rED9!
 ThemeConstants at: 'TMT_BORDERCOLORHINT' put: 16rEEE!
