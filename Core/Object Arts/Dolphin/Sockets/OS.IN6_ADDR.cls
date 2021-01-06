@@ -74,6 +74,6 @@ defineFields
 getFieldNames
 	^#(#Bytes)! !
 !OS.IN6_ADDR class categoriesFor: #addressFamily!constants!public! !
-!OS.IN6_ADDR class categoriesFor: #defineFields!**auto generated**!public!template definition! !
+!OS.IN6_ADDR class categoriesFor: #defineFields!**auto generated**!private!template definition! !
 !OS.IN6_ADDR class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

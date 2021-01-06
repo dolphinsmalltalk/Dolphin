@@ -54,20 +54,23 @@ tv_usec: anInteger
 
 defineFields
 	"Define the fields of the timeval structure.
-		self compileDefinition
-	
-		typedef 		struct tagtimeval {
+
+	TIMEVAL compileDefinition
+
+		typedef 
+		struct tagtimeval {
 			long tv_sec;
 			long tv_usec;
 		} timeval;
 "
 
 	self
-		defineField: #tv_sec type: SDWORDField new;
-		defineField: #tv_usec type: SDWORDField new!
+		defineField: #tv_sec type: SDWORDField new offset: 0;
+		defineField: #tv_usec type: SDWORDField new offset: 4.
+	self byteSize: 8!
 
 getFieldNames
 	^#(#tv_sec #tv_usec)! !
-!OS.TIMEVAL class categoriesFor: #defineFields!**auto generated**!public!template definition! !
+!OS.TIMEVAL class categoriesFor: #defineFields!**auto generated**!private!template definition! !
 !OS.TIMEVAL class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

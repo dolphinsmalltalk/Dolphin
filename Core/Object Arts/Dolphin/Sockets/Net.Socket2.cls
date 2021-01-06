@@ -23,21 +23,21 @@ address
 connect
 	"Connect to a server socket."
 
-	| result socketAddress |
+	| socketAddress |
 	self isOpen ifFalse: [self create].
-	(socketAddress := SOCKADDR_IN new)
-		sin_family: AF_INET;
-		port: self port;
-		sin_addr: (IN_ADDR address: self address).
-	result := WS2_32Library default
-				connect: self asParameter
-				name: socketAddress
-				namelen: socketAddress byteSize.
-	result = SOCKET_ERROR ifTrue: [^self socketErrorOverlap]!
+	socketAddress := SOCKADDR_IN new
+				sin_family: AF_INET;
+				port: self port;
+				sin_addr: (IN_ADDR address: self address);
+				yourself.
+	WS2_32Library default
+		connect: self asParameter
+		name: socketAddress
+		namelen: socketAddress byteSize!
 
 hasInput
 	"Private - Answer whether there is any data ready for reading from the socket,
-	answer false if socket is closed or has not data available to read."
+	Answer false if socket is closed or has no data available to read."
 
 	| fdSet result timeOut |
 	self isOpen ifFalse: [^false].

@@ -34,15 +34,14 @@ displayOn: aPuttableStream
 
 	| buf len |
 	(self isNull or: [self sa_family == 0]) ifTrue: [^self].
-	buf := String newFixed: INET6_ADDRSTRLEN.
+	buf := Utf16String newFixed: INET6_ADDRSTRLEN.
 	len := DWORDBytes fromInteger: buf size.
-	(WS2_32Library default
-		wsaAddressToStringA: bytes
+	WS2_32Library default
+		wsaAddressToStringW: bytes
 		dwAddressLength: self byteSize
 		lpProtocolInfo: nil
 		lpszAddressString: buf
-		lpdwAddressStringLength: len) == 0
-		ifFalse: [Net.SocketError signal].
+		lpdwAddressStringLength: len.
 	aPuttableStream
 		next: len value - 1
 		putAll: buf
@@ -131,7 +130,7 @@ fromString: aString
 getFieldNames
 	^#(#sa_family)! !
 !OS.SOCKADDR class categoriesFor: #addressFamily!constants!public! !
-!OS.SOCKADDR class categoriesFor: #defineFields!**auto generated**!public!template definition! !
+!OS.SOCKADDR class categoriesFor: #defineFields!**auto generated**!private!template definition! !
 !OS.SOCKADDR class categoriesFor: #fromAddress:!instance creation!public! !
 !OS.SOCKADDR class categoriesFor: #fromString:!public! !
 !OS.SOCKADDR class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !

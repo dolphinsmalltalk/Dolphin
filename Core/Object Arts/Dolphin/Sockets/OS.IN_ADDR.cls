@@ -115,6 +115,6 @@ getFieldNames
 	^#(#s_addr)! !
 !OS.IN_ADDR class categoriesFor: #address:!instance creation!public! !
 !OS.IN_ADDR class categoriesFor: #addressFamily!constants!public! !
-!OS.IN_ADDR class categoriesFor: #defineFields!**auto generated**!public!template definition! !
+!OS.IN_ADDR class categoriesFor: #defineFields!**auto generated**!private!template definition! !
 !OS.IN_ADDR class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

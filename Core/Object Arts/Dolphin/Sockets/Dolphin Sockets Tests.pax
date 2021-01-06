@@ -9,9 +9,15 @@ package setClassNames: #(
 	#{Net.Tests}
 	#{Net.Tests.AbstractSocketTest}
 	#{Net.Tests.InternetAddressTest}
+	#{Net.Tests.PROTOENTTest}
 	#{Net.Tests.Socket2Test}
 	#{Net.Tests.SocketErrorTest}
 	#{Net.Tests.SocketTest}
+	#{OS.Tests.AbstractIN_ADDRTest}
+	#{OS.Tests.IN_ADDRTest}
+	#{OS.Tests.IN6_ADDRTest}
+	#{OS.Tests.SERVENTTest}
+	#{OS.Tests.SOCKADDRTest}
 ).
 
 package setPrerequisites: #(
@@ -31,6 +37,12 @@ Net subclass: #'Net.Tests'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+Core.Tests.DolphinTest subclass: #'OS.Tests.AbstractIN_ADDRTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
 Core.Tests.DolphinTest subclass: #'Net.Tests.AbstractSocketTest'
 	instanceVariableNames: 'sockets'
 	classVariableNames: ''
@@ -43,10 +55,40 @@ Core.Tests.DolphinTest subclass: #'Net.Tests.InternetAddressTest'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+Core.Tests.DolphinTest subclass: #'Net.Tests.PROTOENTTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Core.Tests.DolphinTest subclass: #'OS.Tests.SERVENTTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Core.Tests.DolphinTest subclass: #'OS.Tests.SOCKADDRTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
 Core.Tests.DolphinTest subclass: #'Net.Tests.SocketErrorTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #(#{OS.WinSocketErrors})
+	classInstanceVariableNames: ''
+	classConstants: {}!
+OS.Tests.AbstractIN_ADDRTest subclass: #'OS.Tests.IN_ADDRTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+OS.Tests.AbstractIN_ADDRTest subclass: #'OS.Tests.IN6_ADDRTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Net.Tests.AbstractSocketTest subclass: #'Net.Tests.Socket2Test'

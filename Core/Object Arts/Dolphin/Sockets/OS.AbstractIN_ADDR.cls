@@ -20,7 +20,7 @@ displayOn: aPuttableStream
 		ifTrue: [aPuttableStream display: nil]
 		ifFalse: 
 			[| buf |
-			buf := String newFixed: WinSocketConstants.INET6_ADDRSTRLEN.
+			buf := AnsiString newFixed: WinSocketConstants.INET6_ADDRSTRLEN.
 			aPuttableStream nextPutAll: (WS2_32Library default
 						inet_ntop: self class addressFamily
 						pAddr: self
@@ -28,8 +28,7 @@ displayOn: aPuttableStream
 						stringBufSize: buf size)]!
 
 printFieldsOn: aStream
-	self isNull ifTrue: [aStream nextPutAll: 'NULL'] ifFalse: [self displayOn: aStream].
-	self displayOn: aStream! !
+	self isNull ifTrue: [aStream nextPutAll: 'NULL'] ifFalse: [self displayOn: aStream]! !
 !OS.AbstractIN_ADDR categoriesFor: #displayOn:!displaying!public! !
 !OS.AbstractIN_ADDR categoriesFor: #printFieldsOn:!development!printing!private! !
 

@@ -77,9 +77,9 @@ protocol
 defineFields
 	"Define the fields of the PROTOENT structure.
 
-	PROTOENT  compileDefinition
+	PROTOENT compileDefinition
 
-		typedef [uuid(87B4C60A-026E-11D3-9FD7-00A0CC3E4A32), helpstring('The name and protocol numbers that correspond to a given protocol name. Applications must never attempt to modify this structure or to free any of its components. Furthermore, only one copy of this structure is allocated per thread.')]
+		typedef [uuid(87b4c60a-026e-11d3-9fd7-00a0cc3e4a32), helpstring('The name and protocol numbers that correspond to a given protocol name. Applications must never attempt to modify this structure or to free any of its components. Furthermore, only one copy of this structure is allocated per thread.')]
 		struct tagPROTOENT {
 			[readonly, helpstring('Official name of the protocol.')] LPCSTR p_name;
 			[hidden, readonly, helpstring('Null-terminated array of alternate names.')] LPCSTR* p_aliases;
@@ -89,9 +89,19 @@ defineFields
 
 	self
 		defineField: #p_name type: (PointerField type: AnsiString) beReadOnly offset: 0;
-		defineField: #p_aliases type: (PointerField type: LPSTR) beReadOnly beFiller offset: 4;
+		defineField: #p_aliases type: (PointerField type: AnsiString) beReadOnly beFiller offset: 4;
 		defineField: #p_proto type: SWORDField new beReadOnly offset: 8.
 	self byteSize: 12!
+
+fromInteger: anInteger
+	"Answer the static (per-thread) PROTOENT instance populated with data for the numbered protocol.
+		(self fromInteger: 6) 
+	"
+
+	| answer lib |
+	lib := WS2_32Library default.
+	answer := lib getprotobynumber: anInteger.
+	^answer isNull ifTrue: [Net.SocketError signalWith: lib wsaGetLastError] ifFalse: [answer]!
 
 fromString: aString
 	"Answer the static (per-thread) PROTOENT instance populated with data for the named protocol.
@@ -105,7 +115,8 @@ fromString: aString
 
 getFieldNames
 	^#(#p_name #p_proto)! !
-!OS.PROTOENT class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!OS.PROTOENT class categoriesFor: #fromString:!public! !
+!OS.PROTOENT class categoriesFor: #defineFields!**auto generated**!private!template definition! !
+!OS.PROTOENT class categoriesFor: #fromInteger:!instance creation!public! !
+!OS.PROTOENT class categoriesFor: #fromString:!instance creation!public! !
 !OS.PROTOENT class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

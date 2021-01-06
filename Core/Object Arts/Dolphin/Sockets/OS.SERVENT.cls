@@ -83,9 +83,9 @@ s_proto
 defineFields
 	"Define the fields of the SERVENT structure.
 
-	SERVENT  compileDefinition
+	SERVENT compileDefinition
 
-		typedef [uuid(87B4C610-026E-11D3-9FD7-00A0CC3E4A32), helpstring('Used to store or return the name and service number for a given service name.')]
+		typedef [uuid(87b4c610-026e-11d3-9fd7-00a0cc3e4a32), helpstring('Used to store or return the name and service number for a given service name.')]
 		struct tagSERVENT {
 			[readonly, helpstring('The official name of the service.')] LPCSTR s_name;
 			[hidden, readonly, helpstring('A NULL-terminated array of alternate names.')] LPCSTR* s_aliases;
@@ -125,7 +125,7 @@ fromString: aString
 
 getFieldNames
 	^#(#s_name #s_port #s_proto)! !
-!OS.SERVENT class categoriesFor: #defineFields!**auto generated**!public!template definition! !
+!OS.SERVENT class categoriesFor: #defineFields!**auto generated**!private!template definition! !
 !OS.SERVENT class categoriesFor: #fromInteger:!public! !
 !OS.SERVENT class categoriesFor: #fromString:!public! !
 !OS.SERVENT class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !

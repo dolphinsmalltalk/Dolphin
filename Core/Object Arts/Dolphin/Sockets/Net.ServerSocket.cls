@@ -102,9 +102,7 @@ listen: anIntegerBacklog
 	number of connection requests, placing each in a queue, before any are actually accepted 
 	using #accept."
 
-	| result |
-	result := WSockLibrary default listen: self asParameter backlog: anIntegerBacklog.
-	result = 0 ifFalse: [self error]!
+	WSockLibrary default listen: self asParameter backlog: anIntegerBacklog!
 
 onAsyncAccept
 	"Private - Handle the notification of an asynchronous accept event."

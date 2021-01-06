@@ -134,7 +134,7 @@ addressFamily
 defineFields
 	"Define the fields of the SOCKADDR_IN6 structure.
 
-	SOCKADDR_IN6  compileDefinition
+	SOCKADDR_IN6 compileDefinition
 
 		typedef [uuid(a989cfcf-96f5-40b8-9904-cb33f7c78940), helpstring('Specifies a transport address and port for the AF_INET6 address family. All of the data in the structure, except for the address family, is specified in network-byte-order (big-endian).')]
 		struct tagSOCKADDR_IN6 {
@@ -150,29 +150,17 @@ defineFields
 "
 
 	self
-		defineField: #sin6_family
-			type: WORDField new
-			offset: 0;
-		defineField: #sin6_port
-			type: WORDField new
-			offset: 2;
-		defineField: #sin6_flowinfo
-			type: DWORDField new
-			offset: 4;
-		defineField: #sin6_addr
-			type: (StructureField type: IN6_ADDR)
-			offset: 8;
-		defineField: #sin6_scope_id
-			type: DWORDField new
-			offset: 24;
-		defineField: #sin6_scope_struct
-			type: DWORDField new beFiller
-			offset: 24.
+		defineField: #sin6_family type: WORDField new offset: 0;
+		defineField: #sin6_port type: WORDField new offset: 2;
+		defineField: #sin6_flowinfo type: DWORDField new offset: 4;
+		defineField: #sin6_addr type: (StructureField type: IN6_ADDR) offset: 8;
+		defineField: #sin6_scope_id type: DWORDField new offset: 24;
+		defineField: #sin6_scope_struct type: DWORDField new beFiller offset: 24.
 	self byteSize: 28!
 
 getFieldNames
 	^#(#sin6_family #sin6_port #sin6_flowinfo #sin6_addr #sin6_scope_id)! !
 !OS.SOCKADDR_IN6 class categoriesFor: #addressFamily!constants!public! !
-!OS.SOCKADDR_IN6 class categoriesFor: #defineFields!**auto generated**!public!template definition! !
+!OS.SOCKADDR_IN6 class categoriesFor: #defineFields!**auto generated**!private!template definition! !
 !OS.SOCKADDR_IN6 class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

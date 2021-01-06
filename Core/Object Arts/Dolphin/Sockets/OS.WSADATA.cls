@@ -48,7 +48,7 @@ iMaxUdpDg
 	^bytes wordAtOffset: _OffsetOf_iMaxUdpDg!
 
 lpVendorInfo
-	"Answer the <ExternalAddress> value of the receiver's 'lpVendorInfo' field."
+	"Answer the <Address> value of the receiver's 'lpVendorInfo' field."
 
 	^(bytes uintPtrAtOffset: _OffsetOf_lpVendorInfo) asExternalAddress!
 
@@ -110,6 +110,6 @@ defineFields
 
 getFieldNames
 	^#(#wVersion #wHighVersion #szDescription #szSystemStatus #iMaxSockets #iMaxUdpDg #lpVendorInfo)! !
-!OS.WSADATA class categoriesFor: #defineFields!**auto generated**!public!template definition! !
+!OS.WSADATA class categoriesFor: #defineFields!**auto generated**!private!template definition! !
 !OS.WSADATA class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

@@ -90,11 +90,10 @@ queryPort
 	nameLength := SDWORD new
 				value: name size;
 				yourself.
-	(WS2_32Library default
+	WS2_32Library default
 		getsockname: self asParameter
 		name: name
-		namelen: nameLength) = SOCKET_ERROR
-		ifTrue: [^self socketError].
+		namelen: nameLength.
 	^name port!
 
 socketError

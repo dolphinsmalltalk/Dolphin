@@ -247,7 +247,9 @@ Core.Object subclass: #'Net.InternetAddress'
 	classVariableNames: ''
 	imports: #(#{OS.WinSocketConstants})
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: {
+		'MaxHostName' -> 16r100
+	}!
 Core.Object subclass: #'Net.SocketAbstract2'
 	instanceVariableNames: 'port descriptor'
 	classVariableNames: ''
@@ -263,7 +265,7 @@ External.DynamicLinkLibrary subclass: #'OS.IPHlpApiLibrary'
 External.DynamicLinkLibrary subclass: #'OS.WS2_32Library'
 	instanceVariableNames: 'wsaData'
 	classVariableNames: ''
-	imports: #()
+	imports: #(#{OS.WinSocketConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 OS.Win32Error subclass: #'Net.SocketError'

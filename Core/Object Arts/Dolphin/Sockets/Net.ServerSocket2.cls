@@ -40,11 +40,10 @@ bind
 	socketAddress sin_family: AF_INET.
 	socketAddress sin_addr s_addr: INADDR_ANY.
 	socketAddress port: self port.
-	(WS2_32Library default
+	WS2_32Library default
 		bind: self asParameter
 		name: socketAddress
-		namelen: socketAddress byteSize) = SOCKET_ERROR
-		ifTrue: [^self socketErrorOverlap]!
+		namelen: socketAddress byteSize!
 
 bindPort: anInteger 
 	"Private - Create a socket on anIntegerPort and bind to it. The socket is 

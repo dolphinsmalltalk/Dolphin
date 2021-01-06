@@ -146,9 +146,9 @@ NamedAddress_Port: aWORDArray
 defineFields
 	"Define the fields of the NET_ADDRESS_INFO structure.
 
-	NET_ADDRESS_INFO  compileDefinition
+	NET_ADDRESS_INFO compileDefinition
 
-		typedef [uuid(0451C625-7A0F-4B75-AD7C-EA167EC0F47C), helpstring('Contains IP address information returned by the ParseNetworkString function.')]
+		typedef [uuid(0451c625-7a0f-4b75-ad7c-ea167ec0f47c), helpstring('Contains IP address information returned by the ParseNetworkString function.')]
 		struct tagNET_ADDRESS_INFO {
 			[helpstring('The format of the network address in the union in this structure.')] NET_ADDRESS_FORMAT Format;
 			union {
@@ -164,28 +164,16 @@ defineFields
 "
 
 	self
-		defineField: #Format
-			type: SDWORDField new
-			offset: 0;
-		defineField: #NamedAddress_Address
-			type: (ArrayField type: WORDArray length: 256)
-			offset: 4;
-		defineField: #NamedAddress_Port
-			type: (ArrayField type: WORDArray length: 6)
-			offset: 516;
-		defineField: #Ipv4Address
-			type: (StructureField type: SOCKADDR_IN)
-			offset: 4;
-		defineField: #Ipv6Address
-			type: (StructureField type: SOCKADDR_IN6)
-			offset: 4;
-		defineField: #IpAddress
-			type: (StructureField type: SOCKADDR)
-			offset: 4.
+		defineField: #Format type: SDWORDField new offset: 0;
+		defineField: #NamedAddress_Address type: (ArrayField type: WORDArray length: 256) offset: 4;
+		defineField: #NamedAddress_Port type: (ArrayField type: WORDArray length: 6) offset: 516;
+		defineField: #Ipv4Address type: (StructureField type: SOCKADDR_IN) offset: 4;
+		defineField: #Ipv6Address type: (StructureField type: SOCKADDR_IN6) offset: 4;
+		defineField: #IpAddress type: (StructureField type: SOCKADDR) offset: 4.
 	self byteSize: 528!
 
 getFieldNames
 	^#(#Format)! !
-!OS.NET_ADDRESS_INFO class categoriesFor: #defineFields!**auto generated**!public!template definition! !
+!OS.NET_ADDRESS_INFO class categoriesFor: #defineFields!**auto generated**!private!template definition! !
 !OS.NET_ADDRESS_INFO class categoriesFor: #getFieldNames!accessing!private! !
 

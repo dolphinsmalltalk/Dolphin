@@ -178,15 +178,14 @@ onAsyncWrite
 peerAddress
 	"Answer an InternetAddress representing the address of the peer machine."
 
-	| winSockAddr winSockAddrLen result |
+	| winSockAddr winSockAddrLen |
 	winSockAddr := SOCKADDR_IN new.
 	winSockAddrLen := SDWORD new.
 	winSockAddrLen value: winSockAddr byteSize.
-	result := WSockLibrary default
-				getpeername: self asParameter
-				name: winSockAddr
-				namelen: winSockAddrLen.
-	result = -1 ifTrue: [self error].
+	WSockLibrary default
+		getpeername: self asParameter
+		name: winSockAddr
+		namelen: winSockAddrLen.
 	^InternetAddress ipAddress: winSockAddr sin_addr!
 
 port: anIntegerPort address: anInternetAddress 

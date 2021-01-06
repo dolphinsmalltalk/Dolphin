@@ -5,7 +5,9 @@ Core.Object subclass: #'Net.InternetAddress'
 	classVariableNames: ''
 	imports: #(#{OS.WinSocketConstants})
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: {
+		'MaxHostName' -> 16r100
+	}!
 Net.InternetAddress guid: (Core.GUID fromString: '{87b4c495-026e-11d3-9fd7-00a0cc3e4a32}')!
 Net.InternetAddress comment: 'This class represents an Internet IP address. It can be created indirectly from the host name using the #host: class method or, if the IP address is known, from this using #ipAddress:, #fromString: or #readFrom:. 
 
@@ -151,10 +153,10 @@ isIPString: aString
 localHost
 	"Answer a new instance of the receiver containing the address of the local host."
 
-	| hostName result |
-	hostName := String new: 256.
-	result := WS2_32Library default gethostname: hostName namelen: hostName size.
-	result = SOCKET_ERROR ifTrue: [^SocketError signal].
+	| hostName |
+	"256 is 'always adequate' for any host name, apparently"
+	hostName := Utf16String new: MaxHostName.
+	WS2_32Library default gethostname: hostName namelen: hostName size.
 	^self host: hostName trimNulls! !
 !Net.InternetAddress class categoriesFor: #allForHost:!accessing!public! !
 !Net.InternetAddress class categoriesFor: #fromIPString:!instance creation!public! !

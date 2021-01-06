@@ -3,7 +3,7 @@
 External.DynamicLinkLibrary subclass: #'OS.WS2_32Library'
 	instanceVariableNames: 'wsaData'
 	classVariableNames: ''
-	imports: #()
+	imports: #(#{OS.WinSocketConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 OS.WS2_32Library guid: (Core.GUID fromString: '{d368efd5-8705-4c18-ada5-9a1e95868480}')!
@@ -553,8 +553,8 @@ bind: s name: name namelen: namelen
 			sockaddr* name,
 			int namelen);"
 
-	<overlap stdcall: sdword bind handle void* sdword>
-	^self invalidCall: _failureCode!
+	<overlap stdcall: errno bind handle void* sdword>
+	^self invalidOverlappedCall: _failureCode!
 
 close
 	"We've finished using the socket system."
@@ -582,8 +582,8 @@ connect: s name: name namelen: namelen
 			sockaddr* name,
 			int namelen);"
 
-	<overlap stdcall: sdword connect handle void* sdword>
-	^self invalidCall: _failureCode!
+	<overlap stdcall: errno connect handle void* sdword>
+	^self invalidOverlappedCall: _failureCode!
 
 gethostbyaddr: addr len: len type: type
 	"Invoke the gethostbyaddr() function of the module wrapped by the receiver.
@@ -612,7 +612,7 @@ gethostname: name namelen: namelen
 			CHAR* name,
 			int namelen);"
 
-	<stdcall: sdword gethostname lpstr sdword>
+	<stdcall: errno GetHostNameW lpwstr sdword>
 	^self invalidCall: _failureCode!
 
 getpeername: s name: name namelen: namelen
@@ -623,7 +623,7 @@ getpeername: s name: name namelen: namelen
 			sockaddr* name,
 			int* namelen);"
 
-	<stdcall: sdword getpeername handle void* sdword*>
+	<stdcall: errno getpeername handle void* sdword*>
 	^self invalidCall: _failureCode!
 
 getprotobyname: name
@@ -672,7 +672,7 @@ getsockname: s name: name namelen: namelen
 			sockaddr* name,
 			int* namelen);"
 
-	<stdcall: sdword getsockname handle void* sdword*>
+	<stdcall: errno getsockname handle void* sdword*>
 	^self invalidCall: _failureCode!
 
 getsockopt: s level: level optname: optname optval: optval optlen: optlen
@@ -685,7 +685,7 @@ getsockopt: s level: level optname: optname optval: optval optlen: optlen
 			CHAR* optval,
 			int* optlen);"
 
-	<stdcall: sdword getsockopt dword sdword sdword lpstr sdword*>
+	<stdcall: errno getsockopt dword sdword sdword lpstr sdword*>
 	^self invalidCall: _failureCode!
 
 htonl: hostlong
@@ -728,14 +728,23 @@ inet_pton: saInteger pszAddrString: aString pAddrBuf: anIN_ADDR
 	^self invalidCall: _failureCode!
 
 initialize
-	| version res |
+	| version data |
 	version := 2 bitOr: (0 bitShift: 8).
-	wsaData := WSADATA new.
-	res := self wsaStartup: version lpWSAData: wsaData.
-	res = 0
-		ifFalse: 
-			[wsaData := nil.
-			Net.SocketError signalWith: res]!
+	data := WSADATA new.
+	self wsaStartup: version lpWSAData: data.
+	wsaData := data!
+
+invalidCall: anInteger
+	"Private - An invalid external call was attempted through one of the receiver's methods. The argument is the failure code from the external call primitive."
+
+	^anInteger == SOCKET_ERROR ifTrue: [Net.SocketError signal] ifFalse: [super invalidCall: anInteger]!
+
+invalidOverlappedCall: anInteger
+	"Private - An invalid overlapped external call was attempted through one of the receiver's methods. The argument is the failure code from the external call primitive."
+
+	^anInteger == SOCKET_ERROR
+		ifTrue: [Net.SocketError signalWith: Processor activeProcess lastError]
+		ifFalse: [super invalidCall: anInteger]!
 
 ioctlsocket: s cmd: cmd argp: argp
 	"Invoke the ioctlsocket() function of the module wrapped by the receiver.
@@ -745,7 +754,7 @@ ioctlsocket: s cmd: cmd argp: argp
 			long cmd,
 			unsigned long* argp);"
 
-	<stdcall: sdword ioctlsocket dword sdword dword*>
+	<stdcall: errno ioctlsocket dword sdword dword*>
 	^self invalidCall: _failureCode!
 
 listen: s backlog: backlog
@@ -755,7 +764,7 @@ listen: s backlog: backlog
 			unsigned int s,
 			int backlog);"
 
-	<stdcall: sdword listen dword sdword>
+	<stdcall: errno listen dword sdword>
 	^self invalidCall: _failureCode!
 
 ntohl: netlong
@@ -851,7 +860,7 @@ setsockopt: s level: level optname: optname optval: optval optlen: optlen
 			CHAR* optval,
 			int optlen);"
 
-	<stdcall: sdword setsockopt dword sdword sdword lpvoid sdword>
+	<stdcall: errno setsockopt dword sdword sdword lpvoid sdword>
 	^self invalidCall: _failureCode!
 
 shutdown: s how: how
@@ -875,17 +884,17 @@ socket: af type: type protocol: protocol
 	<stdcall: handle socket sdword sdword sdword>
 	^self invalidCall: _failureCode!
 
-wsaAddressToStringA: lpsaAddress dwAddressLength: dwAddressLength lpProtocolInfo: lpProtocolInfo lpszAddressString: lpszAddressString lpdwAddressStringLength: lpdwAddressStringLength
-	"Invoke the WSAAddressToStringA() function of the module wrapped by the receiver.
+wsaAddressToStringW: lpsaAddress dwAddressLength: dwAddressLength lpProtocolInfo: lpProtocolInfo lpszAddressString: lpszAddressString lpdwAddressStringLength: lpdwAddressStringLength
+	"Invoke the WSAAddressToStringW() function of the module wrapped by the receiver.
 
 		int __stdcall WSAAddressToStringA(
 			[in]SOCKADDR* lpsaAddress,
 			[in]unsigned long dwAddressLength,
 			[in]void* lpProtocolInfo,
-			[in, out]LPSTR lpszAddressString,
+			[in, out]LPWSTR lpszAddressString,
 			[in, out]unsigned long* lpdwAddressStringLength);"
 
-	<stdcall: sdword WSAAddressToStringA SOCKADDR* dword void* lpstr dword*>
+	<stdcall: errno WSAAddressToStringW SOCKADDR* dword void* lpwstr dword*>
 	^self invalidCall: _failureCode!
 
 wsaCleanup
@@ -911,8 +920,10 @@ wsaStartup: wVersionRequested lpWSAData: lpWSAData
 			[in]unsigned short wVersionRequested,
 			[out]WSAData* lpWSAData);"
 
-	<stdcall: sdword WSAStartup word WSADATA*>
-	^self invalidCall: _failureCode! !
+	<stdcall: errno WSAStartup word WSADATA*>
+	^_failureCode > 0
+		ifTrue: [Net.SocketError signalWith: _failureCode]
+		ifFalse: [super invalidCall: _failureCode]! !
 !OS.WS2_32Library categoriesFor: #accept:addr:addrlen:!public!win32 functions-sockets library! !
 !OS.WS2_32Library categoriesFor: #bind:name:namelen:!public!win32 functions-sockets library! !
 !OS.WS2_32Library categoriesFor: #close!public!realizing/unrealizing! !
@@ -927,15 +938,17 @@ wsaStartup: wVersionRequested lpWSAData: lpWSAData
 !OS.WS2_32Library categoriesFor: #getservbyname:proto:!public!win32 functions-sockets library! !
 !OS.WS2_32Library categoriesFor: #getservbyport:proto:!public!win32 functions-sockets library! !
 !OS.WS2_32Library categoriesFor: #getsockname:name:namelen:!public!win32 functions-sockets library! !
-!OS.WS2_32Library categoriesFor: #getsockopt:level:optname:optval:optlen:!**auto generated**!public! !
+!OS.WS2_32Library categoriesFor: #getsockopt:level:optname:optval:optlen:!public!win32 functions-sockets library! !
 !OS.WS2_32Library categoriesFor: #htonl:!**auto generated**!public!win32 functions-sockets library! !
 !OS.WS2_32Library categoriesFor: #htons:!**auto generated**!public!win32 functions-sockets library! !
 !OS.WS2_32Library categoriesFor: #inet_addr:!public!win32 functions-sockets library! !
 !OS.WS2_32Library categoriesFor: #inet_ntop:pAddr:pStringBuf:stringBufSize:!public!win32 functions-sockets library! !
 !OS.WS2_32Library categoriesFor: #inet_pton:pszAddrString:pAddrBuf:!public!win32 functions-sockets library! !
 !OS.WS2_32Library categoriesFor: #initialize!initializing!private! !
-!OS.WS2_32Library categoriesFor: #ioctlsocket:cmd:argp:!**auto generated**!public! !
-!OS.WS2_32Library categoriesFor: #listen:backlog:!**auto generated**!public! !
+!OS.WS2_32Library categoriesFor: #invalidCall:!exceptions!private! !
+!OS.WS2_32Library categoriesFor: #invalidOverlappedCall:!exceptions!private! !
+!OS.WS2_32Library categoriesFor: #ioctlsocket:cmd:argp:!public!win32 functions-sockets library! !
+!OS.WS2_32Library categoriesFor: #listen:backlog:!public!win32 functions-sockets library! !
 !OS.WS2_32Library categoriesFor: #ntohl:!**auto generated**!public!win32 functions-sockets library! !
 !OS.WS2_32Library categoriesFor: #ntohs:!**auto generated**!public!win32 functions-sockets library! !
 !OS.WS2_32Library categoriesFor: #recv:buf:len:flags:!public!win32 functions-sockets library! !
@@ -946,10 +959,10 @@ wsaStartup: wVersionRequested lpWSAData: lpWSAData
 !OS.WS2_32Library categoriesFor: #setsockopt:level:optname:optval:optlen:!public!win32 functions-sockets library! !
 !OS.WS2_32Library categoriesFor: #shutdown:how:!**auto generated**!public!win32 functions-sockets library! !
 !OS.WS2_32Library categoriesFor: #socket:type:protocol:!public!win32 functions-sockets library! !
-!OS.WS2_32Library categoriesFor: #wsaAddressToStringA:dwAddressLength:lpProtocolInfo:lpszAddressString:lpdwAddressStringLength:!**auto generated**!public! !
-!OS.WS2_32Library categoriesFor: #wsaCleanup!**auto generated**!public! !
-!OS.WS2_32Library categoriesFor: #wsaGetLastError!**auto generated**!public! !
-!OS.WS2_32Library categoriesFor: #wsaStartup:lpWSAData:!**auto generated**!public! !
+!OS.WS2_32Library categoriesFor: #wsaAddressToStringW:dwAddressLength:lpProtocolInfo:lpszAddressString:lpdwAddressStringLength:!**auto generated**!public!win32 functions-sockets library! !
+!OS.WS2_32Library categoriesFor: #wsaCleanup!**auto generated**!public!win32 functions-sockets library! !
+!OS.WS2_32Library categoriesFor: #wsaGetLastError!**auto generated**!public!win32 functions-sockets library! !
+!OS.WS2_32Library categoriesFor: #wsaStartup:lpWSAData:!public!win32 functions-sockets library! !
 
 !OS.WS2_32Library class methodsFor!
 

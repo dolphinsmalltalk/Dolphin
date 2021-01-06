@@ -60,7 +60,7 @@ h_addr
 	^self h_addr_list dwordAtOffset: 0!
 
 h_addr_list
-	"Answer the <ExternalAddress> value of the receiver's 'h_addr_list' field."
+	"Answer the <Address> value of the receiver's 'h_addr_list' field."
 
 	^(bytes uintPtrAtOffset: _OffsetOf_h_addr_list) asExternalAddress!
 
@@ -70,7 +70,7 @@ h_addrtype
 	^bytes swordAtOffset: _OffsetOf_h_addrtype!
 
 h_aliases
-	"Answer the <ExternalAddress> value of the receiver's 'h_aliases' field."
+	"Answer the <Address> value of the receiver's 'h_aliases' field."
 
 	^(bytes uintPtrAtOffset: _OffsetOf_h_aliases) asExternalAddress!
 
@@ -85,21 +85,21 @@ h_name
 	^AnsiString fromAddress: (bytes intPtrAtOffset: _OffsetOf_h_name)!
 
 host
-	"Answer the host name embedded in the receiver, trimming trailing nulls."
+	"Answer the host name embedded in the receiver."
 
-	^self h_name trimNulls!
+	^self h_name!
 
-reifyNullTerminatedArray: list
+reifyNullTerminatedArray: ptrArray
 	| i each addresses addressClass |
-	addresses := OrderedCollection new.
-	i := 0.
+	addresses := Array writeStream.
 	addressClass := self addressClass.
+	i := 0.
 	
-	[each := list uintPtrAtOffset: i.
+	[each := ptrArray uintPtrAtOffset: i.
 	each isNull] whileFalse: 
-				[addresses add: (addressClass fromAddress: each) address.
+				[addresses nextPut: (addressClass fromAddress: each) address.
 				i := i + VMConstants.IntPtrSize].
-	^addresses asArray! !
+	^addresses contents! !
 !OS.HOSTENT categoriesFor: #address!accessing!public! !
 !OS.HOSTENT categoriesFor: #addressClass!helpers!private! !
 !OS.HOSTENT categoriesFor: #allAddresses!accessing!public! !
@@ -118,11 +118,11 @@ reifyNullTerminatedArray: list
 defineFields
 	"Define the fields of the HOSTENT structure.
 
-	HOSTENT  compileDefinition
+	HOSTENT compileDefinition
 
-		typedef [uuid(87B4C5F4-026E-11D3-9FD7-00A0CC3E4A32), helpstring('Stores information about a given host, such as host name, IPv4 address, and so forth. An application should never attempt to modify this structure or to free any of its components. Furthermore, only one copy of the hostent structure is allocated per thread.')]
+		typedef [uuid(87b4c5f4-026e-11d3-9fd7-00a0cc3e4a32), helpstring('Stores information about a given host, such as host name, IPv4 address, and so forth. An application should never attempt to modify this structure or to free any of its components. Furthermore, only one copy of the hostent structure is allocated per thread.')]
 		struct tagHOSTENT {
-			[readonly, helpstring('The official name of the host (PC). If using the DNS or similar resolution system, it is the Fully Qualified Domain Name (FQDN) that caused the server to return a reply. If using a local hosts file, it is the first entry after the IPv4 address.')] LPCSTR h_name;
+			[readonly, helpstring('The official name of the host (PC). If using the DNS or similar resolution system, it is the Fully Qualified Domain Name (FQDN) that caused the server to return a reply. If using a local hosts file, it is the first entry after the IPv4 address.'), string] LPCSTR h_name;
 			[readonly, helpstring('A NULL-terminated array of alternate names.')] void** h_aliases;
 			[readonly, helpstring('The type of address being returned.')] short h_addrtype;
 			[readonly, helpstring('The length, in bytes, of each address.')] short h_length;
@@ -152,7 +152,7 @@ host: aStringHostName
 	^answer isNull
 		ifTrue: [Net.SocketError signalWith: Processor activeProcess lastError]
 		ifFalse: [answer]! !
-!OS.HOSTENT class categoriesFor: #defineFields!**auto generated**!public!template definition! !
+!OS.HOSTENT class categoriesFor: #defineFields!**auto generated**!private!template definition! !
 !OS.HOSTENT class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !OS.HOSTENT class categoriesFor: #host:!instance creation!public! !
 

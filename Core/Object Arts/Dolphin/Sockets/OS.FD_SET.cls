@@ -23,9 +23,9 @@ typedef struct tagfd_set {
 !OS.FD_SET methodsFor!
 
 fd_array
-	"Answer the <DWORDArray> value of the receiver's 'fd_array' field."
+	"Answer the <UINT_PTRArray> value of the receiver's 'fd_array' field."
 
-	^DWORDArray fromAddress: bytes yourAddress + _OffsetOf_fd_array length: 64!
+	^UINT_PTRArray fromAddress: bytes yourAddress + _OffsetOf_fd_array length: 64!
 
 fd_count
 	"Answer the <Integer> value of the receiver's 'fd_count' field."
@@ -44,20 +44,23 @@ fd_count: anInteger
 
 defineFields
 	"Define the fields of the fd_set structure.
-		FD_SET compileDefinition
-	
-		typedef 		struct tagfd_set {
+
+	FD_SET compileDefinition
+
+		typedef 
+		struct tagfd_set {
 			unsigned int fd_count;
-			unsigned int fd_array[64];
+			[readonly] UINT_PTR fd_array[64];
 		} fd_set;
 "
 
 	self
-		defineField: #fd_count type: DWORDField new;
-		defineField: #fd_array type: (ArrayField type: DWORDArray length: 64) beReadOnly!
+		defineField: #fd_count type: DWORDField new offset: 0;
+		defineField: #fd_array type: (ArrayField type: UINT_PTRArray length: 64) beReadOnly offset: 4.
+	self byteSize: 260!
 
 getFieldNames
 	^#(#fd_count #fd_array)! !
-!OS.FD_SET class categoriesFor: #defineFields!**auto generated**!public!template definition! !
+!OS.FD_SET class categoriesFor: #defineFields!**auto generated**!private!template definition! !
 !OS.FD_SET class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

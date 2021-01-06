@@ -17,6 +17,84 @@ clientSocketClass
 serverSocketClass
 	^ServerSocket2!
 
+testBindReuseFailure
+	| s1 s2 |
+	s1 := self serverSocketClass new.
+	s1
+		port: 0;
+		create.
+	s1 bind.
+	s2 := self serverSocketClass new.
+	s2
+		port: s1 queryPort;
+		create.
+	self
+		should: [s2 bind]
+		raise: SocketError
+		matching: [:ex | ex errorCode = WinSocketErrors.WSAEADDRINUSE].
+	s1 close.
+	s2 close!
+
+testConnectFailure
+	| s1 s2 |
+	s1 := self clientSocketClass port: 0 address: (InternetAddress fromString: '127.0.0.1').
+	self
+		should: [s1 connect]
+		raise: SocketError
+		matching: [:ex | ex errorCode = WinSocketErrors.WSAEADDRNOTAVAIL].
+	s1 close!
+
+testListenUnbound
+	| s1 |
+	s1 := self serverSocketClass new.
+	s1
+		port: 0;
+		create.
+	self
+		should: [s1 listen: 5]
+		raise: SocketError
+		matching: [:ex | ex errorCode = WinSocketErrors.WSAEINVAL].
+	s1 close!
+
+testPeerAddress
+	| s1 s2 peer loopback |
+	s1 := self serverSocketClass port: 0.
+	loopback := InternetAddress fromString: '127.0.0.1'.
+	s2 := self clientSocketClass port: s1 queryPort address: loopback.
+	s2 connect.
+	peer := s2 peerAddress.
+	self assert: peer ipAddress equals: loopback ipAddress.
+	s2 close.
+	s1 close!
+
+testPeerAddressNotConnected
+	| s1 |
+	s1 := self clientSocketClass port: 0 address: (InternetAddress fromString: '127.0.0.1').
+	self
+		should: [s1 peerAddress]
+		raise: SocketError
+		matching: [:ex | ex errorCode = WinSocketErrors.WSAECONNRESET].
+	s1 close!
+
+testQueryPort
+	"See #1317"
+
+	| s |
+	s := self serverSocketClass port: 1000.
+	[self assert: s queryPort = 1000] ensure: [s close]!
+
+testQueryPortUnbound
+	| s |
+	s := self serverSocketClass new.
+	s
+		port: 0;
+		create.
+	self
+		should: [s queryPort]
+		raise: SocketError
+		matching: [:ex | ex errorCode = WinSocketErrors.WSAEINVAL].
+	s close!
+
 testSTBMessages
 	| acceptSocket inbound ready messages outbound sent outfiler |
 	acceptSocket := self serverSocketClass port: 120 backlog: 0.
@@ -58,5 +136,12 @@ testSTBMessages
 	self assert: messages equals: sent! !
 !Net.Tests.Socket2Test categoriesFor: #clientSocketClass!constants!private! !
 !Net.Tests.Socket2Test categoriesFor: #serverSocketClass!constants!private!unit tests! !
-!Net.Tests.Socket2Test categoriesFor: #testSTBMessages!public! !
+!Net.Tests.Socket2Test categoriesFor: #testBindReuseFailure!public!unit tests! !
+!Net.Tests.Socket2Test categoriesFor: #testConnectFailure!public!unit tests! !
+!Net.Tests.Socket2Test categoriesFor: #testListenUnbound!public!unit tests! !
+!Net.Tests.Socket2Test categoriesFor: #testPeerAddress!public!unit tests! !
+!Net.Tests.Socket2Test categoriesFor: #testPeerAddressNotConnected!public!unit tests! !
+!Net.Tests.Socket2Test categoriesFor: #testQueryPort!public!unit tests! !
+!Net.Tests.Socket2Test categoriesFor: #testQueryPortUnbound!public!unit tests! !
+!Net.Tests.Socket2Test categoriesFor: #testSTBMessages!public!unit tests! !
 
