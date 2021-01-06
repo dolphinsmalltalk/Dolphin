@@ -3659,11 +3659,14 @@ STDMETHODIMP_(POTE) Compiler::CompileForClass(IUnknown* piVM, Oop compilerOop, c
 			
 			m_piVM->StorePointerWithValue(&(result.fields[0]), Oop(methodPointer));
 			
-			if (WantTextMap)
-				m_piVM->StorePointerWithValue(&(result.fields[1]), Oop(GetTextMapObject()));
-			
-			if (WantTempsMap)
-				m_piVM->StorePointerWithValue(&(result.fields[2]), Oop(GetTempsMapObject()));
+			if (m_ok) 
+			{
+				if (WantTextMap)
+					m_piVM->StorePointerWithValue(&(result.fields[1]), Oop(GetTextMapObject()));
+
+				if (WantTempsMap)
+					m_piVM->StorePointerWithValue(&(result.fields[2]), Oop(GetTempsMapObject()));
+			}
 		}
 		__except(DolphinExceptionFilter(m_piVM, GetExceptionInformation()))
 		{
