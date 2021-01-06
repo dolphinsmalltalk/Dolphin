@@ -31,15 +31,15 @@ struct tagHTTP_SERVICE_BINDING_A {
 !WinHttpServer.HTTP_SERVICE_BINDING_A methodsFor!
 
 Buffer
-	"Answer the <String> value of the receiver's 'Buffer' field."
+	"Answer the <AnsiString> value of the receiver's 'Buffer' field."
 
-	^String fromAddress: (bytes intPtrAtOffset: _OffsetOf_Buffer) length: self BufferSize!
+	^AnsiString fromAddress: (bytes intPtrAtOffset: _OffsetOf_Buffer) length: self BufferSize!
 
-Buffer: aString
-	"Set the receiver's 'Buffer' field to the value of the argument, aString"
+Buffer: anAnsiString
+	"Set the receiver's 'Buffer' field to the value of the argument, anAnsiString"
 
-	bytes uintPtrAtOffset: _OffsetOf_Buffer put: aString yourAddress.
-	self BufferSize: aString size!
+	bytes uintPtrAtOffset: _OffsetOf_Buffer put: anAnsiString yourAddress.
+	self BufferSize: anAnsiString size!
 
 BufferSize
 	"Private - Answer the <Integer> value of the receiver's 'BufferSize' field."
@@ -72,7 +72,7 @@ defineFields
 
 	super defineFields.
 	self
-		defineField: #Buffer type: (ArrayPointerField type: String lengthField: #BufferSize) offset: 4;
+		defineField: #Buffer type: (ArrayPointerField type: AnsiString lengthField: #BufferSize) offset: 4;
 		defineField: #BufferSize type: DWORDField new beNonBrowsable offset: 8.
 	self byteSize: 12!
 

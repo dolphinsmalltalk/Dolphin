@@ -30,15 +30,15 @@ struct tagHTTP_KNOWN_HEADER {
 !WinHttpServer.HTTP_KNOWN_HEADER methodsFor!
 
 pRawValue
-	"Answer the <String> value of the receiver's 'pRawValue' field."
+	"Answer the <AnsiString> value of the receiver's 'pRawValue' field."
 
-	^String fromAddress: (bytes intPtrAtOffset: _OffsetOf_pRawValue) length: self RawValueLength!
+	^AnsiString fromAddress: (bytes intPtrAtOffset: _OffsetOf_pRawValue) length: self RawValueLength!
 
-pRawValue: aString
-	"Set the receiver's 'pRawValue' field to the value of the argument, aString"
+pRawValue: anAnsiString
+	"Set the receiver's 'pRawValue' field to the value of the argument, anAnsiString"
 
-	bytes uintPtrAtOffset: _OffsetOf_pRawValue put: aString yourAddress.
-	self RawValueLength: aString size!
+	bytes uintPtrAtOffset: _OffsetOf_pRawValue put: anAnsiString yourAddress.
+	self RawValueLength: anAnsiString size!
 
 RawValueLength
 	"Private - Answer the <Integer> value of the receiver's 'RawValueLength' field."
@@ -70,7 +70,7 @@ defineFields
 
 	self
 		defineField: #RawValueLength type: WORDField new beNonBrowsable offset: 0;
-		defineField: #pRawValue type: (ArrayPointerField type: String lengthField: #RawValueLength) offset: 4.
+		defineField: #pRawValue type: (ArrayPointerField type: AnsiString lengthField: #RawValueLength) offset: 4.
 	self byteSize: 8!
 
 getFieldNames

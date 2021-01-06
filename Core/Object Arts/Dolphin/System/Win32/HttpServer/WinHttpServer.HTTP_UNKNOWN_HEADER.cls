@@ -44,26 +44,26 @@ NameLength: anInteger
 	bytes wordAtOffset: _OffsetOf_NameLength put: anInteger!
 
 pName
-	"Answer the <String> value of the receiver's 'pName' field."
+	"Answer the <AnsiString> value of the receiver's 'pName' field."
 
-	^String fromAddress: (bytes intPtrAtOffset: _OffsetOf_pName) length: self NameLength!
+	^AnsiString fromAddress: (bytes intPtrAtOffset: _OffsetOf_pName) length: self NameLength!
 
-pName: aString
-	"Set the receiver's 'pName' field to the value of the argument, aString"
+pName: anAnsiString
+	"Set the receiver's 'pName' field to the value of the argument, anAnsiString"
 
-	bytes uintPtrAtOffset: _OffsetOf_pName put: aString yourAddress.
-	self NameLength: aString size!
+	bytes uintPtrAtOffset: _OffsetOf_pName put: anAnsiString yourAddress.
+	self NameLength: anAnsiString size!
 
 pRawValue
-	"Answer the <String> value of the receiver's 'pRawValue' field."
+	"Answer the <AnsiString> value of the receiver's 'pRawValue' field."
 
-	^String fromAddress: (bytes intPtrAtOffset: _OffsetOf_pRawValue) length: self RawValueLength!
+	^AnsiString fromAddress: (bytes intPtrAtOffset: _OffsetOf_pRawValue) length: self RawValueLength!
 
-pRawValue: aString
-	"Set the receiver's 'pRawValue' field to the value of the argument, aString"
+pRawValue: anAnsiString
+	"Set the receiver's 'pRawValue' field to the value of the argument, anAnsiString"
 
-	bytes uintPtrAtOffset: _OffsetOf_pRawValue put: aString yourAddress.
-	self RawValueLength: aString size!
+	bytes uintPtrAtOffset: _OffsetOf_pRawValue put: anAnsiString yourAddress.
+	self RawValueLength: anAnsiString size!
 
 RawValueLength
 	"Private - Answer the <Integer> value of the receiver's 'RawValueLength' field."
@@ -102,8 +102,8 @@ defineFields
 	self
 		defineField: #NameLength type: WORDField new beNonBrowsable offset: 0;
 		defineField: #RawValueLength type: WORDField new beNonBrowsable offset: 2;
-		defineField: #pName type: (ArrayPointerField type: String lengthField: #NameLength) offset: 4;
-		defineField: #pRawValue type: (ArrayPointerField type: String lengthField: #RawValueLength) offset: 8.
+		defineField: #pName type: (ArrayPointerField type: AnsiString lengthField: #NameLength) offset: 4;
+		defineField: #pRawValue type: (ArrayPointerField type: AnsiString lengthField: #RawValueLength) offset: 8.
 	self byteSize: 12!
 
 getFieldNames

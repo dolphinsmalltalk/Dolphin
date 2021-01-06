@@ -190,15 +190,15 @@ pEntityChunks: aStructureArray
 	self EntityChunkCount: aStructureArray size!
 
 pRawUrl
-	"Private - Answer the <String> value of the receiver's 'pRawUrl' field."
+	"Private - Answer the <AnsiString> value of the receiver's 'pRawUrl' field."
 
-	^String fromAddress: (bytes intPtrAtOffset: _OffsetOf_pRawUrl) length: self RawUrlLength!
+	^AnsiString fromAddress: (bytes intPtrAtOffset: _OffsetOf_pRawUrl) length: self RawUrlLength!
 
-pRawUrl: aString
-	"Set the receiver's 'pRawUrl' field to the value of the argument, aString"
+pRawUrl: anAnsiString
+	"Set the receiver's 'pRawUrl' field to the value of the argument, anAnsiString"
 
-	bytes uintPtrAtOffset: _OffsetOf_pRawUrl put: aString yourAddress.
-	self RawUrlLength: aString size!
+	bytes uintPtrAtOffset: _OffsetOf_pRawUrl put: anAnsiString yourAddress.
+	self RawUrlLength: anAnsiString size!
 
 printableFields
 	| printable |
@@ -226,15 +226,16 @@ pSslInfo: aHTTP_SSL_INFO
 	bytes uintPtrAtOffset: _OffsetOf_pSslInfo put: aHTTP_SSL_INFO yourAddress!
 
 pUnknownVerb
-	"Answer the <String> value of the receiver's 'pUnknownVerb' field."
+	"Answer the <AnsiString> value of the receiver's 'pUnknownVerb' field."
 
-	^String fromAddress: (bytes intPtrAtOffset: _OffsetOf_pUnknownVerb) length: self UnknownVerbLength!
+	^AnsiString fromAddress: (bytes intPtrAtOffset: _OffsetOf_pUnknownVerb)
+		length: self UnknownVerbLength!
 
-pUnknownVerb: aString
-	"Set the receiver's 'pUnknownVerb' field to the value of the argument, aString"
+pUnknownVerb: anAnsiString
+	"Set the receiver's 'pUnknownVerb' field to the value of the argument, anAnsiString"
 
-	bytes uintPtrAtOffset: _OffsetOf_pUnknownVerb put: aString yourAddress.
-	self UnknownVerbLength: aString size!
+	bytes uintPtrAtOffset: _OffsetOf_pUnknownVerb put: anAnsiString yourAddress.
+	self UnknownVerbLength: anAnsiString size!
 
 RawConnectionId
 	"Answer the <Integer> value of the receiver's 'RawConnectionId' field."
@@ -395,8 +396,8 @@ defineFields
 		defineField: #Verb type: SDWORDField new offset: 36;
 		defineField: #UnknownVerbLength type: WORDField new beNonBrowsable offset: 40;
 		defineField: #RawUrlLength type: WORDField new beNonBrowsable offset: 42;
-		defineField: #pUnknownVerb type: (ArrayPointerField type: String lengthField: #UnknownVerbLength) offset: 44;
-		defineField: #pRawUrl type: (ArrayPointerField type: String lengthField: #RawUrlLength) beNonBrowsable offset: 48;
+		defineField: #pUnknownVerb type: (ArrayPointerField type: AnsiString lengthField: #UnknownVerbLength) offset: 44;
+		defineField: #pRawUrl type: (ArrayPointerField type: AnsiString lengthField: #RawUrlLength) beNonBrowsable offset: 48;
 		defineField: #CookedUrl type: (StructureField type: HTTP_COOKED_URL) offset: 52;
 		defineField: #Address type: (PointerArrayField type: SOCKADDR length: 2) offset: 76;
 		defineField: #Headers type: (StructureField type: HTTP_REQUEST_HEADERS) offset: 84;

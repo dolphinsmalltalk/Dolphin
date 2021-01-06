@@ -154,16 +154,16 @@ PackedContextType: anInteger
 	bytes dwordAtOffset: _OffsetOf_PackedContextType put: anInteger!
 
 pMutualAuthData
-	"Answer the <String> value of the receiver's 'pMutualAuthData' field."
+	"Answer the <AnsiString> value of the receiver's 'pMutualAuthData' field."
 
-	^String fromAddress: (bytes intPtrAtOffset: _OffsetOf_pMutualAuthData)
+	^AnsiString fromAddress: (bytes intPtrAtOffset: _OffsetOf_pMutualAuthData)
 		length: self MutualAuthDataLength!
 
-pMutualAuthData: aString
-	"Set the receiver's 'pMutualAuthData' field to the value of the argument, aString"
+pMutualAuthData: anAnsiString
+	"Set the receiver's 'pMutualAuthData' field to the value of the argument, anAnsiString"
 
-	bytes uintPtrAtOffset: _OffsetOf_pMutualAuthData put: aString yourAddress.
-	self MutualAuthDataLength: aString size!
+	bytes uintPtrAtOffset: _OffsetOf_pMutualAuthData put: anAnsiString yourAddress.
+	self MutualAuthDataLength: anAnsiString size!
 
 pPackageName
 	"Answer the <Utf16String> value of the receiver's 'pPackageName' field."
@@ -249,7 +249,7 @@ defineFields
 		defineField: #PackedContextType type: DWORDField new offset: 28;
 		defineField: #PackedContext type: (ArrayPointerField type: ExternalArray lengthField: #PackedContextLength) offset: 32;
 		defineField: #MutualAuthDataLength type: DWORDField new beNonBrowsable offset: 36;
-		defineField: #pMutualAuthData type: (ArrayPointerField type: String lengthField: #MutualAuthDataLength) offset: 40;
+		defineField: #pMutualAuthData type: (ArrayPointerField type: AnsiString lengthField: #MutualAuthDataLength) offset: 40;
 		defineField: #PackageNameLength type: WORDField new beNonBrowsable offset: 44;
 		defineField: #pPackageName type: (ArrayPointerField type: Utf16String arrayLength: (SizeIsArrayFieldLength sizeIs: 'PackageNameLength >> 1')) offset: 48.
 	self byteSize: 52!

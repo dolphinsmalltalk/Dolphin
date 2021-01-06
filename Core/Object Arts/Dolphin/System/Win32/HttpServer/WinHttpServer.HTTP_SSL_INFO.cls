@@ -62,28 +62,28 @@ pClientCertInfo: aHTTP_SSL_CLIENT_CERT_INFO
 	bytes uintPtrAtOffset: _OffsetOf_pClientCertInfo put: aHTTP_SSL_CLIENT_CERT_INFO yourAddress!
 
 pServerCertIssuer
-	"Answer the <String> value of the receiver's 'pServerCertIssuer' field."
+	"Answer the <AnsiString> value of the receiver's 'pServerCertIssuer' field."
 
-	^String fromAddress: (bytes intPtrAtOffset: _OffsetOf_pServerCertIssuer)
+	^AnsiString fromAddress: (bytes intPtrAtOffset: _OffsetOf_pServerCertIssuer)
 		length: self ServerCertIssuerSize!
 
-pServerCertIssuer: aString
-	"Set the receiver's 'pServerCertIssuer' field to the value of the argument, aString"
+pServerCertIssuer: anAnsiString
+	"Set the receiver's 'pServerCertIssuer' field to the value of the argument, anAnsiString"
 
-	bytes uintPtrAtOffset: _OffsetOf_pServerCertIssuer put: aString yourAddress.
-	self ServerCertIssuerSize: aString size!
+	bytes uintPtrAtOffset: _OffsetOf_pServerCertIssuer put: anAnsiString yourAddress.
+	self ServerCertIssuerSize: anAnsiString size!
 
 pServerCertSubject
-	"Answer the <String> value of the receiver's 'pServerCertSubject' field."
+	"Answer the <AnsiString> value of the receiver's 'pServerCertSubject' field."
 
-	^String fromAddress: (bytes intPtrAtOffset: _OffsetOf_pServerCertSubject)
+	^AnsiString fromAddress: (bytes intPtrAtOffset: _OffsetOf_pServerCertSubject)
 		length: self ServerCertSubjectSize!
 
-pServerCertSubject: aString
-	"Set the receiver's 'pServerCertSubject' field to the value of the argument, aString"
+pServerCertSubject: anAnsiString
+	"Set the receiver's 'pServerCertSubject' field to the value of the argument, anAnsiString"
 
-	bytes uintPtrAtOffset: _OffsetOf_pServerCertSubject put: aString yourAddress.
-	self ServerCertSubjectSize: aString size!
+	bytes uintPtrAtOffset: _OffsetOf_pServerCertSubject put: anAnsiString yourAddress.
+	self ServerCertSubjectSize: anAnsiString size!
 
 ServerCertIssuerSize
 	"Private - Answer the <Integer> value of the receiver's 'ServerCertIssuerSize' field."
@@ -166,8 +166,8 @@ defineFields
 		defineField: #ConnectionKeySize type: WORDField new offset: 2;
 		defineField: #ServerCertIssuerSize type: DWORDField new beNonBrowsable offset: 4;
 		defineField: #ServerCertSubjectSize type: DWORDField new beNonBrowsable offset: 8;
-		defineField: #pServerCertIssuer type: (ArrayPointerField type: String lengthField: #ServerCertIssuerSize) offset: 12;
-		defineField: #pServerCertSubject type: (ArrayPointerField type: String lengthField: #ServerCertSubjectSize) offset: 16;
+		defineField: #pServerCertIssuer type: (ArrayPointerField type: AnsiString lengthField: #ServerCertIssuerSize) offset: 12;
+		defineField: #pServerCertSubject type: (ArrayPointerField type: AnsiString lengthField: #ServerCertSubjectSize) offset: 16;
 		defineField: #pClientCertInfo type: (PointerField type: HTTP_SSL_CLIENT_CERT_INFO) offset: 20;
 		defineField: #SslClientCertNegotiated type: DWORDField new offset: 24.
 	self byteSize: 28!

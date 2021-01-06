@@ -102,15 +102,15 @@ pEntityChunks: aStructureArray
 	self EntityChunkCount: aStructureArray size!
 
 pReason
-	"Answer the <String> value of the receiver's 'pReason' field."
+	"Answer the <AnsiString> value of the receiver's 'pReason' field."
 
-	^String fromAddress: (bytes intPtrAtOffset: _OffsetOf_pReason) length: self ReasonLength!
+	^AnsiString fromAddress: (bytes intPtrAtOffset: _OffsetOf_pReason) length: self ReasonLength!
 
-pReason: aString
-	"Set the receiver's 'pReason' field to the value of the argument, aString"
+pReason: anAnsiString
+	"Set the receiver's 'pReason' field to the value of the argument, anAnsiString"
 
-	bytes uintPtrAtOffset: _OffsetOf_pReason put: aString yourAddress.
-	self ReasonLength: aString size!
+	bytes uintPtrAtOffset: _OffsetOf_pReason put: anAnsiString yourAddress.
+	self ReasonLength: anAnsiString size!
 
 ReasonLength
 	"Private - Answer the <Integer> value of the receiver's 'ReasonLength' field."
@@ -190,7 +190,7 @@ defineFields
 		defineField: #Version type: (StructureField type: HTTP_VERSION) offset: 4;
 		defineField: #StatusCode type: WORDField new offset: 8;
 		defineField: #ReasonLength type: WORDField new beNonBrowsable offset: 10;
-		defineField: #pReason type: (ArrayPointerField type: String lengthField: #ReasonLength) offset: 12;
+		defineField: #pReason type: (ArrayPointerField type: AnsiString lengthField: #ReasonLength) offset: 12;
 		defineField: #Headers type: (StructureField type: HTTP_RESPONSE_HEADERS) offset: 16;
 		defineField: #EntityChunkCount type: WORDField new beNonBrowsable offset: 272;
 		defineField: #pEntityChunks type: (StructureArrayPointerField type: HTTP_DATA_CHUNK lengthField: #EntityChunkCount) offset: 276.

@@ -86,15 +86,15 @@ struct tagHTTP_LOG_FIELDS_DATA {
 !WinHttpServer.HTTP_LOG_FIELDS_DATA methodsFor!
 
 ClientIp
-	"Answer the <String> value of the receiver's 'ClientIp' field."
+	"Answer the <AnsiString> value of the receiver's 'ClientIp' field."
 
-	^String fromAddress: (bytes intPtrAtOffset: _OffsetOf_ClientIp) length: self ClientIpLength!
+	^AnsiString fromAddress: (bytes intPtrAtOffset: _OffsetOf_ClientIp) length: self ClientIpLength!
 
-ClientIp: aString
-	"Set the receiver's 'ClientIp' field to the value of the argument, aString"
+ClientIp: anAnsiString
+	"Set the receiver's 'ClientIp' field to the value of the argument, anAnsiString"
 
-	bytes uintPtrAtOffset: _OffsetOf_ClientIp put: aString yourAddress.
-	self ClientIpLength: aString size!
+	bytes uintPtrAtOffset: _OffsetOf_ClientIp put: anAnsiString yourAddress.
+	self ClientIpLength: anAnsiString size!
 
 ClientIpLength
 	"Answer the <Integer> value of the receiver's 'ClientIpLength' field."
@@ -107,15 +107,15 @@ ClientIpLength: anInteger
 	bytes wordAtOffset: _OffsetOf_ClientIpLength put: anInteger!
 
 Cookie
-	"Answer the <String> value of the receiver's 'Cookie' field."
+	"Answer the <AnsiString> value of the receiver's 'Cookie' field."
 
-	^String fromAddress: (bytes intPtrAtOffset: _OffsetOf_Cookie) length: self CookieLength!
+	^AnsiString fromAddress: (bytes intPtrAtOffset: _OffsetOf_Cookie) length: self CookieLength!
 
-Cookie: aString
-	"Set the receiver's 'Cookie' field to the value of the argument, aString"
+Cookie: anAnsiString
+	"Set the receiver's 'Cookie' field to the value of the argument, anAnsiString"
 
-	bytes uintPtrAtOffset: _OffsetOf_Cookie put: aString yourAddress.
-	self CookieLength: aString size!
+	bytes uintPtrAtOffset: _OffsetOf_Cookie put: anAnsiString yourAddress.
+	self CookieLength: anAnsiString size!
 
 CookieLength
 	"Answer the <Integer> value of the receiver's 'CookieLength' field."
@@ -128,15 +128,15 @@ CookieLength: anInteger
 	bytes wordAtOffset: _OffsetOf_CookieLength put: anInteger!
 
 Host
-	"Answer the <String> value of the receiver's 'Host' field."
+	"Answer the <AnsiString> value of the receiver's 'Host' field."
 
-	^String fromAddress: (bytes intPtrAtOffset: _OffsetOf_Host) length: self HostLength!
+	^AnsiString fromAddress: (bytes intPtrAtOffset: _OffsetOf_Host) length: self HostLength!
 
-Host: aString
-	"Set the receiver's 'Host' field to the value of the argument, aString"
+Host: anAnsiString
+	"Set the receiver's 'Host' field to the value of the argument, anAnsiString"
 
-	bytes uintPtrAtOffset: _OffsetOf_Host put: aString yourAddress.
-	self HostLength: aString size!
+	bytes uintPtrAtOffset: _OffsetOf_Host put: anAnsiString yourAddress.
+	self HostLength: anAnsiString size!
 
 HostLength
 	"Answer the <Integer> value of the receiver's 'HostLength' field."
@@ -149,15 +149,15 @@ HostLength: anInteger
 	bytes wordAtOffset: _OffsetOf_HostLength put: anInteger!
 
 Method
-	"Answer the <String> value of the receiver's 'Method' field."
+	"Answer the <AnsiString> value of the receiver's 'Method' field."
 
-	^String fromAddress: (bytes intPtrAtOffset: _OffsetOf_Method) length: self MethodLength!
+	^AnsiString fromAddress: (bytes intPtrAtOffset: _OffsetOf_Method) length: self MethodLength!
 
-Method: aString
-	"Set the receiver's 'Method' field to the value of the argument, aString"
+Method: anAnsiString
+	"Set the receiver's 'Method' field to the value of the argument, anAnsiString"
 
-	bytes uintPtrAtOffset: _OffsetOf_Method put: aString yourAddress.
-	self MethodLength: aString size!
+	bytes uintPtrAtOffset: _OffsetOf_Method put: anAnsiString yourAddress.
+	self MethodLength: anAnsiString size!
 
 MethodLength
 	"Answer the <Integer> value of the receiver's 'MethodLength' field."
@@ -190,15 +190,15 @@ ProtocolStatus: anInteger
 	bytes wordAtOffset: _OffsetOf_ProtocolStatus put: anInteger!
 
 Referrer
-	"Answer the <String> value of the receiver's 'Referrer' field."
+	"Answer the <AnsiString> value of the receiver's 'Referrer' field."
 
-	^String fromAddress: (bytes intPtrAtOffset: _OffsetOf_Referrer) length: self ReferrerLength!
+	^AnsiString fromAddress: (bytes intPtrAtOffset: _OffsetOf_Referrer) length: self ReferrerLength!
 
-Referrer: aString
-	"Set the receiver's 'Referrer' field to the value of the argument, aString"
+Referrer: anAnsiString
+	"Set the receiver's 'Referrer' field to the value of the argument, anAnsiString"
 
-	bytes uintPtrAtOffset: _OffsetOf_Referrer put: aString yourAddress.
-	self ReferrerLength: aString size!
+	bytes uintPtrAtOffset: _OffsetOf_Referrer put: anAnsiString yourAddress.
+	self ReferrerLength: anAnsiString size!
 
 ReferrerLength
 	"Answer the <Integer> value of the receiver's 'ReferrerLength' field."
@@ -211,15 +211,15 @@ ReferrerLength: anInteger
 	bytes wordAtOffset: _OffsetOf_ReferrerLength put: anInteger!
 
 ServerIp
-	"Answer the <String> value of the receiver's 'ServerIp' field."
+	"Answer the <AnsiString> value of the receiver's 'ServerIp' field."
 
-	^String fromAddress: (bytes intPtrAtOffset: _OffsetOf_ServerIp) length: self ServerIpLength!
+	^AnsiString fromAddress: (bytes intPtrAtOffset: _OffsetOf_ServerIp) length: self ServerIpLength!
 
-ServerIp: aString
-	"Set the receiver's 'ServerIp' field to the value of the argument, aString"
+ServerIp: anAnsiString
+	"Set the receiver's 'ServerIp' field to the value of the argument, anAnsiString"
 
-	bytes uintPtrAtOffset: _OffsetOf_ServerIp put: aString yourAddress.
-	self ServerIpLength: aString size!
+	bytes uintPtrAtOffset: _OffsetOf_ServerIp put: anAnsiString yourAddress.
+	self ServerIpLength: anAnsiString size!
 
 ServerIpLength
 	"Answer the <Integer> value of the receiver's 'ServerIpLength' field."
@@ -232,15 +232,15 @@ ServerIpLength: anInteger
 	bytes wordAtOffset: _OffsetOf_ServerIpLength put: anInteger!
 
 ServerName
-	"Answer the <String> value of the receiver's 'ServerName' field."
+	"Answer the <AnsiString> value of the receiver's 'ServerName' field."
 
-	^String fromAddress: (bytes intPtrAtOffset: _OffsetOf_ServerName) length: self ServerNameLength!
+	^AnsiString fromAddress: (bytes intPtrAtOffset: _OffsetOf_ServerName) length: self ServerNameLength!
 
-ServerName: aString
-	"Set the receiver's 'ServerName' field to the value of the argument, aString"
+ServerName: anAnsiString
+	"Set the receiver's 'ServerName' field to the value of the argument, anAnsiString"
 
-	bytes uintPtrAtOffset: _OffsetOf_ServerName put: aString yourAddress.
-	self ServerNameLength: aString size!
+	bytes uintPtrAtOffset: _OffsetOf_ServerName put: anAnsiString yourAddress.
+	self ServerNameLength: anAnsiString size!
 
 ServerNameLength
 	"Answer the <Integer> value of the receiver's 'ServerNameLength' field."
@@ -263,15 +263,16 @@ ServerPort: anInteger
 	bytes wordAtOffset: _OffsetOf_ServerPort put: anInteger!
 
 ServiceName
-	"Answer the <String> value of the receiver's 'ServiceName' field."
+	"Answer the <AnsiString> value of the receiver's 'ServiceName' field."
 
-	^String fromAddress: (bytes intPtrAtOffset: _OffsetOf_ServiceName) length: self ServiceNameLength!
+	^AnsiString fromAddress: (bytes intPtrAtOffset: _OffsetOf_ServiceName)
+		length: self ServiceNameLength!
 
-ServiceName: aString
-	"Set the receiver's 'ServiceName' field to the value of the argument, aString"
+ServiceName: anAnsiString
+	"Set the receiver's 'ServiceName' field to the value of the argument, anAnsiString"
 
-	bytes uintPtrAtOffset: _OffsetOf_ServiceName put: aString yourAddress.
-	self ServiceNameLength: aString size!
+	bytes uintPtrAtOffset: _OffsetOf_ServiceName put: anAnsiString yourAddress.
+	self ServiceNameLength: anAnsiString size!
 
 ServiceNameLength
 	"Answer the <Integer> value of the receiver's 'ServiceNameLength' field."
@@ -304,15 +305,15 @@ Type: anInteger
 	bytes sdwordAtOffset: _OffsetOf_Type put: anInteger!
 
 UriQuery
-	"Answer the <String> value of the receiver's 'UriQuery' field."
+	"Answer the <AnsiString> value of the receiver's 'UriQuery' field."
 
-	^String fromAddress: (bytes intPtrAtOffset: _OffsetOf_UriQuery) length: self UriQueryLength!
+	^AnsiString fromAddress: (bytes intPtrAtOffset: _OffsetOf_UriQuery) length: self UriQueryLength!
 
-UriQuery: aString
-	"Set the receiver's 'UriQuery' field to the value of the argument, aString"
+UriQuery: anAnsiString
+	"Set the receiver's 'UriQuery' field to the value of the argument, anAnsiString"
 
-	bytes uintPtrAtOffset: _OffsetOf_UriQuery put: aString yourAddress.
-	self UriQueryLength: aString size!
+	bytes uintPtrAtOffset: _OffsetOf_UriQuery put: anAnsiString yourAddress.
+	self UriQueryLength: anAnsiString size!
 
 UriQueryLength
 	"Answer the <Integer> value of the receiver's 'UriQueryLength' field."
@@ -346,15 +347,15 @@ UriStemLength: anInteger
 	bytes wordAtOffset: _OffsetOf_UriStemLength put: anInteger!
 
 UserAgent
-	"Answer the <String> value of the receiver's 'UserAgent' field."
+	"Answer the <AnsiString> value of the receiver's 'UserAgent' field."
 
-	^String fromAddress: (bytes intPtrAtOffset: _OffsetOf_UserAgent) length: self UserAgentLength!
+	^AnsiString fromAddress: (bytes intPtrAtOffset: _OffsetOf_UserAgent) length: self UserAgentLength!
 
-UserAgent: aString
-	"Set the receiver's 'UserAgent' field to the value of the argument, aString"
+UserAgent: anAnsiString
+	"Set the receiver's 'UserAgent' field to the value of the argument, anAnsiString"
 
-	bytes uintPtrAtOffset: _OffsetOf_UserAgent put: aString yourAddress.
-	self UserAgentLength: aString size!
+	bytes uintPtrAtOffset: _OffsetOf_UserAgent put: anAnsiString yourAddress.
+	self UserAgentLength: anAnsiString size!
 
 UserAgentLength
 	"Answer the <Integer> value of the receiver's 'UserAgentLength' field."
@@ -515,16 +516,16 @@ defineFields
 		defineField: #ReferrerLength type: WORDField new offset: 26;
 		defineField: #UserName type: (ArrayPointerField type: Utf16String lengthField: #UserNameLength) offset: 28;
 		defineField: #UriStem type: (ArrayPointerField type: Utf16String lengthField: #UriStemLength) offset: 32;
-		defineField: #ClientIp type: (ArrayPointerField type: String lengthField: #ClientIpLength) offset: 36;
-		defineField: #ServerName type: (ArrayPointerField type: String lengthField: #ServerNameLength) offset: 40;
-		defineField: #ServiceName type: (ArrayPointerField type: String lengthField: #ServiceNameLength) offset: 44;
-		defineField: #ServerIp type: (ArrayPointerField type: String lengthField: #ServerIpLength) offset: 48;
-		defineField: #Method type: (ArrayPointerField type: String lengthField: #MethodLength) offset: 52;
-		defineField: #UriQuery type: (ArrayPointerField type: String lengthField: #UriQueryLength) offset: 56;
-		defineField: #Host type: (ArrayPointerField type: String lengthField: #HostLength) offset: 60;
-		defineField: #UserAgent type: (ArrayPointerField type: String lengthField: #UserAgentLength) offset: 64;
-		defineField: #Cookie type: (ArrayPointerField type: String lengthField: #CookieLength) offset: 68;
-		defineField: #Referrer type: (ArrayPointerField type: String lengthField: #ReferrerLength) offset: 72;
+		defineField: #ClientIp type: (ArrayPointerField type: AnsiString lengthField: #ClientIpLength) offset: 36;
+		defineField: #ServerName type: (ArrayPointerField type: AnsiString lengthField: #ServerNameLength) offset: 40;
+		defineField: #ServiceName type: (ArrayPointerField type: AnsiString lengthField: #ServiceNameLength) offset: 44;
+		defineField: #ServerIp type: (ArrayPointerField type: AnsiString lengthField: #ServerIpLength) offset: 48;
+		defineField: #Method type: (ArrayPointerField type: AnsiString lengthField: #MethodLength) offset: 52;
+		defineField: #UriQuery type: (ArrayPointerField type: AnsiString lengthField: #UriQueryLength) offset: 56;
+		defineField: #Host type: (ArrayPointerField type: AnsiString lengthField: #HostLength) offset: 60;
+		defineField: #UserAgent type: (ArrayPointerField type: AnsiString lengthField: #UserAgentLength) offset: 64;
+		defineField: #Cookie type: (ArrayPointerField type: AnsiString lengthField: #CookieLength) offset: 68;
+		defineField: #Referrer type: (ArrayPointerField type: AnsiString lengthField: #ReferrerLength) offset: 72;
 		defineField: #ServerPort type: WORDField new offset: 76;
 		defineField: #ProtocolStatus type: WORDField new offset: 78;
 		defineField: #Win32Status type: DWORDField new offset: 80;
