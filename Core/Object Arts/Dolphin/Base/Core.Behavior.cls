@@ -378,7 +378,7 @@ instanceSpec: anInteger
 instSize
 	"Answer the number of fixed fields (named instance variables) in instances of the receiver."
 
-	^self instanceSpec bitAnd: _SizeMask!
+	^instanceSpec bitAnd: _SizeMask!
 
 instVarNames
 	"Answer a <sequencedReadableCollection> of the receiver's instance variable 
@@ -408,7 +408,7 @@ isIndirection
 	or internal object. Objects of indirection classes, such as ExternalAddress, behave differently 
 	when passed to certain system primitives (e.g. byte replacement primitives)."
 
-	^self instanceSpec anyMask: _IndirectMask!
+	^instanceSpec anyMask: _IndirectMask!
 
 isIndirection: aBoolean
 	"Set/reset the receivers status as an indirect reference (i.e. an
@@ -430,7 +430,7 @@ isMourner
 	"Answer whether instances of the receiver like to grieve 
 	for the loss of their constituents."
 
-	^self instanceSpec anyMask: _MournerMask!
+	^instanceSpec anyMask: _MournerMask!
 
 isNonInstantiable
 	"Answer whether the receiver should not be instantiated, e.g. it is abstract."
@@ -447,7 +447,7 @@ isNullTerminated
 	an extra byte with the value zero at their end, which is not included in the reported size). 
 	Only meaningful for variable byte classes (e.g. String)."
 
-	^self instanceSpec allMask: _NullTermMask!
+	^instanceSpec allMask: _NullTermMask!
 
 isNullTerminated: aBoolean
 	"Set the receivers status as a class of Null Terminated objects
@@ -460,12 +460,12 @@ isPointers
 	"Answer whether the variables of instances of the receiver contain object pointers (as
 	opposed to uninterpreted bytes)."
 
-	^self instanceSpec anyMask: _PointersMask!
+	^instanceSpec anyMask: _PointersMask!
 
 isVariable
 	"Answer whether instances of the receiver can have indexed instance variables."
 
-	^self instanceSpec anyMask: _VariableMask!
+	^instanceSpec anyMask: _VariableMask!
 
 isWords
 	"Answer whether the variables of instances of the receiver are stored as words."
@@ -816,8 +816,6 @@ superclass
 superclass: aClass
 	"Set the superclass of the receiver to be the argument, aClass"
 
-	(aClass isNil or: [aClass isKindOf: Behavior])
-		ifFalse: [self error: 'superclass must be a kind of Behavior'].
 	superclass := aClass!
 
 understoodSelectors

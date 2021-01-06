@@ -14,30 +14,44 @@ Kernel.ClassBuilder comment: ''!
 !Kernel.ClassBuilder categoriesForClass!System-Support! !
 !Kernel.ClassBuilder methodsFor!
 
+allClassVarNamesOf: aClass
+	"Private - Answer an array of the class var names of aClass.
+	The Array will be empty if aClass is nil."
+
+	^aClass isNil ifTrue: [{}] ifFalse: [aClass allClassVarNames]!
+
+allInstVarNamesOf: aClass
+	"Private - Answer an array of the inst var names of aClass.
+	The Array will be empty if aClass is nil."
+
+	^aClass isNil ifTrue: [{}] ifFalse: [aClass allInstVarNames]!
+
 beBytes
 	"Private - Set the class type to variable bytes."
 
-	instanceSpec := self class instanceSpecWithVariableBytes: instanceSpec!
+	instanceSpec := Behavior._VariableMask
+				bitOr: (instanceSpec bitAnd: ##(Behavior._NullTermMask + Behavior._IndirectMask))!
 
 beFixed
 	"Private - Set the class type to pointers containing named instance vars only."
 
-	instanceSpec := self class instanceSpecWithFixedPointers: instanceSpec!
+	instanceSpec := Behavior._PointersMask bitOr: (instanceSpec bitAnd: Behavior._SizeMask)!
 
 beIndirectBytes
 	"Private - Set the class type to indirect bytes."
 
-	instanceSpec := self class instanceSpecWithIndirectBytes!
+	instanceSpec := ##(Behavior._VariableMask + Behavior._IndirectMask)!
 
 beNullTerminatedBytes
 	"Private - Set the class type to null-terminated variable bytes."
 
-	instanceSpec := self class instanceSpecWithNullTerminatedBytes!
+	instanceSpec := ##(Behavior._VariableMask + Behavior._NullTermMask)!
 
 beVariable
 	"Private - Set the class type to indexable pointers and named instance vars."
 
-	instanceSpec := self class instanceSpecWithVariablePointers: instanceSpec!
+	instanceSpec := ##(Behavior._VariableMask + Behavior._PointersMask)
+				bitOr: (instanceSpec bitAnd: Behavior._SizeMask)!
 
 canMutateInSitu
 	"Private - Answer whether the class being modified can be changed without
@@ -51,14 +65,13 @@ canMutateInSitu
 	self superclassIsBeingChanged ifFalse: [^self instanceVariablesAreBeingChanged not].
 
 	"The class is being moved."
-	((self class allInstVarNamesOf: superclass) , self instanceVariables) = currentClass allInstVarNames
+	((self allInstVarNamesOf: superclass) , self instanceVariables) = currentClass allInstVarNames
 		ifFalse: [^false].
-	(self class classOf: superclass) allInstVarNames = currentClass class superclass allInstVarNames
+	(self classOf: superclass) allInstVarNames = currentClass class superclass allInstVarNames
 		ifFalse: [^false].
 	^true!
 
 categories
-	categories isNil ifTrue: [self categoryNames: #('')].
 	^categories!
 
 categories: aCollectionOfClassCategories
@@ -131,6 +144,11 @@ className: aString
 			[className := (path at: len) asSymbol.
 			environment := (BindingReference path: (path copyFrom: 1 to: len - 1) context: Root) value]!
 
+classOf: aClass
+	"Private - Answer the class of aClass or Class if it is nil."
+
+	^aClass ifNil: [Class] ifNotNil: [aClass class]!
+
 classVariables
 	"Private - Answer an Array of proposed class variable names."
 
@@ -169,7 +187,7 @@ createProper
 	receiver's currentClass inst var."
 
 	| metaSuperclass newMetaclass |
-	metaSuperclass := self class classOf: superclass.
+	metaSuperclass := self classOf: superclass.
 	(newMetaclass := Metaclass new)
 		instanceSpec: metaSuperclass instanceSpec;
 		superclass: metaSuperclass.
@@ -194,21 +212,25 @@ currentClass
 	^currentClass!
 
 declareClassVariablesOf: aClass
-	| pool |
-	pool := Dictionary new.
-	classVariables do: 
-			[:each |
-			pool add: ((VariableBinding key: each value: nil)
-						environment: aClass;
-						isClassVariable: true;
-						yourself)].
-	self classConstants do: 
-			[:each |
-			pool add: ((VariableBinding key: each key value: each value)
-						environment: aClass;
-						isClassVariable: true;
-						isConstant: true;
-						yourself)].
+	| pool consts |
+	consts := self classConstants.
+	(classVariables isEmpty and: [consts isEmpty])
+		ifTrue: [pool := nil]
+		ifFalse: 
+			[pool := Dictionary new.
+			classVariables do: 
+					[:each |
+					pool add: ((VariableBinding key: each value: nil)
+								environment: aClass;
+								isClassVariable: true;
+								yourself)].
+			consts do: 
+					[:each |
+					pool add: ((VariableBinding key: each key value: each value)
+								environment: aClass;
+								isClassVariable: true;
+								isConstant: true;
+								yourself)]].
 	aClass basicClassPool: pool!
 
 environment
@@ -234,7 +256,12 @@ fundamentalTypeIsBeingChanged
 	"Private - Answer whether the fundamental class type (ie. Pointers/Bytes, Indexed/Fixed)
 	is being changed."
 
-	^(self class fundamentalTypeOf: instanceSpec) ~~ (self class fundamentalTypeOf: currentClass instanceSpec)			!
+	^(self fundamentalTypeOf: instanceSpec) ~~ (self fundamentalTypeOf: currentClass instanceSpec)			!
+
+fundamentalTypeOf: anInstanceSpec
+	"Private - Answer the combined settings of the isVariable and isPointers flags of anInstanceSpec."
+
+	^anInstanceSpec bitAnd: ##(Behavior._VariableMask + Behavior._PointersMask)!
 
 generateGUID
 	"Private - Generate a GUID for a new class and assign it to that class."
@@ -246,16 +273,16 @@ generateInstanceSpecFor: aClass superclass: aSuperclass
 	and the proposed superclass aSuperclass."
 
 	^aClass == currentClass
-		ifTrue: [
-			self class
+		ifTrue: 
+			[self
 				validateInstanceSpec: instanceSpec
 				size: self instanceVariables size
 				superclass: aSuperclass]
-		ifFalse: [
-			self class
+		ifFalse: 
+			[self
 				validateInstanceSpec: aClass instanceSpec
-				size: aClass instVarNames size 
-				superclass: aSuperclass].!
+				size: aClass instVarNames size
+				superclass: aSuperclass]!
 
 generateMapFrom: oldClass to: newClass
 	"Private - Answer an array with an element corresponding to each named
@@ -295,11 +322,11 @@ imports: anArrayOfBindingReferences
 initialize
 	"Private - Initialize the instance."
 
-	instanceSpec := 0.
-	self beFixed.
+	instanceSpec := Behavior._PointersMask.
 	flags := 0.
 	classVariables := #().
-	environment := Smalltalk!
+	environment := Smalltalk.
+	categories := #()!
 
 initializeCopy: aClassDescriptionCopy fromClass: aClass superclass: aSuperclass
 	"Private - Adjust the invalid inst vars of aClassDescription. Its method
@@ -356,12 +383,15 @@ instanceSpec: anInteger
 
 	instanceSpec := anInteger!
 
+instanceSpecIsBytes: anInstanceSpec
+	"Private - Answer whether anInstanceSpec represents a byte subclass."
+
+	^(anInstanceSpec anyMask: Behavior._PointersMask) not!
+
 instanceVariables
 	"Private - Answer an Array of proposed instance variable names."
 
-	^instanceVariables notNil
-		ifTrue: [instanceVariables]
-		ifFalse: [currentClass isNil ifTrue: [{}] ifFalse: [currentClass instVarNames]]!
+	^instanceVariables ifNil: [currentClass ifNil: [{}] ifNotNil: [currentClass instVarNames]]!
 
 instanceVariables: anInstVarNamesArray
 	"Set the receiver's instanceVariables inst var to anInstVarNamesArray."
@@ -487,10 +517,10 @@ modifyOrCreate
 
 	^self isModifyAction
 		ifFalse: [self createNewClass]
-		ifTrue: [
-			instanceSpec := instanceSpec maskSet: (currentClass instanceSpec 
-											maskClear: Behavior._FundamentalShapeMask).
-			(self class instanceSpecIsBytes: instanceSpec)
+		ifTrue: 
+			[instanceSpec := instanceSpec
+						maskSet: (currentClass instanceSpec maskClear: Behavior._FundamentalShapeMask).
+			(self instanceSpecIsBytes: instanceSpec)
 				ifFalse: [instanceSpec := instanceSpec maskClear: Behavior._BytesSubMask].
 			self modifyExistingClass]!
 
@@ -562,7 +592,7 @@ mutateInSitu
 			reason := 'Recompilation required because of change of superclass from '
 						, currentClass superclass name , ' to '
 						, superclass name.
-			currentClass class setSuperclass: (self class classOf: superclass).
+			currentClass class setSuperclass: (self classOf: superclass).
 			currentClass setSuperclass: superclass.
 			self instanceVariablesAreBeingChanged ifTrue: [self setInstanceVariablesOf: currentClass].
 			self recompilationRequired: true reason: reason]!
@@ -626,7 +656,7 @@ newClassLike: aClass superclass: aSuperclass
 	| newMeta mappingArray newInstanceClass |
 	newMeta := self
 		newMetaclassLike: aClass class
-		superclass: (self class classOf: aSuperclass).
+		superclass: (self classOf: aSuperclass).
 	mappingArray := self generateMapFrom: aClass class to: newMeta.
 	newInstanceClass := self
 		translateInstance: aClass
@@ -810,11 +840,10 @@ validateClassInstanceVars
 	anywhere in the meta-superclass or meta-subclass chain."
 
 	| instVarSet |
-	instVarSet := self class
-		validateInstanceVars: currentClass class instVarNames
-		againstSuperclass: (self class classOf: superclass).
-	currentClass class allSubclasses do: [:cls |
-		cls instVarNames do: [:name | self class validateInstVarName: name using: instVarSet]]!
+	instVarSet := self validateInstanceVars: currentClass class instVarNames
+				againstSuperclass: (self classOf: superclass).
+	currentClass class allSubclasses
+		do: [:cls | cls instVarNames do: [:name | self validateInstVarName: name using: instVarSet]]!
 
 validateClassName
 	"Private - Ensure that the proposed class name is valid."
@@ -822,13 +851,46 @@ validateClassName
 	(self class isValidClassName: className)
 		ifFalse: [self error: ('Invalid class name <1s>' expandMacrosWith: className)]!
 
+validateClassVarName: aString using: aCollection
+	"Private - Ensure that the proposed class variable name is not a
+	reserved word and does not duplicate a name defined in aCollecton."
+
+	| first |
+	(self class isValidIdentifier: aString)
+		ifFalse: 
+			[self
+				error: ('Proposed class variable <1p> is invalid as a local identifier.' expandMacrosWith: aString)].
+	(aCollection includes: aString)
+		ifTrue: [self error: ('Proposed class variable <1p> is multiply defined.' expandMacrosWith: aString)].
+	first := aString first.
+	(first isUppercase or: [first == $_]) ifTrue: [^self].
+	Warning new
+		isSuppressible: true;
+		signal: ('Proposed class variable <1p> should start with an uppercase letter.'
+					expandMacrosWith: aString)!
+
+validateClassVars: classVarsArray againstSuperclass: aClass
+	"Private - Ensure that the proposed class variable name list does not
+	contain a reserved word or a duplicate name defined either in the list
+	itself or anywhere in the proposed superclass chain.
+	Answer a Set of the existing and proposed class vars of the class and its
+	superclasses."
+
+	| classVarSet |
+	classVarSet := (self allClassVarNamesOf: aClass) asSet.
+	classVarsArray do: [:classVar |
+		self validateClassVarName: classVar using: classVarSet.
+		classVarSet add: classVar].
+	^classVarSet
+!
+
 validateClassVarsForCreate
 	"Private - Ensure that the proposed class variable name list does not
 	contain a reserved word or a duplicate name defined either in the list
 	itself or anywhere in the proposed superclass chain."
 
 	classVariables isEmpty
-		ifFalse: [self class validateClassVars: self classVariables againstSuperclass: superclass]!
+		ifFalse: [self validateClassVars: self classVariables againstSuperclass: superclass]!
 
 validateClassVarsForModify
 	"Private - Ensure that the proposed class variable name list does not
@@ -836,9 +898,9 @@ validateClassVarsForModify
 	itself or anywhere in the proposed superclass or subclass chain."
 
 	| classVarSet |
-	classVarSet := self class validateClassVars: self classVariables againstSuperclass: superclass.
+	classVarSet := self validateClassVars: self classVariables againstSuperclass: superclass.
 	currentClass allSubclasses
-		do: [:cls | cls classBindingNames do: [:name | self class validateClassVarName: name using: classVarSet]]!
+		do: [:cls | cls classBindingNames do: [:name | self validateClassVarName: name using: classVarSet]]!
 
 validateForCreate
 	"Private - Ensure that the proposed class creation would result in a valid new class."
@@ -890,7 +952,9 @@ validateForRename
 validateImports
 	"Private - Ensure that the proposed imports exist in the environment and ensure they are of canonical form."
 
-	imports := self imports collect: 
+	imports := self imports.
+	imports isEmpty ifTrue: [^self].
+	imports := imports collect: 
 					[:each |
 					| namespace fullRef private |
 					each isString
@@ -905,7 +969,8 @@ validateImports
 							[namespace := fullRef value.
 							namespace class isMeta ifFalse: [self error: 'Invalid import: ' , each printString]]
 						ifFalse: 
-							[Warning signal: ('Imported namespace <1p> does not currently exist.' expandMacrosWith: fullRef asString).
+							[Warning
+								signal: ('Imported namespace <1p> does not currently exist.' expandMacrosWith: fullRef asString).
 							namespace := fullRef asSymbol].
 					namespace asQualifiedReference
 						isPrivate: private;
@@ -914,10 +979,41 @@ validateImports
 validateInstanceSpec
 	"Private - Validate and complete the instanceSpec inst var."
 
-	instanceSpec := self class
-		validateInstanceSpec: instanceSpec
-		size: self instanceVariables size
-		superclass: superclass.!
+	instanceSpec := self
+				validateInstanceSpec: instanceSpec
+				size: self instanceVariables size
+				superclass: superclass!
+
+validateInstanceSpec: anInstanceSpec size: anInteger superclass: proposedSuperclass
+	"Private - Validate the proposed instance spec, fixed size and superclass and answer a completed instance spec."
+
+	| spec fundamentalType fixedSize |
+	spec := anInstanceSpec bitAnd: ##(Behavior._SizeMask bitInvert).
+	fundamentalType := self fundamentalTypeOf: spec.
+	spec := fundamentalType == Behavior._VariableMask
+				ifTrue: 
+					[self
+						validateSpecAsVariableBytes: spec
+						size: anInteger
+						superclass: proposedSuperclass]
+				ifFalse: 
+					[fundamentalType == Behavior._PointersMask
+						ifTrue: 
+							[self
+								validateSpecAsFixedPointers: spec
+								size: anInteger
+								superclass: proposedSuperclass]
+						ifFalse: 
+							[self
+								validateSpecAsVariablePointers: spec
+								size: anInteger
+								superclass: proposedSuperclass]].
+	fixedSize := anInteger + (proposedSuperclass ifNil: [0] ifNotNil: [proposedSuperclass instSize]).
+	fixedSize > Behavior._SizeMask
+		ifTrue: 
+			[self error: ('Classes are allowed a maximum of <1p> instance variables.'
+						expandMacrosWith: Behavior._SizeMask)].
+	^spec bitOr: fixedSize!
 
 validateInstanceSpecForModify
 	"Private - Validate the instanceSpec for a class modification."
@@ -926,14 +1022,29 @@ validateInstanceSpecForModify
 	(self fundamentalTypeIsBeingChanged and: [currentClass isMeta not and: [self isFixedType]])
 		ifTrue: [self error: ('You may not change the subclass type of <1p>' expandMacrosWith: currentClass)]!
 
+validateInstanceVars: instVarsArray againstSuperclass: aClass
+	"Private - Ensure that the proposed instance variable name list does not
+	contain a reserved word or a duplicate name defined either in the list
+	itself or anywhere in the proposed superclass chain.
+	Answer a Set of the existing and proposed inst vars of the class and its
+	superclasses."
+
+	| instVarSet |
+	instVarSet := (self allInstVarNamesOf: aClass) asSet.
+	instVarsArray do: [:instVar |
+		self validateInstVarName: instVar using: instVarSet.
+		instVarSet add: instVar].
+	^instVarSet
+!
+
 validateInstanceVarsForCreate
 	"Private - Ensure that the proposed instance variable name list does not
 	contain a reserved word or a duplicate name defined either in the list
 	itself or anywhere in the proposed superclass chain."
 
-	self class
-		validateInstanceVars: self instanceVariables
-		againstSuperclass: superclass!
+	| vars |
+	vars := self instanceVariables.
+	vars isEmpty ifFalse: [self validateInstanceVars: vars againstSuperclass: superclass]!
 
 validateInstanceVarsForModify
 	"Private - Ensure that the proposed instance variable name list does not contain a reserved
@@ -942,7 +1053,7 @@ validateInstanceVarsForModify
 
 	| instVarSet proposedInstVarArray |
 	proposedInstVarArray := self instanceVariables.
-	instVarSet := self class validateInstanceVars: proposedInstVarArray againstSuperclass: superclass.
+	instVarSet := self validateInstanceVars: proposedInstVarArray againstSuperclass: superclass.
 	currentClass isMeta
 		ifFalse: 
 			[(self isFixedLayout and: [currentClass instVarNames ~= proposedInstVarArray])
@@ -953,7 +1064,69 @@ validateInstanceVarsForModify
 					existing notEmpty and: [(proposedInstVarArray indexOfSubCollection: currentClass instVarNames) ~~ 1]])
 				ifTrue: [self error: 'New inst vars must come after those already in ' , currentClass name]].
 	currentClass allSubclasses
-		do: [:cls | cls instVarNames do: [:name | self class validateInstVarName: name using: instVarSet]]!
+		do: [:cls | cls instVarNames do: [:name | self validateInstVarName: name using: instVarSet]]!
+
+validateInstVarName: aString using: aCollection
+	"Private - Ensure that the proposed instance variable name is not a
+	reserved word and does not duplicate a name defined in aColecton."
+
+	(self class isValidIdentifier: aString)
+		ifFalse: 
+			[self
+				error: ('Proposed instance variable <1p> is invalid as a local identifier.' expandMacrosWith: aString)].
+	(aCollection includes: aString)
+		ifTrue: 
+			[self error: ('Proposed instance variable <1p> is multiply defined.' expandMacrosWith: aString)]!
+
+validateSpecAsFixedPointers: spec size: anInteger superclass: proposedSuperclass
+	"Private - Answer a validated instance spec. Signal an exception if spec is
+	invalid as a fixed size pointer subclass of proposedSuperclass."
+
+	proposedSuperclass notNil
+		ifTrue: 
+			[proposedSuperclass isPointers
+				ifFalse: 
+					[self
+						validateSpecAsVariablePointers: spec
+						size: anInteger
+						superclass: proposedSuperclass].
+			proposedSuperclass isVariable
+				ifTrue: [self error: 'Subclasses of an indexed class must also be indexed.']].
+	^spec!
+
+validateSpecAsVariableBytes: spec size: anInteger superclass: proposedSuperclass
+	"Private - Answer a validated instance spec possibly containing indirect or
+	nullTerminated bits inherited from the proposedSuperclass. Signal an exception
+	if spec is invalid as a variable byte subclass of proposedSuperclass."
+
+	| inheritedFlags validatedSpec |
+	inheritedFlags := ##(Behavior._IndirectMask + Behavior._NullTermMask).
+	validatedSpec := spec.
+	proposedSuperclass notNil
+		ifTrue: [
+			proposedSuperclass instSize > 0
+				ifTrue: [self error: 'A byte subclass may not derive from a class containing named instance variables'].
+			(proposedSuperclass isPointers and: [proposedSuperclass isVariable])
+				ifTrue: [self error: 'A byte subclass may not derive from a class containing indexed instance variables'].
+			validatedSpec := validatedSpec bitOr: (inheritedFlags bitAnd: proposedSuperclass instanceSpec)].
+
+	(validatedSpec allMask: inheritedFlags)
+		ifTrue: [self error: 'A byte subclass may not be both indirect and null-terminated.'].
+	anInteger > 0
+		ifTrue: [self error: 'A byte subclass may not contain named instance variables.'].
+	^validatedSpec!
+
+validateSpecAsVariablePointers: spec size: anInteger superclass: proposedSuperclass
+	"Private - Answer a validated instance spec. Signal an exception if spec is
+	invalid as a variable subclass of proposedSuperclass."
+
+	(proposedSuperclass notNil and: [proposedSuperclass isBytes])
+		ifTrue: [self error: 'A subclass containing pointers may not derive from a class containing bytes.'].
+	(spec anyMask: Behavior._IndirectMask)
+		ifTrue: [self error: 'Indirect subclasses must contain bytes.'].
+	(spec anyMask: Behavior._NullTermMask)
+		ifTrue: [self error: 'Null-terminated subclasses must contain bytes.'].
+	^spec!
 
 validateSubclassesOf: aClass againstInstanceSpec: instSpec
 	"Private - Ensure that if the proposed change to the instance spec of aClass
@@ -964,11 +1137,11 @@ validateSubclassesOf: aClass againstInstanceSpec: instSpec
 	aClass subclassesDo: 
 			[:cls |
 			| validatedInstSpec |
-			validatedInstSpec := self class
+			validatedInstSpec := self
 						validateInstanceSpec: cls instanceSpec
 						size: cls instVarNames size
 						superclass: dummyClass.
-			(self class fundamentalTypeOf: validatedInstSpec) = (self class fundamentalTypeOf: cls instanceSpec)
+			(self fundamentalTypeOf: validatedInstSpec) = (self fundamentalTypeOf: cls instanceSpec)
 				ifFalse: [self validateSubclassesOf: cls againstInstanceSpec: validatedInstSpec]]!
 
 validateSubclassInstanceSpecs
@@ -1009,8 +1182,10 @@ validateSuperclassIsSubclassable
 
 	superclass notNil
 		ifTrue: 
-			[((superclass isKindOf: Class) not or: [Unsubclassable includes: superclass])
+			[(superclass class isMeta not or: [Unsubclassable includes: superclass])
 				ifTrue: [self error: 'Proposed superclass is not subclassable.']]! !
+!Kernel.ClassBuilder categoriesFor: #allClassVarNamesOf:!helpers!private! !
+!Kernel.ClassBuilder categoriesFor: #allInstVarNamesOf:!helpers!private! !
 !Kernel.ClassBuilder categoriesFor: #beBytes!class type!private! !
 !Kernel.ClassBuilder categoriesFor: #beFixed!class type!private! !
 !Kernel.ClassBuilder categoriesFor: #beIndirectBytes!class type!private! !
@@ -1027,6 +1202,7 @@ validateSuperclassIsSubclassable
 !Kernel.ClassBuilder categoriesFor: #classConstants!accessing!public! !
 !Kernel.ClassBuilder categoriesFor: #classConstants:!accessing!public! !
 !Kernel.ClassBuilder categoriesFor: #className:!accessing!private! !
+!Kernel.ClassBuilder categoriesFor: #classOf:!helpers!private! !
 !Kernel.ClassBuilder categoriesFor: #classVariables!class variables!private! !
 !Kernel.ClassBuilder categoriesFor: #classVariables:!class variables!public! !
 !Kernel.ClassBuilder categoriesFor: #classVariableString:!class variables!public! !
@@ -1039,6 +1215,7 @@ validateSuperclassIsSubclassable
 !Kernel.ClassBuilder categoriesFor: #environment:!accessing!public! !
 !Kernel.ClassBuilder categoriesFor: #errorInvalidRemove:!exceptions!private! !
 !Kernel.ClassBuilder categoriesFor: #fundamentalTypeIsBeingChanged!private!testing! !
+!Kernel.ClassBuilder categoriesFor: #fundamentalTypeOf:!class type!private! !
 !Kernel.ClassBuilder categoriesFor: #generateGUID!operations!private! !
 !Kernel.ClassBuilder categoriesFor: #generateInstanceSpecFor:superclass:!class type!private! !
 !Kernel.ClassBuilder categoriesFor: #generateMapFrom:to:!mutating!private! !
@@ -1053,6 +1230,7 @@ validateSuperclassIsSubclassable
 !Kernel.ClassBuilder categoriesFor: #installNewClass!environment!private! !
 !Kernel.ClassBuilder categoriesFor: #instanceShapeIsBeingChanged!private!testing! !
 !Kernel.ClassBuilder categoriesFor: #instanceSpec:!class type!private! !
+!Kernel.ClassBuilder categoriesFor: #instanceSpecIsBytes:!class type!private! !
 !Kernel.ClassBuilder categoriesFor: #instanceVariables!instance variables!private! !
 !Kernel.ClassBuilder categoriesFor: #instanceVariables:!instance variables!public! !
 !Kernel.ClassBuilder categoriesFor: #instanceVariablesAreBeingChanged!private!testing! !
@@ -1094,6 +1272,8 @@ validateSuperclassIsSubclassable
 !Kernel.ClassBuilder categoriesFor: #validateClassForRename!private!validation! !
 !Kernel.ClassBuilder categoriesFor: #validateClassInstanceVars!private!validation! !
 !Kernel.ClassBuilder categoriesFor: #validateClassName!private!validation! !
+!Kernel.ClassBuilder categoriesFor: #validateClassVarName:using:!private!validation! !
+!Kernel.ClassBuilder categoriesFor: #validateClassVars:againstSuperclass:!private!validation! !
 !Kernel.ClassBuilder categoriesFor: #validateClassVarsForCreate!private!validation! !
 !Kernel.ClassBuilder categoriesFor: #validateClassVarsForModify!private!validation! !
 !Kernel.ClassBuilder categoriesFor: #validateForCreate!private!validation! !
@@ -1102,9 +1282,15 @@ validateSuperclassIsSubclassable
 !Kernel.ClassBuilder categoriesFor: #validateForRename!private!validation! !
 !Kernel.ClassBuilder categoriesFor: #validateImports!private!validation! !
 !Kernel.ClassBuilder categoriesFor: #validateInstanceSpec!private!validation! !
+!Kernel.ClassBuilder categoriesFor: #validateInstanceSpec:size:superclass:!private!validation! !
 !Kernel.ClassBuilder categoriesFor: #validateInstanceSpecForModify!private!validation! !
+!Kernel.ClassBuilder categoriesFor: #validateInstanceVars:againstSuperclass:!private!validation! !
 !Kernel.ClassBuilder categoriesFor: #validateInstanceVarsForCreate!private!validation! !
 !Kernel.ClassBuilder categoriesFor: #validateInstanceVarsForModify!private!validation! !
+!Kernel.ClassBuilder categoriesFor: #validateInstVarName:using:!private!validation! !
+!Kernel.ClassBuilder categoriesFor: #validateSpecAsFixedPointers:size:superclass:!private!validation! !
+!Kernel.ClassBuilder categoriesFor: #validateSpecAsVariableBytes:size:superclass:!private!validation! !
+!Kernel.ClassBuilder categoriesFor: #validateSpecAsVariablePointers:size:superclass:!private!validation! !
 !Kernel.ClassBuilder categoriesFor: #validateSubclassesOf:againstInstanceSpec:!private!validation! !
 !Kernel.ClassBuilder categoriesFor: #validateSubclassInstanceSpecs!private!validation! !
 !Kernel.ClassBuilder categoriesFor: #validateSuperclassChainForCreate!private!validation! !
@@ -1113,23 +1299,6 @@ validateSuperclassIsSubclassable
 !Kernel.ClassBuilder categoriesFor: #validateSuperclassIsSubclassable!private!validation! !
 
 !Kernel.ClassBuilder class methodsFor!
-
-allClassVarNamesOf: aClass
-	"Private - Answer an array of the class var names of aClass.
-	The Array will be empty if aClass is nil."
-
-	^aClass isNil ifTrue: [{}] ifFalse: [aClass allClassVarNames]!
-
-allInstVarNamesOf: aClass
-	"Private - Answer an array of the inst var names of aClass.
-	The Array will be empty if aClass is nil."
-
-	^aClass isNil ifTrue: [{}] ifFalse: [aClass allInstVarNames]!
-
-classOf: aClass
-	"Private - Answer the class of aClass or Class if it is nil."
-
-	^aClass ifNil: [Class] ifNotNil: [aClass class]!
 
 forModifying: aClass
 	"Answer a new instance of the receiver set up to modify the <Class>, aClass.
@@ -1150,18 +1319,13 @@ forModifying: aClass
 				classConstants: aClass classConstants].
 	^builder!
 
-fundamentalTypeOf: anInstanceSpec
-	"Private - Answer the combined settings of the isVariable and isPointers flags of anInstanceSpec."
-
-	^anInstanceSpec bitAnd: Behavior._VariableMask + Behavior._PointersMask!
-
 initialize
 	"Initialize the receiver's class variables.
 		ClassBuilder initialize
 	"
 
 	self addClassConstant: 'Unsubclassable'
-		value: ({Character. SmallInteger} asSet
+		value: ({Character. SmallInteger} asIdentitySet
 				isImmutable: true;
 				yourself).
 	self addClassConstant: 'FixedLayout'
@@ -1191,51 +1355,6 @@ initialize
 				VariableBinding} asSet
 				isImmutable: true;
 				yourself)!
-
-instanceSpecIsBytes: anInstanceSpec
-	"Private - Answer whether anInstanceSpec represents a byte subclass."
-
-	^(anInstanceSpec anyMask: Behavior._PointersMask) not!
-
-instanceSpecWithFixedPointers: anInteger
-	"Private - Answer an instance spec based on anInteger but adjusted to represent instances
-	containing named instance vars only."
-
-	^Core.Behavior._PointersMask bitOr: (anInteger bitAnd: Core.Behavior._SizeMask)!
-
-instanceSpecWithIndirectBytes
-	"Private - Answer an instance spec to represent instances with no named instances variables,
-	made of indexable bytes and interpreted by certain system primitives as an indirection to
-	other data."
-
-	^Behavior._VariableMask + Behavior._IndirectMask!
-
-instanceSpecWithNullTerminatedBytes
-	"Private - Answer an instance spec to represent instances with no named instances variables,
-	made of indexable bytes and terminated by an extra byte initialized to null."
-
-	^Behavior._VariableMask + Behavior._NullTermMask!
-
-instanceSpecWithVariableBytes: anInteger
-	"Private - Answer an instance spec based on anInteger but adjusted to represent instances
-	with no named instances variables and made of indexable bytes."
-
-	^Behavior._VariableMask
-		bitOr: (anInteger bitAnd: Behavior._NullTermMask + Behavior._IndirectMask)!
-
-instanceSpecWithVariablePointers: anInteger
-	"Private - Answer an instance spec based on anInteger but adjusted to represent instances
-	containing indexable pointers with or without named instance vars."
-
-	^Behavior._VariableMask + Behavior._PointersMask
-		bitOr: (anInteger bitAnd: Behavior._SizeMask)!
-
-instSizeOf: aClass
-	"Private - Answer the fixed size of aClass or zero if it is nil."
-
-	^aClass isNil
-		ifTrue: [0]
-		ifFalse: [aClass instSize]!
 
 invalidRemoveError
 	"Answer the <exceptionSelector> that can be used to catch <Exception>s raised by the receiver
@@ -1310,159 +1429,9 @@ renameClass: aClass to: aString
 	self new
 		class: aClass;
 		className: aString;
-		rename!
-
-validateClassVarName: aString using: aCollection
-	"Private - Ensure that the proposed class variable name is not a
-	reserved word and does not duplicate a name defined in aCollecton."
-
-	| first |
-	(self isValidIdentifier: aString)
-		ifFalse: 
-			[self
-				error: ('Proposed class variable <1p> is invalid as a local identifier.' expandMacrosWith: aString)].
-	(aCollection includes: aString)
-		ifTrue: [self error: ('Proposed class variable <1p> is multiply defined.' expandMacrosWith: aString)].
-	first := aString first.
-	(first isUppercase or: [first == $_]) ifTrue: [^self].
-	Warning new
-		isSuppressible: true;
-		signal: ('Proposed class variable <1p> should start with an uppercase letter.'
-					expandMacrosWith: aString)!
-
-validateClassVars: classVarsArray againstSuperclass: aClass
-	"Private - Ensure that the proposed class variable name list does not
-	contain a reserved word or a duplicate name defined either in the list
-	itself or anywhere in the proposed superclass chain.
-	Answer a Set of the existing and proposed class vars of the class and its
-	superclasses."
-
-	| classVarSet |
-	classVarSet := (self allClassVarNamesOf: aClass) asSet.
-	classVarsArray do: [:classVar |
-		self validateClassVarName: classVar using: classVarSet.
-		classVarSet add: classVar].
-	^classVarSet
-!
-
-validateInstanceSpec: anInstanceSpec size: anInteger superclass: proposedSuperclass
-	"Private - Validate the proposed instance spec, fixed size and superclass
-	and answer a completed instance spec."
-
-	| spec fundamentalType fixedSize |
-	spec := anInstanceSpec bitAnd: Behavior._SizeMask bitInvert.
-	fundamentalType := self fundamentalTypeOf: spec.
-	fundamentalType = Behavior._VariableMask
-		ifTrue: 
-			[spec := self
-						validateSpecAsVariableBytes: spec
-						size: anInteger
-						superclass: proposedSuperclass].
-	fundamentalType = Behavior._PointersMask
-		ifTrue: 
-			[spec := self
-						validateSpecAsFixedPointers: spec
-						size: anInteger
-						superclass: proposedSuperclass].
-	fundamentalType = (Behavior._VariableMask + Behavior._PointersMask)
-		ifTrue: 
-			[spec := self
-						validateSpecAsVariablePointers: spec
-						size: anInteger
-						superclass: proposedSuperclass].
-	fixedSize := anInteger + (self instSizeOf: proposedSuperclass).
-	fixedSize > Behavior._SizeMask
-		ifTrue: 
-			[self error: ('Classes are allowed a maximum of <1p> instance variables.'
-						expandMacrosWith: Behavior._SizeMask)].
-	^spec bitOr: fixedSize!
-
-validateInstanceVars: instVarsArray againstSuperclass: aClass
-	"Private - Ensure that the proposed instance variable name list does not
-	contain a reserved word or a duplicate name defined either in the list
-	itself or anywhere in the proposed superclass chain.
-	Answer a Set of the existing and proposed inst vars of the class and its
-	superclasses."
-
-	| instVarSet |
-	instVarSet := (self allInstVarNamesOf: aClass) asSet.
-	instVarsArray do: [:instVar |
-		self validateInstVarName: instVar using: instVarSet.
-		instVarSet add: instVar].
-	^instVarSet
-!
-
-validateInstVarName: aString using: aCollection
-	"Private - Ensure that the proposed instance variable name is not a
-	reserved word and does not duplicate a name defined in aColecton."
-
-	(self isValidIdentifier: aString)
-		ifFalse: 
-			[self
-				error: ('Proposed instance variable <1p> is invalid as a local identifier.' expandMacrosWith: aString)].
-	(aCollection includes: aString)
-		ifTrue: 
-			[self error: ('Proposed instance variable <1p> is multiply defined.' expandMacrosWith: aString)]!
-
-validateSpecAsFixedPointers: spec size: anInteger superclass: proposedSuperclass
-	"Private - Answer a validated instance spec. Signal an exception if spec is
-	invalid as a fixed size pointer subclass of proposedSuperclass."
-
-	proposedSuperclass notNil
-		ifTrue: [
-			proposedSuperclass isBytes
-				ifTrue: [self validateSpecAsVariablePointers: spec size: anInteger superclass: proposedSuperclass].
-			proposedSuperclass isVariable
-				ifTrue: [self error: 'Subclasses of an indexed class must also be indexed.']].
-	^spec
-!
-
-validateSpecAsVariableBytes: spec size: anInteger superclass: proposedSuperclass
-	"Private - Answer a validated instance spec possibly containing indirect or
-	nullTerminated bits inherited from the proposedSuperclass. Signal an exception
-	if spec is invalid as a variable byte subclass of proposedSuperclass."
-
-	| inheritedFlags validatedSpec |
-	inheritedFlags := Behavior._IndirectMask + Behavior._NullTermMask.
-	validatedSpec := spec.
-	proposedSuperclass notNil
-		ifTrue: [
-			proposedSuperclass instSize > 0
-				ifTrue: [self error: 'A byte subclass may not derive from a class containing named instance variables'].
-			(proposedSuperclass isPointers and: [proposedSuperclass isVariable])
-				ifTrue: [self error: 'A byte subclass may not derive from a class containing indexed instance variables'].
-			validatedSpec := validatedSpec bitOr: (inheritedFlags bitAnd: proposedSuperclass instanceSpec)].
-
-	(validatedSpec allMask: inheritedFlags)
-		ifTrue: [self error: 'A byte subclass may not be both indirect and null-terminated.'].
-	anInteger > 0
-		ifTrue: [self error: 'A byte subclass may not contain named instance variables.'].
-	^validatedSpec!
-
-validateSpecAsVariablePointers: spec size: anInteger superclass: proposedSuperclass
-	"Private - Answer a validated instance spec. Signal an exception if spec is
-	invalid as a variable subclass of proposedSuperclass."
-
-	(proposedSuperclass notNil and: [proposedSuperclass isBytes])
-		ifTrue: [self error: 'A subclass containing pointers may not derive from a class containing bytes.'].
-	(spec anyMask: Behavior._IndirectMask)
-		ifTrue: [self error: 'Indirect subclasses must contain bytes.'].
-	(spec anyMask: Behavior._NullTermMask)
-		ifTrue: [self error: 'Null-terminated subclasses must contain bytes.'].
-	^spec! !
-!Kernel.ClassBuilder class categoriesFor: #allClassVarNamesOf:!helpers!private! !
-!Kernel.ClassBuilder class categoriesFor: #allInstVarNamesOf:!helpers!private! !
-!Kernel.ClassBuilder class categoriesFor: #classOf:!helpers!private! !
+		rename! !
 !Kernel.ClassBuilder class categoriesFor: #forModifying:!instance creation!public! !
-!Kernel.ClassBuilder class categoriesFor: #fundamentalTypeOf:!class type!private! !
 !Kernel.ClassBuilder class categoriesFor: #initialize!development!initializing!public! !
-!Kernel.ClassBuilder class categoriesFor: #instanceSpecIsBytes:!class type!private! !
-!Kernel.ClassBuilder class categoriesFor: #instanceSpecWithFixedPointers:!class type!private! !
-!Kernel.ClassBuilder class categoriesFor: #instanceSpecWithIndirectBytes!class type!private! !
-!Kernel.ClassBuilder class categoriesFor: #instanceSpecWithNullTerminatedBytes!class type!private! !
-!Kernel.ClassBuilder class categoriesFor: #instanceSpecWithVariableBytes:!class type!private! !
-!Kernel.ClassBuilder class categoriesFor: #instanceSpecWithVariablePointers:!class type!private! !
-!Kernel.ClassBuilder class categoriesFor: #instSizeOf:!helpers!private! !
 !Kernel.ClassBuilder class categoriesFor: #invalidRemoveError!constants!private! !
 !Kernel.ClassBuilder class categoriesFor: #isFixedLayout:!enquiries!public! !
 !Kernel.ClassBuilder class categoriesFor: #isValidClassName:!private!testing! !
@@ -1474,12 +1443,4 @@ validateSpecAsVariablePointers: spec size: anInteger superclass: proposedSupercl
 !Kernel.ClassBuilder class categoriesFor: #removeClass:!operations!public! !
 !Kernel.ClassBuilder class categoriesFor: #removeClass:ignoreInstances:!operations!public! !
 !Kernel.ClassBuilder class categoriesFor: #renameClass:to:!operations!public! !
-!Kernel.ClassBuilder class categoriesFor: #validateClassVarName:using:!private!validation! !
-!Kernel.ClassBuilder class categoriesFor: #validateClassVars:againstSuperclass:!private!validation! !
-!Kernel.ClassBuilder class categoriesFor: #validateInstanceSpec:size:superclass:!private!validation! !
-!Kernel.ClassBuilder class categoriesFor: #validateInstanceVars:againstSuperclass:!private!validation! !
-!Kernel.ClassBuilder class categoriesFor: #validateInstVarName:using:!private!validation! !
-!Kernel.ClassBuilder class categoriesFor: #validateSpecAsFixedPointers:size:superclass:!private!validation! !
-!Kernel.ClassBuilder class categoriesFor: #validateSpecAsVariableBytes:size:superclass:!private!validation! !
-!Kernel.ClassBuilder class categoriesFor: #validateSpecAsVariablePointers:size:superclass:!private!validation! !
 

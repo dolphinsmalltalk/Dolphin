@@ -449,7 +449,7 @@ fullName
 	"Answer the <String> fully qualified name of the receiver, which is a dot-separated path that binds to the receiver from the global namespace, Root.
 	Note that these names will also be bindable within the legacy Smalltalk namespace, because it is itself an immediate child of root, and so any of its siblings is bindable using that sibling's unqualified name."
 
-	^'a subclass of ' , (superclass ifNil: ['nil'] ifNotNil: [superclass fullName])!
+	^'a subclass of ' , superclass fullName!
 
 fullyQualifiedReference
 	"Answer a <BindingReference> that represents a fully qualified reference to the receiver relative to Smalltalk. If the Class is not in the hierarchy below Smalltalk (i.e. it is in Root, or another namespace hierarchy under Root), then it will be an absolute binding reference."
@@ -868,7 +868,7 @@ setInstanceVariables: aCollection
 	"Private - Set the instance variable string of the receiver to be the list
 	of names in aCollection, separated by spaces."
 
-	instanceVariables := aCollection notEmpty ifTrue: [aCollection asArray]!
+	instanceVariables := aCollection isEmpty ifFalse: [aCollection asArray]!
 
 setShapeFlags: anIntegerMask to: aBoolean
 	"Private - Set/Reset the receivers shape/structure flags (as defined by anIntegerMask)

@@ -44,6 +44,11 @@ displayOn: aPuttableStream
 	"Append to the <puttableStream> argument a String whose characters are a representation of the receiver that an end-user might want to see.
 	The default is to do nothing, since, from the end-user perspective, the receiver is a null."!
 
+fullName
+	"Answer the <String> fully qualified name of the receiver, which is a dot-separated path that binds to the receiver from the global namespace, Root."
+
+	^'nil'!
+
 ifNil: nilBlock 
 	"As the receiver is the nil object, answer the result of evaluating the <niladicValuable>,
 	nilBlock."
@@ -189,6 +194,7 @@ yourAddress
 !Core.UndefinedObject categoriesFor: #bindingFor:!binding!public! !
 !Core.UndefinedObject categoriesFor: #deepCopy!copying!public! !
 !Core.UndefinedObject categoriesFor: #displayOn:!displaying!public! !
+!Core.UndefinedObject categoriesFor: #fullName!accessing!public! !
 !Core.UndefinedObject categoriesFor: #ifNil:!control flow!public! !
 !Core.UndefinedObject categoriesFor: #ifNil:ifNotNil:!control flow!public! !
 !Core.UndefinedObject categoriesFor: #ifNotNil:!control flow!public! !
