@@ -559,8 +559,9 @@ visitExternalArgTypeNode: anStExternalArgTypeNode
 				ifNotNil: 
 					[:static |
 					| structClass |
-					structClass := static binding value.
-					(structClass class isMeta and: [structClass isBytes or: [structClass instSize >= 1]])
+					(static isStaticVariable and: 
+							[structClass := static binding value.
+							structClass class isMeta and: [structClass isBytes or: [structClass instSize >= 1]]])
 						ifTrue: 
 							[| indirections |
 							indirections := anStExternalArgTypeNode indirections.
@@ -583,7 +584,7 @@ visitExternalArgTypeNode: anStExternalArgTypeNode
 							[self
 								signalError: CErrInvalidStructArg
 								forNode: anStExternalArgTypeNode
-								extra: structClass]]].
+								extra: structVar]]].
 	^super visitExternalArgTypeNode: anStExternalArgTypeNode!
 
 visitExternalCallNode: anStExternalCallNode
