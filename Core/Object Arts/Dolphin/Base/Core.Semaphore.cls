@@ -45,11 +45,11 @@ critical: aBlock
 	assigned into the return value holder."
 
 	| retHolder |
-	retHolder := Array new: 1.
+	retHolder := {OS.Win32Constants.WAIT_FAILED}.
 	^
 	[self wait: OS.Win32Constants.INFINITE ret: retHolder.
 	aBlock value]
-			ensure: [(retHolder basicAt: 1) == OS.Win32Constants.WAIT_OBJECT_0 ifTrue: [self signal]]!
+			ensure: [(retHolder at: 1) == OS.Win32Constants.WAIT_OBJECT_0 ifTrue: [self signal]]!
 
 critical: aBlock atPriority: anInteger
 	"Evaluate aBlock as a critical section - i.e. aBlock is evaluated only when
