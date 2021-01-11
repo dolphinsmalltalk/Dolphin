@@ -215,7 +215,7 @@ public:
 	States beUnwinding();
 	States beUnwound();
 	// This is only a point in time indication - not thread safe
-	bool IsInCall() { return m_state >= States::Pending; }
+	bool IsInCall() const { return m_state >= States::Pending; }
 
 private:
 	///////////////////////////////////////////////////////////////////////////
