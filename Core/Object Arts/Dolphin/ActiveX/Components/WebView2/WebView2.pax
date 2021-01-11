@@ -1,0 +1,486 @@
+﻿| package |
+package := Package name: 'WebView2'.
+package paxVersion: 2.1;
+	basicComment: ''.
+
+
+package setClassNames: #(
+	#{WebView2}
+	#{WebView2.COREWEBVIEW2_PHYSICAL_KEY_STATUS}
+	#{WebView2.EventRegistrationToken}
+	#{WebView2.ICoreWebView2}
+	#{WebView2.ICoreWebView2AcceleratorKeyPressedEventArgs}
+	#{WebView2.ICoreWebView2AcceleratorKeyPressedEventHandler}
+	#{WebView2.ICoreWebView2AddScriptToExecuteOnDocumentCreatedCompletedHandler}
+	#{WebView2.ICoreWebView2CallDevToolsProtocolMethodCompletedHandler}
+	#{WebView2.ICoreWebView2CapturePreviewCompletedHandler}
+	#{WebView2.ICoreWebView2ContainsFullScreenElementChangedEventHandler}
+	#{WebView2.ICoreWebView2ContentLoadingEventArgs}
+	#{WebView2.ICoreWebView2ContentLoadingEventHandler}
+	#{WebView2.ICoreWebView2Controller}
+	#{WebView2.ICoreWebView2CreateCoreWebView2ControllerCompletedHandler}
+	#{WebView2.ICoreWebView2CreateCoreWebView2EnvironmentCompletedHandler}
+	#{WebView2.ICoreWebView2Deferral}
+	#{WebView2.ICoreWebView2DevToolsProtocolEventReceivedEventArgs}
+	#{WebView2.ICoreWebView2DevToolsProtocolEventReceivedEventHandler}
+	#{WebView2.ICoreWebView2DevToolsProtocolEventReceiver}
+	#{WebView2.ICoreWebView2DocumentTitleChangedEventHandler}
+	#{WebView2.ICoreWebView2Environment}
+	#{WebView2.ICoreWebView2EnvironmentOptions}
+	#{WebView2.ICoreWebView2ExecuteScriptCompletedHandler}
+	#{WebView2.ICoreWebView2FocusChangedEventHandler}
+	#{WebView2.ICoreWebView2HistoryChangedEventHandler}
+	#{WebView2.ICoreWebView2HttpHeadersCollectionIterator}
+	#{WebView2.ICoreWebView2HttpRequestHeaders}
+	#{WebView2.ICoreWebView2HttpResponseHeaders}
+	#{WebView2.ICoreWebView2MoveFocusRequestedEventArgs}
+	#{WebView2.ICoreWebView2MoveFocusRequestedEventHandler}
+	#{WebView2.ICoreWebView2NavigationCompletedEventArgs}
+	#{WebView2.ICoreWebView2NavigationCompletedEventHandler}
+	#{WebView2.ICoreWebView2NavigationStartingEventArgs}
+	#{WebView2.ICoreWebView2NavigationStartingEventHandler}
+	#{WebView2.ICoreWebView2NewBrowserVersionAvailableEventHandler}
+	#{WebView2.ICoreWebView2NewWindowRequestedEventArgs}
+	#{WebView2.ICoreWebView2NewWindowRequestedEventHandler}
+	#{WebView2.ICoreWebView2PermissionRequestedEventArgs}
+	#{WebView2.ICoreWebView2PermissionRequestedEventHandler}
+	#{WebView2.ICoreWebView2ProcessFailedEventArgs}
+	#{WebView2.ICoreWebView2ProcessFailedEventHandler}
+	#{WebView2.ICoreWebView2ScriptDialogOpeningEventArgs}
+	#{WebView2.ICoreWebView2ScriptDialogOpeningEventHandler}
+	#{WebView2.ICoreWebView2Settings}
+	#{WebView2.ICoreWebView2SourceChangedEventArgs}
+	#{WebView2.ICoreWebView2SourceChangedEventHandler}
+	#{WebView2.ICoreWebView2WebMessageReceivedEventArgs}
+	#{WebView2.ICoreWebView2WebMessageReceivedEventHandler}
+	#{WebView2.ICoreWebView2WebResourceRequest}
+	#{WebView2.ICoreWebView2WebResourceRequestedEventArgs}
+	#{WebView2.ICoreWebView2WebResourceRequestedEventHandler}
+	#{WebView2.ICoreWebView2WebResourceResponse}
+	#{WebView2.ICoreWebView2WindowCloseRequestedEventHandler}
+	#{WebView2.ICoreWebView2WindowFeatures}
+	#{WebView2.ICoreWebView2ZoomFactorChangedEventHandler}
+	#{WebView2.WebView2Loader}
+).
+
+package setPrerequisites: #(
+	'..\..\Automation\ActiveX Automation'
+	'..\..\..\Base\Dolphin'
+	'..\..\..\MVP\Base\Dolphin Basic Geometry'
+	'..\..\COM\OLE COM'
+	'..\..\Structured Storage\OLE Structured Storage'
+).
+
+package!
+
+"Class Definitions"!
+
+Kernel.Namespace subclass: #WebView2
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #(#{OS.COM private} #{OS private})
+	classInstanceVariableNames: ''
+	classConstants: {
+		'COREWEBVIEW2_CAPTURE_PREVIEW_IMAGE_FORMAT_JPEG' -> 16r1.
+		'COREWEBVIEW2_CAPTURE_PREVIEW_IMAGE_FORMAT_PNG' -> 16r0.
+		'COREWEBVIEW2_KEY_EVENT_KIND_KEY_DOWN' -> 16r0.
+		'COREWEBVIEW2_KEY_EVENT_KIND_KEY_UP' -> 16r1.
+		'COREWEBVIEW2_KEY_EVENT_KIND_SYSTEM_KEY_DOWN' -> 16r2.
+		'COREWEBVIEW2_KEY_EVENT_KIND_SYSTEM_KEY_UP' -> 16r3.
+		'COREWEBVIEW2_MOVE_FOCUS_REASON_NEXT' -> 16r1.
+		'COREWEBVIEW2_MOVE_FOCUS_REASON_PREVIOUS' -> 16r2.
+		'COREWEBVIEW2_MOVE_FOCUS_REASON_PROGRAMMATIC' -> 16r0.
+		'COREWEBVIEW2_PERMISSION_KIND_CAMERA' -> 16r2.
+		'COREWEBVIEW2_PERMISSION_KIND_CLIPBOARD_READ' -> 16r6.
+		'COREWEBVIEW2_PERMISSION_KIND_GEOLOCATION' -> 16r3.
+		'COREWEBVIEW2_PERMISSION_KIND_MICROPHONE' -> 16r1.
+		'COREWEBVIEW2_PERMISSION_KIND_NOTIFICATIONS' -> 16r4.
+		'COREWEBVIEW2_PERMISSION_KIND_OTHER_SENSORS' -> 16r5.
+		'COREWEBVIEW2_PERMISSION_KIND_UNKNOWN_PERMISSION' -> 16r0.
+		'COREWEBVIEW2_PERMISSION_STATE_ALLOW' -> 16r1.
+		'COREWEBVIEW2_PERMISSION_STATE_DEFAULT' -> 16r0.
+		'COREWEBVIEW2_PERMISSION_STATE_DENY' -> 16r2.
+		'COREWEBVIEW2_PROCESS_FAILED_KIND_BROWSER_PROCESS_EXITED' -> 16r0.
+		'COREWEBVIEW2_PROCESS_FAILED_KIND_RENDER_PROCESS_EXITED' -> 16r1.
+		'COREWEBVIEW2_PROCESS_FAILED_KIND_RENDER_PROCESS_UNRESPONSIVE' -> 16r2.
+		'COREWEBVIEW2_SCRIPT_DIALOG_KIND_ALERT' -> 16r0.
+		'COREWEBVIEW2_SCRIPT_DIALOG_KIND_BEFOREUNLOAD' -> 16r3.
+		'COREWEBVIEW2_SCRIPT_DIALOG_KIND_CONFIRM' -> 16r1.
+		'COREWEBVIEW2_SCRIPT_DIALOG_KIND_PROMPT' -> 16r2.
+		'COREWEBVIEW2_WEB_ERROR_STATUS_CANNOT_CONNECT' -> 16rC.
+		'COREWEBVIEW2_WEB_ERROR_STATUS_CERTIFICATE_COMMON_NAME_IS_INCORRECT' -> 16r1.
+		'COREWEBVIEW2_WEB_ERROR_STATUS_CERTIFICATE_EXPIRED' -> 16r2.
+		'COREWEBVIEW2_WEB_ERROR_STATUS_CERTIFICATE_IS_INVALID' -> 16r5.
+		'COREWEBVIEW2_WEB_ERROR_STATUS_CERTIFICATE_REVOKED' -> 16r4.
+		'COREWEBVIEW2_WEB_ERROR_STATUS_CLIENT_CERTIFICATE_CONTAINS_ERRORS' -> 16r3.
+		'COREWEBVIEW2_WEB_ERROR_STATUS_CONNECTION_ABORTED' -> 16r9.
+		'COREWEBVIEW2_WEB_ERROR_STATUS_CONNECTION_RESET' -> 16rA.
+		'COREWEBVIEW2_WEB_ERROR_STATUS_DISCONNECTED' -> 16rB.
+		'COREWEBVIEW2_WEB_ERROR_STATUS_ERROR_HTTP_INVALID_SERVER_RESPONSE' -> 16r8.
+		'COREWEBVIEW2_WEB_ERROR_STATUS_HOST_NAME_NOT_RESOLVED' -> 16rD.
+		'COREWEBVIEW2_WEB_ERROR_STATUS_OPERATION_CANCELED' -> 16rE.
+		'COREWEBVIEW2_WEB_ERROR_STATUS_REDIRECT_FAILED' -> 16rF.
+		'COREWEBVIEW2_WEB_ERROR_STATUS_SERVER_UNREACHABLE' -> 16r6.
+		'COREWEBVIEW2_WEB_ERROR_STATUS_TIMEOUT' -> 16r7.
+		'COREWEBVIEW2_WEB_ERROR_STATUS_UNEXPECTED_ERROR' -> 16r10.
+		'COREWEBVIEW2_WEB_ERROR_STATUS_UNKNOWN' -> 16r0.
+		'COREWEBVIEW2_WEB_RESOURCE_CONTEXT_ALL' -> 16r0.
+		'COREWEBVIEW2_WEB_RESOURCE_CONTEXT_CSP_VIOLATION_REPORT' -> 16rF.
+		'COREWEBVIEW2_WEB_RESOURCE_CONTEXT_DOCUMENT' -> 16r1.
+		'COREWEBVIEW2_WEB_RESOURCE_CONTEXT_EVENT_SOURCE' -> 16rA.
+		'COREWEBVIEW2_WEB_RESOURCE_CONTEXT_FETCH' -> 16r8.
+		'COREWEBVIEW2_WEB_RESOURCE_CONTEXT_FONT' -> 16r5.
+		'COREWEBVIEW2_WEB_RESOURCE_CONTEXT_IMAGE' -> 16r3.
+		'COREWEBVIEW2_WEB_RESOURCE_CONTEXT_MANIFEST' -> 16rC.
+		'COREWEBVIEW2_WEB_RESOURCE_CONTEXT_MEDIA' -> 16r4.
+		'COREWEBVIEW2_WEB_RESOURCE_CONTEXT_OTHER' -> 16r10.
+		'COREWEBVIEW2_WEB_RESOURCE_CONTEXT_PING' -> 16rE.
+		'COREWEBVIEW2_WEB_RESOURCE_CONTEXT_SCRIPT' -> 16r6.
+		'COREWEBVIEW2_WEB_RESOURCE_CONTEXT_SIGNED_EXCHANGE' -> 16rD.
+		'COREWEBVIEW2_WEB_RESOURCE_CONTEXT_STYLESHEET' -> 16r2.
+		'COREWEBVIEW2_WEB_RESOURCE_CONTEXT_TEXT_TRACK' -> 16r9.
+		'COREWEBVIEW2_WEB_RESOURCE_CONTEXT_WEBSOCKET' -> 16rB.
+		'COREWEBVIEW2_WEB_RESOURCE_CONTEXT_XML_HTTP_REQUEST' -> 16r7
+	}!
+External.DynamicLinkLibrary subclass: #'WebView2.WebView2Loader'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+External.Structure subclass: #'WebView2.COREWEBVIEW2_PHYSICAL_KEY_STATUS'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_IsExtendedKey' -> 16r8.
+		'_OffsetOf_IsKeyReleased' -> 16r14.
+		'_OffsetOf_IsMenuKeyDown' -> 16rC.
+		'_OffsetOf_RepeatCount' -> 16r0.
+		'_OffsetOf_ScanCode' -> 16r4.
+		'_OffsetOf_WasKeyDown' -> 16r10
+	}!
+External.Structure subclass: #'WebView2.EventRegistrationToken'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_value' -> 16r0
+	}!
+OS.COM.IUnknown subclass: #'WebView2.ICoreWebView2'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+OS.COM.IUnknown subclass: #'WebView2.ICoreWebView2AcceleratorKeyPressedEventArgs'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+OS.COM.IUnknown subclass: #'WebView2.ICoreWebView2AcceleratorKeyPressedEventHandler'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+OS.COM.IUnknown subclass: #'WebView2.ICoreWebView2AddScriptToExecuteOnDocumentCreatedCompletedHandler'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+OS.COM.IUnknown subclass: #'WebView2.ICoreWebView2CallDevToolsProtocolMethodCompletedHandler'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+OS.COM.IUnknown subclass: #'WebView2.ICoreWebView2CapturePreviewCompletedHandler'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+OS.COM.IUnknown subclass: #'WebView2.ICoreWebView2ContainsFullScreenElementChangedEventHandler'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+OS.COM.IUnknown subclass: #'WebView2.ICoreWebView2ContentLoadingEventArgs'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+OS.COM.IUnknown subclass: #'WebView2.ICoreWebView2ContentLoadingEventHandler'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+OS.COM.IUnknown subclass: #'WebView2.ICoreWebView2Controller'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+OS.COM.IUnknown subclass: #'WebView2.ICoreWebView2CreateCoreWebView2ControllerCompletedHandler'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+OS.COM.IUnknown subclass: #'WebView2.ICoreWebView2CreateCoreWebView2EnvironmentCompletedHandler'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+OS.COM.IUnknown subclass: #'WebView2.ICoreWebView2Deferral'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+OS.COM.IUnknown subclass: #'WebView2.ICoreWebView2DevToolsProtocolEventReceivedEventArgs'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+OS.COM.IUnknown subclass: #'WebView2.ICoreWebView2DevToolsProtocolEventReceivedEventHandler'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+OS.COM.IUnknown subclass: #'WebView2.ICoreWebView2DevToolsProtocolEventReceiver'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+OS.COM.IUnknown subclass: #'WebView2.ICoreWebView2DocumentTitleChangedEventHandler'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+OS.COM.IUnknown subclass: #'WebView2.ICoreWebView2Environment'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+OS.COM.IUnknown subclass: #'WebView2.ICoreWebView2EnvironmentOptions'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+OS.COM.IUnknown subclass: #'WebView2.ICoreWebView2ExecuteScriptCompletedHandler'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+OS.COM.IUnknown subclass: #'WebView2.ICoreWebView2FocusChangedEventHandler'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+OS.COM.IUnknown subclass: #'WebView2.ICoreWebView2HistoryChangedEventHandler'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+OS.COM.IUnknown subclass: #'WebView2.ICoreWebView2HttpHeadersCollectionIterator'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+OS.COM.IUnknown subclass: #'WebView2.ICoreWebView2HttpRequestHeaders'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+OS.COM.IUnknown subclass: #'WebView2.ICoreWebView2HttpResponseHeaders'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+OS.COM.IUnknown subclass: #'WebView2.ICoreWebView2MoveFocusRequestedEventArgs'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+OS.COM.IUnknown subclass: #'WebView2.ICoreWebView2MoveFocusRequestedEventHandler'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+OS.COM.IUnknown subclass: #'WebView2.ICoreWebView2NavigationCompletedEventArgs'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+OS.COM.IUnknown subclass: #'WebView2.ICoreWebView2NavigationCompletedEventHandler'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+OS.COM.IUnknown subclass: #'WebView2.ICoreWebView2NavigationStartingEventArgs'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+OS.COM.IUnknown subclass: #'WebView2.ICoreWebView2NavigationStartingEventHandler'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+OS.COM.IUnknown subclass: #'WebView2.ICoreWebView2NewBrowserVersionAvailableEventHandler'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+OS.COM.IUnknown subclass: #'WebView2.ICoreWebView2NewWindowRequestedEventArgs'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+OS.COM.IUnknown subclass: #'WebView2.ICoreWebView2NewWindowRequestedEventHandler'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+OS.COM.IUnknown subclass: #'WebView2.ICoreWebView2PermissionRequestedEventArgs'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+OS.COM.IUnknown subclass: #'WebView2.ICoreWebView2PermissionRequestedEventHandler'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+OS.COM.IUnknown subclass: #'WebView2.ICoreWebView2ProcessFailedEventArgs'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+OS.COM.IUnknown subclass: #'WebView2.ICoreWebView2ProcessFailedEventHandler'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+OS.COM.IUnknown subclass: #'WebView2.ICoreWebView2ScriptDialogOpeningEventArgs'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+OS.COM.IUnknown subclass: #'WebView2.ICoreWebView2ScriptDialogOpeningEventHandler'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+OS.COM.IUnknown subclass: #'WebView2.ICoreWebView2Settings'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+OS.COM.IUnknown subclass: #'WebView2.ICoreWebView2SourceChangedEventArgs'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+OS.COM.IUnknown subclass: #'WebView2.ICoreWebView2SourceChangedEventHandler'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+OS.COM.IUnknown subclass: #'WebView2.ICoreWebView2WebMessageReceivedEventArgs'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+OS.COM.IUnknown subclass: #'WebView2.ICoreWebView2WebMessageReceivedEventHandler'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+OS.COM.IUnknown subclass: #'WebView2.ICoreWebView2WebResourceRequest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+OS.COM.IUnknown subclass: #'WebView2.ICoreWebView2WebResourceRequestedEventArgs'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+OS.COM.IUnknown subclass: #'WebView2.ICoreWebView2WebResourceRequestedEventHandler'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+OS.COM.IUnknown subclass: #'WebView2.ICoreWebView2WebResourceResponse'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+OS.COM.IUnknown subclass: #'WebView2.ICoreWebView2WindowCloseRequestedEventHandler'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+OS.COM.IUnknown subclass: #'WebView2.ICoreWebView2WindowFeatures'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+OS.COM.IUnknown subclass: #'WebView2.ICoreWebView2ZoomFactorChangedEventHandler'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+"End of package definition"!
+
