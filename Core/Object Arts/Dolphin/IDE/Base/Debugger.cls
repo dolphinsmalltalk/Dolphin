@@ -193,25 +193,13 @@ To allow the restart to complete, you will need to find and close any such windo
 Alternatively you can cancel this operation, which will stop this debugging session.'.
 	resp == #cancel ifTrue: [process terminate]!
 
-break: interruptFrame 
+break: interruptFrame
 	"Private - Break the debugged process at the specified break, and refresh the receiver's
 	display (unless updates are deferred, i.e. the debugger is performing a composite operation
 	which is only partially completed)."
 
-	self beBroken.
-	self isInCompositeOp 
-		ifTrue: 
-			[topFrame := interruptFrame.
-			"Complete the composite op, but not in the debugged process"
-			breakAction postToMessageQueue.
-			breakAction := nil]
-		ifFalse: 
-			["Update the display if not part way through a composite operation"
-			(topFrame = interruptFrame and: [self frame index <= interruptFrame index]) 
-				ifTrue: [self refreshFrame]
-				ifFalse: 
-					[topFrame := interruptFrame.
-					self populateStackModel]].
+	"Update of the debugger display must be performed in the (current) UI process"
+	[self updateForBreakAt: interruptFrame] postToMessageQueue.
 	self suspend
 	"N.B. There must be no further code after this point"!
 
@@ -1086,11 +1074,11 @@ queryCommand: aCommandQuery
 queryFrameCommand: aCommandQuery 
 	"Private - All of these commands required that a stack frame be selected"
 	| selector running runnable animating frame |
-	frame := self frame.
 	selector := aCommandQuery commandSymbol.
 	animating := self isAnimating.
 	running := self isRunning or: [animating].
 	runnable := running not and: [self isResumable].
+	frame := self frame.
 	"Note that the implement menu is not just for DNUs any more, but any message which is not directly
 	 implemented by its receiver."
 	selector == #implementDNUMenu 
@@ -1689,13 +1677,7 @@ stubTextFor: aMessage inClass: aClass
 suspend
 	"Private - Suspend the process being debugged following a debug event."
 
-	self isAnimating
-		ifTrue: [
-			[KernelLibrary default sleep: self animatePause. self step] forkAt: Processor userSchedulingPriority.
-			process suspend]
-		ifFalse: [
-			self debugState: 'break'.
-			self suspendProcess]!
+	self isAnimating ifTrue: [process suspend] ifFalse: [self suspendProcess]!
 
 suspendProcess
 	"Private - Suspend the process being debugged."
@@ -1766,6 +1748,30 @@ toggleDisassembly
 		isAutoParseEnabled: (self isDisassembled not and: [sourcePresenter class isAutoParseEnabled]).
 	self displayFrame!
 
+updateForBreakAt: interruptFrame
+	self
+		beBroken;
+		debugState: 'break'.
+	self isInCompositeOp
+		ifTrue: 
+			[topFrame := interruptFrame.
+			"Complete the composite op. Note we are not running in the debugged process"
+			breakAction value.
+			breakAction := nil]
+		ifFalse: 
+			["Update the display if not part way through a composite operation"
+			(topFrame = interruptFrame and: [self frame index <= interruptFrame index])
+				ifTrue: [self refreshFrame]
+				ifFalse: 
+					[topFrame := interruptFrame.
+					self populateStackModel]].
+	^self isAnimating
+		ifTrue: 
+			[
+			[KernelLibrary default sleep: self animatePause.
+			process isDead ifFalse: [self step]]
+					forkAt: Processor userSchedulingPriority]!
+
 updateTemporaries
 	"Private - Refresh the receiver's temporaries list model."
 
@@ -1828,6 +1834,7 @@ userBreak
 	self assert: [process ~~ Processor activeProcess].
 	self beAnimated: false.
 	self beBroken; suspend.
+	self debugState: 'User break'.
 	topFrame := process topFrame.
 	self populateStackModel
 	
@@ -1994,6 +2001,7 @@ variableAtIndex: anInteger put: anObject
 !Debugger categoriesFor: #terminateProcess!commands!private! !
 !Debugger categoriesFor: #toggleAnimation!commands!private! !
 !Debugger categoriesFor: #toggleDisassembly!commands!private! !
+!Debugger categoriesFor: #updateForBreakAt:!operations!private! !
 !Debugger categoriesFor: #updateTemporaries!private!updating! !
 !Debugger categoriesFor: #userBreak!commands!private! !
 !Debugger categoriesFor: #variableAtIndex:put:!helpers!private! !
