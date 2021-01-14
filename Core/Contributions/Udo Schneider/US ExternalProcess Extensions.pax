@@ -45,6 +45,7 @@ package setMethodNames: #(
 
 package setPrerequisites: #(
 	'..\..\Object Arts\Dolphin\Base\Dolphin'
+	'..\..\Object Arts\Dolphin\Base\Deprecated\Dolphin Base (Deprecated)'
 	'..\..\Object Arts\Dolphin\MVP\Presenters\Prompters\Dolphin Prompter'
 	'..\Burning River\ExternalProcess\ExternalProcess'
 	'..\Burning River\InheritableFile\InheritableFile'
