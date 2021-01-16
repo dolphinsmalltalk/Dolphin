@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-XProgramming.SUnit.TestResource subclass: #DBConnectionTestResource
+XProgramming.SUnit.TestResource subclass: #'Database.Tests.DBConnectionTestResource'
 	instanceVariableNames: 'connection isAvailable'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-DBConnectionTestResource guid: (Core.GUID fromString: '{2661c6fe-6796-4f00-a5c4-6ac7f74bb107}')!
-DBConnectionTestResource comment: ''!
-!DBConnectionTestResource categoriesForClass!Unclassified! !
-!DBConnectionTestResource methodsFor!
+Database.Tests.DBConnectionTestResource guid: (Core.GUID fromString: '{2661c6fe-6796-4f00-a5c4-6ac7f74bb107}')!
+Database.Tests.DBConnectionTestResource comment: ''!
+!Database.Tests.DBConnectionTestResource categoriesForClass!Unclassified! !
+!Database.Tests.DBConnectionTestResource methodsFor!
 
 canConnect
 	| cnxn |
@@ -53,14 +53,14 @@ setUp
 
 tearDown
 	self dropDatabase! !
-!DBConnectionTestResource categoriesFor: #canConnect!private! !
-!DBConnectionTestResource categoriesFor: #connect!private! !
-!DBConnectionTestResource categoriesFor: #connection!private! !
-!DBConnectionTestResource categoriesFor: #connectString!private! !
-!DBConnectionTestResource categoriesFor: #createConnection!public! !
-!DBConnectionTestResource categoriesFor: #createDatabase!private! !
-!DBConnectionTestResource categoriesFor: #dropDatabase!private! !
-!DBConnectionTestResource categoriesFor: #newConnection!public! !
-!DBConnectionTestResource categoriesFor: #setUp!public! !
-!DBConnectionTestResource categoriesFor: #tearDown!public! !
+!Database.Tests.DBConnectionTestResource categoriesFor: #canConnect!private! !
+!Database.Tests.DBConnectionTestResource categoriesFor: #connect!private! !
+!Database.Tests.DBConnectionTestResource categoriesFor: #connection!private! !
+!Database.Tests.DBConnectionTestResource categoriesFor: #connectString!private! !
+!Database.Tests.DBConnectionTestResource categoriesFor: #createConnection!public! !
+!Database.Tests.DBConnectionTestResource categoriesFor: #createDatabase!private! !
+!Database.Tests.DBConnectionTestResource categoriesFor: #dropDatabase!private! !
+!Database.Tests.DBConnectionTestResource categoriesFor: #newConnection!public! !
+!Database.Tests.DBConnectionTestResource categoriesFor: #setUp!public! !
+!Database.Tests.DBConnectionTestResource categoriesFor: #tearDown!public! !
 

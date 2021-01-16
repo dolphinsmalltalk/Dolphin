@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Core.Object subclass: #DBConnection
+Core.Object subclass: #'Database.DBConnection'
 	instanceVariableNames: 'handle dsn uid pwd statements transaction connectString flags'
 	classVariableNames: 'Connections DriverCompleteMask HEnv ScrollTypes TxnIsolationLevels'
-	imports: #(#{Smalltalk.ODBCConstants} #{Smalltalk.ODBCRetCodes})
+	imports: #(#{OS.ODBCRetCodes} #{OS.ODBCConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-DBConnection guid: (Core.GUID fromString: '{87b4c472-026e-11d3-9fd7-00a0cc3e4a32}')!
-DBConnection comment: 'A DBConnection represents a connection to an ODBC data source.
+Database.DBConnection guid: (Core.GUID fromString: '{87b4c472-026e-11d3-9fd7-00a0cc3e4a32}')!
+Database.DBConnection comment: 'A DBConnection represents a connection to an ODBC data source.
 
 One can use a DBConnection to query the capabilities of the underlying driver and the structure of the database. One can then interact with the database by submitting SQL queries using #exec: or #query:[cursorType:]. One can also prepare a DBStatement for later parameterization and execution with #prepare:[cursorType:].
 
@@ -25,8 +25,8 @@ Class Variables:
 	TxnIsolationLevels	<IdentityDictionary>. Map between SQL_TXN_XXX values and symbolic names.
 	ScrollTypes	<IdentityDictionary>. Map between SQL_SO_XXX values and symbolic names.
 '!
-!DBConnection categoriesForClass!ODBC Interface! !
-!DBConnection methodsFor!
+!Database.DBConnection categoriesForClass!ODBC Interface! !
+!Database.DBConnection methodsFor!
 
 allocStmtHandle: aDBStatement
 	"Private - Allocate a new statement handle for the specified object.
@@ -35,7 +35,7 @@ allocStmtHandle: aDBStatement
 	| hStmt ret |
 	hStmt := External.Handle new.
 
-	ret := ODBCLibrary default
+	ret := OS.ODBCLibrary default
 		sqlAllocHandle: SQL_HANDLE_STMT
 		inputHandle: self asParameter
 		outputHandlePtr: hStmt.
@@ -57,7 +57,7 @@ basicConnect
 
 	
 	[| ret |
-	ret := ODBCLibrary default 
+	ret := OS.ODBCLibrary default 
 				sqlConnect: self getHandle
 				serverName: dsn
 				nameLength1: SQL_NTS
@@ -113,9 +113,9 @@ checkEmptyEnvironment
 	"Private - If there are no more open connections, free the environment"
 
 	Connections isEmpty
-		ifTrue: [
-			[self class freeEnvironment] on: DBError do: [:se | se toTrace].
-			HEnv := nil].!
+		ifTrue: 
+			[[self class freeEnvironment] on: DBError do: [:se | se toTrace].
+			HEnv := nil]!
 
 close
 	"Close a database connection - rollback the current transaction, disconnect,
@@ -134,17 +134,19 @@ closeNoFail
 	"Quietly close connection (frees handle), and if no
 	more open connections, free the environment"
 
-	[self close] on: DBError do: [ :se |
-		se toTrace.
-		handle := nil.
-		self checkEmptyEnvironment]!
+	[self close] on: DBError
+		do: 
+			[:se |
+			se toTrace.
+			handle := nil.
+			self checkEmptyEnvironment]!
 
 columns: aStringTableName
 	"Answer a list of columns in the table aStringTableName"
 
 	^self columns: nil qualifier: nil owner: nil table: aStringTableName!
 
-columns: aStringColumn qualifier: aStringQualifier owner: aStringOwner table: aStringTable 
+columns: aStringColumn qualifier: aStringQualifier owner: aStringOwner table: aStringTable
 	"Answer the list of columns in the table matching the specified search criteria"
 
 	| i stmt colAttrs |
@@ -156,10 +158,10 @@ columns: aStringColumn qualifier: aStringQualifier owner: aStringOwner table: aS
 		columnName: aStringColumn.
 	i := 0.
 	colAttrs := stmt results collect: 
-					[:each | 
+					[:each |
 					i := i + 1.
 					"at: 'column_name'"	"at: 'DATA_TYPE'"	"at: 'LENGTH'"	"at: 'PRECISION'"	"at: 'SCALE'"
-					(DBColAttr new)
+					DBColAttr new
 						columnNumber: i;
 						name: (each atIndex: 4);
 						type: (each atIndex: 5);
@@ -208,7 +210,7 @@ convertFunctions
 	| mask |
 	mask := self getDWordInfo: SQL_CONVERT_FUNCTIONS.
 	^#('SQL_FN_CVT_CONVERT') 
-		select: [:maskName | (mask bitAnd: (ODBCConstants at: maskName)) ~= 0]!
+		select: [:maskName | (mask bitAnd: (OS.ODBCConstants at: maskName)) ~= 0]!
 
 cursorCommitBehaviour
 	"Answer an <integer> from the SQL_CB_XXX enumeration identifying the
@@ -234,15 +236,14 @@ dataSourceName
 
 	^self getStringInfo: SQL_DATA_SOURCE_NAME!
 
-dbCheckException: anIntegerRetCode 
+dbCheckException: anIntegerRetCode
 	"Private - Checks anIntegerRetCode to see if a DBError or DBWarning should be signalled.
 	Note that as of Dolphin 4.0, DBWarning is actually a notification, which is a more appropriate
 	level of reporting for SQL_SUCCESS_WITH_INFO."
 
-	^anIntegerRetCode = SQL_SUCCESS 
+	^anIntegerRetCode = SQL_SUCCESS
 		ifFalse: 
 			["Signal an error or warning - decide which"
-
 			((anIntegerRetCode = SQL_SUCCESS_WITH_INFO or: [anIntegerRetCode = SQL_NO_DATA])
 				ifTrue: [DBWarning]
 				ifFalse: [DBError]) signalWith: (self exceptionDetails: anIntegerRetCode)]!
@@ -290,7 +291,7 @@ disconnect
 
 	handle isNull ifFalse: [ | ret |
 		self invalidateAllStmts.
-		ret := ODBCLibrary default sqlDisconnect: handle.
+		ret := OS.ODBCLibrary default sqlDisconnect: handle.
 		self dbCheckException: ret]
 !
 
@@ -353,10 +354,9 @@ exec: aString cursorType: aSymbol
 finalize
 	"Private - finalize the affairs of the receiver."
 
-	[ 
-		super finalize.
-		self close 
-	] on: DBError do: [:x | x toTrace]!
+	
+	[super finalize.
+	self close] on: DBError do: [:x | x toTrace]!
 
 free
 	"Private - Free the connection handle."
@@ -369,15 +369,14 @@ free
 freeNoFail
 	"Private - Free the connection handle ignoring any errors."
 
-	^ODBCLibrary default sqlFreeHandle: SQL_HANDLE_DBC handle: handle.
+	^OS.ODBCLibrary default sqlFreeHandle: SQL_HANDLE_DBC handle: handle.
 !
 
-freeStmtHandle: aDBAbstractStatement 
+freeStmtHandle: aDBAbstractStatement
 	| ret |
 	handle isNull ifTrue: [^self].
-	ret := ODBCLibrary default sqlFreeHandle: SQL_HANDLE_STMT
-				handle: aDBAbstractStatement handle.
-	ret ~= SQL_SUCCESS 
+	ret := OS.ODBCLibrary default sqlFreeHandle: SQL_HANDLE_STMT handle: aDBAbstractStatement handle.
+	ret ~= SQL_SUCCESS
 		ifTrue: [DBError signalWith: (aDBAbstractStatement exceptionDetails: ret)]!
 
 getBoolInfo: anInteger
@@ -385,7 +384,7 @@ getBoolInfo: anInteger
 
 	| value |
 	value := Utf16String newFixed: 1.
-	self dbCheckException: (ODBCLibrary default
+	self dbCheckException: (OS.ODBCLibrary default
 				sqlGetInfo: self asParameter
 				infoType: anInteger
 				infoValuePtr: value
@@ -398,28 +397,28 @@ getDWordAttribute: anInteger
 	connection attribute identified by the <integer> argument."
 
 	| buffer ret |
-	buffer := DWORD new.
-	ret := ODBCLibrary default 
+	buffer := ByteArray newFixed: 4.
+	ret := OS.ODBCLibrary default 
 				sqlGetConnectAttr: self asParameter
 				attribute: anInteger
 				valuePtr: buffer
 				bufferLength: SQL_IS_UINTEGER
 				stringLengthPtr: nil.
 	self dbCheckException: ret.
-	^buffer value!
+	^buffer dwordAtOffset: 0!
 
 getDWordInfo: anInteger
 	"Private - Answer an Integer containing the value of the receiver's DWORD info attribute described by anInteger."
 
 	| value |
-	value := DWORDBytes new.
-	self dbCheckException: (ODBCLibrary default
+	value := ByteArray newFixed: 4.
+	self dbCheckException: (OS.ODBCLibrary default
 				sqlGetInfo: self asParameter
 				infoType: anInteger
 				infoValuePtr: value
 				bufferLength: 4
 				stringLengthPtr: nil).
-	^value value!
+	^value dwordAtOffset: 0!
 
 getHandle
 	"Private - Answer the handle instance variable.
@@ -435,11 +434,11 @@ getHandle
 getHandle: anInteger
 	| value |
 	value := External.Handle new.
-	self dbCheckException: (ODBCLibrary default
+	self dbCheckException: (OS.ODBCLibrary default
 				sqlGetInfo: self asParameter
 				infoType: anInteger
 				infoValuePtr: value
-				bufferLength: VMConstants.IntPtrSize
+				bufferLength: Kernel.VMConstants.IntPtrSize
 				stringLengthPtr: nil).
 	^value!
 
@@ -448,7 +447,7 @@ getStringAttribute: anInteger
 
 	| buffer |
 	buffer := Utf16String newFixed: SQL_MAX_OPTION_STRING_LENGTH.
-	self dbCheckException: (ODBCLibrary default
+	self dbCheckException: (OS.ODBCLibrary default
 				sqlGetConnectAttr: self asParameter
 				attribute: anInteger
 				valuePtr: buffer
@@ -462,27 +461,27 @@ getStringInfo: anInteger
 
 	| value len |
 	value := Utf16String newFixed: SQL_MAX_MESSAGE_LENGTH.
-	len := SWORD new.
-	self dbCheckException: (ODBCLibrary default
+	len := ByteArray newFixed: 2.
+	self dbCheckException: (OS.ODBCLibrary default
 				sqlGetInfo: self asParameter
 				infoType: anInteger
 				infoValuePtr: value
 				bufferLength: ##(SQL_MAX_MESSAGE_LENGTH + 1 * 2)
 				stringLengthPtr: len).
-	^value resize: (len value bitShift: -1)!
+	^value resize: ((len swordAtOffset: 0) bitShift: -1)!
 
 getWordInfo: anInteger
 	"Private - Answer an Integer containing the value of the receiver's WORD info attribute described by infoCode."
 
 	| value |
-	value := WORD new.
-	self dbCheckException: (ODBCLibrary default
+	value := ByteArray newFixed: 2.
+	self dbCheckException: (OS.ODBCLibrary default
 				sqlGetInfo: self asParameter
 				infoType: anInteger
 				infoValuePtr: value
 				bufferLength: 2
 				stringLengthPtr: nil).
-	^value value!
+	^value wordAtOffset: 0!
 
 hasAccessibleTables
 	"Answers whetherthe receiver is connected to a DB which has tables that can be accessed."
@@ -623,12 +622,12 @@ maxTableNameLength
 
 	^self getWordInfo: SQL_MAX_TABLE_NAME_LEN!
 
-newParameterizedStatement: aSymbol 
+newParameterizedStatement: aSymbol
 	"Private - Answer a DBParameterizedStatement connected to the receiver"
 
 	^DBParameterizedStatement parent: self cursorType: aSymbol!
 
-newStatement: aSymbol 
+newStatement: aSymbol
 	"Private - Answer a DBStatement connected to the receiver and with the specified 
 	cursor type."
 
@@ -640,7 +639,7 @@ numericFunctions
 	| mask |
 	mask := self getDWordInfo: SQL_NUMERIC_FUNCTIONS.
 	^#('SQL_FN_NUM_ABS' 'SQL_FN_NUM_ACOS' 'SQL_FN_NUM_ASIN' 'SQL_FN_NUM_ATAN' 'SQL_FN_NUM_ATAN2' 'SQL_FN_NUM_CEILING' 'SQL_FN_NUM_COS' 'SQL_FN_NUM_COT' 'SQL_FN_NUM_EXP' 'SQL_FN_NUM_FLOOR' 'SQL_FN_NUM_LOG' 'SQL_FN_NUM_MOD' 'SQL_FN_NUM_SIGN' 'SQL_FN_NUM_SIN' 'SQL_FN_NUM_SQRT' 'SQL_FN_NUM_TAN' 'SQL_FN_NUM_PI' 'SQL_FN_NUM_RAND') 
-		select: [:maskName | (mask bitAnd: (ODBCConstants at: maskName)) ~= 0]!
+		select: [:maskName | (mask bitAnd: (OS.ODBCConstants at: maskName)) ~= 0]!
 
 odbcConformance
 	"Answer the level of ODBC conformance:
@@ -675,10 +674,10 @@ open
 	[| ret |
 	"#1306: From MSDN, 'Applications should allocate at least 1,024 characters for [the connection string] buffer'"
 	connSz := Utf16String newFixed: 2048.
-	lenConnSz := SWORD new.
-	ret := ODBCLibrary default 
+	lenConnSz := External.SWORD new.
+	ret := OS.ODBCLibrary default 
 				sqlDriverConnect: self getHandle
-				windowHandle: UserLibrary default getActiveWindow
+				windowHandle: OS.UserLibrary default getActiveWindow
 				inConnectionString: self connectString
 				stringLength1: SQL_NTS
 				outConnectionString: connSz
@@ -725,8 +724,7 @@ primaryKeysOf: aString
 	| stmt answer |
 	stmt := DBPrimaryKeysStatement parent: self.
 	stmt tableName: aString.
-	answer := stmt results 
-				collect: [:each | each atIndex: 4	"at: 'column_name'"].
+	answer := stmt results collect: [:each | each atIndex: 4	"at: 'column_name'"].
 	stmt free.
 	^answer!
 
@@ -796,7 +794,7 @@ query: aString forwardOnly: aBoolean
 	^self query: aString
 		cursorType: (aBoolean ifTrue: [#forwardOnly] ifFalse: [#keysetDriven])!
 
-queryForeignKeysOf: aTableNameString 
+queryForeignKeysOf: aTableNameString
 	"Private - Answer the DBResultSet for the standard query SQLForeignKeys()
 	where szFkTableName is set to aTableNameString."
 
@@ -857,7 +855,7 @@ setAttribute: idInteger value: anIntegerOrStringOrBytes size: sizeInteger
 	"Private - Set the an attribute of the receiver's connection."
 
 	| ret |
-	ret := ODBCLibrary default 
+	ret := OS.ODBCLibrary default 
 				sqlSetConnectAttr: self asParameter
 				attribute: idInteger
 				valuePtr: anIntegerOrStringOrBytes
@@ -914,7 +912,7 @@ stringFunctions
 	| mask |
 	mask := self getDWordInfo: SQL_STRING_FUNCTIONS.
 	^#('SQL_FN_STR_ASCII' 'SQL_FN_STR_CHAR' 'SQL_FN_STR_CONCAT' 'SQL_FN_STR_INSERT' 'SQL_FN_STR_LCASE' 'SQL_FN_STR_LEFT' 'SQL_FN_STR_LENGTH' 'SQL_FN_STR_LOCATE' 'SQL_FN_STR_LTRIM' 'SQL_FN_STR_REPEAT' 'SQL_FN_STR_REPLACE' 'SQL_FN_STR_RIGHT' 'SQL_FN_STR_RTRIM' 'SQL_FN_STR_SUBSTRING' 'SQL_FN_STR_UCASE') 
-		select: [:maskName | (mask bitAnd: (ODBCConstants at: maskName)) ~= 0]!
+		select: [:maskName | (mask bitAnd: (OS.ODBCConstants at: maskName)) ~= 0]!
 
 supportedCursorTypes
 	"Answer a <collection> of <Symbol>s, being the cursor types supported by the database to
@@ -966,7 +964,7 @@ systemFunctions
 	| mask |
 	mask := self getDWordInfo: SQL_SYSTEM_FUNCTIONS.
 	^#('SQL_FN_SYS_DBNAME' 'SQL_FN_SYS_IFNULL' 'SQL_FN_SYS_USERNAME') 
-		select: [:maskName | (mask bitAnd: (ODBCConstants at: maskName)) ~= 0]!
+		select: [:maskName | (mask bitAnd: (OS.ODBCConstants at: maskName)) ~= 0]!
 
 tables
 	"Answer a collection of all user tables on the database"
@@ -999,7 +997,7 @@ timeDateFunctions
 	| mask |
 	mask := self getDWordInfo: SQL_TIMEDATE_FUNCTIONS.
 	^#('SQL_FN_TD_NOW' 'SQL_FN_TD_CURDATE' 'SQL_FN_TD_DAYOFMONTH' 'SQL_FN_TD_DAYOFWEEK' 'SQL_FN_TD_DAYOFYEAR' 'SQL_FN_TD_MONTH' 'SQL_FN_TD_QUARTER' 'SQL_FN_TD_WEEK' 'SQL_FN_TD_YEAR' 'SQL_FN_TD_CURTIME' 'SQL_FN_TD_HOUR' 'SQL_FN_TD_MINUTE' 'SQL_FN_TD_SECOND') 
-		select: [:maskName | (mask bitAnd: (ODBCConstants at: maskName)) ~= 0]!
+		select: [:maskName | (mask bitAnd: (OS.ODBCConstants at: maskName)) ~= 0]!
 
 traceFile
 	"Answer a String containing the value of the receiver's trace file option."
@@ -1120,155 +1118,155 @@ willAutoCommit: aBoolean
 		setAttribute: SQL_ATTR_AUTOCOMMIT
 		value: (aBoolean ifTrue: [SQL_AUTOCOMMIT_ON] ifFalse: [SQL_AUTOCOMMIT_OFF])
 		size: SQL_IS_UINTEGER! !
-!DBConnection categoriesFor: #allocStmtHandle:!helpers!private! !
-!DBConnection categoriesFor: #asParameter!converting!public! !
-!DBConnection categoriesFor: #basicConnect!operations!private! !
-!DBConnection categoriesFor: #beginRWTxn!public!transactions! !
-!DBConnection categoriesFor: #beginTxn!public!transactions! !
-!DBConnection categoriesFor: #buildConnectString!helpers!private! !
-!DBConnection categoriesFor: #catalogNameSeparator!enquiries!public! !
-!DBConnection categoriesFor: #catalogTerm!enquiries!public! !
-!DBConnection categoriesFor: #checkEmptyEnvironment!helpers!private! !
-!DBConnection categoriesFor: #close!operations!public! !
-!DBConnection categoriesFor: #closeNoFail!operations!public! !
-!DBConnection categoriesFor: #columns:!enquiries!public! !
-!DBConnection categoriesFor: #columns:qualifier:owner:table:!enquiries!public! !
-!DBConnection categoriesFor: #commitTxn!public!transactions! !
-!DBConnection categoriesFor: #connect!operations!public! !
-!DBConnection categoriesFor: #connectString!accessing!public! !
-!DBConnection categoriesFor: #connectString:!accessing!public! !
-!DBConnection categoriesFor: #convertFunctions!enquiries!public! !
-!DBConnection categoriesFor: #cursorCommitBehaviour!enquiries!public! !
-!DBConnection categoriesFor: #cursorRollbackBehaviour!enquiries!public! !
-!DBConnection categoriesFor: #databaseName!enquiries!public! !
-!DBConnection categoriesFor: #dataSourceName!enquiries!public! !
-!DBConnection categoriesFor: #dbCheckException:!exceptions!private! !
-!DBConnection categoriesFor: #dbmsName!enquiries!public! !
-!DBConnection categoriesFor: #dbmsVersion!enquiries!public! !
-!DBConnection categoriesFor: #decodeBitMask:map:!helpers!private! !
-!DBConnection categoriesFor: #defaultCursorType!constants!public! !
-!DBConnection categoriesFor: #defaultFlags!constants!private! !
-!DBConnection categoriesFor: #defaultTransactionIsolation!enquiries!public! !
-!DBConnection categoriesFor: #disconnect!operations!private! !
-!DBConnection categoriesFor: #driverHDBC!accessing!private! !
-!DBConnection categoriesFor: #driverHEnv!accessing!private! !
-!DBConnection categoriesFor: #driverName!enquiries!public! !
-!DBConnection categoriesFor: #driverVersion!enquiries!public! !
-!DBConnection categoriesFor: #dsn!accessing!public! !
-!DBConnection categoriesFor: #dsn:!accessing!public! !
-!DBConnection categoriesFor: #exceptionDetails:!exceptions!private! !
-!DBConnection categoriesFor: #exec:!executing!public! !
-!DBConnection categoriesFor: #exec:cursorType:!executing!public! !
-!DBConnection categoriesFor: #finalize!finalizing!private! !
-!DBConnection categoriesFor: #free!private!realizing/unrealizing! !
-!DBConnection categoriesFor: #freeNoFail!private!realizing/unrealizing! !
-!DBConnection categoriesFor: #freeStmtHandle:!helpers!private! !
-!DBConnection categoriesFor: #getBoolInfo:!enquiries!private! !
-!DBConnection categoriesFor: #getDWordAttribute:!accessing!private! !
-!DBConnection categoriesFor: #getDWordInfo:!enquiries!private! !
-!DBConnection categoriesFor: #getHandle!accessing!private! !
-!DBConnection categoriesFor: #getHandle:!helpers!private! !
-!DBConnection categoriesFor: #getStringAttribute:!accessing!private! !
-!DBConnection categoriesFor: #getStringInfo:!enquiries!private! !
-!DBConnection categoriesFor: #getWordInfo:!enquiries!private! !
-!DBConnection categoriesFor: #hasAccessibleTables!enquiries!public!testing! !
-!DBConnection categoriesFor: #hasIntegrityEnhancementFacility!enquiries!public!testing! !
-!DBConnection categoriesFor: #identifierCase!enquiries!public! !
-!DBConnection categoriesFor: #identifierQuoteCharacter!enquiries!public! !
-!DBConnection categoriesFor: #indicesOf:!enquiries!public! !
-!DBConnection categoriesFor: #initialize!initializing!private! !
-!DBConnection categoriesFor: #initializeStatements!initializing!private! !
-!DBConnection categoriesFor: #invalidateAllStmts!private!realizing/unrealizing! !
-!DBConnection categoriesFor: #isReadOnly!accessing!public! !
-!DBConnection categoriesFor: #isReadOnly:!accessing!public! !
-!DBConnection categoriesFor: #isSAGCompliant!enquiries!public!testing! !
-!DBConnection categoriesFor: #isSourceReadOnly!enquiries!public!testing! !
-!DBConnection categoriesFor: #isTracing!public!testing! !
-!DBConnection categoriesFor: #isTracing:!accessing!public! !
-!DBConnection categoriesFor: #isTransactionCapable!enquiries!public!testing! !
-!DBConnection categoriesFor: #loginTimeout!accessing!public! !
-!DBConnection categoriesFor: #loginTimeout:!accessing!public! !
-!DBConnection categoriesFor: #maxCatalogNameLength!enquiries!public! !
-!DBConnection categoriesFor: #maxColumnNameLength!enquiries!public! !
-!DBConnection categoriesFor: #maxConnections!enquiries!public! !
-!DBConnection categoriesFor: #maxCursorNameLength!enquiries!public! !
-!DBConnection categoriesFor: #maxProcedureNameLength!enquiries!public! !
-!DBConnection categoriesFor: #maxSchemaNameLength!enquiries!public! !
-!DBConnection categoriesFor: #maxStatements!enquiries!public! !
-!DBConnection categoriesFor: #maxTableNameLength!enquiries!public! !
-!DBConnection categoriesFor: #newParameterizedStatement:!operations!private! !
-!DBConnection categoriesFor: #newStatement:!operations!private! !
-!DBConnection categoriesFor: #numericFunctions!enquiries!public! !
-!DBConnection categoriesFor: #odbcConformance!enquiries!public! !
-!DBConnection categoriesFor: #odbcSQLConformance!enquiries!public! !
-!DBConnection categoriesFor: #odbcVersion!enquiries!public! !
-!DBConnection categoriesFor: #open!operations!public! !
-!DBConnection categoriesFor: #postCopy!copying!public! !
-!DBConnection categoriesFor: #prepare:!executing!public! !
-!DBConnection categoriesFor: #prepare:cursorType:!executing!public! !
-!DBConnection categoriesFor: #primaryKeysOf:!enquiries!public! !
-!DBConnection categoriesFor: #printOn:!printing!public! !
-!DBConnection categoriesFor: #procedure:owner:name:!enquiries!public! !
-!DBConnection categoriesFor: #procedures!enquiries!public! !
-!DBConnection categoriesFor: #procedureTerm!enquiries!public! !
-!DBConnection categoriesFor: #pwd!accessing!public! !
-!DBConnection categoriesFor: #pwd:!accessing!public! !
-!DBConnection categoriesFor: #query:!executing!public! !
-!DBConnection categoriesFor: #query:cursorType:!executing!public! !
-!DBConnection categoriesFor: #query:forwardOnly:!executing!public! !
-!DBConnection categoriesFor: #queryForeignKeysOf:!enquiries!private! !
-!DBConnection categoriesFor: #rollbackTxn!public!transactions! !
-!DBConnection categoriesFor: #rowIdColumns:!enquiries!public! !
-!DBConnection categoriesFor: #rowVersionColumns:!enquiries!public! !
-!DBConnection categoriesFor: #schemaTerm!enquiries!public! !
-!DBConnection categoriesFor: #searchPatternEscape!enquiries!public! !
-!DBConnection categoriesFor: #serverName!enquiries!public! !
-!DBConnection categoriesFor: #setAttribute:value:size:!accessing!private! !
-!DBConnection categoriesFor: #setDefaultAttributes!helpers!private! !
-!DBConnection categoriesFor: #specialColumns:qualifier:owner:name:scope:nullable:!enquiries!public! !
-!DBConnection categoriesFor: #statements!accessing!public! !
-!DBConnection categoriesFor: #statisticsFor:type:accurate:!enquiries!public! !
-!DBConnection categoriesFor: #stringFunctions!enquiries!public! !
-!DBConnection categoriesFor: #supportedCursorTypes!enquiries!public! !
-!DBConnection categoriesFor: #supportedTransactionIsolationLevels!enquiries!public!testing! !
-!DBConnection categoriesFor: #supportsExpressionsInOrderBy!enquiries!public!testing! !
-!DBConnection categoriesFor: #supportsMultipleActiveTransactions!enquiries!public!testing! !
-!DBConnection categoriesFor: #supportsMultipleResultSets!enquiries!public!testing! !
-!DBConnection categoriesFor: #supportsOuterJoins!enquiries!public!testing! !
-!DBConnection categoriesFor: #supportsRowUpdates!enquiries!public!testing! !
-!DBConnection categoriesFor: #systemFunctions!enquiries!public! !
-!DBConnection categoriesFor: #tables!enquiries!public! !
-!DBConnection categoriesFor: #tables:owners:tables:types:!enquiries!public! !
-!DBConnection categoriesFor: #tableTerm!enquiries!public! !
-!DBConnection categoriesFor: #timeDateFunctions!enquiries!public! !
-!DBConnection categoriesFor: #traceFile!accessing!public! !
-!DBConnection categoriesFor: #traceFile:!accessing!public! !
-!DBConnection categoriesFor: #transaction!public!transactions! !
-!DBConnection categoriesFor: #transaction:!private!transactions! !
-!DBConnection categoriesFor: #transactionIsolation!accessing!public! !
-!DBConnection categoriesFor: #transactionIsolation:!accessing!public! !
-!DBConnection categoriesFor: #translate!accessing!public! !
-!DBConnection categoriesFor: #translate:!accessing!public! !
-!DBConnection categoriesFor: #translationDLL!accessing!public! !
-!DBConnection categoriesFor: #translationDLL:!accessing!public! !
-!DBConnection categoriesFor: #uid!accessing!public! !
-!DBConnection categoriesFor: #uid:!accessing!public! !
-!DBConnection categoriesFor: #uniqueIndicesOf:!enquiries!public! !
-!DBConnection categoriesFor: #useDriverCompletion!accessing!public! !
-!DBConnection categoriesFor: #useDriverCompletion:!accessing!public! !
-!DBConnection categoriesFor: #userName!enquiries!public! !
-!DBConnection categoriesFor: #views!enquiries!public! !
-!DBConnection categoriesFor: #willAutoCommit!public!testing! !
-!DBConnection categoriesFor: #willAutoCommit:!accessing!public! !
+!Database.DBConnection categoriesFor: #allocStmtHandle:!helpers!private! !
+!Database.DBConnection categoriesFor: #asParameter!converting!public! !
+!Database.DBConnection categoriesFor: #basicConnect!operations!private! !
+!Database.DBConnection categoriesFor: #beginRWTxn!public!transactions! !
+!Database.DBConnection categoriesFor: #beginTxn!public!transactions! !
+!Database.DBConnection categoriesFor: #buildConnectString!helpers!private! !
+!Database.DBConnection categoriesFor: #catalogNameSeparator!enquiries!public! !
+!Database.DBConnection categoriesFor: #catalogTerm!enquiries!public! !
+!Database.DBConnection categoriesFor: #checkEmptyEnvironment!helpers!private! !
+!Database.DBConnection categoriesFor: #close!operations!public! !
+!Database.DBConnection categoriesFor: #closeNoFail!operations!public! !
+!Database.DBConnection categoriesFor: #columns:!enquiries!public! !
+!Database.DBConnection categoriesFor: #columns:qualifier:owner:table:!enquiries!public! !
+!Database.DBConnection categoriesFor: #commitTxn!public!transactions! !
+!Database.DBConnection categoriesFor: #connect!operations!public! !
+!Database.DBConnection categoriesFor: #connectString!accessing!public! !
+!Database.DBConnection categoriesFor: #connectString:!accessing!public! !
+!Database.DBConnection categoriesFor: #convertFunctions!enquiries!public! !
+!Database.DBConnection categoriesFor: #cursorCommitBehaviour!enquiries!public! !
+!Database.DBConnection categoriesFor: #cursorRollbackBehaviour!enquiries!public! !
+!Database.DBConnection categoriesFor: #databaseName!enquiries!public! !
+!Database.DBConnection categoriesFor: #dataSourceName!enquiries!public! !
+!Database.DBConnection categoriesFor: #dbCheckException:!exceptions!private! !
+!Database.DBConnection categoriesFor: #dbmsName!enquiries!public! !
+!Database.DBConnection categoriesFor: #dbmsVersion!enquiries!public! !
+!Database.DBConnection categoriesFor: #decodeBitMask:map:!helpers!private! !
+!Database.DBConnection categoriesFor: #defaultCursorType!constants!public! !
+!Database.DBConnection categoriesFor: #defaultFlags!constants!private! !
+!Database.DBConnection categoriesFor: #defaultTransactionIsolation!enquiries!public! !
+!Database.DBConnection categoriesFor: #disconnect!operations!private! !
+!Database.DBConnection categoriesFor: #driverHDBC!accessing!private! !
+!Database.DBConnection categoriesFor: #driverHEnv!accessing!private! !
+!Database.DBConnection categoriesFor: #driverName!enquiries!public! !
+!Database.DBConnection categoriesFor: #driverVersion!enquiries!public! !
+!Database.DBConnection categoriesFor: #dsn!accessing!public! !
+!Database.DBConnection categoriesFor: #dsn:!accessing!public! !
+!Database.DBConnection categoriesFor: #exceptionDetails:!exceptions!private! !
+!Database.DBConnection categoriesFor: #exec:!executing!public! !
+!Database.DBConnection categoriesFor: #exec:cursorType:!executing!public! !
+!Database.DBConnection categoriesFor: #finalize!finalizing!private! !
+!Database.DBConnection categoriesFor: #free!private!realizing/unrealizing! !
+!Database.DBConnection categoriesFor: #freeNoFail!private!realizing/unrealizing! !
+!Database.DBConnection categoriesFor: #freeStmtHandle:!helpers!private! !
+!Database.DBConnection categoriesFor: #getBoolInfo:!enquiries!private! !
+!Database.DBConnection categoriesFor: #getDWordAttribute:!accessing!private! !
+!Database.DBConnection categoriesFor: #getDWordInfo:!enquiries!private! !
+!Database.DBConnection categoriesFor: #getHandle!accessing!private! !
+!Database.DBConnection categoriesFor: #getHandle:!helpers!private! !
+!Database.DBConnection categoriesFor: #getStringAttribute:!accessing!private! !
+!Database.DBConnection categoriesFor: #getStringInfo:!enquiries!private! !
+!Database.DBConnection categoriesFor: #getWordInfo:!enquiries!private! !
+!Database.DBConnection categoriesFor: #hasAccessibleTables!enquiries!public!testing! !
+!Database.DBConnection categoriesFor: #hasIntegrityEnhancementFacility!enquiries!public!testing! !
+!Database.DBConnection categoriesFor: #identifierCase!enquiries!public! !
+!Database.DBConnection categoriesFor: #identifierQuoteCharacter!enquiries!public! !
+!Database.DBConnection categoriesFor: #indicesOf:!enquiries!public! !
+!Database.DBConnection categoriesFor: #initialize!initializing!private! !
+!Database.DBConnection categoriesFor: #initializeStatements!initializing!private! !
+!Database.DBConnection categoriesFor: #invalidateAllStmts!private!realizing/unrealizing! !
+!Database.DBConnection categoriesFor: #isReadOnly!accessing!public! !
+!Database.DBConnection categoriesFor: #isReadOnly:!accessing!public! !
+!Database.DBConnection categoriesFor: #isSAGCompliant!enquiries!public!testing! !
+!Database.DBConnection categoriesFor: #isSourceReadOnly!enquiries!public!testing! !
+!Database.DBConnection categoriesFor: #isTracing!public!testing! !
+!Database.DBConnection categoriesFor: #isTracing:!accessing!public! !
+!Database.DBConnection categoriesFor: #isTransactionCapable!enquiries!public!testing! !
+!Database.DBConnection categoriesFor: #loginTimeout!accessing!public! !
+!Database.DBConnection categoriesFor: #loginTimeout:!accessing!public! !
+!Database.DBConnection categoriesFor: #maxCatalogNameLength!enquiries!public! !
+!Database.DBConnection categoriesFor: #maxColumnNameLength!enquiries!public! !
+!Database.DBConnection categoriesFor: #maxConnections!enquiries!public! !
+!Database.DBConnection categoriesFor: #maxCursorNameLength!enquiries!public! !
+!Database.DBConnection categoriesFor: #maxProcedureNameLength!enquiries!public! !
+!Database.DBConnection categoriesFor: #maxSchemaNameLength!enquiries!public! !
+!Database.DBConnection categoriesFor: #maxStatements!enquiries!public! !
+!Database.DBConnection categoriesFor: #maxTableNameLength!enquiries!public! !
+!Database.DBConnection categoriesFor: #newParameterizedStatement:!operations!private! !
+!Database.DBConnection categoriesFor: #newStatement:!operations!private! !
+!Database.DBConnection categoriesFor: #numericFunctions!enquiries!public! !
+!Database.DBConnection categoriesFor: #odbcConformance!enquiries!public! !
+!Database.DBConnection categoriesFor: #odbcSQLConformance!enquiries!public! !
+!Database.DBConnection categoriesFor: #odbcVersion!enquiries!public! !
+!Database.DBConnection categoriesFor: #open!operations!public! !
+!Database.DBConnection categoriesFor: #postCopy!copying!public! !
+!Database.DBConnection categoriesFor: #prepare:!executing!public! !
+!Database.DBConnection categoriesFor: #prepare:cursorType:!executing!public! !
+!Database.DBConnection categoriesFor: #primaryKeysOf:!enquiries!public! !
+!Database.DBConnection categoriesFor: #printOn:!printing!public! !
+!Database.DBConnection categoriesFor: #procedure:owner:name:!enquiries!public! !
+!Database.DBConnection categoriesFor: #procedures!enquiries!public! !
+!Database.DBConnection categoriesFor: #procedureTerm!enquiries!public! !
+!Database.DBConnection categoriesFor: #pwd!accessing!public! !
+!Database.DBConnection categoriesFor: #pwd:!accessing!public! !
+!Database.DBConnection categoriesFor: #query:!executing!public! !
+!Database.DBConnection categoriesFor: #query:cursorType:!executing!public! !
+!Database.DBConnection categoriesFor: #query:forwardOnly:!executing!public! !
+!Database.DBConnection categoriesFor: #queryForeignKeysOf:!enquiries!private! !
+!Database.DBConnection categoriesFor: #rollbackTxn!public!transactions! !
+!Database.DBConnection categoriesFor: #rowIdColumns:!enquiries!public! !
+!Database.DBConnection categoriesFor: #rowVersionColumns:!enquiries!public! !
+!Database.DBConnection categoriesFor: #schemaTerm!enquiries!public! !
+!Database.DBConnection categoriesFor: #searchPatternEscape!enquiries!public! !
+!Database.DBConnection categoriesFor: #serverName!enquiries!public! !
+!Database.DBConnection categoriesFor: #setAttribute:value:size:!accessing!private! !
+!Database.DBConnection categoriesFor: #setDefaultAttributes!helpers!private! !
+!Database.DBConnection categoriesFor: #specialColumns:qualifier:owner:name:scope:nullable:!enquiries!public! !
+!Database.DBConnection categoriesFor: #statements!accessing!public! !
+!Database.DBConnection categoriesFor: #statisticsFor:type:accurate:!enquiries!public! !
+!Database.DBConnection categoriesFor: #stringFunctions!enquiries!public! !
+!Database.DBConnection categoriesFor: #supportedCursorTypes!enquiries!public! !
+!Database.DBConnection categoriesFor: #supportedTransactionIsolationLevels!enquiries!public!testing! !
+!Database.DBConnection categoriesFor: #supportsExpressionsInOrderBy!enquiries!public!testing! !
+!Database.DBConnection categoriesFor: #supportsMultipleActiveTransactions!enquiries!public!testing! !
+!Database.DBConnection categoriesFor: #supportsMultipleResultSets!enquiries!public!testing! !
+!Database.DBConnection categoriesFor: #supportsOuterJoins!enquiries!public!testing! !
+!Database.DBConnection categoriesFor: #supportsRowUpdates!enquiries!public!testing! !
+!Database.DBConnection categoriesFor: #systemFunctions!enquiries!public! !
+!Database.DBConnection categoriesFor: #tables!enquiries!public! !
+!Database.DBConnection categoriesFor: #tables:owners:tables:types:!enquiries!public! !
+!Database.DBConnection categoriesFor: #tableTerm!enquiries!public! !
+!Database.DBConnection categoriesFor: #timeDateFunctions!enquiries!public! !
+!Database.DBConnection categoriesFor: #traceFile!accessing!public! !
+!Database.DBConnection categoriesFor: #traceFile:!accessing!public! !
+!Database.DBConnection categoriesFor: #transaction!public!transactions! !
+!Database.DBConnection categoriesFor: #transaction:!private!transactions! !
+!Database.DBConnection categoriesFor: #transactionIsolation!accessing!public! !
+!Database.DBConnection categoriesFor: #transactionIsolation:!accessing!public! !
+!Database.DBConnection categoriesFor: #translate!accessing!public! !
+!Database.DBConnection categoriesFor: #translate:!accessing!public! !
+!Database.DBConnection categoriesFor: #translationDLL!accessing!public! !
+!Database.DBConnection categoriesFor: #translationDLL:!accessing!public! !
+!Database.DBConnection categoriesFor: #uid!accessing!public! !
+!Database.DBConnection categoriesFor: #uid:!accessing!public! !
+!Database.DBConnection categoriesFor: #uniqueIndicesOf:!enquiries!public! !
+!Database.DBConnection categoriesFor: #useDriverCompletion!accessing!public! !
+!Database.DBConnection categoriesFor: #useDriverCompletion:!accessing!public! !
+!Database.DBConnection categoriesFor: #userName!enquiries!public! !
+!Database.DBConnection categoriesFor: #views!enquiries!public! !
+!Database.DBConnection categoriesFor: #willAutoCommit!public!testing! !
+!Database.DBConnection categoriesFor: #willAutoCommit:!accessing!public! !
 
-!DBConnection class methodsFor!
+!Database.DBConnection class methodsFor!
 
 allocHandle
 	"Private - Answer a new connection handle."
 
 	| hDBC ret |
 	hDBC := External.Handle new.
-	ret := ODBCLibrary default
+	ret := OS.ODBCLibrary default
 			sqlAllocHandle: SQL_HANDLE_DBC
 			inputHandle: self environmentHandle
 			outputHandlePtr: hDBC.
@@ -1301,15 +1299,14 @@ connectString: aString do: aTwoArgBlock
 				paramValue := (stream peekFor: ${) ifTrue: [stream upTo: $}] ifFalse: [stream upTo: $;].
 				aTwoArgBlock value: paramName value: paramValue]!
 
-dbCheckException: anIntegerRetCode 
+dbCheckException: anIntegerRetCode
 	"Private - Checks anIntegerRetCode to see if a DBError or DBWarning should be signalled.
 	Note that as of Dolphin 4.0, DBWarning is actually a notification, which is a more appropriate
 	level of reporting for SQL_SUCCESS_WITH_INFO."
 
-	^anIntegerRetCode = SQL_SUCCESS 
+	^anIntegerRetCode = SQL_SUCCESS
 		ifFalse: 
 			["Signal an error or warning - decide which"
-
 			((anIntegerRetCode = SQL_SUCCESS_WITH_INFO or: [anIntegerRetCode = SQL_NO_DATA])
 				ifTrue: [DBWarning]
 				ifFalse: [DBError]) signalWith: (self exceptionDetails: anIntegerRetCode)]!
@@ -1321,10 +1318,10 @@ enumerateDataSources
 	| dsn description dsnLength descriptionLength hEnv odbc ret sources |
 	dsn := Utf16String newFixed: SQL_MAX_DSN_LENGTH.
 	description := Utf16String newFixed: 4.
-	dsnLength := SWORD new.
-	descriptionLength := SWORD new.
+	dsnLength := External.SWORD new.
+	descriptionLength := External.SWORD new.
 	hEnv := self environmentHandle.
-	odbc := ODBCLibrary default.
+	odbc := OS.ODBCLibrary default.
 	
 	[ret := odbc
 				sqlDataSources: hEnv
@@ -1364,7 +1361,7 @@ environmentHandle
 		ifTrue: 
 			[| ret |
 			HEnv := External.Handle new.
-			ret := ODBCLibrary default 
+			ret := OS.ODBCLibrary default 
 						sqlAllocHandle: SQL_HANDLE_ENV
 						inputHandle: nil
 						outputHandlePtr: HEnv.
@@ -1375,12 +1372,12 @@ environmentHandle
 			self setDefaultEnvAttrs].
 	^HEnv!
 
-exceptionDetails: retCode 
+exceptionDetails: retCode
 	"Private - Answer a <DBExceptionDetails> instance that describes the state of the
 	receiver following an exception with the specified <integer> return code. This will 
 	be available as the tag of a subsequent signalled DBError or DBWarning."
 
-	^(DBExceptionDetails new)
+	^DBExceptionDetails new
 		code: retCode;
 		hEnv: HEnv;
 		yourself!
@@ -1401,7 +1398,7 @@ freeEnvironment
 	HEnv isNull 
 		ifFalse: 
 			[| ret |
-			ret := ODBCLibrary default sqlFreeHandle: SQL_HANDLE_ENV handle: HEnv.
+			ret := OS.ODBCLibrary default sqlFreeHandle: SQL_HANDLE_ENV handle: HEnv.
 			self dbCheckException: ret.
 			HEnv := nil]!
 
@@ -1434,7 +1431,7 @@ invalidateHandle: anExternalHandle
 	when it only knows the handle"
 
 	| ret odbc |
-	odbc := ODBCLibrary default.
+	odbc := OS.ODBCLibrary default.
 	ret := odbc sqlDisconnect: anExternalHandle.
 	ret ~= SQL_SUCCESS ifTrue: [DBError signalWith: (self exceptionDetails: ret)].
 	ret := odbc sqlFreeHandle: SQL_HANDLE_DBC handle: anExternalHandle.
@@ -1456,18 +1453,18 @@ odbcVersion
 	"self odbcVersion"
 
 	| version |
-	version := SWORD new.
-	self dbCheckException: (ODBCLibrary default
+	version := ByteArray newFixed: 2.
+	self dbCheckException: (OS.ODBCLibrary default
 				sqlGetEnvAttr: HEnv
 				infoType: SQL_ATTR_ODBC_VERSION
 				infoValuePtr: version
 				bufferLength: nil
 				stringLengthPtr: nil).
-	^version value!
+	^version swordAtOffset: 0!
 
 setDefaultEnvAttrs
 	| ret |
-	ret := ODBCLibrary default 
+	ret := OS.ODBCLibrary default 
 				sqlSetEnvAttr: HEnv
 				attribute: SQL_ATTR_ODBC_VERSION
 				valuePtr: SQL_OV_ODBC3
@@ -1475,31 +1472,31 @@ setDefaultEnvAttrs
 	self dbCheckException: ret.
 	^ret!
 
-transact: aDBConnection action: anInteger 
+transact: aDBConnection action: anInteger
 	"Private - Performs the requested transaction action on the specified
 	 connection (which if Null implies that ODBC should commit/rollback
 	 all connections within the environment."
 
 	| ret |
-	ret := ODBCLibrary default 
+	ret := OS.ODBCLibrary default
 				sqlEndTran: SQL_HANDLE_DBC
 				handle: aDBConnection asParameter
 				completionType: anInteger.
-	ret ~= SQL_SUCCESS ifTrue: [DBError signalWith: (aDBConnection exceptionDetails: ret)].! !
-!DBConnection class categoriesFor: #allocHandle!helpers!private! !
-!DBConnection class categoriesFor: #connections!accessing!public! !
-!DBConnection class categoriesFor: #connectString:do:!operations!private! !
-!DBConnection class categoriesFor: #dbCheckException:!exceptions!private! !
-!DBConnection class categoriesFor: #enumerateDataSources!accessing!public! !
-!DBConnection class categoriesFor: #environmentHandle!accessing!private! !
-!DBConnection class categoriesFor: #exceptionDetails:!exceptions!private! !
-!DBConnection class categoriesFor: #freeAll!private!realizing/unrealizing! !
-!DBConnection class categoriesFor: #freeEnvironment!private!realizing/unrealizing! !
-!DBConnection class categoriesFor: #initialize!initializing!private! !
-!DBConnection class categoriesFor: #invalidateHandle:!private!realizing/unrealizing! !
-!DBConnection class categoriesFor: #new!instance creation!public! !
-!DBConnection class categoriesFor: #newConnections!accessing!private! !
-!DBConnection class categoriesFor: #odbcVersion!accessing!public! !
-!DBConnection class categoriesFor: #setDefaultEnvAttrs!accessing!private! !
-!DBConnection class categoriesFor: #transact:action:!operations!private! !
+	ret ~= SQL_SUCCESS ifTrue: [DBError signalWith: (aDBConnection exceptionDetails: ret)]! !
+!Database.DBConnection class categoriesFor: #allocHandle!helpers!private! !
+!Database.DBConnection class categoriesFor: #connections!accessing!public! !
+!Database.DBConnection class categoriesFor: #connectString:do:!operations!private! !
+!Database.DBConnection class categoriesFor: #dbCheckException:!exceptions!private! !
+!Database.DBConnection class categoriesFor: #enumerateDataSources!accessing!public! !
+!Database.DBConnection class categoriesFor: #environmentHandle!accessing!private! !
+!Database.DBConnection class categoriesFor: #exceptionDetails:!exceptions!private! !
+!Database.DBConnection class categoriesFor: #freeAll!private!realizing/unrealizing! !
+!Database.DBConnection class categoriesFor: #freeEnvironment!private!realizing/unrealizing! !
+!Database.DBConnection class categoriesFor: #initialize!initializing!private! !
+!Database.DBConnection class categoriesFor: #invalidateHandle:!private!realizing/unrealizing! !
+!Database.DBConnection class categoriesFor: #new!instance creation!public! !
+!Database.DBConnection class categoriesFor: #newConnections!accessing!private! !
+!Database.DBConnection class categoriesFor: #odbcVersion!accessing!public! !
+!Database.DBConnection class categoriesFor: #setDefaultEnvAttrs!accessing!private! !
+!Database.DBConnection class categoriesFor: #transact:action:!operations!private! !
 

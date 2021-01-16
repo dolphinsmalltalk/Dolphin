@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Object subclass: #DBErrorDetails
+Core.Object subclass: #'Database.DBErrorDetails'
 	instanceVariableNames: 'msg nativeErr sqlState origin'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-DBErrorDetails guid: (GUID fromString: '{87b4c473-026e-11d3-9fd7-00a0cc3e4a32}')!
-DBErrorDetails comment: 'DBErrorDetails instances hold information about a particular ODBC sub-error.
+Database.DBErrorDetails guid: (Core.GUID fromString: '{87b4c473-026e-11d3-9fd7-00a0cc3e4a32}')!
+Database.DBErrorDetails comment: 'DBErrorDetails instances hold information about a particular ODBC sub-error.
 
 Instance Variables:
 	msg		<String>. Error message text.
@@ -15,8 +15,8 @@ Instance Variables:
 	sqlState		<String>. ODBC error code.
 	origin		<String>. Layer from which the error originated.
 '!
-!DBErrorDetails categoriesForClass!ODBC Interface! !
-!DBErrorDetails methodsFor!
+!Database.DBErrorDetails categoriesForClass!ODBC Interface! !
+!Database.DBErrorDetails methodsFor!
 
 messageText
 	"Answer a text representation of the error of the form:
@@ -55,15 +55,15 @@ sqlState: aString
 	"Private - Set the sqlState instance variable to aString."
 
 	sqlState := aString! !
-!DBErrorDetails categoriesFor: #messageText!accessing!public! !
-!DBErrorDetails categoriesFor: #msg!accessing!public! !
-!DBErrorDetails categoriesFor: #msg:!accessing!private! !
-!DBErrorDetails categoriesFor: #nativeErr:!accessing!private! !
-!DBErrorDetails categoriesFor: #origin:!accessing!private! !
-!DBErrorDetails categoriesFor: #sqlState!accessing!public! !
-!DBErrorDetails categoriesFor: #sqlState:!accessing!private! !
+!Database.DBErrorDetails categoriesFor: #messageText!accessing!public! !
+!Database.DBErrorDetails categoriesFor: #msg!accessing!public! !
+!Database.DBErrorDetails categoriesFor: #msg:!accessing!private! !
+!Database.DBErrorDetails categoriesFor: #nativeErr:!accessing!private! !
+!Database.DBErrorDetails categoriesFor: #origin:!accessing!private! !
+!Database.DBErrorDetails categoriesFor: #sqlState!accessing!public! !
+!Database.DBErrorDetails categoriesFor: #sqlState:!accessing!private! !
 
-!DBErrorDetails class methodsFor!
+!Database.DBErrorDetails class methodsFor!
 
 fromSQLError: errorString
 	"Answer a new instance of the receiver built from the information in the 
@@ -75,5 +75,5 @@ fromSQLError: errorString
 		msg: errorString;
 		origin: (errorString copyFrom: 1 to: lastBrkt);
 		yourself! !
-!DBErrorDetails class categoriesFor: #fromSQLError:!instance creation!public! !
+!Database.DBErrorDetails class categoriesFor: #fromSQLError:!instance creation!public! !
 

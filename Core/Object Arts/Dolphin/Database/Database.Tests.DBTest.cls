@@ -1,19 +1,19 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Core.Tests.DolphinTest subclass: #DBTest
+Core.Tests.DolphinTest subclass: #'Database.Tests.DBTest'
 	instanceVariableNames: 'connection'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-DBTest guid: (Core.GUID fromString: '{13e9a82d-7aae-43aa-864a-a15706b23ae3}')!
-DBTest isNonInstantiable: true!
-DBTest comment: ''!
-!DBTest categoriesForClass!Unclassified! !
-!DBTest methodsFor!
+Database.Tests.DBTest guid: (Core.GUID fromString: '{13e9a82d-7aae-43aa-864a-a15706b23ae3}')!
+Database.Tests.DBTest isNonInstantiable: true!
+Database.Tests.DBTest comment: ''!
+!Database.Tests.DBTest categoriesForClass!Unclassified! !
+!Database.Tests.DBTest methodsFor!
 
 databaseResource
-	^AccessNorthwindDB current !
+	^AccessNorthwindDB current!
 
 employeeNames
 	^#('Davolio' 'Fuller' 'Leverling' 'Peacock' 'Buchanan' 'Suyama' 'King' 'Callahan' 'Dodsworth')!
@@ -48,11 +48,11 @@ testIsEmpty
 	self assert: results isEmpty.
 	results := connection query: 'select CategoryID, CategoryName from categories where CategoryID = 1'.
 	self deny: results isEmpty! !
-!DBTest categoriesFor: #databaseResource!helpers!private! !
-!DBTest categoriesFor: #employeeNames!helpers!private! !
-!DBTest categoriesFor: #field:fromRow:!helpers!private! !
-!DBTest categoriesFor: #setUp!public!running! !
-!DBTest categoriesFor: #tearDown!public!running! !
-!DBTest categoriesFor: #testCollect!public!unit tests! !
-!DBTest categoriesFor: #testIsEmpty!public!unit tests! !
+!Database.Tests.DBTest categoriesFor: #databaseResource!helpers!private! !
+!Database.Tests.DBTest categoriesFor: #employeeNames!helpers!private! !
+!Database.Tests.DBTest categoriesFor: #field:fromRow:!helpers!private! !
+!Database.Tests.DBTest categoriesFor: #setUp!public!running! !
+!Database.Tests.DBTest categoriesFor: #tearDown!public!running! !
+!Database.Tests.DBTest categoriesFor: #testCollect!public!unit tests! !
+!Database.Tests.DBTest categoriesFor: #testIsEmpty!public!unit tests! !
 

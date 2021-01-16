@@ -1,16 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Object subclass: #DBColAttr
+Core.Object subclass: #'Database.DBColAttr'
 	instanceVariableNames: 'columnNumber name length sqlType precision scale special'
 	classVariableNames: ''
-	poolDictionaries: 'DBColFlags ODBCConstants ODBCCTypes ODBCTypes'
+	imports: #(#{Database.DBColFlags} #{OS.ODBCTypes} #{OS.ODBCConstants} #{OS.ODBCCTypes})
 	classInstanceVariableNames: ''
 	classConstants: {
-		'CTypesExtraBytes' -> #(0 2 2 2 0 0 0 0 0 0 1 0 1 1 1 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0).
-		'SQLToCTypes' -> #(-11 -8 -8 -8 -7 -6 -25 -2 -2 -2 1 99 1 1 1 4 5 8 7 8 nil nil nil 1 nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil 91 92 93)
+		'CTypesExtraBytes' -> #(16r0 16r2 16r2 16r2 16r0 16r0 16r0 16r0 16r0 16r0 16r1 16r0 16r1 16r1 16r1 16r0 16r0 16r0 16r0 16r0 16r0 16r0 16r0 16r1 16r0 16r0 16r0 16r0 16r0 16r0 16r0 16r0 16r0 16r0 16r0 16r0 16r0 16r0 16r0 16r0 16r0 16r0 16r0 16r0 16r0 16r0 16r0 16r0 16r0 16r0 16r0 16r0 16r0 16r0 16r0 16r0 16r0 16r0 16r0 16r0 16r0 16r0 16r0 16r0 16r0 16r0 16r0 16r0 16r0 16r0 16r0 16r0 16r0 16r0 16r0 16r0 16r0 16r0 16r0 16r0 16r0 16r0 16r0 16r0 16r0 16r0 16r0 16r0 16r0 16r0 16r0 16r0 16r0 16r0 16r0 16r0 16r0 16r0 16r0 16r0 16r0 16r0 16r0 16r0 16r0).
+		'SQLToCTypes' -> #(-16rB -16r8 -16r8 -16r8 -16r7 -16r6 -16r19 -16r2 -16r2 -16r2 16r1 16r63 16r1 16r1 16r1 16r4 16r5 16r8 16r7 16r8 nil nil nil 16r1 nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil 16r5B 16r5C 16r5D)
 	}!
-DBColAttr guid: (GUID fromString: '{87b4c471-026e-11d3-9fd7-00a0cc3e4a32}')!
-DBColAttr comment: 'A DBColAttr instance describes an SQL column in a table or in a DBRow within a DBResultSet. 
+Database.DBColAttr guid: (Core.GUID fromString: '{87b4c471-026e-11d3-9fd7-00a0cc3e4a32}')!
+Database.DBColAttr comment: 'A DBColAttr instance describes an SQL column in a table or in a DBRow within a DBResultSet. 
 
 Instance Variables:
 	columnNumber	<Integer>. Index of column in the result set.
@@ -25,8 +25,8 @@ Class Variables:
 	ODBCBaseTypes	<IdentityDictionary>
 
 '!
-!DBColAttr categoriesForClass!ODBC Interface! !
-!DBColAttr methodsFor!
+!Database.DBColAttr categoriesForClass!ODBC Interface! !
+!Database.DBColAttr methodsFor!
 
 columnNumber
 	"Answer the instance variable columnNumber"
@@ -180,7 +180,7 @@ printOn: aStream
 		nextPutAll: ', ';
 		nextPutAll: self name;
 		nextPutAll: ', ';
-		nextPutAll: (ODBCTypes keyAtValue: self type ifAbsent: ['SQL_TYPE_NULL']);
+		nextPutAll: (OS.ODBCTypes keyAtValue: self type ifAbsent: ['SQL_TYPE_NULL']);
 		nextPutAll: ', ';
 		print: self length;
 		nextPut: $)!
@@ -254,42 +254,42 @@ updateRuleMask: anInteger
 		self specialFlagAt:
 			(1 bitShift: (anInteger+8)) 
 			put: true ]! !
-!DBColAttr categoriesFor: #columnNumber!accessing!public! !
-!DBColAttr categoriesFor: #columnNumber:!accessing!private! !
-!DBColAttr categoriesFor: #cType!accessing!private! !
-!DBColAttr categoriesFor: #deleteRuleMask!accessing!public! !
-!DBColAttr categoriesFor: #deleteRuleMask:!accessing!private! !
-!DBColAttr categoriesFor: #hasVariableTransferOctetLength!public!testing! !
-!DBColAttr categoriesFor: #initialize!initializing!private! !
-!DBColAttr categoriesFor: #isBinaryType!private!testing! !
-!DBColAttr categoriesFor: #isCharType!private!testing! !
-!DBColAttr categoriesFor: #isFixedPointType!private!testing! !
-!DBColAttr categoriesFor: #isForeignKey!public!testing! !
-!DBColAttr categoriesFor: #isForeignKey:!accessing!private! !
-!DBColAttr categoriesFor: #isKey!public!testing! !
-!DBColAttr categoriesFor: #isPrimaryKey!public!testing! !
-!DBColAttr categoriesFor: #isPrimaryKey:!accessing!private! !
-!DBColAttr categoriesFor: #length!accessing!public! !
-!DBColAttr categoriesFor: #length:!accessing!private! !
-!DBColAttr categoriesFor: #lengthC!accessing!private! !
-!DBColAttr categoriesFor: #name!accessing!public! !
-!DBColAttr categoriesFor: #name:!accessing!private! !
-!DBColAttr categoriesFor: #parameterType!accessing!public! !
-!DBColAttr categoriesFor: #parameterType:!accessing!public! !
-!DBColAttr categoriesFor: #precision!accessing!public! !
-!DBColAttr categoriesFor: #precision:!accessing!private! !
-!DBColAttr categoriesFor: #printOn:!printing!public! !
-!DBColAttr categoriesFor: #scale!accessing!public! !
-!DBColAttr categoriesFor: #scale:!accessing!private! !
-!DBColAttr categoriesFor: #specialFlagAt:!accessing!private! !
-!DBColAttr categoriesFor: #specialFlagAt:put:!accessing!private! !
-!DBColAttr categoriesFor: #transferOctetLength!accessing!initializing!private! !
-!DBColAttr categoriesFor: #type!accessing!public! !
-!DBColAttr categoriesFor: #type:!accessing!private! !
-!DBColAttr categoriesFor: #updateRuleMask!accessing!public! !
-!DBColAttr categoriesFor: #updateRuleMask:!accessing!private! !
+!Database.DBColAttr categoriesFor: #columnNumber!accessing!public! !
+!Database.DBColAttr categoriesFor: #columnNumber:!accessing!private! !
+!Database.DBColAttr categoriesFor: #cType!accessing!private! !
+!Database.DBColAttr categoriesFor: #deleteRuleMask!accessing!public! !
+!Database.DBColAttr categoriesFor: #deleteRuleMask:!accessing!private! !
+!Database.DBColAttr categoriesFor: #hasVariableTransferOctetLength!public!testing! !
+!Database.DBColAttr categoriesFor: #initialize!initializing!private! !
+!Database.DBColAttr categoriesFor: #isBinaryType!private!testing! !
+!Database.DBColAttr categoriesFor: #isCharType!private!testing! !
+!Database.DBColAttr categoriesFor: #isFixedPointType!private!testing! !
+!Database.DBColAttr categoriesFor: #isForeignKey!public!testing! !
+!Database.DBColAttr categoriesFor: #isForeignKey:!accessing!private! !
+!Database.DBColAttr categoriesFor: #isKey!public!testing! !
+!Database.DBColAttr categoriesFor: #isPrimaryKey!public!testing! !
+!Database.DBColAttr categoriesFor: #isPrimaryKey:!accessing!private! !
+!Database.DBColAttr categoriesFor: #length!accessing!public! !
+!Database.DBColAttr categoriesFor: #length:!accessing!private! !
+!Database.DBColAttr categoriesFor: #lengthC!accessing!private! !
+!Database.DBColAttr categoriesFor: #name!accessing!public! !
+!Database.DBColAttr categoriesFor: #name:!accessing!private! !
+!Database.DBColAttr categoriesFor: #parameterType!accessing!public! !
+!Database.DBColAttr categoriesFor: #parameterType:!accessing!public! !
+!Database.DBColAttr categoriesFor: #precision!accessing!public! !
+!Database.DBColAttr categoriesFor: #precision:!accessing!private! !
+!Database.DBColAttr categoriesFor: #printOn:!printing!public! !
+!Database.DBColAttr categoriesFor: #scale!accessing!public! !
+!Database.DBColAttr categoriesFor: #scale:!accessing!private! !
+!Database.DBColAttr categoriesFor: #specialFlagAt:!accessing!private! !
+!Database.DBColAttr categoriesFor: #specialFlagAt:put:!accessing!private! !
+!Database.DBColAttr categoriesFor: #transferOctetLength!accessing!initializing!private! !
+!Database.DBColAttr categoriesFor: #type!accessing!public! !
+!Database.DBColAttr categoriesFor: #type:!accessing!private! !
+!Database.DBColAttr categoriesFor: #updateRuleMask!accessing!public! !
+!Database.DBColAttr categoriesFor: #updateRuleMask:!accessing!private! !
 
-!DBColAttr class methodsFor!
+!Database.DBColAttr class methodsFor!
 
 initialize
 	"Private - Initialize the receiver's class variables.
@@ -341,6 +341,6 @@ new
 	"Answer a new initialized instance of the receiver."
 
 	^super new initialize! !
-!DBColAttr class categoriesFor: #initialize!initializing!private! !
-!DBColAttr class categoriesFor: #new!instance creation!public! !
+!Database.DBColAttr class categoriesFor: #initialize!initializing!private! !
+!Database.DBColAttr class categoriesFor: #new!instance creation!public! !
 

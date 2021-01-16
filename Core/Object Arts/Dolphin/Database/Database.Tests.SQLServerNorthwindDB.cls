@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-DBConnectionTestResource subclass: #SQLServerNorthwindDB
+Database.Tests.DBConnectionTestResource subclass: #'Database.Tests.SQLServerNorthwindDB'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-SQLServerNorthwindDB guid: (Core.GUID fromString: '{2575aff5-9fad-4133-bf64-34ff8442f774}')!
-SQLServerNorthwindDB comment: ''!
-!SQLServerNorthwindDB categoriesForClass!Unclassified! !
-!SQLServerNorthwindDB methodsFor!
+Database.Tests.SQLServerNorthwindDB guid: (Core.GUID fromString: '{2575aff5-9fad-4133-bf64-34ff8442f774}')!
+Database.Tests.SQLServerNorthwindDB comment: ''!
+!Database.Tests.SQLServerNorthwindDB categoriesForClass!Unclassified! !
+!Database.Tests.SQLServerNorthwindDB methodsFor!
 
 connectString
 	"Private - APPVEYOR config is 'DRIVER=SQL Server;Server=(local)\SQL2017;Database=master;User ID=sa;Password=Password12!!'"
@@ -27,11 +27,11 @@ createDatabase
 				with: self uid
 				with: self pwd
 				with: sql.
-	process := ExternalProcess new.
+	process := Smalltalk.ExternalProcess new.
 	process commandLine: cmd.
 	^
 	[process executeSync.
-	true] on: ExternalProcessExecuteError do: [:ex | false]!
+	true] on: Smalltalk.ExternalProcessExecuteError do: [:ex | false]!
 
 dropDatabase
 	self connection
@@ -58,11 +58,11 @@ serverName
 
 uid
 	^'sa'! !
-!SQLServerNorthwindDB categoriesFor: #connectString!private! !
-!SQLServerNorthwindDB categoriesFor: #createDatabase!private! !
-!SQLServerNorthwindDB categoriesFor: #dropDatabase!private! !
-!SQLServerNorthwindDB categoriesFor: #newConnection!public! !
-!SQLServerNorthwindDB categoriesFor: #pwd!private! !
-!SQLServerNorthwindDB categoriesFor: #serverName!private! !
-!SQLServerNorthwindDB categoriesFor: #uid!private! !
+!Database.Tests.SQLServerNorthwindDB categoriesFor: #connectString!private! !
+!Database.Tests.SQLServerNorthwindDB categoriesFor: #createDatabase!private! !
+!Database.Tests.SQLServerNorthwindDB categoriesFor: #dropDatabase!private! !
+!Database.Tests.SQLServerNorthwindDB categoriesFor: #newConnection!public! !
+!Database.Tests.SQLServerNorthwindDB categoriesFor: #pwd!private! !
+!Database.Tests.SQLServerNorthwindDB categoriesFor: #serverName!private! !
+!Database.Tests.SQLServerNorthwindDB categoriesFor: #uid!private! !
 

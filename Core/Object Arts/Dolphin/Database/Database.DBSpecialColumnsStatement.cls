@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-DBSchemaStatement subclass: #DBSpecialColumnsStatement
+Database.DBSchemaStatement subclass: #'Database.DBSpecialColumnsStatement'
 	instanceVariableNames: 'columnType scope nullable'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-DBSpecialColumnsStatement guid: (GUID fromString: '{11e39b07-10d8-43b0-8a5c-43c2eecf5eb9}')!
-DBSpecialColumnsStatement comment: ''!
-!DBSpecialColumnsStatement categoriesForClass!ODBC Interface! !
-!DBSpecialColumnsStatement methodsFor!
+Database.DBSpecialColumnsStatement guid: (Core.GUID fromString: '{11e39b07-10d8-43b0-8a5c-43c2eecf5eb9}')!
+Database.DBSpecialColumnsStatement comment: ''!
+!Database.DBSpecialColumnsStatement categoriesForClass!ODBC Interface! !
+!Database.DBSpecialColumnsStatement methodsFor!
 
 columnType
 	^columnType!
@@ -21,7 +21,7 @@ executeStatement
 	"Private - Execute the database command that the receiver represents.
 	Answer the <integer> return code."
 
-	^ODBCLibrary default 
+	^OS.ODBCLibrary default 
 		sqlSpecialColumns: self allocatedHandle
 		identifierType: self columnType
 		catalogName: self catalogName
@@ -44,11 +44,11 @@ scope
 
 scope: anInteger
 	scope := anInteger! !
-!DBSpecialColumnsStatement categoriesFor: #columnType!accessing!public! !
-!DBSpecialColumnsStatement categoriesFor: #columnType:!accessing!public! !
-!DBSpecialColumnsStatement categoriesFor: #executeStatement!operations!private! !
-!DBSpecialColumnsStatement categoriesFor: #nullable!accessing!public! !
-!DBSpecialColumnsStatement categoriesFor: #nullable:!accessing!public! !
-!DBSpecialColumnsStatement categoriesFor: #scope!accessing!public! !
-!DBSpecialColumnsStatement categoriesFor: #scope:!accessing!public! !
+!Database.DBSpecialColumnsStatement categoriesFor: #columnType!accessing!public! !
+!Database.DBSpecialColumnsStatement categoriesFor: #columnType:!accessing!public! !
+!Database.DBSpecialColumnsStatement categoriesFor: #executeStatement!operations!private! !
+!Database.DBSpecialColumnsStatement categoriesFor: #nullable!accessing!public! !
+!Database.DBSpecialColumnsStatement categoriesFor: #nullable:!accessing!public! !
+!Database.DBSpecialColumnsStatement categoriesFor: #scope!accessing!public! !
+!Database.DBSpecialColumnsStatement categoriesFor: #scope:!accessing!public! !
 

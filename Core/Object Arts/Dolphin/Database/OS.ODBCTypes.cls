@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-SharedPool subclass: #ODBCTypes
+Kernel.SharedPool subclass: #'OS.ODBCTypes'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -50,6 +50,6 @@ SharedPool subclass: #ODBCTypes
 		'SQL_WLONGVARCHAR' -> -16rA.
 		'SQL_WVARCHAR' -> -16r9
 	}!
-ODBCTypes guid: (GUID fromString: '{91b1ee0d-f895-4316-aa43-befde6df9df0}')!
-ODBCTypes comment: ''!
-!ODBCTypes categoriesForClass!Unclassified! !
+OS.ODBCTypes guid: (Core.GUID fromString: '{91b1ee0d-f895-4316-aa43-befde6df9df0}')!
+OS.ODBCTypes comment: ''!
+!OS.ODBCTypes categoriesForClass!Unclassified! !

@@ -5,6 +5,8 @@ package paxVersion: 2.1;
 
 
 package setClassNames: #(
+	#{ADODB.Tests}
+	#{ADODB.Tests.ADODBTest}
 	#{OS.COM.Tests}
 	#{OS.COM.Tests.CLSIDTest}
 	#{OS.COM.Tests.EventSinkTest}
@@ -12,7 +14,6 @@ package setClassNames: #(
 	#{OS.COM.Tests.InterfaceTest}
 	#{OS.COM.Tests.TestTypelib}
 	#{OS.COM.Tests.TypeLibraryAnalyzerTest}
-	#{Smalltalk.ADODBTest}
 ).
 
 package setMethodNames: #(
@@ -22,19 +23,26 @@ package setMethodNames: #(
 package setPrerequisites: #(
 	'Automation\ActiveX Automation'
 	'Connection Points\ActiveX Connection Points'
-	'Components\ADO\ADODB (Old Names)'
+	'Components\ADO\ADODB'
 	'..\Database\Database Tests'
 	'..\Base\Dolphin'
 	'..\Base\Dolphin Base Tests'
 	'COM\OLE COM'
 	'Components\Font\OLE Font'
 	'..\..\..\Contributions\Camp Smalltalk\SUnit\SUnit'
+	'..\..\..\Contributions\Camp Smalltalk\SUnit\SUnitPreload'
 ).
 
 package!
 
 "Class Definitions"!
 
+ADODB subclass: #'ADODB.Tests'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #(#{XProgramming.SUnit})
+	classInstanceVariableNames: ''
+	classConstants: {}!
 OS.COM subclass: #'OS.COM.Tests'
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -59,7 +67,7 @@ Core.Tests.DolphinTest subclass: #'OS.COM.Tests.TypeLibraryAnalyzerTest'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-DBTest subclass: #ADODBTest
+Database.Tests.DBTest subclass: #'ADODB.Tests.ADODBTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

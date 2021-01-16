@@ -1,19 +1,19 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ExternalStructure subclass: #ODBCTIME
+External.Structure subclass: #'OS.ODBCTIME'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_hour' -> 16r0.
 		'_OffsetOf_minute' -> 16r2.
 		'_OffsetOf_second' -> 16r4
 	}!
-ODBCTIME guid: (GUID fromString: '{87b4c598-026e-11d3-9fd7-00a0cc3e4a32}')!
-ODBCTIME comment: 'ODBCTIME is a representation of the same named Win32 ODBC structure.'!
-!ODBCTIME categoriesForClass!External-Data-Structured-ODBC!ODBC Interface! !
-!ODBCTIME methodsFor!
+OS.ODBCTIME guid: (Core.GUID fromString: '{87b4c598-026e-11d3-9fd7-00a0cc3e4a32}')!
+OS.ODBCTIME comment: 'ODBCTIME is a representation of the same named Win32 ODBC structure.'!
+!OS.ODBCTIME categoriesForClass!External-Data-Structured-ODBC!ODBC Interface! !
+!OS.ODBCTIME methodsFor!
 
 asTime
 	"Answers a Time which represents the receiver."
@@ -57,16 +57,16 @@ time: aTime
 		hour: aTime hour;
 		minute: aTime minute;
 		second: aTime second! !
-!ODBCTIME categoriesFor: #asTime!converting!public! !
-!ODBCTIME categoriesFor: #hour!**compiled accessors**!public! !
-!ODBCTIME categoriesFor: #hour:!**compiled accessors**!public! !
-!ODBCTIME categoriesFor: #minute!**compiled accessors**!public! !
-!ODBCTIME categoriesFor: #minute:!**compiled accessors**!public! !
-!ODBCTIME categoriesFor: #second!**compiled accessors**!public! !
-!ODBCTIME categoriesFor: #second:!**compiled accessors**!public! !
-!ODBCTIME categoriesFor: #time:!accessing!public! !
+!OS.ODBCTIME categoriesFor: #asTime!converting!public! !
+!OS.ODBCTIME categoriesFor: #hour!**compiled accessors**!public! !
+!OS.ODBCTIME categoriesFor: #hour:!**compiled accessors**!public! !
+!OS.ODBCTIME categoriesFor: #minute!**compiled accessors**!public! !
+!OS.ODBCTIME categoriesFor: #minute:!**compiled accessors**!public! !
+!OS.ODBCTIME categoriesFor: #second!**compiled accessors**!public! !
+!OS.ODBCTIME categoriesFor: #second:!**compiled accessors**!public! !
+!OS.ODBCTIME categoriesFor: #time:!accessing!public! !
 
-!ODBCTIME class methodsFor!
+!OS.ODBCTIME class methodsFor!
 
 defineFields
 	"typedef struct tagTIME_STRUCT
@@ -91,7 +91,7 @@ fromTime: aTime
 
 getFieldNames
 	^#(#hour #minute #second)! !
-!ODBCTIME class categoriesFor: #defineFields!public!template definition! !
-!ODBCTIME class categoriesFor: #fromTime:!instance creation!public! !
-!ODBCTIME class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.ODBCTIME class categoriesFor: #defineFields!public!template definition! !
+!OS.ODBCTIME class categoriesFor: #fromTime:!instance creation!public! !
+!OS.ODBCTIME class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

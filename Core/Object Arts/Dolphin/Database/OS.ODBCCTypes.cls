@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-SharedPool subclass: #ODBCCTypes
+Kernel.SharedPool subclass: #'OS.ODBCCTypes'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -48,6 +48,6 @@ SharedPool subclass: #ODBCCTypes
 		'SQL_C_VARBOOKMARK' -> -16r2.
 		'SQL_C_WCHAR' -> -16r8
 	}!
-ODBCCTypes guid: (GUID fromString: '{ac8663b9-4e3a-4089-9f50-e0fbdfebcc05}')!
-ODBCCTypes comment: ''!
-!ODBCCTypes categoriesForClass!Unclassified! !
+OS.ODBCCTypes guid: (Core.GUID fromString: '{ac8663b9-4e3a-4089-9f50-e0fbdfebcc05}')!
+OS.ODBCCTypes comment: ''!
+!OS.ODBCCTypes categoriesForClass!Unclassified! !

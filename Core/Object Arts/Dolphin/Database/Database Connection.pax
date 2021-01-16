@@ -20,24 +20,23 @@ ODBCTIMESTAMP defineTemplate.
 ODBCLibrary initialize.'.
 
 package setMethodNames: #(
-	#(#{Smalltalk.DBAbstractRow} #publishedAspects)
-	#(#{Smalltalk.DBResultSet} #debugPrintOn:)
-	#(#{Smalltalk.DBResultSet} #publishedKeyedAspectsBatchSize)
-	#(#{Smalltalk.DBResultSet class} #newInstanceAspect:class:)
-	#(#{Smalltalk.DBResultSet class} #publishedAspectsOfInstances)
+	#(#{Database.DBAbstractRow} #publishedAspects)
+	#(#{Database.DBResultSet} #debugPrintOn:)
+	#(#{Database.DBResultSet} #publishedKeyedAspectsBatchSize)
+	#(#{Database.DBResultSet class} #newInstanceAspect:class:)
+	#(#{Database.DBResultSet class} #publishedAspectsOfInstances)
 ).
 
 package setPrerequisites: #(
 	'Database Connection Base'
 	'..\IDE\Base\Development System'
-	'..\IDE\Base\Development System (Deprecated)'
 ).
 
 package!
 
 "Loose Methods"!
 
-!DBAbstractRow methodsFor!
+!Database.DBAbstractRow methodsFor!
 
 publishedAspects
 	"Answer a <LookupTable> of the <Aspect>s published by the receiver."
@@ -47,9 +46,9 @@ publishedAspects
 	self columns 
 		do: [:each | aspects add: ((self at: each name) newAspect: each name class: Tools.KeyedAspect)].
 	^aspects! !
-!DBAbstractRow categoriesFor: #publishedAspects!constants!development!public! !
+!Database.DBAbstractRow categoriesFor: #publishedAspects!constants!development!public! !
 
-!DBResultSet methodsFor!
+!Database.DBResultSet methodsFor!
 
 debugPrintOn: aStream
 	self printOn: aStream!
@@ -59,10 +58,10 @@ publishedKeyedAspectsBatchSize
 
 	^10
 ! !
-!DBResultSet categoriesFor: #debugPrintOn:!development!printing!public! !
-!DBResultSet categoriesFor: #publishedKeyedAspectsBatchSize!constants!development!private! !
+!Database.DBResultSet categoriesFor: #debugPrintOn:!development!printing!public! !
+!Database.DBResultSet categoriesFor: #publishedKeyedAspectsBatchSize!constants!development!private! !
 
-!DBResultSet class methodsFor!
+!Database.DBResultSet class methodsFor!
 
 newInstanceAspect: aSymbol class: aspectClass 
 	"Private - Answer a new <Aspect> of the class, aspectClass, and with name, aSymbol, 
@@ -77,10 +76,10 @@ publishedAspectsOfInstances
 	"Answer a <LookupTable> of the <Aspect>s published by instances of the receiver."
 
 	^(super publishedAspectsOfInstances)
-		add: (Aspect name: #statement);
+		add: (Tools.Aspect name: #statement);
 		yourself! !
-!DBResultSet class categoriesFor: #newInstanceAspect:class:!adapters!development!private! !
-!DBResultSet class categoriesFor: #publishedAspectsOfInstances!constants!development!public! !
+!Database.DBResultSet class categoriesFor: #newInstanceAspect:class:!adapters!development!private! !
+!Database.DBResultSet class categoriesFor: #publishedAspectsOfInstances!constants!development!public! !
 
 "End of package definition"!
 

@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ExternalStructure subclass: #ODBCTIMESTAMP
+External.Structure subclass: #'OS.ODBCTIMESTAMP'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_day' -> 16r4.
@@ -14,12 +14,12 @@ ExternalStructure subclass: #ODBCTIMESTAMP
 		'_OffsetOf_second' -> 16rA.
 		'_OffsetOf_year' -> 16r0
 	}!
-ODBCTIMESTAMP guid: (GUID fromString: '{87b4c599-026e-11d3-9fd7-00a0cc3e4a32}')!
-ODBCTIMESTAMP comment: 'ODBCTIMESTAMP is a representation of the same named Win32 ODBC structure.
+OS.ODBCTIMESTAMP guid: (Core.GUID fromString: '{87b4c599-026e-11d3-9fd7-00a0cc3e4a32}')!
+OS.ODBCTIMESTAMP comment: 'ODBCTIMESTAMP is a representation of the same named Win32 ODBC structure.
 
 The fraction field is the number of billionths of a second, i.e. a value of 1,000,000 is one millisecond.'!
-!ODBCTIMESTAMP categoriesForClass!External-Data-Structured-ODBC!ODBC Interface! !
-!ODBCTIMESTAMP methodsFor!
+!OS.ODBCTIMESTAMP categoriesForClass!External-Data-Structured-ODBC!ODBC Interface! !
+!OS.ODBCTIMESTAMP methodsFor!
 
 asDateAndTime
 	"Answers a DateAndTime which represents the receiver."
@@ -115,25 +115,25 @@ year: anInteger
 	"Set the receiver's 'year' field to the value of the argument, anInteger"
 
 	bytes swordAtOffset: _OffsetOf_year put: anInteger! !
-!ODBCTIMESTAMP categoriesFor: #asDateAndTime!converting!public! !
-!ODBCTIMESTAMP categoriesFor: #dateAndTime:!accessing!public! !
-!ODBCTIMESTAMP categoriesFor: #day!**compiled accessors**!public! !
-!ODBCTIMESTAMP categoriesFor: #day:!**compiled accessors**!public! !
-!ODBCTIMESTAMP categoriesFor: #fraction!**compiled accessors**!public! !
-!ODBCTIMESTAMP categoriesFor: #fraction:!**compiled accessors**!public! !
-!ODBCTIMESTAMP categoriesFor: #hour!**compiled accessors**!public! !
-!ODBCTIMESTAMP categoriesFor: #hour:!**compiled accessors**!public! !
-!ODBCTIMESTAMP categoriesFor: #milliseconds!accessing!public! !
-!ODBCTIMESTAMP categoriesFor: #minute!**compiled accessors**!public! !
-!ODBCTIMESTAMP categoriesFor: #minute:!**compiled accessors**!public! !
-!ODBCTIMESTAMP categoriesFor: #month!**compiled accessors**!public! !
-!ODBCTIMESTAMP categoriesFor: #month:!**compiled accessors**!public! !
-!ODBCTIMESTAMP categoriesFor: #second!**compiled accessors**!public! !
-!ODBCTIMESTAMP categoriesFor: #second:!**compiled accessors**!public! !
-!ODBCTIMESTAMP categoriesFor: #year!**compiled accessors**!public! !
-!ODBCTIMESTAMP categoriesFor: #year:!**compiled accessors**!public! !
+!OS.ODBCTIMESTAMP categoriesFor: #asDateAndTime!converting!public! !
+!OS.ODBCTIMESTAMP categoriesFor: #dateAndTime:!accessing!public! !
+!OS.ODBCTIMESTAMP categoriesFor: #day!**compiled accessors**!public! !
+!OS.ODBCTIMESTAMP categoriesFor: #day:!**compiled accessors**!public! !
+!OS.ODBCTIMESTAMP categoriesFor: #fraction!**compiled accessors**!public! !
+!OS.ODBCTIMESTAMP categoriesFor: #fraction:!**compiled accessors**!public! !
+!OS.ODBCTIMESTAMP categoriesFor: #hour!**compiled accessors**!public! !
+!OS.ODBCTIMESTAMP categoriesFor: #hour:!**compiled accessors**!public! !
+!OS.ODBCTIMESTAMP categoriesFor: #milliseconds!accessing!public! !
+!OS.ODBCTIMESTAMP categoriesFor: #minute!**compiled accessors**!public! !
+!OS.ODBCTIMESTAMP categoriesFor: #minute:!**compiled accessors**!public! !
+!OS.ODBCTIMESTAMP categoriesFor: #month!**compiled accessors**!public! !
+!OS.ODBCTIMESTAMP categoriesFor: #month:!**compiled accessors**!public! !
+!OS.ODBCTIMESTAMP categoriesFor: #second!**compiled accessors**!public! !
+!OS.ODBCTIMESTAMP categoriesFor: #second:!**compiled accessors**!public! !
+!OS.ODBCTIMESTAMP categoriesFor: #year!**compiled accessors**!public! !
+!OS.ODBCTIMESTAMP categoriesFor: #year:!**compiled accessors**!public! !
 
-!ODBCTIMESTAMP class methodsFor!
+!OS.ODBCTIMESTAMP class methodsFor!
 
 defineFields
 	"Define the fields of the ODBC TIMESTAMP structure
@@ -168,7 +168,7 @@ fromDateAndTime: aDateAndTime
 
 getFieldNames
 	^#(#year #month #day #hour #minute #second #fraction)! !
-!ODBCTIMESTAMP class categoriesFor: #defineFields!public!template definition! !
-!ODBCTIMESTAMP class categoriesFor: #fromDateAndTime:!instance creation!public! !
-!ODBCTIMESTAMP class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.ODBCTIMESTAMP class categoriesFor: #defineFields!public!template definition! !
+!OS.ODBCTIMESTAMP class categoriesFor: #fromDateAndTime:!instance creation!public! !
+!OS.ODBCTIMESTAMP class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

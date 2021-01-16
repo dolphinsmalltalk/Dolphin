@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Error subclass: #DBError
+Core.Error subclass: #'Database.DBError'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'ODBCConstants ODBCRetCodes'
+	imports: #(#{OS.ODBCRetCodes} #{OS.ODBCConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-DBError guid: (GUID fromString: '{87b4c559-026e-11d3-9fd7-00a0cc3e4a32}')!
-DBError comment: 'Instances of DBError hold exception information for Database Connection errors.'!
-!DBError categoriesForClass!ODBC Interface! !
-!DBError methodsFor!
+Database.DBError guid: (Core.GUID fromString: '{87b4c559-026e-11d3-9fd7-00a0cc3e4a32}')!
+Database.DBError comment: 'Instances of DBError hold exception information for Database Connection errors.'!
+!Database.DBError categoriesForClass!ODBC Interface! !
+!Database.DBError methodsFor!
 
 _descriptionFormat
 	"Answer the Win32 format String to be used to format the description for the receiver."
@@ -21,6 +21,6 @@ signal
 
 	self tag buildErrorInfo.
 	super signal! !
-!DBError categoriesFor: #_descriptionFormat!displaying!public! !
-!DBError categoriesFor: #signal!public!signalling! !
+!Database.DBError categoriesFor: #_descriptionFormat!displaying!public! !
+!Database.DBError categoriesFor: #signal!public!signalling! !
 

@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-DBConnectionTest subclass: #SQLServerDBTest
+Database.Tests.DBConnectionTest subclass: #'Database.Tests.SQLServerDBTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-SQLServerDBTest guid: (Core.GUID fromString: '{375baeed-7973-4ad7-bb24-296438e82792}')!
-SQLServerDBTest comment: ''!
-!SQLServerDBTest categoriesForClass!Unclassified! !
-!SQLServerDBTest methodsFor!
+Database.Tests.SQLServerDBTest guid: (Core.GUID fromString: '{375baeed-7973-4ad7-bb24-296438e82792}')!
+Database.Tests.SQLServerDBTest comment: ''!
+!Database.Tests.SQLServerDBTest categoriesForClass!Unclassified! !
+!Database.Tests.SQLServerDBTest methodsFor!
 
 databaseResource
 	^SQLServerNorthwindDB current!
@@ -115,19 +115,19 @@ testViewsQuery
 				types: '''VIEW'''.
 	self assert: (views
 				noDifference: #('Alphabetical list of products' 'Category Sales for 1997' 'Current Product List' 'Customer and Suppliers by City' 'Invoices' 'Order Details Extended' 'Order Subtotals' 'Orders Qry' 'Product Sales for 1997' 'Products Above Average Price' 'Products by Category' 'Quarterly Orders' 'Sales by Category' 'Sales Totals by Amount' 'Summary of Sales by Quarter' 'Summary of Sales by Year'))! !
-!SQLServerDBTest categoriesFor: #databaseResource!private! !
-!SQLServerDBTest categoriesFor: #dbmsFeaturesMap!private! !
-!SQLServerDBTest categoriesFor: #queryColumns!private!unit tests! !
-!SQLServerDBTest categoriesFor: #testForeignKeysQuery!public!unit tests! !
-!SQLServerDBTest categoriesFor: #testPrimaryKeysQuery!public!unit tests! !
-!SQLServerDBTest categoriesFor: #testProceduresQuery!public!unit tests! !
-!SQLServerDBTest categoriesFor: #testSQLServerConnectionAttributes!public!unit tests! !
-!SQLServerDBTest categoriesFor: #testTablesQuery!public! !
-!SQLServerDBTest categoriesFor: #testViewsQuery!public! !
+!Database.Tests.SQLServerDBTest categoriesFor: #databaseResource!private! !
+!Database.Tests.SQLServerDBTest categoriesFor: #dbmsFeaturesMap!private! !
+!Database.Tests.SQLServerDBTest categoriesFor: #queryColumns!private!unit tests! !
+!Database.Tests.SQLServerDBTest categoriesFor: #testForeignKeysQuery!public!unit tests! !
+!Database.Tests.SQLServerDBTest categoriesFor: #testPrimaryKeysQuery!public!unit tests! !
+!Database.Tests.SQLServerDBTest categoriesFor: #testProceduresQuery!public!unit tests! !
+!Database.Tests.SQLServerDBTest categoriesFor: #testSQLServerConnectionAttributes!public!unit tests! !
+!Database.Tests.SQLServerDBTest categoriesFor: #testTablesQuery!public! !
+!Database.Tests.SQLServerDBTest categoriesFor: #testViewsQuery!public! !
 
-!SQLServerDBTest class methodsFor!
+!Database.Tests.SQLServerDBTest class methodsFor!
 
 resources
 	^{SQLServerNorthwindDB}! !
-!SQLServerDBTest class categoriesFor: #resources!public! !
+!Database.Tests.SQLServerDBTest class categoriesFor: #resources!public! !
 

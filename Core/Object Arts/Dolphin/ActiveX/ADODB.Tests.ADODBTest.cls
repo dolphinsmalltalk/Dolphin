@@ -1,14 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-DBTest subclass: #ADODBTest
+Database.Tests.DBTest subclass: #'ADODB.Tests.ADODBTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-ADODBTest guid: (GUID fromString: '{cbc7f08c-1041-4e55-a86a-5a963bba1649}')!
-ADODBTest comment: ''!
-!ADODBTest categoriesForClass!Unclassified! !
-!ADODBTest methodsFor!
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+ADODB.Tests.ADODBTest guid: (Core.GUID fromString: '{cbc7f08c-1041-4e55-a86a-5a963bba1649}')!
+ADODB.Tests.ADODBTest comment: ''!
+!ADODB.Tests.ADODBTest categoriesForClass!Unclassified! !
+!ADODB.Tests.ADODBTest methodsFor!
 
 field: aString fromRow: row 
 	^(super field: aString fromRow: row) value!
@@ -18,14 +19,14 @@ setUp
 	super setUp.
 	"Then replace the connection"
 	connection close.
-	connection := ADODB_Connection new connectionString: self databaseResource connectString.
+	connection := _Connection new connectionString: self databaseResource connectString.
 	connection open! !
-!ADODBTest categoriesFor: #field:fromRow:!private!unit tests! !
-!ADODBTest categoriesFor: #setUp!public!Running! !
+!ADODB.Tests.ADODBTest categoriesFor: #field:fromRow:!private!unit tests! !
+!ADODB.Tests.ADODBTest categoriesFor: #setUp!public!Running! !
 
-!ADODBTest class methodsFor!
+!ADODB.Tests.ADODBTest class methodsFor!
 
 resources
-	^{SQLServerNorthwindDB}! !
-!ADODBTest class categoriesFor: #resources!public! !
+	^{Database.Tests.SQLServerNorthwindDB}! !
+!ADODB.Tests.ADODBTest class categoriesFor: #resources!public! !
 

@@ -1,20 +1,20 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-DBAbstractStatement subclass: #DBStatement
+Database.DBAbstractStatement subclass: #'Database.DBStatement'
 	instanceVariableNames: 'sqlString'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-DBStatement guid: (GUID fromString: '{87b4c477-026e-11d3-9fd7-00a0cc3e4a32}')!
-DBStatement comment: 'A DBStatement is used to represent an SQL statement to be executed by a <DBConnection>.
+Database.DBStatement guid: (Core.GUID fromString: '{87b4c477-026e-11d3-9fd7-00a0cc3e4a32}')!
+Database.DBStatement comment: 'A DBStatement is used to represent an SQL statement to be executed by a <DBConnection>.
 
 In general one does not DBStatements explicitly but rather by the use of DBConnection>>exec: and DBConnection>>query:. For pre-prepared statements DBConnection>>prepare: can be used to answer an instance of <DBParameterizedStatement> which can later be parameterized and executed.
 
 Instance Variables:
 	sqlString		<String>. The SQL statement.'!
-!DBStatement categoriesForClass!ODBC Interface! !
-!DBStatement methodsFor!
+!Database.DBStatement categoriesForClass!ODBC Interface! !
+!Database.DBStatement methodsFor!
 
 defaultCursorType
 	"Answer the <Symbol>ic name of the default cursor type to be used for statements
@@ -31,7 +31,7 @@ exec: aString
 	self sqlString: aString; exec!
 
 executeStatement
-	^ODBCLibrary default 
+	^OS.ODBCLibrary default 
 		sqlExecDirect: self allocatedHandle
 		statementText: self sqlString
 		textLength: SQL_NTS!
@@ -56,10 +56,10 @@ sqlString: aString
 	or lazily by examing the result set) has no effect."
 
 	sqlString := aString! !
-!DBStatement categoriesFor: #defaultCursorType!constants!public! !
-!DBStatement categoriesFor: #exec:!operations!public! !
-!DBStatement categoriesFor: #executeStatement!operations!private! !
-!DBStatement categoriesFor: #printOn:!printing!public! !
-!DBStatement categoriesFor: #sqlString!accessing!public! !
-!DBStatement categoriesFor: #sqlString:!accessing!private! !
+!Database.DBStatement categoriesFor: #defaultCursorType!constants!public! !
+!Database.DBStatement categoriesFor: #exec:!operations!public! !
+!Database.DBStatement categoriesFor: #executeStatement!operations!private! !
+!Database.DBStatement categoriesFor: #printOn:!printing!public! !
+!Database.DBStatement categoriesFor: #sqlString!accessing!public! !
+!Database.DBStatement categoriesFor: #sqlString:!accessing!private! !
 

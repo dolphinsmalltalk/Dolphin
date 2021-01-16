@@ -1,14 +1,14 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Object subclass: #DBAbstractRow
+Core.Object subclass: #'Database.DBAbstractRow'
 	instanceVariableNames: 'columns contents selectors status'
 	classVariableNames: ''
-	poolDictionaries: 'ODBCConstants'
+	imports: #(#{OS.ODBCConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-DBAbstractRow guid: (GUID fromString: '{c829ece2-5847-4e24-855e-a9c259dd955f}')!
-DBAbstractRow isAbstract: true!
-DBAbstractRow comment: 'A DBAbstractRow respresents a row in a <DBResultSet>, either as a buffer containing a collection of field buffers used to receive data from ODBC (subclasses of DBRowBuffer), or as a reified row containing the column values as appropriate types of Smalltalk object (DBRow).
+Database.DBAbstractRow guid: (Core.GUID fromString: '{c829ece2-5847-4e24-855e-a9c259dd955f}')!
+Database.DBAbstractRow isNonInstantiable: true!
+Database.DBAbstractRow comment: 'A DBAbstractRow respresents a row in a <DBResultSet>, either as a buffer containing a collection of field buffers used to receive data from ODBC (subclasses of DBRowBuffer), or as a reified row containing the column values as appropriate types of Smalltalk object (DBRow).
 
 From a DBAbstractRows one can access the column attributes and the actual field data for the columns. The columns can be accessed by name using #at: and by index using #atIndex:. The type of object returned depends on whether the receiver is a buffer (in which case one gets <DBField>s, or a reified <DBRow>, in which case one gets the field values). DBAbstractRows also provide implicit accessor methods for each column by overriding #doesNotUnderstand.
 
@@ -17,8 +17,8 @@ Instance Variables:
 	contents		<Array> of <DBField>|<Object>
 	selectors		<Dictionary> mapping <Symbol>s to <integer> column indices.
 	status		<WORD>|<integer> ODBC row status'!
-!DBAbstractRow categoriesForClass!Kernel-Objects! !
-!DBAbstractRow methodsFor!
+!Database.DBAbstractRow categoriesForClass!Kernel-Objects! !
+!Database.DBAbstractRow methodsFor!
 
 = comparand
 	"Answer whether the receiver and the <Object>, comparand, 
@@ -135,22 +135,22 @@ selectors
 
 status
 	^status! !
-!DBAbstractRow categoriesFor: #=!comparing!public! !
-!DBAbstractRow categoriesFor: #asObject!converting!private! !
-!DBAbstractRow categoriesFor: #at:!accessing!public! !
-!DBAbstractRow categoriesFor: #at:ifAbsent:!accessing!public! !
-!DBAbstractRow categoriesFor: #at:ifPresent:!accessing!public! !
-!DBAbstractRow categoriesFor: #at:put:!accessing!public! !
-!DBAbstractRow categoriesFor: #atIndex:!accessing!public! !
-!DBAbstractRow categoriesFor: #atIndex:put:!accessing!public! !
-!DBAbstractRow categoriesFor: #buildSelectors!accessing!private! !
-!DBAbstractRow categoriesFor: #columns!accessing!public! !
-!DBAbstractRow categoriesFor: #columns:!accessing!private! !
-!DBAbstractRow categoriesFor: #contents!accessing!public! !
-!DBAbstractRow categoriesFor: #doesNotUnderstand:!exceptions!private! !
-!DBAbstractRow categoriesFor: #hash!comparing!public! !
-!DBAbstractRow categoriesFor: #isDeletedRow!public!testing! !
-!DBAbstractRow categoriesFor: #printOn:!printing!public! !
-!DBAbstractRow categoriesFor: #selectors!accessing!private! !
-!DBAbstractRow categoriesFor: #status!accessing!private! !
+!Database.DBAbstractRow categoriesFor: #=!comparing!public! !
+!Database.DBAbstractRow categoriesFor: #asObject!converting!private! !
+!Database.DBAbstractRow categoriesFor: #at:!accessing!public! !
+!Database.DBAbstractRow categoriesFor: #at:ifAbsent:!accessing!public! !
+!Database.DBAbstractRow categoriesFor: #at:ifPresent:!accessing!public! !
+!Database.DBAbstractRow categoriesFor: #at:put:!accessing!public! !
+!Database.DBAbstractRow categoriesFor: #atIndex:!accessing!public! !
+!Database.DBAbstractRow categoriesFor: #atIndex:put:!accessing!public! !
+!Database.DBAbstractRow categoriesFor: #buildSelectors!accessing!private! !
+!Database.DBAbstractRow categoriesFor: #columns!accessing!public! !
+!Database.DBAbstractRow categoriesFor: #columns:!accessing!private! !
+!Database.DBAbstractRow categoriesFor: #contents!accessing!public! !
+!Database.DBAbstractRow categoriesFor: #doesNotUnderstand:!exceptions!private! !
+!Database.DBAbstractRow categoriesFor: #hash!comparing!public! !
+!Database.DBAbstractRow categoriesFor: #isDeletedRow!public!testing! !
+!Database.DBAbstractRow categoriesFor: #printOn:!printing!public! !
+!Database.DBAbstractRow categoriesFor: #selectors!accessing!private! !
+!Database.DBAbstractRow categoriesFor: #status!accessing!private! !
 

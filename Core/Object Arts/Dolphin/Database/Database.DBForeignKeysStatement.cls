@@ -1,21 +1,21 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-DBSchemaStatement subclass: #DBForeignKeysStatement
+Database.DBSchemaStatement subclass: #'Database.DBForeignKeysStatement'
 	instanceVariableNames: 'foreignCatalogName foreignSchemaName foreignTableName'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-DBForeignKeysStatement guid: (GUID fromString: '{b6f9e2f2-9df3-4719-ae44-5f079843683f}')!
-DBForeignKeysStatement comment: ''!
-!DBForeignKeysStatement categoriesForClass!ODBC Interface! !
-!DBForeignKeysStatement methodsFor!
+Database.DBForeignKeysStatement guid: (Core.GUID fromString: '{b6f9e2f2-9df3-4719-ae44-5f079843683f}')!
+Database.DBForeignKeysStatement comment: ''!
+!Database.DBForeignKeysStatement categoriesForClass!ODBC Interface! !
+!Database.DBForeignKeysStatement methodsFor!
 
 executeStatement
 	"Private - Execute the database command that the receiver represents.
 	Answer the <integer> return code."
 
-	^ODBCLibrary default 
+	^OS.ODBCLibrary default 
 		sqlForeignKeys: self allocatedHandle
 		pkCatalogName: self catalogName
 		nameLength1: SQL_NTS
@@ -47,11 +47,11 @@ foreignTableName
 
 foreignTableName: aString
 	foreignTableName := aString! !
-!DBForeignKeysStatement categoriesFor: #executeStatement!operations!private! !
-!DBForeignKeysStatement categoriesFor: #foreignCatalogName!accessing!public! !
-!DBForeignKeysStatement categoriesFor: #foreignCatalogName:!accessing!public! !
-!DBForeignKeysStatement categoriesFor: #foreignSchemaName!accessing!public! !
-!DBForeignKeysStatement categoriesFor: #foreignSchemaName:!accessing!public! !
-!DBForeignKeysStatement categoriesFor: #foreignTableName!accessing!public! !
-!DBForeignKeysStatement categoriesFor: #foreignTableName:!accessing!public! !
+!Database.DBForeignKeysStatement categoriesFor: #executeStatement!operations!private! !
+!Database.DBForeignKeysStatement categoriesFor: #foreignCatalogName!accessing!public! !
+!Database.DBForeignKeysStatement categoriesFor: #foreignCatalogName:!accessing!public! !
+!Database.DBForeignKeysStatement categoriesFor: #foreignSchemaName!accessing!public! !
+!Database.DBForeignKeysStatement categoriesFor: #foreignSchemaName:!accessing!public! !
+!Database.DBForeignKeysStatement categoriesFor: #foreignTableName!accessing!public! !
+!Database.DBForeignKeysStatement categoriesFor: #foreignTableName:!accessing!public! !
 

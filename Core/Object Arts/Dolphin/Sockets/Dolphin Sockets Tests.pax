@@ -25,6 +25,8 @@ package setPrerequisites: #(
 	'..\Base\Dolphin Base Tests'
 	'Dolphin Sockets'
 	'Sockets Connection'
+	'..\..\..\Contributions\Camp Smalltalk\SUnit\SUnit'
+	'..\..\..\Contributions\Camp Smalltalk\SUnit\SUnitPreload'
 ).
 
 package!
@@ -34,7 +36,7 @@ package!
 Net subclass: #'Net.Tests'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #()
+	imports: #(#{XProgramming.SUnit})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Core.Tests.DolphinTest subclass: #'OS.Tests.AbstractIN_ADDRTest'

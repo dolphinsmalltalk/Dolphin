@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Object subclass: #DBExceptionDetails
+Core.Object subclass: #'Database.DBExceptionDetails'
 	instanceVariableNames: 'errors hEnv hDBC hStmt code'
 	classVariableNames: ''
-	poolDictionaries: 'ODBCConstants ODBCRetCodes'
+	imports: #(#{OS.ODBCRetCodes} #{OS.ODBCConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-DBExceptionDetails guid: (GUID fromString: '{87b4c474-026e-11d3-9fd7-00a0cc3e4a32}')!
-DBExceptionDetails comment: 'An instance of DBExceptionDetails holds information about the state of a DB connection object when a DBError or DBWarning is signalled. It is available by sending #tag to the exception object. 
+Database.DBExceptionDetails guid: (Core.GUID fromString: '{87b4c474-026e-11d3-9fd7-00a0cc3e4a32}')!
+Database.DBExceptionDetails comment: 'An instance of DBExceptionDetails holds information about the state of a DB connection object when a DBError or DBWarning is signalled. It is available by sending #tag to the exception object. 
 
 Instance Variables:
 	errors		<Array> of <DBErrorDetails>. List of errors
@@ -19,8 +19,8 @@ Instance Variables:
 Depending on the activity in progress at the time of the exception, one or more of these may contain nil.
 
 '!
-!DBExceptionDetails categoriesForClass!ODBC Interface! !
-!DBExceptionDetails methodsFor!
+!Database.DBExceptionDetails categoriesForClass!ODBC Interface! !
+!Database.DBExceptionDetails methodsFor!
 
 addErrorDetails: newErrorDetails
 	"Private - Add a new error details object to my collection."
@@ -46,10 +46,10 @@ buildErrorInfoFrom: anExternalHandle type: anIntegerHandleType
 	| szSqlState fNativeError szErrorMsg cbErrorMsg recNumber odbc |
 	szSqlState := Utf16String newFixed: SQL_SQLSTATE_SIZE.
 	szErrorMsg := Utf16String new: 128.
-	cbErrorMsg := SWORD new.
-	fNativeError := SDWORD new.
+	cbErrorMsg := External.SWORD new.
+	fNativeError := External.SDWORD new.
 	recNumber := 1.
-	odbc := ODBCLibrary default.
+	odbc := OS.ODBCLibrary default.
 	
 	[| ret |
 	
@@ -140,22 +140,22 @@ retCodeError: anInteger
 	self addErrorDetails: (
 	        DBErrorDetails new
 			msg: ('SQL Error: ',
-					(ODBCRetCodes keyAtValue: code
+					(OS.ODBCRetCodes keyAtValue: code
 				                ifAbsent: ['Unknown']));
 			yourself)! !
-!DBExceptionDetails categoriesFor: #addErrorDetails:!operations!private! !
-!DBExceptionDetails categoriesFor: #buildErrorInfo!operations!private! !
-!DBExceptionDetails categoriesFor: #buildErrorInfoFrom:type:!operations!private! !
-!DBExceptionDetails categoriesFor: #code!accessing!public! !
-!DBExceptionDetails categoriesFor: #code:!accessing!private! !
-!DBExceptionDetails categoriesFor: #errors!accessing!public! !
-!DBExceptionDetails categoriesFor: #errors:!accessing!private! !
-!DBExceptionDetails categoriesFor: #hDBC!accessing!public! !
-!DBExceptionDetails categoriesFor: #hDBC:!accessing!private! !
-!DBExceptionDetails categoriesFor: #hEnv!accessing!public! !
-!DBExceptionDetails categoriesFor: #hEnv:!accessing!private! !
-!DBExceptionDetails categoriesFor: #hStmt!accessing!public! !
-!DBExceptionDetails categoriesFor: #hStmt:!accessing!private! !
-!DBExceptionDetails categoriesFor: #printOn:!printing!public! !
-!DBExceptionDetails categoriesFor: #retCodeError:!accessing!private! !
+!Database.DBExceptionDetails categoriesFor: #addErrorDetails:!operations!private! !
+!Database.DBExceptionDetails categoriesFor: #buildErrorInfo!operations!private! !
+!Database.DBExceptionDetails categoriesFor: #buildErrorInfoFrom:type:!operations!private! !
+!Database.DBExceptionDetails categoriesFor: #code!accessing!public! !
+!Database.DBExceptionDetails categoriesFor: #code:!accessing!private! !
+!Database.DBExceptionDetails categoriesFor: #errors!accessing!public! !
+!Database.DBExceptionDetails categoriesFor: #errors:!accessing!private! !
+!Database.DBExceptionDetails categoriesFor: #hDBC!accessing!public! !
+!Database.DBExceptionDetails categoriesFor: #hDBC:!accessing!private! !
+!Database.DBExceptionDetails categoriesFor: #hEnv!accessing!public! !
+!Database.DBExceptionDetails categoriesFor: #hEnv:!accessing!private! !
+!Database.DBExceptionDetails categoriesFor: #hStmt!accessing!public! !
+!Database.DBExceptionDetails categoriesFor: #hStmt:!accessing!private! !
+!Database.DBExceptionDetails categoriesFor: #printOn:!printing!public! !
+!Database.DBExceptionDetails categoriesFor: #retCodeError:!accessing!private! !
 

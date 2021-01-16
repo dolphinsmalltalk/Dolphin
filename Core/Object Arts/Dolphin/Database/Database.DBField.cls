@@ -1,16 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Object subclass: #DBField
+Core.Object subclass: #'Database.DBField'
 	instanceVariableNames: 'column buffer lengthBuf'
 	classVariableNames: ''
-	poolDictionaries: 'ODBCConstants ODBCCTypes ODBCRetCodes ODBCTypes'
+	imports: #(#{OS.ODBCTypes} #{OS.ODBCRetCodes} #{OS.ODBCConstants} #{OS.ODBCCTypes})
 	classInstanceVariableNames: ''
 	classConstants: {
 		'GetSelectors' -> #(#getGuid #getUtf16String #getUtf16String #getUtf16String #getBoolean #getByte #getInt64 #getByteArray #getByteArray #getByteArray #getAnsiString nil #getAnsiString #numberFromNumeric #numberFromNumeric #getLong #getShort #getDouble #getFloat #getDouble nil nil nil #getAnsiString nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil #getDate #getTime #getDateAndTime).
 		'SetSelectors' -> #(#setGuid: #setUtf16String: #setUtf16String: #setUtf16String: #setBoolean: #setByte: #setInt64: #setByteArray: #setByteArray: #setByteArray: #setAnsiString: nil #setAnsiString: #numberToNumeric: #numberToNumeric: #setLong: #setShort: #setDouble: #setFloat: #setDouble: nil nil nil #setAnsiString: nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil #setDate: #setTime: #setDateAndTime:)
 	}!
-DBField guid: (GUID fromString: '{87b4c475-026e-11d3-9fd7-00a0cc3e4a32}')!
-DBField comment: 'A DBField instance represents a column buffer for holding data as part of a DBRow.
+Database.DBField guid: (Core.GUID fromString: '{87b4c475-026e-11d3-9fd7-00a0cc3e4a32}')!
+Database.DBField comment: 'A DBField instance represents a column buffer for holding data as part of a DBRow.
 
 A field''s value may be converted to a Smalltalk object by sending #value, and conversely may be assigned with #value:.
 
@@ -24,8 +24,8 @@ Class Variables:
 	SetSelectors	<Array> of <Symbol>. Maps integer type codes to mutator for that type.
 
 '!
-!DBField categoriesForClass!ODBC Interface! !
-!DBField methodsFor!
+!Database.DBField categoriesForClass!ODBC Interface! !
+!Database.DBField methodsFor!
 
 = comparand
 	"Answer whether the receiver and the <Object>, comparand, 
@@ -84,7 +84,7 @@ getData: aDBStatement
 	following a fetch (into the receiver's buffer)."
 
 	| ret |
-	ret := ODBCLibrary default
+	ret := OS.ODBCLibrary default
 				sqlGetData: aDBStatement executedHandle
 				columnNumber: column columnNumber
 				targetType: column cType
@@ -97,12 +97,12 @@ getDate
 	"Private - Answer an instance of <Date> representing the contents of the receiver.
 	Use the services of the ODBCDATE structure to split the buffer."
 
-	^(ODBCDATE withBytes: buffer) asDate!
+	^(OS.ODBCDATE withBytes: buffer) asDate!
 
 getDateAndTime
 	"Private - Answer an instance of <DateAndTime> representing the same DateAndTime as that stored in the buffer as an ODBCDATE and ODBCTIME."
 
-	^(ODBCTIMESTAMP withBytes: buffer) asDateAndTime!
+	^(OS.ODBCTIMESTAMP withBytes: buffer) asDateAndTime!
 
 getDouble
 	"Private - Answer a <Float> read from the IEEE 64-bit double precision floating point number in the receiver's buffer."
@@ -138,7 +138,7 @@ getTime
 	"Private - Answer an instance of <Time> representing the buffer of the receiver.
 	Use the services of the <ODBCTIME> structure to split the buffer."
 
-	^(ODBCTIME withBytes: buffer) asTime!
+	^(OS.ODBCTIME withBytes: buffer) asTime!
 
 getUtf16String
 	"Private - Answer the receiver's buffer as an <AnsiString>, i.e. to read from a SQL_C_WCHAR, SQL_C_WVARCHAR, or SQL_C_WLONGVARCHAR buffer."
@@ -161,7 +161,7 @@ initializeForColumn: aDBColAttr
 	the database column described by the <DBColAttr> argument.
 	Answer the receiver."
 
-	lengthBuf := SDWORD fromInteger: SQL_NULL_DATA.
+	lengthBuf := External.SDWORD fromInteger: SQL_NULL_DATA.
 	column := aDBColAttr.
 	buffer := ByteArray newFixed: (##(2 raisedTo: 16) min: aDBColAttr lengthC).
 	^self!
@@ -272,16 +272,16 @@ setDate: aDate
 
 	(self shouldTranslate: aDate class: Date)
 		ifTrue: 
-			[(ODBCDATE withBytes: buffer) date: aDate.
-			lengthBuf value: ODBCDATE byteSize]!
+			[(OS.ODBCDATE withBytes: buffer) date: aDate.
+			lengthBuf value: OS.ODBCDATE byteSize]!
 
 setDateAndTime: aDateAndTime
 	"Private - Set the receiver's buffer with an ODBCTIMESTAMP object instantiated from aDateAndTime."
 
 	(self shouldTranslate: aDateAndTime class: DateAndTime)
 		ifTrue: 
-			[(ODBCTIMESTAMP withBytes: buffer) dateAndTime: aDateAndTime.
-			lengthBuf value: ODBCTIMESTAMP byteSize]!
+			[(OS.ODBCTIMESTAMP withBytes: buffer) dateAndTime: aDateAndTime.
+			lengthBuf value: OS.ODBCTIMESTAMP byteSize]!
 
 setDouble: aNumber
 	"Private - Set the receiver's double buffer with <Float> value of the 
@@ -342,8 +342,8 @@ setTime: aTime
 
 	(self shouldTranslate: aTime class: Time)
 		ifTrue: 
-			[(ODBCTIME withBytes: buffer) time: aTime.
-			lengthBuf value: ODBCTIME byteSize]!
+			[(OS.ODBCTIME withBytes: buffer) time: aTime.
+			lengthBuf value: OS.ODBCTIME byteSize]!
 
 setUtf16String: aString
 	"Private - Set the receiver's buffer from aString."
@@ -388,53 +388,53 @@ value: anObject
 	^anObject
 		ifNil: [self beNull]
 		ifNotNil: [self perform: (SetSelectors at: column type + TypeOffset) with: anObject]! !
-!DBField categoriesFor: #=!comparing!public! !
-!DBField categoriesFor: #beNull!accessing!public! !
-!DBField categoriesFor: #column!accessing!private! !
-!DBField categoriesFor: #fieldBuf!accessing!private! !
-!DBField categoriesFor: #fieldSize!accessing!private! !
-!DBField categoriesFor: #getAnsiString!converting!private! !
-!DBField categoriesFor: #getBoolean!converting!private! !
-!DBField categoriesFor: #getByte!converting!private! !
-!DBField categoriesFor: #getByteArray!converting!private! !
-!DBField categoriesFor: #getData:!accessing!private! !
-!DBField categoriesFor: #getDate!converting!private! !
-!DBField categoriesFor: #getDateAndTime!converting!private! !
-!DBField categoriesFor: #getDouble!converting!private! !
-!DBField categoriesFor: #getFloat!converting!private! !
-!DBField categoriesFor: #getGuid!converting!private! !
-!DBField categoriesFor: #getInt64!converting!private! !
-!DBField categoriesFor: #getLong!converting!private! !
-!DBField categoriesFor: #getShort!converting!private! !
-!DBField categoriesFor: #getTime!converting!private! !
-!DBField categoriesFor: #getUtf16String!converting!private! !
-!DBField categoriesFor: #hash!comparing!public! !
-!DBField categoriesFor: #initializeForColumn:!accessing!private! !
-!DBField categoriesFor: #isNull!public!testing! !
-!DBField categoriesFor: #lengthBuf!accessing!private! !
-!DBField categoriesFor: #numberFromNumeric!converting!private! !
-!DBField categoriesFor: #numberToNumeric:!converting!private! !
-!DBField categoriesFor: #printOn:!printing!public! !
-!DBField categoriesFor: #setAnsiString:!converting!private! !
-!DBField categoriesFor: #setBoolean:!converting!private! !
-!DBField categoriesFor: #setByte:!converting!private! !
-!DBField categoriesFor: #setByteArray:!converting!private! !
-!DBField categoriesFor: #setDate:!converting!private! !
-!DBField categoriesFor: #setDateAndTime:!converting!private! !
-!DBField categoriesFor: #setDouble:!converting!private! !
-!DBField categoriesFor: #setFloat:!converting!private! !
-!DBField categoriesFor: #setGuid:!converting!private! !
-!DBField categoriesFor: #setInt64:!converting!private! !
-!DBField categoriesFor: #setLong:!converting!private! !
-!DBField categoriesFor: #setShort:!converting!private! !
-!DBField categoriesFor: #setTime:!converting!private! !
-!DBField categoriesFor: #setUtf16String:!converting!private! !
-!DBField categoriesFor: #shouldTranslate:class:!accessing!private! !
-!DBField categoriesFor: #size!accessing!private! !
-!DBField categoriesFor: #value!accessing!public! !
-!DBField categoriesFor: #value:!accessing!public! !
+!Database.DBField categoriesFor: #=!comparing!public! !
+!Database.DBField categoriesFor: #beNull!accessing!public! !
+!Database.DBField categoriesFor: #column!accessing!private! !
+!Database.DBField categoriesFor: #fieldBuf!accessing!private! !
+!Database.DBField categoriesFor: #fieldSize!accessing!private! !
+!Database.DBField categoriesFor: #getAnsiString!converting!private! !
+!Database.DBField categoriesFor: #getBoolean!converting!private! !
+!Database.DBField categoriesFor: #getByte!converting!private! !
+!Database.DBField categoriesFor: #getByteArray!converting!private! !
+!Database.DBField categoriesFor: #getData:!accessing!private! !
+!Database.DBField categoriesFor: #getDate!converting!private! !
+!Database.DBField categoriesFor: #getDateAndTime!converting!private! !
+!Database.DBField categoriesFor: #getDouble!converting!private! !
+!Database.DBField categoriesFor: #getFloat!converting!private! !
+!Database.DBField categoriesFor: #getGuid!converting!private! !
+!Database.DBField categoriesFor: #getInt64!converting!private! !
+!Database.DBField categoriesFor: #getLong!converting!private! !
+!Database.DBField categoriesFor: #getShort!converting!private! !
+!Database.DBField categoriesFor: #getTime!converting!private! !
+!Database.DBField categoriesFor: #getUtf16String!converting!private! !
+!Database.DBField categoriesFor: #hash!comparing!public! !
+!Database.DBField categoriesFor: #initializeForColumn:!accessing!private! !
+!Database.DBField categoriesFor: #isNull!public!testing! !
+!Database.DBField categoriesFor: #lengthBuf!accessing!private! !
+!Database.DBField categoriesFor: #numberFromNumeric!converting!private! !
+!Database.DBField categoriesFor: #numberToNumeric:!converting!private! !
+!Database.DBField categoriesFor: #printOn:!printing!public! !
+!Database.DBField categoriesFor: #setAnsiString:!converting!private! !
+!Database.DBField categoriesFor: #setBoolean:!converting!private! !
+!Database.DBField categoriesFor: #setByte:!converting!private! !
+!Database.DBField categoriesFor: #setByteArray:!converting!private! !
+!Database.DBField categoriesFor: #setDate:!converting!private! !
+!Database.DBField categoriesFor: #setDateAndTime:!converting!private! !
+!Database.DBField categoriesFor: #setDouble:!converting!private! !
+!Database.DBField categoriesFor: #setFloat:!converting!private! !
+!Database.DBField categoriesFor: #setGuid:!converting!private! !
+!Database.DBField categoriesFor: #setInt64:!converting!private! !
+!Database.DBField categoriesFor: #setLong:!converting!private! !
+!Database.DBField categoriesFor: #setShort:!converting!private! !
+!Database.DBField categoriesFor: #setTime:!converting!private! !
+!Database.DBField categoriesFor: #setUtf16String:!converting!private! !
+!Database.DBField categoriesFor: #shouldTranslate:class:!accessing!private! !
+!Database.DBField categoriesFor: #size!accessing!private! !
+!Database.DBField categoriesFor: #value!accessing!public! !
+!Database.DBField categoriesFor: #value:!accessing!public! !
 
-!DBField class methodsFor!
+!Database.DBField class methodsFor!
 
 initialize
 	"Initialize the dictionaries of to/from
@@ -511,7 +511,7 @@ newForCol: aDBColAttr
 	"Answer a new instance of the receiver for the column described by aColAttr."
 
 	^super new initializeForColumn: aDBColAttr! !
-!DBField class categoriesFor: #initialize!initializing!public! !
-!DBField class categoriesFor: #new!instance creation!public! !
-!DBField class categoriesFor: #newForCol:!instance creation!public! !
+!Database.DBField class categoriesFor: #initialize!initializing!public! !
+!Database.DBField class categoriesFor: #new!instance creation!public! !
+!Database.DBField class categoriesFor: #newForCol:!instance creation!public! !
 

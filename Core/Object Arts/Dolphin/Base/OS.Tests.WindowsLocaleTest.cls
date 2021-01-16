@@ -71,7 +71,7 @@ testDisplayFloatOn
 						self assert: actual equals: pair second]]!
 
 testDisplayFloatOnNegativeModes
-	| info subject format |
+	| subject format |
 	"Different negative number mode (2)"
 	subject := Locale lcid: 1050.
 	self assert: (subject printFloat: -0.0) equals: '0,00'.

@@ -6,13 +6,14 @@ package paxVersion: 2.1;
 
 
 package setClassNames: #(
-	#{Smalltalk.AccessDBTest}
-	#{Smalltalk.AccessNorthwindDB}
-	#{Smalltalk.DBConnectionTest}
-	#{Smalltalk.DBConnectionTestResource}
-	#{Smalltalk.DBTest}
-	#{Smalltalk.SQLServerDBTest}
-	#{Smalltalk.SQLServerNorthwindDB}
+	#{Database.Tests}
+	#{Database.Tests.AccessDBTest}
+	#{Database.Tests.AccessNorthwindDB}
+	#{Database.Tests.DBConnectionTest}
+	#{Database.Tests.DBConnectionTestResource}
+	#{Database.Tests.DBTest}
+	#{Database.Tests.SQLServerDBTest}
+	#{Database.Tests.SQLServerNorthwindDB}
 ).
 
 package setPrerequisites: #(
@@ -21,49 +22,56 @@ package setPrerequisites: #(
 	'..\Base\Dolphin Base Tests'
 	'..\..\..\Contributions\Burning River\ExternalProcess\ExternalProcess'
 	'..\..\..\Contributions\Camp Smalltalk\SUnit\SUnit'
+	'..\..\..\Contributions\Camp Smalltalk\SUnit\SUnitPreload'
 ).
 
 package!
 
 "Class Definitions"!
 
-Core.Tests.DolphinTest subclass: #DBTest
+Database subclass: #'Database.Tests'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #(#{XProgramming.SUnit})
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Core.Tests.DolphinTest subclass: #'Database.Tests.DBTest'
 	instanceVariableNames: 'connection'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-DBTest subclass: #DBConnectionTest
+Database.Tests.DBTest subclass: #'Database.Tests.DBConnectionTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{Smalltalk.ODBCConstants} #{Smalltalk.ODBCTypes})
+	imports: #(#{OS.ODBCTypes} #{OS.ODBCConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-DBConnectionTest subclass: #AccessDBTest
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-DBConnectionTest subclass: #SQLServerDBTest
+Database.Tests.DBConnectionTest subclass: #'Database.Tests.AccessDBTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-XProgramming.SUnit.TestResource subclass: #DBConnectionTestResource
+Database.Tests.DBConnectionTest subclass: #'Database.Tests.SQLServerDBTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+XProgramming.SUnit.TestResource subclass: #'Database.Tests.DBConnectionTestResource'
 	instanceVariableNames: 'connection isAvailable'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-DBConnectionTestResource subclass: #AccessNorthwindDB
+Database.Tests.DBConnectionTestResource subclass: #'Database.Tests.AccessNorthwindDB'
 	instanceVariableNames: 'filename'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-DBConnectionTestResource subclass: #SQLServerNorthwindDB
+Database.Tests.DBConnectionTestResource subclass: #'Database.Tests.SQLServerNorthwindDB'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

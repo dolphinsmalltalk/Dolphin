@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-SharedPool subclass: #ODBCConstants
+Kernel.SharedPool subclass: #'OS.ODBCConstants'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -1371,6 +1371,6 @@ SharedPool subclass: #ODBCConstants
 		'TRACE_VS_EVENT_ON' -> 16r2.
 		'TypeOffset' -> 16rC
 	}!
-ODBCConstants guid: (GUID fromString: '{8829338e-6d5a-47f4-bcd7-8574c58cd356}')!
-ODBCConstants comment: ''!
-!ODBCConstants categoriesForClass!Unclassified! !
+OS.ODBCConstants guid: (Core.GUID fromString: '{8829338e-6d5a-47f4-bcd7-8574c58cd356}')!
+OS.ODBCConstants comment: ''!
+!OS.ODBCConstants categoriesForClass!Unclassified! !

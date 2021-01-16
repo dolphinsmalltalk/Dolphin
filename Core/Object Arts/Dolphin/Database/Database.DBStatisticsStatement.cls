@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-DBSchemaStatement subclass: #DBStatisticsStatement
+Database.DBSchemaStatement subclass: #'Database.DBStatisticsStatement'
 	instanceVariableNames: 'type accurate'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-DBStatisticsStatement guid: (GUID fromString: '{f9a75139-7d9a-4fba-8c1a-249cc03ff080}')!
-DBStatisticsStatement comment: 'DBTablesStatement is a specialized <DBSchemaStatement> for querying about the indices of tables in a database.'!
-!DBStatisticsStatement categoriesForClass!ODBC Interface! !
-!DBStatisticsStatement methodsFor!
+Database.DBStatisticsStatement guid: (Core.GUID fromString: '{f9a75139-7d9a-4fba-8c1a-249cc03ff080}')!
+Database.DBStatisticsStatement comment: 'DBTablesStatement is a specialized <DBSchemaStatement> for querying about the indices of tables in a database.'!
+!Database.DBStatisticsStatement categoriesForClass!ODBC Interface! !
+!Database.DBStatisticsStatement methodsFor!
 
 accurate
 	^accurate!
@@ -21,7 +21,7 @@ executeStatement
 	"Private - Execute the database command that the receiver represents.
 	Answer the <integer> return code."
 
-	^ODBCLibrary default 
+	^OS.ODBCLibrary default 
 		sqlStatistics: self allocatedHandle
 		catalogName: self catalogName
 		nameLength1: SQL_NTS
@@ -48,11 +48,11 @@ type: statisticsTypeInteger
 
 unique: aBoolean 
 	self type: (aBoolean ifTrue: [SQL_INDEX_UNIQUE] ifFalse: [SQL_INDEX_ALL])! !
-!DBStatisticsStatement categoriesFor: #accurate!accessing!public! !
-!DBStatisticsStatement categoriesFor: #accurate:!accessing!public! !
-!DBStatisticsStatement categoriesFor: #executeStatement!operations!private! !
-!DBStatisticsStatement categoriesFor: #initialize:!initializing!private!searching! !
-!DBStatisticsStatement categoriesFor: #type!accessing!public! !
-!DBStatisticsStatement categoriesFor: #type:!accessing!public! !
-!DBStatisticsStatement categoriesFor: #unique:!accessing!public! !
+!Database.DBStatisticsStatement categoriesFor: #accurate!accessing!public! !
+!Database.DBStatisticsStatement categoriesFor: #accurate:!accessing!public! !
+!Database.DBStatisticsStatement categoriesFor: #executeStatement!operations!private! !
+!Database.DBStatisticsStatement categoriesFor: #initialize:!initializing!private!searching! !
+!Database.DBStatisticsStatement categoriesFor: #type!accessing!public! !
+!Database.DBStatisticsStatement categoriesFor: #type:!accessing!public! !
+!Database.DBStatisticsStatement categoriesFor: #unique:!accessing!public! !
 

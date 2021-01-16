@@ -1,18 +1,18 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-DBConnectionTest subclass: #AccessDBTest
+Database.Tests.DBConnectionTest subclass: #'Database.Tests.AccessDBTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-AccessDBTest guid: (Core.GUID fromString: '{4f4de5da-13fa-4842-941a-f825ce1db278}')!
-AccessDBTest comment: ''!
-!AccessDBTest categoriesForClass!Unclassified! !
-!AccessDBTest methodsFor!
+Database.Tests.AccessDBTest guid: (Core.GUID fromString: '{4f4de5da-13fa-4842-941a-f825ce1db278}')!
+Database.Tests.AccessDBTest comment: ''!
+!Database.Tests.AccessDBTest categoriesForClass!Unclassified! !
+!Database.Tests.AccessDBTest methodsFor!
 
 databaseResource
-	^AccessNorthwindDB current !
+	^AccessNorthwindDB current!
 
 dbmsFeaturesMap
 	"Private - See MSDN help 'SQLGetInfo Returned Values for Access"
@@ -98,19 +98,19 @@ testViewsQuery
 	views := connection views.
 	self assert: (views
 				noDifference: #('Alphabetical List of Products' 'Category Sales for 1997' 'Current Product List' 'Customers and Suppliers by City' 'Employee Sales by Country' 'Invoices' 'Invoices Filter' 'Order Details Extended' 'Order Subtotals' 'Orders Qry' 'Product Sales for 1997' 'Products Above Average Price' 'Products by Category' 'Quarterly Orders' 'Quarterly Orders by Product' 'Sales by Category' 'Sales by Year' 'Ten Most Expensive Products'))! !
-!AccessDBTest categoriesFor: #databaseResource!private! !
-!AccessDBTest categoriesFor: #dbmsFeaturesMap!private! !
-!AccessDBTest categoriesFor: #queryColumns!private! !
-!AccessDBTest categoriesFor: #testAccessConnectionAttributes!public!unit tests! !
-!AccessDBTest categoriesFor: #testForeignKeysQuery!public!unit tests! !
-!AccessDBTest categoriesFor: #testPrimaryKeysQuery!public!unit tests! !
-!AccessDBTest categoriesFor: #testProceduresQuery!public!unit tests! !
-!AccessDBTest categoriesFor: #testTablesQuery!public!unit tests! !
-!AccessDBTest categoriesFor: #testViewsQuery!public!unit tests! !
+!Database.Tests.AccessDBTest categoriesFor: #databaseResource!private! !
+!Database.Tests.AccessDBTest categoriesFor: #dbmsFeaturesMap!private! !
+!Database.Tests.AccessDBTest categoriesFor: #queryColumns!private! !
+!Database.Tests.AccessDBTest categoriesFor: #testAccessConnectionAttributes!public!unit tests! !
+!Database.Tests.AccessDBTest categoriesFor: #testForeignKeysQuery!public!unit tests! !
+!Database.Tests.AccessDBTest categoriesFor: #testPrimaryKeysQuery!public!unit tests! !
+!Database.Tests.AccessDBTest categoriesFor: #testProceduresQuery!public!unit tests! !
+!Database.Tests.AccessDBTest categoriesFor: #testTablesQuery!public!unit tests! !
+!Database.Tests.AccessDBTest categoriesFor: #testViewsQuery!public!unit tests! !
 
-!AccessDBTest class methodsFor!
+!Database.Tests.AccessDBTest class methodsFor!
 
 resources
 	^{AccessNorthwindDB}! !
-!AccessDBTest class categoriesFor: #resources!public! !
+!Database.Tests.AccessDBTest class categoriesFor: #resources!public! !
 

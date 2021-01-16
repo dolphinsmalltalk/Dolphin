@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-DBAbstractRow subclass: #DBRowBuffer
+Database.DBAbstractRow subclass: #'Database.DBRowBuffer'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-DBRowBuffer guid: (GUID fromString: '{87b4c476-026e-11d3-9fd7-00a0cc3e4a32}')!
-DBRowBuffer comment: 'DBRowBuffers are used to describe and buffer the columns of the current row in a <DBResultSet>.'!
-!DBRowBuffer categoriesForClass!ODBC Interface! !
-!DBRowBuffer methodsFor!
+Database.DBRowBuffer guid: (Core.GUID fromString: '{87b4c476-026e-11d3-9fd7-00a0cc3e4a32}')!
+Database.DBRowBuffer comment: 'DBRowBuffers are used to describe and buffer the columns of the current row in a <DBResultSet>.'!
+!Database.DBRowBuffer categoriesForClass!ODBC Interface! !
+!Database.DBRowBuffer methodsFor!
 
 asObject
 	"Private - Answer the receiver as an instance of DBRow containing the receiver's values."
@@ -22,7 +22,7 @@ bind: aDBStatement
 	| hStmt |
 	hStmt := aDBStatement executedHandle.
 	#todo "Will need an array of status values if to fetch a block of rows at a time".
-	status := WORD new.
+	status := External.WORD new.
 	aDBStatement statusArray: status.
 	^hStmt!
 
@@ -31,7 +31,7 @@ contents
 
 	contents isNil
 		ifTrue: [contents := columns collect: [:colAttr | DBField newForCol: colAttr]].
-	^contents.!
+	^contents!
 
 objects
 	"Private - Answer the receivers contents as an <Array> of <Object>s
@@ -46,10 +46,10 @@ sizeInBytes
 
 status
 	^status value! !
-!DBRowBuffer categoriesFor: #asObject!converting!private! !
-!DBRowBuffer categoriesFor: #bind:!operations!private! !
-!DBRowBuffer categoriesFor: #contents!accessing!public! !
-!DBRowBuffer categoriesFor: #objects!accessing!private! !
-!DBRowBuffer categoriesFor: #sizeInBytes!accessing!public! !
-!DBRowBuffer categoriesFor: #status!accessing!private! !
+!Database.DBRowBuffer categoriesFor: #asObject!converting!private! !
+!Database.DBRowBuffer categoriesFor: #bind:!operations!private! !
+!Database.DBRowBuffer categoriesFor: #contents!accessing!public! !
+!Database.DBRowBuffer categoriesFor: #objects!accessing!private! !
+!Database.DBRowBuffer categoriesFor: #sizeInBytes!accessing!public! !
+!Database.DBRowBuffer categoriesFor: #status!accessing!private! !
 

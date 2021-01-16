@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-SharedPool subclass: #DBColFlags
+Kernel.SharedPool subclass: #'Database.DBColFlags'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -19,6 +19,6 @@ SharedPool subclass: #DBColFlags
 		'UpdateRules' -> 16r700.
 		'UpdateSetNull' -> 16r400
 	}!
-DBColFlags guid: (GUID fromString: '{09efa816-d3eb-4a23-9b64-ea47b55b121e}')!
-DBColFlags comment: ''!
-!DBColFlags categoriesForClass!Unclassified! !
+Database.DBColFlags guid: (Core.GUID fromString: '{09efa816-d3eb-4a23-9b64-ea47b55b121e}')!
+Database.DBColFlags comment: ''!
+!Database.DBColFlags categoriesForClass!Unclassified! !

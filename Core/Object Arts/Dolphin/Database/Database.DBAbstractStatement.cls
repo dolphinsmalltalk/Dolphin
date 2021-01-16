@@ -1,22 +1,22 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Core.Object subclass: #DBAbstractStatement
+Core.Object subclass: #'Database.DBAbstractStatement'
 	instanceVariableNames: 'handle parent executed cursorType'
 	classVariableNames: 'CursorTypes'
-	imports: #(#{Smalltalk.ODBCConstants} #{Smalltalk.ODBCRetCodes})
+	imports: #(#{OS.ODBCRetCodes} #{OS.ODBCConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-DBAbstractStatement guid: (Core.GUID fromString: '{f63fc993-6a18-49de-a8d2-07b192c69097}')!
-DBAbstractStatement isNonInstantiable: true!
-DBAbstractStatement comment: 'A DBAbstractStatements represent commands that can be executed by against a <DBConnection>. DBAbstractStatement is itself abstract. Its most commonly used concrete subclass is <DBStatement>, which can be used to execute SQL statements. Other subclasses represent individual queries that can be performed against the metadata in the database schema using the specific functions provided for this purpose in ODBC. Whatever the form of the command the subclass of statement represents, all yield a <DBResultSet>.
+Database.DBAbstractStatement guid: (Core.GUID fromString: '{f63fc993-6a18-49de-a8d2-07b192c69097}')!
+Database.DBAbstractStatement isNonInstantiable: true!
+Database.DBAbstractStatement comment: 'A DBAbstractStatements represent commands that can be executed by against a <DBConnection>. DBAbstractStatement is itself abstract. Its most commonly used concrete subclass is <DBStatement>, which can be used to execute SQL statements. Other subclasses represent individual queries that can be performed against the metadata in the database schema using the specific functions provided for this purpose in ODBC. Whatever the form of the command the subclass of statement represents, all yield a <DBResultSet>.
 
 Instance Variables:
 	handle		<ExternalHandle>. ODBC statement handle.
 	parent		<DBConnection>. The connection on which the statement was (or will be) executed
 	executed		<Boolean>. Indicates if the command has been executed yet.
 	cursorType	<Symbol>. The symbolic name of the cursor type, e.g. #forwardOnly'!
-!DBAbstractStatement categoriesForClass!ODBC Interface! !
-!DBAbstractStatement methodsFor!
+!Database.DBAbstractStatement categoriesForClass!ODBC Interface! !
+!Database.DBAbstractStatement methodsFor!
 
 allocatedHandle
 	"Private - Answer the receiver's ODBC statement handle, which is lazily 
@@ -49,7 +49,7 @@ cancel
 		ifTrue: 
 			[handle isNull 
 				ifTrue: [executed := false]
-				ifFalse: [self dbCheckException: (ODBCLibrary default sqlCancel: handle)]]!
+				ifFalse: [self dbCheckException: (OS.ODBCLibrary default sqlCancel: handle)]]!
 
 close
 	"Private - Close the cursor, but keep the handle.
@@ -62,14 +62,14 @@ close
 			handle isNull 
 				ifFalse: 
 					[self 
-						dbCheckException: (ODBCLibrary default sqlFreeStmt: handle option: SQL_CLOSE)]]!
+						dbCheckException: (OS.ODBCLibrary default sqlFreeStmt: handle option: SQL_CLOSE)]]!
 
 columnLength: anInteger 
 	"Answer the length (bytes) of column number anInteger in the Result Set."
 
 	| ret len |
-	len := DWORD new.
-	ret := ODBCLibrary default 
+	len := ByteArray newFixed: 4.
+	ret := OS.ODBCLibrary default 
 				sqlColAttribute: self executedHandle
 				columnNumber: anInteger
 				fieldIdentifier: SQL_COLUMN_LENGTH	"Note using ODBC 2.x definition of column length"
@@ -78,7 +78,7 @@ columnLength: anInteger
 				stringLengthPtr: nil
 				numericAttributePtr: len.	
 	self dbCheckException: ret.
-	^len value!
+	^len dwordAtOffset: 0!
 
 cursorType
 	"Answer the symbolic cursor type name (one of #dynamic, #forwardOnly, #keysetDriven or #static)."
@@ -92,15 +92,14 @@ cursorType: aSymbol
 	"Attempting to change the cursorType once the statement has been executed will raise an error"
 	handle isNull ifFalse: [self setCursorType]!
 
-dbCheckException: anIntegerRetCode 
+dbCheckException: anIntegerRetCode
 	"Private - Checks anIntegerRetCode to see if a DBError or DBWarning should be 
 	signalled. Note that as of Dolphin 4.0, DBWarning is actually a notification, which is a 
 	more appropriate level of reporting for SQL_SUCCESS_WITH_INFO."
 
-	^anIntegerRetCode = SQL_SUCCESS 
+	^anIntegerRetCode = SQL_SUCCESS
 		ifFalse: 
 			["Signal an error or warning - decide which"
-
 			((anIntegerRetCode = SQL_SUCCESS_WITH_INFO or: [anIntegerRetCode = SQL_NO_DATA])
 				ifTrue: [DBWarning]
 				ifFalse: [DBError]) signalWith: (self exceptionDetails: anIntegerRetCode)]!
@@ -125,14 +124,14 @@ describeCols: columnNumbers
 	nameBufSize := self parent maxColumnNameLength+ 1.
 	name := Utf16String newFixed: nameBufSize.
 	"Similarly, re-usable buffers for all the other output parameters"
-	colNameLen := SWORD new.
-	dataType := SWORD new.
-	columnSize := DWORDBytes new.
-	decimalDigits := SWORD new.
-	nullable := SWORD new.
-	colLen := DWORDBytes new.
+	colNameLen := External.SWORD new.
+	dataType := External.SWORD new.
+	columnSize := External.DWORDBytes new.
+	decimalDigits := External.SWORD new.
+	nullable := External.SWORD new.
+	colLen := External.DWORDBytes new.
 	hStmt := self executedHandle.
-	lib := ODBCLibrary default.
+	lib := OS.ODBCLibrary default.
 	answer := Array new: columnNumbers size.
 	i := 1.
 	columnNumbers do: 
@@ -181,11 +180,11 @@ driverHStmt
 
 	| value |
 	value := External.Handle new.
-	self dbCheckException: (ODBCLibrary default
+	self dbCheckException: (OS.ODBCLibrary default
 				sqlGetInfo: self asParameter
 				infoType: SQL_DRIVER_HSTMT
 				infoValuePtr: value
-				bufferLength: VMConstants.IntPtrSize
+				bufferLength: Kernel.VMConstants.IntPtrSize
 				stringLengthPtr: nil).
 	^value!
 
@@ -224,7 +223,7 @@ finalize
 	"Private - Free any external resources held by the receiver. 
 	Should any error occur we print it to trace but otherwise ignore it."
 
-	[self free] on: DBError do: [ :e | e toTrace]!
+	[self free] on: DBError do: [:e | e toTrace]!
 
 free
 	"Free up all resources leaving the receiver in a re-usable state."
@@ -236,7 +235,7 @@ getStringAttribute: anInteger
 
 	| buffer |
 	buffer := Utf16String newFixed: SQL_MAX_OPTION_STRING_LENGTH.
-	self dbCheckException: (ODBCLibrary default
+	self dbCheckException: (OS.ODBCLibrary default
 				sqlGetStmtAttr: self allocatedHandle
 				attribute: anInteger
 				valuePtr: buffer
@@ -266,7 +265,7 @@ moveTo: anIntegerRow
 	row so that it is read on a subsequent Fetch (requires
 	extended fetch)"
 
-	self dbCheckException: (ODBCLibrary default 
+	self dbCheckException: (OS.ODBCLibrary default 
 				sqlSetPos: self executedHandle
 				rowNumber: anIntegerRow
 				operation: SQL_POSITION
@@ -276,12 +275,12 @@ numColumns
 	"Answer the number of columns in the receiver's result set."
 
 	| ccol ret |
-	ccol := SWORD new.
-	ret := ODBCLibrary default
+	ccol := ByteArray newFixed: 2.
+	ret := OS.ODBCLibrary default
 		sqlNumResultCols: self executedHandle
 		pccol: ccol.
 	self dbCheckException: ret.
-	^ccol value!
+	^ccol swordAtOffset: 0!
 
 numRows
 	"Answer the number of rows affected by an UPDATE, DELETE or INSERT command exec'd on
@@ -289,11 +288,11 @@ numRows
 	indicating that the driver does not know."
 
 	| rowCount ret |
-	rowCount := SDWORD new.
-	ret := ODBCLibrary default sqlRowCount: self executedHandle
+	rowCount := ByteArray newFixed: 4.
+	ret := OS.ODBCLibrary default sqlRowCount: self executedHandle
 				rowCountPtr: rowCount.
 	self dbCheckException: ret.
-	^rowCount value!
+	^rowCount sdwordAtOffset: 0!
 
 parent
 	"Answer the statement's parent <DBConnection> object."
@@ -309,13 +308,12 @@ results
 	The result set will cause the receiver to be lazily executed when
 	any attempt is made to access its contents."
 
-	^(self cursorType == #forwardOnly 
-		ifTrue: [DBForwardOnlyResultSet]
-		ifFalse: [DBResultSet]) statement: self!
+	^(self cursorType == #forwardOnly ifTrue: [DBForwardOnlyResultSet] ifFalse: [DBResultSet])
+		statement: self!
 
 setAttribute: attributeInteger value: anIntegerOrStringOrBytes size: sizeInteger 
 	| ret |
-	ret := ODBCLibrary default 
+	ret := OS.ODBCLibrary default 
 				sqlSetStmtAttr: self allocatedHandle
 				attribute: attributeInteger
 				valuePtr: anIntegerOrStringOrBytes
@@ -344,44 +342,44 @@ statusArray: anArrayOfWORDs
 		value: anArrayOfWORDs
 		size: SQL_IS_POINTER!
 
-suppressErrorsDo: aNiladicBlock 
+suppressErrorsDo: aNiladicBlock
 	aNiladicBlock on: DBError do: [:e | e toTrace]! !
-!DBAbstractStatement categoriesFor: #allocatedHandle!accessing!private! !
-!DBAbstractStatement categoriesFor: #asParameter!accessing!public! !
-!DBAbstractStatement categoriesFor: #basicFree!private!realizing/unrealizing! !
-!DBAbstractStatement categoriesFor: #cancel!operations!public! !
-!DBAbstractStatement categoriesFor: #close!operations!private! !
-!DBAbstractStatement categoriesFor: #columnLength:!accessing!public! !
-!DBAbstractStatement categoriesFor: #cursorType!accessing!public! !
-!DBAbstractStatement categoriesFor: #cursorType:!accessing!public! !
-!DBAbstractStatement categoriesFor: #dbCheckException:!exceptions!private! !
-!DBAbstractStatement categoriesFor: #defaultCursorType!constants!public! !
-!DBAbstractStatement categoriesFor: #describeCol:!accessing!public! !
-!DBAbstractStatement categoriesFor: #describeCols:!accessing!public! !
-!DBAbstractStatement categoriesFor: #driverHStmt!accessing!private! !
-!DBAbstractStatement categoriesFor: #exceptionDetails:!exceptions!private! !
-!DBAbstractStatement categoriesFor: #exec!operations!private! !
-!DBAbstractStatement categoriesFor: #executedHandle!accessing!private! !
-!DBAbstractStatement categoriesFor: #executeStatement!operations!private! !
-!DBAbstractStatement categoriesFor: #finalize!finalizing!private! !
-!DBAbstractStatement categoriesFor: #free!public!realizing/unrealizing! !
-!DBAbstractStatement categoriesFor: #getStringAttribute:!accessing!private! !
-!DBAbstractStatement categoriesFor: #handle!accessing!private! !
-!DBAbstractStatement categoriesFor: #initialize!initializing!private! !
-!DBAbstractStatement categoriesFor: #initialize:!initializing!private! !
-!DBAbstractStatement categoriesFor: #moveTo:!accessing!private! !
-!DBAbstractStatement categoriesFor: #numColumns!accessing!public! !
-!DBAbstractStatement categoriesFor: #numRows!accessing!public! !
-!DBAbstractStatement categoriesFor: #parent!accessing!public! !
-!DBAbstractStatement categoriesFor: #reset!initializing!private! !
-!DBAbstractStatement categoriesFor: #results!accessing!public! !
-!DBAbstractStatement categoriesFor: #setAttribute:value:size:!accessing!private! !
-!DBAbstractStatement categoriesFor: #setCursorType!helpers!private! !
-!DBAbstractStatement categoriesFor: #setDefaultAttributes!initializing!private! !
-!DBAbstractStatement categoriesFor: #statusArray:!accessing!private! !
-!DBAbstractStatement categoriesFor: #suppressErrorsDo:!accessing!private! !
+!Database.DBAbstractStatement categoriesFor: #allocatedHandle!accessing!private! !
+!Database.DBAbstractStatement categoriesFor: #asParameter!accessing!public! !
+!Database.DBAbstractStatement categoriesFor: #basicFree!private!realizing/unrealizing! !
+!Database.DBAbstractStatement categoriesFor: #cancel!operations!public! !
+!Database.DBAbstractStatement categoriesFor: #close!operations!private! !
+!Database.DBAbstractStatement categoriesFor: #columnLength:!accessing!public! !
+!Database.DBAbstractStatement categoriesFor: #cursorType!accessing!public! !
+!Database.DBAbstractStatement categoriesFor: #cursorType:!accessing!public! !
+!Database.DBAbstractStatement categoriesFor: #dbCheckException:!exceptions!private! !
+!Database.DBAbstractStatement categoriesFor: #defaultCursorType!constants!public! !
+!Database.DBAbstractStatement categoriesFor: #describeCol:!accessing!public! !
+!Database.DBAbstractStatement categoriesFor: #describeCols:!accessing!public! !
+!Database.DBAbstractStatement categoriesFor: #driverHStmt!accessing!private! !
+!Database.DBAbstractStatement categoriesFor: #exceptionDetails:!exceptions!private! !
+!Database.DBAbstractStatement categoriesFor: #exec!operations!private! !
+!Database.DBAbstractStatement categoriesFor: #executedHandle!accessing!private! !
+!Database.DBAbstractStatement categoriesFor: #executeStatement!operations!private! !
+!Database.DBAbstractStatement categoriesFor: #finalize!finalizing!private! !
+!Database.DBAbstractStatement categoriesFor: #free!public!realizing/unrealizing! !
+!Database.DBAbstractStatement categoriesFor: #getStringAttribute:!accessing!private! !
+!Database.DBAbstractStatement categoriesFor: #handle!accessing!private! !
+!Database.DBAbstractStatement categoriesFor: #initialize!initializing!private! !
+!Database.DBAbstractStatement categoriesFor: #initialize:!initializing!private! !
+!Database.DBAbstractStatement categoriesFor: #moveTo:!accessing!private! !
+!Database.DBAbstractStatement categoriesFor: #numColumns!accessing!public! !
+!Database.DBAbstractStatement categoriesFor: #numRows!accessing!public! !
+!Database.DBAbstractStatement categoriesFor: #parent!accessing!public! !
+!Database.DBAbstractStatement categoriesFor: #reset!initializing!private! !
+!Database.DBAbstractStatement categoriesFor: #results!accessing!public! !
+!Database.DBAbstractStatement categoriesFor: #setAttribute:value:size:!accessing!private! !
+!Database.DBAbstractStatement categoriesFor: #setCursorType!helpers!private! !
+!Database.DBAbstractStatement categoriesFor: #setDefaultAttributes!initializing!private! !
+!Database.DBAbstractStatement categoriesFor: #statusArray:!accessing!private! !
+!Database.DBAbstractStatement categoriesFor: #suppressErrorsDo:!accessing!private! !
 
-!DBAbstractStatement class methodsFor!
+!Database.DBAbstractStatement class methodsFor!
 
 initialize
 	"
@@ -468,12 +466,12 @@ stbVersion
 	"Answer the current binary filer version number for instances of the receiver."
 
 	^2! !
-!DBAbstractStatement class categoriesFor: #initialize!initializing!public! !
-!DBAbstractStatement class categoriesFor: #new!instance creation!private! !
-!DBAbstractStatement class categoriesFor: #parent:!instance creation!public! !
-!DBAbstractStatement class categoriesFor: #parent:cursorType:!instance creation!public! !
-!DBAbstractStatement class categoriesFor: #stbConvertFrom:!binary filing!public! !
-!DBAbstractStatement class categoriesFor: #stbConvertToVersion1:!binary filing!private! !
-!DBAbstractStatement class categoriesFor: #stbConvertToVersion2:!binary filing!private! !
-!DBAbstractStatement class categoriesFor: #stbVersion!binary filing!public! !
+!Database.DBAbstractStatement class categoriesFor: #initialize!initializing!public! !
+!Database.DBAbstractStatement class categoriesFor: #new!instance creation!private! !
+!Database.DBAbstractStatement class categoriesFor: #parent:!instance creation!public! !
+!Database.DBAbstractStatement class categoriesFor: #parent:cursorType:!instance creation!public! !
+!Database.DBAbstractStatement class categoriesFor: #stbConvertFrom:!binary filing!public! !
+!Database.DBAbstractStatement class categoriesFor: #stbConvertToVersion1:!binary filing!private! !
+!Database.DBAbstractStatement class categoriesFor: #stbConvertToVersion2:!binary filing!private! !
+!Database.DBAbstractStatement class categoriesFor: #stbVersion!binary filing!public! !
 

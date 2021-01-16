@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'Database Connection Base'.
-package paxVersion: 2;
+package paxVersion: 2.1;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk ODBC Database Connection Base (run time).
 Copyright (c) Object Arts Ltd, 1997-2003. Portions copyright CGI Group (Europe) Ltd, 1997.
@@ -14,41 +14,42 @@ package basicPackageVersion: '6.1'.
 
 
 package setClassNames: #(
-	#{DBAbstractRow}
-	#{DBAbstractStatement}
-	#{DBBoundBuffer}
-	#{DBColAttr}
-	#{DBColFlags}
-	#{DBColumnsStatement}
-	#{DBConnection}
-	#{DBError}
-	#{DBErrorDetails}
-	#{DBExceptionDetails}
-	#{DBField}
-	#{DBForeignKeysStatement}
-	#{DBForwardOnlyResultSet}
-	#{DBParameterizedStatement}
-	#{DBPrimaryKeysStatement}
-	#{DBProceduresStatement}
-	#{DBResultSet}
-	#{DBRow}
-	#{DBRowBuffer}
-	#{DBSchemaStatement}
-	#{DBSpecialColumnsStatement}
-	#{DBStatement}
-	#{DBStatisticsStatement}
-	#{DBTablesStatement}
-	#{DBTxn}
-	#{DBUnboundBuffer}
-	#{DBWarning}
-	#{ODBCConstants}
-	#{ODBCCTypes}
-	#{ODBCDATE}
-	#{ODBCLibrary}
-	#{ODBCRetCodes}
-	#{ODBCTIME}
-	#{ODBCTIMESTAMP}
-	#{ODBCTypes}
+	#{Database}
+	#{Database.DBAbstractRow}
+	#{Database.DBAbstractStatement}
+	#{Database.DBBoundBuffer}
+	#{Database.DBColAttr}
+	#{Database.DBColFlags}
+	#{Database.DBColumnsStatement}
+	#{Database.DBConnection}
+	#{Database.DBError}
+	#{Database.DBErrorDetails}
+	#{Database.DBExceptionDetails}
+	#{Database.DBField}
+	#{Database.DBForeignKeysStatement}
+	#{Database.DBForwardOnlyResultSet}
+	#{Database.DBParameterizedStatement}
+	#{Database.DBPrimaryKeysStatement}
+	#{Database.DBProceduresStatement}
+	#{Database.DBResultSet}
+	#{Database.DBRow}
+	#{Database.DBRowBuffer}
+	#{Database.DBSchemaStatement}
+	#{Database.DBSpecialColumnsStatement}
+	#{Database.DBStatement}
+	#{Database.DBStatisticsStatement}
+	#{Database.DBTablesStatement}
+	#{Database.DBTxn}
+	#{Database.DBUnboundBuffer}
+	#{Database.DBWarning}
+	#{OS.ODBCConstants}
+	#{OS.ODBCCTypes}
+	#{OS.ODBCDATE}
+	#{OS.ODBCLibrary}
+	#{OS.ODBCRetCodes}
+	#{OS.ODBCTIME}
+	#{OS.ODBCTIMESTAMP}
+	#{OS.ODBCTypes}
 ).
 
 package setPrerequisites: #(
@@ -60,7 +61,13 @@ package!
 
 "Class Definitions"!
 
-SharedPool subclass: #DBColFlags
+Kernel.Namespace subclass: #Database
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #(#{Core})
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Kernel.SharedPool subclass: #'Database.DBColFlags'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -79,7 +86,7 @@ SharedPool subclass: #DBColFlags
 		'UpdateRules' -> 16r700.
 		'UpdateSetNull' -> 16r400
 	}!
-SharedPool subclass: #ODBCConstants
+Kernel.SharedPool subclass: #'OS.ODBCConstants'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -1450,7 +1457,7 @@ SharedPool subclass: #ODBCConstants
 		'TRACE_VS_EVENT_ON' -> 16r2.
 		'TypeOffset' -> 16rC
 	}!
-SharedPool subclass: #ODBCCTypes
+Kernel.SharedPool subclass: #'OS.ODBCCTypes'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -1498,7 +1505,7 @@ SharedPool subclass: #ODBCCTypes
 		'SQL_C_VARBOOKMARK' -> -16r2.
 		'SQL_C_WCHAR' -> -16r8
 	}!
-SharedPool subclass: #ODBCRetCodes
+Kernel.SharedPool subclass: #'OS.ODBCRetCodes'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -1511,7 +1518,7 @@ SharedPool subclass: #ODBCRetCodes
 		'SQL_SUCCESS' -> 16r0.
 		'SQL_SUCCESS_WITH_INFO' -> 16r1
 	}!
-SharedPool subclass: #ODBCTypes
+Kernel.SharedPool subclass: #'OS.ODBCTypes'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -1561,175 +1568,175 @@ SharedPool subclass: #ODBCTypes
 		'SQL_WLONGVARCHAR' -> -16rA.
 		'SQL_WVARCHAR' -> -16r9
 	}!
-Object subclass: #DBAbstractRow
+Core.Object subclass: #'Database.DBAbstractRow'
 	instanceVariableNames: 'columns contents selectors status'
 	classVariableNames: ''
-	imports: #(#{ODBCConstants})
+	imports: #(#{OS.ODBCConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Object subclass: #DBAbstractStatement
+Core.Object subclass: #'Database.DBAbstractStatement'
 	instanceVariableNames: 'handle parent executed cursorType'
 	classVariableNames: 'CursorTypes'
-	imports: #(#{ODBCConstants} #{ODBCRetCodes})
+	imports: #(#{OS.ODBCRetCodes} #{OS.ODBCConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Object subclass: #DBColAttr
+Core.Object subclass: #'Database.DBColAttr'
 	instanceVariableNames: 'columnNumber name length sqlType precision scale special'
 	classVariableNames: ''
-	imports: #(#{DBColFlags} #{ODBCConstants} #{ODBCCTypes} #{ODBCTypes})
+	imports: #(#{Database.DBColFlags} #{OS.ODBCTypes} #{OS.ODBCConstants} #{OS.ODBCCTypes})
 	classInstanceVariableNames: ''
 	classConstants: {
-		'CTypesExtraBytes' -> #(0 2 2 2 0 0 0 0 0 0 1 0 1 1 1 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0).
-		'SQLToCTypes' -> #(-11 -8 -8 -8 -7 -6 -25 -2 -2 -2 1 99 1 1 1 4 5 8 7 8 nil nil nil 1 nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil 91 92 93)
+		'CTypesExtraBytes' -> #(16r0 16r2 16r2 16r2 16r0 16r0 16r0 16r0 16r0 16r0 16r1 16r0 16r1 16r1 16r1 16r0 16r0 16r0 16r0 16r0 16r0 16r0 16r0 16r1 16r0 16r0 16r0 16r0 16r0 16r0 16r0 16r0 16r0 16r0 16r0 16r0 16r0 16r0 16r0 16r0 16r0 16r0 16r0 16r0 16r0 16r0 16r0 16r0 16r0 16r0 16r0 16r0 16r0 16r0 16r0 16r0 16r0 16r0 16r0 16r0 16r0 16r0 16r0 16r0 16r0 16r0 16r0 16r0 16r0 16r0 16r0 16r0 16r0 16r0 16r0 16r0 16r0 16r0 16r0 16r0 16r0 16r0 16r0 16r0 16r0 16r0 16r0 16r0 16r0 16r0 16r0 16r0 16r0 16r0 16r0 16r0 16r0 16r0 16r0 16r0 16r0 16r0 16r0 16r0 16r0).
+		'SQLToCTypes' -> #(-16rB -16r8 -16r8 -16r8 -16r7 -16r6 -16r19 -16r2 -16r2 -16r2 16r1 16r63 16r1 16r1 16r1 16r4 16r5 16r8 16r7 16r8 nil nil nil 16r1 nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil 16r5B 16r5C 16r5D)
 	}!
-Object subclass: #DBConnection
+Core.Object subclass: #'Database.DBConnection'
 	instanceVariableNames: 'handle dsn uid pwd statements transaction connectString flags'
 	classVariableNames: 'Connections DriverCompleteMask HEnv ScrollTypes TxnIsolationLevels'
-	imports: #(#{ODBCConstants} #{ODBCRetCodes})
+	imports: #(#{OS.ODBCRetCodes} #{OS.ODBCConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Object subclass: #DBErrorDetails
+Core.Object subclass: #'Database.DBErrorDetails'
 	instanceVariableNames: 'msg nativeErr sqlState origin'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Object subclass: #DBExceptionDetails
+Core.Object subclass: #'Database.DBExceptionDetails'
 	instanceVariableNames: 'errors hEnv hDBC hStmt code'
 	classVariableNames: ''
-	imports: #(#{ODBCConstants} #{ODBCRetCodes})
+	imports: #(#{OS.ODBCRetCodes} #{OS.ODBCConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Object subclass: #DBField
+Core.Object subclass: #'Database.DBField'
 	instanceVariableNames: 'column buffer lengthBuf'
 	classVariableNames: ''
-	imports: #(#{ODBCConstants} #{ODBCCTypes} #{ODBCRetCodes} #{ODBCTypes})
+	imports: #(#{OS.ODBCTypes} #{OS.ODBCRetCodes} #{OS.ODBCConstants} #{OS.ODBCCTypes})
 	classInstanceVariableNames: ''
 	classConstants: {
 		'GetSelectors' -> #(#getGuid #getUtf16String #getUtf16String #getUtf16String #getBoolean #getByte #getInt64 #getByteArray #getByteArray #getByteArray #getAnsiString nil #getAnsiString #numberFromNumeric #numberFromNumeric #getLong #getShort #getDouble #getFloat #getDouble nil nil nil #getAnsiString nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil #getDate #getTime #getDateAndTime).
 		'SetSelectors' -> #(#setGuid: #setUtf16String: #setUtf16String: #setUtf16String: #setBoolean: #setByte: #setInt64: #setByteArray: #setByteArray: #setByteArray: #setAnsiString: nil #setAnsiString: #numberToNumeric: #numberToNumeric: #setLong: #setShort: #setDouble: #setFloat: #setDouble: nil nil nil #setAnsiString: nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil #setDate: #setTime: #setDateAndTime:)
 	}!
-Object subclass: #DBTxn
+Core.Object subclass: #'Database.DBTxn'
 	instanceVariableNames: 'connection readOnly creator'
 	classVariableNames: ''
-	imports: #(#{ODBCConstants})
+	imports: #(#{OS.ODBCConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-SequenceableCollection subclass: #DBResultSet
+Core.SequenceableCollection subclass: #'Database.DBResultSet'
 	instanceVariableNames: 'statement buffer columns'
 	classVariableNames: ''
-	imports: #(#{ODBCConstants} #{ODBCRetCodes})
+	imports: #(#{OS.ODBCRetCodes} #{OS.ODBCConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-DBResultSet subclass: #DBForwardOnlyResultSet
+Database.DBResultSet subclass: #'Database.DBForwardOnlyResultSet'
 	instanceVariableNames: 'position'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-DBAbstractRow subclass: #DBRow
+Database.DBAbstractRow subclass: #'Database.DBRow'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-DBAbstractRow subclass: #DBRowBuffer
+Database.DBAbstractRow subclass: #'Database.DBRowBuffer'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-DBRowBuffer subclass: #DBBoundBuffer
+Database.DBRowBuffer subclass: #'Database.DBBoundBuffer'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{ODBCConstants} #{ODBCCTypes})
+	imports: #(#{OS.ODBCConstants} #{OS.ODBCCTypes})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-DBRowBuffer subclass: #DBUnboundBuffer
+Database.DBRowBuffer subclass: #'Database.DBUnboundBuffer'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-DBAbstractStatement subclass: #DBSchemaStatement
+Database.DBAbstractStatement subclass: #'Database.DBSchemaStatement'
 	instanceVariableNames: 'catalogName schemaName tableName'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-DBAbstractStatement subclass: #DBStatement
+Database.DBAbstractStatement subclass: #'Database.DBStatement'
 	instanceVariableNames: 'sqlString'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-DBSchemaStatement subclass: #DBColumnsStatement
+Database.DBSchemaStatement subclass: #'Database.DBColumnsStatement'
 	instanceVariableNames: 'columnName'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-DBSchemaStatement subclass: #DBForeignKeysStatement
+Database.DBSchemaStatement subclass: #'Database.DBForeignKeysStatement'
 	instanceVariableNames: 'foreignCatalogName foreignSchemaName foreignTableName'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-DBSchemaStatement subclass: #DBPrimaryKeysStatement
+Database.DBSchemaStatement subclass: #'Database.DBPrimaryKeysStatement'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-DBSchemaStatement subclass: #DBProceduresStatement
+Database.DBSchemaStatement subclass: #'Database.DBProceduresStatement'
 	instanceVariableNames: 'procedureName'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-DBSchemaStatement subclass: #DBSpecialColumnsStatement
+Database.DBSchemaStatement subclass: #'Database.DBSpecialColumnsStatement'
 	instanceVariableNames: 'columnType scope nullable'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-DBSchemaStatement subclass: #DBStatisticsStatement
+Database.DBSchemaStatement subclass: #'Database.DBStatisticsStatement'
 	instanceVariableNames: 'type accurate'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-DBSchemaStatement subclass: #DBTablesStatement
+Database.DBSchemaStatement subclass: #'Database.DBTablesStatement'
 	instanceVariableNames: 'tableType'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-DBStatement subclass: #DBParameterizedStatement
+Database.DBStatement subclass: #'Database.DBParameterizedStatement'
 	instanceVariableNames: 'values parameters paramCols isPrepared'
 	classVariableNames: ''
-	imports: #(#{ODBCCTypes})
+	imports: #(#{OS.ODBCCTypes})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Error subclass: #DBError
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #(#{ODBCConstants} #{ODBCRetCodes})
-	classInstanceVariableNames: ''
-	classConstants: {}!
-Notification subclass: #DBWarning
+External.DynamicLinkLibrary subclass: #'OS.ODBCLibrary'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ExternalLibrary subclass: #ODBCLibrary
+Core.Error subclass: #'Database.DBError'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #(#{OS.ODBCRetCodes} #{OS.ODBCConstants})
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Core.Notification subclass: #'Database.DBWarning'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ExternalStructure subclass: #ODBCDATE
+External.Structure subclass: #'OS.ODBCDATE'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -1739,7 +1746,7 @@ ExternalStructure subclass: #ODBCDATE
 		'_OffsetOf_month' -> 16r2.
 		'_OffsetOf_year' -> 16r0
 	}!
-ExternalStructure subclass: #ODBCTIME
+External.Structure subclass: #'OS.ODBCTIME'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -1749,7 +1756,7 @@ ExternalStructure subclass: #ODBCTIME
 		'_OffsetOf_minute' -> 16r2.
 		'_OffsetOf_second' -> 16r4
 	}!
-ExternalStructure subclass: #ODBCTIMESTAMP
+External.Structure subclass: #'OS.ODBCTIMESTAMP'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

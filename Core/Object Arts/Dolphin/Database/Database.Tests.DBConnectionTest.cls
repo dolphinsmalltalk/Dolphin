@@ -1,18 +1,18 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-DBTest subclass: #DBConnectionTest
+Database.Tests.DBTest subclass: #'Database.Tests.DBConnectionTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{Smalltalk.ODBCConstants} #{Smalltalk.ODBCTypes})
+	imports: #(#{OS.ODBCTypes} #{OS.ODBCConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-DBConnectionTest guid: (Core.GUID fromString: '{0a84fa8d-f7c4-4bbe-b459-da0409a391b9}')!
-DBConnectionTest isNonInstantiable: true!
-DBConnectionTest comment: 'SUnitBrowser openOnTestCase: self.
+Database.Tests.DBConnectionTest guid: (Core.GUID fromString: '{0a84fa8d-f7c4-4bbe-b459-da0409a391b9}')!
+Database.Tests.DBConnectionTest isNonInstantiable: true!
+Database.Tests.DBConnectionTest comment: 'SUnitBrowser openOnTestCase: self.
 
 If these tests fail make sure that Tests\NWind.mdb is available and NOT write protected.'!
-!DBConnectionTest categoriesForClass!Unclassified! !
-!DBConnectionTest methodsFor!
+!Database.Tests.DBConnectionTest categoriesForClass!Unclassified! !
+!Database.Tests.DBConnectionTest methodsFor!
 
 databaseResource
 	self subclassResponsibility!
@@ -28,8 +28,8 @@ field: aString fromRow: aDBRow
 queryColumns
 	self subclassResponsibility!
 
-shouldRaiseNotSupported: block 
-	self 
+shouldRaiseNotSupported: block
+	self
 		should: block
 		raise: DBError
 		matching: [:e | e tag errors anySatisfy: [:x | x sqlState = 'IM001']]!
@@ -153,11 +153,11 @@ testConnectionString
 
 	| db |
 	db := DBConnection new.
-	db 
+	db
 		connectString: ';DSN=PostgreSQL30;DATABASE=money;SERVER=192.168.168.2;PORT=5432;UID=akira;PWD=;A6=;A7=100;A8=4096;B0=254;B1=8190;BI=0;C2=dd_;;CX=1a503ab;EMPTY='.
 	self assert: db dsn = 'PostgreSQL30'.
 	self assert: db pwd isEmpty.
-	self assert: db uid = 'akira'.
+	self assert: db uid = 'akira'
 
 	"Attributes must be either empty, or contain a key=value pair"
 	"self should: [db connectString: ';DSN;'] raise: Error"!
@@ -166,25 +166,26 @@ testConnectStringDo
 	| pairs block |
 	pairs := OrderedCollection new.
 	block := 
-			[:paramName :paramValue | 
+			[:paramName :paramValue |
 			pairs
 				add: paramName;
 				add: paramValue].
-	DBConnection 
+	DBConnection
 		connectString: 'DRIVER={Microsoft Access Driver (*.mdb)};DBQ=c:\program files\microsoft office\office\samples\Northwind.mdb'
 		do: block.
-	self assert: pairs asArray 
+	self assert: pairs asArray
 				= #('DRIVER' 'Microsoft Access Driver (*.mdb)' 'DBQ' 'c:\program files\microsoft office\office\samples\Northwind.mdb').
 	pairs := OrderedCollection new.
-	DBConnection connectString: ';;DRIVER={Microsoft Text Driver (*.txt; *.csv)};;DefaultDir=.;Dummy=;'
+	DBConnection
+		connectString: ';;DRIVER={Microsoft Text Driver (*.txt; *.csv)};;DefaultDir=.;Dummy=;'
 		do: block.
-	self assert: pairs asArray 
+	self assert: pairs asArray
 				= #('DRIVER' 'Microsoft Text Driver (*.txt; *.csv)' 'DefaultDir' '.' 'Dummy' '').
 	pairs := OrderedCollection new.
-	DBConnection 
+	DBConnection
 		connectString: ';DSN=PostgreSQL30;DATABASE=money;SERVER=192.168.168.2;PORT=5432;UID=akira;PWD=;A6=;A7=100;A8=4096;B0=254;B1=8190;BI=0;C2=dd_;;CX=1a503ab;EMPTY='
 		do: block.
-	self assert: pairs asArray 
+	self assert: pairs asArray
 				= #('DSN' 'PostgreSQL30' 'DATABASE' 'money' 'SERVER' '192.168.168.2' 'PORT' '5432' 'UID' 'akira' 'PWD' '' 'A6' '' 'A7' '100' 'A8' '4096' 'B0' '254' 'B1' '8190' 'BI' '0' 'C2' 'dd_' 'CX' '1a503ab' 'EMPTY' '')!
 
 testDSNlessConnection
@@ -193,7 +194,7 @@ testDSNlessConnection
 	| c connStr locator |
 	c := DBConnection new.
 	locator := self class owningPackage fileLocator.
-	connStr := 'DRIVER={Microsoft Access Driver (*.mdb)};DBQ=<1s>' 
+	connStr := 'DRIVER={Microsoft Access Driver (*.mdb)};DBQ=<1s>'
 				expandMacrosWith: (locator localFileSpecFor: 'Northwind.mdb')
 				with: locator basePath.
 	c connectString: connStr.
@@ -212,7 +213,7 @@ testDSNlessConnection
 
 testPackagesCorrectlySetUp
 	"The base package should not be dependent upon the development system."
-	self assert: ((Package manager packageNamed: 'Database Connection Base') prerequisites collect: [:each | each name]) asArray sort equals: #('Dolphin' 'Dolphin Legacy Date & Time')!
+	self assert: ((Kernel.Package manager packageNamed: 'Database Connection Base') prerequisites collect: [:each | each name]) asArray sort equals: #('Dolphin' 'Dolphin Legacy Date & Time')!
 
 testPreparedQuery
 	| statement results |
@@ -252,21 +253,21 @@ testTracing
 	self assert: connection isTracing not.
 	File delete: traceFile
 ! !
-!DBConnectionTest categoriesFor: #databaseResource!public! !
-!DBConnectionTest categoriesFor: #dbmsFeaturesMap!constants!private! !
-!DBConnectionTest categoriesFor: #field:fromRow:!private!unit tests! !
-!DBConnectionTest categoriesFor: #queryColumns!private! !
-!DBConnectionTest categoriesFor: #shouldRaiseNotSupported:!helpers!public! !
-!DBConnectionTest categoriesFor: #testAsArray!public!unit tests! !
-!DBConnectionTest categoriesFor: #testColumnsQuery!public!unit tests! !
-!DBConnectionTest categoriesFor: #testConnectionAttributes!public!unit tests! !
-!DBConnectionTest categoriesFor: #testConnectionEnquiries!public!unit tests! !
-!DBConnectionTest categoriesFor: #testConnectionString!public!unit tests! !
-!DBConnectionTest categoriesFor: #testConnectStringDo!public!unit tests! !
-!DBConnectionTest categoriesFor: #testDSNlessConnection!public!unit tests! !
-!DBConnectionTest categoriesFor: #testPackagesCorrectlySetUp!public!unit tests! !
-!DBConnectionTest categoriesFor: #testPreparedQuery!public!unit tests! !
-!DBConnectionTest categoriesFor: #testSpecialColumnsQuery!public!unit tests! !
-!DBConnectionTest categoriesFor: #testStatisticsQuery!public!unit tests! !
-!DBConnectionTest categoriesFor: #testTracing!public!unit tests! !
+!Database.Tests.DBConnectionTest categoriesFor: #databaseResource!public! !
+!Database.Tests.DBConnectionTest categoriesFor: #dbmsFeaturesMap!constants!private! !
+!Database.Tests.DBConnectionTest categoriesFor: #field:fromRow:!private!unit tests! !
+!Database.Tests.DBConnectionTest categoriesFor: #queryColumns!private! !
+!Database.Tests.DBConnectionTest categoriesFor: #shouldRaiseNotSupported:!helpers!public! !
+!Database.Tests.DBConnectionTest categoriesFor: #testAsArray!public!unit tests! !
+!Database.Tests.DBConnectionTest categoriesFor: #testColumnsQuery!public!unit tests! !
+!Database.Tests.DBConnectionTest categoriesFor: #testConnectionAttributes!public!unit tests! !
+!Database.Tests.DBConnectionTest categoriesFor: #testConnectionEnquiries!public!unit tests! !
+!Database.Tests.DBConnectionTest categoriesFor: #testConnectionString!public!unit tests! !
+!Database.Tests.DBConnectionTest categoriesFor: #testConnectStringDo!public!unit tests! !
+!Database.Tests.DBConnectionTest categoriesFor: #testDSNlessConnection!public!unit tests! !
+!Database.Tests.DBConnectionTest categoriesFor: #testPackagesCorrectlySetUp!public!unit tests! !
+!Database.Tests.DBConnectionTest categoriesFor: #testPreparedQuery!public!unit tests! !
+!Database.Tests.DBConnectionTest categoriesFor: #testSpecialColumnsQuery!public!unit tests! !
+!Database.Tests.DBConnectionTest categoriesFor: #testStatisticsQuery!public!unit tests! !
+!Database.Tests.DBConnectionTest categoriesFor: #testTracing!public!unit tests! !
 

@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-DBStatement subclass: #DBParameterizedStatement
+Database.DBStatement subclass: #'Database.DBParameterizedStatement'
 	instanceVariableNames: 'values parameters paramCols isPrepared'
 	classVariableNames: ''
-	poolDictionaries: 'ODBCCTypes'
+	imports: #(#{OS.ODBCCTypes})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-DBParameterizedStatement guid: (GUID fromString: '{87b4c549-026e-11d3-9fd7-00a0cc3e4a32}')!
-DBParameterizedStatement comment: 'A DBParameterizedStatement is used to represent a parameterized (prepared) SQL statement to be executed by a <DBConnection>.
+Database.DBParameterizedStatement guid: (Core.GUID fromString: '{87b4c549-026e-11d3-9fd7-00a0cc3e4a32}')!
+Database.DBParameterizedStatement comment: 'A DBParameterizedStatement is used to represent a parameterized (prepared) SQL statement to be executed by a <DBConnection>.
 
 In general one does not create DBParameterizedStatements directly but rather by the use of DBConnection>>prepare:. The statement can later be parameterized with the appropriate column attributes using #paramCols: and the parameter values using #values:. The statement must then executed using #exec to perform the actual database query. If any results are expected then a <DBResultSet> can be retrieved by sending it a #results message.
 
@@ -17,8 +17,8 @@ Instance Variables:
 	paramCols		<Array> of DBColAttr>. Metadata about the parameters.
 	isPrepared		<Boolean>. Flag to indicate whether the statement has been prepared.
 '!
-!DBParameterizedStatement categoriesForClass!ODBC Interface! !
-!DBParameterizedStatement methodsFor!
+!Database.DBParameterizedStatement categoriesForClass!ODBC Interface! !
+!Database.DBParameterizedStatement methodsFor!
 
 bindParams
 	"Private - Bind parameter columns for a prepared SQL statement so that when we 
@@ -26,7 +26,7 @@ bindParams
 	just before first exec (from #parameters)."
 
 	| odbc hstmt |
-	odbc := ODBCLibrary default.
+	odbc := OS.ODBCLibrary default.
 	hstmt := self allocatedHandle.
 	parameters keysAndValuesDo: 
 			[:i :eachField |
@@ -54,7 +54,7 @@ exec
 		ifFalse: [self prepare].
 	paramCols notNil
 		ifTrue: [self setValues].
-	ret := ODBCLibrary default sqlExecute: self allocatedHandle.
+	ret := OS.ODBCLibrary default sqlExecute: self allocatedHandle.
 	self dbCheckException: ret.
 	executed := true.
 !
@@ -96,7 +96,7 @@ prepare
 	| ret |
 	isPrepared := false.
 	parameters := nil.
-	ret := ODBCLibrary default 
+	ret := OS.ODBCLibrary default 
 				sqlPrepare: self allocatedHandle
 				statementText: self sqlString
 				textLength: SQL_NTS.
@@ -134,16 +134,16 @@ values: anArrayOfValues
 
 	self close.
 	values := anArrayOfValues! !
-!DBParameterizedStatement categoriesFor: #bindParams!operations!private! !
-!DBParameterizedStatement categoriesFor: #exec!operations!public! !
-!DBParameterizedStatement categoriesFor: #free!public!realizing/unrealizing! !
-!DBParameterizedStatement categoriesFor: #paramCols!accessing!public! !
-!DBParameterizedStatement categoriesFor: #paramCols:!accessing!public! !
-!DBParameterizedStatement categoriesFor: #parameters!accessing!private! !
-!DBParameterizedStatement categoriesFor: #prepare!operations!private! !
-!DBParameterizedStatement categoriesFor: #prepare:!operations!private! !
-!DBParameterizedStatement categoriesFor: #reset!initializing!private! !
-!DBParameterizedStatement categoriesFor: #setValues!operations!private! !
-!DBParameterizedStatement categoriesFor: #values!accessing!public! !
-!DBParameterizedStatement categoriesFor: #values:!accessing!public! !
+!Database.DBParameterizedStatement categoriesFor: #bindParams!operations!private! !
+!Database.DBParameterizedStatement categoriesFor: #exec!operations!public! !
+!Database.DBParameterizedStatement categoriesFor: #free!public!realizing/unrealizing! !
+!Database.DBParameterizedStatement categoriesFor: #paramCols!accessing!public! !
+!Database.DBParameterizedStatement categoriesFor: #paramCols:!accessing!public! !
+!Database.DBParameterizedStatement categoriesFor: #parameters!accessing!private! !
+!Database.DBParameterizedStatement categoriesFor: #prepare!operations!private! !
+!Database.DBParameterizedStatement categoriesFor: #prepare:!operations!private! !
+!Database.DBParameterizedStatement categoriesFor: #reset!initializing!private! !
+!Database.DBParameterizedStatement categoriesFor: #setValues!operations!private! !
+!Database.DBParameterizedStatement categoriesFor: #values!accessing!public! !
+!Database.DBParameterizedStatement categoriesFor: #values:!accessing!public! !
 

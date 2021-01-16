@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-DBSchemaStatement subclass: #DBColumnsStatement
+Database.DBSchemaStatement subclass: #'Database.DBColumnsStatement'
 	instanceVariableNames: 'columnName'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-DBColumnsStatement guid: (GUID fromString: '{b6faef99-50db-490f-aa8c-b4483998fb14}')!
-DBColumnsStatement comment: 'DBPrimaryKeysStatement is a specialized <DBSchemaStatement> for querying metadata about the columns of tables in a database.'!
-!DBColumnsStatement categoriesForClass!ODBC Interface! !
-!DBColumnsStatement methodsFor!
+Database.DBColumnsStatement guid: (Core.GUID fromString: '{b6faef99-50db-490f-aa8c-b4483998fb14}')!
+Database.DBColumnsStatement comment: 'DBPrimaryKeysStatement is a specialized <DBSchemaStatement> for querying metadata about the columns of tables in a database.'!
+!Database.DBColumnsStatement categoriesForClass!ODBC Interface! !
+!Database.DBColumnsStatement methodsFor!
 
 columnName
 	^columnName!
@@ -21,7 +21,7 @@ executeStatement
 	"Private - Execute the database command that the receiver represents.
 	Answer the <integer> return code."
 
-	^ODBCLibrary default 
+	^OS.ODBCLibrary default 
 		sqlColumns: self allocatedHandle
 		catalogName: self catalogName
 		nameLength1: SQL_NTS
@@ -31,7 +31,7 @@ executeStatement
 		nameLength3: SQL_NTS
 		columnName: self columnName
 		nameLength4: SQL_NTS! !
-!DBColumnsStatement categoriesFor: #columnName!accessing!public! !
-!DBColumnsStatement categoriesFor: #columnName:!accessing!public! !
-!DBColumnsStatement categoriesFor: #executeStatement!operations!private! !
+!Database.DBColumnsStatement categoriesFor: #columnName!accessing!public! !
+!Database.DBColumnsStatement categoriesFor: #columnName:!accessing!public! !
+!Database.DBColumnsStatement categoriesFor: #executeStatement!operations!private! !
 

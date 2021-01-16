@@ -1,26 +1,26 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-DBRowBuffer subclass: #DBBoundBuffer
+Database.DBRowBuffer subclass: #'Database.DBBoundBuffer'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'ODBCConstants ODBCCTypes'
+	imports: #(#{OS.ODBCConstants} #{OS.ODBCCTypes})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-DBBoundBuffer guid: (GUID fromString: '{87b4c547-026e-11d3-9fd7-00a0cc3e4a32}')!
-DBBoundBuffer comment: 'A DBBoundRow represnts a database row buffer that is directly bound to allocated memory for its columns. 
+Database.DBBoundBuffer guid: (Core.GUID fromString: '{87b4c547-026e-11d3-9fd7-00a0cc3e4a32}')!
+Database.DBBoundBuffer comment: 'A DBBoundRow represnts a database row buffer that is directly bound to allocated memory for its columns. 
 
 This is the normal type of buffer used by the Database Connection as it is more efficient when multiple rows are fetched.
 
 '!
-!DBBoundBuffer categoriesForClass!ODBC Interface! !
-!DBBoundBuffer methodsFor!
+!Database.DBBoundBuffer categoriesForClass!ODBC Interface! !
+!Database.DBBoundBuffer methodsFor!
 
 bind: aDBStatement
 	"Private - Bind the receiver's field buffers to columns in the result table."
 
 	| hStmt odbc |
 	hStmt := super bind: aDBStatement.
-	odbc := ODBCLibrary default.
+	odbc := OS.ODBCLibrary default.
 	self contents do: 
 			[:eachField |
 			| dataBuffer column |
@@ -38,6 +38,6 @@ bind: aDBStatement
 getData: aDBStatement
 	"Private - Not currently relevant to a bound row, though it might be if
 	we wanted to use SQLGetData for long values."! !
-!DBBoundBuffer categoriesFor: #bind:!operations!private! !
-!DBBoundBuffer categoriesFor: #getData:!data retrieval!private! !
+!Database.DBBoundBuffer categoriesFor: #bind:!operations!private! !
+!Database.DBBoundBuffer categoriesFor: #getData:!data retrieval!private! !
 

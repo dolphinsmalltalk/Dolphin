@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-DBConnectionTestResource subclass: #AccessNorthwindDB
+Database.Tests.DBConnectionTestResource subclass: #'Database.Tests.AccessNorthwindDB'
 	instanceVariableNames: 'filename'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-AccessNorthwindDB guid: (Core.GUID fromString: '{65bcf4a5-dc5c-461b-a4df-2f29574d34c3}')!
-AccessNorthwindDB comment: ''!
-!AccessNorthwindDB categoriesForClass!Unclassified! !
-!AccessNorthwindDB methodsFor!
+Database.Tests.AccessNorthwindDB guid: (Core.GUID fromString: '{65bcf4a5-dc5c-461b-a4df-2f29574d34c3}')!
+Database.Tests.AccessNorthwindDB comment: ''!
+!Database.Tests.AccessNorthwindDB categoriesForClass!Unclassified! !
+!Database.Tests.AccessNorthwindDB methodsFor!
 
 connectString
 	^'DRIVER={Microsoft Access Driver (*.mdb)};DBQ=<1s>' expandMacrosWith: filename
@@ -27,7 +27,7 @@ createDatabase
 dropDatabase
 	super dropDatabase.
 	File delete: filename! !
-!AccessNorthwindDB categoriesFor: #connectString!private! !
-!AccessNorthwindDB categoriesFor: #createDatabase!private! !
-!AccessNorthwindDB categoriesFor: #dropDatabase!private! !
+!Database.Tests.AccessNorthwindDB categoriesFor: #connectString!private! !
+!Database.Tests.AccessNorthwindDB categoriesFor: #createDatabase!private! !
+!Database.Tests.AccessNorthwindDB categoriesFor: #dropDatabase!private! !
 

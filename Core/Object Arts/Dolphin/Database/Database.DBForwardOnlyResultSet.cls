@@ -1,21 +1,21 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-DBResultSet subclass: #DBForwardOnlyResultSet
+Database.DBResultSet subclass: #'Database.DBForwardOnlyResultSet'
 	instanceVariableNames: 'position'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-DBForwardOnlyResultSet guid: (GUID fromString: '{bdeb3bcd-b383-4bbb-a02a-e63b31338641}')!
-DBForwardOnlyResultSet comment: 'DBForwardOnlyResultSet is the class of <DBResultSet>s specialised to represent forward-only cursors. Forward-only cursors offer much higher performance, especially against large result sets and/or when operating remotely. Backwards navigation and random access are supported, but may be extrememly slow since the query must be re-run and then the result set stepped through once more to the requested position. Since backwards navigation requires a re-query, the result set will not be "static" and will be affected by any updates, insertions or deletions that have been performed since the initial query.
+Database.DBForwardOnlyResultSet guid: (Core.GUID fromString: '{bdeb3bcd-b383-4bbb-a02a-e63b31338641}')!
+Database.DBForwardOnlyResultSet comment: 'DBForwardOnlyResultSet is the class of <DBResultSet>s specialised to represent forward-only cursors. Forward-only cursors offer much higher performance, especially against large result sets and/or when operating remotely. Backwards navigation and random access are supported, but may be extrememly slow since the query must be re-run and then the result set stepped through once more to the requested position. Since backwards navigation requires a re-query, the result set will not be "static" and will be affected by any updates, insertions or deletions that have been performed since the initial query.
 
 Note that forward-only cursors typically tie up the entire connection against which they were executed until they are closed. This may make it necessary to open multiple connections when using forward-only cursors.
 
 Instance Variables:
 	<position>	<integer> position in the result set, one being the first row.
 '!
-!DBForwardOnlyResultSet categoriesForClass!ODBC Interface! !
-!DBForwardOnlyResultSet methodsFor!
+!Database.DBForwardOnlyResultSet categoriesForClass!ODBC Interface! !
+!Database.DBForwardOnlyResultSet methodsFor!
 
 bind: anArrayOfColNums
 	"Private - Create and bind a buffer to hold the
@@ -100,15 +100,15 @@ reverseDo: operation
 	it only moves forward through the result set)."
 
 	^self asOrderedCollection reverseDo: operation! !
-!DBForwardOnlyResultSet categoriesFor: #bind:!binding!private! !
-!DBForwardOnlyResultSet categoriesFor: #close!public!realizing/unrealizing! !
-!DBForwardOnlyResultSet categoriesFor: #free!public!realizing/unrealizing! !
-!DBForwardOnlyResultSet categoriesFor: #moveFirst!operations!private! !
-!DBForwardOnlyResultSet categoriesFor: #moveLast!enumerating!private! !
-!DBForwardOnlyResultSet categoriesFor: #moveNext!operations!private! !
-!DBForwardOnlyResultSet categoriesFor: #movePrevious!enumerating!private! !
-!DBForwardOnlyResultSet categoriesFor: #moveTo:!accessing!private! !
-!DBForwardOnlyResultSet categoriesFor: #onStartup!event handling!private! !
-!DBForwardOnlyResultSet categoriesFor: #requery!operations!private! !
-!DBForwardOnlyResultSet categoriesFor: #reverseDo:!enumerating!public! !
+!Database.DBForwardOnlyResultSet categoriesFor: #bind:!binding!private! !
+!Database.DBForwardOnlyResultSet categoriesFor: #close!public!realizing/unrealizing! !
+!Database.DBForwardOnlyResultSet categoriesFor: #free!public!realizing/unrealizing! !
+!Database.DBForwardOnlyResultSet categoriesFor: #moveFirst!operations!private! !
+!Database.DBForwardOnlyResultSet categoriesFor: #moveLast!enumerating!private! !
+!Database.DBForwardOnlyResultSet categoriesFor: #moveNext!operations!private! !
+!Database.DBForwardOnlyResultSet categoriesFor: #movePrevious!enumerating!private! !
+!Database.DBForwardOnlyResultSet categoriesFor: #moveTo:!accessing!private! !
+!Database.DBForwardOnlyResultSet categoriesFor: #onStartup!event handling!private! !
+!Database.DBForwardOnlyResultSet categoriesFor: #requery!operations!private! !
+!Database.DBForwardOnlyResultSet categoriesFor: #reverseDo:!enumerating!public! !
 
