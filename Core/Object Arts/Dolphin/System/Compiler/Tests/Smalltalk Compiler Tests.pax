@@ -24,15 +24,9 @@ package setClassNames: #(
 ).
 
 package setPrerequisites: #(
-	'..\..\..\IDE\Community Edition\ActiveX Automation Development'
-	'..\..\Continuations\Continuation Tests'
-	'..\..\..\IDE\Base\Development System'
 	'..\..\..\Base\Dolphin'
-	'..\..\..\Base\Dolphin Base Tests'
-	'..\..\Base64\Dolphin Base64'
-	'..\..\..\MVP\Views\Common Controls\Dolphin Common Controls'
-	'..\..\..\Base\Dolphin Legacy Date & Time'
-	'..\..\..\..\..\Contributions\Refactory\Refactoring Browser\Environments\RBEnvironments'
+	'..\..\..\Base\Tests\Dolphin Base Tests'
+	'..\Smalltalk Compiler'
 	'..\Smalltalk Parser'
 	'..\..\..\..\..\Contributions\Camp Smalltalk\SUnit\SUnit'
 ).
@@ -86,7 +80,7 @@ Kernel.Tests.AbstractParserErrorTest subclass: #'Kernel.Tests.CompilerErrorTest'
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Kernel.Tests.AbstractParserErrorTest subclass: #'Kernel.Tests.ParserErrorTest'
-	instanceVariableNames: ''
+	instanceVariableNames: 'semanticAnalyserClass'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''

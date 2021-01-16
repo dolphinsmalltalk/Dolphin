@@ -11,7 +11,7 @@ package setClassNames: #(
 package setPrerequisites: #(
 	'..\IDE\Base\Development System'
 	'..\Base\Dolphin'
-	'..\Base\Dolphin Base Tests'
+	'..\Base\Tests\Dolphin Base Tests'
 	'Dolphin Registry Access'
 ).
 

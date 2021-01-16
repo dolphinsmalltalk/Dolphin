@@ -19,7 +19,7 @@ package setClassNames: #(
 package setPrerequisites: #(
 	'Database Connection Base'
 	'..\Base\Dolphin'
-	'..\Base\Dolphin Base Tests'
+	'..\Base\Tests\Dolphin Base Tests'
 	'..\..\..\Contributions\Burning River\ExternalProcess\ExternalProcess'
 	'..\..\..\Contributions\Camp Smalltalk\SUnit\SUnit'
 	'..\..\..\Contributions\Camp Smalltalk\SUnit\SUnitPreload'

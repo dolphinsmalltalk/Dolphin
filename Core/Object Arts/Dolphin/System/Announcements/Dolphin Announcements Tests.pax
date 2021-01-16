@@ -17,7 +17,7 @@ package setClassNames: #(
 package setPrerequisites: #(
 	'..\..\Base\Dolphin'
 	'Dolphin Announcements'
-	'..\..\Base\Dolphin Base Tests'
+	'..\..\Base\Tests\Dolphin Base Tests'
 	'..\..\..\..\Contributions\Camp Smalltalk\SUnit\SUnit'
 ).
 

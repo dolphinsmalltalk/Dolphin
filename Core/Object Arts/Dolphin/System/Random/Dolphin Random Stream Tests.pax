@@ -1,17 +1,17 @@
 ﻿| package |
 package := Package name: 'Dolphin Random Stream Tests'.
-package paxVersion: 2;
+package paxVersion: 2.1;
 	preDeclareClassesOnLoad: false;
 	basicComment: ''.
 
 
 package setClassNames: #(
-	#{RandomTest}
+	#{Core.Tests.RandomTest}
 ).
 
 package setPrerequisites: #(
 	'..\..\Base\Dolphin'
-	'..\..\Base\Dolphin Base Tests'
+	'..\..\Base\Tests\Dolphin Base Tests'
 	'Dolphin Random Stream'
 ).
 
@@ -19,10 +19,10 @@ package!
 
 "Class Definitions"!
 
-DolphinTest subclass: #RandomTest
+Core.Tests.DolphinTest subclass: #'Core.Tests.RandomTest'
 	instanceVariableNames: 'gen'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 

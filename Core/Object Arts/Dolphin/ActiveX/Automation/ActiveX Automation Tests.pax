@@ -24,7 +24,7 @@ package setPrerequisites: #(
 	'..\ActiveX Tests'
 	'..\..\..\Samples\ActiveX\Random\COM Random Stream'
 	'..\..\Base\Dolphin'
-	'..\..\Base\Dolphin Base Tests'
+	'..\..\Base\Tests\Dolphin Base Tests'
 	'..\..\MVP\Base\Dolphin Basic Geometry'
 	'..\COM\OLE COM'
 ).

@@ -15,7 +15,7 @@ package setClassNames: #(
 
 package setPrerequisites: #(
 	'..\..\Base\Dolphin'
-	'..\..\Base\Dolphin Base Tests'
+	'..\..\Base\Tests\Dolphin Base Tests'
 	'Dolphin Memory-Mapped Files'
 	'..\Random\Dolphin Random Stream'
 ).

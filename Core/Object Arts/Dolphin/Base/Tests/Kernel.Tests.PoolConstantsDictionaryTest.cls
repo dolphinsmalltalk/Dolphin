@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Core.Tests.DolphinTest subclass: #PoolConstantsDictionaryTest
+Core.Tests.DolphinTest subclass: #'Kernel.Tests.PoolConstantsDictionaryTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-PoolConstantsDictionaryTest guid: (Core.GUID fromString: '{9c4827fc-93b3-4424-bec2-99f6bd7d76e9}')!
-PoolConstantsDictionaryTest comment: ''!
-!PoolConstantsDictionaryTest categoriesForClass!Unclassified! !
-!PoolConstantsDictionaryTest methodsFor!
+Kernel.Tests.PoolConstantsDictionaryTest guid: (Core.GUID fromString: '{9c4827fc-93b3-4424-bec2-99f6bd7d76e9}')!
+Kernel.Tests.PoolConstantsDictionaryTest comment: ''!
+!Kernel.Tests.PoolConstantsDictionaryTest categoriesForClass!Unclassified! !
+!Kernel.Tests.PoolConstantsDictionaryTest methodsFor!
 
 key3Value
 	^$l!
@@ -43,10 +43,10 @@ testRemoveKeyString
 	dictionary := self newDictionary.
 	self assert: (dictionary removeKey: 'key') identicalTo: 1.
 	self should: [dictionary removeKey: 'key'] raise: NotFoundError! !
-!PoolConstantsDictionaryTest categoriesFor: #key3Value!private! !
-!PoolConstantsDictionaryTest categoriesFor: #newDictionary!private!unit tests! !
-!PoolConstantsDictionaryTest categoriesFor: #newEmpty!private!unit tests! !
-!PoolConstantsDictionaryTest categoriesFor: #testAtIfAbsentString!public!unit tests! !
-!PoolConstantsDictionaryTest categoriesFor: #testIncludesKey!public!unit tests! !
-!PoolConstantsDictionaryTest categoriesFor: #testRemoveKeyString!public!unit tests! !
+!Kernel.Tests.PoolConstantsDictionaryTest categoriesFor: #key3Value!private! !
+!Kernel.Tests.PoolConstantsDictionaryTest categoriesFor: #newDictionary!private!unit tests! !
+!Kernel.Tests.PoolConstantsDictionaryTest categoriesFor: #newEmpty!private!unit tests! !
+!Kernel.Tests.PoolConstantsDictionaryTest categoriesFor: #testAtIfAbsentString!public!unit tests! !
+!Kernel.Tests.PoolConstantsDictionaryTest categoriesFor: #testIncludesKey!public!unit tests! !
+!Kernel.Tests.PoolConstantsDictionaryTest categoriesFor: #testRemoveKeyString!public!unit tests! !
 

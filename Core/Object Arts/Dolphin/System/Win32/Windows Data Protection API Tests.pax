@@ -11,7 +11,7 @@ package setClassNames: #(
 
 package setPrerequisites: #(
 	'..\..\Base\Dolphin'
-	'..\..\Base\Dolphin Base Tests'
+	'..\..\Base\Tests\Dolphin Base Tests'
 	'Windows Data Protection API'
 ).
 

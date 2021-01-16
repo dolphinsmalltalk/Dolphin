@@ -11,7 +11,7 @@ package setClassNames: #(
 ).
 
 package setPrerequisites: #(
-	'..\..\..\Base\Dolphin Base Tests'
+	'..\..\..\Base\Tests\Dolphin Base Tests'
 	'..\..\..\..\..\Contributions\Camp Smalltalk\SUnit\SUnit'
 	'..\..\..\..\..\Contributions\Camp Smalltalk\SUnit\SUnitPreload'
 	'XML DOM'

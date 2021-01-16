@@ -14,7 +14,7 @@ package setClassNames: #(
 
 package setPrerequisites: #(
 	'..\..\..\..\Base\Dolphin'
-	'..\..\..\..\Base\Dolphin Base Tests'
+	'..\..\..\..\Base\Tests\Dolphin Base Tests'
 	'..\..\..\Base\Dolphin MVP Base'
 	'..\..\..\Dolphin MVP Tests'
 	'..\..\..\..\System\Random\Dolphin Random Stream'
@@ -45,7 +45,7 @@ Core.Tests.DolphinTest subclass: #'UI.Scintilla.Tests.ScintillaLexerMetadataTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-UI.Tests.MultilineTextEditTest subclass: #'UI.Scintilla.Tests.ScintillaViewTest'
+UI.Tests.AbstractMultilineTextEditTest subclass: #'UI.Scintilla.Tests.ScintillaViewTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #(#{UI.Scintilla.ScintillaConstants})

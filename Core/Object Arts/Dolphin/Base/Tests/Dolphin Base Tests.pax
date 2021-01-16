@@ -129,6 +129,7 @@ package setClassNames: #(
 	#{Kernel.Tests.MethodDictionaryTest}
 	#{Kernel.Tests.NamespaceTest}
 	#{Kernel.Tests.NeverSearchPolicyTest}
+	#{Kernel.Tests.PoolConstantsDictionaryTest}
 	#{Kernel.Tests.PropertyManagerTest}
 	#{Kernel.Tests.QuicksortAlgorithmTest}
 	#{Kernel.Tests.RootNamespaceTest}
@@ -148,7 +149,6 @@ package setClassNames: #(
 	#{OS.Tests.ShlwapiLibraryTest}
 	#{OS.Tests.StdioFileStreamTest}
 	#{OS.Tests.WindowsLocaleTest}
-	#{Smalltalk.PoolConstantsDictionaryTest}
 ).
 
 package setMethodNames: #(
@@ -170,24 +170,24 @@ package setAliasVariableNames: #(
 ).
 
 package setPrerequisites: #(
-	'..\IDE\Base\Development System'
-	'Dolphin'
-	'Dolphin Additional Sort Algorithms'
-	'Dolphin Anonymous Classes'
-	'..\MVP\Base\Dolphin Basic Geometry'
-	'Dolphin Command-line Parser'
-	'..\System\Random\Dolphin CRT Random Stream'
-	'..\System\Win32\Dolphin File System Info'
-	'Dolphin Legacy Date & Time'
-	'Dolphin Message Box'
-	'..\System\Random\Dolphin Random Stream'
-	'..\Registry\Dolphin Registry Access'
-	'..\..\..\Contributions\Camp Smalltalk\SUnit\OA SUnit Extensions'
-	'..\ActiveX\COM\OLE COM'
-	'..\System\Compiler\Smalltalk Parser'
-	'..\..\..\Contributions\Camp Smalltalk\SUnit\SUnit'
-	'..\..\..\Contributions\Camp Smalltalk\SUnit\SUnitPreload'
-	'..\ActiveX\Components\XML DOM\XML DOM'
+	'..\..\IDE\Base\Development System'
+	'..\Dolphin'
+	'..\Dolphin Additional Sort Algorithms'
+	'..\Dolphin Anonymous Classes'
+	'..\..\MVP\Base\Dolphin Basic Geometry'
+	'..\Dolphin Command-line Parser'
+	'..\..\System\Random\Dolphin CRT Random Stream'
+	'..\..\System\Win32\Dolphin File System Info'
+	'..\Dolphin Legacy Date & Time'
+	'..\Dolphin Message Box'
+	'..\..\System\Random\Dolphin Random Stream'
+	'..\..\Registry\Dolphin Registry Access'
+	'..\..\..\..\Contributions\Camp Smalltalk\SUnit\OA SUnit Extensions'
+	'..\..\ActiveX\COM\OLE COM'
+	'..\..\System\Compiler\Smalltalk Parser'
+	'..\..\..\..\Contributions\Camp Smalltalk\SUnit\SUnit'
+	'..\..\..\..\Contributions\Camp Smalltalk\SUnit\SUnitPreload'
+	'..\..\ActiveX\Components\XML DOM\XML DOM'
 ).
 
 package setManualPrerequisites: #(
@@ -480,7 +480,7 @@ Core.Tests.DolphinTest subclass: #'Core.Tests.PackageTest'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Core.Tests.DolphinTest subclass: #PoolConstantsDictionaryTest
+Core.Tests.DolphinTest subclass: #'Kernel.Tests.PoolConstantsDictionaryTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

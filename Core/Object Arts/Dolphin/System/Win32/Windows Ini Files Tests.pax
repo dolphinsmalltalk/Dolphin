@@ -13,7 +13,7 @@ package setClassNames: #(
 
 package setPrerequisites: #(
 	'..\..\Base\Dolphin'
-	'..\..\Base\Dolphin Base Tests'
+	'..\..\Base\Tests\Dolphin Base Tests'
 	'..\..\..\..\Contributions\Camp Smalltalk\SUnit\SUnit'
 	'Windows Ini Files'
 ).
