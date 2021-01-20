@@ -1,12 +1,12 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-TextDocument subclass: #WordPad
+UI.TextDocument subclass: #WordPad
 	instanceVariableNames: ''
 	classVariableNames: 'ResourceLib'
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-WordPad guid: (GUID fromString: '{daf98e5f-3a01-477d-b822-6b0e9bc79d14}')!
+WordPad guid: (Core.GUID fromString: '{daf98e5f-3a01-477d-b822-6b0e9bc79d14}')!
 WordPad comment: 'Wordpad is a <topShell> sample application which implements a limited set of the functionality of the familiar Windows utility. Most of the implementation of the application is actually inherited from Dolphin''s TextDocument framework class or provided by RichTextPresenter and RichTextEdit.
 
 Example:
@@ -103,6 +103,11 @@ defaultAdditionalAccelerators
 	^#(#(#toggleBold 'Ctrl+B') #(#toggleItalic 'Ctrl+I') #(#toggleUnderlined 'Ctrl+U'))
 !
 
+displayOn: aPuttableStream
+	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that an end-user might want to see."
+
+	aPuttableStream nextPutAll: 'WordPad'!
+
 fileTypes
 	"Answer an Array of file types that can be associated with this class of document."
 
@@ -133,6 +138,7 @@ resource_Default_view
 !WordPad class categoriesFor: #about!enquiries!private! !
 !WordPad class categoriesFor: #aboutTemplate!enquiries!private! !
 !WordPad class categoriesFor: #defaultAdditionalAccelerators!private! !
+!WordPad class categoriesFor: #displayOn:!displaying!public! !
 !WordPad class categoriesFor: #fileTypes!public! !
 !WordPad class categoriesFor: #icon!constants!public! !
 !WordPad class categoriesFor: #resource_Default_view!public!resources-views! !

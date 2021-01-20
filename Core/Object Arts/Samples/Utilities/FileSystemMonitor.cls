@@ -142,6 +142,11 @@ toggleMonitoring
 defaultModel
 	^FileSystemWatcher new!
 
+displayOn: aPuttableStream
+	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that an end-user might want to see."
+
+	aPuttableStream nextPutAll: 'Filesystem Monitor'!
+
 icon
 	^##(self) defaultIcon!
 
@@ -168,6 +173,7 @@ shutdownOnExit
 
 	^true! !
 !FileSystemMonitor class categoriesFor: #defaultModel!models!public! !
+!FileSystemMonitor class categoriesFor: #displayOn:!displaying!public! !
 !FileSystemMonitor class categoriesFor: #icon!public! !
 !FileSystemMonitor class categoriesFor: #initialize!development!initializing!private! !
 !FileSystemMonitor class categoriesFor: #resource_Default_view!public!resources-views! !

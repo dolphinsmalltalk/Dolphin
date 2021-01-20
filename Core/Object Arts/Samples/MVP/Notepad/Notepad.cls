@@ -1,12 +1,12 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-TextDocument subclass: #Notepad
+UI.TextDocument subclass: #Notepad
 	instanceVariableNames: ''
 	classVariableNames: 'ResourceLib'
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Notepad guid: (GUID fromString: '{64abbec0-8140-42d2-aecd-6d329b3b41e0}')!
+Notepad guid: (Core.GUID fromString: '{64abbec0-8140-42d2-aecd-6d329b3b41e0}')!
 Notepad comment: '`Notepad` is a `<topShell>` sample application which implements most of the functionality of the familiar Windows utility. The major areas of missing functionality are printing, zoom and the status bar. Most of the implementation of the application is actually inherited from Dolphin''s `TextDocument` framework class.
 
 Note that some resources are extracted from the Windows executable, but none of the functionality of that executable is reused (or indeed could be, as Notepad.exe doesn''t export any functions).
@@ -108,6 +108,11 @@ closeResourceLib
 	ResourceLib isNil ifFalse: [ResourceLib close. ResourceLib := nil].
 !
 
+displayOn: aPuttableStream
+	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that an end-user might want to see."
+
+	aPuttableStream nextPutAll: 'Notepad'!
+
 icon
 	"Answers an Icon that can be used to represent this class.
 	Use the one from the real Windows Notepad for fun."
@@ -145,6 +150,7 @@ uninitialize
 !Notepad class categoriesFor: #about!enquiries!private! !
 !Notepad class categoriesFor: #aboutTemplate!enquiries!private! !
 !Notepad class categoriesFor: #closeResourceLib!helpers!private! !
+!Notepad class categoriesFor: #displayOn:!displaying!public! !
 !Notepad class categoriesFor: #icon!constants!public! !
 !Notepad class categoriesFor: #onPreStripImage!class hierarchy-removing!private! !
 !Notepad class categoriesFor: #resource_Default_view!public!resources-views! !

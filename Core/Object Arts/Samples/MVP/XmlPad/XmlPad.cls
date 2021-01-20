@@ -340,6 +340,11 @@ defaultFileExtension
 
 	^'xml'!
 
+displayOn: aPuttableStream
+	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that an end-user might want to see."
+
+	aPuttableStream nextPutAll: 'XmlPad'!
+
 explicitDependencies
 	AdvancedFindDialog
 !
@@ -396,6 +401,7 @@ userSettingsRootKey
 !XmlPad class categoriesFor: #about!enquiries!private! !
 !XmlPad class categoriesFor: #aboutTemplate!enquiries!private! !
 !XmlPad class categoriesFor: #defaultFileExtension!constants!public! !
+!XmlPad class categoriesFor: #displayOn:!displaying!public! !
 !XmlPad class categoriesFor: #explicitDependencies!must not strip!private! !
 !XmlPad class categoriesFor: #fileTypes!constants!public! !
 !XmlPad class categoriesFor: #icon!constants!public! !
