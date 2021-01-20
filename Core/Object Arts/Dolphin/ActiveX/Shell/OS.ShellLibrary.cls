@@ -189,6 +189,18 @@ shGetFolderPath: hwndOwner nFolder: nFolder hToken: hToken dwFlags: dwFlags pszP
 			LPWSTR pszPath);"
 
 	<stdcall: hresult SHGetFolderPathW handle sdword handle dword lpwstr>
+	^self invalidCall: _failureCode!
+
+shGetStockIconInfo: siid uFlags: uFlags psii: psii
+	"Invoke the SHGetStockIconInfo() function of the module wrapped by the receiver.
+	Helpstring: Retrieves information about system-defined Shell icons.
+
+		HRESULT __stdcall SHGetStockIconInfo(
+			SHSTOCKICONID siid,
+			unsigned int uFlags,
+			[in, out]SHSTOCKICONINFO* psii);"
+
+	<stdcall: hresult SHGetStockIconInfo sdword dword SHSTOCKICONINFO*>
 	^self invalidCall: _failureCode! !
 !OS.ShellLibrary categoriesFor: #dragAcceptFiles:fAccept:!**auto generated**!public! !
 !OS.ShellLibrary categoriesFor: #dragFinish:!**auto generated**!public! !
@@ -206,6 +218,7 @@ shGetFolderPath: hwndOwner nFolder: nFolder hToken: hToken dwFlags: dwFlags pszP
 !OS.ShellLibrary categoriesFor: #shellOpen:directory:!public!win32 functions-shell library! !
 !OS.ShellLibrary categoriesFor: #shellOpen:directory:parameters:!public!win32 functions-shell library! !
 !OS.ShellLibrary categoriesFor: #shGetFolderPath:nFolder:hToken:dwFlags:pszPath:!**auto generated**!public!win32 functions-shell library! !
+!OS.ShellLibrary categoriesFor: #shGetStockIconInfo:uFlags:psii:!**auto generated**!public! !
 
 !OS.ShellLibrary class methodsFor!
 

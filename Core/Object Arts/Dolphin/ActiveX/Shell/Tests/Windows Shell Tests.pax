@@ -1,0 +1,33 @@
+﻿| package |
+package := Package name: 'Windows Shell Tests'.
+package paxVersion: 2.1;
+	basicComment: ''.
+
+
+package setMethodNames: #(
+	#(#{Graphics.Tests.IconTest} #testShellStock)
+).
+
+package setPrerequisites: #(
+	'..\..\..\Base\Dolphin'
+	'..\..\..\MVP\Base\Dolphin MVP Base'
+	'..\..\..\MVP\Dolphin MVP Tests'
+).
+
+package!
+
+"Loose Methods"!
+
+!Graphics.Tests.IconTest methodsFor!
+
+testShellStock
+	| subject1 subject2  |
+	subject1 := Icon shellStock: 1.
+	subject2 := Icon shellStock: 180.
+	self assert: subject1 instanceHandle fileName asLowercase equals: (File composePath: SessionManager current systemDirectory subPath: 'imageres.dll') asLowercase.	
+	self assert: subject2 instanceHandle identicalTo: subject1 instanceHandle
+! !
+!Graphics.Tests.IconTest categoriesFor: #testShellStock!public! !
+
+"End of package definition"!
+
