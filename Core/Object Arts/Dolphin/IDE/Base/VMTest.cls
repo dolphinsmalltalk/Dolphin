@@ -1760,10 +1760,13 @@ testPrimitiveIndexOfSp
 							asStackPointer})
 		equals: size.
 	"Try round-tripping with spOfIndex:"
-	{1. 1024. proc size} do: 
+	{1. 2. 3. size//2. size} do: 
 			[:i |
 			sp := proc spOfIndex: i.
-			self assert: (method value: proc withArguments: {sp}) equals: i]!
+			self assert: (method value: proc withArguments: {sp}) equals: i].
+	"Invalid SP that is not within the proc"
+	{3. proc spOfIndex: (size + 1 roundUpTo: 1024)}
+		do: [:each | self assert: (method value: proc withArguments: {each}) equals: 'InvalidParameter1']!
 
 testPrimitiveInstanceCounts
 	"Test primitive that returns instance count stats, but not requesting any specific classes."

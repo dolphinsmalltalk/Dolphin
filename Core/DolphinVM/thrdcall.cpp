@@ -285,10 +285,14 @@ bool OverlappedCall::QueueForMe(PAPCFUNC pfnAPC)
 
 std::wostream& operator<<(std::wostream& stream, const OverlappedCall& oc)
 {
-	return stream<< L"OverlappedCall(" << &oc 
-		<< L", id:" << oc.m_dwThreadId 
-		<< L", state: " << static_cast<std::underlying_type<OverlappedCall::States>::type>(oc.m_state)
-		<< L", process: " << oc.m_oteProcess
+	stream << L"OverlappedCall(" << &oc
+		<< L", id:" << oc.m_dwThreadId
+		<< L", state: " << static_cast<std::underlying_type<OverlappedCall::States>::type>(oc.m_state);
+	if (oc.IsInCall()) 
+	{
+		stream << L", process: " << oc.m_oteProcess;
+	}
+	return stream
 #ifdef _DEBUG
 		<< L", refs: " << oc.m_nRefs 
 #endif
