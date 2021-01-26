@@ -1063,18 +1063,19 @@ buildAllSelectors
 	"Private - Answer a set of all message selectors understood by any class in the system. This
 	needs to run as fast as possible to avoid impacting browser perf when editing."
 
-	| set classes count |
+	| set classes count accumulate |
 	classes := Smalltalk allClasses.
 	"On average there seem to be between 10 and 11 unique selectors per class"
 	count := classes size.
 	set := IdentitySet new: count * 11.
+	accumulate := [:s | set add: s].
 	1 to: count
 		do: 
 			[:i |
-			| each |
+			| each  |
 			each := classes at: i.
-			each understoodSelectorsDo: [:s | set add: s].
-			each class understoodSelectorsDo: [:s | set add: s]].
+			each understoodSelectorsDo: accumulate.
+			each class understoodSelectorsDo: accumulate].
 	^set!
 
 buildMessageMenu: aMenu forMethods: aCollection browseSelector: browseSelector extraArgs: extraArgs browseOtherSelector: browseOtherSelector

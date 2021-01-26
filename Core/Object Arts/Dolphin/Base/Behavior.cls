@@ -978,7 +978,7 @@ understoodSelectorsDo: aMonadicValuable
 	"Evaluate the <monadicValuable> argument for each of the message selectors understood by the receiver at run time, not necessarily including those understood by superclasses.
 	The block may be evaluated more than once for the same selector."
 
-	self selectors do: aMonadicValuable.
+	methodDictionary ifNotNil: [methodDictionary keysDo: aMonadicValuable].
 	self dynamicSelectorsDo: aMonadicValuable!
 
 whichClassIncludesSelector: selector
