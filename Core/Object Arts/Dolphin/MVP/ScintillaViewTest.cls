@@ -151,7 +151,17 @@ testSetGetAnnotations
 					text: 'Blah'
 					style: #Notification).
 	presenter annotations: annotations.
-	self assert: (presenter annotations noDifference: annotations)! !
+	self assert: (presenter annotations noDifference: annotations)!
+
+testStateRestoral
+	| indicStyle1 indicStyle2 |
+	"At the moment, just checking that the non-container indicators are reset on state restoral as regression test for #1085"
+	indicStyle1:= ScintillaIndicatorStyle view: presenter index: INDICATOR_CONTAINER - 1.
+	self assert: indicStyle1 style equals: #hidden.
+	presenter recreate.
+	indicStyle2 := ScintillaIndicatorStyle view: presenter index: INDICATOR_CONTAINER - 1.
+	self assert: indicStyle2 style equals: #hidden.
+! !
 !ScintillaViewTest categoriesFor: #classToTest!helpers!private! !
 !ScintillaViewTest categoriesFor: #initializePresenter!public!Running! !
 !ScintillaViewTest categoriesFor: #margins!private!unit tests! !
@@ -161,4 +171,5 @@ testSetGetAnnotations
 !ScintillaViewTest categoriesFor: #testLanguages!public!unit tests! !
 !ScintillaViewTest categoriesFor: #testOverrideDefaultKeyBindings!public!unit tests! !
 !ScintillaViewTest categoriesFor: #testSetGetAnnotations!public!unit tests! !
+!ScintillaViewTest categoriesFor: #testStateRestoral!public!unit tests! !
 

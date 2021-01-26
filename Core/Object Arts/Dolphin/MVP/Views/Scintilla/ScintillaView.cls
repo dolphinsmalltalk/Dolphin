@@ -3291,7 +3291,6 @@ initializeControl
 	self setCharacterClasses.
 	autoCFillups ifNotNil: [self sciAutoCSetFillUps: autoCFillups].
 	autoCStops ifNotNil: [self sciAutoCStops: autoCStops].
-	self updateControlStyles.
 	foldFlags ifNotNil: [self setFoldFlags].
 	keyBindings ifNotNil: [self updateKeyBindings]!
 
@@ -10161,9 +10160,7 @@ setIndicatorStyles: aCollection
 					each basicId: availableStyles next].
 			newStylesByName at: each name put: each].
 	indicatorStyles := newStylesByName.
-	self
-		hideIndicators;
-		updateIndicatorStyles!
+	self updateIndicatorStyles!
 
 setKeyBindings: aCollectionOfScintillaKeyBindings
 	keyBindings := aCollectionOfScintillaKeyBindings.
@@ -10937,6 +10934,7 @@ updateIndicators
 	indicators do: [:each | self setIndicator: each styleName range: each range]!
 
 updateIndicatorStyles
+	self hideIndicators.
 	indicatorStyles ifNil: [^self].
 	indicatorStyles do: [:each | each applyToView: self initializing: false].
 	(indicatorStyles lookup: #braceHighlight)
