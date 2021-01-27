@@ -910,13 +910,12 @@ messagesForToken: anAssociation startingWith: aString maxItems: anInteger
 	treat it as possibly being of any type, as most likely it is simply uninitialized."
 	(class == UndefinedObject and: [anAssociation value == #identifier]) ifTrue: [class := nil].
 	selectors := Set new.
-	Smalltalk developmentSystem allSelectors do: 
+	(class ifNil: [Smalltalk developmentSystem]) allSelectors do: 
 			[:each |
-			((each beginsWith: aString ignoreCase: ignoreCase)
-				and: [class isNil or: [class canUnderstand: each]])
-					ifTrue: 
-						[selectors add: each.
-						selectors size > anInteger ifTrue: [^#()]]].
+			(each beginsWith: aString ignoreCase: ignoreCase)
+				ifTrue: 
+					[selectors add: each.
+					selectors size > anInteger ifTrue: [^#()]]].
 	^selectors collect: [:each | ScintillaListItem text: each icon: icon]!
 
 modifiedModel

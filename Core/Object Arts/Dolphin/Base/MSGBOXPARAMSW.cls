@@ -92,6 +92,18 @@ text: aString
 
 !MSGBOXPARAMSW class methodsFor!
 
+canUnderstand: aSymbol
+	^(super canUnderstand: aSymbol) or: 
+			[| size field |
+			size := aSymbol size.
+			(aSymbol at: size) == $:
+				ifTrue: 
+					[field := self template at: (aSymbol copyFrom: 1 to: size - 1).
+					field notNil and: [field isWriteable]]
+				ifFalse: 
+					[field := self template at: aSymbol.
+					field notNil and: [field isWriteable]]]!
+
 defineFields
 	"Define the fields of the Win32 MSGBOXPARAMSW structure.
 
@@ -127,6 +139,7 @@ defineFields
 
 getFieldNames
 	^#(#dwSize #hwndOwner #hInstance #lpszText #lpszCaption #dwStyle #lpszIcon #dwLanguageId)! !
+!MSGBOXPARAMSW class categoriesFor: #canUnderstand:!methods-testing!public! !
 !MSGBOXPARAMSW class categoriesFor: #defineFields!public!template definition! !
 !MSGBOXPARAMSW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 
