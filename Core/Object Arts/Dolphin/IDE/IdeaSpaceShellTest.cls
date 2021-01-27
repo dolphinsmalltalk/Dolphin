@@ -154,7 +154,7 @@ testBreakoutCard
 	tools do: 
 			[:each |
 			each exit.
-			self assert: each view isClosed].
+			self deny: each isOpen].
 	ideaShell show.
 	"There should no cards left in the IS"
 	self assert: ideaShell cards isEmpty.
