@@ -455,6 +455,8 @@ testWarningWrittenNotReadMethodTemp
 
 testWarnMsgUnimplementedByConst
 	1 asParameter.
+	"A dynamic selector"
+	MSGBOXPARAMSW new dwLanguageId: 1234.
 	Const wibblyWobblySillySelectorThatNoOneCouldPossiblyImplementIHope.
 	self asParameter!
 

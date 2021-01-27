@@ -252,10 +252,6 @@ visitSequenceNode: aSequenceNode
 			self styleTemporaries: aSequenceNode temporaries.
 			self styleIntersticesUpTo: aSequenceNode rightBar - 1.
 			view applyStyle: #tempCloseBar toNext: 1].
-	self tagBeforeTemporaries
-		ifFalse: 
-			[aSequenceNode parent
-				ifNotNil: [:parent | parent isMethod ifTrue: [parent tag ifNotNil: [:tag | self visitNode: tag]]]].
 	aSequenceNode statements do: [:each | self visitNode: each]!
 
 visitVariableNode: aVariableNode

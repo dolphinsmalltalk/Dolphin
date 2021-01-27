@@ -125,9 +125,10 @@ allSelectors
 	"Answer a <Set> of <Symbol>s, being all the message selectors to which the receiver 
 	is able to respond (this includes messages understood by superclasses)."
 
-	| answer |
+	| answer accumulate |
 	answer := IdentitySet new.
-	self withAllSuperclassesDo: [:each | answer addAll: each selectors].
+	accumulate := [:s | answer add: s].
+	self withAllSuperclassesDo: [:each | each understoodSelectorsDo: accumulate].
 	^answer!
 
 allSubclasses
@@ -978,7 +979,7 @@ understoodSelectorsDo: aMonadicValuable
 	"Evaluate the <monadicValuable> argument for each of the message selectors understood by the receiver at run time, not necessarily including those understood by superclasses.
 	The block may be evaluated more than once for the same selector."
 
-	self selectors do: aMonadicValuable.
+	methodDictionary ifNotNil: [methodDictionary keysDo: aMonadicValuable].
 	self dynamicSelectorsDo: aMonadicValuable!
 
 whichClassIncludesSelector: selector

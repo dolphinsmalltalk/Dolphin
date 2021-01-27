@@ -44,6 +44,13 @@ testIsNonInstantiable
 	self deny: subject isNonInstantiable.
 	self deny: subject class isNonInstantiable!
 
+testUnderstoodSelectors
+	self assert: Association understoodSelectors equals: Association selectors.
+	self assert: (MSGBOXPARAMSW understoodSelectors difference: MSGBOXPARAMSW selectors) asArray
+		equals: #(#dwLanguageId:).
+	self assertIsNil: (IntrosortAlgorithm class instVarNamed: 'methodDictionary').
+	self assert: IntrosortAlgorithm class understoodSelectors isEmpty!
+
 testWhichMethodsOnlySelfSend
 	| subject |
 	subject := BehaviorTestClasses current classWithAbstractMethod1.
@@ -58,6 +65,7 @@ testWhichMethodsOnlySelfSend
 !BehaviorTest categoriesFor: #testHasAbstractMethods!public! !
 !BehaviorTest categoriesFor: #testIsAbstract!public! !
 !BehaviorTest categoriesFor: #testIsNonInstantiable!public! !
+!BehaviorTest categoriesFor: #testUnderstoodSelectors!public! !
 !BehaviorTest categoriesFor: #testWhichMethodsOnlySelfSend!public! !
 
 !BehaviorTest class methodsFor!

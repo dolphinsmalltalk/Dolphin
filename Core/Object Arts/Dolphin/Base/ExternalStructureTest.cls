@@ -10,6 +10,20 @@ ExternalStructureTest comment: 'SUnitBrowser openOnTestCase: self'!
 !ExternalStructureTest categoriesForClass!Unclassified! !
 !ExternalStructureTest methodsFor!
 
+testCanUnderstand
+	"Test canUnderstand: works for implemented, inherited, and dynamic selectors"
+
+	| subject |
+	subject := MSGBOXPARAMSW new.
+	#(#text: #alignment #dwLanguageId:) do: 
+			[:each |
+			self assert: (subject respondsTo: each).
+			self assert: (subject class canUnderstand: each)].
+	#(#dwLanguageId #dwContextHelpId #blah #blah:) do: 
+			[:each |
+			self deny: (subject respondsTo: each).
+			self deny: (subject class canUnderstand: each)]!
+
 testCompileDefinition
 	"Test that compiling structure fields defines the right set of accessors:
 		- get selector for read-only fields
@@ -103,6 +117,7 @@ testIsNull
 
 	struct bytes: ExternalAddress new.
 	self assert: struct isNull.! !
+!ExternalStructureTest categoriesFor: #testCanUnderstand!public!unit tests! !
 !ExternalStructureTest categoriesFor: #testCompileDefinition!public!unit tests! !
 !ExternalStructureTest categoriesFor: #testDynamicSelectors!public!unit tests! !
 !ExternalStructureTest categoriesFor: #testEquals!public!unit tests! !
