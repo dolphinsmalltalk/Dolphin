@@ -498,6 +498,18 @@ byteSize: anInteger
 		ifFalse: [self error: ('Invalid structure size <1d>' expandMacrosWith: anInteger)].
 	self extraInstanceSpec: anInteger!
 
+canUnderstand: aSymbol
+	^(super canUnderstand: aSymbol) or: 
+			[| size field |
+			size := aSymbol size.
+			(aSymbol at: size) == $:
+				ifTrue: 
+					[field := self template lookup: (aSymbol copyFrom: 1 to: size - 1).
+					field notNil and: [field isWriteable]]
+				ifFalse: 
+					[field := self template lookup: aSymbol.
+					field notNil and: [field isReadable]]]!
+
 changedByteSizeFrom: oldByteSize
 	"Private - If the size of the receiver changes such that it fits into a different type for passing/returning structures by value, then we must recompile all existing referencing methods that might have a static literal snapshot of the byte size of the receiver."
 
@@ -935,6 +947,7 @@ withBytes: aByteObject
 !ExternalStructure class categoriesFor: #beUncompiled!modes!public!template definition! !
 !ExternalStructure class categoriesFor: #byteSize!accessing!public! !
 !ExternalStructure class categoriesFor: #byteSize:!initializing!private! !
+!ExternalStructure class categoriesFor: #canUnderstand:!methods-testing!public! !
 !ExternalStructure class categoriesFor: #changedByteSizeFrom:!private!template definition! !
 !ExternalStructure class categoriesFor: #clear:!public!realizing/unrealizing! !
 !ExternalStructure class categoriesFor: #defineField:type:!public!template definition! !
