@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Dialog subclass: #DolphinSureTrustWarning
+UI.Dialog subclass: #'UI.DolphinSureTrustWarning'
 	instanceVariableNames: 'certificateImage description alwaysTrust'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-DolphinSureTrustWarning guid: (GUID fromString: '{6abda145-ee5e-4214-9709-78362121ec65}')!
-DolphinSureTrustWarning comment: 'A DolphinSureTrustWarning dialog is used to presenter a publisher''s digital certificate and to prompt the user to see if contents from this publisher should be trusted. The model for this dialog is the certificate itself and, if it is accepted, it is entered into a temporary or permanent trust store as appropriate.  
+UI.DolphinSureTrustWarning guid: (Core.GUID fromString: '{6abda145-ee5e-4214-9709-78362121ec65}')!
+UI.DolphinSureTrustWarning comment: 'A DolphinSureTrustWarning dialog is used to presenter a publisher''s digital certificate and to prompt the user to see if contents from this publisher should be trusted. The model for this dialog is the certificate itself and, if it is accepted, it is entered into a temporary or permanent trust store as appropriate.  
 
 DolphinSureTrustWarning showModal
 
@@ -17,8 +17,8 @@ Instance Variables:
 	alwaysTrust	<BooleanPresenter> used to indicate whether the user always wants to trust this certificate.
 
 '!
-!DolphinSureTrustWarning categoriesForClass!System-Binary class loading! !
-!DolphinSureTrustWarning methodsFor!
+!UI.DolphinSureTrustWarning categoriesForClass!System-Binary class loading! !
+!UI.DolphinSureTrustWarning methodsFor!
 
 alwaysTrust
 	"Answer true if the user has checked the alway trust check box"
@@ -64,20 +64,20 @@ validateUserInterface
 	super validateUserInterface.
 	alwaysTrust view isEnabled: self model canBePermanentlyTrusted
 ! !
-!DolphinSureTrustWarning categoriesFor: #alwaysTrust!accessing!public! !
-!DolphinSureTrustWarning categoriesFor: #createComponents!initializing!public! !
-!DolphinSureTrustWarning categoriesFor: #description:!accessing!private! !
-!DolphinSureTrustWarning categoriesFor: #model:!accessing!public! !
-!DolphinSureTrustWarning categoriesFor: #ok!commands!public! !
-!DolphinSureTrustWarning categoriesFor: #validateUserInterface!operations!public! !
+!UI.DolphinSureTrustWarning categoriesFor: #alwaysTrust!accessing!public! !
+!UI.DolphinSureTrustWarning categoriesFor: #createComponents!initializing!public! !
+!UI.DolphinSureTrustWarning categoriesFor: #description:!accessing!private! !
+!UI.DolphinSureTrustWarning categoriesFor: #model:!accessing!public! !
+!UI.DolphinSureTrustWarning categoriesFor: #ok!commands!public! !
+!UI.DolphinSureTrustWarning categoriesFor: #validateUserInterface!operations!public! !
 
-!DolphinSureTrustWarning class methodsFor!
+!UI.DolphinSureTrustWarning class methodsFor!
 
 defaultModel
 	"Answer a default model to be assigned to the receiver when it
 	is initialized. This should be an instance of DolphinSureCertificate"
 
-	^ObjectArtsRootCertificate new!
+	^Security.ObjectArtsRootCertificate new!
 
 resource_Default_view
 	"Answer the literal data from which the 'Default view' resource can be reconstituted.
@@ -99,7 +99,7 @@ showModalOn: aDolphinSureCertificate description: aStringDescription
 		description: aStringDescription;
 		showModal
 ! !
-!DolphinSureTrustWarning class categoriesFor: #defaultModel!models!public! !
-!DolphinSureTrustWarning class categoriesFor: #resource_Default_view!public!resources-views! !
-!DolphinSureTrustWarning class categoriesFor: #showModalOn:description:!instance creation!public! !
+!UI.DolphinSureTrustWarning class categoriesFor: #defaultModel!models!public! !
+!UI.DolphinSureTrustWarning class categoriesFor: #resource_Default_view!public!resources-views! !
+!UI.DolphinSureTrustWarning class categoriesFor: #showModalOn:description:!instance creation!public! !
 

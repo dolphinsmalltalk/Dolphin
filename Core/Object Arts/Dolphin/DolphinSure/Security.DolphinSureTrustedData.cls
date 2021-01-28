@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Object subclass: #DolphinSureTrustedData
+Core.Object subclass: #'Security.DolphinSureTrustedData'
 	instanceVariableNames: 'data description signature publisherCertificate'
-	classVariableNames: ''
-	poolDictionaries: ''
+	classVariableNames: 'ValidStbClasses'
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-DolphinSureTrustedData guid: (GUID fromString: '{6ba876e9-8f00-4f03-bed6-f2f6af4edbf1}')!
-DolphinSureTrustedData comment: 'A DolphinSureTrustedData object represents data that has been encrypted with a particular publisher''s certificate.  The intent is that the data can be guaranteed as originating from a particular publisher (identified by the encapsulated certificate) and that it can also be trusted not to have been modified since it was published.  It is not used as a means of transmitting "secret" data (since anyone can directly see it) but as a means of transmitting signed data.
+Security.DolphinSureTrustedData guid: (Core.GUID fromString: '{6ba876e9-8f00-4f03-bed6-f2f6af4edbf1}')!
+Security.DolphinSureTrustedData comment: 'A DolphinSureTrustedData object represents data that has been encrypted with a particular publisher''s certificate.  The intent is that the data can be guaranteed as originating from a particular publisher (identified by the encapsulated certificate) and that it can also be trusted not to have been modified since it was published.  It is not used as a means of transmitting "secret" data (since anyone can directly see it) but as a means of transmitting signed data.
 
 In order to create a piece of signed/trusted data it is necessary to have a DolphinSureCertificate and a matching private key.  These can be obtained by applying to a DolphinSure certificate authority such as Object Arts Ltd (http://www.object-arts.com/DolphinSure). The raw data is signed by first hasing with the SecurehashAlgorithm and then encrypting the result using the DigitalSignatureAlgorithm and the private key of the publisher''s certificate. The point is that, the key can be easily verified to match the hash of the data and it is therefore very difficult to forge another message that pertains to be from the same source.
 
@@ -39,8 +39,8 @@ Instance Variables:
 	publisherCertificate		<DolphinSureCertificate> identifying the message publisher.
 
 '!
-!DolphinSureTrustedData categoriesForClass!Cryptography-Support! !
-!DolphinSureTrustedData methodsFor!
+!Security.DolphinSureTrustedData categoriesForClass!Cryptography-Support! !
+!Security.DolphinSureTrustedData methodsFor!
 
 data
 	"Answers the decoded information for the receiver without verifying that it is correct."
@@ -106,8 +106,8 @@ publisherCertificate
 publisherCertificate: certificate
 	"Private - Initialize the receiver with the given certificate"
 
-	publisherCertificate := (certificate publicKey=ObjectArtsRootCertificate publicKey) 	ifFalse: [certificate].
-	 !
+	publisherCertificate := certificate publicKey = ObjectArtsRootCertificate publicKey
+				ifFalse: [certificate]!
 
 publisherPublicKey
 	"Private - Answer the publisher's public key"
@@ -125,62 +125,48 @@ trustedData
 
 	| validData |
 	validData := self validData.
-	(self publisherCertificate confirmTrustFor: self description) ifFalse: [ 
-		NotTrustedError signal: self description].
-	^validData
-!
+	(self publisherCertificate confirmTrustFor: self description)
+		ifFalse: [NotTrustedError signal: self description].
+	^validData!
 
 validData
 	"Checks the receiver's data to see if it is valid. Signals a TrustedDataError if it
 	has been tampered with. Otherwise answers the valid data"
 
-	self isValid ifFalse: [ 
-		TrustedDataError signal ].
-	^self data
-!
+	self isValid ifFalse: [Security.TrustedDataError signal].
+	^self data!
 
 validDataPublishedBy: aPublisherCertificate
 	"Checks the receiver's data to see if it is valid and published by aPublisherCertificate.
 	Signals a TrustedDataError if it has been tampered with or is published by someone else. 
 	Otherwise answers the valid data"
 
-	self publisherCertificate = aPublisherCertificate ifFalse: [TrustedDataError signal].
+	self publisherCertificate = aPublisherCertificate ifFalse: [Security.TrustedDataError signal].
 	^self validData! !
-!DolphinSureTrustedData categoriesFor: #data!accessing!public! !
-!DolphinSureTrustedData categoriesFor: #data:description:privateKey:!accessing!public! !
-!DolphinSureTrustedData categoriesFor: #data:description:signature:!accessing!public! !
-!DolphinSureTrustedData categoriesFor: #dataToSign!accessing!private! !
-!DolphinSureTrustedData categoriesFor: #description!accessing!public! !
-!DolphinSureTrustedData categoriesFor: #isValid!public!testing! !
-!DolphinSureTrustedData categoriesFor: #publisher!accessing!public! !
-!DolphinSureTrustedData categoriesFor: #publisherCertificate!accessing!public! !
-!DolphinSureTrustedData categoriesFor: #publisherCertificate:!initializing!private! !
-!DolphinSureTrustedData categoriesFor: #publisherPublicKey!accessing!private! !
-!DolphinSureTrustedData categoriesFor: #signature!accessing!public! !
-!DolphinSureTrustedData categoriesFor: #trustedData!accessing!public! !
-!DolphinSureTrustedData categoriesFor: #validData!accessing!public! !
-!DolphinSureTrustedData categoriesFor: #validDataPublishedBy:!accessing!public! !
+!Security.DolphinSureTrustedData categoriesFor: #data!accessing!public! !
+!Security.DolphinSureTrustedData categoriesFor: #data:description:privateKey:!accessing!public! !
+!Security.DolphinSureTrustedData categoriesFor: #data:description:signature:!accessing!public! !
+!Security.DolphinSureTrustedData categoriesFor: #dataToSign!accessing!private! !
+!Security.DolphinSureTrustedData categoriesFor: #description!accessing!public! !
+!Security.DolphinSureTrustedData categoriesFor: #isValid!public!testing! !
+!Security.DolphinSureTrustedData categoriesFor: #publisher!accessing!public! !
+!Security.DolphinSureTrustedData categoriesFor: #publisherCertificate!accessing!public! !
+!Security.DolphinSureTrustedData categoriesFor: #publisherCertificate:!initializing!private! !
+!Security.DolphinSureTrustedData categoriesFor: #publisherPublicKey!accessing!private! !
+!Security.DolphinSureTrustedData categoriesFor: #signature!accessing!public! !
+!Security.DolphinSureTrustedData categoriesFor: #trustedData!accessing!public! !
+!Security.DolphinSureTrustedData categoriesFor: #validData!accessing!public! !
+!Security.DolphinSureTrustedData categoriesFor: #validDataPublishedBy:!accessing!public! !
 
-!DolphinSureTrustedData class methodsFor!
+!Security.DolphinSureTrustedData class methodsFor!
 
-binaryReadFrom: aStream context: anObject 
-	"Answers an object read from its binary STB representation on aStream. Because STB is
-	inherently an insecure format (loading objects can cause arbitrary code to be run) we must
-	use a special STBInFiler (an STBValidatingInFiler) that will only load a restricted set of
-	classes that we know to be passive."
+binaryReadFrom: aStream context: anObject
+	"Answers an object read from its binary STB representation on aStream. Because STB is inherently an insecure format (loading objects can cause arbitrary code to be run) we must 	use a special STBInFiler (an STBValidatingInFiler) that will only load a restricted set of classes that we know to be passive."
 
-	| inFiler validClasses |
-	validClasses := (Set new)
-				add: #String;
-				add: #ByteArray;
-				addAll: self secureCertificateClassNames;
-				add: self name;
-				yourself.
-	inFiler := (STBValidatingInFiler on: aStream)
-				context: anObject;
-				validationBlock: [:className | validClasses identityIncludes: className];
-				yourself.
-	^inFiler next!
+	^(STBValidatingInFiler on: aStream)
+		context: anObject;
+		validationBlock: [:className | ValidStbClasses includes: className];
+		next!
 
 data: aByteArray description: aString publisherCertificate: certificate privateKey: privateKey
 	"Answer an instance of the receiver using the supplied publisher certificate and aByteArray of data
@@ -198,6 +184,22 @@ icon
 	"Answers an Icon that can be used to represent this class"
 
 	^##(self) defaultIcon!
+
+initialize
+	"
+		self initialize
+	"
+
+	| addNames |
+	ValidStbClasses := Set new.
+	addNames := 
+			[:each |
+			ValidStbClasses
+				add: each unqualifiedName;
+				add: each asString].
+	#(#{Core.AnsiString} #{Core.Utf8String} #{Core.ByteArray}) do: addNames.
+	addNames value: self asQualifiedReference.
+	self secureCertificateClassNames do: addNames!
 
 keyGroup
 	"Private - Answers the key group for all instances of the receiver. This is a partial key that can be combined with
@@ -251,20 +253,21 @@ secure
 secureCertificateClassNames
 	"These are the names of the certificate classes that can be loaded from a secure chunk."
 
-	^#(#DolphinSureCertificate #DolphinSurePersonalCertificate)!
+	^#(#{Security.DolphinSureCertificate} #{Security.DolphinSurePersonalCertificate})!
 
 signatureAlgorithm
 	"Private - Answer the signature algorithm of the receiver"
 
 	^DigitalSignatureAlgorithm! !
-!DolphinSureTrustedData class categoriesFor: #binaryReadFrom:context:!binary filing!public! !
-!DolphinSureTrustedData class categoriesFor: #data:description:publisherCertificate:privateKey:!instance creation!public! !
-!DolphinSureTrustedData class categoriesFor: #data:description:publisherCertificate:signature:!instance creation!public! !
-!DolphinSureTrustedData class categoriesFor: #icon!constants!development!public! !
-!DolphinSureTrustedData class categoriesFor: #keyGroup!accessing!private! !
-!DolphinSureTrustedData class categoriesFor: #parseByteArrayChunk:!helpers!private!source filing! !
-!DolphinSureTrustedData class categoriesFor: #publisherCertificate:!instance creation!public! !
-!DolphinSureTrustedData class categoriesFor: #secure!public!source filing! !
-!DolphinSureTrustedData class categoriesFor: #secureCertificateClassNames!constants!public! !
-!DolphinSureTrustedData class categoriesFor: #signatureAlgorithm!accessing!private! !
+!Security.DolphinSureTrustedData class categoriesFor: #binaryReadFrom:context:!binary filing!public! !
+!Security.DolphinSureTrustedData class categoriesFor: #data:description:publisherCertificate:privateKey:!instance creation!public! !
+!Security.DolphinSureTrustedData class categoriesFor: #data:description:publisherCertificate:signature:!instance creation!public! !
+!Security.DolphinSureTrustedData class categoriesFor: #icon!constants!development!public! !
+!Security.DolphinSureTrustedData class categoriesFor: #initialize!class initialization!private! !
+!Security.DolphinSureTrustedData class categoriesFor: #keyGroup!accessing!private! !
+!Security.DolphinSureTrustedData class categoriesFor: #parseByteArrayChunk:!helpers!private!source filing! !
+!Security.DolphinSureTrustedData class categoriesFor: #publisherCertificate:!instance creation!public! !
+!Security.DolphinSureTrustedData class categoriesFor: #secure!public!source filing! !
+!Security.DolphinSureTrustedData class categoriesFor: #secureCertificateClassNames!constants!public! !
+!Security.DolphinSureTrustedData class categoriesFor: #signatureAlgorithm!accessing!private! !
 

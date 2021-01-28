@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ProtectedProductSerialNumber subclass: #AnotherCompanySerialNumber
+Security.ProtectedProductSerialNumber subclass: #'Security.Examples.AnotherCompanySerialNumber'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-AnotherCompanySerialNumber guid: (GUID fromString: '{3f32f382-d7d3-4b5c-b2ba-bfd3621d28c9}')!
-AnotherCompanySerialNumber comment: 'This class is an example of overriding the default encryption used for protecting the unlock key.  In this case we override the class side method #serialNumberProtectorClass to select a different en/decryption algorithm.  Also, although we override the class side #instanceDecodingKey and #instanceEncodingKey methods, we do not answer a simple Integer as we would if we used default encryption, but instead answer a private/public key pair.  See the method comment for #instanceEncodingKey for more information and some guidance.'!
-!AnotherCompanySerialNumber categoriesForClass!Unclassified! !
-!AnotherCompanySerialNumber class methodsFor!
+Security.Examples.AnotherCompanySerialNumber guid: (Core.GUID fromString: '{3f32f382-d7d3-4b5c-b2ba-bfd3621d28c9}')!
+Security.Examples.AnotherCompanySerialNumber comment: 'This class is an example of overriding the default encryption used for protecting the unlock key.  In this case we override the class side method #serialNumberProtectorClass to select a different en/decryption algorithm.  Also, although we override the class side #instanceDecodingKey and #instanceEncodingKey methods, we do not answer a simple Integer as we would if we used default encryption, but instead answer a private/public key pair.  See the method comment for #instanceEncodingKey for more information and some guidance.'!
+!Security.Examples.AnotherCompanySerialNumber categoriesForClass!Unclassified! !
+!Security.Examples.AnotherCompanySerialNumber class methodsFor!
 
 instanceDecodingKey
 	"Private - Answer the key for decrypting instances from 'public'encrypted  serial number strings.
@@ -66,10 +66,10 @@ lockedMethodDecodingKeyHash
 serialNumberProtectorClass
 	"overriden to request asymetric"
 
-	^ElgamalSerialNumberProtector! !
-!AnotherCompanySerialNumber class categoriesFor: #instanceDecodingKey!constants!private! !
-!AnotherCompanySerialNumber class categoriesFor: #instanceEncodingKey!constants!private! !
-!AnotherCompanySerialNumber class categoriesFor: #lockedMethodDecodingKey!constants!private! !
-!AnotherCompanySerialNumber class categoriesFor: #lockedMethodDecodingKeyHash!constants!private! !
-!AnotherCompanySerialNumber class categoriesFor: #serialNumberProtectorClass!constants!public! !
+	^Security.ElgamalSerialNumberProtector! !
+!Security.Examples.AnotherCompanySerialNumber class categoriesFor: #instanceDecodingKey!constants!private! !
+!Security.Examples.AnotherCompanySerialNumber class categoriesFor: #instanceEncodingKey!constants!private! !
+!Security.Examples.AnotherCompanySerialNumber class categoriesFor: #lockedMethodDecodingKey!constants!private! !
+!Security.Examples.AnotherCompanySerialNumber class categoriesFor: #lockedMethodDecodingKeyHash!constants!private! !
+!Security.Examples.AnotherCompanySerialNumber class categoriesFor: #serialNumberProtectorClass!constants!public! !
 

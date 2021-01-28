@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'Protected Notepad'.
-package paxVersion: 2;
+package paxVersion: 2.1;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'This is a version of the Notebook sample which uses non-default cryptography to encrypt the unlock key.  It uses the example class ElgamalSerialNumberProtector to use private/public encryption to protect the key.
 
@@ -10,11 +10,12 @@ package basicPackageVersion: '2005.6.2.23-CU-8'.
 
 
 package setClassNames: #(
-	#{AnotherCompanySerialNumber}
-	#{ProtectedNotepadSessionManager}
+	#{Security.Examples.AnotherCompanySerialNumber}
+	#{Security.Examples.ProtectedNotepadSessionManager}
 ).
 
 package setPrerequisites: #(
+	'..\..\DolphinSure Example Authority\DolphinSure Example Authority'
 	'..\..\MVP\Notepad\Notepad'
 	'..\..\..\Dolphin\Lagoon\Product Protection'
 	'..\..\..\Dolphin\Lagoon\Product Protection Base'
@@ -24,16 +25,16 @@ package!
 
 "Class Definitions"!
 
-ProtectedProductSerialNumber subclass: #AnotherCompanySerialNumber
+Security.ProtectedProductSerialNumber subclass: #'Security.Examples.AnotherCompanySerialNumber'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ProtectedProductSessionManager subclass: #ProtectedNotepadSessionManager
+UI.ProtectedProductSessionManager subclass: #'Security.Examples.ProtectedNotepadSessionManager'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 

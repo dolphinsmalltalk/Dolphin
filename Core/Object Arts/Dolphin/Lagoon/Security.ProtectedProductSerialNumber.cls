@@ -1,14 +1,14 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Object subclass: #ProtectedProductSerialNumber
+Core.Object subclass: #'Security.ProtectedProductSerialNumber'
 	instanceVariableNames: 'value stringValue'
 	classVariableNames: 'FixedLicenceMask'
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ProtectedProductSerialNumber guid: (GUID fromString: '{1e38759a-1c4b-4b07-bfa7-2b47b361a5d1}')!
-ProtectedProductSerialNumber isAbstract: true!
-ProtectedProductSerialNumber comment: 'This class acts as an abstract superclass for serial numbers of protected products. A protected product can be encrypted using the #decodingKey of a serial number. The encryption process garbles the bytecodes of the product''s compiled methods so the application will not run successfully until it is decrypted by the same #decodingKey.
+Security.ProtectedProductSerialNumber guid: (Core.GUID fromString: '{1e38759a-1c4b-4b07-bfa7-2b47b361a5d1}')!
+Security.ProtectedProductSerialNumber isNonInstantiable: true!
+Security.ProtectedProductSerialNumber comment: 'This class acts as an abstract superclass for serial numbers of protected products. A protected product can be encrypted using the #decodingKey of a serial number. The encryption process garbles the bytecodes of the product''s compiled methods so the application will not run successfully until it is decrypted by the same #decodingKey.
 
 Concrete subclasses should be created either for each product created or, more likely, for each publishing author. These subclasses must override the following methods (all on the class side) as described in the method comments:
 
@@ -31,8 +31,8 @@ If you find that a serial number has been illegally distributed to others you ca
 For a simple example see the ''Protected Scribble'' sample package (under Samples/Lagoon/Product Protection/).
 
 It is possible to override more of the class-side methods in the ''constants'' category in order to use different encryption of both the serial number itself, and of the ''garbled'' methods.  The ''Protected Notepad'' sample application showns one example of this.'!
-!ProtectedProductSerialNumber categoriesForClass!Cryptography-Support! !
-!ProtectedProductSerialNumber methodsFor!
+!Security.ProtectedProductSerialNumber categoriesForClass!Cryptography-Support! !
+!Security.ProtectedProductSerialNumber methodsFor!
 
 displayOn: aPuttableStream
 	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that an end-user might want to see."
@@ -80,7 +80,8 @@ lockedMethodDecodingKey
 lockedMethodDecodingKeyHash
 	"Answer the SHA1 hash of the puported method decoding key of the receiver."
 
-	^[SecureHashAlgorithm new hashInteger: self lockedMethodDecodingKey] on: Error do: [:err | ^nil]!
+	^[SecureHashAlgorithm new hashInteger: self lockedMethodDecodingKey] on: Error
+		do: [:err | ^nil]!
 
 printOn: aStream 
 	"Append a textual representation of the receiver to the <puttableStream> argument
@@ -156,24 +157,24 @@ value: anInteger
 
 	value := anInteger.
 	stringValue := nil! !
-!ProtectedProductSerialNumber categoriesFor: #displayOn:!displaying!public! !
-!ProtectedProductSerialNumber categoriesFor: #expiry!accessing!public! !
-!ProtectedProductSerialNumber categoriesFor: #flags!accessing!public! !
-!ProtectedProductSerialNumber categoriesFor: #isFixedLicence!public!testing! !
-!ProtectedProductSerialNumber categoriesFor: #isFloatingLicence!public!testing! !
-!ProtectedProductSerialNumber categoriesFor: #isTrial!public!testing! !
-!ProtectedProductSerialNumber categoriesFor: #isValid!public!testing! !
-!ProtectedProductSerialNumber categoriesFor: #lockedMethodDecodingKey!accessing!public! !
-!ProtectedProductSerialNumber categoriesFor: #lockedMethodDecodingKeyHash!accessing!public! !
-!ProtectedProductSerialNumber categoriesFor: #printOn:!printing!public! !
-!ProtectedProductSerialNumber categoriesFor: #productId!accessing!public! !
-!ProtectedProductSerialNumber categoriesFor: #split!accessing!private! !
-!ProtectedProductSerialNumber categoriesFor: #stringValue!accessing!private! !
-!ProtectedProductSerialNumber categoriesFor: #stringValue:!accessing!initializing!private! !
-!ProtectedProductSerialNumber categoriesFor: #value!accessing!private! !
-!ProtectedProductSerialNumber categoriesFor: #value:!accessing!initializing!private! !
+!Security.ProtectedProductSerialNumber categoriesFor: #displayOn:!displaying!public! !
+!Security.ProtectedProductSerialNumber categoriesFor: #expiry!accessing!public! !
+!Security.ProtectedProductSerialNumber categoriesFor: #flags!accessing!public! !
+!Security.ProtectedProductSerialNumber categoriesFor: #isFixedLicence!public!testing! !
+!Security.ProtectedProductSerialNumber categoriesFor: #isFloatingLicence!public!testing! !
+!Security.ProtectedProductSerialNumber categoriesFor: #isTrial!public!testing! !
+!Security.ProtectedProductSerialNumber categoriesFor: #isValid!public!testing! !
+!Security.ProtectedProductSerialNumber categoriesFor: #lockedMethodDecodingKey!accessing!public! !
+!Security.ProtectedProductSerialNumber categoriesFor: #lockedMethodDecodingKeyHash!accessing!public! !
+!Security.ProtectedProductSerialNumber categoriesFor: #printOn:!printing!public! !
+!Security.ProtectedProductSerialNumber categoriesFor: #productId!accessing!public! !
+!Security.ProtectedProductSerialNumber categoriesFor: #split!accessing!private! !
+!Security.ProtectedProductSerialNumber categoriesFor: #stringValue!accessing!private! !
+!Security.ProtectedProductSerialNumber categoriesFor: #stringValue:!accessing!initializing!private! !
+!Security.ProtectedProductSerialNumber categoriesFor: #value!accessing!private! !
+!Security.ProtectedProductSerialNumber categoriesFor: #value:!accessing!initializing!private! !
 
-!ProtectedProductSerialNumber class methodsFor!
+!Security.ProtectedProductSerialNumber class methodsFor!
 
 fromString: aString 
 	"Answers an instance of the receiver read from aString."
@@ -373,26 +374,26 @@ unlockClasses: aCollectionOfClasses using: aSerialNumber
 
 	(self productProtectorWithKey: aSerialNumber lockedMethodDecodingKey) 
 		unlockClasses: aCollectionOfClasses! !
-!ProtectedProductSerialNumber class categoriesFor: #fromString:!instance creation!public! !
-!ProtectedProductSerialNumber class categoriesFor: #icon!constants!development!public! !
-!ProtectedProductSerialNumber class categoriesFor: #initialize!initializing!private! !
-!ProtectedProductSerialNumber class categoriesFor: #instanceDecoder!helpers!public! !
-!ProtectedProductSerialNumber class categoriesFor: #instanceDecodingKey!constants!private! !
-!ProtectedProductSerialNumber class categoriesFor: #instanceEncoder!helpers!public! !
-!ProtectedProductSerialNumber class categoriesFor: #instanceEncodingKey!constants!private! !
-!ProtectedProductSerialNumber class categoriesFor: #isSafeToEncryptWithProductProtection!constants!public!testing! !
-!ProtectedProductSerialNumber class categoriesFor: #lockClasses:!operations!public! !
-!ProtectedProductSerialNumber class categoriesFor: #lockedMethodDecodingKey!constants!private! !
-!ProtectedProductSerialNumber class categoriesFor: #lockedMethodDecodingKeyHash!constants!private! !
-!ProtectedProductSerialNumber class categoriesFor: #lockedMethodEncodingKey!constants!private! !
-!ProtectedProductSerialNumber class categoriesFor: #new!instance creation!public! !
-!ProtectedProductSerialNumber class categoriesFor: #newProductId!operations!private! !
-!ProtectedProductSerialNumber class categoriesFor: #newProductProtector!helpers!private! !
-!ProtectedProductSerialNumber class categoriesFor: #productId:!instance creation!public! !
-!ProtectedProductSerialNumber class categoriesFor: #productId:expiry:flags:!instance creation!public! !
-!ProtectedProductSerialNumber class categoriesFor: #productProtectorClass!constants!public! !
-!ProtectedProductSerialNumber class categoriesFor: #productProtectorWithKey:!helpers!private! !
-!ProtectedProductSerialNumber class categoriesFor: #purgeSensitiveMethods!operations!public! !
-!ProtectedProductSerialNumber class categoriesFor: #serialNumberProtectorClass!constants!public! !
-!ProtectedProductSerialNumber class categoriesFor: #unlockClasses:using:!operations!public! !
+!Security.ProtectedProductSerialNumber class categoriesFor: #fromString:!instance creation!public! !
+!Security.ProtectedProductSerialNumber class categoriesFor: #icon!constants!development!public! !
+!Security.ProtectedProductSerialNumber class categoriesFor: #initialize!initializing!private! !
+!Security.ProtectedProductSerialNumber class categoriesFor: #instanceDecoder!helpers!public! !
+!Security.ProtectedProductSerialNumber class categoriesFor: #instanceDecodingKey!constants!private! !
+!Security.ProtectedProductSerialNumber class categoriesFor: #instanceEncoder!helpers!public! !
+!Security.ProtectedProductSerialNumber class categoriesFor: #instanceEncodingKey!constants!private! !
+!Security.ProtectedProductSerialNumber class categoriesFor: #isSafeToEncryptWithProductProtection!constants!public!testing! !
+!Security.ProtectedProductSerialNumber class categoriesFor: #lockClasses:!operations!public! !
+!Security.ProtectedProductSerialNumber class categoriesFor: #lockedMethodDecodingKey!constants!private! !
+!Security.ProtectedProductSerialNumber class categoriesFor: #lockedMethodDecodingKeyHash!constants!private! !
+!Security.ProtectedProductSerialNumber class categoriesFor: #lockedMethodEncodingKey!constants!private! !
+!Security.ProtectedProductSerialNumber class categoriesFor: #new!instance creation!public! !
+!Security.ProtectedProductSerialNumber class categoriesFor: #newProductId!operations!private! !
+!Security.ProtectedProductSerialNumber class categoriesFor: #newProductProtector!helpers!private! !
+!Security.ProtectedProductSerialNumber class categoriesFor: #productId:!instance creation!public! !
+!Security.ProtectedProductSerialNumber class categoriesFor: #productId:expiry:flags:!instance creation!public! !
+!Security.ProtectedProductSerialNumber class categoriesFor: #productProtectorClass!constants!public! !
+!Security.ProtectedProductSerialNumber class categoriesFor: #productProtectorWithKey:!helpers!private! !
+!Security.ProtectedProductSerialNumber class categoriesFor: #purgeSensitiveMethods!operations!public! !
+!Security.ProtectedProductSerialNumber class categoriesFor: #serialNumberProtectorClass!constants!public! !
+!Security.ProtectedProductSerialNumber class categoriesFor: #unlockClasses:using:!operations!public! !
 

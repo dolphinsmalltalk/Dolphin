@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-SharedPool subclass: #BCryptConstants
+Kernel.SharedPool subclass: #'OS.BCryptConstants'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -55,6 +55,6 @@ SharedPool subclass: #BCryptConstants
 		'BCRYPT_SIGNATURE_LENGTH' -> 'SignatureLength'.
 		'BCRYPT_STATUS_UNSUCCESSFUL' -> 16rC0000001
 	}!
-BCryptConstants guid: (GUID fromString: '{ddf7b6ba-2a04-4f31-b6f9-c1c1be1ae8ef}')!
-BCryptConstants comment: ''!
-!BCryptConstants categoriesForClass!Unclassified! !
+OS.BCryptConstants guid: (Core.GUID fromString: '{ddf7b6ba-2a04-4f31-b6f9-c1c1be1ae8ef}')!
+OS.BCryptConstants comment: ''!
+!OS.BCryptConstants categoriesForClass!Unclassified! !

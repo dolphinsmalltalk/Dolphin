@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'Product Protection Base'.
-package paxVersion: 2;
+package paxVersion: 2.1;
 	preDeclareClassesOnLoad: false;
 	basicComment: ''.
 
@@ -8,12 +8,12 @@ package basicPackageVersion: 'OA 6 CU 1'.
 
 
 package setClassNames: #(
-	#{ElgamalSerialNumberProtector}
-	#{PC1ProductProtector}
-	#{PC1SerialNumberProtector}
-	#{ProductProtector}
-	#{ProtectedProductSerialNumber}
-	#{SerialNumberProtector}
+	#{Security.ElgamalSerialNumberProtector}
+	#{Security.PC1ProductProtector}
+	#{Security.PC1SerialNumberProtector}
+	#{Security.ProductProtector}
+	#{Security.ProtectedProductSerialNumber}
+	#{Security.SerialNumberProtector}
 ).
 
 package setPrerequisites: #(
@@ -25,40 +25,40 @@ package!
 
 "Class Definitions"!
 
-Object subclass: #ProductProtector
+Core.Object subclass: #'Security.ProductProtector'
 	instanceVariableNames: 'key'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Object subclass: #ProtectedProductSerialNumber
+Core.Object subclass: #'Security.ProtectedProductSerialNumber'
 	instanceVariableNames: 'value stringValue'
 	classVariableNames: 'FixedLicenceMask'
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Object subclass: #SerialNumberProtector
+Core.Object subclass: #'Security.SerialNumberProtector'
 	instanceVariableNames: 'key'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ProductProtector subclass: #PC1ProductProtector
+Security.ProductProtector subclass: #'Security.PC1ProductProtector'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-SerialNumberProtector subclass: #ElgamalSerialNumberProtector
+Security.SerialNumberProtector subclass: #'Security.ElgamalSerialNumberProtector'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-SerialNumberProtector subclass: #PC1SerialNumberProtector
+Security.SerialNumberProtector subclass: #'Security.PC1SerialNumberProtector'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 

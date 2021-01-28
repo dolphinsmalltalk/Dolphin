@@ -1,17 +1,17 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-DolphinSureTrustedData subclass: #DolphinSureCertificate
+Security.DolphinSureTrustedData subclass: #'Security.DolphinSureCertificate'
 	instanceVariableNames: ''
 	classVariableNames: 'UntrustedContentWarning'
-	poolDictionaries: 'Win32Constants'
+	imports: #(#{OS.Win32Constants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-DolphinSureCertificate guid: (GUID fromString: '{e143e2b9-bce4-4c55-b0f7-7060dd84d239}')!
-DolphinSureCertificate comment: 'A DolphinSureCertificate can be used when signing a piece of DolphinSureTrustedData.  It can be used to guarantee that the trusted data is from a particular publisher and because it contains a public key that is used to encode the data one can feel confident that the data has not been modified in transit. Note that, a DolphinSureCertificate is also trusted data itself.  This prevents an attacker from forging the certificate.
+Security.DolphinSureCertificate guid: (Core.GUID fromString: '{e143e2b9-bce4-4c55-b0f7-7060dd84d239}')!
+Security.DolphinSureCertificate comment: 'A DolphinSureCertificate can be used when signing a piece of DolphinSureTrustedData.  It can be used to guarantee that the trusted data is from a particular publisher and because it contains a public key that is used to encode the data one can feel confident that the data has not been modified in transit. Note that, a DolphinSureCertificate is also trusted data itself.  This prevents an attacker from forging the certificate.
 
 If you wish to be able to make use of DolphinSureTrustedData within your applications, either directly or when you wish to digitally sign Dolphin web applets, then you will need to apply for a publisher''s certificate from Object Arts or create one yourself.'!
-!DolphinSureCertificate categoriesForClass!Cryptography-Certificates! !
-!DolphinSureCertificate methodsFor!
+!Security.DolphinSureCertificate categoriesForClass!Cryptography-Certificates! !
+!Security.DolphinSureCertificate methodsFor!
 
 = anObject
 	"Answer whether the receiver is considered equivalent to the argument
@@ -30,14 +30,12 @@ backgroundImageFile
 beNotPermanentlyTrusted
 	"Sets the receiver to be untrusted in the permanent store"
 
-	DolphinSureCertificateStore permanentTrust removeCertificate: self ifAbsent: [].
-!
+	DolphinSureCertificateStore permanentTrust removeCertificate: self ifAbsent: []!
 
 beNotTemporarilyTrusted
 	"Sets the receiver to be untrusted in the temporary store"
 
-	DolphinSureCertificateStore temporaryTrust removeCertificate: self ifAbsent: [].
-!
+	DolphinSureCertificateStore temporaryTrust removeCertificate: self ifAbsent: []!
 
 beNotTrusted
 	"Sets the receiver to be untrusted by removing it from the trust stores"
@@ -68,7 +66,7 @@ confirmTrustFor: aStringDescription
 
 	self isTrusted ifTrue: [^true].
 	#todo.	"Don't pop a dialog here, just raise the warning. Leave it up to the client code to decide how to handle the warning"
-	#{DolphinSureTrustWarning}
+	#{UI.DolphinSureTrustWarning}
 		ifDefined: [:dialog | dialog showModalOn: self description: aStringDescription]
 		ifNotDefined: [UntrustedContentWarning signal: aStringDescription with: self].
 	^self isTrusted!
@@ -120,8 +118,7 @@ imageAttributes
 info
 	"Answers the decoded information for the receiver"
 
-	^DolphinSureCertificateInfo fromBinaryStoreBytes: self data
-	 !
+	^DolphinSureCertificateInfo fromBinaryStoreBytes: self data!
 
 info: aDolphinSureCertificateInfo privateKey: privateKey
 	"Private - Set the encoded information held by the receiver to aDolphinSureCertificateInfo"
@@ -135,9 +132,7 @@ isPermanentlyTrusted
 	"Answer true if the receiver is currently permanently trusted; that is, it is contained
 	within one of our trust stores"
 
-	^DolphinSureCertificateStore permanentTrust includesCertificate: self
-
-	!
+	^DolphinSureCertificateStore permanentTrust includesCertificate: self!
 
 issuingAuthority
 	"Answers the name of the issuing authority of the receiver"
@@ -147,9 +142,7 @@ issuingAuthority
 isTemporarilyTrusted
 	"Answer true if the receiver is currently temporariliy trusted"
 
-	^(DolphinSureCertificateStore temporaryTrust includesCertificate: self) 
-
-	!
+	^DolphinSureCertificateStore temporaryTrust includesCertificate: self!
 
 isTrusted
 	"Answer true if the receiver is currently trusted; that is, it is contained
@@ -200,8 +193,10 @@ sign: aByteArray description: aStringDescription privateKey: privateKey
 	instance of DolphinSureTrustedData. If an error occurs it is likely that the private
 	key does not match that for the certificate."
 
-	^(DolphinSureTrustedData publisherCertificate: self) 
-		data: aByteArray description: aStringDescription privateKey: privateKey!
+	^(DolphinSureTrustedData publisherCertificate: self)
+		data: aByteArray
+		description: aStringDescription
+		privateKey: privateKey!
 
 sign: aByteArray privateKey: privateKey
 	"Signs the data in aByteArray using the receiver and it's privateKey. Answers an
@@ -215,36 +210,36 @@ validityString
 
 	^self info validityString
 	 ! !
-!DolphinSureCertificate categoriesFor: #=!comparing!public! !
-!DolphinSureCertificate categoriesFor: #backgroundImageFile!constants!private! !
-!DolphinSureCertificate categoriesFor: #beNotPermanentlyTrusted!accessing!public!trust! !
-!DolphinSureCertificate categoriesFor: #beNotTemporarilyTrusted!accessing!public!trust! !
-!DolphinSureCertificate categoriesFor: #beNotTrusted!accessing!public!trust! !
-!DolphinSureCertificate categoriesFor: #bePermanentlyTrusted!accessing!public!trust! !
-!DolphinSureCertificate categoriesFor: #beTemporarilyTrusted!accessing!public!trust! !
-!DolphinSureCertificate categoriesFor: #canBePermanentlyTrusted!public!testing!trust! !
-!DolphinSureCertificate categoriesFor: #confirmTrustFor:!operations!public!trust! !
-!DolphinSureCertificate categoriesFor: #details!accessing!public! !
-!DolphinSureCertificate categoriesFor: #displayOn:!printing!public! !
-!DolphinSureCertificate categoriesFor: #gap!drawing!helpers!private! !
-!DolphinSureCertificate categoriesFor: #hasExpired!public!testing! !
-!DolphinSureCertificate categoriesFor: #imageAttributes!drawing!helpers!private! !
-!DolphinSureCertificate categoriesFor: #info!accessing!public! !
-!DolphinSureCertificate categoriesFor: #info:privateKey:!accessing!private! !
-!DolphinSureCertificate categoriesFor: #isPermanentlyTrusted!public!testing!trust! !
-!DolphinSureCertificate categoriesFor: #issuingAuthority!accessing!public! !
-!DolphinSureCertificate categoriesFor: #isTemporarilyTrusted!public!testing!trust! !
-!DolphinSureCertificate categoriesFor: #isTrusted!public!testing!trust! !
-!DolphinSureCertificate categoriesFor: #owner!accessing!public! !
-!DolphinSureCertificate categoriesFor: #printOn:!printing!public! !
-!DolphinSureCertificate categoriesFor: #publicKey!accessing!public! !
-!DolphinSureCertificate categoriesFor: #purpose!accessing!public! !
-!DolphinSureCertificate categoriesFor: #serial!accessing!public! !
-!DolphinSureCertificate categoriesFor: #sign:description:privateKey:!operations!public! !
-!DolphinSureCertificate categoriesFor: #sign:privateKey:!operations!public! !
-!DolphinSureCertificate categoriesFor: #validityString!helpers!private! !
+!Security.DolphinSureCertificate categoriesFor: #=!comparing!public! !
+!Security.DolphinSureCertificate categoriesFor: #backgroundImageFile!constants!private! !
+!Security.DolphinSureCertificate categoriesFor: #beNotPermanentlyTrusted!accessing!public!trust! !
+!Security.DolphinSureCertificate categoriesFor: #beNotTemporarilyTrusted!accessing!public!trust! !
+!Security.DolphinSureCertificate categoriesFor: #beNotTrusted!accessing!public!trust! !
+!Security.DolphinSureCertificate categoriesFor: #bePermanentlyTrusted!accessing!public!trust! !
+!Security.DolphinSureCertificate categoriesFor: #beTemporarilyTrusted!accessing!public!trust! !
+!Security.DolphinSureCertificate categoriesFor: #canBePermanentlyTrusted!public!testing!trust! !
+!Security.DolphinSureCertificate categoriesFor: #confirmTrustFor:!operations!public!trust! !
+!Security.DolphinSureCertificate categoriesFor: #details!accessing!public! !
+!Security.DolphinSureCertificate categoriesFor: #displayOn:!printing!public! !
+!Security.DolphinSureCertificate categoriesFor: #gap!drawing!helpers!private! !
+!Security.DolphinSureCertificate categoriesFor: #hasExpired!public!testing! !
+!Security.DolphinSureCertificate categoriesFor: #imageAttributes!drawing!helpers!private! !
+!Security.DolphinSureCertificate categoriesFor: #info!accessing!public! !
+!Security.DolphinSureCertificate categoriesFor: #info:privateKey:!accessing!private! !
+!Security.DolphinSureCertificate categoriesFor: #isPermanentlyTrusted!public!testing!trust! !
+!Security.DolphinSureCertificate categoriesFor: #issuingAuthority!accessing!public! !
+!Security.DolphinSureCertificate categoriesFor: #isTemporarilyTrusted!public!testing!trust! !
+!Security.DolphinSureCertificate categoriesFor: #isTrusted!public!testing!trust! !
+!Security.DolphinSureCertificate categoriesFor: #owner!accessing!public! !
+!Security.DolphinSureCertificate categoriesFor: #printOn:!printing!public! !
+!Security.DolphinSureCertificate categoriesFor: #publicKey!accessing!public! !
+!Security.DolphinSureCertificate categoriesFor: #purpose!accessing!public! !
+!Security.DolphinSureCertificate categoriesFor: #serial!accessing!public! !
+!Security.DolphinSureCertificate categoriesFor: #sign:description:privateKey:!operations!public! !
+!Security.DolphinSureCertificate categoriesFor: #sign:privateKey:!operations!public! !
+!Security.DolphinSureCertificate categoriesFor: #validityString!helpers!private! !
 
-!DolphinSureCertificate class methodsFor!
+!Security.DolphinSureCertificate class methodsFor!
 
 icon
 	"Answers an Icon that can be used to represent this class"
@@ -285,11 +280,11 @@ untrustedContentWarning
 	by the receiver."
 
 	UntrustedContentWarning := WarningSignal description: 'Untrusted Content %1'! !
-!DolphinSureCertificate class categoriesFor: #icon!constants!development!public! !
-!DolphinSureCertificate class categoriesFor: #info:authority:authorityPrivateKey:!instance creation!public! !
-!DolphinSureCertificate class categoriesFor: #initialize!initializing!private! !
-!DolphinSureCertificate class categoriesFor: #myDefault!instance creation!public! !
-!DolphinSureCertificate class categoriesFor: #new!instance creation!private! !
-!DolphinSureCertificate class categoriesFor: #publisherCertificate:privateKey:!instance creation!private! !
-!DolphinSureCertificate class categoriesFor: #untrustedContentWarning!constants!public! !
+!Security.DolphinSureCertificate class categoriesFor: #icon!constants!development!public! !
+!Security.DolphinSureCertificate class categoriesFor: #info:authority:authorityPrivateKey:!instance creation!public! !
+!Security.DolphinSureCertificate class categoriesFor: #initialize!initializing!private! !
+!Security.DolphinSureCertificate class categoriesFor: #myDefault!instance creation!public! !
+!Security.DolphinSureCertificate class categoriesFor: #new!instance creation!private! !
+!Security.DolphinSureCertificate class categoriesFor: #publisherCertificate:privateKey:!instance creation!private! !
+!Security.DolphinSureCertificate class categoriesFor: #untrustedContentWarning!constants!public! !
 

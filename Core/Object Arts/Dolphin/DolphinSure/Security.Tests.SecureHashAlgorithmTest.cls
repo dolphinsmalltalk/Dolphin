@@ -1,18 +1,18 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-DolphinTest subclass: #SecureHashAlgorithmTest
+Core.Tests.DolphinTest subclass: #'Security.Tests.SecureHashAlgorithmTest'
 	instanceVariableNames: 'hash'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-SecureHashAlgorithmTest guid: (GUID fromString: '{d984b5ab-adae-4262-97fa-504683e01cc6}')!
-SecureHashAlgorithmTest comment: 'This is the unit test for the class SecureHashAlgorithm. Unit tests are a good way to exercise the functionality of your system in a repeatable and automatic manner. They are therefore recommended if you plan to release anything. For more information, see: 
+Security.Tests.SecureHashAlgorithmTest guid: (Core.GUID fromString: '{d984b5ab-adae-4262-97fa-504683e01cc6}')!
+Security.Tests.SecureHashAlgorithmTest comment: 'This is the unit test for the class SecureHashAlgorithm. Unit tests are a good way to exercise the functionality of your system in a repeatable and automatic manner. They are therefore recommended if you plan to release anything. For more information, see: 
 	- http://www.c2.com/cgi/wiki?UnitTest
 	- http://minnow.cc.gatech.edu/squeak/1547
 	- the sunit class category'!
-!SecureHashAlgorithmTest categoriesForClass!Tests-System-Digital Signatures! !
-!SecureHashAlgorithmTest methodsFor!
+!Security.Tests.SecureHashAlgorithmTest categoriesForClass!Tests-System-Digital Signatures! !
+!Security.Tests.SecureHashAlgorithmTest methodsFor!
 
 testExample1
 	"This is the first example from the specification document (FIPS PUB 180-1)"
@@ -33,7 +33,7 @@ testExample3
 
 	hash := SecureHashAlgorithm new hashMessage: (String new: 1000000 withAll: $a).
 	self assert: hash equals: 16r34AA973CD4C4DAA4F61EEB2BDBAD27316534016F! !
-!SecureHashAlgorithmTest categoriesFor: #testExample1!public!testing / examples! !
-!SecureHashAlgorithmTest categoriesFor: #testExample2!public!testing / examples! !
-!SecureHashAlgorithmTest categoriesFor: #testExample3!public!testing / examples! !
+!Security.Tests.SecureHashAlgorithmTest categoriesFor: #testExample1!public!testing / examples! !
+!Security.Tests.SecureHashAlgorithmTest categoriesFor: #testExample2!public!testing / examples! !
+!Security.Tests.SecureHashAlgorithmTest categoriesFor: #testExample3!public!testing / examples! !
 

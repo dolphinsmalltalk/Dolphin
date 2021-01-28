@@ -1,16 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Object subclass: #PC1Cipher
+Core.Object subclass: #'Security.PC1Cipher'
 	instanceVariableNames: 'key box i j'
 	classVariableNames: 'RandPool'
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-PC1Cipher guid: (GUID fromString: '{611b2a17-3b8e-4bd9-94e2-38ce0d22736c}')!
-PC1Cipher comment: 'This class provides a stream encoder/decoder using the PC1 algorithm.
+Security.PC1Cipher guid: (Core.GUID fromString: '{611b2a17-3b8e-4bd9-94e2-38ce0d22736c}')!
+Security.PC1Cipher comment: 'This class provides a stream encoder/decoder using the PC1 algorithm.
 Portions ©1997 by Stefan Matthias Aust'!
-!PC1Cipher categoriesForClass!Cryptography-Support! !
-!PC1Cipher methodsFor!
+!Security.PC1Cipher categoriesForClass!Cryptography-Support! !
+!Security.PC1Cipher methodsFor!
 
 advance
 	"Advance the state of the cypher stream by one step without actually
@@ -97,18 +97,18 @@ reset
 			j := (key at: x \\ n + 1) + (box at: x + 1) + j bitAnd: 255.
 			box swap: x + 1 with: j + 1].
 	i := j := 0! !
-!PC1Cipher categoriesFor: #advance!ciphering!public! !
-!PC1Cipher categoriesFor: #advance:!ciphering!public! !
-!PC1Cipher categoriesFor: #cipher:!ciphering!public! !
-!PC1Cipher categoriesFor: #cipherByte:!ciphering!public! !
-!PC1Cipher categoriesFor: #cipherBytes:!ciphering!public! !
-!PC1Cipher categoriesFor: #cipherString:!ciphering!public! !
-!PC1Cipher categoriesFor: #key!accessing!initializing!public! !
-!PC1Cipher categoriesFor: #key:!accessing!initializing!private! !
-!PC1Cipher categoriesFor: #postCopy!copying!public! !
-!PC1Cipher categoriesFor: #reset!accessing!initializing!public! !
+!Security.PC1Cipher categoriesFor: #advance!ciphering!public! !
+!Security.PC1Cipher categoriesFor: #advance:!ciphering!public! !
+!Security.PC1Cipher categoriesFor: #cipher:!ciphering!public! !
+!Security.PC1Cipher categoriesFor: #cipherByte:!ciphering!public! !
+!Security.PC1Cipher categoriesFor: #cipherBytes:!ciphering!public! !
+!Security.PC1Cipher categoriesFor: #cipherString:!ciphering!public! !
+!Security.PC1Cipher categoriesFor: #key!accessing!initializing!public! !
+!Security.PC1Cipher categoriesFor: #key:!accessing!initializing!private! !
+!Security.PC1Cipher categoriesFor: #postCopy!copying!public! !
+!Security.PC1Cipher categoriesFor: #reset!accessing!initializing!public! !
 
-!PC1Cipher class methodsFor!
+!Security.PC1Cipher class methodsFor!
 
 byteArrayFromInteger: aPositiveIntegerKey 
 	| bytes n |
@@ -148,7 +148,7 @@ example2
 	^Utf8String fromByteArray: (encoder
 				cipherBytes: #[37 96 247 218 229 49 17 103 94 64 244 105 11 180 138 185 67 97 61 196 101 126 196])!
 
-generateRandomWithBits: bitSize 
+generateRandomWithBits: bitSize
 	"Answers a random <Integer> with the supplied bitSize. 
 	The bitSize must be >=16 and will be rounded up to a multiple of 8.
 
@@ -204,14 +204,14 @@ withStrength: bits
 	"Answer an instance of the receiver with <Integer> bits strength"
 
 	^self withKeyInteger: (self generateRandomWithBits: bits)! !
-!PC1Cipher class categoriesFor: #byteArrayFromInteger:!helpers!private! !
-!PC1Cipher class categoriesFor: #churnRandPool!helpers!private! !
-!PC1Cipher class categoriesFor: #example1!examples!public! !
-!PC1Cipher class categoriesFor: #example2!examples!public! !
-!PC1Cipher class categoriesFor: #generateRandomWithBits:!helpers!public! !
-!PC1Cipher class categoriesFor: #randPool!helpers!private! !
-!PC1Cipher class categoriesFor: #withKeyBytes:!instance creation!public! !
-!PC1Cipher class categoriesFor: #withKeyInteger:!instance creation!public! !
-!PC1Cipher class categoriesFor: #withKeyString:!instance creation!public! !
-!PC1Cipher class categoriesFor: #withStrength:!instance creation!public! !
+!Security.PC1Cipher class categoriesFor: #byteArrayFromInteger:!helpers!private! !
+!Security.PC1Cipher class categoriesFor: #churnRandPool!helpers!private! !
+!Security.PC1Cipher class categoriesFor: #example1!examples!public! !
+!Security.PC1Cipher class categoriesFor: #example2!examples!public! !
+!Security.PC1Cipher class categoriesFor: #generateRandomWithBits:!helpers!public! !
+!Security.PC1Cipher class categoriesFor: #randPool!helpers!private! !
+!Security.PC1Cipher class categoriesFor: #withKeyBytes:!instance creation!public! !
+!Security.PC1Cipher class categoriesFor: #withKeyInteger:!instance creation!public! !
+!Security.PC1Cipher class categoriesFor: #withKeyString:!instance creation!public! !
+!Security.PC1Cipher class categoriesFor: #withStrength:!instance creation!public! !
 

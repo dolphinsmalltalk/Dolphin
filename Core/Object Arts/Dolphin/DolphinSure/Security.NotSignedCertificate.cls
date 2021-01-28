@@ -1,19 +1,19 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-DolphinSureCertificate subclass: #NotSignedCertificate
+Security.DolphinSureCertificate subclass: #'Security.NotSignedCertificate'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-NotSignedCertificate guid: (GUID fromString: '{1284a49f-307e-4ea7-a404-ea7e7a56cbfe}')!
-NotSignedCertificate comment: 'A NotSignedCertificate is used to indicate when a piece of data has not been digitally signed using DolphinSure.  Typically it is used by BinaryPackage>>loadUsing: when a binary class file is being loaded and it is discovered that the class data has not been signed. 
+Security.NotSignedCertificate guid: (Core.GUID fromString: '{1284a49f-307e-4ea7-a404-ea7e7a56cbfe}')!
+Security.NotSignedCertificate comment: 'A NotSignedCertificate is used to indicate when a piece of data has not been digitally signed using DolphinSure.  Typically it is used by BinaryPackage>>loadUsing: when a binary class file is being loaded and it is discovered that the class data has not been signed. 
 
 Although it may seem strange to have a certificate for this purpose, it does allow the user to elect to install the NotSignedCertificate in his or her temporary trust store.  By doing so, a user can avoid repeated warnings about loading unsigned classes for the duration of the current Dolphin session. The temporary trust store is cleared out whenever an image is started so unsigned classes cannot be trusted indefinitely.
 
 NotSignedCertificate new confirmTrustFor: ''Unsigned data'''!
-!NotSignedCertificate categoriesForClass!Cryptography-Certificates! !
-!NotSignedCertificate methodsFor!
+!Security.NotSignedCertificate categoriesForClass!Cryptography-Certificates! !
+!Security.NotSignedCertificate methodsFor!
 
 backgroundImageFile
 	"Private - Answers the resource name of the background image file
@@ -45,12 +45,12 @@ purpose
 It is therefore not possible to guarantee the identity of the publisher or ensure that the content has not been modified since it was originally published. 
 
 You must decide if you are willing to accept this content as safe.'! !
-!NotSignedCertificate categoriesFor: #backgroundImageFile!constants!private! !
-!NotSignedCertificate categoriesFor: #canBePermanentlyTrusted!public!testing!trust! !
-!NotSignedCertificate categoriesFor: #imageAttributes!accessing!private! !
-!NotSignedCertificate categoriesFor: #purpose!accessing!public! !
+!Security.NotSignedCertificate categoriesFor: #backgroundImageFile!constants!private! !
+!Security.NotSignedCertificate categoriesFor: #canBePermanentlyTrusted!public!testing!trust! !
+!Security.NotSignedCertificate categoriesFor: #imageAttributes!accessing!private! !
+!Security.NotSignedCertificate categoriesFor: #purpose!accessing!public! !
 
-!NotSignedCertificate class methodsFor!
+!Security.NotSignedCertificate class methodsFor!
 
 new
 	"Answers an instance of the receiver. The byte array should be regenerated using the following
@@ -75,7 +75,7 @@ validYears
 	for by default. Nil indicates valid indefinitely."
 
 	^1! !
-!NotSignedCertificate class categoriesFor: #new!instance creation!public! !
-!NotSignedCertificate class categoriesFor: #publicKey!constants!private! !
-!NotSignedCertificate class categoriesFor: #validYears!constants!private! !
+!Security.NotSignedCertificate class categoriesFor: #new!instance creation!public! !
+!Security.NotSignedCertificate class categoriesFor: #publicKey!constants!private! !
+!Security.NotSignedCertificate class categoriesFor: #validYears!constants!private! !
 

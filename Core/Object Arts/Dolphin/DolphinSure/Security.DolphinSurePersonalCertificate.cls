@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-DolphinSureCertificate subclass: #DolphinSurePersonalCertificate
+Security.DolphinSureCertificate subclass: #'Security.DolphinSurePersonalCertificate'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-DolphinSurePersonalCertificate guid: (GUID fromString: '{cd23937f-fc74-43fd-b678-bebeac42ee59}')!
-DolphinSurePersonalCertificate comment: ''!
-!DolphinSurePersonalCertificate categoriesForClass!Unclassified! !
-!DolphinSurePersonalCertificate methodsFor!
+Security.DolphinSurePersonalCertificate guid: (Core.GUID fromString: '{cd23937f-fc74-43fd-b678-bebeac42ee59}')!
+Security.DolphinSurePersonalCertificate comment: ''!
+!Security.DolphinSurePersonalCertificate categoriesForClass!Unclassified! !
+!Security.DolphinSurePersonalCertificate methodsFor!
 
 backgroundImageFile
 	"Private - Answers the resource name of the background image file
@@ -37,16 +37,16 @@ purpose
 	"Answers the purpose of this certificate"
 
 	^'This certificate ensures that the content is from a known individual and guarantees that it has not been modified since it was originally created.'! !
-!DolphinSurePersonalCertificate categoriesFor: #backgroundImageFile!constants!private! !
-!DolphinSurePersonalCertificate categoriesFor: #imageAttributes!drawing!helpers!private! !
-!DolphinSurePersonalCertificate categoriesFor: #purpose!accessing!public! !
+!Security.DolphinSurePersonalCertificate categoriesFor: #backgroundImageFile!constants!private! !
+!Security.DolphinSurePersonalCertificate categoriesFor: #imageAttributes!drawing!helpers!private! !
+!Security.DolphinSurePersonalCertificate categoriesFor: #purpose!accessing!public! !
 
-!DolphinSurePersonalCertificate class methodsFor!
+!Security.DolphinSurePersonalCertificate class methodsFor!
 
 validYears
 	"Private - Answer the number of years that certificates of this class should be valid
 	for by default. Nil indicates valid indefinitely."
 
 	^1! !
-!DolphinSurePersonalCertificate class categoriesFor: #validYears!constants!private! !
+!Security.DolphinSurePersonalCertificate class categoriesFor: #validYears!constants!private! !
 

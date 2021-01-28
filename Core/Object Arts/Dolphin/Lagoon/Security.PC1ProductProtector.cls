@@ -1,22 +1,22 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ProductProtector subclass: #PC1ProductProtector
+Security.ProductProtector subclass: #'Security.PC1ProductProtector'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-PC1ProductProtector guid: (GUID fromString: '{5cdc0f05-2865-415a-b78e-f13223e1192f}')!
-PC1ProductProtector comment: 'One of these uses the PC1 cypher to encode/decode the bytecodes of all the methods that are to be protected.  Each method is encoded with a different instance of PC1Cipher which has been given a separate key derived from our secret key joined to the method''s name.'!
-!PC1ProductProtector categoriesForClass!Unclassified! !
-!PC1ProductProtector methodsFor!
+Security.PC1ProductProtector guid: (Core.GUID fromString: '{5cdc0f05-2865-415a-b78e-f13223e1192f}')!
+Security.PC1ProductProtector comment: 'One of these uses the PC1 cypher to encode/decode the bytecodes of all the methods that are to be protected.  Each method is encoded with a different instance of PC1Cipher which has been given a separate key derived from our secret key joined to the method''s name.'!
+!Security.PC1ProductProtector categoriesForClass!Unclassified! !
+!Security.PC1ProductProtector methodsFor!
 
 cipherClass: aClass 
 	"Private - Encrypts aClass using our key."
 
 	self methodsOf: aClass do: [:m | self cipherMethod: m]!
 
-cipherForMethod: aCompiledMethod 
+cipherForMethod: aCompiledMethod
 	"Private - Answers a new PC1Cipher suitable for en/decrypting the given method."
 
 	"Implementation notes:
@@ -77,13 +77,13 @@ hashKeyWith: aString
 
 methodsOf: aClass do: aBlockClosure 
 	aClass methodDictionary do: [:each | each whileMutableDo: [aBlockClosure value: each]]! !
-!PC1ProductProtector categoriesFor: #cipherClass:!operations!private! !
-!PC1ProductProtector categoriesFor: #cipherForMethod:!helpers!private! !
-!PC1ProductProtector categoriesFor: #cipherMethod:!operations!private! !
-!PC1ProductProtector categoriesFor: #decipherClass:!operations!private! !
-!PC1ProductProtector categoriesFor: #decipherMethod:!operations!private! !
-!PC1ProductProtector categoriesFor: #decryptClasses:!operations!public! !
-!PC1ProductProtector categoriesFor: #encryptClasses:!operations!public! !
-!PC1ProductProtector categoriesFor: #hashKeyWith:!helpers!public! !
-!PC1ProductProtector categoriesFor: #methodsOf:do:!operations!private! !
+!Security.PC1ProductProtector categoriesFor: #cipherClass:!operations!private! !
+!Security.PC1ProductProtector categoriesFor: #cipherForMethod:!helpers!private! !
+!Security.PC1ProductProtector categoriesFor: #cipherMethod:!operations!private! !
+!Security.PC1ProductProtector categoriesFor: #decipherClass:!operations!private! !
+!Security.PC1ProductProtector categoriesFor: #decipherMethod:!operations!private! !
+!Security.PC1ProductProtector categoriesFor: #decryptClasses:!operations!public! !
+!Security.PC1ProductProtector categoriesFor: #encryptClasses:!operations!public! !
+!Security.PC1ProductProtector categoriesFor: #hashKeyWith:!helpers!public! !
+!Security.PC1ProductProtector categoriesFor: #methodsOf:do:!operations!private! !
 

@@ -1,23 +1,23 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Object subclass: #SecureHashAlgorithm
+Core.Object subclass: #'Security.SecureHashAlgorithm'
 	instanceVariableNames: 'context'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-SecureHashAlgorithm guid: (GUID fromString: '{44a4e77c-6645-42e0-bcc2-e8129d06655e}')!
-SecureHashAlgorithm comment: 'This class implements the Secure Hash Algorithm (SHA) described in the U.S. government''s Secure Hash Standard (SHS). 
+Security.SecureHashAlgorithm guid: (Core.GUID fromString: '{44a4e77c-6645-42e0-bcc2-e8129d06655e}')!
+Security.SecureHashAlgorithm comment: 'This class implements the Secure Hash Algorithm (SHA) described in the U.S. government''s Secure Hash Standard (SHS). 
 This standard is described in FIPS PUB 180-1, "SECURE HASH STANDARD", April 17, 1995. The Secure Hash Algorithm is also described on p. 442 of ''Applied Cryptography: Protocols, Algorithms, and Source Code in C'' by Bruce Scheier, Wiley, 1996.'!
-!SecureHashAlgorithm categoriesForClass!Cryptography-Support! !
-!SecureHashAlgorithm methodsFor!
+!Security.SecureHashAlgorithm categoriesForClass!Cryptography-Support! !
+!Security.SecureHashAlgorithm methodsFor!
 
 context
 	"Private - Gets an SHA context"
 
 	context isNil
 		ifTrue: 
-			[VMLibrary default isWindows7OrGreater ifFalse: [self error: 'Not supported on Vista and earlier versions of  Windows'].
+			[OS.KernelLibrary default isWindows7OrGreater ifFalse: [self error: 'Not supported on Vista and earlier versions of  Windows'].
 			context := self shaLibrary shaCreate].
 	^context!
 
@@ -107,20 +107,20 @@ resetContext
 shaLibrary
 	"Private - Answers the <ExternalLibrary> containing the SHA functions"
 
-	^ BCryptLibrary default! !
-!SecureHashAlgorithm categoriesFor: #context!helpers!private! !
-!SecureHashAlgorithm categoriesFor: #finalHash!helpers!private! !
-!SecureHashAlgorithm categoriesFor: #hashIn:!helpers!private! !
-!SecureHashAlgorithm categoriesFor: #hashInInteger:!operations!public! !
-!SecureHashAlgorithm categoriesFor: #hashInMessage:!operations!public! !
-!SecureHashAlgorithm categoriesFor: #hashInStream:!operations!public! !
-!SecureHashAlgorithm categoriesFor: #hashInteger:!operations!public! !
-!SecureHashAlgorithm categoriesFor: #hashMessage:!operations!public! !
-!SecureHashAlgorithm categoriesFor: #hashStream:!operations!public! !
-!SecureHashAlgorithm categoriesFor: #resetContext!helpers!private! !
-!SecureHashAlgorithm categoriesFor: #shaLibrary!helpers!private! !
+	^OS.BCryptLibrary default! !
+!Security.SecureHashAlgorithm categoriesFor: #context!helpers!private! !
+!Security.SecureHashAlgorithm categoriesFor: #finalHash!helpers!private! !
+!Security.SecureHashAlgorithm categoriesFor: #hashIn:!helpers!private! !
+!Security.SecureHashAlgorithm categoriesFor: #hashInInteger:!operations!public! !
+!Security.SecureHashAlgorithm categoriesFor: #hashInMessage:!operations!public! !
+!Security.SecureHashAlgorithm categoriesFor: #hashInStream:!operations!public! !
+!Security.SecureHashAlgorithm categoriesFor: #hashInteger:!operations!public! !
+!Security.SecureHashAlgorithm categoriesFor: #hashMessage:!operations!public! !
+!Security.SecureHashAlgorithm categoriesFor: #hashStream:!operations!public! !
+!Security.SecureHashAlgorithm categoriesFor: #resetContext!helpers!private! !
+!Security.SecureHashAlgorithm categoriesFor: #shaLibrary!helpers!private! !
 
-!SecureHashAlgorithm class methodsFor!
+!Security.SecureHashAlgorithm class methodsFor!
 
 example
 	"Here are the first two examples from the specification document (FIPS PUB 180-1).
@@ -154,6 +154,6 @@ example2
 		self error: 'Test #3 failed!!'].
 	^true
 ! !
-!SecureHashAlgorithm class categoriesFor: #example!examples!public! !
-!SecureHashAlgorithm class categoriesFor: #example2!examples!public! !
+!Security.SecureHashAlgorithm class categoriesFor: #example!examples!public! !
+!Security.SecureHashAlgorithm class categoriesFor: #example2!examples!public! !
 

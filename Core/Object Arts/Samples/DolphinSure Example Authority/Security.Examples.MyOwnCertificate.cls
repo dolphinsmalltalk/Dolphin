@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-DolphinSureCertificate subclass: #MyOwnCertificate
+Security.DolphinSureCertificate subclass: #'Security.Examples.MyOwnCertificate'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-MyOwnCertificate guid: (GUID fromString: '{a2592b78-b801-4788-885c-e1c32f062980}')!
-MyOwnCertificate comment: ''!
-!MyOwnCertificate categoriesForClass!Cryptography-Certificates! !
-!MyOwnCertificate methodsFor!
+Security.Examples.MyOwnCertificate guid: (Core.GUID fromString: '{a2592b78-b801-4788-885c-e1c32f062980}')!
+Security.Examples.MyOwnCertificate comment: ''!
+!Security.Examples.MyOwnCertificate categoriesForClass!Cryptography-Certificates! !
+!Security.Examples.MyOwnCertificate methodsFor!
 
 backgroundImageFile
 	"Private - Answers the resource name of the background image file
@@ -37,11 +37,11 @@ purpose
 	"Answers the purpose of this certificate"
 
 	^'This certificate ensures that the content is from a known individual and guarantees that it has not been modified since it was originally created.'! !
-!MyOwnCertificate categoriesFor: #backgroundImageFile!constants!private! !
-!MyOwnCertificate categoriesFor: #imageAttributes!drawing!helpers!private! !
-!MyOwnCertificate categoriesFor: #purpose!accessing!public! !
+!Security.Examples.MyOwnCertificate categoriesFor: #backgroundImageFile!constants!private! !
+!Security.Examples.MyOwnCertificate categoriesFor: #imageAttributes!drawing!helpers!private! !
+!Security.Examples.MyOwnCertificate categoriesFor: #purpose!accessing!public! !
 
-!MyOwnCertificate class methodsFor!
+!Security.Examples.MyOwnCertificate class methodsFor!
 
 info: certificateInfo 
 	"Answers an instance of the receiver"
@@ -62,7 +62,7 @@ info: certificateInfo authority: aCertificationAuthorityCertificate authorityPri
 rootCertificateClass
 	"This method must answer the class of the certification authority certificate"
 
-	^MyOwnCertificationAuthorityCertificate!
+	^Security.Examples.MyOwnCertificationAuthorityCertificate!
 
 serial: serial owner: owner details: details 
 	"Answers a certificate definition given the above detail. This definition is presented in a Smalltalk
@@ -123,7 +123,7 @@ trustedData validData asString "Display it".
 trustedData data at: 1 put: 0 "Change the data".
 trustedData validData asString "Now try to Display it"."' 
 				formatWith: keys first displayString).
-	SmalltalkWorkspaceDocument show setDocumentData: stream contents.
+	Tools.SmalltalkWorkspaceDocument show setDocumentData: stream contents.
 	^cert!
 
 validYears
@@ -131,9 +131,9 @@ validYears
 	for by default. Nil indicates valid indefinitely."
 
 	^1! !
-!MyOwnCertificate class categoriesFor: #info:!instance creation!public! !
-!MyOwnCertificate class categoriesFor: #info:authority:authorityPrivateKey:!instance creation!public! !
-!MyOwnCertificate class categoriesFor: #rootCertificateClass!instance creation!public! !
-!MyOwnCertificate class categoriesFor: #serial:owner:details:!operations!public! !
-!MyOwnCertificate class categoriesFor: #validYears!constants!private! !
+!Security.Examples.MyOwnCertificate class categoriesFor: #info:!instance creation!public! !
+!Security.Examples.MyOwnCertificate class categoriesFor: #info:authority:authorityPrivateKey:!instance creation!public! !
+!Security.Examples.MyOwnCertificate class categoriesFor: #rootCertificateClass!instance creation!public! !
+!Security.Examples.MyOwnCertificate class categoriesFor: #serial:owner:details:!operations!public! !
+!Security.Examples.MyOwnCertificate class categoriesFor: #validYears!constants!private! !
 

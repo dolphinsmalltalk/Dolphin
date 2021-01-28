@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'DolphinSure UI'.
-package paxVersion: 2;
+package paxVersion: 2.1;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk "DolphinSure" user interface.
 Copyright (c) Object Arts Ltd, 1999-2001.
@@ -14,16 +14,17 @@ package basicPackageVersion: '6.0'.
 
 
 package setClassNames: #(
-	#{DolphinSureTrustWarning}
+	#{UI.DolphinSureTrustWarning}
 ).
 
 package setMethodNames: #(
-	#(#{DolphinSureCertificate} #image)
-	#(#{DolphinSureCertificate} #imagePrint:on:labelBox:textBox:)
-	#(#{DolphinSureCertificate} #show)
+	#(#{Security.DolphinSureCertificate} #image)
+	#(#{Security.DolphinSureCertificate} #imagePrint:on:labelBox:textBox:)
+	#(#{Security.DolphinSureCertificate} #show)
 ).
 
 package setPrerequisites: #(
+	'..\ActiveX\Deprecated\ActiveX (Deprecated)'
 	'..\Base\Dolphin'
 	'..\MVP\Base\Dolphin Basic Geometry'
 	'..\MVP\Presenters\Boolean\Dolphin Boolean Presenter'
@@ -40,16 +41,16 @@ package!
 
 "Class Definitions"!
 
-Dialog subclass: #DolphinSureTrustWarning
+UI.Dialog subclass: #'UI.DolphinSureTrustWarning'
 	instanceVariableNames: 'certificateImage description alwaysTrust'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 
 "Loose Methods"!
 
-!DolphinSureCertificate methodsFor!
+!Security.DolphinSureCertificate methodsFor!
 
 image
 	"Answers an image displaying the certificate details"
@@ -58,24 +59,24 @@ image
 
 	| background image extent canvas labelBox textBox |
 	self validData.
-	background := OLEPicture fromFile: self backgroundImageFile
+	background := OS.COM.Picture fromFile: self backgroundImageFile
 				usingLocator: FileLocator installRelative.
 	extent := background extent.
-	image := DIBSection width: extent x height: extent y.
+	image := Graphics.DIBSection width: extent x height: extent y.
 	canvas := image canvas.
 	background 
 		drawOn: canvas
-		at: Point zero
+		at: Graphics.Point zero
 		extent: extent.
 	canvas backgroundMode: TRANSPARENT.
-	labelBox := Rectangle origin: 35 @ 55 corner: 110 @ (extent y - 20).
-	textBox := Rectangle origin: 120 @ 55 corner: extent - 20.
+	labelBox := Graphics.Rectangle origin: 35 @ 55 corner: 110 @ (extent y - 20).
+	textBox := Graphics.Rectangle origin: 120 @ 55 corner: extent - 20.
 
 	"Draw attributes"
 	self imageAttributes do: 
 			[:each | 
 			canvas save.
-			each value == #validityString ifTrue: [self info hasExpired ifTrue: [canvas forecolor: Color red]].
+			each value == #validityString ifTrue: [self info hasExpired ifTrue: [canvas forecolor: Graphics.Color red]].
 			self 
 				imagePrint: each
 				on: canvas
@@ -95,9 +96,9 @@ imagePrint: attributeAssociation on: aCanvas labelBox: labelRect textBox: textRe
 	(value := self perform: attributeAssociation value) notEmpty 
 		ifTrue: 
 			[| lh th h |
-			aCanvas font: (Font name: 'Arial' pixelSize: 11) beBold.
+			aCanvas font: (Graphics.Font name: 'Arial' pixelSize: 11) beBold.
 			lh := aCanvas formatText: attributeAssociation key in: labelRect.
-			aCanvas font: (Font name: 'Arial' pixelSize: 11).
+			aCanvas font: (Graphics.Font name: 'Arial' pixelSize: 11).
 			th := aCanvas formatText: value in: textRect.
 			h := lh max: th.
 			labelRect top: labelRect top + h.
@@ -106,10 +107,10 @@ imagePrint: attributeAssociation on: aCanvas labelBox: labelRect textBox: textRe
 show
 	"Shows the receiver as a splash screen"
 
-	(Splash bitmap: self image) show	! !
-!DolphinSureCertificate categoriesFor: #image!drawing!public! !
-!DolphinSureCertificate categoriesFor: #imagePrint:on:labelBox:textBox:!drawing!helpers!private! !
-!DolphinSureCertificate categoriesFor: #show!operations!public! !
+	(UI.Splash bitmap: self image) show	! !
+!Security.DolphinSureCertificate categoriesFor: #image!drawing!public! !
+!Security.DolphinSureCertificate categoriesFor: #imagePrint:on:labelBox:textBox:!drawing!helpers!private! !
+!Security.DolphinSureCertificate categoriesFor: #show!operations!public! !
 
 "End of package definition"!
 

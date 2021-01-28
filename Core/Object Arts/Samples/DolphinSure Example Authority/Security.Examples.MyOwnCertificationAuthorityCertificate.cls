@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-DolphinSureCertificationAuthorityCertificate subclass: #MyOwnCertificationAuthorityCertificate
+Security.DolphinSureCertificationAuthorityCertificate subclass: #'Security.Examples.MyOwnCertificationAuthorityCertificate'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-MyOwnCertificationAuthorityCertificate guid: (GUID fromString: '{3a6b1632-077d-49f5-81be-ed0688e9c2b0}')!
-MyOwnCertificationAuthorityCertificate comment: ''!
-!MyOwnCertificationAuthorityCertificate categoriesForClass!Cryptography-Certificates! !
-!MyOwnCertificationAuthorityCertificate methodsFor!
+Security.Examples.MyOwnCertificationAuthorityCertificate guid: (Core.GUID fromString: '{3a6b1632-077d-49f5-81be-ed0688e9c2b0}')!
+Security.Examples.MyOwnCertificationAuthorityCertificate comment: ''!
+!Security.Examples.MyOwnCertificationAuthorityCertificate categoriesForClass!Cryptography-Certificates! !
+!Security.Examples.MyOwnCertificationAuthorityCertificate methodsFor!
 
 publicKey
 	"Answer the public key of the receiver"
@@ -20,10 +20,10 @@ publisherPublicKey
 	"Private - Answer the publisher's public key"
 
 	^self publicKey! !
-!MyOwnCertificationAuthorityCertificate categoriesFor: #publicKey!accessing!public! !
-!MyOwnCertificationAuthorityCertificate categoriesFor: #publisherPublicKey!accessing!private! !
+!Security.Examples.MyOwnCertificationAuthorityCertificate categoriesFor: #publicKey!accessing!public! !
+!Security.Examples.MyOwnCertificationAuthorityCertificate categoriesFor: #publisherPublicKey!accessing!private! !
 
-!MyOwnCertificationAuthorityCertificate class methodsFor!
+!Security.Examples.MyOwnCertificationAuthorityCertificate class methodsFor!
 
 generate
 	"Private - Generates an instance of the receiver
@@ -32,7 +32,7 @@ generate
 	"
 
 	| oaCert info |
-	info := (DolphinSureCertificateInfo serial: 'MY100001' owner: 'My Own Company Inc.' publicKey: self publicKey).
+	info := (Root.Security.DolphinSureCertificateInfo serial: 'MY100001' owner: 'My Own Company Inc.' publicKey: self publicKey).
 	^(oaCert := self basicNew)
 		publisherCertificate: oaCert;
 		info: info privateKey: self privateKey.
@@ -76,9 +76,9 @@ validYears
 	for by default. Nil indicates valid indefinitely."
 
 	^nil! !
-!MyOwnCertificationAuthorityCertificate class categoriesFor: #generate!instance creation!private! !
-!MyOwnCertificationAuthorityCertificate class categoriesFor: #new!instance creation!public! !
-!MyOwnCertificationAuthorityCertificate class categoriesFor: #privateKey!constants!private! !
-!MyOwnCertificationAuthorityCertificate class categoriesFor: #publicKey!constants!public! !
-!MyOwnCertificationAuthorityCertificate class categoriesFor: #validYears!constants!private! !
+!Security.Examples.MyOwnCertificationAuthorityCertificate class categoriesFor: #generate!instance creation!private! !
+!Security.Examples.MyOwnCertificationAuthorityCertificate class categoriesFor: #new!instance creation!public! !
+!Security.Examples.MyOwnCertificationAuthorityCertificate class categoriesFor: #privateKey!constants!private! !
+!Security.Examples.MyOwnCertificationAuthorityCertificate class categoriesFor: #publicKey!constants!public! !
+!Security.Examples.MyOwnCertificationAuthorityCertificate class categoriesFor: #validYears!constants!private! !
 

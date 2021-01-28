@@ -1,18 +1,18 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Object subclass: #SerialNumberProtector
+Core.Object subclass: #'Security.SerialNumberProtector'
 	instanceVariableNames: 'key'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-SerialNumberProtector guid: (GUID fromString: '{2748fb4f-8d36-4f21-b51a-669a27545e43}')!
-SerialNumberProtector isAbstract: true!
-SerialNumberProtector comment: 'One of these handles the actual cryptography for a (subclass of) ProtectedProductSerialNumber.  The idea of factoring this code out is to allow cryptography (which is really a policy decision) to vary independently of the choice of what data is encoded in a serial number.
+Security.SerialNumberProtector guid: (Core.GUID fromString: '{2748fb4f-8d36-4f21-b51a-669a27545e43}')!
+Security.SerialNumberProtector isNonInstantiable: true!
+Security.SerialNumberProtector comment: 'One of these handles the actual cryptography for a (subclass of) ProtectedProductSerialNumber.  The idea of factoring this code out is to allow cryptography (which is really a policy decision) to vary independently of the choice of what data is encoded in a serial number.
 
 Note that instances only look after the cryptography for serial numbers, they are not responsible for the encryption used to protect the bytecodes of methods (which have different cryptographic requirements), see ProductProtector for that.'!
-!SerialNumberProtector categoriesForClass!Unclassified! !
-!SerialNumberProtector methodsFor!
+!Security.SerialNumberProtector categoriesForClass!Unclassified! !
+!Security.SerialNumberProtector methodsFor!
 
 dataFromString: aString
 	"Private - Answer the raw encrypted data contained in the human-readable String."
@@ -57,18 +57,18 @@ stringFromData: anObject
 	"Private - Answer a human-readable String representing the given raw encrypted data."
 	
 	^ self subclassResponsibility.! !
-!SerialNumberProtector categoriesFor: #dataFromString:!helpers!private! !
-!SerialNumberProtector categoriesFor: #decrypt:!operations!public! !
-!SerialNumberProtector categoriesFor: #decryptFromString:!operations!public! !
-!SerialNumberProtector categoriesFor: #encrypt:!operations!public! !
-!SerialNumberProtector categoriesFor: #encryptToString:!operations!public! !
-!SerialNumberProtector categoriesFor: #key!initializing!public! !
-!SerialNumberProtector categoriesFor: #key:!initializing!private! !
-!SerialNumberProtector categoriesFor: #stringFromData:!helpers!public! !
+!Security.SerialNumberProtector categoriesFor: #dataFromString:!helpers!private! !
+!Security.SerialNumberProtector categoriesFor: #decrypt:!operations!public! !
+!Security.SerialNumberProtector categoriesFor: #decryptFromString:!operations!public! !
+!Security.SerialNumberProtector categoriesFor: #encrypt:!operations!public! !
+!Security.SerialNumberProtector categoriesFor: #encryptToString:!operations!public! !
+!Security.SerialNumberProtector categoriesFor: #key!initializing!public! !
+!Security.SerialNumberProtector categoriesFor: #key:!initializing!private! !
+!Security.SerialNumberProtector categoriesFor: #stringFromData:!helpers!public! !
 
-SerialNumberProtector methodProtocol: #SerialNumberProtector attributes: #() selectors: #(#decryptFromString: #encryptToString:)!
+Security.SerialNumberProtector methodProtocol: #SerialNumberProtector attributes: #() selectors: #(#decryptFromString: #encryptToString:)!
 
-!SerialNumberProtector class methodsFor!
+!Security.SerialNumberProtector class methodsFor!
 
 integerFromReadableString: aString
 	"Private - Answers a LargeInteger arrived at by 'decoding' the given user-friendly string.
@@ -134,8 +134,8 @@ withKey: anInteger
 	^ (self new)
 		key: anInteger;
 		yourself.! !
-!SerialNumberProtector class categoriesFor: #integerFromReadableString:!helpers!private! !
-!SerialNumberProtector class categoriesFor: #isSafeToEncryptWithProductProtection!constants!public!testing! !
-!SerialNumberProtector class categoriesFor: #readableStringFromInteger:!helpers!private! !
-!SerialNumberProtector class categoriesFor: #withKey:!instance creation!public! !
+!Security.SerialNumberProtector class categoriesFor: #integerFromReadableString:!helpers!private! !
+!Security.SerialNumberProtector class categoriesFor: #isSafeToEncryptWithProductProtection!constants!public!testing! !
+!Security.SerialNumberProtector class categoriesFor: #readableStringFromInteger:!helpers!private! !
+!Security.SerialNumberProtector class categoriesFor: #withKey:!instance creation!public! !
 

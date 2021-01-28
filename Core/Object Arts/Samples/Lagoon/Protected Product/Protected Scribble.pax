@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'Protected Scribble'.
-package paxVersion: 2;
+package paxVersion: 2.1;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'This is a version of the standard Scribble application that is protected by serial number. Try deploying this application and then entering the following serial number on startup:
 
@@ -10,11 +10,12 @@ package basicPackageVersion: '2005.6.2.23-CU-9'.
 
 
 package setClassNames: #(
-	#{MyCompanySerialNumber}
-	#{ProtectedScribbleSessionManager}
+	#{Security.Examples.MyCompanySerialNumber}
+	#{Security.Examples.ProtectedScribbleSessionManager}
 ).
 
 package setPrerequisites: #(
+	'..\..\DolphinSure Example Authority\DolphinSure Example Authority'
 	'..\..\..\Dolphin\Lagoon\Product Protection'
 	'..\..\..\Dolphin\Lagoon\Product Protection Base'
 	'..\..\MVP\Scribble\Scribble'
@@ -24,16 +25,16 @@ package!
 
 "Class Definitions"!
 
-ProtectedProductSerialNumber subclass: #MyCompanySerialNumber
+Security.ProtectedProductSerialNumber subclass: #'Security.Examples.MyCompanySerialNumber'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ProtectedProductSessionManager subclass: #ProtectedScribbleSessionManager
+UI.ProtectedProductSessionManager subclass: #'Security.Examples.ProtectedScribbleSessionManager'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 

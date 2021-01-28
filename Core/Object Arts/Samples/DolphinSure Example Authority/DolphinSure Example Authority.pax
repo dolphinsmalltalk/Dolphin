@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'DolphinSure Example Authority'.
-package paxVersion: 2;
+package paxVersion: 2.1;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk Example Authority for DolphinSure Sample
 Copyright (c) Object Arts Ltd, 2006.
@@ -17,8 +17,9 @@ Evaluate the above to create an example certificate for My Own Company inc.'.
 
 
 package setClassNames: #(
-	#{MyOwnCertificate}
-	#{MyOwnCertificationAuthorityCertificate}
+	#{Security.Examples}
+	#{Security.Examples.MyOwnCertificate}
+	#{Security.Examples.MyOwnCertificationAuthorityCertificate}
 ).
 
 package setPrerequisites: #(
@@ -31,16 +32,22 @@ package!
 
 "Class Definitions"!
 
-DolphinSureCertificate subclass: #MyOwnCertificate
+Security subclass: #'Security.Examples'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-DolphinSureCertificationAuthorityCertificate subclass: #MyOwnCertificationAuthorityCertificate
+Security.DolphinSureCertificate subclass: #'Security.Examples.MyOwnCertificate'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Security.DolphinSureCertificationAuthorityCertificate subclass: #'Security.Examples.MyOwnCertificationAuthorityCertificate'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 

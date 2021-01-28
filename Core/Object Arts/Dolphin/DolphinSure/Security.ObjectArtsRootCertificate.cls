@@ -1,19 +1,19 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-DolphinSureCertificationAuthorityCertificate subclass: #ObjectArtsRootCertificate
+Security.DolphinSureCertificationAuthorityCertificate subclass: #'Security.ObjectArtsRootCertificate'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ObjectArtsRootCertificate guid: (GUID fromString: '{01ab17af-ef96-4982-a998-0d75dc9c4159}')!
-ObjectArtsRootCertificate comment: 'The ObjectArtsCertificate class is used to represent the root DolphinSure certifying authority certificate for Object Arts Ltd. The actual encoded certificate data is held in the #new class method.  We specially include this class here to act as the root of the DolphinSureTrustedData trust hierarchy.
+Security.ObjectArtsRootCertificate guid: (Core.GUID fromString: '{01ab17af-ef96-4982-a998-0d75dc9c4159}')!
+Security.ObjectArtsRootCertificate comment: 'The ObjectArtsCertificate class is used to represent the root DolphinSure certifying authority certificate for Object Arts Ltd. The actual encoded certificate data is held in the #new class method.  We specially include this class here to act as the root of the DolphinSureTrustedData trust hierarchy.
 
 If you wish to display the Object Arts root certificate, you can evaluate:
 
 ObjectArtsRootCertificate new show.'!
-!ObjectArtsRootCertificate categoriesForClass!Cryptography-Certificates! !
-!ObjectArtsRootCertificate methodsFor!
+!Security.ObjectArtsRootCertificate categoriesForClass!Cryptography-Certificates! !
+!Security.ObjectArtsRootCertificate methodsFor!
 
 publicKey
 	"Answer the public key of the receiver"
@@ -24,10 +24,10 @@ publisherPublicKey
 	"Private - Answer the publisher's public key"
 
 	^self publicKey! !
-!ObjectArtsRootCertificate categoriesFor: #publicKey!accessing!public! !
-!ObjectArtsRootCertificate categoriesFor: #publisherPublicKey!accessing!private! !
+!Security.ObjectArtsRootCertificate categoriesFor: #publicKey!accessing!public! !
+!Security.ObjectArtsRootCertificate categoriesFor: #publisherPublicKey!accessing!private! !
 
-!ObjectArtsRootCertificate class methodsFor!
+!Security.ObjectArtsRootCertificate class methodsFor!
 
 generate
 	"Private - Generates an instance of the receiver
@@ -36,11 +36,13 @@ generate
 	"
 
 	| oaCert info |
-	info := (DolphinSureCertificateInfo serial: 'OA1100' owner: 'Object Arts Ltd' publicKey: self publicKey).
+	info := DolphinSureCertificateInfo
+				serial: 'OA1100'
+				owner: 'Object Arts Ltd'
+				publicKey: self publicKey.
 	^(oaCert := self basicNew)
 		publisherCertificate: oaCert;
-		info: info privateKey: self privateKey.
-	!
+		info: info privateKey: self privateKey!
 
 new
 	"Answers an instance of the receiver. The byte array should be regenerated using the following
@@ -64,8 +66,8 @@ validYears
 	for by default. Nil indicates valid indefinitely."
 
 	^nil! !
-!ObjectArtsRootCertificate class categoriesFor: #generate!instance creation!private! !
-!ObjectArtsRootCertificate class categoriesFor: #new!instance creation!public! !
-!ObjectArtsRootCertificate class categoriesFor: #publicKey!constants!public! !
-!ObjectArtsRootCertificate class categoriesFor: #validYears!constants!private! !
+!Security.ObjectArtsRootCertificate class categoriesFor: #generate!instance creation!private! !
+!Security.ObjectArtsRootCertificate class categoriesFor: #new!instance creation!public! !
+!Security.ObjectArtsRootCertificate class categoriesFor: #publicKey!constants!public! !
+!Security.ObjectArtsRootCertificate class categoriesFor: #validYears!constants!private! !
 

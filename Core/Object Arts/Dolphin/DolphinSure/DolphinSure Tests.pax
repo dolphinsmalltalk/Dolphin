@@ -1,17 +1,19 @@
 ﻿| package |
 package := Package name: 'DolphinSure Tests'.
-package paxVersion: 2;
+package paxVersion: 2.1;
 	preDeclareClassesOnLoad: false;
 	basicComment: ''.
 
 
 package setClassNames: #(
-	#{SecureHashAlgorithmTest}
+	#{Security.Tests}
+	#{Security.Tests.DolphinSureTrustedDataTest}
+	#{Security.Tests.SecureHashAlgorithmTest}
 ).
 
 package setPrerequisites: #(
 	'..\Base\Dolphin'
-	'..\Base\Dolphin Base Tests'
+	'..\Base\Tests\Dolphin Base Tests'
 	'DolphinSure'
 ).
 
@@ -19,10 +21,22 @@ package!
 
 "Class Definitions"!
 
-DolphinTest subclass: #SecureHashAlgorithmTest
+Security subclass: #'Security.Tests'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Core.Tests.DolphinTest subclass: #'Security.Tests.DolphinSureTrustedDataTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Core.Tests.DolphinTest subclass: #'Security.Tests.SecureHashAlgorithmTest'
 	instanceVariableNames: 'hash'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 

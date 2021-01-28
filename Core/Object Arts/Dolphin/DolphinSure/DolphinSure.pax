@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'DolphinSure'.
-package paxVersion: 2;
+package paxVersion: 2.1;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk "DolphinSure" encryption and signature support.
 Copyright (c) Object Arts Ltd, 1999-2000.
@@ -14,37 +14,45 @@ For documentation evaluate:
 
 package basicPackageVersion: '6.1'.
 
+package basicScriptAt: #postinstall put: '"To allow loading of old format STB''d certs we need to configure the old global names as aliases to the namespaced classes"
+#(
+	#{Security.DolphinSureCertificate} 
+	#{Security.DolphinSureCertificateInfo}
+	#{Security.ObjectArtsCertificate}
+	#{Security.ObjectArtsRootCertificate}
+) 
+do: [:each | ClassLocator addAlias: each unqualifiedName forClass: each value]'.
 
 package setClassNames: #(
-	#{BCryptConstants}
-	#{BCryptLibrary}
-	#{DigitalSignatureAlgorithm}
-	#{DolphinSureCertificate}
-	#{DolphinSureCertificateInfo}
-	#{DolphinSureCertificateStore}
-	#{DolphinSureCertificationAuthorityCertificate}
-	#{DolphinSurePersonalCertificate}
-	#{DolphinSureTrustedData}
-	#{NotSignedCertificate}
-	#{NotTrustedError}
-	#{ObjectArtsCertificate}
-	#{ObjectArtsRootCertificate}
-	#{PC1Cipher}
-	#{SecureHashAlgorithm}
-	#{TrustedDataError}
+	#{OS.BCryptConstants}
+	#{OS.BCryptLibrary}
+	#{Security}
+	#{Security.DigitalSignatureAlgorithm}
+	#{Security.DolphinSureCertificate}
+	#{Security.DolphinSureCertificateInfo}
+	#{Security.DolphinSureCertificateStore}
+	#{Security.DolphinSureCertificationAuthorityCertificate}
+	#{Security.DolphinSurePersonalCertificate}
+	#{Security.DolphinSureTrustedData}
+	#{Security.NotSignedCertificate}
+	#{Security.NotTrustedError}
+	#{Security.ObjectArtsCertificate}
+	#{Security.ObjectArtsRootCertificate}
+	#{Security.PC1Cipher}
+	#{Security.SecureHashAlgorithm}
+	#{Security.TrustedDataError}
 ).
 
 package setMethodNames: #(
-	#(#{SourceManager} #emitSecureChunk:description:publisherCertificate:privateKey:on:)
-	#(#{SourceManager} #secureChunkMarker)
-	#(#{SourceManager} #secureFileIn:)
-	#(#{SourceManager} #secureFileInFrom:)
-	#(#{SourceManager} #secureFileItIn:)
+	#(#{Kernel.SourceManager} #emitSecureChunk:description:publisherCertificate:privateKey:on:)
+	#(#{Kernel.SourceManager} #secureChunkMarker)
+	#(#{Kernel.SourceManager} #secureFileIn:)
+	#(#{Kernel.SourceManager} #secureFileInFrom:)
+	#(#{Kernel.SourceManager} #secureFileItIn:)
 ).
 
 package setPrerequisites: #(
 	'..\Base\Dolphin'
-	'..\Base\Deprecated\Dolphin Base (Deprecated)'
 	'..\Base\Dolphin Legacy Date & Time'
 	'..\System\Random\Dolphin Random Stream'
 	'..\Registry\Dolphin Registry Access'
@@ -54,7 +62,13 @@ package!
 
 "Class Definitions"!
 
-SharedPool subclass: #BCryptConstants
+Kernel.Namespace subclass: #Security
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #(#{Core} #{Kernel private})
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Kernel.SharedPool subclass: #'OS.BCryptConstants'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -109,119 +123,126 @@ SharedPool subclass: #BCryptConstants
 		'BCRYPT_SIGNATURE_LENGTH' -> 'SignatureLength'.
 		'BCRYPT_STATUS_UNSUCCESSFUL' -> 16rC0000001
 	}!
-Object subclass: #DigitalSignatureAlgorithm
+Core.Object subclass: #'Security.DigitalSignatureAlgorithm'
 	instanceVariableNames: 'randKey randSeed'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'SmallPrimes' -> #(3 5 7 11 13 17 19 23 29 31 37 41 43 47 53 59 61 67 71 73 79 83 89 97 101 103 107 109 113 127 131 137 139 149 151 157 163 167 173 179 181 191 193 197 199 211 223 227 229 233 239 241 251 257 263 269 271 277 281 283 293 307 311 313 317 331 337 347 349 353 359 367 373 379 383 389 397 401 409 419 421 431 433 439 443 449 457 461 463 467 479 487 491 499 503 509 521 523 541 547 557 563 569 571 577 587 593 599 601 607 613 617 619 631 641 643 647 653 659 661 673 677 683 691 701 709 719 727 733 739 743 751 757 761 769 773 787 797 809 811 821 823 827 829 839 853 857 859 863 877 881 883 887 907 911 919 929 937 941 947 953 967 971 977 983 991 997 1009 1013 1019 1021 1031 1033 1039 1049 1051 1061 1063 1069 1087 1091 1093 1097 1103 1109 1117 1123 1129 1151 1153 1163 1171 1181 1187 1193 1201 1213 1217 1223 1229 1231 1237 1249 1259 1277 1279 1283 1289 1291 1297 1301 1303 1307 1319 1321 1327 1361 1367 1373 1381 1399 1409 1423 1427 1429 1433 1439 1447 1451 1453 1459 1471 1481 1483 1487 1489 1493 1499 1511 1523 1531 1543 1549 1553 1559 1567 1571 1579 1583 1597 1601 1607 1609 1613 1619 1621 1627 1637 1657 1663 1667 1669 1693 1697 1699 1709 1721 1723 1733 1741 1747 1753 1759 1777 1783 1787 1789 1801 1811 1823 1831 1847 1861 1867 1871 1873 1877 1879 1889 1901 1907 1913 1931 1933 1949 1951 1973 1979 1987 1993 1997 1999)
+		'SmallPrimes' -> #(16r3 16r5 16r7 16rB 16rD 16r11 16r13 16r17 16r1D 16r1F 16r25 16r29 16r2B 16r2F 16r35 16r3B 16r3D 16r43 16r47 16r49 16r4F 16r53 16r59 16r61 16r65 16r67 16r6B 16r6D 16r71 16r7F 16r83 16r89 16r8B 16r95 16r97 16r9D 16rA3 16rA7 16rAD 16rB3 16rB5 16rBF 16rC1 16rC5 16rC7 16rD3 16rDF 16rE3 16rE5 16rE9 16rEF 16rF1 16rFB 16r101 16r107 16r10D 16r10F 16r115 16r119 16r11B 16r125 16r133 16r137 16r139 16r13D 16r14B 16r151 16r15B 16r15D 16r161 16r167 16r16F 16r175 16r17B 16r17F 16r185 16r18D 16r191 16r199 16r1A3 16r1A5 16r1AF 16r1B1 16r1B7 16r1BB 16r1C1 16r1C9 16r1CD 16r1CF 16r1D3 16r1DF 16r1E7 16r1EB 16r1F3 16r1F7 16r1FD 16r209 16r20B 16r21D 16r223 16r22D 16r233 16r239 16r23B 16r241 16r24B 16r251 16r257 16r259 16r25F 16r265 16r269 16r26B 16r277 16r281 16r283 16r287 16r28D 16r293 16r295 16r2A1 16r2A5 16r2AB 16r2B3 16r2BD 16r2C5 16r2CF 16r2D7 16r2DD 16r2E3 16r2E7 16r2EF 16r2F5 16r2F9 16r301 16r305 16r313 16r31D 16r329 16r32B 16r335 16r337 16r33B 16r33D 16r347 16r355 16r359 16r35B 16r35F 16r36D 16r371 16r373 16r377 16r38B 16r38F 16r397 16r3A1 16r3A9 16r3AD 16r3B3 16r3B9 16r3C7 16r3CB 16r3D1 16r3D7 16r3DF 16r3E5 16r3F1 16r3F5 16r3FB 16r3FD 16r407 16r409 16r40F 16r419 16r41B 16r425 16r427 16r42D 16r43F 16r443 16r445 16r449 16r44F 16r455 16r45D 16r463 16r469 16r47F 16r481 16r48B 16r493 16r49D 16r4A3 16r4A9 16r4B1 16r4BD 16r4C1 16r4C7 16r4CD 16r4CF 16r4D5 16r4E1 16r4EB 16r4FD 16r4FF 16r503 16r509 16r50B 16r511 16r515 16r517 16r51B 16r527 16r529 16r52F 16r551 16r557 16r55D 16r565 16r577 16r581 16r58F 16r593 16r595 16r599 16r59F 16r5A7 16r5AB 16r5AD 16r5B3 16r5BF 16r5C9 16r5CB 16r5CF 16r5D1 16r5D5 16r5DB 16r5E7 16r5F3 16r5FB 16r607 16r60D 16r611 16r617 16r61F 16r623 16r62B 16r62F 16r63D 16r641 16r647 16r649 16r64D 16r653 16r655 16r65B 16r665 16r679 16r67F 16r683 16r685 16r69D 16r6A1 16r6A3 16r6AD 16r6B9 16r6BB 16r6C5 16r6CD 16r6D3 16r6D9 16r6DF 16r6F1 16r6F7 16r6FB 16r6FD 16r709 16r713 16r71F 16r727 16r737 16r745 16r74B 16r74F 16r751 16r755 16r757 16r761 16r76D 16r773 16r779 16r78B 16r78D 16r79D 16r79F 16r7B5 16r7BB 16r7C3 16r7C9 16r7CD 16r7CF)
 	}!
-Object subclass: #DolphinSureCertificateInfo
+Core.Object subclass: #'Security.DolphinSureCertificateInfo'
 	instanceVariableNames: 'serial owner details issued expiry publicKey'
-	classVariableNames: ''
+	classVariableNames: 'ValidStbClasses'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Object subclass: #DolphinSureCertificateStore
+Core.Object subclass: #'Security.DolphinSureCertificateStore'
 	instanceVariableNames: 'regKey'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Object subclass: #DolphinSureTrustedData
+Core.Object subclass: #'Security.DolphinSureTrustedData'
 	instanceVariableNames: 'data description signature publisherCertificate'
-	classVariableNames: ''
+	classVariableNames: 'ValidStbClasses'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Object subclass: #PC1Cipher
+Core.Object subclass: #'Security.PC1Cipher'
 	instanceVariableNames: 'key box i j'
 	classVariableNames: 'RandPool'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Object subclass: #SecureHashAlgorithm
+Core.Object subclass: #'Security.SecureHashAlgorithm'
 	instanceVariableNames: 'context'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-DolphinSureTrustedData subclass: #DolphinSureCertificate
+Security.DolphinSureTrustedData subclass: #'Security.DolphinSureCertificate'
 	instanceVariableNames: ''
 	classVariableNames: 'UntrustedContentWarning'
-	imports: #(#{Win32Constants})
+	imports: #(#{OS.Win32Constants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-DolphinSureCertificate subclass: #DolphinSureCertificationAuthorityCertificate
+Security.DolphinSureCertificate subclass: #'Security.DolphinSureCertificationAuthorityCertificate'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-DolphinSureCertificate subclass: #DolphinSurePersonalCertificate
+Security.DolphinSureCertificate subclass: #'Security.DolphinSurePersonalCertificate'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-DolphinSureCertificate subclass: #NotSignedCertificate
+Security.DolphinSureCertificate subclass: #'Security.NotSignedCertificate'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-DolphinSureCertificate subclass: #ObjectArtsCertificate
+Security.DolphinSureCertificate subclass: #'Security.ObjectArtsCertificate'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-DolphinSureCertificationAuthorityCertificate subclass: #ObjectArtsRootCertificate
+Security.DolphinSureCertificationAuthorityCertificate subclass: #'Security.ObjectArtsRootCertificate'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Error subclass: #NotTrustedError
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-Error subclass: #TrustedDataError
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-ExternalLibrary subclass: #BCryptLibrary
+External.DynamicLinkLibrary subclass: #'OS.BCryptLibrary'
 	instanceVariableNames: 'shaAlgorithmHandle'
 	classVariableNames: ''
-	imports: #(#{BCryptConstants})
+	imports: #(#{OS.BCryptConstants})
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Core.Error subclass: #'Security.NotTrustedError'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Core.Error subclass: #'Security.TrustedDataError'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 
 "Loose Methods"!
 
-!SourceManager methodsFor!
+!Kernel.SourceManager methodsFor!
 
-emitSecureChunk: aString description: description publisherCertificate: certificate privateKey: privateKey on: aStream 
+emitSecureChunk: aString description: description publisherCertificate: certificate privateKey: privateKey on: aStream
 	"Private - Output the specified text as a trusted chunk on aStream"
 
 	| trusted filer |
-	trusted := Smalltalk.DolphinSureTrustedData 
+	trusted := Security.DolphinSureTrustedData
 				data: aString
 				description: description
 				publisherCertificate: certificate
 				privateKey: privateKey.
 	aStream
 		nextPutAll: self secureChunkMarker;
-		cr; cr.
+		cr;
+		cr.
 	filer := self chunkFilerOn: aStream.
-	filer emitChunk: trusted description; cr.
-	filer emitChunk: trusted signature; cr.
-	filer emitChunk: trusted publisherCertificate binaryStoreBytes fullPrintString; cr.
+	filer
+		emitChunk: trusted description;
+		cr.
+	filer
+		emitChunk: trusted signature;
+		cr.
+	filer
+		emitChunk: trusted publisherCertificate binaryStoreBytes fullPrintString;
+		cr.
 	filer emitChunk: trusted data.
 	filer endChunk!
 
@@ -247,10 +268,12 @@ secureFileInFrom: aStream
 	| secureMarker actual pos |
 	secureMarker := self secureChunkMarker.
 	pos := aStream position.
-	actual := aStream skipSeparators; nextAvailable: secureMarker size.
+	actual := aStream
+				skipSeparators;
+				nextAvailable: secureMarker size.
 	aStream position: pos.
-	((actual = secureMarker) or: [Smalltalk.NotSignedCertificate new confirmTrustFor: 'Unknown Content']) ifTrue: [ 
-		self fileInFrom: aStream ]!
+	(actual = secureMarker or: [Security.NotSignedCertificate new confirmTrustFor: 'Unknown Content'])
+		ifTrue: [self fileInFrom: aStream]!
 
 secureFileItIn: aString
 	"File the secure chunk format Smalltalk expression in aString into the system.
@@ -258,11 +281,11 @@ secureFileItIn: aString
 	a warning is given to see if the user wished to continue with the file in."
 
 	self secureFileInFrom: aString readStream! !
-!SourceManager categoriesFor: #emitSecureChunk:description:publisherCertificate:privateKey:on:!private!source filing! !
-!SourceManager categoriesFor: #secureChunkMarker!constants!private! !
-!SourceManager categoriesFor: #secureFileIn:!public!source filing! !
-!SourceManager categoriesFor: #secureFileInFrom:!private!source filing! !
-!SourceManager categoriesFor: #secureFileItIn:!public!source filing! !
+!Kernel.SourceManager categoriesFor: #emitSecureChunk:description:publisherCertificate:privateKey:on:!private!source filing! !
+!Kernel.SourceManager categoriesFor: #secureChunkMarker!constants!private! !
+!Kernel.SourceManager categoriesFor: #secureFileIn:!public!source filing! !
+!Kernel.SourceManager categoriesFor: #secureFileInFrom:!private!source filing! !
+!Kernel.SourceManager categoriesFor: #secureFileItIn:!public!source filing! !
 
 "End of package definition"!
 

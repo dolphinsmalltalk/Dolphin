@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Object subclass: #DigitalSignatureAlgorithm
+Core.Object subclass: #'Security.DigitalSignatureAlgorithm'
 	instanceVariableNames: 'randKey randSeed'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'SmallPrimes' -> #(3 5 7 11 13 17 19 23 29 31 37 41 43 47 53 59 61 67 71 73 79 83 89 97 101 103 107 109 113 127 131 137 139 149 151 157 163 167 173 179 181 191 193 197 199 211 223 227 229 233 239 241 251 257 263 269 271 277 281 283 293 307 311 313 317 331 337 347 349 353 359 367 373 379 383 389 397 401 409 419 421 431 433 439 443 449 457 461 463 467 479 487 491 499 503 509 521 523 541 547 557 563 569 571 577 587 593 599 601 607 613 617 619 631 641 643 647 653 659 661 673 677 683 691 701 709 719 727 733 739 743 751 757 761 769 773 787 797 809 811 821 823 827 829 839 853 857 859 863 877 881 883 887 907 911 919 929 937 941 947 953 967 971 977 983 991 997 1009 1013 1019 1021 1031 1033 1039 1049 1051 1061 1063 1069 1087 1091 1093 1097 1103 1109 1117 1123 1129 1151 1153 1163 1171 1181 1187 1193 1201 1213 1217 1223 1229 1231 1237 1249 1259 1277 1279 1283 1289 1291 1297 1301 1303 1307 1319 1321 1327 1361 1367 1373 1381 1399 1409 1423 1427 1429 1433 1439 1447 1451 1453 1459 1471 1481 1483 1487 1489 1493 1499 1511 1523 1531 1543 1549 1553 1559 1567 1571 1579 1583 1597 1601 1607 1609 1613 1619 1621 1627 1637 1657 1663 1667 1669 1693 1697 1699 1709 1721 1723 1733 1741 1747 1753 1759 1777 1783 1787 1789 1801 1811 1823 1831 1847 1861 1867 1871 1873 1877 1879 1889 1901 1907 1913 1931 1933 1949 1951 1973 1979 1987 1993 1997 1999)
+		'SmallPrimes' -> #(16r3 16r5 16r7 16rB 16rD 16r11 16r13 16r17 16r1D 16r1F 16r25 16r29 16r2B 16r2F 16r35 16r3B 16r3D 16r43 16r47 16r49 16r4F 16r53 16r59 16r61 16r65 16r67 16r6B 16r6D 16r71 16r7F 16r83 16r89 16r8B 16r95 16r97 16r9D 16rA3 16rA7 16rAD 16rB3 16rB5 16rBF 16rC1 16rC5 16rC7 16rD3 16rDF 16rE3 16rE5 16rE9 16rEF 16rF1 16rFB 16r101 16r107 16r10D 16r10F 16r115 16r119 16r11B 16r125 16r133 16r137 16r139 16r13D 16r14B 16r151 16r15B 16r15D 16r161 16r167 16r16F 16r175 16r17B 16r17F 16r185 16r18D 16r191 16r199 16r1A3 16r1A5 16r1AF 16r1B1 16r1B7 16r1BB 16r1C1 16r1C9 16r1CD 16r1CF 16r1D3 16r1DF 16r1E7 16r1EB 16r1F3 16r1F7 16r1FD 16r209 16r20B 16r21D 16r223 16r22D 16r233 16r239 16r23B 16r241 16r24B 16r251 16r257 16r259 16r25F 16r265 16r269 16r26B 16r277 16r281 16r283 16r287 16r28D 16r293 16r295 16r2A1 16r2A5 16r2AB 16r2B3 16r2BD 16r2C5 16r2CF 16r2D7 16r2DD 16r2E3 16r2E7 16r2EF 16r2F5 16r2F9 16r301 16r305 16r313 16r31D 16r329 16r32B 16r335 16r337 16r33B 16r33D 16r347 16r355 16r359 16r35B 16r35F 16r36D 16r371 16r373 16r377 16r38B 16r38F 16r397 16r3A1 16r3A9 16r3AD 16r3B3 16r3B9 16r3C7 16r3CB 16r3D1 16r3D7 16r3DF 16r3E5 16r3F1 16r3F5 16r3FB 16r3FD 16r407 16r409 16r40F 16r419 16r41B 16r425 16r427 16r42D 16r43F 16r443 16r445 16r449 16r44F 16r455 16r45D 16r463 16r469 16r47F 16r481 16r48B 16r493 16r49D 16r4A3 16r4A9 16r4B1 16r4BD 16r4C1 16r4C7 16r4CD 16r4CF 16r4D5 16r4E1 16r4EB 16r4FD 16r4FF 16r503 16r509 16r50B 16r511 16r515 16r517 16r51B 16r527 16r529 16r52F 16r551 16r557 16r55D 16r565 16r577 16r581 16r58F 16r593 16r595 16r599 16r59F 16r5A7 16r5AB 16r5AD 16r5B3 16r5BF 16r5C9 16r5CB 16r5CF 16r5D1 16r5D5 16r5DB 16r5E7 16r5F3 16r5FB 16r607 16r60D 16r611 16r617 16r61F 16r623 16r62B 16r62F 16r63D 16r641 16r647 16r649 16r64D 16r653 16r655 16r65B 16r665 16r679 16r67F 16r683 16r685 16r69D 16r6A1 16r6A3 16r6AD 16r6B9 16r6BB 16r6C5 16r6CD 16r6D3 16r6D9 16r6DF 16r6F1 16r6F7 16r6FB 16r6FD 16r709 16r713 16r71F 16r727 16r737 16r745 16r74B 16r74F 16r751 16r755 16r757 16r761 16r76D 16r773 16r779 16r78B 16r78D 16r79D 16r79F 16r7B5 16r7BB 16r7C3 16r7C9 16r7CD 16r7CF)
 	}!
-DigitalSignatureAlgorithm guid: (GUID fromString: '{b1b2a1d8-34b1-4c43-90dc-767320f26e47}')!
-DigitalSignatureAlgorithm comment: 'This class implements the Digital Signature Algorithm (DSA) of the U.S. government''s "Digital Signature Standard" (DSS). The DSA algorithm was proposed in 1991 and became a standard in May 1994. The official description is available as a Federal Information Processing Standards Publication (FIPS PUB 186, May 19, 1994). A companion standard, the Secure Hash Standard, or SHS (FIPS PUB 180-1, April 17, 1995), describes a 160-bit message digest algorithm known as the Secure Hash Algorithm (SHA). This message digest is used to compute the document signature.
+Security.DigitalSignatureAlgorithm guid: (Core.GUID fromString: '{b1b2a1d8-34b1-4c43-90dc-767320f26e47}')!
+Security.DigitalSignatureAlgorithm comment: 'This class implements the Digital Signature Algorithm (DSA) of the U.S. government''s "Digital Signature Standard" (DSS). The DSA algorithm was proposed in 1991 and became a standard in May 1994. The official description is available as a Federal Information Processing Standards Publication (FIPS PUB 186, May 19, 1994). A companion standard, the Secure Hash Standard, or SHS (FIPS PUB 180-1, April 17, 1995), describes a 160-bit message digest algorithm known as the Secure Hash Algorithm (SHA). This message digest is used to compute the document signature.
 
 This class was ported from the Squeak original.
 
@@ -36,8 +36,8 @@ Patents and Export Restrictions:
 Many digital signature technologies are patented. DSA is also patented, but the patent is owned by the U.S. government which has made DSA available royalty-free. There is a claim that the government patent infringes on an earlier patent by Schnorr, but the government is requiring the use of DSA, so they apparently believe this claim is not strong enough to be a serious threat to their own patent.
 
 Most cryptography technology, including digital signature technology, requires an export license for it to be distributed outside the U.S. Recent legislation may have relaxed the export license requirements, but it would be prudent to check the current regulations before exporting this code.'!
-!DigitalSignatureAlgorithm categoriesForClass!Cryptography-Support! !
-!DigitalSignatureAlgorithm methodsFor!
+!Security.DigitalSignatureAlgorithm categoriesForClass!Cryptography-Support! !
+!Security.DigitalSignatureAlgorithm methodsFor!
 
 computeSignatureForMessageHash: hash privateKey: privateKey 
 	"Answer the digital signature of the given message hash using the given private key. A signature is a pair of large integers. The private key is an array of four large integers: (p, q, g, x)."
@@ -79,25 +79,27 @@ dsaSign: p q: q g: g k: k x: x h: h
 elgamalDecrypt: m privateKey: privateKey
 	"Answer the Elgamal decryption of the given message using the given private key. "
 
-	| a b p q x g rs e |
+	| a b p x rs e |
 	p := privateKey first.
-	q := privateKey second.
-	g := privateKey third.
 	x := privateKey fourth.
-
 	a := m at: 1.
 	b := m at: 2.
-
-	rs := self dsaSign: p q: p g: a k: x x: 0 h: 0.
+	rs := self
+				dsaSign: p
+				q: p
+				g: a
+				k: x
+				x: 0
+				h: 0.
 	e := rs at: 1.
-	rs := self dsaSign: p q: p g: 1 k: e x: b h: 0.
-	^rs at: 2
-	
-	
-
-	
-	
-!
+	rs := self
+				dsaSign: p
+				q: p
+				g: 1
+				k: e
+				x: b
+				h: 0.
+	^rs at: 2!
 
 elgamalEncrypt: m publicKey: publicKey
 	"Answer the Elgamal encryption of the given message using the given private key. 
@@ -176,9 +178,8 @@ generateKeyGroup
 generateKeySetForGroup: aGroupArray
 	"Generate and answer a key set for DSA. The result is an array (<private key><public key>). "
 
-	| q p g x y |
+	| p g x y |
 	p := aGroupArray first.
-	q := aGroupArray second.
 	g := aGroupArray third.
 	x := self nextRandom160.
 	y := self
@@ -217,7 +218,7 @@ generateQandP
 					n := n + chunkCount + 1.
 					c := c + 1]]!
 
-generateRandomLength: bitLength s: s n: n 
+generateRandomLength: bitLength s: s n: n
 	"Private - Answer a random number of bitLength bits generated using the secure hash algorithm."
 
 	| sha out count extraBits |
@@ -227,7 +228,7 @@ generateRandomLength: bitLength s: s n: n
 	extraBits := bitLength - (count * 160).
 	0 to: count
 		do: 
-			[:k | 
+			[:k |
 			| v |
 			v := sha hashInteger: s + n + k.
 			k = count ifTrue: [v := v - (v >> extraBits << extraBits)].
@@ -408,11 +409,10 @@ nextRandom160
 
 	| result |
 	result := 0.
-	[result = 0] whileTrue: [
-		result := SecureHashAlgorithm new hashInteger: randKey.
-		randKey := randKey + result + 1].
-	^ result
-!
+	[result = 0] whileTrue: 
+			[result := SecureHashAlgorithm new hashInteger: randKey.
+			randKey := randKey + result + 1].
+	^result!
 
 raise: x to: y mod: n
 	"Private - Answer ((x raisedTo: y) \\ n) for integers x, y and n, but computed efficiently when x, y, and n are very 
@@ -495,30 +495,30 @@ verifySignature: aSignature ofMessageHash: hash publicKey: publicKey
 	v := self remainder: (self remainder: v0 mod: p) mod: q.
 	^ v = r
 ! !
-!DigitalSignatureAlgorithm categoriesFor: #computeSignatureForMessageHash:privateKey:!operations!public!signing! !
-!DigitalSignatureAlgorithm categoriesFor: #dsaSign:q:g:k:x:h:!operations!private! !
-!DigitalSignatureAlgorithm categoriesFor: #elgamalDecrypt:privateKey:!operations!public! !
-!DigitalSignatureAlgorithm categoriesFor: #elgamalEncrypt:publicKey:!operations!public! !
-!DigitalSignatureAlgorithm categoriesFor: #generateFullKeySet!key generation!operations!public! !
-!DigitalSignatureAlgorithm categoriesFor: #generateKeyGroup!key generation!operations!public! !
-!DigitalSignatureAlgorithm categoriesFor: #generateKeySetForGroup:!key generation!operations!public! !
-!DigitalSignatureAlgorithm categoriesFor: #generateQandP!helpers!private! !
-!DigitalSignatureAlgorithm categoriesFor: #generateRandomLength:s:n:!helpers!private! !
-!DigitalSignatureAlgorithm categoriesFor: #generateSandQ!helpers!private! !
-!DigitalSignatureAlgorithm categoriesFor: #initRandom:!initializing!private! !
-!DigitalSignatureAlgorithm categoriesFor: #initRandomFromUser!initializing!private! !
-!DigitalSignatureAlgorithm categoriesFor: #inverseOf:mod:!helpers!private! !
-!DigitalSignatureAlgorithm categoriesFor: #isProbablyPrime:!helpers!private! !
-!DigitalSignatureAlgorithm categoriesFor: #keyStrength!accessing!public! !
-!DigitalSignatureAlgorithm categoriesFor: #logOfLargestPowerOfTwoDividing:!helpers!private! !
-!DigitalSignatureAlgorithm categoriesFor: #nextRandom160!helpers!private! !
-!DigitalSignatureAlgorithm categoriesFor: #raise:to:mod:!helpers!private! !
-!DigitalSignatureAlgorithm categoriesFor: #remainder:mod:!helpers!private! !
-!DigitalSignatureAlgorithm categoriesFor: #signatureToString:!helpers!private! !
-!DigitalSignatureAlgorithm categoriesFor: #stringToSignature:!helpers!private! !
-!DigitalSignatureAlgorithm categoriesFor: #verifySignature:ofMessageHash:publicKey:!operations!public!signing! !
+!Security.DigitalSignatureAlgorithm categoriesFor: #computeSignatureForMessageHash:privateKey:!operations!public!signing! !
+!Security.DigitalSignatureAlgorithm categoriesFor: #dsaSign:q:g:k:x:h:!operations!private! !
+!Security.DigitalSignatureAlgorithm categoriesFor: #elgamalDecrypt:privateKey:!operations!public! !
+!Security.DigitalSignatureAlgorithm categoriesFor: #elgamalEncrypt:publicKey:!operations!public! !
+!Security.DigitalSignatureAlgorithm categoriesFor: #generateFullKeySet!key generation!operations!public! !
+!Security.DigitalSignatureAlgorithm categoriesFor: #generateKeyGroup!key generation!operations!public! !
+!Security.DigitalSignatureAlgorithm categoriesFor: #generateKeySetForGroup:!key generation!operations!public! !
+!Security.DigitalSignatureAlgorithm categoriesFor: #generateQandP!helpers!private! !
+!Security.DigitalSignatureAlgorithm categoriesFor: #generateRandomLength:s:n:!helpers!private! !
+!Security.DigitalSignatureAlgorithm categoriesFor: #generateSandQ!helpers!private! !
+!Security.DigitalSignatureAlgorithm categoriesFor: #initRandom:!initializing!private! !
+!Security.DigitalSignatureAlgorithm categoriesFor: #initRandomFromUser!initializing!private! !
+!Security.DigitalSignatureAlgorithm categoriesFor: #inverseOf:mod:!helpers!private! !
+!Security.DigitalSignatureAlgorithm categoriesFor: #isProbablyPrime:!helpers!private! !
+!Security.DigitalSignatureAlgorithm categoriesFor: #keyStrength!accessing!public! !
+!Security.DigitalSignatureAlgorithm categoriesFor: #logOfLargestPowerOfTwoDividing:!helpers!private! !
+!Security.DigitalSignatureAlgorithm categoriesFor: #nextRandom160!helpers!private! !
+!Security.DigitalSignatureAlgorithm categoriesFor: #raise:to:mod:!helpers!private! !
+!Security.DigitalSignatureAlgorithm categoriesFor: #remainder:mod:!helpers!private! !
+!Security.DigitalSignatureAlgorithm categoriesFor: #signatureToString:!helpers!private! !
+!Security.DigitalSignatureAlgorithm categoriesFor: #stringToSignature:!helpers!private! !
+!Security.DigitalSignatureAlgorithm categoriesFor: #verifySignature:ofMessageHash:publicKey:!operations!public!signing! !
 
-!DigitalSignatureAlgorithm class methodsFor!
+!Security.DigitalSignatureAlgorithm class methodsFor!
 
 example
 	"Private - Example of signing a message and verifying its signature.
@@ -587,12 +587,11 @@ sign: aStringOrStream privateKey: privateKey
 	dsa := self new.
 	dsa initRandomFromUser.
 	hasher := SecureHashAlgorithm new.
-	(aStringOrStream class isBytes)
+	aStringOrStream class isBytes
 		ifTrue: [h := hasher hashMessage: aStringOrStream]
 		ifFalse: [h := hasher hashStream: aStringOrStream].
 	sig := dsa computeSignatureForMessageHash: h privateKey: privateKey.
-	^ dsa signatureToString: sig
-!
+	^dsa signatureToString: sig!
 
 testKeySet512
 	"Answer a pair of keys for testing. The first key is the private key, the second one is the public key."
@@ -621,21 +620,21 @@ verify: signatureString isSignatureOf: aStringOrStream publicKey: publicKey
 	| dsa hasher h sig |
 	dsa := self new.
 	hasher := SecureHashAlgorithm new.
-
-	(aStringOrStream class isBytes)
+	aStringOrStream class isBytes
 		ifTrue: [h := hasher hashMessage: aStringOrStream]
 		ifFalse: [h := hasher hashStream: aStringOrStream].
 	sig := dsa stringToSignature: signatureString.
-
-	^ dsa verifySignature: sig ofMessageHash: h publicKey: publicKey
-! !
-!DigitalSignatureAlgorithm class categoriesFor: #example!examples!private! !
-!DigitalSignatureAlgorithm class categoriesFor: #generateFullKeySet!key generation!operations!public! !
-!DigitalSignatureAlgorithm class categoriesFor: #generateKeyGroup!key generation!operations!public! !
-!DigitalSignatureAlgorithm class categoriesFor: #generateKeySetForGroup:!key generation!operations!public! !
-!DigitalSignatureAlgorithm class categoriesFor: #initialize!initializing!private! !
-!DigitalSignatureAlgorithm class categoriesFor: #sign:privateKey:!operations!public!signing! !
-!DigitalSignatureAlgorithm class categoriesFor: #testKeySet512!accessing!examples!public! !
-!DigitalSignatureAlgorithm class categoriesFor: #testKeySet768!accessing!examples!public! !
-!DigitalSignatureAlgorithm class categoriesFor: #verify:isSignatureOf:publicKey:!operations!public!signing! !
+	^dsa
+		verifySignature: sig
+		ofMessageHash: h
+		publicKey: publicKey! !
+!Security.DigitalSignatureAlgorithm class categoriesFor: #example!examples!private! !
+!Security.DigitalSignatureAlgorithm class categoriesFor: #generateFullKeySet!key generation!operations!public! !
+!Security.DigitalSignatureAlgorithm class categoriesFor: #generateKeyGroup!key generation!operations!public! !
+!Security.DigitalSignatureAlgorithm class categoriesFor: #generateKeySetForGroup:!key generation!operations!public! !
+!Security.DigitalSignatureAlgorithm class categoriesFor: #initialize!initializing!private! !
+!Security.DigitalSignatureAlgorithm class categoriesFor: #sign:privateKey:!operations!public!signing! !
+!Security.DigitalSignatureAlgorithm class categoriesFor: #testKeySet512!accessing!examples!public! !
+!Security.DigitalSignatureAlgorithm class categoriesFor: #testKeySet768!accessing!examples!public! !
+!Security.DigitalSignatureAlgorithm class categoriesFor: #verify:isSignatureOf:publicKey:!operations!public!signing! !
 
