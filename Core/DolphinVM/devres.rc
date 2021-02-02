@@ -657,7 +657,7 @@ END
 2 TEXTINCLUDE 
 BEGIN
     "#include ""winres.h""\r\n"
-    "#include ""Verson.h""\r\n"
+    "#include ""Version.h""\r\n"
     "\0"
 END
 
@@ -692,12 +692,12 @@ BEGIN
         BLOCK "040904b0"
         BEGIN
             VALUE "CompanyName", "Object Arts Ltd."
-            VALUE "FileDescription", "Dolphin 7.1 IDE Resources"
+            VALUE "FileDescription", "Dolphin 7.2 IDE Resources"
 			VALUE "FileVersion", DOLPHIN_ASSEMBLY_VERSION
             VALUE "InternalName", "DolphinDevRes"
             VALUE "LegalCopyright", "Copyright © Object Arts 1997-2018"
             VALUE "OriginalFilename", "DolphinDR7.dll"
-            VALUE "ProductName", "Dolphin Smalltalk 7.1"
+            VALUE "ProductName", "Dolphin Smalltalk 7.2"
             VALUE "ProductVersion", GIT_TAG
             VALUE "WARNING", "Please edit this as a text file rather than with the resource editor to preserve GIT_TAG"
         END
