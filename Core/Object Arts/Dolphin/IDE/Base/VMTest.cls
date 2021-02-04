@@ -608,6 +608,20 @@ testExtCallRetLpwstr
 testExtCallRetNtStatus
 	self verifyExtCallRetNtStatus: false!
 
+testExtendedCharsInCrashDump
+	| path dumped index |
+	path := File temporaryFilename.
+	VMLibrary default
+		dump: 'abc' , (String with: Character dolphin)
+		path: path
+		stackDepth: 0
+		walkbackDepth: 1.
+	dumped := File readAllText: path.
+	index := dumped indexOf: Character dolphin.
+	self deny: index equals: 0.
+	self assert: dumped size > (index + 4).
+	File delete: path!
+
 testFPFaultInPrimitive
 	"An FP fault occurring in a primitive should be reported in the primitive method, not some
 	subsequently invoked method, even when interrupts are off."
@@ -3547,6 +3561,7 @@ verifyPrimitiveNextPutAllOnUtfStrings: method
 !VMTest categoriesFor: #testExtCallRetHRESULT!public!unit tests! !
 !VMTest categoriesFor: #testExtCallRetLpwstr!public!unit tests! !
 !VMTest categoriesFor: #testExtCallRetNtStatus!public!unit tests! !
+!VMTest categoriesFor: #testExtendedCharsInCrashDump!public!unit tests! !
 !VMTest categoriesFor: #testFPFaultInPrimitive!public!unit tests! !
 !VMTest categoriesFor: #testFPStatus!public!unit tests! !
 !VMTest categoriesFor: #testGPFTrap!public!unit tests! !
