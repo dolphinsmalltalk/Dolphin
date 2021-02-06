@@ -2,7 +2,7 @@
 
 [![Build status](https://ci.appveyor.com/api/projects/status/scael64ohx3l6io9/branch/master?svg=true)](https://ci.appveyor.com/project/dolphinsmalltalk/dolphin-db22v/branch/master)
 
-**Please note: The master branch is now the development branch for version 7.2. This will add support for namespaces, but is currently in an interim and unstable state. It  also changes the package and class file formats, and consequently code saved from 7.2 cannot be loaded directly into earlier versions of Dolphin. Please use the 7.1 branch if you need a stable version. PRs for bug fixes, etc, will still be accepted against the 7.1 branch for the foreseeable future.**
+**Please note: The master branch is now the development branch for version 7.2. This will add support for namespaces, but is currently in an interim and unstable state. It  also changes the package and class file formats, and consequently code saved from 7.2 cannot be loaded directly into earlier versions of Dolphin. Please use the `release/7.1` branch if you need a stable version. PRs for bug fixes, etc, will still be accepted against the `release/7.1` branch for the foreseeable future.**
 
 This repository contains:
 * A VS2019 solution to build the Virtual Machine (VM) elements of Dolphin Smalltalk.
@@ -28,7 +28,7 @@ Follow these instructions to create the product image and launch Dolphin Smallta
 
 * First clone the Dolphin repository (this one) into a suitable working directory on your machine, let's call it `\Dolphin`. Any supported version of Windows should be suitable, and at the moment that means Windows 10. Dolphin _may_ run on older Windows versions, but there should be no expectation that it will, or will continue to do so.
 
-* The master branch is on the bleeding edge and current is in an unstable state while version 7.2 is in development, although the tests should always be passing. If you need a stable build then you should use the 7.1 branch.
+* The master branch is on the bleeding edge and current is in an unstable state while version 7.2 is in development, although the tests should always be passing. If you need a stable build then you should use the `release/7.1` branch.
 
 * Next you will need to build the binaries as described above, or fetch the VM binaries. For convenience a batch file, `FetchVM.CMD` is supplied that will determine the correct VM version and invoke the helper PowerShell script `FetchVM.ps1` to download it. If you want to download an alternative VM (which is not usually recommended) then this can be done by invoking `FetchVM.ps1` with a parameter..
 
