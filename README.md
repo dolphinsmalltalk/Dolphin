@@ -2,6 +2,8 @@
 
 [![Build status](https://ci.appveyor.com/api/projects/status/scael64ohx3l6io9/branch/master?svg=true)](https://ci.appveyor.com/project/dolphinsmalltalk/dolphin-db22v/branch/master)
 
+Please note: The master branch is now the development branch for version 7.2. This will add support for namespaces, but is currently in an interim and unstable state. It  also changes the package and class file formats, and consequently code saved from 7.2 cannot be loaded directly into earlier versions of Dolphin. Please use the 7.1 branch if you need a stable version. PRs for bug fixes, etc, will still be accepted against the 7.1 branch for the foreseeable future.
+
 This repository contains:
 * A VS2019 solution to build the Virtual Machine (VM) elements of Dolphin Smalltalk.
 * The necessary Smalltalk packages to build the [Dolphin Smalltalk](https://object-arts.com) Core Images from a pre-built boot image.
@@ -24,9 +26,9 @@ It is not necessary to build the VM, since pre-built binaries are available for 
 
 Follow these instructions to create the product image and launch Dolphin Smalltalk for the first time.
 
-* First clone the Dolphin repository (this one) into a suitable working directory on your machine, let's call it `\Dolphin`. Any supported version of Windows should be suitable, and at the moment that means Windows 10. Dolphin may run on older Windows versions, but there should be no expectation that it will, or will continue to do so.
+* First clone the Dolphin repository (this one) into a suitable working directory on your machine, let's call it `\Dolphin`. Any supported version of Windows should be suitable, and at the moment that means Windows 10. Dolphin _may_ run on older Windows versions, but there should be no expectation that it will, or will continue to do so.
 
-* The master branch is on the bleeding edge and may represent an unstable state, although the tests should always be passing. If you want a stable build then you may want to go back at least to the last tagged version.
+* The master branch is on the bleeding edge and current is in an unstable state while version 7.2 is in development, although the tests should always be passing. If you need a stable build then you should use the 7.1 branch.
 
 * Next you will need to build the binaries as described above, or fetch the VM binaries. For convenience a batch file, `FetchVM.CMD` is supplied that will determine the correct VM version and invoke the helper PowerShell script `FetchVM.ps1` to download it. If you want to download an alternative VM (which is not usually recommended) then this can be done by invoking `FetchVM.ps1` with a parameter..
 
@@ -34,9 +36,9 @@ Follow these instructions to create the product image and launch Dolphin Smallta
 
 * If you do not have a Visual Studio 2019 installed on your machine, then depending on what other software you have you may also need to install the [VC++ runtime distribution](https://support.microsoft.com/en-us/help/2977003/the-latest-supported-visual-c-downloads), specifically https://aka.ms/vs/16/release/vc_redist.x86.exe. This is required by the VM. If Dolphin fails to start, try installing this first.
 
-* In the root folder of the repo you will find the `BootDPRO.cmd` script and a small boot image, `DBOOT.img7`. Double-click `BootDPRO.cmd` or run it from a console window. When the boot process has completed, you should see a `DPRO.img7` file in your directory. IMG7 is the image extension for Dolphin 7, and DPRO stands for _Dolphin Professional_.
+* In the root folder of the repo you will find the `BootDPRO.cmd` script and a small boot image, `DBOOT.img7`. Double-click `BootDPRO.cmd` or run it from a console window. The boot process takes a minute or two to load all the Smalltalk code, and when completed you should see a `DPRO.img7` file in your directory. IMG7 is the image extension for Dolphin 7, and DPRO stands for _Dolphin Professional_.
 
-* Should you wish to test your booted image before proceeding with your own changes or work, you may want to run the standard regression test suite. This is recommended, and easy to do. Just run the `TestDPRO.cmd` script in the root folder. This will launch Dolphin, load the tests, and then execute them. As it runs you will see results being reported as console output. When complete a summary will state whether there were any failures. You should expect there to be none, but check the [AppVeyor build](https://ci.appveyor.com/project/dolphinsmalltalk/dolphin-db22v/branch/master) to see the current build status.
+* Should you wish to test your booted image before proceeding with your own changes or work, you may want to run the standard regression test suite. This is recommended, and easy to do. Just run the `TestDPRO.cmd` script in the root folder. This will launch Dolphin, load the tests, and then execute them. As it runs you will see results being reported as console output. The complete test run should take no more than a couple of minutes. When complete a summary will state whether there were any failures. You should expect there to be none, but check the [AppVeyor build](https://ci.appveyor.com/project/dolphinsmalltalk/dolphin-db22v/branch/master) to see the current build status.
 
 * To launch the image you can right click on `DPRO.img7` and choose _Open With_, selecting `Dolphin7.exe` as the executable to be permanently associated with this file type.
 
@@ -58,6 +60,6 @@ Any contributions are welcome, but are expected to be of a very high standard. Y
 
 ## Releasing a new version of Dolphin
 
-If sufficient changes have been made to the VM or image such that a new release is warranted, you can push a new tag of the form _v.7.x.y_ (eg: **v7.0.42**). When the tag is eventually pushed to the GitHub master branch (by a maintainer) this will trigger an AppVeyor to build and generate a new [Release](https://github.com/dolphinsmalltalk/Dolphin/releases). Each release consists of the full set of VM binaries wrapped up as a zip called `DolphinVM.zip`, and associated PDBs (native debug information for the binaries). The `FetchVM` script will automatically download the correct set of binaries associated with the latest tag at which the repository is checked out.
+If sufficient changes have been made to the VM or image such that a new release is warranted, you can push a new tag of the form _v.7.x.y_ (eg: **v7.0.42**). When the tag is eventually pushed to the GitHub master branch (by a maintainer) this will trigger AppVeyor to build and generate a new [Release](https://github.com/dolphinsmalltalk/Dolphin/releases). Each release consists of the full set of VM binaries wrapped up as a zip called `DolphinVM.zip`, and associated PDBs (native debug information for the binaries). The `FetchVM` script will automatically download the correct set of binaries associated with the latest tag at which the repository is checked out. The release build does also build a setup .exe, but this is not maintained so it may not function correctly.
 
 
