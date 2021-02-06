@@ -10,7 +10,8 @@
 #endif // _MSC_VER > 1000
 
 #ifdef _DEBUG
-#define _ATL_DEBUG_INTERFACES
+// MS bug open since 2018 prevents us defining this. See https://developercommunity.visualstudio.com/content/problem/293098/atl-getrawunknown.html
+//#define _ATL_DEBUG_INTERFACES
 #endif
 
 #include <stdint.h>
