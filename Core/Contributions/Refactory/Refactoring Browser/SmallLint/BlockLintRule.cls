@@ -338,7 +338,7 @@ missingSubclassResponsibility
 								and: [(context selectedClass canUnderstand: each) not]) 
 									ifTrue: 
 										[| envName |
-										envName := context selectedClass name , '>>' , each.
+										envName := context selectedClass name , '>>#' , each.
 										subs do: 
 												[:subClass | 
 												result 

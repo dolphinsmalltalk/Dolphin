@@ -149,7 +149,7 @@ forClass: aClass selectors: selectorCollection
 		onMethods: selectorCollection
 		forClass: aClass
 		in: self)
-		label: aClass name , '>>' 
+		label: aClass name , '>>#' 
 					, (selectorCollection detect: [:each | true] ifNone: ['']);
 		yourself!
 

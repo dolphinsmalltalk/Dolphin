@@ -74,7 +74,7 @@ diff
 		textFont: MethodWorkspace actualFont;
 		styler: SmalltalkMethodStyler new;
 		textStyles: MethodWorkspace textStyles;
-		caption: self methodClass name , '>>' , selector;
+		caption: self methodClass name , '>>#' , selector;
 		compare: self selectedMethodVersion getSource
 			id: 'Version #' , selection printString
 			and: self selectedMethodVersion loadedMethod getSource
@@ -217,7 +217,7 @@ setCaption
 				nextPutAll: 'MethodHistory - ';
 				nextPutAll: self methodClass name;
 				nextPutAll: '>>';
-				nextPutAll: selector asString;
+				print: selector;
 				nextPutAll: '  (';
 				print: selection;
 				nextPutAll: ' of ';

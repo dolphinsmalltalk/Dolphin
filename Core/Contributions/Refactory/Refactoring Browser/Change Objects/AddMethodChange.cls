@@ -41,7 +41,7 @@ changeForMetaclass: aSymbol selector: aSelector
 		ifFalse: [nil]!
 
 changeString
-	^self displayClassName , '>>' , self selector!
+	^self displayClassName , '>>#' , self selector!
 
 class: aClass protocol: aProtocol source: aString 
 	self changeClass: aClass.

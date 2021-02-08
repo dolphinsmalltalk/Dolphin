@@ -38,11 +38,11 @@ modelClass: aRBClass
 parseTree
 	^RBParser parseMethod: self source in: self modelClass realClass onError: [:str :pos | ^nil]!
 
-printOn: aStream 
-	class printOn: aStream.
+printOn: aStream
 	aStream
+		print: class;
 		nextPutAll: '>>';
-		nextPutAll: self selector!
+		print: self selector!
 
 refersToClassNamed: aSymbol 
 	| searcher |

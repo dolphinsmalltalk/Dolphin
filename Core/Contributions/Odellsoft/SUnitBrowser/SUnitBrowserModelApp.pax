@@ -214,7 +214,7 @@ numberOfTests
 
 signature
 	
-	^self class name, '>>', self selector!
+	^self class name, '>>#', self selector!
 
 step
 

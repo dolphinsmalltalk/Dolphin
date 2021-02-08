@@ -49,14 +49,6 @@ changePosition
 
 	^self changeManager changePositionOf: self!
 
-displayOn: aPuttableStream
-	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that an end-user might want to see."
-
-	aPuttableStream
-		display: self methodClass;
-		nextPutAll: '>>';
-		display: self selector!
-
 getDebugInfo
 	"Private - Invoke the compiler to answer a compilation result containing a 
 	recompilation of the receiver, a map between IP ranges and expressions 
@@ -202,7 +194,6 @@ storeSourceString: aString
 !CompiledMethod categoriesFor: #categories:!categories-accessing!private! !
 !CompiledMethod categoriesFor: #changeManager!development!private! !
 !CompiledMethod categoriesFor: #changePosition!development!private!testing! !
-!CompiledMethod categoriesFor: #displayOn:!printing!public! !
 !CompiledMethod categoriesFor: #getDebugInfo!development!private! !
 !CompiledMethod categoriesFor: #getSource!accessing!development!public! !
 !CompiledMethod categoriesFor: #hasChanged!development!private!testing! !
@@ -252,6 +243,7 @@ fromString: aString
 		ifNotNil: 
 			[:theClass |
 			| selector |
+			stream peekFor: $#.
 			selector := stream upToEnd asSymbol.
 			theClass compiledMethodAt: selector ifAbsent: []]! !
 !CompiledMethod class categoriesFor: #defaultSortBlock!private!sorting! !
