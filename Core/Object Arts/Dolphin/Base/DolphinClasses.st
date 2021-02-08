@@ -1189,6 +1189,9 @@ SharedPool subclass: #Win32Constants
 		'MOD_SHIFT' -> 16r4.
 		'MOD_WIN' -> 16r8.
 		'MSGF_MENU' -> 16r2.
+		'MUI_LANGUAGE_INSTALLED' -> 16r20.
+		'MUI_LANGUAGE_LICENSED' -> 16r40.
+		'MUI_LANGUAGE_NAME' -> 16r8.
 		'MWMO_ALERTABLE' -> 16r2.
 		'MWMO_INPUTAVAILABLE' -> 16r4.
 		'MWMO_WAITALL' -> 16r1.
@@ -2179,7 +2182,7 @@ Object subclass: #Link
 	classConstants: {}!
 Object subclass: #Locale
 	instanceVariableNames: 'numberFormat'
-	classVariableNames: 'Invariant SystemDefault TimeZoneInfo UserDefault'
+	classVariableNames: 'InstalledUILanguages Invariant SystemDefault TimeZoneInfo UserDefault'
 	poolDictionaries: 'Win32Constants'
 	classInstanceVariableNames: ''
 	classConstants: {}!

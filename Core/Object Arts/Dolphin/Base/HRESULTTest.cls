@@ -12,25 +12,19 @@ HRESULTTest comment: ''!
 !HRESULTTest methodsFor!
 
 testDisplayString
-	| subject |
+	| subject installedLangIds |
 	subject := HRESULT fromInteger: Win32Errors.E_ABORT.
-	{Locale smalltalk.
-		'Operation aborted'.
-		Locale named: 'fr-CA'.
-		'Opération abandonnée'.
-		Locale named: 'es-AR'.
-		'Operación anulada'.
-		Locale named: 'en-GB'.
-		'Operation aborted'.
-		Locale named: 'ja-JP'.
-		'操作は中断されました'.
-		Locale lcid: Win32Constants.LOCALE_CUSTOM_UNSPECIFIED.
-		'Operation aborted'} pairsDo: 
-				[:locale :expected |
+	installedLangIds := Locale installedUILanguages collect: [:each | each languageId].
+	({{Locale smalltalk. 'Operation aborted'}.
+		{Locale lcid: Win32Constants.LOCALE_CUSTOM_UNSPECIFIED. 'Operation aborted'}}
+			, {{Locale named: 'fr-CA'. 'Opération abandonnée'}.
+					{Locale named: 'es-AR'. 'Operación anulada'}.
+					{Locale named: 'en-GB'. 'Operation aborted'}.
+					{Locale named: 'ja-JP'. '操作は中断されました'}}
+			select: [:each | installedLangIds includes: each first languageId]) do: 
+				[:pair |
 				| actual |
-				locale isInstalled
-					ifTrue: 
-						[actual := subject displayString: locale.
-						self assert: actual equals: expected]]! !
+				actual := subject displayString: pair first.
+				self assert: actual equals: pair second]! !
 !HRESULTTest categoriesFor: #testDisplayString!public!unit tests! !
 

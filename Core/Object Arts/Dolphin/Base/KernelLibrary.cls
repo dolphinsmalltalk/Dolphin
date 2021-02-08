@@ -291,6 +291,10 @@ enumTimeFormats: aCallbackThunk locale: locale dwFlags: dwFlags
 	<stdcall: bool EnumTimeFormatsW lpvoid dword dword>
 	^self invalidCall: _failureCode!
 
+enumUILanguages: aCallbackThunk dwFlags: dwFlags lParam: lParam
+	<stdcall: bool EnumUILanguagesW lpvoid dword uintptr>
+	^self invalidCall: _failureCode!
+
 expandEnvironmentStrings: aString 
 	"Answer the <String> result of replacing environment-variable references of the form
 	%VariableName% with their defined values.
@@ -1706,6 +1710,7 @@ zeroMemory: pvDest length: cBytes
 !KernelLibrary categoriesFor: #enumSystemCodePages:dwFlags:!public!win32 functions-national language support! !
 !KernelLibrary categoriesFor: #enumSystemLocales:dwFlags:!public!win32 functions-national language support! !
 !KernelLibrary categoriesFor: #enumTimeFormats:locale:dwFlags:!public!win32 functions-national language support! !
+!KernelLibrary categoriesFor: #enumUILanguages:dwFlags:lParam:!public!win32 functions-national language support! !
 !KernelLibrary categoriesFor: #expandEnvironmentStrings:!public!win32 functions-process and thread! !
 !KernelLibrary categoriesFor: #expandEnvironmentStrings:lpDst:nSize:!public!win32 functions-process and thread! !
 !KernelLibrary categoriesFor: #fileTimeToLocalTime:lpLocalFileTime:!public!win32 functions-date and time! !

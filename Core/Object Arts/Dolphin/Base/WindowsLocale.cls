@@ -546,6 +546,25 @@ yearMonthFormat
 
 !WindowsLocale class methodsFor!
 
+installedUILanguages: anInteger
+	"Private - Answer a collection of UI languages installed on the system.
+		self installedUILanguages: MUI_LANGUAGE_LICENSED.
+	"
+
+	| enum languages |
+	languages := Array writeStream.
+	enum := ExternalCallback block: 
+					[:language :lParam |
+					languages nextPut: language.
+					true]
+				descriptor: (ExternalDescriptor returnType: 'bool' argumentTypes: 'lpwstr uintptr').
+	KernelLibrary default
+		enumUILanguages: enum asParameter
+		dwFlags: (MUI_LANGUAGE_NAME bitOr: anInteger)
+		lParam: 0.
+	enum free.
+	^languages contents collect: [:each | self named: each]!
+
 named: aString
 	"Answer an instance of the receiver to represent the Locale with the specified name."
 
@@ -572,6 +591,7 @@ systemLocales: anInteger
 	KernelLibrary default enumSystemLocales: enum asParameter dwFlags: anInteger.
 	enum free.
 	^locales collect: [:s | self lcid: (Integer readFrom: s asUppercase readStream radix: 16)]! !
+!WindowsLocale class categoriesFor: #installedUILanguages:!enquiries!private! !
 !WindowsLocale class categoriesFor: #named:!instance creation!public! !
 !WindowsLocale class categoriesFor: #reset!initializing!private! !
 !WindowsLocale class categoriesFor: #systemLocales:!enquiries!private! !
