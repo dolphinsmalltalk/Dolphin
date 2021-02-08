@@ -876,12 +876,12 @@ browseReferencesToClassVar: aString of: browseClass within: aBrowserEnvironment
 		ifFalse: 
 			[| writers readers |
 			writers := self selectMethods: [:each | each byteCodeDispatcher writesStatic: binding] in: refs.
-			writers label: ('Assigners of <1p>.<2s> in <3p>'
+			writers label: ('All methods that assign to <1p>.<2s> in <3p>'
 						expandMacrosWith: definingClass
 						with: aString
 						with: aBrowserEnvironment).
 			readers := self selectMethods: [:each | each byteCodeDispatcher readsStatic: binding] in: refs.
-			readers label: ('Readers of <1p>.<2s> in <3p>'
+			readers label: ('All methods that read <1p>.<2s> in <3p>'
 						expandMacrosWith: definingClass
 						with: aString
 						with: aBrowserEnvironment).
@@ -1739,7 +1739,7 @@ directReferencesToVariable: aVariableBinding in: aBrowserEnvironment
 	matched := self selectMethods: [:each | each refersToLiteral: aVariableBinding]
 				in: aBrowserEnvironment.
 	matched
-		label: ('References to <1p>.<2s> in <3p>'
+		label: ('All methods that reference <1p>.<2s> in <3p>'
 					expandMacrosWith: aVariableBinding environment
 					with: aVariableBinding key
 					with: aBrowserEnvironment);
