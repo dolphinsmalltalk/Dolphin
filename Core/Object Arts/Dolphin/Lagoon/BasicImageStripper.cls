@@ -77,7 +77,7 @@ compileExternalStructuresNow: aCollection
 			ExternalStructure class compile: 'ensureDefined'.
 			aCollection do: [:each | each removeTemplate].
 			"ExternalStructure DNU processing is no longer needed since fully compiled"
-			self removeSelectors: #(#getFieldNames) of: ExternalStructure class.
+			self removeSelectors: #(#getFieldNames #canUnderstand:) of: ExternalStructure class.
 			self removeSelectors: #(#doesNotUnderstand:) of: ExternalStructure].
 	"Field meta-data classes are no longer required"
 	self assert: [self systemPackageManager isProcessingEvents].
