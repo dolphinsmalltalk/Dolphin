@@ -7,7 +7,13 @@ package paxVersion: 2.1;
 
 package setClassNames: #(
 	#{Tools.Tests.CRTLibraryImportTest}
+	#{Tools.Tests.LagoonTests}
 	#{Tools.Tests.PackageClosureTests}
+).
+
+package setMethodNames: #(
+	#(#{Tools.ImageStripper} #initializeForTests)
+	#(#{Tools.ImageStripper class} #newForTests)
 ).
 
 package setPrerequisites: #(
@@ -35,12 +41,37 @@ Core.Tests.DolphinTest subclass: #'Tools.Tests.CRTLibraryImportTest'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+Core.Tests.DolphinTest subclass: #'Tools.Tests.LagoonTests'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
 Core.Tests.DolphinTest subclass: #'Tools.Tests.PackageClosureTests'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #(#{Refactory.Browser private})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
+"Loose Methods"!
+
+!Tools.ImageStripper methodsFor!
+
+initializeForTests
+
+	notifier := DeafObject.Current.
+	logStream := WriteStream on: (String new: 256).
+	elementStack := OrderedCollection new.
+	potentialAspectGetters := IdentitySet new! !
+!Tools.ImageStripper categoriesFor: #initializeForTests!public! !
+
+!Tools.ImageStripper class methodsFor!
+
+newForTests
+
+	^self new initializeForTests! !
+!Tools.ImageStripper class categoriesFor: #newForTests!public! !
 
 "End of package definition"!
 
