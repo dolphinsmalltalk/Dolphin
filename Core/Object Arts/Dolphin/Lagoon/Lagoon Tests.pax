@@ -7,7 +7,13 @@ package paxVersion: 1;
 
 package classNames
 	add: #CRTLibraryImportTest;
+	add: #LagoonTests;
 	add: #PackageClosureTests;
+	yourself.
+
+package methodNames
+	add: #ImageStripper -> #initializeForTests;
+	add: 'ImageStripper class' -> #newForTests;
 	yourself.
 
 package binaryGlobalNames: (Set new
@@ -37,6 +43,11 @@ DolphinTest subclass: #CRTLibraryImportTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+DolphinTest subclass: #LagoonTests
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
 DolphinTest subclass: #PackageClosureTests
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -47,6 +58,23 @@ DolphinTest subclass: #PackageClosureTests
 
 
 "Loose Methods"!
+
+!ImageStripper methodsFor!
+
+initializeForTests
+
+	notifier := DeafObject.Current.
+	logStream := WriteStream on: (String new: 256).
+	elementStack := OrderedCollection new.
+	potentialAspectGetters := IdentitySet new! !
+!ImageStripper categoriesFor: #initializeForTests!initializing!public! !
+
+!ImageStripper class methodsFor!
+
+newForTests
+
+	^self new initializeForTests! !
+!ImageStripper class categoriesFor: #newForTests!instance creation!public! !
 
 "End of package definition"!
 
