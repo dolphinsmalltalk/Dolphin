@@ -2,7 +2,7 @@
 
 UI.TreeModel subclass: #'UI.FolderHierarchyModel'
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: 'NodeSortAlgorithm'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
@@ -28,7 +28,7 @@ folderClass
 
 newNode: anObject
 	^(super newNode: anObject)
-		children: (SortedCollection sortBlock: [:x :y | x object <= y object]);
+		children: (SortedCollection sortAlgorithm: NodeSortAlgorithm);
 		yourself! !
 !UI.FolderHierarchyModel categoriesFor: #addFolder:!adding!public! !
 !UI.FolderHierarchyModel categoriesFor: #folderClass!operations!private! !
@@ -37,6 +37,13 @@ newNode: anObject
 !UI.FolderHierarchyModel class methodsFor!
 
 defaultSearchPolicy
-	^SearchPolicy equality! !
+	^SearchPolicy equality!
+
+initialize
+	self addClassConstant: 'NodeSortAlgorithm'
+		value: ((SortedCollection defaultSortAlgorithmClass newSortBlock: [:x :y | x object <= y object])
+				isImmutable: true;
+				yourself)! !
 !UI.FolderHierarchyModel class categoriesFor: #defaultSearchPolicy!constants!public! !
+!UI.FolderHierarchyModel class categoriesFor: #initialize!development!initializing!private! !
 

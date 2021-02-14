@@ -70,7 +70,7 @@ UI.TreeModel subclass: #'UI.ExpandingTreeModel'
 	classConstants: {}!
 UI.TreeModel subclass: #'UI.FolderHierarchyModel'
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: 'NodeSortAlgorithm'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
