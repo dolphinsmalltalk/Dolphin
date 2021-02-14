@@ -1,14 +1,14 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Object subclass: #AXTypeInfoObject
+Core.Object subclass: #'OS.COM.TypeInfoObject'
 	instanceVariableNames: 'tlbInterface generationFlags'
 	classVariableNames: 'ClassCommentStyleMap GuidClash HighLevelWrapperStyleMap SuperclassClash TracingStyleMap'
-	poolDictionaries: 'AXAutomationConstants AXTypeGenerationFlags'
+	imports: #(#{OS.COM.AutomationConstants} #{OS.COM.TypeGenerationFlags})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-AXTypeInfoObject guid: (GUID fromString: '{27440177-dfab-46d4-bf61-a8fada69a263}')!
-AXTypeInfoObject isAbstract: true!
-AXTypeInfoObject comment: '
+OS.COM.TypeInfoObject guid: (Core.GUID fromString: '{27440177-dfab-46d4-bf61-a8fada69a263}')!
+OS.COM.TypeInfoObject isNonInstantiable: true!
+OS.COM.TypeInfoObject comment: '
 	
 Instance Variables:
 	tlbInterface			<ITypeLib>|<ITypeInfo> COM interface onto type library information relevant to this type element.
@@ -19,8 +19,8 @@ Class Variables:
 	SuperclassClash		<WarningSignal>
 
 '!
-!AXTypeInfoObject categoriesForClass!Kernel-Objects! !
-!AXTypeInfoObject methodsFor!
+!OS.COM.TypeInfoObject categoriesForClass!Kernel-Objects! !
+!OS.COM.TypeInfoObject methodsFor!
 
 asParameter
 	"Answer the receiver in a form suitable for passing to an external function
@@ -131,23 +131,23 @@ suggestedGlobalName
 tlbInterface
 	tlbInterface isNull ifTrue: [self realize].
 	^tlbInterface! !
-!AXTypeInfoObject categoriesFor: #asParameter!converting!public! !
-!AXTypeInfoObject categoriesFor: #attributes!accessing!public! !
-!AXTypeInfoObject categoriesFor: #basicName!accessing!private! !
-!AXTypeInfoObject categoriesFor: #documentation!accessing!public! !
-!AXTypeInfoObject categoriesFor: #environment!constants!public! !
-!AXTypeInfoObject categoriesFor: #free!public!realizing/unrealizing! !
-!AXTypeInfoObject categoriesFor: #globalBinding!accessing!private! !
-!AXTypeInfoObject categoriesFor: #globalName!accessing!public! !
-!AXTypeInfoObject categoriesFor: #guid!accessing!public! !
-!AXTypeInfoObject categoriesFor: #helpfile!accessing!public! !
-!AXTypeInfoObject categoriesFor: #helpstring!accessing!public! !
-!AXTypeInfoObject categoriesFor: #isHidden!public!testing! !
-!AXTypeInfoObject categoriesFor: #isInstalled!public!testing! !
-!AXTypeInfoObject categoriesFor: #isNull!public!testing! !
-!AXTypeInfoObject categoriesFor: #isRestricted!public!testing! !
-!AXTypeInfoObject categoriesFor: #name!accessing!public! !
-!AXTypeInfoObject categoriesFor: #realize!private!realizing/unrealizing! !
-!AXTypeInfoObject categoriesFor: #suggestedGlobalName!accessing!private! !
-!AXTypeInfoObject categoriesFor: #tlbInterface!accessing!private! !
+!OS.COM.TypeInfoObject categoriesFor: #asParameter!converting!public! !
+!OS.COM.TypeInfoObject categoriesFor: #attributes!accessing!public! !
+!OS.COM.TypeInfoObject categoriesFor: #basicName!accessing!private! !
+!OS.COM.TypeInfoObject categoriesFor: #documentation!accessing!public! !
+!OS.COM.TypeInfoObject categoriesFor: #environment!constants!public! !
+!OS.COM.TypeInfoObject categoriesFor: #free!public!realizing/unrealizing! !
+!OS.COM.TypeInfoObject categoriesFor: #globalBinding!accessing!private! !
+!OS.COM.TypeInfoObject categoriesFor: #globalName!accessing!public! !
+!OS.COM.TypeInfoObject categoriesFor: #guid!accessing!public! !
+!OS.COM.TypeInfoObject categoriesFor: #helpfile!accessing!public! !
+!OS.COM.TypeInfoObject categoriesFor: #helpstring!accessing!public! !
+!OS.COM.TypeInfoObject categoriesFor: #isHidden!public!testing! !
+!OS.COM.TypeInfoObject categoriesFor: #isInstalled!public!testing! !
+!OS.COM.TypeInfoObject categoriesFor: #isNull!public!testing! !
+!OS.COM.TypeInfoObject categoriesFor: #isRestricted!public!testing! !
+!OS.COM.TypeInfoObject categoriesFor: #name!accessing!public! !
+!OS.COM.TypeInfoObject categoriesFor: #realize!private!realizing/unrealizing! !
+!OS.COM.TypeInfoObject categoriesFor: #suggestedGlobalName!accessing!private! !
+!OS.COM.TypeInfoObject categoriesFor: #tlbInterface!accessing!private! !
 

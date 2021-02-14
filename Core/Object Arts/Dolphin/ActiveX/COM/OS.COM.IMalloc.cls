@@ -1,19 +1,19 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-IUnknown subclass: #IMalloc
+OS.COM.IUnknown subclass: #'OS.COM.IMalloc'
 	instanceVariableNames: ''
 	classVariableNames: 'Shared Task'
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-IMalloc guid: (IID fromString: '{00000002-0000-0000-c000-000000000046}')!
-IMalloc comment: '<IMalloc> is a wrapper class for the custom interface ''OBJIDL.IMalloc'' generated from type information in the ''ObjIDL Library'' library. It contains methods to invoke the member functions exposed by that interface.
+OS.COM.IMalloc guid: (OS.COM.IID fromString: '{00000002-0000-0000-c000-000000000046}')!
+OS.COM.IMalloc comment: '`OS.COM.IMalloc` is a wrapper class for the custom interface ''OBJIDL.IMalloc'' generated from type information in the ''ObjIDL Library'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface.
 
 WARNING: This comment was automatically generated from the interface''s type information and any changes made here may be overwritten the next time this wrapper class is so generated.'!
-!IMalloc categoriesForClass!COM-Interfaces! !
-!IMalloc methodsFor!
+!OS.COM.IMalloc categoriesForClass!COM-Interfaces! !
+!OS.COM.IMalloc methodsFor!
 
 Alloc: cb
 	"Invoke the Alloc() method of the object wrapped by the receiver.
@@ -79,16 +79,16 @@ Realloc: pv cb: cb
 
 	<virtual stdcall: void* 5 void* dword>
 	^self invalidCall: _failureCode! !
-!IMalloc categoriesFor: #Alloc:!**auto generated**!COM Interfaces-OBJIDL.IMalloc!public! !
-!IMalloc categoriesFor: #DidAlloc:!**auto generated**!COM Interfaces-OBJIDL.IMalloc!public! !
-!IMalloc categoriesFor: #Free:!**auto generated**!COM Interfaces-OBJIDL.IMalloc!public! !
-!IMalloc categoriesFor: #GetSize:!**auto generated**!COM Interfaces-OBJIDL.IMalloc!public! !
-!IMalloc categoriesFor: #HeapMinimize!**auto generated**!COM Interfaces-OBJIDL.IMalloc!public! !
-!IMalloc categoriesFor: #Realloc:cb:!**auto generated**!COM Interfaces-OBJIDL.IMalloc!public! !
+!OS.COM.IMalloc categoriesFor: #Alloc:!**auto generated**!COM Interfaces-OBJIDL.IMalloc!public! !
+!OS.COM.IMalloc categoriesFor: #DidAlloc:!**auto generated**!COM Interfaces-OBJIDL.IMalloc!public! !
+!OS.COM.IMalloc categoriesFor: #Free:!**auto generated**!COM Interfaces-OBJIDL.IMalloc!public! !
+!OS.COM.IMalloc categoriesFor: #GetSize:!**auto generated**!COM Interfaces-OBJIDL.IMalloc!public! !
+!OS.COM.IMalloc categoriesFor: #HeapMinimize!**auto generated**!COM Interfaces-OBJIDL.IMalloc!public! !
+!OS.COM.IMalloc categoriesFor: #Realloc:cb:!**auto generated**!COM Interfaces-OBJIDL.IMalloc!public! !
 
-IMalloc methodProtocol: #IMalloc attributes: #(#readOnly) selectors: #(#Alloc: #DidAlloc: #GetSize: #HeapMinimize #Realloc:cb:)!
+OS.COM.IMalloc methodProtocol: #IMalloc attributes: #(#readOnly) selectors: #(#Alloc: #DidAlloc: #GetSize: #HeapMinimize #Realloc:cb:)!
 
-!IMalloc class methodsFor!
+!OS.COM.IMalloc class methodsFor!
 
 clear
 	"Private - Clear down the standard task/shared allocators (e.g. on startup)."
@@ -152,7 +152,7 @@ task
 	N.B. The task allocator must always be used to allocate [Out] and [In/Out]
 	parameters."
 
-	Task isNull 
+	Task isNull
 		ifTrue: 
 			[| pMalloc |
 			pMalloc := self newPointer.
@@ -164,12 +164,12 @@ uninitialize
 	"Private - Uninitialize the receiver as it is about to be removed from the system."
 
 	self clear! !
-!IMalloc class categoriesFor: #clear!initializing!private! !
-!IMalloc class categoriesFor: #default!accessing!public! !
-!IMalloc class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
-!IMalloc class categoriesFor: #free!private!realizing/unrealizing! !
-!IMalloc class categoriesFor: #freeShared!private!realizing/unrealizing! !
-!IMalloc class categoriesFor: #freeTask!private!realizing/unrealizing! !
-!IMalloc class categoriesFor: #task!accessing!public! !
-!IMalloc class categoriesFor: #uninitialize!accessing!class hierarchy-removing!private! !
+!OS.COM.IMalloc class categoriesFor: #clear!initializing!private! !
+!OS.COM.IMalloc class categoriesFor: #default!accessing!public! !
+!OS.COM.IMalloc class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!OS.COM.IMalloc class categoriesFor: #free!private!realizing/unrealizing! !
+!OS.COM.IMalloc class categoriesFor: #freeShared!private!realizing/unrealizing! !
+!OS.COM.IMalloc class categoriesFor: #freeTask!private!realizing/unrealizing! !
+!OS.COM.IMalloc class categoriesFor: #task!accessing!public! !
+!OS.COM.IMalloc class categoriesFor: #uninitialize!accessing!class hierarchy-removing!private! !
 

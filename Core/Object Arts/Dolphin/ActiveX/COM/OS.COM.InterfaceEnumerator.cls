@@ -1,16 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-COMEnumerator subclass: #COMInterfaceEnumerator
+OS.COM.Enumerator subclass: #'OS.COM.InterfaceEnumerator'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-COMInterfaceEnumerator guid: (GUID fromString: '{c3eefb00-a19e-11d3-b376-080046056106}')!
-COMInterfaceEnumerator comment: 'COMInterfaceEnumerator is Dolphin''s generic implementation of COM enumerators for collections of interface pointers, i.e. IEnumUnknown.
+OS.COM.InterfaceEnumerator guid: (Core.GUID fromString: '{c3eefb00-a19e-11d3-b376-080046056106}')!
+OS.COM.InterfaceEnumerator comment: 'COMInterfaceEnumerator is Dolphin''s generic implementation of COM enumerators for collections of interface pointers, i.e. IEnumUnknown.
 '!
-!COMInterfaceEnumerator categoriesForClass!COM-Implementations! !
-!COMInterfaceEnumerator methodsFor!
+!OS.COM.InterfaceEnumerator categoriesForClass!COM-Implementations! !
+!OS.COM.InterfaceEnumerator methodsFor!
 
 arrayBufferAt: buf length: count
 	"Private - Answer a suitable <ExternalArray> wrapping the buffer at <ExternalAddress>,
@@ -29,10 +29,10 @@ nextElement
 	pi _addRef.
 	^pi yourAddress
 ! !
-!COMInterfaceEnumerator categoriesFor: #arrayBufferAt:length:!COM Interfaces-IEnumXXXX!private! !
-!COMInterfaceEnumerator categoriesFor: #nextElement!COM Interfaces-IEnumXXXX!private! !
+!OS.COM.InterfaceEnumerator categoriesFor: #arrayBufferAt:length:!COM Interfaces-IEnumXXXX!private! !
+!OS.COM.InterfaceEnumerator categoriesFor: #nextElement!COM Interfaces-IEnumXXXX!private! !
 
-!COMInterfaceEnumerator class methodsFor!
+!OS.COM.InterfaceEnumerator class methodsFor!
 
 newEnumeratorOn: sequence
 	"Answer a new <IEnumUnknown> onto a new instance of the receiver
@@ -40,5 +40,5 @@ newEnumeratorOn: sequence
 	sequence."
 
 	^self newEnumerator: IEnumUnknown on: sequence! !
-!COMInterfaceEnumerator class categoriesFor: #newEnumeratorOn:!instance creation!public! !
+!OS.COM.InterfaceEnumerator class categoriesFor: #newEnumeratorOn:!instance creation!public! !
 

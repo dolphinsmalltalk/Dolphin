@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-AXControlSite subclass: #AXValueConvertingControlSite
+UI.AXControlSite subclass: #'UI.AXValueConvertingControlSite'
 	instanceVariableNames: 'typeconverter'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-AXValueConvertingControlSite guid: (GUID fromString: '{3f495368-8c18-4e53-a039-299027f2e032}')!
-AXValueConvertingControlSite comment: 'AXValueConvertingControlSite is a kind of <AXControlSite> that also behaves as if it were a <ValueConvertingControlView>, in particular it implements the <valueView> protocol. 
+UI.AXValueConvertingControlSite guid: (Core.GUID fromString: '{3f495368-8c18-4e53-a039-299027f2e032}')!
+UI.AXValueConvertingControlSite comment: 'AXValueConvertingControlSite is a kind of <AXControlSite> that also behaves as if it were a <ValueConvertingControlView>, in particular it implements the <valueView> protocol. 
 
 Use this class in preference to the superclass when hosting Active-X controls that have a single, clearly identifiable, "value". In many cases this will be obvious as the control will implement a Value property. In some cases a value property might not exist due to an oversight of the designer, in which case it can be implemented for the control by generating the control''s default interface and implementing #value and #value: appropriately in it.In other cases there may be multiple properties that could be used as the value, and one must decide whether, from a particular viewpoint, treating the control as a value view onto just one of these properties makes sense. A sensible strategy in these cases is to start off with a generic AXControlSite and only consider using this class as the use of the control is better understood.
 
@@ -17,8 +17,8 @@ Instance Variables:
 	typeconverter	<typeConverter> used to convert between model values and display values.
 
 '!
-!AXValueConvertingControlSite categoriesForClass!MVP-Views! !
-!AXValueConvertingControlSite methodsFor!
+!UI.AXValueConvertingControlSite categoriesForClass!MVP-Views! !
+!UI.AXValueConvertingControlSite methodsFor!
 
 connectModel
 	"Connect the receiver to its model by wiring up event handlers, etc."
@@ -153,26 +153,26 @@ value: anObject
 	"Set the receiver's model value to anObject"
 
 	self model value: anObject! !
-!AXValueConvertingControlSite categoriesFor: #connectModel!models!public! !
-!AXValueConvertingControlSite categoriesFor: #createControl!private!realizing/unrealizing! !
-!AXValueConvertingControlSite categoriesFor: #defaultProgId!constants!public! !
-!AXValueConvertingControlSite categoriesFor: #defaultTypeConverter!accessing!public! !
-!AXValueConvertingControlSite categoriesFor: #defaultTypeConverterClass!initializing!private! !
-!AXValueConvertingControlSite categoriesFor: #displayValue!private!updating! !
-!AXValueConvertingControlSite categoriesFor: #displayValue:!private!updating! !
-!AXValueConvertingControlSite categoriesFor: #initializeNewTypeConverter:!accessing!private! !
-!AXValueConvertingControlSite categoriesFor: #observePropertyNotifications!helpers!private! !
-!AXValueConvertingControlSite categoriesFor: #propertyChanged:!event handling!private! !
-!AXValueConvertingControlSite categoriesFor: #refreshContents!public!updating! !
-!AXValueConvertingControlSite categoriesFor: #typeconverter!accessing!public! !
-!AXValueConvertingControlSite categoriesFor: #typeconverter:!accessing!public! !
-!AXValueConvertingControlSite categoriesFor: #typeconverterClass!accessing!public! !
-!AXValueConvertingControlSite categoriesFor: #typeconverterClass:!accessing!public! !
-!AXValueConvertingControlSite categoriesFor: #updateModel!private!updating! !
-!AXValueConvertingControlSite categoriesFor: #value!accessing!public! !
-!AXValueConvertingControlSite categoriesFor: #value:!accessing!public! !
+!UI.AXValueConvertingControlSite categoriesFor: #connectModel!models!public! !
+!UI.AXValueConvertingControlSite categoriesFor: #createControl!private!realizing/unrealizing! !
+!UI.AXValueConvertingControlSite categoriesFor: #defaultProgId!constants!public! !
+!UI.AXValueConvertingControlSite categoriesFor: #defaultTypeConverter!accessing!public! !
+!UI.AXValueConvertingControlSite categoriesFor: #defaultTypeConverterClass!initializing!private! !
+!UI.AXValueConvertingControlSite categoriesFor: #displayValue!private!updating! !
+!UI.AXValueConvertingControlSite categoriesFor: #displayValue:!private!updating! !
+!UI.AXValueConvertingControlSite categoriesFor: #initializeNewTypeConverter:!accessing!private! !
+!UI.AXValueConvertingControlSite categoriesFor: #observePropertyNotifications!helpers!private! !
+!UI.AXValueConvertingControlSite categoriesFor: #propertyChanged:!event handling!private! !
+!UI.AXValueConvertingControlSite categoriesFor: #refreshContents!public!updating! !
+!UI.AXValueConvertingControlSite categoriesFor: #typeconverter!accessing!public! !
+!UI.AXValueConvertingControlSite categoriesFor: #typeconverter:!accessing!public! !
+!UI.AXValueConvertingControlSite categoriesFor: #typeconverterClass!accessing!public! !
+!UI.AXValueConvertingControlSite categoriesFor: #typeconverterClass:!accessing!public! !
+!UI.AXValueConvertingControlSite categoriesFor: #updateModel!private!updating! !
+!UI.AXValueConvertingControlSite categoriesFor: #value!accessing!public! !
+!UI.AXValueConvertingControlSite categoriesFor: #value:!accessing!public! !
 
-!AXValueConvertingControlSite class methodsFor!
+!UI.AXValueConvertingControlSite class methodsFor!
 
 applicableTypeConverterCategories
 	"Answers a Set of class categories that contain <typeConverter>s that can 
@@ -195,13 +195,13 @@ resource_Default_view
 	DO NOT EDIT OR RECATEGORIZE THIS METHOD.
 
 	If you wish to modify this resource evaluate:
-	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Default_view)
+	Tools.ViewComposer openOn: (UI.ResourceIdentifier class: self selector: #resource_Default_view)
 	"
 
-	^#(#'!!STL' 3 788558 10 ##(STBViewProxy)  8 ##(AXValueConvertingControlSite)  98 26 0 0 98 2 8 1140916224 1 416 721990 2 ##(ValueHolder)  0 32 1376774 ##(PluggableSearchPolicy)  459270 ##(Message)  8 #= 98 0 562 8 #hash 98 0 0 524550 ##(ColorRef)  8 4278190080 0 7 0 0 0 416 0 81920801 8 'mshtml:<h2>Active-X Value Converting Control Site</h2>
-<h4>Copyright © Object Arts Ltd, 2000</h4>' 590854 ##(IDispatch)  0 0 1378630 1 ##(TKindDispatchAnalyzer)  590598 ##(ITypeInfo)  0 0 525062 ##(TYPEATTR)  0 816 784 0 1378630 2 ##(AXTypeLibraryAnalyzer)  590342 ##(ITypeLib2)  0 0 1 524550 ##(TLIBATTR)  8 #[197 241 80 48 181 152 207 17 187 130 0 170 0 189 206 11 0 0 0 0 1 0 0 0 4 0 0 0 8 0 65 0] 0 0 0 0 234 240 98 2 8 'GUID' 8 #GUID 0 0 0 835 0 0 0 0 918022 ##(IDolphinAxHost)  0 0 722438 ##(AXEventSink)  234 240 98 76 8 -2147418096 8 #ondatasetcomplete 2075 8 #onselectionchange 2073 8 #oncontrolselect 2097 8 #onfocusin 2099 8 #onfocusout 2089 8 #onactivate 2091 8 #ondeactivate 2095 8 #onbeforeactivate 2047 8 #oncontextmenu 2053 8 #onstop 2055 8 #onbeforeeditfocus 2067 8 #onmousewheel -1217 8 #onreadystatechange 2069 8 #onbeforedeactivate -1213 8 #onmouseup -1211 8 #onmousemove -1209 8 #onmousedown -1207 8 #onkeyup -1205 8 #onkeypress -1203 8 #onkeydown 8 -2147418102 8 #onhelp -1199 8 #onclick -1201 8 #ondblclick 8 -2147418103 8 #onmouseout 8 -2147418104 8 #onmouseover 8 -2147418108 8 #onbeforeupdate 8 -2147418107 8 #onafterupdate 8 -2147418106 8 #onrowexit 8 -2147418105 8 #onrowenter 8 -2147418101 8 #ondragstart 8 -2147418100 8 #onselectstart 8 -2147418099 8 #onerrorupdate 8 -2147418080 8 #onrowsdelete 8 -2147418079 8 #onrowsinserted 8 -2147418078 8 #oncellchange 8 -2147418093 8 #onpropertychange 8 -2147418098 8 #ondatasetchanged 8 -2147418097 8 #ondataavailable 416 1049094 ##(IConnectionPoint)  0 0 385781601 770 802 0 0 834 0 2064 2048 0 866 898 0 0 2049 930 8 #[197 241 80 48 181 152 207 17 187 130 0 170 0 189 206 11 0 0 0 0 1 0 0 0 4 0 0 0 8 0 0 0] 0 0 0 0 234 240 98 2 8 'GUID' 1024 0 0 262198 ##(GUID)  16 96 242 80 48 181 152 207 17 187 130 0 170 0 189 206 11 825 0 0 0 1 2761 234 240 98 0 1508358 ##(IAxWinAmbientDispatchEx)  0 0 0 0 524806 ##(IUnknown)  0 0 0 0 0 852486 ##(NullConverter)  0 0 983302 ##(MessageSequence)  202 208 98 3 721670 ##(MessageSend)  8 #createAt:extent: 98 2 328198 ##(Point)  11 11 2498 591 251 416 2434 8 #restoreAmbientProperties 2256 416 2434 8 #controlBinaryStoreBytes: 98 1 8 #[32 105 51 37 249 3 207 17 143 208 0 170 0 104 111 19 60 33 68 79 67 84 89 80 69 32 72 84 77 76 32 80 85 66 76 73 67 32 34 45 47 47 87 51 67 47 47 68 84 68 32 72 84 77 76 32 52 46 48 32 84 114 97 110 115 105 116 105 111 110 97 108 47 47 69 78 34 62 13 10 60 72 84 77 76 62 60 72 69 65 68 62 60 47 72 69 65 68 62 13 10 60 66 79 68 89 62 13 10 60 72 50 62 65 99 116 105 118 101 45 88 32 86 97 108 117 101 32 67 111 110 118 101 114 116 105 110 103 32 67 111 110 116 114 111 108 32 83 105 116 101 60 47 72 50 62 13 10 60 72 52 62 67 111 112 121 114 105 103 104 116 32 169 32 79 98 106 101 99 116 32 65 114 116 115 32 76 116 100 44 32 50 48 48 48 60 47 72 52 62 60 47 66 79 68 89 62 60 47 72 84 77 76 62 13 10] 416 983302 ##(WINDOWPLACEMENT)  8 #[44 0 0 0 0 0 0 0 0 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 5 0 0 0 5 0 0 0 44 1 0 0 130 0 0 0] 98 0 2498 193 193 0 27 )! !
-!AXValueConvertingControlSite class categoriesFor: #applicableTypeConverterCategories!constants!must strip!public! !
-!AXValueConvertingControlSite class categoriesFor: #defaultModel!models!public! !
-!AXValueConvertingControlSite class categoriesFor: #icon!constants!public! !
-!AXValueConvertingControlSite class categoriesFor: #resource_Default_view!public!resources-views! !
+	^#(#'!!STL' 4 985166 10 ##(UI.STBViewProxy) ##(UI.AXValueConvertingControlSite) 34 26 nil nil 34 2 8 1140916224 1 416 918598 2 ##(UI.ValueHolder) nil false 1704454 ##(Core.PluggableSearchPolicy) 786950 ##(Core.Message) #= 8 #() 546 #hash 8 #() nil 917510 ##(Graphics.Color) #default nil 7 nil nil nil 416 nil 537194055 8 'mshtml:<h2>Active-X Value Converting Control Site</h2>
+<h4>Copyright © Object Arts Ltd, 2000</h4>' 1049606 ##(OS.COM.IDispatch) nil nil 1837382 1 ##(OS.COM.TKindDispatchAnalyzer) 1114886 ##(OS.COM.ITypeInfo2) nil nil 983814 ##(OS.COM.TYPEATTR) nil 720 752 nil 1706310 2 ##(OS.COM.TypeLibraryAnalyzer) 1049094 ##(OS.COM.ITypeLib2) nil nil 2049 983302 ##(OS.COM.TLIBATTR) 8 #[197 241 80 48 181 152 207 17 187 130 0 170 0 189 206 11 0 0 0 0 1 0 0 0 4 0 0 0 8 0 0 0] nil nil nil nil 170 176 34 6 8 'PROPVARIANT' 1508870 ##(Kernel.BindingReference) 8 'VARIANT' 34 1 992 800 1 1442886 2 ##(Kernel.VariableBinding) #VARIANT ##(OS.COM.VARIANT) ##(OS.COM) 1 5537 8 'GUID' 962 8 'GUID' 34 1 1088 800 1 1026 #GUID ##(Core.GUID) ##(Core) 1 5537 8 'RemotableHandle' 962 8 'ExternalHandle' 34 1 1168 800 1 1638406 ##(Kernel.UndeclaredVariable) 5537 nil nil nil 1329 nil nil nil nil 1114630 ##(UI.IDolphinAxHost) nil nil 1050118 ##(OS.COM.EventSink) 170 176 34 76 8 -2147418100 #onselectstart 8 -2147418099 #onerrorupdate 2073 #oncontrolselect 8 -2147418101 #ondragstart -1217 #onreadystatechange 2047 #oncontextmenu 2099 #onfocusout -1203 #onkeydown 2075 #onselectionchange 8 -2147418098 #ondatasetchanged 2089 #onactivate 8 -2147418097 #ondataavailable -1201 #ondblclick 8 -2147418093 #onpropertychange 8 -2147418105 #onrowenter -1213 #onmouseup 2091 #ondeactivate -1199 #onclick 8 -2147418078 #oncellchange 2053 #onstop -1211 #onmousemove 2067 #onmousewheel 8 -2147418079 #onrowsinserted 8 -2147418102 #onhelp 8 -2147418106 #onrowexit 2055 #onbeforeeditfocus -1209 #onmousedown 2095 #onbeforeactivate 8 -2147418104 #onmouseover 8 -2147418108 #onbeforeupdate 8 -2147418096 #ondatasetcomplete 8 -2147418107 #onafterupdate 8 -2147418103 #onmouseout 2069 #onbeforedeactivate -1207 #onkeyup 2097 #onfocusin 8 -2147418080 #onrowsdelete -1205 #onkeypress 416 1507846 ##(OS.COM.IConnectionPoint) nil nil 1598699457 706 738 nil nil 770 nil 1632 1648 nil 816 nil 589878 ##(Core.GUID) 16 96 242 80 48 181 152 207 17 187 130 0 170 0 189 206 11 1279 nil nil nil 1 2761 170 176 8 #(1005 #activeElement -525 #ReadyState) 1704966 ##(UI.IAxWinAmbientDispatchEx) nil nil nil nil 983558 ##(OS.COM.IUnknown) nil nil nil nil nil 1049094 ##(UI.NullConverter) nil nil 1310982 ##(Core.MessageSequence) 138 144 34 3 1049350 ##(Core.MessageSend) #createAt:extent: 34 2 918022 ##(Graphics.Point) 6143 21 1954 591 251 416 1906 #restoreAmbientProperties 8 #() 416 1906 #controlBinaryStoreBytes: 34 1 8 #[60 0 104 0 50 0 62 0 65 0 99 0 116 0 105 0 118 0 101 0 45 0 88 0 32 0 86 0 97 0 108 0 117 0 101 0 32 0 67 0 111 0 110 0 118 0 101 0 114 0 116 0 105 0 110 0 103 0 32 0 67 0 111 0 110 0 116 0 114 0 111 0 108 0 32 0 83 0 105 0 116 0 101 0 60 0 47 0 104 0 50 0 62 0 13 0 10 0 60 0 104 0 52 0 62 0 67 0 111 0 112 0 121 0 114 0 105 0 103 0 104 0 116 0 32 0 169 0 32 0 79 0 98 0 106 0 101 0 99 0 116 0 32 0 65 0 114 0 116 0 115 0 32 0 76 0 116 0 100 0 44 0 32 0 50 0 48 0 48 0 48 0 60 0 47 0 104 0 52 0 62 0] 416 1179910 ##(OS.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 38 13 0 0 135 0 0 0] 8 #() 1954 193 193 nil 27 )! !
+!UI.AXValueConvertingControlSite class categoriesFor: #applicableTypeConverterCategories!constants!must strip!public! !
+!UI.AXValueConvertingControlSite class categoriesFor: #defaultModel!models!public! !
+!UI.AXValueConvertingControlSite class categoriesFor: #icon!constants!public! !
+!UI.AXValueConvertingControlSite class categoriesFor: #resource_Default_view!public!resources-views! !
 

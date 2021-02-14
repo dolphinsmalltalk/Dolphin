@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-OLEStructure subclass: #OLEVERB
+OS.COM.OLEStructure subclass: #'OS.COM.OLEVERB'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_fuFlags' -> 16r8.
@@ -11,8 +11,8 @@ OLEStructure subclass: #OLEVERB
 		'_OffsetOf_lpszVerbName' -> 16r4.
 		'_OffsetOf_lVerb' -> 16r0
 	}!
-OLEVERB guid: (GUID fromString: '{33eb8491-3919-4df6-8dbe-d88c4be8d413}')!
-OLEVERB comment: '<OLEVERB> is an <ExternalStructure> class to wrap the struct ''Win32.OLEVERB'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
+OS.COM.OLEVERB guid: (Core.GUID fromString: '{33eb8491-3919-4df6-8dbe-d88c4be8d413}')!
+OS.COM.OLEVERB comment: '<OLEVERB> is an <ExternalStructure> class to wrap the struct ''Win32.OLEVERB'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
 
@@ -28,8 +28,8 @@ struct tagOLEVERB {
 	DWORD grfAttribs;
 } OLEVERB;
 '!
-!OLEVERB categoriesForClass!Win32-Structs! !
-!OLEVERB methodsFor!
+!OS.COM.OLEVERB categoriesForClass!Win32-Structs! !
+!OS.COM.OLEVERB methodsFor!
 
 fuFlags
 	"Answer the <Integer> value of the receiver's 'fuFlags' field."
@@ -81,17 +81,17 @@ printOn: aStream
 		nextPutAll: ': ';
 		print: self lpszVerbName;
 		nextPut: $)! !
-!OLEVERB categoriesFor: #fuFlags!**compiled accessors**!public! !
-!OLEVERB categoriesFor: #fuFlags:!**compiled accessors**!public! !
-!OLEVERB categoriesFor: #grfAttribs!**compiled accessors**!public! !
-!OLEVERB categoriesFor: #grfAttribs:!**compiled accessors**!public! !
-!OLEVERB categoriesFor: #lpszVerbName!**compiled accessors**!public! !
-!OLEVERB categoriesFor: #lpszVerbName:!**compiled accessors**!public! !
-!OLEVERB categoriesFor: #lVerb!**compiled accessors**!public! !
-!OLEVERB categoriesFor: #lVerb:!**compiled accessors**!public! !
-!OLEVERB categoriesFor: #printOn:!development!printing!public! !
+!OS.COM.OLEVERB categoriesFor: #fuFlags!**compiled accessors**!public! !
+!OS.COM.OLEVERB categoriesFor: #fuFlags:!**compiled accessors**!public! !
+!OS.COM.OLEVERB categoriesFor: #grfAttribs!**compiled accessors**!public! !
+!OS.COM.OLEVERB categoriesFor: #grfAttribs:!**compiled accessors**!public! !
+!OS.COM.OLEVERB categoriesFor: #lpszVerbName!**compiled accessors**!public! !
+!OS.COM.OLEVERB categoriesFor: #lpszVerbName:!**compiled accessors**!public! !
+!OS.COM.OLEVERB categoriesFor: #lVerb!**compiled accessors**!public! !
+!OS.COM.OLEVERB categoriesFor: #lVerb:!**compiled accessors**!public! !
+!OS.COM.OLEVERB categoriesFor: #printOn:!development!printing!public! !
 
-!OLEVERB class methodsFor!
+!OS.COM.OLEVERB class methodsFor!
 
 defineFields
 	"Define the fields of the OLEVERB structure.
@@ -115,6 +115,6 @@ defineFields
 
 getFieldNames
 	^#(#lVerb #lpszVerbName #fuFlags #grfAttribs)! !
-!OLEVERB class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!OLEVERB class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.COM.OLEVERB class categoriesFor: #defineFields!**auto generated**!public!template definition! !
+!OS.COM.OLEVERB class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

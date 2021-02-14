@@ -3,7 +3,7 @@
 UI.ValueDialog subclass: #'Tools.AXTypeLibraryPrompter'
 	instanceVariableNames: 'typeLibs path guidPresenter'
 	classVariableNames: ''
-	imports: #()
+	imports: #(#{OS.COM private})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Tools.AXTypeLibraryPrompter guid: (Core.GUID fromString: '{4febe003-3945-11d3-9fe6-00a0cc3e4a32}')!
@@ -44,7 +44,7 @@ ok
 
 	| reg |
 	reg := typeLibs selectionOrNil.
-	self value: (reg isNil ifFalse: [Smalltalk.AXTypeLibraryAnalyzer fromRegistration: reg]).
+	self value: (reg isNil ifFalse: [TypeLibraryAnalyzer fromRegistration: reg]).
 	super ok!
 
 onTypeLibraryChosen
@@ -66,7 +66,7 @@ onTypeLibrarySelected
 			[
 			[| guid |
 			guid := reg libid.
-			path value: (Smalltalk.ITypeLib
+			path value: (ITypeLib
 						queryPath: guid
 						major: reg majorVersion
 						minor: reg minorVersion
@@ -92,12 +92,11 @@ openTypeLib
 	"Browse the file system for a type library to open."
 
 	| typelib |
-	typelib := Smalltalk.AXTypeLibraryAnalyzer open.
-	typelib notNil ifTrue: [
-		self value: typelib.
-		super ok]
-
-!
+	typelib := TypeLibraryAnalyzer open.
+	typelib notNil
+		ifTrue: 
+			[self value: typelib.
+			super ok]!
 
 queryCommand: query
 	"Private - Enter details about a potential command for the receiver 
@@ -117,13 +116,11 @@ refresh
 	"Private - Refresh the list of current AXTypeLibraryAnalyzers in the image"
 
 	| registrations currentTypeLibs |
-
-	currentTypeLibs := Smalltalk.AXTypeLibraryAnalyzer allTypeLibs collect: [:each | each registration ].
-	registrations := Smalltalk.AXTypeLibraryAnalyzer typeLibRegistrations.
+	currentTypeLibs := TypeLibraryAnalyzer allTypeLibs collect: [:each | each registration].
+	registrations := TypeLibraryAnalyzer typeLibRegistrations.
 	registrations := registrations difference: currentTypeLibs.
 	typeLibs list: registrations asSortedCollection.
-	self onTypeLibrarySelected
-! !
+	self onTypeLibrarySelected! !
 !Tools.AXTypeLibraryPrompter categoriesFor: #createComponents!initializing!public! !
 !Tools.AXTypeLibraryPrompter categoriesFor: #createSchematicWiring!initializing!public! !
 !Tools.AXTypeLibraryPrompter categoriesFor: #ok!commands!public! !

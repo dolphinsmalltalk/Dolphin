@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'ActiveX (Deprecated)'.
-package paxVersion: 2;
+package paxVersion: 2.1;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk Active-X Support (Deprecated Classes and Methods)
 
@@ -10,67 +10,166 @@ package basicPackageVersion: '6.0'.
 
 
 package setMethodNames: #(
-	#(#{BSTR} #asUnicodeString)
-	#(#{DATE} #asDate)
-	#(#{DATE} #asTimeStamp)
-	#(#{DATE class} #max)
-	#(#{DATE class} #min)
-	#(#{LPBSTR} #asUnicodeString)
-	#(#{TimeStamp} #asFloat)
-	#(#{TimeStamp} #asVariant)
-	#(#{TimeStamp class} #fromDATE:)
+	#(#{Core.TimeStamp} #asFloat)
+	#(#{Core.TimeStamp} #asVariant)
+	#(#{Core.TimeStamp class} #fromDATE:)
+	#(#{OS.COM.BSTR} #asUnicodeString)
+	#(#{OS.COM.DATE} #asDate)
+	#(#{OS.COM.DATE} #asTimeStamp)
+	#(#{OS.COM.DATE class} #max)
+	#(#{OS.COM.DATE class} #min)
+	#(#{OS.COM.LPBSTR} #asUnicodeString)
+).
+
+package setVariableNames: #(
+	#{Smalltalk.AXDualImp}
+	#{Smalltalk.AXEventSink}
+	#{Smalltalk.AXPropertyBag}
+	#{Smalltalk.AXPropertyBagErrorLog}
+	#{Smalltalk.AXPropertyReadError}
+	#{Smalltalk.AXTypeLibraryAnalyzer}
+	#{Smalltalk.BSTR}
+	#{Smalltalk.CLSID}
+	#{Smalltalk.COMInterface}
+	#{Smalltalk.COMInterfaceImp}
+	#{Smalltalk.COMTaskMemory}
+	#{Smalltalk.DATE}
+	#{Smalltalk.DISPPARAMS}
+	#{Smalltalk.IConnectionPoint}
+	#{Smalltalk.IDispatch}
+	#{Smalltalk.IEnumXXXX}
+	#{Smalltalk.IID}
+	#{Smalltalk.IPicture}
+	#{Smalltalk.ITypeInfo}
+	#{Smalltalk.ITypeInfo2}
+	#{Smalltalk.ITypeLib2}
+	#{Smalltalk.IUnknown}
+	#{Smalltalk.OLEPicture}
+	#{Smalltalk.OLEStructuredStorageConstants}
+	#{Smalltalk.SAFEARRAY}
+	#{Smalltalk.TKindDispatchAnalyzer}
+	#{Smalltalk.TKindInterfaceAnalyzer}
+	#{Smalltalk.TLIBATTR}
+	#{Smalltalk.TYPEATTR}
+	#{Smalltalk.VARIANT}
+	#{Smalltalk.VARIANT_BOOL}
+).
+
+package setAliasVariableNames: #(
+	#{Smalltalk.AXDualImp}
+	#{Smalltalk.AXEventSink}
+	#{Smalltalk.AXPropertyBag}
+	#{Smalltalk.AXPropertyBagErrorLog}
+	#{Smalltalk.AXPropertyReadError}
+	#{Smalltalk.AXTypeLibraryAnalyzer}
+	#{Smalltalk.BSTR}
+	#{Smalltalk.CLSID}
+	#{Smalltalk.COMInterface}
+	#{Smalltalk.COMInterfaceImp}
+	#{Smalltalk.COMTaskMemory}
+	#{Smalltalk.DATE}
+	#{Smalltalk.DISPPARAMS}
+	#{Smalltalk.IConnectionPoint}
+	#{Smalltalk.IDispatch}
+	#{Smalltalk.IEnumXXXX}
+	#{Smalltalk.IID}
+	#{Smalltalk.IPicture}
+	#{Smalltalk.ITypeInfo}
+	#{Smalltalk.ITypeInfo2}
+	#{Smalltalk.ITypeLib2}
+	#{Smalltalk.IUnknown}
+	#{Smalltalk.OLEPicture}
+	#{Smalltalk.OLEStructuredStorageConstants}
+	#{Smalltalk.SAFEARRAY}
+	#{Smalltalk.TKindDispatchAnalyzer}
+	#{Smalltalk.TKindInterfaceAnalyzer}
+	#{Smalltalk.TLIBATTR}
+	#{Smalltalk.TYPEATTR}
+	#{Smalltalk.VARIANT}
+	#{Smalltalk.VARIANT_BOOL}
 ).
 
 package setPrerequisites: #(
 	'..\Automation\ActiveX Automation'
+	'..\Connection Points\ActiveX Connection Points'
+	'..\Property Bags\ActiveX Property Bags'
 	'..\..\Base\Dolphin'
 	'..\..\Base\Dolphin Legacy Date & Time'
 	'..\COM\OLE COM'
+	'..\Components\Picture\OLE Picture'
+	'..\Structured Storage\OLE Structured Storage'
 ).
 
 package!
 
+"Variable Aliases"!
+
+Smalltalk.AXDualImp := OS.COM.DualInterfaceImplementation!
+
+Smalltalk.AXEventSink := OS.COM.EventSink!
+
+Smalltalk.AXPropertyBag := OS.COM.PropertyBag!
+
+Smalltalk.AXPropertyBagErrorLog := OS.COM.PropertyBagErrorLog!
+
+Smalltalk.AXPropertyReadError := OS.COM.PropertyReadError!
+
+Smalltalk.AXTypeLibraryAnalyzer := OS.COM.TypeLibraryAnalyzer!
+
+Smalltalk.BSTR := OS.COM.BSTR!
+
+Smalltalk.CLSID := OS.COM.CLSID!
+
+Smalltalk.COMInterface := OS.COM.Interface!
+
+Smalltalk.COMInterfaceImp := OS.COM.InterfaceImplementation!
+
+Smalltalk.COMTaskMemory := OS.COM.TaskMemory!
+
+Smalltalk.DATE := OS.COM.DATE!
+
+Smalltalk.DISPPARAMS := OS.COM.DISPPARAMS!
+
+Smalltalk.IConnectionPoint := OS.COM.IConnectionPoint!
+
+Smalltalk.IDispatch := OS.COM.IDispatch!
+
+Smalltalk.IEnumXXXX := OS.COM.IEnumXXXX!
+
+Smalltalk.IID := OS.COM.IID!
+
+Smalltalk.IPicture := OS.COM.IPicture!
+
+Smalltalk.ITypeInfo := OS.COM.ITypeInfo!
+
+Smalltalk.ITypeInfo2 := OS.COM.ITypeInfo2!
+
+Smalltalk.ITypeLib2 := OS.COM.ITypeLib2!
+
+Smalltalk.IUnknown := OS.COM.IUnknown!
+
+Smalltalk.OLEPicture := OS.COM.Picture!
+
+Smalltalk.OLEStructuredStorageConstants := OS.COM.StructuredStorageConstants!
+
+Smalltalk.SAFEARRAY := OS.COM.SAFEARRAY!
+
+Smalltalk.TKindDispatchAnalyzer := OS.COM.TKindDispatchAnalyzer!
+
+Smalltalk.TKindInterfaceAnalyzer := OS.COM.TKindInterfaceAnalyzer!
+
+Smalltalk.TLIBATTR := OS.COM.TLIBATTR!
+
+Smalltalk.TYPEATTR := OS.COM.TYPEATTR!
+
+Smalltalk.VARIANT := OS.COM.VARIANT!
+
+Smalltalk.VARIANT_BOOL := OS.COM.VARIANT_BOOL!
+
+
 "Loose Methods"!
 
-!BSTR methodsFor!
-
-asUnicodeString
-	Notification deprecated.
-	^self asUtf16String! !
-!BSTR categoriesFor: #asUnicodeString!converting!public! !
-
-!DATE methodsFor!
-
-asDate
-	Notification deprecated.
-	^(SYSTEMTIME fromDATE: self) asDate!
-
-asTimeStamp
-	Notification deprecated.
-	^self asDateAndTime asTimeStamp! !
-!DATE categoriesFor: #asDate!converting!public! !
-!DATE categoriesFor: #asTimeStamp!accessing!public! !
-
-!DATE class methodsFor!
-
-max
-	#deprecated.
-	^self maximum!
-
-min
-	#deprecated.
-	^self minimum! !
-!DATE class categoriesFor: #max!instance creation!public! !
-!DATE class categoriesFor: #min!instance creation!public! !
-
-!LPBSTR methodsFor!
-
-asUnicodeString
-	Notification deprecated.
-	^self asUtf16String! !
-!LPBSTR categoriesFor: #asUnicodeString!converting!public! !
-
-!TimeStamp methodsFor!
+!Core.TimeStamp methodsFor!
 
 asFloat
 	"Answer the OLEDATE representation of the receiver."
@@ -81,20 +180,58 @@ asVariant
 	"Answer the <VARIANT> representation of the receiver (a VT_DATE)."
 
 	^self asParameter asVariant! !
-!TimeStamp categoriesFor: #asFloat!converting!public! !
-!TimeStamp categoriesFor: #asVariant!converting!public! !
+!Core.TimeStamp categoriesFor: #asFloat!converting!public! !
+!Core.TimeStamp categoriesFor: #asVariant!converting!public! !
 
-!TimeStamp class methodsFor!
+!Core.TimeStamp class methodsFor!
 
 fromDATE: date
 	"Private - Answer a new instance of the receiver instantiated from the <Float> argument, date, which
 	is assumed to be an AX Automation format Date."
-	
+
 	| systime |
 	systime := OS.SYSTEMTIME new.
-	Smalltalk.OLEAutLibrary default variantTimeToSystemTime: date lpSystemTime: systime.
+	OS.COM.OLEAutLibrary default variantTimeToSystemTime: date lpSystemTime: systime.
 	^self fromSYSTEMTIME: systime! !
-!TimeStamp class categoriesFor: #fromDATE:!instance creation!private! !
+!Core.TimeStamp class categoriesFor: #fromDATE:!instance creation!private! !
+
+!OS.COM.BSTR methodsFor!
+
+asUnicodeString
+	Notification deprecated.
+	^self asUtf16String! !
+!OS.COM.BSTR categoriesFor: #asUnicodeString!converting!public! !
+
+!OS.COM.DATE methodsFor!
+
+asDate
+	Notification deprecated.
+	^(SYSTEMTIME fromDATE: self) asDate!
+
+asTimeStamp
+	Notification deprecated.
+	^self asDateAndTime asTimeStamp! !
+!OS.COM.DATE categoriesFor: #asDate!converting!public! !
+!OS.COM.DATE categoriesFor: #asTimeStamp!accessing!public! !
+
+!OS.COM.DATE class methodsFor!
+
+max
+	#deprecated.
+	^self maximum!
+
+min
+	#deprecated.
+	^self minimum! !
+!OS.COM.DATE class categoriesFor: #max!instance creation!public! !
+!OS.COM.DATE class categoriesFor: #min!instance creation!public! !
+
+!OS.COM.LPBSTR methodsFor!
+
+asUnicodeString
+	Notification deprecated.
+	^self asUtf16String! !
+!OS.COM.LPBSTR categoriesFor: #asUnicodeString!converting!public! !
 
 "End of package definition"!
 

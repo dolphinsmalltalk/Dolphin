@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-GenericExternalArray subclass: #SAFEARRAY
+External.GenericExternalArray subclass: #'OS.COM.SAFEARRAY'
 	instanceVariableNames: 'data start recordInfo'
 	classVariableNames: ''
-	poolDictionaries: 'AXAutomationConstants AXAutomationErrors'
+	imports: #(#{OS.COM.AutomationConstants} #{OS.COM.AutomationErrors})
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_cbElements' -> 16r4.
@@ -13,8 +13,8 @@ GenericExternalArray subclass: #SAFEARRAY
 		'_OffsetOf_pvData' -> 16rC.
 		'_OffsetOf_rgsabound' -> 16r10
 	}!
-SAFEARRAY guid: (GUID fromString: '{c06f3b6a-0868-11d3-93af-00a024ca708a}')!
-SAFEARRAY comment: 'SAFEARRAY is an <ExternalArray> class to represent the OLE Automation arrays.
+OS.COM.SAFEARRAY guid: (Core.GUID fromString: '{c06f3b6a-0868-11d3-93af-00a024ca708a}')!
+OS.COM.SAFEARRAY comment: 'SAFEARRAY is an <ExternalArray> class to represent the OLE Automation arrays.
 
 SAFEARRAYs are a flexible representation of potentially multiple dimensioned arrays of almost any of the Variant (Visual Basic) types.
 
@@ -26,8 +26,8 @@ Instance Variables:
 	data		<ExternalAddress>. Pointer to data of array, when locked.
 	start		<integer>. Lower bound of rightmost (least significant) dimension.
 '!
-!SAFEARRAY categoriesForClass!External-Data-Structured! !
-!SAFEARRAY methodsFor!
+!OS.COM.SAFEARRAY categoriesForClass!External-Data-Structured! !
+!OS.COM.SAFEARRAY methodsFor!
 
 _deepenShallowCopy: clone trail: copiesDictionary
 	"Private - Deepen the argument, clone, which is a shallow copy of the receiver.
@@ -45,7 +45,7 @@ accessData
 
 	| pvData |
 	self assert: [data isNull].
-	pvData := ExternalAddress new.
+	pvData := Address new.
 	OLEAutLibrary default safeArrayAccessData: self ppvData: pvData.
 	"We'll need finalization to unlock"
 	self beFinalizable.
@@ -69,8 +69,7 @@ asVariant
 
 	^VARIANT new
 		array: self copy;
-		yourself
-!
+		yourself!
 
 base
 	data isNull ifTrue: [data := self accessData asInteger].
@@ -98,7 +97,10 @@ copy
 	| pcopy |
 	pcopy := self pointerClass new.
 	OLEAutLibrary default safeArrayCopy: self ppsaout: pcopy.
-	^self class fromAddress: pcopy elementClass: self elementClass owner: nil!
+	^self class
+		fromAddress: pcopy
+		elementClass: self elementClass
+		owner: nil!
 
 data
 	"Answer the address of the data buffer in which the receiver's elements
@@ -114,11 +116,11 @@ deduceElementClass
 	f := self fFeatures.
 	(f allMask: FADF_BSTR) ifTrue: [^BSTR].
 	(f allMask: FADF_VARIANT) ifTrue: [^VARIANT].
-	(f allMask: FADF_HAVEIID) 
+	(f allMask: FADF_HAVEIID)
 		ifTrue: 
 			[| class |
-			class := COMInterface classForIID: self iid ifNone: [].
-			class isNil 
+			class := Interface classForIID: self iid ifNone: [].
+			class isNil
 				ifTrue: 
 					["Not a recognised interface class so drop through and
 					 return IDispatch or IUnknown depending on remaining flags"
@@ -212,7 +214,7 @@ free
 	super free!
 
 genericRecordClass
-	^AXRecord!
+	^Record!
 
 hasRecordInfo
 	"Private - Answer whether there an <IRecordInfo> describing the receiver's elements is
@@ -309,7 +311,7 @@ recordClass
 	AXRecord class, which implements late bound access to the structure elements using the
 	information supplied by the <IRecordInfo> interrface."
 
-	^ExternalStructure classForGUID: self recordInfo guid ifNone: []!
+	^Structure classForGUID: self recordInfo guid ifNone: []!
 
 recordInfo
 	"Answer the <IRecordInfo> associated with the receiver (if the receiver is of type
@@ -327,9 +329,10 @@ redim: interval
 	self unaccessData.
 	start := length := nil.
 	bound := SAFEARRAYBOUND new.
-	bound lLbound: interval start; cElements: interval size.
-	OLEAutLibrary default
-		safeArrayRedim: self psaboundNew: bound!
+	bound
+		lLbound: interval start;
+		cElements: interval size.
+	OLEAutLibrary default safeArrayRedim: self psaboundNew: bound!
 
 rgsabound
 	"Answer the <StructureArray> value of the receiver's 'rgsabound' field."
@@ -353,7 +356,7 @@ start
 unaccessData
 	"Private - Reverse a previous #accessData if necessary."
 
-	data notNull 
+	data notNull
 		ifTrue: 
 			[data := nil.
 			OLEAutLibrary default safeArrayUnaccessData: self]!
@@ -401,54 +404,54 @@ with: otherCollection do: operation
 		operation
 			value: elem
 			value: (otherCollection at: i)]! !
-!SAFEARRAY categoriesFor: #_deepenShallowCopy:trail:!copying!private! !
-!SAFEARRAY categoriesFor: #accessData!helpers!private! !
-!SAFEARRAY categoriesFor: #asObject!converting!public! !
-!SAFEARRAY categoriesFor: #asSAFEARRAY!converting!public! !
-!SAFEARRAY categoriesFor: #asVariant!converting!public! !
-!SAFEARRAY categoriesFor: #base!accessing!private! !
-!SAFEARRAY categoriesFor: #cbElements!**compiled accessors**!public! !
-!SAFEARRAY categoriesFor: #cDims!**compiled accessors**!private! !
-!SAFEARRAY categoriesFor: #cLocks!**compiled accessors**!public! !
-!SAFEARRAY categoriesFor: #copy!copying!public! !
-!SAFEARRAY categoriesFor: #data!accessing!public! !
-!SAFEARRAY categoriesFor: #deduceElementClass!helpers!private! !
-!SAFEARRAY categoriesFor: #detach!public!realizing/unrealizing! !
-!SAFEARRAY categoriesFor: #dimensions!accessing!public! !
-!SAFEARRAY categoriesFor: #elementAt:!accessing!public! !
-!SAFEARRAY categoriesFor: #elementAt:put:!accessing!public! !
-!SAFEARRAY categoriesFor: #elementClass!constants!public! !
-!SAFEARRAY categoriesFor: #elementCount!accessing!private! !
-!SAFEARRAY categoriesFor: #elementSize!accessing!public! !
-!SAFEARRAY categoriesFor: #fFeatures!**compiled accessors**!public! !
-!SAFEARRAY categoriesFor: #free!public!realizing/unrealizing! !
-!SAFEARRAY categoriesFor: #genericRecordClass!constants!private! !
-!SAFEARRAY categoriesFor: #hasRecordInfo!private!testing! !
-!SAFEARRAY categoriesFor: #iid!accessing!public! !
-!SAFEARRAY categoriesFor: #initializePointer!initializing!private! !
-!SAFEARRAY categoriesFor: #length!accessing!public! !
-!SAFEARRAY categoriesFor: #length:!accessing!public! !
-!SAFEARRAY categoriesFor: #lowerBound:!accessing!public! !
-!SAFEARRAY categoriesFor: #newElementAt:!helpers!private! !
-!SAFEARRAY categoriesFor: #onStartup!event handling!private! !
-!SAFEARRAY categoriesFor: #pvData!**compiled accessors**!public! !
-!SAFEARRAY categoriesFor: #queryRecordInfo!helpers!private! !
-!SAFEARRAY categoriesFor: #recordClass!helpers!private! !
-!SAFEARRAY categoriesFor: #recordInfo!accessing!public! !
-!SAFEARRAY categoriesFor: #redim:!operations!public! !
-!SAFEARRAY categoriesFor: #rgsabound!**compiled accessors**!public! !
-!SAFEARRAY categoriesFor: #sizeOfDimension:!accessing!public! !
-!SAFEARRAY categoriesFor: #start!accessing!private! !
-!SAFEARRAY categoriesFor: #unaccessData!helpers!private! !
-!SAFEARRAY categoriesFor: #uncheckedAt:put:!accessing!private! !
-!SAFEARRAY categoriesFor: #upperBound:!accessing!public! !
-!SAFEARRAY categoriesFor: #vartype!accessing!public! !
-!SAFEARRAY categoriesFor: #vt!constants!public! !
-!SAFEARRAY categoriesFor: #with:do:!enumerating!public! !
+!OS.COM.SAFEARRAY categoriesFor: #_deepenShallowCopy:trail:!copying!private! !
+!OS.COM.SAFEARRAY categoriesFor: #accessData!helpers!private! !
+!OS.COM.SAFEARRAY categoriesFor: #asObject!converting!public! !
+!OS.COM.SAFEARRAY categoriesFor: #asSAFEARRAY!converting!public! !
+!OS.COM.SAFEARRAY categoriesFor: #asVariant!converting!public! !
+!OS.COM.SAFEARRAY categoriesFor: #base!accessing!private! !
+!OS.COM.SAFEARRAY categoriesFor: #cbElements!**compiled accessors**!public! !
+!OS.COM.SAFEARRAY categoriesFor: #cDims!**compiled accessors**!private! !
+!OS.COM.SAFEARRAY categoriesFor: #cLocks!**compiled accessors**!public! !
+!OS.COM.SAFEARRAY categoriesFor: #copy!copying!public! !
+!OS.COM.SAFEARRAY categoriesFor: #data!accessing!public! !
+!OS.COM.SAFEARRAY categoriesFor: #deduceElementClass!helpers!private! !
+!OS.COM.SAFEARRAY categoriesFor: #detach!public!realizing/unrealizing! !
+!OS.COM.SAFEARRAY categoriesFor: #dimensions!accessing!public! !
+!OS.COM.SAFEARRAY categoriesFor: #elementAt:!accessing!public! !
+!OS.COM.SAFEARRAY categoriesFor: #elementAt:put:!accessing!public! !
+!OS.COM.SAFEARRAY categoriesFor: #elementClass!constants!public! !
+!OS.COM.SAFEARRAY categoriesFor: #elementCount!accessing!private! !
+!OS.COM.SAFEARRAY categoriesFor: #elementSize!accessing!public! !
+!OS.COM.SAFEARRAY categoriesFor: #fFeatures!**compiled accessors**!public! !
+!OS.COM.SAFEARRAY categoriesFor: #free!public!realizing/unrealizing! !
+!OS.COM.SAFEARRAY categoriesFor: #genericRecordClass!constants!private! !
+!OS.COM.SAFEARRAY categoriesFor: #hasRecordInfo!private!testing! !
+!OS.COM.SAFEARRAY categoriesFor: #iid!accessing!public! !
+!OS.COM.SAFEARRAY categoriesFor: #initializePointer!initializing!private! !
+!OS.COM.SAFEARRAY categoriesFor: #length!accessing!public! !
+!OS.COM.SAFEARRAY categoriesFor: #length:!accessing!public! !
+!OS.COM.SAFEARRAY categoriesFor: #lowerBound:!accessing!public! !
+!OS.COM.SAFEARRAY categoriesFor: #newElementAt:!helpers!private! !
+!OS.COM.SAFEARRAY categoriesFor: #onStartup!event handling!private! !
+!OS.COM.SAFEARRAY categoriesFor: #pvData!**compiled accessors**!public! !
+!OS.COM.SAFEARRAY categoriesFor: #queryRecordInfo!helpers!private! !
+!OS.COM.SAFEARRAY categoriesFor: #recordClass!helpers!private! !
+!OS.COM.SAFEARRAY categoriesFor: #recordInfo!accessing!public! !
+!OS.COM.SAFEARRAY categoriesFor: #redim:!operations!public! !
+!OS.COM.SAFEARRAY categoriesFor: #rgsabound!**compiled accessors**!public! !
+!OS.COM.SAFEARRAY categoriesFor: #sizeOfDimension:!accessing!public! !
+!OS.COM.SAFEARRAY categoriesFor: #start!accessing!private! !
+!OS.COM.SAFEARRAY categoriesFor: #unaccessData!helpers!private! !
+!OS.COM.SAFEARRAY categoriesFor: #uncheckedAt:put:!accessing!private! !
+!OS.COM.SAFEARRAY categoriesFor: #upperBound:!accessing!public! !
+!OS.COM.SAFEARRAY categoriesFor: #vartype!accessing!public! !
+!OS.COM.SAFEARRAY categoriesFor: #vt!constants!public! !
+!OS.COM.SAFEARRAY categoriesFor: #with:do:!enumerating!public! !
 
-SAFEARRAY methodProtocol: #variantCompatible attributes: #(#readOnly) selectors: #(#asVariant)!
+OS.COM.SAFEARRAY methodProtocol: #variantCompatible attributes: #(#readOnly) selectors: #(#asVariant)!
 
-!SAFEARRAY class methodsFor!
+!OS.COM.SAFEARRAY class methodsFor!
 
 clear: addressOrBytes
 	"Free an instance of the structure which instances of the receiver wrap
@@ -458,34 +461,32 @@ clear: addressOrBytes
 	hr := OLEAutLibrary default safeArrayDestroy: addressOrBytes.
 	hr < 0 ifFalse: [^self].
 	"If the array is merely locked, then attempt to unlock it"
-	hr = DISP_E_ARRAYISLOCKED 
+	hr = DISP_E_ARRAYISLOCKED
 		ifTrue: 
 			["Set cLocks to 1, and then call unlock"
-
 			addressOrBytes dwordAtOffset: 8 put: 1.
-			hr := (OLEAutLibrary default)
+			hr := OLEAutLibrary default
 						safeArrayUnlock: addressOrBytes;
 						safeArrayDestroy: addressOrBytes].
 	"If still locked after a large number of attempts, or some other error, then report it"
 	hr < 0 ifTrue: [^HRESULTError signalWith: hr]!
 
-createVector: lenInteger vt: vtInteger extra: pvExtra 
+createVector: lenInteger vt: vtInteger extra: pvExtra
 	"Private - Answer a pointer to a new vector (single dimensioned)
 	SAFEARRAY of the specified size and element type, allocated
 	by the OLE Automation Library. The lower bound is defaulted to 
 	zero for compatibility with VB."
 
 	| answer |
-	answer := OLEAutLibrary default 
+	answer := OLEAutLibrary default
 				safeArrayCreateVectorEx: vtInteger
 				lLbound: 0
 				cElements: lenInteger
 				pvExtra: pvExtra.
-	answer isNull 
+	answer isNull
 		ifTrue: 
 			["Unfortunately we don't know why it failed, because the call does not return an HRESULT, 
 			 and doesn't SetLastError() either"
-
 			^self error: 'Failed to create vector'].
 	answer beFinalizable.
 	^answer!
@@ -555,8 +556,8 @@ fromAddress: psa vt: vartype owner: arrayOwner
 	vartype. The instance will not free the safe array at psa
 	unless the arrayOwner is nil."
 
-	^self 
-		fromAddress: psa 
+	^self
+		fromAddress: psa
 		elementClass: (VARIANT classForVT: vartype)
 		owner: arrayOwner!
 
@@ -623,9 +624,7 @@ length: length vt: vt
 	safe array and will free it on receipt of a #free message, 
 	or upon finalization, unless previously sent a #detach message."
 
-	^self 
-		length: length
-		elementClass: (VARIANT classForVT: vt)!
+	^self length: length elementClass: (VARIANT classForVT: vt)!
 
 length: length vt: vt elementClass: elementClass
 	"Private - Answer a new instance of the receiver that owns a buffer
@@ -659,23 +658,23 @@ vt
 	depend on the element type, but it will always include this array modifier."
 
 	^VT_ARRAY! !
-!SAFEARRAY class categoriesFor: #clear:!public!realizing/unrealizing! !
-!SAFEARRAY class categoriesFor: #createVector:vt:extra:!helpers!private! !
-!SAFEARRAY class categoriesFor: #defineFields!public!template definition! !
-!SAFEARRAY class categoriesFor: #elementSize!accessing!public! !
-!SAFEARRAY class categoriesFor: #fromAddress:!instance creation!public! !
-!SAFEARRAY class categoriesFor: #fromAddress:elementClass:owner:!instance creation!public! !
-!SAFEARRAY class categoriesFor: #fromAddress:owner:!instance creation!public! !
-!SAFEARRAY class categoriesFor: #fromAddress:vt:owner:!instance creation!public! !
-!SAFEARRAY class categoriesFor: #initialize!development!initializing!private! !
-!SAFEARRAY class categoriesFor: #length:elementClass:!instance creation!public! !
-!SAFEARRAY class categoriesFor: #length:elementSize:!instance creation!private! !
-!SAFEARRAY class categoriesFor: #length:interfaceClass:!instance creation!public! !
-!SAFEARRAY class categoriesFor: #length:recordClass:!instance creation!public! !
-!SAFEARRAY class categoriesFor: #length:vt:!instance creation!public! !
-!SAFEARRAY class categoriesFor: #length:vt:elementClass:!instance creation!private! !
-!SAFEARRAY class categoriesFor: #newBuffer!instance creation!public! !
-!SAFEARRAY class categoriesFor: #onStartup!event handling!private! !
-!SAFEARRAY class categoriesFor: #uninitialize!class hierarchy-removing!private! !
-!SAFEARRAY class categoriesFor: #vt!constants!public! !
+!OS.COM.SAFEARRAY class categoriesFor: #clear:!public!realizing/unrealizing! !
+!OS.COM.SAFEARRAY class categoriesFor: #createVector:vt:extra:!helpers!private! !
+!OS.COM.SAFEARRAY class categoriesFor: #defineFields!public!template definition! !
+!OS.COM.SAFEARRAY class categoriesFor: #elementSize!accessing!public! !
+!OS.COM.SAFEARRAY class categoriesFor: #fromAddress:!instance creation!public! !
+!OS.COM.SAFEARRAY class categoriesFor: #fromAddress:elementClass:owner:!instance creation!public! !
+!OS.COM.SAFEARRAY class categoriesFor: #fromAddress:owner:!instance creation!public! !
+!OS.COM.SAFEARRAY class categoriesFor: #fromAddress:vt:owner:!instance creation!public! !
+!OS.COM.SAFEARRAY class categoriesFor: #initialize!development!initializing!private! !
+!OS.COM.SAFEARRAY class categoriesFor: #length:elementClass:!instance creation!public! !
+!OS.COM.SAFEARRAY class categoriesFor: #length:elementSize:!instance creation!private! !
+!OS.COM.SAFEARRAY class categoriesFor: #length:interfaceClass:!instance creation!public! !
+!OS.COM.SAFEARRAY class categoriesFor: #length:recordClass:!instance creation!public! !
+!OS.COM.SAFEARRAY class categoriesFor: #length:vt:!instance creation!public! !
+!OS.COM.SAFEARRAY class categoriesFor: #length:vt:elementClass:!instance creation!private! !
+!OS.COM.SAFEARRAY class categoriesFor: #newBuffer!instance creation!public! !
+!OS.COM.SAFEARRAY class categoriesFor: #onStartup!event handling!private! !
+!OS.COM.SAFEARRAY class categoriesFor: #uninitialize!class hierarchy-removing!private! !
+!OS.COM.SAFEARRAY class categoriesFor: #vt!constants!public! !
 

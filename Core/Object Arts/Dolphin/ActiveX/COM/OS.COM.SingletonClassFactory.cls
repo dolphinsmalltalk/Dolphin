@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-COMClassFactory subclass: #COMSingletonClassFactory
+OS.COM.ClassFactory subclass: #'OS.COM.SingletonClassFactory'
 	instanceVariableNames: 'current'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-COMSingletonClassFactory guid: (GUID fromString: '{87b4c542-026e-11d3-9fd7-00a0cc3e4a32}')!
-COMSingletonClassFactory comment: 'COMSingletonClassFactory is simple specialization of COMClassFactory which always serves up the same instance of its registered coclass.
+OS.COM.SingletonClassFactory guid: (Core.GUID fromString: '{87b4c542-026e-11d3-9fd7-00a0cc3e4a32}')!
+OS.COM.SingletonClassFactory comment: 'COMSingletonClassFactory is simple specialization of COMClassFactory which always serves up the same instance of its registered coclass.
 
 Note that although this is a useful concept (it is supported by the ATL for example), it is not strictly supported by COM which expects every call to CoCreateInstance() to answer a brand new instance of the coclass. This can break the apartment threading model when sharing an object since COM assumes that the object is created in the apartment of the caller, and where multiple apartments exist this can result in one apartment erroneously holding an unmarshalled interface pointer to an object in another apartment.
 
@@ -19,8 +19,8 @@ Instance Variables:
 Class Variables:
 	None
 '!
-!COMSingletonClassFactory categoriesForClass!COM-Implementations! !
-!COMSingletonClassFactory methodsFor!
+!OS.COM.SingletonClassFactory categoriesForClass!COM-Implementations! !
+!OS.COM.SingletonClassFactory methodsFor!
 
 createInstance: pUnkOuter
 	"Private - Answer the singleton instance of the receiver's server class."
@@ -28,5 +28,5 @@ createInstance: pUnkOuter
 	current isNil ifTrue: [
 		current := super createInstance: pUnkOuter].
 	^current! !
-!COMSingletonClassFactory categoriesFor: #createInstance:!instance creation!private! !
+!OS.COM.SingletonClassFactory categoriesFor: #createInstance:!instance creation!private! !
 

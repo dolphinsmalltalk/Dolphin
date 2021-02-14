@@ -1,19 +1,19 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-IUnknown subclass: #IRecordInfo
+OS.COM.IUnknown subclass: #'OS.COM.IRecordInfo'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'AXAutomationConstants AXAutomationErrors'
+	imports: #(#{OS.COM.AutomationConstants} #{OS.COM.AutomationErrors})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-IRecordInfo guid: (IID fromString: '{0000002f-0000-0000-c000-000000000046}')!
-IRecordInfo comment: '<IRecordInfo> is a wrapper class for the COM interface ''OLEIDL.IRecordInfo'' generated from type information in the ''OLEIDL Library'' library. It contains methods to invoke the member functions exposed by that interface.
+OS.COM.IRecordInfo guid: (OS.COM.IID fromString: '{0000002f-0000-0000-c000-000000000046}')!
+OS.COM.IRecordInfo comment: '<IRecordInfo> is a wrapper class for the COM interface ''OLEIDL.IRecordInfo'' generated from type information in the ''OLEIDL Library'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
 
 Warning: This comment was automatically generated from the interface''s type information, but any changes made here will not be overwritten if the wrapper class is regenerated.'!
-!IRecordInfo categoriesForClass!COM-Interfaces!OLEIDL-Interfaces! !
-!IRecordInfo methodsFor!
+!OS.COM.IRecordInfo categoriesForClass!COM-Interfaces!OLEIDL-Interfaces! !
+!OS.COM.IRecordInfo methodsFor!
 
 byteSize
 	"Answer the <integer> size in bytes of the structure described by the receiver."
@@ -158,7 +158,7 @@ IsMatchingType: pRecordInfo
 name
 	"Answer the name of the structure described by the receiver."
 
-	| answer  bstr |
+	| answer bstr |
 	bstr := BSTR new.
 	self GetName: bstr.
 	answer := bstr asString.
@@ -280,33 +280,33 @@ typeInfo
 		GetTypeInfo: answer.
 	^answer asObject
 ! !
-!IRecordInfo categoriesFor: #byteSize!accessing!public! !
-!IRecordInfo categoriesFor: #getField:from:ifAbsent:!accessing!private! !
-!IRecordInfo categoriesFor: #GetField:szFieldName:pvarField:!COM Interfaces-IRecordInfo!private! !
-!IRecordInfo categoriesFor: #getFieldNames!accessing!public! !
-!IRecordInfo categoriesFor: #GetFieldNames:rgBstrNames:!**auto generated**!COM Interfaces-IRecordInfo!private! !
-!IRecordInfo categoriesFor: #GetFieldNoCopy:szFieldName:pvarField:ppvDataCArray:!**auto generated**!COM Interfaces-IRecordInfo!private! !
-!IRecordInfo categoriesFor: #GetGuid:!**auto generated**!COM Interfaces-IRecordInfo!private! !
-!IRecordInfo categoriesFor: #GetName:!**auto generated**!COM Interfaces-IRecordInfo!private! !
-!IRecordInfo categoriesFor: #GetSize:!**auto generated**!COM Interfaces-IRecordInfo!private! !
-!IRecordInfo categoriesFor: #GetTypeInfo:!**auto generated**!COM Interfaces-IRecordInfo!private! !
-!IRecordInfo categoriesFor: #guid!accessing!public! !
-!IRecordInfo categoriesFor: #IsMatchingType:!**auto generated**!COM Interfaces-IRecordInfo!public! !
-!IRecordInfo categoriesFor: #name!accessing!public! !
-!IRecordInfo categoriesFor: #PutField:pvData:szFieldName:pvarField:!COM Interfaces-IRecordInfo!private! !
-!IRecordInfo categoriesFor: #PutFieldNoCopy:pvData:szFieldName:pvarField:!**auto generated**!COM Interfaces-IRecordInfo!private! !
-!IRecordInfo categoriesFor: #RecordClear:!**auto generated**!COM Interfaces-IRecordInfo!public! !
-!IRecordInfo categoriesFor: #RecordCopy:pvNew:!**auto generated**!COM Interfaces-IRecordInfo!private! !
-!IRecordInfo categoriesFor: #RecordCreate!**auto generated**!COM Interfaces-IRecordInfo!public! !
-!IRecordInfo categoriesFor: #RecordCreateCopy:ppvDest:!**auto generated**!COM Interfaces-IRecordInfo!private! !
-!IRecordInfo categoriesFor: #RecordDestroy:!**auto generated**!COM Interfaces-IRecordInfo!public! !
-!IRecordInfo categoriesFor: #RecordInit:!**auto generated**!COM Interfaces-IRecordInfo!private! !
-!IRecordInfo categoriesFor: #setField:value:into:ifAbsent:!accessing!private! !
-!IRecordInfo categoriesFor: #typeInfo!methods!public! !
+!OS.COM.IRecordInfo categoriesFor: #byteSize!accessing!public! !
+!OS.COM.IRecordInfo categoriesFor: #getField:from:ifAbsent:!accessing!private! !
+!OS.COM.IRecordInfo categoriesFor: #GetField:szFieldName:pvarField:!COM Interfaces-IRecordInfo!private! !
+!OS.COM.IRecordInfo categoriesFor: #getFieldNames!accessing!public! !
+!OS.COM.IRecordInfo categoriesFor: #GetFieldNames:rgBstrNames:!**auto generated**!COM Interfaces-IRecordInfo!private! !
+!OS.COM.IRecordInfo categoriesFor: #GetFieldNoCopy:szFieldName:pvarField:ppvDataCArray:!**auto generated**!COM Interfaces-IRecordInfo!private! !
+!OS.COM.IRecordInfo categoriesFor: #GetGuid:!**auto generated**!COM Interfaces-IRecordInfo!private! !
+!OS.COM.IRecordInfo categoriesFor: #GetName:!**auto generated**!COM Interfaces-IRecordInfo!private! !
+!OS.COM.IRecordInfo categoriesFor: #GetSize:!**auto generated**!COM Interfaces-IRecordInfo!private! !
+!OS.COM.IRecordInfo categoriesFor: #GetTypeInfo:!**auto generated**!COM Interfaces-IRecordInfo!private! !
+!OS.COM.IRecordInfo categoriesFor: #guid!accessing!public! !
+!OS.COM.IRecordInfo categoriesFor: #IsMatchingType:!**auto generated**!COM Interfaces-IRecordInfo!public! !
+!OS.COM.IRecordInfo categoriesFor: #name!accessing!public! !
+!OS.COM.IRecordInfo categoriesFor: #PutField:pvData:szFieldName:pvarField:!COM Interfaces-IRecordInfo!private! !
+!OS.COM.IRecordInfo categoriesFor: #PutFieldNoCopy:pvData:szFieldName:pvarField:!**auto generated**!COM Interfaces-IRecordInfo!private! !
+!OS.COM.IRecordInfo categoriesFor: #RecordClear:!**auto generated**!COM Interfaces-IRecordInfo!public! !
+!OS.COM.IRecordInfo categoriesFor: #RecordCopy:pvNew:!**auto generated**!COM Interfaces-IRecordInfo!private! !
+!OS.COM.IRecordInfo categoriesFor: #RecordCreate!**auto generated**!COM Interfaces-IRecordInfo!public! !
+!OS.COM.IRecordInfo categoriesFor: #RecordCreateCopy:ppvDest:!**auto generated**!COM Interfaces-IRecordInfo!private! !
+!OS.COM.IRecordInfo categoriesFor: #RecordDestroy:!**auto generated**!COM Interfaces-IRecordInfo!public! !
+!OS.COM.IRecordInfo categoriesFor: #RecordInit:!**auto generated**!COM Interfaces-IRecordInfo!private! !
+!OS.COM.IRecordInfo categoriesFor: #setField:value:into:ifAbsent:!accessing!private! !
+!OS.COM.IRecordInfo categoriesFor: #typeInfo!methods!public! !
 
-IRecordInfo methodProtocol: #IRecordInfo attributes: #(#readOnly) selectors: #(#GetField:szFieldName:pvarField: #GetFieldNames:rgBstrNames: #GetFieldNoCopy:szFieldName:pvarField:ppvDataCArray: #GetGuid: #GetName: #GetSize: #GetTypeInfo: #IsMatchingType: #PutField:pvData:szFieldName:pvarField: #PutFieldNoCopy:pvData:szFieldName:pvarField: #RecordClear: #RecordCopy:pvNew: #RecordCreate #RecordCreateCopy:ppvDest: #RecordDestroy: #RecordInit:)!
+OS.COM.IRecordInfo methodProtocol: #IRecordInfo attributes: #(#readOnly) selectors: #(#GetField:szFieldName:pvarField: #GetFieldNames:rgBstrNames: #GetFieldNoCopy:szFieldName:pvarField:ppvDataCArray: #GetGuid: #GetName: #GetSize: #GetTypeInfo: #IsMatchingType: #PutField:pvData:szFieldName:pvarField: #PutFieldNoCopy:pvData:szFieldName:pvarField: #RecordClear: #RecordCopy:pvNew: #RecordCreate #RecordCreateCopy:ppvDest: #RecordDestroy: #RecordInit:)!
 
-!IRecordInfo class methodsFor!
+!OS.COM.IRecordInfo class methodsFor!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'OLEIDL.IRecordInfo'
@@ -350,5 +350,5 @@ defineFunctions
 		defineFunction: #RecordDestroy:
 			argumentTypes: 'void*'
 ! !
-!IRecordInfo class categoriesFor: #defineFunctions!initializing!public! !
+!OS.COM.IRecordInfo class categoriesFor: #defineFunctions!initializing!public! !
 

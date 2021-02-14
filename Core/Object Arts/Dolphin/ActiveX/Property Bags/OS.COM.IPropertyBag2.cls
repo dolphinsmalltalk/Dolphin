@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-IUnknown subclass: #IPropertyBag2
+OS.COM.IUnknown subclass: #'OS.COM.IPropertyBag2'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-IPropertyBag2 guid: (IID fromString: '{22f55882-280b-11d0-a8a9-00a0c90c2004}')!
-IPropertyBag2 comment: '`IPropertyBag2` is a wrapper class for the COM interface ''Win32.IPropertyBag2'' generated from type information in the ''Win32 API'' library. It contains methods to invoke the member functions exposed by that interface.
+OS.COM.IPropertyBag2 guid: (OS.COM.IID fromString: '{22f55882-280b-11d0-a8a9-00a0c90c2004}')!
+OS.COM.IPropertyBag2 comment: '`OS.COM.IPropertyBag2` is a wrapper class for the COM interface ''Win32.IPropertyBag2'' generated from type information in the ''Win32 API'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
 
@@ -51,8 +51,8 @@ interface IPropertyBag2 : IUnknown
 };
 ```
 '!
-!IPropertyBag2 categoriesForClass!COM-Interfaces! !
-!IPropertyBag2 methodsFor!
+!OS.COM.IPropertyBag2 categoriesForClass!COM-Interfaces! !
+!OS.COM.IPropertyBag2 methodsFor!
 
 countProperties
 	"Answer the <DWORD> result of invoking the CountProperties() method of the COM object."
@@ -163,20 +163,20 @@ Write: cProperties pPropBag: pPropBag pvarValue: pvarValue
 
 	<virtual stdcall: hresult 5 dword PROPBAG2* variant*>
 	^self invalidCall: _failureCode! !
-!IPropertyBag2 categoriesFor: #countProperties!**auto generated**!methods!public! !
-!IPropertyBag2 categoriesFor: #CountProperties:!**auto generated**!COM Interfaces-IPropertyBag2!private! !
-!IPropertyBag2 categoriesFor: #getPropertyInfo:cProperties:!**auto generated**!methods!public! !
-!IPropertyBag2 categoriesFor: #GetPropertyInfo:cProperties:pPropBag:pcProperties:!**auto generated**!COM Interfaces-IPropertyBag2!private! !
-!IPropertyBag2 categoriesFor: #loadObject:dwHint:punkObject:pErrLog:!**auto generated**!methods!public! !
-!IPropertyBag2 categoriesFor: #LoadObject:dwHint:punkObject:pErrLog:!**auto generated**!COM Interfaces-IPropertyBag2!private! !
-!IPropertyBag2 categoriesFor: #read:pPropBag:pErrLog:phrError:!**auto generated**!methods!public! !
-!IPropertyBag2 categoriesFor: #Read:pPropBag:pErrLog:pvarValue:phrError:!**auto generated**!COM Interfaces-IPropertyBag2!private! !
-!IPropertyBag2 categoriesFor: #write:pPropBag:pvarValue:!**auto generated**!methods!public! !
-!IPropertyBag2 categoriesFor: #Write:pPropBag:pvarValue:!**auto generated**!COM Interfaces-IPropertyBag2!private! !
+!OS.COM.IPropertyBag2 categoriesFor: #countProperties!**auto generated**!methods!public! !
+!OS.COM.IPropertyBag2 categoriesFor: #CountProperties:!**auto generated**!COM Interfaces-IPropertyBag2!private! !
+!OS.COM.IPropertyBag2 categoriesFor: #getPropertyInfo:cProperties:!**auto generated**!methods!public! !
+!OS.COM.IPropertyBag2 categoriesFor: #GetPropertyInfo:cProperties:pPropBag:pcProperties:!**auto generated**!COM Interfaces-IPropertyBag2!private! !
+!OS.COM.IPropertyBag2 categoriesFor: #loadObject:dwHint:punkObject:pErrLog:!**auto generated**!methods!public! !
+!OS.COM.IPropertyBag2 categoriesFor: #LoadObject:dwHint:punkObject:pErrLog:!**auto generated**!COM Interfaces-IPropertyBag2!private! !
+!OS.COM.IPropertyBag2 categoriesFor: #read:pPropBag:pErrLog:phrError:!**auto generated**!methods!public! !
+!OS.COM.IPropertyBag2 categoriesFor: #Read:pPropBag:pErrLog:pvarValue:phrError:!**auto generated**!COM Interfaces-IPropertyBag2!private! !
+!OS.COM.IPropertyBag2 categoriesFor: #write:pPropBag:pvarValue:!**auto generated**!methods!public! !
+!OS.COM.IPropertyBag2 categoriesFor: #Write:pPropBag:pvarValue:!**auto generated**!COM Interfaces-IPropertyBag2!private! !
 
-IPropertyBag2 methodProtocol: #IPropertyBag2 attributes: #(#readOnly) selectors: #(#CountProperties: #GetPropertyInfo:cProperties:pPropBag:pcProperties: #LoadObject:dwHint:punkObject:pErrLog: #Read:pPropBag:pErrLog:pvarValue:phrError: #Write:pPropBag:pvarValue:)!
+OS.COM.IPropertyBag2 methodProtocol: #IPropertyBag2 attributes: #(#readOnly) selectors: #(#CountProperties: #GetPropertyInfo:cProperties:pPropBag:pcProperties: #LoadObject:dwHint:punkObject:pErrLog: #Read:pPropBag:pErrLog:pvarValue:phrError: #Write:pPropBag:pvarValue:)!
 
-!IPropertyBag2 class methodsFor!
+!OS.COM.IPropertyBag2 class methodsFor!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'Win32.IPropertyBag2'
@@ -194,5 +194,5 @@ defineFunctions
 		defineFunction: #LoadObject:dwHint:punkObject:pErrLog:
 			argumentTypes: 'lpwstr dword IUnknown* IErrorLog*'
 ! !
-!IPropertyBag2 class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!OS.COM.IPropertyBag2 class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
 

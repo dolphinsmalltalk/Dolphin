@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-IUnknown subclass: #IPicture
+OS.COM.IUnknown subclass: #'OS.COM.IPicture'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-IPicture guid: (IID fromString: '{7bf80980-bf32-101a-8bbb-00aa00300cab}')!
-IPicture comment: '`IPicture` is a wrapper class for the COM interface ''stdole.IPicture'' generated from type information in the ''OLE Automation'' library. It contains methods to invoke the member functions exposed by that interface.
+OS.COM.IPicture guid: (OS.COM.IID fromString: '{7bf80980-bf32-101a-8bbb-00aa00300cab}')!
+OS.COM.IPicture comment: '`IPicture` is a wrapper class for the COM interface ''stdole.IPicture'' generated from type information in the ''OLE Automation'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains the following helpstring for this interface
 	"Picture Object"
@@ -84,8 +84,8 @@ interface IPicture : IUnknown
 };
 ```
 '!
-!IPicture categoriesForClass!COM-Interfaces! !
-!IPicture methodsFor!
+!OS.COM.IPicture categoriesForClass!COM-Interfaces! !
+!OS.COM.IPicture methodsFor!
 
 attributes
 	"Answer the <sdword> value of the 'Attributes' property of the receiver."
@@ -99,7 +99,7 @@ curDC
 	"Answer the <sdword> value of the 'CurDC' property of the receiver."
 
 	| answer |
-	answer := ExternalHandle new.
+	answer := Handle new.
 	self get_CurDC: answer.
 	^answer asObject!
 
@@ -192,7 +192,7 @@ handle
 	"Answer the GDI handle of the picture."
 
 	| answer |
-	answer := ExternalHandle new.
+	answer := Handle new.
 	self get_Handle: answer.
 	^answer
 !
@@ -210,7 +210,7 @@ hPal
 	Note that ownership of the palette varies, see the OLE documentation for further information."
 
 	| answer |
-	answer := ExternalHandle new.
+	answer := Handle new.
 	self get_hPal: answer.
 	^answer
 !
@@ -297,10 +297,10 @@ Render: hdc x: x y: y cx: cx cy: cy xSrc: xSrc ySrc: ySrc cxSrc: cxSrc cySrc: cy
 			[in] OLE_YPOS_HIMETRIC ySrc,
 			[in] OLE_XSIZE_HIMETRIC cxSrc,
 			[in] OLE_YSIZE_HIMETRIC cySrc,
-			[in] RECT* prcWBounds);
+			[in] RECTL* prcWBounds);
 	"
 
-	<virtual stdcall: hresult 9 handle sdword sdword sdword sdword sdword sdword sdword sdword RECT*>
+	<virtual stdcall: hresult 9 handle sdword sdword sdword sdword sdword sdword sdword sdword RECTL*>
 	^self invalidCall: _failureCode!
 
 saveAsFile: pstm fSaveMemCopy: fSaveMemCopy
@@ -379,39 +379,39 @@ width
 	answer := SDWORD new.
 	self get_Width: answer.
 	^answer asObject! !
-!IPicture categoriesFor: #attributes!**auto generated**!properties!public! !
-!IPicture categoriesFor: #curDC!properties!public! !
-!IPicture categoriesFor: #extent!accessing!public! !
-!IPicture categoriesFor: #get_Attributes:!**auto generated**!COM Interfaces-IPicture!private! !
-!IPicture categoriesFor: #get_CurDC:!COM Interfaces-IPicture!private! !
-!IPicture categoriesFor: #get_Handle:!COM Interfaces-IPicture!private! !
-!IPicture categoriesFor: #get_Height:!**auto generated**!COM Interfaces-IPicture!private! !
-!IPicture categoriesFor: #get_hPal:!COM Interfaces-IPicture!private! !
-!IPicture categoriesFor: #get_KeepOriginalFormat:!COM Interfaces-IPicture!private! !
-!IPicture categoriesFor: #get_Type:!**auto generated**!COM Interfaces-IPicture!private! !
-!IPicture categoriesFor: #get_Width:!**auto generated**!COM Interfaces-IPicture!private! !
-!IPicture categoriesFor: #handle!properties!public! !
-!IPicture categoriesFor: #height!**auto generated**!properties!public! !
-!IPicture categoriesFor: #hPal!properties!public! !
-!IPicture categoriesFor: #hPal:!**auto generated**!properties!public! !
-!IPicture categoriesFor: #keepOriginalFormat!properties!public! !
-!IPicture categoriesFor: #keepOriginalFormat:!**auto generated**!properties!public! !
-!IPicture categoriesFor: #pictureChanged!**auto generated**!methods!public! !
-!IPicture categoriesFor: #PictureChanged!**auto generated**!COM Interfaces-IPicture!private! !
-!IPicture categoriesFor: #put_hPal:!COM Interfaces-IPicture!private! !
-!IPicture categoriesFor: #put_KeepOriginalFormat:!**auto generated**!COM Interfaces-IPicture!private! !
-!IPicture categoriesFor: #render:x:y:cx:cy:xSrc:ySrc:cxSrc:cySrc:prcWBounds:!methods!public! !
-!IPicture categoriesFor: #Render:x:y:cx:cy:xSrc:ySrc:cxSrc:cySrc:prcWBounds:!COM Interfaces-IPicture!private! !
-!IPicture categoriesFor: #saveAsFile:fSaveMemCopy:!**auto generated**!methods!public! !
-!IPicture categoriesFor: #SaveAsFile:fSaveMemCopy:pcbSize:!COM Interfaces-IPicture!private! !
-!IPicture categoriesFor: #selectPicture:!**auto generated**!methods!public! !
-!IPicture categoriesFor: #SelectPicture:phdcOut:phbmpOut:!**auto generated**!COM Interfaces-IPicture!private! !
-!IPicture categoriesFor: #setHdc:!methods!public! !
-!IPicture categoriesFor: #SetHdc:!COM Interfaces-IPicture!private! !
-!IPicture categoriesFor: #type!**auto generated**!properties!public! !
-!IPicture categoriesFor: #width!**auto generated**!properties!public! !
+!OS.COM.IPicture categoriesFor: #attributes!**auto generated**!properties!public! !
+!OS.COM.IPicture categoriesFor: #curDC!properties!public! !
+!OS.COM.IPicture categoriesFor: #extent!accessing!public! !
+!OS.COM.IPicture categoriesFor: #get_Attributes:!**auto generated**!COM Interfaces-IPicture!private! !
+!OS.COM.IPicture categoriesFor: #get_CurDC:!COM Interfaces-IPicture!private! !
+!OS.COM.IPicture categoriesFor: #get_Handle:!COM Interfaces-IPicture!private! !
+!OS.COM.IPicture categoriesFor: #get_Height:!**auto generated**!COM Interfaces-IPicture!private! !
+!OS.COM.IPicture categoriesFor: #get_hPal:!COM Interfaces-IPicture!private! !
+!OS.COM.IPicture categoriesFor: #get_KeepOriginalFormat:!COM Interfaces-IPicture!private! !
+!OS.COM.IPicture categoriesFor: #get_Type:!**auto generated**!COM Interfaces-IPicture!private! !
+!OS.COM.IPicture categoriesFor: #get_Width:!**auto generated**!COM Interfaces-IPicture!private! !
+!OS.COM.IPicture categoriesFor: #handle!properties!public! !
+!OS.COM.IPicture categoriesFor: #height!**auto generated**!properties!public! !
+!OS.COM.IPicture categoriesFor: #hPal!properties!public! !
+!OS.COM.IPicture categoriesFor: #hPal:!**auto generated**!properties!public! !
+!OS.COM.IPicture categoriesFor: #keepOriginalFormat!properties!public! !
+!OS.COM.IPicture categoriesFor: #keepOriginalFormat:!**auto generated**!properties!public! !
+!OS.COM.IPicture categoriesFor: #pictureChanged!**auto generated**!methods!public! !
+!OS.COM.IPicture categoriesFor: #PictureChanged!**auto generated**!COM Interfaces-IPicture!private! !
+!OS.COM.IPicture categoriesFor: #put_hPal:!COM Interfaces-IPicture!private! !
+!OS.COM.IPicture categoriesFor: #put_KeepOriginalFormat:!**auto generated**!COM Interfaces-IPicture!private! !
+!OS.COM.IPicture categoriesFor: #render:x:y:cx:cy:xSrc:ySrc:cxSrc:cySrc:prcWBounds:!methods!public! !
+!OS.COM.IPicture categoriesFor: #Render:x:y:cx:cy:xSrc:ySrc:cxSrc:cySrc:prcWBounds:!COM Interfaces-IPicture!private! !
+!OS.COM.IPicture categoriesFor: #saveAsFile:fSaveMemCopy:!**auto generated**!methods!public! !
+!OS.COM.IPicture categoriesFor: #SaveAsFile:fSaveMemCopy:pcbSize:!COM Interfaces-IPicture!private! !
+!OS.COM.IPicture categoriesFor: #selectPicture:!**auto generated**!methods!public! !
+!OS.COM.IPicture categoriesFor: #SelectPicture:phdcOut:phbmpOut:!**auto generated**!COM Interfaces-IPicture!private! !
+!OS.COM.IPicture categoriesFor: #setHdc:!methods!public! !
+!OS.COM.IPicture categoriesFor: #SetHdc:!COM Interfaces-IPicture!private! !
+!OS.COM.IPicture categoriesFor: #type!**auto generated**!properties!public! !
+!OS.COM.IPicture categoriesFor: #width!**auto generated**!properties!public! !
 
-!IPicture class methodsFor!
+!OS.COM.IPicture class methodsFor!
 
 clsid
 	"Private - Answer the CLSID of the coclass (StdPicture) which supports this interface."
@@ -451,7 +451,7 @@ defineFunctions
 		defineFunction: #get_Height:
 			argumentTypes: 'sdword*';
 		defineFunction: #Render:x:y:cx:cy:xSrc:ySrc:cxSrc:cySrc:prcWBounds:
-			argumentTypes: 'handle sdword sdword sdword sdword sdword sdword sdword sdword RECT*';
+			argumentTypes: 'handle sdword sdword sdword sdword sdword sdword sdword sdword RECTL*';
 		defineFunction: #put_hPal:
 			argumentTypes: 'handle';
 		defineFunction: #get_CurDC:
@@ -531,24 +531,22 @@ readFromIStream: anIStream
 
 	| answer |
 	answer := self newPointer.
-	OLEAutLibrary default 
-		oleLoadPicture: anIStream 
+	OLEAutLibrary default
+		oleLoadPicture: anIStream
 		lSize: 0
-		fRunmode: false 
-		riid: self iid 
+		fRunmode: false
+		riid: self iid
 		ppvObj: answer.
-	^answer
-
-	! !
-!IPicture class categoriesFor: #clsid!constants!private! !
-!IPicture class categoriesFor: #createPicture:type:owns:!instance creation!private! !
-!IPicture class categoriesFor: #defineFunctions!initializing!public! !
-!IPicture class categoriesFor: #fromBitmap:!instance creation!public! !
-!IPicture class categoriesFor: #fromFile:!instance creation!public! !
-!IPicture class categoriesFor: #fromIcon:!instance creation!public! !
-!IPicture class categoriesFor: #fromImage:type:!instance creation!private! !
-!IPicture class categoriesFor: #fromOwnedBitmap:!instance creation!public! !
-!IPicture class categoriesFor: #fromOwnedIcon:!instance creation!public! !
-!IPicture class categoriesFor: #fromOwnedImage:type:!instance creation!private! !
-!IPicture class categoriesFor: #readFromIStream:!instance creation!public! !
+	^answer! !
+!OS.COM.IPicture class categoriesFor: #clsid!constants!private! !
+!OS.COM.IPicture class categoriesFor: #createPicture:type:owns:!instance creation!private! !
+!OS.COM.IPicture class categoriesFor: #defineFunctions!initializing!public! !
+!OS.COM.IPicture class categoriesFor: #fromBitmap:!instance creation!public! !
+!OS.COM.IPicture class categoriesFor: #fromFile:!instance creation!public! !
+!OS.COM.IPicture class categoriesFor: #fromIcon:!instance creation!public! !
+!OS.COM.IPicture class categoriesFor: #fromImage:type:!instance creation!private! !
+!OS.COM.IPicture class categoriesFor: #fromOwnedBitmap:!instance creation!public! !
+!OS.COM.IPicture class categoriesFor: #fromOwnedIcon:!instance creation!public! !
+!OS.COM.IPicture class categoriesFor: #fromOwnedImage:type:!instance creation!private! !
+!OS.COM.IPicture class categoriesFor: #readFromIStream:!instance creation!public! !
 

@@ -1,26 +1,26 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-OLEStructure subclass: #CURRENCY
+OS.COM.OLEStructure subclass: #'OS.COM.CURRENCY'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'AXAutomationConstants'
+	imports: #(#{OS.COM.AutomationConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_cy' -> 16r0
 	}!
-CURRENCY guid: (GUID fromString: '{bbe7e662-de98-4ae2-b820-bae3e3c6127a}')!
-CURRENCY comment: 'CURRENCY is an <ExternalStructure> class to represent the Automation structure of the same name.
+OS.COM.CURRENCY guid: (Core.GUID fromString: '{bbe7e662-de98-4ae2-b820-bae3e3c6127a}')!
+OS.COM.CURRENCY comment: 'CURRENCY is an <ExternalStructure> class to represent the Automation structure of the same name.
 
 CURRENCY is a 64-bit fractional value scaled by 10000 to give 4 decimal places. It provides limited scaled decimal capabilities for simple scripting languages such as VB. It corresponds to the variant type VT_CY.
 
 CURRENCYs are mapped to/from Dolphin''s <ScaledDecimal> objects, although of course the latter has unlimited  range, and therefore many ScaledDecimals cannot be represented in a CURRENCY.'!
-!CURRENCY categoriesForClass!External-Data-Structured-COM! !
-!CURRENCY methodsFor!
+!OS.COM.CURRENCY categoriesForClass!External-Data-Structured-COM! !
+!OS.COM.CURRENCY methodsFor!
 
 asVariant
 	"Answer the <VARIANT> representation of the receiver."
 
-	^(VARIANT new)
+	^VARIANT new
 		vt: (self vt bitOr: VT_BYREF);
 		reference: self;
 		yourself!
@@ -45,15 +45,15 @@ value: newValue
 	"Set the receiver's value to the <Number>, newValue."
 
 	self cy: (newValue * 10000) asInteger! !
-!CURRENCY categoriesFor: #asVariant!converting!public! !
-!CURRENCY categoriesFor: #cy!**compiled accessors**!public! !
-!CURRENCY categoriesFor: #cy:!**compiled accessors**!public! !
-!CURRENCY categoriesFor: #value!accessing!public! !
-!CURRENCY categoriesFor: #value:!accessing!public! !
+!OS.COM.CURRENCY categoriesFor: #asVariant!converting!public! !
+!OS.COM.CURRENCY categoriesFor: #cy!**compiled accessors**!public! !
+!OS.COM.CURRENCY categoriesFor: #cy:!**compiled accessors**!public! !
+!OS.COM.CURRENCY categoriesFor: #value!accessing!public! !
+!OS.COM.CURRENCY categoriesFor: #value:!accessing!public! !
 
-CURRENCY methodProtocol: #variantCompatible attributes: #(#readOnly) selectors: #(#asVariant)!
+OS.COM.CURRENCY methodProtocol: #variantCompatible attributes: #(#readOnly) selectors: #(#asVariant)!
 
-!CURRENCY class methodsFor!
+!OS.COM.CURRENCY class methodsFor!
 
 defineFields
 	"Define the fields of the CURRENCY 'structure'.
@@ -97,12 +97,12 @@ vt
 	type when represented in a <VARIANT>."
 
 	^VT_CY! !
-!CURRENCY class categoriesFor: #defineFields!public!template definition! !
-!CURRENCY class categoriesFor: #epsilon!constants!public! !
-!CURRENCY class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!CURRENCY class categoriesFor: #initialize!development!initializing!private! !
-!CURRENCY class categoriesFor: #maximum!constants!public! !
-!CURRENCY class categoriesFor: #minimum!constants!public! !
-!CURRENCY class categoriesFor: #uninitialize!class hierarchy-removing!private! !
-!CURRENCY class categoriesFor: #vt!constants!public! !
+!OS.COM.CURRENCY class categoriesFor: #defineFields!public!template definition! !
+!OS.COM.CURRENCY class categoriesFor: #epsilon!constants!public! !
+!OS.COM.CURRENCY class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.COM.CURRENCY class categoriesFor: #initialize!development!initializing!private! !
+!OS.COM.CURRENCY class categoriesFor: #maximum!constants!public! !
+!OS.COM.CURRENCY class categoriesFor: #minimum!constants!public! !
+!OS.COM.CURRENCY class categoriesFor: #uninitialize!class hierarchy-removing!private! !
+!OS.COM.CURRENCY class categoriesFor: #vt!constants!public! !
 

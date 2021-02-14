@@ -1,14 +1,14 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-External.Address variableByteSubclass: #BSTR
+External.Address variableByteSubclass: #'OS.COM.BSTR'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-BSTR guid: (Core.GUID fromString: '{87b4c519-026e-11d3-9fd7-00a0cc3e4a32}')!
-BSTR isIndirection: true!
-BSTR comment: 'BSTR is an external structure to represent the OLE Automation string type of the same name.
+OS.COM.BSTR guid: (Core.GUID fromString: '{87b4c519-026e-11d3-9fd7-00a0cc3e4a32}')!
+OS.COM.BSTR isIndirection: true!
+OS.COM.BSTR comment: 'BSTR is an external structure to represent the OLE Automation string type of the same name.
 
 BSTR is defined as:
 	typedef OLECHAR FAR* BSTR;
@@ -20,8 +20,8 @@ BSTRs are both null-terminated AND counted. They store their length as a 32-bit 
 BSTRs are stored in memory managed by the OLE Automation Library, which enables ownership to be passed from one function to another:  (down in the depths of OLEAut32.DLL the SysXXX functions map onto the services of the COM task memory allocator). Where a function is expecting a BSTR argument, then a BSTR allocated with SysAllocString must be passed rather than an ordinary Unicode string. The BSTR class can be used to create suitable parameters from other Smalltalk <readableString> classes.
 
 BSTRs use finalization to safely manage the sys. alloc''d string, but they may be explicitly free''d too.'!
-!BSTR categoriesForClass!External-Data-Unstructured! !
-!BSTR methodsFor!
+!OS.COM.BSTR categoriesForClass!External-Data-Unstructured! !
+!OS.COM.BSTR methodsFor!
 
 asAnsiString
 	"Answer an ANSI-encoded string representation of the receiver. If any of the elements of the receiver cannot be represented as ANSI code points, then these will be translated to the default replacement character ($?)."
@@ -94,7 +94,7 @@ basicFree
 byteSize
 	"Answer the size in bytes of the string pointed at by the receiver, including any
 	embedded nulls, but excluding the terminating null."
-	
+
 	^OLEAutLibrary default sysStringByteLen: self!
 
 copy
@@ -148,7 +148,7 @@ size
 	"Answer the number of characters (including any embedded nulls, but excluding the 
 	terminating null) in the receiver. If the receiver is a null pointer, then the answer will
 	be zero."
-	
+
 	^OLEAutLibrary default sysStringLen: self!
 
 species
@@ -171,29 +171,29 @@ value: newValue
 			bstr := newValue asBSTR.
 			bstr == newValue ifTrue: [bstr := bstr copy]].
 	super value: (bstr beUnfinalizable; yourself)! !
-!BSTR categoriesFor: #asAnsiString!converting!public! !
-!BSTR categoriesFor: #asBSTR!converting!public! !
-!BSTR categoriesFor: #asByteString:!converting!private! !
-!BSTR categoriesFor: #asString!converting!public! !
-!BSTR categoriesFor: #asUtf16String!converting!public! !
-!BSTR categoriesFor: #asUtf8String!converting!public! !
-!BSTR categoriesFor: #at:!accessing!public! !
-!BSTR categoriesFor: #at:put:!accessing!public! !
-!BSTR categoriesFor: #attach:!accessing!private! !
-!BSTR categoriesFor: #basicFree!private!realizing/unrealizing! !
-!BSTR categoriesFor: #byteSize!accessing!public! !
-!BSTR categoriesFor: #copy!copying!public! !
-!BSTR categoriesFor: #deepCopy!copying!public! !
-!BSTR categoriesFor: #displayOn:!printing!public! !
-!BSTR categoriesFor: #free!private!realizing/unrealizing! !
-!BSTR categoriesFor: #onStartup!event handling!private! !
-!BSTR categoriesFor: #printOn:!development!printing!public! !
-!BSTR categoriesFor: #size!accessing!public! !
-!BSTR categoriesFor: #species!constants!public! !
-!BSTR categoriesFor: #value!accessing!public! !
-!BSTR categoriesFor: #value:!accessing!public! !
+!OS.COM.BSTR categoriesFor: #asAnsiString!converting!public! !
+!OS.COM.BSTR categoriesFor: #asBSTR!converting!public! !
+!OS.COM.BSTR categoriesFor: #asByteString:!converting!private! !
+!OS.COM.BSTR categoriesFor: #asString!converting!public! !
+!OS.COM.BSTR categoriesFor: #asUtf16String!converting!public! !
+!OS.COM.BSTR categoriesFor: #asUtf8String!converting!public! !
+!OS.COM.BSTR categoriesFor: #at:!accessing!public! !
+!OS.COM.BSTR categoriesFor: #at:put:!accessing!public! !
+!OS.COM.BSTR categoriesFor: #attach:!accessing!private! !
+!OS.COM.BSTR categoriesFor: #basicFree!private!realizing/unrealizing! !
+!OS.COM.BSTR categoriesFor: #byteSize!accessing!public! !
+!OS.COM.BSTR categoriesFor: #copy!copying!public! !
+!OS.COM.BSTR categoriesFor: #deepCopy!copying!public! !
+!OS.COM.BSTR categoriesFor: #displayOn:!printing!public! !
+!OS.COM.BSTR categoriesFor: #free!private!realizing/unrealizing! !
+!OS.COM.BSTR categoriesFor: #onStartup!event handling!private! !
+!OS.COM.BSTR categoriesFor: #printOn:!development!printing!public! !
+!OS.COM.BSTR categoriesFor: #size!accessing!public! !
+!OS.COM.BSTR categoriesFor: #species!constants!public! !
+!OS.COM.BSTR categoriesFor: #value!accessing!public! !
+!OS.COM.BSTR categoriesFor: #value:!accessing!public! !
 
-!BSTR class methodsFor!
+!OS.COM.BSTR class methodsFor!
 
 basicNew
 	^self newFixed: 4!
@@ -208,13 +208,17 @@ fromInteger: anAddress
 	whether anAddress is null, since null is a valid BSTR value,
 	also we must take a copy to avoid ownership problems."
 
-	^anAddress isNull 
+	^anAddress isNull
 		ifTrue: [self new]
-		ifFalse: [ | answer |
+		ifFalse: 
+			[| answer |
 			answer := OLEAutLibrary default sysAllocString: anAddress.
-			answer isNull 
+			answer isNull
 				ifTrue: [OutOfMemoryError signal]
-				ifFalse: [answer beFinalizable; yourself]]!
+				ifFalse: 
+					[answer
+						beFinalizable;
+						yourself]]!
 
 fromString: aString
 	"Answer a new instance of the receiver with the same contents as aString."
@@ -263,14 +267,14 @@ uninitialize
 
 	VMLibrary default registryAt: #BSTR put: nil.
 	SessionManager current removeEventsTriggeredFor: self! !
-!BSTR class categoriesFor: #basicNew!instance creation!private! !
-!BSTR class categoriesFor: #clear:!public!realizing/unrealizing! !
-!BSTR class categoriesFor: #fromInteger:!instance creation!public! !
-!BSTR class categoriesFor: #fromString:!instance creation!public! !
-!BSTR class categoriesFor: #icon!constants!public! !
-!BSTR class categoriesFor: #initialize!development!initializing!private! !
-!BSTR class categoriesFor: #new!instance creation!public! !
-!BSTR class categoriesFor: #newBuffer!instance creation!public! !
-!BSTR class categoriesFor: #onStartup!event handling!private! !
-!BSTR class categoriesFor: #uninitialize!class hierarchy-removing!private! !
+!OS.COM.BSTR class categoriesFor: #basicNew!instance creation!private! !
+!OS.COM.BSTR class categoriesFor: #clear:!public!realizing/unrealizing! !
+!OS.COM.BSTR class categoriesFor: #fromInteger:!instance creation!public! !
+!OS.COM.BSTR class categoriesFor: #fromString:!instance creation!public! !
+!OS.COM.BSTR class categoriesFor: #icon!constants!public! !
+!OS.COM.BSTR class categoriesFor: #initialize!development!initializing!private! !
+!OS.COM.BSTR class categoriesFor: #new!instance creation!public! !
+!OS.COM.BSTR class categoriesFor: #newBuffer!instance creation!public! !
+!OS.COM.BSTR class categoriesFor: #onStartup!event handling!private! !
+!OS.COM.BSTR class categoriesFor: #uninitialize!class hierarchy-removing!private! !
 

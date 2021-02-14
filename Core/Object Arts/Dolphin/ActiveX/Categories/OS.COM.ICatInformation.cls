@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-IUnknown subclass: #ICatInformation
+OS.COM.IUnknown subclass: #'OS.COM.ICatInformation'
 	instanceVariableNames: ''
 	classVariableNames: 'CatMan Controls'
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ICatInformation guid: (IID fromString: '{0002e013-0000-0000-c000-000000000046}')!
-ICatInformation comment: '<ICatInformation> is a wrapper class for the COM interface ''COMCAT.ICatInformation'' generated from type information in the ''OLE Component Categories Library'' library. It contains methods to invoke the member functions exposed by that interface.
+OS.COM.ICatInformation guid: (OS.COM.IID fromString: '{0002e013-0000-0000-c000-000000000046}')!
+OS.COM.ICatInformation comment: '<ICatInformation> is a wrapper class for the COM interface ''COMCAT.ICatInformation'' generated from type information in the ''OLE Component Categories Library'' library. It contains methods to invoke the member functions exposed by that interface.
 
 ICatInformation provides methods for obtaining information about the categories implemented or required by a certain class, as well as information about the categories registered on a given machine.
 
@@ -20,8 +20,8 @@ Class Variables:
 
 
 ICatInformation new allCategories'!
-!ICatInformation categoriesForClass!COM Category Manager!COM-Interfaces! !
-!ICatInformation methodsFor!
+!OS.COM.ICatInformation categoriesForClass!COM Category Manager!COM-Interfaces! !
+!OS.COM.ICatInformation methodsFor!
 
 allCategories
 	"Answer a <collection> of <CATEGORYINFO> structures describing all of the registered categories
@@ -33,7 +33,7 @@ allCategories: locale
 	"Answer a <collection> of <CATEGORYINFO> structures describing all of the registered categories
 	for the specified <Locale> (or <integer> lcid), locale."
 
-	^OLEEnumerator onIEnum: (self enumCategories: locale)!
+	^Enumerable onIEnum: (self enumCategories: locale)!
 
 buildGuidArray: guids
 	"Private - Answer an <ExternalArray> of <GUID> built from the <collection> of <GUID>s, 
@@ -43,14 +43,14 @@ buildGuidArray: guids
 		beUnfinalizable;
 		yourself!
 
-categoriesOfClass: rclsid 
+categoriesOfClass: rclsid
 	"Answer a <collection> of <GUID>s identifying all categories implemented by the COM
 	component with <CLSID>, rclsid."
 
 	| answer |
 	answer := IEnumStruct elementClass: GUID.
 	self EnumImplCategoriesOfClass: rclsid ppenumCatid: answer.
-	^OLEEnumerator onIEnum: answer!
+	^Enumerable onIEnum: answer!
 
 classesInCategories: implementedCategoryGUIDs requiring: requiredCategoryGUIDs
 	"Answer a <collection> of the <CLSID>s of all components registered on the system
@@ -58,8 +58,8 @@ classesInCategories: implementedCategoryGUIDs requiring: requiredCategoryGUIDs
 	and which require the <collection> of <GUID>s, requiredCategoryGUIDs, as the categories implemented
 	in a potential host."
 
-	^(self enumClassesOfCategories: implementedCategoryGUIDs requiring: requiredCategoryGUIDs) 
-		collect: [:e | COMObjectRegistration clsid: (e becomeA: CLSID)]!
+	^(self enumClassesOfCategories: implementedCategoryGUIDs requiring: requiredCategoryGUIDs)
+		collect: [:e | ObjectRegistration clsid: (e becomeA: CLSID)]!
 
 classesInCategory: implementedCategory
 	"Answer a <collection> of the <CLSID>s of all components registered on the system
@@ -78,14 +78,14 @@ descriptionOfCategory: catid locale: locale
 	localized correctly for the <Locale> (or <integer> locale id>, locale."
 
 	| buf |
-	buf := StructurePointer newNull: COMTaskMemory elementClass: Utf16String.
+	buf := StructurePointer newNull: TaskMemory elementClass: Utf16String.
 	self
 		GetCategoryDesc: catid
 		lcid: locale asParameter
 		pszDesc: buf.
 	^buf value asString!
 
-enumCategories: locale 
+enumCategories: locale
 	"Answer an <IEnumCATEGORYINFO> enumerator on all the categories registered
 	on the host system for the <Locale> (or <integer> locale id), locale."
 
@@ -105,7 +105,7 @@ EnumCategories: lcid ppenumCategoryInfo: ppenumCategoryInfo
 	<virtual stdcall: hresult 4 dword void**>
 	^self invalidCall: _failureCode!
 
-enumClassesOfCategories: implementedCategoryGUIDs requiring: requiredCategoryGUIDs 
+enumClassesOfCategories: implementedCategoryGUIDs requiring: requiredCategoryGUIDs
 	"Answer an <IEnumGUID> enumerator on the <CLSID>s of all components registered on the system
 	that support the categories identified by the <collection> of <GUID>s, implementedCategoryGUIDs, 
 	and which require the <collection> of <GUID>s, requiredCategoryGUIDs, as the categories implemented
@@ -113,17 +113,17 @@ enumClassesOfCategories: implementedCategoryGUIDs requiring: requiredCategoryGUI
 
 	| answer rgcatidImpl cImplemented cRequired rgcatidReq |
 	answer := IEnumStruct elementClass: GUID.
-	implementedCategoryGUIDs isEmpty 
+	implementedCategoryGUIDs isEmpty
 		ifTrue: [cImplemented := -1]
 		ifFalse: 
 			[rgcatidImpl := self buildGuidArray: implementedCategoryGUIDs.
 			cImplemented := implementedCategoryGUIDs size].
-	requiredCategoryGUIDs isEmpty 
+	requiredCategoryGUIDs isEmpty
 		ifTrue: [cRequired := -1]
 		ifFalse: 
 			[rgcatidReq := self buildGuidArray: requiredCategoryGUIDs.
 			cRequired := requiredCategoryGUIDs size].
-	self 
+	self
 		EnumClassesOfCategories: cImplemented
 		rgcatidImpl: rgcatidImpl
 		cRequired: cRequired
@@ -193,35 +193,35 @@ IsClassOfCategories: rclsid cImplemented: cImplemented rgcatidImpl: rgcatidImpl 
 	<virtual stdcall: hresult 7 guid* dword guid* dword guid*>
 	^self invalidCall: _failureCode!
 
-requiredCategoriesOfClass: rclsid 
+requiredCategoriesOfClass: rclsid
 	"Answer a <collection> of <GUID>s identifying all categories required (of clients) by the COM
 	component with <CLSID>, rclsid."
 
 	| answer |
 	answer := IEnumStruct elementClass: GUID.
 	self EnumReqCategoriesOfClass: rclsid ppenumCatid: answer.
-	^OLEEnumerator onIEnum: answer! !
-!ICatInformation categoriesFor: #allCategories!enquiries!public! !
-!ICatInformation categoriesFor: #allCategories:!enquiries!public! !
-!ICatInformation categoriesFor: #buildGuidArray:!helpers!methods!private! !
-!ICatInformation categoriesFor: #categoriesOfClass:!enquiries!public! !
-!ICatInformation categoriesFor: #classesInCategories:requiring:!enquiries!public! !
-!ICatInformation categoriesFor: #classesInCategory:!enquiries!public! !
-!ICatInformation categoriesFor: #descriptionOfCategory:!enquiries!public! !
-!ICatInformation categoriesFor: #descriptionOfCategory:locale:!enquiries!public! !
-!ICatInformation categoriesFor: #enumCategories:!enquiries!public! !
-!ICatInformation categoriesFor: #EnumCategories:ppenumCategoryInfo:!**auto generated**!COM Interfaces-ICatInformation!private! !
-!ICatInformation categoriesFor: #enumClassesOfCategories:requiring:!enquiries!public! !
-!ICatInformation categoriesFor: #EnumClassesOfCategories:rgcatidImpl:cRequired:rgcatidReq:ppenumClsid:!COM Interfaces-ICatInformation!private! !
-!ICatInformation categoriesFor: #EnumImplCategoriesOfClass:ppenumCatid:!**auto generated**!COM Interfaces-ICatInformation!private! !
-!ICatInformation categoriesFor: #EnumReqCategoriesOfClass:ppenumCatid:!**auto generated**!COM Interfaces-ICatInformation!private! !
-!ICatInformation categoriesFor: #GetCategoryDesc:lcid:pszDesc:!**auto generated**!COM Interfaces-ICatInformation!private! !
-!ICatInformation categoriesFor: #IsClassOfCategories:cImplemented:rgcatidImpl:cRequired:rgcatidReq:!COM Interfaces-ICatInformation!private! !
-!ICatInformation categoriesFor: #requiredCategoriesOfClass:!enquiries!public! !
+	^Enumerable onIEnum: answer! !
+!OS.COM.ICatInformation categoriesFor: #allCategories!enquiries!public! !
+!OS.COM.ICatInformation categoriesFor: #allCategories:!enquiries!public! !
+!OS.COM.ICatInformation categoriesFor: #buildGuidArray:!helpers!methods!private! !
+!OS.COM.ICatInformation categoriesFor: #categoriesOfClass:!enquiries!public! !
+!OS.COM.ICatInformation categoriesFor: #classesInCategories:requiring:!enquiries!public! !
+!OS.COM.ICatInformation categoriesFor: #classesInCategory:!enquiries!public! !
+!OS.COM.ICatInformation categoriesFor: #descriptionOfCategory:!enquiries!public! !
+!OS.COM.ICatInformation categoriesFor: #descriptionOfCategory:locale:!enquiries!public! !
+!OS.COM.ICatInformation categoriesFor: #enumCategories:!enquiries!public! !
+!OS.COM.ICatInformation categoriesFor: #EnumCategories:ppenumCategoryInfo:!**auto generated**!COM Interfaces-ICatInformation!private! !
+!OS.COM.ICatInformation categoriesFor: #enumClassesOfCategories:requiring:!enquiries!public! !
+!OS.COM.ICatInformation categoriesFor: #EnumClassesOfCategories:rgcatidImpl:cRequired:rgcatidReq:ppenumClsid:!COM Interfaces-ICatInformation!private! !
+!OS.COM.ICatInformation categoriesFor: #EnumImplCategoriesOfClass:ppenumCatid:!**auto generated**!COM Interfaces-ICatInformation!private! !
+!OS.COM.ICatInformation categoriesFor: #EnumReqCategoriesOfClass:ppenumCatid:!**auto generated**!COM Interfaces-ICatInformation!private! !
+!OS.COM.ICatInformation categoriesFor: #GetCategoryDesc:lcid:pszDesc:!**auto generated**!COM Interfaces-ICatInformation!private! !
+!OS.COM.ICatInformation categoriesFor: #IsClassOfCategories:cImplemented:rgcatidImpl:cRequired:rgcatidReq:!COM Interfaces-ICatInformation!private! !
+!OS.COM.ICatInformation categoriesFor: #requiredCategoriesOfClass:!enquiries!public! !
 
-ICatInformation methodProtocol: #ICatInformation attributes: #(#readOnly) selectors: #(#EnumCategories:ppenumCategoryInfo: #EnumClassesOfCategories:rgcatidImpl:cRequired:rgcatidReq:ppenumClsid: #EnumImplCategoriesOfClass:ppenumCatid: #EnumReqCategoriesOfClass:ppenumCatid: #GetCategoryDesc:lcid:pszDesc: #IsClassOfCategories:cImplemented:rgcatidImpl:cRequired:rgcatidReq:)!
+OS.COM.ICatInformation methodProtocol: #ICatInformation attributes: #(#readOnly) selectors: #(#EnumCategories:ppenumCategoryInfo: #EnumClassesOfCategories:rgcatidImpl:cRequired:rgcatidReq:ppenumClsid: #EnumImplCategoriesOfClass:ppenumCatid: #EnumReqCategoriesOfClass:ppenumCatid: #GetCategoryDesc:lcid:pszDesc: #IsClassOfCategories:cImplemented:rgcatidImpl:cRequired:rgcatidReq:)!
 
-!ICatInformation class methodsFor!
+!OS.COM.ICatInformation class methodsFor!
 
 clsid
 	"Answer the <CLSID> of the standard system implementation of this interface."
@@ -286,11 +286,11 @@ uninitialize
 	"Private -  Uninitialize the receiver as it is about to be removed from the image."
 
 	CatMan := Controls := nil.! !
-!ICatInformation class categoriesFor: #clsid!constants!public! !
-!ICatInformation class categoriesFor: #controls!enquiries!public! !
-!ICatInformation class categoriesFor: #current!instance creation!public! !
-!ICatInformation class categoriesFor: #defineFunctions!initializing!public! !
-!ICatInformation class categoriesFor: #new!instance creation!public! !
-!ICatInformation class categoriesFor: #onPreStripImage!class hierarchy-removing!private! !
-!ICatInformation class categoriesFor: #uninitialize!class hierarchy-removing!private! !
+!OS.COM.ICatInformation class categoriesFor: #clsid!constants!public! !
+!OS.COM.ICatInformation class categoriesFor: #controls!enquiries!public! !
+!OS.COM.ICatInformation class categoriesFor: #current!instance creation!public! !
+!OS.COM.ICatInformation class categoriesFor: #defineFunctions!initializing!public! !
+!OS.COM.ICatInformation class categoriesFor: #new!instance creation!public! !
+!OS.COM.ICatInformation class categoriesFor: #onPreStripImage!class hierarchy-removing!private! !
+!OS.COM.ICatInformation class categoriesFor: #uninitialize!class hierarchy-removing!private! !
 

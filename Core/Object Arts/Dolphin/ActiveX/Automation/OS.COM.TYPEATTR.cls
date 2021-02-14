@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-AXTypeInfoStructure subclass: #TYPEATTR
+OS.COM.TypeInfoStructure subclass: #'OS.COM.TYPEATTR'
 	instanceVariableNames: 'piTypeInfo'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_cbAlignment' -> 16r34.
@@ -25,8 +25,8 @@ AXTypeInfoStructure subclass: #TYPEATTR
 		'_OffsetOf_wMinorVerNum' -> 16r3A.
 		'_OffsetOf_wTypeFlags' -> 16r36
 	}!
-TYPEATTR guid: (GUID fromString: '{c06f3b69-0868-11d3-93af-00a024ca708a}')!
-TYPEATTR comment: 'TYPEATTR is an <ExternalStructure> class to represent the Active-X Automation TYPEATTR structure.
+OS.COM.TYPEATTR guid: (Core.GUID fromString: '{c06f3b69-0868-11d3-93af-00a024ca708a}')!
+OS.COM.TYPEATTR comment: 'TYPEATTR is an <ExternalStructure> class to represent the Active-X Automation TYPEATTR structure.
 
 TYPEATTR contains a number of attributes describing a particular type info. element of a type library. Unfortunately it is overloaded (like its originator ITypeInfo) with the job of describing all of the different types of object for which type information may be present in the library (i.e. interfaces, typedefs, enums, coclasses, dispinterfaces, unions, structs, and modules). This means that some of the members may not be relevant to the programming element described. In general we access the members of this structure through the relevant subclass of AXTypeInfoAnalyzer, thus benefitting from the correct factoring of that hierarchy.
 
@@ -50,8 +50,8 @@ Fields:
 	tdescAlias		<TYPEDESC> for which this is an alias (typedef).
 	idldescType	<IDLDESC> providing information about the originating IDL.
 '!
-!TYPEATTR categoriesForClass!External-Data-Structured-COM! !
-!TYPEATTR methodsFor!
+!OS.COM.TYPEATTR categoriesForClass!External-Data-Structured-COM! !
+!OS.COM.TYPEATTR methodsFor!
 
 basicFree
 	"Private - Free external resources owned by the receiver."
@@ -217,38 +217,38 @@ wTypeFlags
 	"Answer the <Integer> value of the receiver's 'wTypeFlags' field."
 
 	^bytes wordAtOffset: _OffsetOf_wTypeFlags! !
-!TYPEATTR categoriesFor: #basicFree!private!realizing/unrealizing! !
-!TYPEATTR categoriesFor: #cbAlignment!**compiled accessors**!public! !
-!TYPEATTR categoriesFor: #cbSizeInstance!**compiled accessors**!public! !
-!TYPEATTR categoriesFor: #cbSizeVft!**compiled accessors**!public! !
-!TYPEATTR categoriesFor: #cFuncs!**compiled accessors**!public! !
-!TYPEATTR categoriesFor: #cImplTypes!**compiled accessors**!public! !
-!TYPEATTR categoriesFor: #classDesc!accessing!private! !
-!TYPEATTR categoriesFor: #cVars!**compiled accessors**!public! !
-!TYPEATTR categoriesFor: #guid!**compiled accessors**!public! !
-!TYPEATTR categoriesFor: #idldescType!**compiled accessors**!public! !
-!TYPEATTR categoriesFor: #isAggregatable!public!testing! !
-!TYPEATTR categoriesFor: #isAppObject!public!testing! !
-!TYPEATTR categoriesFor: #isAutomationCompatible!public!testing! !
-!TYPEATTR categoriesFor: #isControl!public!testing! !
-!TYPEATTR categoriesFor: #isDispatchable!public!testing! !
-!TYPEATTR categoriesFor: #isExtensible!public!testing! !
-!TYPEATTR categoriesFor: #isInstantiable!public!testing! !
-!TYPEATTR categoriesFor: #isLicensed!public!testing! !
-!TYPEATTR categoriesFor: #isRestricted!public!testing! !
-!TYPEATTR categoriesFor: #lcid!**compiled accessors**!public! !
-!TYPEATTR categoriesFor: #memidConstructor!**compiled accessors**!public! !
-!TYPEATTR categoriesFor: #memidDestructor!**compiled accessors**!public! !
-!TYPEATTR categoriesFor: #name!accessing!public! !
-!TYPEATTR categoriesFor: #piTypeInfo:!accessing!private! !
-!TYPEATTR categoriesFor: #tdesc!accessing!public! !
-!TYPEATTR categoriesFor: #tdescAlias!**compiled accessors**!public! !
-!TYPEATTR categoriesFor: #typekind!**compiled accessors**!public! !
-!TYPEATTR categoriesFor: #wMajorVerNum!**compiled accessors**!public! !
-!TYPEATTR categoriesFor: #wMinorVerNum!**compiled accessors**!public! !
-!TYPEATTR categoriesFor: #wTypeFlags!**compiled accessors**!public! !
+!OS.COM.TYPEATTR categoriesFor: #basicFree!private!realizing/unrealizing! !
+!OS.COM.TYPEATTR categoriesFor: #cbAlignment!**compiled accessors**!public! !
+!OS.COM.TYPEATTR categoriesFor: #cbSizeInstance!**compiled accessors**!public! !
+!OS.COM.TYPEATTR categoriesFor: #cbSizeVft!**compiled accessors**!public! !
+!OS.COM.TYPEATTR categoriesFor: #cFuncs!**compiled accessors**!public! !
+!OS.COM.TYPEATTR categoriesFor: #cImplTypes!**compiled accessors**!public! !
+!OS.COM.TYPEATTR categoriesFor: #classDesc!accessing!private! !
+!OS.COM.TYPEATTR categoriesFor: #cVars!**compiled accessors**!public! !
+!OS.COM.TYPEATTR categoriesFor: #guid!**compiled accessors**!public! !
+!OS.COM.TYPEATTR categoriesFor: #idldescType!**compiled accessors**!public! !
+!OS.COM.TYPEATTR categoriesFor: #isAggregatable!public!testing! !
+!OS.COM.TYPEATTR categoriesFor: #isAppObject!public!testing! !
+!OS.COM.TYPEATTR categoriesFor: #isAutomationCompatible!public!testing! !
+!OS.COM.TYPEATTR categoriesFor: #isControl!public!testing! !
+!OS.COM.TYPEATTR categoriesFor: #isDispatchable!public!testing! !
+!OS.COM.TYPEATTR categoriesFor: #isExtensible!public!testing! !
+!OS.COM.TYPEATTR categoriesFor: #isInstantiable!public!testing! !
+!OS.COM.TYPEATTR categoriesFor: #isLicensed!public!testing! !
+!OS.COM.TYPEATTR categoriesFor: #isRestricted!public!testing! !
+!OS.COM.TYPEATTR categoriesFor: #lcid!**compiled accessors**!public! !
+!OS.COM.TYPEATTR categoriesFor: #memidConstructor!**compiled accessors**!public! !
+!OS.COM.TYPEATTR categoriesFor: #memidDestructor!**compiled accessors**!public! !
+!OS.COM.TYPEATTR categoriesFor: #name!accessing!public! !
+!OS.COM.TYPEATTR categoriesFor: #piTypeInfo:!accessing!private! !
+!OS.COM.TYPEATTR categoriesFor: #tdesc!accessing!public! !
+!OS.COM.TYPEATTR categoriesFor: #tdescAlias!**compiled accessors**!public! !
+!OS.COM.TYPEATTR categoriesFor: #typekind!**compiled accessors**!public! !
+!OS.COM.TYPEATTR categoriesFor: #wMajorVerNum!**compiled accessors**!public! !
+!OS.COM.TYPEATTR categoriesFor: #wMinorVerNum!**compiled accessors**!public! !
+!OS.COM.TYPEATTR categoriesFor: #wTypeFlags!**compiled accessors**!public! !
 
-!TYPEATTR class methodsFor!
+!OS.COM.TYPEATTR class methodsFor!
 
 defineFields
 	"Define the fields of the TYPEATTR structure.
@@ -279,27 +279,27 @@ defineFields
 	"
 
 	self
-		defineField: #guid			type: (StructureField type: GUID) beReadOnly;
-		defineField: #lcid				type: DWORDField readOnly;
-		defineField: #dwReserved		type: DWORDField filler;
-		defineField: #memidConstructor	type: SDWORDField readOnly;	"MEMBERID = DISPID = LONG"
-		defineField: #memidDestructor	type: SDWORDField readOnly;	"MEMBERID"
-		defineField: #lpstrSchema		type: (PointerField type: Utf16String) beFiller;
-		defineField: #cbSizeInstance	type: DWORDField readOnly;
-		defineField: #typekind			type: SDWORDField readOnly;	"enumerated type TYPEKIND"
-		defineField: #cFuncs			type: WORDField readOnly;
-		defineField: #cVars			type: WORDField readOnly;
-		defineField: #cImplTypes		type: WORDField readOnly;
-		defineField: #cbSizeVft		type: WORDField readOnly;
-		defineField: #cbAlignment		type: WORDField readOnly;
-		defineField: #wTypeFlags		type: WORDField readOnly;
-		defineField: #wMajorVerNum	type: WORDField readOnly;
-		defineField: #wMinorVerNum	type: WORDField readOnly;
-		defineField: #tdescAlias		type: (StructureField type: TYPEDESC) beReadOnly;
-		defineField: #idldescType		type: (StructureField type: IDLDESC) beReadOnly!
+		defineField: #guid type: (StructureField type: GUID) beReadOnly;
+		defineField: #lcid type: DWORDField readOnly;
+		defineField: #dwReserved type: DWORDField filler;
+		defineField: #memidConstructor type: SDWORDField readOnly;
+		defineField: #memidDestructor type: SDWORDField readOnly;
+		defineField: #lpstrSchema type: (PointerField type: Utf16String) beFiller;
+		defineField: #cbSizeInstance type: DWORDField readOnly;
+		defineField: #typekind type: SDWORDField readOnly;
+		defineField: #cFuncs type: WORDField readOnly;
+		defineField: #cVars type: WORDField readOnly;
+		defineField: #cImplTypes type: WORDField readOnly;
+		defineField: #cbSizeVft type: WORDField readOnly;
+		defineField: #cbAlignment type: WORDField readOnly;
+		defineField: #wTypeFlags type: WORDField readOnly;
+		defineField: #wMajorVerNum type: WORDField readOnly;
+		defineField: #wMinorVerNum type: WORDField readOnly;
+		defineField: #tdescAlias type: (StructureField type: TYPEDESC) beReadOnly;
+		defineField: #idldescType type: (StructureField type: IDLDESC) beReadOnly	"MEMBERID = DISPID = LONG"	"MEMBERID"	"enumerated type TYPEKIND"!
 
 getFieldNames
 	^#(#guid #lcid #memidConstructor #memidDestructor #cbSizeInstance #typekind #cFuncs #cVars #cImplTypes #cbSizeVft #cbAlignment #wTypeFlags #wMajorVerNum #wMinorVerNum #tdescAlias #idldescType)! !
-!TYPEATTR class categoriesFor: #defineFields!public!template definition! !
-!TYPEATTR class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.COM.TYPEATTR class categoriesFor: #defineFields!public!template definition! !
+!OS.COM.TYPEATTR class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

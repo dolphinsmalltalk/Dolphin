@@ -443,7 +443,7 @@ developmentResources
 
 	| devres |
 	devres := OrderedCollection new.
-	#(#{Dialog} #{Presenter} #{AXControlSite} #{AXValueConvertingControlSite})
+	#(#{UI.Dialog} #{UI.Presenter} #{UI.AXControlSite} #{UI.AXValueConvertingControlSite})
 		do: [:s | s ifDefined: [:d | devres add: (ResourceIdentifier class: d name: 'Default view')]].
 	^devres!
 

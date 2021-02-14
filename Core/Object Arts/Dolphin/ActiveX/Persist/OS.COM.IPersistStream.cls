@@ -1,19 +1,19 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-IPersist subclass: #IPersistStream
+OS.COM.IPersist subclass: #'OS.COM.IPersistStream'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-IPersistStream guid: (IID fromString: '{00000109-0000-0000-c000-000000000046}')!
-IPersistStream comment: '<IPersistStream> is a wrapper class for the custom interface ''OBJIDL.IPersistStream'' generated from type information in the ''ObjIDL Library'' library. It contains methods to invoke the member functions exposed by that interface.
+OS.COM.IPersistStream guid: (OS.COM.IID fromString: '{00000109-0000-0000-c000-000000000046}')!
+OS.COM.IPersistStream comment: '<IPersistStream> is a wrapper class for the custom interface ''OBJIDL.IPersistStream'' generated from type information in the ''ObjIDL Library'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface.
 
 WARNING: This comment was automatically generated from the interface''s type information and any changes made here may be overwritten the next time this wrapper class is so generated.'!
-!IPersistStream categoriesForClass!COM-Interfaces! !
-!IPersistStream methodsFor!
+!OS.COM.IPersistStream categoriesForClass!COM-Interfaces! !
+!OS.COM.IPersistStream methodsFor!
 
 GetSizeMax: pcbSize
 	"Invoke the GetSizeMax() method of the object wrapped by the receiver.
@@ -87,17 +87,17 @@ storeOn: anIStream clearDirty: aBoolean
 	the stream to be in the standard format)."
 
 	self Save: anIStream fClearDirty: aBoolean! !
-!IPersistStream categoriesFor: #GetSizeMax:!**auto generated**!COM Interfaces-OBJIDL.IPersistStream!primitives!public! !
-!IPersistStream categoriesFor: #IsDirty!**auto generated**!COM Interfaces-OBJIDL.IPersistStream!primitives!public! !
-!IPersistStream categoriesFor: #Load:!**auto generated**!COM Interfaces-OBJIDL.IPersistStream!primitives!public! !
-!IPersistStream categoriesFor: #maxSize!accessing!public! !
-!IPersistStream categoriesFor: #readFrom:!operations!public! !
-!IPersistStream categoriesFor: #Save:fClearDirty:!COM Interfaces-OBJIDL.IPersistStream!primitives!public! !
-!IPersistStream categoriesFor: #storeOn:clearDirty:!operations!public! !
+!OS.COM.IPersistStream categoriesFor: #GetSizeMax:!**auto generated**!COM Interfaces-OBJIDL.IPersistStream!primitives!public! !
+!OS.COM.IPersistStream categoriesFor: #IsDirty!**auto generated**!COM Interfaces-OBJIDL.IPersistStream!primitives!public! !
+!OS.COM.IPersistStream categoriesFor: #Load:!**auto generated**!COM Interfaces-OBJIDL.IPersistStream!primitives!public! !
+!OS.COM.IPersistStream categoriesFor: #maxSize!accessing!public! !
+!OS.COM.IPersistStream categoriesFor: #readFrom:!operations!public! !
+!OS.COM.IPersistStream categoriesFor: #Save:fClearDirty:!COM Interfaces-OBJIDL.IPersistStream!primitives!public! !
+!OS.COM.IPersistStream categoriesFor: #storeOn:clearDirty:!operations!public! !
 
-IPersistStream methodProtocol: #IPersistStream attributes: #(#readOnly) selectors: #(#GetClassID: #GetSizeMax: #IsDirty #Load: #Save:fClearDirty:)!
+OS.COM.IPersistStream methodProtocol: #IPersistStream attributes: #(#readOnly) selectors: #(#GetClassID: #GetSizeMax: #IsDirty #Load: #Save:fClearDirty:)!
 
-!IPersistStream class methodsFor!
+!OS.COM.IPersistStream class methodsFor!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'OBJIDL.IPersistStream'
@@ -114,5 +114,5 @@ defineFunctions
 		defineFunction: #GetSizeMax:
 			argumentTypes: 'qword*'
 ! !
-!IPersistStream class categoriesFor: #defineFunctions!initializing!public! !
+!OS.COM.IPersistStream class categoriesFor: #defineFunctions!initializing!public! !
 

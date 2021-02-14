@@ -1402,7 +1402,7 @@ testPrimitiveChangeBehavior
 		{{'a'. 'b'}. Association. 'a' -> 'b'}.
 		{10 @ 20 -> (100 @ 200). Graphics.Rectangle. 10 @ 20 corner: 100 @ 200}.
 		{External.Handle fromInteger: 1234. DWORDBytes. DWORDBytes fromInteger: 1234}.
-		{Object guid. Smalltalk.CLSID. Smalltalk.CLSID fromString: '{87b4c451-026e-11d3-9fd7-00a0cc3e4a32}'}.
+		{Object guid. OS.COM.CLSID. OS.COM.CLSID fromString: '{87b4c451-026e-11d3-9fd7-00a0cc3e4a32}'}.
 		{{1. 0}. OrderedCollection. OrderedCollection new}.
 		{{1. 2. 'a'. 'b'}. OrderedCollection. OrderedCollection with: 'a' with: 'b'}.
 		{OrderedCollection with: 'a' with: 'b'. Array. #(1 2 'a' 'b')}.

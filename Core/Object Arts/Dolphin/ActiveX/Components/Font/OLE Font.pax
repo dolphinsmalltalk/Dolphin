@@ -11,8 +11,8 @@ package basicPackageVersion: '6.1'.
 
 
 package setClassNames: #(
-	#{Smalltalk.IFont}
-	#{Smalltalk.IFontDisp}
+	#{OS.COM.IFont}
+	#{OS.COM.IFontDisp}
 ).
 
 package setMethodNames: #(
@@ -31,13 +31,13 @@ package!
 
 "Class Definitions"!
 
-IUnknown subclass: #IFont
+OS.COM.IUnknown subclass: #'OS.COM.IFont'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-IDispatch subclass: #IFontDisp
+OS.COM.IDispatch subclass: #'OS.COM.IFontDisp'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

@@ -1,19 +1,19 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-IUnknown subclass: #ISequentialStream
+OS.COM.IUnknown subclass: #'OS.COM.ISequentialStream'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'OLEStructuredStorageConstants'
+	imports: #(#{OS.COM.StructuredStorageConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ISequentialStream guid: (IID fromString: '{0c733a30-2a1c-11ce-ade5-00aa0044773d}')!
-ISequentialStream comment: 'ISequentialStream is a COMInterface class to wrap the standard COM interface of the same name.
+OS.COM.ISequentialStream guid: (OS.COM.IID fromString: '{0c733a30-2a1c-11ce-ade5-00aa0044773d}')!
+OS.COM.ISequentialStream comment: 'ISequentialStream is a COMInterface class to wrap the standard COM interface of the same name.
 
 ISequentialStream is an abstraction of a simple byte-oriented stream for reading, writing blocks of bytes, with the notion of a current position, although ISequentialStream itself defines no functions to access that position. ISequentialStream is somewhat similar to, though more limited than, <ReadWriteStream> and therefore we implement some of the protocol of that class here on top of the raw ISequentialStream member functions.
 
 ISequentialStream is rather abstract, and starts to get more interesting in the subclass, IStream.'!
-!ISequentialStream categoriesForClass!COM-Interfaces! !
-!ISequentialStream methodsFor!
+!OS.COM.ISequentialStream categoriesForClass!COM-Interfaces! !
+!OS.COM.ISequentialStream methodsFor!
 
 close
 	"Implement the File protocol close method by committing any changes and
@@ -190,29 +190,29 @@ write: buffer count: anInteger
 		cb: anInteger
 		pcbWritten: written.
 	^written asInteger! !
-!ISequentialStream categoriesFor: #close!operations!public! !
-!ISequentialStream categoriesFor: #contentsSpecies!accessing!private! !
-!ISequentialStream categoriesFor: #errorEndOfStream!exceptions!public! !
-!ISequentialStream categoriesFor: #flush!operations!public! !
-!ISequentialStream categoriesFor: #next!accessing!public! !
-!ISequentialStream categoriesFor: #next:!accessing!public! !
-!ISequentialStream categoriesFor: #next:putAll:startingAt:!accessing!public! !
-!ISequentialStream categoriesFor: #nextAvailable:!accessing!public! !
-!ISequentialStream categoriesFor: #nextMatchFor:!accessing!public! !
-!ISequentialStream categoriesFor: #nextPut:!accessing!public! !
-!ISequentialStream categoriesFor: #nextPutAll:!accessing!public! !
-!ISequentialStream categoriesFor: #nextSDWORD!binary filing!public! !
-!ISequentialStream categoriesFor: #nextSDWORDPut:!binary filing!public! !
-!ISequentialStream categoriesFor: #Read:cb:pcbRead:!**auto generated**!primitives!public! !
-!ISequentialStream categoriesFor: #read:count:!accessing!public! !
-!ISequentialStream categoriesFor: #skipTo:!positioning!public! !
-!ISequentialStream categoriesFor: #upTo:!accessing!public! !
-!ISequentialStream categoriesFor: #Write:cb:pcbWritten:!**auto generated**!primitives!public! !
-!ISequentialStream categoriesFor: #write:count:!accessing!public! !
+!OS.COM.ISequentialStream categoriesFor: #close!operations!public! !
+!OS.COM.ISequentialStream categoriesFor: #contentsSpecies!accessing!private! !
+!OS.COM.ISequentialStream categoriesFor: #errorEndOfStream!exceptions!public! !
+!OS.COM.ISequentialStream categoriesFor: #flush!operations!public! !
+!OS.COM.ISequentialStream categoriesFor: #next!accessing!public! !
+!OS.COM.ISequentialStream categoriesFor: #next:!accessing!public! !
+!OS.COM.ISequentialStream categoriesFor: #next:putAll:startingAt:!accessing!public! !
+!OS.COM.ISequentialStream categoriesFor: #nextAvailable:!accessing!public! !
+!OS.COM.ISequentialStream categoriesFor: #nextMatchFor:!accessing!public! !
+!OS.COM.ISequentialStream categoriesFor: #nextPut:!accessing!public! !
+!OS.COM.ISequentialStream categoriesFor: #nextPutAll:!accessing!public! !
+!OS.COM.ISequentialStream categoriesFor: #nextSDWORD!binary filing!public! !
+!OS.COM.ISequentialStream categoriesFor: #nextSDWORDPut:!binary filing!public! !
+!OS.COM.ISequentialStream categoriesFor: #Read:cb:pcbRead:!**auto generated**!primitives!public! !
+!OS.COM.ISequentialStream categoriesFor: #read:count:!accessing!public! !
+!OS.COM.ISequentialStream categoriesFor: #skipTo:!positioning!public! !
+!OS.COM.ISequentialStream categoriesFor: #upTo:!accessing!public! !
+!OS.COM.ISequentialStream categoriesFor: #Write:cb:pcbWritten:!**auto generated**!primitives!public! !
+!OS.COM.ISequentialStream categoriesFor: #write:count:!accessing!public! !
 
-ISequentialStream methodProtocol: #ISequentialStream attributes: #(#readOnly) selectors: #(#Read:cb:pcbRead: #Write:cb:pcbWritten:)!
+OS.COM.ISequentialStream methodProtocol: #ISequentialStream attributes: #(#readOnly) selectors: #(#Read:cb:pcbRead: #Write:cb:pcbWritten:)!
 
-!ISequentialStream class methodsFor!
+!OS.COM.ISequentialStream class methodsFor!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'OBJIDL.ISequentialStream'
@@ -222,5 +222,5 @@ defineFunctions
 	self
 		defineFunction: #Read:cb:pcbRead: argumentTypes: 'sbyte* dword dword*';
 		defineFunction: #Write:cb:pcbWritten: argumentTypes: 'sbyte* dword dword*'! !
-!ISequentialStream class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!OS.COM.ISequentialStream class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
 

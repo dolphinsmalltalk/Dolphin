@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-COMFunction subclass: #DispFunction
+OS.COM.InterfaceFunction subclass: #'OS.COM.DispatchFunction'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'Win32Errors'
+	imports: #(#{OS.Win32Errors})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-DispFunction guid: (GUID fromString: '{4596042f-9e7a-4481-8f6c-d71e47fc990c}')!
-DispFunction comment: ''!
-!DispFunction categoriesForClass!Unclassified! !
-!DispFunction methodsFor!
+OS.COM.DispatchFunction guid: (Core.GUID fromString: '{4596042f-9e7a-4481-8f6c-d71e47fc990c}')!
+OS.COM.DispatchFunction comment: ''!
+!OS.COM.DispatchFunction categoriesForClass!Unclassified! !
+!OS.COM.DispatchFunction methodsFor!
 
 callback: stub interface: aCOMInterface withArgumentsAt: anAddress 
 	"Private - Forward a COM virtual function call as a message to the object which implements
@@ -32,5 +32,5 @@ callback: stub interface: aCOMInterface withArgumentsAt: anAddress
 				withArgumentsAt: anAddress
 				descriptor: descriptor]
 		ifNil: [E_NOTIMPL]! !
-!DispFunction categoriesFor: #callback:interface:withArgumentsAt:!evaluating!private! !
+!OS.COM.DispatchFunction categoriesFor: #callback:interface:withArgumentsAt:!evaluating!private! !
 

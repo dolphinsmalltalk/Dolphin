@@ -377,9 +377,9 @@ initializeExternalRefTypes
 		at: ExtCallArgSQWORD + 1 put: #LARGE_INTEGER;
 		at: ExtCallArgOTE + 1 put: ExtCallArgLPPVOID;
 		at: ExtCallArgBSTR + 1 put: ExtCallArgLPPVOID;
-		at: ExtCallArgVARIANT + 1 put: #VARIANT;
-		at: ExtCallArgDATE + 1 put: #DATE;
-		at: ExtCallArgVARBOOL + 1 put: #VARIANT_BOOL;
+		at: ExtCallArgVARIANT + 1 put: #'OS.COM.VARIANT';
+		at: ExtCallArgDATE + 1 put: #'OS.COM.DATE';
+		at: ExtCallArgVARBOOL + 1 put: #'OS.COM.VARIANT_BOOL';
 		at: ExtCallArgGUID + 1 put: #REFGUID;
 		at: ExtCallArgSTRUCT + 1 put: ExtCallArgLP;
 		at: ExtCallArgSTRUCT4 + 1 put: ExtCallArgLP;
@@ -560,7 +560,7 @@ parsePointerToStruct: anAssociation environment: aNamespace
 	^(structClass isIndirection and: [anAssociation key == ExtCallArgSTRUCT])
 		ifTrue: [ExtCallArgLPPVOID -> nil]
 		ifFalse: 
-			[(#{Smalltalk.IUnknown} valueOrNil
+			[(#{COM.IUnknown} valueOrNil
 				ifNil: [ExtCallArgLP]
 				ifNotNil: [:unkClass | (structClass includesBehavior: unkClass) ifTrue: [ExtCallArgCOMPTR] ifFalse: [ExtCallArgLP]])
 					-> structClass]!

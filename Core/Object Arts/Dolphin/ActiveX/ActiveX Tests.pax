@@ -5,13 +5,14 @@ package paxVersion: 2.1;
 
 
 package setClassNames: #(
+	#{OS.COM.Tests}
+	#{OS.COM.Tests.CLSIDTest}
+	#{OS.COM.Tests.EventSinkTest}
+	#{OS.COM.Tests.IIDTest}
+	#{OS.COM.Tests.InterfaceTest}
+	#{OS.COM.Tests.TestTypelib}
+	#{OS.COM.Tests.TypeLibraryAnalyzerTest}
 	#{Smalltalk.ADODBTest}
-	#{Smalltalk.AXEventSinkTest}
-	#{Smalltalk.AXTypeLibraryAnalyzerTest}
-	#{Smalltalk.CLSIDTest}
-	#{Smalltalk.COMInterfaceTest}
-	#{Smalltalk.IIDTest}
-	#{Smalltalk.TestTypelib}
 	#{Smalltalk.XmlFormatterTest}
 ).
 
@@ -37,20 +38,26 @@ package!
 
 "Class Definitions"!
 
-Core.Tests.DolphinTest subclass: #AXEventSinkTest
+OS.COM subclass: #'OS.COM.Tests'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Core.Tests.DolphinTest subclass: #'OS.COM.Tests.EventSinkTest'
 	instanceVariableNames: 'sink object received'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Core.Tests.DolphinTest subclass: #AXTypeLibraryAnalyzerTest
-	instanceVariableNames: 'analyzer'
+Core.Tests.DolphinTest subclass: #'OS.COM.Tests.InterfaceTest'
+	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Core.Tests.DolphinTest subclass: #COMInterfaceTest
-	instanceVariableNames: ''
+Core.Tests.DolphinTest subclass: #'OS.COM.Tests.TypeLibraryAnalyzerTest'
+	instanceVariableNames: 'analyzer'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -67,19 +74,19 @@ DBTest subclass: #ADODBTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-External.Tests.GUIDTest subclass: #CLSIDTest
+External.Tests.GUIDTest subclass: #'OS.COM.Tests.CLSIDTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-External.Tests.GUIDTest subclass: #IIDTest
+External.Tests.GUIDTest subclass: #'OS.COM.Tests.IIDTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-XProgramming.SUnit.TestResource subclass: #TestTypelib
+XProgramming.SUnit.TestResource subclass: #'OS.COM.Tests.TestTypelib'
 	instanceVariableNames: 'analyzer'
 	classVariableNames: ''
 	imports: #(#{OS.Win32Constants})

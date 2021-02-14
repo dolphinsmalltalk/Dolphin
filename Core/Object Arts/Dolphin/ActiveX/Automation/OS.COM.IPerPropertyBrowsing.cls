@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-IUnknown subclass: #IPerPropertyBrowsing
+OS.COM.IUnknown subclass: #'OS.COM.IPerPropertyBrowsing'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-IPerPropertyBrowsing guid: (IID fromString: '{376bd3aa-3845-101b-84ed-08002b2ec713}')!
-IPerPropertyBrowsing comment: '`IPerPropertyBrowsing` is a wrapper class for the COM interface ''Win32.IPerPropertyBrowsing'' generated from type information in the ''Win32 API'' library. It contains methods to invoke the member functions exposed by that interface.
+OS.COM.IPerPropertyBrowsing guid: (OS.COM.IID fromString: '{376bd3aa-3845-101b-84ed-08002b2ec713}')!
+OS.COM.IPerPropertyBrowsing comment: '`IPerPropertyBrowsing` is a wrapper class for the COM interface ''Win32.IPerPropertyBrowsing'' generated from type information in the ''Win32 API'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
 
@@ -42,8 +42,8 @@ interface IPerPropertyBrowsing : IUnknown
 };
 ```
 '!
-!IPerPropertyBrowsing categoriesForClass!COM-Interfaces! !
-!IPerPropertyBrowsing methodsFor!
+!OS.COM.IPerPropertyBrowsing categoriesForClass!COM-Interfaces! !
+!OS.COM.IPerPropertyBrowsing methodsFor!
 
 getDisplayString: dispID
 	"Answer the <BSTR> result of invoking the GetDisplayString() method of the COM object."
@@ -120,7 +120,7 @@ getStringsAndValues: anInteger
 	answer := Array new: count.
 	count == 0
 		ifFalse: 
-			[var := (VARIANT new)
+			[var := VARIANT new
 						beUnfinalizable;
 						yourself.
 			strings keysAndValuesDo: 
@@ -160,20 +160,20 @@ stringsToValues: dispid
 
 	^Dictionary withAll: (self getStringsAndValues: dispid)
 ! !
-!IPerPropertyBrowsing categoriesFor: #getDisplayString:!**auto generated**!methods!public! !
-!IPerPropertyBrowsing categoriesFor: #GetDisplayString:pbstr:!**auto generated**!COM Interfaces-IPerPropertyBrowsing!private! !
-!IPerPropertyBrowsing categoriesFor: #getPredefinedStrings:!**auto generated**!methods!public! !
-!IPerPropertyBrowsing categoriesFor: #GetPredefinedStrings:pCaStringsOut:pCaCookiesOut:!**auto generated**!COM Interfaces-IPerPropertyBrowsing!private! !
-!IPerPropertyBrowsing categoriesFor: #getPredefinedValue:dwCookie:!**auto generated**!methods!public! !
-!IPerPropertyBrowsing categoriesFor: #GetPredefinedValue:dwCookie:pVarOut:!**auto generated**!COM Interfaces-IPerPropertyBrowsing!private! !
-!IPerPropertyBrowsing categoriesFor: #getStringsAndValues:!accessing!private! !
-!IPerPropertyBrowsing categoriesFor: #mapPropertyToPage:!**auto generated**!methods!public! !
-!IPerPropertyBrowsing categoriesFor: #MapPropertyToPage:pclsid:!**auto generated**!COM Interfaces-IPerPropertyBrowsing!private! !
-!IPerPropertyBrowsing categoriesFor: #stringsToValues:!accessing!public! !
+!OS.COM.IPerPropertyBrowsing categoriesFor: #getDisplayString:!**auto generated**!methods!public! !
+!OS.COM.IPerPropertyBrowsing categoriesFor: #GetDisplayString:pbstr:!**auto generated**!COM Interfaces-IPerPropertyBrowsing!private! !
+!OS.COM.IPerPropertyBrowsing categoriesFor: #getPredefinedStrings:!**auto generated**!methods!public! !
+!OS.COM.IPerPropertyBrowsing categoriesFor: #GetPredefinedStrings:pCaStringsOut:pCaCookiesOut:!**auto generated**!COM Interfaces-IPerPropertyBrowsing!private! !
+!OS.COM.IPerPropertyBrowsing categoriesFor: #getPredefinedValue:dwCookie:!**auto generated**!methods!public! !
+!OS.COM.IPerPropertyBrowsing categoriesFor: #GetPredefinedValue:dwCookie:pVarOut:!**auto generated**!COM Interfaces-IPerPropertyBrowsing!private! !
+!OS.COM.IPerPropertyBrowsing categoriesFor: #getStringsAndValues:!accessing!private! !
+!OS.COM.IPerPropertyBrowsing categoriesFor: #mapPropertyToPage:!**auto generated**!methods!public! !
+!OS.COM.IPerPropertyBrowsing categoriesFor: #MapPropertyToPage:pclsid:!**auto generated**!COM Interfaces-IPerPropertyBrowsing!private! !
+!OS.COM.IPerPropertyBrowsing categoriesFor: #stringsToValues:!accessing!public! !
 
-IPerPropertyBrowsing methodProtocol: #IPerPropertyBrowsing attributes: #(#readOnly) selectors: #(#GetDisplayString:pbstr: #GetPredefinedStrings:pCaStringsOut:pCaCookiesOut: #GetPredefinedValue:dwCookie:pVarOut: #MapPropertyToPage:pclsid:)!
+OS.COM.IPerPropertyBrowsing methodProtocol: #IPerPropertyBrowsing attributes: #(#readOnly) selectors: #(#GetDisplayString:pbstr: #GetPredefinedStrings:pCaStringsOut:pCaCookiesOut: #GetPredefinedValue:dwCookie:pVarOut: #MapPropertyToPage:pclsid:)!
 
-!IPerPropertyBrowsing class methodsFor!
+!OS.COM.IPerPropertyBrowsing class methodsFor!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'OCIDL.IPerPropertyBrowsing'
@@ -191,5 +191,5 @@ defineFunctions
 		defineFunction: #GetPredefinedValue:dwCookie:pVarOut:
 			argumentTypes: 'sdword dword VARIANT*'
 ! !
-!IPerPropertyBrowsing class categoriesFor: #defineFunctions!initializing!public! !
+!OS.COM.IPerPropertyBrowsing class categoriesFor: #defineFunctions!initializing!public! !
 

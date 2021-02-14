@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-IAxWinAmbientDispatch subclass: #IAxWinAmbientDispatchEx
+UI.IAxWinAmbientDispatch subclass: #'UI.IAxWinAmbientDispatchEx'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-IAxWinAmbientDispatchEx guid: (IID fromString: '{b2d0778b-ac99-4c58-a5c8-e7724e5316b5}')!
-IAxWinAmbientDispatchEx comment: '<IAxWinAmbientDispatchEx> is a wrapper class for the COM interface ''ActiveXHost.IAxWinAmbientDispatchEx'' generated from type information in the ''Dolphin Smalltalk Active-X Host Library'' library. It contains methods to invoke the member functions exposed by that interface.
+UI.IAxWinAmbientDispatchEx guid: (OS.COM.IID fromString: '{b2d0778b-ac99-4c58-a5c8-e7724e5316b5}')!
+UI.IAxWinAmbientDispatchEx comment: '<IAxWinAmbientDispatchEx> is a wrapper class for the COM interface ''ActiveXHost.IAxWinAmbientDispatchEx'' generated from type information in the ''Dolphin Smalltalk Active-X Host Library'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains the following helpstring for this interface
 	"IAxWinAmbientDispatch Interface"
@@ -28,8 +28,8 @@ interface IAxWinAmbientDispatchEx : IAxWinAmbientDispatch {
 		[in] IDispatch* pDispatch);
 };
 '!
-!IAxWinAmbientDispatchEx categoriesForClass!ActiveXHost-Interfaces!COM-Interfaces! !
-!IAxWinAmbientDispatchEx methodsFor!
+!UI.IAxWinAmbientDispatchEx categoriesForClass!ActiveXHost-Interfaces!COM-Interfaces! !
+!UI.IAxWinAmbientDispatchEx methodsFor!
 
 setAmbientDispatch: pDispatch
 	"Invoke the SetAmbientDispatch() method of the COM object."
@@ -45,10 +45,10 @@ SetAmbientDispatch: pDispatch
 
 	<virtual stdcall: hresult 36 IDispatch*>
 	^self invalidCall: _failureCode! !
-!IAxWinAmbientDispatchEx categoriesFor: #setAmbientDispatch:!**auto generated**!methods!public! !
-!IAxWinAmbientDispatchEx categoriesFor: #SetAmbientDispatch:!**auto generated**!COM Interfaces-IAxWinAmbientDispatchEx!private! !
+!UI.IAxWinAmbientDispatchEx categoriesFor: #setAmbientDispatch:!**auto generated**!methods!public! !
+!UI.IAxWinAmbientDispatchEx categoriesFor: #SetAmbientDispatch:!**auto generated**!COM Interfaces-IAxWinAmbientDispatchEx!private! !
 
-!IAxWinAmbientDispatchEx class methodsFor!
+!UI.IAxWinAmbientDispatchEx class methodsFor!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'ActiveXHost.IAxWinAmbientDispatchEx'
@@ -58,5 +58,5 @@ defineFunctions
 		defineFunction: #SetAmbientDispatch:
 			argumentTypes: 'IDispatch*'
 ! !
-!IAxWinAmbientDispatchEx class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!UI.IAxWinAmbientDispatchEx class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
 

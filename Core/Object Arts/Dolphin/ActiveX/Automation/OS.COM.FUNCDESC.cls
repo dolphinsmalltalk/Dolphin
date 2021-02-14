@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-AXMemberDesc subclass: #FUNCDESC
+OS.COM.MemberDesc subclass: #'OS.COM.FUNCDESC'
 	instanceVariableNames: 'names arguments outputIndices retvalIndex methodName'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_callconv' -> 16r14.
@@ -19,8 +19,8 @@ AXMemberDesc subclass: #FUNCDESC
 		'_OffsetOf_oVft' -> 16r1C.
 		'_OffsetOf_wFuncFlags' -> 16r30
 	}!
-FUNCDESC guid: (GUID fromString: '{c06f3b6e-0868-11d3-93af-00a024ca708a}')!
-FUNCDESC comment: 'FUNCDESC is an <ExternalStructure> class to represent the Active-X Automation FUNCDESC structure.
+OS.COM.FUNCDESC guid: (Core.GUID fromString: '{c06f3b6e-0868-11d3-93af-00a024ca708a}')!
+OS.COM.FUNCDESC comment: 'FUNCDESC is an <ExternalStructure> class to represent the Active-X Automation FUNCDESC structure.
 
 A FUNCDESC describes various attributes of a function including, for example, the number of parameters, and their types.
 
@@ -38,8 +38,8 @@ Fields:
 	elemdescFunc	<ELEMDESC> describing the return type from the function
 	wFuncFlags	<WORD>. Various flags about the function.
 '!
-!FUNCDESC categoriesForClass!External-Data-Structured-COM! !
-!FUNCDESC methodsFor!
+!OS.COM.FUNCDESC categoriesForClass!External-Data-Structured-COM! !
+!OS.COM.FUNCDESC methodsFor!
 
 argumentNameFor: paramName
 	"Private - Answer a suitable <readableString> Smalltalk argument paramName for
@@ -374,52 +374,52 @@ wFuncFlags
 	"Answer the <Integer> value of the receiver's 'wFuncFlags' field."
 
 	^bytes wordAtOffset: _OffsetOf_wFuncFlags! !
-!FUNCDESC categoriesFor: #argumentNameFor:!helpers!private! !
-!FUNCDESC categoriesFor: #argumentNames!accessing!public! !
-!FUNCDESC categoriesFor: #arguments!accessing!public! !
-!FUNCDESC categoriesFor: #basicFree!private!realizing/unrealizing! !
-!FUNCDESC categoriesFor: #basicIdlAttributes!printing-IDL!private! !
-!FUNCDESC categoriesFor: #callconv!**compiled accessors**!public! !
-!FUNCDESC categoriesFor: #callingConvention!accessing!public! !
-!FUNCDESC categoriesFor: #clearMethodName!development!initializing!private! !
-!FUNCDESC categoriesFor: #cParams!**compiled accessors**!private! !
-!FUNCDESC categoriesFor: #cParamsOpt!**compiled accessors**!public! !
-!FUNCDESC categoriesFor: #cScodes!**compiled accessors**!private! !
-!FUNCDESC categoriesFor: #elemDesc!accessing!public! !
-!FUNCDESC categoriesFor: #elemdescFunc!**compiled accessors**!public! !
-!FUNCDESC categoriesFor: #elemDescFunc!accessing!public! !
-!FUNCDESC categoriesFor: #flags!accessing!private! !
-!FUNCDESC categoriesFor: #funckind!**compiled accessors**!public! !
-!FUNCDESC categoriesFor: #getAllCustData!accessing!private! !
-!FUNCDESC categoriesFor: #hasRetval!public!testing! !
-!FUNCDESC categoriesFor: #idlCallingConvention!printing-IDL!private! !
-!FUNCDESC categoriesFor: #invkind!**compiled accessors**!public! !
-!FUNCDESC categoriesFor: #isDispatchable!public!testing! !
-!FUNCDESC categoriesFor: #isMethod!public!testing! !
-!FUNCDESC categoriesFor: #isPropGet!public!testing! !
-!FUNCDESC categoriesFor: #isPropPut!public!testing! !
-!FUNCDESC categoriesFor: #isPropPutRef!public!testing! !
-!FUNCDESC categoriesFor: #isPropSet!public!testing! !
-!FUNCDESC categoriesFor: #isReadOnly!public!testing! !
-!FUNCDESC categoriesFor: #isRequestEdit!public!testing! !
-!FUNCDESC categoriesFor: #isRestricted!public!testing! !
-!FUNCDESC categoriesFor: #isVirtual!public!testing! !
-!FUNCDESC categoriesFor: #lprgelemdescParam!**compiled accessors**!public! !
-!FUNCDESC categoriesFor: #lprgscode!**compiled accessors**!public! !
-!FUNCDESC categoriesFor: #memid!**compiled accessors**!public! !
-!FUNCDESC categoriesFor: #name!accessing!public! !
-!FUNCDESC categoriesFor: #names!accessing!private! !
-!FUNCDESC categoriesFor: #optionalInputs!accessing!private! !
-!FUNCDESC categoriesFor: #outputIndices!accessing!private! !
-!FUNCDESC categoriesFor: #oVft!**compiled accessors**!public! !
-!FUNCDESC categoriesFor: #retTypeName!accessing!public! !
-!FUNCDESC categoriesFor: #retvalIndex!accessing!private! !
-!FUNCDESC categoriesFor: #selector!accessing!public! !
-!FUNCDESC categoriesFor: #tdescFunc!accessing!private! !
-!FUNCDESC categoriesFor: #vfnIndex!accessing!private! !
-!FUNCDESC categoriesFor: #wFuncFlags!**compiled accessors**!public! !
+!OS.COM.FUNCDESC categoriesFor: #argumentNameFor:!helpers!private! !
+!OS.COM.FUNCDESC categoriesFor: #argumentNames!accessing!public! !
+!OS.COM.FUNCDESC categoriesFor: #arguments!accessing!public! !
+!OS.COM.FUNCDESC categoriesFor: #basicFree!private!realizing/unrealizing! !
+!OS.COM.FUNCDESC categoriesFor: #basicIdlAttributes!printing-IDL!private! !
+!OS.COM.FUNCDESC categoriesFor: #callconv!**compiled accessors**!public! !
+!OS.COM.FUNCDESC categoriesFor: #callingConvention!accessing!public! !
+!OS.COM.FUNCDESC categoriesFor: #clearMethodName!development!initializing!private! !
+!OS.COM.FUNCDESC categoriesFor: #cParams!**compiled accessors**!private! !
+!OS.COM.FUNCDESC categoriesFor: #cParamsOpt!**compiled accessors**!public! !
+!OS.COM.FUNCDESC categoriesFor: #cScodes!**compiled accessors**!private! !
+!OS.COM.FUNCDESC categoriesFor: #elemDesc!accessing!public! !
+!OS.COM.FUNCDESC categoriesFor: #elemdescFunc!**compiled accessors**!public! !
+!OS.COM.FUNCDESC categoriesFor: #elemDescFunc!accessing!public! !
+!OS.COM.FUNCDESC categoriesFor: #flags!accessing!private! !
+!OS.COM.FUNCDESC categoriesFor: #funckind!**compiled accessors**!public! !
+!OS.COM.FUNCDESC categoriesFor: #getAllCustData!accessing!private! !
+!OS.COM.FUNCDESC categoriesFor: #hasRetval!public!testing! !
+!OS.COM.FUNCDESC categoriesFor: #idlCallingConvention!printing-IDL!private! !
+!OS.COM.FUNCDESC categoriesFor: #invkind!**compiled accessors**!public! !
+!OS.COM.FUNCDESC categoriesFor: #isDispatchable!public!testing! !
+!OS.COM.FUNCDESC categoriesFor: #isMethod!public!testing! !
+!OS.COM.FUNCDESC categoriesFor: #isPropGet!public!testing! !
+!OS.COM.FUNCDESC categoriesFor: #isPropPut!public!testing! !
+!OS.COM.FUNCDESC categoriesFor: #isPropPutRef!public!testing! !
+!OS.COM.FUNCDESC categoriesFor: #isPropSet!public!testing! !
+!OS.COM.FUNCDESC categoriesFor: #isReadOnly!public!testing! !
+!OS.COM.FUNCDESC categoriesFor: #isRequestEdit!public!testing! !
+!OS.COM.FUNCDESC categoriesFor: #isRestricted!public!testing! !
+!OS.COM.FUNCDESC categoriesFor: #isVirtual!public!testing! !
+!OS.COM.FUNCDESC categoriesFor: #lprgelemdescParam!**compiled accessors**!public! !
+!OS.COM.FUNCDESC categoriesFor: #lprgscode!**compiled accessors**!public! !
+!OS.COM.FUNCDESC categoriesFor: #memid!**compiled accessors**!public! !
+!OS.COM.FUNCDESC categoriesFor: #name!accessing!public! !
+!OS.COM.FUNCDESC categoriesFor: #names!accessing!private! !
+!OS.COM.FUNCDESC categoriesFor: #optionalInputs!accessing!private! !
+!OS.COM.FUNCDESC categoriesFor: #outputIndices!accessing!private! !
+!OS.COM.FUNCDESC categoriesFor: #oVft!**compiled accessors**!public! !
+!OS.COM.FUNCDESC categoriesFor: #retTypeName!accessing!public! !
+!OS.COM.FUNCDESC categoriesFor: #retvalIndex!accessing!private! !
+!OS.COM.FUNCDESC categoriesFor: #selector!accessing!public! !
+!OS.COM.FUNCDESC categoriesFor: #tdescFunc!accessing!private! !
+!OS.COM.FUNCDESC categoriesFor: #vfnIndex!accessing!private! !
+!OS.COM.FUNCDESC categoriesFor: #wFuncFlags!**compiled accessors**!public! !
 
-!FUNCDESC class methodsFor!
+!OS.COM.FUNCDESC class methodsFor!
 
 defineFields
 	"Define the fields of the FUNCDESC structure.
@@ -478,8 +478,8 @@ stbConvertFrom: anSTBClassFormat
 
 stbVersion
 	^1! !
-!FUNCDESC class categoriesFor: #defineFields!public!template definition! !
-!FUNCDESC class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!FUNCDESC class categoriesFor: #stbConvertFrom:!binary filing!development!public! !
-!FUNCDESC class categoriesFor: #stbVersion!binary filing!development!public! !
+!OS.COM.FUNCDESC class categoriesFor: #defineFields!public!template definition! !
+!OS.COM.FUNCDESC class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.COM.FUNCDESC class categoriesFor: #stbConvertFrom:!binary filing!development!public! !
+!OS.COM.FUNCDESC class categoriesFor: #stbVersion!binary filing!development!public! !
 

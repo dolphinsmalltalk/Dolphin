@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-AbstractELEMDESC subclass: #ELEMDESC
+OS.COM.AbstractELEMDESC subclass: #'OS.COM.ELEMDESC'
 	instanceVariableNames: 'param'
 	classVariableNames: ''
-	poolDictionaries: 'AXAutomationConstants'
+	imports: #(#{OS.COM.AutomationConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_paramdesc' -> 16r8
 	}!
-ELEMDESC guid: (GUID fromString: '{c06f3b77-0868-11d3-93af-00a024ca708a}')!
-ELEMDESC comment: 'ELEMDESC is an <ExternalStructure> class to represent the AX Automation structure of the same name.
+OS.COM.ELEMDESC guid: (Core.GUID fromString: '{c06f3b77-0868-11d3-93af-00a024ca708a}')!
+OS.COM.ELEMDESC comment: 'ELEMDESC is an <ExternalStructure> class to represent the AX Automation structure of the same name.
 
 ELEMDESC contains type and marshalling information for a variable, a function, or a function parameter.
 
@@ -22,8 +22,8 @@ Instance Variables:
 	param		<PARAMDESC>. Cached paramdesc structure.
 	tdesc		<TYPEDESC>. Cached tdesc structure
 '!
-!ELEMDESC categoriesForClass!External-Data-Structured-COM! !
-!ELEMDESC methodsFor!
+!OS.COM.ELEMDESC categoriesForClass!External-Data-Structured-COM! !
+!OS.COM.ELEMDESC methodsFor!
 
 defaultValue
 	"Answer a <VARIANT> which is the default value for the parameter described
@@ -68,16 +68,16 @@ paramdesc
 	"Answer the <PARAMDESC> value of the receiver's 'paramdesc' field."
 
 	^PARAMDESC fromAddress: bytes yourAddress + _OffsetOf_paramdesc! !
-!ELEMDESC categoriesFor: #defaultValue!accessing!public! !
-!ELEMDESC categoriesFor: #hasDefaultValue!development!helpers!private! !
-!ELEMDESC categoriesFor: #isIn!public!testing! !
-!ELEMDESC categoriesFor: #isOptional!public!testing! !
-!ELEMDESC categoriesFor: #isOut!public!testing! !
-!ELEMDESC categoriesFor: #isRetVal!public!testing! !
-!ELEMDESC categoriesFor: #param!accessing!public! !
-!ELEMDESC categoriesFor: #paramdesc!**compiled accessors**!public! !
+!OS.COM.ELEMDESC categoriesFor: #defaultValue!accessing!public! !
+!OS.COM.ELEMDESC categoriesFor: #hasDefaultValue!development!helpers!private! !
+!OS.COM.ELEMDESC categoriesFor: #isIn!public!testing! !
+!OS.COM.ELEMDESC categoriesFor: #isOptional!public!testing! !
+!OS.COM.ELEMDESC categoriesFor: #isOut!public!testing! !
+!OS.COM.ELEMDESC categoriesFor: #isRetVal!public!testing! !
+!OS.COM.ELEMDESC categoriesFor: #param!accessing!public! !
+!OS.COM.ELEMDESC categoriesFor: #paramdesc!**compiled accessors**!public! !
 
-!ELEMDESC class methodsFor!
+!OS.COM.ELEMDESC class methodsFor!
 
 defineFields
 	"Define the fields of the ELEMDESC structure.
@@ -96,6 +96,6 @@ defineFields
 
 getFieldNames
 	^#(#tdescElem #paramdesc)! !
-!ELEMDESC class categoriesFor: #defineFields!public!template definition! !
-!ELEMDESC class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.COM.ELEMDESC class categoriesFor: #defineFields!public!template definition! !
+!OS.COM.ELEMDESC class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

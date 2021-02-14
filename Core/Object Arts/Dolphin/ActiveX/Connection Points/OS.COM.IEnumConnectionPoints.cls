@@ -1,17 +1,17 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-IEnumUnknown subclass: #IEnumConnectionPoints
+OS.COM.IEnumUnknown subclass: #'OS.COM.IEnumConnectionPoints'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-IEnumConnectionPoints guid: (IID fromString: '{b196b285-bab4-101a-b69c-00aa00341d07}')!
-IEnumConnectionPoints comment: '<IEnumConnectionPoints> is a wrapper class for the custom interface ''OBJIDL.IEnumConnectionPoints'' generated from type information in the ''ObjIDL Library'' library. It contains methods to invoke the member functions exposed by that interface.
+OS.COM.IEnumConnectionPoints guid: (OS.COM.IID fromString: '{b196b285-bab4-101a-b69c-00aa00341d07}')!
+OS.COM.IEnumConnectionPoints comment: '<IEnumConnectionPoints> is a wrapper class for the custom interface ''OBJIDL.IEnumConnectionPoints'' generated from type information in the ''ObjIDL Library'' library. It contains methods to invoke the member functions exposed by that interface.
 
 IEnumConnections is used to enumerate details (via the CONNECTDATA structure) of connection points available in a connection point container.'!
-!IEnumConnectionPoints categoriesForClass!COM-Interfaces! !
-!IEnumConnectionPoints class methodsFor!
+!OS.COM.IEnumConnectionPoints categoriesForClass!COM-Interfaces! !
+!OS.COM.IEnumConnectionPoints class methodsFor!
 
 defineFunctions
 	"Declare the virtual function table for the receiver.
@@ -24,6 +24,6 @@ elementClass
 	"Answer the class of element enumerated by the receiver."
 
 	^IConnectionPoint! !
-!IEnumConnectionPoints class categoriesFor: #defineFunctions!initializing!public! !
-!IEnumConnectionPoints class categoriesFor: #elementClass!constants!public! !
+!OS.COM.IEnumConnectionPoints class categoriesFor: #defineFunctions!initializing!public! !
+!OS.COM.IEnumConnectionPoints class categoriesFor: #elementClass!constants!public! !
 

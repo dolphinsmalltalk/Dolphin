@@ -1,27 +1,27 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-AXStructureTypeAnalyzer subclass: #TKindUnionAnalyzer
+OS.COM.StructureTypeAnalyzer subclass: #'OS.COM.TKindUnionAnalyzer'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-TKindUnionAnalyzer guid: (GUID fromString: '{c06f3b81-0868-11d3-93af-00a024ca708a}')!
-TKindUnionAnalyzer comment: ''!
-!TKindUnionAnalyzer categoriesForClass!ActiveX Automation! !
-!TKindUnionAnalyzer methodsFor!
+OS.COM.TKindUnionAnalyzer guid: (Core.GUID fromString: '{c06f3b81-0868-11d3-93af-00a024ca708a}')!
+OS.COM.TKindUnionAnalyzer comment: ''!
+!OS.COM.TKindUnionAnalyzer categoriesForClass!ActiveX Automation! !
+!OS.COM.TKindUnionAnalyzer methodsFor!
 
 isUnion
 	"Answer whether the receiver describes a union."
 
 	^true! !
-!TKindUnionAnalyzer categoriesFor: #isUnion!public!testing! !
+!OS.COM.TKindUnionAnalyzer categoriesFor: #isUnion!public!testing! !
 
-!TKindUnionAnalyzer class methodsFor!
+!OS.COM.TKindUnionAnalyzer class methodsFor!
 
 typekind
 	"Private - Answer the Automation TYPEKIND associated with the receiver."
 	
 	^TKIND_UNION! !
-!TKindUnionAnalyzer class categoriesFor: #typekind!constants!private! !
+!OS.COM.TKindUnionAnalyzer class categoriesFor: #typekind!constants!private! !
 

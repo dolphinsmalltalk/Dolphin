@@ -1,19 +1,19 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-IUnknown subclass: #IClassFactory
+OS.COM.IUnknown subclass: #'OS.COM.IClassFactory'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-IClassFactory guid: (IID fromString: '{00000001-0000-0000-c000-000000000046}')!
-IClassFactory comment: '<IClassFactory> is a wrapper class for the custom interface ''UNKNWN.IClassFactory'' from type information in the ''IUnknown Type Library'' library. It contains methods to invoke the member functions exposed by that interface.
+OS.COM.IClassFactory guid: (OS.COM.IID fromString: '{00000001-0000-0000-c000-000000000046}')!
+OS.COM.IClassFactory comment: '`OS.COM.IClassFactory` is a wrapper class for the custom interface ''UNKNWN.IClassFactory'' from type information in the ''IUnknown Type Library'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface.
 
 WARNING: This comment was automatically generated from the interface''s type information and any changes made here may be overwritten the next time this wrapper class is so generated.'!
-!IClassFactory categoriesForClass!COM-Interfaces! !
-!IClassFactory methodsFor!
+!OS.COM.IClassFactory categoriesForClass!COM-Interfaces! !
+!OS.COM.IClassFactory methodsFor!
 
 createInstance: pUnkOuter iid: iid
 	"Create and a new instance of the class represented by the receiver, aggregating
@@ -22,12 +22,13 @@ createInstance: pUnkOuter iid: iid
 	If aggregation is not required, then pUnkOuter can be nil."
 
 	| ifClass answer hr |
-	ifClass := COMInterface classForIID: iid.
+	ifClass := Interface classForIID: iid.
 	answer := ifClass newPointer.
-	hr := self CreateInstance: pUnkOuter riid: iid ppvObject: answer.
-	^hr < 0 
-		ifTrue: [HRESULTError signalWith: hr]
-		ifFalse: [answer]!
+	hr := self
+				CreateInstance: pUnkOuter
+				riid: iid
+				ppvObject: answer.
+	^hr < 0 ifTrue: [HRESULTError signalWith: hr] ifFalse: [answer]!
 
 CreateInstance: pUnkOuter riid: riid ppvObject: ppvObject
 	"Invoke the CreateInstance() method of the object wrapped by the receiver.
@@ -52,11 +53,11 @@ LockServer: fLock
 
 	<virtual stdcall: hresult 5 sdword>
 	^self invalidCall: _failureCode! !
-!IClassFactory categoriesFor: #createInstance:iid:!instance creation!public! !
-!IClassFactory categoriesFor: #CreateInstance:riid:ppvObject:!COM Interfaces-IClassFactory!public! !
-!IClassFactory categoriesFor: #LockServer:!**auto generated**!public! !
+!OS.COM.IClassFactory categoriesFor: #createInstance:iid:!instance creation!public! !
+!OS.COM.IClassFactory categoriesFor: #CreateInstance:riid:ppvObject:!COM Interfaces-IClassFactory!public! !
+!OS.COM.IClassFactory categoriesFor: #LockServer:!**auto generated**!public! !
 
-!IClassFactory class methodsFor!
+!OS.COM.IClassFactory class methodsFor!
 
 ctxAll
 	"Answer the flags to be used to specify instance creation from any source.
@@ -70,8 +71,8 @@ ctxServer
 	N.B. This varies depending on whether the operating system supports remote
 	servers, and so is not strictly a constant (thanks guys)."
 
-	^CLSCTX_INPROC_SERVER | CLSCTX_LOCAL_SERVER |
-		(OLELibrary default supportsDCOM ifTrue: [CLSCTX_REMOTE_SERVER] ifFalse: [0])!
+	^CLSCTX_INPROC_SERVER | CLSCTX_LOCAL_SERVER
+		| (OLELibrary default supportsDCOM ifTrue: [CLSCTX_REMOTE_SERVER] ifFalse: [0])!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'UNKNWN.IClassFactory'
@@ -84,7 +85,7 @@ defineFunctions
 			argumentTypes: 'IUnknown* GUID* IUnknown**';
 		defineFunction: #LockServer:
 			argumentTypes: 'bool'! !
-!IClassFactory class categoriesFor: #ctxAll!constants!public! !
-!IClassFactory class categoriesFor: #ctxServer!constants!public! !
-!IClassFactory class categoriesFor: #defineFunctions!initializing!public! !
+!OS.COM.IClassFactory class categoriesFor: #ctxAll!constants!public! !
+!OS.COM.IClassFactory class categoriesFor: #ctxServer!constants!public! !
+!OS.COM.IClassFactory class categoriesFor: #defineFunctions!initializing!public! !
 

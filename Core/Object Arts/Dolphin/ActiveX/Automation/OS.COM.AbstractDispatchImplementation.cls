@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-COMInterfaceImp subclass: #AXDispatchImpAbstract
+OS.COM.InterfaceImplementation subclass: #'OS.COM.AbstractDispatchImplementation'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'AXAutomationConstants AXAutomationErrors Win32Constants'
+	imports: #(#{OS.Win32Constants} #{OS.COM.AutomationConstants} #{OS.COM.AutomationErrors})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-AXDispatchImpAbstract guid: (GUID fromString: '{10dee4fb-246c-4582-9a3b-2ca93e0636c2}')!
-AXDispatchImpAbstract comment: ''!
-!AXDispatchImpAbstract categoriesForClass!Unclassified! !
-!AXDispatchImpAbstract methodsFor!
+OS.COM.AbstractDispatchImplementation guid: (Core.GUID fromString: '{10dee4fb-246c-4582-9a3b-2ca93e0636c2}')!
+OS.COM.AbstractDispatchImplementation comment: ''!
+!OS.COM.AbstractDispatchImplementation categoriesForClass!Unclassified! !
+!OS.COM.AbstractDispatchImplementation methodsFor!
 
 decodeArgs: aDISPPARAMS
 	| args argc rgvarg i |
@@ -35,9 +35,10 @@ errorDispatching: dispid exception: anError excepInfo: pExcepInfo
 	| hr |
 	self notifyDispatchError: anError invoking: dispid.
 	hr := anError hresult.
-	pExcepInfo notNull ifTrue: [
-		pExcepInfo scode: hr asInteger.
-		pExcepInfo bstrDescription: (BSTR fromString: anError description) detach].
+	pExcepInfo notNull
+		ifTrue: 
+			[pExcepInfo scode: hr asInteger.
+			pExcepInfo bstrDescription: (BSTR fromString: anError description) detach].
 	^hr!
 
 GetIDsOfNames: getIDsOfNames rgszNames: rgszNames cNames: cNames lcid: lcid rgdispid: rgdispid 
@@ -150,18 +151,18 @@ typeInfoCount
 	"Answer 1 if type information is available, else 0."
 
 	^0! !
-!AXDispatchImpAbstract categoriesFor: #decodeArgs:!helpers!private! !
-!AXDispatchImpAbstract categoriesFor: #errorDispatching:exception:excepInfo:!operations!private! !
-!AXDispatchImpAbstract categoriesFor: #GetIDsOfNames:rgszNames:cNames:lcid:rgdispid:!COM Interfaces-IDispatch!public! !
-!AXDispatchImpAbstract categoriesFor: #GetTypeInfo:lcid:pptinfo:!COM Interfaces-IDispatch!public! !
-!AXDispatchImpAbstract categoriesFor: #GetTypeInfoCount:!COM Interfaces-IDispatch!public! !
-!AXDispatchImpAbstract categoriesFor: #idsOfNames:whenNotKnown:!accessing!public! !
-!AXDispatchImpAbstract categoriesFor: #Invoke:riid:lcid:wFlags:pdispparams:pvarResult:pexcepinfo:puArgErr:!COM Interfaces-IDispatch!public! !
-!AXDispatchImpAbstract categoriesFor: #invokeId:flags:withArguments:!operations!public! !
-!AXDispatchImpAbstract categoriesFor: #notifyDispatchError:invoking:!operations!private! !
-!AXDispatchImpAbstract categoriesFor: #supportedInterfaces!constants!public! !
-!AXDispatchImpAbstract categoriesFor: #typeInfo:ifNone:!accessing!private! !
-!AXDispatchImpAbstract categoriesFor: #typeInfoCount!accessing!public! !
+!OS.COM.AbstractDispatchImplementation categoriesFor: #decodeArgs:!helpers!private! !
+!OS.COM.AbstractDispatchImplementation categoriesFor: #errorDispatching:exception:excepInfo:!operations!private! !
+!OS.COM.AbstractDispatchImplementation categoriesFor: #GetIDsOfNames:rgszNames:cNames:lcid:rgdispid:!COM Interfaces-IDispatch!public! !
+!OS.COM.AbstractDispatchImplementation categoriesFor: #GetTypeInfo:lcid:pptinfo:!COM Interfaces-IDispatch!public! !
+!OS.COM.AbstractDispatchImplementation categoriesFor: #GetTypeInfoCount:!COM Interfaces-IDispatch!public! !
+!OS.COM.AbstractDispatchImplementation categoriesFor: #idsOfNames:whenNotKnown:!accessing!public! !
+!OS.COM.AbstractDispatchImplementation categoriesFor: #Invoke:riid:lcid:wFlags:pdispparams:pvarResult:pexcepinfo:puArgErr:!COM Interfaces-IDispatch!public! !
+!OS.COM.AbstractDispatchImplementation categoriesFor: #invokeId:flags:withArguments:!operations!public! !
+!OS.COM.AbstractDispatchImplementation categoriesFor: #notifyDispatchError:invoking:!operations!private! !
+!OS.COM.AbstractDispatchImplementation categoriesFor: #supportedInterfaces!constants!public! !
+!OS.COM.AbstractDispatchImplementation categoriesFor: #typeInfo:ifNone:!accessing!private! !
+!OS.COM.AbstractDispatchImplementation categoriesFor: #typeInfoCount!accessing!public! !
 
-AXDispatchImpAbstract methodProtocol: #IDispatch attributes: #(#readOnly) selectors: #(#GetIDsOfNames:rgszNames:cNames:lcid:rgdispid: #GetTypeInfo:lcid:pptinfo: #GetTypeInfoCount: #Invoke:riid:lcid:wFlags:pdispparams:pvarResult:pexcepinfo:puArgErr:)!
+OS.COM.AbstractDispatchImplementation methodProtocol: #IDispatch attributes: #(#readOnly) selectors: #(#GetIDsOfNames:rgszNames:cNames:lcid:rgdispid: #GetTypeInfo:lcid:pptinfo: #GetTypeInfoCount: #Invoke:riid:lcid:wFlags:pdispparams:pvarResult:pexcepinfo:puArgErr:)!
 

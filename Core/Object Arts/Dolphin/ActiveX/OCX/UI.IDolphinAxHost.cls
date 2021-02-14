@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-IUnknown subclass: #IDolphinAxHost
+OS.COM.IUnknown subclass: #'UI.IDolphinAxHost'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #(#{OS.COM private})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-IDolphinAxHost guid: (IID fromString: '{4ea0745e-6c01-4bb4-b0ae-47a53ba9174a}')!
-IDolphinAxHost comment: '<IDolphinAxHost> is a wrapper class for the COM interface ''ActiveXHost.IDolphinAxHost'' generated from type information in the ''Dolphin Smalltalk Active-X Host Library'' library. It contains methods to invoke the member functions exposed by that interface.
+UI.IDolphinAxHost guid: (OS.COM.IID fromString: '{4ea0745e-6c01-4bb4-b0ae-47a53ba9174a}')!
+UI.IDolphinAxHost comment: '<IDolphinAxHost> is a wrapper class for the COM interface ''ActiveXHost.IDolphinAxHost'' generated from type information in the ''Dolphin Smalltalk Active-X Host Library'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
 
@@ -43,8 +43,8 @@ interface IDolphinAxHost : IUnknown {
 		[out, retval] VARIANT_BOOL* pbIsWindowless);
 };
 '!
-!IDolphinAxHost categoriesForClass!ActiveXHost-Interfaces!COM-Interfaces! !
-!IDolphinAxHost methodsFor!
+!UI.IDolphinAxHost categoriesForClass!ActiveXHost-Interfaces!COM-Interfaces! !
+!UI.IDolphinAxHost methodsFor!
 
 createControlLicEx: lpTricsData hWnd: hWnd pStream: pStream piAdvise: piAdvise bstrLic: bstrLic
 	"Answer the <IUnknown> result of invoking the CreateControlLicEx() method of the COM object."
@@ -88,21 +88,17 @@ isWindowless
 	Helpstring: Is the control being hosted windowless or not?"
 
 	| answer |
-	answer := (VARIANT_BOOL new).
+	answer := VARIANT_BOOL new.
 	self get_IsWindowless: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 queryControl: riid
 	"Answer the <IUnknown> result of invoking the QueryControl() method of the COM object."
 
 	| answer |
 	answer := IUnknown newPointer.
-	self
-		QueryControl: riid
-		ppiObject: answer.
-	^answer asObject
-!
+	self QueryControl: riid ppiObject: answer.
+	^answer asObject!
 
 QueryControl: riid ppiObject: ppiObject
 	"Private - Invoke the QueryControl() method of the COM object.
@@ -131,16 +127,16 @@ SetExternalUIHandler: pDisp
 
 	<virtual stdcall: hresult 5 IDocHostUIHandlerDispatch*>
 	^self invalidCall: _failureCode! !
-!IDolphinAxHost categoriesFor: #createControlLicEx:hWnd:pStream:piAdvise:bstrLic:!**auto generated**!methods!public! !
-!IDolphinAxHost categoriesFor: #CreateControlLicEx:hWnd:pStream:ppUnk:piAdvise:bstrLic:!**auto generated**!COM Interfaces-IDolphinAxHost!private! !
-!IDolphinAxHost categoriesFor: #get_IsWindowless:!**auto generated**!COM Interfaces-IDolphinAxHost!private! !
-!IDolphinAxHost categoriesFor: #isWindowless!**auto generated**!properties!public! !
-!IDolphinAxHost categoriesFor: #queryControl:!**auto generated**!methods!public! !
-!IDolphinAxHost categoriesFor: #QueryControl:ppiObject:!**auto generated**!COM Interfaces-IDolphinAxHost!private! !
-!IDolphinAxHost categoriesFor: #SetExternalDispatch:!**auto generated**!COM Interfaces-IDolphinAxHost!public! !
-!IDolphinAxHost categoriesFor: #SetExternalUIHandler:!**auto generated**!COM Interfaces-IDolphinAxHost!public! !
+!UI.IDolphinAxHost categoriesFor: #createControlLicEx:hWnd:pStream:piAdvise:bstrLic:!**auto generated**!methods!public! !
+!UI.IDolphinAxHost categoriesFor: #CreateControlLicEx:hWnd:pStream:ppUnk:piAdvise:bstrLic:!**auto generated**!COM Interfaces-IDolphinAxHost!private! !
+!UI.IDolphinAxHost categoriesFor: #get_IsWindowless:!**auto generated**!COM Interfaces-IDolphinAxHost!private! !
+!UI.IDolphinAxHost categoriesFor: #isWindowless!**auto generated**!properties!public! !
+!UI.IDolphinAxHost categoriesFor: #queryControl:!**auto generated**!methods!public! !
+!UI.IDolphinAxHost categoriesFor: #QueryControl:ppiObject:!**auto generated**!COM Interfaces-IDolphinAxHost!private! !
+!UI.IDolphinAxHost categoriesFor: #SetExternalDispatch:!**auto generated**!COM Interfaces-IDolphinAxHost!public! !
+!UI.IDolphinAxHost categoriesFor: #SetExternalUIHandler:!**auto generated**!COM Interfaces-IDolphinAxHost!public! !
 
-!IDolphinAxHost class methodsFor!
+!UI.IDolphinAxHost class methodsFor!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'ActiveXHost.IDolphinAxHost'
@@ -158,5 +154,5 @@ defineFunctions
 		defineFunction: #get_IsWindowless:
 			argumentTypes: 'varbool*'
 ! !
-!IDolphinAxHost class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!UI.IDolphinAxHost class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
 

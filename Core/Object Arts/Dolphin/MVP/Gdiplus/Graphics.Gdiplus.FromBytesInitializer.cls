@@ -22,7 +22,7 @@ hash
 	^self bytes hash!
 
 iStream
-	^Smalltalk.IStream fromBytes: bytes!
+	^COM.IStream fromBytes: bytes!
 
 setBytes: aByteArray 
 	bytes := aByteArray! !

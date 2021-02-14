@@ -5,7 +5,9 @@ package paxVersion: 2.1;
 	basicComment: 'Dolphin Smalltalk Windows Shell Basics
 Copyright (c) Object Arts Ltd, 1998-2000. 
 
-This package wraps some of the basic functionality of the Windows Shell that is exposed through traditional Win32 APIs (as opposed to COM), for example launching processes using ShellExec.'.
+This package wraps some of the basic functionality of the Windows Shell that is exposed through traditional Win32 APIs (as opposed to COM), for example launching processes using ShellExec.
+
+This package is not supposed to be dependent on the OLE COM package.'.
 
 package basicPackageVersion: '6.1'.
 

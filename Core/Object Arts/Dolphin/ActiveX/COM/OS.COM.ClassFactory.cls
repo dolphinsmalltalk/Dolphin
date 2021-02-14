@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-COMInterfaceImp subclass: #COMClassFactory
+OS.COM.InterfaceImplementation subclass: #'OS.COM.ClassFactory'
 	instanceVariableNames: 'serverClass clsid registration'
 	classVariableNames: 'Factories Instances LockCount'
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-COMClassFactory guid: (GUID fromString: '{87b4c540-026e-11d3-9fd7-00a0cc3e4a32}')!
-COMClassFactory comment: 'COMClassFactory is Dolphin''s standard implementation of IClassFactory. It can serve up instances of a particular coclass (possibly also a subclass of COMInterfaceImp), and having been registered once for any paricular coclass it will re-register the availability of that coclass with COM each time that Dolphin is started.
+OS.COM.ClassFactory guid: (Core.GUID fromString: '{87b4c540-026e-11d3-9fd7-00a0cc3e4a32}')!
+OS.COM.ClassFactory comment: 'COMClassFactory is Dolphin''s standard implementation of IClassFactory. It can serve up instances of a particular coclass (possibly also a subclass of COMInterfaceImp), and having been registered once for any paricular coclass it will re-register the availability of that coclass with COM each time that Dolphin is started.
 
 Subclasses can provide specialized services to support coclasses with particular instantiation requirements, and they can even implement alternative class factory interfaces (contrary to common believe IClassFactory is not mandatory).
 
@@ -21,8 +21,8 @@ Class Variables:
 	Instances		- a <WeakSet> containing all outstanding instances of all registered coclasses. Used to control server lifetime.
 	LockCount	- <integer> lock count reflecting calls to LockServer().
 '!
-!COMClassFactory categoriesForClass!COM-Implementations! !
-!COMClassFactory methodsFor!
+!OS.COM.ClassFactory categoriesForClass!COM-Implementations! !
+!OS.COM.ClassFactory methodsFor!
 
 basicFree
 	"Private - clean up external resources held by the receiver."
@@ -54,7 +54,7 @@ createInstance: pUnkOuter
 
 	^self serverClass new!
 
-CreateInstance: pUnkOuter riid: riid ppvObject: ppvObject 
+CreateInstance: pUnkOuter riid: riid ppvObject: ppvObject
 	"Private - Implement IClassFactory::CreateInstance().
 	Manufacture an object of the receiver's server class, answering an interface
 	of the specified IID on it through ppvObject. ppvObject is nulled if an
@@ -65,13 +65,12 @@ CreateInstance: pUnkOuter riid: riid ppvObject: ppvObject
 
 	| pUnk interfaceClass inst |
 	ppvObject value: 0.
-	interfaceClass := COMInterface classForIID: riid ifNone: [^E_NOINTERFACE].
+	interfaceClass := Interface classForIID: riid ifNone: [^E_NOINTERFACE].
 	inst := [self createInstance: pUnkOuter] on: Error do: [:e | ^e hresult asInteger].
-	pUnk := pUnkOuter yourAddress isNull 
+	pUnk := pUnkOuter yourAddress isNull
 				ifTrue: [inst queryInterface: interfaceClass ifNone: [^E_NOINTERFACE]]
 				ifFalse: 
 					["Aggregation request"
-
 					riid = IUnknown iid ifFalse: [^E_NOINTERFACE	"must request IUnknown when aggregating"].
 					IUnknown on: inst outerUnknown: pUnkOuter].
 	ppvObject value: pUnk detach.
@@ -125,18 +124,19 @@ register
 	registration is revoked)."
 
 	| iClassFactory dwCookie |
-	self revoke.							"revoke any existing registration"
+	self revoke.	"revoke any existing registration"
 	dwCookie := DWORDBytes new.
 	iClassFactory := IClassFactory on: self.
+	
 	[OLELibrary default
 		coRegisterClassObject: clsid
 		pUnk: iClassFactory asParameter
-		dwClsContext: CLSCTX_LOCAL_SERVER	"Only context currently supported"
-		flags: REGCLS_MULTIPLEUSE			"We can support multiple classes"
-		lpdwRegister: dwCookie
-	] ensure: [
-		registration := dwCookie asInteger.
-		iClassFactory free]!
+		dwClsContext: CLSCTX_LOCAL_SERVER
+		flags: REGCLS_MULTIPLEUSE
+		lpdwRegister: dwCookie	"Only context currently supported"	"We can support multiple classes"]
+			ensure: 
+				[registration := dwCookie asInteger.
+				iClassFactory free]!
 
 registerInstance: anObject
 	"Private - Register the newly created instance, anObject. The instance registers
@@ -174,27 +174,27 @@ serverClass: aClass
 supportedInterfaces
 	"Answer the set of interface classes supported by the receiver."
 
-	^#(##(IClassFactory))! !
-!COMClassFactory categoriesFor: #basicFree!private!realizing/unrealizing! !
-!COMClassFactory categoriesFor: #clear!initializing!private! !
-!COMClassFactory categoriesFor: #clsid!accessing!public! !
-!COMClassFactory categoriesFor: #clsid:!accessing!private! !
-!COMClassFactory categoriesFor: #createInstance:!instance creation!private! !
-!COMClassFactory categoriesFor: #CreateInstance:riid:ppvObject:!COM Interfaces-IClassFactory!private! !
-!COMClassFactory categoriesFor: #CreateInstanceLic:pUnkReserved:riid:bstrKey:ppvObject:!COM Interfaces-IClassFactory2!public! !
-!COMClassFactory categoriesFor: #free!public!realizing/unrealizing! !
-!COMClassFactory categoriesFor: #GetLicInfo:!COM Interfaces-IClassFactory2!public! !
-!COMClassFactory categoriesFor: #LockServer:!COM Interfaces-IClassFactory!private! !
-!COMClassFactory categoriesFor: #printOn:!development!printing!public! !
-!COMClassFactory categoriesFor: #register!operations!private! !
-!COMClassFactory categoriesFor: #registerInstance:!operations!private! !
-!COMClassFactory categoriesFor: #RequestLicKey:pBstrKey:!COM Interfaces-IClassFactory2!public! !
-!COMClassFactory categoriesFor: #revoke!private!realizing/unrealizing! !
-!COMClassFactory categoriesFor: #serverClass!accessing!private! !
-!COMClassFactory categoriesFor: #serverClass:!accessing!private! !
-!COMClassFactory categoriesFor: #supportedInterfaces!constants!public! !
+	^{IClassFactory}! !
+!OS.COM.ClassFactory categoriesFor: #basicFree!private!realizing/unrealizing! !
+!OS.COM.ClassFactory categoriesFor: #clear!initializing!private! !
+!OS.COM.ClassFactory categoriesFor: #clsid!accessing!public! !
+!OS.COM.ClassFactory categoriesFor: #clsid:!accessing!private! !
+!OS.COM.ClassFactory categoriesFor: #createInstance:!instance creation!private! !
+!OS.COM.ClassFactory categoriesFor: #CreateInstance:riid:ppvObject:!COM Interfaces-IClassFactory!private! !
+!OS.COM.ClassFactory categoriesFor: #CreateInstanceLic:pUnkReserved:riid:bstrKey:ppvObject:!COM Interfaces-IClassFactory2!public! !
+!OS.COM.ClassFactory categoriesFor: #free!public!realizing/unrealizing! !
+!OS.COM.ClassFactory categoriesFor: #GetLicInfo:!COM Interfaces-IClassFactory2!public! !
+!OS.COM.ClassFactory categoriesFor: #LockServer:!COM Interfaces-IClassFactory!private! !
+!OS.COM.ClassFactory categoriesFor: #printOn:!development!printing!public! !
+!OS.COM.ClassFactory categoriesFor: #register!operations!private! !
+!OS.COM.ClassFactory categoriesFor: #registerInstance:!operations!private! !
+!OS.COM.ClassFactory categoriesFor: #RequestLicKey:pBstrKey:!COM Interfaces-IClassFactory2!public! !
+!OS.COM.ClassFactory categoriesFor: #revoke!private!realizing/unrealizing! !
+!OS.COM.ClassFactory categoriesFor: #serverClass!accessing!private! !
+!OS.COM.ClassFactory categoriesFor: #serverClass:!accessing!private! !
+!OS.COM.ClassFactory categoriesFor: #supportedInterfaces!constants!public! !
 
-!COMClassFactory class methodsFor!
+!OS.COM.ClassFactory class methodsFor!
 
 basicOn: serverClass clsid: aCLSID 
 	"Private - Answer an instance of the receiver for the specified server class and CLSID."
@@ -326,23 +326,23 @@ unregister: serverClass
 	| f |
 	f := Factories removeKey: serverClass ifAbsent: [^self].
 	f revoke! !
-!COMClassFactory class categoriesFor: #basicOn:clsid:!instance creation!private! !
-!COMClassFactory class categoriesFor: #canUnloadNow!private!testing! !
-!COMClassFactory class categoriesFor: #clearAll!initializing!private! !
-!COMClassFactory class categoriesFor: #decrementLockCount!accessing!private! !
-!COMClassFactory class categoriesFor: #freeAll!operations!private! !
-!COMClassFactory class categoriesFor: #incrementLockCount!accessing!private! !
-!COMClassFactory class categoriesFor: #initialize!development!initializing!private! !
-!COMClassFactory class categoriesFor: #initializeFactoryRegister!initializing!private! !
-!COMClassFactory class categoriesFor: #lockCount!accessing!public! !
-!COMClassFactory class categoriesFor: #on:!instance creation!public! !
-!COMClassFactory class categoriesFor: #on:clsid:!instance creation!public! !
-!COMClassFactory class categoriesFor: #onElementsExpired:!event handling!private! !
-!COMClassFactory class categoriesFor: #onExit!event handling!private! !
-!COMClassFactory class categoriesFor: #onStartup!event handling!private! !
-!COMClassFactory class categoriesFor: #registerAll!operations!private! !
-!COMClassFactory class categoriesFor: #revokeAll!operations!private! !
-!COMClassFactory class categoriesFor: #revokeOn:!instance creation!public! !
-!COMClassFactory class categoriesFor: #shutdownIfDead!operations-shutdown!private! !
-!COMClassFactory class categoriesFor: #unregister:!instance creation!public! !
+!OS.COM.ClassFactory class categoriesFor: #basicOn:clsid:!instance creation!private! !
+!OS.COM.ClassFactory class categoriesFor: #canUnloadNow!private!testing! !
+!OS.COM.ClassFactory class categoriesFor: #clearAll!initializing!private! !
+!OS.COM.ClassFactory class categoriesFor: #decrementLockCount!accessing!private! !
+!OS.COM.ClassFactory class categoriesFor: #freeAll!operations!private! !
+!OS.COM.ClassFactory class categoriesFor: #incrementLockCount!accessing!private! !
+!OS.COM.ClassFactory class categoriesFor: #initialize!development!initializing!private! !
+!OS.COM.ClassFactory class categoriesFor: #initializeFactoryRegister!initializing!private! !
+!OS.COM.ClassFactory class categoriesFor: #lockCount!accessing!public! !
+!OS.COM.ClassFactory class categoriesFor: #on:!instance creation!public! !
+!OS.COM.ClassFactory class categoriesFor: #on:clsid:!instance creation!public! !
+!OS.COM.ClassFactory class categoriesFor: #onElementsExpired:!event handling!private! !
+!OS.COM.ClassFactory class categoriesFor: #onExit!event handling!private! !
+!OS.COM.ClassFactory class categoriesFor: #onStartup!event handling!private! !
+!OS.COM.ClassFactory class categoriesFor: #registerAll!operations!private! !
+!OS.COM.ClassFactory class categoriesFor: #revokeAll!operations!private! !
+!OS.COM.ClassFactory class categoriesFor: #revokeOn:!instance creation!public! !
+!OS.COM.ClassFactory class categoriesFor: #shutdownIfDead!operations-shutdown!private! !
+!OS.COM.ClassFactory class categoriesFor: #unregister:!instance creation!public! !
 

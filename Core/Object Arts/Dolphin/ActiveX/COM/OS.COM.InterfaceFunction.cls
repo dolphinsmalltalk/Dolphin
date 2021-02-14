@@ -1,20 +1,20 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-COMFunctionAbstract subclass: #COMFunction
+OS.COM.AbstractInterfaceFunction subclass: #'OS.COM.InterfaceFunction'
 	instanceVariableNames: 'selector descriptor'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-COMFunction guid: (GUID fromString: '{87b4c466-026e-11d3-9fd7-00a0cc3e4a32}')!
-COMFunction comment: 'COMFunction is the generic class of <COMFunctionAbstract> used to represent the majority of COM functions which are forwarded to the implementing <Object> (COM server) rather than the <COMObjectStub> or any other object.
+OS.COM.InterfaceFunction guid: (Core.GUID fromString: '{87b4c466-026e-11d3-9fd7-00a0cc3e4a32}')!
+OS.COM.InterfaceFunction comment: 'COMFunction is the generic class of <COMFunctionAbstract> used to represent the majority of COM functions which are forwarded to the implementing <Object> (COM server) rather than the <COMObjectStub> or any other object.
 
 Instance Variables:
 	selector		<Symbol>. Selector to be forwarded.
 	descriptor		<FunctionDescriptor>. Argument type descriptions.
 '!
-!COMFunction categoriesForClass!COM-Implementations! !
-!COMFunction methodsFor!
+!OS.COM.InterfaceFunction categoriesForClass!COM-Implementations! !
+!OS.COM.InterfaceFunction methodsFor!
 
 callback: stub interface: aCOMInterface withArgumentsAt: anAddress
 	"Private - Forward a COM virtual function call as a message to the appropriate implementing
@@ -50,13 +50,13 @@ selector: aSymbol
 	implementing the COM virtual function when that function is called."
 
 	selector := aSymbol! !
-!COMFunction categoriesFor: #callback:interface:withArgumentsAt:!evaluating!private! !
-!COMFunction categoriesFor: #descriptor!accessing!private! !
-!COMFunction categoriesFor: #descriptor:!accessing!private! !
-!COMFunction categoriesFor: #selector!accessing!private! !
-!COMFunction categoriesFor: #selector:!accessing!private! !
+!OS.COM.InterfaceFunction categoriesFor: #callback:interface:withArgumentsAt:!evaluating!private! !
+!OS.COM.InterfaceFunction categoriesFor: #descriptor!accessing!private! !
+!OS.COM.InterfaceFunction categoriesFor: #descriptor:!accessing!private! !
+!OS.COM.InterfaceFunction categoriesFor: #selector!accessing!private! !
+!OS.COM.InterfaceFunction categoriesFor: #selector:!accessing!private! !
 
-!COMFunction class methodsFor!
+!OS.COM.InterfaceFunction class methodsFor!
 
 prototype: anExternalMethod
 	"Answer a new instance of the receiver appropriate for dispatching callbacks
@@ -73,6 +73,6 @@ selector: aSymbol descriptor: aFunctionDescriptor
 	^self new
 		selector: aSymbol;
 		descriptor: aFunctionDescriptor! !
-!COMFunction class categoriesFor: #prototype:!instance creation!public! !
-!COMFunction class categoriesFor: #selector:descriptor:!instance creation!public! !
+!OS.COM.InterfaceFunction class categoriesFor: #prototype:!instance creation!public! !
+!OS.COM.InterfaceFunction class categoriesFor: #selector:descriptor:!instance creation!public! !
 

@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-OLEStructure subclass: #COSERVERINFO
+OS.COM.OLEStructure subclass: #'OS.COM.COSERVERINFO'
 	instanceVariableNames: 'hostName'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_dwReserved1' -> 16r0.
@@ -11,14 +11,14 @@ OLEStructure subclass: #COSERVERINFO
 		'_OffsetOf_pAuthInfo' -> 16r8.
 		'_OffsetOf_pwszName' -> 16r4
 	}!
-COSERVERINFO guid: (GUID fromString: '{87b4c5b4-026e-11d3-9fd7-00a0cc3e4a32}')!
-COSERVERINFO comment: 'COSERVERINFO is an ExternalStructure class to represent the DCOM structure of the same name.
+OS.COM.COSERVERINFO guid: (Core.GUID fromString: '{87b4c5b4-026e-11d3-9fd7-00a0cc3e4a32}')!
+OS.COM.COSERVERINFO comment: '`OS.COM.COSERVERINFO` is an External.Structure class to represent the DCOM COSERVERINFO structure.
 
 COSERVERINFO is used to explicitly identify a remote machine when instantiating COM objects (i.e. it is used in conjunction with CoCreateInstanceEx)..
 
 The only relevant member at present is #pwszName, which would usually be a UNC or DNS name, or a numeric IP address.'!
-!COSERVERINFO categoriesForClass!External-Data-Structured-COM! !
-!COSERVERINFO methodsFor!
+!OS.COM.COSERVERINFO categoriesForClass!External-Data-Structured-COM! !
+!OS.COM.COSERVERINFO methodsFor!
 
 hostName
 	"Answer the <String> value of the receiver's member variable pwszName."
@@ -52,14 +52,14 @@ pwszName: anUtf16String
 	"Set the receiver's 'pwszName' field to the value of the argument, anUtf16String"
 
 	bytes uintPtrAtOffset: _OffsetOf_pwszName put: anUtf16String yourAddress! !
-!COSERVERINFO categoriesFor: #hostName!accessing!public! !
-!COSERVERINFO categoriesFor: #hostName:!accessing!public! !
-!COSERVERINFO categoriesFor: #pAuthInfo!**compiled accessors**!public! !
-!COSERVERINFO categoriesFor: #pAuthInfo:!**compiled accessors**!public! !
-!COSERVERINFO categoriesFor: #pwszName!**compiled accessors**!public! !
-!COSERVERINFO categoriesFor: #pwszName:!**compiled accessors**!public! !
+!OS.COM.COSERVERINFO categoriesFor: #hostName!accessing!public! !
+!OS.COM.COSERVERINFO categoriesFor: #hostName:!accessing!public! !
+!OS.COM.COSERVERINFO categoriesFor: #pAuthInfo!**compiled accessors**!public! !
+!OS.COM.COSERVERINFO categoriesFor: #pAuthInfo:!**compiled accessors**!public! !
+!OS.COM.COSERVERINFO categoriesFor: #pwszName!**compiled accessors**!public! !
+!OS.COM.COSERVERINFO categoriesFor: #pwszName:!**compiled accessors**!public! !
 
-!COSERVERINFO class methodsFor!
+!OS.COM.COSERVERINFO class methodsFor!
 
 defineFields
 	"Define the fields of the COSERVERINFO structure.
@@ -82,6 +82,6 @@ defineFields
 
 getFieldNames
 	^#(#pwszName #pAuthInfo)! !
-!COSERVERINFO class categoriesFor: #defineFields!public!template definition! !
-!COSERVERINFO class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.COM.COSERVERINFO class categoriesFor: #defineFields!public!template definition! !
+!OS.COM.COSERVERINFO class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

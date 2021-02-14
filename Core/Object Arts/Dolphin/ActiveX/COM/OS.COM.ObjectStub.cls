@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Core.Object subclass: #COMObjectStub
+Core.Object subclass: #'OS.COM.ObjectStub'
 	instanceVariableNames: 'cookie object count interfaces outerUnknown'
 	classVariableNames: 'IdentityRegistry'
 	imports: #(#{OS.Win32Errors private})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-COMObjectStub guid: (Core.GUID fromString: '{87b4c46c-026e-11d3-9fd7-00a0cc3e4a32}')!
-COMObjectStub comment: 'COMObjectStub is a private class of objects which are used to wrap any object in the system so that they may be exposed as COM objects. COMObjectStub implements most <IUnknown>, functionality, providing reference count based lifetime management, and the basic mechanics for QueryInterface().
+OS.COM.ObjectStub guid: (Core.GUID fromString: '{87b4c46c-026e-11d3-9fd7-00a0cc3e4a32}')!
+OS.COM.ObjectStub comment: 'COMObjectStub is a private class of objects which are used to wrap any object in the system so that they may be exposed as COM objects. COMObjectStub implements most <IUnknown>, functionality, providing reference count based lifetime management, and the basic mechanics for QueryInterface().
 
 Note that each COM server objecty should have only one COMObjectStub so that the ref. count is correct, and so that queries for IUnknown always answer the same interface.
 
@@ -25,8 +25,8 @@ Class Variables:
 
 
 '!
-!COMObjectStub categoriesForClass!COM-Implementations! !
-!COMObjectStub methodsFor!
+!OS.COM.ObjectStub categoriesForClass!COM-Implementations! !
+!OS.COM.ObjectStub methodsFor!
 
 addInterface: aCOMInterface
 	"Private - Add the argument, aCOMInterface, to the receiver's list of current COM 
@@ -82,14 +82,14 @@ disconnect
 	interface is in-process, then it will not know that the interface has been invalidated,
 	and it may still call back through a COM interface."
 
-	count > 0 ifTrue: [
-		"This might indicate interface leaks in the client, so one might want them traced"
-		"KernelLibrary default outputDebugString: 'Disconnecting ', self printString, String lineDelimiter."
-		count := count + 1.
-		OLELibrary default coDisconnectObject: interfaces first dwReserved: 0.
-		self free]
+	count > 0
+		ifTrue: 
+			["This might indicate interface leaks in the client, so one might want them traced"
 
-	!
+			"KernelLibrary default outputDebugString: 'Disconnecting ', self printString, String lineDelimiter."
+			count := count + 1.
+			OLELibrary default coDisconnectObject: interfaces first dwReserved: 0.
+			self free]!
 
 findInterface: interfaceClass ifNoneAdd: operation
 	"Private - Answer a typed pointer to a COMInterface which supports the interface 
@@ -169,8 +169,8 @@ innerQueryInterface: pIID ppvObject: ppvOut
 	| interfaceClass interface |
 	ppvOut value: 0.	"must set, even on error"
 	"Notification signal: self printString, ': Querying interface ', (IID fromAddress: pIID yourAddress) displayString."
-	interfaceClass := COMInterface classForIID: pIID ifNone: [^E_NOINTERFACE "IID not recognised"].
-	interface := self queryInterface: interfaceClass ifNone: [^E_NOINTERFACE "interface not supported"].
+	interfaceClass := Interface classForIID: pIID ifNone: [^E_NOINTERFACE	"IID not recognised"].
+	interface := self queryInterface: interfaceClass ifNone: [^E_NOINTERFACE	"interface not supported"].
 	"Notification signal: 'Answering interface ', interface printString."
 	ppvOut value: interface detach.
 	^S_OK!
@@ -301,27 +301,27 @@ supportsInterface: interface
 	supports that implementation!!)."
 
 	^interface == IUnknown! !
-!COMObjectStub categoriesFor: #addInterface:!accessing-interfaces!private! !
-!COMObjectStub categoriesFor: #AddRef!COM Interfaces-IUnknown!private! !
-!COMObjectStub categoriesFor: #callback:vfn:withArgumentsAt:!evaluating!private! !
-!COMObjectStub categoriesFor: #cookie!accessing!private! !
-!COMObjectStub categoriesFor: #disconnect!public!realizing/unrealizing! !
-!COMObjectStub categoriesFor: #findInterface:ifNoneAdd:!accessing-interfaces!private! !
-!COMObjectStub categoriesFor: #free!operations!private! !
-!COMObjectStub categoriesFor: #innerAddRef!non delegating unknown!private! !
-!COMObjectStub categoriesFor: #innerQueryInterface:ppvObject:!non delegating unknown!private! !
-!COMObjectStub categoriesFor: #innerRelease!non delegating unknown!private! !
-!COMObjectStub categoriesFor: #onObject:!initializing!private! !
-!COMObjectStub categoriesFor: #outerUnknown:!accessing!private! !
-!COMObjectStub categoriesFor: #printOn:!development!printing!public! !
-!COMObjectStub categoriesFor: #queryInterface:!accessing-interfaces!public! !
-!COMObjectStub categoriesFor: #queryInterface:ifNone:!accessing-interfaces!public! !
-!COMObjectStub categoriesFor: #QueryInterface:ppvObject:!COM Interfaces-IUnknown!private! !
-!COMObjectStub categoriesFor: #referenceCount!accessing!private! !
-!COMObjectStub categoriesFor: #Release!COM Interfaces-IUnknown!private! !
-!COMObjectStub categoriesFor: #supportsInterface:!accessing-interfaces!private!testing! !
+!OS.COM.ObjectStub categoriesFor: #addInterface:!accessing-interfaces!private! !
+!OS.COM.ObjectStub categoriesFor: #AddRef!COM Interfaces-IUnknown!private! !
+!OS.COM.ObjectStub categoriesFor: #callback:vfn:withArgumentsAt:!evaluating!private! !
+!OS.COM.ObjectStub categoriesFor: #cookie!accessing!private! !
+!OS.COM.ObjectStub categoriesFor: #disconnect!public!realizing/unrealizing! !
+!OS.COM.ObjectStub categoriesFor: #findInterface:ifNoneAdd:!accessing-interfaces!private! !
+!OS.COM.ObjectStub categoriesFor: #free!operations!private! !
+!OS.COM.ObjectStub categoriesFor: #innerAddRef!non delegating unknown!private! !
+!OS.COM.ObjectStub categoriesFor: #innerQueryInterface:ppvObject:!non delegating unknown!private! !
+!OS.COM.ObjectStub categoriesFor: #innerRelease!non delegating unknown!private! !
+!OS.COM.ObjectStub categoriesFor: #onObject:!initializing!private! !
+!OS.COM.ObjectStub categoriesFor: #outerUnknown:!accessing!private! !
+!OS.COM.ObjectStub categoriesFor: #printOn:!development!printing!public! !
+!OS.COM.ObjectStub categoriesFor: #queryInterface:!accessing-interfaces!public! !
+!OS.COM.ObjectStub categoriesFor: #queryInterface:ifNone:!accessing-interfaces!public! !
+!OS.COM.ObjectStub categoriesFor: #QueryInterface:ppvObject:!COM Interfaces-IUnknown!private! !
+!OS.COM.ObjectStub categoriesFor: #referenceCount!accessing!private! !
+!OS.COM.ObjectStub categoriesFor: #Release!COM Interfaces-IUnknown!private! !
+!OS.COM.ObjectStub categoriesFor: #supportsInterface:!accessing-interfaces!private!testing! !
 
-!COMObjectStub class methodsFor!
+!OS.COM.ObjectStub class methodsFor!
 
 disconnectAll
 	"Rudely disconnect all external clients of COM objects implemented in Dolphin.
@@ -375,12 +375,12 @@ uninitialize
 
 	self initializeRegistries.
 	VMLibrary default registryAtIndex: 70 put: nil! !
-!COMObjectStub class categoriesFor: #disconnectAll!accessing!public! !
-!COMObjectStub class categoriesFor: #initialize!development!initializing!private! !
-!COMObjectStub class categoriesFor: #initializeRegistries!initializing!private! !
-!COMObjectStub class categoriesFor: #on:!instance creation!public! !
-!COMObjectStub class categoriesFor: #onExit!event handling!private! !
-!COMObjectStub class categoriesFor: #onStartup!event handling!private! !
-!COMObjectStub class categoriesFor: #registry!accessing!private! !
-!COMObjectStub class categoriesFor: #uninitialize!class hierarchy-removing!private! !
+!OS.COM.ObjectStub class categoriesFor: #disconnectAll!accessing!public! !
+!OS.COM.ObjectStub class categoriesFor: #initialize!development!initializing!private! !
+!OS.COM.ObjectStub class categoriesFor: #initializeRegistries!initializing!private! !
+!OS.COM.ObjectStub class categoriesFor: #on:!instance creation!public! !
+!OS.COM.ObjectStub class categoriesFor: #onExit!event handling!private! !
+!OS.COM.ObjectStub class categoriesFor: #onStartup!event handling!private! !
+!OS.COM.ObjectStub class categoriesFor: #registry!accessing!private! !
+!OS.COM.ObjectStub class categoriesFor: #uninitialize!class hierarchy-removing!private! !
 

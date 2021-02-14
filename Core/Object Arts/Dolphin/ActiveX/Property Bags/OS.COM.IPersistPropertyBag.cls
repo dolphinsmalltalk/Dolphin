@@ -1,17 +1,17 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-IPersist subclass: #IPersistPropertyBag
+OS.COM.IPersist subclass: #'OS.COM.IPersistPropertyBag'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-IPersistPropertyBag guid: (IID fromString: '{37d84f60-42cb-11ce-8135-00aa004bb851}')!
-IPersistPropertyBag comment: '<IPersistPropertyBag> is a wrapper class for the COM interface ''OCIDL.IPersistPropertyBag'' generated from type information in the ''OCIDL Library'' library. It contains methods to invoke the member functions exposed by that interface.
+OS.COM.IPersistPropertyBag guid: (OS.COM.IID fromString: '{37d84f60-42cb-11ce-8135-00aa004bb851}')!
+OS.COM.IPersistPropertyBag comment: '`OS.COM.IPersistPropertyBag` is a wrapper class for the COM interface ''OCIDL.IPersistPropertyBag'' generated from type information in the ''OCIDL Library'' library. It contains methods to invoke the member functions exposed by that interface.
 
 IPersistPropertyBag provides persistence storage onto an OLE property bag object (IPropertyBag). A property bag is a text based storage mechanism using name value pairs. See <IPropertyBag> for further details.'!
-!IPersistPropertyBag categoriesForClass!COM-Interfaces! !
-!IPersistPropertyBag methodsFor!
+!OS.COM.IPersistPropertyBag categoriesForClass!COM-Interfaces! !
+!OS.COM.IPersistPropertyBag methodsFor!
 
 initNew  
 	"Initialize a new object instance. Either this or Load() (not both) should be invoked against
@@ -63,15 +63,15 @@ Save: pPropBag fClearDirty: fClearDirty fSaveAllProperties: fSaveAllProperties
 
 	<virtual stdcall: hresult 7 IPropertyBag* bool bool>
 	^self invalidCall: _failureCode! !
-!IPersistPropertyBag categoriesFor: #initNew!methods!public! !
-!IPersistPropertyBag categoriesFor: #InitNew!**auto generated**!COM Interfaces-IPersistPropertyBag!private! !
-!IPersistPropertyBag categoriesFor: #Load:pErrorLog:!COM Interfaces-IPersistPropertyBag!private! !
-!IPersistPropertyBag categoriesFor: #save:fClearDirty:fSaveAllProperties:!methods!public! !
-!IPersistPropertyBag categoriesFor: #Save:fClearDirty:fSaveAllProperties:!COM Interfaces-IPersistPropertyBag!private! !
+!OS.COM.IPersistPropertyBag categoriesFor: #initNew!methods!public! !
+!OS.COM.IPersistPropertyBag categoriesFor: #InitNew!**auto generated**!COM Interfaces-IPersistPropertyBag!private! !
+!OS.COM.IPersistPropertyBag categoriesFor: #Load:pErrorLog:!COM Interfaces-IPersistPropertyBag!private! !
+!OS.COM.IPersistPropertyBag categoriesFor: #save:fClearDirty:fSaveAllProperties:!methods!public! !
+!OS.COM.IPersistPropertyBag categoriesFor: #Save:fClearDirty:fSaveAllProperties:!COM Interfaces-IPersistPropertyBag!private! !
 
-IPersistPropertyBag methodProtocol: #IPersistPropertyBag attributes: #(#readOnly) selectors: #(#InitNew #Load:pErrorLog: #Save:fClearDirty:fSaveAllProperties:)!
+OS.COM.IPersistPropertyBag methodProtocol: #IPersistPropertyBag attributes: #(#readOnly) selectors: #(#InitNew #Load:pErrorLog: #Save:fClearDirty:fSaveAllProperties:)!
 
-!IPersistPropertyBag class methodsFor!
+!OS.COM.IPersistPropertyBag class methodsFor!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'OCIDL.IPersistPropertyBag'
@@ -86,5 +86,5 @@ defineFunctions
 		defineFunction: #Save:fClearDirty:fSaveAllProperties:
 			argumentTypes: 'IPropertyBag* bool bool'
 ! !
-!IPersistPropertyBag class categoriesFor: #defineFunctions!initializing!public! !
+!OS.COM.IPersistPropertyBag class categoriesFor: #defineFunctions!initializing!public! !
 

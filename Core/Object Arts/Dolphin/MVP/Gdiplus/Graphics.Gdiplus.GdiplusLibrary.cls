@@ -877,7 +877,7 @@ gdipCreateBitmapFromStream: stream bitmap: bitmap
 			[in]IStream* stream,
 			[out, retval]PGpBitmap* bitmap);"
 
-	<stdcall: errno GdipCreateBitmapFromStream Smalltalk.IStream* handle*>
+	<stdcall: errno GdipCreateBitmapFromStream COM.IStream* handle*>
 	^self invalidCall: _failureCode!
 
 gdipCreateBitmapFromStreamICM: stream bitmap: bitmap
@@ -887,7 +887,7 @@ gdipCreateBitmapFromStreamICM: stream bitmap: bitmap
 			[in]IStream* stream,
 			[out, retval]PGpBitmap* bitmap);"
 
-	<stdcall: errno GdipCreateBitmapFromStreamICM Smalltalk.IStream* handle*>
+	<stdcall: errno GdipCreateBitmapFromStreamICM COM.IStream* handle*>
 	^self invalidCall: _failureCode!
 
 gdipCreateCachedBitmap: bitmap graphics: graphics cachedBitmap: cachedBitmap
@@ -1222,7 +1222,7 @@ gdipCreateMetafileFromStream: stream metafile: metafile
 			IStream* stream,
 			[out, retval]PGpMetafile* metafile);"
 
-	<stdcall: errno GdipCreateMetafileFromStream Smalltalk.IStream* handle*>
+	<stdcall: errno GdipCreateMetafileFromStream COM.IStream* handle*>
 	^self invalidCall: _failureCode!
 
 gdipCreateMetafileFromWmf: hWmf deleteWmf: deleteWmf wmfPlaceableFileHeader: wmfPlaceableFileHeader metafile: metafile
@@ -1430,7 +1430,7 @@ gdipCreateStreamOnFile: filename access: access stream: stream
 			unsigned int access,
 			[out, retval]IStream** stream);"
 
-	<stdcall: errno GdipCreateStreamOnFile lpwstr dword Smalltalk.IStream**>
+	<stdcall: errno GdipCreateStreamOnFile lpwstr dword COM.IStream**>
 	^self invalidCall: _failureCode!
 
 gdipCreateStringFormat: formatAttributes language: language format: format
@@ -3621,7 +3621,7 @@ gdipGetMetafileHeaderFromStream: stream header: header
 			IStream* stream,
 			MetafileHeader* header);"
 
-	<stdcall: errno GdipGetMetafileHeaderFromStream Smalltalk.IStream* GpMetafileHeader*>
+	<stdcall: errno GdipGetMetafileHeaderFromStream COM.IStream* GpMetafileHeader*>
 	^self invalidCall: _failureCode!
 
 gdipGetMetafileHeaderFromWmf: hWmf wmfPlaceableFileHeader: wmfPlaceableFileHeader header: header
@@ -4865,7 +4865,7 @@ gdipLoadImageFromStream: stream image: image
 			[in]IStream* stream,
 			[out, retval]PGpImage* image);"
 
-	<stdcall: errno GdipLoadImageFromStream Smalltalk.IStream* handle*>
+	<stdcall: errno GdipLoadImageFromStream COM.IStream* handle*>
 	^self invalidCall: _failureCode!
 
 gdipLoadImageFromStreamICM: stream image: image
@@ -4875,7 +4875,7 @@ gdipLoadImageFromStreamICM: stream image: image
 			[in]IStream* stream,
 			[out, retval]PGpImage* image);"
 
-	<stdcall: errno GdipLoadImageFromStreamICM Smalltalk.IStream* handle*>
+	<stdcall: errno GdipLoadImageFromStreamICM COM.IStream* handle*>
 	^self invalidCall: _failureCode!
 
 gdiplusNotificationHook: token1
@@ -5290,7 +5290,7 @@ gdipRecordMetafileStream: stream referenceHdc: referenceHdc type: type frameRect
 			[in]LPWSTR description,
 			[out, retval]PGpMetafile* metafile);"
 
-	<stdcall: errno GdipRecordMetafileStream Smalltalk.IStream* handle sdword RECTF* sdword lpwstr handle*>
+	<stdcall: errno GdipRecordMetafileStream COM.IStream* handle sdword RECTF* sdword lpwstr handle*>
 	^self invalidCall: _failureCode!
 
 gdipRecordMetafileStreamI: stream referenceHdc: referenceHdc type: type frameRect: frameRect frameUnit: frameUnit description: description metafile: metafile
@@ -5305,7 +5305,7 @@ gdipRecordMetafileStreamI: stream referenceHdc: referenceHdc type: type frameRec
 			[in]LPWSTR description,
 			[out, retval]PGpMetafile* metafile);"
 
-	<stdcall: errno GdipRecordMetafileStreamI Smalltalk.IStream* handle sdword RECTL* sdword lpwstr handle*>
+	<stdcall: errno GdipRecordMetafileStreamI COM.IStream* handle sdword RECTL* sdword lpwstr handle*>
 	^self invalidCall: _failureCode!
 
 gdipReleaseDC: graphics hdc: hdc
@@ -5547,7 +5547,7 @@ gdipSaveImageToStream: image stream: stream clsidEncoder: clsidEncoder encoderPa
 			[in]GUID* clsidEncoder,
 			[in]EncoderParameters* encoderParams);"
 
-	<stdcall: errno GdipSaveImageToStream handle Smalltalk.IStream* guid* GpEncoderParameters*>
+	<stdcall: errno GdipSaveImageToStream handle COM.IStream* guid* GpEncoderParameters*>
 	^self invalidCall: _failureCode!
 
 gdipScaleLineTransform: brush sx: sx sy: sy order: order

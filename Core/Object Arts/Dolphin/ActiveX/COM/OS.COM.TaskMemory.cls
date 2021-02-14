@@ -1,16 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-External.Memory variableByteSubclass: #COMTaskMemory
+External.Memory variableByteSubclass: #'OS.COM.TaskMemory'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-COMTaskMemory guid: (Core.GUID fromString: '{87b4c51b-026e-11d3-9fd7-00a0cc3e4a32}')!
-COMTaskMemory isIndirection: true!
-COMTaskMemory comment: ''!
-!COMTaskMemory categoriesForClass!External-Data-Unstructured! !
-!COMTaskMemory class methodsFor!
+OS.COM.TaskMemory guid: (Core.GUID fromString: '{87b4c51b-026e-11d3-9fd7-00a0cc3e4a32}')!
+OS.COM.TaskMemory isIndirection: true!
+OS.COM.TaskMemory comment: ''!
+!OS.COM.TaskMemory categoriesForClass!External-Data-Unstructured! !
+!OS.COM.TaskMemory class methodsFor!
 
 allocator
 	"Private - Answer the appropriate allocator for the receiver.
@@ -25,6 +25,6 @@ initialize
 	"
 
 	self extraInstanceSpec: 4! !
-!COMTaskMemory class categoriesFor: #allocator!accessing!private! !
-!COMTaskMemory class categoriesFor: #initialize!development!initializing!private! !
+!OS.COM.TaskMemory class categoriesFor: #allocator!accessing!private! !
+!OS.COM.TaskMemory class categoriesFor: #initialize!development!initializing!private! !
 

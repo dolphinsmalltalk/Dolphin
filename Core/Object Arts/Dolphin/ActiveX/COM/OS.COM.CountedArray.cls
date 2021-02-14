@@ -1,19 +1,19 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ExternalArray subclass: #OLECountedArray
+External.ExternalArray subclass: #'OS.COM.CountedArray'
 	instanceVariableNames: 'elements'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_cElems' -> 16r0.
 		'_OffsetOf_pElems' -> 16r4
 	}!
-OLECountedArray guid: (GUID fromString: '{44a86404-b2fe-11d3-b376-080046056106}')!
-OLECountedArray isAbstract: true!
-OLECountedArray comment: 'OLECountedArray is an abstract base class for counted array structures used by various OLE/COM interfaces to input/output variable length arrays, where the array storage is allocated from COM task memory.'!
-!OLECountedArray categoriesForClass!Unclassified! !
-!OLECountedArray methodsFor!
+OS.COM.CountedArray guid: (Core.GUID fromString: '{44a86404-b2fe-11d3-b376-080046056106}')!
+OS.COM.CountedArray isNonInstantiable: true!
+OS.COM.CountedArray comment: 'OLECountedArray is an abstract base class for counted array structures used by various OLE/COM interfaces to input/output variable length arrays, where the array storage is allocated from COM task memory.'!
+!OS.COM.CountedArray categoriesForClass!Unclassified! !
+!OS.COM.CountedArray methodsFor!
 
 asArray
 	"Answer an <Array> containing the constituent elements of the receiver."
@@ -95,28 +95,28 @@ uncheckedAt: anInteger put: anObject
 	with the <Object> argument."
 
 	^self elements at: anInteger put: anObject! !
-!OLECountedArray categoriesFor: #asArray!converting!public! !
-!OLECountedArray categoriesFor: #basicLength:!accessing!private! !
-!OLECountedArray categoriesFor: #cElems!**compiled accessors**!public! !
-!OLECountedArray categoriesFor: #cElems:!**compiled accessors**!public! !
-!OLECountedArray categoriesFor: #elements!accessing!private! !
-!OLECountedArray categoriesFor: #getElements!accessing!private! !
-!OLECountedArray categoriesFor: #initialize!initializing!private! !
-!OLECountedArray categoriesFor: #length!accessing!public! !
-!OLECountedArray categoriesFor: #needsFree!initializing!private!realizing/unrealizing! !
-!OLECountedArray categoriesFor: #onStartup!event handling!private! !
-!OLECountedArray categoriesFor: #pElems!**compiled accessors**!public! !
-!OLECountedArray categoriesFor: #pElems:!**compiled accessors**!public! !
-!OLECountedArray categoriesFor: #uncheckedAt:!accessing!private!testing! !
-!OLECountedArray categoriesFor: #uncheckedAt:put:!accessing!private! !
+!OS.COM.CountedArray categoriesFor: #asArray!converting!public! !
+!OS.COM.CountedArray categoriesFor: #basicLength:!accessing!private! !
+!OS.COM.CountedArray categoriesFor: #cElems!**compiled accessors**!public! !
+!OS.COM.CountedArray categoriesFor: #cElems:!**compiled accessors**!public! !
+!OS.COM.CountedArray categoriesFor: #elements!accessing!private! !
+!OS.COM.CountedArray categoriesFor: #getElements!accessing!private! !
+!OS.COM.CountedArray categoriesFor: #initialize!initializing!private! !
+!OS.COM.CountedArray categoriesFor: #length!accessing!public! !
+!OS.COM.CountedArray categoriesFor: #needsFree!initializing!private!realizing/unrealizing! !
+!OS.COM.CountedArray categoriesFor: #onStartup!event handling!private! !
+!OS.COM.CountedArray categoriesFor: #pElems!**compiled accessors**!public! !
+!OS.COM.CountedArray categoriesFor: #pElems:!**compiled accessors**!public! !
+!OS.COM.CountedArray categoriesFor: #uncheckedAt:!accessing!private!testing! !
+!OS.COM.CountedArray categoriesFor: #uncheckedAt:put:!accessing!private! !
 
-!OLECountedArray class methodsFor!
+!OS.COM.CountedArray class methodsFor!
 
 clear: addressOrBytes
 	"Free an instance of the structure which instances of the receiver wrap
 	which resides at the specified address."
 
-	COMTaskMemory free: (addressOrBytes uintPtrAtOffset: 4)!
+	TaskMemory free: (addressOrBytes uintPtrAtOffset: 4)!
 
 defineFields
 	"Define the count field common to OLE counted array structures.
@@ -155,10 +155,10 @@ onStartup
 
 uninitialize
 	SessionManager current removeEventsTriggeredFor: self! !
-!OLECountedArray class categoriesFor: #clear:!public!realizing/unrealizing! !
-!OLECountedArray class categoriesFor: #defineFields!public!template definition! !
-!OLECountedArray class categoriesFor: #initialize!development!initializing!private! !
-!OLECountedArray class categoriesFor: #new:!instance creation!public! !
-!OLECountedArray class categoriesFor: #onStartup!event handling!private! !
-!OLECountedArray class categoriesFor: #uninitialize!class hierarchy-removing!private! !
+!OS.COM.CountedArray class categoriesFor: #clear:!public!realizing/unrealizing! !
+!OS.COM.CountedArray class categoriesFor: #defineFields!public!template definition! !
+!OS.COM.CountedArray class categoriesFor: #initialize!development!initializing!private! !
+!OS.COM.CountedArray class categoriesFor: #new:!instance creation!public! !
+!OS.COM.CountedArray class categoriesFor: #onStartup!event handling!private! !
+!OS.COM.CountedArray class categoriesFor: #uninitialize!class hierarchy-removing!private! !
 

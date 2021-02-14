@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-AXTypeInfoObject subclass: #AXTypeLibraryAnalyzer
-	instanceVariableNames: 'attributes prefix packageName globalName constantsPoolName aliasMap typeAnalyzers'
+OS.COM.TypeInfoObject subclass: #'OS.COM.TypeLibraryAnalyzer'
+	instanceVariableNames: 'attributes namespaceName packageName globalName constantsPoolName aliasMap typeAnalyzers'
 	classVariableNames: 'TypeLibs'
-	poolDictionaries: 'AXAutomationErrors Win32Constants'
+	imports: #(#{OS.Win32Constants} #{OS.COM.AutomationErrors})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-AXTypeLibraryAnalyzer guid: (GUID fromString: '{c06f3b76-0868-11d3-93af-00a024ca708a}')!
-AXTypeLibraryAnalyzer comment: 'AXTypeLibraryAnalyzer is a wrapper class around <ITypeLib> which adds higher level wrapper functions which make ITypeLib easier to use. It is also the starting point for Dolphin''s automatic generation of wrapper classes &c for Active-X objects described by type libraries.
+OS.COM.TypeLibraryAnalyzer guid: (Core.GUID fromString: '{c06f3b76-0868-11d3-93af-00a024ca708a}')!
+OS.COM.TypeLibraryAnalyzer comment: 'AXTypeLibraryAnalyzer is a wrapper class around <ITypeLib> which adds higher level wrapper functions which make ITypeLib easier to use. It is also the starting point for Dolphin''s automatic generation of wrapper classes &c for Active-X objects described by type libraries.
 
 A Type Library is a repository of meta-information, typically about Active-X (COM, OLE, choose your favourite name) objects and interfaces. AXTypeLibraryAnalyzer permits one to enquire about general attributes of a Type Library, but more importantly it enables one to enumerate through the individual meta-elements by acquiring <AXTypeInfoAnalyzer> objects which describe them. For example it is easy to acquire all of the meta-information of a particular type from the library by sending one of the following selectors:
 	#interfaces
@@ -37,8 +37,8 @@ Instance Variables:
 Class Variables:
 	TypeLibs			<WeakLookupTable>. Repository of instances of the receiver, one per type library.
 '!
-!AXTypeLibraryAnalyzer categoriesForClass!ActiveX Automation! !
-!AXTypeLibraryAnalyzer methodsFor!
+!OS.COM.TypeLibraryAnalyzer categoriesForClass!ActiveX Automation! !
+!OS.COM.TypeLibraryAnalyzer methodsFor!
 
 = comparand
 	"Answer whether the receiver and the <Object>, comparand, 
@@ -88,11 +88,14 @@ buildTypeAnalyzers
 	count := self typeInfoCount.
 	lib := self tlbInterface.
 	typeAnalyzers := (1 to: count) collect: 
-					[:i | 
-					AXTypeInfoAnalyzer 
+					[:i |
+					TypeInfoAnalyzer
 						onTypeInfo: (lib typeInfoAt: i) asImplType
 						typeLib: self
 						index: i]!
+
+classBindingForGuid: aGUID
+	^(Smalltalk classesByGuid lookup: aGUID) ifNotNil: [:class | class binding]!
 
 clearCachedAnalyzers
 	"Clear the cached the list of analyzers."
@@ -145,7 +148,7 @@ documentation
 	^[self documentationAt: 0] on: HRESULTError
 		do: 
 			[:ex |
-			AXTypeLibDocumentation new
+			TypeLibDocumentation new
 				name: globalName
 				helpstring: ex messageText
 				helpcontext: 0
@@ -194,7 +197,7 @@ documentationAt: index ifAbsent: exceptionHandler
 		ifTrue: 
 			[hr = TYPE_E_ELEMENTNOTFOUND ifTrue: [^exceptionHandler value].
 			^HRESULTError signalWith: hr].
-	answer := AXTypeLibDocumentation new
+	answer := TypeLibDocumentation new
 				name: bstrName asString
 				helpstring: bstrDocString asString
 				helpcontext: dwHelpContext value
@@ -251,6 +254,9 @@ find: memberName count: numToFind
 			self assert: [assoc key isSameCOMObject: self tlbInterface].
 			info := infos at: assoc value.
 			(rgMemId at: i) -> info]!
+
+fullNameFor: aString
+	^namespaceName isEmpty ifTrue: [aString] ifFalse: [namespaceName , '.' , aString]!
 
 getLibAttr
 	"Private - Answer a <TLIBATTR> detailing the library attributes for the receiver
@@ -364,6 +370,12 @@ names
 	lib := self tlbInterface.
 	^(1 to: self typeInfoCount) collect: [:i | lib nameAt: i]!
 
+namespaceName
+	^namespaceName ifNil: [namespaceName := self globalNameFrom: self name]!
+
+namespaceName: aString
+	namespaceName := aString!
+
 path
 	"Answer the receiver's path if correctly registered, otherwise an empty string."
 	
@@ -417,6 +429,7 @@ setTypeLib: anITypeLib attributes: aTLIBATTR
 	tlbInterface := anITypeLib.
 	attributes := aTLIBATTR.
 	generationFlags := self defaultGenerationFlags.
+	namespaceName := self globalNameFrom: self name.
 	self initializeAliasMap!
 
 sourceInterfaces
@@ -467,38 +480,13 @@ suggestBindingForType: userType
 	"If its in the alias map, then we answer that regardless - caller should check suitable"
 	self aliasMap at: name asString
 		ifPresent: [:alias | ^alias bindingOrNil ifNil: [alias asSymbol -> nil]].
+
+	"Secondly try looking up by GUID as if there is a class with the same GUID then we know it is the right one."
 	typeGuid := userType guid.
-
-	"Secondly try as global without prefix, but only use that if definitely matched"
-	name := self globalNameFrom: name.
-	self environment associationAt: name
-		ifPresent: 
-			[:var | 
-			| varGuid global |
-			global := var value.
-
-			"If type doesn't have GUID, then the global _might_ be the correct one"
-			typeGuid isNull ifTrue: [^name -> nil].
-
-			"Matching Guid tells us it is definitely the correct global, otherwise drop through"
-			varGuid := (global respondsTo: #guid) ifTrue: [global guid].
-			typeGuid = varGuid ifTrue: [^var]].
-
-	"Lookup with prefix - caller should check suitable"
-	self prefix notEmpty 
-		ifTrue: 
-			[name := self prefix , suggested.
-			self environment associationAt: name
-				ifPresent: 
-					[:var | 
-					| varGuid global |
-					global := var value.
-					varGuid := (global respondsTo: #guid) ifTrue: [global guid].
-					"Matching Guid tells us it is definitely the correct global, otherwise drop through"
-					(varGuid notNull and: [typeGuid = varGuid]) ifTrue: [^var]]].
+	typeGuid ifNotNil: [(self classBindingForGuid: typeGuid) ifNotNil: [:var | ^var]].
 
 	"Not currently defined, or defined but _may_ not be correct object, so suggest prefixed name"
-	^name -> nil!
+	^(self globalNameFrom: name) -> nil!
 
 typeAnalyzerAt: index
 	"Answer an <AXTypeInfoAnalyzer> subinstance of the appropriate type
@@ -536,12 +524,12 @@ typeInfoCount
 
 	^self tlbInterface GetTypeInfoCount!
 
-typeInfoForGuid: guid ifNone: exceptionHandler 
+typeInfoForGuid: guid ifNone: exceptionHandler
 	"Private - Answer an <AXTypeInfoAnalyzer> for the member with <GUID>, guid,
 	or if there is no such type info in the library the result of evaluating the
 	<niladicValuable>, exceptionHandler."
 
-	^AXTypeInfoAnalyzer 
+	^TypeInfoAnalyzer
 		onTypeInfo: (self tlbInterface getTypeInfoOfGuid: guid ifNone: [^exceptionHandler value])
 		typeLib: self!
 
@@ -570,65 +558,69 @@ vtblInterfaces
 	described by the receiver. This will include dual interfaces."
 
 	^self selectTypes: [:t | t typekind == TKIND_INTERFACE]! !
-!AXTypeLibraryAnalyzer categoriesFor: #=!comparing!public! !
-!AXTypeLibraryAnalyzer categoriesFor: #aliasMap!accessing!private! !
-!AXTypeLibraryAnalyzer categoriesFor: #at:!accessing!public! !
-!AXTypeLibraryAnalyzer categoriesFor: #at:ifAbsent:!accessing!public! !
-!AXTypeLibraryAnalyzer categoriesFor: #attributes!accessing!public! !
-!AXTypeLibraryAnalyzer categoriesFor: #basicName!accessing!public! !
-!AXTypeLibraryAnalyzer categoriesFor: #basicTypeInfoAt:!accessing!private! !
-!AXTypeLibraryAnalyzer categoriesFor: #buildTypeAnalyzers!accessing!private! !
-!AXTypeLibraryAnalyzer categoriesFor: #clearCachedAnalyzers!initializing!public! !
-!AXTypeLibraryAnalyzer categoriesFor: #coclasses!enumerating!public! !
-!AXTypeLibraryAnalyzer categoriesFor: #customInterfaces!enumerating!public! !
-!AXTypeLibraryAnalyzer categoriesFor: #defaultGenerationFlags!constants!public! !
-!AXTypeLibraryAnalyzer categoriesFor: #dispatchableInterfaces!enumerating!public! !
-!AXTypeLibraryAnalyzer categoriesFor: #dispinterfaces!enumerating!public! !
-!AXTypeLibraryAnalyzer categoriesFor: #displayOn:!displaying!public! !
-!AXTypeLibraryAnalyzer categoriesFor: #documentation!accessing!public! !
-!AXTypeLibraryAnalyzer categoriesFor: #documentationAt:!accessing!private! !
-!AXTypeLibraryAnalyzer categoriesFor: #documentationAt:ifAbsent:!accessing!private! !
-!AXTypeLibraryAnalyzer categoriesFor: #dualInterfaces!enumerating!public! !
-!AXTypeLibraryAnalyzer categoriesFor: #enums!enumerating!public! !
-!AXTypeLibraryAnalyzer categoriesFor: #find:count:!public!searching! !
-!AXTypeLibraryAnalyzer categoriesFor: #getLibAttr!accessing!private! !
-!AXTypeLibraryAnalyzer categoriesFor: #globalNameFrom:!accessing!helpers!private! !
-!AXTypeLibraryAnalyzer categoriesFor: #hash!comparing!public! !
-!AXTypeLibraryAnalyzer categoriesFor: #initializeAfterLoad!initializing!public! !
-!AXTypeLibraryAnalyzer categoriesFor: #initializeAliasMap!initializing!public! !
-!AXTypeLibraryAnalyzer categoriesFor: #interfaces!enumerating!public! !
-!AXTypeLibraryAnalyzer categoriesFor: #isInstalled!public!testing! !
-!AXTypeLibraryAnalyzer categoriesFor: #isName:!accessing!public! !
-!AXTypeLibraryAnalyzer categoriesFor: #isRegistered!public!testing! !
-!AXTypeLibraryAnalyzer categoriesFor: #libid!accessing!public! !
-!AXTypeLibraryAnalyzer categoriesFor: #loadTypeLib!accessing!private! !
-!AXTypeLibraryAnalyzer categoriesFor: #modules!enumerating!public! !
-!AXTypeLibraryAnalyzer categoriesFor: #namedStructs!enumerating!public! !
-!AXTypeLibraryAnalyzer categoriesFor: #namedUnions!enumerating!public! !
-!AXTypeLibraryAnalyzer categoriesFor: #names!enumerating!public! !
-!AXTypeLibraryAnalyzer categoriesFor: #path!accessing!public! !
-!AXTypeLibraryAnalyzer categoriesFor: #realize!private!realizing/unrealizing! !
-!AXTypeLibraryAnalyzer categoriesFor: #registration!accessing!public! !
-!AXTypeLibraryAnalyzer categoriesFor: #reset!initializing!public! !
-!AXTypeLibraryAnalyzer categoriesFor: #selectTypeKind:!enumerating!private! !
-!AXTypeLibraryAnalyzer categoriesFor: #selectTypes:!enumerating!private! !
-!AXTypeLibraryAnalyzer categoriesFor: #setTypeLib:attributes:!initializing!private! !
-!AXTypeLibraryAnalyzer categoriesFor: #sourceInterfaces!enumerating!public! !
-!AXTypeLibraryAnalyzer categoriesFor: #stbSaveOn:!binary filing!public! !
-!AXTypeLibraryAnalyzer categoriesFor: #structs!enumerating!public! !
-!AXTypeLibraryAnalyzer categoriesFor: #suggestBindingForType:!constants!private! !
-!AXTypeLibraryAnalyzer categoriesFor: #typeAnalyzerAt:!accessing!public! !
-!AXTypeLibraryAnalyzer categoriesFor: #typeAnalyzers!accessing!private! !
-!AXTypeLibraryAnalyzer categoriesFor: #typedefs!enumerating!public! !
-!AXTypeLibraryAnalyzer categoriesFor: #typeInfoAt:!accessing!private! !
-!AXTypeLibraryAnalyzer categoriesFor: #typeInfoCount!accessing!public! !
-!AXTypeLibraryAnalyzer categoriesFor: #typeInfoForGuid:ifNone:!accessing!private! !
-!AXTypeLibraryAnalyzer categoriesFor: #uninitialize!initializing!private! !
-!AXTypeLibraryAnalyzer categoriesFor: #unions!enumerating!public! !
-!AXTypeLibraryAnalyzer categoriesFor: #versionString!accessing!public! !
-!AXTypeLibraryAnalyzer categoriesFor: #vtblInterfaces!enumerating!public! !
+!OS.COM.TypeLibraryAnalyzer categoriesFor: #=!comparing!public! !
+!OS.COM.TypeLibraryAnalyzer categoriesFor: #aliasMap!accessing!private! !
+!OS.COM.TypeLibraryAnalyzer categoriesFor: #at:!accessing!public! !
+!OS.COM.TypeLibraryAnalyzer categoriesFor: #at:ifAbsent:!accessing!public! !
+!OS.COM.TypeLibraryAnalyzer categoriesFor: #attributes!accessing!public! !
+!OS.COM.TypeLibraryAnalyzer categoriesFor: #basicName!accessing!public! !
+!OS.COM.TypeLibraryAnalyzer categoriesFor: #basicTypeInfoAt:!accessing!private! !
+!OS.COM.TypeLibraryAnalyzer categoriesFor: #buildTypeAnalyzers!accessing!private! !
+!OS.COM.TypeLibraryAnalyzer categoriesFor: #classBindingForGuid:!private! !
+!OS.COM.TypeLibraryAnalyzer categoriesFor: #clearCachedAnalyzers!initializing!public! !
+!OS.COM.TypeLibraryAnalyzer categoriesFor: #coclasses!enumerating!public! !
+!OS.COM.TypeLibraryAnalyzer categoriesFor: #customInterfaces!enumerating!public! !
+!OS.COM.TypeLibraryAnalyzer categoriesFor: #defaultGenerationFlags!constants!public! !
+!OS.COM.TypeLibraryAnalyzer categoriesFor: #dispatchableInterfaces!enumerating!public! !
+!OS.COM.TypeLibraryAnalyzer categoriesFor: #dispinterfaces!enumerating!public! !
+!OS.COM.TypeLibraryAnalyzer categoriesFor: #displayOn:!displaying!public! !
+!OS.COM.TypeLibraryAnalyzer categoriesFor: #documentation!accessing!public! !
+!OS.COM.TypeLibraryAnalyzer categoriesFor: #documentationAt:!accessing!private! !
+!OS.COM.TypeLibraryAnalyzer categoriesFor: #documentationAt:ifAbsent:!accessing!private! !
+!OS.COM.TypeLibraryAnalyzer categoriesFor: #dualInterfaces!enumerating!public! !
+!OS.COM.TypeLibraryAnalyzer categoriesFor: #enums!enumerating!public! !
+!OS.COM.TypeLibraryAnalyzer categoriesFor: #find:count:!public!searching! !
+!OS.COM.TypeLibraryAnalyzer categoriesFor: #fullNameFor:!public! !
+!OS.COM.TypeLibraryAnalyzer categoriesFor: #getLibAttr!accessing!private! !
+!OS.COM.TypeLibraryAnalyzer categoriesFor: #globalNameFrom:!accessing!helpers!private! !
+!OS.COM.TypeLibraryAnalyzer categoriesFor: #hash!comparing!public! !
+!OS.COM.TypeLibraryAnalyzer categoriesFor: #initializeAfterLoad!initializing!public! !
+!OS.COM.TypeLibraryAnalyzer categoriesFor: #initializeAliasMap!initializing!public! !
+!OS.COM.TypeLibraryAnalyzer categoriesFor: #interfaces!enumerating!public! !
+!OS.COM.TypeLibraryAnalyzer categoriesFor: #isInstalled!public!testing! !
+!OS.COM.TypeLibraryAnalyzer categoriesFor: #isName:!accessing!public! !
+!OS.COM.TypeLibraryAnalyzer categoriesFor: #isRegistered!public!testing! !
+!OS.COM.TypeLibraryAnalyzer categoriesFor: #libid!accessing!public! !
+!OS.COM.TypeLibraryAnalyzer categoriesFor: #loadTypeLib!accessing!private! !
+!OS.COM.TypeLibraryAnalyzer categoriesFor: #modules!enumerating!public! !
+!OS.COM.TypeLibraryAnalyzer categoriesFor: #namedStructs!enumerating!public! !
+!OS.COM.TypeLibraryAnalyzer categoriesFor: #namedUnions!enumerating!public! !
+!OS.COM.TypeLibraryAnalyzer categoriesFor: #names!enumerating!public! !
+!OS.COM.TypeLibraryAnalyzer categoriesFor: #namespaceName!public! !
+!OS.COM.TypeLibraryAnalyzer categoriesFor: #namespaceName:!public! !
+!OS.COM.TypeLibraryAnalyzer categoriesFor: #path!accessing!public! !
+!OS.COM.TypeLibraryAnalyzer categoriesFor: #realize!private!realizing/unrealizing! !
+!OS.COM.TypeLibraryAnalyzer categoriesFor: #registration!accessing!public! !
+!OS.COM.TypeLibraryAnalyzer categoriesFor: #reset!initializing!public! !
+!OS.COM.TypeLibraryAnalyzer categoriesFor: #selectTypeKind:!enumerating!private! !
+!OS.COM.TypeLibraryAnalyzer categoriesFor: #selectTypes:!enumerating!private! !
+!OS.COM.TypeLibraryAnalyzer categoriesFor: #setTypeLib:attributes:!initializing!private! !
+!OS.COM.TypeLibraryAnalyzer categoriesFor: #sourceInterfaces!enumerating!public! !
+!OS.COM.TypeLibraryAnalyzer categoriesFor: #stbSaveOn:!binary filing!public! !
+!OS.COM.TypeLibraryAnalyzer categoriesFor: #structs!enumerating!public! !
+!OS.COM.TypeLibraryAnalyzer categoriesFor: #suggestBindingForType:!constants!private! !
+!OS.COM.TypeLibraryAnalyzer categoriesFor: #typeAnalyzerAt:!accessing!public! !
+!OS.COM.TypeLibraryAnalyzer categoriesFor: #typeAnalyzers!accessing!private! !
+!OS.COM.TypeLibraryAnalyzer categoriesFor: #typedefs!enumerating!public! !
+!OS.COM.TypeLibraryAnalyzer categoriesFor: #typeInfoAt:!accessing!private! !
+!OS.COM.TypeLibraryAnalyzer categoriesFor: #typeInfoCount!accessing!public! !
+!OS.COM.TypeLibraryAnalyzer categoriesFor: #typeInfoForGuid:ifNone:!accessing!private! !
+!OS.COM.TypeLibraryAnalyzer categoriesFor: #uninitialize!initializing!private! !
+!OS.COM.TypeLibraryAnalyzer categoriesFor: #unions!enumerating!public! !
+!OS.COM.TypeLibraryAnalyzer categoriesFor: #versionString!accessing!public! !
+!OS.COM.TypeLibraryAnalyzer categoriesFor: #vtblInterfaces!enumerating!public! !
 
-!AXTypeLibraryAnalyzer class methodsFor!
+!OS.COM.TypeLibraryAnalyzer class methodsFor!
 
 allOpenableTypeLibs
 	"Answer an <sequencedReadableCollection> of all of the instances of the receiver 
@@ -645,14 +637,13 @@ allTypeLibs
 	^TypeLibs asArray!
 
 fromRegistration: registration
-	"Answer an instance of the receiver loaded from the <AXTypeLibRegistration>,
-	registration."
+	"Answer an instance of the receiver loaded from the <TypeLibRegistration>  argument."
 
 	^self
 		load: registration libid
 		major: registration majorVersion
 		minor: registration minorVersion
-		locale: WinNlsConstants.LOCALE_SYSTEM_DEFAULT!
+		locale: NlsConstants.LOCALE_SYSTEM_DEFAULT!
 
 initialize
 	"Private - Initialise the receiver's class variables.
@@ -675,9 +666,7 @@ new
 	"Answer a new empty instance of the receiver - only really useful as a shell for populating
 	in the AXComponentWizard."
 
-	 ^self basicNew 
-		setTypeLib: nil 
-		attributes: TLIBATTR new!
+	^self basicNew setTypeLib: nil attributes: TLIBATTR new!
 
 onPreStripImage
 	"Private -  Assist in the image stripping process by clearning down any
@@ -725,6 +714,7 @@ stbConvertFrom: anSTBClassFormat
 	ver := anSTBClassFormat version.
 	ver < 1 ifTrue: [converted := self stbConvertToVersion1: converted].
 	ver < 2 ifTrue: [converted := self stbConvertToVersion2: converted].
+	ver < 3 ifTrue: [converted := self stbConvertToVersion3: converted].
 	newInstance := self basicNew.
 	1 to: converted size
 		do: [:i | newInstance instVarAt: i put: (converted at: i)].
@@ -750,31 +740,37 @@ stbConvertToVersion2: anArray
 		startingAt: 2.
 	^answer!
 
+stbConvertToVersion3: anArray 
+	"Convert from version 2 instance.
+	In version 3 the prefix is replaced with a namespaceName."
+
+	anArray at: 4 put: nil.
+	^anArray!
+
 stbVersion
-	"Answer the current binary filer version number for instances of the receiver.
+	"Answer the current binary filer version number for instances of the receiver."
 
-	1: Add  aliasMap and typeAnalyzers instance variables, both initially nil."
-
-	^2!
+	^3!
 
 uninitialize
 	"Private - Uninitialize the receiver as it is about to be removed from the system."
 
 	TypeLibs := WeakLookupTable new.
 	SessionManager current removeEventsTriggeredFor: self! !
-!AXTypeLibraryAnalyzer class categoriesFor: #allOpenableTypeLibs!accessing!public! !
-!AXTypeLibraryAnalyzer class categoriesFor: #allTypeLibs!accessing!public! !
-!AXTypeLibraryAnalyzer class categoriesFor: #fromRegistration:!instance creation!public! !
-!AXTypeLibraryAnalyzer class categoriesFor: #initialize!development!initializing!private! !
-!AXTypeLibraryAnalyzer class categoriesFor: #load:major:minor:locale:!instance creation!public! !
-!AXTypeLibraryAnalyzer class categoriesFor: #new!instance creation!public! !
-!AXTypeLibraryAnalyzer class categoriesFor: #onPreStripImage!class hierarchy-removing!private! !
-!AXTypeLibraryAnalyzer class categoriesFor: #onStartup!event handling!public! !
-!AXTypeLibraryAnalyzer class categoriesFor: #onTypeLib:!instance creation!public! !
-!AXTypeLibraryAnalyzer class categoriesFor: #open:!instance creation!public! !
-!AXTypeLibraryAnalyzer class categoriesFor: #stbConvertFrom:!binary filing!public! !
-!AXTypeLibraryAnalyzer class categoriesFor: #stbConvertToVersion1:!binary filing!public! !
-!AXTypeLibraryAnalyzer class categoriesFor: #stbConvertToVersion2:!binary filing!public! !
-!AXTypeLibraryAnalyzer class categoriesFor: #stbVersion!binary filing!public! !
-!AXTypeLibraryAnalyzer class categoriesFor: #uninitialize!class hierarchy-removing!private! !
+!OS.COM.TypeLibraryAnalyzer class categoriesFor: #allOpenableTypeLibs!accessing!public! !
+!OS.COM.TypeLibraryAnalyzer class categoriesFor: #allTypeLibs!accessing!public! !
+!OS.COM.TypeLibraryAnalyzer class categoriesFor: #fromRegistration:!instance creation!public! !
+!OS.COM.TypeLibraryAnalyzer class categoriesFor: #initialize!development!initializing!private! !
+!OS.COM.TypeLibraryAnalyzer class categoriesFor: #load:major:minor:locale:!instance creation!public! !
+!OS.COM.TypeLibraryAnalyzer class categoriesFor: #new!instance creation!public! !
+!OS.COM.TypeLibraryAnalyzer class categoriesFor: #onPreStripImage!class hierarchy-removing!private! !
+!OS.COM.TypeLibraryAnalyzer class categoriesFor: #onStartup!event handling!public! !
+!OS.COM.TypeLibraryAnalyzer class categoriesFor: #onTypeLib:!instance creation!public! !
+!OS.COM.TypeLibraryAnalyzer class categoriesFor: #open:!instance creation!public! !
+!OS.COM.TypeLibraryAnalyzer class categoriesFor: #stbConvertFrom:!binary filing!public! !
+!OS.COM.TypeLibraryAnalyzer class categoriesFor: #stbConvertToVersion1:!binary filing!public! !
+!OS.COM.TypeLibraryAnalyzer class categoriesFor: #stbConvertToVersion2:!binary filing!public! !
+!OS.COM.TypeLibraryAnalyzer class categoriesFor: #stbConvertToVersion3:!binary filing!public! !
+!OS.COM.TypeLibraryAnalyzer class categoriesFor: #stbVersion!binary filing!public! !
+!OS.COM.TypeLibraryAnalyzer class categoriesFor: #uninitialize!class hierarchy-removing!private! !
 

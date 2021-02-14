@@ -15,7 +15,7 @@ package setMethodNames: #(
 	#(#{Graphics.Bitmap} #drawOnGraphics:at:extent:from:extent:unit:attributes:)
 	#(#{Graphics.Icon} #drawOnGraphics:at:extent:from:extent:unit:attributes:)
 	#(#{Graphics.Image} #drawOnGraphics:at:extent:from:extent:unit:attributes:)
-	#(#{Smalltalk.OLEPicture} #drawOnGraphics:at:extent:from:extent:unit:attributes:)
+	#(#{OS.COM.Picture} #drawOnGraphics:at:extent:from:extent:unit:attributes:)
 	#(#{UI.ImagePresenter class} #resource_Gdiplus_view)
 ).
 
@@ -92,7 +92,7 @@ drawOnGraphics: aGraphics at: dstOrigin extent: dstExtent from: srcOrigin extent
 	Notification signal: 'Gdiplus drawOnGraphics not (yet) implement for ' , self class name! !
 !Graphics.Image categoriesFor: #drawOnGraphics:at:extent:from:extent:unit:attributes:!drawing-gdiplus!public! !
 
-!OLEPicture methodsFor!
+!OS.COM.Picture methodsFor!
 
 drawOnGraphics: aGraphics at: dstOrigin extent: dstExtent from: srcOrigin extent: srcExtent unit: aUnit attributes: aImageAtt
 	"Subclass are responsible for drawing themselves on aGraphics.
@@ -108,7 +108,7 @@ drawOnGraphics: aGraphics at: dstOrigin extent: dstExtent from: srcOrigin extent
 				drawOn: aCanvas
 				at: dstOrigin
 				extent: dstExtent]! !
-!OLEPicture categoriesFor: #drawOnGraphics:at:extent:from:extent:unit:attributes:!drawing-gdiplus!public! !
+!OS.COM.Picture categoriesFor: #drawOnGraphics:at:extent:from:extent:unit:attributes:!drawing-gdiplus!public! !
 
 !UI.ImagePresenter class methodsFor!
 

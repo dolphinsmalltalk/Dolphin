@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'ActiveX Property Bags'.
-package paxVersion: 2;
+package paxVersion: 2.1;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk Active-X Property Bags package.
 Copyright (c) Object Arts Ltd, 2000-2001.
@@ -10,16 +10,16 @@ package basicPackageVersion: '6.1'.
 
 
 package setClassNames: #(
-	#{AXPropertyBag}
-	#{AXPropertyBagErrorLog}
-	#{AXPropertyReadError}
-	#{IEnumErrorInfo}
-	#{IErrorLog}
-	#{IPersistPropertyBag}
-	#{IPersistPropertyBag2}
-	#{IPropertyBag}
-	#{IPropertyBag2}
-	#{PROPBAG2}
+	#{OS.COM.IEnumErrorInfo}
+	#{OS.COM.IErrorLog}
+	#{OS.COM.IPersistPropertyBag}
+	#{OS.COM.IPersistPropertyBag2}
+	#{OS.COM.IPropertyBag}
+	#{OS.COM.IPropertyBag2}
+	#{OS.COM.PROPBAG2}
+	#{OS.COM.PropertyBag}
+	#{OS.COM.PropertyBagErrorLog}
+	#{OS.COM.PropertyReadError}
 ).
 
 package setPrerequisites: #(
@@ -33,64 +33,64 @@ package!
 
 "Class Definitions"!
 
-COMInterfaceImp subclass: #AXPropertyBag
+Core.Error subclass: #'OS.COM.PropertyReadError'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+OS.COM.InterfaceImplementation subclass: #'OS.COM.PropertyBag'
 	instanceVariableNames: 'propertyTable clsid saveAll clearDirty'
 	classVariableNames: ''
-	poolDictionaries: 'AXAutomationConstants'
+	imports: #(#{OS.COM.AutomationConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-COMInterfaceImp subclass: #AXPropertyBagErrorLog
+OS.COM.InterfaceImplementation subclass: #'OS.COM.PropertyBagErrorLog'
 	instanceVariableNames: 'errors guid'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Error subclass: #AXPropertyReadError
+OS.COM.IUnknown subclass: #'OS.COM.IErrorLog'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-IUnknown subclass: #IErrorLog
+OS.COM.IUnknown subclass: #'OS.COM.IPropertyBag'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-IUnknown subclass: #IPropertyBag
+OS.COM.IUnknown subclass: #'OS.COM.IPropertyBag2'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-IUnknown subclass: #IPropertyBag2
+OS.COM.IEnumUnknown subclass: #'OS.COM.IEnumErrorInfo'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-IEnumUnknown subclass: #IEnumErrorInfo
+OS.COM.IPersist subclass: #'OS.COM.IPersistPropertyBag'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-IPersist subclass: #IPersistPropertyBag
+OS.COM.IPersistPropertyBag subclass: #'OS.COM.IPersistPropertyBag2'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-IPersistPropertyBag subclass: #IPersistPropertyBag2
+OS.COM.OLEStructure subclass: #'OS.COM.PROPBAG2'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''
-	classConstants: {}!
-OLEStructure subclass: #PROPBAG2
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_cfType' -> 16r6.

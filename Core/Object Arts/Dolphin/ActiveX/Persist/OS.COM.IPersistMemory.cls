@@ -1,19 +1,19 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-IPersist subclass: #IPersistMemory
+OS.COM.IPersist subclass: #'OS.COM.IPersistMemory'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-IPersistMemory guid: (IID fromString: '{bd1ae5e0-a6ae-11ce-bd37-504200c10000}')!
-IPersistMemory comment: '<IPersistMemory> is a wrapper class for the COM interface ''OCIDL.IPersistMemory'' generated from type information in the ''OCIDL Library'' library. It contains methods to invoke the member functions exposed by that interface.
+OS.COM.IPersistMemory guid: (OS.COM.IID fromString: '{bd1ae5e0-a6ae-11ce-bd37-504200c10000}')!
+OS.COM.IPersistMemory comment: '<IPersistMemory> is a wrapper class for the COM interface ''OCIDL.IPersistMemory'' generated from type information in the ''OCIDL Library'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
 
 Warning: This comment was automatically generated from the interface''s type information, but any changes made here will not be overwritten if the wrapper class is regenerated.'!
-!IPersistMemory categoriesForClass!COM-Interfaces!OCIDL-Interfaces! !
-!IPersistMemory methodsFor!
+!OS.COM.IPersistMemory categoriesForClass!COM-Interfaces!OCIDL-Interfaces! !
+!OS.COM.IPersistMemory methodsFor!
 
 getSizeMax
 	"Answer the <DWORD> result of invoking the COM Object's GetSizeMax() method."
@@ -109,20 +109,20 @@ Save: pMem fClearDirty: fClearDirty cbSize: cbSize
 
 	<virtual stdcall: hresult 7 byte* sdword dword>
 	^self invalidCall: _failureCode! !
-!IPersistMemory categoriesFor: #getSizeMax!**auto generated**!methods!public! !
-!IPersistMemory categoriesFor: #GetSizeMax:!**auto generated**!COM Interfaces-IPersistMemory!private! !
-!IPersistMemory categoriesFor: #initNew!**auto generated**!methods!public! !
-!IPersistMemory categoriesFor: #InitNew!**auto generated**!COM Interfaces-IPersistMemory!private! !
-!IPersistMemory categoriesFor: #IsDirty!**auto generated**!COM Interfaces-IPersistMemory!private! !
-!IPersistMemory categoriesFor: #load:!methods!public! !
-!IPersistMemory categoriesFor: #Load:cbSize:!COM Interfaces-IPersistMemory!private! !
-!IPersistMemory categoriesFor: #save:!methods!public! !
-!IPersistMemory categoriesFor: #save:cbSize:!methods!public! !
-!IPersistMemory categoriesFor: #Save:fClearDirty:cbSize:!COM Interfaces-IPersistMemory!private! !
+!OS.COM.IPersistMemory categoriesFor: #getSizeMax!**auto generated**!methods!public! !
+!OS.COM.IPersistMemory categoriesFor: #GetSizeMax:!**auto generated**!COM Interfaces-IPersistMemory!private! !
+!OS.COM.IPersistMemory categoriesFor: #initNew!**auto generated**!methods!public! !
+!OS.COM.IPersistMemory categoriesFor: #InitNew!**auto generated**!COM Interfaces-IPersistMemory!private! !
+!OS.COM.IPersistMemory categoriesFor: #IsDirty!**auto generated**!COM Interfaces-IPersistMemory!private! !
+!OS.COM.IPersistMemory categoriesFor: #load:!methods!public! !
+!OS.COM.IPersistMemory categoriesFor: #Load:cbSize:!COM Interfaces-IPersistMemory!private! !
+!OS.COM.IPersistMemory categoriesFor: #save:!methods!public! !
+!OS.COM.IPersistMemory categoriesFor: #save:cbSize:!methods!public! !
+!OS.COM.IPersistMemory categoriesFor: #Save:fClearDirty:cbSize:!COM Interfaces-IPersistMemory!private! !
 
-IPersistMemory methodProtocol: #IPersistMemory attributes: #(#readOnly) selectors: #(#GetSizeMax: #InitNew #IsDirty #Load:cbSize: #Save:fClearDirty:cbSize:)!
+OS.COM.IPersistMemory methodProtocol: #IPersistMemory attributes: #(#readOnly) selectors: #(#GetSizeMax: #InitNew #IsDirty #Load:cbSize: #Save:fClearDirty:cbSize:)!
 
-!IPersistMemory class methodsFor!
+!OS.COM.IPersistMemory class methodsFor!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'OCIDL.IPersistMemory'
@@ -139,5 +139,5 @@ defineFunctions
 			argumentTypes: 'dword*';
 		defineFunction: #InitNew
 ! !
-!IPersistMemory class categoriesFor: #defineFunctions!initializing!public! !
+!OS.COM.IPersistMemory class categoriesFor: #defineFunctions!initializing!public! !
 

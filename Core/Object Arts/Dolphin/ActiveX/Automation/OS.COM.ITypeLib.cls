@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-IUnknown subclass: #ITypeLib
+OS.COM.IUnknown subclass: #'OS.COM.ITypeLib'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'AXAutomationConstants AXAutomationErrors'
+	imports: #(#{OS.COM.AutomationConstants} #{OS.COM.AutomationErrors})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ITypeLib guid: (IID fromString: '{00020402-0000-0000-c000-000000000046}')!
-ITypeLib comment: 'ITypeLib is a <COMInterface> class which wraps an COM Automation ITypeLib interface pointer.
+OS.COM.ITypeLib guid: (OS.COM.IID fromString: '{00020402-0000-0000-c000-000000000046}')!
+OS.COM.ITypeLib comment: 'ITypeLib is a <COMInterface> class which wraps an COM Automation ITypeLib interface pointer.
 
 The purpose of ITypeLib is to serve as the top-level entry point to a COM type library, which is a repository of meta-information about COM objects and interfaces. An ITypeLib is typically acquired either by loading a type library explicitly from the resources of a COM server or a .TLB file, or directly from a COM object via an interface such as IProvideClassInfo.
 
@@ -16,8 +16,8 @@ The member functions of ITypeLib permit one to enquire about general attributes 
 ITypeLib is a complex and very powerful interface so we have chosen to separate most of Dolphin''s higher level wrapping into a separate class, namely AXTypeLibraryAnalyzer. Therefore the only methods implemented here are the virtual call outs and a few simple wrappers for those.
 
 ITypeLib is primarily of use in the construction of programming tools (it is fundamental to Dolphin''s support for auto-generation of COM object wrappers), but it is unlikely to be of much relevance to most applications.'!
-!ITypeLib categoriesForClass!COM-Interfaces!OCIDL-Interfaces! !
-!ITypeLib methodsFor!
+!OS.COM.ITypeLib categoriesForClass!COM-Interfaces!OCIDL-Interfaces! !
+!OS.COM.ITypeLib methodsFor!
 
 FindName: findName lHashVal: lHashVal ppTInfo: ppTInfo rgMemId: rgMemId pcFound: pcFound
 	"Invoke the FindName() method of the COM object wrapped by the receiver.
@@ -36,8 +36,9 @@ FindName: findName lHashVal: lHashVal ppTInfo: ppTInfo rgMemId: rgMemId pcFound:
 getAllCustData
 	"Answer a <CUSTDATA> describing the custom data associated with the type library."
 
-	^CUSTDATA new beUnfinalizable; yourself
-!
+	^CUSTDATA new
+		beUnfinalizable;
+		yourself!
 
 GetDocumentation: index pBstrName: pBstrName pBstrDocString: pBstrDocString pdwHelpContext: pdwHelpContext pBstrHelpFile: pBstrHelpFile
 	"Private - Invoke the GetDocumentation() method of the COM object wrapped by the receiver.
@@ -62,7 +63,7 @@ getLibAttr
 	Note that the answer MUST be free'd using ReleaseLibAttr()."
 
 	| libattr |
-	libattr:= TLIBATTR newPointer.
+	libattr := TLIBATTR newPointer.
 	self GetLibAttr: libattr.
 	^libattr!
 
@@ -117,12 +118,10 @@ getTypeInfoOfGuid: guid ifNone: exceptionHandler
 	| answer hr |
 	answer := ITypeInfo newPointer.
 	hr := self GetTypeInfoOfGuid: guid ppTInfo: answer.
-	^hr >= 0 
+	^hr >= 0
 		ifTrue: [answer]
-		ifFalse: [
-			hr = TYPE_E_ELEMENTNOTFOUND
-				ifTrue: [exceptionHandler value]
-				ifFalse: [HRESULTError signalWith: hr]]!
+		ifFalse: 
+			[hr = TYPE_E_ELEMENTNOTFOUND ifTrue: [exceptionHandler value] ifFalse: [HRESULTError signalWith: hr]]!
 
 GetTypeInfoOfGuid: guid ppTInfo: ppTInfo
 	"Private - Invoke the GetTypeInfoOfGuid() method of the COM object wrapped by the receiver.
@@ -181,15 +180,16 @@ nameAt: index ifAbsent: exceptionHandler
 	bstrName := BSTR new.
 	"We could use documentationAt:, but that involves a lot of extra
 	processing for information we don't need."
-	hr := self 
-		GetDocumentation: index-1
-		pBstrName: bstrName
-		pBstrDocString: nil
-		pdwHelpContext: nil
-		pBstrHelpFile: nil.
-	hr < 0 ifTrue: [
-		hr = TYPE_E_ELEMENTNOTFOUND ifTrue: [^exceptionHandler value].
-		^HRESULTError signalWith: hr].
+	hr := self
+				GetDocumentation: index - 1
+				pBstrName: bstrName
+				pBstrDocString: nil
+				pdwHelpContext: nil
+				pBstrHelpFile: nil.
+	hr < 0
+		ifTrue: 
+			[hr = TYPE_E_ELEMENTNOTFOUND ifTrue: [^exceptionHandler value].
+			^HRESULTError signalWith: hr].
 	name := bstrName asString.
 	bstrName free.
 	^name!
@@ -217,7 +217,7 @@ typeInfoAt: index
 
 	| answer |
 	answer := ITypeInfo newPointer.
-	self GetTypeInfo: index-1 ppTInfo: answer.
+	self GetTypeInfo: index - 1 ppTInfo: answer.
 	^answer!
 
 typekindAt: anInteger
@@ -241,28 +241,28 @@ typekindAt: anInteger
 	answer := SDWORD new.
 	self GetTypeInfoType: anInteger-1 pTKind: answer.
 	^answer value! !
-!ITypeLib categoriesFor: #FindName:lHashVal:ppTInfo:rgMemId:pcFound:!COM Interfaces-ITypeLib!primitives!public! !
-!ITypeLib categoriesFor: #getAllCustData!accessing!public! !
-!ITypeLib categoriesFor: #GetDocumentation:pBstrName:pBstrDocString:pdwHelpContext:pBstrHelpFile:!COM Interfaces-ITypeLib!primitives!private! !
-!ITypeLib categoriesFor: #getLibAttr!accessing!public! !
-!ITypeLib categoriesFor: #GetLibAttr:!COM Interfaces-ITypeLib!primitives!private! !
-!ITypeLib categoriesFor: #getTypeComp!**auto generated**!methods!public! !
-!ITypeLib categoriesFor: #GetTypeComp:!COM Interfaces-ITypeLib!primitives!public! !
-!ITypeLib categoriesFor: #GetTypeInfo:ppTInfo:!COM Interfaces-ITypeLib!primitives!public! !
-!ITypeLib categoriesFor: #GetTypeInfoCount!COM Interfaces-ITypeLib!primitives!private! !
-!ITypeLib categoriesFor: #getTypeInfoOfGuid:ifNone:!accessing!public! !
-!ITypeLib categoriesFor: #GetTypeInfoOfGuid:ppTInfo:!COM Interfaces-ITypeLib!private! !
-!ITypeLib categoriesFor: #GetTypeInfoType:pTKind:!COM Interfaces-ITypeLib!primitives!public! !
-!ITypeLib categoriesFor: #isName:!accessing!public! !
-!ITypeLib categoriesFor: #IsName:lHashVal:pfName:!COM Interfaces-ITypeLib!primitives!private! !
-!ITypeLib categoriesFor: #nameAt:!accessing!private! !
-!ITypeLib categoriesFor: #nameAt:ifAbsent:!accessing!private! !
-!ITypeLib categoriesFor: #ReleaseTLibAttr:!COM Interfaces-ITypeLib!primitives!private! !
-!ITypeLib categoriesFor: #typeComp!accessing!public! !
-!ITypeLib categoriesFor: #typeInfoAt:!accessing!public! !
-!ITypeLib categoriesFor: #typekindAt:!accessing!private! !
+!OS.COM.ITypeLib categoriesFor: #FindName:lHashVal:ppTInfo:rgMemId:pcFound:!COM Interfaces-ITypeLib!primitives!public! !
+!OS.COM.ITypeLib categoriesFor: #getAllCustData!accessing!public! !
+!OS.COM.ITypeLib categoriesFor: #GetDocumentation:pBstrName:pBstrDocString:pdwHelpContext:pBstrHelpFile:!COM Interfaces-ITypeLib!primitives!private! !
+!OS.COM.ITypeLib categoriesFor: #getLibAttr!accessing!public! !
+!OS.COM.ITypeLib categoriesFor: #GetLibAttr:!COM Interfaces-ITypeLib!primitives!private! !
+!OS.COM.ITypeLib categoriesFor: #getTypeComp!**auto generated**!methods!public! !
+!OS.COM.ITypeLib categoriesFor: #GetTypeComp:!COM Interfaces-ITypeLib!primitives!public! !
+!OS.COM.ITypeLib categoriesFor: #GetTypeInfo:ppTInfo:!COM Interfaces-ITypeLib!primitives!public! !
+!OS.COM.ITypeLib categoriesFor: #GetTypeInfoCount!COM Interfaces-ITypeLib!primitives!private! !
+!OS.COM.ITypeLib categoriesFor: #getTypeInfoOfGuid:ifNone:!accessing!public! !
+!OS.COM.ITypeLib categoriesFor: #GetTypeInfoOfGuid:ppTInfo:!COM Interfaces-ITypeLib!private! !
+!OS.COM.ITypeLib categoriesFor: #GetTypeInfoType:pTKind:!COM Interfaces-ITypeLib!primitives!public! !
+!OS.COM.ITypeLib categoriesFor: #isName:!accessing!public! !
+!OS.COM.ITypeLib categoriesFor: #IsName:lHashVal:pfName:!COM Interfaces-ITypeLib!primitives!private! !
+!OS.COM.ITypeLib categoriesFor: #nameAt:!accessing!private! !
+!OS.COM.ITypeLib categoriesFor: #nameAt:ifAbsent:!accessing!private! !
+!OS.COM.ITypeLib categoriesFor: #ReleaseTLibAttr:!COM Interfaces-ITypeLib!primitives!private! !
+!OS.COM.ITypeLib categoriesFor: #typeComp!accessing!public! !
+!OS.COM.ITypeLib categoriesFor: #typeInfoAt:!accessing!public! !
+!OS.COM.ITypeLib categoriesFor: #typekindAt:!accessing!private! !
 
-!ITypeLib class methodsFor!
+!OS.COM.ITypeLib class methodsFor!
 
 defineFunctions
 	"Declare the virtual functions supported by the receiver.
@@ -298,13 +298,14 @@ load: libid major: verMajor minor: verMinor locale: locale
 	by the rules of QueryPathRegTypeLib()."
 
 	| answer |
-"	^self 
+	"	^self 
 		open: (self queryPath: libid major: verMajor minor: verMinor locale: locale)
 		register: false"
 	answer := self newPointer.
 	OLEAutLibrary default
-		loadRegTypeLib: libid 
-		wVerMajor: verMajor wVerMinor: verMinor 
+		loadRegTypeLib: libid
+		wVerMajor: verMajor
+		wVerMinor: verMinor
 		lcid: locale asParameter
 		pptlib: answer.
 	^answer queryInterface: ITypeLib2 ifNone: [answer]!
@@ -351,27 +352,24 @@ queryPath: libid major: major minor: minor locale: locale ifNone: exceptionHandl
 	"Answer the path of the type library with attributes as detailed
 	by the arguments. If the library is not registered on the host machine
 	then answer the result of evaluating the <niladicValuable>, exceptionHandler."
-	
+
 	| answer hr |
 	answer := BSTR new.
 	hr := OLEAutLibrary default
-		queryPathOfRegTypeLib: libid
-		wVerMajor: major
-		wVerMinor: minor
-		lcid: locale asParameter
-		lpbstrPathName: answer.
-	^hr < 0 
-		ifTrue: [
-			hr = TYPE_E_LIBNOTREGISTERED 
-				ifTrue: [exceptionHandler value]
-				ifFalse: [HRESULTError signalWith: hr]]
-		ifFalse: [answer asString trimNulls]
-! !
-!ITypeLib class categoriesFor: #defineFunctions!initializing!public! !
-!ITypeLib class categoriesFor: #fromAttributes:!instance creation!public! !
-!ITypeLib class categoriesFor: #load:major:minor:locale:!instance creation!public! !
-!ITypeLib class categoriesFor: #open:!instance creation!public! !
-!ITypeLib class categoriesFor: #open:register:!instance creation!public! !
-!ITypeLib class categoriesFor: #queryPath:major:minor:locale:!enquiries!public! !
-!ITypeLib class categoriesFor: #queryPath:major:minor:locale:ifNone:!enquiries!public! !
+				queryPathOfRegTypeLib: libid
+				wVerMajor: major
+				wVerMinor: minor
+				lcid: locale asParameter
+				lpbstrPathName: answer.
+	^hr < 0
+		ifTrue: 
+			[hr = TYPE_E_LIBNOTREGISTERED ifTrue: [exceptionHandler value] ifFalse: [HRESULTError signalWith: hr]]
+		ifFalse: [answer asString trimNulls]! !
+!OS.COM.ITypeLib class categoriesFor: #defineFunctions!initializing!public! !
+!OS.COM.ITypeLib class categoriesFor: #fromAttributes:!instance creation!public! !
+!OS.COM.ITypeLib class categoriesFor: #load:major:minor:locale:!instance creation!public! !
+!OS.COM.ITypeLib class categoriesFor: #open:!instance creation!public! !
+!OS.COM.ITypeLib class categoriesFor: #open:register:!instance creation!public! !
+!OS.COM.ITypeLib class categoriesFor: #queryPath:major:minor:locale:!enquiries!public! !
+!OS.COM.ITypeLib class categoriesFor: #queryPath:major:minor:locale:ifNone:!enquiries!public! !
 

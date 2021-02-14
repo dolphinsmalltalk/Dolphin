@@ -1,16 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-AXTypeInfoObject subclass: #AXTypeInfoAnalyzer
+OS.COM.TypeInfoObject subclass: #'OS.COM.TypeInfoAnalyzer'
 	instanceVariableNames: 'typeLib globalBinding guid index documentation'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'VTtoIDLTypeMap' -> #(nil 'short' 'long' 'float' 'double' 'CURRENCY' 'DATE' 'BSTR' 'IDispatch*' 'SCODE' 'VARIANT_BOOL' 'VARIANT' 'IUnknown*' 'DECIMAL' nil 'char' 'BYTE' 'unsigned short' 'unsigned long' '__int64' 'unsigned __int64' 'int' 'unsigned int' 'void' 'HRESULT' '*' 'SAFEARRAY*' '[]' 'typedef' 'LPSTR' 'LPWSTR')
 	}!
-AXTypeInfoAnalyzer guid: (GUID fromString: '{c06f3b64-0868-11d3-93af-00a024ca708a}')!
-AXTypeInfoAnalyzer isAbstract: true!
-AXTypeInfoAnalyzer comment: 'AXTypeInfoAnalyzer is a class which wraps an Active-X Automation <ITypeInfo> interface pointer and adds higher level behaviours for analyzing the type information available through that interface.
+OS.COM.TypeInfoAnalyzer guid: (Core.GUID fromString: '{c06f3b64-0868-11d3-93af-00a024ca708a}')!
+OS.COM.TypeInfoAnalyzer isNonInstantiable: true!
+OS.COM.TypeInfoAnalyzer comment: 'AXTypeInfoAnalyzer is a class which wraps an Active-X Automation <ITypeInfo> interface pointer and adds higher level behaviours for analyzing the type information available through that interface.
 
 ITypeInfo itself contains a large number of member functions which allow one to enquire about the structure and attributes of each of the individual elements of a Type Library. Unfortunately it is rather poorly factored in that a single interface is used to describe widely differing objects. We have therefore applied the "Conditional Elimination" refactoring pattern and created a pseudo hierarchy as follows:
 
@@ -31,8 +31,8 @@ Instance Variables:
 	guid			<GUID>. Unique id of type.
 	index			<integer> index of the type in the typelib.
 	basicName		<readableString> name of the type from the typelib.'!
-!AXTypeInfoAnalyzer categoriesForClass!ActiveX Automation! !
-!AXTypeInfoAnalyzer methodsFor!
+!OS.COM.TypeInfoAnalyzer categoriesForClass!ActiveX Automation! !
+!OS.COM.TypeInfoAnalyzer methodsFor!
 
 = comparand
 	"Answer whether the receiver and the <Object>, comparand, 
@@ -124,9 +124,9 @@ documentationForMember: memid ifAbsent: exceptionHandler
 				pBstrHelpFile: nil.
 	hr < 0
 		ifTrue: 
-			[hr = AXAutomationErrors.TYPE_E_ELEMENTNOTFOUND ifTrue: [^exceptionHandler value].
+			[hr = AutomationErrors.TYPE_E_ELEMENTNOTFOUND ifTrue: [^exceptionHandler value].
 			^HRESULTError signalWith: hr].
-	answer := AXTypeLibDocumentation new
+	answer := TypeLibDocumentation new
 				name: bstrName asString
 				helpstring: bstrDocString asString
 				helpcontext: dwHelpContext value
@@ -381,7 +381,7 @@ typekind
 typeLib
 	"Answer a <AXTypeLibraryAnalyzer> on the receiver's containing type library."
 
-	typeLib isNil ifTrue: [typeLib := AXTypeLibraryAnalyzer onTypeLib: tlbInterface typeLib].
+	typeLib isNil ifTrue: [typeLib := TypeLibraryAnalyzer onTypeLib: tlbInterface typeLib].
 	^typeLib!
 
 typeName
@@ -412,62 +412,62 @@ vt
 	the receiver."
 
 	^VT_USERDEFINED! !
-!AXTypeInfoAnalyzer categoriesFor: #=!comparing!public! !
-!AXTypeInfoAnalyzer categoriesFor: #asImplType!converting!public! !
-!AXTypeInfoAnalyzer categoriesFor: #attributes!accessing!public! !
-!AXTypeInfoAnalyzer categoriesFor: #baseClass!constants!private! !
-!AXTypeInfoAnalyzer categoriesFor: #basicName!accessing!private! !
-!AXTypeInfoAnalyzer categoriesFor: #classDesc!constants!private! !
-!AXTypeInfoAnalyzer categoriesFor: #constants!enumerating!public! !
-!AXTypeInfoAnalyzer categoriesFor: #displayOn:!displaying!public! !
-!AXTypeInfoAnalyzer categoriesFor: #documentation!accessing!public! !
-!AXTypeInfoAnalyzer categoriesFor: #documentationForMember:!accessing!public! !
-!AXTypeInfoAnalyzer categoriesFor: #documentationForMember:ifAbsent:!accessing!public! !
-!AXTypeInfoAnalyzer categoriesFor: #environment!constants!public! !
-!AXTypeInfoAnalyzer categoriesFor: #fullyQualifiedName!constants!private! !
-!AXTypeInfoAnalyzer categoriesFor: #funcDescAt:!accessing!private! !
-!AXTypeInfoAnalyzer categoriesFor: #functions!enumerating!public! !
-!AXTypeInfoAnalyzer categoriesFor: #functionsByName!enumerating!public! !
-!AXTypeInfoAnalyzer categoriesFor: #getImplTypeInfoAt:!accessing!public! !
-!AXTypeInfoAnalyzer categoriesFor: #getNamesOfMember:count:!accessing!private! !
-!AXTypeInfoAnalyzer categoriesFor: #getRefType:!accessing!private! !
-!AXTypeInfoAnalyzer categoriesFor: #global!accessing!public! !
-!AXTypeInfoAnalyzer categoriesFor: #globalBinding!accessing!private! !
-!AXTypeInfoAnalyzer categoriesFor: #globalBinding:!accessing!private! !
-!AXTypeInfoAnalyzer categoriesFor: #globalName:!accessing!private! !
-!AXTypeInfoAnalyzer categoriesFor: #guid!accessing!public! !
-!AXTypeInfoAnalyzer categoriesFor: #hash!comparing!public! !
-!AXTypeInfoAnalyzer categoriesFor: #idOfName:ifAbsent:!accessing!public! !
-!AXTypeInfoAnalyzer categoriesFor: #includeIDLInClassComment!constants!private! !
-!AXTypeInfoAnalyzer categoriesFor: #index!constants!public! !
-!AXTypeInfoAnalyzer categoriesFor: #isDispatchable!public!testing! !
-!AXTypeInfoAnalyzer categoriesFor: #isDual!public!testing! !
-!AXTypeInfoAnalyzer categoriesFor: #isGlobalDefined!public!testing! !
-!AXTypeInfoAnalyzer categoriesFor: #isHidden!public!testing! !
-!AXTypeInfoAnalyzer categoriesFor: #isInstalled!public!testing! !
-!AXTypeInfoAnalyzer categoriesFor: #isStructure!public!testing! !
-!AXTypeInfoAnalyzer categoriesFor: #isUnion!public!testing! !
-!AXTypeInfoAnalyzer categoriesFor: #nameOfID:!accessing!public! !
-!AXTypeInfoAnalyzer categoriesFor: #nameOfID:ifAbsent:!accessing!public! !
-!AXTypeInfoAnalyzer categoriesFor: #nameSansTag!accessing!private! !
-!AXTypeInfoAnalyzer categoriesFor: #realize!private!realizing/unrealizing! !
-!AXTypeInfoAnalyzer categoriesFor: #realTypeInfo!accessing!public! !
-!AXTypeInfoAnalyzer categoriesFor: #releaseFuncDesc:!private!realizing/unrealizing! !
-!AXTypeInfoAnalyzer categoriesFor: #releaseTypeAttr:!private!realizing/unrealizing! !
-!AXTypeInfoAnalyzer categoriesFor: #releaseVarDesc:!private!realizing/unrealizing! !
-!AXTypeInfoAnalyzer categoriesFor: #setTypeInfo:!accessing!private! !
-!AXTypeInfoAnalyzer categoriesFor: #setTypeInfo:typeLib:index:!accessing!private! !
-!AXTypeInfoAnalyzer categoriesFor: #suggestedBinding!accessing!private! !
-!AXTypeInfoAnalyzer categoriesFor: #tdesc!accessing!constants!public! !
-!AXTypeInfoAnalyzer categoriesFor: #typeFlags!accessing!public! !
-!AXTypeInfoAnalyzer categoriesFor: #typekind!constants!public! !
-!AXTypeInfoAnalyzer categoriesFor: #typeLib!accessing!public! !
-!AXTypeInfoAnalyzer categoriesFor: #typeName!constants!public! !
-!AXTypeInfoAnalyzer categoriesFor: #varDescAt:!accessing!private! !
-!AXTypeInfoAnalyzer categoriesFor: #variables!accessing!public! !
-!AXTypeInfoAnalyzer categoriesFor: #vt!constants!public! !
+!OS.COM.TypeInfoAnalyzer categoriesFor: #=!comparing!public! !
+!OS.COM.TypeInfoAnalyzer categoriesFor: #asImplType!converting!public! !
+!OS.COM.TypeInfoAnalyzer categoriesFor: #attributes!accessing!public! !
+!OS.COM.TypeInfoAnalyzer categoriesFor: #baseClass!constants!private! !
+!OS.COM.TypeInfoAnalyzer categoriesFor: #basicName!accessing!private! !
+!OS.COM.TypeInfoAnalyzer categoriesFor: #classDesc!constants!private! !
+!OS.COM.TypeInfoAnalyzer categoriesFor: #constants!enumerating!public! !
+!OS.COM.TypeInfoAnalyzer categoriesFor: #displayOn:!displaying!public! !
+!OS.COM.TypeInfoAnalyzer categoriesFor: #documentation!accessing!public! !
+!OS.COM.TypeInfoAnalyzer categoriesFor: #documentationForMember:!accessing!public! !
+!OS.COM.TypeInfoAnalyzer categoriesFor: #documentationForMember:ifAbsent:!accessing!public! !
+!OS.COM.TypeInfoAnalyzer categoriesFor: #environment!constants!public! !
+!OS.COM.TypeInfoAnalyzer categoriesFor: #fullyQualifiedName!constants!private! !
+!OS.COM.TypeInfoAnalyzer categoriesFor: #funcDescAt:!accessing!private! !
+!OS.COM.TypeInfoAnalyzer categoriesFor: #functions!enumerating!public! !
+!OS.COM.TypeInfoAnalyzer categoriesFor: #functionsByName!enumerating!public! !
+!OS.COM.TypeInfoAnalyzer categoriesFor: #getImplTypeInfoAt:!accessing!public! !
+!OS.COM.TypeInfoAnalyzer categoriesFor: #getNamesOfMember:count:!accessing!private! !
+!OS.COM.TypeInfoAnalyzer categoriesFor: #getRefType:!accessing!private! !
+!OS.COM.TypeInfoAnalyzer categoriesFor: #global!accessing!public! !
+!OS.COM.TypeInfoAnalyzer categoriesFor: #globalBinding!accessing!private! !
+!OS.COM.TypeInfoAnalyzer categoriesFor: #globalBinding:!accessing!private! !
+!OS.COM.TypeInfoAnalyzer categoriesFor: #globalName:!accessing!private! !
+!OS.COM.TypeInfoAnalyzer categoriesFor: #guid!accessing!public! !
+!OS.COM.TypeInfoAnalyzer categoriesFor: #hash!comparing!public! !
+!OS.COM.TypeInfoAnalyzer categoriesFor: #idOfName:ifAbsent:!accessing!public! !
+!OS.COM.TypeInfoAnalyzer categoriesFor: #includeIDLInClassComment!constants!private! !
+!OS.COM.TypeInfoAnalyzer categoriesFor: #index!constants!public! !
+!OS.COM.TypeInfoAnalyzer categoriesFor: #isDispatchable!public!testing! !
+!OS.COM.TypeInfoAnalyzer categoriesFor: #isDual!public!testing! !
+!OS.COM.TypeInfoAnalyzer categoriesFor: #isGlobalDefined!public!testing! !
+!OS.COM.TypeInfoAnalyzer categoriesFor: #isHidden!public!testing! !
+!OS.COM.TypeInfoAnalyzer categoriesFor: #isInstalled!public!testing! !
+!OS.COM.TypeInfoAnalyzer categoriesFor: #isStructure!public!testing! !
+!OS.COM.TypeInfoAnalyzer categoriesFor: #isUnion!public!testing! !
+!OS.COM.TypeInfoAnalyzer categoriesFor: #nameOfID:!accessing!public! !
+!OS.COM.TypeInfoAnalyzer categoriesFor: #nameOfID:ifAbsent:!accessing!public! !
+!OS.COM.TypeInfoAnalyzer categoriesFor: #nameSansTag!accessing!private! !
+!OS.COM.TypeInfoAnalyzer categoriesFor: #realize!private!realizing/unrealizing! !
+!OS.COM.TypeInfoAnalyzer categoriesFor: #realTypeInfo!accessing!public! !
+!OS.COM.TypeInfoAnalyzer categoriesFor: #releaseFuncDesc:!private!realizing/unrealizing! !
+!OS.COM.TypeInfoAnalyzer categoriesFor: #releaseTypeAttr:!private!realizing/unrealizing! !
+!OS.COM.TypeInfoAnalyzer categoriesFor: #releaseVarDesc:!private!realizing/unrealizing! !
+!OS.COM.TypeInfoAnalyzer categoriesFor: #setTypeInfo:!accessing!private! !
+!OS.COM.TypeInfoAnalyzer categoriesFor: #setTypeInfo:typeLib:index:!accessing!private! !
+!OS.COM.TypeInfoAnalyzer categoriesFor: #suggestedBinding!accessing!private! !
+!OS.COM.TypeInfoAnalyzer categoriesFor: #tdesc!accessing!constants!public! !
+!OS.COM.TypeInfoAnalyzer categoriesFor: #typeFlags!accessing!public! !
+!OS.COM.TypeInfoAnalyzer categoriesFor: #typekind!constants!public! !
+!OS.COM.TypeInfoAnalyzer categoriesFor: #typeLib!accessing!public! !
+!OS.COM.TypeInfoAnalyzer categoriesFor: #typeName!constants!public! !
+!OS.COM.TypeInfoAnalyzer categoriesFor: #varDescAt:!accessing!private! !
+!OS.COM.TypeInfoAnalyzer categoriesFor: #variables!accessing!public! !
+!OS.COM.TypeInfoAnalyzer categoriesFor: #vt!constants!public! !
 
-!AXTypeInfoAnalyzer class methodsFor!
+!OS.COM.TypeInfoAnalyzer class methodsFor!
 
 initialize
 	"Private - Initialize class variables of the receiver.
@@ -524,11 +524,9 @@ onTypeInfo: piTypeInfo
 	| contain answer lib |
 	contain := piTypeInfo libraryAndIndex.
 	lib := contain key.
-	answer := (AXTypeLibraryAnalyzer onTypeLib: contain key)
-				typeAnalyzerAt: contain value.
+	answer := (TypeLibraryAnalyzer onTypeLib: contain key) typeAnalyzerAt: contain value.
 	lib free.
-	^answer
-!
+	^answer!
 
 onTypeInfo: piTypeInfo typeLib: anAXTypeLibraryAnalyzer 
 	"Private - Answer a sub-instance of the receiver of an appropriate class to wrap
@@ -603,14 +601,14 @@ typeKindToClassMap
 		at: TKIND_ALIAS + 1 put: TKindAliasAnalyzer;
 		at: TKIND_UNION + 1 put: TKindUnionAnalyzer;
 		yourself)! !
-!AXTypeInfoAnalyzer class categoriesFor: #initialize!initializing!private! !
-!AXTypeInfoAnalyzer class categoriesFor: #initializeVTtoIDLTypeMap!initializing!private! !
-!AXTypeInfoAnalyzer class categoriesFor: #onTypeInfo:!instance creation!public! !
-!AXTypeInfoAnalyzer class categoriesFor: #onTypeInfo:typeLib:!instance creation!private! !
-!AXTypeInfoAnalyzer class categoriesFor: #onTypeInfo:typeLib:index:!instance creation!private! !
-!AXTypeInfoAnalyzer class categoriesFor: #stbConvertFrom:!binary filing!public! !
-!AXTypeInfoAnalyzer class categoriesFor: #stbConvertToVersion1:!binary filing!public! !
-!AXTypeInfoAnalyzer class categoriesFor: #stbVersion!binary filing!constants!public! !
-!AXTypeInfoAnalyzer class categoriesFor: #typekind!constants!public! !
-!AXTypeInfoAnalyzer class categoriesFor: #typeKindToClassMap!constants!private! !
+!OS.COM.TypeInfoAnalyzer class categoriesFor: #initialize!initializing!private! !
+!OS.COM.TypeInfoAnalyzer class categoriesFor: #initializeVTtoIDLTypeMap!initializing!private! !
+!OS.COM.TypeInfoAnalyzer class categoriesFor: #onTypeInfo:!instance creation!public! !
+!OS.COM.TypeInfoAnalyzer class categoriesFor: #onTypeInfo:typeLib:!instance creation!private! !
+!OS.COM.TypeInfoAnalyzer class categoriesFor: #onTypeInfo:typeLib:index:!instance creation!private! !
+!OS.COM.TypeInfoAnalyzer class categoriesFor: #stbConvertFrom:!binary filing!public! !
+!OS.COM.TypeInfoAnalyzer class categoriesFor: #stbConvertToVersion1:!binary filing!public! !
+!OS.COM.TypeInfoAnalyzer class categoriesFor: #stbVersion!binary filing!constants!public! !
+!OS.COM.TypeInfoAnalyzer class categoriesFor: #typekind!constants!public! !
+!OS.COM.TypeInfoAnalyzer class categoriesFor: #typeKindToClassMap!constants!private! !
 

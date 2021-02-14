@@ -6,10 +6,10 @@ package paxVersion: 2.1;
 
 
 package setClassNames: #(
-	#{Smalltalk.BSTRTest}
-	#{Smalltalk.IDispatchTest}
-	#{Smalltalk.SAFEARRAYTest}
-	#{Smalltalk.VARIANTTest}
+	#{OS.COM.Tests.BSTRTest}
+	#{OS.COM.Tests.IDispatchTest}
+	#{OS.COM.Tests.SAFEARRAYTest}
+	#{OS.COM.Tests.VARIANTTest}
 ).
 
 package setMethodNames: #(
@@ -33,25 +33,25 @@ package!
 
 "Class Definitions"!
 
-Core.Tests.DolphinTest subclass: #BSTRTest
+Core.Tests.DolphinTest subclass: #'OS.COM.Tests.BSTRTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Core.Tests.DolphinTest subclass: #IDispatchTest
+Core.Tests.DolphinTest subclass: #'OS.COM.Tests.IDispatchTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Core.Tests.DolphinTest subclass: #VARIANTTest
+Core.Tests.DolphinTest subclass: #'OS.COM.Tests.VARIANTTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{Smalltalk.AXAutomationConstants})
+	imports: #(#{OS.COM.AutomationConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-External.Tests.GenericExternalArrayTest subclass: #SAFEARRAYTest
+External.Tests.GenericExternalArrayTest subclass: #'OS.COM.Tests.SAFEARRAYTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #(#{OS.Win32Errors})
@@ -64,22 +64,22 @@ External.Tests.GenericExternalArrayTest subclass: #SAFEARRAYTest
 
 testBSTRFromAddress
 	| empty |
-	self stringFromAddressTestClass: Smalltalk.BSTR.
+	self stringFromAddressTestClass: OS.COM.BSTR.
 	"By convention, a null BSTR is equivalent to the empty string"
-	empty := Smalltalk.BSTR new.
-	self assert: (Smalltalk.BSTR fromAddress: nil) equals: empty.
-	self assert: (Smalltalk.BSTR fromAddress: 0) equals: empty! !
+	empty := OS.COM.BSTR new.
+	self assert: (OS.COM.BSTR fromAddress: nil) equals: empty.
+	self assert: (OS.COM.BSTR fromAddress: 0) equals: empty! !
 !External.Tests.AddressTest categoriesFor: #testBSTRFromAddress!public!unit tests! !
 
 !External.Tests.FunctionDescriptorTest methodsFor!
 
 testComPtrs
 	self
-		parseStructArg: Smalltalk.IUnknown
+		parseStructArg: COM.IUnknown
 		valueType: ExtCallArgSTRUCT
 		refType: ExtCallArgCOMPTR.
 	self
-		parseStructArg: Smalltalk.IDispatch
+		parseStructArg: COM.IDispatch
 		valueType: ExtCallArgSTRUCT
 		refType: ExtCallArgCOMPTR! !
 !External.Tests.FunctionDescriptorTest categoriesFor: #testComPtrs!public!unit tests! !

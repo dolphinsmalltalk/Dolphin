@@ -1,19 +1,19 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-IUnknown subclass: #IProvideClassInfo
+OS.COM.IUnknown subclass: #'OS.COM.IProvideClassInfo'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-IProvideClassInfo guid: (IID fromString: '{b196b283-bab4-101a-b69c-00aa00341d07}')!
-IProvideClassInfo comment: '<IProvideClassInfo> is a wrapper class for the COM interface ''OCIDL.IProvideClassInfo'' generated from type information in the ''OCIDL Library'' library. It contains methods to invoke the member functions exposed by that interface.
+OS.COM.IProvideClassInfo guid: (OS.COM.IID fromString: '{b196b283-bab4-101a-b69c-00aa00341d07}')!
+OS.COM.IProvideClassInfo comment: '<IProvideClassInfo> is a wrapper class for the COM interface ''OCIDL.IProvideClassInfo'' generated from type information in the ''OCIDL Library'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface.
 
 IProvideClassInfo contains a single method, #getClassInfo, to enquire the type information (ITypeInfo) for the coclass of the COM object.'!
-!IProvideClassInfo categoriesForClass!COM-Interfaces! !
-!IProvideClassInfo methodsFor!
+!OS.COM.IProvideClassInfo categoriesForClass!COM-Interfaces! !
+!OS.COM.IProvideClassInfo methodsFor!
 
 getClassInfo
 	"Answer the <ITypeInfo> result of invoking the COM Object's GetClassInfo() method."
@@ -21,8 +21,7 @@ getClassInfo
 	| ppTI |
 	ppTI := ITypeInfo newPointer.
 	self GetClassInfo: ppTI.
-	^ppTI
-!
+	^ppTI!
 
 GetClassInfo: ppTI
 	"Private - Invoke the GetClassInfo() method of the COM object wrapped by the receiver.
@@ -33,12 +32,12 @@ GetClassInfo: ppTI
 
 	<virtual stdcall: hresult 4 ITypeInfo**>
 	^self invalidCall: _failureCode! !
-!IProvideClassInfo categoriesFor: #getClassInfo!**auto generated**!public! !
-!IProvideClassInfo categoriesFor: #GetClassInfo:!COM Interfaces-OCIDL.IProvideClassInfo!private! !
+!OS.COM.IProvideClassInfo categoriesFor: #getClassInfo!**auto generated**!public! !
+!OS.COM.IProvideClassInfo categoriesFor: #GetClassInfo:!COM Interfaces-OCIDL.IProvideClassInfo!private! !
 
-IProvideClassInfo methodProtocol: #IProvideClassInfo attributes: #(#readOnly) selectors: #(#GetClassInfo:)!
+OS.COM.IProvideClassInfo methodProtocol: #IProvideClassInfo attributes: #(#readOnly) selectors: #(#GetClassInfo:)!
 
-!IProvideClassInfo class methodsFor!
+!OS.COM.IProvideClassInfo class methodsFor!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'OCIDL.IProvideClassInfo'
@@ -49,5 +48,5 @@ defineFunctions
 		defineFunction: #GetClassInfo:
 			argumentTypes: 'ITypeInfo**'
 ! !
-!IProvideClassInfo class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!OS.COM.IProvideClassInfo class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
 

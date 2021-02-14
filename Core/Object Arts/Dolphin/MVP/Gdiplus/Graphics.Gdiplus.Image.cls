@@ -25,12 +25,12 @@ asByteArray: mimeString
 
 	^self asByteArray: mimeString compression: nil!
 
-asByteArray: mimeString compression: anIntegerOrNil 
+asByteArray: mimeString compression: anIntegerOrNil
 	"SW: OLEPicture>>saveAsFile locks the hGlobal (other uses dont) ... is that necessary?"
 
 	| pStream bytes |
-	pStream := Smalltalk.IStream onHGLOBAL.
-	self 
+	pStream := COM.IStream onHGLOBAL.
+	self
 		saveToIStream: pStream
 		mimeType: mimeString
 		encoderParams: (anIntegerOrNil isNil ifFalse: [self buildCompressionParameters: anIntegerOrNil]).

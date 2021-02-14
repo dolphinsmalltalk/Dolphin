@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-SharedPool subclass: #AXAutomationConstants
+Kernel.SharedPool subclass: #'OS.COM.AutomationConstants'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -192,6 +192,6 @@ SharedPool subclass: #AXAutomationConstants
 		'VT_VECTOR' -> 16r1000.
 		'VT_VOID' -> 16r18
 	}!
-AXAutomationConstants guid: (GUID fromString: '{e4e5f374-c852-48e6-9a06-8e05b8ae6578}')!
-AXAutomationConstants comment: ''!
-!AXAutomationConstants categoriesForClass!Unclassified! !
+OS.COM.AutomationConstants guid: (Core.GUID fromString: '{e4e5f374-c852-48e6-9a06-8e05b8ae6578}')!
+OS.COM.AutomationConstants comment: ''!
+!OS.COM.AutomationConstants categoriesForClass!Unclassified! !

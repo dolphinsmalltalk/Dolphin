@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-COMInterfaceImp subclass: #'Kernel.IPDolphin'
+OS.COM.InterfaceImplementation subclass: #'Kernel.IPDolphin'
 	instanceVariableNames: 'plugHole coclasses'
 	classVariableNames: 'Current'
-	imports: #()
+	imports: #(#{OS.COM private})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Kernel.IPDolphin guid: (Core.GUID fromString: '{b115d2d8-5a00-4a5e-8615-109a3332690f}')!
@@ -25,11 +25,11 @@ Class Variables:
 canUnloadNow
 	"Answer whether it is OK to unload the in-proc. image now."
 
-	Smalltalk.COMClassFactory lockCount > 0 ifTrue: [^false].
+	ClassFactory lockCount > 0 ifTrue: [^false].
 	#todo.	"Need a neater way to do this - at the moment need to look for COM objects are not the receiver to decide
 			whether should stay up. Need to maintain a count and let those types of object adjust it so that they are 
 			ignored?"
-	Smalltalk.COMObjectStub registry keysDo: [:e | e ~~ self ifTrue: [^false]].
+	ObjectStub registry keysDo: [:e | e ~~ self ifTrue: [^false]].
 	^true!
 
 CanUnloadNow 
@@ -71,8 +71,8 @@ GetClassObject: rclsid riid: riid ppv: ppv
 
 	ppv value: 0.
 	self coclasses at: rclsid ifPresent: [:coclass | | factory punk ifClass |
-		factory := Smalltalk.COMClassFactory on: coclass clsid: rclsid.
-		ifClass := Smalltalk.COMInterface classForIID: riid ifNone: [^E_NOINTERFACE].
+		factory := ClassFactory on: coclass clsid: rclsid.
+		ifClass := Interface classForIID: riid ifNone: [^E_NOINTERFACE].
 		punk := factory queryInterface: ifClass ifNone: [^E_NOINTERFACE].
 		ppv value: punk detach.
 		^S_OK].

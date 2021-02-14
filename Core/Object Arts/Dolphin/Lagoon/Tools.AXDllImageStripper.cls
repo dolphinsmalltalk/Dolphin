@@ -3,7 +3,7 @@
 Tools.ImageStripper subclass: #'Tools.AXDllImageStripper'
 	instanceVariableNames: 'typeLibPath'
 	classVariableNames: ''
-	imports: #()
+	imports: #(#{OS.COM private})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Tools.AXDllImageStripper guid: (Core.GUID fromString: '{e6c57f56-c672-49b5-8157-893092e6eb6f}')!
@@ -50,7 +50,7 @@ requiredPackageNames
 stubFile
 	"Answers the stub file to be used by the receiver"
 
-	^Smalltalk.COMInterfaceImp inprocSurrogate: self isToGo!
+	^InterfaceImplementation inprocSurrogate: self isToGo!
 
 typeLibPath
 	"Answer a <readableString>, being the path of the typelibrary file (.tlb) that is to be bound into 

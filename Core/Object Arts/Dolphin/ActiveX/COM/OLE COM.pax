@@ -9,24 +9,26 @@ This package implements basic COM Functionality for interfacing to externally im
 
 package basicPackageVersion: '6.1'.
 
-package basicScriptAt: #postinstall put: 'OLELibrary closeDefault.	"Cause the OLELibrary to be reinitialized"
-COMInterface registerSubclasses.
-VMLibrary default registryAt: #IUnknown put: IUnknown.
-Smalltalk at: #Debugger
-	ifPresent: 
+package basicScriptAt: #postinstall put: 'COM.OLELibrary closeDefault.	"Cause the OLELibrary to be reinitialized"
+COM.Interface registerSubclasses.
+VMLibrary default 
+	registryAt: #IUnknown put: COM.IUnknown;
+	registryAt: #BSTR put: COM.BSTR.
+#{Tools.Debugger}
+	ifDefined:
 		[:debugger | 
 		"Skip all COMFunction function callback methods"
 		debugger
 			skipSelector: #callback:vfn:withArgumentsAt:
-				of: COMObjectStub
+				of: COM.ObjectStub
 				type: 0;
 			skipSelector: #comCallback:id:subId:withArgumentsAt:cookie:
 				of: ProcessorScheduler
 				type: 0;
 			skipSelector: #callback:vfn:withArgumentsAt:
-				of: COMInterface
+				of: COM.Interface
 				type: 0.
-		COMFunction withAllSubclassesDo: 
+		COM.InterfaceFunction withAllSubclassesDo: 
 				[:c | 
 				(c includesSelector: #callback:interface:withArgumentsAt:) 
 					ifTrue: 
@@ -34,72 +36,73 @@ Smalltalk at: #Debugger
 							skipSelector: #callback:interface:withArgumentsAt:
 							of: c
 							type: 0]]]!!'.
-package basicScriptAt: #preuninstall put: 'Smalltalk at: #Debugger
-	ifPresent: 
+package basicScriptAt: #preuninstall put: '#{Tools.Debugger}
+	ifDefined:
 		[:dbg | 
-		dbg unskipSelectorsOf: COMInterface.
+		dbg unskipSelectorsOf: COM.Interface.
 		dbg
-			unskipSelectorsOf: COMObjectStub;
+			unskipSelectorsOf: COM.ObjectStub;
 			unskipSelector: #comCallback:id:subId:withArgumentsAt:cookie: of: ProcessorScheduler.
-		dbg unskipSelectorsOf: COMFunction].
+		dbg unskipSelectorsOf: COM.InterfaceFunction].
 
 "Clear away all running objects"
-COMObjectStub disconnectAll; initializeRegistries.
+COM.ObjectStub disconnectAll; initializeRegistries.
 
 "Clear up the IMalloc allocators, etc"
-OLELibrary closeDefault.
-RPCLibrary closeDefault.
+COM.OLELibrary closeDefault.
+OS.RPCLibrary closeDefault.
 
 "Since we cannot control the order in which classes are removed, we must
  explicitly uninitialize all the interface classes first so that all IIDs, etc,
  are first free''d up."
-COMInterface withAllSubclasses do: [:c | c uninitializeBeforeRemove].
-COMInterface initializeRegister.
+COM.Interface withAllSubclasses do: [:c | c uninitializeBeforeRemove].
+COM.Interface initializeRegister.
 '.
 
 package setClassNames: #(
-	#{Smalltalk.BSTR}
-	#{Smalltalk.CADWORD}
-	#{Smalltalk.CALPOLESTR}
-	#{Smalltalk.CLSID}
-	#{Smalltalk.COAUTHIDENTITY}
-	#{Smalltalk.COAUTHINFO}
-	#{Smalltalk.COMClassFactory}
-	#{Smalltalk.COMEnumerator}
-	#{Smalltalk.COMFunction}
-	#{Smalltalk.COMFunctionAbstract}
-	#{Smalltalk.COMInterface}
-	#{Smalltalk.COMInterfaceEnumerator}
-	#{Smalltalk.COMInterfaceImp}
-	#{Smalltalk.COMObjectStub}
-	#{Smalltalk.COMSingletonClassFactory}
-	#{Smalltalk.COMTaskMemory}
-	#{Smalltalk.COSERVERINFO}
-	#{Smalltalk.EXCEPINFO}
-	#{Smalltalk.IClassFactory}
-	#{Smalltalk.IClassFactory2}
-	#{Smalltalk.IEnumString}
-	#{Smalltalk.IEnumStruct}
-	#{Smalltalk.IEnumUnknown}
-	#{Smalltalk.IEnumXXXX}
-	#{Smalltalk.IErrorInfo}
-	#{Smalltalk.IID}
-	#{Smalltalk.IMalloc}
-	#{Smalltalk.IServiceProvider}
-	#{Smalltalk.ISupportErrorInfo}
-	#{Smalltalk.IUnknown}
-	#{Smalltalk.LICINFO}
-	#{Smalltalk.MULTI_QI}
-	#{Smalltalk.OLEAutLibrary}
-	#{Smalltalk.OLEConstants}
-	#{Smalltalk.OLECountedArray}
-	#{Smalltalk.OLEEnumerator}
-	#{Smalltalk.OLEFinalizableStructure}
-	#{Smalltalk.OLELibrary}
-	#{Smalltalk.OLEStructure}
-	#{Smalltalk.UnkAddRefFunction}
-	#{Smalltalk.UnkQIFunction}
-	#{Smalltalk.UnkReleaseFunction}
+	#{OS.COM}
+	#{OS.COM.AbstractInterfaceFunction}
+	#{OS.COM.AddRefFunction}
+	#{OS.COM.BSTR}
+	#{OS.COM.CADWORD}
+	#{OS.COM.CALPOLESTR}
+	#{OS.COM.ClassFactory}
+	#{OS.COM.CLSID}
+	#{OS.COM.COAUTHIDENTITY}
+	#{OS.COM.COAUTHINFO}
+	#{OS.COM.COSERVERINFO}
+	#{OS.COM.CountedArray}
+	#{OS.COM.Enumerable}
+	#{OS.COM.Enumerator}
+	#{OS.COM.EXCEPINFO}
+	#{OS.COM.FinalizableStructure}
+	#{OS.COM.IClassFactory}
+	#{OS.COM.IClassFactory2}
+	#{OS.COM.IEnumString}
+	#{OS.COM.IEnumStruct}
+	#{OS.COM.IEnumUnknown}
+	#{OS.COM.IEnumXXXX}
+	#{OS.COM.IErrorInfo}
+	#{OS.COM.IID}
+	#{OS.COM.IMalloc}
+	#{OS.COM.Interface}
+	#{OS.COM.InterfaceEnumerator}
+	#{OS.COM.InterfaceFunction}
+	#{OS.COM.InterfaceImplementation}
+	#{OS.COM.IServiceProvider}
+	#{OS.COM.ISupportErrorInfo}
+	#{OS.COM.IUnknown}
+	#{OS.COM.LICINFO}
+	#{OS.COM.MULTI_QI}
+	#{OS.COM.ObjectStub}
+	#{OS.COM.OLEAutLibrary}
+	#{OS.COM.OLEConstants}
+	#{OS.COM.OLELibrary}
+	#{OS.COM.OLEStructure}
+	#{OS.COM.QueryInterfaceFunction}
+	#{OS.COM.ReleaseFunction}
+	#{OS.COM.SingletonClassFactory}
+	#{OS.COM.TaskMemory}
 ).
 
 package setMethodNames: #(
@@ -124,7 +127,13 @@ package!
 
 "Class Definitions"!
 
-Kernel.SharedPool subclass: #OLEConstants
+OS subclass: #'OS.COM'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Kernel.SharedPool subclass: #'OS.COM.OLEConstants'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -139,118 +148,118 @@ Kernel.SharedPool subclass: #OLEConstants
 		'REGCLS_MULTI_SEPARATE' -> 16r2.
 		'REGCLS_MULTIPLEUSE' -> 16r1
 	}!
-Core.Object subclass: #COMFunctionAbstract
+Core.Object subclass: #'OS.COM.AbstractInterfaceFunction'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Core.Object subclass: #COMInterfaceImp
+Core.Object subclass: #'OS.COM.InterfaceImplementation'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{Smalltalk.OLEConstants} #{OS.Win32Errors})
+	imports: #(#{OS.Win32Errors} #{OS.COM.OLEConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Core.Object subclass: #COMObjectStub
+Core.Object subclass: #'OS.COM.ObjectStub'
 	instanceVariableNames: 'cookie object count interfaces outerUnknown'
 	classVariableNames: 'IdentityRegistry'
 	imports: #(#{OS.Win32Errors private})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Core.SequenceableCollection subclass: #OLEEnumerator
-	instanceVariableNames: 'interface'
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-External.Address variableByteSubclass: #BSTR
+OS.COM.AbstractInterfaceFunction subclass: #'OS.COM.AddRefFunction'
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: 'Descriptor'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-External.Memory variableByteSubclass: #COMTaskMemory
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-COMFunctionAbstract subclass: #COMFunction
+OS.COM.AbstractInterfaceFunction subclass: #'OS.COM.InterfaceFunction'
 	instanceVariableNames: 'selector descriptor'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-COMFunctionAbstract subclass: #UnkAddRefFunction
+OS.COM.AbstractInterfaceFunction subclass: #'OS.COM.QueryInterfaceFunction'
 	instanceVariableNames: ''
 	classVariableNames: 'Descriptor'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-COMFunctionAbstract subclass: #UnkQIFunction
+OS.COM.AbstractInterfaceFunction subclass: #'OS.COM.ReleaseFunction'
 	instanceVariableNames: ''
 	classVariableNames: 'Descriptor'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-COMFunctionAbstract subclass: #UnkReleaseFunction
-	instanceVariableNames: ''
-	classVariableNames: 'Descriptor'
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-COMInterfaceImp subclass: #COMClassFactory
-	instanceVariableNames: 'serverClass clsid registration'
-	classVariableNames: 'Factories Instances LockCount'
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-COMInterfaceImp subclass: #COMEnumerator
-	instanceVariableNames: 'enumClass contents'
+Core.SequenceableCollection subclass: #'OS.COM.Enumerable'
+	instanceVariableNames: 'interface'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-COMClassFactory subclass: #COMSingletonClassFactory
-	instanceVariableNames: 'current'
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-COMEnumerator subclass: #COMInterfaceEnumerator
+External.Address variableByteSubclass: #'OS.COM.BSTR'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-External.DynamicLinkLibrary subclass: #OLEAutLibrary
+External.Memory variableByteSubclass: #'OS.COM.TaskMemory'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-External.DynamicLinkLibrary subclass: #OLELibrary
+External.DynamicLinkLibrary subclass: #'OS.COM.OLEAutLibrary'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+External.DynamicLinkLibrary subclass: #'OS.COM.OLELibrary'
 	instanceVariableNames: 'comOnly'
 	classVariableNames: 'DefaultIMalloc'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Core.GUID variableByteSubclass: #CLSID
+Core.GUID variableByteSubclass: #'OS.COM.CLSID'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Core.GUID variableByteSubclass: #IID
+Core.GUID variableByteSubclass: #'OS.COM.IID'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-External.Structure subclass: #COMInterface
+OS.COM.InterfaceImplementation subclass: #'OS.COM.ClassFactory'
+	instanceVariableNames: 'serverClass clsid registration'
+	classVariableNames: 'Factories Instances LockCount'
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+OS.COM.InterfaceImplementation subclass: #'OS.COM.Enumerator'
+	instanceVariableNames: 'enumClass contents'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+OS.COM.ClassFactory subclass: #'OS.COM.SingletonClassFactory'
+	instanceVariableNames: 'current'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+OS.COM.Enumerator subclass: #'OS.COM.InterfaceEnumerator'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+External.Structure subclass: #'OS.COM.Interface'
 	instanceVariableNames: 'implementor'
 	classVariableNames: 'InterfaceClasses'
-	imports: #(#{Smalltalk.OLEConstants private} #{OS.Win32Constants private} #{OS.Win32Errors private})
+	imports: #(#{OS.Win32Constants private} #{OS.Win32Errors private} #{OS.COM.OLEConstants})
 	classInstanceVariableNames: 'argSizes functions typeLib'
 	classConstants: {
 		'_OffsetOf_argSizes' -> 16r4.
@@ -258,79 +267,13 @@ External.Structure subclass: #COMInterface
 		'_OffsetOf_objectCookie' -> 16r8.
 		'_OffsetOf_vtbl' -> 16r0
 	}!
-External.Structure subclass: #OLEStructure
+External.Structure subclass: #'OS.COM.OLEStructure'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{Smalltalk.OLEConstants private})
+	imports: #(#{OS.COM.OLEConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-COMInterface subclass: #IUnknown
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-IUnknown subclass: #IClassFactory
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-IUnknown subclass: #IEnumXXXX
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-IUnknown subclass: #IErrorInfo
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-IUnknown subclass: #IMalloc
-	instanceVariableNames: ''
-	classVariableNames: 'Shared Task'
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-IUnknown subclass: #IServiceProvider
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-IUnknown subclass: #ISupportErrorInfo
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-IClassFactory subclass: #IClassFactory2
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-IEnumXXXX subclass: #IEnumString
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-IEnumXXXX subclass: #IEnumStruct
-	instanceVariableNames: 'elementClass'
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-IEnumXXXX subclass: #IEnumUnknown
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-External.ExternalArray subclass: #OLECountedArray
+External.ExternalArray subclass: #'OS.COM.CountedArray'
 	instanceVariableNames: 'elements'
 	classVariableNames: ''
 	imports: #()
@@ -339,19 +282,85 @@ External.ExternalArray subclass: #OLECountedArray
 		'_OffsetOf_cElems' -> 16r0.
 		'_OffsetOf_pElems' -> 16r4
 	}!
-OLECountedArray subclass: #CADWORD
+OS.COM.CountedArray subclass: #'OS.COM.CADWORD'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-OLECountedArray subclass: #CALPOLESTR
+OS.COM.CountedArray subclass: #'OS.COM.CALPOLESTR'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-OLEStructure subclass: #COAUTHIDENTITY
+OS.COM.Interface subclass: #'OS.COM.IUnknown'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+OS.COM.IUnknown subclass: #'OS.COM.IClassFactory'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+OS.COM.IUnknown subclass: #'OS.COM.IEnumXXXX'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+OS.COM.IUnknown subclass: #'OS.COM.IErrorInfo'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+OS.COM.IUnknown subclass: #'OS.COM.IMalloc'
+	instanceVariableNames: ''
+	classVariableNames: 'Shared Task'
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+OS.COM.IUnknown subclass: #'OS.COM.IServiceProvider'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+OS.COM.IUnknown subclass: #'OS.COM.ISupportErrorInfo'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+OS.COM.IClassFactory subclass: #'OS.COM.IClassFactory2'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+OS.COM.IEnumXXXX subclass: #'OS.COM.IEnumString'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+OS.COM.IEnumXXXX subclass: #'OS.COM.IEnumStruct'
+	instanceVariableNames: 'elementClass'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+OS.COM.IEnumXXXX subclass: #'OS.COM.IEnumUnknown'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+OS.COM.OLEStructure subclass: #'OS.COM.COAUTHIDENTITY'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -365,7 +374,7 @@ OLEStructure subclass: #COAUTHIDENTITY
 		'_OffsetOf_User' -> 16r0.
 		'_OffsetOf_UserLength' -> 16r4
 	}!
-OLEStructure subclass: #COAUTHINFO
+OS.COM.OLEStructure subclass: #'OS.COM.COAUTHINFO'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -379,7 +388,7 @@ OLEStructure subclass: #COAUTHINFO
 		'_OffsetOf_pAuthIdentityData' -> 16r14.
 		'_OffsetOf_pwszServerPrincName' -> 16r8
 	}!
-OLEStructure subclass: #COSERVERINFO
+OS.COM.OLEStructure subclass: #'OS.COM.COSERVERINFO'
 	instanceVariableNames: 'hostName'
 	classVariableNames: ''
 	imports: #()
@@ -390,7 +399,13 @@ OLEStructure subclass: #COSERVERINFO
 		'_OffsetOf_pAuthInfo' -> 16r8.
 		'_OffsetOf_pwszName' -> 16r4
 	}!
-OLEStructure subclass: #LICINFO
+OS.COM.OLEStructure subclass: #'OS.COM.FinalizableStructure'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+OS.COM.OLEStructure subclass: #'OS.COM.LICINFO'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -400,13 +415,7 @@ OLEStructure subclass: #LICINFO
 		'_OffsetOf_fLicVerified' -> 16r8.
 		'_OffsetOf_fRuntimeKeyAvail' -> 16r4
 	}!
-OLEStructure subclass: #OLEFinalizableStructure
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-OLEFinalizableStructure subclass: #EXCEPINFO
+OS.COM.FinalizableStructure subclass: #'OS.COM.EXCEPINFO'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #(#{OS.Win32Errors})
@@ -422,7 +431,7 @@ OLEFinalizableStructure subclass: #EXCEPINFO
 		'_OffsetOf_wCode' -> 16r0.
 		'_OffsetOf_wReserved' -> 16r2
 	}!
-OLEFinalizableStructure subclass: #MULTI_QI
+OS.COM.FinalizableStructure subclass: #'OS.COM.MULTI_QI'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -443,8 +452,11 @@ copyToCOMTaskMemory
 
 	| size |
 	size := self byteSize.
-	^(Smalltalk.COMTaskMemory new: size)
-		replaceFrom: 1 to: size with: self startingAt: 1! !
+	^(OS.COM.TaskMemory new: size)
+		replaceFrom: 1
+		to: size
+		with: self
+		startingAt: 1! !
 !Core.ByteArray categoriesFor: #copyToCOMTaskMemory!copying!public! !
 
 !Core.SessionManager methodsFor!
@@ -456,9 +468,9 @@ comStartup
 	event, but that relied on COMInterface having registered itself before certain other event targets
 	and was therefore not reliable."
 
-	Smalltalk.IUnknown onStartup.
+	COM.IUnknown onStartup.
 	"Attach the outer unknown passed by the stub, if any"
-	self outer notNull ifTrue: [startupArgs at: 2 put: (Smalltalk.IUnknown attach: self outer)]! !
+	self outer notNull ifTrue: [startupArgs at: 2 put: (COM.IUnknown attach: self outer)]! !
 !Core.SessionManager categoriesFor: #comStartup!operations-startup!private! !
 
 !Core.String methodsFor!
@@ -467,13 +479,13 @@ asBSTR
 	"Answer the BSTR (AX Automation string) representation of the receiver.
 	This conversion will also work fine for Utf16String."
 
-	^Smalltalk.BSTR fromString: self!
+	^OS.COM.BSTR fromString: self!
 
 copyToCOMTaskMemory
 	"Answer a COMTaskMemory object containing a copy of the receiver's
 	characters."
 
-	^Smalltalk.COMTaskMemory fromString: self! !
+	^OS.COM.TaskMemory fromString: self! !
 !Core.String categoriesFor: #asBSTR!converting!public! !
 !Core.String categoriesFor: #copyToCOMTaskMemory!copying!public! !
 
@@ -487,7 +499,7 @@ queryInterface: interfaceClass ifNone: exceptionHandler
 	a subinstance will do, or even a completely different class, as long as the
 	protocol of the requested class is supported.."
 
-	^interfaceClass == Smalltalk.IMalloc
+	^interfaceClass == COM.IMalloc
 		ifTrue: [interfaceClass on: self]
 		ifFalse: [exceptionHandler value]! !
 !External.Memory class categoriesFor: #queryInterface:ifNone:!accessing-interfaces!public! !
@@ -498,7 +510,10 @@ copyToCOMTaskMemory
 	"Answer a block of COM Task Memory into which the bytes of the 
 	receiver have been copied."
 
-	^self copy: Smalltalk.COMTaskMemory from: 1 to: self byteSize! !
+	^self
+		copy: COM.TaskMemory
+		from: 1
+		to: self byteSize! !
 !External.Structure categoriesFor: #copyToCOMTaskMemory!copying!public! !
 
 !Kernel.ProcessorScheduler methodsFor!

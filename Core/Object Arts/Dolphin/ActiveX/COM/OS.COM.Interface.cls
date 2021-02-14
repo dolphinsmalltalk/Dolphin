@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-External.Structure subclass: #COMInterface
+External.Structure subclass: #'OS.COM.Interface'
 	instanceVariableNames: 'implementor'
 	classVariableNames: 'InterfaceClasses'
-	imports: #(#{Smalltalk.OLEConstants private} #{OS.Win32Constants private} #{OS.Win32Errors private})
+	imports: #(#{OS.Win32Constants private} #{OS.Win32Errors private} #{OS.COM.OLEConstants})
 	classInstanceVariableNames: 'argSizes functions typeLib'
 	classConstants: {
 		'_OffsetOf_argSizes' -> 16r4.
@@ -11,11 +11,11 @@ External.Structure subclass: #COMInterface
 		'_OffsetOf_objectCookie' -> 16r8.
 		'_OffsetOf_vtbl' -> 16r0
 	}!
-COMInterface guid: (IID fromString: '{87b4c591-026e-11d3-9fd7-00a0cc3e4a32}')!
-COMInterface isNonInstantiable: true!
-COMInterface comment: ''!
-!COMInterface categoriesForClass!External-Data-Structured-COM! !
-!COMInterface methodsFor!
+OS.COM.Interface guid: (OS.COM.IID fromString: '{87b4c591-026e-11d3-9fd7-00a0cc3e4a32}')!
+OS.COM.Interface isNonInstantiable: true!
+OS.COM.Interface comment: ''!
+!OS.COM.Interface categoriesForClass!External-Data-Structured-COM! !
+!OS.COM.Interface methodsFor!
 
 _addRef 
 	"Private - Increment the receiver's reference count, ignoring the request
@@ -278,7 +278,7 @@ supportsErrorInfo
 
 	^self supportsErrorInfo: self class!
 
-supportsErrorInfo: interface 
+supportsErrorInfo: interface
 	"Answer whether the <COMInterface>, interface, as implemented by the receiver supports
 	extended Automation error information.
 	Implementation Note: Some COM Objects (e.g. Microsoft Agent 2) have a bug whereby 
@@ -291,7 +291,7 @@ supportsErrorInfo: interface
 	| piSEI hr |
 	piSEI := ISupportErrorInfo newPointer.
 	hr := self QueryInterface: ISupportErrorInfo iid ppvObject: piSEI.
-	hr == S_OK 
+	hr == S_OK
 		ifTrue: 
 			[| itfClass |
 			itfClass := interface.
@@ -319,45 +319,45 @@ vtbl: anExternalAddress
 	"Set the receiver's 'vtbl' field to the value of the argument, anExternalAddress"
 
 	bytes uintPtrAtOffset: _OffsetOf_vtbl put: anExternalAddress! !
-!COMInterface categoriesFor: #_addRef!methods!private! !
-!COMInterface categoriesFor: #=!comparing!public! !
-!COMInterface categoriesFor: #AddRef!methods!public! !
-!COMInterface categoriesFor: #argSizes:!**compiled accessors**!public! !
-!COMInterface categoriesFor: #asParameter!converting!public! !
-!COMInterface categoriesFor: #attach:!initializing!public! !
-!COMInterface categoriesFor: #basicFree!private!realizing/unrealizing! !
-!COMInterface categoriesFor: #callback:vfn:withArgumentsAt:!evaluating!private! !
-!COMInterface categoriesFor: #copy!copying!public! !
-!COMInterface categoriesFor: #detach!public!realizing/unrealizing! !
-!COMInterface categoriesFor: #free!private!realizing/unrealizing! !
-!COMInterface categoriesFor: #getExtendedErrorInfo:!exceptions!private! !
-!COMInterface categoriesFor: #hash!comparing!public! !
-!COMInterface categoriesFor: #hresultError:!exceptions!public! !
-!COMInterface categoriesFor: #identity!accessing!public! !
-!COMInterface categoriesFor: #iid!constants!public! !
-!COMInterface categoriesFor: #implementor!accessing!public! !
-!COMInterface categoriesFor: #implementor:!accessing!public! !
-!COMInterface categoriesFor: #initialize:!initializing!private! !
-!COMInterface categoriesFor: #initializeAtAddress:!initializing!private! !
-!COMInterface categoriesFor: #interfaceCookie:!**compiled accessors**!public! !
-!COMInterface categoriesFor: #isSameCOMObject:!public!testing! !
-!COMInterface categoriesFor: #objectCookie:!**compiled accessors**!public! !
-!COMInterface categoriesFor: #onExit!event handling!public! !
-!COMInterface categoriesFor: #onStartup!event handling!public! !
-!COMInterface categoriesFor: #postCopy!copying!public! !
-!COMInterface categoriesFor: #printOn:!development!printing!public! !
-!COMInterface categoriesFor: #queryInterface:!accessing-interfaces!public! !
-!COMInterface categoriesFor: #queryInterface:ifNone:!accessing-interfaces!public! !
-!COMInterface categoriesFor: #QueryInterface:ppvObject:!methods!public! !
-!COMInterface categoriesFor: #referenceCount!development!private! !
-!COMInterface categoriesFor: #Release!methods!public! !
-!COMInterface categoriesFor: #supportsErrorInfo!public!testing! !
-!COMInterface categoriesFor: #supportsErrorInfo:!public!testing! !
-!COMInterface categoriesFor: #supportsIID:!public!testing! !
-!COMInterface categoriesFor: #supportsInterface:!public!testing! !
-!COMInterface categoriesFor: #vtbl:!**compiled accessors**!public! !
+!OS.COM.Interface categoriesFor: #_addRef!methods!private! !
+!OS.COM.Interface categoriesFor: #=!comparing!public! !
+!OS.COM.Interface categoriesFor: #AddRef!methods!public! !
+!OS.COM.Interface categoriesFor: #argSizes:!**compiled accessors**!public! !
+!OS.COM.Interface categoriesFor: #asParameter!converting!public! !
+!OS.COM.Interface categoriesFor: #attach:!initializing!public! !
+!OS.COM.Interface categoriesFor: #basicFree!private!realizing/unrealizing! !
+!OS.COM.Interface categoriesFor: #callback:vfn:withArgumentsAt:!evaluating!private! !
+!OS.COM.Interface categoriesFor: #copy!copying!public! !
+!OS.COM.Interface categoriesFor: #detach!public!realizing/unrealizing! !
+!OS.COM.Interface categoriesFor: #free!private!realizing/unrealizing! !
+!OS.COM.Interface categoriesFor: #getExtendedErrorInfo:!exceptions!private! !
+!OS.COM.Interface categoriesFor: #hash!comparing!public! !
+!OS.COM.Interface categoriesFor: #hresultError:!exceptions!public! !
+!OS.COM.Interface categoriesFor: #identity!accessing!public! !
+!OS.COM.Interface categoriesFor: #iid!constants!public! !
+!OS.COM.Interface categoriesFor: #implementor!accessing!public! !
+!OS.COM.Interface categoriesFor: #implementor:!accessing!public! !
+!OS.COM.Interface categoriesFor: #initialize:!initializing!private! !
+!OS.COM.Interface categoriesFor: #initializeAtAddress:!initializing!private! !
+!OS.COM.Interface categoriesFor: #interfaceCookie:!**compiled accessors**!public! !
+!OS.COM.Interface categoriesFor: #isSameCOMObject:!public!testing! !
+!OS.COM.Interface categoriesFor: #objectCookie:!**compiled accessors**!public! !
+!OS.COM.Interface categoriesFor: #onExit!event handling!public! !
+!OS.COM.Interface categoriesFor: #onStartup!event handling!public! !
+!OS.COM.Interface categoriesFor: #postCopy!copying!public! !
+!OS.COM.Interface categoriesFor: #printOn:!development!printing!public! !
+!OS.COM.Interface categoriesFor: #queryInterface:!accessing-interfaces!public! !
+!OS.COM.Interface categoriesFor: #queryInterface:ifNone:!accessing-interfaces!public! !
+!OS.COM.Interface categoriesFor: #QueryInterface:ppvObject:!methods!public! !
+!OS.COM.Interface categoriesFor: #referenceCount!development!private! !
+!OS.COM.Interface categoriesFor: #Release!methods!public! !
+!OS.COM.Interface categoriesFor: #supportsErrorInfo!public!testing! !
+!OS.COM.Interface categoriesFor: #supportsErrorInfo:!public!testing! !
+!OS.COM.Interface categoriesFor: #supportsIID:!public!testing! !
+!OS.COM.Interface categoriesFor: #supportsInterface:!public!testing! !
+!OS.COM.Interface categoriesFor: #vtbl:!**compiled accessors**!public! !
 
-!COMInterface class methodsFor!
+!OS.COM.Interface class methodsFor!
 
 addFunction: functionClass selector: aSymbol descriptor: aFunctionDescriptor
 	"Private - Add a function call definition to the receivers dispatch table."
@@ -447,9 +447,9 @@ comObjectClass
 	"Answer the class of COMObjectStub to use for wrapping objects which instantiate
 	interfaces which are instances of the receiver."
 
-	^COMObjectStub!
+	^ObjectStub!
 
-compileFunction: anInteger 
+compileFunction: anInteger
 	"Private - Generate a suitable compiled method for the specified COM function."
 
 	| aStream fn |
@@ -482,7 +482,7 @@ compileFunction: anInteger
 		space;
 		display: anInteger.
 	fn argumentTypes do: 
-			[:t | 
+			[:t |
 			aStream
 				space;
 				nextPutAll: t].
@@ -490,9 +490,12 @@ compileFunction: anInteger
 		nextPut: $>;
 		cr;
 		tab;
-		nextPutAll: '^self invalidCall'.
+		nextPutAll: '^self ';
+		display: #invalidCall:;
+		nextPutAll: ' _failureCode'.
 
-	"	Notification signal: aStream contents."
+
+	"Notification signal: aStream contents."
 	self compile: aStream contents categories: self generatedFunctionCategories!
 
 compileFunctions
@@ -524,7 +527,7 @@ compileFunctionsIntoImplementor: aClass
 	| aStream cat |
 	cat := self generatedFunctionCategories first.
 	((aClass includesCategory: cat) and: 
-			[(MessageBox
+			[(UI.MessageBox
 				confirm: ('<1p> already includes the method category ''<2s>''
 The generated template methods may overwrite existing methods in the class.
 Are you sure you want to proceed?'
@@ -564,8 +567,7 @@ createContextFlags
 	Implementation Note: As a default we no longer include the inproc-handler option, because
 	that appears to result in useless instances with a lot of Microsoft out-of-proc. servers."
 
-	^IClassFactory ctxServer
-!
+	^IClassFactory ctxServer!
 
 createObject: progID
 	"Answer an instance or subinstance of the receiver on an instance of the COM component 
@@ -575,8 +577,8 @@ createObject: progID
 
 	| clsid |
 	clsid := progID first == ${
-			ifTrue: [CLSID fromString: progID]
-			ifFalse: [CLSID fromProgID: progID].
+				ifTrue: [CLSID fromString: progID]
+				ifFalse: [CLSID fromProgID: progID].
 	^self onCLSID: clsid!
 
 defineFields
@@ -615,7 +617,7 @@ defineFunction: aSymbol descriptor: aFunctionDescriptor
 	on which instances of the receiver are actually created (the 'client' or 'implementor')."
 
 	self
-		addFunction: COMFunction
+		addFunction: InterfaceFunction
 		selector: aSymbol
 		descriptor: aFunctionDescriptor!
 
@@ -632,15 +634,11 @@ defineFunction: aSymbol returnType: retString argumentTypes: argString
 	"Declare a virtual function supported by the receiver and implemented in the object
 	on which instances of the receiver are actually created (the 'client' or 'implementor')."
 
-	self 
+	self
 		defineFunction: aSymbol
-		descriptor: 
-			(self descriptorClass
-				callingConvention: self stdMethodCallType
-				returnType: retString
-				argumentTypes: argString)
-
-!
+		type: InterfaceFunction
+		returnType: retString
+		argumentTypes: argString!
 
 defineFunction: aSymbol type: functionClass returnType: retString argumentTypes: argString
 	"Declare a virtual function supported by the receiver and implemented in the receiver
@@ -653,7 +651,8 @@ defineFunction: aSymbol type: functionClass returnType: retString argumentTypes:
 			(self descriptorClass
 				callingConvention: self stdMethodCallType
 				returnType: retString
-				argumentTypes: argString)
+				argumentTypes: argString
+				environment: self)
 !
 
 defineFunctions
@@ -721,11 +720,6 @@ getObject: aString
 		riid: self iid
 		ppv: answer.
 	^answer!
-
-icon
-	"Answers an Icon that can be used to represent this class"
-
-	^##(self) defaultIcon!
 
 iid
 	"Answer the receiver's globally unique interface id (IID)"
@@ -894,7 +888,7 @@ onCLSID: aCLSID outerIUnknown: anIUnknown hostName:aString
 
 	^self onCLSID: aCLSID outerIUnknown: anIUnknown hostName:aString licenseKey: nil!
 
-onCLSID: aCLSID outerIUnknown: pUnkOuter hostName: hostNameString licenseKey: licenseString 
+onCLSID: aCLSID outerIUnknown: pUnkOuter hostName: hostNameString licenseKey: licenseString
 	"Answer an instance or subinstance of the receiver on an instance of the specified COM 
 	component class, instantiated by its registered server, with the specified outer (controlling) 
 	unknown, on the specified remote host, and using the specified license string (or nil if not 
@@ -902,13 +896,13 @@ onCLSID: aCLSID outerIUnknown: pUnkOuter hostName: hostNameString licenseKey: li
 
 	| dwClsContext hr pServerInfo pUnk pFactory |
 	dwClsContext := self createContextFlags.
-	(hostNameString notNil and: [hostNameString notEmpty]) 
+	(hostNameString notNil and: [hostNameString notEmpty])
 		ifTrue: 
 			[pServerInfo := COSERVERINFO new.
 			pServerInfo hostName: hostNameString.
 			dwClsContext := dwClsContext bitOr: CLSCTX_REMOTE_SERVER].
 	pFactory := IClassFactory newPointer.
-	OLELibrary default 
+	OLELibrary default
 		coGetClassObject: aCLSID
 		dwClsContext: dwClsContext
 		pServerInfo: pServerInfo
@@ -919,21 +913,21 @@ onCLSID: aCLSID outerIUnknown: pUnkOuter hostName: hostNameString licenseKey: li
 	pFactory isNull ifTrue: [^nil].
 	"Successfully retrieved class factory - now ask it to make an instance"
 	pUnk := self newPointer.
-	hr := pFactory 
+	hr := pFactory
 				CreateInstance: pUnkOuter
 				riid: self iid
 				ppvObject: pUnk.
-	hr < 0 
+	hr < 0
 		ifTrue: 
-			["Failed for some reason, perhaps it needs a license"
-			| license |
+			[| license |
+			"Failed for some reason, perhaps it needs a license"
 			hr = CLASS_E_NOTLICENSED ifFalse: [^HRESULTError signalWith: hr].
 			pFactory := pFactory queryInterface: IClassFactory2.
 			pFactory isNil ifTrue: [^HRESULTError signalWith: hr].
 
 			"If a license key was not supplied, then try and get a runtime license"
 			license := licenseString ifNil: [pFactory requestLicenseKey].
-			pFactory 
+			pFactory
 				CreateInstanceLic: pUnkOuter
 				pUnkReserved: nil
 				riid: pUnk iid
@@ -945,9 +939,9 @@ onExit
 	"Ensure all the receiver's subinstances are in their clean state on exit
 	so that they have released any external resources they are holding."
 
-	COMClassFactory onExit.
+	ClassFactory onExit.
 	self primAllSubinstances do: [:i | i onExit].
-	COMObjectStub onExit
+	ObjectStub onExit
 	!
 
 onStartup
@@ -957,8 +951,8 @@ onStartup
 
 	self primAllSubinstances do: [:i | i onStartup].
 	Processor unregisterCOMStubs.					"remove old COM stubs (now invalid)"
-	COMObjectStub onStartup.						"clear down any old registy entries"
-	COMClassFactory onStartup					"now safe to register class factories"!
+	ObjectStub onStartup.						"clear down any old registy entries"
+	ClassFactory onStartup					"now safe to register class factories"!
 
 queryOn: server
 	"Answer a pointer to a (new or existing) instance of the receiver suitable for use
@@ -1056,70 +1050,69 @@ unregister
 	significance."
 
 	InterfaceClasses removeKey: self iid ifAbsent: []! !
-!COMInterface class categoriesFor: #addFunction:selector:descriptor:!automatic generation!public! !
-!COMInterface class categoriesFor: #argSizes!initializing!private! !
-!COMInterface class categoriesFor: #atAddress:!instance creation!public! !
-!COMInterface class categoriesFor: #attach:!instance creation!public! !
-!COMInterface class categoriesFor: #attachInterface:!instance creation!public! !
-!COMInterface class categoriesFor: #calcArgSizes!initializing!private! !
-!COMInterface class categoriesFor: #classForIID:!enquiries!public! !
-!COMInterface class categoriesFor: #classForIID:ifNone:!enquiries!public! !
-!COMInterface class categoriesFor: #clear:!public!realizing/unrealizing! !
-!COMInterface class categoriesFor: #clsid!accessing!public! !
-!COMInterface class categoriesFor: #comObjectClass!constants!public! !
-!COMInterface class categoriesFor: #compileFunction:!automatic generation!development!private! !
-!COMInterface class categoriesFor: #compileFunctions!automatic generation!development!public! !
-!COMInterface class categoriesFor: #compileFunctionsIntoImplementor:!automatic generation!development!public! !
-!COMInterface class categoriesFor: #createContextFlags!constants!public! !
-!COMInterface class categoriesFor: #createObject:!instance creation!public! !
-!COMInterface class categoriesFor: #defineFields!automatic generation!public!template definition! !
-!COMInterface class categoriesFor: #defineFunction:!automatic generation!public! !
-!COMInterface class categoriesFor: #defineFunction:argumentTypes:!automatic generation!public! !
-!COMInterface class categoriesFor: #defineFunction:descriptor:!automatic generation!public! !
-!COMInterface class categoriesFor: #defineFunction:returnType:!automatic generation!public! !
-!COMInterface class categoriesFor: #defineFunction:returnType:argumentTypes:!automatic generation!public! !
-!COMInterface class categoriesFor: #defineFunction:type:returnType:argumentTypes:!automatic generation!public! !
-!COMInterface class categoriesFor: #defineFunctions!initializing!public! !
-!COMInterface class categoriesFor: #defineTemplate!public!template definition! !
-!COMInterface class categoriesFor: #defineVTable!automatic generation!public! !
-!COMInterface class categoriesFor: #elementSize!accessing!public! !
-!COMInterface class categoriesFor: #functions!initializing!private! !
-!COMInterface class categoriesFor: #generatedFunctionCategories!constants!public! !
-!COMInterface class categoriesFor: #getFieldNames!constants!private! !
-!COMInterface class categoriesFor: #getObject:!instance creation!public! !
-!COMInterface class categoriesFor: #icon!constants!public! !
-!COMInterface class categoriesFor: #iid!accessing!public! !
-!COMInterface class categoriesFor: #implementor:!instance creation!private! !
-!COMInterface class categoriesFor: #initialize!development!initializing!private! !
-!COMInterface class categoriesFor: #initializeAfterLoad!initializing!public! !
-!COMInterface class categoriesFor: #initializeInterface!initializing!private! !
-!COMInterface class categoriesFor: #initializeRegister!initializing!private! !
-!COMInterface class categoriesFor: #initializeTypeLib!initializing!private! !
-!COMInterface class categoriesFor: #interfaceClasses!accessing!private! !
-!COMInterface class categoriesFor: #new!instance creation!public! !
-!COMInterface class categoriesFor: #newBuffer!instance creation!public! !
-!COMInterface class categoriesFor: #newInternal!instance creation!public! !
-!COMInterface class categoriesFor: #on:!instance creation!public! !
-!COMInterface class categoriesFor: #on:implementor:!instance creation!public! !
-!COMInterface class categoriesFor: #on:implementor:outerUnknown:!instance creation!private! !
-!COMInterface class categoriesFor: #onCLSID:!instance creation!public! !
-!COMInterface class categoriesFor: #onCLSID:hostName:!instance creation!public! !
-!COMInterface class categoriesFor: #onCLSID:outerIUnknown:!instance creation!public! !
-!COMInterface class categoriesFor: #onCLSID:outerIUnknown:hostName:!instance creation!public! !
-!COMInterface class categoriesFor: #onCLSID:outerIUnknown:hostName:licenseKey:!instance creation!public! !
-!COMInterface class categoriesFor: #onExit!event handling!public! !
-!COMInterface class categoriesFor: #onStartup!drawing!public! !
-!COMInterface class categoriesFor: #queryOn:!instance creation!public! !
-!COMInterface class categoriesFor: #recompileReferences!development!private! !
-!COMInterface class categoriesFor: #register!adding!public! !
-!COMInterface class categoriesFor: #registerClass:forIID:!adding!public! !
-!COMInterface class categoriesFor: #registerSubclasses!initializing!public! !
-!COMInterface class categoriesFor: #removeCompiledFunctions!automatic generation!development!public! !
-!COMInterface class categoriesFor: #setGuid:!accessing!private! !
-!COMInterface class categoriesFor: #stdMethodCallType!constants!private! !
-!COMInterface class categoriesFor: #stdMethodReturnType!constants!private! !
-!COMInterface class categoriesFor: #supportsInterface:!public!testing! !
-!COMInterface class categoriesFor: #uninitialize!class hierarchy-removing!private! !
-!COMInterface class categoriesFor: #uninitializeBeforeRemove!class hierarchy-removing!public! !
-!COMInterface class categoriesFor: #unregister!public!removing! !
+!OS.COM.Interface class categoriesFor: #addFunction:selector:descriptor:!automatic generation!public! !
+!OS.COM.Interface class categoriesFor: #argSizes!initializing!private! !
+!OS.COM.Interface class categoriesFor: #atAddress:!instance creation!public! !
+!OS.COM.Interface class categoriesFor: #attach:!instance creation!public! !
+!OS.COM.Interface class categoriesFor: #attachInterface:!instance creation!public! !
+!OS.COM.Interface class categoriesFor: #calcArgSizes!initializing!private! !
+!OS.COM.Interface class categoriesFor: #classForIID:!enquiries!public! !
+!OS.COM.Interface class categoriesFor: #classForIID:ifNone:!enquiries!public! !
+!OS.COM.Interface class categoriesFor: #clear:!public!realizing/unrealizing! !
+!OS.COM.Interface class categoriesFor: #clsid!accessing!public! !
+!OS.COM.Interface class categoriesFor: #comObjectClass!constants!public! !
+!OS.COM.Interface class categoriesFor: #compileFunction:!automatic generation!development!private! !
+!OS.COM.Interface class categoriesFor: #compileFunctions!automatic generation!development!public! !
+!OS.COM.Interface class categoriesFor: #compileFunctionsIntoImplementor:!automatic generation!development!public! !
+!OS.COM.Interface class categoriesFor: #createContextFlags!constants!public! !
+!OS.COM.Interface class categoriesFor: #createObject:!instance creation!public! !
+!OS.COM.Interface class categoriesFor: #defineFields!automatic generation!public!template definition! !
+!OS.COM.Interface class categoriesFor: #defineFunction:!automatic generation!public! !
+!OS.COM.Interface class categoriesFor: #defineFunction:argumentTypes:!automatic generation!public! !
+!OS.COM.Interface class categoriesFor: #defineFunction:descriptor:!automatic generation!public! !
+!OS.COM.Interface class categoriesFor: #defineFunction:returnType:!automatic generation!public! !
+!OS.COM.Interface class categoriesFor: #defineFunction:returnType:argumentTypes:!automatic generation!public! !
+!OS.COM.Interface class categoriesFor: #defineFunction:type:returnType:argumentTypes:!automatic generation!public! !
+!OS.COM.Interface class categoriesFor: #defineFunctions!initializing!public! !
+!OS.COM.Interface class categoriesFor: #defineTemplate!public!template definition! !
+!OS.COM.Interface class categoriesFor: #defineVTable!automatic generation!public! !
+!OS.COM.Interface class categoriesFor: #elementSize!accessing!public! !
+!OS.COM.Interface class categoriesFor: #functions!initializing!private! !
+!OS.COM.Interface class categoriesFor: #generatedFunctionCategories!constants!public! !
+!OS.COM.Interface class categoriesFor: #getFieldNames!constants!private! !
+!OS.COM.Interface class categoriesFor: #getObject:!instance creation!public! !
+!OS.COM.Interface class categoriesFor: #iid!accessing!public! !
+!OS.COM.Interface class categoriesFor: #implementor:!instance creation!private! !
+!OS.COM.Interface class categoriesFor: #initialize!development!initializing!private! !
+!OS.COM.Interface class categoriesFor: #initializeAfterLoad!initializing!public! !
+!OS.COM.Interface class categoriesFor: #initializeInterface!initializing!private! !
+!OS.COM.Interface class categoriesFor: #initializeRegister!initializing!private! !
+!OS.COM.Interface class categoriesFor: #initializeTypeLib!initializing!private! !
+!OS.COM.Interface class categoriesFor: #interfaceClasses!accessing!private! !
+!OS.COM.Interface class categoriesFor: #new!instance creation!public! !
+!OS.COM.Interface class categoriesFor: #newBuffer!instance creation!public! !
+!OS.COM.Interface class categoriesFor: #newInternal!instance creation!public! !
+!OS.COM.Interface class categoriesFor: #on:!instance creation!public! !
+!OS.COM.Interface class categoriesFor: #on:implementor:!instance creation!public! !
+!OS.COM.Interface class categoriesFor: #on:implementor:outerUnknown:!instance creation!private! !
+!OS.COM.Interface class categoriesFor: #onCLSID:!instance creation!public! !
+!OS.COM.Interface class categoriesFor: #onCLSID:hostName:!instance creation!public! !
+!OS.COM.Interface class categoriesFor: #onCLSID:outerIUnknown:!instance creation!public! !
+!OS.COM.Interface class categoriesFor: #onCLSID:outerIUnknown:hostName:!instance creation!public! !
+!OS.COM.Interface class categoriesFor: #onCLSID:outerIUnknown:hostName:licenseKey:!instance creation!public! !
+!OS.COM.Interface class categoriesFor: #onExit!event handling!public! !
+!OS.COM.Interface class categoriesFor: #onStartup!drawing!public! !
+!OS.COM.Interface class categoriesFor: #queryOn:!instance creation!public! !
+!OS.COM.Interface class categoriesFor: #recompileReferences!development!private! !
+!OS.COM.Interface class categoriesFor: #register!adding!public! !
+!OS.COM.Interface class categoriesFor: #registerClass:forIID:!adding!public! !
+!OS.COM.Interface class categoriesFor: #registerSubclasses!initializing!public! !
+!OS.COM.Interface class categoriesFor: #removeCompiledFunctions!automatic generation!development!public! !
+!OS.COM.Interface class categoriesFor: #setGuid:!accessing!private! !
+!OS.COM.Interface class categoriesFor: #stdMethodCallType!constants!private! !
+!OS.COM.Interface class categoriesFor: #stdMethodReturnType!constants!private! !
+!OS.COM.Interface class categoriesFor: #supportsInterface:!public!testing! !
+!OS.COM.Interface class categoriesFor: #uninitialize!class hierarchy-removing!private! !
+!OS.COM.Interface class categoriesFor: #uninitializeBeforeRemove!class hierarchy-removing!public! !
+!OS.COM.Interface class categoriesFor: #unregister!public!removing! !
 

@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-LPVOID subclass: #LPBSTR
+External.LPVOID subclass: #'OS.COM.LPBSTR'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-LPBSTR guid: (GUID fromString: '{8ed55b71-d72d-4df1-a211-434db718fef0}')!
-LPBSTR comment: 'LPBSTR is a class to represent pointers to BSTRs (Basic Strings). It is useful where an IDispatch method requires that a BSTR argument be passed by references, or when implement such a method as a means of returning a BSTR reference.
+OS.COM.LPBSTR guid: (Core.GUID fromString: '{8ed55b71-d72d-4df1-a211-434db718fef0}')!
+OS.COM.LPBSTR comment: 'LPBSTR is a class to represent pointers to BSTRs (Basic Strings). It is useful where an IDispatch method requires that a BSTR argument be passed by references, or when implement such a method as a means of returning a BSTR reference.
 
 LPBSTR implicitly converts to the referenced string when asked for its value, rather than answering the pointer value itself.
 
@@ -18,8 +18,8 @@ For example:
 
 Note that because BSTR is an indirection class (BSTRs are pointers to strings), it is necessary to send its instances #basicYourAddress to get the address of the object, rather than #yourAddress which will return the contained address.
 '!
-!LPBSTR categoriesForClass!External-Data-Unstructured! !
-!LPBSTR methodsFor!
+!OS.COM.LPBSTR categoriesForClass!External-Data-Unstructured! !
+!OS.COM.LPBSTR methodsFor!
 
 asString
 	"Answer a `String` composed of the characters of the receiver, or the empty string if the receiver is a null pointer."
@@ -45,7 +45,7 @@ value
 
 	^self asString!
 
-value: aString 
+value: aString
 	"Replace the <BSTR> at which the receiver points with the <BSTR> representation of the <readableString>
 	argument.
 	Note that unless the original owner of the BSTR frees the new BSTR, a memory leak will result, since
@@ -58,13 +58,13 @@ value: aString
 	"Avoid side effect on argument if it is already a <BSTR>"
 	bstr == aString ifTrue: [bstr := bstr copy].
 	super value: bstr detach! !
-!LPBSTR categoriesFor: #asString!converting!public! !
-!LPBSTR categoriesFor: #asUtf16String!converting!public! !
-!LPBSTR categoriesFor: #asUtf8String!converting!public! !
-!LPBSTR categoriesFor: #value!accessing!public! !
-!LPBSTR categoriesFor: #value:!accessing!public! !
+!OS.COM.LPBSTR categoriesFor: #asString!converting!public! !
+!OS.COM.LPBSTR categoriesFor: #asUtf16String!converting!public! !
+!OS.COM.LPBSTR categoriesFor: #asUtf8String!converting!public! !
+!OS.COM.LPBSTR categoriesFor: #value!accessing!public! !
+!OS.COM.LPBSTR categoriesFor: #value:!accessing!public! !
 
-!LPBSTR class methodsFor!
+!OS.COM.LPBSTR class methodsFor!
 
 initialize
 	"Private - Initialize the receiver's class variables.
@@ -77,6 +77,6 @@ uninitialize
 	"Private - Uninitialize the receiver prior to its removal from the image."
 
 	VMLibrary default registryAt: self name put: nil! !
-!LPBSTR class categoriesFor: #initialize!development!initializing!private! !
-!LPBSTR class categoriesFor: #uninitialize!class hierarchy-removing!private! !
+!OS.COM.LPBSTR class categoriesFor: #initialize!development!initializing!private! !
+!OS.COM.LPBSTR class categoriesFor: #uninitialize!class hierarchy-removing!private! !
 

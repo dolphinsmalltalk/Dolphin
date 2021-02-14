@@ -1,17 +1,17 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-COMFunctionAbstract subclass: #UnkReleaseFunction
+OS.COM.AbstractInterfaceFunction subclass: #'OS.COM.ReleaseFunction'
 	instanceVariableNames: ''
 	classVariableNames: 'Descriptor'
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-UnkReleaseFunction guid: (GUID fromString: '{8f012e18-24bd-4bc1-85eb-d0dd5497c142}')!
-UnkReleaseFunction comment: 'COMReleaseFunction is a specialized class of <COMFunction> intended to represent the IUnknown::Release() method.
+OS.COM.ReleaseFunction guid: (Core.GUID fromString: '{8f012e18-24bd-4bc1-85eb-d0dd5497c142}')!
+OS.COM.ReleaseFunction comment: 'COMReleaseFunction is a specialized class of <COMFunction> intended to represent the IUnknown::Release() method.
 
 As IUnknown is implemented entirely by the <COMObjectStub>, a COMReleaseFunction sends a #Release message to the relevant stub.'!
-!UnkReleaseFunction categoriesForClass!COM-Implementations! !
-!UnkReleaseFunction methodsFor!
+!OS.COM.ReleaseFunction categoriesForClass!COM-Implementations! !
+!OS.COM.ReleaseFunction methodsFor!
 
 callback: stub interface: aCOMInterface withArgumentsAt: pArgs
 	"Private - Send an IUnknown::AddRef() call as an #AddRef message back to 
@@ -32,11 +32,11 @@ selector
 	"Private - Answer the selector sent when the receiver is evaluated."
 
 	^#Release! !
-!UnkReleaseFunction categoriesFor: #callback:interface:withArgumentsAt:!evaluating!private! !
-!UnkReleaseFunction categoriesFor: #descriptor!accessing!private! !
-!UnkReleaseFunction categoriesFor: #selector!accessing!private! !
+!OS.COM.ReleaseFunction categoriesFor: #callback:interface:withArgumentsAt:!evaluating!private! !
+!OS.COM.ReleaseFunction categoriesFor: #descriptor!accessing!private! !
+!OS.COM.ReleaseFunction categoriesFor: #selector!accessing!private! !
 
-!UnkReleaseFunction class methodsFor!
+!OS.COM.ReleaseFunction class methodsFor!
 
 initialize
 	"Private - Initialize the receiver's class variables.
@@ -52,6 +52,6 @@ uninitialize
 	"Private - Uninitialize the receiver as it is about to be removed from the system."
 
 	Descriptor := nil! !
-!UnkReleaseFunction class categoriesFor: #initialize!development!initializing!private! !
-!UnkReleaseFunction class categoriesFor: #uninitialize!class hierarchy-removing!private! !
+!OS.COM.ReleaseFunction class categoriesFor: #initialize!development!initializing!private! !
+!OS.COM.ReleaseFunction class categoriesFor: #uninitialize!class hierarchy-removing!private! !
 

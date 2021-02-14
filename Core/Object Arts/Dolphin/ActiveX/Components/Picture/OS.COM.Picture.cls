@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Image subclass: #OLEPicture
+Graphics.Image subclass: #'OS.COM.Picture'
 	instanceVariableNames: 'picture extent hmExtent'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #(#{Graphics})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-OLEPicture guid: (CLSID fromString: '{0be35204-8f91-11ce-9de3-00aa004bb851}')!
-OLEPicture comment: 'OLEPicture is an <Image> class which wraps the standard OLE picture object.
+OS.COM.Picture guid: (OS.COM.CLSID fromString: '{0be35204-8f91-11ce-9de3-00aa004bb851}')!
+OS.COM.Picture comment: 'OLEPicture is an <Image> class which wraps the standard OLE picture object.
 
 OLEPicture is capable of representing a wide range of image types, including icons, bitmaps, metafiles, and also JPEGs and GIFs.
 
@@ -16,8 +16,8 @@ Example:
 	pic := (OLEPicture fromFile: ''Resources/DolphinSureCert.jpg'' usingLocator: FileLocator installRelative).
 	ImagePresenter showOn: pic.
 '!
-!OLEPicture categoriesForClass!Graphics-Tools! !
-!OLEPicture methodsFor!
+!OS.COM.Picture categoriesForClass!Graphics-Tools! !
+!OS.COM.Picture methodsFor!
 
 = anObject 
 	"Answer whether the receiver and anObject are equivalent.
@@ -32,14 +32,14 @@ Example:
 							[self identifier = anObject identifier 
 								and: [self instanceHandle = anObject instanceHandle]]]]!
 
-addToImageList: aWinImageList mask: aColorOrNil
+addToImageList: anImageList mask: aColorOrNil
 	"Private - Add a pictorial representation of the receiver to aWinImageList.
 	This will work if the receiver is of bitmap or icon types, if not an error will
 	be raised by the #imageType method."
 
-	^self imageType == IMAGE_BITMAP 
-		ifTrue: [aWinImageList addBitmap: self mask: aColorOrNil]
-		ifFalse: [aWinImageList addIcon: self]!
+	^self imageType == IMAGE_BITMAP
+		ifTrue: [anImageList addBitmap: self mask: aColorOrNil]
+		ifFalse: [anImageList addIcon: self]!
 
 asBitmap
 	^self asDIBSection!
@@ -160,7 +160,7 @@ picture: anIPicture
 	picture := anIPicture
 !
 
-saveAsFile: pathString 
+saveAsFile: pathString
 	"Save this picture to a file at the specified path, and existing file at that path is
 	overwritten."
 
@@ -170,27 +170,27 @@ saveAsFile: pathString
 	self picture saveAsFile: istream fSaveMemCopy: true.
 	istream free.
 	fstream close! !
-!OLEPicture categoriesFor: #=!comparing!public! !
-!OLEPicture categoriesFor: #addToImageList:mask:!double dispatch!private! !
-!OLEPicture categoriesFor: #asBitmap!public! !
-!OLEPicture categoriesFor: #asDIBSection!converting!public! !
-!OLEPicture categoriesFor: #basicFree!private!realizing/unrealizing! !
-!OLEPicture categoriesFor: #createHandle!private!realizing/unrealizing! !
-!OLEPicture categoriesFor: #drawOn:at:extent:!drawing-bitmaps!public! !
-!OLEPicture categoriesFor: #extent!accessing!public! !
-!OLEPicture categoriesFor: #imageType!constants!private!testing! !
-!OLEPicture categoriesFor: #isPersistent!private!testing! !
-!OLEPicture categoriesFor: #loadFromFile:extent:!private!realizing/unrealizing! !
-!OLEPicture categoriesFor: #picture!accessing!private! !
-!OLEPicture categoriesFor: #picture:!accessing!private! !
-!OLEPicture categoriesFor: #saveAsFile:!file operations!public! !
+!OS.COM.Picture categoriesFor: #=!comparing!public! !
+!OS.COM.Picture categoriesFor: #addToImageList:mask:!double dispatch!private! !
+!OS.COM.Picture categoriesFor: #asBitmap!public! !
+!OS.COM.Picture categoriesFor: #asDIBSection!converting!public! !
+!OS.COM.Picture categoriesFor: #basicFree!private!realizing/unrealizing! !
+!OS.COM.Picture categoriesFor: #createHandle!private!realizing/unrealizing! !
+!OS.COM.Picture categoriesFor: #drawOn:at:extent:!drawing-bitmaps!public! !
+!OS.COM.Picture categoriesFor: #extent!accessing!public! !
+!OS.COM.Picture categoriesFor: #imageType!constants!private!testing! !
+!OS.COM.Picture categoriesFor: #isPersistent!private!testing! !
+!OS.COM.Picture categoriesFor: #loadFromFile:extent:!private!realizing/unrealizing! !
+!OS.COM.Picture categoriesFor: #picture!accessing!private! !
+!OS.COM.Picture categoriesFor: #picture:!accessing!private! !
+!OS.COM.Picture categoriesFor: #saveAsFile:!file operations!public! !
 
-!OLEPicture class methodsFor!
+!OS.COM.Picture class methodsFor!
 
 fromIPicture: anIPicture 
 	^(super new)
 		picture: anIPicture;
 		createHandle;
 		yourself! !
-!OLEPicture class categoriesFor: #fromIPicture:!public! !
+!OS.COM.Picture class categoriesFor: #fromIPicture:!public! !
 

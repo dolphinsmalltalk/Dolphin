@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'ActiveX Categories'.
-package paxVersion: 2;
+package paxVersion: 2.1;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Active-X Categories Package. 
 Copyright (c) Object Arts Ltd, 2000-2001.
@@ -19,14 +19,14 @@ package basicPackageVersion: '6.1'.
 
 
 package setClassNames: #(
-	#{CATEGORYINFO}
-	#{COMObjectRegistration}
-	#{ICatInformation}
-	#{ICatRegister}
+	#{OS.COM.CATEGORYINFO}
+	#{OS.COM.ICatInformation}
+	#{OS.COM.ICatRegister}
+	#{OS.COM.ObjectRegistration}
 ).
 
 package setMethodNames: #(
-	#(#{OLELibrary} #oleRegGetUserType:dwFormOfType:pszUserType:)
+	#(#{OS.COM.OLELibrary} #oleRegGetUserType:dwFormOfType:pszUserType:)
 ).
 
 package setPrerequisites: #(
@@ -40,28 +40,28 @@ package!
 
 "Class Definitions"!
 
-Object subclass: #COMObjectRegistration
+Core.Object subclass: #'OS.COM.ObjectRegistration'
 	instanceVariableNames: 'clsid name toolboxImage'
 	classVariableNames: ''
-	poolDictionaries: 'Win32Constants'
+	imports: #(#{OS.Win32Constants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-IUnknown subclass: #ICatInformation
+OS.COM.IUnknown subclass: #'OS.COM.ICatInformation'
 	instanceVariableNames: ''
 	classVariableNames: 'CatMan Controls'
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-IUnknown subclass: #ICatRegister
+OS.COM.IUnknown subclass: #'OS.COM.ICatRegister'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-OLEStructure subclass: #CATEGORYINFO
+OS.COM.OLEStructure subclass: #'OS.COM.CATEGORYINFO'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_catid' -> 16r0.
@@ -71,7 +71,7 @@ OLEStructure subclass: #CATEGORYINFO
 
 "Loose Methods"!
 
-!OLELibrary methodsFor!
+!OS.COM.OLELibrary methodsFor!
 
 oleRegGetUserType: clsid dwFormOfType: dwFormOfType pszUserType: pszUserType
 	"Get user type string of the specified type for the specified class from the registry.
@@ -85,7 +85,7 @@ oleRegGetUserType: clsid dwFormOfType: dwFormOfType pszUserType: pszUserType
 
 	<stdcall: sdword OleRegGetUserType guid* dword lpwstr*>
 	^self invalidCall: _failureCode! !
-!OLELibrary categoriesFor: #oleRegGetUserType:dwFormOfType:pszUserType:!OLE Functions-OLE!public! !
+!OS.COM.OLELibrary categoriesFor: #oleRegGetUserType:dwFormOfType:pszUserType:!OLE Functions-OLE!public! !
 
 "End of package definition"!
 

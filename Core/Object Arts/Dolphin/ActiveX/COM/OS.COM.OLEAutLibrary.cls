@@ -1,16 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-External.DynamicLinkLibrary subclass: #OLEAutLibrary
+External.DynamicLinkLibrary subclass: #'OS.COM.OLEAutLibrary'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-OLEAutLibrary guid: (Core.GUID fromString: '{6467404a-3a82-101b-8181-00aa003743d3}')!
-OLEAutLibrary comment: 'OLEAutLibrary is the <ExternalLibrary> class to represent the Win32 System DLL, OLEAUT32.DLL.
+OS.COM.OLEAutLibrary guid: (Core.GUID fromString: '{6467404a-3a82-101b-8181-00aa003743d3}')!
+OS.COM.OLEAutLibrary comment: 'OLEAutLibrary is the <ExternalLibrary> class to represent the Win32 System DLL, OLEAUT32.DLL.
 This library contains functions pertaining to the use of Active-X Automation.'!
-!OLEAutLibrary categoriesForClass!ActiveX Automation!External-Libraries-ActiveX! !
-!OLEAutLibrary methodsFor!
+!OS.COM.OLEAutLibrary categoriesForClass!ActiveX Automation!External-Libraries-ActiveX! !
+!OS.COM.OLEAutLibrary methodsFor!
 
 getErrorInfo: dwReserved pperrinfo: pperrinfo
 	"Loads _and registers_ a type library from the specified path.
@@ -62,18 +62,18 @@ sysStringLen: aBSTR
 
 	<stdcall: hresult SysStringLen bstr>
 	^self invalidCall: _failureCode! !
-!OLEAutLibrary categoriesFor: #getErrorInfo:pperrinfo:!Automation Functions-Error Handling API!primitives!public! !
-!OLEAutLibrary categoriesFor: #sysAllocString:!Automation Functions-String Manipulation!primitives!public! !
-!OLEAutLibrary categoriesFor: #sysFreeString:!Automation Functions-String Manipulation!primitives!public! !
-!OLEAutLibrary categoriesFor: #sysStringByteLen:!Automation Functions-String Manipulation!primitives!public! !
-!OLEAutLibrary categoriesFor: #sysStringLen:!Automation Functions-String Manipulation!primitives!public! !
+!OS.COM.OLEAutLibrary categoriesFor: #getErrorInfo:pperrinfo:!Automation Functions-Error Handling API!primitives!public! !
+!OS.COM.OLEAutLibrary categoriesFor: #sysAllocString:!Automation Functions-String Manipulation!primitives!public! !
+!OS.COM.OLEAutLibrary categoriesFor: #sysFreeString:!Automation Functions-String Manipulation!primitives!public! !
+!OS.COM.OLEAutLibrary categoriesFor: #sysStringByteLen:!Automation Functions-String Manipulation!primitives!public! !
+!OS.COM.OLEAutLibrary categoriesFor: #sysStringLen:!Automation Functions-String Manipulation!primitives!public! !
 
-!OLEAutLibrary class methodsFor!
+!OS.COM.OLEAutLibrary class methodsFor!
 
 fileName
 	"Answer the host system file name of the external library which
 	the receiver represents."
 
 	^'OLEAUT32'! !
-!OLEAutLibrary class categoriesFor: #fileName!constants!public! !
+!OS.COM.OLEAutLibrary class categoriesFor: #fileName!constants!public! !
 

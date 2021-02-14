@@ -1,21 +1,21 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-OLEStructure subclass: #CATEGORYINFO
+OS.COM.OLEStructure subclass: #'OS.COM.CATEGORYINFO'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_catid' -> 16r0.
 		'_OffsetOf_lcid' -> 16r10.
 		'_OffsetOf_szDescription' -> 16r14
 	}!
-CATEGORYINFO guid: (GUID fromString: '{a8eebb01-0149-481c-8b90-1eeba6516286}')!
-CATEGORYINFO comment: '<CATEGORYINFO> is an <ExternalStructure> class to wrap the struct ''COMCAT.CATEGORYINFO'' from type information in the ''OLE Component Categories Library'' library.
+OS.COM.CATEGORYINFO guid: (Core.GUID fromString: '{a8eebb01-0149-481c-8b90-1eeba6516286}')!
+OS.COM.CATEGORYINFO comment: '<CATEGORYINFO> is an <ExternalStructure> class to wrap the struct ''COMCAT.CATEGORYINFO'' from type information in the ''OLE Component Categories Library'' library.
 
 CATEGORYINFO is used in conjunction with ICatInformation>>EnumCategories() to enumerate details of the categories registered on the host machine.'!
-!CATEGORYINFO categoriesForClass!COM Category Manager! !
-!CATEGORYINFO methodsFor!
+!OS.COM.CATEGORYINFO categoriesForClass!COM Category Manager! !
+!OS.COM.CATEGORYINFO methodsFor!
 
 catid
 	"Answer the <GUID> value of the receiver's 'catid' field."
@@ -74,17 +74,17 @@ szDescription: anUtf16String
 		to: _OffsetOf_szDescription + size
 		startingAt: 1.
 	bytes wordAtOffset: _OffsetOf_szDescription + size put: 0! !
-!CATEGORYINFO categoriesFor: #catid!**compiled accessors**!public! !
-!CATEGORYINFO categoriesFor: #catid:!**compiled accessors**!public! !
-!CATEGORYINFO categoriesFor: #description!accessing!public! !
-!CATEGORYINFO categoriesFor: #description:!accessing!public! !
-!CATEGORYINFO categoriesFor: #lcid!**compiled accessors**!public! !
-!CATEGORYINFO categoriesFor: #lcid:!**compiled accessors**!public! !
-!CATEGORYINFO categoriesFor: #locale:!accessing!public! !
-!CATEGORYINFO categoriesFor: #szDescription!**compiled accessors**!public! !
-!CATEGORYINFO categoriesFor: #szDescription:!**compiled accessors**!public! !
+!OS.COM.CATEGORYINFO categoriesFor: #catid!**compiled accessors**!public! !
+!OS.COM.CATEGORYINFO categoriesFor: #catid:!**compiled accessors**!public! !
+!OS.COM.CATEGORYINFO categoriesFor: #description!accessing!public! !
+!OS.COM.CATEGORYINFO categoriesFor: #description:!accessing!public! !
+!OS.COM.CATEGORYINFO categoriesFor: #lcid!**compiled accessors**!public! !
+!OS.COM.CATEGORYINFO categoriesFor: #lcid:!**compiled accessors**!public! !
+!OS.COM.CATEGORYINFO categoriesFor: #locale:!accessing!public! !
+!OS.COM.CATEGORYINFO categoriesFor: #szDescription!**compiled accessors**!public! !
+!OS.COM.CATEGORYINFO categoriesFor: #szDescription:!**compiled accessors**!public! !
 
-!CATEGORYINFO class methodsFor!
+!OS.COM.CATEGORYINFO class methodsFor!
 
 defineFields
 	"Define the fields of the CATEGORYINFO structure.
@@ -108,6 +108,6 @@ defineFields
 
 getFieldNames
 	^#(#catid #lcid #szDescription)! !
-!CATEGORYINFO class categoriesFor: #defineFields!public!template definition! !
-!CATEGORYINFO class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.COM.CATEGORYINFO class categoriesFor: #defineFields!public!template definition! !
+!OS.COM.CATEGORYINFO class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

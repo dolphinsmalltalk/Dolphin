@@ -41,6 +41,7 @@ package setPrerequisites: #(
 	'..\..\Automation\ActiveX Automation'
 	'..\..\..\Base\Dolphin'
 	'..\..\COM\OLE COM'
+	'..\..\Deprecated\ActiveX (Deprecated)'
 ).
 
 package!

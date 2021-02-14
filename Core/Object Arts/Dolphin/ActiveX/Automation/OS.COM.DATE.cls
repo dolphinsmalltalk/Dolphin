@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-External.DOUBLE subclass: #DATE
+External.DOUBLE subclass: #'OS.COM.DATE'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{AXAutomationConstants})
+	imports: #(#{OS.COM.AutomationConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-DATE guid: (Core.GUID fromString: '{c06f3b6d-0868-11d3-93af-00a024ca708a}')!
-DATE comment: ''!
-!DATE categoriesForClass!External-Data-Structured! !
-!DATE methodsFor!
+OS.COM.DATE guid: (Core.GUID fromString: '{c06f3b6d-0868-11d3-93af-00a024ca708a}')!
+OS.COM.DATE comment: ''!
+!OS.COM.DATE categoriesForClass!External-Data-Structured! !
+!OS.COM.DATE methodsFor!
 
 asDateAndTime
 	"Answer a <DateAndTime> converted from the receiver's Active-X Automation date (an 8-byte floating point day number and fraction of a day), which is assumed to in the local time."
@@ -21,10 +21,10 @@ value
 	Automation date (an 8-byte floating point day number and fraction of a day)."
 
 	^DateAndTime fromSYSTEMTIME: (SYSTEMTIME fromDATE: super value)! !
-!DATE categoriesFor: #asDateAndTime!accessing!public! !
-!DATE categoriesFor: #value!accessing!public! !
+!OS.COM.DATE categoriesFor: #asDateAndTime!accessing!public! !
+!OS.COM.DATE categoriesFor: #value!accessing!public! !
 
-!DATE class methodsFor!
+!OS.COM.DATE class methodsFor!
 
 fromString: aString
 	"
@@ -86,14 +86,14 @@ vt
 	type when represented in a <VARIANT>."
 
 	^VT_DATE! !
-!DATE class categoriesFor: #fromString:!instance creation!public! !
-!DATE class categoriesFor: #fromString:locale:!instance creation!public! !
-!DATE class categoriesFor: #icon!constants!public! !
-!DATE class categoriesFor: #initialize!development!initializing!private! !
-!DATE class categoriesFor: #maximum!constants!public! !
-!DATE class categoriesFor: #minimum!constants!public! !
-!DATE class categoriesFor: #now!instance creation!public! !
-!DATE class categoriesFor: #typeName!constants!private! !
-!DATE class categoriesFor: #uninitialize!class hierarchy-removing!private! !
-!DATE class categoriesFor: #vt!constants!public! !
+!OS.COM.DATE class categoriesFor: #fromString:!instance creation!public! !
+!OS.COM.DATE class categoriesFor: #fromString:locale:!instance creation!public! !
+!OS.COM.DATE class categoriesFor: #icon!constants!public! !
+!OS.COM.DATE class categoriesFor: #initialize!development!initializing!private! !
+!OS.COM.DATE class categoriesFor: #maximum!constants!public! !
+!OS.COM.DATE class categoriesFor: #minimum!constants!public! !
+!OS.COM.DATE class categoriesFor: #now!instance creation!public! !
+!OS.COM.DATE class categoriesFor: #typeName!constants!private! !
+!OS.COM.DATE class categoriesFor: #uninitialize!class hierarchy-removing!private! !
+!OS.COM.DATE class categoriesFor: #vt!constants!public! !
 

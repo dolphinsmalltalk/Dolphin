@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-IDispatch subclass: #IFontDisp
+OS.COM.IDispatch subclass: #'OS.COM.IFontDisp'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-IFontDisp guid: (IID fromString: '{bef6e003-a874-101a-8bba-00aa00300cab}')!
-IFontDisp comment: '`IFontDisp` is a wrapper class generated for the dispatch interface ''stdole.Font'' from type information in the ''OLE Automation'' library. It contains methods to get and set the properties and invoke the methods exposed by that interface.
+OS.COM.IFontDisp guid: (OS.COM.IID fromString: '{bef6e003-a874-101a-8bba-00aa00300cab}')!
+OS.COM.IFontDisp comment: '`IFontDisp` is a wrapper class generated for the dispatch interface ''stdole.Font'' from type information in the ''OLE Automation'' library. It contains methods to get and set the properties and invoke the methods exposed by that interface.
 
 IFontDisp is a standard dispinterface used to represent OLE Fonts, for example to get/set the font ambient property of an ActiveX control site.
 
@@ -56,8 +56,8 @@ short Charset;
 };
 ```
 '!
-!IFontDisp categoriesForClass!COM-Interfaces! !
-!IFontDisp methodsFor!
+!OS.COM.IFontDisp categoriesForClass!COM-Interfaces! !
+!OS.COM.IFontDisp methodsFor!
 
 bold
 	"Answer the <varbool> value of the 'Bold' property of the receiver.
@@ -166,45 +166,44 @@ weight: newVal
 		short Weight"
 
 	self setPropertyId: 7 value: newVal! !
-!IFontDisp categoriesFor: #bold!**auto generated**!properties!public! !
-!IFontDisp categoriesFor: #bold:!**auto generated**!properties!public! !
-!IFontDisp categoriesFor: #charset!**auto generated**!properties!public! !
-!IFontDisp categoriesFor: #charset:!**auto generated**!properties!public! !
-!IFontDisp categoriesFor: #italic!**auto generated**!properties!public! !
-!IFontDisp categoriesFor: #italic:!**auto generated**!properties!public! !
-!IFontDisp categoriesFor: #name!**auto generated**!properties!public! !
-!IFontDisp categoriesFor: #name:!**auto generated**!properties!public! !
-!IFontDisp categoriesFor: #size!**auto generated**!properties!public! !
-!IFontDisp categoriesFor: #size:!**auto generated**!properties!public! !
-!IFontDisp categoriesFor: #strikethrough!**auto generated**!properties!public! !
-!IFontDisp categoriesFor: #strikethrough:!**auto generated**!properties!public! !
-!IFontDisp categoriesFor: #underline!**auto generated**!properties!public! !
-!IFontDisp categoriesFor: #underline:!**auto generated**!properties!public! !
-!IFontDisp categoriesFor: #value!**auto generated**!properties!public! !
-!IFontDisp categoriesFor: #value:!**auto generated**!properties!public! !
-!IFontDisp categoriesFor: #weight!**auto generated**!properties!public! !
-!IFontDisp categoriesFor: #weight:!**auto generated**!properties!public! !
+!OS.COM.IFontDisp categoriesFor: #bold!**auto generated**!properties!public! !
+!OS.COM.IFontDisp categoriesFor: #bold:!**auto generated**!properties!public! !
+!OS.COM.IFontDisp categoriesFor: #charset!**auto generated**!properties!public! !
+!OS.COM.IFontDisp categoriesFor: #charset:!**auto generated**!properties!public! !
+!OS.COM.IFontDisp categoriesFor: #italic!**auto generated**!properties!public! !
+!OS.COM.IFontDisp categoriesFor: #italic:!**auto generated**!properties!public! !
+!OS.COM.IFontDisp categoriesFor: #name!**auto generated**!properties!public! !
+!OS.COM.IFontDisp categoriesFor: #name:!**auto generated**!properties!public! !
+!OS.COM.IFontDisp categoriesFor: #size!**auto generated**!properties!public! !
+!OS.COM.IFontDisp categoriesFor: #size:!**auto generated**!properties!public! !
+!OS.COM.IFontDisp categoriesFor: #strikethrough!**auto generated**!properties!public! !
+!OS.COM.IFontDisp categoriesFor: #strikethrough:!**auto generated**!properties!public! !
+!OS.COM.IFontDisp categoriesFor: #underline!**auto generated**!properties!public! !
+!OS.COM.IFontDisp categoriesFor: #underline:!**auto generated**!properties!public! !
+!OS.COM.IFontDisp categoriesFor: #value!**auto generated**!properties!public! !
+!OS.COM.IFontDisp categoriesFor: #value:!**auto generated**!properties!public! !
+!OS.COM.IFontDisp categoriesFor: #weight!**auto generated**!properties!public! !
+!OS.COM.IFontDisp categoriesFor: #weight:!**auto generated**!properties!public! !
 
-!IFontDisp class methodsFor!
+!OS.COM.IFontDisp class methodsFor!
 
 clsid
 	"Private - Answer the CLSID of the coclass (StdFont) for which the receiver is the default interface."
 
-	^CLSID fromString: '{0be35203-8f91-11ce-9de3-00aa004bb851}'
-!
+	^CLSID fromString: '{0be35203-8f91-11ce-9de3-00aa004bb851}'!
 
-fromFont: aFont 
+fromFont: aFont
 	"Answer a new instance of the receiver on an OLE font object which is equivalent to the
 	<Font>, aFont."
 
 	| answer fd |
 	fd := FONTDESC fromFont: aFont.
 	answer := IFontDisp newPointer.
-	OLEAutLibrary default 
+	OLEAutLibrary default
 		oleCreateFontIndirect: fd
 		riid: IFontDisp iid
 		ppvObj: answer.
 	^answer! !
-!IFontDisp class categoriesFor: #clsid!**auto generated**!constants!private! !
-!IFontDisp class categoriesFor: #fromFont:!instance creation!public! !
+!OS.COM.IFontDisp class categoriesFor: #clsid!**auto generated**!constants!private! !
+!OS.COM.IFontDisp class categoriesFor: #fromFont:!instance creation!public! !
 

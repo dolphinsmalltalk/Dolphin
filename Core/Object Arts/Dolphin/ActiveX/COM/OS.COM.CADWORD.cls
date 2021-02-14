@@ -1,23 +1,23 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-OLECountedArray subclass: #CADWORD
+OS.COM.CountedArray subclass: #'OS.COM.CADWORD'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-CADWORD guid: (GUID fromString: '{60f684dc-b3e2-4700-8e9c-d1a18764ed84}')!
-CADWORD comment: '<CADWORD> is an <ExternalStructure> class to wrap the struct ''OCIDL.CADWORD'' from type information in the ''OCIDL Library'' library.
+OS.COM.CADWORD guid: (Core.GUID fromString: '{60f684dc-b3e2-4700-8e9c-d1a18764ed84}')!
+OS.COM.CADWORD comment: '<CADWORD> is an <ExternalStructure> class to wrap the struct ''OCIDL.CADWORD'' from type information in the ''OCIDL Library'' library.
 
 CADWORD is a counted array of 32-bit unsigned integers. For an example usage see IPerPropertyBrowsing.'!
-!CADWORD categoriesForClass!OCIDL-Structs! !
-!CADWORD methodsFor!
+!OS.COM.CADWORD categoriesForClass!OCIDL-Structs! !
+!OS.COM.CADWORD methodsFor!
 
 getElements
 	^DWORDArray fromAddress: self pElems length: self cElems! !
-!CADWORD categoriesFor: #getElements!accessing!private! !
+!OS.COM.CADWORD categoriesFor: #getElements!accessing!private! !
 
-!CADWORD class methodsFor!
+!OS.COM.CADWORD class methodsFor!
 
 defineFields
 	"Define the fields of the CADWORD structure.
@@ -40,6 +40,6 @@ elementClass
 
 	^DWORD
 ! !
-!CADWORD class categoriesFor: #defineFields!public!template definition! !
-!CADWORD class categoriesFor: #elementClass!constants!public! !
+!OS.COM.CADWORD class categoriesFor: #defineFields!public!template definition! !
+!OS.COM.CADWORD class categoriesFor: #elementClass!constants!public! !
 

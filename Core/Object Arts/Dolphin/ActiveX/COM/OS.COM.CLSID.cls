@@ -1,17 +1,17 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Core.GUID variableByteSubclass: #CLSID
+Core.GUID variableByteSubclass: #'OS.COM.CLSID'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-CLSID guid: (Core.GUID fromString: '{87b4c643-026e-11d3-9fd7-00a0cc3e4a32}')!
-CLSID comment: 'CLSID the class of 128-bit Globally Unique Identifiers (guids) which are specifically used to uniquely identify coclasses (components) in COM.
+OS.COM.CLSID guid: (Core.GUID fromString: '{87b4c643-026e-11d3-9fd7-00a0cc3e4a32}')!
+OS.COM.CLSID comment: '`OS.COM.CLSID` is the class of 128-bit Globally Unique Identifiers (guids) which are specifically used to uniquely identify coclasses (components) in COM.
 
 The CLSIDs of all coclasses registered on your machine can be found under the HKCR\CLSID key in your registry. Each correctly formed entry will have a human (are VB programmers human?) readable form (a ProgID) directly under HKCR.'!
-!CLSID categoriesForClass!External-Data-Structured-COM! !
-!CLSID methodsFor!
+!OS.COM.CLSID categoriesForClass!External-Data-Structured-COM! !
+!OS.COM.CLSID methodsFor!
 
 displayOn: aPuttableStream
 	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that an end-user might want to see."
@@ -24,15 +24,15 @@ progID
 	If the registry contains no relevant entry, then an appropriate HRESULTError will be raised. Note that a ProgID has a maximum of 39 characters."
 
 	| pProgId answer |
-	pProgId := COMTaskMemory new.
+	pProgId := TaskMemory new.
 	OLELibrary default progIDFromCLSID: self lplpszProgID: pProgId.
 	answer := String fromUtf16String: pProgId.
 	pProgId free.
 	^answer! !
-!CLSID categoriesFor: #displayOn:!displaying!public! !
-!CLSID categoriesFor: #progID!displaying!public! !
+!OS.COM.CLSID categoriesFor: #displayOn:!displaying!public! !
+!OS.COM.CLSID categoriesFor: #progID!displaying!public! !
 
-!CLSID class methodsFor!
+!OS.COM.CLSID class methodsFor!
 
 fromProgID: aString
 	"Answer a new instance of the receiver instantiated from the argument, aString,
@@ -56,7 +56,7 @@ initialize
 	"
 
 	self extraInstanceSpec: self byteSize! !
-!CLSID class categoriesFor: #fromProgID:!instance creation!public! !
-!CLSID class categoriesFor: #fromString:!instance creation!public! !
-!CLSID class categoriesFor: #initialize!development!initializing!private! !
+!OS.COM.CLSID class categoriesFor: #fromProgID:!instance creation!public! !
+!OS.COM.CLSID class categoriesFor: #fromString:!instance creation!public! !
+!OS.COM.CLSID class categoriesFor: #initialize!development!initializing!private! !
 

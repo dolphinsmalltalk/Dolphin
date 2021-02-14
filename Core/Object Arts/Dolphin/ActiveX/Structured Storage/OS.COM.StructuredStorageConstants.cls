@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Kernel.SharedPool subclass: #OLEStructuredStorageConstants
+Kernel.SharedPool subclass: #'OS.COM.StructuredStorageConstants'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -50,7 +50,7 @@ Kernel.SharedPool subclass: #OLEStructuredStorageConstants
 		'STREAM_SEEK_END' -> 16r2.
 		'STREAM_SEEK_SET' -> 16r0
 	}!
-OLEStructuredStorageConstants guid: (Core.GUID fromString: '{3ed0417a-f038-403d-abb9-4bf66a49a04d}')!
-OLEStructuredStorageConstants isNonInstantiable: true!
-OLEStructuredStorageConstants comment: ''!
-!OLEStructuredStorageConstants categoriesForClass!Unclassified! !
+OS.COM.StructuredStorageConstants guid: (Core.GUID fromString: '{3ed0417a-f038-403d-abb9-4bf66a49a04d}')!
+OS.COM.StructuredStorageConstants isNonInstantiable: true!
+OS.COM.StructuredStorageConstants comment: ''!
+!OS.COM.StructuredStorageConstants categoriesForClass!Unclassified! !

@@ -1,21 +1,21 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-COMInterfaceImp subclass: #COMEnumerator
+OS.COM.InterfaceImplementation subclass: #'OS.COM.Enumerator'
 	instanceVariableNames: 'enumClass contents'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-COMEnumerator guid: (GUID fromString: '{e3913c43-9396-11d3-b376-0800460222f0}')!
-COMEnumerator comment: 'COMEnumerator is Dolphin''s generic implementation of COM enumerators, i.e. IEnumXXXX. It can enumerate over any sequenceable collection of externally representable objects.
+OS.COM.Enumerator guid: (Core.GUID fromString: '{e3913c43-9396-11d3-b376-0800460222f0}')!
+OS.COM.Enumerator comment: 'COMEnumerator is Dolphin''s generic implementation of COM enumerators, i.e. IEnumXXXX. It can enumerate over any sequenceable collection of externally representable objects.
 
 Instance Variables:
 	enumClass	<IEnumXXXX>
 	contents		<ReadStream>
 
 '!
-!COMEnumerator categoriesForClass!COM-Implementations! !
-!COMEnumerator methodsFor!
+!OS.COM.Enumerator categoriesForClass!COM-Implementations! !
+!OS.COM.Enumerator methodsFor!
 
 arrayBufferAt: buf length: count
 	"Private - Answer a suitable <ExternalArray> wrapping the buffer at <ExternalAddress>,
@@ -97,19 +97,19 @@ supportedInterfaces
 	This will vary on a per-instance basis."
 
 	^{enumClass}! !
-!COMEnumerator categoriesFor: #arrayBufferAt:length:!COM Interfaces-IEnumXXXX!private! !
-!COMEnumerator categoriesFor: #Clone:!COM Interfaces-IEnumXXXX!public! !
-!COMEnumerator categoriesFor: #copyElements:length:!COM Interfaces-IEnumXXXX!private! !
-!COMEnumerator categoriesFor: #Next:rgelt:pceltFetched:!COM Interfaces-IEnumXXXX!public! !
-!COMEnumerator categoriesFor: #nextElement!COM Interfaces-IEnumXXXX!private! !
-!COMEnumerator categoriesFor: #Reset!COM Interfaces-IEnumXXXX!public! !
-!COMEnumerator categoriesFor: #setEnumClass:contents:!accessing!private! !
-!COMEnumerator categoriesFor: #Skip:!COM Interfaces-IEnumXXXX!public! !
-!COMEnumerator categoriesFor: #supportedInterfaces!constants!public! !
+!OS.COM.Enumerator categoriesFor: #arrayBufferAt:length:!COM Interfaces-IEnumXXXX!private! !
+!OS.COM.Enumerator categoriesFor: #Clone:!COM Interfaces-IEnumXXXX!public! !
+!OS.COM.Enumerator categoriesFor: #copyElements:length:!COM Interfaces-IEnumXXXX!private! !
+!OS.COM.Enumerator categoriesFor: #Next:rgelt:pceltFetched:!COM Interfaces-IEnumXXXX!public! !
+!OS.COM.Enumerator categoriesFor: #nextElement!COM Interfaces-IEnumXXXX!private! !
+!OS.COM.Enumerator categoriesFor: #Reset!COM Interfaces-IEnumXXXX!public! !
+!OS.COM.Enumerator categoriesFor: #setEnumClass:contents:!accessing!private! !
+!OS.COM.Enumerator categoriesFor: #Skip:!COM Interfaces-IEnumXXXX!public! !
+!OS.COM.Enumerator categoriesFor: #supportedInterfaces!constants!public! !
 
-COMEnumerator methodProtocol: #IEnumXXXX attributes: #() selectors: #(#Clone: #Next:rgelt:pceltFetched: #Reset #Skip:)!
+OS.COM.Enumerator methodProtocol: #IEnumXXXX attributes: #() selectors: #(#Clone: #Next:rgelt:pceltFetched: #Reset #Skip:)!
 
-!COMEnumerator class methodsFor!
+!OS.COM.Enumerator class methodsFor!
 
 newEnumerator: enumClass on: sequence
 	"Answer a new COM interface which is an instance of the <IEnumXXXX> subclass, enumClass,
@@ -124,6 +124,6 @@ newEnumerator: enumClass onStream: stream
 	^self new
 		setEnumClass: enumClass contents: stream;
 		queryInterface: enumClass! !
-!COMEnumerator class categoriesFor: #newEnumerator:on:!instance creation!public! !
-!COMEnumerator class categoriesFor: #newEnumerator:onStream:!instance creation!public! !
+!OS.COM.Enumerator class categoriesFor: #newEnumerator:on:!instance creation!public! !
+!OS.COM.Enumerator class categoriesFor: #newEnumerator:onStream:!instance creation!public! !
 

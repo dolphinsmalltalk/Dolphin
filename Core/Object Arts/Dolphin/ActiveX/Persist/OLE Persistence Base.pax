@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'OLE Persistence Base'.
-package paxVersion: 2;
+package paxVersion: 2.1;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk OLE Persistence Support. 
 Copyright (c) Object Arts Ltd 2000.
@@ -11,17 +11,17 @@ package basicPackageVersion: '6.0'.
 
 
 package setClassNames: #(
-	#{IPersist}
-	#{IPersistMemory}
-	#{IPersistStream}
-	#{IPersistStreamInit}
+	#{OS.COM.IPersist}
+	#{OS.COM.IPersistMemory}
+	#{OS.COM.IPersistStream}
+	#{OS.COM.IPersistStreamInit}
 ).
 
 package setMethodNames: #(
-	#(#{COMInterface class} #readFromIStream:)
-	#(#{IStream} #nextPutObject:)
-	#(#{OLELibrary} #oleLoadFromStream:iidInterface:ppvObj:)
-	#(#{OLELibrary} #oleSaveToStream:pStm:)
+	#(#{OS.COM.Interface class} #readFromIStream:)
+	#(#{OS.COM.IStream} #nextPutObject:)
+	#(#{OS.COM.OLELibrary} #oleLoadFromStream:iidInterface:ppvObj:)
+	#(#{OS.COM.OLELibrary} #oleSaveToStream:pStm:)
 ).
 
 package setPrerequisites: #(
@@ -34,45 +34,48 @@ package!
 
 "Class Definitions"!
 
-IUnknown subclass: #IPersist
+OS.COM.IUnknown subclass: #'OS.COM.IPersist'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-IPersist subclass: #IPersistMemory
+OS.COM.IPersist subclass: #'OS.COM.IPersistMemory'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-IPersist subclass: #IPersistStream
+OS.COM.IPersist subclass: #'OS.COM.IPersistStream'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-IPersistStream subclass: #IPersistStreamInit
+OS.COM.IPersistStream subclass: #'OS.COM.IPersistStreamInit'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 
 "Loose Methods"!
 
-!COMInterface class methodsFor!
+!OS.COM.Interface class methodsFor!
 
 readFromIStream: anIStream
 	"Answer a new instance of the receiver on a persistent object loaded from the argument, anIStream."
 
 	| answer |
 	answer := self newPointer.
-	OLELibrary default oleLoadFromStream: anIStream iidInterface: self iid ppvObj: answer.
+	OLELibrary default
+		oleLoadFromStream: anIStream
+		iidInterface: self iid
+		ppvObj: answer.
 	^answer! !
-!COMInterface class categoriesFor: #readFromIStream:!instance creation!public! !
+!OS.COM.Interface class categoriesFor: #readFromIStream:!instance creation!public! !
 
-!IStream methodsFor!
+!OS.COM.IStream methodsFor!
 
 nextPutObject: unkObj
 	"Append the persisted representation of the COM object representd by the <IUnknown>,
@@ -81,17 +84,18 @@ nextPutObject: unkObj
 	at least write the object's CLSID to the stream so that it can be reinstantiated."
 
 	| ips |
-	ips := unkObj queryInterface: IPersistStreamInit ifNone: [unkObj queryInterface: IPersistStream].
+	ips := unkObj queryInterface: IPersistStreamInit
+				ifNone: [unkObj queryInterface: IPersistStream].
 	ips isNull
-		ifTrue: [ | ip |
-			ip := unkObj queryInterface: IPersist ifNone: [
-					^self error: 'Object not persistable: ', unkObj printString].
+		ifTrue: 
+			[| ip |
+			ip := unkObj queryInterface: IPersist
+						ifNone: [^self error: 'Object not persistable: ' , unkObj printString].
 			self nextPutCLSID: ip clsid]
-		ifFalse: [OLELibrary default oleSaveToStream: ips pStm: self]
-! !
-!IStream categoriesFor: #nextPutObject:!accessing!public! !
+		ifFalse: [OLELibrary default oleSaveToStream: ips pStm: self]! !
+!OS.COM.IStream categoriesFor: #nextPutObject:!accessing!public! !
 
-!OLELibrary methodsFor!
+!OS.COM.OLELibrary methodsFor!
 
 oleLoadFromStream: pStm iidInterface: riid ppvObj: ppOut
 	"Load an object from the specified stream, answering the specified interface on
@@ -128,8 +132,8 @@ oleSaveToStream: pPStm pStm: pStm
 
 	<stdcall: hresult OleSaveToStream IPersistStream* IStream*>
 	^self invalidCall: _failureCode! !
-!OLELibrary categoriesFor: #oleLoadFromStream:iidInterface:ppvObj:!OLE Functions-Persistent Objects!primitives!public! !
-!OLELibrary categoriesFor: #oleSaveToStream:pStm:!OLE Functions-Persistent Objects!primitives!public! !
+!OS.COM.OLELibrary categoriesFor: #oleLoadFromStream:iidInterface:ppvObj:!OLE Functions-Persistent Objects!primitives!public! !
+!OS.COM.OLELibrary categoriesFor: #oleSaveToStream:pStm:!OLE Functions-Persistent Objects!primitives!public! !
 
 "End of package definition"!
 

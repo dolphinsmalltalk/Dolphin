@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-External.Tests.GenericExternalArrayTest subclass: #SAFEARRAYTest
+External.Tests.GenericExternalArrayTest subclass: #'OS.COM.Tests.SAFEARRAYTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #(#{OS.Win32Errors})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-SAFEARRAYTest guid: (Core.GUID fromString: '{f0fcec1b-f6cd-4f59-b5da-115cf8d04805}')!
-SAFEARRAYTest comment: ''!
-!SAFEARRAYTest categoriesForClass!Unclassified! !
-!SAFEARRAYTest methodsFor!
+OS.COM.Tests.SAFEARRAYTest guid: (Core.GUID fromString: '{f0fcec1b-f6cd-4f59-b5da-115cf8d04805}')!
+OS.COM.Tests.SAFEARRAYTest comment: ''!
+!OS.COM.Tests.SAFEARRAYTest categoriesForClass!Unclassified! !
+!OS.COM.Tests.SAFEARRAYTest methodsFor!
 
 arrayClass
 	^SAFEARRAY!
@@ -44,7 +44,7 @@ testAXRecords
 		do: 
 			[:i |
 			elem := sa2 at: i.
-			self assert: elem class identicalTo: AXRecord.
+			self assert: elem class identicalTo: Record.
 			self assert: elem x equals: i.
 			self assert: elem y equals: i]!
 
@@ -114,13 +114,13 @@ testElementClasses
 	self should: [SAFEARRAY length: 1 elementClass: CLSID] raise: Error.
 
 	"Test array containing interface pointer"
-	array := SAFEARRAY length: 1 elementClass: IRandomStream.
-	random := COMRandomStream new.
+	array := SAFEARRAY length: 1 elementClass: Smalltalk.IRandomStream.
+	random := Smalltalk.COMRandomStream new.
 	random put_Seed: 12345.
 	array at: 1 put: random.
 	irand := array at: 1.
-	self assert: irand class identicalTo: IRandomStream.
-	self assert: array iid equals: IRandomStream iid.
+	self assert: irand class identicalTo: Smalltalk.IRandomStream.
+	self assert: array iid equals: Smalltalk.IRandomStream iid.
 	self assert: irand referenceCount >= 2.
 	self assert: irand seed equals: 12345.
 	self assert: (irand isSameCOMObject: random interface).
@@ -134,7 +134,7 @@ testElementClasses
 	self assert: array recordInfo getFieldNames equals: #('x' 'y').
 
 	"Some invalid safe array types in the VTClasses map"
-	#(#{String} #{Utf16String} #{ExternalAddress}) do: 
+	#(#{String} #{Utf16String} #{Address}) do: 
 			[:each |
 			self
 				should: [SAFEARRAY length: 1 elementClass: each value]
@@ -165,24 +165,24 @@ testRecordInfo
 	sa do: [:each | ordered add: each].
 	self assert: ordered asArray equals: ((1 to: 3) collect: [:each | (each @ each) asParameter])!
 
-threePoints: recordClass 
+threePoints: recordClass
 	| sa |
 	sa := SAFEARRAY length: 3 elementClass: recordClass.
 	1 to: sa size
 		do: 
-			[:each | 
+			[:each |
 			(sa at: each)
 				x: each;
 				y: each].
 	^sa! !
-!SAFEARRAYTest categoriesFor: #arrayClass!constants!private! !
-!SAFEARRAYTest categoriesFor: #elementClassNames!constants!private! !
-!SAFEARRAYTest categoriesFor: #newArrayOfIntegers:!helpers!private! !
-!SAFEARRAYTest categoriesFor: #testAXRecords!public!unit tests! !
-!SAFEARRAYTest categoriesFor: #testBoolDisplayString!public! !
-!SAFEARRAYTest categoriesFor: #testBounds!public!unit tests! !
-!SAFEARRAYTest categoriesFor: #testElementAt!public!unit tests! !
-!SAFEARRAYTest categoriesFor: #testElementClasses!public!unit tests! !
-!SAFEARRAYTest categoriesFor: #testRecordInfo!public!unit tests! !
-!SAFEARRAYTest categoriesFor: #threePoints:!public!unit tests! !
+!OS.COM.Tests.SAFEARRAYTest categoriesFor: #arrayClass!constants!private! !
+!OS.COM.Tests.SAFEARRAYTest categoriesFor: #elementClassNames!constants!private! !
+!OS.COM.Tests.SAFEARRAYTest categoriesFor: #newArrayOfIntegers:!helpers!private! !
+!OS.COM.Tests.SAFEARRAYTest categoriesFor: #testAXRecords!public!unit tests! !
+!OS.COM.Tests.SAFEARRAYTest categoriesFor: #testBoolDisplayString!public! !
+!OS.COM.Tests.SAFEARRAYTest categoriesFor: #testBounds!public!unit tests! !
+!OS.COM.Tests.SAFEARRAYTest categoriesFor: #testElementAt!public!unit tests! !
+!OS.COM.Tests.SAFEARRAYTest categoriesFor: #testElementClasses!public!unit tests! !
+!OS.COM.Tests.SAFEARRAYTest categoriesFor: #testRecordInfo!public!unit tests! !
+!OS.COM.Tests.SAFEARRAYTest categoriesFor: #threePoints:!public!unit tests! !
 

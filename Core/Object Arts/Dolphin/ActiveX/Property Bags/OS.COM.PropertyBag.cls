@@ -1,21 +1,20 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-COMInterfaceImp subclass: #AXPropertyBag
+OS.COM.InterfaceImplementation subclass: #'OS.COM.PropertyBag'
 	instanceVariableNames: 'propertyTable clsid saveAll clearDirty'
 	classVariableNames: ''
-	poolDictionaries: 'AXAutomationConstants'
+	imports: #(#{OS.COM.AutomationConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-AXPropertyBag guid: (GUID fromString: '{9c956c61-af27-11d3-b376-080046056106}')!
-AXPropertyBag comment: ''!
-!AXPropertyBag categoriesForClass!Unclassified! !
-!AXPropertyBag methodsFor!
+OS.COM.PropertyBag guid: (Core.GUID fromString: '{9c956c61-af27-11d3-b376-080046056106}')!
+OS.COM.PropertyBag comment: ''!
+!OS.COM.PropertyBag categoriesForClass!Unclassified! !
+!OS.COM.PropertyBag methodsFor!
 
 asVariant
 	"Answer the object value of the receiver wrapped as an <IUnknown> pointer in a <VARIANT>."
 
-	^VARIANT fromUnknown: self load
-!
+	^VARIANT fromUnknown: self load!
 
 inStream: inputStream
 	"Private - Read a property bag (previously persisted by this class) from the <gettableStream> argument, 
@@ -98,7 +97,7 @@ Read: pszPropName pVar: pVar pErrorLog: pErrorLog
 	"VARIANT>>value: method frees existing content, which we don't want as may not be valid"
 	pVar copyBytes: val detach.
 	S_OK]
-			on: AXPropertyReadError
+			on: PropertyReadError
 			do: 
 				[:e |
 				pErrorLog notNull
@@ -136,12 +135,12 @@ restoreInto: anIUnknown
 	| ipb hr log |
 	ipb := anIUnknown queryInterface: IPersistPropertyBag
 				ifNone: [^HRESULTError signalWith: E_NOINTERFACE].
-	log := (AXPropertyBagErrorLog new)
+	log := (PropertyBagErrorLog new)
 				guid: clsid;
 				yourself.
 	hr := ipb Load: (self queryInterface: IPropertyBag)
 				pErrorLog: (log queryInterface: IErrorLog).
-	log notEmpty ifTrue: [^AXPropertyReadError signalWith: log].
+	log notEmpty ifTrue: [^PropertyReadError signalWith: log].
 	hr < 0 ifTrue: [^ipb hresultError: hr].
 	ipb free!
 
@@ -159,14 +158,14 @@ save: unkObject clearDirty: clearDirtyBoolean saveAll: saveAllBoolean
 	<IPersistPropertyBag>, then raise an E_NOINTERFACE <HRESULTError> exception. Any existing 
 	contents in this property bag are lost."
 
-
 	| ipb |
 	propertyTable := LookupTable new: 15.
-	ipb := unkObject queryInterface: IPersistPropertyBag ifNone: [^HRESULTError signalWith: E_NOINTERFACE].
+	ipb := unkObject queryInterface: IPersistPropertyBag
+				ifNone: [^HRESULTError signalWith: E_NOINTERFACE].
 	clsid := ipb clsid.
-	ipb 
-		Save: (IPropertyBag on: self implementor: self) 
-		fClearDirty: (clearDirty := clearDirtyBoolean) 
+	ipb
+		Save: (IPropertyBag on: self implementor: self)
+		fClearDirty: (clearDirty := clearDirtyBoolean)
 		fSaveAllProperties: (saveAll := saveAllBoolean).
 	ipb free!
 
@@ -179,18 +178,22 @@ setProperties: array
 
 	propertyTable := LookupTable new.
 	clsid := CLSID fromString: (array basicAt: 1).
-	2 to: array basicSize by: 2 do: [:i | | propValue |
-		propValue := array basicAt: i+1.
-		propertyTable at: (array basicAt: i) put: (
-			propValue class == Array
-				ifTrue: [AXPropertyBag new setProperties: propValue]
-				ifFalse: [propValue])].
+	2 to: array basicSize
+		by: 2
+		do: 
+			[:i |
+			| propValue |
+			propValue := array basicAt: i + 1.
+			propertyTable at: (array basicAt: i)
+				put: (propValue class == Array
+						ifTrue: [PropertyBag new setProperties: propValue]
+						ifFalse: [propValue])].
 	^self!
 
 supportedInterfaces
 	"Answer the set of interface classes supported by the receiver."
 
-	^#(##(IPropertyBag))!
+	^{IPropertyBag}!
 
 Write: pszPropName pVar: pVar
 	"Implement the IPropertyBag::Write() method by saving the property to the receiver's
@@ -211,19 +214,19 @@ Write: pszPropName pVar: pVar
 				ifTrue: [self class new save: pVar value clearDirty: clearDirty saveAll: saveAll]
 				ifFalse: [pVar value]).
 	^hr! !
-!AXPropertyBag categoriesFor: #asVariant!converting!public! !
-!AXPropertyBag categoriesFor: #inStream:!accessing!public! !
-!AXPropertyBag categoriesFor: #load!operations!public! !
-!AXPropertyBag categoriesFor: #printOn:indent:!printing!public! !
-!AXPropertyBag categoriesFor: #propertyTable!accessing!private! !
-!AXPropertyBag categoriesFor: #propertyTable:!accessing!private! !
-!AXPropertyBag categoriesFor: #Read:pVar:pErrorLog:!COM Interfaces-IPropertyBag!public! !
-!AXPropertyBag categoriesFor: #restoreInto:!operations!public! !
-!AXPropertyBag categoriesFor: #save:clearDirty:!operations!public! !
-!AXPropertyBag categoriesFor: #save:clearDirty:saveAll:!operations!public! !
-!AXPropertyBag categoriesFor: #setProperties:!helpers!private! !
-!AXPropertyBag categoriesFor: #supportedInterfaces!constants!public! !
-!AXPropertyBag categoriesFor: #Write:pVar:!COM Interfaces-IPropertyBag!public! !
+!OS.COM.PropertyBag categoriesFor: #asVariant!converting!public! !
+!OS.COM.PropertyBag categoriesFor: #inStream:!accessing!public! !
+!OS.COM.PropertyBag categoriesFor: #load!operations!public! !
+!OS.COM.PropertyBag categoriesFor: #printOn:indent:!printing!public! !
+!OS.COM.PropertyBag categoriesFor: #propertyTable!accessing!private! !
+!OS.COM.PropertyBag categoriesFor: #propertyTable:!accessing!private! !
+!OS.COM.PropertyBag categoriesFor: #Read:pVar:pErrorLog:!COM Interfaces-IPropertyBag!public! !
+!OS.COM.PropertyBag categoriesFor: #restoreInto:!operations!public! !
+!OS.COM.PropertyBag categoriesFor: #save:clearDirty:!operations!public! !
+!OS.COM.PropertyBag categoriesFor: #save:clearDirty:saveAll:!operations!public! !
+!OS.COM.PropertyBag categoriesFor: #setProperties:!helpers!private! !
+!OS.COM.PropertyBag categoriesFor: #supportedInterfaces!constants!public! !
+!OS.COM.PropertyBag categoriesFor: #Write:pVar:!COM Interfaces-IPropertyBag!public! !
 
-AXPropertyBag methodProtocol: #IPropertyBag attributes: #(#readOnly) selectors: #(#Read:pVar:pErrorLog: #Write:pVar:)!
+OS.COM.PropertyBag methodProtocol: #IPropertyBag attributes: #(#readOnly) selectors: #(#Read:pVar:pErrorLog: #Write:pVar:)!
 

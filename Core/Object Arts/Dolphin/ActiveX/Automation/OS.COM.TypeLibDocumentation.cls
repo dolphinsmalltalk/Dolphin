@@ -1,21 +1,21 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Object subclass: #AXTypeLibDocumentation
+Core.Object subclass: #'OS.COM.TypeLibDocumentation'
 	instanceVariableNames: 'name helpstring helpcontext helpfile'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-AXTypeLibDocumentation guid: (GUID fromString: '{c06f3b78-0868-11d3-93af-00a024ca708a}')!
-AXTypeLibDocumentation comment: 'AXTypeLibDocumentation is a simple class to hold documentary information from a type library - either from an ITypeLib or an ITypeInfo.
+OS.COM.TypeLibDocumentation guid: (Core.GUID fromString: '{c06f3b78-0868-11d3-93af-00a024ca708a}')!
+OS.COM.TypeLibDocumentation comment: 'AXTypeLibDocumentation is a simple class to hold documentary information from a type library - either from an ITypeLib or an ITypeInfo.
 
 Instance Variables:
 	name 		<String> name of type library element
 	helpstring 	<String>. Short help text (a one-liner) describing the element.
 	helpcontext 	<DWORD>. Help file cross-reference.
 	helpfile		<String>. Path of help file (only valid on documentation for the library).'!
-!AXTypeLibDocumentation categoriesForClass!ActiveX Automation! !
-!AXTypeLibDocumentation methodsFor!
+!OS.COM.TypeLibDocumentation categoriesForClass!ActiveX Automation! !
+!OS.COM.TypeLibDocumentation methodsFor!
 
 helpcontext
 	^helpcontext!
@@ -46,10 +46,10 @@ printOn: aStream
 		nextPut: $(;
 		print: self name;
 		nextPut: $)! !
-!AXTypeLibDocumentation categoriesFor: #helpcontext!accessing!public! !
-!AXTypeLibDocumentation categoriesFor: #helpfile!accessing!public! !
-!AXTypeLibDocumentation categoriesFor: #helpstring!accessing!public! !
-!AXTypeLibDocumentation categoriesFor: #name!accessing!public! !
-!AXTypeLibDocumentation categoriesFor: #name:helpstring:helpcontext:helpfile:!initializing!private! !
-!AXTypeLibDocumentation categoriesFor: #printOn:!printing!public! !
+!OS.COM.TypeLibDocumentation categoriesFor: #helpcontext!accessing!public! !
+!OS.COM.TypeLibDocumentation categoriesFor: #helpfile!accessing!public! !
+!OS.COM.TypeLibDocumentation categoriesFor: #helpstring!accessing!public! !
+!OS.COM.TypeLibDocumentation categoriesFor: #name!accessing!public! !
+!OS.COM.TypeLibDocumentation categoriesFor: #name:helpstring:helpcontext:helpfile:!initializing!private! !
+!OS.COM.TypeLibDocumentation categoriesFor: #printOn:!printing!public! !
 

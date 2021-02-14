@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-AXTypeInfoAnalyzer subclass: #TKindCoclassAnalyzer
+OS.COM.TypeInfoAnalyzer subclass: #'OS.COM.TKindCoclassAnalyzer'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-TKindCoclassAnalyzer guid: (GUID fromString: '{c06f3b70-0868-11d3-93af-00a024ca708a}')!
-TKindCoclassAnalyzer comment: 'TKindCoClassAnalyzer is a class which wraps an OLE Automation <ITypeInfo> interface pointer that describes a ''coclass'' (a COM object class). It adds higher level behaviours for analyzing the type information associated with that coclass, and for automatic generation of Smalltalk wrapper information for that coclass (essentially by adding behaviours to the wrappers generated for its interfaces).'!
-!TKindCoclassAnalyzer categoriesForClass!ActiveX Automation! !
-!TKindCoclassAnalyzer methodsFor!
+OS.COM.TKindCoclassAnalyzer guid: (Core.GUID fromString: '{c06f3b70-0868-11d3-93af-00a024ca708a}')!
+OS.COM.TKindCoclassAnalyzer comment: 'TKindCoClassAnalyzer is a class which wraps an OLE Automation <ITypeInfo> interface pointer that describes a ''coclass'' (a COM object class). It adds higher level behaviours for analyzing the type information associated with that coclass, and for automatic generation of Smalltalk wrapper information for that coclass (essentially by adding behaviours to the wrappers generated for its interfaces).'!
+!OS.COM.TKindCoclassAnalyzer categoriesForClass!ActiveX Automation! !
+!OS.COM.TKindCoclassAnalyzer methodsFor!
 
 baseClass
 	"Private - Answer the Dolphin class used to represent superclass of the receiver.
@@ -129,27 +129,27 @@ sourceInterfaces
 	^((1 to: self attributes cImplTypes) 
 		select: [:i | (piTI getImplTypeFlags: i - 1) allMask: IMPLTYPEFLAG_FSOURCE]) 
 			collect: [:i | self getImplTypeInfoAt: i]! !
-!TKindCoclassAnalyzer categoriesFor: #baseClass!constants!private! !
-!TKindCoclassAnalyzer categoriesFor: #classDesc!accessing!constants!private! !
-!TKindCoclassAnalyzer categoriesFor: #clsid!accessing!public! !
-!TKindCoclassAnalyzer categoriesFor: #defaultInterface!enquiries!public! !
-!TKindCoclassAnalyzer categoriesFor: #defaultSourceInterface!enquiries!public! !
-!TKindCoclassAnalyzer categoriesFor: #interfaceFlags!enumerating!public! !
-!TKindCoclassAnalyzer categoriesFor: #interfaces!enumerating!public! !
-!TKindCoclassAnalyzer categoriesFor: #isAggregatable!public!testing! !
-!TKindCoclassAnalyzer categoriesFor: #isAppObject!public!testing! !
-!TKindCoclassAnalyzer categoriesFor: #isControl!public!testing! !
-!TKindCoclassAnalyzer categoriesFor: #isInstantiable!public!testing! !
-!TKindCoclassAnalyzer categoriesFor: #isLicensed!public!testing! !
-!TKindCoclassAnalyzer categoriesFor: #nonSourceInterfaces!enumerating!public! !
-!TKindCoclassAnalyzer categoriesFor: #notInstantiable!public!testing! !
-!TKindCoclassAnalyzer categoriesFor: #sourceInterfaces!enumerating!public! !
+!OS.COM.TKindCoclassAnalyzer categoriesFor: #baseClass!constants!private! !
+!OS.COM.TKindCoclassAnalyzer categoriesFor: #classDesc!accessing!constants!private! !
+!OS.COM.TKindCoclassAnalyzer categoriesFor: #clsid!accessing!public! !
+!OS.COM.TKindCoclassAnalyzer categoriesFor: #defaultInterface!enquiries!public! !
+!OS.COM.TKindCoclassAnalyzer categoriesFor: #defaultSourceInterface!enquiries!public! !
+!OS.COM.TKindCoclassAnalyzer categoriesFor: #interfaceFlags!enumerating!public! !
+!OS.COM.TKindCoclassAnalyzer categoriesFor: #interfaces!enumerating!public! !
+!OS.COM.TKindCoclassAnalyzer categoriesFor: #isAggregatable!public!testing! !
+!OS.COM.TKindCoclassAnalyzer categoriesFor: #isAppObject!public!testing! !
+!OS.COM.TKindCoclassAnalyzer categoriesFor: #isControl!public!testing! !
+!OS.COM.TKindCoclassAnalyzer categoriesFor: #isInstantiable!public!testing! !
+!OS.COM.TKindCoclassAnalyzer categoriesFor: #isLicensed!public!testing! !
+!OS.COM.TKindCoclassAnalyzer categoriesFor: #nonSourceInterfaces!enumerating!public! !
+!OS.COM.TKindCoclassAnalyzer categoriesFor: #notInstantiable!public!testing! !
+!OS.COM.TKindCoclassAnalyzer categoriesFor: #sourceInterfaces!enumerating!public! !
 
-!TKindCoclassAnalyzer class methodsFor!
+!OS.COM.TKindCoclassAnalyzer class methodsFor!
 
 typekind
 	"Private - Answer the Automation TYPEKIND associated with the receiver."
 	
 	^TKIND_COCLASS! !
-!TKindCoclassAnalyzer class categoriesFor: #typekind!constants!private! !
+!OS.COM.TKindCoclassAnalyzer class categoriesFor: #typekind!constants!private! !
 

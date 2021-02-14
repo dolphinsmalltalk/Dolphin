@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-OLEStructure subclass: #DISPPARAMS
+OS.COM.OLEStructure subclass: #'OS.COM.DISPPARAMS'
 	instanceVariableNames: 'args vargs dispids'
 	classVariableNames: 'ZeroArgs'
-	poolDictionaries: 'AXAutomationConstants'
+	imports: #(#{OS.COM.AutomationConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_cArgs' -> 16r8.
@@ -11,8 +11,8 @@ OLEStructure subclass: #DISPPARAMS
 		'_OffsetOf_rgdispidNamedArgs' -> 16r4.
 		'_OffsetOf_rgvarg' -> 16r0
 	}!
-DISPPARAMS guid: (GUID fromString: '{c06f3b6f-0868-11d3-93af-00a024ca708a}')!
-DISPPARAMS comment: 'DISPPARAMS is an <ExternalStructure> to represent the OLE Automation structure DISPPARAMS.
+OS.COM.DISPPARAMS guid: (Core.GUID fromString: '{c06f3b6f-0868-11d3-93af-00a024ca708a}')!
+OS.COM.DISPPARAMS comment: 'DISPPARAMS is an <ExternalStructure> to represent the OLE Automation structure DISPPARAMS.
 
 DISPPARAMS is the parameter block used in calls to IDispatch::Invoke. It contains an array of VARIANTARG structures (which are actually represented by the identical <VARIANT> structure in Dolphin), a count of the total number of arguments, an array of the <integer> DISPIDs of the so called "named" arguments, and a count of the number of named arguments in that array. The named arguments are assumed to appear first in the rgvarg array.
 
@@ -25,8 +25,8 @@ Fields:
 	rgdispidNamedArgs	<SDWORD*> Array of ids of named arguments
 	cArgs		<DWORD> Total number of named and unnamed arguments (size of rgvarg).
 	cNamedArgs	<DWORD> Number of named arguments (size of rgdispidNamedArgs)'!
-!DISPPARAMS categoriesForClass!External-Data-Structured-COM! !
-!DISPPARAMS methodsFor!
+!OS.COM.DISPPARAMS categoriesForClass!External-Data-Structured-COM! !
+!OS.COM.DISPPARAMS methodsFor!
 
 arg: argument
 	"Set the receiver's single argument to be the <VARIANT> representation 
@@ -37,7 +37,7 @@ arg: argument
 	self rgvarg: args.
 	self cArgs: 1!
 
-args: arguments 
+args: arguments
 	"Set the receiver's arguments to be <Array> of <Object> arguments."
 
 	| argc |
@@ -48,7 +48,7 @@ args: arguments
 	vargs owner: args.
 	1 to: argc
 		do: 
-			[:i | 
+			[:i |
 			| j |
 			j := argc - i + 1.
 			vargs uncheckedAt: j put: (args at: j put: (arguments at: i) asVariant)].
@@ -163,22 +163,22 @@ singleArg
 	"Answer the single VARIANT parameter - assumes cArgs == 1"
 
 	^VARIANT fromAddress: (bytes intPtrAtOffset: 0)! !
-!DISPPARAMS categoriesFor: #arg:!accessing!public! !
-!DISPPARAMS categoriesFor: #args:!accessing!public! !
-!DISPPARAMS categoriesFor: #cArgs!**compiled accessors**!private! !
-!DISPPARAMS categoriesFor: #cArgs:!**compiled accessors**!private! !
-!DISPPARAMS categoriesFor: #cNamedArgs!**compiled accessors**!private! !
-!DISPPARAMS categoriesFor: #cNamedArgs:!**compiled accessors**!private! !
-!DISPPARAMS categoriesFor: #names:named:args:!accessing!public! !
-!DISPPARAMS categoriesFor: #propertyPut:value:!accessing!public! !
-!DISPPARAMS categoriesFor: #propertyPutValue:!accessing!public! !
-!DISPPARAMS categoriesFor: #rgdispidNamedArgs!**compiled accessors**!public! !
-!DISPPARAMS categoriesFor: #rgdispidNamedArgs:!**compiled accessors**!public! !
-!DISPPARAMS categoriesFor: #rgvarg!**compiled accessors**!public! !
-!DISPPARAMS categoriesFor: #rgvarg:!**compiled accessors**!public! !
-!DISPPARAMS categoriesFor: #singleArg!accessing!public! !
+!OS.COM.DISPPARAMS categoriesFor: #arg:!accessing!public! !
+!OS.COM.DISPPARAMS categoriesFor: #args:!accessing!public! !
+!OS.COM.DISPPARAMS categoriesFor: #cArgs!**compiled accessors**!private! !
+!OS.COM.DISPPARAMS categoriesFor: #cArgs:!**compiled accessors**!private! !
+!OS.COM.DISPPARAMS categoriesFor: #cNamedArgs!**compiled accessors**!private! !
+!OS.COM.DISPPARAMS categoriesFor: #cNamedArgs:!**compiled accessors**!private! !
+!OS.COM.DISPPARAMS categoriesFor: #names:named:args:!accessing!public! !
+!OS.COM.DISPPARAMS categoriesFor: #propertyPut:value:!accessing!public! !
+!OS.COM.DISPPARAMS categoriesFor: #propertyPutValue:!accessing!public! !
+!OS.COM.DISPPARAMS categoriesFor: #rgdispidNamedArgs!**compiled accessors**!public! !
+!OS.COM.DISPPARAMS categoriesFor: #rgdispidNamedArgs:!**compiled accessors**!public! !
+!OS.COM.DISPPARAMS categoriesFor: #rgvarg!**compiled accessors**!public! !
+!OS.COM.DISPPARAMS categoriesFor: #rgvarg:!**compiled accessors**!public! !
+!OS.COM.DISPPARAMS categoriesFor: #singleArg!accessing!public! !
 
-!DISPPARAMS class methodsFor!
+!OS.COM.DISPPARAMS class methodsFor!
 
 defineFields
 	"Define the fields of the DISPPARAMSstructure.
@@ -241,11 +241,11 @@ zeroArgs
 	are no arguments."
 
 	^ZeroArgs! !
-!DISPPARAMS class categoriesFor: #defineFields!public!template definition! !
-!DISPPARAMS class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!DISPPARAMS class categoriesFor: #initialize!development!initializing!private! !
-!DISPPARAMS class categoriesFor: #uninitialize!class hierarchy-removing!private! !
-!DISPPARAMS class categoriesFor: #with:!instance creation!public! !
-!DISPPARAMS class categoriesFor: #withArguments:!instance creation!public! !
-!DISPPARAMS class categoriesFor: #zeroArgs!instance creation!public! !
+!OS.COM.DISPPARAMS class categoriesFor: #defineFields!public!template definition! !
+!OS.COM.DISPPARAMS class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.COM.DISPPARAMS class categoriesFor: #initialize!development!initializing!private! !
+!OS.COM.DISPPARAMS class categoriesFor: #uninitialize!class hierarchy-removing!private! !
+!OS.COM.DISPPARAMS class categoriesFor: #with:!instance creation!public! !
+!OS.COM.DISPPARAMS class categoriesFor: #withArguments:!instance creation!public! !
+!OS.COM.DISPPARAMS class categoriesFor: #zeroArgs!instance creation!public! !
 

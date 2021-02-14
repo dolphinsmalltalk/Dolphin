@@ -1,16 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-OLEStructure subclass: #OLEFinalizableStructure
+OS.COM.OLEStructure subclass: #'OS.COM.FinalizableStructure'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-OLEFinalizableStructure guid: (GUID fromString: '{87b4c5b9-026e-11d3-9fd7-00a0cc3e4a32}')!
-OLEFinalizableStructure isAbstract: true!
-OLEFinalizableStructure comment: ''!
-!OLEFinalizableStructure categoriesForClass!External-Data-Structured-COM! !
-!OLEFinalizableStructure methodsFor!
+OS.COM.FinalizableStructure guid: (Core.GUID fromString: '{87b4c5b9-026e-11d3-9fd7-00a0cc3e4a32}')!
+OS.COM.FinalizableStructure isNonInstantiable: true!
+OS.COM.FinalizableStructure comment: ''!
+!OS.COM.FinalizableStructure categoriesForClass!External-Data-Structured-COM! !
+!OS.COM.FinalizableStructure methodsFor!
 
 initialize
 	"Private - Initialize the receiver which is an internal [value] buffer.
@@ -36,11 +36,11 @@ onStartup
 	self beUnfinalizable.
 	self isPointer ifTrue: [
 		bytes := nil]! !
-!OLEFinalizableStructure categoriesFor: #initialize!initializing!private! !
-!OLEFinalizableStructure categoriesFor: #needsFree!private!realizing/unrealizing! !
-!OLEFinalizableStructure categoriesFor: #onStartup!event handling!private! !
+!OS.COM.FinalizableStructure categoriesFor: #initialize!initializing!private! !
+!OS.COM.FinalizableStructure categoriesFor: #needsFree!private!realizing/unrealizing! !
+!OS.COM.FinalizableStructure categoriesFor: #onStartup!event handling!private! !
 
-!OLEFinalizableStructure class methodsFor!
+!OS.COM.FinalizableStructure class methodsFor!
 
 clear: addressOrBytes
 	"Free external resources referenced by the structure
@@ -66,8 +66,8 @@ onStartup
 
 uninitialize
 	SessionManager current removeEventsTriggeredFor: self! !
-!OLEFinalizableStructure class categoriesFor: #clear:!public!realizing/unrealizing! !
-!OLEFinalizableStructure class categoriesFor: #initialize!development!initializing!private! !
-!OLEFinalizableStructure class categoriesFor: #onStartup!event handling!private! !
-!OLEFinalizableStructure class categoriesFor: #uninitialize!class hierarchy-removing!private! !
+!OS.COM.FinalizableStructure class categoriesFor: #clear:!public!realizing/unrealizing! !
+!OS.COM.FinalizableStructure class categoriesFor: #initialize!development!initializing!private! !
+!OS.COM.FinalizableStructure class categoriesFor: #onStartup!event handling!private! !
+!OS.COM.FinalizableStructure class categoriesFor: #uninitialize!class hierarchy-removing!private! !
 

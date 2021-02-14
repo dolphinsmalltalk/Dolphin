@@ -1,15 +1,19 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-SequenceableCollection subclass: #OLEEnumerator
+Core.SequenceableCollection subclass: #'OS.COM.Enumerable'
 	instanceVariableNames: 'interface'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-OLEEnumerator guid: (GUID fromString: '{87b4c50e-026e-11d3-9fd7-00a0cc3e4a32}')!
-OLEEnumerator comment: 'OLEEnumerator is a <sequencedReadableCollection> that wraps an OLE enumeration interface (IEnumXXXX). It provides an efficient way to treat an enumeration supplied by a COM object as a full-blown Smalltalk collection.'!
-!OLEEnumerator categoriesForClass!Collections-Sequenceable! !
-!OLEEnumerator methodsFor!
+OS.COM.Enumerable guid: (Core.GUID fromString: '{87b4c50e-026e-11d3-9fd7-00a0cc3e4a32}')!
+OS.COM.Enumerable comment: 'OS.COM.Enumerable is a <sequencedReadableCollection> that wraps an OLE enumeration interface (IEnumXXXX). It provides an efficient way to treat an enumeration supplied by a COM object as a full-blown Smalltalk collection.
+
+Enumerables are really much closer to positionable stream''s than sequenceable collections, so this design is a mistake in hindsight, but remains in place for now.
+
+'!
+!OS.COM.Enumerable categoriesForClass!Collections-Sequenceable! !
+!OS.COM.Enumerable methodsFor!
 
 add: newElement
 	"OLE IEnums are immutable, and therefore not extensible."
@@ -121,22 +125,22 @@ species
 	(Array because OLEEnumerators are fixed in size and typically static)."
 
 	^Array! !
-!OLEEnumerator categoriesFor: #add:!adding!public! !
-!OLEEnumerator categoriesFor: #approxSize!accessing!private! !
-!OLEEnumerator categoriesFor: #at:!accessing!public! !
-!OLEEnumerator categoriesFor: #at:put:!accessing!public! !
-!OLEEnumerator categoriesFor: #basicFree!private!realizing/unrealizing! !
-!OLEEnumerator categoriesFor: #collect:!enumerating!public! !
-!OLEEnumerator categoriesFor: #copyEmpty:!copying!private! !
-!OLEEnumerator categoriesFor: #copySize!copying!private! !
-!OLEEnumerator categoriesFor: #free!public!realizing/unrealizing! !
-!OLEEnumerator categoriesFor: #from:to:keysAndValuesDo:!enumerating!public! !
-!OLEEnumerator categoriesFor: #growSize!accessing!private! !
-!OLEEnumerator categoriesFor: #interface:!accessing!private! !
-!OLEEnumerator categoriesFor: #keysAndValuesDo:!enumerating!public! !
-!OLEEnumerator categoriesFor: #species!constants!public! !
+!OS.COM.Enumerable categoriesFor: #add:!adding!public! !
+!OS.COM.Enumerable categoriesFor: #approxSize!accessing!private! !
+!OS.COM.Enumerable categoriesFor: #at:!accessing!public! !
+!OS.COM.Enumerable categoriesFor: #at:put:!accessing!public! !
+!OS.COM.Enumerable categoriesFor: #basicFree!private!realizing/unrealizing! !
+!OS.COM.Enumerable categoriesFor: #collect:!enumerating!public! !
+!OS.COM.Enumerable categoriesFor: #copyEmpty:!copying!private! !
+!OS.COM.Enumerable categoriesFor: #copySize!copying!private! !
+!OS.COM.Enumerable categoriesFor: #free!public!realizing/unrealizing! !
+!OS.COM.Enumerable categoriesFor: #from:to:keysAndValuesDo:!enumerating!public! !
+!OS.COM.Enumerable categoriesFor: #growSize!accessing!private! !
+!OS.COM.Enumerable categoriesFor: #interface:!accessing!private! !
+!OS.COM.Enumerable categoriesFor: #keysAndValuesDo:!enumerating!public! !
+!OS.COM.Enumerable categoriesFor: #species!constants!public! !
 
-!OLEEnumerator class methodsFor!
+!OS.COM.Enumerable class methodsFor!
 
 onIEnum: anIEnum
 	"Answer a new instance of the receiver which provides access via the Collection protocol 
@@ -146,5 +150,5 @@ onIEnum: anIEnum
 		interface: anIEnum
 
 	! !
-!OLEEnumerator class categoriesFor: #onIEnum:!instance creation!public! !
+!OS.COM.Enumerable class categoriesFor: #onIEnum:!instance creation!public! !
 

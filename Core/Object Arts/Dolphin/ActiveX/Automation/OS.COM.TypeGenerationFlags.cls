@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-SharedPool subclass: #AXTypeGenerationFlags
+Kernel.SharedPool subclass: #'OS.COM.TypeGenerationFlags'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -22,6 +22,6 @@ SharedPool subclass: #AXTypeGenerationFlags
 		'Verbose' -> 16r800.
 		'WrapperStyleMask' -> 16r90
 	}!
-AXTypeGenerationFlags guid: (GUID fromString: '{65bfd99a-c64d-4f9a-b125-1ccf47a617e9}')!
-AXTypeGenerationFlags comment: ''!
-!AXTypeGenerationFlags categoriesForClass!Unclassified! !
+OS.COM.TypeGenerationFlags guid: (Core.GUID fromString: '{65bfd99a-c64d-4f9a-b125-1ccf47a617e9}')!
+OS.COM.TypeGenerationFlags comment: ''!
+!OS.COM.TypeGenerationFlags categoriesForClass!Unclassified! !

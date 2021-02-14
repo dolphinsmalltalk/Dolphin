@@ -1,18 +1,18 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Object subclass: #COMFunctionAbstract
+Core.Object subclass: #'OS.COM.AbstractInterfaceFunction'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-COMFunctionAbstract guid: (GUID fromString: '{17bd3725-7ec5-48d8-96b7-932dfee404c4}')!
-COMFunctionAbstract isAbstract: true!
-COMFunctionAbstract comment: 'COMFunctionAbstract is the class of objects which describe COM functions or methods. A COMFunctionAbstract is a meta-level description that holds the type of the functions arguments, the selector of the implementation of this function. COMFunctionAbstract itself is abstract, with subclasses defined to describe different types of function.
+OS.COM.AbstractInterfaceFunction guid: (Core.GUID fromString: '{17bd3725-7ec5-48d8-96b7-932dfee404c4}')!
+OS.COM.AbstractInterfaceFunction isNonInstantiable: true!
+OS.COM.AbstractInterfaceFunction comment: 'COMFunctionAbstract is the class of objects which describe COM functions or methods. A COMFunctionAbstract is a meta-level description that holds the type of the functions arguments, the selector of the implementation of this function. COMFunctionAbstract itself is abstract, with subclasses defined to describe different types of function.
 
 An important behaviour of COMFunctionAbstract is the forwarding of an incoming COM method call to the Smalltalk implementation of that method. Different types of COMFunctionAbstract may forward such calls to different objects, perhaps as different messages. Each <COMInterface> class maintains an <Array> of COMFunctionAbstract subinstances, one for each of the functions defined for the interface, in virtual function table order. When a callback to a COM object implemented in Dolphin arrives from the VM (via the Processor object), the callback gets resolved to the corresponding <COMFunctionXXXX> which is then asked to send an appropriate message to the implementor of that function. The <COMFunctionXXXX> uses argument type information to marshal the arguments from the machine stack into appropriate Smalltalk objects, and then forwards the message as defined by its selector. The implementor might be the generic stub <COMObjectStub> - of which there is an instance for every COM object served up by Dolphin - if the function call is to one of the IUnknown methods, or the <Object> which served up the interface in the first place. The architecture allows the implementor to vary on a per function basis.'!
-!COMFunctionAbstract categoriesForClass!COM-Implementations! !
-!COMFunctionAbstract methodsFor!
+!OS.COM.AbstractInterfaceFunction categoriesForClass!COM-Implementations! !
+!OS.COM.AbstractInterfaceFunction methodsFor!
 
 argumentCount
 	"Private - Answer the number of arguments expected by the receiver when 
@@ -99,14 +99,14 @@ selector
 	"Private - Answer the selector sent when the receiver is evaluated."
 
 	^self subclassResponsibility! !
-!COMFunctionAbstract categoriesFor: #argumentCount!accessing!private! !
-!COMFunctionAbstract categoriesFor: #argumentsSize!accessing!private! !
-!COMFunctionAbstract categoriesFor: #argumentTypes!accessing!private! !
-!COMFunctionAbstract categoriesFor: #callback:interface:withArgumentsAt:!evaluating!private! !
-!COMFunctionAbstract categoriesFor: #callingConvention!accessing!private! !
-!COMFunctionAbstract categoriesFor: #descriptor!accessing!private! !
-!COMFunctionAbstract categoriesFor: #messageSelectorAndArgumentNames!accessing!private! !
-!COMFunctionAbstract categoriesFor: #printOn:!development!printing!public! !
-!COMFunctionAbstract categoriesFor: #returnType!accessing!private! !
-!COMFunctionAbstract categoriesFor: #selector!accessing!private! !
+!OS.COM.AbstractInterfaceFunction categoriesFor: #argumentCount!accessing!private! !
+!OS.COM.AbstractInterfaceFunction categoriesFor: #argumentsSize!accessing!private! !
+!OS.COM.AbstractInterfaceFunction categoriesFor: #argumentTypes!accessing!private! !
+!OS.COM.AbstractInterfaceFunction categoriesFor: #callback:interface:withArgumentsAt:!evaluating!private! !
+!OS.COM.AbstractInterfaceFunction categoriesFor: #callingConvention!accessing!private! !
+!OS.COM.AbstractInterfaceFunction categoriesFor: #descriptor!accessing!private! !
+!OS.COM.AbstractInterfaceFunction categoriesFor: #messageSelectorAndArgumentNames!accessing!private! !
+!OS.COM.AbstractInterfaceFunction categoriesFor: #printOn:!development!printing!public! !
+!OS.COM.AbstractInterfaceFunction categoriesFor: #returnType!accessing!private! !
+!OS.COM.AbstractInterfaceFunction categoriesFor: #selector!accessing!private! !
 

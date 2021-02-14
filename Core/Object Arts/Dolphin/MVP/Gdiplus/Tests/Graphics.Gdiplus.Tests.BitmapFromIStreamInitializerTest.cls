@@ -21,7 +21,7 @@ setUp
 
 testCreateHandle
 	| pStream |
-	pStream := Smalltalk.IStream onHGLOBAL.
+	pStream := COM.IStream onHGLOBAL.
 	model iStream: pStream.
 	model createHandle.
 	self assert: constructorArgs size equals: 2.

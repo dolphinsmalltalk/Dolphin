@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-AXInterfaceTypeAnalyzer subclass: #TKindDispatchAnalyzer
+OS.COM.InterfaceTypeAnalyzer subclass: #'OS.COM.TKindDispatchAnalyzer'
 	instanceVariableNames: ''
 	classVariableNames: 'SpecialPropGets'
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-TKindDispatchAnalyzer guid: (GUID fromString: '{c06f3b72-0868-11d3-93af-00a024ca708a}')!
-TKindDispatchAnalyzer comment: 'TKindDispatchAnalyzer is a class which wraps an Active-X Automation <ITypeInfo> interface pointer that describes a ''dispinterface'' (a late-bound Automation interface), i.e. an ITypeInfo of type kind TKIND_DISPATCH. It supports high level behaviours for analyzing the type information associated with dispinterfaces, and for automatically generating a <IDispatch> wrapper subclasses.
+OS.COM.TKindDispatchAnalyzer guid: (Core.GUID fromString: '{c06f3b72-0868-11d3-93af-00a024ca708a}')!
+OS.COM.TKindDispatchAnalyzer comment: 'TKindDispatchAnalyzer is a class which wraps an Active-X Automation <ITypeInfo> interface pointer that describes a ''dispinterface'' (a late-bound Automation interface), i.e. an ITypeInfo of type kind TKIND_DISPATCH. It supports high level behaviours for analyzing the type information associated with dispinterfaces, and for automatically generating a <IDispatch> wrapper subclasses.
 
 Note: Certain dispinterfaces may use combinations of argument types and IDL flags which are not supported by the analyzer''s automatic wrapper method generation capabilities. Where possible generate dual interface wrappers as not only is automated support for these more advanced, but they also offer much better performance. Where not possible it may be necessary to hand craft wrappers for certain methods, perhaps using the auto-generated attempts as a start point. If a previously auto-generated method is moved out of the ''**auto-generated**'' category, then it can be safely modified without fear of it being overwritten.
 
@@ -17,8 +17,8 @@ Class Variables:
 
 
 '!
-!TKindDispatchAnalyzer categoriesForClass!ActiveX Automation! !
-!TKindDispatchAnalyzer methodsFor!
+!OS.COM.TKindDispatchAnalyzer categoriesForClass!ActiveX Automation! !
+!OS.COM.TKindDispatchAnalyzer methodsFor!
 
 asImplType
 	"Answer the actual implementing type for the receiver (some 
@@ -32,9 +32,7 @@ baseClass
 
 	| base |
 	base := self superInterface.
-	^base name = 'IDispatch'
-		ifTrue: [IDispatch]
-		ifFalse: [base global]!
+	^base name = #IDispatch ifTrue: [IDispatch] ifFalse: [base global]!
 
 dualInterface
 	"Answer the ITypeInfo for the dual interface (TKIND_INTERFACE) associated with a TKIND_DISPATCH.
@@ -75,15 +73,15 @@ vt
 	the receiver."
 
 	^VT_DISPATCH! !
-!TKindDispatchAnalyzer categoriesFor: #asImplType!accessing!public! !
-!TKindDispatchAnalyzer categoriesFor: #baseClass!constants!private! !
-!TKindDispatchAnalyzer categoriesFor: #dualInterface!accessing!public! !
-!TKindDispatchAnalyzer categoriesFor: #isAutomationCompatible!public!testing! !
-!TKindDispatchAnalyzer categoriesFor: #properties!enumerating!public! !
-!TKindDispatchAnalyzer categoriesFor: #superInterface!enumerating!public! !
-!TKindDispatchAnalyzer categoriesFor: #vt!constants!public! !
+!OS.COM.TKindDispatchAnalyzer categoriesFor: #asImplType!accessing!public! !
+!OS.COM.TKindDispatchAnalyzer categoriesFor: #baseClass!constants!private! !
+!OS.COM.TKindDispatchAnalyzer categoriesFor: #dualInterface!accessing!public! !
+!OS.COM.TKindDispatchAnalyzer categoriesFor: #isAutomationCompatible!public!testing! !
+!OS.COM.TKindDispatchAnalyzer categoriesFor: #properties!enumerating!public! !
+!OS.COM.TKindDispatchAnalyzer categoriesFor: #superInterface!enumerating!public! !
+!OS.COM.TKindDispatchAnalyzer categoriesFor: #vt!constants!public! !
 
-!TKindDispatchAnalyzer class methodsFor!
+!OS.COM.TKindDispatchAnalyzer class methodsFor!
 
 initialize
 	"Private - Initialize the receiver's class variables.
@@ -98,6 +96,6 @@ typekind
 	"Private - Answer the Automation TYPEKIND associated with the receiver."
 	
 	^TKIND_DISPATCH! !
-!TKindDispatchAnalyzer class categoriesFor: #initialize!development!initializing!private! !
-!TKindDispatchAnalyzer class categoriesFor: #typekind!constants!private! !
+!OS.COM.TKindDispatchAnalyzer class categoriesFor: #initialize!development!initializing!private! !
+!OS.COM.TKindDispatchAnalyzer class categoriesFor: #typekind!constants!private! !
 

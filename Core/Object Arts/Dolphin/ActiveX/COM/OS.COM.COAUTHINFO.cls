@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-OLEStructure subclass: #COAUTHINFO
+OS.COM.OLEStructure subclass: #'OS.COM.COAUTHINFO'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_dwAuthnLevel' -> 16rC.
@@ -14,12 +14,12 @@ OLEStructure subclass: #COAUTHINFO
 		'_OffsetOf_pAuthIdentityData' -> 16r14.
 		'_OffsetOf_pwszServerPrincName' -> 16r8
 	}!
-COAUTHINFO guid: (GUID fromString: '{27d02683-c29f-450c-a25f-3186b62d47f2}')!
-COAUTHINFO comment: '<COAUTHINFO> is an <ExternalStructure> class to wrap the struct ''OBJIDL.COAUTHINFO'' from type information in the ''ObjIDL Library'' library.
+OS.COM.COAUTHINFO guid: (Core.GUID fromString: '{27d02683-c29f-450c-a25f-3186b62d47f2}')!
+OS.COM.COAUTHINFO comment: '`OS.COM.COAUTHINFO` is an <External.Structure> class to wrap the struct ''OBJIDL.COAUTHINFO'' from type information in the ''ObjIDL Library'' library.
 
 The COAUTHINFO structure specifies the authentication settings used while making a remote activation request from a client machine to a server machine.'!
-!COAUTHINFO categoriesForClass!OBJIDL-Structs! !
-!COAUTHINFO methodsFor!
+!OS.COM.COAUTHINFO categoriesForClass!OBJIDL-Structs! !
+!OS.COM.COAUTHINFO methodsFor!
 
 dwAuthnLevel
 	"Answer the <Integer> value of the receiver's 'dwAuthnLevel' field."
@@ -90,22 +90,22 @@ pwszServerPrincName: anUtf16String
 	"Set the receiver's 'pwszServerPrincName' field to the value of the argument, anUtf16String"
 
 	bytes uintPtrAtOffset: _OffsetOf_pwszServerPrincName put: anUtf16String yourAddress! !
-!COAUTHINFO categoriesFor: #dwAuthnLevel!**compiled accessors**!public! !
-!COAUTHINFO categoriesFor: #dwAuthnLevel:!**compiled accessors**!public! !
-!COAUTHINFO categoriesFor: #dwAuthnSvc!**compiled accessors**!public! !
-!COAUTHINFO categoriesFor: #dwAuthnSvc:!**compiled accessors**!public! !
-!COAUTHINFO categoriesFor: #dwAuthzSvc!**compiled accessors**!public! !
-!COAUTHINFO categoriesFor: #dwAuthzSvc:!**compiled accessors**!public! !
-!COAUTHINFO categoriesFor: #dwCapabilities!**compiled accessors**!public! !
-!COAUTHINFO categoriesFor: #dwCapabilities:!**compiled accessors**!public! !
-!COAUTHINFO categoriesFor: #dwImpersonationLevel!**compiled accessors**!public! !
-!COAUTHINFO categoriesFor: #dwImpersonationLevel:!**compiled accessors**!public! !
-!COAUTHINFO categoriesFor: #pAuthIdentityData!**compiled accessors**!public! !
-!COAUTHINFO categoriesFor: #pAuthIdentityData:!**compiled accessors**!public! !
-!COAUTHINFO categoriesFor: #pwszServerPrincName!**compiled accessors**!public! !
-!COAUTHINFO categoriesFor: #pwszServerPrincName:!**compiled accessors**!public! !
+!OS.COM.COAUTHINFO categoriesFor: #dwAuthnLevel!**compiled accessors**!public! !
+!OS.COM.COAUTHINFO categoriesFor: #dwAuthnLevel:!**compiled accessors**!public! !
+!OS.COM.COAUTHINFO categoriesFor: #dwAuthnSvc!**compiled accessors**!public! !
+!OS.COM.COAUTHINFO categoriesFor: #dwAuthnSvc:!**compiled accessors**!public! !
+!OS.COM.COAUTHINFO categoriesFor: #dwAuthzSvc!**compiled accessors**!public! !
+!OS.COM.COAUTHINFO categoriesFor: #dwAuthzSvc:!**compiled accessors**!public! !
+!OS.COM.COAUTHINFO categoriesFor: #dwCapabilities!**compiled accessors**!public! !
+!OS.COM.COAUTHINFO categoriesFor: #dwCapabilities:!**compiled accessors**!public! !
+!OS.COM.COAUTHINFO categoriesFor: #dwImpersonationLevel!**compiled accessors**!public! !
+!OS.COM.COAUTHINFO categoriesFor: #dwImpersonationLevel:!**compiled accessors**!public! !
+!OS.COM.COAUTHINFO categoriesFor: #pAuthIdentityData!**compiled accessors**!public! !
+!OS.COM.COAUTHINFO categoriesFor: #pAuthIdentityData:!**compiled accessors**!public! !
+!OS.COM.COAUTHINFO categoriesFor: #pwszServerPrincName!**compiled accessors**!public! !
+!OS.COM.COAUTHINFO categoriesFor: #pwszServerPrincName:!**compiled accessors**!public! !
 
-!COAUTHINFO class methodsFor!
+!OS.COM.COAUTHINFO class methodsFor!
 
 defineFields
 	"Define the fields of the COAUTHINFO structure.
@@ -134,6 +134,6 @@ defineFields
 
 getFieldNames
 	^#(#dwAuthnSvc #dwAuthzSvc #pwszServerPrincName #dwAuthnLevel #dwImpersonationLevel #pAuthIdentityData #dwCapabilities)! !
-!COAUTHINFO class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!COAUTHINFO class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.COM.COAUTHINFO class categoriesFor: #defineFields!**auto generated**!public!template definition! !
+!OS.COM.COAUTHINFO class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

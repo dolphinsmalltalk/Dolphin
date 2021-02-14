@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-OLEStructure subclass: #FONTDESC
+OS.COM.OLEStructure subclass: #'OS.COM.FONTDESC'
 	instanceVariableNames: 'name'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_cySize' -> 16r8.
@@ -15,12 +15,12 @@ OLEStructure subclass: #FONTDESC
 		'_OffsetOf_sCharset' -> 16r12.
 		'_OffsetOf_sWeight' -> 16r10
 	}!
-FONTDESC guid: (GUID fromString: '{73f5f101-a4da-11d3-b376-080046056106}')!
-FONTDESC comment: 'FONTDESC is an <ExternalStructure> class to represent the OLE structure of the same name.
+OS.COM.FONTDESC guid: (Core.GUID fromString: '{73f5f101-a4da-11d3-b376-080046056106}')!
+OS.COM.FONTDESC comment: 'FONTDESC is an <ExternalStructure> class to represent the OLE structure of the same name.
 
 FONTDESC is similar to a LOGFONT in that it represents a logical description of a Font, although in this case an OLE Font object (see IFont and IFontDisp). FONTDESC is simpler than LOGFONT, however.'!
-!FONTDESC categoriesForClass!External-Data-Structured-COM! !
-!FONTDESC methodsFor!
+!OS.COM.FONTDESC categoriesForClass!External-Data-Structured-COM! !
+!OS.COM.FONTDESC methodsFor!
 
 cySize
 	"Answer the <Integer> value of the receiver's 'cySize' field."
@@ -117,27 +117,27 @@ sWeight: anInteger
 	"Set the receiver's 'sWeight' field to the value of the argument, anInteger"
 
 	bytes swordAtOffset: _OffsetOf_sWeight put: anInteger! !
-!FONTDESC categoriesFor: #cySize!**compiled accessors**!public! !
-!FONTDESC categoriesFor: #cySize:!**compiled accessors**!public! !
-!FONTDESC categoriesFor: #dwSize:!**compiled accessors**!public! !
-!FONTDESC categoriesFor: #faceName!accessing!public! !
-!FONTDESC categoriesFor: #faceName:!accessing!public! !
-!FONTDESC categoriesFor: #fItalic!**compiled accessors**!public! !
-!FONTDESC categoriesFor: #fItalic:!**compiled accessors**!public! !
-!FONTDESC categoriesFor: #fStrikethrough!**compiled accessors**!public! !
-!FONTDESC categoriesFor: #fStrikethrough:!**compiled accessors**!public! !
-!FONTDESC categoriesFor: #fUnderline!**compiled accessors**!public! !
-!FONTDESC categoriesFor: #fUnderline:!**compiled accessors**!public! !
-!FONTDESC categoriesFor: #lpstrName!**compiled accessors**!public! !
-!FONTDESC categoriesFor: #lpstrName:!**compiled accessors**!public! !
-!FONTDESC categoriesFor: #pointSize!accessing!public! !
-!FONTDESC categoriesFor: #pointSize:!accessing!public! !
-!FONTDESC categoriesFor: #sCharset!**compiled accessors**!public! !
-!FONTDESC categoriesFor: #sCharset:!**compiled accessors**!public! !
-!FONTDESC categoriesFor: #sWeight!**compiled accessors**!public! !
-!FONTDESC categoriesFor: #sWeight:!**compiled accessors**!public! !
+!OS.COM.FONTDESC categoriesFor: #cySize!**compiled accessors**!public! !
+!OS.COM.FONTDESC categoriesFor: #cySize:!**compiled accessors**!public! !
+!OS.COM.FONTDESC categoriesFor: #dwSize:!**compiled accessors**!public! !
+!OS.COM.FONTDESC categoriesFor: #faceName!accessing!public! !
+!OS.COM.FONTDESC categoriesFor: #faceName:!accessing!public! !
+!OS.COM.FONTDESC categoriesFor: #fItalic!**compiled accessors**!public! !
+!OS.COM.FONTDESC categoriesFor: #fItalic:!**compiled accessors**!public! !
+!OS.COM.FONTDESC categoriesFor: #fStrikethrough!**compiled accessors**!public! !
+!OS.COM.FONTDESC categoriesFor: #fStrikethrough:!**compiled accessors**!public! !
+!OS.COM.FONTDESC categoriesFor: #fUnderline!**compiled accessors**!public! !
+!OS.COM.FONTDESC categoriesFor: #fUnderline:!**compiled accessors**!public! !
+!OS.COM.FONTDESC categoriesFor: #lpstrName!**compiled accessors**!public! !
+!OS.COM.FONTDESC categoriesFor: #lpstrName:!**compiled accessors**!public! !
+!OS.COM.FONTDESC categoriesFor: #pointSize!accessing!public! !
+!OS.COM.FONTDESC categoriesFor: #pointSize:!accessing!public! !
+!OS.COM.FONTDESC categoriesFor: #sCharset!**compiled accessors**!public! !
+!OS.COM.FONTDESC categoriesFor: #sCharset:!**compiled accessors**!public! !
+!OS.COM.FONTDESC categoriesFor: #sWeight!**compiled accessors**!public! !
+!OS.COM.FONTDESC categoriesFor: #sWeight:!**compiled accessors**!public! !
 
-!FONTDESC class methodsFor!
+!OS.COM.FONTDESC class methodsFor!
 
 defineFields
 	"Define the fields of the FONTDESC structure.
@@ -185,7 +185,7 @@ fromFont: font
 
 getFieldNames
 	^#(#dwSize #lpstrName #cySize #sWeight #sCharset #fItalic #fUnderline #fStrikethrough)! !
-!FONTDESC class categoriesFor: #defineFields!public!template definition! !
-!FONTDESC class categoriesFor: #fromFont:!instance creation!public! !
-!FONTDESC class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.COM.FONTDESC class categoriesFor: #defineFields!public!template definition! !
+!OS.COM.FONTDESC class categoriesFor: #fromFont:!instance creation!public! !
+!OS.COM.FONTDESC class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

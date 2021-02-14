@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-AXDualImp subclass: #AXForwardingDualImp
+OS.COM.DualInterfaceImplementation subclass: #'OS.COM.ForwardingDualInterfaceImplementation'
 	instanceVariableNames: 'interfaceClass server'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-AXForwardingDualImp guid: (GUID fromString: '{609232b8-a27b-4709-941c-128cd9948bda}')!
-AXForwardingDualImp comment: ''!
-!AXForwardingDualImp categoriesForClass!Unclassified! !
-!AXForwardingDualImp methodsFor!
+OS.COM.ForwardingDualInterfaceImplementation guid: (Core.GUID fromString: '{609232b8-a27b-4709-941c-128cd9948bda}')!
+OS.COM.ForwardingDualInterfaceImplementation comment: ''!
+!OS.COM.ForwardingDualInterfaceImplementation categoriesForClass!Unclassified! !
+!OS.COM.ForwardingDualInterfaceImplementation methodsFor!
 
 interfaceClass
 	"Answer the interface class which is implemented by the receiver."
@@ -36,8 +36,8 @@ server: anObject
 	the server is set before the interface is queried."
 
 	server := anObject! !
-!AXForwardingDualImp categoriesFor: #interfaceClass!accessing!public! !
-!AXForwardingDualImp categoriesFor: #interfaceClass:!accessing!public! !
-!AXForwardingDualImp categoriesFor: #server!accessing!public! !
-!AXForwardingDualImp categoriesFor: #server:!accessing!public! !
+!OS.COM.ForwardingDualInterfaceImplementation categoriesFor: #interfaceClass!accessing!public! !
+!OS.COM.ForwardingDualInterfaceImplementation categoriesFor: #interfaceClass:!accessing!public! !
+!OS.COM.ForwardingDualInterfaceImplementation categoriesFor: #server!accessing!public! !
+!OS.COM.ForwardingDualInterfaceImplementation categoriesFor: #server:!accessing!public! !
 

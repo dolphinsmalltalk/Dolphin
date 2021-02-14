@@ -280,12 +280,12 @@ release
 	Smalltalk developmentSystem unregisterTool: self.
 	self allToolClasses do: [:each | each removeEventsTriggeredFor: self]!
 
-streamHtml: aStream intoBrowser: browser 
+streamHtml: aStream intoBrowser: browser
 	| doc docStream |
 	doc := browser document.
-	docStream := doc queryInterface: Smalltalk.IPersistStreamInit.
+	docStream := doc queryInterface: OS.COM.IPersistStreamInit.
 	docStream initNew.
-	docStream readFrom: (aStream queryInterface: Smalltalk.IStream)!
+	docStream readFrom: (aStream queryInterface: OS.COM.IStream)!
 
 variableDescriptionsFor: aClass
 	"Private - Answers a <readableString> that describes the instance variables and
@@ -321,7 +321,7 @@ variableDescriptionsFor: aClass
 						nextPut: $`;
 						cr].
 			stream cr].
-	names := aClass classVarNames asSortedCollection.
+	names := aClass classVariableNames asSortedCollection.
 	names notEmpty
 		ifTrue: 
 			[stream

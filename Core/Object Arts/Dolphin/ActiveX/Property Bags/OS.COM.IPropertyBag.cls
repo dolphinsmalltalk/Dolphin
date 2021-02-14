@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-IUnknown subclass: #IPropertyBag
+OS.COM.IUnknown subclass: #'OS.COM.IPropertyBag'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-IPropertyBag guid: (IID fromString: '{55272a00-42cb-11ce-8135-00aa004bb851}')!
-IPropertyBag comment: '`IPropertyBag` is a wrapper class for the COM interface ''Win32.IPropertyBag'' generated from type information in the ''Win32 API'' library. It contains methods to invoke the member functions exposed by that interface.
+OS.COM.IPropertyBag guid: (OS.COM.IID fromString: '{55272a00-42cb-11ce-8135-00aa004bb851}')!
+OS.COM.IPropertyBag comment: '`OS.COM.IPropertyBag` is a wrapper class for the COM interface ''Win32.IPropertyBag'' generated from type information in the ''Win32 API'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
 
@@ -35,8 +35,8 @@ interface IPropertyBag : IUnknown
 };
 ```
 '!
-!IPropertyBag categoriesForClass!COM-Interfaces! !
-!IPropertyBag methodsFor!
+!OS.COM.IPropertyBag categoriesForClass!COM-Interfaces! !
+!OS.COM.IPropertyBag methodsFor!
 
 read: pszPropName pErrorLog: pErrorLog
 	"Answer the <VARIANT> result of invoking the RemoteRead() method of the COM object."
@@ -74,14 +74,14 @@ Write: pszPropName pVar: pVar
 
 	<virtual stdcall: hresult 5 lpwstr variant*>
 	^self invalidCall: _failureCode! !
-!IPropertyBag categoriesFor: #read:pErrorLog:!**auto generated**!methods!public! !
-!IPropertyBag categoriesFor: #Read:pVar:pErrorLog:!**auto generated**!COM Interfaces-IPropertyBag!private! !
-!IPropertyBag categoriesFor: #write:pVar:!**auto generated**!methods!public! !
-!IPropertyBag categoriesFor: #Write:pVar:!**auto generated**!COM Interfaces-IPropertyBag!private! !
+!OS.COM.IPropertyBag categoriesFor: #read:pErrorLog:!**auto generated**!methods!public! !
+!OS.COM.IPropertyBag categoriesFor: #Read:pVar:pErrorLog:!**auto generated**!COM Interfaces-IPropertyBag!private! !
+!OS.COM.IPropertyBag categoriesFor: #write:pVar:!**auto generated**!methods!public! !
+!OS.COM.IPropertyBag categoriesFor: #Write:pVar:!**auto generated**!COM Interfaces-IPropertyBag!private! !
 
-IPropertyBag methodProtocol: #IPropertyBag attributes: #(#readOnly) selectors: #(#Read:pVar:pErrorLog: #Write:pVar:)!
+OS.COM.IPropertyBag methodProtocol: #IPropertyBag attributes: #(#readOnly) selectors: #(#Read:pVar:pErrorLog: #Write:pVar:)!
 
-!IPropertyBag class methodsFor!
+!OS.COM.IPropertyBag class methodsFor!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'OCIDL.IPropertyBag'
@@ -94,5 +94,5 @@ defineFunctions
 		defineFunction: #Write:pVar:
 			argumentTypes: 'lpwstr VARIANT*'
 ! !
-!IPropertyBag class categoriesFor: #defineFunctions!initializing!public! !
+!OS.COM.IPropertyBag class categoriesFor: #defineFunctions!initializing!public! !
 

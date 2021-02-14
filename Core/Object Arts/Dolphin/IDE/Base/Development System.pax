@@ -494,14 +494,14 @@ package setMethodNames: #(
 	#(#{Refactory.Browser.VariableEnvironment} #updateCachesForMethod:)
 	#(#{Smalltalk class} #publishedEvents)
 	#(#{Smalltalk class} #renameVariable:to:)
-	#(#{Smalltalk.AXControlSite class} #publishedAspectsOfInstances)
 	#(#{Smalltalk.StyledGradientBrush class} #publishedAspectsOfInstances)
 	#(#{Smalltalk.StyledPen class} #publishedAspectsOfInstances)
 	#(#{UI.AbstractCardContainer class} #publishedAspectsOfInstances)
 	#(#{UI.AbstractCardContainer class} #publishedEventsOfInstances)
 	#(#{UI.AbstractDocumentShell} #saveStateOn:)
 	#(#{UI.AbstractToTextConverter class} #publishedAspectsOfInstances)
-	#(#{Smalltalk.AXValueConvertingControlSite class} #publishedAspectsOfInstances)
+	#(#{UI.AXControlSite class} #publishedAspectsOfInstances)
+	#(#{UI.AXValueConvertingControlSite class} #publishedAspectsOfInstances)
 	#(#{UI.BasicListAbstract class} #publishedAspectsOfInstances)
 	#(#{UI.BooleanToText class} #publishedAspectsOfInstances)
 	#(#{UI.BorderLayout} #arrangementAspect)
@@ -3750,7 +3750,7 @@ publishedAspectsOfInstances
 !Graphics.Point3D class methodsFor!
 
 publishedAspectsOfInstances
-	"Answer a <LookupTable> of the <Smalltalk.Aspect>s published by instances of the receiver."
+	"Answer a <LookupTable> of the <Aspect>s published by instances of the receiver."
 
 	^super publishedAspectsOfInstances
 		add: (Tools.Aspect integer: #x);
@@ -3963,7 +3963,7 @@ stylerClass
 !Kernel.CompiledCode class methodsFor!
 
 publishedAspectsOfInstances
-	"Answer a <LookupTable> of the <Smalltalk.Aspect>s published by instances of the receiver."
+	"Answer a <LookupTable> of the <Aspect>s published by instances of the receiver."
 
 	^super publishedAspectsOfInstances
 		add: (Tools.Aspect name: #methodClass) beReadOnly;
@@ -4985,7 +4985,7 @@ printOn: aStream
 !OS.VersionInfo class methodsFor!
 
 publishedAspectsOfInstances
-	"Answer a <LookupTable> of the <Smalltalk.Aspect>s published by instances of the receiver."
+	"Answer a <LookupTable> of the <Aspect>s published by instances of the receiver."
 
 	^super publishedAspectsOfInstances
 		add: (Tools.Aspect string: #fileDescription) beReadOnly;
@@ -5156,7 +5156,7 @@ includesResource: aResourceIdentifier
 !Refactory.Browser.RBConfigurableFormatter class methodsFor!
 
 publishedAspects
-	"Answer a <LookupTable> of the <Smalltalk.Aspect>s published by instances of the receiver."
+	"Answer a <LookupTable> of the <Aspect>s published by instances of the receiver."
 
 	^super publishedAspects
 		add: (Tools.Aspect boolean: #formatCommentWithStatements);
@@ -5296,27 +5296,6 @@ renameVariable: oldName to: newName
 !Smalltalk class categoriesFor: #publishedEvents!events!public! !
 !Smalltalk class categoriesFor: #renameVariable:to:!operations!public! !
 
-!AXControlSite class methodsFor!
-
-publishedAspectsOfInstances
-	"Answer a <LookupTable> of the <Aspect>s published by instances of the receiver."
-
-	^super publishedAspectsOfInstances
-		add: (Tools.Aspect
-					name: #progId
-					presenterBlock: [:p :m | TextPresenter createIn: p on: m]
-					editBlock: [:p | p model value: (self chooseControl: p model value)]);
-		add: (Tools.Aspect name: #controlDispatch) beReadOnly;
-		add: (Tools.Aspect name: #yourself editBlock: [:p | p model value editControlProperties]);
-		add: (Tools.Aspect boolean: #firesPropertyNotifications);
-		add: (Tools.Aspect boolean: #firesControlEvents);
-		add: (Tools.Aspect boolean: #allowContextMenu);
-		add: (Tools.Aspect boolean: #isDesignMode);
-		add: (Tools.Aspect boolean: #isDefault);
-		add: (Tools.Aspect string: #licenseKey);
-		yourself! !
-!AXControlSite class categoriesFor: #publishedAspectsOfInstances!constants!must strip!public! !
-
 !StyledGradientBrush class methodsFor!
 
 publishedAspectsOfInstances
@@ -5385,7 +5364,28 @@ publishedAspectsOfInstances
 		yourself! !
 !UI.AbstractToTextConverter class categoriesFor: #publishedAspectsOfInstances!constants!public! !
 
-!Smalltalk.AXValueConvertingControlSite class methodsFor!
+!UI.AXControlSite class methodsFor!
+
+publishedAspectsOfInstances
+	"Answer a <LookupTable> of the <Aspect>s published by instances of the receiver."
+
+	^super publishedAspectsOfInstances
+		add: (Tools.Aspect
+					name: #progId
+					presenterBlock: [:p :m | TextPresenter createIn: p on: m]
+					editBlock: [:p | p model value: (self chooseControl: p model value)]);
+		add: (Tools.Aspect name: #controlDispatch) beReadOnly;
+		add: (Tools.Aspect name: #yourself editBlock: [:p | p model value editControlProperties]);
+		add: (Tools.Aspect boolean: #firesPropertyNotifications);
+		add: (Tools.Aspect boolean: #firesControlEvents);
+		add: (Tools.Aspect boolean: #allowContextMenu);
+		add: (Tools.Aspect boolean: #isDesignMode);
+		add: (Tools.Aspect boolean: #isDefault);
+		add: (Tools.Aspect string: #licenseKey);
+		yourself! !
+!UI.AXControlSite class categoriesFor: #publishedAspectsOfInstances!constants!must strip!public! !
+
+!UI.AXValueConvertingControlSite class methodsFor!
 
 publishedAspectsOfInstances
 	"Answer a <LookupTable> of the <Aspect>s published by instances of the receiver."
@@ -5400,7 +5400,7 @@ publishedAspectsOfInstances
 						beImmutable;
 		add: (Tools.Aspect name: #value);
 		yourself! !
-!Smalltalk.AXValueConvertingControlSite class categoriesFor: #publishedAspectsOfInstances!constants!must strip!public! !
+!UI.AXValueConvertingControlSite class categoriesFor: #publishedAspectsOfInstances!constants!must strip!public! !
 
 !UI.BasicListAbstract class methodsFor!
 

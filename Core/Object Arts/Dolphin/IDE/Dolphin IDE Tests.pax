@@ -43,7 +43,6 @@ package setPrerequisites: #(
 	'Professional\Dolphin Professional Tools'
 	'Professional\Dolphin Refactoring Browser'
 	'..\MVP\Views\Scintilla\Dolphin Scintilla View'
-	'..\MVP\Views\Scintilla\Dolphin Scintilla View Tests'
 	'..\MVP\Presenters\Text\Dolphin Text Presenter'
 	'..\MVP\Presenters\Tree\Dolphin Tree Presenter'
 	'..\..\..\Contributions\IDB\IDB Method History'

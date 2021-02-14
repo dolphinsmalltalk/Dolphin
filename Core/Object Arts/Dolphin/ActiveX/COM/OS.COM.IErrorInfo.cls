@@ -1,17 +1,17 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-IUnknown subclass: #IErrorInfo
+OS.COM.IUnknown subclass: #'OS.COM.IErrorInfo'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-IErrorInfo guid: (IID fromString: '{1cf2b120-547d-101b-8e65-08002b2bd119}')!
-IErrorInfo comment: '<IErrorInfo> is a wrapper class for the standard OLE Automation interface IErrorInfo.
+OS.COM.IErrorInfo guid: (OS.COM.IID fromString: '{1cf2b120-547d-101b-8e65-08002b2bd119}')!
+OS.COM.IErrorInfo comment: '`OS.COM.IErrorInfo` is a wrapper class for the standard OLE Automation interface IErrorInfo.
 
 IErrorInfo is the interface used to make available extended error information to a client when an exception occurs and an HRESULT failure code is returned.'!
-!IErrorInfo categoriesForClass!COM-Interfaces! !
-!IErrorInfo methodsFor!
+!OS.COM.IErrorInfo categoriesForClass!COM-Interfaces! !
+!OS.COM.IErrorInfo methodsFor!
 
 description
 	"Answer the error description from the receiver."
@@ -25,10 +25,9 @@ excepInfo
 	"Answer an <EXCEPINFO> containing most of the details from the receiver
 	(with the exception of the guid)."
 
-
 	| ex bstr |
 	ex := EXCEPINFO new.
-	ex scode: E_FAIL.		"No other hresult available, caller might be able to substitute something more specific"
+	ex scode: E_FAIL.	"No other hresult available, caller might be able to substitute something more specific"
 	bstr := BSTR new.
 	self GetSource: bstr.
 	ex bstrSource: bstr detach.
@@ -146,21 +145,21 @@ sourceInterface
 	answer := IID new.
 	self GetGUID: answer.
 	^answer! !
-!IErrorInfo categoriesFor: #description!accessing!public! !
-!IErrorInfo categoriesFor: #excepInfo!accessing!public! !
-!IErrorInfo categoriesFor: #GetDescription:!**auto generated**!COM Interfaces-OAIDL.IErrorInfo!public! !
-!IErrorInfo categoriesFor: #GetGUID:!**auto generated**!COM Interfaces-OAIDL.IErrorInfo!public! !
-!IErrorInfo categoriesFor: #GetHelpContext:!**auto generated**!COM Interfaces-OAIDL.IErrorInfo!public! !
-!IErrorInfo categoriesFor: #GetHelpFile:!**auto generated**!COM Interfaces-OAIDL.IErrorInfo!public! !
-!IErrorInfo categoriesFor: #GetSource:!**auto generated**!COM Interfaces-OAIDL.IErrorInfo!public! !
-!IErrorInfo categoriesFor: #guid!accessing!public! !
-!IErrorInfo categoriesFor: #helpContext!accessing!public! !
-!IErrorInfo categoriesFor: #helpFile!accessing!public! !
-!IErrorInfo categoriesFor: #printOn:!printing!public! !
-!IErrorInfo categoriesFor: #source!accessing!public! !
-!IErrorInfo categoriesFor: #sourceInterface!accessing!public! !
+!OS.COM.IErrorInfo categoriesFor: #description!accessing!public! !
+!OS.COM.IErrorInfo categoriesFor: #excepInfo!accessing!public! !
+!OS.COM.IErrorInfo categoriesFor: #GetDescription:!**auto generated**!COM Interfaces-OAIDL.IErrorInfo!public! !
+!OS.COM.IErrorInfo categoriesFor: #GetGUID:!**auto generated**!COM Interfaces-OAIDL.IErrorInfo!public! !
+!OS.COM.IErrorInfo categoriesFor: #GetHelpContext:!**auto generated**!COM Interfaces-OAIDL.IErrorInfo!public! !
+!OS.COM.IErrorInfo categoriesFor: #GetHelpFile:!**auto generated**!COM Interfaces-OAIDL.IErrorInfo!public! !
+!OS.COM.IErrorInfo categoriesFor: #GetSource:!**auto generated**!COM Interfaces-OAIDL.IErrorInfo!public! !
+!OS.COM.IErrorInfo categoriesFor: #guid!accessing!public! !
+!OS.COM.IErrorInfo categoriesFor: #helpContext!accessing!public! !
+!OS.COM.IErrorInfo categoriesFor: #helpFile!accessing!public! !
+!OS.COM.IErrorInfo categoriesFor: #printOn:!printing!public! !
+!OS.COM.IErrorInfo categoriesFor: #source!accessing!public! !
+!OS.COM.IErrorInfo categoriesFor: #sourceInterface!accessing!public! !
 
-!IErrorInfo class methodsFor!
+!OS.COM.IErrorInfo class methodsFor!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'OAIDL.IErrorInfo'
@@ -179,5 +178,5 @@ defineFunctions
 		defineFunction: #GetHelpContext:
 			argumentTypes: 'dword*'
 ! !
-!IErrorInfo class categoriesFor: #defineFunctions!**auto generated**!public! !
+!OS.COM.IErrorInfo class categoriesFor: #defineFunctions!**auto generated**!public! !
 

@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-COMInterface subclass: #IUnknown
+OS.COM.Interface subclass: #'OS.COM.IUnknown'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-IUnknown guid: (IID fromString: '{00000000-0000-0000-c000-000000000046}')!
-IUnknown comment: '`IUnknown` is a wrapper class for the COM interface ''stdole.IUnknown'' generated from type information in the ''OLE Automation'' library. It contains methods to invoke the member functions exposed by that interface.
+OS.COM.IUnknown guid: (OS.COM.IID fromString: '{00000000-0000-0000-c000-000000000046}')!
+OS.COM.IUnknown comment: '`OS.COM.IUnknown` is a wrapper class for the COM interface ''stdole.IUnknown'' generated from type information in the ''OLE Automation'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
 
@@ -34,8 +34,8 @@ interface IUnknown
 	unsigned long __stdcall Release();
 };
 ```'!
-!IUnknown categoriesForClass!COM-Interfaces! !
-!IUnknown methodsFor!
+!OS.COM.IUnknown categoriesForClass!COM-Interfaces! !
+!OS.COM.IUnknown methodsFor!
 
 addRef 
 	"Increment the receiver's reference count.
@@ -83,14 +83,14 @@ Release
 
 	<virtual stdcall: dword 3>
 	^self invalidCall: _failureCode! !
-!IUnknown categoriesFor: #addRef!methods!public! !
-!IUnknown categoriesFor: #AddRef!**auto generated**!COM Interfaces-IUnknown!private! !
-!IUnknown categoriesFor: #asObject!converting!public! !
-!IUnknown categoriesFor: #displayOn:!printing!public! !
-!IUnknown categoriesFor: #QueryInterface:ppvObject:!methods!public! !
-!IUnknown categoriesFor: #Release!**auto generated**!COM Interfaces-IUnknown!private! !
+!OS.COM.IUnknown categoriesFor: #addRef!methods!public! !
+!OS.COM.IUnknown categoriesFor: #AddRef!**auto generated**!COM Interfaces-IUnknown!private! !
+!OS.COM.IUnknown categoriesFor: #asObject!converting!public! !
+!OS.COM.IUnknown categoriesFor: #displayOn:!printing!public! !
+!OS.COM.IUnknown categoriesFor: #QueryInterface:ppvObject:!methods!public! !
+!OS.COM.IUnknown categoriesFor: #Release!**auto generated**!COM Interfaces-IUnknown!private! !
 
-!IUnknown class methodsFor!
+!OS.COM.IUnknown class methodsFor!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'stdole.IUnknown'
@@ -100,9 +100,9 @@ defineFunctions
 	generic Object>>perform:withArgumentsAt:descriptor: primitive."
 
 	functions 
-		add: UnkQIFunction new;
-		add: UnkAddRefFunction new;
-		add: UnkReleaseFunction new!
+		add: QueryInterfaceFunction new;
+		add: AddRefFunction new;
+		add: ReleaseFunction new!
 
 on: server outerUnknown: pUnkOuter
 	"Private - Answer a pointer to a new instance of the receiver acting as a non-delegating
@@ -123,7 +123,7 @@ uninitialize
 	"Private - Uninitialize the receiver prior to its removal from the image."
 
 	VMLibrary default registryAt: self name put: nil! !
-!IUnknown class categoriesFor: #defineFunctions!initializing!public! !
-!IUnknown class categoriesFor: #on:outerUnknown:!instance creation!private! !
-!IUnknown class categoriesFor: #uninitialize!class hierarchy-removing!private! !
+!OS.COM.IUnknown class categoriesFor: #defineFunctions!initializing!public! !
+!OS.COM.IUnknown class categoriesFor: #on:outerUnknown:!instance creation!private! !
+!OS.COM.IUnknown class categoriesFor: #uninitialize!class hierarchy-removing!private! !
 

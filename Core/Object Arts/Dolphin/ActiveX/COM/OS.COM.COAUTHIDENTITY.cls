@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-OLEStructure subclass: #COAUTHIDENTITY
+OS.COM.OLEStructure subclass: #'OS.COM.COAUTHIDENTITY'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_Domain' -> 16r8.
@@ -14,12 +14,12 @@ OLEStructure subclass: #COAUTHIDENTITY
 		'_OffsetOf_User' -> 16r0.
 		'_OffsetOf_UserLength' -> 16r4
 	}!
-COAUTHIDENTITY guid: (GUID fromString: '{31387a96-bdf6-40b2-abee-6ef6a2384b67}')!
-COAUTHIDENTITY comment: '<COAUTHIDENTITY> is an <ExternalStructure> class to wrap the struct ''OBJIDL.COAUTHIDENTITY'' from type information in the ''ObjIDL Library'' library.
+OS.COM.COAUTHIDENTITY guid: (Core.GUID fromString: '{31387a96-bdf6-40b2-abee-6ef6a2384b67}')!
+OS.COM.COAUTHIDENTITY comment: '`OS.COM.COAUTHIDENTITY` is an `External.Structure` class to wrap the struct ''OBJIDL.COAUTHIDENTITY'' from type information in the ''ObjIDL Library'' library.
 
 The COAUTHIDENTITY structure represents a user name and password.'!
-!COAUTHIDENTITY categoriesForClass!OBJIDL-Structs! !
-!COAUTHIDENTITY methodsFor!
+!OS.COM.COAUTHIDENTITY categoriesForClass!OBJIDL-Structs! !
+!OS.COM.COAUTHIDENTITY methodsFor!
 
 Domain
 	"Answer the <Utf16String> value of the receiver's 'Domain' field."
@@ -90,22 +90,22 @@ UserLength: anInteger
 	"Set the receiver's 'UserLength' field to the value of the argument, anInteger"
 
 	bytes dwordAtOffset: _OffsetOf_UserLength put: anInteger! !
-!COAUTHIDENTITY categoriesFor: #Domain!**compiled accessors**!public! !
-!COAUTHIDENTITY categoriesFor: #Domain:!**compiled accessors**!public! !
-!COAUTHIDENTITY categoriesFor: #DomainLength!**compiled accessors**!public! !
-!COAUTHIDENTITY categoriesFor: #DomainLength:!**compiled accessors**!public! !
-!COAUTHIDENTITY categoriesFor: #Flags!**compiled accessors**!public! !
-!COAUTHIDENTITY categoriesFor: #Flags:!**compiled accessors**!public! !
-!COAUTHIDENTITY categoriesFor: #Password!**compiled accessors**!public! !
-!COAUTHIDENTITY categoriesFor: #Password:!**compiled accessors**!public! !
-!COAUTHIDENTITY categoriesFor: #PasswordLength!**compiled accessors**!public! !
-!COAUTHIDENTITY categoriesFor: #PasswordLength:!**compiled accessors**!public! !
-!COAUTHIDENTITY categoriesFor: #User!**compiled accessors**!public! !
-!COAUTHIDENTITY categoriesFor: #User:!**compiled accessors**!public! !
-!COAUTHIDENTITY categoriesFor: #UserLength!**compiled accessors**!public! !
-!COAUTHIDENTITY categoriesFor: #UserLength:!**compiled accessors**!public! !
+!OS.COM.COAUTHIDENTITY categoriesFor: #Domain!**compiled accessors**!public! !
+!OS.COM.COAUTHIDENTITY categoriesFor: #Domain:!**compiled accessors**!public! !
+!OS.COM.COAUTHIDENTITY categoriesFor: #DomainLength!**compiled accessors**!public! !
+!OS.COM.COAUTHIDENTITY categoriesFor: #DomainLength:!**compiled accessors**!public! !
+!OS.COM.COAUTHIDENTITY categoriesFor: #Flags!**compiled accessors**!public! !
+!OS.COM.COAUTHIDENTITY categoriesFor: #Flags:!**compiled accessors**!public! !
+!OS.COM.COAUTHIDENTITY categoriesFor: #Password!**compiled accessors**!public! !
+!OS.COM.COAUTHIDENTITY categoriesFor: #Password:!**compiled accessors**!public! !
+!OS.COM.COAUTHIDENTITY categoriesFor: #PasswordLength!**compiled accessors**!public! !
+!OS.COM.COAUTHIDENTITY categoriesFor: #PasswordLength:!**compiled accessors**!public! !
+!OS.COM.COAUTHIDENTITY categoriesFor: #User!**compiled accessors**!public! !
+!OS.COM.COAUTHIDENTITY categoriesFor: #User:!**compiled accessors**!public! !
+!OS.COM.COAUTHIDENTITY categoriesFor: #UserLength!**compiled accessors**!public! !
+!OS.COM.COAUTHIDENTITY categoriesFor: #UserLength:!**compiled accessors**!public! !
 
-!COAUTHIDENTITY class methodsFor!
+!OS.COM.COAUTHIDENTITY class methodsFor!
 
 defineFields
 	"Define the fields of the COAUTHIDENTITY structure.
@@ -134,6 +134,6 @@ defineFields
 
 getFieldNames
 	^#(#User #UserLength #Domain #DomainLength #Password #PasswordLength #Flags)! !
-!COAUTHIDENTITY class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!COAUTHIDENTITY class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.COM.COAUTHIDENTITY class categoriesFor: #defineFields!**auto generated**!public!template definition! !
+!OS.COM.COAUTHIDENTITY class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

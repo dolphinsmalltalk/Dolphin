@@ -1,14 +1,14 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-AXAPIInfoAnalyzer subclass: #AXInterfaceTypeAnalyzer
+OS.COM.APIInfoAnalyzer subclass: #'OS.COM.InterfaceTypeAnalyzer'
 	instanceVariableNames: 'protocol isSource'
 	classVariableNames: 'ReservedDispSelectors ReservedUnkSelectors'
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-AXInterfaceTypeAnalyzer guid: (GUID fromString: '{c06f3b7d-0868-11d3-93af-00a024ca708a}')!
-AXInterfaceTypeAnalyzer isAbstract: true!
-AXInterfaceTypeAnalyzer comment: 'AXInterfaceTypeAnalyzer is the abstract superclass of <AXTypeInfoAnalyzer>s describing custom COM interfaces (TKindInterfaceAnalyzer) and dispatch interfaces (TKindDispatchAnalyzer).
+OS.COM.InterfaceTypeAnalyzer guid: (Core.GUID fromString: '{c06f3b7d-0868-11d3-93af-00a024ca708a}')!
+OS.COM.InterfaceTypeAnalyzer isNonInstantiable: true!
+OS.COM.InterfaceTypeAnalyzer comment: 'AXInterfaceTypeAnalyzer is the abstract superclass of <AXTypeInfoAnalyzer>s describing custom COM interfaces (TKindInterfaceAnalyzer) and dispatch interfaces (TKindDispatchAnalyzer).
 
 AXInterfaceTypeAnalyzers wrap <ITypeInfo> pointers from a type library, providing behaviour which allows one to query information and generate wrapper classes appropriate for COM interfaces.
 
@@ -21,8 +21,8 @@ Class Variables:
 	ReservedUnkSelectors	<IdentitySet> of <Symbol>. Selectors which should not be overridden by custom interfaces.
 
 '!
-!AXInterfaceTypeAnalyzer categoriesForClass!ActiveX Automation! !
-!AXInterfaceTypeAnalyzer methodsFor!
+!OS.COM.InterfaceTypeAnalyzer categoriesForClass!ActiveX Automation! !
+!OS.COM.InterfaceTypeAnalyzer methodsFor!
 
 classDesc
 	"Private - Answer an <Association> between a Dolphin class suitable for representing
@@ -108,7 +108,7 @@ suggestedBinding
 	Implementation Note: Override because there is a global table of interface classes which 
 	we can use to look up any existing wrapper class."
 
-	^(COMInterface classForIID: self iid ifNone: []) 
+	^(Interface classForIID: self iid ifNone: [])
 		ifNil: [super suggestedBinding]
 		ifNotNil: [:interfaceClass | interfaceClass environment associationAt: interfaceClass name]!
 
@@ -118,18 +118,18 @@ superInterface
 
 	^self isDerived
 		ifTrue: [self getImplTypeInfoAt: 1]! !
-!AXInterfaceTypeAnalyzer categoriesFor: #classDesc!accessing!private! !
-!AXInterfaceTypeAnalyzer categoriesFor: #clsid!accessing!public! !
-!AXInterfaceTypeAnalyzer categoriesFor: #defaultInterface!enquiries!public! !
-!AXInterfaceTypeAnalyzer categoriesFor: #iid!accessing!public! !
-!AXInterfaceTypeAnalyzer categoriesFor: #inheritedFunctions!enumerating!private! !
-!AXInterfaceTypeAnalyzer categoriesFor: #isDerived!private!testing! !
-!AXInterfaceTypeAnalyzer categoriesFor: #isDual!public!testing! !
-!AXInterfaceTypeAnalyzer categoriesFor: #isExtensible!public!testing! !
-!AXInterfaceTypeAnalyzer categoriesFor: #isSource!public!testing! !
-!AXInterfaceTypeAnalyzer categoriesFor: #isVBCollection!private!testing! !
-!AXInterfaceTypeAnalyzer categoriesFor: #methods!enumerating!public! !
-!AXInterfaceTypeAnalyzer categoriesFor: #protocol!accessing!private! !
-!AXInterfaceTypeAnalyzer categoriesFor: #suggestedBinding!accessing!private! !
-!AXInterfaceTypeAnalyzer categoriesFor: #superInterface!enumerating!public! !
+!OS.COM.InterfaceTypeAnalyzer categoriesFor: #classDesc!accessing!private! !
+!OS.COM.InterfaceTypeAnalyzer categoriesFor: #clsid!accessing!public! !
+!OS.COM.InterfaceTypeAnalyzer categoriesFor: #defaultInterface!enquiries!public! !
+!OS.COM.InterfaceTypeAnalyzer categoriesFor: #iid!accessing!public! !
+!OS.COM.InterfaceTypeAnalyzer categoriesFor: #inheritedFunctions!enumerating!private! !
+!OS.COM.InterfaceTypeAnalyzer categoriesFor: #isDerived!private!testing! !
+!OS.COM.InterfaceTypeAnalyzer categoriesFor: #isDual!public!testing! !
+!OS.COM.InterfaceTypeAnalyzer categoriesFor: #isExtensible!public!testing! !
+!OS.COM.InterfaceTypeAnalyzer categoriesFor: #isSource!public!testing! !
+!OS.COM.InterfaceTypeAnalyzer categoriesFor: #isVBCollection!private!testing! !
+!OS.COM.InterfaceTypeAnalyzer categoriesFor: #methods!enumerating!public! !
+!OS.COM.InterfaceTypeAnalyzer categoriesFor: #protocol!accessing!private! !
+!OS.COM.InterfaceTypeAnalyzer categoriesFor: #suggestedBinding!accessing!private! !
+!OS.COM.InterfaceTypeAnalyzer categoriesFor: #superInterface!enumerating!public! !
 

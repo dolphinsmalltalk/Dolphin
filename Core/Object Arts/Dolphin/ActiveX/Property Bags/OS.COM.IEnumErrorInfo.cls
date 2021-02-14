@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-IEnumUnknown subclass: #IEnumErrorInfo
+OS.COM.IEnumUnknown subclass: #'OS.COM.IEnumErrorInfo'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-IEnumErrorInfo guid: (IID fromString: '{502052c4-0fe9-4a5f-9a7d-2335d7584ded}')!
-IEnumErrorInfo comment: ''!
-!IEnumErrorInfo categoriesForClass!Unclassified! !
-!IEnumErrorInfo class methodsFor!
+OS.COM.IEnumErrorInfo guid: (OS.COM.IID fromString: '{502052c4-0fe9-4a5f-9a7d-2335d7584ded}')!
+OS.COM.IEnumErrorInfo comment: ''!
+!OS.COM.IEnumErrorInfo categoriesForClass!Unclassified! !
+!OS.COM.IEnumErrorInfo class methodsFor!
 
 defineFunctions
 	"Declare the virtual function table for the receiver.
@@ -22,6 +22,6 @@ elementClass
 	"Answer the class of element enumerated by the receiver."
 
 	^IErrorInfo! !
-!IEnumErrorInfo class categoriesFor: #defineFunctions!initializing!public! !
-!IEnumErrorInfo class categoriesFor: #elementClass!constants!public! !
+!OS.COM.IEnumErrorInfo class categoriesFor: #defineFunctions!initializing!public! !
+!OS.COM.IEnumErrorInfo class categoriesFor: #elementClass!constants!public! !
 

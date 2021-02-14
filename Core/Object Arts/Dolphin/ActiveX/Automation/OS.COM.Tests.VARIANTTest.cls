@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-DolphinTest subclass: #VARIANTTest
+Core.Tests.DolphinTest subclass: #'OS.COM.Tests.VARIANTTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'AXAutomationConstants'
+	imports: #(#{OS.COM.AutomationConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-VARIANTTest guid: (GUID fromString: '{f436bdf8-12ff-47e4-ad1a-c96795760912}')!
-VARIANTTest comment: ''!
-!VARIANTTest categoriesForClass!Unclassified! !
-!VARIANTTest methodsFor!
+OS.COM.Tests.VARIANTTest guid: (Core.GUID fromString: '{f436bdf8-12ff-47e4-ad1a-c96795760912}')!
+OS.COM.Tests.VARIANTTest comment: ''!
+!OS.COM.Tests.VARIANTTest categoriesForClass!Unclassified! !
+!OS.COM.Tests.VARIANTTest methodsFor!
 
 isValidNullString: aString
 	self assert: (aString yourAddress asExternalAddress at: 1) identicalTo: 0.
@@ -458,44 +458,44 @@ testUI8
 	"dwordAtOffset:put: is unusual in accepting negative values"
 	var qword: -1.
 	self assert: var value equals: 2 ** 64 - 1! !
-!VARIANTTest categoriesFor: #isValidNullString:!private!testing! !
-!VARIANTTest categoriesFor: #testARRAY!public!unit tests! !
-!VARIANTTest categoriesFor: #testARRAYREF!public!unit tests! !
-!VARIANTTest categoriesFor: #testBSTR!public!unit tests! !
-!VARIANTTest categoriesFor: #testCollectionConversions!public!unit tests! !
-!VARIANTTest categoriesFor: #testCY!public!unit tests! !
-!VARIANTTest categoriesFor: #testCYREF!public!unit tests! !
-!VARIANTTest categoriesFor: #testDATE!public!unit tests! !
-!VARIANTTest categoriesFor: #testDISPATCH!public!unit tests! !
-!VARIANTTest categoriesFor: #testDISPATCHREF!public!unit tests! !
-!VARIANTTest categoriesFor: #testDisplayString!public!unit tests! !
-!VARIANTTest categoriesFor: #testEMPTY!public!unit tests! !
-!VARIANTTest categoriesFor: #testFromAddress!public!unit tests! !
-!VARIANTTest categoriesFor: #testFromInteger!public!unit tests! !
-!VARIANTTest categoriesFor: #testI1!public!unit tests! !
-!VARIANTTest categoriesFor: #testI1REF!public!unit tests! !
-!VARIANTTest categoriesFor: #testI2!public!unit tests! !
-!VARIANTTest categoriesFor: #testI2REF!public!unit tests! !
-!VARIANTTest categoriesFor: #testI4!public!unit tests! !
-!VARIANTTest categoriesFor: #testI4REF!public!unit tests! !
-!VARIANTTest categoriesFor: #testI8!public!unit tests! !
-!VARIANTTest categoriesFor: #testINT!public!unit tests! !
-!VARIANTTest categoriesFor: #testNULL!public!unit tests! !
-!VARIANTTest categoriesFor: #testR4!public!unit tests! !
-!VARIANTTest categoriesFor: #testR4REF!public!unit tests! !
-!VARIANTTest categoriesFor: #testR8!public!unit tests! !
-!VARIANTTest categoriesFor: #testR8REF!public!unit tests! !
-!VARIANTTest categoriesFor: #testUI1!public!unit tests! !
-!VARIANTTest categoriesFor: #testUI1REF!public!unit tests! !
-!VARIANTTest categoriesFor: #testUI2!public!unit tests! !
-!VARIANTTest categoriesFor: #testUI2REF!public!unit tests! !
-!VARIANTTest categoriesFor: #testUI4!public!unit tests! !
-!VARIANTTest categoriesFor: #testUI4REF!public!unit tests! !
-!VARIANTTest categoriesFor: #testUI8!public!unit tests! !
+!OS.COM.Tests.VARIANTTest categoriesFor: #isValidNullString:!private!testing! !
+!OS.COM.Tests.VARIANTTest categoriesFor: #testARRAY!public!unit tests! !
+!OS.COM.Tests.VARIANTTest categoriesFor: #testARRAYREF!public!unit tests! !
+!OS.COM.Tests.VARIANTTest categoriesFor: #testBSTR!public!unit tests! !
+!OS.COM.Tests.VARIANTTest categoriesFor: #testCollectionConversions!public!unit tests! !
+!OS.COM.Tests.VARIANTTest categoriesFor: #testCY!public!unit tests! !
+!OS.COM.Tests.VARIANTTest categoriesFor: #testCYREF!public!unit tests! !
+!OS.COM.Tests.VARIANTTest categoriesFor: #testDATE!public!unit tests! !
+!OS.COM.Tests.VARIANTTest categoriesFor: #testDISPATCH!public!unit tests! !
+!OS.COM.Tests.VARIANTTest categoriesFor: #testDISPATCHREF!public!unit tests! !
+!OS.COM.Tests.VARIANTTest categoriesFor: #testDisplayString!public!unit tests! !
+!OS.COM.Tests.VARIANTTest categoriesFor: #testEMPTY!public!unit tests! !
+!OS.COM.Tests.VARIANTTest categoriesFor: #testFromAddress!public!unit tests! !
+!OS.COM.Tests.VARIANTTest categoriesFor: #testFromInteger!public!unit tests! !
+!OS.COM.Tests.VARIANTTest categoriesFor: #testI1!public!unit tests! !
+!OS.COM.Tests.VARIANTTest categoriesFor: #testI1REF!public!unit tests! !
+!OS.COM.Tests.VARIANTTest categoriesFor: #testI2!public!unit tests! !
+!OS.COM.Tests.VARIANTTest categoriesFor: #testI2REF!public!unit tests! !
+!OS.COM.Tests.VARIANTTest categoriesFor: #testI4!public!unit tests! !
+!OS.COM.Tests.VARIANTTest categoriesFor: #testI4REF!public!unit tests! !
+!OS.COM.Tests.VARIANTTest categoriesFor: #testI8!public!unit tests! !
+!OS.COM.Tests.VARIANTTest categoriesFor: #testINT!public!unit tests! !
+!OS.COM.Tests.VARIANTTest categoriesFor: #testNULL!public!unit tests! !
+!OS.COM.Tests.VARIANTTest categoriesFor: #testR4!public!unit tests! !
+!OS.COM.Tests.VARIANTTest categoriesFor: #testR4REF!public!unit tests! !
+!OS.COM.Tests.VARIANTTest categoriesFor: #testR8!public!unit tests! !
+!OS.COM.Tests.VARIANTTest categoriesFor: #testR8REF!public!unit tests! !
+!OS.COM.Tests.VARIANTTest categoriesFor: #testUI1!public!unit tests! !
+!OS.COM.Tests.VARIANTTest categoriesFor: #testUI1REF!public!unit tests! !
+!OS.COM.Tests.VARIANTTest categoriesFor: #testUI2!public!unit tests! !
+!OS.COM.Tests.VARIANTTest categoriesFor: #testUI2REF!public!unit tests! !
+!OS.COM.Tests.VARIANTTest categoriesFor: #testUI4!public!unit tests! !
+!OS.COM.Tests.VARIANTTest categoriesFor: #testUI4REF!public!unit tests! !
+!OS.COM.Tests.VARIANTTest categoriesFor: #testUI8!public!unit tests! !
 
-!VARIANTTest class methodsFor!
+!OS.COM.Tests.VARIANTTest class methodsFor!
 
 supportsI8
 	^true! !
-!VARIANTTest class categoriesFor: #supportsI8!private!testing! !
+!OS.COM.Tests.VARIANTTest class categoriesFor: #supportsI8!private!testing! !
 

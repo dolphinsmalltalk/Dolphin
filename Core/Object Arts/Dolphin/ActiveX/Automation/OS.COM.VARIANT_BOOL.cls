@@ -1,17 +1,17 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-SWORD subclass: #VARIANT_BOOL
+External.SWORD subclass: #'OS.COM.VARIANT_BOOL'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-VARIANT_BOOL guid: (GUID fromString: '{c06f3b75-0868-11d3-93af-00a024ca708a}')!
-VARIANT_BOOL comment: 'VARIANT_BOOL is an <ExternalStructure> class to represent the Automation type, VARIANT_BOOL, which is VB''s boolean type.
+OS.COM.VARIANT_BOOL guid: (Core.GUID fromString: '{c06f3b75-0868-11d3-93af-00a024ca708a}')!
+OS.COM.VARIANT_BOOL comment: 'VARIANT_BOOL is an <ExternalStructure> class to represent the Automation type, VARIANT_BOOL, which is VB''s boolean type.
 
 VARIANT_BOOL is a 16-bit signed integer value where -1 is used to represent true, and 0 is used to represent false. This class has a slightly looser definition in that it maps any non-zero value to true on access, and any non-zero/true value to -1 on mutation.'!
-!VARIANT_BOOL categoriesForClass!External-Data-Structured! !
-!VARIANT_BOOL methodsFor!
+!OS.COM.VARIANT_BOOL categoriesForClass!External-Data-Structured! !
+!OS.COM.VARIANT_BOOL methodsFor!
 
 asBoolean
 	"Answer the receiver as a Smalltalk <Boolean> object (true OR false)."
@@ -33,12 +33,12 @@ value: anObject
 	(-1 for true, 0 for false)."
 
 	super value: (anObject asBoolean ifTrue: [-1] ifFalse: [0])! !
-!VARIANT_BOOL categoriesFor: #asBoolean!converting!public! !
-!VARIANT_BOOL categoriesFor: #displayOn:!printing!public! !
-!VARIANT_BOOL categoriesFor: #value!accessing!public! !
-!VARIANT_BOOL categoriesFor: #value:!accessing!public! !
+!OS.COM.VARIANT_BOOL categoriesFor: #asBoolean!converting!public! !
+!OS.COM.VARIANT_BOOL categoriesFor: #displayOn:!printing!public! !
+!OS.COM.VARIANT_BOOL categoriesFor: #value!accessing!public! !
+!OS.COM.VARIANT_BOOL categoriesFor: #value:!accessing!public! !
 
-!VARIANT_BOOL class methodsFor!
+!OS.COM.VARIANT_BOOL class methodsFor!
 
 icon
 	"Answer a suitable iconic representation for the receiver."
@@ -66,10 +66,10 @@ uninitialize
 vt
 	"Private - Answer the VARIANT type required to represent the receiver."
 
-	^AXAutomationConstants.VT_BOOL! !
-!VARIANT_BOOL class categoriesFor: #icon!constants!public! !
-!VARIANT_BOOL class categoriesFor: #initialize!development!initializing!private! !
-!VARIANT_BOOL class categoriesFor: #typeName!constants!private! !
-!VARIANT_BOOL class categoriesFor: #uninitialize!class hierarchy-removing!private! !
-!VARIANT_BOOL class categoriesFor: #vt!constants!private! !
+	^AutomationConstants.VT_BOOL! !
+!OS.COM.VARIANT_BOOL class categoriesFor: #icon!constants!public! !
+!OS.COM.VARIANT_BOOL class categoriesFor: #initialize!development!initializing!private! !
+!OS.COM.VARIANT_BOOL class categoriesFor: #typeName!constants!private! !
+!OS.COM.VARIANT_BOOL class categoriesFor: #uninitialize!class hierarchy-removing!private! !
+!OS.COM.VARIANT_BOOL class categoriesFor: #vt!constants!private! !
 

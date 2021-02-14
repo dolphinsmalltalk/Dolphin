@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-OLEFinalizableStructure subclass: #STATSTG
+OS.COM.FinalizableStructure subclass: #'OS.COM.STATSTG'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'OLEStructuredStorageConstants'
+	imports: #(#{OS.COM.StructuredStorageConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_atime' -> 16r20.
@@ -18,8 +18,8 @@ OLEFinalizableStructure subclass: #STATSTG
 		'_OffsetOf_pwcsName' -> 16r0.
 		'_OffsetOf_type' -> 16r4
 	}!
-STATSTG guid: (GUID fromString: '{87b4c5c3-026e-11d3-9fd7-00a0cc3e4a32}')!
-STATSTG comment: 'STATSTG is an <ExternalStructure> class to represent the OLE Structured Storage structure of the same name.
+OS.COM.STATSTG guid: (Core.GUID fromString: '{87b4c5c3-026e-11d3-9fd7-00a0cc3e4a32}')!
+OS.COM.STATSTG comment: 'STATSTG is an <ExternalStructure> class to represent the OLE Structured Storage structure of the same name.
 
 STATSTG contains directory type information about a structured storage object (storage, stream, or lock bytes)
 
@@ -37,8 +37,8 @@ Member variables:
 	clsid			<CLSID> of storage object
 	grfStateBits		<integer> bit mask last set by IStorage>>SetStateBits
 	dwStgFmt			<integer> from STGFMT enumeration - the format of the storage object.'!
-!STATSTG categoriesForClass!External-Data-Structured-COM! !
-!STATSTG methodsFor!
+!OS.COM.STATSTG categoriesForClass!External-Data-Structured-COM! !
+!OS.COM.STATSTG methodsFor!
 
 atime
 	"Answer the <FILETIME> value of the receiver's 'atime' field."
@@ -151,30 +151,30 @@ type: anInteger
 	"Set the receiver's 'type' field to the value of the argument, anInteger"
 
 	bytes dwordAtOffset: _OffsetOf_type put: anInteger! !
-!STATSTG categoriesFor: #atime!**compiled accessors**!public! !
-!STATSTG categoriesFor: #atime:!**compiled accessors**!public! !
-!STATSTG categoriesFor: #cbSize!**compiled accessors**!public! !
-!STATSTG categoriesFor: #cbSize:!**compiled accessors**!public! !
-!STATSTG categoriesFor: #clsid!**compiled accessors**!public! !
-!STATSTG categoriesFor: #ctime!**compiled accessors**!public! !
-!STATSTG categoriesFor: #dwStgFmt!**compiled accessors**!public! !
-!STATSTG categoriesFor: #grfLocksSupported!**compiled accessors**!public! !
-!STATSTG categoriesFor: #grfLocksSupported:!**compiled accessors**!public! !
-!STATSTG categoriesFor: #grfMode!**compiled accessors**!public! !
-!STATSTG categoriesFor: #grfStateBits!**compiled accessors**!public! !
-!STATSTG categoriesFor: #isOLEStorage!public!testing! !
-!STATSTG categoriesFor: #isOLEStream!public!testing! !
-!STATSTG categoriesFor: #mtime!**compiled accessors**!public! !
-!STATSTG categoriesFor: #name!accessing!public! !
-!STATSTG categoriesFor: #name:!accessing!public! !
-!STATSTG categoriesFor: #pwcsName!**compiled accessors**!public! !
-!STATSTG categoriesFor: #pwcsName:!**compiled accessors**!public! !
-!STATSTG categoriesFor: #type!**compiled accessors**!public! !
-!STATSTG categoriesFor: #type:!**compiled accessors**!public! !
+!OS.COM.STATSTG categoriesFor: #atime!**compiled accessors**!public! !
+!OS.COM.STATSTG categoriesFor: #atime:!**compiled accessors**!public! !
+!OS.COM.STATSTG categoriesFor: #cbSize!**compiled accessors**!public! !
+!OS.COM.STATSTG categoriesFor: #cbSize:!**compiled accessors**!public! !
+!OS.COM.STATSTG categoriesFor: #clsid!**compiled accessors**!public! !
+!OS.COM.STATSTG categoriesFor: #ctime!**compiled accessors**!public! !
+!OS.COM.STATSTG categoriesFor: #dwStgFmt!**compiled accessors**!public! !
+!OS.COM.STATSTG categoriesFor: #grfLocksSupported!**compiled accessors**!public! !
+!OS.COM.STATSTG categoriesFor: #grfLocksSupported:!**compiled accessors**!public! !
+!OS.COM.STATSTG categoriesFor: #grfMode!**compiled accessors**!public! !
+!OS.COM.STATSTG categoriesFor: #grfStateBits!**compiled accessors**!public! !
+!OS.COM.STATSTG categoriesFor: #isOLEStorage!public!testing! !
+!OS.COM.STATSTG categoriesFor: #isOLEStream!public!testing! !
+!OS.COM.STATSTG categoriesFor: #mtime!**compiled accessors**!public! !
+!OS.COM.STATSTG categoriesFor: #name!accessing!public! !
+!OS.COM.STATSTG categoriesFor: #name:!accessing!public! !
+!OS.COM.STATSTG categoriesFor: #pwcsName!**compiled accessors**!public! !
+!OS.COM.STATSTG categoriesFor: #pwcsName:!**compiled accessors**!public! !
+!OS.COM.STATSTG categoriesFor: #type!**compiled accessors**!public! !
+!OS.COM.STATSTG categoriesFor: #type:!**compiled accessors**!public! !
 
-!STATSTG class methodsFor!
+!OS.COM.STATSTG class methodsFor!
 
-clear: addressOrBytes 
+clear: addressOrBytes
 	"Free external resources referenced by STATSTG
 	structure at the specified address. 	
 	We must check that the name is non-null because it may be
@@ -182,7 +182,7 @@ clear: addressOrBytes
 
 	| addr |
 	addr := addressOrBytes dwordAtOffset: 0.
-	addr isNull ifFalse: [COMTaskMemory free: addr]!
+	addr isNull ifFalse: [TaskMemory free: addr]!
 
 defineFields
 	"Define the fields of the STATSTG structure.
@@ -219,7 +219,7 @@ defineFields
 
 getFieldNames
 	^#(#pwcsName #type #cbSize #mtime #ctime #atime #grfMode #grfLocksSupported #clsid #grfStateBits #dwStgFmt)! !
-!STATSTG class categoriesFor: #clear:!public!realizing/unrealizing! !
-!STATSTG class categoriesFor: #defineFields!public!template definition! !
-!STATSTG class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.COM.STATSTG class categoriesFor: #clear:!public!realizing/unrealizing! !
+!OS.COM.STATSTG class categoriesFor: #defineFields!public!template definition! !
+!OS.COM.STATSTG class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

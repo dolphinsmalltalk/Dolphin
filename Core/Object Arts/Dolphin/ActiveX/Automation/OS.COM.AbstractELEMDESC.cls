@@ -1,18 +1,18 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-OLEStructure subclass: #AbstractELEMDESC
+OS.COM.OLEStructure subclass: #'OS.COM.AbstractELEMDESC'
 	instanceVariableNames: 'owner tdesc'
 	classVariableNames: ''
-	poolDictionaries: 'AXAutomationConstants'
+	imports: #(#{OS.COM.AutomationConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_tdescElem' -> 16r0
 	}!
-AbstractELEMDESC guid: (GUID fromString: '{24cbeadb-8708-4bb1-a28d-207ebd2a8c8e}')!
-AbstractELEMDESC isAbstract: true!
-AbstractELEMDESC comment: ''!
-!AbstractELEMDESC categoriesForClass!External-Data-Structured-COM! !
-!AbstractELEMDESC methodsFor!
+OS.COM.AbstractELEMDESC guid: (Core.GUID fromString: '{24cbeadb-8708-4bb1-a28d-207ebd2a8c8e}')!
+OS.COM.AbstractELEMDESC isNonInstantiable: true!
+OS.COM.AbstractELEMDESC comment: ''!
+!OS.COM.AbstractELEMDESC categoriesForClass!External-Data-Structured-COM! !
+!OS.COM.AbstractELEMDESC methodsFor!
 
 analyzer
 	"Private - Answer the <AXTypeInfoAnalyzer> from which the receiver originated."
@@ -75,18 +75,18 @@ typeName
 	"Answer the Dolphin external type name for the type described by the receiver."
 
 	^self tdesc typeName! !
-!AbstractELEMDESC categoriesFor: #analyzer!accessing!private! !
-!AbstractELEMDESC categoriesFor: #classDesc!accessing!private! !
-!AbstractELEMDESC categoriesFor: #indirections!accessing!public! !
-!AbstractELEMDESC categoriesFor: #isVariant!private!testing! !
-!AbstractELEMDESC categoriesFor: #objectClass!accessing!public! !
-!AbstractELEMDESC categoriesFor: #owner!accessing!private! !
-!AbstractELEMDESC categoriesFor: #owner:!accessing!private! !
-!AbstractELEMDESC categoriesFor: #tdesc!accessing!public! !
-!AbstractELEMDESC categoriesFor: #tdescElem!**compiled accessors**!private! !
-!AbstractELEMDESC categoriesFor: #typeName!accessing!public! !
+!OS.COM.AbstractELEMDESC categoriesFor: #analyzer!accessing!private! !
+!OS.COM.AbstractELEMDESC categoriesFor: #classDesc!accessing!private! !
+!OS.COM.AbstractELEMDESC categoriesFor: #indirections!accessing!public! !
+!OS.COM.AbstractELEMDESC categoriesFor: #isVariant!private!testing! !
+!OS.COM.AbstractELEMDESC categoriesFor: #objectClass!accessing!public! !
+!OS.COM.AbstractELEMDESC categoriesFor: #owner!accessing!private! !
+!OS.COM.AbstractELEMDESC categoriesFor: #owner:!accessing!private! !
+!OS.COM.AbstractELEMDESC categoriesFor: #tdesc!accessing!public! !
+!OS.COM.AbstractELEMDESC categoriesFor: #tdescElem!**compiled accessors**!private! !
+!OS.COM.AbstractELEMDESC categoriesFor: #typeName!accessing!public! !
 
-!AbstractELEMDESC class methodsFor!
+!OS.COM.AbstractELEMDESC class methodsFor!
 
 defineFields
 	"Define the shared fields of the ELEMDESC and ARRAYDESC structures.
@@ -94,5 +94,5 @@ defineFields
 	"
 
 	self defineField: #tdescElem type: (StructureField type: TYPEDESC) beReadOnly beNonBrowsable! !
-!AbstractELEMDESC class categoriesFor: #defineFields!public!template definition! !
+!OS.COM.AbstractELEMDESC class categoriesFor: #defineFields!public!template definition! !
 

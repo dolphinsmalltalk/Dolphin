@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-OLEStructure subclass: #'OS.ITEMIDLIST'
+OS.COM.OLEStructure subclass: #'OS.ITEMIDLIST'
 	instanceVariableNames: 'back'
 	classVariableNames: ''
 	imports: #()

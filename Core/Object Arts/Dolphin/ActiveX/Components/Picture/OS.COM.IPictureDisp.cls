@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-IDispatch subclass: #IPictureDisp
+OS.COM.IDispatch subclass: #'OS.COM.IPictureDisp'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-IPictureDisp guid: (IID fromString: '{7bf80981-bf32-101a-8bbb-00aa00300cab}')!
-IPictureDisp comment: '`IPictureDisp` is a wrapper class generated for the dispatch interface ''stdole.Picture'' from type information in the ''OLE Automation'' library. It contains methods to get and set the properties and invoke the methods exposed by that interface.
+OS.COM.IPictureDisp guid: (OS.COM.IID fromString: '{7bf80981-bf32-101a-8bbb-00aa00300cab}')!
+OS.COM.IPictureDisp comment: '`IPictureDisp` is a wrapper class generated for the dispatch interface ''stdole.Picture'' from type information in the ''OLE Automation'' library. It contains methods to get and set the properties and invoke the methods exposed by that interface.
 
 The type library contains no documentation for this dispinterface
 
@@ -61,8 +61,8 @@ OLE_HANDLE hPal;
 };
 ```
 '!
-!IPictureDisp categoriesForClass!COM-Interfaces! !
-!IPictureDisp methodsFor!
+!OS.COM.IPictureDisp categoriesForClass!COM-Interfaces! !
+!OS.COM.IPictureDisp methodsFor!
 
 handle
 	"Answer the <sdword> value of the 'Handle' property of the receiver.
@@ -116,22 +116,21 @@ width
 		OLE_XSIZE_HIMETRIC Width"
 
 	^self getPropertyId: 4! !
-!IPictureDisp categoriesFor: #handle!**auto generated**!properties!public! !
-!IPictureDisp categoriesFor: #height!**auto generated**!properties!public! !
-!IPictureDisp categoriesFor: #hPal!**auto generated**!properties!public! !
-!IPictureDisp categoriesFor: #hPal:!**auto generated**!properties!public! !
-!IPictureDisp categoriesFor: #render:x:y:cx:cy:xSrc:ySrc:cxSrc:cySrc:prcWBounds:!**auto generated**!methods!public! !
-!IPictureDisp categoriesFor: #type!**auto generated**!properties!public! !
-!IPictureDisp categoriesFor: #value!**auto generated**!properties!public! !
-!IPictureDisp categoriesFor: #value:!**auto generated**!properties!public! !
-!IPictureDisp categoriesFor: #width!**auto generated**!properties!public! !
+!OS.COM.IPictureDisp categoriesFor: #handle!**auto generated**!properties!public! !
+!OS.COM.IPictureDisp categoriesFor: #height!**auto generated**!properties!public! !
+!OS.COM.IPictureDisp categoriesFor: #hPal!**auto generated**!properties!public! !
+!OS.COM.IPictureDisp categoriesFor: #hPal:!**auto generated**!properties!public! !
+!OS.COM.IPictureDisp categoriesFor: #render:x:y:cx:cy:xSrc:ySrc:cxSrc:cySrc:prcWBounds:!**auto generated**!methods!public! !
+!OS.COM.IPictureDisp categoriesFor: #type!**auto generated**!properties!public! !
+!OS.COM.IPictureDisp categoriesFor: #value!**auto generated**!properties!public! !
+!OS.COM.IPictureDisp categoriesFor: #value:!**auto generated**!properties!public! !
+!OS.COM.IPictureDisp categoriesFor: #width!**auto generated**!properties!public! !
 
-!IPictureDisp class methodsFor!
+!OS.COM.IPictureDisp class methodsFor!
 
 clsid
 	"Private - Answer the CLSID of the coclass (StdPicture) for which the receiver is the default interface."
 
-	^CLSID fromString: '{0be35204-8f91-11ce-9de3-00aa004bb851}'
-! !
-!IPictureDisp class categoriesFor: #clsid!**auto generated**!constants!private! !
+	^CLSID fromString: '{0be35204-8f91-11ce-9de3-00aa004bb851}'! !
+!OS.COM.IPictureDisp class categoriesFor: #clsid!**auto generated**!constants!private! !
 

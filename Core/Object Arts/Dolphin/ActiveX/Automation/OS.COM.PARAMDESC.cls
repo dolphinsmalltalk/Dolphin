@@ -1,16 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-OLEStructure subclass: #PARAMDESC
+OS.COM.OLEStructure subclass: #'OS.COM.PARAMDESC'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'AXAutomationConstants'
+	imports: #(#{OS.COM.AutomationConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_pparamdescex' -> 16r0.
 		'_OffsetOf_wParamFlags' -> 16r4
 	}!
-PARAMDESC guid: (GUID fromString: '{c06f3b73-0868-11d3-93af-00a024ca708a}')!
-PARAMDESC comment: 'PARAMDESC is an <ExternalStructure> to represent the AX Automation structure of the same name.
+OS.COM.PARAMDESC guid: (Core.GUID fromString: '{c06f3b73-0868-11d3-93af-00a024ca708a}')!
+OS.COM.PARAMDESC comment: 'PARAMDESC is an <ExternalStructure> to represent the AX Automation structure of the same name.
 
 The PARAMDESC structure is used, one per argument, to describe the parameters to a function belonging to either an [disp]interface or a module in a type library. The information includes certain (but not all) IDL flags, as well as the argument
 type and default value, if any.
@@ -18,8 +18,8 @@ type and default value, if any.
 Fields:
 	pparamdescex	<PARAMDESCEX*> pointer to a struct with default value for the parameter, if any.
 	wParamFlags	<WORD> various flags describing the parameter, such as whether it is [in] or [out].'!
-!PARAMDESC categoriesForClass!External-Data-Structured-COM! !
-!PARAMDESC methodsFor!
+!OS.COM.PARAMDESC categoriesForClass!External-Data-Structured-COM! !
+!OS.COM.PARAMDESC methodsFor!
 
 defaultValue
 	"Answer the <VARIANT> default value for the receiver,
@@ -72,17 +72,17 @@ wParamFlags
 	"Answer the <Integer> value of the receiver's 'wParamFlags' field."
 
 	^bytes wordAtOffset: _OffsetOf_wParamFlags! !
-!PARAMDESC categoriesFor: #defaultValue!accessing!public! !
-!PARAMDESC categoriesFor: #directionFlags!public!testing! !
-!PARAMDESC categoriesFor: #hasDefaultValue!public!testing! !
-!PARAMDESC categoriesFor: #isIn!public!testing! !
-!PARAMDESC categoriesFor: #isOptional!public!testing! !
-!PARAMDESC categoriesFor: #isOut!public!testing! !
-!PARAMDESC categoriesFor: #isRetVal!public!testing! !
-!PARAMDESC categoriesFor: #pparamdescex!**compiled accessors**!public! !
-!PARAMDESC categoriesFor: #wParamFlags!**compiled accessors**!public! !
+!OS.COM.PARAMDESC categoriesFor: #defaultValue!accessing!public! !
+!OS.COM.PARAMDESC categoriesFor: #directionFlags!public!testing! !
+!OS.COM.PARAMDESC categoriesFor: #hasDefaultValue!public!testing! !
+!OS.COM.PARAMDESC categoriesFor: #isIn!public!testing! !
+!OS.COM.PARAMDESC categoriesFor: #isOptional!public!testing! !
+!OS.COM.PARAMDESC categoriesFor: #isOut!public!testing! !
+!OS.COM.PARAMDESC categoriesFor: #isRetVal!public!testing! !
+!OS.COM.PARAMDESC categoriesFor: #pparamdescex!**compiled accessors**!public! !
+!OS.COM.PARAMDESC categoriesFor: #wParamFlags!**compiled accessors**!public! !
 
-!PARAMDESC class methodsFor!
+!OS.COM.PARAMDESC class methodsFor!
 
 defineFields
 	"Define the fields of the PARAMDESC structure.
@@ -97,12 +97,11 @@ defineFields
 	"
 
 	self
-		defineField: #pparamdescex		type: (PointerField type: PARAMDESCEX) beReadOnly;
-		defineField: #wParamFlags		type: WORDField readOnly
-!
+		defineField: #pparamdescex type: (PointerField type: PARAMDESCEX) beReadOnly;
+		defineField: #wParamFlags type: WORDField readOnly!
 
 getFieldNames
 	^#(#pparamdescex #wParamFlags)! !
-!PARAMDESC class categoriesFor: #defineFields!public!template definition! !
-!PARAMDESC class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.COM.PARAMDESC class categoriesFor: #defineFields!public!template definition! !
+!OS.COM.PARAMDESC class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

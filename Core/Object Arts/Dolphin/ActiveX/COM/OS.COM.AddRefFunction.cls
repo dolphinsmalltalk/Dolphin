@@ -1,17 +1,17 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-COMFunctionAbstract subclass: #UnkAddRefFunction
+OS.COM.AbstractInterfaceFunction subclass: #'OS.COM.AddRefFunction'
 	instanceVariableNames: ''
 	classVariableNames: 'Descriptor'
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-UnkAddRefFunction guid: (GUID fromString: '{19c5e908-2db4-4e67-8984-b11c9cf2e982}')!
-UnkAddRefFunction comment: 'COMAddRefFunction is a specialized class of <COMFunction> intended to represent the IUnknown::AddRef() method.
+OS.COM.AddRefFunction guid: (Core.GUID fromString: '{19c5e908-2db4-4e67-8984-b11c9cf2e982}')!
+OS.COM.AddRefFunction comment: 'COMAddRefFunction is a specialized class of <COMFunction> intended to represent the IUnknown::AddRef() method.
 
 As IUnknown is implemented entirely by the <COMObjectStub>, a COMAddRefFunction sends a #AddRef message to the relevant stub.'!
-!UnkAddRefFunction categoriesForClass!COM-Implementations! !
-!UnkAddRefFunction methodsFor!
+!OS.COM.AddRefFunction categoriesForClass!COM-Implementations! !
+!OS.COM.AddRefFunction methodsFor!
 
 callback: stub interface: aCOMInterface withArgumentsAt: pArgs
 	"Private - Send an IUnknown::AddRef() call as an #AddRef message back to 
@@ -32,11 +32,11 @@ selector
 	"Private - Answer the selector sent when the receiver is evaluated."
 
 	^#AddRef! !
-!UnkAddRefFunction categoriesFor: #callback:interface:withArgumentsAt:!evaluating!private! !
-!UnkAddRefFunction categoriesFor: #descriptor!accessing!private! !
-!UnkAddRefFunction categoriesFor: #selector!accessing!private! !
+!OS.COM.AddRefFunction categoriesFor: #callback:interface:withArgumentsAt:!evaluating!private! !
+!OS.COM.AddRefFunction categoriesFor: #descriptor!accessing!private! !
+!OS.COM.AddRefFunction categoriesFor: #selector!accessing!private! !
 
-!UnkAddRefFunction class methodsFor!
+!OS.COM.AddRefFunction class methodsFor!
 
 initialize
 	"Private - Initialize the receiver's class variables.
@@ -52,6 +52,6 @@ uninitialize
 	"Private - Uninitialize the receiver as it is about to be removed from the system."
 
 	Descriptor := nil! !
-!UnkAddRefFunction class categoriesFor: #initialize!development!initializing!private! !
-!UnkAddRefFunction class categoriesFor: #uninitialize!class hierarchy-removing!private! !
+!OS.COM.AddRefFunction class categoriesFor: #initialize!development!initializing!private! !
+!OS.COM.AddRefFunction class categoriesFor: #uninitialize!class hierarchy-removing!private! !
 

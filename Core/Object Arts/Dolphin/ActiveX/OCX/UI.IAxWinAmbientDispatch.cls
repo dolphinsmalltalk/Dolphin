@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-IDispatch subclass: #IAxWinAmbientDispatch
+OS.COM.IDispatch subclass: #'UI.IAxWinAmbientDispatch'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #(#{OS.COM private})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-IAxWinAmbientDispatch guid: (IID fromString: '{b6ea2051-048a-11d1-82b9-00c04fb9942e}')!
-IAxWinAmbientDispatch comment: '<IAxWinAmbientDispatch> is a wrapper class for the COM interface ''ActiveXHost.IAxWinAmbientDispatch'' generated from type information in the ''Dolphin Smalltalk Active-X Host Library'' library. It contains methods to invoke the member functions exposed by that interface.
+UI.IAxWinAmbientDispatch guid: (OS.COM.IID fromString: '{b6ea2051-048a-11d1-82b9-00c04fb9942e}')!
+UI.IAxWinAmbientDispatch comment: '<IAxWinAmbientDispatch> is a wrapper class for the COM interface ''ActiveXHost.IAxWinAmbientDispatch'' generated from type information in the ''Dolphin Smalltalk Active-X Host Library'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains the following helpstring for this interface
 	"IAxWinAmbientDispatch Interface"
@@ -109,18 +109,17 @@ interface IAxWinAmbientDispatch : IDispatch {
 		[out, retval] BSTR* pbstrOptionKeyPath);
 };
 '!
-!IAxWinAmbientDispatch categoriesForClass!COM-Interfaces!DolphinVM-Interfaces! !
-!IAxWinAmbientDispatch methodsFor!
+!UI.IAxWinAmbientDispatch categoriesForClass!COM-Interfaces!DolphinVM-Interfaces! !
+!UI.IAxWinAmbientDispatch methodsFor!
 
 allowContextMenu
 	"Answer the <varbool> value of the 'AllowContextMenu' property of the receiver.
 	Helpstring: Enable or disable context menus"
 
 	| answer |
-	answer := (VARIANT_BOOL new).
+	answer := VARIANT_BOOL new.
 	self get_AllowContextMenu: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 allowContextMenu: pbAllowContextMenu
 	"Set the 'AllowContextMenu' property of the receiver to the <varbool> value of the argument.
@@ -134,10 +133,9 @@ allowShowUI
 	Helpstring: Enable or disable UI"
 
 	| answer |
-	answer := (VARIANT_BOOL new).
+	answer := VARIANT_BOOL new.
 	self get_AllowShowUI: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 allowShowUI: pbAllowShowUI
 	"Set the 'AllowShowUI' property of the receiver to the <varbool> value of the argument.
@@ -151,10 +149,9 @@ allowWindowlessActivation
 	Helpstring: Enable or disable windowless activation"
 
 	| answer |
-	answer := (VARIANT_BOOL new).
+	answer := VARIANT_BOOL new.
 	self get_AllowWindowlessActivation: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 allowWindowlessActivation: pbCanWindowlessActivate
 	"Set the 'AllowWindowlessActivation' property of the receiver to the <varbool> value of the argument.
@@ -187,10 +184,9 @@ displayAsDefault
 	Helpstring: Enable or disable the control as default"
 
 	| answer |
-	answer := (VARIANT_BOOL new).
+	answer := VARIANT_BOOL new.
 	self get_DisplayAsDefault: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 displayAsDefault: pbDisplayAsDefault
 	"Set the 'DisplayAsDefault' property of the receiver to the <varbool> value of the argument.
@@ -426,10 +422,9 @@ messageReflect
 	Helpstring: Enable or disable message reflection"
 
 	| answer |
-	answer := (VARIANT_BOOL new).
+	answer := VARIANT_BOOL new.
 	self get_MessageReflect: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 messageReflect: pbMsgReflect
 	"Set the 'MessageReflect' property of the receiver to the <varbool> value of the argument.
@@ -445,8 +440,7 @@ optionKeyPath
 	| answer |
 	answer := BSTR new.
 	self get_OptionKeyPath: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 optionKeyPath: pbstrOptionKeyPath
 	"Set the 'OptionKeyPath' property of the receiver to the <bstr> value of the argument.
@@ -590,30 +584,27 @@ showGrabHandles
 	Helpstring: Show or hide grab handles"
 
 	| answer |
-	answer := (VARIANT_BOOL new).
+	answer := VARIANT_BOOL new.
 	self get_ShowGrabHandles: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 showHatching
 	"Answer the <varbool> value of the 'ShowHatching' property of the receiver.
 	Helpstring: Are grab handles enabled"
 
 	| answer |
-	answer := (VARIANT_BOOL new).
+	answer := VARIANT_BOOL new.
 	self get_ShowHatching: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 userMode
 	"Answer the <varbool> value of the 'UserMode' property of the receiver.
 	Helpstring: Set the ambient user mode"
 
 	| answer |
-	answer := (VARIANT_BOOL new).
+	answer := VARIANT_BOOL new.
 	self get_UserMode: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 userMode: pbUserMode
 	"Set the 'UserMode' property of the receiver to the <varbool> value of the argument.
@@ -621,64 +612,64 @@ userMode: pbUserMode
 
 	self put_UserMode: pbUserMode
 ! !
-!IAxWinAmbientDispatch categoriesFor: #allowContextMenu!**auto generated**!properties!public! !
-!IAxWinAmbientDispatch categoriesFor: #allowContextMenu:!**auto generated**!properties!public! !
-!IAxWinAmbientDispatch categoriesFor: #allowShowUI!**auto generated**!properties!public! !
-!IAxWinAmbientDispatch categoriesFor: #allowShowUI:!**auto generated**!properties!public! !
-!IAxWinAmbientDispatch categoriesFor: #allowWindowlessActivation!**auto generated**!properties!public! !
-!IAxWinAmbientDispatch categoriesFor: #allowWindowlessActivation:!**auto generated**!properties!public! !
-!IAxWinAmbientDispatch categoriesFor: #backColor!properties!public! !
-!IAxWinAmbientDispatch categoriesFor: #backColor:!properties!public! !
-!IAxWinAmbientDispatch categoriesFor: #displayAsDefault!**auto generated**!properties!public! !
-!IAxWinAmbientDispatch categoriesFor: #displayAsDefault:!**auto generated**!properties!public! !
-!IAxWinAmbientDispatch categoriesFor: #docHostDoubleClickFlags!**auto generated**!properties!public! !
-!IAxWinAmbientDispatch categoriesFor: #docHostDoubleClickFlags:!**auto generated**!properties!public! !
-!IAxWinAmbientDispatch categoriesFor: #docHostFlags!**auto generated**!properties!public! !
-!IAxWinAmbientDispatch categoriesFor: #docHostFlags:!**auto generated**!properties!public! !
-!IAxWinAmbientDispatch categoriesFor: #font!properties!public! !
-!IAxWinAmbientDispatch categoriesFor: #font:!**auto generated**!properties!public! !
-!IAxWinAmbientDispatch categoriesFor: #foreColor!properties!public! !
-!IAxWinAmbientDispatch categoriesFor: #foreColor:!properties!public! !
-!IAxWinAmbientDispatch categoriesFor: #get_AllowContextMenu:!**auto generated**!COM Interfaces-IAxWinAmbientDispatch!private! !
-!IAxWinAmbientDispatch categoriesFor: #get_AllowShowUI:!**auto generated**!COM Interfaces-IAxWinAmbientDispatch!private! !
-!IAxWinAmbientDispatch categoriesFor: #get_AllowWindowlessActivation:!**auto generated**!COM Interfaces-IAxWinAmbientDispatch!private! !
-!IAxWinAmbientDispatch categoriesFor: #get_BackColor:!**auto generated**!COM Interfaces-IAxWinAmbientDispatch!private! !
-!IAxWinAmbientDispatch categoriesFor: #get_DisplayAsDefault:!**auto generated**!COM Interfaces-IAxWinAmbientDispatch!private! !
-!IAxWinAmbientDispatch categoriesFor: #get_DocHostDoubleClickFlags:!**auto generated**!COM Interfaces-IAxWinAmbientDispatch!private! !
-!IAxWinAmbientDispatch categoriesFor: #get_DocHostFlags:!**auto generated**!COM Interfaces-IAxWinAmbientDispatch!private! !
-!IAxWinAmbientDispatch categoriesFor: #get_Font:!**auto generated**!COM Interfaces-IAxWinAmbientDispatch!private! !
-!IAxWinAmbientDispatch categoriesFor: #get_ForeColor:!**auto generated**!COM Interfaces-IAxWinAmbientDispatch!private! !
-!IAxWinAmbientDispatch categoriesFor: #get_LocaleID:!**auto generated**!COM Interfaces-IAxWinAmbientDispatch!private! !
-!IAxWinAmbientDispatch categoriesFor: #get_MessageReflect:!**auto generated**!COM Interfaces-IAxWinAmbientDispatch!private! !
-!IAxWinAmbientDispatch categoriesFor: #get_OptionKeyPath:!**auto generated**!COM Interfaces-IAxWinAmbientDispatch!private! !
-!IAxWinAmbientDispatch categoriesFor: #get_ShowGrabHandles:!**auto generated**!COM Interfaces-IAxWinAmbientDispatch!private! !
-!IAxWinAmbientDispatch categoriesFor: #get_ShowHatching:!**auto generated**!COM Interfaces-IAxWinAmbientDispatch!private! !
-!IAxWinAmbientDispatch categoriesFor: #get_UserMode:!**auto generated**!COM Interfaces-IAxWinAmbientDispatch!private! !
-!IAxWinAmbientDispatch categoriesFor: #localeID!**auto generated**!properties!public! !
-!IAxWinAmbientDispatch categoriesFor: #localeID:!**auto generated**!properties!public! !
-!IAxWinAmbientDispatch categoriesFor: #messageReflect!**auto generated**!properties!public! !
-!IAxWinAmbientDispatch categoriesFor: #messageReflect:!**auto generated**!properties!public! !
-!IAxWinAmbientDispatch categoriesFor: #optionKeyPath!**auto generated**!properties!public! !
-!IAxWinAmbientDispatch categoriesFor: #optionKeyPath:!**auto generated**!properties!public! !
-!IAxWinAmbientDispatch categoriesFor: #put_AllowContextMenu:!**auto generated**!COM Interfaces-IAxWinAmbientDispatch!private! !
-!IAxWinAmbientDispatch categoriesFor: #put_AllowShowUI:!**auto generated**!COM Interfaces-IAxWinAmbientDispatch!private! !
-!IAxWinAmbientDispatch categoriesFor: #put_AllowWindowlessActivation:!**auto generated**!COM Interfaces-IAxWinAmbientDispatch!private! !
-!IAxWinAmbientDispatch categoriesFor: #put_BackColor:!**auto generated**!COM Interfaces-IAxWinAmbientDispatch!private! !
-!IAxWinAmbientDispatch categoriesFor: #put_DisplayAsDefault:!**auto generated**!COM Interfaces-IAxWinAmbientDispatch!private! !
-!IAxWinAmbientDispatch categoriesFor: #put_DocHostDoubleClickFlags:!**auto generated**!COM Interfaces-IAxWinAmbientDispatch!private! !
-!IAxWinAmbientDispatch categoriesFor: #put_DocHostFlags:!**auto generated**!COM Interfaces-IAxWinAmbientDispatch!private! !
-!IAxWinAmbientDispatch categoriesFor: #put_Font:!**auto generated**!COM Interfaces-IAxWinAmbientDispatch!private! !
-!IAxWinAmbientDispatch categoriesFor: #put_ForeColor:!**auto generated**!COM Interfaces-IAxWinAmbientDispatch!private! !
-!IAxWinAmbientDispatch categoriesFor: #put_LocaleID:!**auto generated**!COM Interfaces-IAxWinAmbientDispatch!private! !
-!IAxWinAmbientDispatch categoriesFor: #put_MessageReflect:!**auto generated**!COM Interfaces-IAxWinAmbientDispatch!private! !
-!IAxWinAmbientDispatch categoriesFor: #put_OptionKeyPath:!**auto generated**!COM Interfaces-IAxWinAmbientDispatch!private! !
-!IAxWinAmbientDispatch categoriesFor: #put_UserMode:!**auto generated**!COM Interfaces-IAxWinAmbientDispatch!private! !
-!IAxWinAmbientDispatch categoriesFor: #showGrabHandles!**auto generated**!properties!public! !
-!IAxWinAmbientDispatch categoriesFor: #showHatching!**auto generated**!properties!public! !
-!IAxWinAmbientDispatch categoriesFor: #userMode!**auto generated**!properties!public! !
-!IAxWinAmbientDispatch categoriesFor: #userMode:!**auto generated**!properties!public! !
+!UI.IAxWinAmbientDispatch categoriesFor: #allowContextMenu!**auto generated**!properties!public! !
+!UI.IAxWinAmbientDispatch categoriesFor: #allowContextMenu:!**auto generated**!properties!public! !
+!UI.IAxWinAmbientDispatch categoriesFor: #allowShowUI!**auto generated**!properties!public! !
+!UI.IAxWinAmbientDispatch categoriesFor: #allowShowUI:!**auto generated**!properties!public! !
+!UI.IAxWinAmbientDispatch categoriesFor: #allowWindowlessActivation!**auto generated**!properties!public! !
+!UI.IAxWinAmbientDispatch categoriesFor: #allowWindowlessActivation:!**auto generated**!properties!public! !
+!UI.IAxWinAmbientDispatch categoriesFor: #backColor!properties!public! !
+!UI.IAxWinAmbientDispatch categoriesFor: #backColor:!properties!public! !
+!UI.IAxWinAmbientDispatch categoriesFor: #displayAsDefault!**auto generated**!properties!public! !
+!UI.IAxWinAmbientDispatch categoriesFor: #displayAsDefault:!**auto generated**!properties!public! !
+!UI.IAxWinAmbientDispatch categoriesFor: #docHostDoubleClickFlags!**auto generated**!properties!public! !
+!UI.IAxWinAmbientDispatch categoriesFor: #docHostDoubleClickFlags:!**auto generated**!properties!public! !
+!UI.IAxWinAmbientDispatch categoriesFor: #docHostFlags!**auto generated**!properties!public! !
+!UI.IAxWinAmbientDispatch categoriesFor: #docHostFlags:!**auto generated**!properties!public! !
+!UI.IAxWinAmbientDispatch categoriesFor: #font!properties!public! !
+!UI.IAxWinAmbientDispatch categoriesFor: #font:!**auto generated**!properties!public! !
+!UI.IAxWinAmbientDispatch categoriesFor: #foreColor!properties!public! !
+!UI.IAxWinAmbientDispatch categoriesFor: #foreColor:!properties!public! !
+!UI.IAxWinAmbientDispatch categoriesFor: #get_AllowContextMenu:!**auto generated**!COM Interfaces-IAxWinAmbientDispatch!private! !
+!UI.IAxWinAmbientDispatch categoriesFor: #get_AllowShowUI:!**auto generated**!COM Interfaces-IAxWinAmbientDispatch!private! !
+!UI.IAxWinAmbientDispatch categoriesFor: #get_AllowWindowlessActivation:!**auto generated**!COM Interfaces-IAxWinAmbientDispatch!private! !
+!UI.IAxWinAmbientDispatch categoriesFor: #get_BackColor:!**auto generated**!COM Interfaces-IAxWinAmbientDispatch!private! !
+!UI.IAxWinAmbientDispatch categoriesFor: #get_DisplayAsDefault:!**auto generated**!COM Interfaces-IAxWinAmbientDispatch!private! !
+!UI.IAxWinAmbientDispatch categoriesFor: #get_DocHostDoubleClickFlags:!**auto generated**!COM Interfaces-IAxWinAmbientDispatch!private! !
+!UI.IAxWinAmbientDispatch categoriesFor: #get_DocHostFlags:!**auto generated**!COM Interfaces-IAxWinAmbientDispatch!private! !
+!UI.IAxWinAmbientDispatch categoriesFor: #get_Font:!**auto generated**!COM Interfaces-IAxWinAmbientDispatch!private! !
+!UI.IAxWinAmbientDispatch categoriesFor: #get_ForeColor:!**auto generated**!COM Interfaces-IAxWinAmbientDispatch!private! !
+!UI.IAxWinAmbientDispatch categoriesFor: #get_LocaleID:!**auto generated**!COM Interfaces-IAxWinAmbientDispatch!private! !
+!UI.IAxWinAmbientDispatch categoriesFor: #get_MessageReflect:!**auto generated**!COM Interfaces-IAxWinAmbientDispatch!private! !
+!UI.IAxWinAmbientDispatch categoriesFor: #get_OptionKeyPath:!**auto generated**!COM Interfaces-IAxWinAmbientDispatch!private! !
+!UI.IAxWinAmbientDispatch categoriesFor: #get_ShowGrabHandles:!**auto generated**!COM Interfaces-IAxWinAmbientDispatch!private! !
+!UI.IAxWinAmbientDispatch categoriesFor: #get_ShowHatching:!**auto generated**!COM Interfaces-IAxWinAmbientDispatch!private! !
+!UI.IAxWinAmbientDispatch categoriesFor: #get_UserMode:!**auto generated**!COM Interfaces-IAxWinAmbientDispatch!private! !
+!UI.IAxWinAmbientDispatch categoriesFor: #localeID!**auto generated**!properties!public! !
+!UI.IAxWinAmbientDispatch categoriesFor: #localeID:!**auto generated**!properties!public! !
+!UI.IAxWinAmbientDispatch categoriesFor: #messageReflect!**auto generated**!properties!public! !
+!UI.IAxWinAmbientDispatch categoriesFor: #messageReflect:!**auto generated**!properties!public! !
+!UI.IAxWinAmbientDispatch categoriesFor: #optionKeyPath!**auto generated**!properties!public! !
+!UI.IAxWinAmbientDispatch categoriesFor: #optionKeyPath:!**auto generated**!properties!public! !
+!UI.IAxWinAmbientDispatch categoriesFor: #put_AllowContextMenu:!**auto generated**!COM Interfaces-IAxWinAmbientDispatch!private! !
+!UI.IAxWinAmbientDispatch categoriesFor: #put_AllowShowUI:!**auto generated**!COM Interfaces-IAxWinAmbientDispatch!private! !
+!UI.IAxWinAmbientDispatch categoriesFor: #put_AllowWindowlessActivation:!**auto generated**!COM Interfaces-IAxWinAmbientDispatch!private! !
+!UI.IAxWinAmbientDispatch categoriesFor: #put_BackColor:!**auto generated**!COM Interfaces-IAxWinAmbientDispatch!private! !
+!UI.IAxWinAmbientDispatch categoriesFor: #put_DisplayAsDefault:!**auto generated**!COM Interfaces-IAxWinAmbientDispatch!private! !
+!UI.IAxWinAmbientDispatch categoriesFor: #put_DocHostDoubleClickFlags:!**auto generated**!COM Interfaces-IAxWinAmbientDispatch!private! !
+!UI.IAxWinAmbientDispatch categoriesFor: #put_DocHostFlags:!**auto generated**!COM Interfaces-IAxWinAmbientDispatch!private! !
+!UI.IAxWinAmbientDispatch categoriesFor: #put_Font:!**auto generated**!COM Interfaces-IAxWinAmbientDispatch!private! !
+!UI.IAxWinAmbientDispatch categoriesFor: #put_ForeColor:!**auto generated**!COM Interfaces-IAxWinAmbientDispatch!private! !
+!UI.IAxWinAmbientDispatch categoriesFor: #put_LocaleID:!**auto generated**!COM Interfaces-IAxWinAmbientDispatch!private! !
+!UI.IAxWinAmbientDispatch categoriesFor: #put_MessageReflect:!**auto generated**!COM Interfaces-IAxWinAmbientDispatch!private! !
+!UI.IAxWinAmbientDispatch categoriesFor: #put_OptionKeyPath:!**auto generated**!COM Interfaces-IAxWinAmbientDispatch!private! !
+!UI.IAxWinAmbientDispatch categoriesFor: #put_UserMode:!**auto generated**!COM Interfaces-IAxWinAmbientDispatch!private! !
+!UI.IAxWinAmbientDispatch categoriesFor: #showGrabHandles!**auto generated**!properties!public! !
+!UI.IAxWinAmbientDispatch categoriesFor: #showHatching!**auto generated**!properties!public! !
+!UI.IAxWinAmbientDispatch categoriesFor: #userMode!**auto generated**!properties!public! !
+!UI.IAxWinAmbientDispatch categoriesFor: #userMode:!**auto generated**!properties!public! !
 
-!IAxWinAmbientDispatch class methodsFor!
+!UI.IAxWinAmbientDispatch class methodsFor!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'DolphinVM.IAxWinAmbientDispatch'
@@ -715,5 +706,5 @@ defineFunctions
 		defineFunction: #put_OptionKeyPath: argumentTypes: 'bstr';
 		defineFunction: #get_OptionKeyPath1: argumentTypes: 'bstr*';
 		defineFunction: #get_IsWindowless: argumentTypes: 'varbool*'! !
-!IAxWinAmbientDispatch class categoriesFor: #defineFunctions!initializing!public! !
+!UI.IAxWinAmbientDispatch class categoriesFor: #defineFunctions!initializing!public! !
 

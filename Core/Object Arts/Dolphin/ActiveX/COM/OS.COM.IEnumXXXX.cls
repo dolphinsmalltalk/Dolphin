@@ -1,16 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-IUnknown subclass: #IEnumXXXX
+OS.COM.IUnknown subclass: #'OS.COM.IEnumXXXX'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-IEnumXXXX guid: (IID fromString: '{87b4c59f-026e-11d3-9fd7-00a0cc3e4a32}')!
-IEnumXXXX isAbstract: true!
-IEnumXXXX comment: ''!
-!IEnumXXXX categoriesForClass!COM-Interfaces! !
-!IEnumXXXX methodsFor!
+OS.COM.IEnumXXXX guid: (OS.COM.IID fromString: '{87b4c59f-026e-11d3-9fd7-00a0cc3e4a32}')!
+OS.COM.IEnumXXXX isNonInstantiable: true!
+OS.COM.IEnumXXXX comment: ''!
+!OS.COM.IEnumXXXX categoriesForClass!COM-Interfaces! !
+!OS.COM.IEnumXXXX methodsFor!
 
 batchSize
 	"Answer the number of elements to retrive per hit. 
@@ -217,33 +217,33 @@ upToEndDo: operation
 	elems do: [:e | operation value: e].
 	elems size < count] 
 			whileFalse! !
-!IEnumXXXX categoriesFor: #batchSize!constants!public! !
-!IEnumXXXX categoriesFor: #Clone:!COM Interfaces-IEnumXXXX!primitives!private! !
-!IEnumXXXX categoriesFor: #collect:!enumerating!public! !
-!IEnumXXXX categoriesFor: #contents!accessing!public! !
-!IEnumXXXX categoriesFor: #copy!copying!public! !
-!IEnumXXXX categoriesFor: #do:!enumerating!public! !
-!IEnumXXXX categoriesFor: #elementClass!constants!private! !
-!IEnumXXXX categoriesFor: #errorEndOfStream!exceptions!public! !
-!IEnumXXXX categoriesFor: #newElement!helpers!private! !
-!IEnumXXXX categoriesFor: #newElements:!helpers!private! !
-!IEnumXXXX categoriesFor: #next!accessing!public! !
-!IEnumXXXX categoriesFor: #next:!accessing!public! !
-!IEnumXXXX categoriesFor: #Next:rgelt:pceltFetched:!COM Interfaces-IEnumXXXX!primitives!private! !
-!IEnumXXXX categoriesFor: #nextAvailable!accessing!public! !
-!IEnumXXXX categoriesFor: #nextAvailable:!accessing!public! !
-!IEnumXXXX categoriesFor: #position:!positioning!public! !
-!IEnumXXXX categoriesFor: #reset!positioning!public! !
-!IEnumXXXX categoriesFor: #Reset!COM Interfaces-IEnumXXXX!primitives!private! !
-!IEnumXXXX categoriesFor: #select:!enumerating!public! !
-!IEnumXXXX categoriesFor: #skip:!positioning!public! !
-!IEnumXXXX categoriesFor: #Skip:!COM Interfaces-IEnumXXXX!primitives!private! !
-!IEnumXXXX categoriesFor: #upToEnd!accessing!public! !
-!IEnumXXXX categoriesFor: #upToEndDo:!helpers!private! !
+!OS.COM.IEnumXXXX categoriesFor: #batchSize!constants!public! !
+!OS.COM.IEnumXXXX categoriesFor: #Clone:!COM Interfaces-IEnumXXXX!primitives!private! !
+!OS.COM.IEnumXXXX categoriesFor: #collect:!enumerating!public! !
+!OS.COM.IEnumXXXX categoriesFor: #contents!accessing!public! !
+!OS.COM.IEnumXXXX categoriesFor: #copy!copying!public! !
+!OS.COM.IEnumXXXX categoriesFor: #do:!enumerating!public! !
+!OS.COM.IEnumXXXX categoriesFor: #elementClass!constants!private! !
+!OS.COM.IEnumXXXX categoriesFor: #errorEndOfStream!exceptions!public! !
+!OS.COM.IEnumXXXX categoriesFor: #newElement!helpers!private! !
+!OS.COM.IEnumXXXX categoriesFor: #newElements:!helpers!private! !
+!OS.COM.IEnumXXXX categoriesFor: #next!accessing!public! !
+!OS.COM.IEnumXXXX categoriesFor: #next:!accessing!public! !
+!OS.COM.IEnumXXXX categoriesFor: #Next:rgelt:pceltFetched:!COM Interfaces-IEnumXXXX!primitives!private! !
+!OS.COM.IEnumXXXX categoriesFor: #nextAvailable!accessing!public! !
+!OS.COM.IEnumXXXX categoriesFor: #nextAvailable:!accessing!public! !
+!OS.COM.IEnumXXXX categoriesFor: #position:!positioning!public! !
+!OS.COM.IEnumXXXX categoriesFor: #reset!positioning!public! !
+!OS.COM.IEnumXXXX categoriesFor: #Reset!COM Interfaces-IEnumXXXX!primitives!private! !
+!OS.COM.IEnumXXXX categoriesFor: #select:!enumerating!public! !
+!OS.COM.IEnumXXXX categoriesFor: #skip:!positioning!public! !
+!OS.COM.IEnumXXXX categoriesFor: #Skip:!COM Interfaces-IEnumXXXX!primitives!private! !
+!OS.COM.IEnumXXXX categoriesFor: #upToEnd!accessing!public! !
+!OS.COM.IEnumXXXX categoriesFor: #upToEndDo:!helpers!private! !
 
-IEnumXXXX methodProtocol: #IEnumXXXX attributes: #() selectors: #(#Clone: #Next:rgelt:pceltFetched: #Reset #Skip:)!
+OS.COM.IEnumXXXX methodProtocol: #IEnumXXXX attributes: #() selectors: #(#Clone: #Next:rgelt:pceltFetched: #Reset #Skip:)!
 
-!IEnumXXXX class methodsFor!
+!OS.COM.IEnumXXXX class methodsFor!
 
 defineFunctions
 	"Define the vtable for the IEnumXXXX interface. The vtable is common, but
@@ -267,6 +267,6 @@ elementClass
 
 	^self subclassResponsibility
 ! !
-!IEnumXXXX class categoriesFor: #defineFunctions!initializing!public! !
-!IEnumXXXX class categoriesFor: #elementClass!constants!private! !
+!OS.COM.IEnumXXXX class categoriesFor: #defineFunctions!initializing!public! !
+!OS.COM.IEnumXXXX class categoriesFor: #elementClass!constants!private! !
 

@@ -1,16 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-AXTypeInfoStructure subclass: #AXMemberDesc
+OS.COM.TypeInfoStructure subclass: #'OS.COM.MemberDesc'
 	instanceVariableNames: 'index customAttributes documentation'
 	classVariableNames: ''
-	poolDictionaries: 'AXAutomationConstants'
+	imports: #(#{OS.COM.AutomationConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-AXMemberDesc guid: (GUID fromString: '{ac5eb94d-60c1-4c16-ae6d-31acf5123eb6}')!
-AXMemberDesc isAbstract: true!
-AXMemberDesc comment: ''!
-!AXMemberDesc categoriesForClass!External-Data-Structured-COM! !
-!AXMemberDesc methodsFor!
+OS.COM.MemberDesc guid: (Core.GUID fromString: '{ac5eb94d-60c1-4c16-ae6d-31acf5123eb6}')!
+OS.COM.MemberDesc isNonInstantiable: true!
+OS.COM.MemberDesc comment: ''!
+!OS.COM.MemberDesc categoriesForClass!External-Data-Structured-COM! !
+!OS.COM.MemberDesc methodsFor!
 
 = comperand
 	"Answer whether the receiver is considered equal to the <Object>, comperand."
@@ -219,36 +219,36 @@ tdesc
 	retval argument, the return type of the function (usually HRESULT)."
 
 	^self elemDesc tdesc! !
-!AXMemberDesc categoriesFor: #=!comparing!public! !
-!AXMemberDesc categoriesFor: #argumentCount!accessing!public! !
-!AXMemberDesc categoriesFor: #arguments!accessing!public! !
-!AXMemberDesc categoriesFor: #argumentTypeNames!accessing!public! !
-!AXMemberDesc categoriesFor: #basicFree!private!realizing/unrealizing! !
-!AXMemberDesc categoriesFor: #basicIdlAttributes!printing-IDL!private! !
-!AXMemberDesc categoriesFor: #classDesc!accessing!private! !
-!AXMemberDesc categoriesFor: #cParams!accessing!private! !
-!AXMemberDesc categoriesFor: #customAttributes!accessing!public! !
-!AXMemberDesc categoriesFor: #documentation!accessing!public! !
-!AXMemberDesc categoriesFor: #elemDesc!accessing!private! !
-!AXMemberDesc categoriesFor: #flags!accessing!private! !
-!AXMemberDesc categoriesFor: #getAllCustData!accessing!private! !
-!AXMemberDesc categoriesFor: #hash!comparing!public! !
-!AXMemberDesc categoriesFor: #helpstring!accessing!public! !
-!AXMemberDesc categoriesFor: #idlId!printing-IDL!private! !
-!AXMemberDesc categoriesFor: #index!accessing!private! !
-!AXMemberDesc categoriesFor: #isBindable!public!testing! !
-!AXMemberDesc categoriesFor: #isDefaultBind!public!testing! !
-!AXMemberDesc categoriesFor: #isDisplayBind!public!testing! !
-!AXMemberDesc categoriesFor: #isHidden!public!testing! !
-!AXMemberDesc categoriesFor: #isNonBrowsable!public!testing! !
-!AXMemberDesc categoriesFor: #isReadOnly!public!testing! !
-!AXMemberDesc categoriesFor: #isRequestEdit!public!testing! !
-!AXMemberDesc categoriesFor: #isRestricted!public!testing! !
-!AXMemberDesc categoriesFor: #isSource!public!testing! !
-!AXMemberDesc categoriesFor: #isUIDefault!public!testing! !
-!AXMemberDesc categoriesFor: #isValueProperty!public!testing! !
-!AXMemberDesc categoriesFor: #memid!accessing!public! !
-!AXMemberDesc categoriesFor: #name!accessing!public! !
-!AXMemberDesc categoriesFor: #setAnalyzer:index:!accessing!initializing!private! !
-!AXMemberDesc categoriesFor: #tdesc!accessing!private! !
+!OS.COM.MemberDesc categoriesFor: #=!comparing!public! !
+!OS.COM.MemberDesc categoriesFor: #argumentCount!accessing!public! !
+!OS.COM.MemberDesc categoriesFor: #arguments!accessing!public! !
+!OS.COM.MemberDesc categoriesFor: #argumentTypeNames!accessing!public! !
+!OS.COM.MemberDesc categoriesFor: #basicFree!private!realizing/unrealizing! !
+!OS.COM.MemberDesc categoriesFor: #basicIdlAttributes!printing-IDL!private! !
+!OS.COM.MemberDesc categoriesFor: #classDesc!accessing!private! !
+!OS.COM.MemberDesc categoriesFor: #cParams!accessing!private! !
+!OS.COM.MemberDesc categoriesFor: #customAttributes!accessing!public! !
+!OS.COM.MemberDesc categoriesFor: #documentation!accessing!public! !
+!OS.COM.MemberDesc categoriesFor: #elemDesc!accessing!private! !
+!OS.COM.MemberDesc categoriesFor: #flags!accessing!private! !
+!OS.COM.MemberDesc categoriesFor: #getAllCustData!accessing!private! !
+!OS.COM.MemberDesc categoriesFor: #hash!comparing!public! !
+!OS.COM.MemberDesc categoriesFor: #helpstring!accessing!public! !
+!OS.COM.MemberDesc categoriesFor: #idlId!printing-IDL!private! !
+!OS.COM.MemberDesc categoriesFor: #index!accessing!private! !
+!OS.COM.MemberDesc categoriesFor: #isBindable!public!testing! !
+!OS.COM.MemberDesc categoriesFor: #isDefaultBind!public!testing! !
+!OS.COM.MemberDesc categoriesFor: #isDisplayBind!public!testing! !
+!OS.COM.MemberDesc categoriesFor: #isHidden!public!testing! !
+!OS.COM.MemberDesc categoriesFor: #isNonBrowsable!public!testing! !
+!OS.COM.MemberDesc categoriesFor: #isReadOnly!public!testing! !
+!OS.COM.MemberDesc categoriesFor: #isRequestEdit!public!testing! !
+!OS.COM.MemberDesc categoriesFor: #isRestricted!public!testing! !
+!OS.COM.MemberDesc categoriesFor: #isSource!public!testing! !
+!OS.COM.MemberDesc categoriesFor: #isUIDefault!public!testing! !
+!OS.COM.MemberDesc categoriesFor: #isValueProperty!public!testing! !
+!OS.COM.MemberDesc categoriesFor: #memid!accessing!public! !
+!OS.COM.MemberDesc categoriesFor: #name!accessing!public! !
+!OS.COM.MemberDesc categoriesFor: #setAnalyzer:index:!accessing!initializing!private! !
+!OS.COM.MemberDesc categoriesFor: #tdesc!accessing!private! !
 

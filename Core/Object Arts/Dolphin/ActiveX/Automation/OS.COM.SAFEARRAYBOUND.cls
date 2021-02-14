@@ -1,20 +1,20 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-OLEStructure subclass: #SAFEARRAYBOUND
+OS.COM.OLEStructure subclass: #'OS.COM.SAFEARRAYBOUND'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_cElements' -> 16r0.
 		'_OffsetOf_lLbound' -> 16r4
 	}!
-SAFEARRAYBOUND guid: (GUID fromString: '{c06f3b74-0868-11d3-93af-00a024ca708a}')!
-SAFEARRAYBOUND comment: '<SAFEARRAYBOUND> is an <ExternalStructure> class to wrap the struct ''''OAIDL.SAFEARRAYBOUND'''' from type information in the ''''Ole Automation Type Library'''' library.
+OS.COM.SAFEARRAYBOUND guid: (Core.GUID fromString: '{c06f3b74-0868-11d3-93af-00a024ca708a}')!
+OS.COM.SAFEARRAYBOUND comment: '<SAFEARRAYBOUND> is an <ExternalStructure> class to wrap the struct ''''OAIDL.SAFEARRAYBOUND'''' from type information in the ''''Ole Automation Type Library'''' library.
 
 A SAFEARRAYBOUND describes one dimension of a SAFEARRAY, or C array when used to describe a VT_CARRAY in a <TYPEDESC>.'!
-!SAFEARRAYBOUND categoriesForClass!External-Data-Structured-COM! !
-!SAFEARRAYBOUND methodsFor!
+!OS.COM.SAFEARRAYBOUND categoriesForClass!External-Data-Structured-COM! !
+!OS.COM.SAFEARRAYBOUND methodsFor!
 
 cElements
 	"Answer the <Integer> value of the receiver's 'cElements' field."
@@ -35,12 +35,12 @@ lLbound: anInteger
 	"Set the receiver's 'lLbound' field to the value of the argument, anInteger"
 
 	bytes sdwordAtOffset: _OffsetOf_lLbound put: anInteger! !
-!SAFEARRAYBOUND categoriesFor: #cElements!**compiled accessors**!public! !
-!SAFEARRAYBOUND categoriesFor: #cElements:!**compiled accessors**!public! !
-!SAFEARRAYBOUND categoriesFor: #lLbound!**compiled accessors**!public! !
-!SAFEARRAYBOUND categoriesFor: #lLbound:!**compiled accessors**!public! !
+!OS.COM.SAFEARRAYBOUND categoriesFor: #cElements!**compiled accessors**!public! !
+!OS.COM.SAFEARRAYBOUND categoriesFor: #cElements:!**compiled accessors**!public! !
+!OS.COM.SAFEARRAYBOUND categoriesFor: #lLbound!**compiled accessors**!public! !
+!OS.COM.SAFEARRAYBOUND categoriesFor: #lLbound:!**compiled accessors**!public! !
 
-!SAFEARRAYBOUND class methodsFor!
+!OS.COM.SAFEARRAYBOUND class methodsFor!
 
 defineFields
 	"Define the fields of the SAFEARRAYBOUND structure.
@@ -59,6 +59,6 @@ defineFields
 
 getFieldNames
 	^#(#cElements #lLbound)! !
-!SAFEARRAYBOUND class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!SAFEARRAYBOUND class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.COM.SAFEARRAYBOUND class categoriesFor: #defineFields!**auto generated**!public!template definition! !
+!OS.COM.SAFEARRAYBOUND class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

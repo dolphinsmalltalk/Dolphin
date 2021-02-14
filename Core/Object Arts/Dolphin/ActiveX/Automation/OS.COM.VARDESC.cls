@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-AXMemberDesc subclass: #VARDESC
+OS.COM.MemberDesc subclass: #'OS.COM.VARDESC'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_elemdesc' -> 16rC.
@@ -14,8 +14,8 @@ AXMemberDesc subclass: #VARDESC
 		'_OffsetOf_varkind' -> 16r20.
 		'_OffsetOf_wVarFlags' -> 16r1C
 	}!
-VARDESC guid: (GUID fromString: '{c06f3b6b-0868-11d3-93af-00a024ca708a}')!
-VARDESC comment: 'VARDESC is an <ExternalStructure> class to represent the OLE Automation structure of the same name.
+OS.COM.VARDESC guid: (Core.GUID fromString: '{c06f3b6b-0868-11d3-93af-00a024ca708a}')!
+OS.COM.VARDESC comment: 'VARDESC is an <ExternalStructure> class to represent the OLE Automation structure of the same name.
 
 The VARDESC structure describes a variable constant or data member.
 
@@ -30,8 +30,8 @@ Member variables:
 	varkind		<SDWORD> from the VARKIND enumeration.
 
 Please see the MS Automation help for further information.'!
-!VARDESC categoriesForClass!External-Data-Structured-COM! !
-!VARDESC methodsFor!
+!OS.COM.VARDESC categoriesForClass!External-Data-Structured-COM! !
+!OS.COM.VARDESC methodsFor!
 
 arguments
 	"Answer a <sequencedReadableCollection> containing <ELEMDESC> structures
@@ -160,30 +160,30 @@ wVarFlags
 	"Answer the <Integer> value of the receiver's 'wVarFlags' field."
 
 	^bytes wordAtOffset: _OffsetOf_wVarFlags! !
-!VARDESC categoriesFor: #arguments!accessing!public! !
-!VARDESC categoriesFor: #basicFree!private!realizing/unrealizing! !
-!VARDESC categoriesFor: #basicIdlAttributes!printing-IDL!private! !
-!VARDESC categoriesFor: #elemdesc!**compiled accessors**!public! !
-!VARDESC categoriesFor: #elemDesc!accessing!public! !
-!VARDESC categoriesFor: #flags!accessing!private! !
-!VARDESC categoriesFor: #getAllCustData!accessing!private! !
-!VARDESC categoriesFor: #getValidFields!accessing!private! !
-!VARDESC categoriesFor: #isAnonymous!public!testing! !
-!VARDESC categoriesFor: #isConformant!public!testing! !
-!VARDESC categoriesFor: #isReadOnly!public!testing! !
-!VARDESC categoriesFor: #isRequestEdit!public!testing! !
-!VARDESC categoriesFor: #isRestricted!public!testing! !
-!VARDESC categoriesFor: #isStatic!public!testing! !
-!VARDESC categoriesFor: #isStringField!public!testing! !
-!VARDESC categoriesFor: #isSymbolicConstant!public!testing! !
-!VARDESC categoriesFor: #isUnion!public!testing! !
-!VARDESC categoriesFor: #lpvarValue!**compiled accessors**!public! !
-!VARDESC categoriesFor: #memid!**compiled accessors**!public! !
-!VARDESC categoriesFor: #oInst!**compiled accessors**!public! !
-!VARDESC categoriesFor: #varkind!**compiled accessors**!public! !
-!VARDESC categoriesFor: #wVarFlags!**compiled accessors**!public! !
+!OS.COM.VARDESC categoriesFor: #arguments!accessing!public! !
+!OS.COM.VARDESC categoriesFor: #basicFree!private!realizing/unrealizing! !
+!OS.COM.VARDESC categoriesFor: #basicIdlAttributes!printing-IDL!private! !
+!OS.COM.VARDESC categoriesFor: #elemdesc!**compiled accessors**!public! !
+!OS.COM.VARDESC categoriesFor: #elemDesc!accessing!public! !
+!OS.COM.VARDESC categoriesFor: #flags!accessing!private! !
+!OS.COM.VARDESC categoriesFor: #getAllCustData!accessing!private! !
+!OS.COM.VARDESC categoriesFor: #getValidFields!accessing!private! !
+!OS.COM.VARDESC categoriesFor: #isAnonymous!public!testing! !
+!OS.COM.VARDESC categoriesFor: #isConformant!public!testing! !
+!OS.COM.VARDESC categoriesFor: #isReadOnly!public!testing! !
+!OS.COM.VARDESC categoriesFor: #isRequestEdit!public!testing! !
+!OS.COM.VARDESC categoriesFor: #isRestricted!public!testing! !
+!OS.COM.VARDESC categoriesFor: #isStatic!public!testing! !
+!OS.COM.VARDESC categoriesFor: #isStringField!public!testing! !
+!OS.COM.VARDESC categoriesFor: #isSymbolicConstant!public!testing! !
+!OS.COM.VARDESC categoriesFor: #isUnion!public!testing! !
+!OS.COM.VARDESC categoriesFor: #lpvarValue!**compiled accessors**!public! !
+!OS.COM.VARDESC categoriesFor: #memid!**compiled accessors**!public! !
+!OS.COM.VARDESC categoriesFor: #oInst!**compiled accessors**!public! !
+!OS.COM.VARDESC categoriesFor: #varkind!**compiled accessors**!public! !
+!OS.COM.VARDESC categoriesFor: #wVarFlags!**compiled accessors**!public! !
 
-!VARDESC class methodsFor!
+!OS.COM.VARDESC class methodsFor!
 
 defineFields
 	"Define the fields of the VARDESC structure.
@@ -225,6 +225,6 @@ defineFields
 
 getFieldNames
 	^#(#memid #lpvarValue #oInst #elemdesc #wVarFlags #varkind)! !
-!VARDESC class categoriesFor: #defineFields!public!template definition! !
-!VARDESC class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.COM.VARDESC class categoriesFor: #defineFields!public!template definition! !
+!OS.COM.VARDESC class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

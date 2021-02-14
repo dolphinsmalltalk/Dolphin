@@ -1,17 +1,17 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-COMFunctionAbstract subclass: #UnkQIFunction
+OS.COM.AbstractInterfaceFunction subclass: #'OS.COM.QueryInterfaceFunction'
 	instanceVariableNames: ''
 	classVariableNames: 'Descriptor'
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-UnkQIFunction guid: (GUID fromString: '{28df5741-9369-4150-8e9f-14235fe2e47c}')!
-UnkQIFunction comment: 'COMQueryInterfaceFunction is a specialized class of <COMFunction> intended to represent the IUnknown::QueryInterface() method.
+OS.COM.QueryInterfaceFunction guid: (Core.GUID fromString: '{28df5741-9369-4150-8e9f-14235fe2e47c}')!
+OS.COM.QueryInterfaceFunction comment: 'COMQueryInterfaceFunction is a specialized class of <COMFunction> intended to represent the IUnknown::QueryInterface() method.
 
 As IUnknown is implemented entirely by the <COMObjectStub>, a COMQueryInterfaceFunction sends a #QueryInterface:ppvObject: message to the relevant stub.'!
-!UnkQIFunction categoriesForClass!COM-Implementations! !
-!UnkQIFunction methodsFor!
+!OS.COM.QueryInterfaceFunction categoriesForClass!COM-Implementations! !
+!OS.COM.QueryInterfaceFunction methodsFor!
 
 callback: stub interface: aCOMInterface withArgumentsAt: anAddress
 	"Private - Send an IUnknown::QueryInterface() call as a #QueryInterface:ppvObject: 
@@ -42,11 +42,11 @@ selector
 	"Private - Answer the selector sent when the receiver is evaluated."
 
 	^#QueryInterface:ppvObject:! !
-!UnkQIFunction categoriesFor: #callback:interface:withArgumentsAt:!evaluating!private! !
-!UnkQIFunction categoriesFor: #descriptor!accessing!private! !
-!UnkQIFunction categoriesFor: #selector!accessing!private! !
+!OS.COM.QueryInterfaceFunction categoriesFor: #callback:interface:withArgumentsAt:!evaluating!private! !
+!OS.COM.QueryInterfaceFunction categoriesFor: #descriptor!accessing!private! !
+!OS.COM.QueryInterfaceFunction categoriesFor: #selector!accessing!private! !
 
-!UnkQIFunction class methodsFor!
+!OS.COM.QueryInterfaceFunction class methodsFor!
 
 initialize
 	"Private - Initialize the receiver's class variables.
@@ -66,6 +66,6 @@ uninitialize
 	"Private - Uninitialize the receiver as it is about to be removed from the system."
 
 	Descriptor := nil! !
-!UnkQIFunction class categoriesFor: #initialize!development!initializing!private! !
-!UnkQIFunction class categoriesFor: #uninitialize!class hierarchy-removing!private! !
+!OS.COM.QueryInterfaceFunction class categoriesFor: #initialize!development!initializing!private! !
+!OS.COM.QueryInterfaceFunction class categoriesFor: #uninitialize!class hierarchy-removing!private! !
 

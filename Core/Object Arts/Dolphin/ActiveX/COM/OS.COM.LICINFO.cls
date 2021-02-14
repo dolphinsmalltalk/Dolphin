@@ -1,17 +1,19 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-OLEStructure subclass: #LICINFO
+OS.COM.OLEStructure subclass: #'OS.COM.LICINFO'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_dwSize' -> 16r0.
 		'_OffsetOf_fLicVerified' -> 16r8.
 		'_OffsetOf_fRuntimeKeyAvail' -> 16r4
 	}!
-LICINFO guid: (GUID fromString: '{87b4c5b8-026e-11d3-9fd7-00a0cc3e4a32}')!
-LICINFO comment: 'LICINFO is an ExternalStructure class to represent the COM structure of the same name. LICINFO is used for licensing purposes in conjunction with IClassFactory2. Please refer to COM reference materials for further information.
+OS.COM.LICINFO guid: (Core.GUID fromString: '{87b4c5b8-026e-11d3-9fd7-00a0cc3e4a32}')!
+OS.COM.LICINFO comment: '`OS.COM.LICINFO` is an `External.Structure` class to represent the COM structure LICINFO. 
+
+LICINFO is used for licensing purposes in conjunction with IClassFactory2. Please refer to COM reference materials for further information.
 
 Member variables:
 *	cbLicInfo			<DWORD> sizeof the LICINFO structure
@@ -19,8 +21,8 @@ Member variables:
 	fLicVerified		<Boolean>
 
 *Renamed dwSize for compatibility with standard initialization code.'!
-!LICINFO categoriesForClass!External-Data-Structured-COM! !
-!LICINFO methodsFor!
+!OS.COM.LICINFO categoriesForClass!External-Data-Structured-COM! !
+!OS.COM.LICINFO methodsFor!
 
 dwSize: anInteger
 	"Set the receiver's 'dwSize' field to the value of the argument, anInteger"
@@ -36,11 +38,11 @@ fRuntimeKeyAvail
 	"Answer the <Boolean> value of the receiver's 'fRuntimeKeyAvail' field."
 
 	^(bytes dwordAtOffset: _OffsetOf_fRuntimeKeyAvail) asBoolean! !
-!LICINFO categoriesFor: #dwSize:!**compiled accessors**!public! !
-!LICINFO categoriesFor: #fLicVerified!**compiled accessors**!public! !
-!LICINFO categoriesFor: #fRuntimeKeyAvail!**compiled accessors**!public! !
+!OS.COM.LICINFO categoriesFor: #dwSize:!**compiled accessors**!public! !
+!OS.COM.LICINFO categoriesFor: #fLicVerified!**compiled accessors**!public! !
+!OS.COM.LICINFO categoriesFor: #fRuntimeKeyAvail!**compiled accessors**!public! !
 
-!LICINFO class methodsFor!
+!OS.COM.LICINFO class methodsFor!
 
 defineFields
 	"Define the fields of the LICINFO structure.
@@ -61,6 +63,6 @@ defineFields
 
 getFieldNames
 	^#(#dwSize #fRuntimeKeyAvail #fLicVerified)! !
-!LICINFO class categoriesFor: #defineFields!public!template definition! !
-!LICINFO class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.COM.LICINFO class categoriesFor: #defineFields!public!template definition! !
+!OS.COM.LICINFO class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-SharedPool subclass: #AXAutomationErrors
+Kernel.SharedPool subclass: #'OS.COM.AutomationErrors'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -23,6 +23,6 @@ SharedPool subclass: #AXAutomationErrors
 		'WCODE_HRESULT_FIRST' -> -16r7FFBFE00.
 		'WCODE_HRESULT_LAST' -> -16r7FFB0001
 	}!
-AXAutomationErrors guid: (GUID fromString: '{25804201-a9c9-4774-9e53-bbdb9aabf7db}')!
-AXAutomationErrors comment: ''!
-!AXAutomationErrors categoriesForClass!Unclassified! !
+OS.COM.AutomationErrors guid: (Core.GUID fromString: '{25804201-a9c9-4774-9e53-bbdb9aabf7db}')!
+OS.COM.AutomationErrors comment: ''!
+!OS.COM.AutomationErrors categoriesForClass!Unclassified! !

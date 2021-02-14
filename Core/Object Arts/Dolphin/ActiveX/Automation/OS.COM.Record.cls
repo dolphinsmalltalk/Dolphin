@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-OLEFinalizableStructure subclass: #AXRecord
+OS.COM.FinalizableStructure subclass: #'OS.COM.Record'
 	instanceVariableNames: 'recordInfo owner'
 	classVariableNames: ''
-	poolDictionaries: 'AXAutomationConstants AXAutomationErrors'
+	imports: #(#{OS.COM.AutomationConstants} #{OS.COM.AutomationErrors})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-AXRecord guid: (GUID fromString: '{4c783c74-4472-47ad-901f-ceb9de79dd8b}')!
-AXRecord comment: ''!
-!AXRecord categoriesForClass!Unclassified! !
-!AXRecord methodsFor!
+OS.COM.Record guid: (Core.GUID fromString: '{4c783c74-4472-47ad-901f-ceb9de79dd8b}')!
+OS.COM.Record comment: ''!
+!OS.COM.Record categoriesForClass!Unclassified! !
+!OS.COM.Record methodsFor!
 
 basicFree
 	"Private - Free external resources owned by the receiver.
@@ -133,23 +133,23 @@ setRecordInfo: anIRecordInfo owner: dataOwner
 
 	recordInfo := anIRecordInfo.
 	owner := dataOwner! !
-!AXRecord categoriesFor: #basicFree!private!realizing/unrealizing! !
-!AXRecord categoriesFor: #byteSize!accessing!public! !
-!AXRecord categoriesFor: #displayOn:!displaying!public! !
-!AXRecord categoriesFor: #doesNotUnderstand:!exceptions!public! !
-!AXRecord categoriesFor: #getField:!accessing!public! !
-!AXRecord categoriesFor: #getField:ifAbsent:!accessing!public! !
-!AXRecord categoriesFor: #getValidFields!accessing!private! !
-!AXRecord categoriesFor: #initialize!initializing!private! !
-!AXRecord categoriesFor: #initialize:!initializing!private! !
-!AXRecord categoriesFor: #initializePointer!initializing!private! !
-!AXRecord categoriesFor: #needsFree!private!realizing/unrealizing! !
-!AXRecord categoriesFor: #recordInfo!accessing!public! !
-!AXRecord categoriesFor: #setField:value:!accessing!public! !
-!AXRecord categoriesFor: #setField:value:ifAbsent:!accessing!public! !
-!AXRecord categoriesFor: #setRecordInfo:owner:!accessing!private! !
+!OS.COM.Record categoriesFor: #basicFree!private!realizing/unrealizing! !
+!OS.COM.Record categoriesFor: #byteSize!accessing!public! !
+!OS.COM.Record categoriesFor: #displayOn:!displaying!public! !
+!OS.COM.Record categoriesFor: #doesNotUnderstand:!exceptions!public! !
+!OS.COM.Record categoriesFor: #getField:!accessing!public! !
+!OS.COM.Record categoriesFor: #getField:ifAbsent:!accessing!public! !
+!OS.COM.Record categoriesFor: #getValidFields!accessing!private! !
+!OS.COM.Record categoriesFor: #initialize!initializing!private! !
+!OS.COM.Record categoriesFor: #initialize:!initializing!private! !
+!OS.COM.Record categoriesFor: #initializePointer!initializing!private! !
+!OS.COM.Record categoriesFor: #needsFree!private!realizing/unrealizing! !
+!OS.COM.Record categoriesFor: #recordInfo!accessing!public! !
+!OS.COM.Record categoriesFor: #setField:value:!accessing!public! !
+!OS.COM.Record categoriesFor: #setField:value:ifAbsent:!accessing!public! !
+!OS.COM.Record categoriesFor: #setRecordInfo:owner:!accessing!private! !
 
-!AXRecord class methodsFor!
+!OS.COM.Record class methodsFor!
 
 clear: addressOrBytes
 	"We can't free an arbitrary structure given its address, because we need to pass it
@@ -187,9 +187,9 @@ newWithRecordInfo: recInfo
 		setRecordInfo: recInfo owner: nil;
 		initialize;
 		yourself! !
-!AXRecord class categoriesFor: #clear:!public!realizing/unrealizing! !
-!AXRecord class categoriesFor: #fromAddress:!instance creation!public! !
-!AXRecord class categoriesFor: #fromAddress:recordInfo:owner:!instance creation!public! !
-!AXRecord class categoriesFor: #newBuffer!instance creation!public! !
-!AXRecord class categoriesFor: #newWithRecordInfo:!instance creation!public! !
+!OS.COM.Record class categoriesFor: #clear:!public!realizing/unrealizing! !
+!OS.COM.Record class categoriesFor: #fromAddress:!instance creation!public! !
+!OS.COM.Record class categoriesFor: #fromAddress:recordInfo:owner:!instance creation!public! !
+!OS.COM.Record class categoriesFor: #newBuffer!instance creation!public! !
+!OS.COM.Record class categoriesFor: #newWithRecordInfo:!instance creation!public! !
 

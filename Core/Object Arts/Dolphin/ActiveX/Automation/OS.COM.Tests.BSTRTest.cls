@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-DolphinTest subclass: #BSTRTest
+Core.Tests.DolphinTest subclass: #'OS.COM.Tests.BSTRTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-BSTRTest guid: (GUID fromString: '{d5abc1df-26e1-4722-bcb6-51e4b5c406f6}')!
-BSTRTest comment: ''!
-!BSTRTest categoriesForClass!Unclassified! !
-!BSTRTest methodsFor!
+OS.COM.Tests.BSTRTest guid: (Core.GUID fromString: '{d5abc1df-26e1-4722-bcb6-51e4b5c406f6}')!
+OS.COM.Tests.BSTRTest comment: ''!
+!OS.COM.Tests.BSTRTest categoriesForClass!Unclassified! !
+!OS.COM.Tests.BSTRTest methodsFor!
 
 stringConversionCases
 	^#('' 'a£🍺ö' 'Ḽơᶉëᶆ ȋṕšᶙṁ ḍỡḽǭᵳ ʂǐť ӓṁệẗ, ĉṓɲṩḙċťᶒțûɾ ấɖḯƥĭṩčįɳġ ḝłįʈ, șếᶑ ᶁⱺ ẽḭŭŝḿꝋď ṫĕᶆᶈṓɍ ỉñḉīḑȋᵭṵńť ṷŧ ḹẩḇőꝛế éȶ đꝍꞎôꝛȇ ᵯáꞡᶇā ąⱡîɋṹẵ')!
@@ -35,7 +35,7 @@ testAsUtf8String
 			ptr := LPBSTR fromAddress: subject basicYourAddress.
 			self assert: ptr asUtf8String isKindOf: Utf8String.
 			self assert: ptr asUtf8String equals: each]! !
-!BSTRTest categoriesFor: #stringConversionCases!constants!private! !
-!BSTRTest categoriesFor: #testAsString!public!unit tests! !
-!BSTRTest categoriesFor: #testAsUtf8String!public!unit tests! !
+!OS.COM.Tests.BSTRTest categoriesFor: #stringConversionCases!constants!private! !
+!OS.COM.Tests.BSTRTest categoriesFor: #testAsString!public!unit tests! !
+!OS.COM.Tests.BSTRTest categoriesFor: #testAsUtf8String!public!unit tests! !
 

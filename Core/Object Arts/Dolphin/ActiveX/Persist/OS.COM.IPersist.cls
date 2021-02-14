@@ -1,18 +1,18 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-IUnknown subclass: #IPersist
+OS.COM.IUnknown subclass: #'OS.COM.IPersist'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-IPersist guid: (IID fromString: '{0000010c-0000-0000-c000-000000000046}')!
-IPersist isAbstract: true!
-IPersist comment: '<IPersist> is a wrapper class for the custom interface ''OBJIDL.IPersist'' generated from type information in the ''ObjIDL Library'' library. It contains methods to invoke the member functions exposed by that interface.
+OS.COM.IPersist guid: (OS.COM.IID fromString: '{0000010c-0000-0000-c000-000000000046}')!
+OS.COM.IPersist isNonInstantiable: true!
+OS.COM.IPersist comment: '<IPersist> is a wrapper class for the custom interface ''OBJIDL.IPersist'' generated from type information in the ''ObjIDL Library'' library. It contains methods to invoke the member functions exposed by that interface.
 
 IPersist is at the root of the COM persistance interface hierarchy. The single behaviour provided is an accessor to get the CLSID of the implementing object. Subclasses add the ability to persist to/from ole streams (IPersistStream[Init]), structured storages (IPersistStorage), property bags (IPersistPropertyBag[2]), files (IPersistFile), or a fixed size memory block (IPersistMemory). All of these subinterfaces have some form or Save and Load methods for pickling and reconstituting the implementing COM object.'!
-!IPersist categoriesForClass!COM-Interfaces! !
-!IPersist methodsFor!
+!OS.COM.IPersist categoriesForClass!COM-Interfaces! !
+!OS.COM.IPersist methodsFor!
 
 clsid
 	"Answer the receivers <CLSID>."
@@ -46,14 +46,14 @@ IsDirty
 	"Private - Invoke the IsDirty() method of the COM object wrapped by the receiver."
 
 	^self subclassResponsibility! !
-!IPersist categoriesFor: #clsid!accessing!public! !
-!IPersist categoriesFor: #GetClassID:!**auto generated**!COM Interfaces-OBJIDL.IPersist!primitives!public! !
-!IPersist categoriesFor: #isDirty!public!testing! !
-!IPersist categoriesFor: #IsDirty!private!testing! !
+!OS.COM.IPersist categoriesFor: #clsid!accessing!public! !
+!OS.COM.IPersist categoriesFor: #GetClassID:!**auto generated**!COM Interfaces-OBJIDL.IPersist!primitives!public! !
+!OS.COM.IPersist categoriesFor: #isDirty!public!testing! !
+!OS.COM.IPersist categoriesFor: #IsDirty!private!testing! !
 
-IPersist methodProtocol: #IPersist attributes: #(#readOnly) selectors: #(#GetClassID:)!
+OS.COM.IPersist methodProtocol: #IPersist attributes: #(#readOnly) selectors: #(#GetClassID:)!
 
-!IPersist class methodsFor!
+!OS.COM.IPersist class methodsFor!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'OBJIDL.IPersist'
@@ -64,5 +64,5 @@ defineFunctions
 		defineFunction: #GetClassID:
 			argumentTypes: 'GUID*'
 ! !
-!IPersist class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!OS.COM.IPersist class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
 

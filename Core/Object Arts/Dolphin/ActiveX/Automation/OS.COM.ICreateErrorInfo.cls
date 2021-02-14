@@ -1,18 +1,18 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-IUnknown subclass: #ICreateErrorInfo
+OS.COM.IUnknown subclass: #'OS.COM.ICreateErrorInfo'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ICreateErrorInfo guid: (IID fromString: '{22f03340-547d-101b-8e65-08002b2bd119}')!
-ICreateErrorInfo comment: '<ICreateErrorInfo> is a wrapper class for the custom interface ''OAIDL.ICreateErrorInfo'' from type information in the ''Ole Automation Type Library'' library. It contains methods to invoke the member functions exposed by that interface.
+OS.COM.ICreateErrorInfo guid: (OS.COM.IID fromString: '{22f03340-547d-101b-8e65-08002b2bd119}')!
+OS.COM.ICreateErrorInfo comment: '`OS.COM.ICreateErrorInfo` is a wrapper class for the custom interface ''OAIDL.ICreateErrorInfo'' from type information in the ''Ole Automation Type Library'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface.
 '!
-!ICreateErrorInfo categoriesForClass!COM-Interfaces! !
-!ICreateErrorInfo methodsFor!
+!OS.COM.ICreateErrorInfo categoriesForClass!COM-Interfaces! !
+!OS.COM.ICreateErrorInfo methodsFor!
 
 errorInfo
 	"Answer an IErrorInfo on the receiver's object."
@@ -73,14 +73,14 @@ SetSource: szSource
 
 	<virtual stdcall: hresult 5 lpwstr>
 	^self invalidCall: _failureCode! !
-!ICreateErrorInfo categoriesFor: #errorInfo!accessing-interfaces!public! !
-!ICreateErrorInfo categoriesFor: #SetDescription:!**auto generated**!COM Interfaces-OAIDL.ICreateErrorInfo!private! !
-!ICreateErrorInfo categoriesFor: #SetGuid:!**auto generated**!COM Interfaces-OAIDL.ICreateErrorInfo!private! !
-!ICreateErrorInfo categoriesFor: #SetHelpContext:!**auto generated**!COM Interfaces-OAIDL.ICreateErrorInfo!private! !
-!ICreateErrorInfo categoriesFor: #SetHelpFile:!**auto generated**!COM Interfaces-OAIDL.ICreateErrorInfo!private! !
-!ICreateErrorInfo categoriesFor: #SetSource:!**auto generated**!COM Interfaces-OAIDL.ICreateErrorInfo!private! !
+!OS.COM.ICreateErrorInfo categoriesFor: #errorInfo!accessing-interfaces!public! !
+!OS.COM.ICreateErrorInfo categoriesFor: #SetDescription:!**auto generated**!COM Interfaces-OAIDL.ICreateErrorInfo!private! !
+!OS.COM.ICreateErrorInfo categoriesFor: #SetGuid:!**auto generated**!COM Interfaces-OAIDL.ICreateErrorInfo!private! !
+!OS.COM.ICreateErrorInfo categoriesFor: #SetHelpContext:!**auto generated**!COM Interfaces-OAIDL.ICreateErrorInfo!private! !
+!OS.COM.ICreateErrorInfo categoriesFor: #SetHelpFile:!**auto generated**!COM Interfaces-OAIDL.ICreateErrorInfo!private! !
+!OS.COM.ICreateErrorInfo categoriesFor: #SetSource:!**auto generated**!COM Interfaces-OAIDL.ICreateErrorInfo!private! !
 
-!ICreateErrorInfo class methodsFor!
+!OS.COM.ICreateErrorInfo class methodsFor!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'OAIDL.ICreateErrorInfo'
@@ -121,7 +121,7 @@ new
 	answer := self newPointer.
 	OLEAutLibrary default createErrorInfo: answer.
 	^answer! !
-!ICreateErrorInfo class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
-!ICreateErrorInfo class categoriesFor: #fromEXCEPINFO:guid:!instance creation!public! !
-!ICreateErrorInfo class categoriesFor: #new!instance creation!public! !
+!OS.COM.ICreateErrorInfo class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!OS.COM.ICreateErrorInfo class categoriesFor: #fromEXCEPINFO:guid:!instance creation!public! !
+!OS.COM.ICreateErrorInfo class categoriesFor: #new!instance creation!public! !
 

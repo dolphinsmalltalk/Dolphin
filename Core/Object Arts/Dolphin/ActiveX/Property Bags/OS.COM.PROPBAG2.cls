@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-OLEStructure subclass: #PROPBAG2
+OS.COM.OLEStructure subclass: #'OS.COM.PROPBAG2'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_cfType' -> 16r6.
@@ -13,11 +13,11 @@ OLEStructure subclass: #PROPBAG2
 		'_OffsetOf_pstrName' -> 16rC.
 		'_OffsetOf_vt' -> 16r4
 	}!
-PROPBAG2 guid: (GUID fromString: '{b5ebe54f-d5b4-4606-9447-90b11844193f}')!
-PROPBAG2 comment: '<PROPBAG2> is an <ExternalStructure> class to wrap the struct ''OCIDL.PROPBAG2'' from type information in the ''OCIDL Library'' library.
+OS.COM.PROPBAG2 guid: (Core.GUID fromString: '{b5ebe54f-d5b4-4606-9447-90b11844193f}')!
+OS.COM.PROPBAG2 comment: '`OS.COM.PROPBAG2` is an `External.Structure` class to wrap the struct ''OCIDL.PROPBAG2'' from type information in the ''OCIDL Library'' library.
 '!
-!PROPBAG2 categoriesForClass!OCIDL-Structs! !
-!PROPBAG2 methodsFor!
+!OS.COM.PROPBAG2 categoriesForClass!OCIDL-Structs! !
+!OS.COM.PROPBAG2 methodsFor!
 
 cfType
 	"Answer the <Integer> value of the receiver's 'cfType' field."
@@ -82,20 +82,20 @@ vt: anInteger
 	"Set the receiver's 'vt' field to the value of the argument, anInteger"
 
 	bytes wordAtOffset: _OffsetOf_vt put: anInteger! !
-!PROPBAG2 categoriesFor: #cfType!**compiled accessors**!public! !
-!PROPBAG2 categoriesFor: #cfType:!**compiled accessors**!public! !
-!PROPBAG2 categoriesFor: #clsid!**compiled accessors**!public! !
-!PROPBAG2 categoriesFor: #clsid:!**compiled accessors**!public! !
-!PROPBAG2 categoriesFor: #dwHint!**compiled accessors**!public! !
-!PROPBAG2 categoriesFor: #dwHint:!**compiled accessors**!public! !
-!PROPBAG2 categoriesFor: #dwType!**compiled accessors**!public! !
-!PROPBAG2 categoriesFor: #dwType:!**compiled accessors**!public! !
-!PROPBAG2 categoriesFor: #pstrName!**compiled accessors**!public! !
-!PROPBAG2 categoriesFor: #pstrName:!**compiled accessors**!public! !
-!PROPBAG2 categoriesFor: #vt!**compiled accessors**!public! !
-!PROPBAG2 categoriesFor: #vt:!**compiled accessors**!public! !
+!OS.COM.PROPBAG2 categoriesFor: #cfType!**compiled accessors**!public! !
+!OS.COM.PROPBAG2 categoriesFor: #cfType:!**compiled accessors**!public! !
+!OS.COM.PROPBAG2 categoriesFor: #clsid!**compiled accessors**!public! !
+!OS.COM.PROPBAG2 categoriesFor: #clsid:!**compiled accessors**!public! !
+!OS.COM.PROPBAG2 categoriesFor: #dwHint!**compiled accessors**!public! !
+!OS.COM.PROPBAG2 categoriesFor: #dwHint:!**compiled accessors**!public! !
+!OS.COM.PROPBAG2 categoriesFor: #dwType!**compiled accessors**!public! !
+!OS.COM.PROPBAG2 categoriesFor: #dwType:!**compiled accessors**!public! !
+!OS.COM.PROPBAG2 categoriesFor: #pstrName!**compiled accessors**!public! !
+!OS.COM.PROPBAG2 categoriesFor: #pstrName:!**compiled accessors**!public! !
+!OS.COM.PROPBAG2 categoriesFor: #vt!**compiled accessors**!public! !
+!OS.COM.PROPBAG2 categoriesFor: #vt:!**compiled accessors**!public! !
 
-!PROPBAG2 class methodsFor!
+!OS.COM.PROPBAG2 class methodsFor!
 
 defineFields
 	"Define the fields of the PROPBAG2 structure.
@@ -122,6 +122,6 @@ defineFields
 
 getFieldNames
 	^#(#dwType #vt #cfType #dwHint #pstrName #clsid)! !
-!PROPBAG2 class categoriesFor: #defineFields!public!template definition! !
-!PROPBAG2 class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.COM.PROPBAG2 class categoriesFor: #defineFields!public!template definition! !
+!OS.COM.PROPBAG2 class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

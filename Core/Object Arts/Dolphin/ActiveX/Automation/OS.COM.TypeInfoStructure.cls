@@ -1,14 +1,14 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-OLEFinalizableStructure subclass: #AXTypeInfoStructure
+OS.COM.FinalizableStructure subclass: #'OS.COM.TypeInfoStructure'
 	instanceVariableNames: 'analyzer'
 	classVariableNames: ''
-	poolDictionaries: 'AXAutomationConstants'
+	imports: #(#{OS.COM.AutomationConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-AXTypeInfoStructure guid: (GUID fromString: '{c06f3b66-0868-11d3-93af-00a024ca708a}')!
-AXTypeInfoStructure isAbstract: true!
-AXTypeInfoStructure comment: 'AXTypeInfoStructure is the class of <ExternalStructure>s representing the OLE Automation structures used in conjunction with <ITypeInfo>. AXTypeInfoStructure itself is abstract.
+OS.COM.TypeInfoStructure guid: (Core.GUID fromString: '{c06f3b66-0868-11d3-93af-00a024ca708a}')!
+OS.COM.TypeInfoStructure isNonInstantiable: true!
+OS.COM.TypeInfoStructure comment: 'AXTypeInfoStructure is the class of <ExternalStructure>s representing the OLE Automation structures used in conjunction with <ITypeInfo>. AXTypeInfoStructure itself is abstract.
 
 Note that all subinstances of the receiver are allocated by an ITypeInfo and must be released by that same ITypeInfo. We achieve this by a backpointer to the allocating ITypeInfo/AXTypeInfoAnalyzer, and by marking the subinstance as finalizable. This does mean that holding onto one of these structures will cause the originating ITypeInfo to persist as well.
 
@@ -16,8 +16,8 @@ Instance variables:
 	piTypeInfo	<ITypeInfo> which allocated the struct and which must free it.
 	analyzer		<AXTypeInfoAnalyzer> which wraps piTypeInfo, and can analyze the receiver (may be nil)
 '!
-!AXTypeInfoStructure categoriesForClass!External-Data-Structured-COM! !
-!AXTypeInfoStructure methodsFor!
+!OS.COM.TypeInfoStructure categoriesForClass!External-Data-Structured-COM! !
+!OS.COM.TypeInfoStructure methodsFor!
 
 analyzer
 	"Private - Answer the value of the receiver's ''analyzer'' instance variable."
@@ -76,18 +76,18 @@ vtName
 	"Private - Answer the Dolphin external type name for the receiver's variant type."
 
 	^self tdesc vtName! !
-!AXTypeInfoStructure categoriesFor: #analyzer!accessing!private! !
-!AXTypeInfoStructure categoriesFor: #analyzer:!accessing!private! !
-!AXTypeInfoStructure categoriesFor: #free!public!realizing/unrealizing! !
-!AXTypeInfoStructure categoriesFor: #fullName!accessing!public! !
-!AXTypeInfoStructure categoriesFor: #initializePointer!initializing!private! !
-!AXTypeInfoStructure categoriesFor: #name!accessing!public! !
-!AXTypeInfoStructure categoriesFor: #needsFree!private!realizing/unrealizing! !
-!AXTypeInfoStructure categoriesFor: #tdesc!accessing!private! !
-!AXTypeInfoStructure categoriesFor: #typeName!accessing!public! !
-!AXTypeInfoStructure categoriesFor: #vtName!accessing!private! !
+!OS.COM.TypeInfoStructure categoriesFor: #analyzer!accessing!private! !
+!OS.COM.TypeInfoStructure categoriesFor: #analyzer:!accessing!private! !
+!OS.COM.TypeInfoStructure categoriesFor: #free!public!realizing/unrealizing! !
+!OS.COM.TypeInfoStructure categoriesFor: #fullName!accessing!public! !
+!OS.COM.TypeInfoStructure categoriesFor: #initializePointer!initializing!private! !
+!OS.COM.TypeInfoStructure categoriesFor: #name!accessing!public! !
+!OS.COM.TypeInfoStructure categoriesFor: #needsFree!private!realizing/unrealizing! !
+!OS.COM.TypeInfoStructure categoriesFor: #tdesc!accessing!private! !
+!OS.COM.TypeInfoStructure categoriesFor: #typeName!accessing!public! !
+!OS.COM.TypeInfoStructure categoriesFor: #vtName!accessing!private! !
 
-!AXTypeInfoStructure class methodsFor!
+!OS.COM.TypeInfoStructure class methodsFor!
 
 clear: addressOrBytes
 	"We can't free an arbitrary type info structure given its address, because we need to pass it
@@ -95,5 +95,5 @@ clear: addressOrBytes
 	as values in a <StructureArray>."
 
 	^self shouldNotImplement! !
-!AXTypeInfoStructure class categoriesFor: #clear:!public!realizing/unrealizing! !
+!OS.COM.TypeInfoStructure class categoriesFor: #clear:!public!realizing/unrealizing! !
 

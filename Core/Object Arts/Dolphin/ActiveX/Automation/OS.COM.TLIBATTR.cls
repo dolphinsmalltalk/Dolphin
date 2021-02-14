@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-OLEStructure subclass: #TLIBATTR
+OS.COM.OLEStructure subclass: #'OS.COM.TLIBATTR'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'AXAutomationConstants'
+	imports: #(#{OS.COM.AutomationConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_guid' -> 16r0.
@@ -13,8 +13,8 @@ OLEStructure subclass: #TLIBATTR
 		'_OffsetOf_wMajorVerNum' -> 16r18.
 		'_OffsetOf_wMinorVerNum' -> 16r1A
 	}!
-TLIBATTR guid: (GUID fromString: '{c06f3b71-0868-11d3-93af-00a024ca708a}')!
-TLIBATTR comment: 'TLIBATTR is an ExternalStructure class to represent the OLE Automation TLIBATTR structure.
+OS.COM.TLIBATTR guid: (Core.GUID fromString: '{c06f3b71-0868-11d3-93af-00a024ca708a}')!
+OS.COM.TLIBATTR comment: 'TLIBATTR is an ExternalStructure class to represent the OLE Automation TLIBATTR structure.
 
 TLIBATTR is a simple structure containing basic descriptive details about a type library, namely:
 	its LIBID		(#guid)
@@ -24,8 +24,8 @@ TLIBATTR is a simple structure containing basic descriptive details about a type
 	and some flags	(#wLibFlags)
 
 TLIBATTR is probably only of interest for the purposes of browsing type libraries and is of no obvious use in applications.'!
-!TLIBATTR categoriesForClass!External-Data-Structured-COM! !
-!TLIBATTR methodsFor!
+!OS.COM.TLIBATTR categoriesForClass!External-Data-Structured-COM! !
+!OS.COM.TLIBATTR methodsFor!
 
 comparisonSize
 	"Private - Answer the number of bytes of the receiver to use in comparisons.
@@ -89,19 +89,19 @@ wMinorVerNum
 	"Answer the <Integer> value of the receiver's 'wMinorVerNum' field."
 
 	^bytes wordAtOffset: _OffsetOf_wMinorVerNum! !
-!TLIBATTR categoriesFor: #comparisonSize!accessing!private! !
-!TLIBATTR categoriesFor: #guid!**compiled accessors**!public! !
-!TLIBATTR categoriesFor: #hasDiskImage!public!testing! !
-!TLIBATTR categoriesFor: #isControl!public!testing! !
-!TLIBATTR categoriesFor: #isHidden!public!testing! !
-!TLIBATTR categoriesFor: #isRestricted!public!testing! !
-!TLIBATTR categoriesFor: #lcid!**compiled accessors**!public! !
-!TLIBATTR categoriesFor: #version!accessing-version!public! !
-!TLIBATTR categoriesFor: #wLibFlags!**compiled accessors**!public! !
-!TLIBATTR categoriesFor: #wMajorVerNum!**compiled accessors**!public! !
-!TLIBATTR categoriesFor: #wMinorVerNum!**compiled accessors**!public! !
+!OS.COM.TLIBATTR categoriesFor: #comparisonSize!accessing!private! !
+!OS.COM.TLIBATTR categoriesFor: #guid!**compiled accessors**!public! !
+!OS.COM.TLIBATTR categoriesFor: #hasDiskImage!public!testing! !
+!OS.COM.TLIBATTR categoriesFor: #isControl!public!testing! !
+!OS.COM.TLIBATTR categoriesFor: #isHidden!public!testing! !
+!OS.COM.TLIBATTR categoriesFor: #isRestricted!public!testing! !
+!OS.COM.TLIBATTR categoriesFor: #lcid!**compiled accessors**!public! !
+!OS.COM.TLIBATTR categoriesFor: #version!accessing-version!public! !
+!OS.COM.TLIBATTR categoriesFor: #wLibFlags!**compiled accessors**!public! !
+!OS.COM.TLIBATTR categoriesFor: #wMajorVerNum!**compiled accessors**!public! !
+!OS.COM.TLIBATTR categoriesFor: #wMinorVerNum!**compiled accessors**!public! !
 
-!TLIBATTR class methodsFor!
+!OS.COM.TLIBATTR class methodsFor!
 
 defineFields
 	"Define the fields of the TLIBATTR structure.
@@ -143,6 +143,6 @@ defineFields
 
 getFieldNames
 	^#(#guid #lcid #wMajorVerNum #wMinorVerNum #wLibFlags)! !
-!TLIBATTR class categoriesFor: #defineFields!public!template definition! !
-!TLIBATTR class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.COM.TLIBATTR class categoriesFor: #defineFields!public!template definition! !
+!OS.COM.TLIBATTR class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

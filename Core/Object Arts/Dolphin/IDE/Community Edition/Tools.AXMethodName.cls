@@ -3,7 +3,7 @@
 Core.Object subclass: #'Tools.AXMethodName'
 	instanceVariableNames: 'keywords argumentNames indices'
 	classVariableNames: ''
-	imports: #()
+	imports: #(#{OS.COM private})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Tools.AXMethodName guid: (Core.GUID fromString: '{fdfdeb82-6021-4e02-9882-cc75d3a22b22}')!
@@ -85,7 +85,7 @@ setKeywords: keywordsCollection argumentNames: argsCollection indices: indexColl
 icon
 	"Answers an <Icon> that can be used to represent this class"
 
-	^Smalltalk.AXTypeLibraryAnalyzer icon!
+	^TypeLibraryAnalyzer icon!
 
 keywords: keywordsCollection argumentNames: argumentsCollection indices: indexCollection
 	^self new 

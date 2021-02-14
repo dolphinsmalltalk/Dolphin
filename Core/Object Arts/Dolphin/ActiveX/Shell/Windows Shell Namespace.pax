@@ -14,10 +14,10 @@ For example:
 
 package setClassNames: #(
 	#{OS.BROWSEINFOW}
+	#{OS.IShellFolder}
 	#{OS.ITEMIDLIST}
 	#{OS.SHITEMID}
 	#{OS.WindowsShellMemory}
-	#{Smalltalk.IShellFolder}
 	#{UI.BrowseFolderDialog}
 ).
 
@@ -57,13 +57,13 @@ UI.CommonDialog subclass: #'UI.BrowseFolderDialog'
 	classConstants: {
 		'InitializedMask' -> 16r1
 	}!
-IUnknown subclass: #IShellFolder
+OS.COM.IUnknown subclass: #'OS.IShellFolder'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-OLEStructure subclass: #'OS.ITEMIDLIST'
+OS.COM.OLEStructure subclass: #'OS.ITEMIDLIST'
 	instanceVariableNames: 'back'
 	classVariableNames: ''
 	imports: #()
@@ -102,7 +102,7 @@ allocator
 	"Answer the shell's <IMalloc>."
 
 	| answer |
-	answer := Smalltalk.IMalloc newPointer.
+	answer := COM.IMalloc newPointer.
 	self SHGetMalloc: answer.
 	^answer!
 
@@ -113,10 +113,9 @@ getDesktopFolder
 	"
 
 	| answer |
-	answer := Smalltalk.IShellFolder newPointer.
+	answer := OS.IShellFolder newPointer.
 	self SHGetDesktopFolder: answer.
-	^answer
-!
+	^answer!
 
 pathFromIDList: idList
 	| pathname |
@@ -128,13 +127,13 @@ SHBrowseForFolder: aWin32BROWSEINFO
 	^self invalidCall: _failureCode!
 
 SHGetDesktopFolder: ppshf
-	<stdcall: hresult SHGetDesktopFolder Smalltalk.IShellFolder**>
+	<stdcall: hresult SHGetDesktopFolder IShellFolder**>
 	^self invalidCall: _failureCode!
 
 SHGetMalloc: ppMalloc
 	"Get a pointer to the shell's IMalloc."
 
-	<stdcall: hresult SHGetMalloc Smalltalk.IMalloc**>
+	<stdcall: hresult SHGetMalloc OS.COM.IMalloc**>
 	^self invalidCall: _failureCode!
 
 SHGetPathFromIDList: pidl pszPath: pszPath

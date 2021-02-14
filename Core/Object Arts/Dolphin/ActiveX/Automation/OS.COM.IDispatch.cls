@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-IUnknown subclass: #IDispatch
+OS.COM.IUnknown subclass: #'OS.COM.IDispatch'
 	instanceVariableNames: 'typeInfo dispatchImplementor'
 	classVariableNames: ''
-	poolDictionaries: 'AXAutomationConstants AXAutomationErrors'
+	imports: #(#{OS.COM.AutomationConstants} #{OS.COM.AutomationErrors})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-IDispatch guid: (IID fromString: '{00020400-0000-0000-c000-000000000046}')!
-IDispatch comment: '`IDispatch` is a wrapper class for the standard AX automation dynamic dispatch interface of the same name. It was generated from type information in the ''OLE Automation'' library, stdole2.tlb. It contains methods to invoke the member functions exposed by that interface.
+OS.COM.IDispatch guid: (OS.COM.IID fromString: '{00020400-0000-0000-c000-000000000046}')!
+OS.COM.IDispatch comment: '`IDispatch` is a wrapper class for the standard AX automation dynamic dispatch interface of the same name. It was generated from type information in the ''OLE Automation'' library, stdole2.tlb. It contains methods to invoke the member functions exposed by that interface.
 
 IDL definition follows:
 ```
@@ -45,8 +45,8 @@ interface IDispatch : IUnknown
 		[out]unsigned int* puArgErr);
 };
 ```'!
-!IDispatch categoriesForClass!COM-Interfaces! !
-!IDispatch methodsFor!
+!OS.COM.IDispatch categoriesForClass!COM-Interfaces! !
+!OS.COM.IDispatch methodsFor!
 
 _newEnum
 	"Private - Answer the <IUnknown> of an Automation enumerator (i.e. an object which supports
@@ -80,14 +80,14 @@ basicFree
 	typeInfo := nil.
 	super basicFree!
 
-basicInvokeId: id flags: wFlags parms: parms retVal: varRes 
+basicInvokeId: id flags: wFlags parms: parms retVal: varRes
 	| err ex hr |
 	err := DWORD new.
 	ex := EXCEPINFO new.
-	hr := self 
+	hr := self
 				Invoke: id
 				riid: IID null
-				lcid: WinNlsConstants.LOCALE_USER_DEFAULT
+				lcid: NlsConstants.LOCALE_USER_DEFAULT
 				wFlags: wFlags
 				pdispparams: parms
 				pvarResult: varRes
@@ -106,12 +106,14 @@ dispatchImplementor
 	the receiver, or nil if the receiver does not implement the IDispatch
 	functions."
 
-	dispatchImplementor isNil ifTrue: [
-		(self class ~~ IDispatch and: [(self class typeInfoIfNone: [^nil]) isDual]) ifTrue: [
-			(dispatchImplementor := AXForwardingDualImp new)
-					server: self implementor;
-					interfaceClass: self class;
-					interface: self]].
+	dispatchImplementor isNil
+		ifTrue: 
+			[(self class ~~ IDispatch and: [(self class typeInfoIfNone: [^nil]) isDual])
+				ifTrue: 
+					[(dispatchImplementor := ForwardingDualInterfaceImplementation new)
+						server: self implementor;
+						interfaceClass: self class;
+						interface: self]].
 	^dispatchImplementor!
 
 dispatchImplementor: anObject
@@ -153,64 +155,64 @@ doesNotUnderstand: aMessage
 	| argc hr |
 	self isExtensible ifFalse: [^super doesNotUnderstand: aMessage].
 	argc := aMessage argumentCount.
-	argc == 0 
-				ifTrue: 
-			[(self idOfName: aMessage selector ifAbsent: []) 
+	argc == 0
+		ifTrue: 
+			[(self idOfName: aMessage selector ifAbsent: [])
 				ifNotNil: 
-					[:dispid | 
+					[:dispid |
 					"Note that getPropertyId: will also invoke zero arg methods successfully"
 					^self getPropertyId: dispid]]
-				ifFalse: 
-			[(self idOfName: (aMessage selector upTo: $:) ifAbsent: []) 
+		ifFalse: 
+			[(self idOfName: (aMessage selector upTo: $:) ifAbsent: [])
 				ifNotNil: 
-					[:dispid | 
+					[:dispid |
 					| args |
 					args := aMessage arguments.
-					argc == 1 
+					argc == 1
 						ifTrue: 
-							["One arg message could be a propset,
+							[| parms var |
+							"One arg message could be a propset,
 							 indexed propget, or a method call "
-							| parms var |
 							var := args first asVariant.
 							parms := DISPPARAMS new.
 							parms propertyPutValue: var.
-							hr := self 
+							hr := self
 										basicInvokeId: dispid
 										flags: (var vt == VT_DISPATCH ifTrue: [DISPATCH_PROPERTYPUTREF] ifFalse: [DISPATCH_PROPERTYPUT])
 										parms: parms
 										retVal: nil.
 							hr >= 0 ifTrue: [^self].
 							"Failed - try an indexed propget/method call (can do in one hit as flag combination is allowed by automation spec)"
-							^self 
+							^self
 								invokeId: dispid
 								flags: ##(DISPATCH_PROPERTYGET | DISPATCH_METHOD)
 								parms: (DISPPARAMS with: var)]
-		ifFalse: 
-							[argc == 2 
+						ifFalse: 
+							[argc == 2
 								ifTrue: 
-									["If two args, could be indexed propset or method call"
-									| parms var value item |
+									[| parms var value item |
+									"If two args, could be indexed propset or method call"
 									value := args second.
 									var := value asVariant.
 									parms := DISPPARAMS new.
 									item := args first.
 									parms propertyPut: item value: var.
-									hr := self 
+									hr := self
 												basicInvokeId: dispid
 												flags: (var vt == VT_DISPATCH ifTrue: [DISPATCH_PROPERTYPUTREF] ifFalse: [DISPATCH_PROPERTYPUT])
 												parms: parms
 												retVal: nil.
 									hr >= 0 ifTrue: [^self].
 									"Failed, try method call"
-									^self 
+									^self
 										invokeId: dispid
 										with: item
 										with: value]
 								ifFalse: 
-									[">2 args, must be method call"
-									| retVal |
+									[| retVal |
+									">2 args, must be method call"
 									retVal := VARIANT new.
-									self 
+									self
 										invokeId: dispid
 										flags: DISPATCH_METHOD
 										parms: (DISPPARAMS withArguments: aMessage arguments)
@@ -245,7 +247,7 @@ getIDsOfNames: names
 				GetIDsOfNames: IID null
 				rgszNames: rgszNames
 				cNames: cNames
-				lcid: WinNlsConstants.LOCALE_USER_DEFAULT
+				lcid: NlsConstants.LOCALE_USER_DEFAULT
 				rgdispid: rgDispId.
 	^hr < 0
 		ifTrue: [hr = DISP_E_UNKNOWNNAME ifTrue: [self errorNotFound: names] ifFalse: [self hresultError: hr]]
@@ -283,25 +285,27 @@ getProperty: aString item: item
 getPropertyId: dispid
 	"Answer the property from the receiver with the <Integer> DISPID, dispid."
 
-	^self 
-		invokeId: dispid 
-		flags: ##(DISPATCH_PROPERTYGET|DISPATCH_METHOD) 
+	^self
+		invokeId: dispid
+		flags: ##(DISPATCH_PROPERTYGET | DISPATCH_METHOD)
 		parms: DISPPARAMS zeroArgs!
 
 getPropertyId: dispid item: item
 	"Answer the property from the receiver with the <Integer> DISPID, dispid,
 	and the variant item subscript, item."
 
-	^self invokeId: dispid 
-		flags: DISPATCH_PROPERTYGET 
+	^self
+		invokeId: dispid
+		flags: DISPATCH_PROPERTYGET
 		parms: (DISPPARAMS with: item)!
 
 getPropertyId: dispid withArguments: subscripts
 	"Answer the property from the receiver with the <Integer> DISPID, dispid,
 	and the specified subscripts."
 
-	^self invokeId: dispid 
-		flags: DISPATCH_PROPERTYGET 
+	^self
+		invokeId: dispid
+		flags: DISPATCH_PROPERTYGET
 		parms: (DISPPARAMS withArguments: subscripts)!
 
 getPropertyObj: interfaceClass id: dispid
@@ -337,10 +341,11 @@ getTypeInfo: lcid ifNone: exceptionHandler
 
 	| answer hr |
 	answer := ITypeInfo newPointer.
-	hr := self GetTypeInfo: 0 lcid: lcid asParameter pptinfo: answer.
-	^(hr < 0 or: [answer isNull])
-		ifTrue: [exceptionHandler value]
-		ifFalse: [answer]!
+	hr := self
+				GetTypeInfo: 0
+				lcid: lcid asParameter
+				pptinfo: answer.
+	^(hr < 0 or: [answer isNull]) ifTrue: [exceptionHandler value] ifFalse: [answer]!
 
 GetTypeInfo: itinfo lcid: lcid pptinfo: pptinfo
 	"Private - Invoke the GetTypeInfo() method of the COM object wrapped by the receiver.
@@ -401,7 +406,7 @@ idOfName: name ifAbsent: exceptionHandler
 				GetIDsOfNames: IID null
 				rgszNames: (DWORD fromInteger: uName yourAddress)
 				cNames: 1
-				lcid: WinNlsConstants.LOCALE_USER_DEFAULT
+				lcid: NlsConstants.LOCALE_USER_DEFAULT
 				rgdispid: dispId.
 	^hr < 0
 		ifTrue: [hr = DISP_E_UNKNOWNNAME ifTrue: [exceptionHandler value] ifFalse: [self hresultError: hr]]
@@ -422,7 +427,7 @@ implementor: anObject
 invoke: methodName
 	"Invoke the method with <Integer> DISPID, id, with no arguments."
 
-	^self 
+	^self
 		invokeId: (self idOfName: methodName)
 		flags: DISPATCH_METHOD
 		parms: DISPPARAMS zeroArgs!
@@ -450,7 +455,7 @@ invoke: methodName with: arg1
 	"Invoke the method with <Integer> DISPID, id, and the single <variantCompatible>
 	argument, arg1. This is much like #perform:with: for a dispatch interface."
 
-	^self 
+	^self
 		invokeId: (self idOfName: methodName)
 		flags: DISPATCH_METHOD
 		parms: (DISPPARAMS with: arg1)!
@@ -487,16 +492,19 @@ invoke: methodName withArguments: args
 	<variantCompatible> arguments, args. This is much like #perform:withArguments: for a 
 	dispatch interface."
 
-	^self 
+	^self
 		invokeId: (self idOfName: methodName)
-		flags: DISPATCH_METHOD 
+		flags: DISPATCH_METHOD
 		parms: (DISPPARAMS withArguments: args)!
 
 invokeId: id
 	"Invoke the method with <Integer> DISPID, id, with no arguments.
 	This is much like #perform: for a dispatch interface."
 
-	^self invokeId: id flags: DISPATCH_METHOD parms: DISPPARAMS zeroArgs!
+	^self
+		invokeId: id
+		flags: DISPATCH_METHOD
+		parms: DISPPARAMS zeroArgs!
 
 invokeId: id flags: wFlags parms: parms
 	"Invoke the method with <Integer> DISPID, id, the <integer> flags, wFlags,
@@ -509,7 +517,11 @@ invokeId: id flags: wFlags parms: parms
 
 	| retVal |
 	retVal := VARIANT new.
-	self invokeId: id flags: wFlags parms: parms retVal: retVal.
+	self
+		invokeId: id
+		flags: wFlags
+		parms: parms
+		retVal: retVal.
 	^retVal value!
 
 invokeId: id flags: wFlags parms: parms retVal: varRes
@@ -530,11 +542,11 @@ invokeId: id flags: wFlags parms: parms retVal: varRes
 				retVal: varRes.
 	hr < 0 ifTrue: [HRESULTError signalWith: hr]!
 
-invokeId: anInteger with: anObject 
+invokeId: anInteger with: anObject
 	"Invoke the method with <Integer> DISPID, id, and the single <variantCompatible>
 	argument, arg1. This is much like #perform:with: for a dispatch interface."
 
-	^self 
+	^self
 		invokeId: anInteger
 		flags: DISPATCH_METHOD
 		parms: (DISPPARAMS with: anObject)!
@@ -562,9 +574,9 @@ invokeId: id withArguments: args
 	"Invoke the method with <Integer> DISPID, id, and the <Array> of <variantCompatible>
 	arguments, args. This is much like #perform:withArguments: for a dispatch interface."
 
-	^self 
-		invokeId: id 
-		flags: DISPATCH_METHOD 
+	^self
+		invokeId: id
+		flags: DISPATCH_METHOD
 		parms: (DISPPARAMS withArguments: args)!
 
 isExtensible
@@ -622,14 +634,11 @@ setPropertyId: dispid item: item value: value
 	var := value asVariant.
 	parms := DISPPARAMS new.
 	parms propertyPut: item value: var.
-	self 
-		invokeId: dispid 
-		flags: (var vt == VT_DISPATCH
-				ifTrue: [DISPATCH_PROPERTYPUTREF]
-				ifFalse: [DISPATCH_PROPERTYPUT])
+	self
+		invokeId: dispid
+		flags: (var vt == VT_DISPATCH ifTrue: [DISPATCH_PROPERTYPUTREF] ifFalse: [DISPATCH_PROPERTYPUT])
 		parms: parms
-		retVal: nil
-!
+		retVal: nil!
 
 setPropertyId: dispid value: value
 	"Set the value of the property of the receiver with <integer> DISPID, dispid, to the 
@@ -639,11 +648,9 @@ setPropertyId: dispid value: value
 	var := value asVariant.
 	parms := DISPPARAMS new.
 	parms propertyPutValue: var.
-	self 
-		invokeId: dispid 
-		flags: (var vt == VT_DISPATCH
-				ifTrue: [DISPATCH_PROPERTYPUTREF]
-				ifFalse: [DISPATCH_PROPERTYPUT])
+	self
+		invokeId: dispid
+		flags: (var vt == VT_DISPATCH ifTrue: [DISPATCH_PROPERTYPUTREF] ifFalse: [DISPATCH_PROPERTYPUT])
 		parms: parms
 		retVal: nil!
 
@@ -678,12 +685,12 @@ typeInfoIfNone: exceptionHandler
 	no type information is available, then answer the result of evaluating the <niladicValuable>,
 	exceptionHandler."
 
-	typeInfo isNull 
+	typeInfo isNull
 		ifTrue: 
 			[| piTypeInfo |
-			piTypeInfo := self getTypeInfo: WinNlsConstants.LOCALE_USER_DEFAULT
+			piTypeInfo := self getTypeInfo: NlsConstants.LOCALE_USER_DEFAULT
 						ifNone: [^super typeInfoIfNone: [^exceptionHandler value]].
-			typeInfo := (AXTypeInfoAnalyzer onTypeInfo: piTypeInfo) defaultInterface].
+			typeInfo := (TypeInfoAnalyzer onTypeInfo: piTypeInfo) defaultInterface].
 	^typeInfo!
 
 value
@@ -697,67 +704,67 @@ value: value
 	Raise an HRESULTError if the receiver does not have  a default value property."
 
 	self setPropertyId: DISPID_VALUE value: value! !
-!IDispatch categoriesFor: #_newEnum!enumerating!private! !
-!IDispatch categoriesFor: #asImplType!converting!public! !
-!IDispatch categoriesFor: #asVariant!converting!public! !
-!IDispatch categoriesFor: #basicFree!private!realizing/unrealizing! !
-!IDispatch categoriesFor: #basicInvokeId:flags:parms:retVal:!dispatching!private! !
-!IDispatch categoriesFor: #contents!accessing!public! !
-!IDispatch categoriesFor: #dispatchImplementor!accessing!public! !
-!IDispatch categoriesFor: #dispatchImplementor:!accessing!public! !
-!IDispatch categoriesFor: #displayOn:!printing!public! !
-!IDispatch categoriesFor: #displayValueOn:!printing!private! !
-!IDispatch categoriesFor: #doesNotUnderstand:!exceptions!public! !
-!IDispatch categoriesFor: #downCast!converting!public! !
-!IDispatch categoriesFor: #getIDsOfNames:!accessing!public! !
-!IDispatch categoriesFor: #GetIDsOfNames:rgszNames:cNames:lcid:rgdispid:!COM Interfaces-IDispatch!methods!private! !
-!IDispatch categoriesFor: #getProperty:!accessing!properties!public! !
-!IDispatch categoriesFor: #getProperty:item:!accessing!properties!public! !
-!IDispatch categoriesFor: #getPropertyId:!accessing!public! !
-!IDispatch categoriesFor: #getPropertyId:item:!accessing!public! !
-!IDispatch categoriesFor: #getPropertyId:withArguments:!accessing!public! !
-!IDispatch categoriesFor: #getPropertyObj:id:!accessing!private! !
-!IDispatch categoriesFor: #getPropertyObj:id:item:!dispatching!private! !
-!IDispatch categoriesFor: #getTypeInfo:ifNone:!accessing!private! !
-!IDispatch categoriesFor: #GetTypeInfo:lcid:pptinfo:!COM Interfaces-IDispatch!methods!private! !
-!IDispatch categoriesFor: #getTypeInfoCount!**auto generated**!methods!public! !
-!IDispatch categoriesFor: #GetTypeInfoCount:!**auto generated**!COM Interfaces-IDispatch!private! !
-!IDispatch categoriesFor: #has_NewEnum!private!testing! !
-!IDispatch categoriesFor: #hasTypeInfo!public!testing! !
-!IDispatch categoriesFor: #idOfName:!accessing!public! !
-!IDispatch categoriesFor: #idOfName:ifAbsent:!accessing!public! !
-!IDispatch categoriesFor: #implementor:!accessing!public! !
-!IDispatch categoriesFor: #invoke:!dispatching!public! !
-!IDispatch categoriesFor: #Invoke:riid:lcid:wFlags:pdispparams:pvarResult:pexcepinfo:puArgErr:!COM Interfaces-IDispatch!methods!private! !
-!IDispatch categoriesFor: #invoke:with:!dispatching!public! !
-!IDispatch categoriesFor: #invoke:with:with:!dispatching!public! !
-!IDispatch categoriesFor: #invoke:with:with:with:!dispatching!public! !
-!IDispatch categoriesFor: #invoke:with:with:with:with:!dispatching!public! !
-!IDispatch categoriesFor: #invoke:withArguments:!dispatching!public! !
-!IDispatch categoriesFor: #invokeId:!dispatching!public! !
-!IDispatch categoriesFor: #invokeId:flags:parms:!dispatching!public! !
-!IDispatch categoriesFor: #invokeId:flags:parms:retVal:!dispatching!public! !
-!IDispatch categoriesFor: #invokeId:with:!dispatching!public! !
-!IDispatch categoriesFor: #invokeId:with:with:!dispatching!public! !
-!IDispatch categoriesFor: #invokeId:with:with:with:!dispatching!public! !
-!IDispatch categoriesFor: #invokeId:withArguments:!dispatching!public! !
-!IDispatch categoriesFor: #isExtensible!public!testing! !
-!IDispatch categoriesFor: #isVBCollection!public!testing! !
-!IDispatch categoriesFor: #newEnum!enumerating!public! !
-!IDispatch categoriesFor: #printValueOn:!printing!private! !
-!IDispatch categoriesFor: #setProperty:item:value:!accessing!properties!public! !
-!IDispatch categoriesFor: #setProperty:value:!accessing!properties!public! !
-!IDispatch categoriesFor: #setPropertyId:item:value:!accessing!properties!public! !
-!IDispatch categoriesFor: #setPropertyId:value:!accessing!properties!public! !
-!IDispatch categoriesFor: #setPropertyId:withArguments:value:!accessing!properties!public! !
-!IDispatch categoriesFor: #signalException:!dispatching!private! !
-!IDispatch categoriesFor: #typeInfoIfNone:!accessing!public! !
-!IDispatch categoriesFor: #value!accessing!public! !
-!IDispatch categoriesFor: #value:!accessing!public! !
+!OS.COM.IDispatch categoriesFor: #_newEnum!enumerating!private! !
+!OS.COM.IDispatch categoriesFor: #asImplType!converting!public! !
+!OS.COM.IDispatch categoriesFor: #asVariant!converting!public! !
+!OS.COM.IDispatch categoriesFor: #basicFree!private!realizing/unrealizing! !
+!OS.COM.IDispatch categoriesFor: #basicInvokeId:flags:parms:retVal:!dispatching!private! !
+!OS.COM.IDispatch categoriesFor: #contents!accessing!public! !
+!OS.COM.IDispatch categoriesFor: #dispatchImplementor!accessing!public! !
+!OS.COM.IDispatch categoriesFor: #dispatchImplementor:!accessing!public! !
+!OS.COM.IDispatch categoriesFor: #displayOn:!printing!public! !
+!OS.COM.IDispatch categoriesFor: #displayValueOn:!printing!private! !
+!OS.COM.IDispatch categoriesFor: #doesNotUnderstand:!exceptions!public! !
+!OS.COM.IDispatch categoriesFor: #downCast!converting!public! !
+!OS.COM.IDispatch categoriesFor: #getIDsOfNames:!accessing!public! !
+!OS.COM.IDispatch categoriesFor: #GetIDsOfNames:rgszNames:cNames:lcid:rgdispid:!COM Interfaces-IDispatch!methods!private! !
+!OS.COM.IDispatch categoriesFor: #getProperty:!accessing!properties!public! !
+!OS.COM.IDispatch categoriesFor: #getProperty:item:!accessing!properties!public! !
+!OS.COM.IDispatch categoriesFor: #getPropertyId:!accessing!public! !
+!OS.COM.IDispatch categoriesFor: #getPropertyId:item:!accessing!public! !
+!OS.COM.IDispatch categoriesFor: #getPropertyId:withArguments:!accessing!public! !
+!OS.COM.IDispatch categoriesFor: #getPropertyObj:id:!accessing!private! !
+!OS.COM.IDispatch categoriesFor: #getPropertyObj:id:item:!dispatching!private! !
+!OS.COM.IDispatch categoriesFor: #getTypeInfo:ifNone:!accessing!private! !
+!OS.COM.IDispatch categoriesFor: #GetTypeInfo:lcid:pptinfo:!COM Interfaces-IDispatch!methods!private! !
+!OS.COM.IDispatch categoriesFor: #getTypeInfoCount!**auto generated**!methods!public! !
+!OS.COM.IDispatch categoriesFor: #GetTypeInfoCount:!**auto generated**!COM Interfaces-IDispatch!private! !
+!OS.COM.IDispatch categoriesFor: #has_NewEnum!private!testing! !
+!OS.COM.IDispatch categoriesFor: #hasTypeInfo!public!testing! !
+!OS.COM.IDispatch categoriesFor: #idOfName:!accessing!public! !
+!OS.COM.IDispatch categoriesFor: #idOfName:ifAbsent:!accessing!public! !
+!OS.COM.IDispatch categoriesFor: #implementor:!accessing!public! !
+!OS.COM.IDispatch categoriesFor: #invoke:!dispatching!public! !
+!OS.COM.IDispatch categoriesFor: #Invoke:riid:lcid:wFlags:pdispparams:pvarResult:pexcepinfo:puArgErr:!COM Interfaces-IDispatch!methods!private! !
+!OS.COM.IDispatch categoriesFor: #invoke:with:!dispatching!public! !
+!OS.COM.IDispatch categoriesFor: #invoke:with:with:!dispatching!public! !
+!OS.COM.IDispatch categoriesFor: #invoke:with:with:with:!dispatching!public! !
+!OS.COM.IDispatch categoriesFor: #invoke:with:with:with:with:!dispatching!public! !
+!OS.COM.IDispatch categoriesFor: #invoke:withArguments:!dispatching!public! !
+!OS.COM.IDispatch categoriesFor: #invokeId:!dispatching!public! !
+!OS.COM.IDispatch categoriesFor: #invokeId:flags:parms:!dispatching!public! !
+!OS.COM.IDispatch categoriesFor: #invokeId:flags:parms:retVal:!dispatching!public! !
+!OS.COM.IDispatch categoriesFor: #invokeId:with:!dispatching!public! !
+!OS.COM.IDispatch categoriesFor: #invokeId:with:with:!dispatching!public! !
+!OS.COM.IDispatch categoriesFor: #invokeId:with:with:with:!dispatching!public! !
+!OS.COM.IDispatch categoriesFor: #invokeId:withArguments:!dispatching!public! !
+!OS.COM.IDispatch categoriesFor: #isExtensible!public!testing! !
+!OS.COM.IDispatch categoriesFor: #isVBCollection!public!testing! !
+!OS.COM.IDispatch categoriesFor: #newEnum!enumerating!public! !
+!OS.COM.IDispatch categoriesFor: #printValueOn:!printing!private! !
+!OS.COM.IDispatch categoriesFor: #setProperty:item:value:!accessing!properties!public! !
+!OS.COM.IDispatch categoriesFor: #setProperty:value:!accessing!properties!public! !
+!OS.COM.IDispatch categoriesFor: #setPropertyId:item:value:!accessing!properties!public! !
+!OS.COM.IDispatch categoriesFor: #setPropertyId:value:!accessing!properties!public! !
+!OS.COM.IDispatch categoriesFor: #setPropertyId:withArguments:value:!accessing!properties!public! !
+!OS.COM.IDispatch categoriesFor: #signalException:!dispatching!private! !
+!OS.COM.IDispatch categoriesFor: #typeInfoIfNone:!accessing!public! !
+!OS.COM.IDispatch categoriesFor: #value!accessing!public! !
+!OS.COM.IDispatch categoriesFor: #value:!accessing!public! !
 
-IDispatch methodProtocol: #IDispatch attributes: #(#readOnly) selectors: #(#GetIDsOfNames:rgszNames:cNames:lcid:rgdispid: #GetTypeInfo:lcid:pptinfo: #GetTypeInfoCount: #Invoke:riid:lcid:wFlags:pdispparams:pvarResult:pexcepinfo:puArgErr:)!
+OS.COM.IDispatch methodProtocol: #IDispatch attributes: #(#readOnly) selectors: #(#GetIDsOfNames:rgszNames:cNames:lcid:rgdispid: #GetTypeInfo:lcid:pptinfo: #GetTypeInfoCount: #Invoke:riid:lcid:wFlags:pdispparams:pvarResult:pexcepinfo:puArgErr:)!
 
-!IDispatch class methodsFor!
+!OS.COM.IDispatch class methodsFor!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'stdole.IDispatch'
@@ -769,26 +776,21 @@ defineFunctions
 
 	self
 		defineFunction: #GetTypeInfoCount:
-			type: DispFunction
+			type: DispatchFunction
 			returnType: 'hresult'
 			argumentTypes: 'dword*';
 		defineFunction: #GetTypeInfo:lcid:pptinfo:
-			type: DispFunction
-			returnType: 'sdword'	"Many objects have no type info"
+			type: DispatchFunction
+			returnType: 'sdword'
 			argumentTypes: 'dword dword void**';
 		defineFunction: #GetIDsOfNames:rgszNames:cNames:lcid:rgdispid:
-			type: DispFunction
-			returnType: 'sdword'	"Failue is common, so don't want automatic exception"
+			type: DispatchFunction
+			returnType: 'sdword'
 			argumentTypes: 'GUID* char** dword dword sdword*';
 		defineFunction: #Invoke:riid:lcid:wFlags:pdispparams:pvarResult:pexcepinfo:puArgErr:
-			type: DispFunction
-			returnType: 'sdword'		"Ditto"
-			argumentTypes: 'sdword GUID* dword word DISPPARAMS* VARIANT* EXCEPINFO* dword*'!
-
-icon
-	"Answers an Icon that can be used to represent this class"
-
-	^##(self) defaultIcon!
+			type: DispatchFunction
+			returnType: 'sdword'
+			argumentTypes: 'sdword GUID* dword word DISPPARAMS* VARIANT* EXCEPINFO* dword*'	"Many objects have no type info"	"Failue is common, so don't want automatic exception"	"Ditto"!
 
 uninitialize
 	"Private - Uninitialize the receiver prior to its removal from the image."
@@ -800,8 +802,7 @@ vt
 	type when represented in a <VARIANT>."
 
 	^VT_DISPATCH! !
-!IDispatch class categoriesFor: #defineFunctions!initializing!public! !
-!IDispatch class categoriesFor: #icon!constants!public! !
-!IDispatch class categoriesFor: #uninitialize!class hierarchy-removing!private! !
-!IDispatch class categoriesFor: #vt!constants!public! !
+!OS.COM.IDispatch class categoriesFor: #defineFunctions!initializing!public! !
+!OS.COM.IDispatch class categoriesFor: #uninitialize!class hierarchy-removing!private! !
+!OS.COM.IDispatch class categoriesFor: #vt!constants!public! !
 

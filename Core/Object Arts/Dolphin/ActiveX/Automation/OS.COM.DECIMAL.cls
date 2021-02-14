@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-OLEStructure subclass: #DECIMAL
+OS.COM.OLEStructure subclass: #'OS.COM.DECIMAL'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'AXAutomationConstants'
+	imports: #(#{OS.COM.AutomationConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_hi32' -> 16r4.
@@ -12,14 +12,14 @@ OLEStructure subclass: #DECIMAL
 		'_OffsetOf_sign' -> 16r3.
 		'_OffsetOf_wReserved' -> 16r0
 	}!
-DECIMAL guid: (GUID fromString: '{e6470841-9795-44b8-ba35-cccbab3e9a0c}')!
-DECIMAL comment: 'DECIMAL is an ExternalStructure class to represent the Automation structure of the same name.
+OS.COM.DECIMAL guid: (Core.GUID fromString: '{e6470841-9795-44b8-ba35-cccbab3e9a0c}')!
+OS.COM.DECIMAL comment: 'DECIMAL is an ExternalStructure class to represent the Automation structure of the same name.
 
 DECIMAL is a rather complex 16-byte fixed point value with 12-bytes to represent the absolute value, and a byte each for scale and sign, with the top two bytes unused so that a DECIMAL can be stored safely in a VARIANT without overwriting the vartype. DECIMAL corresponds to VT_DECIMAL.
 
 DECIMALs are mapped to/from Dolphin''s <ScaledDecimal> objects, although of course the latter has unlimited  range, and therefore not all ScaledDecimals can be represented in a DECIMAL.'!
-!DECIMAL categoriesForClass!External-Data-Structured-COM! !
-!DECIMAL methodsFor!
+!OS.COM.DECIMAL categoriesForClass!External-Data-Structured-COM! !
+!OS.COM.DECIMAL methodsFor!
 
 hi32
 	"Answer the <Integer> value of the receiver's 'hi32' field."
@@ -87,18 +87,18 @@ value: val
 	intVal := intVal asInteger.
 	self hi32: (intVal bitShift: -64).
 	self lo64: (intVal bitAnd: 16rFFFFFFFFFFFFFFFF)! !
-!DECIMAL categoriesFor: #hi32!**compiled accessors**!public! !
-!DECIMAL categoriesFor: #hi32:!**compiled accessors**!public! !
-!DECIMAL categoriesFor: #lo64!**compiled accessors**!public! !
-!DECIMAL categoriesFor: #lo64:!**compiled accessors**!public! !
-!DECIMAL categoriesFor: #scale!**compiled accessors**!public! !
-!DECIMAL categoriesFor: #scale:!**compiled accessors**!public! !
-!DECIMAL categoriesFor: #sign!**compiled accessors**!public! !
-!DECIMAL categoriesFor: #sign:!**compiled accessors**!public! !
-!DECIMAL categoriesFor: #value!accessing!public! !
-!DECIMAL categoriesFor: #value:!accessing!public! !
+!OS.COM.DECIMAL categoriesFor: #hi32!**compiled accessors**!public! !
+!OS.COM.DECIMAL categoriesFor: #hi32:!**compiled accessors**!public! !
+!OS.COM.DECIMAL categoriesFor: #lo64!**compiled accessors**!public! !
+!OS.COM.DECIMAL categoriesFor: #lo64:!**compiled accessors**!public! !
+!OS.COM.DECIMAL categoriesFor: #scale!**compiled accessors**!public! !
+!OS.COM.DECIMAL categoriesFor: #scale:!**compiled accessors**!public! !
+!OS.COM.DECIMAL categoriesFor: #sign!**compiled accessors**!public! !
+!OS.COM.DECIMAL categoriesFor: #sign:!**compiled accessors**!public! !
+!OS.COM.DECIMAL categoriesFor: #value!accessing!public! !
+!OS.COM.DECIMAL categoriesFor: #value:!accessing!public! !
 
-!DECIMAL class methodsFor!
+!OS.COM.DECIMAL class methodsFor!
 
 defineFields
 	"Define the fields of the DECIMAL 'structure'.
@@ -133,9 +133,9 @@ vt
 	type when represented in a <VARIANT>."
 
 	^VT_DECIMAL! !
-!DECIMAL class categoriesFor: #defineFields!public!template definition! !
-!DECIMAL class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!DECIMAL class categoriesFor: #initialize!development!initializing!private! !
-!DECIMAL class categoriesFor: #uninitialize!class hierarchy-removing!private! !
-!DECIMAL class categoriesFor: #vt!constants!public! !
+!OS.COM.DECIMAL class categoriesFor: #defineFields!public!template definition! !
+!OS.COM.DECIMAL class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.COM.DECIMAL class categoriesFor: #initialize!development!initializing!private! !
+!OS.COM.DECIMAL class categoriesFor: #uninitialize!class hierarchy-removing!private! !
+!OS.COM.DECIMAL class categoriesFor: #vt!constants!public! !
 

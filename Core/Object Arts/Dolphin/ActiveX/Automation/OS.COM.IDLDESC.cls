@@ -1,16 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-OLEStructure subclass: #IDLDESC
+OS.COM.OLEStructure subclass: #'OS.COM.IDLDESC'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'AXAutomationConstants'
+	imports: #(#{OS.COM.AutomationConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_dwReserved' -> 16r0.
 		'_OffsetOf_wIDLFlags' -> 16r4
 	}!
-IDLDESC guid: (GUID fromString: '{c06f3b80-0868-11d3-93af-00a024ca708a}')!
-IDLDESC comment: 'IDLDESC is an <ExternalStructure> class to represent the AX Automation structure, IDLDESC.
+OS.COM.IDLDESC guid: (Core.GUID fromString: '{c06f3b80-0868-11d3-93af-00a024ca708a}')!
+OS.COM.IDLDESC comment: 'IDLDESC is an <ExternalStructure> class to represent the AX Automation structure, IDLDESC.
 
 IDLDESC contains basic marshalling information for a function argument, basically consisting of flags which relate to attributes such as ''in'', ''out'' and ''retval'', which are defined in the IDL for the argument.
 
@@ -19,8 +19,8 @@ Member variables:
 	wIDLFlags	<WORD> Flags from the IDLFLAGS enumeration.
 
 Note that this structure is only 6-bytes long, and may require packing when embedded in other structures.'!
-!IDLDESC categoriesForClass!External-Data-Structured-COM! !
-!IDLDESC methodsFor!
+!OS.COM.IDLDESC categoriesForClass!External-Data-Structured-COM! !
+!OS.COM.IDLDESC methodsFor!
 
 isIn
 	"Answer whether the receiver is describing an input argument."
@@ -41,12 +41,12 @@ wIDLFlags
 	"Answer the <Integer> value of the receiver's 'wIDLFlags' field."
 
 	^bytes wordAtOffset: _OffsetOf_wIDLFlags! !
-!IDLDESC categoriesFor: #isIn!public!testing! !
-!IDLDESC categoriesFor: #isOut!public!testing! !
-!IDLDESC categoriesFor: #isRetVal!public!testing! !
-!IDLDESC categoriesFor: #wIDLFlags!**compiled accessors**!public! !
+!OS.COM.IDLDESC categoriesFor: #isIn!public!testing! !
+!OS.COM.IDLDESC categoriesFor: #isOut!public!testing! !
+!OS.COM.IDLDESC categoriesFor: #isRetVal!public!testing! !
+!OS.COM.IDLDESC categoriesFor: #wIDLFlags!**compiled accessors**!public! !
 
-!IDLDESC class methodsFor!
+!OS.COM.IDLDESC class methodsFor!
 
 defineFields
 	"Define the fields of the IDLDESC structure.
@@ -67,6 +67,6 @@ defineFields
 
 getFieldNames
 	^#(#wIDLFlags)! !
-!IDLDESC class categoriesFor: #defineFields!public!template definition! !
-!IDLDESC class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.COM.IDLDESC class categoriesFor: #defineFields!public!template definition! !
+!OS.COM.IDLDESC class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

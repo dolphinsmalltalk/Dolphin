@@ -158,7 +158,7 @@ hwndOwner: anExternalHandle
 lpCallback
 	"Answer the <IUnknown> value of the receiver's 'lpCallback' field."
 
-	^Smalltalk.IUnknown fromAddress: (bytes intPtrAtOffset: _OffsetOf_lpCallback)!
+	^COM.IUnknown fromAddress: (bytes intPtrAtOffset: _OffsetOf_lpCallback)!
 
 lpCallback: anIUnknown
 	"Set the receiver's 'lpCallback' field to the value of the argument, anIUnknown"
@@ -367,7 +367,7 @@ defineFields
 		defineField: #nCopies type: DWORDField new;
 		defineField: #hInstance type: HANDLEField new;
 		defineField: #lpPrintTemplateName type: (PointerField type: Utf16String);
-		defineField: #lpCallback type: (PointerField type: Smalltalk.IUnknown);
+		defineField: #lpCallback type: (PointerField type: COM.IUnknown);
 		defineField: #nPropertyPages type: DWORDField new;
 		defineField: #lphPropertyPages type: (PointerField type: Handle);
 		defineField: #nStartPage type: DWORDField new;

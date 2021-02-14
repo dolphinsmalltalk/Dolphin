@@ -1,25 +1,25 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-AbstractELEMDESC subclass: #ARRAYDESC
+OS.COM.AbstractELEMDESC subclass: #'OS.COM.ARRAYDESC'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_cDims' -> 16r8.
 		'_OffsetOf_rgbounds' -> 16rC
 	}!
-ARRAYDESC guid: (GUID fromString: '{c06f3b6c-0868-11d3-93af-00a024ca708a}')!
-ARRAYDESC comment: 'ARRAYDESC is an ExternalStructure class to represent the COM Automation structure of the same name.
+OS.COM.ARRAYDESC guid: (Core.GUID fromString: '{c06f3b6c-0868-11d3-93af-00a024ca708a}')!
+OS.COM.ARRAYDESC comment: '`OS.COM.ARRAYDESC` is an ExternalStructure class to represent the COM Automation ARRAYDESC structure.
 
 ARRAYDESC describes an Automation safe array, specifically the type of the elements, the number of dimensions, and the bounds for each dimension.
 
 Member variables:
-	tdescElem		<TYPEDESC> Type of the elements of the array
-	cDims		<WORD> Number of dimensions
-	rgbounds		<SAFEARRAYBOUND[]> Variable length array containing array dimension bounds'!
-!ARRAYDESC categoriesForClass!External-Data-Structured-COM! !
-!ARRAYDESC methodsFor!
+	tdescElem	`TYPEDESC` Type of the elements of the array
+	cDims		`WORD` Number of dimensions
+	rgbounds	`SAFEARRAYBOUND[]` Variable length array containing array dimension bounds'!
+!OS.COM.ARRAYDESC categoriesForClass!External-Data-Structured-COM! !
+!OS.COM.ARRAYDESC methodsFor!
 
 cDims
 	"Private - Answer the <Integer> value of the receiver's 'cDims' field."
@@ -39,11 +39,11 @@ rgbounds
 		fromAddress: bytes yourAddress + _OffsetOf_rgbounds
 		length: self cDims
 		elementClass: SAFEARRAYBOUND! !
-!ARRAYDESC categoriesFor: #cDims!**compiled accessors**!private! !
-!ARRAYDESC categoriesFor: #elementCount!accessing!private! !
-!ARRAYDESC categoriesFor: #rgbounds!**compiled accessors**!public! !
+!OS.COM.ARRAYDESC categoriesFor: #cDims!**compiled accessors**!private! !
+!OS.COM.ARRAYDESC categoriesFor: #elementCount!accessing!private! !
+!OS.COM.ARRAYDESC categoriesFor: #rgbounds!**compiled accessors**!public! !
 
-!ARRAYDESC class methodsFor!
+!OS.COM.ARRAYDESC class methodsFor!
 
 defineFields
 	"Define the fields of the ARRAYDESC structure.
@@ -69,6 +69,6 @@ defineFields
 
 getFieldNames
 	^#(#tdescElem #cDims #rgbounds)! !
-!ARRAYDESC class categoriesFor: #defineFields!public!template definition! !
-!ARRAYDESC class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.COM.ARRAYDESC class categoriesFor: #defineFields!public!template definition! !
+!OS.COM.ARRAYDESC class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

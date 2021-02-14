@@ -1,17 +1,17 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-OLELockBytesAbstract subclass: #OLELockBytes
+OS.COM.LockBytesAbstract subclass: #'OS.COM.LockBytes'
 	instanceVariableNames: 'bytes'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-OLELockBytes guid: (GUID fromString: '{87b4c541-026e-11d3-9fd7-00a0cc3e4a32}')!
-OLELockBytes comment: 'OLELockBytes is an implementation of the ILockBytes interface on a Smalltalk <ByteArray>. It is primarily intended for testing and development purposes (it is a handy way to see exactly what is being written to a stream), and also as an example implementation of a system COM interface.
+OS.COM.LockBytes guid: (Core.GUID fromString: '{87b4c541-026e-11d3-9fd7-00a0cc3e4a32}')!
+OS.COM.LockBytes comment: 'OLELockBytes is an implementation of the ILockBytes interface on a Smalltalk <ByteArray>. It is primarily intended for testing and development purposes (it is a handy way to see exactly what is being written to a stream), and also as an example implementation of a system COM interface.
 
 OLELockBytes is similar to the system provided ILockBytes implementation on top of a global memory handle, except that the underlying storage mechanism is a ByteArray and it is somewhat slower. It doesn''t support locking.'!
-!OLELockBytes categoriesForClass!COM-Implementations! !
-!OLELockBytes methodsFor!
+!OS.COM.LockBytes categoriesForClass!COM-Implementations! !
+!OS.COM.LockBytes methodsFor!
 
 bytes: anObject 
 	"Private - Set the value of the receiver's ''bytes'' instance variable to the argument, anObject."
@@ -80,23 +80,23 @@ WriteAt: offset pv: pBuf cb: cb pcbWritten: pcbWritten
 		with: pBuf.
 	pcbWritten value: cb.
 	^S_OK! !
-!OLELockBytes categoriesFor: #bytes:!accessing!private! !
-!OLELockBytes categoriesFor: #contents!accessing!public! !
-!OLELockBytes categoriesFor: #copyBytesInto:from:to:!COM Interfaces-ILockBytes!private! !
-!OLELockBytes categoriesFor: #initialize!initializing!private! !
-!OLELockBytes categoriesFor: #replaceFrom:to:with:!COM Interfaces-ILockBytes!private! !
-!OLELockBytes categoriesFor: #resize:!COM Interfaces-ILockBytes!private! !
-!OLELockBytes categoriesFor: #size!accessing!public! !
-!OLELockBytes categoriesFor: #WriteAt:pv:cb:pcbWritten:!COM Interfaces-ILockBytes!private! !
+!OS.COM.LockBytes categoriesFor: #bytes:!accessing!private! !
+!OS.COM.LockBytes categoriesFor: #contents!accessing!public! !
+!OS.COM.LockBytes categoriesFor: #copyBytesInto:from:to:!COM Interfaces-ILockBytes!private! !
+!OS.COM.LockBytes categoriesFor: #initialize!initializing!private! !
+!OS.COM.LockBytes categoriesFor: #replaceFrom:to:with:!COM Interfaces-ILockBytes!private! !
+!OS.COM.LockBytes categoriesFor: #resize:!COM Interfaces-ILockBytes!private! !
+!OS.COM.LockBytes categoriesFor: #size!accessing!public! !
+!OS.COM.LockBytes categoriesFor: #WriteAt:pv:cb:pcbWritten:!COM Interfaces-ILockBytes!private! !
 
-!OLELockBytes class methodsFor!
+!OS.COM.LockBytes class methodsFor!
 
-on: bytes 
+on: bytes
 	"Answer an <ILockBytes> on a new instance of the receiver operating
 	on the <ByteArray>, bytes."
 
-	^(self basicNew)
+	^self basicNew
 		bytes: bytes;
 		queryInterface: ILockBytes! !
-!OLELockBytes class categoriesFor: #on:!instance creation!public! !
+!OS.COM.LockBytes class categoriesFor: #on:!instance creation!public! !
 

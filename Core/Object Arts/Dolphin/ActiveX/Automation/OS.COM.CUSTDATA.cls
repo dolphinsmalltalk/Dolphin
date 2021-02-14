@@ -1,22 +1,22 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-OLEFinalizableStructure subclass: #CUSTDATA
+OS.COM.FinalizableStructure subclass: #'OS.COM.CUSTDATA'
 	instanceVariableNames: 'contents'
 	classVariableNames: 'WellKnownCustomAttributes'
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_cCustData' -> 16r0.
 		'_OffsetOf_prgCustData' -> 16r4
 	}!
-CUSTDATA guid: (GUID fromString: '{c06f3b7b-0868-11d3-93af-00a024ca708a}')!
-CUSTDATA comment: '<CUSTDATA> is an <ExternalStructure> class to wrap the struct ''OAIDL.CUSTDATA'' from type information in the ''Ole Automation Type Library'' library.
+OS.COM.CUSTDATA guid: (Core.GUID fromString: '{c06f3b7b-0868-11d3-93af-00a024ca708a}')!
+OS.COM.CUSTDATA comment: '<CUSTDATA> is an <ExternalStructure> class to wrap the struct ''OAIDL.CUSTDATA'' from type information in the ''Ole Automation Type Library'' library.
 
 The type library contains no documentation for this struct
 
 Warning: This comment was automatically generated from the struct''s type information, but any changes made here will not be overwritten if the wrapper class is regenerated.'!
-!CUSTDATA categoriesForClass!External-Data-Structured-COM! !
-!CUSTDATA methodsFor!
+!OS.COM.CUSTDATA categoriesForClass!External-Data-Structured-COM! !
+!OS.COM.CUSTDATA methodsFor!
 
 basicFree
 	"Private - Free external resources owned by the receiver."
@@ -52,13 +52,13 @@ prgCustData
 		fromAddress: (bytes intPtrAtOffset: _OffsetOf_prgCustData)
 		length: self cCustData
 		elementClass: CUSTDATAITEM! !
-!CUSTDATA categoriesFor: #basicFree!private!realizing/unrealizing! !
-!CUSTDATA categoriesFor: #buildContents!printing-IDL!private! !
-!CUSTDATA categoriesFor: #cCustData!**compiled accessors**!private! !
-!CUSTDATA categoriesFor: #contents!printing-IDL!public! !
-!CUSTDATA categoriesFor: #prgCustData!**compiled accessors**!public! !
+!OS.COM.CUSTDATA categoriesFor: #basicFree!private!realizing/unrealizing! !
+!OS.COM.CUSTDATA categoriesFor: #buildContents!printing-IDL!private! !
+!OS.COM.CUSTDATA categoriesFor: #cCustData!**compiled accessors**!private! !
+!OS.COM.CUSTDATA categoriesFor: #contents!printing-IDL!public! !
+!OS.COM.CUSTDATA categoriesFor: #prgCustData!**compiled accessors**!public! !
 
-!CUSTDATA class methodsFor!
+!OS.COM.CUSTDATA class methodsFor!
 
 defineFields
 	"Define the fields of the CUSTDATA structure.
@@ -92,7 +92,7 @@ initialize
 		at: (GUID fromString: '{82a85647-bd20-4075-823b-d9758c4391eb}') put: #length_is;
 		at: (GUID fromString: '{be29f9d9-7844-49e1-aacb-8e19386529df}') put: #size_is;
 		shrink! !
-!CUSTDATA class categoriesFor: #defineFields!public!template definition! !
-!CUSTDATA class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!CUSTDATA class categoriesFor: #initialize!public! !
+!OS.COM.CUSTDATA class categoriesFor: #defineFields!public!template definition! !
+!OS.COM.CUSTDATA class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.COM.CUSTDATA class categoriesFor: #initialize!public! !
 

@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-IUnknown subclass: #ITypeComp
+OS.COM.IUnknown subclass: #'OS.COM.ITypeComp'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ITypeComp guid: (IID fromString: '{00020403-0000-0000-c000-000000000046}')!
-ITypeComp comment: ''!
-!ITypeComp categoriesForClass!COM-Interfaces! !
-!ITypeComp methodsFor!
+OS.COM.ITypeComp guid: (OS.COM.IID fromString: '{00020403-0000-0000-c000-000000000046}')!
+OS.COM.ITypeComp comment: ''!
+!OS.COM.ITypeComp categoriesForClass!COM-Interfaces! !
+!OS.COM.ITypeComp methodsFor!
 
 Bind: bind lHashVal: lHashVal wFlags: wFlags ppTInfo: ppTInfo pDescKind: pDescKind pBindPtr: pBindPtr
 	"Callout for the ITypeComp::Bind() interface function.
@@ -26,10 +26,10 @@ BindType: bindType lHashVal: lHashVal ppTInfo: ppTInfo ppTComp: ppTComp
 
 	<virtual stdcall: hresult 5 lpwstr dword lppvoid lppvoid>
 	^self invalidCall: _failureCode! !
-!ITypeComp categoriesFor: #Bind:lHashVal:wFlags:ppTInfo:pDescKind:pBindPtr:!COM Interfaces-ITypeComp!primitives!public! !
-!ITypeComp categoriesFor: #BindType:lHashVal:ppTInfo:ppTComp:!COM Interfaces-ITypeComp!primitives!public! !
+!OS.COM.ITypeComp categoriesFor: #Bind:lHashVal:wFlags:ppTInfo:pDescKind:pBindPtr:!COM Interfaces-ITypeComp!primitives!public! !
+!OS.COM.ITypeComp categoriesFor: #BindType:lHashVal:ppTInfo:ppTComp:!COM Interfaces-ITypeComp!primitives!public! !
 
-!ITypeComp class methodsFor!
+!OS.COM.ITypeComp class methodsFor!
 
 defineFunctions
 	"Declare the virtual functions supported by the receiver.
@@ -58,5 +58,5 @@ defineFunctions
 			 argumentTypes: 'lpwstr dword word ITypeInfo** SDWORD* lppvoid'; "'DESCKIND* BINDPTR*';"
 		defineFunction: #BindType:lHashVal:ppTInfo:ppTComp:        
 			 argumentTypes: 'lpwstr dword ITypeInfo** ITypeComp**'! !
-!ITypeComp class categoriesFor: #defineFunctions!initializing!public! !
+!OS.COM.ITypeComp class categoriesFor: #defineFunctions!initializing!public! !
 

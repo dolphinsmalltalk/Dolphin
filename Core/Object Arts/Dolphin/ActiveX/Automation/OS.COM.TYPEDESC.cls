@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-OLEStructure subclass: #TYPEDESC
+OS.COM.OLEStructure subclass: #'OS.COM.TYPEDESC'
 	instanceVariableNames: 'owner classDesc typeInfo'
 	classVariableNames: ''
-	poolDictionaries: 'AXAutomationConstants'
+	imports: #(#{OS.COM.AutomationConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_hreftype' -> 16r0.
@@ -12,8 +12,8 @@ OLEStructure subclass: #TYPEDESC
 		'_OffsetOf_vt' -> 16r4.
 		'VTIndirections' -> #[0 0 0 0 0 0 0 0 0 1 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0]
 	}!
-TYPEDESC guid: (GUID fromString: '{c06f3b7a-0868-11d3-93af-00a024ca708a}')!
-TYPEDESC comment: 'TYPEDESC is an ExternalStructure class to represent the AX Automation structure, TYPEDESC.
+OS.COM.TYPEDESC guid: (Core.GUID fromString: '{c06f3b7a-0868-11d3-93af-00a024ca708a}')!
+OS.COM.TYPEDESC comment: 'TYPEDESC is an ExternalStructure class to represent the AX Automation structure, TYPEDESC.
 
 The TYPEDESC structure describes the type of a variable, function parameter, or return value, and is one of the key structures in the type library model.
 
@@ -29,8 +29,8 @@ Note that this structure is only 6-bytes long, and requires packing when embedde
 Instance Variables:
 	owner		<ExternalStructure>. Backpointer to original structure to keep it alive, and also to locate ITypeInfo.
 '!
-!TYPEDESC categoriesForClass!External-Data-Structured-COM! !
-!TYPEDESC methodsFor!
+!OS.COM.TYPEDESC categoriesForClass!External-Data-Structured-COM! !
+!OS.COM.TYPEDESC methodsFor!
 
 analyzer
 	"Private - Answer the <AXTypeInfoAnalyzer> from which the receiver originated."
@@ -52,8 +52,8 @@ buildClassDesc
 	vt := self vt.
 	vt == VT_PTR
 		ifTrue: 
-			["Its a pointer to something, so we need to recurse and answer  <typename>*"
-			| indirTo |
+			[| indirTo |
+			"Its a pointer to something, so we need to recurse and answer  <typename>*"
 			indirTo := self tdesc classDesc.
 			^indirTo key -> (indirTo value + 1 min: 2)].
 	vt == VT_CARRAY
@@ -66,8 +66,8 @@ buildClassDesc
 			^(arryDesc key arrayType: arryDesc value) -> 0].
 	vt == VT_SAFEARRAY ifTrue: [^SAFEARRAY -> 1].
 	vt == VT_USERDEFINED
-		ifTrue: [^owner isNil ifTrue: [ExternalStructure -> 1] ifFalse: [self typeInfo classDesc]].
-	^(VARIANT classForVT: vt) -> (VTIndirections at: vt+1)!
+		ifTrue: [^owner isNil ifTrue: [Structure -> 1] ifFalse: [self typeInfo classDesc]].
+	^(VARIANT classForVT: vt) -> (VTIndirections at: vt + 1)!
 
 classDesc
 	"Private - Answer a Dolphin class and indirection count pair which can be used to
@@ -191,30 +191,30 @@ vtName
 	"Private - Answer the Dolphin external type name for the receiver's variant type."
 
 	^VARIANT nameOfVT: self vartype! !
-!TYPEDESC categoriesFor: #analyzer!accessing!private! !
-!TYPEDESC categoriesFor: #arrayDesc!development!private! !
-!TYPEDESC categoriesFor: #buildClassDesc!helpers!private! !
-!TYPEDESC categoriesFor: #classDesc!accessing!private! !
-!TYPEDESC categoriesFor: #getRefType!accessing!private! !
-!TYPEDESC categoriesFor: #hreftype!**compiled accessors**!public! !
-!TYPEDESC categoriesFor: #isAnonymous!public!testing! !
-!TYPEDESC categoriesFor: #isStructure!public!testing! !
-!TYPEDESC categoriesFor: #isUnion!public!testing! !
-!TYPEDESC categoriesFor: #isUserDefined!public!testing! !
-!TYPEDESC categoriesFor: #lpadesc!**compiled accessors**!public! !
-!TYPEDESC categoriesFor: #lptdesc!**compiled accessors**!public! !
-!TYPEDESC categoriesFor: #owner:!accessing!private! !
-!TYPEDESC categoriesFor: #realTypeInfo!accessing!public! !
-!TYPEDESC categoriesFor: #tdesc!accessing!public! !
-!TYPEDESC categoriesFor: #tdescArray!accessing!public! !
-!TYPEDESC categoriesFor: #typeDesc!helpers!private! !
-!TYPEDESC categoriesFor: #typeInfo!accessing!public! !
-!TYPEDESC categoriesFor: #typeName!accessing!public! !
-!TYPEDESC categoriesFor: #vartype!accessing!public! !
-!TYPEDESC categoriesFor: #vt!**compiled accessors**!public! !
-!TYPEDESC categoriesFor: #vtName!accessing!private! !
+!OS.COM.TYPEDESC categoriesFor: #analyzer!accessing!private! !
+!OS.COM.TYPEDESC categoriesFor: #arrayDesc!development!private! !
+!OS.COM.TYPEDESC categoriesFor: #buildClassDesc!helpers!private! !
+!OS.COM.TYPEDESC categoriesFor: #classDesc!accessing!private! !
+!OS.COM.TYPEDESC categoriesFor: #getRefType!accessing!private! !
+!OS.COM.TYPEDESC categoriesFor: #hreftype!**compiled accessors**!public! !
+!OS.COM.TYPEDESC categoriesFor: #isAnonymous!public!testing! !
+!OS.COM.TYPEDESC categoriesFor: #isStructure!public!testing! !
+!OS.COM.TYPEDESC categoriesFor: #isUnion!public!testing! !
+!OS.COM.TYPEDESC categoriesFor: #isUserDefined!public!testing! !
+!OS.COM.TYPEDESC categoriesFor: #lpadesc!**compiled accessors**!public! !
+!OS.COM.TYPEDESC categoriesFor: #lptdesc!**compiled accessors**!public! !
+!OS.COM.TYPEDESC categoriesFor: #owner:!accessing!private! !
+!OS.COM.TYPEDESC categoriesFor: #realTypeInfo!accessing!public! !
+!OS.COM.TYPEDESC categoriesFor: #tdesc!accessing!public! !
+!OS.COM.TYPEDESC categoriesFor: #tdescArray!accessing!public! !
+!OS.COM.TYPEDESC categoriesFor: #typeDesc!helpers!private! !
+!OS.COM.TYPEDESC categoriesFor: #typeInfo!accessing!public! !
+!OS.COM.TYPEDESC categoriesFor: #typeName!accessing!public! !
+!OS.COM.TYPEDESC categoriesFor: #vartype!accessing!public! !
+!OS.COM.TYPEDESC categoriesFor: #vt!**compiled accessors**!public! !
+!OS.COM.TYPEDESC categoriesFor: #vtName!accessing!private! !
 
-!TYPEDESC class methodsFor!
+!OS.COM.TYPEDESC class methodsFor!
 
 defineFields
 	"Define the fields of the TYPEDESC structure.
@@ -260,7 +260,7 @@ initialize
 				at: VT_UNKNOWN + 1 put: 1;
 				at: VT_SAFEARRAY + 1 put: 1;
 				yourself)! !
-!TYPEDESC class categoriesFor: #defineFields!public!template definition! !
-!TYPEDESC class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!TYPEDESC class categoriesFor: #initialize!class initialization!development!public! !
+!OS.COM.TYPEDESC class categoriesFor: #defineFields!public!template definition! !
+!OS.COM.TYPEDESC class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.COM.TYPEDESC class categoriesFor: #initialize!class initialization!development!public! !
 

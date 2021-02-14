@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-OLEStructure subclass: #PICTDESC
+OS.COM.OLEStructure subclass: #'OS.COM.PICTDESC'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_dw1' -> 16rC.
@@ -12,10 +12,10 @@ OLEStructure subclass: #PICTDESC
 		'_OffsetOf_handle' -> 16r8.
 		'_OffsetOf_picType' -> 16r4
 	}!
-PICTDESC guid: (GUID fromString: '{a1a65a80-aef9-11d3-b376-080046056106}')!
-PICTDESC comment: ''!
-!PICTDESC categoriesForClass!Unclassified! !
-!PICTDESC methodsFor!
+OS.COM.PICTDESC guid: (Core.GUID fromString: '{a1a65a80-aef9-11d3-b376-080046056106}')!
+OS.COM.PICTDESC comment: ''!
+!OS.COM.PICTDESC categoriesForClass!Unclassified! !
+!OS.COM.PICTDESC methodsFor!
 
 dw1
 	"Answer the <Integer> value of the receiver's 'dw1' field."
@@ -61,17 +61,17 @@ picType: anInteger
 	"Set the receiver's 'picType' field to the value of the argument, anInteger"
 
 	bytes dwordAtOffset: _OffsetOf_picType put: anInteger! !
-!PICTDESC categoriesFor: #dw1!**compiled accessors**!public! !
-!PICTDESC categoriesFor: #dw1:!**compiled accessors**!public! !
-!PICTDESC categoriesFor: #dw2!**compiled accessors**!public! !
-!PICTDESC categoriesFor: #dw2:!**compiled accessors**!public! !
-!PICTDESC categoriesFor: #dwSize:!**compiled accessors**!public! !
-!PICTDESC categoriesFor: #handle!**compiled accessors**!public! !
-!PICTDESC categoriesFor: #handle:!**compiled accessors**!public! !
-!PICTDESC categoriesFor: #picType!**compiled accessors**!public! !
-!PICTDESC categoriesFor: #picType:!**compiled accessors**!public! !
+!OS.COM.PICTDESC categoriesFor: #dw1!**compiled accessors**!public! !
+!OS.COM.PICTDESC categoriesFor: #dw1:!**compiled accessors**!public! !
+!OS.COM.PICTDESC categoriesFor: #dw2!**compiled accessors**!public! !
+!OS.COM.PICTDESC categoriesFor: #dw2:!**compiled accessors**!public! !
+!OS.COM.PICTDESC categoriesFor: #dwSize:!**compiled accessors**!public! !
+!OS.COM.PICTDESC categoriesFor: #handle!**compiled accessors**!public! !
+!OS.COM.PICTDESC categoriesFor: #handle:!**compiled accessors**!public! !
+!OS.COM.PICTDESC categoriesFor: #picType!**compiled accessors**!public! !
+!OS.COM.PICTDESC categoriesFor: #picType:!**compiled accessors**!public! !
 
-!PICTDESC class methodsFor!
+!OS.COM.PICTDESC class methodsFor!
 
 defineFields
 	"Define the fields of the PICTDESC structure.
@@ -134,8 +134,8 @@ getFieldNames
 icon
 	"Answers an Icon that can be used to represent this class"
 
-	^OLEPicture icon! !
-!PICTDESC class categoriesFor: #defineFields!public!template definition! !
-!PICTDESC class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!PICTDESC class categoriesFor: #icon!constants!public! !
+	^Picture icon! !
+!OS.COM.PICTDESC class categoriesFor: #defineFields!public!template definition! !
+!OS.COM.PICTDESC class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.COM.PICTDESC class categoriesFor: #icon!constants!public! !
 

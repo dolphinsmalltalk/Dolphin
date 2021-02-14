@@ -16,7 +16,7 @@ arrayValueString: eachValue
 	^eachValue displayString!
 
 elementClassNames
-	^#(#SWORD #SDWORD #FLOAT #DOUBLE #CURRENCY #BSTR #HRESULT #VARIANT_BOOL #VARIANT #DECIMAL #SBYTE #BYTE)!
+	^#(#SWORD #SDWORD #FLOAT #DOUBLE #'COM.CURRENCY' #'COM.BSTR' #HRESULT #'COM.VARIANT_BOOL' #'COM.VARIANT' #'COM.DECIMAL' #SBYTE #BYTE)!
 
 elementFromValue: anObject 
 	^self numericElementClass fromObject: anObject!

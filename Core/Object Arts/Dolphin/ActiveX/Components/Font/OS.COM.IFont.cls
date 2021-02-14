@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-IUnknown subclass: #IFont
+OS.COM.IUnknown subclass: #'OS.COM.IFont'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-IFont guid: (IID fromString: '{bef6e002-a874-101a-8bba-00aa00300cab}')!
-IFont comment: '`IFont` is a wrapper class for the COM interface ''stdole.IFont'' generated from type information in the ''OLE Automation'' library. It contains methods to invoke the member functions exposed by that interface.
+OS.COM.IFont guid: (OS.COM.IID fromString: '{bef6e002-a874-101a-8bba-00aa00300cab}')!
+OS.COM.IFont comment: '`IFont` is a wrapper class for the COM interface ''stdole.IFont'' generated from type information in the ''OLE Automation'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains the following helpstring for this interface
 	"Font Object"
@@ -94,14 +94,14 @@ interface IFont : IUnknown
 };
 ```
 '!
-!IFont categoriesForClass!COM-Interfaces! !
-!IFont methodsFor!
+!OS.COM.IFont categoriesForClass!COM-Interfaces! !
+!OS.COM.IFont methodsFor!
 
-= anObject 
+= anObject
 	"Answer whether the <Object> argument, pfontOther, is equivalent to the
 	receiver."
 
-	^(anObject isKindOf: COMInterface) and: [self isEqual: anObject]!
+	^(anObject isKindOf: Interface) and: [self isEqual: anObject]!
 
 addRefHfont: aFont 
 	"Invoke the AddRefHfont() method of the COM Object."
@@ -247,7 +247,7 @@ hFont
 	"Answer the handle of the font."
 
 	| answer |
-	answer := ExternalHandle new.
+	answer := Handle new.
 	self get_hFont: answer.
 	^answer asObject!
 
@@ -411,7 +411,7 @@ size
 	self get_Size: answer.
 	^answer asObject!
 
-size: psize 
+size: psize
 	"Set the 'Size' property of the receiver to the <CURRENCY> value of the argument."
 
 	self put_Size: (CURRENCY new value: psize)!
@@ -454,60 +454,59 @@ weight: pweight
 	"Set the 'Weight' property of the receiver to the <sword> value of the argument."
 
 	self put_Weight: pweight! !
-!IFont categoriesFor: #=!methods!public! !
-!IFont categoriesFor: #addRefHfont:!methods!public! !
-!IFont categoriesFor: #AddRefHfont:!COM Interfaces-IFont!private! !
-!IFont categoriesFor: #bold!**auto generated**!properties!public! !
-!IFont categoriesFor: #bold:!**auto generated**!properties!public! !
-!IFont categoriesFor: #charset!**auto generated**!properties!public! !
-!IFont categoriesFor: #charset:!**auto generated**!properties!public! !
-!IFont categoriesFor: #clone!**auto generated**!methods!public! !
-!IFont categoriesFor: #Clone:!**auto generated**!COM Interfaces-IFont!private! !
-!IFont categoriesFor: #get_Bold:!**auto generated**!COM Interfaces-IFont!private! !
-!IFont categoriesFor: #get_Charset:!**auto generated**!COM Interfaces-IFont!private! !
-!IFont categoriesFor: #get_hFont:!COM Interfaces-IFont!private! !
-!IFont categoriesFor: #get_Italic:!**auto generated**!COM Interfaces-IFont!private! !
-!IFont categoriesFor: #get_Name:!**auto generated**!COM Interfaces-IFont!private! !
-!IFont categoriesFor: #get_Size:!**auto generated**!COM Interfaces-IFont!private! !
-!IFont categoriesFor: #get_Strikethrough:!**auto generated**!COM Interfaces-IFont!private! !
-!IFont categoriesFor: #get_Underline:!**auto generated**!COM Interfaces-IFont!private! !
-!IFont categoriesFor: #get_Weight:!**auto generated**!COM Interfaces-IFont!private! !
-!IFont categoriesFor: #hFont!properties!public! !
-!IFont categoriesFor: #isEqual:!methods!public! !
-!IFont categoriesFor: #IsEqual:!**auto generated**!COM Interfaces-IFont!private! !
-!IFont categoriesFor: #italic!**auto generated**!properties!public! !
-!IFont categoriesFor: #italic:!**auto generated**!properties!public! !
-!IFont categoriesFor: #name!**auto generated**!properties!public! !
-!IFont categoriesFor: #name:!**auto generated**!properties!public! !
-!IFont categoriesFor: #put_Bold:!**auto generated**!COM Interfaces-IFont!private! !
-!IFont categoriesFor: #put_Charset:!**auto generated**!COM Interfaces-IFont!private! !
-!IFont categoriesFor: #put_Italic:!**auto generated**!COM Interfaces-IFont!private! !
-!IFont categoriesFor: #put_Name:!**auto generated**!COM Interfaces-IFont!private! !
-!IFont categoriesFor: #put_Size:!**auto generated**!COM Interfaces-IFont!private! !
-!IFont categoriesFor: #put_Strikethrough:!**auto generated**!COM Interfaces-IFont!private! !
-!IFont categoriesFor: #put_Underline:!**auto generated**!COM Interfaces-IFont!private! !
-!IFont categoriesFor: #put_Weight:!**auto generated**!COM Interfaces-IFont!private! !
-!IFont categoriesFor: #releaseHfont:!methods!public! !
-!IFont categoriesFor: #ReleaseHfont:!COM Interfaces-IFont!private! !
-!IFont categoriesFor: #setRatio:cyHimetric:!**auto generated**!methods!public! !
-!IFont categoriesFor: #SetRatio:cyHimetric:!**auto generated**!COM Interfaces-IFont!private! !
-!IFont categoriesFor: #size!**auto generated**!properties!public! !
-!IFont categoriesFor: #size:!properties!public! !
-!IFont categoriesFor: #strikethrough!**auto generated**!properties!public! !
-!IFont categoriesFor: #strikethrough:!**auto generated**!properties!public! !
-!IFont categoriesFor: #underline!**auto generated**!properties!public! !
-!IFont categoriesFor: #underline:!**auto generated**!properties!public! !
-!IFont categoriesFor: #weight!**auto generated**!properties!public! !
-!IFont categoriesFor: #weight:!**auto generated**!properties!public! !
+!OS.COM.IFont categoriesFor: #=!methods!public! !
+!OS.COM.IFont categoriesFor: #addRefHfont:!methods!public! !
+!OS.COM.IFont categoriesFor: #AddRefHfont:!COM Interfaces-IFont!private! !
+!OS.COM.IFont categoriesFor: #bold!**auto generated**!properties!public! !
+!OS.COM.IFont categoriesFor: #bold:!**auto generated**!properties!public! !
+!OS.COM.IFont categoriesFor: #charset!**auto generated**!properties!public! !
+!OS.COM.IFont categoriesFor: #charset:!**auto generated**!properties!public! !
+!OS.COM.IFont categoriesFor: #clone!**auto generated**!methods!public! !
+!OS.COM.IFont categoriesFor: #Clone:!**auto generated**!COM Interfaces-IFont!private! !
+!OS.COM.IFont categoriesFor: #get_Bold:!**auto generated**!COM Interfaces-IFont!private! !
+!OS.COM.IFont categoriesFor: #get_Charset:!**auto generated**!COM Interfaces-IFont!private! !
+!OS.COM.IFont categoriesFor: #get_hFont:!COM Interfaces-IFont!private! !
+!OS.COM.IFont categoriesFor: #get_Italic:!**auto generated**!COM Interfaces-IFont!private! !
+!OS.COM.IFont categoriesFor: #get_Name:!**auto generated**!COM Interfaces-IFont!private! !
+!OS.COM.IFont categoriesFor: #get_Size:!**auto generated**!COM Interfaces-IFont!private! !
+!OS.COM.IFont categoriesFor: #get_Strikethrough:!**auto generated**!COM Interfaces-IFont!private! !
+!OS.COM.IFont categoriesFor: #get_Underline:!**auto generated**!COM Interfaces-IFont!private! !
+!OS.COM.IFont categoriesFor: #get_Weight:!**auto generated**!COM Interfaces-IFont!private! !
+!OS.COM.IFont categoriesFor: #hFont!properties!public! !
+!OS.COM.IFont categoriesFor: #isEqual:!methods!public! !
+!OS.COM.IFont categoriesFor: #IsEqual:!**auto generated**!COM Interfaces-IFont!private! !
+!OS.COM.IFont categoriesFor: #italic!**auto generated**!properties!public! !
+!OS.COM.IFont categoriesFor: #italic:!**auto generated**!properties!public! !
+!OS.COM.IFont categoriesFor: #name!**auto generated**!properties!public! !
+!OS.COM.IFont categoriesFor: #name:!**auto generated**!properties!public! !
+!OS.COM.IFont categoriesFor: #put_Bold:!**auto generated**!COM Interfaces-IFont!private! !
+!OS.COM.IFont categoriesFor: #put_Charset:!**auto generated**!COM Interfaces-IFont!private! !
+!OS.COM.IFont categoriesFor: #put_Italic:!**auto generated**!COM Interfaces-IFont!private! !
+!OS.COM.IFont categoriesFor: #put_Name:!**auto generated**!COM Interfaces-IFont!private! !
+!OS.COM.IFont categoriesFor: #put_Size:!**auto generated**!COM Interfaces-IFont!private! !
+!OS.COM.IFont categoriesFor: #put_Strikethrough:!**auto generated**!COM Interfaces-IFont!private! !
+!OS.COM.IFont categoriesFor: #put_Underline:!**auto generated**!COM Interfaces-IFont!private! !
+!OS.COM.IFont categoriesFor: #put_Weight:!**auto generated**!COM Interfaces-IFont!private! !
+!OS.COM.IFont categoriesFor: #releaseHfont:!methods!public! !
+!OS.COM.IFont categoriesFor: #ReleaseHfont:!COM Interfaces-IFont!private! !
+!OS.COM.IFont categoriesFor: #setRatio:cyHimetric:!**auto generated**!methods!public! !
+!OS.COM.IFont categoriesFor: #SetRatio:cyHimetric:!**auto generated**!COM Interfaces-IFont!private! !
+!OS.COM.IFont categoriesFor: #size!**auto generated**!properties!public! !
+!OS.COM.IFont categoriesFor: #size:!properties!public! !
+!OS.COM.IFont categoriesFor: #strikethrough!**auto generated**!properties!public! !
+!OS.COM.IFont categoriesFor: #strikethrough:!**auto generated**!properties!public! !
+!OS.COM.IFont categoriesFor: #underline!**auto generated**!properties!public! !
+!OS.COM.IFont categoriesFor: #underline:!**auto generated**!properties!public! !
+!OS.COM.IFont categoriesFor: #weight!**auto generated**!properties!public! !
+!OS.COM.IFont categoriesFor: #weight:!**auto generated**!properties!public! !
 
-!IFont class methodsFor!
+!OS.COM.IFont class methodsFor!
 
 clsid
 	"Private - Answer the CLSID of the coclass (StdFont) for which the receiver is the default interface.
 	"
 
-	^CLSID fromString: '{0BE35203-8F91-11CE-9DE3-00AA004BB851}'
-!
+	^CLSID fromString: '{0BE35203-8F91-11CE-9DE3-00AA004BB851}'!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'stdole.IFont'
@@ -560,6 +559,6 @@ defineFunctions
 		defineFunction: #ReleaseHfont:
 			argumentTypes: 'handle'
 ! !
-!IFont class categoriesFor: #clsid!constants!private! !
-!IFont class categoriesFor: #defineFunctions!initializing!public! !
+!OS.COM.IFont class categoriesFor: #clsid!constants!private! !
+!OS.COM.IFont class categoriesFor: #defineFunctions!initializing!public! !
 

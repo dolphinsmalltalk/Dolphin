@@ -1,16 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-External.DynamicLinkLibrary subclass: #OLELibrary
+External.DynamicLinkLibrary subclass: #'OS.COM.OLELibrary'
 	instanceVariableNames: 'comOnly'
 	classVariableNames: 'DefaultIMalloc'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-OLELibrary guid: (Core.GUID fromString: '{64674066-3a82-101b-8181-00aa003743d3}')!
-OLELibrary comment: 'OLELibrary is the <ExternalLibrary> class to represent the Win32 System DLL, OLE32.DLL.
+OS.COM.OLELibrary guid: (Core.GUID fromString: '{64674066-3a82-101b-8181-00aa003743d3}')!
+OS.COM.OLELibrary comment: 'OLELibrary is the <ExternalLibrary> class to represent the Win32 System DLL, OLE32.DLL.
 This library contains functions pertaining to the use of OLE and COM.'!
-!OLELibrary categoriesForClass!External-Libraries-ActiveX! !
-!OLELibrary methodsFor!
+!OS.COM.OLELibrary categoriesForClass!External-Libraries-ActiveX! !
+!OS.COM.OLELibrary methodsFor!
 
 close
 	"Release the reference the receiver has to the External Library	it represents. This may
@@ -294,45 +294,43 @@ uninitialize
 	"Private - Reverse the initialize"
 
 	IMalloc free.
-	self comOnly
-		ifTrue: [self coUninitialize]
-		ifFalse: [self oleUninitialize]! !
-!OLELibrary categoriesFor: #close!public!realizing/unrealizing! !
-!OLELibrary categoriesFor: #clsidFromProgID:lpclsid:!**auto generated**!OLE Functions-GUID!public! !
-!OLELibrary categoriesFor: #coCreateGuid:!**auto generated**!OLE Functions-COM!public! !
-!OLELibrary categoriesFor: #coCreateInstance:pUnkOuter:dwClsContext:riid:ppv:!**auto generated**!OLE Functions-COM!public! !
-!OLELibrary categoriesFor: #coCreateInstanceEx:pUnkOuter:dwClsContext:pServerInfo:cmq:rgmqResults:!**auto generated**!OLE Functions-COM!public! !
-!OLELibrary categoriesFor: #coDisconnectObject:dwReserved:!OLE Functions-COM!public! !
-!OLELibrary categoriesFor: #coFileTimeNow:!OLE Functions-COM!public! !
-!OLELibrary categoriesFor: #coGetClassObject:dwClsContext:pServerInfo:riid:ppv:!**auto generated**!OLE Functions-COM!public! !
-!OLELibrary categoriesFor: #coGetMalloc:ppMalloc:!**auto generated**!OLE Functions-COM!public! !
-!OLELibrary categoriesFor: #coGetObject:pBindOptions:riid:ppv:!OLE Functions-COM!public! !
-!OLELibrary categoriesFor: #coInitialize:!**auto generated**!OLE Functions-COM!public! !
-!OLELibrary categoriesFor: #coInitializeEx:dwCoInit:!**auto generated**!OLE Functions-COM!public! !
-!OLELibrary categoriesFor: #comOnly!accessing!public! !
-!OLELibrary categoriesFor: #comOnly:!initializing!private! !
-!OLELibrary categoriesFor: #coRegisterClassObject:pUnk:dwClsContext:flags:lpdwRegister:!OLE Functions-COM!public! !
-!OLELibrary categoriesFor: #coRevokeClassObject:!OLE Functions-COM!public! !
-!OLELibrary categoriesFor: #coTaskMemAlloc:!**auto generated**!OLE Functions-COM!public! !
-!OLELibrary categoriesFor: #coTaskMemFree:!**auto generated**!OLE Functions-COM!public! !
-!OLELibrary categoriesFor: #coTaskMemRealloc:cb:!**auto generated**!OLE Functions-COM!public! !
-!OLELibrary categoriesFor: #coUninitialize!**auto generated**!OLE Functions-COM!public! !
-!OLELibrary categoriesFor: #initialize!initializing!private! !
-!OLELibrary categoriesFor: #initialize:!initializing!private! !
-!OLELibrary categoriesFor: #now!enquiries!public! !
-!OLELibrary categoriesFor: #oleInitialize:!**auto generated**!OLE Functions-OLE!public! !
-!OLELibrary categoriesFor: #oleLockRunning:fLock:fLastUnlockCloses:!OLE Functions-Persistent Objects!primitives!public! !
-!OLELibrary categoriesFor: #oleUninitialize!**auto generated**!OLE Functions-OLE!public! !
-!OLELibrary categoriesFor: #progIDFromCLSID:lplpszProgID:!**auto generated**!OLE Functions-GUID!public! !
-!OLELibrary categoriesFor: #supportsDCOM!public!testing! !
-!OLELibrary categoriesFor: #uninitialize!private!realizing/unrealizing! !
+	self comOnly ifTrue: [self coUninitialize] ifFalse: [self oleUninitialize]! !
+!OS.COM.OLELibrary categoriesFor: #close!public!realizing/unrealizing! !
+!OS.COM.OLELibrary categoriesFor: #clsidFromProgID:lpclsid:!**auto generated**!OLE Functions-GUID!public! !
+!OS.COM.OLELibrary categoriesFor: #coCreateGuid:!**auto generated**!OLE Functions-COM!public! !
+!OS.COM.OLELibrary categoriesFor: #coCreateInstance:pUnkOuter:dwClsContext:riid:ppv:!**auto generated**!OLE Functions-COM!public! !
+!OS.COM.OLELibrary categoriesFor: #coCreateInstanceEx:pUnkOuter:dwClsContext:pServerInfo:cmq:rgmqResults:!**auto generated**!OLE Functions-COM!public! !
+!OS.COM.OLELibrary categoriesFor: #coDisconnectObject:dwReserved:!OLE Functions-COM!public! !
+!OS.COM.OLELibrary categoriesFor: #coFileTimeNow:!OLE Functions-COM!public! !
+!OS.COM.OLELibrary categoriesFor: #coGetClassObject:dwClsContext:pServerInfo:riid:ppv:!**auto generated**!OLE Functions-COM!public! !
+!OS.COM.OLELibrary categoriesFor: #coGetMalloc:ppMalloc:!**auto generated**!OLE Functions-COM!public! !
+!OS.COM.OLELibrary categoriesFor: #coGetObject:pBindOptions:riid:ppv:!OLE Functions-COM!public! !
+!OS.COM.OLELibrary categoriesFor: #coInitialize:!**auto generated**!OLE Functions-COM!public! !
+!OS.COM.OLELibrary categoriesFor: #coInitializeEx:dwCoInit:!**auto generated**!OLE Functions-COM!public! !
+!OS.COM.OLELibrary categoriesFor: #comOnly!accessing!public! !
+!OS.COM.OLELibrary categoriesFor: #comOnly:!initializing!private! !
+!OS.COM.OLELibrary categoriesFor: #coRegisterClassObject:pUnk:dwClsContext:flags:lpdwRegister:!OLE Functions-COM!public! !
+!OS.COM.OLELibrary categoriesFor: #coRevokeClassObject:!OLE Functions-COM!public! !
+!OS.COM.OLELibrary categoriesFor: #coTaskMemAlloc:!**auto generated**!OLE Functions-COM!public! !
+!OS.COM.OLELibrary categoriesFor: #coTaskMemFree:!**auto generated**!OLE Functions-COM!public! !
+!OS.COM.OLELibrary categoriesFor: #coTaskMemRealloc:cb:!**auto generated**!OLE Functions-COM!public! !
+!OS.COM.OLELibrary categoriesFor: #coUninitialize!**auto generated**!OLE Functions-COM!public! !
+!OS.COM.OLELibrary categoriesFor: #initialize!initializing!private! !
+!OS.COM.OLELibrary categoriesFor: #initialize:!initializing!private! !
+!OS.COM.OLELibrary categoriesFor: #now!enquiries!public! !
+!OS.COM.OLELibrary categoriesFor: #oleInitialize:!**auto generated**!OLE Functions-OLE!public! !
+!OS.COM.OLELibrary categoriesFor: #oleLockRunning:fLock:fLastUnlockCloses:!OLE Functions-Persistent Objects!primitives!public! !
+!OS.COM.OLELibrary categoriesFor: #oleUninitialize!**auto generated**!OLE Functions-OLE!public! !
+!OS.COM.OLELibrary categoriesFor: #progIDFromCLSID:lplpszProgID:!**auto generated**!OLE Functions-GUID!public! !
+!OS.COM.OLELibrary categoriesFor: #supportsDCOM!public!testing! !
+!OS.COM.OLELibrary categoriesFor: #uninitialize!private!realizing/unrealizing! !
 
-!OLELibrary class methodsFor!
+!OS.COM.OLELibrary class methodsFor!
 
 fileName
 	"Answer the host system file name of the external library which
 	the receiver represents."
 
 	^'OLE32'! !
-!OLELibrary class categoriesFor: #fileName!constants!public! !
+!OS.COM.OLELibrary class categoriesFor: #fileName!constants!public! !
 

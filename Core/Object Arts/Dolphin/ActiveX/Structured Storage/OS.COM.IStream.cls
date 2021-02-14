@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ISequentialStream subclass: #IStream
+OS.COM.ISequentialStream subclass: #'OS.COM.IStream'
 	instanceVariableNames: 'name mode'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-IStream guid: (IID fromString: '{0000000c-0000-0000-c000-000000000046}')!
-IStream comment: 'IStream is a COMInterface class to wrap the standard OLE/COM structured storage interface of the same name.
+OS.COM.IStream guid: (OS.COM.IID fromString: '{0000000c-0000-0000-c000-000000000046}')!
+OS.COM.IStream comment: 'IStream is a COMInterface class to wrap the standard OLE/COM structured storage interface of the same name.
 
 IStream expands on ISequentialStream to offer the ability to access and adjust the current stream position, and to lock ranges of bytes in the underlying device (ILockBytes). It also offers transactional control, "directory" information, and copying. IStream is widely implmented and (in particular) used by COM objects for persistent storage purposes, marshalling, etc.
 
@@ -21,8 +21,8 @@ Example:
 	stm reset.				"...rewind..."
 	(STBInFiler on: stm) next.		"...rehydrate the STB''d object..."
 	stm close.				"...finally, close the stream (though finalization would do this anyway."'!
-!IStream categoriesForClass!COM-Interfaces! !
-!IStream methodsFor!
+!OS.COM.IStream categoriesForClass!COM-Interfaces! !
+!OS.COM.IStream methodsFor!
 
 at: anInteger 
 	"Answer the byte at the specified index in the receiver."
@@ -244,7 +244,7 @@ nextLine
 		whileFalse: [result := result , (String with: eol1) , (self upTo: eol1)].
 	^result!
 
-nextPutCLSID: aCLSID 
+nextPutCLSID: aCLSID
 	"Append the specified CLSID to the specified stream.
 	N.B. By convention this should be done before the associated data is streamed."
 
@@ -431,62 +431,62 @@ UnlockRegion: libOffset cb: cb dwLockType: dwLockType
 
 	<virtual stdcall: hresult 12 qword qword dword>
 	^self invalidCall: _failureCode! !
-!IStream categoriesFor: #at:!accessing!public! !
-!IStream categoriesFor: #at:put:!accessing!public! !
-!IStream categoriesFor: #atEnd!public!testing! !
-!IStream categoriesFor: #cacheStats!helpers!private! !
-!IStream categoriesFor: #Clone:!**auto generated**!primitives!public! !
-!IStream categoriesFor: #Commit:!**auto generated**!primitives!public! !
-!IStream categoriesFor: #contents!accessing!public! !
-!IStream categoriesFor: #copy!copying!public! !
-!IStream categoriesFor: #copyFrom:to:!copying!public! !
-!IStream categoriesFor: #CopyTo:cb:pcbRead:pcbWritten:!**auto generated**!primitives!public! !
-!IStream categoriesFor: #copyTo:count:!copying!public! !
-!IStream categoriesFor: #cr!accessing!public! !
-!IStream categoriesFor: #do:!public! !
-!IStream categoriesFor: #fastFlush!operations!public! !
-!IStream categoriesFor: #flush!operations!public! !
-!IStream categoriesFor: #grow!accessing!private! !
-!IStream categoriesFor: #handle!accessing!public! !
-!IStream categoriesFor: #isEmpty!public!testing! !
-!IStream categoriesFor: #isReadable!public!testing! !
-!IStream categoriesFor: #isWriteable!public!testing! !
-!IStream categoriesFor: #lockFrom:to:!operations!public! !
-!IStream categoriesFor: #lockFrom:to:type:!operations!public! !
-!IStream categoriesFor: #LockRegion:cb:dwLockType:!**auto generated**!primitives!public! !
-!IStream categoriesFor: #mode!accessing!public! !
-!IStream categoriesFor: #name!accessing!public! !
-!IStream categoriesFor: #nextCLSID!accessing!public! !
-!IStream categoriesFor: #nextLine!accessing!public! !
-!IStream categoriesFor: #nextPutCLSID:!accessing!public! !
-!IStream categoriesFor: #notEmpty!public!testing! !
-!IStream categoriesFor: #peek!accessing!public! !
-!IStream categoriesFor: #peekFor:!accessing!public! !
-!IStream categoriesFor: #position!accessing!public! !
-!IStream categoriesFor: #position:!accessing!public! !
-!IStream categoriesFor: #reset!accessing!public! !
-!IStream categoriesFor: #resize:!accessing!public! !
-!IStream categoriesFor: #Revert!**auto generated**!primitives!public! !
-!IStream categoriesFor: #rollback!operations!public! !
-!IStream categoriesFor: #Seek:dwOrigin:plibNewPosition:!**auto generated**!primitives!public! !
-!IStream categoriesFor: #SetSize:!**auto generated**!primitives!public! !
-!IStream categoriesFor: #setToEnd!positioning!public! !
-!IStream categoriesFor: #size!accessing!public! !
-!IStream categoriesFor: #skip:!positioning!public! !
-!IStream categoriesFor: #space!accessing!public! !
-!IStream categoriesFor: #stat!accessing!public! !
-!IStream categoriesFor: #Stat:grfStatFlag:!**auto generated**!primitives!public! !
-!IStream categoriesFor: #tab!accessing!public! !
-!IStream categoriesFor: #unlockFrom:to:!operations!public! !
-!IStream categoriesFor: #unlockFrom:to:type:!operations!public! !
-!IStream categoriesFor: #UnlockRegion:cb:dwLockType:!**auto generated**!primitives!public! !
+!OS.COM.IStream categoriesFor: #at:!accessing!public! !
+!OS.COM.IStream categoriesFor: #at:put:!accessing!public! !
+!OS.COM.IStream categoriesFor: #atEnd!public!testing! !
+!OS.COM.IStream categoriesFor: #cacheStats!helpers!private! !
+!OS.COM.IStream categoriesFor: #Clone:!**auto generated**!primitives!public! !
+!OS.COM.IStream categoriesFor: #Commit:!**auto generated**!primitives!public! !
+!OS.COM.IStream categoriesFor: #contents!accessing!public! !
+!OS.COM.IStream categoriesFor: #copy!copying!public! !
+!OS.COM.IStream categoriesFor: #copyFrom:to:!copying!public! !
+!OS.COM.IStream categoriesFor: #CopyTo:cb:pcbRead:pcbWritten:!**auto generated**!primitives!public! !
+!OS.COM.IStream categoriesFor: #copyTo:count:!copying!public! !
+!OS.COM.IStream categoriesFor: #cr!accessing!public! !
+!OS.COM.IStream categoriesFor: #do:!public! !
+!OS.COM.IStream categoriesFor: #fastFlush!operations!public! !
+!OS.COM.IStream categoriesFor: #flush!operations!public! !
+!OS.COM.IStream categoriesFor: #grow!accessing!private! !
+!OS.COM.IStream categoriesFor: #handle!accessing!public! !
+!OS.COM.IStream categoriesFor: #isEmpty!public!testing! !
+!OS.COM.IStream categoriesFor: #isReadable!public!testing! !
+!OS.COM.IStream categoriesFor: #isWriteable!public!testing! !
+!OS.COM.IStream categoriesFor: #lockFrom:to:!operations!public! !
+!OS.COM.IStream categoriesFor: #lockFrom:to:type:!operations!public! !
+!OS.COM.IStream categoriesFor: #LockRegion:cb:dwLockType:!**auto generated**!primitives!public! !
+!OS.COM.IStream categoriesFor: #mode!accessing!public! !
+!OS.COM.IStream categoriesFor: #name!accessing!public! !
+!OS.COM.IStream categoriesFor: #nextCLSID!accessing!public! !
+!OS.COM.IStream categoriesFor: #nextLine!accessing!public! !
+!OS.COM.IStream categoriesFor: #nextPutCLSID:!accessing!public! !
+!OS.COM.IStream categoriesFor: #notEmpty!public!testing! !
+!OS.COM.IStream categoriesFor: #peek!accessing!public! !
+!OS.COM.IStream categoriesFor: #peekFor:!accessing!public! !
+!OS.COM.IStream categoriesFor: #position!accessing!public! !
+!OS.COM.IStream categoriesFor: #position:!accessing!public! !
+!OS.COM.IStream categoriesFor: #reset!accessing!public! !
+!OS.COM.IStream categoriesFor: #resize:!accessing!public! !
+!OS.COM.IStream categoriesFor: #Revert!**auto generated**!primitives!public! !
+!OS.COM.IStream categoriesFor: #rollback!operations!public! !
+!OS.COM.IStream categoriesFor: #Seek:dwOrigin:plibNewPosition:!**auto generated**!primitives!public! !
+!OS.COM.IStream categoriesFor: #SetSize:!**auto generated**!primitives!public! !
+!OS.COM.IStream categoriesFor: #setToEnd!positioning!public! !
+!OS.COM.IStream categoriesFor: #size!accessing!public! !
+!OS.COM.IStream categoriesFor: #skip:!positioning!public! !
+!OS.COM.IStream categoriesFor: #space!accessing!public! !
+!OS.COM.IStream categoriesFor: #stat!accessing!public! !
+!OS.COM.IStream categoriesFor: #Stat:grfStatFlag:!**auto generated**!primitives!public! !
+!OS.COM.IStream categoriesFor: #tab!accessing!public! !
+!OS.COM.IStream categoriesFor: #unlockFrom:to:!operations!public! !
+!OS.COM.IStream categoriesFor: #unlockFrom:to:type:!operations!public! !
+!OS.COM.IStream categoriesFor: #UnlockRegion:cb:dwLockType:!**auto generated**!primitives!public! !
 
-IStream methodProtocol: #gettableStream attributes: #(#ansi #readOnly) selectors: #(#atEnd #do: #next #next: #nextLine #nextMatchFor: #peek #peekFor: #skip: #skipTo: #upTo:)!
-IStream methodProtocol: #IStream attributes: #(#readOnly) selectors: #(#Commit: #CopyTo:cb:pcbRead:pcbWritten: #LockRegion:cb:dwLockType: #Read:cb:pcbRead: #Revert #Seek:dwOrigin:plibNewPosition: #SetSize: #Stat:grfStatFlag: #UnlockRegion:cb:dwLockType: #Write:cb:pcbWritten:)!
-IStream methodProtocol: #puttableStream attributes: #(#ansi #readOnly) selectors: #(#cr #flush #nextPut: #nextPutAll: #space #tab)!
-IStream methodProtocol: #'streamable File' attributes: #(#readOnly) selectors: #(#close #flush #isReadable #isWriteable #position: #read:count: #reset #size #write:count:)!
+OS.COM.IStream methodProtocol: #gettableStream attributes: #(#ansi #readOnly) selectors: #(#atEnd #do: #next #next: #nextLine #nextMatchFor: #peek #peekFor: #skip: #skipTo: #upTo:)!
+OS.COM.IStream methodProtocol: #IStream attributes: #(#readOnly) selectors: #(#Commit: #CopyTo:cb:pcbRead:pcbWritten: #LockRegion:cb:dwLockType: #Read:cb:pcbRead: #Revert #Seek:dwOrigin:plibNewPosition: #SetSize: #Stat:grfStatFlag: #UnlockRegion:cb:dwLockType: #Write:cb:pcbWritten:)!
+OS.COM.IStream methodProtocol: #puttableStream attributes: #(#ansi #readOnly) selectors: #(#cr #flush #nextPut: #nextPutAll: #space #tab)!
+OS.COM.IStream methodProtocol: #'streamable File' attributes: #(#readOnly) selectors: #(#close #flush #isReadable #isWriteable #position: #read:count: #reset #size #write:count:)!
 
-!IStream class methodsFor!
+!OS.COM.IStream class methodsFor!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'OBJIDL.IStream'
@@ -521,34 +521,34 @@ onHGLOBAL
 
 	^self onHGLOBAL: nil!
 
-onHGLOBAL: hGlobal 
+onHGLOBAL: hGlobal
 	"Answer a pointer instance of the receiver to an ILockBytes on top of the block of 
 	global memory identified by the argument, hGlobal."
 
 	| answer |
 	answer := self newPointer.
-	OLELibrary default 
+	OLELibrary default
 		createStreamOnHGlobal: hGlobal
 		fDeleteOnRelease: true
 		ppstm: answer.
 	^answer!
 
-onURL: urlString 
+onURL: urlString
 	"Answer a new instance of the receiver on the file, web page, etc, with the specified
 	URL."
 
 	| answer |
 	answer := self newPointer.
-	URLMonLibrary default 
+	URLMonLibrary default
 		urlOpenBlockingStream: nil
 		szURL: urlString
 		ppStream: answer
 		dwReserved: 0
 		lpfnCB: nil.
 	^answer! !
-!IStream class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
-!IStream class categoriesFor: #fromBytes:!instance creation!public! !
-!IStream class categoriesFor: #onHGLOBAL!instance creation!public! !
-!IStream class categoriesFor: #onHGLOBAL:!instance creation!public! !
-!IStream class categoriesFor: #onURL:!instance creation!public! !
+!OS.COM.IStream class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!OS.COM.IStream class categoriesFor: #fromBytes:!instance creation!public! !
+!OS.COM.IStream class categoriesFor: #onHGLOBAL!instance creation!public! !
+!OS.COM.IStream class categoriesFor: #onHGLOBAL:!instance creation!public! !
+!OS.COM.IStream class categoriesFor: #onURL:!instance creation!public! !
 

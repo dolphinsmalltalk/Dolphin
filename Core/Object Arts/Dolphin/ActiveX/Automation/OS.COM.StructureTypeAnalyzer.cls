@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-AXTypeInfoAnalyzer subclass: #AXStructureTypeAnalyzer
+OS.COM.TypeInfoAnalyzer subclass: #'OS.COM.StructureTypeAnalyzer'
 	instanceVariableNames: ''
 	classVariableNames: 'BuiltIns'
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-AXStructureTypeAnalyzer guid: (GUID fromString: '{17f3ff59-eb25-47b0-8831-7e0d0960d84d}')!
-AXStructureTypeAnalyzer comment: ''!
-!AXStructureTypeAnalyzer categoriesForClass!Unclassified! !
-!AXStructureTypeAnalyzer methodsFor!
+OS.COM.StructureTypeAnalyzer guid: (Core.GUID fromString: '{17f3ff59-eb25-47b0-8831-7e0d0960d84d}')!
+OS.COM.StructureTypeAnalyzer comment: ''!
+!OS.COM.StructureTypeAnalyzer categoriesForClass!Unclassified! !
+!OS.COM.StructureTypeAnalyzer methodsFor!
 
 baseClass
 	"Private - Answer the Dolphin class used to represent superclass of the receiver."
@@ -18,7 +18,7 @@ baseClass
 	firstVar := self variables first.
 	^(firstVar isAnonymous and: [firstVar tdesc isAnonymous not])
 		ifTrue: [firstVar tdesc typeInfo globalBinding value]
-		ifFalse: [ExternalStructure]!
+		ifFalse: [Structure]!
 
 byteSize
 	"Answer the size in bytes of the structure described by the receiver."
@@ -77,23 +77,23 @@ suggestedBinding
 	| id |
 	self isAnonymous ifTrue: [^nil].
 	(id := self guid) isNull ifTrue: [^super suggestedBinding].
-	^(ExternalStructure classForGUID: id ifNone: []) 
+	^(Structure classForGUID: id ifNone: []) 
 		ifNil: [super suggestedBinding]
 		ifNotNil: [:structClass | structClass environment associationAt: structClass name]! !
-!AXStructureTypeAnalyzer categoriesFor: #baseClass!constants!private! !
-!AXStructureTypeAnalyzer categoriesFor: #byteSize!accessing!public! !
-!AXStructureTypeAnalyzer categoriesFor: #classDesc!constants!private! !
-!AXStructureTypeAnalyzer categoriesFor: #isAnonymous!public!testing! !
-!AXStructureTypeAnalyzer categoriesFor: #isStructure!public!testing! !
-!AXStructureTypeAnalyzer categoriesFor: #members!enumerating!public! !
-!AXStructureTypeAnalyzer categoriesFor: #name!accessing!public! !
-!AXStructureTypeAnalyzer categoriesFor: #recordInfoIfNone:!accessing!public! !
-!AXStructureTypeAnalyzer categoriesFor: #suggestedBinding!accessing!private! !
+!OS.COM.StructureTypeAnalyzer categoriesFor: #baseClass!constants!private! !
+!OS.COM.StructureTypeAnalyzer categoriesFor: #byteSize!accessing!public! !
+!OS.COM.StructureTypeAnalyzer categoriesFor: #classDesc!constants!private! !
+!OS.COM.StructureTypeAnalyzer categoriesFor: #isAnonymous!public!testing! !
+!OS.COM.StructureTypeAnalyzer categoriesFor: #isStructure!public!testing! !
+!OS.COM.StructureTypeAnalyzer categoriesFor: #members!enumerating!public! !
+!OS.COM.StructureTypeAnalyzer categoriesFor: #name!accessing!public! !
+!OS.COM.StructureTypeAnalyzer categoriesFor: #recordInfoIfNone:!accessing!public! !
+!OS.COM.StructureTypeAnalyzer categoriesFor: #suggestedBinding!accessing!private! !
 
-!AXStructureTypeAnalyzer class methodsFor!
+!OS.COM.StructureTypeAnalyzer class methodsFor!
 
 initialize
 	BuiltIns := LookupTable new.
-	{ExternalHandle} do: [:each | BuiltIns at: each guid put: each]! !
-!AXStructureTypeAnalyzer class categoriesFor: #initialize!initializing!private! !
+	{Handle} do: [:each | BuiltIns at: each guid put: each]! !
+!OS.COM.StructureTypeAnalyzer class categoriesFor: #initialize!initializing!private! !
 

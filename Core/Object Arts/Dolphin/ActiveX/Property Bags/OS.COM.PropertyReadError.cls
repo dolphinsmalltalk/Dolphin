@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Error subclass: #AXPropertyReadError
+Core.Error subclass: #'OS.COM.PropertyReadError'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-AXPropertyReadError guid: (GUID fromString: '{395bcbe7-6d49-461d-8e8e-617d944548f7}')!
-AXPropertyReadError comment: ''!
-!AXPropertyReadError categoriesForClass!Unclassified! !
-!AXPropertyReadError methodsFor!
+OS.COM.PropertyReadError guid: (Core.GUID fromString: '{395bcbe7-6d49-461d-8e8e-617d944548f7}')!
+OS.COM.PropertyReadError comment: ''!
+!OS.COM.PropertyReadError categoriesForClass!Unclassified! !
+!OS.COM.PropertyReadError methodsFor!
 
 errorLog
 	"Answer the <AXErrorLog> associated with the receiver."
@@ -30,8 +30,8 @@ initialize
 	"Private - Initialize the receiver's instance variables."
 
 	messageText := 'Error loading from property bag'.! !
-!AXPropertyReadError categoriesFor: #errorLog!accessing!public! !
-!AXPropertyReadError categoriesFor: #errorLog:!accessing!public! !
-!AXPropertyReadError categoriesFor: #guid!accessing!public! !
-!AXPropertyReadError categoriesFor: #initialize!initializing!private! !
+!OS.COM.PropertyReadError categoriesFor: #errorLog!accessing!public! !
+!OS.COM.PropertyReadError categoriesFor: #errorLog:!accessing!public! !
+!OS.COM.PropertyReadError categoriesFor: #guid!accessing!public! !
+!OS.COM.PropertyReadError categoriesFor: #initialize!initializing!private! !
 

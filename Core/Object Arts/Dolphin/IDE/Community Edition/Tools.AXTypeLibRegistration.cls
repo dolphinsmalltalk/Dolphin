@@ -3,7 +3,7 @@
 Core.Object subclass: #'Tools.AXTypeLibRegistration'
 	instanceVariableNames: 'description guidString versionString minor major'
 	classVariableNames: ''
-	imports: #()
+	imports: #(#{OS.COM private})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Tools.AXTypeLibRegistration guid: (Core.GUID fromString: '{187aaa33-6992-4cfc-bac1-e8a4cb9ea0f9}')!
@@ -111,7 +111,7 @@ description: dString guidString: gString versionString: vString
 icon
 	"Answers an <Icon> that can be used to represent this class"
 
-	^Smalltalk.AXTypeLibraryAnalyzer icon! !
+	^TypeLibraryAnalyzer icon! !
 !Tools.AXTypeLibRegistration class categoriesFor: #description:guidString:versionString:!instance creation!public! !
 !Tools.AXTypeLibRegistration class categoriesFor: #icon!constants!public! !
 

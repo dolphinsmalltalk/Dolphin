@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-External.DynamicLinkLibrary subclass: #URLMonLibrary
+External.DynamicLinkLibrary subclass: #'OS.COM.URLMonLibrary'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-URLMonLibrary guid: (Core.GUID fromString: '{08630ee6-54c6-11d3-bdd1-004005a6900b}')!
-URLMonLibrary comment: ''!
-!URLMonLibrary categoriesForClass!External-Libraries-Win32! !
-!URLMonLibrary methodsFor!
+OS.COM.URLMonLibrary guid: (Core.GUID fromString: '{08630ee6-54c6-11d3-bdd1-004005a6900b}')!
+OS.COM.URLMonLibrary comment: ''!
+!OS.COM.URLMonLibrary categoriesForClass!External-Libraries-Win32! !
+!OS.COM.URLMonLibrary methodsFor!
 
 overlappedURLDownloadToCacheFile: pCaller szURL: szURL szFilename: szFilename dwBufLength: dwBufLegth dwReserved: dwReserved pBSC: pBsc
 	"Downloads data into the Internet cache and returns the file name of the cache location for retrieving the bits.
@@ -137,20 +137,20 @@ urlOpenPullStream: pCaller szURL: szURL ppStream: ppStream dwReserved: dwReserve
 
 	<stdcall: hresult URLOpenPullStreamW IUnknown* lpwstr IStream** dword lpvoid>
 	^self invalidCall: _failureCode! !
-!URLMonLibrary categoriesFor: #overlappedURLDownloadToCacheFile:szURL:szFilename:dwBufLength:dwReserved:pBSC:!public!win32 functions-internet! !
-!URLMonLibrary categoriesFor: #overlappedURLDownloadToFile:szURL:szFilename:dwReserved:pBSC:!public!win32 functions-internet! !
-!URLMonLibrary categoriesFor: #urlDownload:toFile:!operations!public! !
-!URLMonLibrary categoriesFor: #urlDownloadToCacheFile:!operations!public! !
-!URLMonLibrary categoriesFor: #urlDownloadToCacheFile:szURL:szFilename:dwBufLength:dwReserved:pBSC:!public!win32 functions-internet! !
-!URLMonLibrary categoriesFor: #urlDownloadToFile:szURL:szFilename:dwReserved:pBSC:!public!win32 functions-internet! !
-!URLMonLibrary categoriesFor: #urlOpenBlockingStream:szURL:ppStream:dwReserved:lpfnCB:!public!win32 functions-internet! !
-!URLMonLibrary categoriesFor: #urlOpenPullStream:szURL:ppStream:dwReserved:lpfnCB:!public!win32 functions-internet! !
+!OS.COM.URLMonLibrary categoriesFor: #overlappedURLDownloadToCacheFile:szURL:szFilename:dwBufLength:dwReserved:pBSC:!public!win32 functions-internet! !
+!OS.COM.URLMonLibrary categoriesFor: #overlappedURLDownloadToFile:szURL:szFilename:dwReserved:pBSC:!public!win32 functions-internet! !
+!OS.COM.URLMonLibrary categoriesFor: #urlDownload:toFile:!operations!public! !
+!OS.COM.URLMonLibrary categoriesFor: #urlDownloadToCacheFile:!operations!public! !
+!OS.COM.URLMonLibrary categoriesFor: #urlDownloadToCacheFile:szURL:szFilename:dwBufLength:dwReserved:pBSC:!public!win32 functions-internet! !
+!OS.COM.URLMonLibrary categoriesFor: #urlDownloadToFile:szURL:szFilename:dwReserved:pBSC:!public!win32 functions-internet! !
+!OS.COM.URLMonLibrary categoriesFor: #urlOpenBlockingStream:szURL:ppStream:dwReserved:lpfnCB:!public!win32 functions-internet! !
+!OS.COM.URLMonLibrary categoriesFor: #urlOpenPullStream:szURL:ppStream:dwReserved:lpfnCB:!public!win32 functions-internet! !
 
-!URLMonLibrary class methodsFor!
+!OS.COM.URLMonLibrary class methodsFor!
 
 fileName
 	"Answer the host system file name for the library"
 
 	^'URLMON'! !
-!URLMonLibrary class categoriesFor: #fileName!constants!public! !
+!OS.COM.URLMonLibrary class categoriesFor: #fileName!constants!public! !
 

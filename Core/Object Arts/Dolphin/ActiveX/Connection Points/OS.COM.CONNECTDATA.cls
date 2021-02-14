@@ -1,22 +1,22 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-OLEStructure subclass: #CONNECTDATA
+OS.COM.OLEStructure subclass: #'OS.COM.CONNECTDATA'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_dwCookie' -> 16r4.
 		'_OffsetOf_punk' -> 16r0
 	}!
-CONNECTDATA guid: (GUID fromString: '{3438d2e1-01d6-446c-8102-5f238099585d}')!
-CONNECTDATA comment: '<CONNECTDATA> is an <ExternalStructure> class to wrap the struct ''OBJIDL.CONNECTDATA'' from type information in the ''ObjIDL Library'' library.
+OS.COM.CONNECTDATA guid: (Core.GUID fromString: '{3438d2e1-01d6-446c-8102-5f238099585d}')!
+OS.COM.CONNECTDATA comment: '<CONNECTDATA> is an <ExternalStructure> class to wrap the struct ''OBJIDL.CONNECTDATA'' from type information in the ''ObjIDL Library'' library.
 
 The type library contains no documentation for this struct
 
 Warning: This comment was automatically generated from the struct''s type information, but any changes made here will not be overwritten if the wrapper class is regenerated.'!
-!CONNECTDATA categoriesForClass!No category! !
-!CONNECTDATA methodsFor!
+!OS.COM.CONNECTDATA categoriesForClass!No category! !
+!OS.COM.CONNECTDATA methodsFor!
 
 dwCookie
 	"Answer the <Integer> value of the receiver's 'dwCookie' field."
@@ -37,12 +37,12 @@ punk: anIUnknown
 	"Set the receiver's 'punk' field to the value of the argument, anIUnknown"
 
 	bytes uintPtrAtOffset: _OffsetOf_punk put: anIUnknown yourAddress! !
-!CONNECTDATA categoriesFor: #dwCookie!**compiled accessors**!public! !
-!CONNECTDATA categoriesFor: #dwCookie:!**compiled accessors**!public! !
-!CONNECTDATA categoriesFor: #punk!**compiled accessors**!public! !
-!CONNECTDATA categoriesFor: #punk:!**compiled accessors**!public! !
+!OS.COM.CONNECTDATA categoriesFor: #dwCookie!**compiled accessors**!public! !
+!OS.COM.CONNECTDATA categoriesFor: #dwCookie:!**compiled accessors**!public! !
+!OS.COM.CONNECTDATA categoriesFor: #punk!**compiled accessors**!public! !
+!OS.COM.CONNECTDATA categoriesFor: #punk:!**compiled accessors**!public! !
 
-!CONNECTDATA class methodsFor!
+!OS.COM.CONNECTDATA class methodsFor!
 
 defineFields
 	"Define the fields of the CONNECTDATA structure.
@@ -61,6 +61,6 @@ defineFields
 
 getFieldNames
 	^#(#punk #dwCookie)! !
-!CONNECTDATA class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!CONNECTDATA class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.COM.CONNECTDATA class categoriesFor: #defineFields!**auto generated**!public!template definition! !
+!OS.COM.CONNECTDATA class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

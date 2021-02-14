@@ -1,19 +1,21 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-DolphinTest subclass: #IDispatchTest
+Core.Tests.DolphinTest subclass: #'OS.COM.Tests.IDispatchTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-IDispatchTest guid: (GUID fromString: '{5f6be15f-132a-4eef-b9cb-960a4d8cab7c}')!
-IDispatchTest comment: ''!
-!IDispatchTest categoriesForClass!Unclassified! !
-!IDispatchTest methodsFor!
+OS.COM.Tests.IDispatchTest guid: (Core.GUID fromString: '{5f6be15f-132a-4eef-b9cb-960a4d8cab7c}')!
+OS.COM.Tests.IDispatchTest comment: ''!
+!OS.COM.Tests.IDispatchTest categoriesForClass!Unclassified! !
+!OS.COM.Tests.IDispatchTest methodsFor!
 
 testDisplayOn
-	self assert: ((IDispatch createObject:'Scripting.FileSystemObject') displayString = 'a FileSystemObject').
-	self assert: ((IDispatch createObject:'Scripting.FileSystemObject') drives displayString beginsWith: 'an OrderedCollection(').!
+	self
+		assert: (IDispatch createObject: 'Scripting.FileSystemObject') displayString = 'a FileSystemObject'.
+	self assert: ((IDispatch createObject: 'Scripting.FileSystemObject') drives displayString
+				beginsWith: 'an OrderedCollection(')!
 
 testDNU
 	| fs dict path ts |
@@ -23,7 +25,7 @@ testDNU
 	"2 arg method call"
 	path := fs buildPath: File tempPath name: 'IDispatchTest_testDNU.txt'.
 	"3 arg method call"
-	ts := fs 
+	ts := fs
 				createTextFile: path
 				overwrite: true
 				unicode: false.
@@ -58,7 +60,7 @@ testDNU
 	self should: [dict count: 1 _: 2] raise: HRESULTError.
 	"3 extraneous args to propget"
 	self should: 
-			[dict 
+			[dict
 				count: 1
 				_: 2
 				_: 3]
@@ -74,7 +76,7 @@ testInspectablePropertiesOfDual
 	self assert: (obj publishedAspects includesKey: 'Drives').
 	cDrive := (obj getProperty: #Drives) getProperty: 'Item' item: 'C:'.
 	aspects := cDrive publishedAspects.
-	#('AvailableSpace' 'DriveLetter' 'DriveType' 'FileSystem' 'FreeSpace' 'IsReady' 'Path' 'RootFolder' 'SerialNumber' 'ShareName' 'TotalSize' 'VolumeName') 
+	#('AvailableSpace' 'DriveLetter' 'DriveType' 'FileSystem' 'FreeSpace' 'IsReady' 'Path' 'RootFolder' 'SerialNumber' 'ShareName' 'TotalSize' 'VolumeName')
 		do: [:each | self assert: (aspects includesKey: each)]!
 
 testReadOnlyAspects
@@ -88,8 +90,8 @@ testReadOnlyAspects
 	self assert: prop isNullable.
 	self assert: prop isWriteable.
 	obj free! !
-!IDispatchTest categoriesFor: #testDisplayOn!public!unit tests! !
-!IDispatchTest categoriesFor: #testDNU!public!unit tests! !
-!IDispatchTest categoriesFor: #testInspectablePropertiesOfDual!public!unit tests! !
-!IDispatchTest categoriesFor: #testReadOnlyAspects!public!unit tests! !
+!OS.COM.Tests.IDispatchTest categoriesFor: #testDisplayOn!public!unit tests! !
+!OS.COM.Tests.IDispatchTest categoriesFor: #testDNU!public!unit tests! !
+!OS.COM.Tests.IDispatchTest categoriesFor: #testInspectablePropertiesOfDual!public!unit tests! !
+!OS.COM.Tests.IDispatchTest categoriesFor: #testReadOnlyAspects!public!unit tests! !
 

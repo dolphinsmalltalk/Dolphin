@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'ActiveX Connection Points'.
-package paxVersion: 2;
+package paxVersion: 2.1;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk Active-X Connection Points Package. 
 Copyright (c) Object Arts Ltd, 2000.
@@ -15,11 +15,11 @@ package basicPackageVersion: '6.1'.
 
 
 package setClassNames: #(
-	#{AXEventSink}
-	#{CONNECTDATA}
-	#{IConnectionPoint}
-	#{IConnectionPointContainer}
-	#{IEnumConnectionPoints}
+	#{OS.COM.CONNECTDATA}
+	#{OS.COM.EventSink}
+	#{OS.COM.IConnectionPoint}
+	#{OS.COM.IConnectionPointContainer}
+	#{OS.COM.IEnumConnectionPoints}
 ).
 
 package setPrerequisites: #(
@@ -32,38 +32,38 @@ package!
 
 "Class Definitions"!
 
-AXDispatchImpAbstract subclass: #AXEventSink
+OS.COM.AbstractDispatchImplementation subclass: #'OS.COM.EventSink'
 	instanceVariableNames: 'idMap target connector cookie tiSource flags'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'GenericEventMask' -> 16r2.
 		'NoIndividualEventsMask' -> 16r4.
 		'TraceMask' -> 16r1
 	}!
-IUnknown subclass: #IConnectionPoint
+OS.COM.IUnknown subclass: #'OS.COM.IConnectionPoint'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-IUnknown subclass: #IConnectionPointContainer
+OS.COM.IUnknown subclass: #'OS.COM.IConnectionPointContainer'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-IEnumUnknown subclass: #IEnumConnectionPoints
+OS.COM.IEnumUnknown subclass: #'OS.COM.IEnumConnectionPoints'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-OLEStructure subclass: #CONNECTDATA
+OS.COM.OLEStructure subclass: #'OS.COM.CONNECTDATA'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_dwCookie' -> 16r4.

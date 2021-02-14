@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-IUnknown subclass: #IStorage
+OS.COM.IUnknown subclass: #'OS.COM.IStorage'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'OLEStructuredStorageConstants'
+	imports: #(#{OS.COM.StructuredStorageConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-IStorage guid: (IID fromString: '{0000000b-0000-0000-c000-000000000046}')!
-IStorage comment: 'IStorage is a COMInterface class to wrap the standard COM interface of the same name.
+OS.COM.IStorage guid: (OS.COM.IID fromString: '{0000000b-0000-0000-c000-000000000046}')!
+OS.COM.IStorage comment: 'IStorage is a COMInterface class to wrap the standard COM interface of the same name.
 
 IStorage is an abstraction to represent a structured storage mechanism somewhat similar to a file system which contains both streams (files), represented by IStream interfaces, and sub-storages (sub-directories), represented by further IStorage interfaces. The standard system implementation of IStorage provides a file system within a file (or in fact, and byte device which implements ILockBytes). These are commonly called "compound files".
 
@@ -18,8 +18,8 @@ We do not actually implement this interface in Dolphin, only use it as a means o
 Note that the system compound file implementation can be transaction, unless storages are opened in transacted mode (i.e. STGM_DIRECT). Transacted storages support committing and rolling back changes. The default on freeing (i.e. calling Release()) on a storage is to rollback transacted changes to the last commit point,
 so it is wise to explicitly commit changes using #flush, or by sending #close.
 '!
-!IStorage categoriesForClass!COM-Interfaces! !
-!IStorage methodsFor!
+!OS.COM.IStorage categoriesForClass!COM-Interfaces! !
+!OS.COM.IStorage methodsFor!
 
 close
 	"Implement the File protocol close method by committing any changes and
@@ -147,7 +147,7 @@ directory
 	elements of the receiver.
 	This is the equivalent of the filesystem 'dir' command."
 
-	^OLEEnumerator onIEnum: self iEnumStats!
+	^Enumerable onIEnum: self iEnumStats!
 
 doAutoConvert
 	"Perform automatic conversion of an object to a new class.
@@ -193,7 +193,7 @@ getCLIPFORMATAndUserType
 
 	| cf pszUserType answer |
 	cf := WORD new.
-	pszUserType := COMTaskMemory new.
+	pszUserType := TaskMemory new.
 	OLELibrary default
 		readFmtUserTypeStg: self
 		pcf: cf
@@ -208,7 +208,7 @@ iEnumStats
 
 	| enum |
 	enum := IEnumStruct elementClass: STATSTG.
-	self 
+	self
 		EnumElements: 0
 		reserved2: nil
 		reserved3: 0
@@ -220,7 +220,7 @@ isAutoConvert
 
 	^(OLELibrary default getConvertStg: self) == S_OK!
 
-isAutoConvert: aBoolean 
+isAutoConvert: aBoolean
 	"Mark the receiver for conversion to a different class on next load,
 	depending on the <boolean> argument, aBoolean."
 
@@ -479,55 +479,55 @@ Stat: pstatstg grfStatFlag: grfStatFlag
 
 	<virtual stdcall: hresult 18 STATSTG* dword>
 	^self invalidCall: _failureCode! !
-!IStorage categoriesFor: #close!operations!public! !
-!IStorage categoriesFor: #clsid!accessing!public! !
-!IStorage categoriesFor: #clsid:!accessing!public! !
-!IStorage categoriesFor: #Commit:!**auto generated**!COM Interfaces-OBJIDL.IStorage!primitives!public! !
-!IStorage categoriesFor: #copy:to:!operations!public! !
-!IStorage categoriesFor: #copy:to:withName:!operations!public! !
-!IStorage categoriesFor: #CopyTo:rgiidExclude:snbExclude:pstgDest:!**auto generated**!COM Interfaces-OBJIDL.IStorage!primitives!public! !
-!IStorage categoriesFor: #CreateStorage:grfMode:dwStgFmt:reserved2:ppstg:!**auto generated**!COM Interfaces-OBJIDL.IStorage!primitives!public! !
-!IStorage categoriesFor: #CreateStream:grfMode:reserved1:reserved2:ppstm:!**auto generated**!COM Interfaces-OBJIDL.IStorage!primitives!public! !
-!IStorage categoriesFor: #defaultMode!constants!public! !
-!IStorage categoriesFor: #delete:!operations!public! !
-!IStorage categoriesFor: #DestroyElement:!**auto generated**!COM Interfaces-OBJIDL.IStorage!primitives!public! !
-!IStorage categoriesFor: #directory!accessing!public! !
-!IStorage categoriesFor: #doAutoConvert!operations!public! !
-!IStorage categoriesFor: #EnumElements:reserved2:reserved3:ppenum:!**auto generated**!COM Interfaces-OBJIDL.IStorage!primitives!public! !
-!IStorage categoriesFor: #fastFlush!operations!public! !
-!IStorage categoriesFor: #flush!operations!public! !
-!IStorage categoriesFor: #getCLIPFORMATAndUserType!accessing!public! !
-!IStorage categoriesFor: #iEnumStats!accessing!private! !
-!IStorage categoriesFor: #isAutoConvert!public!testing! !
-!IStorage categoriesFor: #isAutoConvert:!modes!public! !
-!IStorage categoriesFor: #move:to:!operations!public! !
-!IStorage categoriesFor: #move:to:withName:!operations!public! !
-!IStorage categoriesFor: #MoveElementTo:pstgDest:pwcsNewName:grfFlags:!**auto generated**!COM Interfaces-OBJIDL.IStorage!primitives!public! !
-!IStorage categoriesFor: #newStorage:!operations!public! !
-!IStorage categoriesFor: #newStorage:mode:!operations!public! !
-!IStorage categoriesFor: #newStorage:mode:format:!operations!public! !
-!IStorage categoriesFor: #newStream:!operations!public! !
-!IStorage categoriesFor: #newStream:mode:!operations!public! !
-!IStorage categoriesFor: #openStorage:!operations!public! !
-!IStorage categoriesFor: #openStorage:mode:!operations!public! !
-!IStorage categoriesFor: #OpenStorage:pstgPriority:grfMode:snbExclude:reserved:ppstg:!**auto generated**!COM Interfaces-OBJIDL.IStorage!primitives!public! !
-!IStorage categoriesFor: #openStream:!operations!public! !
-!IStorage categoriesFor: #openStream:mode:!operations!public! !
-!IStorage categoriesFor: #OpenStream:reserved1:grfMode:reserved2:ppstm:!**auto generated**!COM Interfaces-OBJIDL.IStorage!primitives!public! !
-!IStorage categoriesFor: #rename:to:!operations!public! !
-!IStorage categoriesFor: #RenameElement:pwcsNewName:!**auto generated**!COM Interfaces-OBJIDL.IStorage!primitives!public! !
-!IStorage categoriesFor: #Revert!**auto generated**!COM Interfaces-OBJIDL.IStorage!primitives!public! !
-!IStorage categoriesFor: #rollback!operations!public! !
-!IStorage categoriesFor: #SetClass:!**auto generated**!COM Interfaces-OBJIDL.IStorage!primitives!public! !
-!IStorage categoriesFor: #setCLIPFORMAT:userType:!accessing!public! !
-!IStorage categoriesFor: #SetElementTimes:pctime:patime:pmtime:!**auto generated**!COM Interfaces-OBJIDL.IStorage!primitives!public! !
-!IStorage categoriesFor: #SetStateBits:grfMask:!**auto generated**!COM Interfaces-OBJIDL.IStorage!primitives!public! !
-!IStorage categoriesFor: #stat!accessing!public! !
-!IStorage categoriesFor: #Stat:grfStatFlag:!**auto generated**!COM Interfaces-OBJIDL.IStorage!primitives!public! !
+!OS.COM.IStorage categoriesFor: #close!operations!public! !
+!OS.COM.IStorage categoriesFor: #clsid!accessing!public! !
+!OS.COM.IStorage categoriesFor: #clsid:!accessing!public! !
+!OS.COM.IStorage categoriesFor: #Commit:!**auto generated**!COM Interfaces-OBJIDL.IStorage!primitives!public! !
+!OS.COM.IStorage categoriesFor: #copy:to:!operations!public! !
+!OS.COM.IStorage categoriesFor: #copy:to:withName:!operations!public! !
+!OS.COM.IStorage categoriesFor: #CopyTo:rgiidExclude:snbExclude:pstgDest:!**auto generated**!COM Interfaces-OBJIDL.IStorage!primitives!public! !
+!OS.COM.IStorage categoriesFor: #CreateStorage:grfMode:dwStgFmt:reserved2:ppstg:!**auto generated**!COM Interfaces-OBJIDL.IStorage!primitives!public! !
+!OS.COM.IStorage categoriesFor: #CreateStream:grfMode:reserved1:reserved2:ppstm:!**auto generated**!COM Interfaces-OBJIDL.IStorage!primitives!public! !
+!OS.COM.IStorage categoriesFor: #defaultMode!constants!public! !
+!OS.COM.IStorage categoriesFor: #delete:!operations!public! !
+!OS.COM.IStorage categoriesFor: #DestroyElement:!**auto generated**!COM Interfaces-OBJIDL.IStorage!primitives!public! !
+!OS.COM.IStorage categoriesFor: #directory!accessing!public! !
+!OS.COM.IStorage categoriesFor: #doAutoConvert!operations!public! !
+!OS.COM.IStorage categoriesFor: #EnumElements:reserved2:reserved3:ppenum:!**auto generated**!COM Interfaces-OBJIDL.IStorage!primitives!public! !
+!OS.COM.IStorage categoriesFor: #fastFlush!operations!public! !
+!OS.COM.IStorage categoriesFor: #flush!operations!public! !
+!OS.COM.IStorage categoriesFor: #getCLIPFORMATAndUserType!accessing!public! !
+!OS.COM.IStorage categoriesFor: #iEnumStats!accessing!private! !
+!OS.COM.IStorage categoriesFor: #isAutoConvert!public!testing! !
+!OS.COM.IStorage categoriesFor: #isAutoConvert:!modes!public! !
+!OS.COM.IStorage categoriesFor: #move:to:!operations!public! !
+!OS.COM.IStorage categoriesFor: #move:to:withName:!operations!public! !
+!OS.COM.IStorage categoriesFor: #MoveElementTo:pstgDest:pwcsNewName:grfFlags:!**auto generated**!COM Interfaces-OBJIDL.IStorage!primitives!public! !
+!OS.COM.IStorage categoriesFor: #newStorage:!operations!public! !
+!OS.COM.IStorage categoriesFor: #newStorage:mode:!operations!public! !
+!OS.COM.IStorage categoriesFor: #newStorage:mode:format:!operations!public! !
+!OS.COM.IStorage categoriesFor: #newStream:!operations!public! !
+!OS.COM.IStorage categoriesFor: #newStream:mode:!operations!public! !
+!OS.COM.IStorage categoriesFor: #openStorage:!operations!public! !
+!OS.COM.IStorage categoriesFor: #openStorage:mode:!operations!public! !
+!OS.COM.IStorage categoriesFor: #OpenStorage:pstgPriority:grfMode:snbExclude:reserved:ppstg:!**auto generated**!COM Interfaces-OBJIDL.IStorage!primitives!public! !
+!OS.COM.IStorage categoriesFor: #openStream:!operations!public! !
+!OS.COM.IStorage categoriesFor: #openStream:mode:!operations!public! !
+!OS.COM.IStorage categoriesFor: #OpenStream:reserved1:grfMode:reserved2:ppstm:!**auto generated**!COM Interfaces-OBJIDL.IStorage!primitives!public! !
+!OS.COM.IStorage categoriesFor: #rename:to:!operations!public! !
+!OS.COM.IStorage categoriesFor: #RenameElement:pwcsNewName:!**auto generated**!COM Interfaces-OBJIDL.IStorage!primitives!public! !
+!OS.COM.IStorage categoriesFor: #Revert!**auto generated**!COM Interfaces-OBJIDL.IStorage!primitives!public! !
+!OS.COM.IStorage categoriesFor: #rollback!operations!public! !
+!OS.COM.IStorage categoriesFor: #SetClass:!**auto generated**!COM Interfaces-OBJIDL.IStorage!primitives!public! !
+!OS.COM.IStorage categoriesFor: #setCLIPFORMAT:userType:!accessing!public! !
+!OS.COM.IStorage categoriesFor: #SetElementTimes:pctime:patime:pmtime:!**auto generated**!COM Interfaces-OBJIDL.IStorage!primitives!public! !
+!OS.COM.IStorage categoriesFor: #SetStateBits:grfMask:!**auto generated**!COM Interfaces-OBJIDL.IStorage!primitives!public! !
+!OS.COM.IStorage categoriesFor: #stat!accessing!public! !
+!OS.COM.IStorage categoriesFor: #Stat:grfStatFlag:!**auto generated**!COM Interfaces-OBJIDL.IStorage!primitives!public! !
 
-IStorage methodProtocol: #IStorage attributes: #(#readOnly) selectors: #(#Commit: #CopyTo:rgiidExclude:snbExclude:pstgDest: #CreateStorage:grfMode:dwStgFmt:reserved2:ppstg: #CreateStream:grfMode:reserved1:reserved2:ppstm: #DestroyElement: #EnumElements:reserved2:reserved3:ppenum: #MoveElementTo:pstgDest:pwcsNewName:grfFlags: #OpenStorage:pstgPriority:grfMode:snbExclude:reserved:ppstg: #OpenStream:reserved1:grfMode:reserved2:ppstm: #RenameElement:pwcsNewName: #Revert #SetClass: #SetElementTimes:pctime:patime:pmtime: #SetStateBits:grfMask: #Stat:grfStatFlag:)!
+OS.COM.IStorage methodProtocol: #IStorage attributes: #(#readOnly) selectors: #(#Commit: #CopyTo:rgiidExclude:snbExclude:pstgDest: #CreateStorage:grfMode:dwStgFmt:reserved2:ppstg: #CreateStream:grfMode:reserved1:reserved2:ppstm: #DestroyElement: #EnumElements:reserved2:reserved3:ppenum: #MoveElementTo:pstgDest:pwcsNewName:grfFlags: #OpenStorage:pstgPriority:grfMode:snbExclude:reserved:ppstg: #OpenStream:reserved1:grfMode:reserved2:ppstm: #RenameElement:pwcsNewName: #Revert #SetClass: #SetElementTimes:pctime:patime:pmtime: #SetStateBits:grfMask: #Stat:grfStatFlag:)!
 
-!IStorage class methodsFor!
+!OS.COM.IStorage class methodsFor!
 
 create: fileName 
 	"Answer an instance of the receiver on a new DocFile with the specified
@@ -558,14 +558,14 @@ createOnILockBytes: anILockBytes
 
 	^self createOnILockBytes: anILockBytes mode: self defaultCreateMode!
 
-createOnILockBytes: anILockBytes mode: grfMode 
+createOnILockBytes: anILockBytes mode: grfMode
 	"Answer a new instance of the receiver set up to create a new storage
 	on the specified ILockBytes, with the <integer> mode flags, grfMode,
 	taken from the STGM enumeration."
 
 	| answer |
 	answer := self newPointer.
-	OLELibrary default 
+	OLELibrary default
 		stgCreateDocfileOnILockBytes: anILockBytes
 		grfMode: grfMode
 		reserved: 0
@@ -667,12 +667,12 @@ onILockBytes: anILockBytes
 
 	^self onILockBytes: anILockBytes mode: ##(STGM_CREATE | STGM_READWRITE | STGM_SHARE_EXCLUSIVE)!
 
-onILockBytes: anILockBytes mode: grfMode 
+onILockBytes: anILockBytes mode: grfMode
 	"Answer a new instance of the receiver on the specified ILockBytes."
 
 	| answer |
 	answer := self newPointer.
-	OLELibrary default 
+	OLELibrary default
 		stgCreateDocfileOnILockBytes: anILockBytes
 		grfMode: grfMode
 		reserved: 0
@@ -725,14 +725,14 @@ openOnILockBytes: anILockBytes
 
 	^self openOnILockBytes: anILockBytes mode: self defaultOpenMode!
 
-openOnILockBytes: anILockBytes mode: grfMode 
+openOnILockBytes: anILockBytes mode: grfMode
 	"Answer a new instance of the receiver on an existing storage whose
 	data is accessible via the specified ILockBytes, with the <integer> mode 
 	flags, grfMode, taken from the STGM enumeration."
 
 	| answer |
 	answer := self newPointer.
-	OLELibrary default 
+	OLELibrary default
 		stgOpenStorageOnILockBytes: anILockBytes
 		pstgPriority: nil
 		grfMode: grfMode
@@ -740,19 +740,19 @@ openOnILockBytes: anILockBytes mode: grfMode
 		reserved: 0
 		ppstgOpen: answer.
 	^answer! !
-!IStorage class categoriesFor: #create:!instance creation!public! !
-!IStorage class categoriesFor: #create:mode:!instance creation!public! !
-!IStorage class categoriesFor: #createOnILockBytes:!instance creation!public! !
-!IStorage class categoriesFor: #createOnILockBytes:mode:!instance creation!public! !
-!IStorage class categoriesFor: #defaultCreateMode!constants!public! !
-!IStorage class categoriesFor: #defaultOpenMode!constants!public! !
-!IStorage class categoriesFor: #defineFunctions!initializing!public! !
-!IStorage class categoriesFor: #initializeModeMaps!initializing!private! !
-!IStorage class categoriesFor: #onILockBytes!instance creation!public! !
-!IStorage class categoriesFor: #onILockBytes:!instance creation!public! !
-!IStorage class categoriesFor: #onILockBytes:mode:!instance creation!public! !
-!IStorage class categoriesFor: #open:!instance creation!public! !
-!IStorage class categoriesFor: #open:mode:!instance creation!public! !
-!IStorage class categoriesFor: #openOnILockBytes:!instance creation!public! !
-!IStorage class categoriesFor: #openOnILockBytes:mode:!instance creation!public! !
+!OS.COM.IStorage class categoriesFor: #create:!instance creation!public! !
+!OS.COM.IStorage class categoriesFor: #create:mode:!instance creation!public! !
+!OS.COM.IStorage class categoriesFor: #createOnILockBytes:!instance creation!public! !
+!OS.COM.IStorage class categoriesFor: #createOnILockBytes:mode:!instance creation!public! !
+!OS.COM.IStorage class categoriesFor: #defaultCreateMode!constants!public! !
+!OS.COM.IStorage class categoriesFor: #defaultOpenMode!constants!public! !
+!OS.COM.IStorage class categoriesFor: #defineFunctions!initializing!public! !
+!OS.COM.IStorage class categoriesFor: #initializeModeMaps!initializing!private! !
+!OS.COM.IStorage class categoriesFor: #onILockBytes!instance creation!public! !
+!OS.COM.IStorage class categoriesFor: #onILockBytes:!instance creation!public! !
+!OS.COM.IStorage class categoriesFor: #onILockBytes:mode:!instance creation!public! !
+!OS.COM.IStorage class categoriesFor: #open:!instance creation!public! !
+!OS.COM.IStorage class categoriesFor: #open:mode:!instance creation!public! !
+!OS.COM.IStorage class categoriesFor: #openOnILockBytes:!instance creation!public! !
+!OS.COM.IStorage class categoriesFor: #openOnILockBytes:mode:!instance creation!public! !
 

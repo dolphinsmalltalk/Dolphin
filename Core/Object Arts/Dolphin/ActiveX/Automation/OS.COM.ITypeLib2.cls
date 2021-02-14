@@ -1,19 +1,19 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ITypeLib subclass: #ITypeLib2
+OS.COM.ITypeLib subclass: #'OS.COM.ITypeLib2'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ITypeLib2 guid: (IID fromString: '{00020411-0000-0000-c000-000000000046}')!
-ITypeLib2 comment: '<ITypeLib2> is a wrapper class for the COM interface ''OAIDL.ITypeLib2'' generated from type information in the ''Ole Automation Type Library'' library. It contains methods to invoke the member functions exposed by that interface.
+OS.COM.ITypeLib2 guid: (OS.COM.IID fromString: '{00020411-0000-0000-c000-000000000046}')!
+OS.COM.ITypeLib2 comment: '<ITypeLib2> is a wrapper class for the COM interface ''OAIDL.ITypeLib2'' generated from type information in the ''Ole Automation Type Library'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface.
 
 WARNING: This comment was automatically generated from the interface''s type information and any changes made here may be overwritten the next time this wrapper class is so generated.'!
-!ITypeLib2 categoriesForClass!COM-Interfaces! !
-!ITypeLib2 methodsFor!
+!OS.COM.ITypeLib2 categoriesForClass!COM-Interfaces! !
+!OS.COM.ITypeLib2 methodsFor!
 
 getAllCustData
 	"Answer the <CUSTDATA> result of invoking the COM Object's GetAllCustData() method."
@@ -21,8 +21,7 @@ getAllCustData
 	| pCustData |
 	pCustData := CUSTDATA new.
 	self GetAllCustData: pCustData.
-	^pCustData value
-!
+	^pCustData value!
 
 GetAllCustData: pCustData
 	"Private - Invoke the GetAllCustData() method of the COM object wrapped by the receiver.
@@ -34,14 +33,13 @@ GetAllCustData: pCustData
 	<virtual stdcall: hresult 17 CUSTDATA*>
 	^self invalidCall: _failureCode!
 
-getCustData: guid 
+getCustData: guid
 	"Answer the <VARIANT> result of invoking the COM Object's GetCustData() method."
 
 	| pVarVal |
 	pVarVal := VARIANT new.
 	self GetCustData: guid pVarVal: pVarVal asVariant.
-	^pVarVal value
-!
+	^pVarVal value!
 
 GetCustData: guid pVarVal: pVarVal
 	"Private - Invoke the GetCustData() method of the COM object wrapped by the receiver.
@@ -103,16 +101,16 @@ GetLibStatistics: pcUniqueNames pcchUniqueNames: pcchUniqueNames
 
 	<virtual stdcall: hresult 15 dword* dword*>
 	^self invalidCall: _failureCode! !
-!ITypeLib2 categoriesFor: #getAllCustData!**auto generated**!public! !
-!ITypeLib2 categoriesFor: #GetAllCustData:!COM Interfaces-OAIDL.ITypeLib2!private! !
-!ITypeLib2 categoriesFor: #getCustData:!**auto generated**!public! !
-!ITypeLib2 categoriesFor: #GetCustData:pVarVal:!COM Interfaces-OAIDL.ITypeLib2!private! !
-!ITypeLib2 categoriesFor: #getDocumentation2:lcid:!**auto generated**!public! !
-!ITypeLib2 categoriesFor: #GetDocumentation2:lcid:pbstrHelpString:pdwHelpStringContext:pbstrHelpStringDll:!COM Interfaces-OAIDL.ITypeLib2!private! !
-!ITypeLib2 categoriesFor: #getLibStatistics!accessing!public! !
-!ITypeLib2 categoriesFor: #GetLibStatistics:pcchUniqueNames:!COM Interfaces-OAIDL.ITypeLib2!private! !
+!OS.COM.ITypeLib2 categoriesFor: #getAllCustData!**auto generated**!public! !
+!OS.COM.ITypeLib2 categoriesFor: #GetAllCustData:!COM Interfaces-OAIDL.ITypeLib2!private! !
+!OS.COM.ITypeLib2 categoriesFor: #getCustData:!**auto generated**!public! !
+!OS.COM.ITypeLib2 categoriesFor: #GetCustData:pVarVal:!COM Interfaces-OAIDL.ITypeLib2!private! !
+!OS.COM.ITypeLib2 categoriesFor: #getDocumentation2:lcid:!**auto generated**!public! !
+!OS.COM.ITypeLib2 categoriesFor: #GetDocumentation2:lcid:pbstrHelpString:pdwHelpStringContext:pbstrHelpStringDll:!COM Interfaces-OAIDL.ITypeLib2!private! !
+!OS.COM.ITypeLib2 categoriesFor: #getLibStatistics!accessing!public! !
+!OS.COM.ITypeLib2 categoriesFor: #GetLibStatistics:pcchUniqueNames:!COM Interfaces-OAIDL.ITypeLib2!private! !
 
-!ITypeLib2 class methodsFor!
+!OS.COM.ITypeLib2 class methodsFor!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'OAIDL.ITypeLib2'
@@ -129,5 +127,5 @@ defineFunctions
 		defineFunction: #GetAllCustData:
 			argumentTypes: 'CUSTDATA*'
 ! !
-!ITypeLib2 class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!OS.COM.ITypeLib2 class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
 

@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'ActiveX Control Hosting'.
-package paxVersion: 2;
+package paxVersion: 2.1;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk ActiveX Visual Control (OCX) Hosting. 
 Copyright (c) Object Arts Ltd, 2000-2006.
@@ -53,29 +53,29 @@ package basicPackageVersion: '6.1'.
 
 
 package setClassNames: #(
-	#{AXControlSite}
-	#{AXValueConvertingControlSite}
-	#{IAxWinAmbientDispatch}
-	#{IAxWinAmbientDispatchEx}
-	#{IDocHostUIHandlerDispatch}
-	#{IDolphinAxHost}
-	#{IMSControl}
-	#{IOleClientSite}
-	#{IOleObject}
-	#{IPropertyNotifySink}
-	#{OLEVERB}
+	#{OS.COM.IOleClientSite}
+	#{OS.COM.IOleObject}
+	#{OS.COM.IPropertyNotifySink}
+	#{OS.COM.OLEVERB}
+	#{UI.AXControlSite}
+	#{UI.AXValueConvertingControlSite}
+	#{UI.IAxWinAmbientDispatch}
+	#{UI.IAxWinAmbientDispatchEx}
+	#{UI.IDocHostUIHandlerDispatch}
+	#{UI.IDolphinAxHost}
+	#{UI.IMSControl}
 ).
 
 package setMethodNames: #(
-	#(#{VMLibrary} #axWinInit)
+	#(#{Kernel.VMLibrary} #axWinInit)
 ).
 
 package setVariableNames: #(
-	#{IAxWinHostWindow}
+	#{Smalltalk.IAxWinHostWindow}
 ).
 
 package setAliasVariableNames: #(
-	#{IAxWinHostWindow}
+	#{Smalltalk.IAxWinHostWindow}
 ).
 
 package setPrerequisites: #(
@@ -99,58 +99,58 @@ package!
 
 "Class Definitions"!
 
-IUnknown subclass: #IDolphinAxHost
+OS.COM.IUnknown subclass: #'UI.IDolphinAxHost'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #(#{OS.COM private})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-IUnknown subclass: #IOleClientSite
+OS.COM.IUnknown subclass: #'OS.COM.IOleClientSite'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-IUnknown subclass: #IOleObject
+OS.COM.IUnknown subclass: #'OS.COM.IOleObject'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-IUnknown subclass: #IPropertyNotifySink
+OS.COM.IUnknown subclass: #'OS.COM.IPropertyNotifySink'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-IDispatch subclass: #IAxWinAmbientDispatch
+OS.COM.IDispatch subclass: #'UI.IAxWinAmbientDispatch'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #(#{OS.COM private})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-IDispatch subclass: #IDocHostUIHandlerDispatch
+OS.COM.IDispatch subclass: #'UI.IDocHostUIHandlerDispatch'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #(#{OS.COM private})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-IDispatch subclass: #IMSControl
+OS.COM.IDispatch subclass: #'UI.IMSControl'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #(#{OS.COM private})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-IAxWinAmbientDispatch subclass: #IAxWinAmbientDispatchEx
+UI.IAxWinAmbientDispatch subclass: #'UI.IAxWinAmbientDispatchEx'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-OLEStructure subclass: #OLEVERB
+OS.COM.OLEStructure subclass: #'OS.COM.OLEVERB'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_fuFlags' -> 16r8.
@@ -158,10 +158,10 @@ OLEStructure subclass: #OLEVERB
 		'_OffsetOf_lpszVerbName' -> 16r4.
 		'_OffsetOf_lVerb' -> 16r0
 	}!
-ControlView subclass: #AXControlSite
+UI.ControlView subclass: #'UI.AXControlSite'
 	instanceVariableNames: 'progId dispControl host sink hostFlags propertyMap ambientDispatch unkControl licenseKey _reserved1 _reserved2'
 	classVariableNames: 'StandardPropNames WM_ATLGETHOST'
-	poolDictionaries: 'AXAutomationConstants AXAutomationErrors'
+	imports: #(#{OS.COM.AutomationConstants private} #{OS.COM.AutomationErrors private} #{OS.COM private})
 	classInstanceVariableNames: ''
 	classConstants: {
 		'AllowContextMenuMask' -> 16r400.
@@ -175,28 +175,28 @@ ControlView subclass: #AXControlSite
 		'UserModeMask' -> 16r40.
 		'WM_FORWARDMSG' -> 16r37F
 	}!
-AXControlSite subclass: #AXValueConvertingControlSite
+UI.AXControlSite subclass: #'UI.AXValueConvertingControlSite'
 	instanceVariableNames: 'typeconverter'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 
 "Variable Aliases"!
 
-IAxWinHostWindow := IDolphinAxHost!
+Smalltalk.IAxWinHostWindow := UI.IDolphinAxHost!
 
 
 "Loose Methods"!
 
-!VMLibrary methodsFor!
+!Kernel.VMLibrary methodsFor!
 
 axWinInit
 	"Initialize the AX host window stuff."
 
 	<stdcall: bool AtlAxWinInit>
 	^self invalidCall: _failureCode! !
-!VMLibrary categoriesFor: #axWinInit!initializing!public! !
+!Kernel.VMLibrary categoriesFor: #axWinInit!initializing!public! !
 
 "End of package definition"!
 

@@ -1,18 +1,18 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-IUnknown subclass: #ICatRegister
+OS.COM.IUnknown subclass: #'OS.COM.ICatRegister'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ICatRegister guid: (IID fromString: '{0002e012-0000-0000-c000-000000000046}')!
-ICatRegister comment: '<ICatRegister> is a wrapper class for the COM interface ''COMCAT.ICatRegister'' generated from type information in the ''OLE Component Categories Library'' library. It contains methods to invoke the member functions exposed by that interface.
+OS.COM.ICatRegister guid: (OS.COM.IID fromString: '{0002e012-0000-0000-c000-000000000046}')!
+OS.COM.ICatRegister comment: '<ICatRegister> is a wrapper class for the COM interface ''COMCAT.ICatRegister'' generated from type information in the ''OLE Component Categories Library'' library. It contains methods to invoke the member functions exposed by that interface.
 
 ICatRegister provides methods for registering and unregistering component category information in the Registry. This includes both the human-readable names of categories and the categories implemented/required by a given component or class.
 '!
-!ICatRegister categoriesForClass!COM Category Manager!COM-Interfaces! !
-!ICatRegister methodsFor!
+!OS.COM.ICatRegister categoriesForClass!COM Category Manager!COM-Interfaces! !
+!OS.COM.ICatRegister methodsFor!
 
 buildCatIdArray: catids
 	"Private - Build an answer an <ExternalArray> of <GUID>s from the 
@@ -28,11 +28,11 @@ registerCategories: categoryInfos
 	| rgCategoryInfo i |
 	rgCategoryInfo := StructureArray length: categoryInfos size elementClass: CATEGORYINFO.
 	i := 1.
-	categoryInfos do: [:cat | rgCategoryInfo at: i put: cat asParameter. i := i + 1].
-	self
-		RegisterCategories: categoryInfos size
-		rgCategoryInfo: rgCategoryInfo
-!
+	categoryInfos do: 
+			[:cat |
+			rgCategoryInfo at: i put: cat asParameter.
+			i := i + 1].
+	self RegisterCategories: categoryInfos size rgCategoryInfo: rgCategoryInfo!
 
 RegisterCategories: cCategories rgCategoryInfo: rgCategoryInfo
 	"Private - Invoke the RegisterCategories() method of the COM object wrapped by the receiver.
@@ -57,14 +57,11 @@ registerCategory: catid description: desc locale: locale
 
 	| cat |
 	cat := CATEGORYINFO new.
-	cat 
+	cat
 		catid: catid;
 		description: desc;
 		locale: locale.
-	self
-		RegisterCategories: 1
-		rgCategoryInfo: cat
-!
+	self RegisterCategories: 1 rgCategoryInfo: cat!
 
 RegisterClassImplCategories: rclsid cCategories: cCategories rgcatid: rgcatid
 	"Private - Invoke the RegisterClassImplCategories() method of the COM object wrapped by the receiver.
@@ -212,28 +209,28 @@ UnRegisterClassReqCategories: rclsid cCategories: cCategories rgcatid: rgcatid
 
 	<virtual stdcall: hresult 9 guid* dword guid*>
 	^self invalidCall: _failureCode! !
-!ICatRegister categoriesFor: #buildCatIdArray:!helpers!private! !
-!ICatRegister categoriesFor: #registerCategories:!operations!public! !
-!ICatRegister categoriesFor: #RegisterCategories:rgCategoryInfo:!**auto generated**!COM Interfaces-ICatRegister!private! !
-!ICatRegister categoriesFor: #registerCategory:description:!operations!public! !
-!ICatRegister categoriesFor: #registerCategory:description:locale:!operations!public! !
-!ICatRegister categoriesFor: #RegisterClassImplCategories:cCategories:rgcatid:!**auto generated**!COM Interfaces-ICatRegister!private! !
-!ICatRegister categoriesFor: #RegisterClassReqCategories:cCategories:rgcatid:!**auto generated**!COM Interfaces-ICatRegister!private! !
-!ICatRegister categoriesFor: #registerCoClass:categories:!operations!public! !
-!ICatRegister categoriesFor: #registerCoClass:category:!operations!public! !
-!ICatRegister categoriesFor: #registerCoClass:requiredCategories:!operations!public! !
-!ICatRegister categoriesFor: #revokeCategories:!operations!public! !
-!ICatRegister categoriesFor: #revokeCategory:!operations!public! !
-!ICatRegister categoriesFor: #revokeCoClass:categories:!operations!public! !
-!ICatRegister categoriesFor: #revokeCoClass:category:!operations!public! !
-!ICatRegister categoriesFor: #revokeCoClass:requiredCategories:!operations!public! !
-!ICatRegister categoriesFor: #UnRegisterCategories:rgcatid:!**auto generated**!COM Interfaces-ICatRegister!private! !
-!ICatRegister categoriesFor: #UnRegisterClassImplCategories:cCategories:rgcatid:!**auto generated**!COM Interfaces-ICatRegister!private! !
-!ICatRegister categoriesFor: #UnRegisterClassReqCategories:cCategories:rgcatid:!**auto generated**!COM Interfaces-ICatRegister!private! !
+!OS.COM.ICatRegister categoriesFor: #buildCatIdArray:!helpers!private! !
+!OS.COM.ICatRegister categoriesFor: #registerCategories:!operations!public! !
+!OS.COM.ICatRegister categoriesFor: #RegisterCategories:rgCategoryInfo:!**auto generated**!COM Interfaces-ICatRegister!private! !
+!OS.COM.ICatRegister categoriesFor: #registerCategory:description:!operations!public! !
+!OS.COM.ICatRegister categoriesFor: #registerCategory:description:locale:!operations!public! !
+!OS.COM.ICatRegister categoriesFor: #RegisterClassImplCategories:cCategories:rgcatid:!**auto generated**!COM Interfaces-ICatRegister!private! !
+!OS.COM.ICatRegister categoriesFor: #RegisterClassReqCategories:cCategories:rgcatid:!**auto generated**!COM Interfaces-ICatRegister!private! !
+!OS.COM.ICatRegister categoriesFor: #registerCoClass:categories:!operations!public! !
+!OS.COM.ICatRegister categoriesFor: #registerCoClass:category:!operations!public! !
+!OS.COM.ICatRegister categoriesFor: #registerCoClass:requiredCategories:!operations!public! !
+!OS.COM.ICatRegister categoriesFor: #revokeCategories:!operations!public! !
+!OS.COM.ICatRegister categoriesFor: #revokeCategory:!operations!public! !
+!OS.COM.ICatRegister categoriesFor: #revokeCoClass:categories:!operations!public! !
+!OS.COM.ICatRegister categoriesFor: #revokeCoClass:category:!operations!public! !
+!OS.COM.ICatRegister categoriesFor: #revokeCoClass:requiredCategories:!operations!public! !
+!OS.COM.ICatRegister categoriesFor: #UnRegisterCategories:rgcatid:!**auto generated**!COM Interfaces-ICatRegister!private! !
+!OS.COM.ICatRegister categoriesFor: #UnRegisterClassImplCategories:cCategories:rgcatid:!**auto generated**!COM Interfaces-ICatRegister!private! !
+!OS.COM.ICatRegister categoriesFor: #UnRegisterClassReqCategories:cCategories:rgcatid:!**auto generated**!COM Interfaces-ICatRegister!private! !
 
-ICatRegister methodProtocol: #ICatRegister attributes: #(#readOnly) selectors: #(#RegisterCategories:rgCategoryInfo: #RegisterClassImplCategories:cCategories:rgcatid: #RegisterClassReqCategories:cCategories:rgcatid: #UnRegisterCategories:rgcatid: #UnRegisterClassImplCategories:cCategories:rgcatid: #UnRegisterClassReqCategories:cCategories:rgcatid:)!
+OS.COM.ICatRegister methodProtocol: #ICatRegister attributes: #(#readOnly) selectors: #(#RegisterCategories:rgCategoryInfo: #RegisterClassImplCategories:cCategories:rgcatid: #RegisterClassReqCategories:cCategories:rgcatid: #UnRegisterCategories:rgcatid: #UnRegisterClassImplCategories:cCategories:rgcatid: #UnRegisterClassReqCategories:cCategories:rgcatid:)!
 
-!ICatRegister class methodsFor!
+!OS.COM.ICatRegister class methodsFor!
 
 current
 	"Answer the singleton instance of the receiver."
@@ -268,25 +265,22 @@ example1
 	reg := ICatRegister current.
 	catid := GUID newUnique.
 	reg registerCategory: catid description: 'Powered by Dolphin'.	"Create the category"
-	clsid := CLSID newUnique.		"A dummy coclass"
+	clsid := CLSID newUnique.	"A dummy coclass"
 	reg registerCoClass: clsid category: catid.	"Register it"
-
 	info := ICatInformation current.
 	info descriptionOfCategory: catid.	"Query back the name of the category"
-	info classesInCategory: catid.		"Enumerate the coclasses - contains only the dummy"
-
+	info classesInCategory: catid.	"Enumerate the coclasses - contains only the dummy"
 	reg revokeCoClass: clsid category: catid.
-	info classesInCategory: catid.		"Enumerate again - should be empty now"
-
-	reg revokeCategory: catid.		"Remove the category"
-	info descriptionOfCategory: catid.	"Expect an error"!
+	info classesInCategory: catid.	"Enumerate again - should be empty now"
+	reg revokeCategory: catid.	"Remove the category"
+	info descriptionOfCategory: catid	"Expect an error"!
 
 new
 	"The receiver is a singleton."
 
 	^self shouldNotImplement! !
-!ICatRegister class categoriesFor: #current!instance creation!public! !
-!ICatRegister class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
-!ICatRegister class categoriesFor: #example1!examples!must strip!public! !
-!ICatRegister class categoriesFor: #new!instance creation!public! !
+!OS.COM.ICatRegister class categoriesFor: #current!instance creation!public! !
+!OS.COM.ICatRegister class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!OS.COM.ICatRegister class categoriesFor: #example1!examples!must strip!public! !
+!OS.COM.ICatRegister class categoriesFor: #new!instance creation!public! !
 

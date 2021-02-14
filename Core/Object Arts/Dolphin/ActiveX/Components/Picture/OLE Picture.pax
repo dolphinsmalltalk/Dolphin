@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'OLE Picture'.
-package paxVersion: 2;
+package paxVersion: 2.1;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk OLE Picture component. 
 Copyright (c) Object Arts Ltd 2000-2002.
@@ -11,16 +11,16 @@ package basicPackageVersion: '6.2'.
 
 
 package setClassNames: #(
-	#{IPicture}
-	#{IPictureDisp}
-	#{OLEPicture}
-	#{PICTDESC}
+	#{OS.COM.IPicture}
+	#{OS.COM.IPictureDisp}
+	#{OS.COM.PICTDESC}
+	#{OS.COM.Picture}
 ).
 
 package setMethodNames: #(
-	#(#{OLEAutLibrary} #oleCreatePictureIndirect:riid:fOwn:ppvObj:)
-	#(#{OLEAutLibrary} #oleLoadPicture:lSize:fRunmode:riid:ppvObj:)
-	#(#{OLEAutLibrary} #oleLoadPicturePath:punkCaller:dwReserved:clrReserved:riid:ppvRet:)
+	#(#{OS.COM.OLEAutLibrary} #oleCreatePictureIndirect:riid:fOwn:ppvObj:)
+	#(#{OS.COM.OLEAutLibrary} #oleLoadPicture:lSize:fRunmode:riid:ppvObj:)
+	#(#{OS.COM.OLEAutLibrary} #oleLoadPicturePath:punkCaller:dwReserved:clrReserved:riid:ppvRet:)
 ).
 
 package setPrerequisites: #(
@@ -36,22 +36,28 @@ package!
 
 "Class Definitions"!
 
-IUnknown subclass: #IPicture
-	instanceVariableNames: ''
+Graphics.Image subclass: #'OS.COM.Picture'
+	instanceVariableNames: 'picture extent hmExtent'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #(#{Graphics})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-IDispatch subclass: #IPictureDisp
+OS.COM.IUnknown subclass: #'OS.COM.IPicture'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-OLEStructure subclass: #PICTDESC
+OS.COM.IDispatch subclass: #'OS.COM.IPictureDisp'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+OS.COM.OLEStructure subclass: #'OS.COM.PICTDESC'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_dw1' -> 16rC.
@@ -60,16 +66,10 @@ OLEStructure subclass: #PICTDESC
 		'_OffsetOf_handle' -> 16r8.
 		'_OffsetOf_picType' -> 16r4
 	}!
-Image subclass: #OLEPicture
-	instanceVariableNames: 'picture extent hmExtent'
-	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''
-	classConstants: {}!
 
 "Loose Methods"!
 
-!OLEAutLibrary methodsFor!
+!OS.COM.OLEAutLibrary methodsFor!
 
 oleCreatePictureIndirect: pDesc riid: riid fOwn: fOwn ppvObj: ppvObj
 	"Create an OLE Picture object wrapping the bitmap/icon/metafile described by
@@ -118,9 +118,9 @@ oleLoadPicturePath: szURLOrPath punkCaller: punk dwReserved: dw clrReserved: clr
 
 	<stdcall: hresult OleLoadPicturePath lpwstr IUnknown* dword sdword guid* void**>
 	^self invalidCall: _failureCode! !
-!OLEAutLibrary categoriesFor: #oleCreatePictureIndirect:riid:fOwn:ppvObj:!OLE Functions-OLE!public! !
-!OLEAutLibrary categoriesFor: #oleLoadPicture:lSize:fRunmode:riid:ppvObj:!OLE Functions-OLE!public! !
-!OLEAutLibrary categoriesFor: #oleLoadPicturePath:punkCaller:dwReserved:clrReserved:riid:ppvRet:!OLE Functions-OLE!public! !
+!OS.COM.OLEAutLibrary categoriesFor: #oleCreatePictureIndirect:riid:fOwn:ppvObj:!OLE Functions-OLE!public! !
+!OS.COM.OLEAutLibrary categoriesFor: #oleLoadPicture:lSize:fRunmode:riid:ppvObj:!OLE Functions-OLE!public! !
+!OS.COM.OLEAutLibrary categoriesFor: #oleLoadPicturePath:punkCaller:dwReserved:clrReserved:riid:ppvRet:!OLE Functions-OLE!public! !
 
 "End of package definition"!
 

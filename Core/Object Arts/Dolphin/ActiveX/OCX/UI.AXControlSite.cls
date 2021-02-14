@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ControlView subclass: #AXControlSite
+UI.ControlView subclass: #'UI.AXControlSite'
 	instanceVariableNames: 'progId dispControl host sink hostFlags propertyMap ambientDispatch unkControl licenseKey _reserved1 _reserved2'
 	classVariableNames: 'StandardPropNames WM_ATLGETHOST'
-	poolDictionaries: 'AXAutomationConstants AXAutomationErrors'
+	imports: #(#{OS.COM.AutomationConstants private} #{OS.COM.AutomationErrors private} #{OS.COM private})
 	classInstanceVariableNames: ''
 	classConstants: {
 		'AllowContextMenuMask' -> 16r400.
@@ -17,8 +17,8 @@ ControlView subclass: #AXControlSite
 		'UserModeMask' -> 16r40.
 		'WM_FORWARDMSG' -> 16r37F
 	}!
-AXControlSite guid: (GUID fromString: '{804d8c3f-38c6-4928-bd58-574c2b24a053}')!
-AXControlSite comment: 'AXControlSite is a <ControlView> which is able to host almost any Active-X control - also referred to as OLE controls, or OCXs. This includes both non-visual controls that require in-place activation (see example1), or to host true visual controls (see AXControlSite class>>example2) including the Microsoft Web Browser control. Events from the control can be enabled, and are triggered off the AXControlSite''s presenter (usually itself).
+UI.AXControlSite guid: (Core.GUID fromString: '{804d8c3f-38c6-4928-bd58-574c2b24a053}')!
+UI.AXControlSite comment: 'AXControlSite is a <ControlView> which is able to host almost any Active-X control - also referred to as OLE controls, or OCXs. This includes both non-visual controls that require in-place activation (see example1), or to host true visual controls (see AXControlSite class>>example2) including the Microsoft Web Browser control. Events from the control can be enabled, and are triggered off the AXControlSite''s presenter (usually itself).
 
 The best way to experiment with AXControlSite is to try it out in the simple Active-X control browser, <AXTestContainer>.
 
@@ -48,20 +48,25 @@ Class Variables:
 	WM_FORWARDMSG	<integer>. Id of Windows message sent to control for pre-translating MSGs. Used by ATL to forward a message to another window for processing WPARAM - DWORD dwUserData - defined by user, LPARAM - LPMSG pMsg - a pointer to the MSG structure, return value - 0 if the message was not processed, nonzero if it was
 	WM_ATLGETHOST	<integer>. Id of Windows message sent to control host to request IAxWinHostWindow.
 '!
-!AXControlSite categoriesForClass!MVP-Views! !
-!AXControlSite methodsFor!
+!UI.AXControlSite categoriesForClass!MVP-Views! !
+!UI.AXControlSite methodsFor!
 
 aboutControl
 	"Pop the controls about box."
 
-	[self controlDispatch invokeId: -552 flags: DISPATCH_METHOD parms: DISPPARAMS zeroArgs retVal: nil]
-		on: HRESULTError do: [:e | | caption |
-			caption := self progId.
-			caption size > 50 ifTrue: [
-				caption := (caption leftString: 50), '...'].
-			MessageBox 
-				warning: 'Sorry, the control refused to show its about box.'
-				caption: caption]!
+	
+	[self controlDispatch
+		invokeId: -552
+		flags: DISPATCH_METHOD
+		parms: DISPPARAMS zeroArgs
+		retVal: nil]
+			on: HRESULTError
+			do: 
+				[:e |
+				| caption |
+				caption := self progId.
+				caption size > 50 ifTrue: [caption := (caption leftString: 50) , '...'].
+				MessageBox warning: 'Sorry, the control refused to show its about box.' caption: caption]!
 
 allowContextMenu
 	"Answer whether the embedded control is permitted to pop a context menu.
@@ -114,8 +119,8 @@ allowWindowless: aBoolean
 ambientDispatch
 	"Answer an <IAxWinAmbientDispatch> which is the dispinterface used to get/set ambient properties on the control site."
 
-	ambientDispatch isNull ifTrue: [
-		ambientDispatch := self hostInterface queryInterface: IAxWinAmbientDispatchEx].
+	ambientDispatch isNull
+		ifTrue: [ambientDispatch := self hostInterface queryInterface: UI.IAxWinAmbientDispatchEx].
 	^ambientDispatch!
 
 backcolor
@@ -138,15 +143,15 @@ binaryStoreControlOnIStream: target
 	"Private - Persist the current control state to the <IStream>, target,
 	using its implementation of <IPersistStream>."
 
-	unkControl isNull ifFalse: [ | ips |
-		ips := unkControl 
-				queryInterface: IPersistStreamInit
-				ifNone: [unkControl queryInterface: IPersistStream].
-		ips isNull
-			ifFalse: [
-				OLELibrary default oleSaveToStream: ips pStm: target.
-				^self]].
-
+	unkControl isNull
+		ifFalse: 
+			[| ips |
+			ips := unkControl queryInterface: IPersistStreamInit
+						ifNone: [unkControl queryInterface: IPersistStream].
+			ips isNull
+				ifFalse: 
+					[OLELibrary default oleSaveToStream: ips pStm: target.
+					^self]].
 	target nextPutCLSID: self clsid!
 
 clientSite
@@ -335,7 +340,7 @@ editControlProperties
 eventSinkClass
 	"Answer the class of <AXEventSink> to use to handle events from the hosted control."
 
-	^AXEventSink!
+	^EventSink!
 
 finalRelease
 	"The last reference to the receiver (as a COM object) has been released.
@@ -443,9 +448,11 @@ hasMessageReflect: aBoolean
 hostInterface
 	"Answer an <IDolphinAxHost> on the control host itself."
 
-	host isNull ifTrue: [ | unkContainer |
-		unkContainer := IUnknown fromAddress: (self sendMessage: self class getHostMsg).
-		host := unkContainer queryInterface: IDolphinAxHost].
+	host isNull
+		ifTrue: 
+			[| unkContainer |
+			unkContainer := IUnknown fromAddress: (self sendMessage: self class getHostMsg).
+			host := unkContainer queryInterface: IDolphinAxHost].
 	^host!
 
 initialize
@@ -652,9 +659,8 @@ queryControlDispatch
 	subinstance, if previously allocated, so that any clients which have previously accessed it do not 
 	have the rug pulled from under their feet."
 
-	dispControl isNil 
-		ifTrue: 
-			[dispControl := (self controlUnknown queryInterface: IDispatch) asImplType]
+	dispControl isNil
+		ifTrue: [dispControl := (self controlUnknown queryInterface: IDispatch) asImplType]
 		ifFalse: 
 			[self assert: [dispControl isNull].
 			dispControl beNullPointer.
@@ -720,7 +726,8 @@ safeCreateControlFromStream: pStream
 	| wszName unkSink control |
 	wszName := self progId.
 	propertyMap := LookupTable new.
-	unkSink := self observePropertyNotifications ifTrue: [self queryInterface: IPropertyNotifySink].
+	unkSink := self observePropertyNotifications
+				ifTrue: [self queryInterface: IPropertyNotifySink].
 	self assert: [unkControl isNull].
 	control := self hostInterface
 				createControlLicEx: wszName
@@ -810,11 +817,7 @@ supportedInterfaces
 	all other control container requirements are satisfied by the ATL host window
 	that we are wrapping."
 
-	^#(
-		##(IPropertyNotifySink)
-	)
-
-!
+	^{IPropertyNotifySink}!
 
 triggeredEvents
 	"Answer the events that the receiver triggers off its presenter."
@@ -835,106 +838,106 @@ usesAmbientColors
 	properties. If it doesn't then there is no point attempting to set them."
 
 	^true! !
-!AXControlSite categoriesFor: #aboutControl!operations!public! !
-!AXControlSite categoriesFor: #allowContextMenu!ambient properties!public!testing! !
-!AXControlSite categoriesFor: #allowContextMenu:!ambient properties!public! !
-!AXControlSite categoriesFor: #allowShowUI!ambient properties!public!testing! !
-!AXControlSite categoriesFor: #allowShowUI:!ambient properties!public! !
-!AXControlSite categoriesFor: #allowWindowless!ambient properties!public!testing! !
-!AXControlSite categoriesFor: #allowWindowless:!ambient properties!public! !
-!AXControlSite categoriesFor: #ambientDispatch!ambient properties!public! !
-!AXControlSite categoriesFor: #backcolor!accessing!ambient properties!public! !
-!AXControlSite categoriesFor: #backcolor:!accessing!ambient properties!public! !
-!AXControlSite categoriesFor: #binaryStoreControlOnIStream:!binary filing!private! !
-!AXControlSite categoriesFor: #clientSite!operations!public! !
-!AXControlSite categoriesFor: #clsid!accessing!public! !
-!AXControlSite categoriesFor: #connectSink!helpers!private! !
-!AXControlSite categoriesFor: #controlBinaryStoreBytes!binary filing!private! !
-!AXControlSite categoriesFor: #controlBinaryStoreBytes:!binary filing!private! !
-!AXControlSite categoriesFor: #controlDispatch!accessing!public! !
-!AXControlSite categoriesFor: #controlOleObject!public! !
-!AXControlSite categoriesFor: #controlUnknown!accessing!public! !
-!AXControlSite categoriesFor: #controlVerbs!public! !
-!AXControlSite categoriesFor: #create!private!realizing/unrealizing! !
-!AXControlSite categoriesFor: #createControl!private!realizing/unrealizing! !
-!AXControlSite categoriesFor: #defaultProgId!constants!public! !
-!AXControlSite categoriesFor: #disconnectSink!helpers!private! !
-!AXControlSite categoriesFor: #docHostDblClickFlags!accessing!ambient properties!public! !
-!AXControlSite categoriesFor: #docHostDblClickFlags:!accessing!ambient properties!public! !
-!AXControlSite categoriesFor: #docHostFlags!accessing!ambient properties!public! !
-!AXControlSite categoriesFor: #docHostFlags:!accessing!ambient properties!public! !
-!AXControlSite categoriesFor: #doPrimaryVerb!public! !
-!AXControlSite categoriesFor: #doVerb:!public! !
-!AXControlSite categoriesFor: #editControlProperties!operations!public! !
-!AXControlSite categoriesFor: #eventSinkClass!constants!public! !
-!AXControlSite categoriesFor: #finalRelease!public!realizing/unrealizing! !
-!AXControlSite categoriesFor: #firesControlEvents!public!testing! !
-!AXControlSite categoriesFor: #firesControlEvents:!accessing!public! !
-!AXControlSite categoriesFor: #firesPropertyNotifications!public!testing! !
-!AXControlSite categoriesFor: #firesPropertyNotifications:!accessing!public! !
-!AXControlSite categoriesFor: #forecolor!accessing!ambient properties!public! !
-!AXControlSite categoriesFor: #forecolor:!accessing!ambient properties!public! !
-!AXControlSite categoriesFor: #free!public!realizing/unrealizing! !
-!AXControlSite categoriesFor: #getPropertyNameForDispid:!helpers!private! !
-!AXControlSite categoriesFor: #hasMessageReflect!ambient properties!public! !
-!AXControlSite categoriesFor: #hasMessageReflect:!ambient properties!public! !
-!AXControlSite categoriesFor: #hostInterface!accessing!public! !
-!AXControlSite categoriesFor: #initialize!initializing!private! !
-!AXControlSite categoriesFor: #isDefault!ambient properties!public! !
-!AXControlSite categoriesFor: #isDefault:!ambient properties!public! !
-!AXControlSite categoriesFor: #isDesignMode!ambient properties!public!testing! !
-!AXControlSite categoriesFor: #isDesignMode:!ambient properties!public! !
-!AXControlSite categoriesFor: #isSinkingEvents!public!testing! !
-!AXControlSite categoriesFor: #isTracingEvents!public!testing! !
-!AXControlSite categoriesFor: #isTracingEvents:!accessing!public! !
-!AXControlSite categoriesFor: #isWindowless!public!testing! !
-!AXControlSite categoriesFor: #licenseKey!accessing!public! !
-!AXControlSite categoriesFor: #licenseKey:!accessing!public! !
-!AXControlSite categoriesFor: #observePropertyNotifications!helpers!private! !
-!AXControlSite categoriesFor: #OnChanged:!event handling!private! !
-!AXControlSite categoriesFor: #onDestroyed!event handling!private! !
-!AXControlSite categoriesFor: #OnRequestEdit:!event handling!private! !
-!AXControlSite categoriesFor: #optionKeyPath!ambient properties!public! !
-!AXControlSite categoriesFor: #optionKeyPath:!ambient properties!public! !
-!AXControlSite categoriesFor: #presenter:!initializing!public! !
-!AXControlSite categoriesFor: #preTranslateKeyboardInput:!dispatching!public! !
-!AXControlSite categoriesFor: #progId!accessing!public! !
-!AXControlSite categoriesFor: #progId:!accessing!public! !
-!AXControlSite categoriesFor: #propertyChanged:!event handling!private! !
-!AXControlSite categoriesFor: #propertyNameFromDispid:!helpers!private! !
-!AXControlSite categoriesFor: #publishedEvents!development!events!public! !
-!AXControlSite categoriesFor: #queryControlDispatch!accessing!private! !
-!AXControlSite categoriesFor: #queryInterface:!accessing-interfaces!public! !
-!AXControlSite categoriesFor: #queryInterface:ifNone:!accessing!accessing-interfaces!public! !
-!AXControlSite categoriesFor: #recreateControl!private!realizing/unrealizing! !
-!AXControlSite categoriesFor: #restoreAmbientProperties!ambient properties!private! !
-!AXControlSite categoriesFor: #safeCreateControlFromStream:!helpers!private! !
-!AXControlSite categoriesFor: #setFont:!accessing!ambient properties!private! !
-!AXControlSite categoriesFor: #showGrabHandles!ambient properties!public!testing! !
-!AXControlSite categoriesFor: #showHatching!ambient properties!public!testing! !
-!AXControlSite categoriesFor: #sink!accessing!public! !
-!AXControlSite categoriesFor: #state!binary filing!private! !
-!AXControlSite categoriesFor: #supportedInterfaces!constants!public! !
-!AXControlSite categoriesFor: #triggeredEvents!events!public! !
-!AXControlSite categoriesFor: #usesAmbientColors!public!testing! !
+!UI.AXControlSite categoriesFor: #aboutControl!operations!public! !
+!UI.AXControlSite categoriesFor: #allowContextMenu!ambient properties!public!testing! !
+!UI.AXControlSite categoriesFor: #allowContextMenu:!ambient properties!public! !
+!UI.AXControlSite categoriesFor: #allowShowUI!ambient properties!public!testing! !
+!UI.AXControlSite categoriesFor: #allowShowUI:!ambient properties!public! !
+!UI.AXControlSite categoriesFor: #allowWindowless!ambient properties!public!testing! !
+!UI.AXControlSite categoriesFor: #allowWindowless:!ambient properties!public! !
+!UI.AXControlSite categoriesFor: #ambientDispatch!ambient properties!public! !
+!UI.AXControlSite categoriesFor: #backcolor!accessing!ambient properties!public! !
+!UI.AXControlSite categoriesFor: #backcolor:!accessing!ambient properties!public! !
+!UI.AXControlSite categoriesFor: #binaryStoreControlOnIStream:!binary filing!private! !
+!UI.AXControlSite categoriesFor: #clientSite!operations!public! !
+!UI.AXControlSite categoriesFor: #clsid!accessing!public! !
+!UI.AXControlSite categoriesFor: #connectSink!helpers!private! !
+!UI.AXControlSite categoriesFor: #controlBinaryStoreBytes!binary filing!private! !
+!UI.AXControlSite categoriesFor: #controlBinaryStoreBytes:!binary filing!private! !
+!UI.AXControlSite categoriesFor: #controlDispatch!accessing!public! !
+!UI.AXControlSite categoriesFor: #controlOleObject!public! !
+!UI.AXControlSite categoriesFor: #controlUnknown!accessing!public! !
+!UI.AXControlSite categoriesFor: #controlVerbs!public! !
+!UI.AXControlSite categoriesFor: #create!private!realizing/unrealizing! !
+!UI.AXControlSite categoriesFor: #createControl!private!realizing/unrealizing! !
+!UI.AXControlSite categoriesFor: #defaultProgId!constants!public! !
+!UI.AXControlSite categoriesFor: #disconnectSink!helpers!private! !
+!UI.AXControlSite categoriesFor: #docHostDblClickFlags!accessing!ambient properties!public! !
+!UI.AXControlSite categoriesFor: #docHostDblClickFlags:!accessing!ambient properties!public! !
+!UI.AXControlSite categoriesFor: #docHostFlags!accessing!ambient properties!public! !
+!UI.AXControlSite categoriesFor: #docHostFlags:!accessing!ambient properties!public! !
+!UI.AXControlSite categoriesFor: #doPrimaryVerb!public! !
+!UI.AXControlSite categoriesFor: #doVerb:!public! !
+!UI.AXControlSite categoriesFor: #editControlProperties!operations!public! !
+!UI.AXControlSite categoriesFor: #eventSinkClass!constants!public! !
+!UI.AXControlSite categoriesFor: #finalRelease!public!realizing/unrealizing! !
+!UI.AXControlSite categoriesFor: #firesControlEvents!public!testing! !
+!UI.AXControlSite categoriesFor: #firesControlEvents:!accessing!public! !
+!UI.AXControlSite categoriesFor: #firesPropertyNotifications!public!testing! !
+!UI.AXControlSite categoriesFor: #firesPropertyNotifications:!accessing!public! !
+!UI.AXControlSite categoriesFor: #forecolor!accessing!ambient properties!public! !
+!UI.AXControlSite categoriesFor: #forecolor:!accessing!ambient properties!public! !
+!UI.AXControlSite categoriesFor: #free!public!realizing/unrealizing! !
+!UI.AXControlSite categoriesFor: #getPropertyNameForDispid:!helpers!private! !
+!UI.AXControlSite categoriesFor: #hasMessageReflect!ambient properties!public! !
+!UI.AXControlSite categoriesFor: #hasMessageReflect:!ambient properties!public! !
+!UI.AXControlSite categoriesFor: #hostInterface!accessing!public! !
+!UI.AXControlSite categoriesFor: #initialize!initializing!private! !
+!UI.AXControlSite categoriesFor: #isDefault!ambient properties!public! !
+!UI.AXControlSite categoriesFor: #isDefault:!ambient properties!public! !
+!UI.AXControlSite categoriesFor: #isDesignMode!ambient properties!public!testing! !
+!UI.AXControlSite categoriesFor: #isDesignMode:!ambient properties!public! !
+!UI.AXControlSite categoriesFor: #isSinkingEvents!public!testing! !
+!UI.AXControlSite categoriesFor: #isTracingEvents!public!testing! !
+!UI.AXControlSite categoriesFor: #isTracingEvents:!accessing!public! !
+!UI.AXControlSite categoriesFor: #isWindowless!public!testing! !
+!UI.AXControlSite categoriesFor: #licenseKey!accessing!public! !
+!UI.AXControlSite categoriesFor: #licenseKey:!accessing!public! !
+!UI.AXControlSite categoriesFor: #observePropertyNotifications!helpers!private! !
+!UI.AXControlSite categoriesFor: #OnChanged:!event handling!private! !
+!UI.AXControlSite categoriesFor: #onDestroyed!event handling!private! !
+!UI.AXControlSite categoriesFor: #OnRequestEdit:!event handling!private! !
+!UI.AXControlSite categoriesFor: #optionKeyPath!ambient properties!public! !
+!UI.AXControlSite categoriesFor: #optionKeyPath:!ambient properties!public! !
+!UI.AXControlSite categoriesFor: #presenter:!initializing!public! !
+!UI.AXControlSite categoriesFor: #preTranslateKeyboardInput:!dispatching!public! !
+!UI.AXControlSite categoriesFor: #progId!accessing!public! !
+!UI.AXControlSite categoriesFor: #progId:!accessing!public! !
+!UI.AXControlSite categoriesFor: #propertyChanged:!event handling!private! !
+!UI.AXControlSite categoriesFor: #propertyNameFromDispid:!helpers!private! !
+!UI.AXControlSite categoriesFor: #publishedEvents!development!events!public! !
+!UI.AXControlSite categoriesFor: #queryControlDispatch!accessing!private! !
+!UI.AXControlSite categoriesFor: #queryInterface:!accessing-interfaces!public! !
+!UI.AXControlSite categoriesFor: #queryInterface:ifNone:!accessing!accessing-interfaces!public! !
+!UI.AXControlSite categoriesFor: #recreateControl!private!realizing/unrealizing! !
+!UI.AXControlSite categoriesFor: #restoreAmbientProperties!ambient properties!private! !
+!UI.AXControlSite categoriesFor: #safeCreateControlFromStream:!helpers!private! !
+!UI.AXControlSite categoriesFor: #setFont:!accessing!ambient properties!private! !
+!UI.AXControlSite categoriesFor: #showGrabHandles!ambient properties!public!testing! !
+!UI.AXControlSite categoriesFor: #showHatching!ambient properties!public!testing! !
+!UI.AXControlSite categoriesFor: #sink!accessing!public! !
+!UI.AXControlSite categoriesFor: #state!binary filing!private! !
+!UI.AXControlSite categoriesFor: #supportedInterfaces!constants!public! !
+!UI.AXControlSite categoriesFor: #triggeredEvents!events!public! !
+!UI.AXControlSite categoriesFor: #usesAmbientColors!public!testing! !
 
-AXControlSite methodProtocol: #COMObject attributes: #(#readOnly) selectors: #(#clsid #finalRelease #queryInterface: #queryInterface:ifNone:)!
-AXControlSite methodProtocol: #IPropertyNotifySink attributes: #(#readOnly) selectors: #(#OnChanged: #OnRequestEdit:)!
+UI.AXControlSite methodProtocol: #COMObject attributes: #(#readOnly) selectors: #(#clsid #finalRelease #queryInterface: #queryInterface:ifNone:)!
+UI.AXControlSite methodProtocol: #IPropertyNotifySink attributes: #(#readOnly) selectors: #(#OnChanged: #OnRequestEdit:)!
 
-!AXControlSite class methodsFor!
+!UI.AXControlSite class methodsFor!
 
-chooseControl: defaultProgId 
+chooseControl: defaultProgId
 	"Prompt the user to choose a control, defaulting to that with the <readableString> progId, defaultProgId, 
 	answering the <readableString> progId of that chosen, or nil if none was chosen (the user pressed
 	cancel)."
 
 	| prompter controlReg choices choicePresenter imageManager |
 	choices := ICatInformation controls.
-	controlReg := defaultProgId isNil 
+	controlReg := defaultProgId isNil
 				ifFalse: 
-					[([CLSID fromString: defaultProgId] on: HRESULTError do: [:e | nil]) 
+					[([CLSID fromString: defaultProgId] on: HRESULTError do: [:e | nil])
 						ifNotNil: [:clsid | clsid notNil ifTrue: [choices detect: [:e | e clsid = clsid] ifNone: []]]].
-	prompter := ChoicePrompter 
+	prompter := ChoicePrompter
 				create: 'Extensible choice prompter'
 				on: controlReg asValue
 				choices: choices
@@ -942,7 +945,7 @@ chooseControl: defaultProgId
 	prompter
 		newCaption: 'Other Active-X control...';
 		newPrompt: 'Please enter a Prog Id:';
-		newBlock: [:aString | COMObjectRegistration clsid: (CLSID fromString: aString)].
+		newBlock: [:aString | ObjectRegistration clsid: (CLSID fromString: aString)].
 	imageManager := ImageManager new.
 	imageManager maskcolor: Color face3d.
 	prompter
@@ -1083,58 +1086,58 @@ initialize
 	"
 
 	IPersistStream.	"Deliberately create a dependency on 'OLE Persistence Base' package"
-
-	self addClassConstant: 'StandardPropNames' value: ((LookupTable new)
-		at: 0"DISPID_VALUE" put: #Value;
-		at: -500"DISPID_AUTOSIZE" put: #Autosize;                 
-		at: -501"DISPID_BACKCOLOR" put: #BackColor;
-		at: -502"DISPID_BACKSTYLE" put: #BackStyle;
-		at: -503"DISPID_BORDERCOLOR" put: #BorderColor;
-		at: -504"DISPID_BORDERSTYLE" put: #BorderStyle;
-		at: -505"DISPID_BORDERWIDTH" put: #BorderWidth;
-		at: -507"DISPID_DRAWMODE" put: #DrawMode;
-		at: -508"DISPID_DRAWSTYLE" put: #DrawStyle;
-		at: -509"DISPID_DRAWWIDTH" put: #DrawWidth;
-		at: -510"DISPID_FILLCOLOR" put: #FillColor;
-		at: -511"DISPID_FILLSTYLE" put: #FillStyle;
-		at: -512"DISPID_FONT" put: #Font;
-		at: -513"DISPID_FORECOLOR" put: #ForeColor;
-		at: -514"DISPID_ENABLED" put: #Enabled;
-		at: -515"DISPID_HWND" put: #Hwnd;
-		at: -516"DISPID_TABSTOP" put: #Tabstop;
-		at: -517"DISPID_TEXT" put: #Text;
-		at: -518"DISPID_CAPTION" put: #Caption;
-		at: -519"DISPID_BORDERVISIBLE" put: #BorderVisible;
-		at: -520"DISPID_APPEARANCE" put: #Appearance;
-		at: -521"DISPID_MOUSEPOINTER" put: #MousePointer;
-		at: -522"DISPID_MOUSEICON" put: #MouseIcon;
-		at: -523"DISPID_PICTURE" put: #Picture;
-		at: -524"DISPID_VALID" put: #Valid;
-		at: -525"DISPID_READYSTATE" put: #ReadyState;
-		at: -526"DISPID_LISTINDEX" put: #ListIndex;
-		at: -527"DISPID_SELECTED" put: #Selected;
-		at: -528"DISPID_LIST" put: #List;
-		at: -529"DISPID_COLUMN" put: #Column;
-		at: -531"DISPID_LISTCOUNT" put: #ListCount;
-		at: -532"DISPID_MULTISELECT" put: #MultiSelect;
-		at: -533"DISPID_MAXLENGTH" put: #MaxLength;
-		at: -534"DISPID_PASSWORDCHAR" put: #PasswordChar;
-		at: -535"DISPID_SCROLLBARS" put: #Scrollbars;
-		at: -536"DISPID_WORDWRAP" put: #Wordwrap;
-		at: -537"DISPID_MULTILINE" put: #Multiline;
-		at: -538"DISPID_NUMBEROFROWS" put: #NumberOfRows;
-		at: -539"DISPID_NUMBEROFCOLUMNS" put: #NumberOfColumns;
-		at: -540"DISPID_DISPLAYSTYLE" put: #DisplayStyle;
-		at: -541"DISPID_GROUPNAME" put: #GroupName;
-		at: -542"DISPID_IMEMODE" put: #IMEMode;
-		at: -543"DISPID_ACCELERATOR" put: #Accelerator;
-		at: -544"DISPID_ENTERKEYBEHAVIOR" put: #EnterKeyBehavior;
-		at: -545"DISPID_TABKEYBEHAVIOR" put: #TabKeyBehavior;
-		at: -546"DISPID_SELTEXT" put: #SelText;
-		at: -547"DISPID_SELSTART" put: #SelStart;
-		at: -548"DISPID_SELLENGTH" put: #SelLength;
-		shrink;
-		yourself)!
+	self addClassConstant: 'StandardPropNames'
+		value: (LookupTable new
+				at: 0 put: #Value;
+				at: -500 put: #Autosize;
+				at: -501 put: #BackColor;
+				at: -502 put: #BackStyle;
+				at: -503 put: #BorderColor;
+				at: -504 put: #BorderStyle;
+				at: -505 put: #BorderWidth;
+				at: -507 put: #DrawMode;
+				at: -508 put: #DrawStyle;
+				at: -509 put: #DrawWidth;
+				at: -510 put: #FillColor;
+				at: -511 put: #FillStyle;
+				at: -512 put: #Font;
+				at: -513 put: #ForeColor;
+				at: -514 put: #Enabled;
+				at: -515 put: #Hwnd;
+				at: -516 put: #Tabstop;
+				at: -517 put: #Text;
+				at: -518 put: #Caption;
+				at: -519 put: #BorderVisible;
+				at: -520 put: #Appearance;
+				at: -521 put: #MousePointer;
+				at: -522 put: #MouseIcon;
+				at: -523 put: #Picture;
+				at: -524 put: #Valid;
+				at: -525 put: #ReadyState;
+				at: -526 put: #ListIndex;
+				at: -527 put: #Selected;
+				at: -528 put: #List;
+				at: -529 put: #Column;
+				at: -531 put: #ListCount;
+				at: -532 put: #MultiSelect;
+				at: -533 put: #MaxLength;
+				at: -534 put: #PasswordChar;
+				at: -535 put: #Scrollbars;
+				at: -536 put: #Wordwrap;
+				at: -537 put: #Multiline;
+				at: -538 put: #NumberOfRows;
+				at: -539 put: #NumberOfColumns;
+				at: -540 put: #DisplayStyle;
+				at: -541 put: #GroupName;
+				at: -542 put: #IMEMode;
+				at: -543 put: #Accelerator;
+				at: -544 put: #EnterKeyBehavior;
+				at: -545 put: #TabKeyBehavior;
+				at: -546 put: #SelText;
+				at: -547 put: #SelStart;
+				at: -548 put: #SelLength;
+				shrink;
+				yourself)	"DISPID_VALUE"	"DISPID_AUTOSIZE"	"DISPID_BACKCOLOR"	"DISPID_BACKSTYLE"	"DISPID_BORDERCOLOR"	"DISPID_BORDERSTYLE"	"DISPID_BORDERWIDTH"	"DISPID_DRAWMODE"	"DISPID_DRAWSTYLE"	"DISPID_DRAWWIDTH"	"DISPID_FILLCOLOR"	"DISPID_FILLSTYLE"	"DISPID_FONT"	"DISPID_FORECOLOR"	"DISPID_ENABLED"	"DISPID_HWND"	"DISPID_TABSTOP"	"DISPID_TEXT"	"DISPID_CAPTION"	"DISPID_BORDERVISIBLE"	"DISPID_APPEARANCE"	"DISPID_MOUSEPOINTER"	"DISPID_MOUSEICON"	"DISPID_PICTURE"	"DISPID_VALID"	"DISPID_READYSTATE"	"DISPID_LISTINDEX"	"DISPID_SELECTED"	"DISPID_LIST"	"DISPID_COLUMN"	"DISPID_LISTCOUNT"	"DISPID_MULTISELECT"	"DISPID_MAXLENGTH"	"DISPID_PASSWORDCHAR"	"DISPID_SCROLLBARS"	"DISPID_WORDWRAP"	"DISPID_MULTILINE"	"DISPID_NUMBEROFROWS"	"DISPID_NUMBEROFCOLUMNS"	"DISPID_DISPLAYSTYLE"	"DISPID_GROUPNAME"	"DISPID_IMEMODE"	"DISPID_ACCELERATOR"	"DISPID_ENTERKEYBEHAVIOR"	"DISPID_TABKEYBEHAVIOR"	"DISPID_SELTEXT"	"DISPID_SELSTART"	"DISPID_SELLENGTH"!
 
 onStartup
 	"The system is starting: Initialize the host window class and register the window message
@@ -1157,12 +1160,12 @@ resource_Default_view
 	DO NOT EDIT OR RECATEGORIZE THIS METHOD.
 
 	If you wish to modify this resource evaluate:
-	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Default_view)
+	Tools.ViewComposer openOn: (UI.ResourceIdentifier class: self selector: #resource_Default_view)
 	"
 
-	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.AXControlSite) 34 25 nil nil 34 2 8 1140916224 1 416 nil 327686 ##(Smalltalk.Color) #default nil 7 nil nil nil 416 nil 537169509 8 'mshtml:
+	^#(#'!!STL' 4 985166 10 ##(UI.STBViewProxy) ##(UI.AXControlSite) 34 25 nil nil 34 2 8 1140916224 1 416 nil 917510 ##(Graphics.Color) #default nil 7 nil nil nil 416 nil 537194055 8 'mshtml:
 <h2>Active-X Control Site</h2>
-<h4>Copyright © Object Arts Ltd</h4>' 590854 ##(Smalltalk.IDispatch) nil nil 1378630 1 ##(Smalltalk.TKindDispatchAnalyzer) 656134 ##(Smalltalk.ITypeInfo2) nil nil 525062 ##(Smalltalk.TYPEATTR) nil 576 608 nil 1378630 2 ##(Smalltalk.AXTypeLibraryAnalyzer) 590342 ##(Smalltalk.ITypeLib2) nil nil 2049 524550 ##(Smalltalk.TLIBATTR) 8 #[197 241 80 48 181 152 207 17 187 130 0 170 0 189 206 11 0 0 0 0 1 0 0 0 4 0 0 0 8 0 0 0] nil nil nil nil 170 176 34 6 8 'PROPVARIANT' #VARIANT 8 'GUID' #GUID 8 'RemotableHandle' #ExternalHandle nil nil nil 1329 nil nil nil nil 918022 ##(Smalltalk.IDolphinAxHost) nil nil 722438 ##(Smalltalk.AXEventSink) 170 176 34 76 8 -2147418100 #onselectstart 8 -2147418099 #onerrorupdate 2073 #oncontrolselect 8 -2147418101 #ondragstart -1217 #onreadystatechange 2047 #oncontextmenu 2099 #onfocusout -1203 #onkeydown 2075 #onselectionchange 8 -2147418098 #ondatasetchanged 2089 #onactivate 8 -2147418097 #ondataavailable -1201 #ondblclick 8 -2147418093 #onpropertychange 8 -2147418105 #onrowenter -1213 #onmouseup 2091 #ondeactivate -1199 #onclick 8 -2147418078 #oncellchange 2053 #onstop -1211 #onmousemove 2067 #onmousewheel 8 -2147418079 #onrowsinserted 8 -2147418102 #onhelp 8 -2147418106 #onrowexit 2055 #onbeforeeditfocus -1209 #onmousedown 2095 #onbeforeactivate 8 -2147418104 #onmouseover 8 -2147418108 #onbeforeupdate 8 -2147418096 #ondatasetcomplete 8 -2147418107 #onafterupdate 8 -2147418103 #onmouseout 2069 #onbeforedeactivate -1207 #onkeyup 2097 #onfocusin 8 -2147418080 #onrowsdelete -1205 #onkeypress 416 1049094 ##(Smalltalk.IConnectionPoint) nil nil 534110177 562 594 nil nil 626 nil 1248 1264 nil 672 nil 262198 ##(Smalltalk.GUID) 16 96 242 80 48 181 152 207 17 187 130 0 170 0 189 206 11 1279 nil nil nil 1 2761 170 176 8 #() 1508358 ##(Smalltalk.IAxWinAmbientDispatchEx) nil nil nil nil 524806 ##(Smalltalk.IUnknown) nil nil nil nil nil 983302 ##(Smalltalk.MessageSequence) 138 144 34 3 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 328198 ##(Smalltalk.Point) 3839 21 1538 531 221 416 1490 #restoreAmbientProperties 1344 416 1490 #controlBinaryStoreBytes: 34 1 8 #[13 0 10 0 60 0 104 0 50 0 62 0 65 0 99 0 116 0 105 0 118 0 101 0 45 0 88 0 32 0 67 0 111 0 110 0 116 0 114 0 111 0 108 0 32 0 83 0 105 0 116 0 101 0 60 0 47 0 104 0 50 0 62 0 13 0 10 0 60 0 104 0 52 0 62 0 67 0 111 0 112 0 121 0 114 0 105 0 103 0 104 0 116 0 32 0 169 0 32 0 79 0 98 0 106 0 101 0 99 0 116 0 32 0 65 0 114 0 116 0 115 0 32 0 76 0 116 0 100 0 60 0 47 0 104 0 52 0 62 0] 416 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 127 7 0 0 10 0 0 0 136 8 0 0 120 0 0 0] 8 #() 1538 193 193 nil 27 )!
+<h4>Copyright © Object Arts Ltd</h4>' 1049606 ##(OS.COM.IDispatch) nil nil 1837382 1 ##(OS.COM.TKindDispatchAnalyzer) 1114886 ##(OS.COM.ITypeInfo2) nil nil 983814 ##(OS.COM.TYPEATTR) nil 576 608 nil 1706310 2 ##(OS.COM.TypeLibraryAnalyzer) 1049094 ##(OS.COM.ITypeLib2) nil nil 2049 983302 ##(OS.COM.TLIBATTR) 8 #[197 241 80 48 181 152 207 17 187 130 0 170 0 189 206 11 0 0 0 0 1 0 0 0 4 0 0 0 8 0 0 0] nil nil nil nil 170 176 34 6 8 'PROPVARIANT' 1508870 ##(Kernel.BindingReference) 8 'VARIANT' 34 1 848 656 1 1442886 2 ##(Kernel.VariableBinding) #VARIANT ##(OS.COM.VARIANT) ##(OS.COM) 1 5537 8 'GUID' 818 8 'GUID' 34 1 944 656 1 882 #GUID ##(Core.GUID) ##(Core) 1 5537 8 'RemotableHandle' 818 8 'ExternalHandle' 34 1 1024 656 1 1638406 ##(Kernel.UndeclaredVariable) 5537 nil nil nil 1329 nil nil nil nil 1114630 ##(UI.IDolphinAxHost) nil nil 1050118 ##(OS.COM.EventSink) 170 176 34 76 8 -2147418100 #onselectstart 8 -2147418099 #onerrorupdate 2073 #oncontrolselect 8 -2147418101 #ondragstart -1217 #onreadystatechange 2047 #oncontextmenu 2099 #onfocusout -1203 #onkeydown 2075 #onselectionchange 8 -2147418098 #ondatasetchanged 2089 #onactivate 8 -2147418097 #ondataavailable -1201 #ondblclick 8 -2147418093 #onpropertychange 8 -2147418105 #onrowenter -1213 #onmouseup 2091 #ondeactivate -1199 #onclick 8 -2147418078 #oncellchange 2053 #onstop -1211 #onmousemove 2067 #onmousewheel 8 -2147418079 #onrowsinserted 8 -2147418102 #onhelp 8 -2147418106 #onrowexit 2055 #onbeforeeditfocus -1209 #onmousedown 2095 #onbeforeactivate 8 -2147418104 #onmouseover 8 -2147418108 #onbeforeupdate 8 -2147418096 #ondatasetcomplete 8 -2147418107 #onafterupdate 8 -2147418103 #onmouseout 2069 #onbeforedeactivate -1207 #onkeyup 2097 #onfocusin 8 -2147418080 #onrowsdelete -1205 #onkeypress 416 1507846 ##(OS.COM.IConnectionPoint) nil nil 57503937 562 594 nil nil 626 nil 1488 1504 nil 672 nil 589878 ##(Core.GUID) 16 96 242 80 48 181 152 207 17 187 130 0 170 0 189 206 11 1279 nil nil nil 1 2761 170 176 8 #() 1704966 ##(UI.IAxWinAmbientDispatchEx) nil nil nil nil 983558 ##(OS.COM.IUnknown) nil nil nil nil nil 1310982 ##(Core.MessageSequence) 138 144 34 3 1049350 ##(Core.MessageSend) #createAt:extent: 34 2 918022 ##(Graphics.Point) 6143 21 1778 531 221 416 1730 #restoreAmbientProperties 1584 416 1730 #controlBinaryStoreBytes: 34 1 8 #[13 0 10 0 60 0 104 0 50 0 62 0 65 0 99 0 116 0 105 0 118 0 101 0 45 0 88 0 32 0 67 0 111 0 110 0 116 0 114 0 111 0 108 0 32 0 83 0 105 0 116 0 101 0 60 0 47 0 104 0 50 0 62 0 13 0 10 0 60 0 104 0 52 0 62 0 67 0 111 0 112 0 121 0 114 0 105 0 103 0 104 0 116 0 32 0 169 0 32 0 79 0 98 0 106 0 101 0 99 0 116 0 32 0 65 0 114 0 116 0 115 0 32 0 76 0 116 0 100 0 60 0 47 0 104 0 52 0 62 0] 416 1179910 ##(OS.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 8 13 0 0 120 0 0 0] 8 #() 1778 193 193 nil 27 )!
 
 stbConvertProxy: aSTBViewProxy
 	"There was a bug in AXControlSite>>state in DPro 4.0 such that the recorded state
@@ -1181,16 +1184,16 @@ winClassName
 	"Private - Answer the name of the Windows window class to use when realizing the receiver."
 
 	^'AtlAxWin71'! !
-!AXControlSite class categoriesFor: #chooseControl:!helpers!public! !
-!AXControlSite class categoriesFor: #example1!examples!public! !
-!AXControlSite class categoriesFor: #example2!examples!public! !
-!AXControlSite class categoriesFor: #example3!examples!public! !
-!AXControlSite class categoriesFor: #getHostMsg!initializing!public! !
-!AXControlSite class categoriesFor: #icon!constants!public! !
-!AXControlSite class categoriesFor: #initialize!initializing!public! !
-!AXControlSite class categoriesFor: #onStartup!events-session!public! !
-!AXControlSite class categoriesFor: #progId:!accessing!instance creation!public! !
-!AXControlSite class categoriesFor: #resource_Default_view!public!resources-views! !
-!AXControlSite class categoriesFor: #stbConvertProxy:!binary filing!public! !
-!AXControlSite class categoriesFor: #winClassName!constants!private! !
+!UI.AXControlSite class categoriesFor: #chooseControl:!helpers!public! !
+!UI.AXControlSite class categoriesFor: #example1!examples!public! !
+!UI.AXControlSite class categoriesFor: #example2!examples!public! !
+!UI.AXControlSite class categoriesFor: #example3!examples!public! !
+!UI.AXControlSite class categoriesFor: #getHostMsg!initializing!public! !
+!UI.AXControlSite class categoriesFor: #icon!constants!public! !
+!UI.AXControlSite class categoriesFor: #initialize!initializing!public! !
+!UI.AXControlSite class categoriesFor: #onStartup!events-session!public! !
+!UI.AXControlSite class categoriesFor: #progId:!accessing!instance creation!public! !
+!UI.AXControlSite class categoriesFor: #resource_Default_view!public!resources-views! !
+!UI.AXControlSite class categoriesFor: #stbConvertProxy:!binary filing!public! !
+!UI.AXControlSite class categoriesFor: #winClassName!constants!private! !
 

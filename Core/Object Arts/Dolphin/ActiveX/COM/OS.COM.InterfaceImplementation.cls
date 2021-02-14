@@ -1,16 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Core.Object subclass: #COMInterfaceImp
+Core.Object subclass: #'OS.COM.InterfaceImplementation'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{Smalltalk.OLEConstants} #{OS.Win32Errors})
+	imports: #(#{OS.Win32Errors} #{OS.COM.OLEConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-COMInterfaceImp guid: (Core.GUID fromString: '{87b4c467-026e-11d3-9fd7-00a0cc3e4a32}')!
-COMInterfaceImp isNonInstantiable: true!
-COMInterfaceImp comment: 'COMInterfaceImp is an abstract class which provides the basic implementation for a COM object such as interface querying (i.e. implements #queryInterface:ifNone: sent by the framework when a previously unencountered interface is requested of the COM object), factory registration, CLSID access, and aggregation.
+OS.COM.InterfaceImplementation guid: (Core.GUID fromString: '{87b4c467-026e-11d3-9fd7-00a0cc3e4a32}')!
+OS.COM.InterfaceImplementation isNonInstantiable: true!
+OS.COM.InterfaceImplementation comment: '`OS.COM.InterfaceImplementation` is an abstract class which provides the basic implementation for a COM object such as interface querying (i.e. implements #queryInterface:ifNone: sent by the framework when a previously unencountered interface is requested of the COM object), factory registration, CLSID access, and aggregation.
 
-Note that, although it is convenient, it is not necessary for a COM server object to be a subclass of this class: any Dolphin object can be a COM object. The COM framework provides a wrapper class, COMObjectStub, which takes care of the boilerplate implementation details, and hence the responsibilities here are few and simple. The only message sent by framework to a COM server object is #queryInterface:ifNone:, and even that is optional. If your class sits more happily elsewhere in the hierarchy then this class is a suitable reference for implementing COM support directly in your class.
+Note that, although it is convenient, it is not necessary for a COM server object to be a subclass of this class: any Dolphin object can be a COM object. The COM framework provides a wrapper class, `OS.COM.ObjectStub`, which takes care of the boilerplate implementation details, and hence the responsibilities here are few and simple. The only message sent by framework to a COM server object is #queryInterface:ifNone:, and even that is optional. If your class sits more happily elsewhere in the hierarchy then this class is a suitable reference for implementing COM support directly in your class.
 
 Subclasses should implement:
 	(class)#clsid		to answer their CLSID
@@ -23,8 +23,8 @@ Subclasses may implement:
 Having added your subclass (and implemented #clsid), you can expose your object to external clients by sending the class the #registerClassFactory method. This need only be done once and a class factory will then be registered with COM each time the image is started. #revokeClassFactories permanently undoes the registration.
 
 Should you wish to aggregate another object in your subclass then see the comment in the #aggregatee instance method for further instructions.'!
-!COMInterfaceImp categoriesForClass!COM-Implementations! !
-!COMInterfaceImp methodsFor!
+!OS.COM.InterfaceImplementation categoriesForClass!COM-Implementations! !
+!OS.COM.InterfaceImplementation methodsFor!
 
 aggregatee
 	"Answer the IUnknown (which must be a non-delegating unknown implementation)
@@ -100,17 +100,17 @@ supportedInterfaces
 	as necessary."
 
 	^self subclassResponsibility! !
-!COMInterfaceImp categoriesFor: #aggregatee!accessing!public! !
-!COMInterfaceImp categoriesFor: #clsid!accessing!public! !
-!COMInterfaceImp categoriesFor: #finalRelease!public!realizing/unrealizing! !
-!COMInterfaceImp categoriesFor: #queryInterface:!accessing-interfaces!public! !
-!COMInterfaceImp categoriesFor: #queryInterface:ifNone:!accessing!accessing-interfaces!public! !
-!COMInterfaceImp categoriesFor: #server!accessing!public! !
-!COMInterfaceImp categoriesFor: #supportedInterfaces!constants!public! !
+!OS.COM.InterfaceImplementation categoriesFor: #aggregatee!accessing!public! !
+!OS.COM.InterfaceImplementation categoriesFor: #clsid!accessing!public! !
+!OS.COM.InterfaceImplementation categoriesFor: #finalRelease!public!realizing/unrealizing! !
+!OS.COM.InterfaceImplementation categoriesFor: #queryInterface:!accessing-interfaces!public! !
+!OS.COM.InterfaceImplementation categoriesFor: #queryInterface:ifNone:!accessing!accessing-interfaces!public! !
+!OS.COM.InterfaceImplementation categoriesFor: #server!accessing!public! !
+!OS.COM.InterfaceImplementation categoriesFor: #supportedInterfaces!constants!public! !
 
-COMInterfaceImp methodProtocol: #COMObject attributes: #(#readOnly) selectors: #(#clsid #finalRelease #queryInterface: #queryInterface:ifNone:)!
+OS.COM.InterfaceImplementation methodProtocol: #COMObject attributes: #(#readOnly) selectors: #(#clsid #finalRelease #queryInterface: #queryInterface:ifNone:)!
 
-!COMInterfaceImp class methodsFor!
+!OS.COM.InterfaceImplementation class methodsFor!
 
 clsid
 	"Answer the CLSID which identifies the receiver's server class in the registry.
@@ -231,12 +231,12 @@ registerAsLocalServer: aRegKey
 registerClassFactory
 	"Register a class factory on the receiver and answer it."
 
-	^COMClassFactory on: self!
+	^ClassFactory on: self!
 
 revokeClassFactories
 	"Revoke any class factories on the receiver."
 
-	^COMClassFactory revokeOn: self!
+	^ClassFactory revokeOn: self!
 
 uninitialize
 	"Private - Uninitialize the receiver as it is about to be removed from the system
@@ -272,7 +272,7 @@ unregister
 unregisterClassFactory
 	"Revoke and unregistery any class factories on the receiver."
 
-	^COMClassFactory unregister: self!
+	^ClassFactory unregister: self!
 
 versionIndependentProgID
 	"Answer the receiver's version independent programmatic ID, typically used from 
@@ -283,20 +283,20 @@ versionIndependentProgID
 	| pid |
 	pid := self progID.
 	^pid copyFrom: 1 to: (pid lastIndexOf: $.)-1! !
-!COMInterfaceImp class categoriesFor: #clsid!constants!public! !
-!COMInterfaceImp class categoriesFor: #inprocSurrogate:!constants!public! !
-!COMInterfaceImp class categoriesFor: #new!instance creation!public! !
-!COMInterfaceImp class categoriesFor: #progDescription!accessing!public! !
-!COMInterfaceImp class categoriesFor: #progID!constants!public! !
-!COMInterfaceImp class categoriesFor: #register!operations!public! !
-!COMInterfaceImp class categoriesFor: #register:!operations!public! !
-!COMInterfaceImp class categoriesFor: #registerAsInProcServer:!helpers!private! !
-!COMInterfaceImp class categoriesFor: #registerAsLocalServer:!helpers!private! !
-!COMInterfaceImp class categoriesFor: #registerClassFactory!operations!public! !
-!COMInterfaceImp class categoriesFor: #revokeClassFactories!operations!public! !
-!COMInterfaceImp class categoriesFor: #uninitialize!class hierarchy-removing!private! !
-!COMInterfaceImp class categoriesFor: #uninitializeBeforeRemove!class hierarchy-removing!private! !
-!COMInterfaceImp class categoriesFor: #unregister!operations!public! !
-!COMInterfaceImp class categoriesFor: #unregisterClassFactory!operations!public! !
-!COMInterfaceImp class categoriesFor: #versionIndependentProgID!constants!public! !
+!OS.COM.InterfaceImplementation class categoriesFor: #clsid!constants!public! !
+!OS.COM.InterfaceImplementation class categoriesFor: #inprocSurrogate:!constants!public! !
+!OS.COM.InterfaceImplementation class categoriesFor: #new!instance creation!public! !
+!OS.COM.InterfaceImplementation class categoriesFor: #progDescription!accessing!public! !
+!OS.COM.InterfaceImplementation class categoriesFor: #progID!constants!public! !
+!OS.COM.InterfaceImplementation class categoriesFor: #register!operations!public! !
+!OS.COM.InterfaceImplementation class categoriesFor: #register:!operations!public! !
+!OS.COM.InterfaceImplementation class categoriesFor: #registerAsInProcServer:!helpers!private! !
+!OS.COM.InterfaceImplementation class categoriesFor: #registerAsLocalServer:!helpers!private! !
+!OS.COM.InterfaceImplementation class categoriesFor: #registerClassFactory!operations!public! !
+!OS.COM.InterfaceImplementation class categoriesFor: #revokeClassFactories!operations!public! !
+!OS.COM.InterfaceImplementation class categoriesFor: #uninitialize!class hierarchy-removing!private! !
+!OS.COM.InterfaceImplementation class categoriesFor: #uninitializeBeforeRemove!class hierarchy-removing!private! !
+!OS.COM.InterfaceImplementation class categoriesFor: #unregister!operations!public! !
+!OS.COM.InterfaceImplementation class categoriesFor: #unregisterClassFactory!operations!public! !
+!OS.COM.InterfaceImplementation class categoriesFor: #versionIndependentProgID!constants!public! !
 

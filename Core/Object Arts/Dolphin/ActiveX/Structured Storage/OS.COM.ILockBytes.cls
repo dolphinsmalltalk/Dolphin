@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-IUnknown subclass: #ILockBytes
+OS.COM.IUnknown subclass: #'OS.COM.ILockBytes'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'OLEStructuredStorageConstants'
+	imports: #(#{OS.COM.StructuredStorageConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ILockBytes guid: (IID fromString: '{0000000a-0000-0000-c000-000000000046}')!
-ILockBytes comment: 'ILockBytes is a COMInterface class to wrap the standard COM interface of the same name.
+OS.COM.ILockBytes guid: (OS.COM.IID fromString: '{0000000a-0000-0000-c000-000000000046}')!
+OS.COM.ILockBytes comment: 'ILockBytes is a COMInterface class to wrap the standard COM interface of the same name.
 
 ILockBytes is an abstraction of a simple byte-oriented block-mode device for reading, writing and locking (though this is typically not implemented) blocks of storage. Typically we will be using an ILockBytes on a device implemented externally to Dolphin, but see the OLELockBytes class for an example of an ILockBytes implemented in Dolphin over a ByteArray. ILockBytes is the "device" interface underlying OLEs Structured Storage mechanism. The relationship between IStorage/IStreams and ILockBytes is somewhat similar to that between PositionableStreams and SequenceableCollections.
 
@@ -19,8 +19,8 @@ Example:
 	i replaceFrom: 1 to: 5 with: #[72 101 108 108 111] startingAt: 1.
 	(i copyFrom: 1 to: 5) asString.
 	i free'!
-!ILockBytes categoriesForClass!COM-Interfaces! !
-!ILockBytes methodsFor!
+!OS.COM.ILockBytes categoriesForClass!COM-Interfaces! !
+!OS.COM.ILockBytes methodsFor!
 
 at: index 
 	"Answer the byte at the specified index in the receiver."
@@ -208,26 +208,26 @@ WriteAt: ulOffset pv: pv cb: cb pcbWritten: pcbWritten
 
 	<virtual stdcall: hresult 5 qword sbyte* dword dword*>
 	^self invalidCall: _failureCode! !
-!ILockBytes categoriesFor: #at:!accessing!public! !
-!ILockBytes categoriesFor: #at:put:!accessing!public! !
-!ILockBytes categoriesFor: #copyFrom:to:!copying!public! !
-!ILockBytes categoriesFor: #flush!operations!public! !
-!ILockBytes categoriesFor: #Flush!**auto generated**!COM Interfaces-OBJIDL.ILockBytes!primitives!public! !
-!ILockBytes categoriesFor: #handle!accessing!public! !
-!ILockBytes categoriesFor: #LockRegion:cb:dwLockType:!**auto generated**!COM Interfaces-OBJIDL.ILockBytes!primitives!public! !
-!ILockBytes categoriesFor: #readAt:bytes:count:!accessing!public! !
-!ILockBytes categoriesFor: #readAt:count:!accessing!public! !
-!ILockBytes categoriesFor: #ReadAt:pv:cb:pcbRead:!**auto generated**!COM Interfaces-OBJIDL.ILockBytes!primitives!public! !
-!ILockBytes categoriesFor: #replaceFrom:to:with:startingAt:!public!replacing! !
-!ILockBytes categoriesFor: #setSize:!accessing!public! !
-!ILockBytes categoriesFor: #SetSize:!**auto generated**!COM Interfaces-OBJIDL.ILockBytes!primitives!public! !
-!ILockBytes categoriesFor: #stat!accessing!public! !
-!ILockBytes categoriesFor: #Stat:grfStatFlag:!**auto generated**!COM Interfaces-OBJIDL.ILockBytes!primitives!public! !
-!ILockBytes categoriesFor: #UnlockRegion:cb:dwLockType:!**auto generated**!COM Interfaces-OBJIDL.ILockBytes!primitives!public! !
-!ILockBytes categoriesFor: #writeAt:bytes:count:!accessing!public! !
-!ILockBytes categoriesFor: #WriteAt:pv:cb:pcbWritten:!**auto generated**!COM Interfaces-OBJIDL.ILockBytes!primitives!public! !
+!OS.COM.ILockBytes categoriesFor: #at:!accessing!public! !
+!OS.COM.ILockBytes categoriesFor: #at:put:!accessing!public! !
+!OS.COM.ILockBytes categoriesFor: #copyFrom:to:!copying!public! !
+!OS.COM.ILockBytes categoriesFor: #flush!operations!public! !
+!OS.COM.ILockBytes categoriesFor: #Flush!**auto generated**!COM Interfaces-OBJIDL.ILockBytes!primitives!public! !
+!OS.COM.ILockBytes categoriesFor: #handle!accessing!public! !
+!OS.COM.ILockBytes categoriesFor: #LockRegion:cb:dwLockType:!**auto generated**!COM Interfaces-OBJIDL.ILockBytes!primitives!public! !
+!OS.COM.ILockBytes categoriesFor: #readAt:bytes:count:!accessing!public! !
+!OS.COM.ILockBytes categoriesFor: #readAt:count:!accessing!public! !
+!OS.COM.ILockBytes categoriesFor: #ReadAt:pv:cb:pcbRead:!**auto generated**!COM Interfaces-OBJIDL.ILockBytes!primitives!public! !
+!OS.COM.ILockBytes categoriesFor: #replaceFrom:to:with:startingAt:!public!replacing! !
+!OS.COM.ILockBytes categoriesFor: #setSize:!accessing!public! !
+!OS.COM.ILockBytes categoriesFor: #SetSize:!**auto generated**!COM Interfaces-OBJIDL.ILockBytes!primitives!public! !
+!OS.COM.ILockBytes categoriesFor: #stat!accessing!public! !
+!OS.COM.ILockBytes categoriesFor: #Stat:grfStatFlag:!**auto generated**!COM Interfaces-OBJIDL.ILockBytes!primitives!public! !
+!OS.COM.ILockBytes categoriesFor: #UnlockRegion:cb:dwLockType:!**auto generated**!COM Interfaces-OBJIDL.ILockBytes!primitives!public! !
+!OS.COM.ILockBytes categoriesFor: #writeAt:bytes:count:!accessing!public! !
+!OS.COM.ILockBytes categoriesFor: #WriteAt:pv:cb:pcbWritten:!**auto generated**!COM Interfaces-OBJIDL.ILockBytes!primitives!public! !
 
-!ILockBytes class methodsFor!
+!OS.COM.ILockBytes class methodsFor!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'OBJIDL.ILockBytes'
@@ -248,17 +248,17 @@ onHGLOBAL
 
 	^self onHGLOBAL: nil!
 
-onHGLOBAL: hGlobal 
+onHGLOBAL: hGlobal
 	"Answer an ILockBytes on a block of global memory identified by the argument, hGlobal."
 
 	| answer |
 	answer := self newPointer.
-	OLELibrary default 
+	OLELibrary default
 		createILockBytesOnHGlobal: hGlobal
 		fDeleteOnRelease: true
 		pplkbyt: answer.
 	^answer! !
-!ILockBytes class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
-!ILockBytes class categoriesFor: #onHGLOBAL!instance creation!public! !
-!ILockBytes class categoriesFor: #onHGLOBAL:!instance creation!public! !
+!OS.COM.ILockBytes class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!OS.COM.ILockBytes class categoriesFor: #onHGLOBAL!instance creation!public! !
+!OS.COM.ILockBytes class categoriesFor: #onHGLOBAL:!instance creation!public! !
 

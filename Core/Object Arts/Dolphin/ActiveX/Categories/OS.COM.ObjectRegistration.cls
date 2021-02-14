@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Object subclass: #COMObjectRegistration
+Core.Object subclass: #'OS.COM.ObjectRegistration'
 	instanceVariableNames: 'clsid name toolboxImage'
 	classVariableNames: ''
-	poolDictionaries: 'Win32Constants'
+	imports: #(#{OS.Win32Constants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-COMObjectRegistration guid: (GUID fromString: '{e3aace46-398d-4cb8-8d6e-d9bf407b92fa}')!
-COMObjectRegistration comment: '<COMObjectRegistration> is a simple class to aggregate the registration information for a COM object such as its CLSID and description. It is used in conjunction with the COM Category Manager interface, <ICatInformation>.
+OS.COM.ObjectRegistration guid: (Core.GUID fromString: '{e3aace46-398d-4cb8-8d6e-d9bf407b92fa}')!
+OS.COM.ObjectRegistration comment: '<COMObjectRegistration> is a simple class to aggregate the registration information for a COM object such as its CLSID and description. It is used in conjunction with the COM Category Manager interface, <ICatInformation>.
 
 Instance Variables:
 	clsid		<CLSID>. Coclass guid.
@@ -15,8 +15,8 @@ Instance Variables:
 	toolboxBmp	<Image>. Iconic representation for the coclass.
 
 '!
-!COMObjectRegistration categoriesForClass!COM Category Manager! !
-!COMObjectRegistration methodsFor!
+!OS.COM.ObjectRegistration categoriesForClass!COM Category Manager! !
+!OS.COM.ObjectRegistration methodsFor!
 
 = comparand
 	"Answer whether the receiver and the <Object>, comparand, 
@@ -36,7 +36,7 @@ clsid: aCLSID
 	clsid := aCLSID!
 
 defaultToolboxBitmap
-	^Bitmap new!
+	^Graphics.Bitmap new!
 
 description
 	"Answer the full type name of the COM component."
@@ -55,7 +55,7 @@ getUserType: form
 	enumeration."
 
 	| mem answer hresult |
-	mem := COMTaskMemory new.
+	mem := TaskMemory new.
 	hresult := OLELibrary default
 				oleRegGetUserType: clsid
 				dwFormOfType: form
@@ -118,27 +118,27 @@ toolboxImage
 								expandEnvironmentStrings: pathAndId first
 								lpDst: path
 								nSize: path size + 1.
-							resLib := ExternalResourceLibrary open: path.
-							toolboxImage := Bitmap fromId: id in: resLib.
+							resLib := ResourceLibrary open: path.
+							toolboxImage := Graphics.Bitmap fromId: id in: resLib.
 							toolboxImage setMap3DColors: true]]].
 	^toolboxImage! !
-!COMObjectRegistration categoriesFor: #=!comparing!public! !
-!COMObjectRegistration categoriesFor: #clsid!accessing!public! !
-!COMObjectRegistration categoriesFor: #clsid:!accessing!public! !
-!COMObjectRegistration categoriesFor: #defaultToolboxBitmap!accessing!public! !
-!COMObjectRegistration categoriesFor: #description!accessing!public! !
-!COMObjectRegistration categoriesFor: #displayOn:!displaying!public! !
-!COMObjectRegistration categoriesFor: #getUserType:!accessing!private! !
-!COMObjectRegistration categoriesFor: #hash!comparing!public! !
-!COMObjectRegistration categoriesFor: #name!accessing!public! !
-!COMObjectRegistration categoriesFor: #printOn:!printing!public! !
-!COMObjectRegistration categoriesFor: #toolboxImage!accessing!public! !
+!OS.COM.ObjectRegistration categoriesFor: #=!comparing!public! !
+!OS.COM.ObjectRegistration categoriesFor: #clsid!accessing!public! !
+!OS.COM.ObjectRegistration categoriesFor: #clsid:!accessing!public! !
+!OS.COM.ObjectRegistration categoriesFor: #defaultToolboxBitmap!accessing!public! !
+!OS.COM.ObjectRegistration categoriesFor: #description!accessing!public! !
+!OS.COM.ObjectRegistration categoriesFor: #displayOn:!displaying!public! !
+!OS.COM.ObjectRegistration categoriesFor: #getUserType:!accessing!private! !
+!OS.COM.ObjectRegistration categoriesFor: #hash!comparing!public! !
+!OS.COM.ObjectRegistration categoriesFor: #name!accessing!public! !
+!OS.COM.ObjectRegistration categoriesFor: #printOn:!printing!public! !
+!OS.COM.ObjectRegistration categoriesFor: #toolboxImage!accessing!public! !
 
-!COMObjectRegistration class methodsFor!
+!OS.COM.ObjectRegistration class methodsFor!
 
 clsid: aCLSID
 	"Answer a new instance of the receiver for the specified class id."
 
 	^self new clsid: aCLSID; yourself! !
-!COMObjectRegistration class categoriesFor: #clsid:!instance creation!public! !
+!OS.COM.ObjectRegistration class categoriesFor: #clsid:!instance creation!public! !
 

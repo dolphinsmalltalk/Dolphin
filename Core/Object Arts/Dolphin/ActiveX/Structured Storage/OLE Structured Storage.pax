@@ -20,17 +20,17 @@ package basicPackageVersion: '6.1'.
 
 
 package setClassNames: #(
-	#{Smalltalk.ILockBytes}
-	#{Smalltalk.IRootStorage}
-	#{Smalltalk.ISequentialStream}
-	#{Smalltalk.IStorage}
-	#{Smalltalk.IStream}
-	#{Smalltalk.OLELockBytes}
-	#{Smalltalk.OLELockBytesAbstract}
-	#{Smalltalk.OLELockFileBytes}
-	#{Smalltalk.OLEStructuredStorageConstants}
-	#{Smalltalk.STATSTG}
-	#{Smalltalk.URLMonLibrary}
+	#{OS.COM.ILockBytes}
+	#{OS.COM.IRootStorage}
+	#{OS.COM.ISequentialStream}
+	#{OS.COM.IStorage}
+	#{OS.COM.IStream}
+	#{OS.COM.LockBytes}
+	#{OS.COM.LockBytesAbstract}
+	#{OS.COM.LockFileBytes}
+	#{OS.COM.STATSTG}
+	#{OS.COM.StructuredStorageConstants}
+	#{OS.COM.URLMonLibrary}
 ).
 
 package setMethodNames: #(
@@ -47,27 +47,27 @@ package setMethodNames: #(
 	#(#{Core.SequencedStream} #Stat:grfStatFlag:)
 	#(#{Core.SequencedStream} #UnlockRegion:cb:dwLockType:)
 	#(#{Core.SequencedStream} #Write:cb:pcbWritten:)
+	#(#{OS.COM.OLELibrary} #createILockBytesOnHGlobal:fDeleteOnRelease:pplkbyt:)
+	#(#{OS.COM.OLELibrary} #createStreamOnHGlobal:fDeleteOnRelease:ppstm:)
+	#(#{OS.COM.OLELibrary} #getConvertStg:)
+	#(#{OS.COM.OLELibrary} #getHGlobalFromILockBytes:phglobal:)
+	#(#{OS.COM.OLELibrary} #getHGlobalFromStream:phglobal:)
+	#(#{OS.COM.OLELibrary} #oleDoAutoConvert:pClsidNew:)
+	#(#{OS.COM.OLELibrary} #readClassStg:pclsid:)
+	#(#{OS.COM.OLELibrary} #readClassStm:pclsid:)
+	#(#{OS.COM.OLELibrary} #readFmtUserTypeStg:pcf:lplpszUserType:)
+	#(#{OS.COM.OLELibrary} #setConvertStg:fConvert:)
+	#(#{OS.COM.OLELibrary} #stgCreateDocfile:grfMode:reserved:ppstgOpen:)
+	#(#{OS.COM.OLELibrary} #stgCreateDocfileOnILockBytes:grfMode:reserved:ppstgOpen:)
+	#(#{OS.COM.OLELibrary} #stgIsStorageFile:)
+	#(#{OS.COM.OLELibrary} #stgIsStorageILockBytes:)
+	#(#{OS.COM.OLELibrary} #stgOpenStorage:pstgPriority:grfMode:snbExclude:reserved:ppstgOpen:)
+	#(#{OS.COM.OLELibrary} #stgOpenStorageOnILockBytes:pstgPriority:grfMode:snbExclude:reserved:ppstgOpen:)
+	#(#{OS.COM.OLELibrary} #stgSetTimes:pctime:patime:pmtime:)
+	#(#{OS.COM.OLELibrary} #writeClassStg:rclsid:)
+	#(#{OS.COM.OLELibrary} #writeClassStm:rclsid:)
+	#(#{OS.COM.OLELibrary} #writeFmtUserTypeStg:cf:lpszUserType:)
 	#(#{OS.ShlwapiLibrary} #shCreateMemStream:cbInit:)
-	#(#{Smalltalk.OLELibrary} #createILockBytesOnHGlobal:fDeleteOnRelease:pplkbyt:)
-	#(#{Smalltalk.OLELibrary} #createStreamOnHGlobal:fDeleteOnRelease:ppstm:)
-	#(#{Smalltalk.OLELibrary} #getConvertStg:)
-	#(#{Smalltalk.OLELibrary} #getHGlobalFromILockBytes:phglobal:)
-	#(#{Smalltalk.OLELibrary} #getHGlobalFromStream:phglobal:)
-	#(#{Smalltalk.OLELibrary} #oleDoAutoConvert:pClsidNew:)
-	#(#{Smalltalk.OLELibrary} #readClassStg:pclsid:)
-	#(#{Smalltalk.OLELibrary} #readClassStm:pclsid:)
-	#(#{Smalltalk.OLELibrary} #readFmtUserTypeStg:pcf:lplpszUserType:)
-	#(#{Smalltalk.OLELibrary} #setConvertStg:fConvert:)
-	#(#{Smalltalk.OLELibrary} #stgCreateDocfile:grfMode:reserved:ppstgOpen:)
-	#(#{Smalltalk.OLELibrary} #stgCreateDocfileOnILockBytes:grfMode:reserved:ppstgOpen:)
-	#(#{Smalltalk.OLELibrary} #stgIsStorageFile:)
-	#(#{Smalltalk.OLELibrary} #stgIsStorageILockBytes:)
-	#(#{Smalltalk.OLELibrary} #stgOpenStorage:pstgPriority:grfMode:snbExclude:reserved:ppstgOpen:)
-	#(#{Smalltalk.OLELibrary} #stgOpenStorageOnILockBytes:pstgPriority:grfMode:snbExclude:reserved:ppstgOpen:)
-	#(#{Smalltalk.OLELibrary} #stgSetTimes:pctime:patime:pmtime:)
-	#(#{Smalltalk.OLELibrary} #writeClassStg:rclsid:)
-	#(#{Smalltalk.OLELibrary} #writeClassStm:rclsid:)
-	#(#{Smalltalk.OLELibrary} #writeFmtUserTypeStg:cf:lpszUserType:)
 ).
 
 package setPrerequisites: #(
@@ -79,7 +79,7 @@ package!
 
 "Class Definitions"!
 
-Kernel.SharedPool subclass: #OLEStructuredStorageConstants
+Kernel.SharedPool subclass: #'OS.COM.StructuredStorageConstants'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -129,64 +129,64 @@ Kernel.SharedPool subclass: #OLEStructuredStorageConstants
 		'STREAM_SEEK_END' -> 16r2.
 		'STREAM_SEEK_SET' -> 16r0
 	}!
-COMInterfaceImp subclass: #OLELockBytesAbstract
+External.DynamicLinkLibrary subclass: #'OS.COM.URLMonLibrary'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{Smalltalk.OLEStructuredStorageConstants})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-OLELockBytesAbstract subclass: #OLELockBytes
+OS.COM.InterfaceImplementation subclass: #'OS.COM.LockBytesAbstract'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #(#{OS.COM.StructuredStorageConstants private})
+	classInstanceVariableNames: ''
+	classConstants: {}!
+OS.COM.LockBytesAbstract subclass: #'OS.COM.LockBytes'
 	instanceVariableNames: 'bytes'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-OLELockBytesAbstract subclass: #OLELockFileBytes
+OS.COM.LockBytesAbstract subclass: #'OS.COM.LockFileBytes'
 	instanceVariableNames: 'file'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-External.DynamicLinkLibrary subclass: #URLMonLibrary
+OS.COM.IUnknown subclass: #'OS.COM.ILockBytes'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #(#{OS.COM.StructuredStorageConstants})
+	classInstanceVariableNames: ''
+	classConstants: {}!
+OS.COM.IUnknown subclass: #'OS.COM.IRootStorage'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-IUnknown subclass: #ILockBytes
+OS.COM.IUnknown subclass: #'OS.COM.ISequentialStream'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{Smalltalk.OLEStructuredStorageConstants})
+	imports: #(#{OS.COM.StructuredStorageConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-IUnknown subclass: #IRootStorage
+OS.COM.IUnknown subclass: #'OS.COM.IStorage'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #()
+	imports: #(#{OS.COM.StructuredStorageConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-IUnknown subclass: #ISequentialStream
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #(#{Smalltalk.OLEStructuredStorageConstants})
-	classInstanceVariableNames: ''
-	classConstants: {}!
-IUnknown subclass: #IStorage
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #(#{Smalltalk.OLEStructuredStorageConstants})
-	classInstanceVariableNames: ''
-	classConstants: {}!
-ISequentialStream subclass: #IStream
+OS.COM.ISequentialStream subclass: #'OS.COM.IStream'
 	instanceVariableNames: 'name mode'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-OLEFinalizableStructure subclass: #STATSTG
+OS.COM.FinalizableStructure subclass: #'OS.COM.STATSTG'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{Smalltalk.OLEStructuredStorageConstants})
+	imports: #(#{OS.COM.StructuredStorageConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_atime' -> 16r20.
@@ -271,7 +271,7 @@ LockRegion: libOffset cb: cb dwLockType: dwLockType
 	optional. The STG_E_INVALIDFUNCTION error is returned if the requested type of locking is
 	not supported."
 
-	^Smalltalk.OLEStructuredStorageConstants.STG_E_INVALIDFUNCTION!
+	^OS.COM.StructuredStorageConstants.STG_E_INVALIDFUNCTION!
 
 queryInterface: anInterfaceClass 
 	"Answer a new interface which supports the specified interface protocol
@@ -279,7 +279,7 @@ queryInterface: anInterfaceClass
 
 	^self queryInterface: anInterfaceClass ifNone: []!
 
-queryInterface: interfaceClass ifNone: exceptionHandler 
+queryInterface: interfaceClass ifNone: exceptionHandler
 	"Answer a new interface which supports the specified interface protocol
 	(usually a class). If the receiver does not support the interface,
 	answer the result of evaluating the niladic valuable, exceptionHandler.
@@ -287,8 +287,8 @@ queryInterface: interfaceClass ifNone: exceptionHandler
 	a subinstance will do, or even a completely different class, as long as the
 	protocol of the requested class is supported.."
 
-	^(Smalltalk.IStream supportsInterface: interfaceClass) 
-		ifTrue: [Smalltalk.IStream on: self]
+	^(OS.COM.IStream supportsInterface: interfaceClass)
+		ifTrue: [OS.COM.IStream on: self]
 		ifFalse: [exceptionHandler value]!
 
 Read: pv cb: cb pcbRead: pcbRead 
@@ -330,18 +330,18 @@ Seek: dlibMove dwOrigin: dwOrigin plibNewPosition: plibNewPosition
 
 	| hr |
 	hr := 
-			[dwOrigin == Smalltalk.OLEStructuredStorageConstants.STREAM_SEEK_SET
+			[dwOrigin == OS.COM.StructuredStorageConstants.STREAM_SEEK_SET
 				ifTrue: [self position: dlibMove]
 				ifFalse: 
-					[dwOrigin == Smalltalk.OLEStructuredStorageConstants.STREAM_SEEK_CUR
+					[dwOrigin == OS.COM.StructuredStorageConstants.STREAM_SEEK_CUR
 						ifTrue: [self skip: dlibMove]
 						ifFalse: 
-							[dwOrigin == Smalltalk.OLEStructuredStorageConstants.STREAM_SEEK_END
+							[dwOrigin == OS.COM.StructuredStorageConstants.STREAM_SEEK_END
 								ifTrue: [self position: self size - dlibMove]
 								ifFalse: [self errorSubscriptBounds: -1]]].
 			OS.Win32Errors.S_OK]
 					on: BoundsError
-					do: [:ex | Smalltalk.OLEStructuredStorageConstants.STG_E_INVALIDFUNCTION].
+					do: [:ex | OS.COM.StructuredStorageConstants.STG_E_INVALIDFUNCTION].
 	plibNewPosition bytes notNull
 		ifTrue: [plibNewPosition value: (hr < 0 ifTrue: [0] ifFalse: [self position])].
 	^hr!
@@ -355,7 +355,7 @@ SetSize: libNewSize
 
 	^OS.Win32Errors.E_NOTIMPL!
 
-Stat: pstatstg grfStatFlag: grfStatFlag 
+Stat: pstatstg grfStatFlag: grfStatFlag
 	"Implement the IStream::Stat() method.
 	
 		HRESULT __stdcall Stat(
@@ -367,7 +367,7 @@ Stat: pstatstg grfStatFlag: grfStatFlag
 
 	pstatstg class init: pstatstg.
 	pstatstg
-		type: ##(Smalltalk.OLEStructuredStorageConstants at: 'STGTY_STREAM');
+		type: ##(OS.COM.StructuredStorageConstants at: 'STGTY_STREAM');
 		cbSize: self size.
 	^OS.Win32Errors.S_OK!
 
@@ -382,7 +382,7 @@ UnlockRegion: libOffset cb: cb dwLockType: dwLockType
 
 	"Implementation Note: Locking is not supported."
 
-	^Smalltalk.OLEStructuredStorageConstants.STG_E_INVALIDFUNCTION!
+	^OS.COM.StructuredStorageConstants.STG_E_INVALIDFUNCTION!
 
 Write: pv cb: cb pcbWritten: pcbWritten 
 	"Implement the IStream::Write() method.
@@ -413,21 +413,7 @@ Write: pv cb: cb pcbWritten: pcbWritten
 !Core.SequencedStream categoriesFor: #UnlockRegion:cb:dwLockType:!public! !
 !Core.SequencedStream categoriesFor: #Write:cb:pcbWritten:!public! !
 
-!OS.ShlwapiLibrary methodsFor!
-
-shCreateMemStream: pInit cbInit: cbInit
-	"Invoke the SHCreateMemStream() function of the module wrapped by the receiver.
-	Helpstring: Creates a memory stream on a copy of a byte buffer
-
-		IStream* __stdcall SHCreateMemStream(
-			[in]BYTE* pInit,
-			[in]unsigned int cbInit);"
-
-	<stdcall: Smalltalk.IStream* 12 byte* dword>
-	^self invalidCall: _failureCode! !
-!OS.ShlwapiLibrary categoriesFor: #shCreateMemStream:cbInit:!**auto generated**!public! !
-
-!OLELibrary methodsFor!
+!OS.COM.OLELibrary methodsFor!
 
 createILockBytesOnHGlobal: hglobal fDeleteOnRelease: fDeleteOnRelease pplkbyt: pplkbyt
 	"Invoke the CreateILockBytesOnHGlobal() function of the module wrapped by the receiver.
@@ -665,26 +651,40 @@ writeFmtUserTypeStg: pStg cf: cf lpszUserType: lpszUserType
 
 	<stdcall: hresult WriteFmtUserTypeStg IStorage* word lpwstr>
 	^self invalidCall: _failureCode! !
-!OLELibrary categoriesFor: #createILockBytesOnHGlobal:fDeleteOnRelease:pplkbyt:!**auto generated**!OLE Functions-Structured Storage!public! !
-!OLELibrary categoriesFor: #createStreamOnHGlobal:fDeleteOnRelease:ppstm:!OLE Functions-Structured Storage!public! !
-!OLELibrary categoriesFor: #getConvertStg:!OLE Functions-Structured Storage!primitives!public! !
-!OLELibrary categoriesFor: #getHGlobalFromILockBytes:phglobal:!**auto generated**!OLE Functions-Structured Storage!public! !
-!OLELibrary categoriesFor: #getHGlobalFromStream:phglobal:!**auto generated**!OLE Functions-Structured Storage!public! !
-!OLELibrary categoriesFor: #oleDoAutoConvert:pClsidNew:!OLE Functions-Structured Storage!primitives!public! !
-!OLELibrary categoriesFor: #readClassStg:pclsid:!**auto generated**!OLE Functions-Structured Storage!public! !
-!OLELibrary categoriesFor: #readClassStm:pclsid:!**auto generated**!OLE Functions-Structured Storage!public! !
-!OLELibrary categoriesFor: #readFmtUserTypeStg:pcf:lplpszUserType:!**auto generated**!OLE Functions-Structured Storage!public! !
-!OLELibrary categoriesFor: #setConvertStg:fConvert:!OLE Functions-Structured Storage!primitives!public! !
-!OLELibrary categoriesFor: #stgCreateDocfile:grfMode:reserved:ppstgOpen:!**auto generated**!OLE Functions-Structured Storage!public! !
-!OLELibrary categoriesFor: #stgCreateDocfileOnILockBytes:grfMode:reserved:ppstgOpen:!**auto generated**!OLE Functions-Structured Storage!public! !
-!OLELibrary categoriesFor: #stgIsStorageFile:!**auto generated**!OLE Functions-Structured Storage!public! !
-!OLELibrary categoriesFor: #stgIsStorageILockBytes:!**auto generated**!OLE Functions-Structured Storage!public! !
-!OLELibrary categoriesFor: #stgOpenStorage:pstgPriority:grfMode:snbExclude:reserved:ppstgOpen:!**auto generated**!OLE Functions-Structured Storage!public! !
-!OLELibrary categoriesFor: #stgOpenStorageOnILockBytes:pstgPriority:grfMode:snbExclude:reserved:ppstgOpen:!**auto generated**!OLE Functions-Structured Storage!public! !
-!OLELibrary categoriesFor: #stgSetTimes:pctime:patime:pmtime:!**auto generated**!OLE Functions-Structured Storage!public! !
-!OLELibrary categoriesFor: #writeClassStg:rclsid:!**auto generated**!OLE Functions-Structured Storage!public! !
-!OLELibrary categoriesFor: #writeClassStm:rclsid:!**auto generated**!OLE Functions-Structured Storage!public! !
-!OLELibrary categoriesFor: #writeFmtUserTypeStg:cf:lpszUserType:!**auto generated**!OLE Functions-Structured Storage!public! !
+!OS.COM.OLELibrary categoriesFor: #createILockBytesOnHGlobal:fDeleteOnRelease:pplkbyt:!**auto generated**!OLE Functions-Structured Storage!public! !
+!OS.COM.OLELibrary categoriesFor: #createStreamOnHGlobal:fDeleteOnRelease:ppstm:!OLE Functions-Structured Storage!public! !
+!OS.COM.OLELibrary categoriesFor: #getConvertStg:!OLE Functions-Structured Storage!primitives!public! !
+!OS.COM.OLELibrary categoriesFor: #getHGlobalFromILockBytes:phglobal:!**auto generated**!OLE Functions-Structured Storage!public! !
+!OS.COM.OLELibrary categoriesFor: #getHGlobalFromStream:phglobal:!**auto generated**!OLE Functions-Structured Storage!public! !
+!OS.COM.OLELibrary categoriesFor: #oleDoAutoConvert:pClsidNew:!OLE Functions-Structured Storage!primitives!public! !
+!OS.COM.OLELibrary categoriesFor: #readClassStg:pclsid:!**auto generated**!OLE Functions-Structured Storage!public! !
+!OS.COM.OLELibrary categoriesFor: #readClassStm:pclsid:!**auto generated**!OLE Functions-Structured Storage!public! !
+!OS.COM.OLELibrary categoriesFor: #readFmtUserTypeStg:pcf:lplpszUserType:!**auto generated**!OLE Functions-Structured Storage!public! !
+!OS.COM.OLELibrary categoriesFor: #setConvertStg:fConvert:!OLE Functions-Structured Storage!primitives!public! !
+!OS.COM.OLELibrary categoriesFor: #stgCreateDocfile:grfMode:reserved:ppstgOpen:!**auto generated**!OLE Functions-Structured Storage!public! !
+!OS.COM.OLELibrary categoriesFor: #stgCreateDocfileOnILockBytes:grfMode:reserved:ppstgOpen:!**auto generated**!OLE Functions-Structured Storage!public! !
+!OS.COM.OLELibrary categoriesFor: #stgIsStorageFile:!**auto generated**!OLE Functions-Structured Storage!public! !
+!OS.COM.OLELibrary categoriesFor: #stgIsStorageILockBytes:!**auto generated**!OLE Functions-Structured Storage!public! !
+!OS.COM.OLELibrary categoriesFor: #stgOpenStorage:pstgPriority:grfMode:snbExclude:reserved:ppstgOpen:!**auto generated**!OLE Functions-Structured Storage!public! !
+!OS.COM.OLELibrary categoriesFor: #stgOpenStorageOnILockBytes:pstgPriority:grfMode:snbExclude:reserved:ppstgOpen:!**auto generated**!OLE Functions-Structured Storage!public! !
+!OS.COM.OLELibrary categoriesFor: #stgSetTimes:pctime:patime:pmtime:!**auto generated**!OLE Functions-Structured Storage!public! !
+!OS.COM.OLELibrary categoriesFor: #writeClassStg:rclsid:!**auto generated**!OLE Functions-Structured Storage!public! !
+!OS.COM.OLELibrary categoriesFor: #writeClassStm:rclsid:!**auto generated**!OLE Functions-Structured Storage!public! !
+!OS.COM.OLELibrary categoriesFor: #writeFmtUserTypeStg:cf:lpszUserType:!**auto generated**!OLE Functions-Structured Storage!public! !
+
+!OS.ShlwapiLibrary methodsFor!
+
+shCreateMemStream: pInit cbInit: cbInit
+	"Invoke the SHCreateMemStream() function of the module wrapped by the receiver.
+	Helpstring: Creates a memory stream on a copy of a byte buffer
+
+		IStream* __stdcall SHCreateMemStream(
+			[in]BYTE* pInit,
+			[in]unsigned int cbInit);"
+
+	<stdcall: COM.IStream* 12 byte* dword>
+	^self invalidCall: _failureCode! !
+!OS.ShlwapiLibrary categoriesFor: #shCreateMemStream:cbInit:!**auto generated**!public! !
 
 "End of package definition"!
 

@@ -1,27 +1,27 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-AXDispatchImpAbstract subclass: #AXEventSink
+OS.COM.AbstractDispatchImplementation subclass: #'OS.COM.EventSink'
 	instanceVariableNames: 'idMap target connector cookie tiSource flags'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'GenericEventMask' -> 16r2.
 		'NoIndividualEventsMask' -> 16r4.
 		'TraceMask' -> 16r1
 	}!
-AXEventSink guid: (GUID fromString: '{d578b1aa-48d3-49f7-a2d0-de3267236311}')!
-AXEventSink comment: 'AXEventSink is a generic connection point callback interface (i.e. event sink) implementation for event dispinterfaces. AXEventSink itself handles incoming events by triggering a same named Smalltalk event, the selector of which is generated from the function description in the type library. The primary keyword of the selector is the name of the event (unchanged in any way), with subsequent keywords the name of the corresponding argument from the library, or just an underscore & colon pair (_:) if the argument is unnamed. In-only arguments are converted from the variant parameter to the equivalent Smalltalk object, whereas output arguments are passed around as a <VARIANT> which can be updated with the value to pass out.
+OS.COM.EventSink guid: (Core.GUID fromString: '{d578b1aa-48d3-49f7-a2d0-de3267236311}')!
+OS.COM.EventSink comment: 'AXEventSink is a generic connection point callback interface (i.e. event sink) implementation for event dispinterfaces. AXEventSink itself handles incoming events by triggering a same named Smalltalk event, the selector of which is generated from the function description in the type library. The primary keyword of the selector is the name of the event (unchanged in any way), with subsequent keywords the name of the corresponding argument from the library, or just an underscore & colon pair (_:) if the argument is unnamed. In-only arguments are converted from the variant parameter to the equivalent Smalltalk object, whereas output arguments are passed around as a <VARIANT> which can be updated with the value to pass out.
 
 AXEventSink implements <IDispatch> (mostly via inheritance), but only the Invoke() method. All other methods are associated with requesting type information about the interface, which it wouldn''t make sense for the caller to do, since it defines the interface and ought therefore to be well aware of its specification.
 
 Note that COM components "source" interfaces are almost always dispinterfaces because VB is restricted to this type, although connection point interface can be vtbl based interfaces too. Some components (e.g. ADO) support both types. Where an event interface is specified as a dual it can be more efficiently implemented using <AXForwardingDualImp>. Where a custom interface is employed, this can simply be implemented against the object which is to receive the events.
 
 '!
-!AXEventSink categoriesForClass!COM-Implementations! !
-!AXEventSink methodsFor!
+!OS.COM.EventSink categoriesForClass!COM-Implementations! !
+!OS.COM.EventSink methodsFor!
 
-connect: anIUnknown 
+connect: anIUnknown
 	"Connect the receiver to appropriate connection point of the the COM object, punkSource.
 	Answer the advise cookie.
 	Note: If the Active-X object has been implemented using ATL, which is common, then one of
@@ -37,7 +37,7 @@ connect: anIUnknown
 	| container |
 	self disconnect.
 	"We must register the IID as a dispinterface as otherwise query back from source will fail"
-	COMInterface registerDispinterface: tiSource iid.
+	Interface registerDispinterface: tiSource iid.
 	container := anIUnknown queryInterface: IConnectionPointContainer.
 	connector := container findConnectionPoint: tiSource.
 	cookie := connector advise: (self queryInterface: IDispatch).
@@ -180,26 +180,26 @@ triggerIndividualEvents: aBoolean
 	its target on receipt of events from the COM event source. By default this is on."
 
 	flags := flags mask: NoIndividualEventsMask set: aBoolean not! !
-!AXEventSink categoriesFor: #connect:!operations!public! !
-!AXEventSink categoriesFor: #disconnect!operations!public! !
-!AXEventSink categoriesFor: #eventNames!events!public! !
-!AXEventSink categoriesFor: #handleEvent:withArguments:!event handling!public! !
-!AXEventSink categoriesFor: #invokeId:flags:withArguments:!operations!public! !
-!AXEventSink categoriesFor: #isTracingEnabled!event handling!private! !
-!AXEventSink categoriesFor: #isTracingEnabled:!event handling!private! !
-!AXEventSink categoriesFor: #printOn:!development!printing!public! !
-!AXEventSink categoriesFor: #publishedEventNames!events!public! !
-!AXEventSink categoriesFor: #setTarget:sourceTypeInfo:!initializing!private! !
-!AXEventSink categoriesFor: #sourceTypeInfo!accessing!public! !
-!AXEventSink categoriesFor: #target!accessing!public! !
-!AXEventSink categoriesFor: #target:!accessing!public! !
-!AXEventSink categoriesFor: #traceEvent:withArguments:!event handling!private! !
-!AXEventSink categoriesFor: #triggerGenericEvent!accessing!public! !
-!AXEventSink categoriesFor: #triggerGenericEvent:!accessing!public! !
-!AXEventSink categoriesFor: #triggerIndividualEvents!accessing!public! !
-!AXEventSink categoriesFor: #triggerIndividualEvents:!accessing!public! !
+!OS.COM.EventSink categoriesFor: #connect:!operations!public! !
+!OS.COM.EventSink categoriesFor: #disconnect!operations!public! !
+!OS.COM.EventSink categoriesFor: #eventNames!events!public! !
+!OS.COM.EventSink categoriesFor: #handleEvent:withArguments:!event handling!public! !
+!OS.COM.EventSink categoriesFor: #invokeId:flags:withArguments:!operations!public! !
+!OS.COM.EventSink categoriesFor: #isTracingEnabled!event handling!private! !
+!OS.COM.EventSink categoriesFor: #isTracingEnabled:!event handling!private! !
+!OS.COM.EventSink categoriesFor: #printOn:!development!printing!public! !
+!OS.COM.EventSink categoriesFor: #publishedEventNames!events!public! !
+!OS.COM.EventSink categoriesFor: #setTarget:sourceTypeInfo:!initializing!private! !
+!OS.COM.EventSink categoriesFor: #sourceTypeInfo!accessing!public! !
+!OS.COM.EventSink categoriesFor: #target!accessing!public! !
+!OS.COM.EventSink categoriesFor: #target:!accessing!public! !
+!OS.COM.EventSink categoriesFor: #traceEvent:withArguments:!event handling!private! !
+!OS.COM.EventSink categoriesFor: #triggerGenericEvent!accessing!public! !
+!OS.COM.EventSink categoriesFor: #triggerGenericEvent:!accessing!public! !
+!OS.COM.EventSink categoriesFor: #triggerIndividualEvents!accessing!public! !
+!OS.COM.EventSink categoriesFor: #triggerIndividualEvents:!accessing!public! !
 
-!AXEventSink class methodsFor!
+!OS.COM.EventSink class methodsFor!
 
 new
 	"Instances of the receiver must be instantiated with #target:sourceTypeInfo:"
@@ -215,6 +215,6 @@ target: anObject sourceTypeInfo: anAXInterfaceTypeAnalyzer
 	to which this sink is connected invokes the methods."
 
 	^super new setTarget: anObject sourceTypeInfo: anAXInterfaceTypeAnalyzer! !
-!AXEventSink class categoriesFor: #new!instance creation!public! !
-!AXEventSink class categoriesFor: #target:sourceTypeInfo:!instance creation!public! !
+!OS.COM.EventSink class categoriesFor: #new!instance creation!public! !
+!OS.COM.EventSink class categoriesFor: #target:sourceTypeInfo:!instance creation!public! !
 

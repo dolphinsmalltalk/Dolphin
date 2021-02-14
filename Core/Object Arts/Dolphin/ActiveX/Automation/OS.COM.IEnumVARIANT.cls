@@ -1,19 +1,19 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-IEnumXXXX subclass: #IEnumVARIANT
+OS.COM.IEnumXXXX subclass: #'OS.COM.IEnumVARIANT'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-IEnumVARIANT guid: (IID fromString: '{00020404-0000-0000-c000-000000000046}')!
-IEnumVARIANT comment: '<IEnumVARIANT> is a wrapper class for the custom interface ''stdole.IEnumVARIANT'' from type information in the ''OLE Automation'' library. It contains methods to invoke the member functions exposed by that interface.
+OS.COM.IEnumVARIANT guid: (OS.COM.IID fromString: '{00020404-0000-0000-c000-000000000046}')!
+OS.COM.IEnumVARIANT comment: '<IEnumVARIANT> is a wrapper class for the custom interface ''stdole.IEnumVARIANT'' from type information in the ''OLE Automation'' library. It contains methods to invoke the member functions exposed by that interface.
 
 Implementation Notes: We have to be careful here to manage the lifetime of the VARIANTs correctly. This necessitates overrides of a couple of superclass methods in order to make sure that the objects/collections answered have a lifetime independent of the buffer originally used to retrieve them with the interface Next() function. It is also convenient to immediately convert the variants to their underlying value.
 
 '!
-!IEnumVARIANT categoriesForClass!COM-Interfaces! !
-!IEnumVARIANT methodsFor!
+!OS.COM.IEnumVARIANT categoriesForClass!COM-Interfaces! !
+!OS.COM.IEnumVARIANT methodsFor!
 
 nextAvailable
 	"Answer the next element from the receiver, or nil if there are
@@ -44,10 +44,10 @@ nextAvailable: anInteger
 	answer := elements collect: [:e | e value].
 	elements free.
 	^answer! !
-!IEnumVARIANT categoriesFor: #nextAvailable!accessing!public! !
-!IEnumVARIANT categoriesFor: #nextAvailable:!accessing!public! !
+!OS.COM.IEnumVARIANT categoriesFor: #nextAvailable!accessing!public! !
+!OS.COM.IEnumVARIANT categoriesFor: #nextAvailable:!accessing!public! !
 
-!IEnumVARIANT class methodsFor!
+!OS.COM.IEnumVARIANT class methodsFor!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'stdole.IEnumVARIANT'
@@ -60,6 +60,6 @@ elementClass
 	"Answer the class of element enumerated by the receiver."
 
 	^VARIANT! !
-!IEnumVARIANT class categoriesFor: #defineFunctions!initializing!public! !
-!IEnumVARIANT class categoriesFor: #elementClass!constants!public! !
+!OS.COM.IEnumVARIANT class categoriesFor: #defineFunctions!initializing!public! !
+!OS.COM.IEnumVARIANT class categoriesFor: #elementClass!constants!public! !
 

@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-OLEFinalizableStructure subclass: #EXCEPINFO
+OS.COM.FinalizableStructure subclass: #'OS.COM.EXCEPINFO'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'Win32Errors'
+	imports: #(#{OS.Win32Errors})
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_dwHelpContext' -> 16r10.
@@ -16,10 +16,12 @@ OLEFinalizableStructure subclass: #EXCEPINFO
 		'_OffsetOf_wCode' -> 16r0.
 		'_OffsetOf_wReserved' -> 16r2
 	}!
-EXCEPINFO guid: (GUID fromString: '{c06f3b63-0868-11d3-93af-00a024ca708a}')!
-EXCEPINFO comment: 'EXCEPINFO is the class of <ExternalStructure>s representing the OLE Automation structure of the same name. EXCEPINFO is used to return exception details from IDispatch::Invoke().'!
-!EXCEPINFO categoriesForClass!External-Data-Structured-COM! !
-!EXCEPINFO methodsFor!
+OS.COM.EXCEPINFO guid: (Core.GUID fromString: '{c06f3b63-0868-11d3-93af-00a024ca708a}')!
+OS.COM.EXCEPINFO comment: '`OS.COM.EXCEPINFO` is the class of `External.Structure`s representing the OLE Automation EXCEPINFO structure. 
+
+EXCEPINFO is used to return exception details from IDispatch::Invoke().'!
+!OS.COM.EXCEPINFO categoriesForClass!External-Data-Structured-COM! !
+!OS.COM.EXCEPINFO methodsFor!
 
 _deepCopy: copiesDictionary 
 	"Private - Answer a 'deep copy' of the receiver, cloning only those parts not already included
@@ -206,39 +208,39 @@ wstrSource
 	"Answer the receiver's bstrSource field as a <Utf16String>."
 
 	^Utf16String fromAddress: self pwszSource! !
-!EXCEPINFO categoriesFor: #_deepCopy:!copying!private! !
-!EXCEPINFO categoriesFor: #bstrDescription!accessing!public! !
-!EXCEPINFO categoriesFor: #bstrDescription:!accessing!public! !
-!EXCEPINFO categoriesFor: #bstrHelpFile!accessing!public! !
-!EXCEPINFO categoriesFor: #bstrHelpFile:!accessing!public! !
-!EXCEPINFO categoriesFor: #bstrSource!accessing!public! !
-!EXCEPINFO categoriesFor: #bstrSource:!accessing!public! !
-!EXCEPINFO categoriesFor: #copy!copying!public! !
-!EXCEPINFO categoriesFor: #description!accessing!public! !
-!EXCEPINFO categoriesFor: #description:!accessing!public! !
-!EXCEPINFO categoriesFor: #dwHelpContext!**compiled accessors**!public! !
-!EXCEPINFO categoriesFor: #dwHelpContext:!**compiled accessors**!public! !
-!EXCEPINFO categoriesFor: #helpFile!accessing!public! !
-!EXCEPINFO categoriesFor: #helpFile:!accessing!public! !
-!EXCEPINFO categoriesFor: #hresult!accessing!public! !
-!EXCEPINFO categoriesFor: #pfnDeferredFillIn!**compiled accessors**!public! !
-!EXCEPINFO categoriesFor: #pwszDescription!**compiled accessors**!public! !
-!EXCEPINFO categoriesFor: #pwszDescription:!**compiled accessors**!public! !
-!EXCEPINFO categoriesFor: #pwszHelpFile!**compiled accessors**!public! !
-!EXCEPINFO categoriesFor: #pwszHelpFile:!**compiled accessors**!public! !
-!EXCEPINFO categoriesFor: #pwszSource!**compiled accessors**!public! !
-!EXCEPINFO categoriesFor: #pwszSource:!**compiled accessors**!public! !
-!EXCEPINFO categoriesFor: #scode!**compiled accessors**!public! !
-!EXCEPINFO categoriesFor: #scode:!**compiled accessors**!public! !
-!EXCEPINFO categoriesFor: #source!accessing!public! !
-!EXCEPINFO categoriesFor: #source:!accessing!public! !
-!EXCEPINFO categoriesFor: #wCode!**compiled accessors**!public! !
-!EXCEPINFO categoriesFor: #wCode:!**compiled accessors**!public! !
-!EXCEPINFO categoriesFor: #wstrDescription!accessing!public! !
-!EXCEPINFO categoriesFor: #wstrHelpFile!accessing!public! !
-!EXCEPINFO categoriesFor: #wstrSource!accessing!public! !
+!OS.COM.EXCEPINFO categoriesFor: #_deepCopy:!copying!private! !
+!OS.COM.EXCEPINFO categoriesFor: #bstrDescription!accessing!public! !
+!OS.COM.EXCEPINFO categoriesFor: #bstrDescription:!accessing!public! !
+!OS.COM.EXCEPINFO categoriesFor: #bstrHelpFile!accessing!public! !
+!OS.COM.EXCEPINFO categoriesFor: #bstrHelpFile:!accessing!public! !
+!OS.COM.EXCEPINFO categoriesFor: #bstrSource!accessing!public! !
+!OS.COM.EXCEPINFO categoriesFor: #bstrSource:!accessing!public! !
+!OS.COM.EXCEPINFO categoriesFor: #copy!copying!public! !
+!OS.COM.EXCEPINFO categoriesFor: #description!accessing!public! !
+!OS.COM.EXCEPINFO categoriesFor: #description:!accessing!public! !
+!OS.COM.EXCEPINFO categoriesFor: #dwHelpContext!**compiled accessors**!public! !
+!OS.COM.EXCEPINFO categoriesFor: #dwHelpContext:!**compiled accessors**!public! !
+!OS.COM.EXCEPINFO categoriesFor: #helpFile!accessing!public! !
+!OS.COM.EXCEPINFO categoriesFor: #helpFile:!accessing!public! !
+!OS.COM.EXCEPINFO categoriesFor: #hresult!accessing!public! !
+!OS.COM.EXCEPINFO categoriesFor: #pfnDeferredFillIn!**compiled accessors**!public! !
+!OS.COM.EXCEPINFO categoriesFor: #pwszDescription!**compiled accessors**!public! !
+!OS.COM.EXCEPINFO categoriesFor: #pwszDescription:!**compiled accessors**!public! !
+!OS.COM.EXCEPINFO categoriesFor: #pwszHelpFile!**compiled accessors**!public! !
+!OS.COM.EXCEPINFO categoriesFor: #pwszHelpFile:!**compiled accessors**!public! !
+!OS.COM.EXCEPINFO categoriesFor: #pwszSource!**compiled accessors**!public! !
+!OS.COM.EXCEPINFO categoriesFor: #pwszSource:!**compiled accessors**!public! !
+!OS.COM.EXCEPINFO categoriesFor: #scode!**compiled accessors**!public! !
+!OS.COM.EXCEPINFO categoriesFor: #scode:!**compiled accessors**!public! !
+!OS.COM.EXCEPINFO categoriesFor: #source!accessing!public! !
+!OS.COM.EXCEPINFO categoriesFor: #source:!accessing!public! !
+!OS.COM.EXCEPINFO categoriesFor: #wCode!**compiled accessors**!public! !
+!OS.COM.EXCEPINFO categoriesFor: #wCode:!**compiled accessors**!public! !
+!OS.COM.EXCEPINFO categoriesFor: #wstrDescription!accessing!public! !
+!OS.COM.EXCEPINFO categoriesFor: #wstrHelpFile!accessing!public! !
+!OS.COM.EXCEPINFO categoriesFor: #wstrSource!accessing!public! !
 
-!EXCEPINFO class methodsFor!
+!OS.COM.EXCEPINFO class methodsFor!
 
 clear: addressOrBytes
 	"Free external resources referenced by the structure
@@ -246,8 +248,9 @@ clear: addressOrBytes
 
 	| lib |
 	lib := OLEAutLibrary default.
-	4 to: 12 by: 4 do: [:offset | lib sysFreeString: (addressOrBytes sdwordAtOffset: offset)]
-!
+	4 to: 12
+		by: 4
+		do: [:offset | lib sysFreeString: (addressOrBytes sdwordAtOffset: offset)]!
 
 defineFields
 	"Define the fields of the EXCEPINFO structure.
@@ -281,7 +284,7 @@ defineFields
 
 getFieldNames
 	^#(#wCode #pwszSource #pwszDescription #pwszHelpFile #dwHelpContext #pfnDeferredFillIn #scode)! !
-!EXCEPINFO class categoriesFor: #clear:!public!realizing/unrealizing! !
-!EXCEPINFO class categoriesFor: #defineFields!public!template definition! !
-!EXCEPINFO class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.COM.EXCEPINFO class categoriesFor: #clear:!public!realizing/unrealizing! !
+!OS.COM.EXCEPINFO class categoriesFor: #defineFields!public!template definition! !
+!OS.COM.EXCEPINFO class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

@@ -1,17 +1,17 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-COMInterfaceImp subclass: #OLELockBytesAbstract
+OS.COM.InterfaceImplementation subclass: #'OS.COM.LockBytesAbstract'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'OLEStructuredStorageConstants'
+	imports: #(#{OS.COM.StructuredStorageConstants private})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-OLELockBytesAbstract guid: (GUID fromString: '{043e5260-ad92-11d3-b376-080046056106}')!
-OLELockBytesAbstract isAbstract: true!
-OLELockBytesAbstract comment: 'OLELockBytesAbstract is an abstract superclass which provides common behaviour for implementations of the OLE Structured Storage <ILockBytes> interface. <ILockBytes> is the abstraction used by OLE to represent an array of bytes.
+OS.COM.LockBytesAbstract guid: (Core.GUID fromString: '{043e5260-ad92-11d3-b376-080046056106}')!
+OS.COM.LockBytesAbstract isNonInstantiable: true!
+OS.COM.LockBytesAbstract comment: 'OLELockBytesAbstract is an abstract superclass which provides common behaviour for implementations of the OLE Structured Storage <ILockBytes> interface. <ILockBytes> is the abstraction used by OLE to represent an array of bytes.
 '!
-!OLELockBytesAbstract categoriesForClass!COM-Implementations! !
-!OLELockBytesAbstract methodsFor!
+!OS.COM.LockBytesAbstract categoriesForClass!COM-Implementations! !
+!OS.COM.LockBytesAbstract methodsFor!
 
 contents
 	"Answer the contents of the receiver (the byte array)"
@@ -97,7 +97,7 @@ Stat: pstatstg grfStatFlag: grfStatFlag
 supportedInterfaces
 	"Answer the set of interface classes supported by the receiver."
 
-	^#(##(ILockBytes))!
+	^#{ILockBytes}!
 
 UnlockRegion: UnlockRegion cb: cb dwLockType: dwLockType 
 	"Private - Implement the ILockBytes::UnlockRegion() interface function.
@@ -122,19 +122,19 @@ WriteAt: offset pv: pBuf cb: cb pcbWritten: pcbWritten
 		with: pBuf.
 	pcbWritten value: cb.
 	^S_OK! !
-!OLELockBytesAbstract categoriesFor: #contents!accessing!public! !
-!OLELockBytesAbstract categoriesFor: #copyBytesInto:from:to:!COM Interfaces-ILockBytes!private! !
-!OLELockBytesAbstract categoriesFor: #Flush!COM Interfaces-ILockBytes!private! !
-!OLELockBytesAbstract categoriesFor: #LockRegion:cb:dwLockType:!COM Interfaces-ILockBytes!private! !
-!OLELockBytesAbstract categoriesFor: #ReadAt:pv:cb:pcbRead:!COM Interfaces-ILockBytes!private! !
-!OLELockBytesAbstract categoriesFor: #replaceFrom:to:with:!COM Interfaces-ILockBytes!private! !
-!OLELockBytesAbstract categoriesFor: #resize:!COM Interfaces-ILockBytes!private! !
-!OLELockBytesAbstract categoriesFor: #SetSize:!COM Interfaces-ILockBytes!private! !
-!OLELockBytesAbstract categoriesFor: #size!accessing!public! !
-!OLELockBytesAbstract categoriesFor: #Stat:grfStatFlag:!COM Interfaces-ILockBytes!private! !
-!OLELockBytesAbstract categoriesFor: #supportedInterfaces!constants!public! !
-!OLELockBytesAbstract categoriesFor: #UnlockRegion:cb:dwLockType:!COM Interfaces-ILockBytes!private! !
-!OLELockBytesAbstract categoriesFor: #WriteAt:pv:cb:pcbWritten:!COM Interfaces-ILockBytes!private! !
+!OS.COM.LockBytesAbstract categoriesFor: #contents!accessing!public! !
+!OS.COM.LockBytesAbstract categoriesFor: #copyBytesInto:from:to:!COM Interfaces-ILockBytes!private! !
+!OS.COM.LockBytesAbstract categoriesFor: #Flush!COM Interfaces-ILockBytes!private! !
+!OS.COM.LockBytesAbstract categoriesFor: #LockRegion:cb:dwLockType:!COM Interfaces-ILockBytes!private! !
+!OS.COM.LockBytesAbstract categoriesFor: #ReadAt:pv:cb:pcbRead:!COM Interfaces-ILockBytes!private! !
+!OS.COM.LockBytesAbstract categoriesFor: #replaceFrom:to:with:!COM Interfaces-ILockBytes!private! !
+!OS.COM.LockBytesAbstract categoriesFor: #resize:!COM Interfaces-ILockBytes!private! !
+!OS.COM.LockBytesAbstract categoriesFor: #SetSize:!COM Interfaces-ILockBytes!private! !
+!OS.COM.LockBytesAbstract categoriesFor: #size!accessing!public! !
+!OS.COM.LockBytesAbstract categoriesFor: #Stat:grfStatFlag:!COM Interfaces-ILockBytes!private! !
+!OS.COM.LockBytesAbstract categoriesFor: #supportedInterfaces!constants!public! !
+!OS.COM.LockBytesAbstract categoriesFor: #UnlockRegion:cb:dwLockType:!COM Interfaces-ILockBytes!private! !
+!OS.COM.LockBytesAbstract categoriesFor: #WriteAt:pv:cb:pcbWritten:!COM Interfaces-ILockBytes!private! !
 
-OLELockBytesAbstract methodProtocol: #ILockBytes attributes: #() selectors: #(#Flush #LockRegion:cb:dwLockType: #ReadAt:pv:cb:pcbRead: #SetSize: #Stat:grfStatFlag: #UnlockRegion:cb:dwLockType: #WriteAt:pv:cb:pcbWritten:)!
+OS.COM.LockBytesAbstract methodProtocol: #ILockBytes attributes: #() selectors: #(#Flush #LockRegion:cb:dwLockType: #ReadAt:pv:cb:pcbRead: #SetSize: #Stat:grfStatFlag: #UnlockRegion:cb:dwLockType: #WriteAt:pv:cb:pcbWritten:)!
 

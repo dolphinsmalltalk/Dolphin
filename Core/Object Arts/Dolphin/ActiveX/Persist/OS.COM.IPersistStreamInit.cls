@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-IPersistStream subclass: #IPersistStreamInit
+OS.COM.IPersistStream subclass: #'OS.COM.IPersistStreamInit'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-IPersistStreamInit guid: (IID fromString: '{7fd52380-4e07-101b-ae2d-08002b2ec713}')!
-IPersistStreamInit comment: ''!
-!IPersistStreamInit categoriesForClass!COM-Interfaces! !
-!IPersistStreamInit methodsFor!
+OS.COM.IPersistStreamInit guid: (OS.COM.IID fromString: '{7fd52380-4e07-101b-ae2d-08002b2ec713}')!
+OS.COM.IPersistStreamInit comment: ''!
+!OS.COM.IPersistStreamInit categoriesForClass!COM-Interfaces! !
+!OS.COM.IPersistStreamInit methodsFor!
 
 initNew
 	"Inform a newly instantiated object that it has been newly instantiated for the purpose of
@@ -34,12 +34,12 @@ InitNew
 
 	<virtual stdcall: sdword 9>
 	^self invalidCall: _failureCode! !
-!IPersistStreamInit categoriesFor: #initNew!initializing!public! !
-!IPersistStreamInit categoriesFor: #InitNew!COM Interfaces-IPersistStreamInit!public! !
+!OS.COM.IPersistStreamInit categoriesFor: #initNew!initializing!public! !
+!OS.COM.IPersistStreamInit categoriesFor: #InitNew!COM Interfaces-IPersistStreamInit!public! !
 
-IPersistStreamInit methodProtocol: #IPersistStreamInit attributes: #(#readOnly) selectors: #(#GetClassID: #GetSizeMax: #InitNew #IsDirty #Load: #Save:fClearDirty:)!
+OS.COM.IPersistStreamInit methodProtocol: #IPersistStreamInit attributes: #(#readOnly) selectors: #(#GetClassID: #GetSizeMax: #InitNew #IsDirty #Load: #Save:fClearDirty:)!
 
-!IPersistStreamInit class methodsFor!
+!OS.COM.IPersistStreamInit class methodsFor!
 
 defineFunctions
 	"Define the vtable for the IPersistStreamInit interface.
@@ -48,5 +48,5 @@ defineFunctions
 
 	self
 		defineFunction: #InitNew returnType: 'sdword'! !
-!IPersistStreamInit class categoriesFor: #defineFunctions!initializing!public! !
+!OS.COM.IPersistStreamInit class categoriesFor: #defineFunctions!initializing!public! !
 

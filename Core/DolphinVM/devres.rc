@@ -93,7 +93,7 @@ COLORVIEW.ICO           ICON                    "Res\\ColorView.ico"
 
 COMBOBOX.ICO            ICON                    "Res\\Combobox.ico"
 
-COMINTERFACE.ICO        ICON                    "Res\\cominter.ico"
+INTERFACE.ICO			ICON                    "Res\\cominter.ico"
 
 COMPILEDCODE.ICO      ICON                      "Res\\CompiledCode.ico"
 
