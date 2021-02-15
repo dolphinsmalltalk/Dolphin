@@ -27,6 +27,7 @@ contents
 	contents
 		add: #('Core\Object Arts\Dolphin\IDE\Professional\Dolphin Professional Tools.pax' #encrypted #imageBased);
 		add: #('Core\Object Arts\Dolphin\Lagoon\Lagoon Image Stripper.pax' #encrypted #imageBased);
+		add: #('Core\Object Arts\Dolphin\Lagoon\Lagoon Image Stripper (Old Names).pax' #encrypted #imageBased);
 		add: #('Core\Object Arts\Dolphin\Lagoon\Application Deployment Kit.pax' #encrypted #imageBased);
 		add: #('Core\Object Arts\Dolphin\Lagoon\ActiveX DLL Server Kit.pax' #encrypted #imageBased);
 		add: #('Core\Object Arts\Dolphin\Lagoon\Console Application Kit.pax' #encrypted #imageBased);
@@ -42,6 +43,7 @@ contents
 		addAll: #(#('Core\Object Arts\Dolphin\MVP\Metafiles\Dolphin Metafile Records.pax' #encrypted #imageBased) #('Core\Object Arts\Dolphin\MVP\Metafiles\Dolphin Metafiles.pax' #encrypted #imageBased));
 		add: #('Core\Object Arts\Dolphin\Utilities\Tutorials\Tutorial Player.pax' #encrypted #imageBased);
 		add: #('Core\Object Arts\Dolphin\Utilities\Tutorials\Learn Smalltalk.pax' #encrypted #imageBased);
+		add: #('Core\Object Arts\Dolphin\Utilities\Tutorials\Learn Smalltalk (Old Names).pax' #encrypted #imageBased);
 		add: #('Core\Object Arts\Dolphin\Utilities\IPHelp\IP Help API.pax' #encrypted #imageBased);
 		yourself.
 

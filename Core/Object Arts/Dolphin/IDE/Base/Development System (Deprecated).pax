@@ -11,15 +11,25 @@ package setVariableNames: #(
 	#{Smalltalk.ClassBrowserAbstract}
 	#{Smalltalk.ClassHierarchyPresenter}
 	#{Smalltalk.Debugger}
+	#{Smalltalk.DebugInfoPlugin}
+	#{Smalltalk.DevelopmentSessionManager}
+	#{Smalltalk.IdealSpaceShell}
+	#{Smalltalk.IdeaSpaceShell}
 	#{Smalltalk.MethodBrowserShell}
 	#{Smalltalk.MethodWorkspace}
+	#{Smalltalk.PackageBrowserShell}
+	#{Smalltalk.PropertyInspector}
 	#{Smalltalk.SmalltalkExpressionStyler}
 	#{Smalltalk.SmalltalkMethodStyler}
+	#{Smalltalk.SmalltalkStyler}
 	#{Smalltalk.SmalltalkSystem}
 	#{Smalltalk.SmalltalkSystemIcon}
+	#{Smalltalk.SmalltalkSystemShell}
 	#{Smalltalk.SmalltalkToolShell}
 	#{Smalltalk.SmalltalkWorkspace}
 	#{Smalltalk.SmalltalkWorkspaceDocument}
+	#{Smalltalk.SystemBrowserShell}
+	#{Smalltalk.TwinLevelInspector}
 	#{Smalltalk.ViewComposer}
 ).
 
@@ -28,20 +38,31 @@ package setAliasVariableNames: #(
 	#{Smalltalk.ClassBrowserAbstract}
 	#{Smalltalk.ClassHierarchyPresenter}
 	#{Smalltalk.Debugger}
+	#{Smalltalk.DebugInfoPlugin}
+	#{Smalltalk.DevelopmentSessionManager}
+	#{Smalltalk.IdealSpaceShell}
+	#{Smalltalk.IdeaSpaceShell}
 	#{Smalltalk.MethodBrowserShell}
 	#{Smalltalk.MethodWorkspace}
+	#{Smalltalk.PackageBrowserShell}
+	#{Smalltalk.PropertyInspector}
 	#{Smalltalk.SmalltalkExpressionStyler}
 	#{Smalltalk.SmalltalkMethodStyler}
+	#{Smalltalk.SmalltalkStyler}
 	#{Smalltalk.SmalltalkSystem}
 	#{Smalltalk.SmalltalkSystemIcon}
+	#{Smalltalk.SmalltalkSystemShell}
 	#{Smalltalk.SmalltalkToolShell}
 	#{Smalltalk.SmalltalkWorkspace}
 	#{Smalltalk.SmalltalkWorkspaceDocument}
+	#{Smalltalk.SystemBrowserShell}
+	#{Smalltalk.TwinLevelInspector}
 	#{Smalltalk.ViewComposer}
 ).
 
 package setPrerequisites: #(
 	'Development System'
+	'..\Professional\Dolphin Professional Tools'
 ).
 
 package!
@@ -56,23 +77,43 @@ Smalltalk.ClassHierarchyPresenter := Tools.ClassHierarchySelector!
 
 Smalltalk.Debugger := Tools.Debugger!
 
+Smalltalk.DebugInfoPlugin := Tools.DebugInfoPlugin!
+
+Smalltalk.DevelopmentSessionManager := Tools.DevelopmentSessionManager!
+
+Smalltalk.IdealSpaceShell := Tools.IdeaSpaceShell!
+
+Smalltalk.IdeaSpaceShell := Tools.IdeaSpaceShell!
+
 Smalltalk.MethodBrowserShell := Tools.MethodBrowserShell!
 
 Smalltalk.MethodWorkspace := Tools.MethodWorkspace!
+
+Smalltalk.PackageBrowserShell := Tools.PackageBrowserShell!
+
+Smalltalk.PropertyInspector := Tools.PropertyInspector!
 
 Smalltalk.SmalltalkExpressionStyler := Tools.SmalltalkExpressionStyler!
 
 Smalltalk.SmalltalkMethodStyler := Tools.SmalltalkMethodStyler!
 
+Smalltalk.SmalltalkStyler := Tools.SmalltalkStyler!
+
 Smalltalk.SmalltalkSystem := Tools.SmalltalkSystem!
 
 Smalltalk.SmalltalkSystemIcon := Tools.SmalltalkSystemIcon!
+
+Smalltalk.SmalltalkSystemShell := Tools.SmalltalkSystemShell!
 
 Smalltalk.SmalltalkToolShell := Tools.SmalltalkToolShell!
 
 Smalltalk.SmalltalkWorkspace := Tools.SmalltalkWorkspace!
 
 Smalltalk.SmalltalkWorkspaceDocument := Tools.SmalltalkWorkspaceDocument!
+
+Smalltalk.SystemBrowserShell := Tools.SystemBrowserShell!
+
+Smalltalk.TwinLevelInspector := Tools.TwinLevelInspector!
 
 Smalltalk.ViewComposer := Tools.ViewComposer!
 

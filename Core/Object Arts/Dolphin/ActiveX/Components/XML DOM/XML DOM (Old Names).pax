@@ -1,0 +1,31 @@
+﻿| package |
+package := Package name: 'XML DOM (Old Names)'.
+package paxVersion: 2.1;
+	basicComment: ''.
+
+
+package setVariableNames: #(
+	#{Smalltalk.DOMParseError}
+	#{Smalltalk.IXMLDOMDocument}
+).
+
+package setAliasVariableNames: #(
+	#{Smalltalk.DOMParseError}
+	#{Smalltalk.IXMLDOMDocument}
+).
+
+package setPrerequisites: #(
+	'XML DOM'
+).
+
+package!
+
+"Variable Aliases"!
+
+Smalltalk.DOMParseError := MSXML.DOMParseError!
+
+Smalltalk.IXMLDOMDocument := MSXML.IXMLDOMDocument!
+
+
+"End of package definition"!
+

@@ -1,0 +1,27 @@
+﻿| package |
+package := Package name: 'Lagoon Image Stripper (Old Names)'.
+package paxVersion: 2.1;
+	basicComment: ''.
+
+
+package setVariableNames: #(
+	#{Smalltalk.ImageStripper}
+).
+
+package setAliasVariableNames: #(
+	#{Smalltalk.ImageStripper}
+).
+
+package setPrerequisites: #(
+	'Lagoon Image Stripper'
+).
+
+package!
+
+"Variable Aliases"!
+
+Smalltalk.ImageStripper := Tools.ImageStripper!
+
+
+"End of package definition"!
+

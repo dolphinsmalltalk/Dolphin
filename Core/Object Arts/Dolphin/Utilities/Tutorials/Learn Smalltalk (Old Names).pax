@@ -1,0 +1,32 @@
+﻿| package |
+package := Package name: 'Learn Smalltalk (Old Names)'.
+package paxVersion: 2.1;
+	basicComment: ''.
+
+
+package setVariableNames: #(
+	#{Smalltalk.Lesson}
+	#{Smalltalk.SmalltalkSyntaxTutorial}
+).
+
+package setAliasVariableNames: #(
+	#{Smalltalk.Lesson}
+	#{Smalltalk.SmalltalkSyntaxTutorial}
+).
+
+package setPrerequisites: #(
+	'Learn Smalltalk'
+	'Tutorial Player'
+).
+
+package!
+
+"Variable Aliases"!
+
+Smalltalk.Lesson := Tools.Lesson!
+
+Smalltalk.SmalltalkSyntaxTutorial := Tools.SmalltalkSyntaxTutorial!
+
+
+"End of package definition"!
+
