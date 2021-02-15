@@ -90,6 +90,7 @@ contents
 		add: #('Core\Object Arts\Dolphin\Sockets\Dolphin Sockets.pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\Sockets\Sockets Connection.pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\Sockets\WinInet.pax' #plain #imageBased);
+		add: #('Core\Object Arts\Dolphin\Sockets\Dolphin Sockets (Old Names).pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\ActiveX\Components\ADO\ADODB.pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\ActiveX\Components\ADO\ADODB (Old Names).pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\ActiveX\Components\CDO\CDO.pax' #plain #imageBased);
@@ -109,6 +110,7 @@ contents
 		add: #('Core\Object Arts\Dolphin\ActiveX\Components\XML DOM\XML DOM.pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\ActiveX\Components\XML DOM\XML DOM Visitor.pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\ActiveX\Components\XML DOM\XML Formatter.pax' #plain #imageBased);
+		add: #('Core\Object Arts\Dolphin\ActiveX\Components\XML DOM\XML DOM (Old Names).pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\ActiveX\Components\Scripting\ActiveX Scripting.pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\ActiveX\Components\VBScript\VBScript Regular Expressions.pax' #plain #imageBased).
 
