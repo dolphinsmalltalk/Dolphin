@@ -83,6 +83,7 @@ addClassesReferencedByClass: aClass to: aSet
 	| addMethodRefs |
 	((aSet includes: aClass) or: [self classReferencesToIgnore includes: aClass]) ifTrue: [^aSet].
 	aSet add: aClass.
+	aClass environment ifNotNil: [:namespace | self addClassesReferencedByClass: namespace to: aSet].
 	aClass allSuperclasses do: [:each | self addClassesReferencedByClass: each to: aSet].
 	addMethodRefs := [:method | self addClassesReferencedByMethod: method to: aSet].
 	aClass methodDictionary do: addMethodRefs.
@@ -205,7 +206,7 @@ buildApplication
 	classBuildingMethods := nil.
 	self finishedWithAll: #(#prepareCycle1:).
 	"First cycle of walking transitive closure from roots, but not removing any resources"
-	self removeRedundantObjects: false.
+	self removeRedundantObjects: false id: 1.
 
 	"Next we remove remaining development artefacts, and then perform another iterative cycle."
 	self prepareCycle2: developmentMethods.
@@ -213,16 +214,16 @@ buildApplication
 	self finishedWithAll: #(#prepareCycle2:).
 	"Have another go at finding redundant stuff now dev. classes out of the picture, but
 	 this time strip resources too"
-	self removeRedundantObjects: true.
+	self removeRedundantObjects: true id: 2.
 	self prepareCycle3.
 	self finishedWithAll: #(#prepareCycle3).
-	self removeRedundantObjects: true.
+	self removeRedundantObjects: true id: 3.
 	self prepareCycle4.
 	self finishedWithAll: #(#prepareCycle4).
-	self removeRedundantObjects: false.
+	self removeRedundantObjects: false id: 4.
 	self prepareCycle5.
 	self finishedWithAll: #(#prepareCycle5).
-	self removeRedundantObjects: false.
+	self removeRedundantObjects: false id: 5.
 	self prepareCycle6: classRemovingMethods.
 	classRemovingMethods := nil.
 	self finishedWithAll: #(#prepareCycle6:).
@@ -771,7 +772,7 @@ logPreservedClasses
 			self
 				logElement: 'RootClass'
 				attributes: attributes
-				value: each name].
+				value: each fullName].
 	developmentClasses removeAll: developmentRoots.
 	self endElement: true!
 
@@ -862,20 +863,21 @@ logRemainingClasses
 	1 to: stats size
 		do: 
 			[:i |
-			| each classStats attributes name count memory |
+			| each classStats attributes name count memory class |
 			each := stats at: i.
 			classStats := each value.
 			attributes := Array writeStream.
-			name := each key name.
+			class := each key.
+			name := class fullName.
 			attributes nextPut: 'name' -> name.
 			count := classStats at: 1.
 			attributes nextPut: 'count' -> count.
 			memory := classStats at: 2.
 			attributes nextPut: 'memoryUsage' -> memory.
-			name asQualifiedReference isDefined ifFalse: [attributes nextPut: 'unbound' -> true].
-			(devClasses includes: each key) ifTrue: [attributes nextPut: 'development' -> true].
+			class bindingOrNil ifNil: [attributes nextPut: 'unbound' -> true].
+			(devClasses includes: class) ifTrue: [attributes nextPut: 'development' -> true].
 			self startElement: 'Class' attributes: attributes contents.
-			self startElement: 'Methods' attributes: {'count' -> each key methodDictionary size}.
+			self startElement: 'Methods' attributes: {'count' -> class methodDictionary size}.
 			selectors := Array writeStream.
 			each key methodDictionary keysDo: [:selector | selectors nextPut: selector].
 			selectors contents sort do: 
@@ -885,9 +887,9 @@ logRemainingClasses
 						attributes: #()
 						value: selector].
 			self endElement: true.
-			self startElement: 'ClassMethods' attributes: {'count' -> each key class methodDictionary size}.
+			self startElement: 'ClassMethods' attributes: {'count' -> class class methodDictionary size}.
 			selectors reset.
-			each key class methodDictionary keysDo: [:selector | selectors nextPut: selector].
+			class class methodDictionary keysDo: [:selector | selectors nextPut: selector].
 			selectors contents sort do: 
 					[:selector |
 					self
@@ -895,7 +897,10 @@ logRemainingClasses
 						attributes: #()
 						value: selector].
 			self endElement: true.
-			self logReferencesToClasses ifTrue: [self logReferencesToClass: each].
+			self logReferencesToClasses
+				ifTrue: 
+					[class := nil.
+					self logReferencesToClass: each].
 			self endElement: true.
 			totalInstances := totalInstances + count.
 			totalMemory := totalMemory + memory.
@@ -947,7 +952,7 @@ logRemainingResources
 			self
 				logElement: 'OwningClass'
 				attributes: #()
-				value: each owningClass name.
+				value: each owningClass fullName.
 			self
 				logElement: 'Name'
 				attributes: #()
@@ -1014,7 +1019,7 @@ logStrippingError: anError
 	logStream isNil ifTrue: [^self].
 	self
 		logElement: 'Error'
-		attributes: {'class' -> anError class name}
+		attributes: {'class' -> anError class fullName}
 		value: anError description.
 	logStream flush!
 
@@ -1223,7 +1228,7 @@ prepareCycle6: aWeakArrayOfMethods
 	self removeClassMetaInfo.
 	self notifyClassesOfCompletedStrip.
 	self
-		finishedWithAll: #(#notifyClassesOfCompletedStrip #removeClassMetaInfo #removeRedundantObjects: #removeRedundantClassesAndResources: #shouldRemoveResources #stripRedundantResources)!
+		finishedWithAll: #(#notifyClassesOfCompletedStrip #removeClassMetaInfo #removeRedundantObjects:id: #removeRedundantClassesAndResources: #shouldRemoveResources #stripRedundantResources)!
 
 prepareToDeployWith: stubFile to: path
 	supersentMethods := self buildSupersentMessageMap.
@@ -1472,7 +1477,7 @@ removeRedundantMethods
 					self
 						logElement: 'LiveClass'
 						attributes: #()
-						value: each name].
+						value: each fullName].
 			self endElement: true].
 	
 	[| count |

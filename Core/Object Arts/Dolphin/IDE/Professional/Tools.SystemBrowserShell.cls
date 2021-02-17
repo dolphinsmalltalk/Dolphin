@@ -214,9 +214,8 @@ uninitialize
 		self uninitialize
 	"
 
-	| devsys |
-	devsys := Smalltalk developmentSystem.
-	devsys systemBrowserClass == self ifTrue: [devsys systemBrowserClass: nil]! !
+	SmalltalkSystem.Current
+		ifNotNil: [:devsys | devsys systemBrowserClass == self ifTrue: [devsys systemBrowserClass: nil]]! !
 !Tools.SystemBrowserShell class categoriesFor: #autoSelectPackages!accessing!private! !
 !Tools.SystemBrowserShell class categoriesFor: #autoSelectPackages:!accessing!private! !
 !Tools.SystemBrowserShell class categoriesFor: #displayOn:!displaying!public! !

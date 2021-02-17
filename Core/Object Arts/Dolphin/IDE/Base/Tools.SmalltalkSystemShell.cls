@@ -533,11 +533,10 @@ textcolor: aColorOrNil
 uninitialize
 	"Private - Uninitialize the receiver as it is about to be removed from the system."
 
-	| devsys |
 	Color removeNamed: #smalltalkSystem.
 	self free.
-	devsys := Smalltalk developmentSystem.
-	devsys systemFolderClass == self ifTrue: [devsys systemFolderClass: nil]!
+	SmalltalkSystem.Current
+		ifNotNil: [:devsys | devsys systemFolderClass == self ifTrue: [devsys systemFolderClass: nil]]!
 
 viewMode
 	"Answer the view mode of the reciver.

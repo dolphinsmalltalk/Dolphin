@@ -704,6 +704,7 @@ package setPrerequisites: #(
 	'..\..\MVP\Presenters\Shell\Dolphin Document Presenter'
 	'..\..\MVP\Dialogs\Find\Dolphin Find Dialog'
 	'..\..\MVP\Presenters\Folder\Dolphin Folder Presenter'
+	'..\..\MVP\Models\Tree\Dolphin Folder Tree Model'
 	'..\..\MVP\Presenters\Font\Dolphin Font Presenter'
 	'..\..\MVP\Presenters\Image\Dolphin Image Presenter'
 	'..\..\MVP\Presenters\Prompters\Dolphin Integer Prompter'

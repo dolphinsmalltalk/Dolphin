@@ -46,6 +46,10 @@ versionFormatString
 
 !UI.Scintilla.ScintillaLibrary class methodsFor!
 
+closeDefault
+	"Private - We don't want to allow the default instance to be closed, as it is not lazily re-opened."
+!
+
 fileName
 	"Answer the host system file name of the external library which the receiver represents"
 
@@ -55,6 +59,7 @@ versionString
 	"Answer the version of the Scintilla control for which this library was generated."
 
 	^'4.4.5'! !
+!UI.Scintilla.ScintillaLibrary class categoriesFor: #closeDefault!private!realizing/unrealizing! !
 !UI.Scintilla.ScintillaLibrary class categoriesFor: #fileName!constants!public! !
 !UI.Scintilla.ScintillaLibrary class categoriesFor: #versionString!**auto generated**!constants!public!scintilla interface! !
 

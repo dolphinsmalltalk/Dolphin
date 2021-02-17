@@ -38,8 +38,8 @@ basicRemoveClass: aClass
 			[:x |
 			self
 				logElement: 'Error'
-				attributes: {'class' -> x class name}
-				value: 'Error uninitializing ' , aClass name , ': ' , x description].
+				attributes: {'class' -> x class fullName}
+				value: 'Error uninitializing ' , aClass fullName , ': ' , x description].
 	subs := aClass subclasses.
 	subs notEmpty
 		ifTrue: 
@@ -57,6 +57,7 @@ collectGarbage: iterations
 
 	| memMan |
 	Smalltalk clearCachedClasses.
+	BindingReference flushBindings.
 	memMan := MemoryManager current.
 	iterations timesRepeat: 
 			[memMan
@@ -85,8 +86,9 @@ compileExternalStructuresNow: aCollection
 			self removeSelectors: #(#doesNotUnderstand:) of: External.Structure].
 	"Field meta-data classes are no longer required"
 	self assert: [self systemPackageManager isProcessingEvents].
+	self startElement: 'StripClasses' attributes: {'reason' -> 'structure field descriptors'}.
+	#{Smalltalk.ExternalField} undeclare.
 	self
-		startElement: 'StripClasses' attributes: {'reason' -> 'structure field descriptors'};
 		uncheckedRemoveClass: #{External.Field} value;
 		endElement: true.
 	self endElement: true!
@@ -158,13 +160,13 @@ emptySystemDictionary
 	globals := OrderedCollection new.
 	Root allBindingsDo: 
 			[:each |
-			(each isClassVariable not and: [each value class isMeta not or: [each value name ~~ each key]]) ifTrue: [globals add: each key]].
+			(each isClassVariable not and: [each value class isMeta not or: [each value name ~~ each key]]) ifTrue: [globals add: each]].
 	globals do: 
 			[:each |
 			self
 				logElement: 'Global'
 				attributes: #()
-				value: each.
+				value: each key.
 			each environment basicRemoveBinding: each].
 	self collectGarbage: 3.
 	self endElement: true!
@@ -244,7 +246,7 @@ logFold: aString folded: count total: total
 logMethod: aCompiledMethod
 	self
 		logElement: 'Method'
-		attributes: {'methodClass' -> aCompiledMethod methodClass name}
+		attributes: {'methodClass' -> aCompiledMethod methodClass fullName}
 		value: aCompiledMethod selector!
 
 logStrippingError: anError
@@ -359,7 +361,7 @@ removeClass: aClass
 	"Private - Removes aClass from the image. Answer the number of classes that
 	were actually removed (subclasses may be removed too)."
 
-	aClass fullyQualifiedReference isDefined ifFalse: [^0].
+	(aClass environment localBindingFor: aClass unqualifiedName) ifNil: [^0].
 	^self uncheckedRemoveClass: aClass!
 
 removeClassBuilder: anArray
@@ -387,9 +389,10 @@ removeClassMetaInfo
 			keepInstVars := self retainInstVarNames.
 			Class allClassesDo: 
 					[:each |
-					each
-						basicClassPool: nil;
-						imports: nil.
+					"We used to empty the class pool here, but it is certainly not safe to do that for Namespace classes.
+					Not sure it is worth keeping for other classes either."
+					"each basicClassPool: nil."
+					each imports: #().
 					"If retaining inst vars, they are collapsed into a string for compactness"
 					each instanceVariableString: (keepInstVars ifTrue: [each instanceVariableString])].
 			self endTag].
@@ -619,13 +622,13 @@ removeRedundantMethodsOnceFrom: aCollectionOfClasses
 		reason: 'unsent'
 		force: false!
 
-removeRedundantObjects: stripResources
+removeRedundantObjects: stripResources id: anInteger
 	"Cycle around removing redundant classes and methods until all remaining
 	classes and methods appear to be required to complete the deployed image."
 
 	
 	[| continue |
-	self startElement: 'StripCycle' attributes: #().
+	self startElement: 'StripCycle' attributes: { 'id' -> anInteger }.
 	continue := (self
 				removeRedundantClassesAndResources: (stripResources and: [self shouldRemoveResources]))
 					+ self removeRedundantMethods > 0.
@@ -686,7 +689,7 @@ removeRedundantResources: referencedClasses
 removeResource: aResourceIdentifier
 	self
 		logElement: 'RemoveResource'
-		attributes: {'owningClass' -> aResourceIdentifier owningClass name}
+		attributes: {'owningClass' -> aResourceIdentifier owningClass fullName}
 		value: aResourceIdentifier name.
 	ResourceIdentifier removeResource: aResourceIdentifier!
 
@@ -809,7 +812,7 @@ uncheckedRemoveClass: aClass
 	self
 		logElement: 'RemoveClass'
 		attributes: #()
-		value: aClass name.
+		value: aClass fullName.
 	^
 	[self basicRemoveClass: aClass.
 	aClass clearGuid.
@@ -882,7 +885,7 @@ verifyRequiredPackages
 !Tools.BasicImageStripper categoriesFor: #removeRedundantClassesAndResources:!operations!private! !
 !Tools.BasicImageStripper categoriesFor: #removeRedundantMethods!operations!private! !
 !Tools.BasicImageStripper categoriesFor: #removeRedundantMethodsOnceFrom:!operations!private! !
-!Tools.BasicImageStripper categoriesFor: #removeRedundantObjects:!operations!private! !
+!Tools.BasicImageStripper categoriesFor: #removeRedundantObjects:id:!operations!private! !
 !Tools.BasicImageStripper categoriesFor: #removeRedundantPackages!operations!private! !
 !Tools.BasicImageStripper categoriesFor: #removeRedundantResources:!operations!private! !
 !Tools.BasicImageStripper categoriesFor: #removeResource:!operations!private! !
