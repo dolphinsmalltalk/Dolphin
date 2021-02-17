@@ -392,7 +392,8 @@ removeClassMetaInfo
 					"We used to empty the class pool here, but it is certainly not safe to do that for Namespace classes.
 					Not sure it is worth keeping for other classes either."
 					"each basicClassPool: nil."
-					each imports: #().
+					"We can't nil out the imports in general either, as these are required to resolve BindingReferences that are not fully qualified."
+					"each imports: #()."
 					"If retaining inst vars, they are collapsed into a string for compactness"
 					each instanceVariableString: (keepInstVars ifTrue: [each instanceVariableString])].
 			self endTag].
