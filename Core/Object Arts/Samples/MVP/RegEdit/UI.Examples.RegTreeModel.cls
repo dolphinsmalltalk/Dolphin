@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-VirtualTreeModel subclass: #RegTreeModel
+UI.VirtualTreeModel subclass: #'UI.Examples.RegTreeModel'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-RegTreeModel guid: (GUID fromString: '{87b4c674-026e-11d3-9fd7-00a0cc3e4a32}')!
-RegTreeModel comment: 'RegTreeModel implements a <treeModel> representing the hierarchy of <RegKey>s in the Windows system registry. For an example of its use, see the RegEdit sample application.'!
-!RegTreeModel categoriesForClass!MVP-Models! !
-!RegTreeModel methodsFor!
+UI.Examples.RegTreeModel guid: (Core.GUID fromString: '{87b4c674-026e-11d3-9fd7-00a0cc3e4a32}')!
+UI.Examples.RegTreeModel comment: 'RegTreeModel implements a <treeModel> representing the hierarchy of <RegKey>s in the Windows system registry. For an example of its use, see the RegEdit sample application.'!
+!UI.Examples.RegTreeModel categoriesForClass!MVP-Models! !
+!UI.Examples.RegTreeModel methodsFor!
 
 approxSize
 	"Private - Answer the approximate size of the receiver.
@@ -26,12 +26,12 @@ defaultGetParentBlock
 
 defaultHasChildrenBlock
 	^[:aRegKey | aRegKey notEmpty]! !
-!RegTreeModel categoriesFor: #approxSize!accessing!private! !
-!RegTreeModel categoriesFor: #defaultGetChildrenBlock!initializing!private! !
-!RegTreeModel categoriesFor: #defaultGetParentBlock!initializing!private! !
-!RegTreeModel categoriesFor: #defaultHasChildrenBlock!initializing!private! !
+!UI.Examples.RegTreeModel categoriesFor: #approxSize!accessing!private! !
+!UI.Examples.RegTreeModel categoriesFor: #defaultGetChildrenBlock!initializing!private! !
+!UI.Examples.RegTreeModel categoriesFor: #defaultGetParentBlock!initializing!private! !
+!UI.Examples.RegTreeModel categoriesFor: #defaultHasChildrenBlock!initializing!private! !
 
-!RegTreeModel class methodsFor!
+!UI.Examples.RegTreeModel class methodsFor!
 
 defaultSearchPolicy
 	"Answer the <searchPolicy> used to compare and search for elements in the receiver's
@@ -42,5 +42,5 @@ defaultSearchPolicy
 	identical."
 
 	^SearchPolicy equality! !
-!RegTreeModel class categoriesFor: #defaultSearchPolicy!accessing!public! !
+!UI.Examples.RegTreeModel class categoriesFor: #defaultSearchPolicy!accessing!public! !
 

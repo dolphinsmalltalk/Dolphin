@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Shell subclass: #RegEdit
+UI.Shell subclass: #'UI.Examples.RegEdit'
 	instanceVariableNames: 'keyPresenter valuesPresenter statusModel'
 	classVariableNames: 'ResourceLib'
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-RegEdit guid: (GUID fromString: '{87b4c69e-026e-11d3-9fd7-00a0cc3e4a32}')!
-RegEdit comment: 'RegEdit is a <topShell> sample application which implements most of the functionality of the Windows utility, RegEdit. It does not implement the full functionality of the standard tool because it is primarily intended as a demonstration of the use of registry access classes, and the tree and enhanced list views. It supports in-place registry key name editing.
+UI.Examples.RegEdit guid: (Core.GUID fromString: '{87b4c69e-026e-11d3-9fd7-00a0cc3e4a32}')!
+UI.Examples.RegEdit comment: 'RegEdit is a <topShell> sample application which implements most of the functionality of the Windows utility, RegEdit. It does not implement the full functionality of the standard tool because it is primarily intended as a demonstration of the use of registry access classes, and the tree and enhanced list views. It supports in-place registry key name editing.
 
 Example:
 RegEdit show
@@ -27,8 +27,8 @@ Class Variables:
 
 
 '!
-!RegEdit categoriesForClass!MVP-Presenters!Samples! !
-!RegEdit methodsFor!
+!UI.Examples.RegEdit categoriesForClass!MVP-Presenters!Samples! !
+!UI.Examples.RegEdit methodsFor!
 
 aboutRegistryEditor
 	"Private - Pop up a little helpful info. about this sample program."
@@ -54,8 +54,8 @@ createComponents
 	"Create the presenters contained by the receiver"
 
 	super createComponents.
-	keyPresenter := self add: (TreePresenter on: RegTreeModel new)  name: 'keys'.
-	valuesPresenter := self add: ListPresenter new name: 'values'.!
+	keyPresenter := self add: (TreePresenter on: RegTreeModel new) name: 'keys'.
+	valuesPresenter := self add: ListPresenter new name: 'values'!
 
 createSchematicWiring
 	"Create the trigger wiring for the receiver"
@@ -380,44 +380,44 @@ toggleStatusBar
 	| statusBar |
 	statusBar := self statusBar.
 	statusBar isWindowVisible ifTrue: [statusBar hide] ifFalse: [statusBar show]! !
-!RegEdit categoriesFor: #aboutRegistryEditor!commands!private! !
-!RegEdit categoriesFor: #additionalAccelerators!constants!private! !
-!RegEdit categoriesFor: #chooseFont!commands!private! !
-!RegEdit categoriesFor: #copyKeyName!commands!private! !
-!RegEdit categoriesFor: #createComponents!initializing!public! !
-!RegEdit categoriesFor: #createSchematicWiring!initializing!public! !
-!RegEdit categoriesFor: #delete!commands!private! !
-!RegEdit categoriesFor: #deleteSelectedKey!commands!private! !
-!RegEdit categoriesFor: #deleteSelectedValue!commands!private! !
-!RegEdit categoriesFor: #exportKey:toFile:!filing!private! !
-!RegEdit categoriesFor: #exportRegistryFile!commands!private! !
-!RegEdit categoriesFor: #fileTypes!constants!private! !
-!RegEdit categoriesFor: #importRegistryFile!commands!private! !
-!RegEdit categoriesFor: #initialize!initializing!private! !
-!RegEdit categoriesFor: #newBinaryValue!commands!public! !
-!RegEdit categoriesFor: #newDWORDValue!commands!public! !
-!RegEdit categoriesFor: #newKey!commands!public! !
-!RegEdit categoriesFor: #newStringValue!commands!public! !
-!RegEdit categoriesFor: #newValue:!commands!public! !
-!RegEdit categoriesFor: #newValueName!commands!private! !
-!RegEdit categoriesFor: #onAboutToRenameKey:accept:!event handling!public! !
-!RegEdit categoriesFor: #onAboutToRenameValue:accept:!event handling!public! !
-!RegEdit categoriesFor: #onKey:renamedTo:accept:!event handling!public! !
-!RegEdit categoriesFor: #onKeySelected!event handling!private! !
-!RegEdit categoriesFor: #onValue:renamedTo:accept:!event handling!public! !
-!RegEdit categoriesFor: #onViewOpened!event handling!public! !
-!RegEdit categoriesFor: #queryCommand:!commands!private! !
-!RegEdit categoriesFor: #refresh!commands!private! !
-!RegEdit categoriesFor: #rename!commands!private! !
-!RegEdit categoriesFor: #renameSelectedKey!commands!private! !
-!RegEdit categoriesFor: #renameSelectedValue!commands!private! !
-!RegEdit categoriesFor: #resourceLib!constants!public! !
-!RegEdit categoriesFor: #selectedKey!accessing!public! !
-!RegEdit categoriesFor: #selectedValue!accessing!public! !
-!RegEdit categoriesFor: #statusBar!commands!private! !
-!RegEdit categoriesFor: #toggleStatusBar!commands!private! !
+!UI.Examples.RegEdit categoriesFor: #aboutRegistryEditor!commands!private! !
+!UI.Examples.RegEdit categoriesFor: #additionalAccelerators!constants!private! !
+!UI.Examples.RegEdit categoriesFor: #chooseFont!commands!private! !
+!UI.Examples.RegEdit categoriesFor: #copyKeyName!commands!private! !
+!UI.Examples.RegEdit categoriesFor: #createComponents!initializing!public! !
+!UI.Examples.RegEdit categoriesFor: #createSchematicWiring!initializing!public! !
+!UI.Examples.RegEdit categoriesFor: #delete!commands!private! !
+!UI.Examples.RegEdit categoriesFor: #deleteSelectedKey!commands!private! !
+!UI.Examples.RegEdit categoriesFor: #deleteSelectedValue!commands!private! !
+!UI.Examples.RegEdit categoriesFor: #exportKey:toFile:!filing!private! !
+!UI.Examples.RegEdit categoriesFor: #exportRegistryFile!commands!private! !
+!UI.Examples.RegEdit categoriesFor: #fileTypes!constants!private! !
+!UI.Examples.RegEdit categoriesFor: #importRegistryFile!commands!private! !
+!UI.Examples.RegEdit categoriesFor: #initialize!initializing!private! !
+!UI.Examples.RegEdit categoriesFor: #newBinaryValue!commands!public! !
+!UI.Examples.RegEdit categoriesFor: #newDWORDValue!commands!public! !
+!UI.Examples.RegEdit categoriesFor: #newKey!commands!public! !
+!UI.Examples.RegEdit categoriesFor: #newStringValue!commands!public! !
+!UI.Examples.RegEdit categoriesFor: #newValue:!commands!public! !
+!UI.Examples.RegEdit categoriesFor: #newValueName!commands!private! !
+!UI.Examples.RegEdit categoriesFor: #onAboutToRenameKey:accept:!event handling!public! !
+!UI.Examples.RegEdit categoriesFor: #onAboutToRenameValue:accept:!event handling!public! !
+!UI.Examples.RegEdit categoriesFor: #onKey:renamedTo:accept:!event handling!public! !
+!UI.Examples.RegEdit categoriesFor: #onKeySelected!event handling!private! !
+!UI.Examples.RegEdit categoriesFor: #onValue:renamedTo:accept:!event handling!public! !
+!UI.Examples.RegEdit categoriesFor: #onViewOpened!event handling!public! !
+!UI.Examples.RegEdit categoriesFor: #queryCommand:!commands!private! !
+!UI.Examples.RegEdit categoriesFor: #refresh!commands!private! !
+!UI.Examples.RegEdit categoriesFor: #rename!commands!private! !
+!UI.Examples.RegEdit categoriesFor: #renameSelectedKey!commands!private! !
+!UI.Examples.RegEdit categoriesFor: #renameSelectedValue!commands!private! !
+!UI.Examples.RegEdit categoriesFor: #resourceLib!constants!public! !
+!UI.Examples.RegEdit categoriesFor: #selectedKey!accessing!public! !
+!UI.Examples.RegEdit categoriesFor: #selectedValue!accessing!public! !
+!UI.Examples.RegEdit categoriesFor: #statusBar!commands!private! !
+!UI.Examples.RegEdit categoriesFor: #toggleStatusBar!commands!private! !
 
-!RegEdit class methodsFor!
+!UI.Examples.RegEdit class methodsFor!
 
 about
 	"Private - Pop up a little helpful info. about this sample program."
@@ -499,10 +499,10 @@ resource_Default_view
 	DO NOT EDIT OR RECATEGORIZE THIS METHOD.
 
 	If you wish to modify this resource evaluate:
-	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Default_view)
+	Tools.ViewComposer openOn: (UI.ResourceIdentifier class: self selector: #resource_Default_view)
 	"
 
-	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.ShellView) 34 27 nil nil 8 #(13565952 65536) 416 nil 327686 ##(Smalltalk.Color) #default nil 37 nil 263174 ##(Smalltalk.Font) nil true 459014 ##(Smalltalk.LOGFONT) 8 #[245 255 255 255 0 0 0 0 0 0 0 0 0 0 0 0 144 1 0 0 0 0 0 0 3 2 1 34 77 105 99 114 111 115 111 102 116 32 83 97 110 115 32 83 101 114 105 102 0 0 0 0 0 0 0 0 0 0 0 0] 328198 ##(Smalltalk.Point) 193 193 nil 416 788230 ##(Smalltalk.BorderLayout) 1 1 nil 410 ##(Smalltalk.StatusBar) 34 18 nil 416 34 2 8 1140850956 1 640 nil 480 nil 7 nil nil nil 640 nil 8 1903688272 170 192 34 2 853766 ##(Smalltalk.StatusBarItem) 1 -1 640 nil 459270 ##(Smalltalk.Message) #fullPath 8 #() nil nil 8 'key name' 34 1 768 1115142 ##(Smalltalk.StatusBarNullItem) 513 1 640 nil nil 983302 ##(Smalltalk.MessageSequence) 138 144 34 1 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 578 1 631 578 1349 43 640 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 59 1 0 0 162 2 0 0 80 1 0 0] 8 #() 578 193 193 nil 27 nil nil 410 ##(Smalltalk.ContainerView) 34 15 nil 416 34 2 8 1140850688 131073 1120 nil 480 nil 7 nil nil nil 1120 1180166 ##(Smalltalk.ProportionalLayout) 170 176 34 4 410 ##(Smalltalk.ListView) 34 30 nil 1120 34 2 8 1140955717 1025 1248 590662 2 ##(Smalltalk.ListModel) 138 144 8 #() nil 1310726 ##(Smalltalk.IdentitySearchPolicy) 480 nil 7 265030 4 ##(Smalltalk.Menu) nil true 34 4 984134 2 ##(Smalltalk.CommandMenuItem) 1 1180998 4 ##(Smalltalk.CommandDescription) #modifySelectedValue 8 'Modify' 1 5 nil nil nil 983366 1 ##(Smalltalk.DividerMenuItem) 4097 1458 1 1490 #deleteSelectedValue 8 '&Delete' 1 1 nil nil nil 1458 1 1490 #renameSelectedValue 8 '&Rename' 1 1 nil nil nil 8 '' nil 1 nil nil nil nil nil nil nil 1248 nil 8 1903904528 ##(Smalltalk.BasicListAbstract) 787814 3 ##(Smalltalk.BlockClosure) 0 nil 1180966 ##(Smalltalk.CompiledExpression) 4 1 ##(Smalltalk.UndefinedObject) 8 'doIt' 8 '[:o | (RegEdit iconFor: o value) imageIndex]' 8 #[32 105 45 17 142 177 160 106] 721414 ##(Smalltalk.Association) #RegEdit ##(Smalltalk.RegEdit) #iconFor: #imageIndex 1712 7 257 nil 1049926 1 ##(Smalltalk.IconImageManager) nil nil nil nil nil nil 138 144 34 2 920646 5 ##(Smalltalk.ListViewColumn) 8 'Name' 451 #left 1698 0 nil 1730 4 1 ##(Smalltalk.UndefinedObject) 8 'doIt' 8 '[:x | x isEmpty ifTrue: [''(Default)''] ifFalse: [x displayString]]' 8 #[32 105 17 158 119 30 106 17 160 106] #isEmpty 8 '(Default)' #displayString 1952 7 257 nil 1698 0 nil 1730 1 83886081 ##(Smalltalk.UndefinedObject) 8 'doIt' 8 '[:a :b | a <= b]' 8 #[29 105 233 1 130 106] 2048 7 513 nil 786 #key 8 #() nil 1248 1904 1 nil nil 1906 8 'Data' 601 #left 1698 0 nil 1730 3 1 ##(Smalltalk.UndefinedObject) 8 'doIt' 8 '[:v | RegEdit displayStringForValue: v]' 8 #[31 105 45 17 177 106] 1824 #displayStringForValue: 2192 7 257 nil 1698 0 nil 1730 2 1 ##(Smalltalk.UndefinedObject) 8 'doIt' 8 '[:a :b | a displayString <= b displayString]' 8 #[30 105 17 158 18 158 130 106] #displayString 2272 7 513 nil 786 #value 8 #() nil 1248 1904 1 nil nil #report 1360 nil 131073 nil 8 #(nil) 898 138 144 34 3 962 #createAt:extent: 34 2 578 457 1 578 893 631 1248 962 #contextMenu: 34 1 1424 1248 962 #text: 34 1 8 'Name' 1248 1042 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 228 0 0 0 0 0 0 0 162 2 0 0 59 1 0 0] 8 #() 1104 nil 27 5 410 ##(Smalltalk.Splitter) 34 12 nil 1120 34 2 8 1140850688 1 2640 nil 480 nil 519 nil nil nil 1510470 1 ##(Smalltalk.DraggableViewInteractor) 2640 nil 1 #left nil nil nil 578 1 1 578 9 9 nil 2736 nil 898 138 144 34 1 962 #createAt:extent: 34 2 578 447 1 578 11 631 2640 1042 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 223 0 0 0 0 0 0 0 228 0 0 0 59 1 0 0] 8 #() 1104 nil 27 1 false 170 192 34 4 410 ##(Smalltalk.TreeView) 34 27 nil 1120 34 2 8 1140916743 1025 2960 590918 3 ##(Smalltalk.TreeModel) nil 1392 525062 ##(Smalltalk.TreeNode) nil nil nil 170 192 1360 480 nil 7 1410 nil true 34 11 1458 1 1490 #expandSelection 8 'Expand/Collapse' 1 1 nil nil nil 1410 nil true 34 5 1458 1 1490 #newKey 8 '&Key' 1 5 nil nil nil 1538 4097 1458 1 1490 #newStringValue 8 '&String Value' 1 1 nil nil nil 1458 1 1490 #newBinaryValue 8 '&Binary Value' 1 1 nil nil nil 1458 1 1490 #newDWORDValue 8 '&DWORD Value' 1 1 nil nil nil 8 '&New' nil 1 nil nil nil nil nil 1458 1 1490 #findItem 8 '&Find...' 1 5 nil nil nil 1538 4097 1458 1 1490 #deleteSelectedKey 8 '&Delete' 1 1 nil nil nil 1458 1 1490 #renameSelectedKey 8 '&Rename' 1 1 nil nil nil 1538 4097 1458 1 1490 #exportRegistryFile 8 '&Export' 1 1 nil nil nil 1458 1 1490 #permissions 8 '&Permissions...' 1 1 nil nil nil 1538 4097 1458 1 1490 #copyKeyName 8 '&Copy Key Name' 1 1 nil nil nil 8 '' nil 1 nil nil nil nil nil nil nil 2960 nil 8 1903706176 786 #name 8 #() 1698 0 nil 1730 4 1 ##(Smalltalk.UndefinedObject) 8 'doIt' 8 '[:k | RegEdit keyIcon imageIndex]' 8 #[32 105 45 159 160 106] 1824 #keyIcon #imageIndex 3840 7 257 nil 1856 nil nil nil nil nil 170 176 1360 9 #smallIcons 1 170 ##(Smalltalk.PluggableLookupTable) 1360 898 138 144 34 2 962 #createAt:extent: 34 2 578 1 1 578 447 631 2960 962 #contextMenu: 34 1 3104 2960 1042 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 223 0 0 0 59 1 0 0] 8 #() 1104 nil 27 8 'keys' 1248 8 'values' nil 898 138 144 34 1 962 #createAt:extent: 34 2 578 1 1 578 1349 631 1120 1042 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 162 2 0 0 59 1 0 0] 34 3 2960 2640 1248 1104 nil 27 170 192 34 2 640 8 'status' nil 461638 4 ##(Smalltalk.MenuBar) nil true 34 4 1410 nil true 34 12 1458 1 1490 #importRegistryFile 8 'Import...' 1 1 nil nil nil 1458 1 1490 #exportRegistryFile 8 '&Export...' 1 1 nil nil nil 1538 4097 1458 1 1490 #loadHive 8 '&Load Hive' 1 1 nil nil nil 1458 1 1490 #unloadHive 8 '&Unload Hive' 1 1 nil nil nil 1538 4097 1458 1 1490 #connectNetworkRegistry 8 '&Connect Network Registry' 1 1 nil nil nil 1458 1 1490 #disconnectNetworkRegistry 8 '&Disconnect Network Registry' 1 1 nil nil nil 1538 4097 1458 1 1490 #print 8 '&Print' 8353 1 nil nil nil 1538 4097 1458 1 1490 #exit 8 'E&xit' 1 1 nil nil nil 8 '&Registry' nil 1 nil nil 11221 nil nil 1410 nil true 34 11 1410 nil true 34 7 1458 1 1490 #newKey 8 '&Key' 1 1 nil nil nil 1538 4097 1458 1 1490 #newStringValue 8 '&String Value' 1 1 nil nil nil 1458 1 1490 #newBinaryValue 8 '&Binary Value' 1 1 nil nil nil 1458 1 1490 #newDWORDValue 8 '&DWORD Value' 1 1 nil nil nil 1458 1 1490 #newMultiStringValue 8 '&Multi-String Value' 1 1 nil nil nil 1458 1 1490 #newExpandableStringValue 8 '&Expandable String Value' 1 1 nil nil nil 8 '&New' nil 1 nil nil 11235 nil nil 1538 4097 1458 1 1490 #permissions 8 '&Permissions...' 1 1 nil nil nil 1538 4097 1458 1 1490 #delete 8 '&Delete' 605 1 nil nil nil 1458 1 1490 #rename 8 '&Rename' 1 1 nil nil nil 1538 4097 1458 1 1490 #copyKeyName 8 '&Copy Key Name' 1 1 nil nil nil 1538 4097 1458 1 1490 #find 8 '&Find...' 8333 1 nil nil nil 1458 1 1490 #findNext 8 'Find Ne&xt' 229 1 nil nil nil 8 '&Edit' nil 1 nil nil 11249 nil nil 1410 nil true 34 8 1458 1 1490 #toggleStatusBar 8 '&Status Bar' 1 1 nil nil nil 1538 4097 1458 1 1490 #viewSplit 8 'Sp&lit' 1 1 nil nil nil 1538 4097 1458 1 1490 #viewDisplayBinary 8 '&Display Binary Data' 1 1 nil nil nil 1538 4097 1458 1 1490 #refresh 8 '&Refresh' 233 1 nil nil nil 1458 1 1490 #chooseFont 8 '&Font' 1 1 nil nil nil 8 '&View' nil 1 nil nil 11261 nil nil 1410 nil true 34 1 1458 1 1490 #aboutRegistryEditor 8 '&About Registry Editor' 1 1 nil nil nil 8 '&Help' nil 1 nil nil 11265 nil nil 8 '' nil 1 nil nil nil nil nil nil nil nil 1 nil nil nil nil 1 nil nil 898 138 144 34 3 962 #createAt:extent: 34 2 578 3839 21 578 1381 791 416 962 #text: 34 1 8 'Dolphin Registry Editor' 416 962 #updateMenuBar 1360 416 1042 8 #[44 0 0 0 0 0 0 0 0 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 127 7 0 0 10 0 0 0 49 10 0 0 149 1 0 0] 34 2 1120 640 1104 nil 27 )!
+	^#(#'!!STL' 4 985166 10 ##(UI.STBViewProxy) ##(UI.ShellView) 34 27 nil nil 8 #(13565952 65536) 416 nil 917510 ##(Graphics.Color) #default nil 39 nil 852998 ##(Graphics.Font) nil true 655622 ##(OS.LOGFONT) 8 #[245 255 255 255 0 0 0 0 0 0 0 0 0 0 0 0 144 1 0 0 0 0 0 0 3 2 1 34 77 105 99 114 111 115 111 102 116 32 83 97 110 115 32 83 101 114 105 102 0 0 0 0 0 0 0 0 0 0 0 0] 918022 ##(Graphics.Point) 193 193 nil 416 984838 ##(UI.BorderLayout) 1 1 nil 410 ##(UI.StatusBar) 34 18 nil 416 34 2 8 1140850956 1 640 nil 480 nil 7 nil nil nil 640 nil 8 1857562352 170 192 34 2 1050374 ##(UI.StatusBarItem) 1 -1 640 nil 786950 ##(Core.Message) #fullPath 8 #() nil nil 8 'key name' 34 1 768 1311750 ##(UI.StatusBarNullItem) 513 1 640 nil nil 1310982 ##(Core.MessageSequence) 138 144 34 1 1049350 ##(Core.MessageSend) #createAt:extent: 34 2 578 1 631 578 1349 43 640 1179910 ##(OS.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 59 1 0 0 162 2 0 0 80 1 0 0] 8 #() 578 193 193 nil 27 nil nil 410 ##(UI.ContainerView) 34 15 nil 416 34 2 8 1140850688 131073 1120 nil 480 nil 7 nil nil nil 1120 1376774 ##(UI.ProportionalLayout) 170 176 34 4 410 ##(UI.ListView) 34 45 nil 1120 34 2 8 1140955717 1025 1248 787270 2 ##(UI.ListModel) 138 144 8 #() nil 1769478 ##(Kernel.IdentitySearchPolicy) 480 nil 7 461638 4 ##(UI.Menu) nil true 34 4 1180742 2 ##(UI.CommandMenuItem) 1 1377606 4 ##(UI.CommandDescription) #modifySelectedValue 8 'Modify' 1 5 nil nil nil 1179974 1 ##(UI.DividerMenuItem) 4097 1458 1 1490 #deleteSelectedValue 8 '&Delete' 1 1 nil nil nil 1458 1 1490 #renameSelectedValue 8 '&Rename' 1 1 nil nil nil 8 '' nil 1 nil nil nil nil nil nil nil 1248 nil 8 1857839872 ##(UI.BasicListAbstract) 1246566 3 ##(Kernel.BlockClosure) 0 nil 1639718 ##(Kernel.CompiledExpression) 4 1 ##(Core.UndefinedObject) 8 'doIt' 8 '[:o | (RegEdit iconFor: o value) imageIndex]' 8 #[32 105 45 17 142 177 160 106] 1049094 ##(Core.Association) #'UI.Examples.RegEdit' ##(UI.Examples.RegEdit) #iconFor: #imageIndex 1712 7 257 nil 1639750 1 ##(Graphics.IconImageManager) nil nil nil nil nil nil 138 144 34 2 1117254 5 ##(UI.ListViewColumn) 8 'Name' 451 #left 1698 0 nil 1730 4 1 ##(Core.UndefinedObject) 8 'doIt' 8 '[:x | x isEmpty ifTrue: [''(Default)''] ifFalse: [x displayString]]' 8 #[32 105 17 158 119 30 106 17 160 106] #isEmpty 8 '(Default)' #displayString 1952 7 257 nil 1698 0 nil 1730 1 83886081 ##(Core.UndefinedObject) 8 'doIt' 8 '[:a :b | a <= b]' 8 #[29 105 233 1 130 106] 2048 7 513 nil 786 #key 8 #() nil 1248 1904 1 nil nil 1906 8 'Data' 601 #left 1698 0 nil 1730 3 1 ##(Core.UndefinedObject) 8 'doIt' 8 '[:v | RegEdit displayStringForValue: v]' 8 #[31 105 45 17 177 106] 1824 #displayStringForValue: 2192 7 257 nil 1698 0 nil 1730 2 1 ##(Core.UndefinedObject) 8 'doIt' 8 '[:a :b | a displayString <= b displayString]' 8 #[30 105 17 158 18 158 130 106] #displayString 2272 7 513 nil 786 #value 8 #() nil 1248 1904 1 nil nil #report 8 #() nil 131073 nil 1 nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil 898 138 144 34 3 962 #createAt:extent: 34 2 578 457 1 578 893 631 1248 962 #contextMenu: 34 1 1424 1248 962 #text: 34 1 8 'Name' 1248 1042 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 228 0 0 0 0 0 0 0 162 2 0 0 59 1 0 0] 8 #() 1104 nil 35 5 410 ##(UI.Splitter) 34 12 nil 1120 34 2 8 1140850688 1 2640 nil 480 nil 519 nil nil nil 1707078 1 ##(UI.DraggableViewInteractor) 2640 nil 1 #left nil nil nil 578 1 1 578 9 9 nil 2736 nil 898 138 144 34 1 962 #createAt:extent: 34 2 578 447 1 578 11 631 2640 1042 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 223 0 0 0 0 0 0 0 228 0 0 0 59 1 0 0] 8 #() 1104 nil 27 1 false 170 192 34 4 410 ##(UI.TreeView) 34 27 nil 1120 34 2 8 1140916743 1025 2960 787526 3 ##(UI.TreeModel) nil 1392 721670 ##(UI.TreeNode) nil nil nil 170 192 1360 480 nil 7 1410 nil true 34 11 1458 1 1490 #expandSelection 8 'Expand/Collapse' 1 1 nil nil nil 1410 nil true 34 5 1458 1 1490 #newKey 8 '&Key' 1 5 nil nil nil 1538 4097 1458 1 1490 #newStringValue 8 '&String Value' 1 1 nil nil nil 1458 1 1490 #newBinaryValue 8 '&Binary Value' 1 1 nil nil nil 1458 1 1490 #newDWORDValue 8 '&DWORD Value' 1 1 nil nil nil 8 '&New' nil 1 nil nil nil nil nil 1458 1 1490 #findItem 8 '&Find...' 1 5 nil nil nil 1538 4097 1458 1 1490 #deleteSelectedKey 8 '&Delete' 1 1 nil nil nil 1458 1 1490 #renameSelectedKey 8 '&Rename' 1 1 nil nil nil 1538 4097 1458 1 1490 #exportRegistryFile 8 '&Export' 1 1 nil nil nil 1458 1 1490 #permissions 8 '&Permissions...' 1 1 nil nil nil 1538 4097 1458 1 1490 #copyKeyName 8 '&Copy Key Name' 1 1 nil nil nil 8 '' nil 1 nil nil nil nil nil nil nil 2960 nil 8 1857683408 786 #name 8 #() 1698 0 nil 1730 4 1 ##(Core.UndefinedObject) 8 'doIt' 8 '[:k | RegEdit keyIcon imageIndex]' 8 #[32 105 45 159 160 106] 1824 #keyIcon #imageIndex 3840 7 257 nil 1856 nil nil nil nil nil 170 176 1360 9 #smallIcons 1 170 192 1360 898 138 144 34 2 962 #createAt:extent: 34 2 578 1 1 578 447 631 2960 962 #contextMenu: 34 1 3104 2960 1042 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 223 0 0 0 59 1 0 0] 8 #() 1104 nil 27 8 'keys' 1248 8 'values' nil 898 138 144 34 1 962 #createAt:extent: 34 2 578 1 1 578 1349 631 1120 1042 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 162 2 0 0 59 1 0 0] 34 3 2960 2640 1248 1104 nil 27 170 192 34 2 640 8 'status' nil 658246 4 ##(UI.MenuBar) nil true 34 4 1410 nil true 34 12 1458 1 1490 #importRegistryFile 8 'Import...' 1 1 nil nil nil 1458 1 1490 #exportRegistryFile 8 '&Export...' 1 1 nil nil nil 1538 4097 1458 1 1490 #loadHive 8 '&Load Hive' 1 1 nil nil nil 1458 1 1490 #unloadHive 8 '&Unload Hive' 1 1 nil nil nil 1538 4097 1458 1 1490 #connectNetworkRegistry 8 '&Connect Network Registry' 1 1 nil nil nil 1458 1 1490 #disconnectNetworkRegistry 8 '&Disconnect Network Registry' 1 1 nil nil nil 1538 4097 1458 1 1490 #print 8 '&Print' 8353 1 nil nil nil 1538 4097 1458 1 1490 #exit 8 'E&xit' 1 1 nil nil nil 8 '&Registry' nil 1 nil nil 27219 nil nil 1410 nil true 34 11 1410 nil true 34 7 1458 1 1490 #newKey 8 '&Key' 1 1 nil nil nil 1538 4097 1458 1 1490 #newStringValue 8 '&String Value' 1 1 nil nil nil 1458 1 1490 #newBinaryValue 8 '&Binary Value' 1 1 nil nil nil 1458 1 1490 #newDWORDValue 8 '&DWORD Value' 1 1 nil nil nil 1458 1 1490 #newMultiStringValue 8 '&Multi-String Value' 1 1 nil nil nil 1458 1 1490 #newExpandableStringValue 8 '&Expandable String Value' 1 1 nil nil nil 8 '&New' nil 1 nil nil 27233 nil nil 1538 4097 1458 1 1490 #permissions 8 '&Permissions...' 1 1 nil nil nil 1538 4097 1458 1 1490 #delete 8 '&Delete' 605 1 nil nil nil 1458 1 1490 #rename 8 '&Rename' 1 1 nil nil nil 1538 4097 1458 1 1490 #copyKeyName 8 '&Copy Key Name' 1 1 nil nil nil 1538 4097 1458 1 1490 #find 8 '&Find...' 8333 1 nil nil nil 1458 1 1490 #findNext 8 'Find Ne&xt' 229 1 nil nil nil 8 '&Edit' nil 1 nil nil 27247 nil nil 1410 nil true 34 8 1458 1 1490 #toggleStatusBar 8 '&Status Bar' 1 1 nil nil nil 1538 4097 1458 1 1490 #viewSplit 8 'Sp&lit' 1 1 nil nil nil 1538 4097 1458 1 1490 #viewDisplayBinary 8 '&Display Binary Data' 1 1 nil nil nil 1538 4097 1458 1 1490 #refresh 8 '&Refresh' 233 1 nil nil nil 1458 1 1490 #chooseFont 8 '&Font' 1 1 nil nil nil 8 '&View' nil 1 nil nil 27259 nil nil 1410 nil true 34 1 1458 1 1490 #aboutRegistryEditor 8 '&About Registry Editor' 1 1 nil nil nil 8 '&Help' nil 1 nil nil 27263 nil nil 8 '' nil 1 nil nil nil nil nil nil nil nil 1 nil nil nil nil 1 nil nil 898 138 144 34 2 962 #createAt:extent: 34 2 578 6143 21 578 1381 791 416 962 #text: 34 1 8 'Dolphin Registry Editor' 416 1042 8 #[44 0 0 0 0 0 0 0 0 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 177 14 0 0 149 1 0 0] 34 2 1120 640 1104 nil 27 )!
 
 shutdownOnExit
 	"Answer whether a runtime session should be shutdown when an instance of the receiver is closed."
@@ -513,16 +513,16 @@ stringIcon
 	"Answers an Icon that can be used to string values."
 
 	^RegKeyValues icon! !
-!RegEdit class categoriesFor: #about!enquiries!private! !
-!RegEdit class categoriesFor: #binaryIcon!constants!public! !
-!RegEdit class categoriesFor: #displayOn:!displaying!public! !
-!RegEdit class categoriesFor: #displayStringForValue:!displaying!private! !
-!RegEdit class categoriesFor: #icon!constants!public! !
-!RegEdit class categoriesFor: #iconFor:!constants!displaying!private! !
-!RegEdit class categoriesFor: #initialize!development!initializing!private! !
-!RegEdit class categoriesFor: #keyIcon!constants!public! !
-!RegEdit class categoriesFor: #onPreStripImage!class hierarchy-removing!private! !
-!RegEdit class categoriesFor: #resource_Default_view!public!resources-views! !
-!RegEdit class categoriesFor: #shutdownOnExit!public!testing! !
-!RegEdit class categoriesFor: #stringIcon!constants!public! !
+!UI.Examples.RegEdit class categoriesFor: #about!enquiries!private! !
+!UI.Examples.RegEdit class categoriesFor: #binaryIcon!constants!public! !
+!UI.Examples.RegEdit class categoriesFor: #displayOn:!displaying!public! !
+!UI.Examples.RegEdit class categoriesFor: #displayStringForValue:!displaying!private! !
+!UI.Examples.RegEdit class categoriesFor: #icon!constants!public! !
+!UI.Examples.RegEdit class categoriesFor: #iconFor:!constants!displaying!private! !
+!UI.Examples.RegEdit class categoriesFor: #initialize!development!initializing!private! !
+!UI.Examples.RegEdit class categoriesFor: #keyIcon!constants!public! !
+!UI.Examples.RegEdit class categoriesFor: #onPreStripImage!class hierarchy-removing!private! !
+!UI.Examples.RegEdit class categoriesFor: #resource_Default_view!public!resources-views! !
+!UI.Examples.RegEdit class categoriesFor: #shutdownOnExit!public!testing! !
+!UI.Examples.RegEdit class categoriesFor: #stringIcon!constants!public! !
 

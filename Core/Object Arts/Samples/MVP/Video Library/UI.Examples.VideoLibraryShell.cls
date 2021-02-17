@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Shell subclass: #VideoLibraryShell
+UI.Shell subclass: #'UI.Examples.VideoLibraryShell'
 	instanceVariableNames: 'ownerPresenter tapesPresenter recordingsPresenter'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-VideoLibraryShell guid: (GUID fromString: '{46aa1198-1908-4799-b06c-c003165d09ff}')!
-VideoLibraryShell comment: 'VideoLibraryShell a modeless user interface for displaying and editing the contents of a VideoLibrary. This class is part of the Video Library sample package. Please see the package comment for more details.
+UI.Examples.VideoLibraryShell guid: (Core.GUID fromString: '{46aa1198-1908-4799-b06c-c003165d09ff}')!
+UI.Examples.VideoLibraryShell comment: 'VideoLibraryShell a modeless user interface for displaying and editing the contents of a VideoLibrary. This class is part of the Video Library sample package. Please see the package comment for more details.
 
 Example:usage
 
@@ -16,17 +16,18 @@ VideoLibraryShell show.
 or 
 
 VideoLibraryShell showOn: (VideoLibrary new owner: ''Mary Joe'')'!
-!VideoLibraryShell categoriesForClass!Samples! !
-!VideoLibraryShell methodsFor!
+!UI.Examples.VideoLibraryShell categoriesForClass!Samples! !
+!UI.Examples.VideoLibraryShell methodsFor!
 
 addTape
 	"Create a new tape and add it to the receiver's library"
 
 	| tape |
 	tape := NewVideoTapeDialog showModal.
-	tape notNil ifTrue: [
-		tapesPresenter model add: tape.
-		self tape: tape ]!
+	tape notNil
+		ifTrue: 
+			[tapesPresenter model add: tape.
+			self tape: tape]!
 
 createComponents
 	"Create the presenters contained by the receiver"
@@ -49,8 +50,7 @@ createSchematicWiring
 editRecording
 	"Edits the current recording in a VideoRecordingDialog"
 
-	VideoRecordingDialog showModalOn: self recording
-	!
+	VideoRecordingDialog showModalOn: self recording!
 
 erase
 	"Removes a programme recording from the current tape"
@@ -107,10 +107,10 @@ record
 
 	| recording |
 	recording := VideoRecordingDialog showModalOn: VideoRecording new.
-	recording notNil ifTrue: [
-		recordingsPresenter model add: recording.
-		self recording: recording ].
-	!
+	recording notNil
+		ifTrue: 
+			[recordingsPresenter model add: recording.
+			self recording: recording]!
 
 recording
 	"Answer the current selected recording in the receiver or nil if there is none"
@@ -125,8 +125,6 @@ recording: aVideoRecordingOrNil
 removeTape
 	"Removes the current tape from the receiver's library"
 
-	| index |
-	index := tapesPresenter selectionByIndex.
 	(MessageBox confirm: ('Are you sure you wish to remove the tape:
 <1d> from this library?' 
 				expandMacrosWith: self tape)
@@ -141,25 +139,25 @@ tape: aVideoTapeOrNil
 	"Sets the current selected tape in the receiver to aVideoTapeOrNil"
 
 	^tapesPresenter selectionOrNil: aVideoTapeOrNil! !
-!VideoLibraryShell categoriesFor: #addTape!commands!public! !
-!VideoLibraryShell categoriesFor: #createComponents!initializing!public! !
-!VideoLibraryShell categoriesFor: #createSchematicWiring!initializing!public! !
-!VideoLibraryShell categoriesFor: #editRecording!commands!public! !
-!VideoLibraryShell categoriesFor: #erase!commands!public! !
-!VideoLibraryShell categoriesFor: #hasSelectedRecording!accessing!public! !
-!VideoLibraryShell categoriesFor: #hasSelectedTape!accessing!public! !
-!VideoLibraryShell categoriesFor: #model:!accessing!public! !
-!VideoLibraryShell categoriesFor: #onTapeSelected!event handling!private! !
-!VideoLibraryShell categoriesFor: #onViewOpened!event handling!public! !
-!VideoLibraryShell categoriesFor: #queryCommand:!commands!private! !
-!VideoLibraryShell categoriesFor: #record!commands!public! !
-!VideoLibraryShell categoriesFor: #recording!accessing!public! !
-!VideoLibraryShell categoriesFor: #recording:!accessing!public! !
-!VideoLibraryShell categoriesFor: #removeTape!commands!public! !
-!VideoLibraryShell categoriesFor: #tape!accessing!public! !
-!VideoLibraryShell categoriesFor: #tape:!accessing!public! !
+!UI.Examples.VideoLibraryShell categoriesFor: #addTape!commands!public! !
+!UI.Examples.VideoLibraryShell categoriesFor: #createComponents!initializing!public! !
+!UI.Examples.VideoLibraryShell categoriesFor: #createSchematicWiring!initializing!public! !
+!UI.Examples.VideoLibraryShell categoriesFor: #editRecording!commands!public! !
+!UI.Examples.VideoLibraryShell categoriesFor: #erase!commands!public! !
+!UI.Examples.VideoLibraryShell categoriesFor: #hasSelectedRecording!accessing!public! !
+!UI.Examples.VideoLibraryShell categoriesFor: #hasSelectedTape!accessing!public! !
+!UI.Examples.VideoLibraryShell categoriesFor: #model:!accessing!public! !
+!UI.Examples.VideoLibraryShell categoriesFor: #onTapeSelected!event handling!private! !
+!UI.Examples.VideoLibraryShell categoriesFor: #onViewOpened!event handling!public! !
+!UI.Examples.VideoLibraryShell categoriesFor: #queryCommand:!commands!private! !
+!UI.Examples.VideoLibraryShell categoriesFor: #record!commands!public! !
+!UI.Examples.VideoLibraryShell categoriesFor: #recording!accessing!public! !
+!UI.Examples.VideoLibraryShell categoriesFor: #recording:!accessing!public! !
+!UI.Examples.VideoLibraryShell categoriesFor: #removeTape!commands!public! !
+!UI.Examples.VideoLibraryShell categoriesFor: #tape!accessing!public! !
+!UI.Examples.VideoLibraryShell categoriesFor: #tape:!accessing!public! !
 
-!VideoLibraryShell class methodsFor!
+!UI.Examples.VideoLibraryShell class methodsFor!
 
 defaultModel
 	"Answer a default model to be assigned to the receiver when it
@@ -205,10 +203,10 @@ shutdownOnExit
 	"Answer whether a runtime session should be shutdown when an instance of the receiver is closed."
 
 	^true! !
-!VideoLibraryShell class categoriesFor: #defaultModel!models!public! !
-!VideoLibraryShell class categoriesFor: #displayOn:!displaying!public! !
-!VideoLibraryShell class categoriesFor: #icon!constants!public! !
-!VideoLibraryShell class categoriesFor: #initialize!development!initializing!private! !
-!VideoLibraryShell class categoriesFor: #resource_Default_view!public!resources-views! !
-!VideoLibraryShell class categoriesFor: #shutdownOnExit!public!testing! !
+!UI.Examples.VideoLibraryShell class categoriesFor: #defaultModel!models!public! !
+!UI.Examples.VideoLibraryShell class categoriesFor: #displayOn:!displaying!public! !
+!UI.Examples.VideoLibraryShell class categoriesFor: #icon!constants!public! !
+!UI.Examples.VideoLibraryShell class categoriesFor: #initialize!development!initializing!private! !
+!UI.Examples.VideoLibraryShell class categoriesFor: #resource_Default_view!public!resources-views! !
+!UI.Examples.VideoLibraryShell class categoriesFor: #shutdownOnExit!public!testing! !
 

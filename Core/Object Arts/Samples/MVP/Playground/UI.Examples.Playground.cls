@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ShellView subclass: #Playground
+UI.ShellView subclass: #'UI.Examples.Playground'
 	instanceVariableNames: 'shapes'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Playground guid: (GUID fromString: '{87b4c721-026e-11d3-9fd7-00a0cc3e4a32}')!
-Playground comment: 'A Playground window is part of the Playground sample package learning aid for Smalltalk. A Playground is a <topView> window into which one or more geometric objects can be placed. These objects can then be manipulated by sending messages to them, usually from a workspace.
+UI.Examples.Playground guid: (Core.GUID fromString: '{87b4c721-026e-11d3-9fd7-00a0cc3e4a32}')!
+UI.Examples.Playground comment: 'A Playground window is part of the Playground sample package learning aid for Smalltalk. A Playground is a <topView> window into which one or more geometric objects can be placed. These objects can then be manipulated by sending messages to them, usually from a workspace.
 
 The objects to be placed in a Playground are normally of a class that is derived from the class <PlayShape>. Typical shapes might be <Triangle>, <Square>, <Circle> etc.The shapes can be added and removed from a <Playground> using the #add: and #remove: methods respectively. You can request a collection of all the shapes currently in the playground using #shapes. Once you have identified a particular shape you can send messages to communicate with it directly.
 
@@ -17,8 +17,8 @@ Instance Variables:
 	shapes		<OrderedCollection> of shapes within the playground.
 
 '!
-!Playground categoriesForClass!MVP-Views!Samples! !
-!Playground methodsFor!
+!UI.Examples.Playground categoriesForClass!MVP-Views!Samples! !
+!UI.Examples.Playground methodsFor!
 
 add: aPlayShape
 	"Adds aPlayShape to the receiver and causes it to be drawn. 
@@ -63,14 +63,14 @@ shapes
 	"Answer the collection of shapes held by the receiver"
 
 	^shapes! !
-!Playground categoriesFor: #add:!adding!public! !
-!Playground categoriesFor: #clear!operations!public! !
-!Playground categoriesFor: #initialize!initializing!private! !
-!Playground categoriesFor: #onPaintRequired:!event handling!public! !
-!Playground categoriesFor: #remove:!public!removing! !
-!Playground categoriesFor: #shapes!accessing!public! !
+!UI.Examples.Playground categoriesFor: #add:!adding!public! !
+!UI.Examples.Playground categoriesFor: #clear!operations!public! !
+!UI.Examples.Playground categoriesFor: #initialize!initializing!private! !
+!UI.Examples.Playground categoriesFor: #onPaintRequired:!event handling!public! !
+!UI.Examples.Playground categoriesFor: #remove:!public!removing! !
+!UI.Examples.Playground categoriesFor: #shapes!accessing!public! !
 
-!Playground class methodsFor!
+!UI.Examples.Playground class methodsFor!
 
 icon
 	"Answers an Icon that can be used to represent this class"
@@ -81,6 +81,6 @@ new
 	"Create and show a new instance of the receiver. Answer the new instance"
 
 	^super new show caption: 'A Playground'.! !
-!Playground class categoriesFor: #icon!constants!public! !
-!Playground class categoriesFor: #new!instance creation!public! !
+!UI.Examples.Playground class categoriesFor: #icon!constants!public! !
+!UI.Examples.Playground class categoriesFor: #new!instance creation!public! !
 

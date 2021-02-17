@@ -108,6 +108,7 @@ contents
 		yourself.
 	answer
 		add: #('Core\Object Arts\Dolphin\MVP\Models\Tree\Dolphin Tree Models.pax' #plain #imageBased);
+		add: #('Core\Object Arts\Dolphin\MVP\Models\Tree\Dolphin Folder Tree Model.pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\MVP\Presenters\Tree\Dolphin Tree Presenter.pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\MVP\Presenters\Boolean\Dolphin Boolean Presenter.pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\MVP\Views\Common Controls\Dolphin Common Controls.pax' #plain #imageBased);

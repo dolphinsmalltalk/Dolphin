@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Model subclass: #PersonalAccount
+Core.Model subclass: #'UI.Examples.PersonalAccount'
 	instanceVariableNames: 'name accountNumber initialBalance transactions currentBalance'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-PersonalAccount guid: (GUID fromString: '{87b4c668-026e-11d3-9fd7-00a0cc3e4a32}')!
-PersonalAccount comment: 'A PersonalAccount holds all details pertaining to a single account in the PersonalMoney system. 
+UI.Examples.PersonalAccount guid: (Core.GUID fromString: '{87b4c668-026e-11d3-9fd7-00a0cc3e4a32}')!
+UI.Examples.PersonalAccount comment: 'A PersonalAccount holds all details pertaining to a single account in the PersonalMoney system. 
 
 Instance Variables
 	accountNumber 	<String> containing the account number.
@@ -18,8 +18,8 @@ Instance Variables
 
 
 '!
-!PersonalAccount categoriesForClass!MVP-Models!Samples! !
-!PersonalAccount methodsFor!
+!UI.Examples.PersonalAccount categoriesForClass!MVP-Models!Samples! !
+!UI.Examples.PersonalAccount methodsFor!
 
 accountNumber
 	"Answer the account number of the receiver"
@@ -121,23 +121,23 @@ transactions
 	"Answer the transactions collection"
 
 	^transactions! !
-!PersonalAccount categoriesFor: #accountNumber!accessing!public! !
-!PersonalAccount categoriesFor: #accountNumber:!accessing!public! !
-!PersonalAccount categoriesFor: #addTransaction:!adding!public! !
-!PersonalAccount categoriesFor: #calculateCurrentBalance!operations!public! !
-!PersonalAccount categoriesFor: #currentBalance!accessing!public! !
-!PersonalAccount categoriesFor: #currentBalance:!accessing!public! !
-!PersonalAccount categoriesFor: #displayOn:!displaying!public! !
-!PersonalAccount categoriesFor: #initialBalance!accessing!public! !
-!PersonalAccount categoriesFor: #initialBalance:!accessing!public! !
-!PersonalAccount categoriesFor: #initialize!initializing!private! !
-!PersonalAccount categoriesFor: #name!accessing!public! !
-!PersonalAccount categoriesFor: #name:!accessing!public! !
-!PersonalAccount categoriesFor: #printOn:!printing!public! !
-!PersonalAccount categoriesFor: #removeTransaction:!public!removing! !
-!PersonalAccount categoriesFor: #transactions!accessing!public! !
+!UI.Examples.PersonalAccount categoriesFor: #accountNumber!accessing!public! !
+!UI.Examples.PersonalAccount categoriesFor: #accountNumber:!accessing!public! !
+!UI.Examples.PersonalAccount categoriesFor: #addTransaction:!adding!public! !
+!UI.Examples.PersonalAccount categoriesFor: #calculateCurrentBalance!operations!public! !
+!UI.Examples.PersonalAccount categoriesFor: #currentBalance!accessing!public! !
+!UI.Examples.PersonalAccount categoriesFor: #currentBalance:!accessing!public! !
+!UI.Examples.PersonalAccount categoriesFor: #displayOn:!displaying!public! !
+!UI.Examples.PersonalAccount categoriesFor: #initialBalance!accessing!public! !
+!UI.Examples.PersonalAccount categoriesFor: #initialBalance:!accessing!public! !
+!UI.Examples.PersonalAccount categoriesFor: #initialize!initializing!private! !
+!UI.Examples.PersonalAccount categoriesFor: #name!accessing!public! !
+!UI.Examples.PersonalAccount categoriesFor: #name:!accessing!public! !
+!UI.Examples.PersonalAccount categoriesFor: #printOn:!printing!public! !
+!UI.Examples.PersonalAccount categoriesFor: #removeTransaction:!public!removing! !
+!UI.Examples.PersonalAccount categoriesFor: #transactions!accessing!public! !
 
-!PersonalAccount class methodsFor!
+!UI.Examples.PersonalAccount class methodsFor!
 
 publishedEventsOfInstances
 	"Answer a Set of Symbols that describe the published events triggered
@@ -147,5 +147,5 @@ publishedEventsOfInstances
 		add: #currentBalanceChanged;
 		yourself.
 ! !
-!PersonalAccount class categoriesFor: #publishedEventsOfInstances!development!events!public! !
+!UI.Examples.PersonalAccount class categoriesFor: #publishedEventsOfInstances!development!events!public! !
 

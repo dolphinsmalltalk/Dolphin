@@ -13,13 +13,13 @@ Refactory.Browser.Tests.RewriteTestCase comment: ''!
 
 setUp
 	env := BrowserEnvironment new.
-	env := env forClasses: {Smalltalk.Animal. Smalltalk.Animal class}.
+	env := env forClasses: {UI.Examples.Animal. UI.Examples.Animal class}.
 	env := env referencesTo: #notify:caption:!
 
 testEnvironment
 	self
-		assert: (env includesSelector: #ask in: Smalltalk.Animal);
-		assert: (env includesSelector: #playGame in: Smalltalk.Animal class);
+		assert: (env includesSelector: #ask in: UI.Examples.Animal);
+		assert: (env includesSelector: #playGame in: UI.Examples.Animal class);
 		deny: env isEmpty!
 
 testFindReplace

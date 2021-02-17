@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Object subclass: #VideoRecording
+Core.Object subclass: #'UI.Examples.VideoRecording'
 	instanceVariableNames: 'title date time length'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-VideoRecording guid: (GUID fromString: '{62802c23-5ba3-4772-bfbe-a848ea29c27c}')!
-VideoRecording comment: 'VideoRecording is represents a programme recorded on a VideoTape. This class is part of the Video Library sample package. Please see the package comment for more details.'!
-!VideoRecording categoriesForClass!Samples! !
-!VideoRecording methodsFor!
+UI.Examples.VideoRecording guid: (Core.GUID fromString: '{62802c23-5ba3-4772-bfbe-a848ea29c27c}')!
+UI.Examples.VideoRecording comment: 'VideoRecording is represents a programme recorded on a VideoTape. This class is part of the Video Library sample package. Please see the package comment for more details.'!
+!UI.Examples.VideoRecording categoriesForClass!Samples! !
+!UI.Examples.VideoRecording methodsFor!
 
 date
 	"Answer the <Date> date when the receiver was aired.
@@ -131,21 +131,21 @@ title: titleString
 	Accessor Method"
 
 	title := titleString! !
-!VideoRecording categoriesFor: #date!accessing!public! !
-!VideoRecording categoriesFor: #date:!accessing!public! !
-!VideoRecording categoriesFor: #defaultLength!constants!private! !
-!VideoRecording categoriesFor: #defaultTitle!constants!private! !
-!VideoRecording categoriesFor: #displayOn:!printing!public! !
-!VideoRecording categoriesFor: #initialize!initializing!private! !
-!VideoRecording categoriesFor: #length!accessing!public! !
-!VideoRecording categoriesFor: #length:!accessing!public! !
-!VideoRecording categoriesFor: #printOn:!printing!public! !
-!VideoRecording categoriesFor: #time!accessing!public! !
-!VideoRecording categoriesFor: #time:!accessing!public! !
-!VideoRecording categoriesFor: #title!accessing!public! !
-!VideoRecording categoriesFor: #title:!accessing!public! !
+!UI.Examples.VideoRecording categoriesFor: #date!accessing!public! !
+!UI.Examples.VideoRecording categoriesFor: #date:!accessing!public! !
+!UI.Examples.VideoRecording categoriesFor: #defaultLength!constants!private! !
+!UI.Examples.VideoRecording categoriesFor: #defaultTitle!constants!private! !
+!UI.Examples.VideoRecording categoriesFor: #displayOn:!printing!public! !
+!UI.Examples.VideoRecording categoriesFor: #initialize!initializing!private! !
+!UI.Examples.VideoRecording categoriesFor: #length!accessing!public! !
+!UI.Examples.VideoRecording categoriesFor: #length:!accessing!public! !
+!UI.Examples.VideoRecording categoriesFor: #printOn:!printing!public! !
+!UI.Examples.VideoRecording categoriesFor: #time!accessing!public! !
+!UI.Examples.VideoRecording categoriesFor: #time:!accessing!public! !
+!UI.Examples.VideoRecording categoriesFor: #title!accessing!public! !
+!UI.Examples.VideoRecording categoriesFor: #title:!accessing!public! !
 
-!VideoRecording class methodsFor!
+!UI.Examples.VideoRecording class methodsFor!
 
 icon
 	"Answers an Icon that can be used to represent this class"
@@ -160,6 +160,6 @@ new
 	"
 
 	^super new initialize! !
-!VideoRecording class categoriesFor: #icon!constants!public! !
-!VideoRecording class categoriesFor: #new!instance creation!public! !
+!UI.Examples.VideoRecording class categoriesFor: #icon!constants!public! !
+!UI.Examples.VideoRecording class categoriesFor: #new!instance creation!public! !
 

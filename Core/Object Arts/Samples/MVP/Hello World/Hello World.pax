@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'Hello World'.
-package paxVersion: 2;
+package paxVersion: 2.1;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk Hello World Sample. 
 Copyright (c) Object Arts Ltd, 1998-2000.
@@ -9,7 +9,7 @@ This package contains a sample "Hello World" class.
 To open a "Hello World" window evaluate:
 
 ```
-HelloWorld show
+UI.Examples.HelloWorld show
 ```
 
 ## Deployment:
@@ -18,9 +18,9 @@ The sample does not have a RuntimeSessionManager, so we need to open an instance
 
 ```
 Smalltalk developmentSystem saveImage.	"Save the image if you don''t want to lose changes"
-HelloWorld show.
+UI.Examples.HelloWorld show.
 (ImageStripper new)
-	rootPackage: HelloWorld owningPackage;
+	rootPackage: UI.Examples.HelloWorld owningPackage;
 	executableName: ''HelloGui.exe'';
 	preserveAspectSetters: false;
 	stripDeprecatedMethods: true;
@@ -32,13 +32,13 @@ And to examine the content:
 ```
 Smalltalk developmentSystem browseDeploymentLog: ''HelloGui.xml''
 "Or view the log"
-XmlPad openOn: ''HelloGui.xml''
+UI.Examples.XmlPad openOn: ''HelloGui.xml''
 ```
 
 '.
 
 package basicScriptAt: #postinstall put: 'Smalltalk developmentSystem addSamplesFolderIcon: (SmalltalkSystemIcon
-			tool: HelloWorld
+			tool: UI.Examples.HelloWorld
 			icon: (TextTileIcon
 					text: $\x1F44B
 					fontName: ''Segoe UI Emoji''
@@ -48,22 +48,23 @@ package basicScriptAt: #postinstall put: 'Smalltalk developmentSystem addSamples
 			helpId: 10739)'.
 
 package setClassNames: #(
-	#{HelloWorld}
+	#{UI.Examples.HelloWorld}
 ).
 
 package setPrerequisites: #(
 	'..\..\..\Dolphin\Base\Dolphin'
 	'..\..\..\Dolphin\MVP\Base\Dolphin MVP Base'
+	'..\UI Examples'
 ).
 
 package!
 
 "Class Definitions"!
 
-ShellView subclass: #HelloWorld
+UI.ShellView subclass: #'UI.Examples.HelloWorld'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'Win32Constants'
+	imports: #(#{OS.Win32Constants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 

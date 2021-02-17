@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'Better Hello World'.
-package paxVersion: 2;
+package paxVersion: 2.1;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'The standard “Hello World” sample application that comes pre-loaded the Dolphin Samples folder is not ideal because it doesn’t show how to build Hello World in the normal Dolphin Model-View-Presenter framework. Whilst this makes it quick and easy do to, it’s educational value is limited and some users have found it rather confusing.
 
@@ -12,9 +12,9 @@ The sample does not have a RuntimeSessionManager, so we need to open an instance
 
 ```
 Smalltalk developmentSystem saveImage.	"Save the image if you don''t want to lose changes"
-BetterHelloWorld show.
+UI.Examples.BetterHelloWorld show.
 (ImageStripper new)
-	rootPackage: BetterHelloWorld owningPackage;
+	rootPackage: UI.Examples.BetterHelloWorld owningPackage;
 	executableName: ''BetterWorld.exe'';
 	preserveAspectSetters: false;
 	stripDeprecatedMethods: true;
@@ -27,11 +27,11 @@ And to examine the content:
 Smalltalk developmentSystem browseDeploymentLog: ''BetterWorld.xml''
 ```'.
 
-package basicScriptAt: #postinstall put: 'Smalltalk developmentSystem addSamplesFolderIconFor: BetterHelloWorld
+package basicScriptAt: #postinstall put: 'Smalltalk developmentSystem addSamplesFolderIconFor: UI.Examples.BetterHelloWorld
 	description: ''Better Hello World'''.
 
 package setClassNames: #(
-	#{BetterHelloWorld}
+	#{UI.Examples.BetterHelloWorld}
 ).
 
 package setPrerequisites: #(
@@ -41,16 +41,17 @@ package setPrerequisites: #(
 	'..\..\..\Dolphin\MVP\Presenters\Text\Dolphin Text Presenter'
 	'..\..\..\Dolphin\MVP\Icons\Dolphin Text Tile Icons'
 	'..\..\..\Dolphin\MVP\Type Converters\Dolphin Type Converters'
+	'..\UI Examples'
 ).
 
 package!
 
 "Class Definitions"!
 
-Shell subclass: #BetterHelloWorld
+UI.Shell subclass: #'UI.Examples.BetterHelloWorld'
 	instanceVariableNames: 'textToDisplayPresenter'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 

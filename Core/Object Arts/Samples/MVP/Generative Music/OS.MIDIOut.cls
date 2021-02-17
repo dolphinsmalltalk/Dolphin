@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Object subclass: #MIDIOut
+Core.Object subclass: #'OS.MIDIOut'
 	instanceVariableNames: 'handle'
 	classVariableNames: ''
-	poolDictionaries: 'MidiConstants'
+	imports: #(#{OS.MidiConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-MIDIOut guid: (GUID fromString: '{feb23957-1be7-48db-9eef-924631f6e9a9}')!
-MIDIOut comment: ''!
-!MIDIOut categoriesForClass!Kernel-Objects! !
-!MIDIOut methodsFor!
+OS.MIDIOut guid: (Core.GUID fromString: '{feb23957-1be7-48db-9eef-924631f6e9a9}')!
+OS.MIDIOut comment: ''!
+!OS.MIDIOut categoriesForClass!Kernel-Objects! !
+!OS.MIDIOut methodsFor!
 
 channel: ch msg: msg with: p1 with: p2 
 	| dword |
@@ -68,13 +68,13 @@ voice: voiceID channel: channel
 		msg: MidiProgramChange
 		with: voiceID
 		with: channel! !
-!MIDIOut categoriesFor: #channel:msg:with:with:!public! !
-!MIDIOut categoriesFor: #close!public! !
-!MIDIOut categoriesFor: #controller:value:!public! !
-!MIDIOut categoriesFor: #keyDown:velocity:!public! !
-!MIDIOut categoriesFor: #keyDown:velocity:channel:!public! !
-!MIDIOut categoriesFor: #keyUp:!public! !
-!MIDIOut categoriesFor: #keyUp:channel:!public! !
-!MIDIOut categoriesFor: #openDeviceID:!public! !
-!MIDIOut categoriesFor: #voice:channel:!public! !
+!OS.MIDIOut categoriesFor: #channel:msg:with:with:!public! !
+!OS.MIDIOut categoriesFor: #close!public! !
+!OS.MIDIOut categoriesFor: #controller:value:!public! !
+!OS.MIDIOut categoriesFor: #keyDown:velocity:!public! !
+!OS.MIDIOut categoriesFor: #keyDown:velocity:channel:!public! !
+!OS.MIDIOut categoriesFor: #keyUp:!public! !
+!OS.MIDIOut categoriesFor: #keyUp:channel:!public! !
+!OS.MIDIOut categoriesFor: #openDeviceID:!public! !
+!OS.MIDIOut categoriesFor: #voice:channel:!public! !
 

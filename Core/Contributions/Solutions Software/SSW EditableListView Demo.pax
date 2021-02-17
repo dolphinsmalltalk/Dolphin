@@ -43,7 +43,7 @@ Shell subclass: #EditableListViewDemo
 	poolDictionaries: ''
 	classInstanceVariableNames: ''
 	classConstants: {}!
-VideoRecording subclass: #PVRRecording
+UI.Examples.VideoRecording subclass: #PVRRecording
 	instanceVariableNames: 'episodeTitle description channel isViewed rating'
 	classVariableNames: ''
 	poolDictionaries: ''

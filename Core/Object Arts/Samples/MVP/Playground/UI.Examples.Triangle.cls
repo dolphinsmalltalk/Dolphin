@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-RegularPolygon subclass: #Triangle
+UI.Examples.RegularPolygon subclass: #'UI.Examples.Triangle'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Triangle guid: (GUID fromString: '{87b4c683-026e-11d3-9fd7-00a0cc3e4a32}')!
-Triangle comment: 'A Triangle is a particular type of <PlayShape> that may be added to a <Playground>. It is part of the Playground sample package used as a Smalltalk learning aid. See this package''s comment for more details.'!
-!Triangle categoriesForClass!Samples! !
-!Triangle methodsFor!
+UI.Examples.Triangle guid: (Core.GUID fromString: '{87b4c683-026e-11d3-9fd7-00a0cc3e4a32}')!
+UI.Examples.Triangle comment: 'A Triangle is a particular type of <PlayShape> that may be added to a <Playground>. It is part of the Playground sample package used as a Smalltalk learning aid. See this package''s comment for more details.'!
+!UI.Examples.Triangle categoriesForClass!Samples! !
+!UI.Examples.Triangle methodsFor!
 
 defaultColor
 	"Answer a default background color for the receiver. 
@@ -27,7 +27,7 @@ defaultSides
 	Triangles have 3 sides"
 
 	^3! !
-!Triangle categoriesFor: #defaultColor!constants!public! !
-!Triangle categoriesFor: #defaultPosition!constants!public! !
-!Triangle categoriesFor: #defaultSides!constants!public! !
+!UI.Examples.Triangle categoriesFor: #defaultColor!constants!public! !
+!UI.Examples.Triangle categoriesFor: #defaultPosition!constants!public! !
+!UI.Examples.Triangle categoriesFor: #defaultSides!constants!public! !
 

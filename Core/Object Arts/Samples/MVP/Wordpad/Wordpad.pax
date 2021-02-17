@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'Wordpad'.
-package paxVersion: 2;
+package paxVersion: 2.1;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk Wordpad Sample. 
 Copyright (c) Object Arts Ltd, 2005.
@@ -21,9 +21,9 @@ The sample does not have a RuntimeSessionManager, so we need to open an instance
 
 ```
 Smalltalk developmentSystem saveImage.	"Save the image if you don''t want to lose changes"
-WordPad show.
+UI.Examples.WordPad show.
 (ImageStripper new)
-	rootPackage: WordPad owningPackage;
+	rootPackage: UI.Examples.WordPad owningPackage;
 	executableName: ''DWordpad.exe'';
 	preserveAspectSetters: true;
 	stripDeprecatedMethods: true;
@@ -35,16 +35,16 @@ And to examine the content:
 ```
 Smalltalk developmentSystem browseDeploymentLog: ''DWordpad.xml''
 "Or view the log"
-XmlPad openOn: ''DWordpad.xml''
+UI.Examples.XmlPad openOn: ''DWordpad.xml''
 ```'.
 
 package basicScriptAt: #postinstall put: 'Smalltalk developmentSystem 
-	addSamplesFolderIconFor: WordPad
+	addSamplesFolderIconFor: UI.Examples.WordPad
 	helpId: 10624'.
 
 package setClassNames: #(
-	#{WordPad}
-	#{WordpadParagraphDialog}
+	#{UI.Examples.WordPad}
+	#{UI.Examples.WordpadParagraphDialog}
 ).
 
 package setPrerequisites: #(
@@ -62,22 +62,24 @@ package setPrerequisites: #(
 	'..\..\..\Dolphin\MVP\Presenters\Text\Dolphin Text Presenter'
 	'..\..\..\Dolphin\MVP\Type Converters\Dolphin Type Converters'
 	'..\..\..\Dolphin\MVP\Models\Value\Dolphin Value Models'
+	'..\UI Examples'
+	'..\..\..\Dolphin\ActiveX\Shell\Windows Shell'
 ).
 
 package!
 
 "Class Definitions"!
 
-TextDocument subclass: #WordPad
+UI.TextDocument subclass: #'UI.Examples.WordPad'
 	instanceVariableNames: ''
 	classVariableNames: 'ResourceLib'
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Dialog subclass: #WordpadParagraphDialog
+UI.Dialog subclass: #'UI.Examples.WordpadParagraphDialog'
 	instanceVariableNames: 'leftPresenter rightPresenter firstLinePresenter alignmentPresenter'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 

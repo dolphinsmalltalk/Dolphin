@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-DoubleBufferedView subclass: #BouncingBallView
+UI.DoubleBufferedView subclass: #'UI.Examples.BouncingBallView'
 	instanceVariableNames: 'balls stepProcess'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-BouncingBallView guid: (GUID fromString: '{247666e7-6b23-4e88-86d1-76d228924535}')!
-BouncingBallView comment: ''!
-!BouncingBallView categoriesForClass!Unclassified! !
-!BouncingBallView methodsFor!
+UI.Examples.BouncingBallView guid: (Core.GUID fromString: '{247666e7-6b23-4e88-86d1-76d228924535}')!
+UI.Examples.BouncingBallView comment: ''!
+!UI.Examples.BouncingBallView categoriesForClass!Unclassified! !
+!UI.Examples.BouncingBallView methodsFor!
 
 ballExtent
 	^48 @ 48!
@@ -97,18 +97,18 @@ step
 
 stepProcess
 	^stepProcess! !
-!BouncingBallView categoriesFor: #ballExtent!constants!private! !
-!BouncingBallView categoriesFor: #balls!accessing!private! !
-!BouncingBallView categoriesFor: #defaultExtent!constants!private! !
-!BouncingBallView categoriesFor: #frameRate!constants!public! !
-!BouncingBallView categoriesFor: #initialize!initializing!private! !
-!BouncingBallView categoriesFor: #numberOfBalls!constants!public! !
-!BouncingBallView categoriesFor: #onDestroyed!event handling!private! !
-!BouncingBallView categoriesFor: #render!operations!private! !
-!BouncingBallView categoriesFor: #step!operations!public! !
-!BouncingBallView categoriesFor: #stepProcess!accessing!private! !
+!UI.Examples.BouncingBallView categoriesFor: #ballExtent!constants!private! !
+!UI.Examples.BouncingBallView categoriesFor: #balls!accessing!private! !
+!UI.Examples.BouncingBallView categoriesFor: #defaultExtent!constants!private! !
+!UI.Examples.BouncingBallView categoriesFor: #frameRate!constants!public! !
+!UI.Examples.BouncingBallView categoriesFor: #initialize!initializing!private! !
+!UI.Examples.BouncingBallView categoriesFor: #numberOfBalls!constants!public! !
+!UI.Examples.BouncingBallView categoriesFor: #onDestroyed!event handling!private! !
+!UI.Examples.BouncingBallView categoriesFor: #render!operations!private! !
+!UI.Examples.BouncingBallView categoriesFor: #step!operations!public! !
+!UI.Examples.BouncingBallView categoriesFor: #stepProcess!accessing!private! !
 
-!BouncingBallView class methodsFor!
+!UI.Examples.BouncingBallView class methodsFor!
 
 defaultModel
 	"Answer a default model to be assigned to the receiver when it is initialized."
@@ -139,9 +139,9 @@ show
 	"Answer and show an instance of the receiver"
 
 	^super show topShell text: self displayString; yourself! !
-!BouncingBallView class categoriesFor: #defaultModel!models!public! !
-!BouncingBallView class categoriesFor: #displayOn:!displaying!public! !
-!BouncingBallView class categoriesFor: #icon!constants!public! !
-!BouncingBallView class categoriesFor: #initialize!development!initializing!private! !
-!BouncingBallView class categoriesFor: #show!operations!public! !
+!UI.Examples.BouncingBallView class categoriesFor: #defaultModel!models!public! !
+!UI.Examples.BouncingBallView class categoriesFor: #displayOn:!displaying!public! !
+!UI.Examples.BouncingBallView class categoriesFor: #icon!constants!public! !
+!UI.Examples.BouncingBallView class categoriesFor: #initialize!development!initializing!private! !
+!UI.Examples.BouncingBallView class categoriesFor: #show!operations!public! !
 

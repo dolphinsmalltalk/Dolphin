@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'Notepad'.
-package paxVersion: 2;
+package paxVersion: 2.1;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk Notepad Sample. 
 Copyright (c) Object Arts Ltd, 2000-2001.
@@ -18,7 +18,7 @@ Notepad show
 ```
 Smalltalk developmentSystem saveImage.	"Save the image if you don''t want to lose changes"
 (ImageStripper new)
-	rootPackage: Notepad owningPackage;
+	rootPackage: UI.Examples.Notepad owningPackage;
 	executableName: ''DNotepad.exe'';
 	preserveAspectSetters: false;
 	stripDeprecatedMethods: true;
@@ -32,12 +32,12 @@ Smalltalk developmentSystem browseDeploymentLog: ''DNotepad.xml''
 ```'.
 
 package basicScriptAt: #postinstall put: 'Smalltalk developmentSystem
-	addSamplesFolderIconFor: Notepad
+	addSamplesFolderIconFor: UI.Examples.Notepad
 	helpId: 10623'.
 
 package setClassNames: #(
-	#{Notepad}
-	#{NotepadSessionManager}
+	#{UI.Examples.Notepad}
+	#{UI.Examples.NotepadSessionManager}
 ).
 
 package setPrerequisites: #(
@@ -50,6 +50,7 @@ package setPrerequisites: #(
 	'..\..\..\Dolphin\MVP\Views\SpinButton\Dolphin SpinButton Control'
 	'..\..\..\Dolphin\MVP\Presenters\Text\Dolphin Text Presenter'
 	'..\..\..\Dolphin\MVP\Type Converters\Dolphin Type Converters'
+	'..\UI Examples'
 ).
 
 package setManualPrerequisites: #(
@@ -60,16 +61,16 @@ package!
 
 "Class Definitions"!
 
-TextDocument subclass: #Notepad
+UI.TextDocument subclass: #'UI.Examples.Notepad'
 	instanceVariableNames: ''
 	classVariableNames: 'ResourceLib'
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-RuntimeSessionManager subclass: #NotepadSessionManager
+UI.RuntimeSessionManager subclass: #'UI.Examples.NotepadSessionManager'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 

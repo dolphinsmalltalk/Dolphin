@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Object subclass: #VideoLibrary
+Core.Object subclass: #'UI.Examples.VideoLibrary'
 	instanceVariableNames: 'owner tapes'
 	classVariableNames: 'DefaultInstance'
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-VideoLibrary guid: (GUID fromString: '{e07e20a9-89d7-4f84-941a-7c3365cf6112}')!
-VideoLibrary comment: 'VideoLibrary is represents a collection of VideoTapes that belong to a particular owner. This class is part of the Video Library sample package. Please see the package comment for more details.'!
-!VideoLibrary categoriesForClass!Samples! !
-!VideoLibrary methodsFor!
+UI.Examples.VideoLibrary guid: (Core.GUID fromString: '{e07e20a9-89d7-4f84-941a-7c3365cf6112}')!
+UI.Examples.VideoLibrary comment: 'VideoLibrary is represents a collection of VideoTapes that belong to a particular owner. This class is part of the Video Library sample package. Please see the package comment for more details.'!
+!UI.Examples.VideoLibrary categoriesForClass!Samples! !
+!UI.Examples.VideoLibrary methodsFor!
 
 defaultOwner	
 	"Private - Answer a <readableString> to use as the owner identifier for a default instance.
@@ -76,15 +76,15 @@ tapes
 	"
 
 	^tapes! !
-!VideoLibrary categoriesFor: #defaultOwner!constants!private! !
-!VideoLibrary categoriesFor: #displayOn:!printing!public! !
-!VideoLibrary categoriesFor: #initialize!initializing!private! !
-!VideoLibrary categoriesFor: #owner!accessing!public! !
-!VideoLibrary categoriesFor: #owner:!initializing!public! !
-!VideoLibrary categoriesFor: #printOn:!printing!public! !
-!VideoLibrary categoriesFor: #tapes!accessing!public! !
+!UI.Examples.VideoLibrary categoriesFor: #defaultOwner!constants!private! !
+!UI.Examples.VideoLibrary categoriesFor: #displayOn:!printing!public! !
+!UI.Examples.VideoLibrary categoriesFor: #initialize!initializing!private! !
+!UI.Examples.VideoLibrary categoriesFor: #owner!accessing!public! !
+!UI.Examples.VideoLibrary categoriesFor: #owner:!initializing!public! !
+!UI.Examples.VideoLibrary categoriesFor: #printOn:!printing!public! !
+!UI.Examples.VideoLibrary categoriesFor: #tapes!accessing!public! !
 
-!VideoLibrary class methodsFor!
+!UI.Examples.VideoLibrary class methodsFor!
 
 default
 	"Answer the default instance of the receiver."
@@ -114,8 +114,8 @@ uninitialize
 	"Private - Uninitialize the receiver as it is about to be removed from the system."
 
 	DefaultInstance := nil! !
-!VideoLibrary class categoriesFor: #default!accessing!public! !
-!VideoLibrary class categoriesFor: #icon!constants!public! !
-!VideoLibrary class categoriesFor: #new!instance creation!public! !
-!VideoLibrary class categoriesFor: #uninitialize!class hierarchy!class hierarchy-removing!private! !
+!UI.Examples.VideoLibrary class categoriesFor: #default!accessing!public! !
+!UI.Examples.VideoLibrary class categoriesFor: #icon!constants!public! !
+!UI.Examples.VideoLibrary class categoriesFor: #new!instance creation!public! !
+!UI.Examples.VideoLibrary class categoriesFor: #uninitialize!class hierarchy!class hierarchy-removing!private! !
 

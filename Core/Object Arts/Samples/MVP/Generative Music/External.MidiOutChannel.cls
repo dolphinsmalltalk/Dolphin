@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Object subclass: #MidiOutChannel
+Core.Object subclass: #'External.MidiOutChannel'
 	instanceVariableNames: 'midiout noteProcess octaveShift'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-MidiOutChannel guid: (GUID fromString: '{f97d6167-73d1-4a93-8f82-93a9ebc90f5d}')!
-MidiOutChannel comment: ''!
-!MidiOutChannel categoriesForClass!Kernel-Objects! !
-!MidiOutChannel methodsFor!
+External.MidiOutChannel guid: (Core.GUID fromString: '{f97d6167-73d1-4a93-8f82-93a9ebc90f5d}')!
+External.MidiOutChannel comment: ''!
+!External.MidiOutChannel categoriesForClass!Kernel-Objects! !
+!External.MidiOutChannel methodsFor!
 
 defaultDeviceId
 	^0!
@@ -69,7 +69,7 @@ midiNoteMap
 		yourself)!
 
 midiout
-	midiout 
+	midiout
 		ifNil: 
 			[| ret |
 			midiout := MIDIOut new.
@@ -124,31 +124,31 @@ playNote: noteName velocity: velocity duration: aDuration channel: channel
 
 voice: voice channel: channel
 	self midiout voice: (self mapVoiceToValue: voice ) channel: channel! !
-!MidiOutChannel categoriesFor: #defaultDeviceId!private! !
-!MidiOutChannel categoriesFor: #defaultDuration!private! !
-!MidiOutChannel categoriesFor: #defaultVelocity!private! !
-!MidiOutChannel categoriesFor: #defaultVoice!private! !
-!MidiOutChannel categoriesFor: #free!private! !
-!MidiOutChannel categoriesFor: #initialize!private! !
-!MidiOutChannel categoriesFor: #mapNoteToValue:!helpers!private! !
-!MidiOutChannel categoriesFor: #mapVoiceToValue:!private! !
-!MidiOutChannel categoriesFor: #midiNoteMap!private! !
-!MidiOutChannel categoriesFor: #midiout!accessing!public! !
-!MidiOutChannel categoriesFor: #octaveShift!helpers!private! !
-!MidiOutChannel categoriesFor: #open!private! !
-!MidiOutChannel categoriesFor: #playNote:channel:!public! !
-!MidiOutChannel categoriesFor: #playNote:duration:channel:!public! !
-!MidiOutChannel categoriesFor: #playNote:velocity:channel:!public! !
-!MidiOutChannel categoriesFor: #playNote:velocity:duration:channel:!public! !
-!MidiOutChannel categoriesFor: #voice:channel:!public! !
+!External.MidiOutChannel categoriesFor: #defaultDeviceId!private! !
+!External.MidiOutChannel categoriesFor: #defaultDuration!private! !
+!External.MidiOutChannel categoriesFor: #defaultVelocity!private! !
+!External.MidiOutChannel categoriesFor: #defaultVoice!private! !
+!External.MidiOutChannel categoriesFor: #free!private! !
+!External.MidiOutChannel categoriesFor: #initialize!private! !
+!External.MidiOutChannel categoriesFor: #mapNoteToValue:!helpers!private! !
+!External.MidiOutChannel categoriesFor: #mapVoiceToValue:!private! !
+!External.MidiOutChannel categoriesFor: #midiNoteMap!private! !
+!External.MidiOutChannel categoriesFor: #midiout!accessing!public! !
+!External.MidiOutChannel categoriesFor: #octaveShift!helpers!private! !
+!External.MidiOutChannel categoriesFor: #open!private! !
+!External.MidiOutChannel categoriesFor: #playNote:channel:!public! !
+!External.MidiOutChannel categoriesFor: #playNote:duration:channel:!public! !
+!External.MidiOutChannel categoriesFor: #playNote:velocity:channel:!public! !
+!External.MidiOutChannel categoriesFor: #playNote:velocity:duration:channel:!public! !
+!External.MidiOutChannel categoriesFor: #voice:channel:!public! !
 
-!MidiOutChannel class methodsFor!
+!External.MidiOutChannel class methodsFor!
 
 generalMidiMap
 	^#(#AcousticGrand #BrightAcoustic #ElectricGrand #'Honky-tonk' #ElectricPianoI #ElectricPiano2 #Harpsichord #Clav #Celesta #Glockenspiel #MusicBox #Vibraphone #Marimba #Xylophone #TubularBells #Dulcimer #DrawbarOrgan #PercussiveOrgan #RockOrgan #ChurchOrgan #ReedOrgan #Accordian #Harmonica #TangoAccordian #AcousticGuitarNylon #AcousticGuitarSteel #ElectricGuitarJazz #ElectricGuitarClean #ElectricGuitarMuted #OverdrivenGuitar #DistortionGuitar #GuitarHarmonics #AcousticBass #ElectricBassFinger #ElectricBassPick #FretlessBass #SlapBass1 #SlapBass2 #SynthBass1 #SynthBass2 #Violin #Viola #Cello #Contrabass #TremoloStrings #PizzicatoStrings #OrchestralStrings #Timpani #StringEnsemble1 #StringEnsemble2 #SynthStrings1 #SynthStrings2 #ChoirAahs #VoiceOohs #SynthVoice #OrchestraHit #Trumpet #Trombone #Tuba #MutedTrumpet #FrenchHorn #BrassSection #SynthBrass1 #SynthBrass2 #SopranoSaxophone #AltoSaxophone #TenorSaxophone #BaritoneSaxophone #Oboe #EnglishHorn #Bassoon #Clarinet #Piccolo #Flute #Recorder #PanFlute #BlownBottle #Shakuhachi #Whistle #Ocarina #Lead1Square #Lead2Sawtooth #Lead3Calliope #Lead4Chiff #Lead5Charang #Lead6Voice #Lead7Fifths #Lead8BassAndLead #Pad1NewAge #Pad2Warm #Pad3Polysynth #Pad4Choir #Pad5Bowed #Pad6Metallic #Pad7Halo #Pad8Wweep #FX1Rain #FX2Soundtrack #FX3Crystal #FX4Atmosphere #FX5Brightness #FX6Goblins #FX7Echoes #FX8SciFi #Sitar #Banjo #Shamisen #Koto #Kalimba #Bagpipe #Fiddle #Shanai #TinkleBell #Agogo #SteelDrums #Woodblock #TaikoDrum #MelodicTom #SynthDrum #ReverseCymbal #GuitarFretNoise #BreathingNoise #Seashore #BirdTweet #TelephoneRing #Helicopter #Applause #Gunshot)!
 
 new
 	^super new initialize! !
-!MidiOutChannel class categoriesFor: #generalMidiMap!public! !
-!MidiOutChannel class categoriesFor: #new!instance creation!public! !
+!External.MidiOutChannel class categoriesFor: #generalMidiMap!public! !
+!External.MidiOutChannel class categoriesFor: #new!instance creation!public! !
 

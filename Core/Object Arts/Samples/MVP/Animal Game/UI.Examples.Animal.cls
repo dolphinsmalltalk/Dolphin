@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Object subclass: #Animal
+Core.Object subclass: #'UI.Examples.Animal'
 	instanceVariableNames: 'name'
 	classVariableNames: 'KnowledgeBase'
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Animal guid: (GUID fromString: '{87b4c454-026e-11d3-9fd7-00a0cc3e4a32}')!
-Animal comment: 'This class forms part of a tutorial for the Dolphin Beginner''s Guide. An Animal represents a potential guess in the animal guessing game. Animal instances are always the leaf nodes in the game''s knowledge tree which is held in the class variable, KnowledgeBase. The main part of the tree is built from instances of Question. 
+UI.Examples.Animal guid: (Core.GUID fromString: '{87b4c454-026e-11d3-9fd7-00a0cc3e4a32}')!
+UI.Examples.Animal comment: 'This class forms part of a tutorial for the Dolphin Beginner''s Guide. An Animal represents a potential guess in the animal guessing game. Animal instances are always the leaf nodes in the game''s knowledge tree which is held in the class variable, KnowledgeBase. The main part of the tree is built from instances of Question. 
 
 The game can be played by a evaluating: 
 
@@ -16,8 +16,8 @@ Animal playGame.
 The knowledge base is initially set up in Animal>>initialize to only know about a single animal; a dog. This method can be re-executed at any point to reset the knowledge tree to its starting point: 
 
 Animal initialize. '!
-!Animal categoriesForClass!Samples! !
-!Animal methodsFor!
+!UI.Examples.Animal categoriesForClass!Samples! !
+!UI.Examples.Animal methodsFor!
 
 ask
 	"Ask whether the receiver is the animal that the player is thinking of.
@@ -25,14 +25,14 @@ ask
 	and install it and a question which will distinguish this new animal from
 	the receiver. This allows the game to learn."
 
-	(MessageBox confirm: 'Are you thinking of ' , self displayString , '?') 
+	(MessageBox confirm: 'Are you thinking of ' , self displayString , '?')
 		ifTrue: [MessageBox notify: 'I guessed your animal correctly.' caption: 'GREAT, I WIN']
 		ifFalse: 
 			[| newAnimal newQuestion |
 			newAnimal := Animal prompt.
 			newQuestion := Question promptToDistinguish: self from: newAnimal].
-	(MessageBox confirm: 'Do you wish to play again?'
-		caption: 'I''m, getting better all the time...') ifTrue: [Animal playGame]!
+	(MessageBox confirm: 'Do you wish to play again?' caption: 'I''m, getting better all the time...')
+		ifTrue: [Animal playGame]!
 
 displayOn: aPuttableStream
 	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that an end-user might want to see.
@@ -68,14 +68,17 @@ printOn: aStream
 	aStream nextPut: $(.
 	self displayOn: aStream.
 	aStream nextPut: $)! !
-!Animal categoriesFor: #ask!operations!public! !
-!Animal categoriesFor: #displayOn:!displaying!public! !
-!Animal categoriesFor: #knowledgeBase!accessing!public! !
-!Animal categoriesFor: #name!accessing!public! !
-!Animal categoriesFor: #name:!accessing!private! !
-!Animal categoriesFor: #printOn:!printing!public! !
+!UI.Examples.Animal categoriesFor: #ask!operations!public! !
+!UI.Examples.Animal categoriesFor: #displayOn:!displaying!public! !
+!UI.Examples.Animal categoriesFor: #knowledgeBase!accessing!public! !
+!UI.Examples.Animal categoriesFor: #name!accessing!public! !
+!UI.Examples.Animal categoriesFor: #name:!accessing!private! !
+!UI.Examples.Animal categoriesFor: #printOn:!printing!public! !
 
-!Animal class methodsFor!
+!UI.Examples.Animal class methodsFor!
+
+icon
+	^##(TextTileIcon text: '🐼')!
 
 knowledgeBase
 	"Answer the Animal game knowledge base."
@@ -117,10 +120,11 @@ uninitialize
 	"Private - Uninitialize the receiver as it is about to be removed from the system."
 
 	KnowledgeBase := nil.! !
-!Animal class categoriesFor: #knowledgeBase!accessing!public! !
-!Animal class categoriesFor: #name:!instance creation!public! !
-!Animal class categoriesFor: #onPreStripImage!class hierarchy-removing!private! !
-!Animal class categoriesFor: #playGame!operations!public! !
-!Animal class categoriesFor: #prompt!instance creation!public! !
-!Animal class categoriesFor: #uninitialize!class hierarchy-removing!private! !
+!UI.Examples.Animal class categoriesFor: #icon!constants!public! !
+!UI.Examples.Animal class categoriesFor: #knowledgeBase!accessing!public! !
+!UI.Examples.Animal class categoriesFor: #name:!instance creation!public! !
+!UI.Examples.Animal class categoriesFor: #onPreStripImage!class hierarchy-removing!private! !
+!UI.Examples.Animal class categoriesFor: #playGame!operations!public! !
+!UI.Examples.Animal class categoriesFor: #prompt!instance creation!public! !
+!UI.Examples.Animal class categoriesFor: #uninitialize!class hierarchy-removing!private! !
 

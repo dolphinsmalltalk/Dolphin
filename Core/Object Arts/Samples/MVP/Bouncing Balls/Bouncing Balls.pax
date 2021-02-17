@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'Bouncing Balls'.
-package paxVersion: 2;
+package paxVersion: 2.1;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk Bouncing Balls Animation Sample. 
 Copyright (c) Object Arts Ltd, 2001.
@@ -15,9 +15,9 @@ The sample demonstrates the use of double buffering to provide non-flickering an
 
 
 package setClassNames: #(
-	#{Ball}
-	#{BouncingBallSessionManager}
-	#{BouncingBallView}
+	#{UI.Examples.Ball}
+	#{UI.Examples.BouncingBallSessionManager}
+	#{UI.Examples.BouncingBallView}
 ).
 
 package setPrerequisites: #(
@@ -32,22 +32,22 @@ package!
 
 "Class Definitions"!
 
-Object subclass: #Ball
+Core.Object subclass: #'UI.Examples.Ball'
 	instanceVariableNames: 'position velocity icon'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-RuntimeSessionManager subclass: #BouncingBallSessionManager
+UI.RuntimeSessionManager subclass: #'UI.Examples.BouncingBallSessionManager'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-DoubleBufferedView subclass: #BouncingBallView
+UI.DoubleBufferedView subclass: #'UI.Examples.BouncingBallView'
 	instanceVariableNames: 'balls stepProcess'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 

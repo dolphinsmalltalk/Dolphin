@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'RegEdit'.
-package paxVersion: 2;
+package paxVersion: 2.1;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk RegEdit Sample.
 Copyright (c) Object Arts Ltd, 1998-2002.
@@ -44,8 +44,8 @@ package basicPackageVersion: '2011.6.5.16'.
 
 
 package setClassNames: #(
-	#{RegEdit}
-	#{RegTreeModel}
+	#{UI.Examples.RegEdit}
+	#{UI.Examples.RegTreeModel}
 ).
 
 package setPrerequisites: #(
@@ -69,16 +69,16 @@ package!
 
 "Class Definitions"!
 
-VirtualTreeModel subclass: #RegTreeModel
+UI.VirtualTreeModel subclass: #'UI.Examples.RegTreeModel'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Shell subclass: #RegEdit
+UI.Shell subclass: #'UI.Examples.RegEdit'
 	instanceVariableNames: 'keyPresenter valuesPresenter statusModel'
 	classVariableNames: 'ResourceLib'
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 

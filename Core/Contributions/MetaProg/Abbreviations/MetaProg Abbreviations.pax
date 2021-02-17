@@ -27,15 +27,15 @@ mailto:jpelrine@metaprog.com
 
 (Some modifications for Dolphin integration by Blair McGlashan, Object Arts, March 2003)'.
 
-package basicScriptAt: #postinstall put: 'SmalltalkWorkspace acceleratorKeyBindings: ((SmalltalkWorkspace acceleratorKeyBindings)
+package basicScriptAt: #postinstall put: 'Tools.SmalltalkWorkspace acceleratorKeyBindings: ((Tools.SmalltalkWorkspace acceleratorKeyBindings)
 			at: ''Shift+Space'' put: #expandAbbreviation;
 			at: ''Ctrl+Space'' put: #snatchAbbreviation;
 			yourself)!!'.
-package basicScriptAt: #postuninstall put: 'SmalltalkWorkspace classPool removeKey: ''Abbreviations'' ifAbsent: []!!
+package basicScriptAt: #postuninstall put: 'Tools.SmalltalkWorkspace classPool removeKey: ''Abbreviations'' ifAbsent: []!!
 | bindings |
-bindings := SmalltalkWorkspace acceleratorKeyBindings.
+bindings := Tools.SmalltalkWorkspace acceleratorKeyBindings.
 #(''Shift+Space'' ''Ctrl+Space'') do: [:each | bindings removeKey: each ifAbsent: []].
-SmalltalkWorkspace acceleratorKeyBindings: bindings!!'.
+Tools.SmalltalkWorkspace acceleratorKeyBindings: bindings!!'.
 
 package setMethodNames: #(
 	#(#{SmalltalkWorkspace} #expandAbbreviation)

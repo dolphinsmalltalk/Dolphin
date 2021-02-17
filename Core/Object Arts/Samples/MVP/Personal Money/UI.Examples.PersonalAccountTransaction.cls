@@ -1,21 +1,21 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Model subclass: #PersonalAccountTransaction
+Core.Model subclass: #'UI.Examples.PersonalAccountTransaction'
 	instanceVariableNames: 'date description amount isDebit'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-PersonalAccountTransaction guid: (GUID fromString: '{87b4c669-026e-11d3-9fd7-00a0cc3e4a32}')!
-PersonalAccountTransaction comment: 'A PersonalAccountTransaction holds details regarding a single transaction for an account within the PersonalMoney system.
+UI.Examples.PersonalAccountTransaction guid: (Core.GUID fromString: '{87b4c669-026e-11d3-9fd7-00a0cc3e4a32}')!
+UI.Examples.PersonalAccountTransaction comment: 'A PersonalAccountTransaction holds details regarding a single transaction for an account within the PersonalMoney system.
 
 Instance Variables
 	amount		<Number> containing the amount of the transaction.
 	description		<String> describing the purpose of the transactions.
 	date		<Date> on which the transaction was made.
 	isDebit		<Boolean> that indicates whether the transaction is a debit or credit.'!
-!PersonalAccountTransaction categoriesForClass!MVP-Models!Samples! !
-!PersonalAccountTransaction methodsFor!
+!UI.Examples.PersonalAccountTransaction categoriesForClass!MVP-Models!Samples! !
+!UI.Examples.PersonalAccountTransaction methodsFor!
 
 actualAmount
 	"Answer the actual amount of the receiver taking into consideration
@@ -92,16 +92,16 @@ printOn: aStream
 		nextPut: $(;
 		display: self;
 		nextPut: $)! !
-!PersonalAccountTransaction categoriesFor: #actualAmount!accessing!public! !
-!PersonalAccountTransaction categoriesFor: #amount!accessing!public! !
-!PersonalAccountTransaction categoriesFor: #amount:!accessing!public! !
-!PersonalAccountTransaction categoriesFor: #date!accessing!public! !
-!PersonalAccountTransaction categoriesFor: #date:!accessing!public! !
-!PersonalAccountTransaction categoriesFor: #description!accessing!public! !
-!PersonalAccountTransaction categoriesFor: #description:!accessing!public! !
-!PersonalAccountTransaction categoriesFor: #displayOn:!displaying!public! !
-!PersonalAccountTransaction categoriesFor: #initialize!initializing!private! !
-!PersonalAccountTransaction categoriesFor: #isDebit!accessing!public!testing! !
-!PersonalAccountTransaction categoriesFor: #isDebit:!accessing!public! !
-!PersonalAccountTransaction categoriesFor: #printOn:!printing!public! !
+!UI.Examples.PersonalAccountTransaction categoriesFor: #actualAmount!accessing!public! !
+!UI.Examples.PersonalAccountTransaction categoriesFor: #amount!accessing!public! !
+!UI.Examples.PersonalAccountTransaction categoriesFor: #amount:!accessing!public! !
+!UI.Examples.PersonalAccountTransaction categoriesFor: #date!accessing!public! !
+!UI.Examples.PersonalAccountTransaction categoriesFor: #date:!accessing!public! !
+!UI.Examples.PersonalAccountTransaction categoriesFor: #description!accessing!public! !
+!UI.Examples.PersonalAccountTransaction categoriesFor: #description:!accessing!public! !
+!UI.Examples.PersonalAccountTransaction categoriesFor: #displayOn:!displaying!public! !
+!UI.Examples.PersonalAccountTransaction categoriesFor: #initialize!initializing!private! !
+!UI.Examples.PersonalAccountTransaction categoriesFor: #isDebit!accessing!public!testing! !
+!UI.Examples.PersonalAccountTransaction categoriesFor: #isDebit:!accessing!public! !
+!UI.Examples.PersonalAccountTransaction categoriesFor: #printOn:!printing!public! !
 

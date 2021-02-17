@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Presenter subclass: #PlimbolePresenter
+UI.Presenter subclass: #'UI.Examples.PlimbolePresenter'
 	instanceVariableNames: 'palette'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-PlimbolePresenter guid: (GUID fromString: '{37200744-dd59-4671-9c52-bec43269016c}')!
-PlimbolePresenter comment: 'This is the Presenter class for the Plimbole Generative Music Sequencer. It receives user input (mouse clicks and commands) and translates these into effects on the Plimbole model that it holds. Together with the PlimboleView class this forms the user interface part of the MVP triad. Normaly one would create the complete Plimbole user interface usering a PlimboleShell since this adds the UI buttons and provides for a fully functioning application. However, it is possible to instantiate a basic Plimbole-PlimboleView-PlimbolePresenter MVP triad as a demonstration:
+UI.Examples.PlimbolePresenter guid: (Core.GUID fromString: '{37200744-dd59-4671-9c52-bec43269016c}')!
+UI.Examples.PlimbolePresenter comment: 'This is the Presenter class for the Plimbole Generative Music Sequencer. It receives user input (mouse clicks and commands) and translates these into effects on the Plimbole model that it holds. Together with the PlimboleView class this forms the user interface part of the MVP triad. Normaly one would create the complete Plimbole user interface usering a PlimboleShell since this adds the UI buttons and provides for a fully functioning application. However, it is possible to instantiate a basic Plimbole-PlimboleView-PlimbolePresenter MVP triad as a demonstration:
 
 presenter := PlimbolePresenter show.
 presenter model signature: ''20_0_150_030621270423452562860760662170_9_A_12''.
@@ -16,8 +16,8 @@ presenter topShell exit.
 
 
 '!
-!PlimbolePresenter categoriesForClass!MVP-Presenters! !
-!PlimbolePresenter methodsFor!
+!UI.Examples.PlimbolePresenter categoriesForClass!MVP-Presenters! !
+!UI.Examples.PlimbolePresenter methodsFor!
 
 availableGridExtents
 	"Answer the chosen grid sizes"
@@ -112,15 +112,15 @@ onLeftButtonDoubleClicked: aMouseEvent
 
 	^self onLeftButtonPressed: aMouseEvent!
 
-onLeftButtonPressed: aMouseEvent 
+onLeftButtonPressed: aMouseEvent
 	"Handles a user click on the receiver. Either add a new cell or cycle an existing cell through the different directions."
 
 	| loc |
 	loc := (aMouseEvent position / self view extent * self plimbole gridExtent) truncated.
-	(self plimbole cellAtLocation: loc) 
+	(self plimbole cellAtLocation: loc)
 		ifNotNil: 
-			[:existingCell | 
-			existingCell direction = 180 
+			[:existingCell |
+			existingCell direction = 180
 				ifTrue: [self plimbole removeCell: existingCell]
 				ifFalse: 
 					[existingCell rotate.
@@ -150,7 +150,7 @@ onViewClosed
 onViewOpened
 	super onViewOpened.
 	self palette: palette.
-	Plimbole 
+	Plimbole
 		when: #playStarted
 		send: #onPlayStarted
 		to: self.
@@ -255,39 +255,39 @@ slowerTempo
 
 	self plimbole tempo: self plimbole tempo // 1.05.
 	self showHintBubble: 'Tempo ' , self plimbole tempo displayString! !
-!PlimbolePresenter categoriesFor: #availableGridExtents!constants!public! !
-!PlimbolePresenter categoriesFor: #beChromaticScale!constants!public! !
-!PlimbolePresenter categoriesFor: #beHangScale!constants!public! !
-!PlimbolePresenter categoriesFor: #bePentatonicScale!constants!public! !
-!PlimbolePresenter categoriesFor: #clearAll!constants!public! !
-!PlimbolePresenter categoriesFor: #copyToClipboard!public! !
-!PlimbolePresenter categoriesFor: #fasterTempo!commands!public! !
-!PlimbolePresenter categoriesFor: #favourites!constants!public! !
-!PlimbolePresenter categoriesFor: #initialize!accessing!initializing!private! !
-!PlimbolePresenter categoriesFor: #isPlaying!public! !
-!PlimbolePresenter categoriesFor: #model:!event handling!private! !
-!PlimbolePresenter categoriesFor: #nextAltoVoice!commands!public! !
-!PlimbolePresenter categoriesFor: #nextGridExtent!commands!public! !
-!PlimbolePresenter categoriesFor: #nextTenorVoice!commands!public! !
-!PlimbolePresenter categoriesFor: #onLeftButtonDoubleClicked:!event handling!private! !
-!PlimbolePresenter categoriesFor: #onLeftButtonPressed:!event handling!private! !
-!PlimbolePresenter categoriesFor: #onPaletteChanged!private! !
-!PlimbolePresenter categoriesFor: #onPlayStarted!private! !
-!PlimbolePresenter categoriesFor: #onViewClosed!event handling!private! !
-!PlimbolePresenter categoriesFor: #onViewOpened!event handling!private! !
-!PlimbolePresenter categoriesFor: #palette!public! !
-!PlimbolePresenter categoriesFor: #palette:!public! !
-!PlimbolePresenter categoriesFor: #pasteClipboard!public! !
-!PlimbolePresenter categoriesFor: #play!public! !
-!PlimbolePresenter categoriesFor: #plimbole!public! !
-!PlimbolePresenter categoriesFor: #previousAltoVoice!commands!public! !
-!PlimbolePresenter categoriesFor: #previousTenorVoice!commands!public! !
-!PlimbolePresenter categoriesFor: #queryCommand:!private! !
-!PlimbolePresenter categoriesFor: #randomFavourite!commands!public! !
-!PlimbolePresenter categoriesFor: #showHintBubble:!private! !
-!PlimbolePresenter categoriesFor: #slowerTempo!commands!public! !
+!UI.Examples.PlimbolePresenter categoriesFor: #availableGridExtents!constants!public! !
+!UI.Examples.PlimbolePresenter categoriesFor: #beChromaticScale!constants!public! !
+!UI.Examples.PlimbolePresenter categoriesFor: #beHangScale!constants!public! !
+!UI.Examples.PlimbolePresenter categoriesFor: #bePentatonicScale!constants!public! !
+!UI.Examples.PlimbolePresenter categoriesFor: #clearAll!constants!public! !
+!UI.Examples.PlimbolePresenter categoriesFor: #copyToClipboard!public! !
+!UI.Examples.PlimbolePresenter categoriesFor: #fasterTempo!commands!public! !
+!UI.Examples.PlimbolePresenter categoriesFor: #favourites!constants!public! !
+!UI.Examples.PlimbolePresenter categoriesFor: #initialize!accessing!initializing!private! !
+!UI.Examples.PlimbolePresenter categoriesFor: #isPlaying!public! !
+!UI.Examples.PlimbolePresenter categoriesFor: #model:!event handling!private! !
+!UI.Examples.PlimbolePresenter categoriesFor: #nextAltoVoice!commands!public! !
+!UI.Examples.PlimbolePresenter categoriesFor: #nextGridExtent!commands!public! !
+!UI.Examples.PlimbolePresenter categoriesFor: #nextTenorVoice!commands!public! !
+!UI.Examples.PlimbolePresenter categoriesFor: #onLeftButtonDoubleClicked:!event handling!private! !
+!UI.Examples.PlimbolePresenter categoriesFor: #onLeftButtonPressed:!event handling!private! !
+!UI.Examples.PlimbolePresenter categoriesFor: #onPaletteChanged!private! !
+!UI.Examples.PlimbolePresenter categoriesFor: #onPlayStarted!private! !
+!UI.Examples.PlimbolePresenter categoriesFor: #onViewClosed!event handling!private! !
+!UI.Examples.PlimbolePresenter categoriesFor: #onViewOpened!event handling!private! !
+!UI.Examples.PlimbolePresenter categoriesFor: #palette!public! !
+!UI.Examples.PlimbolePresenter categoriesFor: #palette:!public! !
+!UI.Examples.PlimbolePresenter categoriesFor: #pasteClipboard!public! !
+!UI.Examples.PlimbolePresenter categoriesFor: #play!public! !
+!UI.Examples.PlimbolePresenter categoriesFor: #plimbole!public! !
+!UI.Examples.PlimbolePresenter categoriesFor: #previousAltoVoice!commands!public! !
+!UI.Examples.PlimbolePresenter categoriesFor: #previousTenorVoice!commands!public! !
+!UI.Examples.PlimbolePresenter categoriesFor: #queryCommand:!private! !
+!UI.Examples.PlimbolePresenter categoriesFor: #randomFavourite!commands!public! !
+!UI.Examples.PlimbolePresenter categoriesFor: #showHintBubble:!private! !
+!UI.Examples.PlimbolePresenter categoriesFor: #slowerTempo!commands!public! !
 
-!PlimbolePresenter class methodsFor!
+!UI.Examples.PlimbolePresenter class methodsFor!
 
 defaultModel
 	^Plimbole new!
@@ -303,12 +303,12 @@ resource_Default_view
 	DO NOT EDIT OR RECATEGORIZE THIS METHOD.
 
 	If you wish to modify this resource evaluate:
-	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Default_view)
+	Tools.ViewComposer openOn: (UI.ResourceIdentifier class: self selector: #resource_Default_view)
 	"
 
-	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.PlimboleView) 34 12 nil nil 34 2 8 1140850688 1 416 nil 327686 ##(Smalltalk.Color) #default nil 7 nil nil nil 416 983302 ##(Smalltalk.MessageSequence) 138 144 34 1 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 328198 ##(Smalltalk.Point) 3839 21 626 201 201 416 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 127 7 0 0 10 0 0 0 227 7 0 0 110 0 0 0] 8 #() 626 193 193 nil 27 )! !
-!PlimbolePresenter class categoriesFor: #defaultModel!public! !
-!PlimbolePresenter class categoriesFor: #defaultPalette!constants!private! !
-!PlimbolePresenter class categoriesFor: #icon!constants!public! !
-!PlimbolePresenter class categoriesFor: #resource_Default_view!public!resources-views! !
+	^#(#'!!STL' 4 985166 10 ##(UI.STBViewProxy) ##(UI.Examples.PlimboleView) 34 12 nil nil 34 2 8 1140850688 1 416 nil 917510 ##(Graphics.Color) #default nil 7 nil nil nil 416 1310982 ##(Core.MessageSequence) 138 144 34 1 1049350 ##(Core.MessageSend) #createAt:extent: 34 2 918022 ##(Graphics.Point) 6143 21 626 201 201 416 1179910 ##(OS.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 99 12 0 0 110 0 0 0] 8 #() 626 193 193 nil 27 )! !
+!UI.Examples.PlimbolePresenter class categoriesFor: #defaultModel!public! !
+!UI.Examples.PlimbolePresenter class categoriesFor: #defaultPalette!constants!private! !
+!UI.Examples.PlimbolePresenter class categoriesFor: #icon!constants!public! !
+!UI.Examples.PlimbolePresenter class categoriesFor: #resource_Default_view!public!resources-views! !
 

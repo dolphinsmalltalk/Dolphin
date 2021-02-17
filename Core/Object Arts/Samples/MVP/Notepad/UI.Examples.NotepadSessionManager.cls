@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-RuntimeSessionManager subclass: #NotepadSessionManager
+UI.RuntimeSessionManager subclass: #'UI.Examples.NotepadSessionManager'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-NotepadSessionManager guid: (GUID fromString: '{10c33fb0-4c63-4493-8746-29ccfcd29ece}')!
-NotepadSessionManager comment: ''!
-!NotepadSessionManager categoriesForClass!Samples! !
-!NotepadSessionManager methodsFor!
+UI.Examples.NotepadSessionManager guid: (Core.GUID fromString: '{10c33fb0-4c63-4493-8746-29ccfcd29ece}')!
+UI.Examples.NotepadSessionManager comment: ''!
+!UI.Examples.NotepadSessionManager categoriesForClass!Samples! !
+!UI.Examples.NotepadSessionManager methodsFor!
 
 main
 	"Start the Notepad application."
@@ -17,13 +17,13 @@ main
 	| pad |
 	pad := self mainShellClass show.
 	self argc > 1 ifTrue: [pad openFile: (self argv at: 2)]! !
-!NotepadSessionManager categoriesFor: #main!operations!public! !
+!UI.Examples.NotepadSessionManager categoriesFor: #main!operations!public! !
 
-!NotepadSessionManager class methodsFor!
+!UI.Examples.NotepadSessionManager class methodsFor!
 
 mainShellClass
 	"Answer the class of the application's main window (a <Shell> presenter)."
 
 	^Notepad! !
-!NotepadSessionManager class categoriesFor: #mainShellClass!constants!public! !
+!UI.Examples.NotepadSessionManager class categoriesFor: #mainShellClass!constants!public! !
 

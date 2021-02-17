@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'Etch-a-Sketch'.
-package paxVersion: 2;
+package paxVersion: 2.1;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk Etch-A-Sketch(tm) Sample. 
 Copyright (c) Object Arts Ltd, 1998-2000.
@@ -12,12 +12,12 @@ EtchASketch is a component that emulates the (once) popular Etch-a-Sketch toy. I
 To create an Etch-a-Sketch document window evaluate:
 
 ```
-es := EtchASketchDocument show.
+es := UI.Examples.EtchASketchDocument show.
 ```
 
 You can draw in the sketch area using the scroll bars or by using the mouse directly. Now try creating a Scribble pad that uses the same model:
 ```
-Scribble showOn: es model.
+UI.Examples.Scribble showOn: es model.
 ```
 Now anything you draw in one will immediately be reflected in the other.
 
@@ -25,9 +25,9 @@ Now anything you draw in one will immediately be reflected in the other.
 
 ```
 Smalltalk developmentSystem saveImage.	"Save the image if you don''t want to lose changes"
-EtchASketchDocument show.
+UI.Examples.EtchASketchDocument show.
 (ImageStripper new)
-	rootPackage: EtchASketch owningPackage;
+	rootPackage: UI.Examples.EtchASketch owningPackage;
 	executableName: ''EtchASketch.exe'';
 	preserveAspectSetters: false;
 	stripDeprecatedMethods: true;
@@ -48,8 +48,8 @@ XmlPad openOn: ''EtchASketch.xml''
 
 
 package setClassNames: #(
-	#{EtchASketch}
-	#{EtchASketchDocument}
+	#{UI.Examples.EtchASketch}
+	#{UI.Examples.EtchASketchDocument}
 ).
 
 package setPrerequisites: #(
@@ -63,22 +63,23 @@ package setPrerequisites: #(
 	'..\..\..\Dolphin\MVP\Models\Value\Dolphin Value Models'
 	'..\..\..\Dolphin\MVP\Icons\Internal Bitmaps and Icons'
 	'..\Scribble\Scribble'
+	'..\UI Examples'
 ).
 
 package!
 
 "Class Definitions"!
 
-Presenter subclass: #EtchASketch
+UI.Presenter subclass: #'UI.Examples.EtchASketch'
 	instanceVariableNames: 'upDownKnob leftRightKnob sketchPad lastLocation'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ScribbleDocument subclass: #EtchASketchDocument
+ScribbleDocument subclass: #'UI.Examples.EtchASketchDocument'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 

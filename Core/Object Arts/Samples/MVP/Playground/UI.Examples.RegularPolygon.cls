@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-PlayShape subclass: #RegularPolygon
+UI.Examples.PlayShape subclass: #'UI.Examples.RegularPolygon'
 	instanceVariableNames: 'color sides position rotation radius'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-RegularPolygon guid: (GUID fromString: '{87b4c680-026e-11d3-9fd7-00a0cc3e4a32}')!
-RegularPolygon comment: 'A RegularPolygon describes a particular type of <PlayShape> that may be added to a <Playground>. It is part of the Playground sample package used as a Smalltalk learning aid. See this package''s comment for more details.
+UI.Examples.RegularPolygon guid: (Core.GUID fromString: '{87b4c680-026e-11d3-9fd7-00a0cc3e4a32}')!
+UI.Examples.RegularPolygon comment: 'A RegularPolygon describes a particular type of <PlayShape> that may be added to a <Playground>. It is part of the Playground sample package used as a Smalltalk learning aid. See this package''s comment for more details.
 
 A RegularPolygon has a number of sides and is drawn within a bounding circle of a given radius and centre position. The polygon, when drawn, is filled with a particular background color. This information is held in the instance variables of a RegularPolygon instance.
 
@@ -19,8 +19,8 @@ Instance Variables:
 	radius		<number> of pixels radius to the boundary of the polygon.
 
 '!
-!RegularPolygon categoriesForClass!Samples! !
-!RegularPolygon methodsFor!
+!UI.Examples.RegularPolygon categoriesForClass!Samples! !
+!UI.Examples.RegularPolygon methodsFor!
 
 chooseColor
 	"Open a color picking dialog on the receiver to allow the color to be changed"
@@ -197,38 +197,38 @@ sides: anInteger
 	sides := anInteger.
 	self redraw.
 ! !
-!RegularPolygon categoriesFor: #chooseColor!operations!public! !
-!RegularPolygon categoriesFor: #color!accessing!public! !
-!RegularPolygon categoriesFor: #color:!accessing!public! !
-!RegularPolygon categoriesFor: #defaultColor!constants!public! !
-!RegularPolygon categoriesFor: #defaultPosition!constants!public! !
-!RegularPolygon categoriesFor: #defaultRadius!constants!public! !
-!RegularPolygon categoriesFor: #defaultRotation!constants!public! !
-!RegularPolygon categoriesFor: #defaultSides!constants!public! !
-!RegularPolygon categoriesFor: #drawOn:!drawing!private! !
-!RegularPolygon categoriesFor: #growBy:!operations!public! !
-!RegularPolygon categoriesFor: #initialize!initializing!private! !
-!RegularPolygon categoriesFor: #moveBy:!operations!public! !
-!RegularPolygon categoriesFor: #moveDown:!operations!public! !
-!RegularPolygon categoriesFor: #moveLeft:!operations!public! !
-!RegularPolygon categoriesFor: #moveRight:!operations!public! !
-!RegularPolygon categoriesFor: #moveUp:!operations!public! !
-!RegularPolygon categoriesFor: #position!accessing!public! !
-!RegularPolygon categoriesFor: #position:!accessing!public! !
-!RegularPolygon categoriesFor: #radius!accessing!public! !
-!RegularPolygon categoriesFor: #radius:!accessing!public! !
-!RegularPolygon categoriesFor: #rotateBy:!operations!public! !
-!RegularPolygon categoriesFor: #rotation!accessing!public! !
-!RegularPolygon categoriesFor: #rotation:!accessing!public! !
-!RegularPolygon categoriesFor: #shrinkBy:!operations!public! !
-!RegularPolygon categoriesFor: #sides!accessing!initializing!public! !
-!RegularPolygon categoriesFor: #sides:!accessing!public! !
+!UI.Examples.RegularPolygon categoriesFor: #chooseColor!operations!public! !
+!UI.Examples.RegularPolygon categoriesFor: #color!accessing!public! !
+!UI.Examples.RegularPolygon categoriesFor: #color:!accessing!public! !
+!UI.Examples.RegularPolygon categoriesFor: #defaultColor!constants!public! !
+!UI.Examples.RegularPolygon categoriesFor: #defaultPosition!constants!public! !
+!UI.Examples.RegularPolygon categoriesFor: #defaultRadius!constants!public! !
+!UI.Examples.RegularPolygon categoriesFor: #defaultRotation!constants!public! !
+!UI.Examples.RegularPolygon categoriesFor: #defaultSides!constants!public! !
+!UI.Examples.RegularPolygon categoriesFor: #drawOn:!drawing!private! !
+!UI.Examples.RegularPolygon categoriesFor: #growBy:!operations!public! !
+!UI.Examples.RegularPolygon categoriesFor: #initialize!initializing!private! !
+!UI.Examples.RegularPolygon categoriesFor: #moveBy:!operations!public! !
+!UI.Examples.RegularPolygon categoriesFor: #moveDown:!operations!public! !
+!UI.Examples.RegularPolygon categoriesFor: #moveLeft:!operations!public! !
+!UI.Examples.RegularPolygon categoriesFor: #moveRight:!operations!public! !
+!UI.Examples.RegularPolygon categoriesFor: #moveUp:!operations!public! !
+!UI.Examples.RegularPolygon categoriesFor: #position!accessing!public! !
+!UI.Examples.RegularPolygon categoriesFor: #position:!accessing!public! !
+!UI.Examples.RegularPolygon categoriesFor: #radius!accessing!public! !
+!UI.Examples.RegularPolygon categoriesFor: #radius:!accessing!public! !
+!UI.Examples.RegularPolygon categoriesFor: #rotateBy:!operations!public! !
+!UI.Examples.RegularPolygon categoriesFor: #rotation!accessing!public! !
+!UI.Examples.RegularPolygon categoriesFor: #rotation:!accessing!public! !
+!UI.Examples.RegularPolygon categoriesFor: #shrinkBy:!operations!public! !
+!UI.Examples.RegularPolygon categoriesFor: #sides!accessing!initializing!public! !
+!UI.Examples.RegularPolygon categoriesFor: #sides:!accessing!public! !
 
-!RegularPolygon class methodsFor!
+!UI.Examples.RegularPolygon class methodsFor!
 
 new
 	"Create an instance of the receiver with a default number of sides"
 	
 	^super new initialize! !
-!RegularPolygon class categoriesFor: #new!instance creation!public! !
+!UI.Examples.RegularPolygon class categoriesFor: #new!instance creation!public! !
 

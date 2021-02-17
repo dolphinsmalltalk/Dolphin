@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Object subclass: #Question
+Core.Object subclass: #'UI.Examples.Question'
 	instanceVariableNames: 'text yes no'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Question guid: (GUID fromString: '{87b4c4ac-026e-11d3-9fd7-00a0cc3e4a32}')!
-Question comment: 'This class forms part of a tutorial for the Dolphin Beginner''s Guide. A Question represents a decision node in the animal guessing game. Question instances form the branch nodes in the game''s knowledge tree. Each instance contains the text of a question and a yes/no branch to take depending on the result of that question. These branches can either point to other Question nodes or to an Animal node if this is a leaf in the tree. '!
-!Question categoriesForClass!Samples! !
-!Question methodsFor!
+UI.Examples.Question guid: (Core.GUID fromString: '{87b4c4ac-026e-11d3-9fd7-00a0cc3e4a32}')!
+UI.Examples.Question comment: 'This class forms part of a tutorial for the Dolphin Beginner''s Guide. A Question represents a decision node in the animal guessing game. Question instances form the branch nodes in the game''s knowledge tree. Each instance contains the text of a question and a yes/no branch to take depending on the result of that question. These branches can either point to other Question nodes or to an Animal node if this is a leaf in the tree. '!
+!UI.Examples.Question categoriesForClass!Samples! !
+!UI.Examples.Question methodsFor!
 
 ask
 	"Ask the receiver's question and continue the game appropriately depending on the
@@ -65,15 +65,15 @@ yes
 	to the receiver's question."
 
 	^yes! !
-!Question categoriesFor: #ask!operations!public! !
-!Question categoriesFor: #displayOn:!displaying!public! !
-!Question categoriesFor: #no!accessing!public! !
-!Question categoriesFor: #printOn:!printing!public! !
-!Question categoriesFor: #text!accessing!public! !
-!Question categoriesFor: #text:yes:no:!accessing!private! !
-!Question categoriesFor: #yes!accessing!public! !
+!UI.Examples.Question categoriesFor: #ask!operations!public! !
+!UI.Examples.Question categoriesFor: #displayOn:!displaying!public! !
+!UI.Examples.Question categoriesFor: #no!accessing!public! !
+!UI.Examples.Question categoriesFor: #printOn:!printing!public! !
+!UI.Examples.Question categoriesFor: #text!accessing!public! !
+!UI.Examples.Question categoriesFor: #text:yes:no:!accessing!private! !
+!UI.Examples.Question categoriesFor: #yes!accessing!public! !
 
-!Question class methodsFor!
+!UI.Examples.Question class methodsFor!
 
 icon
 	"Answers an Icon that can be used to represent this class"
@@ -103,7 +103,7 @@ text: aString yes: yesPath no: noPath
 
 	^self new text: aString yes: yesPath no: noPath
 ! !
-!Question class categoriesFor: #icon!constants!public! !
-!Question class categoriesFor: #promptToDistinguish:from:!instance creation!public! !
-!Question class categoriesFor: #text:yes:no:!instance creation!public! !
+!UI.Examples.Question class categoriesFor: #icon!constants!public! !
+!UI.Examples.Question class categoriesFor: #promptToDistinguish:from:!instance creation!public! !
+!UI.Examples.Question class categoriesFor: #text:yes:no:!instance creation!public! !
 

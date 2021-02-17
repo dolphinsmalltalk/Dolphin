@@ -20,7 +20,7 @@ Note that if deploying this sample as a .exe that the "Retain instance variable 
 ```
 Smalltalk developmentSystem saveImage.	"Save the image if you don''t want to lose changes"
 (ImageStripper new)
-	rootPackage: XmlPad owningPackage;
+	rootPackage: UI.Examples.XmlPad owningPackage;
 	executableName: ''XmlPad.exe'';
 	preserveAspectSetters: true;
 	retainInstVarNames: true;
@@ -33,16 +33,16 @@ And to examine the content:
 ```
 Smalltalk developmentSystem browseDeploymentLog: ''XmlPad.xml''.
 "Or view the log"
-XmlPad openOn: ''XmlPad.xml''
+UI.Examples.XmlPad openOn: ''XmlPad.xml''
 ```'.
 
 package basicScriptAt: #postinstall put: 'Smalltalk developmentSystem 
-	addSamplesFolderIconFor: XmlPad
+	addSamplesFolderIconFor: UI.Examples.XmlPad
 	helpId: 10625'.
 
 package setClassNames: #(
-	#{Smalltalk.XmlPad}
-	#{Smalltalk.XmlPadSessionManager}
+	#{UI.Examples.XmlPad}
+	#{UI.Examples.XmlPadSessionManager}
 ).
 
 package setMethodNames: #(
@@ -57,7 +57,6 @@ package setPrerequisites: #(
 	'..\..\..\Dolphin\MVP\Views\Control Bars\Dolphin Control Bars'
 	'..\..\..\Dolphin\MVP\Dialogs\Find\Dolphin Find Dialog'
 	'..\..\..\Dolphin\Base\Dolphin Message Box'
-	'..\..\..\Dolphin\MVP\Deprecated\Dolphin MVP (Deprecated)'
 	'..\..\..\Dolphin\MVP\Base\Dolphin MVP Base'
 	'..\..\..\Dolphin\Registry\Dolphin Registry Access'
 	'..\..\..\Dolphin\Registry\Dolphin Registry Serialisation'
@@ -66,6 +65,7 @@ package setPrerequisites: #(
 	'..\..\..\Dolphin\MVP\Presenters\Text\Dolphin Text Presenter'
 	'..\..\..\Dolphin\MVP\Type Converters\Dolphin Type Converters'
 	'..\..\..\Dolphin\MVP\Models\Value\Dolphin Value Models'
+	'..\UI Examples'
 	'..\..\..\Dolphin\ActiveX\Components\VBScript\VBScript Regular Expressions'
 	'..\..\..\Dolphin\ActiveX\Components\XML DOM\XML DOM'
 	'..\..\..\Dolphin\ActiveX\Components\XML DOM\XML Formatter'
@@ -80,7 +80,7 @@ package!
 
 "Class Definitions"!
 
-UI.TextDocument subclass: #XmlPad
+UI.TextDocument subclass: #'UI.Examples.XmlPad'
 	instanceVariableNames: 'viewOptions'
 	classVariableNames: ''
 	imports: #(#{MSXML private})
@@ -88,7 +88,7 @@ UI.TextDocument subclass: #XmlPad
 	classConstants: {
 		'RememberPlacementMask' -> 16r1
 	}!
-UI.RuntimeSessionManager subclass: #XmlPadSessionManager
+UI.RuntimeSessionManager subclass: #'UI.Examples.XmlPadSessionManager'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

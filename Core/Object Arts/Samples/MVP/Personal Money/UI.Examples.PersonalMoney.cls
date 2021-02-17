@@ -1,19 +1,19 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Model subclass: #PersonalMoney
+Core.Model subclass: #'UI.Examples.PersonalMoney'
 	instanceVariableNames: 'owner accounts'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-PersonalMoney guid: (GUID fromString: '{87b4c66a-026e-11d3-9fd7-00a0cc3e4a32}')!
-PersonalMoney comment: 'PersonalMoney represent the entirety of the Personal Money system for a single user. It hold owner details and a collection of accounts for this user.
+UI.Examples.PersonalMoney guid: (Core.GUID fromString: '{87b4c66a-026e-11d3-9fd7-00a0cc3e4a32}')!
+UI.Examples.PersonalMoney comment: 'PersonalMoney represent the entirety of the Personal Money system for a single user. It hold owner details and a collection of accounts for this user.
 
 Instance Variables
 	owner	<String> containing the owner''s name
 	accounts	<OrderedCollection> of PersonalAccounts.'!
-!PersonalMoney categoriesForClass!MVP-Models!Samples! !
-!PersonalMoney methodsFor!
+!UI.Examples.PersonalMoney categoriesForClass!MVP-Models!Samples! !
+!UI.Examples.PersonalMoney methodsFor!
 
 accounts
 	"Answer the accounts collection"
@@ -52,11 +52,11 @@ removeAccount: aPersonalAccount
 	Answers aPersonalAccount"
 
 	^self accounts remove: aPersonalAccount! !
-!PersonalMoney categoriesFor: #accounts!accessing!initializing!public! !
-!PersonalMoney categoriesFor: #addAccount:!adding!public! !
-!PersonalMoney categoriesFor: #initialize!initializing!private! !
-!PersonalMoney categoriesFor: #owner!accessing!public! !
-!PersonalMoney categoriesFor: #owner:!accessing!public! !
-!PersonalMoney categoriesFor: #printOn:!printing!public! !
-!PersonalMoney categoriesFor: #removeAccount:!public!removing! !
+!UI.Examples.PersonalMoney categoriesFor: #accounts!accessing!initializing!public! !
+!UI.Examples.PersonalMoney categoriesFor: #addAccount:!adding!public! !
+!UI.Examples.PersonalMoney categoriesFor: #initialize!initializing!private! !
+!UI.Examples.PersonalMoney categoriesFor: #owner!accessing!public! !
+!UI.Examples.PersonalMoney categoriesFor: #owner:!accessing!public! !
+!UI.Examples.PersonalMoney categoriesFor: #printOn:!printing!public! !
+!UI.Examples.PersonalMoney categoriesFor: #removeAccount:!public!removing! !
 

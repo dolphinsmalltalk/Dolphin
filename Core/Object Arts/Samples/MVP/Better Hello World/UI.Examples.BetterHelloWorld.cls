@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Shell subclass: #BetterHelloWorld
+UI.Shell subclass: #'UI.Examples.BetterHelloWorld'
 	instanceVariableNames: 'textToDisplayPresenter'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-BetterHelloWorld guid: (GUID fromString: '{00e258da-1b1a-42c4-89c3-e3ed1983a682}')!
-BetterHelloWorld comment: 'This is the presenter for the Better Hello World example package. The full sample shows an MVP "triad" of elements consisting of a ValueModel, a composite ShellView (drawn with the ViewComposer) and this presenter class that ties all the pieces together. See the package comment for more details and links to tutorial videos that explain how this example was put together.'!
-!BetterHelloWorld categoriesForClass!Unclassified! !
-!BetterHelloWorld methodsFor!
+UI.Examples.BetterHelloWorld guid: (Core.GUID fromString: '{00e258da-1b1a-42c4-89c3-e3ed1983a682}')!
+UI.Examples.BetterHelloWorld comment: 'This is the presenter for the Better Hello World example package. The full sample shows an MVP "triad" of elements consisting of a ValueModel, a composite ShellView (drawn with the ViewComposer) and this presenter class that ties all the pieces together. See the package comment for more details and links to tutorial videos that explain how this example was put together.'!
+!UI.Examples.BetterHelloWorld categoriesForClass!Unclassified! !
+!UI.Examples.BetterHelloWorld methodsFor!
 
 createComponents
 	super createComponents.
@@ -22,11 +22,11 @@ editMe
 model: aModel
 	super model: aModel.
 	textToDisplayPresenter model: aModel! !
-!BetterHelloWorld categoriesFor: #createComponents!public! !
-!BetterHelloWorld categoriesFor: #editMe!public! !
-!BetterHelloWorld categoriesFor: #model:!public! !
+!UI.Examples.BetterHelloWorld categoriesFor: #createComponents!public! !
+!UI.Examples.BetterHelloWorld categoriesFor: #editMe!public! !
+!UI.Examples.BetterHelloWorld categoriesFor: #model:!public! !
 
-!BetterHelloWorld class methodsFor!
+!UI.Examples.BetterHelloWorld class methodsFor!
 
 defaultModel
 	^'Hello World' asValue!
@@ -57,8 +57,8 @@ resource_Editable_view
 	"
 
 	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.ShellView) 34 27 nil nil 8 #(13565952 65536) 416 nil 327686 ##(Smalltalk.Color) #default nil 37 nil nil nil 416 nil 170 192 34 2 410 ##(Smalltalk.TextEdit) 34 16 nil 416 34 2 8 1140916353 1 528 nil nil nil 7 nil 263174 ##(Smalltalk.Font) nil true 459014 ##(Smalltalk.LOGFONT) 8 #[224 255 255 255 0 0 0 0 0 0 0 0 0 0 0 0 144 1 0 0 0 0 0 0 3 2 1 34 86 101 114 100 97 110 97 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0] 328198 ##(Smalltalk.Point) 193 193 nil 528 466 #coral 8 1903872368 852486 ##(Smalltalk.NullConverter) nil nil 1 983302 ##(Smalltalk.MessageSequence) 138 144 34 2 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 674 191 151 674 801 151 528 834 #setMarginWidths: 34 1 8 #(10 10) 528 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 95 0 0 0 75 0 0 0 239 1 0 0 150 0 0 0] 8 #() 674 193 193 nil 27 8 'textToDisplay' nil nil nil nil nil 1 nil nil nil nil 1 nil nil 770 138 144 34 2 834 #createAt:extent: 34 2 674 3839 21 674 1201 801 416 834 #updateMenuBar 8 #() 416 962 8 #[44 0 0 0 0 0 0 0 0 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 127 7 0 0 10 0 0 0 215 9 0 0 154 1 0 0] 34 1 528 1024 nil 27 )! !
-!BetterHelloWorld class categoriesFor: #defaultModel!public! !
-!BetterHelloWorld class categoriesFor: #icon!constants!public! !
-!BetterHelloWorld class categoriesFor: #resource_Default_view!public!resources-views! !
-!BetterHelloWorld class categoriesFor: #resource_Editable_view!public!resources-views! !
+!UI.Examples.BetterHelloWorld class categoriesFor: #defaultModel!public! !
+!UI.Examples.BetterHelloWorld class categoriesFor: #icon!constants!public! !
+!UI.Examples.BetterHelloWorld class categoriesFor: #resource_Default_view!public!resources-views! !
+!UI.Examples.BetterHelloWorld class categoriesFor: #resource_Editable_view!public!resources-views! !
 

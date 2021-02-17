@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Object subclass: #PlimboleCell
+Core.Object subclass: #'UI.Examples.PlimboleCell'
 	instanceVariableNames: 'location velocity plimbole palette'
 	classVariableNames: ''
-	poolDictionaries: 'Win32Constants'
+	imports: #(#{OS.Win32Constants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-PlimboleCell guid: (GUID fromString: '{a9d9ae5c-52b6-43b7-9e6c-1bb39ef49f8a}')!
-PlimboleCell comment: ''!
-!PlimboleCell categoriesForClass!Kernel-Objects! !
-!PlimboleCell methodsFor!
+UI.Examples.PlimboleCell guid: (Core.GUID fromString: '{a9d9ae5c-52b6-43b7-9e6c-1bb39ef49f8a}')!
+UI.Examples.PlimboleCell comment: ''!
+!UI.Examples.PlimboleCell categoriesForClass!Kernel-Objects! !
+!UI.Examples.PlimboleCell methodsFor!
 
 arrowImage
 	| image directionIndex |
@@ -38,16 +38,15 @@ directions
 		at: 3 put: -1 @ 0;
 		yourself)!
 
-drawOn: aCanvas inView: aView 
-	| cellCenter cellExtent cellRect presenter arrow arrowExtent |
-	presenter := aView presenter.
+drawOn: aCanvas inView: aView
+	| cellCenter cellExtent cellRect arrow arrowExtent |
 	cellExtent := aView cellExtent.
 	cellCenter := (self location * cellExtent + (cellExtent / 2)) rounded.
 	cellRect := (Rectangle center: cellCenter extent: cellExtent) insetBy: 2.
 	aCanvas fillRectangle: cellRect color: self color.
 	arrow := self arrowImage.
 	arrowExtent := cellExtent // 2.
-	arrow 
+	arrow
 		drawOn: aCanvas
 		at: cellCenter - (arrowExtent // 2)
 		extent: arrowExtent!
@@ -99,26 +98,26 @@ x
 
 y
 	^self location y! !
-!PlimboleCell categoriesFor: #arrowImage!private! !
-!PlimboleCell categoriesFor: #color!accessing!public! !
-!PlimboleCell categoriesFor: #direction!accessing!public! !
-!PlimboleCell categoriesFor: #directionIndex!accessing!private! !
-!PlimboleCell categoriesFor: #directions!constants!private! !
-!PlimboleCell categoriesFor: #drawOn:inView:!drawing!private! !
-!PlimboleCell categoriesFor: #location!accessing!public! !
-!PlimboleCell categoriesFor: #location:!accessing!public! !
-!PlimboleCell categoriesFor: #palette!accessing!private! !
-!PlimboleCell categoriesFor: #palette:!accessing!private! !
-!PlimboleCell categoriesFor: #printOn:!printing!public! !
-!PlimboleCell categoriesFor: #reverse!operations!public! !
-!PlimboleCell categoriesFor: #rotate!operations!public! !
-!PlimboleCell categoriesFor: #setLocation:direction:!initializing!private! !
-!PlimboleCell categoriesFor: #velocity!accessing!public! !
-!PlimboleCell categoriesFor: #velocity:!accessing!public! !
-!PlimboleCell categoriesFor: #x!accessing!public! !
-!PlimboleCell categoriesFor: #y!accessing!public! !
+!UI.Examples.PlimboleCell categoriesFor: #arrowImage!private! !
+!UI.Examples.PlimboleCell categoriesFor: #color!accessing!public! !
+!UI.Examples.PlimboleCell categoriesFor: #direction!accessing!public! !
+!UI.Examples.PlimboleCell categoriesFor: #directionIndex!accessing!private! !
+!UI.Examples.PlimboleCell categoriesFor: #directions!constants!private! !
+!UI.Examples.PlimboleCell categoriesFor: #drawOn:inView:!drawing!private! !
+!UI.Examples.PlimboleCell categoriesFor: #location!accessing!public! !
+!UI.Examples.PlimboleCell categoriesFor: #location:!accessing!public! !
+!UI.Examples.PlimboleCell categoriesFor: #palette!accessing!private! !
+!UI.Examples.PlimboleCell categoriesFor: #palette:!accessing!private! !
+!UI.Examples.PlimboleCell categoriesFor: #printOn:!printing!public! !
+!UI.Examples.PlimboleCell categoriesFor: #reverse!operations!public! !
+!UI.Examples.PlimboleCell categoriesFor: #rotate!operations!public! !
+!UI.Examples.PlimboleCell categoriesFor: #setLocation:direction:!initializing!private! !
+!UI.Examples.PlimboleCell categoriesFor: #velocity!accessing!public! !
+!UI.Examples.PlimboleCell categoriesFor: #velocity:!accessing!public! !
+!UI.Examples.PlimboleCell categoriesFor: #x!accessing!public! !
+!UI.Examples.PlimboleCell categoriesFor: #y!accessing!public! !
 
-!PlimboleCell class methodsFor!
+!UI.Examples.PlimboleCell class methodsFor!
 
 arrowIcon
 	^InternalIcon 
@@ -131,7 +130,7 @@ location: aLocationPoint direction: directionIndex
 	^(super new)
 		setLocation: aLocationPoint direction: directionIndex;
 		yourself! !
-!PlimboleCell class categoriesFor: #arrowIcon!public! !
-!PlimboleCell class categoriesFor: #icon!constants!public! !
-!PlimboleCell class categoriesFor: #location:direction:!instance creation!public! !
+!UI.Examples.PlimboleCell class categoriesFor: #arrowIcon!public! !
+!UI.Examples.PlimboleCell class categoriesFor: #icon!constants!public! !
+!UI.Examples.PlimboleCell class categoriesFor: #location:direction:!instance creation!public! !
 

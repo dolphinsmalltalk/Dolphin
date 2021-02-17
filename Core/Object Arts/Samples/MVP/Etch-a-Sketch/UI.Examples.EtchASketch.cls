@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Presenter subclass: #EtchASketch
+UI.Presenter subclass: #'UI.Examples.EtchASketch'
 	instanceVariableNames: 'upDownKnob leftRightKnob sketchPad lastLocation'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-EtchASketch guid: (GUID fromString: '{87b4c68a-026e-11d3-9fd7-00a0cc3e4a32}')!
-EtchASketch comment: 'EtchASketch is a <compositePresenter> component that emulates the popular Etch-a-Sketch toy. It allows "ink" to be drawn onto a sketch pad by means of two "knobs"; one for horizontal movement and one for vertical movement. In the basic view the knobs are represented by scroll bars. EtchASketch makes use of the Scribble component for its sketch area.
+UI.Examples.EtchASketch guid: (Core.GUID fromString: '{87b4c68a-026e-11d3-9fd7-00a0cc3e4a32}')!
+UI.Examples.EtchASketch comment: 'EtchASketch is a <compositePresenter> component that emulates the popular Etch-a-Sketch toy. It allows "ink" to be drawn onto a sketch pad by means of two "knobs"; one for horizontal movement and one for vertical movement. In the basic view the knobs are represented by scroll bars. EtchASketch makes use of the Scribble component for its sketch area.
 
 There are a couple of limitations that make this example not ideal:
 
@@ -32,8 +32,8 @@ Instance Variables:
 
 
 '!
-!EtchASketch categoriesForClass!MVP-Presenters!Samples! !
-!EtchASketch methodsFor!
+!UI.Examples.EtchASketch categoriesForClass!MVP-Presenters!Samples! !
+!UI.Examples.EtchASketch methodsFor!
 
 createComponents
 	"Create the presenters contained by the receiver"
@@ -41,8 +41,7 @@ createComponents
 	super createComponents.
 	upDownKnob := self add: NumberPresenter new name: 'upDownKnob'.
 	leftRightKnob := self add: NumberPresenter new name: 'leftRightKnob'.
-	sketchPad := self add: Scribble new name: 'sketchPad'.
-!
+	sketchPad := self add: Smalltalk.Scribble new name: 'sketchPad'!
 
 createSchematicWiring
 	"Create the trigger wiring for the receiver"
@@ -69,29 +68,28 @@ onKnobChanged
 	"Private - Once of the knobs has been moved. Draw to the correct location in the sketch pad"
 
 	| newLocation inkStroke scale |
-
 	"Find the location indicated by the current state of the knobs. Their range is 0-100%
 	so scale this to the extent of the sketch pad view"
 	scale := sketchPad view extent / 100.
-	newLocation := ((leftRightKnob value @ upDownKnob value) * scale) truncated.
+	newLocation := (leftRightKnob value @ upDownKnob value * scale) truncated.
 
 	"Create an InkStroke representing this movement from the last known location.
 	Add this to the model."
-	inkStroke := InkStroke new
-		addPoint: lastLocation;
-		addPoint: newLocation;
-		yourself.
+	inkStroke := Smalltalk.InkStroke new
+				addPoint: lastLocation;
+				addPoint: newLocation;
+				yourself.
 	self model add: inkStroke.
 
 	"Remember the current location as the last"
-	lastLocation := newLocation.! !
-!EtchASketch categoriesFor: #createComponents!initializing!public! !
-!EtchASketch categoriesFor: #createSchematicWiring!initializing!public! !
-!EtchASketch categoriesFor: #initialize!initializing!private! !
-!EtchASketch categoriesFor: #model:!accessing!public! !
-!EtchASketch categoriesFor: #onKnobChanged!event handling!private! !
+	lastLocation := newLocation! !
+!UI.Examples.EtchASketch categoriesFor: #createComponents!initializing!public! !
+!UI.Examples.EtchASketch categoriesFor: #createSchematicWiring!initializing!public! !
+!UI.Examples.EtchASketch categoriesFor: #initialize!initializing!private! !
+!UI.Examples.EtchASketch categoriesFor: #model:!accessing!public! !
+!UI.Examples.EtchASketch categoriesFor: #onKnobChanged!event handling!private! !
 
-!EtchASketch class methodsFor!
+!UI.Examples.EtchASketch class methodsFor!
 
 defaultModel
 	"Answer a default model to be assigned to the receiver when it
@@ -121,18 +119,18 @@ resource_Default_view
 	DO NOT EDIT OR RECATEGORIZE THIS METHOD.
 
 	If you wish to modify this resource evaluate:
-	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Default_view)
+	Tools.ViewComposer openOn: (UI.ResourceIdentifier class: self selector: #resource_Default_view)
 	"
 
-	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.ContainerView) 34 15 nil nil 34 2 8 1140850688 131073 416 nil 327686 ##(Smalltalk.Color) #red nil 7 nil nil nil 416 788230 ##(Smalltalk.BorderLayout) 1 1 410 ##(Smalltalk.StaticText) 34 16 nil 416 34 2 8 1140850945 1 544 nil 482 #red nil 7 nil 263174 ##(Smalltalk.Font) nil true 459014 ##(Smalltalk.LOGFONT) 8 #[241 255 255 255 0 0 0 0 0 0 0 0 0 0 0 0 144 1 0 0 0 0 0 0 3 2 1 34 65 114 105 97 108 32 66 108 97 99 107 0 109 97 110 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0] 328198 ##(Smalltalk.Point) 193 193 nil 544 482 #white 8 1903849936 852486 ##(Smalltalk.NullConverter) nil nil nil 983302 ##(Smalltalk.MessageSequence) 138 144 34 2 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 706 41 1 706 621 51 544 866 #text: 34 1 8 'Etch-a-Sketch(tm)' 544 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 20 0 0 0 0 0 0 0 74 1 0 0 25 0 0 0] 8 #() 706 193 193 nil 27 410 ##(Smalltalk.Slider) 34 18 nil 416 34 2 8 1140916224 1 1072 721990 2 ##(Smalltalk.ValueHolder) nil false 1376774 ##(Smalltalk.PluggableSearchPolicy) 459270 ##(Smalltalk.Message) #= 8 #() 1202 #hash 8 #() nil 482 #default nil 7 nil nil nil 1072 nil 8 1903799248 770 nil nil 3 nil nil 802 138 144 34 4 866 #createAt:extent: 34 2 706 41 411 706 621 51 1072 866 #ticks: 34 1 8 #(0 100) 1072 866 #pageSize: 8 #(0) 1072 866 #range: 34 1 525062 ##(Smalltalk.Interval) 1 201 3 1072 994 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 20 0 0 0 205 0 0 0 74 1 0 0 230 0 0 0] 8 #() 1056 nil 27 410 ##(Smalltalk.Slider) 34 18 nil 416 34 2 8 1140916226 1 1632 1138 nil false 1184 nil 1280 nil 7 nil nil nil 1632 nil 8 1903799248 770 nil nil 3 nil nil 802 138 144 34 4 866 #createAt:extent: 34 2 706 611 51 706 51 361 1632 866 #ticks: 34 1 8 #(0 100) 1632 866 #pageSize: 8 #(0) 1632 866 #range: 34 1 1554 1 201 3 1632 994 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 49 1 0 0 25 0 0 0 74 1 0 0 205 0 0 0] 8 #() 1056 nil 27 nil 410 ##(Smalltalk.ScribbleView) 34 12 nil 416 34 2 8 1140850688 1 2032 590662 2 ##(Smalltalk.ListModel) 138 144 8 #() nil 1310726 ##(Smalltalk.IdentitySearchPolicy) 482 #face3d nil 7 nil nil nil 2032 802 138 144 34 1 866 #createAt:extent: 34 2 706 41 51 706 571 361 2032 994 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 20 0 0 0 25 0 0 0 49 1 0 0 205 0 0 0] 8 #() 1056 nil 27 170 192 34 6 1632 8 'upDownKnob' 2032 8 'sketchPad' 1072 8 'leftRightKnob' 590342 ##(Smalltalk.Rectangle) 706 41 1 706 41 41 802 138 144 34 1 866 #createAt:extent: 34 2 706 3839 21 706 701 501 416 994 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 127 7 0 0 10 0 0 0 221 8 0 0 4 1 0 0] 34 4 1072 1632 2032 544 1056 nil 27 )!
+	^#(#'!!STL' 4 985166 10 ##(UI.STBViewProxy) ##(UI.ContainerView) 34 15 nil nil 34 2 8 1140850688 131073 416 nil 917510 ##(Graphics.Color) #red nil 7 nil nil nil 416 984838 ##(UI.BorderLayout) 1 1 410 ##(UI.StaticText) 34 16 nil 416 34 2 8 1140850945 1 544 nil 496 nil 7 nil 852998 ##(Graphics.Font) nil true 655622 ##(OS.LOGFONT) 8 #[241 255 255 255 0 0 0 0 0 0 0 0 0 0 0 0 144 1 0 0 0 0 0 0 3 2 1 34 65 114 105 97 108 32 66 108 97 99 107 0 109 97 110 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0] 918022 ##(Graphics.Point) 193 193 nil 544 482 #white 8 1857752800 1049094 ##(UI.NullConverter) nil nil nil 1310982 ##(Core.MessageSequence) 138 144 34 2 1049350 ##(Core.MessageSend) #createAt:extent: 34 2 690 41 1 690 621 51 544 850 #text: 34 1 8 'Etch-a-Sketch(tm)' 544 1179910 ##(OS.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 20 0 0 0 0 0 0 0 74 1 0 0 25 0 0 0] 8 #() 690 193 193 nil 27 410 ##(UI.Slider) 34 18 nil 416 34 2 8 1140916224 1 1056 918598 2 ##(UI.ValueHolder) nil false 1704454 ##(Core.PluggableSearchPolicy) 786950 ##(Core.Message) #= 8 #() 1186 #hash 8 #() nil 482 #default nil 7 nil nil nil 1056 nil 8 1857603952 754 nil nil 3 nil nil 786 138 144 34 4 850 #createAt:extent: 34 2 690 41 411 690 621 51 1056 850 #ticks: 34 1 8 #(0 100) 1056 850 #pageSize: 8 #(0) 1056 850 #range: 34 1 852742 ##(Core.Interval) 1 201 3 1056 978 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 20 0 0 0 205 0 0 0 74 1 0 0 230 0 0 0] 8 #() 1040 nil 27 410 ##(UI.Slider) 34 18 nil 416 34 2 8 1140916226 1 1616 1122 nil false 1168 nil 1264 nil 7 nil nil nil 1616 nil 8 1857603952 754 nil nil 3 nil nil 786 138 144 34 4 850 #createAt:extent: 34 2 690 611 51 690 51 361 1616 850 #ticks: 34 1 8 #(0 100) 1616 850 #pageSize: 8 #(0) 1616 850 #range: 34 1 1538 1 201 3 1616 978 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 49 1 0 0 25 0 0 0 74 1 0 0 205 0 0 0] 8 #() 1040 nil 27 nil 410 ##(Smalltalk.ScribbleView) 34 12 nil 416 34 2 8 1140850688 1 2016 787270 2 ##(UI.ListModel) 138 144 8 #() nil 1769478 ##(Kernel.IdentitySearchPolicy) 482 #face3d nil 7 nil nil nil 2016 786 138 144 34 1 850 #createAt:extent: 34 2 690 41 51 690 571 361 2016 978 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 20 0 0 0 25 0 0 0 49 1 0 0 205 0 0 0] 8 #() 1040 nil 27 170 192 34 6 1056 8 'leftRightKnob' 1616 8 'upDownKnob' 2016 8 'sketchPad' 1180166 ##(Graphics.Rectangle) 690 41 1 690 41 41 786 138 144 34 1 850 #createAt:extent: 34 2 690 6143 21 690 701 501 416 978 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 93 13 0 0 4 1 0 0] 34 4 1056 1616 2016 544 1040 nil 27 )!
 
 sampleDescription
 	"Private - Answer the description of the receiver to be used in the samples folder."
 
 	^'Etch-a-Sketch'! !
-!EtchASketch class categoriesFor: #defaultModel!models!public! !
-!EtchASketch class categoriesFor: #icon!constants!public! !
-!EtchASketch class categoriesFor: #initialize!class initialization!private! !
-!EtchASketch class categoriesFor: #resource_Default_view!public!resources-views! !
-!EtchASketch class categoriesFor: #sampleDescription!constants!development!private! !
+!UI.Examples.EtchASketch class categoriesFor: #defaultModel!models!public! !
+!UI.Examples.EtchASketch class categoriesFor: #icon!constants!public! !
+!UI.Examples.EtchASketch class categoriesFor: #initialize!class initialization!private! !
+!UI.Examples.EtchASketch class categoriesFor: #resource_Default_view!public!resources-views! !
+!UI.Examples.EtchASketch class categoriesFor: #sampleDescription!constants!development!private! !
 

@@ -1,19 +1,19 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-RuntimeSessionManager subclass: #BouncingBallSessionManager
+UI.RuntimeSessionManager subclass: #'UI.Examples.BouncingBallSessionManager'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-BouncingBallSessionManager guid: (GUID fromString: '{45115960-cb11-43ad-a27f-a7afe6cc248d}')!
-BouncingBallSessionManager comment: ''!
-!BouncingBallSessionManager categoriesForClass!System-Support! !
-!BouncingBallSessionManager methodsFor!
+UI.Examples.BouncingBallSessionManager guid: (Core.GUID fromString: '{45115960-cb11-43ad-a27f-a7afe6cc248d}')!
+UI.Examples.BouncingBallSessionManager comment: ''!
+!UI.Examples.BouncingBallSessionManager categoriesForClass!System-Support! !
+!UI.Examples.BouncingBallSessionManager methodsFor!
 
 main
 	"Start up the sample application"
 
 	BouncingBallView new showShell! !
-!BouncingBallSessionManager categoriesFor: #main!operations-startup!public! !
+!UI.Examples.BouncingBallSessionManager categoriesFor: #main!operations-startup!public! !
 

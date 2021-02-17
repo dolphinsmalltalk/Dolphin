@@ -1,0 +1,27 @@
+﻿| package |
+package := Package name: 'UI Examples'.
+package paxVersion: 2.1;
+	basicComment: ''.
+
+
+package setClassNames: #(
+	#{UI.Examples}
+).
+
+package setPrerequisites: #(
+	'..\..\Dolphin\Base\Dolphin'
+).
+
+package!
+
+"Class Definitions"!
+
+UI subclass: #'UI.Examples'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+"End of package definition"!
+

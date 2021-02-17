@@ -1,0 +1,37 @@
+﻿| package |
+package := Package name: 'Dolphin Folder Tree Model'.
+package paxVersion: 2.1;
+	basicComment: 'Dolphin Smalltalk Folder Tree Model.
+Copyright (c) Object Arts Ltd. 1997-2001.'.
+
+
+package setClassNames: #(
+	#{UI.Folder}
+	#{UI.FolderHierarchyModel}
+).
+
+package setPrerequisites: #(
+	'..\..\..\Base\Dolphin'
+	'..\..\..\System\Win32\Dolphin File System Info'
+	'Dolphin Tree Models'
+).
+
+package!
+
+"Class Definitions"!
+
+Core.Object subclass: #'UI.Folder'
+	instanceVariableNames: 'pathname canonicalPath'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+UI.TreeModel subclass: #'UI.FolderHierarchyModel'
+	instanceVariableNames: ''
+	classVariableNames: 'NodeSortAlgorithm'
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+"End of package definition"!
+

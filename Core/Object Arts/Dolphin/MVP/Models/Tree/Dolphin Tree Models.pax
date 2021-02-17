@@ -15,8 +15,6 @@ package basicPackageVersion: '6.1'.
 
 package setClassNames: #(
 	#{UI.ExpandingTreeModel}
-	#{UI.Folder}
-	#{UI.FolderHierarchyModel}
 	#{UI.TreeModel}
 	#{UI.TreeModelAbstract}
 	#{UI.TreeNode}
@@ -25,19 +23,12 @@ package setClassNames: #(
 
 package setPrerequisites: #(
 	'..\..\..\Base\Dolphin'
-	'..\..\..\System\Win32\Dolphin File System Info'
 ).
 
 package!
 
 "Class Definitions"!
 
-Core.Object subclass: #'UI.Folder'
-	instanceVariableNames: 'pathname canonicalPath'
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
 Core.Object subclass: #'UI.TreeNode'
 	instanceVariableNames: 'parent children object'
 	classVariableNames: ''
@@ -65,12 +56,6 @@ UI.TreeModelAbstract subclass: #'UI.VirtualTreeModel'
 UI.TreeModel subclass: #'UI.ExpandingTreeModel'
 	instanceVariableNames: 'getChildrenBlock hasChildrenBlock'
 	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-UI.TreeModel subclass: #'UI.FolderHierarchyModel'
-	instanceVariableNames: ''
-	classVariableNames: 'NodeSortAlgorithm'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!

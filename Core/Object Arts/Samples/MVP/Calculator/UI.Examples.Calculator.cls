@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Shell subclass: #Calculator
+UI.Shell subclass: #'UI.Examples.Calculator'
 	instanceVariableNames: 'input output'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Calculator guid: (GUID fromString: '{816da2f6-de4a-41df-bea6-0a549e3a715e}')!
-Calculator comment: 'Calculator is a <topShell> sample application which illustrates the use of the Dolphin Compiler class in a runtime application. See the package comment for more details.'!
-!Calculator categoriesForClass!Samples! !
-!Calculator methodsFor!
+UI.Examples.Calculator guid: (Core.GUID fromString: '{816da2f6-de4a-41df-bea6-0a549e3a715e}')!
+UI.Examples.Calculator comment: 'Calculator is a <topShell> sample application which illustrates the use of the Dolphin Compiler class in a runtime application. See the package comment for more details.'!
+!UI.Examples.Calculator categoriesForClass!Samples! !
+!UI.Examples.Calculator methodsFor!
 
 clearTape
 	"Clears the tape output window"
@@ -60,14 +60,14 @@ print: aString
 
 printNewline
 	self print: String lineDelimiter! !
-!Calculator categoriesFor: #clearTape!commands!public! !
-!Calculator categoriesFor: #createComponents!initializing!private! !
-!Calculator categoriesFor: #displayIt!commands!public! !
-!Calculator categoriesFor: #evaluateIt!commands!public! !
-!Calculator categoriesFor: #print:!helpers!private! !
-!Calculator categoriesFor: #printNewline!private! !
+!UI.Examples.Calculator categoriesFor: #clearTape!commands!public! !
+!UI.Examples.Calculator categoriesFor: #createComponents!initializing!private! !
+!UI.Examples.Calculator categoriesFor: #displayIt!commands!public! !
+!UI.Examples.Calculator categoriesFor: #evaluateIt!commands!public! !
+!UI.Examples.Calculator categoriesFor: #print:!helpers!private! !
+!UI.Examples.Calculator categoriesFor: #printNewline!private! !
 
-!Calculator class methodsFor!
+!UI.Examples.Calculator class methodsFor!
 
 displayOn: aPuttableStream
 	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that an end-user might want to see."
@@ -103,11 +103,11 @@ shutdownOnExit
 	"Answer whether a runtime session should be shutdown when an instance of the receiver is closed."
 
 	^true! !
-!Calculator class categoriesFor: #displayOn:!displaying!public! !
-!Calculator class categoriesFor: #icon!constants!public! !
-!Calculator class categoriesFor: #initialize!development!initializing!private! !
-!Calculator class categoriesFor: #resource_Default_view!public!resources-views! !
-!Calculator class categoriesFor: #shutdownOnExit!public!testing! !
+!UI.Examples.Calculator class categoriesFor: #displayOn:!displaying!public! !
+!UI.Examples.Calculator class categoriesFor: #icon!constants!examples!public! !
+!UI.Examples.Calculator class categoriesFor: #initialize!development!initializing!private! !
+!UI.Examples.Calculator class categoriesFor: #resource_Default_view!public!resources-views! !
+!UI.Examples.Calculator class categoriesFor: #shutdownOnExit!public!testing! !
 
-Calculator class methodProtocol: #installableSystemTool attributes: #(#readOnly) selectors: #(#registerAsToolWith: #unregisterAsToolWith:)!
+UI.Examples.Calculator class methodProtocol: #installableSystemTool attributes: #(#readOnly) selectors: #(#registerAsToolWith: #unregisterAsToolWith:)!
 

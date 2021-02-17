@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-RuntimeSessionManager subclass: #XmlPadSessionManager
+UI.RuntimeSessionManager subclass: #'UI.Examples.XmlPadSessionManager'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-XmlPadSessionManager guid: (GUID fromString: '{77f1f2c7-314a-4967-b1ea-0367f0546923}')!
-XmlPadSessionManager comment: ''!
-!XmlPadSessionManager categoriesForClass!Samples! !
-!XmlPadSessionManager methodsFor!
+UI.Examples.XmlPadSessionManager guid: (Core.GUID fromString: '{77f1f2c7-314a-4967-b1ea-0367f0546923}')!
+UI.Examples.XmlPadSessionManager comment: ''!
+!UI.Examples.XmlPadSessionManager categoriesForClass!Samples! !
+!UI.Examples.XmlPadSessionManager methodsFor!
 
 main
 	"Start the XmlPad application."
@@ -17,13 +17,13 @@ main
 	| pad |
 	pad := self mainShellClass show.
 	self argc > 1 ifTrue: [pad openFile: (self argv at: 2)]! !
-!XmlPadSessionManager categoriesFor: #main!operations!public! !
+!UI.Examples.XmlPadSessionManager categoriesFor: #main!operations!public! !
 
-!XmlPadSessionManager class methodsFor!
+!UI.Examples.XmlPadSessionManager class methodsFor!
 
 mainShellClass
 	"Answer the class of the application's main window (a <Shell> presenter)."
 
 	^XmlPad! !
-!XmlPadSessionManager class categoriesFor: #mainShellClass!constants!public! !
+!UI.Examples.XmlPadSessionManager class categoriesFor: #mainShellClass!constants!public! !
 

@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'Plimbole'.
-package paxVersion: 2;
+package paxVersion: 2.1;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Plimbole is a Generative Music Sequencer based on Otomata (http://www.earslap.com/page/otomata.html). It uses the same cellular automata logic as Otomata but adds a few features that, hopefully, make the results more compelling. Things like different grid sizes and the ability to play through MIDI with separate voices for the tenor (low) and alto (high) parts.
 
@@ -22,9 +22,9 @@ The sample does not have a RuntimeSessionManager, so we need to open an instance
 
 ```
 Smalltalk developmentSystem saveImage.	"Save the image if you don''t want to lose changes"
-PlimboleShell show.
+UI.Examples.PlimboleShell show.
 (ImageStripper new)
-	rootPackage: PlimboleShell owningPackage;
+	rootPackage: UI.Examples.PlimboleShell owningPackage;
 	executableName: ''Plimbole.exe'';
 	stripDeprecatedMethods: true;
 	deploy
@@ -35,17 +35,17 @@ And to examine the content:
 ```
 Smalltalk developmentSystem browseDeploymentLog: ''Plimbole.xml''
 "Or view the log"
-XmlPad openOn: ''Plimbole.xml''
+UI.Examples.XmlPad openOn: ''Plimbole.xml''
 ```
 '.
 
 
 package setClassNames: #(
-	#{Plimbole}
-	#{PlimboleCell}
-	#{PlimbolePresenter}
-	#{PlimboleShell}
-	#{PlimboleView}
+	#{UI.Examples.Plimbole}
+	#{UI.Examples.PlimboleCell}
+	#{UI.Examples.PlimbolePresenter}
+	#{UI.Examples.PlimboleShell}
+	#{UI.Examples.PlimboleView}
 ).
 
 package setPrerequisites: #(
@@ -58,40 +58,41 @@ package setPrerequisites: #(
 	'..\..\..\Dolphin\MVP\Gdiplus\Gdiplus'
 	'..\..\..\Dolphin\MVP\Icons\Internal Bitmaps and Icons'
 	'Midi'
+	'..\UI Examples'
 ).
 
 package!
 
 "Class Definitions"!
 
-Object subclass: #PlimboleCell
+Core.Object subclass: #'UI.Examples.PlimboleCell'
 	instanceVariableNames: 'location velocity plimbole palette'
 	classVariableNames: ''
-	poolDictionaries: 'Win32Constants'
+	imports: #(#{OS.Win32Constants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Model subclass: #Plimbole
+Core.Model subclass: #'UI.Examples.Plimbole'
 	instanceVariableNames: 'cells recurse tenorVoice altoVoice tenorChannel altoChannel scaleIndex noteDuration gridExtent'
 	classVariableNames: 'MidiChannel Registry StepProcess Tempo'
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Presenter subclass: #PlimbolePresenter
+UI.Presenter subclass: #'UI.Examples.PlimbolePresenter'
 	instanceVariableNames: 'palette'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Shell subclass: #PlimboleShell
+UI.Shell subclass: #'UI.Examples.PlimboleShell'
 	instanceVariableNames: 'plimbolePresenter'
 	classVariableNames: 'Palettes'
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-View subclass: #PlimboleView
+UI.View subclass: #'UI.Examples.PlimboleView'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 

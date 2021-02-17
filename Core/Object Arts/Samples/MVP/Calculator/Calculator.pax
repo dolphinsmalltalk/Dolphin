@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'Calculator'.
-package paxVersion: 2;
+package paxVersion: 2.1;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk GUI Calculator Sample. 
 Copyright (c) Object Arts Ltd, 2000.
@@ -8,7 +8,7 @@ Copyright (c) Object Arts Ltd, 2000.
 A simple GUI calculator that allows Smalltalk expressions to be evaluated in a window. This illustrates the use of the Smalltalk compiler at runtime. Note that when this application is deployed many classes and methods will have been removed from the system so not all expressions that would work in the development environment will work at runtime.
 
 ```
-Calculator show
+UI.Examples.Calculator show
 ```
 
 ## Deployment:
@@ -18,7 +18,7 @@ Unusually, we disable most stripping options in order to retain more stuff to ca
 ```
 Smalltalk developmentSystem saveImage.	"Save the image if you don''t want to lose changes"
 (ImageStripper new)
-	rootPackage: Calculator owningPackage;
+	rootPackage: UI.Examples.Calculator owningPackage;
 	executableName: ''DCalc.exe'';
 	stripRedundantClasses: false;
 	stripRedundantMethods: false;
@@ -33,14 +33,16 @@ And to examine the content:
 
 ```
 Smalltalk developmentSystem browseDeploymentLog: ''DCalc.xml''
+"Or view the log"
+UI.Examples.XmlPad openOn: ''DCalc.xml''
 ```
 
 '.
 
 
 package setClassNames: #(
-	#{Calculator}
-	#{CalculatorSessionManager}
+	#{UI.Examples.Calculator}
+	#{UI.Examples.CalculatorSessionManager}
 ).
 
 package setPrerequisites: #(
@@ -50,22 +52,23 @@ package setPrerequisites: #(
 	'..\..\..\Dolphin\MVP\Presenters\Text\Dolphin Text Presenter'
 	'..\..\..\Dolphin\MVP\Icons\Dolphin Text Tile Icons'
 	'..\..\..\Dolphin\MVP\Type Converters\Dolphin Type Converters'
+	'..\UI Examples'
 ).
 
 package!
 
 "Class Definitions"!
 
-Shell subclass: #Calculator
+UI.Shell subclass: #'UI.Examples.Calculator'
 	instanceVariableNames: 'input output'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-RuntimeSessionManager subclass: #CalculatorSessionManager
+UI.RuntimeSessionManager subclass: #'UI.Examples.CalculatorSessionManager'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 

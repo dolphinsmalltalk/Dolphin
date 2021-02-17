@@ -1,27 +1,27 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-RuntimeSessionManager subclass: #SlidingBallSessionManager
+UI.RuntimeSessionManager subclass: #'UI.Examples.SlidingBallSessionManager'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-SlidingBallSessionManager guid: (GUID fromString: '{df9f9b7f-7863-4331-9258-06e55d9fb118}')!
-SlidingBallSessionManager comment: ''!
-!SlidingBallSessionManager categoriesForClass!Unclassified! !
-!SlidingBallSessionManager methodsFor!
+UI.Examples.SlidingBallSessionManager guid: (Core.GUID fromString: '{df9f9b7f-7863-4331-9258-06e55d9fb118}')!
+UI.Examples.SlidingBallSessionManager comment: ''!
+!UI.Examples.SlidingBallSessionManager categoriesForClass!Unclassified! !
+!UI.Examples.SlidingBallSessionManager methodsFor!
 
 main
 	"Start up the sample application"
 
 	self mainShellClass new show! !
-!SlidingBallSessionManager categoriesFor: #main!operations-startup!public! !
+!UI.Examples.SlidingBallSessionManager categoriesFor: #main!operations-startup!public! !
 
-!SlidingBallSessionManager class methodsFor!
+!UI.Examples.SlidingBallSessionManager class methodsFor!
 
 mainShellClass
 	"Answer the class of the application's main window (a <Shell> presenter)."
 
 	^SlidingBallDemo! !
-!SlidingBallSessionManager class categoriesFor: #mainShellClass!constants!public! !
+!UI.Examples.SlidingBallSessionManager class categoriesFor: #mainShellClass!constants!public! !
 

@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Model subclass: #Plimbole
+Core.Model subclass: #'UI.Examples.Plimbole'
 	instanceVariableNames: 'cells recurse tenorVoice altoVoice tenorChannel altoChannel scaleIndex noteDuration gridExtent'
 	classVariableNames: 'MidiChannel Registry StepProcess Tempo'
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Plimbole guid: (GUID fromString: '{f27f7ff6-a16b-433c-bf1b-d38b3db9ec3c}')!
-Plimbole comment: 'This is the Model class for the Plimbole Generative Music Sequencer. Plimbole has been designed to embrace the MVP design rules such that the main functionality is based in the model and is independent of the UI. To demostrate this you can create a Plimbole instance, load it with a piece and then start it playing:
+UI.Examples.Plimbole guid: (Core.GUID fromString: '{f27f7ff6-a16b-433c-bf1b-d38b3db9ec3c}')!
+UI.Examples.Plimbole comment: 'This is the Model class for the Plimbole Generative Music Sequencer. Plimbole has been designed to embrace the MVP design rules such that the main functionality is based in the model and is independent of the UI. To demostrate this you can create a Plimbole instance, load it with a piece and then start it playing:
 
 plimbole := Plimbole new register.
 plimbole signature: ''20_0_150_030621270423452562860760662170_9_A_12''.
@@ -15,8 +15,8 @@ plimbole play.
 
 Make sure that you stop it and unregister any references to the object or it will hold the midi channel open.
 plimbole stop unregister.'!
-!Plimbole categoriesForClass!MVP-Models! !
-!Plimbole methodsFor!
+!UI.Examples.Plimbole categoriesForClass!MVP-Models! !
+!UI.Examples.Plimbole methodsFor!
 
 addCell: aPlimboleCell 
 	self cells add: aPlimboleCell.
@@ -267,7 +267,7 @@ signature
 		showRadix: false.
 	^stream contents!
 
-signature: aString 
+signature: aString
 	"Sets the current piece to that held in aString"
 
 	| stream version tempo scaleIndex cells gridSize tenorIndex altoIndex |
@@ -276,7 +276,7 @@ signature: aString
 	version := Integer readFrom: stream.
 	(#(10 20) includes: version) ifFalse: [self error: 'Wrong version'].
 	stream next = $_ ifFalse: [self error: 'Wrong format'].
-	scaleIndex := (Integer readFrom: stream)+1.
+	scaleIndex := (Integer readFrom: stream) + 1.
 	stream next = $_ ifFalse: [self error: 'Wrong format'].
 	tempo := Integer readFrom: stream.
 	stream next = $_ ifFalse: [self error: 'Wrong format'].
@@ -290,7 +290,7 @@ signature: aString
 			cells add: cell].
 	tenorIndex := altoIndex := 1.
 	gridSize := 9.
-	version = self signatureVersion 
+	version = self signatureVersion
 		ifTrue: 
 			["Version 20 format includes gris size and voices"
 			stream next = $_ ifFalse: [self error: 'Wrong format'].
@@ -373,68 +373,68 @@ voiceChannelForNoteIndex: n
 	"Private - Decode whether note index n is a tenor or alto voice. Tenor is channel 1 and alto is channel 2"
 
 	^(n+1) < (self gridExtent x / 2) ifTrue: [tenorChannel ] ifFalse: [altoChannel ]! !
-!Plimbole categoriesFor: #addCell:!operations!public! !
-!Plimbole categoriesFor: #altoChannel!public! !
-!Plimbole categoriesFor: #altoVoice!accessing!public! !
-!Plimbole categoriesFor: #altoVoice:!accessing!public! !
-!Plimbole categoriesFor: #altoVoiceIndex!accessing!public! !
-!Plimbole categoriesFor: #altoVoiceIndex:!accessing!public! !
-!Plimbole categoriesFor: #altoVoices!constants!public!voices! !
-!Plimbole categoriesFor: #assignAvailableChannels!private! !
-!Plimbole categoriesFor: #beatTime!accessing!constants!public! !
-!Plimbole categoriesFor: #cellAtLocation:!helpers!private! !
-!Plimbole categoriesFor: #cellExtent!helpers!public! !
-!Plimbole categoriesFor: #cells!accessing!public! !
-!Plimbole categoriesFor: #cells:!accessing!private! !
-!Plimbole categoriesFor: #checkCell:!private! !
-!Plimbole categoriesFor: #checkCellCollisions:!helpers!private! !
-!Plimbole categoriesFor: #chromaticScale!constants!public!scales! !
-!Plimbole categoriesFor: #clearCells!public! !
-!Plimbole categoriesFor: #defaultVoice!constants!private! !
-!Plimbole categoriesFor: #gridExtent!accessing!public! !
-!Plimbole categoriesFor: #gridExtent:!public! !
-!Plimbole categoriesFor: #hangScale!constants!public!scales! !
-!Plimbole categoriesFor: #initialize!accessing!initializing!private! !
-!Plimbole categoriesFor: #isPlaying!public!testing! !
-!Plimbole categoriesFor: #midiOutChannel!private! !
-!Plimbole categoriesFor: #noteDuration!accessing!helpers!public! !
-!Plimbole categoriesFor: #noteDuration:!public! !
-!Plimbole categoriesFor: #otomataSignature!public! !
-!Plimbole categoriesFor: #pentatonicScale!constants!public!scales! !
-!Plimbole categoriesFor: #play!commands!public! !
-!Plimbole categoriesFor: #playCellNote:!operations!private! !
-!Plimbole categoriesFor: #playNoteAtX:!helpers!operations!private! !
-!Plimbole categoriesFor: #playNoteAtY:!helpers!operations!private! !
-!Plimbole categoriesFor: #register!public! !
-!Plimbole categoriesFor: #removeCell:!public! !
-!Plimbole categoriesFor: #reset!operations!private! !
-!Plimbole categoriesFor: #scale!accessing!public!scales! !
-!Plimbole categoriesFor: #scaleIndex!accessing!public!scales! !
-!Plimbole categoriesFor: #scaleIndex:!accessing!public!scales! !
-!Plimbole categoriesFor: #scaleName!accessing!public!scales! !
-!Plimbole categoriesFor: #scaleName:!accessing!public!scales! !
-!Plimbole categoriesFor: #scaleNames!public!scales! !
-!Plimbole categoriesFor: #setVoices!private! !
-!Plimbole categoriesFor: #signature!accessing!public! !
-!Plimbole categoriesFor: #signature:!public! !
-!Plimbole categoriesFor: #signatureVersion!private! !
-!Plimbole categoriesFor: #step!operations!public! !
-!Plimbole categoriesFor: #stepCell:!operations!private! !
-!Plimbole categoriesFor: #stop!commands!public! !
-!Plimbole categoriesFor: #tempo!public! !
-!Plimbole categoriesFor: #tempo:!public! !
-!Plimbole categoriesFor: #tenorChannel!public! !
-!Plimbole categoriesFor: #tenorVoice!accessing!public! !
-!Plimbole categoriesFor: #tenorVoice:!accessing!public! !
-!Plimbole categoriesFor: #tenorVoiceIndex!accessing!public! !
-!Plimbole categoriesFor: #tenorVoiceIndex:!accessing!public! !
-!Plimbole categoriesFor: #tenorVoices!constants!public!voices! !
-!Plimbole categoriesFor: #unregister!public! !
-!Plimbole categoriesFor: #update!private! !
-!Plimbole categoriesFor: #voice:!accessing!public! !
-!Plimbole categoriesFor: #voiceChannelForNoteIndex:!accessing!private! !
+!UI.Examples.Plimbole categoriesFor: #addCell:!operations!public! !
+!UI.Examples.Plimbole categoriesFor: #altoChannel!public! !
+!UI.Examples.Plimbole categoriesFor: #altoVoice!accessing!public! !
+!UI.Examples.Plimbole categoriesFor: #altoVoice:!accessing!public! !
+!UI.Examples.Plimbole categoriesFor: #altoVoiceIndex!accessing!public! !
+!UI.Examples.Plimbole categoriesFor: #altoVoiceIndex:!accessing!public! !
+!UI.Examples.Plimbole categoriesFor: #altoVoices!constants!public!voices! !
+!UI.Examples.Plimbole categoriesFor: #assignAvailableChannels!private! !
+!UI.Examples.Plimbole categoriesFor: #beatTime!accessing!constants!public! !
+!UI.Examples.Plimbole categoriesFor: #cellAtLocation:!helpers!private! !
+!UI.Examples.Plimbole categoriesFor: #cellExtent!helpers!public! !
+!UI.Examples.Plimbole categoriesFor: #cells!accessing!public! !
+!UI.Examples.Plimbole categoriesFor: #cells:!accessing!private! !
+!UI.Examples.Plimbole categoriesFor: #checkCell:!private! !
+!UI.Examples.Plimbole categoriesFor: #checkCellCollisions:!helpers!private! !
+!UI.Examples.Plimbole categoriesFor: #chromaticScale!constants!public!scales! !
+!UI.Examples.Plimbole categoriesFor: #clearCells!public! !
+!UI.Examples.Plimbole categoriesFor: #defaultVoice!constants!private! !
+!UI.Examples.Plimbole categoriesFor: #gridExtent!accessing!public! !
+!UI.Examples.Plimbole categoriesFor: #gridExtent:!public! !
+!UI.Examples.Plimbole categoriesFor: #hangScale!constants!public!scales! !
+!UI.Examples.Plimbole categoriesFor: #initialize!accessing!initializing!private! !
+!UI.Examples.Plimbole categoriesFor: #isPlaying!public!testing! !
+!UI.Examples.Plimbole categoriesFor: #midiOutChannel!private! !
+!UI.Examples.Plimbole categoriesFor: #noteDuration!accessing!helpers!public! !
+!UI.Examples.Plimbole categoriesFor: #noteDuration:!public! !
+!UI.Examples.Plimbole categoriesFor: #otomataSignature!public! !
+!UI.Examples.Plimbole categoriesFor: #pentatonicScale!constants!public!scales! !
+!UI.Examples.Plimbole categoriesFor: #play!commands!public! !
+!UI.Examples.Plimbole categoriesFor: #playCellNote:!operations!private! !
+!UI.Examples.Plimbole categoriesFor: #playNoteAtX:!helpers!operations!private! !
+!UI.Examples.Plimbole categoriesFor: #playNoteAtY:!helpers!operations!private! !
+!UI.Examples.Plimbole categoriesFor: #register!public! !
+!UI.Examples.Plimbole categoriesFor: #removeCell:!public! !
+!UI.Examples.Plimbole categoriesFor: #reset!operations!private! !
+!UI.Examples.Plimbole categoriesFor: #scale!accessing!public!scales! !
+!UI.Examples.Plimbole categoriesFor: #scaleIndex!accessing!public!scales! !
+!UI.Examples.Plimbole categoriesFor: #scaleIndex:!accessing!public!scales! !
+!UI.Examples.Plimbole categoriesFor: #scaleName!accessing!public!scales! !
+!UI.Examples.Plimbole categoriesFor: #scaleName:!accessing!public!scales! !
+!UI.Examples.Plimbole categoriesFor: #scaleNames!public!scales! !
+!UI.Examples.Plimbole categoriesFor: #setVoices!private! !
+!UI.Examples.Plimbole categoriesFor: #signature!accessing!public! !
+!UI.Examples.Plimbole categoriesFor: #signature:!public! !
+!UI.Examples.Plimbole categoriesFor: #signatureVersion!private! !
+!UI.Examples.Plimbole categoriesFor: #step!operations!public! !
+!UI.Examples.Plimbole categoriesFor: #stepCell:!operations!private! !
+!UI.Examples.Plimbole categoriesFor: #stop!commands!public! !
+!UI.Examples.Plimbole categoriesFor: #tempo!public! !
+!UI.Examples.Plimbole categoriesFor: #tempo:!public! !
+!UI.Examples.Plimbole categoriesFor: #tenorChannel!public! !
+!UI.Examples.Plimbole categoriesFor: #tenorVoice!accessing!public! !
+!UI.Examples.Plimbole categoriesFor: #tenorVoice:!accessing!public! !
+!UI.Examples.Plimbole categoriesFor: #tenorVoiceIndex!accessing!public! !
+!UI.Examples.Plimbole categoriesFor: #tenorVoiceIndex:!accessing!public! !
+!UI.Examples.Plimbole categoriesFor: #tenorVoices!constants!public!voices! !
+!UI.Examples.Plimbole categoriesFor: #unregister!public! !
+!UI.Examples.Plimbole categoriesFor: #update!private! !
+!UI.Examples.Plimbole categoriesFor: #voice:!accessing!public! !
+!UI.Examples.Plimbole categoriesFor: #voiceChannelForNoteIndex:!accessing!private! !
 
-!Plimbole class methodsFor!
+!UI.Examples.Plimbole class methodsFor!
 
 beatTime
 	^30 * 1000 // self tempo!
@@ -504,18 +504,18 @@ unregister: aPlimbole
 		self stop.
 		self midiOutChannel free ].
 ! !
-!Plimbole class categoriesFor: #beatTime!accessing!constants!public! !
-!Plimbole class categoriesFor: #icon!constants!public! !
-!Plimbole class categoriesFor: #initialize!initialization!private! !
-!Plimbole class categoriesFor: #isPlaying!public!testing! !
-!Plimbole class categoriesFor: #midiOutChannel!private! !
-!Plimbole class categoriesFor: #onStartup!initialization!private! !
-!Plimbole class categoriesFor: #play!commands!public! !
-!Plimbole class categoriesFor: #register:!operations!public! !
-!Plimbole class categoriesFor: #registry!accessing!public! !
-!Plimbole class categoriesFor: #step!commands!public! !
-!Plimbole class categoriesFor: #stop!commands!public! !
-!Plimbole class categoriesFor: #tempo!public! !
-!Plimbole class categoriesFor: #tempo:!public! !
-!Plimbole class categoriesFor: #unregister:!operations!public! !
+!UI.Examples.Plimbole class categoriesFor: #beatTime!accessing!constants!public! !
+!UI.Examples.Plimbole class categoriesFor: #icon!constants!public! !
+!UI.Examples.Plimbole class categoriesFor: #initialize!initialization!private! !
+!UI.Examples.Plimbole class categoriesFor: #isPlaying!public!testing! !
+!UI.Examples.Plimbole class categoriesFor: #midiOutChannel!private! !
+!UI.Examples.Plimbole class categoriesFor: #onStartup!initialization!private! !
+!UI.Examples.Plimbole class categoriesFor: #play!commands!public! !
+!UI.Examples.Plimbole class categoriesFor: #register:!operations!public! !
+!UI.Examples.Plimbole class categoriesFor: #registry!accessing!public! !
+!UI.Examples.Plimbole class categoriesFor: #step!commands!public! !
+!UI.Examples.Plimbole class categoriesFor: #stop!commands!public! !
+!UI.Examples.Plimbole class categoriesFor: #tempo!public! !
+!UI.Examples.Plimbole class categoriesFor: #tempo:!public! !
+!UI.Examples.Plimbole class categoriesFor: #unregister:!operations!public! !
 

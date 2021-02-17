@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-DoubleBufferedView subclass: #SlidingBallDemo
+UI.DoubleBufferedView subclass: #'UI.Examples.SlidingBallDemo'
 	instanceVariableNames: 'start end circle stepProcess'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-SlidingBallDemo guid: (GUID fromString: '{e5ba81f2-42e7-43ee-832f-3a24fadebfee}')!
-SlidingBallDemo comment: 'I would like the example to have two rectangles connected by a line.
+UI.Examples.SlidingBallDemo guid: (Core.GUID fromString: '{e5ba81f2-42e7-43ee-832f-3a24fadebfee}')!
+UI.Examples.SlidingBallDemo comment: 'I would like the example to have two rectangles connected by a line.
 One button (called "start") that when presssed will show a small
 circle travel along the line from one rectangle to the other. Upon
 reaching the second rectangle the circle disappears and a dialog box
@@ -20,8 +20,8 @@ the work space (I would consider another button that would be where
 the user is required to pause and restart the movement)
 
 SlidingBallDemo new show'!
-!SlidingBallDemo categoriesForClass!Unclassified! !
-!SlidingBallDemo methodsFor!
+!UI.Examples.SlidingBallDemo categoriesForClass!Unclassified! !
+!UI.Examples.SlidingBallDemo methodsFor!
 
 circleExtent
 	^20@20!
@@ -154,26 +154,26 @@ stopStepProcess
 	self isRunning ifTrue: [
 		self stepProcess terminate.
 		stepProcess := nil ]! !
-!SlidingBallDemo categoriesFor: #circleExtent!constants!public! !
-!SlidingBallDemo categoriesFor: #circleVelocity!constants!public! !
-!SlidingBallDemo categoriesFor: #defaultExtent!constants!public! !
-!SlidingBallDemo categoriesFor: #defaultWindowStyle!constants!private! !
-!SlidingBallDemo categoriesFor: #frameRate!constants!public! !
-!SlidingBallDemo categoriesFor: #initialize!event handling!private! !
-!SlidingBallDemo categoriesFor: #isCompleted!private!testing! !
-!SlidingBallDemo categoriesFor: #isRunning!private!testing! !
-!SlidingBallDemo categoriesFor: #onDestroyed!event handling!private! !
-!SlidingBallDemo categoriesFor: #onLeftButtonDoubleClicked:!event handling!private! !
-!SlidingBallDemo categoriesFor: #paintCircleOn:!displaying!public! !
-!SlidingBallDemo categoriesFor: #paintEndOn:!displaying!private! !
-!SlidingBallDemo categoriesFor: #paintLineOn:!displaying!private! !
-!SlidingBallDemo categoriesFor: #paintStartOn:!displaying!private! !
-!SlidingBallDemo categoriesFor: #rectangleExtent!constants!public! !
-!SlidingBallDemo categoriesFor: #render!operations!private! !
-!SlidingBallDemo categoriesFor: #showCompletedMessage!operations!private! !
-!SlidingBallDemo categoriesFor: #showStartMessageOn:!displaying!private! !
-!SlidingBallDemo categoriesFor: #startStepProcess!initializing!private! !
-!SlidingBallDemo categoriesFor: #step!operations!private! !
-!SlidingBallDemo categoriesFor: #stepProcess!accessing!private! !
-!SlidingBallDemo categoriesFor: #stopStepProcess!initializing!private! !
+!UI.Examples.SlidingBallDemo categoriesFor: #circleExtent!constants!public! !
+!UI.Examples.SlidingBallDemo categoriesFor: #circleVelocity!constants!public! !
+!UI.Examples.SlidingBallDemo categoriesFor: #defaultExtent!constants!public! !
+!UI.Examples.SlidingBallDemo categoriesFor: #defaultWindowStyle!constants!private! !
+!UI.Examples.SlidingBallDemo categoriesFor: #frameRate!constants!public! !
+!UI.Examples.SlidingBallDemo categoriesFor: #initialize!event handling!private! !
+!UI.Examples.SlidingBallDemo categoriesFor: #isCompleted!private!testing! !
+!UI.Examples.SlidingBallDemo categoriesFor: #isRunning!private!testing! !
+!UI.Examples.SlidingBallDemo categoriesFor: #onDestroyed!event handling!private! !
+!UI.Examples.SlidingBallDemo categoriesFor: #onLeftButtonDoubleClicked:!event handling!private! !
+!UI.Examples.SlidingBallDemo categoriesFor: #paintCircleOn:!displaying!public! !
+!UI.Examples.SlidingBallDemo categoriesFor: #paintEndOn:!displaying!private! !
+!UI.Examples.SlidingBallDemo categoriesFor: #paintLineOn:!displaying!private! !
+!UI.Examples.SlidingBallDemo categoriesFor: #paintStartOn:!displaying!private! !
+!UI.Examples.SlidingBallDemo categoriesFor: #rectangleExtent!constants!public! !
+!UI.Examples.SlidingBallDemo categoriesFor: #render!operations!private! !
+!UI.Examples.SlidingBallDemo categoriesFor: #showCompletedMessage!operations!private! !
+!UI.Examples.SlidingBallDemo categoriesFor: #showStartMessageOn:!displaying!private! !
+!UI.Examples.SlidingBallDemo categoriesFor: #startStepProcess!initializing!private! !
+!UI.Examples.SlidingBallDemo categoriesFor: #step!operations!private! !
+!UI.Examples.SlidingBallDemo categoriesFor: #stepProcess!accessing!private! !
+!UI.Examples.SlidingBallDemo categoriesFor: #stopStepProcess!initializing!private! !
 

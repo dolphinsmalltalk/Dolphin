@@ -76,7 +76,7 @@ testEtchASketch
 	"Etch-a-sketch uses an InternalIcon, and STB."
 
 	| env |
-	env := self environmentForAppDeployment: {Smalltalk.EtchASketch owningPackage}.
+	env := self environmentForAppDeployment: {UI.Examples.EtchASketch owningPackage}.
 	self verifyPackageClosure: env missing: #(#ttmRelayEvent: #defineTemplate #evaluate:).
 	"This isn't necessarily sufficient for InternalIcon, etc, to survive into the deployed app, but is necessary for that to be so."
 	self assert: (env includesClass: InternalIcon).
@@ -93,20 +93,21 @@ testHelloWorld
 		- recompileDefinition - sent from base package, but before the development package which defines it is unloaded
 		- ttmRelayEvent: - only sent (from MVP base) if the Dolphin ToolTips package is loaded"
 
-	self verifyPackageClosure: (self environmentForAppDeployment: {Smalltalk.HelloWorld owningPackage})
+	self
+		verifyPackageClosure: (self environmentForAppDeployment: {UI.Examples.HelloWorld owningPackage})
 		missing: self simpleGuiAppUnimplementedMessages!
 
 testNotepad
 	"Ideally the set of missing selectors would be empty and reasonable effort has been made to reduce this to a small set. Some of the missing methods contributed by the base package will still be missing, but others are present because Hello World is a GUI app and pulls in the base MVP packages that define those methods."
 
-	self verifyPackageClosure: (self environmentForAppDeployment: {Smalltalk.Notepad owningPackage})
+	self verifyPackageClosure: (self environmentForAppDeployment: {UI.Examples.Notepad owningPackage})
 		missing: self simpleGuiAppUnimplementedMessages!
 
 testRegEdit
 	"Regedit uses List and Tree views"
 
 	| env |
-	env := self environmentForAppDeployment: {Smalltalk.RegEdit owningPackage}.
+	env := self environmentForAppDeployment: {UI.Examples.RegEdit owningPackage}.
 	self verifyPackageClosure: env missing: self simpleGuiAppUnimplementedMessages!
 
 testSystemPackage

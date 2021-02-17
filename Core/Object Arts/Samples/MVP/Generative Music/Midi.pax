@@ -1,21 +1,21 @@
 ﻿| package |
 package := Package name: 'Midi'.
-package paxVersion: 2;
+package paxVersion: 2.1;
 	preDeclareClassesOnLoad: false;
 	basicComment: ''.
 
 
 package setClassNames: #(
-	#{MidiConstants}
-	#{MIDIOut}
-	#{MidiOutChannel}
+	#{External.MidiOutChannel}
+	#{OS.MidiConstants}
+	#{OS.MIDIOut}
 ).
 
 package setMethodNames: #(
-	#(#{WinMMLibrary} #midiOutCloseHmo:)
-	#(#{WinMMLibrary} #midiOutGetNumDevs)
-	#(#{WinMMLibrary} #midiOutOpenLphmo:uDeviceID:dwCallback:dwCallbackInstance:dwFlags:)
-	#(#{WinMMLibrary} #midiOutShortMsgHmo:dwMsg:)
+	#(#{OS.WinMMLibrary} #midiOutCloseHmo:)
+	#(#{OS.WinMMLibrary} #midiOutGetNumDevs)
+	#(#{OS.WinMMLibrary} #midiOutOpenLphmo:uDeviceID:dwCallback:dwCallbackInstance:dwFlags:)
+	#(#{OS.WinMMLibrary} #midiOutShortMsgHmo:dwMsg:)
 ).
 
 package setPrerequisites: #(
@@ -26,7 +26,7 @@ package!
 
 "Class Definitions"!
 
-SharedPool subclass: #MidiConstants
+Kernel.SharedPool subclass: #'OS.MidiConstants'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -37,13 +37,13 @@ SharedPool subclass: #MidiConstants
 		'MidiControlChange' -> 16rB.
 		'MidiProgramChange' -> 16rC
 	}!
-Object subclass: #MIDIOut
+Core.Object subclass: #'OS.MIDIOut'
 	instanceVariableNames: 'handle'
 	classVariableNames: ''
-	imports: #(#{MidiConstants})
+	imports: #(#{OS.MidiConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Object subclass: #MidiOutChannel
+Core.Object subclass: #'External.MidiOutChannel'
 	instanceVariableNames: 'midiout noteProcess octaveShift'
 	classVariableNames: ''
 	imports: #()
@@ -52,7 +52,7 @@ Object subclass: #MidiOutChannel
 
 "Loose Methods"!
 
-!WinMMLibrary methodsFor!
+!OS.WinMMLibrary methodsFor!
 
 midiOutCloseHmo: hmo
 	"cdemers - 9/3/2004"
@@ -101,10 +101,10 @@ midiOutShortMsgHmo: hmo dwMsg: dwMsg
 
 	<stdcall: dword midiOutShortMsg dword dword>
 	^self invalidCall: _failureCode! !
-!WinMMLibrary categoriesFor: #midiOutCloseHmo:!public! !
-!WinMMLibrary categoriesFor: #midiOutGetNumDevs!public! !
-!WinMMLibrary categoriesFor: #midiOutOpenLphmo:uDeviceID:dwCallback:dwCallbackInstance:dwFlags:!public! !
-!WinMMLibrary categoriesFor: #midiOutShortMsgHmo:dwMsg:!public! !
+!OS.WinMMLibrary categoriesFor: #midiOutCloseHmo:!public! !
+!OS.WinMMLibrary categoriesFor: #midiOutGetNumDevs!public! !
+!OS.WinMMLibrary categoriesFor: #midiOutOpenLphmo:uDeviceID:dwCallback:dwCallbackInstance:dwFlags:!public! !
+!OS.WinMMLibrary categoriesFor: #midiOutShortMsgHmo:dwMsg:!public! !
 
 "End of package definition"!
 

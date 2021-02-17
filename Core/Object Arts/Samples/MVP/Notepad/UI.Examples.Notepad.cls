@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-UI.TextDocument subclass: #Notepad
+UI.TextDocument subclass: #'UI.Examples.Notepad'
 	instanceVariableNames: ''
 	classVariableNames: 'ResourceLib'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Notepad guid: (Core.GUID fromString: '{64abbec0-8140-42d2-aecd-6d329b3b41e0}')!
-Notepad comment: '`Notepad` is a `<topShell>` sample application which implements most of the functionality of the familiar Windows utility. The major areas of missing functionality are printing, zoom and the status bar. Most of the implementation of the application is actually inherited from Dolphin''s `TextDocument` framework class.
+UI.Examples.Notepad guid: (Core.GUID fromString: '{64abbec0-8140-42d2-aecd-6d329b3b41e0}')!
+UI.Examples.Notepad comment: '`Notepad` is a `<topShell>` sample application which implements most of the functionality of the familiar Windows utility. The major areas of missing functionality are printing, zoom and the status bar. Most of the implementation of the application is actually inherited from Dolphin''s `TextDocument` framework class.
 
 Note that some resources are extracted from the Windows executable, but none of the functionality of that executable is reused (or indeed could be, as Notepad.exe doesn''t export any functions).
 
@@ -22,8 +22,8 @@ Class Variables:
 
 
 '!
-!Notepad categoriesForClass!Samples! !
-!Notepad methodsFor!
+!UI.Examples.Notepad categoriesForClass!Samples! !
+!UI.Examples.Notepad methodsFor!
 
 aboutNotepad
 	"Pop up a little helpful info. about this sample program."
@@ -75,15 +75,15 @@ saveChangesPrompt
 	docName := self hasFilename ifTrue: [self filename] ifFalse: ['Untitled'].
 	^'The text in the <1s> file has changed.<n><n>Do you want to save the changes?' 
 		expandMacrosWith: docName! !
-!Notepad categoriesFor: #aboutNotepad!commands!public! !
-!Notepad categoriesFor: #chooseFont!commands!public! !
-!Notepad categoriesFor: #editGoto!public! !
-!Notepad categoriesFor: #editTimeStamp!commands!public! !
-!Notepad categoriesFor: #hasWordWrap!public!testing! !
-!Notepad categoriesFor: #queryCommand:!commands!private! !
-!Notepad categoriesFor: #saveChangesPrompt!private! !
+!UI.Examples.Notepad categoriesFor: #aboutNotepad!commands!public! !
+!UI.Examples.Notepad categoriesFor: #chooseFont!commands!public! !
+!UI.Examples.Notepad categoriesFor: #editGoto!public! !
+!UI.Examples.Notepad categoriesFor: #editTimeStamp!commands!public! !
+!UI.Examples.Notepad categoriesFor: #hasWordWrap!public!testing! !
+!UI.Examples.Notepad categoriesFor: #queryCommand:!commands!private! !
+!UI.Examples.Notepad categoriesFor: #saveChangesPrompt!private! !
 
-!Notepad class methodsFor!
+!UI.Examples.Notepad class methodsFor!
 
 about
 	"Private - Pop up a little helpful info. about this sample program."
@@ -147,13 +147,13 @@ uninitialize
 	"
 
 	self closeResourceLib! !
-!Notepad class categoriesFor: #about!enquiries!private! !
-!Notepad class categoriesFor: #aboutTemplate!enquiries!private! !
-!Notepad class categoriesFor: #closeResourceLib!helpers!private! !
-!Notepad class categoriesFor: #displayOn:!displaying!public! !
-!Notepad class categoriesFor: #icon!constants!public! !
-!Notepad class categoriesFor: #onPreStripImage!class hierarchy-removing!private! !
-!Notepad class categoriesFor: #resource_Default_view!public!resources-views! !
-!Notepad class categoriesFor: #resourceLib!constants!public! !
-!Notepad class categoriesFor: #uninitialize!class hierarchy-removing!private! !
+!UI.Examples.Notepad class categoriesFor: #about!enquiries!private! !
+!UI.Examples.Notepad class categoriesFor: #aboutTemplate!enquiries!private! !
+!UI.Examples.Notepad class categoriesFor: #closeResourceLib!helpers!private! !
+!UI.Examples.Notepad class categoriesFor: #displayOn:!displaying!public! !
+!UI.Examples.Notepad class categoriesFor: #icon!constants!public! !
+!UI.Examples.Notepad class categoriesFor: #onPreStripImage!class hierarchy-removing!private! !
+!UI.Examples.Notepad class categoriesFor: #resource_Default_view!public!resources-views! !
+!UI.Examples.Notepad class categoriesFor: #resourceLib!constants!public! !
+!UI.Examples.Notepad class categoriesFor: #uninitialize!class hierarchy-removing!private! !
 

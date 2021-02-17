@@ -38,6 +38,6 @@ serialNumberClass
 mainShellClass
 	"Answer the class of the application's main window (a <Shell> presenter)."
 
-	^Smalltalk.Notepad! !
+	^UI.Examples.Notepad! !
 !Security.Examples.ProtectedNotepadSessionManager class categoriesFor: #mainShellClass!constants!public! !
 

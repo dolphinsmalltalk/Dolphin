@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'Video Library'.
-package paxVersion: 2;
+package paxVersion: 2.1;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk Video Library Sample. 
 Copyright (c) Object Arts Ltd, 2001.
@@ -16,12 +16,12 @@ package basicPackageVersion: '2005.6.5.15'.
 
 
 package setClassNames: #(
-	#{NewVideoTapeDialog}
-	#{VideoLibrary}
-	#{VideoLibraryShell}
-	#{VideoRecording}
-	#{VideoRecordingDialog}
-	#{VideoTape}
+	#{UI.Examples.NewVideoTapeDialog}
+	#{UI.Examples.VideoLibrary}
+	#{UI.Examples.VideoLibraryShell}
+	#{UI.Examples.VideoRecording}
+	#{UI.Examples.VideoRecordingDialog}
+	#{UI.Examples.VideoTape}
 ).
 
 package setPrerequisites: #(
@@ -48,40 +48,40 @@ package!
 
 "Class Definitions"!
 
-Object subclass: #VideoLibrary
+Core.Object subclass: #'UI.Examples.VideoLibrary'
 	instanceVariableNames: 'owner tapes'
 	classVariableNames: 'DefaultInstance'
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Object subclass: #VideoRecording
+Core.Object subclass: #'UI.Examples.VideoRecording'
 	instanceVariableNames: 'title date time length'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Object subclass: #VideoTape
+Core.Object subclass: #'UI.Examples.VideoTape'
 	instanceVariableNames: 'name length recordings'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Shell subclass: #VideoLibraryShell
+UI.Shell subclass: #'UI.Examples.VideoLibraryShell'
 	instanceVariableNames: 'ownerPresenter tapesPresenter recordingsPresenter'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Dialog subclass: #VideoRecordingDialog
+UI.Dialog subclass: #'UI.Examples.VideoRecordingDialog'
 	instanceVariableNames: 'titlePresenter datePresenter timePresenter lengthPresenter'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ValueDialog subclass: #NewVideoTapeDialog
+UI.ValueDialog subclass: #'UI.Examples.NewVideoTapeDialog'
 	instanceVariableNames: 'namePresenter lengthPresenter'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 

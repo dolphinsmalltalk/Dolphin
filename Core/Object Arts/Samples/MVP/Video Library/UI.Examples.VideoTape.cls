@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Object subclass: #VideoTape
+Core.Object subclass: #'UI.Examples.VideoTape'
 	instanceVariableNames: 'name length recordings'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-VideoTape guid: (GUID fromString: '{fd390a77-8643-49ee-be26-397fbec58430}')!
-VideoTape comment: 'A VideoTape represents a collection of VideoRecordings recorded on a named video cassette. This class is part of the Video Library sample package. Please see the package comment for more details.'!
-!VideoTape categoriesForClass!Samples! !
-!VideoTape methodsFor!
+UI.Examples.VideoTape guid: (Core.GUID fromString: '{fd390a77-8643-49ee-be26-397fbec58430}')!
+UI.Examples.VideoTape comment: 'A VideoTape represents a collection of VideoRecordings recorded on a named video cassette. This class is part of the Video Library sample package. Please see the package comment for more details.'!
+!UI.Examples.VideoTape categoriesForClass!Samples! !
+!UI.Examples.VideoTape methodsFor!
 
 displayOn: aPuttableStream
 	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that an end-user might want to see."
@@ -68,14 +68,14 @@ recordings
 	"
 
 	^recordings! !
-!VideoTape categoriesFor: #displayOn:!printing!public! !
-!VideoTape categoriesFor: #length!accessing!public! !
-!VideoTape categoriesFor: #name!accessing!public! !
-!VideoTape categoriesFor: #name:length:!initializing!private! !
-!VideoTape categoriesFor: #printOn:!printing!public! !
-!VideoTape categoriesFor: #recordings!accessing!public! !
+!UI.Examples.VideoTape categoriesFor: #displayOn:!printing!public! !
+!UI.Examples.VideoTape categoriesFor: #length!accessing!public! !
+!UI.Examples.VideoTape categoriesFor: #name!accessing!public! !
+!UI.Examples.VideoTape categoriesFor: #name:length:!initializing!private! !
+!UI.Examples.VideoTape categoriesFor: #printOn:!printing!public! !
+!UI.Examples.VideoTape categoriesFor: #recordings!accessing!public! !
 
-!VideoTape class methodsFor!
+!UI.Examples.VideoTape class methodsFor!
 
 defaultTapeLength
 	"Private - Answer a default length (in minutes) to use for instances of the receiver.
@@ -112,8 +112,8 @@ name: tapeName length: tapeLength
 
 	^self new name: tapeName length: tapeLength
 ! !
-!VideoTape class categoriesFor: #defaultTapeLength!constants!private! !
-!VideoTape class categoriesFor: #icon!constants!public! !
-!VideoTape class categoriesFor: #name:!instance creation!public! !
-!VideoTape class categoriesFor: #name:length:!instance creation!public! !
+!UI.Examples.VideoTape class categoriesFor: #defaultTapeLength!constants!private! !
+!UI.Examples.VideoTape class categoriesFor: #icon!constants!public! !
+!UI.Examples.VideoTape class categoriesFor: #name:!instance creation!public! !
+!UI.Examples.VideoTape class categoriesFor: #name:length:!instance creation!public! !
 

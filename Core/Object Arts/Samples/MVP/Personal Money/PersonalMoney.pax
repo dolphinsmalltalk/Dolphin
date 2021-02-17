@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'PersonalMoney'.
-package paxVersion: 2;
+package paxVersion: 2.1;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk Personal Accounts Sample.
 Copyright (c) Object Arts Ltd, 1998-2005
@@ -33,12 +33,12 @@ Smalltalk developmentSystem browseDeploymentLog: ''PersonalMoney.xml''
 
 
 package setClassNames: #(
-	#{PersonalAccount}
-	#{PersonalAccountShell}
-	#{PersonalAccountTransaction}
-	#{PersonalAccountTransactionDialog}
-	#{PersonalMoney}
-	#{PersonalMoneyShell}
+	#{UI.Examples.PersonalAccount}
+	#{UI.Examples.PersonalAccountShell}
+	#{UI.Examples.PersonalAccountTransaction}
+	#{UI.Examples.PersonalAccountTransactionDialog}
+	#{UI.Examples.PersonalMoney}
+	#{UI.Examples.PersonalMoneyShell}
 ).
 
 package setPrerequisites: #(
@@ -62,40 +62,40 @@ package!
 
 "Class Definitions"!
 
-Model subclass: #PersonalAccount
+Core.Model subclass: #'UI.Examples.PersonalAccount'
 	instanceVariableNames: 'name accountNumber initialBalance transactions currentBalance'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Model subclass: #PersonalAccountTransaction
+Core.Model subclass: #'UI.Examples.PersonalAccountTransaction'
 	instanceVariableNames: 'date description amount isDebit'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Model subclass: #PersonalMoney
+Core.Model subclass: #'UI.Examples.PersonalMoney'
 	instanceVariableNames: 'owner accounts'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Shell subclass: #PersonalAccountShell
+UI.Shell subclass: #'UI.Examples.PersonalAccountShell'
 	instanceVariableNames: 'namePresenter accountNumberPresenter initialBalancePresenter transactionsPresenter currentBalancePresenter'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-AbstractDocumentShell subclass: #PersonalMoneyShell
+UI.AbstractDocumentShell subclass: #'UI.Examples.PersonalMoneyShell'
 	instanceVariableNames: 'ownerPresenter accountsPresenter'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Dialog subclass: #PersonalAccountTransactionDialog
+UI.Dialog subclass: #'UI.Examples.PersonalAccountTransactionDialog'
 	instanceVariableNames: 'datePresenter amountPresenter descriptionPresenter isDebitPresenter'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 

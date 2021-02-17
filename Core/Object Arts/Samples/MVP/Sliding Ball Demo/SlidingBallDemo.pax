@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'SlidingBallDemo'.
-package paxVersion: 2;
+package paxVersion: 2.1;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'I would like the example to have two rectangles connected by a line.
 One button (called "start") that when presssed will show a small
@@ -18,8 +18,8 @@ SlidingBallDemo new show'.
 
 
 package setClassNames: #(
-	#{SlidingBallDemo}
-	#{SlidingBallSessionManager}
+	#{UI.Examples.SlidingBallDemo}
+	#{UI.Examples.SlidingBallSessionManager}
 ).
 
 package setPrerequisites: #(
@@ -32,16 +32,16 @@ package!
 
 "Class Definitions"!
 
-RuntimeSessionManager subclass: #SlidingBallSessionManager
+UI.RuntimeSessionManager subclass: #'UI.Examples.SlidingBallSessionManager'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-DoubleBufferedView subclass: #SlidingBallDemo
+UI.DoubleBufferedView subclass: #'UI.Examples.SlidingBallDemo'
 	instanceVariableNames: 'start end circle stepProcess'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 

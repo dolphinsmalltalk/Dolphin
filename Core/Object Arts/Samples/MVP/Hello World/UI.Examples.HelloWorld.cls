@@ -1,17 +1,17 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ShellView subclass: #HelloWorld
+UI.ShellView subclass: #'UI.Examples.HelloWorld'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'Win32Constants'
+	imports: #(#{OS.Win32Constants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-HelloWorld guid: (GUID fromString: '{87b4c720-026e-11d3-9fd7-00a0cc3e4a32}')!
-HelloWorld comment: 'A sample illustrating just about the simplest of all applications; a window displaying hello (in Chinese) within an elliptical border. To demonstrate this evaluate the following:
+UI.Examples.HelloWorld guid: (Core.GUID fromString: '{87b4c720-026e-11d3-9fd7-00a0cc3e4a32}')!
+UI.Examples.HelloWorld comment: 'A sample illustrating just about the simplest of all applications; a window displaying hello (in Chinese) within an elliptical border. To demonstrate this evaluate the following:
 
 HelloWorld show.'!
-!HelloWorld categoriesForClass!MVP-Views!Samples! !
-!HelloWorld methodsFor!
+!UI.Examples.HelloWorld categoriesForClass!MVP-Views!Samples! !
+!UI.Examples.HelloWorld methodsFor!
 
 defaultExtent
 	"Private - Answer the default size of the receiver. This is used only to
@@ -75,13 +75,13 @@ onPositionChanged: aPositionEvent
 
 	aPositionEvent isResize ifTrue: [self invalidate].
 	^super onPositionChanged: aPositionEvent! !
-!HelloWorld categoriesFor: #defaultExtent!constants!private! !
-!HelloWorld categoriesFor: #helloWorldText!constants!public! !
-!HelloWorld categoriesFor: #minExtent!accessing!public! !
-!HelloWorld categoriesFor: #onPaintRequired:!event handling!public! !
-!HelloWorld categoriesFor: #onPositionChanged:!event handling!public! !
+!UI.Examples.HelloWorld categoriesFor: #defaultExtent!constants!private! !
+!UI.Examples.HelloWorld categoriesFor: #helloWorldText!constants!public! !
+!UI.Examples.HelloWorld categoriesFor: #minExtent!accessing!public! !
+!UI.Examples.HelloWorld categoriesFor: #onPaintRequired:!event handling!public! !
+!UI.Examples.HelloWorld categoriesFor: #onPositionChanged:!event handling!public! !
 
-!HelloWorld class methodsFor!
+!UI.Examples.HelloWorld class methodsFor!
 
 icon
 	"Answer an icon for the receiver and its instances."
@@ -94,6 +94,6 @@ show
 	self new show
 
 	! !
-!HelloWorld class categoriesFor: #icon!constants!public! !
-!HelloWorld class categoriesFor: #show!instance creation!public! !
+!UI.Examples.HelloWorld class categoriesFor: #icon!constants!public! !
+!UI.Examples.HelloWorld class categoriesFor: #show!instance creation!public! !
 

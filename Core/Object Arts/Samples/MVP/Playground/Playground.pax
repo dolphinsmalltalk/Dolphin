@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'Playground'.
-package paxVersion: 2;
+package paxVersion: 2.1;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk Playground Tutorial Sample. 
 Copyright (c) Object Arts Ltd, 1998-2000.
@@ -25,12 +25,12 @@ simon growBy: 50.
 
 
 package setClassNames: #(
-	#{Circle}
-	#{Playground}
-	#{PlayShape}
-	#{RegularPolygon}
-	#{Square}
-	#{Triangle}
+	#{UI.Examples.Circle}
+	#{UI.Examples.Playground}
+	#{UI.Examples.PlayShape}
+	#{UI.Examples.RegularPolygon}
+	#{UI.Examples.Square}
+	#{UI.Examples.Triangle}
 ).
 
 package setPrerequisites: #(
@@ -44,40 +44,40 @@ package!
 
 "Class Definitions"!
 
-Object subclass: #PlayShape
+Core.Object subclass: #'UI.Examples.PlayShape'
 	instanceVariableNames: 'playground'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-PlayShape subclass: #RegularPolygon
+UI.Examples.PlayShape subclass: #'UI.Examples.RegularPolygon'
 	instanceVariableNames: 'color sides position rotation radius'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-RegularPolygon subclass: #Circle
+UI.Examples.RegularPolygon subclass: #'UI.Examples.Circle'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-RegularPolygon subclass: #Square
+UI.Examples.RegularPolygon subclass: #'UI.Examples.Square'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-RegularPolygon subclass: #Triangle
+UI.Examples.RegularPolygon subclass: #'UI.Examples.Triangle'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ShellView subclass: #Playground
+UI.ShellView subclass: #'UI.Examples.Playground'
 	instanceVariableNames: 'shapes'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 
