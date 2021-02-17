@@ -366,12 +366,12 @@ wmNotify: message wParam: wParam lParam: lParam
 hasListViewAlphaBlendedHighlights
 	"Does the host support alpha-blended list view selection highlights?"
 
-	^VMLibrary default isWindowsVistaOrGreater!
+	^KernelLibrary default isWindowsVistaOrGreater!
 
 hasListViewHotTracking
 	"Does the host support hot tracking in list views?"
 
-	^VMLibrary default isWindowsVistaOrGreater! !
+	^KernelLibrary default isWindowsVistaOrGreater! !
 !SystemMetrics categoriesFor: #hasListViewAlphaBlendedHighlights!capability enquiries!public! !
 !SystemMetrics categoriesFor: #hasListViewHotTracking!capability enquiries!public! !
 
