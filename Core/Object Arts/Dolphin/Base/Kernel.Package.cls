@@ -703,8 +703,10 @@ initializeGlobals
 	self initializeClasses.
 	self variableNames do: 
 			[:each |
-			each valueOrNil
-				ifNotNil: [:value | (value respondsTo: #initializeAfterLoad) ifTrue: [value initializeAfterLoad]]].
+			(self isAlias: each)
+				ifFalse: 
+					[each valueOrNil
+						ifNotNil: [:value | (value respondsTo: #initializeAfterLoad) ifTrue: [value initializeAfterLoad]]]].
 	(self propertyAt: #variableAliases ifAbsent: [#()]) do: 
 			[:each |
 			| target |
