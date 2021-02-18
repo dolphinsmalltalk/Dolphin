@@ -339,7 +339,7 @@ basicPrintOn: aStream
 	Should not be overridden by subclasses."
 
 	| name |
-	name := self basicClass name.
+	name := self basicClass shortName.
 	aStream 
 		nextPutAll: (name first isVowel ifTrue: ['an '] ifFalse: ['a ']);
 		nextPutAll: name!
@@ -1093,7 +1093,7 @@ printOn: aStream
 	end-user."
 
 	| name |
-	name := self class name.
+	name := self class shortName.
 	aStream 
 		nextPutAll: (name first isVowel ifTrue: ['an '] ifFalse: ['a ']);
 		nextPutAll: name!

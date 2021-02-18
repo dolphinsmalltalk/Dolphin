@@ -19,7 +19,7 @@ canonicalInstance
 testAddress
 	| subject |
 	subject := self canonicalInstance.
-	self assert: subject address printString equals: 'an InternetAddress(192.168.1.240)'!
+	self assert: subject address printString equals: 'a Net.InternetAddress(192.168.1.240)'!
 
 testDisplayOn
 	| subject |
