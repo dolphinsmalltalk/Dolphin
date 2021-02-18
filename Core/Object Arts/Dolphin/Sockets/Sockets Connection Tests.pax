@@ -1,0 +1,42 @@
+﻿| package |
+package := Package name: 'Sockets Connection Tests'.
+package paxVersion: 2.1;
+	basicComment: ''.
+
+
+package setClassNames: #(
+	#{Smalltalk.SocketTest}
+).
+
+package setMethodNames: #(
+	#(#{Net.Tests.SocketErrorTest} #testSocketWouldBlock)
+).
+
+package setPrerequisites: #(
+	'..\Base\Dolphin'
+	'Dolphin Sockets'
+	'Dolphin Sockets Tests'
+	'Sockets Connection'
+).
+
+package!
+
+"Class Definitions"!
+
+Net.Tests.AbstractSocketTest subclass: #SocketTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+"Loose Methods"!
+
+!Net.Tests.SocketErrorTest methodsFor!
+
+testSocketWouldBlock
+	self should: [SocketError signalWith: WSAEWOULDBLOCK] raise: Smalltalk.SocketWouldBlock! !
+!Net.Tests.SocketErrorTest categoriesFor: #testSocketWouldBlock!public!unit tests! !
+
+"End of package definition"!
+

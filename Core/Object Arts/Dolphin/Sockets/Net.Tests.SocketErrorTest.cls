@@ -15,11 +15,7 @@ testSocketClosed
 	self should: [SocketError signalWith: WSAECONNRESET] raise: SocketClosed!
 
 testSocketWaitCancelled
-	self should: [SocketError signalWith: WSAEINTR] raise: SocketWaitCancelled!
-
-testSocketWouldBlock
-	self should: [SocketError signalWith: WSAEWOULDBLOCK] raise: SocketWouldBlock! !
+	self should: [SocketError signalWith: WSAEINTR] raise: SocketWaitCancelled! !
 !Net.Tests.SocketErrorTest categoriesFor: #testSocketClosed!public!unit tests! !
 !Net.Tests.SocketErrorTest categoriesFor: #testSocketWaitCancelled!public!unit tests! !
-!Net.Tests.SocketErrorTest categoriesFor: #testSocketWouldBlock!public!unit tests! !
 

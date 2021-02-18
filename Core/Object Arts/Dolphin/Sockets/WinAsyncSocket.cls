@@ -1,13 +1,12 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-UI.View subclass: #'OS.WinAsyncSocket'
+View subclass: #WinAsyncSocket
 	instanceVariableNames: '_reserved1 _reserved2'
 	classVariableNames: 'DefaultInstance SocketMessageMap UserMessageMap WsaEvent WsaHostInfo'
-	imports: #(#{OS.WinSocketConstants})
-	classInstanceVariableNames: ''
-	classConstants: {}!
-OS.WinAsyncSocket guid: (Core.GUID fromString: '{87b4c717-026e-11d3-9fd7-00a0cc3e4a32}')!
-OS.WinAsyncSocket comment: '** This class is part of the old asynchronous Sockets Connection package which has been superseded by the Dolphin Sockets package **
+	poolDictionaries: 'WinSocketConstants'
+	classInstanceVariableNames: ''!
+WinAsyncSocket guid: (GUID fromString: '{87b4c717-026e-11d3-9fd7-00a0cc3e4a32}')!
+WinAsyncSocket comment: '** This class is part of the old asynchronous Sockets Connection package which has been superseded by the Dolphin Sockets package **
 
 WinAsyncSocket  represents a hidden singleton <view> capable of receiving callbacks from the Windows WSA asynchronous socket library functions. Its singleton instance receives notifications of WSA_XXX events by means of Windows messages. These notifications are interpreted and then passed on to the appropriate handler methods within a <SocketAbstract>. 
 
@@ -23,14 +22,14 @@ Class Variables:
 	DefaultInstance		<WinAsyncSocket> which is the singleton instance of this class.
 
 '!
-!OS.WinAsyncSocket categoriesForClass!Windows Sockets! !
-!OS.WinAsyncSocket methodsFor!
+!WinAsyncSocket categoriesForClass!Windows Sockets! !
+!WinAsyncSocket methodsFor!
 
-cancelSocket: aSocket
+cancelSocket: aSocket 
 	"Private - Cancel any outstanding asynchronous calls."
 
 	| result |
-	result := WSockLibrary default
+	result := WSockLibrary default 
 				wsaAsyncSelect: aSocket asParameter
 				hWnd: self asParameter
 				wMsg: 0
@@ -58,44 +57,44 @@ error
 	"Private - Throw a SocketError exception.
 	The actual error code will be retrieved during the SocketError instantiation."
 
-	Net.SocketError signal!
+	SocketError signal!
 
-monitorSocket: aSocket
+monitorSocket: aSocket 
 	"Register an interest in accept, read, write and close events."
 
 	| result |
-	result := WSockLibrary default
+	result := WSockLibrary default 
 				wsaAsyncSelect: aSocket asParameter
 				hWnd: self asParameter
 				wMsg: WsaEvent
 				lEvent: FD_ACCEPT | FD_READ | FD_WRITE | FD_CLOSE | FD_CONNECT.
 	result = 0 ifFalse: [self error]!
 
-wsaEvent: message wParam: wParam lParam: lParam
+wsaEvent: message wParam: wParam lParam: lParam 
 	"Private - Handles the notification of a WSA event.
 	Determine which socket the notification is for, and
 	send it the appropriate notification message."
 
 	| error socketDescriptor socket event selector |
 	socketDescriptor := wParam.
-	socket := Net.SocketAbstract fromDescriptor: socketDescriptor.
+	socket := SocketAbstract fromDescriptor: socketDescriptor.
 	socket isNil ifTrue: [^nil].
 	error := lParam highWord.
-	error = 0
+	error = 0 
 		ifFalse: 
 			[socket onAsyncError: error.
 			^nil].
 	event := lParam lowWord.
 	selector := SocketMessageMap at: event ifAbsent: nil.
 	selector notNil ifTrue: [socket perform: selector]! !
-!OS.WinAsyncSocket categoriesFor: #cancelSocket:!operations!private! !
-!OS.WinAsyncSocket categoriesFor: #defaultExtent!constants!public! !
-!OS.WinAsyncSocket categoriesFor: #dispatchUser:wParam:lParam:!dispatching!private! !
-!OS.WinAsyncSocket categoriesFor: #error!exceptions!private! !
-!OS.WinAsyncSocket categoriesFor: #monitorSocket:!operations!public! !
-!OS.WinAsyncSocket categoriesFor: #wsaEvent:wParam:lParam:!event handling-win32!private! !
+!WinAsyncSocket categoriesFor: #cancelSocket:!operations!private! !
+!WinAsyncSocket categoriesFor: #defaultExtent!constants!public! !
+!WinAsyncSocket categoriesFor: #dispatchUser:wParam:lParam:!dispatching!private! !
+!WinAsyncSocket categoriesFor: #error!exceptions!private! !
+!WinAsyncSocket categoriesFor: #monitorSocket:!operations!public! !
+!WinAsyncSocket categoriesFor: #wsaEvent:wParam:lParam:!event handling-win32!private! !
 
-!OS.WinAsyncSocket class methodsFor!
+!WinAsyncSocket class methodsFor!
 
 default
 	"Answers the singleton instance."
@@ -103,7 +102,7 @@ default
 	DefaultInstance isNil 
 		ifTrue: 
 			[DefaultInstance := (self new)
-						parentView: UI.View desktop;
+						parentView: View desktop;
 						create;
 						yourself].
 	^DefaultInstance!
@@ -146,9 +145,9 @@ uninitialize
 		ifTrue: 
 			[DefaultInstance destroy.
 			DefaultInstance := nil]! !
-!OS.WinAsyncSocket class categoriesFor: #default!accessing!public! !
-!OS.WinAsyncSocket class categoriesFor: #defaultWmUserOffset!constants!private! !
-!OS.WinAsyncSocket class categoriesFor: #initialize!initializing!private! !
-!OS.WinAsyncSocket class categoriesFor: #onStartup!initializing!private! !
-!OS.WinAsyncSocket class categoriesFor: #uninitialize!class hierarchy-removing!private! !
+!WinAsyncSocket class categoriesFor: #default!accessing!public! !
+!WinAsyncSocket class categoriesFor: #defaultWmUserOffset!constants!private! !
+!WinAsyncSocket class categoriesFor: #initialize!initializing!private! !
+!WinAsyncSocket class categoriesFor: #onStartup!initializing!private! !
+!WinAsyncSocket class categoriesFor: #uninitialize!class hierarchy-removing!private! !
 

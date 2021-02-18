@@ -12,7 +12,6 @@ package setClassNames: #(
 	#{Net.Tests.PROTOENTTest}
 	#{Net.Tests.Socket2Test}
 	#{Net.Tests.SocketErrorTest}
-	#{Net.Tests.SocketTest}
 	#{OS.Tests.AbstractIN_ADDRTest}
 	#{OS.Tests.IN_ADDRTest}
 	#{OS.Tests.IN6_ADDRTest}
@@ -24,7 +23,6 @@ package setPrerequisites: #(
 	'..\Base\Dolphin'
 	'..\Base\Tests\Dolphin Base Tests'
 	'Dolphin Sockets'
-	'Sockets Connection'
 	'..\..\..\Contributions\Camp Smalltalk\SUnit\SUnit'
 	'..\..\..\Contributions\Camp Smalltalk\SUnit\SUnitPreload'
 ).
@@ -94,12 +92,6 @@ OS.Tests.AbstractIN_ADDRTest subclass: #'OS.Tests.IN6_ADDRTest'
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Net.Tests.AbstractSocketTest subclass: #'Net.Tests.Socket2Test'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-Net.Tests.AbstractSocketTest subclass: #'Net.Tests.SocketTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

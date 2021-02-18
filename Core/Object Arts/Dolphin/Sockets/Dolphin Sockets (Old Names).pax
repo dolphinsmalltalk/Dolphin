@@ -5,22 +5,46 @@ package paxVersion: 2.1;
 
 
 package setVariableNames: #(
-	#{Smalltalk.Socket}
+	#{Smalltalk.InternetAddress}
+	#{Smalltalk.SocketClosed}
+	#{Smalltalk.SocketError}
+	#{Smalltalk.SocketReadStream}
+	#{Smalltalk.SocketWaitCancelled}
+	#{Smalltalk.SocketWriteStream}
+	#{Smalltalk.WinSocketConstants}
 ).
 
 package setAliasVariableNames: #(
-	#{Smalltalk.Socket}
+	#{Smalltalk.InternetAddress}
+	#{Smalltalk.SocketClosed}
+	#{Smalltalk.SocketError}
+	#{Smalltalk.SocketReadStream}
+	#{Smalltalk.SocketWaitCancelled}
+	#{Smalltalk.SocketWriteStream}
+	#{Smalltalk.WinSocketConstants}
 ).
 
 package setPrerequisites: #(
-	'Sockets Connection'
+	'Dolphin Sockets'
 ).
 
 package!
 
 "Variable Aliases"!
 
-Smalltalk.Socket := Net.Socket!
+Smalltalk.InternetAddress := Net.InternetAddress!
+
+Smalltalk.SocketClosed := Net.SocketClosed!
+
+Smalltalk.SocketError := Net.SocketError!
+
+Smalltalk.SocketReadStream := Net.SocketReadStream!
+
+Smalltalk.SocketWaitCancelled := Net.SocketWaitCancelled!
+
+Smalltalk.SocketWriteStream := Net.SocketWriteStream!
+
+Smalltalk.WinSocketConstants := OS.WinSocketConstants!
 
 
 "End of package definition"!
