@@ -327,7 +327,7 @@ waitingSemaphores
 !SocketAbstract class categoriesFor: #addSocket:!accessing!private! !
 !SocketAbstract class categoriesFor: #allSockets!accessing!private! !
 !SocketAbstract class categoriesFor: #fromDescriptor:!instance creation!public! !
-!SocketAbstract class categoriesFor: #initialize!initializing!private! !
+!SocketAbstract class categoriesFor: #initialize!initializing!must not strip!private! !
 !SocketAbstract class categoriesFor: #onShutdown!event handling!private! !
 !SocketAbstract class categoriesFor: #onStartup!event handling!private! !
 !SocketAbstract class categoriesFor: #publishedEventsOfInstances!development!events!public! !

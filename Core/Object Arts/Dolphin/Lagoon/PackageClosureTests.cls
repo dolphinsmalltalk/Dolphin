@@ -35,13 +35,15 @@ environmentForAppDeployment: aCollectionOfPackages
 				forMethodCategories: ImageStripper developmentMethodCategoryNames
 						, ImageStripper classBuildingMethodCategoryNames , ImageStripper classRemovingMethodCategoryNames
 						, #('class initialization' 'template definition' 'source filing' 'source filing-methods' 'compiling' 'categories-accessing' 'categories-removing' 'categories-adding' 'categories-testing' 'source filing-class definition').
+	devMethods := devMethods | (BrowserEnvironment new
+						selectMethods: [:each | each selector == #initialize and: [each methodClass isMeta]])
+				& (BrowserEnvironment new forMethodCategories: #('must not strip')) not.
 	"We can speed things up a bit by taking a snapshot of the devMethods environment."
 	devMethods := BrowserEnvironment new forMethodsIn: devMethods.
+	"Custom handling for class initialize methods"
 	env := env & devMethods not.
 	"As before, reify the environment to speed things up as we will enumerate it more than once."
 	env := BrowserEnvironment new forMethodsIn: env.
-	self
-		assert: (devMethods & (BrowserEnvironment new forMethodCategories: #('must not strip'))) isEmpty.
 	names := (aCollectionOfPackages collect: [:each | each name]) asArray sort.
 	env
 		label: 'App deployed from ' , (names size = 1 ifTrue: [names first] ifFalse: [names]) printString.
