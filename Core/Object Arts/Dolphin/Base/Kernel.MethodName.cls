@@ -11,13 +11,6 @@ Kernel.MethodName comment: ''!
 !Kernel.MethodName categoriesForClass!Kernel-Objects! !
 !Kernel.MethodName methodsFor!
 
-<= aMethodName
-	"Answer whether the receiver should sort before the argument."
-
-	^className = aMethodName className
-		ifTrue: [(selector <==> aMethodName selector) <= 0]
-		ifFalse: [className <= aMethodName className]!
-
 = aMethodName
 	^self == aMethodName or: 
 			[self species == aMethodName species
@@ -41,7 +34,7 @@ methodClass
 
 printOn: aPuttableStream
 	aPuttableStream
-		display: className;
+		nextPutAll: className shortName;
 		nextPutAll: '>>';
 		print: selector!
 
@@ -56,7 +49,6 @@ value
 
 valueOrNil
 	^className valueOrNil ifNotNil: [:class | class compiledMethodAt: selector ifAbsent: []]! !
-!Kernel.MethodName categoriesFor: #<=!comparing!public! !
 !Kernel.MethodName categoriesFor: #=!comparing!public! !
 !Kernel.MethodName categoriesFor: #className!accessing!public! !
 !Kernel.MethodName categoriesFor: #className:!initializing!public! !

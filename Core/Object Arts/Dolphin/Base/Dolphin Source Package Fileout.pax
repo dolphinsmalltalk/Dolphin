@@ -40,6 +40,7 @@ package setMethodNames: #(
 	#(#{Kernel.Package} #isRenegade)
 	#(#{Kernel.Package} #isUsingPAX)
 	#(#{Kernel.Package} #isUsingPAX:)
+	#(#{Kernel.Package} #methodNameSortBlock)
 	#(#{Kernel.Package} #save)
 	#(#{Kernel.Package} #saveAs:)
 	#(#{Kernel.Package} #saveChanges)
@@ -416,6 +417,13 @@ isUsingPAX: aBoolean
 		ifTrue: [ self beUsingPAX ]
 		ifFalse: [ self beNotUsingPAX ]!
 
+methodNameSortBlock
+	^
+	[:a :b |
+	a className = b className
+		ifTrue: [a selector <==> b selector <= 0]
+		ifFalse: [a className <= b className]]!
+
 save
 	"Save the receiver to a single PAC file. This includes all of the source for the receiver's contents.
 	If the receiver is operating in PAX source mode then all of the source files are also
@@ -545,7 +553,8 @@ savePAXNamesOn: aPuttableStream
 		initializer: #setClassNames:
 		on: aPuttableStream.
 	self
-		savePAXCollection: (self methodNames asSortedCollection collect: [:each | {each className. each selector}])
+		savePAXCollection: ((self methodNames asSortedCollection: self methodNameSortBlock)
+				collect: [:each | {each className. each selector}])
 		initializer: #setMethodNames:
 		on: aPuttableStream.
 	self
@@ -704,6 +713,7 @@ updateTimestamp
 !Kernel.Package categoriesFor: #isRenegade!public!testing! !
 !Kernel.Package categoriesFor: #isUsingPAX!public!testing! !
 !Kernel.Package categoriesFor: #isUsingPAX:!accessing!public! !
+!Kernel.Package categoriesFor: #methodNameSortBlock!private!source filing-pax! !
 !Kernel.Package categoriesFor: #save!commands!public! !
 !Kernel.Package categoriesFor: #saveAs:!commands!public! !
 !Kernel.Package categoriesFor: #saveChanges!operations!public! !
