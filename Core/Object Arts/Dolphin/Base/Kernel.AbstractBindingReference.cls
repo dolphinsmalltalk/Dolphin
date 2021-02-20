@@ -55,6 +55,11 @@ asSymbol
 
 	^self asString asSymbol!
 
+basicUnqualifiedName
+	"Private - Answer the unqualified name part of the receiver (the final component of the name)."
+
+	^self path last!
+
 binding
 	"Answer the <VariableBinding> referenced by the receiver (i.e. resolve the variable)."
 
@@ -251,9 +256,9 @@ refersToLiteral: anObject
 				and: [self bindingOrNil ifNil: [false] ifNotNil: [:binding | binding refersToLiteral: anObject]]]!
 
 shortName
-	"Answer the shorted <String> name equivalent to the receiver's pathString that is bindable from Smalltalk. i.e. for variables defined directly in Smalltalk, or in any of its imports, this will be an unqualified name. Otherwise it is the fully qualified name relative to Smalltalk."
+	"Answer the shortest <String> name equivalent to the receiver's pathString that is bindable from Smalltalk. i.e. for variables defined directly in Smalltalk, or in any of its imports, this will be an unqualified name. Otherwise it is the fully qualified name relative to Smalltalk."
 
-	^Smalltalk shortNameFor: self unqualifiedName in: self namespace!
+	^Smalltalk shortNameFor: self basicUnqualifiedName in: self namespace!
 
 simpleName
 	"Answer the unqualified name part of the receiver (the final component of the name).
@@ -313,6 +318,7 @@ valueOrNil
 !Kernel.AbstractBindingReference categoriesFor: #asQualifiedReference!converting!public! !
 !Kernel.AbstractBindingReference categoriesFor: #asString!converting!public! !
 !Kernel.AbstractBindingReference categoriesFor: #asSymbol!converting!public! !
+!Kernel.AbstractBindingReference categoriesFor: #basicUnqualifiedName!private! !
 !Kernel.AbstractBindingReference categoriesFor: #binding!accessing!public! !
 !Kernel.AbstractBindingReference categoriesFor: #bindingOrNil!accessing!public! !
 !Kernel.AbstractBindingReference categoriesFor: #context!constants!public! !

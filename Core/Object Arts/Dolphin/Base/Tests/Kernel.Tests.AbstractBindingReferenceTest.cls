@@ -24,6 +24,9 @@ bindingTestCases
 		#(#(#Object #_EventsRegister)).
 		#(#(#XProgramming #SUnit #TestCase))}!
 
+nameSuffix
+	^''!
+
 newTestSubjectWithPath: anArrayOfStrings
 	^self subjectClass path: anArrayOfStrings!
 
@@ -257,12 +260,14 @@ testShortName
 			[:each |
 			| subject |
 			subject := self newTestSubjectWithPathString: each.
-			self assert: subject shortName equals: subject unqualifiedName].
+			self assert: subject shortName equals: ($. split: each) last , self nameSuffix.
+			self assert: subject shortName equals: subject simpleName].
 	#('XProgramming.SUnit' 'XProgramming.SUnit.TestCase') do: 
 			[:each |
 			| subject |
 			subject := self newTestSubjectWithPathString: each.
-			self assert: subject shortName equals: subject pathString]!
+			self assert: subject shortName equals: subject pathString , self nameSuffix.
+			self deny: subject shortName equals: subject simpleName]!
 
 testStoreString
 	self printStringTestCases do: 
@@ -277,7 +282,7 @@ testUnqualifiedName
 			| path subject |
 			path := each first.
 			subject := self newTestSubjectWithPath: path.
-			self assert: subject unqualifiedName equals: path last]!
+			self assert: subject unqualifiedName equals: path last , self nameSuffix]!
 
 testValue
 	self bindingTestCases do: 
@@ -306,6 +311,7 @@ testValueOrNil
 valueOfBinding: aVariableBinding
 	^aVariableBinding value! !
 !Kernel.Tests.AbstractBindingReferenceTest categoriesFor: #bindingTestCases!constants!private! !
+!Kernel.Tests.AbstractBindingReferenceTest categoriesFor: #nameSuffix!constants!private! !
 !Kernel.Tests.AbstractBindingReferenceTest categoriesFor: #newTestSubjectWithPath:!helpers!private! !
 !Kernel.Tests.AbstractBindingReferenceTest categoriesFor: #newTestSubjectWithPathString:!helpers!private! !
 !Kernel.Tests.AbstractBindingReferenceTest categoriesFor: #printStringTestCases!constants!private! !

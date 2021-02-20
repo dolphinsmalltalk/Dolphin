@@ -86,6 +86,16 @@ pathString
 setInstance: aBindingReference
 	instance := aBindingReference!
 
+shortName
+	"Answer the shortest <String> name equivalent to the receiver's pathString that is bindable from Smalltalk. i.e. for variables defined directly in Smalltalk, or in any of its imports, this will be an unqualified name. Otherwise it is the fully qualified name relative to Smalltalk."
+
+	^super shortName, ' class'!
+
+unqualifiedName
+	"Answer the unqualified name part of the receiver (the final component of the name)."
+
+	^super unqualifiedName, ' class'!
+
 valueOfBinding: aVariableBinding
 	^aVariableBinding value class! !
 !Kernel.MetaBindingReference categoriesFor: #asString!converting!public! !
@@ -104,6 +114,8 @@ valueOfBinding: aVariableBinding
 !Kernel.MetaBindingReference categoriesFor: #path!accessing!public! !
 !Kernel.MetaBindingReference categoriesFor: #pathString!accessing!public! !
 !Kernel.MetaBindingReference categoriesFor: #setInstance:!converting!private! !
+!Kernel.MetaBindingReference categoriesFor: #shortName!accessing!public! !
+!Kernel.MetaBindingReference categoriesFor: #unqualifiedName!accessing!public! !
 !Kernel.MetaBindingReference categoriesFor: #valueOfBinding:!accessing!private! !
 
 !Kernel.MetaBindingReference class methodsFor!

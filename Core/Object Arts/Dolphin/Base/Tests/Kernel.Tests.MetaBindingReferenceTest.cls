@@ -11,6 +11,9 @@ Kernel.Tests.MetaBindingReferenceTest comment: ''!
 !Kernel.Tests.MetaBindingReferenceTest categoriesForClass!Unclassified! !
 !Kernel.Tests.MetaBindingReferenceTest methodsFor!
 
+nameSuffix
+	^' class'!
+
 printStringTestCases
 	^#(#(#(#Object) '#{Object class}') #(#('A' 'B' 'C') '#{A.B.C class}'))!
 
@@ -49,6 +52,7 @@ testRefersToLiteral
 
 valueOfBinding: aVariableBinding
 	^aVariableBinding value class! !
+!Kernel.Tests.MetaBindingReferenceTest categoriesFor: #nameSuffix!constants!private! !
 !Kernel.Tests.MetaBindingReferenceTest categoriesFor: #printStringTestCases!constants!private! !
 !Kernel.Tests.MetaBindingReferenceTest categoriesFor: #subjectClass!constants!private! !
 !Kernel.Tests.MetaBindingReferenceTest categoriesFor: #testInstance!public!unit tests! !
