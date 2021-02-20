@@ -95,7 +95,7 @@ createHandle
 		ifFalse: 
 			[| palBitmap canvas bits |
 			"Paletized usage"
-			bits := DWORD new.
+			bits := DWORDBytes new.
 			palBitmap := Bitmap
 						width: 1
 						height: 1

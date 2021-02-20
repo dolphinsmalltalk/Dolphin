@@ -209,7 +209,7 @@ computerName
 
 	| name nameSize |
 	name := Utf16String newFixed: MAX_COMPUTERNAME_LENGTH.
-	nameSize := External.DWORD fromInteger: name size + 1.
+	nameSize := External.DWORDBytes fromInteger: name size + 1.
 	(KernelLibrary default getComputerName: name nSize: nameSize asParameter)
 		ifFalse: [KernelLibrary default systemError].
 	^name leftString: nameSize asInteger!
@@ -1152,7 +1152,7 @@ userName
 
 	| name nameSize |
 	name := Utf16String new: 256.
-	nameSize := External.DWORD fromInteger: name size.
+	nameSize := External.DWORDBytes fromInteger: name size.
 	(AdvApiLibrary default getUserName: name nSize: nameSize asParameter)
 		ifFalse: [AdvApiLibrary default systemError].
 	^name leftString: nameSize asInteger - 1!

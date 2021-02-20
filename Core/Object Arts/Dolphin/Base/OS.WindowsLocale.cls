@@ -201,14 +201,14 @@ getIntegerInfo: anIntegerLcType
 
 getLocaleInfoInteger: anIntegerLcType
 	| buf |
-	buf := DWORDBytes new.
+	buf := ByteArray newFixed: 4.
 	(self nlsLib
 		getLocaleInfo: lcid
 		lCType: (anIntegerLcType bitOr: LOCALE_RETURN_NUMBER)
 		lpLCData: buf
 		cchData: 4) == 0
 		ifTrue: [self nlsLib systemError].
-	^buf value!
+	^buf dwordAtOffset: 0!
 
 getLocaleInfoString: anIntegerLcType
 	"Private - Get the specified <Utf8String> locale information from Windows."

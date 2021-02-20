@@ -196,7 +196,7 @@ hasSmoothScrollingLists
 	hasSmoothScrollingLists isNil
 		ifTrue: 
 			[| bool |
-			bool := DWORD new.
+			bool := DWORDBytes new.
 			hasSmoothScrollingLists := (UserLibrary default
 						systemParametersInfo: SPI_GETLISTBOXSMOOTHSCROLLING
 						uiParam: 0
@@ -314,7 +314,7 @@ minimumTreeViewIndent
 mouseHoverTime
 	^(self
 		getSysParam: SPI_GETMOUSEHOVERTIME
-		type: DWORD
+		type: DWORDBytes
 		ifError: [^400]) value!
 
 nonClientMetrics

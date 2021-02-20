@@ -228,13 +228,7 @@ dmGetDefId: message wParam: wParam lParam: lParam
 
 	| buttonId |
 	buttonId := self defaultButtonId.
-	^buttonId notNull
-		ifTrue: 
-			[DWORD new
-				lowWord: buttonId;
-				highWord: DC_HASDEFID;
-				yourself]
-		ifFalse: [0]!
+	^buttonId notNull ifTrue: [(DC_HASDEFID bitShift: 16) bitOr: buttonId] ifFalse: [0]!
 
 dmSetDefId: message wParam: wParam lParam: lParam 
 	"Private - Default handler for a DM_SETDEFID message sent to request that the id of any default
