@@ -739,6 +739,7 @@ package setPrerequisites: #(
 	'..\..\MVP\Models\Value\Dolphin Value Models'
 	'..\..\MVP\Gdiplus\Gdiplus'
 	'..\..\MVP\Gdiplus\Gdiplus ImageView'
+	'..\..\Utilities\HTML Help\HTML Help'
 	'..\..\MVP\Icons\Internal Bitmaps and Icons'
 	'..\..\..\..\Contributions\Refactory\Refactoring Browser\Change Objects\RBChangeObjects'
 	'..\..\..\..\Contributions\Refactory\Refactoring Browser\Environments\RBEnvironments'

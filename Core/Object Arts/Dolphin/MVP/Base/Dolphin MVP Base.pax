@@ -91,8 +91,6 @@ package setClassNames: #(
 	#{OS.GDILibrary}
 	#{OS.GRADIENT_RECT}
 	#{OS.GRADIENT_TRIANGLE}
-	#{OS.HTMLHelpConstants}
-	#{OS.HTMLHelpLibrary}
 	#{OS.ICONINFO}
 	#{OS.LASTINPUTINFO}
 	#{OS.LOGBRUSH}
@@ -569,25 +567,6 @@ Kernel.SharedPool subclass: #'OS.CommCtrlConstants'
 		'TTN_GETDISPINFOA' -> -16r208.
 		'TTN_GETDISPINFOW' -> -16r212.
 		'TVM_GETEDITCONTROL' -> 16r110F
-	}!
-Kernel.SharedPool subclass: #'OS.HTMLHelpConstants'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {
-		'HH_CLOSE_ALL' -> 16r12.
-		'HH_DISPLAY_INDEX' -> 16r1.
-		'HH_DISPLAY_TEXT_POPUP' -> 16rE.
-		'HH_DISPLAY_TOPIC' -> 16r0.
-		'HH_GET_WIN_HANDLE' -> 16r6.
-		'HH_GET_WIN_TYPE' -> 16r5.
-		'HH_HELP_CONTEXT' -> 16rF.
-		'HH_INITIALIZE' -> 16r1C.
-		'HH_SET_WIN_TYPE' -> 16r4.
-		'HH_TP_HELP_CONTEXTMENU' -> 16r10.
-		'HH_TP_HELP_WM_HELP' -> 16r11.
-		'HH_UNINITIALIZE' -> 16r1D
 	}!
 Kernel.SharedPool subclass: #'OS.ThemeConstants'
 	instanceVariableNames: ''
@@ -1643,12 +1622,6 @@ External.DynamicLinkLibrary subclass: #'OS.DwmApiLibrary'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-External.DynamicLinkLibrary subclass: #'OS.HTMLHelpLibrary'
-	instanceVariableNames: 'cookie'
-	classVariableNames: ''
-	imports: #(#{OS.HTMLHelpConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 External.DynamicLinkLibrary subclass: #'OS.ThemeLibrary'
