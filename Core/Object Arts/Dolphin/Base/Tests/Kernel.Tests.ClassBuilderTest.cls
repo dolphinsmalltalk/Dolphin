@@ -69,6 +69,17 @@ testAddClassInstVars
 			self assert: (each instanceClass instVarAt: offset + 2) equals: nil.
 			self assert: (each instanceClass instVarAt: offset + 3) equals: offset + 1]!
 
+testAddInstVarName
+	| testClass obj inst |
+	testClass := self classBuilderTestClass.
+	testClass addInstVarName: 'foo' asUtf16String.
+	testClass compile: 'foo: anObject foo := anObject';
+		compile: 'foo ^foo'.
+	obj := Object new.
+	inst := testClass new foo: obj.
+	self assert: inst foo identicalTo: obj
+	!
+
 testAddRemoveImports
 	| subclassName |
 	self assert: self classBuilderTestSubclass1 allImports
@@ -432,6 +443,7 @@ testReshapeSubClass
 !Kernel.Tests.ClassBuilderTest categoriesFor: #setUp!public!Running! !
 !Kernel.Tests.ClassBuilderTest categoriesFor: #tearDown!public!Running! !
 !Kernel.Tests.ClassBuilderTest categoriesFor: #testAddClassInstVars!public!unit tests! !
+!Kernel.Tests.ClassBuilderTest categoriesFor: #testAddInstVarName!public!unit tests! !
 !Kernel.Tests.ClassBuilderTest categoriesFor: #testAddRemoveImports!public!unit tests! !
 !Kernel.Tests.ClassBuilderTest categoriesFor: #testBuildAnonymous!public!unit tests! !
 !Kernel.Tests.ClassBuilderTest categoriesFor: #testBuildAnonymousInRootNamespace!public!unit tests! !

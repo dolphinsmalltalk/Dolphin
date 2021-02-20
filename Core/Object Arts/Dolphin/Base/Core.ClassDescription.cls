@@ -18,7 +18,8 @@ Instance Variables:
 !Core.ClassDescription methodsFor!
 
 <= aClassDescription
-	"Answer whether the receiver should sort before the argument, e.g. in a SortedCollection using the default sort block. We use a case sensitive comparison for stability. The class name is the primary sort order, but for equal names the namespace is then used."
+	"Answer whether the receiver should sort before the argument, e.g. in a SortedCollection using the default sort block. We use a case sensitive comparison for stability. The class name is the primary sort order, but for equal names the namespace is then used.
+	This provides a stable order that is reasonable for working with unqualified names, and which is therefore useful for backwards compatibility, but it doesn't necessarily make sense for fully qualified names. Generally it is preferable to specify one's own sort order comparison rather than relying on the default."
 
 	| cmp |
 	cmp := self name <==> aClassDescription name.
@@ -32,7 +33,7 @@ addInstVarName: aString
 
 	| newClass |
 	newClass := (ClassBuilder forModifying: self)
-				instanceVariables: (self instVarNames copyWith: aString);
+				instanceVariables: (self instVarNames copyWith: aString asUtf8String);
 				modifyExistingClass.
 	newClass notNil ifTrue: [newClass logDefinition].
 	^newClass!
@@ -1030,7 +1031,7 @@ withAllSubclassesDo: aMonadicValuable
 !Core.ClassDescription categoriesFor: #fullName!accessing!namespaces!public! !
 !Core.ClassDescription categoriesFor: #fullyQualifiedReference!accessing!public! !
 !Core.ClassDescription categoriesFor: #hasCompilationFailures!public!testing! !
-!Core.ClassDescription categoriesFor: #hierarchyBindingFor:!binding!public! !
+!Core.ClassDescription categoriesFor: #hierarchyBindingFor:!bindings!public! !
 !Core.ClassDescription categoriesFor: #importedNamespacesDo:!pool variables!public! !
 !Core.ClassDescription categoriesFor: #imports!pool variables!public! !
 !Core.ClassDescription categoriesFor: #imports:!pool variables!public! !
