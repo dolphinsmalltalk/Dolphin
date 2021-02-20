@@ -24,7 +24,7 @@ package basicScriptAt: #postinstall put: 'ShellLibrary default isUserAnAdmin
 			signal: ''Unable to register Random Stream sample COM object due to insufficient privileges''].	"Register a class factory for the Random Number Stream"
 COMRandomStream registerClassFactory'.
 package basicScriptAt: #preuninstall put: '	"Revoke the class factory registration."
-	COMRandomStream revokeClassFactories'.
+Smalltalk.COMRandomStream revokeClassFactories'.
 
 package setClassNames: #(
 	#{COMRandomStream}

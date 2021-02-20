@@ -12,7 +12,7 @@ This package is not supposed to be dependent on the OLE COM package.'.
 package basicPackageVersion: '6.1'.
 
 package basicScriptAt: #postinstall put: 'View registerShellMessages.'.
-package basicScriptAt: #preuninstall put: 'View unregisterShellMessages'.
+package basicScriptAt: #preuninstall put: 'UI.View unregisterShellMessages'.
 
 package setClassNames: #(
 	#{OS.ShellConstants}

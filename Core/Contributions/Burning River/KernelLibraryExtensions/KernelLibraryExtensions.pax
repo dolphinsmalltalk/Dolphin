@@ -14,11 +14,6 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 28-Jul-2004	Added KernelLibrary>>getExitCodeProcess and
 		KernelLibrary>>getExitCodeThread.''.'.
 
-package basicScriptAt: #postinstall put: 'Win32Constants
-	at: ''WAIT_FAILED'' put: -1'.
-package basicScriptAt: #preuninstall put: 'Win32Constants
-	removeKey: ''WAIT_FAILED'' ifAbsent: [ nil ]'.
-
 package setMethodNames: #(
 	#(#{KernelLibrary} #getExitCodeProcess:lpExitCode:)
 	#(#{KernelLibrary} #getExitCodeThread:lpExitCode:)
