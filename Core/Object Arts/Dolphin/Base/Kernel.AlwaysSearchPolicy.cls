@@ -27,7 +27,7 @@ hash: operand
 name
 	"Answer the name of the `SearchPolicy`. This is nil apart from the named singletons."
 
-	^#always! !
+	^'always'! !
 !Kernel.AlwaysSearchPolicy categoriesFor: #compare:with:!comparing!public! !
 !Kernel.AlwaysSearchPolicy categoriesFor: #hash:!comparing!public! !
 !Kernel.AlwaysSearchPolicy categoriesFor: #name!accessing!public! !

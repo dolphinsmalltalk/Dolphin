@@ -42,7 +42,7 @@ keyAtValue: value in: collection ifAbsent: operation
 name
 	"Answer the name of the `SearchPolicy`. This is nil apart from the named singletons."
 
-	^#caseInsensitive! !
+	^'caseInsensitive'! !
 !Kernel.CaseInsensitiveSearchPolicy categoriesFor: #compare:with:!comparing!public! !
 !Kernel.CaseInsensitiveSearchPolicy categoriesFor: #hash:!comparing!public! !
 !Kernel.CaseInsensitiveSearchPolicy categoriesFor: #keyAtValue:in:ifAbsent:!public!searching! !

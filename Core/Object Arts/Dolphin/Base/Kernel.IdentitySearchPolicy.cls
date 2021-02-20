@@ -46,7 +46,7 @@ keyAtValue: value in: collection ifAbsent: operation
 name
 	"Answer the name of the `SearchPolicy`. This is nil apart from the named singletons."
 
-	^#identity!
+	^'identity'!
 
 newLookupTable
 	"Answer a new <LookupTable> with the receiver as its search policy."

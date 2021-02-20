@@ -98,11 +98,11 @@ printOn: aPuttableStream
 
 	self name
 		ifNotNil: 
-			[:symbol |
+			[:name |
 			aPuttableStream
 				print: SearchPolicy;
 				space;
-				display: symbol]
+				display: name]
 		ifNil: [super printOn: aPuttableStream]! !
 !Core.SearchPolicy categoriesFor: #compare:with:!comparing!public! !
 !Core.SearchPolicy categoriesFor: #hash:!comparing!public! !

@@ -23,7 +23,7 @@ compare: operand1 with: operand2
 name
 	"Answer the name of the `SearchPolicy`. This is nil apart from the named singletons."
 
-	^#method! !
+	^'method'! !
 !Tools.CompiledMethodSearchPolicy categoriesFor: #compare:with:!comparing!public! !
 !Tools.CompiledMethodSearchPolicy categoriesFor: #name!accessing!public! !
 
