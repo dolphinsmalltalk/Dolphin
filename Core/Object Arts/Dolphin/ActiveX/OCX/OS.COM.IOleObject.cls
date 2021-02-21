@@ -146,7 +146,7 @@ GetExtent: dwDrawAspect psizel: psizel
 			[out] SIZEL* psizel);
 	"
 
-	<virtual stdcall: hresult 19 dword SIZE*>
+	<virtual stdcall: hresult 19 dword SIZEL*>
 	^self invalidCall: _failureCode!
 
 getMiscStatus: dwAspect 
@@ -292,7 +292,7 @@ SetExtent: dwDrawAspect psizel: psizel
 			[in] SIZEL* psizel);
 	"
 
-	<virtual stdcall: sdword 18 dword SIZE*>
+	<virtual stdcall: sdword 18 dword SIZEL*>
 	^self invalidCall: _failureCode!
 
 setHostNames: szContainerApp szContainerObj: szContainerObj

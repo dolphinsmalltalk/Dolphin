@@ -651,7 +651,7 @@ getTextExtentPoint32: hdc lpString: lpString c: cbString lpSize: lpSize
 			int c,
 			SIZEL* lpSize);"
 
-	<stdcall: bool GetTextExtentPoint32W handle lpwstr sdword SIZE*>
+	<stdcall: bool GetTextExtentPoint32W handle lpwstr sdword lpvoid>
 	^self invalidCall: _failureCode!
 
 getTextMetrics: hdc lptm: lptm
@@ -689,9 +689,9 @@ getWindowExtEx: hdc lpSize: lpSize
 
 		BOOL __stdcall GetWindowExtEx(
 			HDC HDC,
-			SIZE* lpSize);"
+			SIZEL* lpSize);"
 
-	<stdcall: bool GetWindowExtEx handle SIZE*>
+	<stdcall: bool GetWindowExtEx handle SIZEL*>
 	^self invalidCall: _failureCode!
 
 getWindowOrgEx: hdc lppt: lppt
@@ -1125,7 +1125,7 @@ setWindowExtEx: hdc nXExtent: nXExtent nYExtent: nYExtent lpSize: lpSize
 			int nYExtent,
 			SIZE* lpSize);"
 
-	<stdcall: bool SetWindowExtEx handle sdword sdword SIZE*>
+	<stdcall: bool SetWindowExtEx handle sdword sdword lpvoid>
 	^self invalidCall: _failureCode!
 
 setWindowOrgEx: hdc nXOrg: x nYOrg: y lppt: aPOINT
