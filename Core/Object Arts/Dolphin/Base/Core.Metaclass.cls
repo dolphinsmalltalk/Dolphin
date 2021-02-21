@@ -211,7 +211,7 @@ subclassesDo: aMonadicValuable
 	instanceClass ifNotNil: [instanceClass subclassesDo: [:each | aMonadicValuable value: each class]]! !
 !Core.Metaclass categoriesFor: #absoluteReference!public! !
 !Core.Metaclass categoriesFor: #asQualifiedReference!converting!public! !
-!Core.Metaclass categoriesFor: #bindingFor:!binding!public! !
+!Core.Metaclass categoriesFor: #bindingFor:!bindings!public! !
 !Core.Metaclass categoriesFor: #classBindingNames!class variables!public! !
 !Core.Metaclass categoriesFor: #classPool!class variables!public! !
 !Core.Metaclass categoriesFor: #classVariables!class variables!public! !
@@ -237,7 +237,7 @@ subclassesDo: aMonadicValuable
 !Core.Metaclass categoriesFor: #printFullNameOn:!helpers!private! !
 !Core.Metaclass categoriesFor: #printOn:!printing!public! !
 !Core.Metaclass categoriesFor: #removeClassVarName:!class variables!public! !
-!Core.Metaclass categoriesFor: #removeFromSuper!class hierarchy-removing!private! !
+!Core.Metaclass categoriesFor: #removeFromSuper!operations!private! !
 !Core.Metaclass categoriesFor: #shortName!public! !
 !Core.Metaclass categoriesFor: #stbSaveOn:!binary filing!public! !
 !Core.Metaclass categoriesFor: #subclassesDo:!class hierarchy-accessing!public! !

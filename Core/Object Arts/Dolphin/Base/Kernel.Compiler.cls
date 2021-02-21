@@ -427,7 +427,7 @@ uninitialize
 		#pathString:context:meta:	Sent to instantiate BindingReference objects for literal binding references"
 
 	#(#notificationCallback: #allInstVarNames #evaluate:for:evaluationPools: #bindingFor: #fullBindingFor: #asNumber #understandsArithmetic #negative #pathString:context:flags:)
-		do: [:each | VMLibrary default unregisterObject: each]!
+		, {BindingReference. Smalltalk} do: [:each | VMLibrary default unregisterObject: each]!
 
 warningClass
 	^CompilerWarningNotification! !

@@ -126,7 +126,7 @@ triggerVariableRenamed: aVariableBinding from: oldSymbol
 !Smalltalk class categoriesFor: #declareVariable:!public! !
 !Smalltalk class categoriesFor: #developmentSystem!accessing!public! !
 !Smalltalk class categoriesFor: #getEvents!events!private! !
-!Smalltalk class categoriesFor: #removeClass:!class hierarchy-removing!public! !
+!Smalltalk class categoriesFor: #removeClass:!operations!public! !
 !Smalltalk class categoriesFor: #setEvents:!events!private! !
 !Smalltalk class categoriesFor: #shortNameFor:in:!helpers!private! !
 !Smalltalk class categoriesFor: #triggerVariableRenamed:from:!events!private! !

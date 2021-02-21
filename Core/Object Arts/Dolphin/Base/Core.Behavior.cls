@@ -937,7 +937,7 @@ withAllSuperclassesDo: aMonadicValuable
 !Core.Behavior categoriesFor: #basicNew!instance creation!private! !
 !Core.Behavior categoriesFor: #basicNew:!instance creation!private! !
 !Core.Behavior categoriesFor: #basicNewFixed:!instance creation!private! !
-!Core.Behavior categoriesFor: #bindingFor:!binding!public! !
+!Core.Behavior categoriesFor: #bindingFor:!bindings!public! !
 !Core.Behavior categoriesFor: #canUnderstand:!methods-testing!public! !
 !Core.Behavior categoriesFor: #compile:!compiling!public! !
 !Core.Behavior categoriesFor: #compileAll!compiling!development!public! !
@@ -956,7 +956,7 @@ withAllSuperclassesDo: aMonadicValuable
 !Core.Behavior categoriesFor: #flushMethodCache!methods-removing!private! !
 !Core.Behavior categoriesFor: #hasImmediateInstances!public!testing! !
 !Core.Behavior categoriesFor: #hasMethods!methods-testing!public! !
-!Core.Behavior categoriesFor: #hierarchyBindingFor:!binding!public! !
+!Core.Behavior categoriesFor: #hierarchyBindingFor:!bindings!public! !
 !Core.Behavior categoriesFor: #includesBehavior:!class hierarchy-testing!public! !
 !Core.Behavior categoriesFor: #includesSelector:!methods-testing!public! !
 !Core.Behavior categoriesFor: #inheritsFrom:!class hierarchy-testing!public! !
@@ -995,7 +995,7 @@ withAllSuperclassesDo: aMonadicValuable
 !Core.Behavior categoriesFor: #recompileReferencesToLiteral:!development!private! !
 !Core.Behavior categoriesFor: #referenceFilterFor:!development!methods-testing!private! !
 !Core.Behavior categoriesFor: #referenceFilterForAnyOf:!development!methods-testing!private! !
-!Core.Behavior categoriesFor: #removeFromSuper!class hierarchy-removing!private! !
+!Core.Behavior categoriesFor: #removeFromSuper!operations!private! !
 !Core.Behavior categoriesFor: #removeFromSystem!class hierarchy-removing!private! !
 !Core.Behavior categoriesFor: #removeSelector:!methods-removing!public! !
 !Core.Behavior categoriesFor: #removeSelector:ifAbsent:!methods-removing!public! !

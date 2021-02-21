@@ -16,6 +16,7 @@ package setClassNames: #(
 	#{OS.VersionResource}
 	#{OS.VS_VERSION_INFO_HEADER}
 	#{Tools.BasicImageStripper}
+	#{Tools.DeploymentContext}
 	#{Tools.ImageStripper}
 	#{Tools.ImageStripperProgress}
 ).
@@ -41,6 +42,15 @@ Core.Object subclass: #'Tools.BasicImageStripper'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+Core.Object subclass: #'Tools.DeploymentContext'
+	instanceVariableNames: 'logStream elementStack aspectSetters aspectGetters developmentClasses preservedMessages rootClasses supersentMethods notifier runFlags'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {
+		'AllResourcesStripped' -> 16r1.
+		'RemoveAbstractUnreachable' -> 16r2
+	}!
 Core.Object subclass: #'Tools.ImageStripperProgress'
 	instanceVariableNames: 'handle oldWndProc progressProcess progressRange progress status cursor'
 	classVariableNames: 'MessageMap'
@@ -59,12 +69,11 @@ Core.Object subclass: #'OS.VersionResource'
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Tools.BasicImageStripper subclass: #'Tools.ImageStripper'
-	instanceVariableNames: 'rootPackageName executableName runtimeSessionManagerClass flags preStripScript versionResource potentialAspectSetters stubFilePath logStream elementStack developmentClasses preservedMessages snapshotType rootClasses supersentMethods potentialAspectGetters notifier runFlags _unused20 _unused21 _unused22'
+	instanceVariableNames: 'rootPackageName executableName runtimeSessionManagerClass flags preStripScript versionResource _unused8 stubFilePath deploymentContext _unused11 _unused12 _unused13 snapshotType _unused15 _unused16 _unused17 _unused18 _unused19 _unused20 _unused21 _unused22'
 	classVariableNames: ''
 	imports: #(#{OS.MessageBoxConstants} #{OS.Win32Constants})
 	classInstanceVariableNames: ''
 	classConstants: {
-		'AllResourcesStripped' -> 16r1.
 		'ClearGuidsMask' -> 16r1.
 		'CompileStructsMask' -> 16r100.
 		'EmptyMethodDictsMask' -> 16r800.
@@ -79,7 +88,6 @@ Tools.BasicImageStripper subclass: #'Tools.ImageStripper'
 		'NoXPManifestMask' -> 16r200000.
 		'PreserveAspectsMask' -> 16r4.
 		'PurgeStubbornClassesMask' -> 16r4000000.
-		'RemoveAbstractUnreachable' -> 16r2.
 		'RetainDevSysMask' -> 16r10000000.
 		'RetainInstVarNamesMask' -> 16r8.
 		'RetainSubclassRespMask' -> 16r800000.

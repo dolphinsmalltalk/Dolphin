@@ -556,7 +556,7 @@ values
 !Core.Dictionary categoriesFor: #at:put:!accessing!public! !
 !Core.Dictionary categoriesFor: #atAll:put:!accessing!public! !
 !Core.Dictionary categoriesFor: #bestSlotFor:boundedBy:!development!private!statistics! !
-!Core.Dictionary categoriesFor: #bindingFor:!binding!public! !
+!Core.Dictionary categoriesFor: #bindingFor:!bindings!public! !
 !Core.Dictionary categoriesFor: #bindingsDo:!enumerating!public! !
 !Core.Dictionary categoriesFor: #changeKey:to:!accessing!private! !
 !Core.Dictionary categoriesFor: #collect:!enumerating!public! !

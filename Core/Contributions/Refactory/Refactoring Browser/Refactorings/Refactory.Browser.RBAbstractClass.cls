@@ -550,7 +550,7 @@ withAllSuperclassesDo: aMonadicValuable
 !Refactory.Browser.RBAbstractClass categoriesFor: #allSuperclasses!accessing!public! !
 !Refactory.Browser.RBAbstractClass categoriesFor: #allSuperclassesDo:!accessing!public! !
 !Refactory.Browser.RBAbstractClass categoriesFor: #binding!accessing!public! !
-!Refactory.Browser.RBAbstractClass categoriesFor: #bindingFor:!method accessing!public! !
+!Refactory.Browser.RBAbstractClass categoriesFor: #bindingFor:!bindings!public! !
 !Refactory.Browser.RBAbstractClass categoriesFor: #compile:!method accessing!public! !
 !Refactory.Browser.RBAbstractClass categoriesFor: #compile:classified:!method accessing!public! !
 !Refactory.Browser.RBAbstractClass categoriesFor: #compileTree:!method accessing!public! !

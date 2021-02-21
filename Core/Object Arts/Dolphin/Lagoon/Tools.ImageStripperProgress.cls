@@ -182,6 +182,12 @@ monitorProgressPeriod
 	^1000
 !
 
+notify: aString
+	"Report aString as the current status"
+
+	UserLibrary default setWindowText: status lpString: aString.
+	SessionManager inputState pumpMessages!
+
 onStartup
 	"Ensure that the handle of the receiver is set to nil at startup."
 
@@ -275,12 +281,6 @@ show
 	self primHookWindowCreate: false.
 	hWnd isNull ifTrue: [self error: 'Failed to create window'].
 	UserLibrary default showWindow: handle nCmdShow: SW_SHOWNORMAL!
-
-status: aString
-	"Report aString as the current status"
-
-	UserLibrary default setWindowText: status lpString: aString.
-	SessionManager inputState pumpMessages!
 
 stopProcess
 	"Private - Stop the progress monitor process"
@@ -402,6 +402,7 @@ wmSetCursor: message wParam: wParam lParam: lParam
 !Tools.ImageStripperProgress categoriesFor: #isView!public!testing! !
 !Tools.ImageStripperProgress categoriesFor: #isWindowVisible!public!testing! !
 !Tools.ImageStripperProgress categoriesFor: #monitorProgressPeriod!constants!private! !
+!Tools.ImageStripperProgress categoriesFor: #notify:!accessing!public! !
 !Tools.ImageStripperProgress categoriesFor: #onStartup!event handling!public! !
 !Tools.ImageStripperProgress categoriesFor: #parentPresenter!presenter!public! !
 !Tools.ImageStripperProgress categoriesFor: #presenter!accessing!public! !
@@ -413,7 +414,6 @@ wmSetCursor: message wParam: wParam lParam: lParam
 !Tools.ImageStripperProgress categoriesFor: #setItem:font:!accessing!private! !
 !Tools.ImageStripperProgress categoriesFor: #setItem:text:!accessing!private! !
 !Tools.ImageStripperProgress categoriesFor: #show!operations!public! !
-!Tools.ImageStripperProgress categoriesFor: #status:!accessing!public! !
 !Tools.ImageStripperProgress categoriesFor: #stopProcess!helpers!private! !
 !Tools.ImageStripperProgress categoriesFor: #subclassWindow:!operations!private! !
 !Tools.ImageStripperProgress categoriesFor: #template!constants!public! !

@@ -338,6 +338,9 @@ environment
 
 	^environment!
 
+environment: anObject
+	environment := anObject!
+
 fileIn
 	"File in the receiver's definition from a class file in the receiver's
 	package directory."
@@ -1058,6 +1061,7 @@ variableSubclass: aClassSymbol instanceVariableNames: instVarString classVariabl
 !Core.Class categoriesFor: #comment:!accessing!development!public! !
 !Core.Class categoriesFor: #definedBindings!accessing!private! !
 !Core.Class categoriesFor: #environment!accessing!public! !
+!Core.Class categoriesFor: #environment:!accessing!private! !
 !Core.Class categoriesFor: #fileIn!development!public!source filing! !
 !Core.Class categoriesFor: #fileOutName!development!private!source filing! !
 !Core.Class categoriesFor: #fileOutStem!development!private!source filing! !
@@ -1097,11 +1101,11 @@ variableSubclass: aClassSymbol instanceVariableNames: instVarString classVariabl
 !Core.Class categoriesFor: #printString!printing!public! !
 !Core.Class categoriesFor: #removeClassVarName:!class hierarchy-mutating!class variables!public! !
 !Core.Class categoriesFor: #removeFromCategory:!categories-removing!public! !
-!Core.Class categoriesFor: #removeFromSuper!class hierarchy-removing!private! !
+!Core.Class categoriesFor: #removeFromSuper!operations!private! !
 !Core.Class categoriesFor: #removeFromSystem!class hierarchy-removing!private! !
 !Core.Class categoriesFor: #removeImport:!namespaces!public! !
 !Core.Class categoriesFor: #removeLocalBindingFor:!bindings!public! !
-!Core.Class categoriesFor: #removeSubclass:!class hierarchy-removing!private! !
+!Core.Class categoriesFor: #removeSubclass:!helpers!private! !
 !Core.Class categoriesFor: #rename:!class hierarchy-mutating!private! !
 !Core.Class categoriesFor: #rename:in:!class hierarchy-mutating!private! !
 !Core.Class categoriesFor: #requiresInstallation!public!testing! !

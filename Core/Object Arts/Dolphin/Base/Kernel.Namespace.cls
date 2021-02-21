@@ -350,7 +350,7 @@ variableRenamed: aVariableBinding from: aString
 !Kernel.Namespace class categoriesFor: #detect:ifNone:!dictionary-enumerating!public! !
 !Kernel.Namespace class categoriesFor: #do:!dictionary-enumerating!public! !
 !Kernel.Namespace class categoriesFor: #do:separatedBy:!dictionary-enumerating!public! !
-!Kernel.Namespace class categoriesFor: #hierarchyBindingFor:!binding!private! !
+!Kernel.Namespace class categoriesFor: #hierarchyBindingFor:!bindings!private! !
 !Kernel.Namespace class categoriesFor: #includes:!dictionary-searching!public! !
 !Kernel.Namespace class categoriesFor: #includesKey:!dictionary-searching!public! !
 !Kernel.Namespace class categoriesFor: #inject:into:!dictionary-enumerating!public! !
