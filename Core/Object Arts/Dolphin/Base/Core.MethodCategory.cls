@@ -157,7 +157,7 @@ selectorsInBehavior: aBehavior
 !Core.MethodCategory categoriesFor: #methods!enumerating!public! !
 !Core.MethodCategory categoriesFor: #methodsInBehavior:!enumerating!public! !
 !Core.MethodCategory categoriesFor: #methodsInBehavior:do:!enumerating!public! !
-!Core.MethodCategory categoriesFor: #removeClass:!public!removing! !
+!Core.MethodCategory categoriesFor: #removeClass:!development!public!removing! !
 !Core.MethodCategory categoriesFor: #removeMethod:!public!removing! !
 !Core.MethodCategory categoriesFor: #removeMethods:!public!removing! !
 !Core.MethodCategory categoriesFor: #removeMethodSilently:!private!removing! !

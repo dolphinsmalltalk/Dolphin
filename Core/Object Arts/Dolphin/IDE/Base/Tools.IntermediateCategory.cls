@@ -78,7 +78,7 @@ removeClass: class
 !Tools.IntermediateCategory categoriesFor: #isIntermediate!private!testing! !
 !Tools.IntermediateCategory categoriesFor: #methodsInBehavior:!enumerating!public! !
 !Tools.IntermediateCategory categoriesFor: #methodsInBehavior:do:!enumerating!public! !
-!Tools.IntermediateCategory categoriesFor: #removeClass:!public!removing! !
+!Tools.IntermediateCategory categoriesFor: #removeClass:!development!public!removing! !
 
 !Tools.IntermediateCategory class methodsFor!
 

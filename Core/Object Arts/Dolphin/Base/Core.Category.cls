@@ -160,7 +160,7 @@ subNames
 !Core.Category categoriesFor: #name!accessing!public! !
 !Core.Category categoriesFor: #permanentCategories!accessing!public! !
 !Core.Category categoriesFor: #printOn:!printing!public! !
-!Core.Category categoriesFor: #removeClass:!public!removing! !
+!Core.Category categoriesFor: #removeClass:!development!public!removing! !
 !Core.Category categoriesFor: #setName:!initializing!private! !
 !Core.Category categoriesFor: #subNames!accessing!public! !
 

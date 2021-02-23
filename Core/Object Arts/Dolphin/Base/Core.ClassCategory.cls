@@ -48,7 +48,7 @@ removeClass: aClass
 !Core.ClassCategory categoriesFor: #contents!enumerating!public! !
 !Core.ClassCategory categoriesFor: #includesClass:!public!testing! !
 !Core.ClassCategory categoriesFor: #isEmpty!public!testing! !
-!Core.ClassCategory categoriesFor: #removeClass:!public!removing! !
+!Core.ClassCategory categoriesFor: #removeClass:!development!public!removing! !
 
 !Core.ClassCategory class methodsFor!
 

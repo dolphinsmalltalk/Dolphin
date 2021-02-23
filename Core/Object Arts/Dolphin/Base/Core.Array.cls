@@ -227,7 +227,7 @@ with: element1 with: element2 with: element3 with: element4 with: element5
 	^{element1. element2. element3. element4. element5}! !
 !Core.Array class categoriesFor: #empty!instance creation!public! !
 !Core.Array class categoriesFor: #initialize!private! !
-!Core.Array class categoriesFor: #newFromStack:!instance creation!must not strip!private! !
+!Core.Array class categoriesFor: #newFromStack:!instance creation!private! !
 !Core.Array class categoriesFor: #with:!instance creation!public! !
 !Core.Array class categoriesFor: #with:with:!instance creation!public! !
 !Core.Array class categoriesFor: #with:with:with:!instance creation!public! !
