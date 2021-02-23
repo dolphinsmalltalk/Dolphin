@@ -56,7 +56,7 @@ superclassName: aString
 
 move: aClass toSuperclass: superClass 
 	^(self new changeClass: aClass)
-		superclassName: superClass name;
+		superclassName: superClass fullName;
 		yourself!
 
 moveClassNamed: aSymbol toSuperClassNamed: superSymbol 
