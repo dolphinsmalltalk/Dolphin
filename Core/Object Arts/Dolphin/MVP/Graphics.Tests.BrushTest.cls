@@ -69,7 +69,7 @@ testStbConversion
 				g: 150
 				b: 250).
 	self assert: brush logBrush hatch equals: HS_BDIAGONAL.
-	self assert: brush logBrush style equals: BS_HATCHED.
+	self assert: brush logBrush lbStyle equals: BS_HATCHED.
 	"Color window brush binaryStoreBytes"
 	version0bytes := #[33 83 84 66 32 52 32 6 4 13 0 83 121 115 67 111 108 111 114 66 114 117 115 104 0 0 0 0 32 0 0 0 0 0 0 0 11 0 0 0].
 	brush := Object fromBinaryStoreBytes: version0bytes.
@@ -92,7 +92,7 @@ testStbConversion2
 				g: 150
 				b: 250).
 	self assert: brush logBrush hatch equals: HS_BDIAGONAL.
-	self assert: brush logBrush style equals: BS_HATCHED! !
+	self assert: brush logBrush lbStyle equals: BS_HATCHED! !
 !Graphics.Tests.BrushTest categoriesFor: #testBitmapBrush!public!unit tests! !
 !Graphics.Tests.BrushTest categoriesFor: #testPrintString!public!unit tests! !
 !Graphics.Tests.BrushTest categoriesFor: #testStbConversion!public!unit tests! !

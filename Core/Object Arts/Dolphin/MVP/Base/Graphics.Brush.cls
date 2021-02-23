@@ -39,7 +39,7 @@ printOn: aPuttableStream
 
 	| lb |
 	lb := self logBrush.
-	(lb style = BS_SOLID and: [lb hatch = 0])
+	(lb lbStyle == BS_SOLID and: [lb lbHatch == 0])
 		ifTrue: 
 			[aPuttableStream
 				nextPut: $(;
@@ -53,13 +53,12 @@ printOn: aPuttableStream
 			[aPuttableStream
 				basicPrint: self;
 				nextPut: $(;
-				print: self logBrush;
-				nextPut: $)]
-! !
+				print: lb;
+				nextPut: $)]! !
 !Graphics.Brush categoriesFor: #createHandle!private!realizing/unrealizing! !
 !Graphics.Brush categoriesFor: #logBrush!accessing!private! !
 !Graphics.Brush categoriesFor: #logBrush:!accessing!private! !
-!Graphics.Brush categoriesFor: #printOn:!printing!public! !
+!Graphics.Brush categoriesFor: #printOn:!development!printing!public! !
 
 !Graphics.Brush class methodsFor!
 
@@ -196,7 +195,7 @@ withStyle: styleFlags color: aColour hatch: hatchObject
 	"Answer a new instance of the receiver with the specified style, colour and hatching attributes. The hatchObject can be either a <Bitmap> or one of the <integer> constants from the Win32 HS_xxx enumeration."
 
 	^self fromLogBrush: (LOGBRUSH new
-				style: styleFlags;
+				lbStyle: styleFlags;
 				color: aColour;
 				hatch: hatchObject;
 				yourself)! !

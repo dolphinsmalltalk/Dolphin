@@ -178,7 +178,7 @@ route: aCommandDescription
 
 	| query |
 	query := self query: aCommandDescription.
-	query canPerform ifTrue: [query perform] ifFalse: [Sound defaultBeep].
+	query canPerform ifTrue: [query perform] ifFalse: [OS.UserLibrary default messageBeep: 0].
 	^0	"Suppress default processing"!
 
 routeFrom: sourceView

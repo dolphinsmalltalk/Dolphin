@@ -43,6 +43,10 @@ package setMethodNames: #(
 	#(#{Graphics.VirtualColor} #asIndexedColor)
 	#(#{OS.BLENDFUNCTION} #beAlpha)
 	#(#{OS.BLENDFUNCTION} #beNotAlpha)
+	#(#{OS.LOGBRUSH} #style)
+	#(#{OS.LOGBRUSH} #style:)
+	#(#{OS.LOGPEN} #style)
+	#(#{OS.LOGPEN} #style:)
 	#(#{OS.LVBKIMAGEW} #offset:)
 	#(#{OS.SystemMetrics} #hasFlashWindow)
 	#(#{OS.SystemMetrics} #hasMenuImages)
@@ -138,6 +142,7 @@ package setPrerequisites: #(
 	'..\Presenters\List\Dolphin List Presenter'
 	'..\Views\MoenTree\Dolphin MoenTree View'
 	'..\Base\Dolphin MVP Base'
+	'..\Views\Buttons\Dolphin Push Buttons'
 	'..\Views\Scrollbars\Dolphin Scrollbars'
 	'..\Views\Slider\Dolphin Slider Control'
 	'..\Presenters\Text\Dolphin Text Presenter'
@@ -183,10 +188,6 @@ Smalltalk.CompositePresenter := UI.Presenter!
 Smalltalk.MultipleChoicePresenter := UI.ChoicePresenter!
 
 Smalltalk.StaticViewAbstract := UI.StaticView!
-
-
-
-
 
 
 "Loose Methods"!
@@ -390,6 +391,30 @@ beNotAlpha
 	self usePerPixelAlpha: false! !
 !OS.BLENDFUNCTION categoriesFor: #beAlpha!accessing!public! !
 !OS.BLENDFUNCTION categoriesFor: #beNotAlpha!accessing!public! !
+
+!OS.LOGBRUSH methodsFor!
+
+style
+	Notification deprecated.
+	^self lbStyle!
+
+style: anInteger 
+	Notification deprecated.
+	self lbStyle: anInteger! !
+!OS.LOGBRUSH categoriesFor: #style!accessing!public! !
+!OS.LOGBRUSH categoriesFor: #style:!accessing!public! !
+
+!OS.LOGPEN methodsFor!
+
+style
+	Notification deprecated.
+	^self lopnStyle!
+
+style: anInteger 
+	Notification deprecated.
+	self lopnStyle: anInteger! !
+!OS.LOGPEN categoriesFor: #style!accessing!public! !
+!OS.LOGPEN categoriesFor: #style:!accessing!public! !
 
 !OS.LVBKIMAGEW methodsFor!
 

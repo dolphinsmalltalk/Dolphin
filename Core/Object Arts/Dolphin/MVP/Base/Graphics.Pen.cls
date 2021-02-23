@@ -44,11 +44,11 @@ logPen: aLOGPEN
 	self free!
 
 style
-	^logPen style!
+	^logPen lopnStyle!
 
-style: flags 
+style: flags
 	self style = flags ifTrue: [^self].
-	logPen style: flags.
+	logPen lopnStyle: flags.
 	self free!
 
 styleName
@@ -174,7 +174,7 @@ withStyle: styleFlags width: anInteger color: aColour
 	"Answer a new instance of the receiver with the specified style, width and colour attributes."
 
 	^self fromLogPen: (LOGPEN newBuffer
-				style: styleFlags;
+				lopnStyle: styleFlags;
 				width: anInteger;
 				color: aColour;
 				yourself)!

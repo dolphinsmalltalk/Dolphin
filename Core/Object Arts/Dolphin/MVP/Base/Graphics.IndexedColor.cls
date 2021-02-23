@@ -91,14 +91,14 @@ rgbCodeFromPalette: aPalette
 	"Answer the COLORREF encoded RGB value that the receiver represents in the specified GDI palette."
 
 	| paletteEntry |
-	paletteEntry := PALETTEENTRY newBuffer.
+	paletteEntry := ByteArray newFixed: 4.
 	^(GDILibrary default
 		getPaletteEntries: aPalette asParameter
 		iStartIndex: index
 		nEntries: 1
 		lppe: paletteEntry) == 0
 		ifTrue: [GDILibrary default systemError]
-		ifFalse: [paletteEntry rgbCode]!
+		ifFalse: [(paletteEntry dwordAtOffset: 0) bitAnd: 16rFFFFFF]!
 
 rgbCodeFromStdPalette
 	"Answer the COLORREF encoded RGB value that the receiver represents in a standard palette."

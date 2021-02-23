@@ -169,7 +169,7 @@ createFontIndirectA: lplf
 		HFONT __stdcall CreateFontIndirect(
 			LOGFONT* lplf);"
 
-	<stdcall: handle CreateFontIndirectA LOGFONT*>
+	<stdcall: handle CreateFontIndirectA lpvoid>
 	^self invalidCall: _failureCode!
 
 createFontIndirectW: lplf
@@ -179,7 +179,7 @@ createFontIndirectW: lplf
 		HFONT __stdcall CreateFontIndirect(
 			LOGFONTW* lplf);"
 
-	<stdcall: handle CreateFontIndirectW LOGFONTW*>
+	<stdcall: handle CreateFontIndirectW lpvoid>
 	^self invalidCall: _failureCode!
 
 createHatchBrush: anInteger color: aCOLORREF
@@ -596,7 +596,7 @@ getPaletteEntries: hpal iStartIndex: iStartIndex nEntries: nEntries lppe: lppe
 			UINT nEntries,
 			PALETTEENTRY* lppe);"
 
-	<stdcall: dword GetPaletteEntries handle dword dword PALETTEENTRY*>
+	<stdcall: dword GetPaletteEntries handle dword dword lpvoid>
 	^self invalidCall: _failureCode!
 
 getPixel: aHandle xPos: xPos yPos: yPos
@@ -1123,9 +1123,9 @@ setWindowExtEx: hdc nXExtent: nXExtent nYExtent: nYExtent lpSize: lpSize
 			HDC HDC,
 			int nXExtent,
 			int nYExtent,
-			SIZE* lpSize);"
+			SIZEL* lpSize);"
 
-	<stdcall: bool SetWindowExtEx handle sdword sdword lpvoid>
+	<stdcall: bool SetWindowExtEx handle sdword sdword SIZEL*>
 	^self invalidCall: _failureCode!
 
 setWindowOrgEx: hdc nXOrg: x nYOrg: y lppt: aPOINT

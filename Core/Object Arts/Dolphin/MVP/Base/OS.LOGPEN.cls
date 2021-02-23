@@ -58,12 +58,6 @@ lopnStyle: anInteger
 
 	bytes dwordAtOffset: _OffsetOf_lopnStyle put: anInteger!
 
-style
-	^self lopnStyle!
-
-style: anInteger 
-	self lopnStyle: anInteger!
-
 width
 	"Answer <integer> width of the pen described by the receiver."
 
@@ -79,8 +73,6 @@ width: anInteger
 !OS.LOGPEN categoriesFor: #lopnColor:!**compiled accessors**!public! !
 !OS.LOGPEN categoriesFor: #lopnStyle!**compiled accessors**!public! !
 !OS.LOGPEN categoriesFor: #lopnStyle:!**compiled accessors**!public! !
-!OS.LOGPEN categoriesFor: #style!accessing!public! !
-!OS.LOGPEN categoriesFor: #style:!accessing!public! !
 !OS.LOGPEN categoriesFor: #width!accessing!public! !
 !OS.LOGPEN categoriesFor: #width:!accessing!public! !
 

@@ -77,13 +77,7 @@ lbStyle
 lbStyle: anInteger
 	"Set the receiver's 'lbStyle' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_lbStyle put: anInteger!
-
-style
-	^self lbStyle!
-
-style: anInteger 
-	self lbStyle: anInteger! !
+	bytes dwordAtOffset: _OffsetOf_lbStyle put: anInteger! !
 !OS.LOGBRUSH categoriesFor: #color!accessing!public! !
 !OS.LOGBRUSH categoriesFor: #color:!accessing!public! !
 !OS.LOGBRUSH categoriesFor: #hatch!accessing!public! !
@@ -95,8 +89,6 @@ style: anInteger
 !OS.LOGBRUSH categoriesFor: #lbHatch:!**compiled accessors**!public! !
 !OS.LOGBRUSH categoriesFor: #lbStyle!**compiled accessors**!public! !
 !OS.LOGBRUSH categoriesFor: #lbStyle:!**compiled accessors**!public! !
-!OS.LOGBRUSH categoriesFor: #style!accessing!public! !
-!OS.LOGBRUSH categoriesFor: #style:!accessing!public! !
 
 !OS.LOGBRUSH class methodsFor!
 
