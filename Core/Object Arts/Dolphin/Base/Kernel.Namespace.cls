@@ -312,7 +312,10 @@ values
 
 variableRenamed: aVariableBinding from: aString
 	self bindingsChanged.
-	^Smalltalk triggerVariableRenamed: aVariableBinding from: (self fullNameFor: aString)! !
+	Smalltalk
+		trigger: #variableRenamed:from:
+		with: aVariableBinding
+		with: (self fullNameFor: aString) asQualifiedReference! !
 !Kernel.Namespace class categoriesFor: #add:!dictionary-adding!public! !
 !Kernel.Namespace class categoriesFor: #addAll:!dictionary-adding!public! !
 !Kernel.Namespace class categoriesFor: #addNewElement:!dictionary-adding!public! !

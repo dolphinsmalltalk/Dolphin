@@ -54,12 +54,13 @@ addClass: aClass
 	self manager addClass: aClass to: self.
 	^aClass!
 
-addLooseMethod: method
+addLooseMethod: aCompiledMethod
 	"Private - Add the <CompiledMethod>, method, to the set of loose methods
 	owned by the receiver."
 
-	self assert: [(self includesClass: method methodClass) not].
-	self methodNames add: method name!
+	self assert: [(self includesClass: aCompiledMethod methodClass) not].
+	self methodNames
+		add: (MethodName class: aCompiledMethod methodClass selector: aCompiledMethod selector)!
 
 addMethod: method
 	"Add the <CompiledMethod>, method, to the list of methods owned by the receiver and
@@ -669,8 +670,10 @@ includesMethod: aCompiledMethod
 	"Answer whether the receiver owns aMethod."
 
 	^methodNames notNil and: 
-			[(self isImportedClass: aCompiledMethod methodClass) not
-				and: [methodNames includes: aCompiledMethod name]]!
+			[| methodClass |
+			methodClass := aCompiledMethod methodClass.
+			(self isImportedClass: methodClass) not
+				and: [methodNames includes: (MethodName class: methodClass selector: aCompiledMethod selector)]]!
 
 includesResourceIdentifier: aResourceIdentifier 
 	"Private - Answer whether the receiver directly owns aResourceIdentifier.
@@ -1292,7 +1295,7 @@ removeLooseMethod: aCompiledMethod
 	(i.e. a loose method) from this package. Do not fire any events."
 
 	self assert: [(self includesClass: aCompiledMethod methodClass) not].
-	self removeMethodNames: {aCompiledMethod name}!
+	self removeMethodNames: {MethodName class: aCompiledMethod methodClass selector: aCompiledMethod selector}!
 
 removeMethod: aCompiledMethod
 	"Remove the <CompiledMethod> argument from the list of loose methods owned by  the receiver, and answer that method.
@@ -1475,7 +1478,7 @@ synchronizeNames
 						ifNotNil: 
 							[:method |
 							| currentName |
-							currentName := method name.
+							currentName := MethodName class: method methodClass selector: method selector.
 							currentName = each ifTrue: [each] ifFalse: [currentName]]]!
 
 timestamp

@@ -145,9 +145,6 @@ loseSource
 
 	self sourceDescriptor: '"Source unavailable for this method"' !
 
-name
-	^MethodName method: self!
-
 owningPackage
 	"Answers the package that owns the receiver or nil if it is not yet owned
 	by any package"
@@ -215,7 +212,6 @@ storeSourceString: aString
 !Kernel.CompiledMethod categoriesFor: #isSelfEvaluating!public!testing! !
 !Kernel.CompiledMethod categoriesFor: #isUnbound!public!testing! !
 !Kernel.CompiledMethod categoriesFor: #loseSource!private!source filing-methods! !
-!Kernel.CompiledMethod categoriesFor: #name!accessing!public! !
 !Kernel.CompiledMethod categoriesFor: #owningPackage!accessing!development!public! !
 !Kernel.CompiledMethod categoriesFor: #owningPackage:!accessing!development!public! !
 !Kernel.CompiledMethod categoriesFor: #owningPackageIfLoose!accessing!development!public! !

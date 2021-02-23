@@ -55,6 +55,8 @@ package setMethodNames: #(
 	#(#{Core.Stream} #nextOrNil)
 	#(#{Core.String} #asUnicodeString)
 	#(#{Core.String} #equals:)
+	#(#{Core.String class} #fromId:)
+	#(#{Core.String class} #fromId:in:)
 	#(#{Core.String class} #fromUnicodeString:)
 	#(#{Core.String class} #unicodeClass)
 	#(#{Core.Time class} #microsecondsToRun:)
@@ -64,6 +66,7 @@ package setMethodNames: #(
 	#(#{Core.UndefinedObject} #subclass:instanceVariableNames:classVariableNames:poolDictionaries:)
 	#(#{Core.UndefinedObject} #subclass:instanceVariableNames:classVariableNames:poolDictionaries:category:)
 	#(#{External.DynamicLinkLibrary} #invalidCall)
+	#(#{External.FunctionDescriptor class} #fromString:)
 	#(#{External.Structure} #do:)
 	#(#{External.Structure} #do:separatedBy:)
 	#(#{Kernel.ByteCodeDispatcher} #byteCodeSegments)
@@ -92,6 +95,7 @@ package setMethodNames: #(
 	#(#{Kernel.VMLibrary} #isWindowsVistaSP1OrGreater)
 	#(#{Kernel.VMLibrary} #isWindowsVistaSP2OrGreater)
 	#(#{Kernel.VMLibrary} #isWindowsXPOrGreater)
+	#(#{Kernel.VMLibrary} #shortName)
 	#(#{OS._FPIEEE_RECORD} #causeCode)
 	#(#{OS._FPIEEE_RECORD} #causeName)
 	#(#{OS._FPIEEE_VALUE} #valueType)
@@ -569,6 +573,14 @@ equals: comperand
 
 !Core.String class methodsFor!
 
+fromId: anInteger
+	Notification deprecated.
+	^self fromResourceId: anInteger!
+
+fromId: resourceId in: anExternalLibraryOrHandle
+	Notification deprecated.
+	^self fromResourceId: resourceId in: anExternalLibraryOrHandle!
+
 fromUnicodeString: anAddressOrUnicodeString
 	#deprecated.
 	^self fromUtf16String: anAddressOrUnicodeString!
@@ -576,6 +588,8 @@ fromUnicodeString: anAddressOrUnicodeString
 unicodeClass
 	#deprecated.
 	^self utf16Class! !
+!Core.String class categoriesFor: #fromId:!instance creation!public! !
+!Core.String class categoriesFor: #fromId:in:!instance creation!public! !
 !Core.String class categoriesFor: #fromUnicodeString:!instance creation!public! !
 !Core.String class categoriesFor: #unicodeClass!constants!public! !
 
@@ -643,6 +657,13 @@ invalidCall
 	Notification deprecated.
 	^self invalidCall: Failed! !
 !External.DynamicLinkLibrary categoriesFor: #invalidCall!exceptions!public! !
+
+!External.FunctionDescriptor class methodsFor!
+
+fromString: aString
+	Notification deprecated.
+	^self fromString: aString environment: Smalltalk! !
+!External.FunctionDescriptor class categoriesFor: #fromString:!instance creation!public! !
 
 !External.Structure methodsFor!
 
@@ -832,7 +853,12 @@ isWindowsVistaSP2OrGreater
 
 isWindowsXPOrGreater
 	Notification deprecated.
-	^KernelLibrary default isWindowsXPOrGreater! !
+	^KernelLibrary default isWindowsXPOrGreater!
+
+shortName
+	"Answer the localised short name for Dolphin."
+	Notification deprecated.
+	^String fromId: 129 in: self! !
 !Kernel.VMLibrary categoriesFor: #isWindows10OrGreater!public!win32 functions-version helpers! !
 !Kernel.VMLibrary categoriesFor: #isWindows7OrGreater!public!win32 functions-version helpers! !
 !Kernel.VMLibrary categoriesFor: #isWindows7SP1OrGreater!public!win32 functions-version helpers! !
@@ -843,6 +869,7 @@ isWindowsXPOrGreater
 !Kernel.VMLibrary categoriesFor: #isWindowsVistaSP1OrGreater!public!win32 functions-version helpers! !
 !Kernel.VMLibrary categoriesFor: #isWindowsVistaSP2OrGreater!public!win32 functions-version helpers! !
 !Kernel.VMLibrary categoriesFor: #isWindowsXPOrGreater!public!win32 functions-version helpers! !
+!Kernel.VMLibrary categoriesFor: #shortName!accessing!public! !
 
 !OS._FPIEEE_RECORD methodsFor!
 

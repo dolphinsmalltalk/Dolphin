@@ -106,15 +106,7 @@ shortNameFor: aString in: aNamespace
 						ifNil: [self imports anySatisfy: [:each | each value == aNamespace]]
 						ifNotNil: [:binding | binding environment == aNamespace]]])
 		ifTrue: [aString]
-		ifFalse: [aNamespace fullNameFor: aString]!
-
-triggerVariableRenamed: aVariableBinding from: oldSymbol
-	"Private - Inform observers that a  system global object has been renamed."
-
-	self
-		trigger: #variableRenamed:from:
-		with: aVariableBinding
-		with: oldSymbol asQualifiedReference! !
+		ifFalse: [aNamespace fullNameFor: aString]! !
 !Smalltalk class categoriesFor: #allClasses!accessing!public! !
 !Smalltalk class categoriesFor: #allClassesDo:!binding!public! !
 !Smalltalk class categoriesFor: #allRoots!accessing!public! !
@@ -129,5 +121,4 @@ triggerVariableRenamed: aVariableBinding from: oldSymbol
 !Smalltalk class categoriesFor: #removeClass:!operations!public! !
 !Smalltalk class categoriesFor: #setEvents:!events!private! !
 !Smalltalk class categoriesFor: #shortNameFor:in:!helpers!private! !
-!Smalltalk class categoriesFor: #triggerVariableRenamed:from:!events!private! !
 

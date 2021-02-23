@@ -401,11 +401,6 @@ selectorOfSpecialSend: anInteger
 selectorOfSpecialSendEx: anInteger
 	^Registry at: 71 + anInteger!
 
-shortName
-	"Answer the localised short name for Dolphin."
-
-	^String fromId: 129 in: self!
-
 signedFromUnsigned: anInteger
 	"Private - Answer a 32-bit signed integer value instantiated from the unsigned 32-bit integer
 	argument. Use the VM's external call primitive to perform the conversion very quickly."
@@ -534,7 +529,6 @@ versionFormatString
 !Kernel.VMLibrary categoriesFor: #registryAtIndex:put:!accessing-registry!private! !
 !Kernel.VMLibrary categoriesFor: #selectorOfSpecialSend:!enquiries!private! !
 !Kernel.VMLibrary categoriesFor: #selectorOfSpecialSendEx:!enquiries!private! !
-!Kernel.VMLibrary categoriesFor: #shortName!accessing!public! !
 !Kernel.VMLibrary categoriesFor: #signedFromUnsigned:!helpers!private! !
 !Kernel.VMLibrary categoriesFor: #specialSelectors!accessing-registry!private! !
 !Kernel.VMLibrary categoriesFor: #stderr!accessing-handles!private! !

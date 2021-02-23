@@ -1538,12 +1538,12 @@ fromGlobalHandle: anExternalHandle
 	p := kernel globalLock: anExternalHandle.
 	^[self fromAddress: p] ensure: [kernel globalUnlock: anExternalHandle]!
 
-fromId: anInteger
+fromResourceId: anInteger
 	"Answer a new String loaded from resources."
 
 	^self fromId: anInteger in: SessionManager current defaultResourceLibrary!
 
-fromId: resourceId in: anExternalLibraryOrHandle
+fromResourceId: resourceId in: anExternalLibraryOrHandle
 	"Answer a new String loaded from the resources of the module with handle, anExternalLibraryOrHandle."
 
 	| len pch |
@@ -1794,8 +1794,8 @@ withAll: aCollectionOfCharacters
 !Core.String class categoriesFor: #fromByteArray:length:startingAt:!instance creation!public! !
 !Core.String class categoriesFor: #fromByteArray:startingAt:!instance creation!public! !
 !Core.String class categoriesFor: #fromGlobalHandle:!instance creation!public! !
-!Core.String class categoriesFor: #fromId:!instance creation!public! !
-!Core.String class categoriesFor: #fromId:in:!instance creation!public! !
+!Core.String class categoriesFor: #fromResourceId:!instance creation!public! !
+!Core.String class categoriesFor: #fromResourceId:in:!instance creation!public! !
 !Core.String class categoriesFor: #fromString:!instance creation!public! !
 !Core.String class categoriesFor: #fromUtf16String:!instance creation!public! !
 !Core.String class categoriesFor: #initialize!class initialization!development!public! !

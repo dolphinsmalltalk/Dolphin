@@ -307,9 +307,6 @@ descriptor: aByteArray literals: aSequenceableCollection
 		literals: aSequenceableCollection;
 		yourself!
 
-fromString: aString
-	^self fromString: aString environment: Smalltalk!
-
 fromString: aString environment: aNamespace
 	"Answer an instance of the receiver instantiated from the argument, which
 	is a Dolphin format external function descriptor, e.g:
@@ -644,7 +641,6 @@ typeHasArgument: ordinalType
 !External.FunctionDescriptor class categoriesFor: #callingConvention:returnType:argumentTypes:environment:!instance creation!public! !
 !External.FunctionDescriptor class categoriesFor: #conventionFromName:!constants!public! !
 !External.FunctionDescriptor class categoriesFor: #descriptor:literals:!instance creation!private! !
-!External.FunctionDescriptor class categoriesFor: #fromString:!instance creation!public! !
 !External.FunctionDescriptor class categoriesFor: #fromString:environment:!instance creation!public! !
 !External.FunctionDescriptor class categoriesFor: #initialize!development!initializing!private! !
 !External.FunctionDescriptor class categoriesFor: #initializeCallingConventions!development!initializing!private! !
