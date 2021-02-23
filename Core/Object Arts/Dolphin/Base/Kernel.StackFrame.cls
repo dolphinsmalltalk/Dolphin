@@ -297,7 +297,7 @@ ipBias
 	"Private - Answer the bias of an IP index to the true IP offset in
 	an compiled code object."
 
-	^MemoryManager current objectHeaderSize - 1!
+	^VMConstants.ObjectHeaderSize - 1!
 
 isBlockFrame
 	^false!

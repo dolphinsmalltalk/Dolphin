@@ -729,6 +729,7 @@ Kernel.SharedPool subclass: #'Kernel.VMConstants'
 		'MaxPrimitive' -> 16rFF.
 		'MaxTemps' -> 16rFF.
 		'MaxVirtualFunction' -> 16r400.
+		'ObjectHeaderSize' -> 16r0.
 		'SmallIntegerMax' -> 16r3FFFFFFF.
 		'SmallIntegerMin' -> -16r40000000.
 		'UIntMax' -> 16rFFFFFFFF.
@@ -2247,7 +2248,7 @@ Core.Object subclass: #'Core.Magnitude'
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Core.Object subclass: #'Kernel.MemoryManager'
-	instanceVariableNames: 'finalizer lastRequests hospice hospiceHighWater maxObjects undertaker bereavements bereaved bereavedHighWater gcInterval lastGCTime lastGCDuration objectHeaderSize events'
+	instanceVariableNames: 'finalizer lastRequests hospice hospiceHighWater maxObjects undertaker bereavements bereaved bereavedHighWater gcInterval lastGCTime lastGCDuration _unused13 events'
 	classVariableNames: 'Current GCInterval'
 	imports: #()
 	classInstanceVariableNames: ''

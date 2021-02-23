@@ -135,7 +135,7 @@ debugStream
 
 	^debugStream
 		ifNil: 
-			[debugStream := #{DebugTraceStream} ifDefined: [:dts | dts new] ifNotDefined: [DeafObject current]]!
+			[debugStream := #{Kernel.DebugTraceStream} valueOrNil ifNotNil: [:dts | dts new] ifNil: [DeafObject current]]!
 
 errno
 	"Answer the value of the C runtime 'errno' global variable saved on completion of the last
@@ -473,7 +473,7 @@ setLaunchBlock: aBlockClosure
 	baseFrame := self frameClass new setProcess: self index: 2 + aBlockClosure localCount.
 	baseFrame
 		basicSender: 0;
-		basicIP: aBlockClosure initialIP + MemoryManager current objectHeaderSize - 1;
+		basicIP: aBlockClosure initialIP + VMConstants.ObjectHeaderSize - 1;
 		sp: baseFrame frameSize + 1;
 		method: aBlockClosure method;
 		environment: aBlockClosure.

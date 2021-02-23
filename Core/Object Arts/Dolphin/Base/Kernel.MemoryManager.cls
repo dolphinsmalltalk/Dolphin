@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
 Core.Object subclass: #'Kernel.MemoryManager'
-	instanceVariableNames: 'finalizer lastRequests hospice hospiceHighWater maxObjects undertaker bereavements bereaved bereavedHighWater gcInterval lastGCTime lastGCDuration objectHeaderSize events'
+	instanceVariableNames: 'finalizer lastRequests hospice hospiceHighWater maxObjects undertaker bereavements bereaved bereavedHighWater gcInterval lastGCTime lastGCDuration _unused13 events'
 	classVariableNames: 'Current GCInterval'
 	imports: #()
 	classInstanceVariableNames: ''
@@ -322,11 +322,6 @@ objectCount
 	<primitive: 169>
 	^Class allRoots inject: 0 into: [:sum :e | sum + e primAllSubinstances size]!
 
-objectHeaderSize
-	"Private - Answer the value of the receiver's ''objectHeaderSize'' instance variable."
-
-	^objectHeaderSize!
-
 onPreSaveImage
 	"Private - Clean up before a snapshot. We perform a compacting garbage collect
 	to minimize the image size, and then move objects queued for finalization. 
@@ -478,7 +473,6 @@ undertakerMain
 !Kernel.MemoryManager categoriesFor: #millisecondClock!enquiries!private! !
 !Kernel.MemoryManager categoriesFor: #minGCInterval!accessing!private! !
 !Kernel.MemoryManager categoriesFor: #objectCount!garbage collection!private! !
-!Kernel.MemoryManager categoriesFor: #objectHeaderSize!accessing!private! !
 !Kernel.MemoryManager categoriesFor: #onPreSaveImage!event handling!private! !
 !Kernel.MemoryManager categoriesFor: #onStartup!event handling!private! !
 !Kernel.MemoryManager categoriesFor: #otOverflow:!interrupts!interrupts-handling!private! !

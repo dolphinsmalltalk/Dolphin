@@ -25,6 +25,7 @@ Kernel.SharedPool subclass: #'Kernel.VMConstants'
 		'MaxPrimitive' -> 16rFF.
 		'MaxTemps' -> 16rFF.
 		'MaxVirtualFunction' -> 16r400.
+		'ObjectHeaderSize' -> 16r0.
 		'SmallIntegerMax' -> 16r3FFFFFFF.
 		'SmallIntegerMin' -> -16r40000000.
 		'UIntMax' -> 16rFFFFFFFF.
