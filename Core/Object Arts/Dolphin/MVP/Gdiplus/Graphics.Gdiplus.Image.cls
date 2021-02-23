@@ -1764,5 +1764,5 @@ prompt
 !Graphics.Gdiplus.Image class categoriesFor: #getImageCodecs:!helpers!private! !
 !Graphics.Gdiplus.Image class categoriesFor: #icon!constants!public! !
 !Graphics.Gdiplus.Image class categoriesFor: #mimeTypeForExtension:!enquiries!private! !
-!Graphics.Gdiplus.Image class categoriesFor: #prompt!instance creation!public! !
+!Graphics.Gdiplus.Image class categoriesFor: #prompt!development!instance creation!public! !
 

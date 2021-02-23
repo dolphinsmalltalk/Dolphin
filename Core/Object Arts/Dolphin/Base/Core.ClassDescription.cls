@@ -404,22 +404,6 @@ conformsToProtocol: protocol
 		superclass notNil and: [superclass conformsToProtocol: protName]]
 !
 
-defaultIconName
-	"Answer a filename to use to find an icon for this class."
-
-	^File composeStem: self name extension: '.ico'!
-
-defaultResourceIcon
-	"Answer a suitable default icon resource to use for this class. Note that this method differs
-	from #defaultIcon in that it uses the #resourceLocator of the class to locate the icon file"
-
-	^#{Icon} value fromId: self defaultResourceIconName!
-
-defaultResourceIconName
-	"Answer a filename to use for an icon of this class loaded from the class resources location."
-
-	^self instanceClass resourcesLocator localFileSpecFor: self defaultIconName!
-
 definition
 	"Answer the <readableString> definition message, which, when evaluated, will define the
 	receiver."
@@ -1021,9 +1005,6 @@ withAllSubclassesDo: aMonadicValuable
 !Core.ClassDescription categoriesFor: #compile:classified:!compiling!public! !
 !Core.ClassDescription categoriesFor: #compileAllSubclasses!compiling!development!public! !
 !Core.ClassDescription categoriesFor: #conformsToProtocol:!protocols!public! !
-!Core.ClassDescription categoriesFor: #defaultIconName!constants!public! !
-!Core.ClassDescription categoriesFor: #defaultResourceIcon!constants!public! !
-!Core.ClassDescription categoriesFor: #defaultResourceIconName!constants!public! !
 !Core.ClassDescription categoriesFor: #definition!public!source filing-class definition! !
 !Core.ClassDescription categoriesFor: #displayOn:!displaying!public! !
 !Core.ClassDescription categoriesFor: #environment!accessing!public! !

@@ -419,7 +419,7 @@ wcsncpy_s: strDestination bufferSize: numberOfElements strSource: strSource coun
 !OS.CRTLibrary categoriesFor: #_fseeki64:offset:origin:!CRT functions-stream I/O!public! !
 !OS.CRTLibrary categoriesFor: #_ftelli64:!CRT functions-stream I/O!public! !
 !OS.CRTLibrary categoriesFor: #_get_osfhandle:!CRT functions-file handling!public! !
-!OS.CRTLibrary categoriesFor: #_isatty:!CRT functions-data conversion!public! !
+!OS.CRTLibrary categoriesFor: #_isatty:!CRT functions-file handling!public! !
 !OS.CRTLibrary categoriesFor: #_makepath_s:bufferSize:drive:dir:fname:ext:!CRT functions-file handling!public! !
 !OS.CRTLibrary categoriesFor: #_open_osfhandle:flags:!CRT functions-file handling!public! !
 !OS.CRTLibrary categoriesFor: #_setmode:mode:!CRT functions-file handling!public! !

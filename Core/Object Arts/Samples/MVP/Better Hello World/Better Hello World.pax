@@ -18,6 +18,7 @@ UI.Examples.BetterHelloWorld show.
 	executableName: ''BetterWorld.exe'';
 	preserveAspectSetters: false;
 	stripDeprecatedMethods: true;
+	"logReferencesToClasses: true;"
 	deploy
 ```
 
@@ -25,6 +26,8 @@ And to examine the content:
 
 ```
 Smalltalk developmentSystem browseDeploymentLog: ''BetterWorld.xml''
+"Or view the log"
+UI.Examples.XmlPad openOn: ''BetterWorld.xml''
 ```'.
 
 package basicScriptAt: #postinstall put: 'Smalltalk developmentSystem addSamplesFolderIconFor: UI.Examples.BetterHelloWorld

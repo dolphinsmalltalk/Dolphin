@@ -24,6 +24,8 @@ UI.Examples.HelloWorld show.
 	executableName: ''HelloGui.exe'';
 	preserveAspectSetters: false;
 	stripDeprecatedMethods: true;
+	preStripScript: ''Point removeSelector: #@'';
+	logReferencesToClasses: true;
 	deploy
 ```
 

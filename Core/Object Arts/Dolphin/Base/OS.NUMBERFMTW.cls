@@ -152,7 +152,7 @@ numberGrouping: aString
 				into: 
 					[:grouping :each |
 					| group |
-					group := Integer fromString: each.
+					group := CRTLibrary default atoi: each.
 					grouping * 10 + group])!
 
 NumDigits

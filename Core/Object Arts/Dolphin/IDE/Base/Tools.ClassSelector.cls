@@ -844,7 +844,7 @@ sourceControl
 systemModel
 	"Private - Answer the development system model."
 
-	^Smalltalk developmentSystem!
+	^SmalltalkSystem current!
 
 testBrowserClass
 	^self systemModel testBrowserClass!

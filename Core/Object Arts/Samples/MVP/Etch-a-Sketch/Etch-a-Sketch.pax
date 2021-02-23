@@ -42,7 +42,7 @@ Smalltalk developmentSystem browseDeploymentLog: ''EtchASketch.xml''.
 
 Or as Xml:
 ```
-XmlPad openOn: ''EtchASketch.xml''
+UI.Examples.XmlPad openOn: ''EtchASketch.xml''
 ```
 '.
 

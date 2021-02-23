@@ -143,9 +143,9 @@ appendManifestContent: manifest
 			manifest 
 				nextPutAll: '<dependency><dependentAssembly><assemblyIdentity type="win32" name="Microsoft.Windows.Common-Controls" version="6.0.0.0" processorArchitecture="X86" publicKeyToken="6595b64144ccf1df" language="*"/></dependentAssembly></dependency>']!
 
-basicRemoveMethod: aCompiledMethod
+basicDeleteMethod: aCompiledMethod
 	| getSelector |
-	super basicRemoveMethod: aCompiledMethod.
+	super basicDeleteMethod: aCompiledMethod.
 	"If removed a method that was previously identified as an aspect getter, we can stop preserving the corresponding setters"
 	(deploymentContext aspectGetters identityIncludes: aCompiledMethod) ifFalse: [^true].
 	deploymentContext aspectGetters remove: aCompiledMethod.
@@ -427,6 +427,17 @@ copyAndUpdateStub: stubFile to: exeFile
 defaultStubFilePath
 	^FileLocator installRelative localFileSpecFor: self stubFile!
 
+deleteClass: aClass
+	"Private - Removes aClass from the image. Answer the number of classes that
+	were actually removed (subclasses may be removed too)."
+
+	(deploymentContext rootClasses includes: aClass)
+		ifTrue: 
+			[Warning
+				signal: 'The class ' , aClass name , ' cannot be removed because it is a root of the application'.
+			^0].
+	^super deleteClass: aClass!
+
 deploymentContext
 	^deploymentContext!
 
@@ -561,7 +572,7 @@ findPotentialAspectAccessorsIn: aClass excluding: aCollection
 
 finishedStrippingResources
 	self
-		finishedWithAll: #(#addReferencedViews:to: #allResourcesStripped #resourcesForClasses: #scanResourcesForViewReferences: #removeRedundantResources: #removeResources:reason: #removeResource:)!
+		finishedWithAll: #(#addReferencedViews:to: #allResourcesStripped #resourcesForClasses: #scanResourcesForViewReferences: #removeRedundantResources: #deleteResources:reason: #deleteResource:)!
 
 finishedWithAll: aCollectionOfSymbols
 	| methods |
@@ -576,7 +587,7 @@ finishedWithStripping
 
 	deploymentContext finishedWithStripping.
 	self
-		finishedWithAll: #(#allMethodsInClasses:do: #allResourcesStripped #basicRemoveMethod: #ignoreViewReferences #messagesSentByClasses: #resourcesForClasses: #removeMethod: #remoteMethods: #removeMethods:reason:force: #logMethod: #preservedMessages #speciallySentMessages #finishedWithStripping).
+		finishedWithAll: #(#allMethodsInClasses:do: #allResourcesStripped #basicDeleteMethod: #ignoreViewReferences #messagesSentByClasses: #resourcesForClasses: #deleteMethod: #deleteMethods: #deleteMethods:reason:force: #logMethod: #preservedMessages #speciallySentMessages #finishedWithStripping).
 	Set primAllSubinstances do: [:each | each shrink]!
 
 foldDuplicatesConstants
@@ -679,7 +690,7 @@ logConfiguration: aString
 			value: 'Target'.
 	self logImageStats.
 	self logDevelopmentCategories.
-	self logPreservedMessages.
+	self logRequiredMethodCategories.
 	deploymentContext endElement: true!
 
 logDevelopmentCategories
@@ -804,7 +815,7 @@ logReferencesToClass: anAssociation
 							[:r |
 							r == anAssociation key class
 								or: [r == anAssociation or: [(r isKindOf: CompiledMethod) and: [r methodClass == anAssociation key]]]]]
-				ifFalse: [binding allReferences reject: [:r | r == Smalltalk or: [r == Processor activeProcess]]].
+				ifFalse: [binding allReferences reject: [:r | r == binding environment or: [r == Processor activeProcess]]].
 	refs isEmpty
 		ifFalse: 
 			[deploymentContext startElement: 'References' attributes: #().
@@ -950,6 +961,18 @@ logRemainingResources
 			value: 'TotalResourcesSize';
 		endElement: true!
 
+logRequiredMethodCategories
+	"Private - Logs a list of the classes that form the root set for the application."
+
+	deploymentContext startElement: 'RequiredMethodCategories' attributes: #().
+	self requiredMethodCategories asArray sort do: 
+			[:each |
+			deploymentContext
+				logElement: #()
+				attributes: each asString
+				value: 'MethodCategory'].
+	deploymentContext endElement: true!
+
 logSentMessages: aWeakIdentityDictionary
 	"Log the messages preserved only because they are assumed to be aspect setters"
 
@@ -1033,7 +1056,7 @@ notifyClassesOfImminentStrip
 				ifNotNil: 
 					[:method |
 					e onPreStripImage.
-					self removeMethod: method]].
+					self deleteMethod: method]].
 	deploymentContext endElement: true!
 
 notRequiredMethodCategories
@@ -1102,6 +1125,10 @@ packageDrivenStage
 	self installRuntimeSessionManager.
 	self removeRedundantPackages.
 	self logRemainingPackages.
+	"Having removed the packages we don't need, we can now look for messages that must be preserved and hopefully get a smaller set"
+	self
+		buildPreservedMessages;
+		logPreservedMessages.
 	"The environment pointers from the variable bindings of pool constants are not needed. We nil them out early while they are easier to reach, but only after determing package pre-requisites."
 	self clearSharedPoolConstantsEnvironmentReferences.
 	self snapshotRootClasses.
@@ -1160,7 +1187,6 @@ prepareCycle6: aWeakArrayOfMethods
 
 prepareToDeployWith: stubFile to: path
 	deploymentContext supersentMethods: self buildSupersentMessageMap.
-	self buildPreservedMessages.
 	self logConfiguration: path.
 	self copyAndUpdateStub: stubFile to: path.
 	self
@@ -1210,7 +1236,7 @@ preStripTidy
 	"We have have done the resource updating."
 	versionResource := nil.
 	self
-		finishedWithAll: #(#appendManifestContent: #behaviorsWithIgnoredAspectSetters #binaryStoreOn: #buildManifest:description:version: #buildMessageMap #buildPreservedMessages #buildSupersentMessageMap #classBuildingMethods #classCategoriesToIgnoreAspectSetters #classRemovingMethods #closeAllDevelopmentTools #closeChangeLog #copyAndUpdateStub:to: #defaultStubFilePath #developmentMethodCategoryNames #developmentMethods #executableName #exeFileExtension #findPotentialAspectAccessors: #findPotentialAspectAccessorsIn:excluding: #ignoreViewReferences: #includeManifestResource #isResourceUpdatingRequired #isToGo #isUnattended #keepImageFile #logConfiguration: #logDevelopmentCategories #logFileExtension #logFileName #logPreservedMessages #logReferencesToClasses: #manifestResourceId #nonAspectSetterCategories #notifyClassesOfImminentStrip #openLogFile #prepareToStrip #preserveAspectSetters #preStripCheck #preStripScript #preStripScript: #removeNotRequiredMethods #referencesFromObjectsInClasses: #requiredMethodCategories #retainInstVarNames: #rootPackage: #runPreStripScript #snapshotDevelopmentClasses #snapshotType #stripAndSave #stripAndSaveWithProgress #stripDeprecatedMethods #stripShouldNotImplement #stripSubclassResponsibility #stubFile #stubFilePath #updateIconResource: #updateStringTableResource: #updateStubResources: #updateVersionResource: #updateXPManifestResource: #versionResource #versionResource: #viewsToClose #writeLogFile)!
+		finishedWithAll: #(#appendManifestContent: #behaviorsWithIgnoredAspectSetters #binaryStoreOn: #buildManifest:description:version: #buildMessageMap #buildSupersentMessageMap #classBuildingMethods #classCategoriesToIgnoreAspectSetters #classRemovingMethods #closeAllDevelopmentTools #closeChangeLog #copyAndUpdateStub:to: #defaultStubFilePath #developmentMethodCategoryNames #developmentMethods #executableName #exeFileExtension #findPotentialAspectAccessors: #findPotentialAspectAccessorsIn:excluding: #ignoreViewReferences: #includeManifestResource #isResourceUpdatingRequired #isToGo #isUnattended #keepImageFile #logConfiguration: #logDevelopmentCategories #logFileExtension #logFileName #logReferencesToClasses: #manifestResourceId #nonAspectSetterCategories #notifyClassesOfImminentStrip #openLogFile #prepareToStrip #preserveAspectSetters #preStripCheck #preStripScript #preStripScript: #removeNotRequiredMethods #referencesFromObjectsInClasses: #retainInstVarNames: #rootPackage: #runPreStripScript #snapshotDevelopmentClasses #snapshotType #stripAndSave #stripAndSaveWithProgress #stripDeprecatedMethods #stripShouldNotImplement #stripSubclassResponsibility #stubFile #stubFilePath #updateIconResource: #updateStringTableResource: #updateStubResources: #updateVersionResource: #updateXPManifestResource: #versionResource #versionResource: #viewsToClose #writeLogFile)!
 
 progressDialogClass
 	^ImageStripperProgress!
@@ -1278,17 +1304,6 @@ referencesFromObjectsInClasses: aCollection
 			messageMap at: res put: hiddenSymbols].
 	^messageMap!
 
-removeClass: aClass
-	"Private - Removes aClass from the image. Answer the number of classes that
-	were actually removed (subclasses may be removed too)."
-
-	(deploymentContext rootClasses includes: aClass)
-		ifTrue: 
-			[Warning
-				signal: 'The class ' , aClass name , ' cannot be removed because it is a root of the application'.
-			^0].
-	^super removeClass: aClass!
-
 removeClassBuilder: aCollection
 	"Private - Remove the ClassBuilder and associated class adding/renaming methods if so configured."
 
@@ -1298,10 +1313,10 @@ removeClassBuilder: aCollection
 			aCollection do: 
 					[:pair |
 					self
-						removeMethods: ((pair at: 2) select: [:method | method ~~ DeadObject.Current]) sort
+						deleteMethods: ((pair at: 2) select: [:method | method ~~ DeadObject.Current]) sort
 						reason: (pair at: 1)
 						force: true].
-			self removeClassNamed: #ClassBuilder.
+			self deleteClassNamed: #ClassBuilder.
 			deploymentContext endElement: true].
 	self finishedWithAll: #(#stripClassBuilder)!
 
@@ -1340,14 +1355,14 @@ removeDevelopmentObjects: devMethods
 					| live |
 					live := (pair at: 2) select: [:each | each ~~ DeadObject.Current].
 					totalRemoved := totalRemoved + (self
-										removeMethods: live
+										deleteMethods: live
 										reason: (pair at: 1)
 										force: true)]].
 	self collectGarbage: 3.
 	self stripDevelopmentClasses
 		ifTrue: 
 			[| removed |
-			[(removed := self removeClasses: self developmentClasses sort reason: 'development') > 0]
+			[(removed := self deleteClasses: self developmentClasses sort reason: 'development') > 0]
 				whileTrue: 
 					[self collectGarbage: 2.
 					totalRemoved := totalRemoved + removed]].
@@ -1372,7 +1387,7 @@ removeMyClass
 				[:e |
 				deploymentContext logStrippingError: e.
 				e resume: true].
-	current == BasicImageStripper]
+	current name == #BasicImageStripper]
 			whileFalse: [current := superclass].
 	self detachClass: deploymentContext class.
 	self collectGarbage: 2!
@@ -1409,7 +1424,7 @@ removeRedundantMethodsOnceFrom: aCollectionOfClasses
 	unreachable := self unreachableMethodsOfNonInstantiablesIn: aCollectionOfClasses.
 	"As the methods are unreachable, we can safely remove them whether or not they are potentially aspect setters"
 	^self
-		removeMethods: unreachable
+		deleteMethods: unreachable
 		reason: 'abstract unreachable'
 		force: true!
 
@@ -1429,7 +1444,7 @@ removeRedundantResources: referencedClasses
 
 	"Remove all but the live resources"
 	deadResources := ResourceIdentifier allResourceIdentifiers difference: liveResources.
-	^self removeResources: deadResources reason: 'unreferenced'!
+	^self deleteResources: deadResources reason: 'unreferenced'!
 
 requiredClasses
 	"Answer a <set> of Classes that are known to be required and that
@@ -1763,6 +1778,19 @@ stubFilePath
 		ifTrue: [self defaultStubFilePath]
 		ifFalse: [FileLocator imageRelative localFileSpecFor: stubFilePath]!
 
+uncheckedDeleteClass: aClass
+	aClass fullName = 'UI.ResourceIdentifier'
+		ifTrue: 
+			[| resourceMessages preserved |
+			"If ResourceIdentifier is removed, then there is no point preserving any resource methods as these are unusable."
+			preserved := deploymentContext preservedMessages.
+			resourceMessages := preserved select: [:each | each beginsWith: 'resource_'].
+			self
+				logComment: 'Discarding preserved resource messages: ' , resourceMessages asArray sort printString.
+			deploymentContext preservedMessages: (preserved difference: resourceMessages).
+			##(self) removeSelector: #uncheckedDeleteClass:].
+	^super uncheckedDeleteClass: aClass!
+
 unreachableMethodsOfNonInstantiablesIn: aCollectionOfClasses
 	"Private - Any methods of non-instantiable classes overridden in all remaining subclasses are redundant if not supersent.
 	Note that we only include instance side methods, as there is a class instance (i.e. the metaclasses are never non-instantiable)."
@@ -1931,7 +1959,7 @@ writeLogFile
 !Tools.ImageStripper categoriesFor: #allReferencedClasses!operations!private! !
 !Tools.ImageStripper categoriesFor: #allResourcesStripped!operations!private! !
 !Tools.ImageStripper categoriesFor: #appendManifestContent:!helpers!private! !
-!Tools.ImageStripper categoriesFor: #basicRemoveMethod:!private!removing! !
+!Tools.ImageStripper categoriesFor: #basicDeleteMethod:!private!removing! !
 !Tools.ImageStripper categoriesFor: #behaviorsWithIgnoredAspectSetters!configuration!public! !
 !Tools.ImageStripper categoriesFor: #binaryStoreOn:!binary filing!public! !
 !Tools.ImageStripper categoriesFor: #buildApplication!must not strip!operations!private! !
@@ -1954,6 +1982,7 @@ writeLogFile
 !Tools.ImageStripper categoriesFor: #compileExternalStructures!accessing!public! !
 !Tools.ImageStripper categoriesFor: #copyAndUpdateStub:to:!operations!private! !
 !Tools.ImageStripper categoriesFor: #defaultStubFilePath!constants!private! !
+!Tools.ImageStripper categoriesFor: #deleteClass:!helpers!private! !
 !Tools.ImageStripper categoriesFor: #deploymentContext!accessing!private! !
 !Tools.ImageStripper categoriesFor: #developmentClasses!configuration!public! !
 !Tools.ImageStripper categoriesFor: #developmentMethods!accessing!public! !
@@ -1999,6 +2028,7 @@ writeLogFile
 !Tools.ImageStripper categoriesFor: #logRemainingClasses!logging!private! !
 !Tools.ImageStripper categoriesFor: #logRemainingPackages!operations!private! !
 !Tools.ImageStripper categoriesFor: #logRemainingResources!operations!private! !
+!Tools.ImageStripper categoriesFor: #logRequiredMethodCategories!operations!private! !
 !Tools.ImageStripper categoriesFor: #logSentMessages:!helpers!private! !
 !Tools.ImageStripper categoriesFor: #manifestResourceId!constants!private! !
 !Tools.ImageStripper categoriesFor: #messagesSentByClasses:!helpers!private! !
@@ -2010,14 +2040,14 @@ writeLogFile
 !Tools.ImageStripper categoriesFor: #onNotification:!event handling!private! !
 !Tools.ImageStripper categoriesFor: #openLogFile!operations!private! !
 !Tools.ImageStripper categoriesFor: #packagedClasses!accessing!private! !
-!Tools.ImageStripper categoriesFor: #packageDrivenStage!must not strip!operations!private! !
-!Tools.ImageStripper categoriesFor: #prepareCycle1:!must not strip!operations!private! !
-!Tools.ImageStripper categoriesFor: #prepareCycle2:!must not strip!operations!private! !
-!Tools.ImageStripper categoriesFor: #prepareCycle3!must not strip!operations!private! !
-!Tools.ImageStripper categoriesFor: #prepareCycle4!must not strip!operations!private! !
-!Tools.ImageStripper categoriesFor: #prepareCycle5!must not strip!operations!private! !
-!Tools.ImageStripper categoriesFor: #prepareCycle6:!must not strip!operations!private! !
-!Tools.ImageStripper categoriesFor: #prepareToDeployWith:to:!must not strip!operations!private! !
+!Tools.ImageStripper categoriesFor: #packageDrivenStage!operations!private! !
+!Tools.ImageStripper categoriesFor: #prepareCycle1:!operations!private! !
+!Tools.ImageStripper categoriesFor: #prepareCycle2:!operations!private! !
+!Tools.ImageStripper categoriesFor: #prepareCycle3!operations!private! !
+!Tools.ImageStripper categoriesFor: #prepareCycle4!operations!private! !
+!Tools.ImageStripper categoriesFor: #prepareCycle5!operations!private! !
+!Tools.ImageStripper categoriesFor: #prepareCycle6:!operations!private! !
+!Tools.ImageStripper categoriesFor: #prepareToDeployWith:to:!operations!private! !
 !Tools.ImageStripper categoriesFor: #prepareToStrip!operations!public! !
 !Tools.ImageStripper categoriesFor: #preserveAspectSetters!accessing!public! !
 !Tools.ImageStripper categoriesFor: #preStripCheck!operations!private! !
@@ -2027,14 +2057,13 @@ writeLogFile
 !Tools.ImageStripper categoriesFor: #purgeIcons!helpers!private! !
 !Tools.ImageStripper categoriesFor: #purgeStubbornClass:!operations!private! !
 !Tools.ImageStripper categoriesFor: #referencesFromObjectsInClasses:!helpers!private! !
-!Tools.ImageStripper categoriesFor: #removeClass:!helpers!private! !
 !Tools.ImageStripper categoriesFor: #removeClassBuilder:!operations!private! !
 !Tools.ImageStripper categoriesFor: #removeClassGuids!operations!private! !
 !Tools.ImageStripper categoriesFor: #removeDevelopmentObjects:!operations!private! !
 !Tools.ImageStripper categoriesFor: #removeMyClass!operations!private! !
 !Tools.ImageStripper categoriesFor: #removeRedundantMethods!operations!private! !
 !Tools.ImageStripper categoriesFor: #removeRedundantMethodsOnceFrom:!operations!private! !
-!Tools.ImageStripper categoriesFor: #removeRedundantPackages!must not strip!operations!private! !
+!Tools.ImageStripper categoriesFor: #removeRedundantPackages!operations!private! !
 !Tools.ImageStripper categoriesFor: #removeRedundantResources:!operations!private! !
 !Tools.ImageStripper categoriesFor: #requiredClasses!configuration!public! !
 !Tools.ImageStripper categoriesFor: #requiredMethodCategories!configuration!public! !
@@ -2073,6 +2102,7 @@ writeLogFile
 !Tools.ImageStripper categoriesFor: #stripSubclassResponsibility!public!testing! !
 !Tools.ImageStripper categoriesFor: #stubFile!public!testing! !
 !Tools.ImageStripper categoriesFor: #stubFilePath!accessing!public! !
+!Tools.ImageStripper categoriesFor: #uncheckedDeleteClass:!helpers!private! !
 !Tools.ImageStripper categoriesFor: #unreachableMethodsOfNonInstantiablesIn:!operations!private! !
 !Tools.ImageStripper categoriesFor: #updateIconResource:!operations!public! !
 !Tools.ImageStripper categoriesFor: #updateStringTableResource:!operations!public! !
@@ -2116,95 +2146,14 @@ developmentMethodCategoryNames
 	^#('development' 'class hierarchy-adding')
 !
 
-for: aPackage
-	"Answers an instance of the receiver suitable for stripping aPackage"
-
-	^self new rootPackage: aPackage!
-
 isSafeToEncryptWithProductProtection
 	"Answer whether it is save to encrypt the receiver's methods as part of the
 	the deployment of a Protected Product application"
 
-	^false!
-
-newForTests
-
-	^self new initializeForTests!
-
-publishedAspectsOfInstances
-	"Answer a <LookupTable> of the <Aspect>s published by instances of the receiver."
-
-	| aspects |
-	aspects := super publishedAspectsOfInstances.
-	#(#stripClassGuids #stripDuplicateStrings #preserveAspectSetters #retainInstVarNames #stripRedundantClasses #stripClassInfo #stripClassBuilder #stripRedundantMethods #stripDeprecatedMethods #stripShouldNotImplement #stripSubclassResponsibility #stripRedundantResources #stripRedundantPackages #compileExternalStructures #writeLogFile #stripDuplicateBytecodes #logReferencesToClasses #isToGo #includeManifestResource #isUnattended)
-		do: [:each | aspects add: (Aspect boolean: each)].
-	aspects
-		add: (Aspect choice: #runtimeSessionManagerClass
-					from: (SessionManager allSubclasses select: [:e | e isRuntime]));
-		add: ((Aspect fileSave: #executableName)
-					isNullable: false;
-					yourself);
-		add: (Aspect multilineString: #preStripScript);
-		add: (Aspect name: #versionResource);
-		add: (Aspect fileOpen: #stubFilePath);
-		yourself.
-	^aspects!
-
-stbConvertFrom: anSTBClassFormat
-	"Convert from previous version. 
-		1: Added a retainPachydermInfo instance var (removed in v3).
-		2: Added a rootClasses instance var and the events instance var in model.
-		3: Consolidates all flags into one integer flags variable.
-		4:  isToGo flag added (the default)
-		5: supersentMessages and spare inst vars added
-		6: runFlags added and spare inst vars added"
-
-	^
-	[:data |
-	| newInstance ver |
-	newInstance := self basicNew.
-	ver := anSTBClassFormat version.
-	ver < 2
-		ifTrue: [1 to: data size do: [:i | newInstance instVarAt: i + 1 put: (data at: i)]]
-		ifFalse: [1 to: data size do: [:i | newInstance instVarAt: i put: (data at: i)]].
-	ver < 3
-		ifTrue: 
-			[| stripClasses base var flags |
-			"Former stripRedundantClasses boolean slot now used for flags variable to hold all booleans"
-			var := ImageStripper indexOfInstVar: 'flags'.
-			stripClasses := newInstance instVarAt: var.
-
-			"Initialize flags"
-			flags := self defaultOptions | StripPackagesMask.
-			stripClasses ifTrue: [flags := flags | StripClassesMask].
-			newInstance instVarAt: var put: flags.
-
-			"Convert former boolean vars to individual bits in the flags variable."
-			base := self superclass instSize.
-			#(5 6 7 8 9 10 13)
-				with: #(#stripRedundantMethods: #preserveAspectSetters: #stripDuplicateStrings: #compileExternalStructures: #writeLogFile: #stripClassInfo: #retainInstVarNames:)
-				do: 
-					[:i :setter |
-					newInstance perform: setter with: (newInstance instVarAt: i + base).
-					newInstance instVarAt: i + base put: nil]].
-	ver < 4
-		ifTrue: 
-			["Default is now 'To Go' deployment"
-			newInstance isToGo: true].
-	newInstance]!
-
-stbVersion
-	"Answer the current binary filer version number for instances of the receiver."
-
-	^6! !
+	^false! !
 !Tools.ImageStripper class categoriesFor: #classBuildingMethodCategoryNames!constants!public! !
 !Tools.ImageStripper class categoriesFor: #classRemovingMethodCategoryNames!constants!public! !
 !Tools.ImageStripper class categoriesFor: #defaultOptions!constants!private! !
 !Tools.ImageStripper class categoriesFor: #developmentMethodCategoryNames!constants!public! !
-!Tools.ImageStripper class categoriesFor: #for:!instance creation!public! !
 !Tools.ImageStripper class categoriesFor: #isSafeToEncryptWithProductProtection!development!public! !
-!Tools.ImageStripper class categoriesFor: #newForTests!public! !
-!Tools.ImageStripper class categoriesFor: #publishedAspectsOfInstances!development!public! !
-!Tools.ImageStripper class categoriesFor: #stbConvertFrom:!binary filing!development!public! !
-!Tools.ImageStripper class categoriesFor: #stbVersion!binary filing!development!public! !
 

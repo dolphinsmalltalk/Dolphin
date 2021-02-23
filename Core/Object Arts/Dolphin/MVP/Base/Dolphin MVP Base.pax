@@ -16,7 +16,7 @@ CommCtrlLibrary default!!
 MessageSend addProtocol: #commandTarget!!
 '.
 package basicScriptAt: #postuninstall put: '| resIds |
-resIds := ResourceIdentifier allResourceIdentifiers.
+resIds := UI.ResourceIdentifier allResourceIdentifiers.
 resIds isEmpty 
 	ifFalse: 
 		[| stream |
@@ -213,6 +213,9 @@ package setClassNames: #(
 package setMethodNames: #(
 	#(#{Core.AnsiString} #copyToClipboard)
 	#(#{Core.ClassDescription} #defaultIcon)
+	#(#{Core.ClassDescription} #defaultIconName)
+	#(#{Core.ClassDescription} #defaultResourceIcon)
+	#(#{Core.ClassDescription} #defaultResourceIconName)
 	#(#{Core.MessageSend} #queryCommand:)
 	#(#{Core.Object} #addToImageList:mask:)
 	#(#{Core.Object} #icon)
@@ -2789,8 +2792,27 @@ defaultIcon
 	default icon; one must define an appropriate #icon method in each class where the 
 	icon required differs from that of the superclass."
 
-	^#{Graphics.Icon} value fromId: self defaultIconName! !
+	^#{Graphics.Icon} value fromId: self defaultIconName!
+
+defaultIconName
+	"Answer a filename to use to find an icon for this class."
+
+	^File composeStem: self name extension: '.ico'!
+
+defaultResourceIcon
+	"Answer a suitable default icon resource to use for this class. Note that this method differs
+	from #defaultIcon in that it uses the #resourceLocator of the class to locate the icon file"
+
+	^#{Graphics.Icon} value fromId: self defaultResourceIconName!
+
+defaultResourceIconName
+	"Answer a filename to use for an icon of this class loaded from the class resources location."
+
+	^self instanceClass resourcesLocator localFileSpecFor: self defaultIconName! !
 !Core.ClassDescription categoriesFor: #defaultIcon!constants!public! !
+!Core.ClassDescription categoriesFor: #defaultIconName!constants!public! !
+!Core.ClassDescription categoriesFor: #defaultResourceIcon!constants!public! !
+!Core.ClassDescription categoriesFor: #defaultResourceIconName!constants!public! !
 
 !Core.MessageSend methodsFor!
 
