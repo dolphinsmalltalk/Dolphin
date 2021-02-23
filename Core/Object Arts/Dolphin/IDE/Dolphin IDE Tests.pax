@@ -33,6 +33,7 @@ package setClassNames: #(
 
 package setPrerequisites: #(
 	'Base\Development System'
+	'Base\Development System Tests'
 	'..\Base\Dolphin'
 	'..\Base\Tests\Dolphin Base Tests'
 	'..\MVP\Base\Dolphin Basic Geometry'
@@ -41,6 +42,7 @@ package setPrerequisites: #(
 	'..\MVP\Base\Dolphin MVP Base'
 	'..\MVP\Dolphin MVP Tests'
 	'Professional\Dolphin Professional Tools'
+	'..\MVP\Views\Buttons\Dolphin Push Buttons'
 	'Professional\Dolphin Refactoring Browser'
 	'..\MVP\Views\Scintilla\Dolphin Scintilla View'
 	'..\MVP\Presenters\Text\Dolphin Text Presenter'

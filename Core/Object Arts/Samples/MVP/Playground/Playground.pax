@@ -38,6 +38,7 @@ package setPrerequisites: #(
 	'..\..\..\Dolphin\MVP\Dialogs\Common\Dolphin Common Dialogs'
 	'..\..\..\Dolphin\MVP\Base\Dolphin MVP Base'
 	'..\..\..\Dolphin\MVP\Icons\Dolphin Text Tile Icons'
+	'..\UI Examples'
 ).
 
 package!

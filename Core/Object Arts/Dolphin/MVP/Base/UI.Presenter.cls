@@ -1103,16 +1103,6 @@ resource_Default_view
 
 	^#(#'!!STL' 4 985166 10 ##(UI.STBViewProxy) ##(UI.ContainerView) 34 15 nil nil 34 2 8 1409286144 131073 416 nil nil nil 5 nil nil nil 416 nil 170 192 8 #() nil 1310982 ##(Core.MessageSequence) 138 144 34 1 1049350 ##(Core.MessageSend) #createAt:extent: 34 2 655878 ##(Graphics.Point) 6143 21 626 701 501 416 1179910 ##(OS.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 93 13 0 0 4 1 0 0] 8 #() 626 193 193 nil 27)!
 
-resource_OK_Cancel_button_block
-	"Answer the literal data from which the 'OK Cancel button block' resource can be reconstituted.
-	DO NOT EDIT OR RECATEGORIZE THIS METHOD.
-
-	If you wish to modify this resource evaluate:
-	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_OK_Cancel_button_block)
-	"
-
-	^#(#'!!STL' 4 985166 10 ##(UI.STBViewProxy) ##(UI.ContainerView) 34 15 nil nil 34 2 8 1409286144 131073 416 nil nil nil 5 nil nil nil 416 852806 1 ##(UI.FlowLayout) 17 17 21 170 192 8 #() 1180166 ##(Graphics.Rectangle) 655878 ##(Graphics.Point) 11 17 578 1 1 1310982 ##(Core.MessageSequence) 138 144 34 1 1049350 ##(Core.MessageSend) #createAt:extent: 34 2 578 6143 21 578 341 65 416 1179910 ##(OS.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 169 12 0 0 42 0 0 0] 34 2 410 ##(UI.PushButton) 34 20 nil 416 34 2 8 1141055488 1 832 nil nil nil 5 nil nil nil 832 nil 8 1920683440 1377606 4 ##(UI.CommandDescription) #ok 8 'OK' 1 1 nil nil true nil nil nil 626 138 144 34 2 690 #createAt:extent: 34 2 578 25 17 578 151 47 832 690 #text: 34 1 8 'OK' 832 770 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 12 0 0 0 8 0 0 0 87 0 0 0 31 0 0 0] 8 #() 578 193 193 nil 29 410 ##(UI.PushButton) 34 20 nil 416 34 2 8 1140924416 1 1184 nil nil nil 5 nil nil nil 1184 nil 8 1920683440 914 #cancel 8 'Cancel' 1 1 nil nil false nil nil nil 626 138 144 34 2 690 #createAt:extent: 34 2 578 191 17 578 151 47 1184 690 #text: 34 1 8 'Cancel' 1184 770 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 95 0 0 0 8 0 0 0 170 0 0 0 31 0 0 0] 8 #() 1168 nil 29 1168 nil 27)!
-
 setAdditionalAccelerators: anArray
 	| bindings |
 	bindings := anArray
@@ -1184,7 +1174,6 @@ showOn: aModel
 !UI.Presenter class categoriesFor: #removeCommandQueryHandler:!accessing!public! !
 !UI.Presenter class categoriesFor: #resource_Container_view!public!resources-views! !
 !UI.Presenter class categoriesFor: #resource_Default_view!public!resources-views! !
-!UI.Presenter class categoriesFor: #resource_OK_Cancel_button_block!public!resources-views! !
 !UI.Presenter class categoriesFor: #setAdditionalAccelerators:!accessing!private! !
 !UI.Presenter class categoriesFor: #setAdditionalKeyBindings:!accessing!private! !
 !UI.Presenter class categoriesFor: #setCommandQueryHandlers:!accessing!private! !

@@ -1,0 +1,29 @@
+﻿| package |
+package := Package name: 'Dolphin GroupBox'.
+package paxVersion: 2.1;
+	basicComment: ''.
+
+
+package setClassNames: #(
+	#{UI.GroupBox}
+).
+
+package setPrerequisites: #(
+	'..\..\..\Base\Dolphin'
+	'..\..\Base\Dolphin Basic Geometry'
+	'..\..\Base\Dolphin MVP Base'
+).
+
+package!
+
+"Class Definitions"!
+
+UI.ControlView subclass: #'UI.GroupBox'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #(#{OS.ButtonConstants})
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+"End of package definition"!
+

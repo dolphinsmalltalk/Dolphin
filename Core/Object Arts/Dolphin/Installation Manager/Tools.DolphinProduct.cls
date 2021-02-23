@@ -126,9 +126,13 @@ contents
 	answer
 		add: #('Core\Object Arts\Dolphin\MVP\Presenters\Date Time\Dolphin Date Time Presenters.pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\MVP\Presenters\Radio\Dolphin Radio Buttons.pax' #plain #imageBased);
+		add: #('Core\Object Arts\Dolphin\MVP\Views\Buttons\Dolphin Check Buttons.pax' #plain #imageBased);
+		add: #('Core\Object Arts\Dolphin\MVP\Views\Buttons\Dolphin Push Buttons.pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\MVP\Views\Date Time\Dolphin Date Time Controls.pax' #plain #imageBased);
+		add: #('Core\Object Arts\Dolphin\MVP\Views\GroupBox\Dolphin GroupBox.pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\MVP\Views\Slider\Dolphin Slider Control.pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\MVP\Views\SpinButton\Dolphin SpinButton Control.pax' #plain #imageBased);
+		add: #('Core\Object Arts\Dolphin\MVP\Views\Splitter\Dolphin Splitter Control.pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\MVP\Views\Tooltips\Dolphin Tooltips.pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\MVP\Views\Cards\Dolphin Card Containers.pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\MVP\Presenters\Color\Dolphin Color Presenter.pax' #plain #imageBased);

@@ -26,6 +26,7 @@ package setPrerequisites: #(
 	'..\..\..\Dolphin\Base\Dolphin'
 	'..\..\..\Dolphin\MVP\Base\Dolphin Basic Geometry'
 	'..\..\..\Dolphin\MVP\Base\Dolphin MVP Base'
+	'..\UI Examples'
 ).
 
 package!

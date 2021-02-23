@@ -40,6 +40,9 @@ package setClassNames: #(
 	#{OS.TVITEMEXW}
 	#{OS.TVITEMW}
 	#{UI.IconicListAbstract}
+	#{UI.LabelEditedEvent}
+	#{UI.LabelEditEvent}
+	#{UI.LabelEditingEvent}
 	#{UI.ListView}
 	#{UI.ListViewColumn}
 	#{UI.TabView}
@@ -477,6 +480,24 @@ Core.Object subclass: #'UI.ListViewColumn'
 		'AutoResizeMask' -> 16r1.
 		'SortInvertedMask' -> 16r2
 	}!
+UI.Event subclass: #'UI.LabelEditEvent'
+	instanceVariableNames: 'cancel item object text'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+UI.LabelEditEvent subclass: #'UI.LabelEditedEvent'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+UI.LabelEditEvent subclass: #'UI.LabelEditingEvent'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
 OS.Win32Structure subclass: #'OS.CCHITTESTINFO'
 	instanceVariableNames: ''
 	classVariableNames: ''

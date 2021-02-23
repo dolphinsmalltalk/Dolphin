@@ -692,6 +692,7 @@ package setPrerequisites: #(
 	'..\..\MVP\Base\Dolphin Basic Geometry'
 	'..\..\MVP\Presenters\Boolean\Dolphin Boolean Presenter'
 	'..\..\MVP\Views\Cards\Dolphin Card Containers'
+	'..\..\MVP\Views\Buttons\Dolphin Check Buttons'
 	'..\..\MVP\Presenters\Choice\Dolphin Choice Presenter'
 	'..\..\MVP\Presenters\Prompters\Dolphin Choice Prompter'
 	'..\..\MVP\Presenters\Collection\Dolphin Collection Presenters'
@@ -706,6 +707,7 @@ package setPrerequisites: #(
 	'..\..\MVP\Presenters\Folder\Dolphin Folder Presenter'
 	'..\..\MVP\Models\Tree\Dolphin Folder Tree Model'
 	'..\..\MVP\Presenters\Font\Dolphin Font Presenter'
+	'..\..\MVP\Views\GroupBox\Dolphin GroupBox'
 	'..\..\MVP\Presenters\Image\Dolphin Image Presenter'
 	'..\..\MVP\Presenters\Prompters\Dolphin Integer Prompter'
 	'..\..\Base\Dolphin Legacy Date & Time'
@@ -718,6 +720,7 @@ package setPrerequisites: #(
 	'..\..\MVP\Presenters\Number\Dolphin Number Presenter'
 	'..\..\MVP\Dialogs\Progress\Dolphin Progress Dialog'
 	'..\..\MVP\Presenters\Prompters\Dolphin Prompter'
+	'..\..\MVP\Views\Buttons\Dolphin Push Buttons'
 	'..\..\MVP\Presenters\Radio\Dolphin Radio Buttons'
 	'..\..\Registry\Dolphin Registry Access'
 	'..\..\MVP\Presenters\Text\Dolphin Rich Text Presenter'
@@ -727,6 +730,7 @@ package setPrerequisites: #(
 	'..\..\MVP\Views\Sliding Tray\Dolphin Slidey-Inney-Outey Thing'
 	'..\..\Base\Dolphin Source Fileout'
 	'..\..\MVP\Views\SpinButton\Dolphin SpinButton Control'
+	'..\..\MVP\Views\Splitter\Dolphin Splitter Control'
 	'..\..\MVP\Views\Styled Views\Dolphin Styled Views'
 	'..\..\MVP\Presenters\Text\Dolphin Text Presenter'
 	'..\..\MVP\Icons\Dolphin Text Tile Icons'
@@ -4987,7 +4991,7 @@ queryThreadCycleTime: anExternalHandle cycleTime: aULARGE_INTEGER
 printFieldsOn: aStream
 	aStream
 		display: 'style=';
-		print: self style;
+		print: self lbStyle;
 		space;
 		display: 'color=';
 		print: self color.
@@ -5005,7 +5009,7 @@ printFieldsOn: aStream
 printFieldsOn: aStream
 	aStream
 		display: 'style=';
-		print: self style;
+		print: self lopnStyle;
 		space;
 		display: 'width=';
 		print: self width;

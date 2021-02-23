@@ -26,6 +26,7 @@ package setPrerequisites: #(
 	'..\..\..\Dolphin\System\Random\Dolphin Random Stream'
 	'..\..\..\Dolphin\MVP\Icons\Dolphin Text Tile Icons'
 	'..\..\..\Dolphin\MVP\Icons\Internal Bitmaps and Icons'
+	'..\UI Examples'
 ).
 
 package!

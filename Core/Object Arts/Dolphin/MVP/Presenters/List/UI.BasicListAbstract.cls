@@ -274,6 +274,12 @@ updateSelectionCache
 
 !UI.BasicListAbstract class methodsFor!
 
+initialize
+	View registerMessageMappings: {WM_CTLCOLORLISTBOX -> #wmCtlColor:wParam:lParam:}!
+
+uninitialize
+	View unregisterMessageMappings: {WM_CTLCOLORLISTBOX}!
+
 value: anObject
 	"Private - Implement #value: in order to provide a default 'get text'
 	monadic valuable for the receiver's subinstances.
@@ -281,5 +287,7 @@ value: anObject
 	valuable, mainly to save space in view resources."
 
 	^anObject displayString! !
+!UI.BasicListAbstract class categoriesFor: #initialize!development!initializing!private! !
+!UI.BasicListAbstract class categoriesFor: #uninitialize!class hierarchy-removing!private! !
 !UI.BasicListAbstract class categoriesFor: #value:!evaluating!private! !
 

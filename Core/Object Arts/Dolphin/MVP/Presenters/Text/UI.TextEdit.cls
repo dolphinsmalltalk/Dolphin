@@ -1462,7 +1462,8 @@ initialize
 				at: #numeric put: ES_NUMBER;
 				shrink;
 				isImmutable: true;
-				yourself)!
+				yourself).
+	View registerMessageMappings: {WM_CTLCOLOREDIT -> #wmCtlColor:wParam:lParam:}!
 
 onStartup
 	"Lookup the value of the FindDialog message.
@@ -1475,6 +1476,9 @@ themePartName
 	^'EDIT'
 !
 
+uninitialize
+	View unregisterMessageMappings: {WM_CTLCOLOREDIT}!
+
 winClassName
 	"Private - Answer the name of the Windows window class to use when realizing the receiver."
 
@@ -1484,5 +1488,6 @@ winClassName
 !UI.TextEdit class categoriesFor: #initialize!development!initializing!private! !
 !UI.TextEdit class categoriesFor: #onStartup!event handling!public! !
 !UI.TextEdit class categoriesFor: #themePartName!constants!private!theming! !
+!UI.TextEdit class categoriesFor: #uninitialize!class hierarchy-removing!private! !
 !UI.TextEdit class categoriesFor: #winClassName!constants!private! !
 

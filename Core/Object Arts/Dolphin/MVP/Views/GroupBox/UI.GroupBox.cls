@@ -32,8 +32,7 @@ defaultWindowExStyle
 defaultWindowStyle
 	"Private - Answer a default style to use when creating a group box control."
 
-	^(super defaultWindowStyle maskClear: WS_TABSTOP)	bitOr: BS_GROUPBOX
-!
+	^(super defaultWindowStyle maskClear: WS_TABSTOP) bitOr: BS_GROUPBOX!
 
 onPositionChanged: aPositionEvent
 	"Private - Handle a window position change event (move or resize).

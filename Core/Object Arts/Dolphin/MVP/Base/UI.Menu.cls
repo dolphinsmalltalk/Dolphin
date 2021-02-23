@@ -794,7 +794,9 @@ initialize
 menuMessageMappings
 	^{WM_CONTEXTMENU -> #wmContextMenu:wParam:lParam:.
 		WM_INITMENU -> #wmInitMenu:wParam:lParam:.
-		WM_INITMENUPOPUP -> #wmInitMenuPopup:wParam:lParam:}!
+		WM_INITMENUPOPUP -> #wmInitMenuPopup:wParam:lParam:.
+		WM_DRAWITEM -> #wmDrawItem:wParam:lParam:.
+		WM_MEASUREITEM -> #wmMeasureItem:wParam:lParam:}!
 
 stbConvertFrom: anSTBClassFormat
 	"Convert from earlier Menu versions."
@@ -841,7 +843,10 @@ stbVersion
 	^4!
 
 uninitialize
-	View unregisterMessageMappings: {WM_CONTEXTMENU. WM_INITMENU. WM_INITMENUPOPUP}! !
+	| menuMessages |
+	menuMessages := {WM_CONTEXTMENU. WM_INITMENU. WM_INITMENUPOPUP}.
+	#{ControlView} isDefined ifFalse: [menuMessages := menuMessages , {WM_DRAWITEM. WM_MEASUREITEM}].
+	View unregisterMessageMappings: menuMessages! !
 !UI.Menu class categoriesFor: #description:!instance creation!public! !
 !UI.Menu class categoriesFor: #fromStrings:!instance creation!public! !
 !UI.Menu class categoriesFor: #icon!constants!public! !

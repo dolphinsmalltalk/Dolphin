@@ -416,7 +416,7 @@ wmInitDialog: message wParam: wParam lParam: lParam
 !UI.DialogView categoriesFor: #showModalTo:!private!realizing/unrealizing! !
 !UI.DialogView categoriesFor: #subclassWindow:!operations!private! !
 !UI.DialogView categoriesFor: #templateId!constants!private! !
-!UI.DialogView categoriesFor: #wmInitDialog:wParam:lParam:!event handling-win32!public! !
+!UI.DialogView categoriesFor: #wmInitDialog:wParam:lParam:!event handling-win32!must not strip!public! !
 
 !UI.DialogView class methodsFor!
 
@@ -424,6 +424,9 @@ icon
 	"Answers an Icon that can be used to represent this class"
 
 	^##(self) defaultIcon!
+
+initialize
+	View registerMessageMappings: {WM_INITDIALOG -> #wmInitDialog:wParam:lParam:}!
 
 new
 	"Answer an instance of the receiver on a nil model"
@@ -434,8 +437,13 @@ on: aSubjectModel
 	"Create a new instance of the receiver editing the value of aSubjectModel."
 
 	^super new model: aSubjectModel.
-! !
+!
+
+uninitialize
+	View unregisterMessageMappings: {WM_INITDIALOG}! !
 !UI.DialogView class categoriesFor: #icon!constants!public! !
+!UI.DialogView class categoriesFor: #initialize!initializing!private! !
 !UI.DialogView class categoriesFor: #new!instance creation!public! !
 !UI.DialogView class categoriesFor: #on:!instance creation!public! !
+!UI.DialogView class categoriesFor: #uninitialize!class hierarchy-removing!private! !
 

@@ -55,6 +55,7 @@ package setPrerequisites: #(
 	'..\..\MVP\Base\Dolphin MVP Base'
 	'..\..\MVP\Presenters\Prompters\Dolphin Prompter'
 	'..\..\MVP\Views\Scintilla\Dolphin Scintilla View'
+	'..\..\MVP\Views\Splitter\Dolphin Splitter Control'
 	'..\..\MVP\Icons\Dolphin Text Tile Icons'
 	'..\..\MVP\Models\Tree\Dolphin Tree Models'
 	'..\..\MVP\Type Converters\Dolphin Type Converters'

@@ -11,6 +11,7 @@ package basicPackageVersion: '6.2'.
 
 
 package setClassNames: #(
+	#{OS.CHARRANGE}
 	#{OS.FINDTEXTEX}
 	#{OS.TextEditConstants}
 	#{OS.TEXTRANGE}
@@ -122,6 +123,15 @@ UI.ValuePresenter subclass: #'UI.TextPresenter'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+OS.Win32Structure subclass: #'OS.CHARRANGE'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_cpMax' -> 16r4.
+		'_OffsetOf_cpMin' -> 16r0
+	}!
 OS.Win32Structure subclass: #'OS.TEXTRANGE'
 	instanceVariableNames: 'text'
 	classVariableNames: ''

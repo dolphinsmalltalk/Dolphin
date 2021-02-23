@@ -479,6 +479,9 @@ commonControlCallError
 
 	^CommonControlCallError!
 
+controlColorMessages
+	^{WM_CTLCOLORMSGBOX. WM_CTLCOLORBTN. WM_CTLCOLORDLG. WM_CTLCOLORSTATIC}!
+
 initialize
 	"Private - Initialise the map of generic notification codes to selectors. We could use an
 	array, but a dictionary is more convenient and loses very little in performance.
@@ -486,19 +489,33 @@ initialize
 		ControlView initialize
 	"
 
-	CommonControlCallError := Signal description: 'Common control call failed'!
+	CommonControlCallError := Signal description: 'Common control call failed'.
+	View registerMessageMappings: self messageMappings!
 
 maxTextLimit
 	"Answer the absolute maximum amount of text that the receiver can ever hold."
 
 	^16r7FFFFFFE!
 
+messageMappings
+	^(self controlColorMessages collect: [:each | each -> #wmCtlColor:wParam:lParam:])
+		, {WM_DRAWITEM -> #wmDrawItem:wParam:lParam:. WM_MEASUREITEM -> #wmMeasureItem:wParam:lParam:}!
+
+uninitialize
+	| deadMessages |
+	deadMessages := self controlColorMessages.
+	#{Menu} isDefined ifFalse: [deadMessages := deadMessages , {WM_DRAWITEM. WM_MEASUREITEM}].
+	View unregisterMessageMappings: deadMessages!
+
 winClassName
 	"Private - Answer the name of the Windows window class to use when realizing the receiver."
 
 	^self subclassResponsibility! !
 !UI.ControlView class categoriesFor: #commonControlCallError!constants!public! !
+!UI.ControlView class categoriesFor: #controlColorMessages!constants!private! !
 !UI.ControlView class categoriesFor: #initialize!development!initializing!private! !
 !UI.ControlView class categoriesFor: #maxTextLimit!constants!public! !
+!UI.ControlView class categoriesFor: #messageMappings!initializing!must not strip!private! !
+!UI.ControlView class categoriesFor: #uninitialize!class hierarchy-removing!private! !
 !UI.ControlView class categoriesFor: #winClassName!constants!private! !
 

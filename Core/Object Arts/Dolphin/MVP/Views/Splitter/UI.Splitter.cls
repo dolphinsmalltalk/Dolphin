@@ -134,6 +134,11 @@ hasFlatAppearance: aBoolean
 isHot
 	^false!
 
+isSplitter
+	"Horrible type test, but marginally less horrible than the `each isKindOf: Splitter` there was before in ProportionalLayout."
+
+	^true!
+
 isVertical
 	"Private - Answer whether the layoutManager which is controlling our
 	destiny has oriented us vertically."
@@ -213,6 +218,7 @@ startTrackingAt: aPoint
 !UI.Splitter categoriesFor: #hasFlatAppearance!accessing-styles!public! !
 !UI.Splitter categoriesFor: #hasFlatAppearance:!accessing-styles!public! !
 !UI.Splitter categoriesFor: #isHot!public!testing! !
+!UI.Splitter categoriesFor: #isSplitter!accessing!public!testing! !
 !UI.Splitter categoriesFor: #isVertical!public!testing! !
 !UI.Splitter categoriesFor: #onEraseRequired:!event handling!public! !
 !UI.Splitter categoriesFor: #onGetCursor:!event handling!public! !

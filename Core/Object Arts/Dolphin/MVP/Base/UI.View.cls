@@ -1965,6 +1965,11 @@ isResizable: aBoolean
 		set: aBoolean
 		recreateIfChanged: false) ifTrue: [self frameChanged]!
 
+isSplitter
+	"Horrible type test, but marginally less horrible than the `each isKindOf: Splitter` there was before in ProportionalLayout."
+
+	^false!
+
 isStateRestoring
 	"Private - Answer true if the state of the receiver is being restored, i.e. we are
 	within a #state: method. Used to disable some notification during this period when
@@ -4779,6 +4784,7 @@ zOrderTop
 !UI.View categoriesFor: #isReadOnly:!public!testing! !
 !UI.View categoriesFor: #isResizable!accessing-styles!public! !
 !UI.View categoriesFor: #isResizable:!accessing-styles!public! !
+!UI.View categoriesFor: #isSplitter!accessing!public!testing! !
 !UI.View categoriesFor: #isStateRestoring!private!testing! !
 !UI.View categoriesFor: #isStateRestoring:!accessing!private! !
 !UI.View categoriesFor: #isTabStop!accessing-styles!public! !
@@ -5148,7 +5154,6 @@ buildMessageMap
 		at: WM_NOTIFY + 1 put: #wmNotify:wParam:lParam:;
 		at: WM_PARENTNOTIFY + 1 put: #wmParentNotify:wParam:lParam:;
 		at: WM_CHAR + 1 put: #wmChar:wParam:lParam:;
-		at: WM_INITDIALOG + 1 put: #wmInitDialog:wParam:lParam:;
 		at: WM_COMMAND + 1 put: #wmCommand:wParam:lParam:;
 		at: WM_TIMER + 1 put: #wmTimer:wParam:lParam:;
 		at: WM_MOUSEMOVE + 1 put: #wmMouseMove:wParam:lParam:;
@@ -5168,20 +5173,12 @@ buildMessageMap
 		at: WM_VSCROLL + 1 put: #wmVScroll:wParam:lParam:;
 		at: WM_SETCURSOR + 1 put: #wmSetCursor:wParam:lParam:;
 		at: WM_QUERYENDSESSION + 1 put: #wmQueryEndSession:wParam:lParam:;
-		at: WM_DRAWITEM + 1 put: #wmDrawItem:wParam:lParam:;
 		at: WM_KEYDOWN + 1 put: #wmKeyDown:wParam:lParam:;
 		at: WM_KEYUP + 1 put: #wmKeyUp:wParam:lParam:;
 		at: WM_SYSKEYDOWN + 1 put: #wmSysKeyDown:wParam:lParam:;
 		at: WM_SYSKEYUP + 1 put: #wmSysKeyUp:wParam:lParam:;
 		at: WM_SYSDEADCHAR + 1 put: #wmSysDeadChar:wParam:lParam:;
 		at: WM_SYSCOLORCHANGE + 1 put: #wmSysColorChange:wParam:lParam:;
-		at: WM_CTLCOLORMSGBOX + 1 put: #wmCtlColor:wParam:lParam:;
-		at: WM_CTLCOLOREDIT + 1 put: #wmCtlColor:wParam:lParam:;
-		at: WM_CTLCOLORLISTBOX + 1 put: #wmCtlColor:wParam:lParam:;
-		at: WM_CTLCOLORBTN + 1 put: #wmCtlColor:wParam:lParam:;
-		at: WM_CTLCOLORDLG + 1 put: #wmCtlColor:wParam:lParam:;
-		at: WM_CTLCOLORSCROLLBAR + 1 put: #wmCtlColor:wParam:lParam:;
-		at: WM_CTLCOLORSTATIC + 1 put: #wmCtlColor:wParam:lParam:;
 		at: WM_GETDLGCODE + 1 put: #wmGetDlgCode:wParam:lParam:;
 		at: WM_ENTERIDLE + 1 put: #wmEnterIdle:wParam:lParam:;
 		at: WM_WINDOWPOSCHANGING + 1 put: #wmWindowPosChanging:wParam:lParam:;
@@ -5194,8 +5191,6 @@ buildMessageMap
 		at: WM_MOUSEHWHEEL + 1 put: #wmMouseHWheel:wParam:lParam:;
 		at: WM_GETMINMAXINFO + 1 put: #wmGetMinMaxInfo:wParam:lParam:;
 		at: WM_MENUCOMMAND + 1 put: #wmMenuCommand:wParam:lParam:;
-		at: WM_MEASUREITEM + 1 put: #wmMeasureItem:wParam:lParam:;
-		at: WM_DRAWITEM + 1 put: #wmDrawItem:wParam:lParam:;
 		at: WM_SYSCOMMAND + 1 put: #wmSysCommand:wParam:lParam:;
 		at: WM_SYSCHAR + 1 put: #wmSysChar:wParam:lParam:;
 		at: WM_HOTKEY + 1 put: #wmHotKey:wParam:lParam:;

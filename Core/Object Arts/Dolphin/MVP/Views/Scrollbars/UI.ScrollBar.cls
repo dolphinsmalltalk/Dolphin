@@ -237,8 +237,14 @@ icon
 
 	^##(self) defaultIcon!
 
+initialize
+	View registerMessageMappings: {WM_CTLCOLORSCROLLBAR -> #wmCtlColor:wParam:lParam:}!
+
 themePartName
 	^#ScrollBar!
+
+uninitialize
+	View unregisterMessageMappings: {WM_CTLCOLORSCROLLBAR }!
 
 winClassName
 	"Private - Answer the name of the Windows window class to use when realizing the receiver."
@@ -249,6 +255,8 @@ winClassName
 !UI.ScrollBar class categoriesFor: #defaultModel!models!public! !
 !UI.ScrollBar class categoriesFor: #defaultWidth!constants!public! !
 !UI.ScrollBar class categoriesFor: #icon!constants!public! !
+!UI.ScrollBar class categoriesFor: #initialize!development!initializing!private! !
 !UI.ScrollBar class categoriesFor: #themePartName!constants!private! !
+!UI.ScrollBar class categoriesFor: #uninitialize!class hierarchy-removing!private! !
 !UI.ScrollBar class categoriesFor: #winClassName!constants!private! !
 

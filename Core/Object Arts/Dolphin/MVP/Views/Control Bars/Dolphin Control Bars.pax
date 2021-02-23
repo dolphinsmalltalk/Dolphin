@@ -38,6 +38,7 @@ package setPrerequisites: #(
 	'..\..\..\Base\Dolphin'
 	'..\..\Base\Dolphin Basic Geometry'
 	'..\..\Base\Dolphin MVP Base'
+	'..\Buttons\Dolphin Push Buttons'
 ).
 
 package!

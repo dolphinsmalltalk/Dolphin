@@ -1,18 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-OS.Win32Structure subclass: #'OS.DRAWITEMSTRUCT'
+OS.OwnerDrawStruct subclass: #'OS.DRAWITEMSTRUCT'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_OffsetOf_CtlID' -> 16r4.
-		'_OffsetOf_CtlType' -> 16r0.
 		'_OffsetOf_hDC' -> 16r18.
 		'_OffsetOf_hwndItem' -> 16r14.
 		'_OffsetOf_itemAction' -> 16rC.
 		'_OffsetOf_itemData' -> 16r2C.
-		'_OffsetOf_itemID' -> 16r8.
 		'_OffsetOf_itemState' -> 16r10.
 		'_OffsetOf_rcItem' -> 16r1C
 	}!
@@ -23,16 +20,6 @@ From MSDN: "The DRAWITEMSTRUCT structure provides information the owner window m
 '!
 !OS.DRAWITEMSTRUCT categoriesForClass!Win-Structs! !
 !OS.DRAWITEMSTRUCT methodsFor!
-
-CtlID
-	"Answer the <Integer> value of the receiver's 'CtlID' field."
-
-	^bytes dwordAtOffset: _OffsetOf_CtlID!
-
-CtlType
-	"Answer the <Integer> value of the receiver's 'CtlType' field."
-
-	^bytes dwordAtOffset: _OffsetOf_CtlType!
 
 hDC
 	"Answer the <Integer> value of the receiver's 'hDC' field."
@@ -59,11 +46,6 @@ itemAction
 
 	^bytes dwordAtOffset: _OffsetOf_itemAction!
 
-itemID
-	"Answer the <Integer> value of the receiver's 'itemID' field."
-
-	^bytes dwordAtOffset: _OffsetOf_itemID!
-
 itemState
 	"Answer the <Integer> value of the receiver's 'itemState' field."
 
@@ -73,14 +55,11 @@ rcItem
 	"Answer the <RECTL> value of the receiver's 'rcItem' field."
 
 	^RECTL fromAddress: bytes yourAddress + _OffsetOf_rcItem! !
-!OS.DRAWITEMSTRUCT categoriesFor: #CtlID!**compiled accessors**!public! !
-!OS.DRAWITEMSTRUCT categoriesFor: #CtlType!**compiled accessors**!public! !
 !OS.DRAWITEMSTRUCT categoriesFor: #hDC!**compiled accessors**!public! !
 !OS.DRAWITEMSTRUCT categoriesFor: #hwndItem!**compiled accessors**!public! !
 !OS.DRAWITEMSTRUCT categoriesFor: #isGrayed!public!testing! !
 !OS.DRAWITEMSTRUCT categoriesFor: #isSelected!public!testing! !
 !OS.DRAWITEMSTRUCT categoriesFor: #itemAction!**compiled accessors**!public! !
-!OS.DRAWITEMSTRUCT categoriesFor: #itemID!**compiled accessors**!public! !
 !OS.DRAWITEMSTRUCT categoriesFor: #itemState!**compiled accessors**!public! !
 !OS.DRAWITEMSTRUCT categoriesFor: #rcItem!**compiled accessors**!public! !
 
@@ -104,10 +83,8 @@ defineFields
 		} DRAWITEMSTRUCT;
 "
 
+	super defineFields.
 	self
-		defineField: #CtlType type: DWORDField readOnly;
-		defineField: #CtlID type: DWORDField readOnly;
-		defineField: #itemID type: DWORDField readOnly;
 		defineField: #itemAction type: DWORDField readOnly;
 		defineField: #itemState type: DWORDField readOnly;
 		defineField: #hwndItem type: DWORDField readOnly;

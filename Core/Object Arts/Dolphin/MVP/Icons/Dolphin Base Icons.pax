@@ -128,6 +128,7 @@ package setPrerequisites: #(
 	'..\Base\Dolphin Basic Geometry'
 	'..\Presenters\Boolean\Dolphin Boolean Presenter'
 	'..\Views\Cards\Dolphin Card Containers'
+	'..\Views\Buttons\Dolphin Check Buttons'
 	'..\..\System\Win32\Dolphin File System Info'
 	'..\..\Base\Dolphin Legacy Date & Time'
 	'..\Base\Dolphin MVP Base'

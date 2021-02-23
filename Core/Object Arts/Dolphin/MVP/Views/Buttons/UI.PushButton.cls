@@ -335,16 +335,6 @@ resource_OK_button
 
 	^#(#'!!STL' 4 985166 10 ##(UI.STBViewProxy) ##(UI.PushButton) 34 20 nil nil 34 2 8 1140924416 1 416 nil nil nil 7 nil nil nil 416 nil 8 1920683440 1377606 4 ##(UI.CommandDescription) #ok 8 '&OK' 1 1 nil nil true nil nil nil 1310982 ##(Core.MessageSequence) 138 144 34 3 1049350 ##(Core.MessageSend) #createAt:extent: 34 2 655878 ##(Graphics.Point) 6143 21 658 141 51 416 610 #isEnabled: 8 #(false) 416 610 #text: 34 1 8 '&OK' 416 1179910 ##(OS.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 69 12 0 0 35 0 0 0] 8 #() 658 193 193 nil 29)!
 
-resource_Push_and_check
-	"Answer the literal data from which the 'Push and check' resource can be reconstituted.
-	DO NOT EDIT OR RECATEGORIZE THIS METHOD.
-
-	If you wish to modify this resource evaluate:
-	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Push_and_check)
-	"
-
-	^#(#'!!STL' 4 985166 10 ##(UI.STBViewProxy) ##(UI.CheckBox) 34 16 nil nil 34 2 8 1409363971 1 416 918598 2 ##(UI.ValueHolder) nil nil 1441798 ##(Kernel.NeverSearchPolicy) false 917510 ##(Graphics.Color) #default nil 5 nil nil nil 416 nil 8 1920683440 1049094 ##(UI.NullConverter) nil nil nil 1310982 ##(Core.MessageSequence) 138 144 34 2 1049350 ##(Core.MessageSend) #createAt:extent: 34 2 655878 ##(Graphics.Point) 6143 21 738 231 61 416 690 #text: 34 1 8 'Push and Check' 416 1179910 ##(OS.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 114 12 0 0 40 0 0 0] 8 #() 738 193 193 nil 27)!
-
 resource_Push_button
 	"Answer the literal data from which the 'Push button' resource can be reconstituted.
 	DO NOT EDIT OR RECATEGORIZE THIS METHOD.
@@ -399,7 +389,6 @@ winClassName
 !UI.PushButton class categoriesFor: #resource_Cancel_button!public!resources-views! !
 !UI.PushButton class categoriesFor: #resource_No_button!public!resources-views! !
 !UI.PushButton class categoriesFor: #resource_OK_button!public!resources-views! !
-!UI.PushButton class categoriesFor: #resource_Push_and_check!public!resources-views! !
 !UI.PushButton class categoriesFor: #resource_Push_button!public!resources-views! !
 !UI.PushButton class categoriesFor: #resource_Yes_button!public!resources-views! !
 !UI.PushButton class categoriesFor: #stbConvertFromVersion1:!binary filing!private! !

@@ -54,7 +54,7 @@ hideShowSplitters: aCompositeView context: aLayoutContext
 	managed := aCompositeView managedSubViews.
 	managed do: 
 			[:each |
-			(each isKindOf: Splitter)
+			each isSplitter
 				ifTrue: 
 					[resizable
 						ifTrue: 
@@ -69,7 +69,7 @@ hideShowSplitters: aCompositeView context: aLayoutContext
 			[:each |
 			(aLayoutContext isViewVisible: each)
 				ifTrue: 
-					[(each isKindOf: Splitter)
+					[each isSplitter
 						ifTrue: 
 							[resizable
 								ifTrue: 

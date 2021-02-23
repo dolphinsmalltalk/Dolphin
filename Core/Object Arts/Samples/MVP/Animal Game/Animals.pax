@@ -27,6 +27,7 @@ package setPrerequisites: #(
 	'..\..\..\Dolphin\MVP\Base\Dolphin MVP Base'
 	'..\..\..\Dolphin\MVP\Presenters\Prompters\Dolphin Prompter'
 	'..\..\..\Dolphin\MVP\Icons\Dolphin Text Tile Icons'
+	'..\UI Examples'
 ).
 
 package!
