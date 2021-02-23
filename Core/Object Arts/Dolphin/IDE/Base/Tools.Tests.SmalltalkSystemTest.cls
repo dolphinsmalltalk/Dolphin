@@ -17,20 +17,20 @@ setUp
 testAllSelectorsImplementedIn
 	| env all |
 	"Github #645"
-	env := Refactory.Browser.BrowserEnvironment new forPackages: {Object owningPackage. ImageStripper owningPackage}.
+	env := Refactory.Browser.BrowserEnvironment new
+				forPackages: {Object owningPackage. Smalltalk.ImageStripper owningPackage}.
 	"Preconditions"
 	self assert: (env definesClass: OS.MSG)
 		description: 'Test inconclusive; package does not own expected class'.
 	self assert: (OS.MSG dynamicSelectors includes: #x)
 		description: 'Test inconclusive; MSG does not have expected dynamic selector'.
-	self
-		assert: (ImageStripper >> #addReferencedViews:to: sendsSelector: #viewClass)
+	self assert: (Smalltalk.ImageStripper >> #addReferencedViews:to: sendsSelector: #viewClass)
 		description: 'Test inconclusive; example unimplemented selector not sent'.
 	all := SmalltalkSystem current unimplementedSelectorsIn: env.
 	self assert: (all includes: #viewClass).
 	self deny: (all includes: #x).
-	env := Refactory.Browser.BrowserEnvironment new forPackages: {Object owningPackage.
-						(STBViewProxy >> #viewClass) owningPackage}.
+	env := Refactory.Browser.BrowserEnvironment new
+				forPackages: {Object owningPackage. (STBViewProxy >> #viewClass) owningPackage}.
 	all := SmalltalkSystem current unimplementedSelectorsIn: env.
 	self deny: (all includes: #viewClass)!
 

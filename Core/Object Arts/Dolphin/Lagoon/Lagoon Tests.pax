@@ -12,8 +12,8 @@ package setClassNames: #(
 ).
 
 package setMethodNames: #(
-	#(#{Tools.ImageStripper} #initializeForTests)
-	#(#{Tools.ImageStripper class} #newForTests)
+	#(#{Smalltalk.ImageStripper} #initializeForTests)
+	#(#{Smalltalk.ImageStripper class} #newForTests)
 ).
 
 package setPrerequisites: #(
@@ -56,19 +56,19 @@ Core.Tests.DolphinTest subclass: #'Tools.Tests.PackageClosureTests'
 
 "Loose Methods"!
 
-!Tools.ImageStripper methodsFor!
+!ImageStripper methodsFor!
 
 initializeForTests
 	deploymentContext := DeploymentContext new.
 	deploymentContext aspectGetters: IdentitySet new! !
-!Tools.ImageStripper categoriesFor: #initializeForTests!public! !
+!ImageStripper categoriesFor: #initializeForTests!public! !
 
-!Tools.ImageStripper class methodsFor!
+!ImageStripper class methodsFor!
 
 newForTests
 
 	^self new initializeForTests! !
-!Tools.ImageStripper class categoriesFor: #newForTests!public! !
+!ImageStripper class categoriesFor: #newForTests!public! !
 
 "End of package definition"!
 

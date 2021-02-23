@@ -15,10 +15,10 @@ package basicPackageVersion: '6.2'.
 package setClassNames: #(
 	#{OS.VersionResource}
 	#{OS.VS_VERSION_INFO_HEADER}
-	#{Tools.BasicImageStripper}
-	#{Tools.DeploymentContext}
-	#{Tools.ImageStripper}
-	#{Tools.ImageStripperProgress}
+	#{Smalltalk.BasicImageStripper}
+	#{Smalltalk.DeploymentContext}
+	#{Smalltalk.ImageStripper}
+	#{Smalltalk.ImageStripperProgress}
 ).
 
 package setMethodNames: #(
@@ -36,13 +36,13 @@ package!
 
 "Class Definitions"!
 
-Core.Object subclass: #'Tools.BasicImageStripper'
+Core.Object subclass: #BasicImageStripper
 	instanceVariableNames: 'events'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Core.Object subclass: #'Tools.DeploymentContext'
+Core.Object subclass: #DeploymentContext
 	instanceVariableNames: 'logStream elementStack aspectSetters aspectGetters developmentClasses preservedMessages rootClasses supersentMethods notifier runFlags'
 	classVariableNames: ''
 	imports: #()
@@ -51,7 +51,7 @@ Core.Object subclass: #'Tools.DeploymentContext'
 		'AllResourcesStripped' -> 16r1.
 		'RemoveAbstractUnreachable' -> 16r2
 	}!
-Core.Object subclass: #'Tools.ImageStripperProgress'
+Core.Object subclass: #ImageStripperProgress
 	instanceVariableNames: 'handle oldWndProc progressProcess progressRange progress status cursor'
 	classVariableNames: 'MessageMap'
 	imports: #(#{OS.Win32Constants private} #{OS private})
@@ -68,7 +68,7 @@ Core.Object subclass: #'OS.VersionResource'
 	imports: #(#{OS.Win32Constants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Tools.BasicImageStripper subclass: #'Tools.ImageStripper'
+BasicImageStripper subclass: #ImageStripper
 	instanceVariableNames: 'rootPackageName executableName runtimeSessionManagerClass flags preStripScript versionResource _unused8 stubFilePath deploymentContext _unused11 _unused12 _unused13 snapshotType _unused15 _unused16 _unused17 _unused18 _unused19 _unused20 _unused21 _unused22'
 	classVariableNames: ''
 	imports: #(#{OS.MessageBoxConstants} #{OS.Win32Constants})

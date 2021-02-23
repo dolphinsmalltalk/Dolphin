@@ -1,17 +1,17 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Tools.ImageStripper subclass: #'Tools.AXDllImageStripper'
+ImageStripper subclass: #AXDllImageStripper
 	instanceVariableNames: 'typeLibPath'
 	classVariableNames: ''
 	imports: #(#{OS.COM private})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Tools.AXDllImageStripper guid: (Core.GUID fromString: '{e6c57f56-c672-49b5-8157-893092e6eb6f}')!
-Tools.AXDllImageStripper comment: 'AXDllImageStripper is a specialized <ImageStripper> for stripping and deploying in-process ActiveX/COM component DLLs.
+AXDllImageStripper guid: (Core.GUID fromString: '{e6c57f56-c672-49b5-8157-893092e6eb6f}')!
+AXDllImageStripper comment: 'AXDllImageStripper is a specialized <ImageStripper> for stripping and deploying in-process ActiveX/COM component DLLs.
 
 See the ''ActiveX In-Process Server Kit'' package comment for further details.'!
-!Tools.AXDllImageStripper categoriesForClass!Unclassified! !
-!Tools.AXDllImageStripper methodsFor!
+!AXDllImageStripper categoriesForClass!Unclassified! !
+!AXDllImageStripper methodsFor!
 
 defaultSessionManagerClass
 	"Answer the default class of SessionManager to be installed into the 
@@ -88,16 +88,16 @@ updateTypelibResource: anExternalHandle
 		lpData: resourceBytes
 		cbData: resourceBytes size)
 			ifFalse: [OS.KernelLibrary default systemError]! !
-!Tools.AXDllImageStripper categoriesFor: #defaultSessionManagerClass!constants!public! !
-!Tools.AXDllImageStripper categoriesFor: #prepareToStrip!operations!public! !
-!Tools.AXDllImageStripper categoriesFor: #requiredPackageNames!accessing!public! !
-!Tools.AXDllImageStripper categoriesFor: #stubFile!accessing!public! !
-!Tools.AXDllImageStripper categoriesFor: #typeLibPath!accessing!public! !
-!Tools.AXDllImageStripper categoriesFor: #typeLibPath:!accessing!public! !
-!Tools.AXDllImageStripper categoriesFor: #updateStubResources:!operations!private! !
-!Tools.AXDllImageStripper categoriesFor: #updateTypelibResource:!operations!private! !
+!AXDllImageStripper categoriesFor: #defaultSessionManagerClass!constants!public! !
+!AXDllImageStripper categoriesFor: #prepareToStrip!operations!public! !
+!AXDllImageStripper categoriesFor: #requiredPackageNames!accessing!public! !
+!AXDllImageStripper categoriesFor: #stubFile!accessing!public! !
+!AXDllImageStripper categoriesFor: #typeLibPath!accessing!public! !
+!AXDllImageStripper categoriesFor: #typeLibPath:!accessing!public! !
+!AXDllImageStripper categoriesFor: #updateStubResources:!operations!private! !
+!AXDllImageStripper categoriesFor: #updateTypelibResource:!operations!private! !
 
-!Tools.AXDllImageStripper class methodsFor!
+!AXDllImageStripper class methodsFor!
 
 defaultOptions
 	"Private - Answer the default set of flags set up in new of converted instances of the receiver."
@@ -112,8 +112,8 @@ publishedAspectsOfInstances
 	a pre-req. of the ADK due to the references to development classes herein."
 
 	^super publishedAspectsOfInstances
-		add: (Aspect fileSave: #typeLibPath);
+		add: (Tools.Aspect fileSave: #typeLibPath);
 		yourself! !
-!Tools.AXDllImageStripper class categoriesFor: #defaultOptions!constants!development!private! !
-!Tools.AXDllImageStripper class categoriesFor: #publishedAspectsOfInstances!constants!development!must strip!public! !
+!AXDllImageStripper class categoriesFor: #defaultOptions!constants!development!private! !
+!AXDllImageStripper class categoriesFor: #publishedAspectsOfInstances!constants!development!must strip!public! !
 

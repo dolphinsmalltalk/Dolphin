@@ -21,7 +21,7 @@ package setClassNames: #(
 	#{Kernel.IIPDolphin}
 	#{Kernel.IIPPlugHole}
 	#{Kernel.IPDolphin}
-	#{Tools.AXDllImageStripper}
+	#{Smalltalk.AXDllImageStripper}
 	#{UI.AXDllGUISessionManager}
 ).
 
@@ -43,7 +43,7 @@ package!
 
 "Class Definitions"!
 
-Tools.ImageStripper subclass: #'Tools.AXDllImageStripper'
+ImageStripper subclass: #AXDllImageStripper
 	instanceVariableNames: 'typeLibPath'
 	classVariableNames: ''
 	imports: #(#{OS.COM private})

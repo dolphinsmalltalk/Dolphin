@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Core.Object subclass: #'Tools.DeploymentContext'
+Core.Object subclass: #DeploymentContext
 	instanceVariableNames: 'logStream elementStack aspectSetters aspectGetters developmentClasses preservedMessages rootClasses supersentMethods notifier runFlags'
 	classVariableNames: ''
 	imports: #()
@@ -9,10 +9,10 @@ Core.Object subclass: #'Tools.DeploymentContext'
 		'AllResourcesStripped' -> 16r1.
 		'RemoveAbstractUnreachable' -> 16r2
 	}!
-Tools.DeploymentContext guid: (Core.GUID fromString: '{7703d82d-a2ec-402f-ad0b-3640cd30da56}')!
-Tools.DeploymentContext comment: ''!
-!Tools.DeploymentContext categoriesForClass!Kernel-Objects! !
-!Tools.DeploymentContext methodsFor!
+DeploymentContext guid: (Core.GUID fromString: '{7703d82d-a2ec-402f-ad0b-3640cd30da56}')!
+DeploymentContext comment: ''!
+!DeploymentContext categoriesForClass!Kernel-Objects! !
+!DeploymentContext methodsFor!
 
 allResourcesStripped
 	runFlags := runFlags bitOr: AllResourcesStripped!
@@ -194,43 +194,43 @@ supersentMethods
 
 supersentMethods: anObject
 	supersentMethods := anObject! !
-!Tools.DeploymentContext categoriesFor: #allResourcesStripped!public!state! !
-!Tools.DeploymentContext categoriesFor: #areAllResourcesStripped!public!state!testing! !
-!Tools.DeploymentContext categoriesFor: #aspectGetters!accessing!public! !
-!Tools.DeploymentContext categoriesFor: #aspectGetters:!accessing!public! !
-!Tools.DeploymentContext categoriesFor: #aspectSetters!accessing!public! !
-!Tools.DeploymentContext categoriesFor: #aspectSetters:!accessing!public! !
-!Tools.DeploymentContext categoriesFor: #basicDevelopmentClasses!accessing!public! !
-!Tools.DeploymentContext categoriesFor: #closeLog!operations!public! !
-!Tools.DeploymentContext categoriesFor: #destroyNotifier!operations!private! !
-!Tools.DeploymentContext categoriesFor: #developmentClasses!accessing!public! !
-!Tools.DeploymentContext categoriesFor: #endElement:!logging!public! !
-!Tools.DeploymentContext categoriesFor: #endTag!logging!public! !
-!Tools.DeploymentContext categoriesFor: #finishedWithStripping!public!state! !
-!Tools.DeploymentContext categoriesFor: #initialize!initializing!private! !
-!Tools.DeploymentContext categoriesFor: #logComment:!logging!public! !
-!Tools.DeploymentContext categoriesFor: #logElement:attributes:value:!logging!public! !
-!Tools.DeploymentContext categoriesFor: #logStrippingError:!logging!public! !
-!Tools.DeploymentContext categoriesFor: #logValue:!logging!public! !
-!Tools.DeploymentContext categoriesFor: #notifier!accessing!public! !
-!Tools.DeploymentContext categoriesFor: #notifier:!accessing!public! !
-!Tools.DeploymentContext categoriesFor: #notify:!logging!public! !
-!Tools.DeploymentContext categoriesFor: #openLogFile:!logging!public! !
-!Tools.DeploymentContext categoriesFor: #preservedMessages!accessing!public! !
-!Tools.DeploymentContext categoriesFor: #preservedMessages:!accessing!public! !
-!Tools.DeploymentContext categoriesFor: #removeAbstractUnreachable!public!state! !
-!Tools.DeploymentContext categoriesFor: #rootClasses!accessing!public! !
-!Tools.DeploymentContext categoriesFor: #rootClasses:!accessing!public! !
-!Tools.DeploymentContext categoriesFor: #shouldRemoveAbstractUnreachable!public!state!testing! !
-!Tools.DeploymentContext categoriesFor: #snapshotDevelopmentClasses!configuration!public! !
-!Tools.DeploymentContext categoriesFor: #startElement:attributes:!logging!public! !
-!Tools.DeploymentContext categoriesFor: #startTag:attributes:!logging!public! !
-!Tools.DeploymentContext categoriesFor: #supersentMethods!accessing!public! !
-!Tools.DeploymentContext categoriesFor: #supersentMethods:!accessing!public! !
+!DeploymentContext categoriesFor: #allResourcesStripped!public!state! !
+!DeploymentContext categoriesFor: #areAllResourcesStripped!public!state!testing! !
+!DeploymentContext categoriesFor: #aspectGetters!accessing!public! !
+!DeploymentContext categoriesFor: #aspectGetters:!accessing!public! !
+!DeploymentContext categoriesFor: #aspectSetters!accessing!public! !
+!DeploymentContext categoriesFor: #aspectSetters:!accessing!public! !
+!DeploymentContext categoriesFor: #basicDevelopmentClasses!accessing!public! !
+!DeploymentContext categoriesFor: #closeLog!operations!public! !
+!DeploymentContext categoriesFor: #destroyNotifier!operations!private! !
+!DeploymentContext categoriesFor: #developmentClasses!accessing!public! !
+!DeploymentContext categoriesFor: #endElement:!logging!public! !
+!DeploymentContext categoriesFor: #endTag!logging!public! !
+!DeploymentContext categoriesFor: #finishedWithStripping!public!state! !
+!DeploymentContext categoriesFor: #initialize!initializing!private! !
+!DeploymentContext categoriesFor: #logComment:!logging!public! !
+!DeploymentContext categoriesFor: #logElement:attributes:value:!logging!public! !
+!DeploymentContext categoriesFor: #logStrippingError:!logging!public! !
+!DeploymentContext categoriesFor: #logValue:!logging!public! !
+!DeploymentContext categoriesFor: #notifier!accessing!public! !
+!DeploymentContext categoriesFor: #notifier:!accessing!public! !
+!DeploymentContext categoriesFor: #notify:!logging!public! !
+!DeploymentContext categoriesFor: #openLogFile:!logging!public! !
+!DeploymentContext categoriesFor: #preservedMessages!accessing!public! !
+!DeploymentContext categoriesFor: #preservedMessages:!accessing!public! !
+!DeploymentContext categoriesFor: #removeAbstractUnreachable!public!state! !
+!DeploymentContext categoriesFor: #rootClasses!accessing!public! !
+!DeploymentContext categoriesFor: #rootClasses:!accessing!public! !
+!DeploymentContext categoriesFor: #shouldRemoveAbstractUnreachable!public!state!testing! !
+!DeploymentContext categoriesFor: #snapshotDevelopmentClasses!configuration!public! !
+!DeploymentContext categoriesFor: #startElement:attributes:!logging!public! !
+!DeploymentContext categoriesFor: #startTag:attributes:!logging!public! !
+!DeploymentContext categoriesFor: #supersentMethods!accessing!public! !
+!DeploymentContext categoriesFor: #supersentMethods:!accessing!public! !
 
-!Tools.DeploymentContext class methodsFor!
+!DeploymentContext class methodsFor!
 
 new
 	^super new initialize! !
-!Tools.DeploymentContext class categoriesFor: #new!public! !
+!DeploymentContext class categoriesFor: #new!public! !
 

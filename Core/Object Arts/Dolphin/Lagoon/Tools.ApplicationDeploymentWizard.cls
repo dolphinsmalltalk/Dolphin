@@ -101,7 +101,7 @@ createComponents
 				name: 'preStripScript'.
 	preStripScriptErrors := self add: ValuePresenter new name: 'preStripScriptErrors'.
 	imageStripperClass := self add: ChoicePresenter new name: 'imageStripperClass'.
-	imageStripperClass choices: ImageStripper withAllSubclasses.
+	imageStripperClass choices: Smalltalk.ImageStripper withAllSubclasses.
 	runtimeSessionManagerClass := self add: ChoicePresenter new name: 'runtimeSessionManagerClass'.
 	isToGo := self add: BooleanPresenter new name: 'isToGo'.
 	stripRedundantPackages := self add: BooleanPresenter new name: 'stripRedundantPackages'.
@@ -283,7 +283,7 @@ reset
 
 Are you sure you would like to continue?')
 			ifFalse: [^self].
-	self value: (ImageStripper new
+	self value: (Smalltalk.ImageStripper new
 				rootPackage: self value rootPackage;
 				stripRedundantClasses: true;
 				yourself)!
@@ -369,7 +369,7 @@ defaultModel
 	"Answer a default model to be assigned to the receiver when it
 	is initialized."
 
-	^ImageStripper new asValue!
+	^Smalltalk.ImageStripper new asValue!
 
 displayOn: aPuttableStream
 	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that an end-user might want to see."

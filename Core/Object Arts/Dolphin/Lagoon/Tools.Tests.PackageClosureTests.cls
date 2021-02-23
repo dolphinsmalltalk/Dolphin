@@ -33,8 +33,8 @@ environmentForAppDeployment: aCollectionOfPackages
 	env := env & (BrowserEnvironment new forClasses: removedClasses) not.
 	"Finally, certain categories of method and specific methods are forcibly removed, or we assume (for the purposes of the test) that these will be removed as unused"
 	devMethods := BrowserEnvironment new
-				forMethodCategories: Tools.ImageStripper developmentMethodCategoryNames
-						, ImageStripper classBuildingMethodCategoryNames , ImageStripper classRemovingMethodCategoryNames
+				forMethodCategories: Smalltalk.ImageStripper developmentMethodCategoryNames
+						, Smalltalk.ImageStripper classBuildingMethodCategoryNames , Smalltalk.ImageStripper classRemovingMethodCategoryNames
 						, #('class initialization' 'template definition' 'source filing' 'source filing-methods' 'compiling' 'categories-accessing' 'categories-removing' 'categories-adding' 'categories-testing' 'source filing-class definition').
 	devMethods := devMethods | (BrowserEnvironment new
 						selectMethods: [:each | each selector == #initialize and: [each methodClass isMeta]])
