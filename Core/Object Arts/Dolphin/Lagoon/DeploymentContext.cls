@@ -1,24 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
 Core.Object subclass: #DeploymentContext
-	instanceVariableNames: 'logStream elementStack aspectSetters aspectGetters developmentClasses preservedMessages rootClasses supersentMethods notifier runFlags'
+	instanceVariableNames: 'logStream elementStack aspectSetters aspectGetters developmentClasses preservedMessages rootClasses supersentMethods notifier runFlags logFilename'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {
-		'AllResourcesStripped' -> 16r1.
-		'RemoveAbstractUnreachable' -> 16r2
-	}!
+	classConstants: {}!
 DeploymentContext guid: (Core.GUID fromString: '{7703d82d-a2ec-402f-ad0b-3640cd30da56}')!
 DeploymentContext comment: ''!
 !DeploymentContext categoriesForClass!Kernel-Objects! !
 !DeploymentContext methodsFor!
-
-allResourcesStripped
-	runFlags := runFlags bitOr: AllResourcesStripped!
-
-areAllResourcesStripped
-	^runFlags allMask: AllResourcesStripped!
 
 aspectGetters
 	^aspectGetters!
@@ -37,7 +28,15 @@ basicDevelopmentClasses
 
 closeLog
 	[elementStack isEmpty] whileFalse: [self endElement: true].
-	logStream close.
+	logFilename isNil
+		ifFalse: 
+			[(File
+				open: logFilename
+				mode: #truncate
+				check: false
+				share: #exclusive)
+				write: logStream contents;
+				close].
 	logStream := nil!
 
 destroyNotifier
@@ -78,7 +77,7 @@ logComment: aString
 		nextPutAll: ' -->';
 		flush!
 
-logElement: aCollection attributes: anObject value: aString
+logElement: aString attributes: aCollection value: anObject
 	self startTag: aString attributes: aCollection.
 	anObject notNil ifTrue: [self logValue: anObject].
 	self endTag!
@@ -86,9 +85,9 @@ logElement: aCollection attributes: anObject value: aString
 logStrippingError: anError
 	logStream isNil ifTrue: [^self].
 	self
-		logElement: {'class' -> anError class fullName}
-		attributes: anError description
-		value: 'Error'.
+		logElement: 'Error'
+		attributes: {'class' -> anError class fullName}
+		value: anError description.
 	logStream flush!
 
 logValue: anObject
@@ -125,10 +124,10 @@ notify: aStringMessage
 	notifier notify: aStringMessage!
 
 openLogFile: aString
-	logStream := aString ifNil: [String writeStream] ifNotNil: [FileStream write: aString text: true].
-	logStream
-		nextPutAll: '<?xml version="1.0" encoding="UTF-8"?>';
-		cr.
+	logFilename := aString.
+	"We can avoid a dependency on FileStream by building the log in memory, and then writing it directly to a File when done."
+	logStream := aString ifNil: [DeafObject current] ifNotNil: [Utf8String writeStream].
+	logStream nextPutAll: '<?xml version="1.0" encoding="UTF-8"?>'.
 	self startElement: 'Lagoon'
 		attributes: {'xmlns:xsi' -> 'http://www.w3.org/2001/XMLSchema-instance'.
 				'xsi:noNamespaceSchemaLocation' -> 'Lagoon.xsd'}!
@@ -139,17 +138,17 @@ preservedMessages
 preservedMessages: aSet
 	preservedMessages := aSet!
 
-removeAbstractUnreachable
-	runFlags := runFlags bitOr: RemoveAbstractUnreachable.!
-
 rootClasses
 	^rootClasses!
 
 rootClasses: anObject
 	rootClasses := anObject!
 
-shouldRemoveAbstractUnreachable
-	^runFlags allMask: RemoveAbstractUnreachable.!
+runFlags
+	^runFlags!
+
+setRunFlag: anInteger
+	runFlags := runFlags bitOr: anInteger!
 
 snapshotDevelopmentClasses
 	developmentClasses := WeakArray withAll: (Object classCategoryClass name: 'Development') classes!
@@ -194,8 +193,6 @@ supersentMethods
 
 supersentMethods: anObject
 	supersentMethods := anObject! !
-!DeploymentContext categoriesFor: #allResourcesStripped!public!state! !
-!DeploymentContext categoriesFor: #areAllResourcesStripped!public!state!testing! !
 !DeploymentContext categoriesFor: #aspectGetters!accessing!public! !
 !DeploymentContext categoriesFor: #aspectGetters:!accessing!public! !
 !DeploymentContext categoriesFor: #aspectSetters!accessing!public! !
@@ -218,19 +215,13 @@ supersentMethods: anObject
 !DeploymentContext categoriesFor: #openLogFile:!logging!public! !
 !DeploymentContext categoriesFor: #preservedMessages!accessing!public! !
 !DeploymentContext categoriesFor: #preservedMessages:!accessing!public! !
-!DeploymentContext categoriesFor: #removeAbstractUnreachable!public!state! !
 !DeploymentContext categoriesFor: #rootClasses!accessing!public! !
 !DeploymentContext categoriesFor: #rootClasses:!accessing!public! !
-!DeploymentContext categoriesFor: #shouldRemoveAbstractUnreachable!public!state!testing! !
+!DeploymentContext categoriesFor: #runFlags!accessing!public! !
+!DeploymentContext categoriesFor: #setRunFlag:!accessing!public! !
 !DeploymentContext categoriesFor: #snapshotDevelopmentClasses!configuration!public! !
 !DeploymentContext categoriesFor: #startElement:attributes:!logging!public! !
 !DeploymentContext categoriesFor: #startTag:attributes:!logging!public! !
 !DeploymentContext categoriesFor: #supersentMethods!accessing!public! !
 !DeploymentContext categoriesFor: #supersentMethods:!accessing!public! !
-
-!DeploymentContext class methodsFor!
-
-new
-	^super new initialize! !
-!DeploymentContext class categoriesFor: #new!public! !
 

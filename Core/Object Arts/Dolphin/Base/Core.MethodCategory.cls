@@ -150,7 +150,7 @@ selectorsInBehavior: aBehavior
 !Core.MethodCategory categoriesFor: #behaviors!enumerating!private! !
 !Core.MethodCategory categoriesFor: #behaviorsDo:!enumerating!public! !
 !Core.MethodCategory categoriesFor: #contents!enumerating!public! !
-!Core.MethodCategory categoriesFor: #includesBehavior:!enumerating!public! !
+!Core.MethodCategory categoriesFor: #includesBehavior:!development!enumerating!public! !
 !Core.MethodCategory categoriesFor: #includesMethod:!public!testing! !
 !Core.MethodCategory categoriesFor: #isEmpty!public!testing! !
 !Core.MethodCategory categoriesFor: #isPrivacy!private!testing! !

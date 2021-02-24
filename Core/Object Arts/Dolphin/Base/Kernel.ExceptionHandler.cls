@@ -17,16 +17,15 @@ actionFor: exception
 
 	^(selector handles: exception) ifTrue: [handler]!
 
-handler: monadicBlock
-	handler := monadicBlock
-!
+setHandler: monadicBlock
+	handler := monadicBlock!
 
-selector: exceptionSelector
+setSelector: exceptionSelector
 	selector := exceptionSelector
 ! !
 !Kernel.ExceptionHandler categoriesFor: #actionFor:!debugger-step over!helpers!private! !
-!Kernel.ExceptionHandler categoriesFor: #handler:!debugger-step over!initializing!private! !
-!Kernel.ExceptionHandler categoriesFor: #selector:!debugger-step over!initializing!private! !
+!Kernel.ExceptionHandler categoriesFor: #setHandler:!debugger-step over!initializing!private! !
+!Kernel.ExceptionHandler categoriesFor: #setSelector:!debugger-step over!initializing!private! !
 
 !Kernel.ExceptionHandler class methodsFor!
 
@@ -35,8 +34,8 @@ on: selector do: action
 	selector, and <monadicBlock> exception handler, action."
 
 	^self new
-		selector: selector;
-		handler: action;
+		setSelector: selector;
+		setHandler: action;
 		yourself! !
 !Kernel.ExceptionHandler class categoriesFor: #on:do:!debugger-step through!instance creation!private! !
 

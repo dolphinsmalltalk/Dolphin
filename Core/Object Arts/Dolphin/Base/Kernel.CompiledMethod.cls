@@ -230,25 +230,6 @@ defaultSortBlock
 
 	^[:x :y | (x methodClass==y methodClass)
 		ifTrue: [x selector <= y selector]
-		ifFalse: [x methodClass <= y methodClass]] !
-
-fromString: aString
-	"Answers the CompiledMethod identified by aString or nil if none is found."
-
-	| className stream |
-	stream := aString readStream.
-	className := stream upToAll: '>>'.
-	stream atEnd ifTrue: [^nil].
-	(className endsWith: ' class')
-		ifTrue: [className := (className allButLast: 6) asQualifiedReference meta]
-		ifFalse: [className := className asQualifiedReference].
-	^className valueOrNil
-		ifNotNil: 
-			[:theClass |
-			| selector |
-			stream peekFor: $#.
-			selector := stream upToEnd asSymbol.
-			theClass compiledMethodAt: selector ifAbsent: []]! !
+		ifFalse: [x methodClass <= y methodClass]] ! !
 !Kernel.CompiledMethod class categoriesFor: #defaultSortBlock!private!sorting! !
-!Kernel.CompiledMethod class categoriesFor: #fromString:!converting!development!public! !
 

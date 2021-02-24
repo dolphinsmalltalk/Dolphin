@@ -260,7 +260,7 @@ gcd: anInteger
 			u := t].
 	[v isImmediate] whileFalse: 
 			[| uHat vHat a b c d q |
-			(uHat := u bitShift: (t := ##(SmallInteger maximum highBit) - u highBit)) isImmediate
+			(uHat := u bitShift: (t := ##(VMConstants.SmallIntegerMax highBit) - u highBit)) isImmediate
 				ifFalse: 
 					[t := t - 1.
 					uHat := uHat bitShift: -1].

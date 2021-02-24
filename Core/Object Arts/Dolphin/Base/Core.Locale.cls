@@ -382,7 +382,7 @@ isSelfEvaluating
 
 	^self lcid ~~ LOCALE_CUSTOM_UNSPECIFIED!
 
-isValid
+isValidLocale
 	"Answer whether the receiver is a recognised (valid) Locale."
 
 	^self subclassResponsibility!
@@ -617,7 +617,7 @@ printFloat: aFloat format: aNUMBERFMT lcid: lcidInteger
 							absPrintOn: stream
 							base: 10
 							digitCount: 17
-							decimalExponents: ##(SmallInteger minimum to: SmallInteger maximum).
+							decimalExponents: ##(VMConstants.SmallIntegerMin to: VMConstants.SmallIntegerMax).
 					stream grabContents].
 	lib := OS.KernelLibrary default.
 	size := lib
@@ -759,7 +759,7 @@ yearMonthFormat
 !Core.Locale categoriesFor: #isInstalled!public!testing! !
 !Core.Locale categoriesFor: #iso639LanguageName!constants!public! !
 !Core.Locale categoriesFor: #isSelfEvaluating!public!testing! !
-!Core.Locale categoriesFor: #isValid!public!testing! !
+!Core.Locale categoriesFor: #isValidLocale!public!testing! !
 !Core.Locale categoriesFor: #languageId!accessing!public! !
 !Core.Locale categoriesFor: #lastTwoDigitYear!constants!public! !
 !Core.Locale categoriesFor: #lcid!accessing!public! !
@@ -863,7 +863,7 @@ makeLcId: langIdWord sortId: sortIdBits
 named: aString
 	"Answer a sub-instance of the receiver to represent the Locale with the specified name."
 
-	^(aString sameAs: 'smalltalk') ifTrue: [self smalltalk] ifFalse: [OS.WindowsLocale named: aString]!
+	^aString <=> 'smalltalk' == 0 ifTrue: [self smalltalk] ifFalse: [OS.WindowsLocale named: aString]!
 
 onPreStripImage
 	"Private -  Assist in the image stripping process by clearning down any lazily initialized variables held by the receiver."

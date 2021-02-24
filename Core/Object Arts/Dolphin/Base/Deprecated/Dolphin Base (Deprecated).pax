@@ -71,6 +71,7 @@ package setMethodNames: #(
 	#(#{External.Structure} #do:separatedBy:)
 	#(#{Kernel.ByteCodeDispatcher} #byteCodeSegments)
 	#(#{Kernel.ChunkSourceFiler} #fileOutBinaryGlobal:)
+	#(#{Kernel.CompiledMethod class} #fromString:)
 	#(#{Kernel.CompilerNotification} #extra)
 	#(#{Kernel.Package} #addGlobalNamed:)
 	#(#{Kernel.Package} #includesGlobalNamed:)
@@ -717,6 +718,28 @@ fileOutBinaryGlobal: anAssociation
 		nextPut: $!!;
 		cr! !
 !Kernel.ChunkSourceFiler categoriesFor: #fileOutBinaryGlobal:!public!source filing-file out! !
+
+!Kernel.CompiledMethod class methodsFor!
+
+fromString: aString
+	"Answers the CompiledMethod identified by aString or nil if none is found."
+
+	| className stream |
+	Notification deprecated.
+	stream := aString readStream.
+	className := stream upToAll: '>>'.
+	stream atEnd ifTrue: [^nil].
+	(className endsWith: ' class')
+		ifTrue: [className := (className allButLast: 6) asQualifiedReference meta]
+		ifFalse: [className := className asQualifiedReference].
+	^className valueOrNil
+		ifNotNil: 
+			[:theClass |
+			| selector |
+			stream peekFor: $#.
+			selector := stream upToEnd asSymbol.
+			theClass compiledMethodAt: selector ifAbsent: []]! !
+!Kernel.CompiledMethod class categoriesFor: #fromString:!converting!development!public! !
 
 !Kernel.CompilerNotification methodsFor!
 

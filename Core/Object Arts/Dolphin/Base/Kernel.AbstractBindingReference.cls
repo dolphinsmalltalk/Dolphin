@@ -103,10 +103,12 @@ displayOn: aPuttableStream
 environment
 	"Answer the in namespace which the referenced binding should be found, or nil if any of the namespaces on the path do not exist."
 
-	| parts |
+	| parts length |
 	parts := self path.
-	^parts size > 1
-		ifTrue: [(self home resolveBindingPath: parts allButLast) ifNotNil: [:ns | ns value]]
+	length := parts size.
+	^length > 1
+		ifTrue: 
+			[(self home resolveBindingPath: (parts copyFrom: 1 to: length - 1)) ifNotNil: [:ns | ns value]]
 		ifFalse: [self home]!
 
 environmentName
@@ -206,10 +208,11 @@ meta
 namespace
 	"Answer the <Namespace> in which the referenced binding should be found, or nil if the namespace path is incomplete."
 
-	| p |
+	| p length |
 	p := self path.
-	^p size > 1
-		ifTrue: [(self home resolveBindingPath: p allButLast) value]
+	length := p size.
+	^length > 1
+		ifTrue: [(self home resolveBindingPath: (p copyFrom: 1 to: length - 1)) value]
 		ifFalse: [self home localEnvironment]!
 
 namespaceBinding

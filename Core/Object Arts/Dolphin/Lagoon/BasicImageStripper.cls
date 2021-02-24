@@ -37,10 +37,11 @@ basicDeleteClass: aClass
 		do: 
 			[:x |
 			self deploymentContext
-				logElement: {'class' -> x class fullName}
-				attributes: 'Error uninitializing ' , aClass fullName , ': ' , x description
-				value: 'Error'.
-			self].
+				logElement: 'Error'
+				attributes: {'class' -> x class fullName}
+				value: 'Error uninitializing ' , aClass fullName , ': ' , x description].
+	aClass classPool associationsDo: [:var | var environment: nil].
+	aClass basicClassPool: nil.
 	subs := aClass subclasses.
 	subs notEmpty
 		ifTrue: 
@@ -109,9 +110,9 @@ defineExternalStructures: aCollection
 
 	self notify: 'Building all ExternalStructure templates'.
 	self deploymentContext
-		logElement: #()
-		attributes: nil
-		value: 'DefineExternalStructures'.
+		logElement: 'DefineExternalStructures'
+		attributes: #()
+		value: nil.
 	self systemPackageManager noEventsDo: [aCollection do: [:each | each byteSize]]!
 
 deleteClass: aClass
@@ -128,15 +129,7 @@ deleteClasses: aCollection reason: aString
 	self deploymentContext startElement: 'StripClasses' attributes: {'reason' -> aString}.
 	aCollection reverseDo: [:each | count := count + (self deleteClass: each)].
 	self deploymentContext endElement: count > 0.
-	self shrinkEventsRegister.
 	^count!
-
-deleteClassNamed: classNameSymbol
-	"Private - Removes the named class from the image, if it exists.
-	Answer the number of classes actually removed."
-
-	^classNameSymbol asQualifiedReference ifDefined: [:class | self deleteClass: class]
-		ifNotDefined: [0]!
 
 deleteMethod: aCompiledMethod
 	self basicDeleteMethod: aCompiledMethod.
@@ -164,9 +157,9 @@ deleteMethodSoft: aCompiledMethod
 
 deleteResource: aResourceIdentifier
 	self deploymentContext
-		logElement: {'owningClass' -> aResourceIdentifier owningClass fullName}
-		attributes: aResourceIdentifier name
-		value: 'RemoveResource'.
+		logElement: 'RemoveResource'
+		attributes: {'owningClass' -> aResourceIdentifier owningClass fullName}
+		value: aResourceIdentifier name.
 	ResourceIdentifier removeResource: aResourceIdentifier!
 
 deleteResources: aCollection reason: aString
@@ -183,9 +176,9 @@ destroyAndRemoveProgress
 	"Private - Destroy the progress view and remove its class if possible."
 
 	self deploymentContext
-		logElement: #()
-		attributes: nil
-		value: 'CloseProgressDialog'.
+		logElement: 'CloseProgressDialog'
+		attributes: #()
+		value: nil.
 	
 	[self destroyNotifier.
 	SessionManager inputState
@@ -245,9 +238,9 @@ emptySystemDictionary
 	globals do: 
 			[:each |
 			self deploymentContext
-				logElement: #()
-				attributes: each key
-				value: 'Global'.
+				logElement: 'Global'
+				attributes: #()
+				value: each key.
 			each environment basicRemoveBinding: each].
 	self collectGarbage: 3.
 	self deploymentContext endElement: true!
@@ -305,19 +298,19 @@ foldDuplicateStrings
 logFold: aString folded: count total: total
 	self deploymentContext
 		startElement: aString attributes: #();
-		logElement: #()
-			attributes: total
-			value: 'Total';
-		logElement: #()
-			attributes: count
-			value: 'Folded';
+		logElement: 'Total'
+			attributes: #()
+			value: total;
+		logElement: 'Folded'
+			attributes: #()
+			value: count;
 		endElement: true!
 
 logMethod: aCompiledMethod
 	self deploymentContext
-		logElement: {'methodClass' -> aCompiledMethod methodClass fullName}
-		attributes: aCompiledMethod selector
-		value: 'Method'!
+		logElement: 'Method'
+		attributes: {'methodClass' -> aCompiledMethod methodClass fullName}
+		value: aCompiledMethod selector!
 
 messagesSentByClasses: aCollectionOfClasses
 	| sent |
@@ -404,9 +397,9 @@ removeCategoryManagement
 
 	self notify: 'Removing code categories'.
 	self deploymentContext
-		logElement: #()
-		attributes: nil
-		value: 'RemoveCategoryManagement'.
+		logElement: 'RemoveCategoryManagement'
+		attributes: #()
+		value: nil.
 	Behavior allSubinstances do: 
 			[:each |
 			each methodsCatalogue: nil.
@@ -457,16 +450,16 @@ removeClassUninstallation: aCollection
 	remove any uninitializers as they will not be needed."
 
 	self deploymentContext startElement: 'StripClassRemoval' attributes: #().
-	#{Kernel.ClassBuilder} isDefined
-		ifTrue: [Notification signal: 'ClassBuilder still present, no action taken']
-		ifFalse: 
+	(Kernel localBindingFor: 'ClassBuilder')
+		ifNil: 
 			[self deleteMethods: aCollection.
 			"Remove any remaining class uninitialize methods that may be miscategorized"
 			Class
-				allClassesDo: [:each | self removeSelectors: #('uninitialize' 'uninitializeBeforeRemove') of: each class]].
+				allClassesDo: [:each | self removeSelectors: #('uninitialize' 'uninitializeBeforeRemove') of: each class]]
+		ifNotNil: [Notification signal: 'ClassBuilder still present, no action taken'].
 	self deploymentContext endElement: true.
 	self
-		finishedWithAll: #(#addClassesReferencedByClass:to: #addClassesReferencedByMethod:to: #allReferencedClasses #basicDeleteClass: #classesReferencedByMethod: #classReferencesToIgnore #emptyMethodDictionariesOfStubbornClasses #notRequiredClasses #purgeStubbornClass: #deleteClass: #deleteClasses:reason: #deleteClassNamed: #removeSelectors:of: #rootClasses #shrinkEventsRegister #removeClassUninstallation: #stripRedundantClasses #uncheckedDeleteClass:).
+		finishedWithAll: #(#addClassesReferencedByClass:to: #addClassesReferencedByMethod:to: #allReferencedClasses #basicDeleteClass: #classesReferencedByMethod: #classReferencesToIgnore #emptyMethodDictionariesOfStubbornClasses #notRequiredClasses #purgeStubbornClass: #deleteClass: #deleteClasses:reason: #removeSelectors:of: #rootClasses #removeClassUninstallation: #stripRedundantClasses #uncheckedDeleteClass:).
 	self collectGarbage: 3!
 
 removeDevelopmentInfo
@@ -596,9 +589,9 @@ removeProtocolManagement
 	class."
 
 	self deploymentContext
-		logElement: #()
-		attributes: nil
-		value: 'RemoveMethodProtocols'.
+		logElement: 'RemoveMethodProtocols'
+		attributes: #()
+		value: nil.
 	#{MethodProtocol} ifDefined: [:p | p initializeProtocols]!
 
 removeRedundantClassesAndResources: stripResources
@@ -676,7 +669,7 @@ removeRedundantPackages
 								| OS.MessageBoxConstants.MB_SETFOREGROUND))].
 	self stripRedundantPackages ifFalse: [^required].
 	pacman := self systemPackageManager.
-	redundantPackages := pacman packages difference: required.
+	redundantPackages := pacman packages asSet difference: required.
 	"Turn off events to prevent repeated tracing of pre-reqs as each of the redundant packages
 	 is uninstalled."
 	pacman beNotProcessingEvents.
@@ -686,9 +679,9 @@ removeRedundantPackages
 	(redundantPackages asSortedCollection: [:a :b | a name < b name]) do: 
 			[:each |
 			self deploymentContext
-				logElement: #()
-				attributes: each
-				value: 'Package'.
+				logElement: 'Package'
+				attributes: #()
+				value: each.
 			self].
 	self deploymentContext endElement: true.
 	self notify: 'Removing unwanted packages'.
@@ -736,9 +729,6 @@ shouldPreserveMethod: aCompiledMethod
 
 shouldRemoveResources
 	^self stripRedundantResources!
-
-shrinkEventsRegister
-	_EventsRegister keys do: [:each | each setEvents: each getEvents shrink]!
 
 speciallySentMessages
 	"Private - A number of messages can be sent without  appearing in the literal
@@ -814,9 +804,9 @@ uncheckedDeleteClass: aClass
 	| removed |
 	removed := aClass allSubclasses inject: 0 into: [:sum :each | sum + (self deleteClass: each)].	"First remove subclasses"
 	self deploymentContext
-		logElement: #()
-		attributes: aClass fullName
-		value: 'RemoveClass'.
+		logElement: 'RemoveClass'
+		attributes: #()
+		value: aClass fullName.
 	^
 	[self basicDeleteClass: aClass.
 	aClass clearGuid.
@@ -846,7 +836,6 @@ verifyRequiredPackages
 !BasicImageStripper categoriesFor: #defineExternalStructures:!operations!private! !
 !BasicImageStripper categoriesFor: #deleteClass:!helpers!private! !
 !BasicImageStripper categoriesFor: #deleteClasses:reason:!operations!private! !
-!BasicImageStripper categoriesFor: #deleteClassNamed:!helpers!private! !
 !BasicImageStripper categoriesFor: #deleteMethod:!private!removing! !
 !BasicImageStripper categoriesFor: #deleteMethods:!private!removing! !
 !BasicImageStripper categoriesFor: #deleteMethods:reason:force:!private!removing! !
@@ -897,7 +886,6 @@ verifyRequiredPackages
 !BasicImageStripper categoriesFor: #rootClasses!accessing!private! !
 !BasicImageStripper categoriesFor: #shouldPreserveMethod:!private!removing! !
 !BasicImageStripper categoriesFor: #shouldRemoveResources!private!testing! !
-!BasicImageStripper categoriesFor: #shrinkEventsRegister!private! !
 !BasicImageStripper categoriesFor: #speciallySentMessages!configuration!private! !
 !BasicImageStripper categoriesFor: #stbSaveOn:!binary filing!public! !
 !BasicImageStripper categoriesFor: #stripClassBuilder!public!testing! !

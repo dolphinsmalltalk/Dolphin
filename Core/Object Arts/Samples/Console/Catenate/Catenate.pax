@@ -28,7 +28,7 @@ And to examine the content:
 ```
 Smalltalk developmentSystem browseDeploymentLog: ''cat.xml''.
 "Or just view the log"
-XmlPad filename: ''cat.xml''
+UI.Examples.XmlPad filename: ''cat.xml''
 ```'.
 
 

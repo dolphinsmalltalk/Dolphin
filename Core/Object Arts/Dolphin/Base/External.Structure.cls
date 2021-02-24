@@ -932,15 +932,14 @@ uninitializeBeforeRemove
 	can't be done by #uninitialize since this only gets sent to classes
 	that explicitly implement it; i.e. it is not inherited by our subclasses."
 
-	_guid notNil ifTrue: [self unregister].
+	_guid notNil ifTrue: [self unregisterRecord].
 	template := _guid := nil.
 	super uninitializeBeforeRemove!
 
-unregister
+unregisterRecord
 	"Unregister the receiver as a Record class for its guid."
 
-	(_guid notNil and: [RecordClasses notNil]) ifTrue: [
-		RecordClasses removeKey: _guid ifAbsent: []]!
+	(_guid notNil and: [RecordClasses notNil]) ifTrue: [RecordClasses removeKey: _guid ifAbsent: []]!
 
 withBytes: aByteObject 
 	"Answer a new instance of the receiver with the arguments as its contents"
@@ -1006,6 +1005,6 @@ withBytes: aByteObject
 !External.Structure class categoriesFor: #structurePacker!public!template definition! !
 !External.Structure class categoriesFor: #template!accessing!private! !
 !External.Structure class categoriesFor: #uninitializeBeforeRemove!class hierarchy-removing!public! !
-!External.Structure class categoriesFor: #unregister!public!removing! !
+!External.Structure class categoriesFor: #unregisterRecord!public!removing! !
 !External.Structure class categoriesFor: #withBytes:!instance creation!public! !
 

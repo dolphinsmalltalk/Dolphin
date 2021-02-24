@@ -254,7 +254,7 @@ hasLeadingZero
 	"Answer whether a leading zero is prepended to a displayed number in this locale if it has only a fractional.
 	So for example if this is true then 0.5 is displayed as '0.5', but if false as '.5'."
 
-	^(self getIntegerInfo: LOCALE_ILZERO) asBoolean!
+	^(self getIntegerInfo: LOCALE_ILZERO) ~~ 0!
 
 indexOfMonth: aString
 	"Answer the 1-based <integer> index in a year (i.e. 1..12) of the month named by the <String> argument, asString, which is expected to be the full locale specific name of a month, or its abbreviated form, in upper or lower case."
@@ -276,7 +276,7 @@ iso639LanguageName
 
 	^self getStringInfo: LOCALE_SISO639LANGNAME!
 
-isValid
+isValidLocale
 	"Answer whether the receiver is a recognised (valid) Locale."
 
 	^self nlsLib isValidLocale: self lcid dwFlags: LCID_SUPPORTED!
@@ -518,7 +518,7 @@ yearMonthFormat
 !OS.WindowsLocale categoriesFor: #infinity!constants!public! !
 !OS.WindowsLocale categoriesFor: #isInstalled!public!testing! !
 !OS.WindowsLocale categoriesFor: #iso639LanguageName!constants!public! !
-!OS.WindowsLocale categoriesFor: #isValid!public!testing! !
+!OS.WindowsLocale categoriesFor: #isValidLocale!public!testing! !
 !OS.WindowsLocale categoriesFor: #lastTwoDigitYear!constants!public! !
 !OS.WindowsLocale categoriesFor: #lcid!accessing!public! !
 !OS.WindowsLocale categoriesFor: #lcid:!initializing!private! !

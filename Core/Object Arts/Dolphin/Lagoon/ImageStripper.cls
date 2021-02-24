@@ -6,6 +6,7 @@ BasicImageStripper subclass: #ImageStripper
 	imports: #(#{OS.MessageBoxConstants} #{OS.Win32Constants})
 	classInstanceVariableNames: ''
 	classConstants: {
+		'AllResourcesStripped' -> 16r1.
 		'ClearGuidsMask' -> 16r1.
 		'CompileStructsMask' -> 16r100.
 		'EmptyMethodDictsMask' -> 16r800.
@@ -20,6 +21,7 @@ BasicImageStripper subclass: #ImageStripper
 		'NoXPManifestMask' -> 16r200000.
 		'PreserveAspectsMask' -> 16r4.
 		'PurgeStubbornClassesMask' -> 16r4000000.
+		'RemoveAbstractUnreachable' -> 16r2.
 		'RetainDevSysMask' -> 16r10000000.
 		'RetainInstVarNamesMask' -> 16r8.
 		'RetainSubclassRespMask' -> 16r800000.
@@ -132,7 +134,7 @@ allReferencedClasses
 
 allResourcesStripped
 	self logComment: 'All resources stripped'.
-	deploymentContext allResourcesStripped.
+	deploymentContext setRunFlag: AllResourcesStripped.
 	self finishedStrippingResources.
 	self finishedWithAll: #(#logRemainingResources)!
 
@@ -344,7 +346,7 @@ classesReferencedByMethod: aCompiledMethod
 	aCompiledMethod literalReferencesDo: 
 			[:each |
 			| value |
-			value := (each isMemberOf: VariableBinding) ifTrue: [each value] ifFalse: [each].
+			value := (each isKindOf: VariableBinding) ifTrue: [each value] ifFalse: [each].
 			"Don't add a class just because it is referenced by one of its own methods"
 			(value class isMeta and: [value ~~ aCompiledMethod methodClass instanceClass])
 				ifTrue: [classes add: value]].
@@ -679,15 +681,15 @@ logComment: aString
 logConfiguration: aString
 	deploymentContext
 		startElement: 'Configuration' attributes: #();
-		logElement: #()
-			attributes: SessionManager current imagePath
-			value: 'ImagePath';
-		logElement: #()
-			attributes: DateAndTime now printString
-			value: 'TimeStamp';
-		logElement: #()
-			attributes: aString
-			value: 'Target'.
+		logElement: 'ImagePath'
+			attributes: #()
+			value: SessionManager current imagePath;
+		logElement: 'TimeStamp'
+			attributes: #()
+			value: DateAndTime now printString;
+		logElement: 'Target'
+			attributes: #()
+			value: aString.
 	self logImageStats.
 	self logDevelopmentCategories.
 	self logRequiredMethodCategories.
@@ -698,9 +700,9 @@ logDevelopmentCategories
 	self class developmentMethodCategoryNames do: 
 			[:each |
 			deploymentContext
-				logElement: #()
-				attributes: each
-				value: 'MethodCategory'].
+				logElement: 'MethodCategory'
+				attributes: #()
+				value: each].
 	deploymentContext endElement: true!
 
 logFileExtension
@@ -719,18 +721,18 @@ logImageStats
 
 	deploymentContext
 		startElement: 'ImageStatistics' attributes: #();
-		logElement: #()
-			attributes: MemoryManager current objectCount
-			value: 'ObjectCount';
-		logElement: #()
-			attributes: Metaclass primAllInstances size
-			value: 'ClassCount';
-		logElement: #()
-			attributes: CompiledMethod primAllSubinstances size
-			value: 'MethodCount';
-		logElement: #()
-			attributes: Symbol primAllInstances size
-			value: 'SymbolCount';
+		logElement: 'ObjectCount'
+			attributes: #()
+			value: MemoryManager current objectCount;
+		logElement: 'ClassCount'
+			attributes: #()
+			value: Metaclass primAllInstances size;
+		logElement: 'MethodCount'
+			attributes: #()
+			value: CompiledMethod primAllSubinstances size;
+		logElement: 'SymbolCount'
+			attributes: #()
+			value: Symbol primAllInstances size;
 		endElement: true!
 
 logLiveClasses
@@ -745,10 +747,10 @@ logManifest
 	deploymentContext startElement: 'Manifest' attributes: #().
 	self logImageStats.
 	self logRemainingClasses.
-	deploymentContext areAllResourcesStripped ifFalse: [self logRemainingResources].
+	(deploymentContext runFlags allMask: AllResourcesStripped)
+		ifFalse: [self logRemainingResources].
 	deploymentContext endElement: true.
-	self
-		finishedWithAll: #(#logImageStats #logRemainingClasses #logRemainingResources)!
+	self finishedWithAll: #(#logImageStats #logRemainingClasses #logRemainingResources)!
 
 logPackagePrerequisites
 	"Answer whether the stripping log should include a package pre-requisites trace showing
@@ -772,9 +774,9 @@ logPreservedClasses
 							{'development' -> true}]
 						ifFalse: [#()].
 			deploymentContext
-				logElement: attributes
-				attributes: each fullName
-				value: 'RootClass'].
+				logElement: 'RootClass'
+				attributes: attributes
+				value: each fullName].
 	deploymentContext basicDevelopmentClasses removeAll: developmentRoots.
 	deploymentContext endElement: true!
 
@@ -785,25 +787,25 @@ logPreservedMessages
 	self requiredMethodCategories asArray sort do: 
 			[:each |
 			deploymentContext
-				logElement: #()
-				attributes: each asString
-				value: 'MethodCategory'].
+				logElement: 'MethodCategory'
+				attributes: #()
+				value: each asString].
 	deploymentContext
 		endElement: true;
 		startElement: 'PreservedMessages' attributes: #().
 	deploymentContext preservedMessages asArray sort do: 
 			[:each |
 			deploymentContext
-				logElement: #()
-				attributes: each
-				value: 'Selector'].
+				logElement: 'Selector'
+				attributes: #()
+				value: each].
 	deploymentContext endElement: true!
 
 logReference: anObject
 	self deploymentContext
-		logElement: {'identityHash' -> anObject identityHash}
-		attributes: ([anObject printString] on: Error , StackOverflow do: [:ex | anObject basicPrintString])
-		value: 'Reference'!
+		logElement: 'Reference'
+		attributes: {'identityHash' -> anObject identityHash}
+		value: ([anObject printString] on: Error , StackOverflow do: [:ex | anObject basicPrintString])!
 
 logReferencesToClass: anAssociation
 	| refs fugitive instances binding |
@@ -815,7 +817,8 @@ logReferencesToClass: anAssociation
 							[:r |
 							r == anAssociation key class
 								or: [r == anAssociation or: [(r isKindOf: CompiledMethod) and: [r methodClass == anAssociation key]]]]]
-				ifFalse: [binding allReferences reject: [:r | r == binding environment or: [r == Processor activeProcess]]].
+				ifFalse: 
+					[binding allReferences reject: [:r | r == binding environment or: [r == Processor activeProcess]]].
 	refs isEmpty
 		ifFalse: 
 			[deploymentContext startElement: 'References' attributes: #().
@@ -883,9 +886,9 @@ logRemainingClasses
 			selectors contents sort do: 
 					[:selector |
 					deploymentContext
-						logElement: #()
-						attributes: selector
-						value: 'Method'].
+						logElement: 'Method'
+						attributes: #()
+						value: selector].
 			deploymentContext endElement: true.
 			deploymentContext startElement: 'ClassMethods'
 				attributes: {'count' -> each key class methodDictionary size}.
@@ -894,9 +897,9 @@ logRemainingClasses
 			selectors contents sort do: 
 					[:selector |
 					deploymentContext
-						logElement: #()
-						attributes: selector
-						value: 'Method'].
+						logElement: 'Method'
+						attributes: #()
+						value: selector].
 			deploymentContext endElement: true.
 			(flags allMask: LogReferencesMask) ifTrue: [self logReferencesToClass: each].
 			deploymentContext endElement: true.
@@ -906,18 +909,18 @@ logRemainingClasses
 			totalClassMethods := totalClassMethods + each key class methodDictionary size].
 	deploymentContext
 		endElement: true;
-		logElement: #()
-			attributes: totalInstances
-			value: 'TotalInstances';
-		logElement: #()
-			attributes: totalMemory
-			value: 'TotalMemory';
-		logElement: #()
-			attributes: totalMethods
-			value: 'TotalMethods';
-		logElement: #()
-			attributes: totalClassMethods
-			value: 'TotalClassMethods'!
+		logElement: 'TotalInstances'
+			attributes: #()
+			value: totalInstances;
+		logElement: 'TotalMemory'
+			attributes: #()
+			value: totalMemory;
+		logElement: 'TotalMethods'
+			attributes: #()
+			value: totalMethods;
+		logElement: 'TotalClassMethods'
+			attributes: #()
+			value: totalClassMethods!
 
 logRemainingPackages
 	"Private - Write a list of the remaining packages to the stripping log."
@@ -926,9 +929,9 @@ logRemainingPackages
 	(self systemPackageManager packages collect: [:each | each name]) asArray sort do: 
 			[:each |
 			deploymentContext
-				logElement: #()
-				attributes: each
-				value: 'Package'].
+				logElement: 'Package'
+				attributes: #()
+				value: each].
 	deploymentContext endElement: true!
 
 logRemainingResources
@@ -944,21 +947,21 @@ logRemainingResources
 			[:each |
 			deploymentContext
 				startElement: 'Resource' attributes: #();
-				logElement: #()
-					attributes: each owningClass fullName
-					value: 'OwningClass';
-				logElement: #()
-					attributes: each name
-					value: 'Name';
-				logElement: #()
-					attributes: each resource size
-					value: 'ByteSize';
+				logElement: 'OwningClass'
+					attributes: #()
+					value: each owningClass fullName;
+				logElement: 'Name'
+					attributes: #()
+					value: each name;
+				logElement: 'ByteSize'
+					attributes: #()
+					value: each resource size;
 				endElement: true.
 			total := total + each resource size].
 	deploymentContext
-		logElement: #()
-			attributes: total
-			value: 'TotalResourcesSize';
+		logElement: 'TotalResourcesSize'
+			attributes: #()
+			value: total;
 		endElement: true!
 
 logRequiredMethodCategories
@@ -968,9 +971,9 @@ logRequiredMethodCategories
 	self requiredMethodCategories asArray sort do: 
 			[:each |
 			deploymentContext
-				logElement: #()
-				attributes: each asString
-				value: 'MethodCategory'].
+				logElement: 'MethodCategory'
+				attributes: #()
+				value: each asString].
 	deploymentContext endElement: true!
 
 logSentMessages: aWeakIdentityDictionary
@@ -980,17 +983,16 @@ logSentMessages: aWeakIdentityDictionary
 	deploymentContext startElement: 'SentMessages' attributes: #().
 	originallySent := Set new.
 	aWeakIdentityDictionary do: [:each | originallySent addAll: each].
-	remainingClasses := Smalltalk allClasses
-				reject: [:each | each includesBehavior: BasicImageStripper].
+	remainingClasses := Smalltalk allClasses reject: [:each | each includesBehavior: BasicImageStripper].
 	allRefs := self messagesSentByClasses: remainingClasses.
 	self finishedWithAll: #(#messagesSentByClasses:).
 	sent := allRefs intersection: originallySent.
 	sent asArray sort do: 
 			[:each |
 			deploymentContext
-				logElement: #()
-				attributes: each
-				value: 'Selector'].
+				logElement: 'Selector'
+				attributes: #()
+				value: each].
 	deploymentContext
 		endElement: true;
 		startElement: 'UnimplementedMessages' attributes: #().
@@ -1000,9 +1002,9 @@ logSentMessages: aWeakIdentityDictionary
 	diff asArray sort do: 
 			[:each |
 			deploymentContext
-				logElement: #()
-				attributes: each
-				value: 'Selector'].
+				logElement: 'Selector'
+				attributes: #()
+				value: each].
 	deploymentContext endElement: true.
 	deploymentContext aspectSetters isEmpty ifTrue: [^self].
 	deploymentContext startElement: 'PreservedAspectSetters' attributes: #().
@@ -1106,10 +1108,12 @@ onNotification: aNotification
 openLogFile
 	"Private - Open log stream if requested"
 
-	self writeLogFile
-		ifTrue: 
-			[File createDirectoryPath: (File splitPathFrom: self logFileName).
-			deploymentContext openLogFile: self logFileName]!
+	| path |
+	path := self writeLogFile
+				ifTrue: 
+					[File createDirectoryPath: (File splitPathFrom: self logFileName).
+					self logFileName].
+	deploymentContext openLogFile: path!
 
 packagedClasses
 	| packagedClasses |
@@ -1154,7 +1158,7 @@ prepareCycle2: developmentMethods
 	self foldDuplicatesConstants.
 	self removeDevelopmentObjects: developmentMethods.
 	"We can now remove abstract unreachable methods without concern that they may be made reachable by the removal of development methods."
-	deploymentContext removeAbstractUnreachable.
+	deploymentContext setRunFlag: RemoveAbstractUnreachable.
 	self emptySystemDictionary!
 
 prepareCycle3
@@ -1167,13 +1171,14 @@ prepareCycle3
 	self removeClassGuids!
 
 prepareCycle4
-	deploymentContext areAllResourcesStripped ifFalse: [self finishedStrippingResources].
+	(deploymentContext runFlags allMask: ImageStripper.AllResourcesStripped)
+		ifFalse: [self finishedStrippingResources].
 	self finishedWithAll: #(#finishedStrippingResources)!
 
 prepareCycle5
 	deploymentContext supersentMethods: nil.	"Dispense with detection of unreachable methods of abstract classes, as these should be done now"
 	#(#class:overrides: #unreachableMethodsOfNonInstantiablesIn: #removeRedundantMethodsOnceFrom:)
-		do: [:each | ##(self) removeSelector: each]!
+		do: [:each | ##(self) removeSelector: each ifAbsent: []]!
 
 prepareCycle6: aWeakArrayOfMethods
 	"Private - Prepare for the final cycle of removing unsent methods."
@@ -1203,6 +1208,7 @@ prepareToStrip
 	Answer whether to proceed with the application deployment."
 
 	deploymentContext := DeploymentContext new.
+	deploymentContext initialize.
 	self openLogFile.
 	^self preStripCheck!
 
@@ -1317,7 +1323,7 @@ removeClassBuilder: aCollection
 						deleteMethods: ((pair at: 2) select: [:method | method ~~ DeadObject.Current]) sort
 						reason: (pair at: 1)
 						force: true].
-			self deleteClassNamed: #ClassBuilder.
+			self deleteClass: ClassBuilder.
 			deploymentContext endElement: true].
 	self finishedWithAll: #(#stripClassBuilder)!
 
@@ -1334,9 +1340,9 @@ removeClassGuids
 			guids do: 
 					[:each |
 					deploymentContext
-						logElement: #()
-						attributes: each
-						value: 'GUID'].
+						logElement: 'GUID'
+						attributes: #()
+						value: each].
 			deploymentContext endElement: true].
 	self finishedWithAll: #(#stripClassGuids)!
 
@@ -1405,9 +1411,9 @@ removeRedundantMethods
 			classes sort do: 
 					[:each |
 					deploymentContext
-						logElement: #()
-						attributes: each fullName
-						value: 'LiveClass'].
+						logElement: 'LiveClass'
+						attributes: #()
+						value: each fullName].
 			deploymentContext endElement: true].
 	
 	[| count |
@@ -1420,7 +1426,8 @@ removeRedundantMethods
 removeRedundantMethodsOnceFrom: aCollectionOfClasses
 	| removed unreachable |
 	removed := super removeRedundantMethodsOnceFrom: aCollectionOfClasses.
-	(removed == 0 and: [deploymentContext shouldRemoveAbstractUnreachable]) ifFalse: [^removed].
+	(removed == 0 and: [deploymentContext runFlags allMask: ImageStripper.RemoveAbstractUnreachable])
+		ifFalse: [^removed].
 	unreachable := self unreachableMethodsOfNonInstantiablesIn: aCollectionOfClasses.
 	"As the methods are unreachable, we can safely remove them whether or not they are potentially aspect setters"
 	^self
@@ -1613,7 +1620,8 @@ shouldPreserveMethod: aCompiledMethod
 	^deploymentContext aspectSetters identityIncludes: aCompiledMethod!
 
 shouldRemoveResources
-	^(flags allMask: StripResourcesMask) and: [deploymentContext areAllResourcesStripped not]!
+	^(flags allMask: StripResourcesMask)
+		and: [(deploymentContext runFlags allMask: ImageStripper.AllResourcesStripped) not]!
 
 shrinkSymbolTable
 	"Private - Resize symbol table. Must be performed at a very high priority to be
@@ -1788,7 +1796,7 @@ uncheckedDeleteClass: aClass
 			self
 				logComment: 'Discarding preserved resource messages: ' , resourceMessages asArray sort printString.
 			deploymentContext preservedMessages: (preserved difference: resourceMessages).
-			##(self) removeSelector: #uncheckedDeleteClass:].
+			##(self) removeSelector: #uncheckedDeleteClass: ifAbsent: []].
 	^super uncheckedDeleteClass: aClass!
 
 unreachableMethodsOfNonInstantiablesIn: aCollectionOfClasses

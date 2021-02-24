@@ -81,7 +81,7 @@ groupSeparator: aString
 	self lpThousandSep: groupSeparator!
 
 hasLeadingZero
-	^self LeadingZero asBoolean!
+	^self LeadingZero ~~ 0!
 
 hasLeadingZero: aBoolean
 	self LeadingZero: aBoolean asParameter!
@@ -135,13 +135,12 @@ NegativeOrder: anInteger
 numberGrouping
 	^numberGrouping
 		ifNil: 
-			[numberGrouping := AnsiString streamContents: 
-							[:stream |
-							| digits |
-							digits := self Grouping printString.
-							digits do: [:each | stream nextPut: each] separatedBy: [stream nextPut: $;].
-							"Rather perversely the meaning of a trailing zero is inverted vs the meaning in the string format"
-							(digits size > 1 and: [digits last = $0]) ifTrue: [stream nextPutAll: ';0']]]!
+			[| stream digits |
+			stream := AnsiString writeStream.
+			digits := self Grouping printString.
+			digits do: [:each | stream nextPut: each] separatedBy: [stream nextPut: $;].
+			(digits size > 1 and: [digits last = $0]) ifTrue: [stream nextPutAll: ';0'].
+			numberGrouping := stream contents]!
 
 numberGrouping: aString
 	| groups |

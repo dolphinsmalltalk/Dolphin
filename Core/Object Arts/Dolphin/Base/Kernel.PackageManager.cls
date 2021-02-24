@@ -346,11 +346,14 @@ defaultPackage
 defaultPackage: aPackage 
 	defaultPackage := aPackage!
 
-dependentPackagesOf: aPackage 
+dependentPackagesOf: aPackage
 	"Private - Answer a <collection> of the packages which have the <Package> argument,
 	as a prerequisite."
 
-	^self packages select: [:each | each prerequisites includes: aPackage]!
+	| dependents |
+	dependents := Set new.
+	self packages do: [:each | (each prerequisites includes: aPackage) ifTrue: [dependents add: each]].
+	^dependents!
 
 duplicatePackageSignal
 	"Private - Answer the Signal raised when an attempt is made to install a package
@@ -756,8 +759,9 @@ onClassRemoved: aClass
 	packages include loose methods of the class. In case they do we empty our loose method
 	cache."
 	looseMethods isNil ifFalse: [looseMethods removeKey: aClass ifAbsent: []].
-	changed := self packages select: [:aPackage | aPackage onClassRemoved: aClass].
-	changed do: [:aPackage | aPackage membershipChanged].
+	changed := Set new.
+	self packages do: [:each | (each onClassRemoved: aClass) ifTrue: [changed add: each]].
+	changed do: [:each | each membershipChanged].
 	self resetPrerequisites!
 
 onClassRenamed: aClass from: oldBindingReference to: newBindingReference

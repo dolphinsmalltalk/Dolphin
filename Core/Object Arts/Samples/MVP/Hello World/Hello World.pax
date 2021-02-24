@@ -25,7 +25,6 @@ UI.Examples.HelloWorld show.
 	preserveAspectSetters: false;
 	stripDeprecatedMethods: true;
 	preStripScript: ''Point removeSelector: #@'';
-	logReferencesToClasses: true;
 	deploy
 ```
 

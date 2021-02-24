@@ -215,7 +215,7 @@ iso639LanguageName
 
 	^'en'!
 
-isValid
+isValidLocale
 	"Answer whether the receiver is a recognised (valid) Locale."
 
 	^true!
@@ -431,7 +431,7 @@ yearMonthFormat
 !Kernel.SmalltalkLocale categoriesFor: #integerBase:!accessing!public! !
 !Kernel.SmalltalkLocale categoriesFor: #isInstalled!public!testing! !
 !Kernel.SmalltalkLocale categoriesFor: #iso639LanguageName!constants!public! !
-!Kernel.SmalltalkLocale categoriesFor: #isValid!public!testing! !
+!Kernel.SmalltalkLocale categoriesFor: #isValidLocale!public!testing! !
 !Kernel.SmalltalkLocale categoriesFor: #lastTwoDigitYear!constants!public! !
 !Kernel.SmalltalkLocale categoriesFor: #lcid!accessing!public! !
 !Kernel.SmalltalkLocale categoriesFor: #listSeparator!constants!public! !

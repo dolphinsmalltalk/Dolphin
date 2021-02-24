@@ -654,7 +654,7 @@ greaterThanFraction: aFraction
 	fpclass := self fpClass.
 	^(fpclass anyMask: Float.FpClassFinite)
 		ifTrue: [self asTrueFraction greaterThanFraction: aFraction]
-		ifFalse: [fpclass noMask: ##(FpClassNaN | FpClassNegative)]!
+		ifFalse: [(fpclass bitAnd: ##(FpClassNaN | FpClassNegative)) == 0]!
 
 greaterThanInteger: anInteger
 	"Private - Answer whether the receiver is greater than the known Integer, anInteger."

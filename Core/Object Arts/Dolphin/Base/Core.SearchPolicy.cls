@@ -97,13 +97,13 @@ printOn: aPuttableStream
 	"Append, to the <puttableStream> argument a string whose characters are the same as those which would result from sending a #printString message to the receiver."
 
 	self name
+		ifNil: [super printOn: aPuttableStream]
 		ifNotNil: 
 			[:name |
 			aPuttableStream
 				print: SearchPolicy;
 				space;
-				display: name]
-		ifNil: [super printOn: aPuttableStream]! !
+				display: name]! !
 !Core.SearchPolicy categoriesFor: #compare:with:!comparing!public! !
 !Core.SearchPolicy categoriesFor: #hash:!comparing!public! !
 !Core.SearchPolicy categoriesFor: #hash:max:!comparing!public! !

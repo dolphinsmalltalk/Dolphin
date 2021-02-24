@@ -282,7 +282,7 @@ uninitializeBeforeRemove
 	(remaining size = 1 and: [remaining first == self])
 		ifTrue: 
 			[Notification signal: 'Uninstalling VM callback entry point'.
-			ProcessorScheduler removeSelector: #callback:withArgumentsAt:cookie:.
+			ProcessorScheduler removeSelector: #callback:withArgumentsAt:cookie: ifAbsent: [].
 			VMLibrary default registryAtIndex: (VMLibrary.Registry indexOf: #callback:withArgumentsAt:cookie:)
 				put: nil]!
 

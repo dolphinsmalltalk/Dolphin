@@ -766,7 +766,7 @@ packByteCodes: anArray
 					bitShift: -1.
 	self assert: [codes class == SmallInteger].
 	^codes! !
-!Kernel.CompiledCode class categoriesFor: #elementsExpired:of:!finalizing!private! !
+!Kernel.CompiledCode class categoriesFor: #elementsExpired:of:!development!finalizing!private! !
 !Kernel.CompiledCode class categoriesFor: #initialize!development!initializing!private! !
 !Kernel.CompiledCode class categoriesFor: #initializeInfoCache!development!initializing!private! !
 !Kernel.CompiledCode class categoriesFor: #initializeInfoCache:!development!initializing!private! !

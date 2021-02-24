@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'Hello World (Console)'.
-package paxVersion: 2;
+package paxVersion: 2.1;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk Command-line Hello World Sample.
 Copyright (c) Object Arts Ltd, 2000-2002.
@@ -47,6 +47,7 @@ Smalltalk developmentSystem saveImage.	"Save the image if you don''t want to los
 (ImageStripper new)
 	rootPackage: CommandLineHelloWorld owningPackage;
 	executableName: ''HelloCli.exe'';
+	isToGo: false; "Just to see how small the image is without the VM"
 	preserveAspectSetters: false;
 	stripDeprecatedMethods: true;
 	deploy
@@ -58,15 +59,16 @@ And to examine the content:
 "Open a browser on the classes and methods that were deployed"
 Smalltalk developmentSystem browseDeploymentLog: ''HelloCli.xml''.
 "Or just view the log"
-XmlPad filename: ''HelloCli.xml''
+UI.Examples.XmlPad filename: ''HelloCli.xml''
 ```'.
 
 
 package setClassNames: #(
-	#{CommandLineHelloWorld}
+	#{Smalltalk.CommandLineHelloWorld}
 ).
 
 package setPrerequisites: #(
+	'..\..\..\Dolphin\Lagoon\Console Application Kit'
 	'..\..\..\Dolphin\Base\Dolphin'
 ).
 
@@ -74,10 +76,10 @@ package!
 
 "Class Definitions"!
 
-ConsoleSessionManager subclass: #CommandLineHelloWorld
+Kernel.ConsoleSessionManager subclass: #CommandLineHelloWorld
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 

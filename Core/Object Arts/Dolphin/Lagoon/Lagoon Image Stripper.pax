@@ -43,14 +43,11 @@ Core.Object subclass: #BasicImageStripper
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Core.Object subclass: #DeploymentContext
-	instanceVariableNames: 'logStream elementStack aspectSetters aspectGetters developmentClasses preservedMessages rootClasses supersentMethods notifier runFlags'
+	instanceVariableNames: 'logStream elementStack aspectSetters aspectGetters developmentClasses preservedMessages rootClasses supersentMethods notifier runFlags logFilename'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {
-		'AllResourcesStripped' -> 16r1.
-		'RemoveAbstractUnreachable' -> 16r2
-	}!
+	classConstants: {}!
 Core.Object subclass: #ImageStripperProgress
 	instanceVariableNames: 'handle oldWndProc progressProcess progressRange progress status cursor'
 	classVariableNames: 'MessageMap'
@@ -74,6 +71,7 @@ BasicImageStripper subclass: #ImageStripper
 	imports: #(#{OS.MessageBoxConstants} #{OS.Win32Constants})
 	classInstanceVariableNames: ''
 	classConstants: {
+		'AllResourcesStripped' -> 16r1.
 		'ClearGuidsMask' -> 16r1.
 		'CompileStructsMask' -> 16r100.
 		'EmptyMethodDictsMask' -> 16r800.
@@ -88,6 +86,7 @@ BasicImageStripper subclass: #ImageStripper
 		'NoXPManifestMask' -> 16r200000.
 		'PreserveAspectsMask' -> 16r4.
 		'PurgeStubbornClassesMask' -> 16r4000000.
+		'RemoveAbstractUnreachable' -> 16r2.
 		'RetainDevSysMask' -> 16r10000000.
 		'RetainInstVarNamesMask' -> 16r8.
 		'RetainSubclassRespMask' -> 16r800000.

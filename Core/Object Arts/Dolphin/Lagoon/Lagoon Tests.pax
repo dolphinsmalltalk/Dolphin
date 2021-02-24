@@ -60,7 +60,9 @@ Core.Tests.DolphinTest subclass: #'Tools.Tests.PackageClosureTests'
 
 initializeForTests
 	deploymentContext := DeploymentContext new.
-	deploymentContext aspectGetters: IdentitySet new! !
+	deploymentContext
+		initialize;
+		aspectGetters: IdentitySet new! !
 !ImageStripper categoriesFor: #initializeForTests!public! !
 
 !ImageStripper class methodsFor!
