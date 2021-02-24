@@ -20,6 +20,7 @@ contents
 	"Base"
 	contents
 		add: #('Core\Object Arts\Dolphin\MVP\Presenters\Text\Dolphin Rich Text Presenter.pax' #plain #imageBased);
+		add: #('Core\Object Arts\Dolphin\MVP\Views\Path\Dolphin StaticPath Control.pax' #encrypted #imageBased);
 		add: #('Core\Object Arts\Dolphin\MVP\Views\SysLink\Dolphin SysLink Control.pax' #encrypted #imageBased);
 		add: #('Core\Contributions\Refactory\Refactoring Browser\Formatters\RBFormatters.pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\System\Announcements\Dolphin Announcements.pax' #plain #imageBased);

@@ -154,16 +154,6 @@ resource_Password_text
 
 	^#(#'!!STL' 4 985166 10 ##(UI.STBViewProxy) ##(UI.TextEdit) 34 16 nil nil 34 2 8 1140916384 1025 416 nil 917510 ##(Graphics.Color) #default nil 7 nil nil nil 416 nil 8 1920675248 1049094 ##(UI.NullConverter) nil nil 1 1310982 ##(Core.MessageSequence) 138 144 34 1 1049350 ##(Core.MessageSend) #createAt:extent: 34 2 655878 ##(Graphics.Point) 6143 21 674 241 39 416 1179910 ##(OS.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 119 12 0 0 29 0 0 0] 8 #() 674 193 193 nil 27)!
 
-resource_Path_text
-	"Answer the literal data from which the 'Path text' resource can be reconstituted.
-	DO NOT EDIT OR RECATEGORIZE THIS METHOD.
-
-	If you wish to modify this resource evaluate:
-	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Path_text)
-	"
-
-	^#(#'!!STL' 4 985166 10 ##(UI.STBViewProxy) ##(UI.StaticPath) 34 17 nil nil 34 2 8 1140850944 1 416 nil nil nil 7 nil nil nil 416 nil 8 1920531648 1049094 ##(UI.NullConverter) nil nil nil 8 'c:\Program Files\Dolphin Smalltalk' 1310982 ##(Core.MessageSequence) 138 144 34 2 1049350 ##(Core.MessageSend) #createAt:extent: 34 2 655878 ##(Graphics.Point) 6143 21 658 241 39 416 610 #text: 34 1 528 416 1179910 ##(OS.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 119 12 0 0 29 0 0 0] 8 #() 658 193 193 nil 27)!
-
 resource_Static_text
 	"Answer the literal data from which the 'Static text' resource can be reconstituted.
 	DO NOT EDIT OR RECATEGORIZE THIS METHOD.
@@ -178,6 +168,5 @@ resource_Static_text
 !UI.TextPresenter class categoriesFor: #resource_Default_view!public!resources-views! !
 !UI.TextPresenter class categoriesFor: #resource_Multiline_text!public!resources-views! !
 !UI.TextPresenter class categoriesFor: #resource_Password_text!public!resources-views! !
-!UI.TextPresenter class categoriesFor: #resource_Path_text!public!resources-views! !
 !UI.TextPresenter class categoriesFor: #resource_Static_text!public!resources-views! !
 

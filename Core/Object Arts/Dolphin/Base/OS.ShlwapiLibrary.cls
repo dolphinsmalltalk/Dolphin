@@ -122,18 +122,6 @@ pathRelativePathTo: pszPath pszFrom: pszFrom dwAttrFrom: dwAttrFrom pszTo: pszTo
 			DWORD dwAttrTo);"
 
 	<stdcall: bool PathRelativePathToW lpwstr lpwstr dword lpwstr dword>
-	^self invalidCall: _failureCode!
-
-pathSetDlgItemPath: hDlg id: id pszPath: pszPath
-	"Invoke the PathSetDlgItemPath() function of the module wrapped by the receiver.
-	Helpstring: Sets the text of a child control in a window or dialog box, using PathCompactPath to make sure the path fits in the control
-
-		void __stdcall PathSetDlgItemPath(
-			HWND hDlg,
-			int id,
-			LPCSTR pszPath);"
-
-	<stdcall: void PathSetDlgItemPathW handle sdword lpwstr>
 	^self invalidCall: _failureCode! !
 !OS.ShlwapiLibrary categoriesFor: #pathCombine:lpszDir:lpszFile:!**auto generated**!public! !
 !OS.ShlwapiLibrary categoriesFor: #pathCommonPrefix:pszFile2:achPath:!**auto generated**!public! !
@@ -145,7 +133,6 @@ pathSetDlgItemPath: hDlg id: id pszPath: pszPath
 !OS.ShlwapiLibrary categoriesFor: #pathIsURL:!**auto generated**!public! !
 !OS.ShlwapiLibrary categoriesFor: #pathParseIconLocation:!**auto generated**!public! !
 !OS.ShlwapiLibrary categoriesFor: #pathRelativePathTo:pszFrom:dwAttrFrom:pszTo:dwAttrTo:!**auto generated**!public! !
-!OS.ShlwapiLibrary categoriesFor: #pathSetDlgItemPath:id:pszPath:!**auto generated**!public! !
 
 !OS.ShlwapiLibrary class methodsFor!
 

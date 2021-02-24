@@ -197,7 +197,6 @@ package setClassNames: #(
 	#{UI.ShellView}
 	#{UI.SizeEvent}
 	#{UI.Splash}
-	#{UI.StaticPath}
 	#{UI.StaticRectangle}
 	#{UI.StaticText}
 	#{UI.StaticView}
@@ -2765,12 +2764,6 @@ UI.StaticView subclass: #'UI.ImageViewAbstract'
 UI.StaticView subclass: #'UI.StaticText'
 	instanceVariableNames: ''
 	classVariableNames: 'AlignmentMap'
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-UI.StaticText subclass: #'UI.StaticPath'
-	instanceVariableNames: 'text'
-	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!

@@ -1,0 +1,68 @@
+﻿| package |
+package := Package name: 'Dolphin StaticPath Control'.
+package paxVersion: 2.1;
+	basicComment: 'Dolphin Smalltalk Static Path control
+Copyright (c) Object Arts Ltd. 1997-2018. Portions Copyright (c) CGI Group (Europe) Ltd. 1997.
+'.
+
+
+package setClassNames: #(
+	#{UI.StaticPath}
+).
+
+package setMethodNames: #(
+	#(#{OS.ShlwapiLibrary} #pathSetDlgItemPath:id:pszPath:)
+	#(#{UI.TextPresenter class} #resource_Path_text)
+).
+
+package setPrerequisites: #(
+	'..\..\..\Base\Dolphin'
+	'..\..\Base\Dolphin Basic Geometry'
+	'..\..\Base\Dolphin MVP Base'
+	'..\..\Presenters\Text\Dolphin Text Presenter'
+	'..\..\Type Converters\Dolphin Type Converters'
+).
+
+package!
+
+"Class Definitions"!
+
+UI.StaticText subclass: #'UI.StaticPath'
+	instanceVariableNames: 'text'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+"Loose Methods"!
+
+!OS.ShlwapiLibrary methodsFor!
+
+pathSetDlgItemPath: hDlg id: id pszPath: pszPath
+	"Invoke the PathSetDlgItemPath() function of the module wrapped by the receiver.
+	Helpstring: Sets the text of a child control in a window or dialog box, using PathCompactPath to make sure the path fits in the control
+
+		void __stdcall PathSetDlgItemPath(
+			HWND hDlg,
+			int id,
+			LPCSTR pszPath);"
+
+	<stdcall: void PathSetDlgItemPathW handle sdword lpwstr>
+	^self invalidCall: _failureCode! !
+!OS.ShlwapiLibrary categoriesFor: #pathSetDlgItemPath:id:pszPath:!**auto generated**!public! !
+
+!UI.TextPresenter class methodsFor!
+
+resource_Path_text
+	"Answer the literal data from which the 'Path text' resource can be reconstituted.
+	DO NOT EDIT OR RECATEGORIZE THIS METHOD.
+
+	If you wish to modify this resource evaluate:
+	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Path_text)
+	"
+
+	^#(#'!!STL' 4 985166 10 ##(UI.STBViewProxy) ##(UI.StaticPath) 34 17 nil nil 34 2 8 1140850944 1 416 nil nil nil 7 nil nil nil 416 nil 8 1920531648 1049094 ##(UI.NullConverter) nil nil nil 8 'c:\Program Files\Dolphin Smalltalk' 1310982 ##(Core.MessageSequence) 138 144 34 2 1049350 ##(Core.MessageSend) #createAt:extent: 34 2 655878 ##(Graphics.Point) 6143 21 658 241 39 416 610 #text: 34 1 528 416 1179910 ##(OS.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 119 12 0 0 29 0 0 0] 8 #() 658 193 193 nil 27)! !
+!UI.TextPresenter class categoriesFor: #resource_Path_text!public!resources-views! !
+
+"End of package definition"!
+
