@@ -43,6 +43,9 @@ package setMethodNames: #(
 	#(#{Core.ClassDescription} #sharedPools)
 	#(#{Core.ClassDescription} #sharedPoolsDo:)
 	#(#{Core.ClassDescription} #sharedVariableString)
+	#(#{Core.Delay class} #resolution)
+	#(#{Core.Delay class} #resolution:do:)
+	#(#{Core.Delay class} #resolution:set:)
 	#(#{Core.File} #readCharacter)
 	#(#{Core.File class} #change:extension:)
 	#(#{Core.File class} #for:inAndBelow:do:)
@@ -473,6 +476,23 @@ sharedVariableString
 !Core.ClassDescription categoriesFor: #sharedPools!pool variables!public! !
 !Core.ClassDescription categoriesFor: #sharedPoolsDo:!pool variables!public! !
 !Core.ClassDescription categoriesFor: #sharedVariableString!accessing!public! !
+
+!Core.Delay class methodsFor!
+
+resolution
+	Notification deprecated.
+	^self timerResolution!
+
+resolution: aDuration do: aNiladicValuable
+	Notification deprecated.
+	self withTimerResolution: aDuration do: aNiladicValuable!
+
+resolution: aDuration set: aBoolean
+	Notification deprecated.
+	^self timerResolution: aDuration set: aBoolean! !
+!Core.Delay class categoriesFor: #resolution!constants!public! !
+!Core.Delay class categoriesFor: #resolution:do:!operations!public! !
+!Core.Delay class categoriesFor: #resolution:set:!helpers!public! !
 
 !Core.File methodsFor!
 

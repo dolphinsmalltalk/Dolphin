@@ -25,10 +25,10 @@ expectDelay: expectedDuration for: nowMicroseconds
 setUp
 	super setUp.
 	startTime := Time microsecondClockValue.
-	Delay resolution: 1 milliseconds set: true!
+	Delay timerResolution: 1 milliseconds set: true!
 
 tearDown
-	Delay resolution: 1 milliseconds set: false.
+	Delay timerResolution: 1 milliseconds set: false.
 	super tearDown!
 
 testBasicWait
