@@ -901,9 +901,10 @@ setGuid: aGUID
 	"Private - Set the value of the receiver's 'guid' instance variable to the 
 	<GUID>, aGUID.
 	Implementation Note: Override to register the structure in the table mapping GUIDs
-	to record classes."
+	to record classes, and the separate table mapping IIDs to COM Interfaces."
 
 	_guid ~= aGUID ifTrue: [
+		self unregister.
 		super setGuid: aGUID.
 		self register]
 !
@@ -932,11 +933,11 @@ uninitializeBeforeRemove
 	can't be done by #uninitialize since this only gets sent to classes
 	that explicitly implement it; i.e. it is not inherited by our subclasses."
 
-	_guid notNil ifTrue: [self unregisterRecord].
+	_guid notNil ifTrue: [self unregister].
 	template := _guid := nil.
 	super uninitializeBeforeRemove!
 
-unregisterRecord
+unregister
 	"Unregister the receiver as a Record class for its guid."
 
 	(_guid notNil and: [RecordClasses notNil]) ifTrue: [RecordClasses removeKey: _guid ifAbsent: []]!
@@ -1005,6 +1006,6 @@ withBytes: aByteObject
 !External.Structure class categoriesFor: #structurePacker!public!template definition! !
 !External.Structure class categoriesFor: #template!accessing!private! !
 !External.Structure class categoriesFor: #uninitializeBeforeRemove!class hierarchy-removing!public! !
-!External.Structure class categoriesFor: #unregisterRecord!public!removing! !
+!External.Structure class categoriesFor: #unregister!public!removing! !
 !External.Structure class categoriesFor: #withBytes:!instance creation!public! !
 

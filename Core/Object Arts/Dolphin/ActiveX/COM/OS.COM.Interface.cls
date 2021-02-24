@@ -978,7 +978,7 @@ register
 	the appropriate GUIDs. This is intended as a helper function when
 	developing, and has no run-time significance."
 
-	self registerClass: self forIID: self iid!
+	self isNonInstantiable ifFalse: [self registerClass: self forIID: self iid]!
 
 registerClass: anInterfaceClass forIID: aGUID
 	"Register the specified interface class, which must support the COM interface protocol
@@ -1049,7 +1049,8 @@ unregister
 	developing (primarily for deinstalling packages), and has no run-time 
 	significance."
 
-	InterfaceClasses removeKey: self iid ifAbsent: []! !
+	(_guid notNil and: [InterfaceClasses notNil]) ifTrue: [
+		InterfaceClasses removeKey: self iid ifAbsent: []]! !
 !OS.COM.Interface class categoriesFor: #addFunction:selector:descriptor:!automatic generation!public! !
 !OS.COM.Interface class categoriesFor: #argSizes!initializing!private! !
 !OS.COM.Interface class categoriesFor: #atAddress:!instance creation!public! !

@@ -12,16 +12,27 @@ OS.COM.Tests.InterfaceTest comment: ''!
 !OS.COM.Tests.InterfaceTest methodsFor!
 
 testAllRegistered
-	| missing different |
+	| missing different iids registered |
 	missing := OrderedCollection new.
 	different := OrderedCollection new.
+	iids := Set new.
 	IUnknown withAllSubclasses do: 
 			[:each |
+			| iid |
+			iid := each iid.
 			(Interface classForIID: each iid ifNone: [])
 				ifNil: [missing add: each]
-				ifNotNil: [:found | found == each ifFalse: [different add: each]]].
+				ifNotNil: 
+					[:found |
+					iids add: iid.
+					found == each ifFalse: [different add: each]]].
 	self assert: different asArray equals: #().
-	self assert: missing asArray equals: #()!
+	self assert: (missing allSatisfy: [:each | each isNonInstantiable]).
+	"Check that only IUnknown and subclasses are registered, and only registered undo one IID"
+	registered := Interface.InterfaceClasses copy.
+	registered removeAllKeys: iids.
+	"The collection will not be empty if any interface class has duplicate registrations"
+	self assert: registered associations asArray equals: #()!
 
 testGetObject
 	| factory font |
