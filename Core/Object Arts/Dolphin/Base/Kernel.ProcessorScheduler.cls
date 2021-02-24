@@ -459,10 +459,9 @@ setHighestPriority: priority activeProcess: aProcess
 sleep: anIntegerOrDuration
 	"Delay the current active process for the specified <Duration>. For backwards compatibility also supports an <integer> argument specifying the delay in milliseconds."
 
-	(Delay forDuration: (anIntegerOrDuration isInteger
-				ifTrue: [anIntegerOrDuration milliseconds]
-				ifFalse: [anIntegerOrDuration]))
-		wait!
+	(anIntegerOrDuration isInteger
+		ifTrue: [Delay forMilliseconds: anIntegerOrDuration]
+		ifFalse: [Delay forDuration: anIntegerOrDuration]) wait!
 
 stackOverflow: interruptArg
 	"Private - The active process overflowed its maximum stack. This is most commonly caused by 
@@ -619,9 +618,9 @@ yield
 	to occur (e.g. the timing process)."
 
 	<primitive: 156>
-	self sleep: 0
-
-	"Sleeping, for whatever duration, yields the processor."!
+	"Sleeping, for whatever duration, yields the processor."
+	(Delay forMilliseconds: 0) wait
+!
 
 zeroDivide: interruptArg
 	"Private - The VM generated a Integer Divide by Zero interrupt. This will happen if any attempt is

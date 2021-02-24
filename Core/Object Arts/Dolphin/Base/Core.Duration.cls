@@ -116,6 +116,68 @@ divideIntoDuration: aDuration
 
 	^aDuration asSeconds / seconds!
 
+formatters
+	^##(| formatters formatter |
+	formatters := LookupTable new.
+	formatters at: '-'
+		put: [:locale :duration :stream | duration negative ifTrue: [stream nextPutAll: locale negativeSign]].
+	formatters at: '+'
+		put: [:locale :duration :stream | stream nextPut: (duration asSeconds < 0 ifTrue: [$-] ifFalse: [$+])].
+	formatters at: 'd'
+		put: [:locale :duration :stream | (duration asSeconds quo: SecondsPerDay) abs printOn: stream].
+	formatter := [:locale :duration :stream | ((duration asSeconds rem: SecondsPerDay) quo: SecondsPerHour) abs printOn: stream].
+	formatters
+		at: 'h' put: formatter;
+		at: 'H' put: formatter.
+	formatter := 
+			[:locale :duration :stream |
+			((duration asSeconds rem: SecondsPerDay) quo: SecondsPerHour) abs
+				printOn: stream
+				base: 10
+				nDigits: 2].
+	formatters
+		at: 'hh' put: formatter;
+		at: 'HH' put: formatter.
+	formatters
+		at: 'm'
+			put: [:locale :duration :stream | ((duration asSeconds rem: SecondsPerHour) quo: 60) abs printOn: stream];
+		at: 'mm'
+			put: 
+				[:locale :duration :stream |
+				((duration asSeconds rem: SecondsPerHour) quo: 60) abs
+					printOn: stream
+					base: 10
+					nDigits: 2];
+		at: 's'
+			put: [:locale :duration :stream | (duration asSeconds truncated rem: 60) abs printOn: stream];
+		at: 'ss'
+			put: 
+				[:locale :time :stream |
+				(time asSeconds truncated rem: 60) abs
+					printOn: stream
+					base: 10
+					nDigits: 2];
+		at: 'S' put: [:locale :duration :stream | duration asSeconds truncated printOn: stream].
+	1 to: 9
+		do: 
+			[:i |
+			formatters at: (String new: i withAll: $f)
+				put: 
+					[:locale :duration :stream |
+					locale
+						printFractionalPart: duration asSeconds
+						on: stream
+						places: i].
+			formatters at: (String new: i withAll: $F)
+				put: 
+					[:locale :duration :stream |
+					stream nextPutAll: locale decimalSeparator.
+					(duration asSeconds abs fractionPart * i exp10) rounded
+						printOn: stream
+						base: 10
+						nDigits: i]].
+	formatters)!
+
 hash
 	"Answer the <SmallInteger> hash value for the receiver."
 
@@ -245,6 +307,7 @@ subtractFromDateAndTime: aDateAndTime
 !Core.Duration categoriesFor: #days!accessing!public! !
 !Core.Duration categoriesFor: #displayOn:!printing!public! !
 !Core.Duration categoriesFor: #divideIntoDuration:!arithmetic!double dispatch!private! !
+!Core.Duration categoriesFor: #formatters!printing!private! !
 !Core.Duration categoriesFor: #hash!comparing!public! !
 !Core.Duration categoriesFor: #hours!accessing!public! !
 !Core.Duration categoriesFor: #humanReadablePrintString!printing!public! !

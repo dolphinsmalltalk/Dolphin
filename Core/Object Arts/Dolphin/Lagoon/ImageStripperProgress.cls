@@ -126,7 +126,7 @@ forkProgressMonitor
 	pollingInterval := self monitorProgressPeriod.
 	progressProcess := 
 			[
-			[Processor sleep: pollingInterval.
+			[(Delay forMilliseconds: pollingInterval) wait.
 			self progress: self currentProgress] repeat]
 					forkAt: Processor userInterruptPriority!
 

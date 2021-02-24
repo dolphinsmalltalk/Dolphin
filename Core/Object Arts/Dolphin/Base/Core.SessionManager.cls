@@ -262,10 +262,7 @@ embeddedStartup
 	"Private - The session has been started as an embedded session, perform appropriate
 	actions."
 
-	#todo "This is necessary because of dum GC strategy - we need to wake up to ensure it happens".
-	[[Processor sleep: 1000] repeat] forkAt: Processor systemBackgroundPriority
-			
-			!
+	[[(Delay forMilliseconds: 1000) wait] repeat] forkAt: Processor systemBackgroundPriority!
 
 errorLogExtension
 	"Answer the suffix for an error log file"

@@ -262,65 +262,6 @@ durationFormat
 
 	^self subclassResponsibility!
 
-durationFormatters
-	^##(| formatters formatter |
-	formatters := LookupTable new.
-	formatters at: '-'
-		put: [:locale :duration :stream | duration negative ifTrue: [stream nextPutAll: locale negativeSign]].
-	formatters at: '+'
-		put: [:locale :duration :stream | stream nextPut: (duration negative ifTrue: [$-] ifFalse: [$+])].
-	formatters at: 'd' put: [:locale :duration :stream | duration days abs printOn: stream].
-	formatter := [:locale :duration :stream | duration hours abs printOn: stream].
-	formatters
-		at: 'h' put: formatter;
-		at: 'H' put: formatter.
-	formatter := 
-			[:locale :duration :stream |
-			duration hours abs
-				printOn: stream
-				base: 10
-				nDigits: 2].
-	formatters
-		at: 'hh' put: formatter;
-		at: 'HH' put: formatter.
-	formatters
-		at: 'm' put: [:locale :duration :stream | duration minutes abs printOn: stream];
-		at: 'mm'
-			put: 
-				[:locale :duration :stream |
-				duration minutes abs
-					printOn: stream
-					base: 10
-					nDigits: 2];
-		at: 's' put: [:locale :duration :stream | duration seconds truncated abs printOn: stream];
-		at: 'ss'
-			put: 
-				[:locale :time :stream |
-				time seconds truncated abs
-					printOn: stream
-					base: 10
-					nDigits: 2];
-		at: 'S' put: [:locale :duration :stream | duration asSeconds truncated printOn: stream].
-	1 to: 9
-		do: 
-			[:i |
-			formatters at: (String new: i withAll: $f)
-				put: 
-					[:locale :duration :stream |
-					locale
-						printFractionalPart: duration seconds
-						on: stream
-						places: i].
-			formatters at: (String new: i withAll: $F)
-				put: 
-					[:locale :duration :stream |
-					stream nextPutAll: locale decimalSeparator.
-					(duration seconds abs fractionPart * i exp10) rounded
-						printOn: stream
-						base: 10
-						nDigits: i]].
-	formatters)!
-
 englishDisplayName
 	"The <String> full name of the locale in English."
 
@@ -567,7 +508,7 @@ printDuration: aDuration on: aWriteStream format: aString
 		on: aWriteStream
 		format: (aString ifNil: [self durationFormat])
 		alphabet: '-+dhHmsSfF'
-		formatters: self durationFormatters!
+		formatters: aDuration formatters!
 
 printFloat: aFloat
 	"Answer a <String> representation of the <Float> argument in the format defined for this locale."
@@ -747,7 +688,6 @@ yearMonthFormat
 !Core.Locale categoriesFor: #displayName!displaying!public! !
 !Core.Locale categoriesFor: #displayTime:on:!printing!public! !
 !Core.Locale categoriesFor: #durationFormat!constants!public! !
-!Core.Locale categoriesFor: #durationFormatters!printing!private! !
 !Core.Locale categoriesFor: #englishDisplayName!constants!public! !
 !Core.Locale categoriesFor: #englishLanguageName!constants!public! !
 !Core.Locale categoriesFor: #firstDayOfWeek!constants!public! !
