@@ -112,10 +112,8 @@ printOn: target
 	target nextPutAll: 'true'!
 
 xor: operand
-	"Answer whether either the receiver or the boolean argument <operand>
-	is true, but not both.
-	Since the receiver is false, the answer is true only if the argument
-	is false."
+	"Answer whether either the receiver or the boolean argument <operand> is true, but not both.
+	Since the receiver is true, the answer is true only if the argument is false."
 
 	^operand not! !
 !True categoriesFor: #and:!control flow!public! !
