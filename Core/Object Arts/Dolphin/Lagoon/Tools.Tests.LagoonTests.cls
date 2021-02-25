@@ -11,17 +11,14 @@ Tools.Tests.LagoonTests comment: ''!
 !Tools.Tests.LagoonTests categoriesForClass!Unclassified! !
 !Tools.Tests.LagoonTests methodsFor!
 
-nopMethod!
-
 testExternalStructureAfterTemplateRemoval
 	"Test the behavior of ExternalStructure after the removal of the ability to instantiate templates during image stripping (specifically its ability to handle canUnderstand:)
 	Regression test for #1095"
 
-	| externalStructureMethodDict externalStructureClassMethodDict basicImageStripperMethodDict |
+	| externalStructureMethodDict externalStructureClassMethodDict testSubjectClass |
 	"Cache current and instantiate copy methodDictionaries to enable partial run of image stripper without destroying the system"
 	externalStructureMethodDict := External.Structure methodDictionary copy.
 	externalStructureClassMethodDict := External.Structure class methodDictionary copy.
-	basicImageStripperMethodDict := Smalltalk.BasicImageStripper methodDictionary copy.
 	
 	[External.Structure
 		methodDictionary: externalStructureMethodDict copy;
@@ -29,12 +26,10 @@ testExternalStructureAfterTemplateRemoval
 	External.Structure class
 		methodDictionary: externalStructureClassMethodDict copy;
 		flushMethodCache.
-	Smalltalk.BasicImageStripper
-		methodDictionary: (basicImageStripperMethodDict copy
-					at: #uncheckedRemoveClass: put: ##(self) >> #nopMethod;
-					yourself);
-		flushMethodCache.	"We don't actually want to remove classes"
-	Smalltalk.ImageStripper newForTests compileExternalStructuresNow: {External.Structure}.
+	testSubjectClass := Smalltalk.ImageStripper newAnonymousSubclass.
+	testSubjectClass compile: 'deleteFieldClasses'.
+	testSubjectClass compile: 'initialize super initialize. deploymentContext := DeploymentContext new initialize'.
+	testSubjectClass new compileExternalStructuresNow: {External.Structure}.
 	self assert: External.Structure template isNil.
 	self shouldnt: [External.Structure canUnderstand: #anything] raise: MessageNotUnderstood.
 	self assert: (External.Structure canUnderstand: #value).
@@ -45,13 +40,11 @@ testExternalStructureAfterTemplateRemoval
 					flushMethodCache.
 				External.Structure class
 					methodDictionary: externalStructureClassMethodDict;
-					flushMethodCache.
-				Smalltalk.BasicImageStripper
-					methodDictionary: basicImageStripperMethodDict;
 					flushMethodCache].
 
-	"Ensure things are back to normal"
-	self assert: External.Structure template notNil! !
-!Tools.Tests.LagoonTests categoriesFor: #nopMethod!helpers!private! !
+	"Ensure things are back to normal and no damage is done"
+	self assert: External.Structure template notNil.
+	self assert: #{External.Field} isDefined.
+	self assert: #{Smalltalk.ExternalField} isDefined! !
 !Tools.Tests.LagoonTests categoriesFor: #testExternalStructureAfterTemplateRemoval!public!unit tests! !
 

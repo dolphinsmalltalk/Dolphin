@@ -14,14 +14,14 @@ DeploymentContext comment: ''!
 aspectGetters
 	^aspectGetters!
 
-aspectGetters: anObject
-	aspectGetters := anObject!
+aspectGetters: aCollection
+	aspectGetters := aCollection!
 
 aspectSetters
 	^aspectSetters!
 
-aspectSetters: anObject
-	aspectSetters := anObject!
+aspectSetters: aCollection
+	aspectSetters := aCollection!
 
 basicDevelopmentClasses
 	^developmentClasses!
@@ -65,7 +65,7 @@ finishedWithStripping
 
 initialize
 	elementStack := OrderedCollection new.
-	rootClasses := #().
+	aspectGetters := rootClasses := #().
 	logStream := notifier := DeafObject current.
 	runFlags := 0!
 

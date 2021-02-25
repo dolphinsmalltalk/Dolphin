@@ -94,15 +94,8 @@ compileExternalStructuresNow: aCollection
 			self removeSelectors: #(#getFieldNames #canUnderstand:) of: External.Structure class.
 			self removeSelectors: #(#doesNotUnderstand:) of: External.Structure].
 	"Field meta-data classes are no longer required"
-	self assert: [self systemPackageManager isProcessingEvents].
-	self deploymentContext startElement: 'StripClasses'
-		attributes: {'reason' -> 'structure field descriptors'}.
-	#{Smalltalk.ExternalField} undeclare.
-	#(#{External.Field} #{External.ArrayFieldLength})
-		do: [:each | self uncheckedDeleteClass: each value].
-	self deploymentContext
-		endElement: true;
-		endElement: true!
+	self deleteFieldClasses.
+	self deploymentContext endElement: true!
 
 defineExternalStructures: aCollection
 	"Private - Ensure that all external structures are fully defined to avoid any recompilation that might
@@ -130,6 +123,15 @@ deleteClasses: aCollection reason: aString
 	aCollection reverseDo: [:each | count := count + (self deleteClass: each)].
 	self deploymentContext endElement: count > 0.
 	^count!
+
+deleteFieldClasses
+	self assert: [self systemPackageManager isProcessingEvents].
+	self deploymentContext startElement: 'StripClasses'
+		attributes: {'reason' -> 'structure field descriptors'}.
+	#{Smalltalk.ExternalField} undeclare.
+	#(#{External.Field} #{External.ArrayFieldLength})
+		do: [:each | self uncheckedDeleteClass: each value].
+	self deploymentContext endElement: true!
 
 deleteMethod: aCompiledMethod
 	self basicDeleteMethod: aCompiledMethod.
@@ -379,7 +381,7 @@ prepareExternalStructures
 	structs do: [:each | self removeSelectors: #(#defineFields) of: each class].
 	self deploymentContext endElement: true.
 	self
-		finishedWithAll: #(#compileExternalStructures #compileExternalStructuresNow: #defineExternalStructures: #prepareExternalStructures #externalStructureClasses)!
+		finishedWithAll: #(#compileExternalStructures #compileExternalStructuresNow: #defineExternalStructures: #prepareExternalStructures #externalStructureClasses #deleteFieldClasses)!
 
 preStripTidy
 	"Private - Remove any methods of ImageStripper that are no longer required to ensure these don't impact the calculated package pre-reqs when they are determined"
@@ -836,6 +838,7 @@ verifyRequiredPackages
 !BasicImageStripper categoriesFor: #defineExternalStructures:!operations!private! !
 !BasicImageStripper categoriesFor: #deleteClass:!helpers!private! !
 !BasicImageStripper categoriesFor: #deleteClasses:reason:!operations!private! !
+!BasicImageStripper categoriesFor: #deleteFieldClasses!operations!private! !
 !BasicImageStripper categoriesFor: #deleteMethod:!private!removing! !
 !BasicImageStripper categoriesFor: #deleteMethods:!private!removing! !
 !BasicImageStripper categoriesFor: #deleteMethods:reason:force:!private!removing! !
