@@ -273,7 +273,7 @@ testLoad60Pax
 	self loadTestAndUninstallPackage: 'ScribbleTestPackages\6.0\ScribbleTest6.pax'!
 
 testLoad70Pax
-	| scribbleTestPackage aliasName binaryVariableName sourceVariableName testPool |
+	| scribbleTestPackage aliasName binaryVariableName sourceVariableName testPool poolConst |
 	self loadAndTestPackage: 'ScribbleTestPackages\7.0\ScribbleTest7.pax'.
 	scribbleTestPackage := loadedPackages first.
 	aliasName := 'Smalltalk.AliasToScribbleTest' asQualifiedReference.
@@ -293,8 +293,17 @@ testLoad70Pax
 	self assert: (scribbleTestPackage classNames includes: sourceVariableName).
 	testPool := sourceVariableName value.
 	self assert: testPool isKindOf: SharedPool class.
+	poolConst := testPool bindingFor: 'ConstantString'.
+	self assert: poolConst isClassVariable.
+	self assert: poolConst isImmutable.
+	self assert: poolConst value equals: 'abc'.
+	self
+		assert: (MethodName className: #{Smalltalk.ScribbleTest} selector: #string) value literals first
+		equals: poolConst.
+	self assert: #{Smalltalk.ScribbleTest} value new string equals: 'abc'.
 	self uninstallTestPackages.
-	self checkNoTestPackageContents!
+	self checkNoTestPackageContents
+!
 
 testLoad72Pax
 	| scribbleTestPackage aliasName binaryVariableName sourceVariableName testPool |

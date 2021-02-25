@@ -42,7 +42,7 @@ package!
 Presenter subclass: #ScribbleTest
 	instanceVariableNames: 'scribblePresenter'
 	classVariableNames: ''
-	poolDictionaries: ''
+	poolDictionaries: 'ScribbleTestSourceGlobal'
 	classInstanceVariableNames: ''!
 
 "Global Aliases"!
@@ -80,6 +80,8 @@ resource_Scribble_test
 "Source Globals"!
 
 Smalltalk at: #ScribbleTestSourceGlobal put: (PoolConstantsDictionary named: #ScribbleTestSourceGlobal)!
+ScribbleTestSourceGlobal at: 'Constant1' put: 16r1!
+ScribbleTestSourceGlobal at: 'ConstantString' put: 'abc'!
 ScribbleTestSourceGlobal shrink!
 
 "Classes"!
@@ -104,10 +106,18 @@ model: aListModel
 	sketch pad (Scribble) component that it holds we pass this down to it."
 
 	super model: aListModel.
-	scribblePresenter model: aListModel.! !
+	scribblePresenter model: aListModel.!
+
+one
+	^Constant1!
+
+string
+	^ConstantString! !
 !ScribbleTest categoriesFor: #a!public! !
 !ScribbleTest categoriesFor: #createComponents!initializing!public! !
 !ScribbleTest categoriesFor: #model:!accessing!public! !
+!ScribbleTest categoriesFor: #one!public! !
+!ScribbleTest categoriesFor: #string!public! !
 
 !ScribbleTest class methodsFor!
 

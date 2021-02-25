@@ -42,7 +42,7 @@ package!
 Presenter subclass: #ScribbleTest
 	instanceVariableNames: 'scribblePresenter'
 	classVariableNames: ''
-	poolDictionaries: ''
+	poolDictionaries: 'ScribbleTestSourceGlobal'
 	classInstanceVariableNames: ''!
 
 "Global Aliases"!

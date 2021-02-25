@@ -3,7 +3,7 @@
 Presenter subclass: #ScribbleTest
 	instanceVariableNames: 'scribblePresenter'
 	classVariableNames: ''
-	poolDictionaries: ''
+	poolDictionaries: 'ScribbleTestSourceGlobal'
 	classInstanceVariableNames: ''!
 ScribbleTest guid: (GUID fromString: '{fb773b56-8ed4-480a-820b-c1a43f6013ea}')!
 ScribbleTest comment: ''!
@@ -25,10 +25,18 @@ model: aListModel
 	sketch pad (Scribble) component that it holds we pass this down to it."
 
 	super model: aListModel.
-	scribblePresenter model: aListModel.! !
+	scribblePresenter model: aListModel.!
+
+one
+	^Constant1!
+
+string
+	^ConstantString! !
 !ScribbleTest categoriesFor: #a!public! !
 !ScribbleTest categoriesFor: #createComponents!initializing!public! !
 !ScribbleTest categoriesFor: #model:!accessing!public! !
+!ScribbleTest categoriesFor: #one!public! !
+!ScribbleTest categoriesFor: #string!public! !
 
 !ScribbleTest class methodsFor!
 
