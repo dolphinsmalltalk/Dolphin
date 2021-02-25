@@ -137,9 +137,9 @@ testFromDuration
 						minutes: -2
 						seconds: -3))
 		equals: (Time
-				hour: 22
-				minute: 57
-				second: 57).
+				hours: 22
+				minutes: 57
+				seconds: 57).
 	self assert: (Time fromDuration: 0 hours) equals: (Time fromSeconds: 0).
 	self
 		assert: (Time fromDuration: (Duration
@@ -283,9 +283,9 @@ testStoreOn
 	subject := Time now.
 	collection := OrderedCollection with: subject
 				with: (Time
-						hour: 23
-						minute: 59
-						second: 58).
+						hours: 23
+						minutes: 59
+						seconds: 58).
 	stored := collection storeString.
 	self assert: (Compiler evaluate: stored) equals: collection! !
 !Core.Tests.TimeTest categoriesFor: #comparePrintStreamFor:hr24:showSeconds:expected:!comparing!private! !
