@@ -113,8 +113,7 @@ printOn: target
 	target nextPutAll: 'false'!
 
 xor: operand
-	"Answer whether either the receiver or the boolean argument <operand>
-	is true, but not both.
+	"Answer whether either the receiver or the boolean argument <operand> is true, but not both.
 	Since the receiver is false, the answer depends entirely on the argument."
 
 	^operand! !
