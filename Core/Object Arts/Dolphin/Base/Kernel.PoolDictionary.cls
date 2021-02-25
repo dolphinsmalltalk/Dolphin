@@ -14,6 +14,9 @@ Kernel.PoolDictionary comment: ''!
 anonymousName
 	^'Anon'!
 
+asQualifiedReference
+	^self name asQualifiedReference!
+
 associationClass
 	"Private - Answer the class of association to be used for holding
 	key-value pairs in the receiver. Must respond to the Association protocol."
@@ -28,7 +31,9 @@ convertToSharedPool
 	pool := poolClass classPool.
 	self associationsDo: 
 			[:each |
-			each environment: poolClass.
+			each
+				environment: poolClass;
+				isClassVariable: true.
 			pool add: each].
 	poolClass basicClassPool: pool.
 	(Smalltalk localBindingFor: identifier) value: poolClass.
@@ -44,12 +49,12 @@ displayOn: aPuttableStream
 environment
 	"Answer the receiver's <Namespace> scope."
 
-	^self!
+	^Smalltalk!
 
 name
 	"Answer the receiver's name."
 
-	^self environment unqualifiedName!
+	^self unqualifiedName!
 
 name: aSymbol 
 	!
@@ -59,9 +64,16 @@ newAssociation: keyObject value: valueObject
 		environment: self;
 		yourself!
 
+resolvePublicBinding: aBindingContext
+	"Private - Resolve a binding with public visibility in the receiver's hierarchy, or among its local imports.
+	This is used to find bindings for second and subsequent components of qualified names."
+
+	^self bindingFor: aBindingContext identifier!
+
 unqualifiedName
 	^self anonymousName! !
 !Kernel.PoolDictionary categoriesFor: #anonymousName!constants!private! !
+!Kernel.PoolDictionary categoriesFor: #asQualifiedReference!private! !
 !Kernel.PoolDictionary categoriesFor: #associationClass!constants!private! !
 !Kernel.PoolDictionary categoriesFor: #convertToSharedPool!development!private! !
 !Kernel.PoolDictionary categoriesFor: #displayOn:!public! !
@@ -69,7 +81,10 @@ unqualifiedName
 !Kernel.PoolDictionary categoriesFor: #name!accessing!public! !
 !Kernel.PoolDictionary categoriesFor: #name:!accessing!private! !
 !Kernel.PoolDictionary categoriesFor: #newAssociation:value:!helpers!private! !
+!Kernel.PoolDictionary categoriesFor: #resolvePublicBinding:!private! !
 !Kernel.PoolDictionary categoriesFor: #unqualifiedName!accessing!private! !
+
+Kernel.PoolDictionary methodProtocol: #importableNamespace attributes: #() selectors: #(#asQualifiedReference #resolvePublicBinding:)!
 
 !Kernel.PoolDictionary class methodsFor!
 

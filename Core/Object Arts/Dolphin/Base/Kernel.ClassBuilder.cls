@@ -967,7 +967,7 @@ validateImports
 					fullRef isDefined
 						ifTrue: 
 							[namespace := fullRef value.
-							namespace class isMeta ifFalse: [self error: 'Invalid import: ' , each printString]]
+							(namespace class conformsToProtocol: #importableNamespace) ifFalse: [self error: 'Invalid import: ' , each printString]]
 						ifFalse: 
 							[Warning
 								signal: ('Imported namespace <1p> does not currently exist.' expandMacrosWith: fullRef asString).

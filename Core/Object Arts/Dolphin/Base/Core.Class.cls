@@ -1143,6 +1143,8 @@ variableSubclass: aClassSymbol instanceVariableNames: instVarString classVariabl
 !Core.Class categoriesFor: #variableSubclass:instanceVariableNames:classVariableNames:imports:!class hierarchy-adding!public! !
 !Core.Class categoriesFor: #variableSubclass:instanceVariableNames:classVariableNames:imports:classInstanceVariableNames:classConstants:!class hierarchy-adding!public! !
 
+Core.Class methodProtocol: #importableNamespace attributes: #() selectors: #(#asQualifiedReference #resolvePublicBinding:)!
+
 !Core.Class class methodsFor!
 
 allBehaviors
