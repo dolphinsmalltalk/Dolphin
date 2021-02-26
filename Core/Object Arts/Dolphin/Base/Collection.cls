@@ -288,7 +288,7 @@ distinct
 	"Answer a <collection> like the receiver containing only one occurrence of each element."
 
 	| seen |
-	seen := Set new.
+	seen := Set new: self approxSize .
 	^self select: [:each | seen addNewElement: each]!
 
 do: operation
