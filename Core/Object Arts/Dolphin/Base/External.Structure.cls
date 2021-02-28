@@ -625,13 +625,14 @@ fieldNamesFromTemplate
 	| answer pairs |
 	pairs := self template associations.
 	answer := OrderedCollection new: pairs size.
-	(pairs asSortedCollection: 
-			[:x :y |
-			| xoff yoff |
-			xoff := x value offset.
-			yoff := y value offset.
-			xoff == yoff ifTrue: [x key <= y key] ifFalse: [xoff < yoff]])
-		do: [:assoc | (assoc key last == $: or: [assoc value isFiller]) ifFalse: [answer add: assoc key]].
+	(pairs
+		sortUsing: (SortAlgorithm defaultSort: 
+					[:x :y |
+					| xoff yoff |
+					xoff := x value offset.
+					yoff := y value offset.
+					xoff == yoff ifTrue: [x key <= y key] ifFalse: [xoff < yoff]]))
+			do: [:assoc | (assoc key last == $: or: [assoc value isFiller]) ifFalse: [answer add: assoc key]].
 	^answer!
 
 fieldOffsetConstantPrefix

@@ -84,7 +84,7 @@ unqualifiedName
 !Kernel.PoolDictionary categoriesFor: #resolvePublicBinding:!private! !
 !Kernel.PoolDictionary categoriesFor: #unqualifiedName!accessing!private! !
 
-Kernel.PoolDictionary methodProtocol: #importableNamespace attributes: #() selectors: #(#asQualifiedReference #resolvePublicBinding:)!
+Kernel.PoolDictionary methodProtocol: #importableNamespace attributes: #(#readOnly) selectors: #(#asQualifiedReference #resolvePublicBinding:)!
 
 !Kernel.PoolDictionary class methodsFor!
 

@@ -1029,14 +1029,13 @@ initializeCommonColors
 			self addNamed: n color: color.
 			color isTransparent ifFalse: [commonColors add: color]].
 	self addClassVariable: 'CommonColors'
-		value: (commonColors asSortedCollection: 
+		value: (commonColors asArray sortUsing: (SortAlgorithm defaultSort: 
 					[:c1 :c2 |
 					| a b |
 					a := c1 hsv.
 					b := c2 hsv.
 					a first < b first
-						or: [a first = b first and: [a second < b second or: [a second = b second and: [a third < b third]]]]])
-				asArray!
+						or: [a first = b first and: [a second < b second or: [a second = b second and: [a third < b third]]]]]))!
 
 ivory
 	^self named: #ivory!

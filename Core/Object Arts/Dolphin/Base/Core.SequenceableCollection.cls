@@ -1015,7 +1015,7 @@ randomizeUsing: aRandom
 	| order |
 	3 timesRepeat: [aRandom next].
 	order := self collect: [:each | aRandom next -> each].
-	order := order asSortedCollection: [:a :b | a key <= b key].
+	order := order sortUsing: (SortAlgorithm defaultSort: [:a :b | a key <= b key]).
 	^order collect: [:each | each value]!
 
 readStream

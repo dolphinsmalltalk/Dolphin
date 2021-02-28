@@ -1098,12 +1098,6 @@ setEvents: anEventsCollectionOrNil
 
 	events := anEventsCollectionOrNil!
 
-sortedPackages
-	"Answer a SortedCollection of the packages held by the receiver,
-	ordered by name."
-
-	^self packages asSortedCollection: Package defaultSortBlock!
-
 sourceManager
 	"Answer the receiver's source manager."
 
@@ -1276,7 +1270,6 @@ youShouldBeProcessingEvents
 !Kernel.PackageManager categoriesFor: #resetPrerequisites!private!updating! !
 !Kernel.PackageManager categoriesFor: #resourceRepackaged:from:to:!events!private! !
 !Kernel.PackageManager categoriesFor: #setEvents:!events!private! !
-!Kernel.PackageManager categoriesFor: #sortedPackages!accessing!public! !
 !Kernel.PackageManager categoriesFor: #sourceManager!accessing!public! !
 !Kernel.PackageManager categoriesFor: #systemPackage!constants!private! !
 !Kernel.PackageManager categoriesFor: #uninstall:!public!removing! !

@@ -929,7 +929,7 @@ manualPrerequisites: aCollectionOfStrings
 
 	| newPrereqs |
 	newPrereqs := aCollectionOfStrings notEmpty 
-				ifTrue: [aCollectionOfStrings asSortedCollection asArray copyWithout: self name].
+				ifTrue: [aCollectionOfStrings asArray sort copyWithout: self name].
 	newPrereqs = manualPrerequisites ifTrue: [^self].
 	manualPrerequisites := newPrereqs.
 	self isChanged: true.
@@ -1686,7 +1686,7 @@ uninstallClasses
 	classes := self remainingClasses.
 
 	"Remove classes, bottom up so as to remove subclasses first"
-	classes := classes asSortedCollection: [:a :b | (self depthOfClass: a) > (self depthOfClass: b)].
+	classes := classes asArray sortUsing: (SortAlgorithm defaultSort: [:a :b | (self depthOfClass: a) > (self depthOfClass: b)]).
 	classes do: 
 			[:aClass |
 			"Notification signal: 'Removing class ', aClass name."

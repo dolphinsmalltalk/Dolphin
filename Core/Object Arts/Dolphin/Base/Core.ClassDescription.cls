@@ -290,7 +290,7 @@ classVariableString
 
 	| aStream |
 	aStream := String smalltalkWriteStream: 40.
-	self classPool keys asSortedCollection do: [:key | aStream nextPutAll: key]
+	self classPool keys asArray sort do: [:key | aStream nextPutAll: key]
 		separatedBy: [aStream space].
 	^aStream contents!
 
@@ -830,7 +830,7 @@ resourceNames
 	| names |
 	names := OrderedCollection new.
 	self resourceSelectorsDo: [:each | names add: (UI.ResourceIdentifier nameFromSelector: each)].
-	^names asSortedCollection!
+	^names asArray sort!
 
 resources
 	| resources |

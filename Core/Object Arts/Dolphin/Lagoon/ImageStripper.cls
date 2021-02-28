@@ -589,7 +589,7 @@ finishedWithStripping
 
 	deploymentContext finishedWithStripping.
 	self
-		finishedWithAll: #(#allMethodsInClasses:do: #allResourcesStripped #basicDeleteMethod: #ignoreViewReferences #messagesSentByClasses: #resourcesForClasses: #deleteMethod: #deleteMethods: #deleteMethods:reason:force: #logMethod: #preservedMessages #speciallySentMessages #finishedWithStripping).
+		finishedWithAll: #(#allMethodsInClasses:do: #allResourcesStripped #basicDeleteMethod: #ignoreViewReferences #messagesSentByClasses: #resourcesForClasses: #deleteMethod: #deleteMethods: #removeMethods:reason:force: #logMethod: #preservedMessages #speciallySentMessages #finishedWithStripping).
 	Set primAllSubinstances do: [:each | each shrink]!
 
 foldDuplicatesConstants
@@ -1320,7 +1320,7 @@ removeClassBuilder: aCollection
 			aCollection do: 
 					[:pair |
 					self
-						deleteMethods: ((pair at: 2) select: [:method | method ~~ DeadObject.Current]) sort
+						removeMethods: ((pair at: 2) select: [:method | method ~~ DeadObject.Current]) sort
 						reason: (pair at: 1)
 						force: true].
 			self deleteClass: ClassBuilder.
@@ -1362,7 +1362,7 @@ removeDevelopmentObjects: devMethods
 					| live |
 					live := (pair at: 2) select: [:each | each ~~ DeadObject.Current].
 					totalRemoved := totalRemoved + (self
-										deleteMethods: live
+										removeMethods: live
 										reason: (pair at: 1)
 										force: true)]].
 	self collectGarbage: 3.
@@ -1431,7 +1431,7 @@ removeRedundantMethodsOnceFrom: aCollectionOfClasses
 	unreachable := self unreachableMethodsOfNonInstantiablesIn: aCollectionOfClasses.
 	"As the methods are unreachable, we can safely remove them whether or not they are potentially aspect setters"
 	^self
-		deleteMethods: unreachable
+		removeMethods: unreachable
 		reason: 'abstract unreachable'
 		force: true!
 

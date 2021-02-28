@@ -335,7 +335,7 @@ initialize
 			[TypeSizes
 				at: ExtCallArgINTPTR + 1 put: VMConstants.IntPtrSize;
 				at: ExtCallArgUINTPTR + 1 put: VMConstants.IntPtrSize].
-	self assert: [ValueTypes asSortedCollection last < TypeSizes size].
+	self assert: [ValueTypes asArray sort last < TypeSizes size].
 	self initializeCallingConventions.
 	self addClassConstant: 'RetClassIndex' value: 4!
 
