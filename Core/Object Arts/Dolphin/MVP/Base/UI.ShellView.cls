@@ -1348,8 +1348,19 @@ icon
 
 	^##(self) defaultIcon!
 
+initialize
+	View registerMessageMappings: self messsageMappings!
+
 installNew
 	^(self asSessionManagerClass basicNew mainShellClass: self) install!
+
+messsageMappings
+	^{WM_ACTIVATE -> #wmActivate:wParam:lParam:.
+		WM_ACTIVATEAPP -> #wmActivateApp:wParam:lParam:.
+		WM_NCACTIVATE -> #wmNcActivate:wParam:lParam:.
+		WM_GETMINMAXINFO -> #wmGetMinMaxInfo:wParam:lParam:.
+		WM_SETTINGCHANGE -> #wmSettingChange:wParam:lParam:.
+		WM_TIMECHANGE -> #wmTimeChange:wParam:lParam:}!
 
 shutdownOnExit
 	"Answer whether a runtime session should be shutdown when an instance of the receiver is closed."
@@ -1419,18 +1430,26 @@ stbConvertFromVersion9: anArray
 		yourself!
 
 themePartName
-	^'WINDOW'! !
+	^'WINDOW'!
+
+uninitialize
+	View unregisterMessageMappings: (self messageMappings collect: [:each | each key]).
+	"No point maintaining registrations for the settingChanged: event, as it will not be triggered when there are no ShellViews."
+	SessionManager current removeActionsForEvent: #settingChanged:! !
 !UI.ShellView class categoriesFor: #asSessionManagerClass!converting!public!VM and session managerment! !
 !UI.ShellView class categoriesFor: #createHookBlock!accessing!private!realizing/unrealizing! !
 !UI.ShellView class categoriesFor: #createHookBlock:!accessing!private!realizing/unrealizing! !
 !UI.ShellView class categoriesFor: #defaultExtentBlock!accessing!geometry!private! !
 !UI.ShellView class categoriesFor: #defaultExtentBlock:!accessing!geometry!private! !
 !UI.ShellView class categoriesFor: #icon!constants!public! !
+!UI.ShellView class categoriesFor: #initialize!development!initializing!private! !
 !UI.ShellView class categoriesFor: #installNew!public! !
+!UI.ShellView class categoriesFor: #messsageMappings!constants!must not strip!private! !
 !UI.ShellView class categoriesFor: #shutdownOnExit!public!testing! !
 !UI.ShellView class categoriesFor: #stbConvertFromVersion0:!binary filing!private! !
 !UI.ShellView class categoriesFor: #stbConvertFromVersion4:!binary filing!private! !
 !UI.ShellView class categoriesFor: #stbConvertFromVersion8:!binary filing!private! !
 !UI.ShellView class categoriesFor: #stbConvertFromVersion9:!binary filing!private! !
 !UI.ShellView class categoriesFor: #themePartName!constants!public!theming! !
+!UI.ShellView class categoriesFor: #uninitialize!class hierarchy-removing!private! !
 

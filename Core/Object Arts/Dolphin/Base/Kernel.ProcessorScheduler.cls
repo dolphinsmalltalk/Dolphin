@@ -618,8 +618,7 @@ yield
 	to occur (e.g. the timing process)."
 
 	<primitive: 156>
-	"Sleeping, for whatever duration, yields the processor."
-	(Delay forMilliseconds: 0) wait
+	self primitiveFailed: _failureCode
 !
 
 zeroDivide: interruptArg

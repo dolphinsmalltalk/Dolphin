@@ -205,10 +205,10 @@ supersentMethods: anObject
 !DeploymentContext categoriesFor: #endTag!logging!public! !
 !DeploymentContext categoriesFor: #finishedWithStripping!public!state! !
 !DeploymentContext categoriesFor: #initialize!initializing!private! !
-!DeploymentContext categoriesFor: #logComment:!logging!public! !
-!DeploymentContext categoriesFor: #logElement:attributes:value:!logging!public! !
-!DeploymentContext categoriesFor: #logStrippingError:!logging!public! !
-!DeploymentContext categoriesFor: #logValue:!logging!public! !
+!DeploymentContext categoriesFor: #logComment:!logging!private! !
+!DeploymentContext categoriesFor: #logElement:attributes:value:!logging!private! !
+!DeploymentContext categoriesFor: #logStrippingError:!logging!private! !
+!DeploymentContext categoriesFor: #logValue:!logging!private! !
 !DeploymentContext categoriesFor: #notifier!accessing!public! !
 !DeploymentContext categoriesFor: #notifier:!accessing!public! !
 !DeploymentContext categoriesFor: #notify:!logging!public! !
@@ -220,7 +220,7 @@ supersentMethods: anObject
 !DeploymentContext categoriesFor: #runFlags!accessing!public! !
 !DeploymentContext categoriesFor: #setRunFlag:!accessing!public! !
 !DeploymentContext categoriesFor: #snapshotDevelopmentClasses!configuration!public! !
-!DeploymentContext categoriesFor: #startElement:attributes:!logging!public! !
+!DeploymentContext categoriesFor: #startElement:attributes:!logging!private! !
 !DeploymentContext categoriesFor: #startTag:attributes:!logging!public! !
 !DeploymentContext categoriesFor: #supersentMethods!accessing!public! !
 !DeploymentContext categoriesFor: #supersentMethods:!accessing!public! !

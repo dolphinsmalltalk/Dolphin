@@ -394,6 +394,12 @@ onPreSaveImage
 
 	ImageClock := self microsecondClockValue!
 
+onPreStripImage
+	"Private - The image is about to be deployed as an executable/DLL.
+	Kill the timing process to potentially allow Delay to be stripped if the application does not use Delays."
+
+	TimingProcess terminate!
+
 onStartup
 	"The system has just started. Initialize the timing system."
 
@@ -516,6 +522,7 @@ withTimerResolution: aDuration do: aNiladicValuable
 !Core.Delay class categoriesFor: #new!instance creation!public! !
 !Core.Delay class categoriesFor: #onExit!event handling!public! !
 !Core.Delay class categoriesFor: #onPreSaveImage!event handling!private! !
+!Core.Delay class categoriesFor: #onPreStripImage!event handling!private! !
 !Core.Delay class categoriesFor: #onStartup!event handling!public! !
 !Core.Delay class categoriesFor: #prod!operations!private! !
 !Core.Delay class categoriesFor: #queryOsTimerResolution!helpers!private! !

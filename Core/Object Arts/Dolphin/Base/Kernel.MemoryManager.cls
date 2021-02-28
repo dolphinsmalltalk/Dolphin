@@ -45,7 +45,7 @@ aboutToIdle
 
 	| now interval |
 	self ensureProcessesRunning.
-	Delay aboutToIdle.
+	#{Delay} ifDefined: [:delay | delay aboutToIdle].
 	now := self millisecondClock.
 	interval := now - lastGCTime.
 	(interval > self gcInterval or: [interval < 0]) ifFalse: [^self].

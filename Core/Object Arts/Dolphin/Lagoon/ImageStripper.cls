@@ -676,10 +676,10 @@ keepImageFile
 
 logComment: aString
 	self notify: aString.
-	deploymentContext logComment: aString!
+	super logComment: aString!
 
 logConfiguration: aString
-	deploymentContext
+	self
 		startElement: 'Configuration' attributes: #();
 		logElement: 'ImagePath'
 			attributes: #()
@@ -693,17 +693,17 @@ logConfiguration: aString
 	self logImageStats.
 	self logDevelopmentCategories.
 	self logRequiredMethodCategories.
-	deploymentContext endElement: true!
+	self endElement: true!
 
 logDevelopmentCategories
-	deploymentContext startElement: 'DevelopmentMethodCategories' attributes: #().
+	self startElement: 'DevelopmentMethodCategories' attributes: #().
 	self class developmentMethodCategoryNames do: 
 			[:each |
-			deploymentContext
+			self
 				logElement: 'MethodCategory'
 				attributes: #()
 				value: each].
-	deploymentContext endElement: true!
+	self endElement: true!
 
 logFileExtension
 	"Answer the extension to use for the log file"
@@ -719,7 +719,7 @@ logImageStats
 	"Private - Dump some stats about the image to the log file to help determine
 	the effectiveness of the stripping process."
 
-	deploymentContext
+	self
 		startElement: 'ImageStatistics' attributes: #();
 		logElement: 'ObjectCount'
 			attributes: #()
@@ -744,12 +744,12 @@ logLiveClasses
 logManifest
 	"Private - Logs a list of the remaining classes to the log stream (if any)."
 
-	deploymentContext startElement: 'Manifest' attributes: #().
+	self startElement: 'Manifest' attributes: #().
 	self logImageStats.
 	self logRemainingClasses.
 	(deploymentContext runFlags allMask: AllResourcesStripped)
 		ifFalse: [self logRemainingResources].
-	deploymentContext endElement: true.
+	self endElement: true.
 	self finishedWithAll: #(#logImageStats #logRemainingClasses #logRemainingResources)!
 
 logPackagePrerequisites
@@ -763,7 +763,7 @@ logPreservedClasses
 
 	| classes developmentRoots |
 	classes := deploymentContext rootClasses.
-	deploymentContext startElement: 'RootClasses' attributes: #().
+	self startElement: 'RootClasses' attributes: #().
 	developmentRoots := OrderedCollection new.
 	classes asArray sort do: 
 			[:each |
@@ -773,36 +773,36 @@ logPreservedClasses
 							[developmentRoots add: each.
 							{'development' -> true}]
 						ifFalse: [#()].
-			deploymentContext
+			self
 				logElement: 'RootClass'
 				attributes: attributes
 				value: each fullName].
 	deploymentContext basicDevelopmentClasses removeAll: developmentRoots.
-	deploymentContext endElement: true!
+	self endElement: true!
 
 logPreservedMessages
 	"Private - Logs a list of the classes that form the root set for the application."
 
-	deploymentContext startElement: 'RequiredMethodCategories' attributes: #().
+	self startElement: 'RequiredMethodCategories' attributes: #().
 	self requiredMethodCategories asArray sort do: 
 			[:each |
-			deploymentContext
+			self
 				logElement: 'MethodCategory'
 				attributes: #()
 				value: each asString].
-	deploymentContext
+	self
 		endElement: true;
 		startElement: 'PreservedMessages' attributes: #().
 	deploymentContext preservedMessages asArray sort do: 
 			[:each |
-			deploymentContext
+			self
 				logElement: 'Selector'
 				attributes: #()
 				value: each].
-	deploymentContext endElement: true!
+	self endElement: true!
 
 logReference: anObject
-	self deploymentContext
+	self
 		logElement: 'Reference'
 		attributes: {'identityHash' -> anObject identityHash}
 		value: ([anObject printString] on: Error , StackOverflow do: [:ex | anObject basicPrintString])!
@@ -821,22 +821,22 @@ logReferencesToClass: anAssociation
 					[binding allReferences reject: [:r | r == binding environment or: [r == Processor activeProcess]]].
 	refs isEmpty
 		ifFalse: 
-			[deploymentContext startElement: 'References' attributes: #().
+			[self startElement: 'References' attributes: #().
 			refs do: [:ref | self logReference: ref].
-			deploymentContext endElement: true].
+			self endElement: true].
 	(fugitive and: [(anAssociation value at: 1) > 0]) ifFalse: [^self].
-	deploymentContext startElement: 'Instances' attributes: #().
+	self startElement: 'Instances' attributes: #().
 	instances := anAssociation key allInstances.
 	1 to: instances size
 		do: 
 			[:i |
 			| inst |
 			inst := instances at: i.
-			deploymentContext startElement: 'Instance' attributes: {'identityHash' -> inst identityHash}.
+			self startElement: 'Instance' attributes: {'identityHash' -> inst identityHash}.
 			inst allReferences
 				do: [:ref | (ref == instances or: [ref == Processor activeProcess]) ifFalse: [self logReference: ref]].
-			deploymentContext endElement: true].
-	deploymentContext endElement: true!
+			self endElement: true].
+	self endElement: true!
 
 logReferencesToClasses
 	"Answer whether the log of classes remaining in the image should include a column to
@@ -857,7 +857,7 @@ logRemainingClasses
 	totalMemory := statsForClass at: 2.
 	totalMethods := 0.
 	totalClassMethods := 0.
-	deploymentContext startElement: 'Classes' attributes: {'count' -> stats size}.
+	self startElement: 'Classes' attributes: {'count' -> stats size}.
 	classes := Array writeStream: stats size.
 	stats associationsDo: [:each | classes nextPut: each].
 	stats := classes contents asArray sort.
@@ -878,36 +878,40 @@ logRemainingClasses
 			attributes nextPut: 'memoryUsage' -> memory.
 			each key bindingOrNil ifNil: [attributes nextPut: 'unbound' -> true].
 			(devClasses includes: each key) ifTrue: [attributes nextPut: 'development' -> true].
-			deploymentContext
+			self
 				startElement: 'Class' attributes: attributes contents;
 				startElement: 'Methods' attributes: {'count' -> each key methodDictionary size}.
 			selectors := Array writeStream.
 			each key methodDictionary keysDo: [:selector | selectors nextPut: selector].
 			selectors contents sort do: 
 					[:selector |
-					deploymentContext
+					self
 						logElement: 'Method'
 						attributes: #()
 						value: selector].
-			deploymentContext endElement: true.
-			deploymentContext startElement: 'ClassMethods'
-				attributes: {'count' -> each key class methodDictionary size}.
+			self endElement: true.
+			self startElement: 'ClassMethods' attributes: {'count' -> each key class methodDictionary size}.
 			selectors reset.
 			each key class methodDictionary keysDo: [:selector | selectors nextPut: selector].
 			selectors contents sort do: 
 					[:selector |
-					deploymentContext
+					self
 						logElement: 'Method'
 						attributes: #()
 						value: selector].
-			deploymentContext endElement: true.
+			self endElement: true.
 			(flags allMask: LogReferencesMask) ifTrue: [self logReferencesToClass: each].
-			deploymentContext endElement: true.
+			self endElement: true.
 			totalInstances := totalInstances + count.
 			totalMemory := totalMemory + memory.
 			totalMethods := totalMethods + each key methodDictionary size.
 			totalClassMethods := totalClassMethods + each key class methodDictionary size].
-	deploymentContext
+	#{EventsCollection} valueOrNil
+		ifNotNil: 
+			[:ec |
+			ec allInstances
+				do: [:each | self logComment: each printString , ': ' , each allReferences printString]].
+	self
 		endElement: true;
 		logElement: 'TotalInstances'
 			attributes: #()
@@ -925,14 +929,14 @@ logRemainingClasses
 logRemainingPackages
 	"Private - Write a list of the remaining packages to the stripping log."
 
-	deploymentContext startElement: 'RetainedPackages' attributes: #().
+	self startElement: 'RetainedPackages' attributes: #().
 	(self systemPackageManager packages collect: [:each | each name]) asArray sort do: 
 			[:each |
-			deploymentContext
+			self
 				logElement: 'Package'
 				attributes: #()
 				value: each].
-	deploymentContext endElement: true!
+	self endElement: true!
 
 logRemainingResources
 	"Private - Logs a list of the remaining classes to the log stream (if any).
@@ -940,12 +944,12 @@ logRemainingResources
 	to simplify debug reference tracing to the classes.."
 
 	| total resman |
-	deploymentContext startElement: 'RemainingResources' attributes: #().
+	self startElement: 'RemainingResources' attributes: #().
 	total := 0.
 	resman := ResourceIdentifier.
 	resman allResourceIdentifiersDo: 
 			[:each |
-			deploymentContext
+			self
 				startElement: 'Resource' attributes: #();
 				logElement: 'OwningClass'
 					attributes: #()
@@ -958,7 +962,7 @@ logRemainingResources
 					value: each resource size;
 				endElement: true.
 			total := total + each resource size].
-	deploymentContext
+	self
 		logElement: 'TotalResourcesSize'
 			attributes: #()
 			value: total;
@@ -967,20 +971,20 @@ logRemainingResources
 logRequiredMethodCategories
 	"Private - Logs a list of the classes that form the root set for the application."
 
-	deploymentContext startElement: 'RequiredMethodCategories' attributes: #().
+	self startElement: 'RequiredMethodCategories' attributes: #().
 	self requiredMethodCategories asArray sort do: 
 			[:each |
-			deploymentContext
+			self
 				logElement: 'MethodCategory'
 				attributes: #()
 				value: each asString].
-	deploymentContext endElement: true!
+	self endElement: true!
 
 logSentMessages: aWeakIdentityDictionary
 	"Log the messages preserved only because they are assumed to be aspect setters"
 
 	| remainingClasses implemented originallySent allRefs diff sent |
-	deploymentContext startElement: 'SentMessages' attributes: #().
+	self startElement: 'SentMessages' attributes: #().
 	originallySent := Set new.
 	aWeakIdentityDictionary do: [:each | originallySent addAll: each].
 	remainingClasses := Smalltalk allClasses reject: [:each | each includesBehavior: BasicImageStripper].
@@ -989,11 +993,11 @@ logSentMessages: aWeakIdentityDictionary
 	sent := allRefs intersection: originallySent.
 	sent asArray sort do: 
 			[:each |
-			deploymentContext
+			self
 				logElement: 'Selector'
 				attributes: #()
 				value: each].
-	deploymentContext
+	self
 		endElement: true;
 		startElement: 'UnimplementedMessages' attributes: #().
 	implemented := Set new: remainingClasses size * 10.
@@ -1001,16 +1005,16 @@ logSentMessages: aWeakIdentityDictionary
 	diff := sent difference: implemented.
 	diff asArray sort do: 
 			[:each |
-			deploymentContext
+			self
 				logElement: 'Selector'
 				attributes: #()
 				value: each].
-	deploymentContext endElement: true.
+	self endElement: true.
 	deploymentContext aspectSetters isEmpty ifTrue: [^self].
-	deploymentContext startElement: 'PreservedAspectSetters' attributes: #().
+	self startElement: 'PreservedAspectSetters' attributes: #().
 	deploymentContext aspectSetters asArray sort
 		do: [:each | (sent identityIncludes: each selector) ifFalse: [self logMethod: each]].
-	deploymentContext endElement: true.
+	self endElement: true.
 	deploymentContext aspectSetters: nil.
 	self finishedWithAll: #(#shouldPreserveMethod:)!
 
@@ -1052,7 +1056,7 @@ notifyClassesOfImminentStrip
 	state. The fewer classes there are with instances in the image, the smaller the set of roots
 	from which the retained functionality need be calculated."
 
-	deploymentContext startElement: 'PreStrip' attributes: #().
+	self startElement: 'PreStrip' attributes: #().
 	Class allClassesDo: 
 			[:e |
 			(e class compiledMethodAt: #onPreStripImage ifAbsent: [])
@@ -1060,7 +1064,7 @@ notifyClassesOfImminentStrip
 					[:method |
 					e onPreStripImage.
 					self deleteMethod: method]].
-	deploymentContext endElement: true!
+	self endElement: true!
 
 notRequiredMethodCategories
 	"Answer an IdentitySet of MethodCategorys whose methods are known to be not required
@@ -1168,17 +1172,21 @@ prepareCycle3
 	self closeExternalLibraries.
 
 	"Necessary to clear these before other class meta-info in order to allow GUID to be stripped."
-	self removeClassGuids!
+	self removeClassGuids.
+!
 
 prepareCycle4
-	(deploymentContext runFlags allMask: ImageStripper.AllResourcesStripped)
+	(deploymentContext runFlags allMask: AllResourcesStripped)
 		ifFalse: [self finishedStrippingResources].
+	self shrinkEventsRegister.
 	self finishedWithAll: #(#finishedStrippingResources)!
 
 prepareCycle5
 	deploymentContext supersentMethods: nil.	"Dispense with detection of unreachable methods of abstract classes, as these should be done now"
 	#(#class:overrides: #unreachableMethodsOfNonInstantiablesIn: #removeRedundantMethodsOnceFrom:)
-		do: [:each | ##(self) removeSelector: each ifAbsent: []]!
+		do: [:each | ##(self) removeSelector: each ifAbsent: []].
+	self shrinkEventsRegister.
+	self finishedWithAll: #(#shrinkEventsRegister)!
 
 prepareCycle6: aWeakArrayOfMethods
 	"Private - Prepare for the final cycle of removing unsent methods."
@@ -1316,7 +1324,7 @@ removeClassBuilder: aCollection
 
 	self stripClassBuilder
 		ifTrue: 
-			[deploymentContext startElement: 'StripClassBuilder' attributes: #().
+			[self startElement: 'StripClassBuilder' attributes: #().
 			aCollection do: 
 					[:pair |
 					self
@@ -1324,7 +1332,7 @@ removeClassBuilder: aCollection
 						reason: (pair at: 1)
 						force: true].
 			self deleteClass: ClassBuilder.
-			deploymentContext endElement: true].
+			self endElement: true].
 	self finishedWithAll: #(#stripClassBuilder)!
 
 removeClassGuids
@@ -1336,14 +1344,14 @@ removeClassGuids
 			self notify: 'Removing class GUIDs'.
 			Class allClassesDo: [:each | each clearGuid].
 			guids := GUID allSubinstances.
-			deploymentContext startElement: 'RemainingGUIDs' attributes: {'count' -> guids size}.
+			self startElement: 'RemainingGUIDs' attributes: {'count' -> guids size}.
 			guids do: 
 					[:each |
-					deploymentContext
+					self
 						logElement: 'GUID'
 						attributes: #()
 						value: each].
-			deploymentContext endElement: true].
+			self endElement: true].
 	self finishedWithAll: #(#stripClassGuids)!
 
 removeDevelopmentObjects: devMethods
@@ -1351,7 +1359,7 @@ removeDevelopmentObjects: devMethods
 	Answer the number of development classes removed."
 
 	| totalRemoved |
-	deploymentContext startElement: 'StripDevelopmentObjects' attributes: #().
+	self startElement: 'StripDevelopmentObjects' attributes: #().
 	self notify: 'Removing remaining development classes and methods'.
 	"Remove the methods first in case they reference the development classes"
 	totalRemoved := 0.
@@ -1373,7 +1381,7 @@ removeDevelopmentObjects: devMethods
 				whileTrue: 
 					[self collectGarbage: 2.
 					totalRemoved := totalRemoved + removed]].
-	deploymentContext endElement: totalRemoved > 0.
+	self endElement: totalRemoved > 0.
 	self finishedWithAll: #(#stripDevelopmentClasses #stripDevelopmentMethods).
 	"developmentClasses inst. var. must be nilled later as still needed for reporting purposes"
 	^totalRemoved + 2!
@@ -1407,14 +1415,14 @@ removeRedundantMethods
 	classes := Class allClasses.
 	(flags allMask: LogLiveClassesMask)
 		ifTrue: 
-			[deploymentContext startElement: 'LiveClasses' attributes: #().
+			[self startElement: 'LiveClasses' attributes: #().
 			classes sort do: 
 					[:each |
-					deploymentContext
+					self
 						logElement: 'LiveClass'
 						attributes: #()
 						value: each fullName].
-			deploymentContext endElement: true].
+			self endElement: true].
 	
 	[| count |
 	count := self removeRedundantMethodsOnceFrom: classes.
@@ -1621,7 +1629,7 @@ shouldPreserveMethod: aCompiledMethod
 
 shouldRemoveResources
 	^(flags allMask: StripResourcesMask)
-		and: [(deploymentContext runFlags allMask: ImageStripper.AllResourcesStripped) not]!
+		and: [(deploymentContext runFlags allMask: AllResourcesStripped) not]!
 
 shrinkSymbolTable
 	"Private - Resize symbol table. Must be performed at a very high priority to be

@@ -1379,6 +1379,10 @@ outputDebugString: aString
 	<stdcall: void OutputDebugStringW lpwstr>
 	^self invalidCall: _failureCode!
 
+overlappedSleepEx: anInteger bAlertable: aBoolean
+	<overlap stdcall: void SleepEx dword bool>
+	^self invalidCall: _failureCode!
+
 pulseEvent: hEvent
 	"Invoke the PulseEvent() function of the module wrapped by the receiver.
 	Helpstring: Sets the specified event object to the signaled state and then resets it to the nonsignaled state after releasing the appropriate number of waiting threads
@@ -1926,6 +1930,7 @@ zeroMemory: pvDest length: cBytes
 !OS.KernelLibrary categoriesFor: #multiByteToWideChar:dwFlags:lpMultiByteStr:cchMultiByte:lpWideCharStr:cchWideChar:!public!win32 functions-string manipulation! !
 !OS.KernelLibrary categoriesFor: #openProcess:bInheritHandle:dwProcessId:!public!win32 functions-process and thread! !
 !OS.KernelLibrary categoriesFor: #outputDebugString:!public!win32 functions-debugging! !
+!OS.KernelLibrary categoriesFor: #overlappedSleepEx:bAlertable:!public!win32 functions-process and thread! !
 !OS.KernelLibrary categoriesFor: #pulseEvent:!**auto generated**!public!win32 functions-synchronization! !
 !OS.KernelLibrary categoriesFor: #queryPerformanceCounter:!public!win32 functions-performance monitoring! !
 !OS.KernelLibrary categoriesFor: #queryPerformanceFrequency:!public!win32 functions-performance monitoring! !

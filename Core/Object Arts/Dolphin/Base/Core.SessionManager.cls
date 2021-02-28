@@ -259,10 +259,9 @@ defaultResourceLibrary
 	^resourceLibrary!
 
 embeddedStartup
-	"Private - The session has been started as an embedded session, perform appropriate
-	actions."
+	"Private - The session has been started as an embedded session, perform appropriate actions."
 
-	[[(Delay forMilliseconds: 1000) wait] repeat] forkAt: Processor systemBackgroundPriority!
+	[[KernelLibrary default overlappedSleepEx: 1000 bAlertable: true] repeat] forkAt: Processor systemBackgroundPriority!
 
 errorLogExtension
 	"Answer the suffix for an error log file"
@@ -629,12 +628,6 @@ onExit
 	self shutdown.
 	^true	"We don't allow cancel, but a subclass could answer false if it wanted"!
 
-onInputLanguageChanged: aWindowsEvent
-	"Private - The input language (keyboard) has been changed."
-
-	settingsChanged add: #('InputLang' 0).
-	inputState msgWindow setTimer: SettingsChangeTimerId interval: 1000!
-
 onPostSaveImage
 	"Private - Perform post-image save actions"
 
@@ -713,16 +706,8 @@ onStartup: args
 	done next. We also kill it to prevent any invalid termination running."
 	Processor activeProcess kill!
 
-onTimeChanged: aWindowsEvent
-	"Private - The system time has been changed. The notifications come in thick and fast because they are sent to every top-level
-	window. We consolidate them by queuing them up for coalescing any that arrive within a 1-second window."
-
-	settingsChanged add: #('Time' 0).
-	inputState msgWindow setTimer: SettingsChangeTimerId interval: 1000!
-
 onTimer: anInteger
-	anInteger == SettingsChangeTimerId
-		ifTrue: [self triggerSettingsChanged]!
+	"Do nothing by default - but see GUISessionManager"!
 
 onUnhandledError: anError
 	"The unhandled Error, anError, occurred in the active Process.
@@ -1108,12 +1093,6 @@ traceStream
 
 	^Processor activeProcess debugStream!
 
-triggerSettingsChanged
-	| pending |
-	pending := settingsChanged.
-	settingsChanged := Set new.
-	pending do: [:each | self trigger: #settingChanged: with: each]!
-
 unhandledException: anException
 	"Private - The unhandled Exception, anException, occurred in the active Process.
 	Depending on the user response and the resumability of the exception, either 
@@ -1243,13 +1222,11 @@ windowsDirectory
 !Core.SessionManager categoriesFor: #onCloseConsole!event handling!private! !
 !Core.SessionManager categoriesFor: #onConsoleCtrl:!event handling!private! !
 !Core.SessionManager categoriesFor: #onExit!event handling!public! !
-!Core.SessionManager categoriesFor: #onInputLanguageChanged:!event handling!private! !
 !Core.SessionManager categoriesFor: #onPostSaveImage!event handling!private! !
 !Core.SessionManager categoriesFor: #onPreSaveImage!event handling!private! !
 !Core.SessionManager categoriesFor: #onQueryWindowsShutdown!event handling!public! !
 !Core.SessionManager categoriesFor: #onQuit:!event handling!public! !
 !Core.SessionManager categoriesFor: #onStartup:!event handling!public! !
-!Core.SessionManager categoriesFor: #onTimeChanged:!event handling!private! !
 !Core.SessionManager categoriesFor: #onTimer:!event handling!private! !
 !Core.SessionManager categoriesFor: #onUnhandledError:!event handling!public! !
 !Core.SessionManager categoriesFor: #onUnhandledNotification:!event handling!public! !
@@ -1308,7 +1285,6 @@ windowsDirectory
 !Core.SessionManager categoriesFor: #trace:!operations-logging!public! !
 !Core.SessionManager categoriesFor: #traceLine:!operations-logging!public! !
 !Core.SessionManager categoriesFor: #traceStream!accessing!operations-logging!public! !
-!Core.SessionManager categoriesFor: #triggerSettingsChanged!event handling!private! !
 !Core.SessionManager categoriesFor: #unhandledException:!exceptions!private! !
 !Core.SessionManager categoriesFor: #unregisterConsoleCtrlHandler!operations!private! !
 !Core.SessionManager categoriesFor: #unregisterServer:!accessing!public! !

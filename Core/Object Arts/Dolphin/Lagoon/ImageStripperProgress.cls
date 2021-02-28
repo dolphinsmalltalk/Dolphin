@@ -126,7 +126,7 @@ forkProgressMonitor
 	pollingInterval := self monitorProgressPeriod.
 	progressProcess := 
 			[
-			[(Delay forMilliseconds: pollingInterval) wait.
+			[KernelLibrary default overlappedSleepEx: pollingInterval bAlertable: true.
 			self progress: self currentProgress] repeat]
 					forkAt: Processor userInterruptPriority!
 

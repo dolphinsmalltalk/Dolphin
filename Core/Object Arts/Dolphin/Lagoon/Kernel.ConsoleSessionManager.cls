@@ -36,6 +36,17 @@ basicTertiaryStartup
 
 	self embeddedStartup!
 
+initializeFromSessionManager: oldSessionManager
+	"Private - The receiver has taken take over as the current session manager from oldSessionManager. This is an opportunity to transfer state information from the replaced manager."
+
+	super initializeFromSessionManager: oldSessionManager.
+	"Console sessions don't trigger settingsChanged: events, so remove any subscriptions inherited from the old session"
+	self setEvents: (self getEvents
+				removeActionsForEvent: #settingChanged:;
+				shrink;
+				asMinimumRepresentation).
+	^self!
+
 isEmbedded
 	"Answer whether the session is running, or should be started, in 'embedded' 
 	mode (i.e. headless). This is an embedded session in so far as it has no GUI."
@@ -122,6 +133,7 @@ unhandledException: anException
 !Kernel.ConsoleSessionManager categoriesFor: #allocConsole!operations!private! !
 !Kernel.ConsoleSessionManager categoriesFor: #attachFd:stream:!helpers!private! !
 !Kernel.ConsoleSessionManager categoriesFor: #basicTertiaryStartup!operations-startup!public! !
+!Kernel.ConsoleSessionManager categoriesFor: #initializeFromSessionManager:!initializing!private! !
 !Kernel.ConsoleSessionManager categoriesFor: #isEmbedded!public!testing! !
 !Kernel.ConsoleSessionManager categoriesFor: #logError:!operations-logging!public! !
 !Kernel.ConsoleSessionManager categoriesFor: #onCloseConsole!event handling!private! !

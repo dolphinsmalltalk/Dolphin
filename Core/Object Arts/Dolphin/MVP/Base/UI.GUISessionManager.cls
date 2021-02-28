@@ -91,6 +91,12 @@ isUnattended
 
 	^flags allMask: UnattendedMask!
 
+onInputLanguageChanged: aWindowsEvent
+	"Private - The input language (keyboard) has been changed."
+
+	settingsChanged add: #('InputLang' 0).
+	inputState msgWindow setTimer: SettingsChangeTimerId interval: 1000!
+
 onSettingChanged: aSettingsChangeEvent
 	"Private - A system setting has been changed. This could be any of a wide range of things from a theme change,
 	regional settings, even policy. The notifications come in thick and fast because they are sent to every top-level
@@ -98,6 +104,17 @@ onSettingChanged: aSettingsChangeEvent
 
 	settingsChanged add: {aSettingsChangeEvent area. aSettingsChangeEvent uiAction}.
 	inputState msgWindow setTimer: SettingsChangeTimerId interval: 1000!
+
+onTimeChanged: aWindowsEvent
+	"Private - The system time has been changed. The notifications come in thick and fast because they are sent to every top-level
+	window. We consolidate them by queuing them up for coalescing any that arrive within a 1-second window."
+
+	settingsChanged add: #('Time' 0).
+	inputState msgWindow setTimer: SettingsChangeTimerId interval: 1000!
+
+onTimer: anInteger
+	anInteger == SettingsChangeTimerId
+		ifTrue: [self triggerSettingsChanged]!
 
 parseCmdLineFlags
 	| options |
@@ -167,6 +184,12 @@ topLevelWindowsInZOrder
 
 	^self inputState topLevelWindowsInZOrder select: [:w | w isPersistentView]!
 
+triggerSettingsChanged
+	| pending |
+	pending := settingsChanged.
+	settingsChanged := Set new.
+	pending do: [:each | self trigger: #settingChanged: with: each]!
+
 windowSystemShutdown
 	"Private - Terminate the window system to release resources prior to exit. Much of this
 	isn't strictly necessary in a 32-bit application, but it's nice to wipe."
@@ -187,7 +210,10 @@ windowSystemStartup
 !UI.GUISessionManager categoriesFor: #disableWindowGhosting!helpers!public! !
 !UI.GUISessionManager categoriesFor: #inputStateClass!constants!private! !
 !UI.GUISessionManager categoriesFor: #isUnattended!public!testing! !
+!UI.GUISessionManager categoriesFor: #onInputLanguageChanged:!event handling!private! !
 !UI.GUISessionManager categoriesFor: #onSettingChanged:!event handling!private! !
+!UI.GUISessionManager categoriesFor: #onTimeChanged:!event handling!private! !
+!UI.GUISessionManager categoriesFor: #onTimer:!event handling!private! !
 !UI.GUISessionManager categoriesFor: #parseCmdLineFlags!operations-startup!private! !
 !UI.GUISessionManager categoriesFor: #resourceManager!accessing!public! !
 !UI.GUISessionManager categoriesFor: #restoreWindowState!operations-startup!private! !
@@ -198,6 +224,7 @@ windowSystemStartup
 !UI.GUISessionManager categoriesFor: #tertiaryStartup!operations-startup!public! !
 !UI.GUISessionManager categoriesFor: #topLevelWindows!accessing!public! !
 !UI.GUISessionManager categoriesFor: #topLevelWindowsInZOrder!accessing!public! !
+!UI.GUISessionManager categoriesFor: #triggerSettingsChanged!event handling!private! !
 !UI.GUISessionManager categoriesFor: #windowSystemShutdown!operations-shutdown!private! !
 !UI.GUISessionManager categoriesFor: #windowSystemStartup!operations-startup!private! !
 

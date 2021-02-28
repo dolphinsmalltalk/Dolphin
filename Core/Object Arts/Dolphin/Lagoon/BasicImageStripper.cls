@@ -36,7 +36,7 @@ basicDeleteClass: aClass
 	[aClass uninitializeBeforeRemove] on: Error
 		do: 
 			[:x |
-			self deploymentContext
+			self
 				logElement: 'Error'
 				attributes: {'class' -> x class fullName}
 				value: 'Error uninitializing ' , aClass fullName , ': ' , x description].
@@ -84,7 +84,7 @@ compileExternalStructuresNow: aCollection
 	message for a field that is not normally compiled."
 
 	self notify: 'Fully compiling ExternalStructures'.
-	self startElement: #() attributes: 'CompileExternalStructures'.
+	self startElement: 'CompileExternalStructures' attributes: #().
 	self systemPackageManager noEventsDo: 
 			[aCollection do: [:each | each fullyCompileDefinition].
 			"Lazy template definition is not required (or possible), so stub it out"
@@ -103,7 +103,7 @@ defineExternalStructures: aCollection
 	otherwise be triggered in a run-time image should the size be lazily determined."
 
 	self notify: 'Building all ExternalStructure templates'.
-	self deploymentContext
+	self
 		logElement: 'DefineExternalStructures'
 		attributes: #()
 		value: nil.
@@ -120,15 +120,14 @@ deleteClasses: aCollection reason: aString
 	| count |
 	aCollection isEmpty ifTrue: [^0].
 	count := 0.
-	self deploymentContext startElement: 'StripClasses' attributes: {'reason' -> aString}.
-	aCollection reverseDo: [:each | count := count + (self deleteClass: each)].
+	self startElement: 'StripClasses' attributes: {'reason' -> aString}.
+	aCollection do: [:each | count := count + (self deleteClass: each)].
 	self endElement: count > 0.
 	^count!
 
 deleteFieldClasses
 	self assert: [self systemPackageManager isProcessingEvents].
-	self deploymentContext startElement: 'StripClasses'
-		attributes: {'reason' -> 'structure field descriptors'}.
+	self startElement: 'StripClasses' attributes: {'reason' -> 'structure field descriptors'}.
 	#{Smalltalk.ExternalField} undeclare.
 	#(#{External.Field} #{External.ArrayFieldLength})
 		do: [:each | self uncheckedDeleteClass: each value].
@@ -146,7 +145,7 @@ deleteMethodSoft: aCompiledMethod
 	^false!
 
 deleteResource: aResourceIdentifier
-	self deploymentContext
+	self
 		logElement: 'RemoveResource'
 		attributes: {'owningClass' -> aResourceIdentifier owningClass fullName}
 		value: aResourceIdentifier name.
@@ -154,7 +153,7 @@ deleteResource: aResourceIdentifier
 
 deleteResources: aCollection reason: aString
 	aCollection isEmpty ifTrue: [^0].
-	self deploymentContext startElement: 'StripResources' attributes: {'reason' -> aString}.
+	self startElement: 'StripResources' attributes: {'reason' -> aString}.
 	aCollection do: [:each | self deleteResource: each].
 	self endElement: true.
 	^aCollection size!
@@ -165,7 +164,7 @@ deploymentContext
 destroyAndRemoveProgress
 	"Private - Destroy the progress view and remove its class if possible."
 
-	self deploymentContext
+	self
 		logElement: 'CloseProgressDialog'
 		attributes: #()
 		value: nil.
@@ -219,7 +218,7 @@ emptySystemDictionary
 	in place to ensure STB can still locate the appropriate class for these."
 
 	| globals |
-	self deploymentContext startElement: 'EmptySystemDictionary' attributes: #().
+	self startElement: 'EmptySystemDictionary' attributes: #().
 	globals := OrderedCollection new.
 	Root allBindingsDo: 
 			[:each |
@@ -227,7 +226,7 @@ emptySystemDictionary
 				ifTrue: [globals add: each]].
 	globals do: 
 			[:each |
-			self deploymentContext
+			self
 				logElement: 'Global'
 				attributes: #()
 				value: each key.
@@ -237,6 +236,9 @@ emptySystemDictionary
 
 endElement: aBoolean
 	self deploymentContext endElement: aBoolean!
+
+endTag
+	self deploymentContext endTag!
 
 externalStructureClasses
 	^External.Structure withAllSubclasses!
@@ -288,8 +290,14 @@ foldDuplicateStrings
 		folded: a first - a second
 		total: a first!
 
+logComment: aString
+	self deploymentContext logComment: aString!
+
+logElement: aString attributes: aCollection value: anObject
+	self deploymentContext logElement: aString attributes: aCollection value: anObject!
+
 logFold: aString folded: count total: total
-	self deploymentContext
+	self
 		startElement: aString attributes: #();
 		logElement: 'Total'
 			attributes: #()
@@ -300,7 +308,7 @@ logFold: aString folded: count total: total
 		endElement: true!
 
 logMethod: aCompiledMethod
-	self deploymentContext
+	self
 		logElement: 'Method'
 		attributes: {'methodClass' -> aCompiledMethod methodClass fullName}
 		value: aCompiledMethod selector!
@@ -351,7 +359,7 @@ prepareExternalStructures
 	"Private - Fully compile all ExternalStructure subclasses if required. They must already
 	have fully defined templates."
 
-	| structs |
+	| structs defineFields |
 	structs := self externalStructureClasses.
 	self defineExternalStructures: structs.
 	self startElement: 'PrepareExternalStructures' attributes: #().
@@ -368,8 +376,13 @@ prepareExternalStructures
 				removeMethods: (each asMethodCategory methodsInBehavior: External.Structure class)
 				reason: 'structure definition: ' , each
 				force: true].
-	"Remove any remaining defineFields methods that might have not been correctly categorised"
-	structs do: [:each | self removeSelectors: #(#defineFields) of: each class].
+	"Remove all Structure defineFields methods"
+	defineFields := IdentitySet new.
+	structs do: [:each | defineFields add: (each class compiledMethodAt: #defineFields ifAbsent: [])].
+	self
+		removeMethods: defineFields
+		reason: 'structure definition: defineFields'
+		force: true.
 	self endElement: true.
 	self
 		finishedWithAll: #(#compileExternalStructures #compileExternalStructuresNow: #defineExternalStructures: #prepareExternalStructures #externalStructureClasses)!
@@ -389,7 +402,7 @@ removeCategoryManagement
 	"Private - Remove categories information"
 
 	self notify: 'Removing code categories'.
-	self deploymentContext
+	self
 		logElement: 'RemoveCategoryManagement'
 		attributes: #()
 		value: nil.
@@ -436,7 +449,7 @@ removeClassMetaInfo
 
 					"If retaining inst vars, they are collapsed into a string for compactness"
 					each instanceVariableString: (keepInstVars ifTrue: [each instanceVariableString])].
-			self deploymentContext endTag]!
+			self endTag]!
 
 removeClassUninstallation: aCollection
 	"Private - Removal of classes has finished. If the image doesn't have the ClassBuilder in it, 
@@ -458,7 +471,7 @@ removeClassUninstallation: aCollection
 removeDevelopmentInfo
 	"Private - Remove development structures, etc."
 
-	self deploymentContext startElement: 'StripDevelopmentInfo' attributes: #().
+	self startElement: 'StripDevelopmentInfo' attributes: #().
 	self removeCategoryManagement.
 	self removeProtocolManagement.
 	#{SmalltalkSystem} ifDefined: [:smsys | smsys reset].
@@ -594,7 +607,7 @@ removeProtocolManagement
 	themselves are removed, not the list of protocol names stored in each
 	class."
 
-	self deploymentContext
+	self
 		logElement: 'RemoveMethodProtocols'
 		attributes: #()
 		value: nil.
@@ -652,7 +665,7 @@ removeRedundantObjects: stripResources id: anInteger
 
 	
 	[| continue |
-	self deploymentContext startElement: 'StripCycle' attributes: {'id' -> anInteger}.
+	self startElement: 'StripCycle' attributes: {'id' -> anInteger}.
 	continue := (self
 				removeRedundantClassesAndResources: (stripResources and: [self shouldRemoveResources]))
 					+ self removeRedundantMethods > 0.
@@ -684,11 +697,10 @@ removeRedundantPackages
 	self startElement: 'RedundantPackages' attributes: #().
 	(redundantPackages asSortedCollection: [:a :b | a name < b name]) do: 
 			[:each |
-			self deploymentContext
+			self
 				logElement: 'Package'
 				attributes: #()
-				value: each.
-			self].
+				value: each].
 	self endElement: true.
 	self notify: 'Removing unwanted packages'.
 	self startElement: 'StripPackages' attributes: #().
@@ -735,6 +747,13 @@ shouldPreserveMethod: aCompiledMethod
 
 shouldRemoveResources
 	^self stripRedundantResources!
+
+shrinkEventsOf: anObject
+	anObject setEvents: (anObject getEvents ifNotNil: [:subs | subs shrink asMinimumRepresentation])!
+
+shrinkEventsRegister
+	_EventsRegister keys do: [:each | self shrinkEventsOf: each].
+	self shrinkEventsOf: SessionManager current!
 
 speciallySentMessages
 	"Private - A number of messages can be sent without  appearing in the literal
@@ -812,7 +831,15 @@ systemPackageManager
 uncheckedDeleteClass: aClass
 	| removed |
 	removed := aClass allSubclasses inject: 0 into: [:sum :each | sum + (self deleteClass: each)].	"First remove subclasses"
-	self deploymentContext
+	"Remove any nested classes"
+	aClass bindingsDo: 
+			[:each |
+			| value |
+			(each isClassVariable not and: 
+					[value := each value.
+					value class isMeta and: [value environment == aClass]])
+				ifTrue: [removed := removed + (self deleteClass: value)]].
+	self
 		logElement: 'RemoveClass'
 		attributes: #()
 		value: aClass fullName.
@@ -859,10 +886,13 @@ verifyRequiredPackages
 !BasicImageStripper categoriesFor: #emptyMethodDictionariesOfStubbornClasses!public!testing! !
 !BasicImageStripper categoriesFor: #emptySystemDictionary!operations!private! !
 !BasicImageStripper categoriesFor: #endElement:!logging!private! !
+!BasicImageStripper categoriesFor: #endTag!logging!private! !
 !BasicImageStripper categoriesFor: #externalStructureClasses!accessing!private! !
 !BasicImageStripper categoriesFor: #finishedWithAll:!operations!private! !
 !BasicImageStripper categoriesFor: #foldDuplicateBytecodes!operations!private! !
 !BasicImageStripper categoriesFor: #foldDuplicateStrings!operations!private! !
+!BasicImageStripper categoriesFor: #logComment:!logging!private! !
+!BasicImageStripper categoriesFor: #logElement:attributes:value:!logging!private! !
 !BasicImageStripper categoriesFor: #logFold:folded:total:!operations!private! !
 !BasicImageStripper categoriesFor: #logMethod:!operations!private! !
 !BasicImageStripper categoriesFor: #messagesSentByClasses:!helpers!private! !
@@ -897,6 +927,8 @@ verifyRequiredPackages
 !BasicImageStripper categoriesFor: #rootClasses!accessing!private! !
 !BasicImageStripper categoriesFor: #shouldPreserveMethod:!private!removing! !
 !BasicImageStripper categoriesFor: #shouldRemoveResources!private!testing! !
+!BasicImageStripper categoriesFor: #shrinkEventsOf:!operations!private! !
+!BasicImageStripper categoriesFor: #shrinkEventsRegister!helpers!private! !
 !BasicImageStripper categoriesFor: #speciallySentMessages!configuration!private! !
 !BasicImageStripper categoriesFor: #startElement:attributes:!logging!private! !
 !BasicImageStripper categoriesFor: #stbSaveOn:!binary filing!public! !
