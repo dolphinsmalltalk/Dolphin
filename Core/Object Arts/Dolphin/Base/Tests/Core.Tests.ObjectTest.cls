@@ -63,7 +63,7 @@ testEventCollectionWeakness
 	target := nil.
 	MemoryManager current collectGarbage.
 	self shouldnt: [source trigger: #error: with: 'ignored'] raise: Error.
-	self assert: (source events at: #error:) isEmpty!
+	self deny: (source events hasActionsForEvent: #error:)!
 
 testIfNilAndIfNotNil
 	| obj evaluated |

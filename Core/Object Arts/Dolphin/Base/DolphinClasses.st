@@ -2301,6 +2301,12 @@ Core.Object subclass: #'Kernel.Namespace'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+Core.Object subclass: #'Kernel.NullEventsCollection'
+	instanceVariableNames: ''
+	classVariableNames: 'Current'
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
 Core.Object subclass: #'Kernel.ObjectRegistry'
 	instanceVariableNames: 'registry'
 	classVariableNames: ''
@@ -3023,12 +3029,6 @@ Core.SharedLookupTable variableSubclass: #'Core.WeakLookupTable'
 Core.SharedIdentityDictionary variableSubclass: #'Kernel.EventsCollection'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-Kernel.EventsCollection variableSubclass: #'Kernel.NullEventsCollection'
-	instanceVariableNames: ''
-	classVariableNames: 'Current'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!

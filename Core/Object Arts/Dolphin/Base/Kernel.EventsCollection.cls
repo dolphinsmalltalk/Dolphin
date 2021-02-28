@@ -99,3 +99,5 @@ triggerEvent: aSymbol withArguments: anArray
 !Kernel.EventsCollection categoriesFor: #triggerEvent:with:with:!debugger-step through!private!triggering! !
 !Kernel.EventsCollection categoriesFor: #triggerEvent:withArguments:!debugger-step through!private!triggering! !
 
+Kernel.EventsCollection methodProtocol: #eventsCollection attributes: #(#readOnly) selectors: #(#addEvent:action: #asMinimumRepresentation #hasActionsForEvent: #removeActionsForEvent: #removeEventsTriggeredFor: #shrink #triggerEvent: #triggerEvent:with: #triggerEvent:with:with: #triggerEvent:withArguments:)!
+
