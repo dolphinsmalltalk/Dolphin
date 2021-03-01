@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-UI.Shell subclass: #WebBrowserShell
+UI.Shell subclass: #'OS.COM.Examples.WebBrowserShell'
 	instanceVariableNames: 'address browser statusModel commandStates'
 	classVariableNames: ''
-	imports: #(#{SHDocVw private})
+	imports: #(#{SHDocVw private} #{UI})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-WebBrowserShell guid: (Core.GUID fromString: '{840f8a35-998b-4346-ab86-95db62f03a47}')!
-WebBrowserShell comment: 'WebBrowserShell is a simple web browser application built around the Microsoft Web Browser control (the basis of Internet Explorer).
+OS.COM.Examples.WebBrowserShell guid: (Core.GUID fromString: '{840f8a35-998b-4346-ab86-95db62f03a47}')!
+OS.COM.Examples.WebBrowserShell comment: 'WebBrowserShell is a simple web browser application built around the Microsoft Web Browser control (the basis of Internet Explorer).
 
 This sample does wire up to a few events from the brower control (mainly for illustrative purposes), but if you want to learn more about what events are fired and when it is recommended that you monitor the behaviour of the control using the ''Active-X Control Browser'' tool.
 
@@ -20,8 +20,8 @@ Instance Variables:
 	statusModel	<ValueHolder>. Model to hold status text updated by events from the explorer control.
 
 '!
-!WebBrowserShell categoriesForClass!Samples! !
-!WebBrowserShell methodsFor!
+!OS.COM.Examples.WebBrowserShell categoriesForClass!Samples! !
+!OS.COM.Examples.WebBrowserShell methodsFor!
 
 createComponents
 	"Create the presenters contained by the receiver"
@@ -175,24 +175,24 @@ queryCommand: query
 
 	^super queryCommand: query.
 ! !
-!WebBrowserShell categoriesFor: #createComponents!initializing!public! !
-!WebBrowserShell categoriesFor: #createSchematicWiring!initializing!public! !
-!WebBrowserShell categoriesFor: #historyBack:!commands!public! !
-!WebBrowserShell categoriesFor: #historyForward:!commands!public! !
-!WebBrowserShell categoriesFor: #home!commands!public! !
-!WebBrowserShell categoriesFor: #homePage!commands!private! !
-!WebBrowserShell categoriesFor: #initialize!initializing!private! !
-!WebBrowserShell categoriesFor: #navigate!commands!public! !
-!WebBrowserShell categoriesFor: #OnBeforeNavigate2:URL:Flags:TargetFrameName:PostData:Headers:Cancel:!event handling!public! !
-!WebBrowserShell categoriesFor: #OnCommandStateChange:Enable:!event handling!public! !
-!WebBrowserShell categoriesFor: #OnDocumentComplete:URL:!event handling!public! !
-!WebBrowserShell categoriesFor: #OnNavigateComplete2:URL:!event handling!public! !
-!WebBrowserShell categoriesFor: #OnNewWindow2:Cancel:!event handling!public! !
-!WebBrowserShell categoriesFor: #onViewOpened!event handling!public! !
-!WebBrowserShell categoriesFor: #openUrl:!operations!public! !
-!WebBrowserShell categoriesFor: #queryCommand:!commands!public! !
+!OS.COM.Examples.WebBrowserShell categoriesFor: #createComponents!initializing!public! !
+!OS.COM.Examples.WebBrowserShell categoriesFor: #createSchematicWiring!initializing!public! !
+!OS.COM.Examples.WebBrowserShell categoriesFor: #historyBack:!commands!public! !
+!OS.COM.Examples.WebBrowserShell categoriesFor: #historyForward:!commands!public! !
+!OS.COM.Examples.WebBrowserShell categoriesFor: #home!commands!public! !
+!OS.COM.Examples.WebBrowserShell categoriesFor: #homePage!commands!private! !
+!OS.COM.Examples.WebBrowserShell categoriesFor: #initialize!initializing!private! !
+!OS.COM.Examples.WebBrowserShell categoriesFor: #navigate!commands!public! !
+!OS.COM.Examples.WebBrowserShell categoriesFor: #OnBeforeNavigate2:URL:Flags:TargetFrameName:PostData:Headers:Cancel:!event handling!public! !
+!OS.COM.Examples.WebBrowserShell categoriesFor: #OnCommandStateChange:Enable:!event handling!public! !
+!OS.COM.Examples.WebBrowserShell categoriesFor: #OnDocumentComplete:URL:!event handling!public! !
+!OS.COM.Examples.WebBrowserShell categoriesFor: #OnNavigateComplete2:URL:!event handling!public! !
+!OS.COM.Examples.WebBrowserShell categoriesFor: #OnNewWindow2:Cancel:!event handling!public! !
+!OS.COM.Examples.WebBrowserShell categoriesFor: #onViewOpened!event handling!public! !
+!OS.COM.Examples.WebBrowserShell categoriesFor: #openUrl:!operations!public! !
+!OS.COM.Examples.WebBrowserShell categoriesFor: #queryCommand:!commands!public! !
 
-!WebBrowserShell class methodsFor!
+!OS.COM.Examples.WebBrowserShell class methodsFor!
 
 displayOn: aPuttableStream
 	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that an end-user might want to see."
@@ -231,9 +231,9 @@ shutdownOnExit
 	"Answer whether a runtime session should be shutdown when an instance of the receiver is closed."
 
 	^true! !
-!WebBrowserShell class categoriesFor: #displayOn:!printing!public! !
-!WebBrowserShell class categoriesFor: #icon!constants!public! !
-!WebBrowserShell class categoriesFor: #initialize!development!initializing!private! !
-!WebBrowserShell class categoriesFor: #resource_Default_view!public!resources-views! !
-!WebBrowserShell class categoriesFor: #shutdownOnExit!public!testing! !
+!OS.COM.Examples.WebBrowserShell class categoriesFor: #displayOn:!printing!public! !
+!OS.COM.Examples.WebBrowserShell class categoriesFor: #icon!constants!public! !
+!OS.COM.Examples.WebBrowserShell class categoriesFor: #initialize!development!initializing!private! !
+!OS.COM.Examples.WebBrowserShell class categoriesFor: #resource_Default_view!public!resources-views! !
+!OS.COM.Examples.WebBrowserShell class categoriesFor: #shutdownOnExit!public!testing! !
 
