@@ -1,21 +1,23 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Net.Tests.AbstractSocketTest subclass: #'Net.Tests.Socket2Test'
+Net.Tests.AbstractSocketTest subclass: #'Net.Tests.SocketTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Net.Tests.Socket2Test guid: (Core.GUID fromString: '{25407553-d303-4d50-ad3d-b05b28a27c47}')!
-Net.Tests.Socket2Test comment: ''!
-!Net.Tests.Socket2Test categoriesForClass!Unclassified! !
-!Net.Tests.Socket2Test methodsFor!
+Net.Tests.SocketTest guid: (Core.GUID fromString: '{25407553-d303-4d50-ad3d-b05b28a27c47}')!
+Net.Tests.SocketTest comment: ''!
+!Net.Tests.SocketTest categoriesForClass!Unclassified! !
+!Net.Tests.SocketTest methodsFor!
 
 clientSocketClass
-	^Socket2!
+	"Qualified name is not necessary here, but is specified for clarity that this is testing the more recent blocking sockets based on overlapped calls."
+
+	^Net.Socket!
 
 serverSocketClass
-	^ServerSocket2!
+	^Net.ServerSocket!
 
 testBindReuseFailure
 	| s1 s2 |
@@ -134,14 +136,14 @@ testSTBMessages
 	ready wait.
 	messages := messages asArray.
 	self assert: messages equals: sent! !
-!Net.Tests.Socket2Test categoriesFor: #clientSocketClass!constants!private! !
-!Net.Tests.Socket2Test categoriesFor: #serverSocketClass!constants!private!unit tests! !
-!Net.Tests.Socket2Test categoriesFor: #testBindReuseFailure!public!unit tests! !
-!Net.Tests.Socket2Test categoriesFor: #testConnectFailure!public!unit tests! !
-!Net.Tests.Socket2Test categoriesFor: #testListenUnbound!public!unit tests! !
-!Net.Tests.Socket2Test categoriesFor: #testPeerAddress!public!unit tests! !
-!Net.Tests.Socket2Test categoriesFor: #testPeerAddressNotConnected!public!unit tests! !
-!Net.Tests.Socket2Test categoriesFor: #testQueryPort!public!unit tests! !
-!Net.Tests.Socket2Test categoriesFor: #testQueryPortUnbound!public!unit tests! !
-!Net.Tests.Socket2Test categoriesFor: #testSTBMessages!public!unit tests! !
+!Net.Tests.SocketTest categoriesFor: #clientSocketClass!constants!private! !
+!Net.Tests.SocketTest categoriesFor: #serverSocketClass!constants!private!unit tests! !
+!Net.Tests.SocketTest categoriesFor: #testBindReuseFailure!public!unit tests! !
+!Net.Tests.SocketTest categoriesFor: #testConnectFailure!public!unit tests! !
+!Net.Tests.SocketTest categoriesFor: #testListenUnbound!public!unit tests! !
+!Net.Tests.SocketTest categoriesFor: #testPeerAddress!public!unit tests! !
+!Net.Tests.SocketTest categoriesFor: #testPeerAddressNotConnected!public!unit tests! !
+!Net.Tests.SocketTest categoriesFor: #testQueryPort!public!unit tests! !
+!Net.Tests.SocketTest categoriesFor: #testQueryPortUnbound!public!unit tests! !
+!Net.Tests.SocketTest categoriesFor: #testSTBMessages!public!unit tests! !
 

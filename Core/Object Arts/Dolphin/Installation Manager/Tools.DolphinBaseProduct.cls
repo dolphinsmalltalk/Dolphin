@@ -118,6 +118,7 @@ contents
 
 	"More Samples"
 	contents
+		add: #('Core\Object Arts\Samples\Sockets\Net Examples.pax' #plain #imageBased);
 		add: #('Core\Object Arts\Samples\Sockets\Chat\Chat.pax' #plain #imageBased).
 
 	"XmlPad Sample"

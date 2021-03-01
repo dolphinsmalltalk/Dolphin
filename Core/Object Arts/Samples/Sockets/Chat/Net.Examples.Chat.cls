@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-UI.Presenter subclass: #Chat
+UI.Presenter subclass: #'Net.Examples.Chat'
 	instanceVariableNames: 'calleeAddress outgoingMessage messageDisplay status socket acceptSocket sendQueue outgoingPort incomingPort'
 	classVariableNames: 'Statii'
-	imports: #()
+	imports: #(#{UI})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Chat guid: (Core.GUID fromString: '{87b4c699-026e-11d3-9fd7-00a0cc3e4a32}')!
-Chat comment: 'Chat is a <compositePresenter> implementing a simple "chat" service for the purpose of demonstrating the use of the new blocking Dolphin Sockets API. It has a multi-threaded design that would be appropriate for more complex socket client/server applications too. Finally Chat illustrates the use of STB-based messaging, which provides for a simple and efficient way to transmit and receive objects over a socket connection. An instance can be opened on any machine running TCP/IP using:
+Net.Examples.Chat guid: (Core.GUID fromString: '{87b4c699-026e-11d3-9fd7-00a0cc3e4a32}')!
+Net.Examples.Chat comment: 'Chat is a <compositePresenter> implementing a simple "chat" service for the purpose of demonstrating the use of the new blocking Dolphin Sockets API. It has a multi-threaded design that would be appropriate for more complex socket client/server applications too. Finally Chat illustrates the use of STB-based messaging, which provides for a simple and efficient way to transmit and receive objects over a socket connection. An instance can be opened on any machine running TCP/IP using:
 
 ```
 	Chat show.
@@ -39,14 +39,14 @@ Instance Variables:
 	acceptSocket		<ServerSocket2> used to wait for a connection.
 	sendQueue			<SharedQueue> in which outgoing messages are queued for the sender thread.
 '!
-!Chat categoriesForClass!MVP-Presenters!Samples! !
-!Chat methodsFor!
+!Net.Examples.Chat categoriesForClass!MVP-Presenters!Samples! !
+!Net.Examples.Chat methodsFor!
 
 acceptCalls
 	"Private - Monitor the port for a connection request. If the port is already in use then we'll
 	receive an error and can display an 'Unable to receive calls' status message."
 
-	acceptSocket := [Net.ServerSocket2 port: self incomingPort backlog: 0] on: Net.SocketError
+	acceptSocket := [Net.ServerSocket port: self incomingPort backlog: 0] on: Net.SocketError
 				do: [:ex | nil].
 	self setAcceptStatus.
 	acceptSocket isNil ifFalse: [self forkAccepter]!
@@ -66,7 +66,7 @@ calleeAddress
 	"Answer the proposed connection address. If the address starts with a digit we'll assume
 	that it is an IP address. Otherwise let's assume a host name"
 
-	^Net.InternetAddress fromString: calleeAddress value!
+	^InternetAddress fromString: calleeAddress value!
 
 canConnect
 	"Answer true if the receiver could attempt a connect. This is the case if we are not already
@@ -80,7 +80,7 @@ canConnect
 	acceptSocket isNil ifTrue: [^true].
 	self incomingPort = self outgoingPort ifFalse: [^true].
 	"Check not attempting to connect to self..."
-	localHost := Net.InternetAddress localHost.
+	localHost := InternetAddress localHost.
 	^({localHost displayString asLowercase. localHost ipString. '127.0.0.1'. 'localhost'}
 		includes: addr displayString asLowercase) not!
 
@@ -105,7 +105,7 @@ connect
 	until some response is received from the connection request."
 
 	| sock |
-	sock := Net.Socket2 port: self outgoingPort address: self calleeAddress.
+	sock := Net.Socket port: self outgoingPort address: self calleeAddress.
 	self status: #connecting.
 	self invalidateUserInterface.
 	self forkConnector: sock!
@@ -323,7 +323,7 @@ receiveMessagesOn: aStream
 	[| filer validClasses |
 	"The messages are a pair of strings in an Assocation. We don't allow any other objects to be deserialised."
 	validClasses := Set withAll: { Association fullName. AnsiString fullName. Utf8String fullName. Utf16String fullName }.
-	filer := (STBValidatingInFiler on: aStream)
+	filer := (Kernel.STBValidatingInFiler on: aStream)
 				validationBlock: [:className | validClasses includes: className];
 				yourself.
 	
@@ -332,7 +332,7 @@ receiveMessagesOn: aStream
 	self enqueueInboundMessage: message.
 	filer stream atEnd]
 			whileFalse: [filer reset]]
-			on: Stream endOfStreamSignal , STBError
+			on: Stream endOfStreamSignal , Kernel.STBError
 			do: [:ex | ]!
 
 send
@@ -354,7 +354,7 @@ senderMain
 
 	
 	[| filer |
-	filer := STBOutFiler on: socket writeStream.
+	filer := Kernel.STBOutFiler on: socket writeStream.
 	
 	[| msg |
 	msg := sendQueue next.
@@ -419,53 +419,53 @@ validateUserInterface
 	super validateUserInterface.
 	calleeAddress view isEnabled: self isIdle.
 	outgoingMessage view isEnabled: self isConnected! !
-!Chat categoriesFor: #acceptCalls!operations!private! !
-!Chat categoriesFor: #appendMessage:!operations!private! !
-!Chat categoriesFor: #calleeAddress!accessing!public! !
-!Chat categoriesFor: #canConnect!public!testing! !
-!Chat categoriesFor: #closeConnection!operations!private! !
-!Chat categoriesFor: #connect!commands!public! !
-!Chat categoriesFor: #connectFailed:!helpers!private! !
-!Chat categoriesFor: #createComponents!initializing!public! !
-!Chat categoriesFor: #createSchematicWiring!initializing!public! !
-!Chat categoriesFor: #defaultPort!accessing!constants!public! !
-!Chat categoriesFor: #disconnect!commands!public! !
-!Chat categoriesFor: #dontAcceptCalls!operations!private! !
-!Chat categoriesFor: #enqueueConnected:!operations!private! !
-!Chat categoriesFor: #enqueueDisconnect!helpers!private! !
-!Chat categoriesFor: #enqueueDisconnected!helpers!private! !
-!Chat categoriesFor: #enqueueInboundMessage:!helpers!private! !
-!Chat categoriesFor: #enqueueOutboundMessage:!helpers!private! !
-!Chat categoriesFor: #forkAccepter!operations!private! !
-!Chat categoriesFor: #forkConnector:!operations!private! !
-!Chat categoriesFor: #forkReceiverOn:!private! !
-!Chat categoriesFor: #forkSender!helpers!private! !
-!Chat categoriesFor: #incomingPort!accessing!public! !
-!Chat categoriesFor: #incomingPort:!accessing!public! !
-!Chat categoriesFor: #isBusy!event handling!public! !
-!Chat categoriesFor: #isConnected!public!testing! !
-!Chat categoriesFor: #isIdle!public!testing! !
-!Chat categoriesFor: #messageReceived:!operations!private! !
-!Chat categoriesFor: #onGetCursor:!event handling!public! !
-!Chat categoriesFor: #onStartup!event handling!private! !
-!Chat categoriesFor: #onViewClosed!event handling!private! !
-!Chat categoriesFor: #onViewOpened!event handling!private! !
-!Chat categoriesFor: #outgoingPort!accessing!public! !
-!Chat categoriesFor: #outgoingPort:!accessing!public! !
-!Chat categoriesFor: #peerAddress!private! !
-!Chat categoriesFor: #queryCommand:!commands!private! !
-!Chat categoriesFor: #receiveMessagesOn:!private! !
-!Chat categoriesFor: #send!commands!public! !
-!Chat categoriesFor: #senderMain!operations!private! !
-!Chat categoriesFor: #setAcceptStatus!operations!private! !
-!Chat categoriesFor: #socketConnected:!helpers!private! !
-!Chat categoriesFor: #socketDisconnected!helpers!private! !
-!Chat categoriesFor: #status!accessing!public! !
-!Chat categoriesFor: #status:!accessing!public! !
-!Chat categoriesFor: #userName!operations!private! !
-!Chat categoriesFor: #validateUserInterface!operations!public! !
+!Net.Examples.Chat categoriesFor: #acceptCalls!operations!private! !
+!Net.Examples.Chat categoriesFor: #appendMessage:!operations!private! !
+!Net.Examples.Chat categoriesFor: #calleeAddress!accessing!public! !
+!Net.Examples.Chat categoriesFor: #canConnect!public!testing! !
+!Net.Examples.Chat categoriesFor: #closeConnection!operations!private! !
+!Net.Examples.Chat categoriesFor: #connect!commands!public! !
+!Net.Examples.Chat categoriesFor: #connectFailed:!helpers!private! !
+!Net.Examples.Chat categoriesFor: #createComponents!initializing!public! !
+!Net.Examples.Chat categoriesFor: #createSchematicWiring!initializing!public! !
+!Net.Examples.Chat categoriesFor: #defaultPort!accessing!constants!public! !
+!Net.Examples.Chat categoriesFor: #disconnect!commands!public! !
+!Net.Examples.Chat categoriesFor: #dontAcceptCalls!operations!private! !
+!Net.Examples.Chat categoriesFor: #enqueueConnected:!operations!private! !
+!Net.Examples.Chat categoriesFor: #enqueueDisconnect!helpers!private! !
+!Net.Examples.Chat categoriesFor: #enqueueDisconnected!helpers!private! !
+!Net.Examples.Chat categoriesFor: #enqueueInboundMessage:!helpers!private! !
+!Net.Examples.Chat categoriesFor: #enqueueOutboundMessage:!helpers!private! !
+!Net.Examples.Chat categoriesFor: #forkAccepter!operations!private! !
+!Net.Examples.Chat categoriesFor: #forkConnector:!operations!private! !
+!Net.Examples.Chat categoriesFor: #forkReceiverOn:!private! !
+!Net.Examples.Chat categoriesFor: #forkSender!helpers!private! !
+!Net.Examples.Chat categoriesFor: #incomingPort!accessing!public! !
+!Net.Examples.Chat categoriesFor: #incomingPort:!accessing!public! !
+!Net.Examples.Chat categoriesFor: #isBusy!event handling!public! !
+!Net.Examples.Chat categoriesFor: #isConnected!public!testing! !
+!Net.Examples.Chat categoriesFor: #isIdle!public!testing! !
+!Net.Examples.Chat categoriesFor: #messageReceived:!operations!private! !
+!Net.Examples.Chat categoriesFor: #onGetCursor:!event handling!public! !
+!Net.Examples.Chat categoriesFor: #onStartup!event handling!private! !
+!Net.Examples.Chat categoriesFor: #onViewClosed!event handling!private! !
+!Net.Examples.Chat categoriesFor: #onViewOpened!event handling!private! !
+!Net.Examples.Chat categoriesFor: #outgoingPort!accessing!public! !
+!Net.Examples.Chat categoriesFor: #outgoingPort:!accessing!public! !
+!Net.Examples.Chat categoriesFor: #peerAddress!private! !
+!Net.Examples.Chat categoriesFor: #queryCommand:!commands!private! !
+!Net.Examples.Chat categoriesFor: #receiveMessagesOn:!private! !
+!Net.Examples.Chat categoriesFor: #send!commands!public! !
+!Net.Examples.Chat categoriesFor: #senderMain!operations!private! !
+!Net.Examples.Chat categoriesFor: #setAcceptStatus!operations!private! !
+!Net.Examples.Chat categoriesFor: #socketConnected:!helpers!private! !
+!Net.Examples.Chat categoriesFor: #socketDisconnected!helpers!private! !
+!Net.Examples.Chat categoriesFor: #status!accessing!public! !
+!Net.Examples.Chat categoriesFor: #status:!accessing!public! !
+!Net.Examples.Chat categoriesFor: #userName!operations!private! !
+!Net.Examples.Chat categoriesFor: #validateUserInterface!operations!public! !
 
-!Chat class methodsFor!
+!Net.Examples.Chat class methodsFor!
 
 icon
 	"Answers an Icon that can be used to represent this class"
@@ -510,8 +510,8 @@ sampleDescription
 	"Private - Answer the description of the receiver to be used in the samples folder."
 
 	^'Sockets Chat'! !
-!Chat class categoriesFor: #icon!constants!public! !
-!Chat class categoriesFor: #initialize!development!initializing!private! !
-!Chat class categoriesFor: #resource_Default_view!public!resources-views! !
-!Chat class categoriesFor: #sampleDescription!constants!development!private! !
+!Net.Examples.Chat class categoriesFor: #icon!constants!public! !
+!Net.Examples.Chat class categoriesFor: #initialize!development!initializing!private! !
+!Net.Examples.Chat class categoriesFor: #resource_Default_view!public!resources-views! !
+!Net.Examples.Chat class categoriesFor: #sampleDescription!constants!development!private! !
 

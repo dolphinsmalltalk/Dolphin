@@ -1,16 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Core.Object subclass: #'Net.SocketAbstract2'
+Core.Object subclass: #'Net.SocketAbstract'
 	instanceVariableNames: 'port descriptor'
 	classVariableNames: ''
 	imports: #(#{OS.WinSocketConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Net.SocketAbstract2 guid: (Core.GUID fromString: '{e811faf7-4001-4b49-bda0-90a3ffae784f}')!
-Net.SocketAbstract2 isNonInstantiable: true!
-Net.SocketAbstract2 comment: 'This class is the abstract superclass of all sockets classes for TCP/IP network communication.'!
-!Net.SocketAbstract2 categoriesForClass!Windows Sockets! !
-!Net.SocketAbstract2 methodsFor!
+Net.SocketAbstract guid: (Core.GUID fromString: '{e811faf7-4001-4b49-bda0-90a3ffae784f}')!
+Net.SocketAbstract isNonInstantiable: true!
+Net.SocketAbstract comment: 'This class is the abstract superclass of all sockets classes for TCP/IP network communication.'!
+!Net.SocketAbstract categoriesForClass!Windows Sockets! !
+!Net.SocketAbstract methodsFor!
 
 asParameter
 	"Answer the receiver in a form suitable for passing to an external function."
@@ -105,18 +105,18 @@ socketErrorOverlap
 	"Private - Raise a <SocketError> in response to an error in an overlapped socket library call."
 
 	SocketError signalWith: Processor activeProcess lastError! !
-!Net.SocketAbstract2 categoriesFor: #asParameter!converting!public! !
-!Net.SocketAbstract2 categoriesFor: #close!operations!public! !
-!Net.SocketAbstract2 categoriesFor: #create!operations!private! !
-!Net.SocketAbstract2 categoriesFor: #descriptor:!initializing!private! !
-!Net.SocketAbstract2 categoriesFor: #errorSocketClosed!operations!private! !
-!Net.SocketAbstract2 categoriesFor: #finalize!finalizing!private! !
-!Net.SocketAbstract2 categoriesFor: #initialize!initializing!private! !
-!Net.SocketAbstract2 categoriesFor: #isOpen!public!testing! !
-!Net.SocketAbstract2 categoriesFor: #port!accessing!public! !
-!Net.SocketAbstract2 categoriesFor: #port:!accessing!private! !
-!Net.SocketAbstract2 categoriesFor: #printOn:!printing!public! !
-!Net.SocketAbstract2 categoriesFor: #queryPort!accessing!public! !
-!Net.SocketAbstract2 categoriesFor: #socketError!exceptions!private! !
-!Net.SocketAbstract2 categoriesFor: #socketErrorOverlap!operations!private! !
+!Net.SocketAbstract categoriesFor: #asParameter!converting!public! !
+!Net.SocketAbstract categoriesFor: #close!operations!public! !
+!Net.SocketAbstract categoriesFor: #create!operations!private! !
+!Net.SocketAbstract categoriesFor: #descriptor:!initializing!private! !
+!Net.SocketAbstract categoriesFor: #errorSocketClosed!operations!private! !
+!Net.SocketAbstract categoriesFor: #finalize!finalizing!private! !
+!Net.SocketAbstract categoriesFor: #initialize!initializing!private! !
+!Net.SocketAbstract categoriesFor: #isOpen!public!testing! !
+!Net.SocketAbstract categoriesFor: #port!accessing!public! !
+!Net.SocketAbstract categoriesFor: #port:!accessing!private! !
+!Net.SocketAbstract categoriesFor: #printOn:!printing!public! !
+!Net.SocketAbstract categoriesFor: #queryPort!accessing!public! !
+!Net.SocketAbstract categoriesFor: #socketError!exceptions!private! !
+!Net.SocketAbstract categoriesFor: #socketErrorOverlap!operations!private! !
 

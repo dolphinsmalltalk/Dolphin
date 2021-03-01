@@ -1,19 +1,19 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Net.SocketAbstract2 subclass: #'Net.Socket2'
+Net.SocketAbstract subclass: #'Net.Socket'
 	instanceVariableNames: 'address readStream writeStream isText'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Net.Socket2 guid: (Core.GUID fromString: '{dfa0db01-8f76-4b2a-a19c-002ecf488fdc}')!
-Net.Socket2 comment: 'This class represents a socket for one end of a TCP/IP network communication link. Sockets can be instantiated to be associated with a specified port on a host computer at a given internet address. Once a connection is made using #connect the underlying communication mechanism uses a stream-based protocol rather than the alternative unreliable datagram-based protocol.
+Net.Socket guid: (Core.GUID fromString: '{dfa0db01-8f76-4b2a-a19c-002ecf488fdc}')!
+Net.Socket comment: 'This class represents a socket for one end of a TCP/IP network communication link. Sockets can be instantiated to be associated with a specified port on a host computer at a given internet address. Once a connection is made using `#connect` the underlying communication mechanism uses a stream-based protocol rather than the alternative unreliable datagram-based protocol.
 
-When connected, a Socket2 can be used to transfer ByteArrays or Strings or (rather more inefficiently) individual bytes across the network using #sendByteArray:, #sendByte:, receiveByteArray: and #receiveByte: methods. For more flexible and efficient transfers, a Socket2 maintains buffered read and write streams that are accessible via the #readStream and #writeStream methods respectively. To transfer entire objects, an appropriate STBFiler may be opened on the streams.
+When connected, a `Net.Socket` can be used to transfer `ByteArray`s or `String`s or (rather more inefficiently) individual bytes across the network using `#sendByteArray:`, `#sendByte:`, `#receiveByteArray:` and `#receiveByte:` methods. For more flexible and efficient transfers, a `Net.Socket` maintains buffered read and write streams that are accessible via the `#readStream` and `#writeStream` methods respectively. To transfer entire objects, an appropriate STBFiler may be opened on the streams.
 
 Most operations (connect, read or write) will block while waiting for data to arrive or be sent. In general such calls should be made from within a background process.'!
-!Net.Socket2 categoriesForClass!Windows Sockets! !
-!Net.Socket2 methodsFor!
+!Net.Socket categoriesForClass!Windows Sockets! !
+!Net.Socket methodsFor!
 
 address
 	"Answer the InternetAddress of the host that the receiver is connected to"
@@ -195,28 +195,28 @@ writeStream
 
 	writeStream isNil ifTrue: [writeStream := SocketWriteStream on: self text: self isText].
 	^writeStream! !
-!Net.Socket2 categoriesFor: #address!accessing!public! !
-!Net.Socket2 categoriesFor: #connect!operations!public! !
-!Net.Socket2 categoriesFor: #hasInput!private!testing! !
-!Net.Socket2 categoriesFor: #initialize!initializing!private! !
-!Net.Socket2 categoriesFor: #isText!public! !
-!Net.Socket2 categoriesFor: #isText:!accessing!public! !
-!Net.Socket2 categoriesFor: #peerAddress!accessing!public! !
-!Net.Socket2 categoriesFor: #port:address:!initializing!private! !
-!Net.Socket2 categoriesFor: #readStream!accessing!public! !
-!Net.Socket2 categoriesFor: #receive:!operations!public! !
-!Net.Socket2 categoriesFor: #receive:count:!operations!public! !
-!Net.Socket2 categoriesFor: #receive:count:startingAt:!operations!public! !
-!Net.Socket2 categoriesFor: #receiveByte!operations!public! !
-!Net.Socket2 categoriesFor: #receiveSome:count:startingAt:!operations!private! !
-!Net.Socket2 categoriesFor: #send:!operations!public! !
-!Net.Socket2 categoriesFor: #send:count:!operations!public! !
-!Net.Socket2 categoriesFor: #send:count:startingAt:!operations!public! !
-!Net.Socket2 categoriesFor: #sendByte:!operations!public! !
-!Net.Socket2 categoriesFor: #sendSome:count:startingAt:!operations!private! !
-!Net.Socket2 categoriesFor: #writeStream!accessing!public! !
+!Net.Socket categoriesFor: #address!accessing!public! !
+!Net.Socket categoriesFor: #connect!operations!public! !
+!Net.Socket categoriesFor: #hasInput!private!testing! !
+!Net.Socket categoriesFor: #initialize!initializing!private! !
+!Net.Socket categoriesFor: #isText!public! !
+!Net.Socket categoriesFor: #isText:!accessing!public! !
+!Net.Socket categoriesFor: #peerAddress!accessing!public! !
+!Net.Socket categoriesFor: #port:address:!initializing!private! !
+!Net.Socket categoriesFor: #readStream!accessing!public! !
+!Net.Socket categoriesFor: #receive:!operations!public! !
+!Net.Socket categoriesFor: #receive:count:!operations!public! !
+!Net.Socket categoriesFor: #receive:count:startingAt:!operations!public! !
+!Net.Socket categoriesFor: #receiveByte!operations!public! !
+!Net.Socket categoriesFor: #receiveSome:count:startingAt:!operations!private! !
+!Net.Socket categoriesFor: #send:!operations!public! !
+!Net.Socket categoriesFor: #send:count:!operations!public! !
+!Net.Socket categoriesFor: #send:count:startingAt:!operations!public! !
+!Net.Socket categoriesFor: #sendByte:!operations!public! !
+!Net.Socket categoriesFor: #sendSome:count:startingAt:!operations!private! !
+!Net.Socket categoriesFor: #writeStream!accessing!public! !
 
-!Net.Socket2 class methodsFor!
+!Net.Socket class methodsFor!
 
 descriptor: anInteger port: anIntegerPort address: anInternetAddress 
 	"Answers a new instance of the receiver with socket descriptor anInteger."
@@ -252,9 +252,9 @@ port: anIntegerPort ipAddress: aByteArray
 	IP address in aByteArray"
 
 	^self port: anIntegerPort address: (InternetAddress ipAddress: aByteArray)! !
-!Net.Socket2 class categoriesFor: #descriptor:port:address:!instance creation!public! !
-!Net.Socket2 class categoriesFor: #new!instance creation!private! !
-!Net.Socket2 class categoriesFor: #port:address:!instance creation!public! !
-!Net.Socket2 class categoriesFor: #port:host:!instance creation!public! !
-!Net.Socket2 class categoriesFor: #port:ipAddress:!instance creation!public! !
+!Net.Socket class categoriesFor: #descriptor:port:address:!instance creation!public! !
+!Net.Socket class categoriesFor: #new!instance creation!private! !
+!Net.Socket class categoriesFor: #port:address:!instance creation!public! !
+!Net.Socket class categoriesFor: #port:host:!instance creation!public! !
+!Net.Socket class categoriesFor: #port:ipAddress:!instance creation!public! !
 

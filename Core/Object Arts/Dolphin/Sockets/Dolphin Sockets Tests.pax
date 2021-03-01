@@ -10,8 +10,8 @@ package setClassNames: #(
 	#{Net.Tests.AbstractSocketTest}
 	#{Net.Tests.InternetAddressTest}
 	#{Net.Tests.PROTOENTTest}
-	#{Net.Tests.Socket2Test}
 	#{Net.Tests.SocketErrorTest}
+	#{Net.Tests.SocketTest}
 	#{OS.Tests.AbstractIN_ADDRTest}
 	#{OS.Tests.IN_ADDRTest}
 	#{OS.Tests.IN6_ADDRTest}
@@ -91,7 +91,7 @@ OS.Tests.AbstractIN_ADDRTest subclass: #'OS.Tests.IN6_ADDRTest'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Net.Tests.AbstractSocketTest subclass: #'Net.Tests.Socket2Test'
+Net.Tests.AbstractSocketTest subclass: #'Net.Tests.SocketTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

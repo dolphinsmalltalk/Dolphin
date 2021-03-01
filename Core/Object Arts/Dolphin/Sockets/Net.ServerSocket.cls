@@ -1,17 +1,17 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Net.SocketAbstract2 subclass: #'Net.ServerSocket2'
+Net.SocketAbstract subclass: #'Net.ServerSocket'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Net.ServerSocket2 guid: (Core.GUID fromString: '{13ab65d3-5229-4982-9d9c-fb0a6fea8376}')!
-Net.ServerSocket2 comment: 'This class is used by a server to listen for a connection request from a socket client. 
+Net.ServerSocket guid: (Core.GUID fromString: '{13ab65d3-5229-4982-9d9c-fb0a6fea8376}')!
+Net.ServerSocket comment: 'This class is used by a server to listen for a connection request from a socket client. 
 
-A ServerSocket2 is instantiated to listen on a particular port with a particular queue size for incoming client connections. Incoming connection requests will be acknowledged and placed on a queue waiting for the ServerSocket2 to accept them. This is done using #accept which then answers the socket for the next client connection in the queue. If the queue becomes full at any time because sufficient #accept calls have not been issued then additional client connections are rejected. The #accept call blocks the calling <Process> until an incoming connection request is available, and so should ideally be performed from a background process dedicated to the job.'!
-!Net.ServerSocket2 categoriesForClass!Windows Sockets! !
-!Net.ServerSocket2 methodsFor!
+`A Net.ServerSocket` is instantiated to listen on a particular port with a particular queue size for incoming client connections. Incoming connection requests will be acknowledged and placed on a queue waiting for the `Net.ServerSocket` to accept them. This is done using #accept which then answers the socket for the next client connection in the queue. If the queue becomes full at any time because sufficient `#accept` calls have not been issued then additional client connections are rejected. The `#accept` call blocks the calling `Process` until an incoming connection request is available, and so should ideally be performed from a background process dedicated to the job.'!
+!Net.ServerSocket categoriesForClass!Windows Sockets! !
+!Net.ServerSocket methodsFor!
 
 accept
 	"Start listening for a connection. This blocks the current process until a connection is accepted. 
@@ -27,7 +27,7 @@ accept
 				addr: address
 				addrlen: length.
 	newDescriptor = INVALID_SOCKET ifTrue: [self socketErrorOverlap].
-	^Socket2
+	^Socket
 		descriptor: newDescriptor
 		port: address sin_port
 		address: address sin_addr address!
@@ -79,14 +79,14 @@ preBindPort: anInteger
 	"Private - Same as #bindPort, but dont call bind."
 
 	self createOnPort: anInteger! !
-!Net.ServerSocket2 categoriesFor: #accept!operations!public! !
-!Net.ServerSocket2 categoriesFor: #bind!operations!private! !
-!Net.ServerSocket2 categoriesFor: #bindPort:!operations!private! !
-!Net.ServerSocket2 categoriesFor: #createOnPort:!helpers!private! !
-!Net.ServerSocket2 categoriesFor: #listen:!operations!private! !
-!Net.ServerSocket2 categoriesFor: #preBindPort:!public!swazoo! !
+!Net.ServerSocket categoriesFor: #accept!operations!public! !
+!Net.ServerSocket categoriesFor: #bind!operations!private! !
+!Net.ServerSocket categoriesFor: #bindPort:!operations!private! !
+!Net.ServerSocket categoriesFor: #createOnPort:!helpers!private! !
+!Net.ServerSocket categoriesFor: #listen:!operations!private! !
+!Net.ServerSocket categoriesFor: #preBindPort:!public!swazoo! !
 
-!Net.ServerSocket2 class methodsFor!
+!Net.ServerSocket class methodsFor!
 
 defaultMaxPendingConnects
 	"Answer the default maximum number of pending connects that can be acknowledged 
@@ -119,9 +119,9 @@ port: anIntegerPort backlog: anIntegerBacklog
 		bind;
 		listen: anIntegerBacklog;
 		yourself! !
-!Net.ServerSocket2 class categoriesFor: #defaultMaxPendingConnects!constants access!public! !
-!Net.ServerSocket2 class categoriesFor: #new!instance creation!public! !
-!Net.ServerSocket2 class categoriesFor: #newPort:!public! !
-!Net.ServerSocket2 class categoriesFor: #port:!instance creation!public! !
-!Net.ServerSocket2 class categoriesFor: #port:backlog:!instance creation!public! !
+!Net.ServerSocket class categoriesFor: #defaultMaxPendingConnects!constants access!public! !
+!Net.ServerSocket class categoriesFor: #new!instance creation!public! !
+!Net.ServerSocket class categoriesFor: #newPort:!public! !
+!Net.ServerSocket class categoriesFor: #port:!instance creation!public! !
+!Net.ServerSocket class categoriesFor: #port:backlog:!instance creation!public! !
 

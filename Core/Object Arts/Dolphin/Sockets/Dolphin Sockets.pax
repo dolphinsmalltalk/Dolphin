@@ -16,9 +16,9 @@ package basicPackageVersion: '6.1'.
 package setClassNames: #(
 	#{Net}
 	#{Net.InternetAddress}
-	#{Net.ServerSocket2}
-	#{Net.Socket2}
-	#{Net.SocketAbstract2}
+	#{Net.ServerSocket}
+	#{Net.Socket}
+	#{Net.SocketAbstract}
 	#{Net.SocketClosed}
 	#{Net.SocketError}
 	#{Net.SocketReadStream}
@@ -250,7 +250,7 @@ Core.Object subclass: #'Net.InternetAddress'
 	classConstants: {
 		'MaxHostName' -> 16r100
 	}!
-Core.Object subclass: #'Net.SocketAbstract2'
+Core.Object subclass: #'Net.SocketAbstract'
 	instanceVariableNames: 'port descriptor'
 	classVariableNames: ''
 	imports: #(#{OS.WinSocketConstants})
@@ -286,13 +286,13 @@ Net.SocketError subclass: #'Net.SocketWaitCancelled'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Net.SocketAbstract2 subclass: #'Net.ServerSocket2'
+Net.SocketAbstract subclass: #'Net.ServerSocket'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Net.SocketAbstract2 subclass: #'Net.Socket2'
+Net.SocketAbstract subclass: #'Net.Socket'
 	instanceVariableNames: 'address readStream writeStream isText'
 	classVariableNames: ''
 	imports: #()

@@ -1,0 +1,27 @@
+﻿| package |
+package := Package name: 'Net Examples'.
+package paxVersion: 2.1;
+	basicComment: ''.
+
+
+package setClassNames: #(
+	#{Net.Examples}
+).
+
+package setPrerequisites: #(
+	'..\..\Dolphin\Sockets\Dolphin Sockets'
+).
+
+package!
+
+"Class Definitions"!
+
+Net subclass: #'Net.Examples'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+"End of package definition"!
+
