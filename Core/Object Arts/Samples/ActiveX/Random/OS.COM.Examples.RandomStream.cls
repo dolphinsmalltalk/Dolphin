@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-AXDualImp subclass: #COMRandomStream
+OS.COM.DualInterfaceImplementation subclass: #'OS.COM.Examples.RandomStream'
 	instanceVariableNames: 'lowerBound upperBound stream'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-COMRandomStream guid: (GUID fromString: '{f560cd26-00a1-4a4f-9833-03ae165a2e11}')!
-COMRandomStream comment: 'COMRandomStream is part of the COM Random Stream sample. See the "RandomStream sample" package for further details.'!
-!COMRandomStream categoriesForClass!COM-Implementations! !
-!COMRandomStream methodsFor!
+OS.COM.Examples.RandomStream guid: (Core.GUID fromString: '{f560cd26-00a1-4a4f-9833-03ae165a2e11}')!
+OS.COM.Examples.RandomStream comment: 'OS.COM.Examples.RandomStream is part of the COM Random Stream sample. See the "RandomStream sample" package for further details.'!
+!OS.COM.Examples.RandomStream categoriesForClass!COM-Implementations! !
+!OS.COM.Examples.RandomStream methodsFor!
 
 get_LowerBound: plLowerBound
 	"Private - Implement IRandomStream::LowerBound().
@@ -73,17 +73,17 @@ put_UpperBound: value
 
 	upperBound := value.
 	^S_OK! !
-!COMRandomStream categoriesFor: #get_LowerBound:!COM Interfaces-IRandomStream!private! !
-!COMRandomStream categoriesFor: #get_Seed:!COM Interfaces-IRandomStream!private! !
-!COMRandomStream categoriesFor: #get_UpperBound:!COM Interfaces-IRandomStream!private! !
-!COMRandomStream categoriesFor: #initialize!initializing!private! !
-!COMRandomStream categoriesFor: #interfaceClass!constants!public! !
-!COMRandomStream categoriesFor: #Next:!COM Interfaces-IRandomStream!private! !
-!COMRandomStream categoriesFor: #put_LowerBound:!COM Interfaces-IRandomStream!private! !
-!COMRandomStream categoriesFor: #put_Seed:!COM Interfaces-IRandomStream!private! !
-!COMRandomStream categoriesFor: #put_UpperBound:!COM Interfaces-IRandomStream!private! !
+!OS.COM.Examples.RandomStream categoriesFor: #get_LowerBound:!COM Interfaces-IRandomStream!private! !
+!OS.COM.Examples.RandomStream categoriesFor: #get_Seed:!COM Interfaces-IRandomStream!private! !
+!OS.COM.Examples.RandomStream categoriesFor: #get_UpperBound:!COM Interfaces-IRandomStream!private! !
+!OS.COM.Examples.RandomStream categoriesFor: #initialize!initializing!private! !
+!OS.COM.Examples.RandomStream categoriesFor: #interfaceClass!constants!public! !
+!OS.COM.Examples.RandomStream categoriesFor: #Next:!COM Interfaces-IRandomStream!private! !
+!OS.COM.Examples.RandomStream categoriesFor: #put_LowerBound:!COM Interfaces-IRandomStream!private! !
+!OS.COM.Examples.RandomStream categoriesFor: #put_Seed:!COM Interfaces-IRandomStream!private! !
+!OS.COM.Examples.RandomStream categoriesFor: #put_UpperBound:!COM Interfaces-IRandomStream!private! !
 
-!COMRandomStream class methodsFor!
+!OS.COM.Examples.RandomStream class methodsFor!
 
 clsid
 	"Answer the receiver's CLSID."
@@ -95,6 +95,6 @@ progID
 	create instances of the receiver, e.g. 'Dolphin.Object.1'"
 
 	^'Dolphin.RandomStream.1'! !
-!COMRandomStream class categoriesFor: #clsid!constants!private! !
-!COMRandomStream class categoriesFor: #progID!constants!public! !
+!OS.COM.Examples.RandomStream class categoriesFor: #clsid!constants!private! !
+!OS.COM.Examples.RandomStream class categoriesFor: #progID!constants!public! !
 

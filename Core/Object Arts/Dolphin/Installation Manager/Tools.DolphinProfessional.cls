@@ -48,6 +48,7 @@ contents
 
 	"Samples"
 	contents
+		add: #('Core\Object Arts\Samples\ActiveX\COM Examples.pax' #plain #imageBased);
 		add: #('Core\Object Arts\Samples\ActiveX\Random\COM Random Stream.pax' #plain #imageBased);
 		add: #('Core\Object Arts\Samples\Console\Hello World\Hello World (Console).pax' #plain #imageBased);
 		add: #('Core\Object Arts\Samples\Console\Catenate\Catenate.pax' #plain #imageBased);

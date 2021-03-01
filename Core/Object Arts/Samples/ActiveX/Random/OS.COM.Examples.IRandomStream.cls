@@ -1,20 +1,20 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-IDispatch subclass: #IRandomStream
+OS.COM.IDispatch subclass: #'OS.COM.Examples.IRandomStream'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-IRandomStream guid: (IID fromString: '{0e2cea3b-e6c4-11d2-833b-0020afab8efe}')!
-IRandomStream comment: '<IRandomStream> is a wrapper class for the COM interface ''RANDOMLib.IRandomStream'' generated from type information in the ''Random 1.0 Type Library'' library. It contains methods to invoke the member functions exposed by that interface.
+OS.COM.Examples.IRandomStream guid: (OS.COM.IID fromString: '{0e2cea3b-e6c4-11d2-833b-0020afab8efe}')!
+OS.COM.Examples.IRandomStream comment: '<IRandomStream> is a wrapper class for the COM interface ''RANDOMLib.IRandomStream'' generated from type information in the ''Random 1.0 Type Library'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains the following helpstring for this interface:
 	"IRandomStream Interface"
 
 WARNING: This comment was automatically generated from the interface''s type information and any changes made here may be overwritten the next time this wrapper class is so generated.'!
-!IRandomStream categoriesForClass!COM-Interfaces! !
-!IRandomStream methodsFor!
+!OS.COM.Examples.IRandomStream categoriesForClass!COM-Interfaces! !
+!OS.COM.Examples.IRandomStream methodsFor!
 
 get_LowerBound: pVal
 	"Private - Get the value of the 'LowerBound' property of the receiver.
@@ -153,24 +153,24 @@ upperBound: pVal
 
 	self put_UpperBound: pVal
 ! !
-!IRandomStream categoriesFor: #get_LowerBound:!**auto generated**!COM Interfaces-IRandomStream!private! !
-!IRandomStream categoriesFor: #get_Seed:!**auto generated**!COM Interfaces-IRandomStream!private! !
-!IRandomStream categoriesFor: #get_UpperBound:!**auto generated**!COM Interfaces-IRandomStream!private! !
-!IRandomStream categoriesFor: #isExtensible!**auto generated**!public!testing! !
-!IRandomStream categoriesFor: #isVBCollection!**auto generated**!public!testing! !
-!IRandomStream categoriesFor: #lowerBound!**auto generated**!properties!public! !
-!IRandomStream categoriesFor: #lowerBound:!**auto generated**!properties!public! !
-!IRandomStream categoriesFor: #next!**auto generated**!methods!public! !
-!IRandomStream categoriesFor: #Next:!**auto generated**!COM Interfaces-IRandomStream!private! !
-!IRandomStream categoriesFor: #put_LowerBound:!**auto generated**!COM Interfaces-IRandomStream!private! !
-!IRandomStream categoriesFor: #put_Seed:!**auto generated**!COM Interfaces-IRandomStream!private! !
-!IRandomStream categoriesFor: #put_UpperBound:!**auto generated**!COM Interfaces-IRandomStream!private! !
-!IRandomStream categoriesFor: #seed!**auto generated**!properties!public! !
-!IRandomStream categoriesFor: #seed:!**auto generated**!properties!public! !
-!IRandomStream categoriesFor: #upperBound!**auto generated**!properties!public! !
-!IRandomStream categoriesFor: #upperBound:!**auto generated**!properties!public! !
+!OS.COM.Examples.IRandomStream categoriesFor: #get_LowerBound:!**auto generated**!COM Interfaces-IRandomStream!private! !
+!OS.COM.Examples.IRandomStream categoriesFor: #get_Seed:!**auto generated**!COM Interfaces-IRandomStream!private! !
+!OS.COM.Examples.IRandomStream categoriesFor: #get_UpperBound:!**auto generated**!COM Interfaces-IRandomStream!private! !
+!OS.COM.Examples.IRandomStream categoriesFor: #isExtensible!**auto generated**!public!testing! !
+!OS.COM.Examples.IRandomStream categoriesFor: #isVBCollection!**auto generated**!public!testing! !
+!OS.COM.Examples.IRandomStream categoriesFor: #lowerBound!**auto generated**!properties!public! !
+!OS.COM.Examples.IRandomStream categoriesFor: #lowerBound:!**auto generated**!properties!public! !
+!OS.COM.Examples.IRandomStream categoriesFor: #next!**auto generated**!methods!public! !
+!OS.COM.Examples.IRandomStream categoriesFor: #Next:!**auto generated**!COM Interfaces-IRandomStream!private! !
+!OS.COM.Examples.IRandomStream categoriesFor: #put_LowerBound:!**auto generated**!COM Interfaces-IRandomStream!private! !
+!OS.COM.Examples.IRandomStream categoriesFor: #put_Seed:!**auto generated**!COM Interfaces-IRandomStream!private! !
+!OS.COM.Examples.IRandomStream categoriesFor: #put_UpperBound:!**auto generated**!COM Interfaces-IRandomStream!private! !
+!OS.COM.Examples.IRandomStream categoriesFor: #seed!**auto generated**!properties!public! !
+!OS.COM.Examples.IRandomStream categoriesFor: #seed:!**auto generated**!properties!public! !
+!OS.COM.Examples.IRandomStream categoriesFor: #upperBound!**auto generated**!properties!public! !
+!OS.COM.Examples.IRandomStream categoriesFor: #upperBound:!**auto generated**!properties!public! !
 
-!IRandomStream class methodsFor!
+!OS.COM.Examples.IRandomStream class methodsFor!
 
 clsid
 	"Private - Answer the CLSID of the coclass (RandomStream) for which the receiver is the default interface."
@@ -204,7 +204,7 @@ initializeTypeLib
 		IRandomStream initializeTypeLib"
 
 	typeLib := RANDOMLib! !
-!IRandomStream class categoriesFor: #clsid!**auto generated**!constants!private! !
-!IRandomStream class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
-!IRandomStream class categoriesFor: #initializeTypeLib!**auto generated**!initializing!private! !
+!OS.COM.Examples.IRandomStream class categoriesFor: #clsid!**auto generated**!constants!private! !
+!OS.COM.Examples.IRandomStream class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!OS.COM.Examples.IRandomStream class categoriesFor: #initializeTypeLib!**auto generated**!initializing!private! !
 

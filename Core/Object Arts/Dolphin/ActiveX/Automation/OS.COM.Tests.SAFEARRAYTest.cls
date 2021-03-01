@@ -114,13 +114,13 @@ testElementClasses
 	self should: [SAFEARRAY length: 1 elementClass: CLSID] raise: Error.
 
 	"Test array containing interface pointer"
-	array := SAFEARRAY length: 1 elementClass: Smalltalk.IRandomStream.
-	random := Smalltalk.COMRandomStream new.
+	array := SAFEARRAY length: 1 elementClass: Examples.IRandomStream.
+	random := Examples.RandomStream new.
 	random put_Seed: 12345.
 	array at: 1 put: random.
 	irand := array at: 1.
-	self assert: irand class identicalTo: Smalltalk.IRandomStream.
-	self assert: array iid equals: Smalltalk.IRandomStream iid.
+	self assert: irand class identicalTo: Examples.IRandomStream.
+	self assert: array iid equals: Examples.IRandomStream iid.
 	self assert: irand referenceCount >= 2.
 	self assert: irand seed equals: 12345.
 	self assert: (irand isSameCOMObject: random interface).

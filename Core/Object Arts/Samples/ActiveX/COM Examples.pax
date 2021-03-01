@@ -1,0 +1,27 @@
+﻿| package |
+package := Package name: 'COM Examples'.
+package paxVersion: 2.1;
+	basicComment: ''.
+
+
+package setClassNames: #(
+	#{OS.COM.Examples}
+).
+
+package setPrerequisites: #(
+	'..\..\Dolphin\ActiveX\COM\OLE COM'
+).
+
+package!
+
+"Class Definitions"!
+
+OS.COM subclass: #'OS.COM.Examples'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+"End of package definition"!
+

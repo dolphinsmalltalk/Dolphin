@@ -1,0 +1,10 @@
+﻿OS.COM.TypeLibraryAnalyzer {
+	#generationFlags : 0,
+	#attributes : OS.COM.TLIBATTR {
+		#bytes : ByteArray [ '2fea2c0ec4e6d211833b0020afab8efe00000000010000000100000008000000' ]
+	},
+	#packageName : 'COM Random Stream',
+	#aliasMap : LookupTable {
+		#GUID : #GUID
+	}
+}

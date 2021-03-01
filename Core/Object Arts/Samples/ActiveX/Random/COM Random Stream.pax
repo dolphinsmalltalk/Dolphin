@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'COM Random Stream'.
-package paxVersion: 2;
+package paxVersion: 2.1;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk Random Stream COM Server Sample
 Copyright (c) Object Arts Ltd, 1997-2000. Portions copyright CGI Group (Europe) Ltd, 1997.
@@ -27,25 +27,26 @@ package basicScriptAt: #preuninstall put: '	"Revoke the class factory registrati
 Smalltalk.COMRandomStream revokeClassFactories'.
 
 package setClassNames: #(
-	#{COMRandomStream}
-	#{COMRandomStreamSessionManager}
-	#{IRandomStream}
+	#{OS.COM.Examples.IRandomStream}
+	#{OS.COM.Examples.RandomStream}
+	#{OS.COM.Examples.RandomStreamSessionManager}
 ).
 
 package setVariableNames: #(
-	#{RANDOMLib}
+	#{OS.COM.Examples.RANDOMLib}
 ).
 
 package setBinaryVariableNames: #(
-	#{RANDOMLib}
+	#{OS.COM.Examples.RANDOMLib}
 ).
 
 package setPrerequisites: #(
+	'..\..\..\Dolphin\ActiveX\Deprecated\ActiveX (Deprecated)'
 	'..\..\..\Dolphin\ActiveX\Automation\ActiveX Automation'
+	'..\COM Examples'
 	'..\..\..\Dolphin\Base\Dolphin'
 	'..\..\..\Dolphin\MVP\Base\Dolphin MVP Base'
 	'..\..\..\Dolphin\System\Random\Dolphin Random Stream'
-	'..\..\..\Dolphin\ActiveX\COM\OLE COM'
 	'..\..\..\Dolphin\ActiveX\Shell\Windows Shell'
 ).
 
@@ -57,22 +58,22 @@ package!
 
 "Class Definitions"!
 
-AXDualImp subclass: #COMRandomStream
+OS.COM.DualInterfaceImplementation subclass: #'OS.COM.Examples.RandomStream'
 	instanceVariableNames: 'lowerBound upperBound stream'
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-IDispatch subclass: #IRandomStream
+UI.RuntimeSessionManager subclass: #'OS.COM.Examples.RandomStreamSessionManager'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-RuntimeSessionManager subclass: #COMRandomStreamSessionManager
+OS.COM.IDispatch subclass: #'OS.COM.Examples.IRandomStream'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 
