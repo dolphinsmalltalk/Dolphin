@@ -1,17 +1,17 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-COMInterfaceImp subclass: #EnumRECT
+OS.COM.InterfaceImplementation subclass: #'OS.COM.Examples.EnumRECT'
 	instanceVariableNames: 'm_iCur m_rgrc'
 	classVariableNames: 'CRECTS'
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-EnumRECT guid: (GUID fromString: '{e3913c41-9396-11d3-b376-0800460222f0}')!
-EnumRECT comment: 'EnumRECT is a sample implementation of the generic COM enumeration interface, IEnumXXX, specialized to enumeration RECT (rectangle) structures.'!
-!EnumRECT categoriesForClass!Samples! !
-!EnumRECT methodsFor!
+OS.COM.Examples.EnumRECT guid: (Core.GUID fromString: '{e3913c41-9396-11d3-b376-0800460222f0}')!
+OS.COM.Examples.EnumRECT comment: 'EnumRECT is a sample implementation of the generic COM enumeration interface, IEnumXXX, specialized to enumeration RECT (rectangle) structures.'!
+!OS.COM.Examples.EnumRECT categoriesForClass!Samples! !
+!OS.COM.Examples.EnumRECT methodsFor!
 
-Clone: ppEnum 
+Clone: ppEnum
 	"Implement the IEnumXXXX::Clone() interface function.
 	See: Inside OLE2, Kraig Brockschmidt, Microsoft Press.
 	N.B. For clarity this is a fairly direct port of Kraig's 
@@ -95,14 +95,14 @@ supportedInterfaces
 	"Answer the set of interface classes supported by the receiver."
 
 	^{IEnumRECT}! !
-!EnumRECT categoriesFor: #Clone:!COM Interfaces-IEnumXXXX!public! !
-!EnumRECT categoriesFor: #initialize!initializing!public! !
-!EnumRECT categoriesFor: #Next:rgelt:pceltFetched:!COM Interfaces-IEnumXXXX!public! !
-!EnumRECT categoriesFor: #Reset!COM Interfaces-IEnumXXXX!public! !
-!EnumRECT categoriesFor: #Skip:!COM Interfaces-IEnumXXXX!public! !
-!EnumRECT categoriesFor: #supportedInterfaces!constants!public! !
+!OS.COM.Examples.EnumRECT categoriesFor: #Clone:!COM Interfaces-IEnumXXXX!public! !
+!OS.COM.Examples.EnumRECT categoriesFor: #initialize!initializing!public! !
+!OS.COM.Examples.EnumRECT categoriesFor: #Next:rgelt:pceltFetched:!COM Interfaces-IEnumXXXX!public! !
+!OS.COM.Examples.EnumRECT categoriesFor: #Reset!COM Interfaces-IEnumXXXX!public! !
+!OS.COM.Examples.EnumRECT categoriesFor: #Skip:!COM Interfaces-IEnumXXXX!public! !
+!OS.COM.Examples.EnumRECT categoriesFor: #supportedInterfaces!constants!public! !
 
-!EnumRECT class methodsFor!
+!OS.COM.Examples.EnumRECT class methodsFor!
 
 initialize
 	"Private - Initialize the receiver's class variables."
@@ -113,6 +113,6 @@ new
 	"Answer a new initialized instance of the receiver."
 
 	^super new initialize! !
-!EnumRECT class categoriesFor: #initialize!initializing!private! !
-!EnumRECT class categoriesFor: #new!instance creation!public! !
+!OS.COM.Examples.EnumRECT class categoriesFor: #initialize!initializing!private! !
+!OS.COM.Examples.EnumRECT class categoriesFor: #new!instance creation!public! !
 

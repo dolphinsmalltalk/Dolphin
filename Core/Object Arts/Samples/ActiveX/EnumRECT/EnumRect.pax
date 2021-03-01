@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'EnumRECT'.
-package paxVersion: 2;
+package paxVersion: 2.1;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk EnumRect COM Sample.
 Copyright (c) Object Arts Ltd, 1997-2000.
@@ -13,7 +13,7 @@ This sample consists of two classes:
 2) EnumRECT, which is the implementation of the COM server object (i.e. the object that actually implements the IEnumRECT interface).
 
 For example:
-	rects := EnumRECT new queryInterface: IEnumRECT.	"Create a Dolphin rectangle server"
+	rects := OS.COM.Examples.EnumRECT new queryInterface: OS.COM.Examples.IEnumRECT.	"Create a Dolphin rectangle server"
 	rects next: 5.					"Ask for five rectangles from the server"
 
 Above we are acting as both server and client from within the Dolphin image. You can try debugging through the second expression to see how it calls out through the interface, and back into the image, through the layers of Dolphin''s COM framework, and eventually to the EnumRECT server object. As far as Dolphin is concerned there is no difference between a call originating inside Dolphin, and one from outside. To the server they are the same. A powerful aspect of Dolphin''s COM support is that you can set breakpoints in any of the servers methods, and when an external client calls in the breakpoint will be tracked and result in a familiar walkback/debugger. You can then debug through up to the point that the image returns to the calling client.
@@ -22,13 +22,14 @@ As an exercise you may like to try interfacing Kraig''s C++ sample to the Dolphi
 
 
 package setClassNames: #(
-	#{EnumRECT}
-	#{IEnumRECT}
+	#{OS.COM.Examples.EnumRECT}
+	#{OS.COM.Examples.IEnumRECT}
 ).
 
 package setPrerequisites: #(
+	'..\COM Examples'
 	'..\..\..\Dolphin\Base\Dolphin'
-	'..\..\..\Dolphin\MVP\Base\Dolphin Basic Geometry'
+	'..\..\..\Dolphin\MVP\Deprecated\Dolphin MVP (Old Names)'
 	'..\..\..\Dolphin\ActiveX\COM\OLE COM'
 ).
 
@@ -36,16 +37,16 @@ package!
 
 "Class Definitions"!
 
-COMInterfaceImp subclass: #EnumRECT
+OS.COM.InterfaceImplementation subclass: #'OS.COM.Examples.EnumRECT'
 	instanceVariableNames: 'm_iCur m_rgrc'
 	classVariableNames: 'CRECTS'
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-IEnumXXXX subclass: #IEnumRECT
+OS.COM.IEnumXXXX subclass: #'OS.COM.Examples.IEnumRECT'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 
