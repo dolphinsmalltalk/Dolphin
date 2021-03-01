@@ -54,7 +54,7 @@ contents
 		add: #('Core\Object Arts\Samples\Console\Calculator\Calculator (Console).pax' #plain #imageBased);
 		add: #('Core\Object Arts\Samples\Lagoon\Protected Product\Protected Scribble.pax' #plain #imageBased);
 		add: #('Core\Object Arts\Samples\Lagoon\Protected Product\Protected Notepad.pax' #plain #imageBased);
-		add: #('Core\Object Arts\Samples\Utilities\File System Monitor.pax' #plain #imageBased);
+		add: #('Core\Object Arts\Samples\Utilities\File System Monitor\File System Monitor.pax' #plain #imageBased);
 		add: #('Core\Object Arts\Samples\Lagoon\Autoplay\Autoplay.pax' #plain #imageBased);
 		add: #('Core\Object Arts\Samples\MVP\Generative Music\Midi.pax' #plain #imageBased);
 		add: #('Core\Object Arts\Samples\MVP\Generative Music\Plimbole.pax' #plain #imageBased);

@@ -198,5 +198,5 @@ initialize
 		at: BFFM_IUNKNOWN put: #iunknown:wParam:lParam:! !
 !UI.BrowseFolderDialog class categoriesFor: #defaultModel!models!public! !
 !UI.BrowseFolderDialog class categoriesFor: #icon!constants!public! !
-!UI.BrowseFolderDialog class categoriesFor: #initialize!initializing!private! !
+!UI.BrowseFolderDialog class categoriesFor: #initialize!initializing!must not strip!private! !
 

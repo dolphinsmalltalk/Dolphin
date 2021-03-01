@@ -1,0 +1,27 @@
+﻿| package |
+package := Package name: 'OS Examples'.
+package paxVersion: 2.1;
+	basicComment: ''.
+
+
+package setClassNames: #(
+	#{OS.Examples}
+).
+
+package setPrerequisites: #(
+	'..\..\Dolphin\Base\Dolphin'
+).
+
+package!
+
+"Class Definitions"!
+
+OS subclass: #'OS.Examples'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+"End of package definition"!
+

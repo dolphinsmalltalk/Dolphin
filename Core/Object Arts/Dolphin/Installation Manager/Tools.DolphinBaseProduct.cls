@@ -63,6 +63,7 @@ contents
 	"Now the samples"
 	contents
 		add: #('Core\Object Arts\Samples\MVP\UI Examples.pax' #plain #imageBased);
+		add: #('Core\Object Arts\Samples\Utilities\OS Examples.pax' #plain #imageBased);
 		add: #('Core\Object Arts\Samples\MVP\Animal Game\Animals.pax' #plain #imageBased);
 		add: #('Core\Object Arts\Samples\MVP\RegEdit\RegEdit.pax' #plain #imageBased);
 		add: #('Core\Object Arts\Samples\MVP\Playground\Playground.pax' #plain #imageBased);
