@@ -107,6 +107,16 @@ testEquals6
 	self deny: (1 to: 0 by: 3) equals: (1 to: 0 by: 2).
 	self assert: (0 to: 1 by: -1) equals: (0 to: 2 by: -1)!
 
+testFloatIntervalConsistency1
+	"See https://github.com/dolphinsmalltalk/Dolphin/issues/1108"
+
+	self verifyIntervalConsistency: (0.3 to: 1.2 by: 0.1)!
+
+testFloatIntervalConsistency2
+	"See https://github.com/dolphinsmalltalk/Dolphin/issues/1108"
+
+	self verifyIntervalConsistency: (0.3 to: 0.82 by: 0.01)!
+
 testFromToBy
 	| interval interval2 originalMethod testMethod |
 	interval := Interval
@@ -208,7 +218,20 @@ testStoreOn
 			| expr copy |
 			expr := each storeString.
 			copy := Compiler evaluate: expr.
-			self assert: copy equals: each]! !
+			self assert: copy equals: each]!
+
+verifyIntervalConsistency: anInterval
+	| elements array |
+	array := anInterval asArray.
+	self assert: array equals: anInterval.
+	self assert: (array reject: [:each | anInterval includes: each]) equals: #().
+	self assert: (anInterval includes: anInterval stop)
+		equals: (anInterval asArray includes: anInterval stop).
+	elements := Array writeStream.
+	anInterval do: [:each | elements nextPut: each].
+	elements := elements contents.
+	self assert: elements equals: anInterval.
+	self assert: (anInterval allSatisfy: [:each | anInterval includes: each])! !
 !Core.Tests.IntervalTest categoriesFor: #assimilate:!public!unit tests! !
 !Core.Tests.IntervalTest categoriesFor: #assimilateResultElement:!helpers!private! !
 !Core.Tests.IntervalTest categoriesFor: #collectionClass!helpers!private! !
@@ -220,6 +243,8 @@ testStoreOn
 !Core.Tests.IntervalTest categoriesFor: #testEquals4!public!testing! !
 !Core.Tests.IntervalTest categoriesFor: #testEquals5!public!testing! !
 !Core.Tests.IntervalTest categoriesFor: #testEquals6!public!unit tests! !
+!Core.Tests.IntervalTest categoriesFor: #testFloatIntervalConsistency1!public!unit tests! !
+!Core.Tests.IntervalTest categoriesFor: #testFloatIntervalConsistency2!public!unit tests! !
 !Core.Tests.IntervalTest categoriesFor: #testFromToBy!public!unit tests! !
 !Core.Tests.IntervalTest categoriesFor: #testIncludes!public!unit tests! !
 !Core.Tests.IntervalTest categoriesFor: #testIsEmpty!public!unit tests! !
@@ -227,4 +252,5 @@ testStoreOn
 !Core.Tests.IntervalTest categoriesFor: #testReplaceFromToWithStartingAt!public!unit tests! !
 !Core.Tests.IntervalTest categoriesFor: #testResize!public!unit tests! !
 !Core.Tests.IntervalTest categoriesFor: #testStoreOn!public!unit tests! !
+!Core.Tests.IntervalTest categoriesFor: #verifyIntervalConsistency:!helpers!private! !
 
