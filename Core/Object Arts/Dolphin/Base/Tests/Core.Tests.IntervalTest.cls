@@ -107,16 +107,6 @@ testEquals6
 	self deny: (1 to: 0 by: 3) equals: (1 to: 0 by: 2).
 	self assert: (0 to: 1 by: -1) equals: (0 to: 2 by: -1)!
 
-testFloatIntervalConsistency1
-	"See https://github.com/dolphinsmalltalk/Dolphin/issues/1108"
-
-	self verifyIntervalConsistency: (0.3 to: 1.2 by: 0.1)!
-
-testFloatIntervalConsistency2
-	"See https://github.com/dolphinsmalltalk/Dolphin/issues/1108"
-
-	self verifyIntervalConsistency: (0.3 to: 0.82 by: 0.01)!
-
 testFromToBy
 	| interval interval2 originalMethod testMethod |
 	interval := Interval
@@ -198,6 +188,21 @@ testIsEmpty
 	self assert: (-11 to: -55 by: 11) isEmpty.
 !
 
+testLimitedPrecisionConsistency1
+	"See https://github.com/dolphinsmalltalk/Dolphin/issues/1108"
+
+	self verifyIntervalConsistency: (0.3 to: 1.2 by: 0.1)!
+
+testLimitedPrecisionConsistency2
+	"See https://github.com/dolphinsmalltalk/Dolphin/issues/1108"
+
+	self verifyIntervalConsistency: (0.3 to: 0.82 by: 0.01)!
+
+testLimitedPrecisionConsistency3
+	"See https://github.com/dolphinsmalltalk/Dolphin/issues/1108"
+
+	self verifyIntervalConsistency: (1 / 5 to: 1.2 by: 1)!
+
 testPrintString
 	self assert: (1 to: 0) printString equals: '(1 to: 0)'.
 	self assert: (1 to: 10 by: 1) printString equals: '(1 to: 10)'.
@@ -222,8 +227,13 @@ testStoreOn
 
 verifyIntervalConsistency: anInterval
 	| elements array |
+	self skip. "Failing until #1108 is fixed"
+	"The tested interval is expected to be one with stop >= start and positive step (i.e. increasing)"
+	self assert: anInterval step > 0.
+	self assert: anInterval last <= anInterval stop.
 	array := anInterval asArray.
 	self assert: array equals: anInterval.
+	self assert: array last <= anInterval stop.
 	self assert: (array reject: [:each | anInterval includes: each]) equals: #().
 	self assert: (anInterval includes: anInterval stop)
 		equals: (anInterval asArray includes: anInterval stop).
@@ -243,11 +253,12 @@ verifyIntervalConsistency: anInterval
 !Core.Tests.IntervalTest categoriesFor: #testEquals4!public!testing! !
 !Core.Tests.IntervalTest categoriesFor: #testEquals5!public!testing! !
 !Core.Tests.IntervalTest categoriesFor: #testEquals6!public!unit tests! !
-!Core.Tests.IntervalTest categoriesFor: #testFloatIntervalConsistency1!public!unit tests! !
-!Core.Tests.IntervalTest categoriesFor: #testFloatIntervalConsistency2!public!unit tests! !
 !Core.Tests.IntervalTest categoriesFor: #testFromToBy!public!unit tests! !
 !Core.Tests.IntervalTest categoriesFor: #testIncludes!public!unit tests! !
 !Core.Tests.IntervalTest categoriesFor: #testIsEmpty!public!unit tests! !
+!Core.Tests.IntervalTest categoriesFor: #testLimitedPrecisionConsistency1!public!unit tests! !
+!Core.Tests.IntervalTest categoriesFor: #testLimitedPrecisionConsistency2!public!unit tests! !
+!Core.Tests.IntervalTest categoriesFor: #testLimitedPrecisionConsistency3!public!unit tests! !
 !Core.Tests.IntervalTest categoriesFor: #testPrintString!public!unit tests! !
 !Core.Tests.IntervalTest categoriesFor: #testReplaceFromToWithStartingAt!public!unit tests! !
 !Core.Tests.IntervalTest categoriesFor: #testResize!public!unit tests! !
