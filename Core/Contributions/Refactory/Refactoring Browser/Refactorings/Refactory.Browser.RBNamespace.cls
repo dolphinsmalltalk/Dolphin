@@ -14,6 +14,9 @@ Refactory.Browser.RBNamespace comment: ''!
 addChangeToClass: aRBClass
 	^changedClasses at: aRBClass name put: {aRBClass nonMetaclass. aRBClass metaclass}!
 
+addClassConstant: anAssociation to: aRBClass
+	^changes addClassConstant: anAssociation to: aRBClass!
+
 addClassVariable: aString to: aRBClass 
 	^changes addClassVariable: aString to: aRBClass!
 
@@ -230,6 +233,9 @@ privateImplementorsOf: aSelector
 removeClass: aRBClass 
 	self removeClassNamed: aRBClass name!
 
+removeClassConstant: anAssociation from: anRBClass
+	^changes removeClassConstant: anAssociation from: anRBClass!
+
 removeClassNamed: aSymbol
 	(self classNamed: aSymbol) subclasses do: [:each | self removeClassNamed: each fullName].
 	removedClasses
@@ -320,6 +326,7 @@ setEnvironment: aBrowserEnvironment
 whichCategoryIncludes: aSymbol
 	^self environment whichCategoryIncludes: aSymbol! !
 !Refactory.Browser.RBNamespace categoriesFor: #addChangeToClass:!changes!private! !
+!Refactory.Browser.RBNamespace categoriesFor: #addClassConstant:to:!changes!private! !
 !Refactory.Browser.RBNamespace categoriesFor: #addClassVariable:to:!changes!private! !
 !Refactory.Browser.RBNamespace categoriesFor: #addImport:to:!changes!private! !
 !Refactory.Browser.RBNamespace categoriesFor: #addInstanceVariable:to:!changes!private! !
@@ -348,6 +355,7 @@ whichCategoryIncludes: aSymbol
 !Refactory.Browser.RBNamespace categoriesFor: #performChange:around:!changes!private! !
 !Refactory.Browser.RBNamespace categoriesFor: #privateImplementorsOf:!helpers!private! !
 !Refactory.Browser.RBNamespace categoriesFor: #removeClass:!changes!public! !
+!Refactory.Browser.RBNamespace categoriesFor: #removeClassConstant:from:!changes!private! !
 !Refactory.Browser.RBNamespace categoriesFor: #removeClassNamed:!changes!public! !
 !Refactory.Browser.RBNamespace categoriesFor: #removeClassVariable:from:!changes!private! !
 !Refactory.Browser.RBNamespace categoriesFor: #removeImport:from:!changes!private! !

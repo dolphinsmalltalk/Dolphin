@@ -15,38 +15,23 @@ asUndoOperation
 	^AddNamespaceImportChange add: variable to: self changeClass!
 
 changeObject
-	| dictionary |
-	dictionary := variable isString 
-				ifTrue: [variable asQualifiedReference value]
-				ifFalse: [variable].
-	^dictionary!
+	^variable asQualifiedReference!
 
 changesFileTemplate
 	^'<1p> <2s> <3s>'!
 
-changeString
-	^'Remove pool variable named, <1d>, from <2s>' expandMacrosWith: variable
-		with: self displayClassName!
+changeStringFormat
+	^'Remove import <1d>, from <2s>'!
 
 changeSymbol
-	^#removeSharedPool:!
+	^#removeImport:!
 
-printOn: aStream 
-	aStream
-		nextPutAll: self displayClassName;
-		nextPutAll: ' removeSharedPool: ';
-		nextPutAll: self variable;
-		nextPut: $!!!
-
-variable
-	^variable isString
-		ifTrue: [variable]
-		ifFalse: [Smalltalk keyAtValue: variable ifAbsent: [self error: 'Cannot find value']]! !
+variableName
+	^variable asString! !
 !Refactory.Browser.RemoveNamespaceImportChange categoriesFor: #asUndoOperation!converting!public! !
 !Refactory.Browser.RemoveNamespaceImportChange categoriesFor: #changeObject!private! !
 !Refactory.Browser.RemoveNamespaceImportChange categoriesFor: #changesFileTemplate!constants!private! !
-!Refactory.Browser.RemoveNamespaceImportChange categoriesFor: #changeString!printing!public! !
-!Refactory.Browser.RemoveNamespaceImportChange categoriesFor: #changeSymbol!private! !
-!Refactory.Browser.RemoveNamespaceImportChange categoriesFor: #printOn:!printing!public! !
-!Refactory.Browser.RemoveNamespaceImportChange categoriesFor: #variable!accessing!private! !
+!Refactory.Browser.RemoveNamespaceImportChange categoriesFor: #changeStringFormat!constants!printing!private! !
+!Refactory.Browser.RemoveNamespaceImportChange categoriesFor: #changeSymbol!constants!private! !
+!Refactory.Browser.RemoveNamespaceImportChange categoriesFor: #variableName!accessing!private! !
 

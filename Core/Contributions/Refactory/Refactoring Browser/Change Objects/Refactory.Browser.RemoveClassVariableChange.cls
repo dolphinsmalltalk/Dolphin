@@ -14,25 +14,12 @@ Refactory.Browser.RemoveClassVariableChange comment: ''!
 asUndoOperation
 	^AddClassVariableChange add: variable to: self changeClass!
 
-changeString
-	^'Remove class variable named, <1s>, from <2s>' expandMacrosWith: variable
-		with: self displayClassName!
+changeStringFormat
+	^'Remove class variable named, <1s>, from <2s>'!
 
 changeSymbol
-	^#removeClassVarName:!
-
-printOn: aStream 
-	aStream
-		nextPutAll: self displayClassName;
-		nextPutAll: ' removeClassVarNamed: ';
-		nextPutAll: variable;
-		nextPut: $!!!
-
-variable
-	^variable asSymbol! !
+	^#removeClassVarName:! !
 !Refactory.Browser.RemoveClassVariableChange categoriesFor: #asUndoOperation!converting!public! !
-!Refactory.Browser.RemoveClassVariableChange categoriesFor: #changeString!printing!public! !
-!Refactory.Browser.RemoveClassVariableChange categoriesFor: #changeSymbol!private! !
-!Refactory.Browser.RemoveClassVariableChange categoriesFor: #printOn:!printing!public! !
-!Refactory.Browser.RemoveClassVariableChange categoriesFor: #variable!private! !
+!Refactory.Browser.RemoveClassVariableChange categoriesFor: #changeStringFormat!constants!printing!private! !
+!Refactory.Browser.RemoveClassVariableChange categoriesFor: #changeSymbol!constants!private! !
 

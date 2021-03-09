@@ -28,8 +28,14 @@ subclassDefiningVariable
 transform
 	| subclass |
 	subclass := self subclassDefiningVariable.
-	subclass removeClassVariable: variableName.
-	class addClassVariable: variableName! !
+	(subclass classConstants detect: [:each | each key = variableName] ifNone: [])
+		ifNil: 
+			[subclass removeClassVariable: variableName.
+			class addClassVariable: variableName]
+		ifNotNil: 
+			[:binding |
+			subclass removeClassConstant: binding.
+			class addClassConstant: binding]! !
 !Refactory.Browser.PullUpClassVariableRefactoring categoriesFor: #preconditions!preconditions!public! !
 !Refactory.Browser.PullUpClassVariableRefactoring categoriesFor: #subclassDefiningVariable!accessing!private! !
 !Refactory.Browser.PullUpClassVariableRefactoring categoriesFor: #transform!public!transforming! !

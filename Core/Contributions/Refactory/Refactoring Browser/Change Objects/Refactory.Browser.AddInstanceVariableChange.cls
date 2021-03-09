@@ -14,21 +14,12 @@ Refactory.Browser.AddInstanceVariableChange comment: ''!
 asUndoOperation
 	^RemoveInstanceVariableChange remove: variable from: self changeClass!
 
-changeString
-	^'Add instance variable named, <1s>, from <2s>' expandMacrosWith: variable
-		with: self displayClassName!
+changeStringFormat
+	^'Add instance variable named, <1s>, to <2s>'!
 
 changeSymbol
-	^#addInstVarName:!
-
-printOn: aStream 
-	aStream
-		nextPutAll: self displayClassName;
-		nextPutAll: ' addInstVarNamed: ';
-		nextPutAll: variable;
-		nextPut: $!!! !
+	^#addInstVarName:! !
 !Refactory.Browser.AddInstanceVariableChange categoriesFor: #asUndoOperation!converting!public! !
-!Refactory.Browser.AddInstanceVariableChange categoriesFor: #changeString!printing!public! !
-!Refactory.Browser.AddInstanceVariableChange categoriesFor: #changeSymbol!private! !
-!Refactory.Browser.AddInstanceVariableChange categoriesFor: #printOn:!printing!public! !
+!Refactory.Browser.AddInstanceVariableChange categoriesFor: #changeStringFormat!constants!printing!private! !
+!Refactory.Browser.AddInstanceVariableChange categoriesFor: #changeSymbol!constants!private! !
 

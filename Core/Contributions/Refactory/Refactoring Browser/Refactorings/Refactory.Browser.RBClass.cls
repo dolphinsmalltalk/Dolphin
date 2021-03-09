@@ -16,6 +16,10 @@ Instance Variables:
 !Refactory.Browser.RBClass categoriesForClass!Refactory-Model! !
 !Refactory.Browser.RBClass methodsFor!
 
+addClassConstant: anAssociation
+	self classConstants add: anAssociation.
+	model addClassConstant: anAssociation to: self!
+
 addClassVariable: aString 
 	self classVariableNames add: aString.
 	model addClassVariable: aString to: self!
@@ -57,7 +61,7 @@ classConstants: aCollectionOfVariableBindings
 
 classVariableNames
 	(classVariableNames isNil and: [self isDefined])
-		ifTrue: [self classVariableNames: self realClass classVariableNames].
+		ifTrue: [self classVariableNames: self realClass classBindingNames].
 	^classVariableNames!
 
 classVariableNames: aCollectionOfStrings 
@@ -163,6 +167,11 @@ printDefinitionOn: puttableStream
 realName: aSymbol 
 	self realClass: aSymbol asQualifiedReference value!
 
+removeClassConstant: anAssociation
+	| binding |
+	binding := self classConstants remove: anAssociation.
+	model removeClassConstant: binding from: self!
+
 removeClassVariable: aString
 	self classVariableNames remove: aString ifAbsent: [self classConstants remove: aString].
 	model removeClassVariable: aString from: self!
@@ -189,6 +198,7 @@ setName: aSymbol
 
 unqualifiedName
 	^(BindingReference splitQualifiedName: name) last asSymbol! !
+!Refactory.Browser.RBClass categoriesFor: #addClassConstant:!public!variable accessing! !
 !Refactory.Browser.RBClass categoriesFor: #addClassVariable:!public!variable accessing! !
 !Refactory.Browser.RBClass categoriesFor: #addImport:!public!variable accessing! !
 !Refactory.Browser.RBClass categoriesFor: #allClassVariableNames!accessing!public! !
@@ -215,6 +225,7 @@ unqualifiedName
 !Refactory.Browser.RBClass categoriesFor: #nonMetaclass!accessing!public! !
 !Refactory.Browser.RBClass categoriesFor: #printDefinitionOn:!accessing!public! !
 !Refactory.Browser.RBClass categoriesFor: #realName:!initialize/release!public! !
+!Refactory.Browser.RBClass categoriesFor: #removeClassConstant:!public!variable accessing! !
 !Refactory.Browser.RBClass categoriesFor: #removeClassVariable:!public!variable accessing! !
 !Refactory.Browser.RBClass categoriesFor: #removeImport:!public!variable accessing! !
 !Refactory.Browser.RBClass categoriesFor: #renameClassVariable:to:around:!public!variable accessing! !

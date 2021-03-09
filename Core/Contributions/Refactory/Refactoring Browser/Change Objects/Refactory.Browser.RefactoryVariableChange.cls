@@ -17,7 +17,13 @@ Refactory.Browser.RefactoryVariableChange comment: ''!
 		and: [variable = aRefactoryVariableChange variable]!
 
 changeObject
-	^self variable!
+	^variable!
+
+changeString
+	^self changeStringFormat expandMacrosWith: self variableName with: self displayClassName!
+
+changeStringFormat
+	^self subclassResponsibility!
 
 changeSymbol
 	^self subclassResponsibility!
@@ -30,25 +36,39 @@ hash
 	^self class hash bitXor: variable hash!
 
 primitiveExecute
-	| changeSymbol |
-	changeSymbol := self changeSymbol.
-	self changeClass perform: changeSymbol with: self changeObject.
-	
+	self changeClass perform: self changeSymbol with: self changeObject
+
 	"ChangeSet current changeClass: self changeClass.
 	SourceFileManager default logChange: (self changesFileTemplate 
 				expandMacrosWith: self changeClass
 				with: changeSymbol
 				with: self variable)"!
 
+printOn: aStream
+	aStream
+		nextPutAll: self displayClassName;
+		space;
+		nextPutAll: self changeSymbol;
+		space;
+		print: self changeObject;
+		nextPut: $!!!
+
 variable
+	^variable!
+
+variableName
 	^variable! !
 !Refactory.Browser.RefactoryVariableChange categoriesFor: #=!comparing!public! !
 !Refactory.Browser.RefactoryVariableChange categoriesFor: #changeObject!private! !
+!Refactory.Browser.RefactoryVariableChange categoriesFor: #changeString!printing!public! !
+!Refactory.Browser.RefactoryVariableChange categoriesFor: #changeStringFormat!constants!printing!private! !
 !Refactory.Browser.RefactoryVariableChange categoriesFor: #changeSymbol!constants!private! !
-!Refactory.Browser.RefactoryVariableChange categoriesFor: #class:variable:!initialize/release!public! !
+!Refactory.Browser.RefactoryVariableChange categoriesFor: #class:variable:!initialize/release!private! !
 !Refactory.Browser.RefactoryVariableChange categoriesFor: #hash!comparing!public! !
 !Refactory.Browser.RefactoryVariableChange categoriesFor: #primitiveExecute!private! !
-!Refactory.Browser.RefactoryVariableChange categoriesFor: #variable!private! !
+!Refactory.Browser.RefactoryVariableChange categoriesFor: #printOn:!printing!public! !
+!Refactory.Browser.RefactoryVariableChange categoriesFor: #variable!accessing!private! !
+!Refactory.Browser.RefactoryVariableChange categoriesFor: #variableName!accessing!private! !
 
 !Refactory.Browser.RefactoryVariableChange class methodsFor!
 

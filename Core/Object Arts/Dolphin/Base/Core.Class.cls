@@ -54,6 +54,9 @@ addBinding: aVariableBinding
 			[self variableAdded: aVariableBinding.
 			true]!
 
+addClassConstant: anAssociation
+	self addClassConstant: anAssociation key value: anAssociation value!
+
 addClassConstant: aString value: anObject
 	"Define a constant binding in the receiver's class pool with the specified name. If the
 	variable already exists, it is marked as constant, and if its existing value is different
@@ -624,6 +627,9 @@ printString
 
 	^self shortName!
 
+removeClassConstant: anAssociation
+	self removeClassVarName: anAssociation key!
+
 removeClassVarName: aString
 	"Remove the class variable from the receiver with the specified <readableString> name.
 	Note: This is a low-level operation and does not recompile affected classes. Generally 
@@ -1025,6 +1031,7 @@ variableSubclass: aClassSymbol instanceVariableNames: instVarString classVariabl
 !Core.Class categoriesFor: #absoluteNameFor:!public! !
 !Core.Class categoriesFor: #absoluteReference!accessing!namespaces!public! !
 !Core.Class categoriesFor: #addBinding:!class variables!private! !
+!Core.Class categoriesFor: #addClassConstant:!class variables!development!public! !
 !Core.Class categoriesFor: #addClassConstant:value:!class variables!development!public! !
 !Core.Class categoriesFor: #addClassVariable:value:!class hierarchy-mutating!class variables!public! !
 !Core.Class categoriesFor: #addClassVarNamed:!class hierarchy-mutating!class variables!public! !
@@ -1099,6 +1106,7 @@ variableSubclass: aClassSymbol instanceVariableNames: instVarString classVariabl
 !Core.Class categoriesFor: #printNameOn:relativeTo:!printing!private! !
 !Core.Class categoriesFor: #printOn:!printing!public! !
 !Core.Class categoriesFor: #printString!printing!public! !
+!Core.Class categoriesFor: #removeClassConstant:!class variables!development!public! !
 !Core.Class categoriesFor: #removeClassVarName:!class hierarchy-mutating!class variables!public! !
 !Core.Class categoriesFor: #removeFromCategory:!categories-removing!public! !
 !Core.Class categoriesFor: #removeFromSuper!operations!private! !

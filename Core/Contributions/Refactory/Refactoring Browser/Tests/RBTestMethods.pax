@@ -84,7 +84,9 @@ Refactory.Browser.Tests.FooLintRuleTest subclass: #'Refactory.Browser.Tests.Tran
 	classVariableNames: 'RecursiveSelfRule'
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: {
+		'Bar' -> 16r7B
+	}!
 Core.Model subclass: #'Refactory.Browser.Tests.ClassToRename'
 	instanceVariableNames: 'rewriteRule builder class'
 	classVariableNames: ''

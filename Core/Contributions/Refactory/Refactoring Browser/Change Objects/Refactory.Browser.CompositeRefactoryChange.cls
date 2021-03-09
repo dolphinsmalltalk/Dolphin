@@ -29,6 +29,9 @@ addChangeFirst: aRefactoryChange
 	changes addFirst: aRefactoryChange.
 	^aRefactoryChange!
 
+addClassConstant: anAssociation to: aRBClass 
+	^self addChange: (AddClassConstantChange add: anAssociation to: aRBClass)!
+
 addClassVariable: variableName to: aClass
 	^self addChange: (AddClassVariableChange add: variableName to: aClass)!
 
@@ -126,6 +129,9 @@ removeChange: aChange
 removeClass: aClass
 	^self addChange: (RemoveClassChange removeClassName: aClass fullName)!
 
+removeClassConstant: anAssociation from: aClass
+	^self addChange: (RemoveClassConstantChange remove: anAssociation from: aClass)!
+
 removeClassNamed: aSymbol
 	self addChange: (RemoveClassChange removeClassName: aSymbol)!
 
@@ -152,6 +158,7 @@ renameClass: class to: newName
 !Refactory.Browser.CompositeRefactoryChange categoriesFor: #=!comparing!public! !
 !Refactory.Browser.CompositeRefactoryChange categoriesFor: #addChange:!accessing!public! !
 !Refactory.Browser.CompositeRefactoryChange categoriesFor: #addChangeFirst:!accessing!public! !
+!Refactory.Browser.CompositeRefactoryChange categoriesFor: #addClassConstant:to:!private! !
 !Refactory.Browser.CompositeRefactoryChange categoriesFor: #addClassVariable:to:!public!refactory/changes! !
 !Refactory.Browser.CompositeRefactoryChange categoriesFor: #addImport:to:!public!refactory/changes! !
 !Refactory.Browser.CompositeRefactoryChange categoriesFor: #addInstanceVariable:to:!public!refactory/changes! !
@@ -175,6 +182,7 @@ renameClass: class to: newName
 !Refactory.Browser.CompositeRefactoryChange categoriesFor: #problemCount!accessing!public! !
 !Refactory.Browser.CompositeRefactoryChange categoriesFor: #removeChange:!inspector accessing!private! !
 !Refactory.Browser.CompositeRefactoryChange categoriesFor: #removeClass:!public!refactory/changes! !
+!Refactory.Browser.CompositeRefactoryChange categoriesFor: #removeClassConstant:from:!public!refactory/changes! !
 !Refactory.Browser.CompositeRefactoryChange categoriesFor: #removeClassNamed:!public!refactory/changes! !
 !Refactory.Browser.CompositeRefactoryChange categoriesFor: #removeClassVariable:from:!public!refactory/changes! !
 !Refactory.Browser.CompositeRefactoryChange categoriesFor: #removeImport:from:!public!refactory/changes! !

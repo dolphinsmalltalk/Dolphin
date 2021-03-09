@@ -20,26 +20,22 @@ changeObject
 changesFileTemplate
 	^'<1p> <2s> <3s>'!
 
-changeString
-	^'Import namespace , <1s>, into <2s>' expandMacrosWith: self variable with: self displayClassName!
+changeStringFormat
+	^'Import <1s>, into <2s>'!
 
 changeSymbol
 	^#addImport:!
 
-printOn: aStream 
-	aStream
-		nextPutAll: self displayClassName;
-		nextPutAll: ' addSharedPool: ';
-		nextPutAll: self variable;
-		nextPut: $!!!
-
 variable
+	^variable asString!
+
+variableName
 	^variable asString! !
 !Refactory.Browser.AddNamespaceImportChange categoriesFor: #asUndoOperation!converting!public! !
 !Refactory.Browser.AddNamespaceImportChange categoriesFor: #changeObject!private! !
 !Refactory.Browser.AddNamespaceImportChange categoriesFor: #changesFileTemplate!constants!private! !
-!Refactory.Browser.AddNamespaceImportChange categoriesFor: #changeString!printing!public! !
-!Refactory.Browser.AddNamespaceImportChange categoriesFor: #changeSymbol!private! !
-!Refactory.Browser.AddNamespaceImportChange categoriesFor: #printOn:!printing!public! !
+!Refactory.Browser.AddNamespaceImportChange categoriesFor: #changeStringFormat!constants!printing!private! !
+!Refactory.Browser.AddNamespaceImportChange categoriesFor: #changeSymbol!constants!private! !
 !Refactory.Browser.AddNamespaceImportChange categoriesFor: #variable!private! !
+!Refactory.Browser.AddNamespaceImportChange categoriesFor: #variableName!accessing!private! !
 

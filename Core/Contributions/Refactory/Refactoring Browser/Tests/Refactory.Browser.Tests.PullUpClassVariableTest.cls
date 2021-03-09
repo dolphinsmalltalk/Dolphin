@@ -18,6 +18,17 @@ testMetaClassFailure
 testNonExistantName
 	self shouldFail: (PullUpClassVariableRefactoring variable: #Foo class: LintRuleTest)!
 
+testPullUpClassConstant
+	| refactoring bar |
+	refactoring := PullUpClassVariableRefactoring variable: #Bar class: LintRuleTest.
+	self executeRefactoring: refactoring.
+	bar := (refactoring model classNamed: #'Refactory.Browser.Tests.LintRuleTest') classConstants
+				detect: [:each | each key = 'Bar'].
+	self assert: bar value equals: 123.
+	self
+		deny: ((refactoring model classNamed: #'Refactory.Browser.Tests.TransformationRuleTest')
+				classConstants anySatisfy: [:each | each key = 'Bar'])!
+
 testPullUpClassVariable
 	| refactoring |
 	refactoring := PullUpClassVariableRefactoring variable: #RecursiveSelfRule class: LintRuleTest.
@@ -28,5 +39,6 @@ testPullUpClassVariable
 				directlyDefinesClassVariable: #RecursiveSelfRule)! !
 !Refactory.Browser.Tests.PullUpClassVariableTest categoriesFor: #testMetaClassFailure!failure tests!public! !
 !Refactory.Browser.Tests.PullUpClassVariableTest categoriesFor: #testNonExistantName!failure tests!public! !
+!Refactory.Browser.Tests.PullUpClassVariableTest categoriesFor: #testPullUpClassConstant!public!tests! !
 !Refactory.Browser.Tests.PullUpClassVariableTest categoriesFor: #testPullUpClassVariable!public!tests! !
 

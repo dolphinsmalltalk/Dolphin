@@ -5,7 +5,9 @@ Refactory.Browser.Tests.FooLintRuleTest subclass: #'Refactory.Browser.Tests.Tran
 	classVariableNames: 'RecursiveSelfRule'
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: {
+		'Bar' -> 16r7B
+	}!
 Refactory.Browser.Tests.TransformationRuleTest guid: (Core.GUID fromString: '{f92d7547-3000-44f7-94ae-0c8b01fc5f2d}')!
 Refactory.Browser.Tests.TransformationRuleTest comment: ''!
 !Refactory.Browser.Tests.TransformationRuleTest categoriesForClass!Refactory-Test data! !

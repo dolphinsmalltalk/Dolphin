@@ -32,7 +32,7 @@ testModelRenameClass
 		compile: 'foo	^Object' classified: #(#accessing);
 		compile: 'objectName ^#(Object)' classified: #(#accessing).
 	"Ensure the test covers renaming an imported class"
-	self assert: (class imports includes: #'Core.Object' asQualifiedReference).
+	self assert: (class imports includes: #{Core.Object}).
 	refactoring := RenameClassRefactoring
 				model: model
 				rename: Object
@@ -44,7 +44,7 @@ testModelRenameClass
 	self assert: (class parseTreeFor: #objectName)
 		equals: (RBParser parseMethod: 'objectName ^#(Thing)').
 	self assert: class superclass name equals: #'Core.Thing'.
-	self assert: (class imports includes: #'Core.Thing' asQualifiedReference)!
+	self assert: (class imports includes: #{Core.Thing})!
 
 testModelRenameSequenceClass
 	model
