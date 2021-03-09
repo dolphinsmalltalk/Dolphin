@@ -15,7 +15,9 @@ canonicalSubject
 	^Kernel.Tests!
 
 nameCases
-	^#(#Core #Kernel #XProgramming #'XProgramming.SUnit') collect: [:each | each asQualifiedReference]!
+	^#(#Core #Kernel #XProgramming 'XProgramming.SUnit' #Smalltalk) collect: [:each | each asQualifiedReference]
+
+!
 
 testAbsoluteName
 	self nameCases
@@ -37,6 +39,31 @@ testAllEnvironments
 	self assert: XProgramming allEnvironments equals: {Root}.
 	self assert: XProgramming.SUnit allEnvironments equals: {XProgramming. Root}.
 	self assert: TestCase allEnvironments equals: {XProgramming.SUnit. XProgramming. Root}!
+
+testAssociationAt
+	| assoc |
+	assoc := Core associationAt: #Association.
+	self assert: assoc key identicalTo: #Association.
+	self assert: assoc value identicalTo: Association.
+	self deny: assoc isClassVariable.
+	self should: [Core associationAt: #Wibble] raise: NotFoundError.
+	"associationAt: is a local lookup, i.e. it will only resolve unqualfied names from the classPool of the Namespace"
+	self should: [Root associationAt: #'Core.Object'] raise: NotFoundError.
+	self should: [UI associationAt: #Object] raise: NotFoundError.
+	self should: [UI associationAt: #'Core.Object'] raise: NotFoundError.!
+
+testAssociationAtIfAbsent
+	| assoc absent |
+	assoc := Core associationAt: #Association ifAbsent: [].
+	self assert: assoc key identicalTo: #Association.
+	self assert: assoc value identicalTo: Association.
+	self deny: assoc isClassVariable.
+	absent := Object new.
+	self assert: (Core associationAt: #Wibble ifAbsent: [absent]) identicalTo: absent.
+	"associationAt: is a local lookup, i.e. it will only resolve unqualfied names from the classPool of the Namespace"
+	self assert: (Root associationAt: #'Core.Object' ifAbsent: [absent]) identicalTo: absent.
+	self assert: (UI associationAt: #Object ifAbsent: [absent]) identicalTo: absent.
+	self assert: (UI associationAt: #'Core.Object' ifAbsent: [absent]) identicalTo: absent.!
 
 testBindingInParentNamespace
 	"We should be able to resolve bindings in enclosing namespaces from nested namespaces"
@@ -132,12 +159,12 @@ testPrivateImportIntoParentNamespace
 	"Obviously we expect the privately imported names to be visible in the namespace"
 	self assert: (External fullBindingFor: 'CompiledMethod') value equals: CompiledMethod.
 	"But they should not be exported as names from that scope"
-	self deny: 'External.CompiledMethod' asQualifiedReference isDefined.
+	self deny: #{External.CompiledMethod} isDefined.
 
 	"External.Tests should inherit the private import of Kernel."
 	self deny: (External.Tests imports includes: Kernel fullyQualifiedReference).
 	self assert: (External.Tests fullBindingFor: 'CompiledMethod') value equals: CompiledMethod.
-	self deny: 'External.Tests.CompiledMethod' asQualifiedReference isDefined!
+	self deny: #{External.Tests.CompiledMethod} isDefined!
 
 testShortName
 	"The short name of a namespace is it's unqualified name if it is defined in Smalltalk, or in one of Smalltalk's imports, otherwise it is the full name."
@@ -145,7 +172,10 @@ testShortName
 	self assert: Behavior shortName equals: 'Behavior'.
 	self assert: XProgramming shortName equals: 'XProgramming'.
 	self assert: XProgramming.SUnit shortName equals: 'XProgramming.SUnit'.
-	self assert: TestCase shortName equals: 'XProgramming.SUnit.TestCase'!
+	self assert: TestCase shortName equals: 'XProgramming.SUnit.TestCase'.
+	"Where there is ambiguity in imported namespaces, the order of imports takes precedence (Core is imported into Smaltlalk before Kernel)."
+	self assert: Core.Tests shortName equals: 'Tests'.
+	self assert: Kernel.Tests shortName equals: 'Kernel.Tests'!
 
 testSimpleName
 	"#simpleName is defined for compatibility. It is the same as the #unqualifiedName (or indeed the #name)."
@@ -162,6 +192,8 @@ testUnqualifiedName
 !Kernel.Tests.NamespaceTest categoriesFor: #testAbsoluteReference!public!unit tests! !
 !Kernel.Tests.NamespaceTest categoriesFor: #testAllClasses!public!unit tests! !
 !Kernel.Tests.NamespaceTest categoriesFor: #testAllEnvironments!public!unit tests! !
+!Kernel.Tests.NamespaceTest categoriesFor: #testAssociationAt!public! !
+!Kernel.Tests.NamespaceTest categoriesFor: #testAssociationAtIfAbsent!public! !
 !Kernel.Tests.NamespaceTest categoriesFor: #testBindingInParentNamespace!public!unit tests! !
 !Kernel.Tests.NamespaceTest categoriesFor: #testEnvironment!public!unit tests! !
 !Kernel.Tests.NamespaceTest categoriesFor: #testFullName!public!unit tests! !

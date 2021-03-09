@@ -42,6 +42,13 @@ testIsSimpleSelfSend
 	{Association >> #key. Association >> #key:. Association >> #key:value:}
 		do: [:each | self deny: (each isSimpleSelfSend: #subclassResponsibility)]!
 
+testLocalEnvironment
+	self assert: (Object>>#=) localEnvironment equals: Core!
+
+testLocalScope
+	self assert: (Object>>#=) localScope equals: Object.
+	self assert: Object class methodDictionary anyOne localScope equals: Object!
+
 testValueWithReceiverArguments
 	| method value |
 	method := self class compiledMethodAt: #returnTrue.
@@ -55,5 +62,7 @@ testValueWithReceiverArguments
 !Kernel.Tests.CompiledMethodTest categoriesFor: #returnTrue!examples!private! !
 !Kernel.Tests.CompiledMethodTest categoriesFor: #testIsQuick!public!unit tests! !
 !Kernel.Tests.CompiledMethodTest categoriesFor: #testIsSimpleSelfSend!public!unit tests! !
+!Kernel.Tests.CompiledMethodTest categoriesFor: #testLocalEnvironment!public!unit tests! !
+!Kernel.Tests.CompiledMethodTest categoriesFor: #testLocalScope!public!unit tests! !
 !Kernel.Tests.CompiledMethodTest categoriesFor: #testValueWithReceiverArguments!public!unit tests! !
 

@@ -276,18 +276,18 @@ testLoad70Pax
 	| scribbleTestPackage aliasName binaryVariableName sourceVariableName testPool poolConst |
 	self loadAndTestPackage: 'ScribbleTestPackages\7.0\ScribbleTest7.pax'.
 	scribbleTestPackage := loadedPackages first.
-	aliasName := 'Smalltalk.AliasToScribbleTest' asQualifiedReference.
+	aliasName := #{Smalltalk.AliasToScribbleTest}.
 	self assert: scribbleTestPackage aliasVariableNames asArray equals: {aliasName}.
 	self assert: aliasName value identicalTo: #{Smalltalk.ScribbleTest} value.
 	self assert: (scribbleTestPackage manager packageOfVariableNamed: aliasName)
 		identicalTo: scribbleTestPackage.
-	binaryVariableName := 'Smalltalk.ScribbleTestBinaryGlobal' asQualifiedReference.
+	binaryVariableName := #{Smalltalk.ScribbleTestBinaryGlobal}.
 	self assert: scribbleTestPackage binaryVariableNames asArray equals: {binaryVariableName}.
 	self assert: (scribbleTestPackage manager packageOfVariableNamed: binaryVariableName)
 		identicalTo: scribbleTestPackage.
 	self assert: binaryVariableName value equals: #('Scribble').
 	self assert: scribbleTestPackage sourceVariableNames asArray equals: #().
-	sourceVariableName := 'Smalltalk.ScribbleTestSourceGlobal' asQualifiedReference.
+	sourceVariableName := #{Smalltalk.ScribbleTestSourceGlobal}.
 	"We should still find the class binding among the packaged variables"
 	self assert: (scribbleTestPackage manager packageOfVariableNamed: sourceVariableName) identicalTo: scribbleTestPackage.
 	self assert: (scribbleTestPackage classNames includes: sourceVariableName).
@@ -309,13 +309,13 @@ testLoad72Pax
 	| scribbleTestPackage aliasName binaryVariableName sourceVariableName testPool |
 	self loadAndTestPackage: 'ScribbleTestPackages\7.2\ScribbleTest72.pax'.
 	scribbleTestPackage := loadedPackages first.
-	aliasName := 'Smalltalk.AliasToScribbleTest' asQualifiedReference.
+	aliasName := #{Smalltalk.AliasToScribbleTest}.
 	self assert: scribbleTestPackage aliasVariableNames asArray equals: {aliasName}.
 	self assert: aliasName value identicalTo: #{Smalltalk.ScribbleTest} value.
-	binaryVariableName := 'Smalltalk.ScribbleTestBinaryGlobal' asQualifiedReference.
+	binaryVariableName := #{Smalltalk.ScribbleTestBinaryGlobal}.
 	self assert: scribbleTestPackage binaryVariableNames asArray equals: {binaryVariableName}.
 	self assert: binaryVariableName value equals: #('Scribble').
-	sourceVariableName := 'Smalltalk.ScribbleTestSourceGlobal' asQualifiedReference.
+	sourceVariableName := #{Smalltalk.ScribbleTestSourceGlobal}.
 	self assert: scribbleTestPackage sourceVariableNames asArray equals: #().
 	self assert: (scribbleTestPackage classNames includes: sourceVariableName).
 	testPool := sourceVariableName value.

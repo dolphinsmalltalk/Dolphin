@@ -455,7 +455,7 @@ split: aReadableString
 				from: 1
 				to: size.
 	end == 0 ifTrue: [^{aReadableString}].
-	answer := Array writeStream: 5.
+	answer := WriteStream on: (Array new: 5).
 	start := 1.
 	codeUnits := aReadableString encodedSizeOf: self.
 	

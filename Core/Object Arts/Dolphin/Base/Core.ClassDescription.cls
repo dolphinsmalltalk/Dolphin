@@ -557,7 +557,13 @@ localBindingFor: aString
 	^self subclassResponsibility!
 
 localEnvironment
-	"Private - Answer the nearest <Namespace> scope."
+	"Private - Answer the enclosing <Namespace> scope."
+
+	^self environment
+!
+
+localScope
+	"Private - Answer the nearest name scope."
 
 	^self instanceClass
 !
@@ -917,7 +923,7 @@ subclassInstVarNames
 	^answer!
 
 suggestedPrivacyFor: aCompiledMethod
-	^#{MethodCategorizationPolicy}
+	^#{Tools.MethodCategorizationPolicy}
 		ifDefined: [:policy | policy default suggestedPrivacyFor: aCompiledMethod]!
 
 variableAdded: aVariableBinding
@@ -1029,6 +1035,7 @@ withAllSubclassesDo: aMonadicValuable
 !Core.ClassDescription categoriesFor: #isChanged:!public!source filing! !
 !Core.ClassDescription categoriesFor: #localBindingFor:!binding!public! !
 !Core.ClassDescription categoriesFor: #localEnvironment!accessing!private! !
+!Core.ClassDescription categoriesFor: #localScope!accessing!private! !
 !Core.ClassDescription categoriesFor: #logDefinition!class hierarchy-mutating!instance variables!private! !
 !Core.ClassDescription categoriesFor: #logRemoveSelector:!development!helpers!private! !
 !Core.ClassDescription categoriesFor: #logRemoveSelectors:!development!helpers!private! !

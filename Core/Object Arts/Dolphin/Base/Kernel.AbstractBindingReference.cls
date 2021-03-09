@@ -5,10 +5,14 @@ Core.Object subclass: #'Kernel.AbstractBindingReference'
 	classVariableNames: 'Undeclared'
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: {
+		'MetaMask' -> 16r1.
+		'PrivateMask' -> 16r2.
+		'RelativeMask' -> 16r4
+	}!
 Kernel.AbstractBindingReference guid: (Core.GUID fromString: '{2d52489e-7275-4df4-9022-294a7b2f9381}')!
 Kernel.AbstractBindingReference isNonInstantiable: true!
-Kernel.AbstractBindingReference comment: 'Abstract superclass of binding references.'!
+Kernel.AbstractBindingReference comment: '`AbstractBindingReference` is the abstract superclass of binding reference objects.'!
 !Kernel.AbstractBindingReference categoriesForClass!System-Namespaces! !
 !Kernel.AbstractBindingReference methodsFor!
 
@@ -24,11 +28,14 @@ Kernel.AbstractBindingReference comment: 'Abstract superclass of binding referen
 	"Answer whether the receiver and the <Object> argument should be considered equivalent. Binding references are considered equivalent if they have the same path and starting point.
 	Note that two binding references that would resolve to the same actual variable binding may not be considered equivalent as the binding resolution is a dynamic quality determined 
 	at the time of resolution, and is not necessarily temporally stable. Equality of binding references is a static property based and is such that two equal references will always bind
-	to the same variable."
+	to the same variable if bound at the same time."
+
+	"Implementation Note: This implementation depends on the fact that for absolute references the context is always nil, and for (useful) relative references, the context is not nil."
 
 	^self == anObject or: 
-			[self class == anObject class
-				and: [self pathString = anObject pathString and: [self context == anObject context]]]!
+			[self class == anObject class and: 
+					[self pathString = anObject pathString
+						and: [self flags == anObject flags and: [self context == anObject context]]]]!
 
 append: aString
 	"Answer a new <BindingReference> that refers to the nested name identified by the <readableString> argument within the receiver's scope."
@@ -38,7 +45,9 @@ append: aString
 asFullyQualifiedReference
 	"Answer a<BindingReference> that references the same binding as the receiver does currently in its home context, but from Smalltalk or Root."
 
-	^BindingReference path: (self namespace fullPath copyWith: self unqualifiedName)!
+	^self isRelative
+		ifTrue: [BindingReference path: (self namespace fullPath copyWith: self unqualifiedName)]
+		ifFalse: [self]!
 
 asQualifiedReference
 	"Answer the <BindingReference> equivalent of the receiver."
@@ -46,7 +55,7 @@ asQualifiedReference
 	^self!
 
 asString
-	"Answer a <readableString> that describes the receiver as a qualified name in the context of the home namespace."
+	"Answer a <readableString> that is the receiver's qualified name expression."
 
 	^self subclassResponsibility!
 
@@ -54,6 +63,13 @@ asSymbol
 	"Answer the <symbol> corresponding to the receiver's fully-qualified name."
 
 	^self asString asSymbol!
+
+baseClass
+	"Answer the 'class' context of the receiver, if a relative reference defined within the context of a class or method, or nil if absolute.
+	When non-nil, this is the starting point for resolution of the binding path, and that 'class' context is asked to resolve the binding."
+
+	^self subclassResponsibility
+	!
 
 basicUnqualifiedName
 	"Private - Answer the unqualified name part of the receiver (the final component of the name)."
@@ -63,15 +79,21 @@ basicUnqualifiedName
 binding
 	"Answer the <VariableBinding> referenced by the receiver (i.e. resolve the variable)."
 
-	^self bindingOrNil ifNil: [self home errorNotFound: self]!
+	^self bindingOrNil ifNil: [self bindingRoot errorNotFound: self]!
 
 bindingOrNil
 	"Answer the <VariableBinding> referenced by the receiver (i.e. resolve the variable), or nil if there is no such variable."
 
 	^self subclassResponsibility!
 
+bindingRoot
+	"Private - Answer the root binding context from which the receiver's binding path is traversed to locate the target binding.
+	This is always a <Class>. It may be a <Namespace>. If the receiver is an absolute binding reference it will be the Smalltalk namespace class."
+
+	^self subclassResponsibility!
+
 context
-	"The name context in which resolution of the binding should be initiated."
+	"Answer the context in which the reference was created. For relative references this is used to determine the start point for binding resolution."
 
 	^self subclassResponsibility!
 
@@ -81,11 +103,11 @@ declare
 	| p nsPath ns |
 	p := self path.
 	nsPath := p allButLast.
-	ns := self home.
+	ns := self bindingRoot.
 	nsPath isEmpty
 		ifFalse: 
-			[(self home resolveBindingPath: nsPath)
-				ifNil: [^self home errorNotFound: (BindingReference path: nsPath context: self context)]
+			[(ns resolveBindingPath: nsPath)
+				ifNil: [^ns errorNotFound: (BindingReference path: nsPath context: self context)]
 				ifNotNil: [:nsBinding | ns := nsBinding targetVariable value]].
 	^ns declareVariable: p last!
 
@@ -98,21 +120,26 @@ declare: anObject
 displayOn: aPuttableStream
 	"Append to the <puttableStream> argument a String whose characters are a representation of the receiver that an end-user might want to see."
 
-	aPuttableStream nextPutAll: self pathString!
+	| identifier |
+	identifier := self pathString.
+	(self isRelative and: [identifier includes: $.]) ifTrue: [aPuttableStream nextPutAll: '_.'].
+	aPuttableStream nextPutAll: identifier!
 
 environment
-	"Answer the in namespace which the referenced binding should be found, or nil if any of the namespaces on the path do not exist."
+	"Answer the namespace (i.e. any Class, not just Namespaces) in which the target binding should be found, or nil if any of the namespaces on the path do not exist."
 
 	| parts length |
 	parts := self path.
 	length := parts size.
 	^length > 1
 		ifTrue: 
-			[(self home resolveBindingPath: (parts copyFrom: 1 to: length - 1)) ifNotNil: [:ns | ns value]]
-		ifFalse: [self home]!
+			[(self bindingRoot resolveBindingPath: (parts copyFrom: 1 to: length - 1)) ifNotNil: [:ns | ns value localScope]]
+		ifFalse: [self bindingRoot]
+
+!
 
 environmentName
-	"Answer the <String> qualified name of the receiver's full namespace qualifier. This includes the path for the home context."
+	"Answer the <String> qualified name of the receiver's full namespace qualifier. This includes the path for the context."
 
 	| stream parts first |
 	parts := self path.
@@ -123,7 +150,7 @@ environmentName
 			parts size <= 1
 				ifTrue: [Smalltalk printFullNameOn: stream]
 				ifFalse: [first := true]]
-		ifNotNil: [:ctxt | ctxt localEnvironment printFullNameOn: stream].
+		ifNotNil: [:ctxt | ctxt localScope printFullNameOn: stream].
 	1 to: parts size - 1
 		do: 
 			[:i |
@@ -131,13 +158,19 @@ environmentName
 			stream nextPutAll: (parts at: i)].
 	^stream contents!
 
+flags
+	^self subclassResponsibility!
+
 hash
 	"Answer the <integer> hash value for the receiver."
 
 	^self subclassResponsibility!
 
 home
-	"Answer the home <Namespace> to which this binding reference is relative."
+	"Answer the 'namespace context' for this binding reference."
+
+	"Implementation Note: This is defined for compabitility with the reference platform, but isn't otherwise particularly useful in Dolphin because Namespaces are classes and any Class can effectively be a namespace.
+	Even in the reference platform it doesn't necessarily define the starting point for binding, since a binding reference can refer to a class shared variable."
 
 	^self subclassResponsibility!
 
@@ -169,6 +202,11 @@ instance
 
 	^self subclassResponsibility!
 
+isAbsolute
+	"Answer whether the receiver specifies an absolute, fully-qualified, binding reference that always resolves to the same binding, no matter the initial binding context."
+
+	^self isRelative not!
+
 isDefined
 	"Answer whether the receiver refers to a defined variable."
 
@@ -187,7 +225,7 @@ isMeta
 isPrivate
 	"Answer whether the receiver represents a private binding reference that should not be used outside its immediate scope."
 
-	^self subclassResponsibility!
+	^self flags allMask: PrivateMask!
 
 isPrivate: aBoolean
 	self subclassResponsibility!
@@ -196,6 +234,11 @@ isQualifiedName
 	"Answer whether the receiver is a name with more than one component."
 
 	^self path size > 1!
+
+isRelative
+	"Answer whether the receiver specifies a binding path relative to a specific binding root, or alternatively is an absolute (or fully-qualified) binding reference."
+
+	^self flags allMask: RelativeMask!
 
 literalTextStyle
 	^#literalBindingReference!
@@ -206,23 +249,23 @@ meta
 	^self subclassResponsibility!
 
 namespace
-	"Answer the <Namespace> in which the referenced binding should be found, or nil if the namespace path is incomplete."
+	"Answer the namespace in which the referenced binding should be found, or nil if the namespace path is incomplete."
 
 	| p length |
 	p := self path.
 	length := p size.
 	^length > 1
-		ifTrue: [(self home resolveBindingPath: (p copyFrom: 1 to: length - 1)) value]
-		ifFalse: [self home localEnvironment]!
+		ifTrue: [(self bindingRoot resolveBindingPath: (p copyFrom: 1 to: length - 1)) value]
+		ifFalse: [self bindingRoot]!
 
 namespaceBinding
-	"Answer the namespace in which the referenced binding should be found (if it exists). If any of the namespaces on the binding path do not exist, an error will be thrown."
+	"Answer a <VariableBinding> for the namespace (a Class, which may be a Namespace) in which the referenced binding should be found (if it exists). If any of the namespaces on the binding path do not exist, an error will be thrown."
 
 	| p |
 	p := self path.
 	^p size > 1
-		ifTrue: [self home resolveBindingPath: p allButLast]
-		ifFalse: [self home localEnvironment binding]!
+		ifTrue: [self bindingRoot resolveBindingPath: p allButLast]
+		ifFalse: [self bindingRoot binding]!
 
 owningPackage: aPackage 
 	^self instance value owningPackage: aPackage!
@@ -247,12 +290,17 @@ printOn: aStream
 	aStream nextPut: $}!
 
 private
-	self isPrivate: true.
-	^self!
+	^self isPrivate
+		ifTrue: [self]
+		ifFalse: 
+			[BindingReference
+				pathString: self pathString
+				context: self context
+				flags: (self flags bitOr: PrivateMask)]!
 
 refersToLiteral: anObject
 	"Private - Answer whether the receiver is a reference to the literal argument.
-	This assumes that the receiver is in the role of a literal. Normally this would only be true of LiteralBindingReferences, but other types of BindingReferences could find their way into literal frames if they result from the evaluation of a static expression."
+	This assumes that the receiver is in the role of a literal created by the compiler."
 
 	^self = anObject or: 
 			[anObject notNil
@@ -283,10 +331,10 @@ undeclare
 	| p nsPath ns |
 	p := self path.
 	nsPath := p allButLast.
-	ns := self home.
+	ns := self bindingRoot.
 	nsPath isEmpty
 		ifFalse: 
-			[(self home resolveBindingPath: nsPath)
+			[(ns resolveBindingPath: nsPath)
 				ifNil: [^self]
 				ifNotNil: [:nsBinding | ns := nsBinding targetVariable value]].
 	^ns removeLocalBindingFor: p last!
@@ -321,15 +369,18 @@ valueOrNil
 !Kernel.AbstractBindingReference categoriesFor: #asQualifiedReference!converting!public! !
 !Kernel.AbstractBindingReference categoriesFor: #asString!converting!public! !
 !Kernel.AbstractBindingReference categoriesFor: #asSymbol!converting!public! !
-!Kernel.AbstractBindingReference categoriesFor: #basicUnqualifiedName!private! !
+!Kernel.AbstractBindingReference categoriesFor: #baseClass!accessing!public! !
+!Kernel.AbstractBindingReference categoriesFor: #basicUnqualifiedName!accessing!private! !
 !Kernel.AbstractBindingReference categoriesFor: #binding!accessing!public! !
 !Kernel.AbstractBindingReference categoriesFor: #bindingOrNil!accessing!public! !
+!Kernel.AbstractBindingReference categoriesFor: #bindingRoot!accessing!public! !
 !Kernel.AbstractBindingReference categoriesFor: #context!constants!public! !
 !Kernel.AbstractBindingReference categoriesFor: #declare!operations!public! !
 !Kernel.AbstractBindingReference categoriesFor: #declare:!operations!public! !
 !Kernel.AbstractBindingReference categoriesFor: #displayOn:!displaying!public! !
 !Kernel.AbstractBindingReference categoriesFor: #environment!operations!public! !
-!Kernel.AbstractBindingReference categoriesFor: #environmentName!public! !
+!Kernel.AbstractBindingReference categoriesFor: #environmentName!accessing!public! !
+!Kernel.AbstractBindingReference categoriesFor: #flags!accessing!private! !
 !Kernel.AbstractBindingReference categoriesFor: #hash!comparing!public! !
 !Kernel.AbstractBindingReference categoriesFor: #home!accessing!public! !
 !Kernel.AbstractBindingReference categoriesFor: #ifDefined:!evaluating!public! !
@@ -337,16 +388,18 @@ valueOrNil
 !Kernel.AbstractBindingReference categoriesFor: #ifDefinedDo:!evaluating!public! !
 !Kernel.AbstractBindingReference categoriesFor: #ifDefinedDo:elseDo:!evaluating!public! !
 !Kernel.AbstractBindingReference categoriesFor: #instance!converting!public! !
+!Kernel.AbstractBindingReference categoriesFor: #isAbsolute!public!testing! !
 !Kernel.AbstractBindingReference categoriesFor: #isDefined!public!testing! !
 !Kernel.AbstractBindingReference categoriesFor: #isLiteral!public!testing! !
 !Kernel.AbstractBindingReference categoriesFor: #isMeta!public!testing! !
 !Kernel.AbstractBindingReference categoriesFor: #isPrivate!public!testing! !
-!Kernel.AbstractBindingReference categoriesFor: #isPrivate:!accessing!public! !
+!Kernel.AbstractBindingReference categoriesFor: #isPrivate:!accessing!private! !
 !Kernel.AbstractBindingReference categoriesFor: #isQualifiedName!public!testing! !
+!Kernel.AbstractBindingReference categoriesFor: #isRelative!public!testing! !
 !Kernel.AbstractBindingReference categoriesFor: #literalTextStyle!constants!public! !
 !Kernel.AbstractBindingReference categoriesFor: #meta!converting!public! !
 !Kernel.AbstractBindingReference categoriesFor: #namespace!operations!public! !
-!Kernel.AbstractBindingReference categoriesFor: #namespaceBinding!public! !
+!Kernel.AbstractBindingReference categoriesFor: #namespaceBinding!accessing!public! !
 !Kernel.AbstractBindingReference categoriesFor: #owningPackage:!accessing!development!private! !
 !Kernel.AbstractBindingReference categoriesFor: #path!accessing!public! !
 !Kernel.AbstractBindingReference categoriesFor: #pathString!accessing!public! !
@@ -360,7 +413,7 @@ valueOrNil
 !Kernel.AbstractBindingReference categoriesFor: #undeclare!operations!public! !
 !Kernel.AbstractBindingReference categoriesFor: #unqualifiedName!accessing!public! !
 !Kernel.AbstractBindingReference categoriesFor: #value!accessing!public! !
-!Kernel.AbstractBindingReference categoriesFor: #valueOfBinding:!accessing!private! !
+!Kernel.AbstractBindingReference categoriesFor: #valueOfBinding:!helpers!private! !
 !Kernel.AbstractBindingReference categoriesFor: #valueOrDo:!accessing!public! !
 !Kernel.AbstractBindingReference categoriesFor: #valueOrNil!accessing!public! !
 

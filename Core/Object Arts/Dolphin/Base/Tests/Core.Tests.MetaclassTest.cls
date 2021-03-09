@@ -70,6 +70,12 @@ testLessOrEqual
 	self deny: ArithmeticValue class <= ArithmeticError.
 	self deny: ArithmeticValue class <= ArithmeticError class!
 
+testLocalEnvironment
+	self assert: Object class localEnvironment equals: Core!
+
+testLocalScope
+	self assert: Object class localScope equals: Object!
+
 testName
 	Smalltalk allRoots do: 
 			[:root |
@@ -81,6 +87,8 @@ testStoreOn
 !Core.Tests.MetaclassTest categoriesFor: #allClassHierarchyInstancesDo:!helpers!private! !
 !Core.Tests.MetaclassTest categoriesFor: #testInstances!public!unit tests! !
 !Core.Tests.MetaclassTest categoriesFor: #testLessOrEqual!public!unit tests! !
+!Core.Tests.MetaclassTest categoriesFor: #testLocalEnvironment!public!unit tests! !
+!Core.Tests.MetaclassTest categoriesFor: #testLocalScope!public!unit tests! !
 !Core.Tests.MetaclassTest categoriesFor: #testName!public!unit tests! !
 !Core.Tests.MetaclassTest categoriesFor: #testStoreOn!public!unit tests! !
 

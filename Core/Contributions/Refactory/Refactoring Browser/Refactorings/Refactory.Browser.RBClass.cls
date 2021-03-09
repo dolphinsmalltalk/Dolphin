@@ -87,7 +87,9 @@ directlyDefinesClassVariable: aString
 	^self classVariableNames includes: aString!
 
 directlyImportsNamespace: aString
-	^self imports includes: aString asQualifiedReference!
+	"Namespace imports must always be absolute binding references, but they may be private, so we just compare the paths"
+
+	^self imports anySatisfy: [:each | each pathString = aString]!
 
 fullyQualifiedReference
 	^BindingReference pathString: name!

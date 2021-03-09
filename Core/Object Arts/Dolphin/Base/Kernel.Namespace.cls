@@ -253,6 +253,12 @@ keysAndValuesDo: aDyadicValuable
 keysDo: aMonadicValuable
 	classPool keysDo: aMonadicValuable!
 
+localEnvironment
+	"Private - Answer the nearest <Namespace> scope."
+
+	^self
+!
+
 lookup: keyObject
 	"Answer the value named by the <Object> argument, keyObject, or nil if there is no such key in the receiver.
 	Clearly if the receiver can contain nil values then it will not be possible to distinguish between the absence
@@ -363,6 +369,7 @@ variableRenamed: aVariableBinding from: aString
 !Kernel.Namespace class categoriesFor: #keys!dictionary-accessing!public! !
 !Kernel.Namespace class categoriesFor: #keysAndValuesDo:!dictionary-enumerating!public! !
 !Kernel.Namespace class categoriesFor: #keysDo:!dictionary-enumerating!public! !
+!Kernel.Namespace class categoriesFor: #localEnvironment!accessing!private! !
 !Kernel.Namespace class categoriesFor: #lookup:!dictionary-accessing!public! !
 !Kernel.Namespace class categoriesFor: #new!instance creation!public! !
 !Kernel.Namespace class categoriesFor: #notEmpty!dictionary-testing!public! !

@@ -28,7 +28,6 @@ Instance Variables:
 	gcInterval		<integer>. Milliseconds between major GC cycles.
 	lastGCTime	<integer>. Milliseconds clock at last major GC cycle.
 	lastGCDuration	<integer>. Duration in milliseconds of last major GC cycle.
-	objectHeaderSize	<integer>. Number of bytes in object headers allocated by the VM (a constant).
 
 Class Variables:
 	GCInterval	<integer>. Default GC interval.

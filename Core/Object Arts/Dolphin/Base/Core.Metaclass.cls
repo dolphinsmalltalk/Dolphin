@@ -69,7 +69,7 @@ comment: aString
 !
 
 environment
-	"Answer the receiver's name space."
+	"Answer the receiver's <Namespace>."
 
 	^self instanceClass environment!
 
@@ -141,6 +141,12 @@ localBindingFor: aString
 	"Answer a variable binding for the named variable directly in the scope of this class, i.e. one of its own class variables. If there is no such class variable, then answer nil."
 
 	^self instanceClass localBindingFor: aString!
+
+localEnvironment
+	"Private - Answer the enclosing <Namespace> scope."
+
+	^self instanceClass localEnvironment
+!
 
 name
 	"Answer a String containing the receiver name. 
@@ -229,6 +235,7 @@ subclassesDo: aMonadicValuable
 !Core.Metaclass categoriesFor: #isAnonymous!public!testing! !
 !Core.Metaclass categoriesFor: #isMeta!public!testing! !
 !Core.Metaclass categoriesFor: #localBindingFor:!binding!public! !
+!Core.Metaclass categoriesFor: #localEnvironment!accessing!private! !
 !Core.Metaclass categoriesFor: #name!accessing!public! !
 !Core.Metaclass categoriesFor: #new!instance creation!public! !
 !Core.Metaclass categoriesFor: #owningPackage!accessing!development!public! !

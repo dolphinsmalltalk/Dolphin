@@ -15,6 +15,9 @@ Kernel.Tests.AbstractNamespaceTest comment: ''!
 canonicalSubject
 	^self subclassResponsibility!
 
+classTestCases
+	^{{'Association'. Association}. {Core.Date. Date}. {'XProgramming.SUnit.TestCase'. TestCase}}!
+
 onVariableRemoved: aVariableBinding
 	removedVariables add: aVariableBinding!
 
@@ -62,6 +65,7 @@ testRemoveLocalBindingFor
 				[Smalltalk removeEventsTriggeredFor: self.
 				subject basicRemoveBinding: binding]! !
 !Kernel.Tests.AbstractNamespaceTest categoriesFor: #canonicalSubject!private! !
+!Kernel.Tests.AbstractNamespaceTest categoriesFor: #classTestCases!private! !
 !Kernel.Tests.AbstractNamespaceTest categoriesFor: #onVariableRemoved:!private! !
 !Kernel.Tests.AbstractNamespaceTest categoriesFor: #setUp!private! !
 !Kernel.Tests.AbstractNamespaceTest categoriesFor: #testAbsoluteName!public!unit tests! !

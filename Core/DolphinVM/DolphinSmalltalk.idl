@@ -141,7 +141,8 @@ typedef struct STBlockClosure
 typedef enum {
 	None = 0,
 	IsMeta = 1,
-	IsPrivate = 2
+	IsPrivate = 2,
+	IsRelative = 4
 } BindingReferenceFlags;
 
 [

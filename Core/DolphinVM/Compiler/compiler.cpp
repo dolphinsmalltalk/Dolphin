@@ -1740,7 +1740,23 @@ POTE Compiler::ParseQualifiedReference(textpos_t textPosition)
 		Str identifier = ThisTokenText;
 		NextToken();
 
+		// Binding references for unqualified names, or which explicitly start with '_.', are considered relative to context, else absolute (fully qualified)
 		BindingReferenceFlags flags = BindingReferenceFlags::None;
+		if (this->m_class != Nil())
+		{
+			if (identifier.starts_with(u8"_."))
+			{
+				// Qualified name with relative prefix
+				identifier = identifier.substr(2);
+				flags = BindingReferenceFlags::IsRelative;
+			}
+			else if (identifier.find('.') == std::string::npos)
+			{
+				// Unqualified name. Always considered as relative
+				flags = BindingReferenceFlags::IsRelative;
+			}
+		}
+
 		while (ThisToken == TokenType::NameConst)
 		{
 			if (!strcmp((LPCSTR)ThisTokenText, "class"))
@@ -1764,7 +1780,23 @@ POTE Compiler::ParseQualifiedReference(textpos_t textPosition)
 		if (ThisToken == TokenType::CloseBrace)
 		{
 			NextToken();
-			Str uniqueIdentifier = (flags & BindingReferenceFlags::IsMeta) == BindingReferenceFlags::IsMeta ? identifier + u8'*' : identifier;
+			// We maintain a dictionary of previously seen BindingReferences to share them in the literal frame
+			// This is generally only of significance when compiling up big arrays of binding refs, e.g. for 
+			// package loose method lists.
+			Str uniqueIdentifier = identifier;
+			if ((flags & BindingReferenceFlags::IsMeta) == BindingReferenceFlags::IsMeta)
+			{
+				uniqueIdentifier += u8'*';
+			}
+			if ((flags & BindingReferenceFlags::IsPrivate) == BindingReferenceFlags::IsPrivate)
+			{
+				uniqueIdentifier += u8'-';
+			}
+			if ((flags & BindingReferenceFlags::IsRelative) == BindingReferenceFlags::IsRelative)
+			{
+				uniqueIdentifier += u8'_';
+			}
+
 			auto iter = m_bindingRefs.find(uniqueIdentifier);
 			if (iter == m_bindingRefs.end())
 			{

@@ -102,7 +102,7 @@ setEvents: anEventsCollectionOrNil
 shortNameFor: aString in: aNamespace
 	^(aNamespace isNil or: 
 			[aNamespace == self or: 
-					[(self bindingFor: aString)
+					[(self fullBindingFor: aString)
 						ifNil: [self imports anySatisfy: [:each | each value == aNamespace]]
 						ifNotNil: [:binding | binding environment == aNamespace]]])
 		ifTrue: [aString]

@@ -481,7 +481,7 @@ initialize
 				yourself!
 
 reset
-	Current numberFormat: nil! !
+	Current ifNotNil: [:current | current numberFormat: nil]! !
 !Kernel.SmalltalkLocale class categoriesFor: #current!instance creation!public! !
 !Kernel.SmalltalkLocale class categoriesFor: #initialize!class initialization!public! !
 !Kernel.SmalltalkLocale class categoriesFor: #reset!initializing!private! !

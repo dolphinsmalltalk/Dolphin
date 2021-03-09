@@ -21,7 +21,7 @@ testAbsoluteNameOfIdentifier
 	self assert: (self subject absoluteNameFor: #Wibble) equals: 'Root.Smalltalk.Wibble'!
 
 testAbsoluteReference
-	self assert: self subject absoluteReference equals: 'Root.Smalltalk' asQualifiedReference!
+	self assert: self subject absoluteReference equals: #{Root.Smalltalk}!
 
 testAllClasses
 	self assert: (Smalltalk allClasses difference: Class allClasses asSet) equals: #()!

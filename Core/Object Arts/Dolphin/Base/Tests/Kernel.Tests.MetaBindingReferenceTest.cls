@@ -15,10 +15,17 @@ nameSuffix
 	^' class'!
 
 printStringTestCases
-	^#(#(#(#Object) '#{Object class}') #(#('A' 'B' 'C') '#{A.B.C class}'))!
+	^#(#(#(#Object) '#{Object class}') #(#('A' 'B' 'C') '#{A.B.C class}')  #(#('_' 'SUnit' 'TestCase') '#{_.SUnit.TestCase class}'))!
 
 subjectClass
 	^MetaBindingReference!
+
+testEqualityOfMetaAndInstance
+	"Meta and instance references should never be equal, whether or not the path is the same."
+
+	self deny: #{Core.Object class} equals: #{Core.Object}.
+	self deny: #{_.Object class} equals: #{_.Object}
+!
 
 testInstance
 	| inst subject |
@@ -29,14 +36,14 @@ testInstance
 testLessOrEqual
 	| a b |
 	super testLessOrEqual.
-	a := self newTestSubjectWithPathString: 'Core.Object'.
-	b := self newTestSubjectWithPathString: 'Core.object'.
+	a := self subjectClass pathString: 'Core.Object'.
+	b := self subjectClass pathString: 'Core.object'.
 	self deny: a <= b instance.
 	self deny: a <= b instance!
 
 testMeta
 	| subject |
-	subject := self newTestSubjectWithPathString: 'Object'.
+	subject := self subjectClass pathString: 'Object'.
 	self assert: subject meta identicalTo: subject!
 
 testRefersToLiteral
@@ -55,6 +62,7 @@ valueOfBinding: aVariableBinding
 !Kernel.Tests.MetaBindingReferenceTest categoriesFor: #nameSuffix!constants!private! !
 !Kernel.Tests.MetaBindingReferenceTest categoriesFor: #printStringTestCases!constants!private! !
 !Kernel.Tests.MetaBindingReferenceTest categoriesFor: #subjectClass!constants!private! !
+!Kernel.Tests.MetaBindingReferenceTest categoriesFor: #testEqualityOfMetaAndInstance!public!unit tests! !
 !Kernel.Tests.MetaBindingReferenceTest categoriesFor: #testInstance!public!unit tests! !
 !Kernel.Tests.MetaBindingReferenceTest categoriesFor: #testLessOrEqual!public!unit tests! !
 !Kernel.Tests.MetaBindingReferenceTest categoriesFor: #testMeta!public!unit tests! !

@@ -83,6 +83,12 @@ testLessOrEqual
 	self deny: Kernel.Tests <= Core.Tests.
 	self assert: TestCase <= TestCaseResult!
 
+testLocalEnvironment
+	self assert: Object localEnvironment equals: Core!
+
+testLocalScope
+	self assert: Object localScope equals: Object!
+
 testPoolBinding
 	"Should be able to resolve imported pool bindings from the class"
 
@@ -98,6 +104,8 @@ testStoreOn
 !Core.Tests.ClassTest categoriesFor: #testImportsValid!public!unit tests! !
 !Core.Tests.ClassTest categoriesFor: #testIncludesNamespace!private! !
 !Core.Tests.ClassTest categoriesFor: #testLessOrEqual!public!unit tests! !
+!Core.Tests.ClassTest categoriesFor: #testLocalEnvironment!public!unit tests! !
+!Core.Tests.ClassTest categoriesFor: #testLocalScope!public!unit tests! !
 !Core.Tests.ClassTest categoriesFor: #testPoolBinding!public!unit tests! !
 !Core.Tests.ClassTest categoriesFor: #testStoreOn!public!unit tests! !
 

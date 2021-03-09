@@ -1327,7 +1327,7 @@ newSystemPackage
 	all do: [:aClass | dolphin addClass: aClass].
 	(Root allBindings reject: [:each | each isClassVariable or: [each value class isMeta and: [each key = each value name]]]) do: [:each |
 		inst addVariableNamed: each fullyQualifiedReference to: dolphin].
-	dolphin setUntracedVariables: {'Core.Transcript' asQualifiedReference}.
+	dolphin setUntracedVariables: #(#{Core.Transcript}).
 	dolphin timestamp: ((File lastWriteTime: dolphin classDefinitionsFileName)
 				ifNil: [0]
 				ifNotNil: [:filetime | filetime asInteger]).

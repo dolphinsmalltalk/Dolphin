@@ -83,8 +83,7 @@ testAddInstVarName
 testAddRemoveImports
 	| subclassName |
 	self assert: self classBuilderTestSubclass1 allImports
-		equals: (#(#ClassBuilderTestPool2 #ClassBuilderTestPool1)
-				collect: [:each | each asQualifiedReference binding fullyQualifiedReference]) , Object imports.
+		equals: #(#{Smalltalk.ClassBuilderTestPool2} #{Smalltalk.ClassBuilderTestPool1}) , Object imports.
 	self assert: (self classBuilderTestSubclass1 fullBindingFor: 'PoolVar1') value
 		equals: 'ClassBuilderTestPool2.PoolVar1'.
 	"PoolVar1 is defined in local pool, TestPool2, but also in inherited pool, TestPool1"
@@ -108,8 +107,7 @@ testAddRemoveImports
 	dirtiedClasses := true.
 	"Names remain the same, but in reverse order because we added previously inherited pool first"
 	self assert: self classBuilderTestSubclass1 allImports
-		equals: (#(#ClassBuilderTestPool1 #ClassBuilderTestPool2)
-				collect: [:each | each asQualifiedReference binding fullyQualifiedReference]) , Object imports.
+		equals: #(#{Smalltalk.ClassBuilderTestPool1} #{Smalltalk.ClassBuilderTestPool2}) , Object imports.
 	self assert: (self classBuilderTestSubclass1 fullBindingFor: 'PoolVar1') value
 		equals: 'ClassBuilderTestPool1.PoolVar1'.
 	"Because we have added TestPool1 before TestPool2, we will now bind to PoolVar1 from there."
@@ -127,8 +125,7 @@ testAddRemoveImports
 		classInstanceVariableNames: ''
 		classConstants: {}.
 	self assert: self classBuilderTestSubclass1 allImports
-		equals: (#(#ClassBuilderTestPool2 #ClassBuilderTestPool3 #ClassBuilderTestPool1)
-				collect: [:each | each asQualifiedReference binding fullyQualifiedReference]) , Object imports.
+		equals: #(#{Smalltalk.ClassBuilderTestPool2} #{Smalltalk.ClassBuilderTestPool3} #{Smalltalk.ClassBuilderTestPool1}), Object imports.
 	self assert: (self classBuilderTestSubclass1 fullBindingFor: 'PoolVar1') value
 		equals: 'ClassBuilderTestPool2.PoolVar1'.
 	self assert: (self classBuilderTestSubclass1 fullBindingFor: 'PoolVar2') value
@@ -146,8 +143,7 @@ testAddRemoveImports
 		classInstanceVariableNames: ''
 		classConstants: {}.
 	self assert: self classBuilderTestSubclass1 allImports
-		equals: {#ClassBuilderTestPool1 asQualifiedReference binding fullyQualifiedReference}
-				, Object imports.
+		equals: #(#{Smalltalk.ClassBuilderTestPool1}), Object imports.
 	self assert: (self classBuilderTestSubclass1 fullBindingFor: 'PoolVar1') value
 		equals: 'ClassBuilderTestPool1.PoolVar1'.
 	self assert: (self classBuilderTestSubclass1 fullBindingFor: 'PoolVar2') value

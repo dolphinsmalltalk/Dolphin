@@ -411,7 +411,13 @@ localCount
 localEnvironment
 	"Private - Answer the nearest <Namespace> scope."
 
-	^methodClass
+	^methodClass localEnvironment
+!
+
+localScope
+	"Private - Answer the nearest name scope."
+
+	^methodClass localScope
 !
 
 messages
@@ -680,6 +686,7 @@ writesInstVar: aString at: anInteger
 !Kernel.CompiledCode categoriesFor: #literalsDo:!enumerating!private! !
 !Kernel.CompiledCode categoriesFor: #localCount!accessing!method header!private! !
 !Kernel.CompiledCode categoriesFor: #localEnvironment!accessing!private! !
+!Kernel.CompiledCode categoriesFor: #localScope!accessing!private! !
 !Kernel.CompiledCode categoriesFor: #messages!accessing!development!public! !
 !Kernel.CompiledCode categoriesFor: #messagesDo:!development!enumerating!public! !
 !Kernel.CompiledCode categoriesFor: #methodClass!accessing!public! !

@@ -1999,7 +1999,11 @@ Core.Object subclass: #'Kernel.AbstractBindingReference'
 	classVariableNames: 'Undeclared'
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: {
+		'MetaMask' -> 16r1.
+		'PrivateMask' -> 16r2.
+		'RelativeMask' -> 16r4
+	}!
 Core.Object subclass: #'External.ArrayFieldLength'
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -2494,10 +2498,7 @@ Kernel.AbstractBindingReference subclass: #'Kernel.BindingReference'
 	classVariableNames: 'Generation'
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {
-		'MetaMask' -> 16r1.
-		'PrivateMask' -> 16r2
-	}!
+	classConstants: {}!
 Kernel.AbstractBindingReference subclass: #'Kernel.MetaBindingReference'
 	instanceVariableNames: 'instance'
 	classVariableNames: ''
