@@ -176,7 +176,7 @@ destroyAndRemoveProgress
 	SessionManager current isConsoleApplication ifTrue: [self removeGuiForConsoleApplication].
 
 	"Ensure RichText converter is not hanging around unecessarily"
-	#{RichText} ifDefined: [:rt | rt uninitialize].
+	#{UI.RichText} ifDefined: [:rt | rt uninitialize].
 	SessionManager inputState purgeDeadWindows]
 			on: Error
 			do: 
@@ -474,7 +474,7 @@ removeDevelopmentInfo
 	self startElement: 'StripDevelopmentInfo' attributes: #().
 	self removeCategoryManagement.
 	self removeProtocolManagement.
-	#{SmalltalkSystem} ifDefined: [:smsys | smsys reset].
+	#{Tools.SmalltalkSystem} ifDefined: [:smsys | smsys reset].
 	Class allSubinstances do: 
 			[:b |
 			b removePropertyAt: #changeIndex ifAbsent: [].
@@ -514,9 +514,9 @@ removeGuiForConsoleApplication
 	that will allow the entire View hierarchy, etc, to be removed."
 
 	self startElement: 'StripConsoleApplication' attributes: #().
-	#(#{ImageRelativeFileLocator} #{InstallRelativeFileLocator})
+	#(#{Kernel.ImageRelativeFileLocator} #{Kernel.InstallRelativeFileLocator})
 		do: [:each | each ifDefined: [:class | class uninitialize]].
-	#{View} isDefined
+	#{UI.View} isDefined
 		ifFalse: [VMLibrary default unregisterObject: #wndProc:message:wParam:lParam:cookie:].
 	self collectGarbage: 3.
 	self endElement: true!
@@ -611,7 +611,7 @@ removeProtocolManagement
 		logElement: 'RemoveMethodProtocols'
 		attributes: #()
 		value: nil.
-	#{MethodProtocol} ifDefined: [:p | p initializeProtocols]!
+	#{Kernel.MethodProtocol} ifDefined: [:p | p initializeProtocols]!
 
 removeRedundantClassesAndResources: stripResources
 	"Private - Removes redundant classes from the current image. A redundant class is one
@@ -826,7 +826,7 @@ systemPackageManager
 	to prevent the PackageManager and Package classes remaining in the
 	deployed image."
 
-	^(#{Package} valueOrNil ?? DeafObject current) manager!
+	^(#{Kernel.Package} valueOrNil ?? DeafObject current) manager!
 
 uncheckedDeleteClass: aClass
 	| removed |

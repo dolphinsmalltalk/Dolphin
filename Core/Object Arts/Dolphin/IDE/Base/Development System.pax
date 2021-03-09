@@ -4380,7 +4380,7 @@ publishedAspectsOfInstances
 				add: (Tools.Aspect boolean: #preDeclareClassesOnLoad);
 				yourself.
 	"If the image has the ADK loaded, then include the image stripper"
-	#{ImageStripper} ifDefined: [:is | answer add: (Tools.Aspect name: #imageStripper) beImmutable].
+	#{Smalltalk.ImageStripper} ifDefined: [:is | answer add: (Tools.Aspect name: #imageStripper) beImmutable].
 	^answer!
 
 publishedEventsOfInstances

@@ -123,8 +123,8 @@ defaultSystemFolderColor
 	This method will only be called if SmalltalkSystemShell is loaded, in which case Color will be as well."
 
 	"Distinguish 7.2. Probably not a permanent change."
-	^#{Color} value seaGreen.
-	"^#{Color} value
+	^#{Graphics.Color} value seaGreen.
+	"^#{Graphics.Color} value
 		r: 41
 		g: 124
 		b: 182."!

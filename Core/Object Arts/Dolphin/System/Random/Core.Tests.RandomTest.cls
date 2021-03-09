@@ -31,7 +31,7 @@ setUp
 
 testCRT
 	| rnd |
-	rnd := #{RandomCRT} valueOrNil.
+	rnd := #{OS.RandomCRT} valueOrNil.
 	rnd isNil ifTrue: [self skip: 'RandomCRT class not present to test'].
 	self 
 		assert: (rnd seed: 1)

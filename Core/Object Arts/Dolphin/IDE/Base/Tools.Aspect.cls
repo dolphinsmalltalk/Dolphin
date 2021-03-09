@@ -583,7 +583,7 @@ folder: aFolderAspectSymbol
 	The aspect is viewable using a ValueWorkspace and editable using a BrowseFolderDialog"
 
 	^self name: aFolderAspectSymbol
-		editBlock: (#{BrowseFolderDialog} ifDefined: [:dialog | [:p | dialog showModalOn: p model]])!
+		editBlock: (#{UI.BrowseFolderDialog} ifDefined: [:dialog | [:p | dialog showModalOn: p model]])!
 
 font: aFontAspectSymbol 
 	"Answer an instance of the receiver for aFontAspectSymbol. The aspect is viewable using a

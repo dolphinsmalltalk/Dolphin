@@ -100,8 +100,8 @@ addReferencedViews: resid to: referenced
 	<Set> argument, referenced."
 
 	| proxies idIndex refView stbProxy |
-	refView := #{ReferenceView} valueOrNil.
-	stbProxy := #{STBViewProxy} valueOrNil.
+	refView := #{UI.ReferenceView} valueOrNil.
+	stbProxy := #{UI.STBViewProxy} valueOrNil.
 	(refView isNil or: [stbProxy isNil]) ifTrue: [^self].
 	idIndex := refView superclass instSize - 1.
 	proxies := resid hiddenObjects
@@ -906,7 +906,7 @@ logRemainingClasses
 			totalMemory := totalMemory + memory.
 			totalMethods := totalMethods + each key methodDictionary size.
 			totalClassMethods := totalClassMethods + each key class methodDictionary size].
-	#{EventsCollection} valueOrNil
+	#{Kernel.EventsCollection} valueOrNil
 		ifNotNil: 
 			[:ec |
 			ec allInstances
@@ -1261,7 +1261,7 @@ purgeIcons
 
 	(SessionManager inputState topLevelWindows
 		reject: [:each | each isKindOf: ImageStripperProgress]) isEmpty
-		ifTrue: [#{Icon} ifDefined: [:iconClass | iconClass clear]]!
+		ifTrue: [#{Graphics.Icon} ifDefined: [:iconClass | iconClass clear]]!
 
 purgeStubbornClass: aClass
 	"Private - Remove what we can of a stubborn class that refuses to uninstall for some reason."

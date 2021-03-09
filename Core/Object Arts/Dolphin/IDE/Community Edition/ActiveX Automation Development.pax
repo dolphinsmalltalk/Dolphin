@@ -7053,21 +7053,19 @@ example2
 	"Example using the Microsoft Scripting Runtime.
 	One of the main purposes of the Scripting Runtime is to provide an object-oriented file
 	system model, and we exercise a very small part of its capabilities here.
-		AXTypeLibraryAnalyzer example2
+		TypeLibraryAnalyzer example2
 	"
 
 	"First lets get the FileSystem object, we might need to generate some wrappers to do so"
 
 	| fs cdrive croot windir systemdir |
-	fs := (#{IFileSystem} isDefined
+	fs := (#{Scripting.IFileSystem} isDefined
 				ifFalse: 
 					[| tlb |
 					tlb := TypeLibraryAnalyzer open: 'scrrun.dll'.
-					"We'll generate without a namespace (i.e. into Smalltalk)"
-					tlb namespaceName: ''.
 					"Generate the wrappers for the type library interfaces"
 					tlb generateInterfaceWrappers.
-					#{IFileSystem} value])
+					#{Scripting.IFileSystem} value])
 					createObject: 'Scripting.FileSystemObject'.
 
 	"Now we can test it out a bit by finding the root of C"
@@ -7079,7 +7077,7 @@ example2
 	systemdir := windir subFolders item: 'system32'.
 
 	"A better way to get the system folder is:"
-	systemdir := fs getSpecialFolder: #{ScriptingConstants.SystemFolder} value.
+	systemdir := fs getSpecialFolder: #{Scripting.ScriptingConstants.SystemFolder} value.
 
 	"Display the contents of the system folder (files only) in a list box (might take a while)"
 	UI.ListPresenter show list: systemdir files contents!
@@ -7087,11 +7085,11 @@ example2
 example3
 	"Example using the Microsoft Excel 2000 (can be adapted for older versions).
 	This code should ideally be run line-by-line from a workspace.
-		AXTypeLibraryAnalyzer example3
+		TypeLibraryAnalyzer example3
 	"
 
 	| excel books book range font arry caption |
-	#{ExcelLib} isDefined
+	#{Xl.ExcelLib} isDefined
 		ifFalse: 
 			[| xl |
 			xl := TypeLibraryAnalyzer open: 'c:\Program Files\Microsoft Office\Office\excel9.olb'.

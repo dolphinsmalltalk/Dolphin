@@ -18,7 +18,7 @@ calcSystemFolderExtentFor: aPoint
 
 	| toolbarHeight metrics systemMetricsClass |
 
-	systemMetricsClass := #{SystemMetrics} valueOrNil.
+	systemMetricsClass := #{OS.SystemMetrics} valueOrNil.
 	systemMetricsClass isNil ifTrue: [
 		^super calcSystemFolderExtentFor: aPoint].
 

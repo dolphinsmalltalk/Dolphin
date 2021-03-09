@@ -223,7 +223,7 @@ comShutdown
 	reference to <COMInterface>"
 
 	self outer notNull ifTrue: [self outer free].
-	#{COMInterface} ifDefined: [:c | c onExit]!
+	#{OS.COM.Interface} ifDefined: [:c | c onExit]!
 
 consoleStreamClass
 	"Answer the class of stdio stream to use for stdin, stdout, and/or stderr when connected to the console.

@@ -1803,12 +1803,12 @@ dropScriptFile: aString
 dropTextFile: aString
 	"Private - Open a txt file. A Smalltalk Workspace is a perfectly good tool for this."
 
-	SmalltalkWorkspaceDocument filename: aString!
+	self openWorkspace: aString!
 
 dropXmlFile: aString
-	"Private - Open an XML file. Use the XmlPad for this, if available."
+	"Private - Open an XML file that has been dropped onto a tool."
 
-	#{XmlPad} ifDefined: [:xmlpad | xmlpad filename: aString]!
+	self openXmlFile: aString!
 
 educationCenter
 	"Open the Education Centre contents page"
@@ -2661,8 +2661,16 @@ openWorkspace
 	ws notNil ifTrue: [ws show].
 	^ws!
 
+openWorkspace: aString
+	"Private - Opens a file identified by the <readableString> filename as a workspace file"
+
+	self workspaceShellClass filename: aString!
+
 openXmlFile: aString
-	#{XmlPad} ifDefined: [:xmlpad | xmlpad filename: aString]!
+	"Private - Open an XML file. Use the XmlPad for this, if available."
+
+	#{UI.Examples.XmlPad} ifDefined: [:xmlpad | xmlpad filename: aString]
+		ifNotDefined: [self openWorkspace: aString]!
 
 overlappingObjectsError: anError
 	"Private - The resumeable <Error>, anError, was raised when an attempt to install a new 
@@ -4508,6 +4516,7 @@ wrapText: aString toWidth: max indent: colInteger tabWidth: tabInteger
 !Tools.SmalltalkSystem categoriesFor: #openViewComposerOnNewViewFor:!commands!public! !
 !Tools.SmalltalkSystem categoriesFor: #openViewComposerOnViewOf:!commands!public! !
 !Tools.SmalltalkSystem categoriesFor: #openWorkspace!commands!public! !
+!Tools.SmalltalkSystem categoriesFor: #openWorkspace:!operations-startup!private! !
 !Tools.SmalltalkSystem categoriesFor: #openXmlFile:!commands!private! !
 !Tools.SmalltalkSystem categoriesFor: #overlappingObjectsError:!exceptions!private! !
 !Tools.SmalltalkSystem categoriesFor: #pacFileDialogType!constants!private! !

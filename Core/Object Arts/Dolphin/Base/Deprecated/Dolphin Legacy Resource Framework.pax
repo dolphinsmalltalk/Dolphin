@@ -234,7 +234,7 @@ initializeFromSessionManager: oldSessionManager
 	state information from the replaced manager."
 
 	super initializeFromSessionManager: oldSessionManager.
-	#{ResourceAccessor} ifDefined: [:ra | ra ensureAccessorsAreInternal]! !
+	#{Smalltalk.ResourceAccessor} ifDefined: [:ra | ra ensureAccessorsAreInternal]! !
 !UI.RuntimeSessionManager categoriesFor: #initializeFromSessionManager:!initializing!private! !
 
 "End of package definition"!

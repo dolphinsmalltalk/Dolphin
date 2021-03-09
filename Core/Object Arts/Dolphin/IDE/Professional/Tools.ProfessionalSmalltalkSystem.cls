@@ -106,7 +106,7 @@ queryCommand: aCommandQuery
 	^super queryCommand: aCommandQuery!
 
 recompileDiffs: aCompiledMethod
-	(#{DiffBrowser} value show: 'Vertical view')
+	(#{Smalltalk.DiffBrowser} value show: 'Vertical view')
 		caption: aCompiledMethod printString;
 		compare: aCompiledMethod disassembly
 			id: 'Current'

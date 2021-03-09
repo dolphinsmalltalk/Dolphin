@@ -1581,7 +1581,7 @@ tracePrerequisitesOfImageStripper: anIdentityDictionary
 	"Only possible to trace the stripper prereqs in DPRO"
 
 	| stream hiddenObjects |
-	(imageStripperBytes isNil or: [#{ImageStripper} isDefined not]) ifTrue: [^self].
+	(imageStripperBytes isNil or: [#{Smalltalk.ImageStripper} isDefined not]) ifTrue: [^self].
 	stream := imageStripperBytes readStream.
 	hiddenObjects := 
 			[(STBInFiler on: stream)
@@ -1594,7 +1594,7 @@ tracePrerequisitesOfImageStripper: anIdentityDictionary
 					"We only trace prerequisite objects that are NOT in the
 					Lagoon package. After all, we know that Lagoon must be
 					present if an ImageStripper is ever loaded into memory"
-					imageStripperClass := #{ImageStripper} value.
+					imageStripperClass := #{Smalltalk.ImageStripper} value.
 					lagoonPackage := imageStripperClass owningPackage.
 					each owningPackage ~= lagoonPackage])
 				ifTrue: 

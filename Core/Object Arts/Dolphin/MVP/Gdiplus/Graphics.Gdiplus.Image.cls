@@ -1523,11 +1523,11 @@ exampleGdipIPropertyItems
 	number of properties, and file extent are displayed.   It also checks for certain properties 
 	of each image and displays them if they exist.
 
-		RichTextPresenter show value: self exampleGdipIPropertyItems
+		UI.RichTextPresenter show value: self exampleGdipIPropertyItems
 	"
 
 	| directory filenames strm image |
-	(directory := #{BrowseFolderDialog} value new
+	(directory := #{UI.BrowseFolderDialog} value new
 				value: 'c:\my documents';
 				showModal) ifNil: [^nil].
 	filenames := (File find: (File appendPathDelimiter: directory) , '*.jpg') collect: [:e | e path].

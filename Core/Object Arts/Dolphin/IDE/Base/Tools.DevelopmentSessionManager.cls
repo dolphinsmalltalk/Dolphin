@@ -378,7 +378,7 @@ openSources
 openWorkspace: filename 
 	"Private - Opens a file identified by the <readableString> filename as a workspace file"
 
-	Smalltalk developmentSystem workspaceShellClass filename: filename!
+	Smalltalk developmentSystem openWorkspace: filename!
 
 openXmlFile: aString
 	"Private - Opens a file identified by the <readableString> argument an XML file"
