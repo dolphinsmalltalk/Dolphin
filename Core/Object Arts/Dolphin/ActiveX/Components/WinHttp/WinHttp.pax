@@ -29,14 +29,6 @@ package setClassNames: #(
 	#{WinHttp.IWinHttpRequestEvents}
 ).
 
-package setVariableNames: #(
-	#{WinHttp.WinHttpLib}
-).
-
-package setBinaryVariableNames: #(
-	#{WinHttp.WinHttpLib}
-).
-
 package setPrerequisites: #(
 	'..\..\Automation\ActiveX Automation'
 	'..\..\..\Base\Dolphin'

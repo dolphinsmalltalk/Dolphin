@@ -46,14 +46,6 @@ package setClassNames: #(
 	#{CDO.ISMTPScriptConnector}
 ).
 
-package setVariableNames: #(
-	#{CDO.CDOLib}
-).
-
-package setBinaryVariableNames: #(
-	#{CDO.CDOLib}
-).
-
 package setPrerequisites: #(
 	'..\..\Automation\ActiveX Automation'
 	'..\ADO\ADODB'

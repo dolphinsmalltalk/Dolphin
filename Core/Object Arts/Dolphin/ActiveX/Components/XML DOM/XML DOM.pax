@@ -198,14 +198,6 @@ package setClassNames: #(
 	#{MSXML.XHR_COOKIE}
 ).
 
-package setVariableNames: #(
-	#{MSXML.MSXML2Lib}
-).
-
-package setBinaryVariableNames: #(
-	#{MSXML.MSXML2Lib}
-).
-
 package setPrerequisites: #(
 	'..\..\Automation\ActiveX Automation'
 	'..\..\..\Base\Dolphin'

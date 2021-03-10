@@ -84,11 +84,6 @@ package setClassNames: #(
 package setVariableNames: #(
 	#{WinHttpServer.HTTP_REQUEST}
 	#{WinHttpServer.HTTP_RESPONSE}
-	#{WinHttpServer.WinHttpServerLib}
-).
-
-package setBinaryVariableNames: #(
-	#{WinHttpServer.WinHttpServerLib}
 ).
 
 package setAliasVariableNames: #(
@@ -97,7 +92,6 @@ package setAliasVariableNames: #(
 ).
 
 package setPrerequisites: #(
-	'..\..\..\ActiveX\Automation\ActiveX Automation'
 	'..\..\..\Base\Dolphin'
 	'..\..\..\Base\Dolphin Message Box'
 	'..\Dolphin Overlapped IO'

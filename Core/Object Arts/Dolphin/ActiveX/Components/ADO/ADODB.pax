@@ -58,14 +58,6 @@ package setClassNames: #(
 	#{ADODB.RecordsetEventsVt}
 ).
 
-package setVariableNames: #(
-	#{ADODB.ADODBLib}
-).
-
-package setBinaryVariableNames: #(
-	#{ADODB.ADODBLib}
-).
-
 package setPrerequisites: #(
 	'..\..\Automation\ActiveX Automation'
 	'..\..\..\Base\Dolphin'

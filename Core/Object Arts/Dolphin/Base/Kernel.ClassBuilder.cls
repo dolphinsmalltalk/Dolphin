@@ -457,16 +457,18 @@ modifyClassVariablesOf: aClass
 	removed := originalNames difference: newNames.
 	removed notEmpty
 		ifTrue: 
-			[self recompilationRequired: true reason: 'Recompilation of ' , aClass name , ' required because class variables/constants are being removed'.
+			[self recompilationRequired: true
+				reason: 'Recompilation of ' , aClass name
+						, ' required because class variables/constants are being removed'.
 			removed do: [:each | aClass classPool removeKey: each].
 			aClass classPool isEmpty ifTrue: [aClass basicClassPool: nil]].
 
 	"Any completely new variables, we'll recompile the class"
 	(newNames difference: originalNames) notEmpty
 		ifTrue: 
-			[Notification signal: 'Recompilation of ' , aClass name
-						, ' required because class variables/constants are being added'.
-			self recompilationRequired: true reason: String new].
+			[self recompilationRequired: true
+				reason: 'Recompilation of ' , aClass name
+						, ' required because class variables/constants are being added'].
 
 	"Now add any new class variables, or those changing from constants to vars"
 	existingClassVariables := classVars
@@ -703,7 +705,8 @@ recompilationRequired: aBoolean reason: aString
 	"Private - Record that recompilation is required if the argument is true. 
 	Note this is not an accessor - if the argument is false, then leave the current setting unchanged."
 
-	aBoolean ifTrue: [flags := flags bitOr: RecompileMask]!
+	aBoolean ifTrue: [flags := flags bitOr: RecompileMask].
+	Notification signal: aString!
 
 remove
 	"Private - Remove currentClass completely from the system."
