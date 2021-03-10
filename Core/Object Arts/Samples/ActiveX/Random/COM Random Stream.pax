@@ -18,13 +18,13 @@ You can also use Dolphin as both client and server.
 Note: This sample is not compatible with the sample of the same name in the 2.1 and earlier releases of Dolphin.'.
 
 package basicScriptAt: #postinstall put: 'ShellLibrary default isUserAnAdmin 
-	ifTrue: [COMRandomStream registerClassFactory]
+	ifTrue: [OS.COM.Examples.RandomStream registerClassFactory]
 	ifFalse: 
 		[Notification 
 			signal: ''Unable to register Random Stream sample COM object due to insufficient privileges''].	"Register a class factory for the Random Number Stream"
-COMRandomStream registerClassFactory'.
-package basicScriptAt: #preuninstall put: '	"Revoke the class factory registration."
-Smalltalk.COMRandomStream revokeClassFactories'.
+OS.COM.Examples.RandomStream registerClassFactory'.
+package basicScriptAt: #preuninstall put: '"Revoke the class factory registration."
+OS.COM.Examples.RandomStream revokeClassFactories'.
 
 package setClassNames: #(
 	#{OS.COM.Examples.IRandomStream}
@@ -41,12 +41,12 @@ package setBinaryVariableNames: #(
 ).
 
 package setPrerequisites: #(
-	'..\..\..\Dolphin\ActiveX\Deprecated\ActiveX (Deprecated)'
 	'..\..\..\Dolphin\ActiveX\Automation\ActiveX Automation'
 	'..\COM Examples'
 	'..\..\..\Dolphin\Base\Dolphin'
 	'..\..\..\Dolphin\MVP\Base\Dolphin MVP Base'
 	'..\..\..\Dolphin\System\Random\Dolphin Random Stream'
+	'..\..\..\Dolphin\ActiveX\COM\OLE COM'
 	'..\..\..\Dolphin\ActiveX\Shell\Windows Shell'
 ).
 

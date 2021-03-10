@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-VideoRecording subclass: #PVRRecording
+UI.Examples.VideoRecording subclass: #PVRRecording
 	instanceVariableNames: 'episodeTitle description channel isViewed rating'
 	classVariableNames: ''
 	poolDictionaries: ''
