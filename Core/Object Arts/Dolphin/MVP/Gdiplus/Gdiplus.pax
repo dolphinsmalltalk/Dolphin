@@ -1743,7 +1743,7 @@ External.Structure subclass: #'Graphics.Gdiplus.GpPathData'
 External.Structure subclass: #'Graphics.Gdiplus.GpPropertyItem'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #()
+	imports: #(#{Graphics.Gdiplus.GdiplusConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_id' -> 16r0.

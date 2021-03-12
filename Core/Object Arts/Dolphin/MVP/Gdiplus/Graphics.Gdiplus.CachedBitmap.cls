@@ -31,7 +31,7 @@ exampleGdipCBPerformance
 	This example creates an image from file and a cached bitmap from the image.  It draws 
 	each a number of times, then shows the elapsed times.
 
-		RichTextPresenter showOn: self exampleGdipCBPerformance
+		UI.RichTextPresenter showOn: self exampleGdipCBPerformance
 	"
 
 	| bitmap graphics image cachedBitmap strm time1 time2 |

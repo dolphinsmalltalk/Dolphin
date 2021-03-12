@@ -81,14 +81,6 @@ setInitializer: aGdiplusInitializer
 
 !Graphics.Gdiplus.GdiplusBase class methodsFor!
 
-enumNamesWithPrefix: aString
-	"Private - Answer a String collection of Win32 enumerated types that begin with aString.
-
-		self enumNamesWithPrefix: 'Unit'
-	"
-
-	^GdiplusConstants keys select: [:e | e beginsWith: aString]!
-
 enumsColorAdjustType
 	"Answer a key-value collection of Win32 ColorAdjustType enumerated types.
 	These specify which Gdiplus objects use color-adjustment information."
@@ -299,7 +291,7 @@ enumsWithPrefix: aString
 		self enumsWithPrefix: 'Unit'
 	"
 
-	^((self enumNamesWithPrefix: aString) collect: [:e | e -> (GdiplusConstants at: e)]) 
+	^(GdiplusConstants associations select: [:each | each key beginsWith: aString])
 		asSortedCollection: [:a :b | a value < b value]!
 
 enumsWrapMode
@@ -313,7 +305,10 @@ fileResource
 
 	^#{Graphics.Gdiplus.Tests.FileResource} ifDefined: [:class | class current]
 		ifNotDefined: 
-			[Notification signal: 'GdiplusTests package needs to be installed for this example to work.']!
+			["If you encounter this error, you can load the test packages by evaluating: 
+				SourceManager default fileIn: (FileLocator installRelative localFileSpecFor: 'RegressionTestsLoad.st')
+			"
+			self error: 'GdiplusTests package needs to be installed for this example to work.']!
 
 fromInitializer: aGdiplusInitializer
 	"Answer an instance of the receiver based on aspects of aGdiplusInitializer.  The instance holds
@@ -362,7 +357,6 @@ showExample: anImage viewMode: aSymbol
 	presenter topShell extent: anImage extent + presenter topShell rectangle extent
 				- presenter topShell clientRectangle extent.
 	^presenter! !
-!Graphics.Gdiplus.GdiplusBase class categoriesFor: #enumNamesWithPrefix:!constants!private! !
 !Graphics.Gdiplus.GdiplusBase class categoriesFor: #enumsColorAdjustType!constants!public! !
 !Graphics.Gdiplus.GdiplusBase class categoriesFor: #enumsColorChannelFlags!constants!public! !
 !Graphics.Gdiplus.GdiplusBase class categoriesFor: #enumsColorMatrixFlags!constants!public! !

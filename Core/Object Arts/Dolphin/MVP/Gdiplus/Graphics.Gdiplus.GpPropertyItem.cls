@@ -3,7 +3,7 @@
 External.Structure subclass: #'Graphics.Gdiplus.GpPropertyItem'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #()
+	imports: #(#{Graphics.Gdiplus.GdiplusConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_id' -> 16r0.
@@ -93,17 +93,17 @@ valueArray
 	| address type |
 	address := self Value.
 	type := self Type.
-	type == 1 ifTrue: [^ByteArray fromAddress: address length: self length].
-	type == 2 ifTrue: [^(String fromAddress: address length: self length - 1) trimNulls].
-	type == 3 ifTrue: [^WORDArray fromAddress: address length: self length / 2].
-	type == 4 ifTrue: [^DWORDArray fromAddress: address length: self length / 4].
-	"Next line won't work with an arary returned, i.e., if length > 8."
-	type == 5 ifTrue: [^(address dwordAtOffset: 0) / (address dwordAtOffset: 4)].
+	type == PropertyTagTypeByte ifTrue: [^ByteArray fromAddress: address length: self length].
+	type == PropertyTagTypeASCII ifTrue: [^(AnsiString fromAddress: address length: self length - 1) trimNulls].
+	type == PropertyTagTypeShort ifTrue: [^WORDArray fromAddress: address length: (self length bitShift: -1)].
+	type == PropertyTagTypeLong ifTrue: [^DWORDArray fromAddress: address length: (self length bitShift: -2)].
+	"Next line won't work with an array value, i.e., if length > 8."
+	type == PropertyTagTypeRational ifTrue: [^(address dwordAtOffset: 0) / (address dwordAtOffset: 4)].
 	"7 is 'Undefined' so just return the bytes."
-	type == 7 ifTrue: [^ByteArray fromAddress: address length: self length].
-	type == 9 ifTrue: [^SDWORDArray fromAddress: address length: self length / 4].
-	"Next line won't work with an arary returned, i.e., if length > 8."
-	type == 10 ifTrue: [^(address sdwordAtOffset: 0) / (address sdwordAtOffset: 4)].
+	type == PropertyTagTypeUndefined ifTrue: [^ByteArray fromAddress: address length: self length].
+	type == PropertyTagTypeSLONG ifTrue: [^SDWORDArray fromAddress: address length: (self length bitShift: -2)].
+	"Next line won't work with an array value, i.e., if length > 8."
+	type == PropertyTagTypeSRational ifTrue: [^(address sdwordAtOffset: 0) / (address sdwordAtOffset: 4)].
 	self error: 'unrecognised type'! !
 !Graphics.Gdiplus.GpPropertyItem categoriesFor: #id!**compiled accessors**!public! !
 !Graphics.Gdiplus.GpPropertyItem categoriesFor: #id:!**compiled accessors**!public! !

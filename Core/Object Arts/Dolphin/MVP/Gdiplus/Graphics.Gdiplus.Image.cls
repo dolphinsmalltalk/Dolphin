@@ -841,11 +841,11 @@ encoders
 exampleGdipIDecoderFileExtensions
 	"This example displays the file extensions for all of the available image decoders.
 
-		RichTextPresenter showOn: self exampleGdipIDecoderFileExtensions
+		UI.RichTextPresenter showOn: self exampleGdipIDecoderFileExtensions
 	"
 
 	| strm |
-	strm := String new writeStream.
+	strm := String writeStream.
 	strm
 		display: 'Decoder file extensions: ';
 		cr.
@@ -861,11 +861,11 @@ exampleGdipIDecoders
 	"MSDN:  Using GDI+ >  Using Image Encoders and Decoders > Listing Installed Decoders
 	This example displays the mime types for all of the available image decoders.
 
-		RichTextPresenter showOn: self exampleGdipIDecoders
+		UI.RichTextPresenter showOn: self exampleGdipIDecoders
 	"
 
 	| strm |
-	strm := String new writeStream.
+	strm := String writeStream.
 	strm
 		display: 'Decoder mime types: ';
 		cr.
@@ -881,34 +881,32 @@ exampleGdipIEncoderClsid
 	"MSDN:  Using GDI+ >  Using Image Encoders and Decoders > Retrieving the Class Identifier
 	This example displays information about the image encoder for the png mime type.
 
-		RichTextPresenter showOn: self exampleGdipIEncoderClsid
+		UI.RichTextPresenter showOn: self exampleGdipIEncoderClsid
 	"
 
-	| strm |
-	strm := String new writeStream.
 	self encoders keysAndValuesDo: 
 			[:i :e |
 			e MimeType asString = 'image/png'
 				ifTrue: 
-					[strm
+					[^String writeStream
 						display: 'An ImageCodecInfo object representing the PNG encoder';
 						cr;
 						display: 'was found at position ';
-						display: i displayString;
+						display: i;
 						display: ' in the array.';
 						cr;
 						display: 'The CLSID of the PNG encoder is ';
-						display: e Clsid.
-					^strm contents]]!
+						display: e Clsid;
+						contents]]!
 
 exampleGdipIEncoderFileExtensions
 	"This example displays the file extensions for all of the available image encoders.
 
-		RichTextPresenter showOn: self exampleGdipIEncoderFileExtensions
+		UI.RichTextPresenter showOn: self exampleGdipIEncoderFileExtensions
 	"
 
 	| strm |
-	strm := String new writeStream.
+	strm := String writeStream.
 	strm
 		display: 'Encoder file extensions: ';
 		cr.
@@ -928,53 +926,41 @@ exampleGdipIEncoderParameters
 		UI.RichTextPresenter showOn: self exampleGdipIEncoderParameters
 	"
 
-	| image mimeType encoderClsid listSize encoderParameters encoder encoderParameterName valueType strm |
+	| image mimeType encoderClsid listSize encoderParameters encoder encoderParameterName valueType |
 	image := Bitmap new.
 	mimeType := 'image/jpeg'.
 	encoderClsid := Image encoderClsid: mimeType.
 	listSize := image encoderParameterListSize: encoderClsid.
 	encoderParameters := image encoderParameterList: encoderClsid.
-	strm := String new writeStream.
 	encoder := encoderParameters Parameter at: 2.
 	encoderParameterName := (image class guidsEncoder detect: [:e | e value = encoder Guid]) key.
 	valueType := ULARGE_INTEGER atAddress: encoder Value.
-	strm
-		display: 'Parameters supported by mime type ' , mimeType;
-		cr;
-		cr;
-		display: ('The parameter list requires %i bytes.' sprintfWith: listSize);
-		cr;
-		display: ('There are %i GpEncoderParameter objects in the array.'
-					sprintfWith: encoderParameters Count);
-		cr;
-		cr;
-		display: 'Parameter 2: ' , encoderParameterName;
-		cr;
-		display: 'The GUID is ' , encoder Guid displayString;
-		cr;
-		display: 'The value type is ' ;
+	^String writeStream
+		display: 'Parameters supported by mime type <s><n><n>' << mimeType;
+		display: 'The parameter list requires <d> bytes.<n>' << listSize;
+		display: 'There are <d> GpEncoderParameter objects in the array.<n><n>' << encoderParameters Count;
+		display: 'Parameter 2: <s><n>' << encoderParameterName;
+		display: 'The GUID is <d><n>' << encoder Guid;
+		display: 'The value type is ';
 		display: (image class enumsEncoderParameterValueType detect: [:t | t value = encoder Type]) key;
 		nextPutAll: ' (';
 		display: encoder Type;
 		nextPut: $);
 		cr;
-		display: 'The number of values is ' , encoder NumberOfValues displayString;
-		cr;
-		display: '	The minimum possible quality value is ' , valueType lowPart displayString;
-		cr;
-		display: '	The maximum possible quality value is ' , valueType highPart displayString;
-		cr.
-	^strm contents!
+		display: 'The number of values is <d><n>' << encoder NumberOfValues;
+		display: '	The minimum possible quality value is <d><n>' << valueType lowPart;
+		display: '	The maximum possible quality value is <d><n>' << valueType highPart;
+		contents!
 
 exampleGdipIEncoders
 	"MSDN:  Using GDI+ >  Using Image Encoders and Decoders > Listing Installed Encoders
 	This example displays the mime types for all of the available image encoders.
 
-		RichTextPresenter showOn: self exampleGdipIEncoders
+		UI.RichTextPresenter showOn: self exampleGdipIEncoders
 	"
 
 	| strm |
-	strm := String new writeStream.
+	strm := String writeStream.
 	strm
 		display: 'Encoder mime types: ';
 		cr.
@@ -990,71 +976,73 @@ exampleGdipIEncoderValues
 	"MSDN: Using GDI+ >  Using Image Encoders & Decoders > Determining Parameters > EncoderValue
 	A given encoder supports certain parameter categories, and for each of those categories, that encoder
 	allows certain values.  This example displays information about the image encoder for the jpeg mime 
-	type, as well as one of the encoder parameters - EncoderTransformation.
+	type.
 
 		UI.RichTextPresenter showOn: self exampleGdipIEncoderValues
 	"
 
-	| image mimeType encoderClsid listSize encoderParameters encoder encoderParameterName valueType valueTypeName strm |
+	| image mimeType encoderClsid listSize encoderParameters strm |
 	image := Bitmap new.
 	mimeType := 'image/jpeg'.
 	encoderClsid := Image encoderClsid: mimeType.
 	listSize := image encoderParameterListSize: encoderClsid.
 	encoderParameters := image encoderParameterList: encoderClsid.
 	strm := String new writeStream.
-	encoder := encoderParameters Parameter at: 1.
-	encoderParameterName := (image class guidsEncoder detect: [:e | e value = encoder Guid]) key.
-	valueType := DWORDArray fromAddress: encoder Value yourAddress length: encoder NumberOfValues.
-	valueTypeName := (image class enumsEncoderParameterValueType detect: [:e | e value = encoder Type])
-				key.
 	strm
-		display: 'Parameters supported by mime type ' , mimeType;
-		cr;
-		cr;
-		display: ('The parameter list requires %i bytes.' sprintfWith: listSize);
-		cr;
-		display: ('There are %i EncoderParameter objects in the array.' sprintfWith: encoderParameters Count);
-		cr;
-		cr;
-		display: 'Parameter 1: ' , encoderParameterName;
-		cr;
-		display: 'The GUID is ' , encoder Guid displayString;
-		cr;
-		display: 'The value type is ' , encoder Type displayString , ', which is type ' , valueTypeName;
-		cr;
-		display: 'The number of values is ' , encoder NumberOfValues displayString;
-		cr;
-		display: 'The allowable values are :';
-		cr.
-	valueType do: 
-			[:e |
-			strm
-				display: '	' , e asInteger displayString , ' ('
-							, (image class enumsEncoderParameterValueType detect: [:t | t value = encoder Type]) key;
-				nextPut: $);
-				cr].
+		display: 'Parameters supported by mime type <p>:<n><n>' << mimeType;
+		display: 'The parameter list requires <d> bytes.<n>' << listSize;
+		display: 'There are <d> EncoderParameter objects in the array.<n>' << encoderParameters Count.
+	encoderParameters Parameter keysAndValuesDo: 
+			[:i :encoder |
+			| encoderParameterName valueType valueTypeName |
+			encoderParameterName := (image class guidsEncoder detect: [:e | e value = encoder Guid]
+						ifNone: ['Unknown' -> encoder Guid]) key.
+			valueType := DWORDArray fromAddress: encoder Value yourAddress length: encoder NumberOfValues.
+			valueTypeName := (image class enumsEncoderParameterValueType detect: [:e | e value = encoder Type])
+						key.
+			strm 
+				display: '<n>Parameter <d>: <s><n>' << {i. encoderParameterName};
+				display: 'The GUID is <d>.<n>' << encoder Guid;
+				display: 'The value type is <d>, which is type <s>.<n>' << {encoder Type. valueTypeName};
+				display: 'The number of values is <d>.<n>' << encoder NumberOfValues.
+			encoder NumberOfValues > 0
+				ifTrue: 
+					[strm
+						display: 'The allowable values are:';
+						cr.
+					valueType do: 
+							[:e |
+							strm
+								tab;
+								display: e asInteger;
+								nextPutAll: ' (';
+								nextPutAll: (image class enumsEncoderParameterValueType detect: [:t | t value = encoder Type]) key;
+								nextPut: $);
+								cr]]].
 	^strm contents!
 
 exampleGdipIFlags
 	"This example enumerates the ImageFlags values for an image.
 
-		RichTextPresenter showOn: self exampleGdipIFlags
+		UI.RichTextPresenter showOn: self exampleGdipIFlags
 	"
 
-	| image strm |
+	| image flags strm |
 	image := self fromFile: self fileResource pafEyeJpg.
-	strm := String new writeStream.
+	flags := image flags.
+	strm := String writeStream.
 	strm
-		display: 'Image flags for file ' , image filename , ': ';
-		cr.
+		display: 'Image flags for file <p>:<n>' << image filename.
 	GdiplusBase enumsImageFlags do: 
 			[:e |
-			strm
-				tab;
-				display: (e key midString: e key size - 10 from: 11);
-				nextPut: $\x20;
-				display: (73750 bitAnd: e value) = e value;
-				cr].
+			e value == 0
+				ifFalse: 
+					[strm
+						tab;
+						display: (e key midString: e key size - 10 from: 11);
+						nextPutAll: ' = ';
+						display: (flags anyMask: e value);
+						cr]].
 	^strm contents!
 
 exampleGdipIInterpMode
@@ -1147,7 +1135,7 @@ exampleGdipILoadImages
 	"
 
 	| bitmap image |
-	bitmap := Bitmap extent: 620 @ 200.
+	bitmap := Bitmap extent: 400 @ 300.
 	image := Image fromFile: 'Resources/Beach Ball.bmp' usingLocator: FileLocator installRelative.
 	bitmap graphics drawImage: image at: 60 @ 10.
 	image := Bitmap fromIcon: Icon warning.
@@ -1181,36 +1169,29 @@ exampleGdipIMetadata
 	"MSDN:  GDI+ >  Using GDI+ >  Using Images, Bitmaps, and Metafiles > Reading and Writing Metadata
 	This example reads and displays a file's property items (metadata).
 
-		SmalltalkWorkspaceDocument show workspace text: self exampleGdipIMetadata			
+		UI.Examples.WordPad showOn: self exampleGdipIMetadata
 	"
 
 	| image strm |
 	image := Image fromFile: self fileResource pafEyeJpg.
 	strm := String writeStream.
 	strm
-		display: 'File: ' , image filename;
-		cr;
-		display: ('There are %i property items in the file.' sprintfWith: image propertiesCount);
-		cr;
-		display: ('The total size of all property items is %i bytes.' sprintfWith: image propertiesSize);
-		cr.
+		display: 'File: <s><n>' << image filename;
+		display: 'There are <d> property items in the file.<n>' << image propertiesCount;
+		display: 'The total size of all property items is <d> bytes.<n>' << image propertiesSize.
 	image properties keysAndValuesDo: 
 			[:i :e |
 			strm
-				display: 'Property item ' , i displayString;
-				cr;
-				display: '  id: ' , e id hex;
-				cr;
-				display: '  type: ' , e typeName;
-				cr;
-				display: '  length: ' , e length displayString;
-				cr].
+				display: 'Property item <d><n>' << i;
+				display: '  id: <s><n>' << e id hex;
+				display: '  type: <s><n>' << e typeName;
+				display: '  length: <d><n>' << e length].
 	^strm contents!
 
 exampleGdipIMetadata2
 	"This example lists all of a file's image property items' descriptions and values.
 
-		SmalltalkWorkspaceDocument show workspace text: self exampleGdipIMetadata2		
+		UI.Examples.WordPad showOn: self exampleGdipIMetadata2
 	"
 
 	| image strm |
@@ -1221,10 +1202,12 @@ exampleGdipIMetadata2
 		cr.
 	image properties do: 
 			[:e |
+			e id printOn: strm base: 16.
 			strm
-				nextPutAll: e id hex , ': ';
-				nextPutAll: e name , ' = ';
-				nextPutAll: e valueArray displayString;
+				nextPutAll: ': ';
+				nextPutAll: e name;
+				nextPutAll: ' = ';
+				display: e valueArray;
 				cr].
 	^strm contents!
 
@@ -1233,10 +1216,10 @@ exampleGdipIMultiFrame
 	This example creates a multiple-frame image and saves it to disk.  It then loads the file
 	and displays some frame information.
 
-		RichTextPresenter showOn: self exampleGdipIMultiFrame
+		UI.RichTextPresenter showOn: self exampleGdipIMultiFrame
 	"
 
-	| encoderParameters parameter value image1 image2 image3 toFile strm guids |
+	| encoderParameters parameter value image1 image2 image3 toFile guids |
 	encoderParameters := GpEncoderParameters new Count: 1.
 	parameter := encoderParameters Parameter first.
 	value := DWORDBytes new.
@@ -1258,17 +1241,12 @@ exampleGdipIMultiFrame
 	image1 saveAdd: encoderParameters.
 	image1 := Image fromFile: toFile.
 	guids := image1 frameDimensionsList.
-	(strm := String new writeStream)
-		display: 'Frame information for file: ' , image1 filename;
-		cr;
-		display: ('The number of dimensions is %i.' sprintfWith: image1 frameDimensionsCount);
-		cr;
-		display: ('The first dimension ID is %s.' sprintfWith: guids first displayString);
-		cr;
-		display: ('The number of frames in that dimension is %i.'
-					sprintfWith: (image1 frameCount: guids first));
-		cr.
-	^strm contents!
+	^String writeStream
+		nextPutAll: 'Frame information for file: <p>:<n>' << image1 filename;
+		nextPutAll: 'The number of dimensions is <d>.<n>' << image1 frameDimensionsCount;
+		nextPutAll: 'The first dimension ID is <d>.<n>' << guids first;
+		nextPutAll: 'The number of frames in that dimension is <d>.<n>' << (image1 frameCount: guids first);
+		contents!
 
 exampleGdipIMultiFrame2
 	"MSDN:  Using GDI+ >  Using Image Encoders & Decoders > Copying Individual Frames 
@@ -1502,7 +1480,7 @@ exampleGdipIPropertyItem
 	don't support properties), sets the Title property, then retrieves and displays the new title.  Note
 	that it does not save the image back to file.
 
-		Notification signal: 'The image title is: ' , self exampleGdipIPropertyItem			
+		self exampleGdipIPropertyItem
 	"
 
 	| image title propItem |
@@ -1528,9 +1506,9 @@ exampleGdipIPropertyItems
 
 	| directory filenames strm image |
 	(directory := #{UI.BrowseFolderDialog} value new
-				value: 'c:\my documents';
+				value: #{ShellLibrary} value default myPictures;
 				showModal) ifNil: [^nil].
-	filenames := (File find: (File appendPathDelimiter: directory) , '*.jpg') collect: [:e | e path].
+	filenames := (File find: (File composePath: directory subPath: '*.jpg')) collect: [:e | e path].
 	strm := String writeStream.
 	filenames do: 
 			[:filename |
@@ -1541,32 +1519,33 @@ exampleGdipIPropertyItems
 			true] on: Error do: [:err | false])
 				ifTrue: 
 					[strm
-						nextPutAll: image propertiesCount displayString;
+						display: image propertiesCount;
 						nextPutAll: ': ';
 						nextPutAll: filename;
 						nextPutAll: ', extent = ';
-						nextPutAll: image extent displayString;
+						display: image extent;
 						cr.
 					(image hasPropertyId: PropertyTagExifUserComment)
 						ifTrue: 
 							[strm
 								tab;
 								nextPutAll: 'PropertyTagExifUserComment: ';
-								nextPutAll: (image propertyFromId: 37510) valueArray asString trimNulls trimBlanks;
+								nextPutAll: (image propertyFromId: PropertyTagExifUserComment) valueArray asString trimNulls
+											trimBlanks;
 								cr].
 					(image hasPropertyId: PropertyTagSoftwareUsed)
 						ifTrue: 
 							[strm
 								tab;
 								nextPutAll: 'PropertyTagSoftwareUsed: ';
-								nextPutAll: (image propertyFromId: 305) valueArray asString trimNulls trimBlanks;
+								nextPutAll: (image propertyFromId: PropertyTagSoftwareUsed) valueArray asString trimNulls trimBlanks;
 								cr].
 					(image hasPropertyId: PropertyTagThumbnailWidth)
 						ifTrue: 
 							[strm
 								tab;
 								nextPutAll: 'PropertyTagThumbnailWidth: ';
-								nextPutAll: (image propertyFromId: 20499) valueArray first displayString;
+								display: (image propertyFromId: PropertyTagThumbnailWidth) valueArray first;
 								cr].
 					(image hasPropertyId: PropertyTagThumbnailData)
 						ifTrue: 
