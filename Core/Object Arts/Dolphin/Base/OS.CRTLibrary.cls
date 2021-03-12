@@ -15,36 +15,6 @@ If there is a function of the C runtime library which you wish to make use of th
 !OS.CRTLibrary categoriesForClass!External-Libraries! !
 !OS.CRTLibrary methodsFor!
 
-__iscsym: aCharacter
-	"Answer whether the argument is a letter, underscore, or digit.
-		int __iscsym(int c)"
-
-	<cdecl: bool __iscsym char>
-	^self invalidCall: _failureCode!
-
-__iscsymf: aCharacter
-	"Answer whether the argument is a letter or underscore.
-		int __iscsymf(int c)"
-
-	<cdecl: bool __iscsymf char>
-	^self invalidCall: _failureCode!
-
-_chdir: aString
-	"Change the current working directory to that identified by the path, aString.
-
-		int _chdir( const char *dirname);"
-
-	<cdecl: sdword _chdir lpstr>
-	^self invalidCall: _failureCode!
-
-_chmod: aFilenameString pmode: aModeInteger
-	"Change the file-permission settings of aFilenameString to aModeInteger
-
-		int _chmod( const char *filename, int pmode );"
-
-	<cdecl: sdword _chmod lpstr sdword>
-	^self invalidCall: _failureCode!
-
 _clearfp
 	"Clear and return the floating point status word
 
@@ -134,18 +104,6 @@ _setmode: fd mode: modeFlag
 	<cdecl: sdword _setmode sdword sdword>
 	^self invalidCall: _failureCode!
 
-_spawnvp: mode cmdname: aString argv: argv
-	"Spawn a new process.
-
-		int _spawnv( int mode, const char *cmdname, const char *const *argv );
-
-	Implementation Note: Overlapped so as to block only the calling process, as the
-	spawned external process may run for a lengthy time.
-	"
-
-	<overlap cdecl: sdword _spawnvp sdword lpstr lpvoid>
-	^self invalidCall: _failureCode!
-
 _splitpath_s: path drive: drive driveLen: driveInteger dir: dir dirLen: dirInteger fname: fname fnameLen: nameInteger ext: ext extLen: extInteger
 	<cdecl: sdword _splitpath_s char* char* intptr char* intptr char* intptr char* intptr>
 	^self invalidCall: _failureCode!
@@ -162,32 +120,8 @@ _stricmp: string1 string2: string2
 	<cdecl: sdword _stricmp lpstr lpstr>
 	^self invalidCall: _failureCode!
 
-_strnicmp: string1 string2: string2 count: count
-	"Answer the result of a case insensitive string comparison between string1 and
-	string2,comparing only the first, count, characters. Answer <0, 0, or >0 according to
-	whether the first count characters of are lexicographically less than, equal to, or greater
-	than the first count characters of string2."
-
-	<cdecl: sdword _strnicmp lpstr lpstr intptr>
-	^self invalidCall: _failureCode!
-
-_strrev: aString
-	"Answer aString, reversed.
-
-		char *_strrev( char *string );
-
-	N.B. We ignore the return value, as it will be a pointer to the argument,
-	and the functions works 'in-place'"
-
-	<cdecl: void _strrev lpstr>
-	^self invalidCall: _failureCode!
-
 _wfopen_s: pFile filename: nameString mode: modeString
 	<cdecl: sdword _wfopen_s handle* lpwstr lpwstr>
-	^self invalidCall: _failureCode!
-
-_wgetcwd: aString maxlen: anInteger
-	<cdecl: lpvoid _wgetcwd lpwstr sdword>
 	^self invalidCall: _failureCode!
 
 atoi: aString
@@ -273,34 +207,6 @@ initialize
 	self synchronizeLocale.
 	^self!
 
-iswcntrl: aCharacter
-	"Answer whether the argument is a control character.
-		int iswcntrl( wint_t c )"
-
-	<cdecl: bool iswcntrl char>
-	^self invalidCall: _failureCode!
-
-iswgraph: aCharacter
-	"Answer whether the argument is a printable character other than a space.
-		int iswgraph( wint_t c )"
-
-	<cdecl: bool iswgraph char>
-	^self invalidCall: _failureCode!
-
-iswprint: aCharacter
-	"Answer whether the argument is a printable character.
-		int iswprint( wint_t c )"
-
-	<cdecl: bool iswprint char>
-	^self invalidCall: _failureCode!
-
-iswpunct: aCharacter
-	"Answer whether the argument is a punctuation character.
-		int iswpunct( wint_t c )"
-
-	<cdecl: bool iswpunct char>
-	^self invalidCall: _failureCode!
-
 memcmp: buf1 buf2: buf2 count: count
 	"Compare the first count bytes in two buffers, answering <0 if buf1 is < buf2, 0 if equal,
 	and >0 if buf2 > buf1.
@@ -312,14 +218,6 @@ memcmp: buf1 buf2: buf2 count: count
 
 memcpy_s: dest destSize: destSize src: src count: count
 	<cdecl: sdword memcpy_s void* dword void* dword>
-	^self invalidCall: _failureCode!
-
-memset: dest c: c count: count
-	"Fill a block of memory.
-				void *memset( void *dest, int c, size_t count );
-	"
-
-	<cdecl: sdword memset lpvoid sdword intptr>
 	^self invalidCall: _failureCode!
 
 setlocale: category locale: localeString
@@ -359,16 +257,6 @@ strncpy_s: desString bufferSize: anInteger strSource: sourceString count: countI
 	<cdecl: sdword strncpy_s lpvoid uintptr lpstr uintptr>
 	^self invalidCall: _failureCode!
 
-strpbrk: string strCharSet: strCharSet
-	"Answer a pointer to the first occurrence of any of the characters
-	from the <String>, strCharSet, in the <String>, string.
-
-		char *strpbrk( const char *string, const char *strCharSet 
-	"
-
-	<cdecl: char* strpbrk char* char*>
-	^self invalidCall: _failureCode!
-
 synchronizeLocale
 	"Private - Synchronize the CRT's locale with the OS locale setting."
 
@@ -390,23 +278,9 @@ wcscspn: aWideString strCharSet: strCharSet
 	<cdecl: dword wcscspn lpvoid lpwstr>
 	^self invalidCall: _failureCode!
 
-wcsncmp: string1 string2: string2 count: count
-	"Answer the order between the <Utf16String> arguments, string1 and string2,
-	considering up to <integer>, count, characters.
-
-		int wcscmp( const wchar_t *string1, const wchar_t *string2, size_t count );
-	"
-
-	<cdecl: sdword wcsncmp lpwstr lpwstr intptr>
-	^self invalidCall: _failureCode!
-
 wcsncpy_s: strDestination bufferSize: numberOfElements strSource: strSource count: count
 	<cdecl: sdword wcsncpy_s lpvoid uintptr lpwstr uintptr>
 	^self invalidCall: _failureCode! !
-!OS.CRTLibrary categoriesFor: #__iscsym:!CRT functions-character classification!public! !
-!OS.CRTLibrary categoriesFor: #__iscsymf:!CRT functions-character classification!public! !
-!OS.CRTLibrary categoriesFor: #_chdir:!CRT functions-directory control!public! !
-!OS.CRTLibrary categoriesFor: #_chmod:pmode:!CRT functions-file handling!public! !
 !OS.CRTLibrary categoriesFor: #_clearfp!CRT functions-floating point support!public! !
 !OS.CRTLibrary categoriesFor: #_close:!CRT functions-low level I/O!public! !
 !OS.CRTLibrary categoriesFor: #_control87:mask:!CRT functions-floating point support!public! !
@@ -423,14 +297,10 @@ wcsncpy_s: strDestination bufferSize: numberOfElements strSource: strSource coun
 !OS.CRTLibrary categoriesFor: #_makepath_s:bufferSize:drive:dir:fname:ext:!CRT functions-file handling!public! !
 !OS.CRTLibrary categoriesFor: #_open_osfhandle:flags:!CRT functions-file handling!public! !
 !OS.CRTLibrary categoriesFor: #_setmode:mode:!CRT functions-file handling!public! !
-!OS.CRTLibrary categoriesFor: #_spawnvp:cmdname:argv:!CRT functions-process and environment control!public! !
 !OS.CRTLibrary categoriesFor: #_splitpath_s:drive:driveLen:dir:dirLen:fname:fnameLen:ext:extLen:!CRT functions-file handling!public! !
 !OS.CRTLibrary categoriesFor: #_statusfp!CRT functions-floating point support!public! !
 !OS.CRTLibrary categoriesFor: #_stricmp:string2:!CRT functions-string manipulation!public! !
-!OS.CRTLibrary categoriesFor: #_strnicmp:string2:count:!CRT functions-string manipulation!public! !
-!OS.CRTLibrary categoriesFor: #_strrev:!CRT functions-string manipulation!public! !
 !OS.CRTLibrary categoriesFor: #_wfopen_s:filename:mode:!CRT functions-stream I/O!public! !
-!OS.CRTLibrary categoriesFor: #_wgetcwd:maxlen:!CRT functions-directory control!public! !
 !OS.CRTLibrary categoriesFor: #atoi:!CRT functions-data conversion!public! !
 !OS.CRTLibrary categoriesFor: #close!public!realizing/unrealizing! !
 !OS.CRTLibrary categoriesFor: #errno!CRT functions-process and environment control!public! !
@@ -449,13 +319,8 @@ wcsncpy_s: strDestination bufferSize: numberOfElements strSource: strSource coun
 !OS.CRTLibrary categoriesFor: #free:!CRT functions-memory allocation!public! !
 !OS.CRTLibrary categoriesFor: #fwrite:size:count:stream:!CRT functions-stream I/O!public! !
 !OS.CRTLibrary categoriesFor: #initialize!initializing!private! !
-!OS.CRTLibrary categoriesFor: #iswcntrl:!CRT functions-character classification!public! !
-!OS.CRTLibrary categoriesFor: #iswgraph:!CRT functions-character classification!public! !
-!OS.CRTLibrary categoriesFor: #iswprint:!CRT functions-character classification!public! !
-!OS.CRTLibrary categoriesFor: #iswpunct:!CRT functions-character classification!public! !
 !OS.CRTLibrary categoriesFor: #memcmp:buf2:count:!CRT functions-buffer manipulation!public! !
 !OS.CRTLibrary categoriesFor: #memcpy_s:destSize:src:count:!public! !
-!OS.CRTLibrary categoriesFor: #memset:c:count:!CRT functions-buffer manipulation!public! !
 !OS.CRTLibrary categoriesFor: #setlocale:locale:!CRT functions-localization!public! !
 !OS.CRTLibrary categoriesFor: #strcat_s:bufferSize:strSource:!CRT functions-string manipulation!public! !
 !OS.CRTLibrary categoriesFor: #strcmp:string2:!CRT functions-string manipulation!public! !
@@ -463,12 +328,10 @@ wcsncpy_s: strDestination bufferSize: numberOfElements strSource: strSource coun
 !OS.CRTLibrary categoriesFor: #strerror_s:bufferSize:errnum:!CRT functions-string manipulation!public! !
 !OS.CRTLibrary categoriesFor: #strlen:!CRT functions-string manipulation!public! !
 !OS.CRTLibrary categoriesFor: #strncpy_s:bufferSize:strSource:count:!CRT functions-string manipulation!public! !
-!OS.CRTLibrary categoriesFor: #strpbrk:strCharSet:!CRT functions-string manipulation!public! !
 !OS.CRTLibrary categoriesFor: #synchronizeLocale!CRT functions-localization!private! !
 !OS.CRTLibrary categoriesFor: #ungetc:stream:!CRT functions-stream I/O!public! !
 !OS.CRTLibrary categoriesFor: #ungetwc:stream:!CRT functions-stream I/O!public! !
 !OS.CRTLibrary categoriesFor: #wcscspn:strCharSet:!CRT functions-string manipulation!public! !
-!OS.CRTLibrary categoriesFor: #wcsncmp:string2:count:!CRT functions-string manipulation!public! !
 !OS.CRTLibrary categoriesFor: #wcsncpy_s:bufferSize:strSource:count:!CRT functions-string manipulation!public! !
 
 !OS.CRTLibrary class methodsFor!

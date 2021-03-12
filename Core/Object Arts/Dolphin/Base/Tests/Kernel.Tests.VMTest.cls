@@ -3138,7 +3138,7 @@ verifyExtCallCrtFault: aBoolean
 	| lib |
 	lib := aBoolean ifTrue: [CRTLibrary nonblocking] ifFalse: [CRTLibrary default].
 	self
-		should: [lib chmod: nil pmode: 0]
+		should: [lib fgetc:  nil]
 		raise: CRTError
 		matching: [:ex | ex tag == EINVAL]!
 

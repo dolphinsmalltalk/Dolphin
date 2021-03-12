@@ -234,8 +234,8 @@ extern "C" PRIMTABLEDECL Interpreter::PrimitiveFp primitivesTable[256] = {
 	Interpreter::primitiveBasicNext												, // case 221: ReadStream|FileStream|ReadWriteStream>>#basicNext, ReadStream>>#basicNextAvailable
 	Interpreter::primitiveBasicNextPut											, // case 222: WriteStream>>#basicNextPut:, FileStream|WriteStream>>#primitiveBasicNextPut:
 	Interpreter::primitiveStringAsUtf32String									, // case 223: Currently unimplemented/unused
-	Interpreter::primitiveBeginsWith											, // case 224:
-	Interpreter::unusedPrimitive												, // case 225:
+	Interpreter::primitiveBeginsWith											, // case 224: String>>#beginsWith:
+	Interpreter::primitiveCharacterClassify										, // case 225: Character>>classify:
 	Interpreter::unusedPrimitive												, // case 226:
 	Interpreter::unusedPrimitive												, // case 227:
 	Interpreter::unusedPrimitive												, // case 228:

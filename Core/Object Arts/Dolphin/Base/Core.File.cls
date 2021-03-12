@@ -1013,13 +1013,15 @@ isWriteable: aString
 	attributes := KernelLibrary default getFileAttributes: aString.
 	^(attributes ~= -1 and: [attributes allMask: FILE_ATTRIBUTE_READONLY]) not!
 
-isWriteable: aFileNameString set: aBoolean
-	"Set the writeable state of aFileNameString to aBoolean. Answers true if the
-	operation succeeds"
+isWriteable: aString set: aBoolean
+	"Set the writeable state of the file with path, aString, to aBoolean. Answers true if the operation succeeds"
 
-	| mode |
-	mode := aBoolean ifTrue: [CRTConstants._S_IWRITE] ifFalse: [CRTConstants._S_IREAD].
-	^(CRTLibrary default _chmod: aFileNameString pmode: mode) = 0!
+	| kernel attributes |
+	kernel := KernelLibrary default.
+	attributes := kernel getFileAttributes: aString.
+	attributes == -1 ifTrue: [kernel systemError].
+	(kernel setFileAttributes: aString
+		value: (attributes mask: FILE_ATTRIBUTE_READONLY set: aBoolean not)) ifFalse: [kernel systemError]!
 
 lastWriteTime: aString
 	"Answer a <FILETIME> representing the time when the file with the specified filename was
@@ -1558,18 +1560,20 @@ windowsDirectory
 	^path!
 
 workingDirectory
-	"Answer the current working directory."
+	"Answer the current working directory. The result always has a trailing separator."
 
-	| buf dir |
-	buf := CRTLibrary default _wgetcwd: nil maxlen: 0.
-	dir := Utf16String fromAddress: buf.
-	CRTLibrary default free: buf.
-	^dir last = $\ ifTrue: [dir] ifFalse: [dir copyWith: $\]!
+	| kernel len buf |
+	kernel := KernelLibrary default.
+	(len := kernel getCurrentDirectory: 0 lpBuffer: nil) == 0 ifTrue: [^kernel systemError].
+	buf := Utf16String newFixed: len-1.
+	(kernel getCurrentDirectory: len lpBuffer: buf) == 0 ifTrue: [^kernel systemError].
+	^(buf at: len-1) = $\ ifTrue: [buf] ifFalse: [buf copyWith: $\]
+!
 
 workingDirectory: aString
 	"Set the current working directory."
 
-	^CRTLibrary default _chdir: aString! !
+	^KernelLibrary default setCurrentDirectory: aString! !
 !Core.File class categoriesFor: #appendPathDelimiter:!filename manipulation!public!testing! !
 !Core.File class categoriesFor: #attributes:!file operations!public! !
 !Core.File class categoriesFor: #commonPrefixOf:and:!filename manipulation!public! !

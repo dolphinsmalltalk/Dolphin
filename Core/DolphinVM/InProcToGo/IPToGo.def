@@ -36,10 +36,6 @@ uncompress
 
 ; CRT functions imported by the image
 
-	__iscsym
-	__iscsymf
-	_chdir
-	_chmod
 	_clearfp
 	_close
 	_control87
@@ -56,14 +52,10 @@ uncompress
 	_makepath_s
 	_open_osfhandle
 	_setmode
-	_spawnvp
 	_splitpath_s
 	_statusfp
 	_stricmp
-	_strnicmp
-	_strrev
 	_wfopen_s
-	_wgetcwd
 	atoi
 	fclose
 	feof
@@ -79,13 +71,8 @@ uncompress
 	fread_s
 	free
 	fwrite
-	iswcntrl
-	iswgraph
-	iswprint
-	iswpunct
 	memcmp
 	memcpy_s
-	memset
 	rand
 	setlocale
 	srand
@@ -96,11 +83,9 @@ uncompress
 	strlen
 	strncmp
 	strncpy_s
-	strpbrk
 	ungetc
 	ungetwc
 	wcscspn
-	wcsncmp
 	wcsncpy_s
 
 ; VMLibrary

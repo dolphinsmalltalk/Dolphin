@@ -3,7 +3,7 @@
 Core.Magnitude subclass: #'Core.Character'
 	instanceVariableNames: 'code'
 	classVariableNames: 'AnsiCharacters AnsiCodePage AnsiCodePoints CharacterSet Utf8Default'
-	imports: #()
+	imports: #(#{OS.NlsConstants private})
 	classInstanceVariableNames: ''
 	classConstants: {
 		'EncodingMask' -> 16r3F000000.
@@ -177,6 +177,20 @@ basicShallowCopy
 
 	^self!
 
+classify: anInteger
+	<primitive: 225>
+	| str charType |
+	#todo. "This is temporary, and to be replaced with an implementation based on ICU in order to yield correct results for all Unicode characters."
+	str := Utf16String with: self.
+	"If outside BMP, we ignore the 2nd surrogate, as all valid surrogates have a CT_CTYPE1 of just C1_DEFINED (i.e. known, but not of any other type). The API isn't really designed correctly to report the classifications for characters outside the BMP, because it operates at a code unit level, and the code units are UTF-16"
+	charType := ByteArray newFixed: 2.
+	(OS.KernelLibrary default
+		getStringType: anInteger
+		lpSrcStr: str
+		cchSrc: 1
+		lpCharType: charType) ifFalse: [OS.KernelLibrary default systemError].
+	^charType wordAtOffset: 0!
+
 code
 	^code!
 
@@ -243,7 +257,9 @@ hash
 isAlphaNumeric
 	"Answer whether the receiver is a letter or a digit."
 
-	^OS.UserLibrary default isCharAlphaNumeric: self!
+	"Implementation Note: The ANSI NCITS 319-1998 defines this as (self isLetter|self isDigit), and therefore it can include any letters, not just the ASCII letters. See #isLetter for the current limitations in Dolphin with respect to recognition of some Unicode letters outside the BMP."
+
+	^(self classify: CT_CTYPE1) anyMask: ##(C1_ALPHA | C1_DIGIT)!
 
 isAscii
 	"Answer whether the receiver is an ascii character"
@@ -264,18 +280,19 @@ isCharacter
 	^true!
 
 isControl
-	"Answer whether the receiver is a control character."
+	"Answer whether the receiver is a control character. Note that this also includes newlines, tabs, etc, but not space."
 
-	^OS.CRTLibrary default iswcntrl: self!
+	^(self classify: CT_CTYPE1) anyMask: C1_CNTRL!
 
 isDigit
-	"Answer whether the receiver is a representation of a decimal-digit character
-	(i.e. it is one of $0 $1 $2 $3 $4 $5 $6 $7 $8 $9)."
+	"Answer whether the receiver is one of the ASCII representations of a decimal-digit character (i.e. it is one of $0 $1 $2 $3 $4 $5 $6 $7 $8 $9)."
+
+	"Implementation Note: This is as defined in ANSI NCITS 319-1998. Unlike #isLetter, the implementation cannot define additional characters for which #isDigit is true, so this does not correspond to the Unicode Decimal Number general category."
 
 	^code >= ##($0 codePoint) and: [code <= ##($9 codePoint)]!
 
 isEnglishLetter
-	"Answer whether the receiver is a letter from the English alphabet."
+	"Answer whether the receiver is a letter from the English alphabet, i.e. [a-zA-Z]."
 
 	| codePoint |
 	^(codePoint := self codePoint) <= ##($z codePoint) and: 
@@ -283,21 +300,21 @@ isEnglishLetter
 				and: [codePoint >= ##($a codePoint) or: [codePoint <= ##($Z codePoint)]]]!
 
 isGraph
-	"Answer whether the receiver is a printable character other than a space."
+	"Answer whether the receiver is a printable character, other than blanks. See also #isPrintable"
 
-	#todo.	"The CRT functions for character classificiation don't work correctly for characters outside the BMP"
-	^OS.CRTLibrary default iswgraph: self!
+	^(self classify: CT_CTYPE1) noMask: ##(C1_CNTRL | C1_SPACE)!
 
 isHexDigit
-	"Answer whether the receiver is a valid Smalltalk hexadecimal digit (i.e. digits and the
-	uppercase characters A through F)."
+	"Answer whether the receiver is a valid Smalltalk hexadecimal digit (i.e. digits and the uppercase characters A through F)."
 
-	^self isDigit or: [code >= ##($A codePoint) and: [code <= ##($F codePoint)]]!
+	^((self classify: CT_CTYPE1) bitAnd: ##(C1_XDIGIT | C1_LOWER)) == C1_XDIGIT!
 
 isLetter
 	"Answer whether the receiver is an alphabetic character."
 
-	^OS.UserLibrary default isCharAlpha: self!
+	"Implementation Note: The ANSI NCITS 319-1998 specifies that this at least includes the letters of the English alphabet (upper and lowercase), but that implementations may consider other Characters to be letters. In Dolphin it is intended that this answer true for all Characters with Unicode codepoints in one of the letter (L) general categories. Due to inadequacies of the underlying Windows API, this is not currently true, and in particular any letters defined outside the Unicode BMP will not be classified as letters. In fact they are not classified as anything, but either defined or not defined."
+
+	^(self classify: CT_CTYPE1) anyMask: C1_ALPHA!
 
 isLinefeed
 	"Answer whether the receiver is the line-feed character."
@@ -315,24 +332,26 @@ isLiteral
 isLowercase
 	"Answer whether the receiver is a lowercase letter."
 
-	^OS.UserLibrary default isCharLower: self!
+	"Implementation Note: The ANSI NCITS 319-1998 specifies that this at least includes the lowercase letters of the English alphabet, but that implementations may consider other Characters to be lowercase letters. In Dolphin it is intended that this answer true for all Characters with Unicode codepoints in one of the Lowercase Letter (Ll) general category. Due to inadequacies of the underlying Windows API, this is not currently true, and in particular any lowercase letters defined outside the Unicode BMP will not be acknowledged. In fact they are not classified as anything, but either defined or not defined."
+
+	^(self classify: CT_CTYPE1) anyMask: C1_LOWER!
 
 isLowerCase
 	"Answer whether the receiver is a lowercase letter."
 
-	^self isLowercase!
+	^(self classify: CT_CTYPE1) anyMask: C1_LOWER!
 
 isPrintable
-	"Answer whether the receiver is a printable character."
+	"Answer whether the receiver is a printable character - everything except pure control characters."
 
-	#todo.	"The CRT functions for character classificiation don't work correctly for characters outside the BMP"
-	^OS.CRTLibrary default iswprint: self!
+	^((self classify: CT_CTYPE1) bitAnd: 16rFF) ~~ C1_CNTRL!
 
 isPunctuation
 	"Answer whether the receiver is a punctuation character."
 
-	#todo.	"The CRT functions for character classificiation don't work correctly for characters outside the BMP"
-	^OS.CRTLibrary default iswpunct: self!
+	"Implementation Note: It is intended that this answer true for all Characters with Unicode codepoints in one of general Punctuation (P) categories. Due to inadequacies of the underlying Windows API, this is not currently true, and in particular any punctuation codepoints defined outside the Unicode BMP will not acknowledged. In fact they are not classified as anything, but either defined or not defined."
+
+	^(self classify: CT_CTYPE1) anyMask: C1_PUNCT!
 
 isSeparator
 	"Answer whether the receiver is an ASCII separator character (i.e. whitespace)."
@@ -347,7 +366,9 @@ isSurrogate
 isUppercase
 	"Answer whether the receiver is an uppercase letter."
 
-	^OS.UserLibrary default isCharUpper: self!
+	"Implementation Note: The ANSI NCITS 319-1998 specifies that this at least includes the uppercase letters of the English alphabet, but that implementations may consider other Characters to be uppercase letters. In Dolphin it is intended that this answer true for all Characters with Unicode codepoints in one of the Uppercase Letter (Lu) general category. Due to inadequacies of the underlying Windows API, this is not currently true, and in particular any uppercase letters defined outside the Unicode BMP will not be acknowledged. In fact they are not classified as anything, but either defined or not defined."
+
+	^(self classify: CT_CTYPE1) anyMask: C1_UPPER!
 
 isUpperCase
 	"Answer whether the receiver is an uppercase letter."
@@ -391,16 +412,16 @@ isUtf8Trail
 	^(code bitAnd: ##(EncodingMask | Utf8SurrogateMask)) == ##(Utf8Mask | 16r80)!
 
 isVowel
-	"Answer whether the receiver is an English vowel (a, e, i, o, or u).
-	This test is case insensitive."
+	"Answer whether the receiver is an English vowel (a, e, i, o, or u), upper or lowercase."
 
 	^'aAeEiIoOuU' identityIncludes: self!
 
 isWhitespace
-	"Answer whether the receiver is a white space character.
-	This is a synonym for #isSeparator as currently defined."
+	"Answer whether the receiver represents a Unicode codepoint classified in one of the Separator (Z) general categories. See also #isSeparator, which for reasons of backwards compatibility only acknowledges the ASCII whitespace characters."
 
-	^self isSeparator!
+	"Implementation Note: It is intended that this answer true for all Characters with Unicode codepoints in one of general Separator (Z) categories. Due to inadequacies of the underlying Windows API, this is not currently true, and in particular any whitespace codepoints defined outside the Unicode BMP will not acknowledged. In fact they are not classified as anything, but either defined or not defined."
+
+	^(self classify: CT_CTYPE1) anyMask: C1_SPACE!
 
 join: aCollection
 	"Answer a new <String> composed from the elements of the <collection> argument separated by the instances of the receiver."
@@ -519,6 +540,7 @@ to: aCharacter
 !Core.Character categoriesFor: #asUtf8String!converting!public! !
 !Core.Character categoriesFor: #basicEncoding!accessing!private! !
 !Core.Character categoriesFor: #basicShallowCopy!copying!public! !
+!Core.Character categoriesFor: #classify:!helpers!private! !
 !Core.Character categoriesFor: #code!accessing!private! !
 !Core.Character categoriesFor: #codePoint!accessing!public! !
 !Core.Character categoriesFor: #codeUnit!accessing!public! !

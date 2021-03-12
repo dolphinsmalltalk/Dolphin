@@ -103,59 +103,21 @@ package setMethodNames: #(
 	#(#{OS._FPIEEE_RECORD} #causeCode)
 	#(#{OS._FPIEEE_RECORD} #causeName)
 	#(#{OS._FPIEEE_VALUE} #valueType)
-	#(#{OS.CRTLibrary} #_controlfp:mask:)
-	#(#{OS.CRTLibrary} #_ecvt:count:dec:sign:)
-	#(#{OS.CRTLibrary} #_eof:)
-	#(#{OS.CRTLibrary} #_filelength:)
-	#(#{OS.CRTLibrary} #_finite:)
-	#(#{OS.CRTLibrary} #_fpclass:)
-	#(#{OS.CRTLibrary} #_gcvt:count:buffer:)
-	#(#{OS.CRTLibrary} #_gcvt_s:bufferSize:value:digits:)
-	#(#{OS.CRTLibrary} #_i64toa:string:radix:)
-	#(#{OS.CRTLibrary} #_logb:)
-	#(#{OS.CRTLibrary} #_ltoa:string:radix:)
-	#(#{OS.CRTLibrary} #_makepath:drive:dir:fname:ext:)
-	#(#{OS.CRTLibrary} #_putenv:)
-	#(#{OS.CRTLibrary} #_rotl:shift:)
-	#(#{OS.CRTLibrary} #_rotr:shift:)
-	#(#{OS.CRTLibrary} #_splitpath:drive:dir:fname:ext:)
-	#(#{OS.CRTLibrary} #_stricoll:string2:)
-	#(#{OS.CRTLibrary} #acos:)
-	#(#{OS.CRTLibrary} #asin:)
-	#(#{OS.CRTLibrary} #atan:)
-	#(#{OS.CRTLibrary} #atan:x:)
-	#(#{OS.CRTLibrary} #ceil:)
-	#(#{OS.CRTLibrary} #chmod:pmode:)
-	#(#{OS.CRTLibrary} #cos:)
-	#(#{OS.CRTLibrary} #exp:)
-	#(#{OS.CRTLibrary} #fabs:)
-	#(#{OS.CRTLibrary} #floor:)
-	#(#{OS.CRTLibrary} #fopen:mode:)
-	#(#{OS.CRTLibrary} #fopen_s:filename:mode:)
-	#(#{OS.CRTLibrary} #fread:size:count:stream:)
-	#(#{OS.CRTLibrary} #freopen:mode:stream:)
-	#(#{OS.CRTLibrary} #frexp:expptr:)
-	#(#{OS.CRTLibrary} #fseek:offset:origin:)
-	#(#{OS.CRTLibrary} #ftell:)
-	#(#{OS.CRTLibrary} #getenv:)
-	#(#{OS.CRTLibrary} #iswspace:)
-	#(#{OS.CRTLibrary} #ldexp:exp:)
-	#(#{OS.CRTLibrary} #log:)
-	#(#{OS.CRTLibrary} #log10:)
-	#(#{OS.CRTLibrary} #log2:)
-	#(#{OS.CRTLibrary} #memcpy:src:count:)
-	#(#{OS.CRTLibrary} #memmove:src:count:)
-	#(#{OS.CRTLibrary} #modf:intptr:)
-	#(#{OS.CRTLibrary} #pow:y:)
-	#(#{OS.CRTLibrary} #sin:)
-	#(#{OS.CRTLibrary} #sqrt:)
-	#(#{OS.CRTLibrary} #strcat:strSource:)
-	#(#{OS.CRTLibrary} #strerror:)
-	#(#{OS.CRTLibrary} #strncmp:string2:count:)
-	#(#{OS.CRTLibrary} #strncpy:strSource:count:)
-	#(#{OS.CRTLibrary} #tan:)
-	#(#{OS.CRTLibrary} #thread_chmod:pmode:)
-	#(#{OS.CRTLibrary} #thread_errno)
+	#(#{OS.CRTLibrary} #__iscsym:)
+	#(#{OS.CRTLibrary} #__iscsymf:)
+	#(#{OS.CRTLibrary} #_chdir:)
+	#(#{OS.CRTLibrary} #_chmod:pmode:)
+	#(#{OS.CRTLibrary} #_spawnvp:cmdname:argv:)
+	#(#{OS.CRTLibrary} #_strnicmp:string2:count:)
+	#(#{OS.CRTLibrary} #_strrev:)
+	#(#{OS.CRTLibrary} #_wgetcwd:maxlen:)
+	#(#{OS.CRTLibrary} #iswcntrl:)
+	#(#{OS.CRTLibrary} #iswgraph:)
+	#(#{OS.CRTLibrary} #iswprint:)
+	#(#{OS.CRTLibrary} #iswpunct:)
+	#(#{OS.CRTLibrary} #memset:c:count:)
+	#(#{OS.CRTLibrary} #strpbrk:strCharSet:)
+	#(#{OS.CRTLibrary} #wcsncmp:string2:count:)
 	#(#{OS.KernelLibrary} #compareStringOrdinal:cchCount1:lpString2:cchCount2:bIgnoreCase:)
 	#(#{OS.KernelLibrary} #getDateFormat:dwFlags:lpDate:lpFormat:lpDateStr:cchDate:)
 	#(#{OS.KernelLibrary} #getFileSize:lpFileSizeHigh:)
@@ -163,6 +125,10 @@ package setMethodNames: #(
 	#(#{OS.KernelLibrary} #lstrcmp:lpString2:)
 	#(#{OS.KernelLibrary} #lstrcmpi:lpString2:)
 	#(#{OS.KernelLibrary} #setFilePointer:lDistanceToMove:lpDistanceToMoveHigh:dwMoveMethod:)
+	#(#{OS.UserLibrary} #isCharAlpha:)
+	#(#{OS.UserLibrary} #isCharAlphaNumeric:)
+	#(#{OS.UserLibrary} #isCharLower:)
+	#(#{OS.UserLibrary} #isCharUpper:)
 	#(#{OS.WindowsLocale} #timeSeparator)
 	#(#{OS.WinMMLibrary} #timeGetTime)
 	#(#{UI.MessageBox} #abortRetryIgnore)
@@ -940,322 +906,153 @@ valueType
 
 !OS.CRTLibrary methodsFor!
 
-_controlfp: newInteger mask: maskInteger
-	<cdecl: dword _controlfp dword dword>
-	#deprecated.	"Insecure - use _controlfp_s"
-	^self invalidCall: _failureCode!
+__iscsym: aCharacter
+	"Answer whether the argument is a letter, underscore, or digit.
+		int __iscsym(int c)"
 
-_ecvt: aFloat count: anInteger dec: decInteger sign: signInteger
-	<cdecl: lpstr _ecvt double sdword sdword* sdword*>
-	#deprecated.	"This function is considered insecure and should not be used - see MSDN"
-	^self invalidCall: _failureCode!
-
-_eof: handleInteger
-	<cdecl: sdword _eof sdword>
-	#deprecated. "Unused"
-	^self invalidCall: _failureCode!
-
-_filelength: handleInteger
-	<cdecl: sdword _filelength sdword>
-	#deprecated.
-	^self invalidCall: _failureCode!
-
-_finite: aFloat
-	<cdecl: bool _finite double>
-	#deprecated.
-	^self invalidCall: _failureCode!
-
-_fpclass: aFloat
-	<cdecl: sdword _fpclass double>
-	#deprecated.
-	^self invalidCall: _failureCode!
-
-_gcvt: aFloat count: anInteger buffer: aString
-	<cdecl: char* _gcvt double sdword char*>
-	#deprecated.	"Insecure - use _gcvt_s"
-	^self invalidCall: _failureCode!
-
-_gcvt_s: aString bufferSize: sizeInteger value: aFloat digits: digitsInteger
-	<cdecl: sdword _gcvt_s char* intptr double sdword>
-	#deprecated.
-	^self invalidCall: _failureCode!
-
-_i64toa: aSmallInteger string: aString radix: anInteger
-	<cdecl: lpstr _i64toa sqword lpstr sdword>
-	#deprecated.	"Insecure - see MSDN"
-	^self invalidCall: _failureCode!
-
-_logb: aFloat
-	<cdecl: double _logb double>
-	#deprecated.
-	^self invalidCall: _failureCode!
-
-_ltoa: aSmallInteger string: aString radix: anInteger
-	<cdecl: lpstr _ltoa sdword lpstr sdword>
-	#deprecated.	"Insecure - see MSDN"
-	^self invalidCall: _failureCode!
-
-_makepath: path drive: drive dir: dir fname: fname ext: ext
-	<cdecl: void _makepath char* char* char* char* char*>
-	#deprecated.	"Insecure. Use #_makepath_s:sizeInBytes:drive:dir:fname:ext:"
-	^self invalidCall: _failureCode!
-
-_putenv: aString
-	<cdecl: sdword _putenv lpstr>
-	#deprecated.	"Insecure - see MSDN"
-	^self invalidCall: _failureCode!
-
-_rotl: anUnsignedlInteger shift: anInteger
-	<cdecl: dword _rotl dword sdword>
-	#deprecated. "Unused"
-	^self invalidCall: _failureCode!
-
-_rotr: anUnsignedlInteger shift: anInteger
-	<cdecl: dword _rotr dword sdword>
-	#deprecated. "Unused"
-	^self invalidCall: _failureCode!
-
-_splitpath: path drive: drive dir: dir fname: fname ext: ext
-	<cdecl: void _splitpath char* char* char* char* char*>
-	#deprecated.	"Insecure - use _splitpath_s"
-	^self invalidCall: _failureCode!
-
-_stricoll: string1 string2: string2
-	<cdecl: sdword _stricoll lpstr lpstr>
-	#deprecated. "Unused"
-	^self invalidCall: _failureCode!
-
-acos: aFloat
-	<cdecl: double acos double>
-	#deprecated.
-	^self invalidCall: _failureCode!
-
-asin: aFloat
-	<cdecl: double asin double>
-	#deprecated.
-	^self invalidCall: _failureCode!
-
-atan: aFloat
-	<cdecl: double atan double>
-	#deprecated.
-	^self invalidCall: _failureCode!
-
-atan: yFloat x: xFloat
-	<cdecl: double atan2 double double>
-	#deprecated.
-	^self invalidCall: _failureCode!
-
-ceil: aFloat
-	<cdecl: double ceil double>
-	#deprecated.
-	^self invalidCall: _failureCode!
-
-chmod: aFilenameString pmode: aModeInteger
-	#deprecated.
-	^self _chmod: aFilenameString pmode: aModeInteger!
-
-cos: aFloat
-	<cdecl: double cos double>
-	#deprecated.
-	^self invalidCall: _failureCode!
-
-exp: aFloat
-	<cdecl: double exp double>
-	#deprecated.
-	^self invalidCall: _failureCode!
-
-fabs: aFloat
-	<cdecl: double fabs double>
-	#deprecated.
-	^self invalidCall: _failureCode!
-
-floor: aFloat
-	<cdecl: double floor double>
-	#deprecated.
-	^self invalidCall: _failureCode!
-
-fopen: nameString mode: modeString
-	<cdecl: handle fopen lpstr lpstr>
-	#deprecated.	"Insecure"
-	^self invalidCall: _failureCode!
-
-fopen_s: pFile filename: nameString mode: modeString
-	<cdecl: sdword fopen_s handle* lpstr lpstr>
+	<cdecl: bool __iscsym char>
 	#deprecated.	"No longer used"
 	^self invalidCall: _failureCode!
 
-fread: buffer size: size count: count stream: aFILE
-	<overlap cdecl: sdword fread lpvoid intptr intptr handle>
-	#deprecated.	"Insecure - use fread_s"
+__iscsymf: aCharacter
+	"Answer whether the argument is a letter or underscore.
+		int __iscsymf(int c)"
+
+	<cdecl: bool __iscsymf char>
+	#deprecated.	"No longer used"
 	^self invalidCall: _failureCode!
 
-freopen: pathString mode: modeString stream: anExternalHandle
-	<cdecl: handle freopen char* char* handle>
-	#deprecated.	"Insecured - see MSDN"
+_chdir: aString
+	"Change the current working directory to that identified by the path, aString.
+
+		int _chdir( const char *dirname);"
+
+	<cdecl: sdword _chdir lpstr>
+	#deprecated. "In favour of KernelLibrary>>setCurrentDirectory:, as this did not handle Unicode"
 	^self invalidCall: _failureCode!
 
-frexp: x expptr: expptr
-	<cdecl: double frexp double sdword*>
+_chmod: aFilenameString pmode: aModeInteger
+	<cdecl: sdword _chmod lpstr sdword>
 	#deprecated.
 	^self invalidCall: _failureCode!
 
-fseek: aFILE offset: offsetInteger origin: originInteger
-	<cdecl: sdword fseek handle sdword sdword>
-	#deprecated. "Use _fseeki64:offset:origin:"
+_spawnvp: mode cmdname: aString argv: argv
+	"Spawn a new process.
+
+		int _spawnv( int mode, const char *cmdname, const char *const *argv );
+
+	Implementation Note: Overlapped so as to block only the calling process, as the
+	spawned external process may run for a lengthy time.
+	"
+
+	<overlap cdecl: sdword _spawnvp sdword lpstr lpvoid>
+	#deprecated. "Not used; see ExternalProcess contribution"
 	^self invalidCall: _failureCode!
 
-ftell: aFILE
-	<cdecl: sdword ftell handle>
-	#deprecated.	"Use #_ftelli64:"
+_strnicmp: string1 string2: string2 count: count
+	"Answer the result of a case insensitive string comparison between string1 and
+	string2,comparing only the first, count, characters. Answer <0, 0, or >0 according to
+	whether the first count characters of are lexicographically less than, equal to, or greater
+	than the first count characters of string2."
+
+	<cdecl: sdword _strnicmp lpstr lpstr intptr>
+	#deprecated ."Not used"
 	^self invalidCall: _failureCode!
 
-getenv: varname
-	<cdecl: lpstr getenv lpstr>
-	#deprecated.	"Insecure - see MSDN"
+_strrev: aString
+	"Answer aString, reversed.
+
+		char *_strrev( char *string );
+
+	N.B. We ignore the return value, as it will be a pointer to the argument,
+	and the functions works 'in-place'"
+
+	<cdecl: void _strrev lpstr>
+	#deprecated. "Not used"
 	^self invalidCall: _failureCode!
 
-iswspace: aCharacter
-	<cdecl: bool iswspace char>
-	#deprecated.	"Unused"
+_wgetcwd: aString maxlen: anInteger
+	<cdecl: lpvoid _wgetcwd lpwstr sdword>
+	#deprecated. "In favour of KernelLibrary>>getCurrentDirectory:lpBuffer:"
 	^self invalidCall: _failureCode!
 
-ldexp: aFloat exp: anInteger
-	<cdecl: double ldexp double sdword>
-	#deprecated.
+iswcntrl: aCharacter
+	"Answer whether the argument is a control character.
+		int iswcntrl( wint_t c )"
+
+	<cdecl: bool iswcntrl char>
+	#deprecated.	"Doesn't work correctly for chars outside BMP"
 	^self invalidCall: _failureCode!
 
-log: aFloat
-	<cdecl: double log double>
-	#deprecated.
+iswgraph: aCharacter
+	"Answer whether the argument is a printable character other than a space.
+		int iswgraph( wint_t c )"
+
+	<cdecl: bool iswgraph char>
+	#deprecated. "Doesn't work correctly for chars outside BMP"
 	^self invalidCall: _failureCode!
 
-log10: aFloat
-	<cdecl: double log10 double>
-	#deprecated.
+iswprint: aCharacter
+	"Answer whether the argument is a printable character.
+		int iswprint( wint_t c )"
+
+	<cdecl: bool iswprint char>
+	#deprecated. "Doesn't work correctly for chars outside BMP"
 	^self invalidCall: _failureCode!
 
-log2: aFloat
-	<cdecl: double log2 double>
-	#deprecated.
+iswpunct: aCharacter
+	"Answer whether the argument is a punctuation character.
+		int iswpunct( wint_t c )"
+
+	<cdecl: bool iswpunct char>
+	#deprecated. "Doesn't work correctly for chars outside BMP"
 	^self invalidCall: _failureCode!
 
-memcpy: dest src: src count: count
-	<cdecl: lpvoid memcpy lpvoid lpvoid intptr>
-	#deprecated.	"Insecure - see MSDN"
+memset: dest c: c count: count
+	"Fill a block of memory.
+				void *memset( void *dest, int c, size_t count );
+	"
+
+	<cdecl: sdword memset lpvoid sdword intptr>
+	#deprecated. "Not used. If required define KernelLibrary FillMemory/RtlFillMemory"
 	^self invalidCall: _failureCode!
 
-memmove: dest src: src count: count
-	<cdecl: void* memmove void* void* intptr>
-	#deprecated.	"Insecure - see MSDN"
+strpbrk: string strCharSet: strCharSet
+	"Answer a pointer to the first occurrence of any of the characters
+	from the <String>, strCharSet, in the <String>, string.
+
+		char *strpbrk( const char *string, const char *strCharSet 
+	"
+
+	<cdecl: char* strpbrk char* char*>
+	#deprecated. "Unused. CRT string functions are generally not useful because they stop at null terminators."
 	^self invalidCall: _failureCode!
 
-modf: aFloat intptr: intFloatOut
-	<cdecl: double modf double lpvoid>
-	#deprecated.
-	^self invalidCall: _failureCode!
+wcsncmp: string1 string2: string2 count: count
+	"Answer the order between the <Utf16String> arguments, string1 and string2,
+	considering up to <integer>, count, characters.
 
-pow: xFloat y: yFloat
-	<cdecl: double pow double double>
-	#deprecated.
-	^self invalidCall: _failureCode!
+		int wcscmp( const wchar_t *string1, const wchar_t *string2, size_t count );
+	"
 
-sin: aFloat
-	<cdecl: double sin double>
-	#deprecated.
-	^self invalidCall: _failureCode!
-
-sqrt: aFloat
-	<cdecl: double sqrt double>
-	#deprecated.
-	^self invalidCall: _failureCode!
-
-strcat: strDestination strSource: strSource
-	<cdecl: lpstr strcat lpstr lpstr>
-	#deprecated.	"This function may cause buffer overruns so is insecure. Use strcat_s instead."
-	^self invalidCall: _failureCode!
-
-strerror: errno
-	<cdecl: lpstr strerror sdword>
-	#deprecated.	"Insecure - see MSDN"
-	^self invalidCall: _failureCode!
-
-strncmp: string1 string2: string2 count: count
-	<cdecl: sdword strncmp lpstr lpstr intptr>
-	#deprecated.	"Smalltalk strings can contain embedded nulls, so CRT string processing functions are not as useful as they might be."
-	^self invalidCall: _failureCode!
-
-strncpy: strDest strSource: strSource count: count
-	<cdecl: lpvoid strncpy lpvoid lpvoid intptr>
-	#deprecated.	"Insecure - see MSDN"
-	^self invalidCall: _failureCode!
-
-tan: aFloat
-	<cdecl: double tan double>
-	#deprecated.
-	^self invalidCall: _failureCode!
-
-thread_chmod: aFilenameString pmode: aModeInteger
-	<overlap cdecl: sdword _chmod lpstr sdword>
-	#deprecated. "Use CRTLibraryNonBlocking>>chmod:pmode:"
-	^self invalidCall: _failureCode!
-
-thread_errno
-	<overlap cdecl: sdword _errno>
-	#deprecated. "Use CRTLibraryNonBlocking>>errno"
+	<cdecl: sdword wcsncmp lpwstr lpwstr intptr>
+	#deprecated. "Unused. CRT string functions are generally not useful because they stop at null terminators."
 	^self invalidCall: _failureCode! !
-!OS.CRTLibrary categoriesFor: #_controlfp:mask:!CRT functions-floating point support!public! !
-!OS.CRTLibrary categoriesFor: #_ecvt:count:dec:sign:!CRT functions-floating point support!public! !
-!OS.CRTLibrary categoriesFor: #_eof:!CRT functions-file handling!public! !
-!OS.CRTLibrary categoriesFor: #_filelength:!CRT functions-file handling!public! !
-!OS.CRTLibrary categoriesFor: #_finite:!CRT functions-floating point support!public! !
-!OS.CRTLibrary categoriesFor: #_fpclass:!CRT functions-floating point support!public! !
-!OS.CRTLibrary categoriesFor: #_gcvt:count:buffer:!CRT functions-floating point support!public! !
-!OS.CRTLibrary categoriesFor: #_gcvt_s:bufferSize:value:digits:!CRT functions-floating point support!public! !
-!OS.CRTLibrary categoriesFor: #_i64toa:string:radix:!CRT functions-data conversion!public! !
-!OS.CRTLibrary categoriesFor: #_logb:!CRT functions-floating point support!public! !
-!OS.CRTLibrary categoriesFor: #_ltoa:string:radix:!CRT functions-data conversion!public! !
-!OS.CRTLibrary categoriesFor: #_makepath:drive:dir:fname:ext:!CRT functions-file handling!public! !
-!OS.CRTLibrary categoriesFor: #_putenv:!CRT functions-process and environment control!public! !
-!OS.CRTLibrary categoriesFor: #_rotl:shift:!CRT functions-bit manipulation!public! !
-!OS.CRTLibrary categoriesFor: #_rotr:shift:!CRT functions-bit manipulation!public! !
-!OS.CRTLibrary categoriesFor: #_splitpath:drive:dir:fname:ext:!CRT functions-file handling!public! !
-!OS.CRTLibrary categoriesFor: #_stricoll:string2:!CRT functions-string manipulation!public! !
-!OS.CRTLibrary categoriesFor: #acos:!CRT functions-floating point support!public! !
-!OS.CRTLibrary categoriesFor: #asin:!CRT functions-floating point support!public! !
-!OS.CRTLibrary categoriesFor: #atan:!CRT functions-floating point support!public! !
-!OS.CRTLibrary categoriesFor: #atan:x:!CRT functions-floating point support!public! !
-!OS.CRTLibrary categoriesFor: #ceil:!CRT functions-floating point support!public! !
-!OS.CRTLibrary categoriesFor: #chmod:pmode:!CRT functions-file handling!public! !
-!OS.CRTLibrary categoriesFor: #cos:!CRT functions-floating point support!public! !
-!OS.CRTLibrary categoriesFor: #exp:!CRT functions-floating point support!public! !
-!OS.CRTLibrary categoriesFor: #fabs:!CRT functions-floating point support!public! !
-!OS.CRTLibrary categoriesFor: #floor:!CRT functions-floating point support!public! !
-!OS.CRTLibrary categoriesFor: #fopen:mode:!CRT functions-stream I/O!public! !
-!OS.CRTLibrary categoriesFor: #fopen_s:filename:mode:!CRT functions-stream I/O!public! !
-!OS.CRTLibrary categoriesFor: #fread:size:count:stream:!CRT functions-stream I/O!public! !
-!OS.CRTLibrary categoriesFor: #freopen:mode:stream:!CRT functions-stream I/O!public! !
-!OS.CRTLibrary categoriesFor: #frexp:expptr:!CRT functions-floating point support!public! !
-!OS.CRTLibrary categoriesFor: #fseek:offset:origin:!CRT functions-stream I/O!public! !
-!OS.CRTLibrary categoriesFor: #ftell:!CRT functions-stream I/O!public! !
-!OS.CRTLibrary categoriesFor: #getenv:!CRT functions-process and environment control!public! !
-!OS.CRTLibrary categoriesFor: #iswspace:!CRT functions-character classification!public! !
-!OS.CRTLibrary categoriesFor: #ldexp:exp:!CRT functions-floating point support!public! !
-!OS.CRTLibrary categoriesFor: #log:!CRT functions-floating point support!public! !
-!OS.CRTLibrary categoriesFor: #log10:!CRT functions-floating point support!public! !
-!OS.CRTLibrary categoriesFor: #log2:!CRT functions-floating point support!public! !
-!OS.CRTLibrary categoriesFor: #memcpy:src:count:!CRT functions-buffer manipulation!public! !
-!OS.CRTLibrary categoriesFor: #memmove:src:count:!CRT functions-buffer manipulation!public! !
-!OS.CRTLibrary categoriesFor: #modf:intptr:!CRT functions-floating point support!public! !
-!OS.CRTLibrary categoriesFor: #pow:y:!CRT functions-floating point support!public! !
-!OS.CRTLibrary categoriesFor: #sin:!CRT functions-floating point support!public! !
-!OS.CRTLibrary categoriesFor: #sqrt:!CRT functions-floating point support!public! !
-!OS.CRTLibrary categoriesFor: #strcat:strSource:!CRT functions-string manipulation!public! !
-!OS.CRTLibrary categoriesFor: #strerror:!CRT functions-string manipulation!public! !
-!OS.CRTLibrary categoriesFor: #strncmp:string2:count:!CRT functions-string manipulation!public! !
-!OS.CRTLibrary categoriesFor: #strncpy:strSource:count:!CRT functions-string manipulation!public! !
-!OS.CRTLibrary categoriesFor: #tan:!CRT functions-floating point support!public! !
-!OS.CRTLibrary categoriesFor: #thread_chmod:pmode:!CRT functions-file handling!public! !
-!OS.CRTLibrary categoriesFor: #thread_errno!CRT functions-process and environment control!public! !
+!OS.CRTLibrary categoriesFor: #__iscsym:!CRT functions-character classification!public! !
+!OS.CRTLibrary categoriesFor: #__iscsymf:!CRT functions-character classification!public! !
+!OS.CRTLibrary categoriesFor: #_chdir:!CRT functions-directory control!public! !
+!OS.CRTLibrary categoriesFor: #_chmod:pmode:!CRT functions-file handling!public! !
+!OS.CRTLibrary categoriesFor: #_spawnvp:cmdname:argv:!CRT functions-process and environment control!public! !
+!OS.CRTLibrary categoriesFor: #_strnicmp:string2:count:!CRT functions-string manipulation!public! !
+!OS.CRTLibrary categoriesFor: #_strrev:!CRT functions-string manipulation!public! !
+!OS.CRTLibrary categoriesFor: #_wgetcwd:maxlen:!CRT functions-directory control!public! !
+!OS.CRTLibrary categoriesFor: #iswcntrl:!CRT functions-character classification!public! !
+!OS.CRTLibrary categoriesFor: #iswgraph:!CRT functions-character classification!public! !
+!OS.CRTLibrary categoriesFor: #iswprint:!CRT functions-character classification!public! !
+!OS.CRTLibrary categoriesFor: #iswpunct:!CRT functions-character classification!public! !
+!OS.CRTLibrary categoriesFor: #memset:c:count:!CRT functions-buffer manipulation!public! !
+!OS.CRTLibrary categoriesFor: #strpbrk:strCharSet:!CRT functions-string manipulation!public! !
+!OS.CRTLibrary categoriesFor: #wcsncmp:string2:count:!CRT functions-string manipulation!public! !
 
 !OS.KernelLibrary methodsFor!
 
@@ -1304,6 +1101,32 @@ setFilePointer: aHandle lDistanceToMove: loInteger lpDistanceToMoveHigh: anAddre
 !OS.KernelLibrary categoriesFor: #lstrcmp:lpString2:!public!win32 functions-string manipulation! !
 !OS.KernelLibrary categoriesFor: #lstrcmpi:lpString2:!public!win32 functions-string manipulation! !
 !OS.KernelLibrary categoriesFor: #setFilePointer:lDistanceToMove:lpDistanceToMoveHigh:dwMoveMethod:!public!win32 functions-file management! !
+
+!OS.UserLibrary methodsFor!
+
+isCharAlpha: aCharacter
+	<stdcall: bool IsCharAlphaW char>
+	#deprecated. "Does not yield Unicode compliant results."
+	^self invalidCall: _failureCode!
+
+isCharAlphaNumeric: aCharacter
+	<stdcall: bool IsCharAlphaNumericW char>
+	#deprecated.	"Does not yield Unicode compliant results."
+	^self invalidCall: _failureCode!
+
+isCharLower: aCharacter
+	<stdcall: bool IsCharLowerW char>
+	#deprecated.	"Does not yield Unicode compliant results."
+	^self invalidCall: _failureCode!
+
+isCharUpper: aCharacter
+	<stdcall: bool IsCharUpperW char>
+	#deprecated. "Does not yield Unicode compliant results."
+	^self invalidCall: _failureCode! !
+!OS.UserLibrary categoriesFor: #isCharAlpha:!public!win32 functions-string manipulation! !
+!OS.UserLibrary categoriesFor: #isCharAlphaNumeric:!public!win32 functions-string manipulation! !
+!OS.UserLibrary categoriesFor: #isCharLower:!public!win32 functions-string manipulation! !
+!OS.UserLibrary categoriesFor: #isCharUpper:!public!win32 functions-string manipulation! !
 
 !OS.WindowsLocale methodsFor!
 

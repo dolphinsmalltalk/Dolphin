@@ -15,10 +15,6 @@ _errno
 	<overlap cdecl: void* _errno>
 	^self invalidCall: _failureCode!
 
-chmod: aFilenameString pmode: aModeInteger
-	<overlap cdecl: sdword _chmod lpstr sdword>
-	^self invalidCall: _failureCode!
-
 fgetc: aFILE
 	<overlap cdecl: sdword fgetc handle>
 	^self invalidCall: _failureCode!
@@ -39,7 +35,6 @@ fread_s: buffer bufferSize: bufsizeInteger elementSize: elemSizeInteger count: c
 	<overlap cdecl: sdword fread_s lpvoid intptr intptr intptr handle>
 	^self invalidCall: _failureCode! !
 !OS.CRTLibraryNonBlocking categoriesFor: #_errno!CRT functions-process and environment control!public! !
-!OS.CRTLibraryNonBlocking categoriesFor: #chmod:pmode:!CRT functions-file handling!public! !
 !OS.CRTLibraryNonBlocking categoriesFor: #fgetc:!CRT functions-stream I/O!public! !
 !OS.CRTLibraryNonBlocking categoriesFor: #fgets:n:stream:!CRT functions-stream I/O!public! !
 !OS.CRTLibraryNonBlocking categoriesFor: #fgetwc:!CRT functions-stream I/O!public! !

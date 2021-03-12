@@ -31,7 +31,7 @@ argumentCount
 	len := self basicSize.
 	len == 0 ifTrue: [^0].
 	ch := self at: 1.
-	^(ch isLetter or: [ch == $_])
+	^(ch isEnglishLetter or: [ch == $_])
 		ifTrue: 
 			[self
 				occurrencesOf: $:

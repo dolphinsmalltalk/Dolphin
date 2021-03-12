@@ -52,7 +52,21 @@ newNumericArray: anInteger
 	^self newCollection: ((1 to: anInteger) collect: [:each | Character digitValue: each])!
 
 reverseTestCases
-	^#(#('' '') #('a' 'a') #('ab' 'ba') #('abc' 'cba') #('oña' 'año'))!
+	^{#('' '').
+		#('a' 'a').
+		#('ab' 'ba').
+		#('abc' 'cba').
+		#('oña' 'año').
+		{String
+				with: $a
+				with: $b
+				with: $\0
+				with: $c.
+			String
+				with: $c
+				with: $\0
+				with: $b
+				with: $a}}!
 
 testAfter
 	self afterTestCases do: 
@@ -613,7 +627,7 @@ testRefersToLiteral
 	self deny: (str refersToLiteral: 'ab')!
 
 testReverse
-	"Tests reversing a variety of 1, 2, 3 and 4 byte encodings"
+	"Tests reversing a variety of 1, 2, 3 and 4 byte encodings, and with embedded nulls"
 
 	super testReverse.
 	self reverseTestCases do: 

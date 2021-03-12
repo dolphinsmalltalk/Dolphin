@@ -113,6 +113,8 @@ copyFile: fromString lpNewFileName: toString bfailIfExists: fail
 	^self invalidCall: _failureCode!
 
 copyMemory: destination source: source length: length
+	"CopyMemory is a macro defined to RtlCopyMemory, which in turn is a macro defined to memcpy"
+
 	| errno |
 	(errno := CRTLibrary default
 				memcpy_s: destination
@@ -583,6 +585,10 @@ getCPInfoExW: codepage dwFlags: dwFlags lpCPInfoEx: lpCPInfoEx
 	<stdcall: bool GetCPInfoExW dword dword CPINFOEXW*>
 	^self invalidCall: _failureCode!
 
+getCurrentDirectory: nBufferLength lpBuffer: lpBuffer
+	<stdcall: dword GetCurrentDirectoryW dword lpwstr>
+	^self invalidCall: _failureCode!
+
 getCurrentProcess
 	"Answer handle of the Dolphin process.
 
@@ -817,6 +823,10 @@ getStdHandle: nStdHandle
 		);"
 
 	<stdcall: handle GetStdHandle dword>
+	^self invalidCall: _failureCode!
+
+getStringType: dwInfoType lpSrcStr: lpSrcStr cchSrc: cchSrc lpCharType: lpCharType
+	<stdcall: bool GetStringTypeW dword lpwstr sdword word*>
 	^self invalidCall: _failureCode!
 
 getSystemDefaultLCID
@@ -1504,6 +1514,10 @@ setConsoleTitle: lpConsoleTitle
 	<stdcall: bool SetConsoleTitleW lpwstr>
 	^self invalidCall: _failureCode!
 
+setCurrentDirectory: lpPathName
+	<stdcall: bool SetCurrentDirectoryW lpwstr>
+	^self invalidCall: _failureCode!
+
 setEndOfFile: anExternalHandle
 	<stdcall: bool SetEndOfFile handle>
 	^self invalidCall: _failureCode!
@@ -1527,6 +1541,15 @@ setEvent: hEvent
 			HANDLE hEvent);"
 
 	<stdcall: bool SetEvent handle>
+	^self invalidCall: _failureCode!
+
+setFileAttributes: aFileName value: attributes
+	"Set the attributes for the specified file or directory. 
+		BOOL SetFileAttributes(
+			LPCWSTR lpFileName,		// file name
+			DWORD dwFileAttributes		// attributes );"
+
+	<stdcall: bool SetFileAttributesW lpwstr dword>
 	^self invalidCall: _failureCode!
 
 setFilePointerEx: hfile liDistanceToMove: liDistanceToMove lpNewFilePointer: lpNewFilePointer dwMoveMethod: dwMoveMethod
@@ -1853,6 +1876,7 @@ zeroMemory: pvDest length: cBytes
 !OS.KernelLibrary categoriesFor: #getComputerName:nSize:!public!win32 functions-system information! !
 !OS.KernelLibrary categoriesFor: #getConsoleTitle:nSize:!**auto generated**!public!win32 functions-console! !
 !OS.KernelLibrary categoriesFor: #getCPInfoExW:dwFlags:lpCPInfoEx:!**auto generated**!public!win32 functions-national language support! !
+!OS.KernelLibrary categoriesFor: #getCurrentDirectory:lpBuffer:!public!win32 functions-directory management! !
 !OS.KernelLibrary categoriesFor: #getCurrentProcess!public!win32 functions-process and thread! !
 !OS.KernelLibrary categoriesFor: #getCurrentThread!public!win32 functions-process and thread! !
 !OS.KernelLibrary categoriesFor: #getCurrentThreadId!public!win32 functions-process and thread! !
@@ -1877,6 +1901,7 @@ zeroMemory: pvDest length: cBytes
 !OS.KernelLibrary categoriesFor: #getProcessHeap!public!win32 functions-memory management! !
 !OS.KernelLibrary categoriesFor: #getShortPathName:lpszShortPath:cchBuffer:!public!win32 functions-file management! !
 !OS.KernelLibrary categoriesFor: #getStdHandle:!public!win32 functions-console! !
+!OS.KernelLibrary categoriesFor: #getStringType:lpSrcStr:cchSrc:lpCharType:!**auto generated**!public!win32 functions-national language support! !
 !OS.KernelLibrary categoriesFor: #getSystemDefaultLCID!public!win32 functions-national language support! !
 !OS.KernelLibrary categoriesFor: #getSystemDirectory:uSize:!public!win32 functions-system information! !
 !OS.KernelLibrary categoriesFor: #getSystemTime:!**auto generated**!public!win32 functions-date and time! !
@@ -1943,9 +1968,11 @@ zeroMemory: pvDest length: cBytes
 !OS.KernelLibrary categoriesFor: #setConsoleCtrlHandler:add:!public!win32 functions-console! !
 !OS.KernelLibrary categoriesFor: #setConsoleOutputCP:!**auto generated**!public!win32 functions-console! !
 !OS.KernelLibrary categoriesFor: #setConsoleTitle:!**auto generated**!public! !
+!OS.KernelLibrary categoriesFor: #setCurrentDirectory:!public!win32 functions-directory management! !
 !OS.KernelLibrary categoriesFor: #setEndOfFile:!public!win32 functions-file management! !
 !OS.KernelLibrary categoriesFor: #setEnvironmentVariable:lpValue:!public!win32 functions-process and thread! !
 !OS.KernelLibrary categoriesFor: #setEvent:!**auto generated**!public!win32 functions-synchronization! !
+!OS.KernelLibrary categoriesFor: #setFileAttributes:value:!public! !
 !OS.KernelLibrary categoriesFor: #setFilePointerEx:liDistanceToMove:lpNewFilePointer:dwMoveMethod:!**auto generated**!public!win32 functions-file management! !
 !OS.KernelLibrary categoriesFor: #setLastError:!public!win32 functions-error! !
 !OS.KernelLibrary categoriesFor: #setStdHandle:hHandle:!public!win32 functions-console! !

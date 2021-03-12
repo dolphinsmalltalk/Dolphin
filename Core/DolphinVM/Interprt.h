@@ -604,6 +604,7 @@ public:
 	static void PushCharacter(Oop* const sp, char32_t codePoint);
 
 	static Oop* primitiveNewCharacter(Oop * const sp, primargcount_t);
+	static Oop* primitiveCharacterClassify(Oop* const sp, primargcount_t);
 
 	///////////////////////////////////////////////////////////////////////////
 	// String Class Primitives

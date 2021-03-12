@@ -501,7 +501,7 @@ testLargeAddress
 	self assert: value first equals: expected!
 
 testOverlappedErrno
-	self assert: (OS.CRTLibrary nonblocking chmod: '' pmode: 0) < 0.
+	self assert: (OS.CRTLibrary nonblocking _chmod: '' pmode: 0) < 0.
 	self assert: Processor activeProcess errno equals: 2!
 
 testOverlappedLastError

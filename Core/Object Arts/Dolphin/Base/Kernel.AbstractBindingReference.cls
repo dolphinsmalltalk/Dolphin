@@ -447,8 +447,9 @@ isValidUnqualifiedName: aString
 			[| first |
 			first := aString at: 1.
 			"We allow identifiers to start with underscores or any letter. We don't insist on uppercase letters as this is a convention, not a syntax restriction."
-			((first == $_ and: [size > 1]) or: [first isLetter])
-				and: [aString allSatisfy: [:each | each isAlphaNumeric or: [each == $_]]]]!
+			((first == $_ and: [size > 1]) or: [first isEnglishLetter]) and: 
+					[aString
+						allSatisfy: [:each | 'ABCDEFGHIJKLMNOPQRSTUVWXYZ_abcdefghijklmnopqrstuvwxyz0123456789' includes: each]]]!
 
 new
 	^self pathString: ''!

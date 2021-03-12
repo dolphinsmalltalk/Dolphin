@@ -313,46 +313,6 @@ inSendMessage
 	<stdcall: bool InSendMessage>
 	^self invalidCall: _failureCode!
 
-isCharAlpha: aCharacter
-	"Answer whether a character is an alphabetic character. This will dependent on the semantics of the 
-	language selected by the user during setup or by using Control Panel.
-		BOOL IsCharAlpha(
-			TCHAR  ch 	// character to test  
-		);"
-
-	<stdcall: bool IsCharAlphaW char>
-	^self invalidCall: _failureCode!
-
-isCharAlphaNumeric: aCharacter
-	"Answer whether a character is an alphabetic character or a digit. This will dependent on the 
-	semantics of the language selected by the user during setup or by using Control Panel.
-		BOOL IsCharAlphaNumeric(
-			TCHAR  ch 	// character to test  
-		);"
-
-	<stdcall: bool IsCharAlphaNumericW char>
-	^self invalidCall: _failureCode!
-
-isCharLower: aCharacter
-	"Answer whether a character is a lowercase letter. This will dependent on the semantics of the 
-	language selected by the user during setup or by using Control Panel.
-		BOOL IsCharLower(
-			TCHAR  ch 	// character to test  
-		);"
-
-	<stdcall: bool IsCharLowerW char>
-	^self invalidCall: _failureCode!
-
-isCharUpper: aCharacter
-	"Answer whether a character is an uppercase letter. This will dependent on the semantics of 
-	the language selected by the user during setup or by using Control Panel.
-		BOOL IsCharUpper(
-			TCHAR  ch 	// character to test  
-		);"
-
-	<stdcall: bool IsCharUpperW char>
-	^self invalidCall: _failureCode!
-
 isWindow: hWnd
 	"Answer whether the window handle, hWnd, is currently valid"
 
@@ -780,10 +740,6 @@ vkKeyScan: aChar
 !OS.UserLibrary categoriesFor: #getSysColorBrush:!public!win32 functions-cursor! !
 !OS.UserLibrary categoriesFor: #getSystemMetrics:!public!win32 functions-system information! !
 !OS.UserLibrary categoriesFor: #inSendMessage!public!win32 functions-message and message queue! !
-!OS.UserLibrary categoriesFor: #isCharAlpha:!public!win32 functions-string manipulation! !
-!OS.UserLibrary categoriesFor: #isCharAlphaNumeric:!public!win32 functions-string manipulation! !
-!OS.UserLibrary categoriesFor: #isCharLower:!public!win32 functions-string manipulation! !
-!OS.UserLibrary categoriesFor: #isCharUpper:!public!win32 functions-string manipulation! !
 !OS.UserLibrary categoriesFor: #isWindow:!public!win32 functions-window! !
 !OS.UserLibrary categoriesFor: #isWindowEnabled:!public!win32 functions-window! !
 !OS.UserLibrary categoriesFor: #isWindowVisible:!public!win32 functions-window! !

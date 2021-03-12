@@ -1399,8 +1399,8 @@ isValidIdentifier: aString
 isValidIdentifierChar: aCharacter 
 	^(self isValidInitialIdentifierChar: aCharacter) or: [aCharacter isDigit]!
 
-isValidInitialIdentifierChar: aCharacter 
-	^aCharacter == $_ or: [aCharacter isLetter]!
+isValidInitialIdentifierChar: aCharacter
+	^aCharacter == $_ or: [aCharacter isEnglishLetter]!
 
 moveClass: aClass toSuperclass: aSuperclass
 	"Move aClass to be subclassed from aSuperclass."

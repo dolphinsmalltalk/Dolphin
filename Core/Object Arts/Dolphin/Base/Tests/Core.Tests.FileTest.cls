@@ -409,6 +409,15 @@ testRemovePathDelimiter
 			self assert: (File removePathDelimiter: each) equals: each.
 			self assert: (File removePathDelimiter: each , '\') equals: each]!
 
+testSetReadOnly
+	| temp |
+	temp := File temporaryFilename.
+	self assert: (File isWriteable: temp).
+	File isWriteable: temp set: false.
+	self deny: (File isWriteable: temp).
+	File isWriteable: temp set: true.
+	File delete: temp!
+
 testShortPath
 	| sysdir tmpDir tmpFile |
 	"This test will only work if short filenames are enabled for the volume on which temp files are stored, and we cannot guarantee this is the case on build machines, nor is there an API that provides a definite answer as to whether short filenames are enabled on a particular volume."
@@ -579,6 +588,7 @@ testSplitStemFrom
 !Core.Tests.FileTest categoriesFor: #testRemoveDirectory!public!unit tests! !
 !Core.Tests.FileTest categoriesFor: #testRemoveExtension!public!unit tests! !
 !Core.Tests.FileTest categoriesFor: #testRemovePathDelimiter!public!unit tests! !
+!Core.Tests.FileTest categoriesFor: #testSetReadOnly!public!unit tests! !
 !Core.Tests.FileTest categoriesFor: #testShortPath!public!unit tests! !
 !Core.Tests.FileTest categoriesFor: #testSniffEncoding!public!unit tests! !
 !Core.Tests.FileTest categoriesFor: #testSplitDriveFrom!public!unit tests! !

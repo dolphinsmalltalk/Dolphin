@@ -24,11 +24,7 @@ classesReferencing
 	^Smalltalk allClasses select: [:c | c allSharedPools includes: self]!
 
 isValidKey: aString
-	^aString notEmpty and: 
-			[| initial |
-			initial := aString first.
-			(initial == $_ or: [initial isLetter])
-				and: [aString allSatisfy: [:each | each == $_ or: [each isAlphaNumeric]]]]!
+	^SharedPool isValidKey: aString!
 
 keyString: anObject
 	| answer |

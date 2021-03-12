@@ -44,8 +44,9 @@ isValidKey: aString
 	^aString notEmpty and: 
 			[| initial |
 			initial := aString first.
-			(initial == $_ or: [initial isLetter])
-				and: [aString allSatisfy: [:each | each == $_ or: [each isAlphaNumeric]]]]!
+			(initial == $_ or: [initial isEnglishLetter]) and: 
+					[aString
+						allSatisfy: [:each | '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ_abcdefghijklmnopqrstuvwxyz' includes: each]]]!
 
 keyString: anObject
 	| answer |

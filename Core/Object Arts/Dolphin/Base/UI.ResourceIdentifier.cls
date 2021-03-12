@@ -285,7 +285,7 @@ selectorFromName: aString
 			[:each |
 			each == $\x20
 				ifTrue: [selector nextPut: $_]
-				ifFalse: [each isAlphaNumeric ifTrue: [selector nextPut: each]]].
+				ifFalse: [('ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789' includes: each) ifTrue: [selector nextPut: each]]].
 	^selector contents asSymbol!
 
 stbConvertFrom: anSTBClassFormat 

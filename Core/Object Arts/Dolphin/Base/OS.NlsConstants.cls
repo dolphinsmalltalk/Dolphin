@@ -32,6 +32,9 @@ Kernel.SharedPool subclass: #'OS.NlsConstants'
 		'CSTR_EQUAL' -> 16r2.
 		'CSTR_GREATER_THAN' -> 16r3.
 		'CSTR_LESS_THAN' -> 16r1.
+		'CT_CTYPE1' -> 16r1.
+		'CT_CTYPE2' -> 16r2.
+		'CT_CTYPE3' -> 16r4.
 		'DATE_LONGDATE' -> 16r2.
 		'DATE_MONTHDAY' -> 16r80.
 		'DATE_SHORTDATE' -> 16r1.

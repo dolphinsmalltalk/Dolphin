@@ -3,7 +3,7 @@
 Core.Tests.DolphinTest subclass: #'Core.Tests.CharacterTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #()
+	imports: #(#{OS.NlsConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Core.Tests.CharacterTest guid: (Core.GUID fromString: '{b5b1b518-3a55-4441-9aa3-32c87f1aedba}')!
@@ -123,6 +123,69 @@ testClassCodePoint
 			self should: [Character codePoint: (i << 16) + 16rFFFE] raise: Error.
 			self should: [Character codePoint: (i << 16) + 16rFFFF] raise: Error]!
 
+testClassify
+	"Hex uppercase letters"
+
+	($A to: $F)
+		do: [:each | self assert: (each classify: CT_CTYPE1) equals: ##(C1_DEFINED | C1_ALPHA | C1_UPPER | C1_XDIGIT)].
+	"Remaining uppercase letters"
+	($G to: $Z)
+		do: [:each | self assert: (each classify: CT_CTYPE1) equals: ##(C1_DEFINED | C1_ALPHA | C1_UPPER)].
+	"Hex lowercase letters"
+	($a to: $f)
+		do: [:each | self assert: (each classify: CT_CTYPE1) equals: ##(C1_DEFINED | C1_ALPHA | C1_LOWER | C1_XDIGIT)].
+	"Remaining Lowercase letters, lowercase greek letters, some others"
+	($g to: $z) , 'αβγδεζηθικλμνξοπρςστυφχψω' , 'ąⱡîɋṹẵ'
+		do: [:each | self assert: (each classify: CT_CTYPE1) equals: ##(C1_DEFINED | C1_ALPHA | C1_LOWER)].
+	"Some Arabic letters"
+	'ٮٯٱٲٳٴٵٶٷٸٹٺٻټٽپٿڀځڂڃڄڅچڇڈډڊڋڌڍڎڏڐڑڒړڔڕږڗژڙښڛڜڝڞڟڠڡڢڣڤڥڦڧڨکڪګڬڭڮگڰڱڲڳڴڵڶڷڸڹںڻڼڽھڿۀہۂۃۄۅۆۇۈۉۊۋیۍێۏېۑےۓە'
+		do: [:each | self assert: (each classify: CT_CTYPE1) equals: ##(C1_DEFINED | C1_ALPHA)].
+	"Arabic Letter Superscript Alef"
+	self assert: ($\x670 classify: 1) equals: C1_DEFINED.
+
+	"Digits"
+	($0 to: $9)
+		do: [:each | self assert: (each classify: CT_CTYPE1) equals: ##(C1_DEFINED | C1_DIGIT | C1_XDIGIT)].
+	"Arabic-indic digits"
+	($\x660 to: $\x669)
+		do: [:each | self assert: (each classify: CT_CTYPE1) equals: ##(C1_DEFINED | C1_DIGIT)].
+
+	"Simple Control chars"
+	($\0 to: $\b) , ($\xE to: $\x1F)
+		do: [:each | self assert: (each classify: CT_CTYPE1) equals: ##(C1_DEFINED | C1_CNTRL)].
+
+	"Space - blank, spacing, not control"
+	self assert: ($\x20 classify: CT_CTYPE1) equals: ##(C1_DEFINED | C1_BLANK | C1_SPACE).
+
+	"Tab - control, blank, spacing"
+	#($\t)
+		do: [:each | self assert: (each classify: CT_CTYPE1) equals: ##(C1_DEFINED | C1_CNTRL | C1_BLANK | C1_SPACE)].
+
+	"Other spaces"
+	#($\n $\v $\f $\r)
+		do: [:each | self assert: (each classify: CT_CTYPE1) equals: ##(C1_DEFINED | C1_CNTRL | C1_SPACE)].
+
+	"Punctuation, ASCII and a few others, e.g. Greek question mark, French speech marks, section mark, runic single, triple danda, arabic percent sign"
+	#($!! $" $# $$ $% $& $' $( $) $* $+ $, $- $. $/ $: $; $< $= $> $? $@ $\x37E $« $§ $\x16EB $\xAA5F $\x66A)
+		do: [:each | self assert: (each classify: CT_CTYPE1) equals: ##(C1_DEFINED | C1_PUNCT)].
+
+	"Unicode Left-to-right mark - a control character"
+	self assert: ((Character codePoint: 16r200E) classify: 1) equals: ##(C1_DEFINED | C1_CNTRL).
+
+	"Lowercase greek letters, some lowercase cyrillic"
+	'αβγδεζηθικλμνξοπρςστυφχψω' , 'кракозябры'
+		do: [:each | self assert: (each classify: CT_CTYPE1) equals: ##(C1_DEFINED | C1_ALPHA | C1_LOWER)].
+
+	"Kanji"
+	'文字化け'
+		do: [:each | self assert: (each classify: CT_CTYPE1) equals: ##(C1_DEFINED | C1_ALPHA)].
+
+	"Emoji"
+	self assert: (Character dolphin classify: 1) equals: C1_DEFINED.
+
+	"Unassigned"
+	self assert: ($\x8D0 classify: 1) equals: 0!
+
 testClassNewCode
 	| ch ch2 originalMethod testMethod |
 	ch := Character newCode: Character dolphin code.
@@ -222,6 +285,40 @@ testIsDigit
 	self deny: Character null isDigit.
 	self deny: (Character codePoint: 16r1F37B) isDigit!
 
+testIsGraph
+	"Graph characters are non-blank printable characters."
+
+	"Control characters"
+	self deny: $\0 isGraph.
+	self deny: $\b isGraph.
+	self deny: $\x7 isGraph.
+	"Blank control characters"
+	self deny: $\f isGraph.
+	self deny: $\t isGraph.
+	self deny: $\v isGraph.
+	self deny: $\n isGraph.
+	"Space"
+	self deny: $\x20 isGraph.
+	"Punctuation"
+	self assert: $. isGraph.
+	"Alpha"
+	self assert: $a isGraph.
+	self assert: $Z isGraph.
+	"Digits"
+	self assert: $0 isGraph.
+	self assert: $9 isGraph.
+	"Left-to-right mark - a control character"
+	self deny: (Character codePoint: 16r200E) isGraph.
+	"Greek"
+	self assert: (Character codePoint: 16r3B4) isGraph.
+	self assert: (Character codePoint: 16r37E) isGraph.
+	"Arabic indic digit zero"
+	self assert: (Character codePoint: 16r660) isGraph.
+	"Arabic percent sign"
+	self assert: (Character codePoint: 16r066A) isGraph.
+	"Emoji"
+	self assert: Character dolphin isGraph!
+
 testIsHexDigit
 	| dolphin |
 	#($0 $1 $2 $3 $4 $5 $6 $7 $8 $9 $A $B $C $D $E $F) do: [:each | self assert: each isHexDigit].
@@ -241,6 +338,7 @@ testIsLowercase
 	self deny: $A isLowerCase.
 	self deny: $0 isLowerCase.
 	self deny: $\0 isLowerCase.
+	self deny: Character eof isLowercase.
 	"Left-to-right mark"
 	self deny: (Character codePoint: 16r200E) isLowerCase.
 	"Turkish, but 8-bit"
@@ -255,29 +353,77 @@ testIsLowercase
 	"Thai 7"
 	self deny: (Character codePoint: 16rE57) isLowercase.
 	"Outside BMP"
-	self deny: Character dolphin isLowercase!
+	self deny: Character dolphin isLowercase.
+	self deny: '𪝿' first isLowercase.
+	self deny: '𐒽' first isLowercase!
+
+testIsPrintable
+	"Control characters"
+
+	self deny: $\0 isPrintable.
+	self deny: $\b isPrintable.
+	self deny: $\a isPrintable.
+	self deny: Character eof isPrintable.
+	"Blanks that are also considered control characters, but are printable"
+	#($\f $\t $\v $\n) do: [:each | self assert: each isPrintable].
+	"Space"
+	self assert: $\x20 isPrintable.
+	"Punctuation"
+	self assert: $. isPrintable.
+	"Alpha"
+	($A to: $Z) , ($a to: $z) do: [:each | self assert: each isPrintable].
+	"Digits"
+	($0 to: $9) do: [:each | self deny: each isPunctuation].
+	"Left-to-right mark - a control character"
+	self deny: (Character codePoint: 16r200E) isPrintable.
+	"Greek"
+	self assert: (Character codePoint: 16r3B4) isPrintable.
+	self assert: (Character codePoint: 16r37E) isPrintable.
+	"Arabic indic digit zero"
+	self assert: (Character codePoint: 16r660) isPrintable.
+	"Arabic percent sign"
+	self assert: (Character codePoint: 16r066A) isPrintable.
+	"Emoji"
+	self assert: Character dolphin isPrintable!
 
 testIsPunctuation
-	self deny: $a isPunctuation.
-	self deny: $0 isPunctuation.
+	"Letters"
+
+	($A to: $Z) , ($a to: $z) do: [:each | self deny: each isPunctuation].
+	"Control chars"
+	self deny: $\b isPunctuation.
+	self deny: $\a isPunctuation.
+	self deny: $\0 isPunctuation.
+	self deny: Character eof isPunctuation.
+	"Blanks"
+	#($\f $\t $\v $\n) do: [:each | self deny: each isPunctuation].
+	"Spaces"
+	self deny: $\x20 isPunctuation.
+	"Digits"
+	($0 to: $9) do: [:each | self deny: each isPunctuation].
+	"Punctuation"
 	self assert: $. isPunctuation.
-	"Solidus"
 	self assert: $/ isPunctuation.
 	"Left-to-right mark"
-	self deny: (Character codePoint: 16r200E) isLowerCase.
+	self deny: (Character codePoint: 16r200E) isPunctuation.
 	"Greek"
 	self deny: (Character codePoint: 16r3B4) isPunctuation.
 	self assert: (Character codePoint: 16r37E) isPunctuation.
 	"Arabic indic digit zero"
 	self deny: (Character codePoint: 16r660) isPunctuation.
 	"Arabic percent sign"
-	self assert: (Character codePoint: 16r066A) isPunctuation!
+	self assert: (Character codePoint: 16r066A) isPunctuation.
+	"Emoji"
+	self deny: Character dolphin isPunctuation!
 
 testIsUppercase
+	($A to: $Z) do: [:each | self assert: each isUppercase].
 	self deny: $a isUppercase.
-	self assert: $A isUppercase.
 	self deny: $0 isUppercase.
 	self deny: $\0 isUppercase.
+	self deny: $\x20 isUppercase.
+	self deny: $\n isUppercase.
+	self deny: $!! isUppercase.
 	"Left-to-right mark"
 	self deny: (Character codePoint: 16r200E) isLowerCase.
 	"Turkish, but 8-bit"
@@ -287,12 +433,14 @@ testIsUppercase
 	self assert: (Character codePoint: 16r0400) isUppercase.
 	self deny: (Character codePoint: 16r450) isUppercase.
 	"Greek delta"
-	self deny: (Character codePoint: 16r3B4) isUppercase.
 	self assert: (Character codePoint: 16r394) isUppercase.
+	self deny: (Character codePoint: 16r3B4) isUppercase.
 	"Thai 7"
 	self deny: (Character codePoint: 16rE57) isUpperCase.
 	"Outside BMP"
-	self deny: Character dolphin isUppercase!
+	self deny: Character dolphin isUppercase.
+	self deny: '𠃀' first isUppercase.
+	self deny: '𐓦' first isUppercase!
 
 testIsUtf16SurrogateTests
 	"Exhaustively tests:
@@ -436,6 +584,13 @@ testIsUtf8SurrogateTests
 			self assert: ch isUtf8Lead.
 			self deny: ch isUtf8Trail]!
 
+testIsWhitespace
+	"Graph characters are non-blank printable characters."
+
+	#($\x20 $\n $\r $\t $\f $\v $\x2028 $\x2029) do: [:each | self assert: each isWhitespace].
+	#($\0 $\b $a $A $0 $\x200E $\x16 $\x3B4 $\x660 $@ $\x1F42C)
+		do: [:each | self deny: each isWhitespace]!
+
 testPrintString
 	self assert: $a printString equals: '$a'.
 	self assert: $a printString equals: '$a'.
@@ -502,6 +657,7 @@ testStb
 !Core.Tests.CharacterTest categoriesFor: #testAsUtf16String!public!unit tests! !
 !Core.Tests.CharacterTest categoriesFor: #testAsUtf8String!public!unit tests! !
 !Core.Tests.CharacterTest categoriesFor: #testClassCodePoint!public!unit tests! !
+!Core.Tests.CharacterTest categoriesFor: #testClassify!public!unit tests! !
 !Core.Tests.CharacterTest categoriesFor: #testClassNewCode!public! !
 !Core.Tests.CharacterTest categoriesFor: #testCodePoint!public!unit tests! !
 !Core.Tests.CharacterTest categoriesFor: #testDigitValue!public!unit tests! !
@@ -510,12 +666,15 @@ testStb
 !Core.Tests.CharacterTest categoriesFor: #testIsAlphaNumeric!public!unit tests! !
 !Core.Tests.CharacterTest categoriesFor: #testIsControl!public!unit tests! !
 !Core.Tests.CharacterTest categoriesFor: #testIsDigit!public!unit tests! !
+!Core.Tests.CharacterTest categoriesFor: #testIsGraph!public!unit tests! !
 !Core.Tests.CharacterTest categoriesFor: #testIsHexDigit!public!unit tests! !
 !Core.Tests.CharacterTest categoriesFor: #testIsLowercase!public!unit tests! !
+!Core.Tests.CharacterTest categoriesFor: #testIsPrintable!public!unit tests! !
 !Core.Tests.CharacterTest categoriesFor: #testIsPunctuation!public!unit tests! !
 !Core.Tests.CharacterTest categoriesFor: #testIsUppercase!public!unit tests! !
 !Core.Tests.CharacterTest categoriesFor: #testIsUtf16SurrogateTests!public!unit tests! !
 !Core.Tests.CharacterTest categoriesFor: #testIsUtf8SurrogateTests!public!unit tests! !
+!Core.Tests.CharacterTest categoriesFor: #testIsWhitespace!public!unit tests! !
 !Core.Tests.CharacterTest categoriesFor: #testPrintString!public!unit tests! !
 !Core.Tests.CharacterTest categoriesFor: #testSize!public!unit tests! !
 !Core.Tests.CharacterTest categoriesFor: #testSplit!public!unit tests! !
