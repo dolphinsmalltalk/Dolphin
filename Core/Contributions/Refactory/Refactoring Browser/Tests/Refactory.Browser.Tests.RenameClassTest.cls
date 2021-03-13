@@ -87,10 +87,29 @@ testRenameClass
 	self assert: class superclass equals: newClass.
 	self assert: (class parseTreeFor: #symbolReference)
 		equals: (RBParser parseMethod: ('symbolReference
-								^<1p>' expandMacrosWith: newName asSymbol)).
+	^<1p>' expandMacrosWith: newName asSymbol)).
 	self assert: (class parseTreeFor: #reference)
 		equals: (RBParser parseMethod: ('reference
-								^<1s> new' expandMacrosWith: newName))! !
+	^<1s> new' expandMacrosWith: newName)).
+	self assert: (class parseTreeFor: #fullyQualifiedReference)
+		equals: (RBParser
+				parseMethod: ('fullyQualifiedReference
+	^<2s>.<1s> new' expandMacrosWith: newName
+						with: ClassToRename environment fullName)).
+	self assert: (class parseTreeFor: #partiallyQualifiedReference1)
+		equals: (RBParser
+				parseMethod: ('partiallyQualifiedReference1
+	^Tests.<1s> new' expandMacrosWith: newName)).
+	self assert: (class parseTreeFor: #partiallyQualifiedReference2)
+		equals: (RBParser parseMethod: ('partiallyQualifiedReference2
+	^Browser.Tests.<1s> new'
+						expandMacrosWith: newName)).
+	self assert: (class parseTreeFor: #externalReference:_:)
+		equals: (RBParser
+				parseMethod: ('externalReference: aClassToRename _: aClassToRename2
+	%<stdcall: <1s>* dummy <2s>.<1s> Tests.<1s>*>'
+						expandMacrosWith: newName
+						with: ClassToRename environment fullName))! !
 !Refactory.Browser.Tests.RenameClassTest categoriesFor: #testBadName!failure tests!public! !
 !Refactory.Browser.Tests.RenameClassTest categoriesFor: #testExistingName!failure tests!public! !
 !Refactory.Browser.Tests.RenameClassTest categoriesFor: #testMetaClassFailure!failure tests!public! !

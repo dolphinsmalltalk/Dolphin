@@ -66,10 +66,10 @@ allReferencesTo: aSymbol do: aBlock
 			refs])
 			do: aBlock!
 
-allReferencesToClass: aRBClass do: aBlock 
+allReferencesToClass: aRBClass do: aBlock
 	self allClassesDo: 
-		[:each |
-		(each whichSelectorsReferToClass: aRBClass) do: [:sel | aBlock value: (each methodFor: sel)]]!
+			[:each |
+			(each whichSelectorsReferToClass: aRBClass) do: [:sel | aBlock value: (each methodFor: sel)]]!
 
 changeClass: aRBClass
 	changedClasses at: aRBClass name put: {aRBClass nonMetaclass. aRBClass metaclass}.

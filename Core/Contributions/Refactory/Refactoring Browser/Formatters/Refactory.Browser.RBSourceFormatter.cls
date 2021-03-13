@@ -97,7 +97,7 @@ visitExternalArgTypeNode: anStExternalArgTypeNode
 			[| typeOrdinal |
 			typeOrdinal := anStExternalArgTypeNode typeOrdinal.
 			codeStream nextPutAll: (External.FunctionDescriptor nameOf: typeOrdinal type: nil)]
-		ifNotNil: [:varNode | codeStream nextPutAll: varNode name].
+		ifNotNil: [:varNode | self visitNode: varNode].
 	anStExternalArgTypeNode indirections timesRepeat: [codeStream nextPut: $*]!
 
 visitExternalCallNode: aStExternalCallNode

@@ -14,19 +14,19 @@ Refactory.Browser.RefactoryClassChange comment: ''!
 
 = aRefactoryClassChange 
 	self class = aRefactoryClassChange class ifFalse: [^false].
-	^classReference = aRefactoryClassChange classReference!
+	^self classReference = aRefactoryClassChange classReference!
 
 asUndoOperation
 	^self subclassResponsibility!
 
 changeClass
-	^classReference valueOrNil!
+	^self classReference valueOrNil!
 
 changeClass: aBehavior
 	classReference := aBehavior fullyQualifiedReference!
 
 changeClassName
-	^classReference instance asString!
+	^self classReference instance asString!
 
 changeClassName: aSymbol 
 	| wasMeta |
@@ -42,7 +42,7 @@ classReference
 	^classReference!
 
 displayClassName
-	^classReference asString!
+	^self classReference asString!
 
 executeNotifying: aBlock 
 	| undo |
@@ -53,10 +53,10 @@ executeNotifying: aBlock
 	^undo!
 
 hash
-	^classReference hash!
+	^self classReference hash!
 
 isMeta
-	^classReference isMeta!
+	^self classReference isMeta!
 
 methodSourceFor: aSymbol 
 	(self changeClass includesSelector: aSymbol) ifFalse: [^nil].

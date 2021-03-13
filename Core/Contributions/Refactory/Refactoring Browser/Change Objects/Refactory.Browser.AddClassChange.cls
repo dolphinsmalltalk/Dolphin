@@ -20,7 +20,7 @@ areSubclassCreationMessageArgumentsValid: aMessageNode
 
 asUndoOperation
 	| class |
-	class := classReference valueOrNil.
+	class := self classReference valueOrNil.
 	^class isBehavior
 		ifTrue: [self class definition: class definition]
 		ifFalse: [RemoveClassChange removeClassName: self changeClassName]!
@@ -30,8 +30,7 @@ category
 	^category!
 
 changeClassName
-	classReference ifNil: [self fillOutDefinition].
-	^classReference asString!
+	^self classReference asString!
 
 changeString
 	^'Define ' , self displayClassName!
@@ -40,6 +39,12 @@ classConstants
 	classConstants isNil ifTrue: [self fillOutDefinition].
 	classConstants isString ifTrue: [classConstants := Compiler evaluate: classConstants].
 	^classConstants!
+
+classReference
+	^classReference
+		ifNil: 
+			[self fillOutDefinition.
+			classReference]!
 
 classVariableNames
 	classVariableNames isNil ifTrue: [self fillOutDefinition].
@@ -145,7 +150,7 @@ printOn: aStream
 		nextPut: $!!!
 
 superclassName
-	classReference ifNil: [self fillOutDefinition].
+	self classReference.
 	^superclassName! !
 !Refactory.Browser.AddClassChange categoriesFor: #=!comparing!public! !
 !Refactory.Browser.AddClassChange categoriesFor: #areSubclassCreationMessageArgumentsValid:!private!testing! !
@@ -154,6 +159,7 @@ superclassName
 !Refactory.Browser.AddClassChange categoriesFor: #changeClassName!accessing!public! !
 !Refactory.Browser.AddClassChange categoriesFor: #changeString!printing!public! !
 !Refactory.Browser.AddClassChange categoriesFor: #classConstants!accessing!public! !
+!Refactory.Browser.AddClassChange categoriesFor: #classReference!accessing!private! !
 !Refactory.Browser.AddClassChange categoriesFor: #classVariableNames!accessing!public! !
 !Refactory.Browser.AddClassChange categoriesFor: #controller!accessing!private! !
 !Refactory.Browser.AddClassChange categoriesFor: #definingSuperclass!accessing!private! !

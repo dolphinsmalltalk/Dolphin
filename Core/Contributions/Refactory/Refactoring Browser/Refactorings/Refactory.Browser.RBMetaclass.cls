@@ -18,6 +18,9 @@ allClassVariableNames
 allImports
 	^self nonMetaclass allImports!
 
+classBindingNames
+	^self nonMetaclass classBindingNames!
+
 directlyDefinesClassVariable: aString 
 	^self nonMetaclass directlyDefinesClassVariable: aString!
 
@@ -47,6 +50,7 @@ storeOn: aStream
 	aStream nextPutAll: ' class'! !
 !Refactory.Browser.RBMetaclass categoriesFor: #allClassVariableNames!accessing!public! !
 !Refactory.Browser.RBMetaclass categoriesFor: #allImports!accessing!public! !
+!Refactory.Browser.RBMetaclass categoriesFor: #classBindingNames!public! !
 !Refactory.Browser.RBMetaclass categoriesFor: #directlyDefinesClassVariable:!public!testing! !
 !Refactory.Browser.RBMetaclass categoriesFor: #directlyImportsNamespace:!public!testing! !
 !Refactory.Browser.RBMetaclass categoriesFor: #fullyQualifiedReference!converting!public! !

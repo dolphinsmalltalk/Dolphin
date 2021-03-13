@@ -21,7 +21,13 @@ method2
 
 !Refactory.Browser.Tests.ClassToRename class methodsFor!
 
+byteSize
+	"Defined to allow this class to contain an external method for testing purposes."
+
+	^4!
+
 new
 	^super new initialize! !
+!Refactory.Browser.Tests.ClassToRename class categoriesFor: #byteSize!accessing!private! !
 !Refactory.Browser.Tests.ClassToRename class categoriesFor: #new!performing!public! !
 

@@ -17,8 +17,23 @@ calls
 calls1
 	^self rewriteRule1: (self rewriteRule1: self calls)!
 
+externalReference: aClassToRename
+	<stdcall: ClassToRename* dummy Refactory.Browser.Tests.ClassToRename>!
+
+externalReference: aClassToRename _: aClassToRename2
+	<stdcall: ClassToRename* dummy Refactory.Browser.Tests.ClassToRename Tests.ClassToRename*>!
+
+fullyQualifiedReference
+	^Refactory.Browser.Tests.ClassToRename new!
+
 name
 	^rewriteRule1!
+
+partiallyQualifiedReference1
+	^Tests.ClassToRename new!
+
+partiallyQualifiedReference2
+	^Browser.Tests.ClassToRename new!
 
 reference
 	^ClassToRename new!
@@ -33,7 +48,12 @@ symbolReference
 	^#ClassToRename! !
 !Refactory.Browser.Tests.SubclassOfClassToRename categoriesFor: #calls!accessing!public! !
 !Refactory.Browser.Tests.SubclassOfClassToRename categoriesFor: #calls1!accessing!public! !
+!Refactory.Browser.Tests.SubclassOfClassToRename categoriesFor: #externalReference:!performing!public! !
+!Refactory.Browser.Tests.SubclassOfClassToRename categoriesFor: #externalReference:_:!performing!public! !
+!Refactory.Browser.Tests.SubclassOfClassToRename categoriesFor: #fullyQualifiedReference!performing!public! !
 !Refactory.Browser.Tests.SubclassOfClassToRename categoriesFor: #name!accessing!public! !
+!Refactory.Browser.Tests.SubclassOfClassToRename categoriesFor: #partiallyQualifiedReference1!performing!public! !
+!Refactory.Browser.Tests.SubclassOfClassToRename categoriesFor: #partiallyQualifiedReference2!performing!public! !
 !Refactory.Browser.Tests.SubclassOfClassToRename categoriesFor: #reference!performing!public! !
 !Refactory.Browser.Tests.SubclassOfClassToRename categoriesFor: #rewriteRule1!accessing!public! !
 !Refactory.Browser.Tests.SubclassOfClassToRename categoriesFor: #rewriteRule1:!accessing!public! !

@@ -41,9 +41,7 @@ visitCascadeNode: aCascadeNode
 	aCascadeNode messages do: [:each | self visitNode: each]!
 
 visitExternalArgTypeNode: anStExternalArgTypeNode
-	"Dolphin specific extension"
-
-	!
+	anStExternalArgTypeNode structClass ifNotNil: [:structVar | self visitNode: structVar]!
 
 visitExternalCallNode: anStExternalCallNode
 	"Dolphin specific extension"

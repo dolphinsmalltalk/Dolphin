@@ -462,11 +462,12 @@ whichSelectorsReferToClass: aRBClass
 	self newMethods do: [:each | (each refersToClass: aRBClass) ifTrue: [selectors add: each selector]].
 	(self isDefined and: [aRBClass isDefined])
 		ifTrue: 
-			[#namespaceToDo.	"Bodge to search for unqualified name symbols"
-			selectors
-				addAll: (self existingMethodsThatReferToAnyOf: {aRBClass binding.
-								aRBClass name asSymbol.
-								aRBClass unqualifiedName asSymbol})].
+			[| literals |
+			#namespaceToDo.	"Bodge to search for unqualified name symbols"
+			literals := aRBClass realClass
+						ifNil: [{aRBClass name asSymbol. aRBClass unqualifiedName asSymbol}]
+						ifNotNil: [:class | {class. class binding. aRBClass name asSymbol. aRBClass unqualifiedName asSymbol}].
+			selectors addAll: (self existingMethodsThatReferToAnyOf: literals)].
 	^selectors!
 
 whichSelectorsReferToClassVariable: aString

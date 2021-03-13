@@ -64,6 +64,9 @@ replaceArgument: searchString withValueFrom: replaceBlock when: conditionBlock
 				replaceWith: replaceBlock
 				when: conditionBlock)!
 
+replaceLiteral: literal with: newLiteral
+	self replaceTree: (RBLiteralNode value: literal) withTree: (RBLiteralNode value: newLiteral)!
+
 replaceMethod: searchString with: replaceString
 	self addRule: (RBStringReplaceRule searchForMethod: searchString replaceWith: replaceString)!
 
@@ -138,6 +141,15 @@ visitCascadeNode: aCascadeNode
 	notFound do: [:each | each arguments: (each arguments collect: [:arg | self visitNode: arg])].
 	aCascadeNode messages: newMessages!
 
+visitExternalArgTypeNode: aStExternalArgTypeNode
+	aStExternalArgTypeNode structClass
+		ifNotNil: [:structVar | aStExternalArgTypeNode structClass: (self visitNode: structVar)]!
+
+visitExternalCallNode: aStExternalCallNode
+	aStExternalCallNode returnType: (self visitNode: aStExternalCallNode returnType).
+	aStExternalCallNode
+		argumentTypes: (aStExternalCallNode argumentTypes collect: [:each | self visitNode: each])!
+
 visitLiteralArrayNode: aRBArrayLiteralNode
 	aRBArrayLiteralNode contents: (aRBArrayLiteralNode contents collect: [:each | self visitNode: each])!
 
@@ -147,6 +159,7 @@ visitMessageNode: aMessageNode
 
 visitMethodNode: aMethodNode
 	aMethodNode arguments: (self visitArgumentNodes: aMethodNode arguments).
+	aMethodNode tag ifNotNil: [:tag | aMethodNode tag: (self visitNode: tag)].
 	aMethodNode body: (self visitNode: aMethodNode body)!
 
 visitOptimizedNode: anOptimizedNode
@@ -169,6 +182,7 @@ visitSequenceNode: aSequenceNode
 !Refactory.Browser.ParseTreeRewriter categoriesFor: #replaceArgument:with:when:!public!replacing! !
 !Refactory.Browser.ParseTreeRewriter categoriesFor: #replaceArgument:withValueFrom:!public!replacing! !
 !Refactory.Browser.ParseTreeRewriter categoriesFor: #replaceArgument:withValueFrom:when:!public!replacing! !
+!Refactory.Browser.ParseTreeRewriter categoriesFor: #replaceLiteral:with:!instance creation!public! !
 !Refactory.Browser.ParseTreeRewriter categoriesFor: #replaceMethod:with:!public!replacing! !
 !Refactory.Browser.ParseTreeRewriter categoriesFor: #replaceMethod:with:when:!public!replacing! !
 !Refactory.Browser.ParseTreeRewriter categoriesFor: #replaceMethod:withValueFrom:!public!replacing! !
@@ -181,6 +195,8 @@ visitSequenceNode: aSequenceNode
 !Refactory.Browser.ParseTreeRewriter categoriesFor: #visitAssignmentNode:!public!visitor/double dispatching! !
 !Refactory.Browser.ParseTreeRewriter categoriesFor: #visitBlockNode:!public!visitor/double dispatching! !
 !Refactory.Browser.ParseTreeRewriter categoriesFor: #visitCascadeNode:!public!visitor/double dispatching! !
+!Refactory.Browser.ParseTreeRewriter categoriesFor: #visitExternalArgTypeNode:!public! !
+!Refactory.Browser.ParseTreeRewriter categoriesFor: #visitExternalCallNode:!public! !
 !Refactory.Browser.ParseTreeRewriter categoriesFor: #visitLiteralArrayNode:!public!visitor/double dispatching! !
 !Refactory.Browser.ParseTreeRewriter categoriesFor: #visitMessageNode:!public!visitor/double dispatching! !
 !Refactory.Browser.ParseTreeRewriter categoriesFor: #visitMethodNode:!public!visitor/double dispatching! !
@@ -254,12 +270,10 @@ replace: code with: newCode method: aBoolean
 		ifFalse: [rewriteRule replace: code with: newCode].
 	^rewriteRule!
 
-replaceLiteral: literal with: newLiteral 
-	| rewriteRule |
-	rewriteRule := self new.
-	rewriteRule replaceTree: (RBLiteralNode value: literal)
-		withTree: (RBLiteralNode value: newLiteral).
-	^rewriteRule!
+replaceLiteral: literal with: newLiteral
+	^self new
+		replaceLiteral: literal with: newLiteral;
+		yourself!
 
 replaceStatements: code with: newCode in: aParseTree onInterval: anInterval
 	| tree replaceStmt |
