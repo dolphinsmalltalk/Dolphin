@@ -703,7 +703,7 @@ versionString
 	"Answers a String containing the current version of the system"
 
 	| patch verString special |
-	verString := self productVersion displayString.
+	verString := self productVersion printString.
 	patch := self patchLevel.
 	patch = 0 ifFalse: [verString := verString , patch displayString].
 	special := self productVersionSpecial.
