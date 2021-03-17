@@ -752,7 +752,7 @@ queryMoveClass: aClass toPackage: aPackage
 	| classPackage response packMan subclasses |
 	packMan := self systemModel packageManager.
 	classPackage := packMan packageOfClass: aClass.
-	subclasses := (aClass allSubclasses collect: [:s | {s. packMan packageOfClass: s}])
+	subclasses := (aClass allSubclasses collect: [:s | Pair first: s second: (packMan packageOfClass: s)])
 				select: [:a | a second isNil or: [a second == classPackage]].
 	classPackage isNil
 		ifTrue: [response := #yes	"Move all subclasses without package too"]

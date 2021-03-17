@@ -314,9 +314,9 @@ fromString: aString environment: aNamespace
 		External.FunctionDescriptor fromString: 'stdcall: hresult GUID* lppvoid'
 	"
 
-	| array |
-	array := self parseDescriptor: aString environment: aNamespace.
-	^self descriptor: array first literals: array second!
+	| pair |
+	pair := self parseDescriptor: aString environment: aNamespace.
+	^self descriptor: pair first literals: pair second!
 
 initialize
 	"Private - Initialize the class variables of the receiver.
@@ -536,7 +536,7 @@ parseDescriptor: aString environment: aNamespace
 					literals nextPut: argType value]].
 	descriptor := descriptor contents.
 	descriptor at: 2 put: argCount.
-	^{descriptor. literals contents}!
+	^Pair first: descriptor second: literals contents!
 
 parseDoubleIndirection: assoc typeName: typeName environment: aNamespace
 	| pointerType |

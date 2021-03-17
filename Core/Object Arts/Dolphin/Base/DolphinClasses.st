@@ -2332,6 +2332,12 @@ Core.Object subclass: #'Kernel.PackageManager'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+Core.Object subclass: #'Core.Pair'
+	instanceVariableNames: 'first second'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
 Core.Object subclass: #'Kernel.PostedActionWindow'
 	instanceVariableNames: 'handle actions'
 	classVariableNames: ''
