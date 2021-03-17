@@ -17,22 +17,24 @@ Instance Variables:
 !Refactory.Browser.SelectorEnvironment methodsFor!
 
 addClass: aClass
-	aClass isMeta
-		ifTrue: [metaClassSelectors at: aClass soleInstance fullName put: aClass selectors]
-		ifFalse: [classSelectors at: aClass fullName put: aClass selectors]!
+	(aClass isMeta ifTrue: [metaClassSelectors] ifFalse: [classSelectors])
+		at: aClass instanceClass fullName
+		put: aClass selectors!
 
-addClass: aClass selector: aSymbol 
-	#rbFix.	"Extract classdict lookup "
-	(self privateSelectorsForClassAdd: aClass) add: aSymbol!
+addClass: aClass selector: aSymbol
+	((aClass isMeta ifTrue: [metaClassSelectors] ifFalse: [classSelectors]) at: aClass instanceClass fullName
+		ifAbsentPutClean: [IdentitySet new: 8]) add: aSymbol!
 
-addClass: aClass selectors: aCollection 
-	#rbFix.	"Added"
-	(self privateSelectorsForClassAdd: aClass) addAll: aCollection!
+addClass: aClass selectors: aCollection
+	((aClass isMeta ifTrue: [metaClassSelectors] ifFalse: [classSelectors])
+		at: aClass instanceClass fullName
+		ifAbsentPutClean: [IdentitySet new: 8]) addAll: aCollection!
 
 classes: classArray metaClasses: metaArray
 	"Used to recreate an environment from its storeString"
 
-	#namespaceToDo. "Store one table of selectors using BindingReferences as the keys"
+	"Implementation Note: A more elegant and compact solution would be to store one table of selectors using BindingReferences as the keys, but this will be slower for typical usage patterns because of the need to create creating BindingReferences for classes, and because hash table comparisons are slower than for simple strings."
+
 	classSelectors := LookupTable new.
 	metaClassSelectors := LookupTable new.
 	classArray do: [:each | classSelectors at: each first put: each last asSet].
@@ -101,19 +103,24 @@ includesCategory: aCategory
 						or: [metaClassSelectors includesKey: className]]]!
 
 includesClass: aClass
-	^(aClass isMeta
-		ifTrue: [metaClassSelectors lookup: aClass soleInstance fullName]
-		ifFalse: [classSelectors lookup: aClass fullName]) notNil
-		and: [super includesClass: aClass]!
+	^((aClass isMeta ifTrue: [metaClassSelectors] ifFalse: [classSelectors])
+		includesKey: aClass instanceClass fullName) and: [super includesClass: aClass]!
 
-includesProtocol: aProtocol in: aClass 
-	^(super includesProtocol: aProtocol in: aClass)
-		and: [(environment selectorsFor: aProtocol in: aClass)
-				anySatisfy: [:aSelector | self privateIncludesSelector: aSelector inClass: aClass]]!
+includesProtocol: aProtocol in: aClass
+	^(super includesProtocol: aProtocol in: aClass) and: 
+			[(environment selectorsFor: aProtocol in: aClass) anySatisfy: 
+					[:aSelector |
+					((aClass isMeta ifTrue: [metaClassSelectors] ifFalse: [classSelectors])
+						lookup: aClass instanceClass fullName)
+							ifNil: [false]
+							ifNotNil: [:selectors | selectors includes: aSelector]]]!
 
-includesSelector: aSelector in: aClass 
-	^(environment includesSelector: aSelector in: aClass)
-		and: [self privateIncludesSelector: aSelector inClass: aClass]!
+includesSelector: aSelector in: aClass
+	^(environment includesSelector: aSelector in: aClass) and: 
+			[((aClass isMeta ifTrue: [metaClassSelectors] ifFalse: [classSelectors])
+				lookup: aClass instanceClass fullName)
+					ifNil: [false]
+					ifNotNil: [:selectors | selectors includes: aSelector]]!
 
 initialize
 	super initialize.
@@ -136,41 +143,29 @@ numberSelectors
 on: aDictionary
 	aDictionary keysAndValuesDo: 
 			[:class :selectors |
-			class isMeta
-				ifTrue: [metaClassSelectors at: class soleInstance fullName put: selectors]
-				ifFalse: [classSelectors at: class fullName put: selectors]]!
+			(class isMeta ifTrue: [metaClassSelectors] ifFalse: [classSelectors])
+				at: class instanceClass fullName
+				put: selectors]!
 
 postCopy
 	classSelectors := classSelectors collect: [:each | each copy].
 	metaClassSelectors := metaClassSelectors collect: [:each | each copy].
 	^super postCopy!
 
-privateIncludesSelector: aSelector inClass: aClass 
-	^(self privateSelectorsForClass: aClass) includes: aSelector!
-
-privateSelectorsForClass: aClass
-	^(aClass isMeta
-		ifTrue: [metaClassSelectors lookup: aClass soleInstance fullName]
-		ifFalse: [classSelectors lookup: aClass fullName]) ?? #()!
-
-privateSelectorsForClassAdd: aClass
-	^aClass isMeta
-		ifTrue: [metaClassSelectors at: aClass soleInstance fullName ifAbsentPutClean: [IdentitySet new: 8]]
-		ifFalse: [classSelectors at: aClass fullName ifAbsentPutClean: [IdentitySet new: 8]]!
-
 removeClass: aClass
-	aClass isMeta
-		ifTrue: [metaClassSelectors removeKey: aClass soleInstance fullName ifAbsent: []]
-		ifFalse: [classSelectors removeKey: aClass fullName ifAbsent: []]!
+	(aClass isMeta ifTrue: [metaClassSelectors] ifFalse: [classSelectors])
+		removeKey: aClass instanceClass fullName
+		ifAbsent: []!
 
 removeClass: aClass selector: aSelector
-	(aClass isMeta
-		ifTrue: [metaClassSelectors at: aClass soleInstance fullName ifAbsent: [^self]]
-		ifFalse: [classSelectors at: aClass fullName ifAbsent: [^self]]) remove: aSelector ifAbsent: []!
+	((aClass isMeta ifTrue: [metaClassSelectors] ifFalse: [classSelectors])
+		lookup: aClass instanceClass fullName)
+			ifNotNil: [:selectors | selectors remove: aSelector ifAbsent: []]!
 
-selectorsForClass: aClass do: aBlock 
-	^(self privateSelectorsForClass: aClass) 
-		do: [:each | (aClass includesSelector: each) ifTrue: [aBlock value: each]]!
+selectorsForClass: aClass do: aBlock
+	((aClass isMeta ifTrue: [metaClassSelectors] ifFalse: [classSelectors])
+		lookup: aClass instanceClass fullName)
+			ifNotNil: [:selectors | selectors do: [:each | (aClass includesSelector: each) ifTrue: [aBlock value: each]]]!
 
 storeOn: aStream
 	| classBlock |
@@ -219,9 +214,6 @@ storeOn: aStream
 !Refactory.Browser.SelectorEnvironment categoriesFor: #numberSelectors!accessing!public! !
 !Refactory.Browser.SelectorEnvironment categoriesFor: #on:!initialize/release!public! !
 !Refactory.Browser.SelectorEnvironment categoriesFor: #postCopy!copying!public! !
-!Refactory.Browser.SelectorEnvironment categoriesFor: #privateIncludesSelector:inClass:!private!testing! !
-!Refactory.Browser.SelectorEnvironment categoriesFor: #privateSelectorsForClass:!accessing!private! !
-!Refactory.Browser.SelectorEnvironment categoriesFor: #privateSelectorsForClassAdd:!adding!private! !
 !Refactory.Browser.SelectorEnvironment categoriesFor: #removeClass:!public!removing! !
 !Refactory.Browser.SelectorEnvironment categoriesFor: #removeClass:selector:!public!removing! !
 !Refactory.Browser.SelectorEnvironment categoriesFor: #selectorsForClass:do:!accessing!public! !
@@ -241,9 +233,8 @@ implementorsMatching: aString in: anEnvironment
 				do: [:each | (aString match: each) ifTrue: [selectors add: each]].
 			selectors notEmpty
 				ifTrue: 
-					[class isMeta
-						ifTrue: [metaDict at: class soleInstance fullName put: selectors]
-						ifFalse: [classDict at: class fullName put: selectors]]].
+					[(class isMeta ifTrue: [metaDict] ifFalse: [classDict]) at: class instanceClass fullName
+						put: selectors]].
 	^(self onEnvironment: anEnvironment)
 		classSelectors: classDict metaClassSelectors: metaDict;
 		label: ('Definitions matching <1p> in <2p>' expandMacrosWith: aString with: anEnvironment);
@@ -258,9 +249,8 @@ implementorsOf: aSelector in: anEnvironment
 			[:class |
 			((class includesSelector: aSelector) and: [anEnvironment includesSelector: aSelector in: class])
 				ifTrue: 
-					[class isMeta
-						ifTrue: [metaDict at: class soleInstance fullName put: selectors]
-						ifFalse: [classDict at: class fullName put: selectors]]].
+					[(class isMeta ifTrue: [metaDict] ifFalse: [classDict]) at: class instanceClass fullName
+						put: selectors]].
 	^(self onEnvironment: anEnvironment)
 		classSelectors: classDict metaClassSelectors: metaDict;
 		label: ('Definitions of <1p> in <2p>' expandMacrosWith: aSelector with: anEnvironment);

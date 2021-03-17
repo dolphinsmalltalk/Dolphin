@@ -16,9 +16,7 @@ Instance Variables:
 !Refactory.Browser.ClassEnvironment methodsFor!
 
 addClass: aClass
-	aClass isMeta
-		ifTrue: [metaClasses add: aClass soleInstance fullName]
-		ifFalse: [classes add: aClass fullName]!
+	(aClass isMeta ifTrue: [metaClasses] ifFalse: [classes]) add: aClass instanceClass fullName!
 
 classes: aCollection 
 	aCollection do: [:each | self addClass: each]!
@@ -79,9 +77,8 @@ includesCategory: aCategory
 								and: [(self includesClass: binding value) or: [self includesClass: binding value class]]]]]!
 
 includesClass: aClass
-	^(aClass isMeta
-		ifTrue: [metaClasses includes: aClass soleInstance fullName]
-		ifFalse: [classes includes: aClass fullName]) and: [super includesClass: aClass]!
+	^((aClass isMeta ifTrue: [metaClasses] ifFalse: [classes]) includes: aClass instanceClass fullName)
+		and: [super includesClass: aClass]!
 
 initialize
 	super initialize.
@@ -103,9 +100,8 @@ problemCount
 	^self numberClasses!
 
 removeClass: aClass
-	aClass isMeta
-		ifTrue: [metaClasses remove: aClass soleInstance fullName ifAbsent: []]
-		ifFalse: [classes remove: aClass fullName ifAbsent: []]!
+	(aClass isMeta ifTrue: [metaClasses] ifFalse: [classes]) remove: aClass instanceClass fullName
+		ifAbsent: []!
 
 selectorsForClass: aClass do: aBlock
 	#rbFix.	"Implement to avoid need for #includesClass: test in loop by performing it up front."

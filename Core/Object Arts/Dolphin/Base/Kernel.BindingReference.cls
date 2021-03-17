@@ -186,6 +186,15 @@ flushBindings
 	1 to: instances size do: [:i | (instances at: i) setBinding: nil].
 	Generation := 0!
 
+fullPathString: aString
+	"Answer a new instance of the receiver representing the qualified name identified by the <readableString> argument, which is expected to be a fully qualified name."
+
+	^self basicNew
+		setPathString: aString;
+		setFlags: 0;
+		isImmutable: true;
+		yourself!
+
 initialize
 	self flushBindings.
 	VMLibrary default
@@ -249,6 +258,7 @@ uninitialize
 		registryAtIndex: 65 put: nil! !
 !Kernel.BindingReference class categoriesFor: #clearCachedBindings!operations!private! !
 !Kernel.BindingReference class categoriesFor: #flushBindings!operations!private! !
+!Kernel.BindingReference class categoriesFor: #fullPathString:!instance creation!public! !
 !Kernel.BindingReference class categoriesFor: #initialize!class initialization!public! !
 !Kernel.BindingReference class categoriesFor: #newPath:context:!instance creation!private! !
 !Kernel.BindingReference class categoriesFor: #pathString:context:!instance creation!public! !
