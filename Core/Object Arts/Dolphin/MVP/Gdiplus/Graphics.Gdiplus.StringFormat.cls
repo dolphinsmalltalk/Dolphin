@@ -71,7 +71,7 @@ flags: anInteger
 	GdiplusLibrary default gdipSetStringFormatFlags: self asParameter flags: anInteger!
 
 getTabOffsets
-	"Private - Answer a two-element Array, the first element containing the receiver's initial 
+	"Private - Answer a <Pair>, the first element containing the receiver's initial 
 	tab offset, the second element containing an array of additional tab offsets."
 
 	| count first array |
@@ -83,7 +83,7 @@ getTabOffsets
 		count: count
 		firstTabOffset: first
 		tabStops: array.
-	^{first sdwordAtOffset: 0. array asArray}!
+	^Pair first: (first floatAtOffset: 0) second: array asArray!
 
 lineAlignment
 	| buf |
@@ -133,9 +133,9 @@ setTabStops: aRealArray first: aReal
 tabOffsets
 	"Answer an Array containing the receiver's tab offsets, including the initial offset."
 
-	| array |
-	array := self getTabOffsets.
-	^((OrderedCollection with: array first) , array second asOrderedCollection) asArray!
+	| pair |
+	pair := self getTabOffsets.
+	^{pair first} , pair second!
 
 tabOffsets: aRealArray
 	"Set the receiver's tab-stops, including the initial offset."

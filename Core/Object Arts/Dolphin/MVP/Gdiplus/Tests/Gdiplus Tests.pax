@@ -46,6 +46,7 @@ package setClassNames: #(
 	#{Graphics.Gdiplus.Tests.POINTFTest}
 	#{Graphics.Gdiplus.Tests.RECTFTest}
 	#{Graphics.Gdiplus.Tests.SolidBrushFromColorInitializerTest}
+	#{Graphics.Gdiplus.Tests.StringFormatTest}
 	#{Graphics.Gdiplus.Tests.TestInitializer}
 ).
 
@@ -174,6 +175,12 @@ Graphics.Gdiplus.Tests.GdiplusTest subclass: #'Graphics.Gdiplus.Tests.PathGradie
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Graphics.Gdiplus.Tests.GdiplusTest subclass: #'Graphics.Gdiplus.Tests.PenTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Graphics.Gdiplus.Tests.GdiplusTest subclass: #'Graphics.Gdiplus.Tests.StringFormatTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
