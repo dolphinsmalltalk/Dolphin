@@ -160,7 +160,7 @@ printString
 
 	^'nil'!
 
-refersToLiteral: anObject
+refersTo: anObject asLiteralOf: aCompiledMethod
 	^anObject isNil!
 
 shallowCopy
@@ -217,7 +217,7 @@ yourAddress
 !Core.UndefinedObject categoriesFor: #notNull!private!testing! !
 !Core.UndefinedObject categoriesFor: #printOn:!printing!public! !
 !Core.UndefinedObject categoriesFor: #printString!printing!public! !
-!Core.UndefinedObject categoriesFor: #refersToLiteral:!private!testing! !
+!Core.UndefinedObject categoriesFor: #refersTo:asLiteralOf:!private!testing! !
 !Core.UndefinedObject categoriesFor: #shallowCopy!copying!public! !
 !Core.UndefinedObject categoriesFor: #subclass:instanceVariableNames:classVariableNames:imports:!class hierarchy-adding!public! !
 !Core.UndefinedObject categoriesFor: #subclass:instanceVariableNames:classVariableNames:imports:classInstanceVariableNames:classConstants:!class hierarchy-adding!public! !

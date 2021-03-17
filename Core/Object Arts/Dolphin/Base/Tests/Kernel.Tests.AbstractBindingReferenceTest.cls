@@ -276,23 +276,31 @@ testPrivate
 testRefersToLiteral
 	"A BindingReference matches literals for the same path..."
 
-	| objectRef poolConstRef poolConst |
+	| method objectRef poolConstRef poolConst |
+	method := self class lookupMethod: testSelector.
 	objectRef := self subjectClass pathString: #'Core.Object'.
-	self assert: (objectRef refersToLiteral: (self subjectClass path: #(#Core #Object))).
+	self assert: (objectRef refersTo: (self subjectClass path: #(#Core #Object))
+				asLiteralOf: method).
 	".. and the binding to which it would resolve ..."
-	self assert: (objectRef refersToLiteral: Object binding).
+	self assert: (objectRef refersTo: Object binding asLiteralOf: method).
 	"... but not the target value."
-	self deny: (objectRef refersToLiteral: Object).
+	self deny: (objectRef refersTo: Object asLiteralOf: method).
 	"BindingRef to a pool variable."
 	poolConstRef := self subjectClass pathString: '_PrimitiveFailureCode.AccessViolation'.
 	poolConst := _PrimitiveFailureCode localBindingFor: 'AccessViolation'.
-	self assert: (poolConstRef
-				refersToLiteral: (self subjectClass path: #(#_PrimitiveFailureCode 'AccessViolation'))).
-	self assert: (poolConstRef refersToLiteral: poolConst).
+	self
+		assert: (poolConstRef refersTo: (self subjectClass path: #(#_PrimitiveFailureCode 'AccessViolation'))
+				asLiteralOf: method).
+	self assert: (poolConstRef refersTo: poolConst asLiteralOf: method).
 	"Should a BindingRef implicitly refers to refs along its path? Not sure."
-	false ifTrue: [self assert: (poolConstRef refersToLiteral: #{Kernel._PrimitiveFailureCode})].
+	false
+		ifTrue: 
+			[self
+				assert: (poolConstRef refersTo: #{Kernel._PrimitiveFailureCode} asLiteralOf: method)].
 	#namespaceToDo.	"This should be true - a reference to a nested binding is implicitly a reference to the outer binding."
-	false ifTrue: [self assert: (poolConstRef refersToLiteral: _PrimitiveFailureCode binding)]!
+	false
+		ifTrue: 
+			[self assert: (poolConstRef refersTo: _PrimitiveFailureCode binding asLiteralOf: method)]!
 
 testShortName
 	#(#Root #Smalltalk #Core #'Core.Class' #'Kernel.BindingContext') do: 

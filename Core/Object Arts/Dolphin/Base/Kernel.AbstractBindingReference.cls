@@ -298,13 +298,14 @@ private
 				context: self context
 				flags: (self flags bitOr: PrivateMask)]!
 
-refersToLiteral: anObject
-	"Private - Answer whether the receiver is a reference to the literal argument.
-	This assumes that the receiver is in the role of a literal created by the compiler."
+refersTo: anObject asLiteralOf: aCompiledCode
+	"Private - Answer whether the receiver, a literal of the <CompiledCode> 2nd argument, is a reference to the <Object> first argument."
 
 	^self = anObject or: 
-			[anObject notNil
-				and: [self bindingOrNil ifNil: [false] ifNotNil: [:binding | binding refersToLiteral: anObject]]]!
+			[anObject notNil and: 
+					[self bindingOrNil
+						ifNil: [false]
+						ifNotNil: [:binding | binding refersTo: anObject asLiteralOf: aCompiledCode]]]!
 
 shortName
 	"Answer the shortest <String> name equivalent to the receiver's pathString that is bindable from Smalltalk. i.e. for variables defined directly in Smalltalk, or in any of its imports, this will be an unqualified name. Otherwise it is the fully qualified name relative to Smalltalk."
@@ -405,7 +406,7 @@ valueOrNil
 !Kernel.AbstractBindingReference categoriesFor: #pathString!accessing!public! !
 !Kernel.AbstractBindingReference categoriesFor: #printOn:!printing!public! !
 !Kernel.AbstractBindingReference categoriesFor: #private!converting!public! !
-!Kernel.AbstractBindingReference categoriesFor: #refersToLiteral:!private!testing! !
+!Kernel.AbstractBindingReference categoriesFor: #refersTo:asLiteralOf:!private!testing! !
 !Kernel.AbstractBindingReference categoriesFor: #shortName!accessing!public! !
 !Kernel.AbstractBindingReference categoriesFor: #simpleName!accessing!public! !
 !Kernel.AbstractBindingReference categoriesFor: #species!comparing!public! !

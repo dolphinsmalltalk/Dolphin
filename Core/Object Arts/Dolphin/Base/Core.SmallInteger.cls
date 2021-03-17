@@ -505,7 +505,7 @@ quo: aNumber
 	<primitive: 13>
 	^aNumber quotientFromInteger: self!
 
-refersToLiteral: anObject 
+refersTo: anObject asLiteralOf: aCompiledMethod
 	"Private - Answer whether the receiver is a reference to the literal argument.
 	This assumes that the receiver is in the role of a literal."
 
@@ -576,7 +576,7 @@ species
 !Core.SmallInteger categoriesFor: #printStringBase:!printing!public! !
 !Core.SmallInteger categoriesFor: #printStringBase:nDigits:!printing!public! !
 !Core.SmallInteger categoriesFor: #quo:!arithmetic!public! !
-!Core.SmallInteger categoriesFor: #refersToLiteral:!private!testing! !
+!Core.SmallInteger categoriesFor: #refersTo:asLiteralOf:!private!testing! !
 !Core.SmallInteger categoriesFor: #shallowCopy!copying!public! !
 !Core.SmallInteger categoriesFor: #species!accessing!public! !
 

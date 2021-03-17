@@ -489,15 +489,26 @@ readsInstVar: aString at: anInteger
 	^((extra between: 1 and: 5) or: [extra == 7]) not 
 		and: [self byteCodeDispatcher readsInstVarAt: anInteger]!
 
+refersToAnyOf: anArray
+	"Private - Answer whether the receiver refers directly from its literal frame (or indirectly as an element of an array in the literal frame) to any of the literal objects in <Array> argument."
+
+	| count |
+	count := anArray size.
+	1 to: self size
+		do: 
+			[:i |
+			| literal |
+			literal := self basicAt: i.
+			1 to: count do: [:j | (literal refersTo: (anArray at: j) asLiteralOf: self) ifTrue: [^true]]].
+	^false!
+
 refersToLiteral: anObject
-	"Private - Answer whether the receiver refers directly from its literal frame (or indirectly as an 
-	element of an array in the literal frame) to the argument, anObject. Named for compatibility 
-	with VisualWorks."
+	"Private - Answer whether the receiver refers directly from its literal frame (or indirectly as an element of an array in the literal frame) to the argument, anObject."
 
-	"Implementation Note: This deliberately does not take account of special selectors and is open
-	coded for speed."
+	"Implementation Note: This deliberately does not take account of special selectors and is open coded for speed."
 
-	1 to: self size do: [:i | ((self basicAt: i) refersToLiteral: anObject) ifTrue: [^true]].
+	1 to: self size
+		do: [:i | ((self basicAt: i) refersTo: anObject asLiteralOf: self) ifTrue: [^true]].
 	^false!
 
 replaceElementsOf: anIndexableObject from: startInteger to: stopInteger startingAt: startAtInteger
@@ -696,6 +707,7 @@ writesInstVar: aString at: anInteger
 !Kernel.CompiledCode categoriesFor: #primitiveIndex!method header!private! !
 !Kernel.CompiledCode categoriesFor: #readsInstVar:!development!public!testing! !
 !Kernel.CompiledCode categoriesFor: #readsInstVar:at:!development!public!testing! !
+!Kernel.CompiledCode categoriesFor: #refersToAnyOf:!private!testing! !
 !Kernel.CompiledCode categoriesFor: #refersToLiteral:!private!testing! !
 !Kernel.CompiledCode categoriesFor: #replaceElementsOf:from:to:startingAt:!private!replacing! !
 !Kernel.CompiledCode categoriesFor: #selector!accessing!public! !

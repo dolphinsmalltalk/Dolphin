@@ -1136,9 +1136,8 @@ propertyManager
 
 	^_PropertyRegister!
 
-refersToLiteral: anObject
-	"Private - Answer whether the receiver is a reference to the literal argument.
-	This assumes that the receiver is in the role of a literal."
+refersTo: anObject asLiteralOf: aCompiledCode
+	"Private - Answer whether the receiver, a literal of the <CompiledCode> 2nd argument, is a reference to the <Object> first argument."
 
 	^self class == anObject class and: [self = anObject]!
 
@@ -1634,7 +1633,7 @@ yourself
 !Core.Object categoriesFor: #propertyAt:ifAbsent:!properties!public! !
 !Core.Object categoriesFor: #propertyAt:put:!properties!public! !
 !Core.Object categoriesFor: #propertyManager!private!properties! !
-!Core.Object categoriesFor: #refersToLiteral:!private!testing! !
+!Core.Object categoriesFor: #refersTo:asLiteralOf:!private!testing! !
 !Core.Object categoriesFor: #release!dependency!public! !
 !Core.Object categoriesFor: #removeAllEventsTriggered!events!public! !
 !Core.Object categoriesFor: #removeAllProperties!properties!public! !

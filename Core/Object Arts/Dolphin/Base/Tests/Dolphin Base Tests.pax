@@ -633,10 +633,12 @@ Kernel.Tests.SystemNamespaceTest subclass: #'Kernel.Tests.SmalltalkNamespaceTest
 	classConstants: {}!
 Core.Tests.AssociationTest subclass: #'Kernel.Tests.VariableBindingTest'
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: 'TestClassVar'
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: {
+		'TestClassConst' -> 16r1
+	}!
 Core.Tests.BooleanTest subclass: #'Core.Tests.FalseTest'
 	instanceVariableNames: ''
 	classVariableNames: ''

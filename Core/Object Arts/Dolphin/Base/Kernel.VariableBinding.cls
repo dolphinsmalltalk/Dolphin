@@ -106,9 +106,15 @@ owningPackage: aPackageOrNil
 
 	self class packageManager addVariableNamed: self fullyQualifiedReference to: aPackageOrNil!
 
-refersToLiteral: anObject
+refersTo: anObject asLiteralOf: aCompiledMethod
 	^(anObject == environment and: 
-			["Not useful to show ever variable in Smalltalk as an implicit reference to it. Probably true of all Namespaces except pools and classes."
+			["Not useful to show every variable in a Namespace as an implicit reference to it, nor a class hierarchy's references to its own class variables."
+			self isClassVariable and: [(aCompiledMethod methodClass includesBehavior: environment) not]])
+		or: [self = anObject]!
+
+refersToLiteral: anObject from: aCompiledMethod
+	^(anObject == environment and: 
+			["Not useful to show every variable in Smalltalk as an implicit reference to it. Probably true of all Namespaces except pools and classes."
 			environment ~~ Smalltalk])
 		or: [self = anObject]!
 
@@ -138,7 +144,8 @@ targetVariable
 !Kernel.VariableBinding categoriesFor: #key:value:!initializing!private! !
 !Kernel.VariableBinding categoriesFor: #owningPackage!accessing!development!public! !
 !Kernel.VariableBinding categoriesFor: #owningPackage:!accessing!development!public! !
-!Kernel.VariableBinding categoriesFor: #refersToLiteral:!private!testing! !
+!Kernel.VariableBinding categoriesFor: #refersTo:asLiteralOf:!private!testing! !
+!Kernel.VariableBinding categoriesFor: #refersToLiteral:from:!private!testing! !
 !Kernel.VariableBinding categoriesFor: #setFlags:!accessing!private! !
 !Kernel.VariableBinding categoriesFor: #targetVariable!accessing!public! !
 

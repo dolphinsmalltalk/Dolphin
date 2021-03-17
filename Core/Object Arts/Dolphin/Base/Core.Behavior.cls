@@ -658,38 +658,36 @@ referenceFilterFor: anObject
 					[| dispatcher |
 					dispatcher := ByteCodeDispatcher new.
 					^
-					[:each |
-					(each refersToLiteral: anObject) or: 
-							[dispatcher method: each.
+					[:eachMethod |
+					(eachMethod refersToLiteral: anObject) or: 
+							[dispatcher method: eachMethod.
 							dispatcher sendsSpecialSelector: index]]]].
-	^[:each | each refersToLiteral: anObject]!
+	^[:eachMethod | eachMethod refersToLiteral: anObject]!
 
 referenceFilterForAnyOf: aCollection
-	| specialSelectorIndices |
-	specialSelectorIndices := IdentityDictionary new.
-	aCollection do: 
+	| array specialSelectorIndices vm |
+	array := aCollection asArray.
+	"Here we are expecting that aCollection is very small, and there will generally be no special selectors in it."
+	vm := VMLibrary default.	
+	specialSelectorIndices := #().
+	array do: 
 			[:each |
 			each isSymbol
 				ifTrue: 
-					[| index |
-					index := VMLibrary default indexOfSpecialSelector: each ifAbsent: [].
-					index notNil ifTrue: [specialSelectorIndices at: each put: index]]].
+					[(vm indexOfSpecialSelector: each ifAbsent: [])
+						ifNotNil: [:index | specialSelectorIndices := specialSelectorIndices copyWith: index]]].
 	^specialSelectorIndices isEmpty
-		ifTrue: [[:each | aCollection anySatisfy: [:literal | each refersToLiteral: literal]]]
+		ifTrue: [[:method | method refersToAnyOf: array]]
 		ifFalse: 
 			[| dispatcher |
 			dispatcher := ByteCodeDispatcher new.
 			
-			[:each |
-			aCollection anySatisfy: 
-					[:literal |
-					(each refersToLiteral: literal) or: 
-							[(specialSelectorIndices lookup: literal)
-								ifNil: [false]
-								ifNotNil: 
-									[:index |
-									dispatcher method: each.
-									dispatcher sendsSpecialSelector: index]]]]]!
+			[:method |
+			(method refersToAnyOf: array) or: 
+					[specialSelectorIndices anySatisfy: 
+							[:index |
+							dispatcher method: method.
+							dispatcher sendsSpecialSelector: index]]]]!
 
 removeFromSuper
 	"Private - Remove the receiver from its superclasses' subclass collection and answer the old superclass.

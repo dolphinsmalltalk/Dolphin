@@ -66,13 +66,14 @@ copyFrom: startInteger to: stopInteger
 	the receiver between the <integer> indices startInteger and stopInteger, inclusive, and in
 	the same order."
 
-	| len |
-	len := stopInteger - startInteger + 1.
-	^(Utf8String new: len)
-		replaceFrom: 1
+	| len slice |
+	slice := Utf8String new: (len := stopInteger - startInteger + 1).
+	self
+		replaceBytesOf: slice
+		from: 1
 		to: len
-		with: self
-		startingAt: startInteger!
+		startingAt: startInteger.
+	^slice!
 
 copyingClass
 	"Private - Answer the class of object expected when the receiver is copied in whole or in part."
@@ -173,7 +174,7 @@ printOn: aStream
 		ifTrue: [aStream nextPutAll: self]
 		ifFalse: [super printOn: aStream]!
 
-refersToLiteral: anObject 
+refersTo: anObject asLiteralOf: aCompiledMethod
 	"Private - Answer whether the receiver is a reference to the literal argument.
 	This assumes that the receiver is in the role of a literal."
 
@@ -220,7 +221,7 @@ stbSaveOn: anSTBOutFiler
 !Core.Symbol categoriesFor: #numArgs!accessing!public! !
 !Core.Symbol categoriesFor: #printArgumentTypeOn:!printing!private! !
 !Core.Symbol categoriesFor: #printOn:!printing!public! !
-!Core.Symbol categoriesFor: #refersToLiteral:!private!testing! !
+!Core.Symbol categoriesFor: #refersTo:asLiteralOf:!private!testing! !
 !Core.Symbol categoriesFor: #replaceFrom:to:with:startingAt:!public!replacing! !
 !Core.Symbol categoriesFor: #shallowCopy!copying!public! !
 !Core.Symbol categoriesFor: #species!accessing!public! !

@@ -47,15 +47,17 @@ testMeta
 	self assert: subject meta identicalTo: subject!
 
 testRefersToLiteral
+	| method |
+	method := self class >> testSelector.
 	"A BindingReference matches literals for the same path..."
 
 	"self assert: (Object class fullyQualifiedReference refersToLiteral: (self subjectClass pathString: 'Object'))."
 
 	".. and the binding to which it would resolve ..."
 
-	self assert: (#{Object class} refersToLiteral: Object binding).
+	self assert: (#{Object class} refersTo: Object binding asLiteralOf: method).
 	"... but not the target value."
-	self deny: (#{Object class} refersToLiteral: #{Object class} value)!
+	self deny: (#{Object class} refersTo: #{Object class} value asLiteralOf: method)!
 
 valueOfBinding: aVariableBinding
 	^aVariableBinding value class! !

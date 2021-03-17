@@ -941,7 +941,7 @@ printOn: aStream
 				ifFalse: [(aStream nextPut: ch) == $' ifTrue: [aStream nextPut: $']]].
 	aStream nextPut: $'!
 
-refersToLiteral: anObject
+refersTo: anObject asLiteralOf: aCompiledMethod
 	"Private - Answer whether the receiver is a reference to the literal argument.
 	This assumes that the receiver is in the role of a literal."
 
@@ -1347,7 +1347,7 @@ withNormalizedLineDelimiters
 !Core.String categoriesFor: #occurrencesOf:from:to:!public!searching! !
 !Core.String categoriesFor: #prevIndexOf:from:to:!public!searching! !
 !Core.String categoriesFor: #printOn:!printing!public! !
-!Core.String categoriesFor: #refersToLiteral:!private!testing! !
+!Core.String categoriesFor: #refersTo:asLiteralOf:!private!testing! !
 !Core.String categoriesFor: #replaceBytesOf:from:to:startingAt:!double dispatch!private! !
 !Core.String categoriesFor: #replaceFrom:to:with:startingAt:!public!replacing! !
 !Core.String categoriesFor: #rightString:!copying!public! !
