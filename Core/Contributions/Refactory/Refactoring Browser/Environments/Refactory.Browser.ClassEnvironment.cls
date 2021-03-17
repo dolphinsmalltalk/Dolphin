@@ -41,12 +41,16 @@ classesAndSelectorsDo: aBlock
 classesDo: aBlock
 	classes do: 
 			[:each |
-			each asQualifiedReference valueOrNil
-				ifNotNil: [:class | (environment includesClass: class) ifTrue: [aBlock value: class]]].
+			(Smalltalk resolveBindingPath: ($. split: each))
+				ifNotNil: [:binding | (environment includesClass: binding value) ifTrue: [aBlock value: binding value]]].
 	metaClasses do: 
 			[:each |
-			each asQualifiedReference valueOrNil
-				ifNotNil: [:class | (environment includesClass: class class) ifTrue: [aBlock value: class class]]]!
+			(Smalltalk resolveBindingPath: ($. split: each))
+				ifNotNil: 
+					[:binding |
+					| meta |
+					meta := binding value class.
+					(environment includesClass: meta) ifTrue: [aBlock value: meta]]]!
 
 classNames
 	^(Set withAll: classes)
@@ -69,9 +73,10 @@ includesCategory: aCategory
 				into: 
 					[:bool :each |
 					bool or: 
-							[| class |
-							class := each asQualifiedReference valueOrNil.
-							class notNil and: [(self includesClass: class) or: [self includesClass: class class]]]]]!
+							[| binding |
+							binding := Smalltalk resolveBindingPath: ($. split: each).
+							binding notNil
+								and: [(self includesClass: binding value) or: [self includesClass: binding value class]]]]]!
 
 includesClass: aClass
 	^(aClass isMeta

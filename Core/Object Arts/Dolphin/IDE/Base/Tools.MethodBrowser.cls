@@ -256,12 +256,10 @@ browseSystem
 
 	self systemModel browseSystemOnMethod: self selection!
 
-browseVariableReferences: anAssociation in: aBrowserEnvironment
-	"Private - Opens a new Method Browser on all the methods which refer to the global binding represented
-	by the <Association> argument. Also includes methods that refer directly to the current
-	value of the global binding."
+browseVariableReferences: aVariableBinding in: aBrowserEnvironment
+	"Private - Opens a new Method Browser on all the methods which refer to the shared variable represented by the <VariableBinding> first argument. Also includes methods that refer directly to the current value of the variable."
 
-	self browseMethodsIn: (self systemModel referencesToVariable: anAssociation in: aBrowserEnvironment)!
+	self browseMethodsIn: (aBrowserEnvironment referencesToVariable: aVariableBinding)!
 
 buildAddCategoryMenu: aMenu
 	"Private - Build a dynamic pull-out menu to hold suggested categories and an 'Other...' 

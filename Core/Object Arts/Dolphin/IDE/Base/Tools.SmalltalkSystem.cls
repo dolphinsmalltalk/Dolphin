@@ -795,12 +795,12 @@ browseMethodsIn: aBrowserEnvironment
 	browser methods: aBrowserEnvironment.
 	^browser!
 
-browseMethodsIn: aBrowserEnvironment filter: aMonadicValuable 
+browseMethodsIn: aBrowserEnvironment filter: aMonadicValuable
 	"Open a method browser on all methods included in the specified <BrowserEnvironment> that
 	pass the specified <monadicValuable> filter. Newly defined or modified methods are
 	considered for inclusion based on the filter."
 
-	^self browseMethodsIn: ((self selectMethods: aMonadicValuable in: aBrowserEnvironment)
+	^self browseMethodsIn: ((aBrowserEnvironment filterMethods: aMonadicValuable)
 				label: aBrowserEnvironment label;
 				yourself)!
 
@@ -817,7 +817,7 @@ browseMethodsWithFullBlocks
 	"
 
 	| methods |
-	methods := self selectMethods: [:each | each needsContext] in: self systemEnvironment.
+	methods := self systemEnvironment filterMethods: [:method | method needsContext].
 	methods label: 'Methods with Full Blocks'.
 	self browseMethodsIn: methods!
 
@@ -872,12 +872,12 @@ browseReferencesToClassVar: aString of: browseClass within: aBrowserEnvironment
 		ifTrue: [self browseMethodsIn: refs]
 		ifFalse: 
 			[| writers readers |
-			writers := self selectMethods: [:each | each byteCodeDispatcher writesStatic: binding] in: refs.
+			writers := refs filterMethods: [:method | method byteCodeDispatcher writesStatic: binding].
 			writers label: ('All methods that assign to <1p>.<2s> in <3p>'
 						expandMacrosWith: definingClass
 						with: aString
 						with: aBrowserEnvironment).
-			readers := self selectMethods: [:each | each byteCodeDispatcher readsStatic: binding] in: refs.
+			readers := refs filterMethods: [:method | method byteCodeDispatcher readsStatic: binding].
 			readers label: ('All methods that read <1p>.<2s> in <3p>'
 						expandMacrosWith: definingClass
 						with: aString
@@ -1003,7 +1003,7 @@ browseSharedVariableReferences: aBindingReference in: aBrowserEnvironment
 	"We resolve the variable, if it exists, and search for refs to that or its value, otherwise just look for references to the BindingReference."
 
 	^self browseMethodsIn: (aBindingReference bindingOrNil
-				ifNotNil: [:var | self referencesToVariable: var in: aBrowserEnvironment]
+				ifNotNil: [:var | aBrowserEnvironment referencesToVariable: var]
 				ifNil: [self referencesToBinding: aBindingReference in: aBrowserEnvironment])!
 
 browseSystem
@@ -1041,11 +1041,9 @@ browseTests
 	^self testBrowserClass show!
 
 browseVariableReferences: aVariableBinding in: aBrowserEnvironment
-	"Opens a new Method Browser on all the methods which refer to the global binding represented
-	by the <Association> argument. Also includes methods that refer directly to the current
-	value of the global binding."
+	"Opens a new Method Browser on all the methods which refer to the shared variable represented by the <VariableBinding> argument. Also includes methods that refer directly to the current value of the variable."
 
-	self browseMethodsIn: (self referencesToVariable: aVariableBinding in: aBrowserEnvironment)!
+	self browseMethodsIn: (aBrowserEnvironment referencesToVariable: aVariableBinding)!
 
 browseViewHierarchy: aView
 	"Useful utility for browsing a view hierarchy."
@@ -1654,7 +1652,7 @@ defaultPublishedAspectsLiteralsMapOf: aTool
 		ifAbsent: [self saveDefaultPublishedAspectsOf: aTool]!
 
 definitionsMatching: aMethodSearch in: aBrowserEnvironment
-	^(self selectMethods: aMethodSearch methodDefinitionFilter in: aBrowserEnvironment)
+	^(aBrowserEnvironment filterMethods: aMethodSearch methodDefinitionFilter)
 		label: ('Definitions of <1p> in <2p>' expandMacrosWith: aMethodSearch pattern
 					with: aBrowserEnvironment);
 		search: aMethodSearch;
@@ -1664,7 +1662,7 @@ definitionsMatching: aMethodSearch inHierarchyOf: aBehavior within: aBrowserEnvi
 	| class hierarchy |
 	class := aBehavior instanceClass.
 	hierarchy := aBrowserEnvironment forClassHierarchyOf: class.
-	^(self selectMethods: aMethodSearch methodDefinitionFilter in: hierarchy)
+	^(hierarchy filterMethods: aMethodSearch methodDefinitionFilter)
 		label: ('Definitions of <1p> in the local hierarchy of <2p>' expandMacrosWith: aMethodSearch pattern
 					with: class);
 		yourself!
@@ -1700,7 +1698,7 @@ deleteClassHierarchy: aClass
 				expandMacrosWith: prompt))
 		ifFalse: [^false].
 	removedGlobals := OrderedCollection new.
-	references := self referencesToVariable: aClass binding in: scope.
+	references := scope referencesToVariable: aClass binding.
 	aClass allSubclassesEndOrderDo: 
 			[:each |
 			removedGlobals add: each binding.
@@ -1711,7 +1709,7 @@ deleteClassHierarchy: aClass
 			[:e |
 			MessageBox errorMsg: e description.
 			^false].
-	removedGlobals do: [:g | references addMethods: (self referencesToVariable: g in: scope) allMethods].
+	removedGlobals do: [:g | references addMethods: (scope referencesToVariable: g) allMethods].
 	references notEmpty
 		ifTrue: 
 			[references
@@ -1734,8 +1732,7 @@ deprecatedIcon
 
 directReferencesToVariable: aVariableBinding in: aBrowserEnvironment
 	| matched |
-	matched := self selectMethods: [:each | each refersToLiteral: aVariableBinding]
-				in: aBrowserEnvironment.
+	matched := aBrowserEnvironment filterMethods: [:method | method refersToLiteral: aVariableBinding].
 	matched
 		label: ('All methods that reference <1p>.<2s> in <3p>'
 					expandMacrosWith: aVariableBinding environment
@@ -3241,7 +3238,7 @@ promptForReferencesToGlobal: aString in: aBrowserEnvironment
 				[:value |
 				(BindingReference isValidQualifiedName: value) and: [value asQualifiedReference isDefined]];
 		showModal)
-			ifNotNil: [:globalName | self referencesToVariable: globalName asQualifiedReference binding in: aBrowserEnvironment]!
+			ifNotNil: [:globalName | aBrowserEnvironment referencesToVariable: globalName asQualifiedReference binding]!
 
 promptForSearchString: aFindDetails caption: aString
 	^(AdvancedFindDialog create: 'Directionless view' on: aFindDetails)
@@ -3391,7 +3388,7 @@ redoChange
 	self changeManager redoOperation!
 
 referencesMatching: aMethodSearch in: aBrowserEnvironment
-	^(self selectMethods: aMethodSearch methodReferenceFilter in: aBrowserEnvironment)
+	^(aBrowserEnvironment filterMethods: aMethodSearch methodReferenceFilter)
 		label: ('References to <1p> in <2p>' expandMacrosWith: aMethodSearch pattern
 					with: aBrowserEnvironment);
 		search: aMethodSearch;
@@ -3414,13 +3411,13 @@ referencesTo: anObject in: aBrowserEnvironment
 
 	| search |
 	search := MethodSearch newLiteral: anObject.
-	^(self selectMethods: search simpleReferenceFilter in: aBrowserEnvironment)
+	^(aBrowserEnvironment filterMethods: search simpleReferenceFilter)
 		label: ('References to <1p> in <2p>' expandMacrosWith: anObject with: aBrowserEnvironment);
 		addSearchString: search pattern;
 		yourself!
 
 referencesToBinding: aBindingReference in: aBrowserEnvironment
-	^(self selectMethods: [:each | each refersToLiteral: aBindingReference] in: aBrowserEnvironment)
+	^(aBrowserEnvironment filterMethods: [:method | method refersToLiteral: aBindingReference])
 		label: ('References to <1p> in <2p>' expandMacrosWith: aBindingReference with: aBrowserEnvironment);
 		addSearchString: aBindingReference printString;
 		yourself!
@@ -3428,22 +3425,13 @@ referencesToBinding: aBindingReference in: aBrowserEnvironment
 referencesToLiteral: anObject in: aBrowserEnvironment
 	| search |
 	search := MethodSearch newLiteral: anObject.
-	^(self selectMethods: search simpleReferenceFilter in: aBrowserEnvironment)
+	^(aBrowserEnvironment filterMethods: search simpleReferenceFilter)
 		label: ('References to <1p> in <2p>' expandMacrosWith: anObject with: aBrowserEnvironment);
 		search: search;
 		yourself!
 
 referencesToVariable: aVariableBinding in: aBrowserEnvironment
-	| matched |
-	matched := self selectMethods: 
-					[:each |
-					(each refersToLiteral: aVariableBinding value) or: [each refersToLiteral: aVariableBinding]]
-				in: aBrowserEnvironment.
-	matched
-		label: ('Direct and indirect references to <1s> in <2p>' expandMacrosWith: aVariableBinding key
-					with: aBrowserEnvironment);
-		addSearchString: aVariableBinding key.
-	^matched!
+	^aBrowserEnvironment referencesToVariable: aVariableBinding!
 
 reformatAllMethodsIn: aBrowserEnvironment
 	| changes |
@@ -3699,7 +3687,7 @@ renameClass: aClass to: newClassName
 	| oldClassName references global |
 	oldClassName := aClass name asString.
 	global := aClass binding.
-	references := self referencesToVariable: global in: self systemEnvironment.
+	references := self systemEnvironment referencesToVariable: global.
 	ClassBuilder renameClass: aClass to: newClassName.
 	references isEmpty
 		ifTrue: [MessageBox notify: 'No methods referenced ' , oldClassName]
@@ -3896,16 +3884,6 @@ saveImageAs
 							[self playSaveImageSound.
 							self sessionManager saveImage: fileName]]]!
 
-selectMethods: aMonadicValuable in: aBrowserEnvironment
-	"Private - Answer a <BrowserEnvironment> scoped to contain only those methods within the
-	<BrowserEnvironment> argument for which the <monadicValuable> argument evaluates to true.
-	The resulting BrowserEnvironment is not a static list, but will always include whichever
-	methods pass the filter at the particular point in time that the enquiry is made."
-
-	^(Refactory.Browser.PluggableEnvironment onEnvironment: aBrowserEnvironment select: aMonadicValuable)
-		label: 'Some methods from ' , aBrowserEnvironment label;
-		yourself!
-
 selectMethods: aMonadicValuable in: aBrowserEnvironment withProgress: aString
 	| progress |
 	progress := ProgressDialog create.
@@ -3913,7 +3891,7 @@ selectMethods: aMonadicValuable in: aBrowserEnvironment withProgress: aString
 	progress operation: 
 			[:p |
 			| matching |
-			matching := self selectMethods: aMonadicValuable in: aBrowserEnvironment.
+			matching := aBrowserEnvironment filterMethods: aMonadicValuable.
 			matching progressBlock: [:percentComplete | p value: percentComplete].
 			(aBrowserEnvironment forMethods: matching allMethods)
 				filter: aMonadicValuable;
@@ -4071,7 +4049,7 @@ upgradeAllResourcesReferencingClassNamed: aSymbol
 
 	| var refs |
 	var := aSymbol asQualifiedReference binding.
-	refs := self referencesToVariable: var in: self systemEnvironment.
+	refs := self systemEnvironment referencesToVariable: var.
 	refs allMethods do: [:each | (ResourceIdentifier forMethod: each) ifNotNil: [:ri | ri reassign]]!
 
 userPreferencesIcon
@@ -4604,7 +4582,6 @@ wrapText: aString toWidth: max indent: colInteger tabWidth: tabInteger
 !Tools.SmalltalkSystem categoriesFor: #saveDefaultPublishedAspectsOf:!operations!private!theming! !
 !Tools.SmalltalkSystem categoriesFor: #saveImage!commands!public! !
 !Tools.SmalltalkSystem categoriesFor: #saveImageAs!commands!public! !
-!Tools.SmalltalkSystem categoriesFor: #selectMethods:in:!enquiries!private! !
 !Tools.SmalltalkSystem categoriesFor: #selectMethods:in:withProgress:!private!searching! !
 !Tools.SmalltalkSystem categoriesFor: #sessionManager!accessing!private! !
 !Tools.SmalltalkSystem categoriesFor: #setCustomDrawAttributes:forClass:!helpers!private! !

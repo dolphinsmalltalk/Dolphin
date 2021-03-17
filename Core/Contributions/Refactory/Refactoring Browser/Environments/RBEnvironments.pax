@@ -18,6 +18,7 @@ package setClassNames: #(
 	#{Refactory.Browser.ClassEnvironment}
 	#{Refactory.Browser.NotEnvironment}
 	#{Refactory.Browser.OrEnvironment}
+	#{Refactory.Browser.PluggableEnvironment}
 	#{Refactory.Browser.ProtocolEnvironment}
 	#{Refactory.Browser.SelectorEnvironment}
 	#{Refactory.Browser.VariableEnvironment}
@@ -87,6 +88,12 @@ Refactory.Browser.BrowserEnvironmentWrapper subclass: #'Refactory.Browser.NotEnv
 	classConstants: {}!
 Refactory.Browser.BrowserEnvironmentWrapper subclass: #'Refactory.Browser.OrEnvironment'
 	instanceVariableNames: 'oredEnvironment'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Refactory.Browser.BrowserEnvironmentWrapper subclass: #'Refactory.Browser.PluggableEnvironment'
+	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''

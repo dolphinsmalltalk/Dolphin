@@ -49,12 +49,12 @@ allClassesDo: aBlock
 	Smalltalk allBehaviorsDo: aBlock!
 
 associationAt: aKey
-	^aKey asQualifiedReference bindingOrNil
+	^(Smalltalk resolveBindingPath: ($. split: aKey))
 		ifNotNil: 
-			[:association |
+			[:binding |
 			| class |
-			class := association value isBehavior ifTrue: [association value] ifFalse: [association value class].
-			((self includesClass: class) or: [self includesClass: class class]) ifTrue: [association]]!
+			(class := binding value) isBehavior ifFalse: [class := class class].
+			((self includesClass: class) or: [self includesClass: class class]) ifTrue: [binding]]!
 
 at: aKey
 	#rbFix.	"Replace #keyNotFoundError: with #errorNotFound"
@@ -139,6 +139,14 @@ filter
 
 filter: aMonadicValuable 
 	filter := aMonadicValuable!
+
+filterMethods: aMonadicValuable
+	"Answer a <BrowserEnvironment> scoped to contain only those methods within the receiver for which the <monadicValuable> argument evaluates to true.
+	The resulting BrowserEnvironment is not a static list, but will always include whichever methods pass the filter at the particular point in time that the enquiry is made."
+
+	^(Refactory.Browser.PluggableEnvironment onEnvironment: self select: aMonadicValuable)
+		label: 'Some methods from ' , self label;
+		yourself!
 
 forCategories: categoryList
 	^CategoryEnvironment onEnvironment: self categories: categoryList!
@@ -317,6 +325,17 @@ referencesTo: aLiteral in: aClass
 	#rbFix.	"Extract construction of hierarchy environment."
 	^(self forClassHierarchyOf: aClass) referencesTo: aLiteral!
 
+referencesToVariable: aVariableBinding
+	| matched |
+	matched := self filterMethods: 
+					[:method |
+					(method refersToLiteral: aVariableBinding value) or: [method refersToLiteral: aVariableBinding]].
+	matched
+		label: ('Direct and indirect references to <1s> in <2p>' expandMacrosWith: aVariableBinding key
+					with: self);
+		addSearchString: aVariableBinding key.
+	^matched!
+
 searchStrings
 	^searchStrings isNil
 		ifTrue: [#()]
@@ -394,6 +413,7 @@ whichProtocolsInclude: aSelector in: aClass
 !Refactory.Browser.BrowserEnvironment categoriesFor: #environment!public! !
 !Refactory.Browser.BrowserEnvironment categoriesFor: #filter!accessing!private! !
 !Refactory.Browser.BrowserEnvironment categoriesFor: #filter:!accessing!private! !
+!Refactory.Browser.BrowserEnvironment categoriesFor: #filterMethods:!enquiries!public! !
 !Refactory.Browser.BrowserEnvironment categoriesFor: #forCategories:!environments!public! !
 !Refactory.Browser.BrowserEnvironment categoriesFor: #forClass:protocols:!environments!public! !
 !Refactory.Browser.BrowserEnvironment categoriesFor: #forClass:selectors:!environments!public! !
@@ -431,6 +451,7 @@ whichProtocolsInclude: aSelector in: aClass
 !Refactory.Browser.BrowserEnvironment categoriesFor: #protocolsFor:!accessing!public! !
 !Refactory.Browser.BrowserEnvironment categoriesFor: #referencesTo:!environments!public! !
 !Refactory.Browser.BrowserEnvironment categoriesFor: #referencesTo:in:!environments!public! !
+!Refactory.Browser.BrowserEnvironment categoriesFor: #referencesToVariable:!enquiries!private! !
 !Refactory.Browser.BrowserEnvironment categoriesFor: #searchStrings!accessing!public! !
 !Refactory.Browser.BrowserEnvironment categoriesFor: #searchStrings:!accessing!public! !
 !Refactory.Browser.BrowserEnvironment categoriesFor: #selectMethods:!environments!public! !

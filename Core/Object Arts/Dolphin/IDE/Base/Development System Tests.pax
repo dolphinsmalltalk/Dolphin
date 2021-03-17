@@ -9,7 +9,6 @@ package setClassNames: #(
 	#{OS.Tests.VersionResourceTest}
 	#{Refactory.Browser.Tests.MethodCategoryEnvironmentTest}
 	#{Refactory.Browser.Tests.PackageEnvironmentTest}
-	#{Refactory.Browser.Tests.PluggableEnvironmentTest}
 	#{Refactory.Browser.Tests.RewriteTestCase}
 	#{Tools.Tests}
 	#{Tools.Tests.ImageListViewTest}
@@ -135,12 +134,6 @@ Refactory.Browser.Tests.BrowserEnvironmentTest subclass: #'Refactory.Browser.Tes
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Refactory.Browser.Tests.BrowserEnvironmentTest subclass: #'Refactory.Browser.Tests.PackageEnvironmentTest'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-Refactory.Browser.Tests.BrowserEnvironmentTest subclass: #'Refactory.Browser.Tests.PluggableEnvironmentTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

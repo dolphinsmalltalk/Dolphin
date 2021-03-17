@@ -28,6 +28,7 @@ package setClassNames: #(
 	#{Refactory.Browser.Tests.MoveMethodTest}
 	#{Refactory.Browser.Tests.MoveVariableDefinitionTest}
 	#{Refactory.Browser.Tests.ParserTest}
+	#{Refactory.Browser.Tests.PluggableEnvironmentTest}
 	#{Refactory.Browser.Tests.ProtectInstanceVariableTest}
 	#{Refactory.Browser.Tests.PullUpClassVariableTest}
 	#{Refactory.Browser.Tests.PushDownClassVariableTest}
@@ -68,6 +69,7 @@ package setMethodNames: #(
 	#(#{Core.String} #withCRs)
 	#(#{Kernel.BlockClosure} #isEqualTo:)
 	#(#{Kernel.CompiledCode} #isEqualTo:)
+	#(#{Refactory.Browser.RemoveClassRefactoring class} #correspondingTestCase)
 	#(#{Smalltalk class} #isEqualTo:)
 ).
 
@@ -166,6 +168,12 @@ Refactory.Browser.Tests.RefactoringBrowserTest subclass: #'Refactory.Browser.Tes
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Refactory.Browser.Tests.RefactoringBrowserTest subclass: #'Refactory.Browser.Tests.VariableTypeTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Refactory.Browser.Tests.BrowserEnvironmentTest subclass: #'Refactory.Browser.Tests.PluggableEnvironmentTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -486,6 +494,12 @@ isEqualTo: aMethod
 				ifFalse: [(a isEqualTo: b) ifFalse: [^false]]].
 	^true! !
 !Kernel.CompiledCode categoriesFor: #isEqualTo:!public!testing! !
+
+!Refactory.Browser.RemoveClassRefactoring class methodsFor!
+
+correspondingTestCase
+	^Refactory.Browser.Tests.RemoveClassTest! !
+!Refactory.Browser.RemoveClassRefactoring class categoriesFor: #correspondingTestCase!public! !
 
 !Smalltalk class methodsFor!
 

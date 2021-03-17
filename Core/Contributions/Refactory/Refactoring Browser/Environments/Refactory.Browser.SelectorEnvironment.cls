@@ -32,6 +32,7 @@ addClass: aClass selectors: aCollection
 classes: classArray metaClasses: metaArray
 	"Used to recreate an environment from its storeString"
 
+	#namespaceToDo. "Store one table of selectors using BindingReferences as the keys"
 	classSelectors := LookupTable new.
 	metaClassSelectors := LookupTable new.
 	classArray do: [:each | classSelectors at: each first put: each last asSet].
@@ -40,17 +41,21 @@ classes: classArray metaClasses: metaArray
 classesAndSelectorsDo: aBlock
 	classSelectors keysAndValuesDo: 
 			[:eachClassName :eachSelectors |
-			eachClassName asQualifiedReference valueOrNil ifNotNil:  
-					[:class |
+			(Smalltalk resolveBindingPath: ($. split: eachClassName))
+				ifNotNil: 
+					[:binding |
+					| class |
+					class := binding value.
 					(environment includesClass: class)
 						ifTrue: 
 							[eachSelectors do: [:each | (class includesSelector: each) ifTrue: [aBlock value: class value: each]]]]].
 	metaClassSelectors keysAndValuesDo: 
 			[:eachClassName :eachSelectors |
-			eachClassName asQualifiedReference valueOrNil ifNotNil:
-					[:class |
+			(Smalltalk resolveBindingPath: ($. split: eachClassName))
+				ifNotNil: 
+					[:binding |
 					| meta |
-					meta := class class.
+					meta := binding value class.
 					(environment includesClass: meta)
 						ifTrue: 
 							[eachSelectors do: [:each | (meta includesSelector: each) ifTrue: [aBlock value: meta value: each]]]]]!
@@ -58,12 +63,20 @@ classesAndSelectorsDo: aBlock
 classesDo: aBlock
 	classSelectors keysDo: 
 			[:each |
-			each asQualifiedReference
-				ifDefined: [:class | (environment includesClass: class) ifTrue: [aBlock value: class]]].
+			(Smalltalk resolveBindingPath: ($. split: each))
+				ifNotNil: 
+					[:binding |
+					| class |
+					class := binding value.
+					(environment includesClass: class) ifTrue: [aBlock value: class]]].
 	metaClassSelectors keysDo: 
 			[:each |
-			each asQualifiedReference
-				ifDefined: [:class | (environment includesClass: class class) ifTrue: [aBlock value: class class]]]!
+			(Smalltalk resolveBindingPath: ($. split: each))
+				ifNotNil: 
+					[:binding |
+					| meta |
+					meta := binding value class.
+					(environment includesClass: meta) ifTrue: [aBlock value: meta]]]!
 
 classNames
 	| names collectNames |

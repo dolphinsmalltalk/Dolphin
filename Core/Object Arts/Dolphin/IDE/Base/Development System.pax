@@ -16,7 +16,6 @@ package setClassNames: #(
 	#{Refactory.Browser.MethodCategoryEnvironment}
 	#{Refactory.Browser.MethodProtocolEnvironment}
 	#{Refactory.Browser.PackageEnvironment}
-	#{Refactory.Browser.PluggableEnvironment}
 	#{Tools.AbstractPublishedAspectInspector}
 	#{Tools.AllMethodsCategory}
 	#{Tools.AnonymousKeyedAspect}
@@ -869,12 +868,6 @@ Refactory.Browser.BrowserEnvironmentWrapper subclass: #'Refactory.Browser.Method
 	classConstants: {}!
 Refactory.Browser.BrowserEnvironmentWrapper subclass: #'Refactory.Browser.PackageEnvironment'
 	instanceVariableNames: 'packages'
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-Refactory.Browser.BrowserEnvironmentWrapper subclass: #'Refactory.Browser.PluggableEnvironment'
-	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''

@@ -280,7 +280,7 @@ testSelectMethods
 	self assert: environment numberClasses equals: 0.
 	environment := universalEnvironment selectMethods: [:each | true].
 	self assert: environment numberSelectors equals: self totalSelectors.
-	environment := universalEnvironment selectMethods: [:each | each refersToLiteral: #environment].
+	environment := universalEnvironment selectMethods: [:method | method refersToLiteral: #environment].
 	self assert: environment numberSelectors
 		equals: (universalEnvironment referencesTo: #environment) numberSelectors!
 
