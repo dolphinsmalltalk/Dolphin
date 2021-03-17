@@ -96,21 +96,6 @@ literalArrayNodeClass
 literalValueNodeClass
 	^StLiteralValueNode!
 
-lookupExternalStructType: anStIdentifierToken
-	| structClass |
-	structClass := anStIdentifierToken value asQualifiedReference bindingOrNil
-				ifNil: 
-					[self parserError: CErrUndeclared range: anStIdentifierToken sourceInterval.
-					"Error ignored, attempt to recover..."
-					External.DWORD]
-				ifNotNil: [:var | var value].
-	((structClass isKindOf: Class) not or: [structClass isPointers and: [structClass instSize < 1]])
-		ifTrue: 
-			[self parserError: CErrInvalidStructArg range: anStIdentifierToken sourceInterval.
-			"Error ignored, attempt to recover..."
-			structClass := External.DWORD].
-	^structClass!
-
 messageNodeClass
 	^StMessageNode!
 
@@ -1180,7 +1165,6 @@ variableNodeClass
 !Kernel.Parser categoriesFor: #line!accessing!public! !
 !Kernel.Parser categoriesFor: #literalArrayNodeClass!constants!private! !
 !Kernel.Parser categoriesFor: #literalValueNodeClass!constants!private! !
-!Kernel.Parser categoriesFor: #lookupExternalStructType:!parsing!private! !
 !Kernel.Parser categoriesFor: #messageNodeClass!constants!private! !
 !Kernel.Parser categoriesFor: #methodClass:!accessing!public! !
 !Kernel.Parser categoriesFor: #methodNodeClass!constants!private! !

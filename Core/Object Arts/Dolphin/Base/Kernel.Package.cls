@@ -232,16 +232,6 @@ basicScriptAt: scriptSymbol put: aString
 			scripts isEmpty ifTrue: [scripts := nil]]
 		ifFalse: [scripts at: scriptSymbol put: aString]!
 
-behaviorFromName: aBindingReference ifAbsent: exceptionHandler
-	| index |
-	index := aBindingReference identityIndexOf: $\x20.
-	^index == 0
-		ifTrue: [self classFromName: aBindingReference ifAbsent: exceptionHandler]
-		ifFalse: 
-			[(self classFromName: (aBindingReference copyFrom: 1 to: index - 1) ifAbsent: [])
-				ifNil: [exceptionHandler value]
-				ifNotNil: [:class | class class]]!
-
 behaviors
 	"Answer an <IdentitySet> of the <Behavior>s owned by the receiver."
 
@@ -357,11 +347,6 @@ classFromName: className
 	See Package>>nameForClass: for the reverse transformation."
 
 	^className asQualifiedReference value!
-
-classFromName: aSymbol ifAbsent: aNiladicValuable
-	"Private - Answer the Class object to which aSymbol refers, or if not defined the result of evaluating aNiladicValuable."
-
-	^aSymbol asQualifiedReference valueOrDo: aNiladicValuable!
 
 classNames
 	"Answer a <collection> of <BindingReference>s naming all the classes owned by the receiver."
@@ -1852,7 +1837,6 @@ If you experience subsequent problems please contact the package supplier for an
 !Kernel.Package categoriesFor: #basicRemoveVariableNamed:!private!removing! !
 !Kernel.Package categoriesFor: #basicResetPrerequisites!initializing!private! !
 !Kernel.Package categoriesFor: #basicScriptAt:put:!accessing!private! !
-!Kernel.Package categoriesFor: #behaviorFromName:ifAbsent:!mapping!private! !
 !Kernel.Package categoriesFor: #behaviors!enumerating!public! !
 !Kernel.Package categoriesFor: #behaviorsDo:!enumerating!public! !
 !Kernel.Package categoriesFor: #binaryGlobalNames:!accessing!legacy package loading!private! !
@@ -1869,7 +1853,6 @@ If you experience subsequent problems please contact the package supplier for an
 !Kernel.Package categoriesFor: #classesDo:!enumerating!public! !
 !Kernel.Package categoriesFor: #classesInHierarchyOrder!enumerating!private! !
 !Kernel.Package categoriesFor: #classFromName:!helpers!private! !
-!Kernel.Package categoriesFor: #classFromName:ifAbsent:!helpers!private! !
 !Kernel.Package categoriesFor: #classNames!accessing!public! !
 !Kernel.Package categoriesFor: #classNames:!accessing!private! !
 !Kernel.Package categoriesFor: #comment!accessing!public! !

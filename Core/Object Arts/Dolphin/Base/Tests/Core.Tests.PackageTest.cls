@@ -233,14 +233,6 @@ tearDown
 	#(#looseA #looseC) do: [:each | scribbleClass removeSelector: each ifAbsent: []].
 	#(#resource_Scribble_test) do: [:each | scribbleClass class removeSelector: each ifAbsent: []]!
 
-testBehaviorFromName
-	"Regression test for fix of bug handling class names containing non-ASCII characters. Note that such names are not syntactically valid in ANSI Smalltalk syntax, but they can easily be generated programmatically, and in future we may want to modernise the syntax to allow these."
-
-	| subject |
-	subject := (ClassBuilder forAnonymousSubclassOf: Package) createNewClass new.
-	subject class compile: 'classFromName: aString ifAbsent: aBlock ^aString = ''Camión'''.
-	self assert: (subject behaviorFromName: 'Camión class' ifAbsent: []) equals: true class!
-
 testForwardRefLoadPac
 	"#1720: Test loading and converting of old packages with forward reference view referereces"
 
@@ -376,7 +368,6 @@ verifyPackageElementsExist: aPackage
 !Core.Tests.PackageTest categoriesFor: #loadTestAndUninstallPackage:!helpers!private! !
 !Core.Tests.PackageTest categoriesFor: #setUp!private!running! !
 !Core.Tests.PackageTest categoriesFor: #tearDown!private!running! !
-!Core.Tests.PackageTest categoriesFor: #testBehaviorFromName!public!unit tests! !
 !Core.Tests.PackageTest categoriesFor: #testForwardRefLoadPac!public!unit tests! !
 !Core.Tests.PackageTest categoriesFor: #testLoad21Pac!public!unit tests! !
 !Core.Tests.PackageTest categoriesFor: #testLoad40Pac!public!unit tests! !
