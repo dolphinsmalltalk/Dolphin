@@ -188,12 +188,6 @@ changeKey: aString to: aString2
 	targetNamespace basicAddBinding: binding.
 	^binding!
 
-classBindingNames
-	"Answer a Set of the class variable names of the receiver. In the case of namespaces, we don't regard the variables in the namespace as class variables.
-	The answer will include constant names, if any."
-
-	^self definedBindings collect: [:each | each key]!
-
 collect: aMonadicValuable
 	^classPool collect: aMonadicValuable!
 
@@ -352,7 +346,6 @@ variableRenamed: aVariableBinding from: aString
 !Kernel.Namespace class categoriesFor: #baseEnvironment!constants!private! !
 !Kernel.Namespace class categoriesFor: #basicClassPool:!binding!private! !
 !Kernel.Namespace class categoriesFor: #changeKey:to:!private! !
-!Kernel.Namespace class categoriesFor: #classBindingNames!accessing!class variables!public! !
 !Kernel.Namespace class categoriesFor: #collect:!dictionary-enumerating!public! !
 !Kernel.Namespace class categoriesFor: #declareVariable:!public! !
 !Kernel.Namespace class categoriesFor: #detect:!dictionary-enumerating!public! !

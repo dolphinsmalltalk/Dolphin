@@ -268,9 +268,9 @@ category: category
 	self categories: {self classCategoryClass name: category asString}!
 
 classBindingNames
-	"Answer a Set of the class variable names of the receiver. The answer will include constant names, if any."
+	"Answer a Set of the class variable names of the receiver. The answer will include constant names, if any. It does not include any non-class variables defined in the receiver (usually only relevant for Namespaces)."
 
-	^(self bindings select: [:each | each isClassVariable]) collect: [:each | each key]!
+	^self definedBindings collect: [:each | each key]!
 
 classCategories
 	"Private - Answer a <collection> of <ClassCategory> objects representing the 
