@@ -11,54 +11,42 @@ Refactory.Browser.RemoveClassRefactoring comment: ''!
 !Refactory.Browser.RemoveClassRefactoring categoriesForClass!Refactory-Refactorings! !
 !Refactory.Browser.RemoveClassRefactoring methodsFor!
 
-checkMethodReferencesTo: aSymbol
-	(self hasReferencesTo: aSymbol)
+checkReferencesTo: aRBClass
+	(self hasReferencesTo: aRBClass)
 		ifTrue: 
 			[self
-				refactoringError: ('<1s> is referenced and cannot be removed safely.<n><n>Would you like to browse references?'
-						expandMacrosWith: aSymbol)
+				refactoringError: ('<1p> is referenced and cannot be removed safely.<n><n>Would you like to browse references?'
+						expandMacrosWith: aRBClass)
 				with: 
 					[| searches |
 					searches := OrderedCollection new.
-					aSymbol asQualifiedReference bindingOrNil
+					aRBClass bindingOrNil
 						ifNotNil: [:binding | searches add: (self model environment referencesTo: binding)].
-					searches add: (self model environment referencesTo: aSymbol).
+					searches add: (self model environment referencesTo: aRBClass).
 					self browseEnvironments: searches]]!
-
-checkReferencesTo: aString 
-	| className |
-	#rbFix.	"Extracted from preconditions"
-	className := aString asSymbol.
-	self checkMethodReferencesTo: className.
-!
 
 classNames: aClassNameCollection 
 	classNames := aClassNameCollection!
 
-hasReferencesTo: aSymbol
-	| bindingRef |
-	bindingRef := aSymbol asQualifiedReference.
-	BrowserEnvironment new methodsDo: 
-			[:each |
-			each literalsDo: 
-					[:literal |
-					((literal refersToLiteral: bindingRef) or: [literal refersToLiteral: aSymbol]) ifTrue: [^true]]].
+hasReferencesTo: aRBClass
+	model allReferencesToClass: aRBClass do: [:each | 
+		(classNames includes: each modelClass name) ifFalse: [^true]].
 	^false!
 
 preconditions
 	^classNames inject: RBCondition empty
 		into: 
-			[:sum :each | 
+			[:sum :each |
 			| aClass |
 			aClass := self model classNamed: each asSymbol.
 			aClass isNil ifTrue: [self refactoringError: 'No such class'].
-			sum 
-				& (((RBCondition isMetaclass: aClass) errorMacro: 'Cannot remove just the metaclass') not 
+			sum
+				& (((RBCondition isMetaclass: aClass) errorMacro: 'Cannot remove just the metaclass') not
 						& (RBCondition withBlock: 
-									[self checkReferencesTo: each.
-									true]) 
-							& ((RBCondition hasSubclasses: aClass) not | ((RBCondition isEmptyClass: aClass) 
-											& ((RBCondition withBlock: [aClass superclass notNil])
+									[self checkReferencesTo: aClass.
+									true])
+							& ((RBCondition hasSubclasses: aClass excluding: classNames) not
+									| ((RBCondition isEmptyClass: aClass) & ((RBCondition withBlock: [aClass superclass notNil])
 													errorMacro: 'Cannot remove top level class<n>when it has subclasses';
 													yourself))))]!
 
@@ -83,8 +71,7 @@ transform
 	self
 		reparentSubclasses;
 		removeClasses! !
-!Refactory.Browser.RemoveClassRefactoring categoriesFor: #checkMethodReferencesTo:!preconditions!private! !
-!Refactory.Browser.RemoveClassRefactoring categoriesFor: #checkReferencesTo:!preconditions!public! !
+!Refactory.Browser.RemoveClassRefactoring categoriesFor: #checkReferencesTo:!preconditions!private! !
 !Refactory.Browser.RemoveClassRefactoring categoriesFor: #classNames:!initialize/release!public! !
 !Refactory.Browser.RemoveClassRefactoring categoriesFor: #hasReferencesTo:!preconditions!public! !
 !Refactory.Browser.RemoveClassRefactoring categoriesFor: #preconditions!preconditions!public! !

@@ -101,13 +101,13 @@ classNamed: aString
 			[(self classNamed: (aString copyFrom: 1 to: index - 1) asSymbol)
 				ifNotNil: [:class | class metaclass]]
 		ifFalse: 
-			[(environment lookup: aString)
+			[(environment associationAt: aString)
 				ifNotNil: 
-					[:class |
+					[:binding |
+					| class |
+					class := binding value.
 					"The environment could be the SystemDictionary, and may return non-Class objects, or a BrowserEnvironment, which won't, so we need to check it is a class"
-					(class isBehavior and: 
-							[aString
-								= ((BindingReference isQualifiedName: aString) ifTrue: [class fullName] ifFalse: [class fullName])])
+					(class isBehavior and: [class fullName = aString])
 						ifTrue: 
 							[| behaviors |
 							behaviors := self createNewClassFor: class.
@@ -133,7 +133,7 @@ createNewClassFor: aBehavior
 	meta := (RBMetaclass existing: aBehavior)
 				model: self;
 				yourself.
-	^changedClasses at: aBehavior instanceClass fullName put: {nonMeta. meta}!
+	^changedClasses at: aBehavior instanceClass fullName put: (Pair first: nonMeta second: meta)!
 
 defineClass: aString
 	| change newClass newClassName |

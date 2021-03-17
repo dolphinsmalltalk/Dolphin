@@ -71,10 +71,11 @@ testModelRenameSequenceClass
 				= (RBParser parseMethod: 'objectName ^ #(Foo3)')!
 
 testRenameClass
-	| refactoring class oldName newName newFullName newClass |
-	oldName := ClassToRename fullName.
+	| refactoring class oldName newName newFullName newClass classToRename |
+	oldName := 'Refactory.Browser.Tests.ClassToRename'.
+	classToRename := oldName asQualifiedReference value.
 	newName := 'New' , 'ClassName'.
-	refactoring := RenameClassRefactoring rename: ClassToRename to: newName.
+	refactoring := RenameClassRefactoring rename: classToRename to: newName.
 	self executeRefactoring: refactoring.
 	newFullName := oldName asQualifiedReference namespace fullNameFor: newName.
 	newClass := refactoring model classNamed: newFullName.
@@ -95,7 +96,7 @@ testRenameClass
 		equals: (RBParser
 				parseMethod: ('fullyQualifiedReference
 	^<2s>.<1s> new' expandMacrosWith: newName
-						with: ClassToRename environment fullName)).
+						with: classToRename environment fullName)).
 	self assert: (class parseTreeFor: #partiallyQualifiedReference1)
 		equals: (RBParser
 				parseMethod: ('partiallyQualifiedReference1
@@ -109,7 +110,7 @@ testRenameClass
 				parseMethod: ('externalReference: aClassToRename _: aClassToRename2
 	%<stdcall: <1s>* dummy <2s>.<1s> Tests.<1s>*>'
 						expandMacrosWith: newName
-						with: ClassToRename environment fullName))! !
+						with: classToRename environment fullName))! !
 !Refactory.Browser.Tests.RenameClassTest categoriesFor: #testBadName!failure tests!public! !
 !Refactory.Browser.Tests.RenameClassTest categoriesFor: #testExistingName!failure tests!public! !
 !Refactory.Browser.Tests.RenameClassTest categoriesFor: #testMetaClassFailure!failure tests!public! !

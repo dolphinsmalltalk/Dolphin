@@ -16,8 +16,7 @@ identifier
 
 setSource: aNamespace identifier: aString
 	source := aNamespace.
-	identifier := aString.
-	visited := Set with: aNamespace!
+	identifier := aString!
 
 source
 	"The source <Namespace> initiating the binding search."
@@ -27,7 +26,10 @@ source
 visitImport: aBindingReference from: aNamespace
 	(aBindingReference isPrivate and: [(source includesNamespace: aNamespace) not]) ifTrue: [^nil].
 	^aBindingReference valueOrNil
-		ifNotNil: [:namespace | (visited addNewElement: namespace) ifTrue: [namespace]]! !
+		ifNotNil: 
+			[:namespace |
+			"We delay initializing the visited set until the last possible moment, as mostly is is not required."
+			((visited ifNil: [visited := Set with: source]) addNewElement: namespace) ifTrue: [namespace]]! !
 !Kernel.BindingContext categoriesFor: #identifier!accessing!public! !
 !Kernel.BindingContext categoriesFor: #setSource:identifier:!initializing!private! !
 !Kernel.BindingContext categoriesFor: #source!accessing!public! !
@@ -36,6 +38,7 @@ visitImport: aBindingReference from: aNamespace
 !Kernel.BindingContext class methodsFor!
 
 source: aNamespace identifier: aString
+	<primitive: 157>
 	^self new
 		setSource: aNamespace identifier: aString;
 		yourself! !

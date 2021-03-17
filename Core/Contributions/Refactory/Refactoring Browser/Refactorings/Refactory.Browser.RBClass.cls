@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
 Refactory.Browser.RBAbstractClass subclass: #'Refactory.Browser.RBClass'
-	instanceVariableNames: 'classVariableNames imports category classConstants comment'
+	instanceVariableNames: 'unqualifiedName classVariableNames imports category classConstants comment'
 	classVariableNames: 'LookupComment'
 	imports: #()
 	classInstanceVariableNames: ''
@@ -117,9 +117,6 @@ kindOfSubclass
 		ifTrue: [self isBytes ifTrue: ['variableByteSubclass:'] ifFalse: ['variableSubclass:']]
 		ifFalse: ['subclass:']!
 
-name: aSymbol 
-	name := aSymbol!
-
 nonMetaclass
 	^self!
 
@@ -199,7 +196,8 @@ setName: aSymbol
 	comment := LookupComment!
 
 unqualifiedName
-	^(BindingReference splitQualifiedName: name) last asSymbol! !
+	^unqualifiedName
+		ifNil: [unqualifiedName := (BindingReference splitQualifiedName: name) last asSymbol]! !
 !Refactory.Browser.RBClass categoriesFor: #addClassConstant:!public!variable accessing! !
 !Refactory.Browser.RBClass categoriesFor: #addClassVariable:!public!variable accessing! !
 !Refactory.Browser.RBClass categoriesFor: #addImport:!public!variable accessing! !
@@ -223,7 +221,6 @@ unqualifiedName
 !Refactory.Browser.RBClass categoriesFor: #imports:!accessing!public! !
 !Refactory.Browser.RBClass categoriesFor: #isMeta!public!testing! !
 !Refactory.Browser.RBClass categoriesFor: #kindOfSubclass!class hierarchy-testing!private! !
-!Refactory.Browser.RBClass categoriesFor: #name:!accessing!public! !
 !Refactory.Browser.RBClass categoriesFor: #nonMetaclass!accessing!public! !
 !Refactory.Browser.RBClass categoriesFor: #printDefinitionOn:!accessing!public! !
 !Refactory.Browser.RBClass categoriesFor: #realName:!initialize/release!public! !
@@ -239,7 +236,7 @@ unqualifiedName
 existing: aBehavior
 	| class |
 	class := aBehavior instanceClass.
-	^(self named: class fullName asSymbol)
+	^(self named: class fullName)
 		realClass: class;
 		yourself!
 

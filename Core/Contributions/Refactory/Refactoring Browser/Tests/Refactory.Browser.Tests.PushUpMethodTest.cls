@@ -52,7 +52,7 @@ testPushUpMethodWithCopyOverriddenMethodsDown
 			self executeRefactoring: refactoring].
 	self assert: ((refactoring model classNamed: BasicLintRuleTest fullName) parseTreeFor: #isComposite)
 		equals: (RBParser parseMethod: 'isComposite ^false').
-	self assert: ((refactoring model classNamed: FooLintRuleTest fullName) parseTreeFor: #isComposite)
+	self assert: ((refactoring model classNamed: 'Refactory.Browser.Tests.Foo', 'LintRuleTest') parseTreeFor: #isComposite)
 		equals: (RBParser parseMethod: 'isComposite ^false').
 	self assert: ((refactoring model classNamed: LintRuleTest fullName) parseTreeFor: #isComposite)
 		equals: (RBParser parseMethod: 'isComposite ^true').

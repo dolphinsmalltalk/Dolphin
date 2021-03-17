@@ -158,10 +158,10 @@ hasNamespace: aSymbol
 		block: [aSymbol asQualifiedReference namespaceBinding notNil]
 		errorString: aSymbol , ' is <1?:not >in an existing namespace'!
 
-hasSubclasses: aClass
+hasSubclasses: aClass excluding: aCollection
 	^self new
 		type: {#hasSubclasses. aClass}
-		block: [aClass subclasses notEmpty]
+		block: [aClass subclasses anySatisfy: [:each | (aCollection includes: each name) not]]
 		errorString: aClass printString , ' has <1?:no >subclasses'!
 
 hasSuperclass: aClass
@@ -348,7 +348,7 @@ withBlock: aBlock errorString: aString
 !Refactory.Browser.RBCondition class categoriesFor: #directlyDefinesInstanceVariable:in:!instance creation!public! !
 !Refactory.Browser.RBCondition class categoriesFor: #empty!instance creation!public! !
 !Refactory.Browser.RBCondition class categoriesFor: #hasNamespace:!instance creation!public! !
-!Refactory.Browser.RBCondition class categoriesFor: #hasSubclasses:!instance creation!public! !
+!Refactory.Browser.RBCondition class categoriesFor: #hasSubclasses:excluding:!instance creation!public! !
 !Refactory.Browser.RBCondition class categoriesFor: #hasSuperclass:!instance creation!public! !
 !Refactory.Browser.RBCondition class categoriesFor: #hierarchyOf:canUnderstand:!instance creation!public! !
 !Refactory.Browser.RBCondition class categoriesFor: #hierarchyOf:definesVariable:!instance creation!public! !

@@ -45,10 +45,9 @@ addInstanceVariable: aString
 	self privateInstanceVariableNames add: aString.
 	model addInstanceVariable: aString to: self!
 
-addMethod: aRBMethod 
-	self newMethods at: aRBMethod selector put: aRBMethod.
-	removedMethods notNil 
-		ifTrue: [removedMethods remove: aRBMethod selector ifAbsent: []]!
+addMethod: aRBMethod
+	(newMethods ifNil: [newMethods := IdentityDictionary new]) at: aRBMethod selector put: aRBMethod.
+	removedMethods notNil ifTrue: [removedMethods remove: aRBMethod selector ifAbsent: []]!
 
 addSubclass: aRBClass 
 	self subclasses add: aRBClass!
@@ -112,10 +111,15 @@ allSuperclassesDo: aMonadicValuable
 			whileFalse: [aMonadicValuable value: current]!
 
 binding
-	^self name asQualifiedReference binding!
+	^self bindingOrNil ifNil: [Smalltalk errorNotFound: self name asQualifiedReference]!
 
 bindingFor: aString
 	^self realClass bindingFor: aString!
+
+bindingOrNil
+	"Resolve the binding for the receiver's real class, if any. The name is always a fully qualified name"
+
+	^Smalltalk resolveBindingPath: ($. split: self name)!
 
 compile: aString 
 	#rbFix. "Support multiple method categories for Dolphin"
@@ -306,9 +310,6 @@ model: aRBNamespace
 name
 	^name!
 
-name: aSymbol 
-	name := aSymbol!
-
 nearestRealClass
 	#rbFix.	"Added"
 	^self realClass isNil 
@@ -316,7 +317,11 @@ nearestRealClass
 		ifFalse: [self realClass]!
 
 newMethods
-	^newMethods isNil ifTrue: [newMethods := IdentityDictionary new] ifFalse: [newMethods]!
+	^newMethods
+		ifNil: 
+			[##(IdentityDictionary new
+				isImmutable: true;
+				yourself)]!
 
 nonMetaclass
 	^model classNamed: self fullName!
@@ -465,8 +470,8 @@ whichSelectorsReferToClass: aRBClass
 			[| literals |
 			#namespaceToDo.	"Bodge to search for unqualified name symbols"
 			literals := aRBClass realClass
-						ifNil: [{aRBClass name asSymbol. aRBClass unqualifiedName asSymbol}]
-						ifNotNil: [:class | {class. class binding. aRBClass name asSymbol. aRBClass unqualifiedName asSymbol}].
+						ifNil: [{aRBClass name asSymbol. aRBClass unqualifiedName}]
+						ifNotNil: [:class | {class. class binding. aRBClass name asSymbol. aRBClass unqualifiedName}].
 			selectors addAll: (self existingMethodsThatReferToAnyOf: literals)].
 	^selectors!
 
@@ -541,7 +546,7 @@ withAllSuperclassesDo: aMonadicValuable
 !Refactory.Browser.RBAbstractClass categoriesFor: #=!comparing!public! !
 !Refactory.Browser.RBAbstractClass categoriesFor: #addInstanceVariable:!public!variable accessing! !
 !Refactory.Browser.RBAbstractClass categoriesFor: #addMethod:!method accessing!public! !
-!Refactory.Browser.RBAbstractClass categoriesFor: #addSubclass:!private! !
+!Refactory.Browser.RBAbstractClass categoriesFor: #addSubclass:!class hierarchy-adding!private! !
 !Refactory.Browser.RBAbstractClass categoriesFor: #allClassVariableNames!accessing!public! !
 !Refactory.Browser.RBAbstractClass categoriesFor: #allImports!accessing!public! !
 !Refactory.Browser.RBAbstractClass categoriesFor: #allInstanceVariableNames!accessing!public! !
@@ -552,6 +557,7 @@ withAllSuperclassesDo: aMonadicValuable
 !Refactory.Browser.RBAbstractClass categoriesFor: #allSuperclassesDo:!accessing!public! !
 !Refactory.Browser.RBAbstractClass categoriesFor: #binding!accessing!public! !
 !Refactory.Browser.RBAbstractClass categoriesFor: #bindingFor:!bindings!public! !
+!Refactory.Browser.RBAbstractClass categoriesFor: #bindingOrNil!bindings!public! !
 !Refactory.Browser.RBAbstractClass categoriesFor: #compile:!method accessing!public! !
 !Refactory.Browser.RBAbstractClass categoriesFor: #compile:classified:!method accessing!public! !
 !Refactory.Browser.RBAbstractClass categoriesFor: #compileTree:!method accessing!public! !
@@ -567,8 +573,8 @@ withAllSuperclassesDo: aMonadicValuable
 !Refactory.Browser.RBAbstractClass categoriesFor: #directlyImportsNamespace:!public!testing! !
 !Refactory.Browser.RBAbstractClass categoriesFor: #existingMethodsThatReferTo:!method accessing!public! !
 !Refactory.Browser.RBAbstractClass categoriesFor: #existingMethodsThatReferToAnyOf:!method accessing!public! !
-!Refactory.Browser.RBAbstractClass categoriesFor: #fullName!public! !
-!Refactory.Browser.RBAbstractClass categoriesFor: #fullyQualifiedReference!private! !
+!Refactory.Browser.RBAbstractClass categoriesFor: #fullName!accessing!public! !
+!Refactory.Browser.RBAbstractClass categoriesFor: #fullyQualifiedReference!accessing!private! !
 !Refactory.Browser.RBAbstractClass categoriesFor: #hash!comparing!public! !
 !Refactory.Browser.RBAbstractClass categoriesFor: #hasRemoved:!public!testing! !
 !Refactory.Browser.RBAbstractClass categoriesFor: #hierarchyDefinesClassVariable:!public!testing! !
@@ -593,7 +599,6 @@ withAllSuperclassesDo: aMonadicValuable
 !Refactory.Browser.RBAbstractClass categoriesFor: #model!accessing!public! !
 !Refactory.Browser.RBAbstractClass categoriesFor: #model:!initialize/release!public! !
 !Refactory.Browser.RBAbstractClass categoriesFor: #name!accessing!public! !
-!Refactory.Browser.RBAbstractClass categoriesFor: #name:!accessing!public! !
 !Refactory.Browser.RBAbstractClass categoriesFor: #nearestRealClass!accessing!private! !
 !Refactory.Browser.RBAbstractClass categoriesFor: #newMethods!accessing!public! !
 !Refactory.Browser.RBAbstractClass categoriesFor: #nonMetaclass!accessing!public! !
@@ -611,8 +616,8 @@ withAllSuperclassesDo: aMonadicValuable
 !Refactory.Browser.RBAbstractClass categoriesFor: #renameInstanceVariable:to:around:!public!variable accessing! !
 !Refactory.Browser.RBAbstractClass categoriesFor: #selectors!method accessing!public! !
 !Refactory.Browser.RBAbstractClass categoriesFor: #setName:!initializing!private! !
-!Refactory.Browser.RBAbstractClass categoriesFor: #shortName!public! !
-!Refactory.Browser.RBAbstractClass categoriesFor: #shortName:!public! !
+!Refactory.Browser.RBAbstractClass categoriesFor: #shortName!accessing!public! !
+!Refactory.Browser.RBAbstractClass categoriesFor: #shortName:!accessing!public! !
 !Refactory.Browser.RBAbstractClass categoriesFor: #soleInstance!accessing!public! !
 !Refactory.Browser.RBAbstractClass categoriesFor: #sourceCodeFor:!method accessing!public! !
 !Refactory.Browser.RBAbstractClass categoriesFor: #storeOn:!printing!public! !
