@@ -199,6 +199,18 @@ do: operation
 
 	self codePointsDo: operation!
 
+do: aNiladicValuable separatedBy: aMonadicValuable
+	"Evaluate the <monadicValuable> first argument for each of the receiver's elements, interspersed with evaluations of the <niladicValuable> second argument. The separator argument is first evaluated after the first element, and is not evaluated after the last element (i.e. it is not evaluated at all if there are less than two elements)."
+
+	"Implementation Note: We have to override the superclass in order to enumerate code points."
+
+	| first stream ch |
+	first := true.
+	stream := self readStream.
+	[(ch := stream nextAvailable) isNil] whileFalse: 
+			[first ifTrue: [first := false] ifFalse: [aMonadicValuable value].
+			aNiladicValuable value: ch]!
+
 emitEncodingMarkerOn: aPositionableStream
 	"Emit any encoding marker used for the stream encoding this collection represents onto the
 	<PositionableStream> argument, which is assumed to be at the start of its sequence. This
@@ -465,6 +477,7 @@ with: otherCollection do: aDyadicValuable
 !Core.UtfEncodedString categoriesFor: #copyWithoutIndex:!copying!public! !
 !Core.UtfEncodedString categoriesFor: #decodeFrom:upTo:!encode/decode!private! !
 !Core.UtfEncodedString categoriesFor: #do:!debugger-step through!enumerating!public! !
+!Core.UtfEncodedString categoriesFor: #do:separatedBy:!enumerating!public! !
 !Core.UtfEncodedString categoriesFor: #emitEncodingMarkerOn:!accessing!public! !
 !Core.UtfEncodedString categoriesFor: #encodedAt:put:!accessing!encode/decode!private! !
 !Core.UtfEncodedString categoriesFor: #encodedSizeOf:!encode/decode!private! !

@@ -100,6 +100,17 @@ do: operation
 
 	1 to: self size do: [:i | operation value: (self at: i)]!
 
+do: aNiladicValuable separatedBy: aMonadicValuable
+	"Evaluate the <monadicValuable> first argument for each of the receiver's elements, interspersed with evaluations of the <niladicValuable> second argument. The separator argument is first evaluated after the first element, and is not evaluated after the last element (i.e. it is not evaluated at all if there are less than two elements)."
+
+	"Implementation Note: As elegant as the superclass implementation is, it is not particularly efficient as it requires two full blocks. Therefore we override here for efficiency, as this is a very useful operation for printing and joining."
+
+	1 to: self size
+		do: 
+			[:i |
+			i > 1 ifTrue: [aMonadicValuable value].
+			aNiladicValuable value: (self at: i)]!
+
 findFirst: discriminator
 	"Answer the index of the first element of the receiver for which the monadic
 	valuable argument, discriminator, evaluates to true. If there are no such elements,
@@ -230,6 +241,7 @@ sortUsing: aSortAlgorithm
 !Core.ArrayedCollection categoriesFor: #decodeAt:!encode/decode!private! !
 !Core.ArrayedCollection categoriesFor: #decodeNextFrom:!encode/decode!private! !
 !Core.ArrayedCollection categoriesFor: #do:!debugger-step through!enumerating!public! !
+!Core.ArrayedCollection categoriesFor: #do:separatedBy:!enumerating!public! !
 !Core.ArrayedCollection categoriesFor: #findFirst:!public!searching! !
 !Core.ArrayedCollection categoriesFor: #identityIncludes:!public!searching! !
 !Core.ArrayedCollection categoriesFor: #includes:!public!searching! !

@@ -294,19 +294,15 @@ do: operation
 
 	^self subclassResponsibility!
 
-do: operation separatedBy: separator 
-	"Evaluate the <monadicValuable> argument, operation, for each of the 
-	receiver's elements, interspersed with evaluations of the <niladicValuable>
-	argument, separator. The separator is first evaluated after the first
-	element, and is not evaluated after the last element (i.e. it is not evaluated
-	at all if there are less than two elements)."
+do: aMonadicValuable separatedBy: aNiladicValuable
+	"Evaluate the <monadicValuable> first argument for each of the receiver's elements, interspersed with evaluations of the <niladicValuable> second argument. The separator argument is first evaluated after the first element, and is not evaluated after the last element (i.e. it is not evaluated at all if there are less than two elements)."
 
 	| sep |
-	sep := [sep := separator].	"Switch to the real separator after first eval."
+	sep := [sep := aNiladicValuable].	"Switch to the real separator after first eval."
 	self do: 
-			[:each | 
+			[:each |
 			sep value.
-			operation value: each]!
+			aMonadicValuable value: each]!
 
 errorEmptyCollection
 	^self error: 'empty collection'!
