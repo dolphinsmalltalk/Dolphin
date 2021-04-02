@@ -3014,13 +3014,11 @@ requestDragImages: session
 
 	self presenter trigger: #requestDragImages: with: session!
 
-requestDragObjects: session
-	"This is where the receiver specifies which object(s) the <DragDropSession>, session,
-	is to drag using DragDropSession>>addDragObject: or DragDropSession>>dragObjects:.
-	The default is to fire a trigger, #drag:, off the Presenter which gives its observers an opportunity
-	to supply the dragger objects"
+requestDragObjects: aDragDropSession
+	"This is where the receiver specifies which object(s) the <DragDropSession> argument is to drag using DragDropSession>>addDragObject: or DragDropSession>>dragObjects:.
+	The default is to fire a trigger, #drag:, off the Presenter which gives its observers an opportunity to supply the dragger objects"
 
-	self presenter trigger: #drag: with: session!
+	self presenter trigger: #drag: with: aDragDropSession!
 
 requestDropOperations: aDragDropSession
 	"Update the <DragDropSession>, session, with the set of supported 

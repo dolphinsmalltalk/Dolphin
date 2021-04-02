@@ -655,12 +655,12 @@ onDragVariable: aDragDropSession
 	"Private - A Global drag has been started. Populate the <DragDropSession>, 
 	session with the objects to be dragged."
 
-	| dragObject |
 	aDragDropSession dragObjects: nil.
-	dragObject := aDragDropSession suggestedSource.
-	aDragDropSession addDragObject: ((aDragDropSession newDragObject: dragObject)
-				format: #VariableName data: dragObject;
-				yourself).
+	variablesPresenter selections do: 
+			[:each |
+			aDragDropSession addDragObject: ((aDragDropSession newDragObject: each)
+						format: #VariableName data: each;
+						yourself)].
 	aDragDropSession defaultOperation: #copy!
 
 onDropOverPackage: aDragDropSession
