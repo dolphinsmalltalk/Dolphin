@@ -1,5 +1,5 @@
 ﻿| package |
-package := Package name: 'RBOldNames'.
+package := Package name: 'RB (Old Names)'.
 package paxVersion: 2.1;
 	basicComment: ''.
 

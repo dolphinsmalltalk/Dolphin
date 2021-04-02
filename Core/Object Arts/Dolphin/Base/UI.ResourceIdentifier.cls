@@ -35,23 +35,6 @@ copy
 
 	^self class class: owningClass name: self name!
 
-editExpression
-	"Private - Answer a String that can be evaluated to edit an emitted resource"
-
-	^'Tools.ViewComposer openOn: (<1d> class: self selector: <2p>)'
-		expandMacrosWith: self class fullName with: self selector
-
-!
-
-emitMethodHeaderFor: aSymbol on: stream
-	stream
-		nextPutAll: aSymbol;
-		cr.
-	self resourceMethodComment expandMacrosWithArguments: {self name. self editExpression} on: stream.
-	stream
-		cr;
-		cr!
-
 exists
 	^(self owningClass class includesSelector: self selector)!
 
@@ -140,14 +123,6 @@ resource
 	(self owningClass respondsTo: selector) ifFalse: [^nil].
 	^self owningClass perform: self selector!
 
-resourceMethodComment
-	^'	"Answer the literal data from which the ''<1s>'' resource can be reconstituted.
-	DO NOT EDIT OR RECATEGORIZE THIS METHOD.
-
-	If you wish to modify this resource evaluate:
-	<2s>
-	"'!
-
 resourceOrNil
 	"Answer the resource represented by the receiver or nil if none exists"
 
@@ -176,8 +151,6 @@ storeOn: aStream
 !UI.ResourceIdentifier categoriesFor: #=!comparing!public! !
 !UI.ResourceIdentifier categoriesFor: #compiledMethod!accessing!public! !
 !UI.ResourceIdentifier categoriesFor: #copy!copying!public! !
-!UI.ResourceIdentifier categoriesFor: #editExpression!helpers!private! !
-!UI.ResourceIdentifier categoriesFor: #emitMethodHeaderFor:on:!accessing!private! !
 !UI.ResourceIdentifier categoriesFor: #exists!public!testing! !
 !UI.ResourceIdentifier categoriesFor: #exportedFileName!accessing!development!private! !
 !UI.ResourceIdentifier categoriesFor: #hash!comparing!public! !
@@ -194,7 +167,6 @@ storeOn: aStream
 !UI.ResourceIdentifier categoriesFor: #owningPackage:!accessing!development!public! !
 !UI.ResourceIdentifier categoriesFor: #printOn:!printing!public! !
 !UI.ResourceIdentifier categoriesFor: #resource!accessing!public! !
-!UI.ResourceIdentifier categoriesFor: #resourceMethodComment!accessing!constants!private! !
 !UI.ResourceIdentifier categoriesFor: #resourceOrNil!accessing!public! !
 !UI.ResourceIdentifier categoriesFor: #selector!accessing!public! !
 !UI.ResourceIdentifier categoriesFor: #selector:!initializing!public! !

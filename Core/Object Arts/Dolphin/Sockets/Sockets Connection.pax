@@ -34,7 +34,7 @@ package globalAliases: (Set new
 package setPrerequisites: #(
 	'..\Base\Dolphin'
 	'..\MVP\Base\Dolphin MVP Base'
-	'Dolphin Sockets (Old Names)').
+	'Dolphin Sockets').
 
 package!
 
@@ -50,13 +50,13 @@ Object subclass: #SocketAbstract
 	classVariableNames: 'AllSockets WaitingSemaphores'
 	poolDictionaries: 'WinSocketConstants'
 	classInstanceVariableNames: ''!
-SocketError subclass: #SocketWouldBlock
-	instanceVariableNames: ''
+ExternalLibrary subclass: #WSockLibrary
+	instanceVariableNames: 'wsaData'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ExternalLibrary subclass: #WSockLibrary
-	instanceVariableNames: 'wsaData'
+SocketError subclass: #SocketWouldBlock
+	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!

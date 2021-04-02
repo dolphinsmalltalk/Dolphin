@@ -1,137 +1,142 @@
 ﻿| package |
 package := Package name: 'Dolphin MVP (Deprecated)'.
-package paxVersion: 2.1;
+package paxVersion: 1;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk Graphical User Interface framework (Deprecated Classes and Methods).
 
-This package includes legacy classes and methods from Dolphin''s base package that have been deprecated. If you have no requirement to use code imported from pre-5.0 versions of Dolphin, then this package can be safely uninstalled.
+This package includes legacy classes and methods from Dolphin''s base MVP package that have been deprecated. If you have no requirement to use code imported from earlier versions of Dolphin, then this package can be safely uninstalled.
 '.
 
 package basicPackageVersion: '6.2'.
 
+package basicScriptAt: #postinstall put: '#(#MultipleChoicePresenter #StaticViewAbstract #CompositePresenter #CheckedPushButton)
+	do: [:each | (Smalltalk bindingFor: each) isDeprecated: true]'.
 
-package setClassNames: #(
-	#{Smalltalk.ComparisonPolicy}
-	#{Smalltalk.Msimg32Library}
-	#{Smalltalk.MultipleSelectionListBox}
-	#{Smalltalk.MultipleSelectionListView}
-).
+package classNames
+	add: #ComparisonPolicy;
+	add: #Msimg32Library;
+	add: #MultipleSelectionListBox;
+	add: #MultipleSelectionListView;
+	yourself.
 
-package setMethodNames: #(
-	#(#{Graphics.ARGB} #asARGB)
-	#(#{Graphics.Brush class} #dkGray)
-	#(#{Graphics.Brush class} #hatchedDiagonal)
-	#(#{Graphics.Brush class} #hollow)
-	#(#{Graphics.Brush class} #ltGray)
-	#(#{Graphics.Canvas} #origin:)
-	#(#{Graphics.Canvas} #setBkMode:)
-	#(#{Graphics.Canvas} #setTextColor:)
-	#(#{Graphics.Color} #asARGB)
-	#(#{Graphics.Color} #asIndexedColor)
-	#(#{Graphics.Color} #saturation)
-	#(#{Graphics.Color class} #buttonFace)
-	#(#{Graphics.ColorNone} #saturation)
-	#(#{Graphics.ColorRef} #asIndexedColor)
-	#(#{Graphics.ColorRef} #asIndexedColorUsingPalette:)
-	#(#{Graphics.ImageList class} #width:height:flags:size:growthGranularity:)
-	#(#{Graphics.IndexedColor} #asIndexedColor)
-	#(#{Graphics.RGB} #asIndexedColorUsingPalette:)
-	#(#{Graphics.RGB class} #stdColor:)
-	#(#{Graphics.SystemColor} #asIndexedColor)
-	#(#{Graphics.SystemColor class} #fromId:)
-	#(#{Graphics.TextTileIcon class} #text:font:color:)
-	#(#{Graphics.VirtualColor} #asIndexedColor)
-	#(#{OS.BLENDFUNCTION} #beAlpha)
-	#(#{OS.BLENDFUNCTION} #beNotAlpha)
-	#(#{OS.LOGBRUSH} #style)
-	#(#{OS.LOGBRUSH} #style:)
-	#(#{OS.LOGPEN} #style)
-	#(#{OS.LOGPEN} #style:)
-	#(#{OS.LVBKIMAGEW} #offset:)
-	#(#{OS.SystemMetrics} #hasFlashWindow)
-	#(#{OS.SystemMetrics} #hasMenuImages)
-	#(#{OS.UserLibrary} #winHelp:lpszHelp:uCommand:dwData:)
-	#(#{UI.AcceleratorTable} #accelerators)
-	#(#{UI.AcceleratorTable} #addKey:commandDescription:)
-	#(#{UI.AcceleratorTable class} #keyModifierNames:)
-	#(#{UI.AcceleratorTable class} #keyModifierNames:do:)
-	#(#{UI.BasicListAbstract} #basicSelectionByIndex:)
-	#(#{UI.BorderLayout} #hasCenter)
-	#(#{UI.BorderLayout} #hasEast)
-	#(#{UI.BorderLayout} #hasNorth)
-	#(#{UI.BorderLayout} #hasSouth)
-	#(#{UI.BorderLayout} #hasWest)
-	#(#{UI.ChoicePresenter class} #resource_Multiselection_list_box)
-	#(#{UI.Clipboard} #getObjectBinaryStoreBytes)
-	#(#{UI.Clipboard} #getObjectBinaryStoreBytesIfNone:)
-	#(#{UI.Clipboard} #setText:format:)
-	#(#{UI.GUISessionManager} #whatsThis:)
-	#(#{UI.ListBox} #basicSelectionByIndex:)
-	#(#{UI.ListModel} #updateAtIndex:)
-	#(#{UI.ListModel} #updateItem:)
-	#(#{UI.ListModel} #updateItem:ifAbsent:)
-	#(#{UI.ListPresenter class} #resource_Multiselection_enhanced_list_view)
-	#(#{UI.ListPresenter class} #resource_Multiselection_list_box)
-	#(#{UI.ListView} #autoArrange)
-	#(#{UI.ListView} #autoArrange:)
-	#(#{UI.ListView} #columns)
-	#(#{UI.ListView} #hasTrackSelect)
-	#(#{UI.ListView} #hasTrackSelect:)
-	#(#{UI.Menu} #find:)
-	#(#{UI.Menu} #find:ifAbsent:)
-	#(#{UI.Menu} #remove:)
-	#(#{UI.Menu} #remove:ifAbsent:)
-	#(#{UI.Menu} #replace:with:)
-	#(#{UI.MoenTreeView} #updateItem:andChildren:imagesOnly:)
-	#(#{UI.PaintEvent class} #handle:wParam:hdc:paintStruct:)
-	#(#{UI.ScrollingDecorator} #continuousTracking)
-	#(#{UI.ScrollingDecorator} #continuousTracking:)
-	#(#{UI.ShellView} #hasThickFrame)
-	#(#{UI.ShellView} #hasThickFrame:)
-	#(#{UI.Slider} #hasTicksBoth)
-	#(#{UI.Slider} #hasTicksBoth:)
-	#(#{UI.Slider} #hasTicksTopOrLeft)
-	#(#{UI.Slider} #hasTicksTopOrLeft:)
-	#(#{UI.Slider} #selection)
-	#(#{UI.Slider} #selection:)
-	#(#{UI.STBViewProxy} #for:)
-	#(#{UI.STBViewProxy class} #for:)
-	#(#{UI.TextEdit} #find:range:down:wholeWord:matchCase:)
-	#(#{UI.TextEdit} #findNextWrapped:down:wholeWord:matchCase:)
-	#(#{UI.TextEdit} #isLowercase)
-	#(#{UI.TextEdit} #isLowercase:)
-	#(#{UI.TextEdit} #isNumeric)
-	#(#{UI.TextEdit} #isNumeric:)
-	#(#{UI.TextEdit} #isUpperCase)
-	#(#{UI.TextEdit} #isUppercase:)
-	#(#{UI.TextEdit} #lines)
-	#(#{UI.TreeView} #disableExpandAll)
-	#(#{UI.TreeView} #disableExpandAll:)
-	#(#{UI.TypeConverter} #leftExceptionalValue)
-	#(#{UI.TypeConverter} #leftExceptionalValue:)
-	#(#{UI.TypeConverter} #rightExceptionalValue)
-	#(#{UI.TypeConverter} #rightExceptionalValue:)
-	#(#{UI.View} #defaultWindowProcessing:)
-	#(#{UI.View} #hasWindowEdge)
-	#(#{UI.View} #hasWindowEdge:)
-	#(#{UI.View} #winHelpPopup:topic:)
-	#(#{UI.View} #winHelpPopup:topic:at:)
-	#(#{UI.WindowsEvent class} #message:handle:wParam:lParam:)
-).
+package methodNames
+	add: #AcceleratorTable -> #accelerators;
+	add: #AcceleratorTable -> #addKey:commandDescription:;
+	add: #ARGB -> #asARGB;
+	add: #BasicListAbstract -> #basicSelectionByIndex:;
+	add: #BLENDFUNCTION -> #beAlpha;
+	add: #BLENDFUNCTION -> #beNotAlpha;
+	add: #BorderLayout -> #hasCenter;
+	add: #BorderLayout -> #hasEast;
+	add: #BorderLayout -> #hasNorth;
+	add: #BorderLayout -> #hasSouth;
+	add: #BorderLayout -> #hasWest;
+	add: #Canvas -> #origin:;
+	add: #Canvas -> #setBkMode:;
+	add: #Canvas -> #setTextColor:;
+	add: #Clipboard -> #getObjectBinaryStoreBytes;
+	add: #Clipboard -> #getObjectBinaryStoreBytesIfNone:;
+	add: #Clipboard -> #setText:format:;
+	add: #Color -> #asARGB;
+	add: #Color -> #asIndexedColor;
+	add: #Color -> #saturation;
+	add: #ColorNone -> #saturation;
+	add: #ColorRef -> #asIndexedColor;
+	add: #ColorRef -> #asIndexedColorUsingPalette:;
+	add: #GUISessionManager -> #whatsThis:;
+	add: #IndexedColor -> #asIndexedColor;
+	add: #ListBox -> #basicSelectionByIndex:;
+	add: #ListModel -> #updateAtIndex:;
+	add: #ListModel -> #updateItem:;
+	add: #ListModel -> #updateItem:ifAbsent:;
+	add: #ListView -> #autoArrange;
+	add: #ListView -> #autoArrange:;
+	add: #ListView -> #columns;
+	add: #ListView -> #hasTrackSelect;
+	add: #ListView -> #hasTrackSelect:;
+	add: #LOGBRUSH -> #style;
+	add: #LOGBRUSH -> #style:;
+	add: #LOGPEN -> #style;
+	add: #LOGPEN -> #style:;
+	add: #LVBKIMAGEW -> #offset:;
+	add: #Menu -> #find:;
+	add: #Menu -> #find:ifAbsent:;
+	add: #Menu -> #remove:;
+	add: #Menu -> #remove:ifAbsent:;
+	add: #Menu -> #replace:with:;
+	add: #MoenTreeView -> #updateItem:andChildren:imagesOnly:;
+	add: #RGB -> #asIndexedColorUsingPalette:;
+	add: #ScrollingDecorator -> #continuousTracking;
+	add: #ScrollingDecorator -> #continuousTracking:;
+	add: #ShellView -> #hasThickFrame;
+	add: #ShellView -> #hasThickFrame:;
+	add: #Slider -> #hasTicksBoth;
+	add: #Slider -> #hasTicksBoth:;
+	add: #Slider -> #hasTicksTopOrLeft;
+	add: #Slider -> #hasTicksTopOrLeft:;
+	add: #Slider -> #selection;
+	add: #Slider -> #selection:;
+	add: #STBViewProxy -> #for:;
+	add: #SystemColor -> #asIndexedColor;
+	add: #SystemMetrics -> #hasFlashWindow;
+	add: #SystemMetrics -> #hasMenuImages;
+	add: #TextEdit -> #find:range:down:wholeWord:matchCase:;
+	add: #TextEdit -> #findNextWrapped:down:wholeWord:matchCase:;
+	add: #TextEdit -> #isLowercase;
+	add: #TextEdit -> #isLowercase:;
+	add: #TextEdit -> #isNumeric;
+	add: #TextEdit -> #isNumeric:;
+	add: #TextEdit -> #isUpperCase;
+	add: #TextEdit -> #isUppercase:;
+	add: #TextEdit -> #lines;
+	add: #TreeView -> #disableExpandAll;
+	add: #TreeView -> #disableExpandAll:;
+	add: #TypeConverter -> #leftExceptionalValue;
+	add: #TypeConverter -> #leftExceptionalValue:;
+	add: #TypeConverter -> #rightExceptionalValue;
+	add: #TypeConverter -> #rightExceptionalValue:;
+	add: #UserLibrary -> #winHelp:lpszHelp:uCommand:dwData:;
+	add: #View -> #defaultWindowProcessing:;
+	add: #View -> #hasWindowEdge;
+	add: #View -> #hasWindowEdge:;
+	add: #View -> #winHelpPopup:topic:;
+	add: #View -> #winHelpPopup:topic:at:;
+	add: #VirtualColor -> #asIndexedColor;
+	add: 'AcceleratorTable class' -> #keyModifierNames:;
+	add: 'AcceleratorTable class' -> #keyModifierNames:do:;
+	add: 'Brush class' -> #dkGray;
+	add: 'Brush class' -> #hatchedDiagonal;
+	add: 'Brush class' -> #hollow;
+	add: 'Brush class' -> #ltGray;
+	add: 'ChoicePresenter class' -> #resource_Multiselection_list_box;
+	add: 'Color class' -> #buttonFace;
+	add: 'ImageList class' -> #width:height:flags:size:growthGranularity:;
+	add: 'ListPresenter class' -> #resource_Multiselection_enhanced_list_view;
+	add: 'ListPresenter class' -> #resource_Multiselection_list_box;
+	add: 'PaintEvent class' -> #handle:wParam:hdc:paintStruct:;
+	add: 'RGB class' -> #stdColor:;
+	add: 'STBViewProxy class' -> #for:;
+	add: 'SystemColor class' -> #fromId:;
+	add: 'TextTileIcon class' -> #text:font:color:;
+	add: 'WindowsEvent class' -> #message:handle:wParam:lParam:;
+	yourself.
 
-package setVariableNames: #(
-	#{Smalltalk.CheckedPushButton}
-	#{Smalltalk.CompositePresenter}
-	#{Smalltalk.MultipleChoicePresenter}
-	#{Smalltalk.StaticViewAbstract}
-).
+package globalNames
+	add: #CheckedPushButton;
+	add: #CompositePresenter;
+	add: #MultipleChoicePresenter;
+	add: #StaticViewAbstract;
+	yourself.
 
-package setAliasVariableNames: #(
-	#{Smalltalk.CheckedPushButton}
-	#{Smalltalk.CompositePresenter}
-	#{Smalltalk.MultipleChoicePresenter}
-	#{Smalltalk.StaticViewAbstract}
-).
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	add: #CheckedPushButton;
+	add: #CompositePresenter;
+	add: #MultipleChoicePresenter;
+	add: #StaticViewAbstract;
+	yourself).
 
 package setPrerequisites: #(
 	'..\..\Base\Dolphin'
@@ -147,319 +152,47 @@ package setPrerequisites: #(
 	'..\Views\Slider\Dolphin Slider Control'
 	'..\Presenters\Text\Dolphin Text Presenter'
 	'..\Icons\Dolphin Text Tile Icons'
-	'..\Type Converters\Dolphin Type Converters'
-).
+	'..\Type Converters\Dolphin Type Converters').
 
 package!
 
 "Class Definitions"!
 
-Core.Object subclass: #ComparisonPolicy
+Object subclass: #ComparisonPolicy
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-External.DynamicLinkLibrary subclass: #Msimg32Library
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ExternalLibrary subclass: #Msimg32Library
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-UI.ListBox subclass: #MultipleSelectionListBox
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ListBox subclass: #MultipleSelectionListBox
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-UI.ListView subclass: #MultipleSelectionListView
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ListView subclass: #MultipleSelectionListView
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
 
-"Variable Aliases"!
+"Global Aliases"!
 
-Smalltalk.CheckedPushButton := UI.PushButton!
+CheckedPushButton := PushButton!
 
-Smalltalk.CompositePresenter := UI.Presenter!
+CompositePresenter := Presenter!
 
-Smalltalk.MultipleChoicePresenter := UI.ChoicePresenter!
+MultipleChoicePresenter := ChoicePresenter!
 
-Smalltalk.StaticViewAbstract := UI.StaticView!
+StaticViewAbstract := StaticView!
 
 
 "Loose Methods"!
 
-!Graphics.ARGB methodsFor!
-
-asARGB
-	Notification deprecated.	"Generally speaking it should not be necessary to convert colours explicitly to ARGB representation, rather any Color should be accepted and converted at the point of passing to an external API if needed."
-	^self! !
-!Graphics.ARGB categoriesFor: #asARGB!converting!public! !
-
-!Graphics.Brush class methodsFor!
-
-dkGray
-	Notification deprecated.
-	^self darkGray!
-
-hatchedDiagonal
-	"Answer a new sub-instance of the receiver for painting diagonal hatching."
-
-	Notification deprecated.
-	^HatchBrush diagonal!
-
-hollow
-	Notification deprecated.	"Same as transparent"
-	^self transparent!
-
-ltGray
-	"Answer the stock light grey brush."
-
-	Notification deprecated.
-	^self silver! !
-!Graphics.Brush class categoriesFor: #dkGray!instance creation!public! !
-!Graphics.Brush class categoriesFor: #hatchedDiagonal!instance creation!public! !
-!Graphics.Brush class categoriesFor: #hollow!instance creation!public! !
-!Graphics.Brush class categoriesFor: #ltGray!instance creation!public! !
-
-!Graphics.Canvas methodsFor!
-
-origin: aPoint
-	Notification deprecated.	"5.0: Use #viewportOrigin:"
-	^self viewportOrigin: aPoint!
-
-setBkMode: mode
-	Notification deprecated.
-	^self backgroundMode: mode!
-
-setTextColor: colour
-	Notification deprecated.	"6.0 (reprise)"
-	^self forecolor: colour! !
-!Graphics.Canvas categoriesFor: #origin:!operations!public! !
-!Graphics.Canvas categoriesFor: #setBkMode:!modes!public! !
-!Graphics.Canvas categoriesFor: #setTextColor:!modes!public! !
-
-!Graphics.Color methodsFor!
-
-asARGB
-	Notification deprecated.	"Generally speaking it should not be necessary to convert colours explicitly to ARGB representation, rather any Color should be accepted and converted at the point of passing to an external API if needed."
-	^self argbClass fromArgbCode: self argbCode!
-
-asIndexedColor
-	"Answer the receiver as an <IndexedColor>."
-
-	"IndexedColors are soft-deprecated. You should avoid their deliberate use, although they may continue to exist in older view resources, etc, and be returned from certain older APIs."
-
-	Notification deprecated.
-	^self asRGB asIndexedColor!
-
-saturation
-	"Ambiguous as to the color model - this is actually the HLS saturation."
-
-	Notification deprecated.
-	^self asRGB hls at: 3! !
-!Graphics.Color categoriesFor: #asARGB!converting!public! !
-!Graphics.Color categoriesFor: #asIndexedColor!converting!public! !
-!Graphics.Color categoriesFor: #saturation!accessing!public! !
-
-!Graphics.Color class methodsFor!
-
-buttonFace
-	Notification deprecated.
-	^Color face3d! !
-!Graphics.Color class categoriesFor: #buttonFace!instance creation!public! !
-
-!Graphics.ColorNone methodsFor!
-
-saturation
-	Notification deprecated.
-	^0! !
-!Graphics.ColorNone categoriesFor: #saturation!public! !
-
-!Graphics.ColorRef methodsFor!
-
-asIndexedColor
-	"Answer the receiver as an <IndexedColor> mapped using the default palette."
-
-	"IndexedColors are soft-deprecated. You should avoid their deliberate use, although they may continue to exist in older view resources, etc, and be returned from certain older APIs."
-
-	Notification deprecated.
-	^self asIndexedColorUsingPalette: self defaultPalette!
-
-asIndexedColorUsingPalette: hPalette
-	"Answer the receiver as the nearest <IndexedColour> using hPalette"
-
-	^self asRGB asIndexedColorUsingPalette: hPalette! !
-!Graphics.ColorRef categoriesFor: #asIndexedColor!converting!public! !
-!Graphics.ColorRef categoriesFor: #asIndexedColorUsingPalette:!converting!public! !
-
-!Graphics.ImageList class methodsFor!
-
-width: cx height: cy flags: flags size: sizeInteger growthGranularity: growthInteger
-	"Answer a new instances with the given parameters."
-
-	#deprecated.
-	^self 
-		newExtent: cx @ cy
-		depth: flags
-		initialSize: sizeInteger
-		growBy: growthInteger
-		masked: false! !
-!Graphics.ImageList class categoriesFor: #width:height:flags:size:growthGranularity:!instance creation!public! !
-
-!Graphics.IndexedColor methodsFor!
-
-asIndexedColor
-	"Answer the receiver as an <IndexedColor>."
-
-	"IndexedColors are soft-deprecated. You should avoid their deliberate use, although they may continue to exist in older view resources, etc, and be returned from certain older APIs."
-
-	Notification deprecated.
-	^self! !
-!Graphics.IndexedColor categoriesFor: #asIndexedColor!converting!public! !
-
-!Graphics.RGB methodsFor!
-
-asIndexedColorUsingPalette: hPalette
-	"Answer the receiver as an IndexedColour using hPalette"
-
-	| index |
-	Notification deprecated.
-	index := GDILibrary default getNearestPaletteIndex: hPalette crColor: self asCOLORREF.
-	^index < 0
-		ifTrue: [GDILibrary default systemError]
-		ifFalse: [IndexedColor withIndex: (index bitOr: 16r1000000)]! !
-!Graphics.RGB categoriesFor: #asIndexedColorUsingPalette:!converting!public! !
-
-!Graphics.RGB class methodsFor!
-
-stdColor: aSymbol
-	Notification deprecated.
-	^self named: aSymbol! !
-!Graphics.RGB class categoriesFor: #stdColor:!instance creation!public! !
-
-!Graphics.SystemColor methodsFor!
-
-asIndexedColor
-	"Answer the receiver as an <IndexedColor>."
-
-	"IndexedColors are soft-deprecated. You should avoid their deliberate use, although they may continue to exist in older view resources, etc, and be returned from certain older APIs."
-
-	Notification deprecated.
-	^(Color fromRgbCode: self rgbCode) asIndexedColor! !
-!Graphics.SystemColor categoriesFor: #asIndexedColor!converting!public! !
-
-!Graphics.SystemColor class methodsFor!
-
-fromId: anInteger
-	Notification deprecated.
-	^self withIndex: anInteger! !
-!Graphics.SystemColor class categoriesFor: #fromId:!instance creation!public! !
-
-!Graphics.TextTileIcon class methodsFor!
-
-text: labelString font: fontString color: aColor
-	Notification deprecated.
-	^self
-		text: labelString
-		fontName: fontString
-		color: aColor! !
-!Graphics.TextTileIcon class categoriesFor: #text:font:color:!instance creation!public! !
-
-!Graphics.VirtualColor methodsFor!
-
-asIndexedColor
-	"Answer the receiver as an <IndexedColor>."
-
-	"IndexedColors are soft-deprecated. You should avoid their deliberate use, although they may continue to exist in older view resources, etc, and be returned from certain older APIs."
-
-	Notification deprecated.
-	^self actualColor asIndexedColor! !
-!Graphics.VirtualColor categoriesFor: #asIndexedColor!converting!public! !
-
-!OS.BLENDFUNCTION methodsFor!
-
-beAlpha
-	#deprecated.
-	self usePerPixelAlpha: true!
-
-beNotAlpha
-	#deprecated.
-	self usePerPixelAlpha: false! !
-!OS.BLENDFUNCTION categoriesFor: #beAlpha!accessing!public! !
-!OS.BLENDFUNCTION categoriesFor: #beNotAlpha!accessing!public! !
-
-!OS.LOGBRUSH methodsFor!
-
-style
-	Notification deprecated.
-	^self lbStyle!
-
-style: anInteger 
-	Notification deprecated.
-	self lbStyle: anInteger! !
-!OS.LOGBRUSH categoriesFor: #style!accessing!public! !
-!OS.LOGBRUSH categoriesFor: #style:!accessing!public! !
-
-!OS.LOGPEN methodsFor!
-
-style
-	Notification deprecated.
-	^self lopnStyle!
-
-style: anInteger 
-	Notification deprecated.
-	self lopnStyle: anInteger! !
-!OS.LOGPEN categoriesFor: #style!accessing!public! !
-!OS.LOGPEN categoriesFor: #style:!accessing!public! !
-
-!OS.LVBKIMAGEW methodsFor!
-
-offset: aPoint
-	Notification deprecated.	"Use #offsetPercent: or #offsetTile:"
-	self
-		xOffsetPercent: aPoint x;
-		yOffsetPercent: aPoint y! !
-!OS.LVBKIMAGEW categoriesFor: #offset:!public! !
-
-!OS.SystemMetrics methodsFor!
-
-hasFlashWindow
-	"Answer whether the host supports the FlashWindowEx API."
-
-
-
-	#deprecated.
-	^true!
-
-hasMenuImages
-	"Answer whether the host supports images on menus."
-
-	#deprecated. "We no longer support OSs earlier than Vista, let alone XP."
-	^true! !
-!OS.SystemMetrics categoriesFor: #hasFlashWindow!capability enquiries!public! !
-!OS.SystemMetrics categoriesFor: #hasMenuImages!capability enquiries!public! !
-
-!OS.UserLibrary methodsFor!
-
-winHelp: hwndMain lpszHelp: lpszHelp uCommand: uCommand dwData: dwData
-	"Invoke the WinHelp() function of the module wrapped by the receiver.
-	Helpstring: Starts windows help and passes a request for help
-
-		BOOL __stdcall WinHelp(
-			HWND hwndMain,
-			LPCSTR lpszHelp,
-			unsigned int uCommand,
-			ULONG_PTR dwData);"
-
-	<stdcall: bool WinHelpA handle lpstr dword uintptr>
-	^self invalidCall: _failureCode! !
-!OS.UserLibrary categoriesFor: #winHelp:lpszHelp:uCommand:dwData:!**auto generated**!public! !
-
-!UI.AcceleratorTable methodsFor!
+!AcceleratorTable methodsFor!
 
 accelerators
 	#deprecated.
@@ -469,10 +202,10 @@ addKey: vKeyCode commandDescription: aCommandDescription
 	#deprecated.
 	aCommandDescription acceleratorKey: vKeyCode.
 	self addCommand: aCommandDescription! !
-!UI.AcceleratorTable categoriesFor: #accelerators!accessing!public! !
-!UI.AcceleratorTable categoriesFor: #addKey:commandDescription:!adding!public! !
+!AcceleratorTable categoriesFor: #accelerators!accessing!public! !
+!AcceleratorTable categoriesFor: #addKey:commandDescription:!adding!public! !
 
-!UI.AcceleratorTable class methodsFor!
+!AcceleratorTable class methodsFor!
 
 keyModifierNames: anInteger
 	Notification deprecated.
@@ -484,17 +217,36 @@ keyModifierNames: anInteger do: aMonadicValuable
 		keyModifierNames: anInteger
 		keyboard: Keyboard default
 		do: aMonadicValuable! !
-!UI.AcceleratorTable class categoriesFor: #keyModifierNames:!enquiries!public! !
-!UI.AcceleratorTable class categoriesFor: #keyModifierNames:do:!enquiries!public! !
+!AcceleratorTable class categoriesFor: #keyModifierNames:!enquiries!public! !
+!AcceleratorTable class categoriesFor: #keyModifierNames:do:!enquiries!public! !
 
-!UI.BasicListAbstract methodsFor!
+!ARGB methodsFor!
+
+asARGB
+	Notification deprecated.	"Generally speaking it should not be necessary to convert colours explicitly to ARGB representation, rather any Color should be accepted and converted at the point of passing to an external API if needed."
+	^self! !
+!ARGB categoriesFor: #asARGB!converting!public! !
+
+!BasicListAbstract methodsFor!
 
 basicSelectionByIndex: anInteger 
 	#deprecated.	"Present for loading of old view resources"
 	self setSingleSelection: anInteger! !
-!UI.BasicListAbstract categoriesFor: #basicSelectionByIndex:!private!selection! !
+!BasicListAbstract categoriesFor: #basicSelectionByIndex:!private!selection! !
 
-!UI.BorderLayout methodsFor!
+!BLENDFUNCTION methodsFor!
+
+beAlpha
+	#deprecated.
+	self usePerPixelAlpha: true!
+
+beNotAlpha
+	#deprecated.
+	self usePerPixelAlpha: false! !
+!BLENDFUNCTION categoriesFor: #beAlpha!accessing!public! !
+!BLENDFUNCTION categoriesFor: #beNotAlpha!accessing!public! !
+
+!BorderLayout methodsFor!
 
 hasCenter
 	"Answer whether a view has been arranged to the centre of the layout."
@@ -520,13 +272,56 @@ hasWest
 	"Answer whether a view has been arranged to the right edge."
 
 	^self west notNil! !
-!UI.BorderLayout categoriesFor: #hasCenter!accessing!public! !
-!UI.BorderLayout categoriesFor: #hasEast!accessing!public! !
-!UI.BorderLayout categoriesFor: #hasNorth!accessing!public! !
-!UI.BorderLayout categoriesFor: #hasSouth!accessing!public! !
-!UI.BorderLayout categoriesFor: #hasWest!accessing!public! !
+!BorderLayout categoriesFor: #hasCenter!accessing!public! !
+!BorderLayout categoriesFor: #hasEast!accessing!public! !
+!BorderLayout categoriesFor: #hasNorth!accessing!public! !
+!BorderLayout categoriesFor: #hasSouth!accessing!public! !
+!BorderLayout categoriesFor: #hasWest!accessing!public! !
 
-!UI.ChoicePresenter class methodsFor!
+!Brush class methodsFor!
+
+dkGray
+	Notification deprecated.
+	^self darkGray!
+
+hatchedDiagonal
+	"Answer a new sub-instance of the receiver for painting diagonal hatching."
+
+	Notification deprecated.
+	^HatchBrush diagonal!
+
+hollow
+	Notification deprecated.	"Same as transparent"
+	^self transparent!
+
+ltGray
+	"Answer the stock light grey brush."
+
+	Notification deprecated.
+	^self silver! !
+!Brush class categoriesFor: #dkGray!instance creation!public! !
+!Brush class categoriesFor: #hatchedDiagonal!instance creation!public! !
+!Brush class categoriesFor: #hollow!instance creation!public! !
+!Brush class categoriesFor: #ltGray!instance creation!public! !
+
+!Canvas methodsFor!
+
+origin: aPoint
+	Notification deprecated.	"5.0: Use #viewportOrigin:"
+	^self viewportOrigin: aPoint!
+
+setBkMode: mode
+	Notification deprecated.
+	^self backgroundMode: mode!
+
+setTextColor: colour
+	Notification deprecated.	"6.0 (reprise)"
+	^self forecolor: colour! !
+!Canvas categoriesFor: #origin:!operations!public! !
+!Canvas categoriesFor: #setBkMode:!modes!public! !
+!Canvas categoriesFor: #setTextColor:!modes!public! !
+
+!ChoicePresenter class methodsFor!
 
 resource_Multiselection_list_box
 	"Answer the literal data from which the 'Multiselection list box' resource can be reconstituted.
@@ -537,9 +332,9 @@ resource_Multiselection_list_box
 	"
 
 	^#(#'!!STL' 4 985166 10 ##(UI.STBViewProxy) ##(Smalltalk.MultipleSelectionListBox) 34 17 nil nil 34 2 8 1412499713 1025 416 787270 2 ##(UI.ListModel) 138 144 8 #() nil 1638406 ##(Kernel.IdentitySearchPolicy) 917510 ##(Graphics.Color) #default nil 5 nil nil nil 416 nil 8 1920482304 786950 ##(Core.Message) #displayString 8 #() 8 #() false 1310982 ##(Core.MessageSequence) 138 144 34 3 1049350 ##(Core.MessageSend) #createAt:extent: 34 2 655878 ##(Graphics.Point) 6143 21 802 251 351 416 754 #caretIndex: 8 #(1) 416 754 #horizontalExtent: 8 #(0) 416 1179910 ##(OS.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 124 12 0 0 185 0 0 0] 8 #() 802 193 193 nil 27)! !
-!UI.ChoicePresenter class categoriesFor: #resource_Multiselection_list_box!public!resources-views! !
+!ChoicePresenter class categoriesFor: #resource_Multiselection_list_box!public!resources-views! !
 
-!UI.Clipboard methodsFor!
+!Clipboard methodsFor!
 
 getObjectBinaryStoreBytes
 	"Answer the STB binary store bytes for the <object> stored on the the clipboard, or raise an
@@ -559,27 +354,106 @@ getObjectBinaryStoreBytesIfNone: exceptionHandler
 setText: text format: formatName
 	Notification deprecated.	"Just use setData:format:"
 	self setRegisteredFormat: formatName data: text! !
-!UI.Clipboard categoriesFor: #getObjectBinaryStoreBytes!accessing!public! !
-!UI.Clipboard categoriesFor: #getObjectBinaryStoreBytesIfNone:!accessing!public! !
-!UI.Clipboard categoriesFor: #setText:format:!accessing!public! !
+!Clipboard categoriesFor: #getObjectBinaryStoreBytes!accessing!public! !
+!Clipboard categoriesFor: #getObjectBinaryStoreBytesIfNone:!accessing!public! !
+!Clipboard categoriesFor: #setText:format:!accessing!public! !
 
-!UI.GUISessionManager methodsFor!
+!Color methodsFor!
+
+asARGB
+	Notification deprecated.	"Generally speaking it should not be necessary to convert colours explicitly to ARGB representation, rather any Color should be accepted and converted at the point of passing to an external API if needed."
+	^self argbClass fromArgbCode: self argbCode!
+
+asIndexedColor
+	"Answer the receiver as an <IndexedColor>."
+
+	"IndexedColors are soft-deprecated. You should avoid their deliberate use, although they may continue to exist in older view resources, etc, and be returned from certain older APIs."
+
+	Notification deprecated.
+	^self asRGB asIndexedColor!
+
+saturation
+	"Ambiguous as to the color model - this is actually the HLS saturation."
+
+	Notification deprecated.
+	^self asRGB hls at: 3! !
+!Color categoriesFor: #asARGB!converting!public! !
+!Color categoriesFor: #asIndexedColor!converting!public! !
+!Color categoriesFor: #saturation!accessing!public! !
+
+!Color class methodsFor!
+
+buttonFace
+	Notification deprecated.
+	^Color face3d! !
+!Color class categoriesFor: #buttonFace!instance creation!public! !
+
+!ColorNone methodsFor!
+
+saturation
+	Notification deprecated.
+	^0! !
+!ColorNone categoriesFor: #saturation!public! !
+
+!ColorRef methodsFor!
+
+asIndexedColor
+	"Answer the receiver as an <IndexedColor> mapped using the default palette."
+
+	"IndexedColors are soft-deprecated. You should avoid their deliberate use, although they may continue to exist in older view resources, etc, and be returned from certain older APIs."
+
+	Notification deprecated.
+	^self asIndexedColorUsingPalette: self defaultPalette!
+
+asIndexedColorUsingPalette: hPalette
+	"Answer the receiver as the nearest <IndexedColour> using hPalette"
+
+	^self asRGB asIndexedColorUsingPalette: hPalette! !
+!ColorRef categoriesFor: #asIndexedColor!converting!public! !
+!ColorRef categoriesFor: #asIndexedColorUsingPalette:!converting!public! !
+
+!GUISessionManager methodsFor!
 
 whatsThis: object
 	| helpId |
 	#deprecated.	"The Windows Help program is no longer supported on Windows 10 and later."
 	helpId := object helpId.
 	View active winHelpPopup: self popupHelpFile topic: helpId! !
-!UI.GUISessionManager categoriesFor: #whatsThis:!commands!public! !
+!GUISessionManager categoriesFor: #whatsThis:!commands!public! !
 
-!UI.ListBox methodsFor!
+!ImageList class methodsFor!
+
+width: cx height: cy flags: flags size: sizeInteger growthGranularity: growthInteger
+	"Answer a new instances with the given parameters."
+
+	#deprecated.
+	^self 
+		newExtent: cx @ cy
+		depth: flags
+		initialSize: sizeInteger
+		growBy: growthInteger
+		masked: false! !
+!ImageList class categoriesFor: #width:height:flags:size:growthGranularity:!instance creation!public! !
+
+!IndexedColor methodsFor!
+
+asIndexedColor
+	"Answer the receiver as an <IndexedColor>."
+
+	"IndexedColors are soft-deprecated. You should avoid their deliberate use, although they may continue to exist in older view resources, etc, and be returned from certain older APIs."
+
+	Notification deprecated.
+	^self! !
+!IndexedColor categoriesFor: #asIndexedColor!converting!public! !
+
+!ListBox methodsFor!
 
 basicSelectionByIndex: sel
 	#deprecated.	"Presenter for old view resources"
 	self basicSelectionsByIndex: sel! !
-!UI.ListBox categoriesFor: #basicSelectionByIndex:!private!selection! !
+!ListBox categoriesFor: #basicSelectionByIndex:!private!selection! !
 
-!UI.ListModel methodsFor!
+!ListModel methodsFor!
 
 updateAtIndex: anInteger 
 	"Update, and answer, an object in the receiver at anInteger index because 
@@ -599,11 +473,11 @@ updateItem: anObject
 updateItem: anObject ifAbsent: exceptionHandler
 	#deprecated.	"Use #refresh:ifAbsent:"
 	^self refresh: anObject ifAbsent: exceptionHandler! !
-!UI.ListModel categoriesFor: #updateAtIndex:!public!updating! !
-!UI.ListModel categoriesFor: #updateItem:!private!updating! !
-!UI.ListModel categoriesFor: #updateItem:ifAbsent:!public!searching! !
+!ListModel categoriesFor: #updateAtIndex:!public!updating! !
+!ListModel categoriesFor: #updateItem:!private!updating! !
+!ListModel categoriesFor: #updateItem:ifAbsent:!public!searching! !
 
-!UI.ListPresenter class methodsFor!
+!ListPresenter class methodsFor!
 
 resource_Multiselection_enhanced_list_view
 	"Answer the literal data from which the 'Multiselection enhanced list view' resource can be reconstituted.
@@ -624,10 +498,10 @@ resource_Multiselection_list_box
 	"
 
 	^#(#'!!STL' 3 788558 10 ##(STBViewProxy) 8 ##(Smalltalk.MultipleSelectionListBox) 98 17 0 0 98 2 8 1144064257 1025 416 590662 2 ##(ListModel) 202 208 98 0 0 1114638 ##(STBSingletonProxy) 8 ##(SearchPolicy) 8 #identity 524550 ##(ColorRef) 8 4278190080 0 7 0 0 0 416 0 8 4294903705 459270 ##(Message) 8 #displayString 98 0 544 32 983302 ##(MessageSequence) 202 208 98 2 721670 ##(MessageSend) 8 #createAt:extent: 98 2 328198 ##(Point) 11 11 882 251 351 416 818 8 #horizontalExtent: 98 1 1 416 983302 ##(WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 0 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 5 0 0 0 5 0 0 0 130 0 0 0 180 0 0 0] 98 0 882 193 193 0 27)! !
-!UI.ListPresenter class categoriesFor: #resource_Multiselection_enhanced_list_view!public!resources-views! !
-!UI.ListPresenter class categoriesFor: #resource_Multiselection_list_box!public!resources-views! !
+!ListPresenter class categoriesFor: #resource_Multiselection_enhanced_list_view!public!resources-views! !
+!ListPresenter class categoriesFor: #resource_Multiselection_list_box!public!resources-views! !
 
-!UI.ListView methodsFor!
+!ListView methodsFor!
 
 autoArrange
 	#deprecated.
@@ -648,13 +522,46 @@ hasTrackSelect
 hasTrackSelect: aBoolean 
 	#deprecated. "6.0"
 	self hasHotTracking: aBoolean! !
-!UI.ListView categoriesFor: #autoArrange!arranging!public! !
-!UI.ListView categoriesFor: #autoArrange:!accessing-styles!public! !
-!UI.ListView categoriesFor: #columns!columns!public! !
-!UI.ListView categoriesFor: #hasTrackSelect!accessing-styles!public! !
-!UI.ListView categoriesFor: #hasTrackSelect:!accessing-styles!public! !
+!ListView categoriesFor: #autoArrange!arranging!public! !
+!ListView categoriesFor: #autoArrange:!accessing-styles!public! !
+!ListView categoriesFor: #columns!columns!public! !
+!ListView categoriesFor: #hasTrackSelect!accessing-styles!public! !
+!ListView categoriesFor: #hasTrackSelect:!accessing-styles!public! !
 
-!UI.Menu methodsFor!
+!LOGBRUSH methodsFor!
+
+style
+	Notification deprecated.
+	^self lbStyle!
+
+style: anInteger 
+	Notification deprecated.
+	self lbStyle: anInteger! !
+!LOGBRUSH categoriesFor: #style!accessing!public! !
+!LOGBRUSH categoriesFor: #style:!accessing!public! !
+
+!LOGPEN methodsFor!
+
+style
+	Notification deprecated.
+	^self lopnStyle!
+
+style: anInteger 
+	Notification deprecated.
+	self lopnStyle: anInteger! !
+!LOGPEN categoriesFor: #style!accessing!public! !
+!LOGPEN categoriesFor: #style:!accessing!public! !
+
+!LVBKIMAGEW methodsFor!
+
+offset: aPoint
+	Notification deprecated.	"Use #offsetPercent: or #offsetTile:"
+	self
+		xOffsetPercent: aPoint x;
+		yOffsetPercent: aPoint y! !
+!LVBKIMAGEW categoriesFor: #offset:!public! !
+
+!Menu methodsFor!
 
 find: aString
 	"Answer the <MenuItem> whose text matches the <readableString> argument.
@@ -692,13 +599,13 @@ replace: aString with: aMenu
 	Notification deprecated.	"Searching a menu by display string is a poor practice."
 	index := items indexOf: (self find: aString).
 	self itemAt: index put: aMenu! !
-!UI.Menu categoriesFor: #find:!public!searching! !
-!UI.Menu categoriesFor: #find:ifAbsent:!public!searching! !
-!UI.Menu categoriesFor: #remove:!public!removing! !
-!UI.Menu categoriesFor: #remove:ifAbsent:!public!removing! !
-!UI.Menu categoriesFor: #replace:with:!public!replacing! !
+!Menu categoriesFor: #find:!public!searching! !
+!Menu categoriesFor: #find:ifAbsent:!public!searching! !
+!Menu categoriesFor: #remove:!public!removing! !
+!Menu categoriesFor: #remove:ifAbsent:!public!removing! !
+!Menu categoriesFor: #replace:with:!public!replacing! !
 
-!UI.MoenTreeView methodsFor!
+!MoenTreeView methodsFor!
 
 updateItem: element andChildren: andChildren imagesOnly: aBoolean 
 	#deprecated.
@@ -706,9 +613,9 @@ updateItem: element andChildren: andChildren imagesOnly: aBoolean
 		invalidateItem: element
 		andChildren: andChildren
 		imagesOnly: aBoolean! !
-!UI.MoenTreeView categoriesFor: #updateItem:andChildren:imagesOnly:!painting!public! !
+!MoenTreeView categoriesFor: #updateItem:andChildren:imagesOnly:!painting!public! !
 
-!UI.PaintEvent class methodsFor!
+!PaintEvent class methodsFor!
 
 handle: hWnd wParam: wParam hdc: hdc paintStruct: ps
 	#deprecated.
@@ -717,9 +624,29 @@ handle: hWnd wParam: wParam hdc: hdc paintStruct: ps
 		wParam: wParam
 		hdc: hdc
 		paintStruct: ps! !
-!UI.PaintEvent class categoriesFor: #handle:wParam:hdc:paintStruct:!instance creation!public! !
+!PaintEvent class categoriesFor: #handle:wParam:hdc:paintStruct:!instance creation!public! !
 
-!UI.ScrollingDecorator methodsFor!
+!RGB methodsFor!
+
+asIndexedColorUsingPalette: hPalette
+	"Answer the receiver as an IndexedColour using hPalette"
+
+	| index |
+	Notification deprecated.
+	index := GDILibrary default getNearestPaletteIndex: hPalette crColor: self asCOLORREF.
+	^index < 0
+		ifTrue: [GDILibrary default systemError]
+		ifFalse: [IndexedColor withIndex: (index bitOr: 16r1000000)]! !
+!RGB categoriesFor: #asIndexedColorUsingPalette:!converting!public! !
+
+!RGB class methodsFor!
+
+stdColor: aSymbol
+	Notification deprecated.
+	^self named: aSymbol! !
+!RGB class categoriesFor: #stdColor:!instance creation!public! !
+
+!ScrollingDecorator methodsFor!
 
 continuousTracking
 	#deprecated.
@@ -728,10 +655,10 @@ continuousTracking
 continuousTracking: aBoolean 
 	#deprecated.
 	self isTrackingContinuous: aBoolean! !
-!UI.ScrollingDecorator categoriesFor: #continuousTracking!modes!public! !
-!UI.ScrollingDecorator categoriesFor: #continuousTracking:!modes!public! !
+!ScrollingDecorator categoriesFor: #continuousTracking!modes!public! !
+!ScrollingDecorator categoriesFor: #continuousTracking:!modes!public! !
 
-!UI.ShellView methodsFor!
+!ShellView methodsFor!
 
 hasThickFrame
 	#deprecated. "6.0: #1375"
@@ -740,10 +667,10 @@ hasThickFrame
 hasThickFrame: aBoolean 
 	#deprecated. "6.0: #1375"
 	self isResizable: aBoolean! !
-!UI.ShellView categoriesFor: #hasThickFrame!accessing-styles!public! !
-!UI.ShellView categoriesFor: #hasThickFrame:!accessing-styles!public! !
+!ShellView categoriesFor: #hasThickFrame!accessing-styles!public! !
+!ShellView categoriesFor: #hasThickFrame:!accessing-styles!public! !
 
-!UI.Slider methodsFor!
+!Slider methodsFor!
 
 hasTicksBoth
 	#deprecated.
@@ -768,28 +695,64 @@ selection
 selection: anIntervalOrNil
 	Notification deprecated.
 	self selectionRange: anIntervalOrNil! !
-!UI.Slider categoriesFor: #hasTicksBoth!accessing-styles!public!updating! !
-!UI.Slider categoriesFor: #hasTicksBoth:!accessing-styles!public!updating! !
-!UI.Slider categoriesFor: #hasTicksTopOrLeft!accessing-styles!public!updating! !
-!UI.Slider categoriesFor: #hasTicksTopOrLeft:!accessing-styles!public!updating! !
-!UI.Slider categoriesFor: #selection!accessing!public! !
-!UI.Slider categoriesFor: #selection:!accessing!public! !
+!Slider categoriesFor: #hasTicksBoth!accessing-styles!public!updating! !
+!Slider categoriesFor: #hasTicksBoth:!accessing-styles!public!updating! !
+!Slider categoriesFor: #hasTicksTopOrLeft!accessing-styles!public!updating! !
+!Slider categoriesFor: #hasTicksTopOrLeft:!accessing-styles!public!updating! !
+!Slider categoriesFor: #selection!accessing!public! !
+!Slider categoriesFor: #selection:!accessing!public! !
 
-!UI.STBViewProxy methodsFor!
+!STBViewProxy methodsFor!
 
 for: aView 
 	#deprecated.
 	self setView: aView! !
-!UI.STBViewProxy categoriesFor: #for:!accessing!public! !
+!STBViewProxy categoriesFor: #for:!accessing!public! !
 
-!UI.STBViewProxy class methodsFor!
+!STBViewProxy class methodsFor!
 
 for: aView 
 	#deprecated.
 	^self forView: aView! !
-!UI.STBViewProxy class categoriesFor: #for:!instance creation!public! !
+!STBViewProxy class categoriesFor: #for:!instance creation!public! !
 
-!UI.TextEdit methodsFor!
+!SystemColor methodsFor!
+
+asIndexedColor
+	"Answer the receiver as an <IndexedColor>."
+
+	"IndexedColors are soft-deprecated. You should avoid their deliberate use, although they may continue to exist in older view resources, etc, and be returned from certain older APIs."
+
+	Notification deprecated.
+	^(Color fromRgbCode: self rgbCode) asIndexedColor! !
+!SystemColor categoriesFor: #asIndexedColor!converting!public! !
+
+!SystemColor class methodsFor!
+
+fromId: anInteger
+	Notification deprecated.
+	^self withIndex: anInteger! !
+!SystemColor class categoriesFor: #fromId:!instance creation!public! !
+
+!SystemMetrics methodsFor!
+
+hasFlashWindow
+	"Answer whether the host supports the FlashWindowEx API."
+
+
+
+	#deprecated.
+	^true!
+
+hasMenuImages
+	"Answer whether the host supports images on menus."
+
+	#deprecated. "We no longer support OSs earlier than Vista, let alone XP."
+	^true! !
+!SystemMetrics categoriesFor: #hasFlashWindow!capability enquiries!public! !
+!SystemMetrics categoriesFor: #hasMenuImages!capability enquiries!public! !
+
+!TextEdit methodsFor!
 
 find: findWhat range: rangeInterval down: downBoolean wholeWord: wordBoolean matchCase: caseBoolean
 	#deprecated.
@@ -840,17 +803,27 @@ isUppercase: aBoolean
 lines
 	#deprecated. "5.0"
 	^self lineCount! !
-!UI.TextEdit categoriesFor: #find:range:down:wholeWord:matchCase:!private!searching & replacing! !
-!UI.TextEdit categoriesFor: #findNextWrapped:down:wholeWord:matchCase:!public!searching & replacing! !
-!UI.TextEdit categoriesFor: #isLowercase!public!testing! !
-!UI.TextEdit categoriesFor: #isLowercase:!public!testing! !
-!UI.TextEdit categoriesFor: #isNumeric!public!testing! !
-!UI.TextEdit categoriesFor: #isNumeric:!accessing!public! !
-!UI.TextEdit categoriesFor: #isUpperCase!public!testing! !
-!UI.TextEdit categoriesFor: #isUppercase:!public!testing! !
-!UI.TextEdit categoriesFor: #lines!accessing!public! !
+!TextEdit categoriesFor: #find:range:down:wholeWord:matchCase:!private!searching & replacing! !
+!TextEdit categoriesFor: #findNextWrapped:down:wholeWord:matchCase:!public!searching & replacing! !
+!TextEdit categoriesFor: #isLowercase!public!testing! !
+!TextEdit categoriesFor: #isLowercase:!public!testing! !
+!TextEdit categoriesFor: #isNumeric!public!testing! !
+!TextEdit categoriesFor: #isNumeric:!accessing!public! !
+!TextEdit categoriesFor: #isUpperCase!public!testing! !
+!TextEdit categoriesFor: #isUppercase:!public!testing! !
+!TextEdit categoriesFor: #lines!accessing!public! !
 
-!UI.TreeView methodsFor!
+!TextTileIcon class methodsFor!
+
+text: labelString font: fontString color: aColor
+	Notification deprecated.
+	^self
+		text: labelString
+		fontName: fontString
+		color: aColor! !
+!TextTileIcon class categoriesFor: #text:font:color:!instance creation!public! !
+
+!TreeView methodsFor!
 
 disableExpandAll
 	#deprecated.
@@ -859,10 +832,10 @@ disableExpandAll
 disableExpandAll: aBoolean 
 	#deprecated.
 	self isExpandAllEnabled: aBoolean not! !
-!UI.TreeView categoriesFor: #disableExpandAll!accessing!public! !
-!UI.TreeView categoriesFor: #disableExpandAll:!accessing!public! !
+!TreeView categoriesFor: #disableExpandAll!accessing!public! !
+!TreeView categoriesFor: #disableExpandAll:!accessing!public! !
 
-!UI.TypeConverter methodsFor!
+!TypeConverter methodsFor!
 
 leftExceptionalValue
 	#deprecated.
@@ -879,12 +852,28 @@ rightExceptionalValue
 rightExceptionalValue: anObject
 	#deprecated.
 	^self rightNullValue: anObject! !
-!UI.TypeConverter categoriesFor: #leftExceptionalValue!accessing!public! !
-!UI.TypeConverter categoriesFor: #leftExceptionalValue:!accessing!public! !
-!UI.TypeConverter categoriesFor: #rightExceptionalValue!accessing!public! !
-!UI.TypeConverter categoriesFor: #rightExceptionalValue:!accessing!public! !
+!TypeConverter categoriesFor: #leftExceptionalValue!accessing!public! !
+!TypeConverter categoriesFor: #leftExceptionalValue:!accessing!public! !
+!TypeConverter categoriesFor: #rightExceptionalValue!accessing!public! !
+!TypeConverter categoriesFor: #rightExceptionalValue:!accessing!public! !
 
-!UI.View methodsFor!
+!UserLibrary methodsFor!
+
+winHelp: hwndMain lpszHelp: lpszHelp uCommand: uCommand dwData: dwData
+	"Invoke the WinHelp() function of the module wrapped by the receiver.
+	Helpstring: Starts windows help and passes a request for help
+
+		BOOL __stdcall WinHelp(
+			HWND hwndMain,
+			LPCSTR lpszHelp,
+			unsigned int uCommand,
+			ULONG_PTR dwData);"
+
+	<stdcall: bool WinHelpA handle lpstr dword uintptr>
+	^self invalidCall: _failureCode! !
+!UserLibrary categoriesFor: #winHelp:lpszHelp:uCommand:dwData:!**auto generated**!public! !
+
+!View methodsFor!
 
 defaultWindowProcessing: anEvent
 	#deprecated.
@@ -921,13 +910,24 @@ winHelpPopup: helpFileString topic: topicId at: aPointOrNil
 		lpszHelp: helpFileString
 		uCommand: HELP_CONTEXTPOPUP
 		dwData: topicId! !
-!UI.View categoriesFor: #defaultWindowProcessing:!dispatching!public! !
-!UI.View categoriesFor: #hasWindowEdge!accessing-styles!public! !
-!UI.View categoriesFor: #hasWindowEdge:!accessing-styles!public! !
-!UI.View categoriesFor: #winHelpPopup:topic:!public! !
-!UI.View categoriesFor: #winHelpPopup:topic:at:!public! !
+!View categoriesFor: #defaultWindowProcessing:!dispatching!public! !
+!View categoriesFor: #hasWindowEdge!accessing-styles!public! !
+!View categoriesFor: #hasWindowEdge:!accessing-styles!public! !
+!View categoriesFor: #winHelpPopup:topic:!public! !
+!View categoriesFor: #winHelpPopup:topic:at:!public! !
 
-!UI.WindowsEvent class methodsFor!
+!VirtualColor methodsFor!
+
+asIndexedColor
+	"Answer the receiver as an <IndexedColor>."
+
+	"IndexedColors are soft-deprecated. You should avoid their deliberate use, although they may continue to exist in older view resources, etc, and be returned from certain older APIs."
+
+	Notification deprecated.
+	^self actualColor asIndexedColor! !
+!VirtualColor categoriesFor: #asIndexedColor!converting!public! !
+
+!WindowsEvent class methodsFor!
 
 message: msgInteger handle: wndHandle wParam: wInteger lParam: lInteger
 	#deprecated.
@@ -936,7 +936,7 @@ message: msgInteger handle: wndHandle wParam: wInteger lParam: lInteger
 		message: msgInteger
 		wParam: wInteger
 		lParam: lInteger! !
-!UI.WindowsEvent class categoriesFor: #message:handle:wParam:lParam:!public! !
+!WindowsEvent class categoriesFor: #message:handle:wParam:lParam:!public! !
 
 "End of package definition"!
 

@@ -66,7 +66,7 @@ contents
 	contents
 		add: #('Core\Contributions\Refactory\Refactoring Browser\Refactorings\RBRefactorings.pax' #plain #imageBased);
 		add: #('Core\Contributions\Refactory\Refactoring Browser\SmallLint\RBSmallLint.pax' #plain #imageBased);
-		add: #('Core\Contributions\Refactory\RBOldNames.pax' #plain #imageBased).
+		add: #('Core\Contributions\Refactory\RB (Old Names).pax' #plain #imageBased).
 
 
 	"Camp Smalltalk Custom refactorings"

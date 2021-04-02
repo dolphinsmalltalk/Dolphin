@@ -801,6 +801,11 @@ isAtomic
 
 	^false!
 
+isBehavior
+	"Answer whether the receiver is a <Behavior>."
+
+	^false!
+
 isCharacter
 	"Answer whether the receiver conforms to the <Character> protocol."
 
@@ -1595,6 +1600,7 @@ yourself
 !Core.Object categoriesFor: #instVarAt:put:!accessing!private! !
 !Core.Object categoriesFor: #instVarNamed:!accessing!private! !
 !Core.Object categoriesFor: #isAtomic!public!testing! !
+!Core.Object categoriesFor: #isBehavior!public!testing! !
 !Core.Object categoriesFor: #isCharacter!public!testing! !
 !Core.Object categoriesFor: #isFinalizable!public!testing! !
 !Core.Object categoriesFor: #isImmediate!private!testing! !

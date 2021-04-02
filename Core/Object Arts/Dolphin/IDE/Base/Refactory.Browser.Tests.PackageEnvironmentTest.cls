@@ -19,7 +19,7 @@ classNamesFor: aPackageEnvironment
 	classNames := aPackageEnvironment classNames asSet
 				addAll: aPackageEnvironment not classNames;
 				yourself.
-	allClassNames := Refactory.Browser.BrowserEnvironment new classNames.
+	allClassNames := BrowserEnvironment new classNames.
 	self assert: classNames equals: allClassNames.
 	"	looseClasses := Set new.
 	aPackageEnvironment packageNames do: [:eachPak | (Package manager packageNamed: eachPak) methods 

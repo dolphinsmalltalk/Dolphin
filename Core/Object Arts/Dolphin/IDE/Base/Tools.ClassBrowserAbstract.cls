@@ -698,7 +698,7 @@ deleteItCommand
 
 dropMethods: aDragDropSession onto: aClass
 	| changes isMove count |
-	changes := Refactory.Browser.CompositeRefactoryChange new.
+	changes := CompositeRefactoryChange new.
 	isMove := aDragDropSession isMove.
 	count := 0.
 	aDragDropSession dragObjects do: 
@@ -1523,8 +1523,7 @@ onRenameInstVar: anAssociation to: aString
 		renameInstanceVariable: anAssociation value
 		to: aString
 		in: anAssociation key
-		within: Refactory.Browser.BrowserEnvironment new)
-			ifNotNil: [variablesPresenter view selectionsByIndex: selections]!
+		within: BrowserEnvironment new) ifNotNil: [variablesPresenter view selectionsByIndex: selections]!
 
 onRenameInstVar: anAssociation to: aString accept: aValueHolder
 	"Private - In-place inst var rename has been made by the user, validate it."

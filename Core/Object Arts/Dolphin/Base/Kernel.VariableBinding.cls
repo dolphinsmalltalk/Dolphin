@@ -7,6 +7,7 @@ Core.Association subclass: #'Kernel.VariableBinding'
 	classInstanceVariableNames: ''
 	classConstants: {
 		'ClassMask' -> 16r2.
+		'DeprecatedMask' -> 16r100.
 		'PrivateMask' -> 16r1
 	}!
 Kernel.VariableBinding guid: (Core.GUID fromString: '{1e72742f-5466-4331-bb39-2ff12ac9743f}')!
@@ -81,6 +82,16 @@ isConstant: aBoolean
 
 	self isImmutable: aBoolean!
 
+isDeprecated
+	"Answer whether the receiver should be considered deprecated."
+
+	^flags allMask: DeprecatedMask!
+
+isDeprecated: aBoolean
+	"Set whether the receiver should be considered deprecated."
+
+	flags := flags mask: DeprecatedMask set: aBoolean!
+
 isPrivate
 	"Answer whether the receiver is a private binding that should only be visible in its home namespace."
 
@@ -139,6 +150,8 @@ targetVariable
 !Kernel.VariableBinding categoriesFor: #isClassVariable:!public! !
 !Kernel.VariableBinding categoriesFor: #isConstant!public! !
 !Kernel.VariableBinding categoriesFor: #isConstant:!public! !
+!Kernel.VariableBinding categoriesFor: #isDeprecated!public! !
+!Kernel.VariableBinding categoriesFor: #isDeprecated:!public! !
 !Kernel.VariableBinding categoriesFor: #isPrivate!public! !
 !Kernel.VariableBinding categoriesFor: #isPrivate:!public! !
 !Kernel.VariableBinding categoriesFor: #key:value:!initializing!private! !

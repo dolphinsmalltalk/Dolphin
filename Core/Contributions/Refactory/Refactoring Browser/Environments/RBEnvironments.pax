@@ -26,7 +26,6 @@ package setClassNames: #(
 
 package setMethodNames: #(
 	#(#{Core.Association} #binding)
-	#(#{Core.Behavior} #isBehavior)
 	#(#{Core.Behavior} #numberSelectors)
 	#(#{Core.Behavior} #selectorsAndMethodsDo:)
 	#(#{Core.ClassDescription} #allSubBehaviorsDo:)
@@ -34,7 +33,6 @@ package setMethodNames: #(
 	#(#{Core.ClassDescription} #subBehaviors)
 	#(#{Core.ClassDescription} #withAllSubBehaviorsDo:)
 	#(#{Core.Metaclass} #soleInstance)
-	#(#{Core.Object} #isBehavior)
 	#(#{Core.Object} #isVariableBinding)
 	#(#{Kernel.CompiledCode} #allLiterals)
 	#(#{Kernel.VariableBinding} #isUnbound)
@@ -127,12 +125,6 @@ binding
 
 !Core.Behavior methodsFor!
 
-isBehavior
-	"Answer whether the receiver is a <Behavior>."
-
-	#rbFix. "Dolphin doesn't normally include these horrid type tests"
-	^true!
-
 numberSelectors
 	"Answer the number of selectors in the receiver's method dictionary."
 
@@ -143,7 +135,6 @@ selectorsAndMethodsDo: aDyadicValuable
 	the receiver's method dictionary."
 
 	^methodDictionary ifNotNil: [methodDictionary keysAndValuesDo: aDyadicValuable]! !
-!Core.Behavior categoriesFor: #isBehavior!public!testing! !
 !Core.Behavior categoriesFor: #numberSelectors!enumerating!public! !
 !Core.Behavior categoriesFor: #selectorsAndMethodsDo:!enumerating!public! !
 
@@ -191,18 +182,11 @@ soleInstance
 
 !Core.Object methodsFor!
 
-isBehavior
-	"Answer whether the receiver is a <Behavior>."
-
-	#rbFix. "Dolphin doesn't include these type tests"
-	^false!
-
 isVariableBinding
 	"Answer whether the receiver is a <variableBinding>, i.e. an association which responds
 	to #key and #value methods."
 
 	^false! !
-!Core.Object categoriesFor: #isBehavior!public!testing! !
 !Core.Object categoriesFor: #isVariableBinding!public!testing! !
 
 !Kernel.CompiledCode methodsFor!

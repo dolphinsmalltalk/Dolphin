@@ -1,122 +1,48 @@
 ﻿| package |
 package := Package name: 'Development System (Deprecated)'.
-package paxVersion: 2.1;
+package paxVersion: 1;
 	basicComment: 'Dolphin Smalltalk Development System - Deprecated content
 
 This package contains obsolete tools from the IDE and variables aliasing old global names to new namespaced names.'.
 
 
-package setVariableNames: #(
-	#{Smalltalk.Aspect}
-	#{Smalltalk.ClassBrowserAbstract}
-	#{Smalltalk.ClassHierarchyPresenter}
-	#{Smalltalk.Debugger}
-	#{Smalltalk.DebugInfoPlugin}
-	#{Smalltalk.DevelopmentSessionManager}
-	#{Smalltalk.IdealSpaceShell}
-	#{Smalltalk.IdeaSpaceShell}
-	#{Smalltalk.MethodBrowserShell}
-	#{Smalltalk.MethodWorkspace}
-	#{Smalltalk.PackageBrowserShell}
-	#{Smalltalk.PropertyInspector}
-	#{Smalltalk.SmalltalkExpressionStyler}
-	#{Smalltalk.SmalltalkMethodStyler}
-	#{Smalltalk.SmalltalkStyler}
-	#{Smalltalk.SmalltalkSystem}
-	#{Smalltalk.SmalltalkSystemIcon}
-	#{Smalltalk.SmalltalkSystemShell}
-	#{Smalltalk.SmalltalkToolShell}
-	#{Smalltalk.SmalltalkWorkspace}
-	#{Smalltalk.SmalltalkWorkspaceDocument}
-	#{Smalltalk.SystemBrowserShell}
-	#{Smalltalk.TwinLevelInspector}
-	#{Smalltalk.ViewComposer}
-).
+package methodNames
+	add: #SmalltalkSystem -> #classesReferencingPool:;
+	add: #SmalltalkSystem -> #classesReferencingPoolNamed:;
+	yourself.
 
-package setAliasVariableNames: #(
-	#{Smalltalk.Aspect}
-	#{Smalltalk.ClassBrowserAbstract}
-	#{Smalltalk.ClassHierarchyPresenter}
-	#{Smalltalk.Debugger}
-	#{Smalltalk.DebugInfoPlugin}
-	#{Smalltalk.DevelopmentSessionManager}
-	#{Smalltalk.IdealSpaceShell}
-	#{Smalltalk.IdeaSpaceShell}
-	#{Smalltalk.MethodBrowserShell}
-	#{Smalltalk.MethodWorkspace}
-	#{Smalltalk.PackageBrowserShell}
-	#{Smalltalk.PropertyInspector}
-	#{Smalltalk.SmalltalkExpressionStyler}
-	#{Smalltalk.SmalltalkMethodStyler}
-	#{Smalltalk.SmalltalkStyler}
-	#{Smalltalk.SmalltalkSystem}
-	#{Smalltalk.SmalltalkSystemIcon}
-	#{Smalltalk.SmalltalkSystemShell}
-	#{Smalltalk.SmalltalkToolShell}
-	#{Smalltalk.SmalltalkWorkspace}
-	#{Smalltalk.SmalltalkWorkspaceDocument}
-	#{Smalltalk.SystemBrowserShell}
-	#{Smalltalk.TwinLevelInspector}
-	#{Smalltalk.ViewComposer}
-).
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
 
 package setPrerequisites: #(
 	'Development System'
-	'..\Professional\Dolphin Professional Tools'
-).
+	'..\..\Base\Dolphin').
 
 package!
 
-"Variable Aliases"!
+"Global Aliases"!
 
-Smalltalk.Aspect := Tools.Aspect!
 
-Smalltalk.ClassBrowserAbstract := Tools.ClassBrowserAbstract!
+"Loose Methods"!
 
-Smalltalk.ClassHierarchyPresenter := Tools.ClassHierarchySelector!
+!SmalltalkSystem methodsFor!
 
-Smalltalk.Debugger := Tools.Debugger!
+classesReferencingPool: aPoolDictionary
+	"Answer a <collection> of all classes that directly reference the specified <PoolDictionary>."
 
-Smalltalk.DebugInfoPlugin := Tools.DebugInfoPlugin!
+	Notification deprecated.
+	^self classesReferencingPoolNamed: aPoolDictionary name!
 
-Smalltalk.DevelopmentSessionManager := Tools.DevelopmentSessionManager!
+classesReferencingPoolNamed: aSymbol
+	"Answer a <collection> of all classes that directly reference the named <PoolDictionary>."
 
-Smalltalk.IdealSpaceShell := Tools.IdeaSpaceShell!
-
-Smalltalk.IdeaSpaceShell := Tools.IdeaSpaceShell!
-
-Smalltalk.MethodBrowserShell := Tools.MethodBrowserShell!
-
-Smalltalk.MethodWorkspace := Tools.MethodWorkspace!
-
-Smalltalk.PackageBrowserShell := Tools.PackageBrowserShell!
-
-Smalltalk.PropertyInspector := Tools.PropertyInspector!
-
-Smalltalk.SmalltalkExpressionStyler := Tools.SmalltalkExpressionStyler!
-
-Smalltalk.SmalltalkMethodStyler := Tools.SmalltalkMethodStyler!
-
-Smalltalk.SmalltalkStyler := Tools.SmalltalkStyler!
-
-Smalltalk.SmalltalkSystem := Tools.SmalltalkSystem!
-
-Smalltalk.SmalltalkSystemIcon := Tools.SmalltalkSystemIcon!
-
-Smalltalk.SmalltalkSystemShell := Tools.SmalltalkSystemShell!
-
-Smalltalk.SmalltalkToolShell := Tools.SmalltalkToolShell!
-
-Smalltalk.SmalltalkWorkspace := Tools.SmalltalkWorkspace!
-
-Smalltalk.SmalltalkWorkspaceDocument := Tools.SmalltalkWorkspaceDocument!
-
-Smalltalk.SystemBrowserShell := Tools.SystemBrowserShell!
-
-Smalltalk.TwinLevelInspector := Tools.TwinLevelInspector!
-
-Smalltalk.ViewComposer := Tools.ViewComposer!
-
+	Notification deprecated.
+	^Smalltalk allClasses select: [:each | each sharedPoolNames includes: aSymbol]! !
+!SmalltalkSystem categoriesFor: #classesReferencingPool:!enquiries!public! !
+!SmalltalkSystem categoriesFor: #classesReferencingPoolNamed:!enquiries!public! !
 
 "End of package definition"!
 

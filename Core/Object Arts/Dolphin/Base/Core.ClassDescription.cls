@@ -404,6 +404,15 @@ conformsToProtocol: protocol
 		superclass notNil and: [superclass conformsToProtocol: protName]]
 !
 
+definedBindings
+	"Private - Answer the bindings that are defined as part of the receiver's class definition (as opposed to externally).
+	For most classes this is all the class variables. For namespaces, this does not include any of the classes in the namespace as these are added to the namespace implicitly as part of their own definition."
+
+	| defined |
+	defined := Set new.
+	self bindingsDo: [:each | each isClassVariable ifTrue: [defined add: each]].
+	^defined!
+
 definition
 	"Answer the <readableString> definition message, which, when evaluated, will define the
 	receiver."
@@ -659,10 +668,10 @@ owningPackage
 packageManager
 	^self subclassResponsibility!
 
-printDefinitionOn: target
-	"Private - Append the textual definition of the receiver to the <puttableStream>, target."
+printDefinitionOn: aPuttableStream
+	"Private - Append the textual definition of the receiver to the <puttableStream> argument."
 
-	^self subclassResponsibility!
+	self subclassResponsibility!
 
 printFullNameOn: aPuttableStream
 	self subclassResponsibility!
@@ -875,6 +884,9 @@ shortName
 
 	^self subclassResponsibility!
 
+sourceFilerClass
+	^ChunkSourceFiler!
+
 sourceManager
 	"Answer the receiver's source manager. Answer a DeafObject if none is available."
 
@@ -1011,6 +1023,7 @@ withAllSubclassesDo: aMonadicValuable
 !Core.ClassDescription categoriesFor: #compile:classified:!compiling!public! !
 !Core.ClassDescription categoriesFor: #compileAllSubclasses!compiling!development!public! !
 !Core.ClassDescription categoriesFor: #conformsToProtocol:!protocols!public! !
+!Core.ClassDescription categoriesFor: #definedBindings!accessing!private! !
 !Core.ClassDescription categoriesFor: #definition!public!source filing-class definition! !
 !Core.ClassDescription categoriesFor: #displayOn:!displaying!public! !
 !Core.ClassDescription categoriesFor: #environment!accessing!public! !
@@ -1050,7 +1063,7 @@ withAllSubclassesDo: aMonadicValuable
 !Core.ClassDescription categoriesFor: #name!accessing!public! !
 !Core.ClassDescription categoriesFor: #owningPackage!accessing!public! !
 !Core.ClassDescription categoriesFor: #packageManager!development!public!source filing! !
-!Core.ClassDescription categoriesFor: #printDefinitionOn:!private!source filing-class definition! !
+!Core.ClassDescription categoriesFor: #printDefinitionOn:!development!private!source filing-class definition! !
 !Core.ClassDescription categoriesFor: #printFullNameOn:!helpers!private! !
 !Core.ClassDescription categoriesFor: #protocolNames!private!protocols! !
 !Core.ClassDescription categoriesFor: #protocols!private!protocols! !
@@ -1077,6 +1090,7 @@ withAllSubclassesDo: aMonadicValuable
 !Core.ClassDescription categoriesFor: #setInstanceVariables:!instance variables!private! !
 !Core.ClassDescription categoriesFor: #setShapeFlags:to:!class hierarchy-mutating!instance specification-accessing!private! !
 !Core.ClassDescription categoriesFor: #shortName!accessing!public! !
+!Core.ClassDescription categoriesFor: #sourceFilerClass!private!source filing-class definition! !
 !Core.ClassDescription categoriesFor: #sourceManager!accessing!public! !
 !Core.ClassDescription categoriesFor: #stbReadFrom:format:!binary filing!public! !
 !Core.ClassDescription categoriesFor: #storeClassCategories!private!source filing-methods! !

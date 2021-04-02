@@ -268,25 +268,25 @@ publishedAspectsOfInstances
 	| aspects |
 	aspects := super publishedAspectsOfInstances.
 	aspects
-		add: ((Tools.Aspect name: #styledPen
+		add: ((Aspect name: #styledPen
 					chooseFrom: #('nil' 'StyledPen solid' 'StyledPen dotted' 'StyledPen dashed' 'StyledPen dashDot' 'StyledPen dashDotDot'))
 					beImmutable;
 					isNullable: true;
 					yourself);
-		add: ((Tools.Aspect name: #styledShadow chooseFrom: #('nil' 'StyledShadow new'))
+		add: ((Aspect name: #styledShadow chooseFrom: #('nil' 'StyledShadow new'))
 					beImmutable;
 					isNullable: true;
 					yourself);
-		add: ((Tools.Aspect name: #styledBrush
+		add: ((Aspect name: #styledBrush
 					chooseFrom: #('nil' 'StyledGradientBrush black' 'StyledGradientBrush white' 'StyledGradientBrush face3dTopToBottomFade' 'StyledGradientBrush face3dLeftToRightFade' 'StyledGradientBrush face3dTopLeftToBottomRightFade'))
 					isNullable: true;
 					yourself);
-		add: ((Tools.Aspect name: #cornerRadii)
+		add: ((Aspect name: #cornerRadii)
 					isNullable: false;
 					beImmutable;
 					yourself);
-		add: (Tools.Aspect boolean: #isAntialiased);
-		add: ((Tools.Aspect collection: #edges addEvaluationFrom: #('#left' '#right' '#top' '#bottom'))
+		add: (Aspect boolean: #isAntialiased);
+		add: ((Aspect collection: #edges addEvaluationFrom: #('#left' '#right' '#top' '#bottom'))
 					beImmutable;
 					isNullable: false;
 					yourself).

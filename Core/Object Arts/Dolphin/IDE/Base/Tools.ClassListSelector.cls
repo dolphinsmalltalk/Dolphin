@@ -134,7 +134,7 @@ initialize
 	"Private - Initialize the receiver"
 
 	super initialize.
-	environment := Refactory.Browser.BrowserEnvironment new forClasses: #()!
+	environment := BrowserEnvironment new forClasses: #()!
 
 model: aListModel
 	"Connects the receiver to a new model."

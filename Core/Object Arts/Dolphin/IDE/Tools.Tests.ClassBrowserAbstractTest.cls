@@ -197,7 +197,7 @@ testAddRemoveOfInheritedMethods
 	self browser toggleShowInheritedMethods.
 	self assert: browser isShowInheritedMethods.
 	self assert: browser isFilterObjectMethods equals: browser class defaultFilterObjectMethods.
-	browser actualClass: Tools.Tests.ClassBrowserAbstractTest.
+	browser actualClass: ClassBrowserAbstractTest.
 	self inheritedMethodAddRemoveTests.
 	browser toggleFilterObjectMethods.
 	self deleteTestMethods: packageA methods.
@@ -266,7 +266,7 @@ testIsMethodVisibleClassSide
 	| subjectClass |
 	self deny: self browser isShowInheritedMethods.
 	self assert: browser isFilterObjectMethods equals: browser class defaultFilterObjectMethods.
-	subjectClass := Tools.Tests.PackageBrowserShellTest class.
+	subjectClass := PackageBrowserShellTest class.
 	browser actualClass: subjectClass.
 	self assert: (browser isMethodVisible: (subjectClass compiledMethodAt: #resources)).
 	self deny: (browser isMethodVisible: (TestCase class compiledMethodAt: #resources)).
@@ -314,7 +314,7 @@ testSwitchFilterPane
 	"#1768"
 
 	| testMethod |
-	testMethod := Tools.Tests.ClassBrowserAbstractTest compiledMethodAt: #testSwitchFilterPane.
+	testMethod := ClassBrowserAbstractTest compiledMethodAt: #testSwitchFilterPane.
 	self browser method: testMethod.
 	self assert: browser method identicalTo: testMethod.
 	self assert: (browser instVarNamed: 'methodBrowserPresenter') source equals: testMethod getSource.

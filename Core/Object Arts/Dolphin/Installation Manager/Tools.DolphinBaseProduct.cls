@@ -38,7 +38,7 @@ contents
 		add: #('Core\Contributions\Camp Smalltalk\SUnit\SUnitPreload.pax' #plain #imageBased);
 		add: #('Core\Contributions\Camp Smalltalk\SUnit\SUnit.pax' #plain #imageBased);
 		add: #('Core\Contributions\Camp Smalltalk\SUnit\SUnitUI.pax' #plain #imageBased);
-		add: #('Core\Contributions\Camp Smalltalk\SUnit\SUnitLegacy.pax' #plain #imageBased);
+		add: #('Core\Contributions\Camp Smalltalk\SUnit\SUnit (Old Names).pax' #plain #imageBased);
 		yourself.
 
 	contents
@@ -77,6 +77,7 @@ contents
 		add: #('Core\Object Arts\Samples\MVP\Calculator\Calculator.pax' #plain #imageBased);
 		add: #('Core\Object Arts\Samples\MVP\Personal Money\PersonalMoney.pax' #plain #imageBased);
 		add: #('Core\Object Arts\Samples\MVP\Video Library\Video Library.pax' #plain #imageBased);
+		add: #('Core\Object Arts\Samples\MVP\Video Library\Video Library (Old Names).pax' #plain #imageBased);
 		add: #('Core\Object Arts\Samples\MVP\Bouncing Balls\Bouncing Balls.pax' #plain #imageBased);
 		add: #('Core\Object Arts\Samples\MVP\Sliding Ball Demo\SlidingBallDemo.pax' #plain #imageBased);
 		add: #('Core\Object Arts\Samples\IDE\Dolphin IDE Extension Example.pax' #plain #imageBased);

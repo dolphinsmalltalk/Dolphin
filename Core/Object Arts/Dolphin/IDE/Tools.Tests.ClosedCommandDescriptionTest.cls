@@ -12,7 +12,7 @@ Tools.Tests.ClosedCommandDescriptionTest comment: ''!
 !Tools.Tests.ClosedCommandDescriptionTest methodsFor!
 
 setUp
-	dialog := Tools.Tests.ClosedCommandDescriptionIssueDialog showOn: 'blah'!
+	dialog := ClosedCommandDescriptionIssueDialog showOn: 'blah'!
 
 tearDown
 

@@ -30,21 +30,15 @@ cr
 
 	stream cr!
 
-emitFooterForMethodsOf: aClass 
-	"Private - Ends the method definition chunks for aClass onto
-	the source stream."
+emitClassName: aClass
+	aClass environment == aClass baseEnvironment
+		ifTrue: [stream nextPutAll: aClass name]
+		ifFalse: [aClass printFullNameOn: stream]!
 
-	^self subclassResponsibility!
-
-emitGUIDOfClass: aClass 
+emitGUIDOfClass: aClass
 	"Private - Emit a GUID definition chunk for the <Class>, aClass, to the source stream."
 
-	^self subclassResponsibility!
-
-emitHeaderForMethodsOf: aClass 
-	"Private - Emits a category header for the class, aClass, to the source stream."
-
-	^self subclassResponsibility!
+	self subclassResponsibility!
 
 evaluationContext
 	^evaluationContext!
@@ -77,7 +71,7 @@ isSourceOnly: aBoolean
 	flags := flags mask: SourceOnlyMask set: aBoolean!
 
 setStream: aPuttableStream
-	stream := aPuttableStream.
+	(stream := aPuttableStream) locale: SmalltalkLocale.Hex.
 	flags := 0!
 
 setToEnd
@@ -107,15 +101,14 @@ storeSourceString: aString forMethod: aCompiledMethod
 	^self subclassResponsibility!
 
 stream
-	"Private - Answer the value of the receiver's ''stream'' instance variable."
+	"Answer the receiver's <puttableStream>."
 
 	^stream! !
 !Kernel.SourceFiler categoriesFor: #atEnd!public!testing! !
 !Kernel.SourceFiler categoriesFor: #close!operations!public! !
 !Kernel.SourceFiler categoriesFor: #cr!accessing!public! !
-!Kernel.SourceFiler categoriesFor: #emitFooterForMethodsOf:!private!source filing! !
+!Kernel.SourceFiler categoriesFor: #emitClassName:!private!source filing-file out! !
 !Kernel.SourceFiler categoriesFor: #emitGUIDOfClass:!private!source filing! !
-!Kernel.SourceFiler categoriesFor: #emitHeaderForMethodsOf:!private!source filing! !
 !Kernel.SourceFiler categoriesFor: #evaluationContext!accessing!public! !
 !Kernel.SourceFiler categoriesFor: #evaluationContext:!accessing!public! !
 !Kernel.SourceFiler categoriesFor: #fileIn!public!source filing! !
@@ -128,9 +121,22 @@ stream
 !Kernel.SourceFiler categoriesFor: #sourcePositionFromDescriptor:!private!source filing! !
 !Kernel.SourceFiler categoriesFor: #storeSource:for:!private!source filing! !
 !Kernel.SourceFiler categoriesFor: #storeSourceString:forMethod:!public!source filing! !
-!Kernel.SourceFiler categoriesFor: #stream!accessing!private! !
+!Kernel.SourceFiler categoriesFor: #stream!accessing!public! !
 
 !Kernel.SourceFiler class methodsFor!
+
+fileOutExtensionForClass: aClass
+	^self subclassResponsibility!
+
+fileOutNameForClass: aClass
+	"Answer the default file name for the class to file out on."
+
+	| path |
+	path := File composeStem: aClass fileOutStem extension: (self fileOutExtensionForClass: aClass).
+	aClass owningPackage
+		ifNil: [Notification signal: 'Warning: ' , self printString , ' is unpackaged']
+		ifNotNil: [:package | path := File replacePath: path with: package path].
+	^path!
 
 on: aWriteStream 
 	"Answer a new instance of the receiver for filing out source code onto the 
@@ -139,5 +145,7 @@ on: aWriteStream
 	^(self new)
 		setStream: aWriteStream;
 		yourself! !
+!Kernel.SourceFiler class categoriesFor: #fileOutExtensionForClass:!enquiries!public! !
+!Kernel.SourceFiler class categoriesFor: #fileOutNameForClass:!enquiries!public! !
 !Kernel.SourceFiler class categoriesFor: #on:!instance creation!public! !
 

@@ -70,7 +70,7 @@ addFilteredMethod: aCompiledMethod forLintRule: aLintRule
 	self trigger: #lintRuleFilterChanged: with: aLintRule!
 
 addGlobalVariable: aString
-	self changeManager performChange: (Refactory.Browser.DolphinAddGlobalChange addGlobal: aString)!
+	self changeManager performChange: (DolphinAddGlobalChange addGlobal: aString)!
 
 addInstanceVariable: aString to: aClass
 	self
@@ -1110,7 +1110,7 @@ renameVariable: aString to: newName in: aClass classVariable: aBoolean within: a
 						ifFalse: 
 							[aBoolean
 								ifTrue: [RenameClassVariableAndAccessorsRefactoring]
-								ifFalse: [Refactory.Browser.RenameInstanceVariableAndAccessorsRefactoring]].
+								ifFalse: [RenameInstanceVariableAndAccessorsRefactoring]].
 			model := RBNamespace onEnvironment: env.
 			refactoring := refactoringClass
 						model: model

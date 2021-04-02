@@ -4,8 +4,7 @@ Shell subclass: #GdiplusImageViewSampleShell
 	instanceVariableNames: 'image edgeChoice viewChoice padding interpolationChoice classChoice useImageClass filename'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''
-	classConstants: {}!
+	classInstanceVariableNames: ''!
 GdiplusImageViewSampleShell guid: (GUID fromString: '{8645634f-e895-424a-a4c8-4db4afb9647e}')!
 GdiplusImageViewSampleShell comment: 'GdiplusImageViewSampleShell
 

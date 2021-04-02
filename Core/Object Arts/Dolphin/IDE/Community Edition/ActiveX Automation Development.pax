@@ -139,7 +139,6 @@ package setMethodNames: #(
 	#(#{OS.COM.APIInfoAnalyzer} #isMethodWrapperRequiredFor:)
 	#(#{OS.COM.APIInfoAnalyzer} #methodCommentDescription)
 	#(#{OS.COM.APIInfoAnalyzer} #mungeSelectorKeywords:forMember:)
-	#(#{OS.COM.APIInfoAnalyzer} #namespaceImports)
 	#(#{OS.COM.APIInfoAnalyzer} #printCommentPrefixOn:isPrivate:)
 	#(#{OS.COM.APIInfoAnalyzer} #printFunctionPrototype:on:indent:)
 	#(#{OS.COM.APIInfoAnalyzer} #printFunctionPrototypeComment:on:)
@@ -1757,12 +1756,6 @@ methodCommentDescription
 mungeSelectorKeywords: aSequencedReadableCollection forMember: aFUNCDESC 
 	^self reinventBadSelector: aSequencedReadableCollection member: aFUNCDESC!
 
-namespaceImports
-	"Private - Answer a <collection> of the shared pool names to be used when 
-	defining a wrapper class for the receiver."
-
-	^self typeLib sharedPoolNames!
-
 printCommentPrefixOn: aPuttableStream isPrivate: aBoolean
 	aPuttableStream
 		tab;
@@ -1962,7 +1955,6 @@ selectorForFunction: aFUNCDESC
 !OS.COM.APIInfoAnalyzer categoriesFor: #isMethodWrapperRequiredFor:!private!testing! !
 !OS.COM.APIInfoAnalyzer categoriesFor: #methodCommentDescription!private! !
 !OS.COM.APIInfoAnalyzer categoriesFor: #mungeSelectorKeywords:forMember:!helpers!private! !
-!OS.COM.APIInfoAnalyzer categoriesFor: #namespaceImports!constants!private! !
 !OS.COM.APIInfoAnalyzer categoriesFor: #printCommentPrefixOn:isPrivate:!private! !
 !OS.COM.APIInfoAnalyzer categoriesFor: #printFunctionPrototype:on:indent:!printing!private! !
 !OS.COM.APIInfoAnalyzer categoriesFor: #printFunctionPrototypeComment:on:!private! !

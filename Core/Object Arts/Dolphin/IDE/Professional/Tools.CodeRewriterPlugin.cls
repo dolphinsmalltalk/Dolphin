@@ -42,7 +42,7 @@ buildSearchRule
 	caption nextPutAll: 'Methods matching: '.
 	self searchText aspectDisplayOn: caption.
 	^
-	[Refactory.Browser.ParseTreeLintRule
+	[ParseTreeLintRule
 		createParseTreeRule: {self searchText}
 		method: isMethodPresenter value
 		name: caption contents]

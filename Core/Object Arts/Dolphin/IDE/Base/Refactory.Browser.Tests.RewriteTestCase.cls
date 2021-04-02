@@ -26,11 +26,11 @@ testFindReplace
 	| find replace rule |
 	find := '``@receiver notify: ``@arg caption: ``@arg1 '.
 	replace := 'self notify: ``@arg caption: ``@arg1'.
-	rule := Refactory.Browser.ParseTreeLintRule
+	rule := ParseTreeLintRule
 				createParseTreeRule: {find. replace}
 				method: false
 				name: 'Find'.
-	Refactory.Browser.SmalllintChecker runRule: rule onEnvironment: env.
+	SmalllintChecker runRule: rule onEnvironment: env.
 	self deny: rule isEmpty!
 
 testTransformationRule

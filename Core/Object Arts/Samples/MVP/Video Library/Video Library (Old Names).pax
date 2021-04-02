@@ -1,0 +1,27 @@
+﻿| package |
+package := Package name: 'Video Library (Old Names)'.
+package paxVersion: 2.1;
+	basicComment: ''.
+
+
+package setVariableNames: #(
+	#{Smalltalk.VideoRecording}
+).
+
+package setAliasVariableNames: #(
+	#{Smalltalk.VideoRecording}
+).
+
+package setPrerequisites: #(
+	'Video Library'
+).
+
+package!
+
+"Variable Aliases"!
+
+Smalltalk.VideoRecording := UI.Examples.VideoRecording!
+
+
+"End of package definition"!
+

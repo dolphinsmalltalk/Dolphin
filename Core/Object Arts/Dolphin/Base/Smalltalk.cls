@@ -3,8 +3,8 @@
 Kernel.Namespace subclass: #Smalltalk
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{Core} #{Kernel} #{Graphics} #{UI} #{OS} #{External})
-	classInstanceVariableNames: 'events allRoots allClasses classesByGuid'
+	imports: #(#{Core} #{Kernel} #{Graphics} #{UI} #{OS} #{External} #{Tools private})
+	classInstanceVariableNames: 'events allRoots allClasses classesByGuid oldNames'
 	classConstants: {}!
 Smalltalk guid: (Core.GUID fromString: '{4c8d0eb7-6d0e-4467-aea6-e6f1107faf7d}')!
 Smalltalk isNonInstantiable: true!
@@ -66,9 +66,9 @@ classUpdated: aClass
 	^self trigger: #classUpdated: with: aClass!
 
 clearCachedClasses
-	"Private - Clear down the all class cache."
+	"Private - Clear down the class caches."
 
-	allRoots := allClasses := classesByGuid := nil!
+	oldNames := allRoots := allClasses := classesByGuid := nil!
 
 declareVariable: aString
 	"For historical reasons the names of variables in the system namespace are always Symbols. This isn't strictly necessary in most cases as in Dolphin Symbols and Strings for the same character sequence are equivalent, but they are not identical and so some code may be broken if we don't stick with Symbols."
@@ -88,6 +88,20 @@ getEvents
 
 	^events!
 
+oldNames
+	"Answer an <abstractDictionary> mapping new namespaced classes to old pre-namespace Smalltalk class names."
+
+	^oldNames
+		ifNil: 
+			[oldNames := IdentityDictionary new.
+			self bindingsDo: 
+					[:each |
+					| value |
+					value := each value.
+					(value class isMeta and: [value environment ~~ self and: [each isDeprecated not]])
+						ifTrue: [oldNames at: value put: each key]].
+			oldNames]!
+
 removeClass: aClass
 	aClass environment removeLocalBindingFor: aClass unqualifiedName.
 	aClass removeFromSuper.	"At this point it would be a good idea to make the class become: a special error reporting class"
@@ -104,9 +118,14 @@ shortNameFor: aString in: aNamespace
 			[aNamespace == self or: 
 					[(self fullBindingFor: aString)
 						ifNil: [self imports anySatisfy: [:each | each value == aNamespace]]
-						ifNotNil: [:binding | binding environment == aNamespace]]])
+						ifNotNil: [:binding | binding environment == aNamespace or: [binding environment == self]]]])
 		ifTrue: [aString]
-		ifFalse: [aNamespace fullNameFor: aString]! !
+		ifFalse: [aNamespace fullNameFor: aString]!
+
+staticVariableRemoved: aVariableBinding
+	self
+		clearCachedClasses;
+		trigger: #variableRemoved: with: aVariableBinding! !
 !Smalltalk class categoriesFor: #allClasses!accessing!public! !
 !Smalltalk class categoriesFor: #allClassesDo:!binding!public! !
 !Smalltalk class categoriesFor: #allRoots!accessing!public! !
@@ -118,7 +137,9 @@ shortNameFor: aString in: aNamespace
 !Smalltalk class categoriesFor: #declareVariable:!public! !
 !Smalltalk class categoriesFor: #developmentSystem!accessing!public! !
 !Smalltalk class categoriesFor: #getEvents!events!private! !
+!Smalltalk class categoriesFor: #oldNames!accessing!public! !
 !Smalltalk class categoriesFor: #removeClass:!operations!public! !
 !Smalltalk class categoriesFor: #setEvents:!events!private! !
 !Smalltalk class categoriesFor: #shortNameFor:in:!helpers!private! !
+!Smalltalk class categoriesFor: #staticVariableRemoved:!class hierarchy-mutating!class variables!private! !
 

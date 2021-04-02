@@ -386,6 +386,11 @@ instVarNames
 
 	^#()!
 
+isBehavior
+	"Answer whether the receiver is a <Behavior>."
+
+	^true!
+
 isBits
 	"Answer whether the variables of instances of the receiver contain bits (i.e. not object pointers)."
 
@@ -963,6 +968,7 @@ withAllSuperclassesDo: aMonadicValuable
 !Core.Behavior categoriesFor: #instanceSpec:!instance specification-accessing!private! !
 !Core.Behavior categoriesFor: #instSize!instance specification-accessing!public! !
 !Core.Behavior categoriesFor: #instVarNames!instance variables!public! !
+!Core.Behavior categoriesFor: #isBehavior!public!testing! !
 !Core.Behavior categoriesFor: #isBits!instance specification-testing!public! !
 !Core.Behavior categoriesFor: #isBytes!instance specification-testing!public! !
 !Core.Behavior categoriesFor: #isFixed!instance specification-testing!public! !

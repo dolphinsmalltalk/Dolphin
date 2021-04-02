@@ -33,7 +33,7 @@ default
 !
 
 defaultModel
-	^Tools.SmalltalkSyntaxTutorial new!
+	^SmalltalkSyntaxTutorial new!
 
 first
 	"Move to the first lesson. We post to the input queue to avoid issues

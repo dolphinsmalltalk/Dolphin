@@ -43,13 +43,13 @@ tableOfContents
 !
 
 testLesson
-	^Tools.Lesson title: 'Test Lesson' contents: '"This lesson is a test"'!
+	^Lesson title: 'Test Lesson' contents: '"This lesson is a test"'!
 
 theEnd
-	^Tools.Lesson title: 'The End' contents: '"And that''d be pretty much it :)"'!
+	^Lesson title: 'The End' contents: '"And that''d be pretty much it :)"'!
 
 welcome
-	^Tools.Lesson title: 'Welcome' contents: '"Hi, this is a test tutorial."'! !
+	^Lesson title: 'Welcome' contents: '"Hi, this is a test tutorial."'! !
 !Tools.AbstractTutorial categoriesFor: #indexOfLesson:!accessing!public! !
 !Tools.AbstractTutorial categoriesFor: #lessonAt:!accessing!public! !
 !Tools.AbstractTutorial categoriesFor: #name!accessing!public! !

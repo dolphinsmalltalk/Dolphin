@@ -358,7 +358,7 @@ toggleToTestsClass
 	^self testClass = self browser actualClass ifTrue: [self classUnderTest] ifFalse: [self testClass]!
 
 toggleToTestsClassDescription
-	^self toggleToTestsClass ?? XProgramming.SUnit.TestCase!
+	^self toggleToTestsClass ?? TestCase!
 
 update: anObject
 	(anObject isKindOf: TestCase)

@@ -34,7 +34,7 @@ title: aString
 !Tools.Lesson class methodsFor!
 
 icon
-	^Tools.AbstractTutorial icon!
+	^AbstractTutorial icon!
 
 title: aTitle contents: someContents
 	^ (self new)

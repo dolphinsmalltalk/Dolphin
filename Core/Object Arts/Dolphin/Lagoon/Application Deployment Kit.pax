@@ -72,7 +72,6 @@ package setMethodNames: #(
 package setPrerequisites: #(
 	'Console Application Kit'
 	'..\IDE\Base\Development System'
-	'..\IDE\Base\Development System (Deprecated)'
 	'..\Base\Dolphin'
 	'..\MVP\Base\Dolphin Basic Geometry'
 	'..\MVP\Presenters\Boolean\Dolphin Boolean Presenter'
@@ -226,7 +225,7 @@ editCustomOptions
 	"Open a <PublishedAspectInspector> on the version resource."
 
 	| inspector |
-	inspector := #{Tools.PublishedAspectInspector} value shellOn: self.
+	inspector := #{PublishedAspectInspector} value shellOn: self.
 	inspector topShell caption: self class name , ' Properties'!
 
 executableName: aString
@@ -474,14 +473,14 @@ publishedAspectsOfInstances
 	#(#stripClassGuids #stripDuplicateStrings #preserveAspectSetters #retainInstVarNames #stripRedundantClasses #stripClassInfo #stripClassBuilder #stripRedundantMethods #stripDeprecatedMethods #stripShouldNotImplement #stripSubclassResponsibility #stripRedundantResources #stripRedundantPackages #compileExternalStructures #writeLogFile #stripDuplicateBytecodes #logReferencesToClasses #isToGo #includeManifestResource #isUnattended)
 		do: [:each | aspects add: (Aspect boolean: each)].
 	aspects
-		add: (Tools.Aspect choice: #runtimeSessionManagerClass
+		add: (Aspect choice: #runtimeSessionManagerClass
 					from: (SessionManager allSubclasses select: [:e | e isRuntime]));
-		add: ((Tools.Aspect fileSave: #executableName)
+		add: ((Aspect fileSave: #executableName)
 					isNullable: false;
 					yourself);
-		add: (Tools.Aspect multilineString: #preStripScript);
-		add: (Tools.Aspect name: #versionResource);
-		add: (Tools.Aspect fileOpen: #stubFilePath);
+		add: (Aspect multilineString: #preStripScript);
+		add: (Aspect name: #versionResource);
+		add: (Aspect fileOpen: #stubFilePath);
 		yourself.
 	^aspects!
 

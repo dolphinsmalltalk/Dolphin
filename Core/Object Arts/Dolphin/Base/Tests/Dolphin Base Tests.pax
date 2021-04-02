@@ -180,9 +180,11 @@ package setPrerequisites: #(
 	'..\..\System\Random\Dolphin CRT Random Stream'
 	'..\..\System\Win32\Dolphin File System Info'
 	'..\Dolphin Legacy Date & Time'
+	'..\Deprecated\Dolphin Legacy Package Support'
 	'..\Dolphin Message Box'
 	'..\..\System\Random\Dolphin Random Stream'
 	'..\..\Registry\Dolphin Registry Access'
+	'..\Dolphin Source Fileout'
 	'..\..\..\..\Contributions\Camp Smalltalk\SUnit\OA SUnit Extensions'
 	'..\..\ActiveX\COM\OLE COM'
 	'..\..\System\Compiler\Smalltalk Parser'
@@ -1095,8 +1097,8 @@ regressionTestsLogFilename
 
 regressionTestSuite
 	| suite |
-	suite := XProgramming.SUnit.TestSuite named: 'RegressionTests'.
-	suite addTests: XProgramming.SUnit.TestCase buildSuite allTests asSortedCollection.
+	suite := TestSuite named: 'RegressionTests'.
+	suite addTests: TestCase buildSuite allTests asSortedCollection.
 	^suite!
 
 runRegressionTests
@@ -1121,8 +1123,8 @@ runRegressionTests
 
 runRegressionTests: aTestSuite logTo: logStream verbose: aBoolean
 	| result |
-	result := XProgramming.SUnit.CommandLineTestRunner new
-				addLogger: (XProgramming.SUnit.TestRunConsoleLogger on: logStream);
+	result := CommandLineTestRunner new
+				addLogger: (TestRunConsoleLogger on: logStream);
 				verbose: aBoolean;
 				runSuite: aTestSuite knownSlowTests: self baselinedSlowTests.
 	self writeJunitTestLog: aTestSuite result: result.

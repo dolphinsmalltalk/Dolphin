@@ -47,8 +47,8 @@ Kernel.Namespace subclass: #'Kernel.SharedPool'
 Kernel.Namespace subclass: #Smalltalk
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{Core} #{Kernel} #{Graphics} #{UI} #{OS} #{External})
-	classInstanceVariableNames: 'events allRoots allClasses classesByGuid'
+	imports: #(#{Core} #{Kernel} #{Graphics} #{UI} #{OS} #{External} #{Tools private})
+	classInstanceVariableNames: 'events allRoots allClasses classesByGuid oldNames'
 	classConstants: {}!
 Kernel.Namespace subclass: #Tools
 	instanceVariableNames: ''
@@ -3584,6 +3584,7 @@ Core.Association subclass: #'Kernel.VariableBinding'
 	classInstanceVariableNames: ''
 	classConstants: {
 		'ClassMask' -> 16r2.
+		'DeprecatedMask' -> 16r100.
 		'PrivateMask' -> 16r1
 	}!
 Core.Message subclass: #'Core.MessageSendAbstract'
@@ -3706,14 +3707,20 @@ Kernel.PluggableSortAlgorithm subclass: #'Kernel.IntrosortAlgorithm'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Kernel.SourceFiler subclass: #'Kernel.ChunkSourceFiler'
-	instanceVariableNames: 'sourceFileIndex'
+Kernel.SourceFiler subclass: #'Kernel.AbstractChunkSourceFiler'
+	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'NormalizeEolsMask' -> 16r2
 	}!
+Kernel.AbstractChunkSourceFiler subclass: #'Kernel.ChunkSourceFiler'
+	instanceVariableNames: 'sourceFileIndex'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
 Kernel.StackFrame subclass: #'Kernel.BlockFrame'
 	instanceVariableNames: ''
 	classVariableNames: ''

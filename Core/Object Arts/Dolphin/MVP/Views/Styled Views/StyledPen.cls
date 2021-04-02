@@ -4,8 +4,7 @@ Object subclass: #StyledPen
 	instanceVariableNames: 'color width dashPattern'
 	classVariableNames: ''
 	poolDictionaries: 'GdiplusConstants'
-	classInstanceVariableNames: ''
-	classConstants: {}!
+	classInstanceVariableNames: ''!
 StyledPen guid: (GUID fromString: '{981954b0-d34d-400f-8e8c-01faa46311ab}')!
 StyledPen comment: 'A StyledPen holds persistent details for a GdiplusPen.'!
 !StyledPen categoriesForClass!Kernel-Objects! !

@@ -68,7 +68,7 @@ openTestSubjectOnNewShell
 sampleClass
 	^sampleClass
 		ifNil: 
-			[sampleClass := Tools.Tests.ViewComposerTest
+			[sampleClass := ViewComposerTest
 						subclass: #ViewComposerTestSample
 						instanceVariableNames: ''
 						classVariableNames: ''

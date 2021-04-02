@@ -1,26 +1,30 @@
 ﻿| package |
 package := Package name: 'Dolphin Styled Views'.
-package paxVersion: 2;
+package paxVersion: 1;
 	preDeclareClassesOnLoad: false;
 	basicComment: ''.
 
 package basicPackageVersion: '0.003'.
 
 
-package setClassNames: #(
-	#{StyledContainer}
-	#{StyledGradientBrush}
-	#{StyledPen}
-	#{StyledShadow}
-).
+package classNames
+	add: #StyledContainer;
+	add: #StyledGradientBrush;
+	add: #StyledPen;
+	add: #StyledShadow;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
 
 package setPrerequisites: #(
 	'..\..\..\Base\Dolphin'
 	'..\..\Base\Dolphin Basic Geometry'
 	'..\..\Base\Dolphin MVP Base'
-	'..\..\Gdiplus\Gdiplus'
-	'..\..\Gdiplus\Gdiplus (Old Names)'
-).
+	'..\..\Gdiplus\Gdiplus').
 
 package!
 
@@ -30,26 +34,27 @@ Object subclass: #StyledGradientBrush
 	instanceVariableNames: 'startColor endColor startPoint endPoint'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''
-	classConstants: {}!
+	classInstanceVariableNames: ''!
 Object subclass: #StyledPen
 	instanceVariableNames: 'color width dashPattern'
 	classVariableNames: ''
 	poolDictionaries: 'GdiplusConstants'
-	classInstanceVariableNames: ''
-	classConstants: {}!
+	classInstanceVariableNames: ''!
 Object subclass: #StyledShadow
 	instanceVariableNames: 'color density offset'
 	classVariableNames: ''
 	poolDictionaries: 'GdiplusConstants'
-	classInstanceVariableNames: ''
-	classConstants: {}!
+	classInstanceVariableNames: ''!
 ContainerView subclass: #StyledContainer
 	instanceVariableNames: 'edges styledPen styledBrush cornerRadii isAntialiased styledShadow _spare4'
 	classVariableNames: 'Nest'
 	poolDictionaries: 'GdiplusConstants ThemeConstants Win32Constants'
-	classInstanceVariableNames: ''
-	classConstants: {}!
+	classInstanceVariableNames: ''!
+
+"Global Aliases"!
+
+
+"Loose Methods"!
 
 "End of package definition"!
 

@@ -124,6 +124,8 @@ package setPrerequisites: #(
 	'Presenters\Text\Dolphin Rich Text Presenter'
 	'Views\Scrollbars\Dolphin Scrollbars'
 	'Views\Slider\Dolphin Slider Control'
+	'Views\Splitter\Dolphin Splitter Control'
+	'Views\Path\Dolphin StaticPath Control'
 	'Views\Styled Views\Dolphin Styled Views'
 	'Views\SysLink\Dolphin SysLink Control'
 	'Presenters\Text\Dolphin Text Presenter'

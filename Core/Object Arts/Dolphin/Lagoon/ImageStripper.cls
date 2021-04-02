@@ -1446,7 +1446,7 @@ removeRedundantMethodsOnceFrom: aCollectionOfClasses
 removeRedundantPackages
 	| required |
 	required := super removeRedundantPackages.
-	#{Tools.SmalltalkSystem} isDefined ifTrue: [flags := flags bitOr: RetainDevSysMask].
+	#{SmalltalkSystem} isDefined ifTrue: [flags := flags bitOr: RetainDevSysMask].
 	^required!
 
 removeRedundantResources: referencedClasses

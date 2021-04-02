@@ -3,7 +3,7 @@
 Core.Model subclass: #'Tools.SmalltalkSystem'
 	instanceVariableNames: 'systemFolderClass workspaceClass defaultInspectorClass defaultBrowserClass systemFolder packageBrowserClass debuggerClass viewComposerClass protocolBrowserClass workspaceShellClass resourceBrowserClass changedIcon hierarchyBrowserClass preferAlternateInspectors formatterClass classChooserClass resourceIdentifierDialogClass findDetails methodWorkspaceClass allSelectors argumentClasses methodExplorerClass aboutBoxClass testBrowserClass toolbarBitmapSize displayItLocale'
 	classVariableNames: 'Current FileDrops RegisteredTools'
-	imports: #(#{Kernel.CompilerFlags} #{Refactory.Browser} #{Kernel.ParseErrorCodes})
+	imports: #(#{Kernel.CompilerFlags} #{Refactory.Browser} #{Kernel.ParseErrorCodes} #{XProgramming.SUnit private} #{Refactory.Browser private})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Tools.SmalltalkSystem guid: (Core.GUID fromString: '{87b4c66c-026e-11d3-9fd7-00a0cc3e4a32}')!
@@ -785,8 +785,7 @@ browseMethodProtocols: protocolNames
 	| protocols protClass env |
 	protClass := Object methodProtocolClass.
 	protocols := protocolNames collect: [:p | protClass name: p asSymbol].
-	env := Refactory.Browser.MethodProtocolEnvironment onEnvironment: self systemEnvironment
-				protocols: protocols.
+	env := MethodProtocolEnvironment onEnvironment: self systemEnvironment protocols: protocols.
 	self browseMethodsIn: env!
 
 browseMethodsIn: aBrowserEnvironment 
@@ -1239,16 +1238,6 @@ classChooserClass
 
 classChooserClass: toolClass
 	classChooserClass := toolClass!
-
-classesReferencingPool: aPoolDictionary
-	"Answer a <collection> of all classes that directly reference the specified <PoolDictionary>."
-
-	^self classesReferencingPoolNamed: aPoolDictionary name!
-
-classesReferencingPoolNamed: aSymbol
-	"Answer a <collection> of all classes that directly reference the named <PoolDictionary>."
-
-	^Smalltalk allClasses select: [:each | each sharedPoolNames includes: aSymbol]!
 
 classFileIn: aClass
 	"The user has chosen to file in aClass. Prompt for a file and file it in"
@@ -4329,8 +4318,6 @@ wrapText: aString toWidth: max indent: colInteger tabWidth: tabInteger
 !Tools.SmalltalkSystem categoriesFor: #classChanged:!accessing!private! !
 !Tools.SmalltalkSystem categoriesFor: #classChooserClass!options!public! !
 !Tools.SmalltalkSystem categoriesFor: #classChooserClass:!options!public! !
-!Tools.SmalltalkSystem categoriesFor: #classesReferencingPool:!enquiries!public! !
-!Tools.SmalltalkSystem categoriesFor: #classesReferencingPoolNamed:!enquiries!public! !
 !Tools.SmalltalkSystem categoriesFor: #classFileIn:!public!source filing! !
 !Tools.SmalltalkSystem categoriesFor: #classFileOut:!public!source filing! !
 !Tools.SmalltalkSystem categoriesFor: #classFilesType!constants!private! !

@@ -172,7 +172,7 @@ testShortName
 	self assert: Behavior shortName equals: 'Behavior'.
 	self assert: XProgramming shortName equals: 'XProgramming'.
 	self assert: XProgramming.SUnit shortName equals: 'XProgramming.SUnit'.
-	self assert: TestCase shortName equals: 'XProgramming.SUnit.TestCase'.
+	self assert: TestRunConsoleLogger shortName equals: 'XProgramming.SUnit.TestRunConsoleLogger'.
 	"Where there is ambiguity in imported namespaces, the order of imports takes precedence (Core is imported into Smaltlalk before Kernel)."
 	self assert: Core.Tests shortName equals: 'Tests'.
 	self assert: Kernel.Tests shortName equals: 'Kernel.Tests'!

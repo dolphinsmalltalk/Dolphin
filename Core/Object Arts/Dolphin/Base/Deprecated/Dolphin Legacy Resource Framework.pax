@@ -25,11 +25,11 @@ package setClassNames: #(
 ).
 
 package setMethodNames: #(
+	#(#{Kernel.AbstractChunkSourceFiler} #fileOutResource:)
 	#(#{Kernel.BlockClosure class} #convertBlockToClosure:)
 	#(#{Kernel.BlockClosure class} #convertMethodContext:)
 	#(#{Kernel.BlockClosure class} #rewriterClass)
 	#(#{Kernel.BlockClosure class} #stbConvertFrom:)
-	#(#{Kernel.ChunkSourceFiler} #fileOutResource:)
 	#(#{UI.ResourceIdentifier} #assignBinaryResourceData:)
 	#(#{UI.ResourceIdentifier class} #resourceAt:ifAbsent:)
 	#(#{UI.RuntimeSessionManager} #initializeFromSessionManager:)
@@ -114,6 +114,29 @@ Kernel.STBProxy subclass: #STBResourceSTBFileAccessorProxy
 
 "Loose Methods"!
 
+!Kernel.AbstractChunkSourceFiler methodsFor!
+
+fileOutResource: aResourceIdentifier
+	"Append a definition of the resource identified by the <ResourceIdentifier>,
+	aResourceIdentifer, to the <puttableStream>, aWriteStream. The definition should be
+	sufficient to recreate a copy of the resource."
+
+	stream
+		nextPut: $(;
+		print: aResourceIdentifier class;
+		nextPutAll: ' class: ';
+		print: aResourceIdentifier owningClass;
+		nextPutAll: ' name: ';
+		print: aResourceIdentifier name;
+		nextPutAll: ') assign: (';
+		print: Object;
+		space;
+		display: #fromBinaryStoreBytes:;
+		cr.
+	aResourceIdentifier resource asInternalResource binaryStoreBytes base64StoreOn: stream.
+	self emitChunk: ')'! !
+!Kernel.AbstractChunkSourceFiler categoriesFor: #fileOutResource:!public!source filing-file out! !
+
 !Kernel.BlockClosure class methodsFor!
 
 convertBlockToClosure: anArray 
@@ -184,29 +207,6 @@ stbConvertFrom: anSTBClassFormat
 !Kernel.BlockClosure class categoriesFor: #convertMethodContext:!binary filing!development!private! !
 !Kernel.BlockClosure class categoriesFor: #rewriterClass!binary filing!development!private! !
 !Kernel.BlockClosure class categoriesFor: #stbConvertFrom:!binary filing!development!public! !
-
-!Kernel.ChunkSourceFiler methodsFor!
-
-fileOutResource: aResourceIdentifier
-	"Append a definition of the resource identified by the <ResourceIdentifier>,
-	aResourceIdentifer, to the <puttableStream>, aWriteStream. The definition should be
-	sufficient to recreate a copy of the resource."
-
-	stream
-		nextPut: $(;
-		print: aResourceIdentifier class;
-		nextPutAll: ' class: ';
-		print: aResourceIdentifier owningClass;
-		nextPutAll: ' name: ';
-		print: aResourceIdentifier name;
-		nextPutAll: ') assign: (';
-		print: Object;
-		space;
-		display: #fromBinaryStoreBytes:;
-		cr.
-	aResourceIdentifier resource asInternalResource binaryStoreBytes base64StoreOn: stream.
-	self emitChunk: ')'! !
-!Kernel.ChunkSourceFiler categoriesFor: #fileOutResource:!public!source filing-file out! !
 
 !UI.ResourceIdentifier methodsFor!
 

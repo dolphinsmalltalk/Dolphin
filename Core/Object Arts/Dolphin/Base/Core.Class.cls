@@ -130,6 +130,7 @@ addImport: aBindingReference
 addSubclass: aClass
 	"Private - Include the argument, aClass, as a subclass of the receiver."
 
+	aClass class isMeta ifFalse: [^self error: '<1p> is not a Class' << aClass].
 	aClass superclass == self
 		ifFalse: [^self error: ('I am not <1p>''s superclass' expandMacrosWith: aClass)].
 	#namespaceToDo.	"Can we use a Set instead? Probably yes as the VM never accesses the subclasses inst var."
@@ -327,15 +328,6 @@ comment: blahBlah
 	"No need to clear the class caches in this case"
 	Smalltalk trigger: #classCommented: with: self!
 
-definedBindings
-	"Private - Answer the bindings that are defined as part of the receiver's class definition (as opposed to externally).
-	For most classes this is all the class variables. For namespaces, this does not include any of the classes in the namespace as these are added to the namespace implicitly as part of their own definition."
-
-	| defined |
-	defined := Set new.
-	self bindingsDo: [:each | each isClassVariable ifTrue: [defined add: each]].
-	^defined!
-
 environment
 	"Answer the receiver's <Namespace>."
 
@@ -353,12 +345,12 @@ fileIn
 fileOutName
 	"Private - Answer the default file name for the class to file out on."
 
-	| path |
-	path := File composeStem: self fileOutStem extension: 'cls'.
-	self owningPackage
-		ifNil: [Notification signal: 'Warning: ' , self printString , ' is unpackaged']
-		ifNotNil: [:package | path := File replacePath: path with: package path].
-	^path!
+	^self sourceFilerClass fileOutNameForClass: self!
+
+fileOutNameForClass: aClass
+	"Private - Answer the default file name for the class to file out on."
+
+	^self sourceFilerClass fileOutNameForClass: self!
 
 fileOutStem
 	"Private - Answer the default file name stem for the class to file out on."
@@ -393,8 +385,8 @@ fullyQualifiedReference
 
 getFullName
 	| stream |
-	(name isNil or: [environment isNil]) ifTrue: [^super fullName].
-	environment == Root ifTrue: [^self name].
+	name isNil ifTrue: [^super fullName].
+	(environment isNil or: [environment == Root]) ifTrue: [^self name].
 	stream := WriteStream on: (Utf8String new: 32).
 	self printNameOn: stream relativeTo: Root.
 	^stream contents!
@@ -442,7 +434,7 @@ includesEnvironment: aClass
 !
 
 includesNamespace: aClass
-	"Answer whether the receiver includes the namespace argument (i.e. is it nested within it somewhere in its environment chain)."
+	"Answer whether the receiver includes the namespace argument (i.e. is it a sub-namespace, or is it nested within it somewhere in its environment chain)."
 
 	^self == aClass or: [(self inheritsFrom: aClass) or: [self environment includesEnvironment: aClass]]!
 
@@ -551,58 +543,6 @@ printAbsoluteNameOn: aPuttableStream
 	name
 		ifNil: [self printOn: aPuttableStream]
 		ifNotNil: [self printNameOn: aPuttableStream relativeTo: nil]!
-
-printDefinitionOn: aPuttableStream
-	"Private - Append the textual definition of the receiver to the <puttableStream> argument. Note that this includes the definition of the receiver's metaclass since we now define the whole caboodle using a single message."
-
-	| classConstants classVariables |
-	self superclass
-		ifNil: [aPuttableStream nextPutAll: 'nil']
-		ifNotNil: 
-			[:base |
-			base environment == base baseEnvironment
-				ifTrue: [aPuttableStream nextPutAll: base name]
-				ifFalse: [base printFullNameOn: aPuttableStream]].
-	aPuttableStream
-		space;
-		nextPutAll: self kindOfSubclass;
-		space;
-		print: (self environment == self baseEnvironment
-					ifTrue: [self unqualifiedName]
-					ifFalse: [self fullName asSymbol]);
-		crtab;
-		nextPutAll: 'instanceVariableNames: ';
-		print: self instanceVariableString;
-		crtab;
-		nextPutAll: 'classVariableNames: '''.
-	classConstants := OrderedCollection new.
-	classVariables := OrderedCollection new.
-	self definedBindings asArray sort do: 
-			[:each |
-			((each isImmutable and: [each value isSelfEvaluating])
-				ifTrue: [classConstants]
-				ifFalse: [classVariables]) addLast: each].
-	classVariables do: [:var | aPuttableStream nextPutAll: var key] separatedBy: [aPuttableStream space].
-	aPuttableStream
-		nextPut: $';
-		crtab;
-		nextPutAll: 'imports: ';
-		print: self imports;
-		crtab;
-		nextPutAll: 'classInstanceVariableNames: ';
-		print: self class instanceVariableString;
-		crtab;
-		nextPutAll: 'classConstants: {'.
-	classConstants isEmpty
-		ifFalse: 
-			[classConstants do: 
-					[:each |
-					aPuttableStream
-						crtab: 2;
-						print: each]
-				separatedBy: [aPuttableStream nextPut: $.].
-			aPuttableStream crtab].
-	aPuttableStream nextPut: $}!
 
 printFullNameOn: aPuttableStream
 	name
@@ -828,9 +768,14 @@ setName: aSymbolOrNil environment: aNamespace
 	fullName := self getFullName!
 
 shortName
-	"Answer the shorted <String> name of the receiver that is bindable from Smalltalk. i.e. for classes defined directly in Smalltalk, or in any of its imports, this will be an unqualified name. Otherwise it is the fully qualified name relative to Smalltalk."
+	"Answer the shortest <String> name of the receiver that is bindable from Smalltalk. i.e. for classes defined directly in Smalltalk, or in any of its imports, this will be an unqualified name. Otherwise it is the fully qualified name relative to Smalltalk."
 
-	^name ifNil: [super name] ifNotNil: [Smalltalk shortNameFor: name in: self environment]!
+	^name
+		ifNil: [super name]
+		ifNotNil: 
+			[environment == self baseEnvironment
+				ifTrue: [name]
+				ifFalse: [Smalltalk shortNameFor: name in: environment]]!
 
 simpleName
 	"Answer the receiver's name within it's environment.
@@ -848,6 +793,15 @@ sourceDescriptor: sourceDes
 	to sourceDes, the format of which only the SourceManager understands."
 
 	comment := sourceDes!
+
+sourceFilerClass
+	^#{LegacyChunkSourceFiler} valueOrNil
+		ifNil: [ChunkSourceFiler]
+		ifNotNil: 
+			[:legacyFiler |
+			self owningPackage
+				ifNil: [environment == Smalltalk ifTrue: [legacyFiler] ifFalse: [ChunkSourceFiler]]
+				ifNotNil: [:package | package sourceFilerClass]]!
 
 stbConvertFrom: anSTBClassFormat
 	"Private - Answer a block that answers a new instance initialised from the block's single
@@ -909,21 +863,6 @@ subclass: aClassSymbol instanceVariableNames: instVarString classVariableNames: 
 	subclass class instanceVariableNames: classInstVarString.
 	^subclass!
 
-subclass: aClassSymbol instanceVariableNames: instVarString classVariableNames: classVarString poolDictionaries: poolDictString classInstanceVariableNames: classInstVarString classConstants: anArrayOfAssociations
-	"For loading early 7.2 packages that didn't have fully qualified class names."
-
-	| subclass |
-	#namespaceToDo. "Remove this"
-	subclass := (self
-				newClassBuilder: aClassSymbol
-				instanceVariableNames: instVarString
-				classVariableNames: classVarString
-				imports: (self importsFromPoolsString: poolDictString))
-				classConstants: anArrayOfAssociations;
-				modifyOrCreate.
-	subclass class instanceVariableNames: classInstVarString.
-	^subclass!
-
 subclasses
 	"Answer a <collection> containing the receiver's immediate subclasses.
 
@@ -942,6 +881,16 @@ subclassesDo: aMonadicValuable
 	"Evaluate the <monadicValuable> argument for each of the receiver's subclasses."
 
 	subclasses do: aMonadicValuable!
+
+unaliasedName
+	"Answer the shortest name for the receiver that is bindable from Smalltalk without using an alias."
+
+	^environment == self baseEnvironment
+		ifTrue: [name]
+		ifFalse: 
+			[| binding |
+			binding := Smalltalk fullBindingFor: name.
+			(binding notNil and: [binding environment == environment]) ifTrue: [name] ifFalse: [fullName]]!
 
 uninitialize
 	"Private - Perform any uninitialisation for the class - typically clearing down class variables - in
@@ -1002,7 +951,7 @@ variableRemoved: aVariableBinding
 		ifTrue: 
 			[self logDefinition.
 			Smalltalk classUpdated: self]
-		ifFalse: [Smalltalk trigger: #variableRemoved: with: aVariableBinding]!
+		ifFalse: [Smalltalk staticVariableRemoved: aVariableBinding]!
 
 variableSubclass: aClassSymbol instanceVariableNames: instVarString classVariableNames: classVarString imports: anArray
 	^(self
@@ -1066,11 +1015,11 @@ variableSubclass: aClassSymbol instanceVariableNames: instVarString classVariabl
 !Core.Class categoriesFor: #clearGuid!accessing!private! !
 !Core.Class categoriesFor: #comment!accessing!development!public! !
 !Core.Class categoriesFor: #comment:!accessing!development!public! !
-!Core.Class categoriesFor: #definedBindings!accessing!private! !
 !Core.Class categoriesFor: #environment!accessing!public! !
 !Core.Class categoriesFor: #environment:!accessing!private! !
 !Core.Class categoriesFor: #fileIn!development!public!source filing! !
 !Core.Class categoriesFor: #fileOutName!development!private!source filing! !
+!Core.Class categoriesFor: #fileOutNameForClass:!development!private!source filing! !
 !Core.Class categoriesFor: #fileOutStem!development!private!source filing! !
 !Core.Class categoriesFor: #fullName!accessing!namespaces!public! !
 !Core.Class categoriesFor: #fullNameFor:!helpers!namespaces!private! !
@@ -1101,7 +1050,6 @@ variableSubclass: aClassSymbol instanceVariableNames: instVarString classVariabl
 !Core.Class categoriesFor: #packageManager!development!public!source filing! !
 !Core.Class categoriesFor: #pathFrom:!accessing!private! !
 !Core.Class categoriesFor: #printAbsoluteNameOn:!public! !
-!Core.Class categoriesFor: #printDefinitionOn:!private!source filing-class definition! !
 !Core.Class categoriesFor: #printFullNameOn:!helpers!private! !
 !Core.Class categoriesFor: #printNameOn:relativeTo:!printing!private! !
 !Core.Class categoriesFor: #printOn:!printing!public! !
@@ -1130,6 +1078,7 @@ variableSubclass: aClassSymbol instanceVariableNames: instVarString classVariabl
 !Core.Class categoriesFor: #simpleName!accessing!public! !
 !Core.Class categoriesFor: #sourceDescriptor!accessing!public!source filing! !
 !Core.Class categoriesFor: #sourceDescriptor:!accessing!private!source filing! !
+!Core.Class categoriesFor: #sourceFilerClass!development!private!source filing-class definition! !
 !Core.Class categoriesFor: #stbConvertFrom:!binary filing!private! !
 !Core.Class categoriesFor: #stbModifyExportProxy:!binary filing!private! !
 !Core.Class categoriesFor: #stbSaveOn:!binary filing!public! !
@@ -1137,10 +1086,10 @@ variableSubclass: aClassSymbol instanceVariableNames: instVarString classVariabl
 !Core.Class categoriesFor: #storeGUID!private!source filing-class definition! !
 !Core.Class categoriesFor: #subclass:instanceVariableNames:classVariableNames:imports:!class hierarchy-adding!public! !
 !Core.Class categoriesFor: #subclass:instanceVariableNames:classVariableNames:imports:classInstanceVariableNames:classConstants:!class hierarchy-adding!public! !
-!Core.Class categoriesFor: #subclass:instanceVariableNames:classVariableNames:poolDictionaries:classInstanceVariableNames:classConstants:!class hierarchy-adding!public! !
 !Core.Class categoriesFor: #subclasses!class hierarchy-accessing!public! !
 !Core.Class categoriesFor: #subclasses:!class hierarchy-mutating!public! !
 !Core.Class categoriesFor: #subclassesDo:!class hierarchy-accessing!public! !
+!Core.Class categoriesFor: #unaliasedName!public!ston! !
 !Core.Class categoriesFor: #uninitialize!class hierarchy-removing!development!private! !
 !Core.Class categoriesFor: #uninitializeBeforeRemove!class hierarchy-removing!public! !
 !Core.Class categoriesFor: #unqualifiedName!accessing!public! !

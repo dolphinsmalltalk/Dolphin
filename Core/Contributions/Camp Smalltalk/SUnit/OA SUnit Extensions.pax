@@ -22,6 +22,7 @@ package setMethodNames: #(
 	#(#{XProgramming.SUnit.TestCase} #assert:isKindOf:)
 	#(#{XProgramming.SUnit.TestCase} #assert:sameAs:)
 	#(#{XProgramming.SUnit.TestCase} #assertIsNil:)
+	#(#{XProgramming.SUnit.TestCase} #assertNotNil:)
 	#(#{XProgramming.SUnit.TestCase} #debugWithResult)
 	#(#{XProgramming.SUnit.TestCase} #debugWithResult:)
 	#(#{XProgramming.SUnit.TestCase} #deny:equals:)
@@ -125,6 +126,9 @@ assertIsNil: anObject
 						print: anObject;
 						nextPutAll: '.';
 						contents)]!
+
+assertNotNil: anObject
+	anObject ifNil: [self fail: 'Expected non-nil object']!
 
 debugWithResult
 	| result |
@@ -318,6 +322,7 @@ skipUnless: aNiladicValuable
 !XProgramming.SUnit.TestCase categoriesFor: #assert:isKindOf:!asserting!public! !
 !XProgramming.SUnit.TestCase categoriesFor: #assert:sameAs:!asserting!public! !
 !XProgramming.SUnit.TestCase categoriesFor: #assertIsNil:!asserting!public! !
+!XProgramming.SUnit.TestCase categoriesFor: #assertNotNil:!asserting!public! !
 !XProgramming.SUnit.TestCase categoriesFor: #debugWithResult!public!running! !
 !XProgramming.SUnit.TestCase categoriesFor: #debugWithResult:!private!running! !
 !XProgramming.SUnit.TestCase categoriesFor: #deny:equals:!asserting!public! !

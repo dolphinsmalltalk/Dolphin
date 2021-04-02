@@ -22,7 +22,7 @@ This is mainly intended as a sample to demonstrate how to implement IDE extensio
 !Tools.OAIDEExtensions methodsFor!
 
 allToolClasses
-	^Tools.SmalltalkToolShell allSubclasses copyWith: Tools.SmalltalkWorkspaceDocument!
+	^SmalltalkToolShell allSubclasses copyWith: SmalltalkWorkspaceDocument!
 
 allVisibleSubViewsOf: aView do: aMonadicValuable 
 	"Enumerate the visible sub-views of aView."
@@ -75,7 +75,7 @@ browseKeyBindingsOfShell: aShellView
 	self streamHtml: stream intoBrowser: browser!
 
 classBrowserClasses
-	^Tools.ClassBrowserAbstract allSubclasses!
+	^ClassBrowserAbstract allSubclasses!
 
 displayOn: aPuttableStream
 	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that an end-user might want to see."
@@ -97,7 +97,7 @@ enableKeyBindingsHelp: aBoolean
 extendClassCommentMenu: aClassBrowserAbstract
 	| commentWorkspaceMenu plugin |
 	plugin := aClassBrowserAbstract loadedPlugins
-				detect: [:each | each isKindOf: Tools.ClassCommentPlugin]
+				detect: [:each | each isKindOf: ClassCommentPlugin]
 				ifNone: [].
 	plugin isNil ifTrue: [^self].
 	commentWorkspaceMenu := (plugin presenterNamed: 'text') view contextMenu.
@@ -168,9 +168,9 @@ onBrowserOpened: aClassBrowserAbstract
 	self onToolOpened: aClassBrowserAbstract!
 
 onClassAdded: aClass
-	(aClass inheritsFrom: Tools.SmalltalkToolShell)
+	(aClass inheritsFrom: SmalltalkToolShell)
 		ifTrue: 
-			[(aClass inheritsFrom: Tools.ClassBrowserAbstract)
+			[(aClass inheritsFrom: ClassBrowserAbstract)
 				ifTrue: [self observeBrowserClass: aClass]
 				ifFalse: [self observeToolClass: aClass]]!
 
@@ -421,8 +421,8 @@ publishedAspectsOfInstances
 	"Answer a <LookupTable> of the <Aspect>s published by instances of the receiver."
 
 	^super publishedAspectsOfInstances
-		add: (Tools.Aspect boolean: #enableKeyBindingsHelp);
-		add: (Tools.Aspect boolean: #enableClassCommentTemplate);
+		add: (Aspect boolean: #enableKeyBindingsHelp);
+		add: (Aspect boolean: #enableClassCommentTemplate);
 		yourself!
 
 uninitialize

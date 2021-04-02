@@ -3,7 +3,7 @@
 UI.Shell subclass: #'Tools.SmalltalkToolShell'
 	instanceVariableNames: 'searchPresenter fontSizePresenter'
 	classVariableNames: 'HistoryDwellTime SearchFieldFlashes'
-	imports: #()
+	imports: #(#{Refactory.Browser private})
 	classInstanceVariableNames: 'optionFlags defaultView defaultExtent defaultSlideyPinsMap additionalKeyBindings commandQueryHandlers'
 	classConstants: {
 		'CanUseIdeaSpaceMask' -> 16r2.
@@ -284,7 +284,7 @@ searchForSymbol: aSymbol
 	self
 		routeCommand: (CommandDescription command: (Message selector: #browseMethodsInEnvironments:
 						argument: (self systemModel messagesMatching: (MethodSearch newSelector: aSymbol)
-								in: Refactory.Browser.BrowserEnvironment new)))!
+								in: BrowserEnvironment new)))!
 
 searchSmalltalk
 	| searchView |

@@ -14,6 +14,34 @@ package basicScriptAt: #postinstall put: '(MethodProtocol name: #sourceObject)
 package setMethodNames: #(
 	#(#{Core.Class} #canFileOut)
 	#(#{Core.Class} #fileOut)
+	#(#{Kernel.AbstractChunkSourceFiler} #emitCategories:for:in:)
+	#(#{Kernel.AbstractChunkSourceFiler} #emitPackageAboutBlock:)
+	#(#{Kernel.AbstractChunkSourceFiler} #emitPackageClassNames:)
+	#(#{Kernel.AbstractChunkSourceFiler} #emitPackageDescription:)
+	#(#{Kernel.AbstractChunkSourceFiler} #emitPackageManualPrerequisites:)
+	#(#{Kernel.AbstractChunkSourceFiler} #emitPackageMethodNames:)
+	#(#{Kernel.AbstractChunkSourceFiler} #emitPackageNames:)
+	#(#{Kernel.AbstractChunkSourceFiler} #emitPackagePrerequisiteNames:)
+	#(#{Kernel.AbstractChunkSourceFiler} #emitPackageScripts:)
+	#(#{Kernel.AbstractChunkSourceFiler} #emitPackageStripperBytes:)
+	#(#{Kernel.AbstractChunkSourceFiler} #emitPackageUntracedVariables:)
+	#(#{Kernel.AbstractChunkSourceFiler} #emitPackageVariableNames:)
+	#(#{Kernel.AbstractChunkSourceFiler} #emitPackageVariableNameSubsets:)
+	#(#{Kernel.AbstractChunkSourceFiler} #emitPackageVariableReference:)
+	#(#{Kernel.AbstractChunkSourceFiler} #emitPackageVersion:)
+	#(#{Kernel.AbstractChunkSourceFiler} #emitPaxPackage:)
+	#(#{Kernel.AbstractChunkSourceFiler} #emitVersionNumber:)
+	#(#{Kernel.AbstractChunkSourceFiler} #methodNameSortBlock:)
+	#(#{Kernel.ChunkSourceFiler} #emitPackageBinaryVariables:)
+	#(#{Kernel.ChunkSourceFiler} #emitPackageClassNames:)
+	#(#{Kernel.ChunkSourceFiler} #emitPackageCollection:initializer:)
+	#(#{Kernel.ChunkSourceFiler} #emitPackageManualPrerequisites:)
+	#(#{Kernel.ChunkSourceFiler} #emitPackageMethodNames:)
+	#(#{Kernel.ChunkSourceFiler} #emitPackageNameCollection:initializer:)
+	#(#{Kernel.ChunkSourceFiler} #emitPackagePrerequisiteNames:)
+	#(#{Kernel.ChunkSourceFiler} #emitPackageUntracedVariables:)
+	#(#{Kernel.ChunkSourceFiler} #emitPackageVariableNames:)
+	#(#{Kernel.ChunkSourceFiler} #emitPackageVariableNameSubsets:)
 	#(#{Kernel.Package} #allFileOutNames)
 	#(#{Kernel.Package} #beNotUsingPAX)
 	#(#{Kernel.Package} #beUsingPAX)
@@ -25,44 +53,33 @@ package setMethodNames: #(
 	#(#{Kernel.Package} #fileOut)
 	#(#{Kernel.Package} #fileOutAll)
 	#(#{Kernel.Package} #fileOutAllChanged)
-	#(#{Kernel.Package} #fileOutAllOn:)
-	#(#{Kernel.Package} #fileOutBinaryVariableNamesOn:)
 	#(#{Kernel.Package} #fileOutBinaryVariables)
 	#(#{Kernel.Package} #fileOutBootDefinitions)
-	#(#{Kernel.Package} #fileOutClassDefinitionsOn:)
-	#(#{Kernel.Package} #fileOutClassesOn:)
-	#(#{Kernel.Package} #fileOutLooseMethodsOn:)
-	#(#{Kernel.Package} #fileOutMethodsOfClass:on:)
 	#(#{Kernel.Package} #fileOutNames)
 	#(#{Kernel.Package} #fileOutOn:)
-	#(#{Kernel.Package} #fileOutSourceVariableNamesOn:)
-	#(#{Kernel.Package} #fileOutVariableAliasesOn:)
+	#(#{Kernel.Package} #isLegacySourceFormat:)
 	#(#{Kernel.Package} #isRenegade)
 	#(#{Kernel.Package} #isUsingPAX)
 	#(#{Kernel.Package} #isUsingPAX:)
-	#(#{Kernel.Package} #methodNameSortBlock)
 	#(#{Kernel.Package} #save)
 	#(#{Kernel.Package} #saveAs:)
 	#(#{Kernel.Package} #saveChanges)
 	#(#{Kernel.Package} #savePAC)
 	#(#{Kernel.Package} #savePAX)
-	#(#{Kernel.Package} #savePAXAboutBlockOn:)
-	#(#{Kernel.Package} #savePAXChunkOn:)
-	#(#{Kernel.Package} #savePAXCollection:initializer:on:)
-	#(#{Kernel.Package} #savePAXManualPrerequisitesOn:)
-	#(#{Kernel.Package} #savePAXNames:initializer:on:)
-	#(#{Kernel.Package} #savePAXNamesOn:)
-	#(#{Kernel.Package} #savePAXPackageOn:)
-	#(#{Kernel.Package} #savePAXPackageVersionOn:)
-	#(#{Kernel.Package} #savePAXPrerequisiteNamesOn:)
-	#(#{Kernel.Package} #savePAXScriptsOn:)
-	#(#{Kernel.Package} #savePAXStripperBytesOn:)
-	#(#{Kernel.Package} #savePAXUntracedVariablesOn:)
-	#(#{Kernel.Package} #savePAXVariableNamesOn:)
 	#(#{Kernel.Package} #saveSingleFilePackage)
-	#(#{Kernel.Package} #toggleUsingPAX)
 	#(#{Kernel.Package} #updateTimestamp)
-	#(#{Kernel.SourceFiler} #fileOutBinaryVariable:)
+	#(#{Kernel.SourceFiler} #emitPackageBinaryVariables:)
+	#(#{Kernel.SourceFiler} #emitPackageDescription:)
+	#(#{Kernel.SourceFiler} #fileOutClass:ofPackage:)
+	#(#{Kernel.SourceFiler} #fileOutDefinitionOfPackage:)
+	#(#{Kernel.SourceFiler} #fileOutPackage:)
+	#(#{Kernel.SourceFiler} #fileOutPackage:methodsOfClass:)
+	#(#{Kernel.SourceFiler} #fileOutPackageClassDefinitions:)
+	#(#{Kernel.SourceFiler} #fileOutPackageClasses:)
+	#(#{Kernel.SourceFiler} #fileOutPackageMethods:)
+	#(#{Kernel.SourceFiler} #fileOutPackageSourceVariables:)
+	#(#{Kernel.SourceFiler} #fileOutPackageVariableAliases:)
+	#(#{Kernel.SourceFiler} #packageClassesInFileoutOrder:)
 	#(#{Kernel.SourceFiler} #storeCommentString:forPackage:)
 	#(#{Kernel.SourceManager} #fileOutPackagedClass:)
 	#(#{Kernel.SourceManager} #fileOutPackagedClass:to:)
@@ -71,6 +88,7 @@ package setMethodNames: #(
 package setPrerequisites: #(
 	'Dolphin'
 	'Dolphin Message Box'
+	'Dolphin Source Fileout'
 	'..\System\STON\Dolphin STON-Core'
 ).
 
@@ -93,6 +111,260 @@ fileOut
 	self sourceManager fileOutPackagedClass: self! !
 !Core.Class categoriesFor: #canFileOut!public!source filing! !
 !Core.Class categoriesFor: #fileOut!public!source filing! !
+
+!Kernel.AbstractChunkSourceFiler methodsFor!
+
+emitCategories: aCollection for: aSymbol in: aClass
+	stream nextPut: $!!.
+	self emitClassName: aClass.
+	stream
+		space;
+		nextPutAll: #categoriesFor:;
+		space.
+	"#2144."
+	self emitString: aSymbol printString.
+	stream nextPut: $!!.
+	aCollection asSortedCollection do: [:each | self nextChunkPut: each name].
+	self endChunk!
+
+emitPackageAboutBlock: aPackage
+	aPackage aboutBlock
+		ifNotNil: 
+			[:aboutBlock |
+			stream nextPutAll: 'package aboutBlockBytes: '.
+			aboutBlock binaryStoreBytes base64StoreOn: stream.
+			stream
+				nextPut: $.;
+				cr]!
+
+emitPackageClassNames: aPackage 
+	self subclassResponsibility!
+
+emitPackageDescription: aPackage
+	"Private - File out a description of the <Package> argument to the receiver's stream in PAX source file format. This is in the form of a chunk which, when re-evaluated, creates an equivalent package description in a state which can be used for comparision or loading, etc. None of the code in the package, with the exception of the package scripts, is included. None of the code, including the package scripts, is evaluated."
+
+	self emitPaxPackage: aPackage.
+	self emitPackageVersion: aPackage.
+	self emitPackageAboutBlock: aPackage.
+	self emitPackageStripperBytes: aPackage.
+	self emitPackageScripts: aPackage.
+	self emitPackageNames: aPackage.
+	self emitPackageVariableNameSubsets: aPackage.
+	self emitPackagePrerequisiteNames: aPackage.
+	self emitPackageManualPrerequisites: aPackage.
+	self emitPackageUntracedVariables: aPackage.
+
+	"Finish off the chunk by answering the package loaded"
+	stream
+		nextPutAll: 'package!!';
+		cr;
+		cr!
+
+emitPackageManualPrerequisites: aPackage
+	"Private - File out the names of any manually configured pre-requisite packages of the <Package> argument onto the receiver's stream."
+
+	self subclassResponsibility!
+
+emitPackageMethodNames: aPackage
+	self subclassResponsibility!
+
+emitPackageNames: aPackage
+	self emitPackageClassNames: aPackage.
+	self emitPackageMethodNames: aPackage.
+	self emitPackageVariableNames: aPackage
+!
+
+emitPackagePrerequisiteNames: aPackage
+	self subclassResponsibility!
+
+emitPackageScripts: aPackage
+	aPackage scripts keys asSortedCollection do: 
+			[:each |
+			stream
+				nextPutAll: 'package basicScriptAt: ';
+				print: each;
+				nextPutAll: ' put: '.
+			self emitString: (aPackage scriptAt: each) printString.
+			stream
+				nextPut: $.;
+				cr].
+	stream cr!
+
+emitPackageStripperBytes: aPackage
+	aPackage imageStripperBytes
+		ifNotNil: 
+			[:bytes |
+			stream nextPutAll: 'package imageStripperBytes: '.
+			bytes base64StoreOn: stream.
+			stream
+				nextPut: $.;
+				cr]!
+
+emitPackageUntracedVariables: aPackage
+	self subclassResponsibility!
+
+emitPackageVariableNames: aPackage
+	self subclassResponsibility!
+
+emitPackageVariableNameSubsets: aPackage
+	self subclassResponsibility!
+
+emitPackageVariableReference: aBindingReference
+	aBindingReference displayOn: stream!
+
+emitPackageVersion: aPackage
+	aPackage basicPackageVersion
+		ifNotNil: 
+			[:ver |
+			stream
+				nextPutAll: 'package ';
+				nextPutAll: #basicPackageVersion:;
+				space.
+			self emitVersionNumber: ver.
+			stream
+				nextPut: $.;
+				cr;
+				cr]!
+
+emitPaxPackage: aPackage
+	stream
+		nextPutAll: '| package |';
+		cr;
+		nextPutAll: 'package := ';
+		print: aPackage class;
+		space;
+		nextPutAll: #name:;
+		space;
+		print: aPackage name;
+		nextPut: $.;
+		cr;
+		nextPutAll: 'package ';
+		nextPutAll: #paxVersion:;
+		space.
+	self emitVersionNumber: aPackage paxVersion.
+	stream
+		nextPut: $;;
+		crtab.
+	aPackage predeclareClassesSetting
+		ifNotNil: 
+			[:bool |
+			stream
+				nextPutAll: #preDeclareClassesOnLoad:;
+				space;
+				print: bool;
+				nextPut: $;;
+				crtab].
+	stream
+		nextPutAll: #basicComment:;
+		space.
+	self emitString: aPackage comment fullPrintString.
+	stream
+		nextPut: $.;
+		cr;
+		cr!
+
+emitVersionNumber: aNumber
+	aNumber isInteger ifTrue: [aNumber printOn: stream base: 10] ifFalse: [aNumber printOn: stream]!
+
+methodNameSortBlock: aPackage
+	^
+	[:a :b |
+	a className = b className
+		ifTrue: [a selector <==> b selector <= 0]
+		ifFalse: [a className <= b className]]! !
+!Kernel.AbstractChunkSourceFiler categoriesFor: #emitCategories:for:in:!private!source filing-pax! !
+!Kernel.AbstractChunkSourceFiler categoriesFor: #emitPackageAboutBlock:!private!source filing-pax! !
+!Kernel.AbstractChunkSourceFiler categoriesFor: #emitPackageClassNames:!accessing!private! !
+!Kernel.AbstractChunkSourceFiler categoriesFor: #emitPackageDescription:!private!source filing-pax! !
+!Kernel.AbstractChunkSourceFiler categoriesFor: #emitPackageManualPrerequisites:!private!source filing-pax! !
+!Kernel.AbstractChunkSourceFiler categoriesFor: #emitPackageMethodNames:!private!source filing-pax! !
+!Kernel.AbstractChunkSourceFiler categoriesFor: #emitPackageNames:!private!source filing-pax! !
+!Kernel.AbstractChunkSourceFiler categoriesFor: #emitPackagePrerequisiteNames:!private!source filing-pax! !
+!Kernel.AbstractChunkSourceFiler categoriesFor: #emitPackageScripts:!private!source filing-pax! !
+!Kernel.AbstractChunkSourceFiler categoriesFor: #emitPackageStripperBytes:!private!source filing-pax! !
+!Kernel.AbstractChunkSourceFiler categoriesFor: #emitPackageUntracedVariables:!private!source filing-pax! !
+!Kernel.AbstractChunkSourceFiler categoriesFor: #emitPackageVariableNames:!private!source filing-pax! !
+!Kernel.AbstractChunkSourceFiler categoriesFor: #emitPackageVariableNameSubsets:!private!source filing-pax! !
+!Kernel.AbstractChunkSourceFiler categoriesFor: #emitPackageVariableReference:!accessing!private!source filing! !
+!Kernel.AbstractChunkSourceFiler categoriesFor: #emitPackageVersion:!private!source filing-pax! !
+!Kernel.AbstractChunkSourceFiler categoriesFor: #emitPaxPackage:!private!source filing-pax! !
+!Kernel.AbstractChunkSourceFiler categoriesFor: #emitVersionNumber:!private!source filing-pax! !
+!Kernel.AbstractChunkSourceFiler categoriesFor: #methodNameSortBlock:!private!source filing-pax! !
+
+!Kernel.ChunkSourceFiler methodsFor!
+
+emitPackageBinaryVariables: aPackage
+	"Private - Emit the definitions for variables of the specified <Package> that are not aliases and which refer to non-source objects onto the receiver's stream."
+
+	self
+		emitComment: 'Binary Variables';
+		cr.
+	aPackage binaryVariableNames asSortedCollection do: 
+			[:each |
+			self
+				emitBinaryVariableDefinition: each;
+				cr]!
+
+emitPackageClassNames: aPackage
+	self emitPackageNameCollection: aPackage classNames initializer: #setClassNames:!
+
+emitPackageCollection: aSequencedReadableCollection initializer: aSymbol
+	aSequencedReadableCollection isEmpty ifTrue: [^self].
+	stream
+		nextPutAll: 'package ';
+		display: aSymbol;
+		nextPutAll: ' #(';
+		cr.
+	aSequencedReadableCollection do: 
+			[:each |
+			stream
+				tab;
+				print: each;
+				cr].
+	stream
+		nextPutAll: ').';
+		cr;
+		cr!
+
+emitPackageManualPrerequisites: aPackage
+	self emitPackageCollection: aPackage manualPrerequisites initializer: #setManualPrerequisites:!
+
+emitPackageMethodNames: aPackage
+	| names |
+	names := aPackage methodNames asSortedCollection: (self methodNameSortBlock: aPackage).
+	self emitPackageCollection: (names collect: [:each | {each className. each selector}])
+		initializer: #setMethodNames:!
+
+emitPackageNameCollection: aCollectionOfBindingReferences initializer: aSymbol
+	self emitPackageCollection: aCollectionOfBindingReferences asSortedCollection initializer: aSymbol!
+
+emitPackagePrerequisiteNames: aPackage
+	| basePath |
+	basePath := aPackage path.
+	self
+		emitPackageCollection: ((aPackage prerequisites asSortedCollection: [:a :b | a name <==> b name < 0])
+				collect: [:each | File removeExtension: (File relativePathOf: each packageFileName to: basePath)])
+		initializer: #setPrerequisites:!
+
+emitPackageUntracedVariables: aPackage
+	self emitPackageNameCollection: aPackage untracedVariables initializer: #setUntracedVariables:!
+
+emitPackageVariableNames: aPackage
+	self emitPackageNameCollection: aPackage variableNames initializer: #setVariableNames:.!
+
+emitPackageVariableNameSubsets: aPackage
+	self emitPackageNameCollection: aPackage binaryVariableNames initializer: #setBinaryVariableNames:.
+	self emitPackageNameCollection: aPackage aliasVariableNames initializer: #setAliasVariableNames:! !
+!Kernel.ChunkSourceFiler categoriesFor: #emitPackageBinaryVariables:!private!source filing! !
+!Kernel.ChunkSourceFiler categoriesFor: #emitPackageClassNames:!accessing!private!source filing-pax! !
+!Kernel.ChunkSourceFiler categoriesFor: #emitPackageCollection:initializer:!private!source filing-pax! !
+!Kernel.ChunkSourceFiler categoriesFor: #emitPackageManualPrerequisites:!private!source filing-pax! !
+!Kernel.ChunkSourceFiler categoriesFor: #emitPackageMethodNames:!private!source filing-pax! !
+!Kernel.ChunkSourceFiler categoriesFor: #emitPackageNameCollection:initializer:!private!source filing-pax! !
+!Kernel.ChunkSourceFiler categoriesFor: #emitPackagePrerequisiteNames:!private!source filing-pax! !
+!Kernel.ChunkSourceFiler categoriesFor: #emitPackageUntracedVariables:!private!source filing-pax! !
+!Kernel.ChunkSourceFiler categoriesFor: #emitPackageVariableNames:!private!source filing-pax! !
+!Kernel.ChunkSourceFiler categoriesFor: #emitPackageVariableNameSubsets:!private!source filing-pax! !
 
 !Kernel.Package methodsFor!
 
@@ -213,130 +485,43 @@ fileOutAllChanged
 
 	self allSourceObjectsDo: [:each | each isChanged ifTrue: [each fileOut]]!
 
-fileOutAllOn: aSourceFiler
-	self fileOutOn: aSourceFiler.
-	self
-		fileOutSourceVariableNamesOn: aSourceFiler;
-		fileOutClassesOn: aSourceFiler;
-		fileOutBinaryVariableNamesOn: aSourceFiler!
-
-fileOutBinaryVariableNamesOn: aSourceFiler
-	"Private - File out the binary representation of the receiver's non-<sourceObject> variables onto the <SourceFiler> argument. Binary variables are saved as the literal representation of their #binaryStoreBytes.  This is used in the single-file .PAC format."
-
-	aSourceFiler
-		emitComment: 'Binary Variables';
-		cr.
-	self binaryVariableNames asSortedCollection do: 
-			[:var |
-			aSourceFiler
-				fileOutBinaryVariable: var;
-				cr]!
-
 fileOutBinaryVariables
-	"Private - File out binary variables to individual .ston files.
-	This is used in the multi-file .PAX format to avoid binary merge conflicts in the main PAX."
+	"Private - File out binary variables to individual files."
 
-	self binaryVariableNames - self aliasVariableNames do: 
-			[:each |
-			| stream |
-			stream := FileStream write: (self fileNameForBinaryVariable: each extension: 'ston') text: true.
-			STON put: each value onStreamPretty: stream.
-			stream cr; close]!
+	self binaryVariableNames - self aliasVariableNames do: (self isLegacySourceFormat
+				ifTrue: 
+					[
+					[:each |
+					| stem stream |
+					stem := each shortName.
+					(BindingReference isQualifiedName: stem) ifTrue: [^SourceFormatNotSupportedError signalWith: each].
+					stream := FileStream write: (File
+										composePath: self path
+										stem: stem
+										extension: 'stb')
+								text: false.
+					each value binaryStoreOn: stream.
+					stream close]]
+				ifFalse: 
+					["In the new format we serialize with STON, as a text format is preferable to binary in most SCCS."
+					
+					[:each |
+					| stream |
+					stream := FileStream write: (self fileNameForBinaryVariable: each extension: 'ston') text: true.
+					STON put: each value onStreamPretty: stream.
+					stream
+						cr;
+						close]])!
 
 fileOutBootDefinitions
 	"Private - If this is a system package then only write out .st files capable of defining
 	the classes independently of the PAX. These are required by the Dolphin boot process.
 	Note that the base system package cannot contain any resources."
 
-	| filer |
-	filer := self sourceManager newSourceFiler: self classDefinitionsFileName.
-	[self fileOutClassDefinitionsOn: filer] ensure: [filer close]!
-
-fileOutClassDefinitionsOn: aSourceFiler
-	"Private - Append the text definitions of the receivers owned classes to aFileStream.
-	This should produce the minimal amount of information to create a new class when 
-	loaded in (i.e. only the basic definitions are emitted)."
-
-	| classes |
-	classes := self classesInHierarchyOrder.
-	classes isEmpty ifTrue: [^self].
-	aSourceFiler
-		emitComment: 'Class Definitions';
-		cr.
-	"The namespaces should be defined first as these may be referenced by other class definitions, then SharedPools, then all other classes."
-	classes do: 
-			[:each |
-			((each inheritsFrom: Namespace) and: [(each inheritsFrom: SharedPool) not])
-				ifTrue: [aSourceFiler fileOutBasicDefinitionOfClass: each]].
-	classes
-		do: [:each | (each inheritsFrom: SharedPool) ifTrue: [aSourceFiler fileOutBasicDefinitionOfClass: each]].
-	classes
-		do: [:each | (each inheritsFrom: Namespace) ifFalse: [aSourceFiler fileOutBasicDefinitionOfClass: each]].
-	aSourceFiler cr!
-
-fileOutClassesOn: aSourceFiler
-	"Private - Append definitions of all the classes owned by the receiver to the <SourceFiler>, aSourceFiler.
-	Note that the classes are filed out in class hierarchy order to avoid creating forward references and to create a consistently ordered source file that can be effectively diff'd."
-
-	| classes |
-	classes := self classesInHierarchyOrder.
-	classes isEmpty ifTrue: [^self].
-	aSourceFiler
-		emitComment: 'Classes';
-		cr.
-	classes do: 
-			[:aClass |
-			aSourceFiler fileOutAttributesOfClass: aClass.
-			self fileOutMethodsOfClass: aClass on: aSourceFiler.
-			self fileOutMethodsOfClass: aClass class on: aSourceFiler]!
-
-fileOutLooseMethodsOn: aSourceFiler
-	"Private - File out the loose methods owned by the receiver to the <SourceFiler> argument."
-
-	| loose |
-	loose := self methods.
-	loose isEmpty ifTrue: [^self].
-	aSourceFiler
-		emitComment: 'Loose Methods';
-		cr.
-	aSourceFiler fileOutMethods: loose!
-
-fileOutMethodsOfClass: aClass on: aSourceFiler 
-	"Private - Append any definitions of the classes methods which
-	are not owned by another package to the <puttableStream>, target."
-
-	| methods |
-	methods := self methodsOfClass: aClass.
-	methods size = aClass methodDictionary size 
-		ifTrue: 
-			["The common case is that all methods of the class also belong to the this package..."
-
-			aSourceFiler fileOutAllMethodsOfBehavior: aClass]
-		ifFalse: 
-			["...but if some methods are not owned by this package we have more work to do"
-
-			| selectors prereqs addBlock |
-			selectors := methods collect: [:m | m selector].
-			aSourceFiler fileOutMessages: selectors ofBehavior: aClass.
-
-			"File out the intersection of the immediate protocols of the class and those of this
-			and prerequisite packages' methods"
-
-			"First add all selectors in the superclass chain which are in this package or one of its
-			pre-requisites into the set of available selectors."
-			prereqs := self prerequisites.
-			addBlock := 
-					[:e :p | 
-					selectors addAll: ((p methodsOfClass: e) collect: [:m | m selector])].
-			prereqs do: [:p | addBlock value: aClass value: p].
-			aClass allSuperclassesDo: 
-					[:e | 
-					addBlock value: e value: self.
-					prereqs do: [:p | addBlock value: e value: p]].
-			#todo.	"File out partial protocols, although tools should prevent protocols being split across packages really"
-			aSourceFiler fileOutProtocols: (aClass protocols 
-						select: [:p | (p selectors difference: selectors) isEmpty])
-				ofBehavior: aClass]!
+	| filer srcmgr |
+	srcmgr := self sourceManager.
+	filer := srcmgr newSourceFiler: self sourceFilerClass path: self classDefinitionsFileName.
+	[filer fileOutPackageClassDefinitions: self] ensure: [filer close]!
 
 fileOutNames
 	"Private - Answers a set of the source filenames for the receiver when in the multi-file
@@ -358,42 +543,13 @@ fileOutOn: aSourceFiler
 	<SourceFiler> argument. This does not file out the source files of the 
 	receiver's contents."
 
-	self savePAXChunkOn: aSourceFiler.
-	self fileOutClassDefinitionsOn: aSourceFiler.
-	self fileOutVariableAliasesOn: aSourceFiler.
-	self fileOutLooseMethodsOn: aSourceFiler.
-	aSourceFiler
-		emitComment: 'End of package definition';
-		cr!
+	aSourceFiler fileOutDefinitionOfPackage: self!
 
-fileOutSourceVariableNamesOn: aSourceFiler
-	"Private - File out the text representation of the receiver's globals onto the
-	<puttableStream>, stream. This is used in the single-file .PAC format."
-
-	| names |
-	names := self sourceVariableNames.
-	names isEmpty ifTrue: [^self].
-	aSourceFiler
-		emitComment: 'Source Variables';
-		cr.
-	names asSortedCollection do: 
-			[:var |
-			var value fileOutOn: aSourceFiler.
-			aSourceFiler cr]!
-
-fileOutVariableAliasesOn: aSourceFiler
-	"Private - File out the text representation of the receiver's global aliases onto the
-	<puttableStream>, stream."
-
-	| names |
-	names := self aliasVariableNames.
-	names isEmpty ifTrue: [^self].
-	aSourceFiler
-		emitComment: 'Variable Aliases';
-		cr.
-	names asSortedCollection
-		do: [:var | aSourceFiler fileOutExpression: var asString , ' := ' , var value fullName].
-	aSourceFiler cr!
+isLegacySourceFormat: aBoolean
+	aBoolean = self isLegacySourceFormat
+		ifFalse: 
+			[self paxVersion: (aBoolean ifTrue: [1] ifFalse: [self class paxVersion]).
+			self isChanged: true]!
 
 isRenegade
 	"Answer whether the receiver was loaded (or last saved) before its source representation in the file system.
@@ -416,13 +572,6 @@ isUsingPAX: aBoolean
 	aBoolean 
 		ifTrue: [ self beUsingPAX ]
 		ifFalse: [ self beNotUsingPAX ]!
-
-methodNameSortBlock
-	^
-	[:a :b |
-	a className = b className
-		ifTrue: [a selector <==> b selector <= 0]
-		ifFalse: [a className <= b className]]!
 
 save
 	"Save the receiver to a single PAC file. This includes all of the source for the receiver's contents.
@@ -461,8 +610,8 @@ savePAC
 	self createPackagePath.
 	"This event can be hooked to backup the old package before it is overwritten, etc"
 	self manager trigger: #aboutToSave: with: self.
-	filer := self sourceManager sourceFilerOn: (FileStream write: self dotPacPath).
-	[self fileOutAllOn: filer] ensure: [filer close]!
+	filer := self sourceFilerClass on: (FileStream write: self dotPacPath).
+	[filer fileOutPackage: self] ensure: [filer close]!
 
 savePAX
 	"Private - File out a definition of the receiver to a .PAX source file. This does not file
@@ -474,201 +623,11 @@ savePAX
 
 	| filer |
 	self createPackagePath.
-	filer := self sourceManager sourceFilerOn: (FileStream write: self fileOutName).
+	filer := self sourceFilerClass on: (FileStream write: self fileOutName).
 	[self fileOutOn: filer] ensure: [filer close].
 
 	"We must also file out the binary globals at this stage, as they are not <sourceObject>s."
 	self fileOutBinaryVariables!
-
-savePAXAboutBlockOn: stream 
-	aboutBlock isNil ifTrue: [^self].
-	stream nextPutAll: 'package aboutBlockBytes: '.
-	aboutBlock binaryStoreBytes base64StoreOn: stream.
-	stream
-		nextPut: $.;
-		cr!
-
-savePAXChunkOn: aSourceFiler
-	"Private - File out the receiver's package description stream in PAX source file format
-	to the <puttableStream>, stream. This is in the form of a chunk which, when re-evaluated,
-	creates an equivalent package description in a state which can be used for comparision
-	or loading, etc. None of the code in the package, with the exception of the package scripts,
-	is included. None of the code, including the package scripts, is evaluated."
-
-	| stream |
-	stream := String smalltalkWriteStream: 1024.
-	self
-		savePAXPackageOn: stream;
-		savePAXPackageVersionOn: stream;
-		savePAXAboutBlockOn: stream;
-		savePAXStripperBytesOn: stream;
-		savePAXScriptsOn: stream;
-		savePAXNamesOn: stream;
-		savePAXVariableNamesOn: stream;
-		savePAXPrerequisiteNamesOn: stream;
-		savePAXManualPrerequisitesOn: stream;
-		savePAXUntracedVariablesOn: stream.
-
-	"Finish off the stream by answering the package loaded"
-	stream nextPutAll: 'package'.
-	aSourceFiler fileOutExpression: stream contents!
-
-savePAXCollection: aSequencedReadableCollection initializer: aSymbol on: aPuttableStream
-	aSequencedReadableCollection isEmpty ifTrue: [^self].
-	aPuttableStream
-		nextPutAll: 'package ';
-		display: aSymbol;
-		nextPutAll: ' #(';
-		cr.
-	aSequencedReadableCollection do: 
-			[:each |
-			aPuttableStream
-				tab;
-				print: each;
-				cr].
-	aPuttableStream
-		nextPutAll: ').';
-		cr;
-		cr!
-
-savePAXManualPrerequisitesOn: aPuttableStream
-	"Private - File out the names of any manually configured pre-requisite packages of the receiver onto the <puttableStream> argument."
-
-	self
-		savePAXCollection: self manualPrerequisites
-		initializer: #setManualPrerequisites:
-		on: aPuttableStream!
-
-savePAXNames: aCollectionOfBindingReferences initializer: aSymbol on: aPuttableStream
-	self
-		savePAXCollection: aCollectionOfBindingReferences asSortedCollection
-		initializer: aSymbol
-		on: aPuttableStream!
-
-savePAXNamesOn: aPuttableStream
-	"Private - File out the PAX source file representation of the class names, loose method  names, and variable names, onto the <puttableStream> argument, in ascending order of their printable representation."
-
-	self
-		savePAXNames: self classNames
-		initializer: #setClassNames:
-		on: aPuttableStream.
-	self
-		savePAXCollection: ((self methodNames asSortedCollection: self methodNameSortBlock)
-				collect: [:each | {each className. each selector}])
-		initializer: #setMethodNames:
-		on: aPuttableStream.
-	self
-		savePAXNames: self variableNames
-		initializer: #setVariableNames:
-		on: aPuttableStream!
-
-savePAXPackageOn: aPuttableStream
-	"Private - Save the basic details of the receiver in the PAX source file representation onto the <puttableStream> argument."
-
-	"Create package and set some basic attributes"
-
-	aPuttableStream
-		nextPutAll: '| package |';
-		cr;
-		nextPutAll: 'package := ';
-		print: self class;
-		space;
-		nextPutAll: #name:;
-		space;
-		print: self name;
-		nextPut: $.;
-		cr;
-		nextPutAll: 'package ';
-		nextPutAll: #paxVersion:;
-		space;
-		print: self paxVersion;
-		nextPut: $;;
-		crtab.
-	preDeclareClassesOnLoad
-		ifNotNil: 
-			[aPuttableStream
-				nextPutAll: #preDeclareClassesOnLoad:;
-				space;
-				print: preDeclareClassesOnLoad;
-				nextPut: $;;
-				crtab].
-	aPuttableStream
-		nextPutAll: #basicComment:;
-		space;
-		print: self comment;
-		nextPut: $.;
-		cr;
-		cr!
-
-savePAXPackageVersionOn: aStream 
-	"Private - Save Package Version - this is the version of the package, not the file out format"
-
-	packageVersion isNil ifTrue: [^self].
-	aStream
-		nextPutAll: 'package ';
-		nextPutAll: #basicPackageVersion:;
-		space;
-		print: self packageVersion;
-		nextPut: $.;
-		cr;
-		cr!
-
-savePAXPrerequisiteNamesOn: aPuttableStream
-	"Private - File out names of the pre-requisite packages of the receiver onto the onto the <puttableStream> argument in ascending order."
-
-	| basePath |
-	basePath := self path.
-	self
-		savePAXCollection: ((self prerequisites asSortedCollection: [:a :b | a name <==> b name < 0])
-				collect: [:each | File removeExtension: (File relativePathOf: each packageFileName to: basePath)])
-		initializer: #setPrerequisites:
-		on: aPuttableStream!
-
-savePAXScriptsOn: target 
-	"Private - File out the PAX source file representation of the receiver's scripts
-	onto the <puttableStream>, target.
-	Implementation Note: The scripts are installed using #basicScriptAt:put: to
-	avoid the package being flagged as changed and the consequent transmission 
-	of a change event."
-
-	self scripts keys asSortedCollection do: 
-			[:each | 
-			target
-				nextPutAll: 'package basicScriptAt: ';
-				print: each;
-				nextPutAll: ' put: ';
-				print: (self scriptAt: each);
-				nextPut: $.;
-				cr].
-	target cr!
-
-savePAXStripperBytesOn: stream 
-	"Private - File out the PAX source file representation of the receiver's 
-	image stripper bytes (if any) onto the <puttableStream>, target."
-
-	imageStripperBytes isNil ifTrue: [^self].
-	stream nextPutAll: 'package imageStripperBytes: '.
-	imageStripperBytes base64StoreOn: stream.
-	stream
-		nextPut: $.;
-		cr!
-
-savePAXUntracedVariablesOn: aWriteStream
-	self
-		savePAXNames: self untracedVariables asSortedCollection
-		initializer: #setUntracedVariables:
-		on: aWriteStream!
-
-savePAXVariableNamesOn: aPuttableStream
-	"Private - File out the PAX source file expressions to record the names of the non-source globals owned by the receiver."
-
-	self
-		savePAXNames: self binaryVariableNames
-			initializer: #setBinaryVariableNames:
-			on: aPuttableStream;
-		savePAXNames: self aliasVariableNames
-			initializer: #setAliasVariableNames:
-			on: aPuttableStream!
 
 saveSingleFilePackage
 	"Save the receiver and all owned objects to a single .PAC file.
@@ -677,11 +636,6 @@ saveSingleFilePackage
 	self savePAC.
 	self updateTimestamp.
 	self resetChangeFlags!
-
-toggleUsingPAX
-	"Toggles the use of PAX mode."
-
-	^self isUsingPAX: self isUsingPAX not!
 
 updateTimestamp
 	"Private - Synchronise the receiver's timestamp with its source file."
@@ -698,50 +652,160 @@ updateTimestamp
 !Kernel.Package categoriesFor: #fileOut!public!source filing! !
 !Kernel.Package categoriesFor: #fileOutAll!public!source filing! !
 !Kernel.Package categoriesFor: #fileOutAllChanged!public!source filing! !
-!Kernel.Package categoriesFor: #fileOutAllOn:!public!source filing! !
-!Kernel.Package categoriesFor: #fileOutBinaryVariableNamesOn:!private!source filing! !
 !Kernel.Package categoriesFor: #fileOutBinaryVariables!private!source filing! !
 !Kernel.Package categoriesFor: #fileOutBootDefinitions!private!source filing! !
-!Kernel.Package categoriesFor: #fileOutClassDefinitionsOn:!private!source filing! !
-!Kernel.Package categoriesFor: #fileOutClassesOn:!private!source filing! !
-!Kernel.Package categoriesFor: #fileOutLooseMethodsOn:!private!source filing! !
-!Kernel.Package categoriesFor: #fileOutMethodsOfClass:on:!private!source filing! !
 !Kernel.Package categoriesFor: #fileOutNames!private!source filing! !
 !Kernel.Package categoriesFor: #fileOutOn:!public!source filing! !
-!Kernel.Package categoriesFor: #fileOutSourceVariableNamesOn:!private!source filing! !
-!Kernel.Package categoriesFor: #fileOutVariableAliasesOn:!private!source filing! !
+!Kernel.Package categoriesFor: #isLegacySourceFormat:!public!testing! !
 !Kernel.Package categoriesFor: #isRenegade!public!testing! !
 !Kernel.Package categoriesFor: #isUsingPAX!public!testing! !
 !Kernel.Package categoriesFor: #isUsingPAX:!accessing!public! !
-!Kernel.Package categoriesFor: #methodNameSortBlock!private!source filing-pax! !
 !Kernel.Package categoriesFor: #save!commands!public! !
 !Kernel.Package categoriesFor: #saveAs:!commands!public! !
 !Kernel.Package categoriesFor: #saveChanges!operations!public! !
 !Kernel.Package categoriesFor: #savePAC!helpers!private! !
 !Kernel.Package categoriesFor: #savePAX!private!source filing-pax! !
-!Kernel.Package categoriesFor: #savePAXAboutBlockOn:!private!source filing-pax! !
-!Kernel.Package categoriesFor: #savePAXChunkOn:!private!source filing-pax! !
-!Kernel.Package categoriesFor: #savePAXCollection:initializer:on:!private!source filing-pax! !
-!Kernel.Package categoriesFor: #savePAXManualPrerequisitesOn:!private!source filing-pax! !
-!Kernel.Package categoriesFor: #savePAXNames:initializer:on:!private!source filing-pax! !
-!Kernel.Package categoriesFor: #savePAXNamesOn:!private!source filing-pax! !
-!Kernel.Package categoriesFor: #savePAXPackageOn:!private!source filing-pax! !
-!Kernel.Package categoriesFor: #savePAXPackageVersionOn:!private!source filing-pax! !
-!Kernel.Package categoriesFor: #savePAXPrerequisiteNamesOn:!private!source filing-pax! !
-!Kernel.Package categoriesFor: #savePAXScriptsOn:!private!source filing-pax! !
-!Kernel.Package categoriesFor: #savePAXStripperBytesOn:!private!source filing-pax! !
-!Kernel.Package categoriesFor: #savePAXUntracedVariablesOn:!private!source filing-pax! !
-!Kernel.Package categoriesFor: #savePAXVariableNamesOn:!private!source filing-pax! !
 !Kernel.Package categoriesFor: #saveSingleFilePackage!public!source filing! !
-!Kernel.Package categoriesFor: #toggleUsingPAX!commands!public! !
 !Kernel.Package categoriesFor: #updateTimestamp!helpers!private! !
 
 !Kernel.SourceFiler methodsFor!
 
-fileOutBinaryVariable: aBindingReference
-	"File out the text representation of the non-<sourceObject> which is the value of the <VariableBinding> referred to by the argument onto the receiver's source stream."
+emitPackageBinaryVariables: aPackage
+	"Emit the definitions for variables of the specified <Package> that refer to non-source objects onto the receiver's stream."
+
+	self subclassResponsibility!
+
+emitPackageDescription: aPackage
+	"Private - File out a description of the <Package> argument to the receiver's stream that includes all of the metadata of the package."
 
 	^self subclassResponsibility!
+
+fileOutClass: aClass ofPackage: package
+	self
+		fileOutDefinitionOfClass: aClass;
+		fileOutPackage: package methodsOfClass: aClass;
+		fileOutPackage: package methodsOfClass: aClass class!
+
+fileOutDefinitionOfPackage: aPackage
+	self emitPackageDescription: aPackage.
+	self fileOutPackageClassDefinitions: aPackage.
+	self fileOutPackageVariableAliases: aPackage.
+	self fileOutPackageMethods: aPackage.
+	self
+		emitComment: 'End of package definition';
+		cr!
+
+fileOutPackage: aPackage
+	self
+		fileOutDefinitionOfPackage: aPackage;
+		fileOutPackageSourceVariables: aPackage;
+		fileOutPackageClasses: aPackage;
+		emitPackageBinaryVariables: aPackage!
+
+fileOutPackage: aPackage methodsOfClass: aClass
+	"Private - Append any definitions of the classes methods which are owned by the specified Package to the receiver's stream."
+
+	| methods |
+	methods := aPackage methodsOfClass: aClass.
+	methods size = aClass methodDictionary size
+		ifTrue: 
+			["The common case is that all methods of the class also belong to the this package..."
+			self fileOutAllMethodsOfBehavior: aClass]
+		ifFalse: 
+			[| selectors prereqs addBlock |
+			"...but if some methods are not owned by this package we have more work to do"
+			selectors := methods collect: [:m | m selector].
+			self fileOutMessages: selectors ofBehavior: aClass.
+
+			"File out the intersection of the immediate protocols of the class and those of this
+			and prerequisite packages' methods"
+
+			"First add all selectors in the superclass chain which are in this package or one of its
+			pre-requisites into the set of available selectors."
+			prereqs := aPackage prerequisites.
+			addBlock := [:e :p | selectors addAll: ((p methodsOfClass: e) collect: [:m | m selector])].
+			prereqs do: [:p | addBlock value: aClass value: p].
+			aClass allSuperclassesDo: 
+					[:e |
+					addBlock value: e value: aPackage.
+					prereqs do: [:p | addBlock value: e value: p]].
+			#todo.	"File out partial protocols, although tools should prevent protocols being split across packages really"
+			self fileOutProtocols: (aClass protocols select: [:p | (p selectors difference: selectors) isEmpty])
+				ofBehavior: aClass]!
+
+fileOutPackageClassDefinitions: aPackage
+	| classes |
+	classes := self packageClassesInFileoutOrder: aPackage.
+	classes isEmpty
+		ifFalse: 
+			[self
+				emitComment: 'Class Definitions';
+				cr.	"The namespaces should be defined first as these may be referenced by other class definitions, then SharedPools, then all other classes."
+			classes do: 
+					[:each |
+					((each inheritsFrom: Namespace) and: [(each inheritsFrom: SharedPool) not])
+						ifTrue: [self fileOutBasicDefinitionOfClass: each]].
+			classes
+				do: [:each | (each inheritsFrom: SharedPool) ifTrue: [self fileOutBasicDefinitionOfClass: each]].
+			classes
+				do: [:each | (each inheritsFrom: Namespace) ifFalse: [self fileOutBasicDefinitionOfClass: each]].
+			self cr]!
+
+fileOutPackageClasses: aPackage
+	| classes |
+	classes := self packageClassesInFileoutOrder: aPackage.
+	classes isEmpty ifTrue: [^self].
+	self
+		emitComment: 'Classes';
+		cr.
+	classes do: 
+			[:aClass |
+			self fileOutAttributesOfClass: aClass.
+			self fileOutPackage: aPackage methodsOfClass: aClass.
+			self fileOutPackage: aPackage methodsOfClass: aClass class]!
+
+fileOutPackageMethods: aPackage
+	"Private - File out the loose methods owned by the specified package to the receiver's stream."
+
+	| loose |
+	loose := aPackage methods.
+	loose isEmpty
+		ifFalse: 
+			[self
+				emitComment: 'Loose Methods';
+				cr.
+			self fileOutMethods: loose]!
+
+fileOutPackageSourceVariables: aPackage
+	"Private - File out the text representation of the specified packages 'source' object variables onto the receiver's stream. This is used in the single-file .PAC format."
+
+	| names |
+	names := aPackage sourceVariableNames.
+	names isEmpty ifTrue: [^self].
+	self
+		emitComment: 'Source Variables';
+		cr.
+	names asSortedCollection do: 
+			[:var |
+			var value fileOutOn: self.
+			self cr]!
+
+fileOutPackageVariableAliases: aPackage
+	"Private - File out the text representation of the specified package's alias variables onto the receiver's stream."
+
+	| names |
+	names := aPackage aliasVariableNames.
+	names isEmpty
+		ifFalse: 
+			[self
+				emitComment: 'Variable Aliases';
+				cr.
+			names asSortedCollection
+				do: [:var | self fileOutExpression: var asString , ' := ' , var value fullName].
+			self cr]!
+
+packageClassesInFileoutOrder: aPackage
+	^aPackage classesInHierarchyOrder!
 
 storeCommentString: aString forPackage: aPackage
 	"Save the <readableString>, aString, as the comment text for the <Package>, aPackage, to the
@@ -749,7 +813,18 @@ storeCommentString: aString forPackage: aPackage
 	descriptor so that the comment may be retrieved later."
 
 	^self subclassResponsibility! !
-!Kernel.SourceFiler categoriesFor: #fileOutBinaryVariable:!public!source filing! !
+!Kernel.SourceFiler categoriesFor: #emitPackageBinaryVariables:!private!source filing! !
+!Kernel.SourceFiler categoriesFor: #emitPackageDescription:!private!source filing-pax! !
+!Kernel.SourceFiler categoriesFor: #fileOutClass:ofPackage:!public!source filing! !
+!Kernel.SourceFiler categoriesFor: #fileOutDefinitionOfPackage:!public! !
+!Kernel.SourceFiler categoriesFor: #fileOutPackage:!public! !
+!Kernel.SourceFiler categoriesFor: #fileOutPackage:methodsOfClass:!private! !
+!Kernel.SourceFiler categoriesFor: #fileOutPackageClassDefinitions:!private! !
+!Kernel.SourceFiler categoriesFor: #fileOutPackageClasses:!private! !
+!Kernel.SourceFiler categoriesFor: #fileOutPackageMethods:!private! !
+!Kernel.SourceFiler categoriesFor: #fileOutPackageSourceVariables:!private! !
+!Kernel.SourceFiler categoriesFor: #fileOutPackageVariableAliases:!private! !
+!Kernel.SourceFiler categoriesFor: #packageClassesInFileoutOrder:!private! !
 !Kernel.SourceFiler categoriesFor: #storeCommentString:forPackage:!public!source filing! !
 
 !Kernel.SourceManager methodsFor!
@@ -762,22 +837,20 @@ fileOutPackagedClass: aClass
 	self fileOutPackagedClass: aClass to: aClass fileOutName.
 	!
 
-fileOutPackagedClass: aClass to: aFileName 
+fileOutPackagedClass: aClass to: aFileName
 	"File out aClass via the package mechanism. The class is filed out to aFileName.
 	Only the methods contained in this package are included in the 
 	generated file and following this call the class and its methods are marked as unchanged."
 
-	| package filer |
-	package := self packageManager packageOfClass: aClass.
-	package isNil 
-		ifTrue: 
+	aClass owningPackage
+		ifNil: 
 			["Not in any package so just file out normally"
-			^self fileOut: aClass to: aFileName].
-	filer := self newSourceFiler: aFileName.
-	filer fileOutDefinitionOfClass: aClass.
-	package fileOutMethodsOfClass: aClass on: filer.
-	package fileOutMethodsOfClass: aClass class on: filer.
-	filer close.
+			self fileOut: aClass to: aFileName]
+		ifNotNil: 
+			[:package |
+			(self newSourceFiler: package sourceFilerClass path: aFileName)
+				fileOutClass: aClass ofPackage: package;
+				close].
 
 	"Flag the class as being saved, i.e. no longer changed"
 	aClass isChanged: false! !

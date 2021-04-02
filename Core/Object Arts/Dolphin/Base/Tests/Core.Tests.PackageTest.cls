@@ -212,8 +212,9 @@ loadAndTestPackage: filename
 	self checkTestPackageContents
 !
 
-loadTestAndUninstallPackage: filename
-	self loadAndTestPackage: filename.
+loadTestAndUninstallPackage: aString
+	self loadAndTestPackage: aString.
+	self assert: loadedPackages first paxVersion equals: 1.
 	self uninstallTestPackages.
 	self checkNoTestPackageContents!
 
@@ -243,6 +244,126 @@ testForwardRefLoadPac
 		close.
 	[loadedPackages := Package manager install: pacName] ensure: [File delete: pacName]!
 
+testLegacyFormatErrorAliasToQualifiedName
+	| package ref filer filerClass |
+	package := Package new.
+	package paxVersion: 1.
+	ref := #{Smalltalk.TestCase}.
+	self assert: ref value identicalTo: XProgramming.SUnit.TestCase.
+	package basicAddVariableNamed: ref.
+	filerClass := package sourceFilerClass.
+	self assert: filerClass equals: LegacyChunkSourceFiler.
+	filer := filerClass on: String writeStream.
+	self
+		should: [package fileOutOn: filer]
+		raise: SourceFormatNotSupportedError
+		matching: [:ex | ex tag class isMeta]!
+
+testLegacyFormatErrorMethodOfNamespacedClass
+	| package filerClass filer method |
+	package := Package new.
+	package paxVersion: 1.
+	method := self class >> self selector.
+	package addLooseMethod: method.
+	filerClass := package sourceFilerClass.
+	self assert: filerClass equals: LegacyChunkSourceFiler.
+	filer := filerClass on: String writeStream.
+	self
+		should: [package fileOutOn: filer]
+		raise: SourceFormatNotSupportedError
+		matching: [:ex | ex tag = (MethodName method: method)]!
+
+testLegacyFormatErrorQualifiedAliasName
+	| package filerClass filer ref |
+	package := Package new.
+	package paxVersion: 1.
+	ref := #{XProgramming.SUnit.ExampleTestResource}.
+	package basicAddVariableNamed: ref.
+	filerClass := package sourceFilerClass.
+	self assert: filerClass equals: LegacyChunkSourceFiler.
+	filer := filerClass on: String writeStream.
+	self
+		should: [package fileOutOn: filer]
+		raise: SourceFormatNotSupportedError
+		matching: [:ex | ex tag = ref]!
+
+testLegacyFormatErrorQualifiedBinaryVariableName
+	| package filerClass filer ref |
+	package := Package new.
+	package paxVersion: 1.
+	ref := #{Kernel.SourceFiles}.
+	package basicAddVariableNamed: ref.
+	filerClass := package sourceFilerClass.
+	self assert: filerClass equals: LegacyChunkSourceFiler.
+	filer := filerClass on: String writeStream.
+	self
+		should: [package fileOutOn: filer]
+		raise: SourceFormatNotSupportedError
+		matching: [:ex | ex tag == ref]!
+
+testLegacyFormatErrorQualifiedClassName
+	| package filerClass filer |
+	package := Package new.
+	package paxVersion: 1.
+	package classNames add: self class fullyQualifiedReference.
+	filerClass := package sourceFilerClass.
+	self assert: filerClass equals: LegacyChunkSourceFiler.
+	filer := filerClass on: String writeStream.
+	self
+		should: [package fileOutOn: filer]
+		raise: SourceFormatNotSupportedError
+		matching: [:ex | ex tag = self class asQualifiedReference]!
+
+testLegacyFormatErrorQualifiedSourceVariableName
+	| package anonClass filerClass filer pool ref |
+	package := Package new.
+	package paxVersion: 1.
+	"PoolConstantDictionary instances only support Smalltalk as their environment because it is only used for legacy packages, but we want to test a theoretical sourceObject that can live in any Namespace."
+	anonClass := Smalltalk.PoolConstantsDictionary newAnonymousSubclass.
+	anonClass compile: 'environment ^Core.Tests'.
+	pool := anonClass named: #TestPool.
+	self class environment at: #TestPool put: pool.
+	
+	[ref := #{Core.Tests.TestPool}.
+	package basicAddVariableNamed: ref.
+	filerClass := package sourceFilerClass.
+	self assert: filerClass equals: LegacyChunkSourceFiler.
+	filer := filerClass on: String writeStream.
+	self
+		should: [package fileOutOn: filer]
+		raise: SourceFormatNotSupportedError
+		matching: [:ex | ex tag == ref]]
+			ensure: [self class environment removeKey: #TestPool]!
+
+testLegacyFormatErrorQualifiedSuperclassName
+	| package filerClass filer testClass |
+	package := Package new.
+	package paxVersion: 1.
+	testClass := #{Smalltalk.SocketTest} valueOrNil.
+	self skipUnless: [testClass notNil].
+	package classNames add: testClass fullyQualifiedReference.
+	filerClass := package sourceFilerClass.
+	self assert: filerClass equals: LegacyChunkSourceFiler.
+	filer := filerClass on: String writeStream.
+	self
+		should: [package fileOutOn: filer]
+		raise: SourceFormatNotSupportedError
+		matching: [:ex | ex tag == testClass]!
+
+testLegacyFormatErrorQualifiedUntracedVariable
+	| package filerClass filer ref |
+	package := Package new.
+	package paxVersion: 1.
+	ref := #{XProgramming.SUnit.ExampleTestResource}.
+	package setUntracedVariables: (Set with: ref).
+	filerClass := package sourceFilerClass.
+	self assert: filerClass equals: LegacyChunkSourceFiler.
+	filer := filerClass on: String writeStream.
+	self
+		should: [package fileOutOn: filer]
+		raise: SourceFormatNotSupportedError
+		matching: [:ex | ex tag = ref]!
+
 testLoad21Pac
 	self loadTestAndUninstallPackage: 'ScribbleTestPackages\2.1\ScribbleTest21.pac'!
 
@@ -265,9 +386,13 @@ testLoad60Pax
 	self loadTestAndUninstallPackage: 'ScribbleTestPackages\6.0\ScribbleTest6.pax'!
 
 testLoad70Pax
-	| scribbleTestPackage aliasName binaryVariableName sourceVariableName testPool poolConst |
-	self loadAndTestPackage: 'ScribbleTestPackages\7.0\ScribbleTest7.pax'.
+	"Test loading of D7 package in version 1 pax format."
+
+	| scribbleTestPackage aliasName binaryVariableName sourceVariableName testPool poolConst testPackagePath filer actual expected |
+	testPackagePath := 'ScribbleTestPackages\7.0\ScribbleTest7.pax'.
+	self loadAndTestPackage: testPackagePath.
 	scribbleTestPackage := loadedPackages first.
+	self assert: scribbleTestPackage paxVersion equals: 1.
 	aliasName := #{Smalltalk.AliasToScribbleTest}.
 	self assert: scribbleTestPackage aliasVariableNames asArray equals: {aliasName}.
 	self assert: aliasName value identicalTo: #{Smalltalk.ScribbleTest} value.
@@ -281,7 +406,8 @@ testLoad70Pax
 	self assert: scribbleTestPackage sourceVariableNames asArray equals: #().
 	sourceVariableName := #{Smalltalk.ScribbleTestSourceGlobal}.
 	"We should still find the class binding among the packaged variables"
-	self assert: (scribbleTestPackage manager packageOfVariableNamed: sourceVariableName) identicalTo: scribbleTestPackage.
+	self assert: (scribbleTestPackage manager packageOfVariableNamed: sourceVariableName)
+		identicalTo: scribbleTestPackage.
 	self assert: (scribbleTestPackage classNames includes: sourceVariableName).
 	testPool := sourceVariableName value.
 	self assert: testPool isKindOf: SharedPool class.
@@ -293,14 +419,26 @@ testLoad70Pax
 		assert: (MethodName className: #{Smalltalk.ScribbleTest} selector: #string) value literals first
 		equals: poolConst.
 	self assert: #{Smalltalk.ScribbleTest} value new string equals: 'abc'.
+	"Now verify it round trips"
+	filer := scribbleTestPackage sourceFilerClass on: String writeStream.
+	filer fileOutPackage: scribbleTestPackage.
+	actual := filer stream contents.
+	expected := File readAllText: (File change: (self filenameFor: testPackagePath) extension: 'pac').
+	"
+	Smalltalk.DiffBrowser compare: actual with: expected
+	"
+	self assert: actual equals: expected.
 	self uninstallTestPackages.
-	self checkNoTestPackageContents
-!
+	self checkNoTestPackageContents!
 
 testLoad72Pax
+	"Test loading of the interim 2.0 package format which uses BindingReferences, but not namespace qualified names."
+
 	| scribbleTestPackage aliasName binaryVariableName sourceVariableName testPool |
 	self loadAndTestPackage: 'ScribbleTestPackages\7.2\ScribbleTest72.pax'.
 	scribbleTestPackage := loadedPackages first.
+	"Package gets downgraded to version 1 format as we don't want to support the interim source format going forward"
+	self assert: scribbleTestPackage paxVersion equals: 1.
 	aliasName := #{Smalltalk.AliasToScribbleTest}.
 	self assert: scribbleTestPackage aliasVariableNames asArray equals: {aliasName}.
 	self assert: aliasName value identicalTo: #{Smalltalk.ScribbleTest} value.
@@ -312,6 +450,7 @@ testLoad72Pax
 	self assert: (scribbleTestPackage classNames includes: sourceVariableName).
 	testPool := sourceVariableName value.
 	self assert: testPool isKindOf: SharedPool class.
+	self verifyTestPackageResources: scribbleTestPackage.
 	self uninstallTestPackages.
 	self checkNoTestPackageContents!
 
@@ -359,7 +498,21 @@ verifyPackageElementsExist: aPackage
 		| value |
 		value := each value.
 		self assert: value owningPackage identicalTo: aPackage].
-	aPackage untracedVariables do: [:each | self assert: each isDefined]! !
+	aPackage untracedVariables do: [:each | self assert: each isDefined]!
+
+verifyTestPackageResources: scribbleTestPackage
+	| resourceIds scribbleTestDefaultViewId scribbleTestViewId |
+	resourceIds := scribbleTestPackage allResourceIdentifiers.
+	self assert: resourceIds size equals: 2.
+	scribbleTestDefaultViewId := UI.ResourceIdentifier class: #{Smalltalk.ScribbleTest} value
+				name: 'Default scribble test view'.
+	self assert: (resourceIds includes: scribbleTestDefaultViewId).
+	self assert: scribbleTestDefaultViewId owningPackage equals: scribbleTestPackage.
+	self assertNotNil: scribbleTestDefaultViewId resource.
+	scribbleTestViewId := UI.ResourceIdentifier class: #{Smalltalk.Scribble} value name: 'Scribble test'.
+	self assert: (resourceIds includes: scribbleTestViewId).
+	self assert: scribbleTestViewId owningPackage equals: scribbleTestPackage.
+	self assertNotNil: scribbleTestViewId resource! !
 !Core.Tests.PackageTest categoriesFor: #checkNoTestPackageContents!helpers!private! !
 !Core.Tests.PackageTest categoriesFor: #checkTestPackageContents!helpers!private! !
 !Core.Tests.PackageTest categoriesFor: #d5ForwardRefTestPacContents!constants!private! !
@@ -369,6 +522,14 @@ verifyPackageElementsExist: aPackage
 !Core.Tests.PackageTest categoriesFor: #setUp!private!running! !
 !Core.Tests.PackageTest categoriesFor: #tearDown!private!running! !
 !Core.Tests.PackageTest categoriesFor: #testForwardRefLoadPac!public!unit tests! !
+!Core.Tests.PackageTest categoriesFor: #testLegacyFormatErrorAliasToQualifiedName!public!unit tests! !
+!Core.Tests.PackageTest categoriesFor: #testLegacyFormatErrorMethodOfNamespacedClass!public!unit tests! !
+!Core.Tests.PackageTest categoriesFor: #testLegacyFormatErrorQualifiedAliasName!public!unit tests! !
+!Core.Tests.PackageTest categoriesFor: #testLegacyFormatErrorQualifiedBinaryVariableName!public!unit tests! !
+!Core.Tests.PackageTest categoriesFor: #testLegacyFormatErrorQualifiedClassName!public!unit tests! !
+!Core.Tests.PackageTest categoriesFor: #testLegacyFormatErrorQualifiedSourceVariableName!public!unit tests! !
+!Core.Tests.PackageTest categoriesFor: #testLegacyFormatErrorQualifiedSuperclassName!public!unit tests! !
+!Core.Tests.PackageTest categoriesFor: #testLegacyFormatErrorQualifiedUntracedVariable!public!unit tests! !
 !Core.Tests.PackageTest categoriesFor: #testLoad21Pac!public!unit tests! !
 !Core.Tests.PackageTest categoriesFor: #testLoad40Pac!public!unit tests! !
 !Core.Tests.PackageTest categoriesFor: #testLoad40Pax!public!unit tests! !
@@ -379,9 +540,10 @@ verifyPackageElementsExist: aPackage
 !Core.Tests.PackageTest categoriesFor: #testLoad70Pax!public!unit tests! !
 !Core.Tests.PackageTest categoriesFor: #testLoad72Pax!public!unit tests! !
 !Core.Tests.PackageTest categoriesFor: #testLoadedPackagesAreWellFormed!public!unit tests! !
-!Core.Tests.PackageTest categoriesFor: #testLooseResourceIdentifiers!public! !
+!Core.Tests.PackageTest categoriesFor: #testLooseResourceIdentifiers!public!unit tests! !
 !Core.Tests.PackageTest categoriesFor: #testTimestampInitialized!public!unit tests! !
 !Core.Tests.PackageTest categoriesFor: #uninstallTestPackages!private!running! !
 !Core.Tests.PackageTest categoriesFor: #verifyPackageElementNamesAreAbsolute:!helpers!private! !
 !Core.Tests.PackageTest categoriesFor: #verifyPackageElementsExist:!helpers!private! !
+!Core.Tests.PackageTest categoriesFor: #verifyTestPackageResources:!helpers!private! !
 

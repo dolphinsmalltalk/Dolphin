@@ -4,8 +4,7 @@ Object subclass: #StyledGradientBrush
 	instanceVariableNames: 'startColor endColor startPoint endPoint'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''
-	classConstants: {}!
+	classInstanceVariableNames: ''!
 StyledGradientBrush guid: (GUID fromString: '{4a31f78c-2126-4b71-bf0b-064199a1f828}')!
 StyledGradientBrush comment: 'A StyledBrush holds persistent details for a GdiplusLinearGradientBrush.'!
 !StyledGradientBrush categoriesForClass!Kernel-Objects! !

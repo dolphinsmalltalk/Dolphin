@@ -1,12 +1,11 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Core.Object subclass: #ComparisonPolicy
+Object subclass: #ComparisonPolicy
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-ComparisonPolicy guid: (Core.GUID fromString: '{02cd77f7-d41d-4e1c-82ee-92322a049235}')!
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ComparisonPolicy guid: (GUID fromString: '{02cd77f7-d41d-4e1c-82ee-92322a049235}')!
 ComparisonPolicy comment: 'This class has now been deprecated, use SearchPolicy (which implements the <comparisonPolicy> protocol) instead.'!
 !ComparisonPolicy categoriesForClass!Deprecated! !
 !ComparisonPolicy class methodsFor!

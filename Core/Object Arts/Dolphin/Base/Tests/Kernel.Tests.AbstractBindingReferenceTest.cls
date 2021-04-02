@@ -108,7 +108,7 @@ testBindingRoot
 
 testEnvironmentName
 	| subject |
-	#('Core.Object' 'Core' 'Smalltalk' 'Smalltalk' 'Root' 'Smalltalk' 'Smalltalk.Animal' 'Smalltalk' 'Animal' 'Smalltalk' 'XProgramming.SUnit' 'XProgramming' 'XProgramming.SUnit.TestCase' 'XProgramming.SUnit')
+	#('Core.Object' 'Core' 'Smalltalk' nil 'Root' nil 'Root.Smalltalk' 'Root' 'Smalltalk.Animal' 'Smalltalk' 'Animal' nil 'XProgramming.SUnit' 'XProgramming' 'XProgramming.SUnit.TestRunConsoleLogger' 'XProgramming.SUnit')
 		pairsDo: 
 			[:each :expected |
 			subject := self subjectClass pathString: each.
@@ -308,7 +308,7 @@ testShortName
 			subject := self subjectClass pathString: each.
 			self assert: subject shortName equals: ($. split: each) last , self nameSuffix.
 			self assert: subject shortName equals: subject simpleName].
-	#('XProgramming.SUnit' 'XProgramming.SUnit.TestCase') do: 
+	#('XProgramming.SUnit' 'XProgramming.SUnit.TestRunConsoleLogger') do: 
 			[:each |
 			| subject |
 			subject := self subjectClass pathString: each.

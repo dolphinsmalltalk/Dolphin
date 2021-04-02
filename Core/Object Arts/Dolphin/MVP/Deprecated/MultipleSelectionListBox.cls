@@ -1,12 +1,11 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-UI.ListBox subclass: #MultipleSelectionListBox
+ListBox subclass: #MultipleSelectionListBox
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-MultipleSelectionListBox guid: (Core.GUID fromString: '{87b4c72d-026e-11d3-9fd7-00a0cc3e4a32}')!
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+MultipleSelectionListBox guid: (GUID fromString: '{87b4c72d-026e-11d3-9fd7-00a0cc3e4a32}')!
 MultipleSelectionListBox comment: 'MultipleSelectionListBox was deprecated in 6.0 - instances should be replaced by <ListBox> instances configured to operate in one of the multiple selection modes.  Note that ListBox corrects the historical design error in MultipleSelectionListBox in that the single selection protocols (#selection[:], #selectionByIndex[:], etc) always operate on a single item (this class redefines the single selection protocols to operate on collections). For multiple selections the multiple selection protocols (e.g. #selections[:], #selectionsByIndex[:], etc) must be used.'!
 !MultipleSelectionListBox categoriesForClass!MVP-Views! !
 !MultipleSelectionListBox methodsFor!

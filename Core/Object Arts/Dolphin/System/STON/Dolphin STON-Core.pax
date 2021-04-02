@@ -326,9 +326,8 @@ fromSton: stonReader
 !Core.Class methodsFor!
 
 stonOn: stonWriter
-	stonWriter 
-		writeObject: self 
-		listSingleton: self shortName asSymbol! !
+	name ifNil: [self error: 'Anonymous classes are not serializable'].
+	stonWriter writeObject: self listSingleton: self unaliasedName asSymbol! !
 !Core.Class categoriesFor: #stonOn:!public!ston! !
 
 !Core.Class class methodsFor!
@@ -637,8 +636,8 @@ stonAllInstVarNames
 stonName
 	"Override to encode my instances using a different class name.
 	Use symbols as class name/tag."
-	
-	^ self shortName! !
+
+	^self unaliasedName! !
 !Core.Object class categoriesFor: #fromSton:!public!ston! !
 !Core.Object class categoriesFor: #stonAllInstVarNames!public!ston! !
 !Core.Object class categoriesFor: #stonName!public!ston! !

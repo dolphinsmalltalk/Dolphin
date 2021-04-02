@@ -185,18 +185,20 @@ basicAddVariableNamed: aBindingReference
 	"Private - Include the variable referenced by the <BindingReference> argument in those owned by the receiver. Answer the argument.
 	 Note that it is assumed that the variable is _not_ currently packaged. To correctly add a class regardless of packaging use the PackageManager."
 
-	| binding |
 	variableNames add: aBindingReference.
-
-	"The global's value has not changed, but it may now need filing out to a new location"
-	binding := aBindingReference value.
-	(self isSourceObject: binding) ifTrue: [binding isChanged: true].
+	((self isAlias: aBindingReference) not and: [self isSourceObject: aBindingReference value])
+		ifTrue: 
+			["The global's value has not changed, but it may now need filing out to a new location."
+			aBindingReference value isChanged: true].
 	^aBindingReference!
 
 basicComment: aString
 	"Private - Set the comment of the receiver."
 
 	comment := aString!
+
+basicPackageVersion
+	^packageVersion!
 
 basicPackageVersion: aString
 	"Private - Sets the package version identification to aStringOrNil."
@@ -476,7 +478,7 @@ displayOn: aPuttableStream
 	aPuttableStream nextPutAll: self name!
 
 ensureNamesFullyQualified
-	self paxVersion >= 2.1 ifTrue: [^self].
+	self isLegacySourceFormat ifFalse: [^self].
 	classNames := classNames collect: [:each | each binding fullyQualifiedReference].
 	variableNames := variableNames collect: [:each | each binding fullyQualifiedReference]!
 
@@ -720,7 +722,7 @@ initializeOldSourcePackage
 isAlias: aBindingReference
 	| target |
 	target := aBindingReference value.
-	^(self isSourceObject: target) and: [aBindingReference ~= target fullyQualifiedReference]!
+	^target class isMeta and: [aBindingReference ~= target fullyQualifiedReference]!
 
 isBasePackage
 	"Answer true if the receiver is a basic component of Dolphin. This is usually an indication that
@@ -756,6 +758,9 @@ isInstalled
 
 	^self manager includesPackage: self!
 
+isLegacySourceFormat
+	^self paxVersion < 2.1!
+
 isSourceObject: anObject
 	"Private - Answer true if anObject can be filed out as an external source file"
 
@@ -783,7 +788,7 @@ loadBinaryVariables
 	| varNames ston |
 	varNames := self propertyAt: #binaryVariables ifAbsent: [].
 	varNames isNil ifTrue: [^self].
-	self paxVersion < 2.1
+	self isLegacySourceFormat
 		ifTrue: 
 			[varNames do: 
 					[:each |
@@ -824,7 +829,7 @@ loadPAC: stream
 	"Private - Load a chunked source text .PAC from the <readableStream>, stream."
 
 	| filer |
-	filer := ChunkSourceFiler on: stream.
+	filer := self sourceFilerClass on: stream.
 
 	"Skip the first chunk since it represents the receiver."
 	filer nextChunk.
@@ -848,7 +853,7 @@ loadPAX
 		signal: ('Loading source package <1p> from: <2s>' expandMacrosWith: self name with: filename).
 	stream := FileStream read: filename.
 	timestamp := stream file lastWriteTime asInteger.
-	filer := ChunkSourceFiler on: stream.
+	filer := self sourceFilerClass on: stream.
 	
 	[| none |
 	"Initialize old style (pre D6) binary resources"
@@ -1155,19 +1160,19 @@ path
 	^File splitPathFrom: self packageFileName!
 
 paxVersion
-	"Private - Answer the PAX format version of the package being loaded (or the current
-	format if a loaded package)."
+	"Private - Answer the PAX format version of this package."
 
 	^self propertyAt: #paxVersion ifAbsent: [self class paxVersion]!
 
 paxVersion: aNumber
-	"Private - Temporarily record the PAX format version in which the package being loaded
-	was saved. This may be used for loading old format source packages in future."
+	"Private - Record the PAX format version in which the package being loaded was saved. If the same as the current package version format, then forget the version."
 
-	self propertyAt: #paxVersion put: aNumber!
+	aNumber = self class paxVersion
+		ifTrue: [self removePropertyAt: #paxVersion ifAbsent: []]
+		ifFalse: [self propertyAt: #paxVersion put: aNumber]!
 
 postLoadInitialization: aNiladicValuable
-	self paxVersion < 2.1 ifTrue: [self updateMethodNamesToFullyQualified].
+	self isLegacySourceFormat ifTrue: [self updateMethodNamesToFullyQualified].
 	self initializeGlobals.
 	self paxVersion < 1
 		ifTrue: 
@@ -1186,6 +1191,9 @@ preDeclareClassesOnLoad: aBoolean
 		ifFalse: 
 			[preDeclareClassesOnLoad := aBoolean.
 			self isChanged: true]!
+
+predeclareClassesSetting
+	^preDeclareClassesOnLoad!
 
 prerequisiteNames
 	"Private - Answer the <readableString> names of the receiver's prerequisite packages, i.e.
@@ -1303,8 +1311,11 @@ removePackagedMethod: aCompiledMethod
 removePAXProperties
 	"Private - Throw away any info cached to load the package, and make sure not marked as changed"
 
-	#(#allResourceNames #binaryVariables #aliasVariables #paxVersion)
+	| originalVersion |
+	#(#allResourceNames #binaryVariables #aliasVariables)
 		do: [:each | self removePropertyAt: each ifAbsent: []].
+	originalVersion := self paxVersion.
+	self paxVersion: (originalVersion < 2.1 ifTrue: [1] ifFalse: [self class paxVersion]).
 	changeIndex := nil!
 
 removeVariableNamed: aBindingReference
@@ -1425,6 +1436,9 @@ sourceDescriptor
 
 sourceDescriptor: anObject
 	comment := anObject!
+
+sourceFilerClass
+	^self isLegacySourceFormat ifTrue: [#{LegacyChunkSourceFiler} value] ifFalse: [ChunkSourceFiler]!
 
 sourceGlobalExtension
 	"Private - Answer the file extension for the files to which source globals are stored."
@@ -1832,6 +1846,7 @@ If you experience subsequent problems please contact the package supplier for an
 !Kernel.Package categoriesFor: #basicAddClass:!adding!private! !
 !Kernel.Package categoriesFor: #basicAddVariableNamed:!adding!private! !
 !Kernel.Package categoriesFor: #basicComment:!accessing!private! !
+!Kernel.Package categoriesFor: #basicPackageVersion!accessing!private! !
 !Kernel.Package categoriesFor: #basicPackageVersion:!accessing!private! !
 !Kernel.Package categoriesFor: #basicRemoveClass:!private!removing! !
 !Kernel.Package categoriesFor: #basicRemoveVariableNamed:!private!removing! !
@@ -1903,6 +1918,7 @@ If you experience subsequent problems please contact the package supplier for an
 !Kernel.Package categoriesFor: #isDefaultPackage!public!testing! !
 !Kernel.Package categoriesFor: #isImportedClass:!initializing!private! !
 !Kernel.Package categoriesFor: #isInstalled!public!testing! !
+!Kernel.Package categoriesFor: #isLegacySourceFormat!public!testing! !
 !Kernel.Package categoriesFor: #isSourceObject:!initializing!private! !
 !Kernel.Package categoriesFor: #isSystemPackage!public!testing! !
 !Kernel.Package categoriesFor: #load!initializing!private! !
@@ -1943,6 +1959,7 @@ If you experience subsequent problems please contact the package supplier for an
 !Kernel.Package categoriesFor: #postLoadInitialization:!loading!private! !
 !Kernel.Package categoriesFor: #preDeclareClassesOnLoad!accessing!public! !
 !Kernel.Package categoriesFor: #preDeclareClassesOnLoad:!accessing!public! !
+!Kernel.Package categoriesFor: #predeclareClassesSetting!accessing!private! !
 !Kernel.Package categoriesFor: #prerequisiteNames!accessing!private! !
 !Kernel.Package categoriesFor: #prerequisites!accessing!public! !
 !Kernel.Package categoriesFor: #printOn:!initializing!public! !
@@ -1980,6 +1997,7 @@ If you experience subsequent problems please contact the package supplier for an
 !Kernel.Package categoriesFor: #shrink!private! !
 !Kernel.Package categoriesFor: #sourceDescriptor!accessing!private! !
 !Kernel.Package categoriesFor: #sourceDescriptor:!accessing!private! !
+!Kernel.Package categoriesFor: #sourceFilerClass!private!source filing-class definition! !
 !Kernel.Package categoriesFor: #sourceGlobalExtension!constants!private! !
 !Kernel.Package categoriesFor: #sourceManager!accessing!public! !
 !Kernel.Package categoriesFor: #sourceVariableNames!accessing!private! !
@@ -2137,8 +2155,8 @@ paxVersion
 	"Private - Answer the current PAX format version number.
 	0 - Original D5.1 format
 	1 - D6.0 format with implicit literal (i.e. not embedded binary) resources
-	2 - Early D7.2 format, using BindingReferences
-	2.1 - D7.2 format with fully qualified names"
+	2 - Early D8 format, using BindingReferences
+	2.1 - D8 format with fully qualified names"
 
 	^2.1!
 

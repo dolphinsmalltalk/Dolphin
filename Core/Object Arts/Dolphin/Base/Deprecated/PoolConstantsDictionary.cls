@@ -7,9 +7,9 @@ Kernel.PoolDictionary variableSubclass: #PoolConstantsDictionary
 	classInstanceVariableNames: ''
 	classConstants: {}!
 PoolConstantsDictionary guid: (Core.GUID fromString: '{87b4c52e-026e-11d3-9fd7-00a0cc3e4a32}')!
-PoolConstantsDictionary comment: 'Prior to Dolphin 7.2, `PoolConstantDictionary` instances were used as shared constants pools, the canonical example being `Win32Constants`.  From Dolphin 7.2 constants pools are namespaces specialised to hold immutable bindings, and are created as subclasses of `SharedPool`. 
+PoolConstantsDictionary comment: 'Prior to Dolphin 8, `PoolConstantDictionary` instances were used as shared constants pools, the canonical example being `Win32Constants`.  From Dolphin 8 constants pools are `Namespace` classes specialised to hold immutable bindings, and are created as subclasses of `SharedPool`. 
 
-`PoolConstantDictionary` definitions stored in older packages will be automatically converted to `SharedPool` subclasses at package load time, so this class is only required for loading such packages. It should have no instances at other times.'!
+`PoolConstantDictionary` definitions stored in older packages will be automatically converted to `SharedPool` subclasses at package load time, so this class is only required for loading such packages, and also resaving in the legacy format. It is not expected to have instances at other times.'!
 !PoolConstantsDictionary categoriesForClass!Deprecated! !
 !PoolConstantsDictionary methodsFor!
 
@@ -20,8 +20,53 @@ add: anAssociation
 	self at: anAssociation key put: anAssociation value.
 	^anAssociation!
 
+canFileOut
+	"Answer true if the receiver can be filed out. At this stage we just check to ensure that
+	the file out file is writeable"
+
+	^File isWriteable: self  fileOutName!
+
 classesReferencing
 	^Smalltalk allClasses select: [:c | c allSharedPools includes: self]!
+
+fileOut
+	"File out the receiver to <name>.st"
+
+	self class sourceManager fileOut: self.
+	self isChanged: false!
+
+fileOutName
+	"Answer the receiver's default file name for file outs (<name>.st)."
+
+	| path package |
+	path := File composeStem: self name extension: 'st'.
+	package := Package manager packageOfVariableNamed: self name asQualifiedReference.
+	package notNil ifTrue: [path := File replacePath: path with: package path].
+	^path!
+
+fileOutOn: aSourceFiler
+	aSourceFiler fileOutPoolDictionary: self!
+
+isChanged
+	"Answer true if the receiver or any of it's contents have been changed since
+	their changed flag was last reset."
+
+	^self propertyAt: #isChanged ifAbsent: [false]!
+
+isChanged: aBoolean
+	"Flag the receiver as changed or not changed, according to the value 
+	of the <Boolean> argument. If the receiver is marked as changed, then
+	its owning package (if any) is also so marked."
+
+	"Note that we don't test the existing value of the change flag here, because
+	 we want to inform the package regardless (in case it isn't currently changed
+	 for some reason)"
+	aBoolean 
+		ifTrue: [ | package |
+			self propertyAt: #isChanged put: true.
+			(package := self owningPackage) notNil ifTrue: [
+				package isChanged: true]]
+		ifFalse: [self removePropertyAt: #isChanged ifAbsent: []]!
 
 isValidKey: aString
 	^SharedPool isValidKey: aString!
@@ -45,20 +90,40 @@ newAssociation: keyObject value: valueObject
 		isImmutable: true;
 		yourself!
 
+owningPackage
+	"Answers the package that owns the receiver or nil if it is not yet owned by any package"
+
+	| n |
+	n := self name.
+	^n = 'Anon' ifFalse: [Package manager packageOfVariableNamed: n asQualifiedReference]!
+
 preResize: newMe 
 	"Private - This message is sent by the receiver when resizing, before the
 	receiver's elements are added to newMe. We must assign across the
 	search policy."
 
-	name isNil ifFalse: [newMe name: name]! !
+	name isNil ifFalse: [newMe name: name]!
+
+sourceFilerClass
+	^LegacyChunkSourceFiler! !
 !PoolConstantsDictionary categoriesFor: #add:!adding!public! !
+!PoolConstantsDictionary categoriesFor: #canFileOut!public!source filing! !
 !PoolConstantsDictionary categoriesFor: #classesReferencing!development!private! !
+!PoolConstantsDictionary categoriesFor: #fileOut!public!source filing! !
+!PoolConstantsDictionary categoriesFor: #fileOutName!public!source filing! !
+!PoolConstantsDictionary categoriesFor: #fileOutOn:!public!source filing! !
+!PoolConstantsDictionary categoriesFor: #isChanged!public!source filing! !
+!PoolConstantsDictionary categoriesFor: #isChanged:!public!source filing! !
 !PoolConstantsDictionary categoriesFor: #isValidKey:!adding!development!private! !
 !PoolConstantsDictionary categoriesFor: #keyString:!adding!development!private! !
 !PoolConstantsDictionary categoriesFor: #name!accessing!public! !
 !PoolConstantsDictionary categoriesFor: #name:!accessing!private! !
 !PoolConstantsDictionary categoriesFor: #newAssociation:value:!helpers!private! !
+!PoolConstantsDictionary categoriesFor: #owningPackage!public!source filing! !
 !PoolConstantsDictionary categoriesFor: #preResize:!adding!private! !
+!PoolConstantsDictionary categoriesFor: #sourceFilerClass!public!source filing! !
+
+PoolConstantsDictionary methodProtocol: #sourceObject attributes: #(#readOnly) selectors: #(#canFileOut #fileOut #fileOutName #isChanged #isChanged: #owningPackage #sourceFilerClass)!
 
 !PoolConstantsDictionary class methodsFor!
 

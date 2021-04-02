@@ -144,7 +144,7 @@ filterMethods: aMonadicValuable
 	"Answer a <BrowserEnvironment> scoped to contain only those methods within the receiver for which the <monadicValuable> argument evaluates to true.
 	The resulting BrowserEnvironment is not a static list, but will always include whichever methods pass the filter at the particular point in time that the enquiry is made."
 
-	^(Refactory.Browser.PluggableEnvironment onEnvironment: self select: aMonadicValuable)
+	^(PluggableEnvironment onEnvironment: self select: aMonadicValuable)
 		label: 'Some methods from ' , self label;
 		yourself!
 

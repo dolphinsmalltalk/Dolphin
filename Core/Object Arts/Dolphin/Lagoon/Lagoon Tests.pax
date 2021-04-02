@@ -12,6 +12,7 @@ package setClassNames: #(
 ).
 
 package setMethodNames: #(
+	#(#{Refactory.Browser.BrowserEnvironment} #forPackagesDeployment:)
 	#(#{Smalltalk.ImageStripper class} #newForTests)
 ).
 
@@ -54,6 +55,43 @@ Core.Tests.DolphinTest subclass: #'Tools.Tests.PackageClosureTests'
 	classConstants: {}!
 
 "Loose Methods"!
+
+!Refactory.Browser.BrowserEnvironment methodsFor!
+
+forPackagesDeployment: aCollectionOfPackages
+	| deployed names devMethods removedClasses |
+	"The in-scope world is drawn from the slice of the classes & methods that are in the requested packages and their pre-reqs"
+	deployed := self forPackagesClosure: aCollectionOfPackages.
+	"Classes categorised as 'Development' are excluded"
+	deployed := deployed & (self forCategories: #('Development' 'System-Compiler')) not.
+	"Assume configured to remove ClassBuilder and Compiler"
+	removedClasses := Set new.
+	{ClassBuilder. MethodProtocol. Category} do: 
+			[:each |
+			removedClasses
+				addAll: each withAllSubclasses;
+				addAll: each class withAllSubclasses].
+	deployed := deployed & (self forClasses: removedClasses) not.
+	"Finally, certain categories of method and specific methods are forcibly removed, or we assume (for the purposes of the test) that these will be removed as unused"
+	devMethods := self
+				forMethodCategories: Smalltalk.ImageStripper developmentMethodCategoryNames
+						, Smalltalk.ImageStripper classBuildingMethodCategoryNames
+							, Smalltalk.ImageStripper classRemovingMethodCategoryNames
+							, #('class initialization' 'template definition' 'source filing' 'source filing-methods' 'compiling' 'categories-accessing' 'categories-removing' 'categories-adding' 'categories-testing' 'source filing-class definition').
+	devMethods := devMethods
+				| (self selectMethods: [:each | each selector == #initialize and: [each methodClass isMeta]])
+					& (self forMethodCategories: #('must not strip')) not.
+	"We can speed things up a bit by taking a snapshot of the devMethods environment."
+	devMethods := self forMethodsIn: devMethods.
+	"Custom handling for class initialize methods"
+	deployed := deployed & devMethods not.
+	"As before, reify the environment to speed things up as we will enumerate it more than once."
+	deployed := self forMethodsIn: deployed.
+	names := (aCollectionOfPackages collect: [:each | each name]) asArray sort.
+	deployed
+		label: 'App deployed from ' , (names size = 1 ifTrue: [names first] ifFalse: [names]) printString.
+	^deployed! !
+!Refactory.Browser.BrowserEnvironment categoriesFor: #forPackagesDeployment:!helpers!public! !
 
 !ImageStripper class methodsFor!
 

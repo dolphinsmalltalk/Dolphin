@@ -14,13 +14,20 @@ package basicScriptAt: #postuninstall put: 'Package binaryPacLoader: nil'.
 
 package setClassNames: #(
 	#{Kernel.Bytecode}
+	#{Kernel.LegacyChunkSourceFiler}
 	#{Smalltalk.MethodContext}
 	#{Smalltalk.PoolConstantsDictionary}
 ).
 
 package setMethodNames: #(
+	#(#{Core.Class} #sharedPoolNames)
+	#(#{Core.Class} #subclass:instanceVariableNames:classVariableNames:poolDictionaries:)
 	#(#{Core.Class} #subclass:instanceVariableNames:classVariableNames:poolDictionaries:classInstanceVariableNames:)
+	#(#{Core.Class} #variableByteSubclass:instanceVariableNames:classVariableNames:poolDictionaries:)
+	#(#{Core.Class} #variableSubclass:instanceVariableNames:classVariableNames:poolDictionaries:)
 	#(#{Core.Class} #variableSubclass:instanceVariableNames:classVariableNames:poolDictionaries:classInstanceVariableNames:)
+	#(#{Core.ClassDescription} #sharedVariableString)
+	#(#{Core.UndefinedObject} #subclass:instanceVariableNames:classVariableNames:poolDictionaries:)
 	#(#{Core.UndefinedObject} #subclass:instanceVariableNames:classVariableNames:poolDictionaries:classInstanceVariableNames:)
 	#(#{Kernel.Package} #allResourceNames:)
 	#(#{Kernel.Package} #basicLoadVersion4:filer:)
@@ -44,6 +51,7 @@ package setMethodNames: #(
 
 package setPrerequisites: #(
 	'..\Dolphin'
+	'..\Dolphin Source Fileout'
 ).
 
 package!
@@ -68,10 +76,29 @@ Kernel.PoolDictionary variableSubclass: #PoolConstantsDictionary
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+Kernel.AbstractChunkSourceFiler subclass: #'Kernel.LegacyChunkSourceFiler'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
 
 "Loose Methods"!
 
 !Core.Class methodsFor!
+
+sharedPoolNames
+	^imports collect: [:each | (Smalltalk oldNames lookup: each value) ifNil: [each unqualifiedName]]!
+
+subclass: aClassSymbol instanceVariableNames: instVarString classVariableNames: classVarString poolDictionaries: poolDictString
+	"For loading pre-8.0 packages"
+
+	#deprecated.
+	^self
+		subclass: aClassSymbol
+		instanceVariableNames: instVarString
+		classVariableNames: classVarString
+		imports: (self importsFromPoolsString: poolDictString)!
 
 subclass: aClassSymbol instanceVariableNames: instVarString classVariableNames: classVarString poolDictionaries: poolDictString classInstanceVariableNames: classInstVarString
 	"For loading pre-7.2 packages."
@@ -86,8 +113,30 @@ subclass: aClassSymbol instanceVariableNames: instVarString classVariableNames: 
 	subclass class instanceVariableNames: classInstVarString.
 	^subclass!
 
+variableByteSubclass: aClassSymbol instanceVariableNames: instVarString classVariableNames: classVarString poolDictionaries: poolDictString
+	"For loading pre-8.0 packages"
+
+	#deprecated.
+	^self
+		variableByteSubclass: 'Smalltalk.' , aClassSymbol
+		instanceVariableNames: instVarString
+		classVariableNames: classVarString
+		imports: (self importsFromPoolsString: poolDictString)!
+
+variableSubclass: aClassSymbol instanceVariableNames: instVarString classVariableNames: classVarString poolDictionaries: poolDictString
+	"For loading pre-8.0 packages"
+
+	#deprecated.
+	^(self
+		newClassBuilder: 'Smalltalk.' , aClassSymbol
+		instanceVariableNames: instVarString
+		classVariableNames: classVarString
+		imports: (self importsFromPoolsString: poolDictString))
+		beVariable;
+		modifyOrCreate!
+
 variableSubclass: aClassSymbol instanceVariableNames: instVarString classVariableNames: classVarString poolDictionaries: poolDictString classInstanceVariableNames: classInstVarString
-	"For loading pre-7.2 packages"
+	"For loading pre-8.0 packages"
 
 	| subclass |
 	#deprecated.
@@ -98,13 +147,37 @@ variableSubclass: aClassSymbol instanceVariableNames: instVarString classVariabl
 				imports: (self importsFromPoolsString: poolDictString).
 	subclass class instanceVariableNames: classInstVarString.
 	^subclass! !
+!Core.Class categoriesFor: #sharedPoolNames!pool variables!public! !
+!Core.Class categoriesFor: #subclass:instanceVariableNames:classVariableNames:poolDictionaries:!class hierarchy-adding!public! !
 !Core.Class categoriesFor: #subclass:instanceVariableNames:classVariableNames:poolDictionaries:classInstanceVariableNames:!class hierarchy-adding!public! !
+!Core.Class categoriesFor: #variableByteSubclass:instanceVariableNames:classVariableNames:poolDictionaries:!class hierarchy-adding!public! !
+!Core.Class categoriesFor: #variableSubclass:instanceVariableNames:classVariableNames:poolDictionaries:!class hierarchy-adding!public! !
 !Core.Class categoriesFor: #variableSubclass:instanceVariableNames:classVariableNames:poolDictionaries:classInstanceVariableNames:!class hierarchy-adding!public! !
+
+!Core.ClassDescription methodsFor!
+
+sharedVariableString
+	| aStream |
+	aStream := String smalltalkWriteStream: 32.
+	self sharedPoolNames asSortedCollection do: [:s | aStream nextPutAll: s]
+		separatedBy: [aStream space].
+	^aStream contents! !
+!Core.ClassDescription categoriesFor: #sharedVariableString!accessing!public! !
 
 !Core.UndefinedObject methodsFor!
 
+subclass: aClassSymbol instanceVariableNames: instVarString classVariableNames: classVarString poolDictionaries: poolDictString
+	"For loading pre-8.0 packages"
+
+	#deprecated.
+	^self
+		subclass: 'Smalltalk.', aClassSymbol
+		instanceVariableNames: instVarString
+		classVariableNames: classVarString
+		imports: (self importsFromPoolsString: poolDictString)!
+
 subclass: aClassSymbol instanceVariableNames: instVarString classVariableNames: classVarString poolDictionaries: poolDictString classInstanceVariableNames: classInstVarString
-	"For loading pre-7.2 packages"
+	"For loading pre-8.0 packages"
 
 	| subclass |
 	#deprecated.
@@ -115,6 +188,7 @@ subclass: aClassSymbol instanceVariableNames: instVarString classVariableNames: 
 				poolDictionaries: poolDictString.
 	subclass class instanceVariableNames: classInstVarString.
 	^subclass! !
+!Core.UndefinedObject categoriesFor: #subclass:instanceVariableNames:classVariableNames:poolDictionaries:!class hierarchy-adding!public! !
 !Core.UndefinedObject categoriesFor: #subclass:instanceVariableNames:classVariableNames:poolDictionaries:classInstanceVariableNames:!class hierarchy-adding!public! !
 
 !Kernel.Package methodsFor!
@@ -152,7 +226,7 @@ fileInClassDefinitions: aFileStream
 
 	| filer |
 	aFileStream beText.
-	filer := ChunkSourceFiler on: aFileStream.
+	filer := self sourceFilerClass on: aFileStream.
 	
 	[filer atEnd ifTrue: [^self errorFileCorrupt].
 	(Compiler evaluate: filer nextChunk logged: true) = 'end-class-definition']
@@ -169,7 +243,7 @@ loadGlobalsFromFiler: binaryFiler
 	variableNames size timesRepeat: [binaryFiler next]!
 
 loadLegacyPAC: aReadStream
-	"Private - Load the package the receiver represents from the Dolphin 3.x format 
+	"Private - Load the package the receiver represents from the Dolphin 2.1/3.x format 
 	(mixed STB binary and source text) on the <readableStream> argument, aReadStream."
 
 	| binaryFiler version selector |
@@ -180,6 +254,7 @@ loadLegacyPAC: aReadStream
 	binaryFiler next.
 	version := binaryFiler next.
 	selector := self versionLookup at: version ifAbsent: [^self errorUnknownFileVersion: version].
+	self paxVersion: 1.
 	self fileInScript: #preinstall.
 	self
 		perform: selector

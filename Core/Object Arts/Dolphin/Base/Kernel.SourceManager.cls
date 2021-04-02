@@ -310,7 +310,7 @@ openSourcesFile: filePath
 	| stream |
 	stream := FileStream read: (self sourcesFileNameFromPath: filePath).
 	SourceFiles at: SourcesIndex
-		put: ((self sourceFilerOn: stream)
+		put: ((self sourceFilerClass on: stream)
 				sourceFileIndex: SourcesIndex;
 				yourself)!
 
@@ -330,15 +330,9 @@ sourceFileFromDescriptor: sourceDescriptor
 	^SourceFiles lookup: (self sourceIndexFromDescriptor: sourceDescriptor)!
 
 sourceFilerClass
-	"Answer the class of <SourceFiler> used by the receiver to write source files."
+	"Answer the default class of <SourceFiler> used by the receiver to write source files."
 
 	^ChunkSourceFiler!
-
-sourceFilerOn: aStream
-	"Answer a <SourceFiler> on the <puttableStream>, aWriteStream."
-
-	aStream locale: SmalltalkLocale.Hex.
-	^self sourceFilerClass on: aStream!
 
 sourceIndexFromDescriptor: sourceObject 
 	"Private - Answer an index into the SourceFiles array which specifies where the source of the 
@@ -470,7 +464,6 @@ truncateChanges
 !Kernel.SourceManager categoriesFor: #packageManager!accessing!must strip!private! !
 !Kernel.SourceManager categoriesFor: #sourceFileFromDescriptor:!private!source filing! !
 !Kernel.SourceManager categoriesFor: #sourceFilerClass!constants!public! !
-!Kernel.SourceManager categoriesFor: #sourceFilerOn:!helpers!public! !
 !Kernel.SourceManager categoriesFor: #sourceIndexFromDescriptor:!private!source filing! !
 !Kernel.SourceManager categoriesFor: #sourcesExtension!constants!private! !
 !Kernel.SourceManager categoriesFor: #sourcesFileName!accessing!public! !

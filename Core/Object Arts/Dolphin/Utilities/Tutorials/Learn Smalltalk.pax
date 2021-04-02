@@ -44,7 +44,7 @@ Tools.TutorialPlayer subclass: #'Tools.ProfStef'
 learnSmalltalk
 	"Open the Learn Smalltalk tutorial"
 
-	Tools.ProfStef show! !
+	ProfStef show! !
 !Tools.SmalltalkSystem categoriesFor: #learnSmalltalk!commands!operations!public! !
 
 "End of package definition"!

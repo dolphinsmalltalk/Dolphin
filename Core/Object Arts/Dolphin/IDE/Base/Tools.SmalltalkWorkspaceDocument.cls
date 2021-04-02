@@ -3,7 +3,7 @@
 UI.AbstractDocumentShell subclass: #'Tools.SmalltalkWorkspaceDocument'
 	instanceVariableNames: 'workspacePresenter searchPresenter'
 	classVariableNames: 'CanUseIdeaSpace DefaultExtent DefaultView LanguageExtensions ReuseIfOpen VariableTips'
-	imports: #()
+	imports: #(#{Refactory.Browser private})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Tools.SmalltalkWorkspaceDocument guid: (Core.GUID fromString: '{87b4c6ba-026e-11d3-9fd7-00a0cc3e4a32}')!
@@ -292,7 +292,7 @@ searchForSymbol: aSymbol
 	self
 		routeCommand: (CommandDescription command: (Message selector: #browseMethodsInEnvironments:
 						argument: (self systemModel messagesMatching: (MethodSearch newSelector: aSymbol)
-								in: Refactory.Browser.BrowserEnvironment new)))!
+								in: BrowserEnvironment new)))!
 
 searchSmalltalk
 	| searchView |

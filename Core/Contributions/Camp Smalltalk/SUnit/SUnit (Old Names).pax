@@ -1,5 +1,5 @@
 ﻿| package |
-package := Package name: 'SUnitLegacy'.
+package := Package name: 'SUnit (Old Names)'.
 package paxVersion: 2.1;
 	basicComment: ''.
 

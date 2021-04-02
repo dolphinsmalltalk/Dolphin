@@ -14,7 +14,7 @@ Tools.TutorialPlayer comment: 'I can navigate through an AbstractTutorial subcla
 createComponents
 	super createComponents.
 	title := self add: TextPresenter new name: 'title'.
-	workspace := self add: Tools.SmalltalkWorkspace new name: 'workspace'!
+	workspace := self add: SmalltalkWorkspace new name: 'workspace'!
 
 currentLesson
 	^ self tutorial lessonAt: self tutorialPosition.
@@ -142,10 +142,10 @@ updateLesson
 !Tools.TutorialPlayer class methodsFor!
 
 defaultModel
-	^Tools.AbstractTutorial new!
+	^AbstractTutorial new!
 
 icon
-	^Tools.AbstractTutorial icon!
+	^AbstractTutorial icon!
 
 resource_Default_view
 	"Answer the literal data from which the 'Default view' resource can be reconstituted.

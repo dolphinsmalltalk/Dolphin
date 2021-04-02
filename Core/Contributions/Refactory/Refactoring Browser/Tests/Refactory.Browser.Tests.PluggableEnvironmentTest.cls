@@ -13,7 +13,7 @@ Refactory.Browser.Tests.PluggableEnvironmentTest comment: ''!
 
 testReferencesTo
 	| printString env |
-	env := Refactory.Browser.BrowserEnvironment new forClasses: (OrderedCollection new
+	env := BrowserEnvironment new forClasses: (OrderedCollection new
 						add: Error;
 						add: Error class;
 						add: Object;

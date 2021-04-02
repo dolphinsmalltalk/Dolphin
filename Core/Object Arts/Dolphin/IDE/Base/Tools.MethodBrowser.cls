@@ -3,7 +3,7 @@
 UI.ListPresenter subclass: #'Tools.MethodBrowser'
 	instanceVariableNames: 'methodsPresenter sourcePresenter filter searchEnvironment refactoringTool versionModel'
 	classVariableNames: 'AdditionalAccelerators AutoFormat InfoTips WordWrap'
-	imports: #(#{Kernel.CompilerFlags})
+	imports: #(#{Kernel.CompilerFlags} #{Refactory.Browser private})
 	classInstanceVariableNames: 'commandQueryHandlers'
 	classConstants: {}!
 Tools.MethodBrowser guid: (Core.GUID fromString: '{87b4c68d-026e-11d3-9fd7-00a0cc3e4a32}')!
@@ -190,7 +190,7 @@ browseMethodClasses
 			classes := (selections collect: [:each | each methodClass]) asSet.
 			classes size = 1
 				ifTrue: [classes anyOne browse]
-				ifFalse: [(Refactory.Browser.BrowserEnvironment new forClasses: classes) openEditor]]!
+				ifFalse: [(BrowserEnvironment new forClasses: classes) openEditor]]!
 
 browseMethodInheritanceChain
 	"Open a method browser displaying the definitions of the 

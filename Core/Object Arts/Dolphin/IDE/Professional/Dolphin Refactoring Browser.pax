@@ -1083,7 +1083,7 @@ icon
 
 newWithCachingContext
 	^self new
-		context: Refactory.Browser.SmalllintCachingContext new;
+		context: SmalllintCachingContext new;
 		yourself! !
 !Refactory.Browser.SmalllintChecker class categoriesFor: #newWithCachingContext!instance creation!public! !
 
@@ -1221,8 +1221,7 @@ displayPrefix
 abstractInstanceVariables
 	"Private - Invoke the 'Abstract Instance Variable' refactoring on the currently selected variables."
 
-	self model abstractInstanceVariables: self variables
-		within: Refactory.Browser.BrowserEnvironment new!
+	self model abstractInstanceVariables: self variables within: BrowserEnvironment new!
 
 methodRefactoringTool
 	^methodBrowserPresenter refactoringTool!
@@ -1248,7 +1247,7 @@ overrideMethods
 	| stream class changes name methods |
 	class := self actualClass.
 	stream := String writeStream.
-	changes := Refactory.Browser.CompositeRefactoryChange new.
+	changes := CompositeRefactoryChange new.
 	methods := self methodsToOverride.
 	(methods isNil or: [methods isEmpty]) ifTrue: [^self].
 	methods do: 
@@ -1389,9 +1388,7 @@ abstractClassVariables
 	choose only one instance variable at a time."
 
 	(self chooseVariables: true caption: 'Abstract Class Variables...')
-		ifNotNil: 
-			[:varNames |
-			self systemModel abstractClassVariables: varNames within: Refactory.Browser.BrowserEnvironment new]!
+		ifNotNil: [:varNames | self systemModel abstractClassVariables: varNames within: BrowserEnvironment new]!
 
 abstractInstanceVariables
 	"Invoke the 'Abstract Instance Variable' refactoring on the users choice of instance variables.
@@ -1400,10 +1397,7 @@ abstractInstanceVariables
 	choose only one instance variable at a time."
 
 	(self chooseVariables: false caption: 'Abstract Instance Variables...')
-		ifNotNil: 
-			[:varNames |
-			self systemModel abstractInstanceVariables: varNames
-				within: Refactory.Browser.BrowserEnvironment new]!
+		ifNotNil: [:varNames | self systemModel abstractInstanceVariables: varNames within: BrowserEnvironment new]!
 
 addClassVariable
 	"Private - Invoke the 'Add Class Variable' refactoring to add a class variable to the
@@ -1460,13 +1454,13 @@ buildVariablesMenu: aMenu instVarSelectors: instVarSelectors classVarSelectors: 
 
 cloneClass: aClass under: superClass changes: aCompositeRefactoryChange
 	| namespace newName |
-	namespace := Refactory.Browser.RBNamespace new
+	namespace := RBNamespace new
 				changes: aCompositeRefactoryChange;
 				yourself.
 	
 	[newName := ('CopyOf' , aClass name) asSymbol.
 	newName asQualifiedReference isDefined] whileTrue.
-	(Refactory.Browser.CopyClassRefactoring
+	(CopyClassRefactoring
 		model: namespace
 		clone: aClass
 		as: newName
@@ -1933,7 +1927,7 @@ renameVariable: aStVariableNode operation: operationBlock validationBlock: valid
 			"If the name is unchanged, treat as valid and ignore later"
 			candidateName = name or: 
 					[| err |
-					[validationBlock value: candidateName] on: Refactory.Browser.RefactoringError
+					[validationBlock value: candidateName] on: RefactoringError
 						do: 
 							[:ex |
 							self errorModel value: ex.
@@ -2020,7 +2014,7 @@ performMethodsRefactoring: aMonadicValuable name: aString
 
 promptForMethodName: aCompiledMethod caption: aString allowExisting: aBoolean
 	| methodName |
-	methodName := Refactory.Browser.RBScopedMethodName fromMethod: aCompiledMethod.
+	methodName := RBScopedMethodName fromMethod: aCompiledMethod.
 	methodName packages: self packages.
 	^self systemModel
 		promptForMethodName: methodName

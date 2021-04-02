@@ -29,7 +29,7 @@ package setClassNames: #(
 package setPrerequisites: #(
 	'..\COM Examples'
 	'..\..\..\Dolphin\Base\Dolphin'
-	'..\..\..\Dolphin\MVP\Deprecated\Dolphin MVP (Old Names)'
+	'..\..\..\Dolphin\MVP\Base\Dolphin Basic Geometry'
 	'..\..\..\Dolphin\ActiveX\COM\OLE COM'
 ).
 

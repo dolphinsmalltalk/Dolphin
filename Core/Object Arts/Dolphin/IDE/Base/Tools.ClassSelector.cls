@@ -3,7 +3,7 @@
 UI.SelectableItemsPresenter subclass: #'Tools.ClassSelector'
 	instanceVariableNames: 'flags classesPresenter searchEnvironment'
 	classVariableNames: ''
-	imports: #()
+	imports: #(#{Refactory.Browser private} #{XProgramming.SUnit private})
 	classInstanceVariableNames: 'commandQueryHandlers'
 	classConstants: {
 		'ClassModeMask' -> 16r1.
@@ -141,7 +141,7 @@ browseReferences
 browserEnvironment
 	"Answer the <BrowserEnvironment> from which the receiver is displaying a list of classes."
 
-	^Refactory.Browser.BrowserEnvironment new!
+	^BrowserEnvironment new!
 
 browseSystem
 	"Open a new system browser on at the same point as the receiver."
@@ -329,7 +329,7 @@ dropClass: aSourceClass onto: aTargetClass changes: aCompositeRefactoryChange
 							not]])
 		ifTrue: [^self].
 	aCompositeRefactoryChange
-		addChange: (Refactory.Browser.DolphinMoveClassChange move: aSourceClass toSuperclass: aTargetClass)!
+		addChange: (DolphinMoveClassChange move: aSourceClass toSuperclass: aTargetClass)!
 
 dropMethod: aCompiledMethod onto: aClass changes: aCompositeRefactoryChange
 	"Don't copy the method over itself, or over an existing method in the class only at user behest. Answer whether the method
@@ -381,7 +381,7 @@ initialize
 
 	super initialize.
 	flags := 0.
-	searchEnvironment := Refactory.Browser.BrowserEnvironment new!
+	searchEnvironment := BrowserEnvironment new!
 
 inspectIt
 	"Open an inspector on the currently selected class."
@@ -536,7 +536,7 @@ onDropOver: aDragDropSession
 			[Sound errorBeep.
 			aDragDropSession operation: nil.
 			^self].
-	changes := Refactory.Browser.CompositeRefactoryChange named: aDragDropSession operation asPhrase.
+	changes := CompositeRefactoryChange named: aDragDropSession operation asPhrase.
 	isMove := aDragDropSession isMove.
 	aDragDropSession dragObjects do: 
 			[:each |
@@ -732,10 +732,8 @@ queryCommand: aCommandQuery
 			[aCommandQuery
 				isEnabled: (self testBrowserClass notNil and: 
 							[class notNil and: 
-									["This odd way of testing if the selected class is a kind of TestCase is 
-									used to avoid creating a dependency on the SUnit package, so it can 
-								be uninstalled if desired."
-									class allSuperclasses anySatisfy: [:each | each name == #'XProgramming.SUnit.TestCase']]]).
+									["Test if the selected class is a kind of TestCase without taking a dependency on the SUnit package, so it can be uninstalled if desired."
+									class inheritsFrom: #{TestCase} value]]).
 			^true].
 	#toggleShowFullNames == selector
 		ifTrue: 

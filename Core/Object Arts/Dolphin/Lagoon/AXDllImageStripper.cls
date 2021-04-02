@@ -112,7 +112,7 @@ publishedAspectsOfInstances
 	a pre-req. of the ADK due to the references to development classes herein."
 
 	^super publishedAspectsOfInstances
-		add: (Tools.Aspect fileSave: #typeLibPath);
+		add: (Aspect fileSave: #typeLibPath);
 		yourself! !
 !AXDllImageStripper class categoriesFor: #defaultOptions!constants!development!private! !
 !AXDllImageStripper class categoriesFor: #publishedAspectsOfInstances!constants!development!must strip!public! !

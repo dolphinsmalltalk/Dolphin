@@ -12,7 +12,7 @@ Refactory.Browser.RenameInstanceVariableAndAccessorsRefactoring comment: ''!
 !Refactory.Browser.RenameInstanceVariableAndAccessorsRefactoring methodsFor!
 
 initializeAccessorsRefactoring
-	accessorsRefactoring := Refactory.Browser.RenameAccessorsForVariableRefactoring
+	accessorsRefactoring := RenameAccessorsForVariableRefactoring
 				model: self model
 				variable: variableName
 				class: class

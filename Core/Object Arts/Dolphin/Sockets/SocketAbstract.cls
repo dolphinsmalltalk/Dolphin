@@ -6,7 +6,7 @@ Object subclass: #SocketAbstract
 	poolDictionaries: 'WinSocketConstants'
 	classInstanceVariableNames: ''!
 SocketAbstract guid: (GUID fromString: '{87b4c4bb-026e-11d3-9fd7-00a0cc3e4a32}')!
-SocketAbstract isAbstract: true!
+SocketAbstract isNonInstantiable: true!
 SocketAbstract comment: '** This class is part of the old asynchronous Sockets Connection package which has been superseded by the Dolphin Sockets package **
 
 This class is the abstract superclass of all sockets classes for TCP/IP network communication.'!

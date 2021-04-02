@@ -45,10 +45,15 @@ contents
 		add: #('Core\Object Arts\Dolphin\ActiveX\OCX\ActiveX Control Hosting.pax' #plain #imageBased);
 		yourself.
 
+	"The advanced find dialog - depends on the VBScript RegExp package"
+	contents
+		add: #('Core\Object Arts\Dolphin\ActiveX\Deprecated\ActiveX (Old Names).pax' #plain #imageBased);
+		add: #('Core\Object Arts\Dolphin\ActiveX\Components\VBScript\VBScript Regular Expressions.pax' #plain #imageBased);
+		add: #('Core\Object Arts\Dolphin\MVP\Dialogs\Find\Dolphin Find Dialog.pax' #plain #imageBased);
+		yourself.
+
 	"GDI+"
 	contents
-		add: #('Core\Object Arts\Dolphin\MVP\Gdiplus\Gdiplus.pax' #plain #imageBased);
-		add: #('Core\Object Arts\Dolphin\MVP\Gdiplus\Gdiplus (Old Names).pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\MVP\Gdiplus\Gdiplus ImageView.pax' #plain #imageBased);
 		yourself.
 
@@ -90,9 +95,9 @@ contents
 	contents
 		add: #('Core\Object Arts\Dolphin\MVP\Presenters\Prompters\Dolphin Integer Prompter.pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\Sockets\Dolphin Sockets.pax' #plain #imageBased);
+		add: #('Core\Object Arts\Dolphin\Sockets\Dolphin Sockets (Old Names).pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\Sockets\Sockets Connection.pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\Sockets\WinInet.pax' #plain #imageBased);
-		add: #('Core\Object Arts\Dolphin\Sockets\Dolphin Sockets (Old Names).pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\ActiveX\Components\ADO\ADODB.pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\ActiveX\Components\ADO\ADODB (Old Names).pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\ActiveX\Components\CDO\CDO.pax' #plain #imageBased);
@@ -113,8 +118,7 @@ contents
 		add: #('Core\Object Arts\Dolphin\ActiveX\Components\XML DOM\XML DOM Visitor.pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\ActiveX\Components\XML DOM\XML Formatter.pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\ActiveX\Components\XML DOM\XML DOM (Old Names).pax' #plain #imageBased);
-		add: #('Core\Object Arts\Dolphin\ActiveX\Components\Scripting\ActiveX Scripting.pax' #plain #imageBased);
-		add: #('Core\Object Arts\Dolphin\ActiveX\Components\VBScript\VBScript Regular Expressions.pax' #plain #imageBased).
+		add: #('Core\Object Arts\Dolphin\ActiveX\Components\Scripting\ActiveX Scripting.pax' #plain #imageBased).
 
 	^contents!
 
