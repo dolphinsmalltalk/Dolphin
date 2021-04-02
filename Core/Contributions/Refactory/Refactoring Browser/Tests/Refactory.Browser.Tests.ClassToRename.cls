@@ -15,9 +15,13 @@ method1
 	^self method2!
 
 method2
-	^self method1! !
+	^self method1!
+
+selfReference
+	^ClassToRename new! !
 !Refactory.Browser.Tests.ClassToRename categoriesFor: #method1!performing!public! !
 !Refactory.Browser.Tests.ClassToRename categoriesFor: #method2!performing!public! !
+!Refactory.Browser.Tests.ClassToRename categoriesFor: #selfReference!performing!public! !
 
 !Refactory.Browser.Tests.ClassToRename class methodsFor!
 

@@ -148,7 +148,7 @@ environmentName
 	self context
 		ifNil: [
 			parts size <= 1
-				ifTrue: [Smalltalk printFullNameOn: stream]
+				ifTrue: [^nil]
 				ifFalse: [first := true]]
 		ifNotNil: [:ctxt | ctxt localScope printFullNameOn: stream].
 	1 to: parts size - 1

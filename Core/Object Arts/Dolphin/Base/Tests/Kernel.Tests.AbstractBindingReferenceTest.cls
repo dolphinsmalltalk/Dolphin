@@ -252,8 +252,7 @@ testPathString
 			[:each |
 			| path |
 			path := each first.
-			pathString := String
-						streamContents: [:strm | path do: [:id | strm nextPutAll: id] separatedBy: [strm nextPut: $.]].
+			pathString := $. join: path.
 			subject := self subjectClass pathString: pathString.
 			self assert: subject path equals: path].
 	subject := self subjectClass pathString: ''.

@@ -94,6 +94,9 @@ replaceTree: searchTree withTree: replaceTree when: aBlock
 				replaceWith: replaceTree
 				when: aBlock)!
 
+replaceTree: searchTree withValueFrom: replaceBlock
+	self addRule: (RBBlockReplaceRule searchForTree: searchTree replaceWith: replaceBlock)!
+
 tree
 	^tree!
 
@@ -112,9 +115,10 @@ visitBlockNode: aBlockNode
 	aBlockNode body: (self visitNode: aBlockNode body)!
 
 visitCascadeNode: aCascadeNode
-	| newMessages notFound |
-	newMessages := OrderedCollection new: aCascadeNode messages size.
-	notFound := OrderedCollection new: aCascadeNode messages size.
+	| newMessages notFound count |
+	count := aCascadeNode messages size.
+	newMessages := OrderedCollection new: count.
+	notFound := OrderedCollection new: count.
 	aCascadeNode messages do: 
 			[:each |
 			| newNode |
@@ -133,7 +137,7 @@ visitCascadeNode: aCascadeNode
 								show: 'Cannot replace message node inside of cascaded node with non-message node.';
 								cr.
 							newMessages add: each]]].
-	notFound size == aCascadeNode messages size
+	notFound size == count
 		ifTrue: 
 			[| receiver |
 			receiver := self visitNode: aCascadeNode messages first receiver.
@@ -189,6 +193,7 @@ visitSequenceNode: aSequenceNode
 !Refactory.Browser.ParseTreeRewriter categoriesFor: #replaceMethod:withValueFrom:when:!public!replacing! !
 !Refactory.Browser.ParseTreeRewriter categoriesFor: #replaceTree:withTree:!public!replacing! !
 !Refactory.Browser.ParseTreeRewriter categoriesFor: #replaceTree:withTree:when:!public!replacing! !
+!Refactory.Browser.ParseTreeRewriter categoriesFor: #replaceTree:withValueFrom:!public!replacing! !
 !Refactory.Browser.ParseTreeRewriter categoriesFor: #tree!accessing!public! !
 !Refactory.Browser.ParseTreeRewriter categoriesFor: #visitArgumentNodes:!public!visiting! !
 !Refactory.Browser.ParseTreeRewriter categoriesFor: #visitArrayNode:!public!visiting! !

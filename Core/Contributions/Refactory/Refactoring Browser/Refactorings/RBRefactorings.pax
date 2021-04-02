@@ -51,6 +51,7 @@ package setClassNames: #(
 	#{Refactory.Browser.RBMethod}
 	#{Refactory.Browser.RBMethodName}
 	#{Refactory.Browser.RBNamespace}
+	#{Refactory.Browser.RBNamespaceClass}
 	#{Refactory.Browser.RBNegationCondition}
 	#{Refactory.Browser.RBReadBeforeWrittenTester}
 	#{Refactory.Browser.Refactoring}
@@ -74,7 +75,9 @@ package setClassNames: #(
 ).
 
 package setMethodNames: #(
+	#(#{Core.Class} #rbClass)
 	#(#{Core.Class class} #rootsOfTheWorld)
+	#(#{Kernel.Namespace class} #rbClass)
 ).
 
 package setPrerequisites: #(
@@ -159,13 +162,19 @@ Kernel.ParseNodeVisitor subclass: #'Refactory.Browser.RBReadBeforeWrittenTester'
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Refactory.Browser.RBAbstractClass subclass: #'Refactory.Browser.RBClass'
-	instanceVariableNames: 'unqualifiedName classVariableNames imports category classConstants comment'
+	instanceVariableNames: 'metaclass unqualifiedName classVariableNames imports category classConstants comment'
 	classVariableNames: 'LookupComment'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Refactory.Browser.RBAbstractClass subclass: #'Refactory.Browser.RBMetaclass'
-	instanceVariableNames: ''
+	instanceVariableNames: 'nonMetaclass'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Refactory.Browser.RBClass subclass: #'Refactory.Browser.RBNamespaceClass'
+	instanceVariableNames: 'removedVariables newVariables'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -455,12 +464,24 @@ Refactory.Browser.VariableRefactoring subclass: #'Refactory.Browser.RenameInstan
 
 "Loose Methods"!
 
+!Core.Class methodsFor!
+
+rbClass
+	^Refactory.Browser.RBClass! !
+!Core.Class categoriesFor: #rbClass!constants!public! !
+
 !Core.Class class methodsFor!
 
 rootsOfTheWorld
 	#rbFix.	"Dolphin uses #allRoots"
 	^Smalltalk allRoots! !
 !Core.Class class categoriesFor: #rootsOfTheWorld!class hierarchy-accessing!private! !
+
+!Kernel.Namespace class methodsFor!
+
+rbClass
+	^Refactory.Browser.RBNamespaceClass! !
+!Kernel.Namespace class categoriesFor: #rbClass!constants!public! !
 
 "End of package definition"!
 

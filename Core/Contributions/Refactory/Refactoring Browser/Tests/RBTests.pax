@@ -70,6 +70,7 @@ package setMethodNames: #(
 	#(#{Kernel.BlockClosure} #isEqualTo:)
 	#(#{Kernel.CompiledCode} #isEqualTo:)
 	#(#{Refactory.Browser.RemoveClassRefactoring class} #correspondingTestCase)
+	#(#{Refactory.Browser.RenameClassRefactoring class} #correspondingTestCase)
 	#(#{Smalltalk class} #isEqualTo:)
 ).
 
@@ -500,6 +501,12 @@ isEqualTo: aMethod
 correspondingTestCase
 	^Refactory.Browser.Tests.RemoveClassTest! !
 !Refactory.Browser.RemoveClassRefactoring class categoriesFor: #correspondingTestCase!public! !
+
+!Refactory.Browser.RenameClassRefactoring class methodsFor!
+
+correspondingTestCase
+	^Tests.RenameClassTest! !
+!Refactory.Browser.RenameClassRefactoring class categoriesFor: #correspondingTestCase!public! !
 
 !Smalltalk class methodsFor!
 

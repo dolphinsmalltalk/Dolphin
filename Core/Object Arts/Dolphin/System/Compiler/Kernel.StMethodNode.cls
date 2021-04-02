@@ -192,8 +192,8 @@ stop
 tag
 	^tag!
 
-tag: anStTagNodeOrNil 
-	tag := anStTagNodeOrNil!
+tag: anStTagNodeOrNil
+	(tag := anStTagNodeOrNil) ifNotNil: [anStTagNodeOrNil parent: self]!
 
 uses: aNode 
 	^body == aNode and: [aNode lastIsReturn]! !

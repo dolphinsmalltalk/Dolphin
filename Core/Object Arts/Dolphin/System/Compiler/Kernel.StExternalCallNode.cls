@@ -26,8 +26,9 @@ acceptVisitor: aProgramNodeVisitor
 argumentTypes
 	^argumentTypes!
 
-argumentTypes: anObject
-	argumentTypes := anObject!
+argumentTypes: aSequenceableCollection
+	argumentTypes := aSequenceableCollection.
+	aSequenceableCollection do: [:each | each parent: self]!
 
 callingConvention
 	^callingConvention!
@@ -66,8 +67,9 @@ primitiveIndex
 returnType
 	^returnType!
 
-returnType: anAssociation 
-	returnType := anAssociation! !
+returnType: aStExternalArgTypeNode
+	returnType := aStExternalArgTypeNode.
+	aStExternalArgTypeNode parent: self! !
 !Kernel.StExternalCallNode categoriesFor: #=!comparing!public! !
 !Kernel.StExternalCallNode categoriesFor: #acceptVisitor:!public!visitor! !
 !Kernel.StExternalCallNode categoriesFor: #argumentTypes!accessing!public! !

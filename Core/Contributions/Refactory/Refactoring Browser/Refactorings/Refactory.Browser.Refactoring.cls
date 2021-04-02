@@ -72,14 +72,14 @@ convertClasses: classSet select: aBlock using: searchReplacer
 						convertMethod: (aClass methodFor: selector)
 						using: searchReplacer]]!
 
-convertMethod: anRBMethod using: searchReplacer
-	"Convert the parse tree for selector using the searchReplacer. If a change is made then compile it into the changeBuilder."
+convertMethod: aRBMethod using: aParseTreeRewriter
+	"Convert the parse tree for the specified method using the specified rewriter. If a change is made then compile it into the changeBuilder."
 
 	| parseTree |
-	parseTree := anRBMethod parseTree.
+	parseTree := aRBMethod parseTree.
 	parseTree isNil ifTrue: [^self].
-	(searchReplacer executeTree: parseTree)
-		ifTrue: [anRBMethod modelClass compileTree: searchReplacer tree]!
+	(aParseTreeRewriter executeTree: parseTree)
+		ifTrue: [aRBMethod modelClass compileTree: aParseTreeRewriter tree]!
 
 copyOptionsFrom: aDictionary 
 	| dict |

@@ -16,9 +16,9 @@ categories
 
 changeString
 	^'<1s> <2s>>><3s>'
-		expandMacrosWith: ((self changeClass includesSelector: self selector)
-				ifTrue: ['Modify']
-				ifFalse: ['Add'])
+		expandMacrosWith: ((self changeClass
+				ifNil: [false]
+				ifNotNil: [:class | class includesSelector: self selector]) ifTrue: ['Modify'] ifFalse: ['Add'])
 		with: self displayClassName
 		with: self selector!
 

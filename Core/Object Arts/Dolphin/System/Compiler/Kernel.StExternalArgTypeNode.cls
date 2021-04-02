@@ -36,7 +36,7 @@ structClass
 	^structClass!
 
 structClass: anStVariableNode
-	structClass := anStVariableNode!
+	(structClass := anStVariableNode) ifNotNil: [anStVariableNode parent: self]!
 
 typeOrdinal
 	^typeOrdinal!

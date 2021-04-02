@@ -72,7 +72,7 @@ renameChangesForClass: aClassName to: newClassName
 	the class name, we need to change the class name to the new 
 	name to perform the compiles."
 
-	self subclassResponsibility! !
+	"No action required for most changes."! !
 !Refactory.Browser.RefactoryChange categoriesFor: #addClassChangeClass!constants!public! !
 !Refactory.Browser.RefactoryChange categoriesFor: #addMethodChangeClass!constants!public! !
 !Refactory.Browser.RefactoryChange categoriesFor: #changeForClass:selector:!accessing!public! !

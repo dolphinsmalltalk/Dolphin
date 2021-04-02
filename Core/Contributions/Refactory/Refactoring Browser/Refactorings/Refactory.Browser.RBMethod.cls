@@ -36,7 +36,10 @@ modelClass: aRBClass
 	class := aRBClass!
 
 parseTree
-	^RBParser parseMethod: self source in: self modelClass realClass onError: [:str :pos | ^nil]!
+	^RBParser
+		parseMethod: self source
+		in: self modelClass
+		onError: [:str :pos | ^nil]!
 
 printOn: aStream
 	aStream

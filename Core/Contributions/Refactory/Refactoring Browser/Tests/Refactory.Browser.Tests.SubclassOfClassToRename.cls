@@ -17,9 +17,6 @@ calls
 calls1
 	^self rewriteRule1: (self rewriteRule1: self calls)!
 
-externalReference: aClassToRename
-	<stdcall: ClassToRename* dummy Refactory.Browser.Tests.ClassToRename>!
-
 externalReference: aClassToRename _: aClassToRename2
 	<stdcall: ClassToRename* dummy Refactory.Browser.Tests.ClassToRename Tests.ClassToRename*>!
 
@@ -48,7 +45,6 @@ symbolReference
 	^#ClassToRename! !
 !Refactory.Browser.Tests.SubclassOfClassToRename categoriesFor: #calls!accessing!public! !
 !Refactory.Browser.Tests.SubclassOfClassToRename categoriesFor: #calls1!accessing!public! !
-!Refactory.Browser.Tests.SubclassOfClassToRename categoriesFor: #externalReference:!performing!public! !
 !Refactory.Browser.Tests.SubclassOfClassToRename categoriesFor: #externalReference:_:!performing!public! !
 !Refactory.Browser.Tests.SubclassOfClassToRename categoriesFor: #fullyQualifiedReference!performing!public! !
 !Refactory.Browser.Tests.SubclassOfClassToRename categoriesFor: #name!accessing!public! !
