@@ -29,11 +29,11 @@ package globalAliases: (Set new
 	yourself).
 
 package setPrerequisites: #(
-	'..\..\..\..\..\..\Dolphin\Core\Object Arts\Dolphin\Base\Dolphin'
-	'..\..\..\..\..\..\Dolphin\Core\Object Arts\Dolphin\MVP\Base\Dolphin Basic Geometry'
-	'..\..\..\..\..\..\Dolphin\Core\Object Arts\Dolphin\MVP\Models\List\Dolphin List Models'
-	'..\..\..\..\..\..\Dolphin\Core\Object Arts\Dolphin\MVP\Base\Dolphin MVP Base'
-	'..\..\..\..\..\..\Dolphin\Core\Object Arts\Samples\MVP\Scribble\Scribble').
+	'..\..\..\..\Core\Object Arts\Dolphin\Base\Dolphin'
+	'..\..\..\..\Core\Object Arts\Dolphin\MVP\Base\Dolphin Basic Geometry'
+	'..\..\..\..\Core\Object Arts\Dolphin\MVP\Models\List\Dolphin List Models'
+	'..\..\..\..\Core\Object Arts\Dolphin\MVP\Base\Dolphin MVP Base'
+	'..\..\..\..\Core\Object Arts\Samples\MVP\Scribble\Scribble').
 
 package!
 
@@ -69,10 +69,10 @@ resource_Scribble_test
 	DO NOT EDIT OR RECATEGORIZE THIS METHOD.
 
 	If you wish to modify this resource evaluate:
-	ViewComposer openOn: (ResourceIdentifier class: self name name: 'Scribble test')
+	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Scribble_test)
 	"
 
-	^#(#'!!STL' 3 788558 10 ##(STBViewProxy)  8 ##(ContainerView)  98 15 0 0 98 2 8 1140850688 131073 416 0 196934 1 ##(RGB)  8454655 0 7 0 0 0 416 788230 ##(BorderLayout)  1 1 0 0 0 0 410 8 ##(ScribbleView)  98 12 0 416 98 2 8 1140850688 1 560 590662 2 ##(ListModel)  202 208 98 0 0 1114638 ##(STBSingletonProxy)  8 ##(SearchPolicy)  8 #identity 498 16908287 0 7 0 0 0 560 983302 ##(MessageSequence)  202 208 98 1 721670 ##(MessageSend)  8 #createAt:extent: 98 2 328198 ##(Point)  41 41 914 681 471 560 983302 ##(WINDOWPLACEMENT)  8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 20 0 0 0 20 0 0 0 104 1 0 0 255 0 0 0] 98 0 914 193 193 0 27 234 256 98 2 560 8 'scribble' 590342 ##(Rectangle)  914 41 41 914 41 41 786 202 208 98 1 850 880 98 2 914 20001 20001 914 761 551 416 962 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 16 39 0 0 16 39 0 0 140 40 0 0 35 40 0 0] 98 2 560 410 432 98 15 0 416 98 2 8 1140850688 131073 1312 0 498 8454655 0 7 0 0 0 1312 530 1 1 0 0 0 0 410 576 98 12 0 1312 98 2 8 1140850688 1 1408 642 202 208 688 0 720 498 16908287 0 7 0 0 0 1408 786 202 208 98 1 850 880 98 2 914 41 41 914 621 421 1408 962 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 20 0 0 0 20 0 0 0 74 1 0 0 230 0 0 0] 98 0 1024 0 27 234 256 98 2 1408 8 'scribble' 1090 914 41 41 914 41 41 786 202 208 98 1 850 880 98 2 914 21 23 914 701 501 1312 962 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 10 0 0 0 11 0 0 0 104 1 0 0 5 1 0 0] 98 1 1408 1024 0 27 1024 0 27 )! !
+	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.ContainerView) 34 15 nil nil 34 2 8 1140850688 131073 416 nil 196934 1 ##(Smalltalk.RGB) 8454655 nil 7 nil nil nil 416 788230 ##(Smalltalk.BorderLayout) 1 1 nil nil nil nil 410 ##(Smalltalk.ScribbleView) 34 12 nil 416 34 2 8 1140850688 1 544 590662 2 ##(Smalltalk.ListModel) 138 144 8 #() nil 1310726 ##(Smalltalk.IdentitySearchPolicy) 482 16908287 nil 7 nil nil nil 544 983302 ##(Smalltalk.MessageSequence) 138 144 34 1 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 328198 ##(Smalltalk.Point) 41 41 834 681 471 544 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 20 0 0 0 20 0 0 0 104 1 0 0 255 0 0 0] 8 #() 834 193 193 nil 27 170 192 34 2 544 8 'scribble' 590342 ##(Smalltalk.Rectangle) 834 41 41 834 41 41 722 138 144 34 1 786 #createAt:extent: 34 2 834 6143 21 834 761 551 416 882 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 123 13 0 0 29 1 0 0] 34 2 544 410 ##(Smalltalk.ContainerView) 34 15 nil 416 34 2 8 1140850688 131073 1232 nil 482 8454655 nil 7 nil nil nil 1232 514 1 1 nil nil nil nil 410 ##(Smalltalk.ScribbleView) 34 12 nil 1232 34 2 8 1140850688 1 1328 610 138 144 656 nil 688 482 16908287 nil 7 nil nil nil 1328 722 138 144 34 1 786 #createAt:extent: 34 2 834 41 41 834 621 421 1328 882 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 20 0 0 0 20 0 0 0 74 1 0 0 230 0 0 0] 8 #() 944 nil 27 170 192 34 2 1328 8 'scribble' 1010 834 41 41 834 41 41 722 138 144 34 1 786 #createAt:extent: 34 2 834 21 23 834 701 501 1232 882 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 10 0 0 0 11 0 0 0 104 1 0 0 5 1 0 0] 34 1 1328 944 nil 27 944 nil 27 )! !
 !Scribble class categoriesFor: #resource_Scribble_test!public!resources-views! !
 
 "End of package definition"!
@@ -135,10 +135,10 @@ resource_Default_scribble_test_view
 	DO NOT EDIT OR RECATEGORIZE THIS METHOD.
 
 	If you wish to modify this resource evaluate:
-	ViewComposer openOn: (ResourceIdentifier class: self name name: 'Default scribble test view')
+	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Default_scribble_test_view)
 	"
 
-	^#(#'!!STL' 3 788558 10 ##(STBViewProxy)  8 ##(ContainerView)  98 15 0 0 98 2 8 1140850688 131073 416 0 524550 ##(ColorRef)  8 4278190080 0 7 0 0 0 416 788230 ##(BorderLayout)  1 1 0 0 0 0 410 8 ##(ReferenceView)  98 14 0 416 98 2 8 1140850688 131073 576 0 0 0 7 0 0 0 576 1638918 ##(ResourceIdentifier)  8 ##(Scribble)  8 #resource_Scribble_test 0 983302 ##(MessageSequence)  202 208 98 1 721670 ##(MessageSend)  8 #createAt:extent: 98 2 328198 ##(Point)  1 1 850 881 681 576 983302 ##(WINDOWPLACEMENT)  8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 184 1 0 0 84 1 0 0] 98 0 850 193 193 0 27 234 256 944 0 722 202 208 98 1 786 816 98 2 850 20001 20001 850 881 681 416 898 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 16 39 0 0 16 39 0 0 200 40 0 0 100 40 0 0] 98 1 576 960 0 27 )! !
+	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.ContainerView) 34 15 nil nil 34 2 8 1140850688 131073 416 nil 327686 ##(Smalltalk.Color) #default nil 7 nil nil nil 416 788230 ##(Smalltalk.BorderLayout) 1 1 nil nil nil nil 410 ##(Smalltalk.ReferenceView) 34 14 nil 416 34 2 8 1140850688 131073 544 nil nil nil 7 nil nil nil 544 1180230 1 ##(Smalltalk.ResourceIdentifier) ##(Smalltalk.Scribble) #resource_Scribble_test nil 983302 ##(Smalltalk.MessageSequence) 138 144 34 1 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 328198 ##(Smalltalk.Point) 1 1 754 881 681 544 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 184 1 0 0 84 1 0 0] 8 #() 754 193 193 nil 27 170 192 848 nil 642 138 144 34 1 706 #createAt:extent: 34 2 754 6143 21 754 881 681 416 802 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 183 13 0 0 94 1 0 0] 34 1 544 864 nil 27 )! !
 !ScribbleTest class categoriesFor: #defaultModel!models!public! !
 !ScribbleTest class categoriesFor: #defaultView!public! !
 !ScribbleTest class categoriesFor: #resource_Default_scribble_test_view!public!resources-views! !
