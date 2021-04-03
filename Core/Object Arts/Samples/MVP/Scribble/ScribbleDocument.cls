@@ -4,8 +4,7 @@ AbstractDocumentShell subclass: #ScribbleDocument
 	instanceVariableNames: 'scribblePresenter checkpoint'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''
-	classConstants: {}!
+	classInstanceVariableNames: ''!
 ScribbleDocument guid: (GUID fromString: '{a1f145eb-f943-4ade-84a5-0274e1390a5b}')!
 ScribbleDocument comment: '`ScribbleDocument` is a very simple example of a non-text DocumentShell.
 

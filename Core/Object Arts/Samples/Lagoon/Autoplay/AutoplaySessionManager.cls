@@ -4,8 +4,7 @@ RuntimeSessionManager subclass: #AutoplaySessionManager
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''
-	classConstants: {}!
+	classInstanceVariableNames: ''!
 AutoplaySessionManager guid: (GUID fromString: '{4926b46c-437f-4688-a5ff-a86350c68924}')!
 AutoplaySessionManager comment: 'AutoplaySessionManager is the <RuntimeSessionManager> for the Autoplay sample. 
 

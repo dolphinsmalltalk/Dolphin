@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'Scribble'.
-package paxVersion: 2;
+package paxVersion: 1;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk Scribble Sample
 Copyright (c) Object Arts Ltd, 1997-2000.
@@ -49,12 +49,18 @@ XmlPad openOn: ''Scribble.xml''
 package basicPackageVersion: '2005.6.5.15'.
 
 
-package setClassNames: #(
-	#{InkStroke}
-	#{Scribble}
-	#{ScribbleDocument}
-	#{ScribbleView}
-).
+package classNames
+	add: #InkStroke;
+	add: #Scribble;
+	add: #ScribbleDocument;
+	add: #ScribbleView;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
 
 package setPrerequisites: #(
 	'..\..\..\Dolphin\Base\Dolphin'
@@ -62,8 +68,7 @@ package setPrerequisites: #(
 	'..\..\..\Dolphin\MVP\Dialogs\Common\Dolphin Common Dialogs'
 	'..\..\..\Dolphin\MVP\Presenters\Shell\Dolphin Document Presenter'
 	'..\..\..\Dolphin\MVP\Models\List\Dolphin List Models'
-	'..\..\..\Dolphin\MVP\Base\Dolphin MVP Base'
-).
+	'..\..\..\Dolphin\MVP\Base\Dolphin MVP Base').
 
 package!
 
@@ -73,26 +78,27 @@ Object subclass: #InkStroke
 	instanceVariableNames: 'data'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''
-	classConstants: {}!
+	classInstanceVariableNames: ''!
 Presenter subclass: #Scribble
 	instanceVariableNames: 'newStroke trackingCanvas'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''
-	classConstants: {}!
+	classInstanceVariableNames: ''!
 AbstractDocumentShell subclass: #ScribbleDocument
 	instanceVariableNames: 'scribblePresenter checkpoint'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''
-	classConstants: {}!
+	classInstanceVariableNames: ''!
 View subclass: #ScribbleView
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''
-	classConstants: {}!
+	classInstanceVariableNames: ''!
+
+"Global Aliases"!
+
+
+"Loose Methods"!
 
 "End of package definition"!
 

@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'Calculator (Console)'.
-package paxVersion: 2;
+package paxVersion: 1;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk Console Calculator Sample. 
 Copyright (c) Object Arts Ltd, 2000-2002.
@@ -45,13 +45,19 @@ XmlPad filename: ''dcalc.xml''
 '.
 
 
-package setClassNames: #(
-	#{CommandLineCalculator}
-).
+package classNames
+	add: #CommandLineCalculator;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
 
 package setPrerequisites: #(
-	'..\..\..\Dolphin\Base\Dolphin'
-).
+	'..\..\..\Dolphin\Lagoon\Console Application Kit'
+	'..\..\..\Dolphin\Base\Dolphin').
 
 package!
 
@@ -61,8 +67,12 @@ ConsoleSessionManager subclass: #CommandLineCalculator
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''
-	classConstants: {}!
+	classInstanceVariableNames: ''!
+
+"Global Aliases"!
+
+
+"Loose Methods"!
 
 "End of package definition"!
 

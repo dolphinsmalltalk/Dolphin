@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'Hello World (Console)'.
-package paxVersion: 2.1;
+package paxVersion: 1;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk Command-line Hello World Sample.
 Copyright (c) Object Arts Ltd, 2000-2002.
@@ -63,25 +63,34 @@ UI.Examples.XmlPad filename: ''HelloCli.xml''
 ```'.
 
 
-package setClassNames: #(
-	#{Smalltalk.CommandLineHelloWorld}
-).
+package classNames
+	add: #CommandLineHelloWorld;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
 
 package setPrerequisites: #(
 	'..\..\..\Dolphin\Lagoon\Console Application Kit'
-	'..\..\..\Dolphin\Base\Dolphin'
-).
+	'..\..\..\Dolphin\Base\Dolphin').
 
 package!
 
 "Class Definitions"!
 
-Kernel.ConsoleSessionManager subclass: #CommandLineHelloWorld
+ConsoleSessionManager subclass: #CommandLineHelloWorld
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+"Global Aliases"!
+
+
+"Loose Methods"!
 
 "End of package definition"!
 
