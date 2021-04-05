@@ -4,8 +4,7 @@ MainTestCase subclass: #BooleanANSITest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''
-	classConstants: {}!
+	classInstanceVariableNames: ''!
 BooleanANSITest guid: (GUID fromString: '{99ac2aab-17ae-4622-a4d9-cbb929a4d3f0}')!
 BooleanANSITest comment: ''!
 !BooleanANSITest categoriesForClass!Unclassified! !

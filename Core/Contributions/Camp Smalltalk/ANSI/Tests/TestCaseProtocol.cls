@@ -4,10 +4,9 @@ TestCase subclass: #TestCaseProtocol
 	instanceVariableNames: ''
 	classVariableNames: 'IsStrict'
 	poolDictionaries: ''
-	classInstanceVariableNames: ''
-	classConstants: {}!
+	classInstanceVariableNames: ''!
 TestCaseProtocol guid: (GUID fromString: '{403355e6-9806-435f-8bba-139199ccd171}')!
-TestCaseProtocol isAbstract: true!
+TestCaseProtocol isNonInstantiable: true!
 TestCaseProtocol comment: ''!
 !TestCaseProtocol categoriesForClass!Unclassified! !
 !TestCaseProtocol methodsFor!

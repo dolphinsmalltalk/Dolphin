@@ -4,8 +4,7 @@ Object subclass: #MsgReturnSpec
 	instanceVariableNames: 'returnValueProtocols returnValueAliasingAttribute'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''
-	classConstants: {}!
+	classInstanceVariableNames: ''!
 MsgReturnSpec guid: (GUID fromString: '{a23f1e93-ec7b-47d3-ae61-3f992842c38e}')!
 MsgReturnSpec comment: ''!
 !MsgReturnSpec categoriesForClass!Unclassified! !

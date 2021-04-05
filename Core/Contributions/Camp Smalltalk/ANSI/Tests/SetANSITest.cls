@@ -4,8 +4,7 @@ CollectionTest subclass: #SetANSITest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''
-	classConstants: {}!
+	classInstanceVariableNames: ''!
 SetANSITest guid: (GUID fromString: '{3329b13f-02b2-4a1f-a5dd-0bafd43b261a}')!
 SetANSITest comment: ''!
 !SetANSITest categoriesForClass!Unclassified! !

@@ -4,8 +4,7 @@ MainTestCase subclass: #ObjectClassANSITest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''
-	classConstants: {}!
+	classInstanceVariableNames: ''!
 ObjectClassANSITest guid: (GUID fromString: '{940ea47e-d8e2-451c-ae00-4af396683bbb}')!
 ObjectClassANSITest comment: ''!
 !ObjectClassANSITest categoriesForClass!Unclassified! !

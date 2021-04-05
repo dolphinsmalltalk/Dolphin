@@ -4,8 +4,7 @@ MainTestCase subclass: #FloatCharacterizationANSITest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''
-	classConstants: {}!
+	classInstanceVariableNames: ''!
 FloatCharacterizationANSITest guid: (GUID fromString: '{662708f9-6fbf-4b7d-bda5-33b4385e7222}')!
 FloatCharacterizationANSITest comment: ''!
 !FloatCharacterizationANSITest categoriesForClass!Unclassified! !

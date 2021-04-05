@@ -4,8 +4,7 @@ TestCaseHelper subclass: #WriteStreamHelper
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''
-	classConstants: {}!
+	classInstanceVariableNames: ''!
 WriteStreamHelper guid: (GUID fromString: '{e3ea43ed-5014-4da4-aa30-477dcb59dcd1}')!
 WriteStreamHelper comment: ''!
 !WriteStreamHelper categoriesForClass!Unclassified! !

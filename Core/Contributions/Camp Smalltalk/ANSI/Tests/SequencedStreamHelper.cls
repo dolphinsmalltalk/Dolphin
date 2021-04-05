@@ -4,8 +4,7 @@ TestCaseHelper subclass: #SequencedStreamHelper
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''
-	classConstants: {}!
+	classInstanceVariableNames: ''!
 SequencedStreamHelper guid: (GUID fromString: '{3feae730-232c-4723-a408-dba6827c7b33}')!
 SequencedStreamHelper comment: ''!
 !SequencedStreamHelper categoriesForClass!Unclassified! !

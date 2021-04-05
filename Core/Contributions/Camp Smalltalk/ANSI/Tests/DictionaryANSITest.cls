@@ -4,8 +4,7 @@ CollectionTest subclass: #DictionaryANSITest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''
-	classConstants: {}!
+	classInstanceVariableNames: ''!
 DictionaryANSITest guid: (GUID fromString: '{98945f32-e6d5-4ec3-b98b-8a6806ee7a34}')!
 DictionaryANSITest comment: ''!
 !DictionaryANSITest categoriesForClass!Unclassified! !

@@ -4,10 +4,9 @@ CollectionTest subclass: #SequencedReadableCollectionTest
 	instanceVariableNames: 'canonicalObjects'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''
-	classConstants: {}!
+	classInstanceVariableNames: ''!
 SequencedReadableCollectionTest guid: (GUID fromString: '{80a590e8-57fd-459f-bfdd-3055f38fecee}')!
-SequencedReadableCollectionTest isAbstract: true!
+SequencedReadableCollectionTest isNonInstantiable: true!
 SequencedReadableCollectionTest comment: ''!
 !SequencedReadableCollectionTest categoriesForClass!Unclassified! !
 !SequencedReadableCollectionTest methodsFor!

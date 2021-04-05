@@ -4,8 +4,7 @@ SequencedReadableCollectionTest subclass: #StringANSITest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''
-	classConstants: {}!
+	classInstanceVariableNames: ''!
 StringANSITest guid: (GUID fromString: '{8d98dc8b-46ae-4a17-ab30-e909e195319a}')!
 StringANSITest comment: ''!
 !StringANSITest categoriesForClass!Unclassified! !

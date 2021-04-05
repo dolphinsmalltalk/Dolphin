@@ -4,8 +4,7 @@ MainTestCase subclass: #DateAndTimeFactoryANSITest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''
-	classConstants: {}!
+	classInstanceVariableNames: ''!
 DateAndTimeFactoryANSITest guid: (GUID fromString: '{3291905d-72ee-4943-91dc-ca23d5131bc9}')!
 DateAndTimeFactoryANSITest comment: ''!
 !DateAndTimeFactoryANSITest categoriesForClass!Unclassified! !

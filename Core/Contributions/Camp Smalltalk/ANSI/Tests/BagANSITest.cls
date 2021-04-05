@@ -4,8 +4,7 @@ CollectionTest subclass: #BagANSITest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''
-	classConstants: {}!
+	classInstanceVariableNames: ''!
 BagANSITest guid: (GUID fromString: '{b2f8f5c3-d96e-491a-b977-be7fda80f1b9}')!
 BagANSITest comment: ''!
 !BagANSITest categoriesForClass!Unclassified! !

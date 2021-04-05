@@ -4,10 +4,9 @@ MainTestCase subclass: #SequencedStreamTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''
-	classConstants: {}!
+	classInstanceVariableNames: ''!
 SequencedStreamTest guid: (GUID fromString: '{26179477-03bb-4bed-a61a-e60a79c4f9e3}')!
-SequencedStreamTest isAbstract: true!
+SequencedStreamTest isNonInstantiable: true!
 SequencedStreamTest comment: ''!
 !SequencedStreamTest categoriesForClass!Unclassified! !
 !SequencedStreamTest class methodsFor!

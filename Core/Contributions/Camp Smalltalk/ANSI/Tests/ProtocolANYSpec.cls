@@ -4,8 +4,7 @@ Object subclass: #ProtocolANYSpec
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''
-	classConstants: {}!
+	classInstanceVariableNames: ''!
 ProtocolANYSpec guid: (GUID fromString: '{63019e4c-0fec-4287-8010-09f64c6c6b1b}')!
 ProtocolANYSpec comment: ''!
 !ProtocolANYSpec categoriesForClass!Unclassified! !

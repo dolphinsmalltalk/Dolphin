@@ -4,8 +4,7 @@ SequencedStreamTest subclass: #ReadStreamANSITest
 	instanceVariableNames: 'readStream'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''
-	classConstants: {}!
+	classInstanceVariableNames: ''!
 ReadStreamANSITest guid: (GUID fromString: '{88580396-fadb-482e-9caf-c4f837c5074a}')!
 ReadStreamANSITest comment: ''!
 !ReadStreamANSITest categoriesForClass!Unclassified! !

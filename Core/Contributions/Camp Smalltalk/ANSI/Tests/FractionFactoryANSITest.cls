@@ -4,8 +4,7 @@ MainTestCase subclass: #FractionFactoryANSITest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''
-	classConstants: {}!
+	classInstanceVariableNames: ''!
 FractionFactoryANSITest guid: (GUID fromString: '{ddb6a720-93f2-4167-891c-39c44c2c04e7}')!
 FractionFactoryANSITest comment: ''!
 !FractionFactoryANSITest categoriesForClass!Unclassified! !

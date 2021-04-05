@@ -4,8 +4,7 @@ MainTestCase subclass: #IdentityDictionaryFactoryANSITest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''
-	classConstants: {}!
+	classInstanceVariableNames: ''!
 IdentityDictionaryFactoryANSITest guid: (GUID fromString: '{94d00b2f-5833-4101-92e3-01600879ef05}')!
 IdentityDictionaryFactoryANSITest comment: ''!
 !IdentityDictionaryFactoryANSITest categoriesForClass!Unclassified! !

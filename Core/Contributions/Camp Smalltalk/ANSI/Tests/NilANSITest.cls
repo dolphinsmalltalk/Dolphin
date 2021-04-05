@@ -4,8 +4,7 @@ MainTestCase subclass: #NilANSITest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''
-	classConstants: {}!
+	classInstanceVariableNames: ''!
 NilANSITest guid: (GUID fromString: '{83421a20-4acd-4ba3-be38-71b4ed2a0d87}')!
 NilANSITest comment: ''!
 !NilANSITest categoriesForClass!Unclassified! !

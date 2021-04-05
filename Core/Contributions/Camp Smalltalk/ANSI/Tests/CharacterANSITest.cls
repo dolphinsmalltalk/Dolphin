@@ -4,8 +4,7 @@ MainTestCase subclass: #CharacterANSITest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''
-	classConstants: {}!
+	classInstanceVariableNames: ''!
 CharacterANSITest guid: (GUID fromString: '{bcaf0373-66ad-4e56-9524-56cd4a84e468}')!
 CharacterANSITest comment: ''!
 !CharacterANSITest categoriesForClass!Unclassified! !

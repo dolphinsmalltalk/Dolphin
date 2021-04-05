@@ -4,8 +4,7 @@ MainTestCase subclass: #DateAndTimeANSITest
 	instanceVariableNames: 'd19970426t8 savedLocale'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''
-	classConstants: {}!
+	classInstanceVariableNames: ''!
 DateAndTimeANSITest guid: (GUID fromString: '{f6ad86cf-3057-4561-b434-61d09e62c2d4}')!
 DateAndTimeANSITest comment: ''!
 !DateAndTimeANSITest categoriesForClass!Unclassified! !

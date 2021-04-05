@@ -4,8 +4,7 @@ TestCaseHelper subclass: #AbstractDictionaryHelper
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''
-	classConstants: {}!
+	classInstanceVariableNames: ''!
 AbstractDictionaryHelper guid: (GUID fromString: '{231d61aa-01c6-4120-b38f-813d3790f479}')!
 AbstractDictionaryHelper comment: ''!
 !AbstractDictionaryHelper categoriesForClass!Unclassified! !

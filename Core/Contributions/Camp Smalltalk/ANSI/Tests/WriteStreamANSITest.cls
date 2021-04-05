@@ -4,8 +4,7 @@ SequencedStreamTest subclass: #WriteStreamANSITest
 	instanceVariableNames: 'writeStream buffer'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''
-	classConstants: {}!
+	classInstanceVariableNames: ''!
 WriteStreamANSITest guid: (GUID fromString: '{ad10f0de-1dd8-4427-b092-0efcb083e330}')!
 WriteStreamANSITest comment: ''!
 !WriteStreamANSITest categoriesForClass!Unclassified! !

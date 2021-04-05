@@ -4,8 +4,7 @@ MainTestCase subclass: #IntervalFactoryANSITest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''
-	classConstants: {}!
+	classInstanceVariableNames: ''!
 IntervalFactoryANSITest guid: (GUID fromString: '{f2920fcd-daf0-4e9a-b9e2-4d0668021baf}')!
 IntervalFactoryANSITest comment: ''!
 !IntervalFactoryANSITest categoriesForClass!Unclassified! !

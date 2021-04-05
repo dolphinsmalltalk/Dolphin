@@ -4,8 +4,7 @@ ProtocolANYSpec subclass: #ProtocolSpec
 	instanceVariableNames: 'name conformsTo description messageSpecifications'
 	classVariableNames: 'ClassProtocols DefaultConvTable FixNum OperatorTable Protocols UnaryConvTable UndefinedConformsToNames'
 	poolDictionaries: ''
-	classInstanceVariableNames: ''
-	classConstants: {}!
+	classInstanceVariableNames: ''!
 ProtocolSpec guid: (GUID fromString: '{6ada6ff6-f587-4936-8a22-fe3e0022efec}')!
 ProtocolSpec comment: ''!
 !ProtocolSpec categoriesForClass!Unclassified! !

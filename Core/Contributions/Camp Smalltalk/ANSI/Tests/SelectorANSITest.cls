@@ -4,8 +4,7 @@ MainTestCase subclass: #SelectorANSITest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''
-	classConstants: {}!
+	classInstanceVariableNames: ''!
 SelectorANSITest guid: (GUID fromString: '{d5ea3520-ffb7-47ed-8536-450548213149}')!
 SelectorANSITest comment: ''!
 !SelectorANSITest categoriesForClass!Unclassified! !

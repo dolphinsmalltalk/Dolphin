@@ -4,8 +4,7 @@ MainTestCase subclass: #ScaledDecimalANSITest
 	instanceVariableNames: 'smallInt2 largeNegInt2000000000 largePosInt2000000000 float2 fractionHalf sclDec2s3 numList'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''
-	classConstants: {}!
+	classInstanceVariableNames: ''!
 ScaledDecimalANSITest guid: (GUID fromString: '{5200c2d1-95c6-4600-9409-435dcb726b43}')!
 ScaledDecimalANSITest comment: ''!
 !ScaledDecimalANSITest categoriesForClass!Unclassified! !

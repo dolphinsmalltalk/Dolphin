@@ -4,8 +4,7 @@ MainTestCase subclass: #TranscriptANSITest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''
-	classConstants: {}!
+	classInstanceVariableNames: ''!
 TranscriptANSITest guid: (GUID fromString: '{1fcfa7b5-483c-4bfb-a670-bcae68b76be9}')!
 TranscriptANSITest comment: ''!
 !TranscriptANSITest categoriesForClass!Unclassified! !
