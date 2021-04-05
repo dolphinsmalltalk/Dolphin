@@ -4,8 +4,7 @@ Object subclass: #XMLWriter
 	instanceVariableNames: 'stream stack scanner canonical'
 	classVariableNames: 'XMLTranslation'
 	poolDictionaries: ''
-	classInstanceVariableNames: ''
-	classConstants: {}!
+	classInstanceVariableNames: ''!
 XMLWriter guid: (GUID fromString: '{d99a57a4-3582-4065-9544-4b3cfa0ba480}')!
 XMLWriter comment: ''!
 !XMLWriter categoriesForClass!XML-Parser! !

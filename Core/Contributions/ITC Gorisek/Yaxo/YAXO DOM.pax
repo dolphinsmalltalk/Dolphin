@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'YAXO DOM'.
-package paxVersion: 2;
+package paxVersion: 1;
 	basicComment: 'Yaxo: Yet another XML Framework
 Authors: Duane Maxwell, Andres Valloud, Michael Rueger
 http://www.squeaklet.com/Yax/index.html
@@ -15,24 +15,29 @@ Note: This package is not used by Spray and the port has had less testing than "
 package basicPackageVersion: '4'.
 
 
-package setClassNames: #(
-	#{XMLDocument}
-	#{XMLDOMParser}
-	#{XMLElement}
-	#{XMLException}
-	#{XMLMalformedException}
-	#{XMLNode}
-	#{XMLNodeWithEntities}
-	#{XMLParser}
-	#{XMLPI}
-	#{XMLStringNode}
-	#{XMLWriter}
-).
+package classNames
+	add: #XMLDocument;
+	add: #XMLDOMParser;
+	add: #XMLElement;
+	add: #XMLException;
+	add: #XMLMalformedException;
+	add: #XMLNode;
+	add: #XMLNodeWithEntities;
+	add: #XMLParser;
+	add: #XMLPI;
+	add: #XMLStringNode;
+	add: #XMLWriter;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
 
 package setPrerequisites: #(
 	'..\..\..\Object Arts\Dolphin\Base\Dolphin'
-	'YAXO Base'
-).
+	'YAXO Base').
 
 package!
 
@@ -42,68 +47,62 @@ Object subclass: #XMLNode
 	instanceVariableNames: ''
 	classVariableNames: 'CanonicalTable'
 	poolDictionaries: ''
-	classInstanceVariableNames: ''
-	classConstants: {}!
+	classInstanceVariableNames: ''!
 Object subclass: #XMLWriter
 	instanceVariableNames: 'stream stack scanner canonical'
 	classVariableNames: 'XMLTranslation'
 	poolDictionaries: ''
-	classInstanceVariableNames: ''
-	classConstants: {}!
+	classInstanceVariableNames: ''!
 Error subclass: #XMLException
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''
-	classConstants: {}!
+	classInstanceVariableNames: ''!
 XMLException subclass: #XMLMalformedException
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''
-	classConstants: {}!
+	classInstanceVariableNames: ''!
 SAXHandler subclass: #XMLDOMParser
 	instanceVariableNames: 'entity stack incremental'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''
-	classConstants: {}!
+	classInstanceVariableNames: ''!
 XMLNode subclass: #XMLNodeWithEntities
 	instanceVariableNames: 'entities'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''
-	classConstants: {}!
+	classInstanceVariableNames: ''!
 XMLNode subclass: #XMLPI
 	instanceVariableNames: 'target data'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''
-	classConstants: {}!
+	classInstanceVariableNames: ''!
 XMLNode subclass: #XMLStringNode
 	instanceVariableNames: 'string'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''
-	classConstants: {}!
+	classInstanceVariableNames: ''!
 XMLNodeWithEntities subclass: #XMLDocument
 	instanceVariableNames: 'dtd version encoding requiredMarkup'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''
-	classConstants: {}!
+	classInstanceVariableNames: ''!
 XMLNodeWithEntities subclass: #XMLElement
 	instanceVariableNames: 'name contents attributes'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''
-	classConstants: {}!
+	classInstanceVariableNames: ''!
 XMLTokenizer subclass: #XMLParser
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''
-	classConstants: {}!
+	classInstanceVariableNames: ''!
+
+"Global Aliases"!
+
+
+"Loose Methods"!
 
 "End of package definition"!
 

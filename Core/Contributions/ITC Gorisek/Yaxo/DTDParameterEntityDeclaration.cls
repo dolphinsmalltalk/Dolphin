@@ -4,8 +4,7 @@ DTDEntityDeclaration subclass: #DTDParameterEntityDeclaration
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''
-	classConstants: {}!
+	classInstanceVariableNames: ''!
 DTDParameterEntityDeclaration guid: (GUID fromString: '{d99f2ec2-dcb6-4bc6-aba4-571ef1a16782}')!
 DTDParameterEntityDeclaration comment: ''!
 !DTDParameterEntityDeclaration categoriesForClass!XML-Parser! !

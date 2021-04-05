@@ -4,8 +4,7 @@ SAXHandler subclass: #XMLDOMParser
 	instanceVariableNames: 'entity stack incremental'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''
-	classConstants: {}!
+	classInstanceVariableNames: ''!
 XMLDOMParser guid: (GUID fromString: '{9aa6df2d-d670-4da4-afc3-d47d0003e980}')!
 XMLDOMParser comment: ''!
 !XMLDOMParser categoriesForClass!XML-Parser! !

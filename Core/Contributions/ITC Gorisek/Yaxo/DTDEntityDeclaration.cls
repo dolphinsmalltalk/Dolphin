@@ -4,8 +4,7 @@ Object subclass: #DTDEntityDeclaration
 	instanceVariableNames: 'name value ndata'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: 'contextBehavior'
-	classConstants: {}!
+	classInstanceVariableNames: 'contextBehavior'!
 DTDEntityDeclaration guid: (GUID fromString: '{505107dc-2774-4508-bf9d-517bb42532c7}')!
 DTDEntityDeclaration comment: ''!
 !DTDEntityDeclaration categoriesForClass!XML-Parser! !

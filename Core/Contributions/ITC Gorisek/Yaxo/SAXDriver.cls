@@ -4,8 +4,7 @@ XMLTokenizer subclass: #SAXDriver
 	instanceVariableNames: 'saxHandler'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''
-	classConstants: {}!
+	classInstanceVariableNames: ''!
 SAXDriver guid: (GUID fromString: '{3102df00-a9b7-41d1-9524-c0c87736c600}')!
 SAXDriver comment: ''!
 !SAXDriver categoriesForClass!XML-Parser! !

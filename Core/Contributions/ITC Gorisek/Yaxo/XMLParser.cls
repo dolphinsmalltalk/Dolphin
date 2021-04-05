@@ -4,8 +4,7 @@ XMLTokenizer subclass: #XMLParser
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''
-	classConstants: {}!
+	classInstanceVariableNames: ''!
 XMLParser guid: (GUID fromString: '{be04633b-820f-4cfe-b0b1-9545388c6de8}')!
 XMLParser comment: ''!
 !XMLParser categoriesForClass!XML-Parser! !

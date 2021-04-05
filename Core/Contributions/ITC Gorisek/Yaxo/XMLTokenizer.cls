@@ -4,8 +4,7 @@ Object subclass: #XMLTokenizer
 	instanceVariableNames: 'stream nestedStreams entities externalEntities parameterEntities parsingMarkup peekChar validating buffer contentBuffer'
 	classVariableNames: 'CharEscapes NameChars NameDelimiters'
 	poolDictionaries: ''
-	classInstanceVariableNames: ''
-	classConstants: {}!
+	classInstanceVariableNames: ''!
 XMLTokenizer guid: (GUID fromString: '{3504f679-282f-4ded-a387-6493f6c85f67}')!
 XMLTokenizer comment: 'XMLTokenizer
 
