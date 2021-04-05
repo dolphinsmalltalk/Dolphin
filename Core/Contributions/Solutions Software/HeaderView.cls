@@ -4,8 +4,7 @@ ControlView subclass: #HeaderView
 	instanceVariableNames: 'columnHeaders'
 	classVariableNames: 'HdnMap'
 	poolDictionaries: 'HeaderViewConstants'
-	classInstanceVariableNames: ''
-	classConstants: {}!
+	classInstanceVariableNames: ''!
 HeaderView guid: (GUID fromString: '{7a6b97fa-0fd4-424d-99de-515000f88886}')!
 HeaderView comment: '#define HDI_WIDTH               0x0001
 #define HDI_HEIGHT              HDI_WIDTH

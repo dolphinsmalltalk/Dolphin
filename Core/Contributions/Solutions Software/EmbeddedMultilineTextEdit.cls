@@ -4,8 +4,7 @@ MultilineTextEdit subclass: #EmbeddedMultilineTextEdit
 	instanceVariableNames: 'column'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''
-	classConstants: {}!
+	classInstanceVariableNames: ''!
 EmbeddedMultilineTextEdit guid: (GUID fromString: '{f464e637-7c1a-4a4a-a066-653a45da17fd}')!
 EmbeddedMultilineTextEdit comment: ''!
 !EmbeddedMultilineTextEdit categoriesForClass!Unclassified! !

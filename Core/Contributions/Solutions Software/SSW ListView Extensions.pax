@@ -1,116 +1,78 @@
 ﻿| package |
 package := Package name: 'SSW ListView Extensions'.
-package paxVersion: 2;
+package paxVersion: 1;
 	basicComment: '© Solutions Software/John Aspinall 2018
 Provided under the same licence terms as Dolphin Smalltalk 7'.
 
 package basicPackageVersion: '7.1.0'.
 
 
-package setClassNames: #(
-	#{ColumnHeader}
-	#{HDITEMW}
-	#{HeaderView}
-	#{HeaderViewConstants}
-).
+package classNames
+	add: #ColumnHeader;
+	add: #HDITEMW;
+	add: #HeaderView;
+	yourself.
 
-package setMethodNames: #(
-	#(#{ListView} #fullItemFromPoint:)
-	#(#{ListView} #getHeaderControl)
-	#(#{ListView} #headerControl)
-	#(#{ListView} #headerRect)
-	#(#{ListView} #hideToolTipWindow)
-	#(#{ListView} #horzScrollBy:)
-	#(#{ListView} #horzScrollPos)
-	#(#{ListView} #horzScrollPos:)
-	#(#{ListView} #lvmGetItemCount)
-	#(#{ListView} #lvmGetToolTips)
-	#(#{ListView} #lvmGetTopIndex)
-	#(#{ListView} #maxTipWidth:)
-	#(#{ListView} #rowPixelHeight)
-	#(#{ListView} #smallImageExtent)
-	#(#{ListView} #vertScrollBy:)
-	#(#{ListView} #vertScrollPos)
-	#(#{ListView} #vertScrollPos:)
-	#(#{ListViewColumn} #columnHeader)
-).
+package methodNames
+	add: #ListView -> #fullItemFromPoint:;
+	add: #ListView -> #getHeaderControl;
+	add: #ListView -> #headerControl;
+	add: #ListView -> #headerRect;
+	add: #ListView -> #hideToolTipWindow;
+	add: #ListView -> #horzScrollBy:;
+	add: #ListView -> #horzScrollPos;
+	add: #ListView -> #horzScrollPos:;
+	add: #ListView -> #lvmGetItemCount;
+	add: #ListView -> #lvmGetToolTips;
+	add: #ListView -> #lvmGetTopIndex;
+	add: #ListView -> #maxTipWidth:;
+	add: #ListView -> #rowPixelHeight;
+	add: #ListView -> #smallImageExtent;
+	add: #ListView -> #vertScrollBy:;
+	add: #ListView -> #vertScrollPos;
+	add: #ListView -> #vertScrollPos:;
+	add: #ListViewColumn -> #columnHeader;
+	yourself.
+
+package globalNames
+	add: #HeaderViewConstants;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
 
 package setPrerequisites: #(
 	'..\..\Object Arts\Dolphin\Base\Dolphin'
 	'..\..\Object Arts\Dolphin\MVP\Base\Dolphin Basic Geometry'
 	'..\..\Object Arts\Dolphin\MVP\Views\Common Controls\Dolphin Common Controls'
 	'..\..\Object Arts\Dolphin\MVP\Base\Dolphin MVP Base'
-	'..\..\Object Arts\Dolphin\MVP\Deprecated\Dolphin MVP (Old Names)'
-).
+	'..\..\Object Arts\Dolphin\MVP\Views\Tooltips\Dolphin Tooltips').
 
 package!
 
 "Class Definitions"!
 
-SharedPool subclass: #HeaderViewConstants
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {
-		'HDF_CENTER' -> 16r2.
-		'HDF_CHECKBOX' -> 16r40.
-		'HDF_CHECKED' -> 16r80.
-		'HDF_JUSTIFYMASK' -> 16r3.
-		'HDF_LEFT' -> 16r0.
-		'HDF_RIGHT' -> 16r1.
-		'HDF_SORTDOWN' -> 16r200.
-		'HDF_SORTUP' -> 16r400.
-		'HDF_SPLITBUTTON' -> 16r1000000.
-		'HDI_FORMAT' -> 16r4.
-		'HDI_IMAGE' -> 16r20.
-		'HDI_LPARAM' -> 16r8.
-		'HDI_TEXT' -> 16r2.
-		'HDM_FIRST' -> 16r1200.
-		'HDM_GETITEMRECT' -> 16r1207.
-		'HDM_GETITEMW' -> 16r120B.
-		'HDM_SETITEMW' -> 16r120C.
-		'HDN_BEGINDRAG' -> -16r136.
-		'HDN_BEGINTRACKW' -> -16r146.
-		'HDN_DIVIDERDBLCLICKW' -> -16r145.
-		'HDN_DROPDOWN' -> -16r13E.
-		'HDN_ENDDRAG' -> -16r137.
-		'HDN_ENDTRACKW' -> -16r147.
-		'HDN_ITEMCLICKW' -> -16r142.
-		'HDN_ITEMDBLCLICKW' -> -16r143.
-		'HDN_ITEMSTATEICONCLICK' -> -16r13C.
-		'HDS_CHECKBOXES' -> 16r400
-	}!
 Object subclass: #ColumnHeader
 	instanceVariableNames: 'parent index dropDownMenu'
 	classVariableNames: ''
-	imports: #(#{HeaderViewConstants})
-	classInstanceVariableNames: ''
-	classConstants: {}!
+	poolDictionaries: 'HeaderViewConstants'
+	classInstanceVariableNames: ''!
 CCITEM subclass: #HDITEMW
 	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {
-		'_OffsetOf_cchTextMax' -> 16r10.
-		'_OffsetOf_cxy' -> 16r4.
-		'_OffsetOf_fmt' -> 16r14.
-		'_OffsetOf_hbm' -> 16rC.
-		'_OffsetOf_iImage' -> 16r1C.
-		'_OffsetOf_iOrder' -> 16r20.
-		'_OffsetOf_lParam' -> 16r18.
-		'_OffsetOf_pszText' -> 16r8.
-		'_OffsetOf_pvFilter' -> 16r28.
-		'_OffsetOf_state' -> 16r2C.
-		'_OffsetOf_type' -> 16r24
-	}!
+	classVariableNames: '_OffsetOf_cchTextMax _OffsetOf_cxy _OffsetOf_fmt _OffsetOf_hbm _OffsetOf_iImage _OffsetOf_iOrder _OffsetOf_lParam _OffsetOf_pszText _OffsetOf_pvFilter _OffsetOf_state _OffsetOf_type'
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
 ControlView subclass: #HeaderView
 	instanceVariableNames: 'columnHeaders'
 	classVariableNames: 'HdnMap'
-	imports: #(#{HeaderViewConstants})
-	classInstanceVariableNames: ''
-	classConstants: {}!
+	poolDictionaries: 'HeaderViewConstants'
+	classInstanceVariableNames: ''!
+
+"Global Aliases"!
+
 
 "Loose Methods"!
 

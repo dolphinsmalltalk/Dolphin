@@ -4,8 +4,7 @@ EmulatedPushButton subclass: #EmbeddedPushButton
 	instanceVariableNames: 'isDisplayingEmbedded embeddedRectangle embeddedDisplayState embeddedText text'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''
-	classConstants: {}!
+	classInstanceVariableNames: ''!
 EmbeddedPushButton guid: (GUID fromString: '{b1d223a1-89b7-41cd-9057-4b9d84f774c7}')!
 EmbeddedPushButton comment: ''!
 !EmbeddedPushButton categoriesForClass!Unclassified! !

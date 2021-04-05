@@ -4,8 +4,7 @@ CheckButton subclass: #EmbeddedCheckButton
 	instanceVariableNames: 'textExtent text isAlwaysDrawnEnabled buttonExtent'
 	classVariableNames: ''
 	poolDictionaries: 'ThemeConstants'
-	classInstanceVariableNames: ''
-	classConstants: {}!
+	classInstanceVariableNames: ''!
 EmbeddedCheckButton guid: (GUID fromString: '{577c445c-7f28-41c6-be9f-021847c53e4e}')!
 EmbeddedCheckButton comment: ''!
 !EmbeddedCheckButton categoriesForClass!MVP-Views! !

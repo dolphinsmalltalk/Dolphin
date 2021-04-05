@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'SSW EditableListView Demo'.
-package paxVersion: 2;
+package paxVersion: 1;
 	basicComment: '© Solutions Software/John Aspinall 2018
 Provided under the same licence terms as Dolphin Smalltalk 7
 
@@ -9,15 +9,22 @@ EditableListViewDemo show'.
 package basicPackageVersion: '7.1.0'.
 
 
-package setClassNames: #(
-	#{EditableListViewDemo}
-	#{PVRRecording}
-).
+package classNames
+	add: #EditableListViewDemo;
+	add: #PVRRecording;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
 
 package setPrerequisites: #(
 	'..\..\Object Arts\Dolphin\Base\Dolphin'
 	'..\..\Object Arts\Dolphin\MVP\Base\Dolphin Basic Geometry'
 	'..\..\Object Arts\Dolphin\MVP\Presenters\Boolean\Dolphin Boolean Presenter'
+	'..\..\Object Arts\Dolphin\MVP\Views\Buttons\Dolphin Check Buttons'
 	'..\..\Object Arts\Dolphin\MVP\Views\Common Controls\Dolphin Common Controls'
 	'..\..\Object Arts\Dolphin\MVP\Presenters\Date Time\Dolphin Date Time Presenters'
 	'..\..\Object Arts\Dolphin\Base\Dolphin Legacy Date & Time'
@@ -25,13 +32,13 @@ package setPrerequisites: #(
 	'..\..\Object Arts\Dolphin\MVP\Presenters\List\Dolphin List Presenter'
 	'..\..\Object Arts\Dolphin\MVP\Base\Dolphin MVP Base'
 	'..\..\Object Arts\Dolphin\MVP\Presenters\Number\Dolphin Number Presenter'
+	'..\..\Object Arts\Dolphin\MVP\Views\Buttons\Dolphin Push Buttons'
 	'..\..\Object Arts\Dolphin\MVP\Views\SpinButton\Dolphin SpinButton Control'
 	'..\..\Object Arts\Dolphin\MVP\Type Converters\Dolphin Type Converters'
 	'..\..\Object Arts\Dolphin\MVP\Models\Value\Dolphin Value Models'
 	'SSW EditableListView'
 	'SSW Widget Enhancements'
-	'..\..\Object Arts\Samples\MVP\Video Library\Video Library'
-).
+	'..\..\Object Arts\Samples\MVP\Video Library\Video Library').
 
 package!
 
@@ -41,14 +48,17 @@ Shell subclass: #EditableListViewDemo
 	instanceVariableNames: 'listPresenter rowHeightPresenter hasRowImagePresenter hasColumnImagesPresenter starRatingsPresenter'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''
-	classConstants: {}!
-UI.Examples.VideoRecording subclass: #PVRRecording
+	classInstanceVariableNames: ''!
+VideoRecording subclass: #PVRRecording
 	instanceVariableNames: 'episodeTitle description channel isViewed rating'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''
-	classConstants: {}!
+	classInstanceVariableNames: ''!
+
+"Global Aliases"!
+
+
+"Loose Methods"!
 
 "End of package definition"!
 

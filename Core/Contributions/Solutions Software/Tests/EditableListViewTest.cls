@@ -28,6 +28,20 @@ testEmbeddedComboBoxStbConversion20
 
 	[self assert: elv allColumns first editor lastSelIndices equals: #()] ensure: [elv close]!
 
+testPackageClosure
+	"Tests predicted unimplemented messages in EditableListViewDemo
+		- defineTemplate- sent from ExternalStructure>>ensureDefined, which is replaced with a no-op stub in deployed apps. Should not be in the UnimplementedMessages section of the actual deployment log for GUI apps.
+		- evaluate: Compiler deliberately removed from the scope of the test to reduce noise. Should not be in the UnimplementedMessages section of the actual deployment log for GUI apps."
+
+	| missing aBrowserEnvironment |
+	aBrowserEnvironment := BrowserEnvironment new
+				forPackagesDeployment: {Smalltalk.EditableListViewDemo owningPackage}.
+	missing := Smalltalk developmentSystem unimplementedSelectorsIn: aBrowserEnvironment.	"Use symmetric  difference, as we also want to fix up the test if some missing message is fixed."
+	self assert: (missing symmetricDifference: #(#defineTemplate #evaluate:)) asArray sort equals: #()
+	"To debug this, open an env browser on the deployment scope as follows:
+		aBrowserEnvironment openEditor.
+	The call graph to unimplemented messages can then be investigated starting with the Method/Browse other/All unimplemented command"!
+
 testStbConversion15
 
 	"#1024: Ensure repurposed inst var slots from version 15 are cleared out"
@@ -42,5 +56,6 @@ testStbConversion15
 !EditableListViewTest categoriesFor: #editableListViewBytes15!constants!private! !
 !EditableListViewTest categoriesFor: #elvWithEmbeddedComboBoxBytes20!constants!private! !
 !EditableListViewTest categoriesFor: #testEmbeddedComboBoxStbConversion20!public!unit tests! !
+!EditableListViewTest categoriesFor: #testPackageClosure!public!unit tests! !
 !EditableListViewTest categoriesFor: #testStbConversion15!public!unit tests! !
 

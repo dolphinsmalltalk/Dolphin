@@ -4,8 +4,7 @@ Shell subclass: #EditableListViewDemo
 	instanceVariableNames: 'listPresenter rowHeightPresenter hasRowImagePresenter hasColumnImagesPresenter starRatingsPresenter'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''
-	classConstants: {}!
+	classInstanceVariableNames: ''!
 EditableListViewDemo guid: (GUID fromString: '{e27b5b72-70de-474c-a0cc-b14ee3fdc1eb}')!
 EditableListViewDemo comment: ''!
 !EditableListViewDemo categoriesForClass!MVP-Presenters! !

@@ -4,8 +4,7 @@ OwnerDrawnButton subclass: #TextAndImageButton
 	instanceVariableNames: 'imageExtent imageManager imageIndex dropDownMenu isMenuOpen'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''
-	classConstants: {}!
+	classInstanceVariableNames: ''!
 TextAndImageButton guid: (GUID fromString: '{7ab8c439-056d-4b01-a5bf-1b454ec864b5}')!
 TextAndImageButton comment: ''!
 !TextAndImageButton categoriesForClass!Unclassified! !

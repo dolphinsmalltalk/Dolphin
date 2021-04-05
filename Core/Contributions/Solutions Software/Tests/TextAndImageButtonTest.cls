@@ -1,12 +1,11 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-XProgramming.SUnit.TestCase subclass: #TextAndImageButtonTest
+TestCase subclass: #TextAndImageButtonTest
 	instanceVariableNames: 'button canvas anon'
 	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-TextAndImageButtonTest guid: (Core.GUID fromString: '{fdb7cc36-fd20-49e9-b512-b324a64641e3}')!
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+TextAndImageButtonTest guid: (GUID fromString: '{fdb7cc36-fd20-49e9-b512-b324a64641e3}')!
 TextAndImageButtonTest comment: ''!
 !TextAndImageButtonTest categoriesForClass!SUnit! !
 !TextAndImageButtonTest methodsFor!

@@ -4,8 +4,7 @@ EmbeddedCheckButton subclass: #EmbeddedRadioButton
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''
-	classConstants: {}!
+	classInstanceVariableNames: ''!
 EmbeddedRadioButton guid: (GUID fromString: '{326bf942-1142-4a1d-a365-f4b0dda88ffe}')!
 EmbeddedRadioButton comment: ''!
 !EmbeddedRadioButton categoriesForClass!MVP-Views! !

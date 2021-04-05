@@ -4,8 +4,7 @@ TextEdit subclass: #FormattedTextEdit
 	instanceVariableNames: 'isFormatting messageBubble format separatorChars placeholderChar'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''
-	classConstants: {}!
+	classInstanceVariableNames: ''!
 FormattedTextEdit guid: (GUID fromString: '{da7e43da-5d5c-4332-a6d6-756996f820ee}')!
 FormattedTextEdit comment: ''!
 !FormattedTextEdit categoriesForClass!Unclassified! !

@@ -1,11 +1,10 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-UI.Examples.VideoRecording subclass: #PVRRecording
+VideoRecording subclass: #PVRRecording
 	instanceVariableNames: 'episodeTitle description channel isViewed rating'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''
-	classConstants: {}!
+	classInstanceVariableNames: ''!
 PVRRecording guid: (GUID fromString: '{afe83110-1d7c-46c1-811c-bc5a22c18ecb}')!
 PVRRecording comment: ''!
 !PVRRecording categoriesForClass!Samples! !
