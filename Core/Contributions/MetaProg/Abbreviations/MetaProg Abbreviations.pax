@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'MetaProg Abbreviations'.
-package paxVersion: 2.1;
+package paxVersion: 1;
 	basicComment: 'The MetaProg Abbreviations package adds an enhancement to all code windows. 
 
 A global abbreviations dictionary contains a bunch of (single- or multi-character) abbreviations for code fragments, where the key is the abbreviation and the value is the code fragment. Multi-line code fragments.are supported.
@@ -27,35 +27,43 @@ mailto:jpelrine@metaprog.com
 
 (Some modifications for Dolphin integration by Blair McGlashan, Object Arts, March 2003)'.
 
-package basicScriptAt: #postinstall put: 'Tools.SmalltalkWorkspace acceleratorKeyBindings: ((Tools.SmalltalkWorkspace acceleratorKeyBindings)
+package basicScriptAt: #postinstall put: 'SmalltalkWorkspace acceleratorKeyBindings: ((SmalltalkWorkspace acceleratorKeyBindings)
 			at: ''Shift+Space'' put: #expandAbbreviation;
 			at: ''Ctrl+Space'' put: #snatchAbbreviation;
 			yourself)!!'.
-package basicScriptAt: #postuninstall put: 'Tools.SmalltalkWorkspace classPool removeKey: ''Abbreviations'' ifAbsent: [].
-Tools.SmalltalkWorkspace setAdditionalKeyBindings: 
-	(Tools.SmalltalkWorkspace getAdditionalKeyBindings 
+package basicScriptAt: #postuninstall put: 'SmalltalkWorkspace classPool removeKey: ''Abbreviations'' ifAbsent: [].
+SmalltalkWorkspace setAdditionalKeyBindings: 
+	(SmalltalkWorkspace getAdditionalKeyBindings 
 		reject: [:each | #(#expandAbbreviation #snatchAbbreviation) includes: each command])'.
 
-package setMethodNames: #(
-	#(#{Tools.SmalltalkWorkspace} #expandAbbreviation)
-	#(#{Tools.SmalltalkWorkspace} #findSeparatorLeftAndKey:)
-	#(#{Tools.SmalltalkWorkspace} #snatchAbbreviation)
-	#(#{Tools.SmalltalkWorkspace class} #abbreviations)
-	#(#{Tools.SmalltalkWorkspace class} #defaultAbbreviations)
-).
+package methodNames
+	add: #SmalltalkWorkspace -> #expandAbbreviation;
+	add: #SmalltalkWorkspace -> #findSeparatorLeftAndKey:;
+	add: #SmalltalkWorkspace -> #snatchAbbreviation;
+	add: 'SmalltalkWorkspace class' -> #abbreviations;
+	add: 'SmalltalkWorkspace class' -> #defaultAbbreviations;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
 
 package setPrerequisites: #(
 	'..\..\..\Object Arts\Dolphin\IDE\Base\Development System'
 	'..\..\..\Object Arts\Dolphin\Base\Dolphin'
 	'..\..\..\Object Arts\Dolphin\Base\Dolphin Message Box'
-	'..\..\..\Object Arts\Dolphin\MVP\Presenters\Prompters\Dolphin Prompter'
-).
+	'..\..\..\Object Arts\Dolphin\MVP\Presenters\Prompters\Dolphin Prompter').
 
 package!
 
+"Global Aliases"!
+
+
 "Loose Methods"!
 
-!Tools.SmalltalkWorkspace methodsFor!
+!SmalltalkWorkspace methodsFor!
 
 expandAbbreviation
 	| startAssoc replace end start abbrev |
@@ -98,17 +106,21 @@ snatchAbbreviation
 				[(key occurrencesOf: $:) > 0 
 					ifTrue: [^MessageBox warning: 'Do not enter an abbreviation containing a colon.'].
 				self class abbreviations at: key put: text]! !
-!Tools.SmalltalkWorkspace categoriesFor: #expandAbbreviation!commands!private! !
-!Tools.SmalltalkWorkspace categoriesFor: #findSeparatorLeftAndKey:!helpers!private! !
-!Tools.SmalltalkWorkspace categoriesFor: #snatchAbbreviation!commands!private! !
+!SmalltalkWorkspace categoriesFor: #expandAbbreviation!commands!private! !
+!SmalltalkWorkspace categoriesFor: #findSeparatorLeftAndKey:!helpers!private! !
+!SmalltalkWorkspace categoriesFor: #snatchAbbreviation!commands!private! !
 
-!Tools.SmalltalkWorkspace class methodsFor!
+!SmalltalkWorkspace class methodsFor!
 
 abbreviations
-	| pool |
-	pool := ##(self) classPool.
-	^(pool at: 'Abbreviations' ifAbsent: []) 
-		ifNil: [pool at: 'Abbreviations' put: self defaultAbbreviations]!
+	^((##(self) localBindingFor: 'Abbreviations')
+		ifNil: 
+			[| newVar |
+			newVar := VariableBinding key: 'Abbreviations' value: self defaultAbbreviations.
+			newVar isClassVariable: true.
+			self basicAddBinding: newVar.
+			newVar])
+			value!
 
 defaultAbbreviations
 	^(Dictionary new)
@@ -140,8 +152,8 @@ defaultAbbreviations
 		at: 'abb' put: 'SmalltalkWorkspace abbreviations inspect';
 		shrink;
 		yourself! !
-!Tools.SmalltalkWorkspace class categoriesFor: #abbreviations!constants!development!public! !
-!Tools.SmalltalkWorkspace class categoriesFor: #defaultAbbreviations!constants!development!private! !
+!SmalltalkWorkspace class categoriesFor: #abbreviations!constants!development!public! !
+!SmalltalkWorkspace class categoriesFor: #defaultAbbreviations!constants!development!private! !
 
 "End of package definition"!
 
