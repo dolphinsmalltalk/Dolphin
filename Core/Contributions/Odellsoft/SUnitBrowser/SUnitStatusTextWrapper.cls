@@ -4,8 +4,7 @@ SUnitAbsWrapper subclass: #SUnitStatusTextWrapper
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''
-	classConstants: {}!
+	classInstanceVariableNames: ''!
 SUnitStatusTextWrapper guid: (GUID fromString: '{a7174fb3-d519-4e52-9a7c-d777937cad5f}')!
 SUnitStatusTextWrapper comment: ''!
 !SUnitStatusTextWrapper categoriesForClass!Unclassified! !

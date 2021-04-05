@@ -4,8 +4,7 @@ Object subclass: #SUnitBrowserResult
 	instanceVariableNames: 'testResult model failures errors passed'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''
-	classConstants: {}!
+	classInstanceVariableNames: ''!
 SUnitBrowserResult guid: (GUID fromString: '{ca60c917-290b-444c-b572-cd6c8a99d198}')!
 SUnitBrowserResult comment: ''!
 !SUnitBrowserResult categoriesForClass!Unclassified! !

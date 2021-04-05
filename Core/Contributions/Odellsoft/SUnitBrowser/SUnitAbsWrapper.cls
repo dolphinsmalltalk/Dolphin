@@ -4,8 +4,7 @@ Object subclass: #SUnitAbsWrapper
 	instanceVariableNames: 'model subject'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''
-	classConstants: {}!
+	classInstanceVariableNames: ''!
 SUnitAbsWrapper guid: (GUID fromString: '{d5b2a9f9-20ff-4e62-9b3f-5fedaa755651}')!
 SUnitAbsWrapper comment: ''!
 !SUnitAbsWrapper categoriesForClass!Unclassified! !

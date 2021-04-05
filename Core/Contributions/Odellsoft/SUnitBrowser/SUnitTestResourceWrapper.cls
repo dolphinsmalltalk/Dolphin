@@ -4,8 +4,7 @@ SUnitAbsWrapper subclass: #SUnitTestResourceWrapper
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''
-	classConstants: {}!
+	classInstanceVariableNames: ''!
 SUnitTestResourceWrapper guid: (GUID fromString: '{e435e984-8d6c-44e8-8a7f-7341afbe2edd}')!
 SUnitTestResourceWrapper comment: ''!
 !SUnitTestResourceWrapper categoriesForClass!Unclassified! !
