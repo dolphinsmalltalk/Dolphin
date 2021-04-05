@@ -113,14 +113,20 @@ snatchAbbreviation
 !SmalltalkWorkspace class methodsFor!
 
 abbreviations
-	^((##(self) localBindingFor: 'Abbreviations')
+	| abbreviationsVar |
+	abbreviationsVar := (##(self) localBindingFor: 'Abbreviations')
+				ifNil: 
+					[| newVar |
+					newVar := VariableBinding key: 'Abbreviations' value: self defaultAbbreviations.
+					newVar isClassVariable: true.
+					self basicAddBinding: newVar.
+					newVar].
+	^abbreviationsVar value
 		ifNil: 
-			[| newVar |
-			newVar := VariableBinding key: 'Abbreviations' value: self defaultAbbreviations.
-			newVar isClassVariable: true.
-			self basicAddBinding: newVar.
-			newVar])
-			value!
+			[| defaults |
+			defaults := self defaultAbbreviations.
+			abbreviationsVar value: defaults.
+			defaults]!
 
 defaultAbbreviations
 	^(Dictionary new)
