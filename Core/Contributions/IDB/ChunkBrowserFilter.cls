@@ -4,8 +4,7 @@ Model subclass: #ChunkBrowserFilter
 	instanceVariableNames: 'selectedChunkTypes selectedComparisonTypes restrictionRange restrictionClass restrictingMostRecent restrictingPicked'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''
-	classConstants: {}!
+	classInstanceVariableNames: ''!
 ChunkBrowserFilter guid: (GUID fromString: '{cca89e53-eee3-495a-915f-463f69c7009a}')!
 ChunkBrowserFilter comment: 'See [DolphinImageFolder]/Idb/Documentation for details
 

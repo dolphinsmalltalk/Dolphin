@@ -4,8 +4,7 @@ Bitmap subclass: #DeviceIndependentBitmap
 	instanceVariableNames: 'depth bitmapStruct bitmapInfoStruct bitmapInfoHeaderStruct dibSectionStruct'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''
-	classConstants: {}!
+	classInstanceVariableNames: ''!
 DeviceIndependentBitmap guid: (GUID fromString: '{48f23686-5426-11d3-998b-bca753d3b065}')!
 DeviceIndependentBitmap comment: 'See [DolphinImageFolder]/Idb/Documentation for details
 

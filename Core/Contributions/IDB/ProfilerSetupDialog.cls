@@ -4,8 +4,7 @@ Dialog subclass: #ProfilerSetupDialog
 	instanceVariableNames: ''
 	classVariableNames: 'IsCollect IsOn ProfiledBlock ProfiledText ProfilingInterval SampleSetName SamplingInterval'
 	poolDictionaries: ''
-	classInstanceVariableNames: ''
-	classConstants: {}!
+	classInstanceVariableNames: ''!
 ProfilerSetupDialog guid: (GUID fromString: '{5bc9a7a0-5833-490b-b342-c0086dcf2ac1}')!
 ProfilerSetupDialog comment: 'See [DolphinImageFolder]/Idb/Documentation for details
 

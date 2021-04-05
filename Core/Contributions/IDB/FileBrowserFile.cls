@@ -4,8 +4,7 @@ FileBrowserAbstract subclass: #FileBrowserFile
 	instanceVariableNames: 'size type timeStamp'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''
-	classConstants: {}!
+	classInstanceVariableNames: ''!
 FileBrowserFile guid: (GUID fromString: '{782ed51a-5423-11d3-998b-bca753d3b065}')!
 FileBrowserFile comment: 'See [DolphinImageFolder]/Idb/Documentation for details
 

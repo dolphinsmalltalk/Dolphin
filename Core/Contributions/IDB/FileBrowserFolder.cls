@@ -4,8 +4,7 @@ FileBrowserAbstract subclass: #FileBrowserFolder
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''
-	classConstants: {}!
+	classInstanceVariableNames: ''!
 FileBrowserFolder guid: (GUID fromString: '{782ed51b-5423-11d3-998b-bca753d3b065}')!
 FileBrowserFolder comment: 'See [DolphinImageFolder]/Idb/Documentation for details
 

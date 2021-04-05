@@ -4,8 +4,7 @@ ProfilerPresenter subclass: #ProfilerTreesPresenter
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''
-	classConstants: {}!
+	classInstanceVariableNames: ''!
 ProfilerTreesPresenter guid: (GUID fromString: '{425d0eb6-542e-11d3-998b-d5ca2c3c1d61}')!
 ProfilerTreesPresenter comment: 'See [DolphinImageFolder]/Idb/Documentation for details
 

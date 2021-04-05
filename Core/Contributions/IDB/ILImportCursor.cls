@@ -4,8 +4,7 @@ ILImportIcon subclass: #ILImportCursor
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''
-	classConstants: {}!
+	classInstanceVariableNames: ''!
 ILImportCursor guid: (GUID fromString: '{7cfee127-28c8-488d-a83b-2a8d6e1f6fa2}')!
 ILImportCursor comment: 'See [DolphinImageFolder]/Idb/Documentation for details
 

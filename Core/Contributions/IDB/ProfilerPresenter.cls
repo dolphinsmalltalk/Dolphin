@@ -4,8 +4,7 @@ Presenter subclass: #ProfilerPresenter
 	instanceVariableNames: 'percentageFilter dolphinFilter selectorFilter'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''
-	classConstants: {}!
+	classInstanceVariableNames: ''!
 ProfilerPresenter guid: (GUID fromString: '{425d0eb3-542e-11d3-998b-d5ca2c3c1d61}')!
 ProfilerPresenter comment: 'See [DolphinImageFolder]/Idb/Documentation for details
 

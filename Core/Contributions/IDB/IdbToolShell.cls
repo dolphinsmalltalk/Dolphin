@@ -4,8 +4,7 @@ IdbShell subclass: #IdbToolShell
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''
-	classConstants: {}!
+	classInstanceVariableNames: ''!
 IdbToolShell guid: (GUID fromString: '{d5a39e13-1a86-4f66-b67f-c7875188c304}')!
 IdbToolShell comment: 'See [DolphinImageFolder]/Idb/Documentation for details
 

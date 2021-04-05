@@ -3,10 +3,9 @@
 ChunkBrowserExpressionChunk subclass: #ChunkBrowserClassGUIDChunk
 	instanceVariableNames: 'id'
 	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-ChunkBrowserClassGUIDChunk guid: (Core.GUID fromString: '{9b98323b-e586-4209-a7bc-11eaf78617b6}')!
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ChunkBrowserClassGUIDChunk guid: (GUID fromString: '{9b98323b-e586-4209-a7bc-11eaf78617b6}')!
 ChunkBrowserClassGUIDChunk comment: 'See [DolphinImageFolder]/Idb/Documentation for details
 
 (C) 2006 Ian Bartholomew

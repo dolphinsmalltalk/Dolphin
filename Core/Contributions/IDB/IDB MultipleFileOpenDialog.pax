@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'IDB MultipleFileOpenDialog'.
-package paxVersion: 2;
+package paxVersion: 1;
 	basicComment: 'Multipe File Open Dialog
 Version 6a - May 2005
 For Version 6 of Dolphin Smalltalk
@@ -13,13 +13,19 @@ Public Domain Freeware
 package basicPackageVersion: '6a'.
 
 
-package setClassNames: #(
-	#{MultipleFileOpenDialog}
-).
+package classNames
+	add: #MultipleFileOpenDialog;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
 
 package setPrerequisites: #(
-	'..\..\Object Arts\Dolphin\MVP\Dialogs\Common\Dolphin Common Dialogs'
-).
+	'..\..\Object Arts\Dolphin\Base\Dolphin'
+	'..\..\Object Arts\Dolphin\MVP\Dialogs\Common\Dolphin Common Dialogs').
 
 package!
 
@@ -29,8 +35,12 @@ FileOpenDialog subclass: #MultipleFileOpenDialog
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''
-	classConstants: {}!
+	classInstanceVariableNames: ''!
+
+"Global Aliases"!
+
+
+"Loose Methods"!
 
 "End of package definition"!
 

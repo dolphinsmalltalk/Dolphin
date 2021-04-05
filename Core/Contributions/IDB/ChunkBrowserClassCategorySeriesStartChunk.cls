@@ -4,8 +4,7 @@ ChunkBrowserSeriesStartChunk subclass: #ChunkBrowserClassCategorySeriesStartChun
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''
-	classConstants: {}!
+	classInstanceVariableNames: ''!
 ChunkBrowserClassCategorySeriesStartChunk guid: (GUID fromString: '{515a3ffc-2d8e-45d5-bac9-8a44eea67142}')!
 ChunkBrowserClassCategorySeriesStartChunk comment: 'See [DolphinImageFolder]/Idb/Documentation for details
 

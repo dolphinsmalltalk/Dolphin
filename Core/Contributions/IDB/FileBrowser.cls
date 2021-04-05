@@ -4,8 +4,7 @@ IdbToolShell subclass: #FileBrowser
 	instanceVariableNames: 'folders files text hex image html hexEnabled removeCr currentRootFolder showImageAs'
 	classVariableNames: 'HexEnabled HexFont RemoveCr RootFolder TextFont Warnings'
 	poolDictionaries: ''
-	classInstanceVariableNames: ''
-	classConstants: {}!
+	classInstanceVariableNames: ''!
 FileBrowser guid: (GUID fromString: '{782ed51c-5423-11d3-998b-bca753d3b065}')!
 FileBrowser comment: 'See [DolphinImageFolder]/Idb/Documentation for details
 

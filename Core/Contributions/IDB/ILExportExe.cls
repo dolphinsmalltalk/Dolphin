@@ -4,8 +4,7 @@ ILExportIcon subclass: #ILExportExe
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''
-	classConstants: {}!
+	classInstanceVariableNames: ''!
 ILExportExe guid: (GUID fromString: '{c4413a4b-200d-48a9-b406-16b894b6c3ce}')!
 ILExportExe comment: 'See [DolphinImageFolder]/Idb/Documentation for details
 

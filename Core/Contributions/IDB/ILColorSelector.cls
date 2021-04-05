@@ -4,8 +4,7 @@ View subclass: #ILColorSelector
 	instanceVariableNames: 'colorTable dum2 dum3 dum4 dum5'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''
-	classConstants: {}!
+	classInstanceVariableNames: ''!
 ILColorSelector guid: (GUID fromString: '{98275153-d23a-4a14-a9f2-1ff232b7dc14}')!
 ILColorSelector comment: 'See [DolphinImageFolder]/Idb/Documentation for details
 

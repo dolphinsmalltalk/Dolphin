@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'IDB Profiler'.
-package paxVersion: 2;
+package paxVersion: 1;
 	basicComment: 'Sampling Stack Profiler
 Version 6a - May 2005
 For Version 6 of Dolphin Smalltalk
@@ -15,32 +15,38 @@ package basicPackageVersion: '6a'.
 package basicScriptAt: #preuninstall put: 'Profiler reset.
 ProfilerSampleSetManager reset'.
 
-package setClassNames: #(
-	#{ProfileBrowser}
-	#{Profiler}
-	#{ProfilerClassListPresenter}
-	#{ProfilerFrame}
-	#{ProfilerListItem}
-	#{ProfilerListsPresenter}
-	#{ProfilerPresenter}
-	#{ProfilerSample}
-	#{ProfilerSampleSet}
-	#{ProfilerSampleSetManager}
-	#{ProfilerSamplesPresenter}
-	#{ProfilerSelectorListPresenter}
-	#{ProfilerSetupDialog}
-	#{ProfilerTallyTreePresenter}
-	#{ProfilerTimeTreePresenter}
-	#{ProfilerTreeNode}
-	#{ProfilerTreesPresenter}
-).
+package classNames
+	add: #ProfileBrowser;
+	add: #Profiler;
+	add: #ProfilerClassListPresenter;
+	add: #ProfilerFrame;
+	add: #ProfilerListItem;
+	add: #ProfilerListsPresenter;
+	add: #ProfilerPresenter;
+	add: #ProfilerSample;
+	add: #ProfilerSampleSet;
+	add: #ProfilerSampleSetManager;
+	add: #ProfilerSamplesPresenter;
+	add: #ProfilerSelectorListPresenter;
+	add: #ProfilerSetupDialog;
+	add: #ProfilerTallyTreePresenter;
+	add: #ProfilerTimeTreePresenter;
+	add: #ProfilerTreeNode;
+	add: #ProfilerTreesPresenter;
+	yourself.
 
-package setMethodNames: #(
-	#(#{ClassDescription} #profilerIconIndex)
-	#(#{CompiledMethod} #profilerIconIndex)
-	#(#{Number} #asPercentageOf:)
-	#(#{Process} #stackDepthFrom:)
-).
+package methodNames
+	add: #ClassDescription -> #profilerIconIndex;
+	add: #CompiledMethod -> #profilerIconIndex;
+	add: #Number -> #asPercentageOf:;
+	add: #Process -> #stackDepthFrom:;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
 
 package setPrerequisites: #(
 	'..\..\Object Arts\Dolphin\IDE\Base\Development System'
@@ -48,6 +54,7 @@ package setPrerequisites: #(
 	'..\..\Object Arts\Dolphin\MVP\Base\Dolphin Basic Geometry'
 	'..\..\Object Arts\Dolphin\MVP\Presenters\Boolean\Dolphin Boolean Presenter'
 	'..\..\Object Arts\Dolphin\MVP\Views\Cards\Dolphin Card Containers'
+	'..\..\Object Arts\Dolphin\MVP\Views\Buttons\Dolphin Check Buttons'
 	'..\..\Object Arts\Dolphin\MVP\Views\Common Controls\Dolphin Common Controls'
 	'..\..\Object Arts\Dolphin\MVP\Views\Control Bars\Dolphin Control Bars'
 	'..\..\Object Arts\Dolphin\MVP\Models\List\Dolphin List Models'
@@ -56,17 +63,17 @@ package setPrerequisites: #(
 	'..\..\Object Arts\Dolphin\MVP\Base\Dolphin MVP Base'
 	'..\..\Object Arts\Dolphin\MVP\Presenters\Number\Dolphin Number Presenter'
 	'..\..\Object Arts\Dolphin\MVP\Dialogs\Progress\Dolphin Progress Dialog'
+	'..\..\Object Arts\Dolphin\MVP\Views\Buttons\Dolphin Push Buttons'
 	'..\..\Object Arts\Dolphin\MVP\Views\Scintilla\Dolphin Scintilla View'
-	'..\..\Object Arts\Dolphin\MVP\Views\Scintilla\Dolphin Scintilla View (Old Names)'
 	'..\..\Object Arts\Dolphin\MVP\Views\Scrollbars\Dolphin Scrollbars'
+	'..\..\Object Arts\Dolphin\MVP\Views\Splitter\Dolphin Splitter Control'
 	'..\..\Object Arts\Dolphin\MVP\Presenters\Text\Dolphin Text Presenter'
 	'..\..\Object Arts\Dolphin\MVP\Icons\Dolphin Text Tile Icons'
 	'..\..\Object Arts\Dolphin\MVP\Models\Tree\Dolphin Tree Models'
 	'..\..\Object Arts\Dolphin\MVP\Presenters\Tree\Dolphin Tree Presenter'
 	'..\..\Object Arts\Dolphin\MVP\Type Converters\Dolphin Type Converters'
 	'..\..\Object Arts\Dolphin\MVP\Models\Value\Dolphin Value Models'
-	'IDB Common'
-).
+	'IDB Common').
 
 package!
 
@@ -76,104 +83,90 @@ Object subclass: #Profiler
 	instanceVariableNames: 'samplingInterval isSampling'
 	classVariableNames: 'Default'
 	poolDictionaries: ''
-	classInstanceVariableNames: ''
-	classConstants: {}!
+	classInstanceVariableNames: ''!
 Object subclass: #ProfilerFrame
 	instanceVariableNames: 'compiledCode receiverClass ip isBlock'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''
-	classConstants: {}!
+	classInstanceVariableNames: ''!
 Object subclass: #ProfilerListItem
 	instanceVariableNames: 'object tallyAll tallyActive timeAll timeActive'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''
-	classConstants: {}!
+	classInstanceVariableNames: ''!
 Object subclass: #ProfilerSample
 	instanceVariableNames: 'root leaf elapsedTime'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''
-	classConstants: {}!
+	classInstanceVariableNames: ''!
 Object subclass: #ProfilerSampleSet
 	instanceVariableNames: 'name root isActive samples samplingCount samplingTimeStamp samplesElapsedTime samplesClasses samplesSelectors'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''
-	classConstants: {}!
+	classInstanceVariableNames: ''!
 Object subclass: #ProfilerSampleSetManager
 	instanceVariableNames: 'sampleSets'
 	classVariableNames: 'Default'
 	poolDictionaries: ''
-	classInstanceVariableNames: ''
-	classConstants: {}!
+	classInstanceVariableNames: ''!
 Presenter subclass: #ProfilerPresenter
 	instanceVariableNames: 'percentageFilter dolphinFilter selectorFilter'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''
-	classConstants: {}!
+	classInstanceVariableNames: ''!
 Presenter subclass: #ProfilerSamplesPresenter
 	instanceVariableNames: 'selectorFilter filterTarget index frame'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''
-	classConstants: {}!
+	classInstanceVariableNames: ''!
 ProfilerPresenter subclass: #ProfilerListsPresenter
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''
-	classConstants: {}!
+	classInstanceVariableNames: ''!
 ProfilerPresenter subclass: #ProfilerTreesPresenter
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''
-	classConstants: {}!
+	classInstanceVariableNames: ''!
 ProfilerListsPresenter subclass: #ProfilerClassListPresenter
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''
-	classConstants: {}!
+	classInstanceVariableNames: ''!
 ProfilerListsPresenter subclass: #ProfilerSelectorListPresenter
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''
-	classConstants: {}!
+	classInstanceVariableNames: ''!
 ProfilerTreesPresenter subclass: #ProfilerTallyTreePresenter
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''
-	classConstants: {}!
+	classInstanceVariableNames: ''!
 ProfilerTreesPresenter subclass: #ProfilerTimeTreePresenter
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''
-	classConstants: {}!
+	classInstanceVariableNames: ''!
 Dialog subclass: #ProfilerSetupDialog
 	instanceVariableNames: ''
 	classVariableNames: 'IsCollect IsOn ProfiledBlock ProfiledText ProfilingInterval SampleSetName SamplingInterval'
 	poolDictionaries: ''
-	classInstanceVariableNames: ''
-	classConstants: {}!
+	classInstanceVariableNames: ''!
 IdbToolShell subclass: #ProfileBrowser
 	instanceVariableNames: 'filterPercentSymbol filterDolphin filterSelector'
 	classVariableNames: 'ShowCounts'
 	poolDictionaries: ''
-	classInstanceVariableNames: ''
-	classConstants: {}!
+	classInstanceVariableNames: ''!
 TreeNode subclass: #ProfilerTreeNode
 	instanceVariableNames: 'tally time classes selectors'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''
-	classConstants: {}!
+	classInstanceVariableNames: ''!
+
+"Global Aliases"!
+
 
 "Loose Methods"!
 

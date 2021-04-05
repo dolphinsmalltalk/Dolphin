@@ -4,8 +4,7 @@ ILExport subclass: #ILExportBitmap
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''
-	classConstants: {}!
+	classInstanceVariableNames: ''!
 ILExportBitmap guid: (GUID fromString: '{91828d5f-ba46-43ae-858e-f89635cf232e}')!
 ILExportBitmap comment: 'See [DolphinImageFolder]/Idb/Documentation for details
 

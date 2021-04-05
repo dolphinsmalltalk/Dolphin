@@ -4,8 +4,7 @@ Object subclass: #ILImage
 	instanceVariableNames: 'extent colorsUsed colorsUsedCount image bitmapCache hotSpot'
 	classVariableNames: 'TransparentRGB'
 	poolDictionaries: 'Win32Constants'
-	classInstanceVariableNames: ''
-	classConstants: {}!
+	classInstanceVariableNames: ''!
 ILImage guid: (GUID fromString: '{5402d9a6-19ee-41a2-8586-d104cd17118c}')!
 ILImage comment: 'See [DolphinImageFolder]/Idb/Documentation for details
 

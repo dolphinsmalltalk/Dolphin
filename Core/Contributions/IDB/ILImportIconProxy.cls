@@ -4,8 +4,7 @@ ILImportBitmapProxy subclass: #ILImportIconProxy
 	instanceVariableNames: 'useMaskBytes maskBytes colorBytes'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''
-	classConstants: {}!
+	classInstanceVariableNames: ''!
 ILImportIconProxy guid: (GUID fromString: '{85330084-1365-4af7-8325-adcedf79d38f}')!
 ILImportIconProxy comment: 'See [DolphinImageFolder]/Idb/Documentation for details
 

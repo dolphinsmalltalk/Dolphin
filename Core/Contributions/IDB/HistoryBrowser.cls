@@ -4,8 +4,7 @@ SmalltalkToolShell subclass: #HistoryBrowser
 	instanceVariableNames: 'scanner'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''
-	classConstants: {}!
+	classInstanceVariableNames: ''!
 HistoryBrowser guid: (GUID fromString: '{85db197d-2437-4a92-801b-9872fb8a2183}')!
 HistoryBrowser comment: 'Abstract superclass for the ClassHistoryBrowser and MethodHistoryBrowser
 

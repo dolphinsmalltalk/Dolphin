@@ -4,8 +4,7 @@ HistoryBrowser subclass: #ClassHistoryBrowser
 	instanceVariableNames: 'class list'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''
-	classConstants: {}!
+	classInstanceVariableNames: ''!
 ClassHistoryBrowser guid: (GUID fromString: '{30a97c72-065a-4c23-9f8e-dc13497f6eda}')!
 ClassHistoryBrowser comment: 'Searches the sources and changes files to provide a change history for a class and opens a browser on the results.
 

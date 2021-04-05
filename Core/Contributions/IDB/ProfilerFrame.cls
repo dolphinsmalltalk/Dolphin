@@ -4,8 +4,7 @@ Object subclass: #ProfilerFrame
 	instanceVariableNames: 'compiledCode receiverClass ip isBlock'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''
-	classConstants: {}!
+	classInstanceVariableNames: ''!
 ProfilerFrame guid: (GUID fromString: '{425d0eae-542e-11d3-998b-d5ca2c3c1d61}')!
 ProfilerFrame comment: 'See [DolphinImageFolder]/Idb/Documentation for details
 

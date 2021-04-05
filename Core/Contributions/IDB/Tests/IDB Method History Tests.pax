@@ -15,6 +15,7 @@ package globalAliases: (Set new
 	yourself).
 
 package setPrerequisites: #(
+	'..\..\..\Object Arts\Dolphin\Base\Dolphin'
 	'..\IDB Method History'
 	'..\..\Camp Smalltalk\SUnit\SUnit').
 

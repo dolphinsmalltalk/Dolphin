@@ -4,8 +4,7 @@ ILImage subclass: #ILEditingImage
 	instanceVariableNames: 'modified undoStack redoStack undoCollector brushCache'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''
-	classConstants: {}!
+	classInstanceVariableNames: ''!
 ILEditingImage guid: (GUID fromString: '{b234bbcf-8aaa-471d-9bbb-5463bf4d92be}')!
 ILEditingImage comment: 'See [DolphinImageFolder]/Idb/Documentation for details
 

@@ -4,8 +4,7 @@ ILExtentDialog subclass: #ILBitmapExtentDialog
 	instanceVariableNames: 'bitmapExtent'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''
-	classConstants: {}!
+	classInstanceVariableNames: ''!
 ILBitmapExtentDialog guid: (GUID fromString: '{563212bc-54f9-430c-addd-0101f3b64ec0}')!
 ILBitmapExtentDialog comment: 'See [DolphinImageFolder]/Idb/Documentation for details
 

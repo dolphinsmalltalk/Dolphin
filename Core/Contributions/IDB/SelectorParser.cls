@@ -4,8 +4,7 @@ Object subclass: #SelectorParser
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''
-	classConstants: {}!
+	classInstanceVariableNames: ''!
 SelectorParser guid: (GUID fromString: '{bcef9177-1432-4eb4-80d9-6197b30bc4ab}')!
 SelectorParser comment: 'Parse a method definition string to obtain the method''s selector.
 

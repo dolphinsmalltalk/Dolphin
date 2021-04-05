@@ -4,8 +4,7 @@ IdbToolShell subclass: #ILLibraryShell
 	instanceVariableNames: 'libraryWorkspace libraryFilename libraryStatus imageStatus modifiedStatus'
 	classVariableNames: ''
 	poolDictionaries: 'CommonDialogConstants'
-	classInstanceVariableNames: ''
-	classConstants: {}!
+	classInstanceVariableNames: ''!
 ILLibraryShell guid: (GUID fromString: '{1c83fb20-739d-43f4-89f6-026860979f42}')!
 ILLibraryShell comment: 'See [DolphinImageFolder]/Idb/Documentation for details
 

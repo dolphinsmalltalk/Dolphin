@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'IDB Method History'.
-package paxVersion: 2.1;
+package paxVersion: 1;
 	basicComment: 'Extracts and presents class/method history from the change log
 Version 7.1 - October 2005
 For Version 7.1 of Dolphin Smalltalk
@@ -17,30 +17,37 @@ Public Domain Freeware
 
 package basicPackageVersion: '6b'.
 
-package setClassNames: #(
-	#{Smalltalk.ChunkFileMethodScanner}
-	#{Smalltalk.ClassHistoryBrowser}
-	#{Smalltalk.DiffBrowser}
-	#{Smalltalk.HistoryBrowser}
-	#{Smalltalk.MethodHistoryBrowser}
-	#{Smalltalk.MethodVersion}
-	#{Smalltalk.SelectorParser}
-).
 
-package setMethodNames: #(
-	#(#{Kernel.ChunkSourceFiler} #sourceDescriptorForPosition:)
-	#(#{Kernel.CompiledMethod} #loadedVersion)
-	#(#{Kernel.CompiledMethod} #versionHistory)
-	#(#{Tools.ClassBrowserAbstract} #browseMethodHistory)
-	#(#{Tools.ClassBrowserAbstract} #browseMethodHistoryForClass)
-	#(#{Tools.ClassBrowserAbstract} #canBrowseMethodHistory)
-	#(#{Tools.ClassBrowserAbstract} #canBrowseMethodHistoryForClass)
-	#(#{Tools.Debugger} #browseMethodHistory)
-	#(#{Tools.Debugger} #canBrowseMethodHistory)
-	#(#{Tools.MethodBrowserShell} #browseMethodHistory)
-	#(#{Tools.MethodBrowserShell} #canBrowseMethodHistory)
-	#(#{Tools.SmalltalkToolShell} #queryMethodHistoryCommand:)
-).
+package classNames
+	add: #ChunkFileMethodScanner;
+	add: #ClassHistoryBrowser;
+	add: #DiffBrowser;
+	add: #HistoryBrowser;
+	add: #MethodHistoryBrowser;
+	add: #MethodVersion;
+	add: #SelectorParser;
+	yourself.
+
+package methodNames
+	add: #ChunkSourceFiler -> #sourceDescriptorForPosition:;
+	add: #ClassBrowserAbstract -> #browseMethodHistory;
+	add: #ClassBrowserAbstract -> #browseMethodHistoryForClass;
+	add: #ClassBrowserAbstract -> #canBrowseMethodHistory;
+	add: #ClassBrowserAbstract -> #canBrowseMethodHistoryForClass;
+	add: #CompiledMethod -> #loadedVersion;
+	add: #CompiledMethod -> #versionHistory;
+	add: #Debugger -> #browseMethodHistory;
+	add: #Debugger -> #canBrowseMethodHistory;
+	add: #MethodBrowserShell -> #browseMethodHistory;
+	add: #MethodBrowserShell -> #canBrowseMethodHistory;
+	add: #SmalltalkToolShell -> #queryMethodHistoryCommand:;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
 
 package setPrerequisites: #(
 	'..\..\Object Arts\Dolphin\IDE\Base\Development System'
@@ -53,69 +60,63 @@ package setPrerequisites: #(
 	'..\..\Object Arts\Dolphin\MVP\Models\List\Dolphin List Models'
 	'..\..\Object Arts\Dolphin\MVP\Presenters\List\Dolphin List Presenter'
 	'..\..\Object Arts\Dolphin\Base\Dolphin Message Box'
-	'..\..\Object Arts\Dolphin\MVP\Deprecated\Dolphin MVP (Deprecated)'
 	'..\..\Object Arts\Dolphin\MVP\Base\Dolphin MVP Base'
 	'..\..\Object Arts\Dolphin\MVP\Presenters\Number\Dolphin Number Presenter'
 	'..\..\Object Arts\Dolphin\MVP\Views\Scintilla\Dolphin Scintilla View'
-	'..\..\Object Arts\Dolphin\MVP\Views\Scintilla\Dolphin Scintilla View (Old Names)'
 	'..\..\Object Arts\Dolphin\MVP\Views\Slider\Dolphin Slider Control'
+	'..\..\Object Arts\Dolphin\MVP\Views\Splitter\Dolphin Splitter Control'
 	'..\..\Object Arts\Dolphin\MVP\Presenters\Text\Dolphin Text Presenter'
 	'..\..\Object Arts\Dolphin\MVP\Icons\Dolphin Text Tile Icons'
 	'..\..\Object Arts\Dolphin\MVP\Type Converters\Dolphin Type Converters'
 	'..\..\Object Arts\Dolphin\MVP\Models\Value\Dolphin Value Models'
-	'..\..\Object Arts\Dolphin\ActiveX\Shell\Windows Shell'
-).
+	'..\..\Object Arts\Dolphin\ActiveX\Shell\Windows Shell').
 
 package!
 
 "Class Definitions"!
 
-Core.Object subclass: #ChunkFileMethodScanner
+Object subclass: #ChunkFileMethodScanner
 	instanceVariableNames: 'readBufferSize'
 	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-Core.Object subclass: #MethodVersion
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Object subclass: #MethodVersion
 	instanceVariableNames: 'methodClass selector source sourceDescriptor'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''
-	classConstants: {}!
-Core.Object subclass: #SelectorParser
+	classInstanceVariableNames: ''!
+Object subclass: #SelectorParser
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-Tools.SmalltalkToolShell subclass: #DiffBrowser
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+SmalltalkToolShell subclass: #DiffBrowser
 	instanceVariableNames: 'diffsPresenter'
 	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-Tools.SmalltalkToolShell subclass: #HistoryBrowser
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+SmalltalkToolShell subclass: #HistoryBrowser
 	instanceVariableNames: 'scanner'
 	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
 HistoryBrowser subclass: #ClassHistoryBrowser
 	instanceVariableNames: 'class list'
 	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
 HistoryBrowser subclass: #MethodHistoryBrowser
 	instanceVariableNames: 'history class selector debugger selection slider source'
 	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+"Global Aliases"!
+
 
 "Loose Methods"!
 
-!Kernel.ChunkSourceFiler methodsFor!
+!ChunkSourceFiler methodsFor!
 
 sourceDescriptorForPosition: positionInteger 
 	"Private - Answer an <integer> source descriptor which encodes the receiver's <integer> source file
@@ -123,9 +124,9 @@ sourceDescriptorForPosition: positionInteger
 	file index must be in the range 0..15, and the position >= 0."
 
 	^self sourceDescriptorForIndex: sourceFileIndex position: positionInteger! !
-!Kernel.ChunkSourceFiler categoriesFor: #sourceDescriptorForPosition:!private!source filing-file in! !
+!ChunkSourceFiler categoriesFor: #sourceDescriptorForPosition:!private!source filing-file in! !
 
-!Tools.ClassBrowserAbstract methodsFor!
+!ClassBrowserAbstract methodsFor!
 
 browseMethodHistory
 	#idbAdded.
@@ -146,12 +147,12 @@ canBrowseMethodHistory
 canBrowseMethodHistoryForClass
 	#idbAdded.
 	^self hasClassSelected! !
-!Tools.ClassBrowserAbstract categoriesFor: #browseMethodHistory!accessing!commands!idb goodies!private! !
-!Tools.ClassBrowserAbstract categoriesFor: #browseMethodHistoryForClass!commands!idb goodies!public! !
-!Tools.ClassBrowserAbstract categoriesFor: #canBrowseMethodHistory!idb goodies!private!testing! !
-!Tools.ClassBrowserAbstract categoriesFor: #canBrowseMethodHistoryForClass!idb goodies!private!testing! !
+!ClassBrowserAbstract categoriesFor: #browseMethodHistory!accessing!commands!idb goodies!private! !
+!ClassBrowserAbstract categoriesFor: #browseMethodHistoryForClass!commands!idb goodies!public! !
+!ClassBrowserAbstract categoriesFor: #canBrowseMethodHistory!idb goodies!private!testing! !
+!ClassBrowserAbstract categoriesFor: #canBrowseMethodHistoryForClass!idb goodies!private!testing! !
 
-!Kernel.CompiledMethod methodsFor!
+!CompiledMethod methodsFor!
 
 loadedVersion
 
@@ -162,10 +163,10 @@ versionHistory
 	"Answer a collection of MethodVersions representing the history of the receiver in this image"
 
 	^Smalltalk.ChunkFileMethodScanner forMethod: self selector inClass: self methodClass! !
-!Kernel.CompiledMethod categoriesFor: #loadedVersion!accessing!public! !
-!Kernel.CompiledMethod categoriesFor: #versionHistory!accessing!public! !
+!CompiledMethod categoriesFor: #loadedVersion!accessing!public! !
+!CompiledMethod categoriesFor: #versionHistory!accessing!public! !
 
-!Tools.Debugger methodsFor!
+!Debugger methodsFor!
 
 browseMethodHistory
 	"Open a browser on the history of the current method"
@@ -179,10 +180,10 @@ browseMethodHistory
 canBrowseMethodHistory
 	#idbAdded.
 	^self hasEditableMethodSelected! !
-!Tools.Debugger categoriesFor: #browseMethodHistory!commands!idb goodies!private! !
-!Tools.Debugger categoriesFor: #canBrowseMethodHistory!accessing!idb goodies!private!testing! !
+!Debugger categoriesFor: #browseMethodHistory!commands!idb goodies!private! !
+!Debugger categoriesFor: #canBrowseMethodHistory!accessing!idb goodies!private!testing! !
 
-!Tools.MethodBrowserShell methodsFor!
+!MethodBrowserShell methodsFor!
 
 browseMethodHistory
 	#idbAdded.
@@ -192,10 +193,10 @@ browseMethodHistory
 canBrowseMethodHistory
 	#idbAdded.
 	^self browser hasMethodSelected! !
-!Tools.MethodBrowserShell categoriesFor: #browseMethodHistory!accessing!commands!idb goodies!private! !
-!Tools.MethodBrowserShell categoriesFor: #canBrowseMethodHistory!accessing!idb goodies!private!testing! !
+!MethodBrowserShell categoriesFor: #browseMethodHistory!accessing!commands!idb goodies!private! !
+!MethodBrowserShell categoriesFor: #canBrowseMethodHistory!accessing!idb goodies!private!testing! !
 
-!Tools.SmalltalkToolShell methodsFor!
+!SmalltalkToolShell methodsFor!
 
 queryMethodHistoryCommand: aCommandQuery 
 	| selector |
@@ -209,7 +210,7 @@ queryMethodHistoryCommand: aCommandQuery
 			[aCommandQuery isEnabled: self canBrowseMethodHistoryForClass.
 			^true].
 	^false! !
-!Tools.SmalltalkToolShell categoriesFor: #queryMethodHistoryCommand:!commands!private! !
+!SmalltalkToolShell categoriesFor: #queryMethodHistoryCommand:!commands!private! !
 
 "End of package definition"!
 

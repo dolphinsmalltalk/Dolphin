@@ -4,8 +4,7 @@ Object subclass: #ILExport
 	instanceVariableNames: 'images colorTable bitmap'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''
-	classConstants: {}!
+	classInstanceVariableNames: ''!
 ILExport guid: (GUID fromString: '{9a0859d6-5add-4465-b138-4f154e114e37}')!
 ILExport comment: 'See [DolphinImageFolder]/Idb/Documentation for details
 

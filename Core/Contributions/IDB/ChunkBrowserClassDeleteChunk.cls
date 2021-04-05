@@ -4,8 +4,7 @@ ChunkBrowserExpressionChunk subclass: #ChunkBrowserClassDeleteChunk
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''
-	classConstants: {}!
+	classInstanceVariableNames: ''!
 ChunkBrowserClassDeleteChunk guid: (GUID fromString: '{36c693ce-1906-4999-9626-62d3460757fb}')!
 ChunkBrowserClassDeleteChunk comment: 'See [DolphinImageFolder]/Idb/Documentation for details
 
