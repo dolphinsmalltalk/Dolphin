@@ -1,34 +1,32 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-OS.Win32Structure subclass: #'OS.STARTUPINFOW'
+Win32Structure subclass: #STARTUPINFOW
 	instanceVariableNames: 'title desktop stdin stdout stderr'
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {
-		'_OffsetOf_cbReserved2' -> 16r32.
-		'_OffsetOf_dwFillAttribute' -> 16r28.
-		'_OffsetOf_dwFlags' -> 16r2C.
-		'_OffsetOf_dwSize' -> 16r0.
-		'_OffsetOf_dwX' -> 16r10.
-		'_OffsetOf_dwXCountChars' -> 16r20.
-		'_OffsetOf_dwXSize' -> 16r18.
-		'_OffsetOf_dwY' -> 16r14.
-		'_OffsetOf_dwYCountChars' -> 16r24.
-		'_OffsetOf_dwYSize' -> 16r1C.
-		'_OffsetOf_hStdError' -> 16r40.
-		'_OffsetOf_hStdInput' -> 16r38.
-		'_OffsetOf_hStdOutput' -> 16r3C.
-		'_OffsetOf_lpDesktop' -> 16r8.
-		'_OffsetOf_lpReserved' -> 16r4.
-		'_OffsetOf_lpReserved2' -> 16r34.
-		'_OffsetOf_lpTitle' -> 16rC.
-		'_OffsetOf_wShowWindow' -> 16r30
-	}!
-OS.STARTUPINFOW guid: (Core.GUID fromString: '{f44c9146-2b3f-11d3-8368-7a8b5a000000}')!
-OS.STARTUPINFOW comment: ''!
-!OS.STARTUPINFOW categoriesForClass!External-Data-Structured-Win32! !
-!OS.STARTUPINFOW methodsFor!
+	classVariableNames: '_OffsetOf_cbReserved2 _OffsetOf_dwFillAttribute _OffsetOf_dwFlags _OffsetOf_dwSize _OffsetOf_dwX _OffsetOf_dwXCountChars _OffsetOf_dwXSize _OffsetOf_dwY _OffsetOf_dwYCountChars _OffsetOf_dwYSize _OffsetOf_hStdError _OffsetOf_hStdInput _OffsetOf_hStdOutput _OffsetOf_lpDesktop _OffsetOf_lpReserved _OffsetOf_lpReserved2 _OffsetOf_lpTitle _OffsetOf_wShowWindow'
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+STARTUPINFOW guid: (GUID fromString: '{f44c9146-2b3f-11d3-8368-7a8b5a000000}')!
+STARTUPINFOW addClassConstant: '_OffsetOf_cbReserved2' value: 16r32!
+STARTUPINFOW addClassConstant: '_OffsetOf_dwFillAttribute' value: 16r28!
+STARTUPINFOW addClassConstant: '_OffsetOf_dwFlags' value: 16r2C!
+STARTUPINFOW addClassConstant: '_OffsetOf_dwSize' value: 16r0!
+STARTUPINFOW addClassConstant: '_OffsetOf_dwX' value: 16r10!
+STARTUPINFOW addClassConstant: '_OffsetOf_dwXCountChars' value: 16r20!
+STARTUPINFOW addClassConstant: '_OffsetOf_dwXSize' value: 16r18!
+STARTUPINFOW addClassConstant: '_OffsetOf_dwY' value: 16r14!
+STARTUPINFOW addClassConstant: '_OffsetOf_dwYCountChars' value: 16r24!
+STARTUPINFOW addClassConstant: '_OffsetOf_dwYSize' value: 16r1C!
+STARTUPINFOW addClassConstant: '_OffsetOf_hStdError' value: 16r40!
+STARTUPINFOW addClassConstant: '_OffsetOf_hStdInput' value: 16r38!
+STARTUPINFOW addClassConstant: '_OffsetOf_hStdOutput' value: 16r3C!
+STARTUPINFOW addClassConstant: '_OffsetOf_lpDesktop' value: 16r8!
+STARTUPINFOW addClassConstant: '_OffsetOf_lpReserved' value: 16r4!
+STARTUPINFOW addClassConstant: '_OffsetOf_lpReserved2' value: 16r34!
+STARTUPINFOW addClassConstant: '_OffsetOf_lpTitle' value: 16rC!
+STARTUPINFOW addClassConstant: '_OffsetOf_wShowWindow' value: 16r30!
+STARTUPINFOW comment: ''!
+!STARTUPINFOW categoriesForClass!External-Data-Structured-Win32! !
+!STARTUPINFOW methodsFor!
 
 desktop: aString
 	"Set the desktop identifier for the receiver to aString. We store down the String
@@ -159,32 +157,32 @@ wShowWindow: anInteger
 	"Set the receiver's 'wShowWindow' field to the value of the argument, anInteger"
 
 	bytes wordAtOffset: _OffsetOf_wShowWindow put: anInteger! !
-!OS.STARTUPINFOW categoriesFor: #desktop:!accessing!public! !
-!OS.STARTUPINFOW categoriesFor: #dwFlags!**compiled accessors**!public! !
-!OS.STARTUPINFOW categoriesFor: #dwFlags:!**compiled accessors**!public! !
-!OS.STARTUPINFOW categoriesFor: #dwSize:!**compiled accessors**!public! !
-!OS.STARTUPINFOW categoriesFor: #dwX!**compiled accessors**!public! !
-!OS.STARTUPINFOW categoriesFor: #dwX:!**compiled accessors**!public! !
-!OS.STARTUPINFOW categoriesFor: #dwXSize!**compiled accessors**!public! !
-!OS.STARTUPINFOW categoriesFor: #dwXSize:!**compiled accessors**!public! !
-!OS.STARTUPINFOW categoriesFor: #dwY!**compiled accessors**!public! !
-!OS.STARTUPINFOW categoriesFor: #dwY:!**compiled accessors**!public! !
-!OS.STARTUPINFOW categoriesFor: #dwYSize!**compiled accessors**!public! !
-!OS.STARTUPINFOW categoriesFor: #dwYSize:!**compiled accessors**!public! !
-!OS.STARTUPINFOW categoriesFor: #hStdError:!**compiled accessors**!public! !
-!OS.STARTUPINFOW categoriesFor: #hStdInput:!**compiled accessors**!public! !
-!OS.STARTUPINFOW categoriesFor: #hStdOutput:!**compiled accessors**!public! !
-!OS.STARTUPINFOW categoriesFor: #lpDesktop:!**compiled accessors**!public! !
-!OS.STARTUPINFOW categoriesFor: #lpTitle!**compiled accessors**!public! !
-!OS.STARTUPINFOW categoriesFor: #lpTitle:!**compiled accessors**!public! !
-!OS.STARTUPINFOW categoriesFor: #stderr:!accessing!public! !
-!OS.STARTUPINFOW categoriesFor: #stdin:!accessing!public! !
-!OS.STARTUPINFOW categoriesFor: #stdout:!accessing!public! !
-!OS.STARTUPINFOW categoriesFor: #title:!accessing!public! !
-!OS.STARTUPINFOW categoriesFor: #wShowWindow!**compiled accessors**!public! !
-!OS.STARTUPINFOW categoriesFor: #wShowWindow:!**compiled accessors**!public! !
+!STARTUPINFOW categoriesFor: #desktop:!accessing!public! !
+!STARTUPINFOW categoriesFor: #dwFlags!**compiled accessors**!public! !
+!STARTUPINFOW categoriesFor: #dwFlags:!**compiled accessors**!public! !
+!STARTUPINFOW categoriesFor: #dwSize:!**compiled accessors**!public! !
+!STARTUPINFOW categoriesFor: #dwX!**compiled accessors**!public! !
+!STARTUPINFOW categoriesFor: #dwX:!**compiled accessors**!public! !
+!STARTUPINFOW categoriesFor: #dwXSize!**compiled accessors**!public! !
+!STARTUPINFOW categoriesFor: #dwXSize:!**compiled accessors**!public! !
+!STARTUPINFOW categoriesFor: #dwY!**compiled accessors**!public! !
+!STARTUPINFOW categoriesFor: #dwY:!**compiled accessors**!public! !
+!STARTUPINFOW categoriesFor: #dwYSize!**compiled accessors**!public! !
+!STARTUPINFOW categoriesFor: #dwYSize:!**compiled accessors**!public! !
+!STARTUPINFOW categoriesFor: #hStdError:!**compiled accessors**!public! !
+!STARTUPINFOW categoriesFor: #hStdInput:!**compiled accessors**!public! !
+!STARTUPINFOW categoriesFor: #hStdOutput:!**compiled accessors**!public! !
+!STARTUPINFOW categoriesFor: #lpDesktop:!**compiled accessors**!public! !
+!STARTUPINFOW categoriesFor: #lpTitle!**compiled accessors**!public! !
+!STARTUPINFOW categoriesFor: #lpTitle:!**compiled accessors**!public! !
+!STARTUPINFOW categoriesFor: #stderr:!accessing!public! !
+!STARTUPINFOW categoriesFor: #stdin:!accessing!public! !
+!STARTUPINFOW categoriesFor: #stdout:!accessing!public! !
+!STARTUPINFOW categoriesFor: #title:!accessing!public! !
+!STARTUPINFOW categoriesFor: #wShowWindow!**compiled accessors**!public! !
+!STARTUPINFOW categoriesFor: #wShowWindow:!**compiled accessors**!public! !
 
-!OS.STARTUPINFOW class methodsFor!
+!STARTUPINFOW class methodsFor!
 
 defineFields
 	"Define the layout of the Win32 STARTUPINFOW structure.
@@ -234,6 +232,6 @@ defineFields
 
 getFieldNames
 	^#(#dwSize #lpDesktop #lpTitle #dwX #dwY #dwXSize #dwYSize #dwXCountChars #dwYCountChars #dwFillAttribute #dwFlags #wShowWindow #hStdInput #hStdOutput #hStdError)! !
-!OS.STARTUPINFOW class categoriesFor: #defineFields!automatic generation!public! !
-!OS.STARTUPINFOW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!STARTUPINFOW class categoriesFor: #defineFields!automatic generation!public! !
+!STARTUPINFOW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

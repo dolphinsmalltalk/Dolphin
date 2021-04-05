@@ -4,8 +4,7 @@ File subclass: #InheritableFile
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''
-	classConstants: {}!
+	classInstanceVariableNames: ''!
 InheritableFile guid: (GUID fromString: '{948edc81-5c17-11d5-be18-00010240d5e2}')!
 InheritableFile comment: ''!
 !InheritableFile categoriesForClass!Unclassified! !

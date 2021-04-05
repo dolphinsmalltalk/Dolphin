@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'ExternalProcess'.
-package paxVersion: 2.1;
+package paxVersion: 1;
 	basicComment: 'Copyright (c) 2003-2004 Robert Jarvis
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
@@ -23,93 +23,71 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 package basicScriptAt: #preinstall put: 'Win32Constants at: ''STILL_ACTIVE'' ifAbsentPut: [ 259 ].'.
 
-package setClassNames: #(
-	#{OS.PROCESS_INFORMATION}
-	#{OS.STARTUPINFOW}
-	#{Smalltalk.ExternalProcess}
-	#{Smalltalk.ExternalProcessExecuteError}
-	#{Smalltalk.ExternalProcessWaitFailure}
-	#{Smalltalk.ExternalProcessWaitTimeout}
-).
+package classNames
+	add: #ExternalProcess;
+	add: #ExternalProcessExecuteError;
+	add: #ExternalProcessWaitFailure;
+	add: #ExternalProcessWaitTimeout;
+	add: #PROCESS_INFORMATION;
+	add: #STARTUPINFOW;
+	yourself.
 
-package setMethodNames: #(
-	#(#{OS.KernelLibrary} #createProcess:lpCommandLine:lpProcessAttributes:lpThreadAttributes:bInheritsHandles:dwCreationFlags:lpEnvironment:lpCurrentDirectory:lpStartupInfo:lpProcessInformation:)
-).
+package methodNames
+	add: #KernelLibrary -> #createProcess:lpCommandLine:lpProcessAttributes:lpThreadAttributes:bInheritsHandles:dwCreationFlags:lpEnvironment:lpCurrentDirectory:lpStartupInfo:lpProcessInformation:;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
 
 package setPrerequisites: #(
 	'..\..\..\Object Arts\Dolphin\Base\Dolphin'
 	'..\InheritableFile\InheritableFile'
-	'..\KernelLibraryExtensions\KernelLibraryExtensions'
-).
+	'..\KernelLibraryExtensions\KernelLibraryExtensions').
 
 package!
 
 "Class Definitions"!
 
-Core.Object subclass: #ExternalProcess
+Object subclass: #ExternalProcess
 	instanceVariableNames: 'commandLine directory millisecondsToWait stdinFilename stdoutFilename stderrFilename si pi stdin stdout stderr processExitCode threadExitCode'
 	classVariableNames: ''
-	imports: #(#{Win32Constants})
-	classInstanceVariableNames: ''
-	classConstants: {}!
-Core.Error subclass: #ExternalProcessExecuteError
+	poolDictionaries: 'Win32Constants'
+	classInstanceVariableNames: ''!
+Error subclass: #ExternalProcessExecuteError
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-Core.Error subclass: #ExternalProcessWaitFailure
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Error subclass: #ExternalProcessWaitFailure
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-Core.Notification subclass: #ExternalProcessWaitTimeout
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Notification subclass: #ExternalProcessWaitTimeout
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-OS.Win32Structure subclass: #'OS.PROCESS_INFORMATION'
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Win32Structure subclass: #PROCESS_INFORMATION
 	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {
-		'_OffsetOf_dwProcessId' -> 16r8.
-		'_OffsetOf_dwThreadId' -> 16rC.
-		'_OffsetOf_hProcess' -> 16r0.
-		'_OffsetOf_hThread' -> 16r4
-	}!
-OS.Win32Structure subclass: #'OS.STARTUPINFOW'
+	classVariableNames: '_OffsetOf_dwProcessId _OffsetOf_dwThreadId _OffsetOf_hProcess _OffsetOf_hThread'
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Win32Structure subclass: #STARTUPINFOW
 	instanceVariableNames: 'title desktop stdin stdout stderr'
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {
-		'_OffsetOf_cbReserved2' -> 16r32.
-		'_OffsetOf_dwFillAttribute' -> 16r28.
-		'_OffsetOf_dwFlags' -> 16r2C.
-		'_OffsetOf_dwSize' -> 16r0.
-		'_OffsetOf_dwX' -> 16r10.
-		'_OffsetOf_dwXCountChars' -> 16r20.
-		'_OffsetOf_dwXSize' -> 16r18.
-		'_OffsetOf_dwY' -> 16r14.
-		'_OffsetOf_dwYCountChars' -> 16r24.
-		'_OffsetOf_dwYSize' -> 16r1C.
-		'_OffsetOf_hStdError' -> 16r40.
-		'_OffsetOf_hStdInput' -> 16r38.
-		'_OffsetOf_hStdOutput' -> 16r3C.
-		'_OffsetOf_lpDesktop' -> 16r8.
-		'_OffsetOf_lpReserved' -> 16r4.
-		'_OffsetOf_lpReserved2' -> 16r34.
-		'_OffsetOf_lpTitle' -> 16rC.
-		'_OffsetOf_wShowWindow' -> 16r30
-	}!
+	classVariableNames: '_OffsetOf_cbReserved2 _OffsetOf_dwFillAttribute _OffsetOf_dwFlags _OffsetOf_dwSize _OffsetOf_dwX _OffsetOf_dwXCountChars _OffsetOf_dwXSize _OffsetOf_dwY _OffsetOf_dwYCountChars _OffsetOf_dwYSize _OffsetOf_hStdError _OffsetOf_hStdInput _OffsetOf_hStdOutput _OffsetOf_lpDesktop _OffsetOf_lpReserved _OffsetOf_lpReserved2 _OffsetOf_lpTitle _OffsetOf_wShowWindow'
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+"Global Aliases"!
+
 
 "Loose Methods"!
 
-!OS.KernelLibrary methodsFor!
+!KernelLibrary methodsFor!
 
 createProcess: aStringFileName lpCommandLine: cl lpProcessAttributes: pa lpThreadAttributes: ta bInheritsHandles: ih dwCreationFlags: flags lpEnvironment: env lpCurrentDirectory: cd lpStartupInfo: si lpProcessInformation: pi
 	"The CreateProcess function creates a new process and its primary thread. 
@@ -130,9 +108,9 @@ createProcess: aStringFileName lpCommandLine: cl lpProcessAttributes: pa lpThrea
 
  	Please see Win32 SDK help for more information."
 
-	<stdcall: bool CreateProcessW lpwstr lpwstr SECURITY_ATTRIBUTES* SECURITY_ATTRIBUTES* bool dword lpvoid lpwstr STARTUPINFOW* PROCESS_INFORMATION*>
+	<stdcall: bool CreateProcessW lpwstr lpwstr SECURITY_ATTRIBUTES* SECURITY_ATTRIBUTES* bool dword lpvoid lpwstr Smalltalk.STARTUPINFOW* Smalltalk.PROCESS_INFORMATION*>
 	^self invalidCall: _failureCode! !
-!OS.KernelLibrary categoriesFor: #createProcess:lpCommandLine:lpProcessAttributes:lpThreadAttributes:bInheritsHandles:dwCreationFlags:lpEnvironment:lpCurrentDirectory:lpStartupInfo:lpProcessInformation:!public!win32 functions-process and thread! !
+!KernelLibrary categoriesFor: #createProcess:lpCommandLine:lpProcessAttributes:lpThreadAttributes:bInheritsHandles:dwCreationFlags:lpEnvironment:lpCurrentDirectory:lpStartupInfo:lpProcessInformation:!public!win32 functions-process and thread! !
 
 "End of package definition"!
 

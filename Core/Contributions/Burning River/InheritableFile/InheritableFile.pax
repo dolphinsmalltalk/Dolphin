@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'InheritableFile'.
-package paxVersion: 2;
+package paxVersion: 1;
 	basicComment: 'Copyright (c) 2002-2004 Robert Jarvis
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
@@ -11,13 +11,18 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 '.
 
 
-package setClassNames: #(
-	#{InheritableFile}
-).
+package classNames
+	add: #InheritableFile;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
 
 package setPrerequisites: #(
-	'..\..\..\Object Arts\Dolphin\Base\Dolphin'
-).
+	'..\..\..\Object Arts\Dolphin\Base\Dolphin').
 
 package!
 
@@ -27,8 +32,12 @@ File subclass: #InheritableFile
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''
-	classConstants: {}!
+	classInstanceVariableNames: ''!
+
+"Global Aliases"!
+
+
+"Loose Methods"!
 
 "End of package definition"!
 
