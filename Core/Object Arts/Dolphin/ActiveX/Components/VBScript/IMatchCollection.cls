@@ -4,8 +4,7 @@ IDispatch subclass: #IMatchCollection
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''
-	classConstants: {}!
+	classInstanceVariableNames: ''!
 IMatchCollection guid: (IID fromString: '{3f4daca2-160d-11d2-a8e9-00104b365c9f}')!
 IMatchCollection comment: '`IMatchCollection` is a wrapper class for the COM interface ''VBScript_RegExp_55.IMatchCollection'' generated from type information in the ''Microsoft VBScript Regular Expressions 5.5'' library. It contains methods to invoke the member functions exposed by that interface.
 
