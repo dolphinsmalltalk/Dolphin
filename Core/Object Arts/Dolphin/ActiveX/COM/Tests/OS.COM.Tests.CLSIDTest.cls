@@ -14,11 +14,18 @@ OS.COM.Tests.CLSIDTest comment: ''!
 subjectClass
 	^CLSID!
 
-testDisplayString
+testDisplayStringProgId
 	| subject |
 	subject := self subjectClass fromProgID: 'ADODB.Command'.
-	self assert: subject displayString equals: subject progID.
-	super testDisplayString!
+	self assert: subject displayString equals: subject progID!
+
+testFromStringProgId
+	| subject actual subject2 |
+	subject := CLSID fromString: 'ADODB.Command'.
+	actual := subject progID.
+	self assert: (actual beginsWith: 'ADODB.Command').
+	subject2 := CLSID fromString: subject asString.
+	self assert: subject2 equals: subject!
 
 testProgId
 	| subject actual |
@@ -26,6 +33,7 @@ testProgId
 	actual := subject progID.
 	self assert: (actual beginsWith: 'ADODB.Command')! !
 !OS.COM.Tests.CLSIDTest categoriesFor: #subjectClass!constants!private! !
-!OS.COM.Tests.CLSIDTest categoriesFor: #testDisplayString!constants!public! !
+!OS.COM.Tests.CLSIDTest categoriesFor: #testDisplayStringProgId!constants!public! !
+!OS.COM.Tests.CLSIDTest categoriesFor: #testFromStringProgId!public!unit tests! !
 !OS.COM.Tests.CLSIDTest categoriesFor: #testProgId!constants!public! !
 

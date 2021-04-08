@@ -1,0 +1,38 @@
+﻿| package |
+package := Package name: 'ADODB Tests'.
+package paxVersion: 2.1;
+	basicComment: ''.
+
+
+package setClassNames: #(
+	#{ADODB.Tests}
+	#{ADODB.Tests.ADODBTest}
+).
+
+package setPrerequisites: #(
+	'..\ADODB'
+	'..\..\..\..\Database\Database Tests'
+	'..\..\..\..\Base\Dolphin'
+	'..\..\..\..\..\..\Contributions\Camp Smalltalk\SUnit\SUnit'
+	'..\..\..\..\..\..\Contributions\Camp Smalltalk\SUnit\SUnitPreload'
+).
+
+package!
+
+"Class Definitions"!
+
+ADODB subclass: #'ADODB.Tests'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #(#{XProgramming.SUnit})
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Database.Tests.DBTest subclass: #'ADODB.Tests.ADODBTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+"End of package definition"!
+

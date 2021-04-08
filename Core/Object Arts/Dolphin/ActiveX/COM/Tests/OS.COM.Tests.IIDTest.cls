@@ -14,11 +14,11 @@ OS.COM.Tests.IIDTest comment: ''!
 subjectClass
 	^IID!
 
-testDisplayString
+testDisplayStringIUknown
 	| subject |
 	subject := IUnknown iid.
 	self assert: subject displayString equals: 'IUnknown'.
 	super testDisplayString! !
 !OS.COM.Tests.IIDTest categoriesFor: #subjectClass!constants!private! !
-!OS.COM.Tests.IIDTest categoriesFor: #testDisplayString!constants!public! !
+!OS.COM.Tests.IIDTest categoriesFor: #testDisplayStringIUknown!constants!public! !
 
