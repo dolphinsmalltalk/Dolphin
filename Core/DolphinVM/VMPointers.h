@@ -64,6 +64,7 @@ typedef OTE ArrayOTE;
 #endif
 
 // Should ideally be sized to a multiple of 16 bytes, accounting for object header size (currently 0)
+// Definition in istasm.inc must match
 struct VMPointers //: public Object
 {
 	union
@@ -109,7 +110,7 @@ struct VMPointers //: public Object
 			SymbolOTE* lookupKeySymbol;							// 56
 			SymbolOTE* wndProcSelector;							// 57
 
-			/**/SymbolOTE* asNumberSymbol;							// 58
+			SymbolOTE* asNumberSymbol;							// 58
 			// TODO - Remove these when compiler no longer uses them.
 			SymbolOTE* fullBindingForSymbol;					// 59
 			SymbolOTE* allInstVarNamesSymbol;					// 60
@@ -119,7 +120,7 @@ struct VMPointers //: public Object
 			SymbolOTE* evaluateExpressionSelector;				// 64
 			SymbolOTE* newBindingRefSelector;					// 65
 
-				// 66..85
+			// 66..85
 			SymbolOTE* compilerNotificationCallback;			// 66
 			POTE _unusedSelector67;								// 67
 
@@ -129,7 +130,7 @@ struct VMPointers //: public Object
 			SymbolOTE* exSpecialSelectors[NumExSpecialSends];	// 71,72,73,74
 			Oop _reservedSymbols[6];							// 75, 76,77,78,79,80
 
-			// Classes required by IST VM
+			// Classes required by Dolphin VM
 			// 81..90
 			BehaviorOTE* ClassMetaclass;						// 81
 			BehaviorOTE* ClassCharacter;						// 82
@@ -143,17 +144,17 @@ struct VMPointers //: public Object
 			BehaviorOTE* ClassBlockClosure;						// 90
 
 			// 91..100
-			BehaviorOTE* ClassMessage;								// 91
-			BehaviorOTE* ClassByteArray;							// 92
+			BehaviorOTE* ClassMessage;							// 91
+			BehaviorOTE* ClassByteArray;						// 92
 			BehaviorOTE* ClassUtf16String;						// 93 - These two previously LPI and LNI
-			BehaviorOTE* ClassCompiledExpression;					// 94
-			BehaviorOTE* ClassExternalMethod;						// 95
-			BehaviorOTE* ClassFloat;								// 96
-			BehaviorOTE* ClassUndefinedObject;						// 97
-			BehaviorOTE* ClassVariableBinding;						// 98 - Only required for debugging and crash dump
+			BehaviorOTE* ClassCompiledExpression;				// 94
+			BehaviorOTE* ClassExternalMethod;					// 95
+			BehaviorOTE* ClassFloat;							// 96
+			BehaviorOTE* ClassUndefinedObject;					// 97
+			BehaviorOTE* ClassVariableBinding;					// 98 - Only required for debugging and crash dump
 
-			BehaviorOTE* ClassSemaphore;							// 99
-			BehaviorOTE* ClassExternalAddress;						// 100
+			BehaviorOTE* ClassSemaphore;						// 99
+			BehaviorOTE* ClassExternalAddress;					// 100
 
 			// 101..110
 			BehaviorOTE* ClassExternalHandle;					// 101
@@ -188,7 +189,7 @@ struct VMPointers //: public Object
 			HandleOTE* WakeupEvent;								// 125 - Handle of Win32 Event object
 			ArrayOTE* VMReferences;								// 126 - Created after loading bootstrap image (i.e. not in the bootstrap image)
 
-			// 127..150
+			// 127..192
 
 			HandleOTE* MsgWndHandle;							// 127
 			BehaviorOTE* ClassIDispatch;						// 128
@@ -199,25 +200,27 @@ struct VMPointers //: public Object
 			MemManOTE* MemoryManager;							// 133 - Current memory manager object
 
 			BehaviorOTE* ClassBYTE;								// 134
-			BehaviorOTE* ClassSBYTE;								// 135
+			BehaviorOTE* ClassSBYTE;							// 135
 			BehaviorOTE* ClassWORD;								// 136
-			BehaviorOTE* ClassSWORD;								// 137
-			BehaviorOTE* ClassDWORD;								// 138
-			BehaviorOTE* ClassSDWORD;								// 139
-			BehaviorOTE* ClassFLOAT;								// 140
-			BehaviorOTE* ClassDOUBLE;								// 141
-			BehaviorOTE* ClassVARBOOL;								// 142
+			BehaviorOTE* ClassSWORD;							// 137
+			BehaviorOTE* ClassDWORD;							// 138
+			BehaviorOTE* ClassSDWORD;							// 139
+			BehaviorOTE* ClassFLOAT;							// 140
+			BehaviorOTE* ClassDOUBLE;							// 141
+			BehaviorOTE* ClassVARBOOL;							// 142
 			BehaviorOTE* ClassCURRENCY;							// 143
-			BehaviorOTE* ClassDECIMAL;								// 144
-			BehaviorOTE* ClassLPBSTR;								// 145
-			BehaviorOTE* ClassQWORD;								// 146	Actually ULARGE_INTEGER
-			BehaviorOTE* ClassSQWORD;								// 147	Actually LARGE_INTEGER
-			BehaviorOTE* _unused148;								// 148	Reserved for UINT_PTR
-			BehaviorOTE* _unused149;								// 149  Reserved for INT_PTR
+			BehaviorOTE* ClassDECIMAL;							// 144
+			BehaviorOTE* ClassLPBSTR;							// 145
+			BehaviorOTE* ClassQWORD;							// 146	Actually ULARGE_INTEGER
+			BehaviorOTE* ClassSQWORD;							// 147	Actually LARGE_INTEGER
+			BehaviorOTE* _unused148;							// 148	Reserved for UINT_PTR
+			BehaviorOTE* _unused149;							// 149  Reserved for INT_PTR
 
-			SemaphoreOTE* TimingSemaphore;							// 150
+			SemaphoreOTE* TimingSemaphore;						// 150
+
+			POTE _unused151to192[42];							// 151-192
 		};
-		Oop pointers[150];
+		Oop pointers[192];
 	};
 };
 

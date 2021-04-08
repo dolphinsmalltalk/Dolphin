@@ -668,10 +668,24 @@ owningPackage
 packageManager
 	^self subclassResponsibility!
 
-printDefinitionOn: aPuttableStream
+printDefinitionOn: puttableStream 
 	"Private - Append the textual definition of the receiver to the <puttableStream> argument."
 
-	self subclassResponsibility!
+	puttableStream
+		nextPutAll: self superclass fullName;
+		space;
+		nextPutAll: self kindOfSubclass;
+		space;
+		print: self fullName;
+		crtab;
+		nextPutAll: 'instanceVariableNames: ';
+		print: self instanceVariableString;
+		crtab;
+		nextPutAll: 'classVariableNames: ';
+		print: self classVariableString;
+		crtab;
+		nextPutAll: 'imports: ';
+		print: self imports!
 
 printFullNameOn: aPuttableStream
 	self subclassResponsibility!

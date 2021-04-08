@@ -73,13 +73,13 @@ HRESULT ObjectMemory::Initialize()
 	ASSERT(PoolGranularity >= sizeof(Oop));
 	ASSERT(_ROUND2(PoolGranularity,sizeof(Oop)) == PoolGranularity);
 	//ASSERT(sizeof(Object) == ObjectHeaderSize*sizeof(MWORD));
-	ASSERT(sizeof(VMPointers) == (150*sizeof(Oop)+ObjectByteSize));
+	ASSERT(sizeof(VMPointers) == (192*sizeof(Oop)+ObjectByteSize));
 	// Check that the const objects segment is still exactly one page
 	ASSERT((sizeof(VMPointers)
 			+ ((FirstCharacterIdx - FirstBuiltInIdx) * ObjectByteSize)
 			+ (sizeof(uint32_t)*2)	// To round up the strings
 			+ (256 * sizeof(Character))
-			+ 2464	// Padding allocated in the assembler, see constobj.asm
+			+ 2296	// Padding allocated in the assembler, see constobj.asm
 			) == dwPageSize);
 
 //	InitializeCriticalSection(&m_csAsyncProtect);

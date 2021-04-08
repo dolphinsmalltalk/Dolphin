@@ -77,7 +77,7 @@ POTE		TYPEDEF 	PTR OTE
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Shared pointers (shared between VM and Smalltalk code)
 
-; Should contain 150 pointers
+; Should contain 192 pointers
 VMPointers		STRUCT 2t
 ;	hdr									ObjectHeader		<>
 
@@ -239,7 +239,10 @@ VMPointers		STRUCT 2t
 										POTE	?			; 147 (ClassSQWORD)
 										POTE	?			; 148 (ClassUINT_PTR)
 										POTE	?			; 149 (ClassINT_PTR)
+
 										POTE	?			; 150 (TimingSemaphore)
+
+										POTE	42t DUP (?)	; Unused 151-192
 VMPointers		ENDS
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

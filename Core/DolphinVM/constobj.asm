@@ -25,7 +25,7 @@ _emptyObj SBYTE 4 DUP (?)					; Used for all empty objects, including the empty 
 _delimStringObj SBYTE 4 DUP (?)				; ... String 2+1 bytes, padded to 4
 _charObjs Character 256 DUP (<>)
 ; Pad out to fill one page
-?_vmConstSegFiller@@3PAEA BYTE 2464 DUP (?)
+?_vmConstSegFiller@@3PAEA BYTE 2296 DUP (?)
 VM$CNST ENDS
 
 
