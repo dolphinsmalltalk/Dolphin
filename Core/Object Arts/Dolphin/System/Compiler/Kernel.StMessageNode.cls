@@ -44,7 +44,7 @@ argumentCount
 	^self arguments size!
 
 arguments
-	^arguments ?? #()!
+	^arguments!
 
 arguments: argCollection 
 	arguments := argCollection.

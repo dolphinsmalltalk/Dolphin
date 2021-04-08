@@ -41,34 +41,6 @@ parseMethod: aString in: aClass
 parserClass
 	^Compiler!
 
-printLiterals: anInteger on: aPuttableStream
-	| i |
-	i := 0.
-	Symbol allInstancesDo: 
-			[:each |
-			aPuttableStream
-				print: each;
-				nextPut: $.;
-				crtab.
-			(i := i + 1) = anInteger ifTrue: [^self]].
-	Smalltalk keysDo: 
-			[:each |
-			aPuttableStream
-				nextPutAll: each;
-				nextPut: $.;
-				crtab.
-			(i := i + 1) = anInteger ifTrue: [^self]].
-	Win32Constants keysDo: 
-			[:each |
-			aPuttableStream
-				display: Win32Constants;
-				nextPut: $.;
-				nextPutAll: each;
-				nextPut: $.;
-				crtab.
-			(i := i + 1) = anInteger ifTrue: [^self]].
-	self halt!
-
 skipUnlessCompilerSupportsCodePointErrors
 	self skipUnless: [self isAtLeastVmVersion: #(2016 7 0 49)]!
 
@@ -178,7 +150,6 @@ writtenNotReadRange: aString
 !Kernel.Tests.CompilerErrorTest categoriesFor: #parseExpression:in:!helpers!private! !
 !Kernel.Tests.CompilerErrorTest categoriesFor: #parseMethod:in:!helpers!private! !
 !Kernel.Tests.CompilerErrorTest categoriesFor: #parserClass!constants!private! !
-!Kernel.Tests.CompilerErrorTest categoriesFor: #printLiterals:on:!helpers!private! !
 !Kernel.Tests.CompilerErrorTest categoriesFor: #skipUnlessCompilerSupportsCodePointErrors!private!unit tests! !
 !Kernel.Tests.CompilerErrorTest categoriesFor: #tempWarningRangeIn:!helpers!private! !
 !Kernel.Tests.CompilerErrorTest categoriesFor: #testErrorsBadContext!public!unit tests! !

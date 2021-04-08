@@ -78,7 +78,8 @@ fillOutDefinitionArguments: parseTree
 	keywords := parseTree selector keywords.
 	pairs := LookupTable new.
 	keywords with: args do: [:eachKeyword :eachArg | pairs at: eachKeyword put: eachArg].
-	classReference := (pairs at: 'subclass:') value asQualifiedReference.
+	"The new class name is always the 1st argument, but might have differing selector keywords, so look up by position"
+	classReference := (args at: 1) value asQualifiedReference.
 	instanceVariableNames := self namesIn: (pairs at: 'instanceVariableNames:') value.
 	classVariableNames := self namesIn: (pairs at: 'classVariableNames:') value.
 	imports := (pairs lookup: 'imports:')

@@ -29,6 +29,16 @@ newCopy: aCollection
 newEmptyCollection: anInteger
 	^Symbol intern: (String new: anInteger)!
 
+testArgumentCount
+	self assert: #< argumentCount equals: 1.
+	self assert: #<==> argumentCount equals: 1.
+	self assert: #a: argumentCount equals: 1.
+	self assert: #size argumentCount equals: 0.
+	self assert: #_dup: argumentCount equals: 1.
+	self assert: #a:b: argumentCount equals: 2.
+	self assert: #a:r:g:b: argumentCount equals: 4.
+	self assert: #ab:c:def: argumentCount equals: 3!
+
 testAsString
 	#('abc ' '£' '€' '🐬' '你好') do: 
 			[:each |
@@ -127,6 +137,7 @@ testSymbolTable
 !Core.Tests.SymbolTest categoriesFor: #newCollection:!helpers!private! !
 !Core.Tests.SymbolTest categoriesFor: #newCopy:!helpers!private! !
 !Core.Tests.SymbolTest categoriesFor: #newEmptyCollection:!public! !
+!Core.Tests.SymbolTest categoriesFor: #testArgumentCount!public!unit tests! !
 !Core.Tests.SymbolTest categoriesFor: #testAsString!helpers!public! !
 !Core.Tests.SymbolTest categoriesFor: #testAtPut!public!unit tests! !
 !Core.Tests.SymbolTest categoriesFor: #testEncodeOnPut!public!unit tests! !

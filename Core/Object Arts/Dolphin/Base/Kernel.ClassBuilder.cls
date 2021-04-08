@@ -26,6 +26,9 @@ allInstVarNamesOf: aClass
 
 	^aClass isNil ifTrue: [{}] ifFalse: [aClass allInstVarNames]!
 
+baseEnvironment
+	^(superclass ifNil: [(currentClass ?? Class) superclass]) baseEnvironment!
+
 beBytes
 	"Private - Set the class type to variable bytes."
 
@@ -139,7 +142,7 @@ className: aString
 	len == 1
 		ifTrue: 
 			[className := aString asSymbol.
-			environment := (superclass ifNil: [currentClass superclass]) baseEnvironment]
+			environment := self baseEnvironment]
 		ifFalse: 
 			[className := (path at: len) asSymbol.
 			environment := (BindingReference path: (path copyFrom: 1 to: len - 1) context: Root) value]!
@@ -504,8 +507,8 @@ modifyImportsOf: aClass
 	newImports fullPrintString = aClass imports fullPrintString
 		ifFalse: 
 			[| reason |
-			reason := 'Recompilation required to update imports of ' , aClass name , ' from :'
-						, aClass imports fullPrintString , ', to:'
+			reason := 'Recompilation required to update imports of ' , aClass name , ' from: '
+						, aClass imports fullPrintString , ', to: '
 						, newImports fullPrintString.
 			aClass imports: newImports.
 			self recompilationRequired: true reason: reason]!
@@ -1189,6 +1192,7 @@ validateSuperclassIsSubclassable
 				ifTrue: [self error: 'Proposed superclass is not subclassable.']]! !
 !Kernel.ClassBuilder categoriesFor: #allClassVarNamesOf:!helpers!private! !
 !Kernel.ClassBuilder categoriesFor: #allInstVarNamesOf:!helpers!private! !
+!Kernel.ClassBuilder categoriesFor: #baseEnvironment!helpers!private! !
 !Kernel.ClassBuilder categoriesFor: #beBytes!class type!private! !
 !Kernel.ClassBuilder categoriesFor: #beFixed!class type!private! !
 !Kernel.ClassBuilder categoriesFor: #beIndirectBytes!class type!private! !

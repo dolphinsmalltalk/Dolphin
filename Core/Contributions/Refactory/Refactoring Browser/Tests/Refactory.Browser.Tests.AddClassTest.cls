@@ -37,6 +37,42 @@ testAddClass
 	self assert: classTest metaclass superclass equals: newClass metaclass.
 	self assert: (newClass metaclass subclasses includes: classTest metaclass)!
 
+testAddVariableByteClass
+	| refactoring newClass superClass |
+	refactoring := AddClassRefactoring
+				addClass: #FooTest
+				superclass: ByteArray
+				subclasses: #()
+				category: #'Refactory-Testing'.
+	self executeRefactoring: refactoring.
+	newClass := refactoring model classNamed: #FooTest.
+	superClass := refactoring model classFor: ByteArray.
+	self assert: newClass superclass equals: superClass.
+	self assert: (superClass subclasses includes: newClass).
+	self assert: newClass metaclass superclass equals: superClass metaclass.
+	self assert: (superClass metaclass subclasses includes: newClass metaclass).
+	self assert: newClass subclasses isEmpty.
+	self assert: newClass metaclass subclasses isEmpty.
+	self assert: newClass kindOfSubclass equals: 'variableByteSubclass:'!
+
+testAddVariableClass
+	| refactoring newClass superClass |
+	refactoring := AddClassRefactoring
+				addClass: #FooTest
+				superclass: Array
+				subclasses: #()
+				category: #'Refactory-Testing'.
+	self executeRefactoring: refactoring.
+	newClass := refactoring model classNamed: #FooTest.
+	superClass := refactoring model classFor: Array.
+	self assert: newClass superclass equals: superClass.
+	self assert: (superClass subclasses includes: newClass).
+	self assert: newClass metaclass superclass equals: superClass metaclass.
+	self assert: (superClass metaclass subclasses includes: newClass metaclass).
+	self assert: newClass subclasses isEmpty.
+	self assert: newClass metaclass subclasses isEmpty.
+	self assert: newClass kindOfSubclass equals: 'variableSubclass:'!
+
 testExistingName
 	self shouldFail: (AddClassRefactoring
 				addClass: #'Core.Object'
@@ -100,6 +136,8 @@ testModelInvalidSubclass
 	self shouldFail: refactoring! !
 !Refactory.Browser.Tests.AddClassTest categoriesFor: #setUp!public!set up! !
 !Refactory.Browser.Tests.AddClassTest categoriesFor: #testAddClass!public!tests! !
+!Refactory.Browser.Tests.AddClassTest categoriesFor: #testAddVariableByteClass!public!tests! !
+!Refactory.Browser.Tests.AddClassTest categoriesFor: #testAddVariableClass!public!tests! !
 !Refactory.Browser.Tests.AddClassTest categoriesFor: #testExistingName!failure tests!public! !
 !Refactory.Browser.Tests.AddClassTest categoriesFor: #testInvalidSubclass!failure tests!public! !
 !Refactory.Browser.Tests.AddClassTest categoriesFor: #testMetaClassFailure!failure tests!public! !

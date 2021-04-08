@@ -25,7 +25,7 @@ Symbol complies with the following ANSI protocols:
 !Core.Symbol methodsFor!
 
 argumentCount
-	"Answer the <integer> number of arguments required by a method with the receiver as its selector."
+	"Answer the <integer> number of arguments required by a method with the receiver as its selector. The result is undefined if the receiver is not a valid selector."
 
 	| len ch |
 	len := self basicSize.
@@ -33,10 +33,12 @@ argumentCount
 	ch := self at: 1.
 	^(ch isEnglishLetter or: [ch == $_])
 		ifTrue: 
-			[self
-				occurrencesOf: $:
-				from: 1
-				to: len]
+			[(self at: len) == $:
+				ifTrue: [(self
+						occurrencesOf: $:
+						from: 1
+						to: len - 1) + 1]
+				ifFalse: [0]]
 		ifFalse: [1]!
 
 asString

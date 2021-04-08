@@ -69,6 +69,7 @@ package setMethodNames: #(
 	#(#{Core.String} #withCRs)
 	#(#{Kernel.BlockClosure} #isEqualTo:)
 	#(#{Kernel.CompiledCode} #isEqualTo:)
+	#(#{Refactory.Browser.AddClassRefactoring class} #correspondingTestCase)
 	#(#{Refactory.Browser.RemoveClassRefactoring class} #correspondingTestCase)
 	#(#{Refactory.Browser.RenameClassRefactoring class} #correspondingTestCase)
 	#(#{Smalltalk class} #isEqualTo:)
@@ -495,6 +496,12 @@ isEqualTo: aMethod
 				ifFalse: [(a isEqualTo: b) ifFalse: [^false]]].
 	^true! !
 !Kernel.CompiledCode categoriesFor: #isEqualTo:!public!testing! !
+
+!Refactory.Browser.AddClassRefactoring class methodsFor!
+
+correspondingTestCase
+	^Tests.AddClassTest! !
+!Refactory.Browser.AddClassRefactoring class categoriesFor: #correspondingTestCase!public! !
 
 !Refactory.Browser.RemoveClassRefactoring class methodsFor!
 

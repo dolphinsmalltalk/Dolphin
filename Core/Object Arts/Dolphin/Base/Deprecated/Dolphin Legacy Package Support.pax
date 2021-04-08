@@ -118,7 +118,7 @@ variableByteSubclass: aClassSymbol instanceVariableNames: instVarString classVar
 
 	#deprecated.
 	^self
-		variableByteSubclass: 'Smalltalk.' , aClassSymbol
+		variableByteSubclass: aClassSymbol
 		instanceVariableNames: instVarString
 		classVariableNames: classVarString
 		imports: (self importsFromPoolsString: poolDictString)!
@@ -127,13 +127,11 @@ variableSubclass: aClassSymbol instanceVariableNames: instVarString classVariabl
 	"For loading pre-8.0 packages"
 
 	#deprecated.
-	^(self
-		newClassBuilder: 'Smalltalk.' , aClassSymbol
+	^self
+		variableSubclass: aClassSymbol
 		instanceVariableNames: instVarString
 		classVariableNames: classVarString
-		imports: (self importsFromPoolsString: poolDictString))
-		beVariable;
-		modifyOrCreate!
+		imports: (self importsFromPoolsString: poolDictString)!
 
 variableSubclass: aClassSymbol instanceVariableNames: instVarString classVariableNames: classVarString poolDictionaries: poolDictString classInstanceVariableNames: classInstVarString
 	"For loading pre-8.0 packages"
@@ -171,7 +169,7 @@ subclass: aClassSymbol instanceVariableNames: instVarString classVariableNames: 
 
 	#deprecated.
 	^self
-		subclass: 'Smalltalk.', aClassSymbol
+		subclass: aClassSymbol
 		instanceVariableNames: instVarString
 		classVariableNames: classVarString
 		imports: (self importsFromPoolsString: poolDictString)!

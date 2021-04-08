@@ -289,7 +289,7 @@ variableByteSubclass: aClassSymbol instanceVariableNames: instVarString classVar
 	otherwise modify the class with name aClassSymbol to have the indicated features and answer 
 	it. Primarily present for backwards compatibility with Smalltalk-80."
 
-	#deprecated.
+	Notification deprecated.
 	^(self
 		variableByteSubclass: aClassSymbol
 		instanceVariableNames: instVarString
@@ -943,7 +943,7 @@ time: aTime
 !UndefinedObject methodsFor!
 
 subclass: aClassSymbol instanceVariableNames: instVarString classVariableNames: classVarString poolDictionaries: poolDictString category: aCategoryOrString
-	#deprecated.
+	Notification deprecated.
 	^(self
 		subclass: aClassSymbol
 		instanceVariableNames: instVarString

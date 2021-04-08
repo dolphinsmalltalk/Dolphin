@@ -309,8 +309,7 @@ testReparentSubClassWithSameAllInstVars
 		subclass: testClass fullName
 		instanceVariableNames: 'var1 var2 var3 var4'
 		classVariableNames: ''
-		poolDictionaries: ''
-		category: 'Tests-Kernel-Classes'.
+		imports: #().
 
 	"test state of new class"
 	self assert: testClass instSize equals: 4.
@@ -339,8 +338,7 @@ testReshapeClass
 				subclass: #ClassBuilderTestClass
 				instanceVariableNames: 'foo var1 bar var2 mumble'
 				classVariableNames: ''
-				poolDictionaries: ''
-				category: 'Tests-Kernel-Classes'.
+				imports: #().
 	self assert: newClass owningPackage
 		identicalTo: ClassBuilderTestClasses current package.
 	newMeta := newClass class.
@@ -375,8 +373,7 @@ testReshapeClassWithJugglingInstVars
 				subclass: testClass fullName
 				instanceVariableNames: 'var2 foo bar mumble var1'
 				classVariableNames: ''
-				poolDictionaries: ''
-				category: 'Tests-Kernel-Classes'.
+				imports: #().
 	newMeta := newClass class.
 
 	"test transparency of mapping"
@@ -411,8 +408,7 @@ testReshapeSubClass
 		subclass: #ClassBuilderTestClass
 		instanceVariableNames: 'var1 foo var2 bar mumble '
 		classVariableNames: ''
-		poolDictionaries: ''
-		category: 'Tests-Kernel-Classes'.
+		imports: #().
 	"test transparency of mapping"
 	self assert: testInstance var1 equals: 42.
 	self assert: testInstance var2 equals: 'hello'.
