@@ -970,12 +970,13 @@ validateImports
 						ifFalse: 
 							[private := each isPrivate.
 							fullRef := each asString asQualifiedReference].
-					fullRef isDefined
-						ifTrue: 
-							[namespace := fullRef value.
-							(namespace class conformsToProtocol: #importableNamespace) ifFalse: [self error: 'Invalid import: ' , each printString]]
-						ifFalse: 
-							[Warning
+					namespace := fullRef valueOrNil.
+					namespace
+						ifNotNil: 
+							[(namespace class conformsToProtocol: #importableNamespace)
+								ifFalse: [self error: 'Invalid import: ' , each printString]]
+						ifNil: 
+							[Notification
 								signal: ('Imported namespace <1p> does not currently exist.' expandMacrosWith: fullRef asString).
 							namespace := fullRef asSymbol].
 					namespace asQualifiedReference

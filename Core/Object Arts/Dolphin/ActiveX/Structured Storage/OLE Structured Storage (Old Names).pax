@@ -1,0 +1,30 @@
+﻿| package |
+package := Package name: 'OLE Structured Storage (Old Names)'.
+package paxVersion: 2.1;
+	basicComment: 'Dolphin Smalltalk OLE Structure Storage pre-8.0 legacy class names
+
+Aliases for namespaced OLE Structured Storage classes that might be referenced from pre-8.0 code.
+'.
+
+
+package setVariableNames: #(
+	#{Smalltalk.URLMonLibrary}
+).
+
+package setAliasVariableNames: #(
+	#{Smalltalk.URLMonLibrary}
+).
+
+package setPrerequisites: #(
+	'OLE Structured Storage'
+).
+
+package!
+
+"Variable Aliases"!
+
+Smalltalk.URLMonLibrary := OS.COM.URLMonLibrary!
+
+
+"End of package definition"!
+
