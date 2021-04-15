@@ -46,7 +46,9 @@ package setMethodNames: #(
 	#(#{Kernel.Package} #script:)
 	#(#{Kernel.Package} #script:put:)
 	#(#{Kernel.Package} #versionLookup)
+	#(#{Kernel.Package class} #binaryGlobalExtension)
 	#(#{Kernel.Package class} #name:comment:)
+	#(#{Kernel.Package class} #sourceGlobalExtension)
 ).
 
 package setPrerequisites: #(
@@ -401,12 +403,24 @@ versionLookup
 
 !Kernel.Package class methodsFor!
 
+binaryGlobalExtension
+	"Private - Answer the file extension for the files to which binary globals are stored."
+
+	^ 'stb'!
+
 name: nameString comment: commentString 
 	#deprecated.	"In 4.0, but retained becaused needed to load some old format packages"
 	^(self name: nameString)
 		basicComment: commentString;
-		yourself! !
+		yourself!
+
+sourceGlobalExtension
+	"Private - Answer the file extension for the files to which source globals are stored."
+
+	^ 'st'! !
+!Kernel.Package class categoriesFor: #binaryGlobalExtension!constants!private! !
 !Kernel.Package class categoriesFor: #name:comment:!instance creation!public! !
+!Kernel.Package class categoriesFor: #sourceGlobalExtension!constants!private! !
 
 "End of package definition"!
 
