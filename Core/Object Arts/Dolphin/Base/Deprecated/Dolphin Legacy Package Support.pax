@@ -90,7 +90,10 @@ Kernel.AbstractChunkSourceFiler subclass: #'Kernel.LegacyChunkSourceFiler'
 !Core.Class methodsFor!
 
 sharedPoolNames
-	^imports collect: [:each | (Smalltalk oldNames lookup: each value) ifNil: [each unqualifiedName]]!
+	^imports collect: 
+			[:each |
+			(each valueOrNil ifNotNil: [:sharedPoolClass | Smalltalk oldNames lookup: sharedPoolClass])
+				ifNil: [each unqualifiedName]]!
 
 subclass: aClassSymbol instanceVariableNames: instVarString classVariableNames: classVarString poolDictionaries: poolDictString
 	"For loading pre-8.0 packages"
