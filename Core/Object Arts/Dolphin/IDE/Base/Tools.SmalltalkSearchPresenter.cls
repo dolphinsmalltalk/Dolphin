@@ -3,7 +3,7 @@
 UI.Presenter subclass: #'Tools.SmalltalkSearchPresenter'
 	instanceVariableNames: 'environment'
 	classVariableNames: 'AutoCompleteDwell'
-	imports: #(#{UI.Scintilla.ScintillaConstants})
+	imports: #(#{UI.Scintilla private})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Tools.SmalltalkSearchPresenter guid: (Core.GUID fromString: '{a8c5bf80-8660-45e4-865c-f489ca9ca4e8}')!

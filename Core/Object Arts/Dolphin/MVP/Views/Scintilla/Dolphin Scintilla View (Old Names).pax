@@ -9,6 +9,7 @@ This package includes legacy aliases for Scintilla classes that have been rename
 package setVariableNames: #(
 	#{Smalltalk.NullScintillaStyler}
 	#{Smalltalk.ScintillaAttribute}
+	#{Smalltalk.ScintillaConstants}
 	#{Smalltalk.ScintillaIndicator}
 	#{Smalltalk.ScintillaIndicatorDefinition}
 	#{Smalltalk.ScintillaIndicatorStyle}
@@ -23,6 +24,7 @@ package setVariableNames: #(
 package setAliasVariableNames: #(
 	#{Smalltalk.NullScintillaStyler}
 	#{Smalltalk.ScintillaAttribute}
+	#{Smalltalk.ScintillaConstants}
 	#{Smalltalk.ScintillaIndicator}
 	#{Smalltalk.ScintillaIndicatorDefinition}
 	#{Smalltalk.ScintillaIndicatorStyle}
@@ -45,6 +47,8 @@ package!
 Smalltalk.NullScintillaStyler := UI.Scintilla.NullStyler!
 
 Smalltalk.ScintillaAttribute := UI.Scintilla.Attribute!
+
+Smalltalk.ScintillaConstants := UI.Scintilla!
 
 Smalltalk.ScintillaIndicator := UI.Scintilla.Indicator!
 

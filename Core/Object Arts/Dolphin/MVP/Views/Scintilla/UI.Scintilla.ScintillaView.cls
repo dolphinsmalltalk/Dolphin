@@ -3,7 +3,7 @@
 UI.MultilineTextEdit subclass: #'UI.Scintilla.ScintillaView'
 	instanceVariableNames: 'this currentTextStyles styleIdMap styler markerDefinitions markers wordChars registeredImages modificationEventMask autoCStops autoCFillups whitespaceBackcolor whitespaceForecolor selectionBackcolor selectionForecolor indicators callTipTabWidth punctuation callTipHighlightColor braceChars whitespaces scFlags allTextStyles foldMarginColor foldMarginHiColor foldMarkerStyle foldFlags stringClass keyBindings indicatorStyles secondarySelectionForecolor secondarySelectionBackcolor annotationStyles caretForecolor secondaryCaretForecolor edgeColor currentLineBackcolor activeHotspotForecolor activeHotspotBackcolor _unused56 _unused57 _unused58 _unused59 _unused60 _unused61 _unused62 _unused63 _unused64 _unused65'
 	classVariableNames: 'CodePages DefaultKeyBindings DefaultTextStyles LexerKeywords Library'
-	imports: #(#{UI.Scintilla.ScintillaConstants})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'AnnotationStylesOffset' -> 16r200.

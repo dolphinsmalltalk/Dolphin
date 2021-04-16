@@ -3,7 +3,7 @@
 UI.Presenter subclass: #'Tools.SmalltalkWorkspace'
 	instanceVariableNames: 'evaluationContext errorModel findDetails workspacePool evaluationPools compilationErrors textStyles searchEnvironment modifiedModel flags indicatorStyles'
 	classVariableNames: 'Abbreviations AnnotationMode AutoCompleteDwell DefaultCaretColor DefaultFont DefaultTabWidth FontQuality IndicatorStyles IsAutoCompletionCaseInsensitive IsAutoCompletionEnabled IsAutoCompletionSpaceAdded IsAutoCompletionTruncating KeyBindings KeywordCompletions MaxAutoCompletionListSize StandardUnaryReturnTypes TextStyles UseDirectWrite WordWrap WrapIndentMode'
-	imports: #(#{Kernel.CompilerFlags} #{UI.Scintilla.ScintillaConstants} #{Refactory.Browser private})
+	imports: #(#{Kernel.CompilerFlags} #{UI.Scintilla private} #{Refactory.Browser private})
 	classInstanceVariableNames: 'additionalKeyBindings commandQueryHandlers'
 	classConstants: {
 		'AutoCompleteMask' -> 16r1.
@@ -1773,8 +1773,7 @@ defaultEditorKeyBindings
 	"Answer any differences from standard Scintilla key bindings to apply by default in workspaces.
 	Note that the defaultAdditionalAccelerators will also supplant any Scintilla commands normally associated with those key bindings."
 
-	^{UI.Scintilla.KeyBinding newChord: 'CTRL+SHIFT+D'
-			message: UI.Scintilla.ScintillaConstants.SCI_SELECTIONDUPLICATE}!
+	^{UI.Scintilla.KeyBinding newChord: 'CTRL+SHIFT+D' message: SCI_SELECTIONDUPLICATE}!
 
 defaultFont
 	"Answer the default  font to use for instances of the receiver"

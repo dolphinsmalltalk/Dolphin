@@ -3,7 +3,7 @@
 Core.Object subclass: #'UI.Scintilla.Marker'
 	instanceVariableNames: 'view definition line handle'
 	classVariableNames: ''
-	imports: #(#{UI.Scintilla.ScintillaConstants})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 UI.Scintilla.Marker guid: (Core.GUID fromString: '{2aad3a52-111c-4781-b79b-22f044e4a6f7}')!

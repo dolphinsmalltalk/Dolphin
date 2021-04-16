@@ -3,7 +3,7 @@
 Core.Object subclass: #'Tools.Tests.MockScintillaView'
 	instanceVariableNames: 'lastStyled tokens text currentTextStyles styleIdMap'
 	classVariableNames: ''
-	imports: #(#{UI.Scintilla.ScintillaConstants})
+	imports: #(#{UI.Scintilla private})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Tools.Tests.MockScintillaView guid: (Core.GUID fromString: '{50616a84-12e3-4960-b005-82a37278383b}')!

@@ -1078,13 +1078,13 @@ UI.Presenter subclass: #'Tools.PackageDependencyPresenter'
 UI.Presenter subclass: #'Tools.SmalltalkSearchPresenter'
 	instanceVariableNames: 'environment'
 	classVariableNames: 'AutoCompleteDwell'
-	imports: #(#{UI.Scintilla.ScintillaConstants})
+	imports: #(#{UI.Scintilla private})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 UI.Presenter subclass: #'Tools.SmalltalkWorkspace'
 	instanceVariableNames: 'evaluationContext errorModel findDetails workspacePool evaluationPools compilationErrors textStyles searchEnvironment modifiedModel flags indicatorStyles'
 	classVariableNames: 'Abbreviations AnnotationMode AutoCompleteDwell DefaultCaretColor DefaultFont DefaultTabWidth FontQuality IndicatorStyles IsAutoCompletionCaseInsensitive IsAutoCompletionEnabled IsAutoCompletionSpaceAdded IsAutoCompletionTruncating KeyBindings KeywordCompletions MaxAutoCompletionListSize StandardUnaryReturnTypes TextStyles UseDirectWrite WordWrap WrapIndentMode'
-	imports: #(#{Kernel.CompilerFlags} #{UI.Scintilla.ScintillaConstants} #{Refactory.Browser private})
+	imports: #(#{Kernel.CompilerFlags} #{UI.Scintilla private} #{Refactory.Browser private})
 	classInstanceVariableNames: 'additionalKeyBindings commandQueryHandlers'
 	classConstants: {
 		'AutoCompleteMask' -> 16r1.
@@ -1466,7 +1466,7 @@ Kernel.STBInFiler subclass: #'Tools.STBDebugger'
 UI.Scintilla.Styler subclass: #'Tools.SmalltalkStyler'
 	instanceVariableNames: 'arrayDepth view last inTag stack'
 	classVariableNames: ''
-	imports: #()
+	imports: #(#{UI.Scintilla private})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Tools.SmalltalkStyler subclass: #'Tools.SmalltalkExpressionStyler'

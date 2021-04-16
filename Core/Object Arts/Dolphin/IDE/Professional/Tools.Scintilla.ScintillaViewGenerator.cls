@@ -75,8 +75,8 @@ defineAdditionalConstants
 		at: 'STYLE_NORMAL' put: 0!
 
 defineConstantsPool
-	##(SharedPool
-		subclass: #'UI.Scintilla.ScintillaConstants'
+	##(UI
+		subclass: #'UI.Scintilla'
 		instanceVariableNames: ''
 		classVariableNames: ''
 		imports: #()
@@ -1384,7 +1384,7 @@ generateConstantsPool
 	stream
 		nextPutAll: #defineConstantsPool;
 		cr;
-		nextPutAll: '##(SharedPool subclass: #''UI.Scintilla.ScintillaConstants''
+		nextPutAll: '##(UI subclass: #''UI.Scintilla''
 	instanceVariableNames: ''''
 	classVariableNames: ''''
 	imports: #()

@@ -3,7 +3,7 @@
 Core.Object subclass: #'UI.Scintilla.KeyBinding'
 	instanceVariableNames: 'acceleratorKey message'
 	classVariableNames: 'Commands VirtualKeyMap'
-	imports: #(#{OS.Win32Constants} #{UI.Scintilla.ScintillaConstants})
+	imports: #(#{OS.Win32Constants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 UI.Scintilla.KeyBinding guid: (Core.GUID fromString: '{bf35c065-fef0-4aa1-8dcd-e40e73c5447a}')!

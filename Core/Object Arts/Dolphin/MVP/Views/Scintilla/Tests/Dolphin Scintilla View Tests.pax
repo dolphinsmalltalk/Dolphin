@@ -48,7 +48,7 @@ Core.Tests.DolphinTest subclass: #'UI.Scintilla.Tests.ScintillaLexerMetadataTest
 UI.Tests.AbstractMultilineTextEditTest subclass: #'UI.Scintilla.Tests.ScintillaViewTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{UI.Scintilla.ScintillaConstants})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 UI.Scintilla.Tests.ScintillaLexerMetadataTest subclass: #'UI.Scintilla.Tests.ScintillaLexerPropertyTest'

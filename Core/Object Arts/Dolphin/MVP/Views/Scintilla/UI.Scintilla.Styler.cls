@@ -3,7 +3,7 @@
 Core.Object subclass: #'UI.Scintilla.Styler'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{UI.Scintilla.ScintillaConstants})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 UI.Scintilla.Styler guid: (Core.GUID fromString: '{7dc234ba-44c2-490a-a7a1-7aafd6b577ec}')!

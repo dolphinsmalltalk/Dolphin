@@ -70,7 +70,7 @@ Tools subclass: #'Tools.Tests'
 Core.Object subclass: #'Tools.Tests.MockScintillaView'
 	instanceVariableNames: 'lastStyled tokens text currentTextStyles styleIdMap'
 	classVariableNames: ''
-	imports: #(#{UI.Scintilla.ScintillaConstants})
+	imports: #(#{UI.Scintilla private})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Kernel.ParseNodeVisitor subclass: #'Tools.Tests.StStyler'

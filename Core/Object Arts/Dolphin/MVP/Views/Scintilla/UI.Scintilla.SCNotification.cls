@@ -3,7 +3,7 @@
 OS.NMHDR subclass: #'UI.Scintilla.SCNotification'
 	instanceVariableNames: 'view textString'
 	classVariableNames: ''
-	imports: #(#{UI.Scintilla.ScintillaConstants})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_annotationLinesAdded' -> 16r54.

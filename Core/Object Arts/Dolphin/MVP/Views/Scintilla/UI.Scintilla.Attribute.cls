@@ -3,7 +3,7 @@
 Core.Object subclass: #'UI.Scintilla.Attribute'
 	instanceVariableNames: 'id'
 	classVariableNames: ''
-	imports: #(#{UI.Scintilla.ScintillaConstants})
+	imports: #()
 	classInstanceVariableNames: 'propertyMap'
 	classConstants: {}!
 UI.Scintilla.Attribute guid: (Core.GUID fromString: '{b73f94fe-0bb9-4c23-aee5-e77b3cf408af}')!

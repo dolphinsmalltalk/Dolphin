@@ -21,16 +21,16 @@ type
 	^type ifNil: [type := view sciPropertyType: id]!
 
 value
-	^self type < ScintillaConstants.SC_TYPE_STRING
+	^self type < SC_TYPE_STRING
 		ifTrue: 
 			[| intVal |
 			intVal := view sciGetPropertyInt: id defaultValue: 0.
-			type == ScintillaConstants.SC_TYPE_BOOLEAN ifTrue: [intVal asBoolean] ifFalse: [intVal]]
+			type == SC_TYPE_BOOLEAN ifTrue: [intVal asBoolean] ifFalse: [intVal]]
 		ifFalse: [view sciGetProperty: id]!
 
 value: anObject
 	view sciSetProperty: id
-		value: (self type < ScintillaConstants.SC_TYPE_STRING
+		value: (self type < SC_TYPE_STRING
 				ifTrue: [anObject asParameter printString]
 				ifFalse: [anObject])! !
 !UI.Scintilla.LexerProperty categoriesFor: #getDescription!accessing!private! !

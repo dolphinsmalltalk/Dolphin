@@ -3,7 +3,7 @@
 UI.Tests.AbstractMultilineTextEditTest subclass: #'UI.Scintilla.Tests.ScintillaViewTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{UI.Scintilla.ScintillaConstants})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 UI.Scintilla.Tests.ScintillaViewTest guid: (Core.GUID fromString: '{3c6fbe95-74e0-4325-97e1-82f12133d503}')!
@@ -111,18 +111,18 @@ testOverrideDefaultKeyBindings
 	self assert: (bindings includesKey: code).
 	bindings removeKey: code.
 	expectedDiffs
-		add: (KeyBinding newAcceleratorKey: code message: ScintillaConstants.SCI_NULL).
+		add: (KeyBinding newAcceleratorKey: code message: SCI_NULL).
 	"Add a binding"
 	code := AcceleratorTable keyCodeFromInvariantString: 'CTRL+J'.
 	self deny: (bindings includesKey: code).
 	binding := KeyBinding newAcceleratorKey: code
-				message: ScintillaConstants.SCI_SELECTIONDUPLICATE.
+				message: SCI_SELECTIONDUPLICATE.
 	bindings at: code put: binding.
 	expectedDiffs add: binding.
 	"Update a binding"
 	code := AcceleratorTable keyCodeFromInvariantString: 'CTRL+D'.
 	self assert: (bindings includesKey: code).
-	binding := KeyBinding newAcceleratorKey: code message: ScintillaConstants.SCI_PAGEDOWN.
+	binding := KeyBinding newAcceleratorKey: code message: SCI_PAGEDOWN.
 	bindings at: code put: binding.
 	expectedDiffs add: binding.
 

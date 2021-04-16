@@ -3,7 +3,7 @@
 UI.Scintilla.Styler subclass: #'Tools.SmalltalkStyler'
 	instanceVariableNames: 'arrayDepth view last inTag stack'
 	classVariableNames: ''
-	imports: #()
+	imports: #(#{UI.Scintilla private})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Tools.SmalltalkStyler guid: (Core.GUID fromString: '{eb307480-e6d7-4715-934e-59caf9618538}')!
