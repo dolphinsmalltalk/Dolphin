@@ -37,7 +37,7 @@ package!
 UI.ImageViewAbstract subclass: #'Graphics.Gdiplus.ImageView'
 	instanceVariableNames: 'interpolationMode swun2 swun3 imageAttributes swun4 swun5 swun6'
 	classVariableNames: ''
-	imports: #(#{Graphics.Gdiplus.GdiplusConstants})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 

@@ -689,7 +689,6 @@ examplesWorkspace
 	"
 
 	| graphics bitmap points brush path colors rect |
-	#'Graphics.Gdiplus.PathGradientBrush'.
 
 	"#blendFactors:positions:"
 	graphics := (bitmap := Bitmap new) graphics.

@@ -87,7 +87,7 @@ Graphics.Gdiplus.Initializer subclass: #'Graphics.Gdiplus.Tests.TestInitializer'
 XProgramming.SUnit.TestCase subclass: #'Graphics.Gdiplus.Tests.GdiplusTest'
 	instanceVariableNames: 'model'
 	classVariableNames: ''
-	imports: #(#{Graphics.Gdiplus.GdiplusConstants})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 External.Tests.POINTTest subclass: #'Graphics.Gdiplus.Tests.POINTFTest'

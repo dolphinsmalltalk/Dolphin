@@ -3,7 +3,7 @@
 External.DynamicLinkLibrary subclass: #'Graphics.Gdiplus.GdiplusLibrary'
 	instanceVariableNames: 'token'
 	classVariableNames: ''
-	imports: #(#{Graphics.Gdiplus.GdiplusConstants})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Graphics.Gdiplus.GdiplusLibrary guid: (Core.GUID fromString: '{de97dca0-ad17-4002-a790-a4b99480a5b8}')!

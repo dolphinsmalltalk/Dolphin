@@ -3,7 +3,7 @@
 UI.ImageViewAbstract subclass: #'Graphics.Gdiplus.ImageView'
 	instanceVariableNames: 'interpolationMode swun2 swun3 imageAttributes swun4 swun5 swun6'
 	classVariableNames: ''
-	imports: #(#{Graphics.Gdiplus.GdiplusConstants})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Graphics.Gdiplus.ImageView guid: (Core.GUID fromString: '{eede5c5a-f1e0-4e07-b766-9ea7d3169055}')!

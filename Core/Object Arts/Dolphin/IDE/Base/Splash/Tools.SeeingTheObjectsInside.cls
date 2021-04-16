@@ -3,7 +3,7 @@
 Graphics.Gdiplus.DoubleBufferedView subclass: #'Tools.SeeingTheObjectsInside'
 	instanceVariableNames: 'background dolphinOutline points sun stepProcess random insideObjectsScale dolphinIntensity textureMap objects dolphins dolphinInside splashDelay hintBubble startTime info baseScale'
 	classVariableNames: ''
-	imports: #(#{Graphics.Gdiplus.GdiplusConstants private} #{Graphics private})
+	imports: #(#{Graphics private} #{Graphics.Gdiplus private})
 	classInstanceVariableNames: 'splashPlayTheGame difficultyLevel'
 	classConstants: {}!
 Tools.SeeingTheObjectsInside guid: (Core.GUID fromString: '{66a4dee3-a72c-4a2f-a14f-bffd6813ceef}')!
@@ -96,9 +96,9 @@ dolphinSplashBackcolor
 
 drawInfoTextOn: graphics
 	| fontCopyright brush stringFormat |
-	brush := Gdiplus.SolidBrush color: Color white.
+	brush := SolidBrush color: Color white.
 	fontCopyright := Gdiplus.Font name: 'Arial' pointSize: 9.
-	stringFormat := Gdiplus.StringFormat genericDefault.
+	stringFormat := StringFormat genericDefault.
 	graphics
 		textRenderingHint: TextRenderingHintAntiAlias;
 		drawString: info
@@ -364,7 +364,7 @@ splashBitmap
 				usingLocator: FileLocator installRelative.
 	extent := rawBitmap extent.
 	bitmap := Gdiplus.Bitmap extent: extent.
-	imageAttr := Gdiplus.ImageAttributes new
+	imageAttr := ImageAttributes new
 				remapColor: self dolphinSplashBackcolor to: SmalltalkSystemShell backcolor;
 				yourself.
 	bitmap graphics

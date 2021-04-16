@@ -91,7 +91,7 @@ Smalltalk.GdiplusBitmap := Graphics.Gdiplus.Bitmap!
 
 Smalltalk.GdiplusCachedBitmap := Graphics.Gdiplus.CachedBitmap!
 
-Smalltalk.GdiplusConstants := Graphics.Gdiplus.GdiplusConstants!
+Smalltalk.GdiplusConstants := Graphics.Gdiplus!
 
 Smalltalk.GdiplusCustomLineCap := Graphics.Gdiplus.CustomLineCap!
 

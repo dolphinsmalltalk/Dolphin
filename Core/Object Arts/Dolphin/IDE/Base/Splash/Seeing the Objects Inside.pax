@@ -34,7 +34,7 @@ package!
 Core.Object subclass: #'Tools.ObjectInside'
 	instanceVariableNames: 'image edgePoints position scale rotation alpha color baseColor matrix'
 	classVariableNames: ''
-	imports: #(#{Graphics.Gdiplus.GdiplusConstants private} #{Graphics private})
+	imports: #(#{Graphics private} #{Graphics.Gdiplus private})
 	classInstanceVariableNames: ''
 	classConstants: {
 		'EdgePointResolution' -> 16rA
@@ -48,7 +48,7 @@ UI.Splash subclass: #'Tools.DolphinSplash'
 Graphics.Gdiplus.DoubleBufferedView subclass: #'Tools.SeeingTheObjectsInside'
 	instanceVariableNames: 'background dolphinOutline points sun stepProcess random insideObjectsScale dolphinIntensity textureMap objects dolphins dolphinInside splashDelay hintBubble startTime info baseScale'
 	classVariableNames: ''
-	imports: #(#{Graphics.Gdiplus.GdiplusConstants private} #{Graphics private})
+	imports: #(#{Graphics private} #{Graphics.Gdiplus private})
 	classInstanceVariableNames: 'splashPlayTheGame difficultyLevel'
 	classConstants: {}!
 

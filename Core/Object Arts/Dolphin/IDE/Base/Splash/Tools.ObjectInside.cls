@@ -3,7 +3,7 @@
 Core.Object subclass: #'Tools.ObjectInside'
 	instanceVariableNames: 'image edgePoints position scale rotation alpha color baseColor matrix'
 	classVariableNames: ''
-	imports: #(#{Graphics.Gdiplus.GdiplusConstants private} #{Graphics private})
+	imports: #(#{Graphics private} #{Graphics.Gdiplus private})
 	classInstanceVariableNames: ''
 	classConstants: {
 		'EdgePointResolution' -> 16rA
@@ -55,13 +55,13 @@ drawEdgePointsOn: aGdiplusGraphics
 drawOn: aGdiplusGraphics
 	| attributes extent |
 	extent := self extent.
-	attributes := Gdiplus.ImageAttributes new.
+	attributes := ImageAttributes new.
 	self color ifNotNil: [:col | attributes remapColor: self baseColor to: col].
 	self alpha
 		ifNotNil: 
 			[:alph |
 			| colorMatrix |
-			colorMatrix := Gdiplus.GpColorMatrix identity.
+			colorMatrix := GpColorMatrix identity.
 			colorMatrix atPoint: 4 @ 4 put: alph.
 			attributes colorMatrix: colorMatrix].
 	aGdiplusGraphics
@@ -92,7 +92,7 @@ findEdgePoints
 	height := image height.
 	width := image width.
 	argb := ByteArray new: 4.
-	gdipluslib := Gdiplus.GdiplusLibrary default.
+	gdipluslib := GdiplusLibrary default.
 	imageHandle := image asParameter.
 	0 to: height + EdgePointResolution
 		by: EdgePointResolution
@@ -131,7 +131,7 @@ initialize
 matrix
 	^matrix 
 		ifNil: 
-			[matrix := (Gdiplus.Matrix new)
+			[matrix := (Matrix new)
 						translateTransform: self position;
 						rotateTransform: self rotation;
 						scaleTransform: self scale asPoint;
@@ -172,7 +172,7 @@ testCollisionIn: aGdiplusBitmap
 	| white color1 gdiplusLib bitmapHandle |
 	white := Color white argbCode asSDword.
 	color1 := ByteArray new: 4.
-	gdiplusLib := Gdiplus.GdiplusLibrary default.
+	gdiplusLib := GdiplusLibrary default.
 	bitmapHandle := aGdiplusBitmap asParameter.
 	^(self matrix transformPoints: self edgePoints) anySatisfy: 
 			[:each |

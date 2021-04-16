@@ -154,7 +154,6 @@ package setClassNames: #(
 	#{Graphics.Gdiplus.FromBytesInitializer}
 	#{Graphics.Gdiplus.FromFileInitializer}
 	#{Graphics.Gdiplus.GdiplusBase}
-	#{Graphics.Gdiplus.GdiplusConstants}
 	#{Graphics.Gdiplus.GdiplusError}
 	#{Graphics.Gdiplus.GdiplusGraphics}
 	#{Graphics.Gdiplus.GdiplusGUIDs}
@@ -249,12 +248,6 @@ package!
 "Class Definitions"!
 
 Graphics subclass: #'Graphics.Gdiplus'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-Kernel.SharedPool subclass: #'Graphics.Gdiplus.GdiplusConstants'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -1146,13 +1139,13 @@ Kernel.SharedPool subclass: #'Graphics.Gdiplus.GdiplusGUIDs'
 Core.Object subclass: #'Graphics.Gdiplus.Initializer'
 	instanceVariableNames: 'library'
 	classVariableNames: ''
-	imports: #(#{Graphics.Gdiplus.GdiplusConstants})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 External.DynamicLinkLibrary subclass: #'Graphics.Gdiplus.GdiplusLibrary'
 	instanceVariableNames: 'token'
 	classVariableNames: ''
-	imports: #(#{Graphics.Gdiplus.GdiplusConstants})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Core.Error subclass: #'Graphics.Gdiplus.GdiplusError'
@@ -1166,7 +1159,7 @@ Core.Error subclass: #'Graphics.Gdiplus.GdiplusError'
 Graphics.GraphicsTool subclass: #'Graphics.Gdiplus.GdiplusBase'
 	instanceVariableNames: 'initializer'
 	classVariableNames: ''
-	imports: #(#{Graphics.Gdiplus.GdiplusGUIDs} #{Graphics.Gdiplus.GdiplusConstants})
+	imports: #(#{Graphics.Gdiplus.GdiplusGUIDs})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Graphics.Gdiplus.GdiplusBase subclass: #'Graphics.Gdiplus.Brush'
@@ -1743,7 +1736,7 @@ External.Structure subclass: #'Graphics.Gdiplus.GpPathData'
 External.Structure subclass: #'Graphics.Gdiplus.GpPropertyItem'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{Graphics.Gdiplus.GdiplusConstants})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_id' -> 16r0.
@@ -1829,7 +1822,7 @@ asColorKeyedBitmap: aKeyColor
 	image := Gdiplus.Bitmap fromBitmap: self.
 	imageAttributes := Gdiplus.ImageAttributes new.
 	imageAttributes
-		colorKeys: Gdiplus.GdiplusConstants.ColorAdjustTypeBitmap
+		colorKeys: Gdiplus.ColorAdjustTypeBitmap
 		colorLow: aKeyColor
 		colorHigh: aKeyColor.
 	ext := self extent.

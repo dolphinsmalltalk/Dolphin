@@ -3,7 +3,7 @@
 External.Structure subclass: #'Graphics.Gdiplus.GpPropertyItem'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{Graphics.Gdiplus.GdiplusConstants})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_id' -> 16r0.
@@ -54,11 +54,11 @@ length: anInteger
 name
 	"Answer the receiver's id (property tag) as a string.  If unknown, answer the receiver's id as a hex string."
 
-	^GdiplusConstants keys asOrderedCollection detect: 
-			[:e |
-			((e beginsWith: 'PropertyTag') and: [(e beginsWith: 'PropertyTagType') not])
-				and: [self id = (GdiplusConstants at: e)]]
-		ifNone: [self id hex]!
+	^(Gdiplus classConstants detect: 
+			[:each |
+			((each key beginsWith: 'PropertyTag') and: [(each key beginsWith: 'PropertyTagType') not])
+				and: [self id = each value]]
+		ifNone: [self id hex -> nil]) key!
 
 Type
 	"Answer the <Integer> value of the receiver's 'Type' field."
@@ -73,8 +73,8 @@ Type: anInteger
 typeName
 	"Answer the receiver's type (property tag type) as a string."
 
-	^GdiplusConstants keys asOrderedCollection
-		detect: [:e | (e beginsWith: 'PropertyTagType') and: [self Type = (GdiplusConstants at: e)]]!
+	^(Gdiplus classConstants
+		detect: [:each | (each key beginsWith: 'PropertyTagType') and: [self Type = each value]]) key!
 
 Value
 	"Answer the <ExternalAddress> value of the receiver's 'Value' field."

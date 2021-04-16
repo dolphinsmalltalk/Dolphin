@@ -3,7 +3,7 @@
 Graphics.InternalBitmap subclass: #'Graphics.InternalIcon'
 	instanceVariableNames: 'tileColor'
 	classVariableNames: ''
-	imports: #(#{Graphics.Gdiplus.GdiplusConstants})
+	imports: #(#{Graphics.Gdiplus private})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Graphics.InternalIcon guid: (Core.GUID fromString: '{7446a3c1-e3ae-45b8-bca2-bbd493a5c7d3}')!
@@ -79,7 +79,7 @@ drawOn: aCanvas at: dstOrigin extent: dstExtent
 drawOnGraphics: aGraphics at: dstOrigin extent: dstExtent from: srcOrigin extent: srcExtent unit: aUnit attributes: aImageAtt
 	tileColor
 		ifNotNil: 
-			[aGraphics fillRectangle: (dstOrigin extent: dstExtent) brush: (Gdiplus.SolidBrush color: tileColor)].
+			[aGraphics fillRectangle: (dstOrigin extent: dstExtent) brush: (SolidBrush color: tileColor)].
 	^self gdiplusBitmap
 		drawOnGraphics: aGraphics
 		at: dstOrigin

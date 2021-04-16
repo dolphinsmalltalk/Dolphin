@@ -2,8 +2,8 @@
 
 Core.Object subclass: #'Graphics.TextTileIcon'
 	instanceVariableNames: 'text fontName tilecolor textcolor icon _reserved6 flags _reserved8 _reserved9'
-	classVariableNames: 'StringFormat'
-	imports: #(#{Graphics.Gdiplus.GdiplusConstants})
+	classVariableNames: 'TextFormat'
+	imports: #(#{Graphics.Gdiplus private})
 	classInstanceVariableNames: ''
 	classConstants: {
 		'FontStyleMask' -> 16r1C.
@@ -71,7 +71,7 @@ applyTransforms: aGdiplusGraphics rect: aRectangle
 	(i := flags bitAnd: RotationMask) == 0 ifTrue: [^self].
 	matrix := (##({
 				[:x :y |
-				Gdiplus.Matrix
+				Matrix
 					m11: 0.0
 					m12: 1.0
 					m21: -1.0
@@ -80,7 +80,7 @@ applyTransforms: aGdiplusGraphics rect: aRectangle
 					m32: (y - x) / 2.0].
 				
 				[:x :y |
-				Gdiplus.Matrix
+				Matrix
 					m11: -1.0
 					m12: 0.0
 					m21: 0.0
@@ -89,7 +89,7 @@ applyTransforms: aGdiplusGraphics rect: aRectangle
 					m32: y].
 				
 				[:x :y |
-				Gdiplus.Matrix
+				Matrix
 					m11: 0.0
 					m12: -1.0
 					m21: 1.0
@@ -175,7 +175,7 @@ drawOn: aCanvas at: dstOrigin extent: dstExtent
 	The receiver is stretched to fit the destination rectangle."
 
 	| graphics |
-	graphics := Gdiplus.GdiplusGraphics fromCanvas: aCanvas.
+	graphics := GdiplusGraphics fromCanvas: aCanvas.
 	self
 		drawOnGraphics: graphics
 		at: dstOrigin
@@ -190,7 +190,7 @@ drawOnGraphics: graphics at: originPoint extent: aPoint
 	back
 		ifNotNil: 
 			[| backbrush |
-			backbrush := Gdiplus.SolidBrush color: back.
+			backbrush := SolidBrush color: back.
 			graphics fillRectangle: rect brush: backbrush.
 			backbrush free.
 			rect := rect insetBy: 1 @ 0].
@@ -212,8 +212,8 @@ drawOnGraphics: graphics at: originPoint extent: aPoint
 	textExtent := (graphics
 				measureString: utf16
 				font: f
-				rect: Gdiplus.RECTF new
-				format: Gdiplus.StringFormat genericTypographic) extent.
+				rect: RECTF new
+				format: StringFormat genericTypographic) extent.
 	f free.
 	scale := width asFloat / textExtent x.
 	scale * textExtent y > height ifTrue: [scale := height asFloat / textExtent y].
@@ -221,7 +221,7 @@ drawOnGraphics: graphics at: originPoint extent: aPoint
 				name: faceName
 				pixelSize: (height * scale max: 1)
 				style: style.
-	textBrush := Gdiplus.SolidBrush color: self actualTextcolor.
+	textBrush := SolidBrush color: self actualTextcolor.
 	graphics
 		drawString: utf16
 		font: f
@@ -286,6 +286,12 @@ imageManager
 
 imageType
 	^Win32Constants.IMAGE_ICON!
+
+isPersistent
+	"Private - Answer true if the receiver holds sufficient information such that it can recreate itself when the Smalltalk image is saved and restored. 
+	TextTileIcon's are self describing, so this is always true."
+
+	^true!
 
 isRealized
 	"For compatibility with <GraphicsTool>s. We realize on demand, but can always do so (system resources permitting)."
@@ -378,15 +384,15 @@ storeOn: aStream
 			aStream nextPutAll: ' yourself)']!
 
 stringFormat
-	(StringFormat isNil or: [StringFormat isRealized not])
+	(TextFormat isNil or: [TextFormat isRealized not])
 		ifTrue: 
-			[StringFormat := (Gdiplus.StringFormat
-						flags: ##(StringFormatFlagsNoClip | StringFormatFlagsNoWrap))
+			[TextFormat := (StringFormat
+						flags: ##(StringFormatFlagsNoFitBlackBox | StringFormatFlagsNoClip | StringFormatFlagsNoWrap))
 						trimming: StringTrimmingNone;
 						lineAlignment: StringAlignmentCenter;
 						alignment: StringAlignmentCenter;
 						yourself].
-	^StringFormat!
+	^TextFormat!
 
 text
 	"Answer the text to be rendered onto the tile."
@@ -436,6 +442,7 @@ tilecolor
 !Graphics.TextTileIcon categoriesFor: #imageIndex!image management!private! !
 !Graphics.TextTileIcon categoriesFor: #imageManager!image management!private! !
 !Graphics.TextTileIcon categoriesFor: #imageType!constants!public! !
+!Graphics.TextTileIcon categoriesFor: #isPersistent!public! !
 !Graphics.TextTileIcon categoriesFor: #isRealized!public!testing! !
 !Graphics.TextTileIcon categoriesFor: #largeIcon!converting!public! !
 !Graphics.TextTileIcon categoriesFor: #printOn:!printing!public! !
@@ -450,6 +457,8 @@ tilecolor
 !Graphics.TextTileIcon categoriesFor: #textcolor!accessing!public! !
 !Graphics.TextTileIcon categoriesFor: #textcolor:!accessing!public! !
 !Graphics.TextTileIcon categoriesFor: #tilecolor!accessing!public! !
+
+Graphics.TextTileIcon methodProtocol: #image attributes: #(#readOnly) selectors: #(#drawOn: #drawOn:at: #drawOn:at:extent: #extent #freeDC #isPersistent)!
 
 !Graphics.TextTileIcon class methodsFor!
 

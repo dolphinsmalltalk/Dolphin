@@ -3,7 +3,7 @@
 XProgramming.SUnit.TestCase subclass: #'Graphics.Gdiplus.Tests.GdiplusTest'
 	instanceVariableNames: 'model'
 	classVariableNames: ''
-	imports: #(#{Graphics.Gdiplus.GdiplusConstants})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Graphics.Gdiplus.Tests.GdiplusTest guid: (Core.GUID fromString: '{ea227fda-3570-490b-b8cf-4973dc534043}')!

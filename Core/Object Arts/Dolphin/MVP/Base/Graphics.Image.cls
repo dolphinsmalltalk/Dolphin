@@ -265,7 +265,7 @@ printOn: aStream
 !Graphics.Image categoriesFor: #loadFromInstance:!private!realizing/unrealizing! !
 !Graphics.Image categoriesFor: #printOn:!printing!public! !
 
-Graphics.Image methodProtocol: #image attributes: #(#readOnly) selectors: #(#drawOn: #drawOn:at: #drawOn:at:extent: #extent)!
+Graphics.Image methodProtocol: #image attributes: #(#readOnly) selectors: #(#drawOn: #drawOn:at: #drawOn:at:extent: #extent #freeDC #isPersistent)!
 
 !Graphics.Image class methodsFor!
 

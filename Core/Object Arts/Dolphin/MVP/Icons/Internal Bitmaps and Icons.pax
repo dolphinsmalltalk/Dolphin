@@ -72,7 +72,7 @@ Core.Object subclass: #'Graphics.InternalBitmap'
 Graphics.InternalBitmap subclass: #'Graphics.InternalIcon'
 	instanceVariableNames: 'tileColor'
 	classVariableNames: ''
-	imports: #(#{Graphics.Gdiplus.GdiplusConstants})
+	imports: #(#{Graphics.Gdiplus private})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 

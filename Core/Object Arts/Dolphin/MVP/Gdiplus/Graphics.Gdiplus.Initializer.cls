@@ -3,7 +3,7 @@
 Core.Object subclass: #'Graphics.Gdiplus.Initializer'
 	instanceVariableNames: 'library'
 	classVariableNames: ''
-	imports: #(#{Graphics.Gdiplus.GdiplusConstants})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Graphics.Gdiplus.Initializer guid: (Core.GUID fromString: '{4687fd64-6607-4be7-b45b-f533ef511bc5}')!

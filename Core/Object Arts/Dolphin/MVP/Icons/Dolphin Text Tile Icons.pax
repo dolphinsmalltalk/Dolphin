@@ -24,8 +24,8 @@ package!
 
 Core.Object subclass: #'Graphics.TextTileIcon'
 	instanceVariableNames: 'text fontName tilecolor textcolor icon _reserved6 flags _reserved8 _reserved9'
-	classVariableNames: 'StringFormat'
-	imports: #(#{Graphics.Gdiplus.GdiplusConstants})
+	classVariableNames: 'TextFormat'
+	imports: #(#{Graphics.Gdiplus private})
 	classInstanceVariableNames: ''
 	classConstants: {
 		'FontStyleMask' -> 16r1C.

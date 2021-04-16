@@ -3,7 +3,7 @@
 Graphics.GraphicsTool subclass: #'Graphics.Gdiplus.GdiplusBase'
 	instanceVariableNames: 'initializer'
 	classVariableNames: ''
-	imports: #(#{Graphics.Gdiplus.GdiplusGUIDs} #{Graphics.Gdiplus.GdiplusConstants})
+	imports: #(#{Graphics.Gdiplus.GdiplusGUIDs})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Graphics.Gdiplus.GdiplusBase guid: (Core.GUID fromString: '{9368410d-787c-4331-994e-9bc2c3f0fe46}')!
@@ -291,7 +291,7 @@ enumsWithPrefix: aString
 		self enumsWithPrefix: 'Unit'
 	"
 
-	^(GdiplusConstants associations select: [:each | each key beginsWith: aString])
+	^(Gdiplus classConstants select: [:each | each key beginsWith: aString])
 		asSortedCollection: [:a :b | a value < b value]!
 
 enumsWrapMode
