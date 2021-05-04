@@ -1279,7 +1279,7 @@ mutate
 
 	| viewClasses excluded |
 	excluded := Set new.
-	#(#{DesktopView} #{WinAsyncSocket} #{BrowserView})
+	#(#{DesktopView} #{Smalltalk.WinAsyncSocket})
 		do: [:each | each ifDefined: [:viewClass | excluded add: viewClass]].
 	"excluded 
 		addAll: (self class owningPackage classes select: [:each | each inheritsFrom: View])."

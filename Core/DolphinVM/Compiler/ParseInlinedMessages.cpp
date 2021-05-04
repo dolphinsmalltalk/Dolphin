@@ -602,7 +602,6 @@ POTE Compiler::AddSymbolToFrame(LPUTF8 s, const TEXTRANGE& tokenRange, LiteralTy
 	return oteSelector;
 }
 
-
 // Return whether we it was suitable to optimize this loop block
 template <bool WhileTrue> bool Compiler::ParseWhileLoopBlock(const ip_t loopmark, 
 								   const TEXTRANGE& tokenRange, const TEXTRANGE& receiverRange)
@@ -816,7 +815,7 @@ bool Compiler::ParseToByDoBlock(textpos_t exprStart, ip_t toPointer, ip_t byPoin
 			else
 			{
 				// Have to call into Smalltalk to find out if it is negative
-				Oop oopIsNegative = m_piVM->Perform(oopStep, GetVMPointers().negativeSymbol);
+				Oop oopIsNegative = m_piVM->Perform(oopStep, GetVMPointers().negativeSelector);
 				bNegativeStep = oopIsNegative == reinterpret_cast<Oop>(GetVMPointers().True);
 			}
 		}

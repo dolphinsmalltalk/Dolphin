@@ -112,20 +112,20 @@ struct VMPointers //: public Object
 
 			SymbolOTE* asNumberSymbol;							// 58
 			// TODO - Remove these when compiler no longer uses them.
-			SymbolOTE* fullBindingForSymbol;					// 59
-			SymbolOTE* allInstVarNamesSymbol;					// 60
-			SymbolOTE* understandsArithmeticSymbol;				// 61
-			SymbolOTE* canUnderstandSymbol;						// 62
-			SymbolOTE* negativeSymbol;							// 63
+			SymbolOTE* fullBindingForSelector;					// 59
+			SymbolOTE* allInstVarNamesSelector;					// 60
+			SymbolOTE* understandsArithmeticSelector;				// 61
+			SymbolOTE* canUnderstandSelector;						// 62
+			SymbolOTE* negativeSelector;							// 63
 			SymbolOTE* evaluateExpressionSelector;				// 64
 			SymbolOTE* newBindingRefSelector;					// 65
 
 			// 66..85
 			SymbolOTE* compilerNotificationCallback;			// 66
-			POTE _unusedSelector67;								// 67
+			SymbolOTE* namespaceAnnotationSelector;				// 67
 
 			SymbolOTE* genericCallbackSelector;					// 68
-			/**/Oop _unusedSelector69;								// 69
+			SymbolOTE* setScopeSelector;						// 69
 			SymbolOTE* virtualCallbackSelector;					// 70
 			SymbolOTE* exSpecialSelectors[NumExSpecialSends];	// 71,72,73,74
 			Oop _reservedSymbols[6];							// 75, 76,77,78,79,80
@@ -218,7 +218,8 @@ struct VMPointers //: public Object
 
 			SemaphoreOTE* TimingSemaphore;						// 150
 
-			POTE _unused151to192[42];							// 151-192
+			BehaviorOTE* ClassMethodAnnotations;				// 151
+			POTE _unused152to192[41];							// 152-192
 		};
 		Oop pointers[192];
 	};

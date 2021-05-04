@@ -17,6 +17,7 @@ package setMethodNames: #(
 	#(#{Graphics.Point} #stonOn:)
 	#(#{Graphics.Point class} #fromSton:)
 	#(#{Kernel.BindingReference class} #stonAllInstVarNames)
+	#(#{Kernel.RelativeBindingReference class} #stonAllInstVarNames)
 	#(#{UI.CardLayout class} #stonAllInstVarNames)
 	#(#{UI.ControlView class} #stonAllInstVarNames)
 	#(#{UI.FramingCalculation} #stonOn:)
@@ -134,8 +135,16 @@ fromSton: stonReader
 stonAllInstVarNames
 	"Override to exclude the number of instance variables we never want to serialize."
 
-	^#('pathString' 'path' 'context' 'flags')! !
+	^#('pathString' 'path' 'private')! !
 !Kernel.BindingReference class categoriesFor: #stonAllInstVarNames!public! !
+
+!Kernel.RelativeBindingReference class methodsFor!
+
+stonAllInstVarNames
+	"Override to exclude the number of instance variables we never want to serialize."
+
+	^super stonAllInstVarNames copyWith: 'scope'! !
+!Kernel.RelativeBindingReference class categoriesFor: #stonAllInstVarNames!public! !
 
 !UI.CardLayout class methodsFor!
 

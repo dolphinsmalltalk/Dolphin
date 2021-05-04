@@ -154,7 +154,10 @@ onViewOpened
 	selection := history size!
 
 parseContext
-	^self methodClass!
+	| methodClass |
+	methodClass := self methodClass.
+	^(methodClass compiledMethodAt: selector ifAbsent: [])
+		ifNil: [ParseContext methodClass: methodClass environment: methodClass environment]!
 
 printableView
 	^source view!

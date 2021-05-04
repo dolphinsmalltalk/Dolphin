@@ -19,18 +19,16 @@ addField
 	| newField command |
 	command := Command current.
 	newField := Prompter prompt: 'Key expression:' caption: 'Add Field'.
-	newField notNil 
+	newField notNil
 		ifTrue: 
-			[| newKey |
-			newKey := self selfField class compilerClass 
-						evaluate: newField
-						for: self selfField.
-			newKey notNil 
+			[| newKey selfField |
+			selfField := self selfField.
+			newKey := selfField class compilerClass evaluate: newField for: selfField environment: selfField class environment.
+			newKey notNil
 				ifTrue: 
-					[(self selfField includesKey: newKey) 
+					[(selfField includesKey: newKey)
 						ifFalse: 
 							["Add the new key and an undo action to remove the new key on #undo"
-
 							command undoWith: [self removeKey: newKey].
 							self addKey: newKey put: nil].
 					self variableName: newKey]].

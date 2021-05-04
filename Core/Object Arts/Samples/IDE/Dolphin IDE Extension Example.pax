@@ -1,22 +1,21 @@
 ﻿| package |
 package := Package name: 'Dolphin IDE Extension Example'.
 package paxVersion: 2.1;
+	environmentName: #{Tools.Examples};
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk IDE Extension Sample. 
 Copyright (c) Object Arts Ltd, 2002.
 
 This package demonstrates how to extend the standard IDE tools by the dynamic, programmatic, addition of commands to menus, without editing the view resources.
 
-Two extensions are implemented:
-1) A command is added to the Class Browser class comment workspace''s context menu to emit a standard format class comment.
-2) A command is added to the help menu of all tools that generates and displays an HTML page  listing all accelerator key bindings for the tool.
+A command is added to the Class Browser class comment workspace''s context menu to emit a standard format class comment.
 
-These extensions can be turned on and off independently as options under ''Object Arts IDE Extensions'' in ''User Preferences''.
+The extensions can be turned on and off as options under ''Object Arts IDE Extensions'' in ''User Preferences''.
 '.
 
 
 package setClassNames: #(
-	#{Tools.OAIDEExtensions}
+	#{Tools.Examples.OAIDEExtensions}
 ).
 
 package setMethodNames: #(
@@ -38,7 +37,7 @@ package!
 
 "Class Definitions"!
 
-Core.Object subclass: #'Tools.OAIDEExtensions'
+Core.Object subclass: #'Tools.Examples.OAIDEExtensions'
 	instanceVariableNames: 'flags'
 	classVariableNames: 'Current'
 	imports: #(#{SHDocVw private})

@@ -252,7 +252,7 @@ XProgramming.SUnit.TestCase subclass: #'Core.Tests.DolphinTest'
 	classConstants: {}!
 Core.Tests.DolphinTest subclass: #'Kernel.Tests.AbstractBindingReferenceTest'
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: 'TestVar'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!

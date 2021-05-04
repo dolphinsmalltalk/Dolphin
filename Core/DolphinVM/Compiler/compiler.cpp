@@ -81,26 +81,8 @@ Compiler::LibCallType Compiler::callTypes[4] =
 
 ///////////////////////
 
-Compiler::Compiler() :
-		m_class(nullptr),
-		m_codePointer(ip_t::zero),
-		m_compiledMethodClass(nullptr),
-		m_compilerObject(0),
-		m_context(0),
-		m_flags(CompilerFlags::Default),
-		m_instVarsInitialized(false),
-		m_isMutable(false),
-		m_isCompilingExpression(false),
-		m_literalLimit(LITERALLIMIT),
-		m_notifier(0),
-		m_ok(true),
-		m_oopWorkspacePools(nullptr),
-		m_pCurrentScope(nullptr),
-		m_primitiveIndex(0),
-		m_selector(),
-		m_sendType(SendType::Other)
-{
-}
+Compiler::Compiler()
+{}
 	
 Compiler::~Compiler()
 {
@@ -121,6 +103,19 @@ Compiler::~Compiler()
 			m_piVM->RemoveReference((*it).first);
 		}
 	}
+
+	// Free annotations
+	{
+		for (AnnotationVector::const_iterator it = m_annotations.cbegin(); it != m_annotations.cend(); it++)
+		{
+			MethodAnnotation annotationPair = *it;
+			m_piVM->RemoveReference((Oop)annotationPair.first);
+			for (OOPVECTOR::const_iterator argsIt = annotationPair.second.cbegin(); argsIt != annotationPair.second.cend(); argsIt++)
+			{
+				m_piVM->RemoveReference(*argsIt);
+			}
+		}
+	}
 }
 
 inline void Compiler::SetFlagsAndText(CompilerFlags flags, LPUTF8 text, textpos_t offset)
@@ -130,7 +125,7 @@ inline void Compiler::SetFlagsAndText(CompilerFlags flags, LPUTF8 text, textpos_
 	NextToken();
 }
 	
-void Compiler::PrepareToCompile(CompilerFlags flags, LPUTF8 compiletext, textpos_t offset, POTE aBehaviorOrNil, Oop compiler, Oop notifier, POTE workspacePools, boolean isCompilingExpression, Oop context)
+void Compiler::PrepareToCompile(CompilerFlags flags, LPUTF8 compiletext, textpos_t offset, POTE aBehaviorOrNil, POTE aNamespaceOrNil, Oop compiler, Oop notifier, POTE workspacePools, boolean isCompilingExpression, Oop context)
 {
 	// Prepare to compile methods for the given class.
 	// This gets the list of instance variable names for this class
@@ -140,6 +135,8 @@ void Compiler::PrepareToCompile(CompilerFlags flags, LPUTF8 compiletext, textpos
 	m_compiledMethodClass = isCompilingExpression ? GetVMPointers().ClassCompiledExpression : GetVMPointers().ClassCompiledMethod;
 	_ASSERTE(aBehaviorOrNil);
 	m_class = aBehaviorOrNil;
+	_ASSERTE(aNamespaceOrNil);
+	m_environment = aNamespaceOrNil;
 	_ASSERTE(notifier);
 	m_notifier=notifier;
 	_ASSERTE(compiler);
@@ -150,6 +147,14 @@ void Compiler::PrepareToCompile(CompilerFlags flags, LPUTF8 compiletext, textpos
 	SetFlagsAndText(flags, compiletext, offset);
 	
 	GetContext(workspacePools);
+
+	// Determine if we need to add a MethodAnnotations literal
+	if (m_environment != m_piVM->NilPointer() && m_environment != GetClassEnvironment(m_class))
+	{
+		m_hasNamespaceAnnotation = true;
+		// Method is compiled in a different namespace, so add the #namespace: annotation
+		AddAnnotation(GetVMPointers().namespaceAnnotationSelector, (Oop)m_environment);
+	}
 }
 
 Str Compiler::GetNameOfClass(Oop oopClass, bool recurse)
@@ -183,10 +188,10 @@ Str Compiler::GetNameOfClass(Oop oopClass, bool recurse)
 	}
 }
 
-POTE Compiler::CompileExpression(LPUTF8 compiletext, Oop compiler, Oop notifier, Oop contextOop, CompilerFlags flags, size_t& len, textpos_t exprStart)
+POTE Compiler::CompileExpression(LPUTF8 compiletext, Oop compiler, Oop notifier, Oop contextOop, POTE environment, CompilerFlags flags, size_t& len, textpos_t exprStart)
 {
 	POTE classPointer = m_piVM->FetchClassOf(contextOop);
-	PrepareToCompile(flags, compiletext, exprStart, classPointer, compiler, notifier, Nil(), true, contextOop);
+	PrepareToCompile(flags, compiletext, exprStart, classPointer, environment, compiler, notifier, Nil(), true, contextOop);
 	POTE oteMethod;
 	if (m_ok)
 	{
@@ -200,7 +205,7 @@ POTE Compiler::CompileExpression(LPUTF8 compiletext, Oop compiler, Oop notifier,
 	return oteMethod;
 }
 
-POTE Compiler::CompileForClassHelper(LPUTF8 compiletext, Oop compiler, Oop notifier, POTE aClass, CompilerFlags flags)
+POTE Compiler::CompileForClassHelper(LPUTF8 compiletext, Oop compiler, Oop notifier, POTE aClass, POTE environment, CompilerFlags flags)
 {
 	BOOL wasDisabled = m_piVM->DisableAsyncGC(true);
 	POTE method = Nil();
@@ -208,7 +213,7 @@ POTE Compiler::CompileForClassHelper(LPUTF8 compiletext, Oop compiler, Oop notif
 	{
 		if (!(flags & CompilerFlags::ScanOnly))
 		{
-			PrepareToCompile(flags, compiletext, textpos_t::start, aClass, compiler, notifier, Nil(), false);
+			PrepareToCompile(flags, compiletext, textpos_t::start, aClass, environment, compiler, notifier, Nil(), false);
 			if (m_ok)
 				// Do the compile
 				method=ParseMethod();
@@ -226,13 +231,13 @@ POTE Compiler::CompileForClassHelper(LPUTF8 compiletext, Oop compiler, Oop notif
 	return method;
 }
 
-POTE Compiler::CompileForEvaluationHelper(LPUTF8 compiletext, Oop compiler, Oop notifier, POTE aBehaviorOrNil, POTE aWorkspacePool, CompilerFlags flags)
+POTE Compiler::CompileForEvaluationHelper(LPUTF8 compiletext, Oop compiler, Oop notifier, POTE aBehaviorOrNil, POTE environment, POTE aWorkspacePool, CompilerFlags flags)
 {
 	BOOL wasDisabled = m_piVM->DisableAsyncGC(true);
 	POTE method = Nil();
 	__try
 	{
-		PrepareToCompile(flags, compiletext, textpos_t::start, aBehaviorOrNil, compiler, notifier,  aWorkspacePool, true);
+		PrepareToCompile(flags, compiletext, textpos_t::start, aBehaviorOrNil, environment, compiler, notifier,  aWorkspacePool, true);
 		if (m_ok)
 		{
 			method = ParseEvalExpression(TokenType::Eof);
@@ -339,8 +344,8 @@ Compiler::StaticType Compiler::FindNameAsStatic(const Str& name, POTE& oteStatic
 	oteStatic = nil;
 
 	Oop scope = reinterpret_cast<Oop>(m_class == nil ? GetVMPointers().SmalltalkDictionary : m_class);
-	POTE oteBinding = reinterpret_cast<POTE>(m_piVM->PerformWith(scope, GetVMPointers().fullBindingForSymbol, 
-												reinterpret_cast<Oop>(NewUtf8String(name))));
+	POTE oteBinding = reinterpret_cast<POTE>(m_piVM->PerformWithWith(scope, GetVMPointers().fullBindingForSelector, 
+												reinterpret_cast<Oop>(NewUtf8String(name)), (Oop)m_environment));
 	STVarObject* pools = nullptr;
 	// Look in Workspace pools (if any) next
 	if (oteBinding == nil && m_oopWorkspacePools != nil)
@@ -773,7 +778,7 @@ Oop Compiler::LastIsPushNumber() const
 		return literal;
 	else
 	{
-		Oop oopIsNumber = m_piVM->Perform(literal, GetVMPointers().understandsArithmeticSymbol);
+		Oop oopIsNumber = m_piVM->Perform(literal, GetVMPointers().understandsArithmeticSelector);
 		return oopIsNumber == reinterpret_cast<Oop>(GetVMPointers().True) ? literal : NULL;
 	}
 }
@@ -957,6 +962,15 @@ size_t Compiler::AddStringToFrame(POTE stringPointer, const TEXTRANGE& range)
 	size_t index = AddToFrame(oopString, range, LiteralType::Normal);
 	m_piVM->RemoveReference((Oop)stringPointer);
 	return index;
+}
+
+void Compiler::AddAnnotation(POTE tag, Oop arg)
+{
+	m_piVM->AddReference((Oop)tag);
+	m_piVM->AddReference(arg);
+	OOPVECTOR args;
+	args.push_back(arg);
+	m_annotations.push_back(MethodAnnotation(tag, args));
 }
 
 void Compiler::GenLiteralConstant(Oop object, const TEXTRANGE& range)
@@ -1794,7 +1808,7 @@ POTE Compiler::ParseQualifiedReference(textpos_t textPosition)
 			}
 			if ((flags & BindingReferenceFlags::IsRelative) == BindingReferenceFlags::IsRelative)
 			{
-				uniqueIdentifier += u8'_';
+				uniqueIdentifier += RelativeBindingRefIdSuffix;
 			}
 
 			auto iter = m_bindingRefs.find(uniqueIdentifier);
@@ -3321,7 +3335,7 @@ Oop Compiler::ParseConstExpression()
 		POTE oteSelf = m_piVM->IsAMetaclass(methodClass) ? reinterpret_cast<STMetaclass*>(GetObj(methodClass))->instanceClass: methodClass;
 		Oop contextOop = Oop(oteSelf);
 		TEXTRANGE tokRange = ThisTokenRange;
-		POTE oteMethod = pCompiler->CompileExpression(Text, m_compilerObject, m_notifier, contextOop, flags, len, tokRange.m_stop+1);
+		POTE oteMethod = pCompiler->CompileExpression(Text, m_compilerObject, m_notifier, contextOop, m_environment, flags, len, tokRange.m_stop+1);
 		if (pCompiler->m_ok && pCompiler->ThisToken != TokenType::CloseParen)
 		{
 			CompileError(TEXTRANGE(tokRange.m_start, tokRange.m_stop+len), CErrStaticExprNotClosed);
@@ -3332,7 +3346,8 @@ Oop Compiler::ParseConstExpression()
 			STCompiledMethod& exprMethod = *(STCompiledMethod*)GetObj(oteMethod);
 
 			// Add all the literals in the expression to the end of the literal frame of this method as this
-			// allows normal references search to work in IDE
+			// allows normal references search to work in IDE. Note that LiteralCount does not include MethodAnnotations, 
+			// so these will not be copied over from the expression.
 			const size_t loopEnd = pCompiler->LiteralCount;
 			for (size_t i=0; i < loopEnd;i++)
 			{
@@ -3381,7 +3396,7 @@ void Compiler::GetInstVars()
 
 	if (m_class != Nil())
 	{
-		POTE arrayPointer=InstVarNamesOf(m_class);	// May throw SE_VMCALLBACKUNWIND
+		POTE arrayPointer=GetInstVarNames();	// May throw SE_VMCALLBACKUNWIND
 		if (m_piVM->FetchClassOf(Oop(arrayPointer)) != GetVMPointers().ClassArray) 
 		{
 #if defined(_DEBUG) && !defined(USE_VM_DLL)
@@ -3694,7 +3709,7 @@ static int DolphinExceptionFilter(IDolphin* piVM, LPEXCEPTION_POINTERS info)
 }
 
 // Compile a string of source as a method in the context of a particular Behavior
-STDMETHODIMP_(POTE) Compiler::CompileForClass(IUnknown* piVM, Oop compilerOop, const char* szSource, POTE aClass, FLAGS flags, Oop notifier)
+STDMETHODIMP_(POTE) Compiler::CompileForClass(IUnknown* piVM, Oop compilerOop, const char* szSource, POTE aClass, POTE aNamespace, FLAGS flags, Oop notifier)
 {
 	m_piVM = (IDolphin*)piVM;
 
@@ -3711,7 +3726,7 @@ STDMETHODIMP_(POTE) Compiler::CompileForClass(IUnknown* piVM, Oop compilerOop, c
 		
 		__try
 		{
-			POTE methodPointer = CompileForClassHelper((LPUTF8)szSource, compilerOop, notifier, aClass, static_cast<CompilerFlags>(flags));
+			Oop methodPointer = (Oop)CompileForClassHelper((LPUTF8)szSource, compilerOop, notifier, aClass, aNamespace, static_cast<CompilerFlags>(flags));
 
 			resultPointer = m_piVM->NewArray(3);
 			STVarObject& result = *(STVarObject*)GetObj(resultPointer);
@@ -3747,7 +3762,7 @@ STDMETHODIMP_(POTE) Compiler::CompileForClass(IUnknown* piVM, Oop compilerOop, c
 }
 
 // Compile an expression (i.e. source outside a method)
-STDMETHODIMP_(POTE) Compiler::CompileForEval(IUnknown* piVM, Oop compilerOop, const char* szSource, POTE aBehaviorOrNil, POTE aWorkspacePool, FLAGS flags, Oop notifier)
+STDMETHODIMP_(POTE) Compiler::CompileForEval(IUnknown* piVM, Oop compilerOop, const char* szSource, POTE aBehaviorOrNil, POTE aNamespaceOrNil, POTE aWorkspacePool, FLAGS flags, Oop notifier)
 {
 	m_piVM = (IDolphin*)piVM; 
 
@@ -3779,7 +3794,7 @@ STDMETHODIMP_(POTE) Compiler::CompileForEval(IUnknown* piVM, Oop compilerOop, co
 		
 		__try
 		{
-			POTE methodPointer = CompileForEvaluationHelper((LPUTF8)szSource, compilerOop, notifier, aBehaviorOrNil, aWorkspacePool, static_cast<CompilerFlags>(flags));
+			Oop methodPointer = (Oop)CompileForEvaluationHelper((LPUTF8)szSource, compilerOop, notifier, aBehaviorOrNil, aNamespaceOrNil, aWorkspacePool, static_cast<CompilerFlags>(flags));
 			
 			resultPointer = m_piVM->NewArray(3);
 			STVarObject& result = *(STVarObject*)GetObj(resultPointer);

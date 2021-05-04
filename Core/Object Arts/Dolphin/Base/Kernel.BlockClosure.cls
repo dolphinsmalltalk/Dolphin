@@ -856,6 +856,7 @@ attemptToRecompile: aBlockClosure
 	result := Compiler
 				compileForEvaluation: oldMethod getSource
 				in: (receiver ifNotNil: [oldMethod methodClass])
+				environment: oldMethod environment
 				evaluationPools: oldMethod evaluationPools
 				flags: 0.
 	newMethod := result method.

@@ -24,7 +24,7 @@ buildLengthReader: anExternalField
 		format: self sizeIsExpression
 		on: expr.
 	expr nextPut: $].
-	^Compiler evaluate: expr contents for: structClass!
+	^Compiler evaluate: expr contents for: structClass environment: structClass environment!
 
 buildLengthWriter: anExternalField
 	| expr varName |
@@ -39,7 +39,8 @@ buildLengthWriter: anExternalField
 	^expr isEmpty
 		ifTrue: [[:struct :value | value]]
 		ifFalse: 
-			[expr := String smalltalkWriteStream
+			[| structClass |
+			expr := String smalltalkWriteStream
 						nextPutAll: '[:';
 						nextPutAll: varName;
 						nextPutAll: ' :';
@@ -48,7 +49,11 @@ buildLengthWriter: anExternalField
 						nextPutAll: expr;
 						nextPut: $];
 						contents.
-			Compiler evaluate: expr for: anExternalField structClass]!
+			structClass := anExternalField structClass.
+			Compiler
+				evaluate: expr
+				for: structClass
+				environment: structClass environment]!
 
 getElementCountOf: anExternalField in: anExternalStructure
 	"Private - Answer the number of elements in the conformant array pointer field of the

@@ -61,6 +61,7 @@ package setMethodNames: #(
 	#(#{Kernel.SourceManager} #compressSources)
 	#(#{Kernel.SourceManager} #compressSourcesWith:)
 	#(#{Kernel.SourceManager} #copyAndReopenSources:)
+	#(#{Kernel.SourceManager} #createDirectoryPath:)
 	#(#{Kernel.SourceManager} #createSources:)
 	#(#{Kernel.SourceManager} #createSourcesFile:)
 	#(#{Kernel.SourceManager} #emitFileOutHeaderOn:)
@@ -69,7 +70,6 @@ package setMethodNames: #(
 	#(#{Kernel.SourceManager} #logChanged:)
 	#(#{Kernel.SourceManager} #logComment:)
 	#(#{Kernel.SourceManager} #logComment:to:)
-	#(#{Kernel.SourceManager} #newSourceFiler:path:)
 	#(#{Kernel.SourceManager} #storeCategoriesForClass:)
 	#(#{Kernel.SourceManager} #storeCategoriesForMethod:)
 ).
@@ -742,6 +742,11 @@ copyAndReopenSources: aString
 				allBehaviorsDo: [:aBehavior | aBehavior methodDictionary do: [:aMethod | aMethod loseSource]]].
 	self openSources: aString!
 
+createDirectoryPath: aString
+	| dir |
+	dir := File splitPathFrom: aString.
+	(File isDirectory: dir) ifFalse: [File createDirectoryPath: dir]!
+
 createSources: filePath
 	"Private - This will create a sources and changes file for the current image. Does not
 	update the receiver to use these new files though."
@@ -755,7 +760,11 @@ createSources: filePath
 createSourcesFile: filePath
 	"Private - Create (or truncate) a source file with the specified path (and default extension)."
 
-	(self newSourceFiler: self sourceFilerClass path: (self sourcesFileNameFromPath: filePath)) close!
+	| filer |
+	self createDirectoryPath: (self sourcesFileNameFromPath: filePath).
+	filer := self sourceFilerClass on: (FileStream write: (self sourcesFileNameFromPath: filePath)).
+	self emitFileOutHeaderOn: filer.
+	filer close!
 
 emitFileOutHeaderOn: aSourceFiler
 	"Private - Append the standard Dolphin file out header to the
@@ -776,7 +785,9 @@ fileOut: anObject to: aFileName
 	will be closed by finalization."
 
 	| filer |
-	filer := self newSourceFiler: anObject sourceFilerClass path: aFileName.
+	self createDirectoryPath: aFileName.
+	filer := anObject sourceFilerClass on: (FileStream write: aFileName).
+	self emitFileOutHeaderOn: filer.
 	anObject fileOutOn: filer.
 	filer close!
 
@@ -815,17 +826,6 @@ logComment: aString to: aSourceFiler
 				emitComment: stampedComment;
 				cr]!
 
-newSourceFiler: filerClass path: aString
-	"Private - Answer a new <SourceFiler> on the specified path with the default
-	format. Any existing file with at the specified path is truncated."
-
-	| answer dir |
-	dir := File splitPathFrom: aString.
-	(File isDirectory: dir) ifFalse: [File createDirectoryPath: dir].
-	answer := filerClass on: (FileStream write: aString).
-	self emitFileOutHeaderOn: answer.
-	^answer!
-
 storeCategoriesForClass: class
 	"Private - Store the categories of the <ClassDescription>, class, to
 	the change log so that they may be reloaded later."
@@ -857,6 +857,7 @@ storeCategoriesForMethod: aCompiledMethod
 !Kernel.SourceManager categoriesFor: #compressSources!operations-source files!public! !
 !Kernel.SourceManager categoriesFor: #compressSourcesWith:!operations-source files!public! !
 !Kernel.SourceManager categoriesFor: #copyAndReopenSources:!operations-source files!private! !
+!Kernel.SourceManager categoriesFor: #createDirectoryPath:!private!source filing! !
 !Kernel.SourceManager categoriesFor: #createSources:!operations-source files!private! !
 !Kernel.SourceManager categoriesFor: #createSourcesFile:!operations-source files!private! !
 !Kernel.SourceManager categoriesFor: #emitFileOutHeaderOn:!private!source filing! !
@@ -865,7 +866,6 @@ storeCategoriesForMethod: aCompiledMethod
 !Kernel.SourceManager categoriesFor: #logChanged:!public!source filing! !
 !Kernel.SourceManager categoriesFor: #logComment:!operations-logging!public! !
 !Kernel.SourceManager categoriesFor: #logComment:to:!operations-logging!private! !
-!Kernel.SourceManager categoriesFor: #newSourceFiler:path:!private!source filing! !
 !Kernel.SourceManager categoriesFor: #storeCategoriesForClass:!private!source filing! !
 !Kernel.SourceManager categoriesFor: #storeCategoriesForMethod:!private!source filing! !
 

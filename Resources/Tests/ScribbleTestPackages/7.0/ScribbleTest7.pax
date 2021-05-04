@@ -9,6 +9,7 @@ package classNames
 	yourself.
 
 package methodNames
+	add: #Object -> #scribble;
 	add: #Scribble -> #looseA;
 	add: #Scribble -> #looseC;
 	add: 'Scribble class' -> #resource_Scribble_test;
@@ -51,6 +52,12 @@ AliasToScribbleTest := ScribbleTest!
 
 
 "Loose Methods"!
+
+!Object methodsFor!
+
+scribble
+	^Scribble! !
+!Object categoriesFor: #scribble!public! !
 
 !Scribble methodsFor!
 

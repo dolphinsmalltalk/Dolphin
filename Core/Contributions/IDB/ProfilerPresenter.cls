@@ -56,7 +56,7 @@ model: aProfilerSampleSet
 	self filterChanged!
 
 parseContext
-	^self selectedMethod ifNotNil: [:method | method methodClass]! !
+	^self selectedMethod! !
 !ProfilerPresenter categoriesFor: #filter:!filtering!public! !
 !ProfilerPresenter categoriesFor: #filterChanged!filtering!public! !
 !ProfilerPresenter categoriesFor: #filterDolphin:!filtering!public! !

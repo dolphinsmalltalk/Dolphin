@@ -12,16 +12,20 @@ Refactory.Browser.Tests.RBMethodTest comment: ''!
 !Refactory.Browser.Tests.RBMethodTest methodsFor!
 
 testLiteralStringsDoNotMatchSymbols
-	| class method |
+	| model class method |
+	model := RBNamespace new.
 	class := RBClass existingNamed: #'Refactory.Browser.Tests.RefactoryTestDataApp'.
+	class model: model.
 	method := class methodFor: #returnInEnsure.
 	self deny: (method refersToSymbol: #asdf).
 	method := class methodFor: #literalArrayStringsAndSymbols.
 	self deny: (method refersToSymbol: #abc)!
 
 testRefersToSymbol
-	| class method |
+	| model class method |
+	model := RBNamespace new.
 	class := RBClass existingNamed: #'Refactory.Browser.Tests.RefactoryTestDataApp'.
+	class model: model.
 	method := class methodFor: #searchingLiteral.
 	self assert: (method refersToSymbol: #printString).
 	self assert: (method refersToSymbol: #abc).

@@ -9,8 +9,8 @@ import "ocidl.idl";
 
 [
 	uuid(446CBAE8-D3AD-4D40-9A50-20D725195AF7),
-	version(7.0),
-	helpstring("Dolphin Smalltalk Compiler 7.0")
+	version(8.0),
+	helpstring("Dolphin Smalltalk Compiler 8.0")
 ]
 library CompilerLib
 {
@@ -151,13 +151,13 @@ library CompilerLib
 
 	[
 		object,
-		uuid(CF88CAFA-2993-11D3-8366-6E485B000000),
+		uuid(c389a32d-bf21-4c47-865a-34b45b3ea03a),
 		pointer_default(unique)
 	]
 	interface ICompiler: IUnknown
 	{
-		POTE CompileForClass([in]IUnknown* piVM, [in]Oop compiler, [in]LPCSTR compiletext, [in]POTE aClass, [in]FLAGS flags, [in]Oop notifier);
-		POTE CompileForEval([in]IUnknown* piVM, [in]Oop compiler, [in]LPCSTR compiletext, [in]POTE aClass, [in]POTE workspacePools, [in]FLAGS flags, [in]Oop notifier);
+		POTE CompileForClass([in]IUnknown* piVM, [in]Oop compiler, [in]LPCSTR compiletext, [in]POTE aClass, [in]POTE aNamespace, [in]FLAGS flags, [in]Oop notifier);
+		POTE CompileForEval([in]IUnknown* piVM, [in]Oop compiler, [in]LPCSTR compiletext, [in]POTE aClass, [in]POTE aNamespace, [in]POTE workspacePools, [in]FLAGS flags, [in]Oop notifier);
 	};
 
 	[
@@ -166,9 +166,8 @@ library CompilerLib
 		//uuid(77A96CF7-0709-4EE5-ABCD-EF11735CEA0D)	// 5.0
 		//uuid(52DE08AC-F761-4D50-9FC5-964156F8A0D5)	// 5.04
 		//uuid(B1401906-004A-4D84-8A8D-7D7D5F7FEC92)	// 6.0
-		uuid(F27D15BD-B8EB-488C-9932-C7FA0C598640)		// 7.0
-
-		
+		//uuid(F27D15BD-B8EB-488C-9932-C7FA0C598640)	// 7.0
+		uuid(84b13fd5-cd7c-48a6-b8da-bcb5dcfa05ea)		// 8.0
 	]
 	coclass DolphinCompiler
 	{

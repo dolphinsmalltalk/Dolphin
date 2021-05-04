@@ -14,7 +14,7 @@ Kernel.CompiledExpression comment: 'CompiledExpression is the class of CompiledC
 !Kernel.CompiledExpression methodsFor!
 
 evaluate: aString for: anObject evaluationPools: anArrayOfPools
-	"Evaluate the receiver (whose source is aString), with the receiver, anObject, 
+	"Private - Evaluate the receiver (whose source is aString), with the receiver, anObject, 
 	within the additional compilation context, anArrayOfPools.
 	N.B. This message is sent by the compiler to evaluate constant expressions
 	DO NOT REMOVE IT."
@@ -85,7 +85,7 @@ value: anObject
 	as its receiver, answering the result."
 
 	^self value: anObject withArguments: #()! !
-!Kernel.CompiledExpression categoriesFor: #evaluate:for:evaluationPools:!evaluating!public! !
+!Kernel.CompiledExpression categoriesFor: #evaluate:for:evaluationPools:!evaluating!private! !
 !Kernel.CompiledExpression categoriesFor: #evaluationPools!accessing!development!public! !
 !Kernel.CompiledExpression categoriesFor: #expressionClass!accessing!private! !
 !Kernel.CompiledExpression categoriesFor: #getDebugInfo!development!private! !

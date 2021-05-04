@@ -30,23 +30,18 @@ Kernel.AbstractBindingReference comment: '`AbstractBindingReference` is the abst
 	at the time of resolution, and is not necessarily temporally stable. Equality of binding references is a static property based and is such that two equal references will always bind
 	to the same variable if bound at the same time."
 
-	"Implementation Note: This implementation depends on the fact that for absolute references the context is always nil, and for (useful) relative references, the context is not nil."
-
-	^self == anObject or: 
-			[self class == anObject class and: 
-					[self pathString = anObject pathString
-						and: [self flags == anObject flags and: [self context == anObject context]]]]!
+	^self subclassResponsibility!
 
 append: aString
 	"Answer a new <BindingReference> that refers to the nested name identified by the <readableString> argument within the receiver's scope."
 
-	^self class path: (self path copyWith: aString) context: self context!
+	^self class path: (self path copyWith: aString) scope: self scope!
 
 asFullyQualifiedReference
 	"Answer a<BindingReference> that references the same binding as the receiver does currently in its home context, but from Smalltalk or Root."
 
 	^self isRelative
-		ifTrue: [BindingReference path: (self namespace fullPath copyWith: self unqualifiedName)]
+		ifTrue: [BindingReference path: (self environment fullPath copyWith: self unqualifiedName)]
 		ifFalse: [self]!
 
 asQualifiedReference
@@ -79,37 +74,27 @@ basicUnqualifiedName
 binding
 	"Answer the <VariableBinding> referenced by the receiver (i.e. resolve the variable)."
 
-	^self bindingOrNil ifNil: [self bindingRoot errorNotFound: self]!
+	^self bindingOrNil ifNil: [self bindingScope errorNotFound: self]!
 
 bindingOrNil
 	"Answer the <VariableBinding> referenced by the receiver (i.e. resolve the variable), or nil if there is no such variable."
 
 	^self subclassResponsibility!
 
-bindingRoot
-	"Private - Answer the root binding context from which the receiver's binding path is traversed to locate the target binding.
-	This is always a <Class>. It may be a <Namespace>. If the receiver is an absolute binding reference it will be the Smalltalk namespace class."
-
-	^self subclassResponsibility!
-
-context
-	"Answer the context in which the reference was created. For relative references this is used to determine the start point for binding resolution."
+bindingScope
+	"Answer the <bindingScope> from which the receiver's binding path is traversed to locate the target binding.
+	This will be a <Class> or a <CompiledCode>. If a class, it may be a <Namespace>. If the receiver is an absolute binding reference it will be the <Smalltalk> namespace class."
 
 	^self subclassResponsibility!
 
 declare
 	"Create a binding in the target namespace that would be resolved by the receiver, if none currently exists."
 
-	| p nsPath ns |
-	p := self path.
-	nsPath := p allButLast.
-	ns := self bindingRoot.
-	nsPath isEmpty
-		ifFalse: 
-			[(ns resolveBindingPath: nsPath)
-				ifNil: [^ns errorNotFound: (BindingReference path: nsPath context: self context)]
-				ifNotNil: [:nsBinding | ns := nsBinding targetVariable value]].
-	^ns declareVariable: p last!
+	^self environment
+		ifNil: 
+			[self bindingScope localScope
+				errorNotFound: (BindingReference path: self path allButLast scope: self scope)]
+		ifNotNil: [:env | env declareVariable: self path last]!
 
 declare: anObject
 	"Create a binding in the target namespace that would be resolved by the receiver, if none currently exists.
@@ -128,37 +113,19 @@ displayOn: aPuttableStream
 environment
 	"Answer the namespace (i.e. any Class, not just Namespaces) in which the target binding should be found, or nil if any of the namespaces on the path do not exist."
 
-	| parts length |
+	| parts length scope |
+	scope := self bindingScope.
 	parts := self path.
 	length := parts size.
 	^length > 1
 		ifTrue: 
-			[(self bindingRoot resolveBindingPath: (parts copyFrom: 1 to: length - 1)) ifNotNil: [:ns | ns value localScope]]
-		ifFalse: [self bindingRoot]
-
-!
+			[(scope localScope resolveBindingPath: (parts copyFrom: 1 to: length - 1)
+				environment: scope environment) ifNotNil: [:ns | ns value]]
+		ifFalse: [scope localScope]!
 
 environmentName
-	"Answer the <String> qualified name of the receiver's full namespace qualifier. This includes the path for the context."
+	"Answer the <String> qualified name of the receiver's full namespace qualifier. This includes the path for the binding scope."
 
-	| stream parts first |
-	parts := self path.
-	stream := String writeStream: 32.
-	first := false.
-	self context
-		ifNil: [
-			parts size <= 1
-				ifTrue: [^nil]
-				ifFalse: [first := true]]
-		ifNotNil: [:ctxt | ctxt localScope printFullNameOn: stream].
-	1 to: parts size - 1
-		do: 
-			[:i |
-			first ifTrue: [first := false] ifFalse: [stream nextPut: $.].
-			stream nextPutAll: (parts at: i)].
-	^stream contents!
-
-flags
 	^self subclassResponsibility!
 
 hash
@@ -225,7 +192,7 @@ isMeta
 isPrivate
 	"Answer whether the receiver represents a private binding reference that should not be used outside its immediate scope."
 
-	^self flags allMask: PrivateMask!
+	^self subclassResponsibility!
 
 isPrivate: aBoolean
 	self subclassResponsibility!
@@ -238,7 +205,7 @@ isQualifiedName
 isRelative
 	"Answer whether the receiver specifies a binding path relative to a specific binding root, or alternatively is an absolute (or fully-qualified) binding reference."
 
-	^self flags allMask: RelativeMask!
+	^self subclassResponsibility!
 
 literalTextStyle
 	^#literalBindingReference!
@@ -248,24 +215,15 @@ meta
 
 	^self subclassResponsibility!
 
-namespace
-	"Answer the namespace in which the referenced binding should be found, or nil if the namespace path is incomplete."
-
-	| p length |
-	p := self path.
-	length := p size.
-	^length > 1
-		ifTrue: [(self bindingRoot resolveBindingPath: (p copyFrom: 1 to: length - 1)) value]
-		ifFalse: [self bindingRoot]!
-
 namespaceBinding
 	"Answer a <VariableBinding> for the namespace (a Class, which may be a Namespace) in which the referenced binding should be found (if it exists). If any of the namespaces on the binding path do not exist, an error will be thrown."
 
-	| p |
-	p := self path.
-	^p size > 1
-		ifTrue: [self bindingRoot resolveBindingPath: p allButLast]
-		ifFalse: [self bindingRoot binding]!
+	| parts scope |
+	scope := self bindingScope.
+	parts := self path.
+	^parts size > 1
+		ifTrue: [scope localScope resolveBindingPath: parts allButLast environment: scope environment]
+		ifFalse: [scope localScope binding]!
 
 owningPackage: aPackage 
 	^self instance value owningPackage: aPackage!
@@ -290,13 +248,7 @@ printOn: aStream
 	aStream nextPut: $}!
 
 private
-	^self isPrivate
-		ifTrue: [self]
-		ifFalse: 
-			[BindingReference
-				pathString: self pathString
-				context: self context
-				flags: (self flags bitOr: PrivateMask)]!
+	^self subclassResponsibility!
 
 refersTo: anObject asLiteralOf: aCompiledCode
 	"Private - Answer whether the receiver, a literal of the <CompiledCode> 2nd argument, is a reference to the <Object> first argument."
@@ -307,10 +259,15 @@ refersTo: anObject asLiteralOf: aCompiledCode
 						ifNil: [false]
 						ifNotNil: [:binding | binding refersTo: anObject asLiteralOf: aCompiledCode]]]!
 
+scope
+	"Private - Answer the <bindingScope> in which the reference was created. For relative references this is used to determine the start point for binding resolution. For absolute references this should always be nil."
+
+	^self subclassResponsibility!
+
 shortName
 	"Answer the shortest <String> name equivalent to the receiver's pathString that is bindable from Smalltalk. i.e. for variables defined directly in Smalltalk, or in any of its imports, this will be an unqualified name. Otherwise it is the fully qualified name relative to Smalltalk."
 
-	^Smalltalk shortNameFor: self basicUnqualifiedName in: self namespace!
+	^Smalltalk shortNameFor: self basicUnqualifiedName in: self environment!
 
 simpleName
 	"Answer the unqualified name part of the receiver (the final component of the name).
@@ -329,16 +286,7 @@ storeOn: aStream
 undeclare
 	"Remove the binding in the target namespace that would be resolved by the receiver, if it exists."
 
-	| p nsPath ns |
-	p := self path.
-	nsPath := p allButLast.
-	ns := self bindingRoot.
-	nsPath isEmpty
-		ifFalse: 
-			[(ns resolveBindingPath: nsPath)
-				ifNil: [^self]
-				ifNotNil: [:nsBinding | ns := nsBinding targetVariable value]].
-	^ns removeLocalBindingFor: p last!
+	self environment ifNotNil: [:env | env removeLocalBindingFor: self path last]!
 
 unqualifiedName
 	"Answer the unqualified name part of the receiver (the final component of the name)."
@@ -374,14 +322,12 @@ valueOrNil
 !Kernel.AbstractBindingReference categoriesFor: #basicUnqualifiedName!accessing!private! !
 !Kernel.AbstractBindingReference categoriesFor: #binding!accessing!public! !
 !Kernel.AbstractBindingReference categoriesFor: #bindingOrNil!accessing!public! !
-!Kernel.AbstractBindingReference categoriesFor: #bindingRoot!accessing!public! !
-!Kernel.AbstractBindingReference categoriesFor: #context!constants!public! !
+!Kernel.AbstractBindingReference categoriesFor: #bindingScope!accessing!public! !
 !Kernel.AbstractBindingReference categoriesFor: #declare!operations!public! !
 !Kernel.AbstractBindingReference categoriesFor: #declare:!operations!public! !
 !Kernel.AbstractBindingReference categoriesFor: #displayOn:!displaying!public! !
 !Kernel.AbstractBindingReference categoriesFor: #environment!operations!public! !
 !Kernel.AbstractBindingReference categoriesFor: #environmentName!accessing!public! !
-!Kernel.AbstractBindingReference categoriesFor: #flags!accessing!private! !
 !Kernel.AbstractBindingReference categoriesFor: #hash!comparing!public! !
 !Kernel.AbstractBindingReference categoriesFor: #home!accessing!public! !
 !Kernel.AbstractBindingReference categoriesFor: #ifDefined:!evaluating!public! !
@@ -399,7 +345,6 @@ valueOrNil
 !Kernel.AbstractBindingReference categoriesFor: #isRelative!public!testing! !
 !Kernel.AbstractBindingReference categoriesFor: #literalTextStyle!constants!public! !
 !Kernel.AbstractBindingReference categoriesFor: #meta!converting!public! !
-!Kernel.AbstractBindingReference categoriesFor: #namespace!operations!public! !
 !Kernel.AbstractBindingReference categoriesFor: #namespaceBinding!accessing!public! !
 !Kernel.AbstractBindingReference categoriesFor: #owningPackage:!accessing!development!private! !
 !Kernel.AbstractBindingReference categoriesFor: #path!accessing!public! !
@@ -407,6 +352,7 @@ valueOrNil
 !Kernel.AbstractBindingReference categoriesFor: #printOn:!printing!public! !
 !Kernel.AbstractBindingReference categoriesFor: #private!converting!public! !
 !Kernel.AbstractBindingReference categoriesFor: #refersTo:asLiteralOf:!private!testing! !
+!Kernel.AbstractBindingReference categoriesFor: #scope!constants!private! !
 !Kernel.AbstractBindingReference categoriesFor: #shortName!accessing!public! !
 !Kernel.AbstractBindingReference categoriesFor: #simpleName!accessing!public! !
 !Kernel.AbstractBindingReference categoriesFor: #species!comparing!public! !
@@ -455,41 +401,52 @@ isValidUnqualifiedName: aString
 new
 	^self pathString: ''!
 
-newPath: anArray context: anObject
+newPath: anArray private: aBoolean scope: aBindingScope
 	^self subclassResponsibility!
 
 path: aSequencedReadableCollection
 	"Answer a new instance of the receiver representing the qualified name composed of the <readableString> elements of the argument."
 
-	^self path: aSequencedReadableCollection context: nil!
-
-path: aSequencedReadableCollection context: anObject
-	"Answer a new instance of the receiver representing the qualified name composed of the <readableString> elements of the argument."
-
-	^self newPath: aSequencedReadableCollection context: anObject!
+	^self path: aSequencedReadableCollection scope: nil!
 
 path: aSequencedReadableCollection home: aNamespaceOrNil
 	"Answer a new instance of the receiver representing the qualified name composed of the <readableString> elements of the argument."
 
 	^self path: aSequencedReadableCollection
-		context: (aNamespaceOrNil == Smalltalk ifFalse: [aNamespaceOrNil])!
+		scope: (aNamespaceOrNil == Smalltalk ifFalse: [aNamespaceOrNil])!
+
+path: aSequencedReadableCollection private: aBoolean scope: aBindingScope
+	"Answer a new instance of the receiver representing the qualified name composed of the <readableString> elements of the argument."
+
+	^self
+		newPath: aSequencedReadableCollection
+		private: aBoolean
+		scope: aBindingScope!
+
+path: aSequencedReadableCollection scope: aBindingScope
+	"Answer a new instance of the receiver representing the qualified name composed of the <readableString> elements of the argument."
+
+	^self
+		path: aSequencedReadableCollection
+		private: false
+		scope: aBindingScope!
 
 pathString: aString
 	"Answer a new instance of the receiver representing the qualified name identified by the <readableString> argument."
 
-	^self pathString: aString context: nil!
-
-pathString: aString context: anObject
-	"Answer a new sub-instance of the receiver representing the qualified name identified by the <readableString> argument, which is relative to the binding context, anObject. If anObject is nil, then an AbsoluteBindingPath is returned. 
-	If anObject is not nil, then it is expected to be some kind of name binding context (i.e. a namespace, class, or method), and the new instance will be a contextual BindingReference with that object as its starting point for resolving the binding."
-
-	^self subclassResponsibility!
+	^self pathString: aString scope: nil!
 
 pathString: aString home: aNamespace
 	"Answer a new instance of the receiver representing the qualified name identified by the <readableString> argument,
 	homed in the specified <Namespace>."
 
-	^self pathString: aString context: (aNamespace == Smalltalk ifFalse: [aNamespace])!
+	^self pathString: aString scope: (aNamespace == Smalltalk ifFalse: [aNamespace])!
+
+pathString: aString scope: aBindingScope
+	"Answer a new sub-instance of the receiver representing the qualified name identified by the <readableString> argument, which is relative to the binding context, anObject. If anObject is nil, then an AbsoluteBindingPath is returned. 
+	If anObject is not nil, then it is expected to be some kind of name binding context (i.e. a namespace, class, or method), and the new instance will be a contextual BindingReference with that object as its starting point for resolving the binding."
+
+	^self subclassResponsibility!
 
 simpleName: aString
 	"Answer a new instance of the receiver representing the variable with the specified unqualified name."
@@ -509,13 +466,14 @@ splitQualifiedName: aString
 !Kernel.AbstractBindingReference class categoriesFor: #isValidQualifiedName:!enquiries!public! !
 !Kernel.AbstractBindingReference class categoriesFor: #isValidUnqualifiedName:!enquiries!public! !
 !Kernel.AbstractBindingReference class categoriesFor: #new!instance creation!public! !
-!Kernel.AbstractBindingReference class categoriesFor: #newPath:context:!instance creation!private! !
+!Kernel.AbstractBindingReference class categoriesFor: #newPath:private:scope:!public! !
 !Kernel.AbstractBindingReference class categoriesFor: #path:!instance creation!public! !
-!Kernel.AbstractBindingReference class categoriesFor: #path:context:!instance creation!public! !
 !Kernel.AbstractBindingReference class categoriesFor: #path:home:!compatibility!instance creation!public! !
+!Kernel.AbstractBindingReference class categoriesFor: #path:private:scope:!instance creation!public! !
+!Kernel.AbstractBindingReference class categoriesFor: #path:scope:!instance creation!public! !
 !Kernel.AbstractBindingReference class categoriesFor: #pathString:!instance creation!public! !
-!Kernel.AbstractBindingReference class categoriesFor: #pathString:context:!instance creation!public! !
 !Kernel.AbstractBindingReference class categoriesFor: #pathString:home:!compatibility!instance creation!public! !
+!Kernel.AbstractBindingReference class categoriesFor: #pathString:scope:!instance creation!public! !
 !Kernel.AbstractBindingReference class categoriesFor: #simpleName:!instance creation!public! !
 !Kernel.AbstractBindingReference class categoriesFor: #simpleName:in:!instance creation!public! !
 !Kernel.AbstractBindingReference class categoriesFor: #splitQualifiedName:!helpers!public! !

@@ -100,8 +100,9 @@ typedef struct STClass
 	STClassDescription	classdesc;
 	POTE		subclasses;
 	POTE		name;
+	POTE		fullName;
 	POTE		classPool;
-	POTE		sharedPools;
+	POTE		imports;
 	POTE		environment;
 	POTE		comment;
 	POTE		classCategories;

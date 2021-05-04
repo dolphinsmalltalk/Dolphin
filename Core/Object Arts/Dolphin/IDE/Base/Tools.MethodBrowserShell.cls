@@ -109,17 +109,18 @@ onViewOpened
 		ifNotNil: [:item | item model: browserPresenter versionModel]!
 
 parseContext
-	^self selectedMethod ifNotNil: [:method | method methodClass]!
+	^self selectedMethod!
 
 recompileDiffs
 	self systemModel recompileDiffs: self method!
 
-saveNewMethod: aString 
+saveNewMethod: aString
 	| method |
 	method := self selectedMethod.
-	self browser 
+	self browser
 		saveMethod: aString
 		in: method methodClass
+		environment: method environment
 		categories: method realCategories
 		package: method owningPackage!
 

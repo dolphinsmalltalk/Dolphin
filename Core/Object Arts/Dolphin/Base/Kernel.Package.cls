@@ -482,6 +482,32 @@ ensureNamesFullyQualified
 	classNames := classNames collect: [:each | each binding fullyQualifiedReference].
 	variableNames := variableNames collect: [:each | each binding fullyQualifiedReference]!
 
+environment
+	"Answer the default environment for the package, in the context of which any loose (extension) methods should be compiled, or nil if there is no default environment for loose methods and the extended class' own environment should be used for resolving static variable references in the method source."
+
+	^self isLegacySourceFormat
+		ifTrue: [Smalltalk]
+		ifFalse: [(self propertyAt: #environmentName ifAbsent: []) ifNotNil: [:ref | ref valueOrNil]]!
+
+environment: aNamespace
+	"Set the default environment for the package, in the context of which any loose (extension) methods should be compiled, or nil if there is no default environment for loose methods and the extended class' own environment should be used for resolving static variable references in the method source."
+
+	self isLegacySourceFormat
+		ifTrue: 
+			[aNamespace == Smalltalk
+				ifFalse: 
+					[self
+						error: 'Legacy format packages can only use Smalltalk as the default environment for compiling scripts and extension methods']]
+		ifFalse: 
+			[aNamespace owningPackage = self
+				ifTrue: [self error: 'The default namespace for a package cannot be one of its own classes'].
+			self environmentName: aNamespace fullyQualifiedReference]!
+
+environmentName: aBindingReference
+	"Private - Record the name of the <Namespace> to be used as the default environment for compiling scripts and extension (aka loose) methods of the package."
+
+	self propertyAt: #environmentName put: aBindingReference!
+
 errorFileCorrupt
 	"Private - Filing in the receivers owned objects has failed because the
 	file is corrupt."
@@ -490,8 +516,10 @@ errorFileCorrupt
 
 evaluateScript: aSymbol source: aString
 	| filer |
-	filer := self sourceManager chunkFilerOn: aString readStream.
-	filer evaluationContext: self.
+	filer := self sourceFilerOn: aString readStream.
+	filer
+		evaluationContext: self;
+		environment: self environment ?? Smalltalk.
 	[filer fileIn] on: Compiler errorClass
 		do: 
 			[:x |
@@ -516,21 +544,7 @@ fileInScript: aSymbol
 	| aString |
 	aString := self scriptAt: aSymbol.
 	aString isEmpty ifTrue: [^self].
-
-	"If the AnonymousClassBuilder is defined, then create an anonymous package class in which to run the script. This allows us to load legacy scripts with Smalltalk on the binding path so that legacy class names will be found. The alternative would be to compile the script in the context of a class in Smalltalk, but we want 'self' in the script to be this package."
-	#{AnonymousClassBuilder} ifDefined: 
-			[:builder |
-			| originalClass anon |
-			originalClass := self class.
-			anon := (builder new
-						superclass: originalClass;
-						yourself) createNewClass.
-			anon setName: nil environment: Smalltalk.
-			
-			[self becomeA: anon.
-			self evaluateScript: aSymbol source: aString]
-					ensure: [self becomeA: originalClass]]
-		ifNotDefined: [self evaluateScript: aSymbol source: aString]!
+	self evaluateScript: aSymbol source: aString!
 
 fileNameForBinaryVariable: globalName extension: aString
 	"Private - Answer a filename for storing the binary globalName."
@@ -695,8 +709,9 @@ initializeGlobals
 			[:each |
 			(self isAlias: each)
 				ifFalse: 
-					[each valueOrNil
-						ifNotNil: [:value | (value respondsTo: #initializeAfterLoad) ifTrue: [value initializeAfterLoad]]]].
+					[| value |
+					value := each valueOrNil.
+					(value respondsTo: #initializeAfterLoad) ifTrue: [value initializeAfterLoad]]].
 	(self propertyAt: #variableAliases ifAbsent: [#()]) do: 
 			[:each |
 			| target |
@@ -829,7 +844,8 @@ loadPAC: stream
 	"Private - Load a chunked source text .PAC from the <readableStream>, stream."
 
 	| filer |
-	filer := self sourceFilerClass on: stream.
+	filer := self sourceFilerOn: stream.
+	filer environment: self environment.
 
 	"Skip the first chunk since it represents the receiver."
 	filer nextChunk.
@@ -853,7 +869,8 @@ loadPAX
 		signal: ('Loading source package <1p> from: <2s>' expandMacrosWith: self name with: filename).
 	stream := FileStream read: filename.
 	timestamp := stream file lastWriteTime asInteger.
-	filer := self sourceFilerClass on: stream.
+	filer := self sourceFilerOn: stream.
+	filer environment: self environment.
 	
 	[| none |
 	"Initialize old style (pre D6) binary resources"
@@ -1246,16 +1263,12 @@ propertyAt: aSymbol ifAbsent: aBlock
 	"Answers a property value of the receiver whose name matches aSymbol. If the object
 	does not have such a property then aBlock is evaluated."
 
-	^properties
-		ifNil: [aBlock value]
-		ifNotNil: 
-			[properties
-				propertyOf: self
-				at: aSymbol
-				ifAbsent: aBlock]!
+	^properties ifNil: [aBlock value] ifNotNil: [properties at: aSymbol ifAbsent: aBlock]!
 
-propertyManager
-	^properties ifNil: [properties := PropertyManager new]!
+propertyAt: aSymbol put: anObject
+	"Sets a property value of the receiver whose name matches aSymbol."
+
+	^(properties ifNil: [properties := IdentityDictionary new]) at: aSymbol put: anObject!
 
 rebaseTo: basePathName
 	"Rebase this package relative to the give base image directory"
@@ -1268,6 +1281,11 @@ remainingClasses
 	"Answer a <collection> of the classes that are still present (i.e. ignore missing classes)"
 
 	^classNames collect: [:each | each valueOrNil]!
+
+removeAllProperties
+	"Remove all the properties of the receiver."
+	
+	properties := nil!
 
 removeClass: aClass
 	"Remove aClass from the list of Classes owned by the receiver.
@@ -1317,6 +1335,12 @@ removePAXProperties
 	originalVersion := self paxVersion.
 	self paxVersion: (originalVersion < 2.1 ifTrue: [1] ifFalse: [self class paxVersion]).
 	changeIndex := nil!
+
+removePropertyAt: aSymbol ifAbsent: aBlock
+	"Removes a property of the receiver whose name matches aSymbol. If the object
+	does not have such a property then aBlock is evaluated."
+
+	^properties ifNil: [aBlock value] ifNotNil: [properties removeKey: aSymbol ifAbsent: aBlock]!
 
 removeVariableNamed: aBindingReference
 	"Remove the named shared variable from the list of shared variables owned by the receiver.
@@ -1439,6 +1463,9 @@ sourceDescriptor: anObject
 
 sourceFilerClass
 	^self isLegacySourceFormat ifTrue: [#{LegacyChunkSourceFiler} value] ifFalse: [ChunkSourceFiler]!
+
+sourceFilerOn: stream
+	^self sourceFilerClass on: stream!
 
 sourceGlobalExtension
 	"Private - Answer the file extension for the files to which source globals are stored."
@@ -1799,7 +1826,7 @@ variables
 			each bindingOrNil
 				ifNil: 
 					[(VariableBinding key: each asSymbol value: nil)
-						environment: each namespace;
+						environment: each environment;
 						yourself]]!
 
 versionIfRequired
@@ -1883,6 +1910,9 @@ If you experience subsequent problems please contact the package supplier for an
 !Kernel.Package categoriesFor: #depthOfClass:!helpers!public! !
 !Kernel.Package categoriesFor: #displayOn:!displaying!public! !
 !Kernel.Package categoriesFor: #ensureNamesFullyQualified!loading!private! !
+!Kernel.Package categoriesFor: #environment!helpers!private! !
+!Kernel.Package categoriesFor: #environment:!helpers!private! !
+!Kernel.Package categoriesFor: #environmentName:!initializing!private! !
 !Kernel.Package categoriesFor: #errorFileCorrupt!exceptions!private! !
 !Kernel.Package categoriesFor: #evaluateScript:source:!private!source filing! !
 !Kernel.Package categoriesFor: #fileInClasses!private!source filing! !
@@ -1965,9 +1995,10 @@ If you experience subsequent problems please contact the package supplier for an
 !Kernel.Package categoriesFor: #printOn:!initializing!public! !
 !Kernel.Package categoriesFor: #privateUninstall!initializing!private! !
 !Kernel.Package categoriesFor: #propertyAt:ifAbsent:!initializing!public! !
-!Kernel.Package categoriesFor: #propertyManager!initializing!private! !
+!Kernel.Package categoriesFor: #propertyAt:put:!properties!public! !
 !Kernel.Package categoriesFor: #rebaseTo:!initializing!public! !
 !Kernel.Package categoriesFor: #remainingClasses!initializing!public! !
+!Kernel.Package categoriesFor: #removeAllProperties!properties!public! !
 !Kernel.Package categoriesFor: #removeClass:!initializing!public! !
 !Kernel.Package categoriesFor: #removeClassName:!initializing!private! !
 !Kernel.Package categoriesFor: #removeGlobalNamed:!initializing!public! !
@@ -1976,6 +2007,7 @@ If you experience subsequent problems please contact the package supplier for an
 !Kernel.Package categoriesFor: #removeMethodNames:!initializing!private! !
 !Kernel.Package categoriesFor: #removePackagedMethod:!initializing!private! !
 !Kernel.Package categoriesFor: #removePAXProperties!initializing!private! !
+!Kernel.Package categoriesFor: #removePropertyAt:ifAbsent:!properties!public! !
 !Kernel.Package categoriesFor: #removeVariableNamed:!initializing!public! !
 !Kernel.Package categoriesFor: #renameLooseMethodsOf:to:!initializing!private! !
 !Kernel.Package categoriesFor: #resetChangeFlags!initializing!public! !
@@ -1998,6 +2030,7 @@ If you experience subsequent problems please contact the package supplier for an
 !Kernel.Package categoriesFor: #sourceDescriptor!accessing!private! !
 !Kernel.Package categoriesFor: #sourceDescriptor:!accessing!private! !
 !Kernel.Package categoriesFor: #sourceFilerClass!private!source filing-class definition! !
+!Kernel.Package categoriesFor: #sourceFilerOn:!loading!private! !
 !Kernel.Package categoriesFor: #sourceGlobalExtension!constants!private! !
 !Kernel.Package categoriesFor: #sourceManager!accessing!public! !
 !Kernel.Package categoriesFor: #sourceVariableNames!accessing!private! !

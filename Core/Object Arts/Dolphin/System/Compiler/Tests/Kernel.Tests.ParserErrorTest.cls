@@ -43,6 +43,7 @@ parseExpression: aString in: aClass
 			[semanticAnalyserClass
 				analyzeParseTree: ast
 				for: aClass
+				environment: Smalltalk
 				context: nil
 				pools: #()
 				onError: errorBlock]
@@ -54,6 +55,7 @@ parseMethod: aString in: aClass
 	ast := self parserClass
 				parseMethod: aString
 				in: aClass
+				environment: Smalltalk
 				onError: [:err | syntaxErrors addLast: err].
 	"Don't perform semantic analysis if there are syntax errors"
 	^syntaxErrors isEmpty
@@ -61,6 +63,7 @@ parseMethod: aString in: aClass
 			[semanticAnalyserClass
 				analyzeParseTree: ast
 				for: aClass
+				environment: Smalltalk
 				context: nil
 				pools: #()
 				onError: nil]

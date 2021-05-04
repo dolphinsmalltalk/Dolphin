@@ -202,6 +202,7 @@ icon
 testBindingReferences
 	| objects rehydrated bindingIndex |
 	objects := {self class fullyQualifiedReference.
+				#{Object}.
 				#{Core.Object}.
 				#{Core.Object}
 					binding;

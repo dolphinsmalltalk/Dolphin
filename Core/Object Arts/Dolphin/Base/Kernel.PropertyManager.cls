@@ -64,14 +64,13 @@ removePropertyOf: anObject at: aSymbol
 !
 
 removePropertyOf: anObject at: aSymbol ifAbsent: aBlock
-	"Removes a property value matching aSymbol for anObject. If no such property
-	exists then aBlock will be evaluated"
+	"Removes and answer the property value matching aSymbol for anObject. If no such property exists then aBlock will be evaluated."
 
-	| propertyDict |
+	| propertyDict removed |
 	propertyDict := register at: anObject ifAbsent: [^aBlock value].
-	propertyDict removeKey: aSymbol ifAbsent: [^aBlock value].
+	removed := propertyDict removeKey: aSymbol ifAbsent: [^aBlock value].
 	propertyDict isEmpty ifTrue: [register removeKey: anObject].
-	! !
+	^removed! !
 !Kernel.PropertyManager categoriesFor: #initialize!initializing!private! !
 !Kernel.PropertyManager categoriesFor: #propertyOf:at:!adding!public! !
 !Kernel.PropertyManager categoriesFor: #propertyOf:at:ifAbsent:!adding!public! !

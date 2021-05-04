@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
 Kernel.ParseNodeVisitor subclass: #'Kernel.StSemanticAnalyser'
-	instanceVariableNames: 'methodNode methodClass evaluationContext currentScope scopes literals stringLiterals addToFrame tempDecls inStaticExpression evalScope annotations errorBlock'
+	instanceVariableNames: 'methodNode classScope evaluationContext currentScope scopes literals stringLiterals addToFrame tempDecls inStaticExpression evalScope annotations errorBlock'
 	classVariableNames: 'OptimizedMessages RestrictedSelectors SpecialSelectors'
 	imports: #(#{Kernel.ParseErrorCodes})
 	classInstanceVariableNames: ''
@@ -331,7 +331,7 @@ checkRedefines: anStVariableNode
 checkRestrictedSelectors: aMethodNode
 	| last first |
 	(self restrictedSelectors identityIncludes: aMethodNode selector) ifFalse: [^self].
-	(OptimizedMessages lookup: methodClass)
+	(OptimizedMessages lookup: self methodClass)
 		ifNotNil: [:selectors | (selectors identityIncludes: aMethodNode selector) ifTrue: [^self]].
 	first := aMethodNode selectorParts first sourceInterval.
 	last := aMethodNode argumentCount > 0
@@ -344,7 +344,7 @@ checkRestrictedSelectors: aMethodNode
 		extras: {aMethodNode selector}!
 
 checkSupersend: aMessageNode
-	methodClass superclass isNil
+	self methodClass superclass isNil
 		ifTrue: [^self signalError: CErrUndeclared forNode: aMessageNode receiver]!
 
 checkTryBlock: aMessageNode
@@ -435,6 +435,9 @@ lineOfSourcePosition: position
 		whileTrue: [stream next == $\n ifTrue: [line := line + 1]].
 	^line!
 
+methodClass
+	^classScope methodClass!
+
 newLiteralsCollection
 	^IdentityDictionary new!
 
@@ -461,11 +464,10 @@ restrictedSelectors
 scopes
 	^scopes!
 
-setMethodNode: aStMethodNode methodClass: aClass context: anObject pools: anArray errorBlock: aMonadicValuable
+setMethodNode: aStMethodNode methodClass: aClass environment: aNamespace context: anObject pools: anArray errorBlock: aMonadicValuable
 	methodNode := aStMethodNode.
-	methodClass := aClass.
 	evaluationContext := anObject.
-	currentScope := StClassScope methodClass: aClass.
+	currentScope := classScope := StClassScope methodClass: aClass environment: aNamespace.
 	anArray isEmpty
 		ifFalse: 
 			[evalScope := (StEvalScope pools: anArray)
@@ -500,7 +502,7 @@ signalError: codeInteger forNode: anStProgramNode range: anInterval extras: anAr
 	err := self compilationErrorClass
 				code: codeInteger
 				in: source
-				for: methodClass
+				for: self methodClass
 				selector: methodNode selector
 				position: position
 				line: (self lineOfSourcePosition: position)
@@ -626,12 +628,14 @@ visitOptimizedNode: anOptimizedNode
 	outerScopes := scopes.
 	(wasInStaticExpression := inStaticExpression)
 		ifFalse: 
-			["If entering a static expression the scope is different (static expressions
+			[ | methodClass |
+			"If entering a static expression the scope is different (static expressions
 			 are compiled in the context of the class side), and only some literals are
 			 retained in the frame."
 			addToFrame := [:literal | self addToFrameStatic: literal].
+			methodClass := self methodClass.
 			currentScope := StClassScope
-						methodClass: (methodClass isMeta ifTrue: [methodClass] ifFalse: [methodClass class]).
+						methodClass: (methodClass isMeta ifTrue: [methodClass] ifFalse: [methodClass class]) environment: classScope environment.
 			scopes := OrderedCollection new].
 	currentScope := scopes addLast: (StMethodScope forScopeNode: anOptimizedNode outer: currentScope).
 	inStaticExpression := true.
@@ -743,6 +747,7 @@ visitVariableNode: aStVariableNode
 !Kernel.StSemanticAnalyser categoriesFor: #isReceiverOfNilTest:!helpers!private! !
 !Kernel.StSemanticAnalyser categoriesFor: #isTempVariable:!helpers!private! !
 !Kernel.StSemanticAnalyser categoriesFor: #lineOfSourcePosition:!helpers!private! !
+!Kernel.StSemanticAnalyser categoriesFor: #methodClass!accessing!private! !
 !Kernel.StSemanticAnalyser categoriesFor: #newLiteralsCollection!helpers!initializing!private! !
 !Kernel.StSemanticAnalyser categoriesFor: #pushActiveFrame!instructions-stack ops!private! !
 !Kernel.StSemanticAnalyser categoriesFor: #pushImmediate:!instructions-stack ops!private! !
@@ -752,7 +757,7 @@ visitVariableNode: aStVariableNode
 !Kernel.StSemanticAnalyser categoriesFor: #removeScope!helpers!private! !
 !Kernel.StSemanticAnalyser categoriesFor: #restrictedSelectors!constants!private! !
 !Kernel.StSemanticAnalyser categoriesFor: #scopes!accessing!public! !
-!Kernel.StSemanticAnalyser categoriesFor: #setMethodNode:methodClass:context:pools:errorBlock:!initializing!private! !
+!Kernel.StSemanticAnalyser categoriesFor: #setMethodNode:methodClass:environment:context:pools:errorBlock:!initializing!private! !
 !Kernel.StSemanticAnalyser categoriesFor: #signalError:forNode:!error handling!private! !
 !Kernel.StSemanticAnalyser categoriesFor: #signalError:forNode:extra:!error handling!private! !
 !Kernel.StSemanticAnalyser categoriesFor: #signalError:forNode:extras:!error handling!private! !
@@ -781,12 +786,13 @@ visitVariableNode: aStVariableNode
 
 !Kernel.StSemanticAnalyser class methodsFor!
 
-analyzeParseTree: aParseTree for: aClass context: anObject pools: anArray onError: aMonadicValuable
+analyzeParseTree: aParseTree for: aClass environment: aNamespace context: anObject pools: anArray onError: aMonadicValuable
 	| methodNode |
 	methodNode := aParseTree isMethod ifTrue: [aParseTree] ifFalse: [aParseTree methodNode].
 	^self new
 		setMethodNode: methodNode
 			methodClass: aClass
+			environment: aNamespace
 			context: anObject
 			pools: anArray
 			errorBlock: aMonadicValuable;
@@ -818,6 +824,6 @@ initialize
 	optimizedMessages do: [:each | restrictedSelectors addAll: each].
 	self addClassConstant: 'RestrictedSelectors' value: restrictedSelectors.
 	self addClassConstant: 'SpecialSelectors' value: VMLibrary default specialSelectors! !
-!Kernel.StSemanticAnalyser class categoriesFor: #analyzeParseTree:for:context:pools:onError:!accessing!public! !
+!Kernel.StSemanticAnalyser class categoriesFor: #analyzeParseTree:for:environment:context:pools:onError:!accessing!public! !
 !Kernel.StSemanticAnalyser class categoriesFor: #initialize!development!initializing!public! !
 

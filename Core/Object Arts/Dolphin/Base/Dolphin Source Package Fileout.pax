@@ -29,6 +29,7 @@ package setMethodNames: #(
 	#(#{Kernel.AbstractChunkSourceFiler} #emitPackageVariableNameSubsets:)
 	#(#{Kernel.AbstractChunkSourceFiler} #emitPackageVariableReference:)
 	#(#{Kernel.AbstractChunkSourceFiler} #emitPackageVersion:)
+	#(#{Kernel.AbstractChunkSourceFiler} #emitPaxAttributes:)
 	#(#{Kernel.AbstractChunkSourceFiler} #emitPaxPackage:)
 	#(#{Kernel.AbstractChunkSourceFiler} #emitVersionNumber:)
 	#(#{Kernel.AbstractChunkSourceFiler} #methodNameSortBlock:)
@@ -42,6 +43,7 @@ package setMethodNames: #(
 	#(#{Kernel.ChunkSourceFiler} #emitPackageUntracedVariables:)
 	#(#{Kernel.ChunkSourceFiler} #emitPackageVariableNames:)
 	#(#{Kernel.ChunkSourceFiler} #emitPackageVariableNameSubsets:)
+	#(#{Kernel.ChunkSourceFiler} #emitPaxAttributes:)
 	#(#{Kernel.Package} #allFileOutNames)
 	#(#{Kernel.Package} #beNotUsingPAX)
 	#(#{Kernel.Package} #beUsingPAX)
@@ -226,6 +228,24 @@ emitPackageVersion: aPackage
 				cr;
 				cr]!
 
+emitPaxAttributes: aPackage
+	stream
+		nextPut: $;;
+		crtab.
+	aPackage predeclareClassesSetting
+		ifNotNil: 
+			[:bool |
+			stream
+				nextPutAll: #preDeclareClassesOnLoad:;
+				space;
+				print: bool;
+				nextPut: $;;
+				crtab].
+	stream
+		nextPutAll: #basicComment:;
+		space.
+	self emitString: aPackage comment fullPrintString!
+
 emitPaxPackage: aPackage
 	stream
 		nextPutAll: '| package |';
@@ -242,22 +262,7 @@ emitPaxPackage: aPackage
 		nextPutAll: #paxVersion:;
 		space.
 	self emitVersionNumber: aPackage paxVersion.
-	stream
-		nextPut: $;;
-		crtab.
-	aPackage predeclareClassesSetting
-		ifNotNil: 
-			[:bool |
-			stream
-				nextPutAll: #preDeclareClassesOnLoad:;
-				space;
-				print: bool;
-				nextPut: $;;
-				crtab].
-	stream
-		nextPutAll: #basicComment:;
-		space.
-	self emitString: aPackage comment fullPrintString.
+	self emitPaxAttributes: aPackage.
 	stream
 		nextPut: $.;
 		cr;
@@ -287,6 +292,7 @@ methodNameSortBlock: aPackage
 !Kernel.AbstractChunkSourceFiler categoriesFor: #emitPackageVariableNameSubsets:!private!source filing-pax! !
 !Kernel.AbstractChunkSourceFiler categoriesFor: #emitPackageVariableReference:!accessing!private!source filing! !
 !Kernel.AbstractChunkSourceFiler categoriesFor: #emitPackageVersion:!private!source filing-pax! !
+!Kernel.AbstractChunkSourceFiler categoriesFor: #emitPaxAttributes:!private!source filing-pax! !
 !Kernel.AbstractChunkSourceFiler categoriesFor: #emitPaxPackage:!private!source filing-pax! !
 !Kernel.AbstractChunkSourceFiler categoriesFor: #emitVersionNumber:!private!source filing-pax! !
 !Kernel.AbstractChunkSourceFiler categoriesFor: #methodNameSortBlock:!private!source filing-pax! !
@@ -354,7 +360,19 @@ emitPackageVariableNames: aPackage
 
 emitPackageVariableNameSubsets: aPackage
 	self emitPackageNameCollection: aPackage binaryVariableNames initializer: #setBinaryVariableNames:.
-	self emitPackageNameCollection: aPackage aliasVariableNames initializer: #setAliasVariableNames:! !
+	self emitPackageNameCollection: aPackage aliasVariableNames initializer: #setAliasVariableNames:!
+
+emitPaxAttributes: aPackage
+	aPackage environment
+		ifNotNil: 
+			[:namespace |
+			stream
+				nextPut: $;;
+				crtab;
+				nextPutAll: #environmentName:;
+				space;
+				print: namespace fullyQualifiedReference].
+	super emitPaxAttributes: aPackage! !
 !Kernel.ChunkSourceFiler categoriesFor: #emitPackageBinaryVariables:!private!source filing! !
 !Kernel.ChunkSourceFiler categoriesFor: #emitPackageClassNames:!accessing!private!source filing-pax! !
 !Kernel.ChunkSourceFiler categoriesFor: #emitPackageCollection:initializer:!private!source filing-pax! !
@@ -365,6 +383,7 @@ emitPackageVariableNameSubsets: aPackage
 !Kernel.ChunkSourceFiler categoriesFor: #emitPackageUntracedVariables:!private!source filing-pax! !
 !Kernel.ChunkSourceFiler categoriesFor: #emitPackageVariableNames:!private!source filing-pax! !
 !Kernel.ChunkSourceFiler categoriesFor: #emitPackageVariableNameSubsets:!private!source filing-pax! !
+!Kernel.ChunkSourceFiler categoriesFor: #emitPaxAttributes:!private!source filing-pax! !
 
 !Kernel.Package methodsFor!
 
@@ -518,9 +537,12 @@ fileOutBootDefinitions
 	the classes independently of the PAX. These are required by the Dolphin boot process.
 	Note that the base system package cannot contain any resources."
 
-	| filer srcmgr |
+	| filer srcmgr filename |
 	srcmgr := self sourceManager.
-	filer := srcmgr newSourceFiler: self sourceFilerClass path: self classDefinitionsFileName.
+	filename := self classDefinitionsFileName.
+	srcmgr createDirectoryPath: filename.
+	filer := self sourceFilerOn: (FileStream write: filename).
+	srcmgr emitFileOutHeaderOn: filer.
 	[filer fileOutPackageClassDefinitions: self] ensure: [filer close]!
 
 fileOutNames
@@ -610,7 +632,7 @@ savePAC
 	self createPackagePath.
 	"This event can be hooked to backup the old package before it is overwritten, etc"
 	self manager trigger: #aboutToSave: with: self.
-	filer := self sourceFilerClass on: (FileStream write: self dotPacPath).
+	filer := self sourceFilerOn: (FileStream write: self dotPacPath).
 	[filer fileOutPackage: self] ensure: [filer close]!
 
 savePAX
@@ -623,7 +645,7 @@ savePAX
 
 	| filer |
 	self createPackagePath.
-	filer := self sourceFilerClass on: (FileStream write: self fileOutName).
+	filer := self sourceFilerOn: (FileStream write: self fileOutName).
 	[self fileOutOn: filer] ensure: [filer close].
 
 	"We must also file out the binary globals at this stage, as they are not <sourceObject>s."
@@ -848,7 +870,11 @@ fileOutPackagedClass: aClass to: aFileName
 			self fileOut: aClass to: aFileName]
 		ifNotNil: 
 			[:package |
-			(self newSourceFiler: package sourceFilerClass path: aFileName)
+			| answer |
+			self createDirectoryPath: aFileName.
+			answer := package sourceFilerOn: (FileStream write: aFileName).
+			self emitFileOutHeaderOn: answer.
+			answer
 				fileOutClass: aClass ofPackage: package;
 				close].
 

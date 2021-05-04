@@ -1355,11 +1355,12 @@ compilationFailuresCategory
 compilationWarningClass
 	^CompilerWarningNotification!
 
-compile: aString in: class categories: anArray package: aPackageOrNil extraFlags: anInteger
+compile: aString in: class environment: aNamespace categories: anArray package: aPackageOrNil extraFlags: anInteger
 	| change flags |
 	change := DolphinAddMethodChange
 				compile: aString
 				in: class
+				environment: aNamespace
 				categories: anArray
 				package: aPackageOrNil.
 	flags := class defaultCompilationFlags bitOr: anInteger.
@@ -1411,13 +1412,14 @@ Are you absolutely sure you want to continue?')
 	progress caption: 'Compressing  sources, please wait...'.
 	self sourceManager compressSourcesWith: progress!
 
-copyAllMethodsOf: aClass to: newClass changes: aCompositeRefactoryChange 
+copyAllMethodsOf: aClass to: newClass changes: aCompositeRefactoryChange
 	aClass methodDictionary do: 
-			[:each | 
+			[:each |
 			| change |
-			change := aCompositeRefactoryChange addMethodChangeClass 
+			change := aCompositeRefactoryChange addMethodChangeClass
 						compile: each getSource
 						in: aClass
+						environment: each environment
 						categories: each categories
 						package: each owningPackageIfLoose.
 			change changeClassName: newClass.
@@ -2265,7 +2267,7 @@ methodsWithNewBytecodesIn: aBrowserEnvironment
 		selectMethods: 
 			[:each |
 			| method |
-			method := Compiler compile: each getSource in: each methodClass.
+			method := Compiler compile: each getSource in: each methodClass environment: each environment.
 			method notNil and: [method byteCodes ~= each byteCodes or: [method extraIndex ~= each extraIndex]]]
 		in: aBrowserEnvironment
 		withProgress: 'Finding methods that recompile differently...')
@@ -3148,6 +3150,7 @@ privatizeMethod: aCompiledMethod
 												to: commentStart
 												with: self privatePrefix)
 										in: class
+										environment: aCompiledMethod environment
 										categories: (aCompiledMethod categories
 												remove: MethodCategory public ifAbsent: [];
 												add: MethodCategory private;
@@ -3287,6 +3290,7 @@ publicizeMethod: aCompiledMethod
 										to: commentStart + self privatePrefix size
 										with: '')
 								in: class
+								environment: aCompiledMethod environment
 								categories: (aCompiledMethod categories
 										remove: private ifAbsent: [];
 										add: public;
@@ -4328,7 +4332,7 @@ wrapText: aString toWidth: max indent: colInteger tabWidth: tabInteger
 !Tools.SmalltalkSystem categoriesFor: #closeAll!commands!public! !
 !Tools.SmalltalkSystem categoriesFor: #compilationFailuresCategory!constants!private! !
 !Tools.SmalltalkSystem categoriesFor: #compilationWarningClass!constants!private! !
-!Tools.SmalltalkSystem categoriesFor: #compile:in:categories:package:extraFlags:!operations!public! !
+!Tools.SmalltalkSystem categoriesFor: #compile:in:environment:categories:package:extraFlags:!operations!public! !
 !Tools.SmalltalkSystem categoriesFor: #compilerNotification:!exceptions!private! !
 !Tools.SmalltalkSystem categoriesFor: #compressChanges!commands!public! !
 !Tools.SmalltalkSystem categoriesFor: #compressSources!commands!public! !

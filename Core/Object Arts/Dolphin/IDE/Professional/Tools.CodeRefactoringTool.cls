@@ -254,20 +254,18 @@ implementMessage: aStMessageNode
 	presenter parseContext owningPackage ifNotNil: [:package | dialog packages: {package}].
 	dialog showModal ifNotNil: [:class | self implementMessage: aStMessageNode inClass: class]!
 
-implementMessage: aStMessageNode inClass: aClass 
+implementMessage: aStMessageNode inClass: aClass
 	| change |
-	change := self systemModel 
+	change := self systemModel
 				compile: (self stubTextFor: aStMessageNode inClass: aClass)
 				in: aClass
+				environment: nil
 				categories: #()
 				package: nil
 				extraFlags: 0.
 	presenter clearParseTree.
-	change method 
-		ifNotNil: 
-			[:method | 
-			(Smalltalk developmentSystem methodCategorizationPolicy bestSuggestionFor: method) 
-				addMethod: method]!
+	change method
+		ifNotNil: [:method | (self systemModel methodCategorizationPolicy bestSuggestionFor: method) addMethod: method]!
 
 inlineMessage
 	"Invoke the 'Inline Message' refactoring to inline the selected
@@ -628,11 +626,13 @@ removeTempDecl: aStVariableNode
 		and: [(scintilla characterAt: range stop + 1) isWhitespace]) ifTrue: [range stop: range stop + 1].
 	scintilla clearRange: range!
 
-renameClass: aStVariableNode 
-	| class model |
+renameClass: aStVariableNode
+	| class model method |
 	model := self systemModel.
-	class := (self selectedMethod methodClass fullBindingFor: aStVariableNode name) value.
-	presenter 
+	method := self selectedMethod.
+	class := (method methodClass fullBindingFor: aStVariableNode name environment: method environment)
+				value.
+	presenter
 		renameVariable: aStVariableNode
 		operation: [:newName | model renameClass: class to: newName]
 		validationBlock: [:name | model validateRenameClass: class to: name]!

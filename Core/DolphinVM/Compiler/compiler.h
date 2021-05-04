@@ -75,7 +75,7 @@ public:
 
 	void SetVMInterface(IDolphin* piVM) { m_piVM = piVM; }
 
-	POTE CompileExpression(LPUTF8 userexpression, Oop compiler, Oop notifier, Oop contextOop, CompilerFlags flags, size_t& len, textpos_t startAt);
+	POTE CompileExpression(LPUTF8 userexpression, Oop compiler, Oop notifier, Oop contextOop, POTE environment, CompilerFlags flags, size_t& len, textpos_t startAt);
 	Oop EvaluateExpression(LPUTF8 text, POTE method, Oop contextOop, POTE pools);
 	Oop EvaluateExpression(LPUTF8 source, textpos_t start, textpos_t end, POTE oteMethod, Oop contextOop, POTE pools);
 
@@ -85,7 +85,7 @@ public:
 
 	POTE NewMethod();
 	POTE __stdcall NewCompiledMethod(POTE classPointer, size_t numBytes, const STMethodHeader& hdr);
-	
+
 	__declspec(property(get = get_Selector)) Str Selector;
 	Str get_Selector() const { return m_selector; }
 
@@ -101,6 +101,7 @@ public:
 	__declspec(property(get = get_Ok)) bool Ok;
 	bool get_Ok() const { return m_ok; }
 
+	// The number of literals in the method, excluding the MethodAnnotations (if any)
 	__declspec(property(get = get_LiteralCount)) size_t LiteralCount;
 	size_t get_LiteralCount() const { return m_literals.size(); }
 
@@ -142,11 +143,11 @@ private:
 		return m_isCompilingExpression;
 	}
 
-	POTE CompileForClassHelper(LPUTF8 compiletext, Oop compiler, Oop notifier, POTE aClass, CompilerFlags flags= CompilerFlags::Default);
-	POTE CompileForEvaluationHelper(LPUTF8 compiletext, Oop compiler, Oop notifier, POTE aBehavior, POTE workspacePools, CompilerFlags=CompilerFlags::Default);
+	POTE CompileForClassHelper(LPUTF8 compiletext, Oop compiler, Oop notifier, POTE aClass, POTE environment, CompilerFlags flags= CompilerFlags::Default);
+	POTE CompileForEvaluationHelper(LPUTF8 compiletext, Oop compiler, Oop notifier, POTE aBehavior, POTE environment, POTE workspacePools, CompilerFlags=CompilerFlags::Default);
 
 	void SetFlagsAndText(CompilerFlags flags, LPUTF8 text, textpos_t offset);
-	void PrepareToCompile(CompilerFlags flags, LPUTF8 text, textpos_t offset, POTE classPointer, Oop compiler, Oop notifier, POTE workspacePools, boolean isCompilingExpression, Oop context=0);
+	void PrepareToCompile(CompilerFlags flags, LPUTF8 text, textpos_t offset, POTE classPointer, POTE aNamespace, Oop compiler, Oop notifier, POTE workspacePools, boolean isCompilingExpression, Oop context=0);
 	virtual void _CompileErrorV(int code, const TEXTRANGE& range, va_list extras);
 	Oop Notification(int errorCode, const TEXTRANGE& range, va_list extras);
 	void InternalError(const char* szFile, int line, const TEXTRANGE&, const char* szMsg, ...);
@@ -180,6 +181,7 @@ private:
 	size_t AddToFrame(Oop object, const TEXTRANGE&, LiteralType type);
 	size_t AddStringToFrame(POTE string, const TEXTRANGE&);
 	POTE AddSymbolToFrame(LPUTF8, const TEXTRANGE&, LiteralType refOnly);
+	void AddAnnotation(POTE tag, Oop arg);
 	void InsertByte(ip_t pos, uint8_t value, BYTECODE::Flags flags, LexicalScope* pScope);
 	void RemoveByte(ip_t pos);
 	void RemoveBytes(ip_t start, size_t count);
@@ -346,6 +348,9 @@ private:
 	POTE ParseArray();
 	POTE ParseByteArray();
 	Oop  ParseConstExpression();
+	
+	static constexpr char8_t RelativeBindingRefIdSuffix = u8'^';
+
 	POTE ParseQualifiedReference(textpos_t textPosition);
 
 	template <bool ignoreNops> ip_t PriorInstruction() const;
@@ -372,6 +377,7 @@ private:
 	size_t FixupTempsAndBlocks();
 	void PatchOptimizedScopes();
 	void PatchCleanBlockLiterals(POTE oteMethod);
+	void PatchBindingReferenceLiterals(POTE oteMethod);
 
 	// text map
 	size_t AddTextMap(ip_t ip, const TEXTRANGE&);
@@ -419,7 +425,8 @@ private:
 	void MakeQuickMethod(STMethodHeader& hdr, STPrimitives extraIndex);
 
 public:
-	POTE InstVarNamesOf(POTE aBehavior)/* throws SE_VMCALLBACKUNWIND */;
+	POTE GetInstVarNames()/* throws SE_VMCALLBACKUNWIND */;
+	POTE GetClassEnvironment(POTE oteClass);
 	POTE FindDictVariable(POTE dict, const Str&)/* throws SE_VMCALLBACKUNWIND */;
 	//POTE FindClass(const Str&)/* throws SE_VMCALLBACKUNWIND */;
 	POTE FindGlobal(const Str&)/* throws SE_VMCALLBACKUNWIND */;
@@ -432,24 +439,25 @@ public:
 
 // ICompiler
 public:
-	STDMETHOD_(POTE, CompileForClass)(IUnknown* piVM, Oop compiler, const char* compiletext, POTE aClass, FLAGS flags, Oop notifier);
-	STDMETHOD_(POTE, CompileForEval)(IUnknown* piVM, Oop compiler, const char* compiletext, POTE aClass, POTE workspacePools, FLAGS flags, Oop notifier);
+	STDMETHOD_(POTE, CompileForClass)(IUnknown* piVM, Oop compiler, const char* compiletext, POTE aClass, POTE aNamespace, FLAGS flags, Oop notifier);
+	STDMETHOD_(POTE, CompileForEval)(IUnknown* piVM, Oop compiler, const char* compiletext, POTE aClass, POTE aNamespace, POTE workspacePools, FLAGS flags, Oop notifier);
 
 private:
 	// Parse state
-	bool m_ok;								// Parse still ok? 
-	bool m_instVarsInitialized;
-	bool m_isMutable;
-	bool m_isCompilingExpression;
+	bool m_ok = true;							// Parse still ok? 
+	bool m_instVarsInitialized = false;
+	bool m_isMutable = false;
+	bool m_isCompilingExpression = false;
+	bool m_hasNamespaceAnnotation = false;
 
 	enum class SendType { Other, Self, Super };
-	CompilerFlags m_flags;							// Compiler flags
+	CompilerFlags m_flags = CompilerFlags::Default;
 
-	SendType m_sendType;					// true if current message is to super
+	SendType m_sendType = SendType::Other;
 
 	// Dynamic array of bytecodes
 	BYTECODES m_bytecodes;
-	ip_t m_codePointer;						// Code insert position
+	ip_t m_codePointer = ip_t::zero;						// Code insert position
 
 	__declspec(property(get = GetLastIp)) ip_t LastIp;
 	ip_t GetLastIp() const
@@ -462,7 +470,11 @@ private:
 	OOPVECTOR m_literalFrame;			// Literal frame
 	typedef std::unordered_map<Oop, size_t> LiteralMap;
 	LiteralMap m_literals;				// All literals
-	size_t m_literalLimit;
+	size_t m_literalLimit = LITERALLIMIT;
+
+	typedef std::pair<POTE, OOPVECTOR> MethodAnnotation;
+	typedef std::vector<MethodAnnotation> AnnotationVector;
+	AnnotationVector m_annotations;
 
 	// Fixed size array of instance vars (determined from class)
 	typedef std::valarray<Str> STRINGARRAY;
@@ -470,16 +482,17 @@ private:
 
 	typedef std::vector<LexicalScope*> SCOPELIST;
 	SCOPELIST m_allScopes;
-	LexicalScope* m_pCurrentScope;
+	LexicalScope* m_pCurrentScope = nullptr;
 
-	POTE m_class;							// The current class to which the compilation applies, i.e. the method class
-	POTE m_oopWorkspacePools;				// Shared pools for associated workspace
-	Oop	 m_context;							// Compilation context for expression
+	POTE m_class = nullptr;					// The current class to which the compilation applies, i.e. the method class
+	POTE m_environment;						// The overriding namespace for extension methods, or nil if the environment of the method class should be used
+	POTE m_oopWorkspacePools = nullptr;		// Shared pools for associated workspace
+	Oop	 m_context = 0;						// Compilation context for expression
 
 	Str m_selector;							// The current message selector
 
-	uintptr_t m_primitiveIndex;				// Index of primitive or zero
-	Oop m_compilerObject;					// The object which was the receiver of the primCompile:... message to start compilation
+	uintptr_t m_primitiveIndex = 0;			// Index of primitive or zero
+	Oop m_compilerObject = 0;				// The object which was the receiver of the primCompile:... message to start compilation
 
 	struct TEXTMAP
 	{
@@ -496,8 +509,8 @@ private:
 
 	TEXTMAPLIST::iterator FindTextMapEntry(ip_t ip);
 
-	POTE m_compiledMethodClass;				// Class of compiled method to generate
-	Oop m_notifier;							// Notifier object to send compilerError:... callbacks to
+	POTE m_compiledMethodClass = nullptr;	// Class of compiled method to generate
+	Oop m_notifier = 0;						// Notifier object to send compilerError:... callbacks to
 
 	typedef std::map<Str, POTE> NAMEDOBJECTS;
 	NAMEDOBJECTS m_bindingRefs;

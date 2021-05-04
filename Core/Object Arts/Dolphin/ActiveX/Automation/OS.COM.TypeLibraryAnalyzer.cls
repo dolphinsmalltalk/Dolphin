@@ -489,7 +489,7 @@ suggestedBinding
 			(binding := ref bindingOrNil)
 				ifNil: 
 					[(VariableBinding key: ref unqualifiedName value: nil)
-						environment: ref namespace;
+						environment: ref environment;
 						yourself]]!
 
 suggestedConstantsPoolBinding

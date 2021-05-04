@@ -45,7 +45,7 @@ childrenDo: aMonadicValuable
 evaluateStatements
 	methodClass isNil ifTrue: [^nil].
 	^self source
-		ifNotNil: [:s | Compiler evaluate: (s copyFrom: body start to: body stop) for: methodClass instanceClass]!
+		ifNotNil: [:s | Compiler evaluate: (s copyFrom: body start to: body stop) for: methodClass instanceClass environment: self methodNode environment]!
 
 hash
 	^self body hash!

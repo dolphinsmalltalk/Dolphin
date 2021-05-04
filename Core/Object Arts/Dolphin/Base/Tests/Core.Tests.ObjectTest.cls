@@ -159,6 +159,9 @@ testOneArgEvent
 		matching: [:arg | arg = 1]
 		against: source!
 
+testPropertyManager
+	self verifyPropertyManagerOf: Object new!
+
 testRemoveEventsTriggeredFor
 	| objectA objectB objectC |
 	objectA := Object new.
@@ -340,6 +343,7 @@ verifyWeakRegistry: aWeakIdentitDictionary
 !Core.Tests.ObjectTest categoriesFor: #testObjectEventRegistry!public!unit tests! !
 !Core.Tests.ObjectTest categoriesFor: #testObjectPropertyManager!public!unit tests! !
 !Core.Tests.ObjectTest categoriesFor: #testOneArgEvent!public!unit tests! !
+!Core.Tests.ObjectTest categoriesFor: #testPropertyManager!public!unit tests! !
 !Core.Tests.ObjectTest categoriesFor: #testRemoveEventsTriggeredFor!public!unit tests! !
 !Core.Tests.ObjectTest categoriesFor: #testThreeArgEvent!public!unit tests! !
 !Core.Tests.ObjectTest categoriesFor: #testTwoArgEvent!public!unit tests! !

@@ -35,7 +35,7 @@ testPackageClosure
 
 	| missing aBrowserEnvironment |
 	aBrowserEnvironment := BrowserEnvironment new
-				forPackagesDeployment: {Smalltalk.EditableListViewDemo owningPackage}.
+				forPackagesDeployment: {EditableListViewDemo owningPackage}.
 	missing := Smalltalk developmentSystem unimplementedSelectorsIn: aBrowserEnvironment.	"Use symmetric  difference, as we also want to fix up the test if some missing message is fixed."
 	self assert: (missing symmetricDifference: #(#defineTemplate #evaluate:)) asArray sort equals: #()
 	"To debug this, open an env browser on the deployment scope as follows:

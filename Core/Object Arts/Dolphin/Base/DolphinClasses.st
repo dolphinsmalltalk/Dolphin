@@ -2051,7 +2051,7 @@ Core.Object subclass: #'Core.Behavior'
 		'_VariableMask' -> 16r1000
 	}!
 Core.Object subclass: #'Kernel.BindingContext'
-	instanceVariableNames: 'source identifier visited'
+	instanceVariableNames: 'methodClass environment identifier visited'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -2267,6 +2267,12 @@ Core.Object subclass: #'Core.Message'
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Core.Object subclass: #'Core.MessageSequenceAbstract'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Core.Object variableSubclass: #'Kernel.MethodAnnotations'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -2503,13 +2509,19 @@ Core.Object subclass: #'OS.VersionInfo'
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Kernel.AbstractBindingReference subclass: #'Kernel.BindingReference'
-	instanceVariableNames: 'pathString path context flags binding generation'
+	instanceVariableNames: 'pathString path private binding generation'
 	classVariableNames: 'Generation'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Kernel.AbstractBindingReference subclass: #'Kernel.MetaBindingReference'
 	instanceVariableNames: 'instance'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Kernel.BindingReference subclass: #'Kernel.RelativeBindingReference'
+	instanceVariableNames: 'scope'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -3349,7 +3361,13 @@ Core.Notification subclass: #'OS.HRESULTNotification'
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Core.Notification subclass: #'Kernel.MethodCompileFailed'
-	instanceVariableNames: 'compilerErrorNotification'
+	instanceVariableNames: 'compilerErrorNotification environment'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Core.Notification subclass: #'Kernel.QueryEnvironmentNotification'
+	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -3716,7 +3734,7 @@ Kernel.SourceFiler subclass: #'Kernel.AbstractChunkSourceFiler'
 		'NormalizeEolsMask' -> 16r2
 	}!
 Kernel.AbstractChunkSourceFiler subclass: #'Kernel.ChunkSourceFiler'
-	instanceVariableNames: 'sourceFileIndex'
+	instanceVariableNames: 'sourceFileIndex environment'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''

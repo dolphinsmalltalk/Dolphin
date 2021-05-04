@@ -52,11 +52,13 @@ allDefinedVariablesDo: aMonadicValuable
 autoParse
 	self textLength > 0 ifFalse: [^self].
 	
-	[| ast |
+	[| ast methodNode |
 	ast := self parseTree.
+	methodNode := ast methodNode.
 	BrowserSemanticAnalyser
 		analyzeParseTree: ast
-		for: ast methodNode methodClass
+		for: methodNode methodClass
+		environment: methodNode environment
 		context: self evaluationContext
 		pools: self allPools
 		onError: nil]
@@ -97,8 +99,7 @@ browseMessage
 	self systemModel browseMethod: ((self targetOfMessage: node) lookupMethod: node selector)!
 
 browseReferencesCommand
-	"Private - Prompt for a selector and open a method browser displaying the references to that
-	selector."
+	"Private - Answer the context-sensitive 'Browse References' command for the selected node."
 
 	self selectedNode
 		ifNotNil: 
@@ -119,15 +120,19 @@ browseReferencesCommand
 	^super browseReferencesCommand!
 
 buildParseTree
-	| methodClass |
-	methodClass := self parseContext ?? ProtoObject.
+	| parseContext |
+	parseContext := self parseContext ifNil: [self defaultParseContext].
 	self clearErrors.
 	self selectedMethod
 		ifNotNil: 
 			[:method |
 			method isExpression
-				ifTrue: [^Parser parseExpression: method getSource in: methodClass]].
-	^[self parseSourceIn: methodClass] on: Compiler notificationClass
+				ifTrue: 
+					[^Parser
+						parseExpression: method getSource
+						in: parseContext methodClass
+						environment: parseContext environment]].
+	^[self parseSourceIn: parseContext] on: Compiler notificationClass
 		do: 
 			[:err |
 			compilationErrors addLast: err.
@@ -179,7 +184,8 @@ defaultStylerClass
 evaluationContext
 	"Answers the evaluation context for this workspace."
 
-	^evaluationContext ifNil: [self parseContext ifNotNil: [:class | class instanceClass]]!
+	^evaluationContext
+		ifNil: [self parseContext ifNotNil: [:context | context methodClass instanceClass]]!
 
 formattedCode: anStProgramNode
 	^anStProgramNode formattedCode!
@@ -220,7 +226,13 @@ method
 	^self selectedMethod!
 
 nameBindingContext
-	^evaluationContext ifNil: [self parseContext ?? Smalltalk] ifNotNil: [:context | context basicClass]!
+	^evaluationContext
+		ifNil: [self parseContext ifNil: [self defaultParseContext]]
+		ifNotNil: 
+			[:context |
+			| class |
+			class := context basicClass.
+			ParseContext methodClass: class environment: class environment]!
 
 nodeForRange: anInterval 
 	^self parseTree 
@@ -256,8 +268,11 @@ onUpdateUI: anSCNotification
 parseContext
 	^parentPresenter ifNotNil: [:p | p parseContext]!
 
-parseSourceIn: methodClass
-	^Parser parseMethod: self source in: methodClass!
+parseSourceIn: aParseContext
+	^Parser
+		parseMethod: self source
+		in: aParseContext methodClass
+		environment: aParseContext environment!
 
 parseTree
 	parseTree == DeafObject current ifTrue: [parseTree := self buildParseTree].
@@ -349,18 +364,18 @@ resetParseTimer
 		setParseTimer!
 
 resolveIdentifier: aString ifDefined: aMonadicValuable
-	| methodClass |
-	methodClass := self parseContext.
-	methodClass ifNil: [^nil].
- 	"In the debugger will have an evaluation context which is the receiver."
+	| context methodClass |
+	context := self parseContext.
+	context ifNil: [^nil].
+	methodClass := context methodClass.
+	"In the debugger will have an evaluation context which is the receiver."
 	(self evaluationContext isKindOf: methodClass)
 		ifTrue: 
-			[
-			aString = 'self' ifTrue: [^aMonadicValuable value: self evaluationContext].
+			[aString = 'self' ifTrue: [^aMonadicValuable value: self evaluationContext].
 			(self contextBindingFor: aString) ifNotNil: [:var | ^aMonadicValuable value: var value].
 			(methodClass indexOfInstVar: aString ifAbsent: [])
 				ifNotNil: [:i | ^aMonadicValuable value: (self evaluationContext instVarAt: i)]].
-	(methodClass fullBindingFor: aString)
+	(methodClass fullBindingFor: aString environment: context environment)
 		ifNotNil: [:binding | binding value ifNotNil: [:value | ^aMonadicValuable value: value]].
 	^nil!
 
@@ -405,7 +420,7 @@ selectorFromNode: aStProgramNode
 
 selfClass
 	^evaluationContext
-		ifNil: [self parseContext ?? UndefinedObject]
+		ifNil: [self parseContext ifNil: [UndefinedObject] ifNotNil: [:context | context methodClass]]
 		ifNotNil: [:context | context basicClass]!
 
 setParseTimer
@@ -424,22 +439,25 @@ targetOfMessage: aStMessageNode
 	receiver := aStMessageNode receiver.
 	receiver isVariable
 		ifTrue: 
-			[receiver isSpecialVariable ifTrue: [^receiver valueClassIn: self parseContext].
+			[receiver isSpecialVariable ifTrue: [^receiver valueClassIn: self parseContext methodClass].
 			^self resolveIdentifier: receiver name ifDefined: [:value | value basicClass]]
 		ifFalse: [receiver isLiteralNode ifTrue: [^aStMessageNode receiver value basicClass]].
 	^nil!
 
-variableClassification: anStVariableNode 
-	| class |
+variableClassification: anStVariableNode
+	| context methodClass |
 	(anStVariableNode notNil and: [anStVariableNode isVariable]) ifFalse: [^nil].
 	(self isTempVariable: anStVariableNode) ifTrue: [^#temporary].
-	class := self parseContext.
-	(class allInstVarNames includes: anStVariableNode name) ifTrue: [^#instance].
-	(class bindingFor: anStVariableNode name) ifNotNil: [^#class].
-	(class environment fullBindingFor: anStVariableNode name) 
+	context := self parseContext.
+	methodClass := context methodClass.
+	(methodClass allInstVarNames includes: anStVariableNode name) ifTrue: [^#instance].
+	(methodClass bindingFor: anStVariableNode name) ifNotNil: [^#class].
+	(context environment fullBindingFor: anStVariableNode name)
 		ifNotNil: 
-			[:var | 
-			^(var value basicClass isMeta and: [var value name == var key]) ifTrue: [#classGlobal] ifFalse: [#global]].
+			[:var |
+			^(var value basicClass isMeta and: [var value name == var key])
+				ifTrue: [#classGlobal]
+				ifFalse: [#global]].
 	"Variable name not found in this context"
 	^nil!
 

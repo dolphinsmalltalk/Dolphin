@@ -311,6 +311,7 @@ compileRange: anInterval ifFail: failBlock debug: aBoolean
 	result := compiler
 				compileForEvaluation: source
 				in: (context ifNotNil: [context basicClass])
+				environment: nil
 				evaluationPools: pools
 				flags: f]
 			on: compiler warningClass
@@ -448,6 +449,9 @@ defaultCompilerFlags
 	receiver."
 
 	^Interactive!
+
+defaultParseContext
+	^##(ParseContext methodClass: ProtoObject environment: Smalltalk)!
 
 defaultStylerClass
 	^SmalltalkExpressionStyler!
@@ -927,7 +931,13 @@ modifiedModel: aValueModel
 	modifiedModel := aValueModel!
 
 nameBindingContext
-	^self evaluationContext ifNil: [Smalltalk] ifNotNil: [:context | context basicClass]!
+	^self evaluationContext
+		ifNil: [self defaultParseContext]
+		ifNotNil: 
+			[:context |
+			| class |
+			class := context basicClass.
+			ParseContext methodClass: class environment: class environment]!
 
 newVariablePool
 	workspacePool := PoolDictionary new!
@@ -996,7 +1006,9 @@ onViewOpened
 !
 
 parseContext
-	^self evaluationContext basicClass!
+	| methodClass |
+	methodClass := self evaluationContext basicClass.
+	^ParseContext methodClass: methodClass environment: methodClass environment!
 
 plainText
 	"Answer the receiver's unformatted source text as a String."
@@ -1140,9 +1152,15 @@ reformatSource
 	| source formatter reformatted expr tabs |
 	source := self hasSelection ifTrue: [self selection] ifFalse: [self text].
 	tabs := (source findFirst: [:each | each ~~ Character tab]) - 1.
-	expr := [Parser parseExpression: source in: self parseContext]
-				on: Parser notificationClass
-				do: [:e | e okToContinue ifTrue: [e exit: nil] ifFalse: [^self]].
+	expr := 
+			[| context |
+			context := self parseContext.
+			Parser
+				parseExpression: source
+				in: context methodClass
+				environment: context environment]
+					on: Parser notificationClass
+					do: [:e | e okToContinue ifTrue: [e exit: nil] ifFalse: [^self]].
 	formatter := expr formatterClass new.
 	tabs <= 0
 		ifTrue: [reformatted := formatter format: expr]
@@ -1163,7 +1181,11 @@ replaceSelection: aString
 resolveIdentifier: aString ifDefined: aMonadicValuable
 	(self workspacePool bindingFor: aString) ifNotNil: [:var | ^aMonadicValuable value: var value].
 	^(self evaluationContext class indexOfInstVar: aString ifAbsent: [])
-		ifNil: [(self nameBindingContext fullBindingFor: aString) ifNotNil: [:var | aMonadicValuable value: var value]]
+		ifNil: 
+			[| nameContext |
+			nameContext := self nameBindingContext.
+			(nameContext methodClass fullBindingFor: aString environment: nameContext environment)
+				ifNotNil: [:var | aMonadicValuable value: var value]]
 		ifNotNil: [:i | aMonadicValuable value: (self evaluationContext instVarAt: i)]!
 
 searchEnvironment
@@ -1281,7 +1303,7 @@ selectPrev
 				ifNotNil: [:next | next range])!
 
 selfClass
-	^self parseContext!
+	^self parseContext methodClass!
 
 setBackcolor
 	view backcolor: self class defaultBackcolor!
@@ -1358,12 +1380,13 @@ showIdentifierCompletionListAt: posInteger maxItems: maxInteger start: start
 	lastDot isZero
 		ifTrue: [choices := self identifiersStartingWith: prefix maxItems: maxInteger]
 		ifFalse: 
-			[| qualifier pool |
+			[| qualifier pool nameContext |
 			"Qualified name, find the binding"
 			qualifier := prefix copyFrom: 1 to: lastDot - 1.
 			prefix := prefix copyFrom: lastDot + 1 to: prefix size.
 			choices := #().
-			(self nameBindingContext fullBindingFor: qualifier)
+			nameContext := self nameBindingContext.
+			(nameContext methodClass fullBindingFor: qualifier environment: nameContext environment)
 				ifNotNil: 
 					[:var |
 					pool := var value.
@@ -1574,6 +1597,7 @@ wrapLinesInRange: anInterval indent: anInteger
 !Tools.SmalltalkWorkspace categoriesFor: #debugIt!commands!public! !
 !Tools.SmalltalkWorkspace categoriesFor: #debugItIfFail:!helpers!private! !
 !Tools.SmalltalkWorkspace categoriesFor: #defaultCompilerFlags!constants!private! !
+!Tools.SmalltalkWorkspace categoriesFor: #defaultParseContext!accessing!autocompletion!private! !
 !Tools.SmalltalkWorkspace categoriesFor: #defaultStylerClass!constants!private! !
 !Tools.SmalltalkWorkspace categoriesFor: #displayIt!commands!public! !
 !Tools.SmalltalkWorkspace categoriesFor: #dragOver:!drag & drop!public! !

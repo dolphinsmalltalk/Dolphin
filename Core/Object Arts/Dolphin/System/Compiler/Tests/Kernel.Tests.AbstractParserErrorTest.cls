@@ -71,10 +71,11 @@ compilationErrorClass
 compilationWarningClass
 	^self parserClass warningClass!
 
-compileMethod: aString in: aClass 
-	^Compiler 
+compileMethod: aString in: aClass
+	^Compiler
 		compile: aString
 		in: aClass
+		environment: nil
 		flags: 0!
 
 errorFormats

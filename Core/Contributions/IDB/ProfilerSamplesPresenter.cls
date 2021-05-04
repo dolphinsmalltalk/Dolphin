@@ -141,7 +141,7 @@ onViewOpened
 	(self presenterNamed: 'workspace') view isReadOnly: true!
 
 parseContext
-	^self selectedMethod ifNotNil: [:method | method methodClass]!
+	^self selectedMethod!
 
 sampleIndicator: anInteger 
 	"Answer a String describing the position of the current sample in its world"

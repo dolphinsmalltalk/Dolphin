@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
 Refactory.Browser.RBAbstractClass subclass: #'Refactory.Browser.RBClass'
-	instanceVariableNames: 'metaclass unqualifiedName classVariableNames imports category classConstants comment'
+	instanceVariableNames: 'metaclass unqualifiedName classVariableNames imports category classConstants comment environment'
 	classVariableNames: 'LookupComment'
 	imports: #()
 	classInstanceVariableNames: ''
@@ -99,6 +99,9 @@ directlyImportsNamespace: aString
 
 	^self imports anySatisfy: [:each | each pathString = aString]!
 
+environment
+	^environment ifNil: [environment := model classNamed: self environmentName]!
+
 fullyQualifiedReference
 	^BindingReference pathString: name!
 
@@ -149,10 +152,13 @@ metaclass: aRBMetaclass
 
 name: aString
 	super name: aString.
-	unqualifiedName := nil!
+	unqualifiedName := environment := nil!
 
 newBindingContextForIdentifier: aString
-	^Kernel.BindingContext source: self identifier: aString!
+	^Kernel.BindingContext
+		methodClass: self
+		environment: self environment
+		identifier: aString!
 
 nonMetaclass
 	^self!
@@ -259,7 +265,7 @@ resolveImportedBinding: aBindingContext
 	current := current superclass.
 	current isNil]
 			whileFalse.
-	^self environment
+	^aBindingContext environment
 		ifNotNil: [:env | env resolveImportedBinding: aBindingContext]!
 
 resolveLocallyImportedBinding: aBindingContext
@@ -295,7 +301,7 @@ resolveUnqualifiedName: aString
 	The search for a variables defined in the class hierarchy cannot encounter cycles. Once the imported namespaces are brought into the mix, however, we can end up revisiting the same namespace more than once because the imports form a directed graph that may have cycles, not necessarily a tree. Obviously there is no point searching any reachable namespace more than once, and we also need the search to terminate, both of which conditions are achieved by maintaining a visited set in a BindingContext object.
 	Namespace imports can be public or private. Private imports are only visited for searches initiated in the importee. Variables can also be private, in which case they can only be resolved locally."
 
-	#namespaceToDo. "Private variables"
+	#namespaceToDo.	"Private variables"
 	^(self bindingFor: aString)
 		ifNil: [self resolveImportedBinding: (self newBindingContextForIdentifier: aString)]!
 
@@ -325,6 +331,7 @@ unqualifiedName
 !Refactory.Browser.RBClass categoriesFor: #definitionString!accessing!public! !
 !Refactory.Browser.RBClass categoriesFor: #directlyDefinesClassVariable:!public!testing! !
 !Refactory.Browser.RBClass categoriesFor: #directlyImportsNamespace:!public!testing! !
+!Refactory.Browser.RBClass categoriesFor: #environment!accessing!public! !
 !Refactory.Browser.RBClass categoriesFor: #fullyQualifiedReference!accessing!namespaces!public! !
 !Refactory.Browser.RBClass categoriesFor: #getImports!helpers!private! !
 !Refactory.Browser.RBClass categoriesFor: #imports!accessing!public! !

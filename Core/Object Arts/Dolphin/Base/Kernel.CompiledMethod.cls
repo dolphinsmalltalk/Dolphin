@@ -62,9 +62,10 @@ getDebugInfo
 	Associations between IP positions and temporaries up to that position in 
 	the receiver, ordered by IP."
 
-	^self compilerClass 
-		debugInfoFor: self getSource 
-		in: self methodClass 
+	^self compilerClass
+		debugInfoFor: self getSource
+		in: self methodClass
+		environment: self environment
 		debug: self isDebugMethod!
 
 getSource
@@ -186,7 +187,7 @@ realCategories
 recompile
 	"Private - Recompile the receiver."
 
-	self methodClass recompile: self selector!
+	^self methodClass recompileMethod: self!
 
 storeSourceString: aString
 	"Private - Record aString as the source for the receiver. Delegate to the receiver's source manager"

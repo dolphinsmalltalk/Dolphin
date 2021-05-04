@@ -76,8 +76,8 @@ changesSize
 comment: aString in: aClass
 	^self addChange: (ClassCommentChange comment: aString in: aClass)!
 
-compile: source in: class 
-	^self addChange: (self addMethodChangeClass compile: source in: class)!
+compile: aString in: aClassDescription
+	^self addChange: (self addMethodChangeClass compile: aString in: aClassDescription)!
 
 compile: aString in: aClass categories: anArray 
 	^self addChange: (self addMethodChangeClass 

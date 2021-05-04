@@ -185,7 +185,7 @@ testRenameClass
 	newName := 'New' , 'ClassName'.
 	refactoring := RenameClassRefactoring rename: classToRename to: newName.
 	self executeRefactoring: refactoring.
-	newFullName := oldName asQualifiedReference namespace fullNameFor: newName.
+	newFullName := oldName asQualifiedReference environment fullNameFor: newName.
 	newClass := refactoring model classNamed: newFullName.
 	self denyIsNil: newClass.
 	self assert: (newClass parseTreeFor: #method1)

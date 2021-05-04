@@ -607,6 +607,7 @@ moveAllTempsToInnerScopeIn: anRBClass selector: aSelector
 	parseTree := Parser
 				parseMethod: (anRBClass sourceCodeFor: aSelector)
 				in: anRBClass realClass
+				environment: anRBClass environment
 				onError: 
 					[:message :pos |
 					notifyError value: 'parsing' value: message.

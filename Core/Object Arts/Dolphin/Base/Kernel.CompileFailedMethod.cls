@@ -23,9 +23,10 @@ getDebugInfo
 	the receiver, ordered by IP."
 
 	| answer |
-	answer := self compilerClass 
+	answer := self compilerClass
 				debugInfoFor: (self class buildSourceForSelector: selector class: methodClass)
 				in: self methodClass
+				environment: self environment
 				debug: self isDebugMethod.
 	^answer!
 

@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
 Kernel.StSemanticScope subclass: #'Kernel.StClassScope'
-	instanceVariableNames: 'methodClass instanceVariables selfVariable superVariable'
+	instanceVariableNames: 'methodClass environment instanceVariables selfVariable superVariable'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -10,6 +10,9 @@ Kernel.StClassScope guid: (Core.GUID fromString: '{b221d07f-4ae8-400c-b48e-28b90
 Kernel.StClassScope comment: ''!
 !Kernel.StClassScope categoriesForClass!Kernel-Objects! !
 !Kernel.StClassScope methodsFor!
+
+environment
+	^environment!
 
 lookupVariable: anStVariableNode
 	"Lookup and return an <StVariable> describing the variable definition in this scope matching
@@ -25,7 +28,8 @@ lookupVariable: anStVariableNode
 				keysAndValuesDo: [:i :v | instanceVariables at: v put: (StInstanceVariable index: i name: v)]].
 	^(instanceVariables lookup: identifier)
 		ifNil: 
-			[(methodClass fullBindingFor: identifier) ifNotNil: [:b | StStaticVariable scope: self binding: b]]!
+			[(methodClass fullBindingFor: identifier environment: environment)
+				ifNotNil: [:b | StStaticVariable scope: self binding: b]]!
 
 methodClass
 	^methodClass!
@@ -37,9 +41,9 @@ selfVariable
 						scope: self;
 						yourself]!
 
-setMethodClass: aClassDescription
+setMethodClass: aClassDescription environment: aNamespace
 	methodClass := aClassDescription.
-	self initialize!
+	environment := aNamespace!
 
 superVariable
 	^superVariable
@@ -47,15 +51,16 @@ superVariable
 			[superVariable := StSuperVariable new
 						scope: self;
 						yourself]! !
+!Kernel.StClassScope categoriesFor: #environment!public! !
 !Kernel.StClassScope categoriesFor: #lookupVariable:!operations!public! !
 !Kernel.StClassScope categoriesFor: #methodClass!accessing!public! !
 !Kernel.StClassScope categoriesFor: #selfVariable!operations!public! !
-!Kernel.StClassScope categoriesFor: #setMethodClass:!accessing!initializing!private! !
+!Kernel.StClassScope categoriesFor: #setMethodClass:environment:!accessing!initializing!private! !
 !Kernel.StClassScope categoriesFor: #superVariable!operations!public! !
 
 !Kernel.StClassScope class methodsFor!
 
-methodClass: aClassDescription
-	^self new setMethodClass: aClassDescription! !
-!Kernel.StClassScope class categoriesFor: #methodClass:!instance creation!public! !
+methodClass: aClassDescription environment: aNamespace
+	^self new setMethodClass: aClassDescription environment: aNamespace! !
+!Kernel.StClassScope class categoriesFor: #methodClass:environment:!instance creation!public! !
 

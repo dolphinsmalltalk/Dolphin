@@ -145,7 +145,7 @@ className: aString
 			environment := self baseEnvironment]
 		ifFalse: 
 			[className := (path at: len) asSymbol.
-			environment := (BindingReference path: (path copyFrom: 1 to: len - 1) context: Root) value]!
+			environment := (BindingReference path: (path copyFrom: 1 to: len - 1) scope: Root) value]!
 
 classOf: aClass
 	"Private - Answer the class of aClass or Class if it is nil."

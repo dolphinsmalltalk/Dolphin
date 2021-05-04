@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
 Kernel.AbstractChunkSourceFiler subclass: #'Kernel.ChunkSourceFiler'
-	instanceVariableNames: 'sourceFileIndex'
+	instanceVariableNames: 'sourceFileIndex environment'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -11,10 +11,20 @@ Kernel.ChunkSourceFiler comment: '`ChunkSourceFiler` is the standard chunk-forma
 !Kernel.ChunkSourceFiler categoriesForClass!Development! !
 !Kernel.ChunkSourceFiler methodsFor!
 
+environment
+	^environment
+!
+
+environment: aNamespace
+	environment := aNamespace
+!
+
 sourceFileIndex: anInteger
 	"Private - Set the <integer> source file index associated with the receiver."
 
 	sourceFileIndex := anInteger! !
+!Kernel.ChunkSourceFiler categoriesFor: #environment!accessing!public! !
+!Kernel.ChunkSourceFiler categoriesFor: #environment:!accessing!public! !
 !Kernel.ChunkSourceFiler categoriesFor: #sourceFileIndex:!accessing!private! !
 
 !Kernel.ChunkSourceFiler class methodsFor!

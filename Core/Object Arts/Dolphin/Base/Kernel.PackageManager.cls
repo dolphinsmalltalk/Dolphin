@@ -758,7 +758,11 @@ onClassRemoved: aClass
 	"We must inform all packages, not just the package owning the class, in case any other
 	packages include loose methods of the class. In case they do we empty our loose method
 	cache."
-	looseMethods isNil ifFalse: [looseMethods removeKey: aClass ifAbsent: []].
+	looseMethods isNil
+		ifFalse: 
+			[looseMethods
+				removeKey: aClass ifAbsent: [];
+				removeKey: aClass class ifAbsent: []].
 	changed := Set new.
 	self packages do: [:each | (each onClassRemoved: aClass) ifTrue: [changed add: each]].
 	changed do: [:each | each membershipChanged].

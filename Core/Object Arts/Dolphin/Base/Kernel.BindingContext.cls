@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
 Core.Object subclass: #'Kernel.BindingContext'
-	instanceVariableNames: 'source identifier visited'
+	instanceVariableNames: 'methodClass environment identifier visited'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -11,36 +11,54 @@ Kernel.BindingContext comment: ''!
 !Kernel.BindingContext categoriesForClass!Kernel-Objects! !
 !Kernel.BindingContext methodsFor!
 
+environment
+	^environment!
+
 identifier
+	"The <String> identifier to bind."
+
 	^identifier!
 
-setSource: aNamespace identifier: aString
-	source := aNamespace.
-	identifier := aString!
+includesNamespace: aNamespace
+	^methodClass == aNamespace or: 
+			[(methodClass inheritsFrom: aNamespace)
+				or: [environment notNil and: [environment includesEnvironment: aNamespace]]]!
 
-source
-	"The source <Namespace> initiating the binding search."
+methodClass
+	"The source <Class> from which the binding search was initiated, e.g. the class into which code is being compiled."
 
-	^source!
+	^methodClass!
+
+setMethodClass: aClass environment: aNamespace identifier: aString
+	methodClass := aClass.
+	identifier := aString.
+	environment := aNamespace.
+	^self!
 
 visitImport: aBindingReference from: aNamespace
-	(aBindingReference isPrivate and: [(source includesNamespace: aNamespace) not]) ifTrue: [^nil].
+	(aBindingReference isPrivate and: [(self includesNamespace: aNamespace) not]) ifTrue: [^nil].
 	^aBindingReference valueOrNil
 		ifNotNil: 
 			[:namespace |
 			"We delay initializing the visited set until the last possible moment, as mostly is is not required."
-			((visited ifNil: [visited := Set with: source]) addNewElement: namespace) ifTrue: [namespace]]! !
+			((visited ifNil: [visited := Set with: methodClass]) addNewElement: namespace) ifTrue: [namespace]]! !
+!Kernel.BindingContext categoriesFor: #environment!accessing!public! !
 !Kernel.BindingContext categoriesFor: #identifier!accessing!public! !
-!Kernel.BindingContext categoriesFor: #setSource:identifier:!initializing!private! !
-!Kernel.BindingContext categoriesFor: #source!accessing!public! !
+!Kernel.BindingContext categoriesFor: #includesNamespace:!public!testing! !
+!Kernel.BindingContext categoriesFor: #methodClass!accessing!public! !
+!Kernel.BindingContext categoriesFor: #setMethodClass:environment:identifier:!initializing!private! !
 !Kernel.BindingContext categoriesFor: #visitImport:from:!public! !
+
+Kernel.BindingContext methodProtocol: #parseContext attributes: #(#readOnly) selectors: #(#environment #methodClass)!
 
 !Kernel.BindingContext class methodsFor!
 
-source: aNamespace identifier: aString
+methodClass: aClass environment: aNamespace identifier: aString
 	<primitive: 157>
 	^self new
-		setSource: aNamespace identifier: aString;
+		setMethodClass: aClass
+			environment: aNamespace
+			identifier: aString;
 		yourself! !
-!Kernel.BindingContext class categoriesFor: #source:identifier:!instance creation!public! !
+!Kernel.BindingContext class categoriesFor: #methodClass:environment:identifier:!instance creation!public! !
 

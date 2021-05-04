@@ -53,13 +53,13 @@ Core.Object subclass: #'Kernel.StVariable'
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Kernel.ParseNodeVisitor subclass: #'Kernel.StSemanticAnalyser'
-	instanceVariableNames: 'methodNode methodClass evaluationContext currentScope scopes literals stringLiterals addToFrame tempDecls inStaticExpression evalScope annotations errorBlock'
+	instanceVariableNames: 'methodNode classScope evaluationContext currentScope scopes literals stringLiterals addToFrame tempDecls inStaticExpression evalScope annotations errorBlock'
 	classVariableNames: 'OptimizedMessages RestrictedSelectors SpecialSelectors'
 	imports: #(#{Kernel.ParseErrorCodes})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Kernel.StSemanticScope subclass: #'Kernel.StClassScope'
-	instanceVariableNames: 'methodClass instanceVariables selfVariable superVariable'
+	instanceVariableNames: 'methodClass environment instanceVariables selfVariable superVariable'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -169,6 +169,7 @@ analyze
 	StSemanticAnalyser
 		analyzeParseTree: self
 		for: self methodClass
+		environment: self environment
 		context: nil
 		pools: #()
 		onError: nil! !

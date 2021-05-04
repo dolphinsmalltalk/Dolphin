@@ -31,20 +31,22 @@ compilationWarningClass
 compileExpression: aString 
 	^self compileExpression: aString in: nil!
 
-compileExpression: aString in: class 
+compileExpression: aString in: aClass
 	| result |
 	self shouldnt: 
-			[result := Compiler 
+			[result := Compiler
 						compileExpression: aString
-						in: class
+						in: aClass
+						environment: nil
 						flags: defaultCompileFlags]
 		raise: self compilationErrorClass.
 	^result!
 
-compileMethod: aString in: aClass 
-	^Compiler 
+compileMethod: aString in: aClass
+	^Compiler
 		compile: aString
 		in: aClass
+		environment: nil
 		flags: defaultCompileFlags!
 
 defaultCompileFlags
@@ -446,6 +448,7 @@ testEmpty
 	method := (Compiler
 				compile: 'nothing'
 				in: UndefinedObject
+				environment: nil
 				flags: 0) method.
 	self assert: method byteCodes equals: (ByteArray with: ReturnSelf)!
 
@@ -926,7 +929,7 @@ testQualifiedReference
 			[:eachContext :eachReceiver |
 			| compiled ref |
 			compiled := self compileExpression: '#(#{Object} #{Object class})' in: eachContext.
-			ref := BindingReference pathString: 'Object' context: eachContext.
+			ref := BindingReference pathString: 'Object' scope: eachContext.
 			self assert: (compiled method value: eachReceiver) equals: {ref. ref meta}]!
 
 testRadixInteger
@@ -1072,6 +1075,7 @@ testScope
 			[Compiler
 				compileExpression: text
 				in: UndefinedObject
+				environment: nil
 				flags: defaultCompileFlags]
 		raise: self compilationErrorClass
 		matching: [:ex | ex errorCode = CErrUndeclared]!

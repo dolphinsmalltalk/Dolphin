@@ -86,16 +86,16 @@ displayOn: aPuttableStream
 
 	aPuttableStream nextPutAll: 'Debug Info.'!
 
-getDebugInfoFor: aCompiledMethod 
+getDebugInfoFor: aCompiledMethod
 	| methodClass compiler flags |
 	methodClass := aCompiledMethod methodClass.
 	compiler := aCompiledMethod compilerClass.
-	flags := methodClass defaultCompilationFlags 
-				| (compiler debugInfoFlags: toggleDebugPresenter value).
+	flags := methodClass defaultCompilationFlags | (compiler debugInfoFlags: toggleDebugPresenter value).
 	flags := flags mask: CompilerFlags.NoOptimize set: toggleOptimisedPresenter value not.
-	^compiler 
+	^compiler
 		compile: aCompiledMethod getSource
 		in: methodClass
+		environment: aCompiledMethod environment
 		flags: flags!
 
 onBrowserClassSelected

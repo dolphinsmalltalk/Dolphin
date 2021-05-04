@@ -43,11 +43,36 @@ testIsSimpleSelfSend
 		do: [:each | self deny: (each isSimpleSelfSend: #subclassResponsibility)]!
 
 testLocalEnvironment
-	self assert: (Object>>#=) localEnvironment equals: Core!
+	self assert: (Object >> #=) localEnvironment identicalTo: Core.
+	self
+		assert: (OS.KernelLibrary
+				>> #createProcess:lpCommandLine:lpProcessAttributes:lpThreadAttributes:bInheritsHandles:dwCreationFlags:lpEnvironment:lpCurrentDirectory:lpStartupInfo:lpProcessInformation:)
+					localEnvironment
+		identicalTo: Smalltalk!
 
 testLocalScope
 	self assert: (Object>>#=) localScope equals: Object.
 	self assert: Object class methodDictionary anyOne localScope equals: Object!
+
+testRecompileMaintainsEnvironmentAndPackage
+	"Verify that a method's environment is maintained if different from it's method class', and likewise the owning package"
+
+	| subject package |
+	subject := OS.KernelLibrary
+				>> #createProcess:lpCommandLine:lpProcessAttributes:lpThreadAttributes:bInheritsHandles:dwCreationFlags:lpEnvironment:lpCurrentDirectory:lpStartupInfo:lpProcessInformation:.
+	"This test will break if the test method's package is updated, so perform a sanity check."
+	self assert: subject environment identicalTo: Smalltalk.
+	package := subject owningPackage.
+	self assert: package ~~ OS.KernelLibrary owningPackage.
+	
+	[| newMethod |
+	newMethod := subject recompile.
+	self assert: newMethod ~~ subject.
+	self assert: newMethod environment identicalTo: Smalltalk.
+	self assert: newMethod owningPackage identicalTo: package]
+			ensure: 
+				[OS.KernelLibrary methodDictionary at: subject selector put: subject.
+				OS.KernelLibrary flushMethodCache]!
 
 testValueWithReceiverArguments
 	| method value |
@@ -64,5 +89,6 @@ testValueWithReceiverArguments
 !Kernel.Tests.CompiledMethodTest categoriesFor: #testIsSimpleSelfSend!public!unit tests! !
 !Kernel.Tests.CompiledMethodTest categoriesFor: #testLocalEnvironment!public!unit tests! !
 !Kernel.Tests.CompiledMethodTest categoriesFor: #testLocalScope!public!unit tests! !
+!Kernel.Tests.CompiledMethodTest categoriesFor: #testRecompileMaintainsEnvironmentAndPackage!public!unit tests! !
 !Kernel.Tests.CompiledMethodTest categoriesFor: #testValueWithReceiverArguments!public!unit tests! !
 

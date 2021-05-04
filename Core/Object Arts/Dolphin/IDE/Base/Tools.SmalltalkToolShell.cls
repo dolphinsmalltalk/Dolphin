@@ -62,6 +62,7 @@ configureFromSavedStateString: aSavedStateString
 	result := Compiler
 				compileForEvaluation: aSavedStateString
 				in: nil
+				environment: nil
 				evaluationPools: #()
 				flags: 0.
 	self view noRedrawDo: [(result method value: nil) value: self]!

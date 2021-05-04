@@ -73,6 +73,11 @@ environment
 
 	^self instanceClass environment!
 
+fullBindingFor: aString environment: aNamespace
+	"Answer a variable binding for the named variable in the scope of this class, and failing that in the specified environment (or the receiver's environment if aNamespace is nil). If there is no such variable, then answer nil."
+
+	^self instanceClass fullBindingFor: aString environment: aNamespace!
+
 fullName
 	"Answer the <String> fully qualified name of the receiver, which is a dot-separated path that binds to the receiver from the global namespace, Root.
 	Note that these names will also be bindable within the legacy Smalltalk namespace, because it is itself an immediate child of root, and so any of its siblings is bindable using that sibling's unqualified name."
@@ -141,12 +146,6 @@ localBindingFor: aString
 	"Answer a variable binding for the named variable directly in the scope of this class, i.e. one of its own class variables. If there is no such class variable, then answer nil."
 
 	^self instanceClass localBindingFor: aString!
-
-localEnvironment
-	"Private - Answer the enclosing <Namespace> scope."
-
-	^self instanceClass localEnvironment
-!
 
 name
 	"Answer a String containing the receiver name. 
@@ -224,6 +223,7 @@ subclassesDo: aMonadicValuable
 !Core.Metaclass categoriesFor: #comment!accessing!public! !
 !Core.Metaclass categoriesFor: #comment:!accessing!public! !
 !Core.Metaclass categoriesFor: #environment!accessing!public! !
+!Core.Metaclass categoriesFor: #fullBindingFor:environment:!binding!public! !
 !Core.Metaclass categoriesFor: #fullName!accessing!namespaces!public! !
 !Core.Metaclass categoriesFor: #fullyQualifiedReference!accessing!public! !
 !Core.Metaclass categoriesFor: #importedNamespacesDo:!pool variables!public! !
@@ -235,7 +235,6 @@ subclassesDo: aMonadicValuable
 !Core.Metaclass categoriesFor: #isAnonymous!public!testing! !
 !Core.Metaclass categoriesFor: #isMeta!public!testing! !
 !Core.Metaclass categoriesFor: #localBindingFor:!binding!public! !
-!Core.Metaclass categoriesFor: #localEnvironment!accessing!private! !
 !Core.Metaclass categoriesFor: #name!accessing!public! !
 !Core.Metaclass categoriesFor: #new!instance creation!public! !
 !Core.Metaclass categoriesFor: #owningPackage!accessing!development!public! !

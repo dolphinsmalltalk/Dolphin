@@ -7,16 +7,16 @@ package paxVersion: 2.1;
 
 package setClassNames: #(
 	#{Net.Tests}
-	#{Net.Tests.AbstractSocketTest}
 	#{Net.Tests.InternetAddressTest}
 	#{Net.Tests.PROTOENTTest}
-	#{Net.Tests.SocketErrorTest}
 	#{Net.Tests.SocketTest}
 	#{OS.Tests.AbstractIN_ADDRTest}
 	#{OS.Tests.IN_ADDRTest}
 	#{OS.Tests.IN6_ADDRTest}
 	#{OS.Tests.SERVENTTest}
 	#{OS.Tests.SOCKADDRTest}
+	#{Smalltalk.AbstractSocketTest}
+	#{Smalltalk.SocketErrorTest}
 ).
 
 package setPrerequisites: #(
@@ -43,7 +43,7 @@ Core.Tests.DolphinTest subclass: #'OS.Tests.AbstractIN_ADDRTest'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Core.Tests.DolphinTest subclass: #'Net.Tests.AbstractSocketTest'
+Core.Tests.DolphinTest subclass: #AbstractSocketTest
 	instanceVariableNames: 'sockets'
 	classVariableNames: ''
 	imports: #()
@@ -73,7 +73,7 @@ Core.Tests.DolphinTest subclass: #'OS.Tests.SOCKADDRTest'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Core.Tests.DolphinTest subclass: #'Net.Tests.SocketErrorTest'
+Core.Tests.DolphinTest subclass: #SocketErrorTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #(#{OS.WinSocketErrors})
@@ -91,7 +91,7 @@ OS.Tests.AbstractIN_ADDRTest subclass: #'OS.Tests.IN6_ADDRTest'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Net.Tests.AbstractSocketTest subclass: #'Net.Tests.SocketTest'
+AbstractSocketTest subclass: #'Net.Tests.SocketTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

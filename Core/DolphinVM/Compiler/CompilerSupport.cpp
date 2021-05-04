@@ -14,16 +14,18 @@ be thrown away eventually, or perhaps compiled into a separate DLL.
 
 #include "..\VMPointers.h"
 
-POTE Compiler::NewCompiledMethod(POTE classPointer, size_t numBytes, const STMethodHeader& hdr)
+///////////////////////////////////
+
+POTE __stdcall Compiler::NewCompiledMethod(POTE classPointer, size_t numBytes, const STMethodHeader & hdr)
 {
-	//_ASSERTE(ObjectMemory::inheritsFrom(classPointer, GetVMPointers().ClassCompiledMethod));
-	// Note we subtract
+	size_t literalCount = LiteralCount + (m_annotations.size() > 0);
+
 	POTE methodPointer = m_piVM->NewObjectWithPointers(classPointer,
 		((sizeof(STCompiledMethod)
-			- sizeof(Oop)	// Deduct dummy literal frame entry (arrays cannot be zero sized in IDL)
-//			-sizeof(ObjectHeader)	// Deduct size of head which NewObjectWithPointers includes implicitly
-) / sizeof(Oop)) + LiteralCount);
-	STCompiledMethod* method = reinterpret_cast<STCompiledMethod*>(GetObj(methodPointer));
+			 -sizeof(Oop)	// Deduct dummy literal frame entry (arrays cannot be zero sized in IDL)
+			//			-sizeof(ObjectHeader)	// Deduct size of head which NewObjectWithPointers includes implicitly
+			) / sizeof(Oop)) + literalCount);
+	STCompiledMethod * method = reinterpret_cast<STCompiledMethod*>(GetObj(methodPointer));
 	POTE bytes = m_piVM->NewByteArray(numBytes);
 	m_piVM->StorePointerWithValue((Oop*)&method->byteCodes, Oop(bytes));
 
@@ -32,23 +34,33 @@ POTE Compiler::NewCompiledMethod(POTE classPointer, size_t numBytes, const STMet
 	return methodPointer;
 }
 
-///////////////////////////////////
-
-//==============
-//InstVarNamesOf
-//==============
 // Returns an Array of instance variable names of anObject. 
 // Used by Compiler to get context for compilation of a method or expression
-//
-
 // N.B. Result has artificially elevated ref. count
-POTE Compiler::InstVarNamesOf(POTE aBehavior) // throws SE_VMCALLBACKUNWIND
+POTE Compiler::GetInstVarNames() // throws SE_VMCALLBACKUNWIND
 {
-	if (!m_piVM->IsBehavior(Oop(aBehavior)))
+	if (!m_piVM->IsBehavior(Oop(m_class)))
 		return m_piVM->NilPointer();
 
-	_ASSERTE(GetVMPointers().allInstVarNamesSymbol != m_piVM->NilPointer());
-	return (POTE)m_piVM->Perform(Oop(aBehavior), GetVMPointers().allInstVarNamesSymbol);
+	_ASSERTE(GetVMPointers().allInstVarNamesSelector != m_piVM->NilPointer());
+	return (POTE)m_piVM->Perform(Oop(m_class), GetVMPointers().allInstVarNamesSelector);
+}
+
+// Returns the namespace of the class into which the method is being compiled
+POTE Compiler::GetClassEnvironment(POTE oteClass)
+{
+	if (!m_piVM->IsBehavior(Oop(oteClass)))
+		return m_piVM->NilPointer();
+
+	if (m_piVM->IsAMetaclass(m_class))
+	{
+		STMetaclass* meta = (STMetaclass*)GetObj(oteClass);
+		oteClass = meta->instanceClass;
+	}
+
+	_ASSERTE(m_piVM->IsAClass(oteClass));
+	STClass* cl = (STClass*)GetObj(oteClass);
+	return cl->environment;
 }
 
 // Ditto on the ref. count front
@@ -76,7 +88,7 @@ POTE Compiler::DictAtPut(POTE dict, const Str& name, Oop value)// throws SE_VMCA
 
 bool Compiler::CanUnderstand(POTE oteBehavior, POTE oteSelector)
 {
-	return ((POTE)m_piVM->PerformWith(Oop(oteBehavior), GetVMPointers().canUnderstandSymbol, Oop(oteSelector)))
+	return ((POTE)m_piVM->PerformWith(Oop(oteBehavior), GetVMPointers().canUnderstandSelector, Oop(oteSelector)))
 		== GetVMPointers().True;
 }
 
@@ -125,8 +137,7 @@ POTE Compiler::FindGlobal(const Str& name)
 	const POTE nil = Nil();
 
 	Oop scope = reinterpret_cast<Oop>(m_class == nil ? GetVMPointers().SmalltalkDictionary : m_class);
-	POTE ote = reinterpret_cast<POTE>(m_piVM->PerformWith(scope, GetVMPointers().fullBindingForSymbol,
-		reinterpret_cast<Oop>(NewUtf8String(name))));
+	POTE ote = reinterpret_cast<POTE>(m_piVM->PerformWithWith(scope, GetVMPointers().fullBindingForSelector, reinterpret_cast<Oop>(NewUtf8String(name)), (Oop)m_environment));
 
 	if (ote != nil)
 	{

@@ -2079,6 +2079,8 @@ POTE Compiler::NewMethod()
 	
 	// Allocate CompiledMethod and install the header
 	POTE method = NewCompiledMethod(m_compiledMethodClass, CodeSize, hdr);
+
+	// Allocate bytecode array for the CompiledMethod and install its header
 	STCompiledMethod& cmpldMethod = *(STCompiledMethod*)GetObj(method);
 
 	// May have been changed above
@@ -2126,7 +2128,6 @@ POTE Compiler::NewMethod()
 			pByteCodes[static_cast<size_t>(i)] = m_bytecodes[i].byte;
 		m_piVM->MakeImmutable(cmpldMethod.byteCodes, TRUE);
 	}
-	
 
 	// We have to delay setting up the initialIP of the clean blocks until the bytecodes have been allocated.
 	PatchCleanBlockLiterals(method);
@@ -2134,28 +2135,66 @@ POTE Compiler::NewMethod()
 	// Install literals 
 	// First those referenced from bytecodes
 	const size_t loopEnd = m_literalFrame.size();
+	const size_t literalCount = LiteralCount + (m_annotations.size() > 0);
 	size_t i = 0;
 	for (; i<loopEnd; i++)
 	{
+		_ASSERTE(i < literalCount);
 		Oop oopLiteral = m_literalFrame[i];
 		_ASSERTE(oopLiteral != NULL);
 		m_piVM->StorePointerWithValue(&cmpldMethod.aLiterals[i], oopLiteral);
 	}
-	// Then the literals for code that is optimised away
+	// Then the literals for references not present in the bytecode
 	for (LiteralMap::const_iterator it = m_literals.cbegin(); it != m_literals.cend(); it++)
 	{
 		if ((*it).second == -1)
 		{
+			_ASSERTE(i < literalCount);
 			Oop oopLiteral = (*it).first;
 			_ASSERTE(oopLiteral != NULL);
-			_ASSERTE(i < LiteralCount);	// Method only allocated to hold LiteralCount literals, so we don't want to write off the end
 			m_piVM->StorePointerWithValue(&cmpldMethod.aLiterals[i], oopLiteral);
 			i++;
 		}
 	}
 	
+	if (m_annotations.size() > 0)
+	{
+		POTE oteMethodAnnotations = m_piVM->NewObjectWithPointers(GetVMPointers().ClassMethodAnnotations, m_annotations.size() * 2);
+		_ASSERTE(i < literalCount);
+		m_piVM->StorePointerWithValue(&cmpldMethod.aLiterals[i], (Oop)oteMethodAnnotations);
+
+		STVarObject& methodAnnotations = *(STVarObject*)GetObj(oteMethodAnnotations);
+		size_t j = 0;
+		for (AnnotationVector::const_iterator it = m_annotations.cbegin(); it != m_annotations.cend(); it++)
+		{
+			m_piVM->StorePointerWithValue(methodAnnotations.fields + j, (Oop)(*it).first);
+			const OOPVECTOR& args = (*it).second;
+			size_t argc = args.size();
+			POTE oteArray;
+			if (argc == 0)
+			{
+				oteArray = GetVMPointers().EmptyArray;
+			} 
+			else
+			{
+				oteArray = m_piVM->NewArray(argc);
+				STVarObject& argsArray = *(STVarObject*)GetObj(oteArray);
+				for (size_t k = 0; k < argc; k++)
+				{
+					m_piVM->StorePointerWithValue(argsArray.fields + k, args[k]);
+				}
+			}
+			m_piVM->StorePointerWithValue(methodAnnotations.fields + j + 1, (Oop)oteArray);
+			j += 2;
+		}
+	}
+
 	m_piVM->StorePointerWithValue((Oop*)&cmpldMethod.selector, reinterpret_cast<Oop>(NewUtf8String(Selector)));
 	m_piVM->StorePointerWithValue((Oop*)&cmpldMethod.methodClass, reinterpret_cast<Oop>(MethodClass));
+
+	// Now that we have created the method, we can patch up any relative BindingReference objects defined in 
+	// methods with a namespace annotation.
+	PatchBindingReferenceLiterals(method);
 
 #if defined(_DEBUG)
 	{
@@ -2189,6 +2228,25 @@ void Compiler::PatchCleanBlockLiterals(POTE oteMethod)
 		if (pScope->IsCleanBlock)
 		{
 			pScope->PatchBlockLiteral(m_piVM, oteMethod);
+		}
+	}
+}
+
+void Compiler::PatchBindingReferenceLiterals(POTE oteMethod)
+{
+	// If the method does not have a namespace annotation, then the method class is an equivalent context for any
+	// relative binding references, so we don't need to do anything
+	if (m_hasNamespaceAnnotation)
+	{
+		POTE setContextSelector = GetVMPointers().setScopeSelector;
+		for (auto it = m_bindingRefs.cbegin(); it != m_bindingRefs.cend(); it++)
+		{
+			// If relative, update the context to be the method so that the binding search will include the method namespace
+			if ((*it).first.ends_with(RelativeBindingRefIdSuffix))
+			{
+				POTE bindingRef = (*it).second;
+				m_piVM->PerformWith((Oop)bindingRef, setContextSelector, (Oop)oteMethod);
+			}
 		}
 	}
 }

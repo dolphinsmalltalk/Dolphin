@@ -342,9 +342,12 @@ dropMethod: aCompiledMethod onto: aClass changes: aCompositeRefactoryChange
 								with: aClass))
 						not]])
 		ifTrue: [^false].
+	"If the method was not compiled in the same environment as the class from which it was dragged, we preserve that namespace, 
+	otherwise we compile it in the target class' namespace"
 	aCompositeRefactoryChange addChange: (aCompositeRefactoryChange addMethodChangeClass
 				compile: aCompiledMethod getSource
 				in: aClass
+				environment: aCompiledMethod environment
 				categories: aCompiledMethod categories
 				package: aCompiledMethod owningPackageIfLoose).
 	^true!

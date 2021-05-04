@@ -42,7 +42,7 @@ checkUnimplemented: aStMessageNode
 					receiver := aStMessageNode receiver.
 					"Could be a reflexive self-send (i.e. a recursive call) that
 					is not yet defined"
-					(receiverClass == methodClass and: [selector = methodNode selector])
+					(receiverClass == self methodClass and: [selector = methodNode selector])
 						ifFalse: 
 							[self
 								signalError: CWarnMsgUnimplemented
@@ -59,9 +59,10 @@ checkUnimplemented: aStMessageNode
 checkUnimplementedSubclassResponsibility: aStMessageNode
 	"Private - Warn for any leaf classes that don't implement the subclass responsibility?"
 
-	| selector |
+	| selector methodClass |
 	aStMessageNode selector == #subclassResponsibility ifFalse: [^self].
 	selector := methodNode selector.
+	methodClass := self methodClass.
 	methodClass allSubclassesDo: 
 			[:class |
 			(class subclasses isEmpty and: [(class whichClassIncludesSelector: selector) == methodClass])

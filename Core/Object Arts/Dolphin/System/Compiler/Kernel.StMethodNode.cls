@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
 Kernel.StProgramNode subclass: #'Kernel.StMethodNode'
-	instanceVariableNames: 'selector selectorParts body source arguments tag replacements nodeReplacements methodClass'
+	instanceVariableNames: 'selector selectorParts body source arguments tag replacements nodeReplacements methodClass environment'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -82,6 +82,12 @@ displayOn: aPuttableStream
 	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that an end-user might want to see."
 
 	aPuttableStream nextPutAll: 'Method'!
+
+environment
+	^environment!
+
+environment: anObject
+	environment := anObject!
 
 hash
 	^(self selector hash bitXor: self body hash) bitXor: self arguments hash!
@@ -212,6 +218,8 @@ uses: aNode
 !Kernel.StMethodNode categoriesFor: #childrenDo:!accessing!public! !
 !Kernel.StMethodNode categoriesFor: #defines:!public!testing! !
 !Kernel.StMethodNode categoriesFor: #displayOn:!printing!public! !
+!Kernel.StMethodNode categoriesFor: #environment!accessing!public! !
+!Kernel.StMethodNode categoriesFor: #environment:!accessing!public! !
 !Kernel.StMethodNode categoriesFor: #hash!comparing!public! !
 !Kernel.StMethodNode categoriesFor: #isExternalCall!public!testing! !
 !Kernel.StMethodNode categoriesFor: #isInlined!public!testing! !

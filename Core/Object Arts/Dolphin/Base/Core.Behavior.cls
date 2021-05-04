@@ -115,27 +115,29 @@ allSuperclassesDo: aMonadicValuable
 	current isNil] 
 			whileFalse: [aMonadicValuable value: current]!
 
-basicCompile: aString 
-	"Private - Compile the argument, code, and enter the result in the receiver's method dictionary. 
-	If a compile error occurs a CompilerNotification is signalled. Answers a new method or nil.
-	Note that this method doesn't generate a #methodAdded: trigger, and doesn't do anything
-	with categories."
+basicCompile: aString
+	^self basicCompile: aString environment: nil!
 
-	^self basicCompile: aString flags: self defaultCompilationFlags!
+basicCompile: aString environment: aNamespace
+	^self
+		basicCompile: aString
+		flags: self defaultCompilationFlags
+		environment: aNamespace!
 
-basicCompile: aString flags: anInteger
+basicCompile: aString flags: anInteger environment: aNamespace
 	| error result stubMethod |
 	result := error := stubMethod := nil.
 	
 	[result := self compilerClass
 				compile: aString
 				in: self
+				environment: aNamespace
 				flags: anInteger]
 			on: self compilerClass errorClass
 			do: 
 				[:n |
 				error := n.
-				stubMethod := (MethodCompileFailed with: n) signal: n description.
+				stubMethod := (MethodCompileFailed error: n environment: aNamespace) signal: n description.
 				n pass].
 	error notNil ifTrue: [result := stubMethod].
 	result notNil
@@ -200,14 +202,31 @@ canUnderstand: aSymbol
 
 	^(self lookupMethod: aSymbol) notNil!
 
-compile: code
-	"Compile the argument, code, and enter the result in the receiver's method dictionary. 
-	If a compile error occurs a CompilerNotification is signalled. Answers a new method or nil.
-	If the method is successfully compiled, then trigger a #methodAdded: event."
+compile: aString
+	"Compile the source code in the <String> argument in the context of the receiver.
+	If the method is successfully compiled, then 
+		- enter the result into the receiver's method dictionary
+		- trigger a #methodAdded: event, and 
+		- answer the new <CompiledMethod> or nil.
+	If a compilation error occurs:
+		- a CompilerNotification is signalled
+		- answer nil"
+
+	^self compile: aString environment: nil!
+
+compile: aString environment: aNamespace
+	"Compile the source code in the <String> argument in the context of the receiver, but overriding the receiver's own <Namespace> with the specified one for binding static variables that are not defined in the receiver's own hierarchy, or imported into it.
+	If the method is successfully compiled, then 
+		- enter the result into the receiver's method dictionary
+		- trigger a #methodAdded: event, and 
+		- answer the new <CompiledMethod> or nil.
+	If a compilation error occurs:
+		- a CompilerNotification is signalled
+		- answer nil"
 
 	| method result |
-	result := self basicCompile: code.
-	result notNil 
+	result := self basicCompile: aString environment: aNamespace.
+	result notNil
 		ifTrue: 
 			[method := result method.
 			result fireSystemUpdateEvent].
@@ -283,6 +302,11 @@ dynamicSelectorsDo: aMonadicValuable
 	"Evaluate the <monadicValuable> argument for each of the extra message selectors understood by the receiver at run time that might not have an associated method."
 
 	"To be overridden by subclasses that handle #doesNotUnderstand: to process additional messages."!
+
+environment
+	"Answer the receiver's name space."
+
+	^Smalltalk!
 
 errorNonInstantiable
 	"Private - Report an error that an attempt was made to instantiate an abstract class."
@@ -611,31 +635,44 @@ recompile: aSelector
 	The method is not logged to the change log but the source is re-used
 	from the original"
 
-	| oldMethod method stubMethod result |
+	| oldMethod |
+	"Was a stub method installed?"
+
+	"Add the selector and copy across the old source descriptor and privacy, as we haven't don't want to change either"
+
+	"The method has not actually changed, so it is inappropriate to issue a #methodUpdated: event"
 	oldMethod := self compiledMethodAt: aSelector.
 	oldMethod isNil ifTrue: [^self].
+	^self recompileMethod: oldMethod!
+
+recompileMethod: aCompiledMethod
+	| env method stubMethod result |
+	env := aCompiledMethod environment.
 	
 	[result := self compilerClass
-				compile: oldMethod getSource
+				compile: aCompiledMethod getSource
 				in: self
+				environment: env
 				flags: self defaultCompilationFlags]
 			on: self compilerClass errorClass
 			do: 
 				[:ex |
-				stubMethod := (MethodCompileFailed with: ex) signal: ex description.
+				stubMethod := (MethodCompileFailed error: ex environment: env) signal: ex description.
 				ex pass].
 
 	"Was a stub method installed?"
 	stubMethod notNil ifTrue: [result := stubMethod].
 	^(result notNil and: [(method := result method) notNil])
 		ifTrue: 
-			["Add the selector and copy across the old source descriptor and privacy, as we haven't don't want to change either"
-			method selector: aSelector.
-			self addSelector: aSelector withMethod: method.
+			[| selector |
+			"Add the selector and copy across the old source descriptor and privacy, as we haven't don't want to change either"
+			selector := aCompiledMethod selector.
+			method selector: selector.
+			self addSelector: selector withMethod: method.
 			"The method has not actually changed, so it is inappropriate to issue a #methodUpdated: event"
 			method
-				sourceDescriptor: oldMethod sourceDescriptor;
-				isPrivate: oldMethod isPrivate;
+				sourceDescriptor: aCompiledMethod sourceDescriptor;
+				isPrivate: aCompiledMethod isPrivate;
 				isImmutable: true;
 				yourself]!
 
@@ -936,13 +973,15 @@ withAllSuperclassesDo: aMonadicValuable
 !Core.Behavior categoriesFor: #allSuperclasses!class hierarchy-accessing!public! !
 !Core.Behavior categoriesFor: #allSuperclassesDo:!class hierarchy-accessing!enumerating!private! !
 !Core.Behavior categoriesFor: #basicCompile:!compiling!private! !
-!Core.Behavior categoriesFor: #basicCompile:flags:!compiling!private! !
+!Core.Behavior categoriesFor: #basicCompile:environment:!compiling!private! !
+!Core.Behavior categoriesFor: #basicCompile:flags:environment:!compiling!private! !
 !Core.Behavior categoriesFor: #basicNew!instance creation!private! !
 !Core.Behavior categoriesFor: #basicNew:!instance creation!private! !
 !Core.Behavior categoriesFor: #basicNewFixed:!instance creation!private! !
 !Core.Behavior categoriesFor: #bindingFor:!bindings!public! !
 !Core.Behavior categoriesFor: #canUnderstand:!methods-testing!public! !
 !Core.Behavior categoriesFor: #compile:!compiling!public! !
+!Core.Behavior categoriesFor: #compile:environment:!compiling!public! !
 !Core.Behavior categoriesFor: #compileAll!compiling!development!public! !
 !Core.Behavior categoriesFor: #compiledMethodAt:!methods-accessing!public! !
 !Core.Behavior categoriesFor: #compiledMethodAt:ifAbsent:!methods-accessing!public! !
@@ -952,6 +991,7 @@ withAllSuperclassesDo: aMonadicValuable
 !Core.Behavior categoriesFor: #definitionOf:!methods-testing!public! !
 !Core.Behavior categoriesFor: #dynamicSelectors!methods-accessing!public! !
 !Core.Behavior categoriesFor: #dynamicSelectorsDo:!methods-accessing!public! !
+!Core.Behavior categoriesFor: #environment!accessing!public! !
 !Core.Behavior categoriesFor: #errorNonInstantiable!error handling!private! !
 !Core.Behavior categoriesFor: #errorNotPinnable!error handling!private! !
 !Core.Behavior categoriesFor: #extraInstanceSpec!instance specification-accessing!private! !
@@ -996,6 +1036,7 @@ withAllSuperclassesDo: aMonadicValuable
 !Core.Behavior categoriesFor: #primAllInstances!instances!private! !
 !Core.Behavior categoriesFor: #primAllSubinstances!instances!private! !
 !Core.Behavior categoriesFor: #recompile:!compiling!development!public! !
+!Core.Behavior categoriesFor: #recompileMethod:!compiling!development!public! !
 !Core.Behavior categoriesFor: #recompileReferencesToLiteral:!development!private! !
 !Core.Behavior categoriesFor: #referenceFilterFor:!development!methods-testing!private! !
 !Core.Behavior categoriesFor: #referenceFilterForAnyOf:!development!methods-testing!private! !

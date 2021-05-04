@@ -634,6 +634,7 @@ initialize
 				at: #ULARGE_INTEGER put: 146;
 				at: #LARGE_INTEGER put: 147;
 				at: #TimingSemaphore put: 150;
+				at: #MethodAnnotations put: 151;
 				isImmutable: true;
 				shrink;
 				yourself)!

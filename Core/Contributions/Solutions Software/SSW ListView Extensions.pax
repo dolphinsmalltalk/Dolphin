@@ -46,7 +46,6 @@ package globalAliases: (Set new
 
 package setPrerequisites: #(
 	'..\..\Object Arts\Dolphin\Base\Dolphin'
-	'..\..\Object Arts\Dolphin\MVP\Base\Dolphin Basic Geometry'
 	'..\..\Object Arts\Dolphin\MVP\Views\Common Controls\Dolphin Common Controls'
 	'..\..\Object Arts\Dolphin\MVP\Base\Dolphin MVP Base'
 	'..\..\Object Arts\Dolphin\MVP\Views\Tooltips\Dolphin Tooltips').
@@ -94,7 +93,7 @@ getHeaderControl
 
 	hHandle := self lvmGetHeader.
 
-	^(Smalltalk.HeaderView fromHandle: hHandle)
+	^(HeaderView fromHandle: hHandle)
 		subclassWindow: hHandle;
 		isManaged: false;
 		yourself

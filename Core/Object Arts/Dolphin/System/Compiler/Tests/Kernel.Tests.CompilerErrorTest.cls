@@ -24,6 +24,7 @@ parseExpression: aString in: aClass
 	[Compiler
 		compileForEvaluation: aString
 		in: aClass
+		environment: nil
 		evaluationPools: #()
 		flags: self defaultCompileFlags]
 			on: self compilationErrorClass
@@ -32,10 +33,11 @@ parseExpression: aString in: aClass
 				errors addLast: ex.
 				ex pass]!
 
-parseMethod: aString in: aClass 
-	^Compiler 
+parseMethod: aString in: aClass
+	^Compiler
 		compile: aString
 		in: aClass
+		environment: nil
 		flags: self defaultCompileFlags!
 
 parserClass
@@ -72,6 +74,7 @@ testErrorsBadPools
 			[Compiler
 				compileForEvaluation: source
 				in: nil
+				environment: nil
 				evaluationPools: 'Bad pools'
 				flags: self defaultCompileFlags]
 		raise: self compilationErrorClass

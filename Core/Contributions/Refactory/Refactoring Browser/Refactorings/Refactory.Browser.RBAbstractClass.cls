@@ -196,7 +196,7 @@ directlyImportsNamespace: aString
 	^self subclassResponsibility!
 
 environment
-	^model classNamed: self environmentName!
+	^self subclassResponsibility!
 
 environmentName
 	| parts count stream first |
@@ -226,7 +226,7 @@ existingMethodsThatReferToAnyOf: aCollection
 fullBindingFor: aString
 	"Answer a variable binding for the named variable in the scope of this class, and failing that in the receiver's environment. If there is no such variable, then answer nil."
 
-	^(self nonMetaclass resolvePathString: aString) ifNotNil: [:binding | binding targetVariable]!
+	^self nonMetaclass resolvePathString: aString!
 
 fullName
 	^name!

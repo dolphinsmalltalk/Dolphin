@@ -1123,7 +1123,7 @@ printStringLimitedTo: anInteger
 propertyAt: aSymbol
 	"Answers a property value of the receiver whose name matches aSymbol."
 
-	^self propertyManager propertyOf: self at: aSymbol.!
+	^self propertyAt: aSymbol ifAbsent: [self errorNotFound: aSymbol]!
 
 propertyAt: aSymbol ifAbsent: aBlock
 	"Answers a property value of the receiver whose name matches aSymbol. If the object
@@ -1187,7 +1187,7 @@ removeEventsTriggeredFor: anObject
 removePropertyAt: aSymbol
 	"Removes a property of the receiver whose name matches aSymbol."
 
-	^self propertyManager removePropertyOf: self at: aSymbol!
+	^self removePropertyAt: aSymbol ifAbsent: [self errorNotFound: aSymbol]!
 
 removePropertyAt: aSymbol ifAbsent: aBlock
 	"Removes a property of the receiver whose name matches aSymbol. If the object

@@ -61,7 +61,7 @@ stopWithoutParentheses
 value
 	^self valueClass
 		pathString: self pathString
-		context: nil
+		scope: nil
 		flags: flags!
 
 valueClass

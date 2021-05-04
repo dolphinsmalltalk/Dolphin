@@ -237,7 +237,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="ConsoleToGo.def" />
-    <None Include="data1.bin" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="ConsoleToGo.rc" />

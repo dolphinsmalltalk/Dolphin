@@ -229,7 +229,7 @@ fileInClassDefinitions: aFileStream
 
 	| filer |
 	aFileStream beText.
-	filer := self sourceFilerClass on: aFileStream.
+	filer := self sourceFilerOn: aFileStream.
 	
 	[filer atEnd ifTrue: [^self errorFileCorrupt].
 	(Compiler evaluate: filer nextChunk logged: true) = 'end-class-definition']

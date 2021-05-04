@@ -20,6 +20,9 @@ displayOn: aStream
 		nextPutAll: '>>';
 		nextPutAll: self selector!
 
+environment
+	^(self loadedMethod ifNil: [self methodClass]) environment!
+
 forCompiledMethod: aCompiledMethod
 
 	selector := aCompiledMethod selector.
@@ -59,28 +62,36 @@ isLoaded
 		ifNotNil: [ :method | method sourceDescriptor = self sourceDescriptor]!
 
 load
-
 	"Load the version of the method represented by the receiver without relogging the source.
 	Return compilation result or nil on failure"
 
 	| compiler |
-
 	compiler := methodClass compilerClass.
-
-	^([compiler compile: self getSource in: methodClass flags: methodClass defaultCompilationFlags] on: compiler errorClass do: [ :n | n return: nil]) ifNotNil: 
-		[ :result || method |
-		method := result method.
-		methodClass methodDictionary ifNotNil: 
-			[ :methodDictionary || oldMethod |
-			oldMethod := methodDictionary lookup: selector.
-			result oldMethod: oldMethod.
-			oldMethod ifNotNil: [method isPrivate: oldMethod isPrivate]].
-		methodClass addSelector: selector withMethod: method.
-		method
-			sourceDescriptor: self sourceDescriptor;
-			isImmutable: true.
-		result fireSystemUpdateEvent.
-		result]!
+	^(
+	[compiler
+		compile: self getSource
+		in: methodClass
+		environment: self environment
+		flags: methodClass defaultCompilationFlags]
+			on: compiler errorClass
+			do: [:n | n return: nil])
+			ifNotNil: 
+				[:result |
+				| method |
+				method := result method.
+				methodClass methodDictionary
+					ifNotNil: 
+						[:methodDictionary |
+						| oldMethod |
+						oldMethod := methodDictionary lookup: selector.
+						result oldMethod: oldMethod.
+						oldMethod ifNotNil: [method isPrivate: oldMethod isPrivate]].
+				methodClass addSelector: selector withMethod: method.
+				method
+					sourceDescriptor: self sourceDescriptor;
+					isImmutable: true.
+				result fireSystemUpdateEvent.
+				result]!
 
 loadedMethod
 
@@ -109,6 +120,7 @@ sourceFileIndex
 	^methodClass sourceManager sourceIndexFromDescriptor: sourceDescriptor! !
 !MethodVersion categoriesFor: #=!comparing!public! !
 !MethodVersion categoriesFor: #displayOn:!printing!public! !
+!MethodVersion categoriesFor: #environment!accessing!public! !
 !MethodVersion categoriesFor: #forCompiledMethod:!initializing!public! !
 !MethodVersion categoriesFor: #forSource:at:in:!initializing!public! !
 !MethodVersion categoriesFor: #getSource!accessing!public! !

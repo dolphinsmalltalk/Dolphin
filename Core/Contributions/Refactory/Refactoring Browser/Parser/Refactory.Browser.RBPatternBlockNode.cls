@@ -44,7 +44,7 @@ createBlockFor: aRBBlockNode
 	| source |
 	self replacePatternNodesIn: aRBBlockNode.
 	source := aRBBlockNode formattedCode.
-	^Compiler evaluate: source for: self!
+	^Compiler evaluate: source for: self environment: self methodNode environment!
 
 createMatchingBlock
 	| newBlock |

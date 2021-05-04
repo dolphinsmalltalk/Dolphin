@@ -8,12 +8,12 @@ A global abbreviations dictionary contains a bunch of (single- or multi-characte
 When installed, all you need to do is to type an  abbreviation, hit Shift+Space, and the abbreviation will be expanded into the code snippet. 
 
 Here are some of the default abbreviations:
-
+```
 	''st'' -> ''Smalltalk''
 	''it'' -> ''ifTrue: []''
 	''npa'' -> ''nextPutAll:''
 	''dtn'' -> ''detect: [:each | ] ifNone: []''
-
+```
 There are many more. To see all the default abbreviations, read the source to SmalltalkWorkspace class>>#defaultAbbreviations, or type in ''abb'', hit Shift+Space to expand it to ''SmalltalkWorkspace abbreviations inspect'', and evaluate.
 
 Of course, the tool works the other way around too. You can select any text, hit Ctrl+Space, and add an abbreviation to the dictionary.

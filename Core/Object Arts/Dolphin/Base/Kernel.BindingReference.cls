@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
 Kernel.AbstractBindingReference subclass: #'Kernel.BindingReference'
-	instanceVariableNames: 'pathString path context flags binding generation'
+	instanceVariableNames: 'pathString path private binding generation'
 	classVariableNames: 'Generation'
 	imports: #()
 	classInstanceVariableNames: ''
@@ -27,6 +27,18 @@ It might have been better if literal binding references were always relative, un
 !Kernel.BindingReference categoriesForClass!System-Namespaces! !
 !Kernel.BindingReference methodsFor!
 
+= anObject
+	"Answer whether the receiver and the <Object> argument should be considered equivalent. Binding references are considered equivalent if they have the same path and starting point.
+	Note that two binding references that would resolve to the same actual variable binding may not be considered equivalent as the binding resolution is a dynamic quality determined 
+	at the time of resolution, and is not necessarily temporally stable. Equality of binding references is a static property based and is such that two equal references will always bind
+	to the same variable if bound at the same time."
+
+	"Implementation Note: This implementation depends on the fact that for absolute references the context is always nil, and for (useful) relative references, the context is not nil."
+
+	^self == anObject or: 
+			[self class == anObject class
+				and: [self pathString = anObject pathString and: [private == anObject isPrivate]]]!
+
 asString
 	"Answer a <readableString> that is the receiver's qualified name expression."
 
@@ -38,13 +50,16 @@ baseClass
 
 	"Implementation Note: Implemented for compatibility with the reference platform, although not used in Dolphin. The selector is likely to confuse anyone with a C++ background; it has nothing to do with a class' superclass."
 
-	^(context notNil and: [self isRelative]) ifTrue: [context localScope]
+	^nil
 !
 
 bind
+	| scope |
+	scope := self bindingScope.
 	self
 		setGeneration: Generation;
-		setBinding: ((self bindingRoot resolveBindingPath: self path) ifNil: [Undeclared])!
+		setBinding: ((scope localScope resolveBindingPath: self path environment: scope environment)
+					ifNil: [Undeclared])!
 
 bindingOrNil
 	"Answer the <VariableBinding> referenced by the receiver (i.e. resolve the variable), or nil if there is no such variable."
@@ -53,41 +68,59 @@ bindingOrNil
 		ifTrue: [self bind].
 	^binding targetVariable!
 
-bindingRoot
-	"Answer the root binding context from which the receiver's binding path is traversed to locate the target binding.
-	This is always a <Class>. It may be a <Namespace>. If the receiver is an absolute binding reference it will be the Smalltalk namespace class."
+bindingScope
+	"Answer the <bindingScope> from which the receiver's binding path is traversed to locate the target binding.
+	This will be a <Class> or a <CompiledCode>. If a class, it may be a <Namespace>. If the receiver is an absolute binding reference it will be the <Smalltalk> namespace class."
 
-	^(context isNil or: [self isRelative not]) ifTrue: [Smalltalk] ifFalse: [context localScope]!
+	"Implementation Note: It is an invariant that the context must be nil if the receiver is an absolute binding reference. This will be the case if only the public instance creation methods on the class side are used."
 
-context
-	"Answer the context in which the reference was created. For relative references this is used to determine the start point for binding resolution."
+	^Smalltalk!
 
-	^context!
+environmentName
+	"Answer the <String> qualified name of the receiver's full namespace qualifier. This includes the path for the binding scope."
 
-flags
-	^flags!
+	| stream parts first |
+	parts := self path.
+	stream := String writeStream: 32.
+	parts size <= 1 ifTrue: [^nil] ifFalse: [first := true].
+	first := true.
+	1 to: parts size - 1
+		do: 
+			[:i |
+			first ifTrue: [first := false] ifFalse: [stream nextPut: $.].
+			stream nextPutAll: (parts at: i)].
+	^stream contents!
 
 hash
 	"Answer the <integer> hash value for the receiver."
 
-	^context
-		ifNil: [self pathString hash]
-		ifNotNil: [context hash hashMultiply + self pathString hash bitAnd: VMConstants.SmallIntegerMax]!
+	^self pathString hash!
 
 home
 	"Answer the 'namespace context' for this binding reference."
 
 	"Implementation Note: This is defined for compatibility with the reference platform. It is not used in Dolphin."
 
-	^(context isNil or: [self isRelative not]) ifTrue: [Smalltalk] ifFalse: [context localEnvironment]!
+	^Smalltalk!
 
 instance
 	"Answer a <BindingReference> that resolves to the value of the binding to which the receiver resolves."
 
 	^self!
 
+isPrivate
+	"Answer whether the receiver represents a private binding reference that should not be used outside its immediate scope."
+
+	^private!
+
 isPrivate: aBoolean
-	self setFlags: (flags mask: PrivateMask set: aBoolean)!
+	<mutable>
+	private := aBoolean!
+
+isRelative
+	"Answer whether the receiver specifies a binding path relative to a specific binding root, or alternatively is an absolute (or fully-qualified) binding reference."
+
+	^false!
 
 meta
 	"Answer a <BindingReference> that resolves to the class of the value of the binding to which the receiver resolves."
@@ -110,17 +143,17 @@ pathString
 			[self setPathString: ($. join: path).
 			pathString]!
 
+private
+	^private ifTrue: [self] ifFalse: [BindingReference pathString: self pathString private: true]!
+
+scope
+	"Private - Answer the <bindingScope> in which the reference was created. For relative references this is used to determine the start point for binding resolution. For absolute references this should always be nil."
+
+	^nil!
+
 setBinding: aVariableBindingOrNil
 	<mutable>
 	binding := aVariableBindingOrNil!
-
-setContext: anObject
-	<mutable>
-	context := anObject!
-
-setFlags: anInteger
-	<mutable>
-	flags := anInteger!
 
 setGeneration: anInteger
 	<mutable>
@@ -130,47 +163,58 @@ setPath: anArray
 	<mutable>
 	path := anArray!
 
-setPath: anArray context: anObject flags: anInteger
+setPath: anArray private: aBoolean
 	path := anArray.
-	context := anObject.
-	flags := anInteger!
+	private := aBoolean!
 
 setPathString: aString
 	<mutable>
 	pathString := aString!
 
-setPathString: aString context: anObject flags: anInteger
+setPathString: aString private: aBoolean
 	pathString := aString.
-	context := anObject.
-	flags := anInteger!
+	private := aBoolean!
+
+setScope: aBindingScope
+	self shouldNotImplement!
+
+stbSaveOn: anSTBOutFiler
+	"Implmentation Note: We don't want to save out any cached binding. Easiest is to flush it - it isn't that expensive to re-cache when needed"
+
+	self setBinding: nil.
+	^super stbSaveOn: anSTBOutFiler!
 
 valueOrNil
 	"Answer the value of the variable named by the receiver, or nil if not defined.
 	Note that it will not be possible to distinguish the cases of an undefined variable and a defined variable with value nil."
 
 	^self bindingOrNil ifNotNil: [:var | var value]! !
+!Kernel.BindingReference categoriesFor: #=!comparing!public! !
 !Kernel.BindingReference categoriesFor: #asString!converting!public! !
 !Kernel.BindingReference categoriesFor: #baseClass!accessing!public! !
 !Kernel.BindingReference categoriesFor: #bind!operations!private! !
 !Kernel.BindingReference categoriesFor: #bindingOrNil!accessing!public! !
-!Kernel.BindingReference categoriesFor: #bindingRoot!accessing!public! !
-!Kernel.BindingReference categoriesFor: #context!accessing!public! !
-!Kernel.BindingReference categoriesFor: #flags!accessing!private! !
+!Kernel.BindingReference categoriesFor: #bindingScope!accessing!public! !
+!Kernel.BindingReference categoriesFor: #environmentName!accessing!public! !
 !Kernel.BindingReference categoriesFor: #hash!comparing!public! !
 !Kernel.BindingReference categoriesFor: #home!accessing!public! !
 !Kernel.BindingReference categoriesFor: #instance!converting!public! !
+!Kernel.BindingReference categoriesFor: #isPrivate!public!testing! !
 !Kernel.BindingReference categoriesFor: #isPrivate:!accessing!private! !
+!Kernel.BindingReference categoriesFor: #isRelative!public!testing! !
 !Kernel.BindingReference categoriesFor: #meta!converting!displaying!public! !
 !Kernel.BindingReference categoriesFor: #path!accessing!public! !
 !Kernel.BindingReference categoriesFor: #pathString!accessing!public! !
+!Kernel.BindingReference categoriesFor: #private!converting!public! !
+!Kernel.BindingReference categoriesFor: #scope!accessing!private! !
 !Kernel.BindingReference categoriesFor: #setBinding:!accessing!private! !
-!Kernel.BindingReference categoriesFor: #setContext:!accessing!private! !
-!Kernel.BindingReference categoriesFor: #setFlags:!accessing!private! !
 !Kernel.BindingReference categoriesFor: #setGeneration:!accessing!private! !
 !Kernel.BindingReference categoriesFor: #setPath:!accessing!private! !
-!Kernel.BindingReference categoriesFor: #setPath:context:flags:!initializing!private! !
+!Kernel.BindingReference categoriesFor: #setPath:private:!initializing!private! !
 !Kernel.BindingReference categoriesFor: #setPathString:!accessing!private! !
-!Kernel.BindingReference categoriesFor: #setPathString:context:flags:!initializing!private! !
+!Kernel.BindingReference categoriesFor: #setPathString:private:!initializing!private! !
+!Kernel.BindingReference categoriesFor: #setScope:!initializing!private! !
+!Kernel.BindingReference categoriesFor: #stbSaveOn:!binary filing!public! !
 !Kernel.BindingReference categoriesFor: #valueOrNil!accessing!public! !
 
 !Kernel.BindingReference class methodsFor!
@@ -190,8 +234,7 @@ fullPathString: aString
 	"Answer a new instance of the receiver representing the qualified name identified by the <readableString> argument, which is expected to be a fully qualified name."
 
 	^self basicNew
-		setPathString: aString;
-		setFlags: 0;
+		setPathString: aString private: false;
 		isImmutable: true;
 		yourself!
 
@@ -199,69 +242,105 @@ initialize
 	self flushBindings.
 	VMLibrary default
 		registryAt: self name put: self;
-		registryAtIndex: 65 put: #pathString:context:flags:!
+		registryAtIndex: 65 put: #pathString:scope:flags:;
+		registryAtIndex: 69 put: #setScope:!
 
-newPath: anArray context: anObject
-	| ref |
-	ref := self basicNew.
-	anArray size <= 1
+newPath: anArray private: aBoolean scope: aBindingScope
+	^(anArray size <= 1
 		ifTrue: 
-			[ref
-				setPath: anArray
-				context: anObject
-				flags: (anObject ifNil: [0] ifNotNil: [RelativeMask])]
+			[aBindingScope
+				ifNil: [BindingReference basicNew setPath: anArray private: aBoolean]
+				ifNotNil: 
+					[RelativeBindingReference
+						newPath: anArray
+						private: aBoolean
+						scope: aBindingScope]]
 		ifFalse: 
 			[(anArray at: 1) = '_'
 				ifTrue: 
-					[ref
-						setPath: (anArray copyFrom: 2 to: anArray size)
-						context: anObject
-						flags: RelativeMask]
-				ifFalse: 
-					["Absolute - note that the context is ignored as it is not needed"
-					ref
-						setPath: anArray
-						context: nil
-						flags: 0]].
-	^ref
+					[RelativeBindingReference
+						newPath: (anArray copyFrom: 2 to: anArray size)
+						private: aBoolean
+						scope: aBindingScope]
+				ifFalse: [BindingReference basicNew setPath: anArray private: aBoolean]])
 		isImmutable: true;
 		yourself!
 
-pathString: aString context: anObject
+pathString: aString private: aBoolean
+	^BindingReference basicNew setPathString: aString private: aBoolean!
+
+pathString: aString private: aBoolean scope: aBindingScope
+	^RelativeBindingReference basicNew
+		setPathString: aString
+		private: aBoolean
+		scope: aBindingScope!
+
+pathString: aString scope: aBindingScope
 	"Answer a new instance of the receiver representing the qualified name identified by the <readableString> argument, which is relative to the binding context, anObject. If anObject is nil, then the instance is a reference from Smalltalk.
 	If anObject is not nil, then it is expected to be some kind of name binding context (i.e. a namespace, class, or method), and the new instance is then a contextual BindingReference with that object as (potentially) its starting point for resolving the binding. However, the context is only relevant as a start point for binding if the path string is an unqualified name, or has the special relative prefix, '_', as the first component of the path. Otherwise the binding reference is considered to specify the full-name of the binding, and will always bind to the same static variable, regardless of context. Since the context is not needed for absolute bindings, it will be discarded - the context of absolute bindings is always nil, which in practice means their binding root is Smalltalk."
 
 	^self
 		pathString: aString
-		context: anObject
-		flags: ((anObject notNil and: [(aString includes: $.) not or: [aString beginsWith: '_.']])
+		scope: aBindingScope
+		flags: ((aBindingScope notNil and: [(aString includes: $.) not or: [aString beginsWith: '_.']])
 				ifTrue: [RelativeMask]
 				ifFalse: [0])!
 
-pathString: aString context: anObject flags: anInteger
+pathString: aString scope: aBindingScope flags: anInteger
 	"Private - Note that this is sent directly by the Compiler to construct literal instances."
 
-	"Implementation Note: If the reference is absolute, then the context is ignored as it is not needed. This avoids keeping the context alive unnecessarily, and also allows for cheaper implementations of the #= and #hash methods."
+	"Implementation Note: If the reference is absolute, then the <bindingScope> is ignored as it is not needed. This avoids keeping the object alive unnecessarily, e.g. if it is a method, and also allows for cheaper implementations of the #= and #hash methods."
 
 	| ref |
-	ref := self basicNew
-				setPathString: aString
-					context: ((anInteger allMask: RelativeMask) ifTrue: [anObject])
-					flags: (anInteger bitAnd: ##(MetaMask bitInvert));
+	ref := ((anInteger allMask: RelativeMask)
+				ifTrue: 
+					[self
+						pathString: aString
+						private: (anInteger allMask: PrivateMask)
+						scope: aBindingScope]
+				ifFalse: [self pathString: aString private: (anInteger allMask: PrivateMask)])
 				isImmutable: true;
 				yourself.
 	^(anInteger allMask: MetaMask) ifTrue: [ref meta] ifFalse: [ref]!
 
+stbConvertFrom: anSTBClassFormat
+	"Convert from version 0:
+		- RelativeBindingReference introduced - context pushed down
+		- flags replaced with private inst var"
+
+	^
+	[:data |
+	(data at: 1)
+		ifNil: 
+			[self
+				path: (data at: 2)
+				private: ((data at: 4) allMask: PrivateMask)
+				scope: (data at: 3)]
+		ifNotNil: 
+			[:pathString |
+			self
+				pathString: pathString
+				private: ((data at: 4) allMask: PrivateMask)
+				scope: (data at: 3)]]!
+
+stbVersion
+	^1!
+
 uninitialize
 	VMLibrary default
 		registryAt: self name put: nil;
-		registryAtIndex: 65 put: nil! !
+		registryAtIndex: 65 put: nil;
+		registryAtIndex: 69 put: nil! !
 !Kernel.BindingReference class categoriesFor: #clearCachedBindings!operations!private! !
 !Kernel.BindingReference class categoriesFor: #flushBindings!operations!private! !
 !Kernel.BindingReference class categoriesFor: #fullPathString:!instance creation!public! !
 !Kernel.BindingReference class categoriesFor: #initialize!class initialization!public! !
-!Kernel.BindingReference class categoriesFor: #newPath:context:!instance creation!private! !
-!Kernel.BindingReference class categoriesFor: #pathString:context:!instance creation!public! !
-!Kernel.BindingReference class categoriesFor: #pathString:context:flags:!instance creation!private! !
+!Kernel.BindingReference class categoriesFor: #newPath:private:scope:!instance creation!private! !
+!Kernel.BindingReference class categoriesFor: #pathString:private:!instance creation!public! !
+!Kernel.BindingReference class categoriesFor: #pathString:private:scope:!instance creation!public! !
+!Kernel.BindingReference class categoriesFor: #pathString:scope:!instance creation!public! !
+!Kernel.BindingReference class categoriesFor: #pathString:scope:flags:!instance creation!private! !
+!Kernel.BindingReference class categoriesFor: #stbConvertFrom:!public! !
+!Kernel.BindingReference class categoriesFor: #stbVersion!public! !
 !Kernel.BindingReference class categoriesFor: #uninitialize!class hierarchy-removing!private! !
 

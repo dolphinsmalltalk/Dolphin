@@ -88,9 +88,9 @@ browseDefinitionsMatching: aMethodSearch in: aBrowserEnvironment
 				with: (self systemModel definitionsMatching: aMethodSearch in: aBrowserEnvironment).
 	parentPresenter parseContext
 		ifNotNil: 
-			[:class |
+			[:context |
 			definitions add: (self systemModel definitionsMatching: aMethodSearch
-						in: (aBrowserEnvironment forClassHierarchyOf: class))].
+						in: (aBrowserEnvironment forClassHierarchyOf: context methodClass))].
 	self routeCommand: (CommandDescription
 				command: (Message selector: #browseMethodsInEnvironments: argument: definitions))!
 
@@ -164,9 +164,9 @@ browseMessagesMatching: aMethodSearch in: aBrowserEnvironment
 				with: (self systemModel referencesMatching: aMethodSearch in: aBrowserEnvironment).
 	parentPresenter parseContext
 		ifNotNil: 
-			[:class |
+			[:context |
 			| hierarchy |
-			hierarchy := aBrowserEnvironment forClassHierarchyOf: class.
+			hierarchy := aBrowserEnvironment forClassHierarchyOf: context methodClass.
 			searches
 				add: (self systemModel definitionsMatching: aMethodSearch in: hierarchy);
 				add: (self systemModel referencesMatching: aMethodSearch in: hierarchy)].
@@ -228,9 +228,9 @@ browseReferencesMatching: aMethodSearch in: aBrowserEnvironment
 				with: (self systemModel referencesMatching: aMethodSearch in: aBrowserEnvironment).
 	parentPresenter parseContext
 		ifNotNil: 
-			[:class |
+			[:context |
 			references add: (self systemModel referencesMatching: aMethodSearch
-						in: (aBrowserEnvironment forClassHierarchyOf: class))].
+						in: (aBrowserEnvironment forClassHierarchyOf: context methodClass))].
 	self routeCommand: (CommandDescription
 				command: (Message selector: #browseMethodsInEnvironments: argument: references))!
 
@@ -800,7 +800,13 @@ onViewOpened
 	self applyOptions!
 
 parseContext
-	^self selectedMethod ifNil: [parentPresenter parseContext] ifNotNil: [:method | method methodClass]!
+	^self selectedMethod
+		ifNil: [parentPresenter parseContext]
+		ifNotNil: 
+			[:method |
+			method owningPackage
+				ifNil: [method]
+				ifNotNil: [:package | ParseContext methodClass: method methodClass environment: package environment]]!
 
 parseTree
 	^sourcePresenter parseTree!
@@ -921,7 +927,7 @@ removeMethod
 	[self systemModel removeMethods: self selections] on: OperationAborted
 		do: [:ex | self errorModel value: ex]!
 
-saveMethod: aString in: aClass categories: aCollection package: aPackageOrNil
+saveMethod: aString in: aClass environment: aNamespace categories: aCollection package: aPackageOrNil
 	| modified originalSelection change newMethod |
 	originalSelection := sourcePresenter selectionRange.
 	modified := sourcePresenter isModified.
@@ -932,6 +938,7 @@ saveMethod: aString in: aClass categories: aCollection package: aPackageOrNil
 	[change := self systemModel
 				compile: aString
 				in: aClass
+				environment: aNamespace
 				categories: aCollection
 				package: aPackageOrNil
 				extraFlags: (sourcePresenter isAutoParseEnabled ifTrue: [0] ifFalse: [Interactive])]
@@ -948,19 +955,22 @@ saveMethod: aString in: aClass categories: aCollection package: aPackageOrNil
 	^newMethod!
 
 saveNewMethod: aString
-	| editedMethod |
+	| editedMethod selector |
 	editedMethod := self selectedMethod.
-	(editedMethod notNil and: [self parseTree selector == editedMethod selector])
+	selector := self parseTree selector.
+	(editedMethod notNil and: [selector == editedMethod selector])
 		ifFalse: 
 			["Saving a method other than that which was being edited."
 			self parseContext
 				ifNotNil: 
-					[:class |
-					(class includesSelector: self parseTree selector)
+					[:context |
+					| methodClass |
+					methodClass := context methodClass.
+					(methodClass includesSelector: selector)
 						ifTrue: 
 							[(MessageBox confirm: ('<1p> already defines <2p><n><n>Are you sure you would like to overwrite it?'
-										expandMacrosWith: self parseContext
-										with: self parseTree selector))
+										expandMacrosWith: methodClass
+										with: selector))
 								ifFalse: [^nil]]]].
 	parentPresenter saveNewMethod: aString!
 
@@ -1170,7 +1180,7 @@ versionModel
 !Tools.MethodBrowser categoriesFor: #refactoringTool!accessing!public! !
 !Tools.MethodBrowser categoriesFor: #refactoringTool:!accessing!private! !
 !Tools.MethodBrowser categoriesFor: #removeMethod!commands!public! !
-!Tools.MethodBrowser categoriesFor: #saveMethod:in:categories:package:!operations!private! !
+!Tools.MethodBrowser categoriesFor: #saveMethod:in:environment:categories:package:!operations!private! !
 !Tools.MethodBrowser categoriesFor: #saveNewMethod:!helpers!public! !
 !Tools.MethodBrowser categoriesFor: #searchEnvironment!accessing!public! !
 !Tools.MethodBrowser categoriesFor: #searchEnvironment:!accessing!public! !

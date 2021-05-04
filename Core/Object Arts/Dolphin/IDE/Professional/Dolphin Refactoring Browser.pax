@@ -1252,7 +1252,7 @@ overrideMethods
 	(methods isNil or: [methods isEmpty]) ifTrue: [^self].
 	methods do: 
 			[:each |
-			| keywordsAndArgs |
+			| keywordsAndArgs env |
 			stream reset.
 			keywordsAndArgs := self systemModel keywordsAndArgsOfMethod: each.
 			self systemModel printSignatureForKeywordsAndArgs: keywordsAndArgs on: stream.
@@ -1264,6 +1264,7 @@ overrideMethods
 			changes addChange: (changes addMethodChangeClass
 						compile: stream contents
 						in: class
+						environment: each environment
 						categories: each categories
 						package: each owningPackageIfLoose)].
 	name := String writeStream.
@@ -1855,7 +1856,7 @@ performMethodRefactoring: aMonadicValuable
 	self promptToSaveChanges ifFalse: [^self].
 	^sourcePresenter executeRefactoring: aMonadicValuable with: self selectedMethod!
 
-performMethodRenameRefactoring: aMonadicValuable 
+performMethodRenameRefactoring: aMonadicValuable
 	"Private - Perform a refactoring that might change the name of the selected method. We
 	maintain the selection if possible."
 
@@ -1864,7 +1865,7 @@ performMethodRenameRefactoring: aMonadicValuable
 	method := self selectedMethod.
 	refactoring := sourcePresenter executeRefactoring: aMonadicValuable with: method.
 	refactoring isNil ifTrue: [^self].
-	method := (method ifNil: [self parseContext] ifNotNil: [method methodClass]) 
+	method := (method ifNil: [self parseContext methodClass] ifNotNil: [method methodClass])
 				compiledMethodAt: refactoring newSelector
 				ifAbsent: [].
 	(method notNil and: [self filter value: method]) ifTrue: [self selectMethod: method]!

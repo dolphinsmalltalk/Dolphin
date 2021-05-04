@@ -172,7 +172,7 @@ emitPackageUntracedVariables: aPackage
 
 emitPackageVariableNames: aPackage
 	self emitPaxVariableNames: aPackage variableNames asArray
-				, (aPackage classNames select: [:each | each value isKindOf: SharedPool class]) asArray
+				, (aPackage classNames select: [:each | each value inheritsFrom: SharedPool]) asArray
 		accessor: #globalNames!
 
 emitPackageVariableNameSubsets: aPackage
@@ -207,6 +207,14 @@ emitPaxVariableNames: aCollectionOfBindingReferences accessor: aSymbol
 		nextPut: $.;
 		cr;
 		cr!
+
+environment
+	^Smalltalk
+!
+
+environment: aNamespace
+	aNamespace == Smalltalk ifFalse: [self error: '<1p> can only be used for compiling code in the Smalltalk namespace' << self class]
+!
 
 fileOutAttributesOfClass: aClass
 	"File-out any attributes of the aClass (e.g. the comment, GUID, etc) not included in the basic
@@ -410,6 +418,8 @@ printBasicDefinitionOfClass: aClass
 !Kernel.LegacyChunkSourceFiler categoriesFor: #emitPackageVariableReference:!accessing!private!source filing! !
 !Kernel.LegacyChunkSourceFiler categoriesFor: #emitPaxNames:!private!source filing-pax! !
 !Kernel.LegacyChunkSourceFiler categoriesFor: #emitPaxVariableNames:accessor:!private!source filing-pax! !
+!Kernel.LegacyChunkSourceFiler categoriesFor: #environment!accessing!public! !
+!Kernel.LegacyChunkSourceFiler categoriesFor: #environment:!accessing!public! !
 !Kernel.LegacyChunkSourceFiler categoriesFor: #fileOutAttributesOfClass:!public!source filing! !
 !Kernel.LegacyChunkSourceFiler categoriesFor: #fileOutBasicDefinitionOfClass:!public!source filing-file out! !
 !Kernel.LegacyChunkSourceFiler categoriesFor: #fileOutClass:ofPackage:!public!source filing! !

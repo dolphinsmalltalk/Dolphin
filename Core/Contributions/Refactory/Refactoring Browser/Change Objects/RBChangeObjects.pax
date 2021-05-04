@@ -139,7 +139,7 @@ Refactory.Browser.RefactoryClassChange subclass: #'Refactory.Browser.RemoveMetho
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Refactory.Browser.AddMethodChange subclass: #'Refactory.Browser.DolphinAddMethodChange'
-	instanceVariableNames: 'packageName compilationFlags method'
+	instanceVariableNames: 'environment packageName compilationFlags method'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''

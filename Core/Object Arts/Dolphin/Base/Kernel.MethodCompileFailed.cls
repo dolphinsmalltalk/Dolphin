@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
 Core.Notification subclass: #'Kernel.MethodCompileFailed'
-	instanceVariableNames: 'compilerErrorNotification'
+	instanceVariableNames: 'compilerErrorNotification environment'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -11,17 +11,18 @@ Kernel.MethodCompileFailed comment: 'A MethodCompileFailed notification is signa
 !Kernel.MethodCompileFailed categoriesForClass!System-Compiler! !
 !Kernel.MethodCompileFailed methodsFor!
 
-compilerErrorNotification: aCompilerErrorNotification
-	"Private - Set the value of the receiver's instance variable compilerErrorNotification to 
-	aCompilerErrorNotification."
-
-	compilerErrorNotification := aCompilerErrorNotification.!
-
 defaultAction
 	"The receiver is an unhandled notification, perform the default action
 	which is nothing but to answer a nil method"
 
 	^nil!
+
+environment
+	^environment!
+
+error: aCompilerErrorNotification environment: aNamespace
+	compilerErrorNotification := aCompilerErrorNotification.
+	environment := aNamespace!
 
 resumeWithStubMethod
 	"Create a stub method which causes an error if evaluated but has the source of the
@@ -35,28 +36,29 @@ resumeWithStubMethod
 	result := methodClass compilerClass
 				compile: (CompileFailedMethod buildSourceForSelector: selector class: methodClass)
 				in: methodClass
+				environment: self environment
 				flags: methodClass defaultCompilationFlags.
 	result method becomeA: CompileFailedMethod.
 
 	"Resume with this stub"
 	self resume: result! !
-!Kernel.MethodCompileFailed categoriesFor: #compilerErrorNotification:!accessing!private! !
 !Kernel.MethodCompileFailed categoriesFor: #defaultAction!handling!public! !
+!Kernel.MethodCompileFailed categoriesFor: #environment!accessing!public! !
+!Kernel.MethodCompileFailed categoriesFor: #error:environment:!initializing!private! !
 !Kernel.MethodCompileFailed categoriesFor: #resumeWithStubMethod!handler responses!operations!public! !
 
 !Kernel.MethodCompileFailed class methodsFor!
 
-new
-	"Private - Use #with:"
-
-	self shouldNotImplement!
-
-with: aCompilerErrorNotification
+error: aCompilerErrorNotification environment: aNamespace
 	"Answer an instance of the receiver that indicates that a method compilation failed
 	due to aCompilerErrorNotification"
 
-	^super new compilerErrorNotification: aCompilerErrorNotification
-! !
+	^super new error: aCompilerErrorNotification environment: aNamespace!
+
+new
+	"Private - Use #error:environment:"
+
+	self shouldNotImplement! !
+!Kernel.MethodCompileFailed class categoriesFor: #error:environment:!instance creation!public! !
 !Kernel.MethodCompileFailed class categoriesFor: #new!instance creation!private! !
-!Kernel.MethodCompileFailed class categoriesFor: #with:!instance creation!public! !
 

@@ -348,8 +348,67 @@ compile: aString categories: categories package: aPackageOrNil flags: anInteger
 	then the suggestion made by the default MethodCategorizationPolicy is chosen. If a compile
 	error occurs then a <CompilerNotification> is signalled. Answers the new method or nil."
 
+	^self compile: aString environment: self environment categories: categories package: aPackageOrNil flags: anInteger!
+
+compile: codeString classified: categoryString
+	"Compile the argument, code, as source code in the context of the receiver
+	and add the resulting method to the receiver's method dictionary.
+	The newly compiled method is added to the category identified by the <readableString>,
+	cat. If the new method replaces an existing one then the original categorization is maintained.
+	If a compile error occurs then a CompilerNotification is signalled. 
+	Answers the new method or nil if the compilation failed.
+	N.B. This method is present primarily as part of the original ST-80 ClassDescription
+	protocol, but is of limited use in a multi-category system like Dolphin. We recommend that
+	#compile:categories: be used in preference."
+
 	| method result |
-	result := self basicCompile: aString flags: anInteger.
+	result := self basicCompile: codeString environment: self environment.
+	result notNil
+		ifTrue: 
+			[| category |
+			method := result method.
+			category := categoryString asMethodCategory.
+			result isNew ifTrue: [category addMethodSilently: method] ifFalse: [category addMethod: method].
+			method storeCategories.
+			result fireSystemUpdateEvent].
+	^method!
+
+compile: aString environment: aNamespaceOrNil categories: categories package: aPackageOrNil 
+	"Compile the <readableString> argument, aString, as source code in the context of the
+	receiver with the default compilation flags, and add the resulting method to the receiver's
+	method dictionary, in the <collection> of <MethodCategory>s, categories. A #methodAdded: or
+	#methodUpdated: event (depending on whether the resulting method is new or replaces an
+	existing method) is fired with the <CompilationResult> as its argument. Note that a
+	#methodCategorized: event will not be generated, even if the set of categories of a
+	pre-existing method are changed, because all the necessary information is available with a
+	#methodUpdated: event. If the collection of categories does not include a privacy category,
+	then the suggestion made by the default MethodCategorizationPolicy is chosen. If a compile
+	error occurs then a <CompilerNotification> is signalled. Answers the new method or nil."
+
+	^self 
+		compile: aString
+		environment: aNamespaceOrNil
+		categories: categories
+		package: aPackageOrNil
+		flags: self defaultCompilationFlags!
+
+compile: aString environment: aNamespaceOrNil categories: categories package: aPackageOrNil flags: anInteger
+	"Compile the <readableString> argument, aString, as source code in the context of the
+	receiver with the specified compilation flags, and add the resulting method to the
+	receiver's method dictionary, in the <collection> of <MethodCategory>s, categories. A
+	#methodAdded: or #methodUpdated: event (depending on whether the resulting method is new or
+	replaces an existing method) is fired with the <CompilationResult> as its argument. Note
+	that a #methodCategorized: event will not be generated, even if the set of categories of a
+	pre-existing method are changed, because all the necessary information is available with a
+	#methodUpdated: event. If the collection of categories does not include a privacy category,
+	then the suggestion made by the default MethodCategorizationPolicy is chosen. If a compile
+	error occurs then a <CompilerNotification> is signalled. Answers the new method or nil."
+
+	| method result |
+	result := self
+				basicCompile: aString
+				flags: anInteger
+				environment: aNamespaceOrNil.
 	result notNil
 		ifTrue: 
 			[| allCats |
@@ -364,29 +423,6 @@ compile: aString categories: categories package: aPackageOrNil flags: anInteger
 			MethodCategory setMethod: method categories: allCats.
 			method storeCategories.
 			"Now we can safely trigger #methodAdded/Updated: since the source and categories are now available"
-			result fireSystemUpdateEvent].
-	^method!
-
-compile: codeString classified: categoryString
-	"Compile the argument, code, as source code in the context of the receiver
-	and add the resulting method to the receiver's method dictionary.
-	The newly compiled method is added to the category identified by the <readableString>,
-	cat. If the new method replaces an existing one then the original categorization is maintained.
-	If a compile error occurs then a CompilerNotification is signalled. 
-	Answers the new method or nil if the compilation failed.
-	N.B. This method is present primarily as part of the original ST-80 ClassDescription
-	protocol, but is of limited use in a multi-category system like Dolphin. We recommend that
-	#compile:categories: be used in preference."
-
-	| method result |
-	result := self basicCompile: codeString.
-	result notNil
-		ifTrue: 
-			[| category |
-			method := result method.
-			category := categoryString asMethodCategory.
-			result isNew ifTrue: [category addMethodSilently: method] ifFalse: [category addMethod: method].
-			method storeCategories.
 			result fireSystemUpdateEvent].
 	^method!
 
@@ -405,13 +441,10 @@ conformsToProtocol: protocol
 !
 
 definedBindings
-	"Private - Answer the bindings that are defined as part of the receiver's class definition (as opposed to externally).
-	For most classes this is all the class variables. For namespaces, this does not include any of the classes in the namespace as these are added to the namespace implicitly as part of their own definition."
+	"Private - Answer a <collection> of the receiver's <VariableBinding>s that are defined as part of the receiver's class definition (as opposed to externally).
+	For most classes this is all the class variables, including constants. For namespaces, this does not include any of the classes in the namespace as these are added to the namespace implicitly as part of their own definition."
 
-	| defined |
-	defined := Set new.
-	self bindingsDo: [:each | each isClassVariable ifTrue: [defined add: each]].
-	^defined!
+	^self bindings select: [:each | each isClassVariable]!
 
 definition
 	"Answer the <readableString> definition message, which, when evaluated, will define the
@@ -429,15 +462,15 @@ displayOn: aPuttableStream
 
 	self printFullNameOn: aPuttableStream!
 
-environment
-	"Answer the receiver's name space."
-
-	^self subclassResponsibility!
-
 fullBindingFor: aString
 	"Answer a variable binding for the named variable in the scope of this class, and failing that in the receiver's environment. If there is no such variable, then answer nil."
 
-	^(self instanceClass resolvePathString: aString) ifNotNil: [:binding | binding targetVariable]!
+	^self instanceClass fullBindingFor: aString environment: self environment!
+
+fullBindingFor: aString environment: aNamespace
+	"Answer a variable binding for the named variable in the scope of this class, and failing that in the specified environment (or the receiver's environment if aNamespace is nil). If there is no such variable, then answer nil."
+
+	^self subclassResponsibility!
 
 fullName
 	"Answer the <String> fully qualified name of the receiver, which is a dot-separated path that binds to the receiver from the global namespace, Root.
@@ -572,7 +605,7 @@ localEnvironment
 !
 
 localScope
-	"Private - Answer the nearest name scope."
+	"Answer the nearest name scope."
 
 	^self instanceClass
 !
@@ -652,8 +685,10 @@ methodsFor
 	"Answer a chunk reader to read and compile method chunks for the receiver.
 	New methods are classified into the default category (''unclassified'')."
 
+	| methodEnvironment |
+	methodEnvironment := QueryEnvironmentNotification signalWith: self.
 	^ChunkReader
-		do: [:chunkString | self compile: chunkString]
+		do: [:chunkString | self compile: chunkString environment: methodEnvironment]
 		inContext: self
 		atEnd: []!
 
@@ -1035,13 +1070,15 @@ withAllSubclassesDo: aMonadicValuable
 !Core.ClassDescription categoriesFor: #compile:categories:package:!compiling!development!public! !
 !Core.ClassDescription categoriesFor: #compile:categories:package:flags:!compiling!development!public! !
 !Core.ClassDescription categoriesFor: #compile:classified:!compiling!public! !
+!Core.ClassDescription categoriesFor: #compile:environment:categories:package:!compiling!development!public! !
+!Core.ClassDescription categoriesFor: #compile:environment:categories:package:flags:!compiling!development!public! !
 !Core.ClassDescription categoriesFor: #compileAllSubclasses!compiling!development!public! !
 !Core.ClassDescription categoriesFor: #conformsToProtocol:!protocols!public! !
 !Core.ClassDescription categoriesFor: #definedBindings!accessing!private! !
 !Core.ClassDescription categoriesFor: #definition!public!source filing-class definition! !
 !Core.ClassDescription categoriesFor: #displayOn:!displaying!public! !
-!Core.ClassDescription categoriesFor: #environment!accessing!public! !
 !Core.ClassDescription categoriesFor: #fullBindingFor:!binding!public! !
+!Core.ClassDescription categoriesFor: #fullBindingFor:environment:!binding!public! !
 !Core.ClassDescription categoriesFor: #fullName!accessing!namespaces!public! !
 !Core.ClassDescription categoriesFor: #fullyQualifiedReference!accessing!public! !
 !Core.ClassDescription categoriesFor: #hasCompilationFailures!public!testing! !
@@ -1062,7 +1099,7 @@ withAllSubclassesDo: aMonadicValuable
 !Core.ClassDescription categoriesFor: #isChanged:!public!source filing! !
 !Core.ClassDescription categoriesFor: #localBindingFor:!binding!public! !
 !Core.ClassDescription categoriesFor: #localEnvironment!accessing!private! !
-!Core.ClassDescription categoriesFor: #localScope!accessing!private! !
+!Core.ClassDescription categoriesFor: #localScope!accessing!public! !
 !Core.ClassDescription categoriesFor: #logDefinition!class hierarchy-mutating!instance variables!private! !
 !Core.ClassDescription categoriesFor: #logRemoveSelector:!development!helpers!private! !
 !Core.ClassDescription categoriesFor: #logRemoveSelectors:!development!helpers!private! !
@@ -1121,6 +1158,7 @@ withAllSubclassesDo: aMonadicValuable
 !Core.ClassDescription categoriesFor: #withAllSubclasses!class hierarchy-accessing!public! !
 !Core.ClassDescription categoriesFor: #withAllSubclassesDo:!enumerating!public! !
 
+Core.ClassDescription methodProtocol: #bindingScope attributes: #(#readOnly) selectors: #(#environment #localScope)!
 Core.ClassDescription methodProtocol: #classDescription attributes: #(#ansi #readOnly) selectors: #(#allSubclasses #allSuperclasses #name #subclasses #superclass)!
 Core.ClassDescription methodProtocol: #'Object class' attributes: #(#ansi #readOnly) selectors: #(#allSubclasses #allSuperclasses #name #new #subclasses #superclass)!
 

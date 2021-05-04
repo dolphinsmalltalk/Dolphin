@@ -52,6 +52,7 @@ package setClassNames: #(
 	#{Tools.DebuggerShellView}
 	#{Tools.DevelopmentSessionManager}
 	#{Tools.DictionaryInspector}
+	#{Tools.Examples}
 	#{Tools.FlipperInspector}
 	#{Tools.Grabber}
 	#{Tools.ImageListView}
@@ -92,6 +93,7 @@ package setClassNames: #(
 	#{Tools.PackageRelativeFileLocator}
 	#{Tools.PackageSelector}
 	#{Tools.PackedReferencesCategory}
+	#{Tools.ParseContext}
 	#{Tools.PluggableVirtualMethodCategory}
 	#{Tools.PopupMenuPainter}
 	#{Tools.PropertyInspector}
@@ -432,6 +434,7 @@ package setMethodNames: #(
 	#(#{Kernel.ProtoObject class} #publishedAspects)
 	#(#{Kernel.ProtoObject class} #publishedAspectsOfInstances)
 	#(#{Kernel.SharedPool class} #canModifyBinding:newValue:)
+	#(#{Kernel.SharedPool class} #isVisiblyAbstract)
 	#(#{Kernel.SharedPool class} #referencesTo:)
 	#(#{Kernel.SourceFiler} #emitResourceMethod:literals:)
 	#(#{Kernel.SourceFiler} #emitResourceMethodHeader:)
@@ -768,6 +771,12 @@ package!
 
 "Class Definitions"!
 
+Tools subclass: #'Tools.Examples'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
 Core.Object subclass: #'Tools.CodeGenerationContext'
 	instanceVariableNames: 'writeStream targetClass'
 	classVariableNames: ''
@@ -800,6 +809,12 @@ Core.Object subclass: #'Tools.MethodSearch'
 	classConstants: {
 		'IgnoreCaseMask' -> 16r1
 	}!
+Core.Object subclass: #'Tools.ParseContext'
+	instanceVariableNames: 'methodClass environment'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
 Core.Object subclass: #'Tools.SmalltalkSearchCandidate'
 	instanceVariableNames: 'matchingName object'
 	classVariableNames: ''
@@ -1784,6 +1799,7 @@ copy: aSymbol from: aClass categories: aCollection
 	method := aClass compiledMethodAt: aSymbol.
 	^self 
 		compile: method getSource
+		environment: method environment
 		categories: aCollection
 		package: method owningPackageIfLoose!
 
@@ -4088,6 +4104,7 @@ asDebugMethod
 	debugMethod := self compilerClass
 				compileDebugExpression: self getSource
 				in: exprClass
+				environment: self environment
 				evaluationPools: self evaluationPools.
 	"Copy across some bits we need as we are an unbound expression"
 	debugMethod sourceDescriptor: self sourceDescriptor.
@@ -4101,18 +4118,21 @@ stylerClass
 !Kernel.CompiledMethod methodsFor!
 
 asDebugMethod
-    	"Private - Answer a debug version of the receiver with breakpoints after each 
+	"Private - Answer a debug version of the receiver with breakpoints after each 
     	expression/statement."
-    
-    	| debugMethod |
-    	self isDebugMethod ifTrue: [^self].
-    	debugMethod := self compilerClass compileDebugMethod: self getSource in: self methodClass.
-    	"Copy across some bits we need as we are an unbound method"
-    	debugMethod 
-    		sourceDescriptor: self sourceDescriptor;
-    		selector: self selector;
-    		isPrivate: self isPrivate.
-    	^debugMethod!
+
+	| debugMethod |
+	self isDebugMethod ifTrue: [^self].
+	debugMethod := self compilerClass
+				compileDebugMethod: self getSource
+				in: self methodClass
+				environment: self environment.
+	"Copy across some bits we need as we are an unbound method"
+	debugMethod
+		sourceDescriptor: self sourceDescriptor;
+		selector: self selector;
+		isPrivate: self isPrivate.
+	^debugMethod!
 
 browse
 	"Open a suitable browser onto the receiver."
@@ -4336,12 +4356,17 @@ publishedAspects
 
 	| aspects |
 	aspects := super publishedAspects.
-	aspects add: ((Tools.Aspect
-				collection: #untracedVariables
-				presenterClass: UI.HashedCollectionPresenter
-				addFrom: self variableNames asSortedCollection)
-				beImmutable;
-				yourself).
+	aspects
+		add: ((Tools.Aspect
+					collection: #untracedVariables
+					presenterClass: UI.HashedCollectionPresenter
+					addFrom: self variableNames asSortedCollection)
+					beImmutable;
+					yourself);
+		add: (Tools.Aspect choice: #environment
+					from: ((Namespace allSubclasses
+							reject: [:each | each isVisiblyAbstract or: [(each inheritsFrom: SharedPool) or: [each owningPackage == self]]])
+								asSortedCollection: [:a :b | a fullName <= b fullName])).
 	^aspects!
 
 searchForInTool: aSmalltalkToolShell 
@@ -4530,6 +4555,11 @@ canModifyBinding: aVariableBinding newValue: anObject
 				with: anObject
 				with: aVariableBinding value)!
 
+isVisiblyAbstract
+	"Private - All Namespaces are non-instantiable (they exist only as classes), but that doesn't mean they are abstract as such."
+
+	^self == ##(self)!
+
 referencesTo: keyString
 	"Answer the collection of any methods which references the named key, assumed to
 	be a variable name from the receiver."
@@ -4543,6 +4573,7 @@ referencesTo: keyString
 		label: ('Methods referencing <1p>.<2s>' expandMacrosWith: self with: keyString);
 		yourself! !
 !Kernel.SharedPool class categoriesFor: #canModifyBinding:newValue:!private! !
+!Kernel.SharedPool class categoriesFor: #isVisiblyAbstract!private!testing! !
 !Kernel.SharedPool class categoriesFor: #referencesTo:!enquiries!public! !
 
 !Kernel.SourceFiler methodsFor!

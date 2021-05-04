@@ -210,6 +210,11 @@ bindingFor: aString
 	^(self hierarchyBindingFor: aString)
 		ifNil: [self environment ifNotNil: [:env | env bindingFor: aString]]!
 
+bindingFor: aString environment: aNamespace
+	"Answer a variable binding for the named variable in the scope of this class (not including imports). If there is no such variable, then answer nil."
+
+	^(self hierarchyBindingFor: aString) ifNil: [aNamespace ifNotNil: [aNamespace bindingFor: aString]]!
+
 bindingOrNil
 	"Answer the receiver's variable binding, or nil if unbound"
 
@@ -269,7 +274,7 @@ category: category
 	self categories: {self classCategoryClass name: category asString}!
 
 classBindingNames
-	"Answer a Set of the class variable names of the receiver. The answer will include constant names, if any. It does not include any non-class variables defined in the receiver (usually only relevant for Namespaces)."
+	"Answer a <collection> of <String>s that contains the class variable names of the receiver. The answer will include constant names, if any. It does not include any non-class variables defined in the receiver (usually only relevant for Namespaces)."
 
 	^self definedBindings collect: [:each | each key]!
 
@@ -285,9 +290,9 @@ classCategories: categoryCollection
 	classCategories := categoryCollection isEmpty ifFalse: [categoryCollection asArray sort]!
 
 classConstants
-	"Answer a <Set> of <VariableBinding>s, being the class variables of the receiver, but not including class constants."
+	"Answer a <Set> of <VariableBinding>s, being the class constants of the receiver."
 
-	^self bindings select: [:each | each isImmutable and: [each value isSelfEvaluating]]!
+	^self definedBindings select: [:each | each isImmutable and: [each value isSelfEvaluating]]!
 
 classPool
 	"Answer the Dictionary of class variables belonging to the receiver.
@@ -358,6 +363,11 @@ fileOutStem
 	"Preserve original names for classes in Smalltalk to avoid causing source control churn."
 
 	^environment == Smalltalk ifTrue: [self unqualifiedName] ifFalse: [self fullName]!
+
+fullBindingFor: aString environment: aNamespace
+	"Answer a variable binding for the named variable in the scope of this class, and failing that in the specified environment (or the receiver's environment if aNamespace is nil). If there is no such variable, then answer nil."
+
+	^self resolvePathString: aString environment: (aNamespace ifNil: [self environment])!
 
 fullName
 	"Answer the <String> fully qualified name of the receiver, which is a dot-separated path that binds to the receiver from the global namespace, Root."
@@ -493,8 +503,11 @@ name
 
 	^name ifNil: [super name]!
 
-newBindingContextForIdentifier: aString
-	^Kernel.BindingContext source: self identifier: aString!
+newBindingContextForIdentifier: aString environment: aNamespace
+	^Kernel.BindingContext
+		methodClass: self
+		environment: aNamespace
+		identifier: aString!
 
 newClassBuilder: aClassSymbol instanceVariableNames: instVarString classVariableNames: classVarString imports: anArrayOfBindingReferences
 	^ClassBuilder new
@@ -658,10 +671,15 @@ requiresInstallation
 resolveBindingPath: anArray
 	"Private - Attempt to resolve a <VariableBinding> by walking the names in the argument through nested namespaces."
 
+	^self resolveBindingPath: anArray environment: self environment!
+
+resolveBindingPath: anArray environment: aNamespace
+	"Private - Attempt to resolve a <VariableBinding> by walking the names in the argument through nested namespaces."
+
 	| length |
 	length := anArray size.
 	length == 0 ifTrue: [^self binding].
-	^(self resolveUnqualifiedName: (anArray at: 1))
+	^(self resolveUnqualifiedName: (anArray at: 1) environment: aNamespace)
 		ifNotNil: 
 			[:rootBinding |
 			| binding namespace |
@@ -672,7 +690,8 @@ resolveBindingPath: anArray
 					| identifier |
 					namespace := binding value.
 					identifier := anArray at: i.
-					binding := namespace resolvePublicBinding: (self newBindingContextForIdentifier: identifier).
+					binding := namespace
+								resolvePublicBinding: (self newBindingContextForIdentifier: identifier environment: aNamespace).
 					binding isNil ifTrue: [^nil]].
 			binding]!
 
@@ -686,7 +705,7 @@ resolveImportedBinding: aBindingContext
 	current := current superclass.
 	current isNil]
 			whileFalse.
-	^self environment
+	^aBindingContext environment
 		ifNotNil: [:env | env resolveImportedBinding: aBindingContext]!
 
 resolveLocallyImportedBinding: aBindingContext
@@ -701,9 +720,10 @@ resolveLocallyImportedBinding: aBindingContext
 				ifNotNil: [:namespace | (namespace resolvePublicBinding: aBindingContext) ifNotNil: [:binding | ^binding]]].
 	^nil!
 
-resolvePathString: aString
-	(BindingReference isQualifiedName: aString) ifFalse: [^self resolveUnqualifiedName: aString].
-	^self resolveBindingPath: ($. split: aString)!
+resolvePathString: aString environment: aNamespace
+	(BindingReference isQualifiedName: aString)
+		ifFalse: [^self resolveUnqualifiedName: aString environment: aNamespace].
+	^self resolveBindingPath: ($. split: aString) environment: aNamespace!
 
 resolvePublicBinding: aBindingContext
 	"Private - Resolve a binding with public visibility in the receiver's hierarchy, or among its local imports.
@@ -714,7 +734,7 @@ resolvePublicBinding: aBindingContext
 	"Search only the local imports, not the imports of the imports."
 	^self resolveLocallyImportedBinding: aBindingContext!
 
-resolveUnqualifiedName: aString
+resolveUnqualifiedName: aString environment: aNamespace
 	"Private - Attempt to find a binding for the specified unqualified name in the scope of the receiver. Variables defined in the class hierarchy should bind more tightly than those in the namespace (environment) hierarchy. Only after exhausting these hierarchies should the imports be searched, again with the same rule that imports into the class hierarchy bind more tightly than those into the environment hierarchy. In other words the binding resolution rules are:
 		1. Variables defined in the class hierarchy, search first the local class variables, then those of the superclass, and so on up to a root class.
 		2. Variables defined in the enclosing namespace hierarchy (i.e. the class' environment, the environment of the environment, and so on up to the Root namespace).
@@ -722,9 +742,10 @@ resolveUnqualifiedName: aString
 	The search for a variables defined in the class hierarchy cannot encounter cycles. Once the imported namespaces are brought into the mix, however, we can end up revisiting the same namespace more than once because the imports form a directed graph that may have cycles, not necessarily a tree. Obviously there is no point searching any reachable namespace more than once, and we also need the search to terminate, both of which conditions are achieved by maintaining a visited set in a BindingContext object.
 	Namespace imports can be public or private. Private imports are only visited for searches initiated in the importee. Variables can also be private, in which case they can only be resolved locally."
 
-	#namespaceToDo. "Private variables"
-	^(self bindingFor: aString)
-		ifNil: [self resolveImportedBinding: (self newBindingContextForIdentifier: aString)]!
+	^((self hierarchyBindingFor: aString)
+		ifNil: [aNamespace ifNotNil: [aNamespace bindingFor: aString]])
+			ifNil: 
+				[self resolveImportedBinding: (self newBindingContextForIdentifier: aString environment: aNamespace)]!
 
 setClassVarNames: anArray
 	"Private - Change the set of class variables to be those specified in anArray. Existing
@@ -736,8 +757,8 @@ setClassVarNames: anArray
 	| removed added original classVars |
 	classVars := self classPool.
 	original := self definedBindings collect: [:each | each key].
-	removed := original difference: anArray.
-	added := anArray difference: original.
+	removed := original difference: anArray asSet.
+	added := anArray difference: original asSet.
 	^(added notEmpty or: [removed notEmpty]) and: 
 			[removed do: [:each | classVars removeKey: each].
 			added do: 
@@ -996,6 +1017,7 @@ variableSubclass: aClassSymbol instanceVariableNames: instVarString classVariabl
 !Core.Class categoriesFor: #basicRemoveBinding:!bindings!private! !
 !Core.Class categoriesFor: #binding!bindings!public! !
 !Core.Class categoriesFor: #bindingFor:!bindings!public! !
+!Core.Class categoriesFor: #bindingFor:environment:!bindings!public! !
 !Core.Class categoriesFor: #bindingOrNil!bindings!public! !
 !Core.Class categoriesFor: #bindingsDo:!bindings!enumerating!public! !
 !Core.Class categoriesFor: #canModifyBinding:newValue:!bindings!private! !
@@ -1021,6 +1043,7 @@ variableSubclass: aClassSymbol instanceVariableNames: instVarString classVariabl
 !Core.Class categoriesFor: #fileOutName!development!private!source filing! !
 !Core.Class categoriesFor: #fileOutNameForClass:!development!private!source filing! !
 !Core.Class categoriesFor: #fileOutStem!development!private!source filing! !
+!Core.Class categoriesFor: #fullBindingFor:environment:!binding!public! !
 !Core.Class categoriesFor: #fullName!accessing!namespaces!public! !
 !Core.Class categoriesFor: #fullNameFor:!helpers!namespaces!private! !
 !Core.Class categoriesFor: #fullPath!accessing!namespaces!private! !
@@ -1043,7 +1066,7 @@ variableSubclass: aClassSymbol instanceVariableNames: instVarString classVariabl
 !Core.Class categoriesFor: #isLiteral!public!testing! !
 !Core.Class categoriesFor: #localBindingFor:!bindings!public! !
 !Core.Class categoriesFor: #name!accessing!public! !
-!Core.Class categoriesFor: #newBindingContextForIdentifier:!bindings!private! !
+!Core.Class categoriesFor: #newBindingContextForIdentifier:environment:!bindings!private! !
 !Core.Class categoriesFor: #newClassBuilder:instanceVariableNames:classVariableNames:imports:!class hierarchy-adding!private! !
 !Core.Class categoriesFor: #owningPackage!development!public!source filing! !
 !Core.Class categoriesFor: #owningPackage:!accessing!development!public! !
@@ -1066,11 +1089,12 @@ variableSubclass: aClassSymbol instanceVariableNames: instVarString classVariabl
 !Core.Class categoriesFor: #rename:in:!class hierarchy-mutating!private! !
 !Core.Class categoriesFor: #requiresInstallation!public!testing! !
 !Core.Class categoriesFor: #resolveBindingPath:!bindings!private! !
+!Core.Class categoriesFor: #resolveBindingPath:environment:!bindings!private! !
 !Core.Class categoriesFor: #resolveImportedBinding:!bindings!private! !
 !Core.Class categoriesFor: #resolveLocallyImportedBinding:!bindings!private! !
-!Core.Class categoriesFor: #resolvePathString:!bindings!private! !
+!Core.Class categoriesFor: #resolvePathString:environment:!bindings!private! !
 !Core.Class categoriesFor: #resolvePublicBinding:!bindings!private! !
-!Core.Class categoriesFor: #resolveUnqualifiedName:!bindings!private! !
+!Core.Class categoriesFor: #resolveUnqualifiedName:environment:!bindings!private! !
 !Core.Class categoriesFor: #setClassVarNames:!class variables!private! !
 !Core.Class categoriesFor: #setGuid:!accessing!private! !
 !Core.Class categoriesFor: #setName:environment:!accessing!private! !

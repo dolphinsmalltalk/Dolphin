@@ -119,6 +119,13 @@ package methodNames
 	add: 'Category class' -> #categoryIcon;
 	add: 'Character class' -> #safeCodePoint:;
 	add: 'CompiledMethod class' -> #fromString:;
+	add: 'Compiler class' -> #compileDebugExpression:in:evaluationPools:;
+	add: 'Compiler class' -> #compileDebugMethod:in:;
+	add: 'Compiler class' -> #compileExpression:in:flags:;
+	add: 'Compiler class' -> #evaluate:for:evaluationPools:;
+	add: 'Compiler class' -> #evaluate:for:evaluationPools:logged:;
+	add: 'Compiler class' -> #evaluate:for:evaluationPools:logged:ifFail:;
+	add: 'Compiler class' -> #evaluate:for:logged:;
 	add: 'Delay class' -> #resolution;
 	add: 'Delay class' -> #resolution:do:;
 	add: 'Delay class' -> #resolution:set:;
@@ -392,6 +399,74 @@ fromString: aString
 			selector := stream upToEnd asSymbol.
 			theClass compiledMethodAt: selector ifAbsent: []]! !
 !CompiledMethod class categoriesFor: #fromString:!converting!development!public! !
+
+!Compiler class methodsFor!
+
+compileDebugExpression: aString in: aClass evaluationPools: anArray
+	Notification deprecated.
+	^self
+		compileDebugExpression: aString
+		in: aClass
+		environment: nil
+		evaluationPools: anArray!
+
+compileDebugMethod: aString in: aClass
+	Notification deprecated.
+	^self
+		compileDebugMethod: aString
+		in: aClass
+		environment: nil!
+
+compileExpression: aString in: aBehaviorOrNil flags: anInteger
+	Notification deprecated.
+	^self
+		compileExpression: aString
+		in: aBehaviorOrNil
+		environment: nil
+		flags: anInteger!
+
+evaluate: aString for: anObject evaluationPools: anArray
+	Notification deprecated.
+	^self
+		evaluate: aString
+		for: anObject
+		environment: nil
+		evaluationPools: anArray
+		logged: false!
+
+evaluate: aString for: anObject evaluationPools: anArray logged: aBoolean
+	Notification deprecated.
+	^self
+		evaluate: aString
+		for: anObject
+		environment: nil
+		evaluationPools: anArray
+		logged: aBoolean!
+
+evaluate: aString for: anObject evaluationPools: anArray logged: aBoolean ifFail: failBlock
+	Notification deprecated.
+	^self
+		evaluate: aString
+		for: anObject
+		environment: nil
+		evaluationPools: anArray
+		logged: aBoolean
+		ifFail: failBlock!
+
+evaluate: aString for: anObject logged: aBoolean
+	Notification deprecated.
+	^self
+		evaluate: aString
+		for: anObject
+		evaluationPools: nil
+		logged: aBoolean! !
+!Compiler class categoriesFor: #compileDebugExpression:in:evaluationPools:!compiling!public! !
+!Compiler class categoriesFor: #compileDebugMethod:in:!compiling!public! !
+!Compiler class categoriesFor: #compileExpression:in:flags:!compiling!public! !
+!Compiler class categoriesFor: #evaluate:for:evaluationPools:!evaluating!public! !
+!Compiler class categoriesFor: #evaluate:for:evaluationPools:logged:!evaluating!public! !
+!Compiler class categoriesFor: #evaluate:for:evaluationPools:logged:ifFail:!evaluating!public! !
+!Compiler class categoriesFor: #evaluate:for:logged:!evaluating!public! !
 
 !CompilerNotification methodsFor!
 

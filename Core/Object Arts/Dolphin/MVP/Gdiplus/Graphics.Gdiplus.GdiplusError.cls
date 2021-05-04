@@ -37,7 +37,8 @@ _descriptionFormat
 
 initialize
 	super initialize.
-	win32Error := Win32Error new!
+	"Gdiplus defines an enum, Status, that creates an ambiguous definition of Win32Error, so we fully qualify it"
+	win32Error := OS.Win32Error new!
 
 win32ErrorDescription
 	"Private - Answer the win32Error description or the empty string to avoid 

@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Core.Object subclass: #'Tools.OAIDEExtensions'
+Core.Object subclass: #'Tools.Examples.OAIDEExtensions'
 	instanceVariableNames: 'flags'
 	classVariableNames: 'Current'
 	imports: #(#{SHDocVw private})
@@ -9,8 +9,8 @@ Core.Object subclass: #'Tools.OAIDEExtensions'
 		'ClassCommentTemplateMask' -> 16r1.
 		'KeyHelpMask' -> 16r2
 	}!
-Tools.OAIDEExtensions guid: (Core.GUID fromString: '{7803cf6a-7f63-44a5-80a6-feb5e0af07a2}')!
-Tools.OAIDEExtensions comment: 'Class to host Object Arts extensions to the standard Dolphin IDE tools.
+Tools.Examples.OAIDEExtensions guid: (Core.GUID fromString: '{7803cf6a-7f63-44a5-80a6-feb5e0af07a2}')!
+Tools.Examples.OAIDEExtensions comment: 'Class to host Object Arts extensions to the standard Dolphin IDE tools.
 
 This is mainly intended as a sample to demonstrate how to implement IDE extensions in Dolphin. It illustrates:
 - how to intercept the opening of new tools of particular classes (i.e. hooking the class #viewOpened: event) 
@@ -18,8 +18,8 @@ This is mainly intended as a sample to demonstrate how to implement IDE extensio
 - using <ClosedCommandDescription>s to build "closed" commands that are pre-targeted at a particular receiver and which can manage their own enablement/disablement state.
 - registering with the system to appear in ''User Preferences'' so that extensions can be enabled and disabled by the user.
 - use of the IE web browser control to display generated HTML.'!
-!Tools.OAIDEExtensions categoriesForClass!Kernel-Objects! !
-!Tools.OAIDEExtensions methodsFor!
+!Tools.Examples.OAIDEExtensions categoriesForClass!Kernel-Objects! !
+!Tools.Examples.OAIDEExtensions methodsFor!
 
 allToolClasses
 	^SmalltalkToolShell allSubclasses copyWith: SmalltalkWorkspaceDocument!
@@ -277,7 +277,9 @@ release
 	"Private - Remove references to objects that may refer back to the receiver."
 
 	super release.
-	Smalltalk developmentSystem unregisterTool: self.
+	Smalltalk developmentSystem
+		unregisterTool: self;
+		removeEventsTriggeredFor: self.
 	self allToolClasses do: [:each | each removeEventsTriggeredFor: self]!
 
 streamHtml: aStream intoBrowser: browser
@@ -367,35 +369,35 @@ variableDescriptionsFor: aClass
 						cr].
 			stream cr].
 	^stream contents! !
-!Tools.OAIDEExtensions categoriesFor: #allToolClasses!constants!private! !
-!Tools.OAIDEExtensions categoriesFor: #allVisibleSubViewsOf:do:!helpers!private! !
-!Tools.OAIDEExtensions categoriesFor: #baseProtocolFor:named:!development!private! !
-!Tools.OAIDEExtensions categoriesFor: #browseKeyBindingsOfShell:!operations!private! !
-!Tools.OAIDEExtensions categoriesFor: #classBrowserClasses!constants!private! !
-!Tools.OAIDEExtensions categoriesFor: #displayOn:!initializing!public! !
-!Tools.OAIDEExtensions categoriesFor: #enableClassCommentTemplate!accessing!public! !
-!Tools.OAIDEExtensions categoriesFor: #enableClassCommentTemplate:!accessing!public! !
-!Tools.OAIDEExtensions categoriesFor: #enableKeyBindingsHelp!accessing!public! !
-!Tools.OAIDEExtensions categoriesFor: #enableKeyBindingsHelp:!accessing!public! !
-!Tools.OAIDEExtensions categoriesFor: #extendClassCommentMenu:!event handling!private! !
-!Tools.OAIDEExtensions categoriesFor: #extendHelpMenu:!helpers!private! !
-!Tools.OAIDEExtensions categoriesFor: #initialize!initializing!private! !
-!Tools.OAIDEExtensions categoriesFor: #nonClassBrowserTools!accessing!private! !
-!Tools.OAIDEExtensions categoriesFor: #observeBrowserClass:!initializing!private! !
-!Tools.OAIDEExtensions categoriesFor: #observeSystemEvents!initializing!private! !
-!Tools.OAIDEExtensions categoriesFor: #observeToolClass:!initializing!private! !
-!Tools.OAIDEExtensions categoriesFor: #observeToolEvents!initializing!private! !
-!Tools.OAIDEExtensions categoriesFor: #onBrowserOpened:!event handling!private! !
-!Tools.OAIDEExtensions categoriesFor: #onClassAdded:!event handling!private! !
-!Tools.OAIDEExtensions categoriesFor: #onToolOpened:!event handling!private! !
-!Tools.OAIDEExtensions categoriesFor: #printHtmlDescriptionOfKeyBindingsForShell:on:!helpers!private! !
-!Tools.OAIDEExtensions categoriesFor: #printHtmlTableOfKeyBindingsForView:on:inUse:!helpers!private! !
-!Tools.OAIDEExtensions categoriesFor: #printInlineStyleSheetOn:!private! !
-!Tools.OAIDEExtensions categoriesFor: #release!dependency!private! !
-!Tools.OAIDEExtensions categoriesFor: #streamHtml:intoBrowser:!operations!private! !
-!Tools.OAIDEExtensions categoriesFor: #variableDescriptionsFor:!development!private! !
+!Tools.Examples.OAIDEExtensions categoriesFor: #allToolClasses!constants!private! !
+!Tools.Examples.OAIDEExtensions categoriesFor: #allVisibleSubViewsOf:do:!helpers!private! !
+!Tools.Examples.OAIDEExtensions categoriesFor: #baseProtocolFor:named:!development!private! !
+!Tools.Examples.OAIDEExtensions categoriesFor: #browseKeyBindingsOfShell:!operations!private! !
+!Tools.Examples.OAIDEExtensions categoriesFor: #classBrowserClasses!constants!private! !
+!Tools.Examples.OAIDEExtensions categoriesFor: #displayOn:!initializing!public! !
+!Tools.Examples.OAIDEExtensions categoriesFor: #enableClassCommentTemplate!accessing!public! !
+!Tools.Examples.OAIDEExtensions categoriesFor: #enableClassCommentTemplate:!accessing!public! !
+!Tools.Examples.OAIDEExtensions categoriesFor: #enableKeyBindingsHelp!accessing!public! !
+!Tools.Examples.OAIDEExtensions categoriesFor: #enableKeyBindingsHelp:!accessing!public! !
+!Tools.Examples.OAIDEExtensions categoriesFor: #extendClassCommentMenu:!event handling!private! !
+!Tools.Examples.OAIDEExtensions categoriesFor: #extendHelpMenu:!helpers!private! !
+!Tools.Examples.OAIDEExtensions categoriesFor: #initialize!initializing!private! !
+!Tools.Examples.OAIDEExtensions categoriesFor: #nonClassBrowserTools!accessing!private! !
+!Tools.Examples.OAIDEExtensions categoriesFor: #observeBrowserClass:!initializing!private! !
+!Tools.Examples.OAIDEExtensions categoriesFor: #observeSystemEvents!initializing!private! !
+!Tools.Examples.OAIDEExtensions categoriesFor: #observeToolClass:!initializing!private! !
+!Tools.Examples.OAIDEExtensions categoriesFor: #observeToolEvents!initializing!private! !
+!Tools.Examples.OAIDEExtensions categoriesFor: #onBrowserOpened:!event handling!private! !
+!Tools.Examples.OAIDEExtensions categoriesFor: #onClassAdded:!event handling!private! !
+!Tools.Examples.OAIDEExtensions categoriesFor: #onToolOpened:!event handling!private! !
+!Tools.Examples.OAIDEExtensions categoriesFor: #printHtmlDescriptionOfKeyBindingsForShell:on:!helpers!private! !
+!Tools.Examples.OAIDEExtensions categoriesFor: #printHtmlTableOfKeyBindingsForView:on:inUse:!helpers!private! !
+!Tools.Examples.OAIDEExtensions categoriesFor: #printInlineStyleSheetOn:!private! !
+!Tools.Examples.OAIDEExtensions categoriesFor: #release!dependency!private! !
+!Tools.Examples.OAIDEExtensions categoriesFor: #streamHtml:intoBrowser:!operations!private! !
+!Tools.Examples.OAIDEExtensions categoriesFor: #variableDescriptionsFor:!development!private! !
 
-!Tools.OAIDEExtensions class methodsFor!
+!Tools.Examples.OAIDEExtensions class methodsFor!
 
 current
 	^Current!
@@ -433,10 +435,10 @@ uninitialize
 	Current isNil ifTrue: [^self].
 	Current release.
 	Current := nil! !
-!Tools.OAIDEExtensions class categoriesFor: #current!accessing!public! !
-!Tools.OAIDEExtensions class categoriesFor: #initialize!initializing!public! !
-!Tools.OAIDEExtensions class categoriesFor: #new!instance creation!public! !
-!Tools.OAIDEExtensions class categoriesFor: #onPreStripImage!class hierarchy-removing!private! !
-!Tools.OAIDEExtensions class categoriesFor: #publishedAspectsOfInstances!constants!development!public! !
-!Tools.OAIDEExtensions class categoriesFor: #uninitialize!class hierarchy-removing!public! !
+!Tools.Examples.OAIDEExtensions class categoriesFor: #current!accessing!public! !
+!Tools.Examples.OAIDEExtensions class categoriesFor: #initialize!initializing!public! !
+!Tools.Examples.OAIDEExtensions class categoriesFor: #new!instance creation!public! !
+!Tools.Examples.OAIDEExtensions class categoriesFor: #onPreStripImage!class hierarchy-removing!private! !
+!Tools.Examples.OAIDEExtensions class categoriesFor: #publishedAspectsOfInstances!constants!development!public! !
+!Tools.Examples.OAIDEExtensions class categoriesFor: #uninitialize!class hierarchy-removing!public! !
 

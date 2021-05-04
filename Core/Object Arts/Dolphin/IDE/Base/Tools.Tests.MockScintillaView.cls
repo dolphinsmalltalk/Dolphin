@@ -55,7 +55,7 @@ setCurrentTextStyles: aCollection
 			each basicId isNil ifTrue: [each basicId: availableStyles next].
 			newStylesByName at: each name put: each.
 			newStylesById at: each basicId put: each].
-	newStylesByName at: #normal ifAbsentPut: [Scintilla.TextStyle normal].
+	newStylesByName at: #normal ifAbsentPut: [TextStyle normal].
 	currentTextStyles := newStylesByName.
 	styleIdMap := newStylesById!
 
@@ -87,7 +87,7 @@ styleNext: anInteger mask: anInteger2
 styleWithId: anInteger
 	^styleIdMap at: anInteger
 		ifAbsent: 
-			[Scintilla.TextStyle new
+			[TextStyle new
 				name: anInteger;
 				yourself]!
 

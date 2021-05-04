@@ -84,6 +84,7 @@ accept: aBoolean methodSource: aString
 	[devsys
 		compile: aString
 		in: method methodClass
+		environment: method environment
 		categories: nil
 		package: nil
 		extraFlags: Interactive]
@@ -320,7 +321,11 @@ buildParseTree
 		ifNotNil: 
 			[:method |
 			method isExpression
-				ifTrue: [Parser parseExpression: method getSource in: method methodClass]
+				ifTrue: 
+					[Parser
+						parseExpression: method getSource
+						in: method methodClass
+						environment: method environment]
 				ifFalse: [Parser parseExistingMethodNoError: method]]!
 
 canImplementMessage
@@ -567,13 +572,14 @@ frames
 
 	^stackPresenter list!
 
-generateStubFor: aMessage inClass: aClass 
-	^(self systemModel 
+generateStubFor: aMessage inClass: aClass
+	^(self systemModel
 		compile: (self stubTextFor: aMessage inClass: aClass)
 		in: aClass
+		environment: nil
 		categories: #()
 		package: nil
-		extraFlags: 0) method 
+		extraFlags: 0) method
 		notNil!
 
 hasEditableMethodSelected
@@ -936,7 +942,7 @@ onWalkback: titleString topFrame: aStackFrame resumable: aBoolean
 	self suspendProcess!
 
 parseContext
-	^self selectedMethod ifNotNil: [:method | method methodClass]!
+	^self selectedMethod!
 
 parseTree
 	^sourcePresenter parseTree!

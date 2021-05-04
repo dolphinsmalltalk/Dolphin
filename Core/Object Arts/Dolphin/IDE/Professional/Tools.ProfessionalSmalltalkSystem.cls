@@ -110,7 +110,10 @@ recompileDiffs: aCompiledMethod
 		caption: aCompiledMethod printString;
 		compare: aCompiledMethod disassembly
 			id: 'Current'
-			and: (Compiler compile: aCompiledMethod getSource in: aCompiledMethod methodClass) disassembly
+			and: (Compiler
+					compile: aCompiledMethod getSource
+					in: aCompiledMethod methodClass
+					environment: aCompiledMethod environment) disassembly
 			id: 'Recompiled'!
 
 systemBrowserClass

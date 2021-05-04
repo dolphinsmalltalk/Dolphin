@@ -56,8 +56,6 @@ package setClassNames: #(
 	#{UI.Tests.MoenTreeViewTest}
 	#{UI.Tests.MoenTreeViewTest2}
 	#{UI.Tests.MultilineTextEditTest}
-	#{UI.Tests.MultipleSelectionListBoxTest}
-	#{UI.Tests.MultipleSelectionListViewTest}
 	#{UI.Tests.MultiSelectListBoxTest}
 	#{UI.Tests.MultiSelectListViewTest}
 	#{UI.Tests.PresenterTest}
@@ -116,7 +114,6 @@ package setPrerequisites: #(
 	'..\System\Filer\Dolphin Literal Filer Tests'
 	'Metafiles\Dolphin Metafile Records'
 	'Views\MoenTree\Dolphin MoenTree View'
-	'Deprecated\Dolphin MVP (Deprecated)'
 	'Base\Dolphin MVP Base'
 	'Presenters\Number\Dolphin Number Presenter'
 	'Views\Buttons\Dolphin Push Buttons'
@@ -255,12 +252,6 @@ Core.Tests.DolphinTest subclass: #'UI.Tests.LayoutManagerTest'
 	classConstants: {}!
 Core.Tests.DolphinTest subclass: #'UI.Tests.MoenTreeViewTest'
 	instanceVariableNames: 'treeModel treeView nodeA nodeB nodeC nodeD nodeE nodeF shell scroller useShell'
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-Core.Tests.DolphinTest subclass: #'UI.Tests.MultipleSelectionListBoxTest'
-	instanceVariableNames: 'box'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -410,12 +401,6 @@ UI.Tests.LayoutManagerTest subclass: #'UI.Tests.GridLayoutTest'
 	classInstanceVariableNames: ''
 	classConstants: {}!
 UI.Tests.LayoutManagerTest subclass: #'UI.Tests.ProportionalLayoutTest'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-UI.Tests.MultipleSelectionListBoxTest subclass: #'UI.Tests.MultipleSelectionListViewTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

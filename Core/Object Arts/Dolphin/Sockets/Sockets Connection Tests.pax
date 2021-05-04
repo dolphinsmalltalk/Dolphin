@@ -1,42 +1,49 @@
 ﻿| package |
 package := Package name: 'Sockets Connection Tests'.
-package paxVersion: 2.1;
+package paxVersion: 1;
 	basicComment: ''.
 
 
-package setClassNames: #(
-	#{Smalltalk.SocketTest}
-).
+package classNames
+	add: #SocketTest;
+	yourself.
 
-package setMethodNames: #(
-	#(#{Net.Tests.SocketErrorTest} #testSocketWouldBlock)
-).
+package methodNames
+	add: #SocketErrorTest -> #testSocketWouldBlock;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
 
 package setPrerequisites: #(
 	'..\Base\Dolphin'
 	'Dolphin Sockets'
 	'Dolphin Sockets Tests'
-	'Sockets Connection'
-).
+	'Sockets Connection').
 
 package!
 
 "Class Definitions"!
 
-Net.Tests.AbstractSocketTest subclass: #SocketTest
+AbstractSocketTest subclass: #SocketTest
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+"Global Aliases"!
+
 
 "Loose Methods"!
 
-!Net.Tests.SocketErrorTest methodsFor!
+!SocketErrorTest methodsFor!
 
 testSocketWouldBlock
 	self should: [SocketError signalWith: WSAEWOULDBLOCK] raise: Smalltalk.SocketWouldBlock! !
-!Net.Tests.SocketErrorTest categoriesFor: #testSocketWouldBlock!public!unit tests! !
+!SocketErrorTest categoriesFor: #testSocketWouldBlock!public!unit tests! !
 
 "End of package definition"!
 

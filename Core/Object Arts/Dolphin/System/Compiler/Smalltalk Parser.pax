@@ -94,7 +94,7 @@ Core.Object subclass: #'Kernel.ParseNodeVisitor'
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Core.Object subclass: #'Kernel.Parser'
-	instanceVariableNames: 'scanner currentToken nextToken errorBlock methodNode st80Syntax comments methodClass source'
+	instanceVariableNames: 'scanner currentToken nextToken errorBlock methodNode st80Syntax comments methodClass source environment'
 	classVariableNames: 'AllowEmptyStatements'
 	imports: #(#{External.ExtCallArgTypes} #{Kernel.ParseErrorCodes})
 	classInstanceVariableNames: ''
@@ -130,7 +130,7 @@ Kernel.StProgramNode subclass: #'Kernel.StExternalArgTypeNode'
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Kernel.StProgramNode subclass: #'Kernel.StMethodNode'
-	instanceVariableNames: 'selector selectorParts body source arguments tag replacements nodeReplacements methodClass'
+	instanceVariableNames: 'selector selectorParts body source arguments tag replacements nodeReplacements methodClass environment'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -381,9 +381,12 @@ Kernel.StLiteralToken subclass: #'Kernel.StNumberLiteralToken'
 !Core.Behavior methodsFor!
 
 parseTreeFor: aSymbol
+	| method |
+	method := self compiledMethodAt: aSymbol.
 	^Parser
-		parseMethod: (self sourceCodeAt: aSymbol)
+		parseMethod: method getSource
 		in: self
+		environment: method environment
 		onError: [:aString :pos | ^nil]! !
 !Core.Behavior categoriesFor: #parseTreeFor:!public!RefactoringBrowser! !
 
@@ -407,6 +410,7 @@ parseTreeOnError: aBlock
 	^Parser
 		parseExpression: self getSource
 		in: self methodClass
+		environment: self environment
 		onError: aBlock! !
 !Kernel.CompiledExpression categoriesFor: #parseTreeOnError:!parsing!public! !
 
@@ -416,6 +420,7 @@ parseTreeOnError: aBlock
 	^Parser
 		parseMethod: self getSource
 		in: self methodClass
+		environment: self environment
 		onError: aBlock! !
 !Kernel.CompiledMethod categoriesFor: #parseTreeOnError:!parsing!public! !
 

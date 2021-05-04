@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
 Core.Object subclass: #'Kernel.Parser'
-	instanceVariableNames: 'scanner currentToken nextToken errorBlock methodNode st80Syntax comments methodClass source'
+	instanceVariableNames: 'scanner currentToken nextToken errorBlock methodNode st80Syntax comments methodClass source environment'
 	classVariableNames: 'AllowEmptyStatements'
 	imports: #(#{External.ExtCallArgTypes} #{Kernel.ParseErrorCodes})
 	classInstanceVariableNames: ''
@@ -52,6 +52,9 @@ canHaveStatementsAfterReturn
 
 cascadeNodeClass
 	^StCascadeNode!
+
+environment: aNamespace
+	environment := aNamespace!
 
 errorBlock: aBlock
 	"Set the errorBlock to be evaluated when a syntax error is detected in the input stream.
@@ -284,7 +287,8 @@ parseExpression: aString
 				arguments: #().
 	method
 		source: aString;
-		methodClass: methodClass.
+		methodClass: methodClass;
+		environment: environment.
 	body := self parseStatementsOf: method.
 	method body: body.
 	self atEnd
@@ -622,11 +626,13 @@ parseMethod: aString
 	^node
 		source: aString;
 		methodClass: methodClass;
+		environment: environment;
 		yourself!
 
-parseMethod: aString in: aClass errorBlock: monadicBlock 
+parseMethod: aString in: aClass environment: aNamespace errorBlock: monadicBlock
 	self errorBlock: monadicBlock.
 	methodClass := aClass.
+	environment := aNamespace.
 	self initializeParserWith: aString.
 	^self parseMethod: aString!
 
@@ -1157,6 +1163,7 @@ variableNodeClass
 !Kernel.Parser categoriesFor: #braceArrayNodeClass!constants!private! !
 !Kernel.Parser categoriesFor: #canHaveStatementsAfterReturn!public!testing! !
 !Kernel.Parser categoriesFor: #cascadeNodeClass!constants!private! !
+!Kernel.Parser categoriesFor: #environment:!public! !
 !Kernel.Parser categoriesFor: #errorBlock:!accessing!public! !
 !Kernel.Parser categoriesFor: #errorPosition!error handling!public! !
 !Kernel.Parser categoriesFor: #externalReferenceTypeFor:!parsing!private! !
@@ -1200,7 +1207,7 @@ variableNodeClass
 !Kernel.Parser categoriesFor: #parseMessagePattern!parsing!private! !
 !Kernel.Parser categoriesFor: #parseMethod!parsing!private! !
 !Kernel.Parser categoriesFor: #parseMethod:!accessing!private! !
-!Kernel.Parser categoriesFor: #parseMethod:in:errorBlock:!parsing!public! !
+!Kernel.Parser categoriesFor: #parseMethod:in:environment:errorBlock:!parsing!public! !
 !Kernel.Parser categoriesFor: #parseMethodParameter!parsing!private! !
 !Kernel.Parser categoriesFor: #parseNumberLiteral!parsing!private! !
 !Kernel.Parser categoriesFor: #parseOptimizedExpression!parsing!private! !
@@ -1275,6 +1282,7 @@ parseExistingMethodNoError: aCompiledMethod
 	^self
 		parseMethod: aCompiledMethod getSource
 		in: aCompiledMethod methodClass
+		environment: aCompiledMethod environment
 		onError: 
 			[:err |
 			Notification signal: ('Error <1p> on line <2p> of <3p> -> <4s>'
@@ -1288,18 +1296,34 @@ parseExpression: aString
 	^self parseExpression: aString onError: nil!
 
 parseExpression: aString in: aClass
-	^self parseExpression: aString in: aClass onError: nil!
+	^self parseExpression: aString in: aClass environment: aClass environment!
 
-parseExpression: aString in: aClass onError: aBlock 
+parseExpression: aString in: aClass environment: aNamespace
+	^self
+		parseExpression: aString
+		in: aClass
+		environment: aNamespace
+		onError: nil!
+
+parseExpression: aString in: aClass environment: aNamespace onError: aBlock
 	| node parser |
-	parser := self new.
-	parser errorBlock: aBlock.
-	parser methodClass: aClass.
-	parser initializeParserWith: aString.
+	parser := self new
+				errorBlock: aBlock;
+				methodClass: aClass;
+				environment: aNamespace;
+				initializeParserWith: aString;
+				yourself.
 	node := parser parseExpression: aString.
-	^(node statements size == 1 and: [node temporaries isEmpty]) 
+	^(node statements size == 1 and: [node temporaries isEmpty])
 		ifTrue: [node statements first]
 		ifFalse: [node]!
+
+parseExpression: aString in: aClass onError: aBlock
+	^self
+		parseExpression: aString
+		in: aClass
+		environment: aClass environment
+		onError: aBlock!
 
 parseExpression: aString onError: aBlock
 	^self
@@ -1316,31 +1340,41 @@ parseExpressionNoError: aString in: aClass
 parseMethod: aString
 	^self parseMethod: aString in: UndefinedObject!
 
-parseMethod: aString in: aClass 
-	^self 
+parseMethod: aString in: aClass
+	^self
 		parseMethod: aString
 		in: aClass
+		environment: aClass environment!
+
+parseMethod: aString in: aClass environment: aNamespace
+	^self
+		parseMethod: aString
+		in: aClass
+		environment: aNamespace
 		onError: nil!
 
-parseMethod: aString in: aClass onError: aBlock 
-	^self new 
+parseMethod: aString in: aClass environment: aNamespace onError: aBlock
+	^self new
 		parseMethod: aString
 		in: aClass
+		environment: aNamespace
 		errorBlock: aBlock!
 
 parseMethod: aString onError: aBlock
 	^self
 		parseMethod: aString
 		in: UndefinedObject
+		environment: Smalltalk
 		onError: aBlock!
 
 parseMethodNoError: aString
 	^self parseMethodNoError: aString in: UndefinedObject!
 
-parseMethodNoError: aString in: methodClass 
-	^self 
+parseMethodNoError: aString in: methodClass
+	^self
 		parseMethod: aString
 		in: methodClass
+		environment: methodClass environment
 		onError: [:err | ^nil]!
 
 parseMethodPattern: aString
@@ -1367,12 +1401,15 @@ warningClass
 !Kernel.Parser class categoriesFor: #parseExistingMethodNoError:!commands!public! !
 !Kernel.Parser class categoriesFor: #parseExpression:!parsing!public! !
 !Kernel.Parser class categoriesFor: #parseExpression:in:!parsing!public! !
+!Kernel.Parser class categoriesFor: #parseExpression:in:environment:!parsing!public! !
+!Kernel.Parser class categoriesFor: #parseExpression:in:environment:onError:!parsing!public! !
 !Kernel.Parser class categoriesFor: #parseExpression:in:onError:!parsing!public! !
 !Kernel.Parser class categoriesFor: #parseExpression:onError:!parsing!public! !
 !Kernel.Parser class categoriesFor: #parseExpressionNoError:in:!parsing!public! !
 !Kernel.Parser class categoriesFor: #parseMethod:!parsing!public! !
 !Kernel.Parser class categoriesFor: #parseMethod:in:!parsing!public! !
-!Kernel.Parser class categoriesFor: #parseMethod:in:onError:!parsing!public! !
+!Kernel.Parser class categoriesFor: #parseMethod:in:environment:!parsing!public! !
+!Kernel.Parser class categoriesFor: #parseMethod:in:environment:onError:!parsing!public! !
 !Kernel.Parser class categoriesFor: #parseMethod:onError:!parsing!public! !
 !Kernel.Parser class categoriesFor: #parseMethodNoError:!parsing!public! !
 !Kernel.Parser class categoriesFor: #parseMethodNoError:in:!parsing!public! !

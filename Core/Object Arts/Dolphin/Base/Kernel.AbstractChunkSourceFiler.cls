@@ -82,6 +82,14 @@ endChunk
 		nextPutAll: ' !!';
 		cr!
 
+environment
+	^self subclassResponsibility
+!
+
+environment: aNamespace
+	self subclassResponsibility
+!
+
 fileIn
 	"File in the expressions/definitions from receiver's source stream, which is
 	expected to be in the receiver's chunk format. Any methods that fail to compile are stubbed 
@@ -92,10 +100,12 @@ fileIn
 			[stream skipSeparators.
 			(stream peekFor: $!!)
 				ifTrue: 
-					[| chunk reader |
+					[| reader |
 					"#methodsFor: expression (we hope) - don't log evaluation"
-					chunk := self nextChunk.
-					reader := Compiler evaluate: chunk for: self evaluationContext.
+					reader := Compiler
+								evaluate: self nextChunk
+								for: self evaluationContext
+								environment: self environment.
 					reader isNil
 						ifTrue: 
 							["The above evaluation failed to compile and the error will have
@@ -110,7 +120,10 @@ fileIn
 					Compiler
 						evaluate: chunk
 						for: self evaluationContext
+						environment: self environment
 						logged: true]]]
+			on: QueryEnvironmentNotification
+			do: [:ex | ex resume: self environment]
 			on: MethodCompileFailed
 			do: 
 				[:n |
@@ -201,6 +214,8 @@ storeSourceString: aString forMethod: aCompiledMethod
 !Kernel.AbstractChunkSourceFiler categoriesFor: #emitHeaderForMethodsOf:!private!source filing-file out! !
 !Kernel.AbstractChunkSourceFiler categoriesFor: #emitString:!private!source filing-file out! !
 !Kernel.AbstractChunkSourceFiler categoriesFor: #endChunk!private!source filing-file out! !
+!Kernel.AbstractChunkSourceFiler categoriesFor: #environment!accessing!public! !
+!Kernel.AbstractChunkSourceFiler categoriesFor: #environment:!accessing!public! !
 !Kernel.AbstractChunkSourceFiler categoriesFor: #fileIn!public!source filing-file in! !
 !Kernel.AbstractChunkSourceFiler categoriesFor: #fileOutExpression:!public!source filing-file out! !
 !Kernel.AbstractChunkSourceFiler categoriesFor: #getSourceFromDescriptor:!public!source filing-file in! !

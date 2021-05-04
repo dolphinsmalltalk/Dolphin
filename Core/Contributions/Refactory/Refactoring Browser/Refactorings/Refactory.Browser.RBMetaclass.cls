@@ -27,10 +27,13 @@ directlyDefinesClassVariable: aString
 directlyImportsNamespace: aString
 	^self nonMetaclass directlyImportsNamespace: aString!
 
+environment
+	^self nonMetaclass environment!
+
 fullyQualifiedReference
 	"Answer a <BindingReference> to this class."
 
-	^self soleInstance fullyQualifiedReference meta!
+	^self nonMetaclass fullyQualifiedReference meta!
 
 isMeta
 	^true!
@@ -69,6 +72,7 @@ unqualifiedName
 !Refactory.Browser.RBMetaclass categoriesFor: #classBindingNames!public! !
 !Refactory.Browser.RBMetaclass categoriesFor: #directlyDefinesClassVariable:!public!testing! !
 !Refactory.Browser.RBMetaclass categoriesFor: #directlyImportsNamespace:!public!testing! !
+!Refactory.Browser.RBMetaclass categoriesFor: #environment!accessing!public! !
 !Refactory.Browser.RBMetaclass categoriesFor: #fullyQualifiedReference!converting!public! !
 !Refactory.Browser.RBMetaclass categoriesFor: #isMeta!public!testing! !
 !Refactory.Browser.RBMetaclass categoriesFor: #localBindingFor:!binding!public! !

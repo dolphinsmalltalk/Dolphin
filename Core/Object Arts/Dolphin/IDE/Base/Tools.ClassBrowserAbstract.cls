@@ -1689,9 +1689,12 @@ packages: aCollection
 	classesPresenter packages: aCollection asArray!
 
 parseContext
-	"Answer the class in who's context methods should be compiled."
+	"Answer the {Class. Namespace} pair in who's context methods should be compiled."
 
-	^self actualClass!
+	^self method
+		ifNil: 
+			[self actualClass
+				ifNotNil: [:class | ParseContext methodClass: class environment: class environment]]!
 
 parseTree
 	^methodBrowserPresenter parseTree!
@@ -2170,24 +2173,29 @@ saveNewMethod: aString
 	method := self method.
 	newMethod := method isNil
 				ifTrue: 
-					[| cat class categories |
+					[| cat class categories package |
 					cat := self category.
 					categories := (cat notNil and: [cat acceptsAdditions])
 								ifTrue: [{cat}]
 								ifFalse: [self model defaultMethodCategories].
 					class := self classForNewMethod.
 					class isNil ifTrue: [^self].
+					package := self packageForNewMethod.
 					methodBrowserPresenter
 						saveMethod: aString
 						in: class
+						environment: (package ifNotNil: [package environment])
 						categories: categories
-						package: self packageForNewMethod]
+						package: package]
 				ifFalse: 
-					[newMethod := methodBrowserPresenter
+					[| package |
+					package := method owningPackage.
+					newMethod := methodBrowserPresenter
 								saveMethod: aString
 								in: method methodClass
+								environment: (package ?? method) environment
 								categories: method realCategories
-								package: method owningPackage].
+								package: package].
 	"When a method is saved it may no longer match the filter. If this is the case we reselect method
 	 causing the filter to be reset, preserving the status model value in case there were any compilation
 	 warnings."

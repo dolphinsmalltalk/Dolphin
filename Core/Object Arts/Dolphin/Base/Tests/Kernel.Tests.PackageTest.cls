@@ -320,11 +320,11 @@ testLegacyFormatErrorQualifiedSourceVariableName
 	package paxVersion: 1.
 	"PoolConstantDictionary instances only support Smalltalk as their environment because it is only used for legacy packages, but we want to test a theoretical sourceObject that can live in any Namespace."
 	anonClass := Smalltalk.PoolConstantsDictionary newAnonymousSubclass.
-	anonClass compile: 'environment ^Core.Tests'.
+	anonClass compile: 'environment ^Kernel.Tests'.
 	pool := anonClass named: #TestPool.
 	self class environment at: #TestPool put: pool.
 	
-	[ref := #{Core.Tests.TestPool}.
+	[ref := #{Kernel.Tests.TestPool}.
 	package basicAddVariableNamed: ref.
 	filerClass := package sourceFilerClass.
 	self assert: filerClass equals: LegacyChunkSourceFiler.
@@ -336,19 +336,28 @@ testLegacyFormatErrorQualifiedSourceVariableName
 			ensure: [self class environment removeKey: #TestPool]!
 
 testLegacyFormatErrorQualifiedSuperclassName
+	"Test that if a class in Smalltalk is defined as a subclass of a class that is not bindable from Smalltalk, that it cannot be a member of a legacy format package (because the superclass will not be bindable without a qualified name)."
+
 	| package filerClass filer testClass |
 	package := Package new.
 	package paxVersion: 1.
-	testClass := #{Smalltalk.SocketTest} valueOrNil.
-	self skipUnless: [testClass notNil].
-	package classNames add: testClass fullyQualifiedReference.
+	testClass := self class
+				subclass: #__Foo__
+				instanceVariableNames: ''
+				classVariableNames: ''
+				imports: #()
+				classInstanceVariableNames: ''
+				classConstants: {}.
+	
+	[package classNames add: testClass fullyQualifiedReference.
 	filerClass := package sourceFilerClass.
 	self assert: filerClass equals: LegacyChunkSourceFiler.
 	filer := filerClass on: String writeStream.
 	self
 		should: [package fileOutOn: filer]
 		raise: SourceFormatNotSupportedError
-		matching: [:ex | ex tag == testClass]!
+		matching: [:ex | ex tag == testClass]]
+			ensure: [testClass removeFromSystem]!
 
 testLegacyFormatErrorQualifiedUntracedVariable
 	| package filerClass filer ref |
@@ -420,7 +429,9 @@ testLoad70Pax
 		equals: poolConst.
 	self assert: #{Smalltalk.ScribbleTest} value new string equals: 'abc'.
 	method := Object >> #scribble.
-	self assert: method environment equals: Smalltalk.
+	self assert: method environment identicalTo: Smalltalk.
+	self assert: method owningPackage identicalTo: scribbleTestPackage.
+	self assert: (method value: Object new withArguments: #()) identicalTo: #{Smalltalk.Scribble} value.
 
 	"Now verify it round trips"
 	filer := scribbleTestPackage sourceFilerClass on: String writeStream.
@@ -428,7 +439,7 @@ testLoad70Pax
 	actual := filer stream contents.
 	expected := File readAllText: (File change: (self filenameFor: testPackagePath) extension: 'pac').
 	"
-	Smalltalk.DiffBrowser compare: actual with: expected
+	Smalltalk.DiffBrowser compare: actual with: expectedDifferences
 	"
 	self assert: actual equals: expected.
 	self uninstallTestPackages.
@@ -472,6 +483,9 @@ testLooseResourceIdentifiers
 	notLoose := all difference: loose.
 	self assert: (notLoose allSatisfy: [:each | each owningClass owningPackage = each owningPackage])!
 
+testPropertyManager
+	self verifyPropertyManagerOf: Package new!
+
 testTimestampInitialized
 	self assert: Package new timestamp asInteger equals: 0!
 
@@ -482,10 +496,10 @@ uninstallTestPackages
 			loadedPackages := nil]!
 
 verifyPackageElementNamesAreAbsolute: aPackage
-	aPackage classNames do: [:each | self assert: each context isNil].
-	aPackage methodNames do: [:each | self assert: each className context isNil].
-	aPackage variableNames do: [:each | self assert: each context isNil].
-	aPackage untracedVariables do: [:each | self assert: each context isNil]!
+	aPackage classNames do: [:each | self assert: each scope isNil].
+	aPackage methodNames do: [:each | self assert: each className scope isNil].
+	aPackage variableNames do: [:each | self assert: each scope isNil].
+	aPackage untracedVariables do: [:each | self assert: each scope isNil]!
 
 verifyPackageElementsExist: aPackage
 	aPackage classNames do: [:each | | class |
@@ -544,6 +558,7 @@ verifyTestPackageResources: scribbleTestPackage
 !Kernel.Tests.PackageTest categoriesFor: #testLoad72Pax!public!unit tests! !
 !Kernel.Tests.PackageTest categoriesFor: #testLoadedPackagesAreWellFormed!public!unit tests! !
 !Kernel.Tests.PackageTest categoriesFor: #testLooseResourceIdentifiers!public!unit tests! !
+!Kernel.Tests.PackageTest categoriesFor: #testPropertyManager!public! !
 !Kernel.Tests.PackageTest categoriesFor: #testTimestampInitialized!public!unit tests! !
 !Kernel.Tests.PackageTest categoriesFor: #uninstallTestPackages!private!running! !
 !Kernel.Tests.PackageTest categoriesFor: #verifyPackageElementNamesAreAbsolute:!helpers!private! !

@@ -2,7 +2,7 @@
 
 Core.Tests.DolphinTest subclass: #'Kernel.Tests.AbstractBindingReferenceTest'
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: 'TestVar'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
@@ -51,14 +51,14 @@ testAsString
 	self printStringTestCases do: 
 			[:each |
 			| subject |
-			subject := self subjectClass path: each first context: each second.
+			subject := self subjectClass path: each first scope: each second.
 			self assert: subject asString equals: (each last copyFrom: 3 to: each last size - 1)]!
 
 testAsSymbol
 	self printStringTestCases do: 
 			[:each |
 			| subject |
-			subject := self subjectClass path: each first context: each second.
+			subject := self subjectClass path: each first scope: each second.
 			self assert: subject asSymbol identicalTo: (each last copyFrom: 3 to: each last size - 1) asSymbol]!
 
 testBinding
@@ -66,7 +66,7 @@ testBinding
 			[:each |
 			| path subject |
 			path := each last.
-			subject := self subjectClass path: each first context: each second.
+			subject := self subjectClass path: each first scope: each second.
 			path
 				ifNil: [self should: [subject binding] raise: NotFoundError]
 				ifNotNil: 
@@ -80,7 +80,7 @@ testBindingOrNil
 	self bindingTestCases do: 
 			[:each |
 			| actual path |
-			actual := (self subjectClass path: each first context: each second) bindingOrNil.
+			actual := (self subjectClass path: each first scope: each second) bindingOrNil.
 			path := each last.
 			path
 				ifNil: [self assertIsNil: actual]
@@ -94,17 +94,17 @@ testBindingOrNil
 
 testBindingOrNilInContext
 	| ref |
-	ref := self subjectClass pathString: '_EventsRegister' context: Object.
+	ref := self subjectClass pathString: '_EventsRegister' scope: Object.
 	self assert: ref bindingOrNil equals: (Object localBindingFor: '_EventsRegister').
-	ref := self subjectClass pathString: '_EventsRegister' context: Object >> #trigger:.
+	ref := self subjectClass pathString: '_EventsRegister' scope: Object >> #trigger:.
 	self assert: ref bindingOrNil equals: (Object localBindingFor: '_EventsRegister')!
 
-testBindingRoot
+testBindingScope
 	| subject |
 	subject := self subjectClass path: #(#OpcodePool 'Nop').
-	self assert: subject bindingRoot identicalTo: Smalltalk.
+	self assert: subject bindingScope identicalTo: Smalltalk.
 	subject := self subjectClass path: #('Nop') home: OpcodePool.
-	self assert: subject bindingRoot identicalTo: OpcodePool!
+	self assert: subject bindingScope identicalTo: OpcodePool!
 
 testEnvironmentName
 	| subject |
@@ -113,13 +113,9 @@ testEnvironmentName
 			[:each :expected |
 			subject := self subjectClass pathString: each.
 			self assert: subject environmentName equals: expected].
-	subject := (self subjectClass pathString: 'Root') instance
-				setContext: Root;
-				yourself.
+	subject := (self subjectClass pathString: 'Root' scope: Root) instance.
 	self assert: subject environmentName equals: 'Root'.
-	subject := (self subjectClass pathString: 'TestCase') instance
-				setContext: XProgramming.SUnit;
-				yourself.
+	subject := (self subjectClass pathString: 'TestCase' scope: XProgramming.SUnit) instance.
 	self assert: subject environmentName equals: 'XProgramming.SUnit'!
 
 testEquals
@@ -133,8 +129,10 @@ testEquals
 		equals: (self subjectClass path: #(#Smalltalk #Object)).
 	self assert: (self subjectClass path: #('Core'))
 		equals: (self subjectClass simpleName: 'Core' in: Smalltalk).
-	self assert: (self subjectClass path: #('_' 'Object') context: self class)
-		equals: (self subjectClass path: #(#Object) context: self class)!
+	self assert: (self subjectClass path: #('_' 'Object') scope: self class)
+		equals: (self subjectClass path: #(#Object) scope: self class).
+	self assert: (self subjectClass path: #('Core' 'Object') scope: self class)
+		equals: (self subjectClass path: #('Core' 'Object') scope: (self class lookupMethod: self selector))!
 
 testHash
 	self assert: (self subjectClass path: #(#Kernel 'OpcodePool' 'Nop')) hash
@@ -144,8 +142,13 @@ testHash
 		equals: (self subjectClass path: #(#Smalltalk 'Object')) hash.
 	self deny: (self subjectClass path: #('Object')) hash
 		equals: (self subjectClass path: #(#Smalltalk)) hash.
-	self assert: (BindingReference path: #('Core' 'Object')) hash
-		equals: (BindingReference path: #('Core' 'Object') home: Smalltalk) hash!
+	self assert: (self subjectClass path: #('Core' 'Object')) hash
+		equals: (self subjectClass path: #('Core' 'Object') home: Smalltalk) hash.
+	self deny: (self subjectClass path: #('Object')) hash
+		equals: (self subjectClass path: #('Object') scope: Core) hash.
+	self assert: (self subjectClass path: #('Core' 'Object') scope: self class) hash
+		equals: (self subjectClass path: #('Core' 'Object') scope: (self class lookupMethod: self selector))
+				hash!
 
 testHome
 	| subject |
@@ -160,7 +163,7 @@ testIfDefined
 	self bindingTestCases do: 
 			[:each |
 			| subject actual path expected |
-			subject := self subjectClass path: each first context: each second.
+			subject := self subjectClass path: each first scope: each second.
 			actual := subject ifDefined: [:value | value].
 			path := each last.
 			expected := path isNil ifFalse: [self valueOfBinding: (Smalltalk resolveBindingPath: path)].
@@ -170,7 +173,7 @@ testIfDefinedIfNotDefined
 	self bindingTestCases do: 
 			[:each |
 			| subject |
-			subject := self subjectClass path: each first context: each second.
+			subject := self subjectClass path: each first scope: each second.
 			subject ifDefined: 
 					[:value |
 					self assert: value identicalTo: (self valueOfBinding: (Smalltalk resolveBindingPath: each last))]
@@ -185,33 +188,35 @@ testIsDefined
 	self bindingTestCases do: 
 			[:each |
 			| subject |
-			subject := self subjectClass path: each first context: each second.
+			subject := self subjectClass path: each first scope: each second.
 			self assert: subject isDefined equals: each last notNil]!
 
 testIsLiteral
-	self bindingTestCases do: [:each | self assert: (self subjectClass path: each first context: each second) isLiteral]!
+	self bindingTestCases
+		do: [:each | self assert: (self subjectClass path: each first scope: each second) isLiteral]!
 
 testIsRelative
 	| subject |
-	subject := self subjectClass path: #(#Object) context: Core.
+	subject := self subjectClass path: #(#Object) scope: Core.
 	self assert: subject isRelative.
 	self deny: subject isAbsolute.
-	subject := self subjectClass path: #('_' #SUnit #TestCase) context: XProgramming.
+	subject := self subjectClass path: #('_' #SUnit #TestCase) scope: XProgramming.
 	self assert: subject isRelative.
 	self deny: subject isAbsolute.
-	subject := self subjectClass path: #(#Object) context: Association.
+	subject := self subjectClass path: #(#Object) scope: Association.
 	self assert: subject isRelative.
 	self deny: subject isAbsolute.
-	subject := self subjectClass path: #(#Core #Object) context: nil.
+	subject := self subjectClass path: #(#Core #Object) scope: nil.
 	self deny: subject isRelative.
 	self assert: subject isAbsolute.
-	subject := self subjectClass path: #(#Core #Object) context: Association.
+	"If the path has multiple components, then unless the first component is '_', it is assumed to be an absolute path and the context is ignored"
+	subject := self subjectClass path: #(#Core #Object) scope: Association.
 	self deny: subject isRelative.
 	self assert: subject isAbsolute!
 
 testIsSelfEvaluating
 	self bindingTestCases
-		do: [:each | self assert: (self subjectClass path: each first context: each second) isSelfEvaluating]!
+		do: [:each | self assert: (self subjectClass path: each first scope: each second) isSelfEvaluating]!
 
 testLessOrEqual
 	| a a1 b |
@@ -243,7 +248,7 @@ testPath
 		{#('_' #SUnit #TestCase). XProgramming. #(#SUnit #TestCase)}} do: 
 				[:each |
 				| subject |
-				subject := self subjectClass path: each first context: each second.
+				subject := self subjectClass path: each first scope: each second.
 				self assert: subject path equals: each last]!
 
 testPathString
@@ -262,7 +267,7 @@ testPrintString
 	self printStringTestCases do: 
 			[:each |
 			| subject |
-			subject := self subjectClass path: each first.
+			subject := self subjectClass path: each first scope: self class.
 			self assert: subject printString equals: each last]!
 
 testPrivate
@@ -319,7 +324,7 @@ testStoreString
 	self printStringTestCases do: 
 			[:each |
 			| subject |
-			subject := self subjectClass path: each first.
+			subject := self subjectClass path: each first scope: Smalltalk.
 			self assert: subject storeString equals: each last]!
 
 testUnqualifiedName
@@ -327,7 +332,7 @@ testUnqualifiedName
 			[:each |
 			| path subject |
 			path := each first.
-			subject := self subjectClass path: path context: each second.
+			subject := self subjectClass path: path scope: each second.
 			self assert: subject unqualifiedName equals: path last , self nameSuffix]!
 
 testValue
@@ -335,7 +340,7 @@ testValue
 			[:each |
 			| path subject |
 			path := each last.
-			subject := self subjectClass path: each first context: each second.
+			subject := self subjectClass path: each first scope: each second.
 			path
 				ifNil: [self should: [subject value] raise: NotFoundError]
 				ifNotNil: 
@@ -348,7 +353,7 @@ testValueOrNil
 	self bindingTestCases do: 
 			[:each |
 			| path subject expected actual |
-			subject := self subjectClass path: each first context: each second.
+			subject := self subjectClass path: each first scope: each second.
 			actual := subject valueOrNil.
 			path := each last.
 			expected := path ifNotNil: [self valueOfBinding: (Smalltalk resolveBindingPath: path)].
@@ -367,7 +372,7 @@ valueOfBinding: aVariableBinding
 !Kernel.Tests.AbstractBindingReferenceTest categoriesFor: #testBinding!public!unit tests! !
 !Kernel.Tests.AbstractBindingReferenceTest categoriesFor: #testBindingOrNil!public!unit tests! !
 !Kernel.Tests.AbstractBindingReferenceTest categoriesFor: #testBindingOrNilInContext!public!unit tests! !
-!Kernel.Tests.AbstractBindingReferenceTest categoriesFor: #testBindingRoot!public!unit tests! !
+!Kernel.Tests.AbstractBindingReferenceTest categoriesFor: #testBindingScope!public!unit tests! !
 !Kernel.Tests.AbstractBindingReferenceTest categoriesFor: #testEnvironmentName!public!unit tests! !
 !Kernel.Tests.AbstractBindingReferenceTest categoriesFor: #testEquals!public!unit tests! !
 !Kernel.Tests.AbstractBindingReferenceTest categoriesFor: #testHash!public!unit tests! !

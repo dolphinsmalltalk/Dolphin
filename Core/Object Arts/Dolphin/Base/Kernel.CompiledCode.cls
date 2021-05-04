@@ -104,6 +104,17 @@ allSymbolLiteralsDo: operation
 
 	self literalReferencesDo: [:each | each class == Symbol ifTrue: [operation value: each]]!
 
+annotations
+	"Answer the receiver's <MethodAnnotations> or nil if none."
+
+	"Implementation Note: If the receiver has any annotations, then these will be stored in a MethodAnnotations object as the last literal."
+
+	| size last |
+	size := self size.
+	^(size > 0 and: 
+			[last := self at: size.
+			last isKindOf: MethodAnnotations]) ifTrue: [last]!
+
 argumentCount
 	"Answer the number of arguments expected by the receiver.
 	This method is part of the ANSI <valuable> protocol, but CompiledCode
@@ -183,6 +194,12 @@ containsSource: aString
 	src := self getSource.
 	^src notNil and: [src contains: aString]!
 
+customEnvironment
+	"Private - Answer the <Namespace> in whose scope this method was compiled, or nil if that namespace is the same as the method's owning class."
+
+	self annotations ifNotNil: [:annotations | annotations environment ifNotNil: [:env | ^env]].
+	^nil!
+
 debugInfo
 	"Private - Answer a compilation result containing a recompilation of the receiver, a
 	map between IP ranges and expressions in the source, and a map between IP ranges
@@ -205,10 +222,9 @@ envInfo
 	^(header bitShift: -1) bitAnd: 63!
 
 environment
-	"Answer the <Namespace> in whose scope this method was compiled."
+	"Answer the <Namespace> in whose scope this method was compiled. Normally this is the environment of the method's owning class, but methods can be explicitly or implicitly annotated with another namespace. Implicit namespace annotations are inserted by the compiler if an alternate environment is provided when compiling the method from source. Explicit namespace annotations are represented by `<namespace: MySpecialNamespace>` tags in the source."
 
-	#namespaceToDo. "Add namespace annotation so can put loose methods in a different namespace."
-	^methodClass environment!
+	^self customEnvironment ifNil: [methodClass environment]!
 
 envTempCount
 	"Answer the number of environment temporaries used by the receiver."
@@ -260,6 +276,13 @@ header
 
 header: aSmallInteger 
 	header := aSmallInteger!
+
+isAnnotated
+	"Answer whether the method has any annotations."
+
+	| count |
+	count := self size.
+	^count > 0 and: [(self literalAt: count) isKindOf: MethodAnnotations]!
 
 isCompilationFailure
 	^false!
@@ -411,11 +434,11 @@ localCount
 localEnvironment
 	"Private - Answer the nearest <Namespace> scope."
 
-	^methodClass localEnvironment
+	^self environment
 !
 
 localScope
-	"Private - Answer the nearest name scope."
+	"Answer the nearest name scope."
 
 	^methodClass localScope
 !
@@ -654,6 +677,7 @@ writesInstVar: aString at: anInteger
 !Kernel.CompiledCode categoriesFor: #allLiteralsDo:!enumerating!private! !
 !Kernel.CompiledCode categoriesFor: #allSymbolLiterals!enumerating!private! !
 !Kernel.CompiledCode categoriesFor: #allSymbolLiteralsDo:!enumerating!private! !
+!Kernel.CompiledCode categoriesFor: #annotations!accessing!public! !
 !Kernel.CompiledCode categoriesFor: #argumentCount!method header!public! !
 !Kernel.CompiledCode categoriesFor: #argumentCount:!accessing!method header!private! !
 !Kernel.CompiledCode categoriesFor: #basicByteCodes!accessing!private! !
@@ -665,6 +689,7 @@ writesInstVar: aString at: anInteger
 !Kernel.CompiledCode categoriesFor: #clear!operations!private! !
 !Kernel.CompiledCode categoriesFor: #compilerClass!constants!private! !
 !Kernel.CompiledCode categoriesFor: #containsSource:!development!public!testing! !
+!Kernel.CompiledCode categoriesFor: #customEnvironment!accessing!private! !
 !Kernel.CompiledCode categoriesFor: #debugInfo!development!private! !
 !Kernel.CompiledCode categoriesFor: #envInfo!accessing!private! !
 !Kernel.CompiledCode categoriesFor: #environment!accessing!public! !
@@ -677,6 +702,7 @@ writesInstVar: aString at: anInteger
 !Kernel.CompiledCode categoriesFor: #hash!comparing!public! !
 !Kernel.CompiledCode categoriesFor: #header!accessing!private! !
 !Kernel.CompiledCode categoriesFor: #header:!accessing!private! !
+!Kernel.CompiledCode categoriesFor: #isAnnotated!public!testing! !
 !Kernel.CompiledCode categoriesFor: #isCompilationFailure!public!testing! !
 !Kernel.CompiledCode categoriesFor: #isDebugMethod!development!private!testing! !
 !Kernel.CompiledCode categoriesFor: #isExpression!private!testing! !
@@ -697,7 +723,7 @@ writesInstVar: aString at: anInteger
 !Kernel.CompiledCode categoriesFor: #literalsDo:!enumerating!private! !
 !Kernel.CompiledCode categoriesFor: #localCount!accessing!method header!private! !
 !Kernel.CompiledCode categoriesFor: #localEnvironment!accessing!private! !
-!Kernel.CompiledCode categoriesFor: #localScope!accessing!private! !
+!Kernel.CompiledCode categoriesFor: #localScope!accessing!public! !
 !Kernel.CompiledCode categoriesFor: #messages!accessing!development!public! !
 !Kernel.CompiledCode categoriesFor: #messagesDo:!development!enumerating!public! !
 !Kernel.CompiledCode categoriesFor: #methodClass!accessing!public! !
@@ -730,7 +756,9 @@ writesInstVar: aString at: anInteger
 !Kernel.CompiledCode categoriesFor: #writesInstVar:!development!public!testing! !
 !Kernel.CompiledCode categoriesFor: #writesInstVar:at:!development!public!testing! !
 
+Kernel.CompiledCode methodProtocol: #bindingScope attributes: #(#readOnly) selectors: #(#environment #localScope)!
 Kernel.CompiledCode methodProtocol: #messageSender attributes: #(#readOnly) selectors: #(#messages)!
+Kernel.CompiledCode methodProtocol: #parseContext attributes: #(#readOnly) selectors: #(#environment #methodClass)!
 
 !Kernel.CompiledCode class methodsFor!
 

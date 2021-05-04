@@ -31,8 +31,8 @@ testAllRegistered
 	"Check that only IUnknown and subclasses are registered, and only registered undo one IID"
 	registered := Interface.InterfaceClasses copy.
 	registered removeAllKeys: iids.
-	"The collection will not be empty if any interface class has duplicate registrations"
-	self assert: registered associations asArray equals: #()!
+	"The collection will not be empty if any interface class has duplicate registrations, although IDispatch can have multiple registrations for dispinterfaces"
+	self assert: (registered associations reject: [:each | each value name == #IDispatch]) asArray equals: #()!
 
 testGetObject
 	| factory font |

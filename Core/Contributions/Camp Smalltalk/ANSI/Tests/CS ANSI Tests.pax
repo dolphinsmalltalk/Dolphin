@@ -604,8 +604,8 @@ ansiProtocolNames
 	Note: This excludes inherited protocols."
 
 	| tmpList |
-	tmpList := Smalltalk.ProtocolSpec classProtocols at: self ifAbsent: [nil].
-	tmpList isNil ifTrue: [^Smalltalk.ProtocolSpec defaultProtocolNameCollection].
+	tmpList := ProtocolSpec classProtocols at: self ifAbsent: [nil].
+	tmpList isNil ifTrue: [^ProtocolSpec defaultProtocolNameCollection].
 	^tmpList!
 
 ansiProtocolNames: protocolNameList
@@ -614,14 +614,14 @@ ansiProtocolNames: protocolNameList
 
 	(protocolNameList isKindOf: Set) ifFalse: [self error: 'Protocol name list not a Set.'].
 	protocolNameList isEmpty
-		ifTrue: [Smalltalk.ProtocolSpec classProtocols removeKey: self ifAbsent: []]
-		ifFalse: [Smalltalk.ProtocolSpec classProtocols at: self put: protocolNameList]!
+		ifTrue: [ProtocolSpec classProtocols removeKey: self ifAbsent: []]
+		ifFalse: [ProtocolSpec classProtocols at: self put: protocolNameList]!
 
 ansiProtocols
 	"Answer the protocols to which the receiver's instances directly conform. 
 	Note: This excludes inherited protocols."
 
-	^Smalltalk.ProtocolSpec protocolsInNameList: self ansiProtocolNames!
+	^ProtocolSpec protocolsInNameList: self ansiProtocolNames!
 
 conformsToAnsiProtocolNamed: protocolName 
 	"Answer whether the receiver conforms to the protocol named protocolName.
@@ -637,7 +637,7 @@ definedAsProtocolNames
 	200/03/04 Harmon, R. Added."
 
 	| tmpList |
-	tmpList := Smalltalk.ProtocolSpec classProtocols at: self ifAbsent: [nil].
+	tmpList := ProtocolSpec classProtocols at: self ifAbsent: [nil].
 	tmpList isNil ifTrue: [^self superclass definedAsProtocolNames].
 	^tmpList!
 
@@ -645,7 +645,7 @@ removeAnsiProtocolNamed: protocolName
 	"Remove the protocol named, protocolName, from the list of protocols to which the receiver conforms."
 
 	self removeAnsiProtocolNamed: protocolName
-		ifAbsent: [Smalltalk.ProtocolSpec errorProtocolNotFound: protocolName]!
+		ifAbsent: [ProtocolSpec errorProtocolNotFound: protocolName]!
 
 removeAnsiProtocolNamed: protocolName ifAbsent: notFoundBlock 
 	"Remove the protocol named, protocolName, from the list of protocols to which the receiver conforms.  Evaluate notFoundBlock if not found."

@@ -41,6 +41,33 @@ testLessOrEqual
 	self deny: a <= b instance.
 	self deny: a <= b instance!
 
+testLiteral
+	| subject |
+	#(#{Object class} #{_.Object class} #{_.Core.Object class}) do: 
+			[:each |
+			"When a relative literal BindingReference is compiled in a method in the method class' namespace, then the context can be the method class"
+			self assert: each scope identicalTo: ##(self).
+			self assert: each valueOrNil identicalTo: Object class].
+	"Absolute references always have nil context"
+	subject := #{Core.Object class}.
+	self assertIsNil: subject scope.
+	self assert: subject valueOrNil identicalTo: Object class!
+
+testLiteralEnvironmentRelative
+	| method source |
+	source := 'thisTestClass ^#{<1s> class} valueOrNil' << self class unqualifiedName.
+	method := Compiler compile: source in: Object.
+	"The unqualified name of this class should not normally be bindable from a method of Core.Object"
+	self assertIsNil: (method value: Object new withArguments: #()).
+	"But when compiled in the Kernel.Tests environment, it should resolve"
+	method := Compiler
+				compile: source
+				in: Object
+				environment: self class environment.
+	self assert: method environment identicalTo: self class environment.
+	self assert: (method value: Object new withArguments: #()) identicalTo: self class class.
+!
+
 testMeta
 	| subject |
 	subject := self subjectClass pathString: 'Object'.
@@ -67,6 +94,8 @@ valueOfBinding: aVariableBinding
 !Kernel.Tests.MetaBindingReferenceTest categoriesFor: #testEqualityOfMetaAndInstance!public!unit tests! !
 !Kernel.Tests.MetaBindingReferenceTest categoriesFor: #testInstance!public!unit tests! !
 !Kernel.Tests.MetaBindingReferenceTest categoriesFor: #testLessOrEqual!public!unit tests! !
+!Kernel.Tests.MetaBindingReferenceTest categoriesFor: #testLiteral!public! !
+!Kernel.Tests.MetaBindingReferenceTest categoriesFor: #testLiteralEnvironmentRelative!public! !
 !Kernel.Tests.MetaBindingReferenceTest categoriesFor: #testMeta!public!unit tests! !
 !Kernel.Tests.MetaBindingReferenceTest categoriesFor: #testRefersToLiteral!public!unit tests! !
 !Kernel.Tests.MetaBindingReferenceTest categoriesFor: #valueOfBinding:!helpers!private! !

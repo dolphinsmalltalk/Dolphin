@@ -20,8 +20,8 @@ IsUserBreakRequested
 AnsiCodePage=?m_ansiCodePage@Interpreter@@2IA
 UnicodeDefaultChar=?m_unicodeReplacementChar@Interpreter@@2_WA
 
-CompileForClass=_PrimCompileForClass@20
-CompileForEval=_PrimCompileForEval@24
+CompileForClass=_PrimCompileForClass@24
+CompileForEval=_PrimCompileForEval@28
 
 ; Stuff for ActiveXHost
 AtlAxWinInit=AxWinInit

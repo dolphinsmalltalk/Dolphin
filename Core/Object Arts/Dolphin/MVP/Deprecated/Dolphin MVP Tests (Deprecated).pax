@@ -1,0 +1,44 @@
+﻿| package |
+package := Package name: 'Dolphin MVP Tests (Deprecated)'.
+package paxVersion: 1;
+	basicComment: ''.
+
+
+package classNames
+	add: #MultipleSelectionListBoxTest;
+	add: #MultipleSelectionListViewTest;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
+
+package setPrerequisites: #(
+	'..\..\Base\Dolphin'
+	'..\..\Base\Tests\Dolphin Base Tests'
+	'Dolphin MVP (Deprecated)').
+
+package!
+
+"Class Definitions"!
+
+DolphinTest subclass: #MultipleSelectionListBoxTest
+	instanceVariableNames: 'box'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+MultipleSelectionListBoxTest subclass: #MultipleSelectionListViewTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+"Global Aliases"!
+
+
+"Loose Methods"!
+
+"End of package definition"!
+
