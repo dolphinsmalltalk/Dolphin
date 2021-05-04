@@ -25,6 +25,11 @@ and: operand
 
 	^operand value!
 
+asBit
+	"Answer the equivalent binary value of the receiver."
+
+	^1!
+
 asDword
 	"Answer the receiver in a form suitable for passing/returning as a
 	32-bit integer value."
@@ -118,6 +123,7 @@ xor: operand
 
 	^operand not! !
 !Core.True categoriesFor: #and:!control flow!public! !
+!Core.True categoriesFor: #asBit!converting!public! !
 !Core.True categoriesFor: #asDword!converting!public! !
 !Core.True categoriesFor: #asParameter!converting!public! !
 !Core.True categoriesFor: #asUIntPtr!converting!public! !

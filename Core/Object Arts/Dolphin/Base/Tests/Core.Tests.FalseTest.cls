@@ -18,6 +18,9 @@ Core.Tests.FalseTest comment: 'This is the unit test for the class False. Unit t
 subjectClass
 	^#{False} value!
 
+testAsBit
+	self assert: false asBit equals: 0!
+
 testEvaluatingConjunction
 	self deny: false & false.
 	self deny: false & true.
@@ -79,6 +82,7 @@ testXor
 	self assert: (false xor: true).
 	self deny: (false xor: false)! !
 !Core.Tests.FalseTest categoriesFor: #subjectClass!constants!public! !
+!Core.Tests.FalseTest categoriesFor: #testAsBit!public!unit tests! !
 !Core.Tests.FalseTest categoriesFor: #testEvaluatingConjunction!public!unit tests! !
 !Core.Tests.FalseTest categoriesFor: #testEvaluatingDisjunction!public!unit tests! !
 !Core.Tests.FalseTest categoriesFor: #testIfFalse!public!testing! !

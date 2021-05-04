@@ -14,6 +14,9 @@ Core.Tests.TrueTest comment: ''!
 subjectClass
 	^#{True} value!
 
+testAsBit
+	self assert: true asBit equals: 1!
+
 testEvaluatingConjunction
 	self deny: true & false.
 	self assert: true & true.
@@ -82,6 +85,7 @@ testXor
 	self assert: (true xor: false).
 	self deny: (true xor: true)! !
 !Core.Tests.TrueTest categoriesFor: #subjectClass!constants!private! !
+!Core.Tests.TrueTest categoriesFor: #testAsBit!public!unit tests! !
 !Core.Tests.TrueTest categoriesFor: #testEvaluatingConjunction!public!unit tests! !
 !Core.Tests.TrueTest categoriesFor: #testEvaluatingDisjunction!public!unit tests! !
 !Core.Tests.TrueTest categoriesFor: #testIfFalse!public!testing! !

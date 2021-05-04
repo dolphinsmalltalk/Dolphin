@@ -49,6 +49,11 @@ and: operand
 
 	^self subclassResponsibility!
 
+asBit
+	"Answer the equivalent binary value of the receiver (0 for false, 1 for true)."
+
+	^self subclassResponsibility!
+
 asBoolean
 	"Answer the receiver as a Boolean value (true OR false)."
 
@@ -176,6 +181,7 @@ xor: operand
 !Core.Boolean categoriesFor: #&!logical operations!public! !
 !Core.Boolean categoriesFor: #|!logical operations!public! !
 !Core.Boolean categoriesFor: #and:!control flow!public! !
+!Core.Boolean categoriesFor: #asBit!converting!public! !
 !Core.Boolean categoriesFor: #asBoolean!converting!public! !
 !Core.Boolean categoriesFor: #asDword!converting!public! !
 !Core.Boolean categoriesFor: #asParameter!converting!public! !
