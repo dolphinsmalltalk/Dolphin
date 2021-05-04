@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Core.Tests.DolphinTest subclass: #'Tools.Tests.PackageManagerTest'
+Core.Tests.DolphinTest subclass: #'Kernel.Tests.PackageManagerTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Tools.Tests.PackageManagerTest guid: (Core.GUID fromString: '{f161630b-6480-4f0c-b958-a57ec75b9cbd}')!
-Tools.Tests.PackageManagerTest comment: ''!
-!Tools.Tests.PackageManagerTest categoriesForClass!Unclassified! !
-!Tools.Tests.PackageManagerTest methodsFor!
+Kernel.Tests.PackageManagerTest guid: (Core.GUID fromString: '{f161630b-6480-4f0c-b958-a57ec75b9cbd}')!
+Kernel.Tests.PackageManagerTest comment: ''!
+!Kernel.Tests.PackageManagerTest categoriesForClass!Unclassified! !
+!Kernel.Tests.PackageManagerTest methodsFor!
 
 testAllClassesPackaged
 	"This is not really a PackageManager test, but more a test that the system has been deployed
@@ -37,6 +37,6 @@ testLooseMethodCacheUpToDate
 					[:eachSelector :eachPackage |
 					self assert: (allLooseMethods at: eachClass >> eachSelector) identicalTo: eachPackage]].
 	self assert: count equals: allLooseMethods size! !
-!Tools.Tests.PackageManagerTest categoriesFor: #testAllClassesPackaged!public!unit tests! !
-!Tools.Tests.PackageManagerTest categoriesFor: #testLooseMethodCacheUpToDate!public!unit tests! !
+!Kernel.Tests.PackageManagerTest categoriesFor: #testAllClassesPackaged!public!unit tests! !
+!Kernel.Tests.PackageManagerTest categoriesFor: #testLooseMethodCacheUpToDate!public!unit tests! !
 

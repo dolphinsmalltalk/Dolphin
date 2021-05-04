@@ -53,7 +53,6 @@ package setClassNames: #(
 	#{Core.Tests.NumberTest}
 	#{Core.Tests.ObjectTest}
 	#{Core.Tests.OrderedCollectionTest}
-	#{Core.Tests.PackageTest}
 	#{Core.Tests.PositionableStreamTest}
 	#{Core.Tests.ProcessTest}
 	#{Core.Tests.ReadStreamTest}
@@ -129,6 +128,8 @@ package setClassNames: #(
 	#{Kernel.Tests.MethodDictionaryTest}
 	#{Kernel.Tests.NamespaceTest}
 	#{Kernel.Tests.NeverSearchPolicyTest}
+	#{Kernel.Tests.PackageManagerTest}
+	#{Kernel.Tests.PackageTest}
 	#{Kernel.Tests.PoolConstantsDictionaryTest}
 	#{Kernel.Tests.PropertyManagerTest}
 	#{Kernel.Tests.QuicksortAlgorithmTest}
@@ -477,7 +478,13 @@ Core.Tests.DolphinTest subclass: #'Core.Tests.ObjectTest'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Core.Tests.DolphinTest subclass: #'Core.Tests.PackageTest'
+Core.Tests.DolphinTest subclass: #'Kernel.Tests.PackageManagerTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Core.Tests.DolphinTest subclass: #'Kernel.Tests.PackageTest'
 	instanceVariableNames: 'loadedPackages checkTimestamps'
 	classVariableNames: ''
 	imports: #()

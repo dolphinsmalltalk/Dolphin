@@ -21,7 +21,6 @@ package setClassNames: #(
 	#{Tools.Tests.PackageBrowserShellTest}
 	#{Tools.Tests.PackagedClassSelectorTest}
 	#{Tools.Tests.PackageFolderTest}
-	#{Tools.Tests.PackageManagerTest}
 	#{Tools.Tests.PackageSelectorTest}
 	#{Tools.Tests.PublishedAspectInspectorTest}
 	#{Tools.Tests.ResourceBrowserTest}
@@ -103,12 +102,6 @@ Core.Tests.DolphinTest subclass: #'Tools.Tests.IdeaSpaceShellTest'
 	classConstants: {}!
 Core.Tests.DolphinTest subclass: #'Tools.Tests.PackageBrowserShellTest'
 	instanceVariableNames: 'packageA packageB packageC dolphinTestA dolphinTestB dolphinTestC shell cardsPresenter classesPresenter methodsPresenter variablesPresenter resourcesPresenter dependencyPresenters methodAA methodAB methodAC methodBA methodBB methodCA'
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-Core.Tests.DolphinTest subclass: #'Tools.Tests.PackageManagerTest'
-	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
