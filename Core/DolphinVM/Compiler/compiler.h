@@ -85,6 +85,7 @@ public:
 
 	POTE NewMethod();
 	POTE __stdcall NewCompiledMethod(POTE classPointer, size_t numBytes, const STMethodHeader& hdr);
+	POTE MakeMethodAnnotations();
 
 	__declspec(property(get = get_Selector)) Str Selector;
 	Str get_Selector() const { return m_selector; }

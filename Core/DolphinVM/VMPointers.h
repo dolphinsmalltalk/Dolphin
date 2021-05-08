@@ -219,7 +219,8 @@ struct VMPointers //: public Object
 			SemaphoreOTE* TimingSemaphore;						// 150
 
 			BehaviorOTE* ClassMethodAnnotations;				// 151
-			POTE _unused152to192[41];							// 152-192
+			POTE SmalltalkNamespaceAnnotation;					// 152
+			POTE _unused153to192[40];							// 153-192
 		};
 		Oop pointers[192];
 	};

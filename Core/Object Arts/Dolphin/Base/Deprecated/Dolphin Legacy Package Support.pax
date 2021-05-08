@@ -106,7 +106,7 @@ subclass: aClassSymbol instanceVariableNames: instVarString classVariableNames: 
 		imports: (self importsFromPoolsString: poolDictString)!
 
 subclass: aClassSymbol instanceVariableNames: instVarString classVariableNames: classVarString poolDictionaries: poolDictString classInstanceVariableNames: classInstVarString
-	"For loading pre-7.2 packages."
+	"For loading pre-8.0 packages."
 
 	| subclass |
 	#deprecated.

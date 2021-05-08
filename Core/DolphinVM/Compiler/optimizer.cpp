@@ -2157,36 +2157,10 @@ POTE Compiler::NewMethod()
 		}
 	}
 	
-	if (m_annotations.size() > 0)
+	if (!m_annotations.empty())
 	{
-		POTE oteMethodAnnotations = m_piVM->NewObjectWithPointers(GetVMPointers().ClassMethodAnnotations, m_annotations.size() * 2);
-		_ASSERTE(i < literalCount);
+		POTE oteMethodAnnotations = MakeMethodAnnotations();
 		m_piVM->StorePointerWithValue(&cmpldMethod.aLiterals[i], (Oop)oteMethodAnnotations);
-
-		STVarObject& methodAnnotations = *(STVarObject*)GetObj(oteMethodAnnotations);
-		size_t j = 0;
-		for (AnnotationVector::const_iterator it = m_annotations.cbegin(); it != m_annotations.cend(); it++)
-		{
-			m_piVM->StorePointerWithValue(methodAnnotations.fields + j, (Oop)(*it).first);
-			const OOPVECTOR& args = (*it).second;
-			size_t argc = args.size();
-			POTE oteArray;
-			if (argc == 0)
-			{
-				oteArray = GetVMPointers().EmptyArray;
-			} 
-			else
-			{
-				oteArray = m_piVM->NewArray(argc);
-				STVarObject& argsArray = *(STVarObject*)GetObj(oteArray);
-				for (size_t k = 0; k < argc; k++)
-				{
-					m_piVM->StorePointerWithValue(argsArray.fields + k, args[k]);
-				}
-			}
-			m_piVM->StorePointerWithValue(methodAnnotations.fields + j + 1, (Oop)oteArray);
-			j += 2;
-		}
 	}
 
 	m_piVM->StorePointerWithValue((Oop*)&cmpldMethod.selector, reinterpret_cast<Oop>(NewUtf8String(Selector)));
@@ -2218,6 +2192,49 @@ POTE Compiler::NewMethod()
 }
 
 //////////////////////////////////////////////////
+
+POTE Compiler::MakeMethodAnnotations()
+{
+	if (m_annotations.size() == 1)
+	{
+		MethodAnnotation annotation = m_annotations[0];
+		if (annotation.first == GetVMPointers().namespaceAnnotationSelector
+			&& annotation.second.size() == 1
+			&& annotation.second[0] == (Oop)GetVMPointers().SmalltalkDictionary)
+		{
+			return GetVMPointers().SmalltalkNamespaceAnnotation;
+		}
+	}
+
+	POTE oteMethodAnnotations = m_piVM->NewObjectWithPointers(GetVMPointers().ClassMethodAnnotations, m_annotations.size() * 2);
+
+	STVarObject& methodAnnotations = *(STVarObject*)GetObj(oteMethodAnnotations);
+	size_t j = 0;
+	for (AnnotationVector::const_iterator it = m_annotations.cbegin(); it != m_annotations.cend(); it++)
+	{
+		m_piVM->StorePointerWithValue(methodAnnotations.fields + j, (Oop)(*it).first);
+		const OOPVECTOR& args = (*it).second;
+		size_t argc = args.size();
+		POTE oteArray;
+		if (argc == 0)
+		{
+			oteArray = GetVMPointers().EmptyArray;
+		}
+		else
+		{
+			oteArray = m_piVM->NewArray(argc);
+			STVarObject& argsArray = *(STVarObject*)GetObj(oteArray);
+			for (size_t k = 0; k < argc; k++)
+			{
+				m_piVM->StorePointerWithValue(argsArray.fields + k, args[k]);
+			}
+		}
+		m_piVM->StorePointerWithValue(methodAnnotations.fields + j + 1, (Oop)oteArray);
+		j += 2;
+	}
+
+	return oteMethodAnnotations;
+}
 
 void Compiler::PatchCleanBlockLiterals(POTE oteMethod)
 {

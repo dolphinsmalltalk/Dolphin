@@ -79,18 +79,23 @@ fromPairs: aSequencedReadableCollection
 			instance
 				at: i * 2 - 1 put: pair first;
 				at: i * 2 put: pair second].
+	instance isImmutable: true.
 	^instance!
 
 initialize
 	"Private - Initialize the receiver's class variables.
 		self initialize
 	"
-	VMLibrary default registryAt: self name put: self!
+
+	VMLibrary default registryAt: self name put: self.
+	VMLibrary default registryAtIndex: 152 put: (self fromPairs: {{#namespace:. {Smalltalk}}})!
 
 uninitialize
 	"Private - Tidy up the receiver in preparation for removal from the system."
 
-	VMLibrary default registryAt: self name put: nil! !
+	VMLibrary default
+		registryAt: self name put: nil;
+		registryAtIndex: 152 put: nil! !
 !Kernel.MethodAnnotations class categoriesFor: #fromPairs:!instance creation!public! !
 !Kernel.MethodAnnotations class categoriesFor: #initialize!development!initializing!private! !
 !Kernel.MethodAnnotations class categoriesFor: #uninitialize!class hierarchy-removing!private! !
