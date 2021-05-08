@@ -53,6 +53,7 @@ package setClassNames: #(
 	#{UI.Tests.ListControlTest}
 	#{UI.Tests.ListPresenterTest}
 	#{UI.Tests.ListViewTest}
+	#{UI.Tests.MenuTest}
 	#{UI.Tests.MoenTreeViewTest}
 	#{UI.Tests.MoenTreeViewTest2}
 	#{UI.Tests.MultilineTextEditTest}
@@ -246,6 +247,12 @@ Core.Tests.DolphinTest subclass: #'Graphics.Tests.IconTest'
 	classConstants: {}!
 Core.Tests.DolphinTest subclass: #'UI.Tests.LayoutManagerTest'
 	instanceVariableNames: 'shell'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Core.Tests.DolphinTest subclass: #'UI.Tests.MenuTest'
+	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''

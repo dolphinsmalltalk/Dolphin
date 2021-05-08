@@ -277,10 +277,9 @@ release
 	"Private - Remove references to objects that may refer back to the receiver."
 
 	super release.
-	Smalltalk developmentSystem
-		unregisterTool: self;
-		removeEventsTriggeredFor: self.
-	self allToolClasses do: [:each | each removeEventsTriggeredFor: self]!
+	Smalltalk developmentSystem unregisterTool: self.
+	self unobserveToolEvents.
+	self unextendMenus!
 
 streamHtml: aStream intoBrowser: browser
 	| doc docStream |
@@ -288,6 +287,35 @@ streamHtml: aStream intoBrowser: browser
 	docStream := doc queryInterface: OS.COM.IPersistStreamInit.
 	docStream initNew.
 	docStream readFrom: (aStream queryInterface: OS.COM.IStream)!
+
+unextendMenus
+	| openTools toolClasses |
+	toolClasses := self allToolClasses.
+	openTools := ((SessionManager inputState topLevelWindows
+				select: [:each | each class conformsToProtocol: #topView]) collect: [:each | each presenter])
+				select: [:each | toolClasses anySatisfy: [:tc | each isKindOf: tc]].
+	openTools do: 
+			[:each |
+			each view menuBar
+				ifNotNil: 
+					[:menuBar |
+					(menuBar findCommand: #help)
+						ifNotNil: 
+							[:helpMenu |
+							(helpMenu findCommand: (Message selector: #browseKeyBindingsOfShell: argument: each view))
+								ifNotNil: [:item | helpMenu removeItem: item]]].
+			(each isKindOf: ClassBrowserShell)
+				ifTrue: 
+					[(each loadedPlugins detect: [:plugin | plugin isKindOf: ClassCommentPlugin] ifNone: [])
+						ifNotNil: 
+							[:plugin |
+							| menu |
+							menu := (plugin presenterNamed: 'text') view contextMenu.
+							(menu findCommand: #emitClassLayoutDescription) ifNotNil: [:item | menu removeItem: item]]]]!
+
+unobserveToolEvents
+	Smalltalk developmentSystem removeEventsTriggeredFor: self.
+	self allToolClasses do: [:each | each removeEventsTriggeredFor: self]!
 
 variableDescriptionsFor: aClass
 	"Private - Answers a <readableString> that describes the instance variables and
@@ -395,6 +423,8 @@ variableDescriptionsFor: aClass
 !Tools.Examples.OAIDEExtensions categoriesFor: #printInlineStyleSheetOn:!private! !
 !Tools.Examples.OAIDEExtensions categoriesFor: #release!dependency!private! !
 !Tools.Examples.OAIDEExtensions categoriesFor: #streamHtml:intoBrowser:!operations!private! !
+!Tools.Examples.OAIDEExtensions categoriesFor: #unextendMenus!dependency!private! !
+!Tools.Examples.OAIDEExtensions categoriesFor: #unobserveToolEvents!initializing!private! !
 !Tools.Examples.OAIDEExtensions categoriesFor: #variableDescriptionsFor:!development!private! !
 
 !Tools.Examples.OAIDEExtensions class methodsFor!
