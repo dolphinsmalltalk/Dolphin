@@ -125,6 +125,7 @@ package setClassNames: #(
 	#{Kernel.Tests.MemoryManagerTest}
 	#{Kernel.Tests.MergesortAlgorithmTest}
 	#{Kernel.Tests.MetaBindingReferenceTest}
+	#{Kernel.Tests.MethodAnnotationsTest}
 	#{Kernel.Tests.MethodDictionaryTest}
 	#{Kernel.Tests.NamespaceTest}
 	#{Kernel.Tests.NeverSearchPolicyTest}
@@ -455,6 +456,12 @@ Core.Tests.DolphinTest subclass: #'Kernel.Tests.MemoryManagerTest'
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Core.Tests.DolphinTest subclass: #'Core.Tests.MessageTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Core.Tests.DolphinTest subclass: #'Kernel.Tests.MethodAnnotationsTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
