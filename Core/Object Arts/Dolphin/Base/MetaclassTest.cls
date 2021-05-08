@@ -37,7 +37,8 @@ testInstances
 					[| instClass |
 					(all includes: each)
 						ifTrue: 
-							[self
+							[| expected |
+							self
 								assert: (stats at: i + 1)
 								equals: 1
 								description: 'Metaclasses should have one instance'.
@@ -49,7 +50,9 @@ testInstances
 								ifNil: [self assert: each superclass identicalTo: Class]
 								ifNotNil: [:superclass | self assert: superclass class identicalTo: each superclass].
 							"And matching subclasses too?"
-							self assert: each subclasses equals: (instClass subclasses collect: [:subbie | subbie class])]
+							expected := instClass subclasses collect: [:subbie | subbie class].
+							self assert: (each subclasses difference: expected) equals: #().
+							self assert: (expected difference: each subclasses) equals: #()]
 						ifFalse: [unbound add: each]]].
 	"Metaclasses not bound into the class hierarchy? It is all too easy to create these in tests and hang onto them in TestCase instance variables, so we can't reliably assert
 	that there are none. What we can do is to check that they aren't dead versions of bound classes"

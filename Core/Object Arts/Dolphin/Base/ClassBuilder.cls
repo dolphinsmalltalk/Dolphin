@@ -427,7 +427,7 @@ mutateClass: oldClass toBeASubclassOf: newSuperclass
 	"Private - Create a new class with the appropriate features and mutate	all instances of oldClass to new instances of the new class and then recursively make the same change to the subclasses of aClass. Finally, remove the oldClass and if appropriate its metaclass from their respective superclasses and do a #oneWayBeome: on oldClass to newClass.
 	Implementation Note: We must not access any instance variables after mutation, in case the receiver is being mutated and the inst. var offsets change."
 
-	| newClass mutatingClassItself |
+	| newClass mutatingClassItself oldMeta newMeta |
 	mutatingClassItself := oldClass == Class.
 	newClass := self newClassLike: oldClass superclass: newSuperclass.
 	self install: newClass.
@@ -440,8 +440,11 @@ mutateClass: oldClass toBeASubclassOf: newSuperclass
 			["In Dolphin Object class et al are not in the subclasses collection of Class, so need special case handling"
 			Smalltalk allRoots do: [:each | self mutateClass: each class toBeASubclassOf: newClass]]
 		ifFalse: [oldClass subclasses do: [:cls | self mutateClass: cls toBeASubclassOf: newClass]].
-	oldClass class removeFromSuper.
 	oldClass removeFromSuper.
+	oldMeta := oldClass class.
+	newMeta := newClass class.
+	oldMeta become: newMeta.
+	newMeta oneWayBecome: oldMeta.
 	oldClass become: newClass.
 	newClass oneWayBecome: oldClass.
 	self updateVMRegistryWith: newClass!
