@@ -1558,6 +1558,7 @@ tracePrerequisites: anIdentityDictionary
 	| trace |
 	trace := IdentityDictionary new: 16.
 	self
+		tracePrerequisitesOfEnvironment: trace;
 		tracePrerequisitesOfClasses: trace packagedVariables: anIdentityDictionary;
 		tracePrerequisitesOfVariables: trace packagedVariables: anIdentityDictionary;
 		tracePrerequisitesOfMethods: trace;
@@ -1603,6 +1604,19 @@ tracePrerequisitesOfClasses: anIdentityDictionary packagedVariables: aLookupTabl
 										ifTrue: ['imports the shared pool']
 										ifFalse: ['imports the namespace'])]]]!
 
+tracePrerequisitesOfEnvironment: anIdentityDictionary
+	"Private - Trace the prerequisites of the receiver's environment, if any."
+
+	self environment
+		ifNotNil: 
+			[:ns |
+			self
+				trace: anIdentityDictionary
+				prerequisite: ns owningPackage
+				from: self
+				to: ns
+				dependency: 'has default namespace']!
+
 tracePrerequisitesOfImageStripper: anIdentityDictionary
 	"Only possible to trace the stripper prereqs in DPRO"
 
@@ -1646,7 +1660,7 @@ tracePrerequisitesOfLiterals: anIdentityDictionary packagedVariables: aLookupTab
 								prerequisite: (aLookupTable lookup: ref)
 								from: eachMethod
 								to: ref
-								dependency: 'references global']]]!
+								dependency: 'references variable']]]!
 
 tracePrerequisitesOfMethods: anIdentityDictionary
 	"Private - Trace the prerequisite method classes of the receiver's loose methods (i.e. the extended classes)."
@@ -2043,6 +2057,7 @@ If you experience subsequent problems please contact the package supplier for an
 !Kernel.Package categoriesFor: #tracePrerequisites!operations!private! !
 !Kernel.Package categoriesFor: #tracePrerequisites:!operations!private! !
 !Kernel.Package categoriesFor: #tracePrerequisitesOfClasses:packagedVariables:!operations!private! !
+!Kernel.Package categoriesFor: #tracePrerequisitesOfEnvironment:!operations!private! !
 !Kernel.Package categoriesFor: #tracePrerequisitesOfImageStripper:!operations!private! !
 !Kernel.Package categoriesFor: #tracePrerequisitesOfLiterals:packagedVariables:!operations!private! !
 !Kernel.Package categoriesFor: #tracePrerequisitesOfMethods:!operations!private! !
