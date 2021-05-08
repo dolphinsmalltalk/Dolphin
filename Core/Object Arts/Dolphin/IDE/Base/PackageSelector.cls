@@ -140,26 +140,28 @@ commonFolder: aCollectionOfPackages
 		ifTrue: [self folderClass root]
 		ifFalse: [self folderClass pathname: (File appendPathDelimiter: commonPrefix)]!
 
-confirmUninstall: aPackage 
+confirmUninstall: aPackage
 	"Private - If the <Package> argument has any dependents, then prompt the user to confirm
 	that they should also be uninstalled, if not then double check that the package should be
 	uninstalled anyway. If this method returns then all dependent packages were successfully
 	uninstalled, and uninstallation of the package may proceed."
 
-	| deps msg prompt max mb |
+	| deps msg prompt max mb response |
 	self promptToSavePackageChanges: aPackage.
 	Cursor wait showWhile: [deps := aPackage allDependentPackages].
 	prompt := 'Uninstalling <1p> package...' expandMacrosWith: aPackage name.
-	deps isEmpty 
+	deps isEmpty
 		ifTrue: 
-			[msg := 'Do you really want to uninstall the <1p> package and remove all its owned objects from the system?' 
-						expandMacrosWith: aPackage name.
-			mb := MessageBox new.
+			[mb := MessageBox new.
 			mb
 				caption: prompt;
 				beTaskModal.
-			(mb confirm: msg) ifFalse: [^self operationAbortedSignal signalWith: aPackage].
-			^self].
+			response := mb
+						confirmOrCancel: 'Do you really want to uninstall the <1p> package and remove all its owned objects from the system?'
+								<< aPackage name.
+			^response == #cancel
+				ifTrue: [self operationAbortedSignal signalWith: aPackage]
+				ifFalse: [response == #yes]].
 	msg := String writeStream.
 	msg
 		nextPutAll: 'The following packages depend on ';
@@ -168,16 +170,16 @@ confirmUninstall: aPackage
 		cr;
 		cr.
 	max := 30.
-	(deps collect: [:e | e name]) asSortedCollection 
+	(deps collect: [:e | e name]) asSortedCollection
 		from: 1
 		to: (deps size min: max)
 		do: 
-			[:each | 
+			[:each |
 			msg
 				tab;
 				nextPutAll: each;
 				cr].
-	deps size > max 
+	deps size > max
 		ifTrue: 
 			[msg
 				tab;
@@ -191,10 +193,15 @@ confirmUninstall: aPackage
 	mb := MessageBox new.
 	mb
 		caption: prompt;
-		buttonStyle: #yesNo;
+		buttonStyle: #yesNoCancel;
 		beTaskModal.
-	(mb warning: msg contents) == #no ifTrue: [^self operationAbortedSignal signalWith: aPackage].
-	deps do: [:e | self promptToSavePackageChanges: e]!
+	response := mb warning: msg contents.
+	^response == #cancel
+		ifTrue: [self operationAbortedSignal signalWith: aPackage]
+		ifFalse: 
+			[response == #yes and: 
+					[deps do: [:e | self promptToSavePackageChanges: e].
+					true]]!
 
 createComponents
 	"Private - Create the presenters contained by the receiver"
@@ -731,16 +738,24 @@ refresh
 removePackage
 	"Prompt for confirmation and, if given, uninstall the selected packages."
 
-	self packages do: 
-			[:each | 
-			[self uninstall: each] on: self operationAbortedSignal
-				do: 
-					[:e | 
-					e tag ~~ each 
-						ifTrue: 
-							[MessageBox 
-								warning: ('Uninstallation of <1p> was aborted, but some dependent packages may have been removed' 
-										expandMacrosWith: each name)]]]!
+	| before |
+	before := Package manager packages keys.
+	[self packages do: [:each | self uninstall: each]] on: self operationAbortedSignal
+		do: 
+			[:e |
+			| removed |
+			removed := before difference: Package manager packages keys.
+			removed isEmpty
+				ifFalse: 
+					[| msg |
+					msg := String writeStream.
+					msg nextPutAll: 'Package uninstallation was aborted, but the following packages were removed:'; cr.
+					removed asSortedCollection do: 
+							[:each |
+							msg
+								crtab;
+								nextPutAll: each].
+					MessageBox warning: msg contents]]!
 
 resetChangeFlags
 	"Reset the change flags for the selected packages"
@@ -915,7 +930,7 @@ uninstall: package
 	| currentFolder |
 	package isInstalled ifFalse: [^self].
 	self checkCanUninstall: package.
-	self confirmUninstall: package.
+	(self confirmUninstall: package) ifFalse: [^self].
 	currentFolder := self filterPresenter selectionOrNil.
 	"Remove selection first to avoid losing objects required to maintain display"
 	self packages: (self packages copyWithout: package).
