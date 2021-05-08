@@ -369,7 +369,7 @@ sharedPools
 	^pools!
 
 sharedPoolsDo: aMonadicValuable
-	Notification deprecated.
+	#deprecated.
 	self
 		importedNamespacesDo: [:each | (each inheritsFrom: SharedPool) ifTrue: [aMonadicValuable value: each]]! !
 !ClassDescription categoriesFor: #allSharedPoolNames!pool variables!public! !
