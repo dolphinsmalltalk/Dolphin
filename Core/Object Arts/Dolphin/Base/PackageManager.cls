@@ -257,6 +257,7 @@ basicRemovePackage: aPackage
 	Answer the Package."
 
 	self packages removeKey: aPackage name.
+	self basePackages remove: aPackage ifAbsent: [].
 	defaultPackage == aPackage ifTrue: [defaultPackage := nil].
 	aPackage removeEventsTriggeredFor: self.
 	^aPackage!
