@@ -299,9 +299,7 @@ testReshapeClass
 	"test transparency of reshapes"
 	self assert: testInstance class identicalTo: newClass.
 	self assert: testClass identicalTo: newClass.
-	"Issue: Dolphin's ClassBuilder fails here because it does not become over the metaclasses, only the classes."
-	(self runKnownBug: 'ClassBuilder does not "become" metaclass' test: #testReshapeClass)
-		ifTrue: [self assert: testMeta identicalTo: newMeta]!
+	self assert: testMeta identicalTo: newMeta!
 
 testReshapeClassWithJugglingInstVars
 	"see if reshapes of classes juggle their instVars correctly"
@@ -332,9 +330,7 @@ testReshapeClassWithJugglingInstVars
 	"test transparency of reshapes"
 	self assert: testInstance class identicalTo: newClass.
 	self assert: testClass identicalTo: newClass.
-	"Dolphin's class builder fails because it does not become over the metaclasses."
-	(self runKnownBug: 'ClassBuilder does not "become" metaclass'
-		test: #testReshapeClassWithJugglingInstVars) ifTrue: [self assert: testMeta identicalTo: newMeta]!
+	self assert: testMeta identicalTo: newMeta!
 
 testReshapeSubClass
 	"see if reshaping a class updates the instances of its subclass correctly"
@@ -371,9 +367,7 @@ testReshapeSubClass
 	"test transparency of reshapes"
 	self assert: testInstance class identicalTo: self classBuilderTestSubclass1.
 	self assert: testClass identicalTo: self classBuilderTestSubclass1.
-	"Dolphin's class builder fails because it does not become over the metaclasses."
-	(self runKnownBug: 'ClassBuilder does not "become" metaclass' test: #testReshapeSubClass)
-		ifTrue: [self assert: testMeta identicalTo: self classBuilderTestSubclass1 class]! !
+	self assert: testMeta identicalTo: self classBuilderTestSubclass1 class! !
 !ClassBuilderTests categoriesFor: #classBuilderTestClass!public!unit tests! !
 !ClassBuilderTests categoriesFor: #classBuilderTestSubclass1!public!unit tests! !
 !ClassBuilderTests categoriesFor: #classBuilderTestSubclass2!public!unit tests! !
