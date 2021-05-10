@@ -58,7 +58,8 @@ Source: "IPDolphin.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "IPDolphinToGo.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "LICENSE"; DestDir: "{app}"; Flags: ignoreversion
 Source: "README.md"; DestDir: "{app}"; Flags: ignoreversion
-Source: "SciLexer.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "Scintilla.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "Lexilla.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "Welcome.st"; DestDir: "{userdocs}\{#MyAppName} {#MyAppVersion}"; Flags: ignoreversion
 Source: "{#GetEnv('VCToolsRedistDir')}\vc_redist.x86.exe"; DestDir: {tmp}; Flags: deleteafterinstall
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files

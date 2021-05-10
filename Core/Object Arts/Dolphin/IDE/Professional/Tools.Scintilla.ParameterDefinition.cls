@@ -41,7 +41,7 @@ setName: nameString typeName: typeString
 	typeName := typeString!
 
 type
-	^typeRef ifNil: [typeRef := Tools.Scintilla.TypeReference named: typeName]!
+	^typeRef ifNil: [typeRef := TypeReference named: typeName]!
 
 typeName
 	^typeName! !

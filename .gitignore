@@ -7,7 +7,8 @@
 *.exe
 *.dll
 *.pdb
-!SciLexer.dll
+!Scintilla.dll
+!Lexilla.dll
 !DBOOT.img7
 !DBOOT.sml
 Repository/

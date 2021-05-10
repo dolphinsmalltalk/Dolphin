@@ -464,6 +464,17 @@ testRgb
 	self shouldRaiseNotARealColorError: [Color default rgb].
 	self assert: IndexedColor darkCyan rgb equals: #(16r00 16r80 16r80)!
 
+testRgbaCode
+	self assert: Color white rgbaCode equals: 16rFFFFFFFF.
+	self assert: Color black rgbaCode equals: 16rFF000000.
+	self assert: Color none rgbaCode equals: 16rFFFFFF.
+	self assert: Color orchid rgbaCode equals: 16rFFD670DA.
+	self assert: IndexedColor darkCyan isKindOf: IndexedColor.
+	self assert: IndexedColor darkCyan rgbaCode equals: 16rFF808000.
+	self assert: (Color orchid alpha: 64) rgbaCode equals: 16r40D670DA.
+	self assert: (Color fromRgbaCode: 16rFFD670DA) equals: Color orchid.
+	self assert: (Color fromRgbaCode: 16r40D670DA) equals: (Color orchid alpha: 64)!
+
 testRgbCode
 	self assert: Color white rgbCode equals: 16rFFFFFF.
 	self assert: Color black rgbCode equals: 0.
@@ -587,6 +598,7 @@ testStlRoundTrip
 !Graphics.Tests.ColorTest categoriesFor: #testPrintString!public!unit tests! !
 !Graphics.Tests.ColorTest categoriesFor: #testRed!public!unit tests! !
 !Graphics.Tests.ColorTest categoriesFor: #testRgb!public!unit tests! !
+!Graphics.Tests.ColorTest categoriesFor: #testRgbaCode!public!unit tests! !
 !Graphics.Tests.ColorTest categoriesFor: #testRgbCode!public!unit tests! !
 !Graphics.Tests.ColorTest categoriesFor: #testRGBNamedColors!public!unit tests! !
 !Graphics.Tests.ColorTest categoriesFor: #testSingletons!public!unit tests! !

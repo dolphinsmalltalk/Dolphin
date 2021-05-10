@@ -338,6 +338,11 @@ rgb
 
 	^self asRGB rgb!
 
+rgbaCode
+	"Answer the receiver's colour value in 32-bit RGBA encoding (or ABGR if you prefer), i.e. red | (green << 8) | (blue << 16) | (alpha << 24)."
+
+	^self alphaMask bitOr: self rgbCode!
+
 rgbCode
 	"Answer the receiver's color value in 24-bit RGB encoding with 8-bits per component in (blue, green, red) order."
 
@@ -412,6 +417,7 @@ stbSaveOn: anSTBOutFiler
 !Graphics.Color categoriesFor: #red!accessing!public! !
 !Graphics.Color categoriesFor: #registerName:!private! !
 !Graphics.Color categoriesFor: #rgb!converting!public! !
+!Graphics.Color categoriesFor: #rgbaCode!accessing!public! !
 !Graphics.Color categoriesFor: #rgbCode!accessing!public! !
 !Graphics.Color categoriesFor: #setAlpha:!public! !
 !Graphics.Color categoriesFor: #species!accessing!public! !
@@ -723,6 +729,14 @@ fromNormalizedArray: anArray
 				red: anArray first * 255
 				green: anArray second * 255
 				blue: anArray third * 255]!
+
+fromRgbaCode: anInteger
+	"Answer a <Color> representing the specified encoded value. Note that the encoding of the argument is assumed to be BGRA."
+
+	| rgb alpha |
+	rgb := self fromRgbCode: (anInteger bitAnd: 16rFFFFFF).
+	alpha := (anInteger bitShift: -24) bitAnd: 16rFF.
+	^alpha == 16rFF ifTrue: [rgb] ifFalse: [rgb alpha: alpha]!
 
 fromRgbCode: anInteger
 	"Answer a <Color> representing the specified encoded value. Note that the encoding of the argument is assumed to be 8-bit RGB, as used by ARGB, not the BGR encoding used by ColorRef's.
@@ -1468,6 +1482,7 @@ yellowGreen
 !Graphics.Color class categoriesFor: #fromHTMLSpec:!instance creation!public! !
 !Graphics.Color class categoriesFor: #fromInteger:!instance creation!private! !
 !Graphics.Color class categoriesFor: #fromNormalizedArray:!instance creation!public! !
+!Graphics.Color class categoriesFor: #fromRgbaCode:!instance creation!public! !
 !Graphics.Color class categoriesFor: #fromRgbCode:!instance creation!public! !
 !Graphics.Color class categoriesFor: #fuchsia!**auto generated**!common colors!public! !
 !Graphics.Color class categoriesFor: #gainsboro!**auto generated**!common colors!public! !

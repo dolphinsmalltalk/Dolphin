@@ -1857,10 +1857,10 @@ emptyUndoBuffer
 				lParam: 0]!
 
 endOfLineAnnotationMode
-	^self class annotationModes at: self sciEOLAnnotationGetVisible + 1 ifAbsent: [#hidden]!
+	^self class endOfLineAnnotationModes at: self sciEOLAnnotationGetVisible ifAbsent: [#hidden]!
 
-endOfLineAnnotationMode: aSymbol 
-	self sciEOLAnnotationSetVisible: (self class annotationModes keyAtValue: aSymbol) - 1!
+endOfLineAnnotationMode: aSymbol
+	self sciEOLAnnotationSetVisible: (self class endOfLineAnnotationModes keyAtValue: aSymbol)!
 
 endOfLineAnnotations
 	"Answer a collection of all the individual end-of-line annotations currently set in the receiver. Unlike other annotations there can only be one per line and the whole annotation must have the same style."
@@ -2671,6 +2671,41 @@ foldTextTagStyle: aSymbolOrNil
 				ifNil: [0]
 				ifNotNil: [(self class foldTextTagStyles identityIndexOf: aSymbolOrNil) - 1].
 	self sciFoldDisplayTextSetStyle: style!
+
+fontLocale
+	"Get the locale for displaying text."
+
+	| len |
+	len := this
+				ifNil: [0]
+				ifNotNil: 
+					[Library
+						directFunction: this
+						msg: SCI_GETFONTLOCALE
+						wParam: 0
+						lpParam: nil].
+	^len = 0
+		ifTrue: [stringClass empty]
+		ifFalse: 
+			[| result |
+			result := stringClass newFixed: len.
+			Library
+				directFunction: this
+				msg: SCI_GETFONTLOCALE
+				wParam: 0
+				lpParam: result.
+			result]!
+
+fontLocale: localeNameString
+	"Set the locale for displaying text."
+
+	this
+		ifNotNil: 
+			[Library
+				directFunction: this
+				msg: SCI_SETFONTLOCALE
+				wParam: 0
+				lpParam: localeNameString]!
 
 fontQuality
 	"Retrieve the quality level for text."
@@ -3886,7 +3921,7 @@ isSelectionRectangular
 isStylingEnabled
 	"Answer whether dynamic text styling using the receiver's configured <ScintillaStyler> is enabled."
 
-	^self sciGetLexer ~~ SCLEX_NULL!
+	^self sciGetLexer ~~ 1 "SCLEX_NULL"!
 
 isStylingEnabled: aBoolean 
 	"Enable or disable dynamic text styling using the receiver's configured <ScintillaStyler>."
@@ -3894,10 +3929,10 @@ isStylingEnabled: aBoolean
 	self isStylingEnabled == aBoolean ifTrue: [^self].
 	aBoolean 
 		ifTrue: 
-			[self sciSetLexer: SCLEX_CONTAINER.
+			[self sciSetILexer: 0.
 			self invalidateStyling]
 		ifFalse: 
-			[self sciSetLexer: SCLEX_NULL.
+			[self setLexerLanguage: #null.
 			self removeAllStyling]!
 
 isTextModified
@@ -4054,7 +4089,8 @@ lexer
 
 	| id |
 	id := self sciGetLexer.
-	^id == SCLEX_AUTOMATIC ifTrue: [#automatic] ifFalse: [self class lexerLanguages lookup: id + 1]!
+	id == 0 ifTrue: [^#container].
+	^self lexerLanguage asSymbol!
 
 lexer: aString 
 	"Set the lexer used in the receiver to be that named by the <Symbol> argument. #container is
@@ -6515,6 +6551,42 @@ sciGetEdgeMode
 				wParam: 0
 				lParam: 0]!
 
+sciGetElementAllowsTranslucent: elementInteger
+	"Private - Get whether an element supports translucency."
+
+	^this
+		ifNil: [false]
+		ifNotNil: 
+			[(Library
+				directFunction: this
+				msg: SCI_GETELEMENTALLOWSTRANSLUCENT
+				wParam: elementInteger
+				lParam: 0) asBoolean]!
+
+sciGetElementColour: elementInteger
+	"Private - Get the colour of an element."
+
+	^this
+		ifNotNil: 
+			[Color fromRgbaCode: (Library
+						directFunction: this
+						msg: SCI_GETELEMENTCOLOUR
+						wParam: elementInteger
+						lParam: 0)]!
+
+sciGetElementIsSet: elementInteger
+	"Private - Get whether an element has been set by SetElementColour. When false, a
+	platform-defined or default colour is used."
+
+	^this
+		ifNil: [false]
+		ifNotNil: 
+			[(Library
+				directFunction: this
+				msg: SCI_GETELEMENTISSET
+				wParam: elementInteger
+				lParam: 0) asBoolean]!
+
 sciGetEOLMode
 	"Private - Retrieve the current end of line mode - one of CRLF, CR, or LF."
 
@@ -7519,17 +7591,6 @@ sciLineScroll: columnsInteger lines: linesInteger
 				wParam: columnsInteger
 				lParam: linesInteger]!
 
-sciLoadLexerLibrary: pathString
-	"Private - Load a lexer library (dll / so)."
-
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_LOADLEXERLIBRARY
-				wParam: 0
-				lpParam: pathString]!
-
 sciMarginGetStyle: lineInteger
 	"Private - Get the style number for the text margin for a line"
 
@@ -8104,6 +8165,17 @@ sciReplaceTargetRE: lengthInteger text: textString
 				wParam: lengthInteger
 				lpParam: textString]!
 
+sciResetElementColour: elementInteger
+	"Private - Use the default or platform-defined colour for an element."
+
+	this
+		ifNotNil: 
+			[Library
+				directFunction: this
+				msg: SCI_RESETELEMENTCOLOUR
+				wParam: elementInteger
+				lParam: 0]!
+
 sciRGBAImageSetHeight: heightInteger
 	"Private - Set the height for future RGBA image data."
 
@@ -8393,6 +8465,18 @@ sciSetEdgeMode: edgeModeInteger
 				wParam: edgeModeInteger
 				lParam: 0]!
 
+sciSetElementColour: elementInteger colourElement: colourElementColor
+	"Private - Set the colour of an element. Translucency (alpha) may or may not be significant
+	and this may depend on the platform. The alpha byte should commonly be 0xff for opaque."
+
+	this
+		ifNotNil: 
+			[Library
+				directFunction: this
+				msg: SCI_SETELEMENTCOLOUR
+				wParam: elementInteger
+				lParam: colourElementColor rgbaCode]!
+
 sciSetEOLMode: eolModeInteger
 	"Private - Set the current end of line mode."
 
@@ -8569,28 +8653,6 @@ sciSetLengthForEncode: bytesInteger
 				msg: SCI_SETLENGTHFORENCODE
 				wParam: bytesInteger
 				lParam: 0]!
-
-sciSetLexer: lexerInteger
-	"Private - Set the lexing language of the document."
-
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_SETLEXER
-				wParam: lexerInteger
-				lParam: 0]!
-
-sciSetLexerLanguage: languageString
-	"Private - Set the lexing language of the document based on string name."
-
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_SETLEXERLANGUAGE
-				wParam: 0
-				lpParam: languageString]!
 
 sciSetLineEndTypesAllowed: lineEndBitSetInteger
 	"Private - Set the line end types that the application wants to use. May not be used if
@@ -9179,6 +9241,18 @@ sciStyleResetDefault
 				msg: SCI_STYLERESETDEFAULT
 				wParam: 0
 				lParam: 0]!
+
+sciSupportsFeature: featureInteger
+	"Private - Get whether a feature is supported"
+
+	^this
+		ifNil: [false]
+		ifNotNil: 
+			[(Library
+				directFunction: this
+				msg: SCI_SUPPORTSFEATURE
+				wParam: featureInteger
+				lParam: 0) asBoolean]!
 
 sciTagsOfStyle: styleInteger
 	"Private - Retrieve a ' ' separated list of style tags like 'literal quoted string'. Result
@@ -10190,18 +10264,17 @@ setKeyBindings: aCollectionOfScintillaKeyBindings
 
 setLexerLanguage: aSymbol
 	aSymbol == #container
-		ifTrue: [self sciSetLexer: SCLEX_CONTAINER]
+		ifTrue: [self sciSetILexer: 0]
 		ifFalse: 
-			[aSymbol == #automatic
-				ifTrue: [self sciSetLexer: SCLEX_AUTOMATIC]
-				ifFalse: 
-					[self sciSetLexerLanguage: aSymbol.
-					self lexer ~~ aSymbol ifTrue: [self error: 'Unrecognised language: ' , aSymbol printString].
-					(LexerKeywords lookup: aSymbol)
-						ifNotNil: 
-							[:keywordSets |
-							keywordSets
-								keysAndValuesDo: [:i :each | each isNil ifFalse: [self sciSetKeyWords: i - 1 keyWords: each]]]].
+			[| lexer |
+			lexer := LexillaLibrary default createLexer: aSymbol.
+			lexer isNull ifTrue: [self error: 'Unrecognised language: ' , aSymbol printString].
+			self sciSetILexer: lexer.
+			(LexerKeywords lookup: aSymbol)
+				ifNotNil: 
+					[:keywordSets |
+					keywordSets
+						keysAndValuesDo: [:i :each | each isNil ifFalse: [self sciSetKeyWords: i - 1 keyWords: each]]].
 			"The fold properties must be set after the lexer has been set."
 			self isFoldingEnabled ifTrue: [self setFoldProperty: true]]!
 
@@ -11596,6 +11669,8 @@ zoomOut
 !UI.Scintilla.ScintillaView categoriesFor: #foldMarkerStyle:!folding!markers!public! !
 !UI.Scintilla.ScintillaView categoriesFor: #foldTextTagStyle!accessing!folding!public! !
 !UI.Scintilla.ScintillaView categoriesFor: #foldTextTagStyle:!accessing!folding!public! !
+!UI.Scintilla.ScintillaView categoriesFor: #fontLocale!**auto generated**!public!scintilla interface! !
+!UI.Scintilla.ScintillaView categoriesFor: #fontLocale:!**auto generated**!public!scintilla interface! !
 !UI.Scintilla.ScintillaView categoriesFor: #fontQuality!other settings!public! !
 !UI.Scintilla.ScintillaView categoriesFor: #fontQuality:!other settings!public! !
 !UI.Scintilla.ScintillaView categoriesFor: #forecolor:!accessing!public! !
@@ -11956,6 +12031,9 @@ zoomOut
 !UI.Scintilla.ScintillaView categoriesFor: #sciGetDocPointer!**auto generated**!multiple views!private!scintilla interface! !
 !UI.Scintilla.ScintillaView categoriesFor: #sciGetDocumentOptions!**auto generated**!private!scintilla interface! !
 !UI.Scintilla.ScintillaView categoriesFor: #sciGetEdgeMode!**auto generated**!long lines!private!scintilla interface! !
+!UI.Scintilla.ScintillaView categoriesFor: #sciGetElementAllowsTranslucent:!**auto generated**!private!scintilla interface! !
+!UI.Scintilla.ScintillaView categoriesFor: #sciGetElementColour:!**auto generated**!private!scintilla interface! !
+!UI.Scintilla.ScintillaView categoriesFor: #sciGetElementIsSet:!**auto generated**!private!scintilla interface! !
 !UI.Scintilla.ScintillaView categoriesFor: #sciGetEOLMode!**auto generated**!line endings!private!scintilla interface! !
 !UI.Scintilla.ScintillaView categoriesFor: #sciGetFontQuality!**auto generated**!other settings!private!scintilla interface! !
 !UI.Scintilla.ScintillaView categoriesFor: #sciGetIdleStyling!**auto generated**!private!scintilla interface!styling! !
@@ -12030,7 +12108,6 @@ zoomOut
 !UI.Scintilla.ScintillaView categoriesFor: #sciIsRangeWord:end:!**auto generated**!enquiries!private!scintilla interface!words! !
 !UI.Scintilla.ScintillaView categoriesFor: #sciLineFromIndexPosition:lineCharacterIndex:!**auto generated**!by character or utf16 code unit!private!scintilla interface! !
 !UI.Scintilla.ScintillaView categoriesFor: #sciLineScroll:lines:!**auto generated**!private!scintilla interface!scrolling! !
-!UI.Scintilla.ScintillaView categoriesFor: #sciLoadLexerLibrary:!**auto generated**!lexer!private!scintilla interface! !
 !UI.Scintilla.ScintillaView categoriesFor: #sciMarginGetStyle:!**auto generated**!margins!private!scintilla interface! !
 !UI.Scintilla.ScintillaView categoriesFor: #sciMarginGetStyleOffset!**auto generated**!margins!private!scintilla interface! !
 !UI.Scintilla.ScintillaView categoriesFor: #sciMarginGetStyles:!**auto generated**!margins!private!scintilla interface! !
@@ -12075,6 +12152,7 @@ zoomOut
 !UI.Scintilla.ScintillaView categoriesFor: #sciReplaceSel:!**auto generated**!private!scintilla interface!text retrieval & modification! !
 !UI.Scintilla.ScintillaView categoriesFor: #sciReplaceTarget:text:!**auto generated**!private!scintilla interface!searching & replacing! !
 !UI.Scintilla.ScintillaView categoriesFor: #sciReplaceTargetRE:text:!**auto generated**!private!scintilla interface!searching & replacing! !
+!UI.Scintilla.ScintillaView categoriesFor: #sciResetElementColour:!**auto generated**!private!scintilla interface! !
 !UI.Scintilla.ScintillaView categoriesFor: #sciRGBAImageSetHeight:!**auto generated**!markers!private!scintilla interface! !
 !UI.Scintilla.ScintillaView categoriesFor: #sciRGBAImageSetScale:!**auto generated**!markers!private!scintilla interface! !
 !UI.Scintilla.ScintillaView categoriesFor: #sciRGBAImageSetWidth:!**auto generated**!markers!private!scintilla interface! !
@@ -12101,6 +12179,7 @@ zoomOut
 !UI.Scintilla.ScintillaView categoriesFor: #sciSetEdgeColour:!**auto generated**!private!scintilla interface! !
 !UI.Scintilla.ScintillaView categoriesFor: #sciSetEdgeColumn:!long lines!private!scintilla interface! !
 !UI.Scintilla.ScintillaView categoriesFor: #sciSetEdgeMode:!**auto generated**!long lines!private!scintilla interface! !
+!UI.Scintilla.ScintillaView categoriesFor: #sciSetElementColour:colourElement:!**auto generated**!private!scintilla interface! !
 !UI.Scintilla.ScintillaView categoriesFor: #sciSetEOLMode:!**auto generated**!line endings!private!scintilla interface! !
 !UI.Scintilla.ScintillaView categoriesFor: #sciSetFoldFlags:!**auto generated**!folding!private!scintilla interface! !
 !UI.Scintilla.ScintillaView categoriesFor: #sciSetFoldMarginColour:back:!**auto generated**!folding!margins!private!scintilla interface! !
@@ -12117,8 +12196,6 @@ zoomOut
 !UI.Scintilla.ScintillaView categoriesFor: #sciSetKeyWords:keyWords:!**auto generated**!lexer!private!scintilla interface! !
 !UI.Scintilla.ScintillaView categoriesFor: #sciSetLayoutCache:!**auto generated**!line wrapping!private!scintilla interface! !
 !UI.Scintilla.ScintillaView categoriesFor: #sciSetLengthForEncode:!**auto generated**!private!scintilla interface!text retrieval & modification! !
-!UI.Scintilla.ScintillaView categoriesFor: #sciSetLexer:!**auto generated**!lexer!private!scintilla interface! !
-!UI.Scintilla.ScintillaView categoriesFor: #sciSetLexerLanguage:!**auto generated**!lexer!private!scintilla interface! !
 !UI.Scintilla.ScintillaView categoriesFor: #sciSetLineEndTypesAllowed:!**auto generated**!line wrapping!private!scintilla interface! !
 !UI.Scintilla.ScintillaView categoriesFor: #sciSetLineIndentation:indentation:!**auto generated**!private!scintilla interface!tabs & indentation guides! !
 !UI.Scintilla.ScintillaView categoriesFor: #sciSetMainSelection:!**auto generated**!multiple selection and virtual space!private!scintilla interface!selection! !
@@ -12171,6 +12248,7 @@ zoomOut
 !UI.Scintilla.ScintillaView categoriesFor: #sciSetYCaretPolicy:caretSlop:!**auto generated**!private!scintilla interface!scrolling! !
 !UI.Scintilla.ScintillaView categoriesFor: #sciStyleClearAll!**auto generated**!private!scintilla interface!style definition! !
 !UI.Scintilla.ScintillaView categoriesFor: #sciStyleResetDefault!**auto generated**!private!scintilla interface!style definition! !
+!UI.Scintilla.ScintillaView categoriesFor: #sciSupportsFeature:!**auto generated**!private!scintilla interface! !
 !UI.Scintilla.ScintillaView categoriesFor: #sciTagsOfStyle:!**auto generated**!lexer-style metadata!private!scintilla interface! !
 !UI.Scintilla.ScintillaView categoriesFor: #sciTargetAsUTF8!**auto generated**!private!scintilla interface!selection! !
 !UI.Scintilla.ScintillaView categoriesFor: #sciTextWidth:text:!**auto generated**!enquiries!private!scintilla interface! !
@@ -12535,6 +12613,20 @@ edgeModes
 
 	^#(#none #line #background #multiline)!
 
+endOfLineAnnotationModes
+	^##(LookupTable withAll: {EOLANNOTATION_ANGLE_CIRCLE -> #angleCircle.
+				EOLANNOTATION_ANGLE_FLAT -> #angleFlat.
+				EOLANNOTATION_ANGLES -> #angles.
+				EOLANNOTATION_BOXED -> #boxed.
+				EOLANNOTATION_CIRCLE_ANGLE -> #circleAngle.
+				EOLANNOTATION_CIRCLE_FLAT -> #circleFlat.
+				EOLANNOTATION_FLAT_ANGLE -> #flatAngle.
+				EOLANNOTATION_FLAT_CIRCLE -> #flatCircle.
+				EOLANNOTATION_FLATS -> #flats.
+				EOLANNOTATION_HIDDEN -> #hidden.
+				EOLANNOTATION_STADIUM -> #stadium.
+				EOLANNOTATION_STANDARD -> #standard})!
+
 foldMarkerStyles
 	^#(#arrows #boxTree #circleTree #plusMinus)!
 
@@ -12583,7 +12675,7 @@ initialize
 				isImmutable: true;
 				yourself).
 	self addClassConstant: 'DefaultTextStyles'
-		value: (IdentityDictionary new
+		value: (LookupTable new
 				at: #container put: (self immutableCopyOfCollection: self defaultTextStyles);
 				at: #xml put: (self immutableCopyOfCollection: self xmlTextStyles);
 				at: #null put: (self immutableCopyOfCollection: self txtTextStyles);
@@ -12594,7 +12686,7 @@ initialize
 				isImmutable: true;
 				yourself).
 	self addClassConstant: 'LexerKeywords'
-		value: (IdentityDictionary new
+		value: (LookupTable new
 				at: #json put: #('false true null' '@id @context @type @value @language @container @list @set @reverse @index @base @vocab @graph');
 				shrink;
 				isImmutable: true;
@@ -12685,18 +12777,13 @@ layoutCachingModes
 	^#(#none #caret #page #document)!
 
 lexerLanguages
-	"Answer the names of all known languages with a lexers built into SciLexer.dll
-	The set of lexers tends to increase quite rapidly over time (though some also get
-	dropped, hence the empty slots in the array), this is from 4.10. Note that a Smalltalk lexer
-	was added around 1.63, however we do not use this. Dolphin's Smalltalk lexer is implemented
-	in the image and container-based lexing is used. This is slower, but much more powerful."
+	"Answer the names of all known languages with a lexers built into Lexilla.dll.
+	The set of lexers tends to increase quite rapidly over time (though some also get dropped), but the list is now that returned dynamically from Lexilla, so will always be current (for the loaded Lexilla).
+	Note that a Smalltalk lexer was added around 1.63, however we do not use this. Dolphin's Smalltalk lexer is implemented in the image and container-based lexing is used. This is slower, but much more powerful."
 
-	"Note that SCLEX_XCODE (13) seem to be dead (i.e. no lexer is registered for it). Note also
-	that the language names are case sensitive. Finally note that there are two special names which
-	are not languages as such: #automatic is an instruction to Scintilla to choose a lexer, and #container
-	sends colourization requests back to the control's container (i.e. into our Smalltalk wrapper)."
+	"Note that #container is not a name as such, but request Scintilla to send colourization requests back to the control's container (i.e. into our Smalltalk wrapper)."
 
-	^#(#container #null #python #cpp #hypertext #xml #perl #sql #vb #props #errorlist #makefile #batch nil #latex #lua #diff #conf #pascal #ave #ada #lisp #ruby #eiffel #eiffelkw #tcl #nncrontab #bullant #vbscript nil nil #baan #matlab #scriptol #asm #cppnocase #fortran #f77 #css #pov #lout #escript #ps #nsis #mmixal #clarion #clarionnocase #lot #yaml #tex #metapost #powerbasic #forth #erlang #octave #mssql #verilog #kix #gui4cli #specman #au3 #apdl #bash #asn1 #vhdl #caml #blitzbasic #purebasic #haskell #phpscript #tads3 #rebol #smalltalk #flagship #csound #freebasic #inno #opal #spice #d #cmake #gap #'PL/M' #abl #abaqus #asy #r #magiksf #powershell #mysql #po #TAL #COBOL #TACL #sorcins #powerpro #nimrod #SML #markdown #txt2tags #a68k #modula #coffeescript #tcmd #avs #ecl #oscript #visualprolog #literatehaskell #fcST #kvirc #rust #DMAP #as #DMIS #registry #bib #srec #ihex #tehex #json #edifact #indent #maxima #stata #sas #nim #cil #x12 #dataflex #hollywood #raku)!
+	^#(#container) , LexillaLibrary default getLexerNames!
 
 lineEndings
 	"Answer the symbolic names of the end-of-line modes supported by Scintilla. These correspond
@@ -13207,6 +13294,7 @@ xmlTextStyles
 !UI.Scintilla.ScintillaView class categoriesFor: #drawingPhases!constants!private! !
 !UI.Scintilla.ScintillaView class categoriesFor: #drawingTechnologies!constants!public! !
 !UI.Scintilla.ScintillaView class categoriesFor: #edgeModes!constants!public! !
+!UI.Scintilla.ScintillaView class categoriesFor: #endOfLineAnnotationModes!constants!public! !
 !UI.Scintilla.ScintillaView class categoriesFor: #foldMarkerStyles!constants!public! !
 !UI.Scintilla.ScintillaView class categoriesFor: #foldTextTagStyles!constants!public! !
 !UI.Scintilla.ScintillaView class categoriesFor: #fontQualities!constants!public! !

@@ -249,7 +249,7 @@ makeParam: anArray
 			[(##(#('bytes' 'space' 'lines' 'columns' 'relative') asSet) includes: paramName)
 				or: [paramName beginsWith: 'length']])
 		or: [paramTypeName = 'line' and: [paramName = 'lines']]) ifTrue: [paramTypeName := 'int'].
-	^Tools.Scintilla.ParameterDefinition newName: paramName typeName: paramTypeName!
+	^ParameterDefinition newName: paramName typeName: paramTypeName!
 
 name
 	^name!
@@ -725,247 +725,23 @@ renamedFunctions
 		at: 'SCI_GETTABMINIMUMWIDTH' put: #tabMinimumWidth;
 		at: 'SCI_SETTABMINIMUMWIDTH' put: #tabMinimumWidth:;
 		yourself.
+
+	"5.0.2"
+	renamedMessages
+		at: 'SCI_GETFONTLOCALE' put: #fontLocale;
+		at: 'SCI_SETFONTLOCALE' put: #fontLocale:
+		yourself.
+
 	renamedMessages
 		shrink;
 		yourself)
-	"Indicators"
-
-	"Zooming"
-	"Undo and Redo"
-	"Tabs & indents"
-	""
-	"Caret"
-	"Markers"
-	"Scrolling"
-	"Line wrapping"
-
-	"Whitespace"
-
-	"Selection and information"
-	"Text retrieval and modification"
-	"Styling"
-
-	"Miscellaneous"
-
-	"Hotspot"
-
-	"Autocompletion"
-
-	"Calltips"
-
-	"Macros"
-
-	"Commands - Cursor movement"
-
-	"Commands - Selection movement"
-
-	"Unsupported rectangular selection commands"
-
-	"Commands - Deletion"
-
-	"Commands - Insertion"
-
-	"Commands - Cut, Copy & Paste"
-
-	"Commands - Other"
-
-	"Brace highlighting"
-
-	"1.67"
-
-	"1.77"
-
-	"Annotations"
-
-	"2.01"
-	"3.6.3"
-	"3.7.0"
-
-	"4.1.5"
-
-	"4.2 - introduces extra types allowing a number of functions to be generated in higher level form"
-
-	"4.2.1"
-	"Indicators"
-
-	"Zooming"
-	"Undo and Redo"
-	"Tabs & indents"
-	""
-	"Caret"
-	"Markers"
-	"Scrolling"
-	"Line wrapping"
-
-	"Whitespace"
-
-	"Selection and information"
-	"Text retrieval and modification"
-	"Styling"
-
-	"Miscellaneous"
-
-	"Hotspot"
-
-	"Autocompletion"
-
-	"Calltips"
-
-	"Macros"
-
-	"Commands - Cursor movement"
-
-	"Commands - Selection movement"
-
-	"Unsupported rectangular selection commands"
-
-	"Commands - Deletion"
-
-	"Commands - Insertion"
-
-	"Commands - Cut, Copy & Paste"
-
-	"Commands - Other"
-
-	"Brace highlighting"
-
-	"1.67"
-
-	"1.77"
-
-	"Annotations"
-
-	"2.01"
-	"3.6.3"
-	"3.7.0"
-
-	"4.1.5"
-
-	"4.2 - introduces extra types allowing a number of functions to be generated in higher level form"
-
-	"4.2.1"
-	"Indicators"
-
-	"Zooming"
-	"Undo and Redo"
-	"Tabs & indents"
-	""
-	"Caret"
-	"Markers"
-	"Scrolling"
-	"Line wrapping"
-
-	"Whitespace"
-
-	"Selection and information"
-	"Text retrieval and modification"
-	"Styling"
-
-	"Miscellaneous"
-
-	"Hotspot"
-
-	"Autocompletion"
-
-	"Calltips"
-
-	"Macros"
-
-	"Commands - Cursor movement"
-
-	"Commands - Selection movement"
-
-	"Unsupported rectangular selection commands"
-
-	"Commands - Deletion"
-
-	"Commands - Insertion"
-
-	"Commands - Cut, Copy & Paste"
-
-	"Commands - Other"
-
-	"Brace highlighting"
-
-	"1.67"
-
-	"1.77"
-
-	"Annotations"
-
-	"2.01"
-	"3.6.3"
-	"3.7.0"
-
-	"4.1.5"
-
-	"4.2 - introduces extra types allowing a number of functions to be generated in higher level form"
-
-	"4.2.1"
-	"Indicators"
-
-	"Zooming"
-	"Undo and Redo"
-	"Tabs & indents"
-	""
-	"Caret"
-	"Markers"
-	"Scrolling"
-	"Line wrapping"
-
-	"Whitespace"
-
-	"Selection and information"
-	"Text retrieval and modification"
-	"Styling"
-
-	"Miscellaneous"
-
-	"Hotspot"
-
-	"Autocompletion"
-
-	"Calltips"
-
-	"Macros"
-
-	"Commands - Cursor movement"
-
-	"Commands - Selection movement"
-
-	"Unsupported rectangular selection commands"
-
-	"Commands - Deletion"
-
-	"Commands - Insertion"
-
-	"Commands - Cut, Copy & Paste"
-
-	"Commands - Other"
-
-	"Brace highlighting"
-
-	"1.67"
-
-	"1.77"
-
-	"Annotations"
-
-	"2.01"
-	"3.6.3"
-	"3.7.0"
-
-	"4.1.5"
-
-	"4.2 - introduces extra types allowing a number of functions to be generated in higher level form"
-
-	"4.2.1"!
+	!
 
 retType: aString
 	returnTypeName := self remappedReturnTypes at: constName ifAbsent: [aString]!
 
 returnType
-	^returnType ifNil: [returnType := Tools.Scintilla.TypeReference named: returnTypeName]!
+	^returnType ifNil: [returnType := TypeReference named: returnTypeName]!
 
 selector
 	selector ifNotNil: [^selector].

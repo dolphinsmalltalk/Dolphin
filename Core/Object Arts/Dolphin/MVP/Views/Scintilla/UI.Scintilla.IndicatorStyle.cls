@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
 UI.Scintilla.QueryableAttribute subclass: #'UI.Scintilla.IndicatorStyle'
-	instanceVariableNames: 'forecolor style under name alpha hoverStyle hoverForecolor flags foreAlpha _reserved12'
+	instanceVariableNames: 'forecolor style under name alpha hoverStyle hoverForecolor flags foreAlpha strokeWidth'
 	classVariableNames: 'HoverForecolor HoverStyle'
 	imports: #()
 	classInstanceVariableNames: ''
@@ -124,6 +124,9 @@ basicIsUnderText
 basicIsUnderText: anIntegerOrNil
 	under := anIntegerOrNil!
 
+basicStrokeWidth: anInteger
+	strokeWidth := anInteger!
+
 basicStyle
 	^style!
 
@@ -196,6 +199,15 @@ name: anObject
 				ifTrue: [id := anObject]
 				ifFalse: [anObject isEmpty ifFalse: [anObject asSymbol]]!
 
+strokeWidth
+	"Answer the stroke width used to draw the indicators with this style in hundreds of a pixel. If nil then the default, 100 (i.e. 1 pel), is used."
+
+	^strokeWidth!
+
+strokeWidth: anInteger
+	self basicStrokeWidth: anInteger.
+	self updateViewProperty: #strokeWidth!
+
 style
 	^style ifNotNil: [:s | IndicatorStyles at: s + 1 ifAbsent: []]!
 
@@ -225,6 +237,7 @@ validateAlpha: anInteger
 !UI.Scintilla.IndicatorStyle categoriesFor: #basicId!accessing!private! !
 !UI.Scintilla.IndicatorStyle categoriesFor: #basicIsUnderText!private!testing! !
 !UI.Scintilla.IndicatorStyle categoriesFor: #basicIsUnderText:!accessing!private! !
+!UI.Scintilla.IndicatorStyle categoriesFor: #basicStrokeWidth:!accessing!private! !
 !UI.Scintilla.IndicatorStyle categoriesFor: #basicStyle!accessing!private! !
 !UI.Scintilla.IndicatorStyle categoriesFor: #basicStyle:!accessing!private! !
 !UI.Scintilla.IndicatorStyle categoriesFor: #flags!accessing!private! !
@@ -241,6 +254,8 @@ validateAlpha: anInteger
 !UI.Scintilla.IndicatorStyle categoriesFor: #isUnderText:!accessing!public! !
 !UI.Scintilla.IndicatorStyle categoriesFor: #name!accessing!public! !
 !UI.Scintilla.IndicatorStyle categoriesFor: #name:!accessing!public! !
+!UI.Scintilla.IndicatorStyle categoriesFor: #strokeWidth!accessing!public! !
+!UI.Scintilla.IndicatorStyle categoriesFor: #strokeWidth:!accessing!public! !
 !UI.Scintilla.IndicatorStyle categoriesFor: #style!accessing!public! !
 !UI.Scintilla.IndicatorStyle categoriesFor: #style:!accessing!public! !
 !UI.Scintilla.IndicatorStyle categoriesFor: #styleFromName:!helpers!private! !
@@ -308,8 +323,15 @@ buildPropertyMap
 					setMessage: SCI_INDICSETOUTLINEALPHA
 					setSelector: #basicForeAlpha:
 					getMessage: SCI_INDICSETOUTLINEALPHA);
+		at: #strokeWidth
+			put: (PropertyDescriptor
+					getSelector: #strokeWidth
+					defaultValue: 100
+					setMessage: SCI_INDICSETSTROKEWIDTH
+					setSelector: #basicStrokeWidth:
+					getMessage: SCI_INDICGETSTROKEWIDTH);
 		shrink;
-		yourself	"Magic number for default value is from the Scintilla code - no const for this"	"Magic number for default value is from the Scintilla code - no const for this"!
+		yourself!
 
 initialize
 	"

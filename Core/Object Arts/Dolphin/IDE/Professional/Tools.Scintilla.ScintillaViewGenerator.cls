@@ -7,7 +7,7 @@ Core.Object subclass: #'Tools.Scintilla.ScintillaViewGenerator'
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Tools.Scintilla.ScintillaViewGenerator guid: (Core.GUID fromString: '{babb8e5d-5ee9-43b2-a88b-0959484c008e}')!
-Tools.Scintilla.ScintillaViewGenerator comment: 'This class reads the Scintilla.iface definition and autogenerates wrapper methods into the ScintillaView class, and defines constants in the ScintillaConstants pool.
+Tools.Scintilla.ScintillaViewGenerator comment: 'This class reads the Scintilla.iface definition and autogenerates wrapper methods into the ScintillaView class, and defines constants in the Scintilla namespace.
 
 The parsing is not sophisticated, but adequate for purpose.
 
@@ -100,8 +100,17 @@ defineConstantsPool
 				'EDGE_LINE' -> 1.
 				'EDGE_MULTILINE' -> 3.
 				'EDGE_NONE' -> 0.
+				'EOLANNOTATION_ANGLE_CIRCLE' -> 258.
+				'EOLANNOTATION_ANGLE_FLAT' -> 274.
+				'EOLANNOTATION_ANGLES' -> 290.
 				'EOLANNOTATION_BOXED' -> 2.
+				'EOLANNOTATION_CIRCLE_ANGLE' -> 288.
+				'EOLANNOTATION_CIRCLE_FLAT' -> 272.
+				'EOLANNOTATION_FLAT_ANGLE' -> 289.
+				'EOLANNOTATION_FLAT_CIRCLE' -> 257.
+				'EOLANNOTATION_FLATS' -> 273.
 				'EOLANNOTATION_HIDDEN' -> 0.
+				'EOLANNOTATION_STADIUM' -> 256.
 				'EOLANNOTATION_STANDARD' -> 1.
 				'INDIC_BOX' -> 6.
 				'INDIC_COMPOSITIONTHICK' -> 14.
@@ -203,6 +212,10 @@ defineConstantsPool
 				'SC_EFF_QUALITY_LCD_OPTIMIZED' -> 3.
 				'SC_EFF_QUALITY_MASK' -> 15.
 				'SC_EFF_QUALITY_NON_ANTIALIASED' -> 1.
+				'SC_ELEMENT_LIST' -> 0.
+				'SC_ELEMENT_LIST_BACK' -> 1.
+				'SC_ELEMENT_LIST_SELECTED' -> 2.
+				'SC_ELEMENT_LIST_SELECTED_BACK' -> 3.
 				'SC_EOL_CR' -> 1.
 				'SC_EOL_CRLF' -> 0.
 				'SC_EOL_LF' -> 2.
@@ -346,6 +359,11 @@ defineConstantsPool
 				'SC_STATUS_OK' -> 0.
 				'SC_STATUS_WARN_REGEX' -> 1001.
 				'SC_STATUS_WARN_START' -> 1000.
+				'SC_SUPPORTS_FRACTIONAL_STROKE_WIDTH' -> 2.
+				'SC_SUPPORTS_LINE_DRAWS_FINAL' -> 0.
+				'SC_SUPPORTS_PIXEL_DIVISIONS' -> 1.
+				'SC_SUPPORTS_PIXEL_MODIFICATION' -> 4.
+				'SC_SUPPORTS_TRANSLUCENT_STROKE' -> 3.
 				'SC_TECHNOLOGY_DEFAULT' -> 0.
 				'SC_TECHNOLOGY_DIRECTWRITE' -> 1.
 				'SC_TECHNOLOGY_DIRECTWRITEDC' -> 3.
@@ -586,6 +604,9 @@ defineConstantsPool
 				'SCI_GETEDGECOLOUR' -> 2364.
 				'SCI_GETEDGECOLUMN' -> 2360.
 				'SCI_GETEDGEMODE' -> 2362.
+				'SCI_GETELEMENTALLOWSTRANSLUCENT' -> 2757.
+				'SCI_GETELEMENTCOLOUR' -> 2754.
+				'SCI_GETELEMENTISSET' -> 2756.
 				'SCI_GETENDATLASTLINE' -> 2278.
 				'SCI_GETENDSTYLED' -> 2028.
 				'SCI_GETEOLMODE' -> 2030.
@@ -596,6 +617,7 @@ defineConstantsPool
 				'SCI_GETFOLDEXPANDED' -> 2230.
 				'SCI_GETFOLDLEVEL' -> 2223.
 				'SCI_GETFOLDPARENT' -> 2225.
+				'SCI_GETFONTLOCALE' -> 2761.
 				'SCI_GETFONTQUALITY' -> 2612.
 				'SCI_GETGAPPOSITION' -> 2644.
 				'SCI_GETHIGHLIGHTGUIDE' -> 2135.
@@ -758,6 +780,7 @@ defineConstantsPool
 				'SCI_INDICGETHOVERFORE' -> 2683.
 				'SCI_INDICGETHOVERSTYLE' -> 2681.
 				'SCI_INDICGETOUTLINEALPHA' -> 2559.
+				'SCI_INDICGETSTROKEWIDTH' -> 2752.
 				'SCI_INDICGETSTYLE' -> 2081.
 				'SCI_INDICGETUNDER' -> 2511.
 				'SCI_INDICSETALPHA' -> 2523.
@@ -766,6 +789,7 @@ defineConstantsPool
 				'SCI_INDICSETHOVERFORE' -> 2682.
 				'SCI_INDICSETHOVERSTYLE' -> 2680.
 				'SCI_INDICSETOUTLINEALPHA' -> 2558.
+				'SCI_INDICSETSTROKEWIDTH' -> 2751.
 				'SCI_INDICSETSTYLE' -> 2080.
 				'SCI_INDICSETUNDER' -> 2510.
 				'SCI_INSERTTEXT' -> 2003.
@@ -799,7 +823,6 @@ defineConstantsPool
 				'SCI_LINEUP' -> 2302.
 				'SCI_LINEUPEXTEND' -> 2303.
 				'SCI_LINEUPRECTEXTEND' -> 2427.
-				'SCI_LOADLEXERLIBRARY' -> 4007.
 				'SCI_LOWERCASE' -> 2340.
 				'SCI_MARGINGETSTYLE' -> 2533.
 				'SCI_MARGINGETSTYLEOFFSET' -> 2538.
@@ -828,7 +851,11 @@ defineConstantsPool
 				'SCI_MARKERSETALPHA' -> 2476.
 				'SCI_MARKERSETBACK' -> 2042.
 				'SCI_MARKERSETBACKSELECTED' -> 2292.
+				'SCI_MARKERSETBACKSELECTEDTRANSLUCENT' -> 2296.
+				'SCI_MARKERSETBACKTRANSLUCENT' -> 2295.
 				'SCI_MARKERSETFORE' -> 2041.
+				'SCI_MARKERSETFORETRANSLUCENT' -> 2294.
+				'SCI_MARKERSETSTROKEWIDTH' -> 2297.
 				'SCI_MARKERSYMBOLDEFINED' -> 2529.
 				'SCI_MOVECARETINSIDEVIEW' -> 2401.
 				'SCI_MOVESELECTEDLINESDOWN' -> 2621.
@@ -873,6 +900,7 @@ defineConstantsPool
 				'SCI_REPLACESEL' -> 2170.
 				'SCI_REPLACETARGET' -> 2194.
 				'SCI_REPLACETARGETRE' -> 2195.
+				'SCI_RESETELEMENTCOLOUR' -> 2755.
 				'SCI_RGBAIMAGESETHEIGHT' -> 2625.
 				'SCI_RGBAIMAGESETSCALE' -> 2651.
 				'SCI_RGBAIMAGESETWIDTH' -> 2624.
@@ -923,6 +951,7 @@ defineConstantsPool
 				'SCI_SETEDGECOLOUR' -> 2365.
 				'SCI_SETEDGECOLUMN' -> 2361.
 				'SCI_SETEDGEMODE' -> 2363.
+				'SCI_SETELEMENTCOLOUR' -> 2753.
 				'SCI_SETEMPTYSELECTION' -> 2556.
 				'SCI_SETENDATLASTLINE' -> 2277.
 				'SCI_SETEOLMODE' -> 2031.
@@ -935,6 +964,7 @@ defineConstantsPool
 				'SCI_SETFOLDLEVEL' -> 2222.
 				'SCI_SETFOLDMARGINCOLOUR' -> 2290.
 				'SCI_SETFOLDMARGINHICOLOUR' -> 2291.
+				'SCI_SETFONTLOCALE' -> 2760.
 				'SCI_SETFONTQUALITY' -> 2611.
 				'SCI_SETHIGHLIGHTGUIDE' -> 2134.
 				'SCI_SETHOTSPOTACTIVEBACK' -> 2411.
@@ -955,8 +985,6 @@ defineConstantsPool
 				'SCI_SETKEYWORDS' -> 4005.
 				'SCI_SETLAYOUTCACHE' -> 2272.
 				'SCI_SETLENGTHFORENCODE' -> 2448.
-				'SCI_SETLEXER' -> 4001.
-				'SCI_SETLEXERLANGUAGE' -> 4006.
 				'SCI_SETLINEENDTYPESALLOWED' -> 2656.
 				'SCI_SETLINEINDENTATION' -> 2126.
 				'SCI_SETLINESTATE' -> 2092.
@@ -1091,6 +1119,7 @@ defineConstantsPool
 				'SCI_STYLESETUNDERLINE' -> 2059.
 				'SCI_STYLESETVISIBLE' -> 2074.
 				'SCI_STYLESETWEIGHT' -> 2063.
+				'SCI_SUPPORTSFEATURE' -> 2750.
 				'SCI_SWAPMAINANCHORCARET' -> 2607.
 				'SCI_TAB' -> 2327.
 				'SCI_TAGSOFSTYLE' -> 4031.
@@ -1152,137 +1181,6 @@ defineConstantsPool
 				'SCK_TAB' -> 9.
 				'SCK_UP' -> 301.
 				'SCK_WIN' -> 313.
-				'SCLEX_A68K' -> 100.
-				'SCLEX_ABAQUS' -> 84.
-				'SCLEX_ADA' -> 20.
-				'SCLEX_APDL' -> 61.
-				'SCLEX_AS' -> 113.
-				'SCLEX_ASM' -> 34.
-				'SCLEX_ASN1' -> 63.
-				'SCLEX_ASYMPTOTE' -> 85.
-				'SCLEX_AU3' -> 60.
-				'SCLEX_AUTOMATIC' -> 1000.
-				'SCLEX_AVE' -> 19.
-				'SCLEX_AVS' -> 104.
-				'SCLEX_BAAN' -> 31.
-				'SCLEX_BASH' -> 62.
-				'SCLEX_BATCH' -> 12.
-				'SCLEX_BIBTEX' -> 116.
-				'SCLEX_BLITZBASIC' -> 66.
-				'SCLEX_BULLANT' -> 27.
-				'SCLEX_CAML' -> 65.
-				'SCLEX_CIL' -> 127.
-				'SCLEX_CLW' -> 45.
-				'SCLEX_CLWNOCASE' -> 46.
-				'SCLEX_CMAKE' -> 80.
-				'SCLEX_COBOL' -> 92.
-				'SCLEX_COFFEESCRIPT' -> 102.
-				'SCLEX_CONF' -> 17.
-				'SCLEX_CONTAINER' -> 0.
-				'SCLEX_CPP' -> 3.
-				'SCLEX_CPPNOCASE' -> 35.
-				'SCLEX_CSOUND' -> 74.
-				'SCLEX_CSS' -> 38.
-				'SCLEX_D' -> 79.
-				'SCLEX_DATAFLEX' -> 129.
-				'SCLEX_DIFF' -> 16.
-				'SCLEX_DMAP' -> 112.
-				'SCLEX_DMIS' -> 114.
-				'SCLEX_ECL' -> 105.
-				'SCLEX_EDIFACT' -> 121.
-				'SCLEX_EIFFEL' -> 23.
-				'SCLEX_EIFFELKW' -> 24.
-				'SCLEX_ERLANG' -> 53.
-				'SCLEX_ERRORLIST' -> 10.
-				'SCLEX_ESCRIPT' -> 41.
-				'SCLEX_F77' -> 37.
-				'SCLEX_FLAGSHIP' -> 73.
-				'SCLEX_FORTH' -> 52.
-				'SCLEX_FORTRAN' -> 36.
-				'SCLEX_FREEBASIC' -> 75.
-				'SCLEX_GAP' -> 81.
-				'SCLEX_GUI4CLI' -> 58.
-				'SCLEX_HASKELL' -> 68.
-				'SCLEX_HOLLYWOOD' -> 130.
-				'SCLEX_HTML' -> 4.
-				'SCLEX_IHEX' -> 118.
-				'SCLEX_INDENT' -> 122.
-				'SCLEX_INNOSETUP' -> 76.
-				'SCLEX_JSON' -> 120.
-				'SCLEX_KIX' -> 57.
-				'SCLEX_KVIRC' -> 110.
-				'SCLEX_LATEX' -> 14.
-				'SCLEX_LISP' -> 21.
-				'SCLEX_LITERATEHASKELL' -> 108.
-				'SCLEX_LOT' -> 47.
-				'SCLEX_LOUT' -> 40.
-				'SCLEX_LUA' -> 15.
-				'SCLEX_MAGIK' -> 87.
-				'SCLEX_MAKEFILE' -> 11.
-				'SCLEX_MARKDOWN' -> 98.
-				'SCLEX_MATLAB' -> 32.
-				'SCLEX_MAXIMA' -> 123.
-				'SCLEX_METAPOST' -> 50.
-				'SCLEX_MMIXAL' -> 44.
-				'SCLEX_MODULA' -> 101.
-				'SCLEX_MSSQL' -> 55.
-				'SCLEX_MYSQL' -> 89.
-				'SCLEX_NIM' -> 126.
-				'SCLEX_NIMROD' -> 96.
-				'SCLEX_NNCRONTAB' -> 26.
-				'SCLEX_NSIS' -> 43.
-				'SCLEX_NULL' -> 1.
-				'SCLEX_OCTAVE' -> 54.
-				'SCLEX_OPAL' -> 77.
-				'SCLEX_OSCRIPT' -> 106.
-				'SCLEX_PASCAL' -> 18.
-				'SCLEX_PERL' -> 6.
-				'SCLEX_PHPSCRIPT' -> 69.
-				'SCLEX_PLM' -> 82.
-				'SCLEX_PO' -> 90.
-				'SCLEX_POV' -> 39.
-				'SCLEX_POWERBASIC' -> 51.
-				'SCLEX_POWERPRO' -> 95.
-				'SCLEX_POWERSHELL' -> 88.
-				'SCLEX_PROGRESS' -> 83.
-				'SCLEX_PROPERTIES' -> 9.
-				'SCLEX_PS' -> 42.
-				'SCLEX_PUREBASIC' -> 67.
-				'SCLEX_PYTHON' -> 2.
-				'SCLEX_R' -> 86.
-				'SCLEX_RAKU' -> 131.
-				'SCLEX_REBOL' -> 71.
-				'SCLEX_REGISTRY' -> 115.
-				'SCLEX_RUBY' -> 22.
-				'SCLEX_RUST' -> 111.
-				'SCLEX_SAS' -> 125.
-				'SCLEX_SCRIPTOL' -> 33.
-				'SCLEX_SMALLTALK' -> 72.
-				'SCLEX_SML' -> 97.
-				'SCLEX_SORCUS' -> 94.
-				'SCLEX_SPECMAN' -> 59.
-				'SCLEX_SPICE' -> 78.
-				'SCLEX_SQL' -> 7.
-				'SCLEX_SREC' -> 117.
-				'SCLEX_STATA' -> 124.
-				'SCLEX_STTXT' -> 109.
-				'SCLEX_TACL' -> 93.
-				'SCLEX_TADS3' -> 70.
-				'SCLEX_TAL' -> 91.
-				'SCLEX_TCL' -> 25.
-				'SCLEX_TCMD' -> 103.
-				'SCLEX_TEHEX' -> 119.
-				'SCLEX_TEX' -> 49.
-				'SCLEX_TXT2TAGS' -> 99.
-				'SCLEX_VB' -> 8.
-				'SCLEX_VBSCRIPT' -> 28.
-				'SCLEX_VERILOG' -> 56.
-				'SCLEX_VHDL' -> 64.
-				'SCLEX_VISUALPROLOG' -> 107.
-				'SCLEX_X12' -> 128.
-				'SCLEX_XCODE' -> 13.
-				'SCLEX_XML' -> 5.
-				'SCLEX_YAML' -> 48.
 				'SCMOD_ALT' -> 4.
 				'SCMOD_CTRL' -> 2.
 				'SCMOD_META' -> 16.
@@ -1622,6 +1520,9 @@ ignoredMessages
 
 	"Call tip styles are managed using a text style."
 	ignoredMessages addAll: #('SCI_CALLTIPSETFORE' 'SCI_CALLTIPSETBACK').
+
+	"5.0.2"
+	ignoredMessages addAll: #('SCI_SETLEXERLANGUAGE' 'SCI_GETCARETLINEBACK' 'SCI_GETCARETFORE' 'SCI_GETHOTSPOTACTIVEFORE' 'SCI_GETHOTSPOTACTIVEBACK' 'SCI_GETEDGECOLOUR' 'SCI_GETADDITIONALCARETFORE' 'SCI_INDICGETSTROKEWIDTH' 'SCI_INDICSETSTROKEWIDTH' 'SCI_MARKERSETALPHA' 'SCI_MARKERSETBACKTRANSLUCENT' 'SCI_MARKERSETFORETRANSLUCENT' 'SCI_MARKERSETBACKSELECTEDTRANSLUCENT' 'SCI_MARKERSETSTROKEWIDTH').
 
 	ignoredMessages
 		shrink;

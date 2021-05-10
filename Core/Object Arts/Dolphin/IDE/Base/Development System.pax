@@ -6677,6 +6677,7 @@ publishedAspectsOfInstances
 		add: (Tools.Aspect name: #name);
 		add: (Tools.Aspect integer: #alpha);
 		add: (Tools.Aspect integer: #foreAlpha);
+		add: (Tools.Aspect integer: #strokeWidth);
 		yourself! !
 !UI.Scintilla.IndicatorStyle class categoriesFor: #publishedAspectsOfInstances!constants!public! !
 
@@ -6718,6 +6719,7 @@ publishedAspectsOfInstances
 		add: (Tools.Aspect color: #backcolor);
 		add: (Tools.Aspect integer: #alpha);
 		add: (Tools.Aspect color: #selectionBackcolor);
+		add: (Tools.Aspect integer: #strokeWidth);
 		yourself! !
 !UI.Scintilla.MarkerDefinition class categoriesFor: #publishedAspectsOfInstances!constants!public! !
 
@@ -6777,7 +6779,6 @@ publishedAspectsOfInstances
 		add: (Tools.Aspect choice: #tabDrawMode from: self tabDrawModes);
 		add: (Tools.Aspect choice: #endOfLineMode from: self lineEndings);
 		add: (Tools.Aspect choice: #tabDrawMode from: self tabDrawModes);
-		add: (Tools.Aspect choice: #endOfLineAnnotationMode from: self annotationModes);
 		yourself.
 	choices := OrderedCollection with: 'nil'.
 	(Styler allSubclasses reject: [:each | each isAbstract])

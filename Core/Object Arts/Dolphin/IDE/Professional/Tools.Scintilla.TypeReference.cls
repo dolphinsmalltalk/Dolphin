@@ -190,6 +190,14 @@ resetTypeMap
 							toMessage: #rgbCode;
 							fromMessage: #fromRgbCode:;
 							yourself);
+				at: 'colouralpha'
+					put: ((self
+							name: 'colouralpha'
+							objectClass: Color
+							byRef: false)
+							toMessage: #rgbaCode;
+							fromMessage: #fromRgbaCode:;
+							yourself);
 				at: 'keymod'
 					put: (self
 							name: 'keymod'

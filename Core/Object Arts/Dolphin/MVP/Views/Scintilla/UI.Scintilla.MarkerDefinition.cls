@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
 UI.Scintilla.Attribute subclass: #'UI.Scintilla.MarkerDefinition'
-	instanceVariableNames: 'code forecolor backcolor view name alpha selectionBackcolor _reserved9 _reserved10 _reserved11 _reserved12'
+	instanceVariableNames: 'code forecolor backcolor view name alpha selectionBackcolor strokeWidth _reserved10 _reserved11 _reserved12'
 	classVariableNames: 'FolderNames'
 	imports: #()
 	classInstanceVariableNames: ''
@@ -68,6 +68,9 @@ basicId
 basicSelectionBackcolor: aColorOrNil
 	selectionBackcolor := aColorOrNil!
 
+basicSetStrokeWidth: anInteger
+	strokeWidth := anInteger!
+
 code
 	^code!
 
@@ -131,6 +134,15 @@ selectionBackcolor: aColor
 storeableProperties
 	^{#name} , super storeableProperties!
 
+strokeWidth
+	"The stroke width used to draw the marker in hundredths of a pixel. If nil then the default width, 100 (i.e. 1 pixel), is used."
+
+	^strokeWidth!
+
+strokeWidth: anInteger
+	self basicSetStrokeWidth: anInteger.
+	self updateViewProperty: #strokeWidth!
+
 view
 	^view!
 
@@ -145,6 +157,7 @@ view: aScintillaView
 !UI.Scintilla.MarkerDefinition categoriesFor: #basicForecolor:!accessing!private! !
 !UI.Scintilla.MarkerDefinition categoriesFor: #basicId!accessing!private! !
 !UI.Scintilla.MarkerDefinition categoriesFor: #basicSelectionBackcolor:!accessing!private! !
+!UI.Scintilla.MarkerDefinition categoriesFor: #basicSetStrokeWidth:!accessing!private! !
 !UI.Scintilla.MarkerDefinition categoriesFor: #code!accessing!private! !
 !UI.Scintilla.MarkerDefinition categoriesFor: #code:!accessing!private! !
 !UI.Scintilla.MarkerDefinition categoriesFor: #forecolor!accessing!colors!public! !
@@ -157,6 +170,8 @@ view: aScintillaView
 !UI.Scintilla.MarkerDefinition categoriesFor: #selectionBackcolor!accessing!colors!public! !
 !UI.Scintilla.MarkerDefinition categoriesFor: #selectionBackcolor:!accessing!colors!public! !
 !UI.Scintilla.MarkerDefinition categoriesFor: #storeableProperties!development!printing!private! !
+!UI.Scintilla.MarkerDefinition categoriesFor: #strokeWidth!accessing!public! !
+!UI.Scintilla.MarkerDefinition categoriesFor: #strokeWidth:!accessing!public! !
 !UI.Scintilla.MarkerDefinition categoriesFor: #view!accessing!private! !
 !UI.Scintilla.MarkerDefinition categoriesFor: #view:!accessing!private! !
 
@@ -270,15 +285,15 @@ boxTree
 buildPropertyMap
 	^IdentityDictionary new
 		at: #backcolor
-			put: (ColorPropertyDescriptor
+			put: (ColorAlphaPropertyDescriptor
 					getSelector: #backcolor
 					defaultValue: Color white
-					setMessage: SCI_MARKERSETBACK);
+					setMessage: SCI_MARKERSETBACKTRANSLUCENT);
 		at: #forecolor
-			put: (ColorPropertyDescriptor
+			put: (ColorAlphaPropertyDescriptor
 					getSelector: #forecolor
 					defaultValue: Color black
-					setMessage: SCI_MARKERSETFORE);
+					setMessage: SCI_MARKERSETFORETRANSLUCENT);
 		at: #glyphName
 			put: ((PropertyDescriptor
 					getSelector: #code
@@ -292,10 +307,15 @@ buildPropertyMap
 					defaultValue: SC_ALPHA_NOALPHA
 					setMessage: SCI_MARKERSETALPHA);
 		at: #selectionBackcolor
-			put: (ColorPropertyDescriptor
+			put: (ColorAlphaPropertyDescriptor
 					getSelector: #selectionBackcolor
 					defaultValue: Color red
-					setMessage: SCI_MARKERSETBACKSELECTED);
+					setMessage: SCI_MARKERSETBACKSELECTEDTRANSLUCENT);
+		at: #strokeWidth
+			put: (PropertyDescriptor
+					getSelector: #strokeWidth
+					defaultValue: 100
+					setMessage: SCI_MARKERSETSTROKEWIDTH);
 		shrink;
 		yourself!
 
