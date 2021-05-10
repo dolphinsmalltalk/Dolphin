@@ -41,9 +41,10 @@ getDebugInfo
 	Associations between IP positions and temporaries up to that position in 
 	the receiver, ordered by IP."
 
-	^self compilerClass 
-		debugInfoForExpression: self getSource 
+	^self compilerClass
+		debugInfoForExpression: self getSource
 		in: self expressionClass
+		environment: self customEnvironment
 		evaluationPools: self evaluationPools
 		debug: self isDebugMethod!
 

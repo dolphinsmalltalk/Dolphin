@@ -4104,7 +4104,7 @@ asDebugMethod
 	debugMethod := self compilerClass
 				compileDebugExpression: self getSource
 				in: exprClass
-				environment: self environment
+				environment: self customEnvironment
 				evaluationPools: self evaluationPools.
 	"Copy across some bits we need as we are an unbound expression"
 	debugMethod sourceDescriptor: self sourceDescriptor.

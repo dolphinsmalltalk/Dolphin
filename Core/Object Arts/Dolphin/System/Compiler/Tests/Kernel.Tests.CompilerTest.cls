@@ -133,6 +133,7 @@ testBlockTempsMap
 	result := Compiler 
 				debugInfoForExpression: '[#(1 2 3) do: [:each | each = 2 ifTrue: [Error signal]]] on: Error do: [:ex | self halt]'
 				in: Object
+				environment: nil
 				evaluationPools: #()
 				debug: false.
 	map := result tempsMap.

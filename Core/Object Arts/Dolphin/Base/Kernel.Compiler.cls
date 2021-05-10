@@ -172,14 +172,14 @@ debugInfoFor: aString in: aClass environment: aNamespace debug: aBoolean
 		environment: aNamespace
 		flags: aClass defaultCompilationFlags | (self debugInfoFlags: aBoolean)!
 
-debugInfoForExpression: aString in: aBehaviorOrNil evaluationPools: pools debug: aBoolean
+debugInfoForExpression: aString in: aBehaviorOrNil environment: aNamespace evaluationPools: pools debug: aBoolean
 	"Answers a CompilationResult with all the information necessary for debugging a method
 	in aClass whose sources is aString."
 
 	^self
 		compileForEvaluation: aString
 		in: aBehaviorOrNil
-		environment: nil
+		environment: aNamespace
 		evaluationPools: pools
 		flags: (self debugInfoFlags: aBoolean)!
 
@@ -435,7 +435,7 @@ warningClass
 !Kernel.Compiler class categoriesFor: #compilerNotification:!exceptions!private! !
 !Kernel.Compiler class categoriesFor: #debugInfoFlags:!development!public! !
 !Kernel.Compiler class categoriesFor: #debugInfoFor:in:environment:debug:!development!public! !
-!Kernel.Compiler class categoriesFor: #debugInfoForExpression:in:evaluationPools:debug:!development!public! !
+!Kernel.Compiler class categoriesFor: #debugInfoForExpression:in:environment:evaluationPools:debug:!development!public! !
 !Kernel.Compiler class categoriesFor: #defaultFlags!constants!public! !
 !Kernel.Compiler class categoriesFor: #defaultFlags:!accessing!public! !
 !Kernel.Compiler class categoriesFor: #disableWarning:!helpers!public! !

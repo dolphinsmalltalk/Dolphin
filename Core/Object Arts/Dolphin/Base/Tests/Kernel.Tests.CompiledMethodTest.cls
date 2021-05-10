@@ -44,6 +44,7 @@ testIsSimpleSelfSend
 
 testLocalEnvironment
 	self assert: (Object >> #=) localEnvironment identicalTo: Core.
+	"An example of a method that has a namespace different to that of its method class"
 	self
 		assert: (OS.KernelLibrary
 				>> #createProcess:lpCommandLine:lpProcessAttributes:lpThreadAttributes:bInheritsHandles:dwCreationFlags:lpEnvironment:lpCurrentDirectory:lpStartupInfo:lpProcessInformation:)
@@ -55,7 +56,7 @@ testLocalScope
 	self assert: Object class methodDictionary anyOne localScope equals: Object!
 
 testRecompileMaintainsEnvironmentAndPackage
-	"Verify that a method's environment is maintained if different from it's method class', and likewise the owning package"
+	"Verify that a recompiled method's environment is maintained if different from it's method class', and likewise the owning package"
 
 	| subject package |
 	subject := OS.KernelLibrary

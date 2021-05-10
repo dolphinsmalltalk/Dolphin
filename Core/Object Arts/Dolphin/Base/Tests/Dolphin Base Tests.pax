@@ -114,6 +114,7 @@ package setClassNames: #(
 	#{Kernel.Tests.ClassBuilderTest}
 	#{Kernel.Tests.ClassBuilderTestClasses}
 	#{Kernel.Tests.CommandLineTest}
+	#{Kernel.Tests.CompiledExpressionTest}
 	#{Kernel.Tests.CompiledMethodTest}
 	#{Kernel.Tests.DefaultSortAlgorithmTest}
 	#{Kernel.Tests.EqualitySearchPolicyTest}
@@ -318,6 +319,12 @@ Core.Tests.DolphinTest subclass: #'Core.Tests.ClassDescriptionTest'
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Core.Tests.DolphinTest subclass: #'Core.Tests.CollectionTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Core.Tests.DolphinTest subclass: #'Kernel.Tests.CompiledExpressionTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
