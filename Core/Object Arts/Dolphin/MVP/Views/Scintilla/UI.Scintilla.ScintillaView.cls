@@ -11,7 +11,8 @@ UI.MultilineTextEdit subclass: #'UI.Scintilla.ScintillaView'
 		'BraceHilightingMask' -> 16r1.
 		'DefaultCallTipTabWidth' -> 16r20.
 		'FoldingMask' -> 16r2.
-		'MarginStylesOffset' -> 16r100
+		'NumAnnotationStyles' -> 16r100.
+		'NumMarginStyles' -> 16r100
 	}!
 UI.Scintilla.ScintillaView guid: (Core.GUID fromString: '{47a3310b-b7e4-4aa9-b6e6-640ad9fe7a3a}')!
 UI.Scintilla.ScintillaView comment: '`ScintillaView` is a `<valueView>` class that wraps the ["Scintilla" programmers'' edit control](https://www.scintilla.org/index.html). 
@@ -275,9 +276,9 @@ annotations
 	| annotations raw |
 	self ensureHasAnnotationStyles.
 	raw := self getRawAnnotations.
-	annotations := OrderedCollection new: raw size.
-	raw do: [:each | annotations addAll: (self annotationsFromRawAnnotation: each)].
-	^annotations!
+	annotations := Array writeStream: raw size.
+	raw do: [:each | annotations nextPutAll: (self annotationsFromRawAnnotation: each)].
+	^annotations grabContents!
 
 annotations: aCollectionOfScintillaAnnotation 
 	"Set the annotations associated with lines of text in the receiver to the <Collection> of
@@ -1910,7 +1911,7 @@ ensureCaretVisible
 	self sciScrollCaret!
 
 ensureHasAnnotationStyles
-	annotationStyles 
+	annotationStyles
 		ifNil: [annotationStyles := self buildAnnotationStyles: self class defaultAnnotationStyles]!
 
 ensureLineVisible: lineInteger
@@ -2764,7 +2765,7 @@ getEolAnnotations
 					[annotations nextPut: (Annotation
 								line: each
 								text: text
-								styles: {self sciEOLAnnotationGetStyle: each})]].
+								style: {self sciEOLAnnotationGetStyle: each})]].
 	^annotations grabContents!
 
 getLineState: lineInteger
@@ -3316,17 +3317,20 @@ initializeControl
 
 	"Note that if any primary selection foreground/background colors are set, then any second
 	selection colours will also be set"
+
+	| marginStylesOffset annotationStyleOffset |
 	self initializeRegisteredImages.
 	self sciSetModEventMask: self modificationEventMask.
 	"Not necessary.
 		self sciUsePopup: false asParameter."
 	self setCallTipTabWidth.
 	"Allocate extended styles for margins and annotations: We use the same styles range for the 4.4.4 EOL annotations - 256 separate styles ought to be sufficient for annotations all up."
+	marginStylesOffset := self sciAllocateExtendedStyles: NumMarginStyles + NumAnnotationStyles.
+	self sciMarginSetStyleOffset: marginStylesOffset.
+	annotationStyleOffset := marginStylesOffset + NumMarginStyles.
 	self
-		sciAllocateExtendedStyles: 512;
-		sciMarginSetStyleOffset: MarginStylesOffset;
-		sciAnnotationSetStyleOffset: AnnotationStylesOffset;
-		sciEOLAnnotationSetStyleOffset: AnnotationStylesOffset.
+		sciAnnotationSetStyleOffset: annotationStyleOffset;
+		sciEOLAnnotationSetStyleOffset: annotationStyleOffset.
 	self updateControlStyles.
 	styler ifNotNil: [self invalidateStyling].
 	self sciSetCodePage: stringClass codePage.
@@ -10185,10 +10189,11 @@ setEdgeColor
 setEolAnnotations: aCollectionOfScintillaAnnotations
 	aCollectionOfScintillaAnnotations do: 
 			[:each |
-			| line |
+			| line styleId |
 			line := each line.
+			styleId := (annotationStyles lookup: each styles first) ifNil: [0] ifNotNil: [:style | style id].
 			self
-				sciEOLAnnotationSetStyle: line style: each styles first;
+				sciEOLAnnotationSetStyle: line style: styleId;
 				sciEOLAnnotationSetText: line text: each text]!
 
 setFoldFlags
@@ -11063,7 +11068,10 @@ updateSetting: aSettingsChangeEvent
 updateTextStyles
 	"Private - Sync. the control's knowledge of the text styles with those recorded in the receiver."
 
-	self isOpen ifFalse: [^self].
+	(self isOpen and: 
+			["Don't update the styles until the extended styles have been allocated (see #initializeControl)"
+			self sciMarginGetStyleOffset ~~ 0])
+		ifFalse: [^self].
 	"Ensure there is a call tip style"
 	self callTipStyle.
 	"Reset all the styles to defaults, and clear the annotation and margin styles too"

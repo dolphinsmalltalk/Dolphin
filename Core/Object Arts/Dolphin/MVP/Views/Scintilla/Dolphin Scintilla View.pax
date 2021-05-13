@@ -1477,7 +1477,8 @@ UI.MultilineTextEdit subclass: #'UI.Scintilla.ScintillaView'
 		'BraceHilightingMask' -> 16r1.
 		'DefaultCallTipTabWidth' -> 16r20.
 		'FoldingMask' -> 16r2.
-		'MarginStylesOffset' -> 16r100
+		'NumAnnotationStyles' -> 16r100.
+		'NumMarginStyles' -> 16r100
 	}!
 
 "Loose Methods"!

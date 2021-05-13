@@ -17,9 +17,10 @@ classToTest
 initializePresenter
 	| margins |
 	super initializePresenter.
-	margins := presenter view margins.
+	presenter drawingTechnology: #directWrite.
+	margins := presenter margins.
 	margins do: [:each | each width: 0].
-	presenter view margins: margins
+	presenter margins: margins
 !
 
 margins
@@ -136,23 +137,41 @@ testOverrideDefaultKeyBindings
 
 testSetGetAnnotations
 	| annotations |
-	presenter text: self text.
-	annotations := OrderedCollection new.
-	annotations
-		add: (Annotation
+	presenter text: self text; annotationMode: #boxed.
+	annotations := {Annotation
 					line: 1
 					text: 'Wobble'
-					style: #Error);
-		add: (Annotation
+					style: #Error.
+				Annotation
 					line: 2
 					text: 'Wibble'
-					style: #Warning);
-		add: (Annotation
+					style: #Warning.
+				Annotation
 					line: 1
 					text: 'Blah'
-					style: #Notification).
+					style: #Notification}.
 	presenter annotations: annotations.
 	self assert: (presenter annotations noDifference: annotations)!
+
+testSetGetEndOfLineAnnotations
+	| expected actual |
+	presenter text: self text.
+	presenter endOfLineAnnotationMode: #angleFlat.
+	expected := {Annotation
+					line: 1
+					text: 'Wobble'
+					style: #Error.
+				Annotation
+					line: 2
+					text: 'Wibble'
+					style: #Warning.
+				Annotation
+					line: 3
+					text: 'Blah'
+					style: #Notification}.
+	presenter endOfLineAnnotations: expected.
+	actual := presenter endOfLineAnnotations.
+	self assert: actual equals: expected!
 
 testStateRestoral
 	| indicStyle1 indicStyle2 |
@@ -172,5 +191,6 @@ testStateRestoral
 !UI.Scintilla.Tests.ScintillaViewTest categoriesFor: #testLanguages!public!unit tests! !
 !UI.Scintilla.Tests.ScintillaViewTest categoriesFor: #testOverrideDefaultKeyBindings!public!unit tests! !
 !UI.Scintilla.Tests.ScintillaViewTest categoriesFor: #testSetGetAnnotations!public!unit tests! !
+!UI.Scintilla.Tests.ScintillaViewTest categoriesFor: #testSetGetEndOfLineAnnotations!public!unit tests! !
 !UI.Scintilla.Tests.ScintillaViewTest categoriesFor: #testStateRestoral!public!unit tests! !
 
