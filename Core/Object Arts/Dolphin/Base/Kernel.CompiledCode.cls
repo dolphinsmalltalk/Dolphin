@@ -758,7 +758,7 @@ writesInstVar: aString at: anInteger
 
 Kernel.CompiledCode methodProtocol: #bindingScope attributes: #(#readOnly) selectors: #(#environment #localScope)!
 Kernel.CompiledCode methodProtocol: #messageSender attributes: #(#readOnly) selectors: #(#messages)!
-Kernel.CompiledCode methodProtocol: #parseContext attributes: #(#readOnly) selectors: #(#environment #methodClass)!
+Kernel.CompiledCode methodProtocol: #parseContext attributes: #(#readOnly) selectors: #(#environment #methodClass #owningPackage)!
 
 !Kernel.CompiledCode class methodsFor!
 

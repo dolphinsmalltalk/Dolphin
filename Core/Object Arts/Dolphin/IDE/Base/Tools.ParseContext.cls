@@ -22,6 +22,9 @@ methodClass: aClass environment: aNamespace
 	environment := aNamespace.
 	^self!
 
+owningPackage
+	^methodClass owningPackage!
+
 printOn: aStream
 	aStream
 		print: self class;
@@ -32,9 +35,10 @@ printOn: aStream
 !Tools.ParseContext categoriesFor: #environment!accessing!public! !
 !Tools.ParseContext categoriesFor: #methodClass!accessing!public! !
 !Tools.ParseContext categoriesFor: #methodClass:environment:!initializing!private! !
+!Tools.ParseContext categoriesFor: #owningPackage!accessing!public! !
 !Tools.ParseContext categoriesFor: #printOn:!printing!public! !
 
-Tools.ParseContext methodProtocol: #parseContext attributes: #(#readOnly) selectors: #(#environment #methodClass)!
+Tools.ParseContext methodProtocol: #parseContext attributes: #(#readOnly) selectors: #(#environment #methodClass #owningPackage)!
 
 !Tools.ParseContext class methodsFor!
 

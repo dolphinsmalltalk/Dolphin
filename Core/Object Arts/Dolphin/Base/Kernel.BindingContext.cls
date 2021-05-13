@@ -29,6 +29,9 @@ methodClass
 
 	^methodClass!
 
+owningPackage
+	^methodClass owningPackage!
+
 setMethodClass: aClass environment: aNamespace identifier: aString
 	methodClass := aClass.
 	identifier := aString.
@@ -46,10 +49,11 @@ visitImport: aBindingReference from: aNamespace
 !Kernel.BindingContext categoriesFor: #identifier!accessing!public! !
 !Kernel.BindingContext categoriesFor: #includesNamespace:!public!testing! !
 !Kernel.BindingContext categoriesFor: #methodClass!accessing!public! !
+!Kernel.BindingContext categoriesFor: #owningPackage!accessing!public! !
 !Kernel.BindingContext categoriesFor: #setMethodClass:environment:identifier:!initializing!private! !
 !Kernel.BindingContext categoriesFor: #visitImport:from:!public! !
 
-Kernel.BindingContext methodProtocol: #parseContext attributes: #(#readOnly) selectors: #(#environment #methodClass)!
+Kernel.BindingContext methodProtocol: #parseContext attributes: #(#readOnly) selectors: #(#environment #methodClass #owningPackage)!
 
 !Kernel.BindingContext class methodsFor!
 

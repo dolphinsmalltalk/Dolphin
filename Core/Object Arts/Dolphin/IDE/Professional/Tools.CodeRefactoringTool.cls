@@ -392,7 +392,7 @@ populateAutoCorrectMenu: aMenu forMessage: aStMessageNode
 
 populateAutoCorrectMenu: aMenu forUndefinedVar: aStVariableNode
 	| methodClass |
-	methodClass := presenter parseContext.
+	methodClass := presenter parseContext methodClass.
 	^aStVariableNode name first isUppercase
 		ifTrue: 
 			[| subMenu |
