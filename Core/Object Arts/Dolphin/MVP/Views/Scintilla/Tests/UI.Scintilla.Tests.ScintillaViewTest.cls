@@ -17,7 +17,7 @@ classToTest
 initializePresenter
 	| margins |
 	super initializePresenter.
-	presenter drawingTechnology: #directWrite.
+	presenter drawingTechnology: #default.
 	margins := presenter margins.
 	margins do: [:each | each width: 0].
 	presenter margins: margins
