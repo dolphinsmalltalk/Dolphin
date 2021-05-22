@@ -660,24 +660,19 @@ variableAssignedLiteral
 
 variableNotDefined
 	| detector |
-	#rbFix.	"Extract hard-coded ref. to Undeclared"
+	#rbFix.	"Modified for namespaces"
 	detector := self new.
 	detector name: 'Variable used, but not defined anywhere'.
 	detector methodBlock: 
-			[:context :result | 
+			[:context :result |
 			context compiledMethod withAllBlockMethodsDo: 
-					[:each | 
+					[:each |
 					each literalsDo: 
-							[:lit | 
-							lit isVariableBinding 
+							[:lit |
+							lit isVariableBinding
 								ifTrue: 
 									[| binding |
-									(((binding := context selectedClass bindingFor: lit key) notNil 
-										and: [binding binding == lit binding]) or: 
-												[((binding := context selectedClass environment bindingFor: lit key) notNil 
-													and: [binding binding == lit binding]) or: 
-															[(binding := self undeclaredVariables bindingFor: lit key) notNil 
-																and: [binding binding == lit binding]]]) 
+									((binding := each fullBindingFor: lit key) notNil and: [binding binding == lit binding])
 										ifFalse: 
 											[result addClass: context selectedClass selector: context selector.
 											result addSearchString: lit key]]]]].

@@ -510,7 +510,7 @@ justSendsSuper
 	matcher := ParseTreeSearcher justSendsSuper.
 	detector methodBlock: 
 			[:context :result |
-			(context parseTree tag isNil and: [matcher executeMethod: context parseTree initialAnswer: false])
+			(context parseTree tags isEmpty and: [matcher executeMethod: context parseTree initialAnswer: false])
 				ifTrue: [result addClass: context selectedClass selector: context selector]].
 	^detector!
 
