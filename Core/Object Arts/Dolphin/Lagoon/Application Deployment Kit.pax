@@ -153,11 +153,12 @@ rehydrateImageStripper: stripperClass
 publishedAspectsOfInstances
 	"Answer a <LookupTable> of the <Aspect>s published by instances of the receiver."
 
+	<namespace: Tools>
 	^super publishedAspectsOfInstances
-		add: (Tools.Aspect string: #fileVersion);
-		add: (Tools.Aspect string: #productVersion);
-		add: (Tools.Aspect name: #stringTables);
-		add: (Tools.Aspect name: #translations);
+		add: (Aspect string: #fileVersion);
+		add: (Aspect string: #productVersion);
+		add: (Aspect name: #stringTables);
+		add: (Aspect name: #translations);
 		yourself! !
 !OS.VersionResource class categoriesFor: #publishedAspectsOfInstances!constants!development!public! !
 

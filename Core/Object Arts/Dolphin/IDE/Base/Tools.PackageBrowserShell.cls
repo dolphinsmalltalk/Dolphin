@@ -73,7 +73,7 @@ browseClass
 		ifTrue: [classes anyOne browse]
 		ifFalse: 
 			[| env |
-			env := Smalltalk developmentSystem browserEnvironmentForClasses: classes.
+			env := SmalltalkSystem current browserEnvironmentForClasses: classes.
 			^#{EnvironmentBrowserShell} valueOrNil
 				ifNil: 
 					[MessageBox notify: 'This feature is only available in the Professional edition'
@@ -861,8 +861,8 @@ openWorkspace
 	"Create a new workspace window on a file"
 
 	| workspaceClass |
-	workspaceClass := Smalltalk developmentSystem workspaceShellClass.
-	^(UI.FileOpenDialog new
+	workspaceClass := SmalltalkSystem current workspaceShellClass.
+	^(FileOpenDialog new
 		fileTypes: workspaceClass fileTypes;
 		defaultExtension: workspaceClass defaultFileExtension;
 		initialDirectory: (packagesPresenter selectedFolder ifNil: [SessionManager current imageBase]);
@@ -1421,7 +1421,7 @@ initialize
 		self initialize.
 	"
 
-	Smalltalk developmentSystem
+	SmalltalkSystem current
 		addSystemFolderIcon: self toolsFolderIcon;
 		registerTool: self.
 	self reuseIfOpen: true.

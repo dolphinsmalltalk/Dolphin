@@ -1,6 +1,7 @@
 ﻿| package |
 package := Package name: 'Development System'.
 package paxVersion: 2.1;
+	environmentName: #{Tools};
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk Development System.
     Copyright (c) Object Arts Ltd, 1997-2007. Portions Copyright (c) CGI Group (Europe) Ltd, 1997.
@@ -672,7 +673,6 @@ package setMethodNames: #(
 	#(#{UI.TreeModelAbstract class} #publishedEventsOfInstances)
 	#(#{UI.TreeView class} #publishedAspectsOfInstances)
 	#(#{UI.TypeConverter class} #publishedAspectsOfInstances)
-	#(#{UI.ValueConverter class} #publishedEventsOfInstances)
 	#(#{UI.ValueConvertingControlView class} #applicableTypeConverterCategories)
 	#(#{UI.ValueConvertingControlView class} #publishedAspectsOfInstances)
 	#(#{UI.ValueDialog class} #publishedEventsOfInstances)
@@ -1553,7 +1553,7 @@ debugPrintOn: aStream
 !Core.ArrayedCollection methodsFor!
 
 newBatchAccessor
-	^Tools.KeyedAspectBatchAccessor subject: self batchSize: self publishedKeyedAspectsBatchSize! !
+	^KeyedAspectBatchAccessor subject: self batchSize: self publishedKeyedAspectsBatchSize! !
 !Core.ArrayedCollection categoriesFor: #newBatchAccessor!public! !
 
 !Core.Association methodsFor!
@@ -1573,7 +1573,7 @@ publishedAspectsOfInstances
 	"Answer a <LookupTable> of the <Aspect>s published by instances of the receiver."
 
 	^super publishedAspectsOfInstances
-		add: (Tools.Aspect collection: #elements);
+		add: (Aspect collection: #elements);
 		yourself! !
 !Core.Bag class categoriesFor: #publishedAspectsOfInstances!constants!public! !
 
@@ -1761,7 +1761,7 @@ renameClassVar: oldString to: newString
 browse
 	"Open a suitable browser onto the receiver."
 
-	Smalltalk developmentSystem browseClass: self!
+	SmalltalkSystem current browseClass: self!
 
 categoriesFor: selector are: categories
 	"Compatibility ith IBM Smalltalk fileIn format (which is of the form
@@ -1777,7 +1777,7 @@ commentStamp: stamp prior: prior
 	"Answer a chunk reader which will add a comment to the receiver. Supplied for 
 	compatibility with the Squeak fileout format"
 
-	^Tools.SingleChunkReader do: [:chunk | self comment: chunk]!
+	^SingleChunkReader do: [:chunk | self comment: chunk]!
 
 copy: selector from: class
 	"Copy the method with the selector <Symbol>, selector, in <ClassDescription>, 
@@ -1978,7 +1978,7 @@ debugPrintOn: aStream
 			aStream nextPut: $)]!
 
 newBatchAccessor
-	^Tools.IndexedInstVarBatchAccessor subject: self batchSize: self publishedKeyedAspectsBatchSize!
+	^IndexedInstVarBatchAccessor subject: self batchSize: self publishedKeyedAspectsBatchSize!
 
 publishedAspects
     	"Answer a <LookupTable> of the <Aspect>s published by the receiver.
@@ -2034,7 +2034,7 @@ alternateInspectorClass
 	"Answer the class of inspector to be used when the user requests to inspect
     	the receiver with the Shift key held down."
 
-	^Tools.DictionaryInspector!
+	^DictionaryInspector!
 
 debugPrintOn: aStream
 	"Copy of the printOn: logic, except using #debugPrintString to print the elements"
@@ -2050,7 +2050,7 @@ debugPrintOn: aStream
 newBatchAccessor
 	| keys |
 	keys := self keys.
-	^Tools.KeyedAspectBatchAccessor
+	^KeyedAspectBatchAccessor
 		subject: self
 		keys: ([keys asSortedCollection] on: Error do: [:ex | keys asOrderedCollection])
 		startingAt: 1
@@ -2094,7 +2094,7 @@ debugPrintOn: aStream
 	self printOn: aStream!
 
 newBatchAccessor
-	^Tools.IndexedInstVarBatchAccessor subject: self batchSize: self publishedKeyedAspectsBatchSize! !
+	^IndexedInstVarBatchAccessor subject: self batchSize: self publishedKeyedAspectsBatchSize! !
 !Core.Interval categoriesFor: #debugPrintOn:!printing!public! !
 !Core.Interval categoriesFor: #newBatchAccessor!public! !
 
@@ -2144,7 +2144,7 @@ methodChanged: aCompiledMethod
 all
 	"Answer the category for all methods."
 
-	^Tools.AllMethodsCategory current! !
+	^AllMethodsCategory current! !
 !Core.MethodCategory class categoriesFor: #all!instance creation!public! !
 
 !Core.Number methodsFor!
@@ -2159,7 +2159,7 @@ alternateInspectorClass
 	"Answer the class of inspector to be used when the user requests to inspect
     	the receiver with the Shift key held down."
 
-	^Tools.BasicInspector!
+	^BasicInspector!
 
 aspectDisplayOn: aStream
 	"Private - Append a single-line textual representatin of the receiver to the <puttableStream> argument in a form that a user viewing the receiver as the value of a published aspect would like to see it.
@@ -2172,12 +2172,12 @@ basicInspect
 	"Open and answer an inspector window on the receiver.
     	Do not override this method."
 
-	^Tools.BasicInspector shellOn: self!
+	^BasicInspector shellOn: self!
 
 browse
 	"Open a suitable browser onto the receiver."
 
-	Smalltalk developmentSystem browseClass: self class!
+	SmalltalkSystem current browseClass: self class!
 
 currentPublishedAspectsAsLiteralsMap
 	"Answer a <LookupTable> mapping  publised aspect symbols to their current literal array representations. We can use this
@@ -2211,12 +2211,12 @@ halt
 inspect
 	"Open and answer an inspector window on the receiver."
 
-	^Smalltalk developmentSystem inspect: self!
+	^SmalltalkSystem current inspect: self!
 
 inspectorClass
 	"Answer the class of inspector to be used when inspecting the receiver."
 
-	^Smalltalk developmentSystem defaultInspectorClass!
+	^SmalltalkSystem current defaultInspectorClass!
 
 newAspect: keyObject class: aspectClass 
 	"Answer an instance of the <Aspect> class, aspectClass, appropriately configured to represent
@@ -2230,7 +2230,7 @@ publicAccessorAspects
 
 	| aspects hidden |
 	aspects := LookupTable new
-				add: (self newAspect: #yourself class: Tools.Aspect);
+				add: (self newAspect: #yourself class: Aspect);
 				yourself.
 	hidden := #'non browsable' asMethodCategory.
 	self class allGetters do: 
@@ -2238,7 +2238,7 @@ publicAccessorAspects
 			(each isPublic and: [(hidden includesMethod: each) not])
 				ifTrue: 
 					[| aspect |
-					aspect := (self perform: each selector) newAspect: each selector class: Tools.Aspect.
+					aspect := (self perform: each selector) newAspect: each selector class: Aspect.
 					(aspect canWriteInto: self) ifFalse: [aspect beReadOnly].
 					aspects add: aspect]].
 	^aspects!
@@ -2288,7 +2288,7 @@ publishedAspects
     	Overridden by subclasses to add the aspects 	published locally"
 
 	^LookupTable new
-		add: ((self newAspect: #yourself class: Tools.Aspect) isNullable: false);
+		add: ((self newAspect: #yourself class: Aspect) isNullable: false);
 		yourself!
 
 publishedAspectsOfInstances
@@ -2300,7 +2300,7 @@ publishedAspectsOfInstances
     	calculated by the ImageStripper, otherwise the Development System may be a pre-requisite."
 
 	^LookupTable new
-		add: (self newInstanceAspect: #yourself class: Tools.Aspect);
+		add: (self newInstanceAspect: #yourself class: Aspect);
 		yourself!
 
 publishedEvents
@@ -2350,7 +2350,7 @@ debug: titleString topFrame: aStackFrame resumable: aBoolean
 debuggerClass
 	"Answer the class of <Debugger> to use for debugging this process."
 
-	^Smalltalk developmentSystem debuggerClass!
+	^SmalltalkSystem current debuggerClass!
 
 halt: aStackFrame cause: aString
 	"Private - Bring up a Smalltalk debugger on the receiver in the specified frame."
@@ -2381,7 +2381,7 @@ showWalkback: titleString callStack: stackTraceString debuggable: debuggableBool
 	system walkback dialog is not available, then use a MessageBox."
 
 	| box response |
-	#{Tools.WalkbackDialog} ifDefined: 
+	#{WalkbackDialog} ifDefined: 
 			[:dialogClass |
 			response := dialogClass new
 						caption: titleString;
@@ -2390,7 +2390,7 @@ showWalkback: titleString callStack: stackTraceString debuggable: debuggableBool
 						resumable: resumableBoolean;
 						showModal.
 			response isNil ifFalse: [^response]].
-	box := UI.MessageBox new.
+	box := MessageBox new.
 	box caption: titleString.
 	box beTaskModal.
 	resumableBoolean
@@ -2500,7 +2500,7 @@ walkback: aString topFrame: aStackFrame resumable: aBoolean
 method
 	"Answer the singleton sub-instance of the receiver which supports a search policy based appropriate for CompiledMethods."
 
-	^Tools.CompiledMethodSearchPolicy current! !
+	^CompiledMethodSearchPolicy current! !
 !Core.SearchPolicy class categoriesFor: #method!instance creation!public! !
 
 !Core.Semaphore methodsFor!
@@ -2515,10 +2515,10 @@ alternateInspectorClass
 	"Answer the class of inspector to be used when the user requests to inspect
     	the receiver with the Shift key held down."
 
-	^Tools.SequenceableCollectionInspector!
+	^SequenceableCollectionInspector!
 
 newBatchAccessor
-	^Tools.KeyedAspectBatchAccessor subject: self batchSize: self publishedKeyedAspectsBatchSize! !
+	^KeyedAspectBatchAccessor subject: self batchSize: self publishedKeyedAspectsBatchSize! !
 !Core.SequenceableCollection categoriesFor: #alternateInspectorClass!constants!public! !
 !Core.SequenceableCollection categoriesFor: #newBatchAccessor!public! !
 
@@ -2550,7 +2550,7 @@ publishedEventsOfInstances
 !Core.Set methodsFor!
 
 newBatchAccessor
-	^Tools.SetBatchAspectAccessor subject: self batchSize: self publishedKeyedAspectsBatchSize! !
+	^SetBatchAspectAccessor subject: self batchSize: self publishedKeyedAspectsBatchSize! !
 !Core.Set categoriesFor: #newBatchAccessor!private! !
 
 !Core.Set class methodsFor!
@@ -2581,7 +2581,7 @@ aspectDisplayOn: aStream
 
 	| count max charStream |
 	aStream nextPut: $'.
-	max := self size min: Tools.Aspect maxDisplayCharacters - 2.
+	max := self size min: Aspect maxDisplayCharacters - 2.
 	charStream := self readStream.
 	count := 0.
 	[charStream atEnd or: [count >= max]] whileFalse: 
@@ -2616,7 +2616,7 @@ publishedAspects
 	"Implementation Note: Override because we want the receiver to be treated
 	purely as a string, rather than as a collection of characters."
 
-	^LookupTable with: (self newAspect: #yourself class: Tools.Aspect)! !
+	^LookupTable with: (self newAspect: #yourself class: Aspect)! !
 !Core.String categoriesFor: #aspectDisplayOn:!private! !
 !Core.String categoriesFor: #debugPrintOn:!printing!public! !
 !Core.String categoriesFor: #literalTextStyle!constants!private! !
@@ -2955,7 +2955,7 @@ publishedKeyedAspects
     	receiver's keyed contents."
 
 	| batchAccessor keyedAspects |
-	batchAccessor := Tools.KeyedAspectBatchAccessor subject: self
+	batchAccessor := KeyedAspectBatchAccessor subject: self
 				batchSize: self publishedKeyedAspectsBatchSize.
 	keyedAspects := batchAccessor getBatchAccessors collect: [:each | each aspectDescriptor].
 	^LookupTable new
@@ -2991,14 +2991,14 @@ publishedAspectsOfInstances
 	"Answer a <LookupTable> of the <Aspect>s published by instances of the receiver."
 
 	^super publishedAspectsOfInstances
-		add: (Tools.Aspect name: #descriptor) beReadOnly;
+		add: (Aspect name: #descriptor) beReadOnly;
 		yourself! !
 !External.ExternalMethod class categoriesFor: #publishedAspectsOfInstances!constants!public! !
 
 !External.Field methodsFor!
 
 autoGenCategories
-	^{Structure autoGenCategory. self isNonBrowsable ifTrue: ['private'] ifFalse: ['public']}!
+	^{External.Structure autoGenCategory. self isNonBrowsable ifTrue: ['private'] ifFalse: ['public']}!
 
 autoGenComment
 	"Private - Answer a suitable piece of comment to warn the user that a
@@ -3102,13 +3102,13 @@ printOffsetExpression: aSymbol on: aCodeGenerationContext extra: aMonadicValuabl
 	aMonadicValuable isNil
 		ifTrue: 
 			[aCodeGenerationContext writeStream
-				nextPutAll: Structure fieldOffsetConstantPrefix;
+				nextPutAll: External.Structure fieldOffsetConstantPrefix;
 				display: aSymbol]
 		ifFalse: 
 			[self emitStaticExpression: 
 					[:context |
 					context writeStream
-						nextPutAll: Structure fieldOffsetConstantPrefix;
+						nextPutAll: External.Structure fieldOffsetConstantPrefix;
 						display: aSymbol;
 						nextPutAll: ' + '.
 					aMonadicValuable value: context]
@@ -3437,7 +3437,7 @@ alternateInspectorClass
 	"Answer the class of inspector to be used when the user requests to inspect
     	the receiver with the Shift key held down."
 
-	^Tools.StructureInspector!
+	^StructureInspector!
 
 printableFields
 	^self getValidFields!
@@ -3485,7 +3485,7 @@ publishedAspects
 					[:each |
 					| field |
 					field := self template at: each.
-					field isBrowsable ifTrue: [aspects add: (field newAspect: each class: Tools.Aspect)]]].
+					field isBrowsable ifTrue: [aspects add: (field newAspect: each class: Aspect)]]].
 	^aspects! !
 !External.Structure categoriesFor: #alternateInspectorClass!constants!public! !
 !External.Structure categoriesFor: #printableFields!printing!private! !
@@ -3576,7 +3576,7 @@ decompileDefinition
 
 formatAndCompile: aString categories: categories
 	| source |
-	source := Smalltalk developmentSystem reformatSource: aString in: self.
+	source := SmalltalkSystem current reformatSource: aString in: self.
 	^self compile: source categories: categories!
 
 hasHandCodedMethodFor: selector
@@ -3593,7 +3593,7 @@ inheritsFieldNamed: aSymbol
 	^base ~~ Object and: [(base template includesKey: aSymbol) or: [base inheritsFieldNamed: aSymbol]]!
 
 newCodeGenerationContext
-	^Tools.CodeGenerationContext targetClass: self!
+	^CodeGenerationContext targetClass: self!
 
 recompileDefinition
 	"Private - Recompiles the existing template for the receiver"
@@ -3620,7 +3620,7 @@ shouldOverrideGetFieldNames
 					(categories isEmpty or: [categories includes: self autoGenCategory asMethodCategory]) and: 
 							[| inherited |
 							inherited := self superclass class lookupMethod: #getFieldNames.
-							inherited methodClass == Structure class
+							inherited methodClass == ##(self) class
 								or: [self fieldNamesFromTemplate asSet ~= (inherited literalAt: 1) asSet]]]]! !
 !External.Structure class categoriesFor: #autoGenCategory!compiling!constants!private! !
 !External.Structure class categoriesFor: #compileAllDefinitions!compiling!public! !
@@ -3778,7 +3778,7 @@ newInstanceAspect: aSymbol class: aspectClass
 		presenterBlock: 
 			[:p :m |
 			| imagePresenter |
-			imagePresenter := UI.ImagePresenter
+			imagePresenter := ImagePresenter
 						create: 'Gdiplus view'
 						in: p
 						on: m.
@@ -3794,8 +3794,8 @@ publishedAspectsOfInstances
 	"Answer a <LookupTable> of the <Aspect>s published by instances of the receiver."
 
 	^super publishedAspectsOfInstances
-		add: (Tools.Aspect choice: #interpolationMode from: self interpolationStyles);
-		add: (Tools.Aspect name: #imageAttributes);
+		add: (Aspect choice: #interpolationMode from: self interpolationStyles);
+		add: (Aspect name: #imageAttributes);
 		yourself! !
 !Graphics.Gdiplus.ImageView class categoriesFor: #publishedAspectsOfInstances!must strip!public! !
 
@@ -3803,8 +3803,8 @@ publishedAspectsOfInstances
 
 choose
 	| filename |
-	filename := UI.FileOpenDialog new
-				fileTypes: {self filesType. UI.FileDialog allFilesType};
+	filename := FileOpenDialog new
+				fileTypes: {self filesType. FileDialog allFilesType};
 				showModal.
 	^filename notNil ifTrue: [self fromFile: filename]!
 
@@ -3829,8 +3829,8 @@ newInstanceAspect: aSymbol class: aspectClass
 
 choose
 	| filename |
-	filename := UI.FileOpenDialog new
-				fileTypes: {self filesType. Icon filesType. UI.FileDialog allFilesType};
+	filename := FileOpenDialog new
+				fileTypes: {self filesType. Icon filesType. FileDialog allFilesType};
 				showModal.
 	^filename notNil
 		ifTrue: 
@@ -3845,9 +3845,9 @@ publishedAspectsOfInstances
 	"Answer a <LookupTable> of the <Aspect>s published by instances of the receiver."
 
 	^super publishedAspectsOfInstances
-		add: (Tools.Aspect color: #color);
-		add: (Tools.Aspect integer: #width);
-		add: (Tools.Aspect choice: #styleName from: self styleNames);
+		add: (Aspect color: #color);
+		add: (Aspect integer: #width);
+		add: (Aspect choice: #styleName from: self styleNames);
 		yourself! !
 !Graphics.Pen class categoriesFor: #publishedAspectsOfInstances!public! !
 
@@ -3857,8 +3857,8 @@ publishedAspectsOfInstances
 	"Answer a <LookupTable> of the <Aspect>s published by instances of the receiver."
 
 	^super publishedAspectsOfInstances
-		add: (Tools.Aspect integer: #x);
-		add: (Tools.Aspect integer: #y);
+		add: (Aspect integer: #x);
+		add: (Aspect integer: #y);
 		yourself! !
 !Graphics.Point class categoriesFor: #publishedAspectsOfInstances!constants!public! !
 
@@ -3868,9 +3868,9 @@ publishedAspectsOfInstances
 	"Answer a <LookupTable> of the <Aspect>s published by instances of the receiver."
 
 	^super publishedAspectsOfInstances
-		add: (Tools.Aspect integer: #x);
-		add: (Tools.Aspect integer: #y);
-		add: (Tools.Aspect integer: #z);
+		add: (Aspect integer: #x);
+		add: (Aspect integer: #y);
+		add: (Aspect integer: #z);
 		yourself! !
 !Graphics.Point3D class categoriesFor: #publishedAspectsOfInstances!constants!public! !
 
@@ -3880,10 +3880,10 @@ publishedAspectsOfInstances
 	"Answer a <LookupTable> of the <Aspect>s published by instances of the receiver."
 
 	^super publishedAspectsOfInstances
-		add: (Tools.Aspect integer: #top);
-		add: (Tools.Aspect integer: #left);
-		add: (Tools.Aspect integer: #bottom);
-		add: (Tools.Aspect integer: #right);
+		add: (Aspect integer: #top);
+		add: (Aspect integer: #left);
+		add: (Aspect integer: #bottom);
+		add: (Aspect integer: #right);
 		yourself! !
 !Graphics.Rectangle class categoriesFor: #publishedAspectsOfInstances!constants!public! !
 
@@ -3900,7 +3900,7 @@ newInstanceAspect: aSymbol class: aspectClass
 
 cpuCyclesToRun
 	| sem start stop lib hThread |
-	lib := KernelLibrary default.
+	lib := OS.KernelLibrary default.
 	hThread := lib getCurrentThread.
 	start := External.QWORD new.
 	stop := External.QWORD new.
@@ -3923,12 +3923,12 @@ publishedAspectsOfInstances
 
 	| aspects |
 	aspects := super publishedAspectsOfInstances.
-	aspects add: (Tools.Aspect name: #receiver).
+	aspects add: (Aspect name: #receiver).
 	#(#argumentCount #envTempCount #stackTempCount #initialIP)
-		do: [:each | aspects add: ((Tools.Aspect integer: each)
+		do: [:each | aspects add: ((Aspect integer: each)
 						beReadOnly;
 						yourself)].
-	aspects add: (Tools.Aspect name: #method).
+	aspects add: (Aspect name: #method).
 	^aspects! !
 !Kernel.BlockClosure class categoriesFor: #publishedAspectsOfInstances!constants!public! !
 
@@ -3997,7 +3997,7 @@ publishedEventsOfInstances
 !Kernel.CompiledCode methodsFor!
 
 alternateInspectorClass
-	^Tools.CompiledMethodInspector!
+	^CompiledMethodInspector!
 
 asDebugMethod
     	"Private - Answer a debug version of the receiver with breakpoints after each 
@@ -4036,7 +4036,7 @@ decodeHeaderOn: aStream
 disassembly
 	"Private - Answer a <readableString> disassembly listing for the receiver."
 
-	^Smalltalk developmentSystem disassembleMethod: self!
+	^SmalltalkSystem current disassembleMethod: self!
 
 hasCompilationIssues
 	^
@@ -4081,15 +4081,15 @@ publishedAspectsOfInstances
 	"Answer a <LookupTable> of the <Aspect>s published by instances of the receiver."
 
 	^super publishedAspectsOfInstances
-		add: (Tools.Aspect name: #methodClass) beReadOnly;
-		add: (Tools.Aspect name: #header) beReadOnly;
-		add: (Tools.Aspect integer: #argumentCount) beReadOnly;
-		add: (Tools.Aspect multilineString: #getSource) beReadOnly;
-		add: (Tools.Aspect name: #byteCodes) beReadOnly;
-		add: (Tools.Aspect multilineString: #disassembly) beReadOnly;
-		add: (Tools.Aspect name: #literals);
-		add: (Tools.Aspect collection: #tempsMap) beReadOnly;
-		add: (Tools.Aspect collection: #textMap) beReadOnly;
+		add: (Aspect name: #methodClass) beReadOnly;
+		add: (Aspect name: #header) beReadOnly;
+		add: (Aspect integer: #argumentCount) beReadOnly;
+		add: (Aspect multilineString: #getSource) beReadOnly;
+		add: (Aspect name: #byteCodes) beReadOnly;
+		add: (Aspect multilineString: #disassembly) beReadOnly;
+		add: (Aspect name: #literals);
+		add: (Aspect collection: #tempsMap) beReadOnly;
+		add: (Aspect collection: #textMap) beReadOnly;
 		yourself! !
 !Kernel.CompiledCode class categoriesFor: #publishedAspectsOfInstances!constants!public! !
 
@@ -4111,7 +4111,7 @@ asDebugMethod
 	^debugMethod!
 
 stylerClass
-	^Smalltalk developmentSystem expressionStylerClass! !
+	^SmalltalkSystem current expressionStylerClass! !
 !Kernel.CompiledExpression categoriesFor: #asDebugMethod!private! !
 !Kernel.CompiledExpression categoriesFor: #stylerClass!constants!public! !
 
@@ -4137,12 +4137,12 @@ asDebugMethod
 browse
 	"Open a suitable browser onto the receiver."
 
-	^Smalltalk developmentSystem browseMethod: self!
+	^SmalltalkSystem current browseMethod: self!
 
 icon
 	"Answers an Icon that can be used to represent this object."
 
-	^Smalltalk developmentSystem iconForMethod: self!
+	^SmalltalkSystem current iconForMethod: self!
 
 infoTip
 	"Private - Answer a suitable 'info tip' for the receiver."
@@ -4163,7 +4163,7 @@ searchForInTool: aSmalltalkToolShell
 	aSmalltalkToolShell searchForMethod: self!
 
 stylerClass
-	^Smalltalk developmentSystem methodStylerClass! !
+	^SmalltalkSystem current methodStylerClass! !
 !Kernel.CompiledMethod categoriesFor: #asDebugMethod!private! !
 !Kernel.CompiledMethod categoriesFor: #browse!public! !
 !Kernel.CompiledMethod categoriesFor: #icon!constants!public! !
@@ -4174,17 +4174,17 @@ stylerClass
 !Kernel.CompiledMethod class methodsFor!
 
 overriddenIcon
-	"Private - Answers an Icon that can be used to represent an overridden instance of this class"
+	"Private - Answers an Icon that can be used to represent an overridden instance of this class: ▴"
 
-	^##((Graphics.TextTileIcon text: $\x25B4 fontName: 'Segoe UI')
-		textcolor: Graphics.Color dodgerBlue;
+	^##((TextTileIcon text: $\x25B4 fontName: 'Segoe UI')
+		textcolor: Color dodgerBlue;
 		yourself)!
 
 publishedAspectsOfInstances
 	"Answer a <LookupTable> of the <Aspect>s published by instances of the receiver."
 
 	^super publishedAspectsOfInstances
-		add: (Tools.Aspect name: #selector) beReadOnly;
+		add: (Aspect name: #selector) beReadOnly;
 		yourself! !
 !Kernel.CompiledMethod class categoriesFor: #overriddenIcon!constants!private! !
 !Kernel.CompiledMethod class categoriesFor: #publishedAspectsOfInstances!constants!public! !
@@ -4206,7 +4206,7 @@ okToContinue
 
 	| mb severity |
 	severity := self severityClass.
-	mb := UI.MessageBox new
+	mb := MessageBox new
 				caption: 'Compilation ' , self severityName;
 				text: ('line <1p>: <2s>' expandMacrosWith: self line with: self errorMessage);
 				iconStyleFlag: severity mbIconId;
@@ -4252,7 +4252,7 @@ icon
 ansiIcon
 	"Private - Answers an Icon that can be used to represent an ANSI standard protocol."
 
-	^Graphics.Icon fromId: 'METHODPROTOCOL_ANSI.ICO'!
+	^Icon fromId: 'METHODPROTOCOL_ANSI.ICO'!
 
 publishedEventsOfInstances
     	"Answer a <Set> of <Symbol>s that describe the published events triggered
@@ -4266,7 +4266,7 @@ publishedEventsOfInstances
 readOnlyIcon
 	"Private - Answers an Icon that can be used to represent a read-only protocol."
 
-	^Graphics.Icon fromId: 'METHODPROTOCOL_READONLY.ICO'! !
+	^Icon fromId: 'METHODPROTOCOL_READONLY.ICO'! !
 !Kernel.MethodProtocol class categoriesFor: #ansiIcon!constants!private! !
 !Kernel.MethodProtocol class categoriesFor: #publishedEventsOfInstances!events!public! !
 !Kernel.MethodProtocol class categoriesFor: #readOnlyIcon!constants!private! !
@@ -4312,7 +4312,7 @@ publishedKeyedAspects
 browse
 	"Open a suitable browser onto the receiver."
 
-	Smalltalk developmentSystem browsePackages: {self}!
+	SmalltalkSystem current browsePackages: {self}!
 
 defaultAbout
 	"Shows a default About splash screen for the receiver. This looks for a bitmap of the same
@@ -4322,7 +4322,7 @@ defaultAbout
 	If you wish to use such a splash screen for your about box then set #aboutBlock to:
 	[:package | package defaultAbout]"
 
-	(UI.Splash bitmap: self defaultAboutBitmap) show!
+	(Splash bitmap: self defaultAboutBitmap) show!
 
 defaultAboutBitmap
 	"Answer a default Bitmap to use for the receiver. We assume that a JPG of the same name as
@@ -4342,10 +4342,10 @@ defaultAboutBitmap
 								stem: self name
 								extension: each.
 					(File exists: imageFile) ifTrue: [^gdiplusImage fromFile: imageFile]]].
-	^Graphics.DIBSection width: 480 height: 360!
+	^DIBSection width: 480 height: 360!
 
 fileLocator
-	^Tools.PackageRelativeFileLocator package: self!
+	^PackageRelativeFileLocator package: self!
 
 icon
 	self isBasePackage ifTrue: [^self class dolphinPackageIcon].
@@ -4357,16 +4357,18 @@ publishedAspects
 	| aspects |
 	aspects := super publishedAspects.
 	aspects
-		add: ((Tools.Aspect
+		add: ((Aspect
 					collection: #untracedVariables
-					presenterClass: UI.HashedCollectionPresenter
+					presenterClass: HashedCollectionPresenter
 					addFrom: self variableNames asSortedCollection)
 					beImmutable;
 					yourself);
-		add: (Tools.Aspect choice: #environment
+		add: (Aspect
+					choice: #environment
 					from: ((Namespace allSubclasses
 							reject: [:each | each isVisiblyAbstract or: [(each inheritsFrom: SharedPool) or: [each owningPackage == self]]])
-								asSortedCollection: [:a :b | a fullName <= b fullName])).
+								asSortedCollection: [:a :b | a fullName <= b fullName])
+					andNil: nil).
 	^aspects!
 
 searchForInTool: aSmalltalkToolShell 
@@ -4396,28 +4398,28 @@ toggleUsingPAX
 changedIcon
 	"Private - Answer the icon to mark packages that have been changed"
 
-	^Smalltalk developmentSystem changedIcon!
+	^SmalltalkSystem current changedIcon!
 
 dolphinPackageIcon
-	^Graphics.Icon fromId: 'DolphinPackage.ico'!
+	^Icon fromId: 'DolphinPackage.ico'!
 
 publishedAspectsOfInstances
 	"Answer a <LookupTable> of the <Aspect>s published by instances of the receiver."
 
 	| answer |
 	answer := super publishedAspectsOfInstances
-				add: (Tools.Aspect multilineString: #comment);
-				add: (Tools.Aspect string: #packageVersion);
-				add: (Tools.Aspect block: #aboutBlock);
-				add: (Tools.Aspect fileSave: #packageFileName);
-				add: (Tools.Aspect sequenceableCollection: #manualPrerequisites
+				add: (Aspect multilineString: #comment);
+				add: (Aspect string: #packageVersion);
+				add: (Aspect block: #aboutBlock);
+				add: (Aspect fileSave: #packageFileName);
+				add: (Aspect sequenceableCollection: #manualPrerequisites
 							addFrom: self manager packageNames asSortedCollection);
-				add: (Tools.Aspect boolean: #preDeclareClassesOnLoad);
-				add: (Tools.Aspect choice: #paxVersion from: #(1 2.1));
+				add: (Aspect boolean: #preDeclareClassesOnLoad);
+				add: (Aspect choice: #paxVersion from: #(1 2.1));
 				yourself.
 	"If the image has the ADK loaded, then include the image stripper"
 	#{Smalltalk.ImageStripper} isDefined
-		ifTrue: [answer add: (Tools.Aspect name: #imageStripper) beImmutable].
+		ifTrue: [answer add: (Aspect name: #imageStripper) beImmutable].
 	^answer!
 
 publishedEventsOfInstances
@@ -4495,7 +4497,7 @@ singleStep: interruptArg
 basicInspect
 	"Open and answer an inspector window on the receiver"
 
-	^Tools.BasicInspector shellOn: self!
+	^BasicInspector shellOn: self!
 
 debugPrintString
 	"Answer a <readableString> whose characters are a description of the receiver 
@@ -4530,7 +4532,7 @@ publishedAspects
     	Overridden by subclasses to add the aspects 	published locally"
 
 	^LookupTable new
-		add: ((Tools.Aspect name: #yourself) isNullable: false);
+		add: ((Aspect name: #yourself) isNullable: false);
 		yourself!
 
 publishedAspectsOfInstances
@@ -4539,7 +4541,7 @@ publishedAspectsOfInstances
     	published locally."
 
 	^LookupTable new
-		add: (Tools.Aspect name: #yourself);
+		add: (Aspect name: #yourself);
 		yourself! !
 !Kernel.ProtoObject class categoriesFor: #icon!public! !
 !Kernel.ProtoObject class categoriesFor: #publishedAspects!constants!public! !
@@ -4548,6 +4550,8 @@ publishedAspectsOfInstances
 !Kernel.SharedPool class methodsFor!
 
 canModifyBinding: aVariableBinding newValue: anObject
+	#namespaceToDo. "Due to an oddity of Namespace redefining Class>>resolveImportedBinding:, variables of UI will not be found here by unqualified name even though imported into the Tools namespace in which this method is compiled."
+
 	^UI.ConfirmationRequiredWarning
 		signal: ('Would you like to recompile references to <1p>.<2s> to reflect the new value <3p> (currently <4p>)?'
 				expandMacrosWith: self
@@ -4606,7 +4610,7 @@ emitResourceMethodHeader: aResourceIdentifier
 		crtab.
 	self emitClassName: Tools.ViewComposer.
 	stream nextPutAll: ' openOn: ('.
-	self emitClassName: UI.ResourceIdentifier.
+	self emitClassName: ResourceIdentifier.
 	stream
 		nextPutAll: ' class: self selector: ';
 		print: aResourceIdentifier selector;
@@ -4709,14 +4713,14 @@ publishedAspectsOfInstances
 	| aspects |
 	aspects := super publishedAspectsOfInstances.
 	^aspects
-		add: (Tools.Aspect collection: #arguments) beReadOnly;
-		add: (Tools.Aspect name: #method);
-		add: (Tools.Aspect integer: #ip);
-		add: (Tools.Aspect integer: #sp);
-		add: (Tools.Aspect integer: #bp) beReadOnly;
-		add: (Tools.Aspect name: #sender);
-		add: (Tools.Aspect collection: #tempNames) beReadOnly;
-		add: (Tools.Aspect name: #environment);
+		add: (Aspect collection: #arguments) beReadOnly;
+		add: (Aspect name: #method);
+		add: (Aspect integer: #ip);
+		add: (Aspect integer: #sp);
+		add: (Aspect integer: #bp) beReadOnly;
+		add: (Aspect name: #sender);
+		add: (Aspect collection: #tempNames) beReadOnly;
+		add: (Aspect name: #environment);
 		yourself! !
 !Kernel.StackFrame class categoriesFor: #publishedAspectsOfInstances!constants!public! !
 
@@ -4851,14 +4855,14 @@ publishedAspects
 	| aspects |
 	aspects := super publishedAspects.
 	aspects at: #yourself
-		put: (Tools.Aspect name: #yourself
+		put: (Aspect name: #yourself
 				presenterBlock: 
 					[:p :m |
 					| tree |
-					tree := UI.TreePresenter
+					tree := TreePresenter
 								create: 'Default view'
 								in: p
-								on: (UI.VirtualTreeModel withRoots: (OrderedCollection with: m value)).
+								on: (VirtualTreeModel withRoots: (OrderedCollection with: m value)).
 					tree view expandAll.
 					tree]).
 	^aspects! !
@@ -5107,7 +5111,6 @@ printFieldsOn: aStream
 
 printableFields
 	| mask fields |
-	false ifTrue: [^super printableFields].
 	mask := self mask.
 	fields := OrderedCollection with: #iItem.
 	self iSubItem == 0 ifFalse: [fields addLast: #iSubItem].
@@ -5127,7 +5130,7 @@ printOn: aStream
 
 	| msg |
 	self basicPrintOn: aStream.
-	msg := UI.View selectorForMessage: self message.
+	msg := View selectorForMessage: self message.
 	aStream nextPut: $(.
 	self hwnd
 		printOn: aStream
@@ -5174,12 +5177,12 @@ publishedAspectsOfInstances
 	"Answer a <LookupTable> of the <Aspect>s published by instances of the receiver."
 
 	^super publishedAspectsOfInstances
-		add: (Tools.Aspect string: #fileDescription) beReadOnly;
-		add: (Tools.Aspect string: #productName) beReadOnly;
-		add: (Tools.Aspect string: #comments) beReadOnly;
-		add: (Tools.Aspect string: #legalCopyright) beReadOnly;
-		add: (Tools.Aspect string: #specialBuild) beReadOnly;
-		add: (Tools.Aspect name: #fixedInfo);
+		add: (Aspect string: #fileDescription) beReadOnly;
+		add: (Aspect string: #productName) beReadOnly;
+		add: (Aspect string: #comments) beReadOnly;
+		add: (Aspect string: #legalCopyright) beReadOnly;
+		add: (Aspect string: #specialBuild) beReadOnly;
+		add: (Aspect name: #fixedInfo);
 		yourself! !
 !OS.VersionInfo class categoriesFor: #publishedAspectsOfInstances!constants!public! !
 
@@ -5189,8 +5192,8 @@ publishedAspectsOfInstances
 	"Answer a <LookupTable> of the <Aspect>s published by instances of the receiver."
 
 	^super publishedAspectsOfInstances
-		add: (Tools.Aspect string: #fileVersionString) beReadOnly;
-		add: (Tools.Aspect string: #productVersionString) beReadOnly;
+		add: (Aspect string: #fileVersionString) beReadOnly;
+		add: (Aspect string: #productVersionString) beReadOnly;
 		yourself! !
 !OS.VS_FIXEDFILEINFO class categoriesFor: #publishedAspectsOfInstances!constants!public! !
 
@@ -5204,7 +5207,7 @@ printOn: aStream
 	aStream
 		basicPrint: self;
 		nextPutAll: '(after ';
-		print: (UI.View fromHandle: self hwndInsertAfter);
+		print: (View fromHandle: self hwndInsertAfter);
 		nextPutAll: ', '.
 	self isRectangleChanged
 		ifTrue: 
@@ -5213,9 +5216,9 @@ printOn: aStream
 				nextPutAll: ', '].
 	flags := self flags.
 	first := true.
-	##((Win32Constants keys select: [:each | each beginsWith: 'SWP_']) asSortedCollection asArray) do: 
+	##((OS.Win32Constants keys select: [:each | each beginsWith: 'SWP_']) asSortedCollection asArray) do: 
 			[:each |
-			(flags allMask: (Win32Constants at: each))
+			(flags allMask: (OS.Win32Constants at: each))
 				ifTrue: 
 					[first ifTrue: [first := false] ifFalse: [aStream nextPut: $|].
 					aStream nextPutAll: each]]! !
@@ -5239,7 +5242,7 @@ allMethods
 	^methods!
 
 allResourcesDo: aBlock
-	UI.ResourceIdentifier allResourceIdentifiersDo: aBlock!
+	ResourceIdentifier allResourceIdentifiersDo: aBlock!
 
 browse
 	^self openEditor!
@@ -5254,7 +5257,7 @@ definitionsOf: aString
 		ifFalse: [self implementorsOf: aString asSymbol]!
 
 dynamicReferencesTo: aLiteral
-	^MethodCategoryEnvironment referencesTo: aLiteral in: self!
+	^Refactory.Browser.MethodCategoryEnvironment referencesTo: aLiteral in: self!
 
 forClassHierarchyFrom: aClass
  	"Answers a <BrowserEnvironment> that includes only aClass and its subclasses, and the corresponding
@@ -5266,10 +5269,10 @@ forClassHierarchyFrom: aClass
  	^self forClasses: classes!
 
 forMethodCategories: categoryList
-	^MethodCategoryEnvironment onEnvironment: self categories: categoryList!
+	^Refactory.Browser.MethodCategoryEnvironment onEnvironment: self categories: categoryList!
 
 forPackages: aCollection
-	^PackageEnvironment onEnvironment: self packages: aCollection!
+	^Refactory.Browser.PackageEnvironment onEnvironment: self packages: aCollection!
 
 forPackagesClosure: aCollectionOfPackages
 	| closure |
@@ -5295,10 +5298,10 @@ includesMethodUncached: aCompiledMethod
 openEditor
 	"Open an appropriate Dolphin browser on this environment."
 
-	Smalltalk developmentSystem browseClass!
+	SmalltalkSystem current browseClass!
 
 search
-	^search ifNil: [Tools.MethodSearch newPattern: (self searchStrings at: 1 ifAbsent: [''])]!
+	^search ifNil: [MethodSearch newPattern: (self searchStrings at: 1 ifAbsent: [''])]!
 
 search: aMethodSearch 
 	search := aMethodSearch.
@@ -5326,7 +5329,7 @@ includesResource: aResourceIdentifier
 openEditor
 	"Open an appropriate Dolphin browser on this environment."
 
-	Smalltalk developmentSystem browseEnvironment: self! !
+	SmalltalkSystem current browseEnvironment: self! !
 !Refactory.Browser.BrowserEnvironmentWrapper categoriesFor: #includesResource:!public!testing! !
 !Refactory.Browser.BrowserEnvironmentWrapper categoriesFor: #openEditor!browsing!public! !
 
@@ -5338,7 +5341,7 @@ includesResource: aResourceIdentifier
 openEditor
 	"Open an appropriate Dolphin browser on this environment."
 
-	^Smalltalk developmentSystem browseEnvironment: self! !
+	^SmalltalkSystem current browseEnvironment: self! !
 !Refactory.Browser.ClassEnvironment categoriesFor: #includesResource:!public!testing! !
 !Refactory.Browser.ClassEnvironment categoriesFor: #openEditor!browsing!public! !
 
@@ -5355,43 +5358,43 @@ publishedAspects
 	"Answer a <LookupTable> of the <Aspect>s published by instances of the receiver."
 
 	^super publishedAspects
-		add: (Tools.Aspect boolean: #formatCommentWithStatements);
-		add: ((Tools.Aspect integer: #indentsForKeywords)
+		add: (Aspect boolean: #formatCommentWithStatements);
+		add: ((Aspect integer: #indentsForKeywords)
 					isNullable: false;
 					yourself);
-		add: (Tools.Aspect string: #indentString);
-		add: (Tools.Aspect boolean: #lineUpBlockBrackets);
-		add: ((Tools.Aspect integer: #maxLineLength)
+		add: (Aspect string: #indentString);
+		add: (Aspect boolean: #lineUpBlockBrackets);
+		add: ((Aspect integer: #maxLineLength)
 					isNullable: false;
 					yourself);
-		add: (Tools.Aspect boolean: #methodSignatureOnMultipleLines);
-		add: ((Tools.Aspect integer: #minimumNewLinesBetweenStatements)
+		add: (Aspect boolean: #methodSignatureOnMultipleLines);
+		add: ((Aspect integer: #minimumNewLinesBetweenStatements)
 					isNullable: false;
 					yourself);
-		add: (Tools.Aspect boolean: #newLineAfterCascade);
-		add: (Tools.Aspect boolean: #newLineBeforeFirstCascade);
-		add: (Tools.Aspect boolean: #newLineBeforeFirstKeyword);
-		add: ((Tools.Aspect integer: #newLinesAfterMethodComment)
+		add: (Aspect boolean: #newLineAfterCascade);
+		add: (Aspect boolean: #newLineBeforeFirstCascade);
+		add: (Aspect boolean: #newLineBeforeFirstKeyword);
+		add: ((Aspect integer: #newLinesAfterMethodComment)
 					isNullable: false;
 					yourself);
-		add: ((Tools.Aspect integer: #newLinesAfterMethodPattern)
+		add: ((Aspect integer: #newLinesAfterMethodPattern)
 					isNullable: false;
 					yourself);
-		add: ((Tools.Aspect integer: #newLinesAfterTemporaries)
+		add: ((Aspect integer: #newLinesAfterTemporaries)
 					isNullable: false;
 					yourself);
-		add: ((Tools.Aspect integer: #numberOfArgumentsForMultiLine)
+		add: ((Aspect integer: #numberOfArgumentsForMultiLine)
 					isNullable: false;
 					yourself);
-		add: (Tools.Aspect boolean: #periodsAsTerminators);
-		add: (Tools.Aspect boolean: #retainBlankLinesBetweenStatements);
-		add: (Tools.Aspect string: #stringFollowingReturn);
-		add: (Tools.Aspect string: #stringInsideBlocks);
-		add: (Tools.Aspect string: #stringInsideParentheses);
-		add: ((Tools.Aspect sequenceableCollection: #traditionalBinaryPrecedence)
+		add: (Aspect boolean: #periodsAsTerminators);
+		add: (Aspect boolean: #retainBlankLinesBetweenStatements);
+		add: (Aspect string: #stringFollowingReturn);
+		add: (Aspect string: #stringInsideBlocks);
+		add: (Aspect string: #stringInsideParentheses);
+		add: ((Aspect sequenceableCollection: #traditionalBinaryPrecedence)
 					isNullable: false;
 					yourself);
-		add: (Tools.Aspect boolean: #useTraditionalBinaryPrecedenceForParentheses);
+		add: (Aspect boolean: #useTraditionalBinaryPrecedenceForParentheses);
 		yourself! !
 !Refactory.Browser.RBConfigurableFormatter class categoriesFor: #publishedAspects!constants!public! !
 
@@ -5401,13 +5404,13 @@ publishedAspects
 	"Answer a <LookupTable> of the <Aspect>s published by instances of the receiver."
 
 	^super publishedAspects
-		add: ((Tools.Aspect integer: #maximumArgumentsPerLine)
+		add: ((Aspect integer: #maximumArgumentsPerLine)
 					isNullable: false;
 					yourself);
-		add: ((Tools.Aspect sequenceableCollection: #selectorsToLeaveOnLine)
+		add: ((Aspect sequenceableCollection: #selectorsToLeaveOnLine)
 					isNullable: false;
 					yourself);
-		add: ((Tools.Aspect sequenceableCollection: #selectorsToStartOnNewLine)
+		add: ((Aspect sequenceableCollection: #selectorsToStartOnNewLine)
 					isNullable: false;
 					yourself);
 		yourself! !
@@ -5419,10 +5422,10 @@ publishedAspects
 	"Answer a <LookupTable> of the <Aspect>s published by instances of the receiver."
 
 	^super publishedAspects
-		add: ((Tools.Aspect integer: #maxLineLength)
+		add: ((Aspect integer: #maxLineLength)
 					isNullable: false;
 					yourself);
-		add: (Tools.Aspect boolean: #periodsAtEndOfMethod);
+		add: (Aspect boolean: #periodsAtEndOfMethod);
 		yourself! !
 !Refactory.Browser.RBSourceFormatter class categoriesFor: #publishedAspects!constants!public! !
 
@@ -5556,7 +5559,7 @@ publishedAspectsOfInstances
 	"Answer a <LookupTable> of the <Aspect>s published by instances of the receiver."
 
 	^super publishedAspectsOfInstances
-		add: (Tools.Aspect name: #locale);
+		add: (Aspect name: #locale);
 		yourself! !
 !UI.AbstractToTextConverter class categoriesFor: #publishedAspectsOfInstances!constants!public! !
 
@@ -5566,18 +5569,18 @@ publishedAspectsOfInstances
 	"Answer a <LookupTable> of the <Aspect>s published by instances of the receiver."
 
 	^super publishedAspectsOfInstances
-		add: (Tools.Aspect
+		add: (Aspect
 					name: #progId
 					presenterBlock: [:p :m | TextPresenter createIn: p on: m]
 					editBlock: [:p | p model value: (self chooseControl: p model value)]);
-		add: (Tools.Aspect name: #controlDispatch) beReadOnly;
-		add: (Tools.Aspect name: #yourself editBlock: [:p | p model value editControlProperties]);
-		add: (Tools.Aspect boolean: #firesPropertyNotifications);
-		add: (Tools.Aspect boolean: #firesControlEvents);
-		add: (Tools.Aspect boolean: #allowContextMenu);
-		add: (Tools.Aspect boolean: #isDesignMode);
-		add: (Tools.Aspect boolean: #isDefault);
-		add: (Tools.Aspect string: #licenseKey);
+		add: (Aspect name: #controlDispatch) beReadOnly;
+		add: (Aspect name: #yourself editBlock: [:p | p model value editControlProperties]);
+		add: (Aspect boolean: #firesPropertyNotifications);
+		add: (Aspect boolean: #firesControlEvents);
+		add: (Aspect boolean: #allowContextMenu);
+		add: (Aspect boolean: #isDesignMode);
+		add: (Aspect boolean: #isDefault);
+		add: (Aspect string: #licenseKey);
 		yourself! !
 !UI.AXControlSite class categoriesFor: #publishedAspectsOfInstances!constants!must strip!public! !
 
@@ -5590,11 +5593,11 @@ publishedAspectsOfInstances
 	applicableTypeConverters := Set new.
 	self applicableTypeConverterCategories do: [:each | applicableTypeConverters addAll: each classes].
 	^super publishedAspectsOfInstances
-		add: (Tools.Aspect choice: #typeconverter
+		add: (Aspect choice: #typeconverter
 					evaluationFrom: (applicableTypeConverters asSortedCollection asArray
 							collect: [:each | each name , ' new']))
 						beImmutable;
-		add: (Tools.Aspect name: #value);
+		add: (Aspect name: #value);
 		yourself! !
 !UI.AXValueConvertingControlSite class categoriesFor: #publishedAspectsOfInstances!constants!must strip!public! !
 
@@ -5604,7 +5607,7 @@ publishedAspectsOfInstances
 	"Answer a <LookupTable> of the <Aspect>s published by instances of the receiver."
 
 	^super publishedAspectsOfInstances
-		add: (Tools.Aspect boolean: #canHScroll);
+		add: (Aspect boolean: #canHScroll);
 		yourself! !
 !UI.BasicListAbstract class categoriesFor: #publishedAspectsOfInstances!constants!public! !
 
@@ -5614,7 +5617,7 @@ publishedAspectsOfInstances
 	"Answer a <LookupTable> of the <Aspect>s published by instances of the receiver."
 
 	^super publishedAspectsOfInstances
-		add: (Tools.Aspect name: #format
+		add: (Aspect name: #format
 					chooseFrom: #('nil' '#(''false'' ''true'')' '#(''no'' ''yes'')' '#(''off'' ''on'')')) beImmutable;
 		yourself! !
 !UI.BooleanToText class categoriesFor: #publishedAspectsOfInstances!constants!public! !
@@ -5625,7 +5628,7 @@ arrangementAspect
 	"Private - Answer an Aspect description for the arrangement aspect of Views that are managed
 	by the receiver."
 
-	^Tools.Aspect
+	^Aspect
 		choice: #arrangement
 		from: #(#north #south #east #west #center)
 		andNil: #none! !
@@ -5637,8 +5640,8 @@ publishedAspectsOfInstances
 	"Answer a <LookupTable> of the <Aspect>s published by instances of the receiver."
 
 	^super publishedAspectsOfInstances
-		add: (Tools.Aspect integer: #horizontalGap);
-		add: (Tools.Aspect integer: #verticalGap);
+		add: (Aspect integer: #horizontalGap);
+		add: (Aspect integer: #verticalGap);
 		yourself! !
 !UI.BorderLayout class categoriesFor: #publishedAspectsOfInstances!constants!public! !
 
@@ -5648,14 +5651,14 @@ publishedAspectsOfInstances
 	"Answer a <LookupTable> of the <Aspect>s published by instances of the receiver."
 
 	^super publishedAspectsOfInstances
-		add: (Tools.Aspect font: #font);
-		add: (Tools.Aspect boolean: #hasButtons);
-		add: (Tools.Aspect boolean: #hasHotTracking);
-		add: (Tools.Aspect boolean: #isMultiline);
-		add: (Tools.Aspect choice: #tabOrientation from: TabView tabOrientations values);
-		add: (Tools.Aspect choice: #viewMode from: TabView viewModes keys asSortedCollection);
-		add: (Tools.Aspect block: #getImageBlock);
-		add: (Tools.Aspect block: #getTextBlock);
+		add: (Aspect font: #font);
+		add: (Aspect boolean: #hasButtons);
+		add: (Aspect boolean: #hasHotTracking);
+		add: (Aspect boolean: #isMultiline);
+		add: (Aspect choice: #tabOrientation from: TabView tabOrientations values);
+		add: (Aspect choice: #viewMode from: TabView viewModes keys asSortedCollection);
+		add: (Aspect block: #getImageBlock);
+		add: (Aspect block: #getTextBlock);
 		yourself!
 
 publishedEventsOfInstances
@@ -5673,9 +5676,9 @@ publishedEventsOfInstances
 
 publishedAspectsOfInstances
 	^super publishedAspectsOfInstances
-		add: (Tools.Aspect string: #text);
-		add: (Tools.Aspect block: #iconBlock);
-		add: (Tools.Aspect integer: #helpId);
+		add: (Aspect string: #text);
+		add: (Aspect block: #iconBlock);
+		add: (Aspect integer: #helpId);
 		yourself! !
 !UI.CardLabel class categoriesFor: #publishedAspectsOfInstances!public! !
 
@@ -5697,7 +5700,7 @@ publishedAspectsOfInstances
 	"Answer a <LookupTable> of the <Aspect>s published by instances of the receiver."
 
 	^super publishedAspectsOfInstances
-		add: (Tools.Aspect boolean: #is3State);
+		add: (Aspect boolean: #is3State);
 		yourself! !
 !UI.CheckBox class categoriesFor: #publishedAspectsOfInstances!constants!public! !
 
@@ -5707,11 +5710,11 @@ publishedAspectsOfInstances
 	"Answer a <LookupTable> of the <Aspect>s published by instances of the receiver."
 
 	^super publishedAspectsOfInstances
-		add: (Tools.Aspect boolean: #value);
-		add: (Tools.Aspect boolean: #hasLeftText);
-		add: (Tools.Aspect boolean: #isPushLike);
-		add: (Tools.Aspect name: #image);
-		add: (Tools.Aspect choice: #alignment from: AlignmentMap keys asSortedCollection);
+		add: (Aspect boolean: #value);
+		add: (Aspect boolean: #hasLeftText);
+		add: (Aspect boolean: #isPushLike);
+		add: (Aspect name: #image);
+		add: (Aspect choice: #alignment from: AlignmentMap keys asSortedCollection);
 		yourself! !
 !UI.CheckButton class categoriesFor: #publishedAspectsOfInstances!constants!public! !
 
@@ -5722,7 +5725,7 @@ publishedAspectsOfInstances
 
 	^super publishedAspectsOfInstances
 		removeKey: #backcolor;
-		add: (Tools.Aspect color: #value);
+		add: (Aspect color: #value);
 		yourself! !
 !UI.ColorView class categoriesFor: #publishedAspectsOfInstances!constants!public! !
 
@@ -5741,9 +5744,9 @@ publishedAspectsOfInstances
 	"Answer a <LookupTable> of the <Aspect>s published by instances of the receiver."
 
 	^super publishedAspectsOfInstances
-		add: (Tools.Aspect integer: #droppedHeight);
-		add: (Tools.Aspect choice: #mode from: Modes);
-		add: (Tools.Aspect boolean: #canHScroll);
+		add: (Aspect integer: #droppedHeight);
+		add: (Aspect choice: #mode from: Modes);
+		add: (Aspect boolean: #canHScroll);
 		yourself! !
 !UI.ComboBox class categoriesFor: #publishedAspectsOfInstances!constants!public! !
 
@@ -5763,11 +5766,11 @@ publishedAspectsOfInstances
 	"Answer a <LookupTable> of the <Aspect>s published by instances of the receiver."
 
 	^super publishedAspectsOfInstances
-		add: (Tools.Aspect name: #command);
-		add: (Tools.Aspect string: #description);
-		add: (Tools.Aspect hotkey: #acceleratorKey);
-		add: (Tools.Aspect boolean: #isModalCommand);
-		add: (Tools.Aspect icon: #image);
+		add: (Aspect name: #command);
+		add: (Aspect string: #description);
+		add: (Aspect hotkey: #acceleratorKey);
+		add: (Aspect boolean: #isModalCommand);
+		add: (Aspect icon: #image);
 		yourself! !
 !UI.CommandDescription class categoriesFor: #publishedAspectsOfInstances!constants!public! !
 
@@ -5781,7 +5784,7 @@ commandString: commandText
 edit
 	"Private - Edit the receiver in a dialog box."
 
-	(Tools.CommandMenuItemDialog createOn: self) showModal! !
+	(CommandMenuItemDialog createOn: self) showModal! !
 !UI.CommandMenuItem categoriesFor: #commandString:!accessing!public! !
 !UI.CommandMenuItem categoriesFor: #edit!operations!private! !
 
@@ -5791,10 +5794,10 @@ publishedAspectsOfInstances
 	"Answer a <LookupTable> of the <Aspect>s published by instances of the receiver."
 
 	^super publishedAspectsOfInstances
-		add: (Tools.Aspect name: #commandDescription);
-		add: (Tools.Aspect boolean: #isRadioButtonStyle);
-		add: (Tools.Aspect boolean: #isDefault);
-		add: (Tools.Aspect icon: #image);
+		add: (Aspect name: #commandDescription);
+		add: (Aspect boolean: #isRadioButtonStyle);
+		add: (Aspect boolean: #isDefault);
+		add: (Aspect icon: #image);
 		yourself! !
 !UI.CommandMenuItem class categoriesFor: #publishedAspectsOfInstances!constants!public! !
 
@@ -5816,9 +5819,9 @@ publishedAspectsOfInstances
 	choices := OrderedCollection with: 'nil'.
 	applicableLayoutManagers asSortedCollection do: [:each | choices addLast: each name , ' new'].
 	^super publishedAspectsOfInstances
-		add: (Tools.Aspect rectangle: #insets) beImmutable;
-		add: (Tools.Aspect choice: #layoutManager evaluationFrom: choices) beImmutable;
-		add: (Tools.Aspect boolean: #clipChildren);
+		add: (Aspect rectangle: #insets) beImmutable;
+		add: (Aspect choice: #layoutManager evaluationFrom: choices) beImmutable;
+		add: (Aspect boolean: #clipChildren);
 		yourself! !
 !UI.ContainerView class categoriesFor: #applicableLayoutManagerCategories!constants!public! !
 !UI.ContainerView class categoriesFor: #publishedAspectsOfInstances!constants!public! !
@@ -5841,8 +5844,8 @@ publishedAspectsOfInstances
 	choices := OrderedCollection with: 'nil'.
 	applicableLayoutManagers asSortedCollection do: [:each | choices addLast: each name , ' new'].
 	^super publishedAspectsOfInstances
-		add: (Tools.Aspect boolean: #hasDivider);
-		add: (Tools.Aspect choice: #layoutManager evaluationFrom: choices) beImmutable;
+		add: (Aspect boolean: #hasDivider);
+		add: (Aspect choice: #layoutManager evaluationFrom: choices) beImmutable;
 		removeKey: #text;
 		yourself
 	"add: (Aspect boolean: #isVertical);"! !
@@ -5855,7 +5858,7 @@ publishedAspectsOfInstances
 	"Answer a <LookupTable> of the <Aspect>s published by instances of the receiver."
 
 	^super publishedAspectsOfInstances
-		add: (Tools.Aspect color: #forecolor);
+		add: (Aspect color: #forecolor);
 		yourself
 	"We really need these notifications, so probably not wise to allow them to be turned off"
 	"add: (Aspect boolean: #wantParentNotifications);"! !
@@ -5867,9 +5870,9 @@ publishedAspects
 	"Answer a <LookupTable> of the <Aspect>s published by the receiver."
 
 	^super publishedAspects
-		add: (self modelClass newInstanceAspect: #minimum class: Tools.Aspect);
-		add: (self modelClass newInstanceAspect: #maximum class: Tools.Aspect);
-		add: (self modelClass newInstanceAspect: #value class: Tools.Aspect);
+		add: (self modelClass newInstanceAspect: #minimum class: Aspect);
+		add: (self modelClass newInstanceAspect: #maximum class: Aspect);
+		add: (self modelClass newInstanceAspect: #value class: Aspect);
 		yourself! !
 !UI.DateTimeCommonControl categoriesFor: #publishedAspects!public! !
 
@@ -5879,12 +5882,12 @@ publishedAspectsOfInstances
 	"Answer a <LookupTable> of the <Aspect>s published by instances of the receiver."
 
 	^super publishedAspectsOfInstances
-		add: (Tools.Aspect boolean: #isTimeMode);
-		add: (Tools.Aspect boolean: #hasUpDown);
-		add: (Tools.Aspect boolean: #canShowNone);
-		add: (Tools.Aspect boolean: #hasLongDateFormat);
-		add: (Tools.Aspect boolean: #isRightAligned);
-		add: (Tools.Aspect name: #displayFormat);
+		add: (Aspect boolean: #isTimeMode);
+		add: (Aspect boolean: #hasUpDown);
+		add: (Aspect boolean: #canShowNone);
+		add: (Aspect boolean: #hasLongDateFormat);
+		add: (Aspect boolean: #isRightAligned);
+		add: (Aspect name: #displayFormat);
 		yourself! !
 !UI.DateTimePicker class categoriesFor: #publishedAspectsOfInstances!constants!public! !
 
@@ -5894,7 +5897,7 @@ publishedAspectsOfInstances
 	"Answer a <LookupTable> of the <Aspect>s published by instances of the receiver."
 
 	^super publishedAspectsOfInstances
-		add: (Tools.Aspect string: #format);
+		add: (Aspect string: #format);
 		yourself! !
 !UI.DateToText class categoriesFor: #publishedAspectsOfInstances!constants!public! !
 
@@ -5904,9 +5907,9 @@ publishedAspectsOfInstances
 	"Answer a <LookupTable> of the <Aspect>s published by instances of the receiver."
 
 	^super publishedAspectsOfInstances
-		add: (Tools.Aspect integer: #horizontalGap);
-		add: (Tools.Aspect integer: #verticalGap);
-		add: (Tools.Aspect choice: #alignment from: AlignmentMap keys asSortedCollection);
+		add: (Aspect integer: #horizontalGap);
+		add: (Aspect integer: #verticalGap);
+		add: (Aspect choice: #alignment from: AlignmentMap keys asSortedCollection);
 		yourself! !
 !UI.FlowLayout class categoriesFor: #publishedAspectsOfInstances!constants!public! !
 
@@ -5916,8 +5919,8 @@ publishedAspectsOfInstances
 	"Answer a <LookupTable> of the <Aspect>s published by instances of the receiver."
 
 	^super publishedAspectsOfInstances
-		add: (Tools.Aspect font: #value);
-		add: (Tools.Aspect string: #previewText);
+		add: (Aspect font: #value);
+		add: (Aspect string: #previewText);
 		yourself! !
 !UI.FontView class categoriesFor: #publishedAspectsOfInstances!constants!public! !
 
@@ -5951,14 +5954,14 @@ publishedAspectsOfInstances
 				ifTrue: [topBottomChoices addLast: each name]
 				ifFalse: [leftRightChoices addLast: each name]].
 	^super publishedAspectsOfInstances
-		add: (Tools.Aspect integer: #topOffset);
-		add: (Tools.Aspect choice: #topFraming from: (topBottomChoices copyWithout: #fixedViewTop));
-		add: (Tools.Aspect integer: #bottomOffset);
-		add: (Tools.Aspect choice: #bottomFraming from: (topBottomChoices copyWithout: #fixedViewBottom));
-		add: (Tools.Aspect integer: #leftOffset);
-		add: (Tools.Aspect choice: #leftFraming from: (leftRightChoices copyWithout: #fixedViewLeft));
-		add: (Tools.Aspect integer: #rightOffset);
-		add: (Tools.Aspect choice: #rightFraming from: (leftRightChoices copyWithout: #fixedViewRight));
+		add: (Aspect integer: #topOffset);
+		add: (Aspect choice: #topFraming from: (topBottomChoices copyWithout: #fixedViewTop));
+		add: (Aspect integer: #bottomOffset);
+		add: (Aspect choice: #bottomFraming from: (topBottomChoices copyWithout: #fixedViewBottom));
+		add: (Aspect integer: #leftOffset);
+		add: (Aspect choice: #leftFraming from: (leftRightChoices copyWithout: #fixedViewLeft));
+		add: (Aspect integer: #rightOffset);
+		add: (Aspect choice: #rightFraming from: (leftRightChoices copyWithout: #fixedViewRight));
 		yourself! !
 !UI.FramingConstraints class categoriesFor: #publishedAspectsOfInstances!constants!public! !
 
@@ -5969,7 +5972,7 @@ arrangementAspect
     	are managed by the recever. Since the aspect contains a <FramingConstraints> instance
     	this must be marked as immutable to ensure that the changes are flushed back correctly"
 
-	^(Tools.Aspect name: #arrangement) beImmutable! !
+	^(Aspect name: #arrangement) beImmutable! !
 !UI.FramingLayout categoriesFor: #arrangementAspect!accessing!private! !
 
 !UI.FramingLayout class methodsFor!
@@ -6026,10 +6029,10 @@ publishedAspectsOfInstances
 	"Answer a <LookupTable> of the <Aspect>s published by instances of the receiver."
 
 	^super publishedAspectsOfInstances
-		add: (Tools.Aspect integer: #horizontalGap);
-		add: (Tools.Aspect integer: #verticalGap);
-		add: (Tools.Aspect integer: #rows);
-		add: (Tools.Aspect integer: #columns);
+		add: (Aspect integer: #horizontalGap);
+		add: (Aspect integer: #verticalGap);
+		add: (Aspect integer: #rows);
+		add: (Aspect integer: #columns);
 		yourself! !
 !UI.GridLayout class categoriesFor: #publishedAspectsOfInstances!constants!public! !
 
@@ -6049,9 +6052,9 @@ publishedAspectsOfInstances
 	"Answer a <LookupTable> of the <Aspect>s published by instances of the receiver."
 
 	^super publishedAspectsOfInstances
-		add: (Tools.Aspect autostring: #value);
-		add: (Tools.Aspect name: #invalidCombinationsMask);
-		add: (Tools.Aspect name: #defaultKeyMask);
+		add: (Aspect autostring: #value);
+		add: (Aspect name: #invalidCombinationsMask);
+		add: (Aspect name: #defaultKeyMask);
 		removeKey: #typeconverter;
 		yourself! !
 !UI.HotKey class categoriesFor: #publishedAspectsOfInstances!constants!public! !
@@ -6063,11 +6066,10 @@ publishedAspectsOfInstances
 
 	| aspects |
 	aspects := super publishedAspectsOfInstances.
-	#(#getImageBlock #getInfoTipBlock #customDrawBlock)
-		do: [:each | aspects add: (Tools.Aspect block: each)].
-	#(#hasHotTracking) do: [:each | aspects add: (Tools.Aspect boolean: each)].
+	#(#getImageBlock #getInfoTipBlock #customDrawBlock) do: [:each | aspects add: (Aspect block: each)].
+	#(#hasHotTracking) do: [:each | aspects add: (Aspect boolean: each)].
 	aspects
-		add: (Tools.Aspect choice: #viewMode from: self viewModes keys asSortedCollection);
+		add: (Aspect choice: #viewMode from: self viewModes keys asSortedCollection);
 		yourself.
 	^aspects!
 
@@ -6102,12 +6104,12 @@ publishedAspectsOfInstances
 	"Answer a <LookupTable> of the <Aspect>s published by instances of the receiver."
 
 	^super publishedAspectsOfInstances
-		add: (Tools.Aspect bitmap: #value);
-		add: (Tools.Aspect choice: #viewMode from: self viewModes);
-		add: (Tools.Aspect boolean: #isWholeBackgroundErased);
-		add: (Tools.Aspect boolean: #isDoubleBuffered);
-		add: (Tools.Aspect rectangle: #insets);
-		add: (Tools.Aspect choice: #imageBorder from: self edgeStyles);
+		add: (Aspect bitmap: #value);
+		add: (Aspect choice: #viewMode from: self viewModes);
+		add: (Aspect boolean: #isWholeBackgroundErased);
+		add: (Aspect boolean: #isDoubleBuffered);
+		add: (Aspect rectangle: #insets);
+		add: (Aspect choice: #imageBorder from: self edgeStyles);
 		yourself! !
 !UI.ImageViewAbstract class categoriesFor: #publishedAspectsOfInstances!constants!public! !
 
@@ -6118,7 +6120,7 @@ arrangementAspect
     	are managed by the recever. The default is to allow for a workspace to edit the
     	arrangement"
 
-	^Tools.Aspect name: #arrangement! !
+	^Aspect name: #arrangement! !
 !UI.LayoutManager categoriesFor: #arrangementAspect!accessing!private! !
 
 !UI.ListBox class methodsFor!
@@ -6127,10 +6129,10 @@ publishedAspectsOfInstances
 	"Answer a <LookupTable> of the <Aspect>s published by instances of the receiver."
 
 	^super publishedAspectsOfInstances
-		add: (Tools.Aspect boolean: #canHScroll);
-		add: (Tools.Aspect boolean: #hasPermanentScrollbars);
-		add: (Tools.Aspect extent: #horizontalExtent);
-		add: (Tools.Aspect choice: #selectionMode from: self selectionModes keys asSortedCollection);
+		add: (Aspect boolean: #canHScroll);
+		add: (Aspect boolean: #hasPermanentScrollbars);
+		add: (Aspect extent: #horizontalExtent);
+		add: (Aspect choice: #selectionMode from: self selectionModes keys asSortedCollection);
 		yourself! !
 !UI.ListBox class categoriesFor: #publishedAspectsOfInstances!constants!public! !
 
@@ -6153,7 +6155,7 @@ publishedAspectsOfInstances
 	"Answer a <LookupTable> of the <Aspect>s published by instances of the receiver."
 
 	^super publishedAspectsOfInstances
-		add: (Tools.Aspect block: #getTextBlock);
+		add: (Aspect block: #getTextBlock);
 		yourself!
 
 publishedEventsOfInstances
@@ -6189,19 +6191,19 @@ publishedAspectsOfInstances
 
 	^super publishedAspectsOfInstances
 		removeKey: #hasCheckBoxes ifAbsent: [];
-		add: (Tools.Aspect boolean: #hasButtons);
-		add: (Tools.Aspect boolean: #hasLinesAtRoot);
-		add: (Tools.Aspect boolean: #hasHotTracking);
-		add: (Tools.Aspect integer: #indentSeparation);
-		add: (Tools.Aspect boolean: #disableExpandAll);
-		add: (Tools.Aspect boolean: #retainExpanded);
-		add: (Tools.Aspect boolean: #useSmartRefresh);
-		add: (Tools.Aspect block: #hasChildrenBlock);
-		add: (Tools.Aspect block: #getChildrenBlock);
-		add: (Tools.Aspect block: #getParentBlock);
-		add: (Tools.Aspect block: #sortBlock);
-		add: (Tools.Aspect boolean: #doSortRoots);
-		add: (Tools.Aspect block: #doSortChildrenBlock);
+		add: (Aspect boolean: #hasButtons);
+		add: (Aspect boolean: #hasLinesAtRoot);
+		add: (Aspect boolean: #hasHotTracking);
+		add: (Aspect integer: #indentSeparation);
+		add: (Aspect boolean: #disableExpandAll);
+		add: (Aspect boolean: #retainExpanded);
+		add: (Aspect boolean: #useSmartRefresh);
+		add: (Aspect block: #hasChildrenBlock);
+		add: (Aspect block: #getChildrenBlock);
+		add: (Aspect block: #getParentBlock);
+		add: (Aspect block: #sortBlock);
+		add: (Aspect boolean: #doSortRoots);
+		add: (Aspect block: #doSortChildrenBlock);
 		yourself	"	-- uses the same 'state' stuff as we need for 'buttons'"
 	"		add: (Aspect boolean: #hasLines);					-- dummied out, we don't have any lines :-( "	"	-- really means #hasButtonsAtRoot"
 	"		add: (Aspect boolean: #isMonoExpandable);		-- dummied out, too much effort for no value"
@@ -6232,18 +6234,18 @@ publishedAspectsOfInstances
 	| answer |
 	answer := super publishedAspectsOfInstances.
 	#(#isVirtual #hasColumnHeaders #hasFullRowSelect #hasGridLines #hasHeaderDragDrop #hasColumnImages #hasSortHeaders #hasFlatScrollbars #hasInfoTips #canEditLabels #showsSelAlways #hasCheckBoxes #isMultiSelect #isAutoArranged #isDoubleBuffered)
-		do: [:each | answer add: (Tools.Aspect boolean: each)].
+		do: [:each | answer add: (Aspect boolean: each)].
 	answer
-		add: (Tools.Aspect autostring: #text);
-		add: (Tools.Aspect bitmap: #backImage) beImmutable;
-		add: (Tools.Aspect boolean: #backImageIsTiled);
-		add: (Tools.Aspect position: #backImageOffset);
-		add: (Tools.Aspect integer: #backImageAlphaPercent) beImmutable;
-		add: (Tools.Aspect name: #iconSpacing chooseFrom: #('32@32'));
-		add: (Tools.Aspect name: #thumbnailExtent chooseFrom: #('64@64' '96@96' '128@128'));
-		add: (Tools.Aspect sequenceableCollection: #columnOrder) beImmutable;
-		add: (Tools.Aspect sequenceableCollection: #columnsList
-					addEvaluationFrom: {self columnClass name , ' new'}) beImmutable;
+		add: (Aspect autostring: #text);
+		add: (Aspect bitmap: #backImage) beImmutable;
+		add: (Aspect boolean: #backImageIsTiled);
+		add: (Aspect position: #backImageOffset);
+		add: (Aspect integer: #backImageAlphaPercent) beImmutable;
+		add: (Aspect name: #iconSpacing chooseFrom: #('32@32'));
+		add: (Aspect name: #thumbnailExtent chooseFrom: #('64@64' '96@96' '128@128'));
+		add: (Aspect sequenceableCollection: #columnOrder) beImmutable;
+		add: (Aspect sequenceableCollection: #columnsList addEvaluationFrom: {self columnClass name , ' new'})
+					beImmutable;
 		removeKey: #text.
 	^answer!
 
@@ -6268,16 +6270,16 @@ publishedAspectsOfInstances
 	"Answer a <LookupTable> of the <Aspect>s published by instances of the receiver."
 
 	^super publishedAspectsOfInstances
-		add: (Tools.Aspect autostring: #text);
-		add: (Tools.Aspect integer: #width);
-		add: (Tools.Aspect block: #getContentsBlock);
-		add: (Tools.Aspect block: #getImageBlock);
-		add: (Tools.Aspect block: #getTextBlock);
-		add: (Tools.Aspect block: #sortBlock);
-		add: (Tools.Aspect choice: #alignment from: #(#left #center #right));
-		add: (Tools.Aspect boolean: #isAutoResize);
-		add: (Tools.Aspect block: #getInfoTipBlock);
-		add: (Tools.Aspect block: #customDrawBlock);
+		add: (Aspect autostring: #text);
+		add: (Aspect integer: #width);
+		add: (Aspect block: #getContentsBlock);
+		add: (Aspect block: #getImageBlock);
+		add: (Aspect block: #getTextBlock);
+		add: (Aspect block: #sortBlock);
+		add: (Aspect choice: #alignment from: #(#left #center #right));
+		add: (Aspect boolean: #isAutoResize);
+		add: (Aspect block: #getInfoTipBlock);
+		add: (Aspect block: #customDrawBlock);
 		yourself! !
 !UI.ListViewColumn class categoriesFor: #publishedAspectsOfInstances!constants!public! !
 
@@ -6286,13 +6288,13 @@ publishedAspectsOfInstances
 edit
 	"Private - Edit the receiver in a dialog box."
 
-	(Tools.MenuDialog createOn: self) showModal!
+	(MenuDialog createOn: self) showModal!
 
 painterClass
 	"Private - Answer the class of painter used for rendering the receiver in a
 	MenuComposerView."
 
-	^Tools.PopupMenuPainter! !
+	^PopupMenuPainter! !
 !UI.Menu categoriesFor: #edit!constants!private! !
 !UI.Menu categoriesFor: #painterClass!constants!private! !
 
@@ -6305,14 +6307,14 @@ publishedAspectsOfInstances
 	OrderedCollection which is a copy of the actual items Array."
 
 	^super publishedAspectsOfInstances
-		add: (Tools.Aspect string: #text);
-		add: (Tools.Aspect sequenceableCollection: #items
+		add: (Aspect string: #text);
+		add: (Aspect sequenceableCollection: #items
 					addEvaluationFrom: #('Menu new' 'CommandMenuItem new' 'DividerMenuItem separator' 'DividerMenuItem barBreak' 'DividerMenuItem break'))
 						beImmutable;
-		add: (Tools.Aspect string: #name);
-		add: (Tools.Aspect boolean: #isAutoDismiss);
-		add: (Tools.Aspect boolean: #hasSharedImageColumn);
-		add: (Tools.Aspect icon: #image);
+		add: (Aspect string: #name);
+		add: (Aspect boolean: #isAutoDismiss);
+		add: (Aspect boolean: #hasSharedImageColumn);
+		add: (Aspect icon: #image);
 		yourself! !
 !UI.Menu class categoriesFor: #publishedAspectsOfInstances!constants!public! !
 
@@ -6322,7 +6324,7 @@ painterClass
 	"Private - Answer the class of painter used for rendering the receiver in a
 	MenuComposerView."
 
-	^Tools.MenuBarPainter! !
+	^MenuBarPainter! !
 !UI.MenuBar categoriesFor: #painterClass!constants!private! !
 
 !UI.MenuBar class methodsFor!
@@ -6367,16 +6369,16 @@ publishedAspectsOfInstances
 	"Answer a <LookupTable> of the <Aspect>s published by instances of the receiver."
 
 	^super publishedAspectsOfInstances
-		add: (Tools.Aspect block: #getTextBlock);
-		add: (Tools.Aspect block: #getImageBlock);
-		add: (Tools.Aspect integer: #parentSpacing);
-		add: (Tools.Aspect name: #linePen);
-		add: (Tools.Aspect name: #maxTextExtent);
-		add: (Tools.Aspect boolean: #hasWordWrap);
-		add: (Tools.Aspect name: #margin);
-		add: (Tools.Aspect boolean: #hasButtons);
-		add: (Tools.Aspect boolean: #isAutoExpanding);
-		add: (Tools.Aspect choice: #viewMode from: self viewModes keys asSortedCollection);
+		add: (Aspect block: #getTextBlock);
+		add: (Aspect block: #getImageBlock);
+		add: (Aspect integer: #parentSpacing);
+		add: (Aspect name: #linePen);
+		add: (Aspect name: #maxTextExtent);
+		add: (Aspect boolean: #hasWordWrap);
+		add: (Aspect name: #margin);
+		add: (Aspect boolean: #hasButtons);
+		add: (Aspect boolean: #isAutoExpanding);
+		add: (Aspect choice: #viewMode from: self viewModes keys asSortedCollection);
 		yourself!
 
 publishedEventsOfInstances
@@ -6405,10 +6407,10 @@ publishedAspectsOfInstances
 					dayMap at: day put: each.
 					day].
 	^super publishedAspectsOfInstances
-		add: (Tools.Aspect boolean: #hasToday);
-		add: (Tools.Aspect boolean: #hasTodayCircle);
-		add: (Tools.Aspect boolean: #hasWeekNumbers);
-		add: (Tools.Aspect name: #firstDayOfWeek
+		add: (Aspect boolean: #hasToday);
+		add: (Aspect boolean: #hasTodayCircle);
+		add: (Aspect boolean: #hasWeekNumbers);
+		add: (Aspect name: #firstDayOfWeek
 					presenterBlock: 
 						[:parent :model |
 						(ChoicePresenter createIn: parent
@@ -6427,11 +6429,11 @@ publishedAspectsOfInstances
 	"Answer a <LookupTable> of the <Aspect>s published by instances of the receiver."
 
 	^super publishedAspectsOfInstances
-		add: (Tools.Aspect boolean: #canVScroll);
-		add: (Tools.Aspect boolean: #wantTab);
-		add: (Tools.Aspect multilineString: #text);
-		add: (Tools.Aspect boolean: #wantReturn);
-		add: (Tools.Aspect boolean: #wordWrap);
+		add: (Aspect boolean: #canVScroll);
+		add: (Aspect boolean: #wantTab);
+		add: (Aspect multilineString: #text);
+		add: (Aspect boolean: #wantReturn);
+		add: (Aspect boolean: #wordWrap);
 		yourself! !
 !UI.MultilineTextEdit class categoriesFor: #publishedAspectsOfInstances!constants!public! !
 
@@ -6441,8 +6443,8 @@ publishedAspectsOfInstances
 	"Answer a <LookupTable> of the <Aspect>s published by instances of the receiver."
 
 	^super publishedAspectsOfInstances
-		add: (Tools.Aspect name: #leftToRightBlock);
-		add: (Tools.Aspect name: #rightToLeftBlock);
+		add: (Aspect name: #leftToRightBlock);
+		add: (Aspect name: #rightToLeftBlock);
 		yourself! !
 !UI.PluggableTypeConverter class categoriesFor: #publishedAspectsOfInstances!constants!public! !
 
@@ -6467,7 +6469,7 @@ editNewDefaultView
 			[MessageBox
 				confirm: ('<1p> already exists. Do you wish to overwrite it?' expandMacrosWith: resourceIdentifier)])
 		ifFalse: [^self].
-	vc := Smalltalk developmentSystem openViewComposerEmpty.
+	vc := SmalltalkSystem current openViewComposerEmpty.
 	vc
 		openOnCopyOf: self defaultResourceIdentifier;
 		resourceIdentifier: resourceIdentifier! !
@@ -6480,8 +6482,8 @@ publishedAspectsOfInstances
 	"Answer a <LookupTable> of the <Aspect>s published by instances of the receiver."
 
 	^super publishedAspectsOfInstances
-		add: (Tools.Aspect name: #range);
-		add: (Tools.Aspect boolean: #isSmooth);
+		add: (Aspect name: #range);
+		add: (Aspect boolean: #isSmooth);
 		yourself! !
 !UI.ProgressBar class categoriesFor: #publishedAspectsOfInstances!constants!public! !
 
@@ -6491,7 +6493,7 @@ publishedAspectsOfInstances
 	"Answer a <LookupTable> of the <Aspect>s published by instances of the receiver."
 
 	^super publishedAspectsOfInstances
-		add: (Tools.Aspect boolean: #isVertical);
+		add: (Aspect boolean: #isVertical);
 		yourself! !
 !UI.ProportionalLayout class categoriesFor: #publishedAspectsOfInstances!constants!public! !
 
@@ -6503,11 +6505,11 @@ publishedAspectsOfInstances
 	| answer |
 	answer := super publishedAspectsOfInstances.
 	answer
-		add: (Tools.Aspect name: #commandDescription) beReadOnly;
-		add: (Tools.Aspect boolean: #isDefault);
-		add: (Tools.Aspect boolean: #hasFlatAppearance);
-		add: (Tools.Aspect icon: #image);
-		add: (Tools.Aspect choice: #style from: ButtonStyleMap keys asSortedCollection);
+		add: (Aspect name: #commandDescription) beReadOnly;
+		add: (Aspect boolean: #isDefault);
+		add: (Aspect boolean: #hasFlatAppearance);
+		add: (Aspect icon: #image);
+		add: (Aspect choice: #style from: ButtonStyleMap keys asSortedCollection);
 		yourself.
 	"add: (Aspect boolean: #isMultiline);"
 
@@ -6533,7 +6535,7 @@ publishedAspectsOfInstances
 	"Answer a <LookupTable> of the <Aspect>s published by instances of the receiver."
 
 	^super publishedAspectsOfInstances
-		add: (Tools.Aspect name: #resourceIdentifier);
+		add: (Aspect name: #resourceIdentifier);
 		removeKey: #hasBorder;
 		removeKey: #hasClientEdge;
 		removeKey: #hasStaticEdge;
@@ -6574,11 +6576,11 @@ browse
 edit
 	"Invoke a suitable editor on the resource identified by the receiver."
 
-	Tools.ViewComposer openOn: self!
+	ViewComposer openOn: self!
 
 editViewUsing: aMonadicBlock 
 	| view | 
-	view := self loadWithContext: UI.View desktop.
+	view := self loadWithContext: View desktop.
 	aMonadicBlock value: view.
 	self assign: view literalStoreArray.
 	view destroy!
@@ -6586,9 +6588,9 @@ editViewUsing: aMonadicBlock
 prompt
 	"Prompt for and answer a new ResourceIdentifier using the receiver to give the default settings."
 
-	^(((self owningClass == UI.Presenter or: [self owningClass owningPackage isNil])
-		ifTrue: [Smalltalk developmentSystem resourceIdentifierDialogClass]
-		ifFalse: [Smalltalk developmentSystem packagedResourceIdentifierDialogClass]) createOn: self)
+	^(((self owningClass == Presenter or: [self owningClass owningPackage isNil])
+		ifTrue: [SmalltalkSystem current resourceIdentifierDialogClass]
+		ifFalse: [SmalltalkSystem current packagedResourceIdentifierDialogClass]) createOn: self)
 		showModal!
 
 publishedAspects
@@ -6596,13 +6598,13 @@ publishedAspects
 	answer := super publishedAspects.
 	self owningClass isBehavior
 		ifTrue: 
-			[answer add: (Tools.Aspect choice: #name
+			[answer add: (Aspect choice: #name
 						from: (owningClass resourceIdentifiers collect: [:each | each name]) asSortedCollection)].
 	^answer!
 
 reassign
 	| view |
-	view := Smalltalk developmentSystem loadViewResource: self resource inContext: UI.View desktop.
+	view := SmalltalkSystem current loadViewResource: self resource inContext: View desktop.
 	self assign: view literalStoreArray.
 	view destroy! !
 !UI.ResourceIdentifier categoriesFor: #assign:!accessing!public! !
@@ -6623,8 +6625,8 @@ prompt
 
 publishedAspectsOfInstances
 	^super publishedAspectsOfInstances
-		add: (Tools.Aspect name: #owningClass);
-		add: (Tools.Aspect string: #name);
+		add: (Aspect name: #owningClass);
+		add: (Aspect string: #name);
 		yourself! !
 !UI.ResourceIdentifier class categoriesFor: #prompt!instance creation!public! !
 !UI.ResourceIdentifier class categoriesFor: #publishedAspectsOfInstances!constants!public! !
@@ -6637,7 +6639,7 @@ publishedAspectsOfInstances
     	style has no effect on RichEdit and neither do ES_CENTER or ES_RIGHT."
 
 	^super publishedAspectsOfInstances
-		add: (Tools.Aspect richText: #text);
+		add: (Aspect richText: #text);
 		removeKey: #format;
 		removeKey: #alignment;
 		yourself! !
@@ -6660,7 +6662,7 @@ publishedAspectsOfInstances
 	"Answer a <LookupTable> of the <Aspect>s published by instances of the receiver."
 
 	^super publishedAspectsOfInstances
-		add: (Tools.Aspect integer: #id) beReadOnly;
+		add: (Aspect integer: #id) beReadOnly;
 		yourself! !
 !UI.Scintilla.Attribute class categoriesFor: #publishedAspectsOfInstances!constants!public! !
 
@@ -6670,14 +6672,14 @@ publishedAspectsOfInstances
 	"Answer a <LookupTable> of the <Aspect>s published by instances of the receiver."
 
 	^super publishedAspectsOfInstances
-		add: (Tools.Aspect color: #forecolor);
-		add: (Tools.Aspect color: #hoverForecolor);
-		add: (Tools.Aspect choice: #style from: IndicatorStyles);
-		add: (Tools.Aspect choice: #hoverStyle from: IndicatorStyles);
-		add: (Tools.Aspect name: #name);
-		add: (Tools.Aspect integer: #alpha);
-		add: (Tools.Aspect integer: #foreAlpha);
-		add: (Tools.Aspect integer: #strokeWidth);
+		add: (Aspect color: #forecolor);
+		add: (Aspect color: #hoverForecolor);
+		add: (Aspect choice: #style from: IndicatorStyles);
+		add: (Aspect choice: #hoverStyle from: IndicatorStyles);
+		add: (Aspect name: #name);
+		add: (Aspect integer: #alpha);
+		add: (Aspect integer: #foreAlpha);
+		add: (Aspect integer: #strokeWidth);
 		yourself! !
 !UI.Scintilla.IndicatorStyle class categoriesFor: #publishedAspectsOfInstances!constants!public! !
 
@@ -6687,8 +6689,8 @@ publishedAspectsOfInstances
 	"Answer a <LookupTable> of the <Aspect>s published by instances of the receiver."
 
 	^super publishedAspectsOfInstances
-		add: (Tools.Aspect choice: #commandSymbol from: Commands values asSortedCollection);
-		add: (Tools.Aspect hotkey: #acceleratorKey);
+		add: (Aspect choice: #commandSymbol from: Commands values asSortedCollection);
+		add: (Aspect hotkey: #acceleratorKey);
 		yourself! !
 !UI.Scintilla.KeyBinding class categoriesFor: #publishedAspectsOfInstances!constants!public! !
 
@@ -6698,12 +6700,12 @@ publishedAspectsOfInstances
 	"Answer a <LookupTable> of the <Aspect>s published by instances of the receiver."
 
 	^super publishedAspectsOfInstances
-		add: (Tools.Aspect boolean: #isSensitive);
-		add: (Tools.Aspect choice: #type from: MarginTypes);
-		add: (Tools.Aspect integer: #width);
-		add: (Tools.Aspect integer: #mask);
-		add: (Tools.Aspect choice: #cursorType from: CursorTypes values);
-		add: (Tools.Aspect color: #backcolor);
+		add: (Aspect boolean: #isSensitive);
+		add: (Aspect choice: #type from: MarginTypes);
+		add: (Aspect integer: #width);
+		add: (Aspect integer: #mask);
+		add: (Aspect choice: #cursorType from: CursorTypes values);
+		add: (Aspect color: #backcolor);
 		yourself! !
 !UI.Scintilla.Margin class categoriesFor: #publishedAspectsOfInstances!constants!public! !
 
@@ -6713,13 +6715,13 @@ publishedAspectsOfInstances
 	"Answer a <LookupTable> of the <Aspect>s published by instances of the receiver."
 
 	^super publishedAspectsOfInstances
-		add: (Tools.Aspect name: #name);
-		add: (Tools.Aspect choice: #glyphName from: self glyphNames , self visibleCharacterGlyphs);
-		add: (Tools.Aspect color: #forecolor);
-		add: (Tools.Aspect color: #backcolor);
-		add: (Tools.Aspect integer: #alpha);
-		add: (Tools.Aspect color: #selectionBackcolor);
-		add: (Tools.Aspect integer: #strokeWidth);
+		add: (Aspect name: #name);
+		add: (Aspect choice: #glyphName from: self glyphNames , self visibleCharacterGlyphs);
+		add: (Aspect color: #forecolor);
+		add: (Aspect color: #backcolor);
+		add: (Aspect integer: #alpha);
+		add: (Aspect color: #selectionBackcolor);
+		add: (Aspect integer: #strokeWidth);
 		yourself! !
 !UI.Scintilla.MarkerDefinition class categoriesFor: #publishedAspectsOfInstances!constants!public! !
 
@@ -6731,19 +6733,19 @@ publishedAspects
 	| createPresenter |
 	createPresenter := 
 			[:p :m |
-			(StylesCollectionPresenter
+			(UI.Scintilla.StylesCollectionPresenter
 				create: 'Developer view'
 				in: p
 				on: m)
-				defaultStyle: (TextStyle new
+				defaultStyle: (UI.Scintilla.TextStyle new
 							backcolor: self backcolor;
 							font: self actualFont;
 							yourself);
 				normalStyle: (self styleNamed: #normal);
 				yourself].
 	^super publishedAspects
-		add: (Tools.Aspect name: #textStyles presenterBlock: createPresenter) beImmutable;
-		add: (Tools.Aspect name: #annotationStyles presenterBlock: createPresenter) beImmutable;
+		add: (Aspect name: #textStyles presenterBlock: createPresenter) beImmutable;
+		add: (Aspect name: #annotationStyles presenterBlock: createPresenter) beImmutable;
 		yourself! !
 !UI.Scintilla.ScintillaView categoriesFor: #publishedAspects!constants!public! !
 
@@ -6757,41 +6759,40 @@ publishedAspectsOfInstances
 	answer
 		removeKey: #format;
 		removeKey: #alignment;
-		add: (Tools.Aspect sequenceableCollection: #keyBindings addEvaluationFrom: {KeyBinding name , ' new'})
-					beImmutable;
-		add: (Tools.Aspect sequenceableCollection: #margins);
-		add: (Tools.Aspect sequenceableCollection: #indicatorStyles
-					addEvaluationFrom: {IndicatorStyle name , ' new'}) beImmutable;
-		add: (Tools.Aspect sequenceableCollection: #markerDefinitions
-					addEvaluationFrom: {MarkerDefinition name , ' new'}) beImmutable;
-		add: (Tools.Aspect choice: #whitespaceVisibility from: self whitespaceVisibilityLevels);
-		add: (Tools.Aspect dictionary: #braceChars) beImmutable;
-		add: (Tools.Aspect choice: #lexer from: (self lexerLanguages copyWithout: nil) asSortedCollection);
-		add: (Tools.Aspect choice: #foldMarkerStyle from: {nil} , self foldMarkerStyles asSortedCollection);
-		add: (Tools.Aspect choice: #caretStyle from: self caretStyles asSortedCollection);
-		add: (Tools.Aspect choice: #indentationGuides
-					from: {nil} , self indentationGuideStyles asSortedCollection);
-		add: (Tools.Aspect choice: #annotationMode from: self annotationModes);
-		add: (Tools.Aspect choice: #wrapIndentMode from: self wrapIndentModes);
-		add: (Tools.Aspect choice: #fontQuality from: self fontQualities);
-		add: (Tools.Aspect choice: #multiPasteMode from: self multiPasteModes);
-		add: (Tools.Aspect integer: #whitespaceMarkerSize);
-		add: (Tools.Aspect choice: #tabDrawMode from: self tabDrawModes);
-		add: (Tools.Aspect choice: #endOfLineMode from: self lineEndings);
-		add: (Tools.Aspect choice: #tabDrawMode from: self tabDrawModes);
+		add: (Aspect sequenceableCollection: #keyBindings
+					addEvaluationFrom: {UI.Scintilla.KeyBinding name , ' new'}) beImmutable;
+		add: (Aspect sequenceableCollection: #margins);
+		add: (Aspect sequenceableCollection: #indicatorStyles
+					addEvaluationFrom: {UI.Scintilla.IndicatorStyle name , ' new'}) beImmutable;
+		add: (Aspect sequenceableCollection: #markerDefinitions
+					addEvaluationFrom: {UI.Scintilla.MarkerDefinition name , ' new'}) beImmutable;
+		add: (Aspect choice: #whitespaceVisibility from: self whitespaceVisibilityLevels);
+		add: (Aspect dictionary: #braceChars) beImmutable;
+		add: (Aspect choice: #lexer from: (self lexerLanguages copyWithout: nil) asSortedCollection);
+		add: (Aspect choice: #foldMarkerStyle from: {nil} , self foldMarkerStyles asSortedCollection);
+		add: (Aspect choice: #caretStyle from: self caretStyles asSortedCollection);
+		add: (Aspect choice: #indentationGuides from: {nil} , self indentationGuideStyles asSortedCollection);
+		add: (Aspect choice: #annotationMode from: self annotationModes);
+		add: (Aspect choice: #wrapIndentMode from: self wrapIndentModes);
+		add: (Aspect choice: #fontQuality from: self fontQualities);
+		add: (Aspect choice: #multiPasteMode from: self multiPasteModes);
+		add: (Aspect integer: #whitespaceMarkerSize);
+		add: (Aspect choice: #tabDrawMode from: self tabDrawModes);
+		add: (Aspect choice: #endOfLineMode from: self lineEndings);
+		add: (Aspect choice: #tabDrawMode from: self tabDrawModes);
 		yourself.
 	choices := OrderedCollection with: 'nil'.
-	(Styler allSubclasses reject: [:each | each isAbstract])
+	(UI.Scintilla.Styler allSubclasses reject: [:each | each isAbstract])
 		do: [:each | choices add: each name , ' new'].
-	answer add: (Tools.Aspect choice: #styler evaluationFrom: choices).
+	answer add: (Aspect choice: #styler evaluationFrom: choices).
 	#(#autoCompletionAcceptChars #autoCompletionCancelChars)
-		do: [:each | answer add: (Tools.Aspect string: each)].
+		do: [:each | answer add: (Aspect string: each)].
 	#(#tabWidth #hoverTime #selectionAlpha #secondarySelectionAlpha #marginCount #currentLineFrameWidth)
-		do: [:each | answer add: (Tools.Aspect integer: each)].
+		do: [:each | answer add: (Aspect integer: each)].
 	#(#caretForecolor #callTipHighlightColor #whitespaceBackcolor #whitespaceForecolor #foldMarginColor #foldMarginHiColor #currentLineBackcolor)
-		do: [:each | answer add: (Tools.Aspect color: each)].
+		do: [:each | answer add: (Aspect color: each)].
 	#(#canScrollPastEnd #isAutoCompletionCancelledAtStart #isAutoCompletionCaseInsensitive #isAutoCompletionCancelledWhenNoMatch #isAutoCompletionSingleMatchChosen #isAutoCompletionTruncating #isBraceHighlightingEnabled #isFoldingEnabled #hasVisibleLineEndings #isCurrentLineHighlighted #isAccessibilityEnabled)
-		do: [:each | answer add: (Tools.Aspect boolean: each)].
+		do: [:each | answer add: (Aspect boolean: each)].
 	^answer!
 
 publishedEventsOfInstances
@@ -6826,7 +6827,7 @@ newInstanceAspect: aSymbol class: aspectClass
 	^(aspectClass name: aSymbol
 		presenterBlock: 
 			[:p :m |
-			TextStylePresenter
+			UI.Scintilla.TextStylePresenter
 				create: 'Developer view'
 				in: p
 				on: m])
@@ -6839,24 +6840,24 @@ publishedAspectsOfInstances
 	answer := super publishedAspectsOfInstances.
 	"Don't bother exposing the changeable style flag, since it doesn't work at present"
 	#(#isItalic #isBold #isUnderlined #isBackcolorExtendedToEndOfLine #isHotspot #isInvisible)
-		do: [:each | answer add: ((Tools.Aspect boolean: each)
+		do: [:each | answer add: ((Aspect boolean: each)
 						isNullable: true;
 						yourself)].
 	^answer
-		add: (Tools.Aspect color: #forecolor);
-		add: (Tools.Aspect color: #backcolor);
-		add: (Tools.Aspect
+		add: (Aspect color: #forecolor);
+		add: (Aspect color: #backcolor);
+		add: (Aspect
 					choice: #fontName
 					from: Canvas forDesktop fontNames asSortedCollection
 					andNil: nil);
-		add: (Tools.Aspect number: #pointSize);
-		add: (Tools.Aspect integer: #characterSet);
-		add: (Tools.Aspect
+		add: (Aspect number: #pointSize);
+		add: (Aspect integer: #characterSet);
+		add: (Aspect
 					choice: #caseName
 					from: self caseNames
 					andNil: nil);
-		add: (Tools.Aspect name: #name);
-		add: (Tools.Aspect number: #weight);
+		add: (Aspect name: #name);
+		add: (Aspect number: #weight);
 		yourself! !
 !UI.Scintilla.TextStyle class categoriesFor: #newInstanceAspect:class:!adapters!private! !
 !UI.Scintilla.TextStyle class categoriesFor: #publishedAspectsOfInstances!constants!public! !
@@ -6867,10 +6868,10 @@ publishedAspectsOfInstances
 	"Answer a <LookupTable> of the <Aspect>s published by instances of the receiver."
 
 	^super publishedAspectsOfInstances
-		add: (Tools.Aspect name: #pageSize);
-		add: (Tools.Aspect name: #range);
-		add: (Tools.Aspect boolean: #isTrackingContinuous);
-		add: (Tools.Aspect boolean: #isVertical);
+		add: (Aspect name: #pageSize);
+		add: (Aspect name: #range);
+		add: (Aspect boolean: #isTrackingContinuous);
+		add: (Aspect boolean: #isVertical);
 		yourself! !
 !UI.ScrollBar class categoriesFor: #publishedAspectsOfInstances!constants!public! !
 
@@ -6880,8 +6881,8 @@ publishedAspectsOfInstances
 	"Answer a <LookupTable> of the <Aspect>s published by instances of the receiver."
 
 	^super publishedAspectsOfInstances
-		add: (Tools.Aspect boolean: #isTrackingContinuous);
-		add: (Tools.Aspect name: #lineExtent);
+		add: (Aspect boolean: #isTrackingContinuous);
+		add: (Aspect name: #lineExtent);
 		removeKey: #layoutManager;
 		yourself! !
 !UI.ScrollingDecorator class categoriesFor: #publishedAspectsOfInstances!constants!public! !
@@ -6892,7 +6893,7 @@ publishedAspectsOfInstances
 	"Answer a <LookupTable> of the <Aspect>s published by instances of the receiver."
 
 	^super publishedAspectsOfInstances
-		add: (Tools.Aspect boolean: #shouldStretchToFit);
+		add: (Aspect boolean: #shouldStretchToFit);
 		yourself! !
 !UI.ScrollingDecoratorLayout class categoriesFor: #publishedAspectsOfInstances!constants!public! !
 
@@ -6930,23 +6931,23 @@ publishedAspectsOfInstances
 			[:p |
 			p model value: (p model value isNil ifTrue: [p parentPresenter model value extent])].
 	^super publishedAspectsOfInstances
-		add: (Tools.Aspect autostring: #caption);
-		add: (Tools.Aspect boolean: #isResizable);
-		add: (Tools.Aspect boolean: #hasSysMenu);
-		add: (Tools.Aspect boolean: #hasCaption);
-		add: (Tools.Aspect boolean: #isInitiallyCentered);
-		add: (Tools.Aspect boolean: #hasMinimize);
-		add: (Tools.Aspect boolean: #hasMaximize);
-		add: (Tools.Aspect boolean: #isToolWindow);
-		add: (Tools.Aspect boolean: #hasTaskbarIcon);
-		add: (Tools.Aspect menuBar: #menuBar) beImmutable;
-		add: (Tools.Aspect icon: #largeIcon);
-		add: (Tools.Aspect icon: #smallIcon);
-		add: ((Tools.Aspect name: #maxExtent editBlock: maxMinExtentEditBlock)
+		add: (Aspect autostring: #caption);
+		add: (Aspect boolean: #isResizable);
+		add: (Aspect boolean: #hasSysMenu);
+		add: (Aspect boolean: #hasCaption);
+		add: (Aspect boolean: #isInitiallyCentered);
+		add: (Aspect boolean: #hasMinimize);
+		add: (Aspect boolean: #hasMaximize);
+		add: (Aspect boolean: #isToolWindow);
+		add: (Aspect boolean: #hasTaskbarIcon);
+		add: (Aspect menuBar: #menuBar) beImmutable;
+		add: (Aspect icon: #largeIcon);
+		add: (Aspect icon: #smallIcon);
+		add: ((Aspect name: #maxExtent editBlock: maxMinExtentEditBlock)
 					beImmutable;
 					beEditedInPlace;
 					yourself);
-		add: ((Tools.Aspect name: #minExtent editBlock: maxMinExtentEditBlock)
+		add: ((Aspect name: #minExtent editBlock: maxMinExtentEditBlock)
 					beImmutable;
 					beEditedInPlace;
 					yourself);
@@ -6977,7 +6978,7 @@ publishedAspects
 	"Answer a <LookupTable> of the <Aspect>s published by the receiver."
 
 	^super publishedAspects
-		add: (Tools.Aspect choice: #tickStyle from: self applicableTickStyles keys asSortedCollection);
+		add: (Aspect choice: #tickStyle from: self applicableTickStyles keys asSortedCollection);
 		yourself! !
 !UI.Slider categoriesFor: #publishedAspects!constants!public! !
 
@@ -6990,11 +6991,11 @@ publishedAspectsOfInstances
 	aspects := super publishedAspectsOfInstances.
 	aspects
 		removeKey: #forecolor;
-		add: (Tools.Aspect name: #range) beImmutable;
-		add: (Tools.Aspect integer: #thumbLength).
-	#(#pageSize #lineSize #selectionRange) do: [:each | aspects add: (Tools.Aspect name: each)].
+		add: (Aspect name: #range) beImmutable;
+		add: (Aspect integer: #thumbLength).
+	#(#pageSize #lineSize #selectionRange) do: [:each | aspects add: (Aspect name: each)].
 	#(#hasAutoTicks #isVertical #hasTicks #hasToolTips)
-		do: [:each | aspects add: (Tools.Aspect boolean: each)].
+		do: [:each | aspects add: (Aspect boolean: each)].
 	^aspects! !
 !UI.Slider class categoriesFor: #publishedAspectsOfInstances!constants!public! !
 
@@ -7008,8 +7009,8 @@ publishedAspects
 	self isAutoSync
 		ifTrue: 
 			[aspects
-				add: (Tools.Aspect boolean: #hasThousandsSeparators);
-				add: (Tools.Aspect choice: #radix from: #(10 16))].
+				add: (Aspect boolean: #hasThousandsSeparators);
+				add: (Aspect choice: #radix from: #(10 16))].
 	^aspects! !
 !UI.SpinButton categoriesFor: #publishedAspects!accessing!must strip!public! !
 
@@ -7019,14 +7020,14 @@ publishedAspectsOfInstances
 	"Answer a <LookupTable> of the <Aspect>s published by instances of the receiver."
 
 	^super publishedAspectsOfInstances
-		add: (Tools.Aspect choice: #alignment from: AlignmentMap keys asSortedCollection);
-		add: (Tools.Aspect boolean: #wantArrowKeys);
-		add: (Tools.Aspect boolean: #isAutoSync);
-		add: (Tools.Aspect boolean: #isVertical);
-		add: (Tools.Aspect boolean: #hasHotTracking);
-		add: (Tools.Aspect boolean: #isWraparound);
-		add: (Tools.Aspect name: #range);
-		add: (Tools.Aspect name: #buddy) beReadOnly;
+		add: (Aspect choice: #alignment from: AlignmentMap keys asSortedCollection);
+		add: (Aspect boolean: #wantArrowKeys);
+		add: (Aspect boolean: #isAutoSync);
+		add: (Aspect boolean: #isVertical);
+		add: (Aspect boolean: #hasHotTracking);
+		add: (Aspect boolean: #isWraparound);
+		add: (Aspect name: #range);
+		add: (Aspect name: #buddy) beReadOnly;
 		yourself!
 
 publishedEventsOfInstances
@@ -7049,7 +7050,7 @@ publishedAspectsOfInstances
 	aspects := super publishedAspectsOfInstances.
 	#(#isTabStop #isGroupStop #isDragSource #isDropTarget #font #text)
 		do: [:each | aspects removeKey: each].
-	aspects add: (Tools.Aspect boolean: #hasFlatAppearance).
+	aspects add: (Aspect boolean: #hasFlatAppearance).
 	^aspects! !
 !UI.Splitter class categoriesFor: #publishedAspectsOfInstances!constants!public! !
 
@@ -7059,7 +7060,7 @@ publishedAspectsOfInstances
 	"Answer a <LookupTable> of the <Aspect>s published by instances of the receiver."
 
 	^super publishedAspectsOfInstances
-		add: (Tools.Aspect bitmap: #image);
+		add: (Aspect bitmap: #image);
 		yourself! !
 !UI.StaticBitmap class categoriesFor: #publishedAspectsOfInstances!constants!public! !
 
@@ -7069,7 +7070,7 @@ publishedAspectsOfInstances
 	"Answer a <LookupTable> of the <Aspect>s published by instances of the receiver."
 
 	^super publishedAspectsOfInstances
-		add: (Tools.Aspect icon: #image);
+		add: (Aspect icon: #image);
 		yourself! !
 !UI.StaticIcon class categoriesFor: #publishedAspectsOfInstances!constants!public! !
 
@@ -7079,7 +7080,7 @@ publishedAspectsOfInstances
 	"Answer a <LookupTable> of the <Aspect>s published by instances of the receiver."
 
 	^super publishedAspectsOfInstances
-		add: (Tools.Aspect choice: #style from: StyleMap keys asSortedCollection);
+		add: (Aspect choice: #style from: StyleMap keys asSortedCollection);
 		yourself! !
 !UI.StaticRectangle class categoriesFor: #publishedAspectsOfInstances!constants!public! !
 
@@ -7097,8 +7098,8 @@ publishedAspectsOfInstances
 	"Answer a <LookupTable> of the <Aspect>s published by instances of the receiver."
 
 	^super publishedAspectsOfInstances
-		add: (Tools.Aspect multilineString: #text);
-		add: (Tools.Aspect choice: #alignment from: AlignmentMap keys asSortedCollection);
+		add: (Aspect multilineString: #text);
+		add: (Aspect choice: #alignment from: AlignmentMap keys asSortedCollection);
 		removeKey: #value;
 		yourself! !
 !UI.StaticText class categoriesFor: #applicableTypeConverterCategories!constants!public! !
@@ -7110,7 +7111,7 @@ publishedAspectsOfInstances
 	"Answer a <LookupTable> of the <Aspect>s published by instances of the receiver."
 
 	^super publishedAspectsOfInstances
-		add: (Tools.Aspect boolean: #isSunken);
+		add: (Aspect boolean: #isSunken);
 		yourself! !
 !UI.StaticView class categoriesFor: #publishedAspectsOfInstances!constants!public! !
 
@@ -7120,9 +7121,9 @@ publishedAspectsOfInstances
 	"Answer a <LookupTable> of the <Aspect>s published by instances of the receiver."
 
 	^super publishedAspectsOfInstances
-		add: (Tools.Aspect boolean: #hasSizeGrip);
-		add: (Tools.Aspect boolean: #hasToolTips);
-		add: (Tools.Aspect sequenceableCollection: #items
+		add: (Aspect boolean: #hasSizeGrip);
+		add: (Aspect boolean: #hasToolTips);
+		add: (Aspect sequenceableCollection: #items
 					addEvaluationFrom: {'<1p> <2s>' expandMacrosWith: StatusBarItem with: #new}) beImmutable;
 		yourself! !
 !UI.StatusBar class categoriesFor: #publishedAspectsOfInstances!constants!public! !
@@ -7133,8 +7134,8 @@ publishedAspectsOfInstances
 	"Answer a <LookupTable> of the <Aspect>s published by instances of the receiver."
 
 	^super publishedAspectsOfInstances
-		add: (Tools.Aspect block: #getImageBlock);
-		add: (Tools.Aspect block: #getTextBlock);
+		add: (Aspect block: #getImageBlock);
+		add: (Aspect block: #getTextBlock);
 		yourself! !
 !UI.StatusBarItem class categoriesFor: #publishedAspectsOfInstances!constants!public! !
 
@@ -7144,9 +7145,9 @@ publishedAspectsOfInstances
 	"Answer a <LookupTable> of the <Aspect>s published by instances of the receiver."
 
 	^super publishedAspectsOfInstances
-		add: (Tools.Aspect choice: #borderStyle from: BorderStyles keys asSortedCollection);
-		add: (Tools.Aspect integer: #width);
-		add: (Tools.Aspect string: #name);
+		add: (Aspect choice: #borderStyle from: BorderStyles keys asSortedCollection);
+		add: (Aspect integer: #width);
+		add: (Aspect string: #name);
 		yourself! !
 !UI.StatusBarItemAbstract class categoriesFor: #publishedAspectsOfInstances!constants!public! !
 
@@ -7157,9 +7158,9 @@ publishedAspectsOfInstances
 
 	| answer |
 	answer := super publishedAspectsOfInstances.
-	answer add: (Tools.Aspect choice: #tabOrientation from: TabOrientations values).
+	answer add: (Aspect choice: #tabOrientation from: TabOrientations values).
 	#(#hasFlatSeparators #hasButtons #isMultiline)
-		do: [:each | answer add: (Tools.Aspect boolean: each)].
+		do: [:each | answer add: (Aspect boolean: each)].
 	^answer! !
 !UI.TabView class categoriesFor: #publishedAspectsOfInstances!constants!public! !
 
@@ -7180,11 +7181,11 @@ publishedAspectsOfInstances
 	aspects := super publishedAspectsOfInstances.
 	aspects removeKey: #value.
 	#(#canHScroll #isReadOnly #isStatic #isSelectionKept #updatePerChar #isFindEnabled)
-		do: [:each | aspects add: (Tools.Aspect boolean: each)].
+		do: [:each | aspects add: (Aspect boolean: each)].
 	^aspects
-		add: (Tools.Aspect choice: #alignment from: AlignmentMap keys asSortedCollection);
-		add: (Tools.Aspect choice: #format from: FormatMap keys asSortedCollection);
-		add: (Tools.Aspect string: #cueBanner);
+		add: (Aspect choice: #alignment from: AlignmentMap keys asSortedCollection);
+		add: (Aspect choice: #format from: FormatMap keys asSortedCollection);
+		add: (Aspect string: #cueBanner);
 		yourself!
 
 publishedEventsOfInstances
@@ -7205,7 +7206,7 @@ publishedAspectsOfInstances
 	"Answer a <LookupTable> of the <Aspect>s published by instances of the receiver."
 
 	^super publishedAspectsOfInstances
-		add: (Tools.Aspect string: #format);
+		add: (Aspect string: #format);
 		yourself! !
 !UI.TimeToText class categoriesFor: #publishedAspectsOfInstances!constants!public! !
 
@@ -7215,18 +7216,18 @@ publishedAspectsOfInstances
 	"Answer a <LookupTable> of the <Aspect>s published by instances of the receiver."
 
 	^super publishedAspectsOfInstances
-		add: (Tools.Aspect rectangle: #insets);
-		add: (Tools.Aspect extent: #buttonSize);
-		add: (Tools.Aspect
+		add: (Aspect rectangle: #insets);
+		add: (Aspect extent: #buttonSize);
+		add: (Aspect
 					choice: #bitmapSize
 					from: ##({16 @ 16. 20 @ 20. 24 @ 24. 32 @ 32. 40 @ 40. 48 @ 48. 64 @ 64})
 					andNil: nil);
-		add: (Tools.Aspect boolean: #hasFlatAppearance);
-		add: (Tools.Aspect boolean: #hasListAppearance);
-		add: (Tools.Aspect boolean: #hasLabels);
-		add: (Tools.Aspect integer: #indent);
-		add: (Tools.Aspect boolean: #canCustomize);
-		add: (Tools.Aspect sequenceableCollection: #items
+		add: (Aspect boolean: #hasFlatAppearance);
+		add: (Aspect boolean: #hasListAppearance);
+		add: (Aspect boolean: #hasLabels);
+		add: (Aspect integer: #indent);
+		add: (Aspect boolean: #canCustomize);
+		add: (Aspect sequenceableCollection: #items
 					addEvaluationFrom: ##({ToolbarIconButton.
 							ToolbarBitmapButton.
 							ToolbarSystemButton.
@@ -7385,7 +7386,7 @@ publishedAspects
 	self bitmap
 		ifNotNil: 
 			[:bmp |
-			aspects add: (Tools.Aspect choice: #bitmapIndex
+			aspects add: (Aspect choice: #bitmapIndex
 						from: (0 to: bmp extent x // (self toolbar ifNil: [16] ifNotNil: [:tb | tb actualBitmapSize x])))].
 	^aspects! !
 !UI.ToolbarBitmapButton categoriesFor: #publishedAspects!constants!public! !
@@ -7396,7 +7397,7 @@ publishedAspectsOfInstances
 	"Answer a <LookupTable> of the <Aspect>s published by instances of the receiver."
 
 	^super publishedAspectsOfInstances
-		add: (Tools.Aspect bitmap: #bitmap) beImmutable;
+		add: (Aspect bitmap: #bitmap) beImmutable;
 		yourself! !
 !UI.ToolbarBitmapButton class categoriesFor: #publishedAspectsOfInstances!constants!public! !
 
@@ -7406,11 +7407,11 @@ publishedAspectsOfInstances
 	"Answer a <LookupTable> of the <Aspect>s published by instances of the receiver."
 
 	^super publishedAspectsOfInstances
-		add: (Tools.Aspect name: #commandDescription);
-		add: (Tools.Aspect boolean: #isCheckStyle);
-		add: (Tools.Aspect boolean: #isGroupStyle);
-		add: (Tools.Aspect boolean: #isDropdownStyle);
-		add: (Tools.Aspect boolean: #isDropDownOnly);
+		add: (Aspect name: #commandDescription);
+		add: (Aspect boolean: #isCheckStyle);
+		add: (Aspect boolean: #isGroupStyle);
+		add: (Aspect boolean: #isDropdownStyle);
+		add: (Aspect boolean: #isDropDownOnly);
 		yourself! !
 !UI.ToolbarButton class categoriesFor: #publishedAspectsOfInstances!constants!public! !
 
@@ -7425,7 +7426,7 @@ publishedAspectsOfInstances
 	"Answer a <LookupTable> of the <Aspect>s published by instances of the receiver."
 
 	^super publishedAspectsOfInstances
-		add: (Tools.Aspect integer: #width);
+		add: (Aspect integer: #width);
 		yourself! !
 !UI.ToolbarSeparator class categoriesFor: #icon!constants!public! !
 !UI.ToolbarSeparator class categoriesFor: #publishedAspectsOfInstances!constants!public! !
@@ -7438,7 +7439,7 @@ publishedAspects
 	| buttons |
 	buttons := BitmapButtons at: self bitmapId ifAbsent: [StandardButtons].
 	^super publishedAspects
-		add: (Tools.Aspect
+		add: (Aspect
 					choice: #bitmapIndex
 					fromMap: buttons
 					nullValue: nil);
@@ -7451,7 +7452,7 @@ publishedAspectsOfInstances
 	"Answer a <LookupTable> of the <Aspect>s published by instances of the receiver."
 
 	^super publishedAspectsOfInstances
-		add: (Tools.Aspect
+		add: (Aspect
 					choice: #bitmapId
 					fromMap: Bitmaps
 					nullValue: nil);
@@ -7464,15 +7465,15 @@ publishedAspectsOfInstances
 	"Answer a <LookupTable> of the <Aspect>s published by instances of the receiver."
 
 	^super publishedAspectsOfInstances
-		add: (Tools.Aspect extent: #buttonSize);
-		add: (Tools.Aspect extent: #bitmapSize);
-		add: (Tools.Aspect boolean: #hasListAppearance);
-		add: (Tools.Aspect boolean: #hasLabels);
-		add: (Tools.Aspect name: #commandDescription) beImmutable;
-		add: (Tools.Aspect boolean: #isCheckStyle);
-		add: (Tools.Aspect boolean: #isGroupStyle);
-		add: (Tools.Aspect boolean: #isDropdownStyle);
-		add: (Tools.Aspect boolean: #isDropDownOnly);
+		add: (Aspect extent: #buttonSize);
+		add: (Aspect extent: #bitmapSize);
+		add: (Aspect boolean: #hasListAppearance);
+		add: (Aspect boolean: #hasLabels);
+		add: (Aspect name: #commandDescription) beImmutable;
+		add: (Aspect boolean: #isCheckStyle);
+		add: (Aspect boolean: #isGroupStyle);
+		add: (Aspect boolean: #isDropdownStyle);
+		add: (Aspect boolean: #isDropDownOnly);
 		yourself
 	"removeKey: #forecolor;"! !
 !UI.ToolButton class categoriesFor: #publishedAspectsOfInstances!constants!public! !
@@ -7483,16 +7484,16 @@ publishedAspectsOfInstances
 	"Answer a <LookupTable> of the <Aspect>s published by instances of the receiver."
 
 	^super publishedAspectsOfInstances
-		add: (Tools.Aspect color: #forecolor);
-		add: (Tools.Aspect color: #backcolor);
-		add: (Tools.Aspect font: #font);
-		add: (Tools.Aspect integer: #maxWidth);
-		add: (Tools.Aspect boolean: #isBalloon);
-		add: (Tools.Aspect boolean: #alwaysTip);
-		add: (Tools.Aspect integer: #showDuration);
-		add: (Tools.Aspect integer: #showDelay);
-		add: (Tools.Aspect integer: #reshowDelay);
-		add: (Tools.Aspect name: #margins) beImmutable;
+		add: (Aspect color: #forecolor);
+		add: (Aspect color: #backcolor);
+		add: (Aspect font: #font);
+		add: (Aspect integer: #maxWidth);
+		add: (Aspect boolean: #isBalloon);
+		add: (Aspect boolean: #alwaysTip);
+		add: (Aspect integer: #showDuration);
+		add: (Aspect integer: #showDelay);
+		add: (Aspect integer: #reshowDelay);
+		add: (Aspect name: #margins) beImmutable;
 		yourself! !
 !UI.Tooltip class categoriesFor: #publishedAspectsOfInstances!constants!public! !
 
@@ -7501,7 +7502,7 @@ publishedAspectsOfInstances
 help
 	"Brings up a help page for the receiver"
 
-	Tools.SmalltalkSystem current openHelpTopicForTool: self! !
+	SmalltalkSystem current openHelpTopicForTool: self! !
 !UI.TranscriptShell categoriesFor: #help!commands!public! !
 
 !UI.TranscriptShell class methodsFor!
@@ -7510,8 +7511,8 @@ publishedAspects
 	"Answer a <LookupTable> of the aspects published by this class."
 
 	^super publishedAspects
-		add: (Tools.Aspect name: #defaultExtent);
-		add: (Tools.Aspect boolean: #flashOnOutput);
+		add: (Aspect name: #defaultExtent);
+		add: (Aspect boolean: #flashOnOutput);
 		yourself!
 
 resource_Scintilla_view
@@ -7550,10 +7551,10 @@ publishedAspectsOfInstances
 	| aspects |
 	aspects := super publishedAspectsOfInstances.
 	#(#hasLinesAtRoot #hasLines #hasButtons #canEditLabels #showsSelAlways #isMonoExpandable #hasInfoTips #hasCheckBoxes #isExpandAllEnabled #hasFullRowSelect)
-		do: [:each | aspects add: (Tools.Aspect boolean: each)].
+		do: [:each | aspects add: (Aspect boolean: each)].
 	aspects
-		add: (Tools.Aspect integer: #indentSeparation);
-		add: (Tools.Aspect choice: #updateMode from: UpdateModes);
+		add: (Aspect integer: #indentSeparation);
+		add: (Aspect choice: #updateMode from: UpdateModes);
 		yourself.
 	^aspects! !
 !UI.TreeView class categoriesFor: #publishedAspectsOfInstances!constants!public! !
@@ -7564,21 +7565,10 @@ publishedAspectsOfInstances
 	"Answer a <LookupTable> of the <Aspect>s published by instances of the receiver."
 
 	^super publishedAspectsOfInstances
-		add: (Tools.Aspect name: #leftNullValue);
-		add: (Tools.Aspect name: #rightNullValue);
+		add: (Aspect name: #leftNullValue);
+		add: (Aspect name: #rightNullValue);
 		yourself! !
 !UI.TypeConverter class categoriesFor: #publishedAspectsOfInstances!constants!public! !
-
-!UI.ValueConverter class methodsFor!
-
-publishedEventsOfInstances
-    	"Answer a Set of Symbols that describe the published events triggered
-    	by instances of the receiver."
-    
-    	^super publishedEventsOfInstances
-    		yourself.
-    ! !
-!UI.ValueConverter class categoriesFor: #publishedEventsOfInstances!events!public! !
 
 !UI.ValueConvertingControlView class methodsFor!
 
@@ -7597,8 +7587,8 @@ publishedAspectsOfInstances
 	applicableTypeConverters := applicableTypeConverters asSortedCollection asArray
 				collect: [:each | each name , ' new'].
 	^super publishedAspectsOfInstances
-		add: (Tools.Aspect choice: #typeconverter evaluationFrom: applicableTypeConverters) beImmutable;
-		add: (Tools.Aspect name: #value);
+		add: (Aspect choice: #typeconverter evaluationFrom: applicableTypeConverters) beImmutable;
+		add: (Aspect name: #value);
 		yourself! !
 !UI.ValueConvertingControlView class categoriesFor: #applicableTypeConverterCategories!constants!public! !
 !UI.ValueConvertingControlView class categoriesFor: #publishedAspectsOfInstances!constants!public! !
@@ -7631,7 +7621,7 @@ publishedAspectsOfInstances
 	"Answer a <LookupTable> of the <Aspect>s published by instances of the receiver."
 
 	^super publishedAspectsOfInstances
-		add: (Tools.Aspect name: #value);
+		add: (Aspect name: #value);
 		yourself!
 
 publishedEventsOfInstances
@@ -7677,7 +7667,7 @@ publishedAspects
 		ifNotNil: 
 			[:parent |
 			parent layoutManager ifNotNil: [:layoutManager | aspects add: layoutManager arrangementAspect].
-			parent == View desktop ifFalse: [aspects add: (Tools.Aspect string: #name)]].
+			parent == View desktop ifFalse: [aspects add: (Aspect string: #name)]].
 	^aspects!
 
 visualObjectAtPoint: aPoint
@@ -7708,7 +7698,7 @@ editNewDefaultView
 		ifFalse: [^self].
 	resourceIdentifier assign: view literalStoreArray.
 	view destroy.
-	Smalltalk developmentSystem openViewComposerOn: resourceIdentifier!
+	SmalltalkSystem current openViewComposerOn: resourceIdentifier!
 
 makeDefaultResource
 	self makeResource: 'Default view' inClass: self!
@@ -7730,15 +7720,15 @@ publishedAspectsOfInstances
 	| aspects |
 	aspects := super publishedAspectsOfInstances.
 	#(#hasBorder #hasClientEdge #hasStaticEdge #usePreferredExtent #isTabStop #isGroupStop #isDragSource #isDropTarget #isTransparent #isEnabled #inheritContextMenu)
-		do: [:each | aspects add: (Tools.Aspect boolean: each)].
+		do: [:each | aspects add: (Aspect boolean: each)].
 	aspects
-		add: (Tools.Aspect color: #backcolor);
-		add: (Tools.Aspect menu: #contextMenu) beImmutable;
-		add: (Tools.Aspect position: #position);
-		add: (Tools.Aspect extent: #extent);
-		add: (Tools.Aspect extent: #preferredExtent);
-		add: (Tools.Aspect font: #font);
-		add: ((Tools.Aspect autostring: #text)
+		add: (Aspect color: #backcolor);
+		add: (Aspect menu: #contextMenu) beImmutable;
+		add: (Aspect position: #position);
+		add: (Aspect extent: #extent);
+		add: (Aspect extent: #preferredExtent);
+		add: (Aspect font: #font);
+		add: ((Aspect autostring: #text)
 					isNullable: false;
 					yourself).
 	^aspects!

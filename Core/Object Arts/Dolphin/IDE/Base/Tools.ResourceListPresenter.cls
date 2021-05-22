@@ -298,7 +298,7 @@ showResourcesReferencingView: aResourceIdentifier
 systemModel
 	"Private - Answer the development system model."
 
-	^Smalltalk developmentSystem! !
+	^SmalltalkSystem current! !
 !Tools.ResourceListPresenter categoriesFor: #browseClass!commands!public! !
 !Tools.ResourceListPresenter categoriesFor: #browseHierarchy!commands!public! !
 !Tools.ResourceListPresenter categoriesFor: #browseIt!commands!public! !

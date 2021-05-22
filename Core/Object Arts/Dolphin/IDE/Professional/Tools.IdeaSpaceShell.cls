@@ -630,11 +630,9 @@ initialize
 		self initialize.
 	"
 
-	Smalltalk developmentSystem
+	SmalltalkSystem current
 		addSystemFolderIcon: self toolsFolderIcon;
-		registerTool: self.
-
-!
+		registerTool: self!
 
 open
 	"Answers an instance of the receiver open on a filename that has been

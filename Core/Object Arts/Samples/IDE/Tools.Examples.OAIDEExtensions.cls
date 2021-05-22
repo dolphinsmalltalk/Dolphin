@@ -68,7 +68,7 @@ browseKeyBindingsOfShell: aShellView
 		largeIcon: (Icon fromId: 'HotKey.ico');
 		isPersistentView: false.
 	shell caption: ('<1d> Key Bindings' expandMacrosWith: aShellView presenter class).
-	presenter := UI.URLPresenter createIn: shell.
+	presenter := URLPresenter createIn: shell.
 	shell show.
 	browser := presenter view controlDispatch.
 	stream reset.
@@ -134,7 +134,7 @@ initialize
 
 	flags := ClassCommentTemplateMask | KeyHelpMask.
 	self observeToolEvents.
-	Smalltalk developmentSystem registerTool: self!
+	SmalltalkSystem current registerTool: self!
 
 nonClassBrowserTools
 	^self allToolClasses difference: self classBrowserClasses!
@@ -146,7 +146,7 @@ observeBrowserClass: aClassBrowserClass
 		to: self!
 
 observeSystemEvents
-	Smalltalk developmentSystem 
+	SmalltalkSystem current
 		when: #classAdded:
 		send: #onClassAdded:
 		to: self!
@@ -277,7 +277,7 @@ release
 	"Private - Remove references to objects that may refer back to the receiver."
 
 	super release.
-	Smalltalk developmentSystem unregisterTool: self.
+	SmalltalkSystem current unregisterTool: self.
 	self unobserveToolEvents.
 	self unextendMenus!
 
@@ -314,7 +314,7 @@ unextendMenus
 							(menu findCommand: #emitClassLayoutDescription) ifNotNil: [:item | menu removeItem: item]]]]!
 
 unobserveToolEvents
-	Smalltalk developmentSystem removeEventsTriggeredFor: self.
+	SmalltalkSystem current removeEventsTriggeredFor: self.
 	self allToolClasses do: [:each | each removeEventsTriggeredFor: self]!
 
 variableDescriptionsFor: aClass

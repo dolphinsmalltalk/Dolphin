@@ -74,7 +74,7 @@ createComponents
 
 	super createComponents.
 	variableNamesPresenter := self add: ListPresenter new name: 'variablenames'.
-	sourcePresenter := self add: Smalltalk developmentSystem workspaceClass new name: 'source'!
+	sourcePresenter := self add: SmalltalkSystem current workspaceClass new name: 'source'!
 
 createSchematicWiring
 	"Create the trigger wiring for the receiver"

@@ -128,14 +128,12 @@ getInstallationDirectory
 	"Private - Determine and answer the installation directory."
 
 	| folder |
-	Smalltalk developmentSystem isOAD ifTrue: [^self imageBase].
+	SmalltalkSystem current isOAD ifTrue: [^self imageBase].
 	"Note we use a read-only key because some users do not have the rights to open a read/write key under HKLM"
-	folder := (RegKey localMachineRoot: #read) at: self productRegistryKey
-				ifPresent: [:key | key value].
-	folder isNil 
+	folder := (RegKey localMachineRoot: #read) at: self productRegistryKey ifPresent: [:key | key value].
+	folder isNil
 		ifTrue: 
 			["Otherwise try the path to the VM"
-
 			folder := File splitPathFrom: VMLibrary default fileName].
 	^File appendPathDelimiter: folder!
 
@@ -357,11 +355,11 @@ openFd: anInteger mode: aSymbol
 		locale: Locale smalltalk;
 		yourself!
 
-openPackage: filename 
+openPackage: filename
 	"Private - Opens a file identified by the <readableString> filename as a package file"
 
 	| package name devsys |
-	devsys := Smalltalk developmentSystem.
+	devsys := SmalltalkSystem current.
 	name := File splitStemFrom: filename.
 	package := devsys packageManager packageNamed: name
 				ifNone: 
@@ -375,15 +373,15 @@ openSources
 
 	self class sourceManager openSources: self imagePath!
 
-openWorkspace: filename 
+openWorkspace: filename
 	"Private - Opens a file identified by the <readableString> filename as a workspace file"
 
-	Smalltalk developmentSystem openWorkspace: filename!
+	SmalltalkSystem current openWorkspace: filename!
 
 openXmlFile: aString
 	"Private - Opens a file identified by the <readableString> argument an XML file"
 
-	Smalltalk developmentSystem dropXmlFile: aString!
+	SmalltalkSystem current dropXmlFile: aString!
 
 parseCmdLineFlags
 	super parseCmdLineFlags.

@@ -246,7 +246,7 @@ selectCategory: aStringOrNil
 systemModel
 	"Private - Answer the development system model."
 
-	^Smalltalk developmentSystem! !
+	^SmalltalkSystem current! !
 !Tools.ResourceToolboxPresenter categoriesFor: #add:toCategory:!operations!private! !
 !Tools.ResourceToolboxPresenter categoriesFor: #addResourceIdentifierFor:!helpers!private! !
 !Tools.ResourceToolboxPresenter categoriesFor: #caption!accessing!public! !
@@ -289,7 +289,7 @@ defaultModel
 	"Private - Answer a default model to be assigned to the receiver when it
 	is initialized."
 
-	^ListModel on: Smalltalk developmentSystem allResourceIdentifiers searchPolicy: SearchPolicy equality!
+	^ListModel on: SmalltalkSystem current allResourceIdentifiers searchPolicy: SearchPolicy equality!
 
 icon
 	"Answers an Icon that can be used to represent this class"

@@ -201,7 +201,7 @@ initialize
 		self initialize.
 	"
 
-	Smalltalk developmentSystem registerTool: self.
+	SmalltalkSystem current registerTool: self.
 	self canUseIdeaSpace: true!
 
 publishedAspects

@@ -52,7 +52,7 @@ defaultModel
 	"Answer a default model to be assigned to the receiver when it
 	is initialized."
 
-	^Smalltalk developmentSystem classHierarchy!
+	^SmalltalkSystem current classHierarchy!
 
 resource_Default_view
 	"Answer the literal data from which the 'Default view' resource can be reconstituted.

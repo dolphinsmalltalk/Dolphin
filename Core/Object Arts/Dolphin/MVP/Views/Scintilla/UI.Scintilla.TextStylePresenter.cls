@@ -52,12 +52,12 @@ buildDefaultStyle
 	^style!
 
 chooseBackcolor
-	(UI.ColorDialog on: backcolorPresenter model)
+	(ColorDialog on: backcolorPresenter model)
 		caption: 'Background Color';
 		showModal!
 
 chooseForecolor
-	(UI.ColorDialog on: forecolorPresenter model)
+	(ColorDialog on: forecolorPresenter model)
 		caption: 'Foreground Color';
 		showModal!
 

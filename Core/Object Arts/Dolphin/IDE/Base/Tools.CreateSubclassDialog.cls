@@ -30,7 +30,7 @@ canApply
 						and: [(Smalltalk fullBindingFor: candidateName) isNil]]]!
 
 chooseSuperclass
-	Smalltalk developmentSystem
+	SmalltalkSystem current
 		chooseClass: superclassPresenter model
 		caption: 'Choose Superclass...'
 		allowNil: true!
@@ -74,7 +74,7 @@ model: aSubjectModel
 	| aClassOrNil |
 	super model: aSubjectModel.
 	aClassOrNil := aSubjectModel value.
-	package := Smalltalk developmentSystem defaultPackage.
+	package := SmalltalkSystem current defaultPackage.
 	superclassPresenter model: aClassOrNil.
 	namePresenter model: aClassOrNil name asValue.
 	self onSuperclassChanged!
@@ -174,7 +174,7 @@ newSubclassOf: aClassOrNil inPackage: aPackage
 	dialog := self on: aClassOrNil asValue.
 	dialog
 		package: aPackage;
-		createView: (Smalltalk developmentSystem canRefactor
+		createView: (SmalltalkSystem current canRefactor
 					ifTrue: [self refactoringView]
 					ifFalse: [self defaultView]).
 	^dialog!

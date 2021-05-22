@@ -103,7 +103,7 @@ Tools.SmalltalkSystemIcon methodProtocol: #whatsThisHelp attributes: #(#readOnly
 icon
 	"Answers an Icon that can be used to represent this class"
 
-	^Smalltalk developmentSystem icon!
+	^SmalltalkSystem current icon!
 
 icon: anIcon description: aStringDescription openBlock: aDyadicValuable 
 	"Answers an instance of the receiver with anIcon, aStringDescription and the <dyadicValuable> 

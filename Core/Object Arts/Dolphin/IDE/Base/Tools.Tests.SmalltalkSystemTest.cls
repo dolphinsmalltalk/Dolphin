@@ -12,7 +12,7 @@ Tools.Tests.SmalltalkSystemTest comment: ''!
 !Tools.Tests.SmalltalkSystemTest methodsFor!
 
 setUp
-	devsys := Smalltalk developmentSystem!
+	devsys := SmalltalkSystem current!
 
 testAllSelectorsImplementedIn
 	| env all |

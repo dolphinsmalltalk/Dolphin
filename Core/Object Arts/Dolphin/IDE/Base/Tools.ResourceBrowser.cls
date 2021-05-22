@@ -127,7 +127,7 @@ initialize
 		self initialize
 	"
 
-	(Smalltalk developmentSystem)
+	SmalltalkSystem current
 		addSystemFolderIcon: self toolsFolderIcon;
 		registerTool: self.
 	self reuseIfOpen: true.

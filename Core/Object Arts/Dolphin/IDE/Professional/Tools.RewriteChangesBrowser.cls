@@ -41,8 +41,7 @@ browseIt
 
 	| change |
 	change := self change.
-	Smalltalk developmentSystem 
-		browseMethod: (change changeClass compiledMethodAt: change selector)!
+	SmalltalkSystem current browseMethod: (change changeClass compiledMethodAt: change selector)!
 
 change
 	| changes |

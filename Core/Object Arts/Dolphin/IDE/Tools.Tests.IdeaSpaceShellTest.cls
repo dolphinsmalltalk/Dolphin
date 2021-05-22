@@ -255,7 +255,7 @@ testSaveRestore
 
 	"Environment Browser on Object subclassses"
 	self newEnvironmentBrowserCard
-		browserEnvironment: (Smalltalk developmentSystem browserEnvironmentForClasses: Object subclasses);
+		browserEnvironment: (SmalltalkSystem current browserEnvironmentForClasses: Object subclasses);
 		method: Presenter >> #createComponents.
 
 	"Workspace"

@@ -92,7 +92,7 @@ compositingQuality: aCompositingQualityConstant
 doWithCanvas: anOperation
 	| hdc |
 	hdc := self getHDC.
-	[anOperation value: (Graphics.Canvas withNonOwnedDC: hdc)]
+	[anOperation value: (Canvas withNonOwnedDC: hdc)]
 		ensure: [hdc notNil ifTrue: [self releaseHDC: hdc]]!
 
 doWithDC: anOperation

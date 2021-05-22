@@ -156,7 +156,7 @@ initialize
 		self initialize
 	"
 
-	(Smalltalk developmentSystem)
+	SmalltalkSystem current
 		registerTool: self;
 		addSystemFolderIcon: self toolsFolderIcon.
 	self renderers: self defaultRenderers.

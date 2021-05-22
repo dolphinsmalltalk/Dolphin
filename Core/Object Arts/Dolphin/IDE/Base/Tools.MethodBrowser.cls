@@ -1054,7 +1054,7 @@ sourceSelection
 	^sourcePresenter view selection!
 
 systemModel
-	^Smalltalk developmentSystem!
+	^SmalltalkSystem current!
 
 togglePrivate
 	"Private - Toggle the selected method between public and private status."

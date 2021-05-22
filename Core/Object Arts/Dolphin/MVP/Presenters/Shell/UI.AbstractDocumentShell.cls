@@ -251,7 +251,7 @@ saveDocument
 
 saveDocumentAs
 	| proceed newFilename |
-	newFilename := (UI.FileSaveDialog on: self filename asValue)
+	newFilename := (FileSaveDialog on: self filename asValue)
 				fileTypes: self class fileTypes;
 				defaultExtension: self class defaultFileExtension;
 				caption: 'Save Document As...';
@@ -374,11 +374,11 @@ fileTypes
 	class of document. Overidden by documents that have their own file
 	types"
 
-	^{UI.FileDialog allFilesType}!
+	^{FileDialog allFilesType}!
 
 getFilename
 	| openFilename |
-	openFilename := UI.FileOpenDialog new
+	openFilename := FileOpenDialog new
 				fileTypes: self fileTypes;
 				defaultExtension: self defaultFileExtension;
 				showModal.

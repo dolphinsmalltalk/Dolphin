@@ -1121,7 +1121,7 @@ canRefactor
 	^false!
 
 changedIcon
-	"Private - Answer the icon to mark source objects that have been changed"
+	"Private - Answer the icon to mark source objects that have been changed: ✨"
 
 	^changedIcon
 		ifNil: 
@@ -1243,9 +1243,9 @@ classFileIn: aClass
 	"The user has chosen to file in aClass. Prompt for a file and file it in"
 
 	| filename |
-	filename := UI.FileOpenDialog new
+	filename := FileOpenDialog new
 				caption: 'File In ' , aClass name , ' Class';
-				fileTypes: {self classFilesType. UI.FileDialog allFilesType};
+				fileTypes: {self classFilesType. FileDialog allFilesType};
 				value: aClass fileOutName;
 				showModal.
 	filename notNil ifTrue: [self sourceManager fileInPackagedClass: aClass from: filename]!
@@ -1254,9 +1254,9 @@ classFileOut: aClass
 	"The user has chosen to file out aClass. Prompt for a file and file it out"
 
 	| filename |
-	filename := UI.FileSaveDialog new
+	filename := FileSaveDialog new
 				caption: 'File Out ' , aClass name , ' Class';
-				fileTypes: {self classFilesType. UI.FileDialog allFilesType};
+				fileTypes: {self classFilesType. FileDialog allFilesType};
 				value: aClass fileOutName;
 				showModal.
 	filename notNil ifTrue: [self sourceManager fileOutPackagedClass: aClass to: filename]!
@@ -1816,9 +1816,9 @@ fileFileIn
 	(containing chunks) and file it in"
 
 	| filename |
-	filename := UI.FileOpenDialog new
+	filename := FileOpenDialog new
 				caption: 'File in...';
-				fileTypes: {self smalltalkFilesType. self classFilesType. UI.FileDialog allFilesType};
+				fileTypes: {self smalltalkFilesType. self classFilesType. FileDialog allFilesType};
 				defaultExtension: '';
 				showModal.
 	filename notNil
@@ -2744,7 +2744,7 @@ packageOpenFileDialogTypes
 	^{{'Packages (<1s>)' expandMacrosWithArguments: {filter} locale: Locale invariant. filter}.
 		self pacFileDialogType.
 		self paxFileDialogType.
-		UI.FileDialog allFilesType}!
+		FileDialog allFilesType}!
 
 panic
 	"Forcibly close all views to clean up if necessary"
@@ -3765,7 +3765,7 @@ requestPackageFileName: aString
 
 	| stem |
 	stem := File splitStemFrom: aString.
-	^UI.FileOpenDialog new
+	^FileOpenDialog new
 		fileTypes: self packageOpenFileDialogTypes;
 		defaultExtension: (File splitExtensionFrom: aString);
 		value: stem;
@@ -3856,8 +3856,8 @@ saveImageAs
 	"Save the Smalltalk image and sources to a user chosen filename."
 
 	| fileName |
-	fileName := UI.FileSaveDialog new
-				fileTypes: {self imageFilesType. UI.FileDialog allFilesType};
+	fileName := FileSaveDialog new
+				fileTypes: {self imageFilesType. FileDialog allFilesType};
 				defaultExtension: '';
 				value: self sessionManager imagePath;
 				caption: 'Save Image As';
@@ -4635,7 +4635,7 @@ help: educationPage
 	self current openHelpTopic: educationPage!
 
 icon
-	"Answers an Icon that can be used to represent this class"
+	"Answers an Icon that can be used to represent this class: 🐬"
 
 	^(TextTileIcon text: Character dolphin color: SmalltalkSystemShell backcolor)
 		textcolor: SmalltalkSystemShell textcolor;

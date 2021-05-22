@@ -420,14 +420,14 @@ hotKey: anInteger
 icon
 	"Answers an Icon that can be used to represent this class"
 
-	^Smalltalk developmentSystem icon!
+	^SmalltalkSystem current icon!
 
 initialize
 	"Private - Initialize the receiver's class variables.
 		self initialize
 	"
 
-	Smalltalk developmentSystem
+	SmalltalkSystem current
 		registerTool: self;
 		systemFolderClass: self.
 	self backImage: self defaultBackImage.

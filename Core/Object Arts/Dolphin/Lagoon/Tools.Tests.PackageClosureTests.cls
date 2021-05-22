@@ -82,7 +82,7 @@ testSystemPackage
 
 verifyPackageClosure: aBrowserEnvironment missing: aCollectionOfSymbols
 	| missing |
-	missing := Smalltalk developmentSystem unimplementedSelectorsIn: aBrowserEnvironment.
+	missing := SmalltalkSystem current unimplementedSelectorsIn: aBrowserEnvironment.
 	"Use symmetric  difference, as we also want to fix up the test if some missing message is fixed."
 	self assert: (missing symmetricDifference: aCollectionOfSymbols) asArray sort equals: #().
 

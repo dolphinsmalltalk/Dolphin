@@ -599,7 +599,8 @@ testMoveUp
 
 testPublishedAspectsOfInstancesOnClassSide
 	"#2136"
-	(Smalltalk developmentSystem definitionsOf: #publishedAspectsOfInstances) 
+
+	(SmalltalkSystem current definitionsOf: #publishedAspectsOfInstances)
 		methodsDo: [:each | self assert: each methodClass isMeta]!
 
 testRefresh

@@ -387,7 +387,7 @@ findDetails: aFindDetails
 	^self presenter == self ifFalse: [self presenter findDetails: aFindDetails]!
 
 findDialogClass
-	^#{AdvancedFindDialog} valueOrNil ?? UI.FindDialog!
+	^#{AdvancedFindDialog} valueOrNil ?? FindDialog!
 
 findNext
 	"Hilight the next occurrence which satisfies the find operation held in findDetails."
@@ -445,7 +445,7 @@ findReplace
 findReplacePrompt: aString
 	"Launch the FindReplaceText dialog."
 
-	UI.FindReplaceDialog ownerView: self findWhat: aString!
+	FindReplaceDialog ownerView: self findWhat: aString!
 
 format
 	"Answer the current format mode of the receiver, one of #mixed, #upperCase, 

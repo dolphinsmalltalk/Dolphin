@@ -1,6 +1,7 @@
 ﻿| package |
 package := Package name: 'Dolphin Community Edition Tools'.
 package paxVersion: 2.1;
+	environmentName: #{Tools};
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk Community Edition Additional Tools.
 Copyright (c) Object Arts Ltd, 1999-2005
@@ -113,8 +114,8 @@ publishedAspectsOfInstances
 	"Answer a <LookupTable> of the <Aspect>s published by instances of the receiver."
 
 	^super publishedAspectsOfInstances
-		add: (Tools.Aspect integer: #getSize);
-		add: (Tools.Aspect boolean: #isSingle);
+		add: (Aspect integer: #getSize);
+		add: (Aspect boolean: #isSingle);
 		yourself! !
 !OS.ITEMIDLIST class categoriesFor: #publishedAspectsOfInstances!must strip!public! !
 

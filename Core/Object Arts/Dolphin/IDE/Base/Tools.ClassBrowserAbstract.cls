@@ -2789,7 +2789,7 @@ classCommentIcon
 defaultAdditionalAccelerators
 	| accels |
 	accels := super defaultAdditionalAccelerators , #(#(#renameIt 'F2')).
-	Smalltalk developmentSystem canRefactor
+	SmalltalkSystem current canRefactor
 		ifTrue: [accels := accels , #(#(#pushUpMethods 'Shift+Ctrl+6') #(#pushDownMethods 'Shift+Ctrl+7'))].
 	^accels!
 

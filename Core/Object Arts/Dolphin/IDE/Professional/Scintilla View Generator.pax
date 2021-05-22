@@ -19,6 +19,7 @@ package setClassNames: #(
 ).
 
 package setPrerequisites: #(
+	'..\Base\Development System'
 	'..\..\Base\Dolphin'
 	'..\..\MVP\Dialogs\Common\Dolphin Common Dialogs'
 	'..\..\MVP\Base\Dolphin MVP Base'

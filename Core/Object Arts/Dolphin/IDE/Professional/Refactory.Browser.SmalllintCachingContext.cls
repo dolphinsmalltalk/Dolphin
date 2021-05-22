@@ -79,7 +79,7 @@ isSafeToEncryptWithProductProtection
 	^false!
 
 systemModel
-	^Smalltalk developmentSystem!
+	^Tools.SmalltalkSystem current!
 
 uninitialize
 	self clearCache.

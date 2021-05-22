@@ -376,7 +376,7 @@ createComponents
 				name: 'inspector'
 				helpId: 10884.
 	sourcePresenter := self
-				add: Smalltalk developmentSystem methodWorkspaceClass new yourself
+				add: SmalltalkSystem current methodWorkspaceClass new yourself
 				name: 'source'
 				helpId: 10885.
 	sourcePresenter areVariableTipsEnabled: true.
@@ -494,7 +494,7 @@ displaySource
 	method := self selectedMethod.
 	self isDisassembled
 		ifTrue: 
-			[styler := Smalltalk developmentSystem disassemblyStylerClass.
+			[styler := SmalltalkSystem current disassemblyStylerClass.
 			text := method disassembly]
 		ifFalse: 
 			[styler := method stylerClass.
@@ -2078,7 +2078,7 @@ initialize
 	self enableDynamicMenus: true.
 	self showWalkbacks: true.
 	self runToCursorBehavior: #precise.
-	Smalltalk developmentSystem registerTool: self.
+	SmalltalkSystem current registerTool: self.
 	self interrupts do: [:each | ProcessorScheduler interruptSelectors at: each first put: each second].
 	self initializeSkipTable.
 	"Set up the debug empty block"

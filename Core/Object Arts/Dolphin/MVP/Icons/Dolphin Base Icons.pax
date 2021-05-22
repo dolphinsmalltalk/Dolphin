@@ -1,6 +1,7 @@
 ﻿| package |
 package := Package name: 'Dolphin Base Icons'.
 package paxVersion: 2.1;
+	environmentName: #{Graphics};
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Base Icons
 Copyright (c) Object Arts Ltd, 2018.
@@ -152,10 +153,10 @@ icon
 !Core.ArithmeticValue class methodsFor!
 
 icon
-	"Answers an Icon that can be used to represent this class"
+	"Answers an Icon that can be used to represent this class: ↂ"
 
-	^##((Graphics.TextTileIcon text: $\x2182 fontName: 'Segoe UI')
-		textcolor: Graphics.Color darkBlue;
+	^##((TextTileIcon text: $\x2182 fontName: 'Segoe UI')
+		textcolor: Color darkBlue;
 		yourself)! !
 !Core.ArithmeticValue class categoriesFor: #icon!constants!public! !
 
@@ -164,18 +165,18 @@ icon
 icon
 	"Answers an Icon that can be used to represent this class"
 
-	^##((Graphics.TextTileIcon text: '#()' fontName: 'Arial')
-		textcolor: Graphics.Color darkBlue;
+	^##((TextTileIcon text: '#()' fontName: 'Arial')
+		textcolor: Color darkBlue;
 		yourself)! !
 !Core.Array class categoriesFor: #icon!constants!public! !
 
 !Core.Association class methodsFor!
 
 icon
-	"Answers an Icon that can be used to represent this class"
+	"Answers an Icon that can be used to represent this class: 🡪"
 
-	^##((Graphics.TextTileIcon text: $\x1F86A)
-		textcolor: Graphics.Color darkBlue;
+	^##((TextTileIcon text: $\x1F86A)
+		textcolor: Color darkBlue;
 		yourself)! !
 !Core.Association class categoriesFor: #icon!constants!public! !
 
@@ -184,8 +185,8 @@ icon
 icon
 	"Answers an Icon that can be used to represent this class"
 
-	^##((Graphics.TextTileIcon text: '⟅ ⟆' fontName: 'Cambria')
-		textcolor: Graphics.Color darkBlue;
+	^##((TextTileIcon text: '⟅ ⟆' fontName: 'Cambria')
+		textcolor: Color darkBlue;
 		yourself)! !
 !Core.Bag class categoriesFor: #icon!constants!public! !
 
@@ -210,8 +211,8 @@ icon
 icon
 	"Answers an Icon that can be used to represent this class"
 
-	^##((Graphics.TextTileIcon text: '#[]' fontName: 'Arial')
-		textcolor: Graphics.Color darkBlue;
+	^##((TextTileIcon text: '#[]' fontName: 'Arial')
+		textcolor: Color darkBlue;
 		yourself)! !
 !Core.ByteArray class categoriesFor: #icon!constants!public! !
 
@@ -220,8 +221,8 @@ icon
 icon
 	"Answers an Icon that can be used to represent this class"
 
-	^##((Graphics.TextTileIcon text: '$b' fontName: 'Cambria')
-		textcolor: Graphics.Color darkBlue;
+	^##((TextTileIcon text: '$b' fontName: 'Cambria')
+		textcolor: Color darkBlue;
 		yourself)! !
 !Core.Character class categoriesFor: #icon!constants!public! !
 
@@ -283,7 +284,7 @@ icon
 icon
 	"Answer the default icon for the receiver and its instances."
 	
-	^Graphics.Icon error! !
+	^Icon error! !
 !Core.Error class categoriesFor: #icon!constants!public! !
 
 !Core.Exception class methodsFor!
@@ -302,10 +303,10 @@ icon
 !Core.False class methodsFor!
 
 icon
-	"Answers an Icon that can be used to represent this class"
+	"Answers an Icon that can be used to represent this class: ✖"
 
-	^##((Graphics.TextTileIcon text: $\x2716)
-		textcolor: Graphics.Color red;
+	^##((TextTileIcon text: $\x2716)
+		textcolor: Color red;
 		yourself)! !
 !Core.False class categoriesFor: #icon!constants!public! !
 
@@ -322,8 +323,8 @@ icon
 icon
 	"Answers an Icon that can be used to represent this class"
 
-	^##((Graphics.TextTileIcon text: '0.8' fontName: 'Cambria')
-		textcolor: Graphics.Color darkBlue;
+	^##((TextTileIcon text: '0.8' fontName: 'Cambria')
+		textcolor: Color darkBlue;
 		yourself)! !
 !Core.Float class categoriesFor: #icon!constants!public! !
 
@@ -332,8 +333,8 @@ icon
 icon
 	"Answers an Icon that can be used to represent this class"
 
-	^##((Graphics.TextTileIcon text: '⅞' fontName: 'Cambria')
-		textcolor: Graphics.Color darkBlue;
+	^##((TextTileIcon text: '⅞' fontName: 'Cambria')
+		textcolor: Color darkBlue;
 		yourself)! !
 !Core.Fraction class categoriesFor: #icon!constants!public! !
 
@@ -350,8 +351,8 @@ icon
 icon
 	"Answers an Icon that can be used to represent this class"
 
-	^##((Graphics.TextTileIcon text: '42' fontName: 'Cambria')
-		textcolor: Graphics.Color darkBlue;
+	^##((TextTileIcon text: '42' fontName: 'Cambria')
+		textcolor: Color darkBlue;
 		yourself)! !
 !Core.Integer class categoriesFor: #icon!constants!public! !
 
@@ -360,8 +361,8 @@ icon
 icon
 	"Answers an Icon that can be used to represent this class"
 
-	^##((Graphics.TextTileIcon text: '1..5' fontName: 'Cambria')
-		textcolor: Graphics.Color darkBlue;
+	^##((TextTileIcon text: '1..5' fontName: 'Cambria')
+		textcolor: Color darkBlue;
 		yourself)! !
 !Core.Interval class categoriesFor: #icon!constants!public! !
 
@@ -370,17 +371,17 @@ icon
 icon
 	"Answers an Icon that can be used to represent this class"
 
-	^##((Graphics.TextTileIcon text: $\x221E fontName: 'Cambria')
-		textcolor: Graphics.Color darkBlue;
+	^##((TextTileIcon text: $\x221E fontName: 'Cambria')
+		textcolor: Color darkBlue;
 		yourself)! !
 !Core.LargeInteger class categoriesFor: #icon!constants!public! !
 
 !Core.Link class methodsFor!
 
 icon
-	"Answers an Icon that can be used to represent this class"
+	"Answers an Icon that can be used to represent this class: 🔗"
 
-	^##(Graphics.TextTileIcon text: $\x1F517)! !
+	^##(TextTileIcon text: $\x1F517)! !
 !Core.Link class categoriesFor: #icon!public! !
 
 !Core.Locale class methodsFor!
@@ -396,8 +397,8 @@ icon
 icon
 	"Answers an Icon that can be used to represent this class"
 
-	^##((Graphics.TextTileIcon text: '|x|' fontName: 'Cambria')
-		textcolor: Graphics.Color darkBlue;
+	^##((TextTileIcon text: '|x|' fontName: 'Cambria')
+		textcolor: Color darkBlue;
 		yourself)! !
 !Core.Magnitude class categoriesFor: #icon!constants!public! !
 
@@ -459,7 +460,7 @@ icon
 icon
 	"Answer the default icon for the receiver and its instances."
 
-	^Graphics.Icon information! !
+	^Icon information! !
 !Core.Notification class categoriesFor: #icon!constants!public! !
 
 !Core.NotificationSignal class methodsFor!
@@ -473,10 +474,10 @@ icon
 !Core.Number class methodsFor!
 
 icon
-	"Answers an Icon that can be used to represent this class"
+	"Answers an Icon that can be used to represent this class: №"
 
-	^##((Graphics.TextTileIcon text: $\x2116 fontName: 'Cambria')
-		textcolor: Graphics.Color darkBlue;
+	^##((TextTileIcon text: $\x2116 fontName: 'Cambria')
+		textcolor: Color darkBlue;
 		yourself)! !
 !Core.Number class categoriesFor: #icon!constants!public! !
 
@@ -493,26 +494,28 @@ icon
 icon
 	"Answers an Icon that can be used to represent this class"
 
-	^##((Graphics.TextTileIcon text: '5⁹⁹' fontName: 'Segoe UI')
-		textcolor: Graphics.Color darkBlue;
+	^##((TextTileIcon text: '5⁹⁹' fontName: 'Segoe UI')
+		textcolor: Color darkBlue;
 		yourself)! !
 !Core.ScaledDecimal class categoriesFor: #icon!constants!public! !
 
 !Core.SearchPolicy class methodsFor!
 
 icon
-	"Answers an Icon that can be used to represent this class"
+	"Answers an Icon that can be used to represent this class: ≾"
 
-	^##((Graphics.TextTileIcon text: $\x227E fontName: 'Cambria')
-		textcolor: Graphics.Color darkBlue;
+	^##((TextTileIcon text: $\x227E fontName: 'Cambria')
+		textcolor: Color darkBlue;
 		yourself)! !
 !Core.SearchPolicy class categoriesFor: #icon!constants!public! !
 
 !Core.Semaphore class methodsFor!
 
 icon
-	^##((Graphics.TextTileIcon text: $\x1F6D1 fontName: 'Segoe UI Emoji')
-		textcolor: Graphics.Color red;
+	"Answers an Icon that can be used to represent this class: 🛑"
+
+	^##((TextTileIcon text: $\x1F6D1 fontName: 'Segoe UI Emoji')
+		textcolor: Color red;
 		yourself)! !
 !Core.Semaphore class categoriesFor: #icon!public! !
 
@@ -521,8 +524,8 @@ icon
 icon
 	"Answers an Icon that can be used to represent this class"
 
-	^##((Graphics.TextTileIcon text: '{ }' fontName: 'Cambria')
-		textcolor: Graphics.Color darkBlue;
+	^##((TextTileIcon text: '{ }' fontName: 'Cambria')
+		textcolor: Color darkBlue;
 		yourself)! !
 !Core.Set class categoriesFor: #icon!constants!public! !
 
@@ -565,7 +568,7 @@ icon
 icon
 	"Answers an Icon that can be used to represent this class"
 
-	^##((Graphics.TextTileIcon text: '‘A’' fontName: 'Cambria') textcolor: Graphics.Color darkBlue)! !
+	^##((TextTileIcon text: '‘A’' fontName: 'Cambria') textcolor: Color darkBlue)! !
 !Core.String class categoriesFor: #icon!constants!public! !
 
 !Core.Symbol class methodsFor!
@@ -573,8 +576,8 @@ icon
 icon
 	"Answers an Icon that can be used to represent this class"
 
-	^##((Graphics.TextTileIcon text: '#S' fontName: 'Cambria')
-		textcolor: Graphics.Color darkBlue;
+	^##((TextTileIcon text: '#S' fontName: 'Cambria')
+		textcolor: Color darkBlue;
 		yourself)! !
 !Core.Symbol class categoriesFor: #icon!constants!public! !
 
@@ -589,21 +592,21 @@ icon
 !Core.True class methodsFor!
 
 icon
-	"Answers an Icon that can be used to represent this class"
+	"Answers an Icon that can be used to represent this class: ✔"
 
 	"Another potential choice here is ☑'"
 
-	^##((Graphics.TextTileIcon text: $\x2714 fontName: 'Segoe UI Emoji')
-		textcolor: Graphics.Color darkGreen;
+	^##((TextTileIcon text: $\x2714 fontName: 'Segoe UI Emoji')
+		textcolor: Color darkGreen;
 		yourself)! !
 !Core.True class categoriesFor: #icon!constants!public! !
 
 !Core.UndefinedObject class methodsFor!
 
 icon
-	"Answers an Icon that can be used to represent this class."
+	"Answers an Icon that can be used to represent this class: ☢"
 
-	^##(Graphics.TextTileIcon text: $\x2622 fontName: 'Segoe UI Emoji')! !
+	^##(TextTileIcon text: $\x2622 fontName: 'Segoe UI Emoji')! !
 !Core.UndefinedObject class categoriesFor: #icon!constants!public! !
 
 !Core.UtfEncodedString class methodsFor!
@@ -611,7 +614,9 @@ icon
 icon
 	"Answers an Icon that can be used to represent this class."
 
-	^##((Graphics.TextTileIcon text: '‘U’' fontName: 'Cambria') textcolor: Graphics.Color darkBlue; yourself)! !
+	^##((TextTileIcon text: '‘U’' fontName: 'Cambria')
+		textcolor: Color darkBlue;
+		yourself)! !
 !Core.UtfEncodedString class categoriesFor: #icon!constants!public! !
 
 !Core.Warning class methodsFor!
@@ -619,7 +624,7 @@ icon
 icon
 	"Answer the default icon for the receiver and its instances."
 
-	^Graphics.Icon warning! !
+	^Icon warning! !
 !Core.Warning class categoriesFor: #icon!constants!public! !
 
 !Core.WarningSignal class methodsFor!
@@ -635,8 +640,8 @@ icon
 icon
 	"Answers an Icon that can be used to represent this class"
 
-	^##((Graphics.TextTileIcon text: '#()' fontName: 'Arial')
-		textcolor: Graphics.Color skyBlue;
+	^##((TextTileIcon text: '#()' fontName: 'Arial')
+		textcolor: Color skyBlue;
 		yourself)! !
 !Core.WeakArray class categoriesFor: #icon!constants!public! !
 
@@ -753,7 +758,7 @@ icon
 !Graphics.Point class methodsFor!
 
 icon
-	"Answers an Icon that can be used to represent this class"
+	"Answers an Icon that can be used to represent this class: ⌖"
 
 	^##((TextTileIcon text: $\x2316 fontName: 'Georgia')
 		textcolor: Color darkBlue;
@@ -763,7 +768,7 @@ icon
 !Graphics.Rectangle class methodsFor!
 
 icon
-	"Answers an Icon that can be used to represent this class"
+	"Answers an Icon that can be used to represent this class: ▭"
 
 	^##(TextTileIcon text: $\x25AD)! !
 !Graphics.Rectangle class categoriesFor: #icon!constants!public! !
@@ -781,8 +786,8 @@ icon
 icon
 	"Answers an Icon that can be used to represent this class"
 
-	^##((Graphics.TextTileIcon text: '#{}' fontName: 'Arial Narrow')
-		textcolor: Graphics.Color darkBlue;
+	^##((TextTileIcon text: '#{}' fontName: 'Arial Narrow')
+		textcolor: Color darkBlue;
 		fontStyle: #italic;
 		yourself)! !
 !Kernel.AbstractBindingReference class categoriesFor: #icon!constants!public! !
@@ -790,10 +795,10 @@ icon
 !Kernel.Announcement class methodsFor!
 
 icon
-	"Answers an Icon that can be used to represent this class."
+	"Answers an Icon that can be used to represent this class: 📢"
 
-	^##((Graphics.TextTileIcon text: $\x1F4E2)
-		textcolor: Graphics.Color darkBlue;
+	^##((TextTileIcon text: $\x1F4E2)
+		textcolor: Color darkBlue;
 		yourself)! !
 !Kernel.Announcement class categoriesFor: #icon!constants!public! !
 
@@ -802,8 +807,8 @@ icon
 icon
 	"Answers an Icon that can be used to represent this class"
 
-	^##((Graphics.TextTileIcon text: '#{}' fontName: 'Arial Narrow')
-		textcolor: Graphics.Color darkBlue;
+	^##((TextTileIcon text: '#{}' fontName: 'Arial Narrow')
+		textcolor: Color darkBlue;
 		yourself)! !
 !Kernel.BindingReference class categoriesFor: #icon!constants!public! !
 
@@ -893,8 +898,8 @@ icon
 icon
 	"Answers an Icon that can be used to represent this class"
 
-	^##((Graphics.TextTileIcon text: '#{}′' fontName: 'Arial Narrow')
-		textcolor: Graphics.Color darkBlue;
+	^##((TextTileIcon text: '#{}′' fontName: 'Arial Narrow')
+		textcolor: Color darkBlue;
 		yourself)! !
 !Kernel.MetaBindingReference class categoriesFor: #icon!constants!public! !
 
@@ -1006,7 +1011,7 @@ icon
 
 	"The commonly accepted symbol for the Universal Set is 'U', but it's too boring and so we use the alternate script ℰ."
 
-	^##(Graphics.TextTileIcon text: $\x2130 fontName: 'Georgia')! !
+	^##(TextTileIcon text: $\x2130 fontName: 'Georgia')! !
 !Root class categoriesFor: #icon!constants!public! !
 
 !Smalltalk class methodsFor!
@@ -1044,7 +1049,7 @@ icon
 !UI.AbstractCardContainer class methodsFor!
 
 icon
-	"Answers an Icon that can be used to represent this class"
+	"Answers an Icon that can be used to represent this class: 🗂"
 
 	^##((TextTileIcon
 		text: $\x1F5C2
@@ -1057,7 +1062,7 @@ icon
 !UI.BooleanPresenter class methodsFor!
 
 icon
-	"Answers an Icon that can be used to represent this class"
+	"Answers an Icon that can be used to represent this class: 🔳"
 
 	^##((TextTileIcon text: $\x1F533 fontName: 'Segoe UI Emoji')
 		textcolor: Color forestGreen;
@@ -1067,7 +1072,7 @@ icon
 !UI.CardLabel class methodsFor!
 
 icon
-	"Answers an Icon that can be used to represent this class."
+	"Answers an Icon that can be used to represent this class: 🏷"
 
 	^##((TextTileIcon text: $\x1F3F7 fontName: 'Segoe UI Emoji')
 		textcolor: Color darkBlue;
@@ -1077,7 +1082,7 @@ icon
 !UI.CheckButton class methodsFor!
 
 icon
-	"Answers an Icon that can be used to represent this class."
+	"Answers an Icon that can be used to represent this class: ☑"
 
 	^##((TextTileIcon text: $\x2611 fontName: 'Segoe UI Emoji') textcolor: Color hotlight)! !
 !UI.CheckButton class categoriesFor: #icon!constants!public! !
@@ -1085,9 +1090,9 @@ icon
 !UI.FramingLayout class methodsFor!
 
 icon
-	"Answers an Icon that can be used to represent this class"
+	"Answers an Icon that can be used to represent this class: 🖽"
 
-	^(TextTileIcon text: $\x1F5BD)! !
+	^##(TextTileIcon text: $\x1F5BD)! !
 !UI.FramingLayout class categoriesFor: #icon!constants!public! !
 
 !UI.Keyboard class methodsFor!
@@ -1101,7 +1106,7 @@ icon
 !UI.LayoutManager class methodsFor!
 
 icon
-	"Answers an Icon that can be used to represent this class"
+	"Answers an Icon that can be used to represent this class: ⧉"
 
 	^##(TextTileIcon text: $\x29C9 fontName: 'Cambria')! !
 !UI.LayoutManager class categoriesFor: #icon!constants!public! !
@@ -1109,15 +1114,19 @@ icon
 !UI.RadioButton class methodsFor!
 
 icon
+	"Answers an Icon that can be used to represent this class: ⦿"
+
 	^##(TextTileIcon text: $\x29BF fontName: 'Cambria')! !
 !UI.RadioButton class categoriesFor: #icon!constants!public! !
 
 !UI.RadioButtonSetPresenter class methodsFor!
 
 icon
-	"Answers an Icon that can be used to represent this class"
+	"Answers an Icon that can be used to represent this class: ⦿"
 
-	^##((TextTileIcon text: $\x29BF fontName: 'Cambria') textcolor: Color forestGreen; yourself)! !
+	^##((TextTileIcon text: $\x29BF fontName: 'Cambria')
+		textcolor: Color forestGreen;
+		yourself)! !
 !UI.RadioButtonSetPresenter class categoriesFor: #icon!constants!public! !
 
 !UI.ResourceIdentifier class methodsFor!

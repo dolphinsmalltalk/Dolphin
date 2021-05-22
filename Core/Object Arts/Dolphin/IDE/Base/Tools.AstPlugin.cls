@@ -28,8 +28,8 @@ createComponents
 
 	super createComponents.
 	astPresenter := self add: TreePresenter new name: 'syntaxTree'.
-	sourcePresenter := self add: Smalltalk developmentSystem methodWorkspaceClass new name: 'source'.
-	sourcePresenter isAutoParseEnabled: false.!
+	sourcePresenter := self add: SmalltalkSystem current methodWorkspaceClass new name: 'source'.
+	sourcePresenter isAutoParseEnabled: false!
 
 createSchematicWiring
 	"Create the trigger wiring for the receiver"

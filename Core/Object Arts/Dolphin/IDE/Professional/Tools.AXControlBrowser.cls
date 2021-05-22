@@ -37,12 +37,12 @@ browseIDL
 	typeLib := ti typeLib.
 	self browseIDLOfTypeLib: typeLib!
 
-browseIDLOfTypeLib: anAXTypeLibraryAnalyzer 
+browseIDLOfTypeLib: anAXTypeLibraryAnalyzer
 	| stream |
 	stream := ReadWriteStream on: String new.
 	Cursor wait showWhile: [anAXTypeLibraryAnalyzer printIDLOn: stream].
 	stream reset.
-	(Smalltalk developmentSystem workspaceShellClass show)
+	SmalltalkSystem current workspaceShellClass show
 		language: #text;
 		streamIn: stream!
 
@@ -390,7 +390,7 @@ initialize
 		self initialize.
 	"
 
-	Smalltalk developmentSystem
+	SmalltalkSystem current
 		addAdditionalToolsFolderIcon: (SmalltalkSystemIcon
 					show: self
 					description: self displayString

@@ -181,7 +181,7 @@ icon
 
 initialize
 	FindNonDolphinWindows := false.
-	Smalltalk developmentSystem registerTool: self!
+	SmalltalkSystem current registerTool: self!
 
 publishedAspects
 	"Answer a <LookupTable> of the <Aspect>s published by the receiver."

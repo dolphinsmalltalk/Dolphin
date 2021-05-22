@@ -305,7 +305,7 @@ testResourceBrowserPreview
 	| resourceId resourceView bmp toolbox resources |
 	resourceId := ResourceIdentifier class: Tools.ResourceBrowser name: 'Default view'.
 	resourceView := 
-			[Smalltalk developmentSystem loadViewResource: resourceId resource inContext: View desktop]
+			[Tools.SmalltalkSystem current loadViewResource: resourceId resource inContext: View desktop]
 					on: Error
 					do: [:x | ].
 	bmp := resourceView notNil

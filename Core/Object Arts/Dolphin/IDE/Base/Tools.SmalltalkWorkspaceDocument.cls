@@ -472,7 +472,7 @@ defaultModel
 	"Answer a default model to be assigned to the receiver when it
 	is initialized."
 
-	^Smalltalk developmentSystem!
+	^SmalltalkSystem current!
 
 defaultTabWidth
 	"Answer the width of tabs (equivalent number of spaces) in instances of the receiver."
@@ -514,7 +514,7 @@ fileTypes
 		add: domain packageFilesType;
 		add: domain ideaSpaceFilesType;
 		add: #('Text Files (*.txt)' '*.txt');
-		add: UI.FileDialog allFilesType;
+		add: FileDialog allFilesType;
 		asArray!
 
 icon
@@ -527,7 +527,7 @@ initialize
 		self initialize
 	"
 
-	Smalltalk developmentSystem
+	SmalltalkSystem current
 		addSystemFolderIcon: self toolsFolderIcon;
 		registerTool: self.
 	self wordWrap: true.
@@ -647,7 +647,7 @@ wordWrap: aBoolean
 	self workspaceClass wordWrap: aBoolean!
 
 workspaceClass
-	^Smalltalk developmentSystem workspaceClass! !
+	^SmalltalkSystem current workspaceClass! !
 !Tools.SmalltalkWorkspaceDocument class categoriesFor: #activeIdeaSpace!public! !
 !Tools.SmalltalkWorkspaceDocument class categoriesFor: #canUseIdeaSpace!accessing!public! !
 !Tools.SmalltalkWorkspaceDocument class categoriesFor: #canUseIdeaSpace:!accessing!public! !

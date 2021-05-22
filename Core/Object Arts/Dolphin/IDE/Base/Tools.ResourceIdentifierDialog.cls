@@ -102,8 +102,7 @@ genNameLike: aString uniqueWithin: aCollection
 icon
 	"Answers an Icon that can be used to represent this class."
 
-	^Smalltalk developmentSystem icon
-!
+	^SmalltalkSystem current icon!
 
 resource_Default_view
 	"Answer the literal data from which the 'Default view' resource can be reconstituted.

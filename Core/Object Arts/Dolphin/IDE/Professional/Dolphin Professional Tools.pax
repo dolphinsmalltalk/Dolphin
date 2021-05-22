@@ -1,6 +1,7 @@
 ﻿| package |
 package := Package name: 'Dolphin Professional Tools'.
 package paxVersion: 2.1;
+	environmentName: #{Tools};
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk Professional Additional Tools.
 Copyright (c) Object Arts Ltd, 2001-2006.
@@ -432,8 +433,8 @@ publishedAspectsOfInstances
 	| answer |
 	answer := super publishedAspectsOfInstances.
 	answer
-		add: (Tools.Aspect multilineString: #text);
-		add: (Tools.Aspect name: #commandDescription) beReadOnly;
+		add: (Aspect multilineString: #text);
+		add: (Aspect name: #commandDescription) beReadOnly;
 		yourself.
 	^answer! !
 !UI.LinkButton class categoriesFor: #publishedAspectsOfInstances!constants!public! !
@@ -471,8 +472,8 @@ publishedAspectsOfInstances
 	#(#layoutManager #isTransparent #isTabStop #isGroupStop #isDragSource #isDropTarget)
 		do: [:each | aspects removeKey: each].
 	#(#isHiddenOnUnpin #isTrayResizable #isCardChangeAnimated)
-		do: [:each | aspects add: (Tools.Aspect boolean: each)].
-	aspects add: (Tools.Aspect choice: #animation from: Animations keys asSortedCollection).
+		do: [:each | aspects add: (Aspect boolean: each)].
+	aspects add: (Aspect choice: #animation from: Animations keys asSortedCollection).
 	^aspects! !
 !UI.SlideyInneyOuteyThing class categoriesFor: #example1!examples!public! !
 !UI.SlideyInneyOuteyThing class categoriesFor: #publishedAspectsOfInstances!constants!public! !
@@ -483,7 +484,7 @@ publishedAspectsOfInstances
 	"Answer a <LookupTable> of the <Aspect>s published by instances of the receiver."
 
 	^super publishedAspectsOfInstances
-		add: (Tools.Aspect multilineString: #text);
+		add: (Aspect multilineString: #text);
 		yourself!
 
 publishedEventsOfInstances

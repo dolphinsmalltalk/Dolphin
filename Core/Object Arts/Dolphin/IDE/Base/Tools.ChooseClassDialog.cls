@@ -119,8 +119,7 @@ queryCommand: query
 icon
 	"Answers an Icon that can be used to represent this class."
 
-	^Smalltalk developmentSystem icon
-!
+	^SmalltalkSystem current icon!
 
 on: aValueModel choices: aClassHierarchyModel caption: aString
 	^(self on: aValueModel)

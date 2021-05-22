@@ -373,7 +373,7 @@ findClass
 	"Prompts for a class name and finds it within the receiver. Will accept wild-
 	carded class name from the user."
 
-	(Smalltalk developmentSystem promptForClassIn: self searchEnvironment)
+	(SmalltalkSystem current promptForClassIn: self searchEnvironment)
 		ifNotNil: 
 			[:class |
 			class notNil ifTrue: [self actualClass: class].

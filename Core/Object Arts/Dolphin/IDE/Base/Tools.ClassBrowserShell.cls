@@ -138,7 +138,7 @@ initialize
 	self defaultShowInheritedMethods: false.
 	self defaultFilterObjectMethods: true.
 	self canUseIdeaSpace: true.
-	Smalltalk developmentSystem
+	SmalltalkSystem current
 		addSystemFolderIcon: self toolsFolderIcon;
 		registerTool: self!
 

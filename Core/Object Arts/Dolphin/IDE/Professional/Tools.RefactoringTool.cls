@@ -107,7 +107,7 @@ setPresenter: aPresenter
 	presenter := aPresenter!
 
 systemModel
-	^Smalltalk developmentSystem! !
+	^SmalltalkSystem current! !
 !Tools.RefactoringTool categoriesFor: #convertTempToInstVar:!public!refactoring! !
 !Tools.RefactoringTool categoriesFor: #inlineParameter:!private!refactoring! !
 !Tools.RefactoringTool categoriesFor: #onAboutToDisplayMenu:!event handling!public! !

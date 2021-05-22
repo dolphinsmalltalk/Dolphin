@@ -125,7 +125,7 @@ initialize
 		self initialize
 	"
 
-	Smalltalk developmentSystem registerTool: self.
+	SmalltalkSystem current registerTool: self.
 	treeUpdateMode := #lazy.
 	treeHasGridLines := false!
 

@@ -287,19 +287,17 @@ initialize
 		self initialize
 	"
 
-	UpdateIntervals := 
-		IdentityDictionary new
-			at: #low put: 5000 milliseconds;
-			at: #default put: 2000 milliseconds;
-			at: #high put: 500 milliseconds;
-			at: #pause put: nil;
-			shrink.
+	UpdateIntervals := IdentityDictionary new
+				at: #low put: 5000 milliseconds;
+				at: #default put: 2000 milliseconds;
+				at: #high put: 500 milliseconds;
+				at: #pause put: nil;
+				shrink.
 	optionFlags := 0.
-	Smalltalk developmentSystem
+	SmalltalkSystem current
 		addSystemFolderIcon: self toolsFolderIcon;
 		registerTool: self.
-	self reuseIfOpen: true.
-	!
+	self reuseIfOpen: true!
 
 publishedAspects
 	"Answer a <LookupTable> of the <Aspect>s published by the receiver."

@@ -139,7 +139,7 @@ initialize
 model: aListModel
 	"Connects the receiver to a new model."
 
-	classesPresenter treeModel: Smalltalk developmentSystem classHierarchy.
+	classesPresenter treeModel: SmalltalkSystem current classHierarchy.
 	super model: aListModel.
 	classesListPresenter model: aListModel!
 

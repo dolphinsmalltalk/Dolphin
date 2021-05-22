@@ -60,7 +60,7 @@ browseFailedClass: aString
 	"Private - Browser the class identified by aString"
 
 	aString asQualifiedReference valueOrNil
-		ifNotNil: [:failedClass | (Smalltalk developmentSystem browseClass: failedClass) caption: self failedRule name]!
+		ifNotNil: [:failedClass | (SmalltalkSystem current browseClass: failedClass) caption: self failedRule name]!
 
 browseFailedMethodName: aString
 	"Private - Browser the method identified by aString"
@@ -317,7 +317,7 @@ infoBrowserPresenter
 
 	infoBrowserPresenter isNil
 		ifTrue: 
-			[infoBrowserPresenter := UI.URLPresenter createIn: infoSitePresenter.
+			[infoBrowserPresenter := URLPresenter createIn: infoSitePresenter.
 			[self infoBrowser readyState == READYSTATE_COMPLETE]
 				whileFalse: [SessionManager inputState pumpMessages].
 			"Suppress the standard IE context menu"

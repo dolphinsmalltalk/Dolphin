@@ -31,7 +31,7 @@ createComponents
 	"Create the presenters contained by the receiver"
 
 	super createComponents.
-	sourcePresenter := self add: Smalltalk developmentSystem workspaceClass new name: 'source'!
+	sourcePresenter := self add: SmalltalkSystem current workspaceClass new name: 'source'!
 
 defaultBatchSize
 	"Answers the default batch size of the receiver, i.e. the number of keyed elements to return at a time"
@@ -171,7 +171,7 @@ initialize
 		self initialize
 	"
 
-	Smalltalk developmentSystem registerTool: self.
+	SmalltalkSystem current registerTool: self.
 	treeUpdateMode := #dynamic.
 	treeHasGridLines := false!
 

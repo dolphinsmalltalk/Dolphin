@@ -31,8 +31,8 @@ createComponents
 	"Create the presenters contained by the receiver"
 
 	super createComponents.
-	disassemblyPresenter := self add: Smalltalk developmentSystem workspaceClass new name: 'disassembly'.
-	sourcePresenter := self add: Smalltalk developmentSystem methodWorkspaceClass new name: 'source'.
+	disassemblyPresenter := self add: SmalltalkSystem current workspaceClass new name: 'disassembly'.
+	sourcePresenter := self add: SmalltalkSystem current methodWorkspaceClass new name: 'source'.
 	sourcePresenter isAutoParseEnabled: false.
 	textMapPresenter := self add: ListPresenter new name: 'textMap'.
 	toggleDebugPresenter := self add: BooleanPresenter new name: 'debugToggle'.

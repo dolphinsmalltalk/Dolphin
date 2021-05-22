@@ -345,7 +345,7 @@ systemModel
 	^SmalltalkSystem current!
 
 workspaceClass
-	^Smalltalk developmentSystem workspaceClass! !
+	^SmalltalkSystem current workspaceClass! !
 !Tools.SmalltalkToolShell categoriesFor: #applyOptions!private! !
 !Tools.SmalltalkToolShell categoriesFor: #browseIt!commands!public! !
 !Tools.SmalltalkToolShell categoriesFor: #buildPopupForCommand:!private! !

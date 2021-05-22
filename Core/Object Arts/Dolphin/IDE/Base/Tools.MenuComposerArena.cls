@@ -61,13 +61,13 @@ createDragImageList
 	bitmap := dragSource createDragImage: dragMenuIndex.
 	"We must use a device-dependent image list or the text/background may be lost when the icon
 	(if any) is painted, depending on the display driver."
-	dragImageList := Graphics.ImageList 
+	dragImageList := ImageList
 				newExtent: bitmap extent
 				depth: ILC_COLORDB
 				masked: false.
 	dragImageList addImage: bitmap.
 	bitmap free.
-	dragImageList 
+	dragImageList
 		beginDragImage: 0
 		hotSpotX: hotspot x
 		hotSpotY: hotspot y!

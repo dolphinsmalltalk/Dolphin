@@ -207,15 +207,15 @@ testAddRemoveOfInheritedMethods
 testBrowseItOpensSystemBrowserOnPackageOfLooseMethod
 	| default |
 	#'1512'.
-	default := Smalltalk developmentSystem defaultBrowserClass.
+	default := SmalltalkSystem current defaultBrowserClass.
 	
 	[| method |
-	Smalltalk developmentSystem defaultBrowserClass: SystemBrowserShell.
+	SmalltalkSystem current defaultBrowserClass: SystemBrowserShell.
 	method := Object compiledMethodAt: #asValue.
 	self assert: method isLoose.
 	browser := method browse.
 	self assert: browser packages equals: {method owningPackage}]
-			ensure: [Smalltalk developmentSystem defaultBrowserClass: default]!
+			ensure: [SmalltalkSystem current defaultBrowserClass: default]!
 
 testEvaluationContext
 	"#832"

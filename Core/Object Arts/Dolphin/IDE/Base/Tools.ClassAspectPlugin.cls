@@ -179,7 +179,7 @@ systemUpdateEvent
 	^#classUpdated:!
 
 textPresenterClass
-	^Smalltalk developmentSystem workspaceClass! !
+	^SmalltalkSystem current workspaceClass! !
 !Tools.ClassAspectPlugin categoriesFor: #accept!commands!public! !
 !Tools.ClassAspectPlugin categoriesFor: #applyOptions!options!private! !
 !Tools.ClassAspectPlugin categoriesFor: #aspect!constants!private! !

@@ -345,7 +345,7 @@ isEnabled: aBoolean
 isSaveablePackage: aPackage
 	"Private - Answer whether aPackage can be saved."
 
-	^aPackage ~= self packageManager systemPackage or: [Smalltalk developmentSystem isOAD]!
+	^aPackage ~= self packageManager systemPackage or: [SmalltalkSystem current isOAD]!
 
 model: aPackageHierarchyModel 
 	super model: aPackageHierarchyModel.
@@ -361,7 +361,7 @@ newPackage
 			[:ex |
 			"User probably doesn't have access rights"
 			].
-	dialog := UI.FileSaveDialog new
+	dialog := FileSaveDialog new
 				initialDirectory: directory;
 				fileTypes: {self systemModel pacFileDialogType};
 				defaultExtension: Package packageExtension;
@@ -540,7 +540,7 @@ openPackage
 	"Request the file name of an existing package to load."
 
 	| pathname fileDialog |
-	fileDialog := UI.FileOpenDialog new.
+	fileDialog := FileOpenDialog new.
 	fileDialog fileTypes: self systemModel packageOpenFileDialogTypes.
 	self filter
 		ifNotNil: [:filter | fileDialog initialDirectory: (FileLocator imageRelative localFileSpecFor: filter)].
@@ -810,7 +810,7 @@ savePackageAs
 	| pathname package |
 	package := self singlePackage.
 	(self okToSavePackage: package) ifFalse: [^self].
-	pathname := UI.FileSaveDialog new
+	pathname := FileSaveDialog new
 				fileTypes: self saveFileDialogTypes;
 				defaultExtension: Package packageExtension;
 				value: (File removeExtension: package packageFileName);
@@ -937,7 +937,7 @@ synchronizeFilter
 systemModel
 	"Private - Answer the development system model."
 
-	^Smalltalk developmentSystem!
+	^SmalltalkSystem current!
 
 testBrowserClass
 	^self systemModel testBrowserClass!

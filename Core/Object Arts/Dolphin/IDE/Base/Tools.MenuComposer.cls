@@ -99,7 +99,7 @@ commandItemClass
 copySelection
 	"Copies the primary selection to the clipboard"
 
-	UI.Clipboard current setObject: self selection!
+	Clipboard current setObject: self selection!
 
 cutSelection
 	"Cuts the current selections to the clipboard"

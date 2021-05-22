@@ -53,19 +53,20 @@ emitBasicWParamLParamFunctionOn: aPuttableStream
 		crtab.
 	self emitMethodBodyOn: aPuttableStream!
 
-emitCommentOn: aPuttableStream 
-	| target |
+emitCommentOn: aPuttableStream
+	| target devsys |
 	self comment isEmpty ifTrue: [^self].
 	target := String writeStream.
 	target nextPut: $".
 	self isPrivate ifTrue: [target nextPutAll: 'Private - '].
 	self emitCommentString: self comment on: target.
 	target nextPut: $".
+	devsys := SmalltalkSystem current.
 	aPuttableStream
-		nextPutAll: (Smalltalk developmentSystem 
+		nextPutAll: (devsys
 					wrapText: target contents
-					indent: Smalltalk developmentSystem workspaceClass defaultTabWidth + 1
-					tabWidth: Smalltalk developmentSystem workspaceClass defaultTabWidth);
+					indent: devsys workspaceClass defaultTabWidth + 1
+					tabWidth: devsys workspaceClass defaultTabWidth);
 		cr!
 
 emitCommentString: aString on: aPuttableStream 

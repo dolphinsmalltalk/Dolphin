@@ -49,7 +49,7 @@ checkUnimplemented: aStMessageNode
 								forNode: aStMessageNode
 								extras: {selector. receiver isVariable ifTrue: [receiver name] ifFalse: ['literal']. receiverClass}]].
 			^self].
-	(Smalltalk developmentSystem allSelectors includes: selector)
+	(SmalltalkSystem current allSelectors includes: selector)
 		ifFalse: 
 			[self
 				signalError: CWarnUndefinedSelector

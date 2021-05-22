@@ -120,7 +120,7 @@ ambientDispatch
 	"Answer an <IAxWinAmbientDispatch> which is the dispinterface used to get/set ambient properties on the control site."
 
 	ambientDispatch isNull
-		ifTrue: [ambientDispatch := self hostInterface queryInterface: UI.IAxWinAmbientDispatchEx].
+		ifTrue: [ambientDispatch := self hostInterface queryInterface: IAxWinAmbientDispatchEx].
 	^ambientDispatch!
 
 backcolor

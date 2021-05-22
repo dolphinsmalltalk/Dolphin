@@ -161,8 +161,7 @@ defaultModel
 icon
 	"Answers an Icon that can be used to represent this class."
 
-	^Smalltalk developmentSystem icon
-!
+	^SmalltalkSystem current icon!
 
 on: value choices: list caption: caption
 	"Answers a dialog to allow the user to choose from the <sequencedReadableCollection> of

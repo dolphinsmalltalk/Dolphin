@@ -48,12 +48,11 @@ initialize
 		self initialize.
 	"
 
-	(Smalltalk developmentSystem)
+	SmalltalkSystem current
 		addSystemFolderIcon: self toolsFolderIcon;
 		registerTool: self.
 	self reuseIfOpen: true.
-	self canUseIdeaSpace: true.
-	!
+	self canUseIdeaSpace: true!
 
 publishedAspects
 	"Answer a <LookupTable> of the <Aspect>s published by the receiver."

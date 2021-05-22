@@ -260,7 +260,7 @@ searchText: aString
 selectorsStartingWith: aString maxItems: anInteger
 	| stream |
 	stream := Array writeStream: (anInteger bitShift: -1).
-	Smalltalk developmentSystem allSelectors do: 
+	SmalltalkSystem current allSelectors do: 
 			[:each |
 			(each beginsWith: aString)
 				ifTrue: 

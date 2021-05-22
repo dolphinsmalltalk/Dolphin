@@ -67,7 +67,7 @@ status: text
 systemModel
 	"Private - Answer the development system model."
 
-	^Smalltalk developmentSystem! !
+	^SmalltalkSystem current! !
 !Tools.SmalllintPlugin categoriesFor: #browserEnvironment!operations!private! !
 !Tools.SmalllintPlugin categoriesFor: #checkerForRule:environment:!helpers!private! !
 !Tools.SmalllintPlugin categoriesFor: #methodFilterForRule:inEnvironment:!helpers!private! !

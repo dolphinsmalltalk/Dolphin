@@ -185,7 +185,7 @@ initialize
 	self defaultFilterObjectMethods: true.
 	self canUseIdeaSpace: true.
 	self autoSelectPackages: true.
-	Smalltalk developmentSystem
+	SmalltalkSystem current
 		addSystemFolderIcon: self toolsFolderIcon;
 		registerTool: self!
 

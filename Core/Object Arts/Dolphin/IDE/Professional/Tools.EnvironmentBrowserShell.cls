@@ -213,7 +213,8 @@ initializeTool
 	"
 	self initializeTool
 	"
-	(Smalltalk developmentSystem)
+
+	SmalltalkSystem current
 		addSystemFolderIcon: self toolsFolderIcon;
 		registerTool: self!
 

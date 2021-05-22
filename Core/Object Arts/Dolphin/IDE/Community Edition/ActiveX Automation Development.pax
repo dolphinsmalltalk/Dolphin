@@ -3321,8 +3321,9 @@ overridableIUnknownSelectors
 publishedAspectsOfInstances
 	"Answer a <LookupTable> of the <Aspect>s published by instances of the receiver."
 
+	<namespace: Tools>
 	^super publishedAspectsOfInstances
-		add: (Tools.Aspect sequenceableCollection: #methods) beReadOnly;
+		add: (Aspect sequenceableCollection: #methods) beReadOnly;
 		yourself!
 
 reservedDispSelectors
@@ -3459,8 +3460,9 @@ printIDLOn: target indent: tabs
 publishedAspectsOfInstances
 	"Answer a <LookupTable> of the <Aspect>s published by instances of the receiver."
 
+	<namespace: Tools>
 	^super publishedAspectsOfInstances
-		add: (Tools.Aspect multilineString: #printIDL);
+		add: (Aspect multilineString: #printIDL);
 		yourself! !
 !OS.COM.MemberDesc class categoriesFor: #publishedAspectsOfInstances!constants!public! !
 
@@ -3494,12 +3496,13 @@ idlAttributes
 publishedAspects
 	"Answer a <LookupTable> of the <Aspect>s published by instances of the receiver."
 
+	<namespace: Tools>
 	| aspects |
 	aspects := self class publishedAspectsOfInstances.
 	self isNull
 		ifFalse: 
 			[self getValidFields
-				do: [:each | aspects add: ((self getField: each) newAspect: each class: Tools.AXRecordAspect)]].
+				do: [:each | aspects add: ((self getField: each) newAspect: each class: AXRecordAspect)]].
 	^aspects! !
 !OS.COM.Record categoriesFor: #publishedAspects!accessing!public! !
 
@@ -3839,8 +3842,9 @@ icon
 publishedAspectsOfInstances
 	"Answer a <LookupTable> of the <Aspect>s published by instances of the receiver."
 
+	<namespace: Tools>
 	^super publishedAspectsOfInstances
-		add: (Tools.Aspect sequenceableCollection: #members) beReadOnly;
+		add: (Aspect sequenceableCollection: #members) beReadOnly;
 		yourself! !
 !OS.COM.StructureTypeAnalyzer class categoriesFor: #icon!constants!public! !
 !OS.COM.StructureTypeAnalyzer class categoriesFor: #publishedAspectsOfInstances!constants!public! !
@@ -3981,8 +3985,9 @@ printIDLBodyOn: target indent: tabs
 publishedAspectsOfInstances
 	"Answer a <LookupTable> of the <Aspect>s published by instances of the receiver."
 
+	<namespace: Tools>
 	^super publishedAspectsOfInstances
-		add: (Tools.Aspect sequenceableCollection: #interfaces) beReadOnly;
+		add: (Aspect sequenceableCollection: #interfaces) beReadOnly;
 		yourself! !
 !OS.COM.TKindCoclassAnalyzer class categoriesFor: #publishedAspectsOfInstances!constants!public! !
 
@@ -4467,8 +4472,9 @@ icon
 publishedAspectsOfInstances
 	"Answer a <LookupTable> of the <Aspect>s published by instances of the receiver."
 
+	<namespace: Tools>
 	^super publishedAspectsOfInstances
-		add: (Tools.Aspect sequenceableCollection: #properties) beReadOnly;
+		add: (Aspect sequenceableCollection: #properties) beReadOnly;
 		yourself! !
 !OS.COM.TKindDispatchAnalyzer class categoriesFor: #icon!constants!public! !
 !OS.COM.TKindDispatchAnalyzer class categoriesFor: #publishedAspectsOfInstances!constants!public! !
@@ -4560,8 +4566,9 @@ removeOldWrappers: aClass
 publishedAspectsOfInstances
 	"Answer a <LookupTable> of the <Aspect>s published by instances of the receiver."
 
+	<namespace: Tools>
 	^super publishedAspectsOfInstances
-		add: (Tools.Aspect sequenceableCollection: #constants) beReadOnly;
+		add: (Aspect sequenceableCollection: #constants) beReadOnly;
 		yourself! !
 !OS.COM.TKindEnumAnalyzer class categoriesFor: #publishedAspectsOfInstances!constants!public! !
 
@@ -5229,8 +5236,9 @@ icon
 publishedAspectsOfInstances
 	"Answer a <LookupTable> of the <Aspect>s published by instances of the receiver."
 
+	<namespace: Tools>
 	^super publishedAspectsOfInstances
-		add: (Tools.Aspect dictionary: #functionsByName) beReadOnly;
+		add: (Aspect dictionary: #functionsByName) beReadOnly;
 		yourself! !
 !OS.COM.TKindModuleAnalyzer class categoriesFor: #icon!constants!public! !
 !OS.COM.TKindModuleAnalyzer class categoriesFor: #publishedAspectsOfInstances!constants!public! !
@@ -5393,7 +5401,7 @@ compileMethod: aString categories: aCollection
 		ifFalse: 
 			[| class source |
 			class := self programObject.
-			source := Smalltalk developmentSystem reformatSource: aString in: class.
+			source := Tools.SmalltalkSystem current reformatSource: aString in: class.
 			class compile: source categories: aCollection]!
 
 compileRawMethod: aString categories: categories
@@ -6013,8 +6021,9 @@ You can Ignore this warning, but it is suggested that you check the location of 
 publishedAspectsOfInstances
 	"Answer a <LookupTable> of the <Aspect>s published by instances of the receiver."
 
+	<namespace: Tools>
 	^super publishedAspectsOfInstances
-		add: (Tools.Aspect multilineString: #printIDL) beReadOnly;
+		add: (Aspect multilineString: #printIDL) beReadOnly;
 		yourself! !
 !OS.COM.TypeInfoAnalyzer class categoriesFor: #publishedAspectsOfInstances!constants!public! !
 
@@ -6386,7 +6395,7 @@ highLevelWrapperStyles
 icon
 	"Answers an <Icon> that can be used to represent this class"
 
-	^TypeLibraryAnalyzer icon!
+	^OS.COM.TypeLibraryAnalyzer icon!
 
 namespaceClashSignal
 	"Answer the <exceptionSelector>/<exceptionSignaler> which can be signalled to	when an existing class is in a different namespace."
@@ -6722,7 +6731,7 @@ isPoolCheck: aVariableBinding
 maybeChangeNamespaceOf: existingClass
 	(self namespaceClashSignal signalWith: existingClass)
 		ifTrue: 
-			[Smalltalk developmentSystem renameClass: existingClass
+			[Tools.SmalltalkSystem current renameClass: existingClass
 				to: (BindingReference pathString: existingClass unqualifiedName home: self environment)
 						asFullyQualifiedReference asSymbol].
 	^existingClass binding!
@@ -7187,21 +7196,22 @@ open
 publishedAspectsOfInstances
 	"Answer a <LookupTable> of the <Aspect>s published by instances of the receiver."
 
+	<namespace: Tools>
 	^super publishedAspectsOfInstances
-		add: (Tools.Aspect boolean: #defineFunctionTables);
-		add: (Tools.Aspect boolean: #defineMethodProtocols);
-		add: (Tools.Aspect string: #namespaceName);
-		add: (Tools.Aspect choice: #highLevelWrappers from: self highLevelWrapperStyles);
-		add: (Tools.Aspect choice: #classComments from: self classCommentStyles);
-		add: (Tools.Aspect choice: #tracing from: self tracingStyles);
-		add: (Tools.Aspect name: #aliasMap);
-		add: (Tools.Aspect sequenceableCollection: #interfaces) beReadOnly;
-		add: (Tools.Aspect sequenceableCollection: #coclasses) beReadOnly;
-		add: (Tools.Aspect sequenceableCollection: #enums) beReadOnly;
-		add: (Tools.Aspect sequenceableCollection: #modules) beReadOnly;
-		add: (Tools.Aspect sequenceableCollection: #namedStructs) beReadOnly;
-		add: (Tools.Aspect sequenceableCollection: #namedUnions) beReadOnly;
-		add: (Tools.Aspect sequenceableCollection: #typedefs) beReadOnly;
+		add: (Aspect boolean: #defineFunctionTables);
+		add: (Aspect boolean: #defineMethodProtocols);
+		add: (Aspect string: #namespaceName);
+		add: (Aspect choice: #highLevelWrappers from: self highLevelWrapperStyles);
+		add: (Aspect choice: #classComments from: self classCommentStyles);
+		add: (Aspect choice: #tracing from: self tracingStyles);
+		add: (Aspect name: #aliasMap);
+		add: (Aspect sequenceableCollection: #interfaces) beReadOnly;
+		add: (Aspect sequenceableCollection: #coclasses) beReadOnly;
+		add: (Aspect sequenceableCollection: #enums) beReadOnly;
+		add: (Aspect sequenceableCollection: #modules) beReadOnly;
+		add: (Aspect sequenceableCollection: #namedStructs) beReadOnly;
+		add: (Aspect sequenceableCollection: #namedUnions) beReadOnly;
+		add: (Aspect sequenceableCollection: #typedefs) beReadOnly;
 		yourself!
 
 registerTypeLib

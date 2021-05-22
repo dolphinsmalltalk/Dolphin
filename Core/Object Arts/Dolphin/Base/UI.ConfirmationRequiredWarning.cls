@@ -44,11 +44,11 @@ confirmBlock: aNiladicValuable
 defaultAction
 	^cancelBlock isNil
 		ifTrue: 
-			[(UI.MessageBox confirm: self messageText)
+			[(MessageBox confirm: self messageText)
 				ifTrue: [self confirmBlock value]
 				ifFalse: [self refuseBlock value]]
 		ifFalse: 
-			[UI.MessageBox
+			[MessageBox
 				confirm: self messageText
 				onYes: self confirmBlock
 				onNo: self refuseBlock

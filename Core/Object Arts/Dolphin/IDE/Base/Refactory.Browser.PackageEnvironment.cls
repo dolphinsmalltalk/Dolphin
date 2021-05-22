@@ -93,7 +93,7 @@ packageNames
 
 packageNames: aCollection
 	| pacman |
-	pacman := Smalltalk developmentSystem packageManager.
+	pacman := SmalltalkSystem current packageManager.
 	self packages: (aCollection collect: [:each | pacman packageNamed: each])!
 
 packages

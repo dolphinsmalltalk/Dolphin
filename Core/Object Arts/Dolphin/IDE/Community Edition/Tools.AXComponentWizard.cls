@@ -61,7 +61,7 @@ browseIDL
 	stm := ReadWriteStream on: (String new: 2048).
 	lib printIDLOn: stm.
 	stm reset.
-	(Smalltalk developmentSystem workspaceShellClass show)
+	SmalltalkSystem current workspaceShellClass show
 		language: #null;
 		streamIn: stm!
 
@@ -76,11 +76,11 @@ browseTypesIDL
 	| stm |
 	stm := ReadWriteStream on: (String new: 2048).
 	types selections do: 
-			[:type | 
+			[:type |
 			type printIDLOn: stm.
 			stm cr].
 	stm reset.
-	Smalltalk developmentSystem workspaceShellClass show streamIn: stm!
+	SmalltalkSystem current workspaceShellClass show streamIn: stm!
 
 cancel
 	"Close the receiver without applying the changes back to the original model"
@@ -506,7 +506,7 @@ initialize
 		self initialize.
 	"
 
-	Smalltalk developmentSystem
+	SmalltalkSystem current
 		addAdditionalToolsFolderIcon: self toolsFolderIcon;
 		registerTool: self.
 	self reuseIfOpen: true.

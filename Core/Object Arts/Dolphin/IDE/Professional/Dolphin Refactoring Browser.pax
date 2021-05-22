@@ -1,6 +1,7 @@
 ﻿| package |
 package := Package name: 'Dolphin Refactoring Browser'.
 package paxVersion: 2.1;
+	environmentName: #{Tools};
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk Refactoring Browser Native UI Integration
 Copyright (c) Object Arts Ltd, 2001-2009.
@@ -515,15 +516,15 @@ publishedAspects
 	| answer |
 	answer := self class publishedAspectsOfInstances.
 	self result isClassEnvironment
-		ifTrue: [answer add: ((Tools.Aspect collection: #failedClasses)
+		ifTrue: [answer add: ((Aspect collection: #failedClasses)
 						beReadOnly;
 						yourself)]
-		ifFalse: [answer add: ((Tools.Aspect collection: #failedMethods)
+		ifFalse: [answer add: ((Aspect collection: #failedMethods)
 						beReadOnly;
 						yourself)].
 	self searchStrings notEmpty
 		ifTrue: 
-			[answer add: ((Tools.Aspect sequenceableCollection: #searchStrings)
+			[answer add: ((Aspect sequenceableCollection: #searchStrings)
 						beReadOnly;
 						yourself)].
 	^answer!
@@ -597,7 +598,7 @@ displayOn: aPuttableStream
 		print: selector!
 
 getOptionVariableToMoveToOf: aClass in: aSelector
-	^Smalltalk developmentSystem selectTargetVariableOf: aClass
+	^SmalltalkSystem current selectTargetVariableOf: aClass
 		parseTree: (aClass parseTreeFor: aSelector)! !
 !Refactory.Browser.ExtractMethodToComponentRefactoring categoriesFor: #displayOn:!displaying!public! !
 !Refactory.Browser.ExtractMethodToComponentRefactoring categoriesFor: #getOptionVariableToMoveToOf:in:!public! !
@@ -705,7 +706,7 @@ getOptionMethodName: anRBMethodName
 										nextPut: $:].
 							stream contents].
 			anRBMethodName selector: mname asSymbol].
-	^(Tools.MethodNameDialog showModalOn: anRBMethodName) isNil ifFalse: [anRBMethodName]! !
+	^(MethodNameDialog showModalOn: anRBMethodName) isNil ifFalse: [anRBMethodName]! !
 !Refactory.Browser.MethodRefactoring categoriesFor: #getOptionMethodName:!options!public! !
 
 !Refactory.Browser.MoveMethodRefactoring methodsFor!
@@ -724,20 +725,20 @@ displayOn: aPuttableStream
 getOptionSelfArgumentName
 	| newName existing |
 	existing := parseTree allDefinedVariables.
-	newName := (UI.Prompter
+	newName := (Prompter
 				createOn: String new
 				prompt: 'Enter name for argument to refer to "self" in extracted method'
 				caption: self displayString)
 				validationBlock: 
 						[:name |
 						(existing includes: name) not and: 
-								[moveToClasses allSatisfy: [:each | (RBCondition isValidTemporaryVariableName: name for: each) check]]];
+								[moveToClasses allSatisfy: [:each | (Refactory.Browser.RBCondition isValidTemporaryVariableName: name for: each) check]]];
 				showModal.
 	newName isNil ifTrue: [^self refactoringAborted: 'Method not moved'].
 	^newName!
 
 getOptionVariableTypes: choicesCollection selected: suggestionsCollection
-	^(UI.ChoicePrompter
+	^(ChoicePrompter
 		create: 'Extensible multi-selection choice prompter'
 		on: suggestionsCollection asOrderedCollection
 		multipleChoices: ((choicesCollection union: suggestionsCollection)
@@ -754,7 +755,7 @@ getOptionVariableTypes: choicesCollection selected: suggestionsCollection
 				(global notNil
 					and: [(global isKindOf: Behavior) and: [self model environment includesClass: global]])
 						ifFalse: 
-							[UI.MessageBox errorMsg: ('Sorry, but <1s> is not a valid class name' expandMacrosWith: aString).
+							[MessageBox errorMsg: ('Sorry, but <1s> is not a valid class name' expandMacrosWith: aString).
 							nil]
 						ifTrue: [self model classNamed: global name]];
 		showModal! !
@@ -877,7 +878,7 @@ owningPackage
 confirm: aString
 	"Dolphin specific confirmation prompt"
 
-	^UI.MessageBox confirm: aString caption: self displayString! !
+	^MessageBox confirm: aString caption: self displayString! !
 !Refactory.Browser.Refactoring categoriesFor: #confirm:!helpers!public! !
 
 !Refactory.Browser.Refactoring class methodsFor!
@@ -885,12 +886,12 @@ confirm: aString
 icon
 	"Answers an Icon that can be used to represent this class"
 
-	^Graphics.Icon fromId: 'Refactoring.ico'!
+	^Icon fromId: 'Refactoring.ico'!
 
 renameIcon
 	"Answers an Icon that can be used to represent this class"
 
-	^Graphics.Icon fromId: 'InPlaceRename.ico'! !
+	^Icon fromId: 'InPlaceRename.ico'! !
 !Refactory.Browser.Refactoring class categoriesFor: #icon!constants!public! !
 !Refactory.Browser.Refactoring class categoriesFor: #renameIcon!constants!public! !
 
@@ -1083,7 +1084,7 @@ icon
 
 newWithCachingContext
 	^self new
-		context: SmalllintCachingContext new;
+		context: Refactory.Browser.SmalllintCachingContext new;
 		yourself! !
 !Refactory.Browser.SmalllintChecker class categoriesFor: #newWithCachingContext!instance creation!public! !
 
@@ -1181,9 +1182,9 @@ true ifFalse: [`@.stmts].
 		name: 'Eliminate unnecessary ifTrue:[ifFalse:] conditions'!
 
 renameArgument: beforeString to: afterString
-	^TransformationRule new
+	^Refactory.Browser.TransformationRule new
 		name: ('Rename argument <1p> to <2p>' expandMacrosWith: beforeString with: afterString);
-		rewriteUsing: (ParseTreeRewriter new
+		rewriteUsing: (Refactory.Browser.ParseTreeRewriter new
 					replaceArgument: beforeString with: afterString;
 					replace: beforeString with: afterString;
 					yourself);

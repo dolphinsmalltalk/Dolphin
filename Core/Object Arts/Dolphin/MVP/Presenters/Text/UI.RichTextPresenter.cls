@@ -34,7 +34,7 @@ bePlain
 chooseSelectionColor
 	"Choose the color for the selection in the receiver"
 
-	(UI.ColorDialog on: (self view aspectValue: #selectionColor))
+	(ColorDialog on: (self view aspectValue: #selectionColor))
 		caption: 'Selection Color';
 		showModal!
 
@@ -45,7 +45,7 @@ chooseSelectionFont
 
 	| dialog struct charFormat |
 	charFormat := self view selectionCharFormat.
-	dialog := UI.FontDialog on: charFormat font.
+	dialog := FontDialog on: charFormat font.
 	struct := dialog winStruct.
 	charFormat populateChooseFont: struct.
 	dialog showModal.
