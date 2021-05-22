@@ -196,9 +196,9 @@ testHierarchyMove
 testPackageMove
 	"Test moving classes around the package hierarchy"
 
-	| abc def |
+	| def |
 	self resetSelection.
-	abc := self createClassesABC.	"Package A"
+	self createClassesABC.	"Package A"
 	def := self createClassesDEF.	"Package B"
 
 	"Make some changes to the packaging which shouldn't alter the displayed classes"

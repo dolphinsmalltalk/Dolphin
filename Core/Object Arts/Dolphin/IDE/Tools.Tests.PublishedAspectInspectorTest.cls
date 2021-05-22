@@ -652,12 +652,11 @@ testRootAspectVisible
 	self assert: (children collect: [:each | each name]) asArray equals: #(#bottom #left #right #top)!
 
 testSetToNil
-	| inspectee listPresenter root |
+	| inspectee root |
 	inspectee := OrderedCollection with: 1 @ 2.
 	self createInspectorOn: inspectee.
 	self assert: treePresenter view itemCount identicalTo: 2.
 	self repaint.
-	listPresenter := self aspectPresenter listPresenter.
 	self assert: treePresenter view itemCount identicalTo: 2.
 	treePresenter view expandAll.
 	self repaint.

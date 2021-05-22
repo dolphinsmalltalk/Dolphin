@@ -270,7 +270,7 @@ testAddRemoveClasses
 	self addRemoveRenameClasses!
 
 testAddRemoveMethods
-	| methodA methodB methodC |
+	| methodA methodC |
 	self createClassesABC.
 	shell packages: {packageA. packageC}.
 	methodsPresenter ensureVisible.
@@ -280,10 +280,10 @@ testAddRemoveMethods
 		package: packageA.
 	self assert: methodsPresenter model isEmpty.
 	"Add a method which is loose but not in one of the selected pacakges"
-	methodB := dolphinTestA
-				compile: 'testLooseInB ^1'
-				categories: #()
-				package: packageB.
+	dolphinTestA
+		compile: 'testLooseInB ^1'
+		categories: #()
+		package: packageB.
 	self assert: methodsPresenter model isEmpty.
 	methodC := dolphinTestA
 				compile: 'testLooseInC ^1'

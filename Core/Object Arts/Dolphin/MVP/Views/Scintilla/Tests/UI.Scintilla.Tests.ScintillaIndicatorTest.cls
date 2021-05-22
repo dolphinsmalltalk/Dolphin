@@ -28,8 +28,8 @@ testStyleNameRangeTag
 	testMethod extraIndex: 0.
 	"Invoke the method directly so we don't need to install it."
 	indicator2 := testMethod value: Indicator withArguments: {#normal. 1 to: 10. tag}.
-	self assert: indicator1 styleName identicalTo: #normal.
-	self assert: indicator1 range equals: (1 to: 10).
-	self assert: indicator1 tag identicalTo: tag! !
+	self assert: indicator2 styleName identicalTo: #normal.
+	self assert: indicator2 range equals: (1 to: 10).
+	self assert: indicator2 tag identicalTo: tag! !
 !UI.Scintilla.Tests.ScintillaIndicatorTest categoriesFor: #testStyleNameRangeTag!public!unit tests! !
 

@@ -1253,7 +1253,7 @@ overrideMethods
 	(methods isNil or: [methods isEmpty]) ifTrue: [^self].
 	methods do: 
 			[:each |
-			| keywordsAndArgs env |
+			| keywordsAndArgs |
 			stream reset.
 			keywordsAndArgs := self systemModel keywordsAndArgsOfMethod: each.
 			self systemModel printSignatureForKeywordsAndArgs: keywordsAndArgs on: stream.

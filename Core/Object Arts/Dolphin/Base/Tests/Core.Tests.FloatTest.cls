@@ -1056,7 +1056,7 @@ testPrintOnDecimalPlacesFmax
 	self assert: (self printString: Float fmax negated decimalPlaces: 5) equals: '-' , fmax!
 
 testPrintOnDecimalPlacesFmin
-	| fmax fmin |
+	| fmin |
 	fmin := String writeStream
 				nextPutAll: '0.';
 				next: 308 - 1 put: $0;

@@ -42,7 +42,7 @@ testRemapIPOfSendSelf
 	"This test relies on the fact that there are only four ShortSendNoArgs instructions to
 	be able to test the SendNoArgs instruction by inserting some dummy literals in the frame."
 
-	| block method info debugMethod debugInfo startIP byte |
+	| block method info debugMethod debugInfo startIP byte map debugMap i |
 	self assert: ShortSendOneArg - ShortSendSelfZeroArgs identicalTo: 5.
 	block := Compiler
 				evaluate: '#literal0. #literal1. #literal2. #literal3. [self shortSendNoArgs. self sendNoArgs]'.
@@ -60,11 +60,12 @@ testRemapIPOfSendSelf
 	self assert: (debugMethod byteCodes at: startIP + 2) equals: ShortSendZeroArgs + 4.
 	debugInfo := debugMethod debugInfo.
 	"Initial IP should not change in debug method because there are no instructions before the BlockCopy"
-	"self 
-		assert: (BlockFrame new 
-				mapIP: startIP
-				from: info
-				to: debugInfo) = startIP."
+	map := info textMap.
+	debugMap := debugInfo textMap.
+	self assert: map size equals: debugMap size.
+	i := BlockFrame findIP: startIP inTextMap: map.
+	self assert: (map at: i) key equals: startIP.
+	self assert: (debugMap at: i) key equals: startIP.
 	"Test remapping of the instruction in the middle of the block"
 	byte := debugMethod byteCodes at: startIP + 3.
 	self assert: (byte = Pop or: [byte = PopPushSelf])! !
