@@ -271,8 +271,13 @@ private:
 	void MaybePatchNegativeNumber();
 	void MaybePatchLiteralMessage();
 
-	// Parsing for primitive methods
+	void ParseTags();
+	TempVarDecl* DeclareFailureCodeTemp();
 	void ParsePrimitive();
+	void ParseKeywordAnnotation();
+	Oop ParseAnnotationArgument();
+	Oop ParseAnnotationArgumentStatic();
+	void ParseUnaryAnnotation();
 
 	struct LibCallType
 	{

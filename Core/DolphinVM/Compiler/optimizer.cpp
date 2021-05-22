@@ -2228,10 +2228,13 @@ POTE Compiler::MakeMethodAnnotations()
 			{
 				m_piVM->StorePointerWithValue(argsArray.fields + k, args[k]);
 			}
+			m_piVM->MakeImmutable((Oop)oteArray, TRUE);
 		}
 		m_piVM->StorePointerWithValue(methodAnnotations.fields + j + 1, (Oop)oteArray);
 		j += 2;
 	}
+
+	m_piVM->MakeImmutable((Oop)oteMethodAnnotations, TRUE);
 
 	return oteMethodAnnotations;
 }

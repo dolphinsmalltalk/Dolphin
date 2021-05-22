@@ -1333,10 +1333,7 @@ POTE Compiler::ParseMethod()
 	PushNewScope(textpos_t::start);
 
 	ParseMessagePattern();
-	if (ThisTokenIsBinary('<'))
-	{
-		ParsePrimitive();
-	}
+	ParseTags();
 	ParseTemporaries();
 	
 	if (m_ok)
@@ -2256,110 +2253,294 @@ ip_t Compiler::ParseUnaryContinuation(ip_t exprMark, textpos_t textPosition)
 	return continuationPointer;
 }
 
-void Compiler::ParsePrimitive()
+TempVarDecl* Compiler::DeclareFailureCodeTemp()
 {
-	TokenType next = NextToken();
-	Str strToken = ThisTokenText;
-
 	// Declare the implicit _failureCode temporary - this will always be the first temp of the method after the arguments
 	TempVarDecl* pErrorCodeDecl = AddTemporary((LPUTF8)"_failureCode", ThisTokenRange, false);
 	TempVarRef* pErrorTempRef = m_pCurrentScope->AddTempRef(pErrorCodeDecl, VarRefType::Write, ThisTokenRange);
 	// Implicitly written to by the primitive itself, but is then read-only and cannot be assigned
 	pErrorCodeDecl->BeReadOnly();
+	return pErrorCodeDecl;
+}
 
-	if (next == TokenType::NameColon)
+void Compiler::ParsePrimitive()
+{
+	TempVarDecl* pErrorCodeDecl = DeclareFailureCodeTemp();
+
+	if (NextToken() != TokenType::SmallIntegerConst)
+		CompileError(CErrExpectPrimIdx);
+	else
 	{
-		if (strToken == (LPUTF8)"primitive:")
+		m_primitiveIndex = static_cast<uintptr_t>(ThisTokenInteger);
+		if (m_primitiveIndex > PRIMITIVE_MAX && !(m_flags & CompilerFlags::Boot))
+			CompileError(ThisTokenRange, CErrBadPrimIdx);
+
+		TokenType next = NextToken();
+		if (next == TokenType::NameColon && Str(ThisTokenText) == (LPUTF8)"error:")
 		{
-			if (NextToken() != TokenType::SmallIntegerConst)
-				CompileError(CErrExpectPrimIdx);
+			if (NextToken() == TokenType::NameConst)
+			{
+				// Rename the _failureCode temporary
+				Str errorCodeName = ThisTokenText;
+				CheckTemporaryName(errorCodeName, ThisTokenRange, false);
+				pErrorCodeDecl->Name = errorCodeName;
+				pErrorCodeDecl->TextRange = ThisTokenRange;
+				NextToken();
+			}
+			else
+				CompileError(ThisTokenRange, CErrExpectVariable);
+		}
+	}
+}
+
+void Compiler::ParseKeywordAnnotation()
+{
+	Str keywordSelector;
+	OOPVECTOR args;
+	TEXTRANGE lastArgRange;
+	do
+	{
+		keywordSelector += ThisTokenText;
+		NextToken();
+		lastArgRange = ThisTokenRange;
+		Oop arg = ParseAnnotationArgument();
+		m_piVM->AddReference(arg);
+		args.push_back(arg);
+	} while (m_ok && ThisToken == TokenType::NameColon);
+
+	if (m_ok)
+	{
+		POTE selector = InternSymbol(keywordSelector);
+		m_piVM->AddReference((Oop)selector);
+		m_annotations.push_back(MethodAnnotation(selector, args));
+
+		if (selector == GetVMPointers().namespaceAnnotationSelector) 
+		{
+			Oop arg = args[0];
+			if (IsIntegerObject(arg) || !m_piVM->IsAClass((POTE)arg))
+			{
+				CompileError(lastArgRange, CErrExpectNamespace);
+			}
 			else
 			{
-				m_primitiveIndex = static_cast<uintptr_t>(ThisTokenInteger);
-				if (m_primitiveIndex > PRIMITIVE_MAX && !(m_flags & CompilerFlags::Boot))
-					CompileError(ThisTokenRange, CErrBadPrimIdx);
-				
-				next = NextToken();
-				if (next == TokenType::NameColon && Str(ThisTokenText) == (LPUTF8)"error:")
-				{
-					if (NextToken() == TokenType::NameConst)
-					{
-						// Rename the _failureCode temporary
-						Str errorCodeName = ThisTokenText;
-						CheckTemporaryName(errorCodeName, ThisTokenRange, false);
-						pErrorCodeDecl->Name = errorCodeName;
-						pErrorCodeDecl->TextRange = ThisTokenRange;
-						NextToken();
-					}
-					else
-						CompileError(ThisTokenRange, CErrExpectVariable);
-				}
-
-				if (ThisTokenIsBinary('>'))
-				{
-					NextToken();
-				}
-				else
-					CompileError(CErrExpectCloseTag);
-			}
-			return;
-		}
-		else
-		{
-			LibCallType* callType = ParseCallingConvention(strToken);
-			if (callType)
-			{
-				ParseLibCall(callType->nCallType, DolphinX::ExtCallPrimitive::LibCall);
-				return;
+				m_environment = (POTE)arg;
 			}
 		}
 	}
-	else
+}
+
+Oop Compiler::ParseAnnotationArgument()
+{
+	TokenType tokenType = ThisToken;
+	Oop arg;
+	
+	switch(tokenType)
 	{
-		if (next == TokenType::NameConst)
+	case TokenType::NameConst:
+		arg = ParseAnnotationArgumentStatic();
+		break;
+
+	case TokenType::SmallIntegerConst:
+		arg = m_piVM->NewSignedInteger(ThisTokenInteger);
+		NextToken();
+		break;
+
+	case TokenType::LargeIntegerConst:
+	case TokenType::ScaledDecimalConst:
+		arg = NewNumber(ThisTokenText);
+		NextToken();
+		break;
+
+	case TokenType::FloatingConst:
+		arg = reinterpret_cast<Oop>(m_piVM->NewFloat(ThisTokenFloat));
+		NextToken();
+		break;
+
+	case TokenType::CharConst:
+		arg = reinterpret_cast<Oop>(m_piVM->NewCharacter(static_cast<char32_t>(ThisTokenInteger)));
+		NextToken();
+		break;
+
+	case TokenType::SymbolConst:
+		arg = (Oop)InternSymbol(ThisTokenText);
+		NextToken();
+		break;
+
+	case TokenType::TrueConst:
+		arg = (Oop)GetVMPointers().False;
+		NextToken();
+		break;
+
+	case TokenType::FalseConst:
+		arg = (Oop)GetVMPointers().False;
+		NextToken();
+		break;
+
+	case TokenType::NilConst:
+		arg = (Oop)m_piVM->NilPointer();
+		NextToken();
+		break;
+
+	case TokenType::AsciiStringConst:	// We no longer create AnsiString literals, only Utf8Strings
+	case TokenType::Utf8StringConst:
+	{
+		LPUTF8 szLiteral = ThisTokenText;
+		arg = reinterpret_cast<Oop>(*szLiteral
+			? NewUtf8String(szLiteral)
+			: GetVMPointers().EmptyString);
+		NextToken();
+	}
+	break;
+
+	case TokenType::ExprConstBegin:
+		arg = ParseConstExpression();
+		NextToken();
+		break;
+
+	case TokenType::ArrayBegin:
+		arg = (Oop)ParseArray();
+		break;
+
+	case TokenType::ByteArrayBegin:
+		arg = (Oop)ParseByteArray();
+		break;
+
+	case TokenType::QualifiedRefBegin:
+		arg = (Oop)ParseQualifiedReference(ThisTokenRange.m_start);
+		break;
+
+	default:
+		arg = (Oop)m_piVM->NilPointer();
+		CompileError(CErrExpectAnnotationArg);
+		break;
+	};
+
+	return arg;
+}
+
+Oop Compiler::ParseAnnotationArgumentStatic()
+{
+	Str strName = ThisTokenText;
+	// Only static variables are valid arguments in annotations
+	if (strName == VarSelf || strName == VarSuper || strName == VarThisContext ||
+		m_pCurrentScope->FindTempDecl(strName) != nullptr ||
+		FindNameAsInstanceVariable(strName) != -1)
+	{
+		CompileError(CErrExpectAnnotationArg);
+		NextToken();
+		return (Oop)m_piVM->NilPointer();
+	}
+
+	POTE oteStatic;
+	switch (FindNameAsStatic(ThisTokenText, oteStatic, false))
+	{
+	case StaticType::Constant:
+	case StaticType::Variable:
+		break;
+
+	default:
+		CompileError(ThisTokenRange, CErrUndeclared, (Oop)NewUtf8String(ThisTokenText));
+		return (Oop)m_piVM->NilPointer();
+	}
+
+	STVariableBinding& var = *(STVariableBinding*)GetObj(oteStatic);
+	Oop value = var.value;
+	// Must remove this last as in the case of a PoolConstantsDictionary the Association is not state
+	// and this will be the last ref.
+	m_piVM->RemoveReference(reinterpret_cast<Oop>(oteStatic));
+	NextToken();
+	return value;
+}
+
+void Compiler::ParseUnaryAnnotation()
+{
+	if (Str(u8"mutable") == ThisTokenText)
+	{
+		this->m_isMutable = true;
+	}
+
+	POTE oteSelector = InternSymbol(ThisTokenText);
+	m_piVM->AddReference((Oop)oteSelector);
+	m_annotations.push_back(MethodAnnotation(oteSelector, OOPVECTOR()));
+	NextToken();
+}
+
+void Compiler::ParseTags()
+{
+	while (ThisTokenIsBinary('<') && m_ok)
+	{
+		TokenType next = NextToken();
+		Str strToken = ThisTokenText;
+
+		if (next == TokenType::NameColon)
+		{
+			if (strToken == (LPUTF8)"primitive:")
+			{
+				ParsePrimitive();
+			}
+			else
+			{
+				LibCallType* callType = ParseCallingConvention(strToken);
+				if (callType)
+				{
+					ParseLibCall(callType->nCallType, DolphinX::ExtCallPrimitive::LibCall);
+				}
+				else
+				{
+					ParseKeywordAnnotation();
+				}
+			}
+		}
+		else if (next == TokenType::NameConst)
 		{
 			if (strToken == (LPUTF8)"virtual")
 			{
-				if (NextToken() == TokenType::NameColon)
+				NextToken();
+				LibCallType* callType = ParseCallingConvention(ThisTokenText);
+				if (callType)
 				{
-					LibCallType* callType = ParseCallingConvention(ThisTokenText);
-					if (callType)
-					{
-						ParseVirtualCall(callType->nCallType);
-						return;
-					}
+					ParseVirtualCall(callType->nCallType);
+				}
+				else
+				{
+					CompileError(CErrExpectCallConv);
 				}
 			}
 			else if (strToken == (LPUTF8)"overlap")
 			{
-				if (NextToken() == TokenType::NameColon)
-				{
-					LibCallType* callType = ParseCallingConvention(ThisTokenText);
-					if (callType)
-					{
-						ParseLibCall(callType->nCallType, DolphinX::ExtCallPrimitive::AsyncLibCall);
-						return;
-					}
-				}
-			}
-			else if (strToken == (LPUTF8)"mutable")
-			{
 				NextToken();
-				if (ThisTokenIsBinary('>'))
+				LibCallType* callType = ParseCallingConvention(ThisTokenText);
+				if (callType)
 				{
-					NextToken();
-					this->m_isMutable = true;
+					ParseLibCall(callType->nCallType, DolphinX::ExtCallPrimitive::AsyncLibCall);
 				}
 				else
 				{
-					CompileError(CErrExpectCloseTag);
+					CompileError(CErrExpectCallConv);
 				}
-				return;
+			}
+			else
+			{
+				ParseUnaryAnnotation();
+			}
+		}
+		else
+		{
+			CompileError(CErrBadSelector);
+		}
+
+		if (m_ok)
+		{
+			if (ThisTokenIsBinary('>'))
+			{
+				NextToken();
+			}
+			else
+			{
+				CompileError(CErrExpectCloseTag);
 			}
 		}
 	}
-	
-	CompileError(CErrBadPrimCallType);
 }
 
 
@@ -2372,7 +2553,7 @@ Compiler::LibCallType* Compiler::ParseCallingConvention(const Str& strToken)
 			return &callTypes[i];
 		}
 		
-		return 0;
+		return nullptr;
 }
 
 
@@ -2405,14 +2586,6 @@ argcount_t Compiler::ParseExtCallArgs(TypeDescriptor args[])
 				CompileError(TEXTRANGE(nArgsStart, LastTokenRange.m_stop), CErrTooManyArgTypes);
 	}
 	
-	if (m_ok)
-	{
-		if (ThisTokenIsBinary('>'))
-			NextToken();
-		else
-			CompileError(CErrExpectCloseTag);
-	}
-
 	return argcount;
 }
 
@@ -2423,7 +2596,9 @@ void Compiler::ParseVirtualCall(DolphinX::ExtCallDeclSpec decl)
 	_ASSERTE(m_literalLimit <= 256);
 	
 	NextToken();
-	
+
+	DeclareFailureCodeTemp();
+
 	TypeDescriptor args[ARGLIMIT];
 	TEXTRANGE retTypeRange = ThisTokenRange;
 	ParseExtCallArgument(args[0]);
@@ -2567,6 +2742,8 @@ void Compiler::ParseLibCall(DolphinX::ExtCallDeclSpec decl, DolphinX::ExtCallPri
 		CompileError(CErrUnsupportedCallConv);
 		return;
 	}
+
+	DeclareFailureCodeTemp();
 	
 	_ASSERTE(decl == DolphinX::ExtCallDeclSpec::StdCall || decl == DolphinX::ExtCallDeclSpec::CDecl);
 	

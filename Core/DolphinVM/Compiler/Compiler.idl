@@ -63,8 +63,8 @@ library CompilerLib
 		CErrExpectPrimIdx,
 		CErrBadPrimIdx,
 		CErrExpectCloseTag,
-		CErrBadPrimCallType,
-		CErrUnsupportedCallConv,
+		CErrExpectCallConv,
+		CErrUnsupportedCallConv=48,
 		CErrExpectFnName,
 		CErrExpectExtType,
 		CErrArgTypeCannotBeVoid,
@@ -102,7 +102,9 @@ library CompilerLib
 		CErrRedefiningArg,
 		CErrEmptyConditionBlock,
 		CErrQualifiedRefNotClosed,
-		CErrBadQualifiedRefModifier
+		CErrBadQualifiedRefModifier,
+		CErrExpectAnnotationArg,
+		CErrExpectNamespace
 	} ParseErrors;
 
 	typedef enum ParseWarnings {
