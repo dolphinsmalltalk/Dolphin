@@ -17,7 +17,8 @@ processBlock: aBlockNode
 	self visitArgumentNodes: aBlockNode arguments.
 	self visitNode: aBlockNode body!
 
-visitAnnotationNode: anStAnnotationNode!
+visitAnnotationNode: anStAnnotationNode
+	anStAnnotationNode arguments do: [:arg | self visitNode: arg]!
 
 visitArgumentNode: anStParameterNode
 	"Here to allow subclasses to detect arguments or temporaries."
@@ -62,7 +63,7 @@ visitMessageNode: aMessageNode
 
 visitMethodNode: aMethodNode
 	self visitArgumentNodes: aMethodNode arguments.
-	aMethodNode tag ifNotNil: [:tag | self visitNode: tag].
+	aMethodNode tags do: [:each | self visitNode: each].
 	self visitNode: aMethodNode body!
 
 visitNode: aNode 

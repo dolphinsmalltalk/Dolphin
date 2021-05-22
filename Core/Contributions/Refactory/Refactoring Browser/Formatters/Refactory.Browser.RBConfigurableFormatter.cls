@@ -86,7 +86,7 @@ formatMethodBodyFor: aMethodNode
 	self indentAround: 
 			[self newLines: NewLinesAfterMethodPattern.
 			self formatMethodCommentFor: aMethodNode.
-			self formatTagFor: aMethodNode.
+			self formatTagsFor: aMethodNode.
 			self visitNode: aMethodNode body]	"Allow for different position of primitive tag relative to temp declarations"!
 
 formatMethodCommentFor: aMethodNode

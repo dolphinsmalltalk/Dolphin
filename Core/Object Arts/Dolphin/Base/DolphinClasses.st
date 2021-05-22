@@ -619,7 +619,6 @@ Kernel.SharedPool subclass: #'Kernel.ParseErrorCodes'
 		'CErrBadContext' -> 16r4C.
 		'CErrBadExtTypeQualifier' -> 16r37.
 		'CErrBadPools' -> 16r53.
-		'CErrBadPrimCallType' -> 16r2F.
 		'CErrBadPrimIdx' -> 16r2D.
 		'CErrBadQualifiedRefModifier' -> 16r5A.
 		'CErrBadSelector' -> 16r4A.
@@ -635,11 +634,14 @@ Kernel.SharedPool subclass: #'Kernel.ParseErrorCodes'
 		'CErrDuplicateTempName' -> 16r55.
 		'CErrEmptyConditionBlock' -> 16r58.
 		'CErrErrorInStaticExpression' -> 16r40.
+		'CErrExpectAnnotationArg' -> 16r5B.
+		'CErrExpectCallConv' -> 16r2F.
 		'CErrExpectCloseTag' -> 16r2E.
 		'CErrExpectExtType' -> 16r32.
 		'CErrExpectFnName' -> 16r31.
 		'CErrExpectLiteralBlock' -> 16r4E.
 		'CErrExpectMessage' -> 16r27.
+		'CErrExpectNamespace' -> 16r5C.
 		'CErrExpectPrimIdx' -> 16r2C.
 		'CErrExpectVariable' -> 16r29.
 		'CErrExpectVfn' -> 16r3A.
@@ -649,7 +651,7 @@ Kernel.SharedPool subclass: #'Kernel.ParseErrorCodes'
 		'CErrInternal' -> 16r42.
 		'CErrInvalExprStart' -> 16r22.
 		'CErrInvalidStructArg' -> 16r36.
-		'CErrLast' -> 16r5A.
+		'CErrLast' -> 16r5C.
 		'CErrMethodTooLarge' -> 16r4F.
 		'CErrNonsenseAtExprEnd' -> 16r24.
 		'CErrNonsenseAtMethodEnd' -> 16r23.
@@ -2272,12 +2274,6 @@ Core.Object subclass: #'Core.MessageSequenceAbstract'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Core.Object variableSubclass: #'Kernel.MethodAnnotations'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
 Core.Object subclass: #'Kernel.MethodName'
 	instanceVariableNames: 'className selector'
 	classVariableNames: ''
@@ -2808,6 +2804,12 @@ Core.SequenceableCollection subclass: #'Core.ArrayedCollection'
 	classConstants: {}!
 Core.SequenceableCollection subclass: #'Core.Interval'
 	instanceVariableNames: 'start stop step'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Core.SequenceableCollection variableSubclass: #'Kernel.MethodAnnotations'
+	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''

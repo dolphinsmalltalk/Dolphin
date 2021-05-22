@@ -13,8 +13,7 @@
 		#pathString : 'SHDocVw',
 		#path : [
 			'SHDocVw'
-		],
-		#flags : 0
+		]
 	},
 	#packageName : 'Internet Explorer',
 	#aliasMap : LookupTable {

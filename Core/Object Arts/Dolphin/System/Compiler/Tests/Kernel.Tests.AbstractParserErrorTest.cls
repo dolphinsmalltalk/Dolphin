@@ -275,6 +275,92 @@ testCompileTimeExpressions
 				line: 1
 				code: CErrStaticExprNotClosed]!
 
+testErrorsAnnotationBadArg
+	| source mark |
+	source := 'blah <blah: void>'.
+	mark := source indexOf: $v.
+	self
+		parseMethodError: source
+		code: CErrUndeclared
+		range: (mark to: mark + 3).
+	"For a unary tag (a mispelling in this case), no argument is expected so there should be a close tag"
+	source := 'blah <overlaped cdecl: void blah>'.
+	mark := source indexOf: $c.
+	self
+		parseMethodError: source
+		code: CErrExpectCloseTag
+		range: (mark to: mark + 5)!
+
+testErrorsAnnotationBadNamespace
+	| source mark |
+	source := 'blah <namespace: #s>'.
+	mark := source indexOf: $#.
+	self
+		parseMethodError: source
+		code: CErrExpectNamespace
+		range: (mark to: mark + 1)!
+
+testErrorsAnnotationBadSelector
+	"Annotations must have unary or keyword selectors. Note that literal symbols are not valid."
+
+	#(12 '''s''' #+ '#mutable') do: 
+			[:each |
+			| source |
+			source := 'blah %< <1d> %>' << each.
+			self
+				parseMethodError: source
+				code: CErrBadSelector
+				range: ((source indexOf: $<) + 2 to: (source indexOf: $>) - 2)]!
+
+testErrorsAnnotationInvalidArg
+	| source mark |
+	source := 'blah <blah: void>'.
+	mark := source indexOf: $:.
+	self
+		parseMethodError: source
+		code: CErrUndeclared
+		range: (mark + 2 to: (source indexOf: $>) - 1).
+	#('self' 'super' 'thisContext' 'arg') do: 
+			[:each |
+			source := 'blah: arg %<z: <1s>%>' << each.
+			mark := source indexOf: $z.
+			self
+				parseMethodError: source
+				code: CErrExpectAnnotationArg
+				range: (mark + 3 to: (source indexOf: $>) - 1)].
+	"For a unary tag, no argument is expected so there should be a close tag"
+	source := 'blah <overlaped cdecl: void blah>'.
+	mark := source indexOf: $c.
+	self
+		parseMethodError: source
+		code: CErrExpectCloseTag
+		range: (mark to: mark + 5)!
+
+testErrorsAnnotationInvalidSelector
+	| source mark |
+	"Not a keyword"
+	source := 'blah < 12 cdecl: void blah>'.
+	mark := source indexOf: $1.
+	self
+		parseMethodError: source
+		code: CErrBadSelector
+		range: (mark to: mark + 1)!
+
+testErrorsAnnotationMissingArg
+	| source mark |
+	source := 'blah <blah:>'.
+	mark := source indexOf: $>.
+	self
+		parseMethodError: source
+		code: CErrExpectAnnotationArg
+		range: (mark to: mark).
+	source := 'blah <blah: 1 wibble:>'.
+	mark := source indexOf: $>.
+	self
+		parseMethodError: source
+		code: CErrExpectAnnotationArg
+		range: (mark to: mark)!
+
 testErrorsArrayNotClosed
 	| text start |
 	self
@@ -370,31 +456,6 @@ testErrorsBadCascade
 		range: (mark + 1 to: mark)
 		line: 1
 		code: CErrExpectMessage!
-
-testErrorsBadExtCallTypes
-	"keyword, but unrecognised"
-
-	| source mark |
-	source := 'blah <blah: void blah>'.
-	mark := source indexOf: $<.
-	self 
-		parseMethodError: source
-		code: CErrBadPrimCallType
-		range: (mark + 1 to: mark + 5).
-	"A misspelled prefix"
-	source := 'blah <overlaped cdecl: void blah>'.
-	mark := source indexOf: $<.
-	self 
-		parseMethodError: source
-		code: CErrBadPrimCallType
-		range: (mark + 1 to: mark + 9).
-	"Not a keyword"
-	source := 'blah <12 cdecl: void blah>'.
-	mark := source indexOf: $<.
-	self 
-		parseMethodError: source
-		code: CErrBadPrimCallType
-		range: (mark + 1 to: mark + 2)!
 
 testErrorsBadMessagePattern
 	| source mark |
@@ -1053,7 +1114,22 @@ testErrorsOptimizedExpressionNotClosed
 		line: 1
 		code: CErrStaticExprNotClosed!
 
-testErrorsPrimitives
+testErrorsPrimitiveBadIndex
+	| source mark |
+	source := 'blah <primitive: 256>'.
+	mark := source lastIndexOf: $2.
+	self
+		parseMethodError: source
+		code: CErrBadPrimIdx
+		range: (mark to: mark + 2).
+	source := 'blah <primitive: ' , (VMConstants.MaxPrimitive + 1) displayString , '>'.
+	mark := source lastIndexOf: $:.
+	self
+		parseMethodError: source
+		code: CErrBadPrimIdx
+		range: (mark + 2 to: mark + 4)!
+
+testErrorsPrimitiveExpectIndex
 	| source mark |
 	source := 'blah <primitive: a>'.
 	mark := source lastIndexOf: $a.
@@ -1072,7 +1148,10 @@ testErrorsPrimitives
 	self
 		parseMethodError: source
 		code: CErrExpectPrimIdx
-		range: (mark to: mark + 2).
+		range: (mark to: mark + 2)!
+
+testErrorsPrimitiveTagNotClosed
+	| source mark |
 	source := 'blah <primitive: 1'.
 	self
 		parseMethodError: source
@@ -1095,31 +1174,7 @@ testErrorsPrimitives
 	self
 		parseMethodError: source
 		code: CErrExpectCloseTag
-		range: (source size + 1 to: source size).
-	source := 'blah <primitive: 256>'.
-	mark := source lastIndexOf: $2.
-	self
-		parseMethodError: source
-		code: CErrBadPrimIdx
-		range: (mark to: mark + 2).
-	source := 'blah <primitive: ' , (VMConstants.MaxPrimitive + 1) displayString , '>'.
-	mark := source lastIndexOf: $:.
-	self
-		parseMethodError: source
-		code: CErrBadPrimIdx
-		range: (mark + 2 to: mark + 4).
-	source := 'blah <blah: void blah>'.
-	mark := source indexOf: $<.
-	self
-		parseMethodError: source
-		code: CErrBadPrimCallType
-		range: (mark + 1 to: mark + 5).
-	source := 'blah <overlaped cdecl: void blah>'.
-	mark := source indexOf: $<.
-	self
-		parseMethodError: source
-		code: CErrBadPrimCallType
-		range: (mark + 1 to: mark + 9)!
+		range: (source size + 1 to: source size)!
 
 testErrorsQualifiedReferenceBadExtension
 	| source |
@@ -1973,13 +2028,18 @@ writtenNotReadRange: aString
 !Kernel.Tests.AbstractParserErrorTest categoriesFor: #tempWarningRangeIn:!helpers!private! !
 !Kernel.Tests.AbstractParserErrorTest categoriesFor: #testByteArraysInLiteralArrays!public!unit tests! !
 !Kernel.Tests.AbstractParserErrorTest categoriesFor: #testCompileTimeExpressions!public!unit tests! !
+!Kernel.Tests.AbstractParserErrorTest categoriesFor: #testErrorsAnnotationBadArg!public!unit tests! !
+!Kernel.Tests.AbstractParserErrorTest categoriesFor: #testErrorsAnnotationBadNamespace!public!unit tests! !
+!Kernel.Tests.AbstractParserErrorTest categoriesFor: #testErrorsAnnotationBadSelector!public! !
+!Kernel.Tests.AbstractParserErrorTest categoriesFor: #testErrorsAnnotationInvalidArg!public!unit tests! !
+!Kernel.Tests.AbstractParserErrorTest categoriesFor: #testErrorsAnnotationInvalidSelector!public! !
+!Kernel.Tests.AbstractParserErrorTest categoriesFor: #testErrorsAnnotationMissingArg!public!unit tests! !
 !Kernel.Tests.AbstractParserErrorTest categoriesFor: #testErrorsArrayNotClosed!public!unit tests! !
 !Kernel.Tests.AbstractParserErrorTest categoriesFor: #testErrorsAssignBlockArgument!public!unit tests! !
 !Kernel.Tests.AbstractParserErrorTest categoriesFor: #testErrorsAssignClass!public!unit tests! !
 !Kernel.Tests.AbstractParserErrorTest categoriesFor: #testErrorsAssignConstant!public!unit tests! !
 !Kernel.Tests.AbstractParserErrorTest categoriesFor: #testErrorsAssignMethodArgument!public!unit tests! !
 !Kernel.Tests.AbstractParserErrorTest categoriesFor: #testErrorsBadCascade!public!unit tests! !
-!Kernel.Tests.AbstractParserErrorTest categoriesFor: #testErrorsBadExtCallTypes!public!unit tests! !
 !Kernel.Tests.AbstractParserErrorTest categoriesFor: #testErrorsBadMessagePattern!public!unit tests! !
 !Kernel.Tests.AbstractParserErrorTest categoriesFor: #testErrorsBadSuper!public!unit tests! !
 !Kernel.Tests.AbstractParserErrorTest categoriesFor: #testErrorsBadTokenInArray!public!unit tests! !
@@ -2013,7 +2073,9 @@ writtenNotReadRange: aString
 !Kernel.Tests.AbstractParserErrorTest categoriesFor: #testErrorsNonsenseAtEndOfExpression!public!unit tests! !
 !Kernel.Tests.AbstractParserErrorTest categoriesFor: #testErrorsNonsenseAtEndOfMethod!public!unit tests! !
 !Kernel.Tests.AbstractParserErrorTest categoriesFor: #testErrorsOptimizedExpressionNotClosed!public!unit tests! !
-!Kernel.Tests.AbstractParserErrorTest categoriesFor: #testErrorsPrimitives!public!unit tests! !
+!Kernel.Tests.AbstractParserErrorTest categoriesFor: #testErrorsPrimitiveBadIndex!public!unit tests! !
+!Kernel.Tests.AbstractParserErrorTest categoriesFor: #testErrorsPrimitiveExpectIndex!public!unit tests! !
+!Kernel.Tests.AbstractParserErrorTest categoriesFor: #testErrorsPrimitiveTagNotClosed!public!unit tests! !
 !Kernel.Tests.AbstractParserErrorTest categoriesFor: #testErrorsQualifiedReferenceBadExtension!public!unit tests! !
 !Kernel.Tests.AbstractParserErrorTest categoriesFor: #testErrorsQualifiedReferenceExtraDot!public!unit tests! !
 !Kernel.Tests.AbstractParserErrorTest categoriesFor: #testErrorsQualifiedReferenceInvalidName!public!unit tests! !

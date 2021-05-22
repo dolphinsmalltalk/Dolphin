@@ -175,6 +175,35 @@ testLiteralBytes
 				to: 16) #literalBytes '#[1') #(##(17 to: 17) #whitespace ' ') #(##(18 to: 19) #literalBytes '2]') #(##(20
 				to: 20) #literalNumber '3') #(##(21 to: 21) #literalArray ')'))!
 
+testMultipleTags
+	| styler text tokens |
+	styler := SmalltalkMethodStyler new.
+	text := 'x<primitive:1>
+	<namespace:Core>self'.
+	mock text: text.
+	styler
+		colorTextFrom: 1
+		to: text size
+		in: mock.
+	tokens := mock tokens asArray.
+	self assert: tokens
+		equals: {{1 to: 1. #unarySelector. 'x'}.
+				{2 to: 14. #tag. '<primitive:1>'}.
+				{15 to: 17. #whitespace. String lineDelimiter copyWith: Character tab}.
+				{18 to: 33. #tag. '<namespace:Core>'}.
+				{34 to: 37. #identifier. 'self'}}.
+	text := 'x<mutable><namespace:Core>self'.
+	mock text: text.
+	styler
+		colorTextFrom: 1
+		to: text size
+		in: mock.
+	tokens := mock tokens asArray.
+	self assert: tokens
+		equals: {{1 to: 1. #unarySelector. 'x'}.
+				{2 to: 26. #tag. '<mutable><namespace:Core>'}.
+				{27 to: 30. #identifier. 'self'}}!
+
 testNegativeOrSubtract
 	"The - operator can be ambiguous if used in an expression without spaces, e.g. x-1."
 
@@ -270,7 +299,9 @@ testPrimitiveTag
 		in: mock.
 	tokens := mock tokens asArray.
 	self assert: tokens
-		equals: #(#(##(1 to: 1) #unarySelector 'x') #(##(2 to: 14) #tag '<primitive:1>') #(##(15 to: 18) #identifier 'self')).
+		equals: {{1 to: 1. #unarySelector. 'x'}.
+				{2 to: 14. #tag. '<primitive:1>'}.
+				{15 to: 18. #identifier. 'self'}}.
 	text := 'x:y<primitive:1>y'.
 	mock text: text.
 	styler
@@ -279,8 +310,10 @@ testPrimitiveTag
 		in: mock.
 	tokens := mock tokens asArray.
 	self assert: tokens
-		equals: #(#(##(1 to: 2) #keywordSelector 'x:') #(##(3 to: 3) #argDecl 'y') #(##(4 to: 16) #tag '<primitive:1>') #(##(17
-				to: 17) #identifier 'y')).
+		equals: {{1 to: 2. #keywordSelector. 'x:'}.
+				{3 to: 3. #argDecl. 'y'}.
+				{4 to: 16. #tag. '<primitive:1>'}.
+				{17 to: 17. #identifier. 'y'}}.
 	text := '|y<primitive: 1>self|y'.
 	mock text: text.
 	styler
@@ -289,9 +322,14 @@ testPrimitiveTag
 		in: mock.
 	tokens := mock tokens asArray.
 	self assert: tokens
-		equals: #(#(##(1 to: 1) #binarySelector '|') #(##(2 to: 2) #argDecl 'y') #(##(3 to: 13) #tag '<primitive:') #(##(14
-				to: 14) #whitespace ' ') #(##(15 to: 16) #tag '1>') #(##(17 to: 20) #identifier 'self') #(##(21
-				to: 21) #binaryMessage '|') #(##(22 to: 22) #identifier 'y')).
+		equals: {{1 to: 1. #binarySelector. '|'}.
+				{2 to: 2. #argDecl. 'y'}.
+				{3 to: 13. #tag. '<primitive:'}.
+				{14 to: 14. #whitespace. ' '}.
+				{15 to: 16. #tag. '1>'}.
+				{17 to: 20. #identifier. 'self'}.
+				{21 to: 21. #binaryMessage. '|'}.
+				{22 to: 22. #identifier. 'y'}}.
 	text := 'x|| <primitive:1>self'.
 	mock text: text.
 	styler
@@ -300,8 +338,12 @@ testPrimitiveTag
 		in: mock.
 	tokens := mock tokens asArray.
 	self assert: tokens
-		equals: #(#(##(1 to: 1) #unarySelector 'x') #(##(2 to: 2) #tempOpenBar '|') #(##(3 to: 3) #tempCloseBar '|') #(##(4
-				to: 4) #whitespace ' ') #(##(5 to: 17) #tag '<primitive:1>') #(##(18 to: 21) #identifier 'self'))!
+		equals: {{1 to: 1. #unarySelector. 'x'}.
+				{2 to: 2. #tempOpenBar. '|'}.
+				{3 to: 3. #tempCloseBar. '|'}.
+				{4 to: 4. #whitespace. ' '}.
+				{5 to: 17. #tag. '<primitive:1>'}.
+				{18 to: 21. #identifier. 'self'}}!
 
 testPseudoSignature
 	"The pseudo variables are valid as unary selectors too."
@@ -627,6 +669,7 @@ testUnaryMessageToString
 !Tools.Tests.SmalltalkStylerTest categoriesFor: #testLegacyLiteralArray!public!unit tests! !
 !Tools.Tests.SmalltalkStylerTest categoriesFor: #testLiteralArray!public!unit tests! !
 !Tools.Tests.SmalltalkStylerTest categoriesFor: #testLiteralBytes!public!unit tests! !
+!Tools.Tests.SmalltalkStylerTest categoriesFor: #testMultipleTags!public! !
 !Tools.Tests.SmalltalkStylerTest categoriesFor: #testNegativeOrSubtract!public!unit tests! !
 !Tools.Tests.SmalltalkStylerTest categoriesFor: #testOptimizedExpressionInArray!public!unit tests! !
 !Tools.Tests.SmalltalkStylerTest categoriesFor: #testPrimitiveTag!public!unit tests! !

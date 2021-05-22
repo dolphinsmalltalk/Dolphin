@@ -504,7 +504,7 @@ name
 	^name ifNil: [super name]!
 
 newBindingContextForIdentifier: aString environment: aNamespace
-	^Kernel.BindingContext
+	^BindingContext
 		methodClass: self
 		environment: aNamespace
 		identifier: aString!

@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
 Kernel.StTagNode subclass: #'Kernel.StAnnotationNode'
-	instanceVariableNames: 'selector'
+	instanceVariableNames: 'selector arguments'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -11,29 +11,37 @@ Kernel.StAnnotationNode comment: ''!
 !Kernel.StAnnotationNode categoriesForClass!System-Compiler! !
 !Kernel.StAnnotationNode methodsFor!
 
+= anObject
+	^self == anObject or: 
+			[self class = anObject class
+				and: [selector == anObject selector and: [arguments = anObject arguments]]]!
+
 acceptVisitor: aProgramNodeVisitor
 	^aProgramNodeVisitor visitAnnotationNode: self!
 
-arguments
-	"In future we may provide generic support for method annotations, with literal arguments."
+argumentCount
+	^arguments size!
 
-	^#()!
+arguments
+	^arguments!
 
 selector
 	^selector!
 
-selector: aString
-	selector := aString asSymbol! !
+setSelector: aSymbol arguments: anArray
+	selector := aSymbol asSymbol.
+	arguments := anArray asArray.
+	^self! !
+!Kernel.StAnnotationNode categoriesFor: #=!comparing!public! !
 !Kernel.StAnnotationNode categoriesFor: #acceptVisitor:!public!visitor! !
+!Kernel.StAnnotationNode categoriesFor: #argumentCount!accessing!public! !
 !Kernel.StAnnotationNode categoriesFor: #arguments!accessing!public! !
 !Kernel.StAnnotationNode categoriesFor: #selector!accessing!public! !
-!Kernel.StAnnotationNode categoriesFor: #selector:!accessing!public! !
+!Kernel.StAnnotationNode categoriesFor: #setSelector:arguments:!initializing!private! !
 
 !Kernel.StAnnotationNode class methodsFor!
 
-selector: aString
-	^self new
-		selector: aString;
-		yourself! !
-!Kernel.StAnnotationNode class categoriesFor: #selector:!accessing!public! !
+selector: aSymbol arguments: anArrayOfStLiteralValueNode
+	^self new setSelector: aSymbol arguments: anArrayOfStLiteralValueNode! !
+!Kernel.StAnnotationNode class categoriesFor: #selector:arguments:!instance creation!public! !
 

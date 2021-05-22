@@ -93,7 +93,7 @@ stbConvertFromVersion1: version1Array
 		2		classLocator	byteArray
 		3		byteArray"
 
-	^{version1Array at: 1. Kernel.ClassLocator new. version1Array at: 2}!
+	^{version1Array at: 1. ClassLocator new. version1Array at: 2}!
 
 stbVersion
 	"Answer the current binary filer version number for instances of the receiver."

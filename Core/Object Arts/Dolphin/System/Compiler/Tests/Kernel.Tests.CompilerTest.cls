@@ -858,6 +858,26 @@ testIntegerScanningBoundaries
 					#(2 10 16 36)
 						do: [:eachRadix | (self evaluateExpression: (eachVal printStringRadix: eachRadix)) = eachVal]]]!
 
+testKeywordAnnotations
+	| method |
+	method := Compiler
+				compile: 'test 
+	<string: ''abc''> 
+	<smallint: 123 largeint: 16r7FFFFFFFFFFFFFFF>
+	<float: 4.56>
+	<class: Core.Tests static: Processor>
+	<expr: ##(Dictionary withAll: {''a'' -> 1. ''b'' -> 2})>'
+				in: Object.
+	self assert: method isAnnotated.
+	self assert: method annotations isImmutable.
+	self assert: method annotations asArray
+		equals: {Message selector: #string: arguments: #('abc').
+				Message selector: #smallint:largeint: arguments: #(123 16r7FFFFFFFFFFFFFFF).
+				Message selector: #float: arguments: #(4.56).
+				Message selector: #class:static: arguments: {Core.Tests. Processor}.
+				Message selector: #expr: arguments: {Dictionary withAll: {'a' -> 1. 'b' -> 2}}}.
+	self assert: method annotations last arguments isImmutable!
+
 testLiteralArray
 	self assert: (Compiler evaluate: '#(-)') equals: {#-}.
 	self assert: (Compiler evaluate: '#(-1)') equals: {-1}.
@@ -883,10 +903,12 @@ testLiteralStringEncoding
 				self assert: actual equals: each.
 				self assert: actual isKindOf: Utf8String]!
 
-testMutable
+testMutableAnnotation
 	| class mutator inst |
 	class := CompilerTestClasses current testClass.
 	mutator := class compile: 'iv1_mutable: op <mutable> iv1 := op'.
+	self assert: mutator isAnnotated.
+	self assert: mutator annotations asArray equals: {Message selector: #mutable}.
 	inst := class new.
 	self assert: mutator extraIndex equals: 49.
 	inst perform: mutator selector with: 123.
@@ -1564,9 +1586,10 @@ verifyTextMapsOf: each
 !Kernel.Tests.CompilerTest categoriesFor: #testIncrementTempOptimisation!public!unit tests! !
 !Kernel.Tests.CompilerTest categoriesFor: #testIntegerScanning!public!unit tests! !
 !Kernel.Tests.CompilerTest categoriesFor: #testIntegerScanningBoundaries!public!unit tests! !
+!Kernel.Tests.CompilerTest categoriesFor: #testKeywordAnnotations!public!unit tests-known failures! !
 !Kernel.Tests.CompilerTest categoriesFor: #testLiteralArray!public!unit tests! !
 !Kernel.Tests.CompilerTest categoriesFor: #testLiteralStringEncoding!public!unit tests! !
-!Kernel.Tests.CompilerTest categoriesFor: #testMutable!public!unit tests!unit tests-known failures! !
+!Kernel.Tests.CompilerTest categoriesFor: #testMutableAnnotation!public!unit tests-known failures! !
 !Kernel.Tests.CompilerTest categoriesFor: #testNestedCopyingBlocks!public!unit tests! !
 !Kernel.Tests.CompilerTest categoriesFor: #testNestedWhileTrueAtStartOfCleanBlock!public!unit tests! !
 !Kernel.Tests.CompilerTest categoriesFor: #testQualifiedReference!public!unit tests! !

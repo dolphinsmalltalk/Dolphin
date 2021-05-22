@@ -492,6 +492,7 @@ environment
 environment: aNamespace
 	"Set the default environment for the package, in the context of which any loose (extension) methods should be compiled, or nil if there is no default environment for loose methods and the extended class' own environment should be used for resolving static variable references in the method source."
 
+	self environment == aNamespace ifTrue: [^self].
 	self isLegacySourceFormat
 		ifTrue: 
 			[aNamespace == Smalltalk
@@ -499,14 +500,21 @@ environment: aNamespace
 					[self
 						error: 'Legacy format packages can only use Smalltalk as the default environment for compiling scripts and extension methods']]
 		ifFalse: 
-			[aNamespace owningPackage = self
-				ifTrue: [self error: 'The default namespace for a package cannot be one of its own classes'].
-			self environmentName: aNamespace fullyQualifiedReference]!
+			[| ref |
+			ref := aNamespace notNil
+						ifTrue: 
+							[aNamespace owningPackage = self
+								ifTrue: [self error: 'The default namespace for a package cannot be one of its own classes'].
+							aNamespace fullyQualifiedReference].
+			self environmentName: ref.
+			self isChanged: true]!
 
 environmentName: aBindingReference
 	"Private - Record the name of the <Namespace> to be used as the default environment for compiling scripts and extension (aka loose) methods of the package."
 
-	self propertyAt: #environmentName put: aBindingReference!
+	aBindingReference isNil
+		ifTrue: [self removePropertyAt: #environmentName]
+		ifFalse: [self propertyAt: #environmentName put: aBindingReference]!
 
 errorFileCorrupt
 	"Private - Filing in the receivers owned objects has failed because the

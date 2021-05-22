@@ -119,7 +119,7 @@ formatMethodBodyFor: aMethodNode
 	self indentWhile: 
 			[self formatMethodCommentFor: aMethodNode indentBefore: true.
 			self newLine.
-			self formatTagFor: aMethodNode.
+			self formatTagsFor: aMethodNode.
 			self visitNode: aMethodNode body]!
 
 formatMethodCommentFor: aNode indentBefore: aBoolean

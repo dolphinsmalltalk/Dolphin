@@ -229,8 +229,8 @@ initialize
 		at: CErrExpectPrimIdx put: 'primitive index expected';
 		at: CErrBadPrimIdx put: 'primitive index <1s> out of range';
 		at: CErrExpectCloseTag put: 'expecting ''>''';
-		at: CErrBadPrimCallType put: 'invalid primitive call type <1p>';
 		at: CErrUnsupportedCallConv put: 'unsupported calling convention <1p>';
+		at: CErrExpectCallConv put: 'calling convention expected';
 		at: CErrExpectFnName put: 'function name or ordinal expected';
 		at: CErrExpectExtType put: 'external type expected';
 		at: CErrArgTypeCannotBeVoid put: 'argument type can''t be void';
@@ -269,6 +269,8 @@ initialize
 		at: CErrEmptyConditionBlock put: 'condition block of <2p> cannot be empty';
 		at: CErrQualifiedRefNotClosed put: 'qualified reference not closed';
 		at: CErrBadQualifiedRefModifier put: 'invalid qualified reference modifier <1p>';
+		at: CErrExpectAnnotationArg put: 'literal value expected';
+		at: CErrExpectNamespace put: 'namespace class expected';
 		yourself.
 	formats
 		at: CWarnRedefiningArg put: 'redefining argument <1p>';

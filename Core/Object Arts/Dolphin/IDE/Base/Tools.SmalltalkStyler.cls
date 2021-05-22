@@ -257,7 +257,7 @@ visitBinarySelectorToken: aStBinarySelectorToken
 	lastStyle := self lastStyle.
 	selector == #<
 		ifTrue: 
-			[^(lastStyle == #unarySelector or: [lastStyle == #argDecl or: [lastStyle == #tempCloseBar]])
+			[^(lastStyle == #unarySelector or: [lastStyle == #argDecl or: [lastStyle == #tempCloseBar or: [lastStyle == #tag]]])
 				ifTrue: 
 					[inTag := true.
 					#tag]

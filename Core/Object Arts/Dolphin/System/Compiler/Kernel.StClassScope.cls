@@ -14,6 +14,9 @@ Kernel.StClassScope comment: ''!
 environment
 	^environment!
 
+environment: aNamespace
+	environment := aNamespace!
+
 lookupVariable: anStVariableNode
 	"Lookup and return an <StVariable> describing the variable definition in this scope matching
 	the variable reference specified by the <StVariableNode> argument."
@@ -52,6 +55,7 @@ superVariable
 						scope: self;
 						yourself]! !
 !Kernel.StClassScope categoriesFor: #environment!public! !
+!Kernel.StClassScope categoriesFor: #environment:!accessing!public! !
 !Kernel.StClassScope categoriesFor: #lookupVariable:!operations!public! !
 !Kernel.StClassScope categoriesFor: #methodClass!accessing!public! !
 !Kernel.StClassScope categoriesFor: #selfVariable!operations!public! !

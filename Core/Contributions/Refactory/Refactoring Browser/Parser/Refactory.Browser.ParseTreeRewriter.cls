@@ -163,7 +163,7 @@ visitMessageNode: aMessageNode
 
 visitMethodNode: aMethodNode
 	aMethodNode arguments: (self visitArgumentNodes: aMethodNode arguments).
-	aMethodNode tag ifNotNil: [:tag | aMethodNode tag: (self visitNode: tag)].
+	aMethodNode tags: (aMethodNode tags collect: [:each | self visitNode: each]).
 	aMethodNode body: (self visitNode: aMethodNode body)!
 
 visitOptimizedNode: anOptimizedNode

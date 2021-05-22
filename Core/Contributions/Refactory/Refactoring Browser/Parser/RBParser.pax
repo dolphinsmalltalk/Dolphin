@@ -919,7 +919,7 @@ equalTo: anObject withMapping: aDictionary
 			((self arguments at: i) equalTo: (anObject arguments at: i)
 				withMapping: aDictionary) ifFalse: [^false].
 			aDictionary removeKey: (self arguments at: i) name].
-	^self tag = anObject tag!
+	^self tags = anObject tags!
 
 initialize
 	replacements := SortedCollection sortBlock: 

@@ -12,7 +12,8 @@ Kernel.Tests.NamespaceTest comment: ''!
 !Kernel.Tests.NamespaceTest methodsFor!
 
 canonicalSubject
-	^Kernel.Tests!
+	<namespace: Kernel>
+	^Tests!
 
 nameCases
 	^#(#Core #Kernel #XProgramming 'XProgramming.SUnit' #Smalltalk) collect: [:each | each asQualifiedReference]

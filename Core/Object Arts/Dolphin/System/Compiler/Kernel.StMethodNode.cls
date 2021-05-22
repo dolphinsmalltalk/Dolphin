@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
 Kernel.StProgramNode subclass: #'Kernel.StMethodNode'
-	instanceVariableNames: 'selector selectorParts body source arguments tag replacements nodeReplacements methodClass environment'
+	instanceVariableNames: 'selector selectorParts body source arguments tags replacements nodeReplacements methodClass environment'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -27,7 +27,7 @@ Instance Variables:
 	(self selector = anObject selector and: [self body = anObject body]) ifFalse: [^false].
 	1 to: self arguments size
 		do: [:i | (self arguments at: i) = (anObject arguments at: i) ifFalse: [^false]].
-	^self tag = anObject tag!
+	^self tags = anObject tags!
 
 acceptVisitor: aProgramNodeVisitor
 	^aProgramNodeVisitor visitMethodNode: self!
@@ -93,7 +93,7 @@ hash
 	^(self selector hash bitXor: self body hash) bitXor: self arguments hash!
 
 isExternalCall
-	^tag notNil and: [tag isExternalCall]!
+	^tags notNil and: [tags isExternalCall]!
 
 isInlined
 	^false!
@@ -106,7 +106,7 @@ isMethod
 
 isPrimitive
 	#rbFix.	"On Dolphin primitives are parsed into an AST, so the tag is actually a node"
-	^tag notNil!
+	^tags notNil!
 
 lastIsReturn
 	^body lastIsReturn!
@@ -195,11 +195,12 @@ start
 stop
 	^source size!
 
-tag
-	^tag!
+tags
+	^tags ?? #()!
 
-tag: anStTagNodeOrNil
-	(tag := anStTagNodeOrNil) ifNotNil: [anStTagNodeOrNil parent: self]!
+tags: aSequencedReadableCollection
+	tags := aSequencedReadableCollection.
+	tags do: [:each | each parent: self]!
 
 uses: aNode 
 	^body == aNode and: [aNode lastIsReturn]! !
@@ -244,8 +245,8 @@ uses: aNode
 !Kernel.StMethodNode categoriesFor: #source:!accessing!public! !
 !Kernel.StMethodNode categoriesFor: #start!accessing!public! !
 !Kernel.StMethodNode categoriesFor: #stop!accessing!public! !
-!Kernel.StMethodNode categoriesFor: #tag!accessing!public! !
-!Kernel.StMethodNode categoriesFor: #tag:!accessing!private! !
+!Kernel.StMethodNode categoriesFor: #tags!accessing!public! !
+!Kernel.StMethodNode categoriesFor: #tags:!accessing!private! !
 !Kernel.StMethodNode categoriesFor: #uses:!public!testing! !
 
 !Kernel.StMethodNode class methodsFor!

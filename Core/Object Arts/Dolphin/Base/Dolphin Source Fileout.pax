@@ -403,7 +403,7 @@ saveImageTo: aString
 	self createSentinel
 		ifTrue: 
 			[| mb |
-			mb := Smalltalk.MessageBox new.
+			mb := UI.MessageBox new.
 			mb beTaskModal.
 			mb
 				errorMsg: ('The image <1p> is open in another Dolphin instance.<n><n>Close that instance and try again should you still wish to save this image to that name.<n><n>The image has not been saved!!'

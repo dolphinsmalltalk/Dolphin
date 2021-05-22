@@ -294,8 +294,9 @@ removeKey: aString ifAbsent: aNiladicValuable
 		ifNotNil: [:binding | binding value]!
 
 resolveImportedBinding: aBindingContext
-	"Private - Search imported namespaces for a binding that matches the identifier in the <BindingContext> supplied. The search proceeds up through the class hierarchy (i.e. imports in the class hierarchy are inherited), and then out to the imports of the enclosing namespace. Imports into the enclosing namespaces of superclasses are not searched."
+	"Private - Search imported namespaces for a binding that matches the identifier in the <BindingContext> supplied. Unlike normal classes, imports into superclasses (super-namespaces) are not searched, but the enclosing environments are searched."
 
+	#namespaceToDo. "This override is not correct anymore now that we specify the class and environment for the search separately. Need to consider whether it can just be removed so the inherited implementation in Class is also used for Namespaces (which means that the environment chain may be visited via the superclass chain), or whether it requires further refinement."
 	(self resolveLocallyImportedBinding: aBindingContext) ifNotNil: [:binding | ^binding].
 	^self environment ifNotNil: [:env | env resolveImportedBinding: aBindingContext]!
 

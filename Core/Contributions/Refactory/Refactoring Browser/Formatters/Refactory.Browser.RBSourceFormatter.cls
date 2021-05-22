@@ -49,13 +49,13 @@ formatMethodPatternFor: aMethodNode
 formatStatementCommentsFor: aStatementNode
 	^self subclassResponsibility!
 
-formatTagFor: aMethodNode 
+formatTagsFor: aMethodNode
 	#rbFix.	"The Dolphin parser is enhanced to actually parse primitives into nodes, so we must visit those nodes"
 	"aMethodNode primitiveSources do:
 			[:each | 
 			codeStream nextPutAll: each.
 			self newLine]"
-	aMethodNode tag ifNotNil: [:tag | self visitNode: tag]!
+	aMethodNode tags do: [:each | self visitNode: each]!
 
 indent: anInteger
 	indent := anInteger!
@@ -81,11 +81,23 @@ newLine
 space
 	codeStream space!
 
-visitAnnotationNode: anStPrimitiveNode
-	codeStream
-		nextPut: $<;
-		display: anStPrimitiveNode selector;
-		nextPut: $>.
+visitAnnotationNode: anStAnnotationNode
+	codeStream nextPut: $<.
+	anStAnnotationNode argumentCount == 0
+		ifTrue: [codeStream display: anStAnnotationNode selector]
+		ifFalse: 
+			[| keywords args |
+			keywords := anStAnnotationNode selector keywords.
+			args := anStAnnotationNode arguments.
+			1 to: keywords size
+				do: 
+					[:i |
+					i == 1 ifFalse: [codeStream space].
+					codeStream
+						nextPutAll: (keywords at: i);
+						space.
+					self visitNode: (args at: i)]].
+	codeStream nextPut: $>.
 	self newLine!
 
 visitArrayNode: anArrayNode
@@ -151,7 +163,7 @@ visitVariableNode: aVariableNode
 !Refactory.Browser.RBSourceFormatter categoriesFor: #formatMethodBodyFor:!formatting!private! !
 !Refactory.Browser.RBSourceFormatter categoriesFor: #formatMethodPatternFor:!formatting!private! !
 !Refactory.Browser.RBSourceFormatter categoriesFor: #formatStatementCommentsFor:!formatting!private! !
-!Refactory.Browser.RBSourceFormatter categoriesFor: #formatTagFor:!formatting!private! !
+!Refactory.Browser.RBSourceFormatter categoriesFor: #formatTagsFor:!formatting!private! !
 !Refactory.Browser.RBSourceFormatter categoriesFor: #indent:!formatting!private! !
 !Refactory.Browser.RBSourceFormatter categoriesFor: #indent:around:!formatting!private! !
 !Refactory.Browser.RBSourceFormatter categoriesFor: #initialize!initializing!private! !

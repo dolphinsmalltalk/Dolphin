@@ -630,8 +630,7 @@ renameClass: aStVariableNode
 	| class model method |
 	model := self systemModel.
 	method := self selectedMethod.
-	class := (method methodClass fullBindingFor: aStVariableNode name environment: method environment)
-				value.
+	class := (method fullBindingFor: aStVariableNode name) value.
 	presenter
 		renameVariable: aStVariableNode
 		operation: [:newName | model renameClass: class to: newName]

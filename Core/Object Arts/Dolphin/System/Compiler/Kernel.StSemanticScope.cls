@@ -12,6 +12,9 @@ Kernel.StSemanticScope comment: ''!
 !Kernel.StSemanticScope categoriesForClass!Kernel-Objects! !
 !Kernel.StSemanticScope methodsFor!
 
+environment: aNamespace
+	outer environment: aNamespace!
+
 isInlined
 	^false!
 
@@ -38,6 +41,7 @@ temps
 
 thisContextVariable
 	^self shouldNotImplement! !
+!Kernel.StSemanticScope categoriesFor: #environment:!accessing!public! !
 !Kernel.StSemanticScope categoriesFor: #isInlined!accessing!public! !
 !Kernel.StSemanticScope categoriesFor: #lookupVariable:!operations!public! !
 !Kernel.StSemanticScope categoriesFor: #outer!accessing!public! !

@@ -115,14 +115,15 @@ recompileDiffs
 	self systemModel recompileDiffs: self method!
 
 saveNewMethod: aString
-	| method |
+	| method package |
 	method := self selectedMethod.
+	package := method owningPackageIfLoose.
 	self browser
 		saveMethod: aString
 		in: method methodClass
-		environment: method environment
+		environment: (package ifNotNil: [package environment])
 		categories: method realCategories
-		package: method owningPackage!
+		package: package!
 
 searchEnvironment: aBrowserEnvironment 
 	browserPresenter searchEnvironment: aBrowserEnvironment!

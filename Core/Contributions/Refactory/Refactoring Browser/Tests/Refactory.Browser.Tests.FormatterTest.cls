@@ -195,6 +195,7 @@ testMethod
 | x |
 ^x + 1') #('foo
 <primitive: 1>
+<foo: 1 bar: ''2''>
 ^self error') #('foo: x
 bar: y
 baz: z

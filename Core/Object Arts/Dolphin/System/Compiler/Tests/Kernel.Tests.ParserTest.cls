@@ -36,6 +36,19 @@ scanNonNumericEnd: aString class: tokenClass
 	next := scanner next.
 	self assert: (extra beginsWith: next value)!
 
+testAnnotationEquality
+	| strings |
+	strings := #('test <namespace: XProgramming>' 'test <namespace: Core>' 'test <namespace: Core> <mutable>' 'test <mutable>').
+	1 to: strings size
+		do: 
+			[:i |
+			1 to: strings size
+				do: 
+					[:j |
+					self
+						deny: ((self parserClass parseMethod: (strings at: i))
+								= (self parserClass parseMethod: (strings at: j)) xor: i = j)]]!
+
 testCharacterScanning
 	| subject tok |
 	subject := self scannerClass on: '$a$b$\t$\$  $c' readStream.
@@ -129,7 +142,7 @@ testExternalCalls
 	tree := self parserClass parseMethod: 'blah <stdcall: void blah>'.
 	self assert: tree formattedCode trimBlanks equals: 'blah
 	<stdcall: void blah>'.
-	ffiCall := tree tag.
+	ffiCall := tree tags first.
 	self assert: ffiCall argumentTypes isEmpty.
 	self assert: ffiCall returnType typeOrdinal equals: ExtCallArgVOID.
 	self assert: ffiCall returnType indirections equals: 0.
@@ -139,7 +152,7 @@ testExternalCalls
 	tree := self parserClass parseMethod: 'blah: x <stdcall: dword blah sdword>'.
 	self assert: tree formattedCode trimBlanks equals: 'blah: x
 	<stdcall: dword blah sdword>'.
-	ffiCall := tree tag.
+	ffiCall := tree tags first.
 	self assert: ffiCall returnType typeOrdinal equals: ExtCallArgDWORD.
 	self assert: ffiCall returnType indirections equals: 0.
 	self assertIsNil: ffiCall returnType structClass.
@@ -184,7 +197,7 @@ testExternalCalls
 	src := src contents.
 	tree := self parserClass parseMethod: src.
 	self assert: tree formattedCode trimBlanks equals: src.
-	ffiCall := tree tag.
+	ffiCall := tree tags first.
 	self assert: ffiCall argumentTypes size equals: types size.
 	ffiCall argumentTypes with: (1 to: types size)
 		do: 
@@ -217,6 +230,7 @@ testFloatScanning
 !Kernel.Tests.ParserTest categoriesFor: #parserClass!constants!private! !
 !Kernel.Tests.ParserTest categoriesFor: #scannerClass!constants!private! !
 !Kernel.Tests.ParserTest categoriesFor: #scanNonNumericEnd:class:!public! !
+!Kernel.Tests.ParserTest categoriesFor: #testAnnotationEquality!public!unit tests! !
 !Kernel.Tests.ParserTest categoriesFor: #testCharacterScanning!public!unit tests! !
 !Kernel.Tests.ParserTest categoriesFor: #testExpressionSolver!public! !
 !Kernel.Tests.ParserTest categoriesFor: #testExternalCallEquality!public!unit tests! !

@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
 Kernel.ParseNodeVisitor subclass: #'Kernel.StSemanticAnalyser'
-	instanceVariableNames: 'methodNode classScope evaluationContext currentScope scopes literals stringLiterals addToFrame tempDecls inStaticExpression evalScope annotations errorBlock'
+	instanceVariableNames: 'methodNode classScope evaluationContext currentScope scopes literals stringLiterals addToFrame tempDecls inStaticExpression evalScope annotations errorBlock isMutator inTag'
 	classVariableNames: 'OptimizedMessages RestrictedSelectors SpecialSelectors'
 	imports: #(#{Kernel.ParseErrorCodes})
 	classInstanceVariableNames: ''
@@ -82,26 +82,6 @@ blockDepth
 			[scope isInlined ifFalse: [depth := depth + 1].
 			scope := scope outer].
 	^depth!
-
-checkAnnotations: aStMethodNode
-	annotations ifNil: [^self].
-	(annotations detect: [:each | each first == #mutable] ifNone: [])
-		ifNotNil: 
-			[(aStMethodNode argumentCount ~~ 1 or: 
-					[| statements |
-					statements := aStMethodNode body statements.
-					statements size > 1 or: 
-							[| statement |
-							statement := statements first.
-							statement isAssignment not or: 
-									[| rhs |
-									rhs := statement value.
-									rhs isVariable not or: 
-											[rhs name ~= aStMethodNode arguments first name or: 
-													[| lhs |
-													lhs := currentScope lookupVariable: statement variable.
-													lhs isNil or: [lhs isInstanceVariable not]]]]]])
-				ifTrue: [self signalError: CWarnMutableIgnored forNode: aStMethodNode]]!
 
 checkIsLiteralBlockHandler: aStProgramNode forMessage: aStMessageNode 
 	aStProgramNode isBlock 
@@ -225,6 +205,23 @@ checkMessageHasNonEmptyNiladicBlockReceiver: aMessageNode
 						range: block sourceInterval
 						extras: {aMessageNode selector}.
 					false]]!
+
+checkMutatorMethod: aStMethodNode
+	(aStMethodNode argumentCount ~~ 1 or: 
+			[| statements |
+			statements := aStMethodNode body statements.
+			statements size > 1 or: 
+					[| statement |
+					statement := statements first.
+					statement isAssignment not or: 
+							[| rhs |
+							rhs := statement value.
+							rhs isVariable not or: 
+									[rhs name ~= aStMethodNode arguments first name or: 
+											[| lhs |
+											lhs := currentScope lookupVariable: statement variable.
+											lhs isNil or: [lhs isInstanceVariable not]]]]]])
+		ifTrue: [self signalError: CWarnMutableIgnored forNode: aStMethodNode]!
 
 checkOptimizedKeywordMessages: aMessageNode
 	| selector arguments argc |
@@ -411,7 +408,7 @@ initialize
 	literals := IdentitySet new.
 	stringLiterals := Set new.
 	addToFrame := [:literal | self addToFrame: literal].
-	inStaticExpression := false!
+	inTag := isMutator := inStaticExpression := false!
 
 isReceiverOfNilTest: aVariableNode 
 	| parentNode |
@@ -517,7 +514,24 @@ tempDecls
 	^tempDecls ifNil: [tempDecls := methodNode allDefinedVariableNodes]!
 
 visitAnnotationNode: anStAnnotationNode
-	self annotations add: {anStAnnotationNode selector. anStAnnotationNode arguments}!
+	"Visiting the args will detect any undeclared variables."
+
+	| selector |
+	inTag := true.
+	[super visitAnnotationNode: anStAnnotationNode] ensure: [inTag := false].
+	selector := anStAnnotationNode selector.
+	selector == #mutable ifTrue: [isMutator := true].
+	selector == #namespace:
+		ifTrue: 
+			[| arg var ns |
+			arg := anStAnnotationNode arguments first.
+			(arg isVariable and: 
+					[var := arg variable.
+					var isStaticVariable and: 
+							[ns := var binding value.
+							ns class isMeta]])
+				ifTrue: [currentScope environment: ns]
+				ifFalse: [self signalError: CErrExpectNamespace forNode: arg]]!
 
 visitArgumentNode: anStParameterNode
 	self checkRedefines: anStParameterNode.
@@ -618,7 +632,7 @@ visitMethodNode: aMethodNode
 	self checkRestrictedSelectors: aMethodNode.
 	currentScope := scopes addLast: (StMethodScope forScopeNode: aMethodNode outer: currentScope).
 	super visitMethodNode: aMethodNode.
-	self checkAnnotations: aMethodNode.
+	isMutator ifTrue: [self checkMutatorMethod: aMethodNode].
 	self removeScope!
 
 visitOptimizedNode: anOptimizedNode
@@ -704,6 +718,8 @@ visitVariableNode: aStVariableNode
 	(self bindVariable: aStVariableNode)
 		ifNotNil: 
 			[:var |
+			(inTag and: [var isStaticVariable not])
+				ifTrue: [self signalError: CErrExpectAnnotationArg forNode: aStVariableNode].
 			var addRead: aStVariableNode fromScope: currentScope.
 			var isTempVariable
 				ifTrue: 
@@ -721,7 +737,6 @@ visitVariableNode: aStVariableNode
 !Kernel.StSemanticAnalyser categoriesFor: #assignVariable:!helpers!private! !
 !Kernel.StSemanticAnalyser categoriesFor: #bindVariable:!helpers!private! !
 !Kernel.StSemanticAnalyser categoriesFor: #blockDepth!helpers!private! !
-!Kernel.StSemanticAnalyser categoriesFor: #checkAnnotations:!helpers!private! !
 !Kernel.StSemanticAnalyser categoriesFor: #checkIsLiteralBlockHandler:forMessage:!helpers!private! !
 !Kernel.StSemanticAnalyser categoriesFor: #checkLiteralFrameSize:!helpers!private! !
 !Kernel.StSemanticAnalyser categoriesFor: #checkMessage:hasMonadicBlockArg:!helpers!private! !
@@ -731,6 +746,7 @@ visitVariableNode: aStVariableNode
 !Kernel.StSemanticAnalyser categoriesFor: #checkMessageArgumentCount:!helpers!private! !
 !Kernel.StSemanticAnalyser categoriesFor: #checkMessageHasNiladicBlockReceiver:!helpers!private! !
 !Kernel.StSemanticAnalyser categoriesFor: #checkMessageHasNonEmptyNiladicBlockReceiver:!helpers!private! !
+!Kernel.StSemanticAnalyser categoriesFor: #checkMutatorMethod:!public! !
 !Kernel.StSemanticAnalyser categoriesFor: #checkOptimizedKeywordMessages:!helpers!private! !
 !Kernel.StSemanticAnalyser categoriesFor: #checkOptimizedMessages:!helpers!private! !
 !Kernel.StSemanticAnalyser categoriesFor: #checkOptimizedUnaryMessages:!helpers!private! !

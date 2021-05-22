@@ -251,6 +251,11 @@ extraIndex: anInteger
 
 	header := ((header bitAnd: 16r7FFFFF) bitOr: ((anInteger bitAnd: 255) bitShift: 23)) asStackPointer!
 
+fullBindingFor: aString
+	"Answer a variable binding for the named variable in the scope of this method, and failing that in the receiver's environment. If there is no such variable, then answer nil."
+
+	^methodClass fullBindingFor: aString environment: self environment!
+
 getDebugInfo
 	"Private - Invoke the compiler to answer a compilation result containing a 
 	recompilation of the receiver, a map between IP ranges and expressions 
@@ -697,6 +702,7 @@ writesInstVar: aString at: anInteger
 !Kernel.CompiledCode categoriesFor: #evaluationPools!accessing!development!public! !
 !Kernel.CompiledCode categoriesFor: #extraIndex!method header!private! !
 !Kernel.CompiledCode categoriesFor: #extraIndex:!method header!private! !
+!Kernel.CompiledCode categoriesFor: #fullBindingFor:!binding!public! !
 !Kernel.CompiledCode categoriesFor: #getDebugInfo!development!private! !
 !Kernel.CompiledCode categoriesFor: #getSource!accessing!development!public! !
 !Kernel.CompiledCode categoriesFor: #hash!comparing!public! !

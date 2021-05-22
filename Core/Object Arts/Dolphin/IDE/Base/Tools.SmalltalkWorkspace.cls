@@ -311,7 +311,7 @@ compileRange: anInterval ifFail: failBlock debug: aBoolean
 	result := compiler
 				compileForEvaluation: source
 				in: (context ifNotNil: [context basicClass])
-				environment: nil
+				environment: self parseContext environment
 				evaluationPools: pools
 				flags: f]
 			on: compiler warningClass

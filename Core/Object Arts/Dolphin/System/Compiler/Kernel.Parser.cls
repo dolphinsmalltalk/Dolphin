@@ -117,6 +117,32 @@ optimizedNodeClass
 parameterNodeClass
 	^StParameterNode!
 
+parseAnnotationArgument
+	| token node |
+	currentToken isIdentifier
+		ifTrue: 
+			[node := self variableNodeClass identifierToken: currentToken.
+			self step.
+			^node].
+	(currentToken isLiteralToken and: [currentToken isMultiKeyword not])
+		ifTrue: [^self parsePrimitiveLiteral].
+	currentToken isLiteralArrayToken
+		ifTrue: 
+			[^currentToken isForByteArray ifTrue: [self parseLiteralByteArray] ifFalse: [self parseLiteralArray]].
+	currentToken isOptimized ifTrue: [^self parseOptimizedExpression].
+	currentToken isQualifiedReference ifTrue: [^self parseQualifiedReference].
+	self parserError: CErrExpectAnnotationArg.
+	"Attempt to recover by treating it as a literal value, the AST will be invalid of course"
+	token := scanner literalTokenClass
+				start: currentToken start
+				comments: nil
+				value: (self source copyFrom: currentToken start to: currentToken stop)
+				stop: currentToken stop.
+	self step.
+	node := self literalValueNodeClass literalToken: token.
+	self addCommentsTo: node.
+	^node!
+
 parseAssignment
 	"Need one token lookahead to see if we have a ':='. This method could 
 	make it possible to assign the literals true, false and nil."
@@ -295,30 +321,6 @@ parseExpression: aString
 		ifFalse: [self parserError: CErrNonsenseAtExprEnd range: (self errorPosition to: self source size)].
 	^body!
 
-parseExtendedTags: startInteger
-	currentToken isIdentifier
-		ifTrue: 
-			[| selector |
-			selector := currentToken value.
-			selector = 'virtual'
-				ifTrue: 
-					[self step.
-					^self parseExternalCall: startInteger isVirtual: true].
-			selector = 'overlap'
-				ifTrue: 
-					[self step.
-					^self parseOverlappedCall: startInteger].
-			selector = 'mutable'
-				ifTrue: 
-					[self step.
-					^(StAnnotationNode selector: selector)
-						start: startInteger;
-						yourself]].
-	self parserError: CErrBadPrimCallType.
-	"Attempt to recover..."
-	self step.
-	^self parseExternalCall: startInteger isVirtual: false!
-
 parseExternalArgType
 	| valueType indirections typeToken structClass stop start |
 	start := currentToken sourceInterval start.
@@ -381,28 +383,14 @@ parseExternalArgTypeQualifier
 	self step.
 	^0!
 
-parseExternalCall: startInteger isVirtual: aBoolean
-	| vfnIndex node |
+parseExternalCall: callConvId startingAt: startInteger
+	| node |
 	node := StExternalCallNode new.
 	node
 		start: startInteger;
-		callingConvention: self parseExternalCallingConvention;
+		callingConvention: callConvId;
 		returnType: self parseExternalArgType.
-	aBoolean
-		ifTrue: 
-			[node isVirtual: true.
-			(currentToken isLiteralToken not or: [(vfnIndex := currentToken value) isInteger not])
-				ifTrue: 
-					[self parserError: CErrExpectVfn.
-					"Error ignored, attempt to recover."
-					vfnIndex := 1].
-			(vfnIndex between: 1 and: VMConstants.MaxVirtualFunction)
-				ifFalse: 
-					[self parserError: CErrBadVfn
-					"Error ignored, continue"].
-			node nameOrOrdinal: vfnIndex.
-			self step]
-		ifFalse: [node nameOrOrdinal: self parseExternalCallName].
+	node nameOrOrdinal: self parseExternalCallName.
 	self parseExternalCallArgs: node.
 	^node!
 
@@ -437,23 +425,21 @@ parseExternalCallArgs: anStExternalCallNode
 	^types!
 
 parseExternalCallingConvention
-	currentToken isKeyword
-		ifTrue: 
-			[| answer |
-			answer := External.FunctionDescriptor conventionFromName: currentToken value.
-			answer < 0
-				ifTrue: 
-					[self parserError: CErrBadPrimCallType.
-					"Error ignored, attempt to recover by using a sensible default..."
-					1].
-			answer > 1
-				ifTrue: 
-					[self parserError: CErrUnsupportedCallConv.
-					"Error ignored, attempt to recover by using a sensible default.."
-					answer := 0].
-			self step.
-			^answer].
-	self parserError: CErrBadPrimCallType!
+	| callConvId |
+	(currentToken isKeyword not
+		or: [(callConvId := External.FunctionDescriptor conventionFromName: currentToken value) < 0])
+			ifTrue: 
+				[self parserError: CErrExpectCallConv.
+				"Error ignored, attempt to recover by using a sensible default..."
+				callConvId := 0]
+			ifFalse: 
+				[callConvId > 1
+					ifTrue: 
+						[self parserError: CErrUnsupportedCallConv.
+						"Error ignored, attempt to recover by using a sensible default.."
+						callConvId := 0].
+				self step].
+	^callConvId!
 
 parseExternalCallName
 	| nameOrOrdinal |
@@ -470,6 +456,20 @@ parseExternalCallName
 			nameOrOrdinal := '']
 		ifFalse: [self step].
 	^nameOrOrdinal!
+
+parseKeywordAnnotation: anInteger
+	| selector args |
+	selector := Utf8String writeStream.
+	args := Array writeStream.
+	
+	[selector nextPutAll: currentToken value.
+	self step.
+	args nextPut: self parseAnnotationArgument.
+	currentToken isKeyword]
+			whileTrue.
+	^(StAnnotationNode selector: selector contents asSymbol arguments: args contents)
+		start: anInteger;
+		yourself!
 
 parseKeywordMessage
 	^self parseKeywordMessageWith: self parseBinaryMessage!
@@ -514,6 +514,28 @@ parseKeywordPattern
 			[node addComments: args last comments.
 			args last comments: nil].
 	^node!
+
+parseKeywordTag: startInteger
+	| keyword |
+	keyword := currentToken value.
+	^keyword = 'primitive:'
+		ifTrue: [self parsePrimitive: startInteger]
+		ifFalse: 
+			[| callConvId |
+			callConvId := External.FunctionDescriptor conventionFromName: keyword.
+			callConvId >= 0
+				ifTrue: 
+					["An external call descriptor"
+					callConvId > 1
+						ifTrue: 
+							[self parserError: CErrUnsupportedCallConv.
+							"Error ignored, attempt to recover by using a sensible default.."
+							callConvId := 0].
+					self step.
+					self parseExternalCall: callConvId startingAt: startInteger]
+				ifFalse: 
+					["A generic keyword annotation"
+					self parseKeywordAnnotation: startInteger]]!
 
 parseLiteralArray
 	| stream start stop |
@@ -662,10 +684,12 @@ parseOptimizedExpression
 	^node!
 
 parseOverlappedCall: startInteger
-	| node |
-	node := self parseExternalCall: startInteger isVirtual: false.
-	node isOverlapped: true.
-	^node!
+	| callConvId |
+	self step.
+	callConvId := self parseExternalCallingConvention.
+	^(self parseExternalCall: callConvId startingAt: startInteger)
+		isOverlapped: true;
+		yourself!
 
 parseParenthesizedExpression
 	| leftParen node rightParen |
@@ -682,6 +706,30 @@ parseParenthesizedExpression
 			"Error ignored, attempt to recover...."].
 	node addParenthesis: (leftParen to: rightParen).
 	^node!
+
+parsePrimitive: startInteger
+	| primitiveNode primitiveIndex |
+	self step.
+	(currentToken isLiteralToken not or: [currentToken value isInteger not])
+		ifTrue: 
+			[self parserError: CErrExpectPrimIdx.
+			"Error ignored, attempt to recover, skip the offending token unless it is the close tag and return a dummy primitive node..."
+			(currentToken isBinary: #>) ifFalse: [self step].
+			^(StPrimitiveNode primitiveIndex: 0)
+				start: startInteger;
+				yourself].
+	primitiveIndex := currentToken value.
+	(primitiveIndex between: 1 and: VMConstants.MaxPrimitive)
+		ifFalse: [self parserError: CErrBadPrimIdx].
+	self step.
+	primitiveNode := (StPrimitiveNode primitiveIndex: primitiveIndex)
+				start: startInteger;
+				yourself.
+	(currentToken isKeyword and: [currentToken value = 'error:'])
+		ifTrue: 
+			[self step.
+			primitiveNode errorTemp: self parseTempDecl].
+	^primitiveNode!
 
 parsePrimitiveIdentifier: anStVariableNodeClass
 	| token node |
@@ -897,50 +945,38 @@ parseStatementsOf: aNode
 				rightBar: rightBar)!
 
 parseTag: startInteger
-	^currentToken isKeyword
-		ifTrue: 
-			[currentToken value = 'primitive:'
-				ifTrue: 
-					[| primitiveIndex primitiveNode |
-					self step.
-					(currentToken isLiteralToken not or: [currentToken value isInteger not])
-						ifTrue: 
-							[self parserError: CErrExpectPrimIdx.
-							"Error ignored, attempt to recover, skip the offending token unless it is the close tag and return a dummy primitive node..."
-							(currentToken isBinary: #>) ifFalse: [self step].
-							^(StPrimitiveNode primitiveIndex: 0)
-								start: startInteger;
-								yourself].
-					primitiveIndex := currentToken value.
-					(primitiveIndex between: 1 and: VMConstants.MaxPrimitive)
-						ifFalse: [self parserError: CErrBadPrimIdx].
-					self step.
-					primitiveNode := (StPrimitiveNode primitiveIndex: primitiveIndex)
-								start: startInteger;
-								yourself.
-					(currentToken isKeyword and: [currentToken value = 'error:'])
-						ifTrue: 
-							[self step.
-							primitiveNode errorTemp: self parseTempDecl].
-					primitiveNode]
-				ifFalse: [self parseExternalCall: startInteger isVirtual: false]]
-		ifFalse: [self parseExtendedTags: startInteger]!
+	currentToken isKeyword ifTrue: [^self parseKeywordTag: startInteger].
+	currentToken isIdentifier ifTrue: [^self parseUnaryTag: startInteger].
+	"Tags must have a keyword or unary selector"
+	self parserError: CErrBadSelector.
+	"Attempt to recover..."
+	self step.
+	^(StAnnotationNode selector: #error arguments: #())
+		start: startInteger;
+		yourself!
 
 parseTags
-	| tag start |
+	| tags start |
 	(currentToken isBinary: #<) ifFalse: [^self].
+	tags := Array writeStream: 1.
+	
+	[| tag |
 	start := currentToken start.
 	self step.
 	tag := self parseTag: start.
-	methodNode tag: tag.
+	tags nextPut: tag.
 	(currentToken isBinary: #>)
 		ifFalse: 
 			[self parserError: CErrExpectCloseTag.
 			"Error ignored, attempt to recover..."
 			tag stop: currentToken start - 1.
+			methodNode tags: tags grabContents.
 			^self].
 	tag stop: currentToken start.
-	self step!
+	self step.
+	currentToken isBinary: #<]
+			whileTrue.
+	methodNode tags: tags grabContents!
 
 parseTempDecl
 	^self parseVariableNode: self tempDeclClass!
@@ -986,6 +1022,16 @@ parseUnaryPattern
 	self step.
 	^self methodNodeClass selectorParts: {selector} arguments: #()!
 
+parseUnaryTag: startInteger
+	| selector |
+	selector := currentToken value.
+	selector = 'virtual' ifTrue: [^self parseVirtualCall: startInteger].
+	selector = 'overlap' ifTrue: [^self parseOverlappedCall: startInteger].
+	self step.
+	^(StAnnotationNode selector: selector arguments: #())
+		start: startInteger;
+		yourself!
+
 parseVariableNode: anStVariableNodeClass
 	| token node |
 	currentToken isIdentifier ifTrue: [^self parsePrimitiveIdentifier: anStVariableNodeClass].
@@ -998,6 +1044,27 @@ parseVariableNode: anStVariableNodeClass
 	self step.
 	node := anStVariableNodeClass identifierToken: token.
 	self addCommentsTo: node.
+	^node!
+
+parseVirtualCall: startInteger
+	| vfnIndex node callConvId |
+	self step.
+	callConvId := self parseExternalCallingConvention.
+	node := StExternalCallNode new.
+	node
+		start: startInteger;
+		callingConvention: callConvId;
+		returnType: self parseExternalArgType.
+	node isVirtual: true.
+	(currentToken isLiteralToken not or: [(vfnIndex := currentToken value) isInteger not])
+		ifTrue: 
+			[self parserError: CErrExpectVfn.	"Error ignored, attempt to recover."
+			vfnIndex := 1].
+	(vfnIndex between: 1 and: VMConstants.MaxVirtualFunction)
+		ifFalse: [self parserError: CErrBadVfn	"Error ignored, continue"].
+	node nameOrOrdinal: vfnIndex.
+	self step.
+	self parseExternalCallArgs: node.
 	^node!
 
 patchFunctionDescriptorClose
@@ -1163,7 +1230,7 @@ variableNodeClass
 !Kernel.Parser categoriesFor: #braceArrayNodeClass!constants!private! !
 !Kernel.Parser categoriesFor: #canHaveStatementsAfterReturn!public!testing! !
 !Kernel.Parser categoriesFor: #cascadeNodeClass!constants!private! !
-!Kernel.Parser categoriesFor: #environment:!public! !
+!Kernel.Parser categoriesFor: #environment:!initializing!public! !
 !Kernel.Parser categoriesFor: #errorBlock:!accessing!public! !
 !Kernel.Parser categoriesFor: #errorPosition!error handling!public! !
 !Kernel.Parser categoriesFor: #externalReferenceTypeFor:!parsing!private! !
@@ -1178,6 +1245,7 @@ variableNodeClass
 !Kernel.Parser categoriesFor: #nextToken!helpers!private! !
 !Kernel.Parser categoriesFor: #optimizedNodeClass!constants!private! !
 !Kernel.Parser categoriesFor: #parameterNodeClass!parsing!private! !
+!Kernel.Parser categoriesFor: #parseAnnotationArgument!parsing!private! !
 !Kernel.Parser categoriesFor: #parseAssignment!parsing!private! !
 !Kernel.Parser categoriesFor: #parseBinaryMessage!parsing!private! !
 !Kernel.Parser categoriesFor: #parseBinaryMessageWith:!parsing!private! !
@@ -1189,17 +1257,18 @@ variableNodeClass
 !Kernel.Parser categoriesFor: #parseCascadedMessageFor:!parsing!private! !
 !Kernel.Parser categoriesFor: #parseCascadeMessage!parsing!private! !
 !Kernel.Parser categoriesFor: #parseExpression:!parsing!public! !
-!Kernel.Parser categoriesFor: #parseExtendedTags:!parsing!private! !
 !Kernel.Parser categoriesFor: #parseExternalArgType!parsing!private! !
 !Kernel.Parser categoriesFor: #parseExternalArgTypeQualifier!parsing!private! !
-!Kernel.Parser categoriesFor: #parseExternalCall:isVirtual:!parsing!private! !
+!Kernel.Parser categoriesFor: #parseExternalCall:startingAt:!parsing!private! !
 !Kernel.Parser categoriesFor: #parseExternalCallArgList!parsing!private! !
 !Kernel.Parser categoriesFor: #parseExternalCallArgs:!parsing!private! !
 !Kernel.Parser categoriesFor: #parseExternalCallingConvention!parsing!private! !
 !Kernel.Parser categoriesFor: #parseExternalCallName!parsing!private! !
+!Kernel.Parser categoriesFor: #parseKeywordAnnotation:!parsing!private! !
 !Kernel.Parser categoriesFor: #parseKeywordMessage!parsing!private! !
 !Kernel.Parser categoriesFor: #parseKeywordMessageWith:!parsing!private! !
 !Kernel.Parser categoriesFor: #parseKeywordPattern!parsing!private! !
+!Kernel.Parser categoriesFor: #parseKeywordTag:!parsing!private! !
 !Kernel.Parser categoriesFor: #parseLiteralArray!parsing!private! !
 !Kernel.Parser categoriesFor: #parseLiteralArrayObject!parsing!private! !
 !Kernel.Parser categoriesFor: #parseLiteralByteArray!parsing!private! !
@@ -1213,6 +1282,7 @@ variableNodeClass
 !Kernel.Parser categoriesFor: #parseOptimizedExpression!parsing!private! !
 !Kernel.Parser categoriesFor: #parseOverlappedCall:!parsing!private! !
 !Kernel.Parser categoriesFor: #parseParenthesizedExpression!parsing!private! !
+!Kernel.Parser categoriesFor: #parsePrimitive:!parsing!private! !
 !Kernel.Parser categoriesFor: #parsePrimitiveIdentifier:!parsing!private! !
 !Kernel.Parser categoriesFor: #parsePrimitiveLiteral!parsing!private! !
 !Kernel.Parser categoriesFor: #parsePrimitiveObject!parsing!private! !
@@ -1232,7 +1302,9 @@ variableNodeClass
 !Kernel.Parser categoriesFor: #parseUnaryMessage!parsing!private! !
 !Kernel.Parser categoriesFor: #parseUnaryMessageWith:!parsing!private! !
 !Kernel.Parser categoriesFor: #parseUnaryPattern!parsing!private! !
+!Kernel.Parser categoriesFor: #parseUnaryTag:!parsing!private! !
 !Kernel.Parser categoriesFor: #parseVariableNode:!parsing!private! !
+!Kernel.Parser categoriesFor: #parseVirtualCall:!parsing!private! !
 !Kernel.Parser categoriesFor: #patchFunctionDescriptorClose!parsing!private! !
 !Kernel.Parser categoriesFor: #patchLiteralArrayToken!parsing!private! !
 !Kernel.Parser categoriesFor: #patchLiteralMessage!helpers!private! !
