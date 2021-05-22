@@ -27,6 +27,7 @@ package globalAliases: (Set new
 
 package setPrerequisites: #(
 	'..\..\Object Arts\Dolphin\IDE\Base\Development System'
+	'..\..\Object Arts\Dolphin\Base\Dolphin'
 	'..\..\Object Arts\Dolphin\MVP\Presenters\Text\Dolphin Text Presenter'
 	'SSW EditableListView'
 	'SSW Widget Enhancements').
