@@ -499,25 +499,23 @@ Interpreter::MethodCacheEntry* __stdcall Interpreter::findNewMethodInClassNoCach
 	// Lookup the method in the dictionaries of the class & superclass chain
 	// Here we manually inline the lookup method for performance reasons as compiler
 	// will not inline everything we need from separate routines.
-	const BehaviorOTE* currentClass = classPointer;
+	const Behavior* behavior = classPointer->m_location;
 	const SmallUinteger targetSelectorHash = targetSelector->m_idHash;
-	const Oop nil = Oop(Pointers.Nil);
 	do
 	{
-		Behavior* behavior = currentClass->m_location;
 		const MethodDictOTE* methodDictionary = behavior->m_methodDictionary;
-		if ((Oop)methodDictionary != nil)
+		const MethodDictionary* dict = methodDictionary->m_location;
+		if (dict != nullptr)
 		{
 			// mask is the number of keys in the dictionary (which is pointer size - header - 2) minus 1
 			// as the size is a power of 2, thus we can avoid a modulus operation which is relatively slow
 			// requiring a division instruction
 			SmallUinteger lastKeyIndex = methodDictionary->pointersSize() - (ObjectHeaderSize + MethodDictionary::FixedSize + 1);
 			SmallUinteger index = targetSelectorHash & lastKeyIndex;
-			MethodDictionary* dict = methodDictionary->m_location;
 
 			bool wrapped = false;
 			const SymbolOTE* nextSelector;
-			while (Oop(nextSelector = dict->m_selectors[index]) != nil)
+			while ((nextSelector = dict->m_selectors[index]) != reinterpret_cast<SymbolOTE*>(Pointers.Nil))
 			{
 				if (nextSelector == targetSelector)
 				{
@@ -560,8 +558,8 @@ Interpreter::MethodCacheEntry* __stdcall Interpreter::findNewMethodInClassNoCach
 				}
 			}
 		}
-		currentClass = behavior->m_superclass;
-	} while (Oop(currentClass) != nil);
+		behavior = behavior->m_superclass->m_location;
+	} while (behavior != nullptr);
 
 	// The message was not understood, send a #doesNotUnderstand: to the receiver.
 	return messageNotUnderstood(classPointer, argCount);
@@ -637,7 +635,7 @@ ContextOTE* __fastcall Context::New(size_t tempCount, Oop oopOuter)
 		pContext = newContext->m_location;
 
 		const Oop nil = Oop(Pointers.Nil);		// Loop invariant
-		pContext->m_block = reinterpret_cast<BlockOTE*>(Pointers.Nil);
+		pContext->m_block = reinterpret_cast<BlockOTE*>(nil);
 
 		// Nil out the old frame up to the required number of temps
 		const auto loopEnd = tempCount;
@@ -921,23 +919,20 @@ MethodOTE* __fastcall Interpreter::lookupMethod(BehaviorOTE* classPointer, Symbo
 	// Lookup the method in the dictionaries of the class & superclass chain
 	// Here we manually inline the lookup method for performance reasons as compiler
 	// will not inline both lookupMethodInClass and lookupMethodInDictionary
-	const BehaviorOTE* currentClass=classPointer;
 	const SmallUinteger targetSelectorHash = targetSelector->m_idHash;
-	const Oop nil = Oop(Pointers.Nil);
+	const Behavior* current = classPointer->m_location;
 	do
 	{
-		const Behavior* current = currentClass->m_location;
 		const MethodDictOTE* methodDictionary = current->m_methodDictionary;
-		if ((Oop)methodDictionary != nil)
+		const MethodDictionary* dict = methodDictionary->m_location;
+		if (dict != nullptr)
 		{
 			SmallUinteger lastKeyIndex = methodDictionary->pointersSize() - (ObjectHeaderSize + MethodDictionary::FixedSize + 1);
 			ASSERT((((lastKeyIndex + 1) >> 1) << 1) == (lastKeyIndex + 1));
 			SmallUinteger index = targetSelectorHash & lastKeyIndex;
 
-			const MethodDictionary* dict = methodDictionary->m_location;
-
 			const SymbolOTE* nextSelector;
-			while (Oop(nextSelector = dict->m_selectors[index]) != nil)
+			while ((nextSelector = dict->m_selectors[index]) != reinterpret_cast<SymbolOTE*>(Pointers.Nil))
 			{
 				if (nextSelector == targetSelector)
 				{
@@ -960,11 +955,11 @@ MethodOTE* __fastcall Interpreter::lookupMethod(BehaviorOTE* classPointer, Symbo
 				}
 			}
 		}
-		currentClass = current->m_superclass;
-	} while ((Oop)currentClass != nil);
+		current = current->m_superclass->m_location;
+	} while (current != nullptr);
 
 	// We didn't find a method with matching selector
-	return reinterpret_cast<MethodOTE*>(nil);
+	return reinterpret_cast<MethodOTE*>(Pointers.Nil);
 }
 
 

@@ -255,14 +255,10 @@ bool __stdcall ObjectMemory::inheritsFrom(const BehaviorOTE* behaviorPointer, co
 	ASSERT(isBehavior(Oop(classPointer)));
 	ASSERT(isBehavior(Oop(behaviorPointer)));
 
-	// This loop should optimize nicely because the compiler can see that there is 
-	// no aliasing and that the loop condiations are therefore invariant
-	const Oop nil = Oop(Pointers.Nil);
 	while (behaviorPointer != classPointer)
 	{
 		Behavior* behavior = behaviorPointer->m_location;
-		// Coded for speed rather than beauty !
-		if (Oop(behaviorPointer) == nil)
+		if (behavior == nullptr)
 			return false;
 		behaviorPointer = behavior->m_superclass;
 	}

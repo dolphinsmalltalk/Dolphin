@@ -121,14 +121,16 @@ Oop* __fastcall Interpreter::primitiveIsKindOf(Oop* const sp, primargcount_t)
 	// Nothing can be a kind of SmallInteger instance
 	if (!ObjectMemoryIsIntegerObject(arg))
 	{
-		BehaviorOTE* oteArg = reinterpret_cast<BehaviorOTE*>(arg);
 		Oop receiver = *(sp - 1);
+		BehaviorOTE* oteArg = reinterpret_cast<BehaviorOTE*>(arg);
 		BehaviorOTE* oteClass = !ObjectMemoryIsIntegerObject(receiver)
 			? reinterpret_cast<OTE*>(receiver)->m_oteClass
 			: Pointers.ClassSmallInteger;
 		while (oteClass != oteArg)
 		{
-			if (reinterpret_cast<OTE*>(oteClass) == Pointers.Nil)
+			// Small optimisation to terminate when 'class' body is null, as this is true for nil
+			ST::Behavior* pBehavior = oteClass->m_location;
+			if (pBehavior == nullptr)
 			{
 				*(sp - 1) = reinterpret_cast<Oop>(Pointers.False);
 				return sp - 1;
