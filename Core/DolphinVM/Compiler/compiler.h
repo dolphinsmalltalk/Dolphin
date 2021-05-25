@@ -454,7 +454,6 @@ private:
 	bool m_instVarsInitialized = false;
 	bool m_isMutable = false;
 	bool m_isCompilingExpression = false;
-	bool m_hasNamespaceAnnotation = false;
 
 	enum class SendType { Other, Self, Super };
 	CompilerFlags m_flags = CompilerFlags::Default;
@@ -481,6 +480,7 @@ private:
 	typedef std::pair<POTE, OOPVECTOR> MethodAnnotation;
 	typedef std::vector<MethodAnnotation> AnnotationVector;
 	AnnotationVector m_annotations;
+	size_t m_namespaceAnnotationIndex = -1;
 
 	// Fixed size array of instance vars (determined from class)
 	typedef std::valarray<Str> STRINGARRAY;
@@ -491,7 +491,7 @@ private:
 	LexicalScope* m_pCurrentScope = nullptr;
 
 	POTE m_class = nullptr;					// The current class to which the compilation applies, i.e. the method class
-	POTE m_environment;						// The overriding namespace for extension methods, or nil if the environment of the method class should be used
+	POTE m_environment = nullptr;			// The overriding namespace for extension methods, or nil if the environment of the method class should be used
 	POTE m_oopWorkspacePools = nullptr;		// Shared pools for associated workspace
 	Oop	 m_context = 0;						// Compilation context for expression
 

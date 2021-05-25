@@ -2255,8 +2255,9 @@ void Compiler::PatchCleanBlockLiterals(POTE oteMethod)
 void Compiler::PatchBindingReferenceLiterals(POTE oteMethod)
 {
 	// If the method does not have a namespace annotation, then the method class is an equivalent context for any
-	// relative binding references, so we don't need to do anything
-	if (m_hasNamespaceAnnotation)
+	// relative binding references, so we don't need to do anything. Otherwise we need to patch the relative literal 
+	// binding references to have the right context.
+	if (m_namespaceAnnotationIndex != -1)
 	{
 		POTE setContextSelector = GetVMPointers().setScopeSelector;
 		for (auto it = m_bindingRefs.cbegin(); it != m_bindingRefs.cend(); it++)

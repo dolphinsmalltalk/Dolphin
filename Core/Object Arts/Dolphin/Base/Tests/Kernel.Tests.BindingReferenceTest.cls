@@ -100,7 +100,38 @@ testLiteral
 	self assert: subject bindingScope identicalTo: Smalltalk.
 	self assert: subject valueOrNil identicalTo: Object!
 
-testLiteralEnvironmentRelative
+testLiteralExplicitEnvironmentRelative
+	| method source |
+	source := 'thisTestClass %<namespace: Kernel.Tests> ^#{<1s>} valueOrNil' << self class unqualifiedName.
+	method := Compiler
+				compile: source
+				in: Object
+				environment: nil.
+	self assert: method isAnnotated.
+	self assert: method customEnvironment identicalTo: self class environment.
+	self assert: (method value: Object new withArguments: #()) identicalTo: self class.
+!
+
+testLiteralExplicitEnvironmentRelative2
+	| method source env |
+	env := self class environment.
+	source := 'thisTestClass %<foo> %<namespace: Kernel> %<bar> %<namespace: <2p>> ^#{<1s>} valueOrNil'
+				expandMacrosWith: self class unqualifiedName
+				with: env.
+	method := Compiler
+				compile: source
+				in: Object
+				environment: nil.
+	self assert: method isAnnotated.
+	"Latest namespace annotation wins"
+	self assert: method annotations asArray
+		equals: {Message selector: #foo.
+				Message selector: #namespace: arguments: {env}.
+				Message selector: #bar}.
+	self assert: method customEnvironment identicalTo: env.
+	self assert: (method value: Object new withArguments: #()) identicalTo: self class!
+
+testLiteralImplicitEnvironmentRelative
 	| method source |
 	source := 'thisTestClass ^#{<1s>} valueOrNil' << self class unqualifiedName.
 	method := Compiler compile: source in: Object.
@@ -111,9 +142,30 @@ testLiteralEnvironmentRelative
 				compile: source
 				in: Object
 				environment: self class environment.
-	self assert: method environment identicalTo: self class environment.
-	self assert: (method value: Object new withArguments: #()) identicalTo: self class.
-!
+	self assert: method isAnnotated.
+	self assert: method customEnvironment identicalTo: self class environment.
+	self assert: (method value: Object new withArguments: #()) identicalTo: self class!
+
+testLiteralImplicitExplicitEnvironmentRelative
+	| method source name env |
+	name := self class unqualifiedName.
+	env := self class environment.
+	source := 'thisTestClass %<foo> %<namespace: <2p>> %<bar> ^#{<1s>} valueOrNil'
+				expandMacrosWith: name
+				with: env.
+	self assertIsNil: (Graphics fullBindingFor: name).
+	method := Compiler
+				compile: source
+				in: Object
+				environment: Graphics.
+	self assert: method isAnnotated.
+	"Note the order: The implicit namespace provided to the Compiler caused an initial namespace annotation to be added that was then changed by the explicit namespace: annotation"
+	self assert: method annotations asArray
+		equals: {Message selector: #namespace: arguments: {env}.
+				Message selector: #foo.
+				Message selector: #bar}.
+	self assert: method customEnvironment identicalTo: env.
+	self assert: (method value: Object new withArguments: #()) identicalTo: self class!
 
 testRelativeNoScope
 	self should: [BindingReference path: #('_' 'Object')] raise: Error!
@@ -139,7 +191,10 @@ testStbConvertFromVersion0
 !Kernel.Tests.BindingReferenceTest categoriesFor: #testIsValidGlobalName!public!unit tests! !
 !Kernel.Tests.BindingReferenceTest categoriesFor: #testLessOrEqual!public!unit tests! !
 !Kernel.Tests.BindingReferenceTest categoriesFor: #testLiteral!public! !
-!Kernel.Tests.BindingReferenceTest categoriesFor: #testLiteralEnvironmentRelative!public! !
+!Kernel.Tests.BindingReferenceTest categoriesFor: #testLiteralExplicitEnvironmentRelative!public! !
+!Kernel.Tests.BindingReferenceTest categoriesFor: #testLiteralExplicitEnvironmentRelative2!public! !
+!Kernel.Tests.BindingReferenceTest categoriesFor: #testLiteralImplicitEnvironmentRelative!public! !
+!Kernel.Tests.BindingReferenceTest categoriesFor: #testLiteralImplicitExplicitEnvironmentRelative!public! !
 !Kernel.Tests.BindingReferenceTest categoriesFor: #testRelativeNoScope!public!unit tests! !
 !Kernel.Tests.BindingReferenceTest categoriesFor: #testStbConvertFromVersion0!public! !
 

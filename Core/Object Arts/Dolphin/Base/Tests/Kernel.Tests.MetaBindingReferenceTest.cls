@@ -53,7 +53,7 @@ testLiteral
 	self assertIsNil: subject scope.
 	self assert: subject valueOrNil identicalTo: Object class!
 
-testLiteralEnvironmentRelative
+testLiteralImplicitEnvironmentRelative
 	| method source |
 	source := 'thisTestClass ^#{<1s> class} valueOrNil' << self class unqualifiedName.
 	method := Compiler compile: source in: Object.
@@ -65,8 +65,7 @@ testLiteralEnvironmentRelative
 				in: Object
 				environment: self class environment.
 	self assert: method environment identicalTo: self class environment.
-	self assert: (method value: Object new withArguments: #()) identicalTo: self class class.
-!
+	self assert: (method value: Object new withArguments: #()) identicalTo: self class class!
 
 testMeta
 	| subject |
@@ -95,7 +94,7 @@ valueOfBinding: aVariableBinding
 !Kernel.Tests.MetaBindingReferenceTest categoriesFor: #testInstance!public!unit tests! !
 !Kernel.Tests.MetaBindingReferenceTest categoriesFor: #testLessOrEqual!public!unit tests! !
 !Kernel.Tests.MetaBindingReferenceTest categoriesFor: #testLiteral!public! !
-!Kernel.Tests.MetaBindingReferenceTest categoriesFor: #testLiteralEnvironmentRelative!public! !
+!Kernel.Tests.MetaBindingReferenceTest categoriesFor: #testLiteralImplicitEnvironmentRelative!public! !
 !Kernel.Tests.MetaBindingReferenceTest categoriesFor: #testMeta!public!unit tests! !
 !Kernel.Tests.MetaBindingReferenceTest categoriesFor: #testRefersToLiteral!public!unit tests! !
 !Kernel.Tests.MetaBindingReferenceTest categoriesFor: #valueOfBinding:!helpers!private! !

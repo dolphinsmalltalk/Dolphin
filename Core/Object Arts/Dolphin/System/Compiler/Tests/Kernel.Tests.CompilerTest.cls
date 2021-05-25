@@ -863,6 +863,7 @@ testKeywordAnnotations
 	method := Compiler
 				compile: 'test 
 	<string: ''abc''> 
+	<namespace: Smalltalk>
 	<smallint: 123 largeint: 16r7FFFFFFFFFFFFFFF>
 	<float: 4.56>
 	<class: Core.Tests static: Processor>
@@ -872,11 +873,13 @@ testKeywordAnnotations
 	self assert: method annotations isImmutable.
 	self assert: method annotations asArray
 		equals: {Message selector: #string: arguments: #('abc').
+				Message selector: #namespace: arguments: {Smalltalk}.
 				Message selector: #smallint:largeint: arguments: #(123 16r7FFFFFFFFFFFFFFF).
 				Message selector: #float: arguments: #(4.56).
 				Message selector: #class:static: arguments: {Core.Tests. Processor}.
 				Message selector: #expr: arguments: {Dictionary withAll: {'a' -> 1. 'b' -> 2}}}.
-	self assert: method annotations last arguments isImmutable!
+	self assert: method annotations last arguments isImmutable.
+	self assert: method customEnvironment identicalTo: Smalltalk!
 
 testLiteralArray
 	self assert: (Compiler evaluate: '#(-)') equals: {#-}.

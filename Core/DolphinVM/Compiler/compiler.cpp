@@ -151,8 +151,8 @@ void Compiler::PrepareToCompile(CompilerFlags flags, LPUTF8 compiletext, textpos
 	// Determine if we need to add a MethodAnnotations literal
 	if (m_environment != m_piVM->NilPointer() && m_environment != GetClassEnvironment(m_class))
 	{
-		m_hasNamespaceAnnotation = true;
-		// Method is compiled in a different namespace, so add the #namespace: annotation
+		m_namespaceAnnotationIndex = 0;
+		// Method is compiled in a different namespace, and may require a #namespace: annotation
 		AddAnnotation(GetVMPointers().namespaceAnnotationSelector, (Oop)m_environment);
 	}
 }
@@ -2311,8 +2311,6 @@ void Compiler::ParseKeywordAnnotation()
 	if (m_ok)
 	{
 		POTE selector = InternSymbol(keywordSelector);
-		m_piVM->AddReference((Oop)selector);
-		m_annotations.push_back(MethodAnnotation(selector, args));
 
 		if (selector == GetVMPointers().namespaceAnnotationSelector) 
 		{
@@ -2325,7 +2323,22 @@ void Compiler::ParseKeywordAnnotation()
 			{
 				m_environment = (POTE)arg;
 			}
+
+			if (m_namespaceAnnotationIndex != -1) 
+			{
+				Oop prev = m_annotations[m_namespaceAnnotationIndex].second[0];
+				m_annotations[m_namespaceAnnotationIndex].second = args;
+				m_piVM->RemoveReference(prev);
+				return;
+			}
+			else
+			{
+				m_namespaceAnnotationIndex = m_annotations.size();
+			}
 		}
+
+		m_piVM->AddReference((Oop)selector);
+		m_annotations.push_back(MethodAnnotation(selector, args));
 	}
 }
 
