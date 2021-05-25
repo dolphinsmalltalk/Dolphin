@@ -1196,30 +1196,38 @@ basicAllRoots
 	^(Metaclass primAllInstances select: [:meta | meta instanceClass superclass isNil])
 		collect: [:meta | meta instanceClass]!
 
-foldLiteralStrings
-	"Fold duplicate literal strings so that there is only a single literal string for each unique character sequence in the image.
-	This is should be a safe operation in Dolphin 6 because method literals are immutable.
-		Class foldLiteralStrings
-	"
+foldLiterals
+	"Fold literals of certain types to save space. This is should be a safe operation in Dolphin because method literals are immutable."
 
-	| after total literalStrings |
+	| totalStrings literalStrings annotations totalAnnotations |
 	literalStrings := Set new.
-	total := 0.
+	annotations := Set new.
+	totalStrings := 0.
+	totalAnnotations := 0.
 	self allMethodsDo: 
 			[:each |
-			each whileMutableDo: 
-					[1 to: each literalCount
-						do: 
-							[:i |
-							| literal |
-							literal := each literalAt: i.
-							(literal isString and: [literal isSymbol not])
+			| count |
+			count := each size.
+			count > 0
+				ifTrue: 
+					[each whileMutableDo: 
+							[| literal |
+							1 to: count
+								do: 
+									[:i |
+									literal := each at: i.
+									(literal isString and: [literal isSymbol not])
+										ifTrue: 
+											[totalStrings := totalStrings + 1.
+											each at: i put: (literalStrings addIfAbsent: literal)]].
+							(literal isKindOf: MethodAnnotations)
 								ifTrue: 
-									[total := total + 1.
-									literalStrings add: literal.
-									each literalAt: i put: (literalStrings find: literal)]]]].
-	after := literalStrings size.
-	^{total. after}! !
+									[totalAnnotations := totalAnnotations + 1.
+									each at: count put: (annotations addIfAbsent: literal)]]]].
+	^LookupTable new
+		at: #strings put: {totalStrings. literalStrings size};
+		at: #annotations put: {totalAnnotations. annotations size};
+		yourself! !
 !Core.Class class categoriesFor: #allBehaviors!class hierarchy-accessing!private! !
 !Core.Class class categoriesFor: #allBehaviorsDo:!enumerating!private! !
 !Core.Class class categoriesFor: #allClasses!class hierarchy-accessing!private! !
@@ -1227,5 +1235,5 @@ foldLiteralStrings
 !Core.Class class categoriesFor: #allMethodsDo:!enumerating!private! !
 !Core.Class class categoriesFor: #allRoots!class hierarchy-accessing!private! !
 !Core.Class class categoriesFor: #basicAllRoots!class hierarchy-accessing!private! !
-!Core.Class class categoriesFor: #foldLiteralStrings!operations!public! !
+!Core.Class class categoriesFor: #foldLiterals!operations!public! !
 

@@ -204,7 +204,7 @@ encryptedPackageNames
 	^encrypted collect: [:each | File splitStemFrom: (each at: 1)]!
 
 foldLiterals
-	Class foldLiteralStrings!
+	Class foldLiterals!
 
 fullName
 	"Answer the full product name associated with the receiver"

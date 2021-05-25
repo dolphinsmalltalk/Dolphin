@@ -592,13 +592,13 @@ finishedWithStripping
 		finishedWithAll: #(#allMethodsInClasses:do: #allResourcesStripped #basicDeleteMethod: #ignoreViewReferences #messagesSentByClasses: #resourcesForClasses: #deleteMethod: #deleteMethods: #removeMethods:reason:force: #logMethod: #preservedMessages #speciallySentMessages #finishedWithStripping).
 	Set primAllSubinstances do: [:each | each shrink]!
 
-foldDuplicatesConstants
+foldDuplicateConstants
 	"Private - Fold any duplicate objects that we can such as literals and strings."
 
-	self foldDuplicateStrings.
+	self foldDuplicateLiterals.
 	self foldDuplicateBytecodes.
 	self
-		finishedWithAll: #(#stripDuplicateBytecodes #stripDuplicateStrings #foldDuplicateStrings #foldDuplicateBytecodes #logFold:folded:total:)!
+		finishedWithAll: #(#stripDuplicateBytecodes #stripDuplicateStrings #foldDuplicateLiterals #foldDuplicateBytecodes #logFold:folded:total:)!
 
 getClassInstanceStats
 	| stats classes totalInstances totalMemory |
@@ -1159,7 +1159,7 @@ prepareCycle1: aWeakArrayOfMethods
 	self class class methodDictionary: nil!
 
 prepareCycle2: developmentMethods
-	self foldDuplicatesConstants.
+	self foldDuplicateConstants.
 	self removeDevelopmentObjects: developmentMethods.
 	"We can now remove abstract unreachable methods without concern that they may be made reachable by the removal of development methods."
 	deploymentContext setRunFlag: RemoveAbstractUnreachable.
@@ -2016,7 +2016,7 @@ writeLogFile
 !ImageStripper categoriesFor: #finishedStrippingResources!helpers!private! !
 !ImageStripper categoriesFor: #finishedWithAll:!operations!private! !
 !ImageStripper categoriesFor: #finishedWithStripping!operations!private! !
-!ImageStripper categoriesFor: #foldDuplicatesConstants!operations!private! !
+!ImageStripper categoriesFor: #foldDuplicateConstants!operations!private! !
 !ImageStripper categoriesFor: #getClassInstanceStats!helpers!private! !
 !ImageStripper categoriesFor: #ignoreViewReferences!accessing!public! !
 !ImageStripper categoriesFor: #includeManifestResource!accessing!public!testing! !

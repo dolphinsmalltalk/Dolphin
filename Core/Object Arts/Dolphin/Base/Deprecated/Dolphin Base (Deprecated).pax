@@ -118,6 +118,7 @@ package methodNames
 	add: #WinMMLibrary -> #timeGetTime;
 	add: 'Category class' -> #categoryIcon;
 	add: 'Character class' -> #safeCodePoint:;
+	add: 'Class class' -> #foldLiteralStrings;
 	add: 'CompiledMethod class' -> #fromString:;
 	add: 'Compiler class' -> #compileDebugExpression:in:evaluationPools:;
 	add: 'Compiler class' -> #compileDebugMethod:in:;
@@ -336,6 +337,13 @@ variableSubclass: aClassSymbol instanceVariableNames: instVarString classVariabl
 !Class categoriesFor: #variableByteSubclass:instanceVariableNames:classVariableNames:poolDictionaries:category:!class hierarchy-adding!public! !
 !Class categoriesFor: #variableByteSubclass:instanceVariableNames:classVariableNames:poolDictionaries:classInstanceVariableNames:!class hierarchy-adding!public! !
 !Class categoriesFor: #variableSubclass:instanceVariableNames:classVariableNames:poolDictionaries:category:!class hierarchy-adding!public! !
+
+!Class class methodsFor!
+
+foldLiteralStrings
+	Notification deprecated.
+	^self foldLiterals at: #strings! !
+!Class class categoriesFor: #foldLiteralStrings!operations!public! !
 
 !ClassDescription methodsFor!
 

@@ -280,11 +280,11 @@ foldDuplicateBytecodes
 		folded: total - byteCodes size
 		total: total!
 
-foldDuplicateStrings
+foldDuplicateLiterals
 	| a |
 	self stripDuplicateStrings ifFalse: [^self].
 	self notify: 'Folding duplicate strings'.
-	a := Class foldLiteralStrings.
+	a := Class foldLiterals at: #strings.
 	self
 		logFold: 'FoldStrings'
 		folded: a first - a second
@@ -890,7 +890,7 @@ verifyRequiredPackages
 !BasicImageStripper categoriesFor: #externalStructureClasses!accessing!private! !
 !BasicImageStripper categoriesFor: #finishedWithAll:!operations!private! !
 !BasicImageStripper categoriesFor: #foldDuplicateBytecodes!operations!private! !
-!BasicImageStripper categoriesFor: #foldDuplicateStrings!operations!private! !
+!BasicImageStripper categoriesFor: #foldDuplicateLiterals!operations!private! !
 !BasicImageStripper categoriesFor: #logComment:!logging!private! !
 !BasicImageStripper categoriesFor: #logElement:attributes:value:!logging!private! !
 !BasicImageStripper categoriesFor: #logFold:folded:total:!operations!private! !
