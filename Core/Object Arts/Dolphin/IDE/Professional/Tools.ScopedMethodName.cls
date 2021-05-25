@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Refactory.Browser.RBMethodName subclass: #'Refactory.Browser.RBScopedMethodName'
+Refactory.Browser.RBMethodName subclass: #'Tools.ScopedMethodName'
 	instanceVariableNames: 'methodClass originalArguments originalSelector scope scopes'
 	classVariableNames: ''
-	imports: #()
+	imports: #(#{Refactory.Browser})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Refactory.Browser.RBScopedMethodName guid: (Core.GUID fromString: '{50a0d881-8784-4db2-b798-817a44da9e38}')!
-Refactory.Browser.RBScopedMethodName comment: 'Dolphin extension of RBMethodName. Holds a scope (a BrowserEnvironment) that defines the context within which the rename is performed.
+Tools.ScopedMethodName guid: (Core.GUID fromString: '{50a0d881-8784-4db2-b798-817a44da9e38}')!
+Tools.ScopedMethodName comment: 'Dolphin extension of RBMethodName. Holds a scope (a BrowserEnvironment) that defines the context within which the rename is performed.
 
 Instance Variables:
 	methodClass			<ClassDescription>. Class of the method being (re)named.
@@ -17,8 +17,8 @@ Instance Variables:
 	scopes				<LookupTable> mapping <String> name to <BrowserEnvironment>. Possible rename scopes.
 
 '!
-!Refactory.Browser.RBScopedMethodName categoriesForClass!Refactory-Support! !
-!Refactory.Browser.RBScopedMethodName methodsFor!
+!Tools.ScopedMethodName categoriesForClass!Refactory-Support! !
+!Tools.ScopedMethodName methodsFor!
 
 addScope: aBrowserEnvironment 
 	^scopes at: aBrowserEnvironment label put: aBrowserEnvironment!
@@ -91,27 +91,27 @@ setSelector: aSymbol arguments: anArray
 	super setSelector: aSymbol arguments: anArray.
 	scopes := LookupTable new.
 	self addScope: BrowserEnvironment new name: 'Global'! !
-!Refactory.Browser.RBScopedMethodName categoriesFor: #addScope:!adding!public! !
-!Refactory.Browser.RBScopedMethodName categoriesFor: #addScope:name:!adding!public! !
-!Refactory.Browser.RBScopedMethodName categoriesFor: #addScopesForMethod:!initializing!private! !
-!Refactory.Browser.RBScopedMethodName categoriesFor: #defaultScope!initializing!public! !
-!Refactory.Browser.RBScopedMethodName categoriesFor: #hasNewSignature!commands!private! !
-!Refactory.Browser.RBScopedMethodName categoriesFor: #initializeForMethod:!initializing!private! !
-!Refactory.Browser.RBScopedMethodName categoriesFor: #methodClass!accessing!public! !
-!Refactory.Browser.RBScopedMethodName categoriesFor: #originalArguments!accessing!public! !
-!Refactory.Browser.RBScopedMethodName categoriesFor: #originalSelector!accessing!public! !
-!Refactory.Browser.RBScopedMethodName categoriesFor: #packages:!accessing!public! !
-!Refactory.Browser.RBScopedMethodName categoriesFor: #permutation!accessing!public! !
-!Refactory.Browser.RBScopedMethodName categoriesFor: #scope!accessing!public! !
-!Refactory.Browser.RBScopedMethodName categoriesFor: #scope:!accessing!public! !
-!Refactory.Browser.RBScopedMethodName categoriesFor: #scopeNames!constants!public! !
-!Refactory.Browser.RBScopedMethodName categoriesFor: #setSelector:arguments:!initializing!private! !
+!Tools.ScopedMethodName categoriesFor: #addScope:!adding!public! !
+!Tools.ScopedMethodName categoriesFor: #addScope:name:!adding!public! !
+!Tools.ScopedMethodName categoriesFor: #addScopesForMethod:!initializing!private! !
+!Tools.ScopedMethodName categoriesFor: #defaultScope!initializing!public! !
+!Tools.ScopedMethodName categoriesFor: #hasNewSignature!commands!private! !
+!Tools.ScopedMethodName categoriesFor: #initializeForMethod:!initializing!private! !
+!Tools.ScopedMethodName categoriesFor: #methodClass!accessing!public! !
+!Tools.ScopedMethodName categoriesFor: #originalArguments!accessing!public! !
+!Tools.ScopedMethodName categoriesFor: #originalSelector!accessing!public! !
+!Tools.ScopedMethodName categoriesFor: #packages:!accessing!public! !
+!Tools.ScopedMethodName categoriesFor: #permutation!accessing!public! !
+!Tools.ScopedMethodName categoriesFor: #scope!accessing!public! !
+!Tools.ScopedMethodName categoriesFor: #scope:!accessing!public! !
+!Tools.ScopedMethodName categoriesFor: #scopeNames!constants!public! !
+!Tools.ScopedMethodName categoriesFor: #setSelector:arguments:!initializing!private! !
 
-!Refactory.Browser.RBScopedMethodName class methodsFor!
+!Tools.ScopedMethodName class methodsFor!
 
 fromMethod: aCompiledMethod
 	^(self new)
 		initializeForMethod: aCompiledMethod;
 		yourself! !
-!Refactory.Browser.RBScopedMethodName class categoriesFor: #fromMethod:!instance creation!public! !
+!Tools.ScopedMethodName class categoriesFor: #fromMethod:!instance creation!public! !
 

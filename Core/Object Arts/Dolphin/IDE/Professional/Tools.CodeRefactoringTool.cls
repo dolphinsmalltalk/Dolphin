@@ -33,10 +33,6 @@ addClassVariable: aStVariableNode to: aClass
 	self systemModel addClassVariable: aStVariableNode name to: aClass.
 	presenter clearParseTree!
 
-addGlobalVariable: aStVariableNode 
-	self systemModel addGlobalVariable: aStVariableNode name.
-	presenter clearParseTree!
-
 addInstanceVariable: aStVariableNode to: aClass 
 	self systemModel addInstanceVariable: aStVariableNode name to: aClass.
 	presenter clearParseTree!
@@ -56,6 +52,10 @@ addParameterCommand
 
 addParameterToMessage
 	self addParameterCommand value: self!
+
+addSharedVariable: aStVariableNode to: aNamespace
+	self systemModel addSharedVariable: aStVariableNode name to: aNamespace.
+	presenter clearParseTree!
 
 canPerformCodeRefactoring
 	^presenter canRefactor and: [presenter isModified not]!
@@ -391,13 +391,13 @@ populateAutoCorrectMenu: aMenu forMessage: aStMessageNode
 	self populateImplementMenu: implementMenu forMessage: aStMessageNode!
 
 populateAutoCorrectMenu: aMenu forUndefinedVar: aStVariableNode
-	| methodClass |
-	methodClass := presenter parseContext methodClass.
+	| parseContext |
+	parseContext := presenter parseContext.
 	^aStVariableNode name first isUppercase
 		ifTrue: 
 			[| subMenu |
 			subMenu := aMenu addSubmenu: ('Add C&lass Variable <1p> to' expandMacrosWith: aStVariableNode name).
-			methodClass instanceClass withAllSuperclassesDo: 
+			parseContext methodClass instanceClass withAllSuperclassesDo: 
 					[:eachClass |
 					subMenu addCommand: (MessageSend
 								receiver: self
@@ -411,9 +411,9 @@ populateAutoCorrectMenu: aMenu forUndefinedVar: aStVariableNode
 				description: ('Create &Class <1p>' expandMacrosWith: aStVariableNode name).
 			aMenu addCommand: (MessageSend
 						receiver: self
-						selector: #addGlobalVariable:
-						arguments: {aStVariableNode})
-				description: ('Declare &Global <1p>' expandMacrosWith: aStVariableNode name)]
+						selector: #addSharedVariable:to:
+						arguments: {aStVariableNode. parseContext environment})
+				description: ('Declare &Shared Variable <1p>.<2s>' expandMacrosWith: parseContext environment with: aStVariableNode name)]
 		ifFalse: 
 			[| subMenu |
 			aMenu addCommand: (MessageSend
@@ -423,7 +423,7 @@ populateAutoCorrectMenu: aMenu forUndefinedVar: aStVariableNode
 				description: ('Declare &Temp <1p>' expandMacrosWith: aStVariableNode name).
 			subMenu := Menu
 						description: ('Add &Instance Variable <1p> to' expandMacrosWith: aStVariableNode name).
-			methodClass withAllSuperclassesDo: 
+			parseContext methodClass withAllSuperclassesDo: 
 					[:eachClass |
 					(ClassBuilder isFixedLayout: eachClass)
 						ifFalse: 
@@ -792,10 +792,10 @@ stubTextFor: aStMessageNode inClass: aClass
 		nextPutAll: body.
 	^source contents! !
 !Tools.CodeRefactoringTool categoriesFor: #addClassVariable:to:!commands!private! !
-!Tools.CodeRefactoringTool categoriesFor: #addGlobalVariable:!commands!private! !
 !Tools.CodeRefactoringTool categoriesFor: #addInstanceVariable:to:!commands!private! !
 !Tools.CodeRefactoringTool categoriesFor: #addParameterCommand!commands!private!refactoring! !
 !Tools.CodeRefactoringTool categoriesFor: #addParameterToMessage!commands!public!refactoring! !
+!Tools.CodeRefactoringTool categoriesFor: #addSharedVariable:to:!commands!private! !
 !Tools.CodeRefactoringTool categoriesFor: #canPerformCodeRefactoring!private!refactoring! !
 !Tools.CodeRefactoringTool categoriesFor: #canRenameNode!private!refactoring! !
 !Tools.CodeRefactoringTool categoriesFor: #changeSignature:in:operation:title:!helpers!private! !

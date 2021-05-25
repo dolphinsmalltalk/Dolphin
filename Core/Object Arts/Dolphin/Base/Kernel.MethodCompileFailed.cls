@@ -25,9 +25,7 @@ error: aCompilerErrorNotification environment: aNamespace
 	environment := aNamespace!
 
 resumeWithStubMethod
-	"Create a stub method which causes an error if evaluated but has the source of the
-	proposed method that did not compile. Answer this as the result of resuming the
-	notification"
+	"Private - Create a stub method which causes an error if evaluated but has the source of the proposed method that did not compile. Answer the <CompilationResult> for the stub method as the result of resuming the notification."
 
 	| selector methodClass result |
 	selector := compilerErrorNotification selector asSymbol.
@@ -45,7 +43,7 @@ resumeWithStubMethod
 !Kernel.MethodCompileFailed categoriesFor: #defaultAction!handling!public! !
 !Kernel.MethodCompileFailed categoriesFor: #environment!accessing!public! !
 !Kernel.MethodCompileFailed categoriesFor: #error:environment:!initializing!private! !
-!Kernel.MethodCompileFailed categoriesFor: #resumeWithStubMethod!handler responses!operations!public! !
+!Kernel.MethodCompileFailed categoriesFor: #resumeWithStubMethod!handler responses!operations!private! !
 
 !Kernel.MethodCompileFailed class methodsFor!
 

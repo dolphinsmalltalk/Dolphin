@@ -12,25 +12,20 @@ Browse the ''*-RB fixes'' pseudo-category to find the modifications made as part
 
 package setClassNames: #(
 	#{Refactory.Browser.AddClassChange}
-	#{Refactory.Browser.AddClassConstantChange}
 	#{Refactory.Browser.AddClassVariableChange}
 	#{Refactory.Browser.AddInstanceVariableChange}
 	#{Refactory.Browser.AddMethodChange}
-	#{Refactory.Browser.AddNamespaceImportChange}
 	#{Refactory.Browser.ChangeSet}
 	#{Refactory.Browser.ClassCommentChange}
 	#{Refactory.Browser.CompositeRefactoryChange}
-	#{Refactory.Browser.DolphinAddMethodChange}
 	#{Refactory.Browser.RefactoryChange}
 	#{Refactory.Browser.RefactoryChangeManager}
 	#{Refactory.Browser.RefactoryClassChange}
 	#{Refactory.Browser.RefactoryVariableChange}
 	#{Refactory.Browser.RemoveClassChange}
-	#{Refactory.Browser.RemoveClassConstantChange}
 	#{Refactory.Browser.RemoveClassVariableChange}
 	#{Refactory.Browser.RemoveInstanceVariableChange}
 	#{Refactory.Browser.RemoveMethodChange}
-	#{Refactory.Browser.RemoveNamespaceImportChange}
 	#{Refactory.Browser.RenameClassChange}
 	#{Refactory.Browser.RenameClassVariableChange}
 	#{Refactory.Browser.RenameInstanceVariableChange}
@@ -138,18 +133,6 @@ Refactory.Browser.RefactoryClassChange subclass: #'Refactory.Browser.RemoveMetho
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Refactory.Browser.AddMethodChange subclass: #'Refactory.Browser.DolphinAddMethodChange'
-	instanceVariableNames: 'environment packageName compilationFlags method'
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-Refactory.Browser.RefactoryVariableChange subclass: #'Refactory.Browser.AddClassConstantChange'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
 Refactory.Browser.RefactoryVariableChange subclass: #'Refactory.Browser.AddClassVariableChange'
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -162,18 +145,6 @@ Refactory.Browser.RefactoryVariableChange subclass: #'Refactory.Browser.AddInsta
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Refactory.Browser.RefactoryVariableChange subclass: #'Refactory.Browser.AddNamespaceImportChange'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-Refactory.Browser.RefactoryVariableChange subclass: #'Refactory.Browser.RemoveClassConstantChange'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
 Refactory.Browser.RefactoryVariableChange subclass: #'Refactory.Browser.RemoveClassVariableChange'
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -181,12 +152,6 @@ Refactory.Browser.RefactoryVariableChange subclass: #'Refactory.Browser.RemoveCl
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Refactory.Browser.RefactoryVariableChange subclass: #'Refactory.Browser.RemoveInstanceVariableChange'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-Refactory.Browser.RefactoryVariableChange subclass: #'Refactory.Browser.RemoveNamespaceImportChange'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

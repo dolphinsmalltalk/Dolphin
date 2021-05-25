@@ -187,7 +187,7 @@ realCategories
 recompile
 	"Private - Recompile the receiver."
 
-	^self methodClass recompileMethod: self!
+	^self methodClass recompileMethod: self environment: self customEnvironment!
 
 storeSourceString: aString
 	"Private - Record aString as the source for the receiver. Delegate to the receiver's source manager"

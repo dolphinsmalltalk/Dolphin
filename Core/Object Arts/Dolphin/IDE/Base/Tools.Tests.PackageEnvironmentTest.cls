@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Refactory.Browser.Tests.BrowserEnvironmentTest subclass: #'Refactory.Browser.Tests.PackageEnvironmentTest'
+Refactory.Browser.Tests.BrowserEnvironmentTest subclass: #'Tools.Tests.PackageEnvironmentTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Refactory.Browser.Tests.PackageEnvironmentTest guid: (Core.GUID fromString: '{4375158a-0238-45ad-86e5-967559575ded}')!
-Refactory.Browser.Tests.PackageEnvironmentTest comment: 'SUnitBrowser openOnTestCase: self'!
-!Refactory.Browser.Tests.PackageEnvironmentTest categoriesForClass!Refactory-Testing! !
-!Refactory.Browser.Tests.PackageEnvironmentTest methodsFor!
+Tools.Tests.PackageEnvironmentTest guid: (Core.GUID fromString: '{4375158a-0238-45ad-86e5-967559575ded}')!
+Tools.Tests.PackageEnvironmentTest comment: 'SUnitBrowser openOnTestCase: self'!
+!Tools.Tests.PackageEnvironmentTest categoriesForClass!Refactory-Testing! !
+!Tools.Tests.PackageEnvironmentTest methodsFor!
 
 classNamesFor: aPackageEnvironment
 	"Superclass implementation will fail because PackageEnvironment may contain partial classes
@@ -19,7 +19,7 @@ classNamesFor: aPackageEnvironment
 	classNames := aPackageEnvironment classNames asSet
 				addAll: aPackageEnvironment not classNames;
 				yourself.
-	allClassNames := BrowserEnvironment new classNames.
+	allClassNames := Refactory.Browser.BrowserEnvironment new classNames.
 	self assert: classNames equals: allClassNames.
 	"	looseClasses := Set new.
 	aPackageEnvironment packageNames do: [:eachPak | (Package manager packageNamed: eachPak) methods 
@@ -48,6 +48,6 @@ testPackageEnvironment
 			self assert: (env definesClass: each)].
 	self assert: (env includesSelector: #choose in: Graphics.Font class).
 	self deny: (env includesSelector: #icon in: Graphics.Font class)! !
-!Refactory.Browser.Tests.PackageEnvironmentTest categoriesFor: #classNamesFor:!BrowserEnvironment tests!public! !
-!Refactory.Browser.Tests.PackageEnvironmentTest categoriesFor: #testPackageEnvironment!public!unit tests! !
+!Tools.Tests.PackageEnvironmentTest categoriesFor: #classNamesFor:!BrowserEnvironment tests!public! !
+!Tools.Tests.PackageEnvironmentTest categoriesFor: #testPackageEnvironment!public!unit tests! !
 

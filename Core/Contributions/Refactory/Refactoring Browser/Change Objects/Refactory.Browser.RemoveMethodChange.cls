@@ -16,8 +16,7 @@ Refactory.Browser.RemoveMethodChange comment: ''!
 	^selector = aRemoveMethodChange selector!
 
 asUndoOperation
-	^self addMethodChangeClass compile: (self methodSourceFor: selector)
-		in: self changeClass!
+	^AddMethodChange compile: (self methodSourceFor: selector) in: self changeClass!
 
 changeString
 	^'Remove <1s>>><2s>' expandMacrosWith: self displayClassName with: self selector!

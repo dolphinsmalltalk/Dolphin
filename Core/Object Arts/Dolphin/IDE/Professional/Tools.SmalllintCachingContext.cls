@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Refactory.Browser.SmalllintContext subclass: #'Refactory.Browser.SmalllintCachingContext'
+Refactory.Browser.SmalllintContext subclass: #'Tools.SmalllintCachingContext'
 	instanceVariableNames: ''
 	classVariableNames: 'Literals Mtx Selectors'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Refactory.Browser.SmalllintCachingContext guid: (Core.GUID fromString: '{8dc28c1a-eaf8-479b-9393-8e00da03fc44}')!
-Refactory.Browser.SmalllintCachingContext comment: ''!
-!Refactory.Browser.SmalllintCachingContext categoriesForClass!Refactory-Lint! !
-!Refactory.Browser.SmalllintCachingContext methodsFor!
+Tools.SmalllintCachingContext guid: (Core.GUID fromString: '{8dc28c1a-eaf8-479b-9393-8e00da03fc44}')!
+Tools.SmalllintCachingContext comment: ''!
+!Tools.SmalllintCachingContext categoriesForClass!Refactory-Lint! !
+!Tools.SmalllintCachingContext methodsFor!
 
 computeLiterals
 	(Literals isNil or: [Selectors isNil]) 
@@ -37,13 +37,13 @@ selectors
 	selectors isNil ifTrue: [self computeLiterals].
 	^selectors
 ! !
-!Refactory.Browser.SmalllintCachingContext categoriesFor: #computeLiterals!helpers!private! !
-!Refactory.Browser.SmalllintCachingContext categoriesFor: #initialize!initialize/release!public! !
-!Refactory.Browser.SmalllintCachingContext categoriesFor: #literals!accessing!public! !
-!Refactory.Browser.SmalllintCachingContext categoriesFor: #mutex!accessing!private! !
-!Refactory.Browser.SmalllintCachingContext categoriesFor: #selectors!accessing!public! !
+!Tools.SmalllintCachingContext categoriesFor: #computeLiterals!helpers!private! !
+!Tools.SmalllintCachingContext categoriesFor: #initialize!initialize/release!public! !
+!Tools.SmalllintCachingContext categoriesFor: #literals!accessing!public! !
+!Tools.SmalllintCachingContext categoriesFor: #mutex!accessing!private! !
+!Tools.SmalllintCachingContext categoriesFor: #selectors!accessing!public! !
 
-!Refactory.Browser.SmalllintCachingContext class methodsFor!
+!Tools.SmalllintCachingContext class methodsFor!
 
 clearCache
 	Literals := Selectors := nil!
@@ -79,14 +79,14 @@ isSafeToEncryptWithProductProtection
 	^false!
 
 systemModel
-	^Tools.SmalltalkSystem current!
+	^SmalltalkSystem current!
 
 uninitialize
 	self clearCache.
 	self systemModel removeEventsTriggeredFor: self! !
-!Refactory.Browser.SmalllintCachingContext class categoriesFor: #clearCache!operations!private! !
-!Refactory.Browser.SmalllintCachingContext class categoriesFor: #initialize!class initialization!private! !
-!Refactory.Browser.SmalllintCachingContext class categoriesFor: #isSafeToEncryptWithProductProtection!constants!public!testing! !
-!Refactory.Browser.SmalllintCachingContext class categoriesFor: #systemModel!accessing!private! !
-!Refactory.Browser.SmalllintCachingContext class categoriesFor: #uninitialize!class initialization!private! !
+!Tools.SmalllintCachingContext class categoriesFor: #clearCache!operations!private! !
+!Tools.SmalllintCachingContext class categoriesFor: #initialize!class initialization!private! !
+!Tools.SmalllintCachingContext class categoriesFor: #isSafeToEncryptWithProductProtection!constants!public!testing! !
+!Tools.SmalllintCachingContext class categoriesFor: #systemModel!accessing!private! !
+!Tools.SmalllintCachingContext class categoriesFor: #uninitialize!class initialization!private! !
 

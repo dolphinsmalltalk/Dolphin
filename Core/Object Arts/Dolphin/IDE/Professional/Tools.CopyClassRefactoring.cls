@@ -1,15 +1,30 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Refactory.Browser.RenameClassRefactoring subclass: #'Refactory.Browser.CopyClassRefactoring'
-	instanceVariableNames: 'superclass'
+Refactory.Browser.ClassRefactoring subclass: #'Tools.CopyClassRefactoring'
+	instanceVariableNames: 'newName class superclass'
 	classVariableNames: ''
-	imports: #()
+	imports: #(#{Refactory.Browser})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Refactory.Browser.CopyClassRefactoring guid: (Core.GUID fromString: '{c6843969-c4d4-4f0f-8de1-ceae5725b831}')!
-Refactory.Browser.CopyClassRefactoring comment: ''!
-!Refactory.Browser.CopyClassRefactoring categoriesForClass!Refactory-Refactorings! !
-!Refactory.Browser.CopyClassRefactoring methodsFor!
+Tools.CopyClassRefactoring guid: (Core.GUID fromString: '{c6843969-c4d4-4f0f-8de1-ceae5725b831}')!
+Tools.CopyClassRefactoring comment: ''!
+!Tools.CopyClassRefactoring categoriesForClass!Refactory-Refactorings! !
+!Tools.CopyClassRefactoring methodsFor!
+
+className: aName newName: aNewName superclass: aClass
+	self className: aName.
+	"If the new name is unqualified, preserve the original namespace of the class."
+	newName := ((BindingReference isQualifiedName: aNewName)
+				ifTrue: [aNewName]
+				ifFalse: 
+					[| parts |
+					parts := $. split: aName.
+					parts at: parts size put: aNewName.
+					$. join: parts])
+					asSymbol.
+	class := self model classNamed: className.
+	superclass := self classObjectFor: aClass.
+	^self!
 
 copyClass
 	self performComponentRefactoring: (AddClassRefactoring 
@@ -89,32 +104,28 @@ transform
 	self copyImportsTo: clone.
 	self copyMethodsFrom: class to: clone.
 	self copyMethodsFrom: class metaclass to: clone metaclass! !
-!Refactory.Browser.CopyClassRefactoring categoriesFor: #copyClass!private!transforming! !
-!Refactory.Browser.CopyClassRefactoring categoriesFor: #copyClassVarsTo:!private!transforming! !
-!Refactory.Browser.CopyClassRefactoring categoriesFor: #copyImportsTo:!private!transforming! !
-!Refactory.Browser.CopyClassRefactoring categoriesFor: #copyInstVarsTo:!private!transforming! !
-!Refactory.Browser.CopyClassRefactoring categoriesFor: #copyMethodsFrom:to:!private!transforming! !
-!Refactory.Browser.CopyClassRefactoring categoriesFor: #displayOn:!displaying!public! !
-!Refactory.Browser.CopyClassRefactoring categoriesFor: #preconditions!preconditions!public! !
-!Refactory.Browser.CopyClassRefactoring categoriesFor: #storeOn:!printing!public! !
-!Refactory.Browser.CopyClassRefactoring categoriesFor: #superclass!accessing!private! !
-!Refactory.Browser.CopyClassRefactoring categoriesFor: #superclass:!accessing!private! !
-!Refactory.Browser.CopyClassRefactoring categoriesFor: #transform!public!transforming! !
+!Tools.CopyClassRefactoring categoriesFor: #className:newName:superclass:!initializing!private! !
+!Tools.CopyClassRefactoring categoriesFor: #copyClass!private!transforming! !
+!Tools.CopyClassRefactoring categoriesFor: #copyClassVarsTo:!private!transforming! !
+!Tools.CopyClassRefactoring categoriesFor: #copyImportsTo:!private!transforming! !
+!Tools.CopyClassRefactoring categoriesFor: #copyInstVarsTo:!private!transforming! !
+!Tools.CopyClassRefactoring categoriesFor: #copyMethodsFrom:to:!private!transforming! !
+!Tools.CopyClassRefactoring categoriesFor: #displayOn:!displaying!public! !
+!Tools.CopyClassRefactoring categoriesFor: #preconditions!preconditions!public! !
+!Tools.CopyClassRefactoring categoriesFor: #storeOn:!printing!public! !
+!Tools.CopyClassRefactoring categoriesFor: #superclass!accessing!private! !
+!Tools.CopyClassRefactoring categoriesFor: #superclass:!accessing!private! !
+!Tools.CopyClassRefactoring categoriesFor: #transform!public!transforming! !
 
-!Refactory.Browser.CopyClassRefactoring class methodsFor!
+!Tools.CopyClassRefactoring class methodsFor!
 
-clone: aClass as: aNewName superclass: superClass 
-	^(super rename: aClass to: aNewName)
-		superclass: superClass;
-		yourself!
+clone: aClass as: aNewName superclass: superClass
+	^self new className: aClass fullName newName: aNewName superclass: superClass!
 
-model: aRBNamespace clone: aClass as: aNewName superclass: superClass 
-	^(super 
-		model: aRBNamespace
-		rename: aClass
-		to: aNewName)
-		superclass: superClass;
-		yourself! !
-!Refactory.Browser.CopyClassRefactoring class categoriesFor: #clone:as:superclass:!instance creation!public! !
-!Refactory.Browser.CopyClassRefactoring class categoriesFor: #model:clone:as:superclass:!instance creation!public! !
+model: aRBNamespace clone: aClass as: aNewName superclass: superClass
+	^self new
+		model: aRBNamespace;
+		className: aClass fullName newName: aNewName superclass: superClass! !
+!Tools.CopyClassRefactoring class categoriesFor: #clone:as:superclass:!instance creation!public! !
+!Tools.CopyClassRefactoring class categoriesFor: #model:clone:as:superclass:!instance creation!public! !
 

@@ -24,10 +24,6 @@ Instance Variables:
 	cmp := self unqualifiedName <==> aRBClass unqualifiedName.
 	^cmp == 0 ifTrue: [self fullName <= aRBClass fullName] ifFalse: [cmp < 0]!
 
-addClassConstant: anAssociation
-	self classConstants add: anAssociation.
-	model addClassConstant: anAssociation to: self!
-
 addClassVariable: aString 
 	self classVariableNames add: aString.
 	model addClassVariable: aString to: self!
@@ -209,20 +205,9 @@ printDefinitionOn: puttableStream
 realName: aSymbol 
 	self realClass: aSymbol asQualifiedReference value!
 
-removeClassConstant: anAssociation
-	| binding |
-	binding := self classConstants remove: anAssociation.
-	model removeClassConstant: binding from: self!
-
 removeClassVariable: aString
 	self classVariableNames remove: aString ifAbsent: [self classConstants remove: aString].
 	model removeClassVariable: aString from: self!
-
-removeImport: aString
-	| ref |
-	ref := aString asQualifiedReference.
-	imports := self imports copyWithout: ref.
-	model removeImport: ref from: self!
 
 renameClassVariable: oldName to: newName around: aBlock
 	| varNames |
@@ -314,7 +299,6 @@ unqualifiedName
 
 	^unqualifiedName ifNil: [unqualifiedName := ($. split: name) last asSymbol]! !
 !Refactory.Browser.RBClass categoriesFor: #<=!public! !
-!Refactory.Browser.RBClass categoriesFor: #addClassConstant:!public!variable accessing! !
 !Refactory.Browser.RBClass categoriesFor: #addClassVariable:!public!variable accessing! !
 !Refactory.Browser.RBClass categoriesFor: #addImport:!namespaces!public! !
 !Refactory.Browser.RBClass categoriesFor: #allClassVariableNames!accessing!public! !
@@ -348,9 +332,7 @@ unqualifiedName
 !Refactory.Browser.RBClass categoriesFor: #nonMetaclass!accessing!public! !
 !Refactory.Browser.RBClass categoriesFor: #printDefinitionOn:!accessing!public! !
 !Refactory.Browser.RBClass categoriesFor: #realName:!initialize/release!public! !
-!Refactory.Browser.RBClass categoriesFor: #removeClassConstant:!public!variable accessing! !
 !Refactory.Browser.RBClass categoriesFor: #removeClassVariable:!public!variable accessing! !
-!Refactory.Browser.RBClass categoriesFor: #removeImport:!public!variable accessing! !
 !Refactory.Browser.RBClass categoriesFor: #renameClassVariable:to:around:!public!variable accessing! !
 !Refactory.Browser.RBClass categoriesFor: #resolveBindingPath:!bindings!private! !
 !Refactory.Browser.RBClass categoriesFor: #resolveImportedBinding:!bindings!private! !

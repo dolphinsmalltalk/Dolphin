@@ -254,9 +254,6 @@ removeClassNamed: aSymbol
 removeClassVariable: aString from: aRBClass 
 	^changes removeClassVariable: aString from: aRBClass!
 
-removeImport: aBindingReference from: aRBClass
-	^changes removeImport: aBindingReference from: aRBClass!
-
 removeInstanceVariable: aString from: aRBClass 
 	^changes removeInstanceVariable: aString from: aRBClass!
 
@@ -366,7 +363,6 @@ whichCategoryIncludes: aSymbol
 !Refactory.Browser.RBNamespace categoriesFor: #removeClassConstant:from:!changes!private! !
 !Refactory.Browser.RBNamespace categoriesFor: #removeClassNamed:!changes!public! !
 !Refactory.Browser.RBNamespace categoriesFor: #removeClassVariable:from:!changes!private! !
-!Refactory.Browser.RBNamespace categoriesFor: #removeImport:from:!changes!private! !
 !Refactory.Browser.RBNamespace categoriesFor: #removeInstanceVariable:from:!changes!private! !
 !Refactory.Browser.RBNamespace categoriesFor: #removeMethod:from:!changes!private! !
 !Refactory.Browser.RBNamespace categoriesFor: #renameClass:to:around:!changes!public! !

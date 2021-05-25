@@ -1,0 +1,67 @@
+﻿| package |
+package := Package name: 'Dolphin Browser Environments'.
+package paxVersion: 2.1;
+	environmentName: #{Tools};
+	basicComment: 'Dolphin Smalltalk Development System Browser Environments.
+    Copyright (c) Object Arts Ltd, 1997-2021. Portions Copyright (c) CGI Group (Europe) Ltd, 1997.
+'.
+
+
+package setClassNames: #(
+	#{Tools.MethodProtocolEnvironment}
+	#{Tools.PackageEnvironment}
+	#{Tools.PluggableEnvironment}
+).
+
+package setMethodNames: #(
+	#(#{Refactory.Browser.BrowserEnvironment} #filterMethods:)
+	#(#{Refactory.Browser.BrowserEnvironment} #forPackages:)
+).
+
+package setPrerequisites: #(
+	'..\..\Base\Dolphin'
+	'..\..\..\..\Contributions\Refactory\Refactoring Browser\Environments\RBEnvironments'
+).
+
+package!
+
+"Class Definitions"!
+
+Refactory.Browser.BrowserEnvironmentWrapper subclass: #'Tools.MethodProtocolEnvironment'
+	instanceVariableNames: 'protocols'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Refactory.Browser.BrowserEnvironmentWrapper subclass: #'Tools.PackageEnvironment'
+	instanceVariableNames: 'packages'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Refactory.Browser.BrowserEnvironmentWrapper subclass: #'Tools.PluggableEnvironment'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+"Loose Methods"!
+
+!Refactory.Browser.BrowserEnvironment methodsFor!
+
+filterMethods: aMonadicValuable
+	"Answer a <BrowserEnvironment> scoped to contain only those methods within the receiver for which the <monadicValuable> argument evaluates to true.
+	The resulting BrowserEnvironment is not a static list, but will always include whichever methods pass the filter at the particular point in time that the enquiry is made."
+
+	^(PluggableEnvironment onEnvironment: self select: aMonadicValuable)
+		label: 'Some methods from ' , self label;
+		yourself!
+
+forPackages: aCollection
+	^PackageEnvironment onEnvironment: self packages: aCollection! !
+!Refactory.Browser.BrowserEnvironment categoriesFor: #filterMethods:!enquiries!public! !
+!Refactory.Browser.BrowserEnvironment categoriesFor: #forPackages:!environments!public! !
+
+"End of package definition"!
+

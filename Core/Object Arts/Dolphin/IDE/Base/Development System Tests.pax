@@ -7,14 +7,14 @@ package paxVersion: 2.1;
 
 package setClassNames: #(
 	#{OS.Tests.VersionResourceTest}
-	#{Refactory.Browser.Tests.MethodCategoryEnvironmentTest}
-	#{Refactory.Browser.Tests.PackageEnvironmentTest}
 	#{Refactory.Browser.Tests.RewriteTestCase}
 	#{Tools.Tests}
 	#{Tools.Tests.ImageListViewTest}
 	#{Tools.Tests.KeyedAspectTest}
 	#{Tools.Tests.MenuPainterTest}
+	#{Tools.Tests.MethodCategoryEnvironmentTest}
 	#{Tools.Tests.MockScintillaView}
+	#{Tools.Tests.PackageEnvironmentTest}
 	#{Tools.Tests.ProductReleaseTest}
 	#{Tools.Tests.SmalltalkSystemTest}
 	#{Tools.Tests.SmalltalkWorkspaceTest}
@@ -127,13 +127,13 @@ UI.Tests.ImageViewAbstractTest subclass: #'Tools.Tests.ImageListViewTest'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Refactory.Browser.Tests.BrowserEnvironmentTest subclass: #'Refactory.Browser.Tests.MethodCategoryEnvironmentTest'
+Refactory.Browser.Tests.BrowserEnvironmentTest subclass: #'Tools.Tests.MethodCategoryEnvironmentTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Refactory.Browser.Tests.BrowserEnvironmentTest subclass: #'Refactory.Browser.Tests.PackageEnvironmentTest'
+Refactory.Browser.Tests.BrowserEnvironmentTest subclass: #'Tools.Tests.PackageEnvironmentTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

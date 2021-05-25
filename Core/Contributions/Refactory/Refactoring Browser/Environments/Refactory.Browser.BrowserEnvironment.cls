@@ -140,14 +140,6 @@ filter
 filter: aMonadicValuable 
 	filter := aMonadicValuable!
 
-filterMethods: aMonadicValuable
-	"Answer a <BrowserEnvironment> scoped to contain only those methods within the receiver for which the <monadicValuable> argument evaluates to true.
-	The resulting BrowserEnvironment is not a static list, but will always include whichever methods pass the filter at the particular point in time that the enquiry is made."
-
-	^(PluggableEnvironment onEnvironment: self select: aMonadicValuable)
-		label: 'Some methods from ' , self label;
-		yourself!
-
 forCategories: categoryList
 	^CategoryEnvironment onEnvironment: self categories: categoryList!
 
@@ -413,7 +405,6 @@ whichProtocolsInclude: aSelector in: aClass
 !Refactory.Browser.BrowserEnvironment categoriesFor: #environment!public! !
 !Refactory.Browser.BrowserEnvironment categoriesFor: #filter!accessing!private! !
 !Refactory.Browser.BrowserEnvironment categoriesFor: #filter:!accessing!private! !
-!Refactory.Browser.BrowserEnvironment categoriesFor: #filterMethods:!enquiries!public! !
 !Refactory.Browser.BrowserEnvironment categoriesFor: #forCategories:!environments!public! !
 !Refactory.Browser.BrowserEnvironment categoriesFor: #forClass:protocols:!environments!public! !
 !Refactory.Browser.BrowserEnvironment categoriesFor: #forClass:selectors:!environments!public! !

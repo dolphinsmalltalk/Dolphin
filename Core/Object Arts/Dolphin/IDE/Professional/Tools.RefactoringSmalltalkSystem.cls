@@ -69,9 +69,6 @@ addFilteredMethod: aCompiledMethod forLintRule: aLintRule
 	filter addClass: aCompiledMethod methodClass selector: aCompiledMethod selector.
 	self trigger: #lintRuleFilterChanged: with: aLintRule!
 
-addGlobalVariable: aString
-	self changeManager performChange: (DolphinAddGlobalChange addGlobal: aString)!
-
 addInstanceVariable: aString to: aClass
 	self
 		executeVariableRefactoring: AddInstanceVariableRefactoring
@@ -112,7 +109,7 @@ addParameterToMethod: aCompiledMethod
 
 addParameterToMethod: aCompiledMethod inPackages: aCollectionOfPackages caption: aString
 	| args argc newName caption suffix newArg selector initializer model refactoring |
-	newName := RBScopedMethodName fromMethod: aCompiledMethod.
+	newName := ScopedMethodName fromMethod: aCompiledMethod.
 	args := newName arguments.
 	argc := args size.
 	suffix := argc + 1.
@@ -165,6 +162,9 @@ addParameterToMethod: aCompiledMethod inPackages: aCollectionOfPackages caption:
 			refactoring
 				execute;
 				yourself]!
+
+addSharedVariable: aString to: aNamespace
+	self changeManager performChange: (AddSharedVariableChange addSharedVariable: aString to: aNamespace )!
 
 basicCreateSubclass: aSymbol of: aClass subclasses: aCollection
 	"Private - Create a subclass a named subclass of the specified class. Answer the new class.
@@ -691,7 +691,7 @@ promptForMethodName: anRBMethodName caption: aString allowExisting: aBoolean
 
 promptForMethodRename: aCompiledMethod caption: aString allowExisting: aBoolean
 	^self
-		promptForMethodName: (RBScopedMethodName fromMethod: aCompiledMethod)
+		promptForMethodName: (ScopedMethodName fromMethod: aCompiledMethod)
 		caption: aString
 		allowExisting: aBoolean!
 
@@ -1353,12 +1353,12 @@ validateRenameTemp: aStVariableNode to: aString in: aClass
 !Tools.RefactoringSmalltalkSystem categoriesFor: #addClassVariable:to:!public!refactoring! !
 !Tools.RefactoringSmalltalkSystem categoriesFor: #addClassVariableTo:!public!refactoring! !
 !Tools.RefactoringSmalltalkSystem categoriesFor: #addFilteredMethod:forLintRule:!public!refactoring! !
-!Tools.RefactoringSmalltalkSystem categoriesFor: #addGlobalVariable:!public! !
 !Tools.RefactoringSmalltalkSystem categoriesFor: #addInstanceVariable:to:!public!refactoring! !
 !Tools.RefactoringSmalltalkSystem categoriesFor: #addInstanceVariableTo:!public!refactoring! !
 !Tools.RefactoringSmalltalkSystem categoriesFor: #addParameterName:initializer:!public!refactoring! !
 !Tools.RefactoringSmalltalkSystem categoriesFor: #addParameterToMethod:!commands!public!refactoring! !
 !Tools.RefactoringSmalltalkSystem categoriesFor: #addParameterToMethod:inPackages:caption:!public!refactoring! !
+!Tools.RefactoringSmalltalkSystem categoriesFor: #addSharedVariable:to:!commands!public! !
 !Tools.RefactoringSmalltalkSystem categoriesFor: #basicCreateSubclass:of:subclasses:!private!refactoring! !
 !Tools.RefactoringSmalltalkSystem categoriesFor: #browseMethodsIn:!browsing!public! !
 !Tools.RefactoringSmalltalkSystem categoriesFor: #browseMethodsInEnvironments:!browsing!public! !

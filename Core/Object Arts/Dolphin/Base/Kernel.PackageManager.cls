@@ -76,19 +76,12 @@ addManagedPackage: aPackage
 	self addPackage: aPackage; observePackage: aPackage!
 
 addMethod: aCompiledMethod to: aPackageOrNil
-	"Add the <CompiledMethod>, method, to the <Package>, destination,
-	after first removing it from any existing package. Note that this is a
-	composite operation with 4 possible cases:
+	"Add the <CompiledMethod>, method, to the <Package>, destination,	after first removing it from any existing package. Note that this is a composite operation with at most 4 cases:
 		1) packaged -> loose
 		2) loose -> packaged
 		3) loose -> loose
 		4) packaged -> packaged (not possible)
-	Moving a packaged method (one owned by the same package as the class in
-	which it implements a message) to become a loose method in a foreign package
-	is different to the others in that we can't actually 'remove' a packaged method 
-	from its package since it is not listed separately. In order that the state of the
-	packages is consistent in that case we all cases we therefore first add the method to its package in 
-	which it becomes a loose method before 'removing' it from its home package."
+	Moving a packaged method (one owned by the same package as the class in which it implements a message) to become a loose method in a foreign package is different to the others in that we can't actually 'remove' a packaged method from its package since it is not listed separately. In order that the state of the packages is consistent in that case we therefore first add the method to its package in which it becomes a loose method before 'removing' it from its home package."
 
 	| source destination classPackage moved indexValue |
 	classPackage := self packageOfClass: aCompiledMethod methodClass.

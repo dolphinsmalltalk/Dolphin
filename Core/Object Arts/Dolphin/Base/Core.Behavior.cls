@@ -630,51 +630,45 @@ primAllSubinstances
 	<primitive: 58>
 	^self primitiveFailed: _failureCode!
 
-recompile: aSelector
-	"Compile the method associated with the message selector, selector.
-	The method is not logged to the change log but the source is re-used
-	from the original"
+recompile: aSymbol
+	"Compile the method associated with the message selector, aSymbol, answering the CompilationResult method. If there is no method with the specified selector in the receiver's method dictionary, then answer nil.
+	The method is not logged to the change log, rather the source is re-used from the original"
 
-	| oldMethod |
-	"Was a stub method installed?"
+	^(self compiledMethodAt: aSymbol ifAbsent: [])
+		ifNotNil: [:method | self recompileMethod: method environment: method customEnvironment]!
 
-	"Add the selector and copy across the old source descriptor and privacy, as we haven't don't want to change either"
-
-	"The method has not actually changed, so it is inappropriate to issue a #methodUpdated: event"
-	oldMethod := self compiledMethodAt: aSelector.
-	oldMethod isNil ifTrue: [^self].
-	^self recompileMethod: oldMethod!
-
-recompileMethod: aCompiledMethod
-	| env method stubMethod result |
-	env := aCompiledMethod environment.
-	
-	[result := self compilerClass
+recompileMethod: aCompiledMethod environment: aNamespace
+	| stubMethodResult result |
+	result := 
+			[self compilerClass
 				compile: aCompiledMethod getSource
 				in: self
-				environment: env
+				environment: aNamespace
 				flags: self defaultCompilationFlags]
-			on: self compilerClass errorClass
-			do: 
-				[:ex |
-				stubMethod := (MethodCompileFailed error: ex environment: env) signal: ex description.
-				ex pass].
+					on: self compilerClass errorClass
+					do: 
+						[:ex |
+						stubMethodResult := (MethodCompileFailed error: ex environment: aNamespace) signal: ex description.
+						ex pass].
 
-	"Was a stub method installed?"
-	stubMethod notNil ifTrue: [result := stubMethod].
-	^(result notNil and: [(method := result method) notNil])
-		ifTrue: 
-			[| selector |
+	"Was a stub method installed? If so the CompilationResult for it is used."
+	result := stubMethodResult ?? result.
+	"If the compilation succeeded, or a stub method was installed, then the result will hold a non-nil method to be installed into the class."
+	result method
+		ifNotNil: 
+			[:method |
+			| selector |
 			"Add the selector and copy across the old source descriptor and privacy, as we haven't don't want to change either"
 			selector := aCompiledMethod selector.
 			method selector: selector.
 			self addSelector: selector withMethod: method.
-			"The method has not actually changed, so it is inappropriate to issue a #methodUpdated: event"
+			"We don't issue a methodUpdated: event at this level, but return the CompilationResult so that the caller may do so if appropriate."
 			method
 				sourceDescriptor: aCompiledMethod sourceDescriptor;
 				isPrivate: aCompiledMethod isPrivate;
 				isImmutable: true;
-				yourself]!
+				yourself].
+	^result!
 
 recompileReferencesToLiteral: aVariableBinding
 	"Private - Recompile any of the receiver's methods that reference the specified object from their literal frame."
@@ -1036,7 +1030,7 @@ withAllSuperclassesDo: aMonadicValuable
 !Core.Behavior categoriesFor: #primAllInstances!instances!private! !
 !Core.Behavior categoriesFor: #primAllSubinstances!instances!private! !
 !Core.Behavior categoriesFor: #recompile:!compiling!development!public! !
-!Core.Behavior categoriesFor: #recompileMethod:!compiling!development!public! !
+!Core.Behavior categoriesFor: #recompileMethod:environment:!compiling!development!private! !
 !Core.Behavior categoriesFor: #recompileReferencesToLiteral:!development!private! !
 !Core.Behavior categoriesFor: #referenceFilterFor:!development!methods-testing!private! !
 !Core.Behavior categoriesFor: #referenceFilterForAnyOf:!development!methods-testing!private! !

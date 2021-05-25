@@ -859,13 +859,6 @@ removeSelectors: aCollection
 	methods do: [:each | self removeMethodFromNonVirtualCategories: each].
 	^methods!
 
-removeSharedPool: aPoolDictionary
-	"Remove the argument, aPoolDictionary, as one of the receiver's pool dictionaries. 
-	Note: This is a low-level operation and does not recompile affected classes. Generally 
-	speaking any modification to a class should be made through a <ClassBuilder>."
-
-	self imports: (self imports copyWithout: aPoolDictionary asQualifiedReference)!
-
 removeUnsupportedProtocols: superUnsupported selector: removedSelector
 	"Private - Remove any protocols that are no longer supported after the removal of the <selector>, removedSelector, from the receiver. Any removed protocols still  supported by subclasses are migrated down."
 
@@ -1130,7 +1123,6 @@ withAllSubclassesDo: aMonadicValuable
 !Core.ClassDescription categoriesFor: #removeSelector:fromCategory:!categories-removing!private! !
 !Core.ClassDescription categoriesFor: #removeSelector:ifAbsent:!development!methods-removing!must strip!public! !
 !Core.ClassDescription categoriesFor: #removeSelectors:!development!methods-removing!public! !
-!Core.ClassDescription categoriesFor: #removeSharedPool:!pool variables!public! !
 !Core.ClassDescription categoriesFor: #removeUnsupportedProtocols:selector:!development!methods-removing!private!protocols! !
 !Core.ClassDescription categoriesFor: #resourceIdentifiers!accessing!public! !
 !Core.ClassDescription categoriesFor: #resourceIdentifiersDo:!enumerating!public! !

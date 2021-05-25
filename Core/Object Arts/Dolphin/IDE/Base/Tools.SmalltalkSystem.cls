@@ -1357,7 +1357,7 @@ compilationWarningClass
 
 compile: aString in: class environment: aNamespace categories: anArray package: aPackageOrNil extraFlags: anInteger
 	| change flags |
-	change := DolphinAddMethodChange
+	change := AddPackagedMethodChange
 				compile: aString
 				in: class
 				environment: aNamespace
@@ -1416,7 +1416,7 @@ copyAllMethodsOf: aClass to: newClass changes: aCompositeRefactoryChange
 	aClass methodDictionary do: 
 			[:each |
 			| change |
-			change := aCompositeRefactoryChange addMethodChangeClass
+			change := AddPackagedMethodChange
 						compile: each getSource
 						in: aClass
 						environment: each environment

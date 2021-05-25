@@ -13,10 +13,6 @@ package basicPackageVersion: '2016.7.0.4'.
 
 
 package setClassNames: #(
-	#{Refactory.Browser.DolphinMoveClassChange}
-	#{Refactory.Browser.MethodCategoryEnvironment}
-	#{Refactory.Browser.MethodProtocolEnvironment}
-	#{Refactory.Browser.PackageEnvironment}
 	#{Tools.AbstractPublishedAspectInspector}
 	#{Tools.AllMethodsCategory}
 	#{Tools.AnonymousKeyedAspect}
@@ -79,6 +75,7 @@ package setClassNames: #(
 	#{Tools.MethodBrowser}
 	#{Tools.MethodBrowserShell}
 	#{Tools.MethodCategorizationPolicy}
+	#{Tools.MethodCategoryEnvironment}
 	#{Tools.MethodExplorerShell}
 	#{Tools.MethodPrivacyCategory}
 	#{Tools.MethodSearch}
@@ -496,7 +493,6 @@ package setMethodNames: #(
 	#(#{Refactory.Browser.BrowserEnvironment} #dynamicReferencesTo:)
 	#(#{Refactory.Browser.BrowserEnvironment} #forClassHierarchyFrom:)
 	#(#{Refactory.Browser.BrowserEnvironment} #forMethodCategories:)
-	#(#{Refactory.Browser.BrowserEnvironment} #forPackages:)
 	#(#{Refactory.Browser.BrowserEnvironment} #forPackagesClosure:)
 	#(#{Refactory.Browser.BrowserEnvironment} #includesMethod:)
 	#(#{Refactory.Browser.BrowserEnvironment} #includesMethodUncached:)
@@ -697,7 +693,9 @@ package setPrerequisites: #(
 	'..\..\MVP\Presenters\Accelerator\Dolphin Accelerator Presenter'
 	'..\..\MVP\Base\Dolphin Basic Geometry'
 	'..\..\MVP\Presenters\Boolean\Dolphin Boolean Presenter'
+	'Dolphin Browser Environments'
 	'..\..\MVP\Views\Cards\Dolphin Card Containers'
+	'Dolphin Change Objects'
 	'..\..\MVP\Views\Buttons\Dolphin Check Buttons'
 	'..\..\MVP\Presenters\Choice\Dolphin Choice Presenter'
 	'..\..\MVP\Presenters\Prompters\Dolphin Choice Prompter'
@@ -874,20 +872,8 @@ Tools.AnonymousKeyedAspect subclass: #'Tools.BasicKeyedAspect'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Refactory.Browser.BrowserEnvironmentWrapper subclass: #'Refactory.Browser.MethodCategoryEnvironment'
+Refactory.Browser.BrowserEnvironmentWrapper subclass: #'Tools.MethodCategoryEnvironment'
 	instanceVariableNames: 'categories'
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-Refactory.Browser.BrowserEnvironmentWrapper subclass: #'Refactory.Browser.MethodProtocolEnvironment'
-	instanceVariableNames: 'protocols'
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-Refactory.Browser.BrowserEnvironmentWrapper subclass: #'Refactory.Browser.PackageEnvironment'
-	instanceVariableNames: 'packages'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -1438,12 +1424,6 @@ Tools.AbstractPublishedAspectInspector subclass: #'Tools.PropertyInspector'
 	classConstants: {}!
 Tools.AbstractPublishedAspectInspector subclass: #'Tools.PublishedAspectInspector'
 	instanceVariableNames: 'displayPresenter workspacePresenter'
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-Refactory.Browser.RefactoryClassChange subclass: #'Refactory.Browser.DolphinMoveClassChange'
-	instanceVariableNames: 'superclassName'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -5257,7 +5237,7 @@ definitionsOf: aString
 		ifFalse: [self implementorsOf: aString asSymbol]!
 
 dynamicReferencesTo: aLiteral
-	^Refactory.Browser.MethodCategoryEnvironment referencesTo: aLiteral in: self!
+	^MethodCategoryEnvironment referencesTo: aLiteral in: self!
 
 forClassHierarchyFrom: aClass
  	"Answers a <BrowserEnvironment> that includes only aClass and its subclasses, and the corresponding
@@ -5269,10 +5249,7 @@ forClassHierarchyFrom: aClass
  	^self forClasses: classes!
 
 forMethodCategories: categoryList
-	^Refactory.Browser.MethodCategoryEnvironment onEnvironment: self categories: categoryList!
-
-forPackages: aCollection
-	^Refactory.Browser.PackageEnvironment onEnvironment: self packages: aCollection!
+	^MethodCategoryEnvironment onEnvironment: self categories: categoryList!
 
 forPackagesClosure: aCollectionOfPackages
 	| closure |
@@ -5313,7 +5290,6 @@ search: aMethodSearch
 !Refactory.Browser.BrowserEnvironment categoriesFor: #dynamicReferencesTo:!environments!public! !
 !Refactory.Browser.BrowserEnvironment categoriesFor: #forClassHierarchyFrom:!environments!public! !
 !Refactory.Browser.BrowserEnvironment categoriesFor: #forMethodCategories:!environments!public! !
-!Refactory.Browser.BrowserEnvironment categoriesFor: #forPackages:!environments!public! !
 !Refactory.Browser.BrowserEnvironment categoriesFor: #forPackagesClosure:!helpers!public! !
 !Refactory.Browser.BrowserEnvironment categoriesFor: #includesMethod:!public!testing! !
 !Refactory.Browser.BrowserEnvironment categoriesFor: #includesMethodUncached:!public!testing! !

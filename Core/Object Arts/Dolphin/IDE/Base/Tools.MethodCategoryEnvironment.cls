@@ -1,20 +1,20 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Refactory.Browser.BrowserEnvironmentWrapper subclass: #'Refactory.Browser.MethodCategoryEnvironment'
+Refactory.Browser.BrowserEnvironmentWrapper subclass: #'Tools.MethodCategoryEnvironment'
 	instanceVariableNames: 'categories'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Refactory.Browser.MethodCategoryEnvironment guid: (Core.GUID fromString: '{d9a3e87e-16b6-4a73-8469-e08822dcb6dd}')!
-Refactory.Browser.MethodCategoryEnvironment comment: 'MethodCategoryEnvironment is a Dolphin specific <BrowserEnvironment> that represents the contents of one or more Dolphin method categories. This can be very powerful when used in conjunction with Dolphin''s >VirtualMethodCategory>s, as the latter have an arbitrary filtering capability.
+Tools.MethodCategoryEnvironment guid: (Core.GUID fromString: '{d9a3e87e-16b6-4a73-8469-e08822dcb6dd}')!
+Tools.MethodCategoryEnvironment comment: '`MethodCategoryEnvironment` is a Dolphin specific `BrowserEnvironment` that represents the contents of one or more Dolphin method categories. This can be very powerful when used in conjunction with Dolphin''s `Tools.VirtualMethodCategory`s, as the latter have an arbitrary filtering capability.
 
 Instance Variables:
-	categories		<collection> of <MethodCategory>
+	categories		`<collection>` of `Kernel.MethodCategory`
 
 '!
-!Refactory.Browser.MethodCategoryEnvironment categoriesForClass!Refactory-Environments! !
-!Refactory.Browser.MethodCategoryEnvironment methodsFor!
+!Tools.MethodCategoryEnvironment categoriesForClass!Refactory-Environments! !
+!Tools.MethodCategoryEnvironment methodsFor!
 
 categories: aCollection
 	categories := aCollection asArray!
@@ -89,18 +89,18 @@ storeOn: aStream
 		space.
 	(categories asArray collect: [:each | each name]) storeOn: aStream.
 	aStream nextPut: $)! !
-!Refactory.Browser.MethodCategoryEnvironment categoriesFor: #categories:!accessing!private! !
-!Refactory.Browser.MethodCategoryEnvironment categoriesFor: #categoryNames:!accessing!private! !
-!Refactory.Browser.MethodCategoryEnvironment categoriesFor: #classesAndSelectorsDo:!enumerating!public! !
-!Refactory.Browser.MethodCategoryEnvironment categoriesFor: #defaultLabel!constants!private! !
-!Refactory.Browser.MethodCategoryEnvironment categoriesFor: #includesClass:!public!testing! !
-!Refactory.Browser.MethodCategoryEnvironment categoriesFor: #includesSelector:in:!public!testing! !
-!Refactory.Browser.MethodCategoryEnvironment categoriesFor: #isEmpty!public!testing! !
-!Refactory.Browser.MethodCategoryEnvironment categoriesFor: #postCopy!copying!public! !
-!Refactory.Browser.MethodCategoryEnvironment categoriesFor: #selectorsForClass:do:!enumerating!public! !
-!Refactory.Browser.MethodCategoryEnvironment categoriesFor: #storeOn:!printing!public! !
+!Tools.MethodCategoryEnvironment categoriesFor: #categories:!accessing!private! !
+!Tools.MethodCategoryEnvironment categoriesFor: #categoryNames:!accessing!private! !
+!Tools.MethodCategoryEnvironment categoriesFor: #classesAndSelectorsDo:!enumerating!public! !
+!Tools.MethodCategoryEnvironment categoriesFor: #defaultLabel!constants!private! !
+!Tools.MethodCategoryEnvironment categoriesFor: #includesClass:!public!testing! !
+!Tools.MethodCategoryEnvironment categoriesFor: #includesSelector:in:!public!testing! !
+!Tools.MethodCategoryEnvironment categoriesFor: #isEmpty!public!testing! !
+!Tools.MethodCategoryEnvironment categoriesFor: #postCopy!copying!public! !
+!Tools.MethodCategoryEnvironment categoriesFor: #selectorsForClass:do:!enumerating!public! !
+!Tools.MethodCategoryEnvironment categoriesFor: #storeOn:!printing!public! !
 
-!Refactory.Browser.MethodCategoryEnvironment class methodsFor!
+!Tools.MethodCategoryEnvironment class methodsFor!
 
 onEnvironment: anEnvironment categories: aCollection
 	^(self onEnvironment: anEnvironment)
@@ -112,11 +112,11 @@ referencesTo: aLiteral in: anEnvironment
 	literalName := (aLiteral isVariableBinding ifTrue: [aLiteral key] ifFalse: [aLiteral])
 				displayString: Locale smalltalk.
 	label := 'References to: ' , literalName.
-	refs := Tools.ReferencesCategory newNamed: label literal: aLiteral.
+	refs := ReferencesCategory newNamed: label literal: aLiteral.
 	^(self onEnvironment: anEnvironment categories: {refs})
 		label: label;
 		searchStrings: {literalName};
 		yourself! !
-!Refactory.Browser.MethodCategoryEnvironment class categoriesFor: #onEnvironment:categories:!instance creation!public! !
-!Refactory.Browser.MethodCategoryEnvironment class categoriesFor: #referencesTo:in:!instance creation!public! !
+!Tools.MethodCategoryEnvironment class categoriesFor: #onEnvironment:categories:!instance creation!public! !
+!Tools.MethodCategoryEnvironment class categoriesFor: #referencesTo:in:!instance creation!public! !
 

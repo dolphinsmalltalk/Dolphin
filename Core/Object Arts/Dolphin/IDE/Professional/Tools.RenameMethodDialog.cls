@@ -73,7 +73,7 @@ onScopeChange
 !Tools.RenameMethodDialog class methodsFor!
 
 defaultModel
-	^RBScopedMethodName new!
+	^ScopedMethodName new!
 
 resource_Default_view
 	"Answer the literal data from which the 'Default view' resource can be reconstituted.

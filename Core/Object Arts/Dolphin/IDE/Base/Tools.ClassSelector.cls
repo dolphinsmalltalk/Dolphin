@@ -328,8 +328,7 @@ dropClass: aSourceClass onto: aTargetClass changes: aCompositeRefactoryChange
 						confirm: ('Move class <1p> to be subclass of <2p>?' expandMacrosWith: aSourceClass with: aTargetClass))
 							not]])
 		ifTrue: [^self].
-	aCompositeRefactoryChange
-		addChange: (DolphinMoveClassChange move: aSourceClass toSuperclass: aTargetClass)!
+	aCompositeRefactoryChange addChange: (MoveClassChange move: aSourceClass toSuperclass: aTargetClass)!
 
 dropMethod: aCompiledMethod onto: aClass changes: aCompositeRefactoryChange
 	"Don't copy the method over itself, or over an existing method in the class only at user behest. Answer whether the method
@@ -344,7 +343,7 @@ dropMethod: aCompiledMethod onto: aClass changes: aCompositeRefactoryChange
 		ifTrue: [^false].
 	"If the method was not compiled in the same environment as the class from which it was dragged, we preserve that namespace, 
 	otherwise we compile it in the target class' namespace"
-	aCompositeRefactoryChange addChange: (aCompositeRefactoryChange addMethodChangeClass
+	aCompositeRefactoryChange addChange: (AddPackagedMethodChange
 				compile: aCompiledMethod getSource
 				in: aClass
 				environment: aCompiledMethod environment

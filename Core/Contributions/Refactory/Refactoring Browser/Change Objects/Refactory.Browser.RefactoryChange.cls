@@ -22,10 +22,6 @@ Instance Variables:
 addClassChangeClass
 	^AddClassChange!
 
-addMethodChangeClass
-	#rbFix.	"Replace hard refs to AddMethodChange with sends of this message, and use Dolphin specific subclass"
-	^DolphinAddMethodChange!
-
 changeForClass: aRBClass selector: aSelector 
 	^nil!
 
@@ -74,7 +70,6 @@ renameChangesForClass: aClassName to: newClassName
 
 	"No action required for most changes."! !
 !Refactory.Browser.RefactoryChange categoriesFor: #addClassChangeClass!constants!public! !
-!Refactory.Browser.RefactoryChange categoriesFor: #addMethodChangeClass!constants!public! !
 !Refactory.Browser.RefactoryChange categoriesFor: #changeForClass:selector:!accessing!public! !
 !Refactory.Browser.RefactoryChange categoriesFor: #changeForMetaclass:selector:!accessing!public! !
 !Refactory.Browser.RefactoryChange categoriesFor: #changes!accessing!public! !

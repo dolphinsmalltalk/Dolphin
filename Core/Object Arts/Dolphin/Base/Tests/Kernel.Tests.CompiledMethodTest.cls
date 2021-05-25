@@ -66,8 +66,10 @@ testRecompileMaintainsEnvironmentAndPackage
 	package := subject owningPackage.
 	self assert: package ~~ OS.KernelLibrary owningPackage.
 	
-	[| newMethod |
-	newMethod := subject recompile.
+	[| newMethod compilationResult |
+	compilationResult := subject recompile.
+	newMethod := compilationResult method.
+	self assertNotNil: newMethod.
 	self assert: newMethod ~~ subject.
 	self assert: newMethod environment identicalTo: Smalltalk.
 	self assert: newMethod owningPackage identicalTo: package]

@@ -6,7 +6,7 @@ package paxVersion: 2.1;
 
 
 package setClassNames: #(
-	#{Refactory.Browser.Tests.AddMethodChangeTest}
+	#{Tools.Tests.AddPackagedMethodChangeTest}
 	#{Tools.Tests.ClassBrowserAbstractTest}
 	#{Tools.Tests.ClassBrowserTest}
 	#{Tools.Tests.ClassHierarchySelectorTest}
@@ -37,6 +37,7 @@ package setPrerequisites: #(
 	'..\Base\Tests\Dolphin Base Tests'
 	'..\MVP\Base\Dolphin Basic Geometry'
 	'..\MVP\Presenters\Boolean\Dolphin Boolean Presenter'
+	'Base\Dolphin Change Objects'
 	'..\MVP\Views\Common Controls\Dolphin Common Controls'
 	'..\MVP\Base\Dolphin MVP Base'
 	'..\MVP\Dolphin MVP Tests'
@@ -47,9 +48,7 @@ package setPrerequisites: #(
 	'..\MVP\Presenters\Text\Dolphin Text Presenter'
 	'..\MVP\Presenters\Tree\Dolphin Tree Presenter'
 	'..\..\..\Contributions\IDB\IDB Method History'
-	'..\..\..\Contributions\Refactory\Refactoring Browser\Change Objects\RBChangeObjects'
 	'..\..\..\Contributions\Refactory\Refactoring Browser\Environments\RBEnvironments'
-	'..\..\..\Contributions\Refactory\Refactoring Browser\Tests\RBTestMethods'
 	'..\..\..\Contributions\Camp Smalltalk\SUnit\SUnit'
 	'..\ActiveX\Components\XML DOM\XML DOM'
 ).
@@ -70,7 +69,7 @@ XProgramming.SUnit.TestCase subclass: #'Tools.Tests.ClosedCommandDescriptionTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Core.Tests.DolphinTest subclass: #'Refactory.Browser.Tests.AddMethodChangeTest'
+Core.Tests.DolphinTest subclass: #'Tools.Tests.AddPackagedMethodChangeTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

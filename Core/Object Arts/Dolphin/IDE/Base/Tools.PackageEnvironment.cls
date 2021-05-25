@@ -1,18 +1,18 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Refactory.Browser.BrowserEnvironmentWrapper subclass: #'Refactory.Browser.PackageEnvironment'
+Refactory.Browser.BrowserEnvironmentWrapper subclass: #'Tools.PackageEnvironment'
 	instanceVariableNames: 'packages'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Refactory.Browser.PackageEnvironment guid: (Core.GUID fromString: '{1e100fa3-4c91-4f2c-8415-03d6fbca4185}')!
-Refactory.Browser.PackageEnvironment comment: 'PackageEnvironment is a Dolphin specific BrowserEnvironment that represents the contents of one or more packages.
+Tools.PackageEnvironment guid: (Core.GUID fromString: '{1e100fa3-4c91-4f2c-8415-03d6fbca4185}')!
+Tools.PackageEnvironment comment: '`PackageEnvironment` is a Dolphin specific `BrowserEnvironment` that represents the contents of one or more packages.
 
 Instance Variables:
-	packages		<Array> of <Package>'!
-!Refactory.Browser.PackageEnvironment categoriesForClass!Refactoring-Environment! !
-!Refactory.Browser.PackageEnvironment methodsFor!
+	packages		`<collection>` of `Kernel.Package`'!
+!Tools.PackageEnvironment categoriesForClass!Refactoring-Environment! !
+!Tools.PackageEnvironment methodsFor!
 
 classesDo: aBlock
 	"Note that the classes of the loose methods and the package's owned classes are non-overlapping sets, however since
@@ -93,7 +93,7 @@ packageNames
 
 packageNames: aCollection
 	| pacman |
-	pacman := SmalltalkSystem current packageManager.
+	pacman := PackageManager current.
 	self packages: (aCollection collect: [:each | pacman packageNamed: each])!
 
 packages
@@ -138,22 +138,22 @@ storeOn: aStream
 	aStream nextPutAll: ' packageNames: '.
 	self packageNames storeOn: aStream.
 	aStream nextPutAll: ';yourself)'! !
-!Refactory.Browser.PackageEnvironment categoriesFor: #classesDo:!accessing/classes!public! !
-!Refactory.Browser.PackageEnvironment categoriesFor: #defaultLabel!constants!private! !
-!Refactory.Browser.PackageEnvironment categoriesFor: #definesClass:!public!testing! !
-!Refactory.Browser.PackageEnvironment categoriesFor: #definesLooseMethodsInClass:!private!testing! !
-!Refactory.Browser.PackageEnvironment categoriesFor: #includesClass:!public!testing! !
-!Refactory.Browser.PackageEnvironment categoriesFor: #includesResource:!public!testing! !
-!Refactory.Browser.PackageEnvironment categoriesFor: #includesSelector:in:!public!testing! !
-!Refactory.Browser.PackageEnvironment categoriesFor: #isSinglePackage!public!testing! !
-!Refactory.Browser.PackageEnvironment categoriesFor: #packageNames!accessing!public! !
-!Refactory.Browser.PackageEnvironment categoriesFor: #packageNames:!accessing!public! !
-!Refactory.Browser.PackageEnvironment categoriesFor: #packages!accessing!public! !
-!Refactory.Browser.PackageEnvironment categoriesFor: #packages:!accessing!private! !
-!Refactory.Browser.PackageEnvironment categoriesFor: #selectorsForClass:do:!accessing!public! !
-!Refactory.Browser.PackageEnvironment categoriesFor: #storeOn:!printing!public! !
+!Tools.PackageEnvironment categoriesFor: #classesDo:!accessing/classes!public! !
+!Tools.PackageEnvironment categoriesFor: #defaultLabel!constants!private! !
+!Tools.PackageEnvironment categoriesFor: #definesClass:!public!testing! !
+!Tools.PackageEnvironment categoriesFor: #definesLooseMethodsInClass:!private!testing! !
+!Tools.PackageEnvironment categoriesFor: #includesClass:!public!testing! !
+!Tools.PackageEnvironment categoriesFor: #includesResource:!public!testing! !
+!Tools.PackageEnvironment categoriesFor: #includesSelector:in:!public!testing! !
+!Tools.PackageEnvironment categoriesFor: #isSinglePackage!public!testing! !
+!Tools.PackageEnvironment categoriesFor: #packageNames!accessing!public! !
+!Tools.PackageEnvironment categoriesFor: #packageNames:!accessing!public! !
+!Tools.PackageEnvironment categoriesFor: #packages!accessing!public! !
+!Tools.PackageEnvironment categoriesFor: #packages:!accessing!private! !
+!Tools.PackageEnvironment categoriesFor: #selectorsForClass:do:!accessing!public! !
+!Tools.PackageEnvironment categoriesFor: #storeOn:!printing!public! !
 
-!Refactory.Browser.PackageEnvironment class methodsFor!
+!Tools.PackageEnvironment class methodsFor!
 
 onEnvironment: anEnvironment packageNames: aString
 	^(self onEnvironment: anEnvironment)
@@ -164,6 +164,6 @@ onEnvironment: anEnvironment packages: aPackage
 	^(self onEnvironment: anEnvironment)
 		packages: aPackage;
 		yourself! !
-!Refactory.Browser.PackageEnvironment class categoriesFor: #onEnvironment:packageNames:!instance creation!public! !
-!Refactory.Browser.PackageEnvironment class categoriesFor: #onEnvironment:packages:!instance creation!public! !
+!Tools.PackageEnvironment class categoriesFor: #onEnvironment:packageNames:!instance creation!public! !
+!Tools.PackageEnvironment class categoriesFor: #onEnvironment:packages:!instance creation!public! !
 

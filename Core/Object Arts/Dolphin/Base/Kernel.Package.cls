@@ -492,22 +492,52 @@ environment
 environment: aNamespace
 	"Set the default environment for the package, in the context of which any loose (extension) methods should be compiled, or nil if there is no default environment for loose methods and the extended class' own environment should be used for resolving static variable references in the method source."
 
+	| ref currentEnvironment preamble failures |
 	self environment == aNamespace ifTrue: [^self].
-	self isLegacySourceFormat
+	(self isLegacySourceFormat and: [aNamespace ~~ Smalltalk])
 		ifTrue: 
-			[aNamespace == Smalltalk
+			[self
+				error: 'Legacy format packages can only use Smalltalk as the default environment for compiling scripts and extension methods'].
+	ref := aNamespace notNil
+				ifTrue: 
+					[aNamespace owningPackage = self
+						ifTrue: [self error: 'The default namespace for a package cannot be one of its own classes'].
+					aNamespace fullyQualifiedReference].
+	currentEnvironment := self environment.
+	preamble := currentEnvironment isNil
+				ifTrue: 
+					["Cannot be here if current namespace is nil and new namespace is nil, due to earlier guard"
+					'The namespace for extension methods of ''<1d>'' will be set to <3p>, requiring that the methods be recompiled.']
 				ifFalse: 
-					[self
-						error: 'Legacy format packages can only use Smalltalk as the default environment for compiling scripts and extension methods']]
-		ifFalse: 
-			[| ref |
-			ref := aNamespace notNil
+					[aNamespace isNil
 						ifTrue: 
-							[aNamespace owningPackage = self
-								ifTrue: [self error: 'The default namespace for a package cannot be one of its own classes'].
-							aNamespace fullyQualifiedReference].
-			self environmentName: ref.
-			self isChanged: true]!
+							['The namespace for extension methods of ''<1d>'' will be reset, requiring that those methods be recompiled in the scope of the classes they extend.']
+						ifFalse: 
+							['The namespace for extension methods of ''<1d>'' will be changed from <2p> to <3p>, requiring that the methods be recompiled.']].
+	Warning
+		signal: (preamble
+				, '<n><n>Methods may fail to recompile if they contain static variable references that are not resolvable in their new scope.<n><n>Press Abort to cancel the change, Retry to open a debugger, or Ignore to continue with the change.'
+					expandMacrosWith: self
+					with: currentEnvironment
+					with: aNamespace).
+	self environmentName: ref.
+	failures := SortedCollection new.
+	self methodsDo: 
+			[:each |
+			| compilationResult |
+			compilationResult := each methodClass recompileMethod: each environment: aNamespace.
+			compilationResult method
+				ifNil: [failures add: each]
+				ifNotNil: 
+					[compilationResult oldMethod: each.
+					Smalltalk trigger: #methodUpdated: with: compilationResult]].
+	failures isEmpty
+		ifFalse: 
+			[Warning
+				signal: ('One or more extension methods of <1d> failed to compile in <2p>, see Transcript for details.'
+						expandMacrosWith: self
+						with: aNamespace)].
+	self isChanged: true!
 
 environmentName: aBindingReference
 	"Private - Record the name of the <Namespace> to be used as the default environment for compiling scripts and extension (aka loose) methods of the package."

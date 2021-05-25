@@ -1,0 +1,147 @@
+﻿| package |
+package := Package name: 'Dolphin Change Objects'.
+package paxVersion: 2.1;
+	environmentName: #{Tools};
+	basicComment: 'Dolphin Smalltalk Development Change Objects.
+    Copyright (c) Object Arts Ltd, 1997-2021. Portions Copyright (c) CGI Group (Europe) Ltd, 1997.
+'.
+
+
+package setClassNames: #(
+	#{Tools.AddClassConstantChange}
+	#{Tools.AddNamespaceImportChange}
+	#{Tools.AddPackagedMethodChange}
+	#{Tools.AddSharedVariableChange}
+	#{Tools.MoveClassChange}
+	#{Tools.RemoveClassConstantChange}
+	#{Tools.RemoveNamespaceImportChange}
+	#{Tools.RemoveSharedVariableChange}
+	#{Tools.SharedVariableChange}
+).
+
+package setMethodNames: #(
+	#(#{Refactory.Browser.AddMethodChange class} #compile:in:categories:)
+	#(#{Refactory.Browser.AddMethodChange class} #compile:in:environment:categories:package:)
+	#(#{Refactory.Browser.AddMethodChange class} #new)
+	#(#{Refactory.Browser.CompositeRefactoryChange} #addClassConstant:to:)
+	#(#{Refactory.Browser.CompositeRefactoryChange} #addImport:to:)
+	#(#{Refactory.Browser.CompositeRefactoryChange} #removeClassConstant:from:)
+	#(#{Refactory.Browser.CompositeRefactoryChange} #removeImport:from:)
+).
+
+package setPrerequisites: #(
+	'..\..\Base\Dolphin'
+	'..\..\..\..\Contributions\Refactory\Refactoring Browser\Change Objects\RBChangeObjects'
+	'..\..\..\..\Contributions\Refactory\Refactoring Browser\Environments\RBEnvironments'
+).
+
+package!
+
+"Class Definitions"!
+
+Refactory.Browser.RefactoryChange subclass: #'Tools.SharedVariableChange'
+	instanceVariableNames: 'variable environmentName'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Refactory.Browser.RefactoryClassChange subclass: #'Tools.MoveClassChange'
+	instanceVariableNames: 'superclassName'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Refactory.Browser.AddMethodChange subclass: #'Tools.AddPackagedMethodChange'
+	instanceVariableNames: 'environment packageName compilationFlags method'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Refactory.Browser.RefactoryVariableChange subclass: #'Tools.AddClassConstantChange'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Refactory.Browser.RefactoryVariableChange subclass: #'Tools.AddNamespaceImportChange'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Refactory.Browser.RefactoryVariableChange subclass: #'Tools.RemoveClassConstantChange'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Refactory.Browser.RefactoryVariableChange subclass: #'Tools.RemoveNamespaceImportChange'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Tools.SharedVariableChange subclass: #'Tools.AddSharedVariableChange'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Tools.SharedVariableChange subclass: #'Tools.RemoveSharedVariableChange'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+"Loose Methods"!
+
+!Refactory.Browser.AddMethodChange class methodsFor!
+
+compile: aString in: aClass categories: aSequenceableCollection
+	"N.B. The new method will be assigned to its existing package (if a modification) or the
+	class' package (if an addition)."
+
+	| change |
+	change := self compile: aString in: aClass.
+	aSequenceableCollection notNil
+		ifTrue: [change protocols: (aSequenceableCollection collect: [:each | each asString])].
+	^change!
+
+compile: aString in: aClass environment: aNamespace categories: aSequenceableCollection package: aPackage
+	| change |
+	change := self
+				compile: aString
+				in: aClass
+				categories: aSequenceableCollection.
+	change
+		environment: aNamespace;
+		package: aPackage.
+	^change!
+
+new
+	^AddPackagedMethodChange basicNew initialize! !
+!Refactory.Browser.AddMethodChange class categoriesFor: #compile:in:categories:!instance creation!public! !
+!Refactory.Browser.AddMethodChange class categoriesFor: #compile:in:environment:categories:package:!instance creation!public! !
+!Refactory.Browser.AddMethodChange class categoriesFor: #new!instance creation!public! !
+
+!Refactory.Browser.CompositeRefactoryChange methodsFor!
+
+addClassConstant: anAssociation to: aRBClass
+	^self addChange: (AddClassConstantChange add: anAssociation to: aRBClass)!
+
+addImport: aBindingReference to: aClass
+	^self addChange: (AddNamespaceImportChange add: aBindingReference to: aClass)!
+
+removeClassConstant: anAssociation from: aClass
+	^self addChange: (RemoveClassConstantChange remove: anAssociation from: aClass)!
+
+removeImport: oldBindingReference from: aRBClass
+	^self addChange: (RemoveNamespaceImportChange remove: oldBindingReference from: aRBClass)! !
+!Refactory.Browser.CompositeRefactoryChange categoriesFor: #addClassConstant:to:!private! !
+!Refactory.Browser.CompositeRefactoryChange categoriesFor: #addImport:to:!public!refactory/changes! !
+!Refactory.Browser.CompositeRefactoryChange categoriesFor: #removeClassConstant:from:!public!refactory/changes! !
+!Refactory.Browser.CompositeRefactoryChange categoriesFor: #removeImport:from:!public!refactory/changes! !
+
+"End of package definition"!
+
