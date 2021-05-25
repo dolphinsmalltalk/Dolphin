@@ -1164,8 +1164,10 @@ validateSuperclassChainForCreate
 	"Private - Ensure that the proposed superclass chain doesn't already include
 	a class of the same name as the proposed class."
 
+	| fullName |
 	superclass isNil ifTrue: [^self].
-	(superclass withAllSuperclasses anySatisfy: [:each | each name = className]) 
+	fullName := self environment fullNameFor: className.
+	(superclass withAllSuperclasses anySatisfy: [:each | each fullName = fullName])
 		ifTrue: [self error: 'Class cannot be a subclass of itself']!
 
 validateSuperclassChainForModify

@@ -211,6 +211,14 @@ testClassVars
 				noDifference: #('Var1' 'Var2')).
 	#namespaceToDo	"Test add/remove class variable, add/remove class constant, change immediate constant to variable, change constant to variable, change variable to immediate constant, change variable to constant."!
 
+testCreateSubclassWithSameUnqualifiedName
+
+	| testSubclass |
+	testSubclass := self classBuilderTestSubclass1
+					subclass: #ClassBuilderTestSubClass
+					instanceVariableNames: '' classVariableNames: '' imports: #().
+	ClassBuilder removeClass: testSubclass!
+
 testFullName
 	self assert: self classBuilderTestClass fullName equals: 'Smalltalk.ClassBuilderTestClass'.
 	self assert: self classBuilderTestSubclass1 fullName equals: 'Kernel.Tests.ClassBuilderTestSubClass'.
@@ -435,6 +443,7 @@ testReshapeSubClass
 !Kernel.Tests.ClassBuilderTest categoriesFor: #testBuildAnonymousInRootNamespace!public!unit tests! !
 !Kernel.Tests.ClassBuilderTest categoriesFor: #testBuildAnonymousRootClass!public!unit tests! !
 !Kernel.Tests.ClassBuilderTest categoriesFor: #testClassVars!public!unit tests! !
+!Kernel.Tests.ClassBuilderTest categoriesFor: #testCreateSubclassWithSameUnqualifiedName!public!unit tests! !
 !Kernel.Tests.ClassBuilderTest categoriesFor: #testFullName!public!unit tests! !
 !Kernel.Tests.ClassBuilderTest categoriesFor: #testMoveClassToSuperclassWithInstVars!public!unit tests! !
 !Kernel.Tests.ClassBuilderTest categoriesFor: #testMoveClassToSuperclassWithNoInstVars!public!unit tests! !
