@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
 ControlBarAbstract subclass: #Toolbar
-	instanceVariableNames: 'idMap items bitmapsStart insets tbFlags indent bitmapSize buttonSize tipText layoutManager'
+	instanceVariableNames: 'idMap items bitmapsStart insets tbFlags indent bitmapSize buttonSize _unused27 layoutManager'
 	classVariableNames: 'LabelsMask'
 	poolDictionaries: 'ToolbarConstants'
 	classInstanceVariableNames: ''!
@@ -23,7 +23,6 @@ Toolbar holds a list of `<ToolbarItem>` items matching the order of items in the
   `_reserved2`		`UndefinedObject` reserved for future use.
   `bitmapSize`		`Point` size of each button bitmap.
   `buttonSize`		`Point` size of each button.
-  `tipText`			`<readableString>` or `nil`, tip text for last button hover.
   `layoutManager`	`<layoutManager>` or `nil`, for managing the layout of sub-views.
 
 ## Class Variables:
@@ -570,12 +569,6 @@ onPositionChanged: aPositionEvent
 onStateRestored
 	self updateSize!
 
-onTipTextRequired: item
-	"Text is required for the tool-tip associated with the
-	<ToolbarItem>, item."
-
-	^item onTipTextRequired!
-
 onViewCreated
 	"The receiver window has been created (but is not yet visible). 
 	Finish the job and install the known ToolbarItems"
@@ -983,18 +976,6 @@ tbSetToolTips: toolTipHandle
 
 	self sendMessage: TB_SETTOOLTIPS wParam: toolTipHandle!
 
-ttnGetDispInfo: anNMTTDISPINFOW
-	"Private - Handler for the TTN_NEEDTEXTW notification message."
-
-	^(anNMTTDISPINFOW idIsHandle
-		ifTrue: [View withHandle: anNMTTDISPINFOW idFrom]
-		ifFalse: [self itemFromId: anNMTTDISPINFOW idFrom])
-			ifNotNil: 
-				[:tool |
-				"Note that we must keep a reference to the text string to prevent its premature death"
-				tipText := anNMTTDISPINFOW text: (self presenter onTipTextRequired: tool).
-				0]!
-
 updateAllItems
 	"Private - Cause all of the receivers items to be rebuilt"
 
@@ -1037,20 +1018,7 @@ wmCreate: message wParam: wParam lParam: lParam
 	^super
 		wmCreate: message
 		wParam: wParam
-		lParam: lParam!
-
-wmNotify: message wParam: wParam lParam: lParam
-	"Private - Redirects WM_NOTIFY messages to the appropriate control as a notify message.
-	Overridden here to handle notifications from the receiver's tool tip control which 
-	does not itself have an associated View so cannot receive the redirected message.
-	In any case it is more convenient to direct the notification to the receiver's
-	#ttnNeedText: handler."
-
-	| pnmhdr code |
-	pnmhdr := lParam asExternalAddress.
-	code := pnmhdr sdwordAtOffset: 8.
-	(code == TTN_GETDISPINFOW or: [code == TTN_GETDISPINFOW]) ifTrue: [^self nmNotify: pnmhdr].
-	^super wmNotify: message wParam: wParam lParam: lParam! !
+		lParam: lParam! !
 
 !Toolbar categoriesForMethods!
 actualBitmapSize!geometry!public! !
@@ -1063,7 +1031,6 @@ addItems:!adding!public! !
 addSeparator!adding!public! !
 addString:!helpers!private! !
 addSystemBitmap:index:!helpers!private! !
-applyFont!font!private!updating! !
 basicActualForecolor!accessing!private! !
 basicAddItems:!adding!private! !
 bitmapSize!geometry!public! !
@@ -1084,6 +1051,7 @@ defaultGradientBackcolor!colors!constants!private! !
 defaultGradientForecolor!colors!constants!private! !
 defaultWindowStyle!constants!private! !
 filerProxy!binary filing!private! !
+fontChanged!private!updating! !
 hasFlatAppearance!accessing-styles!public! !
 hasFlatAppearance:!accessing-styles!public! !
 hasLabels!accessing-styles!public! !
@@ -1111,12 +1079,11 @@ onDropDown:!event handling!private! !
 onEraseRequired:!event handling!private! !
 onPositionChanged:!event handling!public! !
 onStateRestored!binary filing!private! !
-onTipTextRequired:!event handling!public! !
 onViewCreated!event handling!public! !
 removeAllItems!public!removing! !
 removeItem:!public!removing! !
-scaledBitmapSize!geometry!public! !
 size!geometry!public! !
+tbAddBitmap:size:!helpers!private! !
 tbAddButtons:!helpers!private! !
 tbAddString:!adding!private! !
 tbAutoSize!operations!private! !
@@ -1166,13 +1133,11 @@ tbSetIndent:!operations!private! !
 tbSetRows:large:!geometry!private! !
 tbSetState:state:!helpers!private! !
 tbSetToolTips:!accessing!private! !
-ttnGetDispInfo:!event handling-win32!private! !
 updateAllItems!operations!private! !
 updateSize!operations!private! !
 updateSizePosted!operations!private! !
 validateUserInterface!operations!public! !
 wmCreate:wParam:lParam:!event handling-win32!private! !
-wmNotify:wParam:lParam:!event handling-win32!private! !
 !
 
 !Toolbar class methodsFor!
@@ -1228,8 +1193,7 @@ resource_History_tools
 	"Answer the literal data from which the 'History tools' resource can be reconstituted.
 	DO NOT EDIT OR RECATEGORIZE THIS METHOD.
 
-	If you wish to modify this resource evaluate:
-	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_History_tools)
+	If you wish to modify this resource evaluate:ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_History_tools)
 	"
 
 	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.Toolbar) 34 25 nil nil 34 2 8 1409289036 131137 416 nil nil nil 517 nil nil nil 416 327686 ##(Smalltalk.Color) #default 8 1867527152 170 192 8 #() 170 192 34 4 53709 1115206 1 ##(Smalltalk.ToolbarIconButton) 416 17 1180998 4 ##(Smalltalk.CommandDescription) 459270 ##(Smalltalk.Message) #historyForward 8 #() 8 'Forward' 1 1 263494 3 ##(Smalltalk.Icon) nil true 1572870 ##(Smalltalk.ImageRelativeFileLocator) 8 'HistoryForward.ico' 2032142 ##(Smalltalk.STBExternalResourceLibraryProxy) 8 'dolphindr7.dll' nil 53709 53707 594 416 17 626 658 #historyBack 8 #() 8 'Back' 1 1 722 nil true 768 8 'HistoryBack.ico' 816 53707 34 3 848 608 1049158 1 ##(Smalltalk.ToolbarSeparator) 416 1 nil nil 1 nil nil nil nil nil 983302 ##(Smalltalk.MessageSequence) 138 144 34 1 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 328198 ##(Smalltalk.Point) 7039 21 1122 169 51 416 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 191 13 0 0 10 0 0 0 19 14 0 0 35 0 0 0] 8 #() 1122 193 193 nil 27 )!
@@ -1258,6 +1222,13 @@ stbConvertFromVersion12: anArray
 	(anArray at: 6) = Color face3d ifTrue: [anArray at: 6 put: Color default].
 	^super stbConvertFromVersion12: anArray!
 
+stbConvertFromVersion13: anArray
+	"Private - Perform an STB conversion from a version 13 `Toolbar` to version 14.
+	Version 14 adds a tipText instance variable to the superclass (and a couple of spares). The former tipText instance variable of Toolbar becomes unused."
+
+	anArray at: 24 put: nil.
+	^super stbConvertFromVersion13: anArray!
+
 themePartName
 	^#Toolbar
 !
@@ -1269,7 +1240,6 @@ winClassName
 ! !
 
 !Toolbar class categoriesForMethods!
-initialize!development!initializing!private! !
 resource_Default_view!public!resources-views! !
 resource_Edit_tools!public!resources-views! !
 resource_File_tools!public!resources-views! !
@@ -1277,6 +1247,7 @@ resource_Find_tools!public!resources-views! !
 resource_History_tools!public!resources-views! !
 resource_Tool_bar!public!resources-views! !
 stbConvertFromVersion12:!binary filing!private! !
+stbConvertFromVersion13:!binary filing!private! !
 themePartName!constants!private! !
 winClassName!constants!private! !
 !

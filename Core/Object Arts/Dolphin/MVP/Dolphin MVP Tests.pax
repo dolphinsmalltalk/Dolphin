@@ -84,6 +84,7 @@ package classNames
 	add: #SlideyInneyOuteyThingTest;
 	add: #StaticPathTest;
 	add: #StaticTextTest;
+	add: #StatusBarTest;
 	add: #StyledContainerTest;
 	add: #SystemMetricsTest;
 	add: #TabViewTest;
@@ -121,6 +122,7 @@ package setPrerequisites: #(
 	'Presenters\Color\Dolphin Color Presenter'
 	'Views\Common Controls\Dolphin Common Controls'
 	'Dialogs\Common\Dolphin Common Dialogs'
+	'Views\Control Bars\Dolphin Control Bars'
 	'Presenters\Date Time\Dolphin Date Time Presenters'
 	'Presenters\Difference\Dolphin Differences Presenter'
 	'Presenters\Image\Dolphin Image Presenter'
@@ -532,6 +534,12 @@ PresenterTest subclass: #StaticPathTest
 	classInstanceVariableNames: ''!
 
 PresenterTest subclass: #StaticTextTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+PresenterTest subclass: #StatusBarTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''

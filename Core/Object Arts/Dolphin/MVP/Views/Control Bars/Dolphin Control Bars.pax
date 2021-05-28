@@ -51,7 +51,7 @@ package!
 "Class Definitions"!
 
 Object subclass: #StatusBarItemAbstract
-	instanceVariableNames: 'border width parentView model'
+	instanceVariableNames: 'style width parentView model'
 	classVariableNames: 'BorderStyles'
 	poolDictionaries: 'StatusBarConstants'
 	classInstanceVariableNames: ''!
@@ -93,7 +93,7 @@ NMHDR subclass: #NMTOOLBARW
 	classInstanceVariableNames: ''!
 
 StatusBarItemAbstract subclass: #StatusBarItem
-	instanceVariableNames: 'getTextBlock getImageBlock reserved1'
+	instanceVariableNames: 'getTextBlock getImageBlock getTipTextBlock'
 	classVariableNames: ''
 	poolDictionaries: 'Win32Constants'
 	classInstanceVariableNames: ''!
@@ -141,7 +141,7 @@ AbstractNonReferenceDelegatingView subclass: #ToolButton
 	classInstanceVariableNames: ''!
 
 ControlView subclass: #ControlBarAbstract
-	instanceVariableNames: 'names'
+	instanceVariableNames: 'names _tipText _unused17 _unused18'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -153,7 +153,7 @@ ControlBarAbstract subclass: #StatusBar
 	classInstanceVariableNames: ''!
 
 ControlBarAbstract subclass: #Toolbar
-	instanceVariableNames: 'idMap items bitmapsStart insets tbFlags indent bitmapSize buttonSize tipText layoutManager'
+	instanceVariableNames: 'idMap items bitmapsStart insets tbFlags indent bitmapSize buttonSize _unused27 layoutManager'
 	classVariableNames: 'LabelsMask'
 	poolDictionaries: 'ToolbarConstants'
 	classInstanceVariableNames: ''!

@@ -80,6 +80,7 @@ package methodNames
 	add: #Slider -> #hasTicksTopOrLeft:;
 	add: #Slider -> #selection;
 	add: #Slider -> #selection:;
+	add: #StatusBarItemAbstract -> #beFullWidth;
 	add: #STBViewProxy -> #for:;
 	add: #SystemColor -> #asIndexedColor;
 	add: #SystemMetrics -> #hasFlashWindow;
@@ -151,6 +152,7 @@ package setPrerequisites: #(
 	'..\Base\Dolphin Basic Geometry'
 	'..\Presenters\Choice\Dolphin Choice Presenter'
 	'..\Views\Common Controls\Dolphin Common Controls'
+	'..\Views\Control Bars\Dolphin Control Bars'
 	'..\Models\List\Dolphin List Models'
 	'..\Presenters\List\Dolphin List Presenter'
 	'..\Views\MoenTree\Dolphin MoenTree View'
@@ -890,6 +892,15 @@ hasTicksTopOrLeft!accessing-styles!public!updating! !
 hasTicksTopOrLeft:!accessing-styles!public!updating! !
 selection!accessing!public! !
 selection:!accessing!public! !
+!
+
+!StatusBarItemAbstract methodsFor!
+
+beFullWidth
+	Notification deprecated.
+	self isAutoResize: true! !
+!StatusBarItemAbstract categoriesForMethods!
+beFullWidth!accessing!public! !
 !
 
 !STBViewProxy methodsFor!

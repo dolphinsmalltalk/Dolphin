@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
 ControlView subclass: #ControlBarAbstract
-	instanceVariableNames: 'names'
+	instanceVariableNames: 'names _tipText _unused17 _unused18'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -10,11 +10,11 @@ ControlBarAbstract guid: (GUID fromString: '{87b4c726-026e-11d3-9fd7-00a0cc3e4a3
 
 ControlBarAbstract isAbstract: true!
 
-ControlBarAbstract comment: 'ControlBarAbstract is an abstract <compositeView> whose subclasses implement the standard Windows status bar and toolbar controls. It is necessary for control bars to support <compositeView> so that they are able to host additional sub-views under the management of a layout manager.
+ControlBarAbstract comment: '`ControlBarAbstract` is an abstract `<compositeView>` whose subclasses implement the standard Windows status bar and toolbar controls. It is necessary for control bars to support `<compositeView>` so that they are able to host additional sub-views under the management of a layout manager.
 
-Instance Variables:
-	names	<IdentityDictionary> mapping sub-views to their names.
-
+## Instance Variables:
+  `names`		`IdentityDictionary` mapping sub-views to their names.
+  `_tipText`	`Utf16String` or `nil`, tool tip text last shown.
 '!
 
 !ControlBarAbstract categoriesForClass!MVP-Resources-Tool/Status bars!MVP-Views! !
@@ -230,6 +230,11 @@ onSubViewAdded: aView
 
 	!
 
+onTipTextRequired: aControlBarItem
+	"Private - Text is required for the tool-tip associated with the specified item in the receiver."
+
+	^aControlBarItem onTipTextRequired!
+
 onZOrderChanged
 	"Received when the Zorder of the subviews within the receiver has been
 	directly changed. Can be overridden by subclasses to perform necessary 
@@ -248,6 +253,16 @@ removeSubView: aView
 		ifTrue: [self layoutManager removeSubView: aView].
 	names isNil ifFalse: [names removeKey: aView ifAbsent: []].
 	^aView!
+
+ttnGetDispInfo: anNMTTDISPINFOW
+	"Private - Handler for the TTN_GETDISPINFOW notification message."
+
+	| ret |
+	ret := super ttnGetDispInfo: anNMTTDISPINFOW.
+	"We must retain a referenced to the tip text to prevent it being GC'd while still in use by the control.
+	This should really be pushed up to ControlView, but that would create a difficult STB version upgrade."
+	_tipText := anNMTTDISPINFOW text.
+	^ret!
 
 validateSubViewLayouts: anExternalHandle 
 	"Private - Validate the layout of the visible sub-views of the receiver."
@@ -272,7 +287,20 @@ viewNamed: aString ifNone: aBlock
 			| found |
 			found := each viewNamed: aString ifNone: [].
 			found notNil ifTrue: [^found]].
-	^aBlock value! !
+	^aBlock value!
+
+wmNotify: message wParam: wParam lParam: lParam
+	"Private - Redirects WM_NOTIFY messages to the appropriate control as a notify message.
+	Overridden here to handle notifications from the receiver's tool tip control which 
+	does not itself have an associated View so cannot receive the redirected message.
+	In any case it is more convenient to direct the notification to the receiver's
+	#ttnNeedText: handler."
+
+	| pnmhdr code |
+	pnmhdr := lParam asExternalAddress.
+	code := pnmhdr sdwordAtOffset: 8.
+	(code == TTN_GETDISPINFOW or: [code == TTN_GETDISPINFOW]) ifTrue: [^self nmNotify: pnmhdr].
+	^super wmNotify: message wParam: wParam lParam: lParam! !
 
 !ControlBarAbstract categoriesForMethods!
 actualInsets:!accessing!private! !
@@ -301,11 +329,14 @@ nmClick:!event handling-win32!public! !
 nmDblClk:!event handling-win32!public! !
 nmRClick:!event handling-win32!public! !
 onSubViewAdded:!event handling!public! !
+onTipTextRequired:!event handling!private! !
 onZOrderChanged!event handling!public! !
 removeSubView:!hierarchy!public!sub views! !
+ttnGetDispInfo:!event handling-win32!private! !
 validateSubViewLayouts:!geometry!private! !
 validateUserInterface!operations!public! !
 viewNamed:ifNone:!public!sub views! !
+wmNotify:wParam:lParam:!event handling-win32!private! !
 !
 
 ControlBarAbstract methodProtocol: #compositeView attributes: #(#readOnly) selectors: #(#addSubView: #allParents #allSubViews #arrangement #arrangement: #backcolor #backcolor: #canAcceptSubViews #canvas #clientExtent #clientHeight #clientRectangle #clientWidth #close #contextMenu #contextMenu: #cursor #cursorPosition #destroy #disable #disableRedraw #enable #enableRedraw #ensureLayoutValid #ensureRectangleVisible: #ensureSubView:rectangleVisible: #ensureSubViewVisible: #ensureVisible #extent #extent: #firstSubView #font #font: #forecolor #forecolor: #hasBorder #hasBorder: #hasClientEdge #hasClientEdge: #hasFocus #hasLayoutManager #hasStaticEdge #hasStaticEdge: #hasVisibleStyle #hasVisibleStyle: #height #height: #hide #invalidate #invalidateCalculatedExtent #invalidateLayout #invalidateRect: #invalidateRect:erase: #invalidateRgn: #invalidateUserInterface #isEnabled: #isGroupStop #isGroupStop: #isLayoutValid #isManaged #isManaged: #isTabStop #isTabStop: #isTopView #isTransparent #isTransparent: #isWindowVisible #layout #layoutExtent: #layoutManager #layoutManager: #managedSubViews #mapPoint:to: #mapRectangle:to: #model #model: #name #name: #nameOf: #needsValidateLayout #nextSiblingView #nonClientCanvas #onAboutToCreate #onBegin:drag: #onCommand: #onCreated: #onDestroyed #onEraseRequired: #onHScroll: #onModelChanged #onPaintRequired: #onSubViewAdded: #onSubViewRemoved: #onViewCreated #onVScroll: #onZOrderChanged #parentView #placement #placement: #plainText #position #position: #preferredExtent #preferredExtent: #presenter #presenter: #presenterConnectionPoint #preTranslateKeyboardInput: #preTranslateMessage: #preTranslateMouseInput: #previousSiblingView #queryContextMenu #recreate #rectangle #rectangle: #refreshContents #removeSubView: #resolution #screenRectangle #screenRectangle: #scrollBy:clip: #scrollBy:scroll:clip: #setCapture #styles #subViewFromPoint: #subViewFromPoint:flags: #subViews #tabFirst #tabNext #text #text: #topView #update #updateModel #usePreferredExtent #usePreferredExtent: #validate #validateLayout #validateRect: #validateUserInterface #viewNamed: #viewNamed:ifNone: #width #width: #withAllParents #withAllSubViews #x #x: #y #y: #zOrderAfter: #zOrderAfter:withFlags: #zOrderBottom #zOrderTop)!
@@ -317,16 +348,45 @@ icon
 
 	^Icon fromId: 'Toolbar.ico'!
 
+stbConvert: instVarArray fromVersion: verInteger
+	"Convert from earlier version view by updating and answering the array of instance variables
+	(for the View), instVarArray."
+
+	| instVars |
+	instVars := instVarArray.
+	verInteger < 13 ifTrue: [instVars := super stbConvert: instVarArray fromVersion: verInteger].
+	verInteger < 14 ifTrue: [instVars := self stbConvertFromVersion13: instVars].
+	^instVars!
+
 stbConvertFromVersion12: anArray 
 	"Private - Perform an STB conversion from a version 12 <View> to version 13."
 
 	| creationStyle |
 	creationStyle := anArray at: 3.
 	creationStyle at: 1 put: ((creationStyle at: 1) bitOr: CCS_NOPARENTALIGN).
-	^super stbConvertFromVersion12: anArray! !
+	^super stbConvertFromVersion12: anArray!
+
+stbConvertFromVersion13: anArray 
+	"Private - Perform an STB conversion from a version 13 <ControlBarAbstract> to version 14.
+	Adds _tipText instance variable and a couple of spares."
+
+	| count |
+	count := anArray size + 3.
+	^(Array new: count)
+		replaceFrom: 1 to: 15 with: anArray startingAt: 1;
+		replaceFrom: 19 to: count with: anArray startingAt: 16;
+		yourself!
+
+stbVersion
+	"14: Adds _tipText, and two spares"
+
+	^14! !
 
 !ControlBarAbstract class categoriesForMethods!
 icon!constants!public! !
+stbConvert:fromVersion:!binary filing!public! !
 stbConvertFromVersion12:!binary filing!private! !
+stbConvertFromVersion13:!binary filing!private! !
+stbVersion!binary filing!public! !
 !
 

@@ -88,12 +88,11 @@ at: index ifAbsent: exceptionBlock
 		ifTrue: [self uncheckedAt: index]
 		ifFalse: [exceptionBlock value]!
 
-at: anInteger put: newValue 
+at: anInteger put: newValue
 	"Set the element of the receiver at the specified index.
 	Raise an error if the index is out of bounds."
 
-	(anInteger < 1 or: [anInteger > self size]) 
-		ifTrue: [self errorSubscriptBounds: anInteger].
+	(anInteger < 1 or: [anInteger > self length]) ifTrue: [self errorSubscriptBounds: anInteger].
 	^self uncheckedAt: anInteger put: newValue!
 
 basicLength: anInteger
@@ -525,7 +524,7 @@ with: element1
 	<Object> element, element1."
 
 	^(self new: 1)
-		at: 1 put: element1;
+		uncheckedAt: 1 put: element1;
 		yourself!
 
 withAll: newElements

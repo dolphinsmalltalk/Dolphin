@@ -6814,12 +6814,13 @@ publishedAspectsOfInstances!constants!public! !
 !StatusBarItem class methodsFor!
 
 publishedAspectsOfInstances
-    	"Answer a <LookupTable> of the <Aspect>s published by instances of the receiver."
-    
-    	^(super publishedAspectsOfInstances)
-    		add: (Aspect block: #getImageBlock);
-    		add: (Aspect block: #getTextBlock);
-    		yourself! !
+	"Answer a <LookupTable> of the <Aspect>s published by instances of the receiver."
+
+	^super publishedAspectsOfInstances
+		add: (Aspect block: #getImageBlock);
+		add: (Aspect block: #getTextBlock);
+		add: (Aspect block: #getTipTextBlock);
+		yourself! !
 
 !StatusBarItem class categoriesForMethods!
 publishedAspectsOfInstances!constants!public! !
@@ -6828,13 +6829,14 @@ publishedAspectsOfInstances!constants!public! !
 !StatusBarItemAbstract class methodsFor!
 
 publishedAspectsOfInstances
-    	"Answer a <LookupTable> of the <Aspect>s published by instances of the receiver."
-    
-    	^(super publishedAspectsOfInstances)
-    		add: (Aspect choice: #borderStyle from: BorderStyles keys asSortedCollection);
-    		add: (Aspect integer: #width);
-    		add: (Aspect string: #name);
-    		yourself! !
+	"Answer a <LookupTable> of the <Aspect>s published by instances of the receiver."
+
+	^super publishedAspectsOfInstances
+		add: (Aspect choice: #borderStyle from: BorderStyles keys asSortedCollection);
+		add: (Aspect integer: #width);
+		add: (Aspect string: #name);
+		add: (Aspect boolean: #isAutoResize);
+		yourself! !
 
 !StatusBarItemAbstract class categoriesForMethods!
 publishedAspectsOfInstances!constants!public! !

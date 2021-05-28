@@ -8,8 +8,10 @@ CommCtrlConstants at: 'ACS_AUTOPLAY' put: 16r4!
 CommCtrlConstants at: 'ACS_CENTER' put: 16r1!
 CommCtrlConstants at: 'ACS_TRANSPARENT' put: 16r2!
 CommCtrlConstants at: 'CCM_FIRST' put: 16r2000!
+CommCtrlConstants at: 'CCM_GETUNICODEFORMAT' put: 16r2006!
 CommCtrlConstants at: 'CCM_GETVERSION' put: 16r2008!
 CommCtrlConstants at: 'CCM_SETBKCOLOR' put: 16r2001!
+CommCtrlConstants at: 'CCM_SETUNICODEFORMAT' put: 16r2005!
 CommCtrlConstants at: 'CCM_SETVERSION' put: 16r2007!
 CommCtrlConstants at: 'CCS_ADJUSTABLE' put: 16r20!
 CommCtrlConstants at: 'CCS_BOTTOM' put: 16r3!
@@ -85,6 +87,7 @@ CommCtrlConstants at: 'ILD_ROP' put: 16r40!
 CommCtrlConstants at: 'ILD_SCALE' put: 16r2000!
 CommCtrlConstants at: 'ILD_SELECTED' put: 16r4!
 CommCtrlConstants at: 'ILD_TRANSPARENT' put: 16r1!
+CommCtrlConstants at: 'INFOTIPSIZE' put: 16r400!
 CommCtrlConstants at: 'LIM_LARGE' put: 16r1!
 CommCtrlConstants at: 'LIM_SMALL' put: 16r0!
 CommCtrlConstants at: 'NM_CHAR' put: -16r12!

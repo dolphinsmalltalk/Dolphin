@@ -246,6 +246,9 @@ testForwardRefLoadPac
 	[loadedPackages := Package manager install: pacName] ensure: [File delete: pacName]!
 
 testLoad21Pac
+	"The 2.1 packages were a mix of text and binary. The package itself was binary filed, and the view resources also.
+	The test 2.1 package contains a stb version 1 Views and so exercises the whole stb conversion stack. We don't have anything with version 0, but that predated the first commercial release."
+
 	self loadAndTestPackage: 'ScribbleTestPackages\2.1\ScribbleTest21.pac'!
 
 testLoad40Pac

@@ -5593,7 +5593,7 @@ show
 
 	^(self new) showShell; yourself!
 
-stbConvert: instVarArray fromVersion: verInteger 
+stbConvert: instVarArray fromVersion: verInteger
 	"Convert from earlier version view by updating and answering the array of instance variables
 	(for the View), instVarArray."
 
@@ -5604,18 +5604,44 @@ stbConvert: instVarArray fromVersion: verInteger
 
 	| instVars |
 	instVars := instVarArray.
-	verInteger < 1 ifTrue: [instVars := self stbConvertFromVersion0: instVars].
-	verInteger < 2 ifTrue: [instVars := self stbConvertFromVersion1: instVars].
-	verInteger < 3 ifTrue: [instVars := self stbConvertFromVersion2: instVars].
-	verInteger < 4 ifTrue: [instVars := self stbConvertFromVersion3: instVars].
-	verInteger < 5 ifTrue: [instVars := self stbConvertFromVersion4: instVars].
-	verInteger < 6 ifTrue: [instVars := self stbConvertFromVersion5: instVars].
-	verInteger < 8 ifTrue: [instVars := self stbConvertFromVersion7: instVars].
-	verInteger < 9 ifTrue: [instVars := self stbConvertFromVersion8: instVars].
-	verInteger < 10 ifTrue: [instVars := self stbConvertFromVersion9: instVars].
-	verInteger < 11 ifTrue: [instVars := self stbConvertFromVersion10: instVars].
-	verInteger < 12 ifTrue: [instVars := self stbConvertFromVersion11: instVars].
-	verInteger < 13 ifTrue: [instVars := self stbConvertFromVersion12: instVars].
+	"Ugly nesting, but minimises the number of comparisons for more recent versions"
+	verInteger < 13
+		ifTrue: 
+			[verInteger < 12
+				ifTrue: 
+					[verInteger < 11
+						ifTrue: 
+							[verInteger < 10
+								ifTrue: 
+									[verInteger < 9
+										ifTrue: 
+											[verInteger < 8
+												ifTrue: 
+													[verInteger < 7
+														ifTrue: 
+															[verInteger < 6
+																ifTrue: 
+																	[verInteger < 5
+																		ifTrue: 
+																			[verInteger < 4
+																				ifTrue: 
+																					[verInteger < 3
+																						ifTrue: 
+																							[verInteger < 2
+																								ifTrue: 
+																									[verInteger < 1 ifTrue: [instVars := self stbConvertFromVersion0: instVars].
+																									instVars := self stbConvertFromVersion1: instVars].
+																							instVars := self stbConvertFromVersion2: instVars].
+																					instVars := self stbConvertFromVersion3: instVars].
+																			instVars := self stbConvertFromVersion4: instVars].
+																	instVars := self stbConvertFromVersion5: instVars].
+															instVars := self stbConvertFromVersion6: instVars].
+													instVars := self stbConvertFromVersion7: instVars].
+											instVars := self stbConvertFromVersion8: instVars].
+									instVars := self stbConvertFromVersion9: instVars].
+							instVars := self stbConvertFromVersion10: instVars].
+					instVars := self stbConvertFromVersion11: instVars].
+			instVars := self stbConvertFromVersion12: instVars].
 	^instVars!
 
 stbConvertFromVersion0: anArray 

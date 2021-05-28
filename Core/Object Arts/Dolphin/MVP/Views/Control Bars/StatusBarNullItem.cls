@@ -8,7 +8,7 @@ StatusBarItemAbstract subclass: #StatusBarNullItem
 
 StatusBarNullItem guid: (GUID fromString: '{23883cbe-a382-483d-a712-4b5320f87928}')!
 
-StatusBarNullItem comment: 'StatusBarNullItem is a class of status bar items that occupy space, but are otherwise invisible.
+StatusBarNullItem comment: '`StatusBarNullItem` is a class of status bar items that occupy space, but are otherwise invisible.
 '!
 
 !StatusBarNullItem categoriesForClass!MVP-Views-Support! !
