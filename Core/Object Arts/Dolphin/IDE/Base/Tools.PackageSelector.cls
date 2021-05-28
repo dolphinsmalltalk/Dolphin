@@ -925,9 +925,6 @@ singlePackage
 	packages := self packages.
 	^packages size == 1 ifTrue: [packages first]!
 
-sourceControl
-	^Package manager sourceControl!
-
 synchronizeFilter
 	| packages |
 	packages := self selections.
@@ -1058,7 +1055,6 @@ uninstall: package
 !Tools.PackageSelector categoriesFor: #selectRootFolder!public! !
 !Tools.PackageSelector categoriesFor: #setAsDefaultPackage!commands!private! !
 !Tools.PackageSelector categoriesFor: #singlePackage!accessing!private! !
-!Tools.PackageSelector categoriesFor: #sourceControl!accessing!private! !
 !Tools.PackageSelector categoriesFor: #synchronizeFilter!commands!private! !
 !Tools.PackageSelector categoriesFor: #systemModel!accessing!private! !
 !Tools.PackageSelector categoriesFor: #testBrowserClass!constants!private! !

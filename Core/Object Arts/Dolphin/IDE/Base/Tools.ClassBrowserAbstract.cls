@@ -1624,42 +1624,42 @@ onViewOpened
 	| toolbar modifiedModel |
 	super onViewOpened.
 	methodBrowserPresenter beSorted: [:a :b | a selector <= b selector].
-	(self view viewNamed: 'message' ifNone: []) 
+	(self view viewNamed: 'message' ifNone: [])
 		ifNotNil: 
-			[:item | 
-			item 
+			[:item |
+			item
 				when: #doubleClicked:
 				send: #onStatusDoubleClicked:
 				to: self.
 			item model: self statusModel.
 			methodBrowserPresenter errorModel: self statusModel.
 			definitionPresenter errorModel: self statusModel].
-	(self view viewNamed: 'packageOfSelection' ifNone: []) 
+	(self view viewNamed: 'packageOfSelection' ifNone: [])
 		ifNotNil: 
-			[:item | 
-			item 
+			[:item |
+			item
 				when: #doubleClicked:
 				send: #onPackageDoubleClicked:
 				to: self.
 			item model: packageModel].
-	(self view viewNamed: 'version' ifNone: []) 
-		ifNotNil: [:item | item model: methodBrowserPresenter versionModel].
+	(self view viewNamed: 'namespace' ifNone: [])
+		ifNotNil: [:item | item model: methodBrowserPresenter namespaceModel].
 	modifiedModel := methodBrowserPresenter modifiedModel.
 	self modifiedModel: modifiedModel.
 	"Historically we have only flagged method changes in the caption."
-	modifiedModel 
+	modifiedModel
 		when: #valueChanged
 		send: #updateCaption
 		to: self.
 	toolbar := self view viewNamed: 'classBrowserTools'.
-	toolbar presenterConnectionPoint 
+	toolbar presenterConnectionPoint
 		when: #dropDown:
 		send: #onDropDown:
 		to: self.
 
 	"Really a CardContainer view, but we treat as if a presenter"
 	filterPresenter := self view viewNamed: 'filters' ifNone: [].
-	filterPresenter notNil 
+	filterPresenter notNil
 		ifTrue: 
 			[filterPresenter
 				when: #currentCardChanged
@@ -1694,7 +1694,13 @@ parseContext
 	^self method
 		ifNil: 
 			[self actualClass
-				ifNotNil: [:class | ParseContext methodClass: class environment: class environment]]!
+				ifNotNil: 
+					[:class |
+					| ns |
+					ns := self packageForNewMethod
+								ifNil: [class environment]
+								ifNotNil: [:package | package environment ifNil: [class environment]].
+					ParseContext methodClass: class environment: ns]]!
 
 parseTree
 	^methodBrowserPresenter parseTree!

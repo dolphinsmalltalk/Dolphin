@@ -419,8 +419,6 @@ package setMethodNames: #(
 	#(#{Kernel.Package class} #dolphinPackageIcon)
 	#(#{Kernel.Package class} #publishedAspectsOfInstances)
 	#(#{Kernel.Package class} #publishedEventsOfInstances)
-	#(#{Kernel.PackageManager} #getVersionInfoFor:)
-	#(#{Kernel.PackageManager} #isConnected)
 	#(#{Kernel.PackageManager} #sourceControl)
 	#(#{Kernel.PackageManager class} #publishedEventsOfInstances)
 	#(#{Kernel.ProcessorScheduler} #singleStep:)
@@ -1155,7 +1153,7 @@ Tools.ClassSelector subclass: #'Tools.ClassListSelector'
 	classInstanceVariableNames: ''
 	classConstants: {}!
 UI.ListPresenter subclass: #'Tools.MethodBrowser'
-	instanceVariableNames: 'methodsPresenter sourcePresenter filter searchEnvironment refactoringTool versionModel'
+	instanceVariableNames: 'methodsPresenter sourcePresenter filter searchEnvironment refactoringTool namespaceModel'
 	classVariableNames: 'AdditionalAccelerators AutoFormat InfoTips WordWrap'
 	imports: #(#{Kernel.CompilerFlags} #{Refactory.Browser private})
 	classInstanceVariableNames: 'commandQueryHandlers'
@@ -1297,7 +1295,7 @@ Tools.SmalltalkToolShell subclass: #'Tools.MethodBrowserShell'
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Tools.SmalltalkToolShell subclass: #'Tools.PackageBrowserShell'
-	instanceVariableNames: 'packagesPresenter classesPresenter methodsPresenter methodRefactoringTool variablesPresenter resourcesPresenter currentCard commentPresenter cardsPresenter updateFlags scriptTextPresenter scriptNamesPresenter prerequisitesPresenter dependentsPresenter statusModel versionModel'
+	instanceVariableNames: 'packagesPresenter classesPresenter methodsPresenter methodRefactoringTool variablesPresenter resourcesPresenter currentCard commentPresenter cardsPresenter updateFlags scriptTextPresenter scriptNamesPresenter prerequisitesPresenter dependentsPresenter statusModel'
 	classVariableNames: 'WordWrapComment'
 	imports: #(#{OS.Win32Constants})
 	classInstanceVariableNames: ''
@@ -4418,23 +4416,8 @@ publishedEventsOfInstances
 
 !Kernel.PackageManager methodsFor!
 
-getVersionInfoFor: aCompiledMethod 
-	"Part of the StsManager protocol implemented here for systems which do not have STS
-	installed. Answer nil to indicate that we cannot supply version information for
-	aCompiledMethod"
-
-	^nil!
-
-isConnected
-	"Part of the StsManager protocol implemented here for systems which do not have STS
-	installed. Answer nil to indicate that we are not connected to a repository"
-
-	^false!
-
 sourceControl
 	^self! !
-!Kernel.PackageManager categoriesFor: #getVersionInfoFor:!public!source tracking system! !
-!Kernel.PackageManager categoriesFor: #isConnected!public!source tracking system! !
 !Kernel.PackageManager categoriesFor: #sourceControl!accessing!public! !
 
 !Kernel.PackageManager class methodsFor!

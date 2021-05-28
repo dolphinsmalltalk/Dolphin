@@ -338,9 +338,6 @@ slideyPinMap: anIdentityDictionary
 slideyPinNames
 	^#()!
 
-sourceControl
-	^Package manager sourceControl!
-
 systemModel
 	^SmalltalkSystem current!
 
@@ -392,7 +389,6 @@ workspaceClass
 !Tools.SmalltalkToolShell categoriesFor: #slideyPinMap!accessing!public! !
 !Tools.SmalltalkToolShell categoriesFor: #slideyPinMap:!accessing!public! !
 !Tools.SmalltalkToolShell categoriesFor: #slideyPinNames!accessing!private! !
-!Tools.SmalltalkToolShell categoriesFor: #sourceControl!commands!public! !
 !Tools.SmalltalkToolShell categoriesFor: #systemModel!accessing!private! !
 !Tools.SmalltalkToolShell categoriesFor: #workspaceClass!constants!private! !
 

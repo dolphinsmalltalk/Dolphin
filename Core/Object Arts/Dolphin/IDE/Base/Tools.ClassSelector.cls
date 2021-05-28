@@ -838,9 +838,6 @@ showPresenter: viewName
 	self selection show: viewName
 	!
 
-sourceControl
-	^Package manager sourceControl!
-
 systemModel
 	"Private - Answer the development system model."
 
@@ -924,7 +921,6 @@ toggleShowFullNames
 !Tools.ClassSelector categoriesFor: #selectionEnvironment!accessing!private! !
 !Tools.ClassSelector categoriesFor: #setInitialFocus!operations!public! !
 !Tools.ClassSelector categoriesFor: #showPresenter:!commands!public! !
-!Tools.ClassSelector categoriesFor: #sourceControl!accessing!private! !
 !Tools.ClassSelector categoriesFor: #systemModel!commands!private! !
 !Tools.ClassSelector categoriesFor: #testBrowserClass!constants!private! !
 !Tools.ClassSelector categoriesFor: #toggleShowFullNames!commands!private!refactoring! !

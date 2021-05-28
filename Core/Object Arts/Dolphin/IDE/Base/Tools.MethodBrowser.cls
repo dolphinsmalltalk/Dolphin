@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
 UI.ListPresenter subclass: #'Tools.MethodBrowser'
-	instanceVariableNames: 'methodsPresenter sourcePresenter filter searchEnvironment refactoringTool versionModel'
+	instanceVariableNames: 'methodsPresenter sourcePresenter filter searchEnvironment refactoringTool namespaceModel'
 	classVariableNames: 'AdditionalAccelerators AutoFormat InfoTips WordWrap'
 	imports: #(#{Kernel.CompilerFlags} #{Refactory.Browser private})
 	classInstanceVariableNames: 'commandQueryHandlers'
@@ -508,7 +508,7 @@ initialize
 	without selection was picking up all methods added/modified."
 	filter := [:aCompiledMethod | aCompiledMethod isNil].
 	searchEnvironment := self systemModel systemEnvironment.
-	versionModel := ValueHolder new!
+	namespaceModel := ValueHolder new!
 
 inspectIt
 	"Open an inspector on the currently selected method."
@@ -526,17 +526,19 @@ isModified
 isSourceReadOnly
 	^sourcePresenter isReadOnly!
 
-list: aSequenceableCollection 
+list: aSequenceableCollection
 	"MethodBrowser attempts to maintain selection when the list is changed. Perhaps all <listPresenter>s should do this, or at least as an option."
 
 	| selections |
-	(aSequenceableCollection isEmpty ifTrue: [self noMethodsView] ifFalse: [methodsPresenter view]) 
+	(aSequenceableCollection isEmpty ifTrue: [self noMethodsView] ifFalse: [methodsPresenter view])
 		ensureVisible.
 	selections := self selections.
 	self noEventsDo: 
 			[super list: aSequenceableCollection.
 			self selections: selections ifAbsent: []].
-	self selections = selections ifFalse: [self trigger: #selectionChanged]!
+	self updateMethodNamespace.
+	self selections = selections ifFalse: [self trigger: #selectionChanged].
+!
 
 method
 	Notification deprecated.
@@ -601,6 +603,9 @@ modifiedModel
 
 modifiedModel: aValueHolder
 	sourcePresenter modifiedModel: aValueHolder!
+
+namespaceModel
+	^namespaceModel!
 
 newMethod
 	"Sets the receiver up for creating a new method"
@@ -746,7 +751,7 @@ onMethodSelected
 		clearStatus;
 		text: text;
 		selectionRange: (1 to: 0).
-	self updateMethodVersion.
+	self updateMethodNamespace.
 	self trigger: #methodSelected!
 
 onMethodSelectionChanging: aSelectionChangingEvent 
@@ -801,12 +806,16 @@ onViewOpened
 
 parseContext
 	^self selectedMethod
-		ifNil: [parentPresenter parseContext]
+		ifNil: [parentPresenter ifNotNil: [parentPresenter parseContext]]
 		ifNotNil: 
 			[:method |
-			method owningPackage
-				ifNil: [method]
-				ifNotNil: [:package | ParseContext methodClass: method methodClass environment: package environment]]!
+			| package |
+			(method customEnvironment notNil or: [(package := method owningPackage) isNil])
+				ifTrue: [method]
+				ifFalse: 
+					[| class |
+					class := method methodClass.
+					ParseContext methodClass: class environment: (package environment ifNil: [class environment])]]!
 
 parseTree
 	^sourcePresenter parseTree!
@@ -1039,9 +1048,6 @@ source
 
 	^sourcePresenter source!
 
-sourceControl
-	^Package manager sourceControl!
-
 sourcePresenter
 	^sourcePresenter!
 
@@ -1067,17 +1073,8 @@ togglePrivate
 				ifTrue: [self systemModel publicizeMethod: method]
 				ifFalse: [self systemModel privatizeMethod: method]]!
 
-updateMethodVersion
-	| sccs |
-	sccs := self sourceControl.
-	sccs isConnected ifFalse: [^self].
-	
-	[versionModel
-		value: (self selectedMethod isNil ifFalse: [sccs getVersionInfoFor: self selectedMethod])]
-			forkAt: Processor userBackgroundPriority!
-
-versionModel
-	^versionModel! !
+updateMethodNamespace
+	namespaceModel value: (self parseContext ifNotNil: [:context | context environment])! !
 !Tools.MethodBrowser categoriesFor: #addMethods:toCategory:!commands!private! !
 !Tools.MethodBrowser categoriesFor: #addToCommandRoute:!commands!public! !
 !Tools.MethodBrowser categoriesFor: #applyOptions!operations!options!public! !
@@ -1153,6 +1150,7 @@ versionModel
 !Tools.MethodBrowser categoriesFor: #model:!accessing!public! !
 !Tools.MethodBrowser categoriesFor: #modifiedModel!accessing!public! !
 !Tools.MethodBrowser categoriesFor: #modifiedModel:!accessing!public! !
+!Tools.MethodBrowser categoriesFor: #namespaceModel!accessing!public! !
 !Tools.MethodBrowser categoriesFor: #newMethod!commands!public! !
 !Tools.MethodBrowser categoriesFor: #noMethodsView!accessing!private! !
 !Tools.MethodBrowser categoriesFor: #onAboutToDisplayMenu:!event handling!menus!public! !
@@ -1196,14 +1194,12 @@ versionModel
 !Tools.MethodBrowser categoriesFor: #sortBlock!accessing!private! !
 !Tools.MethodBrowser categoriesFor: #sortBlock:!accessing!private! !
 !Tools.MethodBrowser categoriesFor: #source!accessing!public! !
-!Tools.MethodBrowser categoriesFor: #sourceControl!constants!public! !
 !Tools.MethodBrowser categoriesFor: #sourcePresenter!accessing!private! !
 !Tools.MethodBrowser categoriesFor: #sourcePresenter:!accessing!private! !
 !Tools.MethodBrowser categoriesFor: #sourceSelection!accessing!public! !
 !Tools.MethodBrowser categoriesFor: #systemModel!accessing!private! !
 !Tools.MethodBrowser categoriesFor: #togglePrivate!commands!private! !
-!Tools.MethodBrowser categoriesFor: #updateMethodVersion!event handling!private! !
-!Tools.MethodBrowser categoriesFor: #versionModel!accessing!public! !
+!Tools.MethodBrowser categoriesFor: #updateMethodNamespace!event handling!private! !
 
 !Tools.MethodBrowser class methodsFor!
 
