@@ -1,19 +1,18 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
 UI.StatusBarItemAbstract subclass: #'UI.StatusBarItem'
-	instanceVariableNames: 'getTextBlock getImageBlock reserved1'
+	instanceVariableNames: 'getTextBlock getImageBlock getTipTextBlock'
 	classVariableNames: ''
 	imports: #(#{OS.Win32Constants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 UI.StatusBarItem guid: (Core.GUID fromString: '{87b4c6e6-026e-11d3-9fd7-00a0cc3e4a32}')!
-UI.StatusBarItem comment: 'StatusItem is a class describing the standard items that can be held by a <StatusBar>. These can have both text and an image associated with them.
+UI.StatusBarItem comment: '`StatusItem` is a class describing the standard items that can be held by a `StatusBar`. These can have both text and an image associated with them.
 
-Instance Variables:
-	getTextBlock	<monadicValuable> for mapping a list item to its display text.
-	getImageBlock	<monadicValuable> for mapping a list item to an <integer> image index.
-	imageManager	<IconImageManager>
-
+## Instance Variables:
+  getTextBlock		`<monadicValuable>` for mapping a list item to its display text.
+  getImageBlock	`<monadicValuable>` for mapping a list item to an <integer> image index.
+  getTipTextBlock	`<monadicValuable>` for mapping a list item to its tool-tip text.
 '!
 !UI.StatusBarItem categoriesForClass!MVP-Views-Support! !
 !UI.StatusBarItem methodsFor!
@@ -23,7 +22,7 @@ defaultGetImageBlock
 	that will be placed in the receiver. By default we assume icons can be used
 	for images"
 
-	^[:each | each iconImageIndex]!
+	^Message selector: #iconImageIndex!
 
 defaultGetTextBlock
 	"Private - Answer a default block to use to find out the children of an object
@@ -31,47 +30,49 @@ defaultGetTextBlock
 
 	^Message selector: #displayString!
 
-drawImageOn: aCanvas in: aRectangle 
-	^(self getImageBlock ifNotNil: [:getImage | getImage value: model value]) 
+drawImageOn: aCanvas in: aRectangle
+	^self getImage
 		ifNotNil: 
-			[:image | 
-			(self imageManager imageListWithExtent: aRectangle extent) 
+			[:image |
+			(self imageManager imageListWithExtent: aRectangle extent)
 				draw: image
 				on: aCanvas
 				at: aRectangle origin.
-			aRectangle width + (aCanvas textExtent: ' ') x]
+			aRectangle width + (self textWidth: ' ' on: aCanvas)]
 		ifNil: [0]!
 
-drawItem: aCanvas bounding: aRectangle 
+drawItem: aCanvas bounding: aRectangle
 	"Private - Draw the receiver's current model's value onto the <Canvas> argument."
 
-	| textOffset imageRect minHeight imageHeight |
+	| textOffset imageRect imageSize |
 	(model isNil or: [model value isNil]) ifTrue: [^self].
 	aCanvas save.
-	aCanvas font: self parentView actualFont.
+	aCanvas font: parentView actualFont.
 	"The image is drawn in one of the system icon sizes (the largest that will fit). It's
 	possible that the status bar is too small to draw even a 16x16 icon (most likely it is less
 	than 15 pixels high due to a design-time error. In this case draw a 16x16 icon and just let
 	the system truncate it."
-	minHeight := Icon smallExtent y.
-	imageHeight := aRectangle height.
-	imageHeight := imageHeight < minHeight 
-				ifTrue: [minHeight]
-				ifFalse: [imageHeight truncateTo: minHeight].
-	imageRect := aRectangle origin extent: imageHeight.
+	imageSize := self imageSizeIn: aRectangle.
+	imageRect := aRectangle origin extent: imageSize.
 	textOffset := 1 + (self drawImageOn: aCanvas in: imageRect).
 	self drawTextOn: aCanvas offset: textOffset.
 	aCanvas restore!
 
+drawTextFlags
+	^##(DT_SINGLELINE | DT_VCENTER | DT_NOPREFIX)!
+
 drawTextOn: aCanvas offset: anInteger
 	| text |
-	text := self getTextBlock ifNil: [''] ifNotNil: [:getText | getText value: model value].
+	text := self getText.
 	text isEmpty ifTrue: [^self].
 	aCanvas
 		backgroundMode: TRANSPARENT;
 		formatText: text
 			in: (self rectangle insetOriginBy: anInteger @ 0)
-			flags: ##(DT_SINGLELINE | DT_VCENTER | DT_NOPREFIX)!
+			flags: self drawTextFlags!
+
+getImage
+	^self getImageBlock ifNotNil: [:getImage | getImage value: model value]!
 
 getImageBlock
 	"Answer the <monadicValuable> to use to find out the image index of an object that will
@@ -90,13 +91,12 @@ getImageBlock: monad
 !
 
 getText
-	"Private - Answer the text for this item."
+	"Private - Answer the text for this item. Note that there is no default text if the getTextBlock is nil. This is for icon-only items."
 
-	| value getText |
-	^(model isNil or: [(getText := self getTextBlock) isNil
-			or: [(value := self model value) isNil]])
+	| value |
+	^(getTextBlock isNil or: [model isNil or: [(value := self model value) isNil]])
 		ifTrue: ['']
-		ifFalse: [getText value: value]!
+		ifFalse: [(getTextBlock value: value) displayString]!
 
 getTextBlock
 	"Answer the <monadicValuable> used to determine the text to display for an 
@@ -114,10 +114,35 @@ getTextBlock: monad
 	self refreshContents
 !
 
+getTipText
+	"Private - Answer the tool-tip text to be used for this item when required (but see #toolTipText)."
+
+	^getTipTextBlock isNil
+		ifTrue: [super getTipText]
+		ifFalse: 
+			[| value |
+			(model isNil or: [(value := self model value) isNil])
+				ifTrue: ['']
+				ifFalse: [(getTipTextBlock value: value) displayString]]!
+
+getTipTextBlock
+	^getTipTextBlock!
+
+getTipTextBlock: aMonadicValuableOrNil
+	"Set (or clear if the argument is nil) the <monadicValuable> used to calculate the tip text to display for the receiver. See StatusBar>>tipTextAt: for details of when tooltips should be shown for an item."
+
+	getTipTextBlock := aMonadicValuableOrNil!
+
 imageManager
 	"Answer the imageManager which holds the icons."
 
 	^IconImageManager current!
+
+imageSizeIn: aRectangle
+	| minImageSize imageSize |
+	minImageSize := Icon smallExtent y.
+	imageSize := aRectangle height.
+	^imageSize < minImageSize ifTrue: [minImageSize] ifFalse: [imageSize truncateTo: minImageSize]!
 
 initialize
 	"Private - Initialize the state of the receiver."
@@ -132,21 +157,71 @@ printOn: aStream
 	aStream
 		basicPrint: self;
 		nextPut: $(;
-		print: (self parentView notNil ifTrue: [self name]);
-		nextPut: $)! !
+		print: (parentView notNil ifTrue: [self name]);
+		nextPut: $)!
+
+textWidth: aString on: aCanvas
+	^(aCanvas
+		textExtent: aString
+		width: 0
+		flags: self drawTextFlags) x!
+
+toolTipText
+	"Private - Answer the tool-tip text for the receiver. Answer nil if none, in which case no tip is shown."
+
+	"A tool-tip should be displayed when either:
+		1. the item has only an icon (no text); or
+		2. the item text is truncated due to the size of its pane; or
+		3. the tip text is different from the item text.
+	The first two cases are the default behaviour of the control as documented at https://docs.microsoft.com/en-us/windows/win32/controls/sb-settiptext.
+	The final behaviour of displaying a tip when the text is different is a Dolphin specific enhancement that makes the tips useful in a wider range of scenarios."
+
+	| text tipText |
+	tipText := self getTipText.
+	tipText isEmpty ifTrue: [^nil].
+	text := self getText.
+	tipText = text
+		ifTrue: 
+			[| rect canvas requiredWidth availableWidth |
+			"May be case 2: Tip text is the same as item text, display if item text truncated"
+			rect := self rectangle.
+			canvas := parentView canvas.
+			canvas font: parentView actualFont.
+			requiredWidth := 1 + (self getImage
+								ifNil: [self textWidth: text on: canvas]
+								ifNotNil: [(self imageSizeIn: rect) + (self textWidth: ' ' , text on: canvas)]).
+			canvas free.
+			availableWidth := rect width - (self hasBorder
+								ifTrue: 
+									["Have to use a magic number for the width of the vertical separator that is drawn for any border as there doesn't appear to be a metric"
+									2]
+								ifFalse: [0]).
+			availableWidth >= requiredWidth
+				ifTrue: 
+					["Not truncated, so we don't want to display a tip."
+					^nil]].
+	^tipText! !
 !UI.StatusBarItem categoriesFor: #defaultGetImageBlock!adapters!constants!private! !
 !UI.StatusBarItem categoriesFor: #defaultGetTextBlock!adapters!constants!private! !
 !UI.StatusBarItem categoriesFor: #drawImageOn:in:!drawing!private! !
 !UI.StatusBarItem categoriesFor: #drawItem:bounding:!drawing!private! !
+!UI.StatusBarItem categoriesFor: #drawTextFlags!constants!drawing!private! !
 !UI.StatusBarItem categoriesFor: #drawTextOn:offset:!drawing!private! !
+!UI.StatusBarItem categoriesFor: #getImage!drawing!private! !
 !UI.StatusBarItem categoriesFor: #getImageBlock!adapters!public! !
 !UI.StatusBarItem categoriesFor: #getImageBlock:!adapters!public! !
 !UI.StatusBarItem categoriesFor: #getText!private!updating! !
 !UI.StatusBarItem categoriesFor: #getTextBlock!adapters!public! !
 !UI.StatusBarItem categoriesFor: #getTextBlock:!adapters!public! !
+!UI.StatusBarItem categoriesFor: #getTipText!private!updating! !
+!UI.StatusBarItem categoriesFor: #getTipTextBlock!accessing!public! !
+!UI.StatusBarItem categoriesFor: #getTipTextBlock:!accessing!public! !
 !UI.StatusBarItem categoriesFor: #imageManager!accessing!public! !
+!UI.StatusBarItem categoriesFor: #imageSizeIn:!helpers!private! !
 !UI.StatusBarItem categoriesFor: #initialize!initializing!private! !
 !UI.StatusBarItem categoriesFor: #printOn:!development!printing!public! !
+!UI.StatusBarItem categoriesFor: #textWidth:on:!helpers!private! !
+!UI.StatusBarItem categoriesFor: #toolTipText!enquiries!private! !
 
 !UI.StatusBarItem class methodsFor!
 

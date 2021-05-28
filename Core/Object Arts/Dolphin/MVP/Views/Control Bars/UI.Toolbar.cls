@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
 UI.ControlBarAbstract subclass: #'UI.Toolbar'
-	instanceVariableNames: 'idMap items bitmapsStart insets tbFlags indent bitmapSize buttonSize tipText layoutManager'
+	instanceVariableNames: 'idMap items bitmapsStart insets tbFlags indent bitmapSize buttonSize _unused27 layoutManager'
 	classVariableNames: ''
 	imports: #(#{OS.ToolbarConstants})
 	classInstanceVariableNames: ''
@@ -22,7 +22,6 @@ Toolbar holds a list of `<ToolbarItem>` items matching the order of items in the
   `_reserved2`		`UndefinedObject` reserved for future use.
   `bitmapSize`		`Point` size of each button bitmap.
   `buttonSize`		`Point` size of each button.
-  `tipText`			`<readableString>` or `nil`, tip text for last button hover.
   `layoutManager`	`<layoutManager>` or `nil`, for managing the layout of sub-views.
 
 ## Class Variables:
@@ -571,12 +570,6 @@ onPositionChanged: aPositionEvent
 onStateRestored
 	self updateSize!
 
-onTipTextRequired: item
-	"Text is required for the tool-tip associated with the
-	<ToolbarItem>, item."
-
-	^item onTipTextRequired!
-
 onViewCreated
 	"The receiver window has been created (but is not yet visible). 
 	Finish the job and install the known ToolbarItems"
@@ -999,18 +992,6 @@ tbSetToolTips: toolTipHandle
 
 	self sendMessage: TB_SETTOOLTIPS wParam: toolTipHandle!
 
-ttnGetDispInfo: anNMTTDISPINFOW
-	"Private - Handler for the TTN_NEEDTEXTW notification message."
-
-	^(anNMTTDISPINFOW idIsHandle
-		ifTrue: [View withHandle: anNMTTDISPINFOW idFrom]
-		ifFalse: [self itemFromId: anNMTTDISPINFOW idFrom])
-			ifNotNil: 
-				[:tool |
-				"Note that we must keep a reference to the text string to prevent its premature death"
-				tipText := anNMTTDISPINFOW text: (self presenter onTipTextRequired: tool).
-				0]!
-
 updateAllItems
 	"Private - Cause all of the receivers items to be rebuilt"
 
@@ -1052,20 +1033,7 @@ wmCreate: message wParam: wParam lParam: lParam
 	^super
 		wmCreate: message
 		wParam: wParam
-		lParam: lParam!
-
-wmNotify: message wParam: wParam lParam: lParam
-	"Private - Redirects WM_NOTIFY messages to the appropriate control as a notify message.
-	Overridden here to handle notifications from the receiver's tool tip control which 
-	does not itself have an associated View so cannot receive the redirected message.
-	In any case it is more convenient to direct the notification to the receiver's
-	#ttnNeedText: handler."
-
-	| pnmhdr code |
-	pnmhdr := lParam asExternalAddress.
-	code := pnmhdr sdwordAtOffset: 8.
-	(code == TTN_GETDISPINFOW or: [code == TTN_GETDISPINFOW]) ifTrue: [^self nmNotify: pnmhdr].
-	^super wmNotify: message wParam: wParam lParam: lParam! !
+		lParam: lParam! !
 !UI.Toolbar categoriesFor: #actualBitmapSize!geometry!public! !
 !UI.Toolbar categoriesFor: #addBitmap:index:!helpers!private! !
 !UI.Toolbar categoriesFor: #addEditTools!adding!private! !
@@ -1124,7 +1092,6 @@ wmNotify: message wParam: wParam lParam: lParam
 !UI.Toolbar categoriesFor: #onEraseRequired:!event handling!private! !
 !UI.Toolbar categoriesFor: #onPositionChanged:!event handling!public! !
 !UI.Toolbar categoriesFor: #onStateRestored!binary filing!private! !
-!UI.Toolbar categoriesFor: #onTipTextRequired:!event handling!public! !
 !UI.Toolbar categoriesFor: #onViewCreated!event handling!public! !
 !UI.Toolbar categoriesFor: #removeAllItems!public!removing! !
 !UI.Toolbar categoriesFor: #removeItem:!public!removing! !
@@ -1179,13 +1146,11 @@ wmNotify: message wParam: wParam lParam: lParam
 !UI.Toolbar categoriesFor: #tbSetRows:large:!geometry!private! !
 !UI.Toolbar categoriesFor: #tbSetState:state:!helpers!private! !
 !UI.Toolbar categoriesFor: #tbSetToolTips:!accessing!private! !
-!UI.Toolbar categoriesFor: #ttnGetDispInfo:!event handling-win32!private! !
 !UI.Toolbar categoriesFor: #updateAllItems!operations!private! !
 !UI.Toolbar categoriesFor: #updateSize!operations!private! !
 !UI.Toolbar categoriesFor: #updateSizePosted!operations!private! !
 !UI.Toolbar categoriesFor: #validateUserInterface!operations!public! !
 !UI.Toolbar categoriesFor: #wmCreate:wParam:lParam:!event handling-win32!private! !
-!UI.Toolbar categoriesFor: #wmNotify:wParam:lParam:!event handling-win32!private! !
 
 !UI.Toolbar class methodsFor!
 
@@ -1263,6 +1228,13 @@ stbConvertFromVersion12: anArray
 	(anArray at: 6) = Color face3d ifTrue: [anArray at: 6 put: Color default].
 	^super stbConvertFromVersion12: anArray!
 
+stbConvertFromVersion13: anArray
+	"Private - Perform an STB conversion from a version 13 `Toolbar` to version 14.
+	Version 14 adds a tipText instance variable to the superclass (and a couple of spares). The former tipText instance variable of Toolbar becomes unused."
+
+	anArray at: 24 put: nil.
+	^super stbConvertFromVersion13: anArray!
+
 themePartName
 	^#Toolbar!
 
@@ -1278,6 +1250,7 @@ winClassName
 !UI.Toolbar class categoriesFor: #resource_History_tools!public!resources-views! !
 !UI.Toolbar class categoriesFor: #resource_Tool_bar!public!resources-views! !
 !UI.Toolbar class categoriesFor: #stbConvertFromVersion12:!binary filing!private! !
+!UI.Toolbar class categoriesFor: #stbConvertFromVersion13:!binary filing!private! !
 !UI.Toolbar class categoriesFor: #themePartName!constants!private! !
 !UI.Toolbar class categoriesFor: #winClassName!constants!private! !
 

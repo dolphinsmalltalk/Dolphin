@@ -454,8 +454,10 @@ Kernel.SharedPool subclass: #'OS.CommCtrlConstants'
 		'ACS_CENTER' -> 16r1.
 		'ACS_TRANSPARENT' -> 16r2.
 		'CCM_FIRST' -> 16r2000.
+		'CCM_GETUNICODEFORMAT' -> 16r2006.
 		'CCM_GETVERSION' -> 16r2008.
 		'CCM_SETBKCOLOR' -> 16r2001.
+		'CCM_SETUNICODEFORMAT' -> 16r2005.
 		'CCM_SETVERSION' -> 16r2007.
 		'CCS_ADJUSTABLE' -> 16r20.
 		'CCS_BOTTOM' -> 16r3.
@@ -531,6 +533,7 @@ Kernel.SharedPool subclass: #'OS.CommCtrlConstants'
 		'ILD_SCALE' -> 16r2000.
 		'ILD_SELECTED' -> 16r4.
 		'ILD_TRANSPARENT' -> 16r1.
+		'INFOTIPSIZE' -> 16r400.
 		'LIM_LARGE' -> 16r1.
 		'LIM_SMALL' -> 16r0.
 		'LVM_GETEDITCONTROL' -> 16r1018.

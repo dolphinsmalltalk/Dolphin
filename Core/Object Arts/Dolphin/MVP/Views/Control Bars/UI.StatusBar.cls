@@ -7,16 +7,16 @@ UI.ControlBarAbstract subclass: #'UI.StatusBar'
 	classInstanceVariableNames: ''
 	classConstants: {}!
 UI.StatusBar guid: (Core.GUID fromString: '{87b4c72e-026e-11d3-9fd7-00a0cc3e4a32}')!
-UI.StatusBar comment: 'StatusBar is a <compositeView> implementing the Windows "Msctls_Statusbar32" common control.
+UI.StatusBar comment: '`StatusBar` is a `<compositeView>` implementing the Windows "Msctls_Statusbar32" common control.
 
-StatusBar holds a list of items, sub-instances of <StatusItem>, matching the order of items in the control. Items may be added and deleted once the view has been created. It also allows a name to be associated with each item. 
+`StatusBar` holds a list of items, sub-instances of `StatusBarItemAbstract`, matching the order of items in the control. Items may be added and deleted once the view has been created. It also allows a name to be associated with each item. 
 
 Note that, internally, an additional separator is  placed as the first item in the status common control when there are no user parts. This is because the common control does not allow you to remove all the items completely.
 
-Instance Variables:
-	parts				<OrderedCollection> of <StatusOwnerDraw> items.
-	leftOverSeparator	<StatusOwnerDraw> which is the spare separator item.
-	layoutManager		<layoutManager> or nil, for managing the layout of sub-views.
+## Instance Variables:
+  `parts`				`<Array>` of `StatusBarItemAbstract`.
+  `leftOverSeparator`	`StatusBarNullItem`
+  `layoutManager`		`<layoutManager>` or `nil`, for managing the layout of sub-views, if any.
 
 '!
 !UI.StatusBar categoriesForClass!MVP-Views! !
@@ -38,38 +38,6 @@ addItem: aStatusBarItem name: aString
 	self addItem: aStatusBarItem.
 	self name: aStatusBarItem as: aString.
 	^aStatusBarItem!
-
-calculateEdgesForWidth: anInteger
-	| edges right fixedWidth numResizable widths numParts borders rectBorder share |
-	numParts := parts size.
-	self assert: [numParts < 256].	"common control limitation"
-	numParts < 1
-		ifTrue: 
-			["Control can't actually contain no parts, so we put a dummy one in."
-			^SDWORDArray with: -1].
-	numResizable := 0.
-	fixedWidth := 0.
-	widths := parts collect: 
-					[:each |
-					| width |
-					width := each width.
-					width = -1 ifTrue: [numResizable := numResizable + 1] ifFalse: [fixedWidth := fixedWidth + width].
-					width].
-	borders := self sbGetBorders.
-	right := borders at: 2.
-	share := numResizable = 0
-				ifFalse: [(anInteger - right - fixedWidth - self scrollbarWidth) // numResizable].
-	rectBorder := borders at: 3.
-	edges := SDWORDArray new: numParts.
-	widths keysAndValuesDo: 
-			[:i :cx |
-			| width |
-			width := cx = -1 ifTrue: [share] ifFalse: [cx].
-			right := right + width + rectBorder.
-			edges at: i put: right].
-	"Special case last resizable edge"
-	widths last = -1 ifTrue: [edges at: numParts put: -1].
-	^edges!
 
 contents
 	"Answer a copy of all the accessible parts of the receiver."
@@ -168,8 +136,8 @@ itemFromId: dwItemSpec
 
 	^parts lookup: dwItemSpec + 1!
 
-itemRect: anInteger 
-	"Answer the bounding <Rectangle> for the button at the specified 1-based <Integer> index."
+itemRect: anInteger
+	"Answer the bounding <Rectangle> for the item at the specified 1-based <Integer> index."
 
 	| rect |
 	rect := (self sbGetRect: anInteger - 1) asRectangle.
@@ -183,12 +151,13 @@ items
 
 	^parts asOrderedCollection!
 
-items: tools 
+items: aCollection
 	"Private - Sets the receiver's collection of <StatusItem>s to those in 
 	the <collection>, tools.
 	Implementation Note: The items are stored as an <Array> to save space."
 
-	parts := tools asArray.
+	aCollection size > 256 ifTrue: [self error: 'Too many items'].
+	parts := aCollection asArray.
 	self recreate!
 
 layout: aLayoutContext 
@@ -226,14 +195,14 @@ onViewCreated
 	self setControlBackcolor.
 	self setRightEdges.
 	parts do: 
-			[:part | 
+			[:part |
 			part parentView: self.
-			self setText: part]!
+			self setItemText: part]!
 
 rectangleOfItem: aStatusBarItem 
 	^self itemRect: (self indexOfItem: aStatusBarItem)!
 
-removeItem: aStatusBarItem 
+removeItem: aStatusBarItem
 	"Remove aStatusOwnerDraw from the receivers contents of visible parts.
 	Answer aStatusOwnerDraw.
 
@@ -246,18 +215,54 @@ removeItem: aStatusBarItem
 	parts remove: aStatusBarItem.
 	aStatusBarItem parentView: nil.
 	self setRightEdges.
-	parts 
+	parts
 		from: partIndex
 		to: parts size
-		do: [:part | self setText: part].
+		do: [:part | self setItemText: part].
 	^aStatusBarItem!
+
+rightEdgesForWidth: anInteger
+	| edges right fixedWidth numResizable widths numParts borders horizontalGap share |
+	numParts := parts size.
+	numParts < 1
+		ifTrue: 
+			["Control can't actually contain no parts, so we put a dummy one in."
+			^SDWORDArray with: -1].
+	numResizable := 0.
+	fixedWidth := 0.
+	borders := self sbGetBorders.
+	horizontalGap := borders at: 3.
+	widths := Array new: numParts.
+	1 to: numParts
+		do: 
+			[:i |
+			| width |
+			width := (parts at: i) width.
+			width = -1 ifTrue: [numResizable := numResizable + 1] ifFalse: [fixedWidth := fixedWidth + width].
+			widths at: i put: width].
+	right := borders at: 1.
+	"Note `share` can be a Fraction. This is slow, but there are typically only a few parts (max 256), and avoids accumulating rounding error."
+	share := numResizable == 0
+				ifFalse: 
+					[(anInteger - right - fixedWidth - self sizeGripWidth - ((numParts - 1) * horizontalGap))
+						/ numResizable].
+	edges := SDWORDArray new: numParts.
+	1 to: numParts
+		do: 
+			[:i |
+			| width |
+			width := widths at: i.
+			right := right + (width == -1 ifTrue: [share] ifFalse: [width]).
+			edges at: i put: right truncated.
+			right := right + horizontalGap].
+	^edges!
 
 sbGetBorders
 	"Private - Answer a <sequencedReadableCollection> containing:
 
-	 1	width of the horizontal border
-	 2	width of the vertical border
-	 3	width of the border between rectangles"
+	 1	width of the horizontal border (width inset for the bar)
+	 2	width of the vertical border (height inset for the bar)
+	 3	gap between parts (i.e. width of gap between item rectangles)"
 
 	| answer |
 	answer := SDWORDArray new: 3.
@@ -279,18 +284,14 @@ sbGetRect: anInteger
 			].
 	^rect!
 
-sbSetTipText: iPart text: lpszToolTip 
-	"Private - Send an SB_SETTIPTEXT message to the control to set the tool-tip text
-	for the item of the receiver with zero-based <integer> index, iPart, to the <readableString>,
-	aString."
-
-	self 
-		sendMessage: SB_SETTIPTEXT
-		wParam: iPart
-		lpParam: lpszToolTip!
-
-scrollbarWidth
-	^SystemMetrics current scrollThumbExtent x!
+sbGetTipText: anInteger
+	| buf |
+	buf := Utf16String new: INFOTIPSIZE.
+	self
+		sendMessage: SB_GETTIPTEXT
+		wParam: (anInteger bitOr: ##(INFOTIPSIZE << 16))
+		lpParam: buf.
+	^buf trimNulls!
 
 setControlBackcolor: aColor 
 	self 
@@ -298,36 +299,47 @@ setControlBackcolor: aColor
 		wParam: 0
 		lParam: aColor asCOLORREF!
 
-setItem: aStatusBarItem tipText: aString 
-	"Private - Set the tool-tip text of the item, aStatusOwnerDraw, to the <readableString, aString."
+setItem: aStatusBarItem tipText: aString
+	"Private - Set the tool-tip text of the specified <StatusBarItem> of the receiver, to the <readableString, aString."
 
-	self sbSetTipText: (self indexOfItem: aStatusBarItem) - 1 text: aString!
+	"Note that tooltips are inoperative for owner-drawn items."
+
+	self
+		sendMessage: SB_SETTIPTEXT
+		wParam: (self indexOfItem: aStatusBarItem) - 1
+		lpParam: aString asUtf16String!
+
+setItemText: aStatusBarItem
+	"Private - Set the SB_SETTEXT of the receivers common control for	specified one of the receiver's <StatusBarItem>s."
+
+	"In the case of owner-drawn items, this amounts to an instruction to the control to request re-draw of the item."
+
+	| index style lParam |
+	(index := self indexOfItem: aStatusBarItem) == 0 ifTrue: [^self].
+	style := aStatusBarItem style.
+	lParam := (style allMask: SBT_OWNERDRAW)
+				ifTrue: 
+					["If owner drawn, we don't need to pass the text"
+					0]
+				ifFalse: [aStatusBarItem getText asUtf16String].
+	(self
+		sendMessage: SB_SETTEXT
+		wParam: (style bitOr: index - 1)
+		lpParam: lParam) == 0
+		ifTrue: [^self errorInCommonControlCall]!
 
 setRightEdges
 	"Private - Inform the common control of the right edge for each of the receiver's parts."
 
 	^self setRightEdges: self clientWidth!
 
-setRightEdges: anInteger 
+setRightEdges: anInteger
 	| edges |
-	edges := self calculateEdgesForWidth: anInteger.
-	(self 
+	edges := self rightEdgesForWidth: anInteger.
+	(self
 		sendMessage: SB_SETPARTS
 		wParam: edges size
-		lpParam: edges) == 0 
-		ifTrue: [^self errorInCommonControlCall]!
-
-setText: aStatusBarItem 
-	"Private - Set the SB_SETTEXT of the receivers common control for
-	aStatusOwnerDraw."
-
-	| index text |
-	(index := self indexOfItem: aStatusBarItem) == 0 ifTrue: [^self].
-	text := aStatusBarItem getText.
-	(self 
-		sendMessage: SB_SETTEXT
-		wParam: (aStatusBarItem style bitOr: index - 1)
-		lParam: text yourAddress) == 0 
+		lpParam: edges) == 0
 		ifTrue: [^self errorInCommonControlCall]!
 
 setWindowText: aString 
@@ -342,15 +354,17 @@ size
 
 	^self contents size!
 
-updateItem: aStatusBarItem 
+sizeGripWidth
+	^self hasSizeGrip ifTrue: [SystemMetrics current scrollThumbExtent x] ifFalse: [0]!
+
+updateItem: aStatusBarItem
 	"Private - Update the controls knowledge of this part."
 
 	self setRightEdges.
-	self setText: aStatusBarItem.
+	self setItemText: aStatusBarItem.
 	self invalidateRect: (self rectangleOfItem: aStatusBarItem)! !
 !UI.StatusBar categoriesFor: #addItem:!adding!items!public! !
 !UI.StatusBar categoriesFor: #addItem:name:!adding!items!public! !
-!UI.StatusBar categoriesFor: #calculateEdgesForWidth:!geometry!private! !
 !UI.StatusBar categoriesFor: #contents!accessing!public! !
 !UI.StatusBar categoriesFor: #defaultExtent!constants!private! !
 !UI.StatusBar categoriesFor: #defaultWindowStyle!constants!private! !
@@ -375,17 +389,18 @@ updateItem: aStatusBarItem
 !UI.StatusBar categoriesFor: #onViewCreated!event handling!public! !
 !UI.StatusBar categoriesFor: #rectangleOfItem:!accessing!private! !
 !UI.StatusBar categoriesFor: #removeItem:!items!public!removing! !
+!UI.StatusBar categoriesFor: #rightEdgesForWidth:!geometry!private! !
 !UI.StatusBar categoriesFor: #sbGetBorders!accessing!private! !
 !UI.StatusBar categoriesFor: #sbGetRect:!accessing!private! !
-!UI.StatusBar categoriesFor: #sbSetTipText:text:!operations!private! !
-!UI.StatusBar categoriesFor: #scrollbarWidth!constants!private! !
+!UI.StatusBar categoriesFor: #sbGetTipText:!accessing!private! !
 !UI.StatusBar categoriesFor: #setControlBackcolor:!helpers!private! !
 !UI.StatusBar categoriesFor: #setItem:tipText:!operations!private! !
+!UI.StatusBar categoriesFor: #setItemText:!accessing!private! !
 !UI.StatusBar categoriesFor: #setRightEdges!helpers!private! !
 !UI.StatusBar categoriesFor: #setRightEdges:!helpers!private! !
-!UI.StatusBar categoriesFor: #setText:!accessing!private! !
 !UI.StatusBar categoriesFor: #setWindowText:!accessing!private!win32 bug fix! !
 !UI.StatusBar categoriesFor: #size!accessing!public! !
+!UI.StatusBar categoriesFor: #sizeGripWidth!constants!private! !
 !UI.StatusBar categoriesFor: #updateItem:!private!updating! !
 
 !UI.StatusBar class methodsFor!

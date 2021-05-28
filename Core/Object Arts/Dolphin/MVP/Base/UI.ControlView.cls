@@ -82,13 +82,7 @@ commonNotificationMap
 	"Tooltip support - because these are discontinuous, we can't use an array for the lookup table here"
 	nmMap at: TTN_GETDISPINFOW put: #ttnGetDispInfoW:.
 	nmMap shrink.
-	nmMap)
-
-	"IE3 Notifications - Common controls version 4.70"
-
-	"IE4 Notifications - Common controls version 4.71"
-
-	"Tooltip support - because these are discontinuous, we can't use an array for the lookup table here"!
+	nmMap)!
 
 defaultWindowProcessing: message wParam: wParam lParam: lParam
 	"Private - Pass a message to the 'default' window procedure of the receiver."

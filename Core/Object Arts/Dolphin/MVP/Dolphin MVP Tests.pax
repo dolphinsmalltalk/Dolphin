@@ -75,6 +75,7 @@ package setClassNames: #(
 	#{UI.Tests.SliderTest}
 	#{UI.Tests.StaticPathTest}
 	#{UI.Tests.StaticTextTest}
+	#{UI.Tests.StatusBarTest}
 	#{UI.Tests.StyledContainerTest}
 	#{UI.Tests.TabViewTest}
 	#{UI.Tests.TabViewXPTest}
@@ -104,6 +105,7 @@ package setPrerequisites: #(
 	'Presenters\Color\Dolphin Color Presenter'
 	'Views\Common Controls\Dolphin Common Controls'
 	'Dialogs\Common\Dolphin Common Dialogs'
+	'Views\Control Bars\Dolphin Control Bars'
 	'Presenters\Date Time\Dolphin Date Time Presenters'
 	'Presenters\Difference\Dolphin Differences Presenter'
 	'Models\Tree\Dolphin Folder Tree Model'
@@ -474,6 +476,12 @@ UI.Tests.PresenterTest subclass: #'UI.Tests.StaticPathTest'
 	classInstanceVariableNames: ''
 	classConstants: {}!
 UI.Tests.PresenterTest subclass: #'UI.Tests.StaticTextTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+UI.Tests.PresenterTest subclass: #'UI.Tests.StatusBarTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

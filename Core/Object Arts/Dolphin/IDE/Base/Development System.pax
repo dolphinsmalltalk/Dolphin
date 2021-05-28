@@ -7112,6 +7112,7 @@ publishedAspectsOfInstances
 	^super publishedAspectsOfInstances
 		add: (Aspect block: #getImageBlock);
 		add: (Aspect block: #getTextBlock);
+		add: (Aspect block: #getTipTextBlock);
 		yourself! !
 !UI.StatusBarItem class categoriesFor: #publishedAspectsOfInstances!constants!public! !
 
@@ -7124,6 +7125,7 @@ publishedAspectsOfInstances
 		add: (Aspect choice: #borderStyle from: BorderStyles keys asSortedCollection);
 		add: (Aspect integer: #width);
 		add: (Aspect string: #name);
+		add: (Aspect boolean: #isAutoResize);
 		yourself! !
 !UI.StatusBarItemAbstract class categoriesFor: #publishedAspectsOfInstances!constants!public! !
 
