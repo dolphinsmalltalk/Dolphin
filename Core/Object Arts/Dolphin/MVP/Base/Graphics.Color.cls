@@ -220,6 +220,12 @@ isSelfEvaluating
 
 	^true!
 
+isSymbolic
+	"Answer whether the receiver is the symbolic <Color> that does not correspond to a fixed RGB(A) value.
+	A symbolic Color may be equal to a non-symbolic Color at a point in time because it resolves to the same RGB(A), but it should not be assumed this will always be true."
+
+	^false!
+
 isTransparent
 	"Answer whether this <Color> is completely transparent."
 
@@ -401,6 +407,7 @@ stbSaveOn: anSTBOutFiler
 !Graphics.Color categoriesFor: #isGrayscale!public!testing! !
 !Graphics.Color categoriesFor: #isNone!public!testing! !
 !Graphics.Color categoriesFor: #isSelfEvaluating!public!testing! !
+!Graphics.Color categoriesFor: #isSymbolic!public!testing! !
 !Graphics.Color categoriesFor: #isTransparent!public!testing! !
 !Graphics.Color categoriesFor: #lighter!public! !
 !Graphics.Color categoriesFor: #lightness!public! !

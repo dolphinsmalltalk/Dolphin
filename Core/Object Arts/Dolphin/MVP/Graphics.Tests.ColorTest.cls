@@ -373,6 +373,13 @@ testIsNone
 	self deny: (Color named: #smalltalkSystem) isNone.
 	self deny: Color default isNone!
 
+testIsSymbolic
+	self assert: Color window isSymbolic.
+	self assert: (Color named: #smalltalkWorkspace) isSymbolic.
+	self assert: (PluggableColor with: [Color black]) isSymbolic.
+	self deny: Color black isSymbolic.
+	self deny: (Color purple alpha: 63) isSymbolic!
+
 testIsTransparent
 	{Color red. IndexedColor yellow. Color named: #smalltalkWorkspace. Color chocolate alpha: 128}
 		do: [:each | self deny: each isTransparent].
@@ -589,6 +596,7 @@ testStlRoundTrip
 !Graphics.Tests.ColorTest categoriesFor: #testIsDefault!public!unit tests! !
 !Graphics.Tests.ColorTest categoriesFor: #testIsGrayscale!public!unit tests! !
 !Graphics.Tests.ColorTest categoriesFor: #testIsNone!public!unit tests! !
+!Graphics.Tests.ColorTest categoriesFor: #testIsSymbolic!public! !
 !Graphics.Tests.ColorTest categoriesFor: #testIsTransparent!public!unit tests! !
 !Graphics.Tests.ColorTest categoriesFor: #testNormalizedAlpha!public!unit tests! !
 !Graphics.Tests.ColorTest categoriesFor: #testNormalizedBlue!public!unit tests! !

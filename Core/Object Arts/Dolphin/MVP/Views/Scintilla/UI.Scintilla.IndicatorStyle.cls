@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
 UI.Scintilla.QueryableAttribute subclass: #'UI.Scintilla.IndicatorStyle'
-	instanceVariableNames: 'forecolor style under name alpha hoverStyle hoverForecolor flags foreAlpha strokeWidth'
+	instanceVariableNames: 'forecolor style layer name alpha hoverStyle hoverForecolor flags foreAlpha strokeWidth'
 	classVariableNames: 'HoverForecolor HoverStyle'
 	imports: #()
 	classInstanceVariableNames: ''
@@ -118,12 +118,6 @@ basicHoverStyle: anInteger
 basicId
 	^id ifNil: [name isInteger ifTrue: [id := name]]!
 
-basicIsUnderText
-	^under!
-
-basicIsUnderText: anIntegerOrNil
-	under := anIntegerOrNil!
-
 basicStrokeWidth: anInteger
 	strokeWidth := anInteger!
 
@@ -183,12 +177,29 @@ hoverStyle: aSymbol
 	self basicHoverStyle: (self styleFromName: aSymbol).
 	self updateViewProperty: #hoverStyle!
 
+initialize
+	"Private - Initialize the receiver's instance variables."
+
+	"Draw indicators under the text by default - the control has the opposite default for historical reasons, but under is better."
+
+	layer := 1!
+
 isUnderText
-	^(self basicIsUnderText ?? 0) asBoolean!
+	"Answer true if indicators of this style are drawn under text, or false if over."
+
+	"For historical reasons, the Scintilla draws indicators over the text by default, overwriting any descenders. Better results are achieved by drawing the indicators under (i.e. before) the text, so we make this the default if the setting is currently unspecified. Note that under-drawing is not supported in the deprecated single-phase drawing mode."
+
+	^self layer asBoolean!
 
 isUnderText: aBooleanOrNil
-	self basicIsUnderText: (aBooleanOrNil ?? false ifTrue: [1]).
+	self layer: (aBooleanOrNil ?? true) asParameter.
 	self updateViewProperty: #isUnderText!
+
+layer
+	^layer!
+
+layer: anInteger
+	layer := anInteger!
 
 name
 	^name ifNil: ['indicator' , self id displayString]!
@@ -235,8 +246,6 @@ validateAlpha: anInteger
 !UI.Scintilla.IndicatorStyle categoriesFor: #basicHoverStyle!accessing!private! !
 !UI.Scintilla.IndicatorStyle categoriesFor: #basicHoverStyle:!accessing!private! !
 !UI.Scintilla.IndicatorStyle categoriesFor: #basicId!accessing!private! !
-!UI.Scintilla.IndicatorStyle categoriesFor: #basicIsUnderText!private!testing! !
-!UI.Scintilla.IndicatorStyle categoriesFor: #basicIsUnderText:!accessing!private! !
 !UI.Scintilla.IndicatorStyle categoriesFor: #basicStrokeWidth:!accessing!private! !
 !UI.Scintilla.IndicatorStyle categoriesFor: #basicStyle!accessing!private! !
 !UI.Scintilla.IndicatorStyle categoriesFor: #basicStyle:!accessing!private! !
@@ -250,8 +259,11 @@ validateAlpha: anInteger
 !UI.Scintilla.IndicatorStyle categoriesFor: #hoverForecolor:!accessing!colors!public! !
 !UI.Scintilla.IndicatorStyle categoriesFor: #hoverStyle!accessing!public! !
 !UI.Scintilla.IndicatorStyle categoriesFor: #hoverStyle:!accessing!public! !
+!UI.Scintilla.IndicatorStyle categoriesFor: #initialize!initializing!private! !
 !UI.Scintilla.IndicatorStyle categoriesFor: #isUnderText!public!testing! !
 !UI.Scintilla.IndicatorStyle categoriesFor: #isUnderText:!accessing!public! !
+!UI.Scintilla.IndicatorStyle categoriesFor: #layer!private!testing! !
+!UI.Scintilla.IndicatorStyle categoriesFor: #layer:!accessing!private! !
 !UI.Scintilla.IndicatorStyle categoriesFor: #name!accessing!public! !
 !UI.Scintilla.IndicatorStyle categoriesFor: #name:!accessing!public! !
 !UI.Scintilla.IndicatorStyle categoriesFor: #strokeWidth!accessing!public! !
@@ -287,19 +299,21 @@ buildPropertyMap
 					setSelector: #basicForecolor:
 					getMessage: SCI_INDICGETFORE);
 		at: #style
-			put: (PropertyDescriptor
+			put: ((PropertyDescriptor
 					getSelector: #basicStyle
 					defaultValue: nil
 					setMessage: SCI_INDICSETSTYLE
 					setSelector: #basicStyle:
-					getMessage: SCI_INDICGETSTYLE);
+					getMessage: SCI_INDICGETSTYLE)
+					printSelector: #style;
+					yourself);
 		at: #hoverStyle put: HoverStyle;
 		at: #isUnderText
 			put: (PropertyDescriptor
-					getSelector: #basicIsUnderText
+					getSelector: #layer
 					defaultValue: 0
 					setMessage: SCI_INDICSETUNDER
-					setSelector: #basicIsUnderText:
+					setSelector: #layer:
 					getMessage: SCI_INDICGETUNDER);
 		at: #alpha
 			put: (PropertyDescriptor
@@ -350,17 +364,21 @@ new
 stbConvertFrom: anSTBClassFormat
 	^
 	[:vars |
-	| instance |
+	| instance under |
 	instance := self new.
 	vars keysAndValuesDo: [:eachKey :eachValue | instance instVarAt: eachKey put: eachValue].
-	instance forecolor
-		ifNotNil: [:int | instance basicForecolor: (int isZero ifFalse: [Color fromCOLORREF: int])].
-	instance hoverForecolor
-		ifNotNil: [:int | instance basicHoverForecolor: (int isZero ifFalse: [Color fromCOLORREF: int])].
+	anSTBClassFormat version < 3
+		ifTrue: 
+			[instance forecolor
+				ifNotNil: [:int | instance basicForecolor: (int isZero ifFalse: [Color fromCOLORREF: int])].
+			instance hoverForecolor
+				ifNotNil: [:int | instance basicHoverForecolor: (int isZero ifFalse: [Color fromCOLORREF: int])]].
+	under := instance layer.
+	instance layer: (under ifNil: [1] ifNotNil: [under asParameter]).
 	instance]!
 
 stbVersion
-	^3! !
+	^4! !
 !UI.Scintilla.IndicatorStyle class categoriesFor: #buildPropertyMap!constants!must not strip!private! !
 !UI.Scintilla.IndicatorStyle class categoriesFor: #initialize!development!initializing!public! !
 !UI.Scintilla.IndicatorStyle class categoriesFor: #new!public! !

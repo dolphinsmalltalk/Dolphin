@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
 UI.MultilineTextEdit subclass: #'UI.Scintilla.ScintillaView'
-	instanceVariableNames: 'this currentTextStyles styleIdMap styler markerDefinitions markers wordChars registeredImages modificationEventMask autoCStops autoCFillups whitespaceBackcolor whitespaceForecolor selectionBackcolor selectionForecolor indicators callTipTabWidth punctuation callTipHighlightColor braceChars whitespaces scFlags allTextStyles foldMarginColor foldMarginHiColor foldMarkerStyle foldFlags stringClass keyBindings indicatorStyles secondarySelectionForecolor secondarySelectionBackcolor annotationStyles caretForecolor secondaryCaretForecolor edgeColor currentLineBackcolor activeHotspotForecolor activeHotspotBackcolor _unused56 _unused57 _unused58 _unused59 _unused60 _unused61 _unused62 _unused63 _unused64 _unused65'
+	instanceVariableNames: 'this currentTextStyles styleIdMap styler markerDefinitions markers wordChars registeredImages modificationEventMask autoCStops autoCFillups elementColors caretBlinkTime _unused30 _unused31 indicators callTipTabWidth punctuation callTipHighlightColor braceChars whitespaces scFlags allTextStyles foldMarginColor foldMarginHiColor foldMarkerStyle foldFlags stringClass keyBindings indicatorStyles _unused47 _unused48 annotationStyles _unused50 _unused51 edgeColor'
 	classVariableNames: 'CodePages DefaultKeyBindings DefaultTextStyles LexerKeywords Library'
 	imports: #()
 	classInstanceVariableNames: ''
@@ -64,39 +64,45 @@ Features of Scintilla that are not currently exposed at any level higher than th
 N.B. Scintilla is an excellent editor control, but does not do much parameter validation. Thus if using the low-level API be careful not to pass in invalid parameters as these may cause unexpected behaviour. For example if length passed to `SCI_SETSTYLING` is -1, then the control goes into a loop (at the time of writing).
 
 ## Instance Variables:
-  `this`				`ExternalHandle`. C++ ''this'' pointer for direct function invocation.
-  `currentTextStyles`		`IdentityDictionary` mapping `Symbol` to `ScintillaTextStyle` for the current lexer.
-  `styleIdMap`			`Array` 
-  `styler`				`ScintillaStyler`. Responsible for dynamically ''colouring'' text in the view.
-  `markerDefinitions`	`IdentityDictionary` mapping `Symbol` to `ScintillaMarkerDefinition`.
-  `markers`			`IdentitySet` of `ScintillaMarker`s. All markers currently set in the view.
-  `wordChars`			`String` of characters considered to be word delimiters.
-  `registeredImages`	`LookupTable`
-  `modificationEventMask` `<integer>` bit mask controlling `SCN_MODIFIED` notifications (see Scintilla docs).
-  `autoCStops`			`String` or `nil`. The characters which cancel an auto-completion list when typed..
-  `autoCFillups`		`String` or `nil`. The characters which accept the selection in an auto-completion list when typed.
-  `whitespaceBackcolor`	`Color` or `nil.` The colour of the background drawn behind whitespace.
-  `whitespaceForecolor`	`Color` or `nil.` The colour of the glyphs used to display visible whitespace.
-  `selectionBackcolor` 	`Color`. The background colour used to highlight the selection (default is grey).
-  `selectionForecolor`	`Color` or `nil`. The foreground colour used to highlight the selection.
-  `indicators`			`Array` of `ScintillaIndicator`s
-  `callTipTabWidth`		`integer` width of tabs in call tips
-  `punctuation`			`String` or nil.
-  `callTipHighlightColor`	`Color` or `nil`. The hilight colour for calltips.
-  `braceChars`			`String` of characters considered to be brace characters, e.g. ''(){}\[\]''.
-  `whitespaces`			`String` of characters considered to be whitespace.
-  `scFlags`				`<integer>`. Various flags.
-  `allTextStyles`			`IdentityDictionary` mapping `Symbol`ic lexer name to dictionary of text styles for that lexer.
-  `foldMarginColor` 	`Color` or `nil`. The fold margin background colour (if visible)
-  `foldMarginHiColor`	`Color` or `nil`. The fold margin hilight colour (if visible).
-  `foldMarkerStyle`		`Symbol`. Name of the fold (outlining) marker style employed in the fold margin.
-  `foldFlags`			`<integer>`. Lexer fold flags.
-  `codePage`			`<integer>` code page identifier - only CP_ACP or CP_UTF8 are supported
-  `keyBindings`			`IdentityDictionary` mapping Dolphin accelerator key codes to Scintilla messages. `nil` by default (default bindings are used).
-  `indicatorStyles`		`IdentityDictionary` mapping `Symbol` or `<integer>` indicator style names to `ScintillaIndicatorStyle`s.
-  `secondarySelectionForecolor`
-  `secondarySelectionBackcolor`
-  `annotationStyles`		`IdentityDictionary`
+  `this`						`ExternalHandle`. C++ ''this'' pointer for direct function invocation.
+  `currentTextStyles`				`IdentityDictionary` mapping `Symbol` to `ScintillaTextStyle` for the current lexer.
+  `styleIdMap`					`Array` 
+  `styler`						`ScintillaStyler`. Responsible for dynamically ''colouring'' text in the view.
+  `markerDefinitions`			`IdentityDictionary` mapping `Symbol` to `ScintillaMarkerDefinition`.
+  `markers`					`IdentitySet` of `ScintillaMarker`s. All markers currently set in the view.
+  `wordChars`					`String` of characters considered to be word delimiters.
+  `registeredImages`			`LookupTable`
+  `modificationEventMask`		 `<integer>` bit mask controlling `SCN_MODIFIED` notifications (see Scintilla docs).
+  `autoCStops`					`String` or `nil`. The characters which cancel an auto-completion list when typed..
+  `autoCFillups`				`String` or `nil`. The characters which accept the selection in an auto-completion list when typed.
+  `whitespaceBackcolor`			`Color` or `nil.` The colour of the background drawn behind whitespace.
+  `whitespaceForecolor`			`Color` or `nil.` The colour of the glyphs used to display visible whitespace.
+  `selectionBackcolor` 			`Color`. The background colour used to highlight the selection (default is silver).
+  `selectionForecolor`			`Color` or `nil`. The foreground colour used to highlight the selection (default is window text colour)
+  `indicators`					`Array` of `ScintillaIndicator`s
+  `callTipTabWidth`				`integer` width of tabs in call tips
+  `punctuation`					`String` or nil. Used to identify word boundaries.
+  `callTipHighlightColor`			`Color` or `nil`. The hilight colour for calltips.
+  `braceChars`					`String` of characters considered to be brace characters, e.g. ''(){}\[\]''.
+  `whitespaces`					`String` of characters considered to be whitespace.
+  `scFlags`						`<integer>`. Various flags.
+  `allTextStyles`					`IdentityDictionary` mapping `Symbol`ic lexer name to dictionary of text styles for that lexer.
+  `foldMarginColor` 			`Color` or `nil`. The fold margin background colour (if visible)
+  `foldMarginHiColor`			`Color` or `nil`. The fold margin hilight colour (if visible).
+  `foldMarkerStyle`				`Symbol`. Name of the fold (outlining) marker style employed in the fold margin.
+  `foldFlags`					`<integer>`. Lexer fold flags.
+  `codePage`					`<integer>` code page identifier - only CP_ACP or CP_UTF8 are supported
+  `keyBindings`					`IdentityDictionary` mapping Dolphin accelerator key codes to Scintilla messages. `nil` by default (default bindings are used).
+  `indicatorStyles`				`IdentityDictionary` mapping `Symbol` or `<integer>` indicator style names to `ScintillaIndicatorStyle`s.
+  `secondarySelectionForecolor`	`Color` or `nil.` 
+  `secondarySelectionBackcolor`	`Color` or `nil.` 
+  `annotationStyles`				`IdentityDictionary`
+  `caretForecolor`				`Color` or `nil.` Colour of the caret (default is window text colour)
+  `secondaryCaretForecolor`		`Color` or `nil.`  Colour of secondary carets (default is mid-grey)
+  `edgeColor`					`Color` or `nil.` 
+  `currentLineBackcolor`			`Color` or `nil.` 
+  `activeHotspotForecolor`		`Color` or `nil.` 
+  `activeHotspotBackcolor`		`Color` or `nil.` 
 
 ## Class Variables:
   `AnnotationStylesOffset`	`<integer>`
@@ -126,24 +132,22 @@ acceptAutoCompletion
 activeHotspotBackcolor
 	"Get the back colour for active hotspots."
 
-	^activeHotspotBackcolor!
+	^self getElementColor: SC_ELEMENT_HOT_SPOT_ACTIVE_BACK!
 
-activeHotspotBackcolor: aColorOrNil
+activeHotspotBackcolor: aColor
 	"Set the back colour for active hotspots. If the argument is nil, then the setting is removed."
 
-	activeHotspotBackcolor := aColorOrNil.
-	self setActiveHotspotBackcolor!
+	self setOrResetElement: SC_ELEMENT_HOT_SPOT_ACTIVE_BACK color: aColor!
 
 activeHotspotForecolor
 	"Get the fore colour for active hotspots."
 
-	^activeHotspotBackcolor!
+	^self getElementColor: SC_ELEMENT_HOT_SPOT_ACTIVE!
 
-activeHotspotForecolor: aColorOrNil
+activeHotspotForecolor: aColor
 	"Set the foreground colour for active hotspots. If the argument is nil, then the setting is removed."
 
-	activeHotspotForecolor := aColorOrNil.
-	self setActiveHotspotForecolor!
+	self setOrResetElement: SC_ELEMENT_HOT_SPOT_ACTIVE color: aColor!
 
 addAnnotation: aScintillaAnnotation
 	"Append the specified <ScintillaAnnotation> to the current annotations (if any) for the line
@@ -1076,39 +1080,32 @@ canVScroll
 				wParam: 0
 				lParam: 0) asBoolean]!
 
+caretBlinkTime
+	"Get the <Duration> of the caret blink. If nil then the default period is used (that Scintilla initializes from the result of the Win32 GetCaretBlinkTime function)"
+
+	^caretBlinkTime ifNil: [self sciGetCaretPeriod milliseconds]!
+
+caretBlinkTime: aDuration
+	"Set the <Duration> that the caret is on and off. If 0 ms, then the caret does not blink. If nil, then the default system blink time is used."
+
+	caretBlinkTime := (aDuration isNil
+				or: [aDuration asMilliseconds = UserLibrary default getCaretBlinkTime]) ifFalse: [aDuration].
+	self setCaretBlinkTime!
+
 caretForecolor
 	"Get the foreground colour of the caret."
 
-	^caretForecolor ifNil: [Color windowText]!
+	^self getElementColor: SC_ELEMENT_CARET!
 
-caretForecolor: aColorOrNil
-	"Set the foreground colour of the caret."
+caretForecolor: aColor
+	"Set the foreground colour of the caret. Note that we default to Color windowText in order to reflect the Windows theme rather than using the Scintilla default.
+	At present Scintilla does not track the system window text colour for SC_ELEMENT_CARET (in fact it only tracks the system colours for the list elements)."
 
-	caretForecolor := aColorOrNil == Color windowText ifFalse: [aColorOrNil].
-	self setCaretForecolor!
+	self setOrResetElement: SC_ELEMENT_CARET color: (aColor ifNil: [Color windowText])!
 
-caretPeriod
-	"Get the time in milliseconds that the caret is on and off."
-
-	^this
-		ifNil: [0]
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_GETCARETPERIOD
-				wParam: 0
-				lParam: 0]!
-
-caretPeriod: periodMillisecondsInteger
-	"Get the time in milliseconds that the caret is on and off. 0 = steady on."
-
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_SETCARETPERIOD
-				wParam: periodMillisecondsInteger
-				lParam: 0]!
+caretPeriod: anInteger
+	#deprecated.	"Use caretBlinkTime:. Retained for loading legacy view state."
+	self sciSetCaretPeriod: anInteger!
 
 caretPosition
 	"Returns the position of the caret."
@@ -1390,40 +1387,28 @@ currentIndicatorValue: valueInteger
 				wParam: valueInteger
 				lParam: 0]!
 
-currentLineAlpha
-	"Get the background alpha of the caret line."
-
-	^this
-		ifNil: [0]
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_GETCARETLINEBACKALPHA
-				wParam: 0
-				lParam: 0]!
-
-currentLineAlpha: alphaInteger
-	"Set background alpha of the caret line."
-
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_SETCARETLINEBACKALPHA
-				wParam: alphaInteger
-				lParam: 0]!
-
 currentLineBackcolor
-	"Get the colour of the background of the line containing the caret."
+	"Get the colour of the background of the line containing the caret. Answer nil if there is no background colour hilight for the current line."
 
-	^currentLineBackcolor ifNil: [self defaultCurrentLineBackcolor]!
+	^self getElementColor: SC_ELEMENT_CARET_LINE_BACK!
 
 currentLineBackcolor: aColorOrNil
-	"Set the colour of the background of the line containing the caret. 
-	Note that this will have no effect unless #isCurrentLineHighlighted is set to true. You will also want to set #currentLineAlpha to some reasonable transparency value (100 or less), or the background will obliterate the text."
+	"Set the colour of the background of the line containing the caret. If the argument is nil, then there is no background colour.
 
-	currentLineBackcolor := aColorOrNil = self defaultCurrentLineBackcolor ifFalse: [aColorOrNil].
-	self setCurrentLineBackcolor!
+	The effect of any alpha in the colour will depend on the #currentLineBackgroundLayer setting as follows:
+		#base		- the colour is drawn opaquely over the ambient background colour of the view. Any alpha is ignored.
+		#underText	- the colour is drawn with translucency under the text. If the colour has no alpha, this will look the same as #base.
+		#overText		- the colour is drawn with translucency over the text. If the colour has no alpha, the text will be obliterated (probably not useful)."
+
+	self setOrResetElement: SC_ELEMENT_CARET_LINE_BACK color: aColorOrNil!
+
+currentLineBackcolorLayer
+	^self class layerNames at: self sciGetCaretLineLayer + 1!
+
+currentLineBackcolorLayer: aSymbol
+	"See #currentLineBackcolor:"
+
+	self sciSetCaretLineLayer: (self class layerNames indexOf: aSymbol ifAbsent: [1]) - 1!
 
 currentLineFrameWidth
 	"Retrieve the caret line frame width. Width = 0 means this option is disabled."
@@ -1534,6 +1519,8 @@ defaultBraceChars
 		yourself)!
 
 defaultCurrentLineBackcolor
+	"Private - `self sciGetElementBaseColour: SC_ELEMENT_CARET_LINE_BACK` returns transparent black, which is not what was used when making the caret line visible before 5.0.3, so retain the original colour for backwards compatibility."
+
 	^Color yellow!
 
 defaultEdgeColor
@@ -1591,9 +1578,6 @@ defaultModEventMask
 
 	"Enable only the set that we actually respond to"
 	^##(SC_MOD_INSERTTEXT|SC_MOD_DELETETEXT|SC_MOD_CHANGESTYLE | SC_MOD_CHANGEFOLD | SC_MOD_CHANGEANNOTATION | SC_MOD_CHANGEMARGIN)!
-
-defaultSecondardCaretForecolor
-	^##(Color fromRgbCode: 16r7F7F7F)!
 
 defaultTextLimit
 	^SmallInteger maximum!
@@ -1746,7 +1730,7 @@ documentLineFromLine: displayLineInteger
 				lParam: 0) + 1]!
 
 drawingPhases
-	"Answer the <Character> used as the separator between entries in an auto-completion list <String>."
+	"Answer the number of drawing phases used by the receiver; one of `#one` (deprecated), `#two` (default), or `#multiple`. See [SCI_GETPHASESDRAW](https://www.scintilla.org/ScintillaDoc.html#SCI_GETPHASESDRAW) in the Scintilla documentation for further details."
 
 	^self class drawingPhases at: self sciGetPhasesDraw + 1 ifAbsent: [#two]!
 
@@ -1761,11 +1745,15 @@ drawingTechnology
 	^self class drawingTechnologies at: self sciGetTechnology + 1 ifAbsent: [#default]!
 
 drawingTechnology: aSymbol
+	"Set the technology to be used for drawing to that named. See the class #drawingTechnologies method for choices, and [SCI_GETTECHNOLOGY](https://www.scintilla.org/ScintillaDoc.html#SCI_GETTECHNOLOGY) for a description of each. Use of one of the DirectWrite modes provides better font rendering and supports full-colour characters."
+
 	| tech |
 	tech := aSymbol
 				ifNil: [SC_TECHNOLOGY_DEFAULT]
 				ifNotNil: [(self class drawingTechnologies keyAtValue: aSymbol) - 1].
-	self sciSetTechnology: tech!
+	self sciSetTechnology: tech.
+	"When not using direct-write, we need to turn on double buffering or the view may flash a lot"
+	self sciSetBufferedDraw: tech == SC_TECHNOLOGY_DEFAULT!
 
 duplicateLine
 	"Duplicate the current line."
@@ -1798,7 +1786,7 @@ edgeColor: aColorOrNil
 	"Set the edge colour used to highlight long lines (those longer than the #edgeColumn setting)."
 
 	edgeColor := aColorOrNil = self defaultEdgeColor ifFalse: [aColorOrNil].
-	self setEdgeColor!
+	self sciSetEdgeColour: self edgeColor!
 
 edgeColumn
 	"Retrieve the column number which text should be kept within."
@@ -1844,6 +1832,9 @@ editStyles
 	(TextStylesDialog createOn: (self aspectValue: #textStyles))
 		defaultStyle: self buildViewStyle;
 		showModal!
+
+elementColors
+	^elementColors!
 
 emptyUndoBuffer
 	"Delete the undo history."
@@ -2520,12 +2511,6 @@ findStyleStart: aSymbol before: anInteger
 	[start > 0 and: [(self styleIdAt: start) == id]] whileTrue: [start := start - 1].
 	^start + 1!
 
-firstVisibleLine: anInteger
-	"Scroll so that a display line is at the top of the display."
-
-	Notification deprecated.
-	self lineScroll: anInteger!
-
 foldAll
 	"Collapse the document at the fold points identified by the language lexer."
 
@@ -2560,12 +2545,13 @@ foldFlags
 foldFlags: anInteger 
 	"Set the fold flags used to configure the visual appearance of folding (document outlining) in Scintilla:
 	The <integer> argument should be some combination of the following values:
+		SC_FOLDFLAG_NONE -> 0
 		SC_FOLDFLAG_LINEBEFORE_EXPANDED -> 2 
 		SC_FOLDFLAG_LINEBEFORE_CONTRACTED -> 4 
 		SC_FOLDFLAG_LINEAFTER_EXPANDED -> 8 
 		SC_FOLDFLAG_LINEAFTER_CONTRACTED -> 16 
 		SC_FOLDFLAG_LEVELNUMBERS -> 64 
-	"
+	As with most settings, this can be nil'd, in which case the default flags are used (SC_FOLDFLAG_NONE)."
 
 	foldFlags := anInteger.
 	self setFoldFlags!
@@ -2750,6 +2736,10 @@ formFeed
 
 getDirectPointer
 	^this := super sendMessage: SCI_GETDIRECTPOINTER!
+
+getElementColor: anInteger
+	^(elementColors lookup: anInteger) ifNil: [
+		self sciGetElementBaseColour: anInteger]!
 
 getEolAnnotations
 	| annotations |
@@ -3076,29 +3066,6 @@ highlightMismatchedBrace: posInteger
 				wParam: posInteger - 1
 				lParam: 0]!
 
-hoverTime
-	"Retrieve the time the mouse must sit still to generate a mouse dwell event."
-
-	^this
-		ifNil: [0]
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_GETMOUSEDWELLTIME
-				wParam: 0
-				lParam: 0]!
-
-hoverTime: periodMillisecondsInteger
-	"Sets the time the mouse must sit still to generate a mouse dwell event."
-
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_SETMOUSEDWELLTIME
-				wParam: periodMillisecondsInteger
-				lParam: 0]!
-
 identifyTextMatchingSelectionWithStyleName: aSymbol
 	| index newIndicators selection selectionStart oldIndicators |
 	"get a list of indicators that aren't related to secondary selection"
@@ -3159,6 +3126,28 @@ imeMode: aSymbol
 	self sciSetIMEInteraction: (aSymbol
 				ifNil: [SC_IME_WINDOWED]
 				ifNotNil: [(self class imeInteractionModes keyAtValue: aSymbol) - 1])!
+
+inactiveSelectionBackcolor
+	"Answer the background <Color> of the selection when the view does not have focus. The colour can have translucency (alpha), but will be drawn opaquely if the #selectionLayer is not set to #underText or #overText, the default #selectionLayer being #base."
+
+	^self getElementColor: SC_ELEMENT_SELECTION_INACTIVE_BACK!
+
+inactiveSelectionBackcolor: aColor
+	"Set the background <Color> of the selection when the view does not have focus. If the argument is nil, the default inactive selection background colour is used.
+	If the argument has transparency (alpha), this is respected only if the selection layer setting is #underText or #overText. If the selection layer setting is #base, then the alpha is ignored.
+	To turn off selection background highlighting, set #selectionLayer to #underText, and use a completely translucent <Color> (i.e. zero alpha)."
+
+	self setOrResetElement: SC_ELEMENT_SELECTION_INACTIVE_BACK color: aColor!
+
+inactiveSelectionForecolor
+	"Answer the foreground <Color> (i.e. text colour) of the selection when the view does not have focus. The colour can have translucency (alpha), but will be drawn opaquely if the #selectionLayer is not set to #underText or #overText, the default #selectionLayer being #base."
+
+	^self getElementColor: SC_ELEMENT_SELECTION_INACTIVE_TEXT!
+
+inactiveSelectionForecolor: aColor
+	"Set the foreground <Color> of the selection when the view does not have focus. If the argument is nil, the default inactive selection text colour is used."
+
+	self setOrResetElement: SC_ELEMENT_SELECTION_INACTIVE_TEXT color: aColor!
 
 indent
 	"If selection is empty or all on one line replace the selection with a tab character. If
@@ -3296,14 +3285,19 @@ indicatorsUnder: aPoint
 	^self indicatorsAt: (self charCloseToPosition: aPoint)!
 
 initialize
-	| styles |
+	| styles windowText |
 	super initialize.
 	markerDefinitions := self defaultMarkerDefinitions.
 	markers := IdentitySet new.
 	allTextStyles := IdentityDictionary new.
 	styles := self class defaultTextStyles.
 	self setCurrentTextStyles: styles.
-	selectionBackcolor := Color silver.
+	elementColors := LookupTable new.
+	windowText := Color windowText.
+	elementColors
+		at: SC_ELEMENT_CARET put: windowText;
+		at: SC_ELEMENT_LIST put: windowText;
+		at: SC_ELEMENT_LIST_BACK put: Color window.
 	scFlags := 0.
 	stringClass := Utf8String.
 	self initializeRegisteredImages!
@@ -3314,16 +3308,11 @@ initializeControl
 
 	"Discard registered images rather than restoring - these can be re-registered dynamically as required"
 
-	"Note that if any primary selection foreground/background colors are set, then any second
-	selection colours will also be set"
-
 	| marginStylesOffset annotationStyleOffset |
 	self initializeRegisteredImages.
 	self sciSetModEventMask: self modificationEventMask.
-	"See Scintilla documentatio: https://www.scintilla.org/ScintillaDoc.html#SCI_GETBUFFEREDDRAW"
-	self isDrawingBuffered: false.
-	"Not necessary.
-		self sciUsePopup: false asParameter."
+	"See Scintilla documentatio: https://www.scintilla.org/ScintillaDoc.html#SCI_GETBUFFEREDDRAW, although it incorrectly states that this should almost always be turned off. My experience is that unless Direct Draw is being used, that there is a lot of flicker without double-buffering."
+	self sciSetBufferedDraw: self sciGetTechnology == SC_TECHNOLOGY_DEFAULT.
 	self setCallTipTabWidth.
 	"Allocate extended styles for margins and annotations: We use the same styles range for the 4.4.4 EOL annotations - 256 separate styles ought to be sufficient for annotations all up."
 	marginStylesOffset := self sciAllocateExtendedStyles: NumMarginStyles + NumAnnotationStyles.
@@ -3339,7 +3328,8 @@ initializeControl
 	autoCFillups ifNotNil: [self sciAutoCSetFillUps: autoCFillups].
 	autoCStops ifNotNil: [self sciAutoCStops: autoCStops].
 	foldFlags ifNotNil: [self setFoldFlags].
-	keyBindings ifNotNil: [self updateKeyBindings]!
+	keyBindings ifNotNil: [self updateKeyBindings].
+	caretBlinkTime ifNotNil: [self setCaretBlinkTime]!
 
 initializeMarkerDefinitions
 	markerDefinitions do: [:each | each applyToView: self initializing: true]!
@@ -3591,27 +3581,9 @@ isCaretSticky: aBoolean
 	self sciSetCaretSticky: (aBoolean ifTrue: [SC_CARETSTICKY_ON] ifFalse: [SC_CARETSTICKY_OFF])!
 
 isCurrentLineHighlighted
-	"Is the background of the line containing the caret in a different colour?"
+	"Is the background of the line containing the caret highlighted in a different colour?"
 
-	^this
-		ifNil: [false]
-		ifNotNil: 
-			[(Library
-				directFunction: this
-				msg: SCI_GETCARETLINEVISIBLE
-				wParam: 0
-				lParam: 0) asBoolean]!
-
-isCurrentLineHighlighted: showBoolean
-	"Display the background of the line containing the caret in a different colour."
-
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_SETCARETLINEVISIBLE
-				wParam: showBoolean asParameter
-				lParam: 0]!
+	^self sciGetElementIsSet: SC_ELEMENT_CARET_LINE_BACK!
 
 isCurrentLineHighlightedAlways
 	"Is the caret line always visible?"
@@ -3640,56 +3612,6 @@ isCurrentLineMarkedWith: aSymbol
 	"Answer whether the current line (i.e. the line with the caret) has the named marker."
 
 	^self isLine: self currentLine markedWith: aSymbol!
-
-isDrawingBuffered
-	"Is drawing done first into a buffer or direct to the screen?"
-
-	^this
-		ifNil: [false]
-		ifNotNil: 
-			[(Library
-				directFunction: this
-				msg: SCI_GETBUFFEREDDRAW
-				wParam: 0
-				lParam: 0) asBoolean]!
-
-isDrawingBuffered: bufferedBoolean
-	"If drawing is buffered then each line of text is drawn into a bitmap buffer before drawing
-	it to the screen to avoid flicker."
-
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_SETBUFFEREDDRAW
-				wParam: bufferedBoolean asParameter
-				lParam: 0]!
-
-isDrawingTwoPhase
-	"Is drawing done in two phases with backgrounds drawn before foregrounds?"
-
-	#deprecated.
-	^this
-		ifNil: [false]
-		ifNotNil: 
-			[(Library
-				directFunction: this
-				msg: SCI_GETTWOPHASEDRAW
-				wParam: 0
-				lParam: 0) asBoolean]!
-
-isDrawingTwoPhase: twoPhaseBoolean
-	"In twoPhaseDraw mode, drawing is performed in two phases, first the background and then the
-	foreground. This avoids chopping off characters that overlap the next run."
-
-	#deprecated.
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_SETTWOPHASEDRAW
-				wParam: twoPhaseBoolean asParameter
-				lParam: 0]!
 
 isFoldingEnabled
 	^scFlags allMask: FoldingMask!
@@ -4285,29 +4207,66 @@ linesOnScreen
 				wParam: 0
 				lParam: 0]!
 
-marginCount
-	"Answer the maximum number of margins that can be displayed. As of Scintilla 3.7.0
-	this is no longer fixed at three."
+listBackcolor
+	"Answer the background <Color> lists, e.g, autocompletion lists."
 
-	^self sciGetMargins!
+	^(elementColors lookup: SC_ELEMENT_LIST_BACK) ifNil: [Color window]!
 
-marginCount: anInteger
-	"Set the maximum number of margins that can be displayed. As of Scintilla 3.7.0
-	this is no longer fixed at three."
+listBackcolor: aColor
+	self
+		setOrResetElement: SC_ELEMENT_LIST_BACK
+		color: aColor
+		defaultSystem: Color window!
 
-	^self sciSetMargins: anInteger!
+listForecolor
+	"Answer the foreground <Color> (i.e. text colour) of list items in, e.g, autocompletion lists."
+
+	^(elementColors lookup: SC_ELEMENT_LIST) ifNil: [Color windowText]!
+
+listForecolor: aColor
+	self
+		setOrResetElement: SC_ELEMENT_LIST
+		color: aColor
+		defaultSystem: Color windowText!
+
+listSelectionBackcolor
+	"Answer the selection background hilight <Color> used in lists, e.g, autocompletion lists."
+
+	^(elementColors lookup: SC_ELEMENT_LIST_SELECTED_BACK) ifNil: [Color highlight]!
+
+listSelectionBackcolor: aColor
+	"Set the selection background hilight <Color> used in lists, e.g, autocompletion lists."
+
+	self
+		setOrResetElement: SC_ELEMENT_LIST_BACK
+		color: aColor
+		defaultSystem: Color highlight!
+
+listSelectionForecolor
+	"Answer the selection foreground hilight <Color> used in lists, e.g, autocompletion lists."
+
+	^(elementColors lookup: SC_ELEMENT_LIST_SELECTED) ifNil: [Color highlightText]!
+
+listSelectionForecolor: aColor
+	"Set the selection foreground hilight <Color> used in lists, e.g, autocompletion lists."
+
+	self
+		setOrResetElement: SC_ELEMENT_LIST
+		color: aColor
+		defaultSystem: Color highlightText!
 
 margins
 	"Answer a <sequencedReadableCollection> of <ScintillaMargin> containing all the receiver's
 	margins."
 
-	^(1 to: self marginCount) collect: [:index | Margin view: self index: index - 1]!
+	^(1 to: self sciGetMargins) collect: [:index | Margin view: self index: index - 1]!
 
 margins: aSequenceableCollection
-	"Set the receiver's collection of margins to the <sequencedReadableCollection> of <ScintillaMargin> 
-	argument."
+	"Set the receiver's collection of margins to the <sequencedReadableCollection> of `Scintilla.Margin` argument."
 
-	self marginCount: aSequenceableCollection size.
+	"The control limits the number of margins to <1000, although more than 10 or 20 would be absurd."
+
+	self sciSetMargins: aSequenceableCollection size.
 	aSequenceableCollection keysAndValuesDo: 
 			[:i :each |
 			each
@@ -4458,6 +4417,20 @@ modifyText: niladicBlock
 	readOnly := self isReadOnly.
 	self isReadOnly: false.
 	niladicBlock ensure: [self isReadOnly: readOnly]!
+
+mouseDwellTime
+	"Retrieve the <Duration> that the mouse must sit still to generate a mouse hovering event. Answer nil if this is effectively infinite to indicate that the dwell is not set and no hover events will be generated."
+
+	| dwell |
+	dwell := self sciGetMouseDwellTime.
+	^dwell = SC_TIME_FOREVER ifFalse: [dwell milliseconds]!
+
+mouseDwellTime: aDuration
+	"Set the <Duration> that the mouse must sit still to generate a mouse hovering event. If nil then disables hover events."
+
+	self sciSetMouseDwellTime: (aDuration
+				ifNil: [SC_TIME_FOREVER]
+				ifNotNil: [aDuration isInteger ifTrue: [aDuration] ifFalse: [aDuration asMilliseconds]])!
 
 moveCaretInsideView
 	"Move the caret inside current view if it's not there already."
@@ -4901,7 +4874,7 @@ onViewCreated
 	self getDirectPointer.
 	"Disable notifications via WM_COMMAND such as EN_CHANGE, EN_KILLFOCUS, etc. These are better handled through NM_NOTIFY."
 	self sendMessage: SCI_SETCOMMANDEVENTS wParam: 0.
-	"It would be nice to be able to used DirectWrite mode by default for for better quality text rendering, hardware acceleration, and support for fonts with colour (e.g. for emojis), but the interaction with auto-completion is just too clunky. There is a noticeable delay when the auto-completion list is shown and refreshed. This is may be because Scintilla is still using a (GDI) ListBox for the auto-completion. Interaction when drawing over other GDI windows is also rather flishy-flashy. In the single-line search presenter the Scintilla view frequently fails to paint text (when the text is slightly too large vertically), and the auto-completion list comes up at the wrong location (over the text)."
+	"It would be nice to be able to used DirectWrite mode by default for for better quality text rendering, hardware acceleration, and support for fonts with colour (e.g. for emojis), but there are some circumstances under which it does not work very well. Interaction when drawing over other GDI windows can be slow, flash a lot, may show rendering errors, and there can be problems with the GDI-based autocompletion list. An example view that works poorly in DirectWrite modes is the single-line search presenter the Scintilla view. If switched out of default mode, this frequently fails to paint text, and the auto-completion list comes up at the wrong location (over the text)."
 	(false and: [KernelLibrary default isWindowsVistaOrGreater])
 		ifTrue: 
 			[self
@@ -5338,6 +5311,10 @@ replaceTarget: aString
 
 requiredLineMarginWidth
 	^self widthOfText: '_' , (self lineCount max: 999) displayString inStyle: #lineNumber!
+
+resetElementColor: anInteger
+	elementColors removeKey: anInteger ifAbsent: [].
+	self sciResetElementColour: anInteger!
 
 resetKeyBindings
 	"Reset to the default Scintilla key bindings"
@@ -6448,6 +6425,42 @@ sciGetBidirectional
 				wParam: 0
 				lParam: 0]!
 
+sciGetBufferedDraw
+	"Private - Is drawing done first into a buffer or direct to the screen?"
+
+	^this
+		ifNil: [false]
+		ifNotNil: 
+			[(Library
+				directFunction: this
+				msg: SCI_GETBUFFEREDDRAW
+				wParam: 0
+				lParam: 0) asBoolean]!
+
+sciGetCaretLineLayer
+	"Private - Get the layer of the background of the line containing the caret."
+
+	^this
+		ifNil: [0]
+		ifNotNil: 
+			[Library
+				directFunction: this
+				msg: SCI_GETCARETLINELAYER
+				wParam: 0
+				lParam: 0]!
+
+sciGetCaretPeriod
+	"Private - Get the time in milliseconds that the caret is on and off."
+
+	^this
+		ifNil: [0]
+		ifNotNil: 
+			[Library
+				directFunction: this
+				msg: SCI_GETCARETPERIOD
+				wParam: 0
+				lParam: 0]!
+
 sciGetCaretSticky
 	"Private - Can the caret preferred x position only be changed by explicit movement
 	commands?"
@@ -6567,6 +6580,20 @@ sciGetElementAllowsTranslucent: elementInteger
 				msg: SCI_GETELEMENTALLOWSTRANSLUCENT
 				wParam: elementInteger
 				lParam: 0) asBoolean]!
+
+sciGetElementBaseColour: elementInteger
+	"Private - Get the colour of an element."
+
+	^this
+		ifNotNil: 
+			[| code |
+			code := Library
+						directFunction: this
+						msg: SCI_GETELEMENTBASECOLOUR
+						wParam: elementInteger
+						lParam: 0.
+			"Scintilla returns 0 if the colour is undefined"
+			code == 0 ifFalse: [Color fromRgbaCode: code]]!
 
 sciGetElementColour: elementInteger
 	"Private - Get the colour of an element."
@@ -6860,6 +6887,18 @@ sciGetMaxLineState
 				wParam: 0
 				lParam: 0]!
 
+sciGetMouseDwellTime
+	"Private - Retrieve the time the mouse must sit still to generate a mouse dwell event."
+
+	^this
+		ifNil: [0]
+		ifNotNil: 
+			[Library
+				directFunction: this
+				msg: SCI_GETMOUSEDWELLTIME
+				wParam: 0
+				lParam: 0]!
+
 sciGetMouseSelectionRectangularSwitch
 	"Private - Whether switching to rectangular mode while selecting with the mouse is allowed."
 
@@ -7080,7 +7119,7 @@ sciGetRectangularSelectionCaretVirtualSpace
 				lParam: 0]!
 
 sciGetRepresentation: encodedCharacterString
-	"Private - Set the way a character is drawn. Result is NUL-terminated."
+	"Private - Get the way a character is drawn. Result is NUL-terminated."
 
 	| len |
 	len := this
@@ -7112,6 +7151,18 @@ sciGetSearchFlags
 			[Library
 				directFunction: this
 				msg: SCI_GETSEARCHFLAGS
+				wParam: 0
+				lParam: 0]!
+
+sciGetSelectionLayer
+	"Private - Get the layer for drawing selections"
+
+	^this
+		ifNil: [0]
+		ifNotNil: 
+			[Library
+				directFunction: this
+				msg: SCI_GETSELECTIONLAYER
 				wParam: 0
 				lParam: 0]!
 
@@ -8274,41 +8325,6 @@ sciSetAccessibility: accessibilityInteger
 				wParam: accessibilityInteger
 				lParam: 0]!
 
-sciSetAdditionalCaretFore: foreColor
-	"Private - Set the foreground colour of additional carets."
-
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_SETADDITIONALCARETFORE
-				wParam: foreColor rgbCode
-				lParam: 0]!
-
-sciSetAdditionalSelBack: backColor
-	"Private - Set the background colour of additional selections. Must have previously called
-	SetSelBack with non-zero first argument for this to have an effect."
-
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_SETADDITIONALSELBACK
-				wParam: backColor rgbCode
-				lParam: 0]!
-
-sciSetAdditionalSelFore: foreColor
-	"Private - Set the foreground colour of additional selections. Must have previously called
-	SetSelFore with non-zero first argument for this to have an effect."
-
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_SETADDITIONALSELFORE
-				wParam: foreColor rgbCode
-				lParam: 0]!
-
 sciSetAutomaticFold: automaticFoldInteger
 	"Private - Set automatic folding behaviours."
 
@@ -8331,26 +8347,38 @@ sciSetBidirectional: bidirectionalInteger
 				wParam: bidirectionalInteger
 				lParam: 0]!
 
-sciSetCaretFore: foreColor
-	"Private - Set the foreground colour of the caret."
+sciSetBufferedDraw: bufferedBoolean
+	"Private - If drawing is buffered then each line of text is drawn into a bitmap buffer
+	before drawing it to the screen to avoid flicker."
 
 	this
 		ifNotNil: 
 			[Library
 				directFunction: this
-				msg: SCI_SETCARETFORE
-				wParam: foreColor rgbCode
+				msg: SCI_SETBUFFEREDDRAW
+				wParam: bufferedBoolean asParameter
 				lParam: 0]!
 
-sciSetCaretLineBack: backColor
-	"Private - Set the colour of the background of the line containing the caret."
+sciSetCaretLineLayer: layerInteger
+	"Private - Set the layer of the background of the line containing the caret."
 
 	this
 		ifNotNil: 
 			[Library
 				directFunction: this
-				msg: SCI_SETCARETLINEBACK
-				wParam: backColor rgbCode
+				msg: SCI_SETCARETLINELAYER
+				wParam: layerInteger
+				lParam: 0]!
+
+sciSetCaretPeriod: periodMillisecondsInteger
+	"Private - Get the time in milliseconds that the caret is on and off. 0 = steady on."
+
+	this
+		ifNotNil: 
+			[Library
+				directFunction: this
+				msg: SCI_SETCARETPERIOD
+				wParam: periodMillisecondsInteger
 				lParam: 0]!
 
 sciSetCaretSticky: useCaretStickyBehaviourInteger
@@ -8454,10 +8482,6 @@ sciSetEdgeColour: edgeColourColor
 				wParam: edgeColourColor rgbCode
 				lParam: 0]!
 
-sciSetEdgeColumn: columnInteger
-	#deprecated. "For reading old view resources"
-	self edgeColumn: columnInteger + 1!
-
 sciSetEdgeMode: edgeModeInteger
 	"Private - The edge may be displayed by a line (EDGE_LINE/EDGE_MULTILINE) or by highlighting
 	text that goes beyond it (EDGE_BACKGROUND) or not displayed at all (EDGE_NONE)."
@@ -8536,28 +8560,6 @@ sciSetFontQuality: fontQualityInteger
 				msg: SCI_SETFONTQUALITY
 				wParam: fontQualityInteger
 				lParam: 0]!
-
-sciSetHotspotActiveBack: useSettingBoolean back: backColor
-	"Private - Set a back colour for active hotspots."
-
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_SETHOTSPOTACTIVEBACK
-				wParam: useSettingBoolean asParameter
-				lParam: backColor rgbCode]!
-
-sciSetHotspotActiveFore: useSettingBoolean fore: foreColor
-	"Private - Set a fore colour for active hotspots."
-
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_SETHOTSPOTACTIVEFORE
-				wParam: useSettingBoolean asParameter
-				lParam: foreColor rgbCode]!
 
 sciSetHScrollBar: visibleBoolean
 	"Private - Show or hide the horizontal scroll bar."
@@ -8748,6 +8750,17 @@ sciSetModEventMask: eventMaskInteger
 				wParam: eventMaskInteger
 				lParam: 0]!
 
+sciSetMouseDwellTime: periodMillisecondsInteger
+	"Private - Sets the time the mouse must sit still to generate a mouse dwell event."
+
+	this
+		ifNotNil: 
+			[Library
+				directFunction: this
+				msg: SCI_SETMOUSEDWELLTIME
+				wParam: periodMillisecondsInteger
+				lParam: 0]!
+
 sciSetMouseSelectionRectangularSwitch: mouseSelectionRectangularSwitchBoolean
 	"Private - Set whether switching to rectangular mode while selecting with the mouse is
 	allowed."
@@ -8886,18 +8899,6 @@ sciSetSearchFlags: searchFlagsInteger
 				wParam: searchFlagsInteger
 				lParam: 0]!
 
-sciSetSelBack: useSettingBoolean back: backColor
-	"Private - Set the background colour of the main and additional selections and whether to
-	use this setting."
-
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_SETSELBACK
-				wParam: useSettingBoolean asParameter
-				lParam: backColor rgbCode]!
-
 sciSetSelection: caretInteger anchor: anchorInteger
 	"Private - Set a simple selection"
 
@@ -8908,6 +8909,18 @@ sciSetSelection: caretInteger anchor: anchorInteger
 				msg: SCI_SETSELECTION
 				wParam: caretInteger - 1
 				lParam: anchorInteger - 1]!
+
+sciSetSelectionLayer: layerInteger
+	"Private - Set the layer for drawing selections: either opaquely on base layer or
+	translucently over text"
+
+	this
+		ifNotNil: 
+			[Library
+				directFunction: this
+				msg: SCI_SETSELECTIONLAYER
+				wParam: layerInteger
+				lParam: 0]!
 
 sciSetSelectionMode: selectionModeInteger
 	"Private - Set the selection mode to stream (SC_SEL_STREAM) or rectangular
@@ -8986,18 +8999,6 @@ sciSetSelectionNStart: selectionInteger anchor: anchorInteger
 				msg: SCI_SETSELECTIONNSTART
 				wParam: selectionInteger
 				lParam: anchorInteger - 1]!
-
-sciSetSelFore: useSettingBoolean fore: foreColor
-	"Private - Set the foreground colour of the main and additional selections and whether to
-	use this setting."
-
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_SETSELFORE
-				wParam: useSettingBoolean asParameter
-				lParam: foreColor rgbCode]!
 
 sciSetStylingEx: lengthInteger styles: stylesString
 	"Private - Set the styles for a segment of the document."
@@ -9111,17 +9112,6 @@ sciSetVisiblePolicy: visiblePolicyInteger visibleSlop: visibleSlopInteger
 				wParam: visiblePolicyInteger
 				lParam: visibleSlopInteger]!
 
-sciSetWhitespaceBack: useSettingBoolean back: backColor
-	"Private - Set the background colour of all whitespace and whether to use this setting."
-
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_SETWHITESPACEBACK
-				wParam: useSettingBoolean asParameter
-				lParam: backColor rgbCode]!
-
 sciSetWhitespaceChars: charactersString
 	"Private - Set the set of characters making up whitespace for when moving or selecting by
 	word. Should be called after SetWordChars."
@@ -9133,17 +9123,6 @@ sciSetWhitespaceChars: charactersString
 				msg: SCI_SETWHITESPACECHARS
 				wParam: 0
 				lpParam: charactersString]!
-
-sciSetWhitespaceFore: useSettingBoolean fore: foreColor
-	"Private - Set the foreground colour of all whitespace and whether to use this setting."
-
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_SETWHITESPACEFORE
-				wParam: useSettingBoolean asParameter
-				lParam: foreColor rgbCode]!
 
 sciSetWordChars: charactersString
 	"Private - Set the set of characters making up words for when moving or selecting by word.
@@ -9833,56 +9812,35 @@ searchPrev: searchFlagsInteger text: textString
 secondaryCaretForecolor
 	"Get the foreground colour of the secondary caret."
 
-	^secondaryCaretForecolor ifNil: [self defaultSecondardCaretForecolor]!
+	^self getElementColor: SC_ELEMENT_CARET_ADDITIONAL!
 
 secondaryCaretForecolor: aColor
 	"Set the foreground colour of the secondary carets."
 
-	secondaryCaretForecolor := aColor = self defaultSecondardCaretForecolor ifFalse: [aColor].
-	self setSecondaryCaretForecolor!
-
-secondarySelectionAlpha
-	"Get the alpha of the selection."
-
-	^this
-		ifNil: [0]
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_GETADDITIONALSELALPHA
-				wParam: 0
-				lParam: 0]!
-
-secondarySelectionAlpha: alphaInteger
-	"Set the alpha of the selection."
-
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_SETADDITIONALSELALPHA
-				wParam: alphaInteger
-				lParam: 0]!
+	self setOrResetElement: SC_ELEMENT_CARET_ADDITIONAL color: aColor!
 
 secondarySelectionBackcolor
-	^secondarySelectionBackcolor!
+	"Answer the background <Color> of secondary selections, or nil if the default is in use."
 
-secondarySelectionBackcolor: aColorOrNil 
-	"Set the background colour of secondary selections. Note that this setting is ignored if a
-	primary selection background colour has not been set."
+	^self getElementColor: SC_ELEMENT_SELECTION_ADDITIONAL_BACK!
 
-	secondarySelectionBackcolor := aColorOrNil.
-	self setSecondarySelectionBackcolor!
+secondarySelectionBackcolor: aColor
+	"Set the background <Color> of secondary selections. Note that:
+		1. this setting is ignored if a primary selection background colour has not been set.
+		2. this corresponds with SC_ELEMENT_SELECTION_ADDITIONAL_BACK, not SC_ELEMENT_SELECTION_SECONDARY_BACK."
+
+	self setOrResetElement: SC_ELEMENT_SELECTION_ADDITIONAL_BACK color: aColor!
 
 secondarySelectionForecolor
-	^secondarySelectionForecolor!
+	"Answer the foreground <Color> of secondary selections, or nil if the default is in use."
 
-secondarySelectionForecolor: aColorOrNil 
-	"Set the foreground colour for secondary selections. Note that this is ignored unless a primary selection foreground colour has been set.
-	If the value is nil, then the secondary selection foreground colour is set to be the same as the primary selector foreground colour."
+	^self getElementColor: SC_ELEMENT_SELECTION_ADDITIONAL_TEXT!
 
-	secondarySelectionForecolor := aColorOrNil.
-	self setSecondarySelectionForecolor!
+secondarySelectionForecolor: aColor
+	"Set the foreground <Color> for secondary selections. If the value is nil, then the default Scintilla colour is used.
+	Note that this corresponds with SC_ELEMENT_SELECTION_ADDITIONAL_TEXT, not SC_ELEMENT_SELECTION_SECONDARY_TEXT."
+
+	self setOrResetElement: SC_ELEMENT_SELECTION_ADDITIONAL_TEXT color: aColor!
 
 selection
 	"Retrieve the selected text. Return the length of the text. Result is NUL-terminated."
@@ -9908,42 +9866,17 @@ selection
 				lpParam: result.
 			result]!
 
-selectionAlpha
-	"Get the alpha of the selection."
-
-	^this
-		ifNil: [0]
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_GETSELALPHA
-				wParam: 0
-				lParam: 0]!
-
-selectionAlpha: alphaInteger
-	"Set the alpha of the selection."
-
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_SETSELALPHA
-				wParam: alphaInteger
-				lParam: 0]!
-
 selectionBackcolor
-	"Answer the background colour of the selection, or nil if selection background colouring is
-	disabled."
+	"Answer the background <Color> of the selection. The colour can have translucency (alpha), but will be drawn opaquely if the #selectionLayer is not set to #underText or #overText, the default #selectionLayer being #base."
 
-	^selectionBackcolor!
+	^self getElementColor: SC_ELEMENT_SELECTION_BACK!
 
-selectionBackcolor: aColorOrNil 
-	"Set the background colour of the selection. The argument can be nil to turn off selection
-	highlighting by background colour. If this setting is nil, then the #selectionForecolor
-	should be set, as otherwise the selection will not be visible at all."
+selectionBackcolor: aColor
+	"Set the background <Color> of the selection. If the argument is nil, the default selection colour is used.
+	If the argument has transparency (alpha), this is respected only if the selection layer setting is #underText or #overText. If the selection layer setting is #base, then the alpha is ignored.
+	To turn off selection background highlighting, set #selectionLayer to #underText, and use a completely translucent <Color> (i.e. zero alpha)."
 
-	selectionBackcolor := aColorOrNil.
-	self setSelectionBackcolor!
+	self setOrResetElement: SC_ELEMENT_SELECTION_BACK color: aColor!
 
 selectionCount
 	"How many selections are there?"
@@ -9958,18 +9891,25 @@ selectionCount
 				lParam: 0]!
 
 selectionForecolor
-	"Answer the foreground colour of the selection, or nil if the selection foreground colouring
-	is disabled (the default)."
+	"Answer the foreground <Color> of the selection, or nil if the selection foreground colouring is disabled (the default)."
 
-	^selectionForecolor!
+	^self getElementColor: SC_ELEMENT_SELECTION_TEXT!
 
-selectionForecolor: aColorOrNil 
-	"Set the foreground colour of the selection. If the argument is nil, then selection
-	foreground colouring is enabled and the selected text retains its original foreground
-	colour."
+selectionForecolor: aColorOrNil
+	"Set the foreground <Color> of the selection. If the argument is nil, then selection foreground colouring is disabled and the selected text retains its original foreground colour."
 
-	selectionForecolor := aColorOrNil.
-	self setSelectionForecolor!
+	self setOrResetElement: SC_ELEMENT_SELECTION_TEXT color: aColorOrNil!
+
+selectionLayer
+	^self class layerNames at: self sciGetSelectionLayer + 1!
+
+selectionLayer: aSymbol
+	"Set the selection background drawing layer as follows:
+		#base		- the selection background colour is drawn opaquely over the ambient background colour of the view. Any alpha is ignored.
+		#underText	- the selection background colour is drawn with translucency under the text. If the colour has no alpha, this will look the same as #base.
+		#overText		- the selection background colour is drawn with translucency over the text. If the colour has no alpha, the text will be obliterated (probably not useful)."
+
+	self sciSetSelectionLayer: (self class layerNames indexOf: aSymbol ifAbsent: [1]) - 1!
 
 selectionMode
 	"Answer a <Symbol> naming the current selection mode."
@@ -10116,16 +10056,6 @@ sendMessage: anIntegerMessageID wParam: wParam lpParam: lpParam
 				wParam: wParam
 				lpParam: lpParam yourAddress]!
 
-setActiveHotspotBackcolor
-	activeHotspotBackcolor
-		ifNil: [self sciSetHotspotActiveBack: false back: 0]
-		ifNotNil: [self sciSetHotspotActiveBack: true back: activeHotspotBackcolor]!
-
-setActiveHotspotForecolor
-	activeHotspotForecolor
-		ifNil: [self sciSetHotspotActiveFore: false fore: 0]
-		ifNotNil: [self sciSetHotspotActiveFore: true fore: activeHotspotForecolor]!
-
 setCallTipHighlightColor
 	self sciCallTipSetForeHlt: (callTipHighlightColor
 				ifNil: 
@@ -10135,8 +10065,10 @@ setCallTipHighlightColor
 setCallTipTabWidth
 	self sciCallTipUseStyle: callTipTabWidth!
 
-setCaretForecolor
-	self sciSetCaretFore: self caretForecolor!
+setCaretBlinkTime
+	self sciSetCaretPeriod: (caretBlinkTime
+				ifNil: [UserLibrary default getCaretBlinkTime]
+				ifNotNil: [caretBlinkTime asMilliseconds])!
 
 setCharacterClasses
 	"Private - Configure the control with current character class settings. 
@@ -10147,9 +10079,6 @@ setCharacterClasses
 	"Whitepace and punctutation character classes will have been reset to defaults."
 	whitespaces ifNotNil: [self sciSetWhitespaceChars: whitespaces].
 	punctuation ifNotNil: [self sciSetPunctuationChars: punctuation]!
-
-setCurrentLineBackcolor
-	self sciSetCaretLineBack: self currentLineBackcolor!
 
 setCurrentTextStyles: aCollection 
 	| newStylesByName allocatedStyles newStylesById availableStyles count |
@@ -10184,8 +10113,9 @@ setDefaultTextStyle
 		applyToView: self initializing: true.
 	self sciStyleClearAll!
 
-setEdgeColor
-	self sciSetEdgeColour: self edgeColor!
+setElement: anInteger color: aColor
+	elementColors at: anInteger put: aColor.
+	self sciSetElementColour: anInteger colourElement: aColor!
 
 setEolAnnotations: aCollectionOfScintillaAnnotations
 	aCollectionOfScintillaAnnotations do: 
@@ -10202,12 +10132,12 @@ setFoldFlags
 
 setFoldMarginColor
 	foldMarginColor
-		ifNil: [self sciSetFoldMarginColour: false back: nil]
+		ifNil: [self sciSetFoldMarginColour: false back: Color face3d]
 		ifNotNil: [self sciSetFoldMarginColour: true back: foldMarginColor]!
 
 setFoldMarginHiColor
 	foldMarginHiColor
-		ifNil: [self sciSetFoldMarginHiColour: false fore: nil]
+		ifNil: [self sciSetFoldMarginHiColour: false fore: Color highlight3d]
 		ifNotNil: [self sciSetFoldMarginHiColour: true fore: foldMarginHiColor]!
 
 setFoldProperty: aBoolean
@@ -10302,6 +10232,18 @@ setMarginWidths: anArray
 		sciSetMarginLeft: anArray first;
 		sciSetMarginRight: anArray last!
 
+setOrResetElement: anInteger color: aColor
+	"Private - Set/reset the Scintilla element colour identified by the <integer> argument to the (potentially translucent) <Color> argument. If aColor is nil, the element colour is reset to the Scintilla default. If the colour is the same as the Scintilla default, and not a symbolic color that just happens to have the same value as the Scintilla default currently, then the element colour is also reset."
+
+	(aColor isNil or: [aColor isSymbolic not and: [aColor = (self sciGetElementBaseColour: anInteger)]])
+		ifTrue: [self resetElementColor: anInteger]
+		ifFalse: [self setElement: anInteger color: aColor]!
+
+setOrResetElement: anInteger color: aColor defaultSystem: defaultColor
+	(aColor isNil or: [aColor == defaultColor])
+		ifTrue: [self resetElementColor: anInteger]
+		ifFalse: [self setElement: anInteger color: aColor]!
+
 setRawAnnotations: aCollectionOfScintillaAnnotations 
 	"Private - Update the control with the specified collection of annotations in raw form (one
 	annotation object per line with linefeed separated annotation text lines, zero-based line
@@ -10327,41 +10269,6 @@ setReadOnly: readOnlyBoolean
 				msg: SCI_SETREADONLY
 				wParam: readOnlyBoolean asParameter
 				lParam: 0]!
-
-setSecondaryCaretForecolor
-	self sciSetAdditionalCaretFore: self secondaryCaretForecolor!
-
-setSecondarySelectionBackcolor
-	self sciSetAdditionalSelBack: (secondarySelectionBackcolor
-				ifNil: 
-					["Default to same as primary selection backcolor"
-					selectionBackcolor
-						ifNil: 
-							["And if even that is not specified, use the hardcoded default in Scintilla"
-							Color fromRgbCode: 16rD7D7D7]])!
-
-setSecondarySelectionForecolor
-	self sciSetAdditionalSelFore: (secondarySelectionForecolor
-				ifNil: 
-					["Default to primary selection forecolor"
-					selectionForecolor
-						ifNil: 
-							["And if even that is not specified use the hardcoded default in the control"
-							Color red]])!
-
-setSelectionBackcolor
-	selectionBackcolor
-		ifNil: [self sciSetSelBack: false back: nil]
-		ifNotNil: 
-			[self sciSetSelBack: true back: selectionBackcolor.
-			self setSecondarySelectionBackcolor]!
-
-setSelectionForecolor
-	selectionForecolor 
-		ifNil: [self sciSetSelFore: false fore: nil]
-		ifNotNil: 
-			[self sciSetSelFore: true fore: selectionForecolor.
-			self setSecondarySelectionForecolor]!
 
 setTabStops: anInteger 
 	"Private - Set the width of the receiver's tab stops to anInteger."
@@ -10398,16 +10305,6 @@ setText: aString
 		emptyUndoBuffer.
 	"Setting the text also removes the indicators"
 	indicators := nil!
-
-setWhitespaceBackcolor
-	whitespaceBackcolor
-		ifNil: [self sciSetWhitespaceBack: false back: Color white]
-		ifNotNil: [self sciSetWhitespaceBack: true back: whitespaceBackcolor]!
-
-setWhitespaceForecolor
-	whitespaceForecolor
-		ifNil: [self sciSetWhitespaceFore: false fore: Color white]
-		ifNotNil: [self sciSetWhitespaceFore: true fore: whitespaceForecolor]!
 
 showAutoCompletionList: aCollection prefixLength: anInteger
 	"Display a auto-completion list built from the displayStrings of the elements of the
@@ -10520,9 +10417,9 @@ state
 
 	| answer |
 	answer := super state.
-	#(#(#isDrawingBuffered: #isDrawingBuffered false) #(#hoverTime: #hoverTime ##(SC_TIME_FOREVER)) #(#setIndicators: #indicators #()) #(#sciSetCaretStyle: #sciGetCaretStyle ##(CARETSTYLE_LINE)) #(#currentLineAlpha: #currentLineAlpha ##(SC_ALPHA_NOALPHA)) #(#caretPeriod: #caretPeriod 500) #(#caretWidth: #caretWidth 1) #(#sciSetCaretSticky: #sciGetCaretSticky ##(SC_CARETSTICKY_OFF)) #(#isCurrentLineHighlighted: #isCurrentLineHighlighted false) #(#isCurrentLineHighlightedAlways: #isCurrentLineHighlightedAlways false) #(#sciSetEOLMode: #sciGetEOLMode ##(SC_EOL_CRLF)) #(#hasVisibleLineEndings: #hasVisibleLineEndings false) #(#wordWrap: #wordWrap false) #(#sciSetLayoutCache: #sciGetLayoutCache ##(SC_CACHE_CARET)) #(#margins: #margins #()) #(#markers: #markers ##(IdentitySet
-		new)) #(#isOvertypeEnabled: #isOvertypeEnabled false) #(#printMagnification: #printMagnification 0) #(#printColourMode: #printColourMode ##(SC_PRINT_NORMAL)) #(#canHScroll: #canHScroll true) #(#canScrollPastEnd: #canScrollPastEnd true) #(#scrollWidth: #scrollWidth 2000) #(#xOffset: #xOffset 0) #(#sciSetSelectionMode: #sciGetSelectionMode ##(SC_SEL_STREAM)) #(#backspaceUnindents: #backspaceUnindents false) #(#sciSetIndentationGuides: #sciGetIndentationGuides ##(SC_IV_NONE)) #(#indentation: #indentation 0) #(#tabIndents: #tabIndents true) #(#tabWidth: #tabWidth 8) #(#isUsingTabs: #isUsingTabs true) #(#tabMinimumWidth: #tabMinimumWidth 2) #(#targetRange: #targetRange ##(1
-		to: 0)) #(#sciSetViewWS: #sciGetViewWS ##(SCWS_INVISIBLE)) #(#autoCompletionSeparator: #autoCompletionSeparator $\x20) #(#autoCompletionImageIdSeparator: #autoCompletionImageIdSeparator $?) #(#isAutoCompletionCancelledAtStart: #isAutoCompletionCancelledAtStart true) #(#isAutoCompletionCaseInsensitive: #isAutoCompletionCaseInsensitive false) #(#isAutoCompletionCancelledWhenNoMatch: #isAutoCompletionCancelledWhenNoMatch true) #(#isAutoCompletionTruncating: #isAutoCompletionTruncating false) #(#maxCompletionListHeight: #maxCompletionListHeight 5) #(#maxCompletionListWidth: #maxCompletionListWidth 0) #(#edgeColumn: #edgeColumn 0) #(#sciSetEdgeMode: #sciGetEdgeMode ##(EDGE_NONE)) #(#zoomLevel: #zoomLevel 0) #(#setLexerLanguage: #lexer #container) #(#controlCharacter: #controlCharacter nil) #(#selectionAlpha: #selectionAlpha ##(SC_ALPHA_NOALPHA)) #(#secondarySelectionAlpha: #secondarySelectionAlpha ##(SC_ALPHA_NOALPHA)) #(#positionCacheSize: #positionCacheSize 1024) #(#areHotspotsSingleLine: #areHotspotsSingleLine true) #(#sciAnnotationSetVisible: #sciAnnotationGetVisible ##(ANNOTATION_HIDDEN)) #(#setRawAnnotations: #getRawAnnotations #()) #(#sciEOLAnnotationSetVisible: #sciEOLAnnotationGetVisible ##(ANNOTATION_HIDDEN)) #(#setEolAnnotations: #getEolAnnotations #()) #(#extraAscent: #extraAscent 0) #(#extraDescent: #extraDescent 0) #(#areAdditionalCaretsVisible: #areAdditionalCaretsVisible true) #(#sciSetTechnology: #sciGetTechnology ##(SC_TECHNOLOGY_DEFAULT)) #(#sciSetFontQuality: #sciGetFontQuality ##(SC_EFF_QUALITY_DEFAULT)) #(#whitespaceMarkerSize: #whitespaceMarkerSize 1) #(#sciSetMultiPaste: #sciGetMultiPaste ##(SC_MULTIPASTE_ONCE)) #(#sciSetIMEInteraction: #sciGetIMEInteraction ##(SC_IME_WINDOWED)) #(#sciAutoCSetOrder: #sciAutoCGetOrder ##(SC_ORDER_PRESORTED)) #(#sciSetPhasesDraw: #sciGetPhasesDraw ##(SC_PHASES_TWO)) #(#sciSetIdleStyling: #sciGetIdleStyling ##(SC_IDLESTYLING_NONE)) #(#isMouseWheelCaptured: #isMouseWheelCaptured true) #(#sciSetTabDrawMode: #sciGetTabDrawMode 0) #(#sciSetAccessibility: #sciGetAccessibility 0) #(#currentLineFrameWidth: #currentLineFrameWidth 0) #(#isAccessibilityEnabled: #isAccessibilityEnabled false) #(#sciSetWrapIndentMode: #sciGetWrapIndentMode ##(SC_WRAPINDENT_FIXED)) #(#sciFoldDisplayTextSetStyle: #sciFoldDisplayTextGetStyle 0) #(#defaultFoldTextTag: #defaultFoldTextTag '') #(#hasAdditionalSelectionTyping: #hasAdditionalSelectionTyping false))
+	#(#(#sciSetMouseDwellTime: #sciGetMouseDwellTime ##(SC_TIME_FOREVER)) #(#setIndicators: #indicators #()) #(#sciSetCaretStyle: #sciGetCaretStyle ##(CARETSTYLE_LINE)) #(#caretWidth: #caretWidth 1) #(#sciSetCaretSticky: #sciGetCaretSticky ##(SC_CARETSTICKY_OFF)) #(#isCurrentLineHighlightedAlways: #isCurrentLineHighlightedAlways false) #(#sciSetEOLMode: #sciGetEOLMode ##(SC_EOL_CRLF)) #(#hasVisibleLineEndings: #hasVisibleLineEndings false) #(#wordWrap: #wordWrap false) #(#sciSetLayoutCache: #sciGetLayoutCache ##(SC_CACHE_CARET)) #(#margins: #margins nil) #(#markers: #markers ##(IdentitySet
+		new)) #(#isOvertypeEnabled: #isOvertypeEnabled false) #(#printMagnification: #printMagnification 0) #(#printColourMode: #printColourMode ##(SC_PRINT_NORMAL)) #(#canHScroll: #canHScroll true) #(#canScrollPastEnd: #canScrollPastEnd true) #(#scrollWidth: #scrollWidth 2000) #(#xOffset: #xOffset 0) #(#sciSetSelectionMode: #sciGetSelectionMode ##(SC_SEL_STREAM)) #(#backspaceUnindents: #backspaceUnindents false) #(#sciSetIndentationGuides: #sciGetIndentationGuides ##(SC_IV_NONE)) #(#indentation: #indentation 0) #(#tabIndents: #tabIndents true) #(#tabWidth: #tabWidth 8) #(#isUsingTabs: #isUsingTabs true) #(#tabMinimumWidth: #tabMinimumWidth 2) #(#targetRange: #targetRange ##(0
+		to: -1)) #(#sciSetViewWS: #sciGetViewWS ##(SCWS_INVISIBLE)) #(#autoCompletionSeparator: #autoCompletionSeparator $\x20) #(#autoCompletionImageIdSeparator: #autoCompletionImageIdSeparator $?) #(#isAutoCompletionCancelledAtStart: #isAutoCompletionCancelledAtStart true) #(#isAutoCompletionCaseInsensitive: #isAutoCompletionCaseInsensitive false) #(#isAutoCompletionCancelledWhenNoMatch: #isAutoCompletionCancelledWhenNoMatch true) #(#isAutoCompletionTruncating: #isAutoCompletionTruncating false) #(#maxCompletionListHeight: #maxCompletionListHeight 5) #(#maxCompletionListWidth: #maxCompletionListWidth 0) #(#edgeColumn: #edgeColumn 1) #(#sciSetEdgeMode: #sciGetEdgeMode ##(EDGE_NONE)) #(#zoomLevel: #zoomLevel 0) #(#setLexerLanguage: #lexer #container) #(#controlCharacter: #controlCharacter nil) #(#positionCacheSize: #positionCacheSize 1024) #(#areHotspotsSingleLine: #areHotspotsSingleLine true) #(#sciAnnotationSetVisible: #sciAnnotationGetVisible ##(ANNOTATION_HIDDEN)) #(#setRawAnnotations: #getRawAnnotations #()) #(#sciEOLAnnotationSetVisible: #sciEOLAnnotationGetVisible ##(ANNOTATION_HIDDEN)) #(#setEolAnnotations: #getEolAnnotations #()) #(#extraAscent: #extraAscent 0) #(#extraDescent: #extraDescent 0) #(#areAdditionalCaretsVisible: #areAdditionalCaretsVisible true) #(#sciSetTechnology: #sciGetTechnology ##(SC_TECHNOLOGY_DEFAULT)) #(#sciSetFontQuality: #sciGetFontQuality ##(SC_EFF_QUALITY_DEFAULT)) #(#whitespaceMarkerSize: #whitespaceMarkerSize 1) #(#sciSetMultiPaste: #sciGetMultiPaste ##(SC_MULTIPASTE_ONCE)) #(#sciSetIMEInteraction: #sciGetIMEInteraction ##(SC_IME_WINDOWED)) #(#sciAutoCSetOrder: #sciAutoCGetOrder ##(SC_ORDER_PRESORTED)) #(#sciSetPhasesDraw: #sciGetPhasesDraw ##(SC_PHASES_TWO)) #(#sciSetIdleStyling: #sciGetIdleStyling ##(SC_IDLESTYLING_NONE)) #(#isMouseWheelCaptured: #isMouseWheelCaptured true) #(#sciSetTabDrawMode: #sciGetTabDrawMode 0) #(#sciSetAccessibility: #sciGetAccessibility 0) #(#currentLineFrameWidth: #currentLineFrameWidth 0) #(#isAccessibilityEnabled: #isAccessibilityEnabled false) #(#sciSetWrapIndentMode: #sciGetWrapIndentMode ##(SC_WRAPINDENT_FIXED)) #(#sciFoldDisplayTextSetStyle: #sciFoldDisplayTextGetStyle 0) #(#defaultFoldTextTag: #defaultFoldTextTag '') #(#hasAdditionalSelectionTyping: #hasAdditionalSelectionTyping false) #(#sciSetSelectionLayer: #sciGetSelectionLayer ##(SC_LAYER_BASE)) #(#sciSetCaretLineLayer: #sciGetCaretLineLayer ##(SC_LAYER_BASE)))
 			do: 
 				[:each |
 				| attrib |
@@ -11017,21 +10914,12 @@ updateControlStyles
 		updateIndicatorStyles;
 		updateTextStyles;
 		initializeMarkerDefinitions.
-	whitespaceForecolor ifNotNil: [self setWhitespaceForecolor].
-	whitespaceBackcolor ifNotNil: [self setWhitespaceBackcolor].
-	"Note that if any primary selection foreground/background colors are set, then any second
-	selection colours will also be set"
-	selectionForecolor ifNotNil: [self setSelectionForecolor].
-	selectionBackcolor = Color silver ifFalse: [self setSelectionBackcolor].
+	elementColors
+		keysAndValuesDo: [:elementCode :color | self sciSetElementColour: elementCode colourElement: color].
 	callTipHighlightColor ifNotNil: [self setCallTipHighlightColor].
 	foldMarginColor ifNotNil: [self setFoldMarginColor].
 	foldMarginHiColor ifNotNil: [self setFoldMarginHiColor].
-	self setCaretForecolor.
-	secondaryCaretForecolor ifNotNil: [self setSecondaryCaretForecolor].
-	edgeColor ifNotNil: [self setEdgeColor].
-	currentLineBackcolor ifNotNil: [self setCurrentLineBackcolor].
-	activeHotspotForecolor ifNotNil: [self setActiveHotspotForecolor].
-	activeHotspotBackcolor ifNotNil: [self setActiveHotspotBackcolor]!
+	edgeColor ifNotNil: [self sciSetEdgeColour: self edgeColor]!
 
 updateIndicators
 	self basicClearContainerIndicators.
@@ -11090,34 +10978,25 @@ validateUserInterface
 	super validateUserInterface!
 
 whitespaceBackcolor
-	"Answer the background colour of all whitespace, or nil if none is specified. If no global
-	white space background colour, then the default colour is used. This will be that of
-	whatever style the styler is setting on blocks of whitespace, otherwise the default
-	background colour of the view."
+	"Answer the background colour of all whitespace, or nil if none is specified. If nil then the default whitepace background colour is used. This will be that of whatever style the styler is setting on blocks of whitespace, otherwise the default background colour of the view."
 
-	^whitespaceBackcolor!
+	^self getElementColor: SC_ELEMENT_WHITE_SPACE_BACK!
 
-whitespaceBackcolor: aColorOrNil 
-	"Set the background colour of all whitespace. The argument can be nil to adopt the default
-	background colour."
+whitespaceBackcolor: aColorOrNil
+	"Set the background colour of all whitespace. The argument can be nil to adopt the default whitespace background colour."
 
-	whitespaceBackcolor := aColorOrNil == Color default ifFalse: [aColorOrNil].
-	self setWhitespaceBackcolor!
+	self setOrResetElement: SC_ELEMENT_WHITE_SPACE_BACK
+		color: (aColorOrNil == Color default ifFalse: [aColorOrNil])!
 
 whitespaceForecolor
-	"Answer the foreground colour used to display whitespace markers (when visible). If nil then
-	the default whitespace colour is being used. This will be that of whatever style the styler
-	is setting on blocks of whitespace (which could be a specially allocated whitespace style,
-	or just the normal style), otherwise the default foreground colour of the view."
+	"Answer the foreground colour used to display whitespace markers (when visible). If nil then the default whitespace colour is being used. This will be that of whatever style the styler is setting on blocks of whitespace (which could be a specially allocated whitespace style, or just the normal style), otherwise the default foreground colour of the view."
 
-	^whitespaceForecolor!
+	^self getElementColor: SC_ELEMENT_WHITE_SPACE!
 
-whitespaceForecolor: aColorOrNil 
-	"Set the foreground colour to be used to display whitespace markers (when visible). If nil
-	then the default white space colour will be used."
+whitespaceForecolor: aColorOrNil
+	"Set the foreground colour to be used to display whitespace markers (when visible). If nil then the default white space colour will be used."
 
-	whitespaceForecolor := aColorOrNil == Color default ifFalse: [aColorOrNil].
-	self setWhitespaceForecolor!
+	self setOrResetElement: SC_ELEMENT_WHITE_SPACE color: (aColorOrNil == Color default ifFalse: [aColorOrNil])!
 
 whitespaceMarkerSize
 	"Get the size of the dots used to mark space characters."
@@ -11377,6 +11256,14 @@ xOffset: xOffsetInteger
 				wParam: xOffsetInteger
 				lParam: 0]!
 
+zoomFactor
+	"Scintilla zooms in and out by points, and is the the points delta that is reported by SCI_GETZOOM, which is not easy to understand from a user perspective. The actual the zoom factor is relative to the original font size. The factor can be multiplied by 100 to give a zoom percentage for presentation to the user."
+
+	| fontSize zoom |
+	fontSize := self actualFont pointSize.
+	zoom := self zoomLevel.
+	^(fontSize + zoom) / fontSize!
+
 zoomIn
 	"Magnify the displayed text by increasing the sizes by 1 point."
 
@@ -11423,10 +11310,10 @@ zoomOut
 				wParam: 0
 				lParam: 0]! !
 !UI.Scintilla.ScintillaView categoriesFor: #acceptAutoCompletion!**auto generated**!autocompletion!commands!public!scintilla interface! !
-!UI.Scintilla.ScintillaView categoriesFor: #activeHotspotBackcolor!caret, selection, and hotspot styles!public! !
-!UI.Scintilla.ScintillaView categoriesFor: #activeHotspotBackcolor:!caret, selection, and hotspot styles!public! !
-!UI.Scintilla.ScintillaView categoriesFor: #activeHotspotForecolor!caret, selection, and hotspot styles!public!scintilla interface! !
-!UI.Scintilla.ScintillaView categoriesFor: #activeHotspotForecolor:!caret, selection, and hotspot styles!public! !
+!UI.Scintilla.ScintillaView categoriesFor: #activeHotspotBackcolor!caret, selection, and hotspot styles!element colors!public! !
+!UI.Scintilla.ScintillaView categoriesFor: #activeHotspotBackcolor:!caret, selection, and hotspot styles!element colors!public! !
+!UI.Scintilla.ScintillaView categoriesFor: #activeHotspotForecolor!caret, selection, and hotspot styles!element colors!public! !
+!UI.Scintilla.ScintillaView categoriesFor: #activeHotspotForecolor:!caret, selection, and hotspot styles!element colors!public! !
 !UI.Scintilla.ScintillaView categoriesFor: #addAnnotation:!adding!annotations!public! !
 !UI.Scintilla.ScintillaView categoriesFor: #addKeyBinding:!key bindings!public! !
 !UI.Scintilla.ScintillaView categoriesFor: #addMarker:!markers!public! !
@@ -11515,10 +11402,11 @@ zoomOut
 !UI.Scintilla.ScintillaView categoriesFor: #canScrollPastEnd:!**auto generated**!public!scintilla interface!scrolling! !
 !UI.Scintilla.ScintillaView categoriesFor: #canUndo!**auto generated**!public!scintilla interface!testing!undo & redo! !
 !UI.Scintilla.ScintillaView categoriesFor: #canVScroll!**auto generated**!public!scintilla interface!scrolling!testing! !
-!UI.Scintilla.ScintillaView categoriesFor: #caretForecolor!caret, selection, and hotspot styles!public!scintilla interface! !
-!UI.Scintilla.ScintillaView categoriesFor: #caretForecolor:!caret, selection, and hotspot styles!public!scintilla interface! !
-!UI.Scintilla.ScintillaView categoriesFor: #caretPeriod!**auto generated**!caret, selection, and hotspot styles!public!scintilla interface! !
-!UI.Scintilla.ScintillaView categoriesFor: #caretPeriod:!**auto generated**!caret, selection, and hotspot styles!public!scintilla interface! !
+!UI.Scintilla.ScintillaView categoriesFor: #caretBlinkTime!caret, selection, and hotspot styles!public! !
+!UI.Scintilla.ScintillaView categoriesFor: #caretBlinkTime:!caret, selection, and hotspot styles!public! !
+!UI.Scintilla.ScintillaView categoriesFor: #caretForecolor!caret, selection, and hotspot styles!element colors!public!scintilla interface! !
+!UI.Scintilla.ScintillaView categoriesFor: #caretForecolor:!caret, selection, and hotspot styles!element colors!public! !
+!UI.Scintilla.ScintillaView categoriesFor: #caretPeriod:!caret, selection, and hotspot styles!private! !
 !UI.Scintilla.ScintillaView categoriesFor: #caretPosition!**auto generated**!caret!public!scintilla interface!selection! !
 !UI.Scintilla.ScintillaView categoriesFor: #caretPosition:!**auto generated**!caret!public!scintilla interface!selection! !
 !UI.Scintilla.ScintillaView categoriesFor: #caretScreenCoordinates!caret, selection, and hotspot styles!public!scintilla interface! !
@@ -11551,10 +11439,10 @@ zoomOut
 !UI.Scintilla.ScintillaView categoriesFor: #currentIndicatorId:!**auto generated**!indicators!public!scintilla interface! !
 !UI.Scintilla.ScintillaView categoriesFor: #currentIndicatorValue!**auto generated**!indicators!public!scintilla interface! !
 !UI.Scintilla.ScintillaView categoriesFor: #currentIndicatorValue:!**auto generated**!indicators!public!scintilla interface! !
-!UI.Scintilla.ScintillaView categoriesFor: #currentLineAlpha!**auto generated**!caret, selection, and hotspot styles!public!scintilla interface! !
-!UI.Scintilla.ScintillaView categoriesFor: #currentLineAlpha:!**auto generated**!caret, selection, and hotspot styles!public!scintilla interface! !
-!UI.Scintilla.ScintillaView categoriesFor: #currentLineBackcolor!caret, selection, and hotspot styles!public! !
-!UI.Scintilla.ScintillaView categoriesFor: #currentLineBackcolor:!caret, selection, and hotspot styles!public! !
+!UI.Scintilla.ScintillaView categoriesFor: #currentLineBackcolor!caret, selection, and hotspot styles!element colors!public! !
+!UI.Scintilla.ScintillaView categoriesFor: #currentLineBackcolor:!caret, selection, and hotspot styles!element colors!public! !
+!UI.Scintilla.ScintillaView categoriesFor: #currentLineBackcolorLayer!caret, selection, and hotspot styles!public! !
+!UI.Scintilla.ScintillaView categoriesFor: #currentLineBackcolorLayer:!caret, selection, and hotspot styles!public! !
 !UI.Scintilla.ScintillaView categoriesFor: #currentLineFrameWidth!**auto generated**!caret, selection, and hotspot styles!public!scintilla interface! !
 !UI.Scintilla.ScintillaView categoriesFor: #currentLineFrameWidth:!**auto generated**!caret, selection, and hotspot styles!public!scintilla interface! !
 !UI.Scintilla.ScintillaView categoriesFor: #currentLineText!**auto generated**!public!scintilla interface!selection! !
@@ -11562,13 +11450,12 @@ zoomOut
 !UI.Scintilla.ScintillaView categoriesFor: #cutSelection!**auto generated**!clipboard operations!commands!public!scintilla interface! !
 !UI.Scintilla.ScintillaView categoriesFor: #decodeStyledText:!private!text retrieval & modification! !
 !UI.Scintilla.ScintillaView categoriesFor: #defaultBraceChars!brace highlighting!constants!private! !
-!UI.Scintilla.ScintillaView categoriesFor: #defaultCurrentLineBackcolor!caret, selection, and hotspot styles!public!scintilla interface! !
-!UI.Scintilla.ScintillaView categoriesFor: #defaultEdgeColor!long lines!public!scintilla interface! !
+!UI.Scintilla.ScintillaView categoriesFor: #defaultCurrentLineBackcolor!caret, selection, and hotspot styles!constants!element colors!private! !
+!UI.Scintilla.ScintillaView categoriesFor: #defaultEdgeColor!long lines!private!scintilla interface! !
 !UI.Scintilla.ScintillaView categoriesFor: #defaultFoldTextTag!**auto generated**!public!scintilla interface! !
 !UI.Scintilla.ScintillaView categoriesFor: #defaultFoldTextTag:!**auto generated**!public!scintilla interface! !
 !UI.Scintilla.ScintillaView categoriesFor: #defaultMarkerDefinitions!constants!markers!private! !
 !UI.Scintilla.ScintillaView categoriesFor: #defaultModEventMask!constants!private! !
-!UI.Scintilla.ScintillaView categoriesFor: #defaultSecondardCaretForecolor!caret, selection, and hotspot styles!private!scintilla interface! !
 !UI.Scintilla.ScintillaView categoriesFor: #defaultTextLimit!constants!private! !
 !UI.Scintilla.ScintillaView categoriesFor: #defaultTextStylesFor:!constants!public!style definition! !
 !UI.Scintilla.ScintillaView categoriesFor: #defaultWhitespaceChars!constants!public! !
@@ -11596,6 +11483,7 @@ zoomOut
 !UI.Scintilla.ScintillaView categoriesFor: #edgeMode!long lines!public! !
 !UI.Scintilla.ScintillaView categoriesFor: #edgeMode:!long lines!public! !
 !UI.Scintilla.ScintillaView categoriesFor: #editStyles!commands!public! !
+!UI.Scintilla.ScintillaView categoriesFor: #elementColors!private! !
 !UI.Scintilla.ScintillaView categoriesFor: #emptyUndoBuffer!**auto generated**!public!scintilla interface!undo & redo! !
 !UI.Scintilla.ScintillaView categoriesFor: #endOfLineAnnotationMode!annotations!public! !
 !UI.Scintilla.ScintillaView categoriesFor: #endOfLineAnnotationMode:!annotations!public! !
@@ -11661,7 +11549,6 @@ zoomOut
 !UI.Scintilla.ScintillaView categoriesFor: #findMatchingBrace:!brace highlighting!public! !
 !UI.Scintilla.ScintillaView categoriesFor: #findString:startingAt:!public!searching & replacing! !
 !UI.Scintilla.ScintillaView categoriesFor: #findStyleStart:before:!brace highlighting!public! !
-!UI.Scintilla.ScintillaView categoriesFor: #firstVisibleLine:!public!scrolling! !
 !UI.Scintilla.ScintillaView categoriesFor: #foldAll!commands!folding!public! !
 !UI.Scintilla.ScintillaView categoriesFor: #foldChildren:action:!**auto generated**!folding!public!scintilla interface! !
 !UI.Scintilla.ScintillaView categoriesFor: #foldFlags!folding!public! !
@@ -11686,6 +11573,7 @@ zoomOut
 !UI.Scintilla.ScintillaView categoriesFor: #formatRectangle!accessing!public! !
 !UI.Scintilla.ScintillaView categoriesFor: #formFeed!**auto generated**!commands!public!scintilla interface! !
 !UI.Scintilla.ScintillaView categoriesFor: #getDirectPointer!helpers!private! !
+!UI.Scintilla.ScintillaView categoriesFor: #getElementColor:!element colors!private! !
 !UI.Scintilla.ScintillaView categoriesFor: #getEolAnnotations!annotations!private! !
 !UI.Scintilla.ScintillaView categoriesFor: #getLineState:!**auto generated**!lexer!public!scintilla interface!styling! !
 !UI.Scintilla.ScintillaView categoriesFor: #getRawAnnotation:!annotations!private! !
@@ -11718,8 +11606,6 @@ zoomOut
 !UI.Scintilla.ScintillaView categoriesFor: #highlightGuide!**auto generated**!public!scintilla interface!tabs & indentation guides! !
 !UI.Scintilla.ScintillaView categoriesFor: #highlightGuide:!**auto generated**!public!scintilla interface!tabs & indentation guides! !
 !UI.Scintilla.ScintillaView categoriesFor: #highlightMismatchedBrace:!**auto generated**!brace highlighting!public!scintilla interface! !
-!UI.Scintilla.ScintillaView categoriesFor: #hoverTime!**auto generated**!notifications!other settings!public!scintilla interface! !
-!UI.Scintilla.ScintillaView categoriesFor: #hoverTime:!**auto generated**!notifications!other settings!public!scintilla interface! !
 !UI.Scintilla.ScintillaView categoriesFor: #identifyTextMatchingSelectionWithStyleName:!public!searching & replacing! !
 !UI.Scintilla.ScintillaView categoriesFor: #idleStylingMode!public!styling! !
 !UI.Scintilla.ScintillaView categoriesFor: #idleStylingMode:!public!styling! !
@@ -11727,6 +11613,10 @@ zoomOut
 !UI.Scintilla.ScintillaView categoriesFor: #imageIndexForIcon:!autocompletion!helpers!private! !
 !UI.Scintilla.ScintillaView categoriesFor: #imeMode!ime!other settings!public! !
 !UI.Scintilla.ScintillaView categoriesFor: #imeMode:!other settings!public! !
+!UI.Scintilla.ScintillaView categoriesFor: #inactiveSelectionBackcolor!caret, selection, and hotspot styles!element colors!public! !
+!UI.Scintilla.ScintillaView categoriesFor: #inactiveSelectionBackcolor:!caret, selection, and hotspot styles!element colors!public! !
+!UI.Scintilla.ScintillaView categoriesFor: #inactiveSelectionForecolor!caret, selection, and hotspot styles!element colors!public! !
+!UI.Scintilla.ScintillaView categoriesFor: #inactiveSelectionForecolor:!caret, selection, and hotspot styles!element colors!public! !
 !UI.Scintilla.ScintillaView categoriesFor: #indent!**auto generated**!commands!public!scintilla interface! !
 !UI.Scintilla.ScintillaView categoriesFor: #indentation!**auto generated**!public!scintilla interface!tabs & indentation guides! !
 !UI.Scintilla.ScintillaView categoriesFor: #indentation:!**auto generated**!public!scintilla interface!tabs & indentation guides! !
@@ -11774,15 +11664,10 @@ zoomOut
 !UI.Scintilla.ScintillaView categoriesFor: #isCallTipActive!**auto generated**!call tips!public!scintilla interface!testing! !
 !UI.Scintilla.ScintillaView categoriesFor: #isCaretSticky!caret, selection, and hotspot styles!public!testing! !
 !UI.Scintilla.ScintillaView categoriesFor: #isCaretSticky:!caret, selection, and hotspot styles!public! !
-!UI.Scintilla.ScintillaView categoriesFor: #isCurrentLineHighlighted!**auto generated**!caret, selection, and hotspot styles!public!scintilla interface!testing! !
-!UI.Scintilla.ScintillaView categoriesFor: #isCurrentLineHighlighted:!**auto generated**!caret, selection, and hotspot styles!public!scintilla interface! !
+!UI.Scintilla.ScintillaView categoriesFor: #isCurrentLineHighlighted!caret, selection, and hotspot styles!public!testing! !
 !UI.Scintilla.ScintillaView categoriesFor: #isCurrentLineHighlightedAlways!**auto generated**!caret, selection, and hotspot styles!public!scintilla interface! !
 !UI.Scintilla.ScintillaView categoriesFor: #isCurrentLineHighlightedAlways:!**auto generated**!caret, selection, and hotspot styles!public!scintilla interface! !
 !UI.Scintilla.ScintillaView categoriesFor: #isCurrentLineMarkedWith:!markers!public!testing! !
-!UI.Scintilla.ScintillaView categoriesFor: #isDrawingBuffered!**auto generated**!other settings!public!scintilla interface!testing! !
-!UI.Scintilla.ScintillaView categoriesFor: #isDrawingBuffered:!**auto generated**!other settings!public!scintilla interface! !
-!UI.Scintilla.ScintillaView categoriesFor: #isDrawingTwoPhase!**auto generated**!public!scintilla interface! !
-!UI.Scintilla.ScintillaView categoriesFor: #isDrawingTwoPhase:!**auto generated**!public!scintilla interface! !
 !UI.Scintilla.ScintillaView categoriesFor: #isFoldingEnabled!folding!public!testing! !
 !UI.Scintilla.ScintillaView categoriesFor: #isFoldingEnabled:!folding!public! !
 !UI.Scintilla.ScintillaView categoriesFor: #isIndicator:setAt:!indicators!public! !
@@ -11838,8 +11723,14 @@ zoomOut
 !UI.Scintilla.ScintillaView categoriesFor: #lineScroll:!**auto generated**!public!scintilla interface! !
 !UI.Scintilla.ScintillaView categoriesFor: #lineScrollBy:!public!scrolling! !
 !UI.Scintilla.ScintillaView categoriesFor: #linesOnScreen!**auto generated**!enquiries!public!scintilla interface! !
-!UI.Scintilla.ScintillaView categoriesFor: #marginCount!constants!margins!public! !
-!UI.Scintilla.ScintillaView categoriesFor: #marginCount:!constants!margins!public! !
+!UI.Scintilla.ScintillaView categoriesFor: #listBackcolor!autocompletion!element colors!public! !
+!UI.Scintilla.ScintillaView categoriesFor: #listBackcolor:!autocompletion!element colors!public! !
+!UI.Scintilla.ScintillaView categoriesFor: #listForecolor!autocompletion!element colors!public! !
+!UI.Scintilla.ScintillaView categoriesFor: #listForecolor:!autocompletion!element colors!public! !
+!UI.Scintilla.ScintillaView categoriesFor: #listSelectionBackcolor!autocompletion!element colors!public! !
+!UI.Scintilla.ScintillaView categoriesFor: #listSelectionBackcolor:!autocompletion!element colors!public! !
+!UI.Scintilla.ScintillaView categoriesFor: #listSelectionForecolor!autocompletion!element colors!public! !
+!UI.Scintilla.ScintillaView categoriesFor: #listSelectionForecolor:!autocompletion!element colors!public! !
 !UI.Scintilla.ScintillaView categoriesFor: #margins!margins!public! !
 !UI.Scintilla.ScintillaView categoriesFor: #margins:!margins!public! !
 !UI.Scintilla.ScintillaView categoriesFor: #marginWidths!accessing!private! !
@@ -11855,6 +11746,8 @@ zoomOut
 !UI.Scintilla.ScintillaView categoriesFor: #modificationEventMask!notifications!public! !
 !UI.Scintilla.ScintillaView categoriesFor: #modificationEventMask:!notifications!public! !
 !UI.Scintilla.ScintillaView categoriesFor: #modifyText:!private!text retrieval & modification! !
+!UI.Scintilla.ScintillaView categoriesFor: #mouseDwellTime!other settings!public! !
+!UI.Scintilla.ScintillaView categoriesFor: #mouseDwellTime:!other settings!public! !
 !UI.Scintilla.ScintillaView categoriesFor: #moveCaretInsideView!**auto generated**!caret!commands!public!scintilla interface! !
 !UI.Scintilla.ScintillaView categoriesFor: #moveDown!**auto generated**!caret!commands!public!scintilla interface! !
 !UI.Scintilla.ScintillaView categoriesFor: #moveLeft!**auto generated**!caret!commands!public!scintilla interface! !
@@ -11940,6 +11833,7 @@ zoomOut
 !UI.Scintilla.ScintillaView categoriesFor: #removeStylingFrom:to:!public!styling! !
 !UI.Scintilla.ScintillaView categoriesFor: #replaceTarget:!public!searching & replacing! !
 !UI.Scintilla.ScintillaView categoriesFor: #requiredLineMarginWidth!enquiries!helpers!margins!private! !
+!UI.Scintilla.ScintillaView categoriesFor: #resetElementColor:!autocompletion!element colors!private! !
 !UI.Scintilla.ScintillaView categoriesFor: #resetKeyBindings!helpers!key bindings!private! !
 !UI.Scintilla.ScintillaView categoriesFor: #resetMarkers!helpers!markers!private! !
 !UI.Scintilla.ScintillaView categoriesFor: #resetZoom!commands!public!zooming! !
@@ -12031,6 +11925,9 @@ zoomOut
 !UI.Scintilla.ScintillaView categoriesFor: #sciGetAccessibility!**auto generated**!accessibility!private!scintilla interface! !
 !UI.Scintilla.ScintillaView categoriesFor: #sciGetAutomaticFold!**auto generated**!folding!private!scintilla interface! !
 !UI.Scintilla.ScintillaView categoriesFor: #sciGetBidirectional!**auto generated**!private!scintilla interface! !
+!UI.Scintilla.ScintillaView categoriesFor: #sciGetBufferedDraw!**auto generated**!other settings!private!scintilla interface!testing! !
+!UI.Scintilla.ScintillaView categoriesFor: #sciGetCaretLineLayer!**auto generated**!caret, selection, and hotspot styles!private!scintilla interface! !
+!UI.Scintilla.ScintillaView categoriesFor: #sciGetCaretPeriod!**auto generated**!other settings!private!scintilla interface! !
 !UI.Scintilla.ScintillaView categoriesFor: #sciGetCaretSticky!**auto generated**!caret, selection, and hotspot styles!private!scintilla interface! !
 !UI.Scintilla.ScintillaView categoriesFor: #sciGetCaretStyle!**auto generated**!caret, selection, and hotspot styles!private!scintilla interface! !
 !UI.Scintilla.ScintillaView categoriesFor: #sciGetCharacterCategoryOptimization!**auto generated**!private!scintilla interface!words! !
@@ -12038,11 +11935,12 @@ zoomOut
 !UI.Scintilla.ScintillaView categoriesFor: #sciGetCodePage!**auto generated**!other settings!private!scintilla interface! !
 !UI.Scintilla.ScintillaView categoriesFor: #sciGetControlCharSymbol!**auto generated**!character representations!private!scintilla interface! !
 !UI.Scintilla.ScintillaView categoriesFor: #sciGetDocPointer!**auto generated**!multiple views!private!scintilla interface! !
-!UI.Scintilla.ScintillaView categoriesFor: #sciGetDocumentOptions!**auto generated**!private!scintilla interface! !
+!UI.Scintilla.ScintillaView categoriesFor: #sciGetDocumentOptions!**auto generated**!other settings!private!scintilla interface! !
 !UI.Scintilla.ScintillaView categoriesFor: #sciGetEdgeMode!**auto generated**!long lines!private!scintilla interface! !
-!UI.Scintilla.ScintillaView categoriesFor: #sciGetElementAllowsTranslucent:!**auto generated**!private!scintilla interface! !
-!UI.Scintilla.ScintillaView categoriesFor: #sciGetElementColour:!**auto generated**!private!scintilla interface! !
-!UI.Scintilla.ScintillaView categoriesFor: #sciGetElementIsSet:!**auto generated**!private!scintilla interface! !
+!UI.Scintilla.ScintillaView categoriesFor: #sciGetElementAllowsTranslucent:!**auto generated**!element colors!private!scintilla interface! !
+!UI.Scintilla.ScintillaView categoriesFor: #sciGetElementBaseColour:!element colors!private! !
+!UI.Scintilla.ScintillaView categoriesFor: #sciGetElementColour:!**auto generated**!element colors!private!scintilla interface! !
+!UI.Scintilla.ScintillaView categoriesFor: #sciGetElementIsSet:!**auto generated**!element colors!private!scintilla interface! !
 !UI.Scintilla.ScintillaView categoriesFor: #sciGetEOLMode!**auto generated**!line endings!private!scintilla interface! !
 !UI.Scintilla.ScintillaView categoriesFor: #sciGetFontQuality!**auto generated**!other settings!private!scintilla interface! !
 !UI.Scintilla.ScintillaView categoriesFor: #sciGetIdleStyling!**auto generated**!private!scintilla interface!styling! !
@@ -12064,6 +11962,7 @@ zoomOut
 !UI.Scintilla.ScintillaView categoriesFor: #sciGetMarginRight!**auto generated**!margins!private!scintilla interface! !
 !UI.Scintilla.ScintillaView categoriesFor: #sciGetMargins!**auto generated**!margins!private!scintilla interface! !
 !UI.Scintilla.ScintillaView categoriesFor: #sciGetMaxLineState!**auto generated**!private!scintilla interface!styling! !
+!UI.Scintilla.ScintillaView categoriesFor: #sciGetMouseDwellTime!**auto generated**!other settings!private!scintilla interface! !
 !UI.Scintilla.ScintillaView categoriesFor: #sciGetMouseSelectionRectangularSwitch!**auto generated**!multiple selection and virtual space!private!scintilla interface! !
 !UI.Scintilla.ScintillaView categoriesFor: #sciGetMultiEdgeColumn:!**auto generated**!private!scintilla interface! !
 !UI.Scintilla.ScintillaView categoriesFor: #sciGetMultiPaste!**auto generated**!multiple selection and virtual space!private!scintilla interface! !
@@ -12081,6 +11980,7 @@ zoomOut
 !UI.Scintilla.ScintillaView categoriesFor: #sciGetRectangularSelectionCaretVirtualSpace!**auto generated**!multiple selection and virtual space!private!scintilla interface!selection! !
 !UI.Scintilla.ScintillaView categoriesFor: #sciGetRepresentation:!**auto generated**!private!scintilla interface! !
 !UI.Scintilla.ScintillaView categoriesFor: #sciGetSearchFlags!**auto generated**!private!scintilla interface!searching & replacing! !
+!UI.Scintilla.ScintillaView categoriesFor: #sciGetSelectionLayer!**auto generated**!private!scintilla interface! !
 !UI.Scintilla.ScintillaView categoriesFor: #sciGetSelectionMode!**auto generated**!private!scintilla interface!selection! !
 !UI.Scintilla.ScintillaView categoriesFor: #sciGetSelectionNAnchor:!**auto generated**!accessing!multiple selection and virtual space!private!scintilla interface!selection! !
 !UI.Scintilla.ScintillaView categoriesFor: #sciGetSelectionNAnchorVirtualSpace:!**auto generated**!multiple selection and virtual space!private!scintilla interface!selection! !
@@ -12170,13 +12070,11 @@ zoomOut
 !UI.Scintilla.ScintillaView categoriesFor: #sciSearchAnchor!**auto generated**!caret!private!scintilla interface!searching & replacing! !
 !UI.Scintilla.ScintillaView categoriesFor: #sciSearchInTarget:text:!**auto generated**!private!scintilla interface!searching & replacing! !
 !UI.Scintilla.ScintillaView categoriesFor: #sciSetAccessibility:!**auto generated**!accessibility!private!scintilla interface! !
-!UI.Scintilla.ScintillaView categoriesFor: #sciSetAdditionalCaretFore:!**auto generated**!caret, selection, and hotspot styles!private!scintilla interface!selection! !
-!UI.Scintilla.ScintillaView categoriesFor: #sciSetAdditionalSelBack:!**auto generated**!caret, selection, and hotspot styles!private!scintilla interface!selection! !
-!UI.Scintilla.ScintillaView categoriesFor: #sciSetAdditionalSelFore:!**auto generated**!caret, selection, and hotspot styles!private!scintilla interface!selection! !
 !UI.Scintilla.ScintillaView categoriesFor: #sciSetAutomaticFold:!**auto generated**!folding!private!scintilla interface! !
 !UI.Scintilla.ScintillaView categoriesFor: #sciSetBidirectional:!**auto generated**!private!scintilla interface! !
-!UI.Scintilla.ScintillaView categoriesFor: #sciSetCaretFore:!**auto generated**!caret, selection, and hotspot styles!private!scintilla interface! !
-!UI.Scintilla.ScintillaView categoriesFor: #sciSetCaretLineBack:!**auto generated**!caret, selection, and hotspot styles!private!scintilla interface! !
+!UI.Scintilla.ScintillaView categoriesFor: #sciSetBufferedDraw:!**auto generated**!other settings!private!scintilla interface! !
+!UI.Scintilla.ScintillaView categoriesFor: #sciSetCaretLineLayer:!**auto generated**!caret, selection, and hotspot styles!private!scintilla interface! !
+!UI.Scintilla.ScintillaView categoriesFor: #sciSetCaretPeriod:!**auto generated**!caret, selection, and hotspot styles!private!scintilla interface! !
 !UI.Scintilla.ScintillaView categoriesFor: #sciSetCaretSticky:!**auto generated**!caret, selection, and hotspot styles!private!scintilla interface! !
 !UI.Scintilla.ScintillaView categoriesFor: #sciSetCaretStyle:!**auto generated**!caret, selection, and hotspot styles!private!scintilla interface! !
 !UI.Scintilla.ScintillaView categoriesFor: #sciSetCaretWidth:!**auto generated**!caret, selection, and hotspot styles!private!scintilla interface! !
@@ -12185,17 +12083,14 @@ zoomOut
 !UI.Scintilla.ScintillaView categoriesFor: #sciSetCodePage:!**auto generated**!other settings!private!scintilla interface! !
 !UI.Scintilla.ScintillaView categoriesFor: #sciSetControlCharSymbol:!**auto generated**!caret, selection, and hotspot styles!private!scintilla interface! !
 !UI.Scintilla.ScintillaView categoriesFor: #sciSetDocPointer:!**auto generated**!multiple views!private!scintilla interface! !
-!UI.Scintilla.ScintillaView categoriesFor: #sciSetEdgeColour:!**auto generated**!private!scintilla interface! !
-!UI.Scintilla.ScintillaView categoriesFor: #sciSetEdgeColumn:!long lines!private!scintilla interface! !
+!UI.Scintilla.ScintillaView categoriesFor: #sciSetEdgeColour:!**auto generated**!long lines!private!scintilla interface! !
 !UI.Scintilla.ScintillaView categoriesFor: #sciSetEdgeMode:!**auto generated**!long lines!private!scintilla interface! !
-!UI.Scintilla.ScintillaView categoriesFor: #sciSetElementColour:colourElement:!**auto generated**!private!scintilla interface! !
+!UI.Scintilla.ScintillaView categoriesFor: #sciSetElementColour:colourElement:!**auto generated**!element colors!private!scintilla interface! !
 !UI.Scintilla.ScintillaView categoriesFor: #sciSetEOLMode:!**auto generated**!line endings!private!scintilla interface! !
 !UI.Scintilla.ScintillaView categoriesFor: #sciSetFoldFlags:!**auto generated**!folding!private!scintilla interface! !
 !UI.Scintilla.ScintillaView categoriesFor: #sciSetFoldMarginColour:back:!**auto generated**!folding!margins!private!scintilla interface! !
 !UI.Scintilla.ScintillaView categoriesFor: #sciSetFoldMarginHiColour:fore:!**auto generated**!folding!margins!private!scintilla interface! !
 !UI.Scintilla.ScintillaView categoriesFor: #sciSetFontQuality:!**auto generated**!other settings!private!scintilla interface! !
-!UI.Scintilla.ScintillaView categoriesFor: #sciSetHotspotActiveBack:back:!**auto generated**!caret, selection, and hotspot styles!private!scintilla interface! !
-!UI.Scintilla.ScintillaView categoriesFor: #sciSetHotspotActiveFore:fore:!**auto generated**!caret, selection, and hotspot styles!private!scintilla interface! !
 !UI.Scintilla.ScintillaView categoriesFor: #sciSetHScrollBar:!**auto generated**!private!scintilla interface!scrolling! !
 !UI.Scintilla.ScintillaView categoriesFor: #sciSetIdentifiers:identifiers:!**auto generated**!lexer-substyles!private!scintilla interface! !
 !UI.Scintilla.ScintillaView categoriesFor: #sciSetIdleStyling:!**auto generated**!private!scintilla interface!styling! !
@@ -12211,8 +12106,9 @@ zoomOut
 !UI.Scintilla.ScintillaView categoriesFor: #sciSetMarginLeft:!**auto generated**!margins!private!scintilla interface! !
 !UI.Scintilla.ScintillaView categoriesFor: #sciSetMarginOptions:!**auto generated**!margins!private!scintilla interface! !
 !UI.Scintilla.ScintillaView categoriesFor: #sciSetMarginRight:!**auto generated**!margins!private!scintilla interface! !
-!UI.Scintilla.ScintillaView categoriesFor: #sciSetMargins:!**auto generated**!private!scintilla interface! !
+!UI.Scintilla.ScintillaView categoriesFor: #sciSetMargins:!**auto generated**!margins!private!scintilla interface! !
 !UI.Scintilla.ScintillaView categoriesFor: #sciSetModEventMask:!**auto generated**!notifications!private!scintilla interface! !
+!UI.Scintilla.ScintillaView categoriesFor: #sciSetMouseDwellTime:!**auto generated**!other settings!private!scintilla interface! !
 !UI.Scintilla.ScintillaView categoriesFor: #sciSetMouseSelectionRectangularSwitch:!**auto generated**!multiple selection and virtual space!private!scintilla interface! !
 !UI.Scintilla.ScintillaView categoriesFor: #sciSetMultiPaste:!**auto generated**!multiple selection and virtual space!private!scintilla interface! !
 !UI.Scintilla.ScintillaView categoriesFor: #sciSetPasteConvertEndings:!**auto generated**!clipboard operations!private!scintilla interface! !
@@ -12225,8 +12121,8 @@ zoomOut
 !UI.Scintilla.ScintillaView categoriesFor: #sciSetRepresentation:representation:!**auto generated**!private!scintilla interface! !
 !UI.Scintilla.ScintillaView categoriesFor: #sciSetSavePoint!**auto generated**!private!scintilla interface!text retrieval & modification! !
 !UI.Scintilla.ScintillaView categoriesFor: #sciSetSearchFlags:!**auto generated**!private!scintilla interface!searching & replacing! !
-!UI.Scintilla.ScintillaView categoriesFor: #sciSetSelBack:back:!**auto generated**!caret, selection, and hotspot styles!private!scintilla interface! !
 !UI.Scintilla.ScintillaView categoriesFor: #sciSetSelection:anchor:!**auto generated**!private!scintilla interface!selection! !
+!UI.Scintilla.ScintillaView categoriesFor: #sciSetSelectionLayer:!**auto generated**!private!scintilla interface! !
 !UI.Scintilla.ScintillaView categoriesFor: #sciSetSelectionMode:!**auto generated**!private!scintilla interface!selection! !
 !UI.Scintilla.ScintillaView categoriesFor: #sciSetSelectionNAnchor:anchor:!**auto generated**!multiple selection and virtual space!private!scintilla interface! !
 !UI.Scintilla.ScintillaView categoriesFor: #sciSetSelectionNAnchorVirtualSpace:space:!**auto generated**!multiple selection and virtual space!private!scintilla interface!selection! !
@@ -12234,7 +12130,6 @@ zoomOut
 !UI.Scintilla.ScintillaView categoriesFor: #sciSetSelectionNCaretVirtualSpace:space:!**auto generated**!multiple selection and virtual space!private!scintilla interface!selection! !
 !UI.Scintilla.ScintillaView categoriesFor: #sciSetSelectionNEnd:caret:!**auto generated**!multiple selection and virtual space!private!scintilla interface! !
 !UI.Scintilla.ScintillaView categoriesFor: #sciSetSelectionNStart:anchor:!**auto generated**!multiple selection and virtual space!private!scintilla interface! !
-!UI.Scintilla.ScintillaView categoriesFor: #sciSetSelFore:fore:!**auto generated**!caret, selection, and hotspot styles!private!scintilla interface! !
 !UI.Scintilla.ScintillaView categoriesFor: #sciSetStylingEx:styles:!**auto generated**!private!scintilla interface!styling! !
 !UI.Scintilla.ScintillaView categoriesFor: #sciSetTabDrawMode:!**auto generated**!private!scintilla interface!white space! !
 !UI.Scintilla.ScintillaView categoriesFor: #sciSetTargetEndVirtualSpace:!**auto generated**!private!scintilla interface!search & replace using target! !
@@ -12245,9 +12140,7 @@ zoomOut
 !UI.Scintilla.ScintillaView categoriesFor: #sciSetViewWS:!**auto generated**!private!scintilla interface!white space! !
 !UI.Scintilla.ScintillaView categoriesFor: #sciSetVirtualSpaceOptions:!**auto generated**!multiple selection and virtual space!private!scintilla interface! !
 !UI.Scintilla.ScintillaView categoriesFor: #sciSetVisiblePolicy:visibleSlop:!**auto generated**!private!scintilla interface!scrolling! !
-!UI.Scintilla.ScintillaView categoriesFor: #sciSetWhitespaceBack:back:!**auto generated**!private!scintilla interface!white space! !
 !UI.Scintilla.ScintillaView categoriesFor: #sciSetWhitespaceChars:!**auto generated**!character classes!private!scintilla interface!white space!words! !
-!UI.Scintilla.ScintillaView categoriesFor: #sciSetWhitespaceFore:fore:!**auto generated**!private!scintilla interface!white space! !
 !UI.Scintilla.ScintillaView categoriesFor: #sciSetWordChars:!**auto generated**!character classes!private!scintilla interface!words! !
 !UI.Scintilla.ScintillaView categoriesFor: #sciSetWrapIndentMode:!**auto generated**!line wrapping!private!scintilla interface! !
 !UI.Scintilla.ScintillaView categoriesFor: #sciSetWrapMode:!**auto generated**!line wrapping!private!scintilla interface! !
@@ -12303,22 +12196,20 @@ zoomOut
 !UI.Scintilla.ScintillaView categoriesFor: #scrollWidth:!**auto generated**!public!scintilla interface!scrolling! !
 !UI.Scintilla.ScintillaView categoriesFor: #searchNext:text:!**auto generated**!public!scintilla interface! !
 !UI.Scintilla.ScintillaView categoriesFor: #searchPrev:text:!**auto generated**!public!scintilla interface! !
-!UI.Scintilla.ScintillaView categoriesFor: #secondaryCaretForecolor!caret, selection, and hotspot styles!public!scintilla interface! !
-!UI.Scintilla.ScintillaView categoriesFor: #secondaryCaretForecolor:!caret, selection, and hotspot styles!public!scintilla interface! !
-!UI.Scintilla.ScintillaView categoriesFor: #secondarySelectionAlpha!**auto generated**!caret, selection, and hotspot styles!public!scintilla interface! !
-!UI.Scintilla.ScintillaView categoriesFor: #secondarySelectionAlpha:!**auto generated**!caret, selection, and hotspot styles!public!scintilla interface! !
-!UI.Scintilla.ScintillaView categoriesFor: #secondarySelectionBackcolor!caret, selection, and hotspot styles!public! !
-!UI.Scintilla.ScintillaView categoriesFor: #secondarySelectionBackcolor:!caret, selection, and hotspot styles!public! !
-!UI.Scintilla.ScintillaView categoriesFor: #secondarySelectionForecolor!caret, selection, and hotspot styles!public! !
-!UI.Scintilla.ScintillaView categoriesFor: #secondarySelectionForecolor:!caret, selection, and hotspot styles!public! !
+!UI.Scintilla.ScintillaView categoriesFor: #secondaryCaretForecolor!caret, selection, and hotspot styles!element colors!public!scintilla interface! !
+!UI.Scintilla.ScintillaView categoriesFor: #secondaryCaretForecolor:!caret, selection, and hotspot styles!element colors!public! !
+!UI.Scintilla.ScintillaView categoriesFor: #secondarySelectionBackcolor!caret, selection, and hotspot styles!element colors!public! !
+!UI.Scintilla.ScintillaView categoriesFor: #secondarySelectionBackcolor:!caret, selection, and hotspot styles!element colors!public! !
+!UI.Scintilla.ScintillaView categoriesFor: #secondarySelectionForecolor!caret, selection, and hotspot styles!element colors!public! !
+!UI.Scintilla.ScintillaView categoriesFor: #secondarySelectionForecolor:!caret, selection, and hotspot styles!element colors!public! !
 !UI.Scintilla.ScintillaView categoriesFor: #selection!**auto generated**!public!scintilla interface!selection! !
-!UI.Scintilla.ScintillaView categoriesFor: #selectionAlpha!**auto generated**!caret, selection, and hotspot styles!public!scintilla interface! !
-!UI.Scintilla.ScintillaView categoriesFor: #selectionAlpha:!**auto generated**!caret, selection, and hotspot styles!public!scintilla interface! !
-!UI.Scintilla.ScintillaView categoriesFor: #selectionBackcolor!caret, selection, and hotspot styles!public! !
-!UI.Scintilla.ScintillaView categoriesFor: #selectionBackcolor:!caret, selection, and hotspot styles!public! !
+!UI.Scintilla.ScintillaView categoriesFor: #selectionBackcolor!caret, selection, and hotspot styles!element colors!public! !
+!UI.Scintilla.ScintillaView categoriesFor: #selectionBackcolor:!caret, selection, and hotspot styles!element colors!public! !
 !UI.Scintilla.ScintillaView categoriesFor: #selectionCount!**auto generated**!multiple selection and virtual space!public!scintilla interface!selection! !
-!UI.Scintilla.ScintillaView categoriesFor: #selectionForecolor!caret, selection, and hotspot styles!public! !
-!UI.Scintilla.ScintillaView categoriesFor: #selectionForecolor:!caret, selection, and hotspot styles!public! !
+!UI.Scintilla.ScintillaView categoriesFor: #selectionForecolor!caret, selection, and hotspot styles!element colors!public! !
+!UI.Scintilla.ScintillaView categoriesFor: #selectionForecolor:!caret, selection, and hotspot styles!element colors!public! !
+!UI.Scintilla.ScintillaView categoriesFor: #selectionLayer!caret, selection, and hotspot styles!public! !
+!UI.Scintilla.ScintillaView categoriesFor: #selectionLayer:!caret, selection, and hotspot styles!public! !
 !UI.Scintilla.ScintillaView categoriesFor: #selectionMode!public!selection! !
 !UI.Scintilla.ScintillaView categoriesFor: #selectionMode:!public!selection! !
 !UI.Scintilla.ScintillaView categoriesFor: #selectionPlainText:!private!selection! !
@@ -12331,16 +12222,13 @@ zoomOut
 !UI.Scintilla.ScintillaView categoriesFor: #sendMessage:wParam:!operations!private! !
 !UI.Scintilla.ScintillaView categoriesFor: #sendMessage:wParam:lParam:!operations!private! !
 !UI.Scintilla.ScintillaView categoriesFor: #sendMessage:wParam:lpParam:!operations!private! !
-!UI.Scintilla.ScintillaView categoriesFor: #setActiveHotspotBackcolor!caret, selection, and hotspot styles!private! !
-!UI.Scintilla.ScintillaView categoriesFor: #setActiveHotspotForecolor!caret, selection, and hotspot styles!private! !
 !UI.Scintilla.ScintillaView categoriesFor: #setCallTipHighlightColor!call tips!private! !
 !UI.Scintilla.ScintillaView categoriesFor: #setCallTipTabWidth!helpers!private! !
-!UI.Scintilla.ScintillaView categoriesFor: #setCaretForecolor!call tips!private! !
+!UI.Scintilla.ScintillaView categoriesFor: #setCaretBlinkTime!caret, selection, and hotspot styles!private! !
 !UI.Scintilla.ScintillaView categoriesFor: #setCharacterClasses!character classes!helpers!private! !
-!UI.Scintilla.ScintillaView categoriesFor: #setCurrentLineBackcolor!caret, selection, and hotspot styles!public!scintilla interface! !
 !UI.Scintilla.ScintillaView categoriesFor: #setCurrentTextStyles:!private!style definition! !
 !UI.Scintilla.ScintillaView categoriesFor: #setDefaultTextStyle!private!style definition! !
-!UI.Scintilla.ScintillaView categoriesFor: #setEdgeColor!long lines!private! !
+!UI.Scintilla.ScintillaView categoriesFor: #setElement:color:!autocompletion!element colors!private! !
 !UI.Scintilla.ScintillaView categoriesFor: #setEolAnnotations:!annotations!private! !
 !UI.Scintilla.ScintillaView categoriesFor: #setFoldFlags!folding!private! !
 !UI.Scintilla.ScintillaView categoriesFor: #setFoldMarginColor!folding!margins!private! !
@@ -12355,18 +12243,13 @@ zoomOut
 !UI.Scintilla.ScintillaView categoriesFor: #setLexerLanguage:!lexer!private! !
 !UI.Scintilla.ScintillaView categoriesFor: #setLine:state:!**auto generated**!public!scintilla interface!styling! !
 !UI.Scintilla.ScintillaView categoriesFor: #setMarginWidths:!helpers!margins!private! !
+!UI.Scintilla.ScintillaView categoriesFor: #setOrResetElement:color:!element colors!private! !
+!UI.Scintilla.ScintillaView categoriesFor: #setOrResetElement:color:defaultSystem:!autocompletion!element colors!private! !
 !UI.Scintilla.ScintillaView categoriesFor: #setRawAnnotations:!annotations!helpers!private! !
 !UI.Scintilla.ScintillaView categoriesFor: #setReadOnly:!**auto generated**!modes!public!scintilla interface!text retrieval & modification! !
-!UI.Scintilla.ScintillaView categoriesFor: #setSecondaryCaretForecolor!caret, selection, and hotspot styles!private!scintilla interface! !
-!UI.Scintilla.ScintillaView categoriesFor: #setSecondarySelectionBackcolor!caret, selection, and hotspot styles!private! !
-!UI.Scintilla.ScintillaView categoriesFor: #setSecondarySelectionForecolor!caret, selection, and hotspot styles!private! !
-!UI.Scintilla.ScintillaView categoriesFor: #setSelectionBackcolor!caret, selection, and hotspot styles!private! !
-!UI.Scintilla.ScintillaView categoriesFor: #setSelectionForecolor!caret, selection, and hotspot styles!private! !
 !UI.Scintilla.ScintillaView categoriesFor: #setTabStops:!private!tabs & indentation guides! !
 !UI.Scintilla.ScintillaView categoriesFor: #setTargetRangeFromSelection!**auto generated**!public!scintilla interface!searching & replacing! !
 !UI.Scintilla.ScintillaView categoriesFor: #setText:!helpers!private!text retrieval & modification! !
-!UI.Scintilla.ScintillaView categoriesFor: #setWhitespaceBackcolor!initializing!private! !
-!UI.Scintilla.ScintillaView categoriesFor: #setWhitespaceForecolor!private!white space! !
 !UI.Scintilla.ScintillaView categoriesFor: #showAutoCompletionList:prefixLength:!autocompletion!public!scintilla interface! !
 !UI.Scintilla.ScintillaView categoriesFor: #showAutoCompletionList:prefixLength:withIcons:!autocompletion!public!scintilla interface! !
 !UI.Scintilla.ScintillaView categoriesFor: #showCallTip:at:!call tips!public!scintilla interface! !
@@ -12440,9 +12323,9 @@ zoomOut
 !UI.Scintilla.ScintillaView categoriesFor: #updateTextStyles!helpers!private!style definition! !
 !UI.Scintilla.ScintillaView categoriesFor: #validateUserInterface!operations!public! !
 !UI.Scintilla.ScintillaView categoriesFor: #whitespaceBackcolor!public!white space! !
-!UI.Scintilla.ScintillaView categoriesFor: #whitespaceBackcolor:!public!white space! !
-!UI.Scintilla.ScintillaView categoriesFor: #whitespaceForecolor!public!white space! !
-!UI.Scintilla.ScintillaView categoriesFor: #whitespaceForecolor:!public!white space! !
+!UI.Scintilla.ScintillaView categoriesFor: #whitespaceBackcolor:!element colors!public!white space! !
+!UI.Scintilla.ScintillaView categoriesFor: #whitespaceForecolor!element colors!public!white space! !
+!UI.Scintilla.ScintillaView categoriesFor: #whitespaceForecolor:!element colors!public!white space! !
 !UI.Scintilla.ScintillaView categoriesFor: #whitespaceMarkerSize!**auto generated**!public!scintilla interface!white space! !
 !UI.Scintilla.ScintillaView categoriesFor: #whitespaceMarkerSize:!**auto generated**!public!scintilla interface!white space! !
 !UI.Scintilla.ScintillaView categoriesFor: #whitespaces!character classes!public!white space! !
@@ -12467,6 +12350,7 @@ zoomOut
 !UI.Scintilla.ScintillaView categoriesFor: #wrapIndentMode:!other settings!public! !
 !UI.Scintilla.ScintillaView categoriesFor: #xOffset!**auto generated**!public!scintilla interface!scrolling! !
 !UI.Scintilla.ScintillaView categoriesFor: #xOffset:!**auto generated**!public!scintilla interface!scrolling! !
+!UI.Scintilla.ScintillaView categoriesFor: #zoomFactor!public!zooming! !
 !UI.Scintilla.ScintillaView categoriesFor: #zoomIn!**auto generated**!commands!public!scintilla interface!zooming! !
 !UI.Scintilla.ScintillaView categoriesFor: #zoomLevel!**auto generated**!public!scintilla interface!zooming! !
 !UI.Scintilla.ScintillaView categoriesFor: #zoomLevel:!**auto generated**!public!scintilla interface!zooming! !
@@ -12782,6 +12666,16 @@ jsonTextStyles
 				yourself).
 	^styles!
 
+layerNames
+	"Answer the symbolic names of all drawing layers.
+
+		#base 		(SC_LAYER_BASE, 0)			Draw the element opaquely on the base layer
+		#underText	(SC_LAYER_UNDER_TEXT, 1)	Draw the element translucently under the text. This will not work in single phase drawing mode (SC_PHASES_ONE) as there is no under-text phase.
+		#overText		(SC_LAYER_OVER_TEXT, 2)	Draw the element translucently over the text.
+	"
+
+	^#(#base #underText #overText)!
+
 layoutCachingModes
 	^#(#none #caret #page #document)!
 
@@ -13042,6 +12936,7 @@ stbConvert: instVarArray fromVersion: verInteger
 	verInteger < 14 ifTrue: [instVars := self stbConvertFromVersion13: instVars].
 	verInteger < 15 ifTrue: [instVars := self stbConvertFromVersion14: instVars].
 	verInteger < 16 ifTrue: [instVars := self stbConvertFromVersion15: instVars].
+	verInteger < 17 ifTrue: [instVars := self stbConvertFromVersion16: instVars].
 	^instVars!
 
 stbConvertFromVersion13: anArray
@@ -13070,9 +12965,56 @@ stbConvertFromVersion14: anArray
 
 stbConvertFromVersion15: anArray
 	"Private - Perform an STB conversion from a version 15 <ScintillaView> to version 16.
-	Adds some new instance variables."
+	Adds 15 new instance variables."
 
-	^anArray!
+	| count |
+	count := anArray size + 15.
+	^(Array new: count)
+		replaceFrom: 1 to: 50 with: anArray startingAt: 1;
+		replaceFrom: 66 to: count with: anArray startingAt: 51;
+		yourself!
+
+stbConvertFromVersion16: anArray
+	"Private - Perform an STB conversion from a version 16 <ScintillaView> to version 17.
+	Introduces the generic element colours mechanism to replace a number of the specific colour settings and to support translucent colours for those.
+	As this frees up a large number of existing instance variables, we remove all the trailing unused variables added in version 16.
+	There are seven slots free, and it seems likely that follow on versions of Scintilla 5.x will further consolidate the colours into element colours, e.g. the edge and fold-margin colours."
+
+	| count instVars elementColors |
+	count := anArray size - 13.
+
+	"Convert former inst var colour settings to element colours"
+	elementColors := LookupTable new.
+	#(28 ##(SC_ELEMENT_WHITE_SPACE_BACK) 29 ##(SC_ELEMENT_WHITE_SPACE) 31 ##(SC_ELEMENT_SELECTION_TEXT) 47 ##(SC_ELEMENT_SELECTION_ADDITIONAL_TEXT) 48 ##(SC_ELEMENT_SELECTION_ADDITIONAL_BACK) 51 ##(SC_ELEMENT_CARET_ADDITIONAL) 53 ##(SC_ELEMENT_CARET_LINE_BACK) 54 ##(SC_ELEMENT_HOT_SPOT_ACTIVE) 55 ##(SC_ELEMENT_HOT_SPOT_ACTIVE_BACK))
+		pairsDo: 
+			[:instVarIndex :elementCode |
+			(anArray at: instVarIndex)
+				ifNotNil: 
+					[:color |
+					elementColors at: elementCode put: color.
+					anArray at: instVarIndex put: nil]].
+	instVars := Array new: count.
+	instVars
+		replaceFrom: 1
+		to: 52
+		with: anArray
+		startingAt: 1.
+	instVars
+		replaceFrom: 53
+		to: count
+		with: anArray
+		startingAt: 66.
+	instVars at: 28 put: elementColors.
+	"Some more special cases"
+	elementColors at: SC_ELEMENT_CARET put: ((instVars at: 50) ifNil: [Color windowText]).
+	instVars at: 50 put: nil.
+	(instVars at: 30)
+		ifNotNil: 
+			[:selectionBackcolor |
+			selectionBackcolor = Color silver
+				ifFalse: [elementColors at: SC_ELEMENT_SELECTION_BACK put: selectionBackcolor].
+			instVars at: 30 put: nil].
+	^instVars!
 
 stbConvertFromVersion9: anArray 
 	"Private - Perform an STB conversion from a version 9 (or earlier) <ScintillaView> to version 10.
@@ -13089,7 +13031,7 @@ stbConvertFromVersion9: anArray
 	^array!
 
 stbVersion
-	^16!
+	^17!
 
 tabDrawModes
 	^#(#longArrow #strikeOut)!
@@ -13314,6 +13256,7 @@ xmlTextStyles
 !UI.Scintilla.ScintillaView class categoriesFor: #indentationGuideStyles!constants!private! !
 !UI.Scintilla.ScintillaView class categoriesFor: #initialize!development!initializing!private! !
 !UI.Scintilla.ScintillaView class categoriesFor: #jsonTextStyles!constants!public!style definition! !
+!UI.Scintilla.ScintillaView class categoriesFor: #layerNames!constants!public! !
 !UI.Scintilla.ScintillaView class categoriesFor: #layoutCachingModes!constants!public! !
 !UI.Scintilla.ScintillaView class categoriesFor: #lexerLanguages!constants!public! !
 !UI.Scintilla.ScintillaView class categoriesFor: #lineEndings!constants!public! !
@@ -13327,6 +13270,7 @@ xmlTextStyles
 !UI.Scintilla.ScintillaView class categoriesFor: #stbConvertFromVersion13:!binary filing!private! !
 !UI.Scintilla.ScintillaView class categoriesFor: #stbConvertFromVersion14:!binary filing!private! !
 !UI.Scintilla.ScintillaView class categoriesFor: #stbConvertFromVersion15:!binary filing!private! !
+!UI.Scintilla.ScintillaView class categoriesFor: #stbConvertFromVersion16:!binary filing!private! !
 !UI.Scintilla.ScintillaView class categoriesFor: #stbConvertFromVersion9:!binary filing!private! !
 !UI.Scintilla.ScintillaView class categoriesFor: #stbVersion!binary filing!public! !
 !UI.Scintilla.ScintillaView class categoriesFor: #tabDrawModes!constants!public! !

@@ -153,6 +153,17 @@ mask: anInteger
 	mask := anInteger.
 	self updateViewProperty: #mask!
 
+maskPrintString
+	| dword |
+	mask ifNil: [^nil].
+	dword := mask asDword.
+	^dword = Scintilla.SC_MASK_FOLDERS
+		ifTrue: ['SC_MASK_FOLDERS']
+		ifFalse: 
+			[dword = ##(Scintilla.SC_MASK_FOLDERS bitInvert asDword)
+				ifTrue: ['~SC_MASK_FOLDERS']
+				ifFalse: [dword hex]]!
+
 type
 	"The symbolic name of the Scintilla margin type, defaulting to #symbol."
 
@@ -195,6 +206,7 @@ width: anInteger
 !UI.Scintilla.Margin categoriesFor: #isSensitive:!accessing!public! !
 !UI.Scintilla.Margin categoriesFor: #mask!accessing!public! !
 !UI.Scintilla.Margin categoriesFor: #mask:!accessing!public! !
+!UI.Scintilla.Margin categoriesFor: #maskPrintString!accessing!private! !
 !UI.Scintilla.Margin categoriesFor: #type!accessing!public! !
 !UI.Scintilla.Margin categoriesFor: #type:!accessing!public! !
 !UI.Scintilla.Margin categoriesFor: #width!accessing!public! !
@@ -212,19 +224,23 @@ buildPropertyMap
 					setSelector: #basicIsSensitive:
 					getMessage: SCI_GETMARGINSENSITIVEN);
 		at: #mask
-			put: (PropertyDescriptor
+			put: ((PropertyDescriptor
 					getSelector: #mask
 					defaultValue: 0
 					setMessage: SCI_SETMARGINMASKN
 					setSelector: #mask:
-					getMessage: SCI_GETMARGINMASKN);
+					getMessage: SCI_GETMARGINMASKN)
+					printSelector: #maskPrintString;
+					yourself);
 		at: #type
-			put: (PropertyDescriptor
+			put: ((PropertyDescriptor
 					getSelector: #basicType
 					defaultValue: SC_MARGIN_SYMBOL
 					setMessage: SCI_SETMARGINTYPEN
 					setSelector: #basicType:
-					getMessage: SCI_GETMARGINTYPEN);
+					getMessage: SCI_GETMARGINTYPEN)
+					printSelector: #type;
+					yourself);
 		at: #width
 			put: (PropertyDescriptor
 					getSelector: #basicWidth

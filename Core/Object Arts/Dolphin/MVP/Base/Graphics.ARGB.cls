@@ -64,7 +64,11 @@ normalizedAlpha
 red
 	"Answer the receiver's red component component expressed as an <integer> in the range [0,255]."
 
-	^(code bitShift: -16) bitAnd: 255! !
+	^(code bitShift: -16) bitAnd: 255!
+
+rgbCode
+	^((code bitShift: -16) bitAnd: 16rFF)
+		bitOr: ((code bitAnd: 16r00FF00) bitOr: ((code bitAnd: 16rFF) bitShift: 16))! !
 !Graphics.ARGB categoriesFor: #alpha!accessing!public! !
 !Graphics.ARGB categoriesFor: #alpha:!accessing!public! !
 !Graphics.ARGB categoriesFor: #alphaMask!accessing!private! !
@@ -75,6 +79,7 @@ red
 !Graphics.ARGB categoriesFor: #isNone!public!testing! !
 !Graphics.ARGB categoriesFor: #normalizedAlpha!accessing!public! !
 !Graphics.ARGB categoriesFor: #red!accessing!public! !
+!Graphics.ARGB categoriesFor: #rgbCode!public! !
 
 !Graphics.ARGB class methodsFor!
 

@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
 Core.Object subclass: #'UI.Scintilla.PropertyDescriptor'
-	instanceVariableNames: 'getSelector defaultValue setMessage setSelector getMessage flags'
+	instanceVariableNames: 'getSelector defaultValue setMessage setSelector getMessage flags printSelector'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -41,8 +41,10 @@ getAttribute: aScintillaAttribute ofView: aScintillaView
 				valueFromLResult: (aScintillaView sendMessage: getMessage wParam: aScintillaAttribute basicId).
 	^aScintillaAttribute perform: setSelector with: ((self isDefaultValue: value) ifFalse: [value])!
 
-getAttributeValue: aScintillaAttribute
-	^aScintillaAttribute perform: getSelector!
+getPrintString: aScintillaAttribute
+	^printSelector
+		ifNil: [(aScintillaAttribute perform: getSelector) ifNotNil: [:value | value printString]]
+		ifNotNil: [aScintillaAttribute perform: printSelector]!
 
 getSelector: aSymbol defaultValue: anObject setMessage: anInteger
 	getSelector := aSymbol.
@@ -65,6 +67,9 @@ printOn: aStream
 		nextPut: $(;
 		print: getSelector;
 		nextPut: $)!
+
+printSelector: aSymbol
+	printSelector := aSymbol!
 
 setAttribute: aScintillaAttribute ofView: aScintillaView initializing: aBoolean
 	"Set the property described by the receiver of the attribute, aScintillaAttribute, of the control, aScintillaView.
@@ -90,11 +95,12 @@ valueFromLResult: anObject
 !UI.Scintilla.PropertyDescriptor categoriesFor: #alwaysPrint!public!testing! !
 !UI.Scintilla.PropertyDescriptor categoriesFor: #alwaysPrint:!accessing!public! !
 !UI.Scintilla.PropertyDescriptor categoriesFor: #getAttribute:ofView:!operations!private! !
-!UI.Scintilla.PropertyDescriptor categoriesFor: #getAttributeValue:!helpers!private! !
+!UI.Scintilla.PropertyDescriptor categoriesFor: #getPrintString:!helpers!private! !
 !UI.Scintilla.PropertyDescriptor categoriesFor: #getSelector:defaultValue:setMessage:!initializing!private! !
 !UI.Scintilla.PropertyDescriptor categoriesFor: #isDefaultValue:!operations!private! !
 !UI.Scintilla.PropertyDescriptor categoriesFor: #lParamFromAttributeValue:!helpers!private! !
 !UI.Scintilla.PropertyDescriptor categoriesFor: #printOn:!displaying!public! !
+!UI.Scintilla.PropertyDescriptor categoriesFor: #printSelector:!initializing!public! !
 !UI.Scintilla.PropertyDescriptor categoriesFor: #setAttribute:ofView:initializing:!operations!private! !
 !UI.Scintilla.PropertyDescriptor categoriesFor: #setSelector:getMessage:!initializing!private! !
 !UI.Scintilla.PropertyDescriptor categoriesFor: #valueFromLResult:!helpers!private! !

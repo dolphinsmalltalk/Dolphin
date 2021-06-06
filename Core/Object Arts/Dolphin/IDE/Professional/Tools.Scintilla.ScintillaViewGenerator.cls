@@ -157,6 +157,7 @@ defineConstantsPool
 				'SC_ALPHA_TRANSPARENT' -> 0.
 				'SC_AUTOMATICFOLD_CHANGE' -> 4.
 				'SC_AUTOMATICFOLD_CLICK' -> 2.
+				'SC_AUTOMATICFOLD_NONE' -> 0.
 				'SC_AUTOMATICFOLD_SHOW' -> 1.
 				'SC_BIDIRECTIONAL_DISABLED' -> 0.
 				'SC_BIDIRECTIONAL_L2R' -> 1.
@@ -212,10 +213,25 @@ defineConstantsPool
 				'SC_EFF_QUALITY_LCD_OPTIMIZED' -> 3.
 				'SC_EFF_QUALITY_MASK' -> 15.
 				'SC_EFF_QUALITY_NON_ANTIALIASED' -> 1.
+				'SC_ELEMENT_CARET' -> 40.
+				'SC_ELEMENT_CARET_ADDITIONAL' -> 41.
+				'SC_ELEMENT_CARET_LINE_BACK' -> 50.
+				'SC_ELEMENT_HOT_SPOT_ACTIVE' -> 70.
+				'SC_ELEMENT_HOT_SPOT_ACTIVE_BACK' -> 71.
 				'SC_ELEMENT_LIST' -> 0.
 				'SC_ELEMENT_LIST_BACK' -> 1.
 				'SC_ELEMENT_LIST_SELECTED' -> 2.
 				'SC_ELEMENT_LIST_SELECTED_BACK' -> 3.
+				'SC_ELEMENT_SELECTION_ADDITIONAL_BACK' -> 13.
+				'SC_ELEMENT_SELECTION_ADDITIONAL_TEXT' -> 12.
+				'SC_ELEMENT_SELECTION_BACK' -> 11.
+				'SC_ELEMENT_SELECTION_INACTIVE_BACK' -> 17.
+				'SC_ELEMENT_SELECTION_INACTIVE_TEXT' -> 16.
+				'SC_ELEMENT_SELECTION_SECONDARY_BACK' -> 15.
+				'SC_ELEMENT_SELECTION_SECONDARY_TEXT' -> 14.
+				'SC_ELEMENT_SELECTION_TEXT' -> 10.
+				'SC_ELEMENT_WHITE_SPACE' -> 60.
+				'SC_ELEMENT_WHITE_SPACE_BACK' -> 61.
 				'SC_EOL_CR' -> 1.
 				'SC_EOL_CRLF' -> 0.
 				'SC_EOL_LF' -> 2.
@@ -231,8 +247,10 @@ defineConstantsPool
 				'SC_FOLDFLAG_LINEBEFORE_CONTRACTED' -> 4.
 				'SC_FOLDFLAG_LINEBEFORE_EXPANDED' -> 2.
 				'SC_FOLDFLAG_LINESTATE' -> 128.
+				'SC_FOLDFLAG_NONE' -> 0.
 				'SC_FOLDLEVELBASE' -> 1024.
 				'SC_FOLDLEVELHEADERFLAG' -> 8192.
+				'SC_FOLDLEVELNONE' -> 0.
 				'SC_FOLDLEVELNUMBERMASK' -> 4095.
 				'SC_FOLDLEVELWHITEFLAG' -> 4096.
 				'SC_FONT_SIZE_MULTIPLIER' -> 100.
@@ -242,6 +260,7 @@ defineConstantsPool
 				'SC_IDLESTYLING_TOVISIBLE' -> 1.
 				'SC_IME_INLINE' -> 1.
 				'SC_IME_WINDOWED' -> 0.
+				'SC_INDICFLAG_NONE' -> 0.
 				'SC_INDICFLAG_VALUEFORE' -> 1.
 				'SC_INDICVALUEBIT' -> 16777216.
 				'SC_INDICVALUEMASK' -> 16777215.
@@ -250,6 +269,9 @@ defineConstantsPool
 				'SC_IV_NONE' -> 0.
 				'SC_IV_REAL' -> 1.
 				'SC_LASTSTEPINUNDOREDO' -> 256.
+				'SC_LAYER_BASE' -> 0.
+				'SC_LAYER_OVER_TEXT' -> 2.
+				'SC_LAYER_UNDER_TEXT' -> 1.
 				'SC_LINE_END_TYPE_DEFAULT' -> 0.
 				'SC_LINE_END_TYPE_UNICODE' -> 1.
 				'SC_LINECHARACTERINDEX_NONE' -> 0.
@@ -374,6 +396,7 @@ defineConstantsPool
 				'SC_TYPE_STRING' -> 2.
 				'SC_UPDATE_CONTENT' -> 1.
 				'SC_UPDATE_H_SCROLL' -> 8.
+				'SC_UPDATE_NONE' -> 0.
 				'SC_UPDATE_SELECTION' -> 2.
 				'SC_UPDATE_V_SCROLL' -> 4.
 				'SC_WEIGHT_BOLD' -> 700.
@@ -580,6 +603,7 @@ defineConstantsPool
 				'SCI_GETCARETLINEBACK' -> 2097.
 				'SCI_GETCARETLINEBACKALPHA' -> 2471.
 				'SCI_GETCARETLINEFRAME' -> 2704.
+				'SCI_GETCARETLINELAYER' -> 2764.
 				'SCI_GETCARETLINEVISIBLE' -> 2095.
 				'SCI_GETCARETLINEVISIBLEALWAYS' -> 2654.
 				'SCI_GETCARETPERIOD' -> 2075.
@@ -605,6 +629,7 @@ defineConstantsPool
 				'SCI_GETEDGECOLUMN' -> 2360.
 				'SCI_GETEDGEMODE' -> 2362.
 				'SCI_GETELEMENTALLOWSTRANSLUCENT' -> 2757.
+				'SCI_GETELEMENTBASECOLOUR' -> 2758.
 				'SCI_GETELEMENTCOLOUR' -> 2754.
 				'SCI_GETELEMENTISSET' -> 2756.
 				'SCI_GETENDATLASTLINE' -> 2278.
@@ -702,6 +727,7 @@ defineConstantsPool
 				'SCI_GETSELALPHA' -> 2477.
 				'SCI_GETSELECTIONEMPTY' -> 2650.
 				'SCI_GETSELECTIONEND' -> 2145.
+				'SCI_GETSELECTIONLAYER' -> 2762.
 				'SCI_GETSELECTIONMODE' -> 2423.
 				'SCI_GETSELECTIONNANCHOR' -> 2579.
 				'SCI_GETSELECTIONNANCHORVIRTUALSPACE' -> 2583.
@@ -843,6 +869,7 @@ defineConstantsPool
 				'SCI_MARKERDELETEHANDLE' -> 2018.
 				'SCI_MARKERENABLEHIGHLIGHT' -> 2293.
 				'SCI_MARKERGET' -> 2046.
+				'SCI_MARKERGETLAYER' -> 2734.
 				'SCI_MARKERHANDLEFROMLINE' -> 2732.
 				'SCI_MARKERLINEFROMHANDLE' -> 2017.
 				'SCI_MARKERNEXT' -> 2047.
@@ -855,6 +882,7 @@ defineConstantsPool
 				'SCI_MARKERSETBACKTRANSLUCENT' -> 2295.
 				'SCI_MARKERSETFORE' -> 2041.
 				'SCI_MARKERSETFORETRANSLUCENT' -> 2294.
+				'SCI_MARKERSETLAYER' -> 2735.
 				'SCI_MARKERSETSTROKEWIDTH' -> 2297.
 				'SCI_MARKERSYMBOLDEFINED' -> 2529.
 				'SCI_MOVECARETINSIDEVIEW' -> 2401.
@@ -933,6 +961,7 @@ defineConstantsPool
 				'SCI_SETCARETLINEBACK' -> 2098.
 				'SCI_SETCARETLINEBACKALPHA' -> 2470.
 				'SCI_SETCARETLINEFRAME' -> 2705.
+				'SCI_SETCARETLINELAYER' -> 2765.
 				'SCI_SETCARETLINEVISIBLE' -> 2096.
 				'SCI_SETCARETLINEVISIBLEALWAYS' -> 2655.
 				'SCI_SETCARETPERIOD' -> 2076.
@@ -1031,6 +1060,7 @@ defineConstantsPool
 				'SCI_SETSELBACK' -> 2068.
 				'SCI_SETSELECTION' -> 2572.
 				'SCI_SETSELECTIONEND' -> 2144.
+				'SCI_SETSELECTIONLAYER' -> 2763.
 				'SCI_SETSELECTIONMODE' -> 2422.
 				'SCI_SETSELECTIONNANCHOR' -> 2578.
 				'SCI_SETSELECTIONNANCHORVIRTUALSPACE' -> 2582.
@@ -1303,7 +1333,7 @@ generateConstantsPool
 	((self class includesSelector: #defineConstantsPool) not
 		or: [source ~= (self class sourceCodeAt: #defineConstantsPool)])
 			ifTrue: 
-				[changes addChangeFirst: (changes addMethodChangeClass
+				[changes addChangeFirst: (Tools.AddPackagedMethodChange
 							compile: source
 							in: self class
 							categories: {self autoGenCategoryName. 'development'})]!
@@ -1337,7 +1367,7 @@ generateEventHandler: aScintillaEventDef
 
 generateFunction: func
 	| stream |
-	(self ignoredMessages includes: func constName) 
+	(self class ignoredMessages includes: func constName) 
 		ifTrue: 
 			[Notification signal: 'Ignoring message ' , func constName.
 			^self].
@@ -1398,137 +1428,6 @@ getAndResetCommentQueue
 	answer := commentQueue contents.
 	commentQueue := WriteStream on: (Utf8String new: 160).
 	^answer!
-
-ignoredMessages
-	^##(| ignoredMessages |
-	ignoredMessages := (Set new)
-				add: 'SCI_NULL';
-				add: 'SCI_COPYTEXT';
-				add: 'SCI_GETREADONLY';
-				add: 'SCI_USEPOPUP';
-				add: 'SCI_SETCURRENTPOS';
-				add: 'SCI_LINELENGTH';
-				yourself.
-
-	"We use the direct function exported by the DLL, and don't need a wrapper method for SCI_GETDIRECTPOINTER as we need to send it directly."
-	ignoredMessages addAll: #('SCI_GETDIRECTFUNCTION' 'SCI_GETDIRECTPOINTER').
-	"We don't use direct/unsafe access to the scintilla character buffer."
-	ignoredMessages addAll: #('SCI_GETCHARACTERPOINTER' 'SCI_GETRANGEPOINTER' 'SCI_GETGAPPOSITION').
-	"We don't support background loading"
-	ignoredMessages add: 'SCI_CREATELOADER'.
-
-	"The idFrom field of the notification header is not needed to identify the Scintilla
-	control, as we have an object instance associated with each control instance that receives
-	the notifications directly."
-	ignoredMessages addAll: #('SCI_GETIDENTIFIER' 'SCI_SETIDENTIFIER').
-
-	"Scintilla supports standard Windows focus messages, which are used in the MVP framework already"
-	ignoredMessages
-		add: 'SCI_GETFOCUS';
-		add: 'SCI_SETFOCUS';
-		add: 'SCI_GRABFOCUS';
-		yourself.
-
-	"Margin attributes managed by ScintillaMargin"
-	ignoredMessages
-		addAll: #('SCI_GETMARGINMASKN' 'SCI_SETMARGINMASKN');
-		addAll: #('SCI_GETMARGINTYPEN' 'SCI_SETMARGINTYPEN');
-		addAll: #('SCI_GETMARGINWIDTHN' 'SCI_SETMARGINWIDTHN');
-		addAll: #('SCI_GETMARGINSENSITIVEN' 'SCI_SETMARGINSENSITIVEN');
-		addAll: #('SCI_GETMARGINCURSORN' 'SCI_SETMARGINCURSORN');
-		addAll: #('SCI_GETMARGINBACKN' 'SCI_SETMARGINBACKN');
-		yourself.
-
-	"Indicator attributes managed by ScintillaIndicatorStyle"
-	ignoredMessages
-		addAll: #('SCI_INDICGETFORE' 'SCI_INDICSETFORE');
-		addAll: #('SCI_INDICGETSTYLE' 'SCI_INDICSETSTYLE');
-		addAll: #('SCI_INDICGETHOVERSTYLE' 'SCI_INDICSETHOVERSTYLE');
-		addAll: #('SCI_INDICGETHOVERFORE' 'SCI_INDICSETHOVERFORE');
-		addAll: #('SCI_INDICGETUNDER' 'SCI_INDICSETUNDER');
-		addAll: #('SCI_INDICGETALPHA' 'SCI_INDICSETALPHA');
-		addAll: #('SCI_INDICGETFLAGS' 'SCI_INDICSETFLAGS');
-		addAll: #('SCI_INDICGETOUTLINEALPHA' 'SCI_INDICSETOUTLINEALPHA');
-		yourself.
-
-	"Indicator attributes managed by ScintillaMarkerDefinition"
-	ignoredMessages
-		add: 'SCI_MARKERSETBACK';
-		add: 'SCI_MARKERSETBACKSELECTED';
-		add: 'SCI_MARKERSETFORE';
-		add: 'SCI_MARKERADD';
-		add: 'SCI_MARKERDEFINE';
-		add: 'SCI_MARKERDELETE';
-		yourself.
-
-	"Annotation attributes are managed by ScintillaAnnotation"
-	ignoredMessages
-		addAll: #('SCI_ANNOTATIONGETSTYLE' 'SCI_ANNOTATIONSETSTYLE');
-		yourself.
-
-	"Style attributes managed by ScintillaTextStyle, but note that as Scintilla wrapping
-	predates when style definitions were queryable, so we don't use these at all"
-	ignoredMessages
-		addAll: #('SCI_STYLESETFORE' 'SCI_STYLEGETFORE');
-		addAll: #('SCI_STYLESETBACK' 'SCI_STYLEGETBACK');
-		addAll: #('SCI_STYLESETFONT' 'SCI_STYLEGETFONT');
-		addAll: #('SCI_STYLESETBOLD' 'SCI_STYLEGETBOLD');
-		addAll: #('SCI_STYLESETITALIC' 'SCI_STYLEGETITALIC');
-		addAll: #('SCI_STYLESETUNDERLINE' 'SCI_STYLEGETUNDERLINE');
-		addAll: #('SCI_STYLESETCASE' 'SCI_STYLEGETCASE');
-		addAll: #('SCI_STYLESETCHARACTERSET' 'SCI_STYLEGETCHARACTERSET');
-		addAll: #('SCI_STYLESETSIZE' 'SCI_STYLEGETSIZE');
-		addAll: #('SCI_STYLESETEOLFILLED' 'SCI_STYLEGETEOLFILLED');
-		addAll: #('SCI_STYLESETCHANGEABLE' 'SCI_STYLEGETCHANGEABLE');
-		addAll: #('SCI_STYLESETHOTSPOT' 'SCI_STYLEGETHOTSPOT');
-		addAll: #('SCI_STYLESETVISIBLE' 'SCI_STYLEGETVISIBLE');
-		addAll: #('SCI_STYLESETSIZEFRACTIONAL' 'SCI_STYLEGETSIZEFRACTIONAL');
-		addAll: #('SCI_STYLESETWEIGHT' 'SCI_STYLEGETWEIGHT');
-		yourself.
-
-	"SCI_GETLENGTH is ignored because it duplicates SCI_GETTEXTLENGTH"
-	ignoredMessages add: 'SCI_GETLENGTH'.
-
-	"Don't make use of document ref. stuff at present."
-	"ignoredMessages add: 'SCI_ADDREFDOCUMENT'."
-
-	"Scintilla's cursor management is not required in Dolphin which has its own mechanisms."
-	ignoredMessages addAll: #('SCI_GETCURSOR' 'SCI_SETCURSOR').
-
-	"We don't need SCI_GETMODEVENTMASK because we store the event mask in an instance variable (for some reason that I no longer know)"
-	ignoredMessages add: 'SCI_GETMODEVENTMASK'.
-
-	"We don't need these as they are for the GTK+ platform only"
-	ignoredMessages
-		addAll: #('SCI_GETRECTANGULARSELECTIONMODIFIER' 'SCI_SETRECTANGULARSELECTIONMODIFIER').
-
-	"We always get/set the selection range start and end as a pair."
-	ignoredMessages
-		addAll: #('SCI_GETSELECTIONEND' 'SCI_SETSELECTIONEND' 'SCI_SETSELECTIONSTART' 'SCI_SETSEL' 'SCI_GETTARGETSTART' 'SCI_GETTARGETEND' 'SCI_GETSELECTIONNSTART' 'SCI_GETSELECTIONNEND').
-
-	"Likewise the old messages to set the target start and end separately are no longer needed, as we always set an interval and can use SCI_SETTARGETRANGE"
-	ignoredMessages addAll: #('SCI_SETTARGETSTART' 'SCI_SETTARGETEND').
-
-	"Old style-bits indicators."
-	ignoredMessages addAll: #('SCI_SETSTYLEBITS' 'SCI_GETSTYLEBITS' 'SCI_GETSTYLEBITSNEEDED').
-
-	"Some position functions that we want to keep zero-based"
-	ignoredMessages addAll: #('SCI_LINEFROMPOSITION' 'SCI_POSITIONFROMLINE').
-
-	"4.1.3: SCI_GET/SETCOMMANDEVENTS are not generated because we don't allow this to be changed (it must be false)"
-	ignoredMessages addAll: #('SCI_GETCOMMANDEVENTS' 'SCI_SETCOMMANDEVENTS').
-
-	"Call tip styles are managed using a text style."
-	ignoredMessages addAll: #('SCI_CALLTIPSETFORE' 'SCI_CALLTIPSETBACK').
-
-	"5.0.2"
-	ignoredMessages addAll: #('SCI_SETLEXERLANGUAGE' 'SCI_GETCARETLINEBACK' 'SCI_GETCARETFORE' 'SCI_GETHOTSPOTACTIVEFORE' 'SCI_GETHOTSPOTACTIVEBACK' 'SCI_GETEDGECOLOUR' 'SCI_GETADDITIONALCARETFORE' 'SCI_INDICGETSTROKEWIDTH' 'SCI_INDICSETSTROKEWIDTH' 'SCI_MARKERSETALPHA' 'SCI_MARKERSETBACKTRANSLUCENT' 'SCI_MARKERSETFORETRANSLUCENT' 'SCI_MARKERSETBACKSELECTEDTRANSLUCENT' 'SCI_MARKERSETSTROKEWIDTH').
-
-	ignoredMessages
-		shrink;
-		isImmutable: true;
-		yourself)
-!
 
 initialize
 	events := OrderedCollection new: 256.
@@ -1885,7 +1784,6 @@ updateLibVersion
 !Tools.Scintilla.ScintillaViewGenerator categoriesFor: #generateFunctions!accessing!generating!private! !
 !Tools.Scintilla.ScintillaViewGenerator categoriesFor: #generateNotificationMap!generating!private! !
 !Tools.Scintilla.ScintillaViewGenerator categoriesFor: #getAndResetCommentQueue!helpers!private! !
-!Tools.Scintilla.ScintillaViewGenerator categoriesFor: #ignoredMessages!constants!private! !
 !Tools.Scintilla.ScintillaViewGenerator categoriesFor: #initialize!helpers!initializing!public! !
 !Tools.Scintilla.ScintillaViewGenerator categoriesFor: #isIgnoredConstant:!helpers!private! !
 !Tools.Scintilla.ScintillaViewGenerator categoriesFor: #parseAlias:!helpers!private! !
@@ -1913,8 +1811,598 @@ updateLibVersion
 icon
 	^ScintillaView icon!
 
+ignoredMessages
+	"Ignored messages are not generated, either because they are not needed, or because they are manually defined."
+
+	^##(| ignoredMessages |
+	ignoredMessages := (Set new)
+				add: 'SCI_NULL';
+				add: 'SCI_COPYTEXT';
+				add: 'SCI_GETREADONLY';
+				add: 'SCI_USEPOPUP';
+				add: 'SCI_SETCURRENTPOS';
+				add: 'SCI_LINELENGTH';
+				yourself.
+
+	"We use the direct function exported by the DLL, and don't need a wrapper method for SCI_GETDIRECTPOINTER as we need to send it directly."
+	ignoredMessages addAll: #('SCI_GETDIRECTFUNCTION' 'SCI_GETDIRECTPOINTER').
+	"We don't use direct/unsafe access to the scintilla character buffer."
+	ignoredMessages addAll: #('SCI_GETCHARACTERPOINTER' 'SCI_GETRANGEPOINTER' 'SCI_GETGAPPOSITION').
+	"We don't support background loading"
+	ignoredMessages add: 'SCI_CREATELOADER'.
+
+	"The idFrom field of the notification header is not needed to identify the Scintilla
+	control, as we have an object instance associated with each control instance that receives
+	the notifications directly."
+	ignoredMessages addAll: #('SCI_GETIDENTIFIER' 'SCI_SETIDENTIFIER').
+
+	"Scintilla supports standard Windows focus messages, which are used in the MVP framework already"
+	ignoredMessages
+		add: 'SCI_GETFOCUS';
+		add: 'SCI_SETFOCUS';
+		add: 'SCI_GRABFOCUS';
+		yourself.
+
+	"Margin attributes managed by ScintillaMargin"
+	ignoredMessages
+		addAll: #('SCI_GETMARGINMASKN' 'SCI_SETMARGINMASKN');
+		addAll: #('SCI_GETMARGINTYPEN' 'SCI_SETMARGINTYPEN');
+		addAll: #('SCI_GETMARGINWIDTHN' 'SCI_SETMARGINWIDTHN');
+		addAll: #('SCI_GETMARGINSENSITIVEN' 'SCI_SETMARGINSENSITIVEN');
+		addAll: #('SCI_GETMARGINCURSORN' 'SCI_SETMARGINCURSORN');
+		addAll: #('SCI_GETMARGINBACKN' 'SCI_SETMARGINBACKN');
+		yourself.
+
+	"Indicator attributes managed by ScintillaIndicatorStyle"
+	ignoredMessages
+		addAll: #('SCI_INDICGETFORE' 'SCI_INDICSETFORE');
+		addAll: #('SCI_INDICGETSTYLE' 'SCI_INDICSETSTYLE');
+		addAll: #('SCI_INDICGETHOVERSTYLE' 'SCI_INDICSETHOVERSTYLE');
+		addAll: #('SCI_INDICGETHOVERFORE' 'SCI_INDICSETHOVERFORE');
+		addAll: #('SCI_INDICGETUNDER' 'SCI_INDICSETUNDER');
+		addAll: #('SCI_INDICGETALPHA' 'SCI_INDICSETALPHA');
+		addAll: #('SCI_INDICGETFLAGS' 'SCI_INDICSETFLAGS');
+		addAll: #('SCI_INDICGETOUTLINEALPHA' 'SCI_INDICSETOUTLINEALPHA');
+		yourself.
+
+	"Indicator attributes managed by ScintillaMarkerDefinition"
+	ignoredMessages
+		add: 'SCI_MARKERSETBACK';
+		add: 'SCI_MARKERSETBACKSELECTED';
+		add: 'SCI_MARKERSETFORE';
+		add: 'SCI_MARKERADD';
+		add: 'SCI_MARKERDEFINE';
+		add: 'SCI_MARKERDELETE';
+		yourself.
+
+	"Annotation attributes are managed by ScintillaAnnotation"
+	ignoredMessages
+		addAll: #('SCI_ANNOTATIONGETSTYLE' 'SCI_ANNOTATIONSETSTYLE');
+		yourself.
+
+	"Style attributes managed by ScintillaTextStyle, but note that as Scintilla wrapping
+	predates when style definitions were queryable, so we don't use these at all"
+	ignoredMessages
+		addAll: #('SCI_STYLESETFORE' 'SCI_STYLEGETFORE');
+		addAll: #('SCI_STYLESETBACK' 'SCI_STYLEGETBACK');
+		addAll: #('SCI_STYLESETFONT' 'SCI_STYLEGETFONT');
+		addAll: #('SCI_STYLESETBOLD' 'SCI_STYLEGETBOLD');
+		addAll: #('SCI_STYLESETITALIC' 'SCI_STYLEGETITALIC');
+		addAll: #('SCI_STYLESETUNDERLINE' 'SCI_STYLEGETUNDERLINE');
+		addAll: #('SCI_STYLESETCASE' 'SCI_STYLEGETCASE');
+		addAll: #('SCI_STYLESETCHARACTERSET' 'SCI_STYLEGETCHARACTERSET');
+		addAll: #('SCI_STYLESETSIZE' 'SCI_STYLEGETSIZE');
+		addAll: #('SCI_STYLESETEOLFILLED' 'SCI_STYLEGETEOLFILLED');
+		addAll: #('SCI_STYLESETCHANGEABLE' 'SCI_STYLEGETCHANGEABLE');
+		addAll: #('SCI_STYLESETHOTSPOT' 'SCI_STYLEGETHOTSPOT');
+		addAll: #('SCI_STYLESETVISIBLE' 'SCI_STYLEGETVISIBLE');
+		addAll: #('SCI_STYLESETSIZEFRACTIONAL' 'SCI_STYLEGETSIZEFRACTIONAL');
+		addAll: #('SCI_STYLESETWEIGHT' 'SCI_STYLEGETWEIGHT');
+		yourself.
+
+	"SCI_GETLENGTH is ignored because it duplicates SCI_GETTEXTLENGTH"
+	ignoredMessages add: 'SCI_GETLENGTH'.
+
+	"Don't make use of document ref. stuff at present."
+	"ignoredMessages add: 'SCI_ADDREFDOCUMENT'."
+
+	"Scintilla's cursor management is not required in Dolphin which has its own mechanisms."
+	ignoredMessages addAll: #('SCI_GETCURSOR' 'SCI_SETCURSOR').
+
+	"We don't need SCI_GETMODEVENTMASK because we store the event mask in an instance variable (for some reason that I no longer know)"
+	ignoredMessages add: 'SCI_GETMODEVENTMASK'.
+
+	"We don't need these as they are for the GTK+ platform only"
+	ignoredMessages
+		addAll: #('SCI_GETRECTANGULARSELECTIONMODIFIER' 'SCI_SETRECTANGULARSELECTIONMODIFIER').
+
+	"We always get/set the selection range start and end as a pair."
+	ignoredMessages
+		addAll: #('SCI_GETSELECTIONEND' 'SCI_SETSELECTIONEND' 'SCI_SETSELECTIONSTART' 'SCI_SETSEL' 'SCI_GETTARGETSTART' 'SCI_GETTARGETEND' 'SCI_GETSELECTIONNSTART' 'SCI_GETSELECTIONNEND').
+
+	"Likewise the old messages to set the target start and end separately are no longer needed, as we always set an interval and can use SCI_SETTARGETRANGE"
+	ignoredMessages addAll: #('SCI_SETTARGETSTART' 'SCI_SETTARGETEND').
+
+	"Old style-bits indicators."
+	ignoredMessages addAll: #('SCI_SETSTYLEBITS' 'SCI_GETSTYLEBITS' 'SCI_GETSTYLEBITSNEEDED').
+
+	"Some position functions that we want to keep zero-based"
+	ignoredMessages addAll: #('SCI_LINEFROMPOSITION' 'SCI_POSITIONFROMLINE').
+
+	"4.1.3: SCI_GET/SETCOMMANDEVENTS are not generated because we don't allow this to be changed (it must be false)"
+	ignoredMessages addAll: #('SCI_GETCOMMANDEVENTS' 'SCI_SETCOMMANDEVENTS').
+
+	"Call tip styles are managed using a text style."
+	ignoredMessages addAll: #('SCI_CALLTIPSETFORE' 'SCI_CALLTIPSETBACK').
+
+	"5.0.2"
+	ignoredMessages addAll: #('SCI_SETLEXERLANGUAGE' 'SCI_GETCARETLINEBACK' 'SCI_GETCARETFORE' 'SCI_GETHOTSPOTACTIVEFORE' 'SCI_GETHOTSPOTACTIVEBACK' 'SCI_GETEDGECOLOUR' 'SCI_GETADDITIONALCARETFORE' 'SCI_INDICGETSTROKEWIDTH' 'SCI_INDICSETSTROKEWIDTH' 'SCI_MARKERSETALPHA' 'SCI_MARKERSETBACKTRANSLUCENT' 'SCI_MARKERSETFORETRANSLUCENT' 'SCI_MARKERSETBACKSELECTEDTRANSLUCENT' 'SCI_MARKERSETSTROKEWIDTH' 'SCI_SETWHITESPACEFORE' 'SCI_SETWHITESPACEBACK' 'SCI_GETTWOPHASEDRAW' 'SCI_SETTWOPHASEDRAW').
+
+	"5.0.3 - the elements API replaces quite a number of colour settings"
+	ignoredMessages addAll: #('SCI_MARKERGETLAYER' 'SCI_MARKERSETLAYER' 'SCI_GETCARETLINEVISIBLE' 'SCI_SETCARETLINEVISIBLE' 'SCI_SETCARETLINEBACK' 'SCI_GETCARETLINEBACKALPHA' 'SCI_SETCARETLINEBACKALPHA' 'SCI_SETCARETFORE' 'SCI_GETSELALPHA' 'SCI_SETSELALPHA'  'SCI_GETADDITIONALSELALPHA' 'SCI_SETADDITIONALSELALPHA'  'SCI_GETADDITIONALSELFORE' 'SCI_SETADDITIONALSELFORE' 'SCI_GETADDITIONALSELBACK' 'SCI_SETADDITIONALSELBACK' 'SCI_SETADDITIONALCARETFORE' 'SCI_SETSELBACK' 'SCI_SETSELFORE' 'SCI_SETHOTSPOTACTIVEBACK' 'SCI_SETHOTSPOTACTIVEFORE' 'SCI_GETELEMENTBASECOLOUR').
+
+	ignoredMessages
+		shrink;
+		isImmutable: true;
+		yourself)
+!
+
 new
-	^super new initialize! !
+	^super new initialize!
+
+renamedFunctions
+	^##(| renamedMessages |
+	renamedMessages := LookupTable new.
+	"Indicators"
+	renamedMessages
+		at: 'SCI_GETINDICATORCURRENT' put: #currentIndicatorId;
+		at: 'SCI_SETINDICATORCURRENT' put: #currentIndicatorId:;
+		at: 'SCI_GETINDICATORVALUE' put: #currentIndicatorValue;
+		at: 'SCI_SETINDICATORVALUE' put: #currentIndicatorValue:;
+		at: 'SCI_INDICATORALLONFOR' put: #indicatorMaskAt:;
+		yourself.
+
+	"Zooming"
+	renamedMessages
+		at: 'SCI_ZOOMIN' put: #zoomIn;
+		at: 'SCI_ZOOMOUT' put: #zoomOut;
+		at: 'SCI_GETZOOM' put: #zoomLevel;
+		at: 'SCI_SETZOOM' put: #zoomLevel:;
+		yourself.
+	"Undo and Redo"
+	renamedMessages
+		at: 'SCI_BEGINUNDOACTION' put: #beginUndoGroup;
+		at: 'SCI_ENDUNDOACTION' put: #endUndoGroup;
+		at: 'SCI_EMPTYUNDOBUFFER' put: #emptyUndoBuffer;
+		at: 'SCI_CANREDO' put: #canRedo;
+		at: 'SCI_CANUNDO' put: #canUndo;
+		at: 'SCI_REDO' put: #redo;
+		at: 'SCI_GETUNDOCOLLECTION' put: #isUndoEnabled;
+		at: 'SCI_SETUNDOCOLLECTION' put: #isUndoEnabled:;
+		at: 'SCI_UNDO' put: #basicUndo;
+		yourself.
+	"Tabs & indents"
+	renamedMessages
+		at: 'SCI_GETHIGHLIGHTGUIDE' put: #highlightGuide;
+		at: 'SCI_SETHIGHLIGHTGUIDE' put: #highlightGuide:;
+		at: 'SCI_GETINDENT' put: #indentation;
+		at: 'SCI_SETINDENT' put: #indentation:;
+		at: 'SCI_GETTABWIDTH' put: #tabWidth;
+		at: 'SCI_SETTABWIDTH' put: #tabWidth:;
+		at: 'SCI_GETUSETABS' put: #isUsingTabs;
+		at: 'SCI_SETUSETABS' put: #isUsingTabs:;
+		at: 'SCI_GETBACKSPACEUNINDENTS' put: #backspaceUnindents;
+		at: 'SCI_SETBACKSPACEUNINDENTS' put: #backspaceUnindents:;
+		at: 'SCI_GETTABINDENTS' put: #tabIndents;
+		at: 'SCI_SETTABINDENTS' put: #tabIndents:;
+		yourself.
+	""
+	renamedMessages
+		at: 'SCI_GETXOFFSET' put: #xOffset;
+		at: 'SCI_SETXOFFSET' put: #xOffset:;
+		at: 'SCI_BACKTAB' put: #unindent;
+		at: 'SCI_GETVIEWEOL' put: #hasVisibleLineEndings;
+		at: 'SCI_SETVIEWEOL' put: #hasVisibleLineEndings:;
+		at: 'SCI_GETHSCROLLBAR' put: #canHScroll;
+		at: 'SCI_GETVSCROLLBAR' put: #canVScroll;
+		at: 'SCI_SETENDATLASTLINE' put: #canScrollPastEnd:;
+		yourself.
+	"Caret"
+	renamedMessages
+		at: 'SCI_GOTOPOS' put: #goto:;
+		at: 'SCI_GETCURRENTPOS' put: #caretPosition;
+		at: 'SCI_SETEMPTYSELECTION' put: #caretPosition:;
+		at: 'SCI_GETANCHOR' put: #anchorPosition;
+		at: 'SCI_SETANCHOR' put: #anchorPosition:;
+		at: 'SCI_GETCARETWIDTH' put: #caretWidth;
+		at: 'SCI_SETCARETLINEVISIBLE' put: #isCurrentLineHighlighted:;
+		at: 'SCI_GETCARETLINEVISIBLEALWAYS' put: #isCurrentLineHighlightedAlways;
+		at: 'SCI_SETCARETLINEVISIBLEALWAYS' put: #isCurrentLineHighlightedAlways:;
+		at: 'SCI_MOVECARETINSIDEVIEW' put: #moveCaretInsideView;
+		at: 'SCI_CHOOSECARETX' put: #rememberCaretX;
+		at: 'SCI_GETADDITIONALCARETSVISIBLE' put: #areAdditionalCaretsVisible;
+		at: 'SCI_SETADDITIONALCARETSVISIBLE' put: #areAdditionalCaretsVisible:;
+		at: 'SCI_GETCARETLINEFRAME' put: #currentLineFrameWidth;
+		at: 'SCI_SETCARETLINEFRAME' put: #currentLineFrameWidth:;
+		at: 'SCI_GETMOVEEXTENDSSELECTION' put: #isInSelectionExtendMode;
+		yourself.
+	"Markers"
+	renamedMessages
+		at: 'SCI_MARKERDELETEALL' put: #deleteMarkers:;
+		yourself.
+	"Scrolling"
+	renamedMessages
+		at: 'SCI_SETVSCROLLBAR' put: #showVerticalScrollBar:;
+		at: 'SCI_GETSCROLLWIDTH' put: #scrollWidth;
+		at: 'SCI_SETSCROLLWIDTH' put: #scrollWidth:;
+		at: 'SCI_GETSCROLLWIDTHTRACKING' put: #isScrollWidthTracking;
+		at: 'SCI_SETSCROLLWIDTHTRACKING' put: #isScrollWidthTracking:;
+		yourself.
+	"Line wrapping"
+	renamedMessages
+		at: 'SCI_LINESSPLIT' put: #splitTarget:;
+		at: 'SCI_LINESJOIN' put: #joinTarget;
+		yourself.
+
+	"Whitespace"
+	renamedMessages
+		at: 'SCI_GETWHITESPACESIZE' put: #whitespaceMarkerSize;
+		at: 'SCI_SETWHITESPACESIZE' put: #whitespaceMarkerSize:;
+		yourself.
+
+	"Selection and information"
+	renamedMessages
+		at: 'SCI_SELECTIONISRECTANGLE' put: #isSelectionRectangular;
+		at: 'SCI_HIDESELECTION' put: #hideSelection:;
+		at: 'SCI_GETSELEOLFILLED' put: #isSelectionBackcolorExtendedToEndOfLine;
+		at: 'SCI_SETSELEOLFILLED' put: #isSelectionBackcolorExtendedToEndOfLine:;
+		at: 'SCI_GETSELECTIONEMPTY' put: #isSelectionEmpty;
+		at: 'SCI_GETSELTEXT' put: #selection;
+		at: 'SCI_GETTARGETTEXT' put: #targetText;
+		at: 'SCI_GETCURLINE' put: #currentLineText;
+		at: 'SCI_TARGETWHOLEDOCUMENT' put: #targetAll;
+		at: 'SCI_CLEAR' put: #basicClearSelection;
+		at: 'SCI_GETTEXTLENGTH' put: #textLength;
+		at: 'SCI_GETADDITIONALSELECTIONTYPING' put: #hasAdditionalSelectionTyping;
+		at: 'SCI_SETADDITIONALSELECTIONTYPING' put: #hasAdditionalSelectionTyping:;
+		yourself.
+	"Text retrieval and modification"
+	renamedMessages
+		at: 'SCI_GETTEXT' put: #plainText;
+		yourself.
+	"Styling"
+	renamedMessages
+		at: 'SCI_CLEARDOCUMENTSTYLE' put: #removeAllStyling;
+		at: 'SCI_SETSTYLING' put: #styleNext:mask:;
+		at: 'SCI_GETENDSTYLED' put: #stylingPosition;
+		at: 'SCI_STARTSTYLING' put: #startStylingFrom:;
+		at: 'SCI_COLOURISE' put: #restyleFrom:to:;
+		at: 'SCI_GETSTYLEAT' put: #styleIdAt:;
+		yourself.
+
+	"Miscellaneous"
+	renamedMessages
+		at: 'SCI_GETOVERTYPE' put: #isOvertypeEnabled;
+		at: 'SCI_SETOVERTYPE' put: #isOvertypeEnabled:;
+		at: 'SCI_GETMODIFY' put: #isTextModified;
+		at: 'SCI_GETLINECOUNT' put: #lineCount;
+		at: 'SCI_GETPRINTCOLOURMODE' put: #printColourMode;
+		at: 'SCI_SETPRINTCOLOURMODE' put: #printColourMode:;
+		at: 'SCI_GETPRINTMAGNIFICATION' put: #printMagnification;
+		at: 'SCI_SETPRINTMAGNIFICATION' put: #printMagnification:;
+		at: 'SCI_CLEARALL' put: #basicClearAll;
+		at: 'SCI_EDITTOGGLEOVERTYPE' put: #toggleOvertype;
+		at: 'SCI_SETREADONLY' put: #setReadOnly:;
+		at: 'SCI_TAB' put: #indent;
+		at: 'SCI_TARGETFROMSELECTION' put: #setTargetRangeFromSelection;
+		at: 'SCI_GETSTATUS' put: #errorStatus;
+		at: 'SCI_SETSTATUS' put: #errorStatus:;
+		at: 'SCI_LINESONSCREEN' put: #linesOnScreen;
+		at: 'SCI_GETMOUSEDOWNCAPTURES' put: #willCaptureMouse;
+		at: 'SCI_SETMOUSEDOWNCAPTURES' put: #willCaptureMouse:;
+		at: 'SCI_GETWRAPSTARTINDENT' put: #hangingIndent;
+		at: 'SCI_SETWRAPSTARTINDENT' put: #hangingIndent:;
+		at: 'SCI_GETPOSITIONCACHE' put: #positionCacheSize;
+		at: 'SCI_SETPOSITIONCACHE' put: #positionCacheSize:;
+		at: 'SCI_GETEXTRAASCENT' put: #extraAscent;
+		at: 'SCI_SETEXTRAASCENT' put: #extraAscent:;
+		at: 'SCI_GETEXTRADESCENT' put: #extraDescent;
+		at: 'SCI_SETEXTRADESCENT' put: #extraDescent:;
+		yourself.
+
+	"Hotspot"
+	renamedMessages
+		at: 'SCI_GETHOTSPOTACTIVEUNDERLINE' put: #isActiveHotspotUnderlined;
+		at: 'SCI_SETHOTSPOTACTIVEUNDERLINE' put: #isActiveHotspotUnderlined:;
+		at: 'SCI_GETHOTSPOTSINGLELINE' put: #areHotspotsSingleLine;
+		at: 'SCI_SETHOTSPOTSINGLELINE' put: #areHotspotsSingleLine:;
+		yourself.
+
+	"Autocompletion"
+	renamedMessages
+		at: 'SCI_AUTOCCANCEL' put: #cancelAutoCompletion;
+		at: 'SCI_AUTOCACTIVE' put: #isAutoCompletionActive;
+		at: 'SCI_AUTOCCOMPLETE' put: #acceptAutoCompletion;
+		at: 'SCI_AUTOCGETIGNORECASE' put: #isAutoCompletionCaseInsensitive;
+		at: 'SCI_AUTOCSETIGNORECASE' put: #isAutoCompletionCaseInsensitive:;
+		at: 'SCI_AUTOCGETAUTOHIDE' put: #isAutoCompletionCancelledWhenNoMatch;
+		at: 'SCI_AUTOCSETAUTOHIDE' put: #isAutoCompletionCancelledWhenNoMatch:;
+		at: 'SCI_AUTOCSELECT' put: #findAutoCompletionEntry:;
+		at: 'SCI_AUTOCGETCANCELATSTART' put: #isAutoCompletionCancelledAtStart;
+		at: 'SCI_AUTOCSETCANCELATSTART' put: #isAutoCompletionCancelledAtStart:;
+		at: 'SCI_AUTOCGETDROPRESTOFWORD' put: #isAutoCompletionTruncating;
+		at: 'SCI_AUTOCSETDROPRESTOFWORD' put: #isAutoCompletionTruncating:;
+		at: 'SCI_AUTOCGETCHOOSESINGLE' put: #isAutoCompletionSingleMatchChosen;
+		at: 'SCI_AUTOCSETCHOOSESINGLE' put: #isAutoCompletionSingleMatchChosen:;
+		at: 'SCI_CLEARREGISTEREDIMAGES' put: #destroyAutoCompletionListImages;
+		at: 'SCI_AUTOCGETMAXWIDTH' put: #maxCompletionListWidth;
+		at: 'SCI_AUTOCSETMAXWIDTH' put: #maxCompletionListWidth:;
+		at: 'SCI_AUTOCGETMAXHEIGHT' put: #maxCompletionListHeight;
+		at: 'SCI_AUTOCSETMAXHEIGHT' put: #maxCompletionListHeight:;
+		at: 'SCI_AUTOCGETCURRENTTEXT' put: #autoCompletionCurrentText;
+		at: 'SCI_AUTOCPOSSTART' put: #autoCompletionListPosition;
+		yourself.
+
+	"Calltips"
+	renamedMessages
+		at: 'SCI_CALLTIPACTIVE' put: #isCallTipActive;
+		at: 'SCI_CALLTIPCANCEL' put: #cancelCallTip;
+		at: 'SCI_CANCEL' put: #cancelModes;
+		at: 'SCI_CALLTIPSETPOSITION' put: #isCallTipAboveText:;
+		at: 'SCI_CALLTIPPOSSTART' put: #callTipPosition;
+		at: 'SCI_CALLTIPSETHLT' put: #highlightCallTipFrom:to:;
+		yourself.
+
+	"Macros"
+	renamedMessages
+		at: 'SCI_STARTRECORD' put: #startRecording;
+		at: 'SCI_STOPRECORD' put: #stopRecording;
+		yourself.
+
+	"Commands - Cursor movement"
+	renamedMessages
+		at: 'SCI_CHARLEFT' put: #moveLeft;
+		at: 'SCI_CHARRIGHT' put: #moveRight;
+		at: 'SCI_WORDLEFT' put: #moveToStartOfWord;
+		at: 'SCI_WORDLEFTEND' put: #moveToEndOfPreviousWord;
+		at: 'SCI_WORDRIGHT' put: #moveToEndOfWord;
+		at: 'SCI_WORDRIGHTEND' put: #moveToEndOfNextWord;
+		at: 'SCI_WORDPARTLEFT' put: #moveToStartOfWordPart;
+		at: 'SCI_WORDPARTRIGHT' put: #moveToEndOfWordPart;
+		at: 'SCI_LINEUP' put: #moveUp;
+		at: 'SCI_LINEDOWN' put: #moveDown;
+		at: 'SCI_PARAUP' put: #moveParaUp;
+		at: 'SCI_PARADOWN' put: #moveParaDown;
+		at: 'SCI_PAGEUP' put: #movePageUp;
+		at: 'SCI_PAGEUP' put: #movePageUp;
+		at: 'SCI_STUTTEREDPAGEUP' put: #moveStutteredPageUp;
+		at: 'SCI_PAGEDOWN' put: #movePageDown;
+		at: 'SCI_STUTTEREDPAGEDOWN' put: #moveStutteredPageDown;
+		at: 'SCI_DOCUMENTEND' put: #moveToEndOfDocument;
+		at: 'SCI_DOCUMENTSTART' put: #moveToStartOfDocument;
+		at: 'SCI_HOME' put: #moveToStartOfLine;
+		at: 'SCI_HOMEWRAP' put: #moveToStartOfWrappedLine;
+		at: 'SCI_HOMEDISPLAY' put: #moveToStartOfDisplayLine;
+		at: 'SCI_VCHOME' put: #moveToVcHome;
+		at: 'SCI_VCHOMEWRAP' put: #moveToWrappedVcHome;
+		at: 'SCI_VCHOMEDISPLAY' put: #moveToVcStartOfDisplayLine;
+		at: 'SCI_LINEEND' put: #moveToEndOfLine;
+		at: 'SCI_LINEENDDISPLAY' put: #moveToEndOfDisplayLine;
+		at: 'SCI_LINEENDWRAP' put: #moveToEndOfWrappedLine;
+		at: 'SCI_LINESCROLLDOWN' put: #scrollDown;
+		at: 'SCI_LINESCROLLUP' put: #scrollUp;
+		yourself.
+
+	"Commands - Selection movement"
+	renamedMessages
+		at: 'SCI_CHARLEFTEXTEND' put: #extendLeft;
+		at: 'SCI_CHARRIGHTEXTEND' put: #extendRight;
+		at: 'SCI_CHARLEFTRECTEXTEND' put: #extendRectangleLeft;
+		at: 'SCI_CHARRIGHTRECTEXTEND' put: #extendRectangleRight;
+		at: 'SCI_WORDLEFTEXTEND' put: #extendToStartOfWord;
+		at: 'SCI_WORDLEFTENDEXTEND' put: #extendToEndOfPreviousWord;
+		at: 'SCI_WORDRIGHTEXTEND' put: #extendToEndOfWord;
+		at: 'SCI_WORDRIGHTENDEXTEND' put: #extendToEndOfNextWord;
+		at: 'SCI_WORDPARTLEFTEXTEND' put: #extendToStartOfWordPart;
+		at: 'SCI_WORDPARTRIGHTEXTEND' put: #extendToEndOfWordPart;
+		at: 'SCI_DOCUMENTENDEXTEND' put: #extendToEndOfDocument;
+		at: 'SCI_DOCUMENTSTARTEXTEND' put: #extendToStartOfDocument;
+		at: 'SCI_HOMEEXTEND' put: #extendToStartOfLine;
+		at: 'SCI_HOMEWRAPEXTEND' put: #extendToStartOfWrappedLine;
+		at: 'SCI_HOMEDISPLAYEXTEND' put: #extendToStartOfDisplayLine;
+		at: 'SCI_HOMERECTEXTEND' put: #extendRectangleToStartOfLine;
+		at: 'SCI_VCHOMEEXTEND' put: #extendToVcHome;
+		at: 'SCI_VCHOMERECTEXTEND' put: #extendRectangleToVcHome;
+		at: 'SCI_VCHOMEWRAPEXTEND' put: #extendToWrappedVcHome;
+		at: 'SCI_VCHOMEDISPLAYEXTEND' put: #extendToStartOfVcDisplayLine;
+		at: 'SCI_LINEDOWNEXTEND' put: #extendDown;
+		at: 'SCI_LINEUPEXTEND' put: #extendUp;
+		at: 'SCI_LINEDOWNRECTEXTEND' put: #extendRectangleDown;
+		at: 'SCI_LINEUPRECTEXTEND' put: #extendRectangleUp;
+		at: 'SCI_LINEENDEXTEND' put: #extendToEndOfLine;
+		at: 'SCI_LINEENDRECTEXTEND' put: #extendRectangleToEndOfLine;
+		at: 'SCI_LINEENDDISPLAYEXTEND' put: #extendToEndOfDisplayLine;
+		at: 'SCI_LINEENDWRAPEXTEND' put: #extendToEndOfWrappedLine;
+		at: 'SCI_PAGEUPEXTEND' put: #extendPageUp;
+		at: 'SCI_PAGEUPRECTEXTEND' put: #extendRectanglePageUp;
+		at: 'SCI_STUTTEREDPAGEUPEXTEND' put: #extendStutteredPageUp;
+		at: 'SCI_PAGEDOWNEXTEND' put: #extendPageDown;
+		at: 'SCI_STUTTEREDPAGEDOWNEXTEND' put: #extendStutteredPageDown;
+		at: 'SCI_PAGEDOWNRECTEXTEND' put: #extendRectanglePageDown;
+		at: 'SCI_PARAUPEXTEND' put: #extendParaUp;
+		at: 'SCI_PARADOWNEXTEND' put: #extendParaDown;
+		at: 'SCI_SELECTALL' put: #basicSelectAll;
+		yourself.
+
+	"Unsupported rectangular selection commands"
+	false
+		ifTrue: 
+			[renamedMessages
+				at: 'SCI_PARADOWNRECTEXTEND' put: #extendRectangleParaDown;
+				at: 'SCI_PARAUPRECTEXTEND' put: #extendRectangleParaUp;
+				at: 'SCI_WORDLEFTRECTEXTEND' put: #extendRectangleToStartOfWord;
+				at: 'SCI_WORDRIGHTRECTEXTEND' put: #extendRectangleToEndOfWord;
+				yourself].
+
+	"Commands - Deletion"
+	renamedMessages
+		at: 'SCI_DELLINELEFT' put: #deleteToStartOfLine;
+		at: 'SCI_DELLINERIGHT' put: #deleteToEndOfLine;
+		at: 'SCI_DELWORDLEFT' put: #deleteToStartOfWord;
+		at: 'SCI_DELWORDRIGHT' put: #deleteToNextWord;
+		at: 'SCI_DELWORDRIGHTEND' put: #deleteToEndOfWord;
+		at: 'SCI_DELETEBACK' put: #backspace;
+		at: 'SCI_DELETEBACKNOTLINE' put: #backspaceNoLine;
+		yourself.
+
+	"Commands - Insertion"
+	renamedMessages
+		at: 'SCI_FORMFEED' put: #formFeed;
+		at: 'SCI_NEWLINE' put: #newLine;
+		yourself.
+
+	"Commands - Cut, Copy & Paste"
+	renamedMessages
+		at: 'SCI_PASTE' put: #pasteClipboard;
+		at: 'SCI_CUT' put: #cutSelection;
+		at: 'SCI_COPY' put: #copySelection;
+		at: 'SCI_COPYALLOWLINE' put: #copySelectionOrLine;
+		at: 'SCI_LINECUT' put: #cutLine;
+		at: 'SCI_LINEDELETE' put: #deleteLine;
+		at: 'SCI_LINECOPY' put: #copyLine;
+		at: 'SCI_LINEDUPLICATE' put: #duplicateLine;
+		at: 'SCI_LINETRANSPOSE' put: #twiddleLines;
+		yourself.
+
+	"Commands - Other"
+	renamedMessages
+		at: 'SCI_UPPERCASE' put: #convertToUppercase;
+		at: 'SCI_LOWERCASE' put: #convertToLowercase;
+		at: 'SCI_MOVESELECTEDLINESUP' put: #moveSelectedLinesUp;
+		at: 'SCI_MOVESELECTEDLINESDOWN' put: #moveSelectedLinesDown;
+		at: 'SCI_SCROLLTOSTART' put: #scrollToStart;
+		at: 'SCI_SCROLLTOEND' put: #scrollToEnd;
+		at: 'SCI_LINEREVERSE' put: #reverseSelectedLines;
+		yourself.
+
+	"Brace highlighting"
+	renamedMessages
+		at: 'SCI_BRACEBADLIGHT' put: #highlightMismatchedBrace:;
+		at: 'SCI_BRACEHIGHLIGHT' put: #highlightBracesAt:and:;
+		yourself.
+
+	"1.67"
+	renamedMessages
+		at: 'SCI_SELECTIONDUPLICATE' put: #duplicateSelection;
+		yourself.
+
+	"1.77"
+	renamedMessages
+		at: 'SCI_SETKEYSUNICODE' put: #isKeyboardInputUnicode:;
+		at: 'SCI_GETKEYSUNICODE' put: #isKeyboardInputUnicode;
+		yourself.
+
+	"Annotations"
+	renamedMessages
+		at: 'SCI_ANNOTATIONCLEARALL' put: #basicRemoveAllAnnotations;
+		yourself.
+
+	"2.01"
+	renamedMessages
+		at: 'SCI_GETMULTIPLESELECTION' put: #isMultiSelect;
+		at: 'SCI_SETMULTIPLESELECTION' put: #isMultiSelect:;
+		at: 'SCI_CLEARSELECTIONS' put: #removeSelections;
+		at: 'SCI_GETADDITIONALCARETSBLINK' put: #hasBlinkingSecondaryCarets;
+		at: 'SCI_SETADDITIONALCARETSBLINK' put: #hasBlinkingSecondaryCarets:;
+		at: 'SCI_ROTATESELECTION' put: #rotateSelection;
+		at: 'SCI_GETSELECTIONS' put: #selectionCount;
+		at: 'SCI_SWAPMAINANCHORCARET' put: #swapPrimarySelectionAnchorAndCaret;
+		at: 'SCI_VERTICALCENTRECARET' put: #centerCurrentLine;
+		yourself.
+	"3.6.3"
+	renamedMessages
+		at: 'SCI_GETALLLINESVISIBLE' put: #areAllLinesVisible;
+		at: 'SCI_DESCRIBEKEYWORDSETS' put: #describeKeywordSets;
+		at: 'SCI_GETLEXERLANGUAGE' put: #lexerLanguage;
+		yourself.
+	"3.7.0"
+	renamedMessages
+		at: 'SCI_MULTIEDGECLEARALL' put: #removeAllEdges;
+		at: 'SCI_GETMOUSEWHEELCAPTURES' put: #isMouseWheelCaptured;
+		at: 'SCI_SETMOUSEWHEELCAPTURES' put: #isMouseWheelCaptured:;
+		yourself.
+
+	"4.1.5"
+	renamedMessages
+		at: 'SCI_GETDEFAULTFOLDDISPLAYTEXT' put: #defaultFoldTextTag;
+		at: 'SCI_SETDEFAULTFOLDDISPLAYTEXT' put: #defaultFoldTextTag:;
+		yourself.
+
+	"4.2 - introduces extra types allowing a number of functions to be generated in higher level form"
+	renamedMessages
+		at: 'SCI_GOTOLINE' put: #gotoLine:;
+		at: 'SCI_GETLINEENDPOSITION' put: #lineEndPosition:;
+		at: 'SCI_CALLTIPSETPOSSTART' put: #callTipPosition:;
+		at: 'SCI_VISIBLEFROMDOCLINE' put: #lineFromDocumentLine:;
+		at: 'SCI_DOCLINEFROMVISIBLE' put: #documentLineFromLine:;
+		at: 'SCI_SETFOLDLEVEL' put: #foldLine:level:;
+		at: 'SCI_GETFOLDLEVEL' put: #foldLevelOfLine:;
+		at: 'SCI_GETLASTCHILD' put: #lastChildLine:level:;
+		at: 'SCI_FOLDCHILDREN' put: #foldChildren:action:;
+		at: 'SCI_EXPANDCHILDREN' put: #expandChildren:level:;
+		at: 'SCI_GETFOLDPARENT' put: #parentOfFoldedLine:;
+		at: 'SCI_SHOWLINES' put: #showLinesFrom:to:;
+		at: 'SCI_HIDELINES' put: #hideLinesFrom:to:;
+		at: 'SCI_GETLINEVISIBLE' put: #isLineVisible:;
+		at: 'SCI_WRAPCOUNT' put: #wrapCount:;
+		at: 'SCI_SETFOLDEXPANDED' put: #isLine:folded:;
+		at: 'SCI_GETFOLDEXPANDED' put: #isLineFolded:;
+		at: 'SCI_TOGGLEFOLD' put: #toggleFold:;
+		at: 'SCI_TOGGLEFOLDSHOWTEXT' put: #toggleFold:showText:;
+		at: 'SCI_FOLDLINE' put: #foldLine:action:;
+		at: 'SCI_ENSUREVISIBLE' put: #ensureLineVisible:;
+		at: 'SCI_ENSUREVISIBLEENFORCEPOLICY' put: #ensureLineVisibleEnforcingPolicy:;
+		at: 'SCI_WORDSTARTPOSITION' put: #wordStartAt:onlyWordCharacters:;
+		at: 'SCI_WORDENDPOSITION' put: #wordEndAt:onlyWordCharacters:;
+		at: 'SCI_TEXTHEIGHT' put: #lineHeight:;
+		at: 'SCI_GETFIRSTVISIBLELINE' put: #lineScroll;
+		at: 'SCI_SETFIRSTVISIBLELINE' put: #lineScroll:;
+		at: 'SCI_GETEDGECOLUMN' put: #edgeColumn;
+		at: 'SCI_SETEDGECOLUMN' put: #edgeColumn:;
+		at: 'SCI_SEARCHNEXT' put: #searchNext:text:;
+		at: 'SCI_SEARCHPREV' put: #searchPrev:text:;
+		at: 'SCI_FINDCOLUMN' put: #indexOfLine:column:;
+		at: 'SCI_GETLINESTATE' put: #getLineState:;
+		at: 'SCI_GETLINEINDENTATION' put: #indentationOfLine:;
+		at: 'SCI_CLEARTABSTOPS' put: #clearTabStops:;
+		at: 'SCI_GETCOLUMN' put: #columnFromPosition:;
+		at: 'SCI_GETENDATLASTLINE' put: #canScrollPastEnd;
+		at: 'SCI_GETRECTANGULARSELECTIONANCHOR' put: #rectangularSelectionAnchor;
+		at: 'SCI_SETRECTANGULARSELECTIONCARET' put: #rectangularSelectionCaret:;
+		at: 'SCI_SETRECTANGULARSELECTIONANCHOR' put: #rectangularSelectionAnchor:;
+		at: 'SCI_GETRECTANGULARSELECTIONCARET' put: #rectangularSelectionCaret;
+		at: 'SCI_SETLINESTATE' put: #setLine:state:;
+		at: 'SCI_GETSELECTIONSTART' put: #selectionStart;
+		yourself.
+
+	"4.2.1"
+	renamedMessages
+		at: 'SCI_GETTABMINIMUMWIDTH' put: #tabMinimumWidth;
+		at: 'SCI_SETTABMINIMUMWIDTH' put: #tabMinimumWidth:;
+		yourself.
+
+	"5.0.2"
+	renamedMessages
+		at: 'SCI_GETFONTLOCALE' put: #fontLocale;
+		at: 'SCI_SETFONTLOCALE' put: #fontLocale:
+		yourself.
+
+	renamedMessages
+		shrink;
+		yourself)
+	! !
 !Tools.Scintilla.ScintillaViewGenerator class categoriesFor: #icon!constants!development!public! !
+!Tools.Scintilla.ScintillaViewGenerator class categoriesFor: #ignoredMessages!constants!private! !
 !Tools.Scintilla.ScintillaViewGenerator class categoriesFor: #new!instance creation!public! !
+!Tools.Scintilla.ScintillaViewGenerator class categoriesFor: #renamedFunctions!constants!private! !
 

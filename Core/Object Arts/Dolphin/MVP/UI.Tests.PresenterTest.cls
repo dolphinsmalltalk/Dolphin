@@ -16,7 +16,7 @@ classToTest
 	^self subclassResponsibility!
 
 initializePresenter
-	presenter := self classToTest show!
+	self classToTest ifNotNil: [:subjectClass | presenter := subjectClass show]!
 
 leftClickAt: aPoint 
 	"Fire a left-click at the specified client coordinate of the tested presenter."
@@ -47,8 +47,12 @@ setUp
 	self initializePresenter!
 
 tearDown
-	presenter topShell close.
-	presenter := nil!
+	presenter isNil
+		ifFalse: 
+			[| shell |
+			shell := presenter topShell.
+			shell = View desktop ifTrue: [presenter destroy] ifFalse: [shell close].
+			presenter := nil]!
 
 waitForInputIdle
 	SessionManager inputState pumpMessages! !

@@ -830,7 +830,7 @@ Core.Object subclass: #'Tools.VisualShellFinder'
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Kernel.AttributeDescriptor subclass: #'Tools.Aspect'
-	instanceVariableNames: 'name presenterBlock editBlock immediateActionBlock category'
+	instanceVariableNames: 'name presenterBlock editBlock immediateActionBlock category getBlock putBlock'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -6639,6 +6639,7 @@ publishedAspectsOfInstances
 		add: (Aspect integer: #alpha);
 		add: (Aspect integer: #foreAlpha);
 		add: (Aspect integer: #strokeWidth);
+		add: (Aspect boolean: #isUnderText);
 		yourself! !
 !UI.Scintilla.IndicatorStyle class categoriesFor: #publishedAspectsOfInstances!constants!public! !
 
@@ -6720,7 +6721,9 @@ publishedAspectsOfInstances
 		removeKey: #alignment;
 		add: (Aspect sequenceableCollection: #keyBindings
 					addEvaluationFrom: {UI.Scintilla.KeyBinding name , ' new'}) beImmutable;
-		add: (Aspect sequenceableCollection: #margins);
+		add: ((Aspect sequenceableCollection: #margins)
+					getBlock: [:view | view margins asOrderedCollection];
+					beImmutable);
 		add: (Aspect sequenceableCollection: #indicatorStyles
 					addEvaluationFrom: {UI.Scintilla.IndicatorStyle name , ' new'}) beImmutable;
 		add: (Aspect sequenceableCollection: #markerDefinitions
@@ -6739,6 +6742,8 @@ publishedAspectsOfInstances
 		add: (Aspect choice: #tabDrawMode from: self tabDrawModes);
 		add: (Aspect choice: #endOfLineMode from: self lineEndings);
 		add: (Aspect choice: #tabDrawMode from: self tabDrawModes);
+		add: (Aspect name: #mouseDwellTime);
+		add: (Aspect choice: #drawingTechnology from: self drawingTechnologies);
 		yourself.
 	choices := OrderedCollection with: 'nil'.
 	(UI.Scintilla.Styler allSubclasses reject: [:each | each isAbstract])
@@ -6746,12 +6751,12 @@ publishedAspectsOfInstances
 	answer add: (Aspect choice: #styler evaluationFrom: choices).
 	#(#autoCompletionAcceptChars #autoCompletionCancelChars)
 		do: [:each | answer add: (Aspect string: each)].
-	#(#tabWidth #hoverTime #selectionAlpha #secondarySelectionAlpha #marginCount #currentLineFrameWidth)
-		do: [:each | answer add: (Aspect integer: each)].
-	#(#caretForecolor #callTipHighlightColor #whitespaceBackcolor #whitespaceForecolor #foldMarginColor #foldMarginHiColor #currentLineBackcolor)
+	#(#tabWidth #currentLineFrameWidth) do: [:each | answer add: (Aspect integer: each)].
+	#(#caretForecolor #callTipHighlightColor #whitespaceBackcolor #whitespaceForecolor #foldMarginColor #foldMarginHiColor #currentLineBackcolor #selectionBackcolor #inactiveSelectionBackcolor)
 		do: [:each | answer add: (Aspect color: each)].
-	#(#canScrollPastEnd #isAutoCompletionCancelledAtStart #isAutoCompletionCaseInsensitive #isAutoCompletionCancelledWhenNoMatch #isAutoCompletionSingleMatchChosen #isAutoCompletionTruncating #isBraceHighlightingEnabled #isFoldingEnabled #hasVisibleLineEndings #isCurrentLineHighlighted #isAccessibilityEnabled)
+	#(#canScrollPastEnd #isAutoCompletionCancelledAtStart #isAutoCompletionCaseInsensitive #isAutoCompletionCancelledWhenNoMatch #isAutoCompletionSingleMatchChosen #isAutoCompletionTruncating #isBraceHighlightingEnabled #isFoldingEnabled #hasVisibleLineEndings #isAccessibilityEnabled)
 		do: [:each | answer add: (Aspect boolean: each)].
+	answer add: (Aspect choice: #selectionLayer from: self layerNames).
 	^answer!
 
 publishedEventsOfInstances

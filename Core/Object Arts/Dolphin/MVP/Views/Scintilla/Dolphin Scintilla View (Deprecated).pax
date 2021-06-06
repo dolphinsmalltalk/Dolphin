@@ -15,10 +15,24 @@ package setMethodNames: #(
 	#(#{UI.Scintilla.IndicatorStyle} #styleName)
 	#(#{UI.Scintilla.IndicatorStyle} #styleName:)
 	#(#{UI.Scintilla.IndicatorStyle class} #styleNames)
+	#(#{UI.Scintilla.ScintillaView} #currentLineAlpha:)
+	#(#{UI.Scintilla.ScintillaView} #firstVisibleLine:)
 	#(#{UI.Scintilla.ScintillaView} #highlightRange:withIndicator:)
+	#(#{UI.Scintilla.ScintillaView} #hoverTime)
+	#(#{UI.Scintilla.ScintillaView} #hoverTime:)
 	#(#{UI.Scintilla.ScintillaView} #indicatorDefinitions:)
+	#(#{UI.Scintilla.ScintillaView} #isCurrentLineHighlighted:)
+	#(#{UI.Scintilla.ScintillaView} #isDrawingBuffered)
+	#(#{UI.Scintilla.ScintillaView} #isDrawingBuffered:)
+	#(#{UI.Scintilla.ScintillaView} #isDrawingTwoPhase)
+	#(#{UI.Scintilla.ScintillaView} #isDrawingTwoPhase:)
 	#(#{UI.Scintilla.ScintillaView} #isKeyboardInputUnicode)
 	#(#{UI.Scintilla.ScintillaView} #isKeyboardInputUnicode:)
+	#(#{UI.Scintilla.ScintillaView} #marginCount)
+	#(#{UI.Scintilla.ScintillaView} #marginCount:)
+	#(#{UI.Scintilla.ScintillaView} #sciSetEdgeColumn:)
+	#(#{UI.Scintilla.ScintillaView} #secondarySelectionAlpha:)
+	#(#{UI.Scintilla.ScintillaView} #selectionAlpha:)
 ).
 
 package setPrerequisites: #(
@@ -88,6 +102,20 @@ styleNames
 
 !UI.Scintilla.ScintillaView methodsFor!
 
+currentLineAlpha: alphaInteger
+	"Set background alpha of the caret line."
+
+	#deprecated.	"Use a currentLineBackcolor with alpha"
+	self
+		currentLineBackcolor: (self currentLineBackcolor alpha: alphaInteger);
+		currentLineBackcolorLayer: (alphaInteger < 255 ifTrue: [#underText] ifFalse: [#base])!
+
+firstVisibleLine: anInteger
+	"Scroll so that a display line is at the top of the display."
+
+	Notification deprecated.
+	self lineScroll: anInteger!
+
 highlightRange: anInterval withIndicator: idInteger 
 	"Apply the indicator identified by the <integer> argument to the range of text
 	specified by the <Interval> argument."
@@ -95,9 +123,59 @@ highlightRange: anInterval withIndicator: idInteger
 	#deprecated.
 	self setIndicator: idInteger range: anInterval!
 
+hoverTime
+	#deprecated.	"Use #hoverDwell"
+	^self sciGetMouseDwellTime!
+
+hoverTime: periodMillisecondsInteger
+	#deprecated.	"Use #hoverDwell:. Retained to load legacy view state."
+	self sciSetMouseDwellTime: periodMillisecondsInteger!
+
 indicatorDefinitions: aSequenceableCollection 
 	#deprecated.
 	self indicatorStyles: aSequenceableCollection!
+
+isCurrentLineHighlighted: showBoolean
+	"Set whether the background of the line containing the caret is highlighted using a in a different colour than the ambient background colour."
+
+	#deprecated.	"Retained for legacy view state."
+	self setOrResetElement: SC_ELEMENT_CARET_LINE_BACK
+		color: (showBoolean
+				ifTrue: [(elementColors lookup: SC_ELEMENT_CARET_LINE_BACK) ifNil: [self defaultCurrentLineBackcolor]])!
+
+isDrawingBuffered
+	#deprecated.	"This setting is managed automatically - turned off when using directWrite, or on when using GDI (drawingMode = #default)"
+	^self sciGetBufferedDraw!
+
+isDrawingBuffered: bufferedBoolean
+	#deprecated.	"This setting is managed automatically - turned off when using directWrite, or on when using GDI (drawingMode = #default)"
+	self sciSetBufferedDraw: bufferedBoolean!
+
+isDrawingTwoPhase
+	"Is drawing done in two phases with backgrounds drawn before foregrounds?"
+
+	#deprecated.
+	^this
+		ifNil: [false]
+		ifNotNil: 
+			[(Library
+				directFunction: this
+				msg: SCI_GETTWOPHASEDRAW
+				wParam: 0
+				lParam: 0) asBoolean]!
+
+isDrawingTwoPhase: twoPhaseBoolean
+	"In twoPhaseDraw mode, drawing is performed in two phases, first the background and then the
+	foreground. This avoids chopping off characters that overlap the next run."
+
+	#deprecated.
+	this
+		ifNotNil: 
+			[Library
+				directFunction: this
+				msg: SCI_SETTWOPHASEDRAW
+				wParam: twoPhaseBoolean asParameter
+				lParam: 0]!
 
 isKeyboardInputUnicode
 	"Are keys always interpreted as Unicode?"
@@ -122,11 +200,51 @@ isKeyboardInputUnicode: keysUnicodeBoolean
 				directFunction: this
 				msg: SCI_SETKEYSUNICODE
 				wParam: keysUnicodeBoolean asParameter
-				lParam: 0]! !
+				lParam: 0]!
+
+marginCount
+	"Answer the maximum number of margins that can be displayed. As of Scintilla 3.7.0
+	this is no longer fixed at three."
+
+	#deprecated.
+	^self sciGetMargins!
+
+marginCount: anInteger
+	"Set the maximum number of margins that can be displayed. As of Scintilla 3.7.0
+	this is no longer fixed at three."
+
+	#deprecated.
+	^self sciSetMargins: anInteger!
+
+sciSetEdgeColumn: columnInteger
+	#deprecated. "For reading old view resources"
+	self edgeColumn: columnInteger + 1!
+
+secondarySelectionAlpha: alphaInteger
+	#deprecated.	"Retained as used in old saved view state."
+	self secondarySelectionBackcolor: (self secondarySelectionBackcolor alpha: alphaInteger)!
+
+selectionAlpha: alphaInteger
+	#deprecated.	"Retained as used in old saved view state."
+	self selectionBackcolor: (self selectionBackcolor alpha: alphaInteger)! !
+!UI.Scintilla.ScintillaView categoriesFor: #currentLineAlpha:!caret, selection, and hotspot styles!public! !
+!UI.Scintilla.ScintillaView categoriesFor: #firstVisibleLine:!public!scrolling! !
 !UI.Scintilla.ScintillaView categoriesFor: #highlightRange:withIndicator:!indicators!public! !
+!UI.Scintilla.ScintillaView categoriesFor: #hoverTime!other settings!private! !
+!UI.Scintilla.ScintillaView categoriesFor: #hoverTime:!other settings!private! !
 !UI.Scintilla.ScintillaView categoriesFor: #indicatorDefinitions:!indicators!public! !
+!UI.Scintilla.ScintillaView categoriesFor: #isCurrentLineHighlighted:!caret, selection, and hotspot styles!public! !
+!UI.Scintilla.ScintillaView categoriesFor: #isDrawingBuffered!other settings!public!testing! !
+!UI.Scintilla.ScintillaView categoriesFor: #isDrawingBuffered:!other settings!public! !
+!UI.Scintilla.ScintillaView categoriesFor: #isDrawingTwoPhase!public!scintilla interface! !
+!UI.Scintilla.ScintillaView categoriesFor: #isDrawingTwoPhase:!public!scintilla interface! !
 !UI.Scintilla.ScintillaView categoriesFor: #isKeyboardInputUnicode!**auto generated**!other settings!public!scintilla interface!testing! !
 !UI.Scintilla.ScintillaView categoriesFor: #isKeyboardInputUnicode:!**auto generated**!other settings!public!scintilla interface! !
+!UI.Scintilla.ScintillaView categoriesFor: #marginCount!margins!public!scintilla interface! !
+!UI.Scintilla.ScintillaView categoriesFor: #marginCount:!margins!public!scintilla interface! !
+!UI.Scintilla.ScintillaView categoriesFor: #sciSetEdgeColumn:!long lines!private!scintilla interface! !
+!UI.Scintilla.ScintillaView categoriesFor: #secondarySelectionAlpha:!caret, selection, and hotspot styles!public! !
+!UI.Scintilla.ScintillaView categoriesFor: #selectionAlpha:!caret, selection, and hotspot styles!public! !
 
 "End of package definition"!
 

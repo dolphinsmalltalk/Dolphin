@@ -37,6 +37,11 @@ isNone
 
 	^self actualColor isNone!
 
+isSymbolic
+	"Answer whether the receiver is the symbolic <Color> that does not correspond to a fixed RGB(A) value."
+
+	^true!
+
 rgbCode
 	"Answer the receiver's color value in 24-bit RGB encoding with 8-bits per component in (blue, green, red) order."
 
@@ -46,5 +51,6 @@ rgbCode
 !Graphics.VirtualColor categoriesFor: #asRGB!converting!public! !
 !Graphics.VirtualColor categoriesFor: #isDefault!public!testing! !
 !Graphics.VirtualColor categoriesFor: #isNone!public!testing! !
+!Graphics.VirtualColor categoriesFor: #isSymbolic!public!testing! !
 !Graphics.VirtualColor categoriesFor: #rgbCode!converting!public! !
 

@@ -13,12 +13,18 @@ package setClassNames: #(
 ).
 
 package setPrerequisites: #(
+	'..\..\..\..\IDE\Base\Development System'
 	'..\..\..\..\Base\Dolphin'
 	'..\..\..\..\Base\Tests\Dolphin Base Tests'
+	'..\..\..\Base\Dolphin Basic Geometry'
+	'..\..\..\..\System\Filer\Dolphin Literal Filer'
 	'..\..\..\Base\Dolphin MVP Base'
 	'..\..\..\Dolphin MVP Tests'
 	'..\..\..\..\System\Random\Dolphin Random Stream'
 	'..\Dolphin Scintilla View'
+	'..\Dolphin Scintilla View (Old Names)'
+	'..\..\..\Type Converters\Dolphin Type Converters'
+	'..\..\..\Models\Value\Dolphin Value Models'
 	'..\..\..\..\..\..\Contributions\Camp Smalltalk\SUnit\SUnit'
 	'..\..\..\..\..\..\Contributions\Camp Smalltalk\SUnit\SUnitPreload'
 ).

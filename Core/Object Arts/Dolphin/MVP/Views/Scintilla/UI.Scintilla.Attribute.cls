@@ -70,15 +70,15 @@ printOn: aStream
 printPropertiesOn: aStream
 	self class propertyMap keysAndValuesDo: 
 			[:name :descriptor |
-			| value |
-			value := descriptor getAttributeValue: self.
-			(value notNil or: [descriptor alwaysPrint])
+			| printString |
+			printString := descriptor getPrintString: self.
+			(printString notNil or: [descriptor alwaysPrint])
 				ifTrue: 
 					[aStream
 						nextPutAll: ', ';
 						nextPutAll: name;
 						nextPutAll: '=';
-						print: value]]!
+						display: printString]]!
 
 storeableProperties
 	^{#basicId} , self class propertyMap keys asArray!

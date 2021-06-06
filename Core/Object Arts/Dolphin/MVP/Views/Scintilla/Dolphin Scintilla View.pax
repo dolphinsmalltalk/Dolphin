@@ -69,6 +69,7 @@ package setClassNames: #(
 ).
 
 package setMethodNames: #(
+	#(#{OS.UserLibrary} #getCaretBlinkTime)
 	#(#{UI.TextPresenter class} #resource_Scintilla_view)
 ).
 
@@ -186,6 +187,7 @@ UI subclass: #'UI.Scintilla'
 		'SC_ALPHA_TRANSPARENT' -> 16r0.
 		'SC_AUTOMATICFOLD_CHANGE' -> 16r4.
 		'SC_AUTOMATICFOLD_CLICK' -> 16r2.
+		'SC_AUTOMATICFOLD_NONE' -> 16r0.
 		'SC_AUTOMATICFOLD_SHOW' -> 16r1.
 		'SC_BIDIRECTIONAL_DISABLED' -> 16r0.
 		'SC_BIDIRECTIONAL_L2R' -> 16r1.
@@ -241,10 +243,25 @@ UI subclass: #'UI.Scintilla'
 		'SC_EFF_QUALITY_LCD_OPTIMIZED' -> 16r3.
 		'SC_EFF_QUALITY_MASK' -> 16rF.
 		'SC_EFF_QUALITY_NON_ANTIALIASED' -> 16r1.
+		'SC_ELEMENT_CARET' -> 16r28.
+		'SC_ELEMENT_CARET_ADDITIONAL' -> 16r29.
+		'SC_ELEMENT_CARET_LINE_BACK' -> 16r32.
+		'SC_ELEMENT_HOT_SPOT_ACTIVE' -> 16r46.
+		'SC_ELEMENT_HOT_SPOT_ACTIVE_BACK' -> 16r47.
 		'SC_ELEMENT_LIST' -> 16r0.
 		'SC_ELEMENT_LIST_BACK' -> 16r1.
 		'SC_ELEMENT_LIST_SELECTED' -> 16r2.
 		'SC_ELEMENT_LIST_SELECTED_BACK' -> 16r3.
+		'SC_ELEMENT_SELECTION_ADDITIONAL_BACK' -> 16rD.
+		'SC_ELEMENT_SELECTION_ADDITIONAL_TEXT' -> 16rC.
+		'SC_ELEMENT_SELECTION_BACK' -> 16rB.
+		'SC_ELEMENT_SELECTION_INACTIVE_BACK' -> 16r11.
+		'SC_ELEMENT_SELECTION_INACTIVE_TEXT' -> 16r10.
+		'SC_ELEMENT_SELECTION_SECONDARY_BACK' -> 16rF.
+		'SC_ELEMENT_SELECTION_SECONDARY_TEXT' -> 16rE.
+		'SC_ELEMENT_SELECTION_TEXT' -> 16rA.
+		'SC_ELEMENT_WHITE_SPACE' -> 16r3C.
+		'SC_ELEMENT_WHITE_SPACE_BACK' -> 16r3D.
 		'SC_EOL_CR' -> 16r1.
 		'SC_EOL_CRLF' -> 16r0.
 		'SC_EOL_LF' -> 16r2.
@@ -260,8 +277,10 @@ UI subclass: #'UI.Scintilla'
 		'SC_FOLDFLAG_LINEBEFORE_CONTRACTED' -> 16r4.
 		'SC_FOLDFLAG_LINEBEFORE_EXPANDED' -> 16r2.
 		'SC_FOLDFLAG_LINESTATE' -> 16r80.
+		'SC_FOLDFLAG_NONE' -> 16r0.
 		'SC_FOLDLEVELBASE' -> 16r400.
 		'SC_FOLDLEVELHEADERFLAG' -> 16r2000.
+		'SC_FOLDLEVELNONE' -> 16r0.
 		'SC_FOLDLEVELNUMBERMASK' -> 16rFFF.
 		'SC_FOLDLEVELWHITEFLAG' -> 16r1000.
 		'SC_FONT_SIZE_MULTIPLIER' -> 16r64.
@@ -271,6 +290,7 @@ UI subclass: #'UI.Scintilla'
 		'SC_IDLESTYLING_TOVISIBLE' -> 16r1.
 		'SC_IME_INLINE' -> 16r1.
 		'SC_IME_WINDOWED' -> 16r0.
+		'SC_INDICFLAG_NONE' -> 16r0.
 		'SC_INDICFLAG_VALUEFORE' -> 16r1.
 		'SC_INDICVALUEBIT' -> 16r1000000.
 		'SC_INDICVALUEMASK' -> 16rFFFFFF.
@@ -279,6 +299,9 @@ UI subclass: #'UI.Scintilla'
 		'SC_IV_NONE' -> 16r0.
 		'SC_IV_REAL' -> 16r1.
 		'SC_LASTSTEPINUNDOREDO' -> 16r100.
+		'SC_LAYER_BASE' -> 16r0.
+		'SC_LAYER_OVER_TEXT' -> 16r2.
+		'SC_LAYER_UNDER_TEXT' -> 16r1.
 		'SC_LINE_END_TYPE_DEFAULT' -> 16r0.
 		'SC_LINE_END_TYPE_UNICODE' -> 16r1.
 		'SC_LINECHARACTERINDEX_NONE' -> 16r0.
@@ -403,6 +426,7 @@ UI subclass: #'UI.Scintilla'
 		'SC_TYPE_STRING' -> 16r2.
 		'SC_UPDATE_CONTENT' -> 16r1.
 		'SC_UPDATE_H_SCROLL' -> 16r8.
+		'SC_UPDATE_NONE' -> 16r0.
 		'SC_UPDATE_SELECTION' -> 16r2.
 		'SC_UPDATE_V_SCROLL' -> 16r4.
 		'SC_WEIGHT_BOLD' -> 16r2BC.
@@ -609,6 +633,7 @@ UI subclass: #'UI.Scintilla'
 		'SCI_GETCARETLINEBACK' -> 16r831.
 		'SCI_GETCARETLINEBACKALPHA' -> 16r9A7.
 		'SCI_GETCARETLINEFRAME' -> 16rA90.
+		'SCI_GETCARETLINELAYER' -> 16rACC.
 		'SCI_GETCARETLINEVISIBLE' -> 16r82F.
 		'SCI_GETCARETLINEVISIBLEALWAYS' -> 16rA5E.
 		'SCI_GETCARETPERIOD' -> 16r81B.
@@ -634,6 +659,7 @@ UI subclass: #'UI.Scintilla'
 		'SCI_GETEDGECOLUMN' -> 16r938.
 		'SCI_GETEDGEMODE' -> 16r93A.
 		'SCI_GETELEMENTALLOWSTRANSLUCENT' -> 16rAC5.
+		'SCI_GETELEMENTBASECOLOUR' -> 16rAC6.
 		'SCI_GETELEMENTCOLOUR' -> 16rAC2.
 		'SCI_GETELEMENTISSET' -> 16rAC4.
 		'SCI_GETENDATLASTLINE' -> 16r8E6.
@@ -731,6 +757,7 @@ UI subclass: #'UI.Scintilla'
 		'SCI_GETSELALPHA' -> 16r9AD.
 		'SCI_GETSELECTIONEMPTY' -> 16rA5A.
 		'SCI_GETSELECTIONEND' -> 16r861.
+		'SCI_GETSELECTIONLAYER' -> 16rACA.
 		'SCI_GETSELECTIONMODE' -> 16r977.
 		'SCI_GETSELECTIONNANCHOR' -> 16rA13.
 		'SCI_GETSELECTIONNANCHORVIRTUALSPACE' -> 16rA17.
@@ -872,6 +899,7 @@ UI subclass: #'UI.Scintilla'
 		'SCI_MARKERDELETEHANDLE' -> 16r7E2.
 		'SCI_MARKERENABLEHIGHLIGHT' -> 16r8F5.
 		'SCI_MARKERGET' -> 16r7FE.
+		'SCI_MARKERGETLAYER' -> 16rAAE.
 		'SCI_MARKERHANDLEFROMLINE' -> 16rAAC.
 		'SCI_MARKERLINEFROMHANDLE' -> 16r7E1.
 		'SCI_MARKERNEXT' -> 16r7FF.
@@ -884,6 +912,7 @@ UI subclass: #'UI.Scintilla'
 		'SCI_MARKERSETBACKTRANSLUCENT' -> 16r8F7.
 		'SCI_MARKERSETFORE' -> 16r7F9.
 		'SCI_MARKERSETFORETRANSLUCENT' -> 16r8F6.
+		'SCI_MARKERSETLAYER' -> 16rAAF.
 		'SCI_MARKERSETSTROKEWIDTH' -> 16r8F9.
 		'SCI_MARKERSYMBOLDEFINED' -> 16r9E1.
 		'SCI_MOVECARETINSIDEVIEW' -> 16r961.
@@ -962,6 +991,7 @@ UI subclass: #'UI.Scintilla'
 		'SCI_SETCARETLINEBACK' -> 16r832.
 		'SCI_SETCARETLINEBACKALPHA' -> 16r9A6.
 		'SCI_SETCARETLINEFRAME' -> 16rA91.
+		'SCI_SETCARETLINELAYER' -> 16rACD.
 		'SCI_SETCARETLINEVISIBLE' -> 16r830.
 		'SCI_SETCARETLINEVISIBLEALWAYS' -> 16rA5F.
 		'SCI_SETCARETPERIOD' -> 16r81C.
@@ -1060,6 +1090,7 @@ UI subclass: #'UI.Scintilla'
 		'SCI_SETSELBACK' -> 16r814.
 		'SCI_SETSELECTION' -> 16rA0C.
 		'SCI_SETSELECTIONEND' -> 16r860.
+		'SCI_SETSELECTIONLAYER' -> 16rACB.
 		'SCI_SETSELECTIONMODE' -> 16r976.
 		'SCI_SETSELECTIONNANCHOR' -> 16rA12.
 		'SCI_SETSELECTIONNANCHORVIRTUALSPACE' -> 16rA16.
@@ -1317,7 +1348,7 @@ Core.Object subclass: #'UI.Scintilla.Marker'
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Core.Object subclass: #'UI.Scintilla.PropertyDescriptor'
-	instanceVariableNames: 'getSelector defaultValue setMessage setSelector getMessage flags'
+	instanceVariableNames: 'getSelector defaultValue setMessage setSelector getMessage flags printSelector'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -1331,7 +1362,7 @@ Core.Object subclass: #'UI.Scintilla.Styler'
 	classInstanceVariableNames: ''
 	classConstants: {}!
 UI.Scintilla.Attribute subclass: #'UI.Scintilla.MarkerDefinition'
-	instanceVariableNames: 'code forecolor backcolor view name alpha selectionBackcolor strokeWidth _reserved10 _reserved11 _reserved12'
+	instanceVariableNames: 'code forecolor backcolor view name alpha selectionBackcolor strokeWidth layerCode _reserved11 _reserved12'
 	classVariableNames: 'FolderNames'
 	imports: #()
 	classInstanceVariableNames: ''
@@ -1356,7 +1387,7 @@ UI.Scintilla.Attribute subclass: #'UI.Scintilla.TextStyle'
 		'UnderlinedMask' -> 16r30
 	}!
 UI.Scintilla.QueryableAttribute subclass: #'UI.Scintilla.IndicatorStyle'
-	instanceVariableNames: 'forecolor style under name alpha hoverStyle hoverForecolor flags foreAlpha strokeWidth'
+	instanceVariableNames: 'forecolor style layer name alpha hoverStyle hoverForecolor flags foreAlpha strokeWidth'
 	classVariableNames: 'HoverForecolor HoverStyle'
 	imports: #()
 	classInstanceVariableNames: ''
@@ -1467,7 +1498,7 @@ UI.Scintilla.Styler subclass: #'UI.Scintilla.NullStyler'
 	classInstanceVariableNames: ''
 	classConstants: {}!
 UI.MultilineTextEdit subclass: #'UI.Scintilla.ScintillaView'
-	instanceVariableNames: 'this currentTextStyles styleIdMap styler markerDefinitions markers wordChars registeredImages modificationEventMask autoCStops autoCFillups whitespaceBackcolor whitespaceForecolor selectionBackcolor selectionForecolor indicators callTipTabWidth punctuation callTipHighlightColor braceChars whitespaces scFlags allTextStyles foldMarginColor foldMarginHiColor foldMarkerStyle foldFlags stringClass keyBindings indicatorStyles secondarySelectionForecolor secondarySelectionBackcolor annotationStyles caretForecolor secondaryCaretForecolor edgeColor currentLineBackcolor activeHotspotForecolor activeHotspotBackcolor _unused56 _unused57 _unused58 _unused59 _unused60 _unused61 _unused62 _unused63 _unused64 _unused65'
+	instanceVariableNames: 'this currentTextStyles styleIdMap styler markerDefinitions markers wordChars registeredImages modificationEventMask autoCStops autoCFillups elementColors caretBlinkTime _unused30 _unused31 indicators callTipTabWidth punctuation callTipHighlightColor braceChars whitespaces scFlags allTextStyles foldMarginColor foldMarginHiColor foldMarkerStyle foldFlags stringClass keyBindings indicatorStyles _unused47 _unused48 annotationStyles _unused50 _unused51 edgeColor'
 	classVariableNames: 'CodePages DefaultKeyBindings DefaultTextStyles LexerKeywords Library'
 	imports: #()
 	classInstanceVariableNames: ''
@@ -1483,6 +1514,13 @@ UI.MultilineTextEdit subclass: #'UI.Scintilla.ScintillaView'
 
 "Loose Methods"!
 
+!OS.UserLibrary methodsFor!
+
+getCaretBlinkTime
+	<stdcall: dword GetCaretBlinkTime>
+	^self invalidCall: _failureCode! !
+!OS.UserLibrary categoriesFor: #getCaretBlinkTime!public!win32 functions-carets! !
+
 !UI.TextPresenter class methodsFor!
 
 resource_Scintilla_view
@@ -1493,7 +1531,7 @@ resource_Scintilla_view
 	Tools.ViewComposer openOn: (UI.ResourceIdentifier class: self selector: #resource_Scintilla_view)
 	"
 
-	^#(#'!!STL' 4 985166 10 ##(UI.STBViewProxy) ##(UI.Scintilla.ScintillaView) 34 50 nil nil 34 2 8 1445007428 1025 416 918598 2 ##(UI.ValueHolder) nil false 1769478 ##(Kernel.EqualitySearchPolicy) nil 917510 ##(Graphics.Color) #default nil 5 nil nil nil 416 nil 8 2031697384 1049094 ##(UI.NullConverter) nil nil 9 1848875793 170 192 34 4 #normal 1444934 1 ##(UI.Scintilla.TextStyle) 1 nil nil 1 nil nil nil nil #normal nil nil nil #callTip 658 77 546 #gray 546 #white 1 nil nil nil nil #callTip nil nil nil nil 1507654 1 ##(UI.Scintilla.NullStyler) #normal 170 192 34 2 #default 1903686 2 ##(UI.Scintilla.MarkerDefinition) 1 nil nil nil 416 #circle nil nil nil nil nil nil 138 ##(Core.IdentitySet) 8 #() nil 170 176 848 nil nil nil nil nil 546 #silver nil nil 65 nil nil nil 8 '' 3 170 192 34 2 #container 624 nil nil nil nil 208 nil 170 192 34 6 1 1772614 3 ##(UI.Scintilla.IndicatorStyle) 1 416 546 #commonGreen 3 false 1 nil nil nil nil nil nil 3 978 3 416 546 #blue 5 false 3 nil nil nil nil nil nil 5 978 5 416 546 #red 1 false 5 nil nil nil nil nil nil nil nil 170 192 34 6 #Notification 658 1029 nil 546 #gainsboro 1 nil nil nil nil #Notification nil nil nil #Warning 658 1027 546 #darkGoldenrod 546 #ivory 1 nil nil nil nil #Warning nil nil nil #Error 658 1031 546 #firebrick 546 #floralWhite 1 nil nil nil nil #Error nil nil nil nil 1310982 ##(Core.MessageSequence) 138 144 34 7 1049350 ##(Core.MessageSend) #createAt:extent: 34 2 918022 ##(Graphics.Point) 6143 21 1362 631 501 416 1314 #caretPeriod: 8 #(530) 416 1314 #margins: 34 1 34 3 1247302 3 ##(UI.Scintilla.Margin) 1 416 1 3 nil nil nil nil 1490 3 416 33 nil 3 67108863 nil nil 1490 5 416 1 nil 3 -67108863 nil nil 416 1314 #tabWidth: 8 #(4) 416 1314 #targetRange: 34 1 852742 ##(Core.Interval) 1 -1 3 416 1314 #maxCompletionListHeight: 8 #(9) 416 1314 #edgeColumn: 8 #(1) 416 1179910 ##(OS.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 58 13 0 0 4 1 0 0] 8 #() 1362 193 193 nil 31 )! !
+	^#(#'!!STL' 4 985166 10 ##(UI.STBViewProxy) ##(UI.Scintilla.ScintillaView) 34 52 nil nil 34 2 8 1445007428 1025 416 918598 2 ##(UI.ValueHolder) nil false 1769478 ##(Kernel.EqualitySearchPolicy) nil 917510 ##(Graphics.Color) #default nil 5 nil nil nil 416 nil 8 1949376404 1049094 ##(UI.NullConverter) nil nil 9 1561214081 170 192 34 4 #callTip 1444934 1 ##(UI.Scintilla.TextStyle) 77 546 #gray 546 #white 1 nil nil nil nil #callTip nil nil nil #normal 658 1 nil nil 1 nil nil nil nil #normal nil nil nil nil 1507654 1 ##(UI.Scintilla.NullStyler) #normal 170 192 34 2 #default 1903686 2 ##(UI.Scintilla.MarkerDefinition) 1 nil nil nil 416 #circle nil nil nil nil nil nil 138 ##(Core.IdentitySet) 8 #() nil 170 176 848 nil nil nil 170 176 34 2 81 546 #windowText nil nil nil nil 65 nil nil nil 8 '' 3 170 192 34 2 #container 624 nil nil nil nil 208 nil 170 192 34 6 1 1772614 4 ##(UI.Scintilla.IndicatorStyle) 1 416 546 #commonGreen 3 3 1 nil nil nil nil nil nil 3 1010 3 416 546 #blue 5 3 3 nil nil nil nil nil nil 5 1010 5 416 546 #red 1 3 5 nil nil nil nil nil nil nil nil 170 192 34 6 #Warning 658 1027 546 #darkGoldenrod 546 #ivory 1 nil nil nil nil #Warning nil nil nil #Notification 658 1029 nil 546 #gainsboro 1 nil nil nil nil #Notification nil nil nil #Error 658 1031 546 #firebrick 546 #floralWhite 1 nil nil nil nil #Error nil nil nil nil nil nil 1310982 ##(Core.MessageSequence) 138 144 34 7 1049350 ##(Core.MessageSend) #createAt:extent: 34 2 918022 ##(Graphics.Point) 6143 21 1394 631 501 416 1346 #margins: 34 1 34 3 1247302 3 ##(UI.Scintilla.Margin) 1 416 1 3 nil nil nil nil 1490 3 416 33 nil 3 67108863 nil nil 1490 5 416 1 nil 3 -67108863 nil nil 416 1346 #tabWidth: 8 #(4) 416 1346 #maxCompletionListHeight: 8 #(9) 416 1346 #sciSetTechnology: 8 #(1) 416 1346 #sciSetFontQuality: 8 #(3) 416 1346 #sciSetSelectionLayer: 8 #(1) 416 1179910 ##(OS.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 58 13 0 0 4 1 0 0] 8 #() 1394 193 193 nil 35 )! !
 !UI.TextPresenter class categoriesFor: #resource_Scintilla_view!public!resources-views! !
 
 "End of package definition"!

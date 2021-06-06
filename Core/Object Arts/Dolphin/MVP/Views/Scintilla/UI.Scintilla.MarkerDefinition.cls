@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
 UI.Scintilla.Attribute subclass: #'UI.Scintilla.MarkerDefinition'
-	instanceVariableNames: 'code forecolor backcolor view name alpha selectionBackcolor strokeWidth _reserved10 _reserved11 _reserved12'
+	instanceVariableNames: 'code forecolor backcolor view name alpha selectionBackcolor strokeWidth layerCode _reserved11 _reserved12'
 	classVariableNames: 'FolderNames'
 	imports: #()
 	classInstanceVariableNames: ''
@@ -106,6 +106,16 @@ glyphName: aSymbol
 							- 1]).
 	self updateViewProperty: #glyphName!
 
+layer
+	^self layerCode ifNil: [#base] ifNotNil: [:c | ScintillaView layerNames at: c + 1]!
+
+layer: aSymbol
+	layerCode := aSymbol ifNotNil: [(ScintillaView layerNames indexOf: aSymbol) - 1].
+	self updateViewProperty: #layer!
+
+layerCode
+	^layerCode!
+
 name
 	^name ifNil: [self id]!
 
@@ -164,6 +174,9 @@ view: aScintillaView
 !UI.Scintilla.MarkerDefinition categoriesFor: #forecolor:!accessing!colors!public! !
 !UI.Scintilla.MarkerDefinition categoriesFor: #glyphName!accessing!public! !
 !UI.Scintilla.MarkerDefinition categoriesFor: #glyphName:!accessing!public! !
+!UI.Scintilla.MarkerDefinition categoriesFor: #layer!accessing!public! !
+!UI.Scintilla.MarkerDefinition categoriesFor: #layer:!accessing!public! !
+!UI.Scintilla.MarkerDefinition categoriesFor: #layerCode!accessing!private! !
 !UI.Scintilla.MarkerDefinition categoriesFor: #name!accessing!public! !
 !UI.Scintilla.MarkerDefinition categoriesFor: #name:!accessing!public! !
 !UI.Scintilla.MarkerDefinition categoriesFor: #newForLine:!adding!must not strip!public! !
@@ -300,6 +313,7 @@ buildPropertyMap
 					defaultValue: 0
 					setMessage: SCI_MARKERDEFINE)
 					alwaysPrint: true;
+					printSelector: #glyphName;
 					yourself);
 		at: #alpha
 			put: (PropertyDescriptor
@@ -316,6 +330,11 @@ buildPropertyMap
 					getSelector: #strokeWidth
 					defaultValue: 100
 					setMessage: SCI_MARKERSETSTROKEWIDTH);
+		at: #layer
+			put: (PropertyDescriptor
+					getSelector: #layerCode
+					defaultValue: SC_LAYER_BASE
+					setMessage: SCI_MARKERSETLAYER);
 		shrink;
 		yourself!
 

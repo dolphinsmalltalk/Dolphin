@@ -42,6 +42,11 @@ id
 
 	^id!
 
+isSymbolic
+	"Answer whether the receiver is the symbolic <Color> that does not correspond to a fixed RGB(A) value."
+
+	^true!
+
 name
 	"Answer the symbolic name of the receiver."
 
@@ -97,6 +102,7 @@ shallowCopy
 !Graphics.SystemColor categoriesFor: #asRGB!converting!public! !
 !Graphics.SystemColor categoriesFor: #brushClass!constants!private! !
 !Graphics.SystemColor categoriesFor: #id!accessing!private! !
+!Graphics.SystemColor categoriesFor: #isSymbolic!public!testing! !
 !Graphics.SystemColor categoriesFor: #name!accessing!public! !
 !Graphics.SystemColor categoriesFor: #printOn:!development!printing!public! !
 !Graphics.SystemColor categoriesFor: #rgbCode!converting!public! !
