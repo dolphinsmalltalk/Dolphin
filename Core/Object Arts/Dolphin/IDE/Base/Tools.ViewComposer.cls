@@ -2238,6 +2238,8 @@ updatePrimarySelection
 validateAdornment
 	self isAdornmentModified ifFalse: [^self].
 	self eraseAdornment.
+	"Avoid going into a death spiral if something has closed the composingView"
+	composingView isOpen ifFalse: [^self].
 	self drawAdornment.
 	self primarySelection notNil
 		ifTrue: 
