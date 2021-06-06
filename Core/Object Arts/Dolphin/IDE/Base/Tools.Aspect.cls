@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
 Kernel.AttributeDescriptor subclass: #'Tools.Aspect'
-	instanceVariableNames: 'name presenterBlock editBlock immediateActionBlock category'
+	instanceVariableNames: 'name presenterBlock editBlock immediateActionBlock category getBlock putBlock'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -94,10 +94,10 @@ canImmediateAction
 	^self immediateActionBlock notNil!
 
 canReadFrom: anObject
-	^self isReadable and: [anObject respondsTo: self getSelector]!
+	^self isReadable and: [getBlock notNil or: [anObject respondsTo: self getSelector]]!
 
 canWriteInto: anObject
-	^self isWriteable and: [anObject respondsTo: self putSelector]!
+	^self isWriteable and: [putBlock notNil or: [anObject respondsTo: self putSelector]]!
 
 category
 	^category!
@@ -150,10 +150,13 @@ editBlock
 
 	^editBlock!
 
-getSelector
-	"Private - Answers the selector used for getting the aspect value from the subject"
+getBlock: aMonadicValuable
+	getBlock := aMonadicValuable!
 
-	^self name
+getSelector
+	"Private - Answers the selector used for getting the aspect value from the subject if the getBlock is not set."
+
+	^self name asSymbol
 !
 
 hash
@@ -239,11 +242,14 @@ printOn: aStream
 		basicPrint: self;
 		nextPut: $(; print: self name; nextPut: $)!
 
-putSelector
-	^(self name copyWith: $:) asSymbol!
+putBlock: aDyadicValuable
+	putBlock := aDyadicValuable!
 
-readFrom: anObject 
-	^anObject perform: self getSelector!
+putSelector
+	^(self getSelector copyWith: $:) asSymbol!
+
+readFrom: anObject
+	^getBlock ifNil: [anObject perform: self getSelector] ifNotNil: [getBlock value: anObject]!
 
 value
 	"Private - Answer the value of the receiver when it is to appear as an
@@ -255,7 +261,9 @@ writeInto: subjectObject value: valueObject
 	"Private - Set the attribute of subjectObject described by the receiver 
 	to valueObject."
 
-	^subjectObject perform: self putSelector with: valueObject! !
+	putBlock
+		ifNil: [subjectObject perform: self putSelector with: valueObject]
+		ifNotNil: [putBlock value: subjectObject value: valueObject]! !
 !Tools.Aspect categoriesFor: #<=!comparing!public! !
 !Tools.Aspect categoriesFor: #=!comparing!public! !
 !Tools.Aspect categoriesFor: #accessorClass!constants!private! !
@@ -281,6 +289,7 @@ writeInto: subjectObject value: valueObject
 !Tools.Aspect categoriesFor: #editablePresenterBlock!enquiries!public! !
 !Tools.Aspect categoriesFor: #editablePresenterFor:in:!enquiries!public! !
 !Tools.Aspect categoriesFor: #editBlock!accessing!private! !
+!Tools.Aspect categoriesFor: #getBlock:!accessing!public! !
 !Tools.Aspect categoriesFor: #getSelector!accessing!private! !
 !Tools.Aspect categoriesFor: #hash!comparing!public! !
 !Tools.Aspect categoriesFor: #immediateActionBlock!accessing!private! !
@@ -296,7 +305,8 @@ writeInto: subjectObject value: valueObject
 !Tools.Aspect categoriesFor: #presenterBlock!accessing!public! !
 !Tools.Aspect categoriesFor: #presenterFor:in:!enquiries!public! !
 !Tools.Aspect categoriesFor: #printOn:!printing!public! !
-!Tools.Aspect categoriesFor: #putSelector!accessing!private! !
+!Tools.Aspect categoriesFor: #putBlock:!accessing!public! !
+!Tools.Aspect categoriesFor: #putSelector!accessing!public! !
 !Tools.Aspect categoriesFor: #readFrom:!indirect accessing!private! !
 !Tools.Aspect categoriesFor: #value!accessing!private! !
 !Tools.Aspect categoriesFor: #writeInto:value:!indirect accessing!private! !
