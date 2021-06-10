@@ -131,9 +131,6 @@ argumentCount: anInteger
 	info := (info bitAnd: ##((16rFF << 7) bitInvert)) 
 				bitOr: ((anInteger bitAnd: 16rFF) bitShift: 7)!
 
-asBlock
-	^self!
-
 atPriority: anInteger
 	"Evaluate the receiver at the specified priority. On completion or curtailment the active process' 
 	priority is returned to its previous value."
@@ -770,7 +767,6 @@ whileTrue: iterationBlock
 !Kernel.BlockClosure categoriesFor: #=!comparing!public! !
 !Kernel.BlockClosure categoriesFor: #argumentCount!accessing!public! !
 !Kernel.BlockClosure categoriesFor: #argumentCount:!accessing!development!private! !
-!Kernel.BlockClosure categoriesFor: #asBlock!accessing!converting!public! !
 !Kernel.BlockClosure categoriesFor: #atPriority:!evaluating!public! !
 !Kernel.BlockClosure categoriesFor: #copiedValues!private! !
 !Kernel.BlockClosure categoriesFor: #critical!private!scheduling! !
