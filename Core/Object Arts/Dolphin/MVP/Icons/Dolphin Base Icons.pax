@@ -37,6 +37,7 @@ package setMethodNames: #(
 	#(#{Core.Interval class} #icon)
 	#(#{Core.LargeInteger class} #icon)
 	#(#{Core.Link class} #icon)
+	#(#{Core.LinkedList class} #icon)
 	#(#{Core.Locale class} #icon)
 	#(#{Core.Magnitude class} #icon)
 	#(#{Core.Message class} #icon)
@@ -383,6 +384,14 @@ icon
 
 	^##(TextTileIcon text: $\x1F517)! !
 !Core.Link class categoriesFor: #icon!public! !
+
+!Core.LinkedList class methodsFor!
+
+icon
+	"Answers an Icon that can be used to represent this class: ⛓"
+
+	^##(TextTileIcon text: $\x26D3 fontName: 'Arial')! !
+!Core.LinkedList class categoriesFor: #icon!public! !
 
 !Core.Locale class methodsFor!
 
