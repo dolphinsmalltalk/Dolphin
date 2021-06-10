@@ -118,6 +118,21 @@ testCount
 			self assert: (subject count: none) equals: 0.
 			self assert: (subject count: odd) equals: (i + 1) // 2]!
 
+testDetectIfNone
+	| absent |
+	absent := Object new.
+	#(#() #($a) #($a $b) #($a $b $c $d $e)) do: 
+			[:eachCase |
+			| subject |
+			subject := self newCollection: eachCase.
+			eachCase do: 
+					[:elem |
+					| actualElem |
+					actualElem := self assimilate: elem.
+					self assert: (subject detect: [:each | each = actualElem] ifNone: [absent]) equals: actualElem.
+					actualElem := self assimilate: $f.
+					self assert: (subject detect: [:each | each = actualElem] ifNone: [absent]) identicalTo: absent]]!
+
 testDistinct
 	| result |
 	#(#() #($a) #($a $a) #($a $b) #($a $b $a) #($a $b $c $a $e)) do: 
@@ -167,6 +182,7 @@ testFold
 !Core.Tests.CollectionTest categoriesFor: #testAnyone!public!unit tests! !
 !Core.Tests.CollectionTest categoriesFor: #testAnySatisfy!public!unit tests! !
 !Core.Tests.CollectionTest categoriesFor: #testCount!public!unit tests! !
+!Core.Tests.CollectionTest categoriesFor: #testDetectIfNone!public!unit tests! !
 !Core.Tests.CollectionTest categoriesFor: #testDistinct!public!unit tests! !
 !Core.Tests.CollectionTest categoriesFor: #testDoSeparatedBy!public!unit tests! !
 !Core.Tests.CollectionTest categoriesFor: #testFold!public!unit tests! !

@@ -93,6 +93,22 @@ decodeNextFrom: aReadStream
 
 	^aReadStream basicNextAvailable!
 
+detect: discriminator ifNone: exceptionHandler
+	"Evaluate the <monadicValuable> argument, discriminator, for each of the receiver's 
+	elements.  Answer the first element (in the #do: order) for which discriminator evaluates 
+	to true. If none evaluates to true answer the result of evaluating the <niladicValuable> 
+	argument, exceptionHandler."
+
+	"Implementation Note: Override to a more optimal solution that avoids the full block required in the general purpose Collection implementation using only #do:"
+
+	1 to: self size
+		do: 
+			[:i |
+			| each |
+			each := self at: i.
+			(discriminator value: each) ifTrue: [^each]].
+	^exceptionHandler value!
+
 do: operation
 	"Evaluate the <monadicValuable> argument, operation, for each of the elements of the 
 	receiver. Answers the receiver. The elements are evaluated in index order.
@@ -240,6 +256,7 @@ sortUsing: aSortAlgorithm
 !Core.ArrayedCollection categoriesFor: #copyFrom:to:!public! !
 !Core.ArrayedCollection categoriesFor: #decodeAt:!encode/decode!private! !
 !Core.ArrayedCollection categoriesFor: #decodeNextFrom:!encode/decode!private! !
+!Core.ArrayedCollection categoriesFor: #detect:ifNone:!public!searching! !
 !Core.ArrayedCollection categoriesFor: #do:!debugger-step through!enumerating!public! !
 !Core.ArrayedCollection categoriesFor: #do:separatedBy:!enumerating!public! !
 !Core.ArrayedCollection categoriesFor: #findFirst:!public!searching! !

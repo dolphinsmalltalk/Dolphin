@@ -31,7 +31,7 @@ decodeInvalidContinuations
 	^Error notYetImplemented!
 
 decodeTestCases
-	^Error notYetImplemented!
+	^self subclassResponsibility!
 
 indexOfTestCases
 	^super indexOfTestCases, #('' $文 'a£ö🐬👨🏻‍🍳' $文 '' $🐬 'a£文🍺👨🏻‍🍳' $🐬'a£a文a🍺a👨🏻‍🍳a' $a 'a£文🍺👨🏻‍🍳' $b 'a文£文ö文🐬文👨🏻‍🍳文' $文 'a🐬£🐬文🐬🍺🐬👨🏻‍🍳🐬' $🐬)!
@@ -218,6 +218,24 @@ testDecodeNextFrom
 			actual := subject decodeNextFrom: stream.
 			self assert: actual equals: Character replacement.
 			self assert: stream atEnd]!
+
+testDetectIfNoneExtended
+	| absent chars subject |
+	absent := Object new.
+	chars := self decodeTestCases.
+	subject := self newCollection: chars.
+	chars keysAndValuesDo: 
+			[:key :ch |
+			| enumerated |
+			enumerated := OrderedCollection new.
+			self assert: (subject detect: 
+							[:each |
+							enumerated add: each.
+							each = ch]
+						ifNone: [absent])
+				equals: ch.
+			self assert: enumerated asArray equals: (chars copyFrom: 1 to: key).
+			self assert: (subject detect: [:each | each = $\x1F37B] ifNone: [absent]) identicalTo: absent]!
 
 testEncodeOnPut
 	{Character dolphin.
@@ -588,6 +606,7 @@ withAllTestCases
 !Core.Tests.UtfEncodedStringTest categoriesFor: #testCopyWithoutIndex!public!unit tests! !
 !Core.Tests.UtfEncodedStringTest categoriesFor: #testDecodeAt!public!unit tests! !
 !Core.Tests.UtfEncodedStringTest categoriesFor: #testDecodeNextFrom!constants!public! !
+!Core.Tests.UtfEncodedStringTest categoriesFor: #testDetectIfNoneExtended!public!unit tests! !
 !Core.Tests.UtfEncodedStringTest categoriesFor: #testEncodeOnPut!public!unit tests! !
 !Core.Tests.UtfEncodedStringTest categoriesFor: #testFindFirst!public!unit tests! !
 !Core.Tests.UtfEncodedStringTest categoriesFor: #testFindLast!public!unit tests! !

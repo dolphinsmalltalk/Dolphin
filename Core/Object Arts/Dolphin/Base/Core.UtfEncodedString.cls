@@ -194,6 +194,19 @@ decodeFrom: aReadStream upTo: anObject
 					^newStream contents]]
 		ifFalse: [aReadStream upToEnd]!
 
+detect: discriminator ifNone: exceptionHandler
+	"Evaluate the <monadicValuable> argument, discriminator, for each of the receiver's 
+	elements.  Answer the first element (in the #do: order) for which discriminator evaluates 
+	to true. If none evaluates to true answer the result of evaluating the <niladicValuable> 
+	argument, exceptionHandler."
+
+	"Implementation note: Override to enumerate code points, not code units."
+
+	| stream ch |
+	stream := self readStream.
+	[(ch := stream nextAvailable) isNil] whileFalse: [(discriminator value: ch) ifTrue: [^ch]].
+	^exceptionHandler value!
+
 do: operation
 	"Evaluate the <monadicValuable> argument, operation, for each of the <Characters> of the receiver. Answers the receiver. The elements are evaluated in sequence."
 
@@ -476,6 +489,7 @@ with: otherCollection do: aDyadicValuable
 !Core.UtfEncodedString categoriesFor: #copyWith:atIndex:!copying!public! !
 !Core.UtfEncodedString categoriesFor: #copyWithoutIndex:!copying!public! !
 !Core.UtfEncodedString categoriesFor: #decodeFrom:upTo:!encode/decode!private! !
+!Core.UtfEncodedString categoriesFor: #detect:ifNone:!public!searching! !
 !Core.UtfEncodedString categoriesFor: #do:!debugger-step through!enumerating!public! !
 !Core.UtfEncodedString categoriesFor: #do:separatedBy:!enumerating!public! !
 !Core.UtfEncodedString categoriesFor: #emitEncodingMarkerOn:!accessing!public! !
