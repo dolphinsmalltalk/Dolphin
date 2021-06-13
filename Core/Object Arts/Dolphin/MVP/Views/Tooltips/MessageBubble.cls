@@ -303,9 +303,8 @@ position: aPoint
 
 startTimeout
 	timeout isZero
-		ifFalse: 
-			[timeoutProcess := 
-					[Processor sleep: timeout.
+		ifFalse: [timeoutProcess := 
+					[timeout wait.
 					[self close] postToMessageQueue] fork]!
 
 timeout

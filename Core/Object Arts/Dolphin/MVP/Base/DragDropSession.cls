@@ -336,10 +336,11 @@ startScrollProcess
 	"Private - Start a process for scrolling the drop target"				
 
 	self stopScrollProcess.
-	scrollProcess := [
-		Processor sleep: self defaultScrollDelay.
-			[ dropTarget ddScroll: self.
-				Processor sleep: self defaultScrollInterval ] repeat ] 
+	scrollProcess := 
+			[self defaultScrollDelay wait.
+			
+			[dropTarget ddScroll: self.
+			self defaultScrollInterval wait] repeat]
 					forkAt: Processor userBackgroundPriority!
 
 stopScrollProcess
