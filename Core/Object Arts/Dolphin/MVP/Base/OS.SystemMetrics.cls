@@ -311,6 +311,11 @@ menuWidth
 minimumTreeViewIndent
 	^16!
 
+monitorCount
+	"Answer the number of monitors currently attached."
+
+	^self getMetric: SM_CMONITORS!
+
 mouseHoverTime
 	^(self
 		getSysParam: SPI_GETMOUSEHOVERTIME
@@ -453,6 +458,7 @@ virtualScreenRectangle
 !OS.SystemMetrics categoriesFor: #menuTextAcceleratorGap!constants!public! !
 !OS.SystemMetrics categoriesFor: #menuWidth!constants!public! !
 !OS.SystemMetrics categoriesFor: #minimumTreeViewIndent!constants!public! !
+!OS.SystemMetrics categoriesFor: #monitorCount!accessing!public! !
 !OS.SystemMetrics categoriesFor: #mouseHoverTime!constants!public! !
 !OS.SystemMetrics categoriesFor: #nonClientMetrics!constants!public! !
 !OS.SystemMetrics categoriesFor: #onSettingChanged:!event handling-win32!private! !

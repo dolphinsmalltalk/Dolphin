@@ -82,6 +82,7 @@ package setClassNames: #(
 	#{OS.CommCtrlLibrary}
 	#{OS.DEVMODE}
 	#{OS.DIBSECTION}
+	#{OS.DISPLAY_DEVICEW}
 	#{OS.DOCINFOW}
 	#{OS.DRAWITEMSTRUCT}
 	#{OS.DTBGOPTS}
@@ -103,6 +104,8 @@ package setClassNames: #(
 	#{OS.MENUITEMINFOW}
 	#{OS.MINMAXINFO}
 	#{OS.MockThemeLibrary}
+	#{OS.MONITORINFO}
+	#{OS.MONITORINFOEXW}
 	#{OS.NCCALCSIZE_PARAMS}
 	#{OS.NEWTEXTMETRICW}
 	#{OS.NMHDR}
@@ -148,6 +151,7 @@ package setClassNames: #(
 	#{UI.DesktopView}
 	#{UI.Dialog}
 	#{UI.DialogView}
+	#{UI.DisplayMonitor}
 	#{UI.DividerMenuItem}
 	#{UI.DoubleBufferedView}
 	#{UI.DragDropObject}
@@ -257,6 +261,8 @@ package setMethodNames: #(
 	#(#{OS.UserLibrary} #endDialog:nResult:)
 	#(#{OS.UserLibrary} #endPaint:lpPaint:)
 	#(#{OS.UserLibrary} #enumClipboardFormats:)
+	#(#{OS.UserLibrary} #enumDisplayDevices:iDevNum:lpDisplayDevice:dwFlags:)
+	#(#{OS.UserLibrary} #enumDisplayMonitors:lprcClip:lpfnEnum:dwData:)
 	#(#{OS.UserLibrary} #enumThreadWindows:lpfn:lParam:)
 	#(#{OS.UserLibrary} #enumWindows:lParam:)
 	#(#{OS.UserLibrary} #fillRect:lprc:hbr:)
@@ -281,6 +287,7 @@ package setMethodNames: #(
 	#(#{OS.UserLibrary} #getLastActivePopup:)
 	#(#{OS.UserLibrary} #getLastInputInfo:)
 	#(#{OS.UserLibrary} #getMenuInfo:lpcmi:)
+	#(#{OS.UserLibrary} #getMonitorInfo:lpmi:)
 	#(#{OS.UserLibrary} #getNextDlgGroupItem:hCtl:bPrevious:)
 	#(#{OS.UserLibrary} #getNextDlgTabItem:hCtl:bPrevious:)
 	#(#{OS.UserLibrary} #getProp:lpString:)
@@ -318,6 +325,9 @@ package setMethodNames: #(
 	#(#{OS.UserLibrary} #makeDragList:)
 	#(#{OS.UserLibrary} #mapWindowPoints:hWndTo:lpPoints:cPoints:)
 	#(#{OS.UserLibrary} #modifyMenu:uPosition:uFlags:uIDNewItem:lpNewItem:)
+	#(#{OS.UserLibrary} #monitorFromPoint:dwFlags:)
+	#(#{OS.UserLibrary} #monitorFromRect:dwFlags:)
+	#(#{OS.UserLibrary} #monitorFromWindow:dwFlags:)
 	#(#{OS.UserLibrary} #openClipboard:)
 	#(#{OS.UserLibrary} #printWindow:hdcBlt:nFlags:)
 	#(#{OS.UserLibrary} #redrawWindow:lprcUpdate:hrgnUpdate:flags:)
@@ -1368,6 +1378,16 @@ Core.Object subclass: #'UI.CommandQuery'
 		'DefaultMask' -> 16r4.
 		'EnabledMask' -> 16r1
 	}!
+Core.Object subclass: #'UI.DisplayMonitor'
+	instanceVariableNames: 'handle info devices'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {
+		'MONITOR_DEFAULTTONEAREST' -> 16r2.
+		'MONITOR_DEFAULTTONULL' -> 16r0.
+		'MONITOR_DEFAULTTOPRIMARY' -> 16r1
+	}!
 Core.Object subclass: #'UI.DragDropObject'
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -2181,6 +2201,24 @@ OS.Win32Structure subclass: #'OS.DIBSECTION'
 		'_OffsetOf_dshSection' -> 16r4C.
 		'_OffsetOf_dsOffset' -> 16r50
 	}!
+OS.Win32Structure subclass: #'OS.DISPLAY_DEVICEW'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_DeviceID' -> 16r148.
+		'_OffsetOf_DeviceKey' -> 16r248.
+		'_OffsetOf_DeviceName' -> 16r4.
+		'_OffsetOf_DeviceString' -> 16r44.
+		'_OffsetOf_dwSize' -> 16r0.
+		'_OffsetOf_StateFlags' -> 16r144.
+		'DISPLAY_DEVICE_ATTACHED_TO_DESKTOP' -> 16r1.
+		'DISPLAY_DEVICE_MIRRORING_DRIVER' -> 16r8.
+		'DISPLAY_DEVICE_MULTI_DRIVER' -> 16r2.
+		'DISPLAY_DEVICE_PRIMARY_DEVICE' -> 16r4.
+		'DISPLAY_DEVICE_VGA_COMPATIBLE' -> 16r10
+	}!
 OS.Win32Structure subclass: #'OS.DOCINFOW'
 	instanceVariableNames: 'docName'
 	classVariableNames: ''
@@ -2340,6 +2378,18 @@ OS.Win32Structure subclass: #'OS.MINMAXINFO'
 		'_OffsetOf_ptMaxTrackSize' -> 16r20.
 		'_OffsetOf_ptMinTrackSize' -> 16r18.
 		'_OffsetOf_ptReserved' -> 16r0
+	}!
+OS.Win32Structure subclass: #'OS.MONITORINFO'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_dwFlags' -> 16r24.
+		'_OffsetOf_dwSize' -> 16r0.
+		'_OffsetOf_rcMonitor' -> 16r4.
+		'_OffsetOf_rcWork' -> 16r14.
+		'MONITORINFOF_PRIMARY' -> 16r1
 	}!
 OS.Win32Structure subclass: #'OS.NMHDR'
 	instanceVariableNames: ''
@@ -2625,6 +2675,14 @@ OS.AbstractLOGFONT subclass: #'OS.LOGFONTW'
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_lfFaceName' -> 16r1C
+	}!
+OS.MONITORINFO subclass: #'OS.MONITORINFOEXW'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_szDevice' -> 16r28
 	}!
 OS.NMHDR subclass: #'OS.NMTTDISPINFOW'
 	instanceVariableNames: 'text'
@@ -3272,6 +3330,32 @@ enumClipboardFormats: knownFormat
 	<stdcall: dword EnumClipboardFormats dword>
 	^self invalidCall: _failureCode!
 
+enumDisplayDevices: lpDevice iDevNum: iDevNum lpDisplayDevice: lpDisplayDevice dwFlags: dwFlags
+	"Invoke the EnumDisplayDevices() function of the module wrapped by the receiver.
+	Helpstring: Queries information about the display devices in the current session.
+
+		BOOL __stdcall EnumDisplayDevices(
+			[in]LPCWSTR lpDevice,
+			[in]DWORD iDevNum,
+			[in, out]DISPLAY_DEVICEW* lpDisplayDevice,
+			[in]DWORD dwFlags);"
+
+	<stdcall: bool EnumDisplayDevicesW lpwstr dword DISPLAY_DEVICEW* dword>
+	^self invalidCall: _failureCode!
+
+enumDisplayMonitors: hDC lprcClip: lprcClip lpfnEnum: lpfnEnum dwData: dwData
+	"Invoke the EnumDisplayMonitors() function of the module wrapped by the receiver.
+	Helpstring: Enumerates display monitors (including invisible pseudo-monitors associated with the mirroring drivers) that intersect a region formed by the intersection of a specified clipping rectangle and the visible region of a device context.
+
+		BOOL __stdcall EnumDisplayMonitors(
+			[in]wireHDC hDC,
+			[in]RECT* lprcClip,
+			[in]LPVOID lpfnEnum,
+			[in]LONG_PTR dwData);"
+
+	<stdcall: bool EnumDisplayMonitors handle RECTL* void* intptr>
+	^self invalidCall: _failureCode!
+
 enumThreadWindows: dwThreadId lpfn: aCallbackThunk lParam: lParam
 	<stdcall: bool EnumThreadWindows dword lpvoid uintptr>
 	^self invalidCall: _failureCode!
@@ -3485,6 +3569,17 @@ getLastInputInfo: plii
 
 getMenuInfo: hMenu lpcmi: aMenuItemInfo
 	<stdcall: bool GetMenuInfo handle MENUINFO*>
+	^self invalidCall: _failureCode!
+
+getMonitorInfo: hmonitor lpmi: lpmi
+	"Invoke the GetMonitorInfo() function of the module wrapped by the receiver.
+	Helpstring: Retrieves a handle to the display monitor that has the largest area of intersection with the bounding rectangle of a specified window.
+
+		BOOL __stdcall GetMonitorInfo(
+			[in]HMONITOR HMONITOR,
+			[in, out]MONITORINFO* lpmi);"
+
+	<stdcall: bool GetMonitorInfoW handle MONITORINFO*>
 	^self invalidCall: _failureCode!
 
 getNextDlgGroupItem: p1 hCtl: p2 bPrevious: p3
@@ -3908,6 +4003,39 @@ modifyMenu: hMenuDrop uPosition: position uFlags: styleFlags uIDNewItem: menuId 
 		);"
 
 	<stdcall: bool ModifyMenuW handle dword dword dword lpwstr>
+	^self invalidCall: _failureCode!
+
+monitorFromPoint: pt dwFlags: dwFlags
+	"Invoke the MonitorFromPoint() function of the module wrapped by the receiver.
+	Helpstring: Retrieves a handle to the display monitor that contains a specified point.
+
+		HMONITOR __stdcall MonitorFromPoint(
+			[in]POINTL pt,
+			[in]DWORD dwFlags);"
+
+	<stdcall: handle MonitorFromPoint POINTL dword>
+	^self invalidCall: _failureCode!
+
+monitorFromRect: lprc dwFlags: dwFlags
+	"Invoke the MonitorFromRect() function of the module wrapped by the receiver.
+	Helpstring: Retrieves a handle to the display monitor that has the largest area of intersection with a specified rectangle.
+
+		HMONITOR __stdcall MonitorFromRect(
+			[in]RECT* lprc,
+			[in]DWORD dwFlags);"
+
+	<stdcall: handle MonitorFromRect RECTL* dword>
+	^self invalidCall: _failureCode!
+
+monitorFromWindow: hwnd dwFlags: dwFlags
+	"Invoke the MonitorFromWindow() function of the module wrapped by the receiver.
+	Helpstring: Retrieves a handle to the display monitor that has the largest area of intersection with the bounding rectangle of a specified window.
+
+		HMONITOR __stdcall MonitorFromWindow(
+			[in]wireHWND hwnd,
+			[in]DWORD dwFlags);"
+
+	<stdcall: handle MonitorFromWindow handle dword>
 	^self invalidCall: _failureCode!
 
 openClipboard: hWnd
@@ -4487,6 +4615,8 @@ windowFromPoint: aPOINTL
 !OS.UserLibrary categoriesFor: #endDialog:nResult:!public!win32 functions-dialog box! !
 !OS.UserLibrary categoriesFor: #endPaint:lpPaint:!public!win32 functions-painting and drawing! !
 !OS.UserLibrary categoriesFor: #enumClipboardFormats:!public!win32 functions-clipboard! !
+!OS.UserLibrary categoriesFor: #enumDisplayDevices:iDevNum:lpDisplayDevice:dwFlags:!**auto generated**!public! !
+!OS.UserLibrary categoriesFor: #enumDisplayMonitors:lprcClip:lpfnEnum:dwData:!**auto generated**!public!win32 functions-multiple display monitors! !
 !OS.UserLibrary categoriesFor: #enumThreadWindows:lpfn:lParam:!public!win32 functions-window! !
 !OS.UserLibrary categoriesFor: #enumWindows:lParam:!public!win32 functions-window! !
 !OS.UserLibrary categoriesFor: #fillRect:lprc:hbr:!public!win32 functions-filled shape! !
@@ -4511,6 +4641,7 @@ windowFromPoint: aPOINTL
 !OS.UserLibrary categoriesFor: #getLastActivePopup:!public!win32 functions-window! !
 !OS.UserLibrary categoriesFor: #getLastInputInfo:!public!win32 functions-keyboard input!win32 functions-mouse input!win32 functions-timer!win32 functions-window! !
 !OS.UserLibrary categoriesFor: #getMenuInfo:lpcmi:!public!win32 functions-menu! !
+!OS.UserLibrary categoriesFor: #getMonitorInfo:lpmi:!**auto generated**!public!win32 functions-multiple display monitors! !
 !OS.UserLibrary categoriesFor: #getNextDlgGroupItem:hCtl:bPrevious:!public!win32 functions-window! !
 !OS.UserLibrary categoriesFor: #getNextDlgTabItem:hCtl:bPrevious:!public!win32 functions-window! !
 !OS.UserLibrary categoriesFor: #getProp:lpString:!public!win32 functions-window property! !
@@ -4548,6 +4679,9 @@ windowFromPoint: aPOINTL
 !OS.UserLibrary categoriesFor: #makeDragList:!public!win32 functions-list box! !
 !OS.UserLibrary categoriesFor: #mapWindowPoints:hWndTo:lpPoints:cPoints:!public!win32 functions-coordinate space and transformation! !
 !OS.UserLibrary categoriesFor: #modifyMenu:uPosition:uFlags:uIDNewItem:lpNewItem:!public!win32 functions-menu! !
+!OS.UserLibrary categoriesFor: #monitorFromPoint:dwFlags:!**auto generated**!public!win32 functions-multiple display monitors! !
+!OS.UserLibrary categoriesFor: #monitorFromRect:dwFlags:!**auto generated**!public!win32 functions-multiple display monitors! !
+!OS.UserLibrary categoriesFor: #monitorFromWindow:dwFlags:!**auto generated**!public!win32 functions-multiple display monitors! !
 !OS.UserLibrary categoriesFor: #openClipboard:!public!win32 functions-clipboard! !
 !OS.UserLibrary categoriesFor: #printWindow:hdcBlt:nFlags:!public!win32 functions-painting and drawing! !
 !OS.UserLibrary categoriesFor: #redrawWindow:lprcUpdate:hrgnUpdate:flags:!public!win32 functions-painting and drawing! !

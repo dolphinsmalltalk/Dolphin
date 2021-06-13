@@ -672,6 +672,7 @@ Kernel.SharedPool subclass: #'OS.Win32Constants'
 		'SIZE_MAXSHOW' -> 16r3.
 		'SIZE_MINIMIZED' -> 16r1.
 		'SIZE_RESTORED' -> 16r0.
+		'SM_CMONITORS' -> 16r50.
 		'SM_CXBORDER' -> 16r5.
 		'SM_CXCURSOR' -> 16rD.
 		'SM_CXDLGFRAME' -> 16r7.

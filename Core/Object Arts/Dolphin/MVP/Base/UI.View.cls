@@ -975,6 +975,9 @@ dispatchUser: userId wParam: wParam lParam: lParam map: aLookupTable
 				with: wParam
 				with: lParam]!
 
+displayMonitor
+	^DisplayMonitor displayingView: self!
+
 displayOn: aPuttableStream
 	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that an end-user might want to see."
 
@@ -4660,6 +4663,7 @@ zOrderTop
 !UI.View categoriesFor: #dispatchRegistered:wParam:lParam:!dispatching!private! !
 !UI.View categoriesFor: #dispatchUser:wParam:lParam:!dispatching!private! !
 !UI.View categoriesFor: #dispatchUser:wParam:lParam:map:!dispatching!private! !
+!UI.View categoriesFor: #displayMonitor!accessing!public! !
 !UI.View categoriesFor: #displayOn:!displaying!public! !
 !UI.View categoriesFor: #displayOnFormats!displaying!private! !
 !UI.View categoriesFor: #displayOnMaxCharacters!constants!displaying!private! !

@@ -1412,6 +1412,7 @@ Kernel.SharedPool subclass: #'OS.Win32Constants'
 		'SIZE_MAXSHOW' -> 16r3.
 		'SIZE_MINIMIZED' -> 16r1.
 		'SIZE_RESTORED' -> 16r0.
+		'SM_CMONITORS' -> 16r50.
 		'SM_CXBORDER' -> 16r5.
 		'SM_CXCURSOR' -> 16rD.
 		'SM_CXDLGFRAME' -> 16r7.
@@ -1967,6 +1968,7 @@ Kernel.SharedPool subclass: #'OS.Win32Errors'
 		'ERROR_INVALID_HANDLE' -> 16r6.
 		'ERROR_INVALID_NAME' -> 16r7B.
 		'ERROR_INVALID_PARAMETER' -> 16r57.
+		'ERROR_INVALID_WINDOW_HANDLE' -> 16r578.
 		'ERROR_MORE_DATA' -> 16rEA.
 		'ERROR_MR_MID_NOT_FOUND' -> 16r13D.
 		'ERROR_NO_MORE_FILES' -> 16r12.

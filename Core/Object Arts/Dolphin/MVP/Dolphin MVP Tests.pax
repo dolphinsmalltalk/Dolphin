@@ -38,6 +38,7 @@ package setClassNames: #(
 	#{UI.Tests.CommandDescriptionTest}
 	#{UI.Tests.ContainerViewTest}
 	#{UI.Tests.DifferencesPresenterTest}
+	#{UI.Tests.DisplayMonitorTest}
 	#{UI.Tests.EvaluationConverterTest}
 	#{UI.Tests.FileDialogTest}
 	#{UI.Tests.FlowLayoutTest}
@@ -219,6 +220,12 @@ Core.Tests.DolphinTest subclass: #'Graphics.Tests.ColorTest'
 	classConstants: {}!
 Core.Tests.DolphinTest subclass: #'UI.Tests.CommandDescriptionTest'
 	instanceVariableNames: 'savedKeyboardLayout'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Core.Tests.DolphinTest subclass: #'UI.Tests.DisplayMonitorTest'
+	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
