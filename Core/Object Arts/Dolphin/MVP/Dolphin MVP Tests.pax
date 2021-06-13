@@ -22,6 +22,7 @@ package classNames
 	add: #CommandDescriptionTest;
 	add: #ContainerViewTest;
 	add: #DifferencesPresenterTest;
+	add: #DisplayMonitorTest;
 	add: #EvaluationConverterTest;
 	add: #ExternalPointTest;
 	add: #ExternalRectangleTest;
@@ -193,6 +194,11 @@ DolphinTest subclass: #ColorTest
 	classInstanceVariableNames: ''!
 DolphinTest subclass: #CommandDescriptionTest
 	instanceVariableNames: 'savedKeyboardLayout'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+DolphinTest subclass: #DisplayMonitorTest
+	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
