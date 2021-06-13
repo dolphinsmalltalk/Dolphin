@@ -292,7 +292,10 @@ subtractFromDateAndTime: aDateAndTime
 	"Private - Part of a double dispatch for <DateAndTime> subtraction. Answers a 
 	<DateAndTime> representing the receiver subtracted from the argument"
 
-	^aDateAndTime class utcSeconds: aDateAndTime asSeconds - seconds offset: aDateAndTime offsetSeconds! !
+	^aDateAndTime class utcSeconds: aDateAndTime asSeconds - seconds offset: aDateAndTime offsetSeconds!
+
+wait
+	(Delay forDuration: self) wait! !
 !Core.Duration categoriesFor: #-!arithmetic!public! !
 !Core.Duration categoriesFor: #*!arithmetic!public! !
 !Core.Duration categoriesFor: #/!arithmetic!public! !
@@ -327,6 +330,7 @@ subtractFromDateAndTime: aDateAndTime
 !Core.Duration categoriesFor: #setSeconds:!initializing!private! !
 !Core.Duration categoriesFor: #storeOn:!printing!public! !
 !Core.Duration categoriesFor: #subtractFromDateAndTime:!initializing!private! !
+!Core.Duration categoriesFor: #wait!process synchronisation!public! !
 
 Core.Duration methodProtocol: #Duration attributes: #(#ansi #readOnly) selectors: #(#- #* #/ #~~ #~= #+ #< #<= #= #== #> #>= #abs #asSeconds #between:and: #class #copy #days #doesNotUnderstand: #error: #hash #hours #identityHash #isKindOf: #isMemberOf: #isNil #max: #min: #minutes #negated #negative #notNil #perform: #perform:with: #perform:with:with: #perform:with:with:with: #perform:withArguments: #positive #printOn: #printString #respondsTo: #seconds #yourself)!
 

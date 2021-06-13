@@ -335,10 +335,10 @@ startScrollProcess
 
 	self stopScrollProcess.
 	scrollProcess := 
-			[(Delay forDuration: self defaultScrollDelay) wait.
+			[self defaultScrollDelay wait.
 			
 			[dropTarget ddScroll: self.
-			(Delay forDuration: self defaultScrollInterval) wait] repeat]
+			self defaultScrollInterval wait] repeat]
 					forkAt: Processor userBackgroundPriority!
 
 stopScrollProcess
