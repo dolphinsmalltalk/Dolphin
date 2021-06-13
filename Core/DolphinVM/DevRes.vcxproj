@@ -241,6 +241,7 @@
     <Image Include="Res\Dictionary.ico" />
     <Image Include="Res\DiskVolumeInformation.ico" />
     <Image Include="Res\DisplayIt.ico" />
+    <Image Include="Res\DisplayMonitor.ico" />
     <Image Include="Res\DocumentShell.ico" />
     <Image Include="Res\DolphinNoXP.ico" />
     <Image Include="Res\DolphinPackage.ico" />
