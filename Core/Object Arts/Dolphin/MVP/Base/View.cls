@@ -973,6 +973,9 @@ dispatchUser: userId wParam: wParam lParam: lParam map: aLookupTable
 				with: wParam
 				with: lParam]!
 
+displayMonitor
+	^DisplayMonitor displayingView: self!
+
 displayOn: aStream 
 	"Append, to aStream, a String whose characters are a representation of the receiver as a user
 	would want to see it."
@@ -4653,6 +4656,7 @@ zOrderTop
 !View categoriesFor: #dispatchRegistered:wParam:lParam:!dispatching!private! !
 !View categoriesFor: #dispatchUser:wParam:lParam:!dispatching!private! !
 !View categoriesFor: #dispatchUser:wParam:lParam:map:!dispatching!private! !
+!View categoriesFor: #displayMonitor!accessing!public! !
 !View categoriesFor: #displayOn:!displaying!public! !
 !View categoriesFor: #displayOnFormats!displaying!private! !
 !View categoriesFor: #displayOnMaxCharacters!constants!displaying!private! !

@@ -841,6 +841,7 @@ Win32Constants at: 'SIZE_MAXIMIZED' put: 16r2!
 Win32Constants at: 'SIZE_MAXSHOW' put: 16r3!
 Win32Constants at: 'SIZE_MINIMIZED' put: 16r1!
 Win32Constants at: 'SIZE_RESTORED' put: 16r0!
+Win32Constants at: 'SM_CMONITORS' put: 16r50!
 Win32Constants at: 'SM_CXBORDER' put: 16r5!
 Win32Constants at: 'SM_CXCURSOR' put: 16rD!
 Win32Constants at: 'SM_CXDLGFRAME' put: 16r7!
