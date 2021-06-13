@@ -27,8 +27,12 @@ lookupVariable: anStVariableNode
 	instanceVariables isNil
 		ifTrue: 
 			[instanceVariables := LookupTable new: 5.
-			methodClass allInstVarNames
-				keysAndValuesDo: [:i :v | instanceVariables at: v put: (StInstanceVariable index: i name: v)]].
+			methodClass allInstVarNames keysAndValuesDo: 
+					[:i :v |
+					instanceVariables at: v
+						put: ((StInstanceVariable index: i name: v)
+								scope: self;
+								yourself)]].
 	^(instanceVariables lookup: identifier)
 		ifNil: 
 			[(methodClass fullBindingFor: identifier environment: environment)

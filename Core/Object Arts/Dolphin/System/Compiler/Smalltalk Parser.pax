@@ -109,7 +109,7 @@ Core.Object subclass: #'Kernel.Scanner'
 		'PatternVariableCharacter' -> $`
 	}!
 Core.Object subclass: #'Kernel.StProgramNode'
-	instanceVariableNames: 'parent comments'
+	instanceVariableNames: 'parent comments scope'
 	classVariableNames: 'FormatterClass SuperSearch'
 	imports: #()
 	classInstanceVariableNames: ''

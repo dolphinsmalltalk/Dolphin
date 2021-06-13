@@ -93,7 +93,7 @@ readStaticVariable: aStVariableNode
 targetOfMessage: aStMessageNode
 	| receiver |
 	receiver := aStMessageNode receiver.
-	receiver isVariable ifTrue: [^receiver variable ifNotNil: [:var | var valueClass]].
+	receiver isVariable ifTrue: [^receiver variable ifNotNil: [:var | var staticValueClass]].
 	receiver isLiteralNode ifTrue: [^receiver valueClass].
 	^nil!
 
@@ -111,7 +111,7 @@ visitSequenceNode: aSequenceNode
 	answer := super visitSequenceNode: aSequenceNode.
 	isStub
 		ifFalse: 
-			[self currentScope unreferencedArguments
+			[currentScope unreferencedArguments
 				do: [:each | self signalError: CInfoUnreferencedArg forNode: each node]].
 	^answer! !
 !Tools.BrowserSemanticAnalyser categoriesFor: #checkHardBreakpoint:!helpers!private! !

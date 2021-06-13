@@ -26,7 +26,7 @@ visitArgumentNode: anStParameterNode
 	^self visitVariableNode: anStParameterNode!
 
 visitArgumentNodes: aNodeCollection
-	^aNodeCollection do: [:each | self visitArgumentNode: each]!
+	^aNodeCollection do: [:each | self visitNode: each]!
 
 visitArrayNode: anStBraceArrayNode
 	anStBraceArrayNode children do: [:each | self visitNode: each]!
@@ -142,6 +142,8 @@ visitVariableNode: aVariableNode
 !Kernel.ParseNodeVisitor categoriesFor: #visitTemporaryNodes:!public!visiting! !
 !Kernel.ParseNodeVisitor categoriesFor: #visitThisContextVariableNode:!public!visiting! !
 !Kernel.ParseNodeVisitor categoriesFor: #visitVariableNode:!public!visiting! !
+
+Kernel.ParseNodeVisitor methodProtocol: #parseNodeVisitor attributes: #() selectors: #(#visitAnnotationNode: #visitArgumentNode: #visitArrayNode: #visitAssignmentNode: #visitBlockNode: #visitCascadeNode: #visitExternalArgTypeNode: #visitExternalCallNode: #visitLiteralArrayNode: #visitLiteralNode: #visitMessageNode: #visitMethodNode: #visitOptimizedNode: #visitParameterNode: #visitPrimitiveNode: #visitQualifiedReferenceNode: #visitReturnNode: #visitSelfVariableNode: #visitSequenceNode: #visitSpecialVariableNode: #visitSuperVariableNode: #visitTempDeclNode: #visitThisContextVariableNode: #visitVariableNode:)!
 
 !Kernel.ParseNodeVisitor class methodsFor!
 

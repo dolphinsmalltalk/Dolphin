@@ -5658,9 +5658,8 @@ idlTypeOfVT: vt
 isClassCheck: aVariableBinding
 	"Private - The receiver's global is already present, check to make sure it is actually a class."
 
-	| value resp mb |
-	value := aVariableBinding value.
-	value class isMeta ifTrue: [^true].
+	| resp mb |
+	aVariableBinding isClassBinding ifTrue: [^true].
 	mb := UI.MessageBox new.
 	mb iconStyle: #warning.
 	mb

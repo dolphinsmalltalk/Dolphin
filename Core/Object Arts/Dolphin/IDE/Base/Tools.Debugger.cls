@@ -345,6 +345,9 @@ canSaveMethod
 
 	^self hasEditableMethodSelected!
 
+classForVariable: aStVariable
+	^aStVariable valueClass: self frame!
+
 clearCachedMethodInfo
 	_method := nil.
 	sourcePresenter clearParseTree!
@@ -376,10 +379,12 @@ createComponents
 				name: 'inspector'
 				helpId: 10884.
 	sourcePresenter := self
-				add: SmalltalkSystem current methodWorkspaceClass new yourself
+				add: SmalltalkSystem current methodWorkspaceClass new
 				name: 'source'
 				helpId: 10885.
-	sourcePresenter areVariableTipsEnabled: true.
+	sourcePresenter
+		areVariableTipsEnabled: true;
+		variableMetadataProvider: self.
 	refactoringTool := self systemModel newMethodRefactoringToolFor: self!
 
 createSchematicWiring
@@ -1731,6 +1736,9 @@ terminateProcess
 		uniqueId: [self] method.
 	^(mb confirm: 'Are you sure you want to terminate the process?') ifTrue: [process terminate]!
 
+tipForVariable: aStVariable
+	^aStVariable infoTip: self frame!
+
 toggleAnimation
 	"Private - Start/stop animating the debugged process. At the moment this is mainly a bit of
 	fun, rather than anything of serious utility. It is also handy for stress testing the
@@ -1900,6 +1908,7 @@ variableAtIndex: anInteger put: anObject
 !Tools.Debugger categoriesFor: #buildParseTree!commands!private! !
 !Tools.Debugger categoriesFor: #canImplementMessage!private!testing! !
 !Tools.Debugger categoriesFor: #canSaveMethod!private!testing! !
+!Tools.Debugger categoriesFor: #classForVariable:!public! !
 !Tools.Debugger categoriesFor: #clearCachedMethodInfo!helpers!private! !
 !Tools.Debugger categoriesFor: #continue:with:!operations!private! !
 !Tools.Debugger categoriesFor: #createComponents!initializing!public! !
@@ -2006,6 +2015,7 @@ variableAtIndex: anInteger put: anObject
 !Tools.Debugger categoriesFor: #suspendProcess!operations!private! !
 !Tools.Debugger categoriesFor: #terminateOnClose!private!testing! !
 !Tools.Debugger categoriesFor: #terminateProcess!commands!private! !
+!Tools.Debugger categoriesFor: #tipForVariable:!enquiries!public! !
 !Tools.Debugger categoriesFor: #toggleAnimation!commands!private! !
 !Tools.Debugger categoriesFor: #toggleDisassembly!commands!private! !
 !Tools.Debugger categoriesFor: #updateForBreakAt:!operations!private! !
@@ -2014,6 +2024,7 @@ variableAtIndex: anInteger put: anObject
 !Tools.Debugger categoriesFor: #variableAtIndex:put:!helpers!private! !
 
 Tools.Debugger methodProtocol: #debugEventHandler attributes: #(#readOnly) selectors: #(#onBreak: #onHalt: #onStep: #onTerminate #onWalkback:topFrame:resumable:)!
+Tools.Debugger methodProtocol: #variableMetadataProvider attributes: #(#readOnly) selectors: #(#classForVariable: #tipForVariable:)!
 
 !Tools.Debugger class methodsFor!
 

@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
 Core.Object subclass: #'Kernel.StProgramNode'
-	instanceVariableNames: 'parent comments'
+	instanceVariableNames: 'parent comments scope'
 	classVariableNames: 'FormatterClass SuperSearch'
 	imports: #()
 	classInstanceVariableNames: ''
@@ -330,6 +330,12 @@ recurseInto
 recurseIntoCharacter
 	^$`!
 
+scope
+	^scope!
+
+scope: aStLexicalScope
+	scope := aStLexicalScope!
+
 sentMessages
 	| messages |
 	messages := IdentitySet new.
@@ -467,6 +473,8 @@ whoDefines: aName
 !Kernel.StProgramNode categoriesFor: #printOn:!printing!public! !
 !Kernel.StProgramNode categoriesFor: #recurseInto!public!testing/matching! !
 !Kernel.StProgramNode categoriesFor: #recurseIntoCharacter!meta variable/accessing!public! !
+!Kernel.StProgramNode categoriesFor: #scope!accessing!public! !
+!Kernel.StProgramNode categoriesFor: #scope:!accessing!public! !
 !Kernel.StProgramNode categoriesFor: #sentMessages!accessing!public! !
 !Kernel.StProgramNode categoriesFor: #size!enumerating!public! !
 !Kernel.StProgramNode categoriesFor: #source!accessing!public! !

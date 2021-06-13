@@ -440,14 +440,29 @@ package setMethodNames: #(
 	#(#{Kernel.StackFrame} #makeDebug)
 	#(#{Kernel.StackFrame} #stackWorkspace)
 	#(#{Kernel.StackFrame class} #publishedAspectsOfInstances)
+	#(#{Kernel.StArgumentVariable} #category)
 	#(#{Kernel.StAssignmentNode} #displayOn:)
 	#(#{Kernel.StBlockNode} #displayOn:)
+	#(#{Kernel.StBlockScope} #category)
 	#(#{Kernel.StCascadeNode} #displayOn:)
+	#(#{Kernel.StClassScope} #category)
+	#(#{Kernel.StEvalScope} #category)
+	#(#{Kernel.StGeneratedTempVariable} #category)
+	#(#{Kernel.StInstanceVariable} #printInfoTipOn:)
+	#(#{Kernel.StInstanceVariable} #printInfoTipOn:frame:)
+	#(#{Kernel.StInstanceVariable} #valueInFrame:)
 	#(#{Kernel.StLiteralArrayNode} #displayOn:)
 	#(#{Kernel.StLiteralToken} #textStyle)
 	#(#{Kernel.StLiteralValueNode} #displayOn:)
+	#(#{Kernel.StLocalVariable} #category)
+	#(#{Kernel.StLocalVariable} #debugInfoInFrame:)
+	#(#{Kernel.StLocalVariable} #printInfoTipOn:)
+	#(#{Kernel.StLocalVariable} #printInfoTipOn:frame:)
+	#(#{Kernel.StLocalVariable} #valueClass:)
 	#(#{Kernel.StMessageNode} #displayOn:)
+	#(#{Kernel.StMethodScope} #category)
 	#(#{Kernel.StNumberLiteralToken} #textStyle)
+	#(#{Kernel.StOptimizedBlockScope} #category)
 	#(#{Kernel.StOptimizedNode} #displayOn:)
 	#(#{Kernel.StParameterNode} #displayOn:)
 	#(#{Kernel.StPrimitiveNode} #displayOn:)
@@ -456,20 +471,37 @@ package setMethodNames: #(
 	#(#{Kernel.StProgramNode} #preComments)
 	#(#{Kernel.StProgramNode} #publishedAspects)
 	#(#{Kernel.StReturnNode} #displayOn:)
+	#(#{Kernel.StSelfVariable} #printInfoTipOn:frame:)
 	#(#{Kernel.StSelfVariable} #valueClass)
+	#(#{Kernel.StSelfVariable} #valueClass:)
 	#(#{Kernel.StSelfVariableNode} #valueClassIn:)
+	#(#{Kernel.StSemanticScope} #category)
 	#(#{Kernel.StSequenceNode} #displayOn:)
 	#(#{Kernel.StSpecialVariableNode} #displayOn:)
 	#(#{Kernel.StSpecialVariableNode} #valueClassIn:)
+	#(#{Kernel.StStaticVariable} #printInfoTipOn:)
+	#(#{Kernel.StStaticVariable} #staticValueClass)
 	#(#{Kernel.StStaticVariable} #valueClass)
+	#(#{Kernel.StSuperVariable} #printInfoTipOn:)
 	#(#{Kernel.StSuperVariable} #valueClass)
+	#(#{Kernel.StSuperVariable} #valueClass:)
 	#(#{Kernel.StSuperVariableNode} #valueClassIn:)
 	#(#{Kernel.StTempDeclNode} #displayOn:)
+	#(#{Kernel.StTempVariable} #category)
 	#(#{Kernel.StThisContextVariable} #valueClass)
 	#(#{Kernel.StThisContextVariableNode} #valueClassIn:)
 	#(#{Kernel.StToken} #postComments)
 	#(#{Kernel.StToken} #preComments)
+	#(#{Kernel.StVariable} #infoTip)
+	#(#{Kernel.StVariable} #infoTip:)
+	#(#{Kernel.StVariable} #printInfoTipOn:)
+	#(#{Kernel.StVariable} #printInfoTipOn:frame:)
+	#(#{Kernel.StVariable} #staticValueClass)
 	#(#{Kernel.StVariable} #valueClass)
+	#(#{Kernel.StVariable} #valueClass:)
+	#(#{Kernel.StVariable} #valueInFrame:)
+	#(#{Kernel.StWorkspaceVariable} #printInfoTipOn:)
+	#(#{Kernel.StWorkspaceVariable} #staticValueClass)
 	#(#{OS._FPIEEE_RECORD} #printFieldsOn:)
 	#(#{OS._FPIEEE_VALUE} #printFieldsOn:)
 	#(#{OS.FILETIME} #printOn:)
@@ -1081,7 +1113,7 @@ UI.Presenter subclass: #'Tools.SmalltalkSearchPresenter'
 	classInstanceVariableNames: ''
 	classConstants: {}!
 UI.Presenter subclass: #'Tools.SmalltalkWorkspace'
-	instanceVariableNames: 'evaluationContext errorModel findDetails workspacePool evaluationPools compilationErrors textStyles searchEnvironment modifiedModel flags indicatorStyles'
+	instanceVariableNames: 'evaluationContext errorModel findDetails workspacePool evaluationPools compilationErrors textStyles searchEnvironment modifiedModel flags indicatorStyles variableMetadataProvider'
 	classVariableNames: 'Abbreviations AnnotationMode AutoCompleteDwell DefaultCaretColor DefaultFont DefaultTabWidth FontQuality IndicatorStyles IsAutoCompletionCaseInsensitive IsAutoCompletionEnabled IsAutoCompletionSpaceAdded IsAutoCompletionTruncating KeyBindings KeywordCompletions MaxAutoCompletionListSize StandardUnaryReturnTypes TextStyles UseDirectWrite WordWrap WrapIndentMode'
 	imports: #(#{Kernel.CompilerFlags} #{UI.Scintilla private} #{Refactory.Browser private})
 	classInstanceVariableNames: 'additionalKeyBindings commandQueryHandlers'
@@ -2173,7 +2205,7 @@ debugPrintString
 
 	| stream |
 	stream := LimitedWriteStream
-				on: (String new: 32)
+				over: (String smalltalkWriteStream: 32)
 				limit: 500
 				limitBlock: [:s | ^s contents , ' ... etc ...'].
 	self debugPrintOn: stream.
@@ -4687,6 +4719,14 @@ publishedAspectsOfInstances
 		yourself! !
 !Kernel.StackFrame class categoriesFor: #publishedAspectsOfInstances!constants!public! !
 
+!Kernel.StArgumentVariable methodsFor!
+
+category
+	"Answer a descriptive category name for this local variable."
+
+	^'argument'! !
+!Kernel.StArgumentVariable categoriesFor: #category!accessing!public! !
+
 !Kernel.StAssignmentNode methodsFor!
 
 displayOn: aPuttableStream
@@ -4703,6 +4743,14 @@ displayOn: aPuttableStream
 	aPuttableStream nextPutAll: '[]'! !
 !Kernel.StBlockNode categoriesFor: #displayOn:!printing!public! !
 
+!Kernel.StBlockScope methodsFor!
+
+category
+	"Answer a descriptive category name for this scope."
+
+	^'Block'! !
+!Kernel.StBlockScope categoriesFor: #category!public! !
+
 !Kernel.StCascadeNode methodsFor!
 
 displayOn: aPuttableStream
@@ -4710,6 +4758,54 @@ displayOn: aPuttableStream
 
 	aPuttableStream nextPutAll: 'Cascade'! !
 !Kernel.StCascadeNode categoriesFor: #displayOn:!printing!public! !
+
+!Kernel.StClassScope methodsFor!
+
+category
+	"Answer a descriptive category name for this scope."
+
+	^'Class'! !
+!Kernel.StClassScope categoriesFor: #category!public! !
+
+!Kernel.StEvalScope methodsFor!
+
+category
+	"Answer a descriptive category name for this scope."
+
+	^'Workspace'! !
+!Kernel.StEvalScope categoriesFor: #category!public! !
+
+!Kernel.StGeneratedTempVariable methodsFor!
+
+category
+	"Answer a descriptive category name for this local variable."
+
+	^'generated temp'! !
+!Kernel.StGeneratedTempVariable categoriesFor: #category!accessing!public! !
+
+!Kernel.StInstanceVariable methodsFor!
+
+printInfoTipOn: aStream
+	aStream
+		nextPutAll: 'Instance variable ''';
+		print: (scope methodClass whichClassDefinesInstVar: name);
+		nextPut: $.;
+		nextPutAll: self name;
+		nextPutAll: ''''!
+
+printInfoTipOn: aStream frame: aStackFrame
+	"Answer an informative tip for this variable that might be displayed, for example, when the user is hovering over it in a Debugger workspace showing the specified <StackFrame>."
+
+	self printInfoTipOn: aStream.
+	aStream
+		nextPutAll: ': ';
+		debugPrint: (self valueInFrame: aStackFrame)!
+
+valueInFrame: aStackFrame
+	^aStackFrame receiver instVarAt: index! !
+!Kernel.StInstanceVariable categoriesFor: #printInfoTipOn:!accessing!public! !
+!Kernel.StInstanceVariable categoriesFor: #printInfoTipOn:frame:!accessing!public! !
+!Kernel.StInstanceVariable categoriesFor: #valueInFrame:!accessing!public! !
 
 !Kernel.StLiteralArrayNode methodsFor!
 
@@ -4733,6 +4829,47 @@ displayOn: aPuttableStream
 	self value printOn: aPuttableStream! !
 !Kernel.StLiteralValueNode categoriesFor: #displayOn:!printing!public! !
 
+!Kernel.StLocalVariable methodsFor!
+
+category
+	"Answer a descriptive category name for this local variable."
+
+	^self subclassResponsibility!
+
+debugInfoInFrame: aStackFrame
+	^aStackFrame temps detect: [:each | each first = self name] ifNone: []!
+
+printInfoTipOn: aStream
+	aStream
+		nextPutAll: scope category;
+		space;
+		nextPutAll: self category;
+		nextPutAll: ' ''';
+		nextPutAll: self name;
+		nextPutAll: ''''!
+
+printInfoTipOn: aStream frame: aStackFrame
+	"Answer an informative tip for this variable that might be displayed, for example, when the user is hovering over it in a Debugger workspace showing the specified <StackFrame>."
+
+	self printInfoTipOn: aStream.
+	(self debugInfoInFrame: aStackFrame)
+		ifNotNil: 
+			[:entry |
+			aStream
+				nextPutAll: ': ';
+				debugPrint: (aStackFrame temp: (entry at: 2) at: (entry at: 3))]!
+
+valueClass: aStackFrame
+	Sound bell.
+	^(self debugInfoInFrame: aStackFrame)
+		ifNil: [super valueClass: aStackFrame]
+		ifNotNil: [:entry | (aStackFrame temp: (entry at: 2) at: (entry at: 3)) basicClass]! !
+!Kernel.StLocalVariable categoriesFor: #category!accessing!public! !
+!Kernel.StLocalVariable categoriesFor: #debugInfoInFrame:!accessing!public! !
+!Kernel.StLocalVariable categoriesFor: #printInfoTipOn:!accessing!public! !
+!Kernel.StLocalVariable categoriesFor: #printInfoTipOn:frame:!accessing!public! !
+!Kernel.StLocalVariable categoriesFor: #valueClass:!public! !
+
 !Kernel.StMessageNode methodsFor!
 
 displayOn: aPuttableStream
@@ -4743,11 +4880,27 @@ displayOn: aPuttableStream
 		print: self selector! !
 !Kernel.StMessageNode categoriesFor: #displayOn:!printing!public! !
 
+!Kernel.StMethodScope methodsFor!
+
+category
+	"Answer a descriptive category name for this scope."
+
+	^'Method'! !
+!Kernel.StMethodScope categoriesFor: #category!public! !
+
 !Kernel.StNumberLiteralToken methodsFor!
 
 textStyle
 	^#literalNumber! !
 !Kernel.StNumberLiteralToken categoriesFor: #textStyle!constants!public! !
+
+!Kernel.StOptimizedBlockScope methodsFor!
+
+category
+	"Answer a descriptive category name for this scope."
+
+	^'Optimized Block'! !
+!Kernel.StOptimizedBlockScope categoriesFor: #category!public! !
 
 !Kernel.StOptimizedNode methodsFor!
 
@@ -4844,19 +4997,39 @@ displayOn: aPuttableStream
 
 !Kernel.StSelfVariable methodsFor!
 
+printInfoTipOn: aStream frame: aStackFrame
+	"Answer an informative tip for this variable that might be displayed, for example, when the user is hovering over it in a Debugger workspace showing the specified <StackFrame>."
+
+	aStream
+		nextPutAll: 'Receiver: ';
+		debugPrint: aStackFrame receiver!
+
 valueClass
 	"Answer the class of the variables value, if this is known, or nil if unknown."
 
 	"The scope will be an StClassScope which knows the method class."
 
-	^scope methodClass! !
+	^scope methodClass!
+
+valueClass: aStackFrame
+	^aStackFrame receiver basicClass! !
+!Kernel.StSelfVariable categoriesFor: #printInfoTipOn:frame:!accessing!public! !
 !Kernel.StSelfVariable categoriesFor: #valueClass!accessing!public! !
+!Kernel.StSelfVariable categoriesFor: #valueClass:!public! !
 
 !Kernel.StSelfVariableNode methodsFor!
 
 valueClassIn: aClass
 	^aClass! !
 !Kernel.StSelfVariableNode categoriesFor: #valueClassIn:!public! !
+
+!Kernel.StSemanticScope methodsFor!
+
+category
+	"Answer a descriptive category name for this scope."
+
+	^self subclassResponsibility! !
+!Kernel.StSemanticScope categoriesFor: #category!public! !
 
 !Kernel.StSequenceNode methodsFor!
 
@@ -4880,26 +5053,63 @@ valueClassIn: aClass
 
 !Kernel.StStaticVariable methodsFor!
 
+printInfoTipOn: aStream
+	"Print an informative tip on the <puttableStream> argument for this variable that might be displayed, for example, when the user is hovering over it in a browser workspace."
+
+	"Here we try to provide some useful information, such as the fully qualified name of a class referenced only by a short name, whether the variable is a class or shared variable, or a class constant."
+
+	| prefix |
+	prefix := binding isClassVariable
+				ifTrue: [binding isImmutable ifTrue: ['Class constant '] ifFalse: ['Class variable ']]
+				ifFalse: 
+					[binding isClassBinding
+						ifTrue: 
+							[aStream
+								nextPutAll: 'Class ';
+								nextPutAll: binding fullName.
+							^self]
+						ifFalse: ['Shared variable ']].
+	aStream
+		nextPutAll: prefix;
+		nextPutAll: binding fullName;
+		nextPutAll: ': ';
+		debugPrint: binding value;
+		contents!
+
+staticValueClass
+	"Answer the class that the variable should be assumed to hold for the purposes of deducing what messages it may understand, or nil if not known with any certainty."
+
+	"In the case of static variables, we can only offer a variable type with confidence (without resort to type inference) if the variable binding is constant (which includes class bindings). If it isn't then the variable could assume different types through the course of the method or even across different invocations (if a global, or class variable). This might cause false reports of unimplemented messages in the debugger. Therefore we have to be conservative here in suggesting the variable type."
+
+	^binding isImmutable ifTrue: [binding value basicClass]!
+
 valueClass
 	"Answer the class of the variables value, if this is known, or nil if unknown."
 
-	"In the case of static variables, we can only offer a variable type with confidence (without
-	resort to type inference) if the variable binding is constant. If it isn't then the variable
-	could assume different types through the course of the method or even across different
-	invocations (if a global, or class variable). This might cause false reports of
-	unimplemented messages in the debugger. Therefore we have to be conservative here in
-	suggesting the variable type."
-
-	^binding isImmutable ifTrue: [binding value basicClass]! !
+	^binding value basicClass! !
+!Kernel.StStaticVariable categoriesFor: #printInfoTipOn:!accessing!public! !
+!Kernel.StStaticVariable categoriesFor: #staticValueClass!accessing!public! !
 !Kernel.StStaticVariable categoriesFor: #valueClass!accessing!public! !
 
 !Kernel.StSuperVariable methodsFor!
 
+printInfoTipOn: aStream
+	"Answer an informative tip for this variable that might be displayed, for example, when the user is hovering over it in a browser workspace."
+
+	aStream
+		nextPutAll: 'Supersend to ';
+		print: scope methodClass superclass!
+
 valueClass
 	"Answer the class of the variables value, if this is known, or nil if unknown."
 
-	^scope methodClass superclass! !
+	^scope methodClass superclass!
+
+valueClass: aStackFrame
+	^aStackFrame method methodClass superclass! !
+!Kernel.StSuperVariable categoriesFor: #printInfoTipOn:!accessing!public! !
 !Kernel.StSuperVariable categoriesFor: #valueClass!accessing!public! !
+!Kernel.StSuperVariable categoriesFor: #valueClass:!public! !
 
 !Kernel.StSuperVariableNode methodsFor!
 
@@ -4917,6 +5127,14 @@ displayOn: aPuttableStream
 		nextPutAll: name;
 		nextPut: $|! !
 !Kernel.StTempDeclNode categoriesFor: #displayOn:!printing!public! !
+
+!Kernel.StTempVariable methodsFor!
+
+category
+	"Answer a descriptive category name for this local variable."
+
+	^'temp'! !
+!Kernel.StTempVariable categoriesFor: #category!accessing!public! !
 
 !Kernel.StThisContextVariable methodsFor!
 
@@ -4954,13 +5172,82 @@ preComments
 
 !Kernel.StVariable methodsFor!
 
-valueClass
-	"Answer the class of the variables value, if this is known, or nil if unknown. In Smalltalk
-	we only know the type that a variable can assume in the case of constants as variables are
-	untyped."
+infoTip
+	"Answer an informative tip for this variable that might be displayed, for example, when the user is hovering over it in a browser workspace."
 
-	^nil! !
+	| stream |
+	stream := LimitedWriteStream
+				over: (String smalltalkWriteStream: 32)
+				limit: 120
+				limitBlock: [:s | ^s contents , ' ... etc ...'].
+	self printInfoTipOn: stream.
+	^stream contents!
+
+infoTip: aStackFrame
+	"Answer an informative tip for this variable that might be displayed, for example, when the user is hovering over it in a Debugger workspace showing the specified <StackFrame>."
+
+	| stream |
+	stream := LimitedWriteStream
+				over: (String smalltalkWriteStream: 32)
+				limit: 120
+				limitBlock: [:s | ^s contents , ' ... etc ...'].
+	self printInfoTipOn: stream frame: aStackFrame.
+	^stream contents!
+
+printInfoTipOn: aStream
+	"Write a informative tip for this variable to the <puttableStream> argument, that might be displayed, for example, when the user is hovering over it in a browser workspace."
+
+	aStream nextPutAll: self name!
+
+printInfoTipOn: aStream frame: aStackFrame
+	"Write a informative tip for this variable to the <puttableStream> argument, that might be displayed, for example, when the user is hovering over it in a debugger workspace."
+
+	"By default, use the static tip."
+
+	self printInfoTipOn: aStream!
+
+staticValueClass
+	"Answer the class that the variable should be assumed to hold for the purposes of deducing what messages it may understand, or nil if not known with any certainty."
+
+	^self valueClass!
+
+valueClass
+	"Answer the class of the variables value, if this is known, or nil if unknown. In Smalltalk we only know the type that a variable can assume in the case of constants and shared variables where the value is availabe, as variables are untyped."
+
+	^nil!
+
+valueClass: aStackFrame 
+	^self valueClass!
+
+valueInFrame: aStackFrame
+	^self subclassResponsibility! !
+!Kernel.StVariable categoriesFor: #infoTip!accessing!public! !
+!Kernel.StVariable categoriesFor: #infoTip:!accessing!public! !
+!Kernel.StVariable categoriesFor: #printInfoTipOn:!accessing!public! !
+!Kernel.StVariable categoriesFor: #printInfoTipOn:frame:!accessing!public! !
+!Kernel.StVariable categoriesFor: #staticValueClass!accessing!public! !
 !Kernel.StVariable categoriesFor: #valueClass!accessing!public! !
+!Kernel.StVariable categoriesFor: #valueClass:!public! !
+!Kernel.StVariable categoriesFor: #valueInFrame:!accessing!public! !
+
+!Kernel.StWorkspaceVariable methodsFor!
+
+printInfoTipOn: aStream
+	"Print an informative tip on the <puttableStream> argument for this variable that might be displayed, for example, when the user is hovering over it in a browser workspace."
+
+	aStream
+		nextPutAll: 'Workspace variable ';
+		nextPutAll: binding fullName;
+		nextPutAll: ': ';
+		debugPrint: binding value;
+		contents!
+
+staticValueClass
+	"Answer the class that the variable should be assumed to hold for the purposes of deducing what messages it may understand, or nil if not known with any certainty."
+
+	^binding value basicClass! !
+!Kernel.StWorkspaceVariable categoriesFor: #printInfoTipOn:!accessing!public! !
+!Kernel.StWorkspaceVariable categoriesFor: #staticValueClass!accessing!public! !
 
 !OS._FPIEEE_RECORD methodsFor!
 

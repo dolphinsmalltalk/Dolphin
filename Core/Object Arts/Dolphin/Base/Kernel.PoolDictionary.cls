@@ -51,6 +51,9 @@ environment
 
 	^Smalltalk!
 
+fullNameFor: aString 
+	^aString!
+
 name
 	"Answer the receiver's name."
 
@@ -78,6 +81,7 @@ unqualifiedName
 !Kernel.PoolDictionary categoriesFor: #convertToSharedPool!development!private! !
 !Kernel.PoolDictionary categoriesFor: #displayOn:!public! !
 !Kernel.PoolDictionary categoriesFor: #environment!accessing!public! !
+!Kernel.PoolDictionary categoriesFor: #fullNameFor:!public! !
 !Kernel.PoolDictionary categoriesFor: #name!accessing!public! !
 !Kernel.PoolDictionary categoriesFor: #name:!accessing!private! !
 !Kernel.PoolDictionary categoriesFor: #newAssociation:value:!helpers!private! !

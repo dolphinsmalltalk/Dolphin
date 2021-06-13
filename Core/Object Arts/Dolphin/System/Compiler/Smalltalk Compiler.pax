@@ -25,6 +25,7 @@ package setClassNames: #(
 	#{Kernel.StTempVariable}
 	#{Kernel.StThisContextVariable}
 	#{Kernel.StVariable}
+	#{Kernel.StWorkspaceVariable}
 ).
 
 package setMethodNames: #(
@@ -155,6 +156,12 @@ Kernel.StSpecialVariable subclass: #'Kernel.StSuperVariable'
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Kernel.StSpecialVariable subclass: #'Kernel.StThisContextVariable'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Kernel.StStaticVariable subclass: #'Kernel.StWorkspaceVariable'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

@@ -371,7 +371,7 @@ compilationErrorClass
 
 countOuterTemps
 	| scope count |
-	scope := self currentScope.
+	scope := currentScope.
 	count := 0.
 	[scope outer notNil and: [scope isInlined]] whileTrue: 
 			[scope := scope outer.
@@ -533,10 +533,6 @@ visitAnnotationNode: anStAnnotationNode
 				ifTrue: [currentScope environment: ns]
 				ifFalse: [self signalError: CErrExpectNamespace forNode: arg]]!
 
-visitArgumentNode: anStParameterNode
-	self checkRedefines: anStParameterNode.
-	self currentScope declareArgument: anStParameterNode!
-
 visitArgumentNodes: aNodeCollection
 	| count max |
 	aNodeCollection isEmpty ifTrue: [^self].
@@ -544,7 +540,7 @@ visitArgumentNodes: aNodeCollection
 	max := VMConstants.MaxTemps.
 	aNodeCollection do: 
 			[:each |
-			self visitArgumentNode: each.
+			self visitNode: each.
 			count := count + 1.
 			count > max
 				ifTrue: 
@@ -557,11 +553,13 @@ visitAssignmentNode: anStAssignmentNode
 	| variableNode |
 	self visitNode: anStAssignmentNode value.
 	variableNode := anStAssignmentNode variable.
+	variableNode scope: currentScope.
 	variableNode isConstantNode ifTrue: [^self].
 	self assignVariable: variableNode!
 
 visitBlockNode: aBlockNode
 	currentScope := scopes addLast: (StBlockScope forScopeNode: aBlockNode outer: currentScope).
+	aBlockNode scope: currentScope.
 	self blockDepth > VMConstants.MaxBlockNesting
 		ifTrue: [self signalError: CErrBlockNestingTooDeep forNode: aBlockNode].
 	self processBlock: aBlockNode.
@@ -631,9 +629,14 @@ visitMessageNode: aMessageNode
 visitMethodNode: aMethodNode
 	self checkRestrictedSelectors: aMethodNode.
 	currentScope := scopes addLast: (StMethodScope forScopeNode: aMethodNode outer: currentScope).
+	aMethodNode scope: currentScope.
 	super visitMethodNode: aMethodNode.
 	isMutator ifTrue: [self checkMutatorMethod: aMethodNode].
 	self removeScope!
+
+visitNode: aNode 
+	aNode scope: currentScope.
+	^aNode acceptVisitor: self!
 
 visitOptimizedNode: anOptimizedNode
 	| wasInStaticExpression outerAddToFrame outerScopes outerCurrentScope |
@@ -652,6 +655,7 @@ visitOptimizedNode: anOptimizedNode
 						methodClass: (methodClass isMeta ifTrue: [methodClass] ifFalse: [methodClass class]) environment: classScope environment.
 			scopes := OrderedCollection new].
 	currentScope := scopes addLast: (StMethodScope forScopeNode: anOptimizedNode outer: currentScope).
+	anOptimizedNode scope: currentScope.
 	inStaticExpression := true.
 	[super visitOptimizedNode: anOptimizedNode] ensure: 
 			[self removeScope.
@@ -659,6 +663,10 @@ visitOptimizedNode: anOptimizedNode
 			addToFrame := outerAddToFrame.
 			currentScope := outerCurrentScope.
 			scopes := outerScopes]!
+
+visitParameterNode: anStParameterNode
+	self checkRedefines: anStParameterNode.
+	self currentScope declareArgument: anStParameterNode!
 
 visitPrimitiveNode: anStPrimitiveNode
 	self currentScope declareLocalVariable: (StGeneratedTempVariable
@@ -675,7 +683,7 @@ visitSelfVariableNode: anStSelfVariableNode
 visitSequenceNode: aSequenceNode
 	| answer scope |
 	answer := super visitSequenceNode: aSequenceNode.
-	scope := self currentScope.
+	scope := currentScope.
 	scope temporaries do: 
 			[:each |
 			| reads writes |
@@ -698,7 +706,7 @@ visitSuperVariableNode: anStSuperVariableNode
 
 visitTempDeclNode: anStTempDeclNode
 	self checkRedefines: anStTempDeclNode.
-	self currentScope declareTemp: anStTempDeclNode!
+	currentScope declareTemp: anStTempDeclNode!
 
 visitTemporaryNodes: aNodeCollection
 	| count |
@@ -780,7 +788,6 @@ visitVariableNode: aStVariableNode
 !Kernel.StSemanticAnalyser categoriesFor: #signalError:forNode:range:extras:!error handling!private! !
 !Kernel.StSemanticAnalyser categoriesFor: #tempDecls!accessing!private! !
 !Kernel.StSemanticAnalyser categoriesFor: #visitAnnotationNode:!public!visiting! !
-!Kernel.StSemanticAnalyser categoriesFor: #visitArgumentNode:!public!visiting! !
 !Kernel.StSemanticAnalyser categoriesFor: #visitArgumentNodes:!public!visiting! !
 !Kernel.StSemanticAnalyser categoriesFor: #visitAssignmentNode:!public!visitor/double dispatching! !
 !Kernel.StSemanticAnalyser categoriesFor: #visitBlockNode:!public!visitor/double dispatching! !
@@ -790,7 +797,9 @@ visitVariableNode: aStVariableNode
 !Kernel.StSemanticAnalyser categoriesFor: #visitLiteralNode:!public!visitor/double dispatching! !
 !Kernel.StSemanticAnalyser categoriesFor: #visitMessageNode:!public!visitor/double dispatching! !
 !Kernel.StSemanticAnalyser categoriesFor: #visitMethodNode:!public!visitor/double dispatching! !
+!Kernel.StSemanticAnalyser categoriesFor: #visitNode:!public!visiting! !
 !Kernel.StSemanticAnalyser categoriesFor: #visitOptimizedNode:!public!visitor/double dispatching! !
+!Kernel.StSemanticAnalyser categoriesFor: #visitParameterNode:!public!visiting! !
 !Kernel.StSemanticAnalyser categoriesFor: #visitPrimitiveNode:!public!visiting! !
 !Kernel.StSemanticAnalyser categoriesFor: #visitReturnNode:!public!visiting! !
 !Kernel.StSemanticAnalyser categoriesFor: #visitSelfVariableNode:!public!visiting! !

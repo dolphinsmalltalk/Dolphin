@@ -19,7 +19,8 @@ lookupVariable: anStVariableNode
 	identifier := anStVariableNode name.
 	pools do: 
 			[:each |
-			(each bindingFor: identifier) ifNotNil: [:binding | ^StStaticVariable scope: self binding: binding]].
+			(each bindingFor: identifier)
+				ifNotNil: [:binding | ^StWorkspaceVariable scope: self binding: binding]].
 	^outer lookupVariable: anStVariableNode!
 
 setPools: anArray

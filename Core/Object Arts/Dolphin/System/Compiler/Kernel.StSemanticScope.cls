@@ -36,9 +36,6 @@ selfVariable
 superVariable
 	^outer superVariable!
 
-temps
-	self subclassResponsibility!
-
 thisContextVariable
 	^self shouldNotImplement! !
 !Kernel.StSemanticScope categoriesFor: #environment:!accessing!public! !
@@ -48,6 +45,5 @@ thisContextVariable
 !Kernel.StSemanticScope categoriesFor: #outer:!accessing!public! !
 !Kernel.StSemanticScope categoriesFor: #selfVariable!public! !
 !Kernel.StSemanticScope categoriesFor: #superVariable!public! !
-!Kernel.StSemanticScope categoriesFor: #temps!accessing!private! !
 !Kernel.StSemanticScope categoriesFor: #thisContextVariable!public! !
 

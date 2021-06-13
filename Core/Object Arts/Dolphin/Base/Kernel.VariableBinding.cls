@@ -62,6 +62,9 @@ fullyQualifiedReference
 isAlias
 	^false!
 
+isClassBinding
+	^value class isMeta and: [key == value name and: [environment == value environment]]!
+
 isClassVariable
 	"Answer whether the receiver is a class variable binding (as opposed to a namespace variable binding)."
 
@@ -146,6 +149,7 @@ targetVariable
 !Kernel.VariableBinding categoriesFor: #fullName!accessing!public! !
 !Kernel.VariableBinding categoriesFor: #fullyQualifiedReference!converting!public! !
 !Kernel.VariableBinding categoriesFor: #isAlias!public! !
+!Kernel.VariableBinding categoriesFor: #isClassBinding!public!testing! !
 !Kernel.VariableBinding categoriesFor: #isClassVariable!public! !
 !Kernel.VariableBinding categoriesFor: #isClassVariable:!public! !
 !Kernel.VariableBinding categoriesFor: #isConstant!public! !

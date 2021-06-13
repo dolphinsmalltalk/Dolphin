@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
 UI.Presenter subclass: #'Tools.SmalltalkWorkspace'
-	instanceVariableNames: 'evaluationContext errorModel findDetails workspacePool evaluationPools compilationErrors textStyles searchEnvironment modifiedModel flags indicatorStyles'
+	instanceVariableNames: 'evaluationContext errorModel findDetails workspacePool evaluationPools compilationErrors textStyles searchEnvironment modifiedModel flags indicatorStyles variableMetadataProvider'
 	classVariableNames: 'Abbreviations AnnotationMode AutoCompleteDwell DefaultCaretColor DefaultFont DefaultTabWidth FontQuality IndicatorStyles IsAutoCompletionCaseInsensitive IsAutoCompletionEnabled IsAutoCompletionSpaceAdded IsAutoCompletionTruncating KeyBindings KeywordCompletions MaxAutoCompletionListSize StandardUnaryReturnTypes TextStyles UseDirectWrite WordWrap WrapIndentMode'
 	imports: #(#{Kernel.CompilerFlags} #{UI.Scintilla private} #{Refactory.Browser private})
 	classInstanceVariableNames: 'additionalKeyBindings commandQueryHandlers'
@@ -169,22 +169,23 @@ chooseEvaluationPools
 chunkFilerClass
 	^ChunkSourceFiler!
 
-classForIdentifier: aString
-	aString = 'self' ifTrue: [^self selfClass].
-	aString = 'super' ifTrue: [^self selfClass superclass].
-	aString = 'thisContext' ifTrue: [^Integer].
-	"In the debugger the workspacePool will also contain any temps and args, so we'll get
-	sensible autocompletion on those too"
-	^self resolveIdentifier: aString ifDefined: [:value | value basicClass]!
+classForIdentifier: anStIdentifierToken
+	^(self resolveVariable: anStIdentifierToken)
+		ifNotNil: [:variable | variableMetadataProvider classForVariable: variable]!
 
 classForToken: anAssociation
 	"Private - Answer the inferred class of the specified token, or nil if not known."
 
-	| style text |
+	| style text range |
 	anAssociation isNil ifTrue: [^nil].
 	style := anAssociation value.
-	text := view plainTextRange: anAssociation key.
-	style == #identifier ifTrue: [^self classForIdentifier: text].
+	range := anAssociation key.
+	text := view plainTextRange: range .
+	style == #identifier ifTrue: [
+			^self classForIdentifier: (StIdentifierToken
+				start: range start
+				comments: nil
+				value: text)].
 	style == #literalPseudo
 		ifTrue: 
 			[| lookup |
@@ -199,7 +200,7 @@ classForToken: anAssociation
 	style == #literalString ifTrue: [^String].
 	style == #literalSymbol ifTrue: [^Symbol].
 	style == #literalCharacter ifTrue: [^Character].
-	style == #literalBindingReference ifTrue: [^BindingReference].
+	style == #literalBindingReference ifTrue: [^AbstractBindingReference].
 	style == #specialCharacter
 		ifTrue: 
 			[| ch |
@@ -215,6 +216,9 @@ classForToken: anAssociation
 					^(self classForToken: penultimate) ifNotNil: [:class | class basicClass]].
 			(StandardUnaryReturnTypes lookup: text) ifNotNil: [:class | ^class]].
 	^nil!
+
+classForVariable: aStVariable
+	^aStVariable valueClass!
 
 clear
 	"Remove all contents in the receiver's view"
@@ -653,9 +657,13 @@ getCompletionSignatureFor: aString at: anInteger
 			[receiverStyle := prev value.
 			receiverStyle == #identifier
 				ifTrue: 
-					[| ident |
-					ident := view plainTextRange: prev key.
-					(self classForIdentifier: ident)
+					[| range ident |
+					range := prev key.
+					ident := view plainTextRange: range.
+					(self classForIdentifier: (StIdentifierToken
+								start: range start
+								comments: nil
+								value: ident))
 						ifNotNil: 
 							[:methodClass |
 							(methodClass lookupMethod: selector)
@@ -703,7 +711,7 @@ highlightCompilationErrors: anInteger
 identifierAt: anInteger
 	| style |
 	style := (view styleAt: anInteger) name.
-	^(#(#identifier #tempDecl #argDecl) identityIncludes: style)
+	^(#(#identifier #tempDecl #argDecl #blockArgDecl) identityIncludes: style)
 		ifTrue: 
 			[| range |
 			range := view tokenRangeAt: anInteger.
@@ -769,7 +777,8 @@ initialize
 	compilationErrors := OrderedCollection new.
 	self textStyles: self class textStyles.
 	self indicatorStyles: self class indicatorStyles.
-	self isAutoCompletionEnabled: self class isAutoCompletionEnabled!
+	self isAutoCompletionEnabled: self class isAutoCompletionEnabled.
+	variableMetadataProvider := self!
 
 insertCompletion: aString at: anInteger
 	"Private-"
@@ -957,19 +966,41 @@ onCharAdded: aCharacter
 onHoverEnd: aPoint 
 	self view cancelCallTip!
 
-onHoverStart: aPoint 
-	| indicators index scintilla |
+onHoverStart: aPoint
+	| indicators index scintilla style range tokenText |
 	scintilla := self view.
 	scintilla isAutoCompletionActive ifTrue: [^self].
 	indicators := scintilla indicatorsUnder: aPoint.
-	indicators isEmpty 
+	indicators isEmpty
 		ifFalse: 
 			[self showTipForIndicators: indicators.
 			^self].
 	self areVariableTipsEnabled ifFalse: [^self].
 	index := scintilla charCloseToPosition: aPoint.
 	index <= 0 ifTrue: [^self].
-	(self identifierAt: index) ifNotNil: [:identifier | self showTipForIdentifier: identifier]!
+	style := (view styleAt: index) name.
+	range := view tokenRangeAt: index.
+	tokenText := view plainTextRange: range.
+	"Can be useful to see a tip for Characters expressed in $\xNN[NN] form"
+	style == #literalCharacter
+		ifTrue: 
+			[| ch tip |
+			ch := (Scanner on: tokenText readStream) next value.
+			(ch isGraph
+				ifTrue: 
+					[tip := ch asUtf8String.
+					tip = (tokenText copyFrom: 2)]
+				ifFalse: 
+					[tip := ch printString.
+					tip = tokenText])
+					ifFalse: [self view showCallTip: 'Character: ' , tip at: range stop].
+			^self].
+	(#(#identifier #tempDecl #argDecl #blockArgDecl) identityIncludes: style)
+		ifTrue: 
+			[self showTipForIdentifier: (StIdentifierToken
+						start: range start
+						comments: nil
+						value: tokenText)]!
 
 onRightButtonReleased: aMouseEvent 
 	"If the right button is clicked outside the selection range, then change the caret position
@@ -1179,14 +1210,29 @@ replaceSelection: aString
 	^self view replaceSelection: aString!
 
 resolveIdentifier: aString ifDefined: aMonadicValuable
-	(self workspacePool bindingFor: aString) ifNotNil: [:var | ^aMonadicValuable value: var value].
-	^(self evaluationContext class indexOfInstVar: aString ifAbsent: [])
+	^(self resolveVariable: aString) ifNotNil: [:variable | aMonadicValuable value: variable]!
+
+resolveVariable: anStIdentifierToken
+	| nameContext classScope name |
+	nameContext := self nameBindingContext.
+	classScope := StClassScope methodClass: nameContext methodClass environment: nameContext environment.
+	name := anStIdentifierToken value.
+	name = 'self' ifTrue: [^classScope selfVariable].
+	name = 'super' ifTrue: [^classScope superVariable].
+	name = 'thisContext' ifTrue: [^classScope thisContextVariable].
+	^(nameContext methodClass indexOfInstVar: name ifAbsent: [])
+		ifNotNil: 
+			[:i |
+			(StInstanceVariable index: i name: name)
+				scope: classScope;
+				yourself]
 		ifNil: 
-			[| nameContext |
-			nameContext := self nameBindingContext.
-			(nameContext methodClass fullBindingFor: aString environment: nameContext environment)
-				ifNotNil: [:var | aMonadicValuable value: var value]]
-		ifNotNil: [:i | aMonadicValuable value: (self evaluationContext instVarAt: i)]!
+			[(nameContext methodClass fullBindingFor: name environment: nameContext environment)
+				ifNotNil: [:var | StStaticVariable scope: classScope binding: var]
+				ifNil: 
+					["Workspace pool is lowest priority"
+					(self workspacePool bindingFor: name)
+						ifNotNil: [:var | ^StWorkspaceVariable scope: (StEvalScope pools: {self workspacePool}) binding: var]]]!
 
 searchEnvironment
 	^searchEnvironment ifNil: [self systemModel systemEnvironment]!
@@ -1442,15 +1488,22 @@ showSymbolCompletionListAt: posInteger maxItems: maxInteger
 	self showCompletionList: symbols prefixLength: prefixLength!
 
 showTipForIdentifier: anStIdentifierToken
-	| name |
-	name := anStIdentifierToken value.
-	self resolveIdentifier: name
-		ifDefined: 
-			[:result |
-			| tip |
-			tip := [result debugPrintString] on: Error do: [:ex | name].
+	(self resolveVariable: anStIdentifierToken)
+		ifNotNil: 
+			[:variable |
+			| tip identifier |
+			identifier := anStIdentifierToken value.
+			tip := [variableMetadataProvider tipForVariable: variable] on: Error
+						do: 
+							[:ex |
+							String writeStream
+								nextPutAll: ([variable infoTip] on: Error do: [:ex2 | identifier]);
+								nextPutAll: ': <';
+								print: ex;
+								nextPut: $>;
+								contents].
 			"Don't display the tip if it contains no useful information"
-			tip = name ifFalse: [self view showCallTip: tip at: anStIdentifierToken stop]]!
+			tip = identifier ifFalse: [self view showCallTip: tip at: anStIdentifierToken stop]]!
 
 showTipForIndicators: aCollectionOfScintillaIndicators
 	| tip last |
@@ -1508,6 +1561,9 @@ textStyles: aCollectionOfScintillaTextStyles
 	textStyles := aCollectionOfScintillaTextStyles asOrderedCollection.
 	self isOpen ifTrue: [self view textStyles: textStyles]!
 
+tipForVariable: aStVariable
+	^aStVariable infoTip!
+
 toggleAutoCompletion
 	^self isAutoCompletionEnabled: self isAutoCompletionEnabled not!
 
@@ -1536,6 +1592,9 @@ validateUserInterface
 
 	super validateUserInterface.
 	self modifiedModel value: self isModified!
+
+variableMetadataProvider: aVariableResolver
+	variableMetadataProvider := aVariableResolver!
 
 workspacePool
 	"Answer the PoolDictionary for locals used in evaluations within the receiver"
@@ -1575,6 +1634,7 @@ wrapLinesInRange: anInterval indent: anInteger
 !Tools.SmalltalkWorkspace categoriesFor: #chunkFilerClass!constants!public! !
 !Tools.SmalltalkWorkspace categoriesFor: #classForIdentifier:!autocompletion!helpers!private! !
 !Tools.SmalltalkWorkspace categoriesFor: #classForToken:!autocompletion!helpers!private! !
+!Tools.SmalltalkWorkspace categoriesFor: #classForVariable:!public! !
 !Tools.SmalltalkWorkspace categoriesFor: #clear!operations!public! !
 !Tools.SmalltalkWorkspace categoriesFor: #clearErrors!operations!public! !
 !Tools.SmalltalkWorkspace categoriesFor: #clearStatus!operations!public! !
@@ -1676,6 +1736,7 @@ wrapLinesInRange: anInterval indent: anInteger
 !Tools.SmalltalkWorkspace categoriesFor: #reformatSource!commands!public! !
 !Tools.SmalltalkWorkspace categoriesFor: #replaceSelection:!operations!public! !
 !Tools.SmalltalkWorkspace categoriesFor: #resolveIdentifier:ifDefined:!autocompletion!helpers!private! !
+!Tools.SmalltalkWorkspace categoriesFor: #resolveVariable:!autocompletion!helpers!private! !
 !Tools.SmalltalkWorkspace categoriesFor: #searchEnvironment!commands!public! !
 !Tools.SmalltalkWorkspace categoriesFor: #searchEnvironment:!accessing!public! !
 !Tools.SmalltalkWorkspace categoriesFor: #selectedWord!helpers!private! !
@@ -1713,6 +1774,7 @@ wrapLinesInRange: anInterval indent: anInteger
 !Tools.SmalltalkWorkspace categoriesFor: #textLength!accessing!public! !
 !Tools.SmalltalkWorkspace categoriesFor: #textStyles!accessing!public! !
 !Tools.SmalltalkWorkspace categoriesFor: #textStyles:!accessing!public! !
+!Tools.SmalltalkWorkspace categoriesFor: #tipForVariable:!public! !
 !Tools.SmalltalkWorkspace categoriesFor: #toggleAutoCompletion!commands!public! !
 !Tools.SmalltalkWorkspace categoriesFor: #toggleStyling!commands!public! !
 !Tools.SmalltalkWorkspace categoriesFor: #tokenBefore:!accessing!autocompletion!private! !
@@ -1720,11 +1782,13 @@ wrapLinesInRange: anInterval indent: anInteger
 !Tools.SmalltalkWorkspace categoriesFor: #tokenStartAt:!accessing!autocompletion!private! !
 !Tools.SmalltalkWorkspace categoriesFor: #updateErrorStatus!operations!public! !
 !Tools.SmalltalkWorkspace categoriesFor: #validateUserInterface!operations!public! !
+!Tools.SmalltalkWorkspace categoriesFor: #variableMetadataProvider:!accessing!public! !
 !Tools.SmalltalkWorkspace categoriesFor: #workspacePool!accessing!public! !
 !Tools.SmalltalkWorkspace categoriesFor: #workspacePool:!accessing!public! !
 !Tools.SmalltalkWorkspace categoriesFor: #wrapLinesInRange:indent:!helpers!private! !
 
 Tools.SmalltalkWorkspace methodProtocol: #textPresenter attributes: #() selectors: #(#clear #findDetails #findDetails: #hasSelection #isModified #isModified: #replaceSelection: #selectionRange #selectionRange:)!
+Tools.SmalltalkWorkspace methodProtocol: #variableMetadataProvider attributes: #(#readOnly) selectors: #(#classForVariable: #tipForVariable:)!
 
 !Tools.SmalltalkWorkspace class methodsFor!
 
@@ -2037,14 +2101,23 @@ defaultTextStyles
 
 defaultUnaryReturnTypes
 	"Private - Answer the default set of standard messages with known return types. These allow for more
-	targetted completion lists after common unary message sends."
+	targeted completion lists after common unary message sends."
 
 	| answer |
 	answer := LookupTable new.
-	#('isNil' 'isEmpty' 'notNil' 'asBoolean' 'not') do: [:each | answer at: each put: Boolean].
-	#('size' 'basicSize' 'hash' 'asInteger' 'yourAddress') do: [:each | answer at: each put: Integer].
-	#('printString' 'displayString' 'asString') do: [:each | answer at: each put: String].
+	#(#isNil #isEmpty #notNil #asBoolean #not #isBehavior #isNumber #isInteger #isString) do: [:each | answer at: each put: Boolean].
+	#(#size #basicSize #hash #asInteger #yourAddress) do: [:each | answer at: each put: Integer].
+	#(#printString #displayString #asString) do: [:each | answer at: each put: String].
 	^answer
+		at: #asArray put: Array;
+		at: #asOrderedCollection put: OrderedCollection;
+		at: #asQualifiedReference put: AbstractBindingReference;
+		at: #asSet put: Set;
+		at: #asSortedCollection put: SortedCollection;
+		at: #asSymbol put: Symbol;
+		at: #asUtf8String put: Utf8String;
+		at: #readStream put: ReadStream;
+		at: #writeStream put: WriteStream;
 		shrink;
 		yourself!
 
@@ -2218,7 +2291,7 @@ resource_Default_view
 	Tools.ViewComposer openOn: (UI.ResourceIdentifier class: self selector: #resource_Default_view)
 	"
 
-	^#(#'!!STL' 4 985166 10 ##(UI.STBViewProxy) ##(UI.Scintilla.ScintillaView) 34 52 nil nil 34 2 8 1411453252 1 416 918598 2 ##(UI.ValueHolder) nil false 1769478 ##(Kernel.EqualitySearchPolicy) nil 1245702 ##(Graphics.ThemeColor) #smalltalkWorkspace nil 21 461638 4 ##(UI.Menu) nil true 34 13 1180742 2 ##(UI.CommandMenuItem) 1 1377606 4 ##(UI.CommandDescription) #accept 8 '&Accept' 1 1 nil nil nil 1179974 1 ##(UI.DividerMenuItem) 4097 578 nil true 34 10 626 1 658 #undo 8 '&Undo' 1 1 853318 3 ##(Graphics.Icon) nil true 2031622 ##(Kernel.ImageRelativeFileLocator) 8 'EditUndo.ico' 2490894 ##(Kernel.STBExternalResourceLibraryProxy) 8 'dolphindr7.dll' nil nil nil 706 4097 626 1 658 #cutSelection 8 'Cu&t' 1 1 818 nil true 864 8 'EditCut.ico' 912 nil nil 626 1 658 #copySelection 8 '&Copy' 1 1 818 nil true 864 8 'EditCopy.ico' 912 nil nil 626 1 658 #pasteClipboard 8 '&Paste' 1 1 818 nil true 864 8 'EditPaste.ico' 912 nil nil 626 1 658 #clearSelection 8 'De&lete' 1 1 818 nil true 864 8 'EditClear.ico' 912 nil nil 706 4097 626 1 658 #reformatSource 8 'Re&format' 1 1 nil nil nil 706 4097 626 1 658 #selectAll 8 '&Select All' 1 1 nil nil nil 8 '&Edit' nil 134217729 nil nil nil nil nil 578 nil true 34 10 626 1 658 #inspectWorkspacePool 8 '&Variables' 1 1 nil nil nil 626 1 658 #cloneNew 8 'Clo&ne' 1 1 818 nil true 864 8 'SmalltalkWorkspace.ico' 912 nil nil 706 4097 626 1 658 #toggleAutoCompletion 8 'Auto-complete' 1 1 nil nil nil 626 1 658 #toggleIndentationGuides 8 'Indentation &Guides' 1 1 nil nil nil 626 1 658 #toggleLineEndings 8 'Line &Endings' 1 1 1378630 2 ##(Graphics.TextTileIcon) $¶ 8 'Arial' nil nil nil nil 1 nil nil nil nil 626 1 658 #toggleLineNumbers 8 'Line N&umbers' 1 1 nil nil nil 626 1 658 #toggleStyling 8 '&Syntax Coloring' 1 1 nil nil nil 626 1 658 #toggleWhitespace 8 'W&hitespace' 1 1 nil nil nil 626 1 658 #toggleWordWrap 8 '&Word Wrap' 1 1 nil nil nil 8 'Wor&kspace' nil 134217729 nil nil nil nil nil 706 4097 626 1 658 #browseIt 8 'Bro&wse It' 1 1 818 nil true 864 8 'ClassBrowserShell.ico' 912 nil nil 626 1 658 #displayIt 8 '&Display It' 1 1 818 nil true 864 8 'DisplayIt.ico' 912 nil nil 626 1 658 #printIt 8 '&Print It' 1 1 818 nil true 864 8 'PrintIt.ico' 912 nil nil 626 1 658 #evaluateIt 8 'E&valuate It' 1 1 818 nil true 864 8 'EvaluateIt.ico' 912 nil nil 626 1 658 #inspectIt 8 '&Inspect It' 1 1 818 nil true 864 8 'InspectIt.ico' 912 nil nil 626 1 658 #debugIt 8 'Deb&ug It' 1 1 818 nil true 864 8 'DebugIt.ico' 912 nil nil 706 4097 578 nil true 34 2 626 2097153 658 #browseDefinitions 8 'Defi&nitions...' 1 1 nil nil nil 626 1 658 #browseReferences 8 '&References...' 1 1 nil nil nil 8 '&Browse' nil 1 nil nil nil nil nil 8 '&Workspace' nil 134217729 nil nil nil nil nil nil nil 416 nil 8 1949376404 1049094 ##(UI.NullConverter) nil nil 9 1574741777 170 192 34 4 #callTip 1444934 1 ##(UI.Scintilla.TextStyle) 77 917510 ##(Graphics.Color) #gray 2786 #white 1 nil nil nil nil #callTip nil nil nil #normal 2754 1 nil nil 1 nil nil nil nil #normal nil nil nil nil 2032902 ##(Tools.SmalltalkExpressionStyler) 1 nil nil false 138 144 8 #() 170 192 34 2 #default 1903686 2 ##(UI.Scintilla.MarkerDefinition) 1 nil nil nil 416 #circle nil nil nil nil nil nil 138 ##(Core.IdentitySet) 2896 nil 170 176 2896 nil nil nil 170 176 34 2 81 2786 #windowText nil nil nil nil 65 nil nil 170 192 34 6 #literalBytes 8 '[]' #literalArray 8 '()' #specialCharacter 8 '()[]<>' 8 '' 3 170 192 34 2 #container 2720 nil nil nil nil 208 nil 170 192 2896 nil nil 170 192 34 6 #Warning 2754 1027 2786 #darkGoldenrod 2786 #ivory 1 nil nil nil nil #Warning nil nil nil #Notification 2754 1029 nil 2786 #gainsboro 1 nil nil nil nil #Notification nil nil nil #Error 2754 1031 2786 #firebrick 2786 #floralWhite 1 nil nil nil nil #Error nil nil nil nil nil nil 1310982 ##(Core.MessageSequence) 138 144 34 8 1049350 ##(Core.MessageSend) #createAt:extent: 34 2 918022 ##(Graphics.Point) 6143 21 3474 461 311 416 3426 #contextMenu: 34 1 592 416 3426 #wordWrap: 8 #(true) 416 3426 #margins: 34 1 34 3 1247302 3 ##(UI.Scintilla.Margin) 1 416 1 3 nil nil nil nil 3634 3 416 1 nil nil 67108863 nil nil 3634 5 416 1 nil nil nil nil nil 416 3426 #tabWidth: 8 #(4) 416 3426 #maxCompletionListHeight: 8 #(9) 416 3426 #hasAdditionalSelectionTyping: 8 #(true) 416 3426 #sciSetSelectionLayer: 8 #(1) 416 1179910 ##(OS.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 229 12 0 0 165 0 0 0] 8 #() 3474 193 193 nil 35 )!
+	^#(#'!!STL' 4 985166 10 ##(UI.STBViewProxy) ##(UI.Scintilla.ScintillaView) 34 52 nil nil 34 2 8 1411453252 1 416 918598 2 ##(UI.ValueHolder) nil false 1769478 ##(Kernel.EqualitySearchPolicy) nil 1245702 ##(Graphics.ThemeColor) #smalltalkWorkspace nil 21 461638 4 ##(UI.Menu) nil true 34 13 1180742 2 ##(UI.CommandMenuItem) 1 1377606 4 ##(UI.CommandDescription) #accept 8 '&Accept' 1 1 nil nil nil 1179974 1 ##(UI.DividerMenuItem) 4097 578 nil true 34 10 626 1 658 #undo 8 '&Undo' 1 1 853318 3 ##(Graphics.Icon) nil true 2031622 ##(Kernel.ImageRelativeFileLocator) 8 'EditUndo.ico' 2490894 ##(Kernel.STBExternalResourceLibraryProxy) 8 'dolphindr7.dll' nil nil nil 706 4097 626 1 658 #cutSelection 8 'Cu&t' 1 1 818 nil true 864 8 'EditCut.ico' 912 nil nil 626 1 658 #copySelection 8 '&Copy' 1 1 818 nil true 864 8 'EditCopy.ico' 912 nil nil 626 1 658 #pasteClipboard 8 '&Paste' 1 1 818 nil true 864 8 'EditPaste.ico' 912 nil nil 626 1 658 #clearSelection 8 'De&lete' 1 1 818 nil true 864 8 'EditClear.ico' 912 nil nil 706 4097 626 1 658 #reformatSource 8 'Re&format' 1 1 nil nil nil 706 4097 626 1 658 #selectAll 8 '&Select All' 1 1 nil nil nil 8 '&Edit' nil 134217729 nil nil nil nil nil 578 nil true 34 10 626 1 658 #inspectWorkspacePool 8 '&Variables' 1 1 nil nil nil 626 1 658 #cloneNew 8 'Clo&ne' 1 1 818 nil true 864 8 'SmalltalkWorkspace.ico' 912 nil nil 706 4097 626 1 658 #toggleAutoCompletion 8 'Auto-complete' 1 1 nil nil nil 626 1 658 #toggleIndentationGuides 8 'Indentation &Guides' 1 1 nil nil nil 626 1 658 #toggleLineEndings 8 'Line &Endings' 1 1 1378630 2 ##(Graphics.TextTileIcon) $¶ 8 'Arial' nil nil nil nil 1 nil nil nil nil 626 1 658 #toggleLineNumbers 8 'Line N&umbers' 1 1 nil nil nil 626 1 658 #toggleStyling 8 '&Syntax Coloring' 1 1 nil nil nil 626 1 658 #toggleWhitespace 8 'W&hitespace' 1 1 nil nil nil 626 1 658 #toggleWordWrap 8 '&Word Wrap' 1 1 nil nil nil 8 'Wor&kspace' nil 134217729 nil nil nil nil nil 706 4097 626 1 658 #browseIt 8 'Bro&wse It' 1 1 818 nil true 864 8 'ClassBrowserShell.ico' 912 nil nil 626 1 658 #displayIt 8 '&Display It' 1 1 818 nil true 864 8 'DisplayIt.ico' 912 nil nil 626 1 658 #printIt 8 '&Print It' 1 1 818 nil true 864 8 'PrintIt.ico' 912 nil nil 626 1 658 #evaluateIt 8 'E&valuate It' 1 1 818 nil true 864 8 'EvaluateIt.ico' 912 nil nil 626 1 658 #inspectIt 8 '&Inspect It' 1 1 818 nil true 864 8 'InspectIt.ico' 912 nil nil 626 1 658 #debugIt 8 'Deb&ug It' 1 1 818 nil true 864 8 'DebugIt.ico' 912 nil nil 706 4097 578 nil true 34 2 626 2097153 658 #browseDefinitions 8 'Defi&nitions...' 1 1 nil nil nil 626 1 658 #browseReferences 8 '&References...' 1 1 nil nil nil 8 '&Browse' nil 1 nil nil nil nil nil 8 '&Workspace' nil 134217729 nil nil nil nil nil nil nil 416 nil 8 1949376404 1049094 ##(UI.NullConverter) nil nil 9 2116324833 170 192 34 4 #callTip 1444934 1 ##(UI.Scintilla.TextStyle) 77 917510 ##(Graphics.Color) #gray 2786 #white 1 nil nil nil nil #callTip nil nil nil #normal 2754 1 nil nil 1 nil nil nil nil #normal nil nil nil nil 2032902 ##(Tools.SmalltalkExpressionStyler) 1 nil nil false 138 144 8 #() 170 192 34 2 #default 1903686 2 ##(UI.Scintilla.MarkerDefinition) 1 nil nil nil 416 #circle nil nil nil nil nil nil 138 ##(Core.IdentitySet) 2896 nil 170 176 2896 nil nil nil 170 176 34 2 81 2786 #windowText nil nil nil nil 65 nil nil 170 192 34 6 #literalBytes 8 '[]' #specialCharacter 8 '()[]<>' #literalArray 8 '()' 8 '' 3 170 192 34 2 #container 2720 nil nil nil nil 208 nil 170 192 2896 nil nil 170 192 34 6 #Warning 2754 1027 2786 #darkGoldenrod 2786 #ivory 1 nil nil nil nil #Warning nil nil nil #Notification 2754 1029 nil 2786 #gainsboro 1 nil nil nil nil #Notification nil nil nil #Error 2754 1031 2786 #firebrick 2786 #floralWhite 1 nil nil nil nil #Error nil nil nil nil nil nil 1310982 ##(Core.MessageSequence) 138 144 34 9 1049350 ##(Core.MessageSend) #createAt:extent: 34 2 918022 ##(Graphics.Point) 6143 21 3474 461 311 416 3426 #contextMenu: 34 1 592 416 3426 #sciSetMouseDwellTime: 8 #(500) 416 3426 #wordWrap: 8 #(true) 416 3426 #margins: 34 1 34 3 1247302 3 ##(UI.Scintilla.Margin) 1 416 1 3 nil nil nil nil 3666 3 416 1 nil nil 67108863 nil nil 3666 5 416 1 nil nil nil nil nil 416 3426 #tabWidth: 8 #(4) 416 3426 #maxCompletionListHeight: 8 #(9) 416 3426 #hasAdditionalSelectionTyping: 8 #(true) 416 3426 #sciSetSelectionLayer: 8 #(1) 416 1179910 ##(OS.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 229 12 0 0 165 0 0 0] 8 #() 3474 193 193 nil 35 )!
 
 setAdditionalKeyBindings: anArray
 	additionalKeyBindings := anArray ifNotNil: [anArray]!

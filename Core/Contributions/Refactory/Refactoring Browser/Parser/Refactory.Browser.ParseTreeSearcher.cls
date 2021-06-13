@@ -163,6 +163,9 @@ visitArgumentNode: aNode
 			[super visitArgumentNode: aNode.
 			aNode]!
 
+visitArgumentNodes: aNodeCollection
+	^aNodeCollection do: [:each | self visitArgumentNode: each]!
+
 visitNode: aNode
 	^(self performSearches: searches on: aNode)
 		ifNil: 
@@ -198,6 +201,7 @@ visitNode: aNode
 !Refactory.Browser.ParseTreeSearcher categoriesFor: #performSearches:on:!operations!private! !
 !Refactory.Browser.ParseTreeSearcher categoriesFor: #recusivelySearchInContext!operations!private! !
 !Refactory.Browser.ParseTreeSearcher categoriesFor: #visitArgumentNode:!public!visiting! !
+!Refactory.Browser.ParseTreeSearcher categoriesFor: #visitArgumentNodes:!public!visiting! !
 !Refactory.Browser.ParseTreeSearcher categoriesFor: #visitNode:!public!visiting! !
 
 !Refactory.Browser.ParseTreeSearcher class methodsFor!
