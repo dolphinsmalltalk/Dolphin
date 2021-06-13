@@ -133,6 +133,8 @@ DISKVOLUMEINFORMATION.ICO ICON                  "Res\\DiskVolumeInformation.ico"
 
 DISPLAYIT.ICO           ICON                    "Res\\DisplayIt.ico"
 
+DISPLAYMONITOR.ICO      ICON                    "Res\\DisplayMonitor.ico"
+
 DOCUMENTSHELL.ICO       ICON                    "Res\\DocumentShell.ico"
 
 DOLPHINPACKAGE.ICO      ICON                    "Res\\DolphinPackage.ico"
