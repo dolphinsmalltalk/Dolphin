@@ -131,7 +131,7 @@ show
 
 	actionButton text: '&Find Next'; command: #findNext.
 	closeButton text: '&Close'.
-	self view show!
+	super show!
 
 showModal
 	"Show the receiver's view as a modal dialog.

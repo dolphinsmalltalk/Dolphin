@@ -659,10 +659,11 @@ create
 		default position,
 		default size."
 
+	| extent |
 	creationParent isNil ifTrue: [self parentView: self class desktop].
-	^self
-		createAt: (self defaultPositionWithin: creationParent forExtent: self defaultExtent)
-		extent: self defaultExtent!
+	extent := self defaultExtent.
+	^self createAt: (self defaultPositionWithin: creationParent forExtent: extent)
+		extent: extent!
 
 createAt: position extent: extentPoint
 	"Private - Create the View window ensuring it has the VM window procedure.
@@ -2157,6 +2158,14 @@ mapRectangle: aRectangle to: anotherView
 		from: self
 		to: anotherView) asRectangle
 !
+
+mapScreenToClient: aPoint
+	"Maps the `Point` argument from screen coordinates to the coordinate system of the receiver."
+
+	| pt |
+	pt := POINTL fromPoint: aPoint.
+	UserLibrary default screenToClient: handle lpPoint: pt.
+	^pt asPoint!
 
 maxExtent
 	"Answers the maximum extent for the receiver or nil if there is no constraint.
@@ -4818,6 +4827,7 @@ zOrderTop
 !UI.View categoriesFor: #mapPoint:to:!geometry!public! !
 !UI.View categoriesFor: #mapPointToScreen:!geometry!public! !
 !UI.View categoriesFor: #mapRectangle:to:!geometry!public! !
+!UI.View categoriesFor: #mapScreenToClient:!geometry!public! !
 !UI.View categoriesFor: #maxExtent!accessing!public! !
 !UI.View categoriesFor: #minExtent!accessing!public! !
 !UI.View categoriesFor: #model!accessing!public! !

@@ -220,6 +220,13 @@ dispatchUser: userId wParam: wParam lParam: lParam
 		lParam: lParam
 		map: self dialogMessageMap!
 
+displayOnMonitor: aMonitor
+	"Move the receiver so it is displayed on the specified `DisplayMonitor`, but attempting to maintain the same position relative to the display origin.
+	This can be used, for example, to position a dialog on the same monitor as its owner."
+
+	self displayMonitor = aMonitor
+		ifFalse: [self positionNear: aMonitor origin + (self position - self displayMonitor origin)]!
+
 dmGetDefId: message wParam: wParam lParam: lParam
 	"Private - Default handler for a DM_GETDEFID message sent to request the id of any default
 	push button in the receiver.
@@ -768,6 +775,15 @@ performCommand: aCommand
 			[aCommand value] ensure: [self enable]]
 		ifFalse: [aCommand value]!
 
+positionNear: aPoint
+	"Attempt to position the receiver at the origin, aPoint, in screen co-ordinates, but ensuring that the receiver's window will be entirely visible if possible, or if not so that at least the top-left corner is visible."
+
+	| workArea position |
+	workArea := (DisplayMonitor nearestPoint: aPoint) workArea.
+	position := (aPoint min: workArea bottomRight - self extent) max: workArea topLeft.
+	position := creationParent mapScreenToClient: position.
+	self position: position!
+
 preTranslateKeyboardInput: aMSG 
 	"Answer whether the receiver would like to consume the argument aMSG, which is a keyboard
 	message."
@@ -1205,6 +1221,7 @@ wmWindowPosChanged: message wParam: wParam lParam: lParam
 !UI.ShellView categoriesFor: #defaultWindowStyle!constants!private! !
 !UI.ShellView categoriesFor: #dialogMessageMap!private! !
 !UI.ShellView categoriesFor: #dispatchUser:wParam:lParam:!dispatching!private! !
+!UI.ShellView categoriesFor: #displayOnMonitor:!geometry!helpers!public! !
 !UI.ShellView categoriesFor: #dmGetDefId:wParam:lParam:!default button!event handling-win32!private! !
 !UI.ShellView categoriesFor: #dmSetDefId:wParam:lParam:!default button!event handling-win32!private! !
 !UI.ShellView categoriesFor: #drawMenuBar!menus!public! !
@@ -1275,6 +1292,7 @@ wmWindowPosChanged: message wParam: wParam lParam: lParam
 !UI.ShellView categoriesFor: #onViewRestored:!event handling!public! !
 !UI.ShellView categoriesFor: #parentView:!hierarchy!private! !
 !UI.ShellView categoriesFor: #performCommand:!commands!public! !
+!UI.ShellView categoriesFor: #positionNear:!geometry!public! !
 !UI.ShellView categoriesFor: #preTranslateKeyboardInput:!dispatching!public! !
 !UI.ShellView categoriesFor: #preTranslateMouseInput:!dispatching!public! !
 !UI.ShellView categoriesFor: #queryClose!event handling!public! !

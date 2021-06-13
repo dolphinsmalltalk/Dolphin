@@ -52,6 +52,16 @@ cancel
 
 	self destroy!
 
+centerInOwner: aView
+	"Private - Position the dialog so that it's client area is centred as closely as possible to the centre of the owner's client area, but keeping the window entirely visible on the nearest display monitor if possible."
+
+	| clientExtent rect |
+	clientExtent := self clientExtent.
+	rect := self
+				calcRectangleFromClientRectangle: ((aView clientExtent - clientExtent) // 2 extent: clientExtent).
+	"Ensure the dialog does not stray out of bounds, favouring keeping the top-left corner visible if it is too large"
+	self positionNear: (aView mapPointToScreen: rect origin)!
+
 defaultBackcolor
 	"Private - Answer the default colour for the receiver's background"
 
@@ -214,9 +224,10 @@ onInitDialog
 	parent here"
 	UserLibrary default setParent: self asParameter hWndNewParent: creationParent asParameter.
 
-	"If the dialog does not have a caption, assume it is a property page in a tabbed dialog"
 	(self isPropertyPage and: [self isThemed])
-		ifTrue: [ThemeLibrary default enableThemeDialogTexture: self asParameter dwFlags: ETDT_ENABLETAB].
+		ifTrue: [
+			"Property pages in tabbed dialogs require a specific theme"
+			ThemeLibrary default enableThemeDialogTexture: self asParameter dwFlags: ETDT_ENABLETAB].
 
 	"Tell Windows NOT to set the focus. We set focus later after we have populated the dialog
 	(though subclasses loaded from a Windows dialog template resource may wish to return true
@@ -230,6 +241,11 @@ performCommand: aCommand
 
 	^aCommand value
 !
+
+positionForOwner: aView
+	self isInitiallyCentered
+		ifTrue: [self centerInOwner: aView]
+		ifFalse: [self displayOnMonitor: aView displayMonitor]!
 
 preTranslateKeyboardInput: aMSG
 	"Answer whether the receiver would like to consume the argument aMSG,
@@ -326,8 +342,7 @@ showModalTo: aView
 	(enableOwningView := owningView isEnabled) ifTrue: [owningView isEnabled: false].
 	
 	["Only now can we adjust the position of the dialog (if required)."
-	self isInitiallyCentered
-		ifTrue: [self position: (self centerExtent: self extent within: creationParent)].
+	self positionForOwner: owningView.
 	self
 		layout;
 		show.
@@ -348,6 +363,12 @@ showModalTo: aView
 		window coming to the front."
 				self basicDestroy].
 	^self answer!
+
+showModeless: aView
+	"Private - Show the (already created) receiver as a modeless dialog for the specified owner window."
+
+	self positionForOwner: aView.
+	self show!
 
 subclassWindow: aWinHandle
 	"Private - Subclass the receiver's associated Win32 window by substituting the VM's 
@@ -383,6 +404,7 @@ wmInitDialog: message wParam: wParam lParam: lParam
 !UI.DialogView categoriesFor: #answer:!accessing!not an aspect!public! !
 !UI.DialogView categoriesFor: #basicCreateAt:extent:!private!realizing/unrealizing! !
 !UI.DialogView categoriesFor: #cancel!commands!public! !
+!UI.DialogView categoriesFor: #centerInOwner:!geometry!private! !
 !UI.DialogView categoriesFor: #defaultBackcolor!colors!constants!private! !
 !UI.DialogView categoriesFor: #defaultWindowProcessing:wParam:lParam:!dispatching!private! !
 !UI.DialogView categoriesFor: #defaultWindowStyle!constants!private! !
@@ -404,6 +426,7 @@ wmInitDialog: message wParam: wParam lParam: lParam
 !UI.DialogView categoriesFor: #oldWndProc:!accessing!private! !
 !UI.DialogView categoriesFor: #onInitDialog!event handling!public! !
 !UI.DialogView categoriesFor: #performCommand:!commands!public! !
+!UI.DialogView categoriesFor: #positionForOwner:!helpers!private! !
 !UI.DialogView categoriesFor: #preTranslateKeyboardInput:!dispatching!public! !
 !UI.DialogView categoriesFor: #resourceLib!constants!public! !
 !UI.DialogView categoriesFor: #runModalInProcessLoop!operations!private! !
@@ -414,6 +437,7 @@ wmInitDialog: message wParam: wParam lParam: lParam
 !UI.DialogView categoriesFor: #setItem:text:!accessing!private! !
 !UI.DialogView categoriesFor: #showModal!private!realizing/unrealizing! !
 !UI.DialogView categoriesFor: #showModalTo:!private!realizing/unrealizing! !
+!UI.DialogView categoriesFor: #showModeless:!private!realizing/unrealizing! !
 !UI.DialogView categoriesFor: #subclassWindow:!operations!private! !
 !UI.DialogView categoriesFor: #templateId!constants!private! !
 !UI.DialogView categoriesFor: #wmInitDialog:wParam:lParam:!event handling-win32!must not strip!public! !

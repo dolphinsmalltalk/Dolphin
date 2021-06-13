@@ -106,6 +106,11 @@ revert
 	self model revert
 !
 
+show
+	"Shows the view of the receiver"
+
+	self view showModeless: ownerView!
+
 showModal
 	"Show the receiver's view as a modal dialog.
 	Answer the model if the receiver was confirmed (with #apply, #okay) or nil otherwise"
@@ -137,6 +142,7 @@ subject
 !UI.Dialog categoriesFor: #ownerView!accessing!public! !
 !UI.Dialog categoriesFor: #ownerView:!accessing!not an aspect!private! !
 !UI.Dialog categoriesFor: #revert!commands!public! !
+!UI.Dialog categoriesFor: #show!operations!public! !
 !UI.Dialog categoriesFor: #showModal!public!realizing/unrealizing! !
 !UI.Dialog categoriesFor: #showModalView!private!realizing/unrealizing! !
 !UI.Dialog categoriesFor: #showShell!operations!public! !
