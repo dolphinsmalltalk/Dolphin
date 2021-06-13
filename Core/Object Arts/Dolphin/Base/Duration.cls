@@ -228,7 +228,10 @@ subtractFromDateAndTime: aDateAndTime
 	"Private - Part of a double dispatch for <DateAndTime> subtraction. Answers a 
 	<DateAndTime> representing the receiver subtracted from the argument"
 
-	^aDateAndTime class utcSeconds: aDateAndTime asSeconds - seconds offset: aDateAndTime offsetSeconds! !
+	^aDateAndTime class utcSeconds: aDateAndTime asSeconds - seconds offset: aDateAndTime offsetSeconds!
+
+wait
+	(Delay forDuration: self) wait! !
 !Duration categoriesFor: #-!arithmetic!public! !
 !Duration categoriesFor: #*!arithmetic!public! !
 !Duration categoriesFor: #/!arithmetic!public! !
@@ -243,6 +246,7 @@ subtractFromDateAndTime: aDateAndTime
 !Duration categoriesFor: #days!accessing!public! !
 !Duration categoriesFor: #displayOn:!printing!public! !
 !Duration categoriesFor: #divideIntoDuration:!arithmetic!double dispatch!private! !
+!Duration categoriesFor: #formatters!printing!private! !
 !Duration categoriesFor: #hash!comparing!public! !
 !Duration categoriesFor: #hours!accessing!public! !
 !Duration categoriesFor: #humanReadablePrintString!printing!public! !
@@ -262,6 +266,7 @@ subtractFromDateAndTime: aDateAndTime
 !Duration categoriesFor: #setSeconds:!initializing!private! !
 !Duration categoriesFor: #storeOn:!printing!public! !
 !Duration categoriesFor: #subtractFromDateAndTime:!initializing!private! !
+!Duration categoriesFor: #wait!process synchronisation!public! !
 
 Duration methodProtocol: #Duration attributes: #(#ansi #readOnly) selectors: #(#- #* #/ #~~ #~= #+ #< #<= #= #== #> #>= #abs #asSeconds #between:and: #class #copy #days #doesNotUnderstand: #error: #hash #hours #identityHash #isKindOf: #isMemberOf: #isNil #max: #min: #minutes #negated #negative #notNil #perform: #perform:with: #perform:with:with: #perform:with:with:with: #perform:withArguments: #positive #printOn: #printString #respondsTo: #seconds #yourself)!
 

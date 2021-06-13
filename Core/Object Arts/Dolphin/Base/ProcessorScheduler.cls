@@ -458,10 +458,9 @@ setHighestPriority: priority activeProcess: aProcess
 sleep: anIntegerOrDuration
 	"Delay the current active process for the specified <Duration>. For backwards compatibility also supports an <integer> argument specifying the delay in milliseconds."
 
-	(Delay forDuration: (anIntegerOrDuration isInteger
-				ifTrue: [anIntegerOrDuration milliseconds]
-				ifFalse: [anIntegerOrDuration]))
-		wait!
+	(anIntegerOrDuration isInteger
+		ifTrue: [anIntegerOrDuration milliseconds]
+		ifFalse: [anIntegerOrDuration]) wait!
 
 stackOverflow: interruptArg 
 	"Private - The active process overflowed its maximum stack. This is most commonly caused by 
