@@ -686,7 +686,8 @@ initialize
 	StandardAliases
 		at: 'PROPVARIANT' put: #{OS.COM.VARIANT};
 		at: 'RemotableHandle' put: #{External.Handle};
-		at: 'RECT' put: #{OS.RECTL}!
+		at: 'RECT' put: #{OS.RECTL};
+		at: 'POINT' put: #{OS.POINTL}!
 
 load: libid major: verMajor minor: verMinor locale: locale
 	"Answer a new instance of the receiver on the registered type library
