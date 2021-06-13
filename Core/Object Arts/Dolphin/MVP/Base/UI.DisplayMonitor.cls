@@ -182,6 +182,12 @@ fromHandle: anExternalHandle
 	^self new
 		handle: anExternalHandle;
 		yourself!
+
+icon
+	"Answers an Icon that can be used to represent this class"
+
+	^##(self) defaultIcon!
+
 intersecting: aRectangle
 	"Answer an instance of the receiver describing the monitor which has the largest intersection with the specified `Rectangle` of the screen co-ordinate space, or nil if there is no intersection."
 
@@ -216,6 +222,7 @@ primary
 !UI.DisplayMonitor class categoriesFor: #forCanvas:intersecting:!enumerating!public! !
 !UI.DisplayMonitor class categoriesFor: #forCanvas:intersecting:do:!enumerating!private! !
 !UI.DisplayMonitor class categoriesFor: #fromHandle:!instance creation!private! !
+!UI.DisplayMonitor class categoriesFor: #icon!constants!public! !
 !UI.DisplayMonitor class categoriesFor: #intersecting:!instance creation!public! !
 !UI.DisplayMonitor class categoriesFor: #nearestPoint:!instance creation!public! !
 !UI.DisplayMonitor class categoriesFor: #nearestView:!instance creation!public! !
