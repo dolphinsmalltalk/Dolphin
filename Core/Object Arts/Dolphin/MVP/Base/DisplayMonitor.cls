@@ -5,7 +5,7 @@ Object subclass: #DisplayMonitor
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-DisplayMonitor guid: (Core.GUID fromString: '{2ab65289-2a77-4c76-9ab2-82178699a48c}')!
+DisplayMonitor guid: (GUID fromString: '{2ab65289-2a77-4c76-9ab2-82178699a48c}')!
 DisplayMonitor addClassConstant: 'MONITOR_DEFAULTTONEAREST' value: 16r2!
 DisplayMonitor addClassConstant: 'MONITOR_DEFAULTTONULL' value: 16r0!
 DisplayMonitor addClassConstant: 'MONITOR_DEFAULTTOPRIMARY' value: 16r1!
