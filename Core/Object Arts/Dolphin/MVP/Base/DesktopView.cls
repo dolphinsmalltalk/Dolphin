@@ -2,7 +2,7 @@
 
 View subclass: #DesktopView
 	instanceVariableNames: 'resolution defaultExtentBlock dvReserved1 dvReserved2'
-	classVariableNames: 'Current'
+	classVariableNames: 'Current ProgmanClassAtom'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 DesktopView guid: (GUID fromString: '{87b4c70e-026e-11d3-9fd7-00a0cc3e4a32}')!
@@ -164,6 +164,11 @@ invalidateUserInterface
 
 	flags := flags maskClear: UIValidMask.!
 
+isDesktop
+	"Answer whether the receiver represents the desktop window"
+
+	^true!
+
 isLayoutValid
 	"Answer true if the layout of the receiver is currently valid"
 
@@ -206,8 +211,8 @@ onStartup
 	"Make sure the receiver represents the desktop window handle."
 
 	self assumeDesktopHandle.
-	resolution := nil
-!
+	resolution := nil.
+	self class getProgmanClass!
 
 onViewActivated: anEvent
 	"Default handler for window activation.
@@ -266,6 +271,13 @@ refresh
 		invalidate: nil
 		lpRect: nil
 		bErase: true!
+
+repositionShell: aShellView
+	| activeMonitor |
+	activeMonitor := DisplayMonitor active.
+	aShellView isInitiallyCentered
+		ifTrue: [aShellView centerNear: activeMonitor workArea center]
+		ifFalse: [aShellView displayOnMonitor: activeMonitor]!
 
 resolution
 	"Answer the logical pixels per inch of the desktop"
@@ -337,6 +349,7 @@ workArea
 !DesktopView categoriesFor: #invalidateLayout!geometry!public! !
 !DesktopView categoriesFor: #invalidateRect:erase:!drawing!public! !
 !DesktopView categoriesFor: #invalidateUserInterface!accessing!public! !
+!DesktopView categoriesFor: #isDesktop!public!testing! !
 !DesktopView categoriesFor: #isLayoutValid!geometry!public!testing! !
 !DesktopView categoriesFor: #layoutManager:!geometry!public! !
 !DesktopView categoriesFor: #name!accessing!public! !
@@ -351,6 +364,7 @@ workArea
 !DesktopView categoriesFor: #performCommand:!commands!public! !
 !DesktopView categoriesFor: #queryContextMenu!menus!public! !
 !DesktopView categoriesFor: #refresh!drawing!public! !
+!DesktopView categoriesFor: #repositionShell:!helpers!private! !
 !DesktopView categoriesFor: #resolution!accessing!public! !
 !DesktopView categoriesFor: #screenRectangle!geometry!public! !
 !DesktopView categoriesFor: #setDefaultButton:state:!accessing!default button!private! !
@@ -376,6 +390,13 @@ current: aDesktopView
 
 	Current := aDesktopView!
 
+getProgmanClass
+	| user |
+	user := UserLibrary default.
+	ProgmanClassAtom := user
+				getClassLongPtr: (user findWindow: 'Progman' asUtf16String lpWindowName: nil)
+				nIndex: GCW_ATOM!
+
 icon
 	"Answers an Icon that can be used to represent this class"
 
@@ -387,6 +408,12 @@ initialize
 	Current := self new
 			assumeDesktopHandle;
 			yourself!
+
+isProgramManager: hWnd
+	"Private - Answer whether the argument is the window handle of the Windows program manager. Here we are relying on the undocumented fact that the 'program manager' (main Windows shell) has a specific name for its Window class, and has done so since the very earliest versions of Windows. It seems unlikely to change, but if it does will fail safe for most purposes."
+
+	^(UserLibrary default getClassLongPtr: hWnd asParameter nIndex: Win32Constants.GCW_ATOM)
+		== ProgmanClassAtom!
 
 stbConvertFromVersion9: anArray 
 	"Private - Perform an STB conversion from a version 9 (or earlier) instance
@@ -419,8 +446,10 @@ uninitialize
 	Current := nil! !
 !DesktopView class categoriesFor: #current!accessing!public! !
 !DesktopView class categoriesFor: #current:!accessing!public! !
+!DesktopView class categoriesFor: #getProgmanClass!initializing!private! !
 !DesktopView class categoriesFor: #icon!constants!public! !
 !DesktopView class categoriesFor: #initialize!development!initializing!private! !
+!DesktopView class categoriesFor: #isProgramManager:!enquiries!private! !
 !DesktopView class categoriesFor: #stbConvertFromVersion9:!binary filing!private! !
 !DesktopView class categoriesFor: #uninitialize!class hierarchy-removing!private! !
 

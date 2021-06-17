@@ -2,7 +2,7 @@
 
 Object subclass: #DisplayMonitor
 	instanceVariableNames: 'handle info devices'
-	classVariableNames: ''
+	classVariableNames: 'MONITOR_DEFAULTTONEAREST MONITOR_DEFAULTTONULL MONITOR_DEFAULTTOPRIMARY'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 DisplayMonitor guid: (GUID fromString: '{2ab65289-2a77-4c76-9ab2-82178699a48c}')!
@@ -115,6 +115,16 @@ workArea
 
 !DisplayMonitor class methodsFor!
 
+active
+	"Answer an instance of the receiver representing the monitor that is most likely to be the one the user might consider active. There is no completely reliable way to determine this, so we use the heuristic that the monitor of the foreground window (whether that is a Dolphin window or not) is likely to be the one with the users' interest.
+	An exception is if the 'Progman' window is the foreground window, which will be the case if the user has clicked on the desktop (at least in any version of Windows that is currently relevant)."
+
+	UserLibrary default getForegroundWindow
+		ifNotNil: [:hWnd | (DesktopView isProgramManager: hWnd) ifFalse: [^self displayingView: hWnd]].
+
+	"We want to return the display with the mouse cursor if the desktop (really the program manager) has focus, or in the unlikely event that GetForegroundWindow returns null, which according to the docs it can do if activation is in transition."
+	^self containingPoint: Cursor position!
+
 allIntersecting: aRectangle
 	"Answer a `<collection>` containing instances of the receiver describing all the display monitors with display areas that intersect the specified virtual screen area (i.e. desktop area)."
 
@@ -137,11 +147,11 @@ desktopMonitors
 
 	^self allMonitors select: [:each | each isAttachedToDesktop]!
 
-displayingView: aView
-	"Answer an instance of the receiver describing the monitor on which the specified `View` is (at least mostly) displayed. Note that for the desktop view, the primary monitor will be returned.
-	If the View is outside the visible display area, answer nil."
+displayingView: aViewOrHandle
+	"Answer an instance of the receiver describing the monitor on which the specified `View`/window is (at least mostly) displayed. Note that for the desktop window, the primary monitor will be returned.
+	If the window is outside the visible display area, answer nil."
 
-	^(UserLibrary default monitorFromWindow: aView asParameter dwFlags: MONITOR_DEFAULTTONULL)
+	^(UserLibrary default monitorFromWindow: aViewOrHandle asParameter dwFlags: MONITOR_DEFAULTTONULL)
 		ifNotNil: [:hMonitor | self fromHandle: hMonitor]!
 
 forCanvas: aCanvas intersecting: aRectangle
@@ -212,6 +222,7 @@ primary
 	^(UserLibrary default monitorFromWindow: nil dwFlags: MONITOR_DEFAULTTOPRIMARY)
 		ifNil: [Win32Error signal]
 		ifNotNil: [:hMonitor | self fromHandle: hMonitor]! !
+!DisplayMonitor class categoriesFor: #active!instance creation!public! !
 !DisplayMonitor class categoriesFor: #allIntersecting:!instance creation!public! !
 !DisplayMonitor class categoriesFor: #allMonitors!enumerating!public! !
 !DisplayMonitor class categoriesFor: #containingPoint:!instance creation!public! !

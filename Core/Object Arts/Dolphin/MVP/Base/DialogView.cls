@@ -40,7 +40,7 @@ basicCreateAt: position extent: size
 	^UserLibrary default 
 		createDialog: self resourceLib asParameter
 		lpTemplate: self templateId asResourceId
-		hWndParent: self class active asParameter
+		hWndParent: self class activeHandle
 		lpDialogFunc: VMLibrary default getDlgProc
 		dwInitParam: 0!
 
@@ -49,16 +49,6 @@ cancel
 	command to follow the correct procedure for cancelling a dialog."
 
 	self destroy!
-
-centerInOwner: aView
-	"Private - Position the dialog so that it's client area is centred as closely as possible to the centre of the owner's client area, but keeping the window entirely visible on the nearest display monitor if possible."
-
-	| clientExtent rect |
-	clientExtent := self clientExtent.
-	rect := self
-				calcRectangleFromClientRectangle: ((aView clientExtent - clientExtent) // 2 extent: clientExtent).
-	"Ensure the dialog does not stray out of bounds, favouring keeping the top-left corner visible if it is too large"
-	self positionNear: (aView mapPointToScreen: rect origin)!
 
 defaultBackcolor
 	"Private - Answer the default colour for the receiver's background"
@@ -241,11 +231,6 @@ performCommand: aCommand
 	^aCommand value
 !
 
-positionForOwner: aView
-	self isInitiallyCentered
-		ifTrue: [self centerInOwner: aView]
-		ifFalse: [self displayOnMonitor: aView displayMonitor]!
-
 preTranslateKeyboardInput: aMSG
 	"Answer whether the receiver would like to consume the argument aMSG,
 	which is a keyboard message.
@@ -325,32 +310,34 @@ setItem: anInteger text: aString
 		ifFalse: [UserLibrary default systemError]!
 
 showModal
-	"Private - Show the (already created) receiver as a dialog modal to the current active window."
+	"Private - Show the receiver as a dialog modal to the current active window. Note that if the Dialog has already been created, it will have taken activation, and it is no longer possible to determine the previously active window."
 
-	^self showModalTo: self class active!
+	^self showModalTo: nil!
 
-showModalTo: aView 
+showModalTo: aView
 	"Private - Show the (already created) receiver as a dialog modal to aView."
 
 	| enableOwningView owningView |
-	owningView := aView = self class desktop ifTrue: [self class active] ifFalse: [aView].
+	"The act of creating a dialog box, even without showing it, steals activation, so it may be too late to find the previously active window now if the dialog has already been created"
+	owningView := aView ifNil: [View active].
+	(owningView isNil or: [owningView == self]) ifTrue: [owningView := View desktop].
 	"Allow the create to fail, in which case return nil as the result"
 	self handle isNil ifTrue: [^nil].
 	(enableOwningView := owningView isEnabled) ifTrue: [owningView isEnabled: false].
 	
 	["Only now can we adjust the position of the dialog (if required)."
-	self positionForOwner: owningView.
+	owningView repositionShell: self.
 	self
 		layout;
 		show.
-	self isInProc ifTrue: [self runModalInProcessLoop] ifFalse: [self runModalLoop]] 
+	self isInProc ifTrue: [self runModalInProcessLoop] ifFalse: [self runModalLoop]]
 			ensure: 
 				["Seems windows may re-enable a disabled view itself, so we re-establish enablement state regardless"
 				owningView isEnabled: enableOwningView.
 				enableOwningView ifTrue: [owningView beActive].
 				"Force the owning view to re-paint and update its cursor in case actions following closure of the dialog are lengthy"
 				owningView update.
-				UserLibrary default 
+				UserLibrary default
 					sendMessage: owningView asParameter
 					msg: WM_SETCURSOR
 					wParam: 0
@@ -364,7 +351,7 @@ showModalTo: aView
 showModeless: aView
 	"Private - Show the (already created) receiver as a modeless dialog for the specified owner window."
 
-	self positionForOwner: aView.
+	aView repositionShell: self.
 	self show!
 
 subclassWindow: aWinHandle
@@ -401,7 +388,6 @@ wmInitDialog: message wParam: wParam lParam: lParam
 !DialogView categoriesFor: #answer:!accessing!not an aspect!public! !
 !DialogView categoriesFor: #basicCreateAt:extent:!private!realizing/unrealizing! !
 !DialogView categoriesFor: #cancel!commands!public! !
-!DialogView categoriesFor: #centerInOwner:!geometry!private! !
 !DialogView categoriesFor: #defaultBackcolor!colors!constants!private! !
 !DialogView categoriesFor: #defaultWindowProcessing:wParam:lParam:!dispatching!private! !
 !DialogView categoriesFor: #defaultWindowStyle!constants!private! !
@@ -423,7 +409,6 @@ wmInitDialog: message wParam: wParam lParam: lParam
 !DialogView categoriesFor: #oldWndProc:!accessing!private! !
 !DialogView categoriesFor: #onInitDialog!event handling!public! !
 !DialogView categoriesFor: #performCommand:!commands!public! !
-!DialogView categoriesFor: #positionForOwner:!helpers!private! !
 !DialogView categoriesFor: #preTranslateKeyboardInput:!dispatching!public! !
 !DialogView categoriesFor: #resourceLib!constants!public! !
 !DialogView categoriesFor: #runModalInProcessLoop!operations!private! !

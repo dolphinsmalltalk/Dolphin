@@ -244,6 +244,11 @@ position
 	^pos asPoint
 !
 
+position: aPoint
+	"Move the mouse cursor (if permitted) to the Point specified in screen co-ordinates."
+
+	^(UserLibrary default setCursorPosX: aPoint x y: aPoint y) ~~ 0!
+
 reset
 	"Clear the global cursor setting. Answers the previous global cursor (or nil if none)."
 
@@ -348,6 +353,7 @@ wait
 !Cursor class categoriesFor: #no!instance creation!public! !
 !Cursor class categoriesFor: #onPreStripImage!class hierarchy-removing!private! !
 !Cursor class categoriesFor: #position!accessing!public! !
+!Cursor class categoriesFor: #position:!accessing!public! !
 !Cursor class categoriesFor: #reset!initializing!public! !
 !Cursor class categoriesFor: #show!operations!public! !
 !Cursor class categoriesFor: #show:!operations!public! !
