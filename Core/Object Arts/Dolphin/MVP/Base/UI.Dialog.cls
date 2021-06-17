@@ -64,7 +64,7 @@ initialize
 	"Private - Initialize the receiver"
 
 	super initialize.
-	self ownerView: View active.
+	self ownerView: View activeOrDesktop.
 	confirmed := false!
 
 isConfirmed

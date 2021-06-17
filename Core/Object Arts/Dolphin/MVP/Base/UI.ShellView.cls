@@ -100,6 +100,14 @@ caption: aString
 	self text: aString.
 	self trigger: #captionChanged!
 
+centerNear: aPoint
+	"Private - Centre the receiver's client area over the specified screen co-ordinate as nearly as possible without causing the receiver to be off-screen or overlap monitors. If it is not possible to achieve this, perhaps because the receiver is too large for the display, favour keeping the receiver's top-left corner visible."
+
+	| extent |
+	extent := self clientExtent.
+	self positionNear: (self calcRectangleFromClientRectangle: (aPoint - (extent // 2) extent: extent))
+				origin!
+
 close
 	"Asks the receiver to close itself, answering whether it is closed."
 
@@ -1206,6 +1214,7 @@ wmWindowPosChanged: message wParam: wParam lParam: lParam
 !UI.ShellView categoriesFor: #buttonRemoved:!default button!private! !
 !UI.ShellView categoriesFor: #caption!accessing!public! !
 !UI.ShellView categoriesFor: #caption:!accessing!public! !
+!UI.ShellView categoriesFor: #centerNear:!helpers!private! !
 !UI.ShellView categoriesFor: #close!public!realizing/unrealizing! !
 !UI.ShellView categoriesFor: #combinedAcceleratorTable!accelerator!accessing!private! !
 !UI.ShellView categoriesFor: #commandPolicyClass!commands!constants!public! !

@@ -64,7 +64,9 @@ dwSize: anInteger
 isAttachedToDesktop
 	^self StateFlags allMask: DISPLAY_DEVICE_ATTACHED_TO_DESKTOP!
 
-isPrimary
+isPrimaryAdaptor
+	"Answer whether the receiver is describing the primary display adaptor."
+
 	^self StateFlags allMask: DISPLAY_DEVICE_PRIMARY_DEVICE!
 
 StateFlags
@@ -76,7 +78,7 @@ StateFlags
 !OS.DISPLAY_DEVICEW categoriesFor: #DeviceString!**compiled accessors**!public! !
 !OS.DISPLAY_DEVICEW categoriesFor: #dwSize:!**compiled accessors**!public! !
 !OS.DISPLAY_DEVICEW categoriesFor: #isAttachedToDesktop!public!testing! !
-!OS.DISPLAY_DEVICEW categoriesFor: #isPrimary!public!testing! !
+!OS.DISPLAY_DEVICEW categoriesFor: #isPrimaryAdaptor!public!testing! !
 !OS.DISPLAY_DEVICEW categoriesFor: #StateFlags!**compiled accessors**!public! !
 
 !OS.DISPLAY_DEVICEW class methodsFor!

@@ -1065,7 +1065,7 @@ prompt: aString toSaveChanges: aSelectionChangingEvent
 						ifTrue: ['Do you wish to retain them']
 						ifFalse: ['Would you like them copied to the clipboard'].
 			mb := MessageBox new.
-			mb owner: self view.
+			mb owner: self view topView.
 			"mb beTaskModal."
 			response := mb
 						confirm: ('There are unsaved <1s> changes.<n><n><2s>?' expandMacrosWith: aString with: prompt).

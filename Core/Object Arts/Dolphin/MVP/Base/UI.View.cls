@@ -1002,7 +1002,7 @@ displayOnFormats
 displayOnMaxCharacters
 	"Private - Answers the maximum number of characters to display with #displayOn:"
 
-	^24!
+	^50!
 
 dragCut: session
 	"The <DragDropSession>, session, has just completed a successful move operation.
@@ -1813,6 +1813,11 @@ isActive
 	"Answer whether the receiver is the current active window."
 
 	^self class activeHandle = self handle!
+
+isDesktop
+	"Answer whether the receiver represents the desktop window"
+
+	^false!
 
 isDialogMessage: aMSG
 	"Private - Answer whether the receiver wishes to gobble up (and indeed has gobbled up) 
@@ -3015,6 +3020,11 @@ removeSubView: aView
 	^aView
 		destroy;
 		yourself!
+
+repositionShell: aShellView
+	aShellView isInitiallyCentered
+		ifTrue: [aShellView centerNear: (self mapPointToScreen: self clientRectangle center)]
+		ifFalse: [aShellView displayOnMonitor: self displayMonitor]!
 
 requestDragImages: session
 	"This is where the receiver specifies any drag image overrides. 
@@ -4523,6 +4533,25 @@ wmXButtonUp: message wParam: wParam lParam: lParam
 				wParam: wParam
 				lParam: lParam)!
 
+wndClassAtom
+	"Answer the `<integer>` atom that uniquely identifies the receiver's Window class."
+
+	^UserLibrary default getClassLongPtr: self asParameter nIndex: GCW_ATOM!
+
+wndClassName
+	"Answer the `String` name of the receiver's Window class."
+
+	| buf |
+	"Per https://docs.microsoft.com/en-us/windows/win32/api/winuser/ns-winuser-wndclassexw, the maximum length of a window class name is 256,
+	although it not specified whether this includes the null terminator."
+	buf := Utf16String newFixed: 256.
+	(UserLibrary default
+		getClassName: self asParameter
+		lpClassName: buf
+		nMaxCount: 256) == 0
+		ifTrue: [Win32Error signal].
+	^buf trimNulls!
+
 x
 	"Answer the left coordinate of the receiver in the coordinate system of the parent."
 
@@ -4777,6 +4806,7 @@ zOrderTop
 !UI.View categoriesFor: #invalidateRgn:erase:!drawing!public! !
 !UI.View categoriesFor: #invalidateUserInterface!accessing!public! !
 !UI.View categoriesFor: #isActive!public!testing! !
+!UI.View categoriesFor: #isDesktop!public!testing! !
 !UI.View categoriesFor: #isDialogMessage:!dispatching!private! !
 !UI.View categoriesFor: #isDolphinWindow!private!testing! !
 !UI.View categoriesFor: #isDragSource!private!testing! !
@@ -4941,6 +4971,7 @@ zOrderTop
 !UI.View categoriesFor: #registerHotKeyId:modifiers:vkey:!helpers!public! !
 !UI.View categoriesFor: #releaseDC:!operations!public! !
 !UI.View categoriesFor: #removeSubView:!hierarchy!public!sub views! !
+!UI.View categoriesFor: #repositionShell:!helpers!private! !
 !UI.View categoriesFor: #requestDragImages:!drag & drop!public! !
 !UI.View categoriesFor: #requestDragObjects:!drag & drop!public! !
 !UI.View categoriesFor: #requestDropOperations:!drag & drop!public! !
@@ -5107,6 +5138,8 @@ zOrderTop
 !UI.View categoriesFor: #wmXButtonDblClk:wParam:lParam:!event handling-win32!private! !
 !UI.View categoriesFor: #wmXButtonDown:wParam:lParam:!event handling-win32!private! !
 !UI.View categoriesFor: #wmXButtonUp:wParam:lParam:!event handling-win32!private! !
+!UI.View categoriesFor: #wndClassAtom!accessing!public! !
+!UI.View categoriesFor: #wndClassName!accessing!public! !
 !UI.View categoriesFor: #x!geometry!public! !
 !UI.View categoriesFor: #x:!geometry!public! !
 !UI.View categoriesFor: #y!geometry!public! !
@@ -5130,21 +5163,22 @@ UI.View methodProtocol: #window attributes: #(#readOnly) selectors: #(#asParamet
 !UI.View class methodsFor!
 
 active
-	"Answers a Dolphin View for the active Window. This may not be
-	a registered Dolphin window (e.g. the Window does not belong to Dolphin
-	or is a control on a dialog template which has not been subclassed).
+	"Answers a Dolphin View for the active Window. This may not be a registered Dolphin window (e.g. the Window does not belong to Dolphin or is a control on a dialog template which has not been subclassed).
+	If the foreground window belongs to another process, this method will answer nil."
 
-	N.B. We deliberately reference View specifically rather than 'self' because
-	if the active window is not a registered Dolphin View then we want an
-	instance of View to represent it, not an instance of whatever subclass
-	sent the #active message."
+	"N.B. We deliberately reference View specifically rather than 'self' because if the active window is not a registered Dolphin View then we want an instance of View to represent it, not an instance of whatever subclass sent the #active message."
 
-	^View fromHandle: self activeHandle!
+	^self activeHandle ifNotNil: [:hWnd | View fromHandle: hWnd]!
 
 activeHandle
-	"Private - Answers the handle of the current active Window."
+	"Private - Answers the handle of the current active Window in the Dolphin process."
 
 	^UserLibrary default getActiveWindow!
+
+activeOrDesktop
+	"Answers a Dolphin `View` for the active Window, or if none is active default to the `DesktopView`."
+
+	^self activeHandle ifNotNil: [:hWnd | View fromHandle: hWnd] ifNil: [self desktop]!
 
 buildMessageMap
 	"Private - Initialize the map of Windows message numbers to the selectors of the low-level event handlers in the receiver.
@@ -5298,16 +5332,12 @@ focusHandle
 	^UserLibrary default getFocus!
 
 foreground
-	"Answers a Dolphin View for the foreground Window. This may not be
-	a registered Dolphin View (e.g. the Window does not belong to Dolphin
-	or is a control on a dialog template which has not been subclassed).
+	"Answers a Dolphin View for the foreground Window. This may not be a registered Dolphin View (e.g. the Window does not belong to Dolphin	or is a control on a dialog template which has not been subclassed).
+	In unusual circumstances, when window activation is in a state of transition, this may return nil, indicating that there is no foreground window at that time."
 
-	N.B. We deliberately reference View specifically rather than 'self' because
-	if the foreground window is not a registered Dolphin View then we want an
-	instance of View to represent it, not an instance of whatever subclass
-	sent the #foreground message."
+	"N.B. We deliberately reference View specifically rather than 'self' because if the foreground window is not a registered Dolphin View then we want an instance of View to represent it, not an instance of whatever subclass sent the #foreground message."
 
-	^View fromHandle: self foregroundHandle!
+	^self foregroundHandle ifNotNil: [:hWnd | View fromHandle: hWnd]!
 
 foregroundHandle
 	"Private - Answers handle of the current foreground window."
@@ -5745,6 +5775,7 @@ wndClassName
 	^'DolphinWindow'! !
 !UI.View class categoriesFor: #active!accessing!public! !
 !UI.View class categoriesFor: #activeHandle!accessing!private! !
+!UI.View class categoriesFor: #activeOrDesktop!enquiries!public! !
 !UI.View class categoriesFor: #buildMessageMap!constants!must not strip!private! !
 !UI.View class categoriesFor: #capture!accessing!public! !
 !UI.View class categoriesFor: #closeAll!operations!private! !
@@ -5757,7 +5788,7 @@ wndClassName
 !UI.View class categoriesFor: #destroyAll!operations!private! !
 !UI.View class categoriesFor: #focus!accessing!public! !
 !UI.View class categoriesFor: #focusHandle!accessing!private! !
-!UI.View class categoriesFor: #foreground!accessing!public! !
+!UI.View class categoriesFor: #foreground!enquiries!public! !
 !UI.View class categoriesFor: #foregroundHandle!accessing!private! !
 !UI.View class categoriesFor: #frameWidths:!constants!public! !
 !UI.View class categoriesFor: #freeTheme!private!theming! !

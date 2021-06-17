@@ -163,6 +163,7 @@ package setMethodNames: #(
 	#(#{Tools.SmalltalkSystem} #runRegressionTests:logTo:verbose:)
 	#(#{Tools.SmalltalkSystem} #setTestAttributes:id:name:duration:tests:failures:errors:skipped:)
 	#(#{Tools.SmalltalkSystem} #writeJunitTestLog:result:)
+	#(#{External.PermanentLibrary class} #setDefault:)
 ).
 
 package setVariableNames: #(
@@ -1089,6 +1090,14 @@ Smalltalk.DolphinTest := Core.Tests.DolphinTest!
 
 
 "Loose Methods"!
+
+!External.PermanentLibrary class methodsFor!
+
+setDefault: anExternalLibrary
+	"Set the default instance of the receiver. For testing purposes only. The 'default' instance of permanent libraries should not normally be changed."
+
+	default := anExternalLibrary! !
+!External.PermanentLibrary class categoriesFor: #setDefault:!accessing!public! !
 
 !OS.CRTLibraryNonBlocking methodsFor!
 

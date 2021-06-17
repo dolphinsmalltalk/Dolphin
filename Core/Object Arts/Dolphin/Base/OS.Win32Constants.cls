@@ -314,6 +314,7 @@ Kernel.SharedPool subclass: #'OS.Win32Constants'
 		'GA_ROOT' -> 16r2.
 		'GA_ROOTOWNER' -> 16r3.
 		'GCL_WNDPROC' -> -16r18.
+		'GCW_ATOM' -> -16r20.
 		'GENERIC_READ' -> 16r80000000.
 		'GENERIC_WRITE' -> 16r40000000.
 		'GHND' -> 16r42.

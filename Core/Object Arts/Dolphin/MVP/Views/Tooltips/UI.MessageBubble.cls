@@ -98,7 +98,7 @@ close
 
 createTooltip
 	tooltip := Tooltip new.
-	tooltip bePopupFor: (owner ifNil: [View active]).
+	tooltip bePopupFor: self owner.
 	tooltip
 		baseStyle: tooltipStyle
 		maskedBy: ##(TTS_BALLOON | TTS_ALWAYSTIP | TTS_CLOSE | TTS_NOANIMATE | TTS_NOFADE | TTS_NOPREFIX)
@@ -295,7 +295,7 @@ open
 	^#ok!
 
 owner
-	^owner ifNil: [View active]!
+	^owner ifNil: [View activeOrDesktop]!
 
 position
 	^position!

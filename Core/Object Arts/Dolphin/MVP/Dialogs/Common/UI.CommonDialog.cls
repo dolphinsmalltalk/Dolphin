@@ -101,7 +101,7 @@ showModal
 	hook := self createHook.
 	hook notNil ifTrue: [self winStruct hook: hook].
 	self prepareStruct.
-	owner := self ownerView ifNil: [View active].
+	owner := self ownerView ifNil: [View activeOrDesktop].
 	wasEnabled := owner isEnabled.
 	apiResult := 
 			[SessionManager inputState startIdleTimer: owner.

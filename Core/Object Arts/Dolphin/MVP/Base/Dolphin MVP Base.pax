@@ -272,6 +272,7 @@ package setMethodNames: #(
 	#(#{OS.UserLibrary} #frameRect:lprc:hbr:)
 	#(#{OS.UserLibrary} #getAncestor:gaFlags:)
 	#(#{OS.UserLibrary} #getCapture)
+	#(#{OS.UserLibrary} #getClassLongPtr:nIndex:)
 	#(#{OS.UserLibrary} #getClassName:lpClassName:nMaxCount:)
 	#(#{OS.UserLibrary} #getClientRect:lpRect:)
 	#(#{OS.UserLibrary} #getClipboardData:)
@@ -2750,7 +2751,7 @@ UI.View subclass: #'UI.ControlView'
 	classConstants: {}!
 UI.View subclass: #'UI.DesktopView'
 	instanceVariableNames: 'resolution defaultExtentBlock dvReserved1 dvReserved2'
-	classVariableNames: 'Current'
+	classVariableNames: 'Current ProgmanClassAtom'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
@@ -3431,6 +3432,10 @@ getCapture
 		HANDLE GetCapture(VOID)."
 
 	<stdcall: handle GetCapture>
+	^self invalidCall: _failureCode!
+
+getClassLongPtr: hWnd nIndex: nIndex
+	<stdcall: uintptr GetClassLongW handle sdword>
 	^self invalidCall: _failureCode!
 
 getClassName: aWindowHandle lpClassName: aByteBuffer nMaxCount: anInteger
@@ -4626,6 +4631,7 @@ windowFromPoint: aPOINTL
 !OS.UserLibrary categoriesFor: #frameRect:lprc:hbr:!public!win32 functions-filled shape! !
 !OS.UserLibrary categoriesFor: #getAncestor:gaFlags:!**auto generated**!public! !
 !OS.UserLibrary categoriesFor: #getCapture!public!win32 functions-mouse input! !
+!OS.UserLibrary categoriesFor: #getClassLongPtr:nIndex:!public!win32 functions-window class! !
 !OS.UserLibrary categoriesFor: #getClassName:lpClassName:nMaxCount:!public!win32 functions-window class! !
 !OS.UserLibrary categoriesFor: #getClientRect:lpRect:!public!win32 functions-window! !
 !OS.UserLibrary categoriesFor: #getClipboardData:!public!win32 functions-clipboard! !

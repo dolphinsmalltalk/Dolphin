@@ -41,6 +41,7 @@ package setClassNames: #(
 	#{UI.Tests.DifferencesPresenterTest}
 	#{UI.Tests.DisplayMonitorTest}
 	#{UI.Tests.EvaluationConverterTest}
+	#{UI.Tests.FakeUserLibrary}
 	#{UI.Tests.FileDialogTest}
 	#{UI.Tests.FlowLayoutTest}
 	#{UI.Tests.FolderTest}
@@ -226,7 +227,7 @@ Core.Tests.DolphinTest subclass: #'UI.Tests.CommandDescriptionTest'
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Core.Tests.DolphinTest subclass: #'UI.Tests.DialogViewTest'
-	instanceVariableNames: 'owner shell2'
+	instanceVariableNames: 'owner shell2 fakeUser32 cursorPos'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -239,6 +240,12 @@ Core.Tests.DolphinTest subclass: #'UI.Tests.DisplayMonitorTest'
 	classConstants: {}!
 Core.Tests.DolphinTest subclass: #'UI.Tests.EvaluationConverterTest'
 	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+OS.UserLibrary subclass: #'UI.Tests.FakeUserLibrary'
+	instanceVariableNames: 'user32 getForegroundWindowBlock getActiveWindowBlock getCursorPosBlock'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
