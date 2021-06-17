@@ -10,6 +10,39 @@ DisplayMonitorTest comment: ''!
 !DisplayMonitorTest categoriesForClass!Unclassified! !
 !DisplayMonitorTest methodsFor!
 
+testActive
+	| shell primary user32 |
+	primary := DisplayMonitor primary.
+	shell := ShellView show.
+	user32 := UserLibrary default.
+	
+	[self assert: View foreground equals: shell.
+	shell position: primary workArea topLeft + 50.
+	self assert: DisplayMonitor active equals: primary.
+	((DisplayMonitor desktopMonitors reject: [:each | each = primary]) lookup: 1)
+		ifNotNil: 
+			[:otherMonitor |
+			| active |
+			shell position: otherMonitor workArea topLeft + 100.
+			self assert: shell displayMonitor equals: otherMonitor.
+			active := DisplayMonitor active.
+			self assert: active equals: otherMonitor.
+			self deny: active equals: primary].
+	"Simulate transfer of activation to the desktop. Making it the foreground window is equivalent to activating the Windows shell program manager"
+	user32 := FakeUserLibrary new.
+	user32
+		initializeForDesktopActive;
+		open.
+	"As we have things set up to fake the foreground/active window, sneak in some tests of related View class enquiries."
+	self assertIsNil: View activeHandle.
+	self assert: (DesktopView isProgramManager: View foregroundHandle).
+	self assert: View activeOrDesktop isDesktop.
+	"When the program manager is active, we deliberately choose to regard the display with the mouse cursor as the active display"
+	self assert: DisplayMonitor active equals: (DisplayMonitor containingPoint: Cursor position)]
+			ensure: 
+				[user32 free.
+				shell destroy]!
+
 testAllIntersecting
 	self assert: (DisplayMonitor allIntersecting: (View desktop rectangle insetBy: 200))
 		equals: {DisplayMonitor primary}.
@@ -90,10 +123,6 @@ testPrimary
 	| primary origin rectangle workArea |
 	primary := DisplayMonitor primary.
 	self assert: primary isPrimary.
-	false
-		ifTrue: 
-			["Oddly, this does not appear to hold"
-			self assert: (primary devices anySatisfy: [:each | each isPrimary])].
 	self assert: primary isAttachedToDesktop.
 	rectangle := primary rectangle.
 	self assert: rectangle isKindOf: Rectangle.
@@ -116,6 +145,7 @@ testPrintString
 			[| secondary |
 			secondary := all detect: [:each | each isPrimary not].
 			self assert: secondary printString equals: 'a DisplayMonitor(<1p>)' << secondary deviceName]! !
+!DisplayMonitorTest categoriesFor: #testActive!public!unit tests! !
 !DisplayMonitorTest categoriesFor: #testAllIntersecting!public!unit tests! !
 !DisplayMonitorTest categoriesFor: #testAllPhysicalMonitors!public!unit tests! !
 !DisplayMonitorTest categoriesFor: #testComparing!public!unit tests! !

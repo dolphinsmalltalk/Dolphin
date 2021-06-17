@@ -340,6 +340,7 @@ Win32Constants at: 'GA_PARENT' put: 16r1!
 Win32Constants at: 'GA_ROOT' put: 16r2!
 Win32Constants at: 'GA_ROOTOWNER' put: 16r3!
 Win32Constants at: 'GCL_WNDPROC' put: -16r18!
+Win32Constants at: 'GCW_ATOM' put: -16r20!
 Win32Constants at: 'GENERIC_READ' put: 16r80000000!
 Win32Constants at: 'GENERIC_WRITE' put: 16r40000000!
 Win32Constants at: 'GHND' put: 16r42!

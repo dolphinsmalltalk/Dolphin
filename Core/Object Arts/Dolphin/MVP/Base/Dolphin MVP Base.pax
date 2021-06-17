@@ -82,10 +82,10 @@ package classNames
 	add: #DEVMODE;
 	add: #Dialog;
 	add: #DialogView;
-	add: #DisplayMonitor;
 	add: #DIBSection;
 	add: #DIBSECTION;
 	add: #DISPLAY_DEVICEW;
+	add: #DisplayMonitor;
 	add: #DividerMenuItem;
 	add: #DOCINFOW;
 	add: #DoubleBufferedView;
@@ -283,6 +283,7 @@ package methodNames
 	add: #UserLibrary -> #frameRect:lprc:hbr:;
 	add: #UserLibrary -> #getAncestor:gaFlags:;
 	add: #UserLibrary -> #getCapture;
+	add: #UserLibrary -> #getClassLongPtr:nIndex:;
 	add: #UserLibrary -> #getClassName:lpClassName:nMaxCount:;
 	add: #UserLibrary -> #getClientRect:lpRect:;
 	add: #UserLibrary -> #getClipboardData:;
@@ -457,13 +458,13 @@ Object subclass: #CommandQuery
 	classVariableNames: 'CheckedMask DefaultMask EnabledMask'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-Object subclass: #DragDropObject
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
 Object subclass: #DisplayMonitor
 	instanceVariableNames: 'handle info devices'
+	classVariableNames: 'MONITOR_DEFAULTTONEAREST MONITOR_DEFAULTTONULL MONITOR_DEFAULTTOPRIMARY'
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Object subclass: #DragDropObject
+	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -822,6 +823,11 @@ Win32Structure subclass: #DIBSECTION
 	classVariableNames: '_OffsetOf_dsBitfields _OffsetOf_dsBm _OffsetOf_dsBmih _OffsetOf_dshSection _OffsetOf_dsOffset'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+Win32Structure subclass: #DISPLAY_DEVICEW
+	instanceVariableNames: ''
+	classVariableNames: '_OffsetOf_DeviceID _OffsetOf_DeviceKey _OffsetOf_DeviceName _OffsetOf_DeviceString _OffsetOf_dwSize _OffsetOf_StateFlags DISPLAY_DEVICE_ATTACHED_TO_DESKTOP DISPLAY_DEVICE_MIRRORING_DRIVER DISPLAY_DEVICE_MULTI_DRIVER DISPLAY_DEVICE_PRIMARY_DEVICE DISPLAY_DEVICE_VGA_COMPATIBLE'
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
 Win32Structure subclass: #DOCINFOW
 	instanceVariableNames: 'docName'
 	classVariableNames: '_OffsetOf_dwSize _OffsetOf_fwType _OffsetOf_lpszDatatype _OffsetOf_lpszDocName _OffsetOf_lpszOutput'
@@ -887,11 +893,6 @@ Win32Structure subclass: #MEASUREITEMSTRUCT
 	classVariableNames: '_OffsetOf_CtlID _OffsetOf_CtlType _OffsetOf_itemData _OffsetOf_itemHeight _OffsetOf_itemID _OffsetOf_itemWidth'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-Win32Structure subclass: #DISPLAY_DEVICEW
-	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_DeviceID _OffsetOf_DeviceKey _OffsetOf_DeviceName _OffsetOf_DeviceString _OffsetOf_dwSize _OffsetOf_StateFlags DISPLAY_DEVICE_ATTACHED_TO_DESKTOP DISPLAY_DEVICE_MIRRORING_DRIVER DISPLAY_DEVICE_MULTI_DRIVER DISPLAY_DEVICE_PRIMARY_DEVICE DISPLAY_DEVICE_VGA_COMPATIBLE'
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
 Win32Structure subclass: #MENUINFO
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_cyMax _OffsetOf_dwContextHelpID _OffsetOf_dwMenuData _OffsetOf_dwSize _OffsetOf_dwStyle _OffsetOf_fMask _OffsetOf_hbrBack'
@@ -905,6 +906,11 @@ Win32Structure subclass: #MENUITEMINFOW
 Win32Structure subclass: #MINMAXINFO
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_ptMaxPosition _OffsetOf_ptMaxSize _OffsetOf_ptMaxTrackSize _OffsetOf_ptMinTrackSize _OffsetOf_ptReserved'
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Win32Structure subclass: #MONITORINFO
+	instanceVariableNames: ''
+	classVariableNames: '_OffsetOf_dwFlags _OffsetOf_dwSize _OffsetOf_rcMonitor _OffsetOf_rcWork MONITORINFOF_PRIMARY'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 Win32Structure subclass: #NMHDR
@@ -997,6 +1003,11 @@ AbstractLOGFONT subclass: #LOGFONTW
 	classVariableNames: '_OffsetOf_lfFaceName'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+MONITORINFO subclass: #MONITORINFOEXW
+	instanceVariableNames: ''
+	classVariableNames: '_OffsetOf_szDevice'
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
 NMHDR subclass: #NMTTDISPINFOW
 	instanceVariableNames: 'text'
 	classVariableNames: '_OffsetOf_hinst _OffsetOf_lParam _OffsetOf_lpszText _OffsetOf_szText _OffsetOf_uFlags'
@@ -1050,11 +1061,6 @@ GraphicsTool subclass: #WinImageList
 Brush subclass: #HatchBrush
 	instanceVariableNames: 'id color'
 	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-Win32Structure subclass: #MONITORINFO
-	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_dwFlags _OffsetOf_dwSize _OffsetOf_rcMonitor _OffsetOf_rcWork MONITORINFOF_PRIMARY'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 Brush subclass: #StockBrush
@@ -1187,11 +1193,6 @@ Presenter subclass: #ValuePresenter
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-MONITORINFO subclass: #MONITORINFOEXW
-	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_szDevice'
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
 Shell subclass: #Dialog
 	instanceVariableNames: 'confirmed ownerView'
 	classVariableNames: ''
@@ -1239,7 +1240,7 @@ View subclass: #ControlView
 	classInstanceVariableNames: ''!
 View subclass: #DesktopView
 	instanceVariableNames: 'resolution defaultExtentBlock dvReserved1 dvReserved2'
-	classVariableNames: 'Current'
+	classVariableNames: 'Current ProgmanClassAtom'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 View subclass: #DoubleBufferedView
@@ -1976,6 +1977,10 @@ getCapture
 		HANDLE GetCapture(VOID)."
 
 	<stdcall: handle GetCapture>
+	^self invalidCall: _failureCode!
+
+getClassLongPtr: hWnd nIndex: nIndex
+	<stdcall: uintptr GetClassLongW handle sdword>
 	^self invalidCall: _failureCode!
 
 getClassName: aWindowHandle lpClassName: aByteBuffer nMaxCount: anInteger
@@ -3171,6 +3176,7 @@ windowFromPoint: aPOINTL
 !UserLibrary categoriesFor: #frameRect:lprc:hbr:!public!win32 functions-filled shape! !
 !UserLibrary categoriesFor: #getAncestor:gaFlags:!**auto generated**!public! !
 !UserLibrary categoriesFor: #getCapture!public!win32 functions-mouse input! !
+!UserLibrary categoriesFor: #getClassLongPtr:nIndex:!public!win32 functions-window class! !
 !UserLibrary categoriesFor: #getClassName:lpClassName:nMaxCount:!public!win32 functions-window class! !
 !UserLibrary categoriesFor: #getClientRect:lpRect:!public!win32 functions-window! !
 !UserLibrary categoriesFor: #getClipboardData:!public!win32 functions-clipboard! !

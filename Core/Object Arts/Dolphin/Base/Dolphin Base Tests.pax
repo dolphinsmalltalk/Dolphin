@@ -146,6 +146,7 @@ package methodNames
 	add: #SmalltalkSystem -> #runRegressionTests:logTo:verbose:;
 	add: #SmalltalkSystem -> #setTestAttributes:id:name:duration:tests:failures:errors:skipped:;
 	add: #SmalltalkSystem -> #writeJunitTestLog:result:;
+	add: 'PermanentLibrary class' -> #setDefault:;
 	yourself.
 
 package binaryGlobalNames: (Set new
@@ -835,6 +836,14 @@ TestRunLogger subclass: #TestRunConsoleLogger
 
 
 "Loose Methods"!
+
+!PermanentLibrary class methodsFor!
+
+setDefault: anExternalLibrary
+	"Set the default instance of the receiver. For testing purposes only. The 'default' instance of permanent libraries should not normally be changed."
+
+	default := anExternalLibrary! !
+!PermanentLibrary class categoriesFor: #setDefault:!accessing!public! !
 
 !SmalltalkSystem methodsFor!
 

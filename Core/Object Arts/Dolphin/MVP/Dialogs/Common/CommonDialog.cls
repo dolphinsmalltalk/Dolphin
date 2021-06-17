@@ -100,20 +100,20 @@ showModal
 	hook := self createHook.
 	hook notNil ifTrue: [self winStruct hook: hook].
 	self prepareStruct.
-	owner := self ownerView ifNil: [View active].
+	owner := self ownerView ifNil: [View activeOrDesktop].
 	wasEnabled := owner isEnabled.
 	apiResult := 
 			[SessionManager inputState startIdleTimer: owner.
 			hook notNil ifTrue: [view := nil].
-			self basicShowModal] 
+			self basicShowModal]
 					ensure: [SessionManager inputState stopIdleTimer: owner].
-	hitType := wasEnabled 
+	hitType := wasEnabled
 				ifTrue: [HTCLIENT]
 				ifFalse: 
 					[owner isEnabled: false.
 					HTERROR].
 	"Reset the view's cursor in case control does not return to message loop"
-	UserLibrary default 
+	UserLibrary default
 		sendMessage: owner asParameter
 		msg: WM_SETCURSOR
 		wParam: 0

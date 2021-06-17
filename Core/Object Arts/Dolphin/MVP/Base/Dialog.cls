@@ -66,9 +66,8 @@ initialize
 	"Private - Initialize the receiver"
 
 	super initialize.
-	self ownerView: View active.
-	confirmed := false
-!
+	self ownerView: View activeOrDesktop.
+	confirmed := false!
 
 isConfirmed
 	"Answer true if the receiver has been confirmed and changes have been applied
