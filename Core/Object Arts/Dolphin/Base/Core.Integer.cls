@@ -361,6 +361,11 @@ equalToInteger: anInteger
 
 	^self - anInteger == 0!
 
+equalToScaledDecimal: aScaledDecimal
+	"Private - Answer whether the receiver is equal to the known <ScaledDecimal>, aScaledDecimal."
+
+	^self equalToFraction: aScaledDecimal asFraction!
+
 even
 	"Answer whether the receiver is an even integer. Zero is considered even.
 	Override superclass as we've a more efficient implementation."
@@ -832,6 +837,7 @@ yourAddress
 !Core.Integer categoriesFor: #equalToFloat:!double dispatch!private! !
 !Core.Integer categoriesFor: #equalToFraction:!double dispatch!private! !
 !Core.Integer categoriesFor: #equalToInteger:!double dispatch!private! !
+!Core.Integer categoriesFor: #equalToScaledDecimal:!double dispatch!private! !
 !Core.Integer categoriesFor: #even!public!testing! !
 !Core.Integer categoriesFor: #exp10!mathematical!public! !
 !Core.Integer categoriesFor: #factorial!factorization!public! !

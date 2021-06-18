@@ -61,6 +61,11 @@ We are grateful to Richard A. Harmon for contributing his ANSI compliant ScaledD
 	^operand greaterThanScaledDecimal: self
 !
 
+= anObject
+	"Answer whether the receiver is numerically equivalent to the <Object>, anObject - i.e. whether the difference between the receiver and comparand is zero."
+
+	^anObject understandsArithmetic and: [anObject equalToScaledDecimal: self]!
+
 addToScaledDecimal: operand
 	"Private - Answer the <ScaledDecimal> result of adding the receiver
 	to the known <ScaledDecimal>."
@@ -131,6 +136,16 @@ divideIntoScaledDecimal: operand
 	^self species
 		newFromNumber: operand asFraction / fraction
 		scale: (scale max: operand scale)!
+
+equalToInteger: anInteger
+	"Private - Answer whether the receiver is equal to the known <Integer>, anInteger."
+
+	^fraction equalToInteger: anInteger!
+
+equalToScaledDecimal: aScaledDecimal
+	"Private - Answer whether the receiver is equal to the known <ScaledDecimal>, aScaledDecimal."
+
+	^aScaledDecimal asFraction = fraction!
 
 fractionPart
 	"Answer a <number> of the same type as the receiver, representing the 
@@ -260,6 +275,13 @@ storeOn: aStream
 				print: scale;
 				nextPut: $)]!
 
+subtractFromInteger: operand
+	"Private - Subtract the receiver from the known integer, anInteger, and answer the result."
+
+	^self species
+		newFromNumber: operand asFraction - fraction
+		scale: scale!
+
 subtractFromScaledDecimal: operand
 	"Private - Answer the result of subtracting the receiver from the 
 	known <ScaledDecimal>, operand."
@@ -279,6 +301,7 @@ truncated
 !Core.ScaledDecimal categoriesFor: #//!arithmetic!public! !
 !Core.ScaledDecimal categoriesFor: #+!arithmetic!public! !
 !Core.ScaledDecimal categoriesFor: #<!comparing!public! !
+!Core.ScaledDecimal categoriesFor: #=!comparing!public! !
 !Core.ScaledDecimal categoriesFor: #addToScaledDecimal:!double dispatch!private! !
 !Core.ScaledDecimal categoriesFor: #asFloat!converting!public! !
 !Core.ScaledDecimal categoriesFor: #asFraction!converting!public! !
@@ -287,6 +310,8 @@ truncated
 !Core.ScaledDecimal categoriesFor: #denominator!accessing!public! !
 !Core.ScaledDecimal categoriesFor: #displayOn:!printing!public! !
 !Core.ScaledDecimal categoriesFor: #divideIntoScaledDecimal:!double dispatch!private! !
+!Core.ScaledDecimal categoriesFor: #equalToInteger:!double dispatch!private! !
+!Core.ScaledDecimal categoriesFor: #equalToScaledDecimal:!double dispatch!private! !
 !Core.ScaledDecimal categoriesFor: #fractionPart!accessing!public! !
 !Core.ScaledDecimal categoriesFor: #generality!coercing!private! !
 !Core.ScaledDecimal categoriesFor: #greaterThanScaledDecimal:!double dispatch!private! !
@@ -310,6 +335,12 @@ Core.ScaledDecimal methodProtocol: #scaledDecimal attributes: #(#ansi #readOnly)
 
 !Core.ScaledDecimal class methodsFor!
 
+basicNewFromFraction: aFraction scale: scaleInteger
+	"Private - Answer a new instance of me."
+
+	<primitive: 157>
+	^self basicNew setFraction: aFraction asFraction scale: scaleInteger!
+
 maxPrecision
 	"Private - The maximum allowed precision for <ScaledDecimal>s parsed from literal string format. The
 	theoretical limit of the implementation is unbounded, but we impose an arbitrary limit to
@@ -322,8 +353,8 @@ maxPrecision
 newFromNumber: aNumber scale: scaleInteger
 	"Answer a new instance of me."
 
-	^self basicNew
-		setFraction: aNumber asFraction scale: scaleInteger;
+	^(self basicNewFromFraction: aNumber asFraction scale: scaleInteger)
+		isImmutable: true;
 		yourself!
 
 one
@@ -340,6 +371,7 @@ zero
 		newFromNumber: 0
 		scale: 0
 ! !
+!Core.ScaledDecimal class categoriesFor: #basicNewFromFraction:scale:!instance creation!private! !
 !Core.ScaledDecimal class categoriesFor: #maxPrecision!accessing!private! !
 !Core.ScaledDecimal class categoriesFor: #newFromNumber:scale:!instance creation!public! !
 !Core.ScaledDecimal class categoriesFor: #one!instance creation!public! !
