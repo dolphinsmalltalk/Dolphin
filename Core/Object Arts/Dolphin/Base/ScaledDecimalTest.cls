@@ -10,6 +10,24 @@ ScaledDecimalTest comment: ''!
 !ScaledDecimalTest categoriesForClass!Unclassified! !
 !ScaledDecimalTest methodsFor!
 
+floatTestValues
+	^(self integerTestValues, self fractionTestValues) collect: [ :each | each asFloat]!
+
+fractionTestValues
+	^(self integerTestValues collect: [ :each | each / 17]), (self integerTestValues collect: [ :each | each / 297])!
+
+integerTestValues
+	^self smallIntegerTestValues, self largeIntegerTestValues!
+
+largeIntegerTestValues
+	^self smallIntegerTestValues collect: [ :each | each positive ifTrue: [each + SmallInteger maximum] ifFalse: [each + SmallInteger minimum]]!
+
+numericTestValues
+	^self integerTestValues, self floatTestValues, self fractionTestValues!
+
+smallIntegerTestValues
+	^{0. 1. -1. 999. -999. SmallInteger maximum. SmallInteger minimum}!
+
 testAsNumber
 	"Ensure no loss of precision"
 
@@ -108,6 +126,36 @@ testConvertFromIntegerWithScale
 	sd := -130000000013 asScaledDecimal: 1.
 	self assert: sd scale equals: 0.
 	self assert: sd printString equals: '-130000000013s'!
+
+testEqualityComparisons
+	"Test equality comparisons between ScaledDecimals of various scales, and various classes of numbers (including other ScaledDecimals)"
+
+	0 to: 15 do: 
+		[ :scale |
+		self numericTestValues do: 
+			[ :each || scaledDecimal scaledDecimalPlusOne scaledDecimalMinusFraction |
+			scaledDecimal := each asScaledDecimal: scale.
+			scaledDecimalPlusOne := scaledDecimal + 1.
+			scaledDecimalMinusFraction := scaledDecimal - 0.005s.
+
+			self 
+				assert: scaledDecimal equals: scaledDecimal;
+				assert: scaledDecimal equals: each;
+				assert: each equals: scaledDecimal.
+
+			self 
+				deny: scaledDecimal equals: scaledDecimalPlusOne;
+				deny: scaledDecimalPlusOne equals: scaledDecimal;
+				deny: scaledDecimalPlusOne equals: each;
+				deny: each equals: scaledDecimalPlusOne.
+
+			self 
+				deny: scaledDecimal equals: scaledDecimalMinusFraction;
+				deny: scaledDecimalMinusFraction equals: scaledDecimal;
+				deny: scaledDecimalMinusFraction equals: scaledDecimalPlusOne;
+				deny: scaledDecimalPlusOne equals: scaledDecimalMinusFraction;
+				deny: scaledDecimalMinusFraction equals: each;
+				deny: each equals: scaledDecimalMinusFraction]]!
 
 testExactNthRoot
 	| eight thousandth tenth two |
@@ -250,6 +298,30 @@ testStoreOnRoundTrip
 	BECAUSE compiler would consider 0.5s2 as = 0.5s1 and would reuse same slot..."
 	self assert: 0.25s2 storeString equals: '0.25s'!
 
+testSubtractionFromInteger
+	"Test subtraction of ScaledDecimals of various scales from Integers"
+
+	0 to: 15 do: 
+		[ :scale |
+		self integerTestValues do: 
+			[ :each || scaledDecimal result |
+			scaledDecimal := each asScaledDecimal: scale.
+
+			result := each - scaledDecimal.
+			self assert: result isZero.
+			self assert: result class = ScaledDecimal.
+			self assert: result scale equals: scaledDecimal scale.
+
+			result := (each + each) - scaledDecimal.
+			self assert: result equals: each.
+			self assert: result class = ScaledDecimal.
+			self assert: result scale equals: scaledDecimal scale.
+
+			result := each negated - scaledDecimal.
+			self assert: result equals: (each * -2).
+			self assert: result class = ScaledDecimal.
+			self assert: result scale equals: scaledDecimal scale]]!
+
 testZeroRaisedToInteger
 	"Zero might be handle specially"
 
@@ -260,6 +332,12 @@ testZeroRaisedToInteger
 	self assert: (0.0s1 raisedToInteger: 1) scale equals: 1.
 	self assert: (0.0s1 raisedToInteger: 2) equals: 0.
 	self assert: (0.0s1 raisedToInteger: 2) scale equals: 1! !
+!ScaledDecimalTest categoriesFor: #floatTestValues!constants!private! !
+!ScaledDecimalTest categoriesFor: #fractionTestValues!constants!private! !
+!ScaledDecimalTest categoriesFor: #integerTestValues!constants!private! !
+!ScaledDecimalTest categoriesFor: #largeIntegerTestValues!constants!private! !
+!ScaledDecimalTest categoriesFor: #numericTestValues!constants!private! !
+!ScaledDecimalTest categoriesFor: #smallIntegerTestValues!constants!private! !
 !ScaledDecimalTest categoriesFor: #testAsNumber!public!unit tests! !
 !ScaledDecimalTest categoriesFor: #testAsNumberNegatedWithoutDecimalPoint!public!unit tests! !
 !ScaledDecimalTest categoriesFor: #testAsNumberNegatedWithoutDecimalPoint2!public!unit tests! !
@@ -272,6 +350,7 @@ testZeroRaisedToInteger
 !ScaledDecimalTest categoriesFor: #testConvertFromFloat!public!unit tests! !
 !ScaledDecimalTest categoriesFor: #testConvertFromFraction!public!unit tests! !
 !ScaledDecimalTest categoriesFor: #testConvertFromIntegerWithScale!public!unit tests! !
+!ScaledDecimalTest categoriesFor: #testEqualityComparisons!public!unit tests! !
 !ScaledDecimalTest categoriesFor: #testExactNthRoot!public!unit tests! !
 !ScaledDecimalTest categoriesFor: #testExactSqrt!public!unit tests! !
 !ScaledDecimalTest categoriesFor: #testInexactNthRoot!public!unit tests! !
@@ -285,5 +364,6 @@ testZeroRaisedToInteger
 !ScaledDecimalTest categoriesFor: #testRounded!public!unit tests! !
 !ScaledDecimalTest categoriesFor: #testScaleExtension!public!unit tests! !
 !ScaledDecimalTest categoriesFor: #testStoreOnRoundTrip!public!unit tests! !
+!ScaledDecimalTest categoriesFor: #testSubtractionFromInteger!public!unit tests! !
 !ScaledDecimalTest categoriesFor: #testZeroRaisedToInteger!public!unit tests! !
 

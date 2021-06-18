@@ -195,6 +195,11 @@ equalToInteger: anInteger
 
 	^anInteger retry: #= coercing: self!
 
+equalToScaledDecimal: aScaledDecimal
+	"Private - Answer whether the receiver is equal to the known <ScaledDecimal>, aScaledDecimal, by coercing the less general of it and the receiver and comparing again. Overridden by subclasses which can implement more correctly and/or efficiently."
+
+	^aScaledDecimal retry: #= coercing: self!
+
 floor
 	"Answer the <integer> nearest the receiver toward negative infinity
 	(i.e. the largest integer less than or equal to the receiver)."
@@ -497,6 +502,7 @@ understandsArithmetic
 !ArithmeticValue categoriesFor: #equalToFloat:!double dispatch!private! !
 !ArithmeticValue categoriesFor: #equalToFraction:!double dispatch!private! !
 !ArithmeticValue categoriesFor: #equalToInteger:!double dispatch!private! !
+!ArithmeticValue categoriesFor: #equalToScaledDecimal:!double dispatch!private! !
 !ArithmeticValue categoriesFor: #floor!public!truncation and round off! !
 !ArithmeticValue categoriesFor: #generality!coercing!private! !
 !ArithmeticValue categoriesFor: #greaterThanFloat:!double dispatch!private! !
