@@ -60,6 +60,11 @@ We are grateful to Richard A. Harmon for contributing his ANSI compliant ScaledD
 	^operand greaterThanScaledDecimal: self
 !
 
+= anObject
+	"Answer whether the receiver is numerically equivalent to the <Object>, anObject - i.e. whether the difference between the receiver and comparand is zero."
+
+	^anObject understandsArithmetic and: [anObject equalToScaledDecimal: self]!
+
 addToScaledDecimal: operand
 	"Private - Answer the <ScaledDecimal> result of adding the receiver
 	to the known <ScaledDecimal>."
@@ -131,6 +136,16 @@ divideIntoScaledDecimal: operand
 	^self species
 		newFromNumber: operand asFraction / fraction
 		scale: (scale max: operand scale)!
+
+equalToInteger: anInteger
+	"Private - Answer whether the receiver is equal to the known <Integer>, anInteger."
+
+	^fraction equalToInteger: anInteger!
+
+equalToScaledDecimal: aScaledDecimal
+	"Private - Answer whether the receiver is equal to the known <ScaledDecimal>, aScaledDecimal."
+
+	^aScaledDecimal asFraction = fraction!
 
 fractionPart
 	"Answer a <number> of the same type as the receiver, representing the 
@@ -260,6 +275,13 @@ storeOn: aStream
 				print: scale;
 				nextPut: $)]!
 
+subtractFromInteger: operand
+	"Private - Subtract the receiver from the known integer, anInteger, and answer the result."
+
+	^self species
+		newFromNumber: operand asFraction - fraction
+		scale: scale!
+
 subtractFromScaledDecimal: operand
 	"Private - Answer the result of subtracting the receiver from the 
 	known <ScaledDecimal>, operand."
@@ -279,6 +301,7 @@ truncated
 !ScaledDecimal categoriesFor: #//!arithmetic!public! !
 !ScaledDecimal categoriesFor: #+!arithmetic!public! !
 !ScaledDecimal categoriesFor: #<!comparing!public! !
+!ScaledDecimal categoriesFor: #=!comparing!public! !
 !ScaledDecimal categoriesFor: #addToScaledDecimal:!double dispatch!private! !
 !ScaledDecimal categoriesFor: #asFloat!converting!public! !
 !ScaledDecimal categoriesFor: #asFraction!converting!public! !
@@ -287,6 +310,8 @@ truncated
 !ScaledDecimal categoriesFor: #denominator!accessing!public! !
 !ScaledDecimal categoriesFor: #displayOn:!printing!public! !
 !ScaledDecimal categoriesFor: #divideIntoScaledDecimal:!double dispatch!private! !
+!ScaledDecimal categoriesFor: #equalToInteger:!double dispatch!private! !
+!ScaledDecimal categoriesFor: #equalToScaledDecimal:!double dispatch!private! !
 !ScaledDecimal categoriesFor: #fractionPart!accessing!public! !
 !ScaledDecimal categoriesFor: #generality!coercing!private! !
 !ScaledDecimal categoriesFor: #greaterThanScaledDecimal:!double dispatch!private! !
@@ -303,12 +328,19 @@ truncated
 !ScaledDecimal categoriesFor: #scale!accessing!public! !
 !ScaledDecimal categoriesFor: #setFraction:scale:!initializing!private! !
 !ScaledDecimal categoriesFor: #storeOn:!public! !
+!ScaledDecimal categoriesFor: #subtractFromInteger:!double dispatch!private! !
 !ScaledDecimal categoriesFor: #subtractFromScaledDecimal:!double dispatch!private! !
 !ScaledDecimal categoriesFor: #truncated!public!truncation and round off! !
 
 ScaledDecimal methodProtocol: #scaledDecimal attributes: #(#ansi #readOnly) selectors: #(#- #* #/ #// #\\ #+ #< #<= #> #>= #abs #asFloat #asFloatD #asFloatE #asFloatQ #asFraction #asInteger #asScaledDecimal: #between:and: #ceiling #floor #fractionPart #integerPart #max: #min: #negated #negative #positive #quo: #raisedTo: #raisedToInteger: #reciprocal #rem: #rounded #roundTo: #scale #sign #sqrt #squared #strictlyPositive #to: #to:by: #to:by:do: #to:do: #truncated #truncateTo:)!
 
 !ScaledDecimal class methodsFor!
+
+basicNewFromFraction: aFraction scale: scaleInteger
+	"Private - Answer a new instance of me."
+
+	<primitive: 157>
+	^self basicNew setFraction: aFraction asFraction scale: scaleInteger!
 
 maxPrecision
 	"Private - The maximum allowed precision for <ScaledDecimal>s parsed from literal string format. The
@@ -322,8 +354,8 @@ maxPrecision
 newFromNumber: aNumber scale: scaleInteger
 	"Answer a new instance of me."
 
-	^self basicNew
-		setFraction: aNumber asFraction scale: scaleInteger;
+	^(self basicNewFromFraction: aNumber asFraction scale: scaleInteger)
+		isImmutable: true;
 		yourself!
 
 one
@@ -340,6 +372,7 @@ zero
 		newFromNumber: 0
 		scale: 0
 ! !
+!ScaledDecimal class categoriesFor: #basicNewFromFraction:scale:!instance creation!private! !
 !ScaledDecimal class categoriesFor: #maxPrecision!accessing!private! !
 !ScaledDecimal class categoriesFor: #newFromNumber:scale:!instance creation!public! !
 !ScaledDecimal class categoriesFor: #one!instance creation!public! !

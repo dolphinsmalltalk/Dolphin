@@ -192,6 +192,11 @@ equalToInteger: anInteger
 
 	^anInteger * denominator = numerator!
 
+equalToScaledDecimal: aScaledDecimal
+	"Private - Answer whether the receiver is equal to the known <ScaledDecimal>, aScaledDecimal."
+
+	^self equalToFraction: aScaledDecimal asFraction!
+
 generality
 	"Private - Answer the generality of the receiver."
 
@@ -385,6 +390,7 @@ truncated
 !Fraction categoriesFor: #equalToFloat:!double dispatch!private! !
 !Fraction categoriesFor: #equalToFraction:!double dispatch!private! !
 !Fraction categoriesFor: #equalToInteger:!double dispatch!private! !
+!Fraction categoriesFor: #equalToScaledDecimal:!double dispatch!private! !
 !Fraction categoriesFor: #generality!coercing!private! !
 !Fraction categoriesFor: #greaterThanFloat:!double dispatch!private! !
 !Fraction categoriesFor: #greaterThanFraction:!double dispatch!private! !
