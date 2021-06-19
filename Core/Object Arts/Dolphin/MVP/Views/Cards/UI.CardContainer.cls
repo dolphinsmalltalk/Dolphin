@@ -410,7 +410,7 @@ resource_Default_view
 	DO NOT EDIT OR RECATEGORIZE THIS METHOD.
 
 	If you wish to modify this resource evaluate:
-	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Default_view)
+	Tools.ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Default_view)
 	"
 
 	^#(#'!!STL' 4 985166 10 ##(UI.STBViewProxy) ##(UI.CardContainer) 34 16 nil nil 34 2 8 1409286144 131073 416 nil 917510 ##(Graphics.Color) #default nil 5 nil nil nil 416 853318 1 ##(UI.CardLayout) 138 144 8 #() nil nil nil nil 170 192 560 nil 410 ##(UI.TabViewXP) 34 28 nil 416 34 2 8 1140916736 1 592 787270 2 ##(UI.ListModel) 138 144 560 nil 1638406 ##(Kernel.IdentitySearchPolicy) nil nil 1 nil nil nil 592 nil 8 1920388864 1246566 3 ##(Kernel.BlockClosure) 0 nil 1377574 ##(Kernel.CompiledMethod) 2 3 ##(UI.ListControlView) #defaultGetTextBlock 575230339 8 #[30 105 226 0 106] #displayString 768 7 257 nil 754 0 nil 786 2 3 ##(UI.IconicListAbstract) #defaultGetImageBlock 579598755 8 #[30 105 226 0 106] #iconImageIndex 832 7 257 nil 1639750 1 ##(Graphics.IconImageManager) nil nil nil nil nil #noIcons nil nil nil nil nil 1310982 ##(Core.MessageSequence) 138 144 34 2 1049350 ##(Core.MessageSend) #createAt:extent: 34 2 655878 ##(Graphics.Point) 1 1 1026 701 501 592 978 #tcmSetExtendedStyle:dwExStyle: 8 #(-1 0) 592 1179910 ##(OS.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 94 1 0 0 250 0 0 0] 8 #() 1026 193 193 nil 27 914 138 144 34 1 978 #createAt:extent: 34 2 1026 6143 21 1026 701 501 416 1106 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 93 13 0 0 4 1 0 0] 34 1 592 1168 nil 27)! !
