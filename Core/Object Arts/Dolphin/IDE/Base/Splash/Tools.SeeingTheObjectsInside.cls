@@ -61,10 +61,10 @@ dolphinInsideBaseColor
 		b: 1!
 
 dolphinInsideIntensityColor
-	^Color 
-		r: 215
-		g: 109
-		b: 10!
+	^Color
+		r: 192
+		g: 89
+		b: 207!
 
 dolphinInsideIntensityPeriod
 	^1500!
@@ -89,10 +89,7 @@ dolphinOutline
 dolphinSplashBackcolor
 	"Private - The ambient background colour in the Dolphin splash bitmap as shipped. We could pull a pixel out of the bitmap, but that is very slow, so it is hard coded below."
 
-	^Color
-		r: 41
-		g: 124
-		b: 182!
+	^Color seaGreen!
 
 drawInfoTextOn: graphics
 	| fontCopyright brush stringFormat |
