@@ -117,7 +117,7 @@ resource_Gdiplus_view
 	DO NOT EDIT OR RECATEGORIZE THIS METHOD.
 
 	If you wish to modify this resource evaluate:
-	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Gdiplus_view)
+	Tools.ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Gdiplus_view)
 	"
 
 	^#(#'!!STL' 4 985166 10 ##(UI.STBViewProxy) ##(Graphics.Gdiplus.ImageView) 34 28 nil nil 34 2 8 1140850944 1 416 918598 2 ##(UI.ValueHolder) nil false 1638406 ##(Kernel.EqualitySearchPolicy) nil nil nil 7 nil nil nil 416 nil 8 4294902331 1049094 ##(UI.NullConverter) nil nil nil nil #normal 1 1180166 ##(Graphics.Rectangle) 655878 ##(Graphics.Point) 1 1 626 1 1 nil nil #none nil nil nil nil nil 1310982 ##(Core.MessageSequence) 138 144 34 1 1049350 ##(Core.MessageSend) #createAt:extent: 34 2 626 6143 21 626 201 201 416 1179910 ##(OS.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 99 12 0 0 110 0 0 0] 8 #() 626 193 193 nil 29)! !
