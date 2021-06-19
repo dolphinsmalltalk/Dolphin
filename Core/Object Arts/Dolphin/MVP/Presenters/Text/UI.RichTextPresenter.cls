@@ -119,7 +119,7 @@ resource_Default_view
 	DO NOT EDIT OR RECATEGORIZE THIS METHOD.
 
 	If you wish to modify this resource evaluate:
-	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Default_view)
+	Tools.ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Default_view)
 	"
 
 	^#(#'!!STL' 4 985166 10 ##(UI.STBViewProxy) ##(UI.RichTextEdit) 34 18 nil nil 34 2 8 1140920644 1025 416 nil 917510 ##(Graphics.Color) #default nil 7 461638 4 ##(UI.Menu) nil true 34 10 1180742 2 ##(UI.CommandMenuItem) 1 1377606 4 ##(UI.CommandDescription) #chooseSelectionFont 8 '&Font...' 1 1 nil nil nil 1179974 1 ##(UI.DividerMenuItem) 4097 562 1 594 #bePlain 8 '&Plain' 1 1 nil nil nil 562 1 594 #toggleBold 8 '&Bold' 1 1 nil nil nil 562 1 594 #toggleItalic 8 '&Italic' 1 1 nil nil nil 562 1 594 #toggleUnderlined 8 '&Underlined' 1 1 nil nil nil 642 4097 514 nil true 34 3 562 1025 594 #alignParagraphLeft 8 '&Left' 1 1 nil nil nil 562 1025 594 #alignParagraphCenter 8 '&Centre' 1 1 nil nil nil 562 1025 594 #alignParagraphRight 8 '&Right' 1 1 nil nil nil 8 '&Align' nil 1 nil nil nil nil nil 642 4097 562 1 594 #chooseSelectionColor 8 '&Colour...' 1 1 nil nil nil 8 '' nil 1 nil nil nil nil nil nil nil 416 nil 8 1385118048 1049094 ##(UI.NullConverter) nil nil 9 nil 852230 ##(OS.EDITSTREAM) 8 #[0 0 0 0 0 0 0 0 32 0 219 4] 1310982 ##(Core.MessageSequence) 138 144 34 5 1049350 ##(Core.MessageSend) #createAt:extent: 34 2 655878 ##(Graphics.Point) 6143 21 1362 421 351 416 1314 #contextMenu: 34 1 528 416 1314 #text: 34 1 721158 ##(UI.RichText) 8 '{\urtf1\ansi\ansicpg1252\deff0\deflang2057{\fonttbl{\f0\froman Times New Roman;}}
@@ -132,7 +132,7 @@ resource_Static_text
 	DO NOT EDIT OR RECATEGORIZE THIS METHOD.
 
 	If you wish to modify this resource evaluate:
-	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Static_text)
+	Tools.ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Static_text)
 	"
 
 	^#(#'!!STL' 4 985166 10 ##(UI.STBViewProxy) ##(UI.RichTextEdit) 34 18 nil nil 34 2 8 1140855108 1025 416 nil 917510 ##(Graphics.Color) #default nil 7 461638 4 ##(UI.Menu) nil true 34 10 1180742 2 ##(UI.CommandMenuItem) 1 1377606 4 ##(UI.CommandDescription) #chooseSelectionFont 8 '&Font...' 1 1 nil nil nil 1179974 1 ##(UI.DividerMenuItem) 4097 562 1 594 #bePlain 8 '&Plain' 1 1 nil nil nil 562 1 594 #toggleBold 8 '&Bold' 1 1 nil nil nil 562 1 594 #toggleItalic 8 '&Italic' 1 1 nil nil nil 562 1 594 #toggleUnderlined 8 '&Underlined' 1 1 nil nil nil 642 4097 514 nil true 34 3 562 1025 594 #alignParagraphLeft 8 '&Left' 1 1 nil nil nil 562 1025 594 #alignParagraphCenter 8 '&Centre' 1 1 nil nil nil 562 1025 594 #alignParagraphRight 8 '&Right' 1 1 nil nil nil 8 '&Align' nil 1 nil nil nil nil nil 642 4097 562 1 594 #chooseSelectionColor 8 '&Colour...' 1 1 nil nil nil 8 '' nil 1 nil nil nil nil nil nil nil 416 nil 8 1385118048 1049094 ##(UI.NullConverter) nil nil 43 nil 852230 ##(OS.EDITSTREAM) 8 #[0 0 0 0 0 0 0 0 16 0 219 4] 1310982 ##(Core.MessageSequence) 138 144 34 5 1049350 ##(Core.MessageSend) #createAt:extent: 34 2 655878 ##(Graphics.Point) 6143 21 1362 421 131 416 1314 #contextMenu: 34 1 528 416 1314 #text: 34 1 721158 ##(UI.RichText) 8 '{\urtf1\ansi\ansicpg1252\deff0\deflang2057{\fonttbl{\f0\fnil\fcharset0 Times New Roman;}{\f1\froman Times New Roman;}}
