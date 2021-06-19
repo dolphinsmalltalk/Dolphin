@@ -109,6 +109,15 @@ prefix
 		ifTrue: [prefix := '\StringFileInfo\', self getTranslationInfo, '\'].
 	^prefix!
 
+printOn: aStream
+	super printOn: aStream.
+	aStream
+		nextPut: $(;
+		print: self fileDescription;
+		nextPutAll: ', ';
+		nextPutAll: self fileVersionString;
+		nextPut: $)!
+
 productMajor
 	"Answer the <integer> major version number of the product."
 
@@ -156,6 +165,7 @@ specialBuild
 !OS.VersionInfo categoriesFor: #getTranslationInfo!accessing!private! !
 !OS.VersionInfo categoriesFor: #legalCopyright!accessing!public! !
 !OS.VersionInfo categoriesFor: #prefix!accessing!private! !
+!OS.VersionInfo categoriesFor: #printOn:!printing!public! !
 !OS.VersionInfo categoriesFor: #productMajor!accessing!public! !
 !OS.VersionInfo categoriesFor: #productMinor!accessing!public! !
 !OS.VersionInfo categoriesFor: #productName!accessing!public! !

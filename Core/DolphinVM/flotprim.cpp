@@ -78,11 +78,11 @@ Oop* Interpreter::primitiveFloatTimesTwoPower(Oop* const sp, primargcount_t)
 
 		FloatOTE* oteResult = Float::New();
 		FloatOTE* oteReceiver = reinterpret_cast<FloatOTE*>(*(sp-1));
-		// Compiler doesn't have an intrinsic form for ldexp(), and the lib functions uses old x87 instructions
-		oteResult->m_location->m_fValue = ldexp(oteReceiver->m_location->m_fValue, arg);
+		// ldexp in 10.0.21390.1 (Windows 10, May 21 Insider build) has an apparent new bug that it no longer returns 
+		// zero if underflow denormal, so use theoretically equivalent scalbn instead.
+		oteResult->m_location->m_fValue = scalbn(oteReceiver->m_location->m_fValue, arg);
 		// exp2(1074) overflows when printing Float.FMin
 		//oteResult->m_location->m_fValue = oteReceiver->m_location->m_fValue * exp2(arg);
-
 		*(sp-1) = reinterpret_cast<Oop>(oteResult);
 		ObjectMemory::AddToZct((OTE*)oteResult);
 		return sp-1;

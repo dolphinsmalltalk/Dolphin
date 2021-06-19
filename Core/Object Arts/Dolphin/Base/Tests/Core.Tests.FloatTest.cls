@@ -1426,16 +1426,51 @@ testStoreOn
 	self assert: (Compiler evaluate: Float nan storeString) isNaN!
 
 testTimesTwoPower
-	self assert: (1.0 timesTwoPower: 16) equals: 2 ** 16.
-	self assert: (1.0 timesTwoPower: -1) equals: 0.5.
-	self assert: (1.0 timesTwoPower: Float emax) equals: 2 ** Float emax.
-	self assert: (-1.0 timesTwoPower: Float emax) equals: -2 ** Float emax.
-	self assert: (0.0 timesTwoPower: 10) equals: 0.0.
+	| cases fmin emax emin infinity |
+	fmin := Float fminNormalized.
+	emax := Float emax.
+	emin := Float emin.
+	infinity := Float infinity.
+	cases := {{1.0. 16. 2 ** 16}.
+				{1.0. -1. 0.5}.
+				{1.0. emax. 2 ** emax}.
+				{-1.0. emax. -2 ** emax}.
+				{1.0. emin. fmin}.
+				{0.0. 10. 0.0}.
+				{infinity. 10. infinity}.
+				{Float negativeInfinity. 10. Float negativeInfinity}.
+				{infinity. emax. infinity}.
+				{Float fmax. 1.0. infinity}.
+				{fmin. 1.0. fmin * 2}.
+				{fmin. emin. 0.0}.
+				{fmin. emax. 2.0}.
+				{1.0. Float.EMinDenormalized - 1. 0.0}}.
+	cases do: 
+			[:each |
+			| receiver arg expected |
+			receiver := each first.
+			arg := each second.
+			expected := each third.
+			self assert: (receiver timesTwoPower: arg) equals: expected.
+			"Individual cases are repeated with ScaledDecimal arg to bypass the primitive response"
+			self assert: (receiver timesTwoPower: (arg asScaledDecimal: 0)) equals: expected].
+	Float denormalized
+		ifTrue: 
+			[| fminDenormal eminDenormal |
+			fminDenormal := Float fminDenormalized.
+			eminDenormal := Float.EMinDenormalized.
+			self assert: (fmin timesTwoPower: eminDenormal - emin) equals: fminDenormal.
+			self assert: (fmin timesTwoPower: (eminDenormal - emin asScaledDecimal: 0))
+				equals: Float fminDenormalized.
+			self assert: (1.0 timesTwoPower: eminDenormal) equals: fminDenormal.
+			"ScaledDecimal arg will bypass primitive response, which loses some precision and we get zero. Not sure this is worth fixing."
+			false
+				ifTrue: [self assert: (1.0 timesTwoPower: (eminDenormal asScaledDecimal: 0)) equals: fminDenormal]].
 	self assertNegativeZero: (-0.0 timesTwoPower: 10).
-	self assert: (Float infinity timesTwoPower: 10) equals: Float infinity.
-	self assert: (Float negativeInfinity timesTwoPower: 10) equals: Float negativeInfinity.
+	self assertNegativeZero: (-0.0 timesTwoPower: 10s).
 	self assert: (Float nan timesTwoPower: 10) isNaN.
-	self shouldRaiseOverflow: [1.0 timesTwoPower: Float emax + 1]!
+	self assert: (Float nan timesTwoPower: 10s) isNaN.
+	self shouldRaiseOverflow: [1.0 timesTwoPower: emax + 1]!
 
 testTruncated
 	| subject y int |
