@@ -1159,7 +1159,7 @@ resource_Default_view
 	DO NOT EDIT OR RECATEGORIZE THIS METHOD.
 
 	If you wish to modify this resource evaluate:
-	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Default_view)
+	Tools.ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Default_view)
 	"
 
 	^#(#'!!STL' 4 985166 10 ##(UI.STBViewProxy) ##(UI.Toolbar) 34 25 nil nil 34 2 8 1140853580 131073 416 nil nil nil 7 nil nil nil 416 917510 ##(Graphics.Color) #default 8 1920642432 nil 170 192 8 #() 8 #() nil nil 1 nil nil nil nil nil 1310982 ##(Core.MessageSequence) 138 144 34 1 1049350 ##(Core.MessageSend) #createAt:extent: 34 2 655878 ##(Graphics.Point) 6143 21 690 401 51 416 1179910 ##(OS.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 199 12 0 0 35 0 0 0] 8 #() 690 193 193 nil 27)!
@@ -1169,7 +1169,7 @@ resource_Edit_tools
 	DO NOT EDIT OR RECATEGORIZE THIS METHOD.
 
 	If you wish to modify this resource evaluate:
-	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Edit_tools)
+	Tools.ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Edit_tools)
 	"
 
 	^#(#'!!STL' 4 985166 10 ##(UI.STBViewProxy) ##(UI.Toolbar) 34 25 nil nil 34 2 8 1409289036 131137 416 nil nil nil 517 nil nil nil 416 917510 ##(Graphics.Color) #default 8 1920642432 170 192 8 #() 170 192 34 10 22365 1311814 1 ##(UI.ToolbarIconButton) 416 1 1377606 4 ##(UI.CommandDescription) #undo 8 'Undo' 1 1 853318 3 ##(Graphics.Icon) nil true 2031622 ##(Kernel.ImageRelativeFileLocator) 8 'EditUndo.ico' 2490894 ##(Kernel.STBExternalResourceLibraryProxy) 8 'dolphindr7.dll' nil 22365 22361 594 416 1 626 #pasteClipboard 8 'Paste' 1 1 674 nil true 720 8 'EditPaste.ico' 768 22361 22357 594 416 1 626 #cutSelection 8 'Cut' 1 1 674 nil true 720 8 'EditCut.ico' 768 22357 22363 594 416 1 626 #clearSelection 8 'Delete' 1 1 674 nil true 720 8 'EditClear.ico' 768 22363 22359 594 416 1 626 #copySelection 8 'Copy' 1 1 674 nil true 720 8 'EditCopy.ico' 768 22359 34 6 880 1040 800 960 608 1245766 1 ##(UI.ToolbarSeparator) 416 1 nil nil 1 nil nil nil nil nil 1310982 ##(Core.MessageSequence) 138 144 34 1 1049350 ##(Core.MessageSend) #createAt:extent: 34 2 655878 ##(Graphics.Point) 6143 21 1282 247 51 416 1179910 ##(OS.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 122 12 0 0 35 0 0 0] 8 #() 1282 193 193 nil 27)!
@@ -1179,7 +1179,7 @@ resource_File_tools
 	DO NOT EDIT OR RECATEGORIZE THIS METHOD.
 
 	If you wish to modify this resource evaluate:
-	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_File_tools)
+	Tools.ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_File_tools)
 	"
 
 	^#(#'!!STL' 4 985166 10 ##(UI.STBViewProxy) ##(UI.Toolbar) 34 25 nil nil 34 2 8 1409289036 131137 416 nil nil nil 517 nil nil nil 416 917510 ##(Graphics.Color) #default 8 1920642432 170 192 8 #() 170 192 34 6 22689 1311814 1 ##(UI.ToolbarIconButton) 416 1 1377606 4 ##(UI.CommandDescription) #fileSave 8 'Save' 1 1 853318 3 ##(Graphics.Icon) nil true 2031622 ##(Kernel.ImageRelativeFileLocator) 8 'FileSave.ico' 2490894 ##(Kernel.STBExternalResourceLibraryProxy) 8 'dolphindr7.dll' nil 22689 22687 594 416 1 626 #fileOpen 8 'Open' 1 1 674 nil true 720 8 'FileOpen.ico' 768 22687 22685 594 416 1 626 #fileNew 8 'New' 1 1 674 nil true 720 8 'FileNew.ico' 768 22685 34 4 880 800 608 1245766 1 ##(UI.ToolbarSeparator) 416 1 nil nil 1 nil nil nil nil nil 1310982 ##(Core.MessageSequence) 138 144 34 1 1049350 ##(Core.MessageSend) #createAt:extent: 34 2 655878 ##(Graphics.Point) 6143 21 1122 155 51 416 1179910 ##(OS.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 76 12 0 0 35 0 0 0] 8 #() 1122 193 193 nil 27)!
@@ -1189,7 +1189,7 @@ resource_Find_tools
 	DO NOT EDIT OR RECATEGORIZE THIS METHOD.
 
 	If you wish to modify this resource evaluate:
-	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Find_tools)
+	Tools.ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Find_tools)
 	"
 
 	^#(#'!!STL' 4 985166 10 ##(UI.STBViewProxy) ##(UI.Toolbar) 34 25 nil nil 34 2 8 1409289036 131137 416 nil nil nil 517 nil nil nil 416 917510 ##(Graphics.Color) #default 8 1920642432 170 192 8 #() 170 192 34 4 23007 1311814 1 ##(UI.ToolbarIconButton) 416 1 1377606 4 ##(UI.CommandDescription) #find 8 'Find' 1 1 853318 3 ##(Graphics.Icon) nil true 2031622 ##(Kernel.ImageRelativeFileLocator) 8 'Find.ico' 2490894 ##(Kernel.STBExternalResourceLibraryProxy) 8 'dolphindr7.dll' nil 23007 23009 594 416 1 626 #findNext 8 'Find Next' 1 1 674 nil true 720 8 'FindNext.ico' 768 23009 34 3 608 800 1245766 1 ##(UI.ToolbarSeparator) 416 1 nil nil 1 nil nil nil nil nil 1310982 ##(Core.MessageSequence) 138 144 34 1 1049350 ##(Core.MessageSend) #createAt:extent: 34 2 655878 ##(Graphics.Point) 6143 21 1042 109 51 416 1179910 ##(OS.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 53 12 0 0 35 0 0 0] 8 #() 1042 193 193 nil 27)!
@@ -1199,7 +1199,7 @@ resource_History_tools
 	DO NOT EDIT OR RECATEGORIZE THIS METHOD.
 
 	If you wish to modify this resource evaluate:
-	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_History_tools)
+	Tools.ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_History_tools)
 	"
 
 	^#(#'!!STL' 4 985166 10 ##(UI.STBViewProxy) ##(UI.Toolbar) 34 25 nil nil 34 2 8 1409289036 131137 416 nil nil nil 517 nil nil nil 416 917510 ##(Graphics.Color) #default 8 1920642432 170 192 8 #() 170 192 34 4 23329 1311814 1 ##(UI.ToolbarIconButton) 416 17 1377606 4 ##(UI.CommandDescription) 786950 ##(Core.Message) #historyForward 8 #() 8 'Forward' 1 1 853318 3 ##(Graphics.Icon) nil true 2031622 ##(Kernel.ImageRelativeFileLocator) 8 'HistoryForward.ico' 2490894 ##(Kernel.STBExternalResourceLibraryProxy) 8 'dolphindr7.dll' nil 23329 23327 594 416 17 626 658 #historyBack 8 #() 8 'Back' 1 1 722 nil true 768 8 'HistoryBack.ico' 816 23327 34 3 848 608 1245766 1 ##(UI.ToolbarSeparator) 416 1 nil nil 1 nil nil nil nil nil 1310982 ##(Core.MessageSequence) 138 144 34 1 1049350 ##(Core.MessageSend) #createAt:extent: 34 2 655878 ##(Graphics.Point) 6143 21 1122 169 51 416 1179910 ##(OS.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 83 12 0 0 35 0 0 0] 8 #() 1122 193 193 nil 27)!
@@ -1209,7 +1209,7 @@ resource_Tool_bar
 	DO NOT EDIT OR RECATEGORIZE THIS METHOD.
 
 	If you wish to modify this resource evaluate:
-	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Tool_bar)
+	Tools.ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Tool_bar)
 	"
 
 	^#(#'!!STL' 4 985166 10 ##(UI.STBViewProxy) ##(UI.Toolbar) 34 25 nil nil 34 2 8 1409288972 131137 416 nil 917510 ##(Graphics.Color) #default nil 517 nil nil nil 416 496 8 1920642432 170 192 8 #() 170 192 544 138 144 544 nil nil 1 nil nil nil nil 852806 1 ##(UI.FlowLayout) 1 1 1 1310982 ##(Core.MessageSequence) 138 144 34 1 1049350 ##(Core.MessageSend) #createAt:extent: 34 2 655878 ##(Graphics.Point) 6143 21 738 701 51 416 1179910 ##(OS.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 93 13 0 0 35 0 0 0] 8 #() 738 193 193 nil 27)!
