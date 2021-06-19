@@ -360,7 +360,7 @@ showHintBubble
 
 splashBitmap
 	| bitmap rawBitmap extent imageAttr |
-	rawBitmap := Gdiplus.Bitmap fromFile: 'Resources\Dolphin7Splash.png'
+	rawBitmap := Gdiplus.Bitmap fromFile: 'Resources\DolphinSplash.png'
 				usingLocator: FileLocator installRelative.
 	extent := rawBitmap extent.
 	bitmap := Gdiplus.Bitmap extent: extent.
