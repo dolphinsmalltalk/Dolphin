@@ -43,9 +43,9 @@ free
 		self basicFree]!
 
 handler
-	"Answer the NPSynchronousStreamHandler which receieves the notifications
+	"Answer the NPSynchronousStreamHandler which receives the notifications
 	from the web browser when something of interest happens to
-	the receiever. The notifications are called onXXX:..."
+	the receiver. The notifications are called onXXX:..."
 
 	^handler!
 

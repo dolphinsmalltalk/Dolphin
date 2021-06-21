@@ -266,7 +266,7 @@ uninstall
 baselineImageVersion
 	"Answer a <Float> that indicates the base line version of image that will be required to install
 	and run any package. We use a <Float> so it is easy to present the required version to the 
-	user if he/she tries to use an older iamge to load the package"
+	user if he/she tries to use an older image to load the package"
 
 	^3.0!
 
@@ -276,7 +276,7 @@ binaryPackageExtension
 	^ClassLocator binaryPackageExtension!
 
 binaryPackageVersion
-	"Answer an <integter> version of the BinaryPackage class. Not sure what this is used
+	"Answer an <integer> version of the BinaryPackage class. Not sure what this is used
 	for yet but we write it to the file anyway"
 
 	^0!

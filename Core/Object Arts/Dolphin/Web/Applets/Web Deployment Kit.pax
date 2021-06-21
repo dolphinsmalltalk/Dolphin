@@ -224,7 +224,7 @@ findOrImportForeignClass
 	"Private - Answer the 'imported' class referred to by the receiver. If this
 	has already been loaded then answer it from the ImportedClasses Dictionary,
 	otherwise load it. If there is an entry for the class in ImportedClasses but
-	it is is nil, then this indicates that there is a circularity in the class
+	it is nil, then this indicates that there is a circularity in the class
 	load sequence and the operation will be aborted."
 
 	| class classKey |

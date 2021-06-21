@@ -23,7 +23,7 @@ defaultResLibPath
 	^'DolphinVM006'!
 
 initializeFromSessionManager: oldSessionManager
-	"Private - The receiver has taken take over as the current session
+    "Private - The receiver has taken over as the current session
 	manager from oldSessionManager. This is an opportunity to transfer
 	state information from the replaced manager."
 
@@ -62,7 +62,7 @@ isDLL
 	^true!
 
 isRuntime
-	"Answer whether the sessions managed by instances of the receiver are for a run-time applications 
+	"Answer whether the sessions managed by instances of the receiver are for a run-time application 
 	(as opposed to development, or abstract)."
 
 	^true! !

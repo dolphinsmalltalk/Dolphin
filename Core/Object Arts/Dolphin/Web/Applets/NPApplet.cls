@@ -251,7 +251,7 @@ getURLSynchronous: url timeout: secs
 	the number of seconds to wait after the URL is initially requested of the browser
 	before deciding that it isn't going to open, i.e. this is not a timeout for the whole
 	download, just the period between request and the browser confirming the download
-	stream has been oened. Such a timeout is necessary because if the URL does not
+	stream has been opened. Such a timeout is necessary because if the URL does not
 	exist, then it appears that the browser simply keeps quiet about it.
 	Answers a local file name after the url has been copied or
 	nil if the download failed. Note that the url must be in canonicalized form so
@@ -335,7 +335,7 @@ invalidateViews
 !
 
 isBrowserIE
-	"Answer whether the browser hosting the applet is Internet explorer."
+	"Answer whether the browser hosting the applet is Internet Explorer."
 
 	^self userAgent = 'Microsoft Internet Explorer'
 !
@@ -367,7 +367,7 @@ isOkToDownload: url
 	"Private - Answer whether the user agrees to download an applet.
 
 	Presently we immediately answer with the positive, but in the future
-	a code-signing test could be incorparated here, or if each indivual class
+	a code-signing test could be incorporated here, or if each individual class
 	is to be tested the #getClassURL: method."
 
 	^true!
@@ -451,7 +451,7 @@ onFullPrint: npFullPrint
 !
 
 onNew: savedDataOrNil
-	"TPrivate - he receiver has just been created by the internet browser. savedData
+	"TPrivate - the receiver has just been created by the internet browser. savedData
 	is a <COMTaskMemory> pointer (or nil) holding any data blocks associated 
 	with this mimetype/url by the last instance of the applet."
 
@@ -515,7 +515,7 @@ OnSetWindow: hWnd x: x y: y cx: width cy: height clipTop: clipTop clipLeft: clip
 
 onStreamAsFile: anAppletStream filename: filenameOrNil
 	"A stream which had the NP_ASFILE or NP_ASFILEONLY mode set has
-	either failed or been completly downloaded onto a local drive."
+	either failed or been completely downloaded onto a local drive."
 
 	^self!
 
@@ -879,7 +879,7 @@ initialize
 	UserAbortSignal := Signal description: 'Aborted download of ''%1'''.!
 
 mimeDolphinApplet
-	"Answer the MIME String for a dolphin binary applet."
+	"Answer the MIME String for a Dolphin binary applet."
 
 	^'application/x-dolphin-applet'!
 

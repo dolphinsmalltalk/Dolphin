@@ -86,7 +86,7 @@ External.DynamicLinkLibrary subclass: #'WinHttpServer.HttpApiLibrary'
 		'HTTP_URL_FLAG_REMOVE_ALL' -> 16r1
 	}!
 WinHttpServer.HttpApiLibrary guid: (Core.GUID fromString: '{06475580-47cf-4641-9eb7-96d83f2d2e96}')!
-WinHttpServer.HttpApiLibrary comment: 'HttpApiLibrary is the <ExternalLibrary> class to represent the dynamic link library, ''HttpApi.dll''.It was generated generated from type information in the ''Win32 API'' library. It contains methods for each of the functions defined by the corresponding module in that type library.
+WinHttpServer.HttpApiLibrary comment: 'HttpApiLibrary is the <ExternalLibrary> class to represent the dynamic link library, ''HttpApi.dll''.It was generated from type information in the ''Win32 API'' library. It contains methods for each of the functions defined by the corresponding module in that type library.
 
 The type library contains the following helpstring for this module
 	"Windows HTTP Server API"
