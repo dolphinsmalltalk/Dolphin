@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Tools.SmalltalkToolShell subclass: #'Tools.SmalltalkSystemShell'
 	instanceVariableNames: 'systemFolderPresenter'
@@ -256,12 +256,20 @@ updateCaption
 	"The receiver has changed in such a way that the caption may need to be refreshed.
 	Do this here"
 
-	| sesh txt |
+	| sesh title |
 	sesh := SessionManager current.
-	txt := '<1s> - <2s>' expandMacrosWith: sesh applicationName
-				with: (File splitFilenameFrom: sesh imageFileName).
-	SessionManager current bootInfo ifNotNil: [:info | txt := txt , ' - ' , info].
-	self caption: txt!
+	title := String writeStream.
+	title
+		nextPutAll: sesh applicationName;
+		nextPutAll: ' - ';
+		nextPutAll: (File splitFilenameFrom: sesh imageFileName).
+	SessionManager current bootInfo
+		ifNotNil: 
+			[:bootInfo |
+			title
+				nextPutAll: ' - ';
+				display: bootInfo].
+	self caption: title contents!
 
 whatsThis
 	systemFolderPresenter selection whatsThis ! !

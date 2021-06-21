@@ -30,7 +30,7 @@ HRESULT __stdcall ErrorUnableToCreateVM(HRESULT hr)
 
 static const wchar_t* FindImageNameArg()
 {
-	LPCWSTR szImage = L"DPRO.img7";
+	LPCWSTR szImage = L"DPRO.img8";
 	static wchar_t achImageName[_MAX_PATH];
 
 	for (auto i=1;i<__argc;i++)
@@ -58,27 +58,19 @@ static HRESULT StartOldImage(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPCWS
 	switch(versionMajor)
 	{
 	case 3:		// Dolphin 3.06
-		pVMCLSID = &__uuidof(DolphinSmalltalk3);
-		pszVM = L"DolphinVM003.DLL";
-		break;
-
 	case 4:		// Dolphin 4.01
-		pVMCLSID = &__uuidof(DolphinSmalltalk4);
-		pszVM = L"DolphinVM004.DLL";
-		break;
-
 	case 5:		// Dolphin 5.1
-		pVMCLSID = &__uuidof(DolphinSmalltalk51);
-		pszVM = L"DolphinVM005.DLL";
-		break;
-
 	case 6:		// Dolphin 6
-		pszVM = L"DolphinVM006.DLL";
-		pVMCLSID = &__uuidof(DolphinSmalltalk62);
+		// The older images VMs can no longer be launcher by 7.0 and later launcher
+		return ReportError(IDP_UNSUPPORTEDIMAGEVERSION, szImageName, (int)versionMajor);
+
+	case 7:		// Dolphin 7
+		pszVM = L"DolphinVM7.DLL";
+		pVMCLSID = &__uuidof(DolphinSmalltalk71);
 		break;
 
-	case 7:		// Dolphin 7 (or unknown)
-		pszVM = L"DolphinVM7.DLL";
+	case 8:		// Dolphin 8
+		pszVM = L"DolphinVM8.DLL";
 		pVMCLSID = &__uuidof(DolphinSmalltalk);
 		break;
 
@@ -121,9 +113,9 @@ static HRESULT __stdcall StartDevSys(HINSTANCE hInstance, HINSTANCE hPrevInstanc
 		return ReportError(IDP_INVALIDIMAGETYPE, szImageName, reinterpret_cast<char*>(imageFile.GetData()));
 
 	ImageHeader* pHeader = imageFile.GetHeader();
-	uint16_t versionMajor = LOWORD(pHeader->versionMS);
-	if (versionMajor < 6)
+	if (pHeader->versionMH >= 1990)
 	{
+		uint16_t versionMajor = LOWORD(pHeader->versionMS);
 		imageFile.Close();
 		return StartOldImage(hInstance, hPrevInstance, lpCmdLine, nCmdShow,
 				szImageName, versionMajor);

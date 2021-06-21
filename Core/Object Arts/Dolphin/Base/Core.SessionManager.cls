@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Object subclass: #'Core.SessionManager'
 	instanceVariableNames: 'inputState resourceLibrary imagePath servers argv cmdLineFlags state sentry startupArgs consoleHandler stdioStreams eventLogHandle flags sessionId hConsole settingsChanged events'
@@ -244,11 +244,10 @@ createSentinel
 defaultResLibPath
 	"Answer the path of the development resource library."
 
-	^'DolphinDR7'!
+	^'DolphinDR8'!
 
 defaultResourceLibrary
-	"Private - Answer the ExternalResourceLibrary containing the Dolphin 
-	development system resources."
+	"Private - Answer an `External.ResourceLibrary` containing the Dolphin development system resources."
 
 	resourceLibrary isNil
 		ifTrue: 

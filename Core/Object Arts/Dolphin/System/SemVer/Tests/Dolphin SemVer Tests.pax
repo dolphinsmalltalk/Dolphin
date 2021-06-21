@@ -1,0 +1,29 @@
+﻿| package |
+package := Package name: 'Dolphin SemVer Tests'.
+package paxVersion: 2.1;
+	basicComment: ''.
+
+
+package setClassNames: #(
+	#{Core.Tests.SemVerTest}
+).
+
+package setPrerequisites: #(
+	'..\..\..\Base\Dolphin'
+	'..\..\..\Base\Tests\Dolphin Base Tests'
+	'..\Dolphin SemVer'
+).
+
+package!
+
+"Class Definitions"!
+
+Core.Tests.DolphinTest subclass: #'Core.Tests.SemVerTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+"End of package definition"!
+

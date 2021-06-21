@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Object subclass: #'Tools.DolphinProduct'
 	instanceVariableNames: 'versionMask encryptedClasses'
@@ -321,16 +321,11 @@ printOn: aStream
 productDetails
 	"Answers the product details for the receiver"
 
-	| array |
-	array := VMLibrary default defaultProductDetails.
-	8 < array size ifTrue: [array := array , (Array new: 8) copyFrom: 1 to: 8].
-	^array
-		at: 1 put: self fullName;
-		at: 2 put: self name;
-		at: 3 put: self version;
-		at: 6 put: self shortProductName;
-		at: 7 put: nil;
-		at: 8 put: nil;
+	^VMLibrary default defaultProductDetails
+		at: #productName put: self fullName;
+		at: #shortProductName put: self name;
+		at: #productVersionString put: self version;
+		at: #abbreviatedProductName put: self shortProductName;
 		yourself!
 
 productLevel

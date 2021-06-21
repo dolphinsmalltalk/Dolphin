@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 IDispatch subclass: #IRegExpAbstract
 	instanceVariableNames: ''
@@ -93,6 +93,16 @@ isVBCollection
 matchCollectionClass
 	^self subclassResponsibility!
 
+matchSingle: aString
+	| matches match count |
+	matches := self matchCollectionClass newPointer.
+	self Execute: aString ppMatches: matches.
+	count := matches count.
+	count == 1 ifFalse: [InvalidFormat signal: aString with: self].
+	match := matches item: 0.
+	matches free.
+	^match!
+
 pattern
 	"Answer the regular expression search <String>. See
 	http://msdn.microsoft.com/library/en-us/dnclinic/html/scripting051099.asp for help and
@@ -150,13 +160,13 @@ replace: sourceString replaceString: replaceString
 
 	^self subclassResponsibility!
 
-test: aString 
+test: aString
 	"Answer whether the <String> argument matches the current regular expression."
 
-	| answer |
-	answer := VARIANT_BOOL new.
-	self Test: aString pMatch: answer.
-	^answer value!
+	| buf |
+	buf := ByteArray newFixed: 2.
+	self Test: aString pMatch: buf.
+	^(buf swordAtOffset: 0) ~~ 0!
 
 Test: sourceString pMatch: pMatch
 	^self subclassResponsibility! !
@@ -172,6 +182,7 @@ Test: sourceString pMatch: pMatch
 !IRegExpAbstract categoriesFor: #isExtensible!public!testing! !
 !IRegExpAbstract categoriesFor: #isVBCollection!public!testing! !
 !IRegExpAbstract categoriesFor: #matchCollectionClass!constants!private! !
+!IRegExpAbstract categoriesFor: #matchSingle:!operations!public! !
 !IRegExpAbstract categoriesFor: #pattern!properties!public! !
 !IRegExpAbstract categoriesFor: #pattern:!properties!public! !
 !IRegExpAbstract categoriesFor: #printValueOn:!printing!private! !
@@ -189,7 +200,7 @@ clsid
 	installed, the coclass supports IRegExp2, but on older installations (such as a standard
 	Win98 2e) only IRegExp is supported."
 
-	^CLSID fromString: '{3f4daca4-160d-11d2-a8e9-00104b365c9f}'
+	^##(CLSID fromString: '{3f4daca4-160d-11d2-a8e9-00104b365c9f}')
 !
 
 pattern: aString

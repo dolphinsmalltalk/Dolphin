@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 IDispatch subclass: #IMatchCollection
 	instanceVariableNames: ''
@@ -53,10 +53,10 @@ asArray
 count
 	"Answer the <sdword> value of the 'Count' property of the receiver."
 
-	| answer |
-	answer := SDWORD new.
-	self get_Count: answer.
-	^answer asObject!
+	| buf |
+	buf := ByteArray newFixed: 4.
+	self get_Count: buf.
+	^buf sdwordAtOffset: 0!
 
 get__NewEnum: ppEnum
 	"Private - Get the value of the '_NewEnum' property of the receiver.
@@ -108,7 +108,7 @@ matchClass
 	^IMatch! !
 !IMatchCollection categoriesFor: #_newEnum!**auto generated**!properties!public! !
 !IMatchCollection categoriesFor: #asArray!converting!public! !
-!IMatchCollection categoriesFor: #count!**auto generated**!properties!public! !
+!IMatchCollection categoriesFor: #count!properties!public! !
 !IMatchCollection categoriesFor: #get__NewEnum:!**auto generated**!COM Interfaces-IMatchCollection!private! !
 !IMatchCollection categoriesFor: #get_Count:!**auto generated**!COM Interfaces-IMatchCollection!private! !
 !IMatchCollection categoriesFor: #get_Item:ppMatch:!**auto generated**!COM Interfaces-IMatchCollection!private! !

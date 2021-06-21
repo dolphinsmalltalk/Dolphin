@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 OS.COM.IUnknown subclass: #'OS.COM.IClassFactory'
 	instanceVariableNames: ''
@@ -71,7 +71,7 @@ ctxServer
 	N.B. This varies depending on whether the operating system supports remote
 	servers, and so is not strictly a constant (thanks guys)."
 
-	^CLSCTX_INPROC_SERVER | CLSCTX_LOCAL_SERVER
+	^##(CLSCTX_INPROC_SERVER | CLSCTX_LOCAL_SERVER)
 		| (OLELibrary default supportsDCOM ifTrue: [CLSCTX_REMOTE_SERVER] ifFalse: [0])!
 
 defineFunctions

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 External.PermanentLibrary subclass: #'Kernel.VMLibrary'
 	instanceVariableNames: 'wndProc dlgProc genericCallback vtable specialSelectorStart'
@@ -120,30 +120,31 @@ debugDump: msgString
 	^self invalidCall: _failureCode!
 
 defaultProductDetails
-	"Private - Answers an eight element<Array> describing the default
-	 version of the development environment as based on the VM version.
+	"Private - Answers a <LookupTable> describing the default version of the development environment as based on the VM version information.
 
-	1. <readableString> Product name 
-	2. <readableString> Short product name
-	3. <Float> Version number
-	4. <readableString> Version special
-	5. <Integer> Image patch level
-	6 <readableString> Very short name
-	7 <readableString> Serial number
-	8 <readableString> Boot source version information"
+	- Product name (includes major version)
+	- Short product name
+	- Product version in SemVer form (M.N.P[-prerel+buildmeta])
+	- Special build information (usually empty)
+	- Image patch level (usually zero as the image patching feature is no longer used)
+	- Abbreviated (very short) product name
+	- Serial number (no longer used)
+	- Boot source version information
+	- Registry version number - used to form a key for saving/restoring settings in registry."
 
 	| version |
 	version := self versionInfo.
-	^(Array new: 8)
-		at: 1 put: (version formatVersionString: '%1 %2!!d!!');
-		at: 2 put: (version formatVersionString: '%1');
-		at: 3 put: (Float fromString: (version formatVersionString: '%3!!d!!.%4!!d!!'));
-		at: 4 put: version specialBuild;
-		at: 5 put: self basePatchLevel;
-		at: 6 put: 'D7';
-		at: 7 put: nil;
-		at: 8 put: nil;
-		yourself	"Serial #"	"Boot info"!
+	^LookupTable new
+		at: #productName put: (version formatVersionString: '%1 %2!!d!!');
+		at: #shortProductName put: (version formatVersionString: '%1');
+		at: #productVersionString put: version productVersionString;
+		at: #specialBuild put: version specialBuild;
+		at: #basePatchLevel put: self basePatchLevel;
+		at: #abbreviatedProductName put: 'D8';
+		at: #serialNumber put: nil;
+		at: #bootInfo put: nil;
+		at: #registryVersion put: (version at: 'RegistryVersion');
+		yourself!
 
 dump: msgString path: pathString stackDepth: slotsInteger walkbackDepth: framesInteger
 	"Write a VM state log to the file with <readableString> path, pathString, with the 

@@ -1,0 +1,30 @@
+﻿| package |
+package := Package name: 'Dolphin SemVer'.
+package paxVersion: 2.1;
+	basicComment: 'Dolphin Semantic Versions
+Copyright © Object Arts Ltd, 2021.
+'.
+
+
+package setClassNames: #(
+	#{Core.SemVer}
+).
+
+package setPrerequisites: #(
+	'..\..\Base\Dolphin'
+	'..\..\ActiveX\Components\VBScript\VBScript Regular Expressions'
+).
+
+package!
+
+"Class Definitions"!
+
+Core.Magnitude subclass: #'Core.SemVer'
+	instanceVariableNames: 'major minor patch prerelease buildmetadata'
+	classVariableNames: 'RegEx'
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+"End of package definition"!
+

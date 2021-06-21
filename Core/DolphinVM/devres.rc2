@@ -1,5 +1,5 @@
 //
-// IST.RC2 - resources Microsoft Visual C++ does not edit directly
+// devres.rcs - resources Microsoft Visual C++ does not edit directly
 //
 #pragma code_page(65001)
 
@@ -32,15 +32,14 @@ BEGIN
     BEGIN
         BLOCK "040904e4"
         BEGIN
-            VALUE "CompanyName", "Object Arts Ltd."
-            VALUE "FileDescription", "Dolphin Smalltalk Virtual Machine"
-            VALUE "FileVersion", DOLPHIN_FILE_VERSION
-            VALUE "InternalName", "Dolphin"
-            VALUE "LegalCopyright", "Portions Copyright Â© Object Arts Ltd 1997-2021."
-            VALUE "OriginalFilename", "DolphinVM8.DLL"
-            VALUE "PrivateBuild", ""
-            VALUE "ProductName", "Dolphin Smalltalk"
-            VALUE "ProductVersion", DOLPHIN_PRODUCT_VERSION
+			VALUE "CompanyName", "Object Arts Ltd."
+			VALUE "FileDescription", "Dolphin IDE Resources"
+			VALUE "FileVersion", DOLPHIN_SEMANTIC_VERSION
+			VALUE "InternalName", "DolphinDevRes"
+            VALUE "LegalCopyright", "Portions Copyright © Object Arts Ltd 1997-2021."
+			VALUE "OriginalFilename", "DolphinDR8.dll"
+			VALUE "ProductName", "Dolphin Smalltalk"
+			VALUE "ProductVersion", GIT_TAG
         END
     END
     BLOCK "VarFileInfo"

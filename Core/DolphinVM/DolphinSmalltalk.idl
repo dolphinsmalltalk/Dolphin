@@ -449,6 +449,15 @@ library DolphinVM
 	[
 		uuid(C579F2C3-AA3C-421A-9A80-8A6B83912E5C)		// 7.1
 	]
+	coclass DolphinSmalltalk71
+	{
+		[default] interface IDolphin71;
+		interface IDolphinStart;
+	};
+
+	[
+		uuid(17f921bb-6c99-4999-a048-14bdea929a25)		// 8.0
+	]
 	coclass DolphinSmalltalk
 	{
 		[default] interface IDolphin;

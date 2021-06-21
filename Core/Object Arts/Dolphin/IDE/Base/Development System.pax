@@ -760,6 +760,7 @@ package setPrerequisites: #(
 	'..\..\MVP\Presenters\Text\Dolphin Rich Text Presenter'
 	'..\..\MVP\Views\Scintilla\Dolphin Scintilla View'
 	'..\..\MVP\Views\Scrollbars\Dolphin Scrollbars'
+	'..\..\System\SemVer\Dolphin SemVer'
 	'..\..\MVP\Views\Slider\Dolphin Slider Control'
 	'..\..\MVP\Views\Sliding Tray\Dolphin Slidey-Inney-Outey Thing'
 	'..\..\Base\Dolphin Source Fileout'

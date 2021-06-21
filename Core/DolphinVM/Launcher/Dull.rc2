@@ -41,12 +41,12 @@ BLOCK "StringFileInfo"
 		BEGIN
 			VALUE "CompanyName", "Object Arts Ltd."
 			VALUE "FileDescription", "Dolphin Smalltalk Launcher"
-			VALUE "FileVersion", DOLPHIN_ASSEMBLY_VERSION
+			VALUE "FileVersion", DOLPHIN_FILE_VERSION
 			VALUE "InternalName", "Dolphin"
-			VALUE "LegalCopyright", "Copyright © Object Arts 1997-2016"
-			VALUE "OriginalFilename", "Dolphin7.exe"
+			VALUE "LegalCopyright", "Copyright © Object Arts 1997-2021"
+			VALUE "OriginalFilename", "Dolphin8.exe"
 			VALUE "ProductName", "Dolphin Smalltalk"
-			VALUE "ProductVersion", GIT_TAG
+			VALUE "ProductVersion", DOLPHIN_PRODUCT_VERSION
 		END
 	END
 	BLOCK "VarFileInfo"

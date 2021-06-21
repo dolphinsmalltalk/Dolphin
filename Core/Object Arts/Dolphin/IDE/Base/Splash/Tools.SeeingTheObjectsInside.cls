@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Graphics.Gdiplus.DoubleBufferedView subclass: #'Tools.SeeingTheObjectsInside'
 	instanceVariableNames: 'background dolphinOutline points sun stepProcess random insideObjectsScale dolphinIntensity textureMap objects dolphins dolphinInside splashDelay hintBubble startTime info baseScale'
@@ -182,7 +182,6 @@ initialize
 	info
 		nextPut: $.;
 		cr;
-		nextPutAll: 'Dolphin ';
 		nextPutAll: SessionManager current versionString;
 		nextPutAll: ' is Open Source under the MIT License.'.
 	SessionManager current bootInfo
@@ -191,7 +190,7 @@ initialize
 			info
 				cr;
 				nextPutAll: 'Image boot info: ';
-				nextPutAll: bootInfo].
+				display: bootInfo].
 	info := info contents.
 	scale := View desktop extent * 0.75 / self originalBitmapExtent.
 	baseScale := (scale x min: scale y) min: 1.
@@ -382,7 +381,8 @@ startStepProcess
 	stepProcess := 
 			[
 			[[self step] on: Error do: [:ex | ex toTrace].
-			Processor sleep: 1000 // self frameRate] repeat]
+			Processor sleep: 1000 // self frameRate.
+			self isOpen] whileTrue]
 					forkAt: Processor userBackgroundPriority!
 
 step

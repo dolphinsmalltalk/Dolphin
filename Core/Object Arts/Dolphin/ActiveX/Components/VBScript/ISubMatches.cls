@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 IDispatch subclass: #ISubMatches
 	instanceVariableNames: ''
@@ -48,15 +48,23 @@ _newEnum
 	^answer asObject!
 
 asArray
-	^(0 to: self count - 1) collect: [:each | self item: each]!
+	| variant answer count |
+	variant := VARIANT new.
+	count := self count.
+	answer := Array new: count.
+	1 to: count do: [:i |
+			self get_Item: i - 1 pSubMatch: variant.
+			answer at: i put: variant value.
+			variant basicFree].
+	^answer!
 
 count
 	"Answer the <sdword> value of the 'Count' property of the receiver."
 
 	| answer |
-	answer := SDWORD new.
+	answer := ByteArray newFixed: 4.
 	self get_Count: answer.
-	^answer asObject!
+	^answer sdwordAtOffset: 0!
 
 get__NewEnum: ppEnum
 	"Private - Get the value of the '_NewEnum' property of the receiver.
@@ -107,7 +115,7 @@ item: index
 	^answer! !
 !ISubMatches categoriesFor: #_newEnum!**auto generated**!properties!public! !
 !ISubMatches categoriesFor: #asArray!converting!public! !
-!ISubMatches categoriesFor: #count!**auto generated**!properties!public! !
+!ISubMatches categoriesFor: #count!properties!public! !
 !ISubMatches categoriesFor: #get__NewEnum:!**auto generated**!COM Interfaces-ISubMatches!private! !
 !ISubMatches categoriesFor: #get_Count:!**auto generated**!COM Interfaces-ISubMatches!private! !
 !ISubMatches categoriesFor: #get_Item:pSubMatch:!**auto generated**!COM Interfaces-ISubMatches!private! !

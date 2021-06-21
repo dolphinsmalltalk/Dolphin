@@ -11,25 +11,32 @@
       <Output TaskParameter="Lines" PropertyName="GitTag"/>
     </ReadLinesFromFile>
     <PropertyGroup>
-	    <DolphinVersion>2016.$([System.Text.RegularExpressions.Regex]::Match($(GitTag), '(?:v)?(\d+\.\d+.\d+)').Groups.get_Item(1))</DolphinVersion>
+      <TagMajorMinor>$([System.Text.RegularExpressions.Regex]::Match($(GitTag), '(?:v?\d+\.\d+)').Groups.get_Item(0))</TagMajorMinor>
+      <TagPatch>$([System.Text.RegularExpressions.Regex]::Match($(GitTag), '(?:v?\d+\.\d+\.)(\d+)').Groups.get_Item(1))</TagPatch>
+      <TagCommits>$([System.Text.RegularExpressions.Regex]::Match($(GitTag), '(?:v?\d+\.\d+\.\d+)-(\d+)').Groups.get_Item(1))</TagCommits>
+      <TagCommitId>$([System.Text.RegularExpressions.Regex]::Match($(GitTag), '(?:v?\d+\.\d+\.\d+-\d+)-(g[a-f0-9]+)').Groups.get_Item(1))</TagCommitId>
+      <FourPartVersion>$(TagMajorMinor).$(TagPatch).$(TagCommits)</FourPartVersion>
+      <PatchVersion Condition="'$(TagCommits)'=='0'">$(TagPatch)</PatchVersion>
+      <PatchVersion Condition="'$(TagCommits)'!='0'">$([MSBuild]::Add($(TagPatch), 1))-rc.$(TagCommits)</PatchVersion>
+      <SemanticVersion>$(TagMajorMinor).$(PatchVersion)+$(TagCommitId)</SemanticVersion>
     </PropertyGroup>
-    <Message Importance="Normal" Text="Building Dolphin version $(DolphinVersion)" />
+    <Message Importance="Normal" Text="Building Dolphin version $(SemanticVersion)" />
     <Delete Files="$(IntDir)version.txt"/>
-    <Message Importance="High" Text="Generating version.h for tag $(GitTag), version $(DolphinVersion)" />
+    <Message Importance="High" Text="Generating Version.h for tag $(GitTag), file version $(FourPartVersion), product semver $(SemanticVersion)" />
     <ItemGroup>
       <VersionHeaderLines Include="// This file generated on $([System.DateTime]::Now)" />
-      <VersionHeaderLines Include="#define DOLPHIN_ASSEMBLY_VERSION &quot;$(DolphinVersion)&quot;" />
-      <VersionHeaderLines Include="#define DOLPHIN_VERINFO_VERSION $(DolphinVersion.Replace('.',','))" />
+      <VersionHeaderLines Include="#define DOLPHIN_FILE_VERSION &quot;$(FourPartVersion)&quot;" />
+      <VersionHeaderLines Include="#define DOLPHIN_VERINFO_VERSION $(FourPartVersion.Replace('.',','))" />
       <VersionHeaderLines Include="#if defined(_DEBUG)" />
-      <VersionHeaderLines Include="  #define GIT_TAG &quot;$(GitTag) (Debug)&quot;" />
+      <VersionHeaderLines Include="  #define DOLPHIN_PRODUCT_VERSION &quot;$(SemanticVersion)-debug&quot;" />
       <VersionHeaderLines Include="#else" />
-      <VersionHeaderLines Include="  #define GIT_TAG &quot;$(GitTag)&quot;" />
+      <VersionHeaderLines Include="  #define DOLPHIN_PRODUCT_VERSION &quot;$(SemanticVersion)&quot;" />
       <VersionHeaderLines Include="#endif" />
     </ItemGroup>
     <WriteLinesToFile Overwrite="true" File="$(VersionHeader)" Encoding="Ascii" Lines="@(VersionHeaderLines)" />
     <ItemGroup>
       <Manifest>
-        <AssemblyIdentity>ObjectArts.DolphinSmalltalk.Dolphin, version=$(DolphinVersion), processorArchitecture=x86, type=win32</AssemblyIdentity>
+        <AssemblyIdentity>ObjectArts.DolphinSmalltalk.Dolphin, version=$(FourPartVersion), processorArchitecture=x86, type=win32</AssemblyIdentity>
       </Manifest>
     </ItemGroup>
   </Target>

@@ -335,6 +335,8 @@ PointersOTE* __fastcall ObjectMemory::newPointerObject(BehaviorOTE* classPointer
 
 PointersOTE* __fastcall ObjectMemory::newUninitializedPointerObject(BehaviorOTE* classPointer, size_t oops)
 {
+	ASSERT(isBehavior((Oop)classPointer) && classPointer->isPointers());
+
 	// Don't worry, compiler will not really use multiply instruction here
 	size_t objectSize = SizeOfPointers(oops);
 	OTE* ote;
