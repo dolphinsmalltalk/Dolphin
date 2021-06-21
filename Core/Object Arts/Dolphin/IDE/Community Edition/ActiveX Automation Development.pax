@@ -5140,7 +5140,7 @@ printClassCommentPreambleOn: target
 		nextPutAll: ' is the `ExternalLibrary` class to represent the dynamic link library, ';
 		print: (self dllNameIfNone: ['(anon)']);
 		nextPut: $.;
-		nextPutAll: 'It was generated generated from type information in the ';
+		nextPutAll: 'It was generated from type information in the ';
 		print: lib helpstring;
 		nextPutAll: ' library. It contains methods for each of the functions defined by the corresponding module in that type library.'!
 

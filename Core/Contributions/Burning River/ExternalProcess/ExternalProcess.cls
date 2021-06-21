@@ -18,7 +18,7 @@ There may be four directories involved in spawning an ExternalProcess (any two o
 (a) The current working directory (CWD) of the Smalltalk application which spawns the process.
 (b) The directory containing the executable which is to be spawned.
 (c) The CWD of the spawned External Process.
-(d) The directory in which the redirected standard outputof the ExternalProcess is to be stored.
+(d) The directory in which the redirected standard output of the ExternalProcess is to be stored.
 
 The first of these is given, of course. The others are specified, if required, as follows:
 

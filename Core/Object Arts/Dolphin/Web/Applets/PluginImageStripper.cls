@@ -93,7 +93,7 @@ stubFile
 !PluginImageStripper class methodsFor!
 
 defaultOptions
-	"Private - Answer the default set of flags set up in new of converted instances of the receiver."
+	"Private - Answer the default set of flags set up in new converted instances of the receiver."
 
 	^(ClearGuidsMask|
 		"We don't want to strip anything out apart from unused packages as we need a full image

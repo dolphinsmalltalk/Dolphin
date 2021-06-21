@@ -243,7 +243,7 @@ testSuperMethodOnClassSide
 	self assert: piClassFloating superpis size = 0!
 
 testTChartLoad
-	"We must ensure that the TeeChart package is not loaded forv the test to be valid"
+	"We must ensure that the TeeChart package is not loaded for the test to be valid"
 
 	| tchartLocator tchartClass tchart |
 	self assert: (Smalltalk at: #TeeChart ifAbsent: []) isNil.

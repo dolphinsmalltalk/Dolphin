@@ -253,7 +253,7 @@ More precisely, you sent the message ''next'' to ProfStef class (it''s me !!).
 Note you can run this tutorial again by evaluating: ''ProfStef go''. 
 ''ProfStef previous'' returns to the previous lesson.
 
-You can also Evaluate It using the keyboard shortcut ''CTRL e''
+You can also Evaluate It using the keyboard shortcut ''CTRL-e''
 
 Try to evaluate this expression:"
 

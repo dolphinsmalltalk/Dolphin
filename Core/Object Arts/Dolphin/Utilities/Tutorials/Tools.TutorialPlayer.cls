@@ -60,7 +60,7 @@ next
 onViewOpened
 	super onViewOpened.
 
-	"Workspaces font is set by system options, Override this here."
+	"Workspaces font is set by system options. Override this here."
 	workspace view font: self view font.
 
 	self updateLesson

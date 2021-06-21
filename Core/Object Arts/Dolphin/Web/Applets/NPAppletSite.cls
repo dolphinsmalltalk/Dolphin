@@ -6,7 +6,7 @@ ContainerView subclass: #NPAppletSite
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 NPAppletSite guid: (GUID fromString: '{ccb87570-6c2e-11d3-bdd5-004005a6900b}')!
-NPAppletSite comment: 'An NPAppletSite is a container view which is positioned to completly obscure the parent BrowserView that was supplied by the web browser for a particular NPApplet. All views of an applet are added as subviews of the NPAppletSite. All applets (be they presenters or views) can locate their NPAppletSite using #site.  This, in turn, can be used to gain access to the NPApplet browser context by sending #context:.
+NPAppletSite comment: 'An NPAppletSite is a container view which is positioned to completely obscure the parent BrowserView that was supplied by the web browser for a particular NPApplet. All views of an applet are added as subviews of the NPAppletSite. All applets (be they presenters or views) can locate their NPAppletSite using #site.  This, in turn, can be used to gain access to the NPApplet browser context by sending #context:.
 
 Instance Variables:
 	context		<NPApplet> which this is a site for.
@@ -35,7 +35,7 @@ backgroundImage
 !
 
 context
-	"Answer the NPApplet context which the reciver is connected to."
+	"Answer the NPApplet context which the receiver is connected to."
 
 	^context!
 
@@ -108,14 +108,14 @@ preTranslateMouseInput: aMSG
 
 translateAccelerator: aMSG
 	"Private - Inform Windows of the accelerator table associated with self. This in turn
-	sends a WM_COMMAND if any of our accelerator keys matches."
+	sends a WM_COMMAND if any of our accelerator keys match."
 
 	^false!
 
 wmPaint: message wParam: wParam lParam: lParam
 	"Private - This window requires painting"
 
-	"Unfortuntately, the Netscape Browser API does not reliably inform us of resize changes to
+	"Unfortunately, the Netscape Browser API does not reliably inform us of resize changes to
 	the applet site (at least not for IE browsers, anyway). Hence we detect a size change in our
 	parent BrowserView and force our site to become the same extent."
 
