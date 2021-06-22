@@ -2,7 +2,7 @@
 
 [![Build status](https://ci.appveyor.com/api/projects/status/scael64ohx3l6io9/branch/master?svg=true)](https://ci.appveyor.com/project/dolphinsmalltalk/dolphin-db22v/branch/master)
 
-**Please note: The master branch is now the development branch for version 7.2. This will add support for namespaces, but is currently in an interim and unstable state. It  also changes the package and class file formats, and consequently code saved from 7.2 cannot be loaded directly into earlier versions of Dolphin. Please use the `release/7.1` branch if you need a stable version. PRs for bug fixes, etc, will still be accepted against the `release/7.1` branch for the foreseeable future.**
+**Please note: The master branch is now the development branch for version 8.0. This adds support for namespaces, but is a beta state. The source code fileout format requires changes to support namespaces, although Dolphin 8 can round-trip code in the earlier (pre-namespace) package format of Dolphin 7.1 when namespaces are not used. Please use the `release/7.1` branch if you need a stable version. PRs for bug fixes, etc, will still be accepted against the `release/7.1` branch for the foreseeable future.**
 
 This repository contains:
 * A VS2019 solution to build the Virtual Machine (VM) elements of Dolphin Smalltalk.
@@ -22,13 +22,13 @@ It is not necessary to build the VM, since pre-built binaries are available for 
 
 * Load the DolphinVM solution into Visual Studio. Choose the **Release** profile (**Debug** will compile but will run slowly) and then _Build Solution_. A bunch of DLLs and `Dolphin7.exe` will have been copied to the `\Dolphin` root folder.
 
-## Building the Dolphin 7 Product Image
+## Building the Dolphin Product Image
 
 Follow these instructions to create the product image and launch Dolphin Smalltalk for the first time.
 
 * First clone the Dolphin repository (this one) into a suitable working directory on your machine, let's call it `\Dolphin`. Any supported version of Windows should be suitable, and at the moment that means Windows 10. Dolphin _may_ run on older Windows versions, but there should be no expectation that it will, or will continue to do so.
 
-* The master branch is on the bleeding edge and current is in an unstable state while version 7.2 is in development, although the tests should always be passing. If you need a stable build then you should use the `release/7.1` branch.
+* The master branch is on the bleeding edge and current is in an unstable state while version 8.0 is in development, although the tests should always be passing. If you need a stable build then you should use the `release/7.1` branch.
 
 * Next you will need to build the binaries as described above, or fetch the VM binaries. For convenience a batch file, `FetchVM.CMD` is supplied that will determine the correct VM version and invoke the helper PowerShell script `FetchVM.ps1` to download it. If you want to download an alternative VM (which is not usually recommended) then this can be done by invoking `FetchVM.ps1` with a parameter..
 
@@ -50,7 +50,7 @@ You should see Dolphin Professional 7 launch successfully. You can now continue 
 
 If you want to submit changes, you will need to create your own fork and clone that instead. You will not be able to push directly to the main Dolphin repo.
 
-No further changes will (normally) be accepted into the DolphinVM repo for versions of Dolphin from 7.1, although it remains open for bug fixes to 7.0. If you wish to contribute to the 7.1 VM, please make and commit your VM changes in this main Dolphin repo and submit a PR here. PRs can contain synchronized changes to both the VM and the image, and the PR validation build will exercise both.
+No further changes will (normally) be accepted into the DolphinVM repo for versions of Dolphin from 7.1, although it remains open for bug fixes to 7.0. If you wish to contribute to the current VM, please make and commit your VM changes in this main Dolphin repo and submit a PR here. PRs can contain synchronized changes to both the VM and the image, and the PR validation build will exercise both.
 
 Any contributions are welcome, but are expected to be of a very high standard. You are more likely to have your contribution accepted unchanged if you follow these rules:
 - PRs should be associated with an pre-existing issue. In other words, create a github issue describing your bug or proposed improvement first. This allows the merits of the change to be discussed and should save wasted time preparing a PR that is rejected because the change is not agreed on principle.
