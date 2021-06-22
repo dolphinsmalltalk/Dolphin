@@ -17,6 +17,7 @@ package setClassNames: #(
 
 package setPrerequisites: #(
 	'..\Base\Dolphin'
+	'..\System\SemVer\Dolphin SemVer'
 ).
 
 package!
@@ -24,7 +25,7 @@ package!
 "Class Definitions"!
 
 Core.Object subclass: #'Tools.DolphinProduct'
-	instanceVariableNames: 'versionMask encryptedClasses'
+	instanceVariableNames: 'version encryptedClasses'
 	classVariableNames: 'Current EditionsMap'
 	imports: #()
 	classInstanceVariableNames: ''

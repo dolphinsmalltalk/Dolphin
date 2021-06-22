@@ -60,7 +60,7 @@ testFromGitDescription
 testInvalidVersions
 	"Invalid semantic versions from https://regex101.com/r/vkijKf/1/"
 
-	#('1' '1.2' '1.2.3-0123' '1.2.3-0123.0123' '1.1.2+.123' '+invalid' '-invalid' '-invalid+invalid' '-invalid.01' 'alpha' 'alpha.beta' 'alpha.beta.1' 'alpha.1' 'alpha+beta' 'alpha_beta' 'alpha.' 'alpha..' 'beta' '1.0.0-alpha_beta' '-alpha.' '1.0.0-alpha..' '1.0.0-alpha..1' '1.0.0-alpha...1' '1.0.0-alpha....1' '1.0.0-alpha.....1' '1.0.0-alpha......1' '1.0.0-alpha.......1' '01.1.1' '1.01.1' '1.1.01' '1.2' '1.2.3.DEV' '1.2-SNAPSHOT' '1.2.31.2.3----RC-SNAPSHOT.12.09.1--..12+788' '1.2-RC-SNAPSHOT' '-1.0.3-gamma+b7718' '+justmeta' '9.8.7+meta+meta' '9.8.7-whatever+meta+meta' '99999999999999999999999.999999999999999999.99999999999999999----RC-SNAPSHOT.12.09.1--------------------------------..12')
+	#('1' '1.2' '1.2.3-0123' '1.2.3-0123.0123' '1.1.2+.123' '+invalid' '-invalid' '-invalid+invalid' '-invalid.01' 'alpha' 'alpha.beta' 'alpha.beta.1' 'alpha.1' 'alpha+beta' 'alpha_beta' 'alpha.' 'alpha..' 'beta' '1.0.0-alpha_beta' '-alpha.' '1.0.0-alpha..' '1.0.0-alpha..1' '1.0.0-alpha...1' '1.0.0-alpha....1' '1.0.0-alpha.....1' '1.0.0-alpha......1' '1.0.0-alpha.......1' '01.1.1' '1.01.1' '1.1.01' '1.2' '1.2.3.DEV' '1.2-SNAPSHOT' '1.2.31.2.3----RC-SNAPSHOT.12.09.1--..12+788' '1.2-RC-SNAPSHOT' '-1.0.3-gamma+b7718' '+justmeta' '9.8.7+meta+meta' '9.8.7-whatever+meta+meta' '99999999999999999999999.999999999999999999.99999999999999999----RC-SNAPSHOT.12.09.1--------------------------------..12' '1.0.A' '1.2.3a')
 		do: 
 			[:each |
 			self deny: (SemVer isValid: each).
@@ -102,6 +102,20 @@ testPrecedence
 					self assert: semver1 < semver2.
 					self assert: semver1 <= semver2]]!
 
+testReadFromPartial
+	| stream remainder |
+	#(#('0.0.4a' '0.0.4' 'a') #('0.0.4-0%' '0.0.4-0' '%')) do: 
+			[:each |
+			| string subject |
+			string := each first.
+			"Not a valid SemVer as a whole string."
+			self deny: (SemVer isValid: string).
+			stream := string readStream.
+			subject := SemVer readFrom: stream.
+			self assert: subject equals: (SemVer fromString: each second).
+			remainder := stream upToEnd.
+			self assert: remainder equals: each third]!
+
 testValidVersions
 	"Valid semantic versions from https://regex101.com/r/vkijKf/1/"
 
@@ -125,5 +139,6 @@ testValidVersions
 !Core.Tests.SemVerTest categoriesFor: #testFromGitDescription!public!unit tests! !
 !Core.Tests.SemVerTest categoriesFor: #testInvalidVersions!public!unit tests! !
 !Core.Tests.SemVerTest categoriesFor: #testPrecedence!public!unit tests! !
+!Core.Tests.SemVerTest categoriesFor: #testReadFromPartial!public! !
 !Core.Tests.SemVerTest categoriesFor: #testValidVersions!public!unit tests! !
 

@@ -53,6 +53,7 @@ package setMethodNames: #(
 	#(#{Core.ScaledDecimal class} #icon)
 	#(#{Core.SearchPolicy class} #icon)
 	#(#{Core.Semaphore class} #icon)
+	#(#{Core.SemVer class} #icon)
 	#(#{Core.Set class} #icon)
 	#(#{Core.Signal class} #icon)
 	#(#{Core.SortAlgorithm class} #icon)
@@ -135,6 +136,7 @@ package setPrerequisites: #(
 	'..\..\Base\Dolphin Legacy Date & Time'
 	'..\Base\Dolphin MVP Base'
 	'..\Presenters\Radio\Dolphin Radio Buttons'
+	'..\..\System\SemVer\Dolphin SemVer'
 	'..\..\System\STON\Dolphin STON-Core'
 	'Dolphin Text Tile Icons'
 ).
@@ -527,6 +529,14 @@ icon
 		textcolor: Color red;
 		yourself)! !
 !Core.Semaphore class categoriesFor: #icon!public! !
+
+!Core.SemVer class methodsFor!
+
+icon
+	^##((TextTileIcon text: $\x1F522 fontName: 'Segoe UI Emoji')
+		textcolor: Color navy;
+		yourself)! !
+!Core.SemVer class categoriesFor: #icon!public! !
 
 !Core.Set class methodsFor!
 

@@ -146,11 +146,6 @@ fullName
 
 !Tools.DolphinCoreProduct class methodsFor!
 
-productLevel
-	"Private - Answer the product ID for the receiver"
-
-	^0!
-
 productName
 	"Answer the product name"
 	
@@ -160,7 +155,6 @@ shortProductName
 	"Answer the abbreviated product name"
 	
 	^'DCORE'! !
-!Tools.DolphinCoreProduct class categoriesFor: #productLevel!constants!private! !
 !Tools.DolphinCoreProduct class categoriesFor: #productName!accessing!public! !
 !Tools.DolphinCoreProduct class categoriesFor: #shortProductName!accessing!public! !
 

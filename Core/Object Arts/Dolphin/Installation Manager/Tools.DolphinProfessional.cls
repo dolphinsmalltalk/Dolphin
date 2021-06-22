@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Tools.DolphinBaseProduct subclass: #'Tools.DolphinProfessional'
 	instanceVariableNames: ''
@@ -110,11 +110,6 @@ developmentClasses
 			package notNil ifTrue: [package classes do: [:c | classes remove: c ifAbsent: []]]].
 	^classes!
 
-productLevel
-	"Private - Answer the product ID for the receiver"
-
-	^3!
-
 productName
 	"Answer the product name"
 	
@@ -125,7 +120,6 @@ shortProductName
 	
 	^'DPRO'! !
 !Tools.DolphinProfessional class categoriesFor: #developmentClasses!public! !
-!Tools.DolphinProfessional class categoriesFor: #productLevel!constants!private! !
 !Tools.DolphinProfessional class categoriesFor: #productName!accessing!public! !
 !Tools.DolphinProfessional class categoriesFor: #shortProductName!accessing!public! !
 

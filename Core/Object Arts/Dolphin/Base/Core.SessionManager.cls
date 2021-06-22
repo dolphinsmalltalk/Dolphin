@@ -462,7 +462,7 @@ isConsoleApplication
 	^self class isConsoleApplication!
 
 isDebug
-	^self versionInfo productVersionString contains: '(Debug)'!
+	^self versionInfo productVersionString endsWith: '+debug'!
 
 isDLL
 	"Private - Answer whether the receiver is a shared library, as opposed to an application."

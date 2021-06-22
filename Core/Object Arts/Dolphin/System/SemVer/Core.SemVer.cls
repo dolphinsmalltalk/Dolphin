@@ -2,7 +2,7 @@
 
 Core.Magnitude subclass: #'Core.SemVer'
 	instanceVariableNames: 'major minor patch prerelease buildmetadata'
-	classVariableNames: 'RegEx'
+	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
@@ -269,24 +269,18 @@ fromGitDescription: aString
 fromString: aString
 	"Answer a new instance of the receiver parsed from the SemVer representation in the argument. If the format is invalid, and error will be thrown."
 
-	| match groups instance |
-	#todo. "Reimplement parsing using SmaCC, or hand code it. Probably the latter as we don't really want a dependency out of a core component on a higher level one."
-	match := self regEx matchSingle: aString.
-	groups := match subMatches.
-	match free.
-	instance := self
-				major: (Integer fromString: (groups at: 1))
-				minor: (Integer fromString: (groups at: 2))
-				patch: (Integer fromString: (groups at: 3))
-				prerelease: (groups at: 4)
-				buildmetadata: (groups at: 5).
-	groups free.
+	| instance stream |
+	stream := aString readStream.
+	instance := self readFrom: stream.
+	(instance isNil or: [stream atEnd not]) ifTrue: [InvalidFormat signal: aString with: self].
 	^instance!
 
 isValid: aString
 	"Answer whether the argument is in valid SemVer format."
 
-	^self regEx test: aString!
+	| stream |
+	stream := aString readStream.
+	^(self readFrom: stream) notNil and: [stream atEnd]!
 
 major: majorInteger minor: minorInteger patch: patchInteger prerelease: prerelString buildmetadata: metadataString
 	"Answer a new instance of the receiver with the specified version fields."
@@ -299,16 +293,84 @@ major: majorInteger minor: minorInteger patch: patchInteger prerelease: prerelSt
 		prerelease: prerelString
 		buildmetadata: metadataString!
 
-regEx
-	RegEx isNull
-		ifTrue: 
-			["The regexp is sourced from https://regex101.com/r/vkijKf/1/"
-			RegEx := Smalltalk.IRegExp2
-						pattern: '^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(?:-((?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\.(?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\+([0-9a-zA-Z-]+(?:\.[0-9a-zA-Z-]+)*))?$'].
-	^RegEx! !
+parseBuildMetadataIdentifier: aReadStream into: aWriteStream
+	| ch |
+	aReadStream atEnd ifTrue: [^false].
+	
+	[ch := aReadStream next.
+	(ch == $- or: [ch isEnglishLetter or: [ch isDigit]]) ifFalse: [^false].
+	aWriteStream nextPut: ch.
+	ch := aReadStream peek.
+	ch isNil or: [ch == $.]]
+			whileFalse.
+	^true!
+
+parseMetadata: aReadStream
+	| buildmetadata |
+	buildmetadata := String writeStream.
+	[self parseBuildMetadataIdentifier: aReadStream into: buildmetadata] whileTrue: 
+			[aReadStream atEnd ifTrue: [^buildmetadata contents].
+			aReadStream next == $. ifFalse: [^nil].
+			buildmetadata nextPut: $.].
+	^nil!
+
+parsePrerelease: aReadStream
+	| prerelease |
+	prerelease := String writeStream.
+	[self parsePrereleaseIdentifier: aReadStream into: prerelease] whileTrue: 
+			[| ch |
+			ch := aReadStream peek.
+			(ch isNil or: [ch ~~ $.]) ifTrue: [^prerelease contents].
+			prerelease nextPut: aReadStream next].
+	^nil!
+
+parsePrereleaseIdentifier: aReadStream into: aWriteStream
+	| ch multi leadingZero |
+	ch := aReadStream nextAvailable.
+	"A prerelease identifier must have at least one hyphen, digit or letter."
+	(ch notNil and: [ch == $- or: [ch isDigit or: [ch isEnglishLetter]]]) ifFalse: [^false].
+	leadingZero := ch == $0.
+	multi := false.
+	
+	[aWriteStream nextPut: ch.
+	ch := aReadStream peek.
+	ch notNil and: 
+			[ch == $-
+				or: [ch isDigit or: [ch isEnglishLetter and: 
+									[leadingZero := false.
+									true]]]]]
+			whileTrue: 
+				[multi := true.
+				ch := aReadStream next].
+	^(leadingZero & multi) not!
+
+parseVersionNumber: aReadStream
+	| ch int leadingZero multi |
+	ch := aReadStream nextAvailable.
+	(ch isNil or: [ch isDigit not]) ifTrue: [^nil].
+	leadingZero := ch == $0.
+	int := ch digitValue.
+	multi := false.
+	
+	[ch := aReadStream peek.
+	ch isNil or: [ch isDigit not]] whileFalse: 
+				[| digit |
+				multi := true.
+				digit := ch digitValue.
+				int := int * 10 + digit.
+				aReadStream next].
+	^leadingZero & multi ifFalse: [int]!
+
+readFrom: aReadStream
+	^(SemVerParser on: aReadStream) parse! !
 !Core.SemVer class categoriesFor: #fromGitDescription:!instance creation!public! !
 !Core.SemVer class categoriesFor: #fromString:!instance creation!public! !
 !Core.SemVer class categoriesFor: #isValid:!enquiries!public! !
 !Core.SemVer class categoriesFor: #major:minor:patch:prerelease:buildmetadata:!public! !
-!Core.SemVer class categoriesFor: #regEx!accessing!private! !
+!Core.SemVer class categoriesFor: #parseBuildMetadataIdentifier:into:!private! !
+!Core.SemVer class categoriesFor: #parseMetadata:!private! !
+!Core.SemVer class categoriesFor: #parsePrerelease:!private! !
+!Core.SemVer class categoriesFor: #parsePrereleaseIdentifier:into:!private! !
+!Core.SemVer class categoriesFor: #parseVersionNumber:!private! !
+!Core.SemVer class categoriesFor: #readFrom:!public! !
 

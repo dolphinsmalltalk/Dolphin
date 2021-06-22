@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Tools.DolphinBaseProduct subclass: #'Tools.DolphinCommunityEdition'
 	instanceVariableNames: ''
@@ -32,11 +32,6 @@ preShrink
 
 !Tools.DolphinCommunityEdition class methodsFor!
 
-productLevel
-	"Private - Answer the product ID for the receiver"
-
-	^1!
-
 productName
 	"Answer the product name"
 	
@@ -46,7 +41,6 @@ shortProductName
 	"Answer the abbreviated product name"
 	
 	^'DCE'! !
-!Tools.DolphinCommunityEdition class categoriesFor: #productLevel!constants!private! !
 !Tools.DolphinCommunityEdition class categoriesFor: #productName!accessing!public! !
 !Tools.DolphinCommunityEdition class categoriesFor: #shortProductName!accessing!public! !
 

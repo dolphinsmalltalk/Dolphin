@@ -20,6 +20,8 @@ Package manager install: 'Core\Object Arts\Dolphin\System\Base64\Dolphin Base64.
 Object owningPackage 
 	packageVersion: VMLibrary default versionString!
 
+Package manager install: 'Core\Object Arts\Dolphin\System\SemVer\Dolphin SemVer.pax'!
+
 "Load standard Dolphin products"
 Package manager install: 'Core\Object Arts\Dolphin\Installation Manager\Dolphin Products.pax'!
 

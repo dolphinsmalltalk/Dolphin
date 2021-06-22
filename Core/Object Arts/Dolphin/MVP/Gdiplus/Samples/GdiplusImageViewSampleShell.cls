@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Shell subclass: #GdiplusImageViewSampleShell
 	instanceVariableNames: 'image edgeChoice viewChoice padding interpolationChoice classChoice useImageClass filename'
@@ -117,7 +117,7 @@ Copyright: 2003
 DISCLAIMER: This software is freely provided purely as a sample and as such it
 is provided "as is", WITHOUT ANY WARRANTY; without even the implied warranty of 
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE' 
-		formatWith: SessionManager current versionInfo productVersionString!
+		formatWith: SessionManager current productVersion!
 
 icon
 	"Answers an Icon that can be used to represent this class"

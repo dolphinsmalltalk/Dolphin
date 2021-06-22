@@ -485,7 +485,7 @@ utf16StringFromAddress: pointer
 versionFormatString
 	"Private - Answer a String containing the version format used by the receiver."
 
-	^'%3!!d!!.%4!!d!!%5!!d!!'! !
+	^'%2!!d!!.%3!!d!!.%4!!d!!.%5!!d!!'! !
 !Kernel.VMLibrary categoriesFor: #_snprintf_s:bufferSize:count:format:with:!helpers!private! !
 !Kernel.VMLibrary categoriesFor: #_snprintf_s:bufferSize:count:format:with:with:!helpers!private! !
 !Kernel.VMLibrary categoriesFor: #addressFromInteger:!helpers!private! !
