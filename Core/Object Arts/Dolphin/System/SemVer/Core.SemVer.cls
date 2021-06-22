@@ -293,84 +293,11 @@ major: majorInteger minor: minorInteger patch: patchInteger prerelease: prerelSt
 		prerelease: prerelString
 		buildmetadata: metadataString!
 
-parseBuildMetadataIdentifier: aReadStream into: aWriteStream
-	| ch |
-	aReadStream atEnd ifTrue: [^false].
-	
-	[ch := aReadStream next.
-	(ch == $- or: [ch isEnglishLetter or: [ch isDigit]]) ifFalse: [^false].
-	aWriteStream nextPut: ch.
-	ch := aReadStream peek.
-	ch isNil or: [ch == $.]]
-			whileFalse.
-	^true!
-
-parseMetadata: aReadStream
-	| buildmetadata |
-	buildmetadata := String writeStream.
-	[self parseBuildMetadataIdentifier: aReadStream into: buildmetadata] whileTrue: 
-			[aReadStream atEnd ifTrue: [^buildmetadata contents].
-			aReadStream next == $. ifFalse: [^nil].
-			buildmetadata nextPut: $.].
-	^nil!
-
-parsePrerelease: aReadStream
-	| prerelease |
-	prerelease := String writeStream.
-	[self parsePrereleaseIdentifier: aReadStream into: prerelease] whileTrue: 
-			[| ch |
-			ch := aReadStream peek.
-			(ch isNil or: [ch ~~ $.]) ifTrue: [^prerelease contents].
-			prerelease nextPut: aReadStream next].
-	^nil!
-
-parsePrereleaseIdentifier: aReadStream into: aWriteStream
-	| ch multi leadingZero |
-	ch := aReadStream nextAvailable.
-	"A prerelease identifier must have at least one hyphen, digit or letter."
-	(ch notNil and: [ch == $- or: [ch isDigit or: [ch isEnglishLetter]]]) ifFalse: [^false].
-	leadingZero := ch == $0.
-	multi := false.
-	
-	[aWriteStream nextPut: ch.
-	ch := aReadStream peek.
-	ch notNil and: 
-			[ch == $-
-				or: [ch isDigit or: [ch isEnglishLetter and: 
-									[leadingZero := false.
-									true]]]]]
-			whileTrue: 
-				[multi := true.
-				ch := aReadStream next].
-	^(leadingZero & multi) not!
-
-parseVersionNumber: aReadStream
-	| ch int leadingZero multi |
-	ch := aReadStream nextAvailable.
-	(ch isNil or: [ch isDigit not]) ifTrue: [^nil].
-	leadingZero := ch == $0.
-	int := ch digitValue.
-	multi := false.
-	
-	[ch := aReadStream peek.
-	ch isNil or: [ch isDigit not]] whileFalse: 
-				[| digit |
-				multi := true.
-				digit := ch digitValue.
-				int := int * 10 + digit.
-				aReadStream next].
-	^leadingZero & multi ifFalse: [int]!
-
 readFrom: aReadStream
 	^(SemVerParser on: aReadStream) parse! !
 !Core.SemVer class categoriesFor: #fromGitDescription:!instance creation!public! !
 !Core.SemVer class categoriesFor: #fromString:!instance creation!public! !
 !Core.SemVer class categoriesFor: #isValid:!enquiries!public! !
 !Core.SemVer class categoriesFor: #major:minor:patch:prerelease:buildmetadata:!public! !
-!Core.SemVer class categoriesFor: #parseBuildMetadataIdentifier:into:!private! !
-!Core.SemVer class categoriesFor: #parseMetadata:!private! !
-!Core.SemVer class categoriesFor: #parsePrerelease:!private! !
-!Core.SemVer class categoriesFor: #parsePrereleaseIdentifier:into:!private! !
-!Core.SemVer class categoriesFor: #parseVersionNumber:!private! !
 !Core.SemVer class categoriesFor: #readFrom:!public! !
 
