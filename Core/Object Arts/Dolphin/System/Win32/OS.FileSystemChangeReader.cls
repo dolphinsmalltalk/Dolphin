@@ -14,7 +14,7 @@ FileSystemChangeReader employs the ReadDirectoryChangesW API to request director
 
 FileSystemChangeReader itself is abstract, and has subclasses that publish the file system notifications either as Smalltalk events on the main UI thread (FileSystemWatcher), or by pushing them onto a SharedQueue for processing by a background thread (FileSystemChangeReader).
 
-To monitor the entire	contents of a directory and its sub-directories, pass the name of the directory with or without a terminating back slash, for example:
+To monitor the entire contents of a directory and its sub-directories, pass the name of the directory with or without a terminating back slash, for example:
 	FileSystemWatcher monitorDirectory: ''c:\temp''
 
 To monitor a specific file set up a monitor on the directory and then set the filename as the filter, for example:
