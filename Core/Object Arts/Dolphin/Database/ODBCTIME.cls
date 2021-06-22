@@ -54,7 +54,7 @@ time: aTime
 	self
 		hour: aTime hour;
 		minute: aTime minute;
-		second: aTime second! !
+		second: aTime second truncated "ODBCTIME doesn't support fractional seconds"! !
 !ODBCTIME categoriesFor: #asTime!converting!public! !
 !ODBCTIME categoriesFor: #hour!**compiled accessors**!public! !
 !ODBCTIME categoriesFor: #hour:!**compiled accessors**!public! !

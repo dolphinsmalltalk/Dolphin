@@ -209,6 +209,23 @@ testDSNlessConnection
 	c := DBConnection new.
 	c connectString: 'DRIVER={Microsoft Text Driver (*.txt; *.csv)}'!
 
+testODBCTIMEConversion
+	"Ensure valid conversion of Time to ODBCTIME"
+
+	| increment |
+
+	increment := 1/100.
+
+	0 to: (60 - increment) by: increment do: 
+		[ :seconds || hours minutes time odbctime |
+		hours := seconds truncated \\ 24.
+		minutes := seconds truncated max: 59.
+		time := Time hours: hours minutes: minutes seconds: seconds.
+		odbctime := ODBCTIME fromTime: time.
+		self assert: odbctime hour equals: time hour.
+		self assert: odbctime minute equals: time minute.
+		self assert: odbctime second equals: time second truncated]!
+
 testPackagesCorrectlySetUp
 	"The base package should not be dependent upon the development system."
 	self assert: ((Package manager packageNamed: 'Database Connection Base') prerequisites allSatisfy: [:each | each name = 'Dolphin' or: [each name = 'Dolphin Legacy Date & Time']])!
@@ -263,6 +280,7 @@ testTracing
 !DBConnectionTest categoriesFor: #testConnectionString!public!unit tests! !
 !DBConnectionTest categoriesFor: #testConnectStringDo!public!unit tests! !
 !DBConnectionTest categoriesFor: #testDSNlessConnection!public!unit tests! !
+!DBConnectionTest categoriesFor: #testODBCTIMEConversion!public!unit tests! !
 !DBConnectionTest categoriesFor: #testPackagesCorrectlySetUp!public!unit tests! !
 !DBConnectionTest categoriesFor: #testPreparedQuery!public!unit tests! !
 !DBConnectionTest categoriesFor: #testSpecialColumnsQuery!public!unit tests! !
