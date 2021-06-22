@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 XProgramming.SUnit.TestCase subclass: #'Kernel.Tests.ContinuationTest'
 	instanceVariableNames: 'tmp tmp2'
@@ -76,15 +76,11 @@ testSimpleCallCC
 testSimplestCallCC
 	| x |
 	x := [:cc | cc value: true] callCC.
-	self assert: x!
-
-testVMVersion
-	self assert: VMLibrary default versionString asNumber > 5.01! !
+	self assert: x! !
 !Kernel.Tests.ContinuationTest categoriesFor: #runCase!public!Running! !
 !Kernel.Tests.ContinuationTest categoriesFor: #testBlockTemps!public!unit tests! !
 !Kernel.Tests.ContinuationTest categoriesFor: #testBlockVars!public!unit tests! !
 !Kernel.Tests.ContinuationTest categoriesFor: #testMethodTemps!public!unit tests! !
 !Kernel.Tests.ContinuationTest categoriesFor: #testSimpleCallCC!public!unit tests! !
 !Kernel.Tests.ContinuationTest categoriesFor: #testSimplestCallCC!public!unit tests! !
-!Kernel.Tests.ContinuationTest categoriesFor: #testVMVersion!public!unit tests! !
 
