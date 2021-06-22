@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Database.Tests.DBTest subclass: #'Database.Tests.DBConnectionTest'
 	instanceVariableNames: ''
@@ -211,6 +211,23 @@ testDSNlessConnection
 	c := DBConnection new.
 	c connectString: 'DRIVER={Microsoft Text Driver (*.txt; *.csv)}'!
 
+testODBCTIMEConversion
+	"Ensure valid conversion of Time to ODBCTIME"
+
+	| increment |
+
+	increment := 1/100.
+
+	0 to: (60 - increment) by: increment do: 
+		[ :seconds || hours minutes time odbctime |
+		hours := seconds truncated \\ 24.
+		minutes := seconds truncated max: 59.
+		time := Time hours: hours minutes: minutes seconds: seconds.
+		odbctime := OS.ODBCTIME fromTime: time.
+		self assert: odbctime hour equals: time hour.
+		self assert: odbctime minute equals: time minute.
+		self assert: odbctime second equals: time second truncated]!
+
 testPackagesCorrectlySetUp
 	"The base package should not be dependent upon the development system."
 	self assert: ((Kernel.Package manager packageNamed: 'Database Connection Base') prerequisites collect: [:each | each name]) asArray sort equals: #('Dolphin' 'Dolphin Legacy Date & Time')!
@@ -265,6 +282,7 @@ testTracing
 !Database.Tests.DBConnectionTest categoriesFor: #testConnectionString!public!unit tests! !
 !Database.Tests.DBConnectionTest categoriesFor: #testConnectStringDo!public!unit tests! !
 !Database.Tests.DBConnectionTest categoriesFor: #testDSNlessConnection!public!unit tests! !
+!Database.Tests.DBConnectionTest categoriesFor: #testODBCTIMEConversion!public!unit tests! !
 !Database.Tests.DBConnectionTest categoriesFor: #testPackagesCorrectlySetUp!public!unit tests! !
 !Database.Tests.DBConnectionTest categoriesFor: #testPreparedQuery!public!unit tests! !
 !Database.Tests.DBConnectionTest categoriesFor: #testSpecialColumnsQuery!public!unit tests! !
