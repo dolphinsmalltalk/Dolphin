@@ -1,13 +1,17 @@
-version: v7.1.9
+version: 7.2.{build}
 skip_non_tags: true
 image: Visual Studio 2019
 configuration: Release
+environment:
+  VCToolsRedistDir: '%ProgramFiles(x86)%\Microsoft Visual Studio\2019\Community\VC\Redist\MSVC\v142'
 install:
 - cmd: "git submodule update --init --recursive\n   \ngit lfs pull"
-before_build:
-- cmd: choco install innosetup -y -version 6.0.3 --allow-empty-checksums
 build_script:
 - cmd: >-
+    set | sort
+
+    choco install innosetup -y -version 6.0.3 --allow-empty-checksums
+
     msbuild Core\DolphinVM\DolphinVM.sln /verbosity:m /logger:"C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll"
 
     Core\DolphinVM\AppVeyorZIPDolphinVM
@@ -26,6 +30,7 @@ artifacts:
   name: DolphinPdbs
 deploy:
 - provider: GitHub
+  tag: $(APPVEYOR_REPO_TAG_NAME)
   auth_token:
     secure: nI7qHVzc64UJLC/OqZZFLCAe6hzyK1o6kvvuo8PDeZgJNq3rTHmZjLP+/00l5QJf
   artifact: SetupExe,DolphinVM,DolphinPdbs
