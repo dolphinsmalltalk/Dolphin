@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'Gdiplus ImageView Sample'.
-package paxVersion: 1;
+package paxVersion: 2.1;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Evaluate
 	GdiplusImageViewSampleShell show'.
@@ -8,15 +8,9 @@ package paxVersion: 1;
 package basicPackageVersion: '6.0'.
 
 
-package classNames
-	add: #GdiplusImageViewSampleShell;
-	yourself.
-
-package binaryGlobalNames: (Set new
-	yourself).
-
-package globalAliases: (Set new
-	yourself).
+package setClassNames: #(
+	#{UI.Examples.GdiplusImageViewSampleShell}
+).
 
 package setPrerequisites: #(
 	'..\..\..\Base\Dolphin'
@@ -29,25 +23,26 @@ package setPrerequisites: #(
 	'..\..\..\Base\Dolphin Message Box'
 	'..\..\Base\Dolphin MVP Base'
 	'..\..\Presenters\Number\Dolphin Number Presenter'
+	'..\..\Views\SpinButton\Dolphin SpinButton Control'
 	'..\..\Presenters\Text\Dolphin Text Presenter'
 	'..\..\Type Converters\Dolphin Type Converters'
 	'..\..\Models\Value\Dolphin Value Models'
-	'..\Gdiplus ImageView').
+	'..\Gdiplus'
+	'..\Gdiplus ImageView'
+	'..\..\..\ActiveX\Components\Picture\OLE Picture'
+	'..\..\..\..\Samples\MVP\UI Examples'
+).
 
 package!
 
 "Class Definitions"!
 
-Shell subclass: #GdiplusImageViewSampleShell
-	instanceVariableNames: 'image edgeChoice viewChoice padding interpolationChoice classChoice useImageClass filename'
+UI.Shell subclass: #'UI.Examples.GdiplusImageViewSampleShell'
+	instanceVariableNames: 'image edgeChoice viewChoice padding paddingSpinner interpolationChoice classChoice useImageClass filename'
 	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
-
-"Loose Methods"!
+	imports: #(#{Graphics.Gdiplus})
+	classInstanceVariableNames: ''
+	classConstants: {}!
 
 "End of package definition"!
 
