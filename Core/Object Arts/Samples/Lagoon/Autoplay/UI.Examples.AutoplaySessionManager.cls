@@ -1,16 +1,17 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
-RuntimeSessionManager subclass: #AutoplaySessionManager
+UI.RuntimeSessionManager subclass: #'UI.Examples.AutoplaySessionManager'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-AutoplaySessionManager guid: (GUID fromString: '{4926b46c-437f-4688-a5ff-a86350c68924}')!
-AutoplaySessionManager comment: 'AutoplaySessionManager is the <RuntimeSessionManager> for the Autoplay sample. 
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+UI.Examples.AutoplaySessionManager guid: (Core.GUID fromString: '{4926b46c-437f-4688-a5ff-a86350c68924}')!
+UI.Examples.AutoplaySessionManager comment: 'AutoplaySessionManager is the <RuntimeSessionManager> for the Autoplay sample. 
 
 AutoplaySessionManager illustrates starting and parameterizing an applications main shell, simple command-line argument processing, and how to prevent multiple instances of a Dolphin application being started.'!
-!AutoplaySessionManager categoriesForClass!Samples! !
-!AutoplaySessionManager methodsFor!
+!UI.Examples.AutoplaySessionManager categoriesForClass!Samples! !
+!UI.Examples.AutoplaySessionManager methodsFor!
 
 allowDuplicate
 	"It would appear that the image associated with this session is already open. Since we
@@ -35,14 +36,14 @@ main
 			y := Number readFrom: stream.
 			autoplay pageExtent: x@y]].
 	autoplay show! !
-!AutoplaySessionManager categoriesFor: #allowDuplicate!operations-startup!public! !
-!AutoplaySessionManager categoriesFor: #main!operations!public! !
+!UI.Examples.AutoplaySessionManager categoriesFor: #allowDuplicate!operations-startup!public! !
+!UI.Examples.AutoplaySessionManager categoriesFor: #main!operations!public! !
 
-!AutoplaySessionManager class methodsFor!
+!UI.Examples.AutoplaySessionManager class methodsFor!
 
 mainShellClass
 	"Answer the class of the application's main window (a <Shell> presenter)."
 
 	^Autoplay! !
-!AutoplaySessionManager class categoriesFor: #mainShellClass!constants!public! !
+!UI.Examples.AutoplaySessionManager class categoriesFor: #mainShellClass!constants!public! !
 
