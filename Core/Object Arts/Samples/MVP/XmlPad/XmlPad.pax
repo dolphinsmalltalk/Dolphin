@@ -61,7 +61,6 @@ package setPrerequisites: #(
 	'..\..\..\Dolphin\Registry\Dolphin Registry Access'
 	'..\..\..\Dolphin\Registry\Dolphin Registry Serialisation'
 	'..\..\..\Dolphin\MVP\Views\Scintilla\Dolphin Scintilla View'
-	'..\..\..\Dolphin\MVP\Views\Scintilla\Dolphin Scintilla View (Old Names)'
 	'..\..\..\Dolphin\MVP\Presenters\Text\Dolphin Text Presenter'
 	'..\..\..\Dolphin\MVP\Type Converters\Dolphin Type Converters'
 	'..\..\..\Dolphin\MVP\Models\Value\Dolphin Value Models'
