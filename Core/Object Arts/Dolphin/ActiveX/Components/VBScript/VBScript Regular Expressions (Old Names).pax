@@ -1,0 +1,31 @@
+﻿| package |
+package := Package name: 'VBScript Regular Expressions (Old Names)'.
+package paxVersion: 2.1;
+	basicComment: ''.
+
+
+package setVariableNames: #(
+	#{Smalltalk.IRegExp}
+	#{Smalltalk.IRegExp2}
+).
+
+package setAliasVariableNames: #(
+	#{Smalltalk.IRegExp}
+	#{Smalltalk.IRegExp2}
+).
+
+package setPrerequisites: #(
+	'VBScript Regular Expressions'
+).
+
+package!
+
+"Variable Aliases"!
+
+Smalltalk.IRegExp := VBScript.IRegExp!
+
+Smalltalk.IRegExp2 := VBScript.IRegExp2!
+
+
+"End of package definition"!
+

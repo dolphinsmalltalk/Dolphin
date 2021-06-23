@@ -46,12 +46,12 @@ contents
 		add: #('Core\Object Arts\Dolphin\ActiveX\OCX\ActiveX Control Hosting.pax' #plain #imageBased);
 		yourself.
 
-	"The advanced find dialog - depends on the VBScript RegExp package, as currently does SemVer"
+	"The advanced find dialog - depends on the VBScript RegExp package"
 	contents
 		add: #('Core\Object Arts\Dolphin\ActiveX\Deprecated\ActiveX (Old Names).pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\ActiveX\Components\VBScript\VBScript Regular Expressions.pax' #plain #imageBased);
+		add: #('Core\Object Arts\Dolphin\ActiveX\Components\VBScript\VBScript Regular Expressions (Old Names).pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\MVP\Dialogs\Find\Dolphin Find Dialog.pax' #plain #imageBased);
-		add: #('Core\Object Arts\Dolphin\System\SemVer\Dolphin SemVer.pax' #plain #imageBased);
 		yourself.
 
 	"GDI+"

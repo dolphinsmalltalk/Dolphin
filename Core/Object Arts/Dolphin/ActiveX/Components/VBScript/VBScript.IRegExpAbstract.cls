@@ -1,19 +1,19 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-IDispatch subclass: #IRegExpAbstract
+OS.COM.IDispatch subclass: #'VBScript.IRegExpAbstract'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-IRegExpAbstract guid: (IID fromString: '{427e61d6-dda9-489b-9102-c745ec40641b}')!
-IRegExpAbstract isNonInstantiable: true!
-IRegExpAbstract comment: '`IRegExpAbstract` is an abstract class implementing methods common between the Microsoft Scripting IRegExp COM interfaces.'!
-!IRegExpAbstract categoriesForClass!COM-Interfaces! !
-!IRegExpAbstract methodsFor!
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+VBScript.IRegExpAbstract guid: (OS.COM.IID fromString: '{427e61d6-dda9-489b-9102-c745ec40641b}')!
+VBScript.IRegExpAbstract isNonInstantiable: true!
+VBScript.IRegExpAbstract comment: '`IRegExpAbstract` is an abstract class implementing methods common between the Microsoft Scripting IRegExp COM interfaces.'!
+!VBScript.IRegExpAbstract categoriesForClass!COM-Interfaces! !
+!VBScript.IRegExpAbstract methodsFor!
 
 execute: aString
-	"Answer an <IMatchCollection> containing all sub-strings of the <String> argument which
-	match this regular expression."
+	"Answer an <sequencedReadableCollection> containing all sub-strings of the <String> argument which match this regular expression."
 
 	| matches answer |
 	matches := self matchCollectionClass newPointer.
@@ -94,6 +94,8 @@ matchCollectionClass
 	^self subclassResponsibility!
 
 matchSingle: aString
+	"Answer the single matching <String> in the argument matching this regular expression. If there is not exactly one match, throw an InvalidFormat exception."
+
 	| matches match count |
 	matches := self matchCollectionClass newPointer.
 	self Execute: aString ppMatches: matches.
@@ -170,30 +172,30 @@ test: aString
 
 Test: sourceString pMatch: pMatch
 	^self subclassResponsibility! !
-!IRegExpAbstract categoriesFor: #execute:!operations!public! !
-!IRegExpAbstract categoriesFor: #Execute:ppMatches:!private! !
-!IRegExpAbstract categoriesFor: #get_Global:!private! !
-!IRegExpAbstract categoriesFor: #get_IgnoreCase:!private! !
-!IRegExpAbstract categoriesFor: #get_Pattern:!private! !
-!IRegExpAbstract categoriesFor: #global!properties!public! !
-!IRegExpAbstract categoriesFor: #global:!properties!public! !
-!IRegExpAbstract categoriesFor: #ignoreCase!properties!public! !
-!IRegExpAbstract categoriesFor: #ignoreCase:!properties!public! !
-!IRegExpAbstract categoriesFor: #isExtensible!public!testing! !
-!IRegExpAbstract categoriesFor: #isVBCollection!public!testing! !
-!IRegExpAbstract categoriesFor: #matchCollectionClass!constants!private! !
-!IRegExpAbstract categoriesFor: #matchSingle:!operations!public! !
-!IRegExpAbstract categoriesFor: #pattern!properties!public! !
-!IRegExpAbstract categoriesFor: #pattern:!properties!public! !
-!IRegExpAbstract categoriesFor: #printValueOn:!printing!private! !
-!IRegExpAbstract categoriesFor: #put_Global:!private! !
-!IRegExpAbstract categoriesFor: #put_IgnoreCase:!private! !
-!IRegExpAbstract categoriesFor: #put_Pattern:!private! !
-!IRegExpAbstract categoriesFor: #replace:replaceString:!operations!public! !
-!IRegExpAbstract categoriesFor: #test:!operations!public! !
-!IRegExpAbstract categoriesFor: #Test:pMatch:!private! !
+!VBScript.IRegExpAbstract categoriesFor: #execute:!operations!public! !
+!VBScript.IRegExpAbstract categoriesFor: #Execute:ppMatches:!private! !
+!VBScript.IRegExpAbstract categoriesFor: #get_Global:!private! !
+!VBScript.IRegExpAbstract categoriesFor: #get_IgnoreCase:!private! !
+!VBScript.IRegExpAbstract categoriesFor: #get_Pattern:!private! !
+!VBScript.IRegExpAbstract categoriesFor: #global!properties!public! !
+!VBScript.IRegExpAbstract categoriesFor: #global:!properties!public! !
+!VBScript.IRegExpAbstract categoriesFor: #ignoreCase!properties!public! !
+!VBScript.IRegExpAbstract categoriesFor: #ignoreCase:!properties!public! !
+!VBScript.IRegExpAbstract categoriesFor: #isExtensible!public!testing! !
+!VBScript.IRegExpAbstract categoriesFor: #isVBCollection!public!testing! !
+!VBScript.IRegExpAbstract categoriesFor: #matchCollectionClass!constants!private! !
+!VBScript.IRegExpAbstract categoriesFor: #matchSingle:!operations!public! !
+!VBScript.IRegExpAbstract categoriesFor: #pattern!properties!public! !
+!VBScript.IRegExpAbstract categoriesFor: #pattern:!properties!public! !
+!VBScript.IRegExpAbstract categoriesFor: #printValueOn:!printing!private! !
+!VBScript.IRegExpAbstract categoriesFor: #put_Global:!private! !
+!VBScript.IRegExpAbstract categoriesFor: #put_IgnoreCase:!private! !
+!VBScript.IRegExpAbstract categoriesFor: #put_Pattern:!private! !
+!VBScript.IRegExpAbstract categoriesFor: #replace:replaceString:!operations!public! !
+!VBScript.IRegExpAbstract categoriesFor: #test:!operations!public! !
+!VBScript.IRegExpAbstract categoriesFor: #Test:pMatch:!private! !
 
-!IRegExpAbstract class methodsFor!
+!VBScript.IRegExpAbstract class methodsFor!
 
 clsid
 	"Private - Answer the CLSID of the associated coclass, RegExp. When VBScript RegExp 5.5 is
@@ -205,6 +207,6 @@ clsid
 
 pattern: aString
 	^self new pattern: aString! !
-!IRegExpAbstract class categoriesFor: #clsid!constants!private! !
-!IRegExpAbstract class categoriesFor: #pattern:!instance creation!public! !
+!VBScript.IRegExpAbstract class categoriesFor: #clsid!constants!private! !
+!VBScript.IRegExpAbstract class categoriesFor: #pattern:!instance creation!public! !
 

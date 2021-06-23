@@ -1,12 +1,13 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
-IRegExpAbstract subclass: #IRegExp
+VBScript.IRegExpAbstract subclass: #'VBScript.IRegExp'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-IRegExp guid: (IID fromString: '{3f4daca0-160d-11d2-a8e9-00104b365c9f}')!
-IRegExp comment: '`IRegExp` is a wrapper class for the COM interface ''VBScript_RegExp_55.IRegExp'' generated from type information in the ''Microsoft VBScript Regular Expressions 5.5'' library. It contains methods to invoke the member functions exposed by that interface.
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+VBScript.IRegExp guid: (OS.COM.IID fromString: '{3f4daca0-160d-11d2-a8e9-00104b365c9f}')!
+VBScript.IRegExp comment: '`IRegExp` is a wrapper class for the COM interface ''VBScript_RegExp_55.IRegExp'' generated from type information in the ''Microsoft VBScript Regular Expressions 5.5'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
 
@@ -57,8 +58,8 @@ interface IRegExp : IDispatch
 };
 ```
 '!
-!IRegExp categoriesForClass!COM-Interfaces!VBScript_RegExp_55-Interfaces! !
-!IRegExp methodsFor!
+!VBScript.IRegExp categoriesForClass!COM-Interfaces!VBScript_RegExp_55-Interfaces! !
+!VBScript.IRegExp methodsFor!
 
 Execute: sourceString ppMatches: ppMatches
 	"Private - Invoke the Execute() method of the COM object.
@@ -108,13 +109,13 @@ Test: sourceString pMatch: pMatch
 
 	<virtual stdcall: hresult 15 bstr varbool*>
 	^self invalidCall: _failureCode! !
-!IRegExp categoriesFor: #Execute:ppMatches:!**auto generated**!COM Interfaces-IRegExp!private! !
-!IRegExp categoriesFor: #matchCollectionClass!constants!private! !
-!IRegExp categoriesFor: #replace:replaceString:!operations!public! !
-!IRegExp categoriesFor: #Replace:replaceString:pDestString:!**auto generated**!COM Interfaces-IRegExp!private! !
-!IRegExp categoriesFor: #Test:pMatch:!**auto generated**!COM Interfaces-IRegExp!private! !
+!VBScript.IRegExp categoriesFor: #Execute:ppMatches:!**auto generated**!COM Interfaces-IRegExp!private! !
+!VBScript.IRegExp categoriesFor: #matchCollectionClass!constants!private! !
+!VBScript.IRegExp categoriesFor: #replace:replaceString:!operations!public! !
+!VBScript.IRegExp categoriesFor: #Replace:replaceString:pDestString:!**auto generated**!COM Interfaces-IRegExp!private! !
+!VBScript.IRegExp categoriesFor: #Test:pMatch:!**auto generated**!COM Interfaces-IRegExp!private! !
 
-!IRegExp class methodsFor!
+!VBScript.IRegExp class methodsFor!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'VBScript_RegExp_55.IRegExp'
@@ -140,5 +141,5 @@ defineFunctions
 		defineFunction: #Replace:replaceString:pDestString:
 			argumentTypes: 'bstr bstr bstr*'
 ! !
-!IRegExp class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!VBScript.IRegExp class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
 

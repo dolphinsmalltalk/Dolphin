@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Object subclass: #'Tools.MethodSearch'
 	instanceVariableNames: 'findDetails regexp literal'
@@ -120,9 +120,9 @@ regexpReferenceFilter
 regularExpression
 	"Private - Answer a <IRegExp> configured with the receiver's current search details."
 
-	regexp isNull 
+	regexp isNull
 		ifTrue: 
-			[regexp := Smalltalk.IRegExp new.
+			[regexp := VBScript.IRegExp2 new.
 			regexp
 				pattern: findDetails pattern;
 				ignoreCase: findDetails isCaseSensitive not].
