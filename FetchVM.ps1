@@ -4,19 +4,17 @@
 
 param 
 (
-    [string]$tagVersion
+    [string]$VMversion
 )
 
 # Override Powershell's default use of TLS1.0 for web requests; this is insecure and no longer works with GitHub
 [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
 
-if(-not($tagVersion)) { Throw “tagVersion required (hint: Use/see fetchvm.cmd)” }
+if(-not($VMVersion)) { Throw “VMVersion required (hint: Use/see fetchvm.cmd)” }
 
 Try 
 {
 	$scriptDir = Split-Path $script:MyInvocation.MyCommand.Path;
-	$parts = $tagVersion -split '\.'
-	$VMversion = $parts[0] + '.' + $parts[1]
 	Write-Host "Fetching DolphinVM.zip" $VMversion
 	$source = "https://github.com/dolphinsmalltalk/Dolphin/releases/download/$VMversion/DolphinVM.zip";
 	$zipFile = $scriptDir+"\DolphinVM.zip";

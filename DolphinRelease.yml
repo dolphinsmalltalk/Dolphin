@@ -22,7 +22,7 @@ build_script:
 
     iscc BuildDolphinSetup.iss
 artifacts:
-- path: Releases\DolphinSetup\DolphinSetup.exe
+- path: Releases\Dolphin8Setup\Dolphin8Setup.exe
   name: SetupExe
 - path: DolphinVM.zip
   name: DolphinVM
