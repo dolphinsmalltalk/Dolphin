@@ -3461,6 +3461,12 @@ Kernel.RelativeFileLocator subclass: #'Kernel.InstallRelativeFileLocator'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+Kernel.RelativeFileLocator subclass: #'Kernel.PackageRelativeFileLocator'
+	instanceVariableNames: 'packageName'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
 Kernel.InstructionInterpreter subclass: #'Kernel.MessageSendCollector'
 	instanceVariableNames: 'messageBlock superMessageBlock'
 	classVariableNames: ''

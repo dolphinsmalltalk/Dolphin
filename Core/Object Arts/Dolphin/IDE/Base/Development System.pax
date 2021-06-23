@@ -88,7 +88,6 @@ package setClassNames: #(
 	#{Tools.PackageHierarchyModel}
 	#{Tools.PackagePrerequisites}
 	#{Tools.PackagePrompter}
-	#{Tools.PackageRelativeFileLocator}
 	#{Tools.PackageSelector}
 	#{Tools.PackedReferencesCategory}
 	#{Tools.ParseContext}
@@ -989,12 +988,6 @@ Kernel.ChunkReader subclass: #'Tools.SingleChunkReader'
 	classConstants: {}!
 Core.Error subclass: #'Tools.InvalidInstallationError'
 	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-Kernel.RelativeFileLocator subclass: #'Tools.PackageRelativeFileLocator'
-	instanceVariableNames: 'packageName'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Object subclass: #'Kernel.PackageManager'
 	instanceVariableNames: 'packages processEvents packagedVariables looseMethods events defaultPackage basePackages'
@@ -601,6 +601,11 @@ loadPrereqsForPackage: aPackage relativeTo: pathString extension: extensionStrin
 				trail: trailCollection].
 	trailCollection addLast: aPackage.
 	^trailCollection!
+
+lookup: packageNameString
+	"Answer the <Package> held by the receiver whose name matches <readableString>, packageName, or nil if there is no such package."
+
+	^self packageNamed: packageNameString ifNone: []!
 
 looseMethodRemoved: aCompiledMethod
 	"Private - The loose <CompiledMethod> argument has been (or is about to be) removed from the
@@ -1219,6 +1224,7 @@ youShouldBeProcessingEvents
 !Kernel.PackageManager categoriesFor: #loadPackage:!binary filing!private! !
 !Kernel.PackageManager categoriesFor: #loadPrereq:relativeTo:extension:loaded:trail:!helpers!private! !
 !Kernel.PackageManager categoriesFor: #loadPrereqsForPackage:relativeTo:extension:loaded:trail:!helpers!private! !
+!Kernel.PackageManager categoriesFor: #lookup:!accessing!public! !
 !Kernel.PackageManager categoriesFor: #looseMethodRemoved:!helpers!private! !
 !Kernel.PackageManager categoriesFor: #looseMethods!accessing!public! !
 !Kernel.PackageManager categoriesFor: #looseMethodUpdated:!helpers!private! !
