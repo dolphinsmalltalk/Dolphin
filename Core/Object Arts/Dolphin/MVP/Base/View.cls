@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Object subclass: #View
 	instanceVariableNames: 'handle creationParent creationStyle presenter model backcolor preferredExtent flags contextMenu font events interactor'
@@ -1432,6 +1432,11 @@ getItemHandle: anInteger ifAbsent: exceptionHandler
 
 getNoRedrawCount
 	^self propertyAt: #_noRedrawCount ifAbsent: [0]!
+
+getOwner
+	"Private - Answers the handle of owner window, or nil if not owned."
+
+	^self getWindow: GW_HWNDOWNER!
 
 getParent
 	"Private - Answers the handle of the parent (or owner) window."
@@ -3020,7 +3025,11 @@ removeSubView: aView
 repositionShell: aShellView
 	aShellView isInitiallyCentered
 		ifTrue: [aShellView centerNear: (self mapPointToScreen: self clientRectangle center)]
-		ifFalse: [aShellView displayOnMonitor: self displayMonitor]!
+		ifFalse: 
+			["The view may already be positioned over the receiver, but not on the monitor on which the receiver is mostly displayed.
+			We don't want to reposition it in this case, as the shell might be something like an in-place editor and should stay where it is."
+			(self screenRectangle containsPoint: aShellView position)
+				ifFalse: [aShellView displayOnMonitor: self displayMonitor]]!
 
 requestDragImages: session
 	"This is where the receiver specifies any drag image overrides. 
@@ -4745,6 +4754,7 @@ zOrderTop
 !View categoriesFor: #getItem:ifAbsent:!hierarchy!private! !
 !View categoriesFor: #getItemHandle:ifAbsent:!hierarchy!private! !
 !View categoriesFor: #getNoRedrawCount!private! !
+!View categoriesFor: #getOwner!hierarchy!private! !
 !View categoriesFor: #getParent!hierarchy!private! !
 !View categoriesFor: #getPreviousSibling!hierarchy!private! !
 !View categoriesFor: #getScrollInfo:bar:!accessing!private! !
