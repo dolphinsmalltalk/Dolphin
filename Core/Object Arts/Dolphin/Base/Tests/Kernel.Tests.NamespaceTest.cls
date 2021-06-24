@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Kernel.Tests.AbstractNamespaceTest subclass: #'Kernel.Tests.NamespaceTest'
 	instanceVariableNames: ''
@@ -65,6 +65,22 @@ testAssociationAtIfAbsent
 	self assert: (Root associationAt: #'Core.Object' ifAbsent: [absent]) identicalTo: absent.
 	self assert: (UI associationAt: #Object ifAbsent: [absent]) identicalTo: absent.
 	self assert: (UI associationAt: #'Core.Object' ifAbsent: [absent]) identicalTo: absent.!
+
+testBindingFromNamespaceWithCustomEnvironment
+	"Test the case of resolving an unqualified name in a method that is defined in a Namespace class in a different environment than that of the Namespace class itself, where the identifier is not bindable in the namespace class, but is bindable in the method environment (bug #1129)."
+
+	| direct indirect |
+	direct := UI bindingFor: 'ConfirmationRequiredWarning'.
+	"Resolve an unqualified name in the context of a namespace that has a direct import of the namespace in which the identifier resides."
+	self assert: (Tools fullBindingFor: 'ConfirmationRequiredWarning') sameAs: direct.
+	"Resolve an unqualified name in the context of a class that cannot resolve the identifier, but with a custom namespace that does import the target namespace."
+	self assertIsNil: (SharedPool class fullBindingFor: 'ConfirmationRequiredWarning').
+	"If we specify a custom environment in which the identifier is bindable, we should be able to find it"
+	indirect := SharedPool class fullBindingFor: 'ConfirmationRequiredWarning' environment: Tools.
+	"Fails currently due to bug imported namespace binding resolution bug."
+	self skipIfCiBuild.
+	self assertNotNil: indirect.
+	self assert: direct sameAs: indirect!
 
 testBindingInParentNamespace
 	"We should be able to resolve bindings in enclosing namespaces from nested namespaces"
@@ -167,6 +183,24 @@ testPrivateImportIntoParentNamespace
 	self assert: (External.Tests fullBindingFor: 'CompiledMethod') value equals: CompiledMethod.
 	self deny: #{External.Tests.CompiledMethod} isDefined!
 
+testResolveImportIntoCustomEnvironment
+	"Test the case of resolving an unqualified name in a method that is in a different namespace than its class, where the unqualified name has a match in a namespace imported into the method namespace, but is not bindable in the class' namespace."
+
+	| direct indirect |
+	"Resolve an unqualified name in the context of a namespace that has a direct import of the namespace in which the identifier resides."
+	direct := Tools fullBindingFor: 'ConfirmationRequiredWarning'.
+	self assertNotNil: direct.
+	"As Tools imports UI, we should be able to find it"
+	self assert: (SharedPool class fullBindingFor: 'UI' environment: Tools) sameAs: UI binding.
+	"Resolve an unqualified name in the context of a class that cannot resolve the identifier, but with a custom namespace that does import the target namespace."
+	indirect := SharedPool class fullBindingFor: 'ConfirmationRequiredWarning' environment: Tools.
+	"Fails currently due to bug imported namespace binding resolution bug."
+	self skip.
+	self assertNotNil: indirect.
+	self assert: direct sameAs: indirect
+	
+	!
+
 testShortName
 	"The short name of a namespace is it's unqualified name if it is defined in Smalltalk, or in one of Smalltalk's imports, otherwise it is the full name."
 
@@ -195,6 +229,7 @@ testUnqualifiedName
 !Kernel.Tests.NamespaceTest categoriesFor: #testAllEnvironments!public!unit tests! !
 !Kernel.Tests.NamespaceTest categoriesFor: #testAssociationAt!public! !
 !Kernel.Tests.NamespaceTest categoriesFor: #testAssociationAtIfAbsent!public! !
+!Kernel.Tests.NamespaceTest categoriesFor: #testBindingFromNamespaceWithCustomEnvironment!public! !
 !Kernel.Tests.NamespaceTest categoriesFor: #testBindingInParentNamespace!public!unit tests! !
 !Kernel.Tests.NamespaceTest categoriesFor: #testEnvironment!public!unit tests! !
 !Kernel.Tests.NamespaceTest categoriesFor: #testFullName!public!unit tests! !
@@ -205,6 +240,7 @@ testUnqualifiedName
 !Kernel.Tests.NamespaceTest categoriesFor: #testName!public!unit tests! !
 !Kernel.Tests.NamespaceTest categoriesFor: #testPrintOn!public!unit tests! !
 !Kernel.Tests.NamespaceTest categoriesFor: #testPrivateImportIntoParentNamespace!public!unit tests! !
+!Kernel.Tests.NamespaceTest categoriesFor: #testResolveImportIntoCustomEnvironment!public! !
 !Kernel.Tests.NamespaceTest categoriesFor: #testShortName!public!unit tests! !
 !Kernel.Tests.NamespaceTest categoriesFor: #testSimpleName!public!unit tests! !
 !Kernel.Tests.NamespaceTest categoriesFor: #testUnqualifiedName!public!unit tests! !
