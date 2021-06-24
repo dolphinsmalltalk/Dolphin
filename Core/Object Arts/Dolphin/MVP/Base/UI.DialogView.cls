@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 UI.ShellView subclass: #'UI.DialogView'
 	instanceVariableNames: 'endModal isModal oldWndProc'
@@ -56,6 +56,20 @@ defaultBackcolor
 	"Private - Answer the default colour for the receiver's background"
 
 	^(self hasCaption or: [self isThemed not]) ifTrue: [Color face3d] ifFalse: [super defaultBackcolor]!
+
+defaultExtent
+	"Answer the default size of the receiver"
+
+	"Implementation Note: This is used only for creation, and as the the initial size and position are ignored when creating a dialog, we may as well answer any fixed point rather than calculating something that will be ignored."
+
+	^260 @ 295!
+
+defaultPositionWithin: aParentView forExtent: aPoint
+	"Private - Answer the default position of the receiver within aParentView given its intended extent aPoint."
+
+	"Implementation Note: This is used only for creation, and as the the initial size and position are ignored when creating a dialog, we may as well answer any fixed point rather than calculating something that will be ignored."
+
+	^0 @ 0!
 
 defaultWindowProcessing: message wParam: wParam lParam: lParam
 	"Private - Pass a Windows message to the 'default' window procedure of the receiver.
@@ -392,6 +406,8 @@ wmInitDialog: message wParam: wParam lParam: lParam
 !UI.DialogView categoriesFor: #basicCreateAt:extent:!private!realizing/unrealizing! !
 !UI.DialogView categoriesFor: #cancel!commands!public! !
 !UI.DialogView categoriesFor: #defaultBackcolor!colors!constants!private! !
+!UI.DialogView categoriesFor: #defaultExtent!constants!public! !
+!UI.DialogView categoriesFor: #defaultPositionWithin:forExtent:!geometry!private! !
 !UI.DialogView categoriesFor: #defaultWindowProcessing:wParam:lParam:!dispatching!private! !
 !UI.DialogView categoriesFor: #defaultWindowStyle!constants!private! !
 !UI.DialogView categoriesFor: #destroy!public!realizing/unrealizing! !

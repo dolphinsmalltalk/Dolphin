@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Tests.DolphinTest subclass: #'UI.Tests.DialogViewTest'
 	instanceVariableNames: 'owner shell2 fakeUser32 cursorPos'
@@ -125,6 +125,32 @@ testCenteringInOwnerModeless
 				<= 1.
 	dialog destroy!
 
+testInplaceNotRepositioned
+	| desktopMonitors position dialog leftMonitor ownerRect |
+	desktopMonitors := DisplayMonitor desktopMonitors.
+	leftMonitor := desktopMonitors first.
+	"This test requires multiple monitors arranged in a typical horizontal configuration. It could be made to work in a vertical configuration, but there much value."
+	self skipUnless: 
+			[desktopMonitors size > 1
+				and: [(desktopMonitors at: 2) workArea origin >= leftMonitor workArea topRight]].
+	"We need a view that is mainly on the left-most monitor, and partially on the next"
+	ownerRect := (leftMonitor workArea corner x - 400) @ 100 extent: 640 @ 480.
+	owner := self createShell: ownerRect text: self printString , ' owner'.
+	self assert: owner displayMonitor equals: leftMonitor.
+	dialog := DialogView new
+				isInitiallyCentered: false;
+				create;
+				yourself.
+	"Position the dialog on the 2nd monitor, but still over the owner view, before we show it"
+	dialog rectangle: (ownerRect corner - self dialogExtent + 50 extent: self dialogExtent).
+	self deny: dialog displayMonitor equals: leftMonitor.
+	position := dialog position.
+	"Show the dialog - it shouldn't get moved"
+	dialog showModeless: owner.
+	self deny: dialog displayMonitor equals: leftMonitor.
+	self assert: dialog position equals: position.
+	dialog destroy!
+
 testNearOwnerModal
 	"Test that a modal dialog that is not initially centred is at least shown on the same display as its owner."
 
@@ -153,6 +179,7 @@ testNearOwnerModeless
 	secondary := self getSecondaryMonitorIfAvailable.
 	self createTestShells: secondary.
 	dialog := self createSubjectDialog: false.
+	self assert: dialog displayMonitor equals: DisplayMonitor primary.
 	position := dialog position.
 	dialog showModeless: owner.
 	self assert: dialog displayMonitor equals: secondary.
@@ -213,6 +240,7 @@ workAreaNearest: aPoint
 !UI.Tests.DialogViewTest categoriesFor: #tearDown!public!running! !
 !UI.Tests.DialogViewTest categoriesFor: #testCenteringInOwner!public!unit tests! !
 !UI.Tests.DialogViewTest categoriesFor: #testCenteringInOwnerModeless!public!unit tests! !
+!UI.Tests.DialogViewTest categoriesFor: #testInplaceNotRepositioned!public!unit tests! !
 !UI.Tests.DialogViewTest categoriesFor: #testNearOwnerModal!public!unit tests! !
 !UI.Tests.DialogViewTest categoriesFor: #testNearOwnerModeless!public!unit tests! !
 !UI.Tests.DialogViewTest categoriesFor: #testRemainsOnScreen!public!unit tests! !

@@ -154,6 +154,12 @@ UI subclass: #'UI.Tests'
 	imports: #(#{XProgramming.SUnit})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+OS.UserLibrary subclass: #'UI.Tests.FakeUserLibrary'
+	instanceVariableNames: 'user32 getForegroundWindowBlock getActiveWindowBlock getCursorPosBlock'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
 Core.Tests.DolphinTest subclass: #'UI.Tests.AbstractContainerViewTest'
 	instanceVariableNames: 'containerView'
 	classVariableNames: ''
@@ -240,12 +246,6 @@ Core.Tests.DolphinTest subclass: #'UI.Tests.DisplayMonitorTest'
 	classConstants: {}!
 Core.Tests.DolphinTest subclass: #'UI.Tests.EvaluationConverterTest'
 	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-OS.UserLibrary subclass: #'UI.Tests.FakeUserLibrary'
-	instanceVariableNames: 'user32 getForegroundWindowBlock getActiveWindowBlock getCursorPosBlock'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''

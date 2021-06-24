@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 UI.View subclass: #'UI.DesktopView'
 	instanceVariableNames: 'resolution defaultExtentBlock dvReserved1 dvReserved2'
@@ -362,6 +362,7 @@ workArea
 !UI.DesktopView categoriesFor: #performCommand:!commands!public! !
 !UI.DesktopView categoriesFor: #queryContextMenu!menus!public! !
 !UI.DesktopView categoriesFor: #refresh!drawing!public! !
+!UI.DesktopView categoriesFor: #repositionShell:!helpers!private! !
 !UI.DesktopView categoriesFor: #resolution!accessing!public! !
 !UI.DesktopView categoriesFor: #screenRectangle!geometry!public! !
 !UI.DesktopView categoriesFor: #setDefaultButton:state:!accessing!default button!private! !
