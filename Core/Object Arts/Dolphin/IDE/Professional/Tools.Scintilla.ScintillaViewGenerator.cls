@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Object subclass: #'Tools.Scintilla.ScintillaViewGenerator'
 	instanceVariableNames: 'events commentQueue lexerConstantPrefixes previewChanges commands parsingDeprecated namespace constantsPool generatedSelectors aliases functions'
@@ -371,6 +371,9 @@ defineConstantsPool
 				'SC_PRINT_INVERTLIGHT' -> 1.
 				'SC_PRINT_NORMAL' -> 0.
 				'SC_PRINT_SCREENCOLOURS' -> 5.
+				'SC_REPRESENTATION_BLOB' -> 1.
+				'SC_REPRESENTATION_COLOUR' -> 16.
+				'SC_REPRESENTATION_PLAIN' -> 0.
 				'SC_SEL_LINES' -> 2.
 				'SC_SEL_RECTANGLE' -> 1.
 				'SC_SEL_STREAM' -> 0.
@@ -522,6 +525,7 @@ defineConstantsPool
 				'SCI_CLEAR' -> 2180.
 				'SCI_CLEARALL' -> 2004.
 				'SCI_CLEARALLCMDKEYS' -> 2072.
+				'SCI_CLEARALLREPRESENTATIONS' -> 2770.
 				'SCI_CLEARCMDKEY' -> 2071.
 				'SCI_CLEARDOCUMENTSTYLE' -> 2005.
 				'SCI_CLEARREGISTEREDIMAGES' -> 2408.
@@ -623,6 +627,7 @@ defineConstantsPool
 				'SCI_GETDEFAULTFOLDDISPLAYTEXT' -> 2723.
 				'SCI_GETDIRECTFUNCTION' -> 2184.
 				'SCI_GETDIRECTPOINTER' -> 2185.
+				'SCI_GETDIRECTSTATUSFUNCTION' -> 2772.
 				'SCI_GETDOCPOINTER' -> 2357.
 				'SCI_GETDOCUMENTOPTIONS' -> 2379.
 				'SCI_GETEDGECOLOUR' -> 2364.
@@ -721,6 +726,8 @@ defineConstantsPool
 				'SCI_GETRECTANGULARSELECTIONCARETVIRTUALSPACE' -> 2593.
 				'SCI_GETRECTANGULARSELECTIONMODIFIER' -> 2599.
 				'SCI_GETREPRESENTATION' -> 2666.
+				'SCI_GETREPRESENTATIONAPPEARANCE' -> 2767.
+				'SCI_GETREPRESENTATIONCOLOUR' -> 2769.
 				'SCI_GETSCROLLWIDTH' -> 2275.
 				'SCI_GETSCROLLWIDTHTRACKING' -> 2517.
 				'SCI_GETSEARCHFLAGS' -> 2199.
@@ -925,6 +932,7 @@ defineConstantsPool
 				'SCI_RELEASEALLEXTENDEDSTYLES' -> 2552.
 				'SCI_RELEASEDOCUMENT' -> 2377.
 				'SCI_RELEASELINECHARACTERINDEX' -> 2712.
+				'SCI_REPLACERECTANGULAR' -> 2771.
 				'SCI_REPLACESEL' -> 2170.
 				'SCI_REPLACETARGET' -> 2194.
 				'SCI_REPLACETARGETRE' -> 2195.
@@ -1051,6 +1059,8 @@ defineConstantsPool
 				'SCI_SETRECTANGULARSELECTIONCARETVIRTUALSPACE' -> 2592.
 				'SCI_SETRECTANGULARSELECTIONMODIFIER' -> 2598.
 				'SCI_SETREPRESENTATION' -> 2665.
+				'SCI_SETREPRESENTATIONAPPEARANCE' -> 2766.
+				'SCI_SETREPRESENTATIONCOLOUR' -> 2768.
 				'SCI_SETSAVEPOINT' -> 2014.
 				'SCI_SETSCROLLWIDTH' -> 2274.
 				'SCI_SETSCROLLWIDTHTRACKING' -> 2516.
@@ -1940,6 +1950,10 @@ ignoredMessages
 
 	"5.0.3 - the elements API replaces quite a number of colour settings"
 	ignoredMessages addAll: #('SCI_MARKERGETLAYER' 'SCI_MARKERSETLAYER' 'SCI_GETCARETLINEVISIBLE' 'SCI_SETCARETLINEVISIBLE' 'SCI_SETCARETLINEBACK' 'SCI_GETCARETLINEBACKALPHA' 'SCI_SETCARETLINEBACKALPHA' 'SCI_SETCARETFORE' 'SCI_GETSELALPHA' 'SCI_SETSELALPHA'  'SCI_GETADDITIONALSELALPHA' 'SCI_SETADDITIONALSELALPHA'  'SCI_GETADDITIONALSELFORE' 'SCI_SETADDITIONALSELFORE' 'SCI_GETADDITIONALSELBACK' 'SCI_SETADDITIONALSELBACK' 'SCI_SETADDITIONALCARETFORE' 'SCI_SETSELBACK' 'SCI_SETSELFORE' 'SCI_SETHOTSPOTACTIVEBACK' 'SCI_SETHOTSPOTACTIVEFORE' 'SCI_GETELEMENTBASECOLOUR').
+
+	"5.1.0"
+	"The status codes are currently very limited and it is difficult to see why one would bother with them. Even if they were more useful, we wouldn't want to call the function this way - odd that it wasn't immediately added to the ScintillaDLL exports like the existing direct function. Perhaps when it is, it will be worth calling, but even then we won't need this message."
+	ignoredMessages add: 'SCI_GETDIRECTSTATUSFUNCTION'.
 
 	ignoredMessages
 		shrink;

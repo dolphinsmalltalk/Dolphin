@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 External.DynamicLinkLibrary subclass: #'UI.Scintilla.ScintillaLibrary'
 	instanceVariableNames: ''
@@ -58,7 +58,7 @@ fileName
 versionString
 	"Answer the version of the Scintilla control for which this library was generated."
 
-	^'5.0.3'! !
+	^'5.1.0'! !
 !UI.Scintilla.ScintillaLibrary class categoriesFor: #closeDefault!private!realizing/unrealizing! !
 !UI.Scintilla.ScintillaLibrary class categoriesFor: #fileName!constants!public! !
 !UI.Scintilla.ScintillaLibrary class categoriesFor: #versionString!**auto generated**!constants!public!scintilla interface! !

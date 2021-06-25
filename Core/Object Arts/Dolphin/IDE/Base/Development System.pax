@@ -633,6 +633,7 @@ package setMethodNames: #(
 	#(#{UI.RichTextEdit class} #publishedAspectsOfInstances)
 	#(#{UI.RichTextPresenter class} #publishedEventsOfInstances)
 	#(#{UI.Scintilla.Attribute class} #publishedAspectsOfInstances)
+	#(#{UI.Scintilla.CharacterRepresentation class} #publishedAspectsOfInstances)
 	#(#{UI.Scintilla.IndicatorStyle class} #publishedAspectsOfInstances)
 	#(#{UI.Scintilla.KeyBinding class} #publishedAspectsOfInstances)
 	#(#{UI.Scintilla.Margin class} #publishedAspectsOfInstances)
@@ -6906,6 +6907,19 @@ publishedAspectsOfInstances
 		yourself! !
 !UI.Scintilla.Attribute class categoriesFor: #publishedAspectsOfInstances!constants!public! !
 
+!UI.Scintilla.CharacterRepresentation class methodsFor!
+
+publishedAspectsOfInstances
+	"Answer a <LookupTable> of the <Aspect>s published by instances of the receiver."
+
+	^super publishedAspectsOfInstances
+		add: (Aspect name: #character);
+		add: (Aspect boolean: #isBlob);
+		add: (Aspect string: #representation);
+		add: (Aspect color: #color);
+		yourself! !
+!UI.Scintilla.CharacterRepresentation class categoriesFor: #publishedAspectsOfInstances!constants!public! !
+
 !UI.Scintilla.IndicatorStyle class methodsFor!
 
 publishedAspectsOfInstances
@@ -7002,6 +7016,8 @@ publishedAspectsOfInstances
 		removeKey: #alignment;
 		add: (Aspect sequenceableCollection: #keyBindings
 					addEvaluationFrom: {UI.Scintilla.KeyBinding name , ' new'}) beImmutable;
+		add: (Aspect sequenceableCollection: #characterRepresentations
+					addEvaluationFrom: {UI.Scintilla.CharacterRepresentation name , ' new'}) beImmutable;
 		add: ((Aspect sequenceableCollection: #margins)
 					getBlock: [:view | view margins asOrderedCollection];
 					beImmutable);

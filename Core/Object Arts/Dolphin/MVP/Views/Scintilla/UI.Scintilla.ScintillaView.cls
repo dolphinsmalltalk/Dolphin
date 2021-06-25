@@ -1,7 +1,7 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 UI.MultilineTextEdit subclass: #'UI.Scintilla.ScintillaView'
-	instanceVariableNames: 'this currentTextStyles styleIdMap styler markerDefinitions markers wordChars registeredImages modificationEventMask autoCStops autoCFillups elementColors caretBlinkTime _unused30 _unused31 indicators callTipTabWidth punctuation callTipHighlightColor braceChars whitespaces scFlags allTextStyles foldMarginColor foldMarginHiColor foldMarkerStyle foldFlags stringClass keyBindings indicatorStyles _unused47 _unused48 annotationStyles _unused50 _unused51 edgeColor'
+	instanceVariableNames: 'this currentTextStyles styleIdMap styler markerDefinitions markers wordChars registeredImages modificationEventMask autoCStops autoCFillups elementColors caretBlinkTime characterRepresentations _unused31 indicators callTipTabWidth punctuation callTipHighlightColor braceChars whitespaces scFlags allTextStyles foldMarginColor foldMarginHiColor foldMarkerStyle foldFlags stringClass keyBindings indicatorStyles _unused47 _unused48 annotationStyles _unused50 _unused51 edgeColor'
 	classVariableNames: 'CodePages DefaultKeyBindings DefaultTextStyles LexerKeywords Library'
 	imports: #()
 	classInstanceVariableNames: ''
@@ -373,6 +373,9 @@ appendText: aString
 	| text |
 	text := stringClass coerceString: aString.
 	self modifyText: [self sciAppendText: text size text: text]!
+
+applyCharacterRepresentations
+	characterRepresentations do: [:each | each applyToView: self initializing: true]!
 
 applyStyle: aSymbol toNext: anInteger 
 	"Apply the named style to the next anInteger characters (from the current styling position)
@@ -1183,6 +1186,15 @@ characterAt: anInteger
 	| ch |
 	ch := (self sciGetCharAt: anInteger) bitAnd: 16rFF.
 	^stringClass characterForCodeUnit: ch!
+
+characterRepresentations
+	^(characterRepresentations ifNil: [#()] ifNotNil: [characterRepresentations])
+		asSortedCollection: [:a :b | a character <= b character]!
+
+characterRepresentations: aCollection
+	characterRepresentations := aCollection asArray.
+	self sciClearAllRepresentations.
+	characterRepresentations ifNotNil: [self applyCharacterRepresentations]!
 
 charCloseToPosition: aPoint
 	"Answer the one-based index of the character closest to the specified <Point> within the
@@ -3329,7 +3341,8 @@ initializeControl
 	autoCStops ifNotNil: [self sciAutoCStops: autoCStops].
 	foldFlags ifNotNil: [self setFoldFlags].
 	keyBindings ifNotNil: [self updateKeyBindings].
-	caretBlinkTime ifNotNil: [self setCaretBlinkTime]!
+	caretBlinkTime ifNotNil: [self setCaretBlinkTime].
+	characterRepresentations ifNotNil: [self applyCharacterRepresentations]!
 
 initializeMarkerDefinitions
 	markerDefinitions do: [:each | each applyToView: self initializing: true]!
@@ -5971,6 +5984,17 @@ sciClearAllCmdKeys
 				wParam: 0
 				lParam: 0]!
 
+sciClearAllRepresentations
+	"Private - Clear representations to default."
+
+	this
+		ifNotNil: 
+			[Library
+				directFunction: this
+				msg: SCI_CLEARALLREPRESENTATIONS
+				wParam: 0
+				lParam: 0]!
+
 sciClearCmdKey: keyDefinitionInteger
 	"Private - When key+modifier combination keyDefinition is pressed do nothing."
 
@@ -7142,6 +7166,29 @@ sciGetRepresentation: encodedCharacterString
 				lpParam: result.
 			result]!
 
+sciGetRepresentationAppearance: encodedCharacterString
+	"Private - Get the appearance of a representation."
+
+	^this
+		ifNil: [0]
+		ifNotNil: 
+			[Library
+				directFunction: this
+				msg: SCI_GETREPRESENTATIONAPPEARANCE
+				wpParam: encodedCharacterString
+				lParam: 0]!
+
+sciGetRepresentationColour: encodedCharacterString
+	"Private - Get the colour of a representation."
+
+	^this
+		ifNotNil: 
+			[Color fromRgbaCode: (Library
+						directFunction: this
+						msg: SCI_GETREPRESENTATIONCOLOUR
+						wpParam: encodedCharacterString
+						lParam: 0)]!
+
 sciGetSearchFlags
 	"Private - Get the search flags used by SearchInTarget."
 
@@ -8181,6 +8228,17 @@ sciReleaseLineCharacterIndex: lineCharacterIndexInteger
 				wParam: lineCharacterIndexInteger
 				lParam: 0]!
 
+sciReplaceRectangular: lengthInteger text: textString
+	"Private - Replace the selection with text like a rectangular paste."
+
+	this
+		ifNotNil: 
+			[Library
+				directFunction: this
+				msg: SCI_REPLACERECTANGULAR
+				wParam: lengthInteger
+				lpParam: textString]!
+
 sciReplaceSel: textString
 	"Private - Replace the selected text with the argument text."
 
@@ -8875,6 +8933,28 @@ sciSetRepresentation: encodedCharacterString representation: representationStrin
 				msg: SCI_SETREPRESENTATION
 				wpParam: encodedCharacterString
 				lpParam: representationString]!
+
+sciSetRepresentationAppearance: encodedCharacterString appearance: appearanceInteger
+	"Private - Set the appearance of a representation."
+
+	this
+		ifNotNil: 
+			[Library
+				directFunction: this
+				msg: SCI_SETREPRESENTATIONAPPEARANCE
+				wpParam: encodedCharacterString
+				lParam: appearanceInteger]!
+
+sciSetRepresentationColour: encodedCharacterString colour: colourColor
+	"Private - Set the colour of a representation."
+
+	this
+		ifNotNil: 
+			[Library
+				directFunction: this
+				msg: SCI_SETREPRESENTATIONCOLOUR
+				wpParam: encodedCharacterString
+				lParam: colourColor rgbaCode]!
 
 sciSetSavePoint
 	"Private - Remember the current position in the undo history as the position at which the
@@ -11333,6 +11413,7 @@ zoomOut
 !UI.Scintilla.ScintillaView categoriesFor: #annotationStyles:!annotations!public!style definition! !
 !UI.Scintilla.ScintillaView categoriesFor: #annotationStylesFromStyleBytes:!annotations!converting!private! !
 !UI.Scintilla.ScintillaView categoriesFor: #appendText:!public!text retrieval & modification! !
+!UI.Scintilla.ScintillaView categoriesFor: #applyCharacterRepresentations!accessing!character representations!private! !
 !UI.Scintilla.ScintillaView categoriesFor: #applyStyle:toNext:!public!styling! !
 !UI.Scintilla.ScintillaView categoriesFor: #applyStyleId:toNext:!public!styling! !
 !UI.Scintilla.ScintillaView categoriesFor: #applyTextStylesForLexer:!helpers!lexer!private! !
@@ -11359,7 +11440,7 @@ zoomOut
 !UI.Scintilla.ScintillaView categoriesFor: #backspaceUnindents!**auto generated**!public!scintilla interface!tabs & indentation guides!testing! !
 !UI.Scintilla.ScintillaView categoriesFor: #backspaceUnindents:!**auto generated**!public!scintilla interface!tabs & indentation guides! !
 !UI.Scintilla.ScintillaView categoriesFor: #basicAnnotateLine:withText:inStyles:!annotations!helpers!private! !
-!UI.Scintilla.ScintillaView categoriesFor: #basicClearAll!**auto generated**!private!scintilla interface! !
+!UI.Scintilla.ScintillaView categoriesFor: #basicClearAll!**auto generated**!private!scintilla interface!text retrieval & modification! !
 !UI.Scintilla.ScintillaView categoriesFor: #basicClearContainerIndicators!indicators!private! !
 !UI.Scintilla.ScintillaView categoriesFor: #basicClearSelection!**auto generated**!private!scintilla interface!selection! !
 !UI.Scintilla.ScintillaView categoriesFor: #basicKeyBindings!key bindings!private! !
@@ -11416,13 +11497,15 @@ zoomOut
 !UI.Scintilla.ScintillaView categoriesFor: #caretWidth:!caret, selection, and hotspot styles!public!scintilla interface! !
 !UI.Scintilla.ScintillaView categoriesFor: #centerCurrentLine!**auto generated**!commands!public!scintilla interface! !
 !UI.Scintilla.ScintillaView categoriesFor: #characterAt:!public!text retrieval & modification! !
+!UI.Scintilla.ScintillaView categoriesFor: #characterRepresentations!accessing!character representations!public! !
+!UI.Scintilla.ScintillaView categoriesFor: #characterRepresentations:!accessing!character representations!public! !
 !UI.Scintilla.ScintillaView categoriesFor: #charCloseToPosition:!public!selection! !
 !UI.Scintilla.ScintillaView categoriesFor: #charNearestPosition:!public!selection! !
 !UI.Scintilla.ScintillaView categoriesFor: #clearAll!commands!public!scintilla interface!text retrieval & modification! !
 !UI.Scintilla.ScintillaView categoriesFor: #clearContainerIndicators!indicators!public! !
 !UI.Scintilla.ScintillaView categoriesFor: #clearIndicator:from:to:!indicators!public! !
 !UI.Scintilla.ScintillaView categoriesFor: #clearRange:!public!text retrieval & modification! !
-!UI.Scintilla.ScintillaView categoriesFor: #clearTabStops:!**auto generated**!public!scintilla interface! !
+!UI.Scintilla.ScintillaView categoriesFor: #clearTabStops:!**auto generated**!public!scintilla interface!tabs & indentation guides! !
 !UI.Scintilla.ScintillaView categoriesFor: #codePage!other settings!public! !
 !UI.Scintilla.ScintillaView categoriesFor: #codePage:!other settings!public! !
 !UI.Scintilla.ScintillaView categoriesFor: #columnFromPosition:!**auto generated**!enquiries!public!scintilla interface! !
@@ -11452,8 +11535,8 @@ zoomOut
 !UI.Scintilla.ScintillaView categoriesFor: #defaultBraceChars!brace highlighting!constants!private! !
 !UI.Scintilla.ScintillaView categoriesFor: #defaultCurrentLineBackcolor!caret, selection, and hotspot styles!constants!element colors!private! !
 !UI.Scintilla.ScintillaView categoriesFor: #defaultEdgeColor!long lines!private!scintilla interface! !
-!UI.Scintilla.ScintillaView categoriesFor: #defaultFoldTextTag!**auto generated**!public!scintilla interface! !
-!UI.Scintilla.ScintillaView categoriesFor: #defaultFoldTextTag:!**auto generated**!public!scintilla interface! !
+!UI.Scintilla.ScintillaView categoriesFor: #defaultFoldTextTag!**auto generated**!folding!public!scintilla interface! !
+!UI.Scintilla.ScintillaView categoriesFor: #defaultFoldTextTag:!**auto generated**!folding!public!scintilla interface! !
 !UI.Scintilla.ScintillaView categoriesFor: #defaultMarkerDefinitions!constants!markers!private! !
 !UI.Scintilla.ScintillaView categoriesFor: #defaultModEventMask!constants!private! !
 !UI.Scintilla.ScintillaView categoriesFor: #defaultTextLimit!constants!private! !
@@ -11467,9 +11550,9 @@ zoomOut
 !UI.Scintilla.ScintillaView categoriesFor: #deleteToNextWord!**auto generated**!commands!public!scintilla interface! !
 !UI.Scintilla.ScintillaView categoriesFor: #deleteToStartOfLine!**auto generated**!commands!public!scintilla interface! !
 !UI.Scintilla.ScintillaView categoriesFor: #deleteToStartOfWord!**auto generated**!commands!public!scintilla interface! !
-!UI.Scintilla.ScintillaView categoriesFor: #describeKeywordSets!**auto generated**!enquiries!public!scintilla interface! !
+!UI.Scintilla.ScintillaView categoriesFor: #describeKeywordSets!**auto generated**!lexer!public!scintilla interface! !
 !UI.Scintilla.ScintillaView categoriesFor: #destroyAutoCompletionListImages!**auto generated**!autocompletion!public!scintilla interface! !
-!UI.Scintilla.ScintillaView categoriesFor: #documentLineFromLine:!**auto generated**!public!scintilla interface! !
+!UI.Scintilla.ScintillaView categoriesFor: #documentLineFromLine:!**auto generated**!folding!public!scintilla interface! !
 !UI.Scintilla.ScintillaView categoriesFor: #drawingPhases!other settings!public!scintilla interface! !
 !UI.Scintilla.ScintillaView categoriesFor: #drawingPhases:!other settings!public! !
 !UI.Scintilla.ScintillaView categoriesFor: #drawingTechnology!other settings!public!scintilla interface! !
@@ -11494,8 +11577,8 @@ zoomOut
 !UI.Scintilla.ScintillaView categoriesFor: #endUndoGroup!**auto generated**!public!scintilla interface!undo & redo! !
 !UI.Scintilla.ScintillaView categoriesFor: #ensureCaretVisible!caret!public! !
 !UI.Scintilla.ScintillaView categoriesFor: #ensureHasAnnotationStyles!annotations!helpers!initializing!private! !
-!UI.Scintilla.ScintillaView categoriesFor: #ensureLineVisible:!**auto generated**!public!scintilla interface!scrolling! !
-!UI.Scintilla.ScintillaView categoriesFor: #ensureLineVisibleEnforcingPolicy:!**auto generated**!public!scintilla interface! !
+!UI.Scintilla.ScintillaView categoriesFor: #ensureLineVisible:!**auto generated**!folding!public!scintilla interface!scrolling! !
+!UI.Scintilla.ScintillaView categoriesFor: #ensureLineVisibleEnforcingPolicy:!**auto generated**!folding!public!scintilla interface! !
 !UI.Scintilla.ScintillaView categoriesFor: #ensureRangeVisible:!public!scrolling! !
 !UI.Scintilla.ScintillaView categoriesFor: #ensureVisible:!public!scrolling! !
 !UI.Scintilla.ScintillaView categoriesFor: #enUpdate!event handling-win32!private! !
@@ -11554,7 +11637,7 @@ zoomOut
 !UI.Scintilla.ScintillaView categoriesFor: #foldFlags!folding!public! !
 !UI.Scintilla.ScintillaView categoriesFor: #foldFlags:!folding!public! !
 !UI.Scintilla.ScintillaView categoriesFor: #foldLevelOfLine:!**auto generated**!public!scintilla interface! !
-!UI.Scintilla.ScintillaView categoriesFor: #foldLine:action:!**auto generated**!public!scintilla interface! !
+!UI.Scintilla.ScintillaView categoriesFor: #foldLine:action:!**auto generated**!folding!public!scintilla interface! !
 !UI.Scintilla.ScintillaView categoriesFor: #foldLine:level:!**auto generated**!folding!public!scintilla interface! !
 !UI.Scintilla.ScintillaView categoriesFor: #foldMargin!folding!margins!public! !
 !UI.Scintilla.ScintillaView categoriesFor: #foldMarginColor!folding!margins!public! !
@@ -11890,6 +11973,7 @@ zoomOut
 !UI.Scintilla.ScintillaView categoriesFor: #sciCharPositionFromPoint:y:!**auto generated**!enquiries!private!scintilla interface! !
 !UI.Scintilla.ScintillaView categoriesFor: #sciCharPositionFromPointClose:y:!**auto generated**!enquiries!private!scintilla interface! !
 !UI.Scintilla.ScintillaView categoriesFor: #sciClearAllCmdKeys!**auto generated**!key bindings!private!scintilla interface! !
+!UI.Scintilla.ScintillaView categoriesFor: #sciClearAllRepresentations!**auto generated**!character representations!private!scintilla interface! !
 !UI.Scintilla.ScintillaView categoriesFor: #sciClearCmdKey:!**auto generated**!key bindings!private!scintilla interface! !
 !UI.Scintilla.ScintillaView categoriesFor: #sciClearRepresentation:!**auto generated**!character representations!private!scintilla interface! !
 !UI.Scintilla.ScintillaView categoriesFor: #sciContractedFoldNext:!**auto generated**!folding!private!scintilla interface! !
@@ -11975,12 +12059,14 @@ zoomOut
 !UI.Scintilla.ScintillaView categoriesFor: #sciGetProperty:!**auto generated**!private!scintilla interface! !
 !UI.Scintilla.ScintillaView categoriesFor: #sciGetPropertyExpanded:!**auto generated**!private!scintilla interface! !
 !UI.Scintilla.ScintillaView categoriesFor: #sciGetPropertyInt:defaultValue:!**auto generated**!private!scintilla interface! !
-!UI.Scintilla.ScintillaView categoriesFor: #sciGetPunctuationChars!**auto generated**!by character or utf16 code unit!character classes!private!scintilla interface! !
+!UI.Scintilla.ScintillaView categoriesFor: #sciGetPunctuationChars!**auto generated**!character classes!private!scintilla interface!words! !
 !UI.Scintilla.ScintillaView categoriesFor: #sciGetRectangularSelectionAnchorVirtualSpace!**auto generated**!multiple selection and virtual space!private!scintilla interface!selection! !
 !UI.Scintilla.ScintillaView categoriesFor: #sciGetRectangularSelectionCaretVirtualSpace!**auto generated**!multiple selection and virtual space!private!scintilla interface!selection! !
-!UI.Scintilla.ScintillaView categoriesFor: #sciGetRepresentation:!**auto generated**!private!scintilla interface! !
+!UI.Scintilla.ScintillaView categoriesFor: #sciGetRepresentation:!**auto generated**!character representations!private!scintilla interface! !
+!UI.Scintilla.ScintillaView categoriesFor: #sciGetRepresentationAppearance:!**auto generated**!character representations!private!scintilla interface! !
+!UI.Scintilla.ScintillaView categoriesFor: #sciGetRepresentationColour:!**auto generated**!character representations!private!scintilla interface! !
 !UI.Scintilla.ScintillaView categoriesFor: #sciGetSearchFlags!**auto generated**!private!scintilla interface!searching & replacing! !
-!UI.Scintilla.ScintillaView categoriesFor: #sciGetSelectionLayer!**auto generated**!private!scintilla interface! !
+!UI.Scintilla.ScintillaView categoriesFor: #sciGetSelectionLayer!**auto generated**!caret, selection, and hotspot styles!private!scintilla interface! !
 !UI.Scintilla.ScintillaView categoriesFor: #sciGetSelectionMode!**auto generated**!private!scintilla interface!selection! !
 !UI.Scintilla.ScintillaView categoriesFor: #sciGetSelectionNAnchor:!**auto generated**!accessing!multiple selection and virtual space!private!scintilla interface!selection! !
 !UI.Scintilla.ScintillaView categoriesFor: #sciGetSelectionNAnchorVirtualSpace:!**auto generated**!multiple selection and virtual space!private!scintilla interface!selection! !
@@ -12058,6 +12144,7 @@ zoomOut
 !UI.Scintilla.ScintillaView categoriesFor: #sciReleaseAllExtendedStyles!**auto generated**!private!scintilla interface!style definition! !
 !UI.Scintilla.ScintillaView categoriesFor: #sciReleaseDocument:!**auto generated**!multiple views!private!scintilla interface! !
 !UI.Scintilla.ScintillaView categoriesFor: #sciReleaseLineCharacterIndex:!**auto generated**!by character or utf16 code unit!private!scintilla interface! !
+!UI.Scintilla.ScintillaView categoriesFor: #sciReplaceRectangular:text:!**auto generated**!private!scintilla interface!selection! !
 !UI.Scintilla.ScintillaView categoriesFor: #sciReplaceSel:!**auto generated**!private!scintilla interface!text retrieval & modification! !
 !UI.Scintilla.ScintillaView categoriesFor: #sciReplaceTarget:text:!**auto generated**!private!scintilla interface!searching & replacing! !
 !UI.Scintilla.ScintillaView categoriesFor: #sciReplaceTargetRE:text:!**auto generated**!private!scintilla interface!searching & replacing! !
@@ -12118,11 +12205,13 @@ zoomOut
 !UI.Scintilla.ScintillaView categoriesFor: #sciSetPunctuationChars:!**auto generated**!character classes!private!scintilla interface!words! !
 !UI.Scintilla.ScintillaView categoriesFor: #sciSetRectangularSelectionAnchorVirtualSpace:!**auto generated**!multiple selection and virtual space!private!scintilla interface!selection! !
 !UI.Scintilla.ScintillaView categoriesFor: #sciSetRectangularSelectionCaretVirtualSpace:!**auto generated**!multiple selection and virtual space!private!scintilla interface!selection! !
-!UI.Scintilla.ScintillaView categoriesFor: #sciSetRepresentation:representation:!**auto generated**!private!scintilla interface! !
+!UI.Scintilla.ScintillaView categoriesFor: #sciSetRepresentation:representation:!**auto generated**!character representations!private!scintilla interface! !
+!UI.Scintilla.ScintillaView categoriesFor: #sciSetRepresentationAppearance:appearance:!**auto generated**!character representations!private!scintilla interface! !
+!UI.Scintilla.ScintillaView categoriesFor: #sciSetRepresentationColour:colour:!**auto generated**!character representations!private!scintilla interface! !
 !UI.Scintilla.ScintillaView categoriesFor: #sciSetSavePoint!**auto generated**!private!scintilla interface!text retrieval & modification! !
 !UI.Scintilla.ScintillaView categoriesFor: #sciSetSearchFlags:!**auto generated**!private!scintilla interface!searching & replacing! !
 !UI.Scintilla.ScintillaView categoriesFor: #sciSetSelection:anchor:!**auto generated**!private!scintilla interface!selection! !
-!UI.Scintilla.ScintillaView categoriesFor: #sciSetSelectionLayer:!**auto generated**!private!scintilla interface! !
+!UI.Scintilla.ScintillaView categoriesFor: #sciSetSelectionLayer:!**auto generated**!caret, selection, and hotspot styles!private!scintilla interface! !
 !UI.Scintilla.ScintillaView categoriesFor: #sciSetSelectionMode:!**auto generated**!private!scintilla interface!selection! !
 !UI.Scintilla.ScintillaView categoriesFor: #sciSetSelectionNAnchor:anchor:!**auto generated**!multiple selection and virtual space!private!scintilla interface! !
 !UI.Scintilla.ScintillaView categoriesFor: #sciSetSelectionNAnchorVirtualSpace:space:!**auto generated**!multiple selection and virtual space!private!scintilla interface!selection! !
