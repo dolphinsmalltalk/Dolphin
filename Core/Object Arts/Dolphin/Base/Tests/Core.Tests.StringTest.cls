@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Tests.ArrayedCollectionTest subclass: #'Core.Tests.StringTest'
 	instanceVariableNames: ''
@@ -677,6 +677,9 @@ testReverseDo
 			actual := actual contents.
 			self assert: actual equals: expected]!
 
+testSpecies
+	self assert: self collectionClass empty species sameAs: String!
+
 testSplitByCharacterArray
 	| empty separators |
 	empty := #().
@@ -1107,6 +1110,7 @@ withAllTestCases
 !Core.Tests.StringTest categoriesFor: #testReverse!public!unit tests! !
 !Core.Tests.StringTest categoriesFor: #testReversedFromTo!public!unit tests! !
 !Core.Tests.StringTest categoriesFor: #testReverseDo!public!unit tests! !
+!Core.Tests.StringTest categoriesFor: #testSpecies!public!unit tests! !
 !Core.Tests.StringTest categoriesFor: #testSplitByCharacterArray!public!unit tests! !
 !Core.Tests.StringTest categoriesFor: #testSplitByString!public!unit tests! !
 !Core.Tests.StringTest categoriesFor: #testSplitSingle!public!unit tests! !
