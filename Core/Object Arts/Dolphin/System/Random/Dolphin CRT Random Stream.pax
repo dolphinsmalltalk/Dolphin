@@ -2,7 +2,7 @@
 package := Package name: 'Dolphin CRT Random Stream'.
 package paxVersion: 2.1;
 	preDeclareClassesOnLoad: false;
-	basicComment: 'Simple, fast, but low quality Random stream implemented on the C-runtime library rand() function. Note that this has only 16 bits of randomness.'.
+	basicComment: 'Simple, fast, but low quality Random stream implemented on the C-runtime library rand() function. Note that this has only 15 bits of randomness.'.
 
 
 package setClassNames: #(
