@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 UI.Dialog subclass: #'Tools.CreateSubclassDialog'
 	instanceVariableNames: 'packagesPresenter subclassesPresenter namePresenter usePackagePresenter package superclassPresenter'
@@ -76,7 +76,7 @@ model: aSubjectModel
 	aClassOrNil := aSubjectModel value.
 	package := SmalltalkSystem current defaultPackage.
 	superclassPresenter model: aClassOrNil.
-	namePresenter model: aClassOrNil name asValue.
+	namePresenter model: aClassOrNil fullName asValue.
 	self onSuperclassChanged!
 
 onPackageSelected
