@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 UI.Tests.AbstractMultilineTextEditTest subclass: #'UI.Scintilla.Tests.ScintillaViewTest'
 	instanceVariableNames: ''
@@ -191,7 +191,8 @@ testStbUpgradeFrom15
 	filer := STLInFiler on: stream.
 	filer context: View desktop.
 	presenter := filer next.
-	#(29 30 31 47 48 50 51) do: [:i | self assertIsNil: (presenter instVarAt: i)].
+	#(29 30 47 48 50 51) do: [:i | self assertIsNil: (presenter instVarAt: i)].
+	self assert: (presenter instVarAt: 31) sameAs: UI.Scintilla.ScintillaLibrary default.
 	self assert: presenter elementColors associations asArray
 		equals: {SC_ELEMENT_CARET -> Color windowText}!
 
@@ -205,7 +206,8 @@ Line 2' 416 1458 #currentLineAlpha: 8 #(63) 416 1458 #caretPeriod: 8 #(530) 416 
 	filer context: View desktop.
 	presenter := filer next.
 	"The element colour instance variables should have been nil'd, and replaced with entries in the elementColors dictionary. Any alpha settings should be transferred to the relevant colour(s)"
-	#(29 30 31 47 48 50 51) do: [:i | self assertIsNil: (presenter instVarAt: i)].
+	#(29 30 47 48 50 51) do: [:i | self assertIsNil: (presenter instVarAt: i)].
+	self assert: (presenter instVarAt: 31) sameAs: UI.Scintilla.ScintillaLibrary default.
 	self assert: presenter caretForecolor equals: Color navy.
 	self assert: presenter secondaryCaretForecolor equals: Color purple.
 	self assert: presenter currentLineBackcolor equals: (Color cyan alpha: 63).

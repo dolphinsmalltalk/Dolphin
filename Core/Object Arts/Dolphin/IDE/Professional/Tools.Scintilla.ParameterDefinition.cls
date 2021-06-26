@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Object subclass: #'Tools.Scintilla.ParameterDefinition'
 	instanceVariableNames: 'name typeName typeRef'
@@ -18,10 +18,14 @@ emitOutParam: aCharacter on: aWriteStream
 	aWriteStream
 		space;
 		nextPut: aCharacter;
-		nextPutAll: (self type byRef ifTrue: ['pParam: '] ifFalse: ['Param: ']);
-		display: (self isUnused ifTrue: [0] ifFalse: [self parameterName]);
-		space;
-		display: self type toScintilla!
+		nextPutAll: (self type byRef ifTrue: ['pParam: '] ifFalse: ['Param: ']).
+	self isUnused
+		ifTrue: [aWriteStream nextPut: $0]
+		ifFalse: 
+			[| paramType aString |
+			paramType := self type.
+			aString := self parameterName.
+			paramType printParameter: aString on: aWriteStream]!
 
 isUnused
 	| aString |

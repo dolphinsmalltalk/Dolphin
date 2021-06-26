@@ -7,9 +7,13 @@ External.DynamicLinkLibrary subclass: #'UI.Scintilla.ScintillaLibrary'
 	classInstanceVariableNames: ''
 	classConstants: {}!
 UI.Scintilla.ScintillaLibrary guid: (Core.GUID fromString: '{846bc1f2-ad71-411e-8c63-c99780a5a626}')!
-UI.Scintilla.ScintillaLibrary comment: 'ExternalLibrary class to wrap the Scintilla DLL (SciLexer.dll).'!
+UI.Scintilla.ScintillaLibrary comment: '`External.DynamcLinkLibrary` class to wrap the Scintilla DLL (SciLexer.dll).'!
 !UI.Scintilla.ScintillaLibrary categoriesForClass!External-Libraries! !
 !UI.Scintilla.ScintillaLibrary methodsFor!
+
+directBooleanFunction: sciThis msg: msg wParam: wParam lParam: lParam
+	<stdcall: bool Scintilla_DirectFunction handle dword uintptr uintptr>
+	^self invalidCall: _failureCode!
 
 directFunction: sciThis msg: msg wParam: wParam lParam: lParam
 	<stdcall: intptr Scintilla_DirectFunction handle dword uintptr uintptr>
@@ -38,6 +42,7 @@ versionFormatString
 	"
 
 	^'%2!!d!!.%3!!d!!.%4!!d!!'! !
+!UI.Scintilla.ScintillaLibrary categoriesFor: #directBooleanFunction:msg:wParam:lParam:!operations!private! !
 !UI.Scintilla.ScintillaLibrary categoriesFor: #directFunction:msg:wParam:lParam:!operations!private! !
 !UI.Scintilla.ScintillaLibrary categoriesFor: #directFunction:msg:wParam:lpParam:!operations!private! !
 !UI.Scintilla.ScintillaLibrary categoriesFor: #directFunction:msg:wpParam:lParam:!operations!private! !

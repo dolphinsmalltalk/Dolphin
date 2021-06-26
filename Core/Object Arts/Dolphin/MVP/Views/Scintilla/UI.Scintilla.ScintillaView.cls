@@ -1,8 +1,8 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
 UI.MultilineTextEdit subclass: #'UI.Scintilla.ScintillaView'
-	instanceVariableNames: 'this currentTextStyles styleIdMap styler markerDefinitions markers wordChars registeredImages modificationEventMask autoCStops autoCFillups elementColors caretBlinkTime characterRepresentations _unused31 indicators callTipTabWidth punctuation callTipHighlightColor braceChars whitespaces scFlags allTextStyles foldMarginColor foldMarginHiColor foldMarkerStyle foldFlags stringClass keyBindings indicatorStyles _unused47 _unused48 annotationStyles _unused50 _unused51 edgeColor'
-	classVariableNames: 'CodePages DefaultKeyBindings DefaultTextStyles LexerKeywords Library'
+	instanceVariableNames: 'this currentTextStyles styleIdMap styler markerDefinitions markers wordChars registeredImages modificationEventMask autoCStops autoCFillups elementColors caretBlinkTime characterRepresentations library indicators callTipTabWidth punctuation callTipHighlightColor braceChars whitespaces scFlags allTextStyles foldMarginColor foldMarginHiColor foldMarkerStyle foldFlags stringClass keyBindings indicatorStyles _unused47 _unused48 annotationStyles _unused50 _unused51 edgeColor'
+	classVariableNames: 'CodePages DefaultKeyBindings DefaultTextStyles LexerKeywords'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
@@ -19,9 +19,9 @@ UI.Scintilla.ScintillaView comment: '`ScintillaView` is a `<valueView>` class th
 
 Scintilla is a very powerful control with an extensive range of features. It is inevitably somewhat complex, and you are urged to read the [Scintilla documentation](https://www.scintilla.org/ScintillaDoc.html) if you want to use this control in your own applications. In order to expose the full capabilities of Scintilla, this class and its supporting classes are also somewhat complex, but as far as reasonably possible this complexity is hidden from common use cases.
 
-This class provides at least a basic interface to all of Scintilla''s extensive functionality; almost every `SCI_XXX` message listed in the documentation has a corresponding wrapper method in this class. The wrapper methods have been auto-generated from Scintilla''s interface definition file (Scintilla.iface), and are either of the form `#sciXXX:etc`, or have had a more readable symbol allocated. These can all be found in the ''scintilla interface'' method category. Likewise each of the `SCN_XXX` notification messages has a corresponding `#scnXXX` event handler that is (or can be) used to hook the event. These can all be found in the ''event handling-scintilla'' method category. In addition ScintillaView implements higher-level functionality to allow it to be used as a drop-in replacement for a `MultilineTextEdit`, and which also simplifies the use of most of its additional capabilities. 
+This class provides at least a basic interface to all of Scintilla''s extensive functionality; almost every `SCI_XXX` message listed in the documentation has a corresponding wrapper method in this class. The wrapper methods have been auto-generated from Scintilla''s interface definition file (Scintilla.iface), and are either of the form `#sciXXX:etc`, or have had a more readable symbol allocated. These can all be found in the ''scintilla interface'' method category. Likewise each of the `SCN_XXX` notification messages has a corresponding `#scnXXX` event handler that is (or can be) used to hook the event. These can all be found in the ''event handling-scintilla'' method category. In addition `ScintillaView` implements higher-level functionality to allow it to be used as a drop-in replacement for a `MultilineTextEdit`, and which also simplifies the use of most of its additional capabilities. 
 
-ScintillaView provides high-level object-oriented wrappings for the following Scintilla features:
+`ScintillaView` provides high-level object-oriented wrappings for the following Scintilla features:
 	Text retrieval and modification	(though not get/set of styled text, and based around the standard `<textView>` protocol)
 	Searching and replacing 		(`TextEdit` implementation is inherited, but does not include RegExp replace)
 	Overtype
@@ -29,10 +29,12 @@ ScintillaView provides high-level object-oriented wrappings for the following Sc
 	Undo and Redo
 	Mouse capture				(supported as `#willCaptureMouse` aspect, but not really required - use MVP''s `MouseTracker` instead)
 	Line endings
-	Styling						(an extensive Smalltalk framework is provided - stylers can be implemented in Smalltalk e.g. `ScintillaSmalltalkStyler` based on `SmalltalkScanner`)
-	Style definition				(full control is possible by altering aspects of a collection of `ScintillaTextStyle` objects, UI editors are provided for this too).
+	Styling						(an extensive Smalltalk framework is provided - stylers can be implemented in Smalltalk e.g. `Tools.SmalltalkStyler` based on `Kernel.Scanner`)
+	Style definition				(full control is possible by altering aspects of a collection of `TextStyle` objects, UI editors are provided for this too).
+	Element colours
 	Caret, selection, 
 		and hotspot styles			(not hotspot styles)
+	Character Representations
 	Margins
 	Other Settings					(mostly)
 	Brace highlighting
@@ -41,6 +43,7 @@ ScintillaView provides high-level object-oriented wrappings for the following Sc
 	Indicators					Named "modern" indicators are now supported. Indicator values are unused at present and probably not needed.
 	Autocompletion				(note that the container needs to invoke auto-completion when appropriate)
 	User lists
+	Call tips
 	Keyboard commands			(some are bound to existing commands)
 	Key bindings
 	Line wrapping
@@ -52,9 +55,8 @@ ScintillaView provides high-level object-oriented wrappings for the following Sc
 	Multiple-selection
 	
 Features of Scintilla that are not currently exposed at any level higher than the basic message interface include:
-	Error handling				(not currently used by Scintilla itself)
+	Error handling				(not currently used much by Scintilla itself)
 	Cursor					(superfluous given MVP''s cursor management framework)
-	Call tips
 	Popup edit menu			(no special means to disable control context menus is needed in MVP)
 	Macro-recording
 	Printing					(partial support for some properties is provided)
@@ -64,22 +66,23 @@ Features of Scintilla that are not currently exposed at any level higher than th
 N.B. Scintilla is an excellent editor control, but does not do much parameter validation. Thus if using the low-level API be careful not to pass in invalid parameters as these may cause unexpected behaviour. For example if length passed to `SCI_SETSTYLING` is -1, then the control goes into a loop (at the time of writing).
 
 ## Instance Variables:
-  `this`						`ExternalHandle`. C++ ''this'' pointer for direct function invocation.
-  `currentTextStyles`				`IdentityDictionary` mapping `Symbol` to `ScintillaTextStyle` for the current lexer.
+
+  `this`						`External.Handle`. C++ ''this'' pointer for direct function invocation.
+  `currentTextStyles`				`IdentityDictionary` mapping `Symbol` to `TextStyle` for the current lexer.
   `styleIdMap`					`Array` 
   `styler`						`ScintillaStyler`. Responsible for dynamically ''colouring'' text in the view.
-  `markerDefinitions`			`IdentityDictionary` mapping `Symbol` to `ScintillaMarkerDefinition`.
-  `markers`					`IdentitySet` of `ScintillaMarker`s. All markers currently set in the view.
+  `markerDefinitions`			`IdentityDictionary` mapping `Symbol` to `MarkerDefinition`.
+  `markers`					`IdentitySet` of `Marker`s. All markers currently set in the view.
   `wordChars`					`String` of characters considered to be word delimiters.
   `registeredImages`			`LookupTable`
   `modificationEventMask`		 `<integer>` bit mask controlling `SCN_MODIFIED` notifications (see Scintilla docs).
   `autoCStops`					`String` or `nil`. The characters which cancel an auto-completion list when typed..
   `autoCFillups`				`String` or `nil`. The characters which accept the selection in an auto-completion list when typed.
-  `whitespaceBackcolor`			`Color` or `nil.` The colour of the background drawn behind whitespace.
-  `whitespaceForecolor`			`Color` or `nil.` The colour of the glyphs used to display visible whitespace.
-  `selectionBackcolor` 			`Color`. The background colour used to highlight the selection (default is silver).
-  `selectionForecolor`			`Color` or `nil`. The foreground colour used to highlight the selection (default is window text colour)
-  `indicators`					`Array` of `ScintillaIndicator`s
+  `elementColors`				`LookupTable` of `Color` keyed by `SmallInteger` element id.
+  `caretBlinktime`				`Duration` of caret blink.
+  `characterRepresentations`		`Array` of `CharacterRepresentation`.
+  `library`						`ScintillaLibrary` instance for direct function invocation. Can be a `NullScintillaLibrary` if the view is unrealised.
+  `indicators`					`Array` of `Indicator`s
   `callTipTabWidth`				`integer` width of tabs in call tips
   `punctuation`					`String` or nil. Used to identify word boundaries.
   `callTipHighlightColor`			`Color` or `nil`. The hilight colour for calltips.
@@ -91,29 +94,20 @@ N.B. Scintilla is an excellent editor control, but does not do much parameter va
   `foldMarginHiColor`			`Color` or `nil`. The fold margin hilight colour (if visible).
   `foldMarkerStyle`				`Symbol`. Name of the fold (outlining) marker style employed in the fold margin.
   `foldFlags`					`<integer>`. Lexer fold flags.
-  `codePage`					`<integer>` code page identifier - only CP_ACP or CP_UTF8 are supported
+  `stringClass`					Either `AnsiString` or `Utf8String`, depending on whether in Unicode mode. Default and recommended for most uses is Utf8.
   `keyBindings`					`IdentityDictionary` mapping Dolphin accelerator key codes to Scintilla messages. `nil` by default (default bindings are used).
-  `indicatorStyles`				`IdentityDictionary` mapping `Symbol` or `<integer>` indicator style names to `ScintillaIndicatorStyle`s.
-  `secondarySelectionForecolor`	`Color` or `nil.` 
-  `secondarySelectionBackcolor`	`Color` or `nil.` 
+  `indicatorStyles`				`IdentityDictionary` mapping `Symbol` or `<integer>` indicator style names to `IndicatorStyle`s.
   `annotationStyles`				`IdentityDictionary`
-  `caretForecolor`				`Color` or `nil.` Colour of the caret (default is window text colour)
-  `secondaryCaretForecolor`		`Color` or `nil.`  Colour of secondary carets (default is mid-grey)
   `edgeColor`					`Color` or `nil.` 
-  `currentLineBackcolor`			`Color` or `nil.` 
-  `activeHotspotForecolor`		`Color` or `nil.` 
-  `activeHotspotBackcolor`		`Color` or `nil.` 
 
 ## Class Variables:
-  `AnnotationStylesOffset`	`<integer>`
-  `BackgroundDwellEvents`	`<integer>`
-  `BraceHilightingMask`		`<integer>` bit mask for accessing brace highlighting flag.
+CodePages DefaultKeyBindings DefaultTextStyles LexerKeywords
+
   `CodePages`				`IdentityDictionary` mapping `<integer>` to `Symbol`
-  `DefaultCallTipTabWidth`	`<integer>`
   `DefaultKeyBindings`		`LookupTable` mapping Dolphin accelerator key codes to Scintilla messages for the default key bindings.
   `DefaultTextStyles`			`IdentityDictionary` of default text style maps by lexer name.
-  `MarginStylesOffset`		`<integer>`
-  `FoldingMask`			`<integer>` bit mask for access the folding (outlining) enabled flag.
+  `LexerKeywords`			`LookupTable` of `Array` of String, keyed by lexer `Symbol`
+
 '!
 !UI.Scintilla.ScintillaView categoriesForClass!MVP-Views! !
 !UI.Scintilla.ScintillaView methodsFor!
@@ -121,13 +115,11 @@ N.B. Scintilla is an excellent editor control, but does not do much parameter va
 acceptAutoCompletion
 	"User has selected an item so remove the list and insert the selection."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_AUTOCCOMPLETE
-				wParam: 0
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_AUTOCCOMPLETE
+		wParam: 0
+		lParam: 0!
 
 activeHotspotBackcolor
 	"Get the back colour for active hotspots."
@@ -224,26 +216,21 @@ allKeyBindings
 anchorPosition
 	"Returns the position of the opposite end of the selection to the caret."
 
-	^this
-		ifNil: [0]
-		ifNotNil: 
-			[(Library
-				directFunction: this
-				msg: SCI_GETANCHOR
-				wParam: 0
-				lParam: 0) + 1]!
+	^(library
+		directFunction: this
+		msg: SCI_GETANCHOR
+		wParam: 0
+		lParam: 0) + 1!
 
 anchorPosition: anchorInteger
 	"Set the selection anchor to a position. The anchor is the opposite end of the selection
 	from the caret."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_SETANCHOR
-				wParam: anchorInteger - 1
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_SETANCHOR
+		wParam: anchorInteger - 1
+		lParam: 0!
 
 annotateLine: anInteger withAll: aCollectionOfScintillaAnnotation
 	"Apply the <collection> of <ScintillaAnnotation> as the annotations for the line identified
@@ -405,60 +392,47 @@ applyTextStylesForLexer: aSymbol
 areAdditionalCaretsVisible
 	"Whether additional carets are visible"
 
-	^this
-		ifNil: [false]
-		ifNotNil: 
-			[(Library
-				directFunction: this
-				msg: SCI_GETADDITIONALCARETSVISIBLE
-				wParam: 0
-				lParam: 0) asBoolean]!
+	^library
+		directBooleanFunction: this
+		msg: SCI_GETADDITIONALCARETSVISIBLE
+		wParam: 0
+		lParam: 0!
 
 areAdditionalCaretsVisible: additionalCaretsVisibleBoolean
 	"Set whether additional carets are visible"
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_SETADDITIONALCARETSVISIBLE
-				wParam: additionalCaretsVisibleBoolean asParameter
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_SETADDITIONALCARETSVISIBLE
+		wParam: additionalCaretsVisibleBoolean asParameter
+		lParam: 0!
 
 areAllLinesVisible
 	"Are all lines visible?"
 
-	^this
-		ifNil: [false]
-		ifNotNil: 
-			[(Library
-				directFunction: this
-				msg: SCI_GETALLLINESVISIBLE
-				wParam: 0
-				lParam: 0) asBoolean]!
+	^library
+		directBooleanFunction: this
+		msg: SCI_GETALLLINESVISIBLE
+		wParam: 0
+		lParam: 0!
 
 areHotspotsSingleLine
 	"Get the HotspotSingleLine property"
 
-	^this
-		ifNil: [false]
-		ifNotNil: 
-			[(Library
-				directFunction: this
-				msg: SCI_GETHOTSPOTSINGLELINE
-				wParam: 0
-				lParam: 0) asBoolean]!
+	^library
+		directBooleanFunction: this
+		msg: SCI_GETHOTSPOTSINGLELINE
+		wParam: 0
+		lParam: 0!
 
 areHotspotsSingleLine: singleLineBoolean
 	"Limit hotspots to single line so hotspots on two lines don't merge."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_SETHOTSPOTSINGLELINE
-				wParam: singleLineBoolean asParameter
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_SETHOTSPOTSINGLELINE
+		wParam: singleLineBoolean asParameter
+		lParam: 0!
 
 autoCompletionAcceptChars
 	"Answer a <String> of characters that, when typed, will accept the current selection in an
@@ -489,20 +463,17 @@ autoCompletionCurrentText
 	text Result is NUL-terminated."
 
 	| len |
-	len := this
-				ifNil: [0]
-				ifNotNil: 
-					[Library
-						directFunction: this
-						msg: SCI_AUTOCGETCURRENTTEXT
-						wParam: 0
-						lpParam: nil].
-	^len = 0
+	len := library
+				directFunction: this
+				msg: SCI_AUTOCGETCURRENTTEXT
+				wParam: 0
+				lpParam: nil.
+	^len == 0
 		ifTrue: [stringClass empty]
 		ifFalse: 
 			[| result |
 			result := stringClass newFixed: len.
-			Library
+			library
 				directFunction: this
 				msg: SCI_AUTOCGETCURRENTTEXT
 				wParam: 0
@@ -525,14 +496,11 @@ autoCompletionImageIdSeparator: aCharacter
 autoCompletionListPosition
 	"Retrieve the position of the caret when the auto-completion list was displayed."
 
-	^this
-		ifNil: [0]
-		ifNotNil: 
-			[(Library
-				directFunction: this
-				msg: SCI_AUTOCPOSSTART
-				wParam: 0
-				lParam: 0) + 1]!
+	^(library
+		directFunction: this
+		msg: SCI_AUTOCPOSSTART
+		wParam: 0
+		lParam: 0) + 1!
 
 autoCompletionSeparator
 	"Answer the <Character> used as the separator between entries in an auto-completion list <String>."
@@ -562,48 +530,39 @@ backcolorChanged
 backspace
 	"Delete the selection or if no selection, the character before the caret."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_DELETEBACK
-				wParam: 0
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_DELETEBACK
+		wParam: 0
+		lParam: 0!
 
 backspaceNoLine
 	"Delete the selection or if no selection, the character before the caret. Will not delete
 	the character before at the start of a line."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_DELETEBACKNOTLINE
-				wParam: 0
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_DELETEBACKNOTLINE
+		wParam: 0
+		lParam: 0!
 
 backspaceUnindents
 	"Does a backspace pressed when caret is within indentation unindent?"
 
-	^this
-		ifNil: [false]
-		ifNotNil: 
-			[(Library
-				directFunction: this
-				msg: SCI_GETBACKSPACEUNINDENTS
-				wParam: 0
-				lParam: 0) asBoolean]!
+	^library
+		directBooleanFunction: this
+		msg: SCI_GETBACKSPACEUNINDENTS
+		wParam: 0
+		lParam: 0!
 
 backspaceUnindents: bsUnIndentsBoolean
 	"Sets whether a backspace pressed when caret is within indentation unindents."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_SETBACKSPACEUNINDENTS
-				wParam: bsUnIndentsBoolean asParameter
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_SETBACKSPACEUNINDENTS
+		wParam: bsUnIndentsBoolean asParameter
+		lParam: 0!
 
 basicAnnotateLine: anInteger withText: aString inStyles: aByteArray 
 	self
@@ -613,13 +572,11 @@ basicAnnotateLine: anInteger withText: aString inStyles: aByteArray
 basicClearAll
 	"Private - Delete all text in the document."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_CLEARALL
-				wParam: 0
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_CLEARALL
+		wParam: 0
+		lParam: 0!
 
 basicClearContainerIndicators
 	"Private - Clear all the containers indicators (those with Id's starting with
@@ -637,13 +594,11 @@ basicClearContainerIndicators
 basicClearSelection
 	"Private - Clear the selection."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_CLEAR
-				wParam: 0
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_CLEAR
+		wParam: 0
+		lParam: 0!
 
 basicKeyBindings
 	^keyBindings!
@@ -651,81 +606,65 @@ basicKeyBindings
 basicLineFromPosition: posInteger
 	"Private - Retrieve the line containing a position."
 
-	^this isNil
-		ifTrue: [0]
-		ifFalse: 
-			[Library
-				directFunction: this
-				msg: SCI_LINEFROMPOSITION
-				wParam: posInteger
-				lParam: 0]!
+	^library
+		directFunction: this
+		msg: SCI_LINEFROMPOSITION
+		wParam: posInteger
+		lParam: 0!
 
 basicPositionAtLine: lineInteger
 	"Private - Retrieve the position at the start of a line."
 
-	^this isNil
-		ifTrue: [0]
-		ifFalse: 
-			[Library
-				directFunction: this
-				msg: SCI_POSITIONFROMLINE
-				wParam: lineInteger
-				lParam: 0]!
+	^library
+		directFunction: this
+		msg: SCI_POSITIONFROMLINE
+		wParam: lineInteger
+		lParam: 0!
 
 basicRemoveAllAnnotations
 	"Private - Clear the annotations from all lines"
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_ANNOTATIONCLEARALL
-				wParam: 0
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_ANNOTATIONCLEARALL
+		wParam: 0
+		lParam: 0!
 
 basicSelectAll
 	"Private - Select all the text in the document."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_SELECTALL
-				wParam: 0
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_SELECTALL
+		wParam: 0
+		lParam: 0!
 
 basicSelectionStart: anchorInteger end: caretInteger
 	"Private - Select a range of text."
 
-	this isNil
-		ifFalse: 
-			[Library
-				directFunction: this
-				msg: SCI_SETSEL
-				wParam: anchorInteger
-				lParam: caretInteger]!
+	library
+		directFunction: this
+		msg: SCI_SETSEL
+		wParam: anchorInteger
+		lParam: caretInteger!
 
 basicUndo
 	"Private - Undo one action in the undo history."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_UNDO
-				wParam: 0
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_UNDO
+		wParam: 0
+		lParam: 0!
 
 beginUndoGroup
 	"Start a sequence of actions that is undone and redone as a unit. May be nested."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_BEGINUNDOACTION
-				wParam: 0
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_BEGINUNDOACTION
+		wParam: 0
+		lParam: 0!
 
 boundingRectangleOfTextRange: anIntervalOfInteger 
 	| height topLeft line style width start |
@@ -926,25 +865,20 @@ callTipHighlightColor: aColorOrNil
 callTipPosition
 	"Retrieve the position where the caret was before displaying the call tip."
 
-	^this
-		ifNil: [0]
-		ifNotNil: 
-			[(Library
-				directFunction: this
-				msg: SCI_CALLTIPPOSSTART
-				wParam: 0
-				lParam: 0) + 1]!
+	^(library
+		directFunction: this
+		msg: SCI_CALLTIPPOSSTART
+		wParam: 0
+		lParam: 0) + 1!
 
 callTipPosition: posStartInteger
 	"Set the start position in order to change when backspacing removes the calltip."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_CALLTIPSETPOSSTART
-				wParam: posStartInteger - 1
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_CALLTIPSETPOSSTART
+		wParam: posStartInteger - 1
+		lParam: 0!
 
 callTipStyle
 	^currentTextStyles at: #callTip
@@ -964,47 +898,38 @@ callTipTabWidth: anInteger
 cancelAutoCompletion
 	"Remove the auto-completion list from the screen."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_AUTOCCANCEL
-				wParam: 0
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_AUTOCCANCEL
+		wParam: 0
+		lParam: 0!
 
 cancelCallTip
 	"Remove the call tip from the screen."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_CALLTIPCANCEL
-				wParam: 0
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_CALLTIPCANCEL
+		wParam: 0
+		lParam: 0!
 
 cancelModes
 	"Cancel any modes such as call tip or auto-completion list display."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_CANCEL
-				wParam: 0
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_CANCEL
+		wParam: 0
+		lParam: 0!
 
 canHScroll
 	"Is the horizontal scroll bar visible?"
 
-	^this
-		ifNil: [false]
-		ifNotNil: 
-			[(Library
-				directFunction: this
-				msg: SCI_GETHSCROLLBAR
-				wParam: 0
-				lParam: 0) asBoolean]!
+	^library
+		directBooleanFunction: this
+		msg: SCI_GETHSCROLLBAR
+		wParam: 0
+		lParam: 0!
 
 canHScroll: aBoolean 
 	"Sets the receiver into horizontal scrolling mode the <Boolean> argument is true."
@@ -1026,62 +951,48 @@ canPaste
 canRedo
 	"Are there any redoable actions in the undo history?"
 
-	^this
-		ifNil: [false]
-		ifNotNil: 
-			[(Library
-				directFunction: this
-				msg: SCI_CANREDO
-				wParam: 0
-				lParam: 0) asBoolean]!
+	^library
+		directBooleanFunction: this
+		msg: SCI_CANREDO
+		wParam: 0
+		lParam: 0!
 
 canScrollPastEnd
 	"Retrieve whether the maximum scroll position has the last line at the bottom of the view."
 
-	^this
-		ifNil: [false]
-		ifNotNil: 
-			[(Library
-				directFunction: this
-				msg: SCI_GETENDATLASTLINE
-				wParam: 0
-				lParam: 0) asBoolean]!
+	^library
+		directBooleanFunction: this
+		msg: SCI_GETENDATLASTLINE
+		wParam: 0
+		lParam: 0!
 
 canScrollPastEnd: endAtLastLineBoolean
 	"Sets the scroll range so that maximum scroll position has the last line at the bottom of
 	the view (default). Setting this to false allows scrolling one page below the last line."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_SETENDATLASTLINE
-				wParam: endAtLastLineBoolean asParameter
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_SETENDATLASTLINE
+		wParam: endAtLastLineBoolean asParameter
+		lParam: 0!
 
 canUndo
 	"Are there any undoable actions in the undo history?"
 
-	^this
-		ifNil: [false]
-		ifNotNil: 
-			[(Library
-				directFunction: this
-				msg: SCI_CANUNDO
-				wParam: 0
-				lParam: 0) asBoolean]!
+	^library
+		directBooleanFunction: this
+		msg: SCI_CANUNDO
+		wParam: 0
+		lParam: 0!
 
 canVScroll
 	"Is the vertical scroll bar visible?"
 
-	^this
-		ifNil: [false]
-		ifNotNil: 
-			[(Library
-				directFunction: this
-				msg: SCI_GETVSCROLLBAR
-				wParam: 0
-				lParam: 0) asBoolean]!
+	^library
+		directBooleanFunction: this
+		msg: SCI_GETVSCROLLBAR
+		wParam: 0
+		lParam: 0!
 
 caretBlinkTime
 	"Get the <Duration> of the caret blink. If nil then the default period is used (that Scintilla initializes from the result of the Win32 GetCaretBlinkTime function)"
@@ -1113,25 +1024,20 @@ caretPeriod: anInteger
 caretPosition
 	"Returns the position of the caret."
 
-	^this
-		ifNil: [0]
-		ifNotNil: 
-			[(Library
-				directFunction: this
-				msg: SCI_GETCURRENTPOS
-				wParam: 0
-				lParam: 0) + 1]!
+	^(library
+		directFunction: this
+		msg: SCI_GETCURRENTPOS
+		wParam: 0
+		lParam: 0) + 1!
 
 caretPosition: caretInteger
 	"Set caret to a position, while removing any existing selection."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_SETEMPTYSELECTION
-				wParam: caretInteger - 1
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_SETEMPTYSELECTION
+		wParam: caretInteger - 1
+		lParam: 0!
 
 caretScreenCoordinates
 	^self mapPointToScreen: (self positionOfChar: self caretPosition)!
@@ -1152,14 +1058,11 @@ caretStyle: aSymbol
 caretWidth
 	"Returns the width of the insert mode caret."
 
-	^this
-		ifNil: [0]
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_GETCARETWIDTH
-				wParam: 0
-				lParam: 0]!
+	^library
+		directFunction: this
+		msg: SCI_GETCARETWIDTH
+		wParam: 0
+		lParam: 0!
 
 caretWidth: anInteger 
 	"Set the width of the caret to the number of pels specified by the <integer> argument."
@@ -1171,13 +1074,11 @@ caretWidth: anInteger
 centerCurrentLine
 	"Centre current line in window."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_VERTICALCENTRECARET
-				wParam: 0
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_VERTICALCENTRECARET
+		wParam: 0
+		lParam: 0!
 
 characterAt: anInteger
 	"Answer the <Character> at the specified one-based <integer> index in the receiver's text.
@@ -1234,13 +1135,11 @@ clearRange: anInterval
 clearTabStops: lineInteger
 	"Clear explicit tabstops on a line."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_CLEARTABSTOPS
-				wParam: lineInteger - 1
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_CLEARTABSTOPS
+		wParam: lineInteger - 1
+		lParam: 0!
 
 codePage
 	"Answer a <Symbol> naming the code page currently in use. Note that the multi-byte code
@@ -1265,14 +1164,11 @@ codePage: aSymbol
 columnFromPosition: posInteger
 	"Retrieve the column number of a position, taking tab width into account."
 
-	^this
-		ifNil: [0]
-		ifNotNil: 
-			[(Library
-				directFunction: this
-				msg: SCI_GETCOLUMN
-				wParam: posInteger - 1
-				lParam: 0) + 1]!
+	^(library
+		directFunction: this
+		msg: SCI_GETCOLUMN
+		wParam: posInteger - 1
+		lParam: 0) + 1!
 
 command: anInteger id: id
 	"Private - Change events via WM_COMMAND should be disabled as of Scintilla 4.1.5. We handle change of focus, etc, through SCN_XXX notifications."
@@ -1296,35 +1192,29 @@ controlCharacter: aCharacter
 convertToLowercase
 	"Transform the selection to lower case."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_LOWERCASE
-				wParam: 0
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_LOWERCASE
+		wParam: 0
+		lParam: 0!
 
 convertToUppercase
 	"Transform the selection to upper case."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_UPPERCASE
-				wParam: 0
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_UPPERCASE
+		wParam: 0
+		lParam: 0!
 
 copyLine
 	"Copy the line containing the caret."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_LINECOPY
-				wParam: 0
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_LINECOPY
+		wParam: 0
+		lParam: 0!
 
 copyRange: anInterval
 	"Copy a range of text to the clipboard."
@@ -1334,70 +1224,56 @@ copyRange: anInterval
 copySelection
 	"Copy the selection to the clipboard."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_COPY
-				wParam: 0
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_COPY
+		wParam: 0
+		lParam: 0!
 
 copySelectionOrLine
 	"Copy the selection, if selection empty copy the line with the caret"
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_COPYALLOWLINE
-				wParam: 0
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_COPYALLOWLINE
+		wParam: 0
+		lParam: 0!
 
 currentIndicatorId
 	"Get the current indicator"
 
-	^this
-		ifNil: [0]
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_GETINDICATORCURRENT
-				wParam: 0
-				lParam: 0]!
+	^library
+		directFunction: this
+		msg: SCI_GETINDICATORCURRENT
+		wParam: 0
+		lParam: 0!
 
 currentIndicatorId: indicatorInteger
 	"Set the indicator used for IndicatorFillRange and IndicatorClearRange"
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_SETINDICATORCURRENT
-				wParam: indicatorInteger
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_SETINDICATORCURRENT
+		wParam: indicatorInteger
+		lParam: 0!
 
 currentIndicatorValue
 	"Get the current indicator value"
 
-	^this
-		ifNil: [0]
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_GETINDICATORVALUE
-				wParam: 0
-				lParam: 0]!
+	^library
+		directFunction: this
+		msg: SCI_GETINDICATORVALUE
+		wParam: 0
+		lParam: 0!
 
 currentIndicatorValue: valueInteger
 	"Set the value used for IndicatorFillRange"
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_SETINDICATORVALUE
-				wParam: valueInteger
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_SETINDICATORVALUE
+		wParam: valueInteger
+		lParam: 0!
 
 currentLineBackcolor
 	"Get the colour of the background of the line containing the caret. Answer nil if there is no background colour hilight for the current line."
@@ -1425,46 +1301,38 @@ currentLineBackcolorLayer: aSymbol
 currentLineFrameWidth
 	"Retrieve the caret line frame width. Width = 0 means this option is disabled."
 
-	^this
-		ifNil: [0]
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_GETCARETLINEFRAME
-				wParam: 0
-				lParam: 0]!
+	^library
+		directFunction: this
+		msg: SCI_GETCARETLINEFRAME
+		wParam: 0
+		lParam: 0!
 
 currentLineFrameWidth: widthInteger
 	"Display the caret line framed. Set width !!= 0 to enable this option and width = 0 to
 	disable it."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_SETCARETLINEFRAME
-				wParam: widthInteger
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_SETCARETLINEFRAME
+		wParam: widthInteger
+		lParam: 0!
 
 currentLineText
 	"Retrieve the text of the line containing the caret. Returns the index of the caret on the
 	line. Result is NUL-terminated."
 
 	| len |
-	len := this
-				ifNil: [0]
-				ifNotNil: 
-					[Library
-						directFunction: this
-						msg: SCI_GETCURLINE
-						wParam: 0
-						lpParam: nil].
-	^len = 0
+	len := library
+				directFunction: this
+				msg: SCI_GETCURLINE
+				wParam: 0
+				lpParam: nil.
+	^len == 0
 		ifTrue: [stringClass empty]
 		ifFalse: 
 			[| result |
 			result := stringClass newFixed: len - 1.
-			Library
+			library
 				directFunction: this
 				msg: SCI_GETCURLINE
 				wParam: len
@@ -1474,24 +1342,20 @@ currentLineText
 cutLine
 	"Cut the line containing the caret."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_LINECUT
-				wParam: 0
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_LINECUT
+		wParam: 0
+		lParam: 0!
 
 cutSelection
 	"Cut the selection to the clipboard."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_CUT
-				wParam: 0
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_CUT
+		wParam: 0
+		lParam: 0!
 
 decodeStyledText: aByteArray
 	| tokens pair lastStyle buffer wsStyle stream ws |
@@ -1542,20 +1406,17 @@ defaultFoldTextTag
 	"Get the default fold display text."
 
 	| len |
-	len := this
-				ifNil: [0]
-				ifNotNil: 
-					[Library
-						directFunction: this
-						msg: SCI_GETDEFAULTFOLDDISPLAYTEXT
-						wParam: 0
-						lpParam: nil].
-	^len = 0
+	len := library
+				directFunction: this
+				msg: SCI_GETDEFAULTFOLDDISPLAYTEXT
+				wParam: 0
+				lpParam: nil.
+	^len == 0
 		ifTrue: [stringClass empty]
 		ifFalse: 
 			[| result |
 			result := stringClass newFixed: len.
-			Library
+			library
 				directFunction: this
 				msg: SCI_GETDEFAULTFOLDDISPLAYTEXT
 				wParam: 0
@@ -1565,13 +1426,11 @@ defaultFoldTextTag
 defaultFoldTextTag: textString
 	"Set the default fold display text."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_SETDEFAULTFOLDDISPLAYTEXT
-				wParam: 0
-				lpParam: textString]!
+	library
+		directFunction: this
+		msg: SCI_SETDEFAULTFOLDDISPLAYTEXT
+		wParam: 0
+		lpParam: textString!
 
 defaultMarkerDefinitions
 	"Private - Answer an <IdentityDictionary> that associates marker names that are meaningful in the
@@ -1619,99 +1478,82 @@ defaultWindowStyle
 deleteLine
 	"Delete the line containing the caret."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_LINEDELETE
-				wParam: 0
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_LINEDELETE
+		wParam: 0
+		lParam: 0!
 
 deleteMarkers: markerNumberInteger
 	"Delete all markers with a particular number from all lines."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_MARKERDELETEALL
-				wParam: markerNumberInteger
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_MARKERDELETEALL
+		wParam: markerNumberInteger
+		lParam: 0!
 
 deleteToEndOfLine
 	"Delete forwards from the current position to the end of the line."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_DELLINERIGHT
-				wParam: 0
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_DELLINERIGHT
+		wParam: 0
+		lParam: 0!
 
 deleteToEndOfWord
 	"Delete the word to the right of the caret, but not the trailing non-word characters."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_DELWORDRIGHTEND
-				wParam: 0
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_DELWORDRIGHTEND
+		wParam: 0
+		lParam: 0!
 
 deleteToNextWord
 	"Delete the word to the right of the caret."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_DELWORDRIGHT
-				wParam: 0
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_DELWORDRIGHT
+		wParam: 0
+		lParam: 0!
 
 deleteToStartOfLine
 	"Delete back from the current position to the start of the line."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_DELLINELEFT
-				wParam: 0
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_DELLINELEFT
+		wParam: 0
+		lParam: 0!
 
 deleteToStartOfWord
 	"Delete the word to the left of the caret."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_DELWORDLEFT
-				wParam: 0
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_DELWORDLEFT
+		wParam: 0
+		lParam: 0!
 
 describeKeywordSets
 	"Retrieve a '\n' separated list of descriptions of the keyword sets understood by the
 	current lexer. Result is NUL-terminated."
 
 	| len |
-	len := this
-				ifNil: [0]
-				ifNotNil: 
-					[Library
-						directFunction: this
-						msg: SCI_DESCRIBEKEYWORDSETS
-						wParam: 0
-						lpParam: nil].
-	^len = 0
+	len := library
+				directFunction: this
+				msg: SCI_DESCRIBEKEYWORDSETS
+				wParam: 0
+				lpParam: nil.
+	^len == 0
 		ifTrue: [stringClass empty]
 		ifFalse: 
 			[| result |
 			result := stringClass newFixed: len.
-			Library
+			library
 				directFunction: this
 				msg: SCI_DESCRIBEKEYWORDSETS
 				wParam: 0
@@ -1721,25 +1563,20 @@ describeKeywordSets
 destroyAutoCompletionListImages
 	"Clear all the registered XPM images."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_CLEARREGISTEREDIMAGES
-				wParam: 0
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_CLEARREGISTEREDIMAGES
+		wParam: 0
+		lParam: 0!
 
 documentLineFromLine: displayLineInteger
 	"Find the document line of a display line taking hidden lines into account."
 
-	^this
-		ifNil: [0]
-		ifNotNil: 
-			[(Library
-				directFunction: this
-				msg: SCI_DOCLINEFROMVISIBLE
-				wParam: displayLineInteger - 1
-				lParam: 0) + 1]!
+	^(library
+		directFunction: this
+		msg: SCI_DOCLINEFROMVISIBLE
+		wParam: displayLineInteger - 1
+		lParam: 0) + 1!
 
 drawingPhases
 	"Answer the number of drawing phases used by the receiver; one of `#one` (deprecated), `#two` (default), or `#multiple`. See [SCI_GETPHASESDRAW](https://www.scintilla.org/ScintillaDoc.html#SCI_GETPHASESDRAW) in the Scintilla documentation for further details."
@@ -1770,24 +1607,20 @@ drawingTechnology: aSymbol
 duplicateLine
 	"Duplicate the current line."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_LINEDUPLICATE
-				wParam: 0
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_LINEDUPLICATE
+		wParam: 0
+		lParam: 0!
 
 duplicateSelection
 	"Duplicate the selection. If selection empty duplicate the line containing the caret."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_SELECTIONDUPLICATE
-				wParam: 0
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_SELECTIONDUPLICATE
+		wParam: 0
+		lParam: 0!
 
 edgeColor
 	"Retrieve the colour used in edge indication."
@@ -1803,25 +1636,20 @@ edgeColor: aColorOrNil
 edgeColumn
 	"Retrieve the column number which text should be kept within."
 
-	^this
-		ifNil: [0]
-		ifNotNil: 
-			[(Library
-				directFunction: this
-				msg: SCI_GETEDGECOLUMN
-				wParam: 0
-				lParam: 0) + 1]!
+	^(library
+		directFunction: this
+		msg: SCI_GETEDGECOLUMN
+		wParam: 0
+		lParam: 0) + 1!
 
 edgeColumn: columnInteger
 	"Set the column number of the edge. If text goes past the edge then it is highlighted."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_SETEDGECOLUMN
-				wParam: columnInteger - 1
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_SETEDGECOLUMN
+		wParam: columnInteger - 1
+		lParam: 0!
 
 edgeMode
 	"Answer the <Symbol>ic name of the current edge marking mode used to indicate long lines.
@@ -1851,13 +1679,11 @@ elementColors
 emptyUndoBuffer
 	"Delete the undo history."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_EMPTYUNDOBUFFER
-				wParam: 0
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_EMPTYUNDOBUFFER
+		wParam: 0
+		lParam: 0!
 
 endOfLineAnnotationMode
 	^self class endOfLineAnnotationModes at: self sciEOLAnnotationGetVisible ifAbsent: [#hidden]!
@@ -1898,13 +1724,11 @@ endOfLineMode: aSymbol
 endUndoGroup
 	"End a sequence of actions that is undone and redone as a unit."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_ENDUNDOACTION
-				wParam: 0
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_ENDUNDOACTION
+		wParam: 0
+		lParam: 0!
 
 ensureCaretVisible
 	"Ensure the caret is visible. Note that this will show the caret even if currently hidden inside a fold."
@@ -1919,25 +1743,21 @@ ensureHasAnnotationStyles
 ensureLineVisible: lineInteger
 	"Ensure a particular line is visible by expanding any header line hiding it."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_ENSUREVISIBLE
-				wParam: lineInteger - 1
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_ENSUREVISIBLE
+		wParam: lineInteger - 1
+		lParam: 0!
 
 ensureLineVisibleEnforcingPolicy: lineInteger
 	"Ensure a particular line is visible by expanding any header line hiding it. Use the
 	currently set visibility policy to determine which range to display."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_ENSUREVISIBLEENFORCEPOLICY
-				wParam: lineInteger - 1
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_ENSUREVISIBLEENFORCEPOLICY
+		wParam: lineInteger - 1
+		lParam: 0!
 
 ensureRangeVisible: anInterval
 	"Ensure that the specified range of text is visible, prioritising visibility of the start of the range."
@@ -1961,489 +1781,400 @@ enUpdate
 errorStatus
 	"Get error status."
 
-	^this
-		ifNil: [0]
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_GETSTATUS
-				wParam: 0
-				lParam: 0]!
+	^library
+		directFunction: this
+		msg: SCI_GETSTATUS
+		wParam: 0
+		lParam: 0!
 
 errorStatus: statusInteger
 	"Change error status - 0 = OK."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_SETSTATUS
-				wParam: statusInteger
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_SETSTATUS
+		wParam: statusInteger
+		lParam: 0!
 
 expandChildren: lineInteger level: levelInteger
 	"Expand a fold header and all children. Use the level argument instead of the line's current
 	level."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_EXPANDCHILDREN
-				wParam: lineInteger - 1
-				lParam: levelInteger]!
+	library
+		directFunction: this
+		msg: SCI_EXPANDCHILDREN
+		wParam: lineInteger - 1
+		lParam: levelInteger!
 
 extendDown
 	"Move caret down one line extending selection to new caret position."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_LINEDOWNEXTEND
-				wParam: 0
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_LINEDOWNEXTEND
+		wParam: 0
+		lParam: 0!
 
 extendLeft
 	"Move caret left one character extending selection to new caret position."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_CHARLEFTEXTEND
-				wParam: 0
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_CHARLEFTEXTEND
+		wParam: 0
+		lParam: 0!
 
 extendPageDown
 	"Move caret one page down extending selection to new caret position."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_PAGEDOWNEXTEND
-				wParam: 0
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_PAGEDOWNEXTEND
+		wParam: 0
+		lParam: 0!
 
 extendPageUp
 	"Move caret one page up extending selection to new caret position."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_PAGEUPEXTEND
-				wParam: 0
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_PAGEUPEXTEND
+		wParam: 0
+		lParam: 0!
 
 extendParaDown
 	"Extend selection down one paragraph (delimited by empty lines)."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_PARADOWNEXTEND
-				wParam: 0
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_PARADOWNEXTEND
+		wParam: 0
+		lParam: 0!
 
 extendParaUp
 	"Extend selection up one paragraph (delimited by empty lines)."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_PARAUPEXTEND
-				wParam: 0
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_PARAUPEXTEND
+		wParam: 0
+		lParam: 0!
 
 extendRectangleDown
 	"Move caret down one line, extending rectangular selection to new caret position."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_LINEDOWNRECTEXTEND
-				wParam: 0
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_LINEDOWNRECTEXTEND
+		wParam: 0
+		lParam: 0!
 
 extendRectangleLeft
 	"Move caret left one character, extending rectangular selection to new caret position."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_CHARLEFTRECTEXTEND
-				wParam: 0
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_CHARLEFTRECTEXTEND
+		wParam: 0
+		lParam: 0!
 
 extendRectanglePageDown
 	"Move caret one page down, extending rectangular selection to new caret position."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_PAGEDOWNRECTEXTEND
-				wParam: 0
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_PAGEDOWNRECTEXTEND
+		wParam: 0
+		lParam: 0!
 
 extendRectanglePageUp
 	"Move caret one page up, extending rectangular selection to new caret position."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_PAGEUPRECTEXTEND
-				wParam: 0
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_PAGEUPRECTEXTEND
+		wParam: 0
+		lParam: 0!
 
 extendRectangleRight
 	"Move caret right one character, extending rectangular selection to new caret position."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_CHARRIGHTRECTEXTEND
-				wParam: 0
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_CHARRIGHTRECTEXTEND
+		wParam: 0
+		lParam: 0!
 
 extendRectangleToEndOfLine
 	"Move caret to last position on line, extending rectangular selection to new caret
 	position."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_LINEENDRECTEXTEND
-				wParam: 0
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_LINEENDRECTEXTEND
+		wParam: 0
+		lParam: 0!
 
 extendRectangleToStartOfLine
 	"Move caret to first position on line, extending rectangular selection to new caret
 	position."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_HOMERECTEXTEND
-				wParam: 0
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_HOMERECTEXTEND
+		wParam: 0
+		lParam: 0!
 
 extendRectangleToVcHome
 	"Move caret to before first visible character on line. If already there move to first
 	character on line. In either case, extend rectangular selection to new caret position."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_VCHOMERECTEXTEND
-				wParam: 0
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_VCHOMERECTEXTEND
+		wParam: 0
+		lParam: 0!
 
 extendRectangleUp
 	"Move caret up one line, extending rectangular selection to new caret position."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_LINEUPRECTEXTEND
-				wParam: 0
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_LINEUPRECTEXTEND
+		wParam: 0
+		lParam: 0!
 
 extendRight
 	"Move caret right one character extending selection to new caret position."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_CHARRIGHTEXTEND
-				wParam: 0
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_CHARRIGHTEXTEND
+		wParam: 0
+		lParam: 0!
 
 extendStutteredPageDown
 	"Move caret to bottom of page, or one page down if already at bottom of page, extending
 	selection to new caret position."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_STUTTEREDPAGEDOWNEXTEND
-				wParam: 0
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_STUTTEREDPAGEDOWNEXTEND
+		wParam: 0
+		lParam: 0!
 
 extendStutteredPageUp
 	"Move caret to top of page, or one page up if already at top of page, extending selection to
 	new caret position."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_STUTTEREDPAGEUPEXTEND
-				wParam: 0
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_STUTTEREDPAGEUPEXTEND
+		wParam: 0
+		lParam: 0!
 
 extendToEndOfDisplayLine
 	"Move caret to last position on display line extending selection to new caret position."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_LINEENDDISPLAYEXTEND
-				wParam: 0
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_LINEENDDISPLAYEXTEND
+		wParam: 0
+		lParam: 0!
 
 extendToEndOfDocument
 	"Move caret to last position in document extending selection to new caret position."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_DOCUMENTENDEXTEND
-				wParam: 0
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_DOCUMENTENDEXTEND
+		wParam: 0
+		lParam: 0!
 
 extendToEndOfLine
 	"Move caret to last position on line extending selection to new caret position."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_LINEENDEXTEND
-				wParam: 0
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_LINEENDEXTEND
+		wParam: 0
+		lParam: 0!
 
 extendToEndOfNextWord
 	"Move caret right one word, position cursor at end of word, extending selection to new caret
 	position."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_WORDRIGHTENDEXTEND
-				wParam: 0
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_WORDRIGHTENDEXTEND
+		wParam: 0
+		lParam: 0!
 
 extendToEndOfPreviousWord
 	"Move caret left one word, position cursor at end of word, extending selection to new caret
 	position."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_WORDLEFTENDEXTEND
-				wParam: 0
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_WORDLEFTENDEXTEND
+		wParam: 0
+		lParam: 0!
 
 extendToEndOfWord
 	"Move caret right one word extending selection to new caret position."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_WORDRIGHTEXTEND
-				wParam: 0
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_WORDRIGHTEXTEND
+		wParam: 0
+		lParam: 0!
 
 extendToEndOfWordPart
 	"Move to the next change in capitalisation extending selection to new caret position."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_WORDPARTRIGHTEXTEND
-				wParam: 0
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_WORDPARTRIGHTEXTEND
+		wParam: 0
+		lParam: 0!
 
 extendToEndOfWrappedLine
 	"Like LineEndExtend but when word-wrap is enabled extends first to end of display line
 	LineEndDisplayExtend, then to start of document line LineEndExtend."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_LINEENDWRAPEXTEND
-				wParam: 0
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_LINEENDWRAPEXTEND
+		wParam: 0
+		lParam: 0!
 
 extendToStartOfDisplayLine
 	"Move caret to first position on display line extending selection to new caret position."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_HOMEDISPLAYEXTEND
-				wParam: 0
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_HOMEDISPLAYEXTEND
+		wParam: 0
+		lParam: 0!
 
 extendToStartOfDocument
 	"Move caret to first position in document extending selection to new caret position."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_DOCUMENTSTARTEXTEND
-				wParam: 0
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_DOCUMENTSTARTEXTEND
+		wParam: 0
+		lParam: 0!
 
 extendToStartOfLine
 	"Move caret to first position on line extending selection to new caret position."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_HOMEEXTEND
-				wParam: 0
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_HOMEEXTEND
+		wParam: 0
+		lParam: 0!
 
 extendToStartOfVcDisplayLine
 	"Like VCHomeDisplay but extending selection to new caret position."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_VCHOMEDISPLAYEXTEND
-				wParam: 0
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_VCHOMEDISPLAYEXTEND
+		wParam: 0
+		lParam: 0!
 
 extendToStartOfWord
 	"Move caret left one word extending selection to new caret position."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_WORDLEFTEXTEND
-				wParam: 0
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_WORDLEFTEXTEND
+		wParam: 0
+		lParam: 0!
 
 extendToStartOfWordPart
 	"Move to the previous change in capitalisation extending selection to new caret position."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_WORDPARTLEFTEXTEND
-				wParam: 0
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_WORDPARTLEFTEXTEND
+		wParam: 0
+		lParam: 0!
 
 extendToStartOfWrappedLine
 	"Like HomeExtend but when word-wrap is enabled extends first to start of display line
 	HomeDisplayExtend, then to start of document line HomeExtend."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_HOMEWRAPEXTEND
-				wParam: 0
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_HOMEWRAPEXTEND
+		wParam: 0
+		lParam: 0!
 
 extendToVcHome
 	"Like VCHome but extending selection to new caret position."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_VCHOMEEXTEND
-				wParam: 0
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_VCHOMEEXTEND
+		wParam: 0
+		lParam: 0!
 
 extendToWrappedVcHome
 	"Like VCHomeExtend but when word-wrap is enabled extends first to start of display line
 	VCHomeDisplayExtend, then behaves like VCHomeExtend."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_VCHOMEWRAPEXTEND
-				wParam: 0
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_VCHOMEWRAPEXTEND
+		wParam: 0
+		lParam: 0!
 
 extendUp
 	"Move caret up one line extending selection to new caret position."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_LINEUPEXTEND
-				wParam: 0
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_LINEUPEXTEND
+		wParam: 0
+		lParam: 0!
 
 extraAscent
 	"Get extra ascent for each line"
 
-	^this
-		ifNil: [0]
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_GETEXTRAASCENT
-				wParam: 0
-				lParam: 0]!
+	^library
+		directFunction: this
+		msg: SCI_GETEXTRAASCENT
+		wParam: 0
+		lParam: 0!
 
 extraAscent: extraAscentInteger
 	"Set extra ascent for each line"
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_SETEXTRAASCENT
-				wParam: extraAscentInteger
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_SETEXTRAASCENT
+		wParam: extraAscentInteger
+		lParam: 0!
 
 extraDescent
 	"Get extra descent for each line"
 
-	^this
-		ifNil: [0]
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_GETEXTRADESCENT
-				wParam: 0
-				lParam: 0]!
+	^library
+		directFunction: this
+		msg: SCI_GETEXTRADESCENT
+		wParam: 0
+		lParam: 0!
 
 extraDescent: extraDescentInteger
 	"Set extra descent for each line"
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_SETEXTRADESCENT
-				wParam: extraDescentInteger
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_SETEXTRADESCENT
+		wParam: extraDescentInteger
+		lParam: 0!
 
 filerProxy
 	| saved |
@@ -2488,13 +2219,11 @@ find: aString range: anInterval flags: anInteger
 findAutoCompletionEntry: selectString
 	"Select the item in the auto-completion list that starts with a string."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_AUTOCSELECT
-				wParam: 0
-				lpParam: selectString]!
+	library
+		directFunction: this
+		msg: SCI_AUTOCSELECT
+		wParam: 0
+		lpParam: selectString!
 
 findMatchingBrace: anInteger
 	"Answer the one-based <integer> index of the character in the receiver which is the brace
@@ -2543,13 +2272,11 @@ foldAll
 foldChildren: lineInteger action: actionInteger
 	"Expand or contract a fold header and its children."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_FOLDCHILDREN
-				wParam: lineInteger - 1
-				lParam: actionInteger]!
+	library
+		directFunction: this
+		msg: SCI_FOLDCHILDREN
+		wParam: lineInteger - 1
+		lParam: actionInteger!
 
 foldFlags
 	^foldFlags!
@@ -2571,37 +2298,30 @@ foldFlags: anInteger
 foldLevelOfLine: lineInteger
 	"Retrieve the fold level of a line."
 
-	^this
-		ifNil: [0]
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_GETFOLDLEVEL
-				wParam: lineInteger - 1
-				lParam: 0]!
+	^library
+		directFunction: this
+		msg: SCI_GETFOLDLEVEL
+		wParam: lineInteger - 1
+		lParam: 0!
 
 foldLine: lineInteger action: actionInteger
 	"Expand or contract a fold header."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_FOLDLINE
-				wParam: lineInteger - 1
-				lParam: actionInteger]!
+	library
+		directFunction: this
+		msg: SCI_FOLDLINE
+		wParam: lineInteger - 1
+		lParam: actionInteger!
 
 foldLine: lineInteger level: levelInteger
 	"Set the fold level of a line. This encodes an integer level along with flags indicating
 	whether the line is a header and whether it is effectively white space."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_SETFOLDLEVEL
-				wParam: lineInteger - 1
-				lParam: levelInteger]!
+	library
+		directFunction: this
+		msg: SCI_SETFOLDLEVEL
+		wParam: lineInteger - 1
+		lParam: levelInteger!
 
 foldMargin
 	"Answer the <ScintillaMargin> used to display fold markers for outlining."
@@ -2674,20 +2394,17 @@ fontLocale
 	"Get the locale for displaying text."
 
 	| len |
-	len := this
-				ifNil: [0]
-				ifNotNil: 
-					[Library
-						directFunction: this
-						msg: SCI_GETFONTLOCALE
-						wParam: 0
-						lpParam: nil].
-	^len = 0
+	len := library
+				directFunction: this
+				msg: SCI_GETFONTLOCALE
+				wParam: 0
+				lpParam: nil.
+	^len == 0
 		ifTrue: [stringClass empty]
 		ifFalse: 
 			[| result |
 			result := stringClass newFixed: len.
-			Library
+			library
 				directFunction: this
 				msg: SCI_GETFONTLOCALE
 				wParam: 0
@@ -2697,13 +2414,11 @@ fontLocale
 fontLocale: localeNameString
 	"Set the locale for displaying text."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_SETFONTLOCALE
-				wParam: 0
-				lpParam: localeNameString]!
+	library
+		directFunction: this
+		msg: SCI_SETFONTLOCALE
+		wParam: 0
+		lpParam: localeNameString!
 
 fontQuality
 	"Retrieve the quality level for text."
@@ -2738,16 +2453,16 @@ formatRectangle
 formFeed
 	"Insert a Form Feed character."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_FORMFEED
-				wParam: 0
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_FORMFEED
+		wParam: 0
+		lParam: 0!
 
 getDirectPointer
-	^this := super sendMessage: SCI_GETDIRECTPOINTER!
+	this := super sendMessage: SCI_GETDIRECTPOINTER.
+	library := ScintillaLibrary default.
+	^this!
 
 getElementColor: anInteger
 	^(elementColors lookup: anInteger) ifNil: [
@@ -2772,14 +2487,11 @@ getEolAnnotations
 getLineState: lineInteger
 	"Retrieve the extra styling information for a line."
 
-	^this
-		ifNil: [0]
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_GETLINESTATE
-				wParam: lineInteger - 1
-				lParam: 0]!
+	^library
+		directFunction: this
+		msg: SCI_GETLINESTATE
+		wParam: lineInteger - 1
+		lParam: 0!
 
 getRawAnnotation: anInteger
 	"Private - Answer a single <ScintillaAnnotation> representing the raw form of the annotations against
@@ -2818,116 +2530,93 @@ getRawAnnotations
 	^rawAnnotations contents!
 
 getSelectionRange: anInteger
-	^this
-		ifNil: [0 to: -1]
-		ifNotNil: 
-			[| lib |
-			lib := Library.
-			(lib
+	^(library
+		directFunction: this
+		msg: SCI_GETSELECTIONNSTART
+		wParam: anInteger
+		lParam: 0) + 1
+		to: (library
 				directFunction: this
-				msg: SCI_GETSELECTIONNSTART
+				msg: SCI_GETSELECTIONNEND
 				wParam: anInteger
-				lParam: 0) + 1
-				to: (lib
-						directFunction: this
-						msg: SCI_GETSELECTIONNEND
-						wParam: anInteger
-						lParam: 0)]!
+				lParam: 0)!
 
 goto: caretInteger
 	"Set caret to a position and ensure it is visible."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_GOTOPOS
-				wParam: caretInteger - 1
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_GOTOPOS
+		wParam: caretInteger - 1
+		lParam: 0!
 
 gotoLine: lineInteger
 	"Set caret to start of a line and ensure it is visible."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_GOTOLINE
-				wParam: lineInteger - 1
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_GOTOLINE
+		wParam: lineInteger - 1
+		lParam: 0!
 
-handle: aHandleOrNil 
+handle: aHandleOrNil
 	this := nil.
+	library := NullScintillaLibrary default.
 	super handle: aHandleOrNil!
 
 hangingIndent
 	"Retrive the start indent for wrapped lines."
 
-	^this
-		ifNil: [0]
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_GETWRAPSTARTINDENT
-				wParam: 0
-				lParam: 0]!
+	^library
+		directFunction: this
+		msg: SCI_GETWRAPSTARTINDENT
+		wParam: 0
+		lParam: 0!
 
 hangingIndent: indentInteger
 	"Set the start indent for wrapped lines."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_SETWRAPSTARTINDENT
-				wParam: indentInteger
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_SETWRAPSTARTINDENT
+		wParam: indentInteger
+		lParam: 0!
 
 hasAdditionalSelectionTyping
 	"Whether typing can be performed into multiple selections"
 
-	^this
-		ifNil: [false]
-		ifNotNil: 
-			[(Library
-				directFunction: this
-				msg: SCI_GETADDITIONALSELECTIONTYPING
-				wParam: 0
-				lParam: 0) asBoolean]!
+	^library
+		directBooleanFunction: this
+		msg: SCI_GETADDITIONALSELECTIONTYPING
+		wParam: 0
+		lParam: 0!
 
 hasAdditionalSelectionTyping: additionalSelectionTypingBoolean
 	"Set whether typing can be performed into multiple selections"
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_SETADDITIONALSELECTIONTYPING
-				wParam: additionalSelectionTypingBoolean asParameter
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_SETADDITIONALSELECTIONTYPING
+		wParam: additionalSelectionTypingBoolean asParameter
+		lParam: 0!
 
 hasBlinkingSecondaryCarets
 	"Whether additional carets will blink"
 
-	^this
-		ifNil: [false]
-		ifNotNil: 
-			[(Library
-				directFunction: this
-				msg: SCI_GETADDITIONALCARETSBLINK
-				wParam: 0
-				lParam: 0) asBoolean]!
+	^library
+		directBooleanFunction: this
+		msg: SCI_GETADDITIONALCARETSBLINK
+		wParam: 0
+		lParam: 0!
 
 hasBlinkingSecondaryCarets: additionalCaretsBlinkBoolean
 	"Set whether additional carets will blink"
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_SETADDITIONALCARETSBLINK
-				wParam: additionalCaretsBlinkBoolean asParameter
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_SETADDITIONALCARETSBLINK
+		wParam: additionalCaretsBlinkBoolean asParameter
+		lParam: 0!
 
 hasFoldMargin
 	^self foldMargin ifNotNil: [:margin | margin width ~~ 0] ifNil: [false]!
@@ -2961,36 +2650,28 @@ hasSelection
 hasVisibleLineEndings
 	"Are the end of line characters visible?"
 
-	^this
-		ifNil: [false]
-		ifNotNil: 
-			[(Library
-				directFunction: this
-				msg: SCI_GETVIEWEOL
-				wParam: 0
-				lParam: 0) asBoolean]!
+	^library
+		directBooleanFunction: this
+		msg: SCI_GETVIEWEOL
+		wParam: 0
+		lParam: 0!
 
 hasVisibleLineEndings: visibleBoolean
 	"Make the end of line characters visible or invisible."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_SETVIEWEOL
-				wParam: visibleBoolean asParameter
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_SETVIEWEOL
+		wParam: visibleBoolean asParameter
+		lParam: 0!
 
 hideIndicators
 	"Private - Reconfigure all indicator styles to hidden apart from the default 3 pre-configured styles."
 
-	| lib |
-	this ifNil: [^self].
-	lib := Library.
 	3 to: INDICATOR_MAX
 		do: 
 			[:each |
-			lib
+			library
 				directFunction: this
 				msg: SCI_INDICSETSTYLE
 				wParam: each
@@ -2999,46 +2680,38 @@ hideIndicators
 hideLinesFrom: lineStartInteger to: lineEndInteger
 	"Make a range of lines invisible."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_HIDELINES
-				wParam: lineStartInteger - 1
-				lParam: lineEndInteger - 1]!
+	library
+		directFunction: this
+		msg: SCI_HIDELINES
+		wParam: lineStartInteger - 1
+		lParam: lineEndInteger - 1!
 
 hideSelection: hideBoolean
 	"Draw the selection either highlighted or in normal (non-highlighted) style."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_HIDESELECTION
-				wParam: hideBoolean asParameter
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_HIDESELECTION
+		wParam: hideBoolean asParameter
+		lParam: 0!
 
 highlightBracesAt: posAInteger and: posBInteger
 	"Highlight the characters at two positions."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_BRACEHIGHLIGHT
-				wParam: posAInteger - 1
-				lParam: posBInteger - 1]!
+	library
+		directFunction: this
+		msg: SCI_BRACEHIGHLIGHT
+		wParam: posAInteger - 1
+		lParam: posBInteger - 1!
 
 highlightCallTipFrom: highlightStartInteger to: highlightEndInteger
 	"Highlight a segment of the definition."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_CALLTIPSETHLT
-				wParam: highlightStartInteger - 1
-				lParam: highlightEndInteger - 1]!
+	library
+		directFunction: this
+		msg: SCI_CALLTIPSETHLT
+		wParam: highlightStartInteger - 1
+		lParam: highlightEndInteger - 1!
 
 highlightFindMatch: anInterval
 	self selectionRange: anInterval.
@@ -3047,36 +2720,29 @@ highlightFindMatch: anInterval
 highlightGuide
 	"Get the highlighted indentation guide column."
 
-	^this
-		ifNil: [0]
-		ifNotNil: 
-			[(Library
-				directFunction: this
-				msg: SCI_GETHIGHLIGHTGUIDE
-				wParam: 0
-				lParam: 0) + 1]!
+	^(library
+		directFunction: this
+		msg: SCI_GETHIGHLIGHTGUIDE
+		wParam: 0
+		lParam: 0) + 1!
 
 highlightGuide: columnInteger
 	"Set the highlighted indentation guide column. 0 = no highlighted guide."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_SETHIGHLIGHTGUIDE
-				wParam: columnInteger - 1
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_SETHIGHLIGHTGUIDE
+		wParam: columnInteger - 1
+		lParam: 0!
 
 highlightMismatchedBrace: posInteger
 	"Highlight the character at a position indicating there is no matching brace."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_BRACEBADLIGHT
-				wParam: posInteger - 1
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_BRACEBADLIGHT
+		wParam: posInteger - 1
+		lParam: 0!
 
 identifyTextMatchingSelectionWithStyleName: aSymbol
 	| index newIndicators selection selectionStart oldIndicators |
@@ -3165,36 +2831,29 @@ indent
 	"If selection is empty or all on one line replace the selection with a tab character. If
 	more than one line selected, indent the lines."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_TAB
-				wParam: 0
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_TAB
+		wParam: 0
+		lParam: 0!
 
 indentation
 	"Retrieve indentation size."
 
-	^this
-		ifNil: [0]
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_GETINDENT
-				wParam: 0
-				lParam: 0]!
+	^library
+		directFunction: this
+		msg: SCI_GETINDENT
+		wParam: 0
+		lParam: 0!
 
 indentation: indentSizeInteger
 	"Set the number of spaces used for one level of indentation."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_SETINDENT
-				wParam: indentSizeInteger
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_SETINDENT
+		wParam: indentSizeInteger
+		lParam: 0!
 
 indentationGuides
 	"Answer the symbolic name of the style of indentation guides visible in the receiver, or nil if none."
@@ -3211,27 +2870,21 @@ indentationGuides: aSymbolOrNil
 indentationOfLine: lineInteger
 	"Retrieve the number of columns that a line is indented."
 
-	^this
-		ifNil: [0]
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_GETLINEINDENTATION
-				wParam: lineInteger - 1
-				lParam: 0]!
+	^library
+		directFunction: this
+		msg: SCI_GETLINEINDENTATION
+		wParam: lineInteger - 1
+		lParam: 0!
 
 indexOfLine: lineInteger column: columnInteger
 	"Find the position of a column on a line taking into account tabs and multi-byte characters.
 	If beyond end of line, return line end position."
 
-	^this
-		ifNil: [0]
-		ifNotNil: 
-			[(Library
-				directFunction: this
-				msg: SCI_FINDCOLUMN
-				wParam: lineInteger - 1
-				lParam: columnInteger - 1) + 1]!
+	^(library
+		directFunction: this
+		msg: SCI_FINDCOLUMN
+		wParam: lineInteger - 1
+		lParam: columnInteger - 1) + 1!
 
 indicatorCount
 	"Answer the number of indicators configured for the receiver. With the advent of 'modern'
@@ -3253,14 +2906,11 @@ indicatorIdFromName: anIntegerOrSymbol
 indicatorMaskAt: posInteger
 	"Are any indicators present at pos?"
 
-	^this
-		ifNil: [0]
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_INDICATORALLONFOR
-				wParam: posInteger - 1
-				lParam: 0]!
+	^library
+		directFunction: this
+		msg: SCI_INDICATORALLONFOR
+		wParam: posInteger - 1
+		lParam: 0!
 
 indicators
 	"Answer a <collection> of <ScintillaIndicator>s, being the indicators (e.g. squiggly
@@ -3380,155 +3030,122 @@ isAccessibilityEnabled: aBoolean
 isActiveHotspotUnderlined
 	"Get whether underlining for active hotspots."
 
-	^this
-		ifNil: [false]
-		ifNotNil: 
-			[(Library
-				directFunction: this
-				msg: SCI_GETHOTSPOTACTIVEUNDERLINE
-				wParam: 0
-				lParam: 0) asBoolean]!
+	^library
+		directBooleanFunction: this
+		msg: SCI_GETHOTSPOTACTIVEUNDERLINE
+		wParam: 0
+		lParam: 0!
 
 isActiveHotspotUnderlined: underlineBoolean
 	"Enable / Disable underlining active hotspots."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_SETHOTSPOTACTIVEUNDERLINE
-				wParam: underlineBoolean asParameter
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_SETHOTSPOTACTIVEUNDERLINE
+		wParam: underlineBoolean asParameter
+		lParam: 0!
 
 isAutoCompletionActive
 	"Is there an auto-completion list visible?"
 
-	^this
-		ifNil: [false]
-		ifNotNil: 
-			[(Library
-				directFunction: this
-				msg: SCI_AUTOCACTIVE
-				wParam: 0
-				lParam: 0) asBoolean]!
+	^library
+		directBooleanFunction: this
+		msg: SCI_AUTOCACTIVE
+		wParam: 0
+		lParam: 0!
 
 isAutoCompletionCancelledAtStart
 	"Retrieve whether auto-completion cancelled by backspacing before start."
 
-	^this
-		ifNil: [false]
-		ifNotNil: 
-			[(Library
-				directFunction: this
-				msg: SCI_AUTOCGETCANCELATSTART
-				wParam: 0
-				lParam: 0) asBoolean]!
+	^library
+		directBooleanFunction: this
+		msg: SCI_AUTOCGETCANCELATSTART
+		wParam: 0
+		lParam: 0!
 
 isAutoCompletionCancelledAtStart: cancelBoolean
 	"Should the auto-completion list be cancelled if the user backspaces to a position before
 	where the box was created."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_AUTOCSETCANCELATSTART
-				wParam: cancelBoolean asParameter
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_AUTOCSETCANCELATSTART
+		wParam: cancelBoolean asParameter
+		lParam: 0!
 
 isAutoCompletionCancelledWhenNoMatch
 	"Retrieve whether or not autocompletion is hidden automatically when nothing matches."
 
-	^this
-		ifNil: [false]
-		ifNotNil: 
-			[(Library
-				directFunction: this
-				msg: SCI_AUTOCGETAUTOHIDE
-				wParam: 0
-				lParam: 0) asBoolean]!
+	^library
+		directBooleanFunction: this
+		msg: SCI_AUTOCGETAUTOHIDE
+		wParam: 0
+		lParam: 0!
 
 isAutoCompletionCancelledWhenNoMatch: autoHideBoolean
 	"Set whether or not autocompletion is hidden automatically when nothing matches."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_AUTOCSETAUTOHIDE
-				wParam: autoHideBoolean asParameter
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_AUTOCSETAUTOHIDE
+		wParam: autoHideBoolean asParameter
+		lParam: 0!
 
 isAutoCompletionCaseInsensitive
 	"Retrieve state of ignore case flag."
 
-	^this
-		ifNil: [false]
-		ifNotNil: 
-			[(Library
-				directFunction: this
-				msg: SCI_AUTOCGETIGNORECASE
-				wParam: 0
-				lParam: 0) asBoolean]!
+	^library
+		directBooleanFunction: this
+		msg: SCI_AUTOCGETIGNORECASE
+		wParam: 0
+		lParam: 0!
 
 isAutoCompletionCaseInsensitive: ignoreCaseBoolean
 	"Set whether case is significant when performing auto-completion searches."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_AUTOCSETIGNORECASE
-				wParam: ignoreCaseBoolean asParameter
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_AUTOCSETIGNORECASE
+		wParam: ignoreCaseBoolean asParameter
+		lParam: 0!
 
 isAutoCompletionSingleMatchChosen
 	"Retrieve whether a single item auto-completion list automatically choose the item."
 
-	^this
-		ifNil: [false]
-		ifNotNil: 
-			[(Library
-				directFunction: this
-				msg: SCI_AUTOCGETCHOOSESINGLE
-				wParam: 0
-				lParam: 0) asBoolean]!
+	^library
+		directBooleanFunction: this
+		msg: SCI_AUTOCGETCHOOSESINGLE
+		wParam: 0
+		lParam: 0!
 
 isAutoCompletionSingleMatchChosen: chooseSingleBoolean
 	"Should a single item auto-completion list automatically choose the item."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_AUTOCSETCHOOSESINGLE
-				wParam: chooseSingleBoolean asParameter
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_AUTOCSETCHOOSESINGLE
+		wParam: chooseSingleBoolean asParameter
+		lParam: 0!
 
 isAutoCompletionTruncating
 	"Retrieve whether or not autocompletion deletes any word characters after the inserted text
 	upon completion."
 
-	^this
-		ifNil: [false]
-		ifNotNil: 
-			[(Library
-				directFunction: this
-				msg: SCI_AUTOCGETDROPRESTOFWORD
-				wParam: 0
-				lParam: 0) asBoolean]!
+	^library
+		directBooleanFunction: this
+		msg: SCI_AUTOCGETDROPRESTOFWORD
+		wParam: 0
+		lParam: 0!
 
 isAutoCompletionTruncating: dropRestOfWordBoolean
 	"Set whether or not autocompletion deletes any word characters after the inserted text upon
 	completion."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_AUTOCSETDROPRESTOFWORD
-				wParam: dropRestOfWordBoolean asParameter
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_AUTOCSETDROPRESTOFWORD
+		wParam: dropRestOfWordBoolean asParameter
+		lParam: 0!
 
 isBackgroundDwellEnabled
 	"Answer whether dwell (hover) events are generated even when the control does not have focus.
@@ -3563,25 +3180,20 @@ isBraceHighlightingEnabled: aBoolean
 isCallTipAboveText: aboveBoolean
 	"Set position of calltip, above or below text."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_CALLTIPSETPOSITION
-				wParam: aboveBoolean asParameter
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_CALLTIPSETPOSITION
+		wParam: aboveBoolean asParameter
+		lParam: 0!
 
 isCallTipActive
 	"Is there an active call tip?"
 
-	^this
-		ifNil: [false]
-		ifNotNil: 
-			[(Library
-				directFunction: this
-				msg: SCI_CALLTIPACTIVE
-				wParam: 0
-				lParam: 0) asBoolean]!
+	^library
+		directBooleanFunction: this
+		msg: SCI_CALLTIPACTIVE
+		wParam: 0
+		lParam: 0!
 
 isCaretSticky
 	"Can the caret preferred x position only be changed by explicit movement commands?"
@@ -3601,25 +3213,20 @@ isCurrentLineHighlighted
 isCurrentLineHighlightedAlways
 	"Is the caret line always visible?"
 
-	^this
-		ifNil: [false]
-		ifNotNil: 
-			[(Library
-				directFunction: this
-				msg: SCI_GETCARETLINEVISIBLEALWAYS
-				wParam: 0
-				lParam: 0) asBoolean]!
+	^library
+		directBooleanFunction: this
+		msg: SCI_GETCARETLINEVISIBLEALWAYS
+		wParam: 0
+		lParam: 0!
 
 isCurrentLineHighlightedAlways: alwaysVisibleBoolean
 	"Sets the caret line to always visible."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_SETCARETLINEVISIBLEALWAYS
-				wParam: alwaysVisibleBoolean asParameter
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_SETCARETLINEVISIBLEALWAYS
+		wParam: alwaysVisibleBoolean asParameter
+		lParam: 0!
 
 isCurrentLineMarkedWith: aSymbol 
 	"Answer whether the current line (i.e. the line with the caret) has the named marker."
@@ -3660,25 +3267,20 @@ isIndicator: anIntegerOrSymbol setAt: positionInteger
 isInSelectionExtendMode
 	"Get whether or not regular caret moves will extend or reduce the selection."
 
-	^this
-		ifNil: [false]
-		ifNotNil: 
-			[(Library
-				directFunction: this
-				msg: SCI_GETMOVEEXTENDSSELECTION
-				wParam: 0
-				lParam: 0) asBoolean]!
+	^library
+		directBooleanFunction: this
+		msg: SCI_GETMOVEEXTENDSSELECTION
+		wParam: 0
+		lParam: 0!
 
 isLine: lineInteger folded: expandedBoolean
 	"Show the children of a header line."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_SETFOLDEXPANDED
-				wParam: lineInteger - 1
-				lParam: expandedBoolean asParameter]!
+	library
+		directFunction: this
+		msg: SCI_SETFOLDEXPANDED
+		wParam: lineInteger - 1
+		lParam: expandedBoolean asParameter!
 
 isLine: anInteger markedWith: aSymbol
 	"Answer whether the line in the receiver with the specified one-based <integer>
@@ -3691,153 +3293,119 @@ isLine: anInteger markedWith: aSymbol
 isLineFolded: lineInteger
 	"Is a header line expanded?"
 
-	^this
-		ifNil: [false]
-		ifNotNil: 
-			[(Library
-				directFunction: this
-				msg: SCI_GETFOLDEXPANDED
-				wParam: lineInteger - 1
-				lParam: 0) asBoolean]!
+	^library
+		directBooleanFunction: this
+		msg: SCI_GETFOLDEXPANDED
+		wParam: lineInteger - 1
+		lParam: 0!
 
 isLineVisible: lineInteger
 	"Is a line visible?"
 
-	^this
-		ifNil: [false]
-		ifNotNil: 
-			[(Library
-				directFunction: this
-				msg: SCI_GETLINEVISIBLE
-				wParam: lineInteger - 1
-				lParam: 0) asBoolean]!
+	^library
+		directBooleanFunction: this
+		msg: SCI_GETLINEVISIBLE
+		wParam: lineInteger - 1
+		lParam: 0!
 
 isMouseWheelCaptured
 	"Get whether mouse wheel can be active outside the window."
 
-	^this
-		ifNil: [false]
-		ifNotNil: 
-			[(Library
-				directFunction: this
-				msg: SCI_GETMOUSEWHEELCAPTURES
-				wParam: 0
-				lParam: 0) asBoolean]!
+	^library
+		directBooleanFunction: this
+		msg: SCI_GETMOUSEWHEELCAPTURES
+		wParam: 0
+		lParam: 0!
 
 isMouseWheelCaptured: capturesBoolean
 	"Set whether the mouse wheel can be active outside the window."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_SETMOUSEWHEELCAPTURES
-				wParam: capturesBoolean asParameter
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_SETMOUSEWHEELCAPTURES
+		wParam: capturesBoolean asParameter
+		lParam: 0!
 
 isMultiSelect
 	"Whether multiple selections can be made"
 
-	^this
-		ifNil: [false]
-		ifNotNil: 
-			[(Library
-				directFunction: this
-				msg: SCI_GETMULTIPLESELECTION
-				wParam: 0
-				lParam: 0) asBoolean]!
+	^library
+		directBooleanFunction: this
+		msg: SCI_GETMULTIPLESELECTION
+		wParam: 0
+		lParam: 0!
 
 isMultiSelect: multipleSelectionBoolean
 	"Set whether multiple selections can be made"
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_SETMULTIPLESELECTION
-				wParam: multipleSelectionBoolean asParameter
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_SETMULTIPLESELECTION
+		wParam: multipleSelectionBoolean asParameter
+		lParam: 0!
 
 isOvertypeEnabled
 	"Returns true if overtype mode is active otherwise false is returned."
 
-	^this
-		ifNil: [false]
-		ifNotNil: 
-			[(Library
-				directFunction: this
-				msg: SCI_GETOVERTYPE
-				wParam: 0
-				lParam: 0) asBoolean]!
+	^library
+		directBooleanFunction: this
+		msg: SCI_GETOVERTYPE
+		wParam: 0
+		lParam: 0!
 
 isOvertypeEnabled: overTypeBoolean
 	"Set to overtype (true) or insert mode."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_SETOVERTYPE
-				wParam: overTypeBoolean asParameter
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_SETOVERTYPE
+		wParam: overTypeBoolean asParameter
+		lParam: 0!
 
 isScrollWidthTracking
 	"Retrieve whether the scroll width tracks wide lines."
 
-	^this
-		ifNil: [false]
-		ifNotNil: 
-			[(Library
-				directFunction: this
-				msg: SCI_GETSCROLLWIDTHTRACKING
-				wParam: 0
-				lParam: 0) asBoolean]!
+	^library
+		directBooleanFunction: this
+		msg: SCI_GETSCROLLWIDTHTRACKING
+		wParam: 0
+		lParam: 0!
 
 isScrollWidthTracking: trackingBoolean
 	"Sets whether the maximum width line displayed is used to set scroll width."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_SETSCROLLWIDTHTRACKING
-				wParam: trackingBoolean asParameter
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_SETSCROLLWIDTHTRACKING
+		wParam: trackingBoolean asParameter
+		lParam: 0!
 
 isSelectionBackcolorExtendedToEndOfLine
 	"Is the selection end of line filled?"
 
-	^this
-		ifNil: [false]
-		ifNotNil: 
-			[(Library
-				directFunction: this
-				msg: SCI_GETSELEOLFILLED
-				wParam: 0
-				lParam: 0) asBoolean]!
+	^library
+		directBooleanFunction: this
+		msg: SCI_GETSELEOLFILLED
+		wParam: 0
+		lParam: 0!
 
 isSelectionBackcolorExtendedToEndOfLine: filledBoolean
 	"Set the selection to have its end of line filled or not."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_SETSELEOLFILLED
-				wParam: filledBoolean asParameter
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_SETSELEOLFILLED
+		wParam: filledBoolean asParameter
+		lParam: 0!
 
 isSelectionEmpty
 	"Is every selected range empty?"
 
-	^this
-		ifNil: [false]
-		ifNotNil: 
-			[(Library
-				directFunction: this
-				msg: SCI_GETSELECTIONEMPTY
-				wParam: 0
-				lParam: 0) asBoolean]!
+	^library
+		directBooleanFunction: this
+		msg: SCI_GETSELECTIONEMPTY
+		wParam: 0
+		lParam: 0!
 
 isSelectionKept
 	"Answer true if the receiver is set to maintain selection even after losing focus."
@@ -3849,14 +3417,11 @@ isSelectionKept
 isSelectionRectangular
 	"Is the selection rectangular? The alternative is the more common stream selection."
 
-	^this
-		ifNil: [false]
-		ifNotNil: 
-			[(Library
-				directFunction: this
-				msg: SCI_SELECTIONISRECTANGLE
-				wParam: 0
-				lParam: 0) asBoolean]!
+	^library
+		directBooleanFunction: this
+		msg: SCI_SELECTIONISRECTANGLE
+		wParam: 0
+		lParam: 0!
 
 isStylingEnabled
 	"Answer whether dynamic text styling using the receiver's configured <ScintillaStyler> is enabled."
@@ -3878,14 +3443,11 @@ isStylingEnabled: aBoolean
 isTextModified
 	"Is the document different from when it was last saved?"
 
-	^this
-		ifNil: [false]
-		ifNotNil: 
-			[(Library
-				directFunction: this
-				msg: SCI_GETMODIFY
-				wParam: 0
-				lParam: 0) asBoolean]!
+	^library
+		directBooleanFunction: this
+		msg: SCI_GETMODIFY
+		wParam: 0
+		lParam: 0!
 
 isTextModified: aBoolean 
 	"Private - Set/reset the receiver's text modification flag."
@@ -3896,60 +3458,48 @@ isTextModified: aBoolean
 isUndoEnabled
 	"Is undo history being collected?"
 
-	^this
-		ifNil: [false]
-		ifNotNil: 
-			[(Library
-				directFunction: this
-				msg: SCI_GETUNDOCOLLECTION
-				wParam: 0
-				lParam: 0) asBoolean]!
+	^library
+		directBooleanFunction: this
+		msg: SCI_GETUNDOCOLLECTION
+		wParam: 0
+		lParam: 0!
 
 isUndoEnabled: collectUndoBoolean
 	"Choose between collecting actions into the undo history and discarding them."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_SETUNDOCOLLECTION
-				wParam: collectUndoBoolean asParameter
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_SETUNDOCOLLECTION
+		wParam: collectUndoBoolean asParameter
+		lParam: 0!
 
 isUsingTabs
 	"Retrieve whether tabs will be used in indentation."
 
-	^this
-		ifNil: [false]
-		ifNotNil: 
-			[(Library
-				directFunction: this
-				msg: SCI_GETUSETABS
-				wParam: 0
-				lParam: 0) asBoolean]!
+	^library
+		directBooleanFunction: this
+		msg: SCI_GETUSETABS
+		wParam: 0
+		lParam: 0!
 
 isUsingTabs: useTabsBoolean
 	"Indentation will only use space characters if useTabs is false, otherwise it will use a
 	combination of tabs and spaces."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_SETUSETABS
-				wParam: useTabsBoolean asParameter
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_SETUSETABS
+		wParam: useTabsBoolean asParameter
+		lParam: 0!
 
 joinTarget
 	"Join the lines in the target."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_LINESJOIN
-				wParam: 0
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_LINESJOIN
+		wParam: 0
+		lParam: 0!
 
 keyBindings
 	"Answer the collection of key bindings currently assigned in the receiver."
@@ -3980,14 +3530,11 @@ keyboardCommands
 lastChildLine: lineInteger level: levelInteger
 	"Find the last child line of a header line."
 
-	^this
-		ifNil: [0]
-		ifNotNil: 
-			[(Library
-				directFunction: this
-				msg: SCI_GETLASTCHILD
-				wParam: lineInteger - 1
-				lParam: levelInteger) + 1]!
+	^(library
+		directFunction: this
+		msg: SCI_GETLASTCHILD
+		wParam: lineInteger - 1
+		lParam: levelInteger) + 1!
 
 lastLineWithState
 	"Answer the 1-based index of the last line with additional styling state information associated with it."
@@ -4051,20 +3598,17 @@ lexerLanguage
 	"Retrieve the name of the lexer. Return the length of the text. Result is NUL-terminated."
 
 	| len |
-	len := this
-				ifNil: [0]
-				ifNotNil: 
-					[Library
-						directFunction: this
-						msg: SCI_GETLEXERLANGUAGE
-						wParam: 0
-						lpParam: nil].
-	^len = 0
+	len := library
+				directFunction: this
+				msg: SCI_GETLEXERLANGUAGE
+				wParam: 0
+				lpParam: nil.
+	^len == 0
 		ifTrue: [stringClass empty]
 		ifFalse: 
 			[| result |
 			result := stringClass newFixed: len.
-			Library
+			library
 				directFunction: this
 				msg: SCI_GETLEXERLANGUAGE
 				wParam: 0
@@ -4098,50 +3642,38 @@ lexerPropertyNames
 lineCount
 	"Returns the number of lines in the document. There is always at least one."
 
-	^this
-		ifNil: [0]
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_GETLINECOUNT
-				wParam: 0
-				lParam: 0]!
+	^library
+		directFunction: this
+		msg: SCI_GETLINECOUNT
+		wParam: 0
+		lParam: 0!
 
 lineEndPosition: lineInteger
 	"Get the position after the last visible characters on a line."
 
-	^this
-		ifNil: [0]
-		ifNotNil: 
-			[(Library
-				directFunction: this
-				msg: SCI_GETLINEENDPOSITION
-				wParam: lineInteger - 1
-				lParam: 0) + 1]!
+	^(library
+		directFunction: this
+		msg: SCI_GETLINEENDPOSITION
+		wParam: lineInteger - 1
+		lParam: 0) + 1!
 
 lineFromDocumentLine: docLineInteger
 	"Find the display line of a document line taking hidden lines into account."
 
-	^this
-		ifNil: [0]
-		ifNotNil: 
-			[(Library
-				directFunction: this
-				msg: SCI_VISIBLEFROMDOCLINE
-				wParam: docLineInteger - 1
-				lParam: 0) + 1]!
+	^(library
+		directFunction: this
+		msg: SCI_VISIBLEFROMDOCLINE
+		wParam: docLineInteger - 1
+		lParam: 0) + 1!
 
 lineHeight: lineInteger
 	"Retrieve the height of a particular line of text in pixels."
 
-	^this
-		ifNil: [0]
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_TEXTHEIGHT
-				wParam: lineInteger - 1
-				lParam: 0]!
+	^library
+		directFunction: this
+		msg: SCI_TEXTHEIGHT
+		wParam: lineInteger - 1
+		lParam: 0!
 
 lineLength: anInteger 
 	"Answers the length of the line at anInteger."
@@ -4183,25 +3715,20 @@ lineRange: anInteger
 lineScroll
 	"Retrieve the display line at the top of the display."
 
-	^this
-		ifNil: [0]
-		ifNotNil: 
-			[(Library
-				directFunction: this
-				msg: SCI_GETFIRSTVISIBLELINE
-				wParam: 0
-				lParam: 0) + 1]!
+	^(library
+		directFunction: this
+		msg: SCI_GETFIRSTVISIBLELINE
+		wParam: 0
+		lParam: 0) + 1!
 
 lineScroll: displayLineInteger
 	"Scroll so that a display line is at the top of the display."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_SETFIRSTVISIBLELINE
-				wParam: displayLineInteger - 1
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_SETFIRSTVISIBLELINE
+		wParam: displayLineInteger - 1
+		lParam: 0!
 
 lineScrollBy: anInteger 
 	"Scrolls the text in the receiver by anInteger lines."
@@ -4211,14 +3738,11 @@ lineScrollBy: anInteger
 linesOnScreen
 	"Retrieves the number of lines completely visible."
 
-	^this
-		ifNil: [0]
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_LINESONSCREEN
-				wParam: 0
-				lParam: 0]!
+	^library
+		directFunction: this
+		msg: SCI_LINESONSCREEN
+		wParam: 0
+		lParam: 0!
 
 listBackcolor
 	"Answer the background <Color> lists, e.g, autocompletion lists."
@@ -4356,49 +3880,39 @@ markerTypesOnLine: anInteger
 maxCompletionListHeight
 	"Set the maximum height, in rows, of auto-completion and user lists."
 
-	^this
-		ifNil: [0]
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_AUTOCGETMAXHEIGHT
-				wParam: 0
-				lParam: 0]!
+	^library
+		directFunction: this
+		msg: SCI_AUTOCGETMAXHEIGHT
+		wParam: 0
+		lParam: 0!
 
 maxCompletionListHeight: rowCountInteger
 	"Set the maximum height, in rows, of auto-completion and user lists. The default is 5 rows."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_AUTOCSETMAXHEIGHT
-				wParam: rowCountInteger
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_AUTOCSETMAXHEIGHT
+		wParam: rowCountInteger
+		lParam: 0!
 
 maxCompletionListWidth
 	"Get the maximum width, in characters, of auto-completion and user lists."
 
-	^this
-		ifNil: [0]
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_AUTOCGETMAXWIDTH
-				wParam: 0
-				lParam: 0]!
+	^library
+		directFunction: this
+		msg: SCI_AUTOCGETMAXWIDTH
+		wParam: 0
+		lParam: 0!
 
 maxCompletionListWidth: characterCountInteger
 	"Set the maximum width, in characters, of auto-completion and user lists. Set to 0 to
 	autosize to fit longest item, which is the default."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_AUTOCSETMAXWIDTH
-				wParam: characterCountInteger
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_AUTOCSETMAXWIDTH
+		wParam: characterCountInteger
+		lParam: 0!
 
 modificationEventMask
 	"Answer the <integer> notification event mask that controls the SCN_MODIFIED notifications that 
@@ -4448,337 +3962,277 @@ mouseDwellTime: aDuration
 moveCaretInsideView
 	"Move the caret inside current view if it's not there already."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_MOVECARETINSIDEVIEW
-				wParam: 0
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_MOVECARETINSIDEVIEW
+		wParam: 0
+		lParam: 0!
 
 moveDown
 	"Move caret down one line."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_LINEDOWN
-				wParam: 0
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_LINEDOWN
+		wParam: 0
+		lParam: 0!
 
 moveLeft
 	"Move caret left one character."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_CHARLEFT
-				wParam: 0
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_CHARLEFT
+		wParam: 0
+		lParam: 0!
 
 movePageDown
 	"Move caret one page down."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_PAGEDOWN
-				wParam: 0
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_PAGEDOWN
+		wParam: 0
+		lParam: 0!
 
 movePageUp
 	"Move caret one page up."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_PAGEUP
-				wParam: 0
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_PAGEUP
+		wParam: 0
+		lParam: 0!
 
 moveParaDown
 	"Move caret down one paragraph (delimited by empty lines)."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_PARADOWN
-				wParam: 0
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_PARADOWN
+		wParam: 0
+		lParam: 0!
 
 moveParaUp
 	"Move caret up one paragraph (delimited by empty lines)."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_PARAUP
-				wParam: 0
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_PARAUP
+		wParam: 0
+		lParam: 0!
 
 moveRight
 	"Move caret right one character."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_CHARRIGHT
-				wParam: 0
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_CHARRIGHT
+		wParam: 0
+		lParam: 0!
 
 moveSelectedLinesDown
 	"Move the selected lines down one line, shifting the line below before the selection"
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_MOVESELECTEDLINESDOWN
-				wParam: 0
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_MOVESELECTEDLINESDOWN
+		wParam: 0
+		lParam: 0!
 
 moveSelectedLinesUp
 	"Move the selected lines up one line, shifting the line above after the selection"
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_MOVESELECTEDLINESUP
-				wParam: 0
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_MOVESELECTEDLINESUP
+		wParam: 0
+		lParam: 0!
 
 moveStutteredPageDown
 	"Move caret to bottom of page, or one page down if already at bottom of page."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_STUTTEREDPAGEDOWN
-				wParam: 0
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_STUTTEREDPAGEDOWN
+		wParam: 0
+		lParam: 0!
 
 moveStutteredPageUp
 	"Move caret to top of page, or one page up if already at top of page."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_STUTTEREDPAGEUP
-				wParam: 0
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_STUTTEREDPAGEUP
+		wParam: 0
+		lParam: 0!
 
 moveToEndOfDisplayLine
 	"Move caret to last position on display line."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_LINEENDDISPLAY
-				wParam: 0
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_LINEENDDISPLAY
+		wParam: 0
+		lParam: 0!
 
 moveToEndOfDocument
 	"Move caret to last position in document."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_DOCUMENTEND
-				wParam: 0
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_DOCUMENTEND
+		wParam: 0
+		lParam: 0!
 
 moveToEndOfLine
 	"Move caret to last position on line."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_LINEEND
-				wParam: 0
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_LINEEND
+		wParam: 0
+		lParam: 0!
 
 moveToEndOfNextWord
 	"Move caret right one word, position cursor at end of word."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_WORDRIGHTEND
-				wParam: 0
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_WORDRIGHTEND
+		wParam: 0
+		lParam: 0!
 
 moveToEndOfPreviousWord
 	"Move caret left one word, position cursor at end of word."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_WORDLEFTEND
-				wParam: 0
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_WORDLEFTEND
+		wParam: 0
+		lParam: 0!
 
 moveToEndOfWord
 	"Move caret right one word."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_WORDRIGHT
-				wParam: 0
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_WORDRIGHT
+		wParam: 0
+		lParam: 0!
 
 moveToEndOfWordPart
 	"Move to the change next in capitalisation."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_WORDPARTRIGHT
-				wParam: 0
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_WORDPARTRIGHT
+		wParam: 0
+		lParam: 0!
 
 moveToEndOfWrappedLine
 	"Like LineEnd but when word-wrap is enabled goes first to end of display line
 	LineEndDisplay, then to start of document line LineEnd."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_LINEENDWRAP
-				wParam: 0
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_LINEENDWRAP
+		wParam: 0
+		lParam: 0!
 
 moveToStartOfDisplayLine
 	"Move caret to first position on display line."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_HOMEDISPLAY
-				wParam: 0
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_HOMEDISPLAY
+		wParam: 0
+		lParam: 0!
 
 moveToStartOfDocument
 	"Move caret to first position in document."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_DOCUMENTSTART
-				wParam: 0
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_DOCUMENTSTART
+		wParam: 0
+		lParam: 0!
 
 moveToStartOfLine
 	"Move caret to first position on line."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_HOME
-				wParam: 0
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_HOME
+		wParam: 0
+		lParam: 0!
 
 moveToStartOfWord
 	"Move caret left one word."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_WORDLEFT
-				wParam: 0
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_WORDLEFT
+		wParam: 0
+		lParam: 0!
 
 moveToStartOfWordPart
 	"Move to the previous change in capitalisation."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_WORDPARTLEFT
-				wParam: 0
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_WORDPARTLEFT
+		wParam: 0
+		lParam: 0!
 
 moveToStartOfWrappedLine
 	"Like Home but when word-wrap is enabled goes first to start of display line HomeDisplay,
 	then to start of document line Home."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_HOMEWRAP
-				wParam: 0
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_HOMEWRAP
+		wParam: 0
+		lParam: 0!
 
 moveToVcHome
 	"Move caret to before first visible character on line. If already there move to first
 	character on line."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_VCHOME
-				wParam: 0
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_VCHOME
+		wParam: 0
+		lParam: 0!
 
 moveToVcStartOfDisplayLine
 	"Move caret to before first visible character on display line. If already there move to
 	first character on display line."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_VCHOMEDISPLAY
-				wParam: 0
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_VCHOMEDISPLAY
+		wParam: 0
+		lParam: 0!
 
 moveToWrappedVcHome
 	"Like VCHome but when word-wrap is enabled goes first to start of display line
 	VCHomeDisplay, then behaves like VCHome."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_VCHOMEWRAP
-				wParam: 0
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_VCHOMEWRAP
+		wParam: 0
+		lParam: 0!
 
 moveUp
 	"Move caret up one line."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_LINEUP
-				wParam: 0
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_LINEUP
+		wParam: 0
+		lParam: 0!
 
 multiPasteMode
 	"Retrieve the effect of pasting when there are multiple selections.."
@@ -4795,13 +4249,11 @@ multiPasteMode: aSymbol
 newLine
 	"Insert a new line, may use a CRLF, CR or LF depending on EOL mode."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_NEWLINE
-				wParam: 0
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_NEWLINE
+		wParam: 0
+		lParam: 0!
 
 newNotification: pSCNotification
 	^(SCNotification fromAddress: pSCNotification)
@@ -4899,14 +4351,11 @@ onViewCreated
 parentOfFoldedLine: lineInteger
 	"Find the parent line of a child line."
 
-	^this
-		ifNil: [0]
-		ifNotNil: 
-			[(Library
-				directFunction: this
-				msg: SCI_GETFOLDPARENT
-				wParam: lineInteger - 1
-				lParam: 0) + 1]!
+	^(library
+		directFunction: this
+		msg: SCI_GETFOLDPARENT
+		wParam: lineInteger - 1
+		lParam: 0) + 1!
 
 passwordCharacter
 	^self shouldNotImplement!
@@ -4917,13 +4366,11 @@ passwordCharacter: aCharacter
 pasteClipboard
 	"Paste the contents of the clipboard into the document replacing the selection."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_PASTE
-				wParam: 0
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_PASTE
+		wParam: 0
+		lParam: 0!
 
 performUndoableAction: aNiladicBlock 
 	"Evaluate the <niladicBlock> argument as a composite update within an undo group
@@ -4937,20 +4384,17 @@ plainText
 	NUL-terminated."
 
 	| len |
-	len := this
-				ifNil: [0]
-				ifNotNil: 
-					[Library
-						directFunction: this
-						msg: SCI_GETTEXT
-						wParam: 0
-						lpParam: nil].
-	^len = 0
+	len := library
+				directFunction: this
+				msg: SCI_GETTEXT
+				wParam: 0
+				lpParam: nil.
+	^len == 0
 		ifTrue: [stringClass empty]
 		ifFalse: 
 			[| result |
 			result := stringClass newFixed: len - 1.
-			Library
+			library
 				directFunction: this
 				msg: SCI_GETTEXT
 				wParam: len
@@ -4981,25 +4425,20 @@ plainTextFrom: startInteger to: stopInteger
 positionCacheSize
 	"How many entries are allocated to the position cache?"
 
-	^this
-		ifNil: [0]
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_GETPOSITIONCACHE
-				wParam: 0
-				lParam: 0]!
+	^library
+		directFunction: this
+		msg: SCI_GETPOSITIONCACHE
+		wParam: 0
+		lParam: 0!
 
 positionCacheSize: sizeInteger
 	"Set number of entries in position cache"
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_SETPOSITIONCACHE
-				wParam: sizeInteger
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_SETPOSITIONCACHE
+		wParam: sizeInteger
+		lParam: 0!
 
 positionOfChar: anInteger
 	"Map the one-based index of a character in the receiver to its client co-ordinates within
@@ -5041,48 +4480,38 @@ printAnnotationStyleBytes: aScintillaAnnotation on: aWriteStream
 printColourMode
 	"Returns the print colour mode."
 
-	^this
-		ifNil: [0]
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_GETPRINTCOLOURMODE
-				wParam: 0
-				lParam: 0]!
+	^library
+		directFunction: this
+		msg: SCI_GETPRINTCOLOURMODE
+		wParam: 0
+		lParam: 0!
 
 printColourMode: modeInteger
 	"Modify colours when printing for clearer printed text."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_SETPRINTCOLOURMODE
-				wParam: modeInteger
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_SETPRINTCOLOURMODE
+		wParam: modeInteger
+		lParam: 0!
 
 printMagnification
 	"Returns the print magnification."
 
-	^this
-		ifNil: [0]
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_GETPRINTMAGNIFICATION
-				wParam: 0
-				lParam: 0]!
+	^library
+		directFunction: this
+		msg: SCI_GETPRINTMAGNIFICATION
+		wParam: 0
+		lParam: 0!
 
 printMagnification: magnificationInteger
 	"Sets the print magnification added to the point size of each style for printing."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_SETPRINTMAGNIFICATION
-				wParam: magnificationInteger
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_SETPRINTMAGNIFICATION
+		wParam: magnificationInteger
+		lParam: 0!
 
 punctuation
 	^punctuation ifNil: [self sciGetPunctuationChars]!
@@ -5152,70 +4581,56 @@ rangeOfIndicator: anIntegerOrSymbol at: positionInteger
 rectangularSelectionAnchor
 	"Return the anchor position of the rectangular selection."
 
-	^this
-		ifNil: [0]
-		ifNotNil: 
-			[(Library
-				directFunction: this
-				msg: SCI_GETRECTANGULARSELECTIONANCHOR
-				wParam: 0
-				lParam: 0) + 1]!
+	^(library
+		directFunction: this
+		msg: SCI_GETRECTANGULARSELECTIONANCHOR
+		wParam: 0
+		lParam: 0) + 1!
 
 rectangularSelectionAnchor: anchorInteger
 	"Set the anchor position of the rectangular selection."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_SETRECTANGULARSELECTIONANCHOR
-				wParam: anchorInteger - 1
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_SETRECTANGULARSELECTIONANCHOR
+		wParam: anchorInteger - 1
+		lParam: 0!
 
 rectangularSelectionCaret
 	"Return the caret position of the rectangular selection."
 
-	^this
-		ifNil: [0]
-		ifNotNil: 
-			[(Library
-				directFunction: this
-				msg: SCI_GETRECTANGULARSELECTIONCARET
-				wParam: 0
-				lParam: 0) + 1]!
+	^(library
+		directFunction: this
+		msg: SCI_GETRECTANGULARSELECTIONCARET
+		wParam: 0
+		lParam: 0) + 1!
 
 rectangularSelectionCaret: caretInteger
 	"Set the caret position of the rectangular selection."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_SETRECTANGULARSELECTIONCARET
-				wParam: caretInteger - 1
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_SETRECTANGULARSELECTIONCARET
+		wParam: caretInteger - 1
+		lParam: 0!
 
 redo
 	"Redoes the next action on the undo history."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_REDO
-				wParam: 0
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_REDO
+		wParam: 0
+		lParam: 0!
 
 rememberCaretX
 	"Set the last x chosen value to be the caret x position."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_CHOOSECARETX
-				wParam: 0
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_CHOOSECARETX
+		wParam: 0
+		lParam: 0!
 
 removeAllAnnotations
 	"Remove all the annotations from all lines in the receiver."
@@ -5225,13 +4640,11 @@ removeAllAnnotations
 removeAllEdges
 	"Clear all vertical edges."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_MULTIEDGECLEARALL
-				wParam: 0
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_MULTIEDGECLEARALL
+		wParam: 0
+		lParam: 0!
 
 removeAllMarkers
 	"Remove all markers on all lines from the view."
@@ -5242,13 +4655,11 @@ removeAllMarkers
 removeAllStyling
 	"Set all style bytes to 0, remove all folding information."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_CLEARDOCUMENTSTYLE
-				wParam: 0
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_CLEARDOCUMENTSTYLE
+		wParam: 0
+		lParam: 0!
 
 removeAnnotation: aScintillaAnnotation 
 	"Remove any annotations in the receiver matching the <ScintillaAnnotation> argument, i.e.
@@ -5301,13 +4712,11 @@ removeMarkersOfType: aSymbol
 removeSelections
 	"Clear selections to a single empty stream selection"
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_CLEARSELECTIONS
-				wParam: 0
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_CLEARSELECTIONS
+		wParam: 0
+		lParam: 0!
 
 removeStylingFrom: startInteger to: stopInteger
 	"Remove any styling from the specified range of text."
@@ -5352,24 +4761,20 @@ restyleAll
 restyleFrom: startInteger to: endInteger
 	"Colourise a segment of the document using the current lexing language."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_COLOURISE
-				wParam: startInteger - 1
-				lParam: endInteger - 1]!
+	library
+		directFunction: this
+		msg: SCI_COLOURISE
+		wParam: startInteger - 1
+		lParam: endInteger - 1!
 
 reverseSelectedLines
 	"Reverse order of selected lines."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_LINEREVERSE
-				wParam: 0
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_LINEREVERSE
+		wParam: 0
+		lParam: 0!
 
 rgbaBitsFromBitmap: aDIBSection
 	"Private - Return a <ByteArray> representing the <DIBSection> in RGBA format (as opposed to the native Windows BRGA format)."
@@ -5394,169 +4799,136 @@ rgbaBitsFromBitmap: aDIBSection
 rotateSelection
 	"Set the main selection to the next selection."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_ROTATESELECTION
-				wParam: 0
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_ROTATESELECTION
+		wParam: 0
+		lParam: 0!
 
 sciAddRefDocument: docAddress
 	"Private - Extend life of document."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_ADDREFDOCUMENT
-				wParam: 0
-				lpParam: docAddress]!
+	library
+		directFunction: this
+		msg: SCI_ADDREFDOCUMENT
+		wParam: 0
+		lpParam: docAddress!
 
 sciAddSelection: caretInteger anchor: anchorInteger
 	"Private - Add a selection"
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_ADDSELECTION
-				wParam: caretInteger - 1
-				lParam: anchorInteger - 1]!
+	library
+		directFunction: this
+		msg: SCI_ADDSELECTION
+		wParam: caretInteger - 1
+		lParam: anchorInteger - 1!
 
 sciAddStyledText: lengthInteger c: cByteArray
 	"Private - Add array of cells to document."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_ADDSTYLEDTEXT
-				wParam: lengthInteger
-				lpParam: cByteArray]!
+	library
+		directFunction: this
+		msg: SCI_ADDSTYLEDTEXT
+		wParam: lengthInteger
+		lpParam: cByteArray!
 
 sciAddTabStop: lineInteger x: xInteger
 	"Private - Add an explicit tab stop for a line."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_ADDTABSTOP
-				wParam: lineInteger - 1
-				lParam: xInteger]!
+	library
+		directFunction: this
+		msg: SCI_ADDTABSTOP
+		wParam: lineInteger - 1
+		lParam: xInteger!
 
 sciAddText: lengthInteger text: textString
 	"Private - Add text to the document at current position."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_ADDTEXT
-				wParam: lengthInteger
-				lpParam: textString]!
+	library
+		directFunction: this
+		msg: SCI_ADDTEXT
+		wParam: lengthInteger
+		lpParam: textString!
 
 sciAddUndoAction: tokenInteger flags: flagsInteger
 	"Private - Add a container action to the undo stack"
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_ADDUNDOACTION
-				wParam: tokenInteger
-				lParam: flagsInteger]!
+	library
+		directFunction: this
+		msg: SCI_ADDUNDOACTION
+		wParam: tokenInteger
+		lParam: flagsInteger!
 
 sciAllocate: bytesInteger
 	"Private - Enlarge the document to a particular size of text bytes."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_ALLOCATE
-				wParam: bytesInteger
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_ALLOCATE
+		wParam: bytesInteger
+		lParam: 0!
 
 sciAllocateExtendedStyles: numberStylesInteger
 	"Private - Allocate some extended (>255) style numbers and return the start of the range"
 
-	^this
-		ifNil: [0]
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_ALLOCATEEXTENDEDSTYLES
-				wParam: numberStylesInteger
-				lParam: 0]!
+	^library
+		directFunction: this
+		msg: SCI_ALLOCATEEXTENDEDSTYLES
+		wParam: numberStylesInteger
+		lParam: 0!
 
 sciAllocateLineCharacterIndex: lineCharacterIndexInteger
 	"Private - Request line character index be created or its use count increased."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_ALLOCATELINECHARACTERINDEX
-				wParam: lineCharacterIndexInteger
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_ALLOCATELINECHARACTERINDEX
+		wParam: lineCharacterIndexInteger
+		lParam: 0!
 
 sciAllocateSubStyles: styleBaseInteger numberStyles: numberStylesInteger
 	"Private - Allocate a set of sub styles for a particular base style, returning start of
 	range"
 
-	^this
-		ifNil: [0]
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_ALLOCATESUBSTYLES
-				wParam: styleBaseInteger
-				lParam: numberStylesInteger]!
+	^library
+		directFunction: this
+		msg: SCI_ALLOCATESUBSTYLES
+		wParam: styleBaseInteger
+		lParam: numberStylesInteger!
 
 sciAnnotationGetLines: lineInteger
 	"Private - Get the number of annotation lines for a line"
 
-	^this
-		ifNil: [0]
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_ANNOTATIONGETLINES
-				wParam: lineInteger - 1
-				lParam: 0]!
+	^library
+		directFunction: this
+		msg: SCI_ANNOTATIONGETLINES
+		wParam: lineInteger - 1
+		lParam: 0!
 
 sciAnnotationGetStyleOffset
 	"Private - Get the start of the range of style numbers used for annotations"
 
-	^this
-		ifNil: [0]
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_ANNOTATIONGETSTYLEOFFSET
-				wParam: 0
-				lParam: 0]!
+	^library
+		directFunction: this
+		msg: SCI_ANNOTATIONGETSTYLEOFFSET
+		wParam: 0
+		lParam: 0!
 
 sciAnnotationGetStyles: lineInteger
 	"Private - Get the annotation styles for a line"
 
 	| len |
-	len := this
-				ifNil: [0]
-				ifNotNil: 
-					[Library
-						directFunction: this
-						msg: SCI_ANNOTATIONGETSTYLES
-						wParam: lineInteger - 1
-						lpParam: nil].
-	^len = 0
+	len := library
+				directFunction: this
+				msg: SCI_ANNOTATIONGETSTYLES
+				wParam: lineInteger - 1
+				lpParam: nil.
+	^len == 0
 		ifTrue: [Core.ByteArray empty]
 		ifFalse: 
 			[| result |
 			result := Core.ByteArray newFixed: len.
-			Library
+			library
 				directFunction: this
 				msg: SCI_ANNOTATIONGETSTYLES
 				wParam: lineInteger - 1
@@ -5567,20 +4939,17 @@ sciAnnotationGetText: lineInteger
 	"Private - Get the annotation text for a line"
 
 	| len |
-	len := this
-				ifNil: [0]
-				ifNotNil: 
-					[Library
-						directFunction: this
-						msg: SCI_ANNOTATIONGETTEXT
-						wParam: lineInteger - 1
-						lpParam: nil].
-	^len = 0
+	len := library
+				directFunction: this
+				msg: SCI_ANNOTATIONGETTEXT
+				wParam: lineInteger - 1
+				lpParam: nil.
+	^len == 0
 		ifTrue: [stringClass empty]
 		ifFalse: 
 			[| result |
 			result := stringClass newFixed: len.
-			Library
+			library
 				directFunction: this
 				msg: SCI_ANNOTATIONGETTEXT
 				wParam: lineInteger - 1
@@ -5590,533 +4959,426 @@ sciAnnotationGetText: lineInteger
 sciAnnotationGetVisible
 	"Private - Get the visibility for the annotations for a view"
 
-	^this
-		ifNil: [0]
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_ANNOTATIONGETVISIBLE
-				wParam: 0
-				lParam: 0]!
+	^library
+		directFunction: this
+		msg: SCI_ANNOTATIONGETVISIBLE
+		wParam: 0
+		lParam: 0!
 
 sciAnnotationSetStyleOffset: styleInteger
 	"Private - Get the start of the range of style numbers used for annotations"
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_ANNOTATIONSETSTYLEOFFSET
-				wParam: styleInteger
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_ANNOTATIONSETSTYLEOFFSET
+		wParam: styleInteger
+		lParam: 0!
 
 sciAnnotationSetStyles: lineInteger styles: stylesString
 	"Private - Set the annotation styles for a line"
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_ANNOTATIONSETSTYLES
-				wParam: lineInteger - 1
-				lpParam: stylesString]!
+	library
+		directFunction: this
+		msg: SCI_ANNOTATIONSETSTYLES
+		wParam: lineInteger - 1
+		lpParam: stylesString!
 
 sciAnnotationSetText: lineInteger text: textString
 	"Private - Set the annotation text for a line"
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_ANNOTATIONSETTEXT
-				wParam: lineInteger - 1
-				lpParam: textString]!
+	library
+		directFunction: this
+		msg: SCI_ANNOTATIONSETTEXT
+		wParam: lineInteger - 1
+		lpParam: textString!
 
 sciAnnotationSetVisible: visibleInteger
 	"Private - Set the visibility for the annotations for a view"
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_ANNOTATIONSETVISIBLE
-				wParam: visibleInteger
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_ANNOTATIONSETVISIBLE
+		wParam: visibleInteger
+		lParam: 0!
 
 sciAppendText: lengthInteger text: textString
 	"Private - Append a string to the end of the document without changing the selection."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_APPENDTEXT
-				wParam: lengthInteger
-				lpParam: textString]!
+	library
+		directFunction: this
+		msg: SCI_APPENDTEXT
+		wParam: lengthInteger
+		lpParam: textString!
 
 sciAssignCmdKey: keyDefinitionInteger sciCommand: sciCommandInteger
 	"Private - When key+modifier combination keyDefinition is pressed perform sciCommand."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_ASSIGNCMDKEY
-				wParam: keyDefinitionInteger
-				lParam: sciCommandInteger]!
+	library
+		directFunction: this
+		msg: SCI_ASSIGNCMDKEY
+		wParam: keyDefinitionInteger
+		lParam: sciCommandInteger!
 
 sciAutoCGetCaseInsensitiveBehaviour
 	"Private - Get auto-completion case insensitive behaviour."
 
-	^this
-		ifNil: [0]
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_AUTOCGETCASEINSENSITIVEBEHAVIOUR
-				wParam: 0
-				lParam: 0]!
+	^library
+		directFunction: this
+		msg: SCI_AUTOCGETCASEINSENSITIVEBEHAVIOUR
+		wParam: 0
+		lParam: 0!
 
 sciAutoCGetCurrent
 	"Private - Get currently selected item position in the auto-completion list"
 
-	^this
-		ifNil: [0]
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_AUTOCGETCURRENT
-				wParam: 0
-				lParam: 0]!
+	^library
+		directFunction: this
+		msg: SCI_AUTOCGETCURRENT
+		wParam: 0
+		lParam: 0!
 
 sciAutoCGetMulti
 	"Private - Retrieve the effect of autocompleting when there are multiple selections."
 
-	^this
-		ifNil: [0]
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_AUTOCGETMULTI
-				wParam: 0
-				lParam: 0]!
+	^library
+		directFunction: this
+		msg: SCI_AUTOCGETMULTI
+		wParam: 0
+		lParam: 0!
 
 sciAutoCGetOrder
 	"Private - Get the way autocompletion lists are ordered."
 
-	^this
-		ifNil: [0]
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_AUTOCGETORDER
-				wParam: 0
-				lParam: 0]!
+	^library
+		directFunction: this
+		msg: SCI_AUTOCGETORDER
+		wParam: 0
+		lParam: 0!
 
 sciAutoCGetSeparator
 	"Private - Retrieve the auto-completion list separator character."
 
-	^this
-		ifNil: [0]
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_AUTOCGETSEPARATOR
-				wParam: 0
-				lParam: 0]!
+	^library
+		directFunction: this
+		msg: SCI_AUTOCGETSEPARATOR
+		wParam: 0
+		lParam: 0!
 
 sciAutoCGetTypeSeparator
 	"Private - Retrieve the auto-completion list type-separator character."
 
-	^this
-		ifNil: [0]
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_AUTOCGETTYPESEPARATOR
-				wParam: 0
-				lParam: 0]!
+	^library
+		directFunction: this
+		msg: SCI_AUTOCGETTYPESEPARATOR
+		wParam: 0
+		lParam: 0!
 
 sciAutoCSetCaseInsensitiveBehaviour: behaviourInteger
 	"Private - Set auto-completion case insensitive behaviour to either prefer case-sensitive
 	matches or have no preference."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_AUTOCSETCASEINSENSITIVEBEHAVIOUR
-				wParam: behaviourInteger
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_AUTOCSETCASEINSENSITIVEBEHAVIOUR
+		wParam: behaviourInteger
+		lParam: 0!
 
 sciAutoCSetFillUps: characterSetString
 	"Private - Define a set of characters that when typed will cause the autocompletion to
 	choose the selected item."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_AUTOCSETFILLUPS
-				wParam: 0
-				lpParam: characterSetString]!
+	library
+		directFunction: this
+		msg: SCI_AUTOCSETFILLUPS
+		wParam: 0
+		lpParam: characterSetString!
 
 sciAutoCSetMulti: multiInteger
 	"Private - Change the effect of autocompleting when there are multiple selections."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_AUTOCSETMULTI
-				wParam: multiInteger
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_AUTOCSETMULTI
+		wParam: multiInteger
+		lParam: 0!
 
 sciAutoCSetOrder: orderInteger
 	"Private - Set the way autocompletion lists are ordered."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_AUTOCSETORDER
-				wParam: orderInteger
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_AUTOCSETORDER
+		wParam: orderInteger
+		lParam: 0!
 
 sciAutoCSetSeparator: separatorCharacterInteger
 	"Private - Change the separator character in the string setting up an auto-completion list.
 	Default is space but can be changed if items contain space."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_AUTOCSETSEPARATOR
-				wParam: separatorCharacterInteger
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_AUTOCSETSEPARATOR
+		wParam: separatorCharacterInteger
+		lParam: 0!
 
 sciAutoCSetTypeSeparator: separatorCharacterInteger
 	"Private - Change the type-separator character in the string setting up an auto-completion
 	list. Default is '?' but can be changed if items contain '?'."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_AUTOCSETTYPESEPARATOR
-				wParam: separatorCharacterInteger
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_AUTOCSETTYPESEPARATOR
+		wParam: separatorCharacterInteger
+		lParam: 0!
 
 sciAutoCShow: lengthEnteredInteger itemList: itemListString
 	"Private - Display a auto-completion list. The lengthEntered parameter indicates how many
 	characters before the caret should be used to provide context."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_AUTOCSHOW
-				wParam: lengthEnteredInteger
-				lpParam: itemListString]!
+	library
+		directFunction: this
+		msg: SCI_AUTOCSHOW
+		wParam: lengthEnteredInteger
+		lpParam: itemListString!
 
 sciAutoCStops: characterSetString
 	"Private - Define a set of character that when typed cancel the auto-completion list."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_AUTOCSTOPS
-				wParam: 0
-				lpParam: characterSetString]!
+	library
+		directFunction: this
+		msg: SCI_AUTOCSTOPS
+		wParam: 0
+		lpParam: characterSetString!
 
 sciBraceBadLightIndicator: useSettingBoolean indicator: indicatorInteger
 	"Private - Use specified indicator to highlight non matching brace instead of changing its
 	style."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_BRACEBADLIGHTINDICATOR
-				wParam: useSettingBoolean asParameter
-				lParam: indicatorInteger]!
+	library
+		directFunction: this
+		msg: SCI_BRACEBADLIGHTINDICATOR
+		wParam: useSettingBoolean asParameter
+		lParam: indicatorInteger!
 
 sciBraceHighlightIndicator: useSettingBoolean indicator: indicatorInteger
 	"Private - Use specified indicator to highlight matching braces instead of changing their
 	style."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_BRACEHIGHLIGHTINDICATOR
-				wParam: useSettingBoolean asParameter
-				lParam: indicatorInteger]!
+	library
+		directFunction: this
+		msg: SCI_BRACEHIGHLIGHTINDICATOR
+		wParam: useSettingBoolean asParameter
+		lParam: indicatorInteger!
 
 sciBraceMatch: posInteger maxReStyle: maxReStyleInteger
 	"Private - Find the position of a matching brace or INVALID_POSITION if no match. The
 	maxReStyle must be 0 for now. It may be defined in a future release."
 
-	^this
-		ifNil: [0]
-		ifNotNil: 
-			[(Library
-				directFunction: this
-				msg: SCI_BRACEMATCH
-				wParam: posInteger - 1
-				lParam: maxReStyleInteger) + 1]!
+	^(library
+		directFunction: this
+		msg: SCI_BRACEMATCH
+		wParam: posInteger - 1
+		lParam: maxReStyleInteger) + 1!
 
 sciBraceMatchNext: posInteger startPos: startPosInteger
 	"Private - Similar to BraceMatch, but matching starts at the explicit start position."
 
-	^this
-		ifNil: [0]
-		ifNotNil: 
-			[(Library
-				directFunction: this
-				msg: SCI_BRACEMATCHNEXT
-				wParam: posInteger - 1
-				lParam: startPosInteger - 1) + 1]!
+	^(library
+		directFunction: this
+		msg: SCI_BRACEMATCHNEXT
+		wParam: posInteger - 1
+		lParam: startPosInteger - 1) + 1!
 
 sciCallTipSetForeHlt: foreColor
 	"Private - Set the foreground colour for the highlighted part of the call tip."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_CALLTIPSETFOREHLT
-				wParam: foreColor rgbCode
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_CALLTIPSETFOREHLT
+		wParam: foreColor rgbCode
+		lParam: 0!
 
 sciCallTipShow: posInteger definition: definitionString
 	"Private - Show a call tip containing a definition near position pos."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_CALLTIPSHOW
-				wParam: posInteger - 1
-				lpParam: definitionString]!
+	library
+		directFunction: this
+		msg: SCI_CALLTIPSHOW
+		wParam: posInteger - 1
+		lpParam: definitionString!
 
 sciCallTipUseStyle: tabSizeInteger
 	"Private - Enable use of STYLE_CALLTIP and set call tip tab size in pixels."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_CALLTIPUSESTYLE
-				wParam: tabSizeInteger
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_CALLTIPUSESTYLE
+		wParam: tabSizeInteger
+		lParam: 0!
 
 sciCanPaste
 	"Private - Will a paste succeed?"
 
-	^this
-		ifNil: [false]
-		ifNotNil: 
-			[(Library
-				directFunction: this
-				msg: SCI_CANPASTE
-				wParam: 0
-				lParam: 0) asBoolean]!
+	^library
+		directBooleanFunction: this
+		msg: SCI_CANPASTE
+		wParam: 0
+		lParam: 0!
 
 sciChangeInsertion: lengthInteger text: textString
 	"Private - Change the text that is being inserted in response to SC_MOD_INSERTCHECK"
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_CHANGEINSERTION
-				wParam: lengthInteger
-				lpParam: textString]!
+	library
+		directFunction: this
+		msg: SCI_CHANGEINSERTION
+		wParam: lengthInteger
+		lpParam: textString!
 
 sciChangeLexerState: startInteger end: endInteger
 	"Private - Indicate that the internal state of a lexer has changed over a range and
 	therefore there may be a need to redraw."
 
-	^this
-		ifNil: [0]
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_CHANGELEXERSTATE
-				wParam: startInteger - 1
-				lParam: endInteger - 1]!
+	^library
+		directFunction: this
+		msg: SCI_CHANGELEXERSTATE
+		wParam: startInteger - 1
+		lParam: endInteger - 1!
 
 sciCharPositionFromPoint: xInteger y: yInteger
 	"Private - Find the position of a character from a point within the window."
 
-	^this
-		ifNil: [0]
-		ifNotNil: 
-			[(Library
-				directFunction: this
-				msg: SCI_CHARPOSITIONFROMPOINT
-				wParam: xInteger
-				lParam: yInteger) + 1]!
+	^(library
+		directFunction: this
+		msg: SCI_CHARPOSITIONFROMPOINT
+		wParam: xInteger
+		lParam: yInteger) + 1!
 
 sciCharPositionFromPointClose: xInteger y: yInteger
 	"Private - Find the position of a character from a point within the window. Return
 	INVALID_POSITION if not close to text."
 
-	^this
-		ifNil: [0]
-		ifNotNil: 
-			[(Library
-				directFunction: this
-				msg: SCI_CHARPOSITIONFROMPOINTCLOSE
-				wParam: xInteger
-				lParam: yInteger) + 1]!
+	^(library
+		directFunction: this
+		msg: SCI_CHARPOSITIONFROMPOINTCLOSE
+		wParam: xInteger
+		lParam: yInteger) + 1!
 
 sciClearAllCmdKeys
 	"Private - Drop all key mappings."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_CLEARALLCMDKEYS
-				wParam: 0
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_CLEARALLCMDKEYS
+		wParam: 0
+		lParam: 0!
 
 sciClearAllRepresentations
 	"Private - Clear representations to default."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_CLEARALLREPRESENTATIONS
-				wParam: 0
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_CLEARALLREPRESENTATIONS
+		wParam: 0
+		lParam: 0!
 
 sciClearCmdKey: keyDefinitionInteger
 	"Private - When key+modifier combination keyDefinition is pressed do nothing."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_CLEARCMDKEY
-				wParam: keyDefinitionInteger
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_CLEARCMDKEY
+		wParam: keyDefinitionInteger
+		lParam: 0!
 
 sciClearRepresentation: encodedCharacterString
 	"Private - Remove a character representation."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_CLEARREPRESENTATION
-				wpParam: encodedCharacterString
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_CLEARREPRESENTATION
+		wpParam: encodedCharacterString
+		lParam: 0!
 
 sciContractedFoldNext: lineStartInteger
 	"Private - Find the next line at or after lineStart that is a contracted fold header line.
 	Return -1 when no more lines."
 
-	^this
-		ifNil: [0]
-		ifNotNil: 
-			[(Library
-				directFunction: this
-				msg: SCI_CONTRACTEDFOLDNEXT
-				wParam: lineStartInteger - 1
-				lParam: 0) + 1]!
+	^(library
+		directFunction: this
+		msg: SCI_CONTRACTEDFOLDNEXT
+		wParam: lineStartInteger - 1
+		lParam: 0) + 1!
 
 sciConvertEOLs: eolModeInteger
 	"Private - Convert all line endings in the document to one mode."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_CONVERTEOLS
-				wParam: eolModeInteger
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_CONVERTEOLS
+		wParam: eolModeInteger
+		lParam: 0!
 
 sciCopyRange: startInteger end: endInteger
 	"Private - Copy a range of text to the clipboard. Positions are clipped into the document."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_COPYRANGE
-				wParam: startInteger - 1
-				lParam: endInteger - 1]!
+	library
+		directFunction: this
+		msg: SCI_COPYRANGE
+		wParam: startInteger - 1
+		lParam: endInteger - 1!
 
 sciCountCharacters: startInteger end: endInteger
 	"Private - Count characters between two positions."
 
-	^this
-		ifNil: [0]
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_COUNTCHARACTERS
-				wParam: startInteger - 1
-				lParam: endInteger - 1]!
+	^library
+		directFunction: this
+		msg: SCI_COUNTCHARACTERS
+		wParam: startInteger - 1
+		lParam: endInteger - 1!
 
 sciCountCodeUnits: startInteger end: endInteger
 	"Private - Count code units between two positions."
 
-	^this
-		ifNil: [0]
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_COUNTCODEUNITS
-				wParam: startInteger - 1
-				lParam: endInteger - 1]!
+	^library
+		directFunction: this
+		msg: SCI_COUNTCODEUNITS
+		wParam: startInteger - 1
+		lParam: endInteger - 1!
 
 sciCreateDocument: bytesInteger documentOptions: documentOptionsInteger
 	"Private - Create a new document object. Starts with reference count of 1 and not selected
 	into editor."
 
-	^this
-		ifNotNil: 
-			[Library
+	^Address fromAddress: (library
 				directFunction: this
 				msg: SCI_CREATEDOCUMENT
 				wParam: bytesInteger
-				lParam: documentOptionsInteger]!
+				lParam: documentOptionsInteger)!
 
 sciDeleteRange: startInteger lengthDelete: lengthDeleteInteger
 	"Private - Delete a range of text in the document."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_DELETERANGE
-				wParam: startInteger - 1
-				lParam: lengthDeleteInteger]!
+	library
+		directFunction: this
+		msg: SCI_DELETERANGE
+		wParam: startInteger - 1
+		lParam: lengthDeleteInteger!
 
 sciDescribeProperty: nameString
 	"Private - Describe a property. Result is NUL-terminated."
 
 	| len |
-	len := this
-				ifNil: [0]
-				ifNotNil: 
-					[Library
-						directFunction: this
-						msg: SCI_DESCRIBEPROPERTY
-						wpParam: nameString
-						lpParam: nil].
-	^len = 0
+	len := library
+				directFunction: this
+				msg: SCI_DESCRIBEPROPERTY
+				wpParam: nameString
+				lpParam: nil.
+	^len == 0
 		ifTrue: [stringClass empty]
 		ifFalse: 
 			[| result |
 			result := stringClass newFixed: len.
-			Library
+			library
 				directFunction: this
 				msg: SCI_DESCRIBEPROPERTY
 				wpParam: nameString
@@ -6127,20 +5389,17 @@ sciDescriptionOfStyle: styleInteger
 	"Private - Retrieve a description of a style. Result is NUL-terminated."
 
 	| len |
-	len := this
-				ifNil: [0]
-				ifNotNil: 
-					[Library
-						directFunction: this
-						msg: SCI_DESCRIPTIONOFSTYLE
-						wParam: styleInteger
-						lpParam: nil].
-	^len = 0
+	len := library
+				directFunction: this
+				msg: SCI_DESCRIPTIONOFSTYLE
+				wParam: styleInteger
+				lpParam: nil.
+	^len == 0
 		ifTrue: [stringClass empty]
 		ifFalse: 
 			[| result |
 			result := stringClass newFixed: len.
-			Library
+			library
 				directFunction: this
 				msg: SCI_DESCRIPTIONOFSTYLE
 				wParam: styleInteger
@@ -6151,45 +5410,37 @@ sciDistanceToSecondaryStyles
 	"Private - Where styles are duplicated by a feature such as active/inactive code return the
 	distance between the two types."
 
-	^this
-		ifNil: [0]
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_DISTANCETOSECONDARYSTYLES
-				wParam: 0
-				lParam: 0]!
+	^library
+		directFunction: this
+		msg: SCI_DISTANCETOSECONDARYSTYLES
+		wParam: 0
+		lParam: 0!
 
 sciDropSelectionN: selectionInteger
 	"Private - Drop one selection"
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_DROPSELECTIONN
-				wParam: selectionInteger
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_DROPSELECTIONN
+		wParam: selectionInteger
+		lParam: 0!
 
 sciEncodedFromUTF8: utf8String
 	"Private - Translates a UTF8 string into the document encoding. Return the length of the
 	result in bytes. On error return 0."
 
 	| len |
-	len := this
-				ifNil: [0]
-				ifNotNil: 
-					[Library
-						directFunction: this
-						msg: SCI_ENCODEDFROMUTF8
-						wpParam: utf8String
-						lpParam: nil].
-	^len = 0
+	len := library
+				directFunction: this
+				msg: SCI_ENCODEDFROMUTF8
+				wpParam: utf8String
+				lpParam: nil.
+	^len == 0
 		ifTrue: [stringClass empty]
 		ifFalse: 
 			[| result |
 			result := stringClass newFixed: len.
-			Library
+			library
 				directFunction: this
 				msg: SCI_ENCODEDFROMUTF8
 				wpParam: utf8String
@@ -6199,56 +5450,45 @@ sciEncodedFromUTF8: utf8String
 sciEOLAnnotationClearAll
 	"Private - Clear the end of annotations from all lines"
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_EOLANNOTATIONCLEARALL
-				wParam: 0
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_EOLANNOTATIONCLEARALL
+		wParam: 0
+		lParam: 0!
 
 sciEOLAnnotationGetStyle: lineInteger
 	"Private - Get the style number for the end of line annotations for a line"
 
-	^this
-		ifNil: [0]
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_EOLANNOTATIONGETSTYLE
-				wParam: lineInteger - 1
-				lParam: 0]!
+	^library
+		directFunction: this
+		msg: SCI_EOLANNOTATIONGETSTYLE
+		wParam: lineInteger - 1
+		lParam: 0!
 
 sciEOLAnnotationGetStyleOffset
 	"Private - Get the start of the range of style numbers used for end of line annotations"
 
-	^this
-		ifNil: [0]
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_EOLANNOTATIONGETSTYLEOFFSET
-				wParam: 0
-				lParam: 0]!
+	^library
+		directFunction: this
+		msg: SCI_EOLANNOTATIONGETSTYLEOFFSET
+		wParam: 0
+		lParam: 0!
 
 sciEOLAnnotationGetText: lineInteger
 	"Private - Get the end of line annotation text for a line"
 
 	| len |
-	len := this
-				ifNil: [0]
-				ifNotNil: 
-					[Library
-						directFunction: this
-						msg: SCI_EOLANNOTATIONGETTEXT
-						wParam: lineInteger - 1
-						lpParam: nil].
-	^len = 0
+	len := library
+				directFunction: this
+				msg: SCI_EOLANNOTATIONGETTEXT
+				wParam: lineInteger - 1
+				lpParam: nil.
+	^len == 0
 		ifTrue: [stringClass empty]
 		ifFalse: 
 			[| result |
 			result := stringClass newFixed: len.
-			Library
+			library
 				directFunction: this
 				msg: SCI_EOLANNOTATIONGETTEXT
 				wParam: lineInteger - 1
@@ -6258,493 +5498,383 @@ sciEOLAnnotationGetText: lineInteger
 sciEOLAnnotationGetVisible
 	"Private - Get the visibility for the end of line annotations for a view"
 
-	^this
-		ifNil: [0]
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_EOLANNOTATIONGETVISIBLE
-				wParam: 0
-				lParam: 0]!
+	^library
+		directFunction: this
+		msg: SCI_EOLANNOTATIONGETVISIBLE
+		wParam: 0
+		lParam: 0!
 
 sciEOLAnnotationSetStyle: lineInteger style: styleInteger
 	"Private - Set the style number for the end of line annotations for a line"
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_EOLANNOTATIONSETSTYLE
-				wParam: lineInteger - 1
-				lParam: styleInteger]!
+	library
+		directFunction: this
+		msg: SCI_EOLANNOTATIONSETSTYLE
+		wParam: lineInteger - 1
+		lParam: styleInteger!
 
 sciEOLAnnotationSetStyleOffset: styleInteger
 	"Private - Get the start of the range of style numbers used for end of line annotations"
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_EOLANNOTATIONSETSTYLEOFFSET
-				wParam: styleInteger
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_EOLANNOTATIONSETSTYLEOFFSET
+		wParam: styleInteger
+		lParam: 0!
 
 sciEOLAnnotationSetText: lineInteger text: textString
 	"Private - Set the end of line annotation text for a line"
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_EOLANNOTATIONSETTEXT
-				wParam: lineInteger - 1
-				lpParam: textString]!
+	library
+		directFunction: this
+		msg: SCI_EOLANNOTATIONSETTEXT
+		wParam: lineInteger - 1
+		lpParam: textString!
 
 sciEOLAnnotationSetVisible: visibleInteger
 	"Private - Set the visibility for the end of line annotations for a view"
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_EOLANNOTATIONSETVISIBLE
-				wParam: visibleInteger
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_EOLANNOTATIONSETVISIBLE
+		wParam: visibleInteger
+		lParam: 0!
 
 sciFindIndicatorFlash: startInteger end: endInteger
 	"Private - On OS X, flash a find indicator, then fade out."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_FINDINDICATORFLASH
-				wParam: startInteger - 1
-				lParam: endInteger - 1]!
+	library
+		directFunction: this
+		msg: SCI_FINDINDICATORFLASH
+		wParam: startInteger - 1
+		lParam: endInteger - 1!
 
 sciFindIndicatorHide
 	"Private - On OS X, hide the find indicator."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_FINDINDICATORHIDE
-				wParam: 0
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_FINDINDICATORHIDE
+		wParam: 0
+		lParam: 0!
 
 sciFindIndicatorShow: startInteger end: endInteger
 	"Private - On OS X, show a find indicator."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_FINDINDICATORSHOW
-				wParam: startInteger - 1
-				lParam: endInteger - 1]!
+	library
+		directFunction: this
+		msg: SCI_FINDINDICATORSHOW
+		wParam: startInteger - 1
+		lParam: endInteger - 1!
 
 sciFindText: searchFlagsInteger ft: ftFINDTEXTEX
 	"Private - Find some text in the document."
 
-	^this
-		ifNil: [0]
-		ifNotNil: 
-			[(Library
-				directFunction: this
-				msg: SCI_FINDTEXT
-				wParam: searchFlagsInteger
-				lpParam: ftFINDTEXTEX) + 1]!
+	^(library
+		directFunction: this
+		msg: SCI_FINDTEXT
+		wParam: searchFlagsInteger
+		lpParam: ftFINDTEXTEX) + 1!
 
 sciFoldAll: actionInteger
 	"Private - Expand or contract all fold headers."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_FOLDALL
-				wParam: actionInteger
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_FOLDALL
+		wParam: actionInteger
+		lParam: 0!
 
 sciFoldDisplayTextGetStyle
 	"Private - Get the style of fold display text."
 
-	^this
-		ifNil: [0]
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_FOLDDISPLAYTEXTGETSTYLE
-				wParam: 0
-				lParam: 0]!
+	^library
+		directFunction: this
+		msg: SCI_FOLDDISPLAYTEXTGETSTYLE
+		wParam: 0
+		lParam: 0!
 
 sciFoldDisplayTextSetStyle: styleInteger
 	"Private - Set the style of fold display text."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_FOLDDISPLAYTEXTSETSTYLE
-				wParam: styleInteger
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_FOLDDISPLAYTEXTSETSTYLE
+		wParam: styleInteger
+		lParam: 0!
 
 sciFormatRange: drawBoolean fr: frFORMATRANGE
 	"Private - On Windows, will draw the document into a display context such as a printer."
 
-	^this
-		ifNil: [0]
-		ifNotNil: 
-			[(Library
-				directFunction: this
-				msg: SCI_FORMATRANGE
-				wParam: drawBoolean asParameter
-				lpParam: frFORMATRANGE) + 1]!
+	^(library
+		directFunction: this
+		msg: SCI_FORMATRANGE
+		wParam: drawBoolean asParameter
+		lpParam: frFORMATRANGE) + 1!
 
 sciFreeSubStyles
 	"Private - Free allocated sub styles"
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_FREESUBSTYLES
-				wParam: 0
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_FREESUBSTYLES
+		wParam: 0
+		lParam: 0!
 
 sciGetAccessibility
 	"Private - Report accessibility status."
 
-	^this
-		ifNil: [0]
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_GETACCESSIBILITY
-				wParam: 0
-				lParam: 0]!
+	^library
+		directFunction: this
+		msg: SCI_GETACCESSIBILITY
+		wParam: 0
+		lParam: 0!
 
 sciGetAutomaticFold
 	"Private - Get automatic folding behaviours."
 
-	^this
-		ifNil: [0]
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_GETAUTOMATICFOLD
-				wParam: 0
-				lParam: 0]!
+	^library
+		directFunction: this
+		msg: SCI_GETAUTOMATICFOLD
+		wParam: 0
+		lParam: 0!
 
 sciGetBidirectional
 	"Private - Retrieve bidirectional text display state."
 
-	^this
-		ifNil: [0]
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_GETBIDIRECTIONAL
-				wParam: 0
-				lParam: 0]!
+	^library
+		directFunction: this
+		msg: SCI_GETBIDIRECTIONAL
+		wParam: 0
+		lParam: 0!
 
 sciGetBufferedDraw
 	"Private - Is drawing done first into a buffer or direct to the screen?"
 
-	^this
-		ifNil: [false]
-		ifNotNil: 
-			[(Library
-				directFunction: this
-				msg: SCI_GETBUFFEREDDRAW
-				wParam: 0
-				lParam: 0) asBoolean]!
+	^library
+		directBooleanFunction: this
+		msg: SCI_GETBUFFEREDDRAW
+		wParam: 0
+		lParam: 0!
 
 sciGetCaretLineLayer
 	"Private - Get the layer of the background of the line containing the caret."
 
-	^this
-		ifNil: [0]
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_GETCARETLINELAYER
-				wParam: 0
-				lParam: 0]!
+	^library
+		directFunction: this
+		msg: SCI_GETCARETLINELAYER
+		wParam: 0
+		lParam: 0!
 
 sciGetCaretPeriod
 	"Private - Get the time in milliseconds that the caret is on and off."
 
-	^this
-		ifNil: [0]
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_GETCARETPERIOD
-				wParam: 0
-				lParam: 0]!
+	^library
+		directFunction: this
+		msg: SCI_GETCARETPERIOD
+		wParam: 0
+		lParam: 0!
 
 sciGetCaretSticky
 	"Private - Can the caret preferred x position only be changed by explicit movement
 	commands?"
 
-	^this
-		ifNil: [0]
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_GETCARETSTICKY
-				wParam: 0
-				lParam: 0]!
+	^library
+		directFunction: this
+		msg: SCI_GETCARETSTICKY
+		wParam: 0
+		lParam: 0!
 
 sciGetCaretStyle
 	"Private - Returns the current style of the caret."
 
-	^this
-		ifNil: [0]
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_GETCARETSTYLE
-				wParam: 0
-				lParam: 0]!
+	^library
+		directFunction: this
+		msg: SCI_GETCARETSTYLE
+		wParam: 0
+		lParam: 0!
 
 sciGetCharacterCategoryOptimization
 	"Private - Get the number of characters to have directly indexed categories"
 
-	^this
-		ifNil: [0]
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_GETCHARACTERCATEGORYOPTIMIZATION
-				wParam: 0
-				lParam: 0]!
+	^library
+		directFunction: this
+		msg: SCI_GETCHARACTERCATEGORYOPTIMIZATION
+		wParam: 0
+		lParam: 0!
 
 sciGetCharAt: posInteger
 	"Private - Returns the character byte at the position."
 
-	^this
-		ifNil: [0]
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_GETCHARAT
-				wParam: posInteger - 1
-				lParam: 0]!
+	^library
+		directFunction: this
+		msg: SCI_GETCHARAT
+		wParam: posInteger - 1
+		lParam: 0!
 
 sciGetCodePage
 	"Private - Get the code page used to interpret the bytes of the document as characters."
 
-	^this
-		ifNil: [0]
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_GETCODEPAGE
-				wParam: 0
-				lParam: 0]!
+	^library
+		directFunction: this
+		msg: SCI_GETCODEPAGE
+		wParam: 0
+		lParam: 0!
 
 sciGetControlCharSymbol
 	"Private - Get the way control characters are displayed."
 
-	^this
-		ifNil: [0]
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_GETCONTROLCHARSYMBOL
-				wParam: 0
-				lParam: 0]!
+	^library
+		directFunction: this
+		msg: SCI_GETCONTROLCHARSYMBOL
+		wParam: 0
+		lParam: 0!
 
 sciGetDocPointer
 	"Private - Retrieve a pointer to the document object."
 
-	^this
-		ifNotNil: 
-			[Library
+	^Address fromAddress: (library
 				directFunction: this
 				msg: SCI_GETDOCPOINTER
 				wParam: 0
-				lParam: 0]!
+				lParam: 0)!
 
 sciGetDocumentOptions
 	"Private - Get which document options are set."
 
-	^this
-		ifNil: [0]
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_GETDOCUMENTOPTIONS
-				wParam: 0
-				lParam: 0]!
+	^library
+		directFunction: this
+		msg: SCI_GETDOCUMENTOPTIONS
+		wParam: 0
+		lParam: 0!
 
 sciGetEdgeMode
 	"Private - Retrieve the edge highlight mode."
 
-	^this
-		ifNil: [0]
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_GETEDGEMODE
-				wParam: 0
-				lParam: 0]!
+	^library
+		directFunction: this
+		msg: SCI_GETEDGEMODE
+		wParam: 0
+		lParam: 0!
 
 sciGetElementAllowsTranslucent: elementInteger
 	"Private - Get whether an element supports translucency."
 
-	^this
-		ifNil: [false]
-		ifNotNil: 
-			[(Library
-				directFunction: this
-				msg: SCI_GETELEMENTALLOWSTRANSLUCENT
-				wParam: elementInteger
-				lParam: 0) asBoolean]!
+	^library
+		directBooleanFunction: this
+		msg: SCI_GETELEMENTALLOWSTRANSLUCENT
+		wParam: elementInteger
+		lParam: 0!
 
 sciGetElementBaseColour: elementInteger
 	"Private - Get the colour of an element."
 
-	^this
-		ifNotNil: 
-			[| code |
-			code := Library
-						directFunction: this
-						msg: SCI_GETELEMENTBASECOLOUR
-						wParam: elementInteger
-						lParam: 0.
-			"Scintilla returns 0 if the colour is undefined"
-			code == 0 ifFalse: [Color fromRgbaCode: code]]!
+	| code |
+	code := library
+				directFunction: this
+				msg: SCI_GETELEMENTBASECOLOUR
+				wParam: elementInteger
+				lParam: 0.
+	"Scintilla returns 0 if the colour is undefined"
+	^code == 0 ifFalse: [Color fromRgbaCode: code]!
 
 sciGetElementColour: elementInteger
 	"Private - Get the colour of an element."
 
-	^this
-		ifNotNil: 
-			[Color fromRgbaCode: (Library
-						directFunction: this
-						msg: SCI_GETELEMENTCOLOUR
-						wParam: elementInteger
-						lParam: 0)]!
+	^Color fromRgbaCode: (library
+				directFunction: this
+				msg: SCI_GETELEMENTCOLOUR
+				wParam: elementInteger
+				lParam: 0)!
 
 sciGetElementIsSet: elementInteger
 	"Private - Get whether an element has been set by SetElementColour. When false, a
 	platform-defined or default colour is used."
 
-	^this
-		ifNil: [false]
-		ifNotNil: 
-			[(Library
-				directFunction: this
-				msg: SCI_GETELEMENTISSET
-				wParam: elementInteger
-				lParam: 0) asBoolean]!
+	^library
+		directBooleanFunction: this
+		msg: SCI_GETELEMENTISSET
+		wParam: elementInteger
+		lParam: 0!
 
 sciGetEOLMode
 	"Private - Retrieve the current end of line mode - one of CRLF, CR, or LF."
 
-	^this
-		ifNil: [0]
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_GETEOLMODE
-				wParam: 0
-				lParam: 0]!
+	^library
+		directFunction: this
+		msg: SCI_GETEOLMODE
+		wParam: 0
+		lParam: 0!
 
 sciGetFontQuality
 	"Private - Retrieve the quality level for text."
 
-	^this
-		ifNil: [0]
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_GETFONTQUALITY
-				wParam: 0
-				lParam: 0]!
+	^library
+		directFunction: this
+		msg: SCI_GETFONTQUALITY
+		wParam: 0
+		lParam: 0!
 
 sciGetIdleStyling
 	"Private - Retrieve the limits to idle styling."
 
-	^this
-		ifNil: [0]
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_GETIDLESTYLING
-				wParam: 0
-				lParam: 0]!
+	^library
+		directFunction: this
+		msg: SCI_GETIDLESTYLING
+		wParam: 0
+		lParam: 0!
 
 sciGetIMEInteraction
 	"Private - Is the IME displayed in a window or inline?"
 
-	^this
-		ifNil: [0]
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_GETIMEINTERACTION
-				wParam: 0
-				lParam: 0]!
+	^library
+		directFunction: this
+		msg: SCI_GETIMEINTERACTION
+		wParam: 0
+		lParam: 0!
 
 sciGetIndentationGuides
 	"Private - Are the indentation guides visible?"
 
-	^this
-		ifNil: [0]
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_GETINDENTATIONGUIDES
-				wParam: 0
-				lParam: 0]!
+	^library
+		directFunction: this
+		msg: SCI_GETINDENTATIONGUIDES
+		wParam: 0
+		lParam: 0!
 
 sciGetLayoutCache
 	"Private - Retrieve the degree of caching of layout information."
 
-	^this
-		ifNil: [0]
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_GETLAYOUTCACHE
-				wParam: 0
-				lParam: 0]!
+	^library
+		directFunction: this
+		msg: SCI_GETLAYOUTCACHE
+		wParam: 0
+		lParam: 0!
 
 sciGetLexer
 	"Private - Retrieve the lexing language of the document."
 
-	^this
-		ifNil: [0]
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_GETLEXER
-				wParam: 0
-				lParam: 0]!
+	^library
+		directFunction: this
+		msg: SCI_GETLEXER
+		wParam: 0
+		lParam: 0!
 
 sciGetLine: lineInteger
 	"Private - Retrieve the contents of a line. Returns the length of the line."
 
 	| len |
-	len := this
-				ifNil: [0]
-				ifNotNil: 
-					[Library
-						directFunction: this
-						msg: SCI_GETLINE
-						wParam: lineInteger - 1
-						lpParam: nil].
-	^len = 0
+	len := library
+				directFunction: this
+				msg: SCI_GETLINE
+				wParam: lineInteger - 1
+				lpParam: nil.
+	^len == 0
 		ifTrue: [stringClass empty]
 		ifFalse: 
 			[| result |
 			result := stringClass newFixed: len.
-			Library
+			library
 				directFunction: this
 				msg: SCI_GETLINE
 				wParam: lineInteger - 1
@@ -6754,302 +5884,230 @@ sciGetLine: lineInteger
 sciGetLineCharacterIndex
 	"Private - Retrieve line character index state."
 
-	^this
-		ifNil: [0]
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_GETLINECHARACTERINDEX
-				wParam: 0
-				lParam: 0]!
+	^library
+		directFunction: this
+		msg: SCI_GETLINECHARACTERINDEX
+		wParam: 0
+		lParam: 0!
 
 sciGetLineEndTypesActive
 	"Private - Get the line end types currently recognised. May be a subset of the allowed types
 	due to lexer limitation."
 
-	^this
-		ifNil: [0]
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_GETLINEENDTYPESACTIVE
-				wParam: 0
-				lParam: 0]!
+	^library
+		directFunction: this
+		msg: SCI_GETLINEENDTYPESACTIVE
+		wParam: 0
+		lParam: 0!
 
 sciGetLineEndTypesAllowed
 	"Private - Get the line end types currently allowed."
 
-	^this
-		ifNil: [0]
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_GETLINEENDTYPESALLOWED
-				wParam: 0
-				lParam: 0]!
+	^library
+		directFunction: this
+		msg: SCI_GETLINEENDTYPESALLOWED
+		wParam: 0
+		lParam: 0!
 
 sciGetLineEndTypesSupported
 	"Private - Bit set of LineEndType enumertion for which line ends beyond the standard LF, CR,
 	and CRLF are supported by the lexer."
 
-	^this
-		ifNil: [0]
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_GETLINEENDTYPESSUPPORTED
-				wParam: 0
-				lParam: 0]!
+	^library
+		directFunction: this
+		msg: SCI_GETLINEENDTYPESSUPPORTED
+		wParam: 0
+		lParam: 0!
 
 sciGetLineIndentPosition: lineInteger
 	"Private - Retrieve the position before the first non indentation character on a line."
 
-	^this
-		ifNil: [0]
-		ifNotNil: 
-			[(Library
-				directFunction: this
-				msg: SCI_GETLINEINDENTPOSITION
-				wParam: lineInteger - 1
-				lParam: 0) + 1]!
+	^(library
+		directFunction: this
+		msg: SCI_GETLINEINDENTPOSITION
+		wParam: lineInteger - 1
+		lParam: 0) + 1!
 
 sciGetLineSelEndPosition: lineInteger
 	"Private - Retrieve the position of the end of the selection at the given line
 	(INVALID_POSITION if no selection on this line)."
 
-	^this
-		ifNil: [0]
-		ifNotNil: 
-			[(Library
-				directFunction: this
-				msg: SCI_GETLINESELENDPOSITION
-				wParam: lineInteger - 1
-				lParam: 0) + 1]!
+	^(library
+		directFunction: this
+		msg: SCI_GETLINESELENDPOSITION
+		wParam: lineInteger - 1
+		lParam: 0) + 1!
 
 sciGetLineSelStartPosition: lineInteger
 	"Private - Retrieve the position of the start of the selection at the given line
 	(INVALID_POSITION if no selection on this line)."
 
-	^this
-		ifNil: [0]
-		ifNotNil: 
-			[(Library
-				directFunction: this
-				msg: SCI_GETLINESELSTARTPOSITION
-				wParam: lineInteger - 1
-				lParam: 0) + 1]!
+	^(library
+		directFunction: this
+		msg: SCI_GETLINESELSTARTPOSITION
+		wParam: lineInteger - 1
+		lParam: 0) + 1!
 
 sciGetMainSelection
 	"Private - Which selection is the main selection"
 
-	^this
-		ifNil: [0]
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_GETMAINSELECTION
-				wParam: 0
-				lParam: 0]!
+	^library
+		directFunction: this
+		msg: SCI_GETMAINSELECTION
+		wParam: 0
+		lParam: 0!
 
 sciGetMarginLeft
 	"Private - Returns the size in pixels of the left margin."
 
-	^this
-		ifNil: [0]
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_GETMARGINLEFT
-				wParam: 0
-				lParam: 0]!
+	^library
+		directFunction: this
+		msg: SCI_GETMARGINLEFT
+		wParam: 0
+		lParam: 0!
 
 sciGetMarginOptions
 	"Private - Get the margin options."
 
-	^this
-		ifNil: [0]
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_GETMARGINOPTIONS
-				wParam: 0
-				lParam: 0]!
+	^library
+		directFunction: this
+		msg: SCI_GETMARGINOPTIONS
+		wParam: 0
+		lParam: 0!
 
 sciGetMarginRight
 	"Private - Returns the size in pixels of the right margin."
 
-	^this
-		ifNil: [0]
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_GETMARGINRIGHT
-				wParam: 0
-				lParam: 0]!
+	^library
+		directFunction: this
+		msg: SCI_GETMARGINRIGHT
+		wParam: 0
+		lParam: 0!
 
 sciGetMargins
 	"Private - How many margins are there?."
 
-	^this
-		ifNil: [0]
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_GETMARGINS
-				wParam: 0
-				lParam: 0]!
+	^library
+		directFunction: this
+		msg: SCI_GETMARGINS
+		wParam: 0
+		lParam: 0!
 
 sciGetMaxLineState
 	"Private - Retrieve the last line number that has line state."
 
-	^this
-		ifNil: [0]
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_GETMAXLINESTATE
-				wParam: 0
-				lParam: 0]!
+	^library
+		directFunction: this
+		msg: SCI_GETMAXLINESTATE
+		wParam: 0
+		lParam: 0!
 
 sciGetMouseDwellTime
 	"Private - Retrieve the time the mouse must sit still to generate a mouse dwell event."
 
-	^this
-		ifNil: [0]
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_GETMOUSEDWELLTIME
-				wParam: 0
-				lParam: 0]!
+	^library
+		directFunction: this
+		msg: SCI_GETMOUSEDWELLTIME
+		wParam: 0
+		lParam: 0!
 
 sciGetMouseSelectionRectangularSwitch
 	"Private - Whether switching to rectangular mode while selecting with the mouse is allowed."
 
-	^this
-		ifNil: [false]
-		ifNotNil: 
-			[(Library
-				directFunction: this
-				msg: SCI_GETMOUSESELECTIONRECTANGULARSWITCH
-				wParam: 0
-				lParam: 0) asBoolean]!
+	^library
+		directBooleanFunction: this
+		msg: SCI_GETMOUSESELECTIONRECTANGULARSWITCH
+		wParam: 0
+		lParam: 0!
 
 sciGetMultiEdgeColumn: whichInteger
 	"Private - Get multi edge positions."
 
-	^this
-		ifNil: [0]
-		ifNotNil: 
-			[(Library
-				directFunction: this
-				msg: SCI_GETMULTIEDGECOLUMN
-				wParam: whichInteger
-				lParam: 0) + 1]!
+	^(library
+		directFunction: this
+		msg: SCI_GETMULTIEDGECOLUMN
+		wParam: whichInteger
+		lParam: 0) + 1!
 
 sciGetMultiPaste
 	"Private - Retrieve the effect of pasting when there are multiple selections."
 
-	^this
-		ifNil: [0]
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_GETMULTIPASTE
-				wParam: 0
-				lParam: 0]!
+	^library
+		directFunction: this
+		msg: SCI_GETMULTIPASTE
+		wParam: 0
+		lParam: 0!
 
 sciGetNamedStyles
 	"Private - Retrieve the number of named styles for the lexer."
 
-	^this
-		ifNil: [0]
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_GETNAMEDSTYLES
-				wParam: 0
-				lParam: 0]!
+	^library
+		directFunction: this
+		msg: SCI_GETNAMEDSTYLES
+		wParam: 0
+		lParam: 0!
 
 sciGetNextTabStop: lineInteger x: xInteger
 	"Private - Find the next explicit tab stop position on a line after a position."
 
-	^this
-		ifNil: [0]
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_GETNEXTTABSTOP
-				wParam: lineInteger - 1
-				lParam: xInteger]!
+	^library
+		directFunction: this
+		msg: SCI_GETNEXTTABSTOP
+		wParam: lineInteger - 1
+		lParam: xInteger!
 
 sciGetPasteConvertEndings
 	"Private - Get convert-on-paste setting"
 
-	^this
-		ifNil: [false]
-		ifNotNil: 
-			[(Library
-				directFunction: this
-				msg: SCI_GETPASTECONVERTENDINGS
-				wParam: 0
-				lParam: 0) asBoolean]!
+	^library
+		directBooleanFunction: this
+		msg: SCI_GETPASTECONVERTENDINGS
+		wParam: 0
+		lParam: 0!
 
 sciGetPhasesDraw
 	"Private - How many phases is drawing done in?"
 
-	^this
-		ifNil: [0]
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_GETPHASESDRAW
-				wParam: 0
-				lParam: 0]!
+	^library
+		directFunction: this
+		msg: SCI_GETPHASESDRAW
+		wParam: 0
+		lParam: 0!
 
 sciGetPrimaryStyleFromStyle: styleInteger
 	"Private - For a secondary style, return the primary style, else return the argument."
 
-	^this
-		ifNil: [0]
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_GETPRIMARYSTYLEFROMSTYLE
-				wParam: styleInteger
-				lParam: 0]!
+	^library
+		directFunction: this
+		msg: SCI_GETPRIMARYSTYLEFROMSTYLE
+		wParam: styleInteger
+		lParam: 0!
 
 sciGetPrintWrapMode
 	"Private - Is printing line wrapped?"
 
-	^this
-		ifNil: [0]
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_GETPRINTWRAPMODE
-				wParam: 0
-				lParam: 0]!
+	^library
+		directFunction: this
+		msg: SCI_GETPRINTWRAPMODE
+		wParam: 0
+		lParam: 0!
 
 sciGetProperty: keyString
 	"Private - Retrieve a 'property' value previously set with SetProperty. Result is
 	NUL-terminated."
 
 	| len |
-	len := this
-				ifNil: [0]
-				ifNotNil: 
-					[Library
-						directFunction: this
-						msg: SCI_GETPROPERTY
-						wpParam: keyString
-						lpParam: nil].
-	^len = 0
+	len := library
+				directFunction: this
+				msg: SCI_GETPROPERTY
+				wpParam: keyString
+				lpParam: nil.
+	^len == 0
 		ifTrue: [stringClass empty]
 		ifFalse: 
 			[| result |
 			result := stringClass newFixed: len.
-			Library
+			library
 				directFunction: this
 				msg: SCI_GETPROPERTY
 				wpParam: keyString
@@ -7061,20 +6119,17 @@ sciGetPropertyExpanded: keyString
 	replacement on returned buffer. Result is NUL-terminated."
 
 	| len |
-	len := this
-				ifNil: [0]
-				ifNotNil: 
-					[Library
-						directFunction: this
-						msg: SCI_GETPROPERTYEXPANDED
-						wpParam: keyString
-						lpParam: nil].
-	^len = 0
+	len := library
+				directFunction: this
+				msg: SCI_GETPROPERTYEXPANDED
+				wpParam: keyString
+				lpParam: nil.
+	^len == 0
 		ifTrue: [stringClass empty]
 		ifFalse: 
 			[| result |
 			result := stringClass newFixed: len.
-			Library
+			library
 				directFunction: this
 				msg: SCI_GETPROPERTYEXPANDED
 				wpParam: keyString
@@ -7085,33 +6140,27 @@ sciGetPropertyInt: keyString defaultValue: defaultValueInteger
 	"Private - Retrieve a 'property' value previously set with SetProperty, interpreted as an
 	int AFTER any '$()' variable replacement."
 
-	^this
-		ifNil: [0]
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_GETPROPERTYINT
-				wpParam: keyString
-				lParam: defaultValueInteger]!
+	^library
+		directFunction: this
+		msg: SCI_GETPROPERTYINT
+		wpParam: keyString
+		lParam: defaultValueInteger!
 
 sciGetPunctuationChars
 	"Private - Get the set of characters making up punctuation characters"
 
 	| len |
-	len := this
-				ifNil: [0]
-				ifNotNil: 
-					[Library
-						directFunction: this
-						msg: SCI_GETPUNCTUATIONCHARS
-						wParam: 0
-						lpParam: nil].
-	^len = 0
+	len := library
+				directFunction: this
+				msg: SCI_GETPUNCTUATIONCHARS
+				wParam: 0
+				lpParam: nil.
+	^len == 0
 		ifTrue: [stringClass empty]
 		ifFalse: 
 			[| result |
 			result := stringClass newFixed: len.
-			Library
+			library
 				directFunction: this
 				msg: SCI_GETPUNCTUATIONCHARS
 				wParam: 0
@@ -7121,45 +6170,36 @@ sciGetPunctuationChars
 sciGetRectangularSelectionAnchorVirtualSpace
 	"Private - Return the virtual space of the anchor of the rectangular selection."
 
-	^this
-		ifNil: [0]
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_GETRECTANGULARSELECTIONANCHORVIRTUALSPACE
-				wParam: 0
-				lParam: 0]!
+	^library
+		directFunction: this
+		msg: SCI_GETRECTANGULARSELECTIONANCHORVIRTUALSPACE
+		wParam: 0
+		lParam: 0!
 
 sciGetRectangularSelectionCaretVirtualSpace
 	"Private - Return the virtual space of the caret of the rectangular selection."
 
-	^this
-		ifNil: [0]
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_GETRECTANGULARSELECTIONCARETVIRTUALSPACE
-				wParam: 0
-				lParam: 0]!
+	^library
+		directFunction: this
+		msg: SCI_GETRECTANGULARSELECTIONCARETVIRTUALSPACE
+		wParam: 0
+		lParam: 0!
 
 sciGetRepresentation: encodedCharacterString
 	"Private - Get the way a character is drawn. Result is NUL-terminated."
 
 	| len |
-	len := this
-				ifNil: [0]
-				ifNotNil: 
-					[Library
-						directFunction: this
-						msg: SCI_GETREPRESENTATION
-						wpParam: encodedCharacterString
-						lpParam: nil].
-	^len = 0
+	len := library
+				directFunction: this
+				msg: SCI_GETREPRESENTATION
+				wpParam: encodedCharacterString
+				lpParam: nil.
+	^len == 0
 		ifTrue: [stringClass empty]
 		ifFalse: 
 			[| result |
 			result := stringClass newFixed: len.
-			Library
+			library
 				directFunction: this
 				msg: SCI_GETREPRESENTATION
 				wpParam: encodedCharacterString
@@ -7169,178 +6209,137 @@ sciGetRepresentation: encodedCharacterString
 sciGetRepresentationAppearance: encodedCharacterString
 	"Private - Get the appearance of a representation."
 
-	^this
-		ifNil: [0]
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_GETREPRESENTATIONAPPEARANCE
-				wpParam: encodedCharacterString
-				lParam: 0]!
+	^library
+		directFunction: this
+		msg: SCI_GETREPRESENTATIONAPPEARANCE
+		wpParam: encodedCharacterString
+		lParam: 0!
 
 sciGetRepresentationColour: encodedCharacterString
 	"Private - Get the colour of a representation."
 
-	^this
-		ifNotNil: 
-			[Color fromRgbaCode: (Library
-						directFunction: this
-						msg: SCI_GETREPRESENTATIONCOLOUR
-						wpParam: encodedCharacterString
-						lParam: 0)]!
+	^Color fromRgbaCode: (library
+				directFunction: this
+				msg: SCI_GETREPRESENTATIONCOLOUR
+				wpParam: encodedCharacterString
+				lParam: 0)!
 
 sciGetSearchFlags
 	"Private - Get the search flags used by SearchInTarget."
 
-	^this
-		ifNil: [0]
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_GETSEARCHFLAGS
-				wParam: 0
-				lParam: 0]!
+	^library
+		directFunction: this
+		msg: SCI_GETSEARCHFLAGS
+		wParam: 0
+		lParam: 0!
 
 sciGetSelectionLayer
 	"Private - Get the layer for drawing selections"
 
-	^this
-		ifNil: [0]
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_GETSELECTIONLAYER
-				wParam: 0
-				lParam: 0]!
+	^library
+		directFunction: this
+		msg: SCI_GETSELECTIONLAYER
+		wParam: 0
+		lParam: 0!
 
 sciGetSelectionMode
 	"Private - Get the mode of the current selection."
 
-	^this
-		ifNil: [0]
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_GETSELECTIONMODE
-				wParam: 0
-				lParam: 0]!
+	^library
+		directFunction: this
+		msg: SCI_GETSELECTIONMODE
+		wParam: 0
+		lParam: 0!
 
 sciGetSelectionNAnchor: selectionInteger
 	"Private - Return the anchor position of the nth selection."
 
-	^this
-		ifNil: [0]
-		ifNotNil: 
-			[(Library
-				directFunction: this
-				msg: SCI_GETSELECTIONNANCHOR
-				wParam: selectionInteger
-				lParam: 0) + 1]!
+	^(library
+		directFunction: this
+		msg: SCI_GETSELECTIONNANCHOR
+		wParam: selectionInteger
+		lParam: 0) + 1!
 
 sciGetSelectionNAnchorVirtualSpace: selectionInteger
 	"Private - Return the virtual space of the anchor of the nth selection."
 
-	^this
-		ifNil: [0]
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_GETSELECTIONNANCHORVIRTUALSPACE
-				wParam: selectionInteger
-				lParam: 0]!
+	^library
+		directFunction: this
+		msg: SCI_GETSELECTIONNANCHORVIRTUALSPACE
+		wParam: selectionInteger
+		lParam: 0!
 
 sciGetSelectionNCaret: selectionInteger
 	"Private - Return the caret position of the nth selection."
 
-	^this
-		ifNil: [0]
-		ifNotNil: 
-			[(Library
-				directFunction: this
-				msg: SCI_GETSELECTIONNCARET
-				wParam: selectionInteger
-				lParam: 0) + 1]!
+	^(library
+		directFunction: this
+		msg: SCI_GETSELECTIONNCARET
+		wParam: selectionInteger
+		lParam: 0) + 1!
 
 sciGetSelectionNCaretVirtualSpace: selectionInteger
 	"Private - Return the virtual space of the caret of the nth selection."
 
-	^this
-		ifNil: [0]
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_GETSELECTIONNCARETVIRTUALSPACE
-				wParam: selectionInteger
-				lParam: 0]!
+	^library
+		directFunction: this
+		msg: SCI_GETSELECTIONNCARETVIRTUALSPACE
+		wParam: selectionInteger
+		lParam: 0!
 
 sciGetSelectionNEndVirtualSpace: selectionInteger
 	"Private - Returns the virtual space at the end of the selection."
 
-	^this
-		ifNil: [0]
-		ifNotNil: 
-			[(Library
-				directFunction: this
-				msg: SCI_GETSELECTIONNENDVIRTUALSPACE
-				wParam: selectionInteger
-				lParam: 0) + 1]!
+	^(library
+		directFunction: this
+		msg: SCI_GETSELECTIONNENDVIRTUALSPACE
+		wParam: selectionInteger
+		lParam: 0) + 1!
 
 sciGetSelectionNStartVirtualSpace: selectionInteger
 	"Private - Returns the virtual space at the start of the selection."
 
-	^this
-		ifNil: [0]
-		ifNotNil: 
-			[(Library
-				directFunction: this
-				msg: SCI_GETSELECTIONNSTARTVIRTUALSPACE
-				wParam: selectionInteger
-				lParam: 0) + 1]!
+	^(library
+		directFunction: this
+		msg: SCI_GETSELECTIONNSTARTVIRTUALSPACE
+		wParam: selectionInteger
+		lParam: 0) + 1!
 
 sciGetStyledText: trTEXTRANGE
 	"Private - Retrieve a buffer of cells. Returns the number of bytes in the buffer not
 	including terminating NULs."
 
-	^this
-		ifNil: [0]
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_GETSTYLEDTEXT
-				wParam: 0
-				lpParam: trTEXTRANGE]!
+	^library
+		directFunction: this
+		msg: SCI_GETSTYLEDTEXT
+		wParam: 0
+		lpParam: trTEXTRANGE!
 
 sciGetStyleFromSubStyle: subStyleInteger
 	"Private - For a sub style, return the base style, else return the argument."
 
-	^this
-		ifNil: [0]
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_GETSTYLEFROMSUBSTYLE
-				wParam: subStyleInteger
-				lParam: 0]!
+	^library
+		directFunction: this
+		msg: SCI_GETSTYLEFROMSUBSTYLE
+		wParam: subStyleInteger
+		lParam: 0!
 
 sciGetSubStyleBases
 	"Private - Get the set of base styles that can be extended with sub styles Result is
 	NUL-terminated."
 
 	| len |
-	len := this
-				ifNil: [0]
-				ifNotNil: 
-					[Library
-						directFunction: this
-						msg: SCI_GETSUBSTYLEBASES
-						wParam: 0
-						lpParam: nil].
-	^len = 0
+	len := library
+				directFunction: this
+				msg: SCI_GETSUBSTYLEBASES
+				wParam: 0
+				lpParam: nil.
+	^len == 0
 		ifTrue: [Core.ByteArray empty]
 		ifFalse: 
 			[| result |
 			result := Core.ByteArray newFixed: len.
-			Library
+			library
 				directFunction: this
 				msg: SCI_GETSUBSTYLEBASES
 				wParam: 0
@@ -7350,58 +6349,46 @@ sciGetSubStyleBases
 sciGetSubStylesLength: styleBaseInteger
 	"Private - The number of sub styles associated with a base style"
 
-	^this
-		ifNil: [0]
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_GETSUBSTYLESLENGTH
-				wParam: styleBaseInteger
-				lParam: 0]!
+	^library
+		directFunction: this
+		msg: SCI_GETSUBSTYLESLENGTH
+		wParam: styleBaseInteger
+		lParam: 0!
 
 sciGetSubStylesStart: styleBaseInteger
 	"Private - The starting style number for the sub styles associated with a base style"
 
-	^this
-		ifNil: [0]
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_GETSUBSTYLESSTART
-				wParam: styleBaseInteger
-				lParam: 0]!
+	^library
+		directFunction: this
+		msg: SCI_GETSUBSTYLESSTART
+		wParam: styleBaseInteger
+		lParam: 0!
 
 sciGetTabDrawMode
 	"Private - Retrieve the current tab draw mode. Returns one of SCTD_* constants."
 
-	^this
-		ifNil: [0]
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_GETTABDRAWMODE
-				wParam: 0
-				lParam: 0]!
+	^library
+		directFunction: this
+		msg: SCI_GETTABDRAWMODE
+		wParam: 0
+		lParam: 0!
 
 sciGetTag: tagNumberInteger
 	"Private - Retrieve the value of a tag from a regular expression search. Result is
 	NUL-terminated."
 
 	| len |
-	len := this
-				ifNil: [0]
-				ifNotNil: 
-					[Library
-						directFunction: this
-						msg: SCI_GETTAG
-						wParam: tagNumberInteger
-						lpParam: nil].
-	^len = 0
+	len := library
+				directFunction: this
+				msg: SCI_GETTAG
+				wParam: tagNumberInteger
+				lpParam: nil.
+	^len == 0
 		ifTrue: [stringClass empty]
 		ifFalse: 
 			[| result |
 			result := stringClass newFixed: len.
-			Library
+			library
 				directFunction: this
 				msg: SCI_GETTAG
 				wParam: tagNumberInteger
@@ -7411,94 +6398,73 @@ sciGetTag: tagNumberInteger
 sciGetTargetEndVirtualSpace
 	"Private - Get the virtual space of the target end"
 
-	^this
-		ifNil: [0]
-		ifNotNil: 
-			[(Library
-				directFunction: this
-				msg: SCI_GETTARGETENDVIRTUALSPACE
-				wParam: 0
-				lParam: 0) + 1]!
+	^(library
+		directFunction: this
+		msg: SCI_GETTARGETENDVIRTUALSPACE
+		wParam: 0
+		lParam: 0) + 1!
 
 sciGetTargetStartVirtualSpace
 	"Private - Get the virtual space of the target start"
 
-	^this
-		ifNil: [0]
-		ifNotNil: 
-			[(Library
-				directFunction: this
-				msg: SCI_GETTARGETSTARTVIRTUALSPACE
-				wParam: 0
-				lParam: 0) + 1]!
+	^(library
+		directFunction: this
+		msg: SCI_GETTARGETSTARTVIRTUALSPACE
+		wParam: 0
+		lParam: 0) + 1!
 
 sciGetTechnology
 	"Private - Get the tech."
 
-	^this
-		ifNil: [0]
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_GETTECHNOLOGY
-				wParam: 0
-				lParam: 0]!
+	^library
+		directFunction: this
+		msg: SCI_GETTECHNOLOGY
+		wParam: 0
+		lParam: 0!
 
 sciGetTextRange: trTEXTRANGE
 	"Private - Retrieve a range of text. Return the length of the text."
 
-	^this
-		ifNil: [0]
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_GETTEXTRANGE
-				wParam: 0
-				lpParam: trTEXTRANGE]!
+	^library
+		directFunction: this
+		msg: SCI_GETTEXTRANGE
+		wParam: 0
+		lpParam: trTEXTRANGE!
 
 sciGetViewWS
 	"Private - Are white space characters currently visible? Returns one of SCWS_* constants."
 
-	^this
-		ifNil: [0]
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_GETVIEWWS
-				wParam: 0
-				lParam: 0]!
+	^library
+		directFunction: this
+		msg: SCI_GETVIEWWS
+		wParam: 0
+		lParam: 0!
 
 sciGetVirtualSpaceOptions
 	"Private - Return options for virtual space behaviour."
 
-	^this
-		ifNil: [0]
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_GETVIRTUALSPACEOPTIONS
-				wParam: 0
-				lParam: 0]!
+	^library
+		directFunction: this
+		msg: SCI_GETVIRTUALSPACEOPTIONS
+		wParam: 0
+		lParam: 0!
 
 sciGetWhitespaceChars
 	"Private - Get the set of characters making up whitespace for when moving or selecting by
 	word."
 
 	| len |
-	len := this
-				ifNil: [0]
-				ifNotNil: 
-					[Library
-						directFunction: this
-						msg: SCI_GETWHITESPACECHARS
-						wParam: 0
-						lpParam: nil].
-	^len = 0
+	len := library
+				directFunction: this
+				msg: SCI_GETWHITESPACECHARS
+				wParam: 0
+				lpParam: nil.
+	^len == 0
 		ifTrue: [stringClass empty]
 		ifFalse: 
 			[| result |
 			result := stringClass newFixed: len.
-			Library
+			library
 				directFunction: this
 				msg: SCI_GETWHITESPACECHARS
 				wParam: 0
@@ -7510,20 +6476,17 @@ sciGetWordChars
 	Returns the number of characters"
 
 	| len |
-	len := this
-				ifNil: [0]
-				ifNotNil: 
-					[Library
-						directFunction: this
-						msg: SCI_GETWORDCHARS
-						wParam: 0
-						lpParam: nil].
-	^len = 0
+	len := library
+				directFunction: this
+				msg: SCI_GETWORDCHARS
+				wParam: 0
+				lpParam: nil.
+	^len == 0
 		ifTrue: [stringClass empty]
 		ifFalse: 
 			[| result |
 			result := stringClass newFixed: len.
-			Library
+			library
 				directFunction: this
 				msg: SCI_GETWORDCHARS
 				wParam: 0
@@ -7533,209 +6496,162 @@ sciGetWordChars
 sciGetWrapIndentMode
 	"Private - Retrieve how wrapped sublines are placed. Default is fixed."
 
-	^this
-		ifNil: [0]
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_GETWRAPINDENTMODE
-				wParam: 0
-				lParam: 0]!
+	^library
+		directFunction: this
+		msg: SCI_GETWRAPINDENTMODE
+		wParam: 0
+		lParam: 0!
 
 sciGetWrapMode
 	"Private - Retrieve whether text is word wrapped."
 
-	^this
-		ifNil: [0]
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_GETWRAPMODE
-				wParam: 0
-				lParam: 0]!
+	^library
+		directFunction: this
+		msg: SCI_GETWRAPMODE
+		wParam: 0
+		lParam: 0!
 
 sciGetWrapVisualFlags
 	"Private - Retrive the display mode of visual flags for wrapped lines."
 
-	^this
-		ifNil: [0]
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_GETWRAPVISUALFLAGS
-				wParam: 0
-				lParam: 0]!
+	^library
+		directFunction: this
+		msg: SCI_GETWRAPVISUALFLAGS
+		wParam: 0
+		lParam: 0!
 
 sciGetWrapVisualFlagsLocation
 	"Private - Retrive the location of visual flags for wrapped lines."
 
-	^this
-		ifNil: [0]
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_GETWRAPVISUALFLAGSLOCATION
-				wParam: 0
-				lParam: 0]!
+	^library
+		directFunction: this
+		msg: SCI_GETWRAPVISUALFLAGSLOCATION
+		wParam: 0
+		lParam: 0!
 
 sciIndexPositionFromLine: lineInteger lineCharacterIndex: lineCharacterIndexInteger
 	"Private - Retrieve the position measured in index units at the start of a document line."
 
-	^this
-		ifNil: [0]
-		ifNotNil: 
-			[(Library
-				directFunction: this
-				msg: SCI_INDEXPOSITIONFROMLINE
-				wParam: lineInteger - 1
-				lParam: lineCharacterIndexInteger) + 1]!
+	^(library
+		directFunction: this
+		msg: SCI_INDEXPOSITIONFROMLINE
+		wParam: lineInteger - 1
+		lParam: lineCharacterIndexInteger) + 1!
 
 sciIndicatorClearRange: startInteger lengthClear: lengthClearInteger
 	"Private - Turn a indicator off over a range."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_INDICATORCLEARRANGE
-				wParam: startInteger - 1
-				lParam: lengthClearInteger]!
+	library
+		directFunction: this
+		msg: SCI_INDICATORCLEARRANGE
+		wParam: startInteger - 1
+		lParam: lengthClearInteger!
 
 sciIndicatorEnd: indicatorInteger pos: posInteger
 	"Private - Where does a particular indicator end?"
 
-	^this
-		ifNil: [0]
-		ifNotNil: 
-			[(Library
-				directFunction: this
-				msg: SCI_INDICATOREND
-				wParam: indicatorInteger
-				lParam: posInteger - 1) + 1]!
+	^(library
+		directFunction: this
+		msg: SCI_INDICATOREND
+		wParam: indicatorInteger
+		lParam: posInteger - 1) + 1!
 
 sciIndicatorFillRange: startInteger lengthFill: lengthFillInteger
 	"Private - Turn a indicator on over a range."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_INDICATORFILLRANGE
-				wParam: startInteger - 1
-				lParam: lengthFillInteger]!
+	library
+		directFunction: this
+		msg: SCI_INDICATORFILLRANGE
+		wParam: startInteger - 1
+		lParam: lengthFillInteger!
 
 sciIndicatorStart: indicatorInteger pos: posInteger
 	"Private - Where does a particular indicator start?"
 
-	^this
-		ifNil: [0]
-		ifNotNil: 
-			[(Library
-				directFunction: this
-				msg: SCI_INDICATORSTART
-				wParam: indicatorInteger
-				lParam: posInteger - 1) + 1]!
+	^(library
+		directFunction: this
+		msg: SCI_INDICATORSTART
+		wParam: indicatorInteger
+		lParam: posInteger - 1) + 1!
 
 sciIndicatorValueAt: indicatorInteger pos: posInteger
 	"Private - What value does a particular indicator have at a position?"
 
-	^this
-		ifNil: [0]
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_INDICATORVALUEAT
-				wParam: indicatorInteger
-				lParam: posInteger - 1]!
+	^library
+		directFunction: this
+		msg: SCI_INDICATORVALUEAT
+		wParam: indicatorInteger
+		lParam: posInteger - 1!
 
 sciInsertText: posInteger text: textString
 	"Private - Insert string at a position."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_INSERTTEXT
-				wParam: posInteger - 1
-				lpParam: textString]!
+	library
+		directFunction: this
+		msg: SCI_INSERTTEXT
+		wParam: posInteger - 1
+		lpParam: textString!
 
 sciIsRangeWord: startInteger end: endInteger
 	"Private - Is the range start..end considered a word?"
 
-	^this
-		ifNil: [false]
-		ifNotNil: 
-			[(Library
-				directFunction: this
-				msg: SCI_ISRANGEWORD
-				wParam: startInteger - 1
-				lParam: endInteger - 1) asBoolean]!
+	^library
+		directBooleanFunction: this
+		msg: SCI_ISRANGEWORD
+		wParam: startInteger - 1
+		lParam: endInteger - 1!
 
 sciLineFromIndexPosition: posInteger lineCharacterIndex: lineCharacterIndexInteger
 	"Private - Retrieve the document line containing a position measured in index units."
 
-	^this
-		ifNil: [0]
-		ifNotNil: 
-			[(Library
-				directFunction: this
-				msg: SCI_LINEFROMINDEXPOSITION
-				wParam: posInteger - 1
-				lParam: lineCharacterIndexInteger) + 1]!
+	^(library
+		directFunction: this
+		msg: SCI_LINEFROMINDEXPOSITION
+		wParam: posInteger - 1
+		lParam: lineCharacterIndexInteger) + 1!
 
 sciLineScroll: columnsInteger lines: linesInteger
 	"Private - Scroll horizontally and vertically."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_LINESCROLL
-				wParam: columnsInteger
-				lParam: linesInteger]!
+	library
+		directFunction: this
+		msg: SCI_LINESCROLL
+		wParam: columnsInteger
+		lParam: linesInteger!
 
 sciMarginGetStyle: lineInteger
 	"Private - Get the style number for the text margin for a line"
 
-	^this
-		ifNil: [0]
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_MARGINGETSTYLE
-				wParam: lineInteger - 1
-				lParam: 0]!
+	^library
+		directFunction: this
+		msg: SCI_MARGINGETSTYLE
+		wParam: lineInteger - 1
+		lParam: 0!
 
 sciMarginGetStyleOffset
 	"Private - Get the start of the range of style numbers used for margin text"
 
-	^this
-		ifNil: [0]
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_MARGINGETSTYLEOFFSET
-				wParam: 0
-				lParam: 0]!
+	^library
+		directFunction: this
+		msg: SCI_MARGINGETSTYLEOFFSET
+		wParam: 0
+		lParam: 0!
 
 sciMarginGetStyles: lineInteger
 	"Private - Get the styles in the text margin for a line"
 
 	| len |
-	len := this
-				ifNil: [0]
-				ifNotNil: 
-					[Library
-						directFunction: this
-						msg: SCI_MARGINGETSTYLES
-						wParam: lineInteger - 1
-						lpParam: nil].
-	^len = 0
+	len := library
+				directFunction: this
+				msg: SCI_MARGINGETSTYLES
+				wParam: lineInteger - 1
+				lpParam: nil.
+	^len == 0
 		ifTrue: [Core.ByteArray empty]
 		ifFalse: 
 			[| result |
 			result := Core.ByteArray newFixed: len.
-			Library
+			library
 				directFunction: this
 				msg: SCI_MARGINGETSTYLES
 				wParam: lineInteger - 1
@@ -7746,20 +6662,17 @@ sciMarginGetText: lineInteger
 	"Private - Get the text in the text margin for a line"
 
 	| len |
-	len := this
-				ifNil: [0]
-				ifNotNil: 
-					[Library
-						directFunction: this
-						msg: SCI_MARGINGETTEXT
-						wParam: lineInteger - 1
-						lpParam: nil].
-	^len = 0
+	len := library
+				directFunction: this
+				msg: SCI_MARGINGETTEXT
+				wParam: lineInteger - 1
+				lpParam: nil.
+	^len == 0
 		ifTrue: [stringClass empty]
 		ifFalse: 
 			[| result |
 			result := stringClass newFixed: len.
-			Library
+			library
 				directFunction: this
 				msg: SCI_MARGINGETTEXT
 				wParam: lineInteger - 1
@@ -7769,253 +6682,203 @@ sciMarginGetText: lineInteger
 sciMarginSetStyle: lineInteger style: styleInteger
 	"Private - Set the style number for the text margin for a line"
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_MARGINSETSTYLE
-				wParam: lineInteger - 1
-				lParam: styleInteger]!
+	library
+		directFunction: this
+		msg: SCI_MARGINSETSTYLE
+		wParam: lineInteger - 1
+		lParam: styleInteger!
 
 sciMarginSetStyleOffset: styleInteger
 	"Private - Get the start of the range of style numbers used for margin text"
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_MARGINSETSTYLEOFFSET
-				wParam: styleInteger
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_MARGINSETSTYLEOFFSET
+		wParam: styleInteger
+		lParam: 0!
 
 sciMarginSetStyles: lineInteger styles: stylesString
 	"Private - Set the style in the text margin for a line"
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_MARGINSETSTYLES
-				wParam: lineInteger - 1
-				lpParam: stylesString]!
+	library
+		directFunction: this
+		msg: SCI_MARGINSETSTYLES
+		wParam: lineInteger - 1
+		lpParam: stylesString!
 
 sciMarginSetText: lineInteger text: textString
 	"Private - Set the text in the text margin for a line"
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_MARGINSETTEXT
-				wParam: lineInteger - 1
-				lpParam: textString]!
+	library
+		directFunction: this
+		msg: SCI_MARGINSETTEXT
+		wParam: lineInteger - 1
+		lpParam: textString!
 
 sciMarginTextClearAll
 	"Private - Clear the margin text on all lines"
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_MARGINTEXTCLEARALL
-				wParam: 0
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_MARGINTEXTCLEARALL
+		wParam: 0
+		lParam: 0!
 
 sciMarkerAddSet: lineInteger markerSet: markerSetInteger
 	"Private - Add a set of markers to a line."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_MARKERADDSET
-				wParam: lineInteger - 1
-				lParam: markerSetInteger]!
+	library
+		directFunction: this
+		msg: SCI_MARKERADDSET
+		wParam: lineInteger - 1
+		lParam: markerSetInteger!
 
 sciMarkerDefinePixmap: markerNumberInteger pixmap: pixmapString
 	"Private - Define a marker from a pixmap."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_MARKERDEFINEPIXMAP
-				wParam: markerNumberInteger
-				lpParam: pixmapString]!
+	library
+		directFunction: this
+		msg: SCI_MARKERDEFINEPIXMAP
+		wParam: markerNumberInteger
+		lpParam: pixmapString!
 
 sciMarkerDefineRGBAImage: markerNumberInteger pixels: pixelsString
 	"Private - Define a marker from RGBA data. It has the width and height from
 	RGBAImageSetWidth/Height"
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_MARKERDEFINERGBAIMAGE
-				wParam: markerNumberInteger
-				lpParam: pixelsString]!
+	library
+		directFunction: this
+		msg: SCI_MARKERDEFINERGBAIMAGE
+		wParam: markerNumberInteger
+		lpParam: pixelsString!
 
 sciMarkerDeleteHandle: markerHandleInteger
 	"Private - Delete a marker."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_MARKERDELETEHANDLE
-				wParam: markerHandleInteger
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_MARKERDELETEHANDLE
+		wParam: markerHandleInteger
+		lParam: 0!
 
 sciMarkerEnableHighlight: enabledBoolean
 	"Private - Enable/disable highlight for current folding block (smallest one that contains
 	the caret)"
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_MARKERENABLEHIGHLIGHT
-				wParam: enabledBoolean asParameter
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_MARKERENABLEHIGHLIGHT
+		wParam: enabledBoolean asParameter
+		lParam: 0!
 
 sciMarkerGet: lineInteger
 	"Private - Get a bit mask of all the markers set on a line."
 
-	^this
-		ifNil: [0]
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_MARKERGET
-				wParam: lineInteger - 1
-				lParam: 0]!
+	^library
+		directFunction: this
+		msg: SCI_MARKERGET
+		wParam: lineInteger - 1
+		lParam: 0!
 
 sciMarkerHandleFromLine: lineInteger which: whichInteger
 	"Private - Retrieve marker handles of a line"
 
-	^this
-		ifNil: [0]
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_MARKERHANDLEFROMLINE
-				wParam: lineInteger - 1
-				lParam: whichInteger]!
+	^library
+		directFunction: this
+		msg: SCI_MARKERHANDLEFROMLINE
+		wParam: lineInteger - 1
+		lParam: whichInteger!
 
 sciMarkerLineFromHandle: markerHandleInteger
 	"Private - Retrieve the line number at which a particular marker is located."
 
-	^this
-		ifNil: [0]
-		ifNotNil: 
-			[(Library
-				directFunction: this
-				msg: SCI_MARKERLINEFROMHANDLE
-				wParam: markerHandleInteger
-				lParam: 0) + 1]!
+	^(library
+		directFunction: this
+		msg: SCI_MARKERLINEFROMHANDLE
+		wParam: markerHandleInteger
+		lParam: 0) + 1!
 
 sciMarkerNext: lineStartInteger markerMask: markerMaskInteger
 	"Private - Find the next line at or after lineStart that includes a marker in mask. Return
 	-1 when no more lines."
 
-	^this
-		ifNil: [0]
-		ifNotNil: 
-			[(Library
-				directFunction: this
-				msg: SCI_MARKERNEXT
-				wParam: lineStartInteger - 1
-				lParam: markerMaskInteger) + 1]!
+	^(library
+		directFunction: this
+		msg: SCI_MARKERNEXT
+		wParam: lineStartInteger - 1
+		lParam: markerMaskInteger) + 1!
 
 sciMarkerNumberFromLine: lineInteger which: whichInteger
 	"Private - Retrieve marker number of a marker handle"
 
-	^this
-		ifNil: [0]
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_MARKERNUMBERFROMLINE
-				wParam: lineInteger - 1
-				lParam: whichInteger]!
+	^library
+		directFunction: this
+		msg: SCI_MARKERNUMBERFROMLINE
+		wParam: lineInteger - 1
+		lParam: whichInteger!
 
 sciMarkerPrevious: lineStartInteger markerMask: markerMaskInteger
 	"Private - Find the previous line before lineStart that includes a marker in mask."
 
-	^this
-		ifNil: [0]
-		ifNotNil: 
-			[(Library
-				directFunction: this
-				msg: SCI_MARKERPREVIOUS
-				wParam: lineStartInteger - 1
-				lParam: markerMaskInteger) + 1]!
+	^(library
+		directFunction: this
+		msg: SCI_MARKERPREVIOUS
+		wParam: lineStartInteger - 1
+		lParam: markerMaskInteger) + 1!
 
 sciMarkerSymbolDefined: markerNumberInteger
 	"Private - Which symbol was defined for markerNumber with MarkerDefine"
 
-	^this
-		ifNil: [0]
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_MARKERSYMBOLDEFINED
-				wParam: markerNumberInteger
-				lParam: 0]!
+	^library
+		directFunction: this
+		msg: SCI_MARKERSYMBOLDEFINED
+		wParam: markerNumberInteger
+		lParam: 0!
 
 sciMultiEdgeAddLine: columnInteger edgeColour: edgeColourColor
 	"Private - Add a new vertical edge to the view."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_MULTIEDGEADDLINE
-				wParam: columnInteger - 1
-				lParam: edgeColourColor rgbCode]!
+	library
+		directFunction: this
+		msg: SCI_MULTIEDGEADDLINE
+		wParam: columnInteger - 1
+		lParam: edgeColourColor rgbCode!
 
 sciMultipleSelectAddEach
 	"Private - Add each occurrence of the main selection in the target to the set of selections.
 	If the current selection is empty then select word around caret."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_MULTIPLESELECTADDEACH
-				wParam: 0
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_MULTIPLESELECTADDEACH
+		wParam: 0
+		lParam: 0!
 
 sciMultipleSelectAddNext
 	"Private - Add the next occurrence of the main selection to the set of selections as main.
 	If the current selection is empty then select word around caret."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_MULTIPLESELECTADDNEXT
-				wParam: 0
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_MULTIPLESELECTADDNEXT
+		wParam: 0
+		lParam: 0!
 
 sciNameOfStyle: styleInteger
 	"Private - Retrieve the name of a style. Result is NUL-terminated."
 
 	| len |
-	len := this
-				ifNil: [0]
-				ifNotNil: 
-					[Library
-						directFunction: this
-						msg: SCI_NAMEOFSTYLE
-						wParam: styleInteger
-						lpParam: nil].
-	^len = 0
+	len := library
+				directFunction: this
+				msg: SCI_NAMEOFSTYLE
+				wParam: styleInteger
+				lpParam: nil.
+	^len == 0
 		ifTrue: [stringClass empty]
 		ifFalse: 
 			[| result |
 			result := stringClass newFixed: len.
-			Library
+			library
 				directFunction: this
 				msg: SCI_NAMEOFSTYLE
 				wParam: styleInteger
@@ -8025,135 +6888,106 @@ sciNameOfStyle: styleInteger
 sciPointXFromPosition: posInteger
 	"Private - Retrieve the x value of the point in the window where a position is displayed."
 
-	^this
-		ifNil: [0]
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_POINTXFROMPOSITION
-				wParam: 0
-				lParam: posInteger - 1]!
+	^library
+		directFunction: this
+		msg: SCI_POINTXFROMPOSITION
+		wParam: 0
+		lParam: posInteger - 1!
 
 sciPointYFromPosition: posInteger
 	"Private - Retrieve the y value of the point in the window where a position is displayed."
 
-	^this
-		ifNil: [0]
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_POINTYFROMPOSITION
-				wParam: 0
-				lParam: posInteger - 1]!
+	^library
+		directFunction: this
+		msg: SCI_POINTYFROMPOSITION
+		wParam: 0
+		lParam: posInteger - 1!
 
 sciPositionAfter: posInteger
 	"Private - Given a valid document position, return the next position taking code page into
 	account. Maximum value returned is the last position in the document."
 
-	^this
-		ifNil: [0]
-		ifNotNil: 
-			[(Library
-				directFunction: this
-				msg: SCI_POSITIONAFTER
-				wParam: posInteger - 1
-				lParam: 0) + 1]!
+	^(library
+		directFunction: this
+		msg: SCI_POSITIONAFTER
+		wParam: posInteger - 1
+		lParam: 0) + 1!
 
 sciPositionBefore: posInteger
 	"Private - Given a valid document position, return the previous position taking code page
 	into account. Returns 0 if passed 0."
 
-	^this
-		ifNil: [0]
-		ifNotNil: 
-			[(Library
-				directFunction: this
-				msg: SCI_POSITIONBEFORE
-				wParam: posInteger - 1
-				lParam: 0) + 1]!
+	^(library
+		directFunction: this
+		msg: SCI_POSITIONBEFORE
+		wParam: posInteger - 1
+		lParam: 0) + 1!
 
 sciPositionFromPoint: xInteger y: yInteger
 	"Private - Find the position from a point within the window."
 
-	^this
-		ifNil: [0]
-		ifNotNil: 
-			[(Library
-				directFunction: this
-				msg: SCI_POSITIONFROMPOINT
-				wParam: xInteger
-				lParam: yInteger) + 1]!
+	^(library
+		directFunction: this
+		msg: SCI_POSITIONFROMPOINT
+		wParam: xInteger
+		lParam: yInteger) + 1!
 
 sciPositionFromPointClose: xInteger y: yInteger
 	"Private - Find the position from a point within the window but return INVALID_POSITION if
 	not close to text."
 
-	^this
-		ifNil: [0]
-		ifNotNil: 
-			[(Library
-				directFunction: this
-				msg: SCI_POSITIONFROMPOINTCLOSE
-				wParam: xInteger
-				lParam: yInteger) + 1]!
+	^(library
+		directFunction: this
+		msg: SCI_POSITIONFROMPOINTCLOSE
+		wParam: xInteger
+		lParam: yInteger) + 1!
 
 sciPositionRelative: posInteger relative: relativeInteger
 	"Private - Given a valid document position, return a position that differs in a number of
 	characters. Returned value is always between 0 and last position in document."
 
-	^this
-		ifNil: [0]
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_POSITIONRELATIVE
-				wParam: posInteger - 1
-				lParam: relativeInteger]!
+	^library
+		directFunction: this
+		msg: SCI_POSITIONRELATIVE
+		wParam: posInteger - 1
+		lParam: relativeInteger!
 
 sciPositionRelativeCodeUnits: posInteger relative: relativeInteger
 	"Private - Given a valid document position, return a position that differs in a number of
 	UTF-16 code units. Returned value is always between 0 and last position in document. The
 	result may point half way (2 bytes) inside a non-BMP character."
 
-	^this
-		ifNil: [0]
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_POSITIONRELATIVECODEUNITS
-				wParam: posInteger - 1
-				lParam: relativeInteger]!
+	^library
+		directFunction: this
+		msg: SCI_POSITIONRELATIVECODEUNITS
+		wParam: posInteger - 1
+		lParam: relativeInteger!
 
 sciPrivateLexerCall: operationInteger pointer: pointerAddress
 	"Private - For private communication between an application and a known lexer."
 
-	^this
-		ifNotNil: 
-			[Library
+	^Address fromAddress: (library
 				directFunction: this
 				msg: SCI_PRIVATELEXERCALL
 				wParam: operationInteger
-				lpParam: pointerAddress]!
+				lpParam: pointerAddress)!
 
 sciPropertyNames
 	"Private - Retrieve a '\n' separated list of properties understood by the current lexer.
 	Result is NUL-terminated."
 
 	| len |
-	len := this
-				ifNil: [0]
-				ifNotNil: 
-					[Library
-						directFunction: this
-						msg: SCI_PROPERTYNAMES
-						wParam: 0
-						lpParam: nil].
-	^len = 0
+	len := library
+				directFunction: this
+				msg: SCI_PROPERTYNAMES
+				wParam: 0
+				lpParam: nil.
+	^len == 0
 		ifTrue: [stringClass empty]
 		ifFalse: 
 			[| result |
 			result := stringClass newFixed: len.
-			Library
+			library
 				directFunction: this
 				msg: SCI_PROPERTYNAMES
 				wParam: 0
@@ -8163,105 +6997,85 @@ sciPropertyNames
 sciPropertyType: nameString
 	"Private - Retrieve the type of a property."
 
-	^this
-		ifNil: [0]
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_PROPERTYTYPE
-				wpParam: nameString
-				lParam: 0]!
+	^library
+		directFunction: this
+		msg: SCI_PROPERTYTYPE
+		wpParam: nameString
+		lParam: 0!
 
 sciRegisterImage: typeInteger xpmData: xpmDataString
 	"Private - Register an XPM image for use in autocompletion lists."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_REGISTERIMAGE
-				wParam: typeInteger
-				lpParam: xpmDataString]!
+	library
+		directFunction: this
+		msg: SCI_REGISTERIMAGE
+		wParam: typeInteger
+		lpParam: xpmDataString!
 
 sciRegisterRGBAImage: typeInteger pixels: pixelsString
 	"Private - Register an RGBA image for use in autocompletion lists. It has the width and
 	height from RGBAImageSetWidth/Height"
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_REGISTERRGBAIMAGE
-				wParam: typeInteger
-				lpParam: pixelsString]!
+	library
+		directFunction: this
+		msg: SCI_REGISTERRGBAIMAGE
+		wParam: typeInteger
+		lpParam: pixelsString!
 
 sciReleaseAllExtendedStyles
 	"Private - Release all extended (>255) style numbers"
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_RELEASEALLEXTENDEDSTYLES
-				wParam: 0
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_RELEASEALLEXTENDEDSTYLES
+		wParam: 0
+		lParam: 0!
 
 sciReleaseDocument: docAddress
 	"Private - Release a reference to the document, deleting document if it fades to black."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_RELEASEDOCUMENT
-				wParam: 0
-				lpParam: docAddress]!
+	library
+		directFunction: this
+		msg: SCI_RELEASEDOCUMENT
+		wParam: 0
+		lpParam: docAddress!
 
 sciReleaseLineCharacterIndex: lineCharacterIndexInteger
 	"Private - Decrease use count of line character index and remove if 0."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_RELEASELINECHARACTERINDEX
-				wParam: lineCharacterIndexInteger
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_RELEASELINECHARACTERINDEX
+		wParam: lineCharacterIndexInteger
+		lParam: 0!
 
 sciReplaceRectangular: lengthInteger text: textString
 	"Private - Replace the selection with text like a rectangular paste."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_REPLACERECTANGULAR
-				wParam: lengthInteger
-				lpParam: textString]!
+	library
+		directFunction: this
+		msg: SCI_REPLACERECTANGULAR
+		wParam: lengthInteger
+		lpParam: textString!
 
 sciReplaceSel: textString
 	"Private - Replace the selected text with the argument text."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_REPLACESEL
-				wParam: 0
-				lpParam: textString]!
+	library
+		directFunction: this
+		msg: SCI_REPLACESEL
+		wParam: 0
+		lpParam: textString!
 
 sciReplaceTarget: lengthInteger text: textString
 	"Private - Replace the target text with the argument text. Text is counted so it can contain
 	NULs. Returns the length of the replacement text."
 
-	^this
-		ifNil: [0]
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_REPLACETARGET
-				wParam: lengthInteger
-				lpParam: textString]!
+	^library
+		directFunction: this
+		msg: SCI_REPLACETARGET
+		wParam: lengthInteger
+		lpParam: textString!
 
 sciReplaceTargetRE: lengthInteger text: textString
 	"Private - Replace the target text with the argument text after \d processing. Text is
@@ -8270,588 +7084,482 @@ sciReplaceTargetRE: lengthInteger text: textString
 	Returns the length of the replacement text including any change caused by processing the \d
 	patterns."
 
-	^this
-		ifNil: [0]
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_REPLACETARGETRE
-				wParam: lengthInteger
-				lpParam: textString]!
+	^library
+		directFunction: this
+		msg: SCI_REPLACETARGETRE
+		wParam: lengthInteger
+		lpParam: textString!
 
 sciResetElementColour: elementInteger
 	"Private - Use the default or platform-defined colour for an element."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_RESETELEMENTCOLOUR
-				wParam: elementInteger
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_RESETELEMENTCOLOUR
+		wParam: elementInteger
+		lParam: 0!
 
 sciRGBAImageSetHeight: heightInteger
 	"Private - Set the height for future RGBA image data."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_RGBAIMAGESETHEIGHT
-				wParam: heightInteger
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_RGBAIMAGESETHEIGHT
+		wParam: heightInteger
+		lParam: 0!
 
 sciRGBAImageSetScale: scalePercentInteger
 	"Private - Set the scale factor in percent for future RGBA image data."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_RGBAIMAGESETSCALE
-				wParam: scalePercentInteger
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_RGBAIMAGESETSCALE
+		wParam: scalePercentInteger
+		lParam: 0!
 
 sciRGBAImageSetWidth: widthInteger
 	"Private - Set the width for future RGBA image data."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_RGBAIMAGESETWIDTH
-				wParam: widthInteger
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_RGBAIMAGESETWIDTH
+		wParam: widthInteger
+		lParam: 0!
 
 sciScrollCaret
 	"Private - Ensure the caret is visible."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_SCROLLCARET
-				wParam: 0
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_SCROLLCARET
+		wParam: 0
+		lParam: 0!
 
 sciScrollRange: secondaryInteger primary: primaryInteger
 	"Private - Scroll the argument positions and the range between them into view giving
 	priority to the primary position then the secondary position. This may be used to make a
 	search match visible."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_SCROLLRANGE
-				wParam: secondaryInteger - 1
-				lParam: primaryInteger - 1]!
+	library
+		directFunction: this
+		msg: SCI_SCROLLRANGE
+		wParam: secondaryInteger - 1
+		lParam: primaryInteger - 1!
 
 sciSearchAnchor
 	"Private - Sets the current caret position to be the search anchor."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_SEARCHANCHOR
-				wParam: 0
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_SEARCHANCHOR
+		wParam: 0
+		lParam: 0!
 
 sciSearchInTarget: lengthInteger text: textString
 	"Private - Search for a counted string in the target and set the target to the found range.
 	Text is counted so it can contain NULs. Returns start of found range or -1 for failure in
 	which case target is not moved."
 
-	^this
-		ifNil: [0]
-		ifNotNil: 
-			[(Library
-				directFunction: this
-				msg: SCI_SEARCHINTARGET
-				wParam: lengthInteger
-				lpParam: textString) + 1]!
+	^(library
+		directFunction: this
+		msg: SCI_SEARCHINTARGET
+		wParam: lengthInteger
+		lpParam: textString) + 1!
 
 sciSetAccessibility: accessibilityInteger
 	"Private - Enable or disable accessibility."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_SETACCESSIBILITY
-				wParam: accessibilityInteger
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_SETACCESSIBILITY
+		wParam: accessibilityInteger
+		lParam: 0!
 
 sciSetAutomaticFold: automaticFoldInteger
 	"Private - Set automatic folding behaviours."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_SETAUTOMATICFOLD
-				wParam: automaticFoldInteger
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_SETAUTOMATICFOLD
+		wParam: automaticFoldInteger
+		lParam: 0!
 
 sciSetBidirectional: bidirectionalInteger
 	"Private - Set bidirectional text display state."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_SETBIDIRECTIONAL
-				wParam: bidirectionalInteger
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_SETBIDIRECTIONAL
+		wParam: bidirectionalInteger
+		lParam: 0!
 
 sciSetBufferedDraw: bufferedBoolean
 	"Private - If drawing is buffered then each line of text is drawn into a bitmap buffer
 	before drawing it to the screen to avoid flicker."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_SETBUFFEREDDRAW
-				wParam: bufferedBoolean asParameter
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_SETBUFFEREDDRAW
+		wParam: bufferedBoolean asParameter
+		lParam: 0!
 
 sciSetCaretLineLayer: layerInteger
 	"Private - Set the layer of the background of the line containing the caret."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_SETCARETLINELAYER
-				wParam: layerInteger
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_SETCARETLINELAYER
+		wParam: layerInteger
+		lParam: 0!
 
 sciSetCaretPeriod: periodMillisecondsInteger
 	"Private - Get the time in milliseconds that the caret is on and off. 0 = steady on."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_SETCARETPERIOD
-				wParam: periodMillisecondsInteger
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_SETCARETPERIOD
+		wParam: periodMillisecondsInteger
+		lParam: 0!
 
 sciSetCaretSticky: useCaretStickyBehaviourInteger
 	"Private - Stop the caret preferred x position changing when the user types."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_SETCARETSTICKY
-				wParam: useCaretStickyBehaviourInteger
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_SETCARETSTICKY
+		wParam: useCaretStickyBehaviourInteger
+		lParam: 0!
 
 sciSetCaretStyle: caretStyleInteger
 	"Private - Set the style of the caret to be drawn."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_SETCARETSTYLE
-				wParam: caretStyleInteger
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_SETCARETSTYLE
+		wParam: caretStyleInteger
+		lParam: 0!
 
 sciSetCaretWidth: pixelWidthInteger
 	"Private - Set the width of the insert mode caret."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_SETCARETWIDTH
-				wParam: pixelWidthInteger
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_SETCARETWIDTH
+		wParam: pixelWidthInteger
+		lParam: 0!
 
 sciSetCharacterCategoryOptimization: countCharactersInteger
 	"Private - Set the number of characters to have directly indexed categories"
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_SETCHARACTERCATEGORYOPTIMIZATION
-				wParam: countCharactersInteger
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_SETCHARACTERCATEGORYOPTIMIZATION
+		wParam: countCharactersInteger
+		lParam: 0!
 
 sciSetCharsDefault
 	"Private - Reset the set of characters for whitespace and word characters to the defaults."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_SETCHARSDEFAULT
-				wParam: 0
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_SETCHARSDEFAULT
+		wParam: 0
+		lParam: 0!
 
 sciSetCodePage: codePageInteger
 	"Private - Set the code page used to interpret the bytes of the document as characters. The
 	SC_CP_UTF8 value can be used to enter Unicode mode."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_SETCODEPAGE
-				wParam: codePageInteger
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_SETCODEPAGE
+		wParam: codePageInteger
+		lParam: 0!
 
 sciSetControlCharSymbol: symbolInteger
 	"Private - Change the way control characters are displayed: If symbol is < 32, keep the
 	drawn way, else, use the given character."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_SETCONTROLCHARSYMBOL
-				wParam: symbolInteger
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_SETCONTROLCHARSYMBOL
+		wParam: symbolInteger
+		lParam: 0!
 
 sciSetDocPointer: docAddress
 	"Private - Change the document object used."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_SETDOCPOINTER
-				wParam: 0
-				lpParam: docAddress]!
+	library
+		directFunction: this
+		msg: SCI_SETDOCPOINTER
+		wParam: 0
+		lpParam: docAddress!
 
 sciSetEdgeColour: edgeColourColor
 	"Private - Change the colour used in edge indication."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_SETEDGECOLOUR
-				wParam: edgeColourColor rgbCode
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_SETEDGECOLOUR
+		wParam: edgeColourColor rgbCode
+		lParam: 0!
 
 sciSetEdgeMode: edgeModeInteger
 	"Private - The edge may be displayed by a line (EDGE_LINE/EDGE_MULTILINE) or by highlighting
 	text that goes beyond it (EDGE_BACKGROUND) or not displayed at all (EDGE_NONE)."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_SETEDGEMODE
-				wParam: edgeModeInteger
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_SETEDGEMODE
+		wParam: edgeModeInteger
+		lParam: 0!
 
 sciSetElementColour: elementInteger colourElement: colourElementColor
 	"Private - Set the colour of an element. Translucency (alpha) may or may not be significant
 	and this may depend on the platform. The alpha byte should commonly be 0xff for opaque."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_SETELEMENTCOLOUR
-				wParam: elementInteger
-				lParam: colourElementColor rgbaCode]!
+	library
+		directFunction: this
+		msg: SCI_SETELEMENTCOLOUR
+		wParam: elementInteger
+		lParam: colourElementColor rgbaCode!
 
 sciSetEOLMode: eolModeInteger
 	"Private - Set the current end of line mode."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_SETEOLMODE
-				wParam: eolModeInteger
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_SETEOLMODE
+		wParam: eolModeInteger
+		lParam: 0!
 
 sciSetFoldFlags: flagsInteger
 	"Private - Set some style options for folding."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_SETFOLDFLAGS
-				wParam: flagsInteger
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_SETFOLDFLAGS
+		wParam: flagsInteger
+		lParam: 0!
 
 sciSetFoldMarginColour: useSettingBoolean back: backColor
 	"Private - Set one of the colours used as a chequerboard pattern in the fold margin"
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_SETFOLDMARGINCOLOUR
-				wParam: useSettingBoolean asParameter
-				lParam: backColor rgbCode]!
+	library
+		directFunction: this
+		msg: SCI_SETFOLDMARGINCOLOUR
+		wParam: useSettingBoolean asParameter
+		lParam: backColor rgbCode!
 
 sciSetFoldMarginHiColour: useSettingBoolean fore: foreColor
 	"Private - Set the other colour used as a chequerboard pattern in the fold margin"
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_SETFOLDMARGINHICOLOUR
-				wParam: useSettingBoolean asParameter
-				lParam: foreColor rgbCode]!
+	library
+		directFunction: this
+		msg: SCI_SETFOLDMARGINHICOLOUR
+		wParam: useSettingBoolean asParameter
+		lParam: foreColor rgbCode!
 
 sciSetFontQuality: fontQualityInteger
 	"Private - Choose the quality level for text from the FontQuality enumeration."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_SETFONTQUALITY
-				wParam: fontQualityInteger
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_SETFONTQUALITY
+		wParam: fontQualityInteger
+		lParam: 0!
 
 sciSetHScrollBar: visibleBoolean
 	"Private - Show or hide the horizontal scroll bar."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_SETHSCROLLBAR
-				wParam: visibleBoolean asParameter
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_SETHSCROLLBAR
+		wParam: visibleBoolean asParameter
+		lParam: 0!
 
 sciSetIdentifiers: styleInteger identifiers: identifiersString
 	"Private - Set the identifiers that are shown in a particular style"
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_SETIDENTIFIERS
-				wParam: styleInteger
-				lpParam: identifiersString]!
+	library
+		directFunction: this
+		msg: SCI_SETIDENTIFIERS
+		wParam: styleInteger
+		lpParam: identifiersString!
 
 sciSetIdleStyling: idleStylingInteger
 	"Private - Sets limits to idle styling."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_SETIDLESTYLING
-				wParam: idleStylingInteger
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_SETIDLESTYLING
+		wParam: idleStylingInteger
+		lParam: 0!
 
 sciSetILexer: ilexerAddress
 	"Private - Set the lexer from an ILexer*."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_SETILEXER
-				wParam: 0
-				lpParam: ilexerAddress]!
+	library
+		directFunction: this
+		msg: SCI_SETILEXER
+		wParam: 0
+		lpParam: ilexerAddress!
 
 sciSetIMEInteraction: imeInteractionInteger
 	"Private - Choose to display the IME in a window or inline."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_SETIMEINTERACTION
-				wParam: imeInteractionInteger
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_SETIMEINTERACTION
+		wParam: imeInteractionInteger
+		lParam: 0!
 
 sciSetIndentationGuides: indentViewInteger
 	"Private - Show or hide indentation guides."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_SETINDENTATIONGUIDES
-				wParam: indentViewInteger
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_SETINDENTATIONGUIDES
+		wParam: indentViewInteger
+		lParam: 0!
 
 sciSetKeyWords: keyWordSetInteger keyWords: keyWordsString
 	"Private - Set up the key words used by the lexer."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_SETKEYWORDS
-				wParam: keyWordSetInteger
-				lpParam: keyWordsString]!
+	library
+		directFunction: this
+		msg: SCI_SETKEYWORDS
+		wParam: keyWordSetInteger
+		lpParam: keyWordsString!
 
 sciSetLayoutCache: cacheModeInteger
 	"Private - Sets the degree of caching of layout information."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_SETLAYOUTCACHE
-				wParam: cacheModeInteger
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_SETLAYOUTCACHE
+		wParam: cacheModeInteger
+		lParam: 0!
 
 sciSetLengthForEncode: bytesInteger
 	"Private - Set the length of the utf8 argument for calling EncodedFromUTF8. Set to -1 and
 	the string will be measured to the first nul."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_SETLENGTHFORENCODE
-				wParam: bytesInteger
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_SETLENGTHFORENCODE
+		wParam: bytesInteger
+		lParam: 0!
 
 sciSetLineEndTypesAllowed: lineEndBitSetInteger
 	"Private - Set the line end types that the application wants to use. May not be used if
 	incompatible with lexer or encoding."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_SETLINEENDTYPESALLOWED
-				wParam: lineEndBitSetInteger
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_SETLINEENDTYPESALLOWED
+		wParam: lineEndBitSetInteger
+		lParam: 0!
 
 sciSetLineIndentation: lineInteger indentation: indentationInteger
 	"Private - Change the indentation of a line to a number of columns."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_SETLINEINDENTATION
-				wParam: lineInteger - 1
-				lParam: indentationInteger]!
+	library
+		directFunction: this
+		msg: SCI_SETLINEINDENTATION
+		wParam: lineInteger - 1
+		lParam: indentationInteger!
 
 sciSetMainSelection: selectionInteger
 	"Private - Set the main selection"
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_SETMAINSELECTION
-				wParam: selectionInteger
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_SETMAINSELECTION
+		wParam: selectionInteger
+		lParam: 0!
 
 sciSetMarginLeft: pixelWidthInteger
 	"Private - Sets the size in pixels of the left margin."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_SETMARGINLEFT
-				wParam: 0
-				lParam: pixelWidthInteger]!
+	library
+		directFunction: this
+		msg: SCI_SETMARGINLEFT
+		wParam: 0
+		lParam: pixelWidthInteger!
 
 sciSetMarginOptions: marginOptionsInteger
 	"Private - Set the margin options."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_SETMARGINOPTIONS
-				wParam: marginOptionsInteger
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_SETMARGINOPTIONS
+		wParam: marginOptionsInteger
+		lParam: 0!
 
 sciSetMarginRight: pixelWidthInteger
 	"Private - Sets the size in pixels of the right margin."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_SETMARGINRIGHT
-				wParam: 0
-				lParam: pixelWidthInteger]!
+	library
+		directFunction: this
+		msg: SCI_SETMARGINRIGHT
+		wParam: 0
+		lParam: pixelWidthInteger!
 
 sciSetMargins: marginsInteger
 	"Private - Allocate a non-standard number of margins."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_SETMARGINS
-				wParam: marginsInteger
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_SETMARGINS
+		wParam: marginsInteger
+		lParam: 0!
 
 sciSetModEventMask: eventMaskInteger
 	"Private - Set which document modification events are sent to the container."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_SETMODEVENTMASK
-				wParam: eventMaskInteger
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_SETMODEVENTMASK
+		wParam: eventMaskInteger
+		lParam: 0!
 
 sciSetMouseDwellTime: periodMillisecondsInteger
 	"Private - Sets the time the mouse must sit still to generate a mouse dwell event."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_SETMOUSEDWELLTIME
-				wParam: periodMillisecondsInteger
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_SETMOUSEDWELLTIME
+		wParam: periodMillisecondsInteger
+		lParam: 0!
 
 sciSetMouseSelectionRectangularSwitch: mouseSelectionRectangularSwitchBoolean
 	"Private - Set whether switching to rectangular mode while selecting with the mouse is
 	allowed."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_SETMOUSESELECTIONRECTANGULARSWITCH
-				wParam: mouseSelectionRectangularSwitchBoolean asParameter
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_SETMOUSESELECTIONRECTANGULARSWITCH
+		wParam: mouseSelectionRectangularSwitchBoolean asParameter
+		lParam: 0!
 
 sciSetMultiPaste: multiPasteInteger
 	"Private - Change the effect of pasting when there are multiple selections."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_SETMULTIPASTE
-				wParam: multiPasteInteger
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_SETMULTIPASTE
+		wParam: multiPasteInteger
+		lParam: 0!
 
 sciSetPasteConvertEndings: convertBoolean
 	"Private - Enable/Disable convert-on-paste for line endings"
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_SETPASTECONVERTENDINGS
-				wParam: convertBoolean asParameter
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_SETPASTECONVERTENDINGS
+		wParam: convertBoolean asParameter
+		lParam: 0!
 
 sciSetPhasesDraw: phasesInteger
 	"Private - In one phase draw, text is drawn in a series of rectangular blocks with no
@@ -8859,484 +7567,398 @@ sciSetPhasesDraw: phasesInteger
 	horizontally. In multiple phase draw, each element is drawn over the whole drawing area,
 	allowing text to overlap from one line to the next."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_SETPHASESDRAW
-				wParam: phasesInteger
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_SETPHASESDRAW
+		wParam: phasesInteger
+		lParam: 0!
 
 sciSetPrintWrapMode: wrapModeInteger
 	"Private - Set printing to line wrapped (SC_WRAP_WORD) or not line wrapped (SC_WRAP_NONE)."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_SETPRINTWRAPMODE
-				wParam: wrapModeInteger
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_SETPRINTWRAPMODE
+		wParam: wrapModeInteger
+		lParam: 0!
 
 sciSetProperty: keyString value: valueString
 	"Private - Set up a value that may be used by a lexer for some optional feature."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_SETPROPERTY
-				wpParam: keyString
-				lpParam: valueString]!
+	library
+		directFunction: this
+		msg: SCI_SETPROPERTY
+		wpParam: keyString
+		lpParam: valueString!
 
 sciSetPunctuationChars: charactersString
 	"Private - Set the set of characters making up punctuation characters Should be called after
 	SetWordChars."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_SETPUNCTUATIONCHARS
-				wParam: 0
-				lpParam: charactersString]!
+	library
+		directFunction: this
+		msg: SCI_SETPUNCTUATIONCHARS
+		wParam: 0
+		lpParam: charactersString!
 
 sciSetRectangularSelectionAnchorVirtualSpace: spaceInteger
 	"Private - Set the virtual space of the anchor of the rectangular selection."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_SETRECTANGULARSELECTIONANCHORVIRTUALSPACE
-				wParam: spaceInteger
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_SETRECTANGULARSELECTIONANCHORVIRTUALSPACE
+		wParam: spaceInteger
+		lParam: 0!
 
 sciSetRectangularSelectionCaretVirtualSpace: spaceInteger
 	"Private - Set the virtual space of the caret of the rectangular selection."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_SETRECTANGULARSELECTIONCARETVIRTUALSPACE
-				wParam: spaceInteger
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_SETRECTANGULARSELECTIONCARETVIRTUALSPACE
+		wParam: spaceInteger
+		lParam: 0!
 
 sciSetRepresentation: encodedCharacterString representation: representationString
 	"Private - Set the way a character is drawn."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_SETREPRESENTATION
-				wpParam: encodedCharacterString
-				lpParam: representationString]!
+	library
+		directFunction: this
+		msg: SCI_SETREPRESENTATION
+		wpParam: encodedCharacterString
+		lpParam: representationString!
 
 sciSetRepresentationAppearance: encodedCharacterString appearance: appearanceInteger
 	"Private - Set the appearance of a representation."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_SETREPRESENTATIONAPPEARANCE
-				wpParam: encodedCharacterString
-				lParam: appearanceInteger]!
+	library
+		directFunction: this
+		msg: SCI_SETREPRESENTATIONAPPEARANCE
+		wpParam: encodedCharacterString
+		lParam: appearanceInteger!
 
 sciSetRepresentationColour: encodedCharacterString colour: colourColor
 	"Private - Set the colour of a representation."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_SETREPRESENTATIONCOLOUR
-				wpParam: encodedCharacterString
-				lParam: colourColor rgbaCode]!
+	library
+		directFunction: this
+		msg: SCI_SETREPRESENTATIONCOLOUR
+		wpParam: encodedCharacterString
+		lParam: colourColor rgbaCode!
 
 sciSetSavePoint
 	"Private - Remember the current position in the undo history as the position at which the
 	document was saved."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_SETSAVEPOINT
-				wParam: 0
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_SETSAVEPOINT
+		wParam: 0
+		lParam: 0!
 
 sciSetSearchFlags: searchFlagsInteger
 	"Private - Set the search flags used by SearchInTarget."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_SETSEARCHFLAGS
-				wParam: searchFlagsInteger
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_SETSEARCHFLAGS
+		wParam: searchFlagsInteger
+		lParam: 0!
 
 sciSetSelection: caretInteger anchor: anchorInteger
 	"Private - Set a simple selection"
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_SETSELECTION
-				wParam: caretInteger - 1
-				lParam: anchorInteger - 1]!
+	library
+		directFunction: this
+		msg: SCI_SETSELECTION
+		wParam: caretInteger - 1
+		lParam: anchorInteger - 1!
 
 sciSetSelectionLayer: layerInteger
 	"Private - Set the layer for drawing selections: either opaquely on base layer or
 	translucently over text"
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_SETSELECTIONLAYER
-				wParam: layerInteger
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_SETSELECTIONLAYER
+		wParam: layerInteger
+		lParam: 0!
 
 sciSetSelectionMode: selectionModeInteger
 	"Private - Set the selection mode to stream (SC_SEL_STREAM) or rectangular
 	(SC_SEL_RECTANGLE/SC_SEL_THIN) or by lines (SC_SEL_LINES)."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_SETSELECTIONMODE
-				wParam: selectionModeInteger
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_SETSELECTIONMODE
+		wParam: selectionModeInteger
+		lParam: 0!
 
 sciSetSelectionNAnchor: selectionInteger anchor: anchorInteger
 	"Private - Set the anchor position of the nth selection."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_SETSELECTIONNANCHOR
-				wParam: selectionInteger
-				lParam: anchorInteger - 1]!
+	library
+		directFunction: this
+		msg: SCI_SETSELECTIONNANCHOR
+		wParam: selectionInteger
+		lParam: anchorInteger - 1!
 
 sciSetSelectionNAnchorVirtualSpace: selectionInteger space: spaceInteger
 	"Private - Set the virtual space of the anchor of the nth selection."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_SETSELECTIONNANCHORVIRTUALSPACE
-				wParam: selectionInteger
-				lParam: spaceInteger]!
+	library
+		directFunction: this
+		msg: SCI_SETSELECTIONNANCHORVIRTUALSPACE
+		wParam: selectionInteger
+		lParam: spaceInteger!
 
 sciSetSelectionNCaret: selectionInteger caret: caretInteger
 	"Private - Set the caret position of the nth selection."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_SETSELECTIONNCARET
-				wParam: selectionInteger
-				lParam: caretInteger - 1]!
+	library
+		directFunction: this
+		msg: SCI_SETSELECTIONNCARET
+		wParam: selectionInteger
+		lParam: caretInteger - 1!
 
 sciSetSelectionNCaretVirtualSpace: selectionInteger space: spaceInteger
 	"Private - Set the virtual space of the caret of the nth selection."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_SETSELECTIONNCARETVIRTUALSPACE
-				wParam: selectionInteger
-				lParam: spaceInteger]!
+	library
+		directFunction: this
+		msg: SCI_SETSELECTIONNCARETVIRTUALSPACE
+		wParam: selectionInteger
+		lParam: spaceInteger!
 
 sciSetSelectionNEnd: selectionInteger caret: caretInteger
 	"Private - Sets the position that ends the selection - this becomes the currentPosition."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_SETSELECTIONNEND
-				wParam: selectionInteger
-				lParam: caretInteger - 1]!
+	library
+		directFunction: this
+		msg: SCI_SETSELECTIONNEND
+		wParam: selectionInteger
+		lParam: caretInteger - 1!
 
 sciSetSelectionNStart: selectionInteger anchor: anchorInteger
 	"Private - Sets the position that starts the selection - this becomes the anchor."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_SETSELECTIONNSTART
-				wParam: selectionInteger
-				lParam: anchorInteger - 1]!
+	library
+		directFunction: this
+		msg: SCI_SETSELECTIONNSTART
+		wParam: selectionInteger
+		lParam: anchorInteger - 1!
 
 sciSetStylingEx: lengthInteger styles: stylesString
 	"Private - Set the styles for a segment of the document."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_SETSTYLINGEX
-				wParam: lengthInteger
-				lpParam: stylesString]!
+	library
+		directFunction: this
+		msg: SCI_SETSTYLINGEX
+		wParam: lengthInteger
+		lpParam: stylesString!
 
 sciSetTabDrawMode: tabDrawModeInteger
 	"Private - Set how tabs are drawn when visible."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_SETTABDRAWMODE
-				wParam: tabDrawModeInteger
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_SETTABDRAWMODE
+		wParam: tabDrawModeInteger
+		lParam: 0!
 
 sciSetTargetEndVirtualSpace: spaceInteger
 	"Private - Sets the virtual space of the target end"
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_SETTARGETENDVIRTUALSPACE
-				wParam: spaceInteger
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_SETTARGETENDVIRTUALSPACE
+		wParam: spaceInteger
+		lParam: 0!
 
 sciSetTargetRange: startInteger end: endInteger
 	"Private - Sets both the start and end of the target in one call."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_SETTARGETRANGE
-				wParam: startInteger - 1
-				lParam: endInteger - 1]!
+	library
+		directFunction: this
+		msg: SCI_SETTARGETRANGE
+		wParam: startInteger - 1
+		lParam: endInteger - 1!
 
 sciSetTargetStartVirtualSpace: spaceInteger
 	"Private - Sets the virtual space of the target start"
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_SETTARGETSTARTVIRTUALSPACE
-				wParam: spaceInteger
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_SETTARGETSTARTVIRTUALSPACE
+		wParam: spaceInteger
+		lParam: 0!
 
 sciSetTechnology: technologyInteger
 	"Private - Set the technology used."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_SETTECHNOLOGY
-				wParam: technologyInteger
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_SETTECHNOLOGY
+		wParam: technologyInteger
+		lParam: 0!
 
 sciSetText: textString
 	"Private - Replace the contents of the document with the argument text."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_SETTEXT
-				wParam: 0
-				lpParam: textString]!
+	library
+		directFunction: this
+		msg: SCI_SETTEXT
+		wParam: 0
+		lpParam: textString!
 
 sciSetViewWS: viewWSInteger
 	"Private - Make white space characters invisible, always visible or visible outside
 	indentation."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_SETVIEWWS
-				wParam: viewWSInteger
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_SETVIEWWS
+		wParam: viewWSInteger
+		lParam: 0!
 
 sciSetVirtualSpaceOptions: virtualSpaceOptionsInteger
 	"Private - Set options for virtual space behaviour."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_SETVIRTUALSPACEOPTIONS
-				wParam: virtualSpaceOptionsInteger
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_SETVIRTUALSPACEOPTIONS
+		wParam: virtualSpaceOptionsInteger
+		lParam: 0!
 
 sciSetVisiblePolicy: visiblePolicyInteger visibleSlop: visibleSlopInteger
 	"Private - Set the way the display area is determined when a particular line is to be moved
 	to by Find, FindNext, GotoLine, etc."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_SETVISIBLEPOLICY
-				wParam: visiblePolicyInteger
-				lParam: visibleSlopInteger]!
+	library
+		directFunction: this
+		msg: SCI_SETVISIBLEPOLICY
+		wParam: visiblePolicyInteger
+		lParam: visibleSlopInteger!
 
 sciSetWhitespaceChars: charactersString
 	"Private - Set the set of characters making up whitespace for when moving or selecting by
 	word. Should be called after SetWordChars."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_SETWHITESPACECHARS
-				wParam: 0
-				lpParam: charactersString]!
+	library
+		directFunction: this
+		msg: SCI_SETWHITESPACECHARS
+		wParam: 0
+		lpParam: charactersString!
 
 sciSetWordChars: charactersString
 	"Private - Set the set of characters making up words for when moving or selecting by word.
 	First sets defaults like SetCharsDefault."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_SETWORDCHARS
-				wParam: 0
-				lpParam: charactersString]!
+	library
+		directFunction: this
+		msg: SCI_SETWORDCHARS
+		wParam: 0
+		lpParam: charactersString!
 
 sciSetWrapIndentMode: wrapIndentModeInteger
 	"Private - Sets how wrapped sublines are placed. Default is fixed."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_SETWRAPINDENTMODE
-				wParam: wrapIndentModeInteger
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_SETWRAPINDENTMODE
+		wParam: wrapIndentModeInteger
+		lParam: 0!
 
 sciSetWrapMode: wrapModeInteger
 	"Private - Sets whether text is word wrapped."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_SETWRAPMODE
-				wParam: wrapModeInteger
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_SETWRAPMODE
+		wParam: wrapModeInteger
+		lParam: 0!
 
 sciSetWrapVisualFlags: wrapVisualFlagsInteger
 	"Private - Set the display mode of visual flags for wrapped lines."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_SETWRAPVISUALFLAGS
-				wParam: wrapVisualFlagsInteger
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_SETWRAPVISUALFLAGS
+		wParam: wrapVisualFlagsInteger
+		lParam: 0!
 
 sciSetWrapVisualFlagsLocation: wrapVisualFlagsLocationInteger
 	"Private - Set the location of visual flags for wrapped lines."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_SETWRAPVISUALFLAGSLOCATION
-				wParam: wrapVisualFlagsLocationInteger
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_SETWRAPVISUALFLAGSLOCATION
+		wParam: wrapVisualFlagsLocationInteger
+		lParam: 0!
 
 sciSetXCaretPolicy: caretPolicyInteger caretSlop: caretSlopInteger
 	"Private - Set the way the caret is kept visible when going sideways. The exclusion zone is
 	given in pixels."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_SETXCARETPOLICY
-				wParam: caretPolicyInteger
-				lParam: caretSlopInteger]!
+	library
+		directFunction: this
+		msg: SCI_SETXCARETPOLICY
+		wParam: caretPolicyInteger
+		lParam: caretSlopInteger!
 
 sciSetYCaretPolicy: caretPolicyInteger caretSlop: caretSlopInteger
 	"Private - Set the way the line the caret is on is kept visible. The exclusion zone is given
 	in lines."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_SETYCARETPOLICY
-				wParam: caretPolicyInteger
-				lParam: caretSlopInteger]!
+	library
+		directFunction: this
+		msg: SCI_SETYCARETPOLICY
+		wParam: caretPolicyInteger
+		lParam: caretSlopInteger!
 
 sciStyleClearAll
 	"Private - Clear all the styles and make equivalent to the global default style."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_STYLECLEARALL
-				wParam: 0
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_STYLECLEARALL
+		wParam: 0
+		lParam: 0!
 
 sciStyleResetDefault
 	"Private - Reset the default style to its state at startup"
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_STYLERESETDEFAULT
-				wParam: 0
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_STYLERESETDEFAULT
+		wParam: 0
+		lParam: 0!
 
 sciSupportsFeature: featureInteger
 	"Private - Get whether a feature is supported"
 
-	^this
-		ifNil: [false]
-		ifNotNil: 
-			[(Library
-				directFunction: this
-				msg: SCI_SUPPORTSFEATURE
-				wParam: featureInteger
-				lParam: 0) asBoolean]!
+	^library
+		directBooleanFunction: this
+		msg: SCI_SUPPORTSFEATURE
+		wParam: featureInteger
+		lParam: 0!
 
 sciTagsOfStyle: styleInteger
 	"Private - Retrieve a ' ' separated list of style tags like 'literal quoted string'. Result
 	is NUL-terminated."
 
 	| len |
-	len := this
-				ifNil: [0]
-				ifNotNil: 
-					[Library
-						directFunction: this
-						msg: SCI_TAGSOFSTYLE
-						wParam: styleInteger
-						lpParam: nil].
-	^len = 0
+	len := library
+				directFunction: this
+				msg: SCI_TAGSOFSTYLE
+				wParam: styleInteger
+				lpParam: nil.
+	^len == 0
 		ifTrue: [stringClass empty]
 		ifFalse: 
 			[| result |
 			result := stringClass newFixed: len.
-			Library
+			library
 				directFunction: this
 				msg: SCI_TAGSOFSTYLE
 				wParam: styleInteger
@@ -9347,20 +7969,17 @@ sciTargetAsUTF8
 	"Private - Returns the target converted to UTF8. Return the length in bytes."
 
 	| len |
-	len := this
-				ifNil: [0]
-				ifNotNil: 
-					[Library
-						directFunction: this
-						msg: SCI_TARGETASUTF8
-						wParam: 0
-						lpParam: nil].
-	^len = 0
+	len := library
+				directFunction: this
+				msg: SCI_TARGETASUTF8
+				wParam: 0
+				lpParam: nil.
+	^len == 0
 		ifTrue: [Core.Utf8String empty]
 		ifFalse: 
 			[| result |
 			result := Core.Utf8String newFixed: len.
-			Library
+			library
 				directFunction: this
 				msg: SCI_TARGETASUTF8
 				wParam: 0
@@ -9371,36 +7990,29 @@ sciTextWidth: styleInteger text: textString
 	"Private - Measure the pixel width of some text in a particular style. NUL terminated text
 	argument. Does not handle tab or control characters."
 
-	^this
-		ifNil: [0]
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_TEXTWIDTH
-				wParam: styleInteger
-				lpParam: textString]!
+	^library
+		directFunction: this
+		msg: SCI_TEXTWIDTH
+		wParam: styleInteger
+		lpParam: textString!
 
 sciToggleCaretSticky
 	"Private - Switch between sticky and non-sticky: meant to be bound to a key."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_TOGGLECARETSTICKY
-				wParam: 0
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_TOGGLECARETSTICKY
+		wParam: 0
+		lParam: 0!
 
 sciUserListShow: listTypeInteger itemList: itemListString
 	"Private - Display a list of strings and send notification when user chooses one."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_USERLISTSHOW
-				wParam: listTypeInteger
-				lpParam: itemListString]!
+	library
+		directFunction: this
+		msg: SCI_USERLISTSHOW
+		wParam: listTypeInteger
+		lpParam: itemListString!
 
 scnAutoCCancelled: pSCNotification 
 	"Private - Default handler for an SCN_AUTOCCANCELLED event.
@@ -9800,94 +8412,75 @@ scnZoom: anExternalAddress
 scrollDown
 	"Scroll the document down, keeping the caret visible."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_LINESCROLLDOWN
-				wParam: 0
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_LINESCROLLDOWN
+		wParam: 0
+		lParam: 0!
 
 scrollToEnd
 	"Scroll to end of document."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_SCROLLTOEND
-				wParam: 0
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_SCROLLTOEND
+		wParam: 0
+		lParam: 0!
 
 scrollToStart
 	"Scroll to start of document."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_SCROLLTOSTART
-				wParam: 0
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_SCROLLTOSTART
+		wParam: 0
+		lParam: 0!
 
 scrollUp
 	"Scroll the document up, keeping the caret visible."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_LINESCROLLUP
-				wParam: 0
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_LINESCROLLUP
+		wParam: 0
+		lParam: 0!
 
 scrollWidth
 	"Retrieve the document width assumed for scrolling."
 
-	^this
-		ifNil: [0]
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_GETSCROLLWIDTH
-				wParam: 0
-				lParam: 0]!
+	^library
+		directFunction: this
+		msg: SCI_GETSCROLLWIDTH
+		wParam: 0
+		lParam: 0!
 
 scrollWidth: pixelWidthInteger
 	"Sets the document width assumed for scrolling."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_SETSCROLLWIDTH
-				wParam: pixelWidthInteger
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_SETSCROLLWIDTH
+		wParam: pixelWidthInteger
+		lParam: 0!
 
 searchNext: searchFlagsInteger text: textString
 	"Find some text starting at the search anchor. Does not ensure the selection is visible."
 
-	^this
-		ifNil: [0]
-		ifNotNil: 
-			[(Library
-				directFunction: this
-				msg: SCI_SEARCHNEXT
-				wParam: searchFlagsInteger
-				lpParam: textString) + 1]!
+	^(library
+		directFunction: this
+		msg: SCI_SEARCHNEXT
+		wParam: searchFlagsInteger
+		lpParam: textString) + 1!
 
 searchPrev: searchFlagsInteger text: textString
 	"Find some text starting at the search anchor and moving backwards. Does not ensure the
 	selection is visible."
 
-	^this
-		ifNil: [0]
-		ifNotNil: 
-			[(Library
-				directFunction: this
-				msg: SCI_SEARCHPREV
-				wParam: searchFlagsInteger
-				lpParam: textString) + 1]!
+	^(library
+		directFunction: this
+		msg: SCI_SEARCHPREV
+		wParam: searchFlagsInteger
+		lpParam: textString) + 1!
 
 secondaryCaretForecolor
 	"Get the foreground colour of the secondary caret."
@@ -9926,20 +8519,17 @@ selection
 	"Retrieve the selected text. Return the length of the text. Result is NUL-terminated."
 
 	| len |
-	len := this
-				ifNil: [0]
-				ifNotNil: 
-					[Library
-						directFunction: this
-						msg: SCI_GETSELTEXT
-						wParam: 0
-						lpParam: nil].
-	^len = 0
+	len := library
+				directFunction: this
+				msg: SCI_GETSELTEXT
+				wParam: 0
+				lpParam: nil.
+	^len == 0
 		ifTrue: [stringClass empty]
 		ifFalse: 
 			[| result |
 			result := stringClass newFixed: len - 1.
-			Library
+			library
 				directFunction: this
 				msg: SCI_GETSELTEXT
 				wParam: 0
@@ -9961,14 +8551,11 @@ selectionBackcolor: aColor
 selectionCount
 	"How many selections are there?"
 
-	^this
-		ifNil: [0]
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_GETSELECTIONS
-				wParam: 0
-				lParam: 0]!
+	^library
+		directFunction: this
+		msg: SCI_GETSELECTIONS
+		wParam: 0
+		lParam: 0!
 
 selectionForecolor
 	"Answer the foreground <Color> of the selection, or nil if the selection foreground colouring is disabled (the default)."
@@ -10023,21 +8610,16 @@ selectionRange
 	selected then the start position represents the caret position, and the end position is less
 	than the start position (i.e. the interval is empty)."
 
-	^this isNil
-		ifTrue: [0 to: -1]
-		ifFalse: 
-			[| lib |
-			lib := Library.
-			(lib
+	^(library
+		directFunction: this
+		msg: SCI_GETSELECTIONSTART
+		wParam: 0
+		lParam: 0) + 1
+		to: (library
 				directFunction: this
-				msg: SCI_GETSELECTIONSTART
+				msg: SCI_GETSELECTIONEND
 				wParam: 0
-				lParam: 0) + 1
-				to: (lib
-						directFunction: this
-						msg: SCI_GETSELECTIONEND
-						wParam: 0
-						lParam: 0)]!
+				lParam: 0)!
 
 selectionRanges
 	"Answer an <Array> of <Interval> representing the current selections. Even if not in multi-select mode there could be more than one selection range if a rectangular selection has been made.
@@ -10062,14 +8644,11 @@ selections
 selectionStart
 	"Returns the position at the start of the selection."
 
-	^this
-		ifNil: [0]
-		ifNotNil: 
-			[(Library
-				directFunction: this
-				msg: SCI_GETSELECTIONSTART
-				wParam: 0
-				lParam: 0) + 1]!
+	^(library
+		directFunction: this
+		msg: SCI_GETSELECTIONSTART
+		wParam: 0
+		lParam: 0) + 1!
 
 sendMessage: anInteger
 	"Private - Send the Win32 message, anInteger, to the receiver's real window with wParam and
@@ -10077,14 +8656,11 @@ sendMessage: anInteger
 
 	"Implementation Note: Override to ensure goes through direct call mechanism."
 
-	^this
-		ifNil: [0]
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: anInteger
-				wParam: 0
-				lParam: 0]!
+	^library
+		directFunction: this
+		msg: anInteger
+		wParam: 0
+		lParam: 0!
 
 sendMessage: msgInteger wParam: wParamInteger
 	"Private - Send the Win32 message msgInteger to the receiver's real window with the
@@ -10092,14 +8668,11 @@ sendMessage: msgInteger wParam: wParamInteger
 
 	"Implementation Note: Override to ensure goes through direct call mechanism."
 
-	^this
-		ifNil: [0]
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: msgInteger
-				wParam: wParamInteger
-				lParam: 0]!
+	^library
+		directFunction: this
+		msg: msgInteger
+		wParam: wParamInteger
+		lParam: 0!
 
 sendMessage: anIntegerMessageID wParam: wParam lParam: lParam
 	"Private - Send the specified Win32 <integer> message to the receiver with the specified
@@ -10110,14 +8683,11 @@ sendMessage: anIntegerMessageID wParam: wParam lParam: lParam
 	however, that no callback into Dolphin will result. Also we must be careful not to call
 	through a null pointer or we will get a GPF."
 
-	^this
-		ifNil: [0]
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: anIntegerMessageID
-				wParam: wParam
-				lParam: lParam]!
+	^library
+		directFunction: this
+		msg: anIntegerMessageID
+		wParam: wParam
+		lParam: lParam!
 
 sendMessage: anIntegerMessageID wParam: wParam lpParam: lpParam
 	"Private - Send the Win32 message anIntegerMessageID with parameters wParam and lpParam
@@ -10128,13 +8698,11 @@ sendMessage: anIntegerMessageID wParam: wParam lpParam: lpParam
 	however, that no callback into Dolphin will result. Also we must be careful not to call
 	through a null pointer or we will get a GPF."
 
-	^this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: anIntegerMessageID
-				wParam: wParam
-				lpParam: lpParam yourAddress]!
+	^library
+		directFunction: this
+		msg: anIntegerMessageID
+		wParam: wParam
+		lpParam: lpParam yourAddress!
 
 setCallTipHighlightColor
 	self sciCallTipSetForeHlt: (callTipHighlightColor
@@ -10297,13 +8865,11 @@ setLexerLanguage: aSymbol
 setLine: lineInteger state: stateInteger
 	"Used to hold extra styling information for each line."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_SETLINESTATE
-				wParam: lineInteger - 1
-				lParam: stateInteger]!
+	library
+		directFunction: this
+		msg: SCI_SETLINESTATE
+		wParam: lineInteger - 1
+		lParam: stateInteger!
 
 setMarginWidths: anArray 
 	"Private - Sets the left and right margins of the receiver to anInteger pixels"
@@ -10342,13 +8908,11 @@ setRawAnnotations: aCollectionOfScintillaAnnotations
 setReadOnly: readOnlyBoolean
 	"Set to read only or read write."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_SETREADONLY
-				wParam: readOnlyBoolean asParameter
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_SETREADONLY
+		wParam: readOnlyBoolean asParameter
+		lParam: 0!
 
 setTabStops: anInteger 
 	"Private - Set the width of the receiver's tab stops to anInteger."
@@ -10358,13 +8922,11 @@ setTabStops: anInteger
 setTargetRangeFromSelection
 	"Make the target range start and end be the same as the selection range start and end."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_TARGETFROMSELECTION
-				wParam: 0
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_TARGETFROMSELECTION
+		wParam: 0
+		lParam: 0!
 
 setText: aString
 	"Private - Set up the receiver to be displaying the new text in the <String> argument."
@@ -10424,13 +8986,11 @@ showCallTip: aString at: anInteger
 showLinesFrom: lineStartInteger to: lineEndInteger
 	"Make a range of lines visible."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_SHOWLINES
-				wParam: lineStartInteger - 1
-				lParam: lineEndInteger - 1]!
+	library
+		directFunction: this
+		msg: SCI_SHOWLINES
+		wParam: lineStartInteger - 1
+		lParam: lineEndInteger - 1!
 
 showUserList: aCollection id: anInteger
 	"Display a 'user list' built from the displayStrings of the elements of the <collection>
@@ -10442,25 +9002,21 @@ showUserList: aCollection id: anInteger
 showVerticalScrollBar: visibleBoolean
 	"Show or hide the vertical scroll bar."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_SETVSCROLLBAR
-				wParam: visibleBoolean asParameter
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_SETVSCROLLBAR
+		wParam: visibleBoolean asParameter
+		lParam: 0!
 
 splitTarget: pixelWidthInteger
 	"Split the lines in the target into lines that are less wide than pixelWidth where
 	possible."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_LINESSPLIT
-				wParam: pixelWidthInteger
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_LINESSPLIT
+		wParam: pixelWidthInteger
+		lParam: 0!
 
 startDwellTimer
 	self setTimer: 1 interval: 100!
@@ -10468,25 +9024,21 @@ startDwellTimer
 startRecording
 	"Start notifying the container of all key presses and commands."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_STARTRECORD
-				wParam: 0
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_STARTRECORD
+		wParam: 0
+		lParam: 0!
 
 startStylingFrom: startInteger
 	"Set the current styling position to start. The unused parameter is no longer used and
 	should be set to 0."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_STARTSTYLING
-				wParam: startInteger - 1
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_STARTSTYLING
+		wParam: startInteger - 1
+		lParam: 0!
 
 state
 	"Private - Answer a <MessageSequence> which, when replayed, will restore the receiver to its current state"
@@ -10520,13 +9072,11 @@ stopDwellTimer
 stopRecording
 	"Stop notifying the container of all key presses and commands."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_STOPRECORD
-				wParam: 0
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_STOPRECORD
+		wParam: 0
+		lParam: 0!
 
 stopStyling
 	"Cancel any further styling for the specified mask by moving the styling end point to the
@@ -10565,14 +9115,11 @@ styledTextFrom: startInteger to: stopInteger
 styleIdAt: posInteger
 	"Returns the style byte at the position."
 
-	^this
-		ifNil: [0]
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_GETSTYLEAT
-				wParam: posInteger - 1
-				lParam: 0]!
+	^library
+		directFunction: this
+		msg: SCI_GETSTYLEAT
+		wParam: posInteger - 1
+		lParam: 0!
 
 styleNamed: aSymbol
 	"Answer a <ScintillaTextStyle> being the named style, or nil if the name is not recognised."
@@ -10583,13 +9130,11 @@ styleNext: lengthInteger mask: styleInteger
 	"Change style from current styling position for length characters to a style and move the
 	current styling position to after this newly styled segment."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_SETSTYLING
-				wParam: lengthInteger
-				lParam: styleInteger]!
+	library
+		directFunction: this
+		msg: SCI_SETSTYLING
+		wParam: lengthInteger
+		lParam: styleInteger!
 
 styler
 	"Answer the <ScintillaStyler> used to dynamically colour text in the receiver."
@@ -10629,25 +9174,20 @@ styleWithId: anInteger
 stylingPosition
 	"Retrieve the position of the last correctly styled character."
 
-	^this
-		ifNil: [0]
-		ifNotNil: 
-			[(Library
-				directFunction: this
-				msg: SCI_GETENDSTYLED
-				wParam: 0
-				lParam: 0) + 1]!
+	^(library
+		directFunction: this
+		msg: SCI_GETENDSTYLED
+		wParam: 0
+		lParam: 0) + 1!
 
 swapPrimarySelectionAnchorAndCaret
 	"Swap that caret and anchor of the main selection."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_SWAPMAINANCHORCARET
-				wParam: 0
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_SWAPMAINANCHORCARET
+		wParam: 0
+		lParam: 0!
 
 tabDrawMode
 	"Answer the current indenting mode used when wrapping lines. This can be one of #fixed
@@ -10665,102 +9205,80 @@ tabDrawMode: aSymbol
 tabIndents
 	"Does a tab pressed when caret is within indentation indent?"
 
-	^this
-		ifNil: [false]
-		ifNotNil: 
-			[(Library
-				directFunction: this
-				msg: SCI_GETTABINDENTS
-				wParam: 0
-				lParam: 0) asBoolean]!
+	^library
+		directBooleanFunction: this
+		msg: SCI_GETTABINDENTS
+		wParam: 0
+		lParam: 0!
 
 tabIndents: tabIndentsBoolean
 	"Sets whether a tab pressed when caret is within indentation indents."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_SETTABINDENTS
-				wParam: tabIndentsBoolean asParameter
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_SETTABINDENTS
+		wParam: tabIndentsBoolean asParameter
+		lParam: 0!
 
 tabMinimumWidth
 	"Get the minimum visual width of a tab."
 
-	^this
-		ifNil: [0]
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_GETTABMINIMUMWIDTH
-				wParam: 0
-				lParam: 0]!
+	^library
+		directFunction: this
+		msg: SCI_GETTABMINIMUMWIDTH
+		wParam: 0
+		lParam: 0!
 
 tabMinimumWidth: pixelsInteger
 	"Set the minimum visual width of a tab."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_SETTABMINIMUMWIDTH
-				wParam: pixelsInteger
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_SETTABMINIMUMWIDTH
+		wParam: pixelsInteger
+		lParam: 0!
 
 tabWidth
 	"Retrieve the visible size of a tab."
 
-	^this
-		ifNil: [0]
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_GETTABWIDTH
-				wParam: 0
-				lParam: 0]!
+	^library
+		directFunction: this
+		msg: SCI_GETTABWIDTH
+		wParam: 0
+		lParam: 0!
 
 tabWidth: tabWidthInteger
 	"Change the visible size of a tab to be a multiple of the width of a space character."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_SETTABWIDTH
-				wParam: tabWidthInteger
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_SETTABWIDTH
+		wParam: tabWidthInteger
+		lParam: 0!
 
 targetAll
 	"Sets the target to the whole document."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_TARGETWHOLEDOCUMENT
-				wParam: 0
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_TARGETWHOLEDOCUMENT
+		wParam: 0
+		lParam: 0!
 
 targetRange
 	"Answer the range of the current search/replace target. The target is like the selection,
 	but not visible."
 
-	^this isNil
-		ifTrue: [0 to: -1]
-		ifFalse: 
-			[| lib |
-			lib := Library.
-			(lib
+	^(library
+		directFunction: this
+		msg: SCI_GETTARGETSTART
+		wParam: 0
+		lParam: 0) + 1
+		to: (library
 				directFunction: this
-				msg: SCI_GETTARGETSTART
+				msg: SCI_GETTARGETEND
 				wParam: 0
-				lParam: 0) + 1
-				to: (lib
-						directFunction: this
-						msg: SCI_GETTARGETEND
-						wParam: 0
-						lParam: 0)]!
+				lParam: 0)!
 
 targetRange: anInterval
 	"Set the range of the current search/replace target. The target is like the selection, but
@@ -10772,20 +9290,17 @@ targetText
 	"Retrieve the text in the target."
 
 	| len |
-	len := this
-				ifNil: [0]
-				ifNotNil: 
-					[Library
-						directFunction: this
-						msg: SCI_GETTARGETTEXT
-						wParam: 0
-						lpParam: nil].
-	^len = 0
+	len := library
+				directFunction: this
+				msg: SCI_GETTARGETTEXT
+				wParam: 0
+				lpParam: nil.
+	^len == 0
 		ifTrue: [stringClass empty]
 		ifFalse: 
 			[| result |
 			result := stringClass newFixed: len.
-			Library
+			library
 				directFunction: this
 				msg: SCI_GETTARGETTEXT
 				wParam: 0
@@ -10804,14 +9319,11 @@ textAtLine: anInteger
 textLength
 	"Retrieve the number of characters in the document."
 
-	^this
-		ifNil: [0]
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_GETTEXTLENGTH
-				wParam: 0
-				lParam: 0]!
+	^library
+		directFunction: this
+		msg: SCI_GETTEXTLENGTH
+		wParam: 0
+		lParam: 0!
 
 textLimit
 	"Answer the current text limit for the control (i.e. the amount of text it can hold)."
@@ -10852,24 +9364,20 @@ textStyles: aCollection
 toggleFold: lineInteger
 	"Switch a header line between expanded and contracted."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_TOGGLEFOLD
-				wParam: lineInteger - 1
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_TOGGLEFOLD
+		wParam: lineInteger - 1
+		lParam: 0!
 
 toggleFold: lineInteger showText: textString
 	"Switch a header line between expanded and contracted and show some text after the line."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_TOGGLEFOLDSHOWTEXT
-				wParam: lineInteger - 1
-				lpParam: textString]!
+	library
+		directFunction: this
+		msg: SCI_TOGGLEFOLDSHOWTEXT
+		wParam: lineInteger - 1
+		lpParam: textString!
 
 toggleFoldMargin
 	"Show or hide the first fold margin, inverting the current state."
@@ -10894,13 +9402,11 @@ toggleLineNumbers
 toggleOvertype
 	"Switch from insert to overtype mode or the reverse."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_EDITTOGGLEOVERTYPE
-				wParam: 0
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_EDITTOGGLEOVERTYPE
+		wParam: 0
+		lParam: 0!
 
 toggleStyling
 	"Enable/disable dynamic styling of text in the receiver."
@@ -10961,13 +9467,11 @@ tokenStartAt: anInteger
 twiddleLines
 	"Switch the current line with the previous."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_LINETRANSPOSE
-				wParam: 0
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_LINETRANSPOSE
+		wParam: 0
+		lParam: 0!
 
 undo
 	"Undo one action in the undo history."
@@ -10981,13 +9485,11 @@ unfoldAll
 unindent
 	"Dedent the selected lines."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_BACKTAB
-				wParam: 0
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_BACKTAB
+		wParam: 0
+		lParam: 0!
 
 updateControlStyles
 	self
@@ -11081,25 +9583,20 @@ whitespaceForecolor: aColorOrNil
 whitespaceMarkerSize
 	"Get the size of the dots used to mark space characters."
 
-	^this
-		ifNil: [0]
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_GETWHITESPACESIZE
-				wParam: 0
-				lParam: 0]!
+	^library
+		directFunction: this
+		msg: SCI_GETWHITESPACESIZE
+		wParam: 0
+		lParam: 0!
 
 whitespaceMarkerSize: sizeInteger
 	"Set the size of the dots used to mark space characters."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_SETWHITESPACESIZE
-				wParam: sizeInteger
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_SETWHITESPACESIZE
+		wParam: sizeInteger
+		lParam: 0!
 
 whitespaces
 	"Answer a <String> representing the set of characters considered to be whitespace in the receiver."
@@ -11142,25 +9639,20 @@ widthOfText: aString inStyle: aSymbol
 willCaptureMouse
 	"Get whether mouse gets captured."
 
-	^this
-		ifNil: [false]
-		ifNotNil: 
-			[(Library
-				directFunction: this
-				msg: SCI_GETMOUSEDOWNCAPTURES
-				wParam: 0
-				lParam: 0) asBoolean]!
+	^library
+		directBooleanFunction: this
+		msg: SCI_GETMOUSEDOWNCAPTURES
+		wParam: 0
+		lParam: 0!
 
 willCaptureMouse: capturesBoolean
 	"Set whether the mouse is captured when its button is pressed."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_SETMOUSEDOWNCAPTURES
-				wParam: capturesBoolean asParameter
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_SETMOUSEDOWNCAPTURES
+		wParam: capturesBoolean asParameter
+		lParam: 0!
 
 wmChar: message wParam: wParam lParam: lParam 
 	"Private - Handle WM_CHAR. Implementation Note: We override here in order to allow
@@ -11250,26 +9742,20 @@ wordChars: aStringOrNil
 wordEndAt: posInteger onlyWordCharacters: onlyWordCharactersBoolean
 	"Get position of end of word."
 
-	^this
-		ifNil: [0]
-		ifNotNil: 
-			[(Library
-				directFunction: this
-				msg: SCI_WORDENDPOSITION
-				wParam: posInteger - 1
-				lParam: onlyWordCharactersBoolean asParameter) + 1]!
+	^(library
+		directFunction: this
+		msg: SCI_WORDENDPOSITION
+		wParam: posInteger - 1
+		lParam: onlyWordCharactersBoolean asParameter) + 1!
 
 wordStartAt: posInteger onlyWordCharacters: onlyWordCharactersBoolean
 	"Get position of start of word."
 
-	^this
-		ifNil: [0]
-		ifNotNil: 
-			[(Library
-				directFunction: this
-				msg: SCI_WORDSTARTPOSITION
-				wParam: posInteger - 1
-				lParam: onlyWordCharactersBoolean asParameter) + 1]!
+	^(library
+		directFunction: this
+		msg: SCI_WORDSTARTPOSITION
+		wParam: posInteger - 1
+		lParam: onlyWordCharactersBoolean asParameter) + 1!
 
 wordWrap
 	"Answer whether the receiver is in word-wrap mode."
@@ -11291,14 +9777,11 @@ wordWrap: aBoolean
 wrapCount: docLineInteger
 	"The number of display lines needed to wrap a document line"
 
-	^this
-		ifNil: [0]
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_WRAPCOUNT
-				wParam: docLineInteger - 1
-				lParam: 0]!
+	^library
+		directFunction: this
+		msg: SCI_WRAPCOUNT
+		wParam: docLineInteger - 1
+		lParam: 0!
 
 wrapIndentMode
 	"Answer the current indenting mode used when wrapping lines. This can be one of #fixed
@@ -11316,25 +9799,20 @@ wrapIndentMode: aSymbol
 xOffset
 	"Get the xOffset (ie, horizontal scroll position)."
 
-	^this
-		ifNil: [0]
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_GETXOFFSET
-				wParam: 0
-				lParam: 0]!
+	^library
+		directFunction: this
+		msg: SCI_GETXOFFSET
+		wParam: 0
+		lParam: 0!
 
 xOffset: xOffsetInteger
 	"Set the xOffset (ie, horizontal scroll position)."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_SETXOFFSET
-				wParam: xOffsetInteger
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_SETXOFFSET
+		wParam: xOffsetInteger
+		lParam: 0!
 
 zoomFactor
 	"Scintilla zooms in and out by points, and is the the points delta that is reported by SCI_GETZOOM, which is not easy to understand from a user perspective. The actual the zoom factor is relative to the original font size. The factor can be multiplied by 100 to give a zoom percentage for presentation to the user."
@@ -11347,48 +9825,39 @@ zoomFactor
 zoomIn
 	"Magnify the displayed text by increasing the sizes by 1 point."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_ZOOMIN
-				wParam: 0
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_ZOOMIN
+		wParam: 0
+		lParam: 0!
 
 zoomLevel
 	"Retrieve the zoom level."
 
-	^this
-		ifNil: [0]
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_GETZOOM
-				wParam: 0
-				lParam: 0]!
+	^library
+		directFunction: this
+		msg: SCI_GETZOOM
+		wParam: 0
+		lParam: 0!
 
 zoomLevel: zoomInPointsInteger
 	"Set the zoom level. This number of points is added to the size of all fonts. It may be
 	positive to magnify or negative to reduce."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_SETZOOM
-				wParam: zoomInPointsInteger
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_SETZOOM
+		wParam: zoomInPointsInteger
+		lParam: 0!
 
 zoomOut
 	"Make the displayed text smaller by decreasing the sizes by 1 point."
 
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_ZOOMOUT
-				wParam: 0
-				lParam: 0]! !
+	library
+		directFunction: this
+		msg: SCI_ZOOMOUT
+		wParam: 0
+		lParam: 0! !
 !UI.Scintilla.ScintillaView categoriesFor: #acceptAutoCompletion!**auto generated**!autocompletion!commands!public!scintilla interface! !
 !UI.Scintilla.ScintillaView categoriesFor: #activeHotspotBackcolor!caret, selection, and hotspot styles!element colors!public! !
 !UI.Scintilla.ScintillaView categoriesFor: #activeHotspotBackcolor:!caret, selection, and hotspot styles!element colors!public! !
@@ -12910,7 +11379,9 @@ multiPasteModes
 	^#(#once #each)!
 
 onStartup
-	Library := ScintillaLibrary default!
+	"We must load the Scintilla library for it to register its Window class"
+
+	ScintillaLibrary openDefault!
 
 selectionModes
 	"Answer the symbolic names of the selection modes supported by Scintilla."
@@ -13352,7 +11823,7 @@ xmlTextStyles
 !UI.Scintilla.ScintillaView class categoriesFor: #markdownTextStyles!constants!public!style definition! !
 !UI.Scintilla.ScintillaView class categoriesFor: #mergeKeyBindings:!key bindings!public! !
 !UI.Scintilla.ScintillaView class categoriesFor: #multiPasteModes!constants!public! !
-!UI.Scintilla.ScintillaView class categoriesFor: #onStartup!event handling!public! !
+!UI.Scintilla.ScintillaView class categoriesFor: #onStartup!events-session!public! !
 !UI.Scintilla.ScintillaView class categoriesFor: #selectionModes!constants!public! !
 !UI.Scintilla.ScintillaView class categoriesFor: #smalltalkTextStyles!constants!public!style definition! !
 !UI.Scintilla.ScintillaView class categoriesFor: #stbConvert:fromVersion:!binary filing!private! !

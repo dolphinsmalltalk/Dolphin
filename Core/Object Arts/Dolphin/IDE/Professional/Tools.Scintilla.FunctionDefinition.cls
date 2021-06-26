@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Tools.Scintilla.InterfaceDefinition subclass: #'Tools.Scintilla.FunctionDefinition'
 	instanceVariableNames: 'funcType returnType lParam wParam returnTypeName'
@@ -15,7 +15,7 @@ constPrefix
 	^'SCI_'!
 
 defaultReturnValue
-	^self hasReturnValue ifTrue: [self returnType default]!
+	^self returnType defaultValue!
 
 displayOn: aStream
 	aStream nextPutAll: returnTypeName;
@@ -76,23 +76,11 @@ emitMethodBodyOn: aPuttableStream
 	self emitMethodPreambleOn: aPuttableStream.
 	self hasReturnValue
 		ifTrue: 
-			[| default |
-			aPuttableStream nextPutAll: '^(this '.
-			default := self defaultReturnValue.
-			default isNil
-				ifTrue: []
-				ifFalse: 
-					[aPuttableStream
-						nextPutAll: 'ifNil: [';
-						print: default;
-						nextPutAll: '] '].
-			aPuttableStream nextPutAll: 'ifNotNil: ['.
+			[aPuttableStream nextPutAll: '^('.
 			self returnType emitReturnConversionAround: [self emitScintillaCallOn: aPuttableStream]
-				on: aPuttableStream]
-		ifFalse: 
-			[aPuttableStream nextPutAll: '(this ifNotNil: ['.
-			self emitScintillaCallOn: aPuttableStream].
-	aPuttableStream nextPutAll: '])'!
+				on: aPuttableStream.
+			aPuttableStream nextPut: $)]
+		ifFalse: [self emitScintillaCallOn: aPuttableStream]!
 
 emitMethodPreambleOn: aPuttableStream 
 	self emitCommentOn: aPuttableStream.
@@ -126,8 +114,12 @@ emitNullNullFunctionOn: aWriteStream
 	self emitMethodBodyOn: aWriteStream!
 
 emitScintillaCallOn: aPuttableStream
+	| retType |
+	retType := self returnType.
 	aPuttableStream
-		nextPutAll: 'Library directFunction: this msg: ';
+		nextPutAll: 'library ';
+		nextPutAll: retType directFunctionKeyword;
+		nextPutAll: 'this msg: ';
 		nextPutAll: constName.
 	wParam emitOutParam: $w on: aPuttableStream.
 	lParam emitOutParam: $l on: aPuttableStream!
@@ -140,16 +132,16 @@ emitStringResultFunctionOn: aPuttableStream
 	self emitMethodPreambleOn: aPuttableStream.
 	resultClassExpression := self fixedClassStringResults at: constName ifAbsent: ['stringClass'].
 	aPuttableStream
-		nextPutAll: '| len | len := this ifNil: [0] ifNotNil: [Library directFunction: this msg: ';
+		nextPutAll: '| len | len := library directFunction: this msg: ';
 		nextPutAll: self constName;
-		nextPutAll: ' wParam: 0 lpParam: nil]. ^len = 0 ifTrue: [';
+		nextPutAll: ' wParam: 0 lpParam: nil. ^len == 0 ifTrue: [';
 		display: resultClassExpression;
 		nextPutAll: ' empty] ifFalse: [| result | result := ';
 		display: resultClassExpression;
 		nextPutAll: ' newFixed: len'.
 	(self stringResultsCountNull includes: self constName) ifTrue: [aPuttableStream nextPutAll: '-1'].
 	aPuttableStream
-		nextPutAll: '. Library directFunction: this msg: ';
+		nextPutAll: '. library directFunction: this msg: ';
 		nextPutAll: self constName;
 		nextPutAll: ' wParam: 0 lpParam: result. result]'!
 
@@ -177,20 +169,20 @@ emitWParamStringResultFunctionOn: aWriteStream
 	self emitMethodPreambleOn: aWriteStream.
 	resultClassExpression := self fixedClassStringResults at: constName ifAbsent: ['stringClass'].
 	aWriteStream
-		nextPutAll: '| len | len := this ifNil: [0] ifNotNil: [Library directFunction: this msg: ';
+		nextPutAll: '| len | len := library directFunction: this msg: ';
 		nextPutAll: self constName.
 	ignoreWParam
 		ifTrue: [aWriteStream nextPutAll: ' wParam: 0']
 		ifFalse: [wParam emitOutParam: $w on: aWriteStream].
 	aWriteStream
-		nextPutAll: ' lpParam: nil]. ^len = 0 ifTrue: [';
+		nextPutAll: ' lpParam: nil. ^len == 0 ifTrue: [';
 		display: resultClassExpression;
 		nextPutAll: ' empty] ifFalse: [| result | result := ';
 		display: resultClassExpression;
 		nextPutAll: ' newFixed: len'.
 	(self stringResultsCountNull includes: constName) ifTrue: [aWriteStream display: -1].
 	aWriteStream
-		nextPutAll: '. Library directFunction: this msg: ';
+		nextPutAll: '. library directFunction: this msg: ';
 		nextPutAll: constName.
 	ignoreWParam
 		ifTrue: [aWriteStream nextPutAll: ' wParam: len']
