@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Object subclass: #'Core.Pair'
 	instanceVariableNames: 'first second'
@@ -11,6 +11,13 @@ Core.Pair comment: '<Core.Pair> is a simple 2-element tuple.'!
 !Core.Pair categoriesForClass!Kernel-Objects! !
 !Core.Pair methodsFor!
 
+= anObject
+	"Answer whether the receiver and anObject are considered equivalent. 
+	A `Pair` can only be equal to another `Pair` with the equal values."
+
+	^self == anObject
+		or: [anObject species == self species and: [first = anObject first and: [second = anObject second]]]!
+
 first
 	"Answer the 1st element of the pair."
 
@@ -21,10 +28,24 @@ first: anObject
 
 	first := anObject!
 
+hash
+	"Answer the <integer> hash value for the receiver."
+
+	^first hash hashMultiply + second hash!
+
 last
 	"Answer the 2nd element of the pair. Useful when replacing uses of 2-element Arrays."
 
 	^second!
+
+printOn: aStream
+	self basicPrintOn: aStream.
+	aStream
+		nextPut: $(;
+		print: first;
+		nextPutAll: ', ';
+		print: second;
+		nextPut: $)!
 
 second
 	"Answer the 2nd element of the pair."
@@ -35,9 +56,12 @@ second: anObject
 	"Set the 2nd element of the pair."
 
 	second := anObject! !
+!Core.Pair categoriesFor: #=!comparing!public! !
 !Core.Pair categoriesFor: #first!accessing!public! !
 !Core.Pair categoriesFor: #first:!accessing!public! !
+!Core.Pair categoriesFor: #hash!comparing!public! !
 !Core.Pair categoriesFor: #last!accessing!public! !
+!Core.Pair categoriesFor: #printOn:!public! !
 !Core.Pair categoriesFor: #second!accessing!public! !
 !Core.Pair categoriesFor: #second:!accessing!public! !
 

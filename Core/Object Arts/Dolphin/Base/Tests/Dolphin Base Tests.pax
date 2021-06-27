@@ -53,6 +53,7 @@ package setClassNames: #(
 	#{Core.Tests.NumberTest}
 	#{Core.Tests.ObjectTest}
 	#{Core.Tests.OrderedCollectionTest}
+	#{Core.Tests.PairTest}
 	#{Core.Tests.PositionableStreamTest}
 	#{Core.Tests.ProcessTest}
 	#{Core.Tests.ReadStreamTest}
@@ -501,6 +502,12 @@ Core.Tests.DolphinTest subclass: #'Kernel.Tests.PackageManagerTest'
 	classConstants: {}!
 Core.Tests.DolphinTest subclass: #'Kernel.Tests.PackageTest'
 	instanceVariableNames: 'loadedPackages checkTimestamps'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Core.Tests.DolphinTest subclass: #'Core.Tests.PairTest'
+	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
