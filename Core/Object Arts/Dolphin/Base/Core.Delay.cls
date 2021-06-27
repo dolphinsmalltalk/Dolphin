@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Object subclass: #'Core.Delay'
 	instanceVariableNames: 'duration resumptionTime waitSemaphore'
@@ -76,6 +76,11 @@ delta: anInteger
 	image reload to base off a new millisecond clock relative to the old)."
 
 	resumptionTime := resumptionTime + anInteger!
+
+duration
+	"Answer the duration of the delay."
+
+	^duration microseconds!
 
 duration: anInteger
 	"Private - Initialize the receiver to be a Delay for the number of microseconds specified by
@@ -218,6 +223,7 @@ wakeup
 !Core.Delay categoriesFor: #calcResumptionTime!accessing!private! !
 !Core.Delay categoriesFor: #cancel!process synchronisation!public! !
 !Core.Delay categoriesFor: #delta:!operations!private! !
+!Core.Delay categoriesFor: #duration!accessing!public! !
 !Core.Delay categoriesFor: #duration:!accessing!private! !
 !Core.Delay categoriesFor: #getDuration!accessing!private! !
 !Core.Delay categoriesFor: #hasExpired!private!testing! !
