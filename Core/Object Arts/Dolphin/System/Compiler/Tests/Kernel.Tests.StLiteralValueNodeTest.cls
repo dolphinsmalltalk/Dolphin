@@ -6,7 +6,7 @@ Core.Tests.DolphinTest subclass: #'Kernel.Tests.StLiteralValueNodeTest'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Kernel.Tests.StLiteralValueNodeTest guid: (Core.GUID fromString: '{7dd892ce-527c-45da-ab0a-3a79c30f0075}')!
+Kernel.Tests.StLiteralValueNodeTest guid: (Core.GUID fromString: '{f8a26c7d-e798-4b63-bfa2-411d30509b7e}')!
 Kernel.Tests.StLiteralValueNodeTest comment: ''!
 !Kernel.Tests.StLiteralValueNodeTest categoriesForClass!Unclassified! !
 !Kernel.Tests.StLiteralValueNodeTest methodsFor!
