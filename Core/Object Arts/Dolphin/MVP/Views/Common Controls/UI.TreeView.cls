@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 UI.IconicListAbstract subclass: #'UI.TreeView'
 	instanceVariableNames: 'handleObjectMap indentSeparation viewMode tvFlags objectHandleMap'
@@ -809,6 +809,12 @@ onItem: anObject updatedAtIndex: anInteger
 
 	^self shouldNotImplement!
 
+onItems: anObject addedAtIndex: anIntegerIndex 
+	"Event received when anObject has been added to the receiver's
+	model at anIntegerIndex. Trees use #onItem:addedInParent:"
+
+	^self shouldNotImplement!
+
 onItemUpdated: anObject 
 	"Event received when anObject has been updated.
 	Refresh the tree representation of this object"
@@ -1320,6 +1326,7 @@ wmKeyDown: message wParam: wParam lParam: lParam
 !UI.TreeView categoriesFor: #onItem:removedAtIndex:!event handling!public! !
 !UI.TreeView categoriesFor: #onItem:removedFromParent:!event handling!public! !
 !UI.TreeView categoriesFor: #onItem:updatedAtIndex:!event handling!public! !
+!UI.TreeView categoriesFor: #onItems:addedAtIndex:!event handling!public! !
 !UI.TreeView categoriesFor: #onItemUpdated:!event handling!public! !
 !UI.TreeView categoriesFor: #onSelChanging:!event handling!private! !
 !UI.TreeView categoriesFor: #onSelChangingFrom:to:cause:!event handling!helpers!private! !

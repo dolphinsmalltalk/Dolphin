@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 UI.IconicListAbstract subclass: #'UI.ListView'
 	instanceVariableNames: 'lastClickedColIndex columns viewMode lastSelIndices iconSpacing lvStyle thumbnailExtent lvFlags backImage backImageOffset backImageAlpha approvedSelIndices _unused35 _unused36 _unused37 _unused38 _unused39 _unused40 _unused41 _unused42 _unused43 _unused44 _unused45'
@@ -1200,6 +1200,11 @@ lvmGetItem: aLvItem
 		lpParam: aLvItem) == 0
 		ifTrue: [^self errorInCommonControlCall]!
 
+lvmGetItemCount
+	"Private - Answers the number of items in the underlying list-view control."
+
+	^self sendMessage: LVM_GETITEMCOUNT!
+
 lvmGetItemPosition: index
 	"Private - Answer the Point of the index item on the view."
 
@@ -1732,6 +1737,32 @@ onItem: anObject removedAtIndex: anInteger
 	"Implementation Note: Override in order to maintain the lastSel correctly."
 
 	super onItem: anObject removedAtIndex: anInteger.
+	self updateSelectionCache!
+
+onItems: aSequenceableCollection addedAtIndex: anInteger
+	"Event received when the specified sequence of objects has been added to the receiver's model beginning at the specified <integer> index. By default, do nothing."
+
+	self isVirtual
+		ifTrue: 
+			[| count |
+			count := aSequenceableCollection size.
+			"In a virtual list, if more than a few items are being added, we may as well just update the virtual size. This will cause the list to be redrawn completely, but unless inserting at the end that is likely anyway, and this is many times faster than sending multiple LVM_INSERTITEM messages."
+			count > 3
+				ifTrue: [self lvmSetItemCount: self lvmGetItemCount + count]
+				ifFalse: 
+					[| lvItem |
+					lvItem := LVITEMW allCallbacks.
+					aSequenceableCollection inject: anInteger
+						into: 
+							[:index :each |
+							lvItem iItem: anInteger - 1.
+							self lvmInsertItem: lvItem.
+							anInteger + 1]]]
+		ifFalse: 
+			[self
+				addOrUpdate: false
+				nonVirtualItems: aSequenceableCollection
+				afterIndex: anInteger - 1].
 	self updateSelectionCache!
 
 onKeyPressed: aKeyEvent
@@ -2430,6 +2461,7 @@ wantCustomDrawItemNotifications: pNMHDR
 !UI.ListView categoriesFor: #lvmGetHeader!geometry!private! !
 !UI.ListView categoriesFor: #lvmGetImageList:!image management!private! !
 !UI.ListView categoriesFor: #lvmGetItem:!accessing!private! !
+!UI.ListView categoriesFor: #lvmGetItemCount!accessing!private! !
 !UI.ListView categoriesFor: #lvmGetItemPosition:!geometry!private! !
 !UI.ListView categoriesFor: #lvmGetItemRect:bounding:!geometry!private! !
 !UI.ListView categoriesFor: #lvmGetItemSpacing!accessing!private! !
@@ -2489,6 +2521,7 @@ wantCustomDrawItemNotifications: pNMHDR
 !UI.ListView categoriesFor: #onDropDown:!event handling!private! !
 !UI.ListView categoriesFor: #onEraseRequired:!event handling!public! !
 !UI.ListView categoriesFor: #onItem:removedAtIndex:!event handling!public! !
+!UI.ListView categoriesFor: #onItems:addedAtIndex:!event handling!public! !
 !UI.ListView categoriesFor: #onKeyPressed:!event handling!public! !
 !UI.ListView categoriesFor: #onKeyTyped:!event handling!public! !
 !UI.ListView categoriesFor: #onLeftButtonDoubleClicked:!event handling!public! !

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 UI.ControlView subclass: #'UI.ListControlView'
 	instanceVariableNames: 'getTextBlock'
@@ -113,6 +113,7 @@ connectModel
 	self model
 		when: #listChanged send: #onListChanged to: self;
 		when: #item:addedAtIndex: send: #onItem:addedAtIndex: to: self;
+		when: #items:addedAtIndex: send: #onItems:addedAtIndex: to: self;
 		when: #item:removedAtIndex: send: #onItem:removedAtIndex: to: self;
 		when: #item:updatedAtIndex: send: #onItem:updatedAtIndex: to: self.!
 
@@ -305,6 +306,14 @@ onItem: anObject updatedAtIndex: anInteger
 	"Updates the item at the specified <integer> index to reflect it's current state."
 
 	self updateItem: anObject atIndex: anInteger	!
+
+onItems: aSequenceableCollection addedAtIndex: anInteger 
+	"Event received when the specified sequence of objects has been added to the receiver's model beginning at the specified <integer> index. By default, do nothing."
+
+	aSequenceableCollection inject: anInteger into: [:index :each |
+		self onItem: each addedAtIndex: anInteger.
+		anInteger + 1]
+	!
 
 onListChanged
 	"The model held by the receiver has been changed so refresh the receiver contents here."
@@ -644,6 +653,7 @@ updateSelectionCache
 !UI.ListControlView categoriesFor: #onItem:addedAtIndex:!event handling!public! !
 !UI.ListControlView categoriesFor: #onItem:removedAtIndex:!event handling!public! !
 !UI.ListControlView categoriesFor: #onItem:updatedAtIndex:!event handling!public! !
+!UI.ListControlView categoriesFor: #onItems:addedAtIndex:!event handling!public! !
 !UI.ListControlView categoriesFor: #onListChanged!event handling!public! !
 !UI.ListControlView categoriesFor: #onSelChanged!private! !
 !UI.ListControlView categoriesFor: #onSelChanged:!event handling!private! !

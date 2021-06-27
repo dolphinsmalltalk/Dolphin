@@ -6420,6 +6420,7 @@ publishedEventsOfInstances
 	^(super publishedEventsOfInstances)
 		add: #item:updatedAtIndex:;
 		add: #item:addedAtIndex:;
+		add: #items:addedAtIndex:;
 		add: #item:removedAtIndex:;
 		add: #listChanged;
 		yourself! !

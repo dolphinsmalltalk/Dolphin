@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 UI.View subclass: #'UI.MoenTreeView'
 	instanceVariableNames: 'anchorNode getTextBlock getImageBlock mtvFlags leading imageManager calculatedExtent parentSpacing selection linePen iconExtent maxTextExtent dtFlags margin textInset _mtvReserved0 _mtvReserved1 _mtvReserved2'
@@ -722,6 +722,11 @@ isAutoExpanding
 
 isAutoExpanding: aBoolean
 	mtvFlags := mtvFlags mask: AutoExpandingMask set: aBoolean!
+
+isExpanded: anObject
+	"Answers if the node associated with anObject is expanded."
+
+	^anObject notNil and: [(self nodeForObject: anObject) isExpanded]!
 
 itemFromPoint: aPoint 
 	"Private - Answer the node of the receiver under the <Point> argument or nil if none."
@@ -1849,6 +1854,7 @@ zip: aMoenTreeNode
 !UI.MoenTreeView categoriesFor: #invalidateTree:imagesOnly:!painting!private! !
 !UI.MoenTreeView categoriesFor: #isAutoExpanding!accessing-styles!public!testing! !
 !UI.MoenTreeView categoriesFor: #isAutoExpanding:!accessing!public! !
+!UI.MoenTreeView categoriesFor: #isExpanded:!public! !
 !UI.MoenTreeView categoriesFor: #itemFromPoint:!helpers!private! !
 !UI.MoenTreeView categoriesFor: #join:!private!tree layout! !
 !UI.MoenTreeView categoriesFor: #layoutLeaf:!private!tree layout! !
