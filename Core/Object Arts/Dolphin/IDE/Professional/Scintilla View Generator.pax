@@ -73,7 +73,7 @@ Core.Object subclass: #'Tools.Scintilla.ScintillaViewGenerator'
 	classConstants: {}!
 Core.Object subclass: #'Tools.Scintilla.TypeReference'
 	instanceVariableNames: ''
-	classVariableNames: 'TypeMap'
+	classVariableNames: 'Enums TypeMap'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
@@ -126,7 +126,7 @@ Tools.Scintilla.ColourTypeReference subclass: #'Tools.Scintilla.ColourAlphaTypeR
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Tools.Scintilla.IntTypeReference subclass: #'Tools.Scintilla.EnumTypeReference'
-	instanceVariableNames: 'name'
+	instanceVariableNames: 'name prefix values defaultValueName'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''

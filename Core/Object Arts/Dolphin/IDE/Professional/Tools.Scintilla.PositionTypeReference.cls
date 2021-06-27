@@ -11,6 +11,9 @@ Tools.Scintilla.PositionTypeReference comment: ''!
 !Tools.Scintilla.PositionTypeReference categoriesForClass!Development! !
 !Tools.Scintilla.PositionTypeReference methodsFor!
 
+defaultValue
+	^'INVALID_POSITION'!
+
 emitReturnConversionAround: aBlockClosure on: aPuttableStream
 	aPuttableStream nextPut: $(.
 	aBlockClosure value.
@@ -24,6 +27,7 @@ printParameter: aString on: aWriteStream
 		nextPutAll: aString;
 		space;
 		display: ' - 1'! !
+!Tools.Scintilla.PositionTypeReference categoriesFor: #defaultValue!accessing!public! !
 !Tools.Scintilla.PositionTypeReference categoriesFor: #emitReturnConversionAround:on:!generating!private! !
 !Tools.Scintilla.PositionTypeReference categoriesFor: #name!accessing!public! !
 !Tools.Scintilla.PositionTypeReference categoriesFor: #printParameter:on:!generating!public! !

@@ -14,6 +14,9 @@ Tools.Scintilla.PointerTypeReference comment: ''!
 byRef
 	^true!
 
+defaultValue
+	^0!
+
 emitReturnConversionAround: aBlockClosure on: aPuttableStream
 	aPuttableStream
 		print: self objectClass;
@@ -36,6 +39,7 @@ name: aString objectClass: aClass
 objectClass
 	^objectClass! !
 !Tools.Scintilla.PointerTypeReference categoriesFor: #byRef!accessing!public! !
+!Tools.Scintilla.PointerTypeReference categoriesFor: #defaultValue!constants!public! !
 !Tools.Scintilla.PointerTypeReference categoriesFor: #emitReturnConversionAround:on:!generating!private! !
 !Tools.Scintilla.PointerTypeReference categoriesFor: #fromMessage!accessing!public! !
 !Tools.Scintilla.PointerTypeReference categoriesFor: #name!accessing!public! !

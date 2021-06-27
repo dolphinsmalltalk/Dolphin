@@ -2,7 +2,7 @@
 
 Core.Object subclass: #'Tools.Scintilla.TypeReference'
 	instanceVariableNames: ''
-	classVariableNames: 'TypeMap'
+	classVariableNames: 'Enums TypeMap'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
@@ -16,7 +16,7 @@ byRef
 	^false!
 
 defaultValue
-	^nil!
+	^self subclassResponsibility!
 
 directFunctionKeyword
 	^'directFunction: '!
@@ -55,8 +55,16 @@ printParameter: aString on: aWriteStream
 
 !Tools.Scintilla.TypeReference class methodsFor!
 
-declareEnum: aString
-	TypeMap at: aString put: (EnumTypeReference name: aString)!
+declareEnum: aString prefix: anObject
+	| enum |
+	enum := EnumTypeReference name: aString prefix: anObject.
+	TypeMap at: aString put: enum.
+	Enums add: enum!
+
+enumForConst: aString
+	"Unfortunately we can't rely on the prefixes all ending in an underscore, as some do not"
+
+	^Enums detect: [:each | aString beginsWith: each prefix] ifNone: []!
 
 icon
 	^UI.Scintilla.ScintillaView icon!
@@ -72,6 +80,7 @@ named: aString
 	^aString ifNotNil: [TypeMap at: aString]!
 
 resetTypeMap
+	Enums := Set new.
 	TypeMap := LookupTable new
 				at: 'void' put: VoidTypeReference new;
 				at: 'string' put: (PointerTypeReference name: 'string' objectClass: String);
@@ -89,7 +98,8 @@ resetTypeMap
 				at: 'findtext' put: (PointerTypeReference name: 'findtext' objectClass: OS.FINDTEXTEX);
 				at: 'formatrange' put: (PointerTypeReference name: 'formatrange' objectClass: OS.FORMATRANGE);
 				yourself! !
-!Tools.Scintilla.TypeReference class categoriesFor: #declareEnum:!constants!public! !
+!Tools.Scintilla.TypeReference class categoriesFor: #declareEnum:prefix:!constants!public! !
+!Tools.Scintilla.TypeReference class categoriesFor: #enumForConst:!constants!public! !
 !Tools.Scintilla.TypeReference class categoriesFor: #icon!constants!development!public! !
 !Tools.Scintilla.TypeReference class categoriesFor: #initialize!constants!private! !
 !Tools.Scintilla.TypeReference class categoriesFor: #named:!public! !

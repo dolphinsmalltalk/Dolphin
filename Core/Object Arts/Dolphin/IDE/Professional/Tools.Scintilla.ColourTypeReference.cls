@@ -11,6 +11,9 @@ Tools.Scintilla.ColourTypeReference comment: ''!
 !Tools.Scintilla.ColourTypeReference categoriesForClass!Development! !
 !Tools.Scintilla.ColourTypeReference methodsFor!
 
+defaultValue
+	^'Color black rgbCode'!
+
 emitReturnConversionAround: aBlockClosure on: aPuttableStream
 	aPuttableStream
 		print: self objectClass;
@@ -34,6 +37,7 @@ printParameter: aString on: aWriteStream
 		nextPutAll: aString;
 		space;
 		display: #rgbCode! !
+!Tools.Scintilla.ColourTypeReference categoriesFor: #defaultValue!constants!public! !
 !Tools.Scintilla.ColourTypeReference categoriesFor: #emitReturnConversionAround:on:!generating!private! !
 !Tools.Scintilla.ColourTypeReference categoriesFor: #fromMessage!generating!private! !
 !Tools.Scintilla.ColourTypeReference categoriesFor: #name!accessing!public! !

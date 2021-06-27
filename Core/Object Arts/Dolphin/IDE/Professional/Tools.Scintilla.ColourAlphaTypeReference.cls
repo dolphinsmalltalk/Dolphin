@@ -11,6 +11,9 @@ Tools.Scintilla.ColourAlphaTypeReference comment: ''!
 !Tools.Scintilla.ColourAlphaTypeReference categoriesForClass!Development! !
 !Tools.Scintilla.ColourAlphaTypeReference methodsFor!
 
+defaultValue
+	^'Color black rgbaCode'!
+
 fromMessage
 	^#fromRgbaCode:!
 
@@ -22,6 +25,7 @@ printParameter: aString on: aWriteStream
 		nextPutAll: aString;
 		space;
 		display: #rgbaCode! !
+!Tools.Scintilla.ColourAlphaTypeReference categoriesFor: #defaultValue!constants!public! !
 !Tools.Scintilla.ColourAlphaTypeReference categoriesFor: #fromMessage!generating!private! !
 !Tools.Scintilla.ColourAlphaTypeReference categoriesFor: #name!accessing!public! !
 !Tools.Scintilla.ColourAlphaTypeReference categoriesFor: #printParameter:on:!generating!public! !

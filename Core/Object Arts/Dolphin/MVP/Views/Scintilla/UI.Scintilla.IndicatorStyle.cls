@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 UI.Scintilla.QueryableAttribute subclass: #'UI.Scintilla.IndicatorStyle'
 	instanceVariableNames: 'forecolor style layer name alpha hoverStyle hoverForecolor flags foreAlpha strokeWidth'
@@ -336,7 +336,7 @@ buildPropertyMap
 					defaultValue: 50
 					setMessage: SCI_INDICSETOUTLINEALPHA
 					setSelector: #basicForeAlpha:
-					getMessage: SCI_INDICSETOUTLINEALPHA);
+					getMessage: SCI_INDICGETOUTLINEALPHA);
 		at: #strokeWidth
 			put: (PropertyDescriptor
 					getSelector: #strokeWidth

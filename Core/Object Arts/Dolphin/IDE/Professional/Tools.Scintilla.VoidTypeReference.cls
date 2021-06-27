@@ -11,6 +11,9 @@ Tools.Scintilla.VoidTypeReference comment: ''!
 !Tools.Scintilla.VoidTypeReference categoriesForClass!Development! !
 !Tools.Scintilla.VoidTypeReference methodsFor!
 
+defaultValue
+	^self shouldNotImplement!
+
 isVoid
 	^true!
 
@@ -19,6 +22,7 @@ name
 
 objectClass
 	^nil! !
+!Tools.Scintilla.VoidTypeReference categoriesFor: #defaultValue!constants!public! !
 !Tools.Scintilla.VoidTypeReference categoriesFor: #isVoid!accessing!public! !
 !Tools.Scintilla.VoidTypeReference categoriesFor: #name!accessing!public! !
 !Tools.Scintilla.VoidTypeReference categoriesFor: #objectClass!accessing!public! !
