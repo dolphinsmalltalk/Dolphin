@@ -7017,7 +7017,7 @@ publishedAspectsOfInstances
 		add: (Aspect sequenceableCollection: #keyBindings
 					addEvaluationFrom: {UI.Scintilla.KeyBinding name , ' new'}) beImmutable;
 		add: (Aspect sequenceableCollection: #characterRepresentations
-					addEvaluationFrom: {UI.Scintilla.CharacterRepresentation name , ' new'}) beImmutable;
+					addEvaluationFrom: {UI.Scintilla.CharacterRepresentation name , ' new'. UI.Scintilla.CharacterRepresentation name , ' ', #forLineEnding}) beImmutable;
 		add: ((Aspect sequenceableCollection: #margins)
 					getBlock: [:view | view margins asOrderedCollection];
 					beImmutable);

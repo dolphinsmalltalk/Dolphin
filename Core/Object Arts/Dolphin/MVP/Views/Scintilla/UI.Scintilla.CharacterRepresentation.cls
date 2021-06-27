@@ -89,7 +89,10 @@ forCharacter: aCharacter
 		yourself!
 
 forLineEnding
-	^self forCharacter: $\x2028!
+	^(self forCharacter: $\x2028)
+		isBlob: false;
+		color: Color windowText;
+		yourself!
 
 icon
 	^ScintillaView icon!
