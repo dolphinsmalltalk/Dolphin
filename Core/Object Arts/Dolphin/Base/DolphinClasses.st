@@ -3641,7 +3641,7 @@ Core.MessageSequenceAbstract subclass: #'Kernel.EventMessageSequence'
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Core.MessageSequenceAbstract subclass: #'Core.MessageSequence'
-	instanceVariableNames: 'list'
+	instanceVariableNames: 'messages'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''

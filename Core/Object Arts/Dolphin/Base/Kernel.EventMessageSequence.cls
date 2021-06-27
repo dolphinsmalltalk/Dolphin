@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.MessageSequenceAbstract subclass: #'Kernel.EventMessageSequence'
 	instanceVariableNames: 'receivers messages tally'
@@ -39,6 +39,35 @@ elementsExpired: count of: aWeakArray
 	tally := tally - count.
 	receivers corpsesDo: [:deathAt | messages at: deathAt put: nil]!
 
+forwardTo: anObject
+	"Forwards all the messages in this sequence to anObject. Answers the result of the last message in the sequence."
+
+	| corpse last |
+	corpse := DeadObject.Current.
+	last := nil.
+	1 to: receivers basicSize
+		do: 
+			[:index |
+			| receiver |
+			"Assign the receiver into a temp to prevent it being GC'd before the message can be sent."
+			receiver := receivers at: index.
+			receiver == corpse
+				ifFalse: [(messages at: index) ifNotNil: [:msg | last := msg forwardTo: anObject]]].
+	^last!
+
+includes: aMessage
+	"Answer whether the argument, anObject, is equal to one of the 
+	receiver's elements."
+
+	| corpse |
+	corpse := DeadObject current.
+	1 to: receivers basicSize
+		do: 
+			[:index |
+			(receivers at: index) == corpse
+				ifFalse: [(messages at: index) ifNotNil: [:msg | msg = aMessage ifTrue: [^true]]]].
+	^false!
+
 initialize
 	"Private - Initialize the receiver.
 	Implementation Note: The majority of instances only ever contain one message
@@ -50,20 +79,15 @@ initialize
 	messages := Array new: 1.
 	tally := 0!
 
-messagesDo: operation
-	"Private - Evaluates the <monadicValuable>, operation, for all non-dead elements of the receiver.
-	An event message registration is considered dead if the target (receiver) of the message has been
-	garbage collected."
-
-	| corpse |
-	corpse := DeadObject current.
+messages
+	| answer |
+	answer := OrderedCollection new: receivers basicSize.
 	1 to: receivers basicSize
 		do: 
 			[:index |
-			| receiver |
-			"Assign the receiver into a temp to prevent it being GC'd before the message can be sent."
-			receiver := receivers at: index.
-			receiver == corpse ifFalse: [(messages at: index) ifNotNil: [:msg | operation value: msg]]]!
+			(receivers at: index) == DeadObject.Current
+				ifFalse: [(answer at: index) ifNotNil: [:msg | answer addLast: msg]]].
+	^answer!
 
 removeMessagesFor: anObject
 	"Removes all the messages in this sequence that are destined for anObject. Answers the receiver."
@@ -82,11 +106,46 @@ removeMessagesFor: anObject
 size
 	"Answers the number of messages in the receiver"
 
-	^tally! !
+	^tally!
+
+value
+	"Plays all the messages in this sequence, which are assumed to be MessageSends that are fully qualified with their receivers. Answers the result of the last message in the sequence."
+
+	| last |
+	last := nil.
+	1 to: receivers basicSize
+		do: 
+			[:index |
+			| receiver |
+			"Assign the receiver into a temp to prevent it being GC'd before the message can be sent."
+			receiver := receivers at: index.
+			receiver == DeadObject.Current ifFalse: [(messages at: index) ifNotNil: [:msg | last := msg value]]].
+	^last!
+
+valueWithArguments: anArray
+	"Evaluate the receiver with the specified <Array> of arguments."
+
+	"Implementation Note: Inline the enumeration purely because it is performance critical - this is on one of the main paths for SASE event distribution."
+
+	| last |
+	last := nil.
+	1 to: receivers basicSize
+		do: 
+			[:index |
+			| receiver |
+			"Assign the receiver into a temp to prevent it being GC'd before the message can be sent."
+			receiver := receivers at: index.
+			receiver == DeadObject.Current
+				ifFalse: [(messages at: index) ifNotNil: [:msg | last := msg valueWithArguments: anArray]]].
+	^last! !
 !Kernel.EventMessageSequence categoriesFor: #add:!adding!public! !
 !Kernel.EventMessageSequence categoriesFor: #elementsExpired:of:!finalizing!private! !
+!Kernel.EventMessageSequence categoriesFor: #forwardTo:!operations!public! !
+!Kernel.EventMessageSequence categoriesFor: #includes:!public!searching! !
 !Kernel.EventMessageSequence categoriesFor: #initialize!initializing!private! !
-!Kernel.EventMessageSequence categoriesFor: #messagesDo:!debugger-step through!enumerating!private! !
+!Kernel.EventMessageSequence categoriesFor: #messages!accessing!public! !
 !Kernel.EventMessageSequence categoriesFor: #removeMessagesFor:!public!removing! !
 !Kernel.EventMessageSequence categoriesFor: #size!accessing!public! !
+!Kernel.EventMessageSequence categoriesFor: #value!evaluating!public! !
+!Kernel.EventMessageSequence categoriesFor: #valueWithArguments:!evaluating!public! !
 

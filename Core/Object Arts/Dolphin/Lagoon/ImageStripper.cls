@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 BasicImageStripper subclass: #ImageStripper
 	instanceVariableNames: 'rootPackageName executableName runtimeSessionManagerClass flags preStripScript versionResource _unused8 stubFilePath deploymentContext _unused11 _unused12 _unused13 snapshotType _unused15 _unused16 _unused17 _unused18 _unused19 _unused20 _unused21 _unused22'
@@ -1293,7 +1293,7 @@ referencesFromObjectsInClasses: aCollection
 
 	"Add all messages that can be triggered by events"
 	_EventsRegister
-		do: [:each | each do: [:mseq | mseq messagesDo: [:ms | messageMap at: ms put: {ms selector}]]].
+		do: [:each | each do: [:mseq | mseq messages do: [:ms | messageMap at: ms put: {ms selector}]]].
 
 	"Note that we don't add the preserved aspect setters to the sent messages as this would prevent removal of non-aspect setter 
 	methods with the same selectors. Rather we prebuild a collection of potential aspect setters, and block deletion of these."

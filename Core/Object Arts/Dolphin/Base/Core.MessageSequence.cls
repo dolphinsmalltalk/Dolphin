@@ -1,7 +1,7 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.MessageSequenceAbstract subclass: #'Core.MessageSequence'
-	instanceVariableNames: 'list'
+	instanceVariableNames: 'messages'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -14,65 +14,85 @@ Core.MessageSequence comment: ''!
 add: aMessage
 	"Adds aMessage to the end of this sequence. Answers aMessage"
 
-	^list addLast: aMessage.
-!
+	^messages addLast: aMessage!
 
 add: newElement afterIndex: index
 	"Add newElement to the receiver immediately after the element currently at the
 	specified <integer> index. index must be between 0 and the receiver's current 
 	size (if not raise an exception). Answer newElement."
 
-	^list add: newElement afterIndex: index!
+	^messages add: newElement afterIndex: index!
 
 addAll: newElements afterIndex: index
 	"Add all of the elements in the <collection>, newElements, after the existing element of
 	the receiver at the one-based <integer> index, index. Answer the newly added elements."
 
-	^list addAll: newElements afterIndex: index!
+	^messages addAll: newElements afterIndex: index!
+
+forwardTo: anObject
+	"Forwards all the messages in this sequence to anObject. Answers the
+	result of the last message in the sequence."
+
+	^messages inject: nil into: [:answer :each | each forwardTo: anObject]!
+
+includes: aMessage
+	"Answer whether the argument, anObject, is equal to one of the receiver's elements."
+
+	^messages includes: aMessage!
 
 initialize
 	"Private - Initialize the receiver"
 
-	super initialize.
-	list := OrderedCollection new.!
+	messages := OrderedCollection new!
 
-list
-	"Private - Answers the message list"
+messages
+	"Answer a <collection> of all the messages in the sequence."
 
-	^list!
+	^messages!
 
-messagesDo: aBlock
-	"Private - Enumerates through the receiver"
-
-	^list do: aBlock!
+messages: aSequenceableCollection
+	messages := aSequenceableCollection!
 
 removeMessagesFor: anObject
 	"Removes all the messages in this sequence that are destined for anObject.
 	Answer the receiver."
 
-	list := list reject: [ :each | each receiver == anObject]!
+	messages := messages reject: [:each | each receiver == anObject]!
 
 size
 	"Answers the number of messages in the sequence"
 
-	^list size! !
+	^messages size!
+
+value
+	"Plays all the messages in this sequence, which are assumed to be `MessageSend`s that are fully qualified with their receivers. Answers the result of the last message in the sequence."
+
+	^messages inject: nil into: [:answer :each | each value]!
+
+valueWithArguments: anArray
+	"Plays all the messages in this sequence, which are assumed to be `MessageSend`s that are fully qualified when provided with the specified arguments. Answers the result of the last message in the sequence."
+
+	^messages inject: nil into: [:answer :each | each valueWithArguments: anArray]! !
 !Core.MessageSequence categoriesFor: #add:!adding!public! !
 !Core.MessageSequence categoriesFor: #add:afterIndex:!adding!public! !
 !Core.MessageSequence categoriesFor: #addAll:afterIndex:!adding!public! !
+!Core.MessageSequence categoriesFor: #forwardTo:!operations!public! !
+!Core.MessageSequence categoriesFor: #includes:!public!searching! !
 !Core.MessageSequence categoriesFor: #initialize!initializing!private! !
-!Core.MessageSequence categoriesFor: #list!accessing!private! !
-!Core.MessageSequence categoriesFor: #messagesDo:!enumerating!private! !
+!Core.MessageSequence categoriesFor: #messages!accessing!public! !
+!Core.MessageSequence categoriesFor: #messages:!initializing!public! !
 !Core.MessageSequence categoriesFor: #removeMessagesFor:!public!removing! !
 !Core.MessageSequence categoriesFor: #size!public!testing! !
+!Core.MessageSequence categoriesFor: #value!evaluating!public! !
+!Core.MessageSequence categoriesFor: #valueWithArguments:!evaluating!public! !
 
 !Core.MessageSequence class methodsFor!
 
 withMessages: aSequencedReadableCollection
 	"Answer a new instance of the receiver with the specified sequence of <MessageSend>s."
 
-	| answer |
-	answer := self new.
-	answer list addAll: aSequencedReadableCollection.
-	^answer! !
+	^self new
+		messages: aSequencedReadableCollection asOrderedCollection;
+		yourself! !
 !Core.MessageSequence class categoriesFor: #withMessages:!instance creation!public! !
 

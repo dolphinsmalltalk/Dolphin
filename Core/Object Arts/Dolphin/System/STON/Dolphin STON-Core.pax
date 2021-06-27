@@ -510,7 +510,7 @@ fromSton: stonReader
 !Core.MessageSequence methodsFor!
 
 stonOn: stonWriter
-	stonWriter writeObject: self do: [stonWriter encodeList: list]! !
+	stonWriter writeObject: self do: [stonWriter encodeList: messages]! !
 !Core.MessageSequence categoriesFor: #stonOn:!public!ston! !
 
 !Core.MessageSequence class methodsFor!

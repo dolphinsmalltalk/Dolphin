@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Kernel.STBProxy subclass: #'UI.STBViewProxy'
 	instanceVariableNames: 'viewClass instVars state placement subViews resolution events version'
@@ -147,6 +147,7 @@ setView: aView
 	instVars := Array new: size.
 	1 to: size do: [:i | instVars at: i put: (aView instVarAt: i)].
 	state := aView state.
+	state messages: state messages asArray.
 	aView isOpen
 		ifTrue: 
 			[placement := aView placement.

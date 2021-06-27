@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 UI.ControlView subclass: #'UI.AXControlSite'
 	instanceVariableNames: 'progId dispControl host sink hostFlags propertyMap ambientDispatch unkControl licenseKey _reserved1 _reserved2'
@@ -808,7 +808,7 @@ state
 				selector: #controlBinaryStoreBytes:
 				argument: self controlBinaryStoreBytes).
 	#todo.	"Need more control over addition to MessageSequence (e.g. add:afterIndex:) in the meantime use private #list accessor"
-	sequence list addAll: controlState afterIndex: 1.
+	sequence messages addAll: controlState afterIndex: 1.
 	^sequence!
 
 supportedInterfaces

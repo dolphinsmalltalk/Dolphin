@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Object subclass: #BasicImageStripper
 	instanceVariableNames: 'events'
@@ -330,7 +330,7 @@ messagesSentByClasses: aCollectionOfClasses
 					eachSymbol == selector ifFalse: [sent add: eachSymbol]]].
 
 	"Add all messages that can be triggered by events"
-	_EventsRegister do: [:each | each do: [:mseq | mseq messagesDo: [:ms | sent add: ms selector]]].
+	_EventsRegister do: [:each | each do: [:mseq | mseq messages do: [:ms | sent add: ms selector]]].
 	^sent!
 
 notify: aStringMessage

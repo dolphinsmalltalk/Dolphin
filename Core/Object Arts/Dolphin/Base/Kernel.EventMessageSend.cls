@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.MessageSendAbstract variableSubclass: #'Kernel.EventMessageSend'
 	instanceVariableNames: 'expectedArgCount'
@@ -75,7 +75,11 @@ value
 	receiver's selector to the receiver's receiver, with the 
 	receiver's arguments, and answers the result."
 
-	^self forwardTo: self receiver withArguments: #()! !
+	^expectedArgCount == 0
+		ifTrue: [self receiver perform: selector]
+		ifFalse: 
+			[self receiver perform: selector
+				withArguments: (expectedArgCount == args size ifTrue: [args] ifFalse: [self mergeArguments: #()])]! !
 !Kernel.EventMessageSend categoriesFor: #asMessageSend!public! !
 !Kernel.EventMessageSend categoriesFor: #forwardTo:withArguments:!evaluating!private! !
 !Kernel.EventMessageSend categoriesFor: #mergeArguments:!evaluating!private! !
