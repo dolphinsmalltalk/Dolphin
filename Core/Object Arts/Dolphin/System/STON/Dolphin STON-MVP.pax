@@ -193,9 +193,10 @@ stonAllInstVarNames
 !UI.Scintilla.ScintillaView class methodsFor!
 
 stonAllInstVarNames
-	"Override to exclude the number of instance variables we never want to serialize."
+	"Override to exclude a number of instance variables we never want to serialize."
 
-	^super stonAllInstVarNames copyWithout: 'styleIdMap'! !
+	^##(super stonAllInstVarNames
+		difference: #('this' 'styleIdMap' 'library'))! !
 !UI.Scintilla.ScintillaView class categoriesFor: #stonAllInstVarNames!public! !
 
 !UI.Toolbar class methodsFor!
@@ -215,7 +216,7 @@ stonOn: stonWriter
 	"At present this is more experiment than anything useful. To show the potential though try Display-It on the following in a workspace:
 
 			shell := View desktop.
-			resourceView := Smalltalk developmentSystem loadViewResource: (ResourceIdentifier class: ClassBrowserShell selector: #resource_Default_view) resource inContext: shell. 
+			resourceView := Smalltalk developmentSystem loadViewResource: (ResourceIdentifier class: Tools.ClassBrowserShell selector: #resource_Default_view) resource inContext: shell. 
 			ston := STON toStringPretty: resourceView.
 			resourceView destroy.
 			ston.

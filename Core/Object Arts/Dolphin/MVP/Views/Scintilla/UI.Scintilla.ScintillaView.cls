@@ -2177,10 +2177,13 @@ extraDescent: extraDescentInteger
 		lParam: 0!
 
 filerProxy
-	| saved |
-	saved := styleIdMap.
-	styleIdMap := nil.
-	^[super filerProxy] ensure: [styleIdMap := saved]!
+	| proxy vars |
+	proxy := super filerProxy.
+	vars := proxy instVars.
+	vars at: ##(self indexOfInstVar: 'this') put: nil.
+	vars at: ##(self indexOfInstVar: 'library') put: NullScintillaLibrary default.
+	vars at: ##(self indexOfInstVar: 'styleIdMap') put: nil.
+	^proxy!
 
 find: aFindDetails range: anInterval 
 	"Private - Find the first occurrence of aString in the text of the receiver within the range rangeInterval."
@@ -2460,8 +2463,8 @@ formFeed
 		lParam: 0!
 
 getDirectPointer
-	this := super sendMessage: SCI_GETDIRECTPOINTER.
 	library := ScintillaLibrary default.
+	this := super sendMessage: SCI_GETDIRECTPOINTER.
 	^this!
 
 getElementColor: anInteger
@@ -2949,6 +2952,7 @@ indicatorsUnder: aPoint
 initialize
 	| styles windowText |
 	super initialize.
+	library := NullScintillaLibrary default.
 	markerDefinitions := self defaultMarkerDefinitions.
 	markers := IdentitySet new.
 	allTextStyles := IdentityDictionary new.
@@ -3930,7 +3934,7 @@ modificationEventMask: anInteger
 	modificationEventMask := anInteger = self defaultModEventMask ifFalse: [anInteger].
 	self sciSetModEventMask: self modificationEventMask!
 
-modifyText: niladicBlock 
+modifyText: niladicBlock
 	"Evaluate the <niladicBlock> argument, which is assumed to modify the receiver's text
 	content."
 
@@ -3942,8 +3946,11 @@ modifyText: niladicBlock
 
 	| readOnly |
 	readOnly := self isReadOnly.
-	self isReadOnly: false.
-	niladicBlock ensure: [self isReadOnly: readOnly]!
+	readOnly
+		ifFalse: [niladicBlock value]
+		ifTrue: 
+			[self isReadOnly: false.
+			niladicBlock ensure: [self isReadOnly: readOnly]]!
 
 mouseDwellTime
 	"Retrieve the <Duration> that the mouse must sit still to generate a mouse hovering event. Answer nil if this is effectively infinite to indicate that the dwell is not set and no hover events will be generated."
