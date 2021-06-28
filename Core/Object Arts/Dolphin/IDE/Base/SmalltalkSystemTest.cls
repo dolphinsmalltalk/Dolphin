@@ -85,6 +85,18 @@ testNameForArgument
 	self assert: (devsys nameForArgument: Object yourAddress asExternalAddress)
 		equals: 'anExternalAddress'!
 
+testSystemOptions
+	"Regression test for #1133 - Tests that enumerating tool properties for the options dialog isn't going to fail"
+
+	| options |
+	options := LookupTable new.
+	SmalltalkSystem current systemOptions do: 
+			[:eachTool |
+			options at: eachTool
+				put: (eachTool publishedAspects collect: [:eachAspect | (eachAspect accessorFor: eachTool) value])].
+	"There isn't much we can assert about the actual values, so just kick the tyres at very little bit"
+	self assert: ((options at: ClassBrowserShell) includesKey: #grayedMethodFadeFactor)!
+
 testWrapText
 	| formatter wrapped |
 	(devsys respondsTo: #wrapText:toWidth:indent:tabWidth:) ifFalse: [^self].
@@ -193,5 +205,6 @@ wxy'.
 !SmalltalkSystemTest categoriesFor: #testBuildSimpleSignature!public!unit tests! !
 !SmalltalkSystemTest categoriesFor: #testDefaultInspectorClass!public!unit tests! !
 !SmalltalkSystemTest categoriesFor: #testNameForArgument!public!unit tests! !
+!SmalltalkSystemTest categoriesFor: #testSystemOptions!public!unit tests! !
 !SmalltalkSystemTest categoriesFor: #testWrapText!public!unit tests! !
 
