@@ -375,13 +375,6 @@ initialize
 	self reuseIfOpen: true.
 	self canUseIdeaSpace: true.!
 
-publishedAspects
-	"Answer a <LookupTable> of the <Aspect>s published by the receiver."
-
-	^super publishedAspects
-		removeKey: (Aspect boolean: #canUseIdeaSpace);
-		yourself!
-
 resource_Default_view
 	"Answer the literal data from which the 'Default view' resource can be reconstituted.
 	DO NOT EDIT OR RECATEGORIZE THIS METHOD.
@@ -410,7 +403,6 @@ typeOfObject: aSourceObject
 !SourceBrowser class categoriesFor: #forSourcesOfPackages:!instance creation!public! !
 !SourceBrowser class categoriesFor: #icon!constants!public! !
 !SourceBrowser class categoriesFor: #initialize!initializing!private! !
-!SourceBrowser class categoriesFor: #publishedAspects!public! !
 !SourceBrowser class categoriesFor: #resource_Default_view!public!resources-views! !
 !SourceBrowser class categoriesFor: #show!instance creation!public! !
 !SourceBrowser class categoriesFor: #toolsFolderHelpId!public! !
