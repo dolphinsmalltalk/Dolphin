@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 UI.Shell subclass: #'XProgramming.SUnit.TestRunner'
 	instanceVariableNames: 'result lastPass'

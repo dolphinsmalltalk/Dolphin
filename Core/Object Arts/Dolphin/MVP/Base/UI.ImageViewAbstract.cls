@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 UI.StaticView subclass: #'UI.ImageViewAbstract'
 	instanceVariableNames: 'image viewMode ivFlags insets imageBorder'

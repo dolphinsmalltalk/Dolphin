@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.SequencedGrowableCollection subclass: #'Core.LinkedList'
 	instanceVariableNames: 'firstLink lastLink'

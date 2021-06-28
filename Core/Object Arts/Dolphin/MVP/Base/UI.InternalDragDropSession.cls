@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 UI.DragDropSession subclass: #'UI.InternalDragDropSession'
 	instanceVariableNames: 'lastImageKey imageList oldCursor dragButton operationDescriptions'

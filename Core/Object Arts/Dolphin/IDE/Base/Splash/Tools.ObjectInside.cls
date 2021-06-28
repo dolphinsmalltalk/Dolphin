@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Object subclass: #'Tools.ObjectInside'
 	instanceVariableNames: 'image edgePoints position scale rotation alpha color baseColor matrix'

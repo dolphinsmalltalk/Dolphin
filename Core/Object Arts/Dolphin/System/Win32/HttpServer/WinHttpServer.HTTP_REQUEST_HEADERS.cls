@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 WinHttpServer.HTTP_HEADERS subclass: #'WinHttpServer.HTTP_REQUEST_HEADERS'
 	instanceVariableNames: ''

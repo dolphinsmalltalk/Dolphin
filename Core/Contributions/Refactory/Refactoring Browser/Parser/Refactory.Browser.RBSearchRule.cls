@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Refactory.Browser.RBParseTreeRule subclass: #'Refactory.Browser.RBSearchRule'
 	instanceVariableNames: 'answerBlock'

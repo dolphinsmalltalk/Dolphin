@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 UI.ControlView subclass: #'UI.ControlBarAbstract'
 	instanceVariableNames: 'names _tipText _unused17 _unused18'

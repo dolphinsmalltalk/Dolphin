@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 OS.COM.InterfaceImplementation subclass: #'Kernel.IPDolphin'
 	instanceVariableNames: 'plugHole coclasses'

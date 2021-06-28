@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Graphics.Gdiplus.Initializer subclass: #'Graphics.Gdiplus.MatrixInitializer'
 	instanceVariableNames: 'm11 m12 m21 m22 m31 m32'

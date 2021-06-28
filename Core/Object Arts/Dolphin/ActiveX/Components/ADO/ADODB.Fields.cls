@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 ADODB.Fields20 subclass: #'ADODB.Fields'
 	instanceVariableNames: ''

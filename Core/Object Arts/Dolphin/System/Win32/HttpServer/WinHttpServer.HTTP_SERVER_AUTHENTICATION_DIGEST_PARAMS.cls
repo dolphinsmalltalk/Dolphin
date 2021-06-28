@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 WinHttpServer.HttpServerStructure subclass: #'WinHttpServer.HTTP_SERVER_AUTHENTICATION_DIGEST_PARAMS'
 	instanceVariableNames: ''

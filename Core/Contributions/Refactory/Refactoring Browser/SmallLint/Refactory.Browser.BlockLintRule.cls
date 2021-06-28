@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Refactory.Browser.BasicLintRule subclass: #'Refactory.Browser.BlockLintRule'
 	instanceVariableNames: 'classBlock methodBlock'

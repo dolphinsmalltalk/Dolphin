@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Tools.MethodNameDialog subclass: #'Tools.RenameMethodDialog'
 	instanceVariableNames: 'scopePresenter scopeDescriptionPresenter allowExistingSelector'

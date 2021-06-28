@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 TreeNode subclass: #ProfilerTreeNode
 	instanceVariableNames: 'tally time classes selectors'

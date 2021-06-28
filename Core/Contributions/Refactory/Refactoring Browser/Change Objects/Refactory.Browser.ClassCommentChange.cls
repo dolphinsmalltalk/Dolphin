@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Refactory.Browser.RefactoryClassChange subclass: #'Refactory.Browser.ClassCommentChange'
 	instanceVariableNames: 'comment'

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 UI.ContainerView subclass: #'UI.ScrollingDecorator'
 	instanceVariableNames: 'scrollOffset tracking lineExtent'

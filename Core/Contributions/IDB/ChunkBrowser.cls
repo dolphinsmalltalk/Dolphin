@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 IdbToolShell subclass: #ChunkBrowser
 	instanceVariableNames: 'chunkList chunkText pathname filter'

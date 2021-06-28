@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 UI.ValuePresenter subclass: #'UI.TextPresenter'
 	instanceVariableNames: 'findDetails'

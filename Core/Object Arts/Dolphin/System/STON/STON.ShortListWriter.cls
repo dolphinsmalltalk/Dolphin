@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 STON.ListWriter subclass: #'STON.ShortListWriter'
 	instanceVariableNames: ''

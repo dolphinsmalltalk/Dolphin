@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Database.DBSchemaStatement subclass: #'Database.DBForeignKeysStatement'
 	instanceVariableNames: 'foreignCatalogName foreignSchemaName foreignTableName'

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 IdbShell subclass: #ILEditorShell
 	instanceVariableNames: 'editorWorkspace colorSelector backupImage imageStatus locationStatus zoneStatus zoomStatus modifiedStatus'

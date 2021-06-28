@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 OS.IpHlpApiTableStruct subclass: #'OS.IP_ADAPTER_ORDER_MAP'
 	instanceVariableNames: ''

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 UI.LinearLayout subclass: #'UI.ProportionalLayout'
 	instanceVariableNames: 'proportions isVertical'

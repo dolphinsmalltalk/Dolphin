@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 UI.Scintilla.LexerMetadata subclass: #'UI.Scintilla.LexerProperty'
 	instanceVariableNames: 'type'

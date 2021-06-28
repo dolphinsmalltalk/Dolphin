@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Kernel.StSemanticAnalyser subclass: #'Tools.BrowserSemanticAnalyser'
 	instanceVariableNames: 'isStub'

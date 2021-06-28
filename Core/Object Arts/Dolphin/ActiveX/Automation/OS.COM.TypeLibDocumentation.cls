@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Object subclass: #'OS.COM.TypeLibDocumentation'
 	instanceVariableNames: 'name helpstring helpcontext helpfile'

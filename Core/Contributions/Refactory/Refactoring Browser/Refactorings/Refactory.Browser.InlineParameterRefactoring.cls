@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Refactory.Browser.RemoveParameterRefactoring subclass: #'Refactory.Browser.InlineParameterRefactoring'
 	instanceVariableNames: 'expressions'

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 UI.Shell subclass: #'OS.COM.Examples.WebBrowserShell'
 	instanceVariableNames: 'address browser statusModel commandStates'

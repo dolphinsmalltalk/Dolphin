@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 ADODB.Recordset15 subclass: #'ADODB.Recordset20'
 	instanceVariableNames: ''

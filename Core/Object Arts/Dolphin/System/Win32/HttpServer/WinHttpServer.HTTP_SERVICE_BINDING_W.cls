@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 WinHttpServer.HTTP_SERVICE_BINDING_BASE subclass: #'WinHttpServer.HTTP_SERVICE_BINDING_W'
 	instanceVariableNames: ''

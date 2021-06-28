@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 WinHttpServer.HttpQosSetting subclass: #'WinHttpServer.HTTP_FLOWRATE_INFO'
 	instanceVariableNames: ''

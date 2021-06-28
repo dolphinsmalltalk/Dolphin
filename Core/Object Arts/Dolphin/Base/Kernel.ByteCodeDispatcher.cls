@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Object subclass: #'Kernel.ByteCodeDispatcher'
 	instanceVariableNames: 'byteCodes method ip interpreter instructionLength byteCode instructions'

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Win32Structure subclass: #ICONDIRENTRY
 	instanceVariableNames: ''

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 UI.ValueConvertingControlView subclass: #'UI.Slider'
 	instanceVariableNames: 'autoTickFrequency _reserved1 _reserved2'

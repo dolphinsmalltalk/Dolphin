@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Graphics.Bitmap subclass: #'Graphics.DIBSection'
 	instanceVariableNames: 'depth imageBits'

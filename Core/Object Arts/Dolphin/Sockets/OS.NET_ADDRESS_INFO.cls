@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 External.Structure subclass: #'OS.NET_ADDRESS_INFO'
 	instanceVariableNames: ''

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Object variableSubclass: #'Kernel.BlockClosure'
 	instanceVariableNames: 'outer method initialIP info receiver'

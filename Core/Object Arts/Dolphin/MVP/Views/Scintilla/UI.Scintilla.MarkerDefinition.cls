@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 UI.Scintilla.Attribute subclass: #'UI.Scintilla.MarkerDefinition'
 	instanceVariableNames: 'code forecolor backcolor view name alpha selectionBackcolor strokeWidth layerCode _reserved11 _reserved12'

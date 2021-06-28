@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 UI.ListPresenter subclass: #'Tools.ResourceToolboxPresenter'
 	instanceVariableNames: 'categoriesPresenter resourcesPresenter iconMap'

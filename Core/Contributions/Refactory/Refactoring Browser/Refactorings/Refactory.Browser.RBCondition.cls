@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Refactory.Browser.RBAbstractCondition subclass: #'Refactory.Browser.RBCondition'
 	instanceVariableNames: 'block type errorBlock'

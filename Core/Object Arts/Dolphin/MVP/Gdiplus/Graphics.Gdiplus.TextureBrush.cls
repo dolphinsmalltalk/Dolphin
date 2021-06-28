@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Graphics.Gdiplus.Brush subclass: #'Graphics.Gdiplus.TextureBrush'
 	instanceVariableNames: ''

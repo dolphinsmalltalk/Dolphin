@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 UI.View subclass: #'Graphics.Gdiplus.DoubleBufferedView'
 	instanceVariableNames: 'backSurface requiresRender'

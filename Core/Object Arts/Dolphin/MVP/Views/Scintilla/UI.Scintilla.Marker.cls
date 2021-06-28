@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Object subclass: #'UI.Scintilla.Marker'
 	instanceVariableNames: 'view definition line handle'

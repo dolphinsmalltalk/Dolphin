@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 ADODB.Command15 subclass: #'ADODB.Command25'
 	instanceVariableNames: ''

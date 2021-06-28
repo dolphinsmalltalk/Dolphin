@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Kernel.ParseNodeVisitor subclass: #'Refactory.Browser.RBSourceFormatter'
 	instanceVariableNames: 'codeStream lineStart indent'

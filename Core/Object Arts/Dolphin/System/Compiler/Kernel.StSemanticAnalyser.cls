@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Kernel.ParseNodeVisitor subclass: #'Kernel.StSemanticAnalyser'
 	instanceVariableNames: 'methodNode classScope evaluationContext currentScope scopes literals stringLiterals addToFrame tempDecls inStaticExpression evalScope annotations errorBlock isMutator inTag'

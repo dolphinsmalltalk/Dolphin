@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 External.Callback subclass: #'External.MessageCallback'
 	instanceVariableNames: 'receiver selector closure'

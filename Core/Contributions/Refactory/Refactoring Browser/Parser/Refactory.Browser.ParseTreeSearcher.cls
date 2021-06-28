@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Kernel.ParseNodeVisitor subclass: #'Refactory.Browser.ParseTreeSearcher'
 	instanceVariableNames: 'searches answer argumentSearches context messages'

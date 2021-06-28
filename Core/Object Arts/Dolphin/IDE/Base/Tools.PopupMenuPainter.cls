@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Tools.MenuPainter subclass: #'Tools.PopupMenuPainter'
 	instanceVariableNames: 'itemWidth textOffset submenuOffset acceleratorOffset'

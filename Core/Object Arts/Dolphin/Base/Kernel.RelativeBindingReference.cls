@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Kernel.BindingReference subclass: #'Kernel.RelativeBindingReference'
 	instanceVariableNames: 'scope'

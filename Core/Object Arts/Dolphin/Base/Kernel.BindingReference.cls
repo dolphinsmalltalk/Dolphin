@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Kernel.AbstractBindingReference subclass: #'Kernel.BindingReference'
 	instanceVariableNames: 'pathString path private binding generation'

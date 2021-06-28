@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 UI.Event subclass: #'UI.SelectionChangeEvent'
 	instanceVariableNames: 'newSelections oldSelections cause'

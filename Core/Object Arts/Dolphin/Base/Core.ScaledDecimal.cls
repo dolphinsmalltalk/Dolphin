@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Number subclass: #'Core.ScaledDecimal'
 	instanceVariableNames: 'fraction scale'
@@ -327,7 +327,8 @@ truncated
 !Core.ScaledDecimal categoriesFor: #reciprocal!arithmetic!public! !
 !Core.ScaledDecimal categoriesFor: #scale!accessing!public! !
 !Core.ScaledDecimal categoriesFor: #setFraction:scale:!initializing!private! !
-!Core.ScaledDecimal categoriesFor: #storeOn:!public! !
+!Core.ScaledDecimal categoriesFor: #storeOn:!public!storing! !
+!Core.ScaledDecimal categoriesFor: #subtractFromInteger:!double dispatch!public! !
 !Core.ScaledDecimal categoriesFor: #subtractFromScaledDecimal:!double dispatch!private! !
 !Core.ScaledDecimal categoriesFor: #truncated!public!truncation and round off! !
 

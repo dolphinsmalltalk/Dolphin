@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 OwnerDrawnButton subclass: #TextAndImageButton
 	instanceVariableNames: 'imageExtent imageManager imageIndex dropDownMenu isMenuOpen'

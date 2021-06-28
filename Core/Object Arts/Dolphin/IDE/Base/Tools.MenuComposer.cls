@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 UI.ValueDialog subclass: #'Tools.MenuComposer'
 	instanceVariableNames: 'arena menuViews conflictingAccelerators'

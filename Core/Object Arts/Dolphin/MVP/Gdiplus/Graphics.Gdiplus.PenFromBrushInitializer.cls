@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Graphics.Gdiplus.PenInitializer subclass: #'Graphics.Gdiplus.PenFromBrushInitializer'
 	instanceVariableNames: 'brush width'

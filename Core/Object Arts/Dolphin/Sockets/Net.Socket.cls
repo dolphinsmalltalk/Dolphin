@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Net.SocketAbstract subclass: #'Net.Socket'
 	instanceVariableNames: 'address readStream writeStream isText'

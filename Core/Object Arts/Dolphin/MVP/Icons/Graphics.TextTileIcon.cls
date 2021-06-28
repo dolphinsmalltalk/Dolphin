@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Object subclass: #'Graphics.TextTileIcon'
 	instanceVariableNames: 'text fontName tilecolor textcolor icon _reserved6 flags _reserved8 _reserved9'

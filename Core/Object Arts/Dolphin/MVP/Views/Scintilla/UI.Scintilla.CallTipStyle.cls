@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 UI.Scintilla.TextStyle subclass: #'UI.Scintilla.CallTipStyle'
 	instanceVariableNames: ''

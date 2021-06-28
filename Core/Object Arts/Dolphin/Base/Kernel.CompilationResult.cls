@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Object subclass: #'Kernel.CompilationResult'
 	instanceVariableNames: 'method rawTextMap rawTempsMap textMap tempsMap oldMethod package'

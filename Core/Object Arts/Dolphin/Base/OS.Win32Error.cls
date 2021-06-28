@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 OS.HRESULTError subclass: #'OS.Win32Error'
 	instanceVariableNames: ''

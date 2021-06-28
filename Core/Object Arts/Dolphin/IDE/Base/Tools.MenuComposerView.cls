@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 UI.View subclass: #'Tools.MenuComposerView'
 	instanceVariableNames: 'selectionIndex painter'

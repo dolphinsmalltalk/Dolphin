@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 External.SWORD subclass: #'OS.COM.VARIANT_BOOL'
 	instanceVariableNames: ''

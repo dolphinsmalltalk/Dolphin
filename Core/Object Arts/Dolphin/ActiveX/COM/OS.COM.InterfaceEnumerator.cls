@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 OS.COM.Enumerator subclass: #'OS.COM.InterfaceEnumerator'
 	instanceVariableNames: ''

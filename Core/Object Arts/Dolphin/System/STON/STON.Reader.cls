@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Object subclass: #'STON.Reader'
 	instanceVariableNames: 'readStream objects classes stringStream acceptUnknownClasses newLine convertNewLines classInstVarMaps currentCharacter objectProperties renamedClasses'

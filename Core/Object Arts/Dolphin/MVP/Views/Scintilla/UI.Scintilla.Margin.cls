@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 UI.Scintilla.QueryableAttribute subclass: #'UI.Scintilla.Margin'
 	instanceVariableNames: 'width type isSensitive mask cursorType backcolor'

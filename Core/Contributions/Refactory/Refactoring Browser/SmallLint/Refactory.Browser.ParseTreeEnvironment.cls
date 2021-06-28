@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Refactory.Browser.SelectorEnvironment subclass: #'Refactory.Browser.ParseTreeEnvironment'
 	instanceVariableNames: 'matcher'

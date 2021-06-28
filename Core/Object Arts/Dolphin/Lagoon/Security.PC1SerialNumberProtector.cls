@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Security.SerialNumberProtector subclass: #'Security.PC1SerialNumberProtector'
 	instanceVariableNames: ''

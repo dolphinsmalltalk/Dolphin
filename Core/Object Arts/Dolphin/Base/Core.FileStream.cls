@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.ReadWriteStream subclass: #'Core.FileStream'
 	instanceVariableNames: 'file flags pageBase logicalFileSize offset'

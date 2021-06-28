@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Kernel.StValueNode subclass: #'Kernel.StBlockNode'
 	instanceVariableNames: 'left right body arguments bar'

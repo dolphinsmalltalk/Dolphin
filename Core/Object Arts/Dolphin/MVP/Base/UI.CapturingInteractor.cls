@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 UI.Interactor subclass: #'UI.CapturingInteractor'
 	instanceVariableNames: 'oldInteractor stateFlags'

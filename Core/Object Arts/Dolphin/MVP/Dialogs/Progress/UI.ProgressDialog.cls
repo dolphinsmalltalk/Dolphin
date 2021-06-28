@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 UI.Dialog subclass: #'UI.ProgressDialog'
 	instanceVariableNames: 'progressPresenter operation process textPresenter flags priority'

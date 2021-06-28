@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 OS.COM.TypeInfoStructure subclass: #'OS.COM.MemberDesc'
 	instanceVariableNames: 'index customAttributes documentation'

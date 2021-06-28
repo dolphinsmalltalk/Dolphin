@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 UI.Prompter subclass: #'UI.IntegerPrompter'
 	instanceVariableNames: 'intervalPresenter interval'
