@@ -11,6 +11,19 @@ Kernel.ChunkSourceFiler comment: '`ChunkSourceFiler` is the standard chunk-forma
 !Kernel.ChunkSourceFiler categoriesForClass!Development! !
 !Kernel.ChunkSourceFiler methodsFor!
 
+emitClassName: aClass
+	| classEnv |
+	classEnv := aClass environment.
+	(classEnv == aClass baseEnvironment and: 
+			[| localEnv |
+			localEnv := self environment ?? Smalltalk.
+			classEnv == localEnv or: 
+					[| var |
+					var := localEnv fullBindingFor: aClass name.
+					var notNil and: [var value == aClass]]])
+		ifTrue: [stream nextPutAll: aClass name]
+		ifFalse: [aClass printFullNameOn: stream]!
+
 environment
 	^environment
 !
@@ -23,6 +36,7 @@ sourceFileIndex: anInteger
 	"Private - Set the <integer> source file index associated with the receiver."
 
 	sourceFileIndex := anInteger! !
+!Kernel.ChunkSourceFiler categoriesFor: #emitClassName:!private!source filing-file out! !
 !Kernel.ChunkSourceFiler categoriesFor: #environment!accessing!public! !
 !Kernel.ChunkSourceFiler categoriesFor: #environment:!accessing!public! !
 !Kernel.ChunkSourceFiler categoriesFor: #sourceFileIndex:!accessing!private! !

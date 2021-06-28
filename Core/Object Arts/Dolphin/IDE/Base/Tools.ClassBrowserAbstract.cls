@@ -688,6 +688,16 @@ customDrawSelector: anNMLVCUSTOMDRAW
 definitionCardName
 	^'definition'!
 
+definitionOfClass: aClass
+	| strm |
+	strm := (WriteStream on: (Utf8String new: 256))
+				locale: SmalltalkLocale.Hex;
+				yourself.
+	(aClass sourceFilerClass on: strm) 
+		environment: aClass environment;
+		printBasicDefinitionOfClass: aClass.
+	^strm contents!
+
 deleteItCommand
 	| focus |
 	focus := View focus.
@@ -1060,23 +1070,16 @@ onClassSelected
 	"If the selection change is due to a class deletion, for example, then there may be outstanding changes that
 	 the user would like to preserve, though our only sensible option is to copy them to the clipboard"
 
-	| definition selection |
 	self promptToCopyChanges.
-	selection := self selectedClass.
-	definition := selection isNil
-				ifTrue: 
-					[methodBrowserPresenter
-						filter: [:method | false];
-						clear.
-					String new]
-				ifFalse: 
-					[self isInstanceMode: classesPresenter isInstanceMode.
-					selection definition].
+	self hasClassSelected
+		ifTrue: [self isInstanceMode: classesPresenter isInstanceMode]
+		ifFalse: 
+			[methodBrowserPresenter
+				filter: [:method | false];
+				clear].
 	self updateFilters.
 	self updatePackage.
-	definitionPresenter
-		text: definition;
-		evaluationContext: selection.
+	self updateClassDefinition.
 	self updateSourceEnablement.
 	self updateCaption.
 
@@ -1107,7 +1110,7 @@ onClassUpdated: aClass
 			[self 
 				updateClass: 'definition'
 				presenter: definitionPresenter
-				source: aClass instanceClass definition].
+				source: (self definitionOfClass: aClass instanceClass)].
 
 	"If displaying the actual class or a superclass, then may need to refresh variables"
 	(class includesBehavior: aClass) ifFalse: [^self].
@@ -2381,6 +2384,13 @@ updateClass: aspectString presenter: aSmalltalkWorkspace source: sourceString
 	(aSmalltalkWorkspace prompt: aspectString toSaveChanges: event)
 		ifTrue: [aSmalltalkWorkspace text: sourceString]!
 
+updateClassDefinition
+	| selection |
+	selection := self selectedClass.
+	definitionPresenter
+		text: (selection isNil ifTrue: [''] ifFalse: [self definitionOfClass: selection]);
+		evaluationContext: selection!
+
 updateFilters
 	"Private - Update the various filter lists displayed in the middle pane of the
 	browser."
@@ -2609,6 +2619,7 @@ variablesMethodFilter
 !Tools.ClassBrowserAbstract categoriesFor: #customDrawProtocols:!helpers!private! !
 !Tools.ClassBrowserAbstract categoriesFor: #customDrawSelector:!helpers!private! !
 !Tools.ClassBrowserAbstract categoriesFor: #definitionCardName!constants!private! !
+!Tools.ClassBrowserAbstract categoriesFor: #definitionOfClass:!event handling!private! !
 !Tools.ClassBrowserAbstract categoriesFor: #deleteItCommand!helpers!private! !
 !Tools.ClassBrowserAbstract categoriesFor: #dropMethods:onto:!helpers!private! !
 !Tools.ClassBrowserAbstract categoriesFor: #emphasiseCategoryItem:isRelevant:!helpers!private! !
@@ -2761,6 +2772,7 @@ variablesMethodFilter
 !Tools.ClassBrowserAbstract categoriesFor: #updateCaption!public!updating! !
 !Tools.ClassBrowserAbstract categoriesFor: #updateCategories!private!updating! !
 !Tools.ClassBrowserAbstract categoriesFor: #updateClass:presenter:source:!helpers!private! !
+!Tools.ClassBrowserAbstract categoriesFor: #updateClassDefinition!event handling!private! !
 !Tools.ClassBrowserAbstract categoriesFor: #updateFilters!private!updating! !
 !Tools.ClassBrowserAbstract categoriesFor: #updateMethodsInCategory!private!updating! !
 !Tools.ClassBrowserAbstract categoriesFor: #updateMethodsInProtocol!private!updating! !
