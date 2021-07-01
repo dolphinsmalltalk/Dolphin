@@ -42,6 +42,11 @@ isSymbolic
 
 	^true!
 
+rgbaCode
+	"Answer the receiver's colour value in 32-bit RGBA encoding (or ABGR if you prefer), i.e. red | (green << 8) | (blue << 16) | (alpha << 24)."
+
+	^self actualColor rgbaCode!
+
 rgbCode
 	"Answer the receiver's color value in 24-bit RGB encoding with 8-bits per component in (blue, green, red) order."
 
@@ -52,5 +57,6 @@ rgbCode
 !Graphics.VirtualColor categoriesFor: #isDefault!public!testing! !
 !Graphics.VirtualColor categoriesFor: #isNone!public!testing! !
 !Graphics.VirtualColor categoriesFor: #isSymbolic!public!testing! !
+!Graphics.VirtualColor categoriesFor: #rgbaCode!accessing!public! !
 !Graphics.VirtualColor categoriesFor: #rgbCode!converting!public! !
 

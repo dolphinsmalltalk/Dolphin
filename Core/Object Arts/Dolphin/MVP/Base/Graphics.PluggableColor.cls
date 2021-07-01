@@ -20,7 +20,11 @@ actualColor
 	^valuable value actualColor!
 
 printOn: aPuttableStream
-	self basicPrintOn: aPuttableStream!
+	aPuttableStream
+		print: self class;
+		space;
+		display: #with:;
+		print: valuable!
 
 setValuable: aNiladicValuable 
 	valuable := aNiladicValuable!
