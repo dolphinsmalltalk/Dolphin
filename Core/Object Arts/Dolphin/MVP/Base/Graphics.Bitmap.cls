@@ -293,7 +293,7 @@ detachHandle
 drawDisabledOn: aCanvas at: aPoint extent: sizePoint
 	"Draw a disabled/grayed representation of the receiver on aCanvas at aPoint with extent sizePoint."
 
-	^UserLibrary default
+	^User32
 		drawState: aCanvas asParameter
 		hbr: nil
 		lpOutputFunc: nil
@@ -476,7 +476,7 @@ loadFromFile: pathString extent: anObject
 	| fuLoad |
 	fuLoad := self baseLoadFlags bitOr: LR_LOADFROMFILE.
 	self getMap3DColors ifTrue: [fuLoad := fuLoad bitOr: LR_LOADMAP3DCOLORS].
-	^UserLibrary default
+	^User32
 		loadImage: 0
 		lpszName: pathString asResourceId
 		uType: self imageType
@@ -489,7 +489,7 @@ loadFromInstance: hModule
 	Answers the bitmaps handle, or nil if the bitmap could not be loaded."
 
 	extent := nil.	"Any old cached extent may be invalid and no longer match the loaded resource."
-	^UserLibrary default
+	^User32
 		loadImage: hModule asParameter
 		lpszName: identifier asResourceId
 		uType: self imageType
@@ -629,7 +629,7 @@ fromId: anIntegerOrStringId inFile: aString flags: anInteger
 
 	| reslib icon |
 	reslib := External.ResourceLibrary open: aString.
-	icon := self fromOwnedHandle: (UserLibrary default
+	icon := self fromOwnedHandle: (User32
 						loadImage: reslib asParameter
 						lpszName: anIntegerOrStringId asResourceId
 						uType: IMAGE_BITMAP

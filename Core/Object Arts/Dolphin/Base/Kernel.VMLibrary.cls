@@ -262,7 +262,7 @@ indexOfSpecialSelector: aSymbol ifAbsent: exceptionHandler
 isSlowMachine
 	"Answer true if this machine is judged to be slow."
 
-	^(UserLibrary default getSystemMetrics: SM_SLOWMACHINE) ~~ 0
+	^(User32 getSystemMetrics: SM_SLOWMACHINE) ~~ 0
 
 	"
 	VMLibrary default isSlowMachine

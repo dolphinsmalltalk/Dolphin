@@ -87,7 +87,7 @@ commonNotificationMap
 defaultWindowProcessing: message wParam: wParam lParam: lParam
 	"Private - Pass a message to the 'default' window procedure of the receiver."
 
-	^UserLibrary default
+	^User32
 		callWindowProc: oldWndProc
 		hWnd: handle
 		msg: message

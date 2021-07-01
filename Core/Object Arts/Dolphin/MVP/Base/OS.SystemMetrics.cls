@@ -87,7 +87,7 @@ getIconTitleFont
 				ifError: [^Graphics.Font system])!
 
 getMetric: anInteger
-	^UserLibrary default getSystemMetrics: anInteger!
+	^User32 getSystemMetrics: anInteger!
 
 getMetric: anInteger1 pair: anInteger2 
 	^(self getMetric: anInteger1) @ (self getMetric: anInteger2)!
@@ -95,7 +95,7 @@ getMetric: anInteger1 pair: anInteger2
 getSysParam: anInteger type: anExternalStructureClass ifError: aNiladicValuable
 	| struct |
 	struct := anExternalStructureClass new.
-	(UserLibrary default
+	(User32
 		systemParametersInfo: anInteger
 		uiParam: 0
 		pvParam: struct
@@ -118,12 +118,12 @@ getSysParamStruct: anInteger type: anExternalStructureClass
 	^self
 		getSysParam: anInteger
 		type: anExternalStructureClass
-		ifError: [UserLibrary default systemError]!
+		ifError: [User32 systemError]!
 
 getSysParamW: anInteger type: anExternalStructureClass ifError: aNiladicValuable
 	| struct |
 	struct := anExternalStructureClass new.
-	(UserLibrary default
+	(User32
 		systemParametersInfo: anInteger
 		uiParam: 0
 		pvParam: struct
@@ -197,7 +197,7 @@ hasSmoothScrollingLists
 		ifTrue: 
 			[| bool |
 			bool := DWORDBytes new.
-			hasSmoothScrollingLists := (UserLibrary default
+			hasSmoothScrollingLists := (User32
 						systemParametersInfo: SPI_GETLISTBOXSMOOTHSCROLLING
 						uiParam: 0
 						pvParam: bool
@@ -333,7 +333,7 @@ nonClientMetrics
 			nonClientMetrics := self
 						getSysParamW: SPI_GETNONCLIENTMETRICS
 						type: NONCLIENTMETRICSW
-						ifError: [UserLibrary default systemError]].
+						ifError: [User32 systemError]].
 	^nonClientMetrics!
 
 onSettingChanged: anArray
@@ -377,7 +377,7 @@ scrollThumbExtent
 	^scrollThumbExtent ifNil: [scrollThumbExtent := self getMetric: SM_CXHTHUMB pair: SM_CYVTHUMB]!
 
 setSysParamBool: anInteger value: aBoolean
-	^UserLibrary default
+	^User32
 		systemParametersInfo: anInteger
 		uiParam: 0
 		pvParam: aBoolean asInteger

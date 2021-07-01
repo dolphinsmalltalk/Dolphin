@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Tests.DolphinTest subclass: #'External.Tests.DynamicLinkLibraryTest'
 	instanceVariableNames: ''
@@ -26,7 +26,7 @@ testInvalidOverlappedCallArguments
 
 testSingletonSerialisation
 	| singletons array bytes |
-	singletons := {KernelLibrary default. VersionLibrary default. UserLibrary default}.
+	singletons := {KernelLibrary default. VersionLibrary default. User32}.
 	array := #(#'!!STL' 3 98 3 1114638 ##(Kernel.STBSingletonProxy) 8 ##(OS.KernelLibrary) 8 #default 426 8 ##(OS.VersionLibrary) 464 426 8 ##(UserLibrary) 464).
 	self assert: ((Object fromLiteralStoreArray: array) asIdentitySet - singletons) isEmpty.
 	array := singletons literalStoreArray.
@@ -59,21 +59,21 @@ verifyInvalidCallArguments: aBoolean
 				and: [ex argument == obj and: [ex type = (WIN32_FIND_DATAW fullName , '*')]]].
 	apiCall := self makeTestMethodFrom: UserLibrary >> #fillRect:lprc:hbr: overlapped: aBoolean.
 	self
-		should: [apiCall value: UserLibrary default withArguments: {obj. ByteArray newFixed: 16. nil}]
+		should: [apiCall value: User32 withArguments: {obj. ByteArray newFixed: 16. nil}]
 		raise: errorClass
 		matching: 
 			[:ex |
 			ex hresult = (HRESULT fromPrimitiveFailureCode: _PrimitiveFailureCode.InvalidParameter1)
 				and: [ex argument == obj and: [ex type = 'handle']]].
 	self
-		should: [apiCall value: UserLibrary default withArguments: {nil. obj. nil}]
+		should: [apiCall value: User32 withArguments: {nil. obj. nil}]
 		raise: errorClass
 		matching: 
 			[:ex |
 			ex hresult = (HRESULT fromPrimitiveFailureCode: _PrimitiveFailureCode.InvalidParameter2)
 				and: [ex argument == obj and: [ex type = 'OS.RECTL*']]].
 	self
-		should: [apiCall value: UserLibrary default withArguments: {nil. ByteArray newFixed: 16. obj}]
+		should: [apiCall value: User32 withArguments: {nil. ByteArray newFixed: 16. obj}]
 		raise: errorClass
 		matching: 
 			[:ex |

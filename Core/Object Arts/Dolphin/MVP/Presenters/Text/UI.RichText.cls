@@ -157,7 +157,7 @@ onPreStripImage
 
 registerClipboardFormat
 	| clipboardRtf |
-	clipboardRtf := UserLibrary default registerClipboardFormat: 'RTF in UTF8'.
+	clipboardRtf := User32 registerClipboardFormat: 'RTF in UTF8'.
 	clipboardRtf == 0 ifTrue: [^Win32Error signal].
 	Clipboard current
 		addRegisteredFormat: #RichText

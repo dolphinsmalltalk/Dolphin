@@ -408,7 +408,7 @@ messageBox: anExternalHandle text: textString caption: captionString style: styl
 				ifTrue: [0]
 				ifFalse: 
 					["#2107: getActiveWindow may return nil, e.g. in a headless app with no windows"
-					anExternalHandle ifNil: [UserLibrary default getActiveWindow ?? 0]].
+					anExternalHandle ifNil: [User32 getActiveWindow ?? 0]].
 	struct := MSGBOXPARAMSW new.
 	dwStyle := styleInteger.
 	struct text: textString.
@@ -783,7 +783,11 @@ fileName
 	"Answer the host system file name of the external library which 
 	the receiver represents."
 
-	^'USER32'! !
+	^'USER32'!
+
+sharedVariableName
+	^#{User32}! !
 !OS.UserLibrary class categoriesFor: #clear!initializing!private! !
 !OS.UserLibrary class categoriesFor: #fileName!constants!public! !
+!OS.UserLibrary class categoriesFor: #sharedVariableName!constants!private! !
 

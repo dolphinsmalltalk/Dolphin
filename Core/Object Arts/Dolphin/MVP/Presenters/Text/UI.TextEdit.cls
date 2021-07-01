@@ -110,7 +110,7 @@ calcRectangleFromClientRectangle: aRectangle
 
 	| rect |
 	rect := RECTL fromRectangle: aRectangle.
-	UserLibrary default
+	User32
 		adjustWindowRectEx: rect
 		dwStyle: self baseStyle | WS_BORDER
 		bMenu: false
@@ -155,7 +155,7 @@ canPaste
 	"Answer whether the window can paste from the current contents of
 	the clipboard."
 
-	^self isReadOnly not and: [UserLibrary default isClipboardFormatAvailable: CF_UNICODETEXT]!
+	^self isReadOnly not and: [User32 isClipboardFormatAvailable: CF_UNICODETEXT]!
 
 canRedo
 	"Answer whether the window can redo the last undone operation."

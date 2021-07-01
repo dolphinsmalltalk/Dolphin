@@ -28,7 +28,7 @@ beep
 
 	| iStyle |
 	iStyle := self iconStyleFlag.
-	iStyle = 0 ifFalse: [UserLibrary default messageBeep: iStyle]!
+	iStyle = 0 ifFalse: [User32 messageBeep: iStyle]!
 
 caption
 	"Answer the receiver's current caption."
@@ -98,7 +98,7 @@ owner: aViewOrHandle
 
 ownerHandle
 	| handle |
-	handle := owner ifNil: [UserLibrary default getActiveWindow] ifNotNil: [owner].
+	handle := owner ifNil: [User32 getActiveWindow] ifNotNil: [owner].
 	^handle notNil ifTrue: [handle asParameter] ifFalse: [0]!
 
 text

@@ -98,9 +98,9 @@ drawThemeParentBackground: hwnd hdc: hDC prc: prc
 			[in, optional]RECTL* prc);"
 
 	| offset parent oldOrg |
-	parent := UserLibrary default getParent: hwnd.
+	parent := User32 getParent: hwnd.
 	offset := POINTL new.
-	UserLibrary default
+	User32
 		mapWindowPoints: hwnd
 		hWndTo: parent
 		lpPoints: offset
@@ -111,7 +111,7 @@ drawThemeParentBackground: hwnd hdc: hDC prc: prc
 		nXOrg: offset x
 		nYOrg: offset y
 		lppt: oldOrg) ifFalse: [^HRESULT win32Error: KernelLibrary default getLastError].
-	UserLibrary default
+	User32
 		sendMessage: parent
 		msg: WM_PRINTCLIENT
 		wParam: hDC
@@ -456,7 +456,7 @@ getThemeSysColorBrush: htheme iColorId: iColorId
 			[in]HTHEME HTHEME,
 			[in]int iColorId);"
 
-	^UserLibrary default getSysColorBrush: iColorId!
+	^User32 getSysColorBrush: iColorId!
 
 getThemeSysFont: htheme iFontId: iFontId plf: plf
 	"Invoke the GetThemeSysFont() function of the module wrapped by the receiver.

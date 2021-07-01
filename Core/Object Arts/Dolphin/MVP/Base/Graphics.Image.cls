@@ -50,7 +50,7 @@ copy
 copyHandle
 	"Private - Answer an external handle to the image which is a copy of that represented by the receiver."
 
-	^UserLibrary default
+	^User32
 		copyImage: self handle
 		uType: self imageType
 		cxDesired: 0
@@ -199,7 +199,7 @@ loadFromFile: pathString extent: aPoint
 	"Private - Attempts to load an image of the receivers type from a disk file.
 	Answers the image's handle, or nil if the image could not be loaded."
 
-	^UserLibrary default
+	^User32
 		loadImage: 0
 		lpszName: pathString asResourceId
 		uType: self imageType

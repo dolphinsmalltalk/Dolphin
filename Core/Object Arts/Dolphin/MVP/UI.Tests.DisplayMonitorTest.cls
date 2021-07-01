@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Tests.DolphinTest subclass: #'UI.Tests.DisplayMonitorTest'
 	instanceVariableNames: ''
@@ -15,7 +15,6 @@ testActive
 	| shell primary user32 |
 	primary := DisplayMonitor primary.
 	shell := ShellView show.
-	user32 := UserLibrary default.
 	
 	[self assert: View foreground equals: shell.
 	shell position: primary workArea topLeft + 50.

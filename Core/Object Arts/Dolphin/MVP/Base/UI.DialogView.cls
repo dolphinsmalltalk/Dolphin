@@ -39,7 +39,7 @@ basicCreateAt: position extent: size
 	has been opened with the LOAD_LIBRARY_AS_DATAFILE flag. Dialog templates
 	can only be loaded from DLLs that have been loaded as normal code modules."
 
-	^UserLibrary default
+	^User32
 		createDialog: self resourceLib asParameter
 		lpTemplate: self templateId asResourceId
 		hWndParent: self class activeHandle
@@ -77,7 +77,7 @@ defaultWindowProcessing: message wParam: wParam lParam: lParam
 	our own DialogProc() (dialog procs are not WndProcs), which just returns false
 	to get the DefDlgProc() to do its stuff."
 
-	^UserLibrary default
+	^User32
 		defDlgProc: handle
 		msg: message
 		wParam: wParam
@@ -155,13 +155,13 @@ enableItem: anInteger state: aBoolean
 	"Private - Enable/Disable the receiver's control with the specified Id. Answers the previous
 	state of the window."
 
-	^UserLibrary default enableWindow: (self getItem: anInteger) asParameter bEnable: aBoolean!
+	^User32 enableWindow: (self getItem: anInteger) asParameter bEnable: aBoolean!
 
 endDialog: result
 	"Close the receiver with result as the result of the dialog (should be an Integer
 	or convertible to anInteger by asDword)"
 
-	UserLibrary default endDialog: handle nResult: result asUIntPtr!
+	User32 endDialog: handle nResult: result asUIntPtr!
 
 getItemText: anInteger
 	"Private - Get the text of the receiver's control with the specified id.
@@ -226,11 +226,10 @@ onInitDialog
 
 	"Similarly, Windows always creates dialog as a child of the desktop. Force the required
 	parent here"
-	UserLibrary default setParent: self asParameter hWndNewParent: creationParent asParameter.
-
+	User32 setParent: self asParameter hWndNewParent: creationParent asParameter.
 	(self isPropertyPage and: [self isThemed])
-		ifTrue: [
-			"Property pages in tabbed dialogs require a specific theme"
+		ifTrue: 
+			["Property pages in tabbed dialogs require a specific theme"
 			ThemeLibrary default enableThemeDialogTexture: self asParameter dwFlags: ETDT_ENABLETAB].
 
 	"Tell Windows NOT to set the focus. We set focus later after we have populated the dialog
@@ -290,7 +289,7 @@ runModalLoop
 setItem: anInteger font: aFontOrHandle
 	"Private - Set the font of the receiver's control with the specified id."
 
-	UserLibrary default
+	User32
 		sendMessage: (self getItemHandle: anInteger ifAbsent: [])
 		msg: WM_SETFONT
 		wParam: aFontOrHandle asParameter
@@ -301,7 +300,7 @@ setItem: anInteger icon: anIcon
 	Difficult to trap error here because return is 0 if previously control had no error,
 	or if a real error occurred!!. The answer is the handle of the previous icon."
 
-	^UserLibrary default
+	^User32
 		sendDlgItemMessage: handle
 		nIDDlgItem: anInteger
 		msg: STM_SETICON
@@ -312,19 +311,19 @@ setItem: anIntegerId int: anInteger
 	"Private - Set the text of the receiver's control with the specified id to the string
 	representation of anInteger."
 
-	(UserLibrary default
+	(User32
 		setDlgItemInt: handle
 		nIDDlgItem: anIntegerId
 		uValue: anInteger
-		bSigned: anInteger negative) ifFalse: [UserLibrary default systemError]!
+		bSigned: anInteger negative) ifFalse: [User32 systemError]!
 
 setItem: anInteger text: aString
 	"Private - Set the text of the receiver's control with the specified id."
 
-	(UserLibrary default
+	(User32
 		setDlgItemText: self asParameter
 		nIDDlgItem: anInteger
-		lpString: aString) ifFalse: [UserLibrary default systemError]!
+		lpString: aString) ifFalse: [User32 systemError]!
 
 showModal
 	"Private - Show the receiver as a dialog modal to the current active window. Note that if the Dialog has already been created, it will have taken activation, and it is no longer possible to determine the previously active window."
@@ -354,7 +353,7 @@ showModalTo: aView
 				enableOwningView ifTrue: [owningView beActive].
 				"Force the owning view to re-paint and update its cursor in case actions following closure of the dialog are lengthy"
 				owningView update.
-				UserLibrary default
+				User32
 					sendMessage: owningView asParameter
 					msg: WM_SETCURSOR
 					wParam: 0

@@ -58,7 +58,7 @@ isView
 	^false!
 
 killTimer: anInteger
-	^UserLibrary default killTimer: handle uIDEvent: anInteger!
+	^User32 killTimer: handle uIDEvent: anInteger!
 
 onStartup
 	"Private - Ensure that the handle of the receiver is set to nil at startup."
@@ -71,7 +71,7 @@ postAction: aNiladicValuable
 	thread."
 
 	actions nextPut: aNiladicValuable.
-	UserLibrary default
+	User32
 		postMessage: handle
 		msg: WM_USER
 		wParam: 0
@@ -98,7 +98,7 @@ preTranslateMessage: aMSG
 	^false!
 
 setTimer: idInteger interval: intervalInteger
-	^UserLibrary default
+	^User32
 		setTimer: handle
 		nIDEvent: idInteger
 		uElapse: intervalInteger

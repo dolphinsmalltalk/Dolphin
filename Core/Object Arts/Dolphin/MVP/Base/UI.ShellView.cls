@@ -72,7 +72,7 @@ allAdditionalKeyBindings
 basicMenu: aMenuBarOrNil
 	"Private - Set the menu bar for this window to aMenuBarOrNil."
 
-	UserLibrary default setMenu: self asParameter hMenu: aMenuBarOrNil asParameter!
+	User32 setMenu: self asParameter hMenu: aMenuBarOrNil asParameter!
 
 buildCombinedAcceleratorTable
 	combinedAcceleratorTable := acceleratorTable
@@ -266,7 +266,7 @@ drawMenuBar
 	"Draw the receiver's menu bar, either when initially set or after it has been updated.
 	Answer whether the request succeeded."
 
-	^UserLibrary default drawMenuBar: self asParameter!
+	^User32 drawMenuBar: self asParameter!
 
 ensureSubViewVisible: aSubView 
 	"Terminate the recursion as making a sub-view visible should not change the z-order of the Windows on the desktop (or indeed in an idea space).
@@ -304,7 +304,7 @@ flash: flashCountInteger flags: flagsInteger
 		hwnd: self asParameter;
 		uCount: flashCountInteger;
 		dwFlags: flagsInteger.
-	^(UserLibrary default flashWindowEx: params) ~= 0!
+	^(User32 flashWindowEx: params) ~= 0!
 
 getDefId
 	"Private - Answer the ID of any default push button in the receiver, or 0 if none."
@@ -320,7 +320,7 @@ getLastActivePopup
 	if there is no popup."
 
 	| hWnd |
-	hWnd := UserLibrary default getLastActivePopup: self asParameter.
+	hWnd := User32 getLastActivePopup: self asParameter.
 	^(hWnd notNil and: [hWnd ~= handle]) ifTrue: [View fromHandle: hWnd]!
 
 hasCaption
@@ -445,7 +445,7 @@ isLayeredWindow: aBoolean
 isMaximized
 	"Answer whether the receiver is currently maximized."
 
-	^UserLibrary default isZoomed: self asParameter!
+	^User32 isZoomed: self asParameter!
 
 isMinimized
 	"Answer whether the receiver is currently minimized."
@@ -726,7 +726,7 @@ onViewDeactivated: anEvent
 
 	| focus |
 	focus := self class focus.
-	(focus notNil and: [UserLibrary default isChild: self asParameter hWnd: focus asParameter])
+	(focus notNil and: [User32 isChild: self asParameter hWnd: focus asParameter])
 		ifTrue: [self lastFocus: focus].
 	self trigger: #viewDeactivated.
 	^0!
@@ -893,7 +893,7 @@ setButtonId: id style: style
 
 	| hWndButton |
 	hWndButton := self findItemHandle: id ifAbsent: [^self].
-	UserLibrary default
+	User32
 		sendMessage: hWndButton
 		msg: BM_SETSTYLE
 		wParam: style
@@ -982,7 +982,7 @@ translateAccelerator: aMSG
 	| hAccel |
 	hAccel := self combinedAcceleratorTable asParameter.
 	^hAccel ~= 0 and: 
-			[(UserLibrary default
+			[(User32
 				translateAccelerator: self asParameter
 				haccl: combinedAcceleratorTable asParameter
 				lpmsg: aMSG) ~~ false]	"useful on image restart of debugged process"!

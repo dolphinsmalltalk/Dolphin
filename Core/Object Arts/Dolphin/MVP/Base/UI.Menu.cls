@@ -85,21 +85,19 @@ applyFlags
 	(flags isNil or: [flags == 0]) ifTrue: [^self].
 	struct := MENUINFO newBuffer.
 	struct style: flags.
-	(UserLibrary default setMenuInfo: self asParameter lpcmi: struct) ifFalse: [Sound errorBeep]!
+	(User32 setMenuInfo: self asParameter lpcmi: struct) ifFalse: [Sound errorBeep]!
 
 basicFree
 	"Private - Free the Menu resource handle and all submenus."
 
-	| lib |
-	lib := UserLibrary default.
 	items keysAndValuesDo: 
 			[:i :menuItem |
-			lib
+			User32
 				removeMenu: handle
 				uPosition: i - 1
 				uFlags: MF_BYPOSITION.
 			menuItem free].
-	lib destroyMenu: handle!
+	User32 destroyMenu: handle!
 
 basicRealize
 	"Private - Realizes the handle for the context menu and all connected submenus."
@@ -164,7 +162,7 @@ commandString: aString
 createHandle
 	"Private - Answer an external handle to a new popup menu."
 
-	^UserLibrary default createPopupMenu!
+	^User32 createPopupMenu!
 
 defaultFlags
 	"Private - Answer the default flags to be applied when realizing new instances of the receiver."
@@ -181,10 +179,10 @@ deleteItemAt: position
 	"Private - Delete the receiver's item at the specified one-based index."
 
 	(items at: position) free.
-	(UserLibrary default
+	(User32
 		deleteMenu: self handle
 		uPosition: position - 1
-		uFlags: MF_BYPOSITION) ifFalse: [UserLibrary default systemError]!
+		uFlags: MF_BYPOSITION) ifFalse: [User32 systemError]!
 
 description
 	"Private - Answer a short textual description of the receiver's command.
@@ -218,7 +216,7 @@ drawItemImage: itemImage on: hDC at: topLeft disabled: aBoolean
 						at: 0 @ 0.
 					true]
 				descriptor: DrawStateCallbackDescriptor.
-	UserLibrary default
+	User32
 		drawState: hDC
 		hbr: nil
 		lpOutputFunc: callback asParameter
@@ -346,7 +344,7 @@ insertIntoMenu: parentMenu at: position info: aMENUITEMINFO
 	self realize.
 	hParent isNull ifTrue: [^self].
 	aMENUITEMINFO subMenu: self text: self text.
-	(UserLibrary default
+	(User32
 		insertMenuItem: hParent
 		uItem: position
 		fByPosition: true
@@ -578,7 +576,7 @@ removeItemAt: index
 	items := items copyWithoutIndex: index.
 	self isRealized
 		ifTrue: 
-			[(UserLibrary default
+			[(User32
 				removeMenu: self handle
 				uPosition: index - 1
 				uFlags: MF_BYPOSITION) ifFalse: [OS.UserLibrary default systemError]].
@@ -593,7 +591,7 @@ setDefault: index
 	"Set the item of the receiver with the specified 1-based <integer> index
 	to be the default item. If the index is zero, then the menu has no default."
 
-	UserLibrary default
+	User32
 		setMenuDefaultItem: self handle
 		uItem: index - 1
 		fByPos: TRUE!
@@ -604,7 +602,7 @@ setItem: anInteger info: aMENUITEMINFO
 	checked or unchecked (and if checked whether check-box or radio button style), command
 	string, bitmap, etc. Answer whether the call succeeded."
 
-	^UserLibrary default
+	^User32
 		setMenuItemInfo: self handle
 		uItem: anInteger - 1
 		fByPosition: true
@@ -613,7 +611,7 @@ setItem: anInteger info: aMENUITEMINFO
 showIn: aView position: aPos
 	"Show top level of context menu on screen at position aPos."
 
-	^UserLibrary default
+	^User32
 		trackPopupMenu: self asParameter
 		uFlags: ##(TPM_LEFTALIGN | TPM_RIGHTBUTTON)
 		x: aPos x
@@ -653,7 +651,7 @@ updateItem: indexInteger id: idInteger text: newText
 	"Private - Update the text of the menu item with the 1-based <integer> position, indexInteger, 
 	within the receiver to the <readableString>, newText."
 
-	UserLibrary default
+	User32
 		modifyMenu: self handle
 		uPosition: indexInteger - 1
 		uFlags: ##(MF_BYPOSITION | MFT_STRING)

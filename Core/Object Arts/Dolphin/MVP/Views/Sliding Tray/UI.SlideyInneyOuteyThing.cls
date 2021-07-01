@@ -49,7 +49,7 @@ animatePositiveFlag
 	^self isVertical ifTrue: [AW_HOR_POSITIVE] ifFalse: [AW_VER_POSITIVE]!
 
 animateTray: aBoolean
-	UserLibrary default
+	User32
 		animateWindow: tray asParameter
 		dwTime: self animationDuration
 		dwFlags: (self trayAnimationType bitOr: (aBoolean

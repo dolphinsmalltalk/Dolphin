@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 OS.UserLibrary subclass: #'UI.Tests.FakeUserLibrary'
 	instanceVariableNames: 'user32 getForegroundWindowBlock getActiveWindowBlock getCursorPosBlock'
@@ -6,7 +6,7 @@ OS.UserLibrary subclass: #'UI.Tests.FakeUserLibrary'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-UI.Tests.FakeUserLibrary guid: (GUID fromString: '{bbf4bdc3-fddb-4f49-8884-67abd17b5abf}')!
+UI.Tests.FakeUserLibrary guid: (Core.GUID fromString: '{bbf4bdc3-fddb-4f49-8884-67abd17b5abf}')!
 UI.Tests.FakeUserLibrary comment: ''!
 !UI.Tests.FakeUserLibrary categoriesForClass!External-Libraries-Win32! !
 !UI.Tests.FakeUserLibrary methodsFor!
@@ -49,7 +49,7 @@ initializeForDesktopActive
 	getActiveWindowBlock := []!
 
 open
-	user32 := UserLibrary default.
+	user32 := User32.
 	handle := user32 handle.
 	self beFinalizable.
 	UserLibrary setDefault: self! !
@@ -63,4 +63,10 @@ open
 !UI.Tests.FakeUserLibrary categoriesFor: #getForegroundWindowBlock:!initializing!private! !
 !UI.Tests.FakeUserLibrary categoriesFor: #initializeForDesktopActive!initializing!public! !
 !UI.Tests.FakeUserLibrary categoriesFor: #open!private!realizing/unrealizing! !
+
+!UI.Tests.FakeUserLibrary class methodsFor!
+
+openDefault
+	"Do nothing - we don't want to overwrite the real UserLibrary on startup"! !
+!UI.Tests.FakeUserLibrary class categoriesFor: #openDefault!instance creation!private!realizing/unrealizing! !
 

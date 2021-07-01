@@ -59,7 +59,7 @@ addNonVirtualItems: aCollection insertStruct: aTVINSERTSTRUCT
 									tvItem
 										image: index - 1;
 										selectedImage: index - 1]].
-					hItem := UserLibrary default
+					hItem := User32
 								sendMessageU: handle
 								msg: TVM_INSERTITEMW
 								wParam: 0
@@ -76,13 +76,11 @@ addRoot: anObject
 addVirtualItems: aCollection insertStruct: aTVINSERTSTRUCT
 	aTVINSERTSTRUCT item allCallbacks.
 	self withOldWndProc: 
-			[| user |
-			"Add items with subclassing removed so don't receive TVM_INSERTITEMs"
-			user := UserLibrary default.
+			["Add items with subclassing removed so don't receive TVM_INSERTITEMs"
 			aCollection do: 
 					[:each |
 					| hItem |
-					hItem := user
+					hItem := User32
 								sendMessageU: handle
 								msg: TVM_INSERTITEMW
 								wParam: 0
@@ -1086,7 +1084,7 @@ tvmGetItemRect: aHandle textOnly: aBoolean
 tvmGetNextItem: aHandle code: anInteger
 	"Private - Send TVM_GETNEXTITEM with anInteger and aHandle to the tree view."
 
-	^UserLibrary default
+	^User32
 		sendMessageU: handle
 		msg: TVM_GETNEXTITEM
 		wParam: anInteger
@@ -1097,7 +1095,7 @@ tvmSetImageList: aWinImageList type: anIntegerImageType
 	 Answer the receiver's previous <Imagelist>."
 
 	^ImageList
-		fromHandle: (UserLibrary default
+		fromHandle: (User32
 				sendMessageU: handle
 				msg: TVM_SETIMAGELIST
 				wParam: anIntegerImageType

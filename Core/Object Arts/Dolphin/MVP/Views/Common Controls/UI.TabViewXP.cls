@@ -188,7 +188,7 @@ paintTabLabelsOn: aCanvas
 				on: aCanvas
 				in: (rect translateBy: 0 @ (self isInverted ifTrue: [self selExtra] ifFalse: [self selExtra negated])).
 			self hasFocus
-				ifTrue: [UserLibrary default drawFocusRect: aCanvas asParameter lprc: (rect insetBy: 1) asParameter]].
+				ifTrue: [User32 drawFocusRect: aCanvas asParameter lprc: (rect insetBy: 1) asParameter]].
 	selectedIndex + 1 to: itemCount
 		do: 
 			[:i |
@@ -345,7 +345,7 @@ paintVerticalTabLabelsOn: aCanvas
 		on: aCanvas
 		in: (rect translateBy: (self isInverted ifTrue: [self selExtra] ifFalse: [self selExtra negated]) @ 0).
 	self hasFocus
-		ifTrue: [UserLibrary default drawFocusRect: aCanvas asParameter lprc: (rect insetBy: 1) asParameter].
+		ifTrue: [User32 drawFocusRect: aCanvas asParameter lprc: (rect insetBy: 1) asParameter].
 	selectedIndex + 1 to: itemCount
 		do: 
 			[:i |

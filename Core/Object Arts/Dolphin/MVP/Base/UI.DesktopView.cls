@@ -151,7 +151,7 @@ invalidateRect: aRectangle erase: aBoolean
 	"Invalidates the specified desktop rectangle (a RECTL, Rectangle, or nil for the whole client window).
 	Set whether to erase the receivers background before repainting. Answer whether the function succeeds."
 
-	^UserLibrary default
+	^User32
 		invalidate: handle
 		lpRect: aRectangle asParameter
 		bErase: aBoolean asParameter!
@@ -265,7 +265,7 @@ refresh
 	"Redraw the entire desktop and all windows (i.e. a complete screen refresh). This will cause
 	a lot of flashing!!"
 
-	^UserLibrary default
+	^User32
 		invalidate: nil
 		lpRect: nil
 		bErase: true!
@@ -299,7 +299,7 @@ setDefaultButton: button state: setDefault
 	!
 
 setFocus
-	^UserLibrary default setFocus: handle!
+	^User32 setFocus: handle!
 
 topShell
 	"Answer the first <topPresenter> located in the parent chain of the receiver."
@@ -389,10 +389,8 @@ current: aDesktopView
 	Current := aDesktopView!
 
 getProgmanClass
-	| user |
-	user := UserLibrary default.
-	ProgmanClassAtom := user
-				getClassLongPtr: (user findWindow: 'Progman' asUtf16String lpWindowName: nil)
+	ProgmanClassAtom := User32
+				getClassLongPtr: (User32 findWindow: 'Progman' asUtf16String lpWindowName: nil)
 				nIndex: GCW_ATOM!
 
 icon
@@ -410,8 +408,7 @@ initialize
 isProgramManager: hWnd
 	"Private - Answer whether the argument is the window handle of the Windows program manager. Here we are relying on the undocumented fact that the 'program manager' (main Windows shell) has a specific name for its Window class, and has done so since the very earliest versions of Windows. It seems unlikely to change, but if it does will fail safe for most purposes."
 
-	^(UserLibrary default getClassLongPtr: hWnd asParameter nIndex: Win32Constants.GCW_ATOM)
-		== ProgmanClassAtom!
+	^(User32 getClassLongPtr: hWnd asParameter nIndex: Win32Constants.GCW_ATOM) == ProgmanClassAtom!
 
 stbConvertFromVersion9: anArray
 	"Private - Perform an STB conversion from a version 9 (or earlier) instance

@@ -1002,8 +1002,8 @@ caretBlinkTime
 caretBlinkTime: aDuration
 	"Set the <Duration> that the caret is on and off. If 0 ms, then the caret does not blink. If nil, then the default system blink time is used."
 
-	caretBlinkTime := (aDuration isNil
-				or: [aDuration asMilliseconds = UserLibrary default getCaretBlinkTime]) ifFalse: [aDuration].
+	caretBlinkTime := (aDuration isNil or: [aDuration asMilliseconds = User32 getCaretBlinkTime])
+				ifFalse: [aDuration].
 	self setCaretBlinkTime!
 
 caretForecolor
@@ -8722,7 +8722,7 @@ setCallTipTabWidth
 
 setCaretBlinkTime
 	self sciSetCaretPeriod: (caretBlinkTime
-				ifNil: [UserLibrary default getCaretBlinkTime]
+				ifNil: [User32 getCaretBlinkTime]
 				ifNotNil: [caretBlinkTime asMilliseconds])!
 
 setCharacterClasses
@@ -10042,7 +10042,7 @@ zoomOut
 !UI.Scintilla.ScintillaView categoriesFor: #edgeMode!long lines!public! !
 !UI.Scintilla.ScintillaView categoriesFor: #edgeMode:!long lines!public! !
 !UI.Scintilla.ScintillaView categoriesFor: #editStyles!commands!public! !
-!UI.Scintilla.ScintillaView categoriesFor: #elementColors!private! !
+!UI.Scintilla.ScintillaView categoriesFor: #elementColors!accessibility!element colors!public! !
 !UI.Scintilla.ScintillaView categoriesFor: #emptyUndoBuffer!**auto generated**!public!scintilla interface!undo & redo! !
 !UI.Scintilla.ScintillaView categoriesFor: #endOfLineAnnotationMode!annotations!public! !
 !UI.Scintilla.ScintillaView categoriesFor: #endOfLineAnnotationMode:!annotations!public! !
@@ -10887,7 +10887,7 @@ zoomOut
 !UI.Scintilla.ScintillaView categoriesFor: #updateSetting:!event handling!private!updating! !
 !UI.Scintilla.ScintillaView categoriesFor: #updateTextStyles!helpers!private!style definition! !
 !UI.Scintilla.ScintillaView categoriesFor: #validateUserInterface!operations!public! !
-!UI.Scintilla.ScintillaView categoriesFor: #whitespaceBackcolor!public!white space! !
+!UI.Scintilla.ScintillaView categoriesFor: #whitespaceBackcolor!element colors!public!white space! !
 !UI.Scintilla.ScintillaView categoriesFor: #whitespaceBackcolor:!element colors!public!white space! !
 !UI.Scintilla.ScintillaView categoriesFor: #whitespaceForecolor!element colors!public!white space! !
 !UI.Scintilla.ScintillaView categoriesFor: #whitespaceForecolor:!element colors!public!white space! !

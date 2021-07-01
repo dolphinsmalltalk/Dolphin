@@ -132,7 +132,7 @@ paintSeparatorOn: aCanvas in: aRectangle
 
 	| offset |
 	offset := textOffset - SystemMetrics current paddedBorderThickness.
-	UserLibrary default
+	User32
 		drawEdge: aCanvas asParameter
 		qrc: (RECTL
 				left: aRectangle left + offset

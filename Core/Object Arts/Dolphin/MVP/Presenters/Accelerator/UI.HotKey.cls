@@ -90,7 +90,7 @@ preTranslateKeyboardInput: aMSG
 	"Private - Dispatch keyboard input in the receiver directly to avoid accelerator table
 	translation in containing shell."
 
-	UserLibrary default
+	User32
 		translateMessage: aMSG;
 		dispatchMessage: aMSG.
 	^true!

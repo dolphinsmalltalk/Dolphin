@@ -165,7 +165,7 @@ paintClassicBackgroundOn: aCanvas
 paintClassicEdgesOn: aCanvas
 	self isPinned ifTrue: [^nil].
 	"Note that we omit one line of the top-edge in order to give the same appearance as the tab control when pinned"
-	UserLibrary default
+	User32
 		drawEdge: aCanvas asParameter
 		qrc: (0 @ -1 corner: self extent) asParameter
 		edge: (self isResizable ifTrue: [EDGE_RAISED] ifFalse: [EDGE_ETCHED])

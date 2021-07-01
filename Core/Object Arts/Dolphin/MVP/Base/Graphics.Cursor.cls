@@ -20,7 +20,7 @@ load: identifierObject fromInstance: hModule extent: aPoint
 	"Private - Attempts to load the receiver as a resource from an instance.
 	Answers the image's handle, or nil if the image could not be loaded."
 
-	^UserLibrary default
+	^User32
 		loadImage: hModule asParameter
 		lpszName: identifierObject asResourceId
 		uType: self imageType
@@ -34,7 +34,7 @@ loadFromInstance: hModule
 	it does not appear to work for instance 0; the system. Hence this method 
 	which tries the old way. Answers the loaded handle or nil if the load failed"
 
-	^UserLibrary default loadCursor: hModule asParameter lpCursorName: identifier asResourceId!
+	^User32 loadCursor: hModule asParameter lpCursorName: identifier asResourceId!
 
 makeCurrent
 	"Make the receiver become the current global cursor."
@@ -73,7 +73,7 @@ setCursor
 	"Private - Set the receiver as the current Windows cursor. Answers the handle of the old
 	cursor."
 
-	^UserLibrary default setCursor: self asParameter!
+	^User32 setCursor: self asParameter!
 
 showWhile: aBlock
 	"Maintain the wait cursor while aBlock is executed, answering the result of the block.
@@ -85,7 +85,7 @@ showWhile: aBlock
 	actual := self setCursor.
 	^aBlock ensure: 
 			[Current := previous.
-			UserLibrary default setCursor: actual]! !
+			User32 setCursor: actual]! !
 !Graphics.Cursor categoriesFor: #imageType!constants!private! !
 !Graphics.Cursor categoriesFor: #load:fromInstance:extent:!private!realizing/unrealizing! !
 !Graphics.Cursor categoriesFor: #loadFromInstance:!private!realizing/unrealizing! !
@@ -126,7 +126,7 @@ current: aCursorOrNil
 	| original |
 	original := Current.
 	Current := aCursorOrNil.
-	UserLibrary default setCursor: Current asParameter.
+	User32 setCursor: Current asParameter.
 	^original!
 
 ddCopy
@@ -230,13 +230,13 @@ position
 
 	| pos |
 	pos := POINTL new.
-	UserLibrary default getCursorPos: pos.
+	User32 getCursorPos: pos.
 	^pos asPoint!
 
 position: aPoint
 	"Move the mouse cursor (if permitted) to the Point specified in screen co-ordinates."
 
-	^(UserLibrary default setCursorPosX: aPoint x y: aPoint y) ~~ 0!
+	^(User32 setCursorPosX: aPoint x y: aPoint y) ~~ 0!
 
 reset
 	"Clear the global cursor setting. Answers the previous global cursor (or nil if none)."
@@ -251,7 +251,7 @@ show
 show: aBoolean
 	"Show or hide the current cursor according to aBoolean"
 
-	UserLibrary default showCursor: aBoolean asParameter!
+	User32 showCursor: aBoolean asParameter!
 
 sizeAll
 	"Answer the instance that is the SizeAll cursor."

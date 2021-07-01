@@ -19,8 +19,9 @@ libraryClass: aClass
 	^self new libraryClass: aClass; yourself! !
 
 Kernel at: #VM put: VMLibrary default!
+OS at: #User32 put: UserLibrary default!
 | systemPackage |
 systemPackage := Object owningPackage.
 DynamicLinkLibraryStub owningPackage: systemPackage.
-#(#{Kernel.VM}) do: [:each |
+#(#{Kernel.VM} #{OS.User32}) do: [:each |
 	each binding owningPackage: systemPackage]!

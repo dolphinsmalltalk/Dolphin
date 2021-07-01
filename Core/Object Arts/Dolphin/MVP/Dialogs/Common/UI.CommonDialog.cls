@@ -114,7 +114,7 @@ showModal
 					[owner isEnabled: false.
 					HTERROR].
 	"Reset the view's cursor in case control does not return to message loop"
-	UserLibrary default
+	User32
 		sendMessage: owner asParameter
 		msg: WM_SETCURSOR
 		wParam: 0

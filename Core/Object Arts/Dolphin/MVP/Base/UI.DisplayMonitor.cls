@@ -43,7 +43,7 @@ devices
 			i := 0.
 			device := DISPLAY_DEVICEW newBuffer.
 			
-			[UserLibrary default
+			[User32
 				enumDisplayDevices: self deviceName
 				iDevNum: i
 				lpDisplayDevice: device
@@ -66,7 +66,7 @@ info
 	^info
 		ifNil: 
 			[info := MONITORINFOEXW newBuffer.
-			(UserLibrary default getMonitorInfo: handle lpmi: info) ifFalse: [Win32Error signal].
+			(User32 getMonitorInfo: handle lpmi: info) ifFalse: [Win32Error signal].
 			info]!
 
 isAttachedToDesktop
@@ -121,7 +121,7 @@ active
 	"Answer an instance of the receiver representing the monitor that is most likely to be the one the user might consider active. There is no completely reliable way to determine this, so we use the heuristic that the monitor of the foreground window (whether that is a Dolphin window or not) is likely to be the one with the users' interest.
 	An exception is if the 'Progman' window is the foreground window, which will be the case if the user has clicked on the desktop (at least in any version of Windows that is currently relevant)."
 
-	UserLibrary default getForegroundWindow
+	User32 getForegroundWindow
 		ifNotNil: [:hWnd | (DesktopView isProgramManager: hWnd) ifFalse: [^self displayingView: hWnd]].
 
 	"We want to return the display with the mouse cursor if the desktop (really the program manager) has focus, or in the unlikely event that GetForegroundWindow returns null, which according to the docs it can do if activation is in transition."
@@ -141,7 +141,7 @@ containingPoint: aPoint
 	"Answer an instance of the receiver describing the monitor on which the specified 'Point' in the screen co-ordinate space would appear. If the View is outside the display area of any of the connected monitors, answer nil.
 	Note that there may be areas of the virtual screen area that are not visible, depending on the relative sizes and positioning of the monitors in the Windows display settings, i.e. a Point within the virtual screen area may not actually be displayed on any monitor."
 
-	^(UserLibrary default monitorFromPoint: aPoint asParameter dwFlags: MONITOR_DEFAULTTONULL)
+	^(User32 monitorFromPoint: aPoint asParameter dwFlags: MONITOR_DEFAULTTONULL)
 		ifNotNil: [:hMonitor | self fromHandle: hMonitor]!
 
 desktopMonitors
@@ -153,7 +153,7 @@ displayingView: aViewOrHandle
 	"Answer an instance of the receiver describing the monitor on which the specified `View`/window is (at least mostly) displayed. Note that for the desktop window, the primary monitor will be returned.
 	If the window is outside the visible display area, answer nil."
 
-	^(UserLibrary default monitorFromWindow: aViewOrHandle asParameter dwFlags: MONITOR_DEFAULTTONULL)
+	^(User32 monitorFromWindow: aViewOrHandle asParameter dwFlags: MONITOR_DEFAULTTONULL)
 		ifNotNil: [:hMonitor | self fromHandle: hMonitor]!
 
 forCanvas: aCanvas intersecting: aRectangle
@@ -173,7 +173,7 @@ forCanvas: aCanvas intersecting: aRectangle
 
 forCanvas: aCanvas intersecting: aRectangle do: aMonadicValuable
 	| user32 callback answer |
-	user32 := UserLibrary default.
+	user32 := User32.
 	callback := External.Callback block: 
 					[:hMonitor :hdc :lprect :lparam |
 					aMonadicValuable value: (DisplayMonitor fromHandle: hMonitor).
@@ -201,27 +201,27 @@ icon
 intersecting: aRectangle
 	"Answer an instance of the receiver describing the monitor which has the largest intersection with the specified `Rectangle` of the screen co-ordinate space, or nil if there is no intersection."
 
-	^(UserLibrary default monitorFromRect: aRectangle asParameter dwFlags: MONITOR_DEFAULTTONULL)
+	^(User32 monitorFromRect: aRectangle asParameter dwFlags: MONITOR_DEFAULTTONULL)
 		ifNotNil: [:hMonitor | self fromHandle: hMonitor]!
 
 nearestPoint: aPoint
 	"Answer an instance of the receiver describing the monitor to which the specified `Point` (expressing a position in the screen co-ordinate space) is nearest."
 
-	^(UserLibrary default monitorFromPoint: aPoint asParameter dwFlags: MONITOR_DEFAULTTONEAREST)
+	^(User32 monitorFromPoint: aPoint asParameter dwFlags: MONITOR_DEFAULTTONEAREST)
 		ifNotNil: [:hMonitor | self fromHandle: hMonitor]
 		ifNil: [Win32Error signal]!
 
 nearestView: aView
 	"Answer an instance of the receiver describing the monitor on which the specified `View` is either mostly displayed, or, if off-screen, to which it is nearest."
 
-	^(UserLibrary default monitorFromWindow: aView asParameter dwFlags: MONITOR_DEFAULTTONEAREST)
+	^(User32 monitorFromWindow: aView asParameter dwFlags: MONITOR_DEFAULTTONEAREST)
 		ifNotNil: [:hMonitor | self fromHandle: hMonitor]
 		ifNil: [Win32Error signal]!
 
 primary
 	"Answer an instance of the receiver describing the primary display monitor."
 
-	^(UserLibrary default monitorFromWindow: nil dwFlags: MONITOR_DEFAULTTOPRIMARY)
+	^(User32 monitorFromWindow: nil dwFlags: MONITOR_DEFAULTTOPRIMARY)
 		ifNil: [Win32Error signal]
 		ifNotNil: [:hMonitor | self fromHandle: hMonitor]! !
 !UI.DisplayMonitor class categoriesFor: #active!instance creation!public! !

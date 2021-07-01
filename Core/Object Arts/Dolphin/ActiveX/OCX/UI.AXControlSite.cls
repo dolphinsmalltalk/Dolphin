@@ -1144,7 +1144,7 @@ onStartup
 	used for communicating with it."
 
 	VM axWinInit.
-	WM_ATLGETHOST := UserLibrary default registerWindowMessage: 'WM_ATLGETHOST'!
+	WM_ATLGETHOST := User32 registerWindowMessage: 'WM_ATLGETHOST'!
 
 progId: aString 
 	"Answer a new instance of the receiver hosting the OCX with the specified prog id (which may also be 

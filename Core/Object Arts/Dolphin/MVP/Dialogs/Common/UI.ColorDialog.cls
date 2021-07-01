@@ -139,7 +139,7 @@ onStartup
 
 registerColorOkMessage
 	WM_COLOROK notNil ifTrue: [hookHandlers removeKey: WM_COLOROK ifAbsent: []].
-	WM_COLOROK := UserLibrary default registerWindowMessage: 'commdlg_ColorOK'.
+	WM_COLOROK := User32 registerWindowMessage: 'commdlg_ColorOK'.
 	hookHandlers at: WM_COLOROK put: #wmColorOk:wParam:lParam:!
 
 resetCustomColors

@@ -260,7 +260,7 @@ showIndirect
 		ifFalse: 
 			[iconIdentifier := icon identifier.
 			hInstance := icon instanceHandle asParameter].
-	button := UserLibrary default
+	button := User32
 				messageBox: self ownerHandle
 				text: self text
 				caption: self caption

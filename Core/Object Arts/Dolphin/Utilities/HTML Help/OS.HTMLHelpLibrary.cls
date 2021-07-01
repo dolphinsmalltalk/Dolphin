@@ -81,7 +81,7 @@ htmlHelpUrl: url style: styleOrNil
 
 	self assert: [cookie notNil].
 	^self
-		htmlHelp: UserLibrary default getDesktopWindow
+		htmlHelp: User32 getDesktopWindow
 		pszFile: (styleOrNil isNil ifTrue: [url] ifFalse: [url , '>' , styleOrNil])
 		uCommand: HH_DISPLAY_TOPIC
 		dwData: 0! !

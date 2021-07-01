@@ -196,7 +196,7 @@ drawBitmap: aBitmap at: dstOrigin extent: dstExtent from: srcOrigin extent: srcE
 drawEdge: aRectangle edge: edgeInteger grfFlags: bdrInteger
 	"The DrawEdge function draws one or more edges of rectangle."
 
-	^UserLibrary default
+	^User32
 		drawEdge: self asParameter
 		qrc: aRectangle asParameter
 		edge: edgeInteger
@@ -241,7 +241,7 @@ extent
 fillRectangle: aRectangle
 	"Draw a filled rectangle of size aRectangle using the current brush."
 
-	^UserLibrary default
+	^User32
 		fillRect: self asParameter
 		lprc: aRectangle asParameter
 		hbr: self brush asParameter!
@@ -249,7 +249,7 @@ fillRectangle: aRectangle
 fillRectangle: aRectangle brush: aBrush
 	"Draw a filled rectangle of size aRectangle using aBrush."
 
-	^UserLibrary default
+	^User32
 		fillRect: self asParameter
 		lprc: aRectangle asParameter
 		hbr: aBrush asParameter!
@@ -376,7 +376,7 @@ formatText: aString in: aRectangle flags: anInteger
 	| text |
 	"We need to do an explicit conversion to UTF-16 here, because we want to pass the correct number of code units."
 	text := aString asUtf16String.
-	^UserLibrary default
+	^User32
 		drawTextEx: self asParameter
 		lpchText: text
 		cchText: text size
@@ -387,7 +387,7 @@ formatText: aString in: aRectangle flags: anInteger
 frameRectangle: aRectangle brush: aBrush
 	"Frame aRectangle on the receiver using aBrush."
 
-	^UserLibrary default
+	^User32
 		frameRect: self asParameter
 		lprc: aRectangle asParameter
 		hbr: aBrush asParameter!
@@ -460,7 +460,7 @@ intersectClipRectangle: aRectangle
 invertRectangle: aRectangle
 	"Invert the pixels within aRectangle"
 
-	^UserLibrary default invertRect: self asParameter lprc: aRectangle asParameter!
+	^User32 invertRect: self asParameter lprc: aRectangle asParameter!
 
 invertRegion: aRegion
 	"Invert the pixels within aRegion"
@@ -1126,7 +1126,7 @@ desktopResolution
 forDesktop
 	"Answers a new Canvas with an owned hDC for the REAL desktop window."
 
-	^self on: UserLibrary default!
+	^self on: User32!
 
 forDisplay
 	"Answers a new Canvas with an owned hDC for the display device."

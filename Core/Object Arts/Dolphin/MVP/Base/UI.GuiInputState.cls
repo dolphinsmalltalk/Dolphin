@@ -20,16 +20,16 @@ allTopLevelWindowHandlesDo: aMonadicValuable
 	| callback answer |
 	callback := External.Callback block: [:hwnd :lParam | aMonadicValuable value: hwnd]
 				descriptor: EnumHandlesDescriptor.
-	answer := UserLibrary default enumWindows: callback asParameter lParam: 0.
+	answer := User32 enumWindows: callback asParameter lParam: 0.
 	callback free.
 	^answer!
 
 getLastInputInfo
 	| lastInputInfo |
 	lastInputInfo := LASTINPUTINFO new.
-	^(UserLibrary default getLastInputInfo: lastInputInfo)
+	^(User32 getLastInputInfo: lastInputInfo)
 		ifTrue: [lastInputInfo dwTime]
-		ifFalse: [UserLibrary default systemError]!
+		ifFalse: [User32 systemError]!
 
 guiStartup
 	"Private - System startup has entered the second stage, and it is time to reinitialize the
@@ -51,7 +51,7 @@ topLevelWindowHandlesDo: aMonadicValuable
 	| callback answer |
 	callback := External.Callback block: [:hwnd :lParam | aMonadicValuable value: hwnd]
 				descriptor: EnumHandlesDescriptor.
-	answer := UserLibrary default
+	answer := User32
 				enumThreadWindows: KernelLibrary default getCurrentThreadId
 				lpfn: callback asParameter
 				lParam: 0.
@@ -112,7 +112,7 @@ uiIdle: aShellWindow
 	"Private - If the argument is one of the receiver's currently visible windows, then request
 	it to update its UI."
 
-	(UserLibrary default isWindowVisible: aShellWindow asParameter) ifTrue: [aShellWindow enterIdle]!
+	(User32 isWindowVisible: aShellWindow asParameter) ifTrue: [aShellWindow enterIdle]!
 
 userSessionIdleMs
 	"Answer the <integer> number of milliseconds that the user session has been idle.
@@ -132,14 +132,14 @@ visibleWindows
 	the existing View classes. This might be important to those wanting to implement their own
 	window class hieararchy."
 
-	| hDesktop user |
-	user := UserLibrary default.
-	hDesktop := user getDesktopWindow.
+	| hDesktop |
+	hDesktop := User32 getDesktopWindow.
 	^windows select: 
 			[:each |
 			| hWnd |
 			hWnd := each asParameter.
-			hWnd notNil and: [hWnd ~= hDesktop and: [(user isWindow: hWnd) and: [user isWindowVisible: hWnd]]]]! !
+			hWnd notNil
+				and: [hWnd ~= hDesktop and: [(User32 isWindow: hWnd) and: [User32 isWindowVisible: hWnd]]]]! !
 !UI.GuiInputState categoriesFor: #aboutToForkUI!idling!private! !
 !UI.GuiInputState categoriesFor: #allTopLevelWindowHandlesDo:!enumerating!private! !
 !UI.GuiInputState categoriesFor: #getLastInputInfo!helpers!private! !

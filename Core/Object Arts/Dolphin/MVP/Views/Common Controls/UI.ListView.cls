@@ -940,7 +940,7 @@ invalidateHeader
 	| hWnd |
 	(hWnd := self lvmGetHeader) notNull
 		ifTrue: 
-			[UserLibrary default
+			[User32
 				invalidate: hWnd
 				lpRect: nil
 				bErase: true]!
@@ -1386,7 +1386,7 @@ lvmSetImageList: aWinImageList type: anIntegerImageType
 	"Private - Set the receivers normal/state image list depending on anIntegerImageType.
 	Answer the handle of the previous image list."
 
-	^UserLibrary default
+	^User32
 		sendMessageU: handle
 		msg: LVM_SETIMAGELIST
 		wParam: anIntegerImageType

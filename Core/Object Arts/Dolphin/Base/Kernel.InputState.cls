@@ -161,14 +161,14 @@ hasVisibleWindows
 	the existing View classes. This might be important to those wanting to implement their own
 	window class hierarchy."
 
-	| hDesktop user |
-	user := UserLibrary default.
-	hDesktop := user getDesktopWindow.
+	| hDesktop |
+	hDesktop := User32 getDesktopWindow.
 	^windows anySatisfy: 
 			[:each |
 			| hWnd |
 			hWnd := each asParameter.
-			hWnd notNil and: [hWnd ~= hDesktop and: [(user isWindow: hWnd) and: [user isWindowVisible: hWnd]]]]!
+			hWnd notNil
+				and: [hWnd ~= hDesktop and: [(User32 isWindow: hWnd) and: [User32 isWindowVisible: hWnd]]]]!
 
 idle
 	"Private - Put the VM thread to sleep until there are messages from the host system, or a
@@ -181,7 +181,7 @@ idle
 	MemoryManager current aboutToIdle.
 	"Disable background sampling while sleeping"
 	self primSampleInterval: -1.
-	UserLibrary default
+	User32
 		msgWaitForMultipleObjectsEx: 1
 		pHandles: wakeupEvent
 		dwMilliseconds: MaxIdleSleep
@@ -254,7 +254,7 @@ isInputAvailable
 	arrived since the last call to GetMessage, PeekMessage, or GetQueueStatus, so we have to
 	test against the high word."
 
-	^(UserLibrary default getQueueStatus: queueStatusMask) anyMask: (queueStatusMask bitShift: 16)!
+	^(User32 getQueueStatus: queueStatusMask) anyMask: (queueStatusMask bitShift: 16)!
 
 isInputReady: aMSG
 	"Private - Answer whether there is currently a message waiting in the host system queue (if
@@ -269,7 +269,7 @@ isInputReady: aMSG
 	that GetMessage() can be called without it blocking."
 
 	self primSampleInterval: SamplingInterval.
-	^UserLibrary default
+	^User32
 		peekMessage: aMSG
 		hWnd: 0
 		uMsgFilterMin: 0
@@ -374,7 +374,7 @@ postAction: aNiladicValuable
 postQuit: anInteger
 	"Private - Initiate graceful system shutdown with the appropriate Windows API call."
 
-	UserLibrary default postQuitMessage: anInteger!
+	User32 postQuitMessage: anInteger!
 
 preTranslateMessage: aMSG
 	"Private - Pre-dispatch message filter. Answers true if some window consumed the message, or
@@ -385,7 +385,7 @@ preTranslateMessage: aMSG
 	[handle isNull] whileFalse: 
 			[(self lookupWindow: handle)
 				ifNotNil: [:window | (window preTranslateMessage: aMSG) ifTrue: [^true]].
-			handle := UserLibrary default getParent: handle].
+			handle := User32 getParent: handle].
 	^false!
 
 primSampleInterval: anInteger
@@ -428,7 +428,7 @@ pumpMessage: aMSG
 	"Private - Read and dispatch the first pending host system message. If a WM_QUIT is
 	received, then exit Smalltalk."
 
-	(UserLibrary default
+	(User32
 		getMessage: aMSG
 		hWnd: 0
 		wMsgFilterMin: 0
@@ -437,7 +437,7 @@ pumpMessage: aMSG
 		ifFalse: 
 			[(self preTranslateMessage: aMSG)
 				ifFalse: 
-					[UserLibrary default
+					[User32
 						translateMessage: aMSG;
 						dispatchMessage: aMSG]]!
 
@@ -463,7 +463,7 @@ purgeDeadWindows
 	windows := windows select: 
 					[:each |
 					| hWnd |
-					(hWnd := each asParameter) notNil and: [UserLibrary default isWindow: hWnd]].
+					(hWnd := each asParameter) notNil and: [User32 isWindow: hWnd]].
 	lastWindow := nil.
 	Processor enableAsyncEvents: bEnabled!
 
@@ -515,10 +515,10 @@ startIdleTimer: aView
 	[| idleHost hWnd |
 	idleHost := idleTimer basicAt: 1.
 	hWnd := aView asParameter.
-	(idleHost == DeadObject current or: [hWnd isNull or: [(UserLibrary default isWindow: hWnd) not]])
+	(idleHost == DeadObject current or: [hWnd isNull or: [(User32 isWindow: hWnd) not]])
 		ifTrue: 
 			[idleTimer basicAt: 1 put: aView.
-			UserLibrary default
+			User32
 				setTimer: hWnd
 				nIDEvent: WM_ENTERIDLE
 				uElapse: 100
@@ -535,7 +535,7 @@ stopIdleTimer: aView
 	idleHost == aView
 		ifTrue: 
 			[idleTimer basicAt: 1 put: DeadObject current.
-			UserLibrary default killTimer: aView asParameter uIDEvent: WM_ENTERIDLE]]
+			User32 killTimer: aView asParameter uIDEvent: WM_ENTERIDLE]]
 			critical!
 
 topLevelWindows
@@ -615,7 +615,7 @@ wndProc: hWnd message: message wParam: wParam lParam: lParam cookie: cookie
 				ifTrue: 
 					[^Processor callback: cookie
 						evaluate: 
-							[UserLibrary default
+							[User32
 								defWindowProc: hWnd
 								msg: message
 								wParam: wParam

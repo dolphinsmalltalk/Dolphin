@@ -30,13 +30,12 @@ availableFormatIds
 	"Answer a <sequencedReadableCollection> containing each of the currently available clipboard format <integer> identifiers.
 	The actual formats on the clipboard appear first in the collection, with converted formats following."
 
-	| answer lib |
-	lib := UserLibrary default.
-	answer := Array writeStream: lib countClipboardFormats.
+	| answer |
+	answer := Array writeStream: User32 countClipboardFormats.
 	self apply: 
 			[| fmt |
 			fmt := 0.
-			[(fmt := lib enumClipboardFormats: fmt) == 0] whileFalse: [answer nextPut: fmt]].
+			[(fmt := User32 enumClipboardFormats: fmt) == 0] whileFalse: [answer nextPut: fmt]].
 	^answer grabContents!
 
 availableFormats
@@ -55,19 +54,19 @@ availableFormats
 basicEmpty
 	"Private - Empty the clipboard (assumes it is open)."
 
-	UserLibrary default emptyClipboard ifFalse: [Win32Error signal]!
+	User32 emptyClipboard ifFalse: [Win32Error signal]!
 
 basicFree
 	"Private - Close the clipboard.
 	We don't treat attempting to close the clipboard when it is not
 	open as an exception."
 
-	^UserLibrary default closeClipboard!
+	^User32 closeClipboard!
 
 basicRealize
 	"Open the clipboard."
 
-	isOpen := UserLibrary default openClipboard: nil.
+	isOpen := User32 openClipboard: nil.
 	isOpen ifFalse: [Win32Error signal]!
 
 close
@@ -123,7 +122,7 @@ getFormatName: format
 
 	| name len |
 	name := Utf16String newFixed: 256.
-	len := UserLibrary default
+	len := User32
 				getClipboardFormatName: format
 				lpszFormatName: name
 				cchMaxCount: name size.
@@ -162,7 +161,7 @@ getRegisteredFormat: name ifNone: exceptionHandler
 	formatId := registeredFormats at: name.
 	^self apply: 
 			[| handle |
-			handle := UserLibrary default getClipboardData: formatId first.
+			handle := User32 getClipboardData: formatId first.
 			handle isNull ifTrue: [^exceptionHandler value].
 			formatId last rightToLeft: handle]!
 
@@ -220,10 +219,10 @@ initialize
 			converter: (PluggableTypeConverter leftToRight: [:ds | ds copyToGlobalHeap]
 					rightToLeft: [:handle | DIBSection fromGlobalHandle: handle]);
 		addRegisteredFormat: #Object
-			id: (UserLibrary default registerClipboardFormat: 'Smalltalk Object Format')
+			id: (User32 registerClipboardFormat: 'Smalltalk Object Format')
 			converter: objectConverter;
 		addRegisteredFormat: #ObjectClass
-			id: (UserLibrary default registerClipboardFormat: 'Smalltalk Object Class Format')
+			id: (User32 registerClipboardFormat: 'Smalltalk Object Class Format')
 			converter: objectConverter!
 
 isBitmapAvailable
@@ -247,7 +246,7 @@ isFormatIdAvailable: dwFormat
 	"Private - Answer whether the clipboard contains the specified
 	registered <integer> clipboard format."
 
-	^UserLibrary default isClipboardFormatAvailable: dwFormat!
+	^User32 isClipboardFormatAvailable: dwFormat!
 
 isFormatRegistered: aString
 	^registeredFormats includesKey: aString!
@@ -280,7 +279,7 @@ registerFormat: formatName converter: aTypeConverter
 	The type converter needs to convert objects to suitable handles as its left-to-right conversion, and from global memory handles to objects for its right-to-left."
 
 	| id |
-	id := UserLibrary default registerClipboardFormat: formatName.
+	id := User32 registerClipboardFormat: formatName.
 	id == 0 ifTrue: [^Win32Error signal].
 	^self
 		addRegisteredFormat: formatName
@@ -312,7 +311,7 @@ setData: handle formatId: formatId
 	wasOpen := self open.
 	^
 	[wasOpen ifFalse: [self basicEmpty].
-	UserLibrary default setClipboardData: formatId hMem: handle]
+	User32 setClipboardData: formatId hMem: handle]
 			ensure: [wasOpen ifFalse: [self close]]!
 
 setDIB: aDIBSection
