@@ -175,7 +175,11 @@ initialize
 	"Private - Initialize the receiver"
 
 	super initialize.
-	keyPresenter model roots: RegKey roots!
+	keyPresenter model roots: {RegKey classesRoot: #read.
+				RegKey userRoot.
+				RegKey localMachineRoot: #read.
+				RegKey usersRoot.
+				RegKey configRoot}!
 
 newBinaryValue
 	"Add a new, empty, string value under the currently selected key."
@@ -307,21 +311,23 @@ queryCommand: query
 				isChecked: self statusBar isWindowVisible.
 			^true].
 	selKey := self selectedKey.
-	(#(#newKey #newStringValue #newDWORDValue #newBinaryValue #exportRegistryFile #copyKeyName)
-		includes: command)
-			ifTrue: 
-				[query isEnabled: selKey notNil.
-				^true].
-
+	(#(#newKey #newStringValue #newDWORDValue #newBinaryValue) includes: command)
+		ifTrue: 
+			[query isEnabled: (selKey notNil and: [selKey isWriteable]).
+			^true].
+	(#(#exportRegistryFile #copyKeyName) includes: command)
+		ifTrue: 
+			[query isEnabled: selKey notNil.
+			^true].
 	"Modification of the root keys is not permitted."
 	(#(#deleteSelectedKey #renameSelectedKey) includes: command)
 		ifTrue: 
-			[query isEnabled: (selKey notNil and: [selKey isRoot not]).
+			[query isEnabled: (selKey notNil and: [selKey isWriteable and: [selKey isRoot not]]).
 			^true].
 	selVal := self selectedValue.
 	#renameSelectedValue == command
 		ifTrue: 
-			[query isEnabled: (selVal notNil and: [selVal key notEmpty]).
+			[query isEnabled: (selVal notNil and: [selVal key notEmpty and: [selKey isWriteable]]).
 			^true].
 	#deleteSelectedValue == command
 		ifTrue: 
@@ -331,11 +337,11 @@ queryCommand: query
 		ifTrue: 
 			[keyPresenter view hasFocus
 				ifTrue: 
-					[query isEnabled: (selKey notNil and: [selKey isRoot not]).
+					[query isEnabled: (selKey notNil and: [selKey isWriteable and: [selKey isRoot not]]).
 					^true].
 			valuesPresenter view hasFocus
 				ifTrue: 
-					[query isEnabled: (selVal notNil and: [selVal key notEmpty]).
+					[query isEnabled: (selVal notNil and: [selVal key notEmpty and: [selKey isWriteable]]).
 					^true]].
 	^super queryCommand: query!
 
@@ -432,7 +438,7 @@ about
 	(MessageBox new)
 		caption: 'About Dolphin Registry Editor';
 		icon: self icon;
-		text: ('Simple Registry Editor Sample. Copyright (c) Object Arts Ltd, 1998-2011.<n><1s><n>
+		text: ('Simple Registry Editor Sample.<n>Copyright © Object Arts Ltd, 1998-2011.<n><1s><n>
 This is a reduced functionality implementation of the standard system utility REGEDIT.EXE, intended to demonstrate various features of Dolphin''s application framework such as virtual tree models, and in-place label editing.<n> 
 DISCLAIMER: This software is freely provided purely as an educational sample and as such it is provided "as is", WITHOUT ANY WARRANTY; without even the implied warranty of  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. Furthermore, as with the real registry editor extreme care and expert knowledge are required to avoid damaging the installation of the operating system or other software on your machine if any modifications to the registry are attempted. Please take care - we accept no responsibility for any damage to your computer''s configuration which may be caused by the use of this sample.' 
 					expandMacrosWith: VMLibrary default fullVersion);
