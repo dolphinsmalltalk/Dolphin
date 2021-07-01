@@ -1065,13 +1065,12 @@ sprintfWith: arg1
 
 	Note: This is much faster than formatWith:."
 
-	| n crt buf size format |
-	crt := VMLibrary default.
+	| n buf size format |
 	size := self size + 64.
 	format := self asUtf8String.
 	
 	[buf := Utf8String new: size.
-	n := crt
+	n := VM
 				_snprintf_s: buf
 				bufferSize: size + 1
 				count: size
@@ -1091,13 +1090,12 @@ sprintfWith: arg1 with: arg2
 
 	Note: This is much faster than formatWith:with:."
 
-	| written lib buf size format |
-	lib := VMLibrary default.
+	| written buf size format |
 	size := self size + 128.
 	format := self asUtf8String.
 	
 	[buf := Utf8String new: size.
-	written := lib
+	written := VM
 				_snprintf_s: buf
 				bufferSize: size + 1
 				count: size

@@ -351,7 +351,7 @@ initializeTimingSemaphore
 	"Private - Create the timing semaphore used for communication with the VM's timer services."
 
 	TimingSemaphore isNil ifTrue: [TimingSemaphore := Semaphore new].
-	VMLibrary default registryAt: #TimingSemaphore put: TimingSemaphore!
+	VM registryAt: #TimingSemaphore put: TimingSemaphore!
 
 keepAlive
 	"Private - Ensure that there is a timing process, and that it is in a runnable state."

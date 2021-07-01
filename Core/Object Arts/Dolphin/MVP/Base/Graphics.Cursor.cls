@@ -286,13 +286,13 @@ sizeWE
 splitHorizontal
 	"Answer the instance that is the SplitHorizontal cursor."
 
-	SplitHorizontal isNil ifTrue: [SplitHorizontal := self fromId: 'HSPLIT' in: VMLibrary default].
+	SplitHorizontal isNil ifTrue: [SplitHorizontal := self fromId: 'HSPLIT' in: VM].
 	^SplitHorizontal!
 
 splitVertical
 	"Answer the instance that is the SplitVertical cursor."
 
-	SplitVertical isNil ifTrue: [SplitVertical := self fromId: 'VSPLIT' in: VMLibrary default].
+	SplitVertical isNil ifTrue: [SplitVertical := self fromId: 'VSPLIT' in: VM].
 	^SplitVertical!
 
 uninitialize

@@ -399,7 +399,7 @@ primInstanceStats: anArrayOrNil
 registerObjects
 	"Private - Register the finalize and bereavement queue Semaphores with the VM."
 
-	VMLibrary default
+	VM
 		registryAt: #memoryManager put: self;
 		registryAt: #Corpse put: DeadObject current;
 		registryAt: #FinalizeQueue put: hospice;

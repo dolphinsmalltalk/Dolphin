@@ -39,7 +39,7 @@ main
 openStdOut
 	"Private - We want to open stdout in untranslated mode as we are going to dump the file contents exactly as they are."
 
-	^StdioBinaryFileStream fromHandle: VMLibrary default stdout! !
+	^StdioBinaryFileStream fromHandle: VM stdout! !
 !Catenate categoriesFor: #cat:!operations-startup!public! !
 !Catenate categoriesFor: #main!operations-startup!public! !
 !Catenate categoriesFor: #openStdOut!helpers!private! !

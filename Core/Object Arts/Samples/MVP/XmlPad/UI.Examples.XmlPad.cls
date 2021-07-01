@@ -317,10 +317,10 @@ viewToolbar
 about
 	"Private - Pop up a little helpful info. about this sample program."
 
-	(MessageBox new)
+	MessageBox new
 		caption: ('About Dolphin <1d>' expandMacrosWith: self);
 		icon: self icon;
-		text: (self aboutTemplate expandMacrosWith: VMLibrary default fullVersion);
+		text: (self aboutTemplate expandMacrosWith: VM fullVersion);
 		open!
 
 aboutTemplate

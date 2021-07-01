@@ -1103,7 +1103,7 @@ The image MUST exit immediately, but see crash dump (if configured).
 		lpText: text
 		lpCaption: SessionManager current applicationName
 		uType: ##(MB_OK | MB_ICONERROR | MB_TASKMODAL | MB_SETFOREGROUND).
-	VMLibrary default crashDump: anError description.
+	VM crashDump: anError description.
 	SessionManager current primQuit: -1!
 
 onNotification: aNotification
@@ -1959,7 +1959,7 @@ vmReferencedClasses
 	"Answer a <collection> of all the classes referenced directly by the VM.
 	These must not be stripped!!"
 
-	^VMLibrary default registry select: 
+	^VM registry select: 
 			[:each |
 			each class isMeta and: [(#('GUID' 'PoolConstantsDictionary') includes: each name asString) not]]!
 

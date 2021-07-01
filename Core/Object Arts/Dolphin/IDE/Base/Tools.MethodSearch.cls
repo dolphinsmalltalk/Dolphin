@@ -140,8 +140,8 @@ simpleReferenceFilter
 	| object special |
 	object := self literal.
 	object isNil ifTrue: [self error: 'Invalid reference search'].
-	special := VMLibrary default indexOfSpecialSelector: object ifAbsent: [].
-	^special isNil 
+	special := VM indexOfSpecialSelector: object ifAbsent: [].
+	^special isNil
 		ifTrue: [[:each | each refersToLiteral: object]]
 		ifFalse: [[:each | (each refersToLiteral: object) or: [each sendsSpecialSelector: special]]]!
 

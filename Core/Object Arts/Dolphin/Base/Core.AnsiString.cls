@@ -186,13 +186,13 @@ fromAddress: anAddress
 	job for us by performing a simple nop which returns the original pointer (_strninc()
 	has the useful property that it returns NULL for NULL argument too)."
 
-	^VMLibrary default stringFromAddress: anAddress!
+	^VM stringFromAddress: anAddress!
 
 initialize
 	empty := self new
 				isImmutable: true;
 				yourself.
-	VMLibrary default registryAt: #AnsiString put: self.
+	VM registryAt: #AnsiString put: self.
 	self extraInstanceSpec: EncodingAnsi!
 
 with: aCharacter

@@ -387,7 +387,7 @@ withOldWndProc: operation
 	interested."
 
 	self setWndProc: self oldWndProc.
-	^operation ensure: [self setWndProc: VMLibrary default getWndProc]!
+	^operation ensure: [self setWndProc: VM getWndProc]!
 
 wmPaint: message wParam: wParam lParam: lParam 
 	"Private - Controls do their own painting so only allow the default."

@@ -171,7 +171,7 @@ initialize
 	dolphinIntensity := 0.
 	self loadTextureMap: 'ObjectsInside'.
 	random := Random new.
-	copyright := $. split: VMLibrary default versionInfo legalCopyright.
+	copyright := $. split: VM versionInfo legalCopyright.
 	info := Utf16String writeStream.
 	info nextPutAll: copyright first.
 	(copyright size > 1 and: [copyright second notEmpty])

@@ -751,8 +751,7 @@ null
 
 onStartup
 	| utf ansiCharacters |
-	AnsiCodePage := (VMLibrary default getProcAddress: 'AnsiCodePage' ifAbsent: [#[0 0 0 0]])
-				dwordAtOffset: 0.
+	AnsiCodePage := (VM getProcAddress: 'AnsiCodePage' ifAbsent: [#[0 0 0 0]]) dwordAtOffset: 0.
 	utf := self byteCharacterSet asUtf16String.
 	AnsiCodePoints := ((0 to: utf size * 2 - 1 by: 2) collect: [:each | utf wordAtOffset: each])
 				isImmutable: true;
@@ -764,8 +763,7 @@ onStartup
 	AnsiCharacters := ansiCharacters.
 	"In practice the replacement character is always $\xFFFD, but we fetch it from the VM (which in turn has retrieved it from Windows) just in case"
 	Utf8Default := Character
-				codePoint: ((VMLibrary default getProcAddress: 'UnicodeDefaultChar' ifAbsent: [#[16rFD 16rFF]])
-						wordAtOffset: 0)!
+				codePoint: ((VM getProcAddress: 'UnicodeDefaultChar' ifAbsent: [#[16rFD 16rFF]]) wordAtOffset: 0)!
 
 replacement
 	"Answer the Unicode replacement <Character>, used to substitute for invalid code points and encodings."

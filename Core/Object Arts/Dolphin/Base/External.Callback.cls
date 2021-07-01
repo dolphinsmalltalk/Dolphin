@@ -131,7 +131,7 @@ allocateThunks
 				dwSize: MaxThunks * ThunkSize
 				flAllocationType: MEM_COMMIT
 				flProtect: PAGE_EXECUTE_READWRITE.
-	procAddress := VMLibrary default getGenericCallback.
+	procAddress := VM getGenericCallback.
 	1 to: MaxThunks
 		do: 
 			[:i |
@@ -283,8 +283,7 @@ uninitializeBeforeRemove
 		ifTrue: 
 			[Notification signal: 'Uninstalling VM callback entry point'.
 			ProcessorScheduler removeSelector: #callback:withArgumentsAt:cookie: ifAbsent: [].
-			VMLibrary default registryAtIndex: (VMLibrary.Registry indexOf: #callback:withArgumentsAt:cookie:)
-				put: nil]!
+			VM registryAtIndex: (VMLibrary.Registry indexOf: #callback:withArgumentsAt:cookie:) put: nil]!
 
 unitializeSubclass: anExternalCallbackClass
 	! !

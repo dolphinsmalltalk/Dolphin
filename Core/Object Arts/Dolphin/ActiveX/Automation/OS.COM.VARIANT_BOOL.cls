@@ -50,7 +50,7 @@ initialize
 		self initialize
 	"
 
-	VMLibrary default registryAt: self name put: self!
+	VM registryAt: self name put: self!
 
 typeName
 	"Private - Answer the Dolphin external type name for the receiver.
@@ -61,7 +61,7 @@ typeName
 uninitialize
 	"Private - Uninitialize the receiver prior to its removal from the image."
 
-	VMLibrary default registryAt: self name put: nil!
+	VM registryAt: self name put: nil!
 
 vt
 	"Private - Answer the VARIANT type required to represent the receiver."

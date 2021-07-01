@@ -140,13 +140,13 @@ initialize
 		self initialize
 	"
 
-	VMLibrary default registryAt: self name put: self.
-	VMLibrary default registryAtIndex: 152 put: (self fromPairs: {{#namespace:. {Smalltalk}}})!
+	VM registryAt: self name put: self.
+	VM registryAtIndex: 152 put: (self fromPairs: {{#namespace:. {Smalltalk}}})!
 
 uninitialize
 	"Private - Tidy up the receiver in preparation for removal from the system."
 
-	VMLibrary default
+	VM
 		registryAt: self name put: nil;
 		registryAtIndex: 152 put: nil! !
 !Kernel.MethodAnnotations class categoriesFor: #fromPairs:!instance creation!public! !

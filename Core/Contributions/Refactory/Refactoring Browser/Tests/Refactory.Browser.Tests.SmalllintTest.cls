@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Refactory.Browser.Tests.RefactoringBrowserTest subclass: #'Refactory.Browser.Tests.SmalllintTest'
 	instanceVariableNames: ''
@@ -131,7 +131,7 @@ testFullBlocks
 	"This test will always fail on Dolphin 3/4 because the BlockLintRule class>>fullBlocks identifies all methods with
 	blocks as having full blocks since Dolphin does not distinguish."
 
-	VMLibrary default bytecodeVersion lowWord < 6 ifTrue: [^self].
+	VM bytecodeVersion lowWord < 6 ifTrue: [^self].
 	self blockRuleFor: self currentSelector
 		plusSelectors: #(#caller1 #fullBlocks #detectAnySatisfy #fileBlocks #moveDefinition #caller #assignmentInBlock #equalNotUsed #stringConcatenation #noMoveDefinition #referencesConditionFor: #returnInEnsure)!
 

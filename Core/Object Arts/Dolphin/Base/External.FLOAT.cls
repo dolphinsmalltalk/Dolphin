@@ -46,7 +46,7 @@ initialize
 		self initialize
 	"
 
-	VMLibrary default registryAt: self name put: self!
+	VM registryAt: self name put: self!
 
 maximum
 	^self fromBytes: #[255 255 127 127]!
@@ -58,7 +58,7 @@ minimum
 uninitialize
 	"Private - Uninitialize the receiver prior to its removal from the image."
 
-	VMLibrary default registryAt: self name put: nil! !
+	VM registryAt: self name put: nil! !
 !External.FLOAT class categoriesFor: #defineFields!public!template definition! !
 !External.FLOAT class categoriesFor: #initialize!development!initializing!private! !
 !External.FLOAT class categoriesFor: #maximum!constants!public! !

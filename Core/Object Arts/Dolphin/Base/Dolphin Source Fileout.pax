@@ -771,7 +771,7 @@ emitFileOutHeaderOn: aSourceFiler
 	<puttableStream>, aWriteStream."
 
 	aSourceFiler
-		emitComment: 'Filed out from ' , VMLibrary default productName;
+		emitComment: 'Filed out from ' , VM productName;
 		cr!
 
 fileOut: anObject

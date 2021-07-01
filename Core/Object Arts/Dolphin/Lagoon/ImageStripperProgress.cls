@@ -272,11 +272,11 @@ show
 	an attempt is being made to load a dialog template from a resource library that
 	has been opened with the LOAD_LIBRARY_AS_DATAFILE flag. Dialog templates
 	can only be loaded from DLLs that have been loaded as normal code modules."
-	hWnd := UserLibrary default 
+	hWnd := UserLibrary default
 				createDialog: self resourceLib asParameter
 				lpTemplate: self template asResourceId
 				hWndParent: nil
-				lpDialogFunc: VMLibrary default getDlgProc
+				lpDialogFunc: VM getDlgProc
 				dwInitParam: 0.
 	self primHookWindowCreate: false.
 	hWnd isNull ifTrue: [self error: 'Failed to create window'].
@@ -301,12 +301,12 @@ subclassWindow: anIntegerOrHandle
 					[UserLibrary default
 						setWindowULongPtr: handle
 						nIndex: GWL_WNDPROC
-						dwNewLong: VMLibrary default getWndProc]
+						dwNewLong: VM getWndProc]
 				ifFalse: 
 					[UserLibrary default
 						setWindowULong: handle
 						nIndex: GWL_WNDPROC
-						dwNewLong: VMLibrary default getWndProc]!
+						dwNewLong: VM getWndProc]!
 
 template
 	^140!

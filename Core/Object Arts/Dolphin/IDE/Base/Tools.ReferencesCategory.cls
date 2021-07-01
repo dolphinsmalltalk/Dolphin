@@ -58,11 +58,11 @@ initialize
 
 	self createDefaultInstances!
 
-newNamed: aString literal: anObject 
-	^((VMLibrary default indexOfSpecialSelector: anObject ifAbsent: []) 
+newNamed: aString literal: anObject
+	^((VM indexOfSpecialSelector: anObject ifAbsent: [])
 		ifNil: [self newNamed: aString]
 		ifNotNil: 
-			[:index | 
+			[:index |
 			(SpecialReferencesCategory newNamed: aString)
 				index: index;
 				yourself])

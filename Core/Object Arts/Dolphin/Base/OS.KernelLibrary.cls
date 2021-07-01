@@ -2014,7 +2014,7 @@ open
 	VM object registry on startup."
 
 	WinVerOrGreaterMask := nil.
-	^self fromHandle: VMLibrary default kernelHandle! !
+	^self fromHandle: VM kernelHandle! !
 !OS.KernelLibrary class categoriesFor: #fileName!constants!public! !
 !OS.KernelLibrary class categoriesFor: #open!instance creation!public! !
 

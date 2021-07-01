@@ -1035,7 +1035,6 @@ initialize
 		VARIANT initialize
 	"
 
-	| vm |
 	Unspecified := self new
 				hresult: DISP_E_PARAMNOTFOUND;
 				beUnfinalizable;
@@ -1043,9 +1042,8 @@ initialize
 	self
 		initializeVTNames;
 		initializeVTClasses.
-	vm := VMLibrary default.
-	self externalTypeNames do: [:each | vm registryAt: each asSymbol put: each value].
-	vm registryAt: self name put: self!
+	self externalTypeNames do: [:each | VM registryAt: each asSymbol put: each value].
+	VM registryAt: self name put: self!
 
 initializeVTClasses
 	"Private - Initialize the map of VARENUM type codes to suitable buffer classes.
@@ -1177,13 +1175,11 @@ typeName
 uninitialize
 	"Private - Uninitialize the receiver prior to its removal from the image."
 
-	| vm |
 	Unspecified := nil.
 	"The VM only needs a ref to certain classes to implement the VARIANT>>value primitive, so these can be
 	 cleared out if this class is removed."
-	vm := VMLibrary default.
-	self externalTypeNames do: [:each | vm registryAt: each asSymbol put: nil].
-	vm registryAt: self name put: nil!
+	self externalTypeNames do: [:each | VM registryAt: each asSymbol put: nil].
+	VM registryAt: self name put: nil!
 
 unspecified
 	"Answer an instance of the receiver appropriate to use as an unspecified optional argument."

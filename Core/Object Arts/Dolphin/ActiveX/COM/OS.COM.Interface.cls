@@ -171,7 +171,7 @@ initialize: anInteger
 	interface is registered."
 
 	super initialize: anInteger.
-	self vtbl: VMLibrary default getVTable.
+	self vtbl: VM getVTable.
 	self argSizes: self class argSizes yourAddress!
 
 initializeAtAddress: anAddress

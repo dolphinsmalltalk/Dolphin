@@ -57,7 +57,7 @@ prepareStruct
 	color := self value.
 	(color isNil or: [color isDefault]) ifTrue: [color := self defaultColor].
 	self winStruct
-		hInstance: VMLibrary default applicationHandle;
+		hInstance: VM applicationHandle;
 		rgbResult: color rgbCode;
 		maskIn: CC_RGBINIT;
 		lpCustColors: customColors!

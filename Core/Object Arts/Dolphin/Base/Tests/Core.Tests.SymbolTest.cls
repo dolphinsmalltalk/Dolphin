@@ -93,7 +93,7 @@ testPrintString
 
 	"Unquoted"
 
-	(#('at:' 'a') union: VMLibrary default specialSelectors) do: 
+	(#('at:' 'a') union: VM specialSelectors) do: 
 			[:each |
 			| print sym |
 			sym := each asSymbol.

@@ -182,7 +182,7 @@ destroyAndRemoveProgress
 			do: 
 				[:e |
 				self deploymentContext logStrippingError: e.
-				VMLibrary default crashDump: e description].
+				VM crashDump: e description].
 	self collectGarbage: 3.
 	self finishedWithAll: #(#destroyNotifier #progressDialogClass #removeGuiForConsoleApplication)!
 
@@ -516,8 +516,7 @@ removeGuiForConsoleApplication
 	self startElement: 'StripConsoleApplication' attributes: #().
 	#(#{Kernel.ImageRelativeFileLocator} #{Kernel.InstallRelativeFileLocator})
 		do: [:each | each ifDefined: [:class | class uninitialize]].
-	#{UI.View} isDefined
-		ifFalse: [VMLibrary default unregisterObject: #wndProc:message:wParam:lParam:cookie:].
+	#{UI.View} isDefined ifFalse: [VM unregisterObject: #wndProc:message:wParam:lParam:cookie:].
 	self collectGarbage: 3.
 	self endElement: true!
 
@@ -759,7 +758,7 @@ speciallySentMessages
 	"Private - A number of messages can be sent without  appearing in the literal
 	frame of any method. Answer a Set of these selectors here."
 
-	^Set withAll: (VMLibrary default registry select: [:each | each class == Symbol])!
+	^Set withAll: (VM registry select: [:each | each class == Symbol])!
 
 startElement: aString attributes: aCollectionOfAttributes
 	self deploymentContext startElement: aString attributes: aCollectionOfAttributes!

@@ -61,7 +61,7 @@ createAndRegisterInputSemaphore
 	is available for the Main UI Process."
 
 	inputSemaphore := Semaphore new.
-	VMLibrary default registryAt: #InputSemaphore put: inputSemaphore!
+	VM registryAt: #InputSemaphore put: inputSemaphore!
 
 createAndRegisterWakeupEvent
 	"Private - Create and register the Win32 Event object that is signalled by the VM when it
@@ -73,11 +73,11 @@ createAndRegisterWakeupEvent
 				bManualReset: false
 				bInitialState: false
 				lpName: nil.
-	VMLibrary default registryAt: #WakeupEvent put: wakeupEvent!
+	VM registryAt: #WakeupEvent put: wakeupEvent!
 
 createPostedActionWindow
 	| hWnd |
-	hWnd := VMLibrary default registryAt: #MsgWndHandle.
+	hWnd := VM registryAt: #MsgWndHandle.
 	msgWindow := PostedActionWindow new
 				handle: hWnd;
 				yourself.
@@ -100,7 +100,7 @@ ensureMainRunning
 			main isAlive
 				ifTrue: 
 					["Check for user break"
-					VMLibrary default isUserBreakRequested ifTrue: [main queueInterrupt: Processor userBreakInterrupt].
+					VM isUserBreakRequested ifTrue: [main queueInterrupt: Processor userBreakInterrupt].
 					^self]].
 	self forkMain!
 
@@ -470,7 +470,7 @@ registerAsDispatcher
 		SessionManager inputState registerAsDispatcher
 	"
 
-	VMLibrary default registryAt: #Dispatcher put: self!
+	VM registryAt: #Dispatcher put: self!
 
 removeWindowAt: aHandle 
 	"Private - Unregister a Window object with the specified handle."
@@ -558,7 +558,7 @@ windowAt: aHandle ifAbsent: exceptionHandler
 	handle is nil, then answers nil."
 
 	| hWnd wasEnabled window |
-	aHandle isNil ifTrue: [^exceptionHandler value].
+	aHandle ifNil: [^exceptionHandler value].
 	hWnd := aHandle asInteger.
 	wasEnabled := Processor enableAsyncEvents: false.
 	window := windows lookup: hWnd.

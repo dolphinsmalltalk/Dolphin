@@ -487,7 +487,7 @@ initialize
 	empty := self new
 				isImmutable: true;
 				yourself.
-	VMLibrary default registryAt: #Utf16String put: self.
+	VM registryAt: #Utf16String put: self.
 	self extraInstanceSpec: EncodingUtf16.
 	self addClassConstant: 'LeadOffset' value: Character.Utf16LeadMask - (16r10000 >> 10).
 	self addClassConstant: 'SurrogateOffset'

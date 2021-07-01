@@ -43,7 +43,7 @@ basicCreateAt: position extent: size
 		createDialog: self resourceLib asParameter
 		lpTemplate: self templateId asResourceId
 		hWndParent: self class activeHandle
-		lpDialogFunc: VMLibrary default getDlgProc
+		lpDialogFunc: VM getDlgProc
 		dwInitParam: 0!
 
 cancel
@@ -260,7 +260,7 @@ resourceLib
 	flag), as if it is then CreateDialogIndirect() will GPF when attempting to use 
 	any templates from it."
 
-	^VMLibrary default!
+	^VM!
 
 runModalInProcessLoop
 	"Private - Create a modal message loop until our continue flag suggests exit. Note that here

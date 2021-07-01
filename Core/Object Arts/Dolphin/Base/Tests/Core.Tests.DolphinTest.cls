@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 XProgramming.SUnit.TestCase subclass: #'Core.Tests.DolphinTest'
 	instanceVariableNames: ''
@@ -58,7 +58,7 @@ failureLog
 !
 
 isAtLeastVmVersion: anArray
-	^VMLibrary default versionInfo fileVersion >= (self versionFromParts: anArray)!
+	^VM versionInfo fileVersion >= (self versionFromParts: anArray)!
 
 isLogging
 	^true!

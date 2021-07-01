@@ -1891,7 +1891,7 @@ vmVersionCheck: verWhenSaved
 	in order to work - it should load OK though."
 
 	| versionString verOnLoad |
-	verOnLoad := VMLibrary default bytecodeVersion.
+	verOnLoad := VM bytecodeVersion.
 	verWhenSaved = verOnLoad ifTrue: [^self].
 	versionString := verWhenSaved > 0
 				ifTrue: [verWhenSaved highWord displayString , '.' , verWhenSaved lowWord displayString]

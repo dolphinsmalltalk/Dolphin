@@ -388,7 +388,7 @@ findToolsBitmap
 	resources DLL just because the find or list toolbars are used.
 	Note that the bitmap is shared, and should not be modified."
 
-	^(Bitmap fromId: 'FINDBAR.BMP' in: VMLibrary default)
+	^(Bitmap fromId: 'FINDBAR.BMP' in: VM)
 		setMap3DColors: true;
 		isShared: true;
 		yourself!
@@ -443,7 +443,7 @@ listToolsBitmap
 	resources DLL just because the find or list toolbars are used.
 	Note that the bitmap is shared, and should not be modified."
 
-	^(Bitmap fromId: 'LISTBAR.BMP' in: VMLibrary default)
+	^(Bitmap fromId: 'LISTBAR.BMP' in: VM)
 		setMap3DColors: true;
 		isShared: true;
 		yourself!

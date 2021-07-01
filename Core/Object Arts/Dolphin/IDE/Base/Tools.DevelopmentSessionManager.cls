@@ -134,7 +134,7 @@ getInstallationDirectory
 	folder isNil
 		ifTrue: 
 			["Otherwise try the path to the VM"
-			folder := File splitPathFrom: VMLibrary default fileName].
+			folder := File splitPathFrom: VM fileName].
 	^File appendPathDelimiter: folder!
 
 imageStamp
@@ -150,7 +150,7 @@ imageStamp: aDateAndTime
 imageVersionMinor: anInteger
 	"Private - Set the minor component of the image's version Integer."
 
-	^VMLibrary default registryAt: #ImageVersionMinor put: anInteger!
+	^VM registryAt: #ImageVersionMinor put: anInteger!
 
 initialize
 	super initialize.
@@ -244,7 +244,7 @@ logError: anException
 
 	self isUnattended
 		ifTrue: 
-			[VMLibrary default
+			[VM
 				dump: anException description
 				path: nil
 				stackDepth: -1
@@ -252,7 +252,10 @@ logError: anException
 			^self].
 	
 	[| f |
-	f := FileStream write: self errorLogName mode: #append type: #utf8.
+	f := FileStream
+				write: self errorLogName
+				mode: #append
+				type: #utf8.
 	f
 		print: DateAndTime now;
 		nextPutAll: ': Unhandled exception - '.
@@ -454,7 +457,7 @@ processCommandLine
 productDetails
 	"Private - Answers a <LookupTable>  of key-value pairs describing this version of the development environment"
 
-	productDetails isNil ifTrue: [productDetails := VMLibrary default defaultProductDetails].
+	productDetails isNil ifTrue: [productDetails := VM defaultProductDetails].
 	^productDetails!
 
 productDetails: anArray
@@ -681,8 +684,7 @@ unhandledException: anException
 versionInfo
 	"Answer the <VersionInfo> for this session, extracted from the host executable."
 
-	^VMLibrary default versionInfo
-!
+	^VM versionInfo!
 
 versionString
 	"Answers a String containing the current version of the system"

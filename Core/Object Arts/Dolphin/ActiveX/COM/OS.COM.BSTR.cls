@@ -271,7 +271,7 @@ onStartup
 uninitialize
 	"Private - Uninitialize the receiver immediately prior to its removal from the system."
 
-	VMLibrary default registryAt: #BSTR put: nil.
+	VM registryAt: #BSTR put: nil.
 	SessionManager current removeEventsTriggeredFor: self! !
 !OS.COM.BSTR class categoriesFor: #basicNew!instance creation!private! !
 !OS.COM.BSTR class categoriesFor: #clear:!public!realizing/unrealizing! !

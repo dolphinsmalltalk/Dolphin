@@ -35,6 +35,6 @@ fileName
 	"Answer the host system file name of the external library which
 	the receiver represents."
 
-	^VMLibrary default compilerFileName! !
+	^VM compilerFileName! !
 !Kernel.CompilerLibrary class categoriesFor: #fileName!constants!public! !
 

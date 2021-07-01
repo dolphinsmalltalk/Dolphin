@@ -1143,7 +1143,7 @@ onStartup
 	"The system is starting: Initialize the host window class and register the window message
 	used for communicating with it."
 
-	VMLibrary default axWinInit.
+	VM axWinInit.
 	WM_ATLGETHOST := UserLibrary default registerWindowMessage: 'WM_ATLGETHOST'!
 
 progId: aString 

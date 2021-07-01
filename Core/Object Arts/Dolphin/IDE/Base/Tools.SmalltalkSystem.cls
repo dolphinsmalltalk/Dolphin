@@ -43,7 +43,7 @@ aboutDolphin
 		ifTrue: [splashClass new show]
 		ifFalse: 
 			[| msg version |
-			version := VMLibrary default versionInfo.
+			version := VM versionInfo.
 			msg := 'Dolphin Smalltalk - <1s><n><n><2s>' expandMacrosWith: self sessionManager versionString
 						with: version legalCopyright.
 			MessageBox new
@@ -283,7 +283,7 @@ allSelectorsSentIn: aBrowserEnvironment
 
 	| selectors excluded |
 	selectors := (IdentitySet new: 512)
-				addAll: VMLibrary default specialSelectors;
+				addAll: VM specialSelectors;
 				yourself.
 	excluded := 'examples' asMethodCategory methods.
 	aBrowserEnvironment methodsDo: 
@@ -302,7 +302,7 @@ allSymbolsReferencedIn: aBrowserEnvironment
 
 	| symbols |
 	symbols := (IdentitySet new: 10000)
-				addAll: VMLibrary default specialSelectors;
+				addAll: VM specialSelectors;
 				yourself.
 	aBrowserEnvironment methodsDo: 
 			[:eachMethod |
@@ -2119,14 +2119,14 @@ interruptHotKey
 	"Answer the <integer> HOTKEYF_XXX|VK_XXX code used by the VM as the break/interrupt key,
 	e.g. VK_CANCEL (Ctrl+Break)"
 
-	^VMLibrary default registryAt: #interruptHotKey!
+	^VM registryAt: #interruptHotKey!
 
 interruptHotKey: anInteger
 	"Set the HOTKEYF_XXX|VK_XXX code to be used by the VM as the break/interrupt key to the
 	<SmallInteger> argument, which must be a sensible VK value, e.g. VK_CANCEL, or things will
 	go badly."
 
-	VMLibrary default registryAt: #interruptHotKey put: anInteger!
+	VM registryAt: #interruptHotKey put: anInteger!
 
 isOAD
 	"Private - Is this an Object Arts Development version"

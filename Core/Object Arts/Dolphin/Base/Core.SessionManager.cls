@@ -88,12 +88,11 @@ argv
 
 	argv isNil
 		ifTrue: 
-			[| lib argc lppstr |
-			lib := VMLibrary default.
-			argc := lib argc.
+			[| argc lppstr |
+			argc := VM argc.
 			argv := Array new: argc.
 			"Open code the access to the array of strings to reduce base system dependencies on external struct classes"
-			lppstr := lib argv.
+			lppstr := VM argv.
 			lppstr isNull
 				ifTrue: [argv at: 1 put: (External.DynamicLinkLibrary moduleFileName: nil)]
 				ifFalse: 
@@ -127,7 +126,7 @@ basicPrimaryStartup
 	should be kept to a minimal set, as there is no opportunity to repair any
 	damage until these are completed, so if they fail, you've had it."
 
-	VMLibrary default onStartup.	"The VMLibrary must be initialized before we do anything else."
+	VM onStartup.	"The VMLibrary must be initialized before we do anything else."
 	self openLibraries.	"Now we can open the permanent libraries"
 	self imagePath: imagePath.	"Split off the extension now can use lib functions."
 	#{External.Callback} ifDefined: [:ec | ec onStartup	"Old callbacks will be invalid"].
@@ -391,12 +390,12 @@ imageVersion
 imageVersionMajor
 	"Answer the major component of the images version Integer."
 
-	^VMLibrary default registryAt: #ImageVersionMajor!
+	^VM registryAt: #ImageVersionMajor!
 
 imageVersionMinor
 	"Answer the minor component of the images version Integer."
 
-	^VMLibrary default registryAt: #ImageVersionMinor!
+	^VM registryAt: #ImageVersionMinor!
 
 initialize
 	"Private - Initialize the receiver after installation as the current SessionManager.
@@ -519,7 +518,7 @@ logError: anException
 	form of error logging. Here we are using the VM's dump facility to append a short
 	but informative log each time an error occurs, to <app name>.ERRORS."
 
-	VMLibrary default
+	VM
 		dump: anException description
 		path: nil
 		stackDepth: 0
@@ -758,7 +757,7 @@ openEventLog
 	"Private - Open the NT event log for writing, and answer a handle onto it that can be passed to the
 	ReportEvent() API."
 
-	eventLogHandle := VMLibrary default registerEventSource: self eventLogSource.
+	eventLogHandle := VM registerEventSource: self eventLogSource.
 	^eventLogHandle!
 
 openFd: anInteger mode: aSymbol

@@ -71,7 +71,7 @@ logError: anException
 
 	"Write to the crash dump log - this always works"
 
-	VMLibrary default
+	VM
 		dump: anException description
 		path: nil
 		stackDepth: -1
@@ -147,15 +147,15 @@ primaryStartup
 	self openSources!
 
 productDetails
-	productDetails isNil ifTrue: [productDetails := VMLibrary default defaultProductDetails].
+	productDetails isNil ifTrue: [productDetails := VM defaultProductDetails].
 	^productDetails!
 
 productDetails: aLookupTable
 	productDetails := aLookupTable!
 
 productVersion
-	#todo. "Revise the Dolphin Product package handling of version numbers to not expect a Float version"
-	^Float fromString: (VMLibrary default defaultProductDetails at: #registryVersion)!
+	#todo.	"Revise the Dolphin Product package handling of version numbers to not expect a Float version"
+	^Float fromString: (VM defaultProductDetails at: #registryVersion)!
 
 quit: anInteger
 	"Private - Force a close down of the session with the specified exit code."

@@ -34,11 +34,11 @@ about
 	MessageBox new
 		caption: 'About ' , self class name asPhrase;
 		icon: self icon;
-		text: ('Directory change monitoring sample. Copyright (c) Object Arts Ltd, 2005.<n><1s><n>
+		text: ('Directory change monitoring sample.<n>Copyright © Object Arts Ltd, 2005.<n><1s><n>
 This sample monitors and displays file system changes occurring with a directory hierarchy as reported by the operating system. 
 It is mainly intended to demonstrate the use of the FileSystemWatcher class.<n>
 DISCLAIMER: This software is freely provided purely as an educational sample and as such it is provided "as is", WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.'
-					expandMacrosWith: VMLibrary default fullVersion);
+					expandMacrosWith: VM fullVersion);
 		open!
 
 addChange: anArray 

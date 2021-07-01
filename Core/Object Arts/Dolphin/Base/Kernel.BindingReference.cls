@@ -240,7 +240,7 @@ fullPathString: aString
 
 initialize
 	self flushBindings.
-	VMLibrary default
+	VM
 		registryAt: self name put: self;
 		registryAtIndex: 65 put: #pathString:scope:flags:;
 		registryAtIndex: 69 put: #setScope:!
@@ -327,7 +327,7 @@ stbVersion
 	^1!
 
 uninitialize
-	VMLibrary default
+	VM
 		registryAt: self name put: nil;
 		registryAtIndex: 65 put: nil;
 		registryAtIndex: 69 put: nil! !

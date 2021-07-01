@@ -343,7 +343,7 @@ basicCreateAt: position extent: extentPoint
 		nHeight: extentPoint y
 		hWndParent: self creationParentView asParameter
 		hMenu: ((dwStyle anyMask: WS_CHILD) ifTrue: [self defaultId])
-		hInstance: VMLibrary default applicationHandle
+		hInstance: VM applicationHandle
 		lpParam: nil!
 
 basicDestroy
@@ -3491,7 +3491,7 @@ subclassWindow
 	that has already been subclassed (!!)."
 
 	| dolphinWndProc oldProc |
-	dolphinWndProc := VMLibrary default getWndProc.
+	dolphinWndProc := VM getWndProc.
 	(oldProc := self setWndProc: dolphinWndProc) = dolphinWndProc ifFalse: [self oldWndProc: oldProc]!
 
 subclassWindow: hWnd
@@ -4302,7 +4302,7 @@ wmNotify: message wParam: wParam lParam: lParam
 	 are very frequent and mostly ignored."
 
 	| pNMHdr |
-	^(self class withHandle: ((pNMHdr := VMLibrary default addressFromInteger: lParam) dwordAtOffset: 0))
+	^(self class withHandle: ((pNMHdr := VM addressFromInteger: lParam) dwordAtOffset: 0))
 		ifNotNil: [:control | control nmNotify: pNMHdr]!
 
 wmPaint: message wParam: wParam lParam: lParam
@@ -5377,7 +5377,7 @@ fromHandle: aHandle
 	See also #withHandle:, which answers only registered (known)
 	Views."
 
-	^SessionManager inputState windowAt: aHandle
+	^SessionManager.Current inputState windowAt: aHandle
 		ifAbsent: 
 			[| unknownView parentView parentHandle |
 			unknownView := self new handle: aHandle.
@@ -5420,7 +5420,7 @@ initialize
 			[MessageMap := self buildMessageMap
 						isImmutable: true;
 						yourself].
-	VMLibrary default registryAtIndex: 54 put: #subclassWindow:!
+	VM registryAtIndex: 54 put: #subclassWindow:!
 
 mapRectangle: aRectangle from: aSourceView to: aDestinationView
 	"Answers a RECTL like aRectangle mapped from the coordinate system of aSourceView 
@@ -5482,8 +5482,8 @@ registerClass
 	| atom classStruct |
 	classStruct := WNDCLASS new
 				className: self wndClassName;
-				lpfnWndProc: VMLibrary default getWndProc;
-				hInstance: VMLibrary default applicationHandle;
+				lpfnWndProc: VM getWndProc;
+				hInstance: VM applicationHandle;
 				style: self winClassStyle;
 				hbrBackground: self winClassBrush asParameter;
 				hIcon: self winClassIcon asParameter;
@@ -5719,12 +5719,12 @@ uninitialize
 	you may need the VM to be able to notify the image of Windows messages, and will have to
 	register appropriate selectors to replace these. Note further that #wndProc:message:wParam:lParam:cookie:
 	cannot be unregistered here because it is needed by the ImageStripper progress dialog."
-	#(#subclassWindow:) do: [:each | VMLibrary default unregisterObject: each]!
+	#(#subclassWindow:) do: [:each | VM unregisterObject: each]!
 
 unregisterClass
 	"Private - Unregister the receivers corresponding Win32 class - answer whether it succeeds."
 
-	^UserLibrary default unregisterClass: WndClassAtom hInstance: VMLibrary default applicationHandle!
+	^UserLibrary default unregisterClass: WndClassAtom hInstance: VM applicationHandle!
 
 unregisterMessageMappings: aCollectionOfIntegers
 	MessageMap whileMutableDo: [aCollectionOfIntegers do: [:each | MessageMap at: each + 1 put: nil]]!

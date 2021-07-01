@@ -49,7 +49,7 @@ initialize
 		self initialize
 	"
 
-	VMLibrary default registryAt: self name put: self!
+	VM registryAt: self name put: self!
 
 new
 	"Answer a new instance of the receiver.
@@ -61,7 +61,7 @@ new
 uninitialize
 	"Private - Uninitialize the receiver prior to its removal from the image."
 
-	VMLibrary default registryAt: self name put: nil! !
+	VM registryAt: self name put: nil! !
 !External.LPVOID class categoriesFor: #defineFields!public!template definition! !
 !External.LPVOID class categoriesFor: #initialize!development!initializing!private! !
 !External.LPVOID class categoriesFor: #new!instance creation!public! !

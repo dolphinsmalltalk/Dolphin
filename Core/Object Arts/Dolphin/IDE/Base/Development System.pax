@@ -1616,7 +1616,7 @@ whichMethodsContainSource: aString
 whichMethodsOnlySelfSend: aSymbol
 	"Answer a Set of methods which consist purely of a send-to-self of the specified zero-arg selector."
 
-	^self selectMethods: ((VMLibrary default indexOfSpecialSelector: aSymbol ifAbsent: [])
+	^self selectMethods: ((VM indexOfSpecialSelector: aSymbol ifAbsent: [])
 				ifNil: [[:method | method isSimpleSelfSend: aSymbol]]
 				ifNotNil: 
 					[:index |

@@ -274,25 +274,6 @@ isUserBreakRequested
 	<cdecl: bool IsUserBreakRequested>
 	^self invalidCall: _failureCode!
 
-isWindowsServer
-	"Answers whether the current OS is a Windows Server release."
-
-	"Implementation Note: This is the equivalent of the IsWindowsServer() version helper
-	function, which is provided as an inline function in VersionHelpers.h in the Windows SDK."
-
-	| osvi |
-	osvi := OSVERSIONINFOEXW new
-				wProductType: VER_NT_WORKSTATION;
-				yourself.
-	^(KernelLibrary default
-		verifyVersionInfo: osvi
-		dwTypeMask: VER_PRODUCT_TYPE
-		dwlConditionMask: (KernelLibrary default
-				verSetConditionMask: 0
-				typeMask: VER_PRODUCT_TYPE
-				condition: VER_EQUAL))
-			not!
-
 kernelHandle
 	"Private - Answer the handle of the KernelLibrary. This cannot be obtained in the normal way
 	because there is a bit of a chicken and egg problem."
@@ -513,7 +494,6 @@ versionFormatString
 !Kernel.VMLibrary categoriesFor: #indexOfSpecialSelector:ifAbsent:!accessing-registry!private! !
 !Kernel.VMLibrary categoriesFor: #isSlowMachine!environment!public! !
 !Kernel.VMLibrary categoriesFor: #isUserBreakRequested!accessing!helpers!private! !
-!Kernel.VMLibrary categoriesFor: #isWindowsServer!public!win32 functions-version helpers! !
 !Kernel.VMLibrary categoriesFor: #kernelHandle!accessing-handles!private! !
 !Kernel.VMLibrary categoriesFor: #largeSignedFromUnsigned:!helpers!private! !
 !Kernel.VMLibrary categoriesFor: #largeUnsignedFromSigned:!helpers!private! !
@@ -660,7 +640,10 @@ open
 registryKeys
 	"Private - Answer the map between symbolic names and VM registry indices."
 
-	^RegistryKeys! !
+	^RegistryKeys!
+
+sharedVariableName
+	^#{VM}! !
 !Kernel.VMLibrary class categoriesFor: #fileName!constants!public! !
 !Kernel.VMLibrary class categoriesFor: #hasBytecodeRepresentation:!helpers!private! !
 !Kernel.VMLibrary class categoriesFor: #initialize!development!initializing!private! !
@@ -669,5 +652,7 @@ registryKeys
 !Kernel.VMLibrary class categoriesFor: #maxMessageArguments!limits!public! !
 !Kernel.VMLibrary class categoriesFor: #maxTemps!limits!public! !
 !Kernel.VMLibrary class categoriesFor: #open!instance creation!public! !
+!Kernel.VMLibrary class categoriesFor: #openDefault!instance creation!private!realizing/unrealizing! !
 !Kernel.VMLibrary class categoriesFor: #registryKeys!constants!private! !
+!Kernel.VMLibrary class categoriesFor: #sharedVariableName!constants!private! !
 

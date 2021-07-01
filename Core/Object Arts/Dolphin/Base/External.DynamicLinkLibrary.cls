@@ -348,7 +348,7 @@ closeDefault
 	(default notNil and: [default handle notNull]) 
 		ifTrue: 
 			[default close.
-			default := nil]!
+			self setDefault: nil]!
 
 default
 	"Answer the default, opened, instance of the receiver."
@@ -378,6 +378,13 @@ initializeAfterBinaryLoad
 	"Private - Perform any post-binary load initialisation for the class. "
 
 	self clear!
+
+initializeSubclasses
+	"Private - Perform session startup processing for the receiver and its subclasses.
+	We open the permanent libraries first to make the startup more robust in case of
+	errors opening other libraries."
+
+	self subclassesDo: [:c | c == PermanentLibrary ifFalse: [c onStartup2]]!
 
 load: aString flags: anInteger
 	"Private - Open the external library with the external file name, aString,
@@ -420,14 +427,14 @@ onStartup
 	"If we don't have a handle for the Kernel32.DLL then we can't open any other libraries"
 	KernelLibrary openDefault.
 	PermanentLibrary onStartup2.
-	self onStartup2!
+	self initializeSubclasses!
 
 onStartup2
 	"Private - Perform session startup processing for the receiver and its subclasses.
 	We open the permanent libraries first to make the startup more robust in case of
 	errors opening other libraries."
 
-	self subclassesDo: [:c | c == PermanentLibrary ifFalse: [c onStartup2]]!
+	self setDefault: nil!
 
 open
 	"Answer a new instance of the receiver to represent the receiver's ExternalLibrary. The 
@@ -448,7 +455,24 @@ openDefault
 	"Private - Open and record the default instance of the receiver.
 	Answer the new instance."
 
-	^default := self open!
+	self setDefault: self open.
+	^default!
+
+setDefault: anExternalLibrary
+	"Private - Set the default instance of the receiver, updating the shared variable normally used to reference it (if there is one)."
+
+	default := anExternalLibrary.
+	self sharedVariableName
+		ifNotNil: 
+			[:ref |
+			ref binding
+				setValue: (default ifNil: [DynamicLinkLibraryStub libraryClass: self]);
+				isImmutable: true]!
+
+sharedVariableName
+	"Private - Answer a <BindingReference> that refers to the shared variable holding the default instance of the receiver, or nil if there is no variable."
+
+	^nil!
 
 stbReadFrom: anSTBInFiler format: anSTBClassConversion 
 	"Read an instance of the receiver from the binary filer, aSTBInFiler."
@@ -485,6 +509,7 @@ versionInfo
 !External.DynamicLinkLibrary class categoriesFor: #fileName!constants!public! !
 !External.DynamicLinkLibrary class categoriesFor: #fromHandle:!instance creation!public! !
 !External.DynamicLinkLibrary class categoriesFor: #initializeAfterBinaryLoad!initializing!private! !
+!External.DynamicLinkLibrary class categoriesFor: #initializeSubclasses!initializing!private! !
 !External.DynamicLinkLibrary class categoriesFor: #load:flags:!private!realizing/unrealizing! !
 !External.DynamicLinkLibrary class categoriesFor: #moduleFileName:!helpers!private! !
 !External.DynamicLinkLibrary class categoriesFor: #onExit!finalizing!private! !
@@ -494,6 +519,8 @@ versionInfo
 !External.DynamicLinkLibrary class categoriesFor: #open!instance creation!public! !
 !External.DynamicLinkLibrary class categoriesFor: #open:!instance creation!public! !
 !External.DynamicLinkLibrary class categoriesFor: #openDefault!instance creation!private!realizing/unrealizing! !
+!External.DynamicLinkLibrary class categoriesFor: #setDefault:!initializing!private! !
+!External.DynamicLinkLibrary class categoriesFor: #sharedVariableName!constants!private! !
 !External.DynamicLinkLibrary class categoriesFor: #stbReadFrom:format:!binary filing!public! !
 !External.DynamicLinkLibrary class categoriesFor: #uninitialize!class hierarchy-removing!private! !
 !External.DynamicLinkLibrary class categoriesFor: #uninitializeBeforeRemove!class hierarchy-removing!private! !

@@ -288,7 +288,7 @@ initialize
 	self extraInstanceSpec: EncodingUtf8.
 	Table isNil ifTrue: [Table := Array new: 3989].
 	empty := #''.
-	VMLibrary default registryAt: #Symbol put: self.
+	VM registryAt: #Symbol put: self.
 	classificationTable := Array new: 128.
 	'_ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'
 		do: [:alpha | classificationTable at: alpha codePoint + 1 put: #alphabetic].

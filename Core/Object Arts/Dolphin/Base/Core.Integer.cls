@@ -141,13 +141,13 @@ asDword
 asExternalAddress
 	"Answer the receiver as an ExternalAddress."
 
-	^VMLibrary default addressFromInteger: self!
+	^VM addressFromInteger: self!
 
 asExternalHandle
 	"Answer the receiver as an ExternalHandle.
 	Implementation Note: Use the external call primitive coercion trick for speed."
 
-	^VMLibrary default handleFromInteger: self!
+	^VM handleFromInteger: self!
 
 asFraction
 	"Answer the normalized fractional representation of the receiver, in this
@@ -177,7 +177,7 @@ asSDword
 	Implementation Note: Get the external library primitive to perform the coercion
 	for us."
 
-	^VMLibrary default signedFromUnsigned: self!
+	^VM signedFromUnsigned: self!
 
 asStackPointer
 	"Private - Answer a <SmallInteger> value which can be stored into a stack slot and which will be

@@ -249,7 +249,7 @@ hash
 	In order for internal structure to have the same value as pointer structures
 	we use the VM export here."
 
-	^VMLibrary default hashBytes: bytes count: self comparisonSize!
+	^VM hashBytes: bytes count: self comparisonSize!
 
 heapPointerClass
 	"Private - Answer the default class to use as a heap pointer"

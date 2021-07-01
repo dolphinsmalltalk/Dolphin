@@ -4365,4 +4365,10 @@ OS.FILETIME subclass: #'OS.LocalFILETIME'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+Kernel.ProtoObject subclass: #'External.DynamicLinkLibraryStub'
+	instanceVariableNames: 'libraryClass'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
 

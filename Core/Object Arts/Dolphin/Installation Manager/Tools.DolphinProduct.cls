@@ -317,7 +317,7 @@ printOn: aStream
 productDetails
 	"Answers the product details for the receiver"
 
-	^VMLibrary default defaultProductDetails
+	^VM defaultProductDetails
 		at: #productName put: self fullName;
 		at: #shortProductName put: self name;
 		at: #productVersionString put: self version displayString;

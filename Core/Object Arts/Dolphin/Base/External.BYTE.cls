@@ -59,12 +59,12 @@ initialize
 		self initialize
 	"
 
-	VMLibrary default registryAt: self name put: self!
+	VM registryAt: self name put: self!
 
 uninitialize
 	"Private - Uninitialize the receiver prior to its removal from the image."
 
-	VMLibrary default registryAt: self name put: nil! !
+	VM registryAt: self name put: nil! !
 !External.BYTE class categoriesFor: #defineFields!public!template definition! !
 !External.BYTE class categoriesFor: #initialize!development!initializing!private! !
 !External.BYTE class categoriesFor: #uninitialize!class hierarchy-removing!private! !

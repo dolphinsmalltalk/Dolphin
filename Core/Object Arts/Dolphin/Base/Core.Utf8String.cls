@@ -511,7 +511,7 @@ fromAddress: anAddress
 initialize
 	self extraInstanceSpec: EncodingUtf8.
 	empty := ''.
-	VMLibrary default registryAt: #Utf8String put: self! !
+	VM registryAt: #Utf8String put: self! !
 !Core.Utf8String class categoriesFor: #characterForCodeUnit:!enquiries!public! !
 !Core.Utf8String class categoriesFor: #codePage!instance creation!public! !
 !Core.Utf8String class categoriesFor: #fromAddress:!instance creation!public! !
