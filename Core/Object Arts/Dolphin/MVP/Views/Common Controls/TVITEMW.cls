@@ -168,12 +168,6 @@ pszText: anUtf16String
 
 	bytes uintPtrAtOffset: _OffsetOf_pszText put: anUtf16String yourAddress!
 
-saveDetails
-	"Private - Set the flag in the receiver's mask which informs the TreeView to save
-	any details included in this item and not ask for them again."
-
-	self maskIn: TVIF_DI_SETITEM!
-
 selectedImage: anInteger
 	"Set contents' iSelectedImage member to anInteger"
 
@@ -218,7 +212,6 @@ textPointerOffset
 !TVITEMW categoriesFor: #lParam:!**compiled accessors**!public! !
 !TVITEMW categoriesFor: #pszText!**compiled accessors**!public! !
 !TVITEMW categoriesFor: #pszText:!**compiled accessors**!public! !
-!TVITEMW categoriesFor: #saveDetails!accessing!private! !
 !TVITEMW categoriesFor: #selectedImage:!accessing!public! !
 !TVITEMW categoriesFor: #stateMask!**compiled accessors**!public! !
 !TVITEMW categoriesFor: #stateMask:!**compiled accessors**!public! !

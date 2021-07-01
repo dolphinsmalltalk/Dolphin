@@ -129,6 +129,13 @@ addSystemBitmap: systemBitmapId index: anIntegerIndex
 					self tbAddBitmap: addBitmap size: 0].
 	^start + anIntegerIndex!
 
+applyFont
+	"Private - The receiver's font has been changed. The default is to cause the receiver to
+	resize."
+
+	super applyFont.
+	self updateSize!
+
 basicActualForecolor
 	"Private - Answer the <Color> to be applied as the receiver's foreground colour. This might
 	be 'Color default' indicating that the receiver is configured to use the default background
@@ -318,13 +325,6 @@ filerProxy
 	saved := bitmapsStart.
 	bitmapsStart := nil.
 	^[super filerProxy] ensure: [bitmapsStart := saved]!
-
-fontChanged
-	"Private - The receiver's font has been changed. The default is to cause the receiver to
-	resize."
-
-	super fontChanged.
-	self updateSize!
 
 hasFlatAppearance
 	"Answer whether the receiver has a flat appearance. A flat toolbar draws its buttons without
@@ -1063,6 +1063,7 @@ wmNotify: message wParam: wParam lParam: lParam
 !Toolbar categoriesFor: #addSeparator!adding!public! !
 !Toolbar categoriesFor: #addString:!helpers!private! !
 !Toolbar categoriesFor: #addSystemBitmap:index:!helpers!private! !
+!Toolbar categoriesFor: #applyFont!font!private!updating! !
 !Toolbar categoriesFor: #basicActualForecolor!accessing!private! !
 !Toolbar categoriesFor: #basicAddItems:!adding!private! !
 !Toolbar categoriesFor: #bitmapSize!geometry!public! !
@@ -1083,7 +1084,6 @@ wmNotify: message wParam: wParam lParam: lParam
 !Toolbar categoriesFor: #defaultGradientForecolor!colors!constants!private! !
 !Toolbar categoriesFor: #defaultWindowStyle!constants!private! !
 !Toolbar categoriesFor: #filerProxy!binary filing!private! !
-!Toolbar categoriesFor: #fontChanged!private!updating! !
 !Toolbar categoriesFor: #hasFlatAppearance!accessing-styles!public! !
 !Toolbar categoriesFor: #hasFlatAppearance:!accessing-styles!public! !
 !Toolbar categoriesFor: #hasLabels!accessing-styles!public! !

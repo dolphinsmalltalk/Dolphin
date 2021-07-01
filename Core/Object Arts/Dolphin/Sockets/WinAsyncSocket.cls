@@ -25,6 +25,9 @@ Class Variables:
 !WinAsyncSocket categoriesForClass!Windows Sockets! !
 !WinAsyncSocket methodsFor!
 
+applyFont
+	"Nothing to do here as the receiver cannot display text."!
+
 cancelSocket: aSocket 
 	"Private - Cancel any outstanding asynchronous calls."
 
@@ -87,6 +90,7 @@ wsaEvent: message wParam: wParam lParam: lParam
 	event := lParam lowWord.
 	selector := SocketMessageMap at: event ifAbsent: nil.
 	selector notNil ifTrue: [socket perform: selector]! !
+!WinAsyncSocket categoriesFor: #applyFont!font!private!updating! !
 !WinAsyncSocket categoriesFor: #cancelSocket:!operations!private! !
 !WinAsyncSocket categoriesFor: #defaultExtent!constants!public! !
 !WinAsyncSocket categoriesFor: #dispatchUser:wParam:lParam:!dispatching!private! !

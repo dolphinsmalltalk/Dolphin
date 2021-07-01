@@ -21,6 +21,12 @@ Class Variables:
 !TabView categoriesForClass!MVP-Views! !
 !TabView methodsFor!
 
+applyFont
+	"Private - The receiver's font has been changed, this will affect the tab geometry."
+
+	super applyFont.
+	self invalidateLayout!
+
 applyImageLists
 	"Private - Set the receiver's image list from the image manager."
 
@@ -128,12 +134,6 @@ ensureVisible: anIntegerOrHandle
 	"Ensure the item with the specified index is visible, scrolling it into view if necessary."
 
 	"Nothing to do (or nothing we can do)"!
-
-fontChanged
-	"Private - The receiver's font has been changed, this will affect the tab geometry."
-
-	super fontChanged.
-	self invalidateLayout!
 
 getItem: anInteger
 	| tcItem |
@@ -599,6 +599,7 @@ viewMode
 viewModeChanged
 	super viewModeChanged.
 	self invalidateLayout! !
+!TabView categoriesFor: #applyFont!font!private!updating! !
 !TabView categoriesFor: #applyImageLists!image management!private! !
 !TabView categoriesFor: #basicAdd:atIndex:!adding!private! !
 !TabView categoriesFor: #basicClear!public!removing! !
@@ -615,7 +616,6 @@ viewModeChanged
 !TabView categoriesFor: #defaultWindowStyle!constants!public! !
 !TabView categoriesFor: #dragOver:!drag & drop!public! !
 !TabView categoriesFor: #ensureVisible:!public! !
-!TabView categoriesFor: #fontChanged!public!updating! !
 !TabView categoriesFor: #getItem:!helpers!private! !
 !TabView categoriesFor: #getSelectionsByIndex!private!selection! !
 !TabView categoriesFor: #getSingleSelection!public!selection! !

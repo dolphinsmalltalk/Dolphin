@@ -12232,7 +12232,7 @@ zoomOut
 !ScintillaView categoriesFor: #setFoldMarginColor!folding!margins!private! !
 !ScintillaView categoriesFor: #setFoldMarginHiColor!folding!margins!private! !
 !ScintillaView categoriesFor: #setFoldProperty:!folding!private! !
-!ScintillaView categoriesFor: #setFont:!helpers!private!style definition! !
+!ScintillaView categoriesFor: #setFont:!font!private!style definition! !
 !ScintillaView categoriesFor: #setIndicator:from:length:!indicators!public! !
 !ScintillaView categoriesFor: #setIndicator:range:!indicators!public! !
 !ScintillaView categoriesFor: #setIndicators:!indicators!private! !
