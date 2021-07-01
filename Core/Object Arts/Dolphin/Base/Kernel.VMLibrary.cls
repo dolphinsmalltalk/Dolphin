@@ -179,7 +179,9 @@ errorIntegerMoreThan32Bits: anInteger
 fullVersion
 	"Answer a String which describes the full name and version number of the VM."
 
-	^self versionInfo formatVersionString: '%1 %2!!d!! release %3!!d!!.%4!!d!!%5!!d!!'!
+	| verinfo |
+	verinfo := self versionInfo.
+	^verinfo productName , ' ' , (verinfo productVersionString readStream upTo: $+)!
 
 getDlgProc
 	"Private - Answer a pointer to the VM's dialog window procedure.
