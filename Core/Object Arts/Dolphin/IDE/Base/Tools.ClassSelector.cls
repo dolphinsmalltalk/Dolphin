@@ -161,7 +161,7 @@ buildAllVariablesMenu: aMenu
 	class
 		withAllSuperclassesDo: [:eachClass | eachClass instVarNames do: [:each | instVars add: eachClass -> each]].
 	instVars size > self maximumVariableMenuEntries
-		ifTrue: [aMenu addCommand: #browseInstanceVariables description: '&Instance Variable...']
+		ifTrue: [aMenu addCommand: #browseInstanceVariables description: '&Instance Variable…']
 		ifFalse: 
 			[self
 				populateVarMenu: aMenu
@@ -175,7 +175,7 @@ buildAllVariablesMenu: aMenu
 		withAllSuperclassesDo: [:eachClass | eachClass classBindingNames do: [:each | classVars add: eachClass -> each]].
 	(aMenu notEmpty and: [classVars notEmpty]) ifTrue: [aMenu addSeparator].
 	classVars size > self maximumVariableMenuEntries
-		ifTrue: [aMenu addCommand: #browseClassVariables description: '&Class Variable...']
+		ifTrue: [aMenu addCommand: #browseClassVariables description: '&Class Variable…']
 		ifFalse: 
 			[self
 				populateVarMenu: aMenu
@@ -243,7 +243,7 @@ classPackage
 	oldPkg := class owningPackage.
 	newPkg := PackagePrompter
 				showModalOn: oldPkg asValue
-				caption: ('Package of <1p>...' expandMacrosWith: class)
+				caption: 'Package of <1p>…' << class
 				default: nil
 				validationBlock: [:package | package notNil and: [class fullyQualifiedReference isDefined]].
 	(newPkg isNil or: [newPkg = oldPkg]) ifFalse: [self queryMoveClass: class toPackage: newPkg]!
@@ -298,7 +298,7 @@ createSchematicWiring
 	"when: #dragCut: send: #onClassCut: to: self;"	"Nothing to do"!
 
 createVariableAccessors: aBoolean 
-	(self chooseVariables: aBoolean caption: 'Create Accessors for...') 
+	(self chooseVariables: aBoolean caption: 'Create Accessors for…') 
 		ifNotNil: 
 			[:varNames | 
 			self systemModel 
@@ -765,7 +765,7 @@ queryMoveClass: aClass toPackage: aPackage
 					[prompt := '<1s>.<n><n>Are you sure you would like to move it to <2p>?' expandMacrosWith: prompt
 								with: aPackage name.
 					response := MessageBox new
-								caption: 'Moving class to new package...';
+								caption: 'Moving class to new package…';
 								defaultButton: 2;
 								confirm: prompt.
 					response ifFalse: [^false]]
@@ -796,7 +796,7 @@ renameClassVariable
 	| classVar class |
 	class := self selection.
 	classVar := ChoicePrompter choices: class classBindingNames asSortedCollection
-				caption: 'Rename Class Variable...'.
+				caption: 'Rename Class Variable…'.
 	classVar isNil ifFalse: [self systemModel renameClassVariable: classVar in: class]!
 
 renameInstanceVariable
@@ -806,7 +806,7 @@ renameInstanceVariable
 	| instVar class |
 	class := self actualClass.
 	instVar := ChoicePrompter choices: class instVarNames asSortedCollection
-				caption: 'Rename Instance Variable...'.
+				caption: 'Rename Instance Variable…'.
 	instVar isNil ifFalse: [self systemModel renameInstanceVariable: instVar in: class]!
 
 searchEnvironment

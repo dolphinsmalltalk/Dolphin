@@ -6804,7 +6804,7 @@ Press Yes to move the class, No to leave it where it is, or Cancel to abort'
 						expandMacrosWith: aVariableBinding key
 						with: hisPackage
 						with: myPackage).
-			mb caption: ('Dolphin Type Library Analyzer: Generating <1s>...' expandMacrosWith: self name).
+			mb caption: 'Dolphin Type Library Analyzer: Generating <1s>…' << self name.
 			resp := mb open.
 			resp == #cancel ifTrue: [self abortGeneration].
 			resp == #yes ifTrue: [self addVariableToPackage: aVariableBinding]].
@@ -7227,7 +7227,7 @@ registerTypeLib
 			do: 
 				[:each |
 				UI.MessageBox new
-					caption: 'Unable to register type library...';
+					caption: 'Unable to register type library…';
 					errorMsg: each description]!
 
 stonAllInstVarNames

@@ -278,7 +278,7 @@ printLiteral: offset
 		next: cc
 		putAll: literal
 		startingAt: 1.
-	cc < literal size ifTrue: [stream nextPutAll: '...']!
+	cc < literal size ifTrue: [stream nextPutAll: '…']!
 
 printLongPrefix
 	"Private - Append the long instruction prefix to the stream"

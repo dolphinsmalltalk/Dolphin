@@ -175,7 +175,7 @@ initialize
 
 	"Where there is no entry in the table for the message box type, the application name is used."
 	DefaultCaptions := IdentityDictionary new
-				at: #confirm put: 'Please confirm...';
+				at: #confirm put: 'Please confirm…';
 				at: #notify put: 'Note';
 				shrink;
 				yourself	"Use the Windows default caption"!

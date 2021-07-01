@@ -60,7 +60,7 @@ addClassVariableTo: aClass
 				promptForClassVarName: ''
 				in: aClass
 				prompt: 'Please enter a name for the new variable:'
-				caption: ('Add Class Variable to <1p>...' expandMacrosWith: aClass).
+				caption: ('Add Class Variable to <1p>…' expandMacrosWith: aClass).
 	varName isNil ifFalse: [self addClassVariable: varName to: aClass]!
 
 addFilteredMethod: aCompiledMethod forLintRule: aLintRule
@@ -83,7 +83,7 @@ addInstanceVariableTo: aClass
 				promptForInstVarName: ''
 				in: aClass
 				prompt: 'Please enter a name for the new variable:'
-				caption: ('Add Instance Variable to <1p>...' expandMacrosWith: aClass).
+				caption: ('Add Instance Variable to <1p>…' expandMacrosWith: aClass).
 	varName isNil ifFalse: [self addInstanceVariable: varName to: aClass]!
 
 addParameterName: anRBMethodName initializer: initializer
@@ -105,7 +105,7 @@ addParameterToMethod: aCompiledMethod
 	^self 
 		addParameterToMethod: aCompiledMethod
 		inPackages: #()
-		caption: 'Add Parameter to <1p>>><2d>...'!
+		caption: 'Add Parameter to <1p>>><2d>…'!
 
 addParameterToMethod: aCompiledMethod inPackages: aCollectionOfPackages caption: aString
 	| args argc newName caption suffix newArg selector initializer model refactoring |
@@ -417,7 +417,7 @@ extractToTemporary: anInterval from: aSelector in: aClass
 	newName := (Prompter
 				createOn: ''
 				prompt: 'Please enter the name of the new temporary:'
-				caption: 'Extract to Temporary...')
+				caption: 'Extract to Temporary…')
 				validationBlock: 
 						[:name |
 						(existing includes: name) not and: 
@@ -435,7 +435,7 @@ extractToTemporary: anInterval from: aSelector in: aClass
 handleRefactoringError: ex
 	| text caption |
 	text := ex messageText.
-	caption := '<1d>...' expandMacrosWith: ex refactoring.
+	caption := '<1d>…' expandMacrosWith: ex refactoring.
 	ex isResumable
 		ifTrue: 
 			[(MessageBox confirm: (text last == $?
@@ -939,7 +939,7 @@ removeMethodsDuplicatedInSuperclassOf: aClass
 		cr.
 	'Would you like to remove the duplicates from <1p>?' expandMacrosWithArguments: {aClass} on: msg.
 	(MessageBox new
-		caption: 'Remove Duplicate Methods...';
+		caption: 'Remove Duplicate Methods…';
 		isSuppressible: true;
 		uniqueId: #removeMethodsDuplicatedInSuperclassOf:;
 		confirm: msg contents)
@@ -951,7 +951,7 @@ removeMethodsDuplicatedInSuperclassOf: aClass
 
 removeMethodsIn: methodsEnvironment within: searchEnvironment
 	MessageBox new
-		caption: 'Remove Methods...';
+		caption: 'Remove Methods…';
 		defaultButton: 2;
 		confirm: ('Are you sure you would like to remove <1p>?
 
@@ -1013,7 +1013,7 @@ renameMethod: aCompiledMethod
 	| newName |
 	newName := self
 				promptForMethodRename: aCompiledMethod
-				caption: ('Rename <1p> ...' expandMacrosWith: aCompiledMethod)
+				caption: ('Rename <1p> …' expandMacrosWith: aCompiledMethod)
 				allowExisting: false.
 	^newName isNil ifFalse: [self renameMethod: aCompiledMethod to: newName]!
 
@@ -1041,7 +1041,7 @@ renameMethodReferences: aCompiledMethod
 	| newName |
 	newName := self
 				promptForMethodRename: aCompiledMethod
-				caption: ('Rename References to <1p> ...' expandMacrosWith: aCompiledMethod)
+				caption: 'Rename References to <1p> …' << aCompiledMethod
 				allowExisting: true.
 	^newName notNil ifTrue: [self renameMethodReferences: aCompiledMethod to: newName]!
 
@@ -1073,7 +1073,7 @@ renameTemporary: aStVariableNode to: aString in: aClass selector: aSelector
 			newName := (Prompter
 						createOn: oldName
 						prompt: ('Please enter the new name for <1p>:' expandMacrosWith: oldName)
-						caption: 'Rename Temporary...')
+						caption: 'Rename Temporary…')
 						validationBlock: 
 								[:name |
 								
@@ -1131,7 +1131,7 @@ safeRemoveClass: aClass
 	(MessageBox new
 		uniqueId: [self] method displayString;
 		isSuppressible: true;
-		caption: 'Safe Remove Class...';
+		caption: 'Safe Remove Class…';
 		confirm: ('Remove class <1p>?' expandMacrosWith: oldClassName)) ifFalse: [^false].
 	self handleRefactoringException: [(RemoveClassRefactoring classNames: {aClass fullName}) execute].
 	^true!
@@ -1211,12 +1211,12 @@ safeRemoveSelectors: anArrayOfSelectors from: aClass inEnvironment: aBrowserEnvi
 		isSuppressible: true.
 	anArrayOfSelectors size = 1
 		ifTrue: 
-			[mb caption: 'Safe Remove Method...'.
+			[mb caption: 'Safe Remove Method…'.
 			prompt := 'Remove <1p>>><2p> (if it has no references or is equivalent to the superclass implementation)?'
 						expandMacrosWith: aClass
 						with: anArrayOfSelectors first]
 		ifFalse: 
-			[mb caption: 'Safe Remove Methods...'.
+			[mb caption: 'Safe Remove Methods…'.
 			prompt := String smalltalkWriteStream.
 			'The following methods of <1p> will be removed if they have no references or are equivalent to the superclass implementation:'
 				expandMacrosWithArguments: {aClass}
@@ -1256,7 +1256,7 @@ scopeToRenameAccessorsFor: aString in: aClass classVariable: aBoolean within: aB
 	finder findSetterMethod ifNotNil: [:setter | selectors addLast: setter].
 	selectors isEmpty ifTrue: [^nil].
 	dialog := RenameAccessorsDialog create.
-	dialog caption: ('Rename <3s> variable <1p>.<2s> ...'
+	dialog caption: ('Rename <3s> variable <1p>.<2s> …'
 				expandMacrosWith: aClass
 				with: aString
 				with: (aBoolean ifTrue: ['class'] ifFalse: ['instance'])).
@@ -1304,7 +1304,7 @@ selectTargetVariableOf: aClass parseTree: aStMethodNode
 	^((ChoicePrompter
 		createOn: default asValue
 		choices: variables
-		caption: 'Choose target variable...')
+		caption: 'Choose target variable…')
 		getTextBlock: [:each | each key ifNil: [each value] ifNotNil: [:eachClass | eachClass name , '.' , each value]];
 		showModal) ifNotNil: [:choice | choice value]!
 

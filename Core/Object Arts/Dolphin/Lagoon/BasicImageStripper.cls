@@ -625,7 +625,7 @@ removeRedundantClassesAndResources: stripResources
 	"Find classes that are redundant"
 	msg := 'Removing redundant classes'.
 	stripResources ifTrue: [msg := msg , ' and resources'].
-	self notify: msg , '...'.
+	self notify: msg , '…'.
 	self collectGarbage: 3.
 	referencedClasses := self allReferencedClasses.
 	stripResources ifTrue: [count := count + (self removeRedundantResources: referencedClasses)].
@@ -644,7 +644,7 @@ removeRedundantMethodsOnceFrom: aCollectionOfClasses
 
 	| redundantMessages redundantMethods sent implemented |
 	self stripRedundantMethods ifFalse: [^0].
-	self notify: 'Removing redundant methods...'.
+	self notify: 'Removing redundant methods…'.
 	self collectGarbage: 1.
 	sent := self messagesSentByClasses: aCollectionOfClasses.
 	implemented := Set new: aCollectionOfClasses size * 12.

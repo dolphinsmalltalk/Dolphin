@@ -70,7 +70,7 @@ changeSignature: aSymbol in: methodClass operation: aMonadicValuable title: titl
 				ifNotNil: [:renamedMethod | presenter executeRefactoring: aMonadicValuable with: renamedMethod]
 				ifNil: 
 					[MessageBox errorMsg: ('<2p> is not defined in <1p>' expandMacrosWith: methodClass with: aSymbol)
-						caption: ('<3s> send of <2p> in <1p>...'
+						caption: ('<3s> send of <2p> in <1p>…'
 								expandMacrosWith: methodClass
 								with: aSymbol
 								with: titleString).
@@ -249,7 +249,7 @@ implementMessage: aStMessageNode
 	| dialog |
 	dialog := self systemModel classChooserClass create.
 	dialog
-		caption: 'Choose Target Class...';
+		caption: 'Choose Target Class…';
 		allowNil: false.
 	presenter parseContext owningPackage ifNotNil: [:package | dialog packages: {package}].
 	dialog showModal ifNotNil: [:class | self implementMessage: aStMessageNode inClass: class]!
@@ -476,7 +476,7 @@ populateImplementMenu: aMenu forMessage: aStMessageNode
 				receiver: self
 				selector: #implementMessage:
 				argument: aStMessageNode)
-		description: '&Class...'.
+		description: '&Class…'.
 	aMenu setDefault: 1!
 
 queryCommand: aCommandQuery command: aCommand 

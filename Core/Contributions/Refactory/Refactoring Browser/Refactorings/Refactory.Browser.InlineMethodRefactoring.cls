@@ -51,7 +51,7 @@ findSelectedMessage
 getOptionImplementorToInline: anOrderedCollection
 	^UI.ChoicePrompter
 		choices: (anOrderedCollection asSortedCollection: [:a :b | a displayString <= b displayString])
-		caption: ('Inline <1p> from...' expandMacrosWith: sourceMessage selector)!
+		caption: 'Inline <1p> from…' << sourceMessage selector!
 
 hasMultipleReturns
 	"Do we have multiple returns? If the last statement isn't a return, then we have an implicit return of self."

@@ -65,7 +65,7 @@ aboutControl
 				[:e |
 				| caption |
 				caption := self progId.
-				caption size > 50 ifTrue: [caption := (caption leftString: 50) , '...'].
+				caption size > 50 ifTrue: [caption := (caption leftString: 50) , '…'].
 				MessageBox warning: 'Sorry, the control refused to show its about box.' caption: caption]!
 
 allowContextMenu
@@ -941,9 +941,9 @@ chooseControl: defaultProgId
 				create: 'Extensible choice prompter'
 				on: controlReg asValue
 				choices: choices
-				caption: 'Please choose a control...'.
+				caption: 'Please choose a control…'.
 	prompter
-		newCaption: 'Other Active-X control...';
+		newCaption: 'Other Active-X control…';
 		newPrompt: 'Please enter a Prog Id:';
 		newBlock: [:aString | ObjectRegistration clsid: (CLSID fromString: aString)].
 	imageManager := ImageManager new.

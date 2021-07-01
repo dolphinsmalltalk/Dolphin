@@ -615,7 +615,7 @@ basicCompressSources: progress
 	filer
 		sourceFileIndex: SourcesIndex;
 		isSourceOnly: true.
-	self logComment: 'Compressing sources....' to: filer.
+	self logComment: 'Compressing sources…' to: filer.
 	index := 0.
 	classes do: 
 			[:class |

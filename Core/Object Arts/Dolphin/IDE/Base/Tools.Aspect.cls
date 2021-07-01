@@ -524,7 +524,7 @@ collection: aCollectionAspectSymbol presenterClass: collectionPresenterClass add
 			[:p :m | 
 			(collectionPresenterClass createIn: p on: m) setAddItemBlock: 
 					[anArray size > 1 
-						ifTrue: [ChoicePrompter choices: anArray caption: 'Add ...']
+						ifTrue: [ChoicePrompter choices: anArray caption: 'Add…']
 						ifFalse: [anArray first]]]
 		editBlock: self defaultCollectionEditBlock!
 

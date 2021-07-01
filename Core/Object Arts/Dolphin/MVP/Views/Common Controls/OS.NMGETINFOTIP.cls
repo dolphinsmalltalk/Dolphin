@@ -39,7 +39,7 @@ text: text
 			last := max - 4.
 			"Ensure we don't truncate in the middle of a character"
 			(tipText at: last) isUtf16Lead ifTrue: [last := last - 1].
-			tipText := (tipText copyFrom: 1 to: last) , '...'].
+			tipText := (tipText copyFrom: 1 to: last) , '…'].
 	tipText copyToBuffer: self pszText ofSize: max.
 	^tipText! !
 !OS.NMGETINFOTIP categoriesFor: #cchTextMax!accessing!public! !

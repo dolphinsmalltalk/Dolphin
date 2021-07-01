@@ -132,7 +132,7 @@ addMethodCategory
 	| actualClass newCategory |
 	actualClass := self actualClass.
 	newCategory := (CategoryPrompter choices: MethodCategory allMethodCategories
-				caption: 'Add Method Category ...') showModal.
+				caption: 'Add Method Category…') showModal.
 	newCategory notNil ifFalse: [^self].
 	categoriesPresenter model addCategory: newCategory.
 	newCategory addClass: actualClass!
@@ -148,7 +148,7 @@ addMethodProtocol
 				create: 'Extensible choice prompter'
 				on: nil asValue
 				choices: protocols
-				caption: 'Add Protocol to ' , actualClass name , ' ...')
+				caption: 'Add Protocol to ' , actualClass name , '…')
 				getTextBlock: [:protocol | protocol name];
 				newBlock: [:aString | protClass name: aString];
 				showModal.
@@ -280,14 +280,14 @@ browseMessageDefinitionsIn: aBrowserEnvironment
 	"Private - Prompt for a selector and open a method browser displaying all definitions of
 	that selector in the specified <BrowserEnvironment>."
 
-	(self systemModel promptForSelector: '' caption: 'Definitions of ...')
+	(self systemModel promptForSelector: '' caption: 'Definitions of…')
 		ifNotNil: [:search | Cursor wait showWhile: [self browseDefinitionsMatching: search in: aBrowserEnvironment]]!
 
 browseMessageReferencesIn: aBrowserEnvironment
 	"Private - Prompt for a selector and open a method browser displaying the references to that
 	selector from methods defined in the specified <BrowserEnvironment>."
 
-	(self systemModel promptForSelector: '' caption: 'References to...')
+	(self systemModel promptForSelector: '' caption: 'References to…')
 		ifNotNil: [:search | Cursor wait showWhile: [self browseReferencesMatching: search in: aBrowserEnvironment]]!
 
 browseMethodCategory
@@ -445,7 +445,7 @@ classForNewMethod
 	^self actualClass ifNil: 
 			[self systemModel 
 				chooseClass: nil asValue
-				caption: 'Choose Class of New Method...'
+				caption: 'Choose Class of New Method…'
 				allowNil: false]!
 
 classMethodFilter
@@ -1542,7 +1542,7 @@ onRenameInstVar: anAssociation to: aString accept: aValueHolder
 					do: 
 						[:ex |
 						MessageBox errorMsg: ex description
-							caption: ('Rename <1d>.<2d> to <3s>...'
+							caption: ('Rename <1d>.<2d> to <3s>…'
 									expandMacrosWith: anAssociation value
 									with: anAssociation key
 									with: aString).

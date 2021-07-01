@@ -199,7 +199,7 @@ valueTextOnly
 	stream := LimitedWriteStream
 				over: (String writeStream: 32)
 				limit: 3000
-				limitBlock: [:s | ^s contents , ' ... etc ...'].
+				limitBlock: [:s | ^s contents , ' … etc …'].
 	stream locale: Locale smalltalk.
 	[self aspectDescriptor displayAspectValueOf: self subject on: stream] on: Error
 		do: [:ex | stream basicPrint: ex].
@@ -209,7 +209,7 @@ yourselfAspect
 	"Answers the AspectAccessor for the #yourself published aspect of the 
 	receiver's value."
 
-	^self value publishedAspects detect: [:each | each name == #yourself]! !
+	^self value publishedAspects at: #yourself! !
 !Tools.AspectAccessor categoriesFor: #<=!comparing!public! !
 !Tools.AspectAccessor categoriesFor: #=!comparing!public! !
 !Tools.AspectAccessor categoriesFor: #aspectDescriptor!accessing!private! !

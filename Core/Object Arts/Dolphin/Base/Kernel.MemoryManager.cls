@@ -242,7 +242,7 @@ forkUndertaker
 	data inside a critical section against the mutex with a supersend, implement 
 	elementsExpired: repairing the shared data inside the mutex)."
 
-	Notification signal: self class name , ': Restarting Undertaker process...'.
+	Notification signal: self class name , ': Restarting Undertaker process…'.
 	[self undertakerMain] forkAt: Processor highIOPriority!
 
 gcInterval

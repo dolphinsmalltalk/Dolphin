@@ -42,7 +42,7 @@ runRule: aLintRule
 			[| progress |
 			progress := ProgressDialog create.
 			progress
-				caption: 'Running Rule... ';
+				caption: 'Running Rule…';
 				text: aLintRule name.
 			progress operation: 
 					[:progressPresenter |

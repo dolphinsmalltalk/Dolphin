@@ -988,7 +988,7 @@ displayOn: aPuttableStream
 			description := String streamContents: [:strm | (self perform: each) displayOn: strm].
 			description notNil and: [description notEmpty]].
 	description size > self displayOnMaxCharacters
-		ifTrue: [description := (description leftString: self displayOnMaxCharacters) , '...'].
+		ifTrue: [description := (description leftString: self displayOnMaxCharacters) , '…'].
 	aPuttableStream nextPutAll: description!
 
 displayOnFormats

@@ -403,10 +403,10 @@ buildIdeaSpacePopup
 	popup := Menu new.
 	popup
 		addCommand: (Message selector: #newIdeaSpace) description: 'New IdeaSpace';
-		addCommand: (Message selector: #openIdeaSpace) description: 'Open IdeaSpace from Template...';
+		addCommand: (Message selector: #openIdeaSpace) description: 'Open IdeaSpace from Template…';
 		addSeparator;
 		addCommand: (Message selector: #saveIdeaSpace) description: 'Save IdeaSpace Template';
-		addCommand: (Message selector: #saveIdeaSpaceAs) description: 'Save IdeaSpace Template as...';
+		addCommand: (Message selector: #saveIdeaSpaceAs) description: 'Save IdeaSpace Template as…';
 		addCommand: (Message selector: #revertIdeaSpace) description: 'Revert IdeaSpace to Template';
 		addSeparator;
 		addCommand: (Message selector: #addToNewIdeaSpace) description: 'Add to New IdeaSpace';

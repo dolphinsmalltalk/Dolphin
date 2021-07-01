@@ -409,7 +409,7 @@ beNotUsingPAX
 				expandMacrosWith: self name
 				with: names size
 				with: self path.
-	(UI.MessageBox confirm: msg caption: ('Convert <1p> to PAC mode...' expandMacrosWith: self name))
+	(UI.MessageBox confirm: msg caption: 'Convert <1p> to PAC mode…' << self name)
 		ifTrue: [names do: [:each | (File exists: each) ifTrue: [File delete: each]]]!
 
 beUsingPAX
@@ -423,7 +423,7 @@ beUsingPAX
 	msg := 'Placing this package into PAX source mode will create <1p> source files<n>in the directory <2s>.<n><n>Are you sure that you wish to proceed?'
 				expandMacrosWith: self allSourceObjects size
 				with: self path.
-	(UI.MessageBox confirm: msg caption: ('Convert <1p> to PAX mode...' expandMacrosWith: self name))
+	(UI.MessageBox confirm: msg caption: 'Convert <1p> to PAX mode…' << self name)
 		ifTrue: [self fileOutAll]!
 
 canFileOut

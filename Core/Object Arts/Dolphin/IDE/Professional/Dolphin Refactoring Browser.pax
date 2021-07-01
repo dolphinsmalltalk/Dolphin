@@ -743,8 +743,8 @@ getOptionVariableTypes: choicesCollection selected: suggestionsCollection
 		on: suggestionsCollection asOrderedCollection
 		multipleChoices: ((choicesCollection union: suggestionsCollection)
 				asSortedCollection: [:a :b | a name < b name])
-		caption: 'Select class(es) of new method... ')
-		newCaption: 'Add Other Class ...';
+		caption: 'Select class(es) of new method… ')
+		newCaption: 'Add Other Class…';
 		newBlock: 
 				[:aString |
 				| global index |
@@ -1277,7 +1277,7 @@ methodsToOverride
 						ifTrue: [methods at: eachSelector put: eachMethod]].
 			class := class superclass].
 	^(ChoicePrompter multipleChoices: methods keys asSortedCollection
-		caption: 'Choose Methods to Override...')
+		caption: 'Choose Methods to Override…')
 			ifNotNil: [:selectors | selectors collect: [:each | selectedClass lookupMethod: each]]!
 
 overrideMethods
@@ -1384,7 +1384,7 @@ queryRefactoringCommand: aCommandQuery
 				isEnabled: class superclass notNil;
 				text: (aCommandQuery commandDescription menuText
 							expandMacrosWithArguments: {methods isEmpty
-										ifTrue: ['...']
+										ifTrue: ['…']
 										ifFalse: [methods size == 1 ifTrue: [methods first] ifFalse: ['Methods']]}
 							locale: Locale smalltalk).
 			^true].
@@ -1396,7 +1396,7 @@ removeInstanceVariables
 	self model removeInstanceVariables: self variables within: self searchEnvironment!
 
 renameMethod
-	(self chooseMethodForRefactoring: 'Rename Method...') 
+	(self chooseMethodForRefactoring: 'Rename Method…') 
 		ifNotNil: [:method | self methodRefactoringTool renameMethod: method]!
 
 selectedOverridableMethods
@@ -1425,7 +1425,7 @@ abstractClassVariables
 	same name) which has the advantage of not requiring a dialog, but which enables the user to 
 	choose only one instance variable at a time."
 
-	(self chooseVariables: true caption: 'Abstract Class Variables...')
+	(self chooseVariables: true caption: 'Abstract Class Variables…')
 		ifNotNil: [:varNames | self systemModel abstractClassVariables: varNames within: BrowserEnvironment new]!
 
 abstractInstanceVariables
@@ -1434,7 +1434,7 @@ abstractInstanceVariables
 	same name) which has the advantage of not requiring a dialog, but which enables the user to 
 	choose only one instance variable at a time."
 
-	(self chooseVariables: false caption: 'Abstract Instance Variables...')
+	(self chooseVariables: false caption: 'Abstract Instance Variables…')
 		ifNotNil: [:varNames | self systemModel abstractInstanceVariables: varNames within: BrowserEnvironment new]!
 
 addClassVariable
@@ -1523,7 +1523,7 @@ populateClassVarMenu: aMenu selectors: selectors
 	class := self selection.
 	varNames := class classBindingNames.
 	varNames size > self maximumVariableMenuEntries
-		ifTrue: [(aMenu addCommand: selectors last description: '&Class Variable...') isModalCommand: true]
+		ifTrue: [(aMenu addCommand: selectors last description: '&Class Variable…') isModalCommand: true]
 		ifFalse: 
 			[self
 				populateVarMenu: aMenu
@@ -1537,7 +1537,7 @@ populateInstVarMenu: aMenu selectors: selectors
 	class := self actualClass.
 	varNames := class instVarNames.
 	varNames size > self maximumVariableMenuEntries 
-		ifTrue: [(aMenu addCommand: selectors last description: '&Instance Variable...') isModalCommand: true]
+		ifTrue: [(aMenu addCommand: selectors last description: '&Instance Variable…') isModalCommand: true]
 		ifFalse: 
 			[self 
 				populateVarMenu: aMenu
@@ -1555,7 +1555,7 @@ populatePullUpVariableMenu: aMenu forClass: aClass command: commandSymbol classV
 	pairs isNil
 		ifTrue: 
 			[aMenu addCommand: tooManyCommand
-				description: (aBoolean ifTrue: ['&Class Variable...'] ifFalse: ['&Instance Variable...'])]
+				description: (aBoolean ifTrue: ['&Class Variable…'] ifFalse: ['&Instance Variable…'])]
 		ifFalse: 
 			[(pairs asSortedCollection: 
 					[:p1 :p2 |
@@ -1628,7 +1628,7 @@ protectInstanceVariables
 	same name) which has the advantage of not requiring a dialog, but which enables the user to 
 	choose only one instance variable at a time."
 
-	(self chooseVariables: false caption: 'Protect Instance Variables...') 
+	(self chooseVariables: false caption: 'Protect Instance Variables…') 
 		ifNotNil: [:varNames | self systemModel protectInstanceVariables: varNames]!
 
 pullUpClassVariables
@@ -1646,7 +1646,7 @@ pullUpClassVariables
 	pairs := (ChoicePrompter
 				createOn: pairs
 				multipleChoices: pairs
-				caption: 'Pull Up Class Variables...')
+				caption: 'Pull Up Class Variables…')
 				getTextBlock: [:each | each key name , '.' , each value];
 				showModal.
 	pairs isNil
@@ -1670,7 +1670,7 @@ pullUpInstanceVariables
 	pairs := (ChoicePrompter
 				createOn: pairs
 				multipleChoices: pairs
-				caption: 'Pull Up Instance Variables...')
+				caption: 'Pull Up Instance Variables…')
 				getTextBlock: [:each | each key name , '.' , each value];
 				showModal.
 	pairs isNil
@@ -1700,7 +1700,7 @@ pushDownClassVariables
 	same name) which has the advantage of not requiring a dialog, but which enables the user to 
 	choose only one instance variable at a time."
 
-	(self chooseVariables: true caption: 'Push Down Class Variables...') 
+	(self chooseVariables: true caption: 'Push Down Class Variables…') 
 		ifNotNil: [:varNames | self systemModel pushDownInstanceVariables: varNames]!
 
 pushDownInstanceVariables
@@ -1709,7 +1709,7 @@ pushDownInstanceVariables
 	same name) which has the advantage of not requiring a dialog, but which enables the user to 
 	choose only one instance variable at a time."
 
-	(self chooseVariables: false caption: 'Push Down Instance Variables...') 
+	(self chooseVariables: false caption: 'Push Down Instance Variables…') 
 		ifNotNil: [:varNames | self systemModel pushDownInstanceVariables: varNames]!
 
 queryRefactoringCommand: aCommandQuery
@@ -1795,7 +1795,7 @@ removeClassVariables
 	same name) which has the advantage of not requiring a dialog, but which enables the user to 
 	choose only one instance variable at a time."
 
-	(self chooseVariables: true caption: 'Remove Class Variables...') 
+	(self chooseVariables: true caption: 'Remove Class Variables…') 
 		ifNotNil: [:varNames | self systemModel removeClassVariables: varNames within: self searchEnvironment]!
 
 removeDuplicateMethods
@@ -1803,9 +1803,8 @@ removeDuplicateMethods
 	class := self actualClass.
 	(self systemModel removeMethodsDuplicatedInSuperclassOf: class)
 		ifFalse: 
-			[MessageBox
-				notify: ('<1p> does not duplicate any of its superclass'' methods' expandMacrosWith: class)
-				caption: 'Remove Duplicate Methods...']!
+			[MessageBox notify: '<1p> does not duplicate any of its superclass'' methods' << class
+				caption: 'Remove Duplicate Methods…']!
 
 removeInstanceVariables
 	"Invoke the 'Remove Instance Variable' refactoring on the users choice of instance variables.
@@ -1813,7 +1812,7 @@ removeInstanceVariables
 	same name) which has the advantage of not requiring a dialog, but which enables the user to 
 	choose only one instance variable at a time."
 
-	(self chooseVariables: false caption: 'Remove Instance Variables...') 
+	(self chooseVariables: false caption: 'Remove Instance Variables…') 
 		ifNotNil: [:varNames | self systemModel removeInstanceVariables: varNames within: self searchEnvironment]!
 
 safeRemoveClass
@@ -2003,7 +2002,7 @@ addParameter
 	the selector of the method to which the parameter is added, and constrained to operate
 	only within the selected packages."
 
-	(self chooseMethodForRefactoring: 'Add Parameter in Package(s)...') 
+	(self chooseMethodForRefactoring: 'Add Parameter in Package(s)…') 
 		ifNotNil: [:method | self addParameterTo: method]
 !
 
@@ -2011,7 +2010,7 @@ addParameterTo: aCompiledMethod
 	self model 
 		addParameterToMethod: aCompiledMethod
 		inPackages: self packages
-		caption: 'Add Parameter to <2p> in Package(s)...'!
+		caption: 'Add Parameter to <2p> in Package(s)…'!
 
 addParameterToMethod
 	"Private - 'Loose Methods' card context menu command to invoke the 
@@ -2048,7 +2047,7 @@ performMethodRenameRefactoring: aMonadicValuable
 
 performMethodsRefactoring: aMonadicValuable name: aString
 	| methods |
-	methods := self chooseMethodsForRefactoring: ('<1s> from Package(s)...' expandMacrosWith: aString).
+	methods := self chooseMethodsForRefactoring: '<1s> from Package(s)…' << aString.
 	methods isEmpty ifTrue: [^nil].
 	^[aMonadicValuable value: methods allMethods] on: Notification
 		do: 
@@ -2097,12 +2096,12 @@ removeParameter
 	only within the selected packages."
 
 	| method ast arg |
-	method := self chooseMethodForRefactoring: 'Remove Parameter in Package(s)...'.
+	method := self chooseMethodForRefactoring: 'Remove Parameter in Package(s)…'.
 	method isNil ifTrue: [^self].
 	ast := method parseTreeNoError.
 	ast isNil ifTrue: [^self].
 	arg := ChoicePrompter choices: ast argumentNames
-				caption: ('Remove Parameter from <1p> in Package(s)...' expandMacrosWith: method selector).
+				caption: 'Remove Parameter from <1p> in Package(s)…' << method selector.
 	arg notNil ifTrue: [methodRefactoringTool removeParameter: arg from: method]!
 
 renameLooseMethod
@@ -2127,14 +2126,14 @@ renameMethod
 	method selected on the methods tab. It allows the selection of an arbitrary method to be
 	renamed at package scope, not just loose methods."
 
-	(self chooseMethodForRefactoring: 'Rename Method in Package(s)...') 
+	(self chooseMethodForRefactoring: 'Rename Method in Package(s)…') 
 		ifNotNil: [:method | methodRefactoringTool renameMethod: method]!
 
 renameMethodReferences: aCompiledMethod
 	| methodName |
 	methodName := self
 				promptForMethodName: aCompiledMethod
-				caption: ('Rename References to <1p> in Package(s)...' expandMacrosWith: aCompiledMethod selector)
+				caption: 'Rename References to <1p> in Package(s)…' << aCompiledMethod selector
 				allowExisting: true.
 	methodName notNil ifTrue: [self model renameMethodReferences: aCompiledMethod to: methodName]!
 
@@ -2149,7 +2148,7 @@ safeRemoveMethod
 	renamed at package scope, not just loose methods."
 
 	| methods |
-	methods := self chooseMethodsForRefactoring: 'Safe Remove Methods from Package(s)...'.
+	methods := self chooseMethodsForRefactoring: 'Safe Remove Methods from Package(s)…'.
 	methods isEmpty 
 		ifFalse: [self model safeRemoveMethodsIn: methods within: self selectionEnvironment]!
 
@@ -2185,7 +2184,7 @@ moveAllTempsToInnerScope
 		confirm: 'This refactoring will move all temporaries in all methods in the selected package(s) into the tightest scope that contains both the variable assignment and references. Any unreferenced temporaries will be removed.
 
 Are you sure that you would like to proceed?'
-		caption: 'Move All Temps to Inner Scope...')
+		caption: 'Move All Temps to Inner Scope…')
 			ifTrue: [self systemModel moveAllTempsToInnerScope: self selectionEnvironment]!
 
 queryRefactoringCommand: aCommandQuery 
@@ -2219,7 +2218,7 @@ removeDuplicateMethods
 							i := i + 1.
 							progress value: i * 100 // count.
 							devsys removeMethodsDuplicatedInSuperclassOf: eachClass]]])
-		caption: 'Remove Methods Duplicating Superclass'' from Package(s)...';
+		caption: 'Remove Methods Duplicating Superclass'' from Package(s)…';
 		showModal! !
 !Tools.PackageSelector categoriesFor: #moveAllTempsToInnerScope!commands!private!refactoring! !
 !Tools.PackageSelector categoriesFor: #queryRefactoringCommand:!commands!private!refactoring! !
