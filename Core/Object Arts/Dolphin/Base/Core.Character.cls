@@ -214,6 +214,12 @@ codePoint
 			["If this is a UTF-8 or UTF-16 surrogate, the code point will be invalid"
 			code bitAnd: 16rFFFFFF]!
 
+codePointString
+	"Answer the Unicode code string for the receiver as typically shown in tables of Unicode characters, e.g. U+0061 for $a"
+
+	^'U+'
+		, (self codePoint printStringBase: 16 nDigits: ((self codePoint numberOfDigitsInBase: 16) max: 4))!
+
 codeUnit
 	"Answer the <integer> character code for the character in its native encoding. This can
 	never be greater than 16r10FFFF, which is the maximum Unicode code point."
@@ -541,6 +547,7 @@ to: aCharacter
 !Core.Character categoriesFor: #classify:!helpers!private! !
 !Core.Character categoriesFor: #code!accessing!private! !
 !Core.Character categoriesFor: #codePoint!accessing!public! !
+!Core.Character categoriesFor: #codePointString!printing!public! !
 !Core.Character categoriesFor: #codeUnit!accessing!public! !
 !Core.Character categoriesFor: #deepCopy!copying!public! !
 !Core.Character categoriesFor: #digitValue!accessing!public! !

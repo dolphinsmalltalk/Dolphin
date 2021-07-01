@@ -967,7 +967,7 @@ onHoverEnd: aPoint
 	self view cancelCallTip!
 
 onHoverStart: aPoint
-	| indicators index scintilla style range tokenText |
+	| indicators index scintilla style range |
 	scintilla := self view.
 	scintilla isAutoCompletionActive ifTrue: [^self].
 	indicators := scintilla indicatorsUnder: aPoint.
@@ -980,27 +980,18 @@ onHoverStart: aPoint
 	index <= 0 ifTrue: [^self].
 	style := (view styleAt: index) name.
 	range := view tokenRangeAt: index.
-	tokenText := view plainTextRange: range.
+
 	"Can be useful to see a tip for Characters expressed in $\xNN[NN] form"
 	style == #literalCharacter
 		ifTrue: 
-			[| ch tip |
-			ch := (Scanner on: tokenText readStream) next value.
-			(ch isGraph
-				ifTrue: 
-					[tip := ch asUtf8String.
-					tip = (tokenText copyFrom: 2)]
-				ifFalse: 
-					[tip := ch printString.
-					tip = tokenText])
-					ifFalse: [self view showCallTip: 'Character: ' , tip at: range stop].
+			[self showTipForCharacter: range.
 			^self].
 	(#(#identifier #tempDecl #argDecl #blockArgDecl) identityIncludes: style)
 		ifTrue: 
 			[self showTipForIdentifier: (StIdentifierToken
 						start: range start
 						comments: nil
-						value: tokenText)]!
+						value: (view plainTextRange: range))]!
 
 onRightButtonReleased: aMouseEvent 
 	"If the right button is clicked outside the selection range, then change the caret position
@@ -1487,6 +1478,21 @@ showSymbolCompletionListAt: posInteger maxItems: maxInteger
 	quoted ifTrue: [symbols := symbols collect: [:each | each displayString printString]].
 	self showCompletionList: symbols prefixLength: prefixLength!
 
+showTipForCharacter: anInterval
+	| representation ch tokenText tip |
+	tokenText := view plainTextRange: anInterval.
+	ch := (Scanner on: tokenText readStream) next value.
+	tip := (ch isGraph
+				ifTrue: 
+					[representation := ch asUtf8String.
+					representation = (tokenText copyFrom: 2)]
+				ifFalse: 
+					[representation := ch printString.
+					representation = tokenText])
+					ifTrue: ['Codepoint: ' , ch codePointString]
+					ifFalse: ['Character: ' , representation].
+	self view showCallTip: tip at: anInterval stop!
+
 showTipForIdentifier: anStIdentifierToken
 	(self resolveVariable: anStIdentifierToken)
 		ifNotNil: 
@@ -1763,6 +1769,7 @@ wrapLinesInRange: anInterval indent: anInteger
 !Tools.SmalltalkWorkspace categoriesFor: #showResult:at:!helpers!private! !
 !Tools.SmalltalkWorkspace categoriesFor: #showSelectorCompletionListAt:maxItems:!autocompletion!helpers!private! !
 !Tools.SmalltalkWorkspace categoriesFor: #showSymbolCompletionListAt:maxItems:!autocompletion!helpers!private! !
+!Tools.SmalltalkWorkspace categoriesFor: #showTipForCharacter:!event handling!private! !
 !Tools.SmalltalkWorkspace categoriesFor: #showTipForIdentifier:!helpers!private! !
 !Tools.SmalltalkWorkspace categoriesFor: #showTipForIndicators:!helpers!private! !
 !Tools.SmalltalkWorkspace categoriesFor: #startAutocompleteTimer!autocompletion!helpers!private! !
