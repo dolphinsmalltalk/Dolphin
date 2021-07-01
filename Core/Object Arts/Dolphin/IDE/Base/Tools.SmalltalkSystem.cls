@@ -2935,7 +2935,7 @@ populateWindowMenu: windowMenu withShells: openShells ofClasses: toolClasses
 			shells do: 
 					[:eachShell |
 					| description |
-					description := eachShell view text.
+					description := self sanitizeWindowTextForMenu: eachShell view text.
 					eachShell view isWindowVisible ifFalse: [description := description , ' (hidden)'].
 					windowMenu
 						addCommand: (Message selector: #showShellWithHandle: argument: eachShell view handle)
@@ -3841,6 +3841,25 @@ samplesFolder
 samplesFolderIcon
 	^Icon fromId: 'SampleApplicationsFolder.ico'!
 
+sanitizeWindowTextForMenu: aString
+	"Private - Control characters present in the window text (including tabs) may cause Windows to display a corrupt string, so replqce any control characters in the proposed menu text for a window with its Unicode display character. Also limit the maximum amount of text to something reasonable so the menu is not too wide."
+
+	| sanitized original count |
+	sanitized := String writeStream.
+	original := aString readStream.
+	count := 0.
+	[original atEnd or: [count > 80 and: 
+					[sanitized nextPutAll: ' …'.
+					true]]]
+		whileFalse: 
+			[| ch code |
+			count := count + 1.
+			ch := original next.
+			code := ch code.
+			sanitized
+				nextPut: ((code between: 0 and: 31) ifTrue: [Character codePoint: 16r2400 + code] ifFalse: [ch])].
+	^sanitized contents!
+
 saveDefaultPublishedAspectsOf: aTool 
 	"Private - Saves the current state of aTools published aspects as its default values. These
 	can later be used to find any publishes aspects that have been changed from their defaults"
@@ -4572,6 +4591,7 @@ wrapText: aString toWidth: max indent: colInteger tabWidth: tabInteger
 !Tools.SmalltalkSystem categoriesFor: #resourceManager!private! !
 !Tools.SmalltalkSystem categoriesFor: #samplesFolder!accessing!private! !
 !Tools.SmalltalkSystem categoriesFor: #samplesFolderIcon!initializing!private! !
+!Tools.SmalltalkSystem categoriesFor: #sanitizeWindowTextForMenu:!helpers!private! !
 !Tools.SmalltalkSystem categoriesFor: #saveDefaultPublishedAspectsOf:!operations!private!theming! !
 !Tools.SmalltalkSystem categoriesFor: #saveImage!commands!public! !
 !Tools.SmalltalkSystem categoriesFor: #saveImageAs!commands!public! !
