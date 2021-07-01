@@ -174,6 +174,9 @@ isRoot
 
 	^handle = rootKey handle!
 
+isWriteable
+	^self sam allMask: KEY_WRITE!
+
 key
 	"Answer the lookup key of the receiver."
 
@@ -770,6 +773,7 @@ valueFromObject: value
 !OS.RegKeyAbstract categoriesFor: #hash!comparing!public! !
 !OS.RegKeyAbstract categoriesFor: #includesKey:!public!searching! !
 !OS.RegKeyAbstract categoriesFor: #isRoot!public!testing! !
+!OS.RegKeyAbstract categoriesFor: #isWriteable!public!testing! !
 !OS.RegKeyAbstract categoriesFor: #key!accessing!public! !
 !OS.RegKeyAbstract categoriesFor: #key:!accessing!public! !
 !OS.RegKeyAbstract categoriesFor: #keyInfo!accessing!public! !
