@@ -61,6 +61,12 @@ addTreeFor: anObject parentNode: aMoenTreeNode
 anchorNode
 	^anchorNode!
 
+applyFont
+	"Private - The receiver's font has been changed. We need to regenerate
+	our contours as it is likely that the text extents will have changed."
+
+	self invalidateGeometry!
+
 attachParent: aMoenTreeNode height: anInteger
 	"Private - Extend the branch contour to enclose the <MoenTreeNode>, tNode."
 
@@ -461,12 +467,6 @@ findNodeForObject: anObject
 				keyOfNode: anObject
 				in: anchorNode
 				ifAbsent: []]!
-
-fontChanged
-	"Private - The receiver's font has been changed. We need to regenerate
-	our contours as it is likely that the text extents will have changed."
-
-	self invalidateGeometry!
 
 generateAbsolutes
 	"Private - Generate the absolute positions of each tree and the preferred view extent.
@@ -1779,6 +1779,7 @@ zip: aMoenTreeNode
 	self zip: aMoenTreeNode parent! !
 !MoenTreeView categoriesFor: #addTreeFor:parentNode:!adding!private! !
 !MoenTreeView categoriesFor: #anchorNode!accessing!private! !
+!MoenTreeView categoriesFor: #applyFont!font!private!updating! !
 !MoenTreeView categoriesFor: #attachParent:height:!private!tree layout! !
 !MoenTreeView categoriesFor: #autoExpandNode:!adding!private! !
 !MoenTreeView categoriesFor: #basicExpandNode:!operations!private! !
@@ -1815,7 +1816,6 @@ zip: aMoenTreeNode
 !MoenTreeView categoriesFor: #expandNode:!operations!private! !
 !MoenTreeView categoriesFor: #expandSubtree:!operations!private! !
 !MoenTreeView categoriesFor: #findNodeForObject:!private!searching! !
-!MoenTreeView categoriesFor: #fontChanged!private!updating! !
 !MoenTreeView categoriesFor: #generateAbsolutes!geometry!private! !
 !MoenTreeView categoriesFor: #generateNodeClipRects!private!tree layout! !
 !MoenTreeView categoriesFor: #generatePosition:absolute:!geometry!private! !

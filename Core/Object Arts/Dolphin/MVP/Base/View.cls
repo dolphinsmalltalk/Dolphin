@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #View
 	instanceVariableNames: 'handle creationParent creationStyle presenter model backcolor preferredExtent flags contextMenu font events interactor'
@@ -68,9 +68,9 @@ actualBackcolor
 
 actualFont
 	"Private - Answer the actual font to be used to paint text in the receiver.
-	Views which have a nil font inherit their parent's font."
+	Views which have a nil font use the ambient font (i.e. their parent's actualFont)."
 
-	^self font ifNil: [self parentView actualFont]!
+	^font ifNil: [self parentView actualFont]!
 
 actualPreferredExtent: aLayoutContext 
 	"Private - Answer the preferred extent of the receiver given the suggested extent specifed
@@ -161,6 +161,16 @@ ambientBackcolor
 			[self backcolor 
 				ifNil: [self parentView ambientBackcolor]
 				ifNotNil: [:color | color isDefault ifTrue: [self defaultBackcolor] ifFalse: [color]]]!
+
+ambientFontChanged
+	"Private - The receiver's ambient font has been changed. If the receiver does not have its own specific font, then apply the ambient font and propagate it to sub-views."
+
+	font ifNil: [self fontChanged]!
+
+applyFont
+	self
+		invalidate;
+		invalidateCalculatedExtent!
 
 arrangement
 	"Answer the arrangement parameter for the receiver in its parent's 
@@ -349,12 +359,15 @@ basicDestroy
 
 	^UserLibrary default destroyWindow: handle!
 
+basicFont: aFontOrNil
+	font := aFontOrNil!
+
 basicInvalidateLayout
 	"Private - Invalidates the layout of the receiver (only) indicating that the geometry
 	needs to be recalculated. Use #invalidateLayout to fully invalidate the parent chain
 	of views."
 
-	flags := flags maskClear: LayoutValidMask!
+	flags := flags bitAnd: ##(LayoutValidMask bitInvert)!
 
 basicPaint: message wParam: wParam lParam: lParam
 	"Private - This window requires painting and this is to be performed in the
@@ -1316,19 +1329,16 @@ font
 !
 
 font: aFontOrNil
-	"Set a new font into the receiver. Setting nil implies that the font
-	should be inherited from the parent"
+	"Set a new font into the receiver. Setting nil implies that the font should be inherited from the parent"
 
-	font := aFontOrNil.
-	self isOpen ifTrue: [ self fontChanged ].
-!
+	self basicFont: aFontOrNil.
+	self isOpen ifTrue: [self fontChanged]!
 
 fontChanged
-	"Private - The receiver's font has been changed. The default is to cause the receiver ot repaint. Should be overidden by subclasses that need to apply the  font to a Windows control"
+	"Private - The receiver's font has been changed. The default is to cause the receiver to repaint. Should be overidden by subclasses that need to apply the  font to a Windows control"
 
-	self
-		invalidate;
-		invalidateCalculatedExtent!
+	self subViewsDo: [:each | each ambientFontChanged].
+	self applyFont!
 
 forecolor
 	"Answers the foreground colour of the receiver.
@@ -1755,7 +1765,7 @@ invalidateCalculatedExtent
 	and thereby effects the appropriate layout recalculation. In some cases, however, 
 	it is necessary to poke it for a layout to take place. We do this here by invalidating 
 	a minimal rectangle of the receiver."
-	self invalidateRect: (0 @ 0 extent: 1 @ 1)!
+	self invalidateRect: (RECT left: 0 top: 0 right: 1 bottom: 1)!
 
 invalidateLayout
 	"Invalidates the layout of the receiver and all its parent indicating that the geometry
@@ -3740,7 +3750,7 @@ updateModel
 !
 
 updateSetting: aSettingsChangeEvent
-	(font isNil and: [aSettingsChangeEvent isFontChange]) ifTrue: [self fontChanged]!
+	(font isNil and: [aSettingsChangeEvent isFontChange]) ifTrue: [self applyFont]!
 
 usePreferredExtent
 	"Answers true if the receiver's preferred extent should be used by a layout manager when
@@ -4605,7 +4615,7 @@ zOrderTop
 	UserLibrary default bringWindowToTop: handle.
 	self parentView onZOrderChanged! !
 !View categoriesFor: #actualBackcolor!accessing!private! !
-!View categoriesFor: #actualFont!accessing!private! !
+!View categoriesFor: #actualFont!accessing!font!private! !
 !View categoriesFor: #actualPreferredExtent:!geometry!private! !
 !View categoriesFor: #addSubView:!hierarchy!public!sub views! !
 !View categoriesFor: #addToCommandRoute:!commands!public! !
@@ -4616,6 +4626,8 @@ zOrderTop
 !View categoriesFor: #allSubViews!hierarchy!public! !
 !View categoriesFor: #allSubViewsDo:!hierarchy!public! !
 !View categoriesFor: #ambientBackcolor!accessing!private! !
+!View categoriesFor: #ambientFontChanged!font!private!updating! !
+!View categoriesFor: #applyFont!font!private!updating! !
 !View categoriesFor: #arrangement!accessing!public! !
 !View categoriesFor: #arrangement:!accessing!public! !
 !View categoriesFor: #asParameter!converting!public! !
@@ -4635,6 +4647,7 @@ zOrderTop
 !View categoriesFor: #basicAddSubView:!hierarchy!private!sub views! !
 !View categoriesFor: #basicCreateAt:extent:!private!realizing/unrealizing! !
 !View categoriesFor: #basicDestroy!private!realizing/unrealizing! !
+!View categoriesFor: #basicFont:!accessing!private! !
 !View categoriesFor: #basicInvalidateLayout!geometry!private! !
 !View categoriesFor: #basicPaint:wParam:lParam:!drawing!private! !
 !View categoriesFor: #beActive!operations!public! !
@@ -4737,9 +4750,9 @@ zOrderTop
 !View categoriesFor: #findMatch:inRange:!private!searching & replacing! !
 !View categoriesFor: #firstSubView!hierarchy!public!sub views! !
 !View categoriesFor: #flash:!operations!public! !
-!View categoriesFor: #font!accessing!public! !
-!View categoriesFor: #font:!accessing!public! !
-!View categoriesFor: #fontChanged!private!updating! !
+!View categoriesFor: #font!accessing!font!public! !
+!View categoriesFor: #font:!accessing!font!public! !
+!View categoriesFor: #fontChanged!font!private!updating! !
 !View categoriesFor: #forecolor!accessing!public! !
 !View categoriesFor: #forecolor:!accessing!public! !
 !View categoriesFor: #forecolorChanged!private!updating! !

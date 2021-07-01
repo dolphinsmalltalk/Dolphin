@@ -11,6 +11,9 @@ Splitter comment: 'Splitter is a <view> used for implementing "splitter bars" fo
 !Splitter categoriesForClass!MVP-Resources-Splitters!MVP-Views! !
 !Splitter methodsFor!
 
+applyFont
+	"Nothing to do here as the receiver cannot display text."!
+
 calculateExtent: aLayoutContext 
 	"Private - Answer the calculated extent of the receiver that should be used by a
 	layout manager during it's layout process."
@@ -196,6 +199,7 @@ startTrackingAt: aPoint
 	position := self constrainPosition: aPoint.
 	self drawTrackingAt: position.
 	^position! !
+!Splitter categoriesFor: #applyFont!font!private!updating! !
 !Splitter categoriesFor: #calculateExtent:!operations!private! !
 !Splitter categoriesFor: #cancelTrackingAt:!private!tracking! !
 !Splitter categoriesFor: #constrainPosition:!operations!private! !

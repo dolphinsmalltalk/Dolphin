@@ -15,6 +15,9 @@ Instance Variables:
 !AbstractDelegatingView categoriesForClass!MVP-Resources-Misc! !
 !AbstractDelegatingView methodsFor!
 
+applyFont
+	"Nothing to do here. The delegatee will respond appropriately when the change is propagated to it."!
+
 backcolor: aColorOrNil 
 	"Sets the background colour of the receiver and the referee to aColorOrNil."
 
@@ -173,6 +176,7 @@ viewNamed: aString ifNone: aBlock
 	on to our referee."
 
 	^self referee viewNamed: aString ifNone: aBlock! !
+!AbstractDelegatingView categoriesFor: #applyFont!font!private!updating! !
 !AbstractDelegatingView categoriesFor: #backcolor:!accessing!public! !
 !AbstractDelegatingView categoriesFor: #calculateExtent:!geometry!private! !
 !AbstractDelegatingView categoriesFor: #clearReferee!event handling!private! !

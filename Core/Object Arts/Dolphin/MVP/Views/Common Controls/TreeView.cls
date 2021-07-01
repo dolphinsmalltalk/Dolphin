@@ -366,7 +366,7 @@ getSelectionsByIndex
 
 getSingleSelection
 	"Private - Answer the 'index' (or in the case of the receiver, the handle) of the selected object in 
-	the receiver, or nil if there is no selection."
+	the receiver, or zero if there is no selection."
 
 	^self tvmGetNextItem: nil code: TVGN_CARET!
 
@@ -667,37 +667,39 @@ onDestroyed
 	self newMaps.
 	^super onDestroyed!
 
-onDisplayDetailsRequired: aTVITEM 
+onDisplayDetailsRequired: aTVITEM
 	"Private - Get the display info for the requested <TVITEM>."
 
 	| object requestMask saveDetails |
-	object := self objectFromHandle: aTVITEM handle ifAbsent: [].
+	object := handleObjectMap lookup: aTVITEM handle.
 	"The TreeView sometimes asks for display details for items that are being removed"
-	object isNil ifTrue: [^0].
+	object ifNil: [^0].
 	requestMask := aTVITEM mask.
 	saveDetails := tvFlags anyMask: UpdateModeMask.
-	((requestMask allMask: TVIF_IMAGE) and: [self hasIcons]) 
+	((requestMask allMask: TVIF_IMAGE) and: [self hasIcons])
 		ifTrue: 
-			[self getImageBlock ifNotNil: 
-					[:getImage | 
-					(getImage value: object) ifNotNil: 
-							[:index | 
+			[self getImageBlock
+				ifNotNil: 
+					[:getImage |
+					(getImage value: object)
+						ifNotNil: 
+							[:index |
 							aTVITEM
 								image: index - 1;
 								selectedImage: index - 1]]].
-	(requestMask allMask: TVIF_CHILDREN) 
+	(requestMask allMask: TVIF_CHILDREN)
 		ifTrue: 
 			[aTVITEM children: (self model hasChildren: object) asParameter.
 			"If only requesting children details, tell it to not ask again, regardless of updateMode"
-			requestMask = TVIF_CHILDREN ifTrue: [saveDetails := true]].
-	(requestMask allMask: TVIF_TEXT) 
+			requestMask == TVIF_CHILDREN ifTrue: [saveDetails := true]].
+	(requestMask allMask: TVIF_TEXT)
 		ifTrue: 
-			[aTVITEM textInBuffer: (self getTextBlock value: object) displayString.
+			[aTVITEM textInBuffer: (self getTextBlock value: object).
 			"There appears to be a bug in the tree view such that if it asks for text in combination with
 			 other information and is told to save it, then it displays only the first character of the text,
 			 therefore we only tell it to save the information if it has asked for the text in isolation."
-			requestMask = TVIF_TEXT ifFalse: [saveDetails := false]].
-	saveDetails ifTrue: [aTVITEM saveDetails].
+			requestMask == TVIF_TEXT ifFalse: [saveDetails := false]].
+	saveDetails ifTrue: [aTVITEM maskIn: TVIF_DI_SETITEM].
 	"Suppress default processing"
 	^0!
 
@@ -867,7 +869,7 @@ onViewCreated
 
 	super onViewCreated.
 	self newMaps.
-	self fontChanged.
+	self applyFont.
 	self refreshContents.
 	self viewMode: self viewMode.
 	indentSeparation ifNotNil: [self updateIndentation]!
@@ -1175,7 +1177,7 @@ updateMode
 		#dynamic	- display details re-requested by callback on every paint
 		#lazy		- display details initially requested by callback on first paint only
 		#static	- tree nodes fully populated with display details when first added
-	The display details referred to are the label test, icon, and whether or not the node has children."
+	The display details referred to are the label text, icon, and whether or not the node has children."
 
 	^UpdateModes at: ((tvFlags bitAnd: UpdateModeMask) bitShift: -1) + 1!
 
