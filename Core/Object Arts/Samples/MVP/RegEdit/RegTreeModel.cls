@@ -22,7 +22,16 @@ approxSize
 	^5000!
 
 defaultGetChildrenBlock
-	^[:each | each asSortedCollection: [:a :b | a name < b name]]!
+	^
+	[:each |
+	| children |
+	children := SortedCollection sortBlock: [:a :b | a name < b name].
+	each
+		do: [:child | 
+			[child asParameter.
+			children add: child.
+			child free] on: Win32Error do: [:ex | ]].
+	children]!
 
 defaultGetParentBlock
 	^[:aRegKey | aRegKey parentKey]!

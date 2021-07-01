@@ -113,10 +113,10 @@ decodeMultiSz: aByteArray size: anInteger
 	[multisz atEnd] whileFalse: [strings nextPut: (multisz upTo: $\0)].
 	^strings contents!
 
-displayOn: aStream
-	"Append a short textual description of the receiver to aStream."
+displayOn: aPuttableStream
+	"Append to the <puttableStream> argument a String whose characters are a representation of the receiver that an end-user might want to see."
 
-	aStream display: name!
+	name displayOn: aPuttableStream!
 
 do: operation
 	"Evaluate monadic value argument, operation, for each of the element of the 
@@ -173,6 +173,9 @@ isRoot
 
 	^handle = rootKey handle!
 
+isWriteable
+	^self sam allMask: KEY_WRITE!
+
 key
 	"Answer the lookup key of the receiver."
 
@@ -181,7 +184,7 @@ key
 key: newName
 	"Set the lookup key of the receiver to the <readableString>, newName."
 
-	#todo "Implement registry key renaming".
+	#todo.	"Implement registry key renaming"
 	^Error notYetImplemented!
 
 keyInfo
@@ -519,7 +522,7 @@ splitPath: path
 		ifFalse: 
 			[superPath := path leftString: lastSlash - 1.
 			stem := path rightString: path size - lastSlash].
-	^Array with: superPath with: stem!
+	^{superPath. stem}!
 
 subKeyClass
 	"Private - Answer the class of association to be used for holding
@@ -778,6 +781,7 @@ handle:!accessing!private! !
 hash!comparing!public! !
 includesKey:!public!searching! !
 isRoot!public!testing! !
+isWriteable!public!testing! !
 key!accessing!public! !
 key:!accessing!public! !
 keyInfo!accessing!public! !
@@ -945,12 +949,7 @@ new
 roots
 	"Answer an array of the predefined registry roots."
 
-	^Array 
-		with: self classesRoot
-		with: self userRoot
-		with: self localMachineRoot
-		with: self usersRoot
-		with: self configRoot!
+	^{self classesRoot. self userRoot. self localMachineRoot. self usersRoot. self configRoot}!
 
 userRoot
 	"Answer a new instance of the receiver, rooted in HKEY_CURRENT_USER.
