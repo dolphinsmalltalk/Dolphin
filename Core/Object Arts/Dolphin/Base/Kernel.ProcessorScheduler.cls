@@ -298,7 +298,7 @@ idlePanic: interruptArg
 	is in a state of 'idle panic'. The argument is the interrupt enable/disable status. We take
 	the remedial action of starting another idle process."
 
-	SessionManager inputState idlePanic.
+	SessionManager.Current inputState idlePanic.
 	self enableInterrupts!
 
 idleProcess
@@ -492,7 +492,7 @@ systemProcessOwner
 	"Private - Answer the object responsible for maintaining the system processes (excluding
 	those which belong to the memory manager."
 
-	^SessionManager inputState!
+	^SessionManager.Current inputState!
 
 terminate: interruptArg
 	"Private - The current active process has been sent a terminate interrupt, terminate it."

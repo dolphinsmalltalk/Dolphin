@@ -502,7 +502,7 @@ postToInputQueue
 	"Queue the receiver as a deferred action to be evaluated by the main UI process
 	when the Windows message queue is empty."
 
-	SessionManager inputState queueDeferredAction: self!
+	SessionManager.Current inputState queueDeferredAction: self!
 
 postToMessageQueue
 	"Queue the receiver as a deferred action to be evaluated by the main UI process in
@@ -513,7 +513,7 @@ postToMessageQueue
 	deferred actions are treated as a lower priority than any Windows messages. Also it will
 	work even when a modal message loop (such as the menu processing loop) is active."
 
-	SessionManager inputState postAction: self!
+	SessionManager.Current inputState postAction: self!
 
 printOn: aStream 
 	"Append, to aStream, a <String> whose characters are a description of the receiver."

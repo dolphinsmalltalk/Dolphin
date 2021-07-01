@@ -79,7 +79,7 @@ scrollBar
 	"Answer the View which received the scroll command or the ScrollBar
 	if the scrollBar is a scroll bar control."
 
-	^SessionManager inputState windowAt: self lParam ifAbsent: []!
+	^SessionManager.Current inputState lookupWindow: self lParam!
 
 scrollCode
 	"Answer the scroll bar value."

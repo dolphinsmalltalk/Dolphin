@@ -269,7 +269,7 @@ runModalInProcessLoop
 	likely to be required by the new process."
 
 	self isModal: true.
-	SessionManager inputState loopWhile: [self isModal]!
+	SessionManager.Current inputState loopWhile: [self isModal]!
 
 runModalLoop
 	"Private - create a modal message loop. We do this by forking a new UI process, and 

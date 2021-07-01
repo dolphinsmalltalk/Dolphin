@@ -58,7 +58,7 @@ assumeDesktopHandle
 	Note that we associate with both the true desktop handle and null."
 
 	self attachHandle: self class desktopHandle.
-	SessionManager inputState windowAt: 0 put: self!
+	SessionManager.Current inputState windowAt: 0 put: self!
 
 basicActualBackcolor
 	"Private - Answer the <Color> to be applied as the receiver's background colour."
@@ -437,7 +437,7 @@ uninitialize
 	"Private - Uninitialize the receiver as it is about to be removed from the system."
 
 	Current isNil ifTrue: [^self].
-	SessionManager inputState removeWindowAt: 0.
+	SessionManager.Current inputState removeWindowAt: 0.
 	Current
 		winFinalize;
 		handle: nil.

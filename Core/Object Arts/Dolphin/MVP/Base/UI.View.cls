@@ -197,7 +197,7 @@ attachHandle: anIntegerOrHandle
 	for the critical message dispatching."
 
 	self handle: anIntegerOrHandle asExternalHandle.
-	SessionManager inputState windowAt: anIntegerOrHandle put: self!
+	SessionManager.Current inputState windowAt: anIntegerOrHandle put: self!
 
 backcolor
 	"Answers the background colour of the receiver"
@@ -1835,7 +1835,7 @@ isDialogMessage: aMSG
 isDolphinWindow
 	"Private - Answers true if this view is managed by Dolphin."
 
-	^SessionManager inputState isDolphinWindow: handle!
+	^SessionManager.Current inputState isDolphinWindow: handle!
 
 isDragSource
 	"Private - Answer whether the receiver can take part in a drag and drop session as a drag source."
@@ -3838,7 +3838,7 @@ winFinalize
 
 	self freeTheme.
 	self isStateRestoring ifFalse: [self release].
-	SessionManager inputState removeWindowAt: handle!
+	SessionManager.Current inputState removeWindowAt: handle!
 
 withAllParents
 	"Answer an <sequencedReadableCollection> of self and all its parent Views, in inverse hierarchy order."
@@ -4007,7 +4007,7 @@ wmEnterIdle: message wParam: wParam lParam: lParam
 
 	"wParam = MSGF_MENU ifTrue: [^nil]."
 
-	SessionManager inputState enterIdle.
+	SessionManager.Current inputState enterIdle.
 	^0!
 
 wmEnterMenuLoop: message wParam: wParam lParam: lParam
@@ -4019,7 +4019,7 @@ wmEnterMenuLoop: message wParam: wParam lParam: lParam
 	while the menu loop is active. Be warned, this uses a magic number for the timer
 	(WM_ENTERIDLE = 289). The timer fires every 1/10th of a second."
 
-	SessionManager inputState startIdleTimer: self.
+	SessionManager.Current inputState startIdleTimer: self.
 	^nil!
 
 wmEraseBkGnd: message wParam: wParam lParam: lParam
@@ -4039,7 +4039,7 @@ wmExitMenuLoop: message wParam: wParam lParam: lParam
 	Implementation Note: See wmEnterMenuLoop:&c. We must ensure the idle
 	kick timer is killed."
 
-	SessionManager inputState stopIdleTimer: self.
+	SessionManager.Current inputState stopIdleTimer: self.
 	^nil!
 
 wmGetDlgCode: message wParam: wParam lParam: aMSGAddress
@@ -4072,7 +4072,7 @@ wmHScroll: message wParam: wParam lParam: lParam
 	"Private - A vertical Scroll event has occured. Pass onto receivers controller. Have to check
 	whether the event came from a standard scrool bar or a scroll bar controller."
 
-	^(lParam == 0 ifTrue: [self] ifFalse: [SessionManager inputState windowAt: lParam ifAbsent: []])
+	^(lParam == 0 ifTrue: [self] ifFalse: [SessionManager.Current inputState lookupWindow: lParam])
 		ifNotNil: 
 			[:window |
 			window onHScroll: (ScrollEvent
@@ -4471,7 +4471,7 @@ wmTimer: message wParam: wParam lParam: lParam
 	wParam == WM_ENTERIDLE
 		ifTrue: 
 			["Simulated WM_ENTERIDLE fired when menus popped"
-			SessionManager inputState enterIdle.
+			SessionManager.Current inputState enterIdle.
 			^0].
 	self presenter trigger: #timerTick: with: wParam.
 	^nil!
@@ -4480,7 +4480,7 @@ wmVScroll: message wParam: wParam lParam: lParam
 	"Private - A vertical Scroll event has occured. Pass onto the receivers controller. Have to check
 	whether the event came from a standard scroll bar or a scroll bar controller."
 
-	^(lParam == 0 ifTrue: [self] ifFalse: [SessionManager inputState windowAt: lParam ifAbsent: []])
+	^(lParam == 0 ifTrue: [self] ifFalse: [SessionManager.Current inputState lookupWindow: lParam])
 		ifNotNil: 
 			[:window |
 			window onVScroll: (ScrollEvent
@@ -5319,7 +5319,7 @@ destroyAll
 	This is a rather drastic action in that any unsaved data in any window will be lost."
 
 	self topLevelViews do: [:w | w destroy].
-	SessionManager inputState purgeDeadWindows!
+	SessionManager.Current inputState purgeDeadWindows!
 
 focus
 	"Answers the View with focus or nil if there is none.
@@ -5709,7 +5709,7 @@ topLevelViews
 	"Answer a Collection containing all top level Dolphin Views.
 	Note that this will include Views which are not Shells (e.g. tool tips)."
 
-	^SessionManager inputState topLevelWindows select: [:w | w isKindOf: ##(self)]!
+	^SessionManager.Current inputState topLevelWindows select: [:w | w isKindOf: ##(self)]!
 
 uninitialize
 	"Private - Remove any special selectors sent by the VM."
@@ -5774,7 +5774,7 @@ withHandle: aHandle
 	although you will need to visit #dispatchMessage:, (and any other direct users 
 	of AllViews)."
 
-	^SessionManager current inputState windowAt: aHandle ifAbsent: []!
+	^SessionManager.Current inputState lookupWindow: aHandle!
 
 wndClassName
 	"Private - Answer the Windows class name to be registered with Win32 for instances of the receiver.

@@ -218,7 +218,7 @@ promptForDropOperation
 	self resetOperation.
 	popup showIn: self dropTarget position: Cursor position.
 	"Allow the command selected from the menu to be dispatched before returning"
-	SessionManager inputState pumpMessages!
+	SessionManager.Current inputState pumpMessages!
 
 showDragImage
 	"Show the current drag image. This may be useful to targets wishing to draw some sort of emphasis."

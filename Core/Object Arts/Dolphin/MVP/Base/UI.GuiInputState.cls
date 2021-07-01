@@ -42,10 +42,10 @@ guiStartup
 	oldWindows notNil ifTrue: [oldWindows do: [:w | w onStartup]].
 	self createPostedActionWindow!
 
-isDolphinWindow: hWnd 
+isDolphinWindow: hWnd
 	"Answer whether the window with handle, hWnd, is a Dolphin window or not."
 
-	^(self windowAt: hWnd ifAbsent: []) notNil!
+	^(self lookupWindow: hWnd) notNil!
 
 topLevelWindowHandlesDo: aMonadicValuable
 	| callback answer |
@@ -89,7 +89,7 @@ topLevelWindowsInZOrder
 	views := OrderedCollection new: 20.
 	self topLevelWindowHandlesDo: 
 			[:hwnd |
-			(self windowAt: hwnd ifAbsent: []) ifNotNil: [:view | views addLast: view].
+			(self lookupWindow: hwnd) ifNotNil: [:view | views addLast: view].
 			true].
 	^views!
 

@@ -30,7 +30,7 @@ extractResult: anExternalHandle
 	dialog := self view.
 	self assert: [dialog handle = anExternalHandle].
 	dialog subclassWindow.
-	SessionManager inputState windowAt: anExternalHandle put: dialog!
+	SessionManager.Current inputState windowAt: anExternalHandle put: dialog!
 
 fdFlags
 	| fdFlags |

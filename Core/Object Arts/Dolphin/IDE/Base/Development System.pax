@@ -2434,7 +2434,7 @@ step: steps
     	single step until the current callback has returned to avoid deadlocking the 
     	current UI process."
 
-	SessionManager inputState queueDeferredAction: (MessageSend
+	SessionManager.Current inputState queueDeferredAction: (MessageSend
 				receiver: self
 				selector: #primStep:
 				argument: steps)!

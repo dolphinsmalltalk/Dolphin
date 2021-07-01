@@ -263,7 +263,7 @@ isMain
 	"Answer whether the receiver is the main user I/F process (i.e. it
 	manages the input queue)."
 
-	^SessionManager inputState main == self!
+	^SessionManager.Current inputState main == self!
 
 isReady
 	"Answer whether the receiver is Ready to run but inactive"

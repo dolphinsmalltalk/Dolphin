@@ -282,6 +282,19 @@ keepAlive
 
 	self hasVisibleWindows ifFalse: [SessionManager current noVisibleWindows]!
 
+lookupWindow: aHandle
+	"Answers an open window that has a handle of aHandle (an Integer or ExternalHandle). If the
+	handle is nil, then answers nil."
+
+	^aHandle
+		ifNotNil: 
+			[| hWnd wasEnabled window |
+			hWnd := aHandle asInteger.
+			wasEnabled := Processor enableAsyncEvents: false.
+			window := windows lookup: hWnd.
+			Processor enableAsyncEvents: wasEnabled.
+			^window]!
+
 loopWhile: aBlock
 	"Pump messages until the <niladicValuable> argument evaluates to false."
 
@@ -370,7 +383,7 @@ preTranslateMessage: aMSG
 	| handle |
 	handle := aMSG hwnd.
 	[handle isNull] whileFalse: 
-			[(self windowAt: handle ifAbsent: [])
+			[(self lookupWindow: handle)
 				ifNotNil: [:window | (window preTranslateMessage: aMSG) ifTrue: [^true]].
 			handle := UserLibrary default getParent: handle].
 	^false!
@@ -638,6 +651,7 @@ wndProc: hWnd message: message wParam: wParam lParam: lParam cookie: cookie
 !Kernel.InputState categoriesFor: #isInputAvailable!idling!private! !
 !Kernel.InputState categoriesFor: #isInputReady:!message dispatching!private! !
 !Kernel.InputState categoriesFor: #keepAlive!idling!private! !
+!Kernel.InputState categoriesFor: #lookupWindow:!accessing!public! !
 !Kernel.InputState categoriesFor: #loopWhile:!message dispatching!public! !
 !Kernel.InputState categoriesFor: #main!accessing!private! !
 !Kernel.InputState categoriesFor: #main:!initializing!private! !

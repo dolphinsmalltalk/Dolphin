@@ -415,7 +415,7 @@ invalidateUserInterface
 	to be requeried using #validateUserInterface (usually at idle time)"
 
 	flags := flags maskClear: UIValidMask.
-	SessionManager inputState prod!
+	SessionManager.Current inputState prod!
 
 isInitiallyCentered
 	"Private - Answer whether the receiver should be centered within its parent when created."

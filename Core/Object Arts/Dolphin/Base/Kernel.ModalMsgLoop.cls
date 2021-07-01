@@ -34,13 +34,13 @@ signal
 	"Terminate the modal loop, and return control to the sender of #wait."
 
 	loop := false.
-	SessionManager inputState prod!
+	SessionManager.Current inputState prod!
 
 wait
 	"Start the modal loop, returning when the receiver is signalled. While waiting the Windows
 	message loop continues to be serviced, but keyboard and mouse input is discarded."
 
-	SessionManager inputState loopWhile: [loop]! !
+	SessionManager.Current inputState loopWhile: [loop]! !
 !Kernel.ModalMsgLoop categoriesFor: #initialize!initializing!private! !
 !Kernel.ModalMsgLoop categoriesFor: #signal!process synchronisation!public! !
 !Kernel.ModalMsgLoop categoriesFor: #wait!process synchronisation!public! !

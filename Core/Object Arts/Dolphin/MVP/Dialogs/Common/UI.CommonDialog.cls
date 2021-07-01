@@ -104,10 +104,10 @@ showModal
 	owner := self ownerView ifNil: [View activeOrDesktop].
 	wasEnabled := owner isEnabled.
 	apiResult := 
-			[SessionManager inputState startIdleTimer: owner.
+			[SessionManager.Current inputState startIdleTimer: owner.
 			hook notNil ifTrue: [view := nil].
 			self basicShowModal]
-					ensure: [SessionManager inputState stopIdleTimer: owner].
+					ensure: [SessionManager.Current inputState stopIdleTimer: owner].
 	hitType := wasEnabled
 				ifTrue: [HTCLIENT]
 				ifFalse: 
