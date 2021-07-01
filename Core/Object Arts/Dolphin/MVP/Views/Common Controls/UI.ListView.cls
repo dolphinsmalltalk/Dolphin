@@ -791,8 +791,8 @@ hasHeaderDragDrop: aBoolean
 	^self listViewStyleMask: LVS_EX_HEADERDRAGDROP set: aBoolean!
 
 hasHotTracking
-	"Answer whether the receiver has the track select style.
-	This is not available in pre-IE4 versions of the CommCtrl Library."
+	"Answer whether the receiver has the track select style. This means that the item under the cursor is automatically selected when hovered over for a period of time. 
+	See [Extended List-View Styles](https://docs.microsoft.com/en-us/windows/win32/controls/extended-list-view-styles)."
 
 	^self listViewStyleAllMask: LVS_EX_TRACKSELECT!
 
@@ -879,7 +879,7 @@ iconSpacing: aPointOrNil
 	#smallIcons view mode to aPointOrNil. If nil the receiver uses the default spacing."
 
 	self setIconSpacing: (iconSpacing := aPointOrNil).
-	self fontChanged!
+	self applyFont!
 
 imageFromRow: item
 	"Private - Answer the image for row which represents the <Object>, item.

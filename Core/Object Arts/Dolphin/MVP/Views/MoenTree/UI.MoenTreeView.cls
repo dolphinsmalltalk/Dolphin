@@ -63,6 +63,12 @@ addTreeFor: anObject parentNode: aMoenTreeNode
 anchorNode
 	^anchorNode!
 
+applyFont
+	"Private - The receiver's font has been changed. We need to regenerate
+	our contours as it is likely that the text extents will have changed."
+
+	self invalidateGeometry!
+
 attachParent: aMoenTreeNode height: anInteger
 	"Private - Extend the branch contour to enclose the <MoenTreeNode>, tNode."
 
@@ -463,12 +469,6 @@ findNodeForObject: anObject
 				keyOfNode: anObject
 				in: anchorNode
 				ifAbsent: []]!
-
-fontChanged
-	"Private - The receiver's font has been changed. We need to regenerate
-	our contours as it is likely that the text extents will have changed."
-
-	self invalidateGeometry!
 
 generateAbsolutes
 	"Private - Generate the absolute positions of each tree and the preferred view extent.
@@ -1787,6 +1787,7 @@ zip: aMoenTreeNode
 	self zip: aMoenTreeNode parent! !
 !UI.MoenTreeView categoriesFor: #addTreeFor:parentNode:!adding!private! !
 !UI.MoenTreeView categoriesFor: #anchorNode!accessing!private! !
+!UI.MoenTreeView categoriesFor: #applyFont!font!private!updating! !
 !UI.MoenTreeView categoriesFor: #attachParent:height:!private!tree layout! !
 !UI.MoenTreeView categoriesFor: #autoExpandNode:!adding!private! !
 !UI.MoenTreeView categoriesFor: #basicExpandNode:!operations!private! !
@@ -1823,7 +1824,6 @@ zip: aMoenTreeNode
 !UI.MoenTreeView categoriesFor: #expandNode:!operations!private! !
 !UI.MoenTreeView categoriesFor: #expandSubtree:!operations!private! !
 !UI.MoenTreeView categoriesFor: #findNodeForObject:!private!searching! !
-!UI.MoenTreeView categoriesFor: #fontChanged!private!updating! !
 !UI.MoenTreeView categoriesFor: #generateAbsolutes!geometry!private! !
 !UI.MoenTreeView categoriesFor: #generateNodeClipRects!private!tree layout! !
 !UI.MoenTreeView categoriesFor: #generatePosition:absolute:!geometry!private! !
@@ -1854,7 +1854,7 @@ zip: aMoenTreeNode
 !UI.MoenTreeView categoriesFor: #invalidateTree:imagesOnly:!painting!private! !
 !UI.MoenTreeView categoriesFor: #isAutoExpanding!accessing-styles!public!testing! !
 !UI.MoenTreeView categoriesFor: #isAutoExpanding:!accessing!public! !
-!UI.MoenTreeView categoriesFor: #isExpanded:!public! !
+!UI.MoenTreeView categoriesFor: #isExpanded:!testing!public! !
 !UI.MoenTreeView categoriesFor: #itemFromPoint:!helpers!private! !
 !UI.MoenTreeView categoriesFor: #join:!private!tree layout! !
 !UI.MoenTreeView categoriesFor: #layoutLeaf:!private!tree layout! !

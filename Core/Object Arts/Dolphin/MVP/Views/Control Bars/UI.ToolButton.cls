@@ -11,6 +11,12 @@ UI.ToolButton comment: ''!
 !UI.ToolButton categoriesForClass!MVP-Resources-Buttons!MVP-Resources-Misc! !
 !UI.ToolButton methodsFor!
 
+applyFont
+	"Private - The receiver's font has been changed, pass on to the internal toolbar"
+
+	self referee font: self font
+	"self onResize"!
+
 backcolor: aColorOrNil 
 	"We need to set the internal toolbar's forecolor to match in order to avoid gradients"
 
@@ -83,12 +89,6 @@ defaultExtent
 	used when the desired size of a view is requested."
 
 	^##(96 @ 48)!
-
-fontChanged
-	"Private - The receiver's font has been changed, pass on to the internal toolbar"
-
-	self referee font: self font.
-	"self onResize"!
 
 hasFlatAppearance
 	"Answer whether the receiver has a flat appearance. A flat button draws its buttons without
@@ -202,6 +202,7 @@ toolTipText
 	"Answer a String suitable for displaying in a Tool tip control."
 
 	^self commandDescription toolTipText! !
+!UI.ToolButton categoriesFor: #applyFont!font!private!updating! !
 !UI.ToolButton categoriesFor: #backcolor:!accessing!public! !
 !UI.ToolButton categoriesFor: #bitmapSize!accessing!geometry!public! !
 !UI.ToolButton categoriesFor: #bitmapSize:!accessing!geometry!public! !
@@ -214,7 +215,6 @@ toolTipText
 !UI.ToolButton categoriesFor: #defaultBackcolor!private! !
 !UI.ToolButton categoriesFor: #defaultBitmapSize!constants!private! !
 !UI.ToolButton categoriesFor: #defaultExtent!constants!private! !
-!UI.ToolButton categoriesFor: #fontChanged!private!updating! !
 !UI.ToolButton categoriesFor: #hasFlatAppearance!accessing!accessing-styles!public! !
 !UI.ToolButton categoriesFor: #hasFlatAppearance:!accessing!accessing-styles!public! !
 !UI.ToolButton categoriesFor: #hasLabels!accessing!accessing-styles!public! !

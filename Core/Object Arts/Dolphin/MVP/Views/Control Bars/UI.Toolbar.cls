@@ -130,6 +130,13 @@ addSystemBitmap: systemBitmapId index: anIntegerIndex
 					self tbAddBitmap: addBitmap size: 0].
 	^start + anIntegerIndex!
 
+applyFont
+	"Private - The receiver's font has been changed. The default is to cause the receiver to
+	resize."
+
+	super applyFont.
+	self updateSize!
+
 basicActualForecolor
 	"Private - Answer the <Color> to be applied as the receiver's foreground colour. This might
 	be 'Color default' indicating that the receiver is configured to use the default background
@@ -319,13 +326,6 @@ filerProxy
 	saved := bitmapsStart.
 	bitmapsStart := nil.
 	^[super filerProxy] ensure: [bitmapsStart := saved]!
-
-fontChanged
-	"Private - The receiver's font has been changed. The default is to cause the receiver to
-	resize."
-
-	super fontChanged.
-	self updateSize!
 
 hasFlatAppearance
 	"Answer whether the receiver has a flat appearance. A flat toolbar draws its buttons without
@@ -1044,6 +1044,7 @@ wmCreate: message wParam: wParam lParam: lParam
 !UI.Toolbar categoriesFor: #addSeparator!adding!public! !
 !UI.Toolbar categoriesFor: #addString:!helpers!private! !
 !UI.Toolbar categoriesFor: #addSystemBitmap:index:!helpers!private! !
+!UI.Toolbar categoriesFor: #applyFont!font!private!updating! !
 !UI.Toolbar categoriesFor: #basicActualForecolor!accessing!private! !
 !UI.Toolbar categoriesFor: #basicAddItems:!adding!private! !
 !UI.Toolbar categoriesFor: #bitmapSize!geometry!public! !

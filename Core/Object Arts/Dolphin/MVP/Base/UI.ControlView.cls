@@ -25,6 +25,12 @@ Class Variables:
 !UI.ControlView categoriesForClass!MVP-Views! !
 !UI.ControlView methodsFor!
 
+applyFont
+	"Private - Apply the receiver's font to the associated Windows control"
+
+	super applyFont.
+	self setFont: self actualFont!
+
 backcolorChanged
 	self setControlBackcolor: self actualBackcolor.
 	super backcolorChanged!
@@ -119,12 +125,6 @@ errorOutOfMemory
 	"Raise a OutOfMemoryError indicating that the receiver has run out of space"
 
 	^OutOfMemoryError signal!
-
-fontChanged
-	"Apply the receiver' font to the associated Windows control"
-
-	super fontChanged.
-	self setFont: self actualFont!
 
 forecolor
 	"Answers the foreground colour of the receiver"
@@ -338,7 +338,7 @@ setFont: aFont
 	logical pixel's per inch."
 	aFont resolution: self resolution.
 	
-	self sendMessage: WM_SETFONT wParam: aFont asParameter lParam: 1.!
+	self sendMessage: WM_SETFONT wParam: aFont asParameter lParam: 0!
 
 subclassWindow: hWnd
 	"Private - Subclass the receiver's associated Win32 window by substituting the VM's 
@@ -415,6 +415,7 @@ wmWindowPosChanged: message wParam: wParam lParam: lParam
 	super wmWindowPosChanged: message wParam: wParam lParam: lParam.
 	^nil	"Accept default processing"
 ! !
+!UI.ControlView categoriesFor: #applyFont!font!private!updating! !
 !UI.ControlView categoriesFor: #backcolorChanged!helpers!private! !
 !UI.ControlView categoriesFor: #ccmGetVersion!operations!public! !
 !UI.ControlView categoriesFor: #ccmSetVersion:!operations!public! !
@@ -424,10 +425,9 @@ wmWindowPosChanged: message wParam: wParam lParam: lParam
 !UI.ControlView categoriesFor: #defaultWindowStyle!constants!private! !
 !UI.ControlView categoriesFor: #errorInCommonControlCall!exceptions!public! !
 !UI.ControlView categoriesFor: #errorOutOfMemory!exceptions!public! !
-!UI.ControlView categoriesFor: #fontChanged!public!updating! !
 !UI.ControlView categoriesFor: #forecolor!accessing!public! !
 !UI.ControlView categoriesFor: #forecolor:!accessing!public! !
-!UI.ControlView categoriesFor: #getFont!accessing!private! !
+!UI.ControlView categoriesFor: #getFont!accessing!font!private! !
 !UI.ControlView categoriesFor: #itemFromId:!accessing!private! !
 !UI.ControlView categoriesFor: #nmClick:!event handling-win32!private! !
 !UI.ControlView categoriesFor: #nmCustomDraw:!event handling-win32!private! !
@@ -453,7 +453,7 @@ wmWindowPosChanged: message wParam: wParam lParam: lParam
 !UI.ControlView categoriesFor: #paintTransparentBackgroundOn:!private!updating! !
 !UI.ControlView categoriesFor: #setControlBackcolor!helpers!private! !
 !UI.ControlView categoriesFor: #setControlBackcolor:!helpers!private! !
-!UI.ControlView categoriesFor: #setFont:!accessing!private! !
+!UI.ControlView categoriesFor: #setFont:!accessing!font!private! !
 !UI.ControlView categoriesFor: #subclassWindow:!operations!private! !
 !UI.ControlView categoriesFor: #ttnGetDispInfo:!event handling-win32!private! !
 !UI.ControlView categoriesFor: #ttnGetDispInfoW:!event handling-win32!private! !

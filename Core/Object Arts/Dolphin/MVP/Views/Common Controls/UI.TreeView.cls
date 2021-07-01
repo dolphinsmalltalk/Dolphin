@@ -370,7 +370,7 @@ getSelectionsByIndex
 
 getSingleSelection
 	"Private - Answer the 'index' (or in the case of the receiver, the handle) of the selected object in 
-	the receiver, or nil if there is no selection."
+	the receiver, or zero if there is no selection."
 
 	^self tvmGetNextItem: nil code: TVGN_CARET!
 
@@ -682,7 +682,7 @@ onDisplayDetailsRequired: aTVITEM
 	| object requestMask saveDetails |
 	object := handleObjectMap lookup: aTVITEM handle.
 	"The TreeView sometimes asks for display details for items that are being removed"
-	object isNil ifTrue: [^0].
+	object ifNil: [^0].
 	requestMask := aTVITEM mask.
 	saveDetails := tvFlags anyMask: UpdateModeMask.
 	((requestMask allMask: TVIF_IMAGE) and: [self hasIcons])
@@ -884,7 +884,7 @@ onViewCreated
 
 	super onViewCreated.
 	self newMaps.
-	self fontChanged.
+	self applyFont.
 	self refreshContents.
 	self viewMode: self viewMode.
 	indentSeparation ifNotNil: [self updateIndentation]!
@@ -1195,7 +1195,7 @@ updateMode
 		#dynamic	- display details re-requested by callback on every paint
 		#lazy		- display details initially requested by callback on first paint only
 		#static	- tree nodes fully populated with display details when first added
-	The display details referred to are the label test, icon, and whether or not the node has children."
+	The display details referred to are the label text, icon, and whether or not the node has children."
 
 	^UpdateModes at: ((tvFlags bitAnd: UpdateModeMask) bitShift: -1) + 1!
 

@@ -980,7 +980,7 @@ wmInitMenu: message wParam: wParam lParam: lParam
 !UI.RichTextEdit categoriesFor: #setAutoUrlDetection:!helpers!private! !
 !UI.RichTextEdit categoriesFor: #setCharFormat:flags:!helpers!private! !
 !UI.RichTextEdit categoriesFor: #setControlBackcolor:!helpers!private! !
-!UI.RichTextEdit categoriesFor: #setFont:!helpers!private! !
+!UI.RichTextEdit categoriesFor: #setFont:!font!helpers!private! !
 !UI.RichTextEdit categoriesFor: #setMaxTextLimit!operations!private! !
 !UI.RichTextEdit categoriesFor: #setWindowText:!accessing!private! !
 !UI.RichTextEdit categoriesFor: #state!accessing!private! !

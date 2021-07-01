@@ -32,6 +32,11 @@ addToCommandRoute: route
 
 	^nil!
 
+ambientFontChanged
+	"Private - The desktop font has been changed (ignore it)."
+
+	!
+
 asParameter
 	"Answer the receiver in a form suitable for passing to an external
 	function call (in this case the receiver's window handle).
@@ -109,10 +114,6 @@ dispatchMessage: message wParam: wParam lParam: lParam
 
 enterIdle
 	^true!
-
-fontChanged
-	"Private - The desktop font has been changed (ignore it)."
-!
 
 forecolorChanged
 	"Private - The desktop foreground color has been changed (ignore it)."
@@ -384,6 +385,7 @@ wmSetCursor: message wParam: wParam lParam: lParam
 	User32 setCursor: cursor.
 	^0! !
 !ImageStripperProgress categoriesFor: #addToCommandRoute:!commands!public! !
+!ImageStripperProgress categoriesFor: #ambientFontChanged!private!updating! !
 !ImageStripperProgress categoriesFor: #asParameter!converting!public! !
 !ImageStripperProgress categoriesFor: #beActive!operations!public! !
 !ImageStripperProgress categoriesFor: #currentProgress!operations!private! !
@@ -393,7 +395,6 @@ wmSetCursor: message wParam: wParam lParam: lParam
 !ImageStripperProgress categoriesFor: #detail:!accessing!public! !
 !ImageStripperProgress categoriesFor: #dispatchMessage:wParam:lParam:!dispatching!private! !
 !ImageStripperProgress categoriesFor: #enterIdle!event handling-win32!private! !
-!ImageStripperProgress categoriesFor: #fontChanged!private!updating! !
 !ImageStripperProgress categoriesFor: #forecolorChanged!private!updating! !
 !ImageStripperProgress categoriesFor: #forkProgressMonitor!operations!private! !
 !ImageStripperProgress categoriesFor: #getItemHandle:ifAbsent:!hierarchy!private! !

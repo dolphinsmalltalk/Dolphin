@@ -10799,7 +10799,7 @@ zoomOut
 !UI.Scintilla.ScintillaView categoriesFor: #setFoldMarginColor!folding!margins!private! !
 !UI.Scintilla.ScintillaView categoriesFor: #setFoldMarginHiColor!folding!margins!private! !
 !UI.Scintilla.ScintillaView categoriesFor: #setFoldProperty:!folding!private! !
-!UI.Scintilla.ScintillaView categoriesFor: #setFont:!helpers!private!style definition! !
+!UI.Scintilla.ScintillaView categoriesFor: #setFont:!font!private!style definition! !
 !UI.Scintilla.ScintillaView categoriesFor: #setIndicator:from:length:!indicators!public! !
 !UI.Scintilla.ScintillaView categoriesFor: #setIndicator:range:!indicators!public! !
 !UI.Scintilla.ScintillaView categoriesFor: #setIndicators:!indicators!private! !
