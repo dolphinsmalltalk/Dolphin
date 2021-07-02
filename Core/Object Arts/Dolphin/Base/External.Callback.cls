@@ -126,7 +126,7 @@ allocateThunks
 
 	| procAddress |
 	self deallocateThunks.
-	ThunkBase := KernelLibrary default
+	ThunkBase := Kernel32
 				virtualAlloc: 0
 				dwSize: MaxThunks * ThunkSize
 				flAllocationType: MEM_COMMIT
@@ -195,7 +195,7 @@ clear
 
 deallocateThunks
 	ThunkBase isNil ifTrue: [^self].
-	KernelLibrary default
+	Kernel32
 		virtualFree: ThunkBase
 		dwSize: 0
 		dwFreeType: MEM_RELEASE.

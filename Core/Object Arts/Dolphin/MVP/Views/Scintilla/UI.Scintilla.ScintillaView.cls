@@ -4347,7 +4347,7 @@ onViewCreated
 	"Disable notifications via WM_COMMAND such as EN_CHANGE, EN_KILLFOCUS, etc. These are better handled through NM_NOTIFY."
 	self sendMessage: SCI_SETCOMMANDEVENTS wParam: 0.
 	"It would be nice to be able to used DirectWrite mode by default for for better quality text rendering, hardware acceleration, and support for fonts with colour (e.g. for emojis), but there are some circumstances under which it does not work very well. Interaction when drawing over other GDI windows can be slow, flash a lot, may show rendering errors, and there can be problems with the GDI-based autocompletion list. An example view that works poorly in DirectWrite modes is the single-line search presenter the Scintilla view. If switched out of default mode, this frequently fails to paint text, and the auto-completion list comes up at the wrong location (over the text)."
-	(false and: [KernelLibrary default isWindowsVistaOrGreater])
+	(false and: [Kernel32 isWindowsVistaOrGreater])
 		ifTrue: 
 			[self
 				drawingTechnology: #directWrite;

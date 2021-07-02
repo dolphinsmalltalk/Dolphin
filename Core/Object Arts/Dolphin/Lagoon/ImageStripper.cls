@@ -422,8 +422,7 @@ copyAndUpdateStub: stubFile to: exeFile
 	File copy: stubFile to: exeFile.
 	File isWriteable: exeFile set: true.
 	self isResourceUpdatingRequired
-		ifTrue: 
-			[OS.KernelLibrary default updateResourcesOf: exeFile do: [:hUpdate | self updateStubResources: hUpdate]].
+		ifTrue: [OS.Kernel32 updateResourcesOf: exeFile do: [:hUpdate | self updateStubResources: hUpdate]].
 	^exeFile!
 
 defaultStubFilePath
@@ -1586,16 +1585,16 @@ saveExecutable: exePath keepImage: retainImage
 	size := imageFile size.
 	imageData := ByteArray new: size.
 	imageFile read: imageData count: size.
-	OS.KernelLibrary default updateResourcesOf: exePath
+	OS.Kernel32 updateResourcesOf: exePath
 		do: 
 			[:hUpdate |
-			(OS.KernelLibrary default
+			(OS.Kernel32
 				updateResource: hUpdate
 				lpType: RT_RCDATA
 				lpName: 100
 				wLanguage: 0
 				lpData: imageData
-				cbData: size) ifFalse: [OS.KernelLibrary default systemError]]]
+				cbData: size) ifFalse: [OS.Kernel32 systemError]]]
 			ensure: 
 				[imageFile close.
 				retainImage ifFalse: [File delete: image]].
@@ -1889,13 +1888,13 @@ updateXPManifestResource: anExternalHandle
 				buildManifest: assemblyName contents
 				description: (strings at: 'FileDescription' ifAbsent: [file , ' Application'])
 				version: ver.
-	(OS.KernelLibrary default
+	(OS.Kernel32
 		updateResource: anExternalHandle
 		lpType: RT_MANIFEST
 		lpName: self manifestResourceId
 		wLanguage: ver languageId
 		lpData: manifest
-		cbData: manifest size) ifFalse: [OS.KernelLibrary default systemError]!
+		cbData: manifest size) ifFalse: [OS.Kernel32 systemError]!
 
 verifyRequiredPackages
 	| packages required found missing |

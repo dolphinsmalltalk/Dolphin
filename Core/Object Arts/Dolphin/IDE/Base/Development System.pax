@@ -3904,17 +3904,16 @@ newInstanceAspect: aSymbol class: aspectClass
 !Kernel.BlockClosure methodsFor!
 
 cpuCyclesToRun
-	| sem start stop lib hThread |
-	lib := OS.KernelLibrary default.
-	hThread := lib getCurrentThread.
+	| sem start stop hThread |
+	hThread := OS.Kernel32 getCurrentThread.
 	start := External.QWORD new.
 	stop := External.QWORD new.
 	sem := Semaphore new.
 	
 	[
-	[lib queryThreadCycleTime: hThread cycleTime: start.
+	[OS.Kernel32 queryThreadCycleTime: hThread cycleTime: start.
 	self value.
-	lib queryThreadCycleTime: hThread cycleTime: stop]
+	OS.Kernel32 queryThreadCycleTime: hThread cycleTime: stop]
 			ensure: [sem signal]]
 			forkAt: Processor userInterruptPriority.
 	sem wait.

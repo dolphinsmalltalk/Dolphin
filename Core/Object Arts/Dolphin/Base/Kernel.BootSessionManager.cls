@@ -16,8 +16,7 @@ allocConsole
 
 	"Attach to the existing console so that the output goes to the build log"
 
-	(KernelLibrary default attachConsole: ATTACH_PARENT_PROCESS)
-		ifFalse: [KernelLibrary default allocConsole]!
+	(Kernel32 attachConsole: ATTACH_PARENT_PROCESS) ifFalse: [Kernel32 allocConsole]!
 
 basicTertiaryStartup
 	"Perform tertiary system startup operations."

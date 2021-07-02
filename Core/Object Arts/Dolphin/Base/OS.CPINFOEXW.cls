@@ -56,14 +56,14 @@ defaultCharacter
 
 	| utf16 |
 	utf16 := Utf16String newFixed: 2.
-	(KernelLibrary default
+	(Kernel32
 		multiByteToWideChar: self codepage
 		dwFlags: 0
 		lpMultiByteStr: bytes yourAddress + _OffsetOf_DefaultChar
 		cchMultiByte: 2
 		lpWideCharStr: utf16
 		cchWideChar: 2) == 0
-		ifTrue: [^KernelLibrary default systemError].
+		ifTrue: [^Kernel32 systemError].
 	^utf16 at: 1!
 
 LeadByte
@@ -99,7 +99,7 @@ UnicodeDefaultChar
 codePage: anInteger
 	| cpinfo |
 	cpinfo := self newBuffer.
-	KernelLibrary default
+	Kernel32
 		getCPInfoExW: anInteger
 		dwFlags: 0
 		lpCPInfoEx: cpinfo.

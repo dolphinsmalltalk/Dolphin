@@ -68,7 +68,7 @@ createAndRegisterWakeupEvent
 	wants to wake up the image from an idle state (i.e. from its call to
 	MsgWaitForMultipleObjects[Ex])."
 
-	wakeupEvent := KernelLibrary default
+	wakeupEvent := Kernel32
 				createEvent: nil
 				bManualReset: false
 				bInitialState: false
@@ -237,7 +237,7 @@ initializeFrom: anInputState
 		registerAsDispatcher;
 		createAndRegisterInputSemaphore;
 		setSamplingInterval: 60.
-	queueStatusMask := KernelLibrary default inputQueueMask!
+	queueStatusMask := Kernel32 inputQueueMask!
 
 inputSemaphore
 	"Private - Answer the queue empty/not-empty semaphore"
@@ -363,7 +363,7 @@ msgWindow
 onExit
 	"Private - The system is closing down, release system resources."
 
-	KernelLibrary default closeHandle: wakeupEvent!
+	Kernel32 closeHandle: wakeupEvent!
 
 postAction: aNiladicValuable 
 	"Queue a niladic valuable (e.g. a MessageSend or niladic block) for deferred evaluation from

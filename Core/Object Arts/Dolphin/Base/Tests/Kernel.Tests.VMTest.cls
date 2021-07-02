@@ -89,7 +89,7 @@ earlyTermination: aBoolean
 			[a := 1.
 			
 			[a := 2.
-			KernelLibrary default sleep: 30] ifCurtailed: [a := 0].
+			Kernel32 sleep: 30] ifCurtailed: [a := 0].
 			a := 3]
 					forkAt: Processor userInterruptPriority.	"High priority background proc runs but then blocks..."
 	self assert: proc isWaiting description: 'Proc should be blocked on the overlapped call semaphore'.
@@ -356,7 +356,7 @@ suspendAndTerminate
 	self assert: Processor pendingTerminations isEmpty.
 	proc := 
 			[a := 1.
-			KernelLibrary default sleep: 10.
+			Kernel32 sleep: 10.
 			a := 2] forkAt: Processor userInterruptPriority.	"High priority background proc runs but then blocks..."
 	self assert: proc isWaiting.	"proc should be blocked on the overlapped call semaphore"
 	self assert: a identicalTo: 1.
@@ -517,9 +517,8 @@ testExtCallOverlappedFpFault
 	self verifyExtCallFpFault: true!
 
 testExtCallOverlappedGC
-	| kernel event finished delay1 delay2 |
-	kernel := KernelLibrary default.
-	event := kernel
+	| event finished delay1 delay2 |
+	event := Kernel32
 				createEvent: nil
 				bManualReset: false
 				bInitialState: false
@@ -529,7 +528,7 @@ testExtCallOverlappedGC
 	delay2 := Delay forDuration: 20 milliseconds.
 	
 	[delay1 signal.
-	kernel waitForSingleObject: event dwMilliseconds: -1.
+	Kernel32 waitForSingleObject: event dwMilliseconds: -1.
 	finished := true.
 	delay2 signal]
 			forkAt: Processor userInterruptPriority.
@@ -540,7 +539,7 @@ testExtCallOverlappedGC
 				collectGarbage;
 				administerLastRites].
 	self deny: finished.
-	kernel setEvent: event.
+	Kernel32 setEvent: event.
 	delay2 wait.
 	self assert: finished!
 
@@ -2898,7 +2897,7 @@ testRegistry
 	self assert: imageVersionMinor isInteger.
 	imageVersionMajor := SessionManager current imageVersionMajor.
 	self assert: imageVersionMajor isInteger.
-	nonClasses := Dictionary withAll: {#DolphinHandle -> (KernelLibrary default getModuleHandle: nil).
+	nonClasses := Dictionary withAll: {#DolphinHandle -> (Kernel32 getModuleHandle: nil).
 						#Corpse -> DeadObject current.
 						#interruptHotKey -> interruptHotKey.
 						#BereavementSemaphore -> (MemoryManager current instVarNamed: 'bereavements').
@@ -2907,7 +2906,7 @@ testRegistry
 						#WakeupEvent -> (SessionManager inputState instVarNamed: 'wakeupEvent').
 						#ImageVersionMinor -> imageVersionMinor.
 						#ImageVersionMajor -> imageVersionMajor.
-						#KernelHandle -> KernelLibrary default handle.
+						#KernelHandle -> Kernel32 handle.
 						#CRTHandle -> CRTLibrary default handle.
 						#Dispatcher -> SessionManager inputState.
 						#VMHandle -> VM handle.

@@ -42,9 +42,9 @@ copyToGlobalHeap
 	colorTable := header biBitCount <= 8 ifTrue: [self getColorTable bytes] ifFalse: [#[]].
 	headerSize := header byteSize.
 	imageSize := header biSizeImage.
-	hGlobal := KernelLibrary default globalAlloc: ##(GHND | GMEM_DDESHARE)
+	hGlobal := Kernel32 globalAlloc: ##(GHND | GMEM_DDESHARE)
 				dwBytes: headerSize + colorTable size + imageSize.
-	pGlobal := KernelLibrary default globalLock: hGlobal.
+	pGlobal := Kernel32 globalLock: hGlobal.
 	pGlobal
 		replaceFrom: 1
 		to: headerSize
@@ -60,7 +60,7 @@ copyToGlobalHeap
 		to: endHeader + imageSize
 		with: ds dsBm bmBits
 		startingAt: 1.
-	KernelLibrary default globalUnlock: hGlobal.
+	Kernel32 globalUnlock: hGlobal.
 	^hGlobal!
 
 createHandle
@@ -215,7 +215,7 @@ fromGlobalHandle: anExternalHandle
 	followed by the image bits."
 
 	| pBitmap header offset dibSection |
-	pBitmap := KernelLibrary default globalLock: anExternalHandle.
+	pBitmap := Kernel32 globalLock: anExternalHandle.
 	header := BITMAPINFOHEADER fromAddress: pBitmap.
 	dibSection := self
 				width: header biWidth
@@ -237,7 +237,7 @@ fromGlobalHandle: anExternalHandle
 		to: header biSizeImage
 		with: pBitmap
 		startingAt: offset.
-	KernelLibrary default globalUnlock: anExternalHandle.
+	Kernel32 globalUnlock: anExternalHandle.
 	^dibSection!
 
 width: width height: height

@@ -57,7 +57,7 @@ createCallback
 					dwNumberOfBytesTransfered > 0 ifTrue: [self processNotifications].
 					"Need to read again to get the next set of notifications... handle null if closed"
 					handle notNull
-						ifTrue: [self readDirectoryChanges ifFalse: [self processError: KernelLibrary default getLastError]]]
+						ifTrue: [self readDirectoryChanges ifFalse: [self processError: Kernel32 getLastError]]]
 				descriptor: FileIOCompletionRoutineDescriptor!
 
 defaultNotificationMask
@@ -99,7 +99,7 @@ free
 	callback := nil!
 
 freeDirectoryHandle: anExternalHandle
-	KernelLibrary default
+	Kernel32
 		cancelIo: anExternalHandle;
 		closeHandle: anExternalHandle!
 
@@ -111,7 +111,7 @@ getDirectoryHandle
 	is because we don't receive any notification if the directory is deleted after we start
 	monitoring, so we would be blissfully unaware."
 
-	handle := KernelLibrary default
+	handle := Kernel32
 				createFile: directory
 				dwDesiredAccess: FILE_LIST_DIRECTORY
 				dwSharedMode: FILE_SHARE_READ | FILE_SHARE_WRITE
@@ -121,7 +121,7 @@ getDirectoryHandle
 				hTemplateFile: nil.
 	handle asSignedInteger == -1 ifFalse: [^self].
 	handle := nil.
-	KernelLibrary default systemError!
+	Kernel32 systemError!
 
 handleError: anInteger 
 	^self subclassResponsibility!
@@ -233,7 +233,7 @@ notifySize: aBoolean
 
 processError: anInteger
 	buffer := nil.
-	KernelLibrary default closeHandle: handle.
+	Kernel32 closeHandle: handle.
 	handle := nil.
 	anInteger = ERROR_OPERATION_ABORTED ifTrue: [^self].
 	self handleError: anInteger!
@@ -247,7 +247,7 @@ processNotifications
 
 readDirectoryChanges
 	self assert: [handle notNull].
-	^(KernelLibrary default
+	^(Kernel32
 		readDirectoryChangesW: handle
 		lpBuffer: buffer
 		nBufferLength: buffer size
@@ -268,7 +268,7 @@ shouldNotifyChange: anAssociation
 startMonitoring
 	"Start monitoring directory for changes."
 
-	| err lib |
+	| err |
 	handle isNull ifFalse: [^self].
 	self getDirectoryHandle.
 	self beFinalizable.
@@ -276,11 +276,10 @@ startMonitoring
 	buffer := ByteArray newFixed: self bufferSize.
 	self readDirectoryChanges ifTrue: [^self].
 	buffer := nil.
-	lib := KernelLibrary default.
-	err := lib getLastError.
-	lib closeHandle: handle.
+	err := Kernel32 getLastError.
+	Kernel32 closeHandle: handle.
 	handle := nil.
-	^lib systemError: err!
+	^Kernel32 systemError: err!
 
 stopMonitoring
 	"Stop monitoring the directory for changes. Answer whether the receiver was monitoring
@@ -299,7 +298,7 @@ stopMonitoring
 	the receiver (and therefore the callback object) go out of scope. In order to do this we
 	must enter an alertable wait state, e.g. using SleepEx. N.B. We won't normally sleep for
 	20mS, just as long as it takes the APC to arrive, which in practice is immediately."
-	buffer isNil ifFalse: [KernelLibrary default sleepEx: 20 bAlertable: true].
+	buffer isNil ifFalse: [Kernel32 sleepEx: 20 bAlertable: true].
 	^wasMonitoring!
 
 unpackNotifications

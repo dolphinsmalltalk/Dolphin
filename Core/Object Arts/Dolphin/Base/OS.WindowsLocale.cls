@@ -369,7 +369,7 @@ negativeSign
 nlsLib
 	"Private - Answer the library responsible for locale support."
 
-	^KernelLibrary default!
+	^Kernel32!
 
 numberGrouping
 	"Answer a <string> which describes the way in which number digits should be grouped in the receiver locale. The format string consists of a series of integers specifying from left to right how many digits of the number should be formed into a group before the next group (if needed), each group being separated by the 'thousands' separator for the locale. There can be up to 9 characters in the string. If the last character is zero, then the preceding group specification is repeated.
@@ -439,7 +439,7 @@ shortAmDesignator
 
 	^info at: LOCALE_SSHORTESTAM
 		ifAbsentPutClean: 
-			[KernelLibrary default isWindows10OrGreater
+			[Kernel32 isWindows10OrGreater
 				ifTrue: [self getLocaleInfoString: LOCALE_SSHORTESTAM]
 				ifFalse: [self amDesignator first]]!
 
@@ -458,7 +458,7 @@ shortPmDesignator
 
 	^info at: LOCALE_SSHORTESTPM
 		ifAbsentPutClean: 
-			[KernelLibrary default isWindows10OrGreater
+			[Kernel32 isWindows10OrGreater
 				ifTrue: [self getLocaleInfoString: LOCALE_SSHORTESTPM]
 				ifFalse: [self pmDesignator first]]!
 
@@ -570,7 +570,7 @@ installedUILanguages: anInteger
 					languages nextPut: language.
 					true]
 				descriptor: (FunctionDescriptor returnType: 'bool' argumentTypes: 'lpwstr uintptr').
-	KernelLibrary default
+	Kernel32
 		enumUILanguages: enum asParameter
 		dwFlags: (MUI_LANGUAGE_NAME bitOr: anInteger)
 		lParam: 0.
@@ -580,17 +580,16 @@ installedUILanguages: anInteger
 named: aString
 	"Answer an instance of the receiver to represent the Locale with the specified name."
 
-	| kernel lcid |
-	kernel := KernelLibrary default.
-	lcid := kernel localeNameToLCID: aString asUtf16String dwFlags: 0.
-	lcid == 0 ifTrue: [kernel systemError].
+	| lcid |
+	lcid := Kernel32 localeNameToLCID: aString asUtf16String dwFlags: 0.
+	lcid == 0 ifTrue: [Kernel32 systemError].
 	^self lcid: lcid!
 
 reset
 	SystemDefault := nil.
 	self userDefault: nil!
 
-systemLocales: anInteger 
+systemLocales: anInteger
 	"Private - Answer a collection of system locales, depending on the flags argument, anInteger."
 
 	| enum locales |
@@ -600,7 +599,7 @@ systemLocales: anInteger
 					locales addLast: locale.
 					true]
 				descriptor: EnumNamesDescriptor.
-	KernelLibrary default enumSystemLocales: enum asParameter dwFlags: anInteger.
+	Kernel32 enumSystemLocales: enum asParameter dwFlags: anInteger.
 	enum free.
 	^locales collect: [:s | self lcid: (Integer readFrom: s asUppercase readStream radix: 16)]! !
 !OS.WindowsLocale class categoriesFor: #initialize!class initialization!development!public! !

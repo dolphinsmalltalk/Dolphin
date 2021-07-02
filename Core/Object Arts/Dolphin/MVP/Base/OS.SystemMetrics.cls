@@ -235,7 +235,7 @@ initialize
 
 	"So many capabilities depend on these flag, we may as well query them immediately. These also cannot change because of a Windows settings change."
 
-	isVistaOrLater := KernelLibrary default isWindowsVistaOrGreater.
+	isVistaOrLater := Kernel32 isWindowsVistaOrGreater.
 	isNotWine := NTLibrary isWine not.
 	"Wine does not support the ComMCtrlLibrary>>loadIconWithScaleDown:.. method which is normally
 	availble under Vista and later. Hence we don't allow this to be called even if the Windows

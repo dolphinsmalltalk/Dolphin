@@ -26,7 +26,7 @@ testInvalidOverlappedCallArguments
 
 testSingletonSerialisation
 	| singletons array bytes |
-	singletons := {KernelLibrary default. VersionLibrary default. User32}.
+	singletons := {Kernel32. VersionLibrary default. User32}.
 	array := #(#'!!STL' 3 98 3 1114638 ##(Kernel.STBSingletonProxy) 8 ##(OS.KernelLibrary) 8 #default 426 8 ##(OS.VersionLibrary) 464 426 8 ##(UserLibrary) 464).
 	self assert: ((Object fromLiteralStoreArray: array) asIdentitySet - singletons) isEmpty.
 	array := singletons literalStoreArray.
@@ -39,10 +39,10 @@ testSingletonSerialisation
 verifyInvalidCallArguments: aBoolean
 	| apiCall errorClass obj gdiLibrary |
 	obj := Object new.
-	errorClass := KernelLibrary default invalidArgErrorClass.
+	errorClass := Kernel32 invalidArgErrorClass.
 	apiCall := self makeTestMethodFrom: KernelLibrary >> #outputDebugString: overlapped: aBoolean.
 	self
-		should: [apiCall value: KernelLibrary default withArguments: {obj}]
+		should: [apiCall value: Kernel32 withArguments: {obj}]
 		raise: errorClass
 		matching: 
 			[:ex |
@@ -51,7 +51,7 @@ verifyInvalidCallArguments: aBoolean
 	apiCall := self makeTestMethodFrom: KernelLibrary >> #findFirstFile:lpFindFileData:
 				overlapped: aBoolean.
 	self
-		should: [apiCall value: KernelLibrary default withArguments: {'*.*' asUtf16String. obj}]
+		should: [apiCall value: Kernel32 withArguments: {'*.*' asUtf16String. obj}]
 		raise: errorClass
 		matching: 
 			[:ex |

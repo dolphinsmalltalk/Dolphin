@@ -126,8 +126,9 @@ forkProgressMonitor
 	pollingInterval := self monitorProgressPeriod.
 	progressProcess := 
 			[
-			[KernelLibrary default overlappedSleepEx: pollingInterval bAlertable: true.
-			self progress: self currentProgress] repeat]
+			[Kernel32 overlappedSleepEx: pollingInterval bAlertable: true.
+			self progress: self currentProgress]
+					repeat]
 					forkAt: Processor userInterruptPriority!
 
 getItemHandle: anInteger ifAbsent: exceptionHandler

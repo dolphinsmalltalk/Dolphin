@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Tests.DolphinTest subclass: #'Core.Tests.ProcessTest'
 	instanceVariableNames: ''
@@ -506,10 +506,10 @@ testOverlappedErrno
 
 testOverlappedLastError
 	| temp1 temp2 |
-	OS.KernelLibrary default setLastError: 0.
-	self assert: OS.KernelLibrary default getLastError equals: 0.
-	OS.KernelLibrary default threadSetLastError: 0.
-	self assert: OS.KernelLibrary default threadGetLastError equals: 0.
+	OS.Kernel32 setLastError: 0.
+	self assert: OS.Kernel32 getLastError equals: 0.
+	OS.Kernel32 threadSetLastError: 0.
+	self assert: OS.Kernel32 threadGetLastError equals: 0.
 	temp1 := File temporaryFilename.
 	temp2 := File temporaryFilename.
 	File
@@ -520,8 +520,8 @@ testOverlappedLastError
 		raise: OS.Win32Error
 		matching: [:ex | ex statusCode = 2].
 	self assert: Processor activeProcess lastError equals: 2.
-	self assert: OS.KernelLibrary default getLastError equals: 0.
-	self assert: OS.KernelLibrary default threadGetLastError equals: 2!
+	self assert: OS.Kernel32 getLastError equals: 0.
+	self assert: OS.Kernel32 threadGetLastError equals: 2!
 
 testSchedulerTermination
 	| process sema gotHere sema2 |

@@ -99,7 +99,7 @@ crashDump: message
 	parms := ByteArray new: VMConstants.IntPtrSize.
 	str := message asUtf16String.
 	parms intPtrAtOffset: 0 put: str yourAddress.
-	KernelLibrary default
+	Kernel32
 		raiseException: 16r20000002
 		dwExceptionFlags: 0
 		nNumberOfArguments: 1
@@ -197,8 +197,7 @@ getGenericCallback
 
 	genericCallback isNil
 		ifTrue: 
-			[genericCallback := KernelLibrary default getProcAddressDWORD: self asParameter
-						lpProcName: 'GenericCallback'].
+			[genericCallback := Kernel32 getProcAddressDWORD: self asParameter lpProcName: 'GenericCallback'].
 	^genericCallback!
 
 getVTable
@@ -217,7 +216,7 @@ getWndProc
 	"There is not point throwing an error here if it fails, because that will be terminal anyway."
 
 	wndProc isNil
-		ifTrue: [wndProc := KernelLibrary default getProcAddressDWORD: self asParameter lpProcName: 'WndProc'].
+		ifTrue: [wndProc := Kernel32 getProcAddressDWORD: self asParameter lpProcName: 'WndProc'].
 	^wndProc!
 
 handleFromInteger: anInteger
@@ -462,7 +461,7 @@ utf16StringFromAddress: pointer
 
 	<stdcall: lpwstr AnswerDWORD lpvoid>
 	| len |
-	len := KernelLibrary default lstrlenW: pointer.
+	len := Kernel32 lstrlenW: pointer.
 	^Utf16String fromAddress: pointer length: len!
 
 versionFormatString
@@ -654,7 +653,6 @@ sharedVariableName
 !Kernel.VMLibrary class categoriesFor: #maxMessageArguments!limits!public! !
 !Kernel.VMLibrary class categoriesFor: #maxTemps!limits!public! !
 !Kernel.VMLibrary class categoriesFor: #open!instance creation!public! !
-!Kernel.VMLibrary class categoriesFor: #openDefault!instance creation!private!realizing/unrealizing! !
 !Kernel.VMLibrary class categoriesFor: #registryKeys!constants!private! !
 !Kernel.VMLibrary class categoriesFor: #sharedVariableName!constants!private! !
 

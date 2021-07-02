@@ -1135,7 +1135,9 @@ icon
 icon
 	"Answers an Icon that can be used to represent this class: ⦿"
 
-	^##(TextTileIcon text: $\x29BF fontName: 'Cambria')! !
+	^##((TextTileIcon text: $\x29BF fontName: 'Cambria')
+		textcolor: Color hotlight;
+		yourself)! !
 !UI.RadioButton class categoriesFor: #icon!constants!public! !
 
 !UI.RadioButtonSetPresenter class methodsFor!

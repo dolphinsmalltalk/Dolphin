@@ -52,7 +52,7 @@ topLevelWindowHandlesDo: aMonadicValuable
 	callback := External.Callback block: [:hwnd :lParam | aMonadicValuable value: hwnd]
 				descriptor: EnumHandlesDescriptor.
 	answer := User32
-				enumThreadWindows: KernelLibrary default getCurrentThreadId
+				enumThreadWindows: Kernel32 getCurrentThreadId
 				lpfn: callback asParameter
 				lParam: 0.
 	callback free.
@@ -120,7 +120,7 @@ userSessionIdleMs
 	"
 
 	| currentTime lastInputTime |
-	currentTime := KernelLibrary default getTickCount.
+	currentTime := Kernel32 getTickCount.
 	lastInputTime := self getLastInputInfo.
 	currentTime < lastInputTime ifTrue: [^currentTime].	"In case of 49.7-day wrap, we understate the idle time"
 	^currentTime - lastInputTime!

@@ -140,7 +140,7 @@ close
 	library was successfully closed."
 
 	| success |
-	success := handle notNull and: [KernelLibrary default freeLibrary: handle].
+	success := handle notNull and: [Kernel32 freeLibrary: handle].
 	handle := nil.
 	^success!
 
@@ -172,7 +172,7 @@ getProcAddress: nameOrOrdinal ifAbsent: exceptionHandler
 	procedure, then answer the result of evaluation the <niladicValuable> exceptionHandler.."
 
 	| address |
-	address := KernelLibrary default getProcAddress: self asParameter lpProcName: nameOrOrdinal.
+	address := Kernel32 getProcAddress: self asParameter lpProcName: nameOrOrdinal.
 	^address = 0 ifTrue: [exceptionHandler value] ifFalse: [address]!
 
 handle
@@ -197,7 +197,7 @@ invalidCall: anInteger
 	anInteger >= 0
 		ifTrue: 
 			[| error |
-			error := KernelLibrary default getLastError.
+			error := Kernel32 getLastError.
 			^error == 0 ifTrue: [self primitiveFailed: anInteger] ifFalse: [self systemError: error]].
 	frame := Processor activeProcess topFrame sender.
 	method := frame method.
@@ -361,7 +361,7 @@ default
 default: anExternalLibrary
 	"Set the default instance of the receiver."
 
-	default := anExternalLibrary!
+	self setDefault: anExternalLibrary!
 
 fileName
 	"Answer the host system file name for the external library the 
@@ -390,9 +390,8 @@ load: aString flags: anInteger
 	"Private - Open the external library with the external file name, aString,
 	and answer the handle."
 
-	| hLibrary klib |
-	klib := KernelLibrary default.
-	hLibrary := klib
+	| hLibrary |
+	hLibrary := Kernel32
 				loadLibraryEx: aString
 				hFile: nil
 				dwFlags: anInteger.
@@ -403,7 +402,7 @@ moduleFileName: aLibOrHandle
 
 	| buf size |
 	buf := File pathBuffer.
-	size := KernelLibrary default
+	size := Kernel32
 				getModuleFileName: aLibOrHandle asParameter
 				lpFilename: buf
 				nSize: buf size + 1.

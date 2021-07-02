@@ -24,15 +24,13 @@ Instance Variables:
 allocConsole
 	"Private - Open a console window for this session."
 
-	| kernel |
-	kernel := KernelLibrary default.
-	(self isUnattended and: [kernel attachConsole: ATTACH_PARENT_PROCESS])
+	(self isUnattended and: [Kernel32 attachConsole: ATTACH_PARENT_PROCESS])
 		ifFalse: 
 			[| hMenu |
-			kernel allocConsole.
+			Kernel32 allocConsole.
 			"Remove the close button from the console window as otherwise if the user
 			closes it Windows will kill this process with no way to intercept."
-			hConsole := kernel getConsoleWindow.
+			hConsole := Kernel32 getConsoleWindow.
 			hMenu := User32 getSystemMenu: hConsole bRevert: false.
 			User32
 				deleteMenu: hMenu

@@ -146,7 +146,7 @@ icon
 	"Answers an Icon that can be used to represent this class (use the icon from
 	the host executable)."
 
-	^Icon fromId: '!!APPLICATION' in: (KernelLibrary default getModuleHandle: nil)!
+	^Icon fromId: '!!APPLICATION' in: (Kernel32 getModuleHandle: nil)!
 
 resource_Default_view
 	"Answer the literal data from which the 'Default view' resource can be reconstituted.

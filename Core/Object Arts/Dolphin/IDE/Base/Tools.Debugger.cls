@@ -1811,7 +1811,7 @@ updateForBreakAt: interruptFrame
 	^self isAnimating
 		ifTrue: 
 			[
-			[OS.KernelLibrary default sleep: self animatePause.
+			[OS.Kernel32 sleep: self animatePause.
 			process isDead ifFalse: [self step]]
 					forkAt: Processor userSchedulingPriority]!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Tests.DolphinTest subclass: #'Core.Tests.FileTest'
 	instanceVariableNames: 'tempFile'
@@ -295,8 +295,8 @@ testClassRelativePathOfTo
 
 testCommonPrefixOfAnd
 	self
-		assert: ((File commonPrefixOf: OS.KernelLibrary default moduleFileName
-				and: OS.UserLibrary default moduleFileName) sameAs: SessionManager current systemDirectory).
+		assert: ((File commonPrefixOf: OS.Kernel32 moduleFileName and: OS.UserLibrary default moduleFileName)
+				sameAs: SessionManager current systemDirectory).
 	self
 		assert: (File commonPrefixOf: 'D:\dev\Dolphin\DolphinVM7.DLL' and: 'C:\dev\Dolphin\DolphinVM7.DLL')
 				isEmpty!

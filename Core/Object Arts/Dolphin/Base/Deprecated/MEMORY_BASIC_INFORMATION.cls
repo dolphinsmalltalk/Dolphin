@@ -69,7 +69,7 @@ forAddress: anAddress
 
 	| answer |
 	answer := self new.
-	KernelLibrary default
+	Kernel32
 		virtualQuery: anAddress
 		lpBuffer: answer
 		dwLength: answer size.

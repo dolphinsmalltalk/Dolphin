@@ -110,7 +110,7 @@ drawThemeParentBackground: hwnd hdc: hDC prc: prc
 		offsetWindowOrgEx: hDC
 		nXOrg: offset x
 		nYOrg: offset y
-		lppt: oldOrg) ifFalse: [^HRESULT win32Error: KernelLibrary default getLastError].
+		lppt: oldOrg) ifFalse: [^HRESULT win32Error: Kernel32 getLastError].
 	User32
 		sendMessage: parent
 		msg: WM_PRINTCLIENT

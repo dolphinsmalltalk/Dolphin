@@ -93,7 +93,7 @@ beep: anInteger
 beep: freqInteger duration: durationInteger
 	"Generate a parp of the specified frequency and duration from the system speaker."
 
-	OS.KernelLibrary default beep: freqInteger dwDuration: durationInteger!
+	OS.Kernel32 beep: freqInteger dwDuration: durationInteger!
 
 bell
 	"Generate a very short parp using the computer speaker - useful for debugging.

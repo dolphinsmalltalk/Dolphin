@@ -37,7 +37,7 @@ flush
 
 	buffer position == 0
 		ifFalse: 
-			[KernelLibrary default outputDebugString: buffer contents asUtf16String.
+			[Kernel32 outputDebugString: buffer contents asUtf16String.
 			buffer reset]!
 
 initialize

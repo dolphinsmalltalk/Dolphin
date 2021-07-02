@@ -26,7 +26,7 @@ initialize
 	Set the details to be the last error code reported
 	by a system library (i.e. that retried by KernelLibrary>>getLastError)."
 
-	self tag: (HRESULT status: KernelLibrary default getLastError facility: FACILITY_WIN32)! !
+	self tag: (HRESULT status: Kernel32 getLastError facility: FACILITY_WIN32)! !
 !OS.Win32Error categoriesFor: #_descriptionArguments!displaying!public! !
 !OS.Win32Error categoriesFor: #_descriptionFormat!displaying!public! !
 !OS.Win32Error categoriesFor: #initialize!initializing!private! !

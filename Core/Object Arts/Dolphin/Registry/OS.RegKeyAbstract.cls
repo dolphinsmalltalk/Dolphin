@@ -254,7 +254,7 @@ objectFromValue: bytes type: type size: size
 	type == REG_NONE ifTrue: [^nil].
 	type == REG_EXPAND_SZ
 		ifTrue: 
-			[^KernelLibrary default
+			[^Kernel32
 				expandEnvironmentStrings: (Utf16String fromByteArray: bytes length: (size bitShift: -1) - 1)].
 	type == REG_QWORD ifTrue: [^bytes sqwordAtOffset: 0].
 	Notification signal: 'Unrecognised registry value type treated as binary: ' , type printString.

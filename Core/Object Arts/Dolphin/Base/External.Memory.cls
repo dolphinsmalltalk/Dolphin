@@ -37,7 +37,7 @@ basicAllocate: anInteger
 	| pBlock |
 	pBlock := self allocator Alloc: anInteger.
 	pBlock isNull ifTrue: [^OutOfMemoryError signal].
-	KernelLibrary default zeroMemory: pBlock length: anInteger.
+	Kernel32 zeroMemory: pBlock length: anInteger.
 	self value: pBlock!
 
 basicFree
@@ -98,7 +98,7 @@ Alloc: anInteger
 	"Private - Allocate and answer anInteger bytes of memory from the process
 	heap."
 
-	^KernelLibrary default
+	^Kernel32
 		heapAlloc: self processHeap asParameter
 		dwFlags: 0
 		dwBytes: anInteger!
@@ -116,16 +116,15 @@ clear: anExternalAddress
 	self free: anExternalAddress!
 
 copyBytesToGlobalHeap: aByteObject
-	| len pMem hMem kernel |
-	kernel := KernelLibrary default.
+	| len pMem hMem |
 	len := aByteObject byteSize.
-	hMem := kernel globalAlloc: ##(GHND | GMEM_DDESHARE) dwBytes: len.
-	pMem := kernel globalLock: hMem.
-	kernel
+	hMem := Kernel32 globalAlloc: ##(GHND | GMEM_DDESHARE) dwBytes: len.
+	pMem := Kernel32 globalLock: hMem.
+	Kernel32
 		copyMemory: pMem
 		source: aByteObject
 		length: len.
-	kernel globalUnlock: hMem.
+	Kernel32 globalUnlock: hMem.
 	^hMem!
 
 DidAlloc: anAddress
@@ -136,7 +135,7 @@ DidAlloc: anAddress
 	may cause additional unspecified activity!!"
 
 	anAddress isNull ifTrue: [^-1].
-	^(KernelLibrary default
+	^(Kernel32
 		heapValidate: self processHeap asParameter
 		dwFlags: 0
 		lpMem: anAddress) ifTrue: [1] ifFalse: [0]!
@@ -152,7 +151,7 @@ Free: anAddress
 	"Private - Free the memory at the specified address (which must
 	previously have been allocated from the process heap)."
 
-	KernelLibrary default
+	Kernel32
 		heapFree: self processHeap asParameter
 		dwFlags: 0
 		lpMem: anAddress!
@@ -179,7 +178,7 @@ GetSize: anAddress
 	"Private - Answer the size of the specified heap block, or -1
 	(actually 16rFFFFFFFF) for failure)."
 
-	^KernelLibrary default
+	^Kernel32
 		heapSize: self processHeap asParameter
 		dwFlags: 0
 		lpMem: anAddress!
@@ -187,7 +186,7 @@ GetSize: anAddress
 HeapMinimize
 	"Private - Minimize the size of the process heap."
 
-	KernelLibrary default heapCompact: self processHeap asParameter dwFlags: 0!
+	Kernel32 heapCompact: self processHeap asParameter dwFlags: 0!
 
 new
 	"Answer a new instance of the receiver of the initially holding a null pointer."
@@ -215,13 +214,13 @@ processHeap
 	"Private - Answer an object representing the process heap which
 	can be passed to a Win32 HeapXXX() API call."
 
-	^KernelLibrary default getProcessHeap!
+	^Kernel32 getProcessHeap!
 
 Realloc: anAddress cb: anInteger
 	"Private - Resize the specified heap block, answering the new address,
 	or 0 on failure."
 
-	^(KernelLibrary default
+	^(Kernel32
 		heapReAlloc: self processHeap asParameter
 		dwFlags: 0
 		lpMem: anAddress

@@ -675,7 +675,7 @@ init: buffer
 	"Initialize a buffer (or buffer at the specified address) to hold an instance of the record type
 	described by the receiver. Assumes that the memory is completely uninitialized."
 
-	KernelLibrary default zeroMemory: buffer length: self byteSize!
+	Kernel32 zeroMemory: buffer length: self byteSize!
 
 initializeAfterLoad
 	"Private - Ensure the template is removed. This could have been incorrectly initialised

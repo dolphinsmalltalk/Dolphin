@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Tests.AbstractFileStreamTest subclass: #'OS.Tests.StdioFileStreamTest'
 	instanceVariableNames: ''
@@ -107,7 +107,7 @@ testFromHandleOnPipe
 	| pipeIn pipeOut streams |
 	pipeIn := Handle new.
 	pipeOut := Handle new.
-	KernelLibrary default
+	Kernel32
 		createPipe: pipeIn
 		hWritePipe: pipeOut
 		lpPipeAttributes: (SECURITY_ATTRIBUTES new

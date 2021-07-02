@@ -461,7 +461,7 @@ clockPrecision
 	"Answer a <Duration> such that after that period of time passes, #now is guaranteed
 	to answer a different <DateAndTime>."
 
-	^OS.KernelLibrary default isWindows8OrGreater
+	^OS.Kernel32 isWindows8OrGreater
 		ifTrue: 
 			["MSDN says that the resolution for GetSystemTimePreciseAsFileTime is <1uS. The resolution of FILETIMEs is 100nS"
 			1 microseconds]
@@ -703,7 +703,7 @@ utcSecondsNow
 	"Strictly speaking a FILETIME is unsigned, and so could require up to a 12-byte LargeInteger, but we'll be Ok with 8-bytes until about 4pm on 15th May 30600."
 	filetime := LargeInteger new64.
 	"Get the UTC FILETIME - this expresses the number of 100 nanosecond intervals since 00:00h on 1st Jan 1601 UTC"
-	OS.KernelLibrary default getSystemTimePreciseAsFileTime: filetime basicYourAddress.
+	OS.Kernel32 getSystemTimePreciseAsFileTime: filetime basicYourAddress.
 	"Convert to seconds (and fractional seconds) past epoch"
 	^FiletimeEpochSeconds + (filetime / ##(1e9 / 100))!
 

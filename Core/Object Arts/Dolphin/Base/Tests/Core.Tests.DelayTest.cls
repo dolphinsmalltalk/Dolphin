@@ -123,7 +123,7 @@ testSimultaneousWaitAndSignal
 	signalFinished := true]
 			forkAt: Processor userInterruptPriority.	"Will block on AccessProtect in #cancel too, but higher priority"
 	Delay.AccessProtect signal.	"Allow the bug to unfold"
-	OS.KernelLibrary default sleep: 10.	"Wait for both processes above to finish, without using the Delay mechanism"
+	OS.Kernel32 sleep: 10.	"Wait for both processes above to finish, without using the Delay mechanism"
 	self expectDelay: 0 milliseconds for: endTime.	"Process should not have actually waited on the delay"
 	self assertIsNil: waitError.
 	self assert: signalFinished.

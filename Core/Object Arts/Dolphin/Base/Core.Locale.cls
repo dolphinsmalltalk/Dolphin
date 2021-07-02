@@ -530,7 +530,7 @@ printFloat: aFloat format: aNUMBERFMT lcid: lcidInteger
 
 	"Implementation Note: I tried adding a primitive for this with code similar to that below, although failing for NaNs and Infinities, using the CRT _gcvt function to perform the initial conversion of the Float to an invariant String before the locale specific formatting is applied. Interestingly it actually runs more slowly!! This suggests that _gcvt is not very efficient."
 
-	| localized classification size lib invariant |
+	| localized classification size invariant |
 	classification := aFloat fpClass.
 	(classification anyMask: Float.FpClassFinite)
 		ifFalse: 
@@ -560,17 +560,16 @@ printFloat: aFloat format: aNUMBERFMT lcid: lcidInteger
 							digitCount: 17
 							decimalExponents: ##(VMConstants.SmallIntegerMin to: VMConstants.SmallIntegerMax).
 					stream grabContents].
-	lib := OS.KernelLibrary default.
-	size := lib
+	size := OS.Kernel32
 				getNumberFormat: lcidInteger
 				dwFlags: 0
 				lpValue: invariant
 				lpFormat: aNUMBERFMT
 				lpNumberStr: nil
 				cchNumber: 0.
-	size == 0 ifTrue: [^lib systemError].
+	size == 0 ifTrue: [^OS.Kernel32 systemError].
 	localized := Utf16String new: size - 1.
-	lib
+	OS.Kernel32
 		getNumberFormat: lcidInteger
 		dwFlags: 0
 		lpValue: invariant
@@ -751,8 +750,8 @@ default
 getTimeZoneInfo
 	| timeZoneInfo rc |
 	timeZoneInfo := OS.TIME_ZONE_INFORMATION new.
-	rc := OS.KernelLibrary default getTimeZoneInformation: timeZoneInfo.
-	rc = -1 ifTrue: [^OS.KernelLibrary default systemError].
+	rc := OS.Kernel32 getTimeZoneInformation: timeZoneInfo.
+	rc = -1 ifTrue: [^OS.Kernel32 systemError].
 	timeZoneInfo zoneId: rc.
 	^timeZoneInfo!
 
@@ -850,13 +849,13 @@ supportedSystemLocales
 systemDefault
 	"Answer the instance of the receiver which represents the default system locale."
 
-	^SystemDefault ifNil: [SystemDefault := self lcid: OS.KernelLibrary default getSystemDefaultLCID]!
+	^SystemDefault ifNil: [SystemDefault := self lcid: OS.Kernel32 getSystemDefaultLCID]!
 
 timeZoneInformation
 	^TimeZoneInfo ifNil: [TimeZoneInfo := self getTimeZoneInfo]!
 
 uiDefault
-	^self lcid: OS.KernelLibrary default getThreadUILanguage!
+	^self lcid: OS.Kernel32 getThreadUILanguage!
 
 userDefault
 	"Answer the instance of the receiver which represents the default user locale."

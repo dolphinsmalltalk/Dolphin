@@ -503,7 +503,7 @@ readPageFor: anInteger
 			 previously visited page. This is necessary in case we position beyond the
 			 current end of file and write some data - we don't want stale data from the
 			 previous page showing through."
-			OS.KernelLibrary default zeroMemory: collection yourAddress + readLimit length: PageSize - readLimit]!
+			OS.Kernel32 zeroMemory: collection yourAddress + readLimit length: PageSize - readLimit]!
 
 reset
 	self position: 0!

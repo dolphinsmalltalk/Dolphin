@@ -388,7 +388,7 @@ setStream: anExternalAddress name: aString flags: anInteger
 	self beFinalizable.
 	"Examine the underlying OS file handle to determine the file type"
 	oshandle := crtlib _get_osfhandle: fd.
-	filetype := KernelLibrary default getFileType: oshandle.
+	filetype := Kernel32 getFileType: oshandle.
 	((filetype == Win32Constants.FILE_TYPE_CHAR and: 
 			[flags := flags bitOr: DeviceMask.
 			true])
@@ -561,20 +561,19 @@ on: aFile type: aSymbol
 	"Answer an new concrete sub-instance of the receiver attached to the open <File>, aFile, with content type named by the <Symbol>, aSymbol.
 	Valid content types are #binary, to read/write raw bytes, #text (for text translation mode - sniffing the current encoding) or one of the valid String encodings - see String.Encodings."
 
-	| kernel oshandle proc crt fd handle mode encoding flags |
+	| oshandle proc crt fd handle mode encoding flags |
 	aFile isReadable ifFalse: [self error: 'must be attached to a readable file'].
 	encoding := aSymbol == #text ifTrue: [String encodingName: aFile sniffEncoding] ifFalse: [aSymbol].
 	oshandle := External.Handle new.
-	kernel := KernelLibrary default.
-	proc := kernel getCurrentProcess.
-	(kernel
+	proc := Kernel32 getCurrentProcess.
+	(Kernel32
 		duplicateHandle: proc
 		hSourceHandle: aFile asParameter
 		hTargetProcessHandle: proc
 		lpTargetHandle: oshandle
 		dwDesiredAccess: 0
 		bInheritHandle: false
-		dwOptions: Win32Constants.DUPLICATE_SAME_ACCESS) ifFalse: [KernelLibrary default systemError].
+		dwOptions: Win32Constants.DUPLICATE_SAME_ACCESS) ifFalse: [Kernel32 systemError].
 	crt := CRTLibrary default.
 	fd := crt _open_osfhandle: oshandle flags: 0.
 	aFile isWriteable

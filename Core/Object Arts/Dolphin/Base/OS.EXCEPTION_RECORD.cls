@@ -79,7 +79,7 @@ moduleFileName
 
 	| buf |
 	buf := ByteArray new: ##(VMConstants.IntPtrSize * 2 + (4 * 5)).
-	^(KernelLibrary default
+	^(Kernel32
 		virtualQuery: self ExceptionAddress
 		lpBuffer: buf
 		dwLength: buf size) == 0

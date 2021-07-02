@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Tests.DolphinTest subclass: #'OS.Tests.RegKeyTest'
 	instanceVariableNames: 'testKey'
@@ -67,7 +67,7 @@ testEmptySz
 
 testExpandSz
 	| path |
-	path := KernelLibrary default expandEnvironmentStrings: '%PATH%'.
+	path := Kernel32 expandEnvironmentStrings: '%PATH%'.
 	testKey
 		valueAt: 'PATH'
 		put: '%PATH%'

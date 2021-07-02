@@ -39,7 +39,7 @@ asByteString: aClass
 	| bytes buf size |
 	(size := self size) == 0 ifTrue: [^aClass empty].
 	buf := aClass new: size * 4.
-	bytes := KernelLibrary default
+	bytes := Kernel32
 				wideCharToMultiByte: aClass codePage
 				dwFlags: 0
 				lpWideCharStr: self
@@ -48,7 +48,7 @@ asByteString: aClass
 				cchMultiByte: buf size
 				lpDefaultChar: nil
 				lpUsedDefaultChar: nil.
-	bytes == 0 ifTrue: [^KernelLibrary default systemError].
+	bytes == 0 ifTrue: [^Kernel32 systemError].
 	buf resize: bytes.
 	^buf!
 

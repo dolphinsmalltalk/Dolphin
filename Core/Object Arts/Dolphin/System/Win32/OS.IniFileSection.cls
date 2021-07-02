@@ -28,7 +28,7 @@ at: keyString put: valueObject
 	| value |
 	keyString isNil ifTrue: [self errorNilKey].
 	value := valueObject displayString.
-	^(KernelLibrary default
+	^(Kernel32
 		writePrivateProfileString: name
 		lpKeyName: keyString asUtf16String shallowCopy
 		lpString: value
@@ -40,18 +40,17 @@ errorNilKey
 	self error: 'nil is not a valid key'!
 
 getValue: key
-	| lib buf count |
+	| buf count |
 	buf := Utf16String newFixed: 128.
-	lib := KernelLibrary default.
 	
-	[count := lib
+	[count := Kernel32
 				getPrivateProfileString: name
 				lpKeyName: key
 				lpDefault: nil
 				lpReturnedString: buf
 				nSize: buf size
 				lpFileName: filename.
-	(count == 0 and: [lib getLastError ~~ 0])
+	(count == 0 and: [Kernel32 getLastError ~~ 0])
 		ifTrue: 
 			["Not found"
 			^nil].
@@ -110,7 +109,7 @@ removeKey: aString ifAbsent: aNiladicValuable
 	key := aString asUtf16String shallowCopy.
 	value := self getValue: key.
 	value isNil ifTrue: [^aNiladicValuable value].
-	^(KernelLibrary default
+	^(Kernel32
 		writePrivateProfileString: name
 		lpKeyName: key
 		lpString: nil

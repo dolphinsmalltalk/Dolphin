@@ -180,15 +180,15 @@ basicShallowCopy
 classify: anInteger
 	<primitive: 225>
 	| str charType |
-	#todo. "This is temporary, and to be replaced with an implementation based on ICU in order to yield correct results for all Unicode characters."
+	#todo.	"This is temporary, and to be replaced with an implementation based on ICU in order to yield correct results for all Unicode characters."
 	str := Utf16String with: self.
 	"If outside BMP, we ignore the 2nd surrogate, as all valid surrogates have a CT_CTYPE1 of just C1_DEFINED (i.e. known, but not of any other type). The API isn't really designed correctly to report the classifications for characters outside the BMP, because it operates at a code unit level, and the code units are UTF-16"
 	charType := ByteArray newFixed: 2.
-	(OS.KernelLibrary default
+	(OS.Kernel32
 		getStringType: anInteger
 		lpSrcStr: str
 		cchSrc: 1
-		lpCharType: charType) ifFalse: [OS.KernelLibrary default systemError].
+		lpCharType: charType) ifFalse: [OS.Kernel32 systemError].
 	^charType wordAtOffset: 0!
 
 code

@@ -2337,7 +2337,7 @@ useDirectWrite
 	"Answer whether to use DirectWrite for drawing text in the workspace. This offers improved quality, coloured emoji's, and hardware acceleration, but may not 
 	work well in all circumstances, so it can be turned off."
 
-	^UseDirectWrite and: [OS.KernelLibrary default isWindowsVistaOrGreater]!
+	^UseDirectWrite and: [OS.Kernel32 isWindowsVistaOrGreater]!
 
 useDirectWrite: aBoolean
 	| tech |

@@ -39,7 +39,7 @@ displayOn: aPuttableStream
 					NTLibrary default asParameter asInteger].
 	lcid := aPuttableStream locale primary lcid.
 	
-	[len := KernelLibrary default
+	[len := Kernel32
 				formatMessage: flags
 				lpSource: hModule
 				dwMessageId: code

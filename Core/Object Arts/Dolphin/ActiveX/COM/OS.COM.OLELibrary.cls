@@ -288,7 +288,7 @@ supportsDCOM
 	"Answer whether the host OS supports DCOM (i.e. remote servers).
 	This is the officially recognised test!!"
 
-	^(KernelLibrary default getProcAddress: self asParameter lpProcName: 'CoInitializeEx') notNull!
+	^(Kernel32 getProcAddress: self asParameter lpProcName: 'CoInitializeEx') notNull!
 
 uninitialize
 	"Private - Reverse the initialize"

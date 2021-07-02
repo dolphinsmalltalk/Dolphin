@@ -44,7 +44,7 @@ Class Variables:
 allocConsole
 	"Private - Open a console window for this session."
 
-	KernelLibrary default
+	Kernel32
 		allocConsole;
 		setConsoleTitle: self applicationName;
 		setConsoleOutputCP: NlsConstants.CP_UTF8;
@@ -155,7 +155,7 @@ basicShutdown
 	#{Delay} ifDefined: [:d | d onExit].
 	inputState onExit.
 	External.DynamicLinkLibrary onExit.
-	KernelLibrary default closeHandle: sentry!
+	Kernel32 closeHandle: sentry!
 
 basicStdioStreams
 	"Private - Answer the 3-element <Array> of <StdioFileStream>s which are the 
@@ -209,8 +209,7 @@ computerName
 	| name nameSize |
 	name := Utf16String newFixed: MAX_COMPUTERNAME_LENGTH.
 	nameSize := External.DWORDBytes fromInteger: name size + 1.
-	(KernelLibrary default getComputerName: name nSize: nameSize asParameter)
-		ifFalse: [KernelLibrary default systemError].
+	(Kernel32 getComputerName: name nSize: nameSize asParameter) ifFalse: [Kernel32 systemError].
 	^name leftString: nameSize asInteger!
 
 comShutdown
@@ -234,11 +233,11 @@ createInputState
 	inputState := self inputStateClass newFromOld: inputState!
 
 createSentinel
-	sentry := KernelLibrary default
+	sentry := Kernel32
 				createMutex: nil
 				bInitialOwner: false
 				lpName: self sentinelName.
-	^KernelLibrary default getLastError == ERROR_ALREADY_EXISTS!
+	^Kernel32 getLastError == ERROR_ALREADY_EXISTS!
 
 defaultResLibPath
 	"Answer the path of the development resource library."
@@ -259,7 +258,8 @@ defaultResourceLibrary
 embeddedStartup
 	"Private - The session has been started as an embedded session, perform appropriate actions."
 
-	[[KernelLibrary default overlappedSleepEx: 1000 bAlertable: true] repeat] forkAt: Processor systemBackgroundPriority!
+	[[Kernel32 overlappedSleepEx: 1000 bAlertable: true] repeat]
+		forkAt: Processor systemBackgroundPriority!
 
 errorLogExtension
 	"Answer the suffix for an error log file"
@@ -313,14 +313,14 @@ freeConsole
 		SessionManager current freeConsole
 	"
 
-	KernelLibrary default closeHandle: hConsole.
+	Kernel32 closeHandle: hConsole.
 	hConsole := nil.
-	KernelLibrary default freeConsole!
+	Kernel32 freeConsole!
 
 getCommandLine
 	"Private - Answer the command line String used to start Dolphin."
 
-	^KernelLibrary default getCommandLine!
+	^Kernel32 getCommandLine!
 
 getenv: aString
 	"Answer the value of the specified environment variable, or nil if it does not exist.
@@ -328,13 +328,13 @@ getenv: aString
 
 	| buf size |
 	"N.B. Size answered includes null terminator IF not enough space (or nil buffer)."
-	size := KernelLibrary default
+	size := Kernel32
 				getEnvironmentVariable: aString
 				lpBuffer: nil
 				nSize: 0.
 	size == 0 ifTrue: [^nil].
 	buf := Utf16String newFixed: size - 1.	"Dolphin Strings alloc. extra space for null terminator"
-	KernelLibrary default
+	Kernel32
 		getEnvironmentVariable: aString
 		lpBuffer: buf
 		nSize: size.
@@ -765,7 +765,7 @@ openFd: anInteger mode: aSymbol
 		ifTrue: 
 			["stdio file descriptor is not currently established, attach to the console handle"
 			self consoleStreamClass
-				attach: (KernelLibrary default getStdHandle: STD_INPUT_HANDLE - anInteger)
+				attach: (Kernel32 getStdHandle: STD_INPUT_HANDLE - anInteger)
 				toFd: anInteger
 				mode: aSymbol]
 		ifFalse: 
@@ -880,7 +880,7 @@ registerConsoleCtrlHandler
 						receiver: self
 						selector: #onConsoleCtrl:
 						descriptor: (External.FunctionDescriptor fromString: 'stdcall: bool dword' environment: Smalltalk).
-			KernelLibrary default setConsoleCtrlHandler: consoleHandler asParameter add: true]!
+			Kernel32 setConsoleCtrlHandler: consoleHandler asParameter add: true]!
 
 registerRunning
 	"Private - Register this session as the owner of the image by creating a named Win32 event.
@@ -977,8 +977,7 @@ sessionId
 setenv: nameString value: valueString
 	"Set the value of the specified environment variable."
 
-	(KernelLibrary default setEnvironmentVariable: nameString lpValue: valueString)
-		ifFalse: [KernelLibrary default systemError]!
+	(Kernel32 setEnvironmentVariable: nameString lpValue: valueString) ifFalse: [Kernel32 systemError]!
 
 setEvents: anEventsCollectionOrNil
 	"Private - Set the EventsCollection of the receiver to be anEventsCollectionOrNil.
@@ -1058,11 +1057,10 @@ systemDirectory
 	"Answer the path of the Windows system directory on the host computer for the current
 	session."
 
-	| path len kernel |
-	kernel := KernelLibrary default.
-	(len := kernel getSystemDirectory: nil uSize: 0) == 0 ifTrue: [kernel systemError].
+	| path len |
+	(len := Kernel32 getSystemDirectory: nil uSize: 0) == 0 ifTrue: [Kernel32 systemError].
 	path := Utf16String newFixed: len - 1.
-	(kernel getSystemDirectory: path uSize: len) == 0 ifTrue: [kernel systemError].
+	(Kernel32 getSystemDirectory: path uSize: len) == 0 ifTrue: [Kernel32 systemError].
 	^path!
 
 tertiaryStartup
@@ -1108,7 +1106,7 @@ unregisterConsoleCtrlHandler
 	"Private - Unregister the console control callback."
 
 	consoleHandler isNil ifTrue: [^self].
-	KernelLibrary default setConsoleCtrlHandler: consoleHandler asParameter add: false.
+	Kernel32 setConsoleCtrlHandler: consoleHandler asParameter add: false.
 	consoleHandler free.
 	consoleHandler := nil!
 

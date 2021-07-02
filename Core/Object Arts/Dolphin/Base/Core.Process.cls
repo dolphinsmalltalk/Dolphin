@@ -308,7 +308,7 @@ lastError
 	"Answer the value of the Win32 error code (i.e. the result of GetLastError()) run in the
 	context of the overlapped external call thread associated with the receiver."
 
-	^OS.KernelLibrary default threadGetLastError!
+	^OS.Kernel32 threadGetLastError!
 
 name
 	"Answer the 'name' of the Process. This is usually defined by the creator of the process.

@@ -18,7 +18,7 @@ defaultAction
 	lacking in imagination."
 
 	^SessionManager current
-		ifNil: [OS.KernelLibrary default outputDebugString: self description , String lineDelimiter]
+		ifNil: [OS.Kernel32 outputDebugString: self description , String lineDelimiter]
 		ifNotNil: [:session | session onUnhandledNotification: self]!
 
 hresult

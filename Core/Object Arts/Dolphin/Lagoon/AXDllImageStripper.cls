@@ -80,14 +80,13 @@ updateTypelibResource: anExternalHandle
 	tlbPath := self typeLibPath.
 	tlbPath isNil ifTrue: [^self].
 	resourceBytes := (FileStream read: tlbPath text: false) contents.
-	(OS.KernelLibrary default
+	(OS.Kernel32
 		updateResource: anExternalHandle
 		lpType: 'TYPELIB' asUtf16String
 		lpName: 1
-		wLanguage: 0 
+		wLanguage: 0
 		lpData: resourceBytes
-		cbData: resourceBytes size)
-			ifFalse: [OS.KernelLibrary default systemError]! !
+		cbData: resourceBytes size) ifFalse: [OS.Kernel32 systemError]! !
 !AXDllImageStripper categoriesFor: #defaultSessionManagerClass!constants!public! !
 !AXDllImageStripper categoriesFor: #prepareToStrip!operations!public! !
 !AXDllImageStripper categoriesFor: #requiredPackageNames!accessing!public! !

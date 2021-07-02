@@ -17,7 +17,8 @@ context
 
 	context isNil
 		ifTrue: 
-			[OS.KernelLibrary default isWindows7OrGreater ifFalse: [self error: 'Not supported on Vista and earlier versions of  Windows'].
+			[OS.Kernel32 isWindows7OrGreater
+				ifFalse: [self error: 'Not supported on Vista and earlier versions of  Windows'].
 			context := self shaLibrary shaCreate].
 	^context!
 

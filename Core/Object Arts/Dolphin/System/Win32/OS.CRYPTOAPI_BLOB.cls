@@ -31,7 +31,7 @@ struct tagCRYPTOAPI_BLOB {
 basicFree
 	"Private - Free external resources owned by the receiver."
 
-	KernelLibrary default localFree: self basicPbData!
+	Kernel32 localFree: self basicPbData!
 
 basicPbData
 	^bytes intPtrAtOffset:_OffsetOf_pbData!

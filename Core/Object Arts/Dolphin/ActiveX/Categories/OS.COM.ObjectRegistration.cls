@@ -114,7 +114,7 @@ toolboxImage
 						ifFalse: 
 							[| resLib |
 							path := File pathBuffer.
-							KernelLibrary default
+							Kernel32
 								expandEnvironmentStrings: pathAndId first
 								lpDst: path
 								nSize: path size + 1.
