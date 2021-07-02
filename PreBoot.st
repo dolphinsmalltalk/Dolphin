@@ -34,9 +34,10 @@ External.PermanentLibrary subclass: #'OS.NTLibrary'
 	classConstants: {}.
 ntdll instVarAt: (OS.NTLibrary indexOfInstVar: 'isWine') put: isWine.
 OS at: #NtDll put: ntdll!
+OS at: #Shlwapi put: ShlwapiLibrary default!
 
 | systemPackage |
 systemPackage := Object owningPackage.
 DynamicLinkLibraryStub owningPackage: systemPackage.
-#(#{Kernel.VM} #{OS.User32} #{OS.Kernel32} #{OS.Ucrt} #{OS.NtDll}) do: [:each |
+#(#{Kernel.VM} #{OS.User32} #{OS.Kernel32} #{OS.Ucrt} #{OS.NtDll} #{OS.Shlwapi}) do: [:each |
 	each binding owningPackage: systemPackage]!

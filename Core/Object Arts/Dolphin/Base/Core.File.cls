@@ -594,13 +594,13 @@ commonPrefixOf: pathString1 and: pathString2
 	| prefix len path1 path2 |
 	path1 := pathString1 asUtf16String.
 	path2 := pathString2 asUtf16String.
-	len := ShlwapiLibrary default
+	len := Shlwapi
 				pathCommonPrefix: path1
 				pszFile2: path2
 				achPath: nil.
 	len == 0 ifTrue: [^''].
 	prefix := Utf16String newFixed: len.
-	ShlwapiLibrary default
+	Shlwapi
 		pathCommonPrefix: path1
 		pszFile2: path2
 		achPath: prefix.
@@ -617,7 +617,7 @@ composePath: path subPath: subpath
 
 	| buffer |
 	buffer := self pathBuffer.
-	^ShlwapiLibrary default
+	^Shlwapi
 		pathCombine: buffer
 		lpszDir: path
 		lpszFile: subpath!
@@ -988,12 +988,12 @@ isDirectory: aString
 isRelativePath: aFileNameString
 	"Answers true if aFileNameString is a relative path with no absolute components"
 
-	^ShlwapiLibrary default pathIsRelative: aFileNameString!
+	^Shlwapi pathIsRelative: aFileNameString!
 
 isRootPath: aString
 	"Answer whether the <String> argument is a root path, e.g. 'c:\'"
 
-	^ShlwapiLibrary default pathIsRoot: aString!
+	^Shlwapi pathIsRoot: aString!
 
 isWriteable: aString
 	"Answer whether the file at the specified path is writeable. If there is no such file, then
@@ -1220,7 +1220,7 @@ relativePathOf: aPathString to: aBasePathString
 	| relPath toPath |
 	relPath := self pathBuffer.
 	toPath := aPathString asUtf16String.
-	relPath := (ShlwapiLibrary default
+	relPath := (Shlwapi
 				pathRelativePathTo: relPath
 				pszFrom: aBasePathString
 				dwAttrFrom: 0

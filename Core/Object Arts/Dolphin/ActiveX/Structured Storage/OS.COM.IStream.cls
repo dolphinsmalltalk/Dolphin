@@ -507,7 +507,7 @@ defineFunctions
 fromBytes: aByteArray
 	"Answer a pointer instance of the receiver that can be used to stream over a copy of the bytes in the argument."
 
-	^(ShlwapiLibrary default shCreateMemStream: aByteArray cbInit: aByteArray size)
+	^(Shlwapi shCreateMemStream: aByteArray cbInit: aByteArray size)
 		ifNil: [Win32Error signal]
 		ifNotNil: 
 			[:stm |

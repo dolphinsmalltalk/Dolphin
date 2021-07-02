@@ -44,7 +44,7 @@ plainText: pathString
 setWindowText: pathString
 	"Private - Sets the text of the receiver"
 
-	ShlwapiLibrary default
+	Shlwapi
 		pathSetDlgItemPath: self parentView asParameter
 		id: self id
 		pszPath: pathString.
