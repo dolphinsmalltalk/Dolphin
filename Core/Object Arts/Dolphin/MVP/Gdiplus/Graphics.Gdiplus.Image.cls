@@ -42,12 +42,12 @@ basicFree
 	"Private - Free up external resources held by the receiver.
 	Ignore any errors which might arise."
 
-	GdiplusLibrary default gdipDisposeImage: handle!
+	Gdip gdipDisposeImage: handle!
 
 basicRotate: aRotateConstant
 	"Rotate the receiver according to aRotateConstant."
 
-	GdiplusLibrary default gdipImageRotateFlip: self asParameter rfType: aRotateConstant!
+	Gdip gdipImageRotateFlip: self asParameter rfType: aRotateConstant!
 
 bounds
 	"Answer the receiver's bounding rectangle.  Most images will have Point zero as the 
@@ -77,7 +77,7 @@ clone
 
 	| gpHandle |
 	gpHandle := Handle new.
-	GdiplusLibrary default gdipCloneImage: self handle cloneImage: gpHandle.
+	Gdip gdipCloneImage: self handle cloneImage: gpHandle.
 	^(self class fromOwnedHandle: gpHandle)
 		initializer: initializer;
 		yourself!
@@ -153,7 +153,7 @@ encoderParameterList: aCLSID
 	| size buffer |
 	size := self encoderParameterListSize: aCLSID.
 	buffer := GpEncoderParameters new: size.
-	GdiplusLibrary default
+	Gdip
 		gdipGetEncoderParameterList: self asParameter
 		clsidEncoder: aCLSID
 		size: size
@@ -165,7 +165,7 @@ encoderParameterListSize: aCLSID
 
 	| size |
 	size := ByteArray newFixed: 4.
-	GdiplusLibrary default
+	Gdip
 		gdipGetEncoderParameterListSize: self asParameter
 		clsidEncoder: aCLSID
 		size: size.
@@ -174,12 +174,12 @@ encoderParameterListSize: aCLSID
 extent
 	"Answer a <Point> specifying the dimensions of the receiver in pixels."
 
-	| buf lib width |
+	| buf width hImage |
 	buf := ByteArray new: 4.
-	lib := GdiplusLibrary default.
-	lib gdipGetImageWidth: self asParameter width: buf.
+	hImage := self asParameter.
+	Gdip gdipGetImageWidth: hImage width: buf.
 	width := buf dwordAtOffset: 0.
-	lib gdipGetImageHeight: self asParameter height: buf.
+	Gdip gdipGetImageHeight: hImage height: buf.
 	^width @ (buf dwordAtOffset: 0)!
 
 filename
@@ -193,7 +193,7 @@ flags
 
 	| flags |
 	flags := ByteArray newFixed: 4.
-	GdiplusLibrary default gdipGetImageFlags: self asParameter flags: flags.
+	Gdip gdipGetImageFlags: self asParameter flags: flags.
 	^flags dwordAtOffset: 0!
 
 flipX
@@ -216,7 +216,7 @@ frameCount: aFrameDimensionGUID
 
 	| count |
 	count := ByteArray newFixed: 4.
-	GdiplusLibrary default
+	Gdip
 		gdipImageGetFrameCount: self asParameter
 		dimensionID: aFrameDimensionGUID asParameter
 		count: count.
@@ -236,7 +236,7 @@ frameDimensionsCount
 
 	| count |
 	count := ByteArray newFixed: 4.
-	GdiplusLibrary default gdipImageGetFrameDimensionsCount: self asParameter count: count.
+	Gdip gdipImageGetFrameDimensionsCount: self asParameter count: count.
 	^count dwordAtOffset: 0!
 
 frameDimensionsList
@@ -244,7 +244,7 @@ frameDimensionsList
 
 	| guids |
 	guids := StructureArray length: self frameDimensionsCount elementClass: GUID.
-	GdiplusLibrary default
+	Gdip
 		gdipImageGetFrameDimensionsList: self asParameter
 		dimensionIDs: guids
 		count: guids size.
@@ -274,7 +274,7 @@ getBounds
 	| rect unit |
 	rect := RECTF new.
 	unit := ByteArray newFixed: 4.
-	GdiplusLibrary default
+	Gdip
 		gdipGetImageBounds: self asParameter
 		srcRect: rect
 		srcUnit: unit.
@@ -307,7 +307,7 @@ height
 
 	| buf |
 	buf := ByteArray newFixed: 4.
-	GdiplusLibrary default gdipGetImageHeight: self asParameter height: buf.
+	Gdip gdipGetImageHeight: self asParameter height: buf.
 	^buf dwordAtOffset: 0!
 
 isLandscape
@@ -337,7 +337,7 @@ palette
 	| size palette |
 	size := self paletteSize.
 	palette := GpColorPalette new: size.
-	GdiplusLibrary default
+	Gdip
 		gdipGetImagePalette: self asParameter
 		palette: palette
 		size: size.
@@ -346,20 +346,20 @@ palette
 palette: aGpColorPalette
 	"Set the receiver's color palette to aGpColorPalette."
 
-	GdiplusLibrary default gdipSetImagePalette: self asParameter palette: aGpColorPalette asParameter!
+	Gdip gdipSetImagePalette: self asParameter palette: aGpColorPalette asParameter!
 
 paletteSize
 	"Private - Answer the size, in bytes, of the receiver's color palette."
 
 	| size |
 	size := ByteArray newFixed: 4.
-	GdiplusLibrary default gdipGetImagePaletteSize: self asParameter size: size.
+	Gdip gdipGetImagePaletteSize: self asParameter size: size.
 	^size dwordAtOffset: 0!
 
 pixelFormat
 	| flags |
 	flags := ByteArray newFixed: 4.
-	GdiplusLibrary default gdipGetImagePixelFormat: self asParameter format: flags.
+	Gdip gdipGetImagePixelFormat: self asParameter format: flags.
 	^flags sdwordAtOffset: 0!
 
 properties
@@ -372,7 +372,7 @@ propertiesCount
 
 	| propertyCount |
 	propertyCount := ByteArray newFixed: 4.
-	GdiplusLibrary default gdipGetPropertyCount: self asParameter numOfProperty: propertyCount.
+	Gdip gdipGetPropertyCount: self asParameter numOfProperty: propertyCount.
 	^propertyCount dwordAtOffset: 0!
 
 propertiesSize
@@ -386,7 +386,7 @@ propertiesSizeAndCount
 
 	| buf |
 	buf := ByteArray new: 8.
-	GdiplusLibrary default
+	Gdip
 		gdipGetPropertySize: self asParameter
 		totalBufferSize: buf
 		numProperties: buf yourAddress + 4.
@@ -395,7 +395,7 @@ propertiesSizeAndCount
 property: aGpPropertyItem
 	"Set aGpPropertyItem to be one of the receiver's property items."
 
-	GdiplusLibrary default gdipSetPropertyItem: self asParameter item: aGpPropertyItem!
+	Gdip gdipSetPropertyItem: self asParameter item: aGpPropertyItem!
 
 propertyFromId: aPropertyTagConstant
 	"Answer the receiver's <GpPropertyItem> identified by aPropertyTagConstant."
@@ -403,7 +403,7 @@ propertyFromId: aPropertyTagConstant
 	| propertyItem propSize |
 	propSize := self propertySize: aPropertyTagConstant.
 	propertyItem := GpPropertyItem new: propSize.
-	GdiplusLibrary default
+	Gdip
 		gdipGetPropertyItem: self asParameter
 		propId: aPropertyTagConstant
 		propSize: propSize
@@ -417,7 +417,7 @@ propertyIdList
 	count := self propertiesCount.
 	count = 0 ifTrue: [^#()].
 	list := DWORDArray new: count.
-	GdiplusLibrary default
+	Gdip
 		gdipGetPropertyIdList: self asParameter
 		numOfProperty: self propertiesCount
 		list: list.
@@ -428,7 +428,7 @@ propertySize: aPropertyTagConstant
 
 	| size |
 	size := ByteArray newFixed: 4.
-	GdiplusLibrary default
+	Gdip
 		gdipGetPropertyItemSize: self asParameter
 		propId: aPropertyTagConstant
 		size: size.
@@ -480,12 +480,12 @@ rotateRight
 saveAdd: aGpEncoderParameters
 	"Close the receiver's disk file.  Used with multi-frame images."
 
-	GdiplusLibrary default gdipSaveAdd: self asParameter encoderParams: aGpEncoderParameters!
+	Gdip gdipSaveAdd: self asParameter encoderParams: aGpEncoderParameters!
 
 saveAddImage: aGdiplusImage encoderParams: aGpEncoderParameters
 	"Add aGdiplusImage to the receiver and save it as a frame in the receiver's disk file."
 
-	GdiplusLibrary default
+	Gdip
 		gdipSaveAddImage: self asParameter
 		newImage: aGdiplusImage asParameter
 		encoderParams: aGpEncoderParameters!
@@ -530,7 +530,7 @@ saveToFile: pathString clsidEncoder: aCLSIDEncoder encoderParams: aGpEncoderPara
 	NB:  In general, this method should not be called directly (i.e., use other save methods)
 	since the image encoder is normally derived from the pathString."
 
-	GdiplusLibrary default
+	Gdip
 		gdipSaveImageToFile: self asParameter
 		filename: pathString
 		clsidEncoder: aCLSIDEncoder
@@ -576,7 +576,7 @@ saveToIStream: pStream mimeType: mimeString encoderParams: aGpEncoderParameters
 
 	| encoder |
 	encoder := self class encoderClsid: mimeString.
-	GdiplusLibrary default
+	Gdip
 		gdipSaveImageToStream: self asParameter
 		stream: pStream
 		clsidEncoder: encoder
@@ -593,7 +593,7 @@ selectActiveFrame: anInteger dimensionID: aFrameDimensionGUID
 	dimension specified by aFrameDimensionGUID.  All changes made to the previously 
 	active frame are discarded unless saved before switching."
 
-	GdiplusLibrary default
+	Gdip
 		gdipImageSelectActiveFrame: self asParameter
 		dimensionID: aFrameDimensionGUID asParameter
 		frameIndex: anInteger!
@@ -636,7 +636,7 @@ thumbnailWithExtent: aPoint
 
 	| gpImage |
 	gpImage := Handle new.
-	GdiplusLibrary default
+	Gdip
 		gdipGetImageThumbnail: self asParameter
 		thumbWidth: aPoint x
 		thumbHeight: aPoint y
@@ -656,7 +656,7 @@ thumbnailWithExtent2: aPoint
 
 	| gpImage |
 	gpImage := Handle new.
-	GdiplusLibrary default
+	Gdip
 		gdipGetImageThumbnail: self asParameter
 		thumbWidth: aPoint x
 		thumbHeight: aPoint y
@@ -679,7 +679,7 @@ width
 
 	| buf |
 	buf := ByteArray newFixed: 4.
-	GdiplusLibrary default gdipGetImageWidth: self asParameter width: buf.
+	Gdip gdipGetImageWidth: self asParameter width: buf.
 	^buf dwordAtOffset: 0! !
 !Graphics.Gdiplus.Image categoriesFor: #asBitmap!public! !
 !Graphics.Gdiplus.Image categoriesFor: #asByteArray:!converting!public! !
@@ -1651,23 +1651,22 @@ getImageCodecs: aBoolean
 	collection we might as well leave it as a single block of memory accessed via a
 	StructureArray."
 
-	| numCodecs lib codecs buf byteSize |
+	| numCodecs codecs buf byteSize |
 	buf := ByteArray newFixed: 8.
-	lib := GdiplusLibrary default.
 	aBoolean
-		ifTrue: [lib gdipGetImageEncodersSize: buf size: buf yourAddress + 4]
-		ifFalse: [lib gdipGetImageDecodersSize: buf size: buf yourAddress + 4].
+		ifTrue: [Gdip gdipGetImageEncodersSize: buf size: buf yourAddress + 4]
+		ifFalse: [Gdip gdipGetImageDecodersSize: buf size: buf yourAddress + 4].
 	numCodecs := buf dwordAtOffset: 0.
 	byteSize := buf dwordAtOffset: 4.
 	buf := Memory new: byteSize.
 	aBoolean
 		ifTrue: 
-			[lib
+			[Gdip
 				gdipGetImageEncoders: numCodecs
 				size: byteSize
 				encoders: buf]
 		ifFalse: 
-			[lib
+			[Gdip
 				gdipGetImageDecoders: numCodecs
 				size: byteSize
 				decoders: buf].

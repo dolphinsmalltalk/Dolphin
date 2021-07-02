@@ -29,7 +29,7 @@ library
 		Making this a parameter allows a MockLibrary to be used for UnitTesting.
 		(Not sure how important the tests will be, so may remove this at a later date"
 
-	^library ifNil: [GdiplusLibrary default]!
+	^library ifNil: [Gdip]!
 
 library: anObject
 	library := anObject! !

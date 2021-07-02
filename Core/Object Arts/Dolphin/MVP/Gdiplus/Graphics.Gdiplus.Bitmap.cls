@@ -16,7 +16,7 @@ asBitmap
 
 	| hbmReturn |
 	hbmReturn := Handle new.
-	GdiplusLibrary default
+	Gdip
 		gdipCreateHBITMAPFromBitmap: self asParameter
 		hbmReturn: hbmReturn
 		background: 0.
@@ -27,7 +27,7 @@ asIcon
 
 	| hbmReturn |
 	hbmReturn := Handle new.
-	GdiplusLibrary default gdipCreateHICONFromBitmap: self asParameter hbmReturn: hbmReturn.
+	Gdip gdipCreateHICONFromBitmap: self asParameter hbmReturn: hbmReturn.
 	^Icon fromOwnedHandle: hbmReturn!
 
 cloneBitmapRectangle: aRectangle format: aPixelFormatConstant
@@ -35,7 +35,7 @@ cloneBitmapRectangle: aRectangle format: aPixelFormatConstant
 
 	| gpHandle |
 	gpHandle := Handle new.
-	GdiplusLibrary default
+	Gdip
 		gdipCloneBitmapAreaI: aRectangle left
 		y: aRectangle top
 		width: aRectangle width
@@ -53,7 +53,7 @@ cloneFormat: aPixelFormatConstant
 	^self cloneBitmapRectangle: (Rectangle extent: self extent) format: aPixelFormatConstant!
 
 lockBits: rect flags: flags format: format lockedBitmapData: lockedBitmapData
-	GdiplusLibrary default
+	Gdip
 		gdipBitmapLockBits: self handle
 		rect: rect
 		flags: flags
@@ -76,7 +76,7 @@ pixelAt: aPoint
 
 	| color |
 	color := ByteArray newFixed: 4.
-	GdiplusLibrary default
+	Gdip
 		gdipBitmapGetPixel: self asParameter
 		x: aPoint x
 		y: aPoint y
@@ -86,14 +86,14 @@ pixelAt: aPoint
 pixelAt: aPoint put: anARGB
 	"Set the pixel at aPoint to be anARGB"
 
-	GdiplusLibrary default
+	Gdip
 		gdipBitmapSetPixel: self asParameter
 		x: aPoint x
 		y: aPoint y
 		color: anARGB argbCode!
 
 unlockBits: lockedBitmapData
-	GdiplusLibrary default gdipBitmapUnlockBits: self handle lockedBitmapData: lockedBitmapData! !
+	Gdip gdipBitmapUnlockBits: self handle lockedBitmapData: lockedBitmapData! !
 !Graphics.Gdiplus.Bitmap categoriesFor: #asBitmap!public! !
 !Graphics.Gdiplus.Bitmap categoriesFor: #asIcon!public! !
 !Graphics.Gdiplus.Bitmap categoriesFor: #cloneBitmapRectangle:format:!copying!private! !

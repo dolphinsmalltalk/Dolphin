@@ -16,28 +16,28 @@ alignment
 
 	| alignment |
 	alignment := ByteArray newFixed: 4.
-	GdiplusLibrary default gdipGetPenMode: self asParameter penMode: alignment.
+	Gdip gdipGetPenMode: self asParameter penMode: alignment.
 	^alignment sdwordAtOffset: 0!
 
 alignment: aPenAlignmentConstant
 	"Set the alignment (e.g., center or inset) of the receiver relative to a stroke that is drawn."
 
-	GdiplusLibrary default gdipSetPenMode: self asParameter penMode: aPenAlignmentConstant!
+	Gdip gdipSetPenMode: self asParameter penMode: aPenAlignmentConstant!
 
 basicFree
 	"Private - Free up external resources held by the receiver.
 	Ignore any errors which might arise."
 
-	GdiplusLibrary default gdipDeletePen: handle!
+	Gdip gdipDeletePen: handle!
 
 brush
 	"Answer the receiver's brush, used when drawing a line."
 
 	| type gpHandle class |
 	gpHandle := Handle new.
-	GdiplusLibrary default gdipGetPenBrushFill: self asParameter brush: gpHandle.
+	Gdip gdipGetPenBrushFill: self asParameter brush: gpHandle.
 	type := SDWORD new.
-	GdiplusLibrary default gdipGetBrushType: gpHandle type: type.
+	Gdip gdipGetBrushType: gpHandle type: type.
 	class := ##({SolidBrush. HatchBrush. TextureBrush. PathGradientBrush. LinearGradientBrush})
 				at: type value + 1.
 	^class fromOwnedHandle: gpHandle!
@@ -45,25 +45,25 @@ brush
 brush: aGdiplusBrush
 	"Set the receiver to use aGdiplusBrush when drawing a line."
 
-	GdiplusLibrary default gdipSetPenBrushFill: self asParameter brush: aGdiplusBrush asParameter!
+	Gdip gdipSetPenBrushFill: self asParameter brush: aGdiplusBrush asParameter!
 
 color
 	"Answer an ARGB that is the receiver's drawing color."
 
 	| color |
 	color := ByteArray newFixed: 4.
-	GdiplusLibrary default gdipGetPenColor: self asParameter argb: color.
+	Gdip gdipGetPenColor: self asParameter argb: color.
 	^Color fromArgbCode: (color dwordAtOffset: 0)!
 
 color: aColor
 	"Set the receiver's drawing color to the <Color> argument."
 
-	GdiplusLibrary default gdipSetPenColor: self asParameter argb: aColor argbCode!
+	Gdip gdipSetPenColor: self asParameter argb: aColor argbCode!
 
 compoundArray
 	| array |
 	array := FLOATArray new: self compoundArrayCount.
-	GdiplusLibrary default
+	Gdip
 		gdipGetPenCompoundArray: self asParameter
 		dash: array
 		count: array size.
@@ -73,7 +73,7 @@ compoundArray: aRealArray
 	self assert: [aRealArray size >= 2].
 	self assert: [aRealArray allSatisfy: [:each | each between: 0.0 and: 1.0]].
 	self assert: [aRealArray first = 0.0 and: [aRealArray last = 1.0]].
-	GdiplusLibrary default
+	Gdip
 		gdipSetPenCompoundArray: self asParameter
 		dash: (FLOATArray withAll: aRealArray)
 		count: aRealArray size!
@@ -83,34 +83,32 @@ compoundArrayCount
 
 	| count |
 	count := ByteArray newFixed: 4.
-	GdiplusLibrary default gdipGetPenCompoundCount: self asParameter count: count.
+	Gdip gdipGetPenCompoundCount: self asParameter count: count.
 	^count sdwordAtOffset: 0!
 
 customEndCap
 	| gpHandle |
 	gpHandle := Handle new.
-	GdiplusLibrary default gdipGetPenCustomEndCap: self asParameter customCap: gpHandle.
+	Gdip gdipGetPenCustomEndCap: self asParameter customCap: gpHandle.
 	^CustomLineCap fromOwnedHandle: gpHandle!
 
 customEndCap: aGdiplusCustomLineCap
-	GdiplusLibrary default gdipSetPenCustomEndCap: self asParameter
-		customCap: aGdiplusCustomLineCap asParameter!
+	Gdip gdipSetPenCustomEndCap: self asParameter customCap: aGdiplusCustomLineCap asParameter!
 
 customStartCap: aGdiplusCustomLineCap
-	GdiplusLibrary default gdipSetPenCustomStartCap: self asParameter
-		customCap: aGdiplusCustomLineCap asParameter!
+	Gdip gdipSetPenCustomStartCap: self asParameter customCap: aGdiplusCustomLineCap asParameter!
 
 dashCap: aDashCapConstant
 	"Set the dash cap of the receiver."
 
-	GdiplusLibrary default gdipSetPenDashCap197819: self asParameter dashCap: aDashCapConstant!
+	Gdip gdipSetPenDashCap197819: self asParameter dashCap: aDashCapConstant!
 
 dashPattern
 	"Answer an array of custom dashes and spaces for the receiver."
 
 	| array |
 	array := FLOATArray new: self dashPatternCount.
-	GdiplusLibrary default
+	Gdip
 		gdipGetPenDashArray: self asParameter
 		dash: array
 		count: array size.
@@ -119,7 +117,7 @@ dashPattern
 dashPattern: aRealArray
 	"Set an array of custom dashes and spaces for the receiver."
 
-	GdiplusLibrary default
+	Gdip
 		gdipSetPenDashArray: self asParameter
 		dash: (FLOATArray withAll: aRealArray)
 		count: aRealArray size!
@@ -129,37 +127,37 @@ dashPatternCount
 
 	| count |
 	count := ByteArray newFixed: 4.
-	GdiplusLibrary default gdipGetPenDashCount: self asParameter count: count.
+	Gdip gdipGetPenDashCount: self asParameter count: count.
 	^count sdwordAtOffset: 0!
 
 dashStyle: aDashStyleConstant
 	"Set the dash style of the receiver."
 
-	GdiplusLibrary default gdipSetPenDashStyle: self asParameter dashStyle: aDashStyleConstant!
+	Gdip gdipSetPenDashStyle: self asParameter dashStyle: aDashStyleConstant!
 
 endCap: aLineCapConstant
-	GdiplusLibrary default gdipSetPenEndCap: self asParameter endCap: aLineCapConstant!
+	Gdip gdipSetPenEndCap: self asParameter endCap: aLineCapConstant!
 
 lineCap: startCap endCap: endCap dashCap: dashCap
-	GdiplusLibrary default
+	Gdip
 		gdipSetPenLineCap197819: self asParameter
 		startCap: startCap
 		endCap: endCap
 		dashCap: dashCap!
 
 lineJoin: aLineJoinConstant
-	GdiplusLibrary default gdipSetPenLineJoin: self asParameter lineJoin: aLineJoinConstant!
+	Gdip gdipSetPenLineJoin: self asParameter lineJoin: aLineJoinConstant!
 
 resetTransform
 	"Set the receiver's transformation matrix to the identity matrix."
 
-	GdiplusLibrary default gdipResetPenTransform: self asParameter!
+	Gdip gdipResetPenTransform: self asParameter!
 
 rotateTransform: aRealAngle order: aMatrixOrderConstant
 	"Set the receiver's transformation matrix to the product of itself and a rotation matrix 
 	defined by aRealAngle with the order of transformation specified by aMatrixOrderConstant."
 
-	GdiplusLibrary default
+	Gdip
 		gdipRotatePenTransform: self asParameter
 		angle: aRealAngle
 		order: aMatrixOrderConstant!
@@ -168,32 +166,32 @@ scaleTransform: aRealPoint order: aMatrixOrderConstant
 	"Set the receiver's transformation matrix to the product of itself and a scaling matrix
 	defined by aRealPoint with the order of transformation specified by aMatrixOrderConstant."
 
-	GdiplusLibrary default
+	Gdip
 		gdipScalePenTransform: self asParameter
 		sx: aRealPoint x
 		sy: aRealPoint y
 		order: aMatrixOrderConstant!
 
 startCap: aLineCapConstant
-	GdiplusLibrary default gdipSetPenStartCap: self asParameter startCap: aLineCapConstant!
+	Gdip gdipSetPenStartCap: self asParameter startCap: aLineCapConstant!
 
 transform: aGdiplusMatrix
 	"Set aGdiplusMatrix as the transformation matrix of the receiver."
 
-	GdiplusLibrary default gdipSetPenTransform: self asParameter matrix: aGdiplusMatrix asParameter!
+	Gdip gdipSetPenTransform: self asParameter matrix: aGdiplusMatrix asParameter!
 
 width
 	"Answer the width of the receiver's stroke."
 
 	| width |
 	width := ByteArray newFixed: 4.
-	GdiplusLibrary default gdipGetPenWidth: self asParameter width: width.
+	Gdip gdipGetPenWidth: self asParameter width: width.
 	^width floatAtOffset: 0!
 
 width: aNumber
 	"Set the width of the receiver's stroke."
 
-	GdiplusLibrary default gdipSetPenWidth: self asParameter width: aNumber! !
+	Gdip gdipSetPenWidth: self asParameter width: aNumber! !
 !Graphics.Gdiplus.Pen categoriesFor: #alignment!accessing!public! !
 !Graphics.Gdiplus.Pen categoriesFor: #alignment:!accessing!public! !
 !Graphics.Gdiplus.Pen categoriesFor: #basicFree!private!realizing/unrealizing! !

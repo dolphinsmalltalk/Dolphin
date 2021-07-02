@@ -18,14 +18,14 @@ basicFree
 	"Private - Free up external resources held by the receiver.
 	Ignore any errors which might arise."
 
-	GdiplusLibrary default gdipDeleteBrush: handle!
+	Gdip gdipDeleteBrush: handle!
 
 clone
 	"Answer a copy of the receiver."
 
 	| gpHandle |
 	gpHandle := Handle new.
-	GdiplusLibrary default gdipCloneBrush: self handle cloneBrush: gpHandle.
+	Gdip gdipCloneBrush: self handle cloneBrush: gpHandle.
 	^(self class fromOwnedHandle: gpHandle)
 		initializer: initializer;
 		yourself! !

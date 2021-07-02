@@ -16,14 +16,14 @@ Graphics.Gdiplus.GdiplusGraphics comment: 'GdiplusGraphics class provides method
 basicFree
 	"Private - Free up external resources held by the receiver.  Ignore any errors which might arise."
 
-	GdiplusLibrary default gdipDeleteGraphics: handle!
+	Gdip gdipDeleteGraphics: handle!
 
 beginContainer
 	"Answer an <Integer> value that identifies the container."
 
 	| state |
 	state := ByteArray newFixed: 4.
-	GdiplusLibrary default gdipBeginContainer2: self asParameter state: state asParameter.
+	Gdip gdipBeginContainer2: self asParameter state: state asParameter.
 	^state dwordAtOffset: 0!
 
 clear
@@ -34,13 +34,13 @@ clear
 clear: aColor
 	"Clear the receiver and (flood) fill it with the specified color."
 
-	GdiplusLibrary default gdipGraphicsClear: self asParameter color: aColor argbCode!
+	Gdip gdipGraphicsClear: self asParameter color: aColor argbCode!
 
 clipRectangle: aRectangle combineMode: aCombineModeConstant
 	"Set the clipping region of the receiver to a region that is the combination of itself and 
 	aRectangle, using  aCombineModeConstant to specify how the two regions are combined."
 
-	GdiplusLibrary default
+	Gdip
 		gdipSetClipRectI: self asParameter
 		x: aRectangle left
 		y: aRectangle top
@@ -52,7 +52,7 @@ clipRegion: aGdiplusRegion combineMode: aCombineModeConstant
 	"Set the clipping region of the receiver to a region that is the combination of itself and the region
 	specified by aGdiplusRegion, using  aCombineModeConstant to specify how the two regions are combined."
 
-	GdiplusLibrary default
+	Gdip
 		gdipSetClipRegion: self asParameter
 		region: aGdiplusRegion asParameter
 		combineMode: aCombineModeConstant!
@@ -62,15 +62,13 @@ compositingMode
 
 	| compositingMode |
 	compositingMode := ByteArray newFixed: 4.
-	GdiplusLibrary default gdipGetCompositingMode: self asParameter
-		compositingMode: compositingMode asParameter.
+	Gdip gdipGetCompositingMode: self asParameter compositingMode: compositingMode asParameter.
 	^compositingMode sdwordAtOffset: 0!
 
 compositingMode: aCompositingModeConstant
 	"Set the receiver's compositing mode (how rendered colors are combined with background colors.)."
 
-	GdiplusLibrary default gdipSetCompositingMode: self asParameter
-		compositingMode: aCompositingModeConstant!
+	Gdip gdipSetCompositingMode: self asParameter compositingMode: aCompositingModeConstant!
 
 compositingQuality
 	"Answer an Integer that represents whether gamma correction is applied when colors 
@@ -78,16 +76,14 @@ compositingQuality
 
 	| compositingQuality |
 	compositingQuality := ByteArray newFixed: 4.
-	GdiplusLibrary default gdipGetCompositingQuality: self asParameter
-		compositingQuality: compositingQuality asParameter.
+	Gdip gdipGetCompositingQuality: self asParameter compositingQuality: compositingQuality asParameter.
 	^compositingQuality sdwordAtOffset: 0!
 
 compositingQuality: aCompositingQualityConstant
 	"Set the receiver's compositingQuality (whether gamma correction is applied when 
 	colors are blended with background colors)"
 
-	GdiplusLibrary default gdipSetCompositingQuality: self asParameter
-		compositingQuality: aCompositingQualityConstant!
+	Gdip gdipSetCompositingQuality: self asParameter compositingQuality: aCompositingQualityConstant!
 
 doWithCanvas: anOperation
 	| hdc |
@@ -107,7 +103,7 @@ Any state changes you make to the device context between GetHDC and ReleaseHDC w
 drawArc: aRectangle pen: aGdiplusPen startAngle: startAngle sweepAngle: sweepAngle
 	"Draw an arc on the receiver in aRectangle, from startAngle with length sweepAngle, using aGdiplusPen."
 
-	GdiplusLibrary default
+	Gdip
 		gdipDrawArcI: self asParameter
 		pen: aGdiplusPen asParameter
 		x: aRectangle left
@@ -120,7 +116,7 @@ drawArc: aRectangle pen: aGdiplusPen startAngle: startAngle sweepAngle: sweepAng
 drawBezier: aPointsCollection pen: aGdiplusPen
 	"Draw a Bezier curve on the receiver, specified by four points using aGdiplusPen."
 
-	GdiplusLibrary default
+	Gdip
 		gdipDrawBezierI: self asParameter
 		pen: aGdiplusPen asParameter
 		x1: aPointsCollection first x
@@ -133,7 +129,7 @@ drawBezier: aPointsCollection pen: aGdiplusPen
 		y4: aPointsCollection fourth y!
 
 drawCachedBitmap: aCachedBitmap at: aPoint
-	GdiplusLibrary default
+	Gdip
 		gdipDrawCachedBitmap: self asParameter
 		cachedBitmap: aCachedBitmap asParameter
 		x: aPoint x
@@ -143,7 +139,7 @@ drawClosedCurve: aPointsCollection pen: aGdiplusPen tension: aReal
 	"Draw a closed cardinal spline on the receiver that passes through aPointsCollection using aGdiplusPen.
 	aReal specifies how tightly the curve bends through the coordinates of the cardinal spline."
 
-	GdiplusLibrary default
+	Gdip
 		gdipDrawClosedCurve2I: self asParameter
 		pen: aGdiplusPen asParameter
 		points: (StructureArray withAll: (aPointsCollection collect: [:e | POINTL fromPoint: e])
@@ -154,7 +150,7 @@ drawClosedCurve: aPointsCollection pen: aGdiplusPen tension: aReal
 drawCurve: aPointsCollection pen: aGdiplusPen
 	"Draw a cardinal spline on the receiver that passes through aPointsCollection using aGdiplusPen."
 
-	GdiplusLibrary default
+	Gdip
 		gdipDrawCurveI: self asParameter
 		pen: aGdiplusPen asParameter
 		points: (StructureArray withAll: (aPointsCollection collect: [:e | POINTL fromPoint: e])
@@ -165,7 +161,7 @@ drawCurve: aPointsCollection pen: aGdiplusPen tension: aReal
 	"Draw a cardinal spline on the receiver that passes through aPointsCollection using aGdiplusPen.
 	aReal specifies how tightly the curve bends through the coordinates of the cardinal spline."
 
-	GdiplusLibrary default
+	Gdip
 		gdipDrawCurve2I: self asParameter
 		pen: aGdiplusPen asParameter
 		points: (StructureArray withAll: (aPointsCollection collect: [:e | POINTL fromPoint: e])
@@ -194,7 +190,7 @@ drawDropShadowRectangle: rect offset: offset alpha: alpha
 drawEllipse: aRectangle pen: aPen
 	"Draw an ellipse on the receiver, within aRectangle's bounds, using aPen."
 
-	GdiplusLibrary default
+	Gdip
 		gdipDrawEllipseI: self asParameter
 		pen: aPen asParameter
 		x: aRectangle left
@@ -218,7 +214,7 @@ drawImage: aGdiplusImage at: aPoint
 drawImage: aGdiplusImage at: dstOrigin extent: dstExtent
 	"Draw all of aGdiplusImage on the receiver, sized to fit the specified rectangle."
 
-	GdiplusLibrary default
+	Gdip
 		gdipDrawImageRectI: self asParameter
 		image: aGdiplusImage asParameter
 		x: dstOrigin x
@@ -244,7 +240,7 @@ drawImage: aGdiplusImage at: dstOrigin extent: dstExtent from: srcOrigin extent:
 	rectangle specified by dstOrigin and dstExtent. The image is stretched to fit the destination rectangle.
 	srcUnit is the unit of measure for the source rectangle. imageAttributes specifies color adjustments."
 
-	GdiplusLibrary default
+	Gdip
 		gdipDrawImageRectRectI: self asParameter
 		image: aGdiplusImage asParameter
 		dstx: dstOrigin x
@@ -264,7 +260,7 @@ drawImage: anImage points: threePoints
 	"Draw anImage on the receiver stretched to fit the parallelogram specified by threePoints."
 
 	self assert: [threePoints size = 3].
-	GdiplusLibrary default
+	Gdip
 		gdipDrawImagePointsI: self asParameter
 		image: anImage asParameter
 		dstpoints: (StructureArray withAll: (threePoints collect: [:e | POINTL fromPoint: e])
@@ -290,7 +286,7 @@ drawLine: aRectangle pen: aPen
 drawLineFrom: fromPoint to: toPoint pen: aGdiplusPen
 	"Draw a line that connects two points using aGdiplusPen."
 
-	GdiplusLibrary default
+	Gdip
 		gdipDrawLineI: self asParameter
 		pen: aGdiplusPen asParameter
 		x1: fromPoint x
@@ -301,7 +297,7 @@ drawLineFrom: fromPoint to: toPoint pen: aGdiplusPen
 drawPath: aPath pen: aPen
 	"Draw aPath on the receiver using aPen."
 
-	GdiplusLibrary default
+	Gdip
 		gdipDrawPath: self asParameter
 		pen: aPen asParameter
 		path: aPath asParameter!
@@ -309,7 +305,7 @@ drawPath: aPath pen: aPen
 drawPie: aRectangle pen: aGdiplusPen startAngle: startAngle sweepAngle: sweepAngle
 	"Draw a pie on the receiver in aRectangle, from startAngle with length sweepAngle, using aGdiplusPen."
 
-	GdiplusLibrary default
+	Gdip
 		gdipDrawPieI: self asParameter
 		pen: aGdiplusPen asParameter
 		x: aRectangle left
@@ -322,7 +318,7 @@ drawPie: aRectangle pen: aGdiplusPen startAngle: startAngle sweepAngle: sweepAng
 drawPolygon: collectionOfPoints pen: aPen
 	"Draw a polygon on the receiver using aPen."
 
-	GdiplusLibrary default
+	Gdip
 		gdipDrawPolygonI: self asParameter
 		pen: aPen asParameter
 		points: (StructureArray withAll: (collectionOfPoints collect: [:e | POINTL fromPoint: e])
@@ -337,7 +333,7 @@ drawRectangle: aRectangle
 drawRectangle: aRectangle pen: aPen
 	"Draw a Rectangle on the receiver using aPen."
 
-	GdiplusLibrary default
+	Gdip
 		gdipDrawRectangleI: self asParameter
 		pen: aPen asParameter
 		x: aRectangle left asInteger
@@ -376,7 +372,7 @@ drawString: aString font: aFont rect: aRectangle format: aStringFormat brush: aB
 	brush := aBrush ifNil: [SolidBrush new].
 	"Note that we must convert to UTF-16 explicitly to ensure we pass the correct string length."
 	text := aString asUtf16String.
-	GdiplusLibrary default
+	Gdip
 		gdipDrawString: self asParameter
 		str: text
 		length: text size
@@ -398,12 +394,12 @@ drawString: aString layoutRect: aRectangle
 endContainer: containerInteger
 	"Close a graphics container specified by containerInteger."
 
-	GdiplusLibrary default gdipEndContainer: self asParameter state: containerInteger!
+	Gdip gdipEndContainer: self asParameter state: containerInteger!
 
 fillClosedCurve: aPointsCollection brush: aGdiplusBrush
 	"Fills a closed cardinal spline on the receiver that passes through aPointsCollection using aGdiplusPen."
 
-	GdiplusLibrary default
+	Gdip
 		gdipFillClosedCurveI: self asParameter
 		brush: aGdiplusBrush asParameter
 		points: (StructureArray withAll: (aPointsCollection collect: [:e | POINTL fromPoint: e])
@@ -413,7 +409,7 @@ fillClosedCurve: aPointsCollection brush: aGdiplusBrush
 fillEllipse: aRectangle brush: aGdiplusBrush
 	"Fill the interior of an ellipse that is bounded by aRectangle on the receiver using aGdiplusBrush."
 
-	GdiplusLibrary default
+	Gdip
 		gdipFillEllipseI: self asParameter
 		brush: aGdiplusBrush asParameter
 		x: aRectangle left
@@ -424,7 +420,7 @@ fillEllipse: aRectangle brush: aGdiplusBrush
 fillPath: aPath brush: aBrush
 	"Fill aPath on the receiver using a Brush."
 
-	GdiplusLibrary default
+	Gdip
 		gdipFillPath: self asParameter
 		brush: aBrush asParameter
 		path: aPath asParameter!
@@ -432,7 +428,7 @@ fillPath: aPath brush: aBrush
 fillPie: aRectangle brush: aGdiplusBrush startAngle: startAngle sweepAngle: sweepAngle
 	"Fill a pie on the receiver in aRectangle, from startAngle with length sweepAngle, using aGdiplusBrush."
 
-	GdiplusLibrary default
+	Gdip
 		gdipFillPieI: self asParameter
 		brush: aGdiplusBrush asParameter
 		x: aRectangle left
@@ -454,7 +450,7 @@ fillPolygon: collectionOfPoints brush: aBrush fillMode: aFillModeConstant
 	"Fill the interior of a polygon on the receiver with aBrush.  aFillMode specifies how to fill a closed area
 	that is within another closed area and that is created when the curve or path passes over itself."
 
-	GdiplusLibrary default
+	Gdip
 		gdipFillPolygonI: self asParameter
 		brush: aBrush asParameter
 		points: (StructureArray withAll: (collectionOfPoints collect: [:e | POINTL fromPoint: e])
@@ -465,7 +461,7 @@ fillPolygon: collectionOfPoints brush: aBrush fillMode: aFillModeConstant
 fillRectangle: aRectangle brush: aGdiplusBrush
 	"Fill aRectangle on the receiver using a aGdiplusBrush."
 
-	GdiplusLibrary default
+	Gdip
 		gdipFillRectangleI: self asParameter
 		brush: aGdiplusBrush asParameter
 		x: aRectangle left asInteger
@@ -482,7 +478,7 @@ fillRectangle: aRectangle color: aColor
 fillRegion: aRegion brush: aBrush
 	"Fill aRegion on the receiver using aBrush."
 
-	GdiplusLibrary default
+	Gdip
 		gdipFillRegion: self asParameter
 		brush: aBrush asParameter
 		region: aRegion asParameter!
@@ -500,7 +496,7 @@ getHDC
 
 	| gpHandle |
 	gpHandle := Handle new.
-	GdiplusLibrary default gdipGetDC: self asParameter hdc: gpHandle.
+	Gdip gdipGetDC: self asParameter hdc: gpHandle.
 	^gpHandle!
 
 interpolationMode
@@ -509,15 +505,13 @@ interpolationMode
 
 	| interpolationMode |
 	interpolationMode := ByteArray newFixed: 4.
-	GdiplusLibrary default gdipGetInterpolationMode: self asParameter
-		interpolationMode: interpolationMode asParameter.
+	Gdip gdipGetInterpolationMode: self asParameter interpolationMode: interpolationMode asParameter.
 	^interpolationMode sdwordAtOffset: 0!
 
 interpolationMode: anInterpolationModeConstant
 	"Set the receiver's interpolation mode (the algorithm that is used when images are scaled or rotated)."
 
-	GdiplusLibrary default gdipSetInterpolationMode: self asParameter
-		interpolationMode: anInterpolationModeConstant!
+	Gdip gdipSetInterpolationMode: self asParameter interpolationMode: anInterpolationModeConstant!
 
 measureString: aString font: aFont
 	"Answer a Point that is the extent of aString as specified by aFont."
@@ -535,7 +529,7 @@ measureString: aString font: aFont rect: aRectangle format: aStringFormat
 	boundRect := RECTF new.
 	"Note that we must conver to UTF-16 explicitly to ensure we pass the correct string length."
 	text := aString asUtf16String.
-	GdiplusLibrary default
+	Gdip
 		gdipMeasureString: self asParameter
 		str: text
 		length: text size
@@ -552,27 +546,27 @@ pageScale
 
 	| scale |
 	scale := ByteArray newFixed: 4.
-	GdiplusLibrary default gdipGetPageScale: self asParameter scale: scale.
+	Gdip gdipGetPageScale: self asParameter scale: scale.
 	^scale floatAtOffset: 0!
 
 pageScale: aRealNumber
 	"Set the scaling factor for the page transformation of the receiver to aRealNumber.
 	The page transformation converts page coordinates to device coordinates."
 
-	GdiplusLibrary default gdipSetPageScale: self asParameter scale: aRealNumber!
+	Gdip gdipSetPageScale: self asParameter scale: aRealNumber!
 
 pageUnit
 	"Answer the unit of measure currently set for the receiver."
 
 	| unit |
 	unit := ByteArray newFixed: 4.
-	GdiplusLibrary default gdipGetPageUnit: self asParameter unit: unit.
+	Gdip gdipGetPageUnit: self asParameter unit: unit.
 	^unit sdwordAtOffset: 0!
 
 pageUnit: aUnitConstant
 	"Set the receiver's unit of measure."
 
-	GdiplusLibrary default gdipSetPageUnit: self asParameter unit: aUnitConstant!
+	Gdip gdipSetPageUnit: self asParameter unit: aUnitConstant!
 
 pageUnitName
 	"Answer the receiver's page unit as a string."
@@ -582,14 +576,13 @@ pageUnitName
 pixelOffsetMode
 	| pixelOffsetMode |
 	pixelOffsetMode := ByteArray newFixed: 4.
-	GdiplusLibrary default gdipGetPixelOffsetMode: self asParameter pixelOffsetMode: pixelOffsetMode.
+	Gdip gdipGetPixelOffsetMode: self asParameter pixelOffsetMode: pixelOffsetMode.
 	^pixelOffsetMode sdwordAtOffset: 0!
 
 pixelOffsetMode: aPixelOffsetModeConstant
 	"Set the type of pixel offsetting that is applied to lines and curves."
 
-	GdiplusLibrary default gdipSetPixelOffsetMode: self asParameter
-		pixelOffsetMode: aPixelOffsetModeConstant!
+	Gdip gdipSetPixelOffsetMode: self asParameter pixelOffsetMode: aPixelOffsetModeConstant!
 
 releaseHDC: anExternalHandle
 	" 
@@ -598,26 +591,26 @@ releaseHDC: anExternalHandle
 	        SetStatus(DllExports::GdipReleaseDC(nativeGraphics, hdc));
 	    }"
 
-	GdiplusLibrary default gdipReleaseDC: self asParameter hdc: anExternalHandle!
+	Gdip gdipReleaseDC: self asParameter hdc: anExternalHandle!
 
 resetClip
 	"Set the clipping region of the receiver to an infinite region."
 
-	GdiplusLibrary default gdipResetClip: self asParameter!
+	Gdip gdipResetClip: self asParameter!
 
 resetTransform
 	"Set the receiver's transformation matrix to the identity matrix."
 
-	GdiplusLibrary default gdipResetWorldTransform: self asParameter!
+	Gdip gdipResetWorldTransform: self asParameter!
 
 resolution
 	"Answer the resolution, in dots per inch, of the display device associated with the receiver."
 
 	| dpi dpiX dpiY |
 	dpi := ByteArray new: 4.
-	GdiplusLibrary default gdipGetDpiX: self asParameter dpi: dpi.
+	Gdip gdipGetDpiX: self asParameter dpi: dpi.
 	dpiX := dpi floatAtOffset: 0.
-	GdiplusLibrary default gdipGetDpiY: self asParameter dpi: dpi.
+	Gdip gdipGetDpiY: self asParameter dpi: dpi.
 	dpiY := dpi floatAtOffset: 0.
 	^dpiX asInteger @ dpiY asInteger!
 
@@ -636,7 +629,7 @@ rotateTransform: aRealAngle order: aMatrixOrderConstant
 	"Set the receiver's transformation matrix to the product of itself and a rotation matrix 
 	defined by aRealAngle with the order of transformation specified by aMatrixOrderConstant."
 
-	GdiplusLibrary default
+	Gdip
 		gdipRotateWorldTransform: self asParameter
 		angle: aRealAngle
 		order: aMatrixOrderConstant!
@@ -650,7 +643,7 @@ scaleTransform: aRealPoint order: aMatrixOrderConstant
 	"Set the receiver's transformation matrix to the product of itself and a scaling matrix
 	defined by aRealPoint with the order of transformation specified by aMatrixOrderConstant."
 
-	GdiplusLibrary default
+	Gdip
 		gdipScaleWorldTransform: self asParameter
 		sx: aRealPoint x
 		sy: aRealPoint y
@@ -659,31 +652,31 @@ scaleTransform: aRealPoint order: aMatrixOrderConstant
 smoothingMode
 	| smoothingMode |
 	smoothingMode := ByteArray newFixed: 4.
-	GdiplusLibrary default gdipGetSmoothingMode: self asParameter smoothingMode: smoothingMode.
+	Gdip gdipGetSmoothingMode: self asParameter smoothingMode: smoothingMode.
 	^smoothingMode sdwordAtOffset: 0!
 
 smoothingMode: aSmoothingModeConstant
 	"Set the type of smoothing (antialiasing) that is applied to lines and curves."
 
-	GdiplusLibrary default gdipSetSmoothingMode: self asParameter smoothingMode: aSmoothingModeConstant!
+	Gdip gdipSetSmoothingMode: self asParameter smoothingMode: aSmoothingModeConstant!
 
 textRenderingHint: aTextRenderingHintConstant
 	"Set the text rendering mode of the receiver."
 
-	GdiplusLibrary default gdipSetTextRenderingHint: self asParameter mode: aTextRenderingHintConstant!
+	Gdip gdipSetTextRenderingHint: self asParameter mode: aTextRenderingHintConstant!
 
 transform
 	"Answer a GdiplusMatrix that is the receiver's transformation matrix."
 
 	| gpHandle |
 	gpHandle := Matrix new.
-	GdiplusLibrary default gdipGetWorldTransform: self asParameter matrix: gpHandle asParameter.
+	Gdip gdipGetWorldTransform: self asParameter matrix: gpHandle asParameter.
 	^gpHandle!
 
 transform: aGdiplusMatrix
 	"Set aGdiplusMatrix as the transformation matrix of the receiver."
 
-	GdiplusLibrary default gdipSetWorldTransform: self asParameter matrix: aGdiplusMatrix asParameter!
+	Gdip gdipSetWorldTransform: self asParameter matrix: aGdiplusMatrix asParameter!
 
 transformPoints: aPointsCollection destSpace: destSpace srcSpace: srcSpace
 	"Convert aPointsCollection from one coordinate space to another. The conversion 
@@ -696,7 +689,7 @@ transformPoints: aPointsCollection destSpace: destSpace srcSpace: srcSpace
 				initializer: [:pointl :point | pointl x: point x y: point y].
 	points beUnfinalizable.
 	count := points size.
-	GdiplusLibrary default
+	Gdip
 		gdipTransformPointsI: self asParameter
 		destSpace: destSpace
 		srcSpace: srcSpace
@@ -713,7 +706,7 @@ translateTransform: aRealPoint order: aMatrixOrderConstant
 	"Set the receiver's transformation matrix to the product of itself and a translation matrix
 	defined by aRealPoint with the order of transformation specified by aMatrixOrderConstant."
 
-	GdiplusLibrary default
+	Gdip
 		gdipTranslateWorldTransform: self asParameter
 		dx: aRealPoint x
 		dy: aRealPoint y

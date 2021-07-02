@@ -12,7 +12,7 @@ Graphics.Gdiplus.PathGradientBrush comment: 'A path gradient brush paints a colo
 !Graphics.Gdiplus.PathGradientBrush methodsFor!
 
 blendBellShape: focusReal scale: scaleReal
-	GdiplusLibrary default
+	Gdip
 		gdipSetPathGradientSigmaBlend: self asParameter
 		focus: focusReal
 		scale: scaleReal!
@@ -22,7 +22,7 @@ blendColors
 	count := self blendColorsCount.
 	blend := DWORDArray new: count.
 	positions := FLOATArray new: count.
-	GdiplusLibrary default
+	Gdip
 		gdipGetPathGradientPresetBlend: self asParameter
 		blend: blend
 		positions: positions
@@ -41,7 +41,7 @@ blendColors: colorsArray positions: positionsArray
 	self assert: [colorsArray size = positionsArray size].
 	self assert: [positionsArray size >= 2].
 	self assert: [positionsArray first = 0 and: [positionsArray last = 1]].
-	GdiplusLibrary default
+	Gdip
 		gdipSetPathGradientPresetBlend: self asParameter
 		blend: (DWORDArray withAll: (colorsArray collect: [:e | e argbCode]))
 		positions: (FLOATArray withAll: positionsArray)
@@ -52,7 +52,7 @@ blendColorsCount
 
 	| count |
 	count := ByteArray newFixed: 4.
-	GdiplusLibrary default gdipGetPathGradientPresetBlendCount: self asParameter count: count.
+	Gdip gdipGetPathGradientPresetBlendCount: self asParameter count: count.
 	^count sdwordAtOffset: 0!
 
 blendFactors
@@ -60,7 +60,7 @@ blendFactors
 	count := self blendFactorsCount.
 	factors := FLOATArray new: count.
 	positions := FLOATArray new: count.
-	GdiplusLibrary default
+	Gdip
 		gdipGetPathGradientBlend: self asParameter
 		blend: factors
 		positions: positions
@@ -72,7 +72,7 @@ blendFactors: factorsArray positions: positionsArray
 	self assert: [positionsArray size >= 2].
 	self assert: [factorsArray allSatisfy: [:each | each between: 0 and: 1]].
 	self assert: [positionsArray first = 0 and: [positionsArray last = 1]].
-	GdiplusLibrary default
+	Gdip
 		gdipSetPathGradientBlend: self asParameter
 		blend: (FLOATArray withAll: factorsArray)
 		positions: (FLOATArray withAll: positionsArray)
@@ -83,11 +83,11 @@ blendFactorsCount
 
 	| count |
 	count := ByteArray newFixed: 4.
-	GdiplusLibrary default gdipGetPathGradientBlendCount: self asParameter count: count.
+	Gdip gdipGetPathGradientBlendCount: self asParameter count: count.
 	^count sdwordAtOffset: 0!
 
 blendTriangularShape: focusReal scale: scaleReal
-	GdiplusLibrary default
+	Gdip
 		gdipSetPathGradientLinearBlend: self asParameter
 		focus: focusReal
 		scale: scaleReal!
@@ -97,7 +97,7 @@ bounds
 
 	| rect |
 	rect := RECTL new.
-	GdiplusLibrary default gdipGetPathGradientRectI: self asParameter rect: rect.
+	Gdip gdipGetPathGradientRectI: self asParameter rect: rect.
 	^rect asRectangle!
 
 centerColor
@@ -105,35 +105,34 @@ centerColor
 
 	| color |
 	color := ByteArray newFixed: 4.
-	GdiplusLibrary default gdipGetPathGradientCenterColor: self asParameter colors: color.
+	Gdip gdipGetPathGradientCenterColor: self asParameter colors: color.
 	^Color fromArgbCode: (color dwordAtOffset: 0)!
 
 centerColor: aColor
 	"Set the color that appears at the receiver's center point."
 
-	GdiplusLibrary default gdipSetPathGradientCenterColor: self asParameter colors: aColor argbCode!
+	Gdip gdipSetPathGradientCenterColor: self asParameter colors: aColor argbCode!
 
 centerPoint
 	"Answer the center point of the receiver."
 
 	| point |
 	point := POINTL new.
-	GdiplusLibrary default gdipGetPathGradientCenterPointI: self asParameter points: point.
+	Gdip gdipGetPathGradientCenterPointI: self asParameter points: point.
 	^point asPoint!
 
 centerPoint: aPoint
 	"Set the center point of the receiver. By default, the center point is at the centroid of the 
 	receiver's boundary path, but it can be set to any location inside or outside the path."
 
-	GdiplusLibrary default gdipSetPathGradientCenterPointI: self asParameter
-		points: (POINTL fromPoint: aPoint)!
+	Gdip gdipSetPathGradientCenterPointI: self asParameter points: (POINTL fromPoint: aPoint)!
 
 focusScales
 	"Answer a Point that represents the x and y scale factors for the receiver's center color relative to its boundary path."
 
 	| buf y |
 	buf := ByteArray newFixed: 8.
-	GdiplusLibrary default
+	Gdip
 		gdipGetPathGradientFocusScales: self asParameter
 		xScale: buf
 		yScale: buf yourAddress + 4.
@@ -143,7 +142,7 @@ focusScales: aPoint
 	"Specify that the receiver's center color should appear within the receiver's boundary path 
 	scaled by a factor of aPoint in the x and y directions."
 
-	GdiplusLibrary default
+	Gdip
 		gdipSetPathGradientFocusScales: self asParameter
 		xScale: aPoint x
 		yScale: aPoint y!
@@ -153,15 +152,13 @@ isGammaCorrected
 
 	| result |
 	result := ByteArray newFixed: 4.
-	GdiplusLibrary default gdipGetPathGradientGammaCorrection: self asParameter
-		useGammaCorrection: result asParameter.
+	Gdip gdipGetPathGradientGammaCorrection: self asParameter useGammaCorrection: result asParameter.
 	^(result sdwordAtOffset: 0) ~~ 0!
 
 isGammaCorrected: aBoolean
 	"Set whether or not gamma correction should be applied to the receiver."
 
-	GdiplusLibrary default gdipSetPathGradientGammaCorrection: self asParameter
-		useGammaCorrection: aBoolean asParameter!
+	Gdip gdipSetPathGradientGammaCorrection: self asParameter useGammaCorrection: aBoolean asParameter!
 
 multiplyTransform: aGdiplusMatrix 
 	"Set the receiver's transformation matrix to the product of itself and aGdiplusMatrix."
@@ -172,7 +169,7 @@ multiplyTransform: aGdiplusMatrix order: aMatrixOrderConstant
 	"Set the receiver's transformation matrix to the product of itself and aGdiplusMatrix
 	with the order of transformation specified by aMatrixOrderConstant."
 
-	GdiplusLibrary default
+	Gdip
 		gdipMultiplyPathGradientTransform: self asParameter
 		matrix: aGdiplusMatrix asParameter
 		order: aMatrixOrderConstant!
@@ -182,13 +179,13 @@ pointCount
 
 	| count |
 	count := ByteArray newFixed: 4.
-	GdiplusLibrary default gdipGetPathGradientPointCount: self asParameter count: count.
+	Gdip gdipGetPathGradientPointCount: self asParameter count: count.
 	^count sdwordAtOffset: 0!
 
 resetTransform
 	"Set the receiver's transformation matrix to the identity matrix."
 
-	GdiplusLibrary default gdipResetPathGradientTransform: self asParameter!
+	Gdip gdipResetPathGradientTransform: self asParameter!
 
 rotateTransform: aRealPoint 
 	"Rotate the receiver's transformation matrix by aRealPoint."
@@ -199,7 +196,7 @@ rotateTransform: aRealAngle order: aMatrixOrderConstant
 	"Set the receiver's transformation matrix to the product of itself and a rotation matrix 
 	defined by aRealAngle with the order of transformation specified by aMatrixOrderConstant."
 
-	GdiplusLibrary default
+	Gdip
 		gdipRotatePathGradientTransform: self asParameter
 		angle: aRealAngle
 		order: aMatrixOrderConstant!
@@ -213,7 +210,7 @@ scaleTransform: aRealPoint order: aMatrixOrderConstant
 	"Set the receiver's transformation matrix to the product of itself and a scaling matrix
 	defined by aRealPoint with the order of transformation specified by aMatrixOrderConstant."
 
-	GdiplusLibrary default
+	Gdip
 		gdipScalePathGradientTransform: self asParameter
 		sx: aRealPoint x
 		sy: aRealPoint y
@@ -231,7 +228,7 @@ surroundColors
 	count := self surroundColorsCount.
 	colors := DWORDArray new: count.
 	count := DWORD fromInteger: count.
-	GdiplusLibrary default
+	Gdip
 		gdipGetPathGradientSurroundColorsWithCount: self asParameter
 		color: colors
 		count: count.
@@ -240,7 +237,7 @@ surroundColors
 surroundColors: colorsArray
 	"Set the colors that appear on the receiver's boundaries."
 
-	GdiplusLibrary default
+	Gdip
 		gdipSetPathGradientSurroundColorsWithCount: self asParameter
 		color: (DWORDArray withAll: (colorsArray collect: [:e | e argbCode]))
 		count: (DWORDBytes fromInteger: colorsArray size)!
@@ -248,7 +245,7 @@ surroundColors: colorsArray
 surroundColorsCount
 	| count |
 	count := ByteArray newFixed: 4.
-	GdiplusLibrary default gdipGetPathGradientSurroundColorCount: self asParameter count: count.
+	Gdip gdipGetPathGradientSurroundColorCount: self asParameter count: count.
 	^count sdwordAtOffset: 0!
 
 transform
@@ -256,14 +253,13 @@ transform
 
 	| matrix |
 	matrix := Matrix new.
-	GdiplusLibrary default gdipGetPathGradientTransform: self asParameter matrix: matrix asParameter.
+	Gdip gdipGetPathGradientTransform: self asParameter matrix: matrix asParameter.
 	^matrix!
 
 transform: aGdiplusMatrix
 	"Set aGdiplusMatrix as the transformation matrix of the receiver."
 
-	GdiplusLibrary default gdipSetPathGradientTransform: self asParameter
-		matrix: aGdiplusMatrix asParameter!
+	Gdip gdipSetPathGradientTransform: self asParameter matrix: aGdiplusMatrix asParameter!
 
 translateTransform: aRealPoint 
 	"Translate (shift) the receiver's transformation matrix by aRealPoint."
@@ -274,7 +270,7 @@ translateTransform: aRealPoint order: aMatrixOrderConstant
 	"Set the receiver's transformation matrix to the product of itself and a translation matrix
 	defined by aRealPoint with the order of transformation specified by aMatrixOrderConstant."
 
-	GdiplusLibrary default
+	Gdip
 		gdipTranslatePathGradientTransform: self asParameter
 		dx: aRealPoint x
 		dy: aRealPoint y
@@ -285,13 +281,13 @@ wrapMode
 
 	| mode |
 	mode := ByteArray newFixed: 4.
-	GdiplusLibrary default gdipGetPathGradientWrapMode: self asParameter wrapMode: mode.
+	Gdip gdipGetPathGradientWrapMode: self asParameter wrapMode: mode.
 	^mode dwordAtOffset: 0!
 
 wrapMode: aWrapModeConstant
 	"Set if and how painting is done outside the receiver's boundary path."
 
-	GdiplusLibrary default gdipSetPathGradientWrapMode: self asParameter wrapMode: aWrapModeConstant! !
+	Gdip gdipSetPathGradientWrapMode: self asParameter wrapMode: aWrapModeConstant! !
 !Graphics.Gdiplus.PathGradientBrush categoriesFor: #blendBellShape:scale:!accessing-properties!public! !
 !Graphics.Gdiplus.PathGradientBrush categoriesFor: #blendColors!accessing-properties!public! !
 !Graphics.Gdiplus.PathGradientBrush categoriesFor: #blendColors:positions:!accessing-properties!public! !

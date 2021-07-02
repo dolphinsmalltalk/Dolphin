@@ -16,13 +16,13 @@ Graphics.Gdiplus.Matrix comment: 'GdiplusMatrix represents a 3 ×3 matrix that, 
 asArray
 	| array |
 	array := FLOATArray new: 6.
-	GdiplusLibrary default gdipGetMatrixElements: self asParameter matrixOut: array.
+	Gdip gdipGetMatrixElements: self asParameter matrixOut: array.
 	^array asArray!
 
 basicFree
 	"Private - Free up external resources held by the receiver.  Ignore any errors which might arise."
 
-	GdiplusLibrary default gdipDeleteMatrix: handle!
+	Gdip gdipDeleteMatrix: handle!
 
 printOn: aStream
 	self basicPrintOn: aStream.
@@ -35,7 +35,7 @@ rotateTransform: aRealAngle
 	self rotateTransform: aRealAngle order: MatrixOrderPrepend!
 
 rotateTransform: aRealAngle order: aMatrixOrderConstant
-	GdiplusLibrary default
+	Gdip
 		gdipRotateMatrix: self asParameter
 		angle: aRealAngle
 		order: aMatrixOrderConstant!
@@ -44,7 +44,7 @@ scaleTransform: aPoint
 	self scaleTransform: aPoint order: MatrixOrderPrepend!
 
 scaleTransform: aPoint order: aMatrixOrderConstant
-	GdiplusLibrary default
+	Gdip
 		gdipScaleMatrix: self asParameter
 		scaleX: aPoint x
 		scaleY: aPoint y
@@ -54,7 +54,7 @@ shearTransform: aPoint
 	self shearTransform: aPoint order: MatrixOrderPrepend!
 
 shearTransform: aPoint order: aMatrixOrderConstant
-	GdiplusLibrary default
+	Gdip
 		gdipShearMatrix: self asParameter
 		shearX: aPoint x
 		shearY: aPoint y
@@ -67,7 +67,7 @@ transformPoints: aPointsCollection
 				elementClass: POINTL
 				initializer: [:pointl :point | pointl x: point x y: point y].
 	pts beUnfinalizable.
-	GdiplusLibrary default
+	Gdip
 		gdipTransformMatrixPointsI: self handle
 		pts: pts
 		count: aPointsCollection size.
@@ -77,7 +77,7 @@ translateTransform: aPoint
 	self translateTransform: aPoint order: MatrixOrderPrepend!
 
 translateTransform: aPoint order: aMatrixOrderConstant
-	GdiplusLibrary default
+	Gdip
 		gdipTranslateMatrix: self asParameter
 		offsetX: aPoint x
 		offsetY: aPoint y

@@ -231,6 +231,14 @@ package setMethodNames: #(
 	#(#{UI.View} #createThumbnailExtent:mask:)
 ).
 
+package setVariableNames: #(
+	#{Graphics.Gdiplus.Gdip}
+).
+
+package setBinaryVariableNames: #(
+	#{Graphics.Gdiplus.Gdip}
+).
+
 package setPrerequisites: #(
 	'..\..\Base\Dolphin'
 	'..\Base\Dolphin Basic Geometry'

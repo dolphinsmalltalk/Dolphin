@@ -26,7 +26,7 @@ families: anInteger
 	| numFound families clonedHandle gpHandles |
 	numFound := ByteArray newFixed: 4.
 	gpHandles := DWORDArray new: anInteger.
-	GdiplusLibrary default
+	Gdip
 		gdipGetFontCollectionFamilyList: self asParameter
 		numSought: anInteger
 		gpfamilies: gpHandles
@@ -39,7 +39,7 @@ families: anInteger
 		keysAndValuesDo: 
 			[:eachKey :eachValue |
 			clonedHandle := Handle new.
-			GdiplusLibrary default gdipCloneFontFamily: eachValue clonedFontFamily: clonedHandle.
+			Gdip gdipCloneFontFamily: eachValue clonedFontFamily: clonedHandle.
 			families at: eachKey put: (FontFamily fromOwnedHandle: clonedHandle)].
 	^families!
 
@@ -48,7 +48,7 @@ familyCount
 
 	| count |
 	count := ByteArray newFixed: 4.
-	GdiplusLibrary default gdipGetFontCollectionFamilyCount: self asParameter numFound: count.
+	Gdip gdipGetFontCollectionFamilyCount: self asParameter numFound: count.
 	^count sdwordAtOffset: 0! !
 !Graphics.Gdiplus.FontCollection categoriesFor: #basicFree!private!realizing/unrealizing! !
 !Graphics.Gdiplus.FontCollection categoriesFor: #families!accessing!public! !

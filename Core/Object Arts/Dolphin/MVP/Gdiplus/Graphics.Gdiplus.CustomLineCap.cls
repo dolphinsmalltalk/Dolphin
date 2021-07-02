@@ -18,38 +18,38 @@ baseCap
 
 	| linecap |
 	linecap := ByteArray newFixed: 4.
-	GdiplusLibrary default gdipGetCustomLineCapBaseCap: self asParameter baseCap: linecap.
+	Gdip gdipGetCustomLineCapBaseCap: self asParameter baseCap: linecap.
 	^linecap sdwordAtOffset: 0!
 
 baseCap: aLineCapConstant
 	"Set the style of the base cap used at the end of a line to that represented by aLineCapConstant."
 
-	GdiplusLibrary default gdipSetCustomLineCapBaseCap: self asParameter baseCap: aLineCapConstant!
+	Gdip gdipSetCustomLineCapBaseCap: self asParameter baseCap: aLineCapConstant!
 
 baseInset
 	"Answer the distance between the base cap to the start of the line."
 
 	| baseInset |
 	baseInset := ByteArray newFixed: 4.
-	GdiplusLibrary default gdipGetCustomLineCapBaseInset: self asParameter inset: baseInset.
+	Gdip gdipGetCustomLineCapBaseInset: self asParameter inset: baseInset.
 	^baseInset floatAtOffset: 0!
 
 baseInset: aNumber
 	"Set the distance between the base cap to the start of the line."
 
-	GdiplusLibrary default gdipSetCustomLineCapBaseInset: self asParameter inset: aNumber!
+	Gdip gdipSetCustomLineCapBaseInset: self asParameter inset: aNumber!
 
 basicFree
 	"Private - Free up external resources held by the receiver.  Ignore any errors which might arise."
 
-	GdiplusLibrary default gdipDeleteCustomLineCap: handle!
+	Gdip gdipDeleteCustomLineCap: handle!
 
 clone
 	"Answer a copy of the receiver."
 
 	| gpHandle |
 	gpHandle := Handle new.
-	GdiplusLibrary default gdipCloneCustomLineCap: self handle clonedCap: gpHandle.
+	Gdip gdipCloneCustomLineCap: self handle clonedCap: gpHandle.
 	^(self class fromOwnedHandle: gpHandle)
 		initializer: initializer;
 		yourself!
@@ -67,7 +67,7 @@ startCap
 startCap: startLineCapConstant endCap: endLineCapConstant
 	"Set the style of the stroke cap used at the start and ends of lines."
 
-	GdiplusLibrary default
+	Gdip
 		gdipSetCustomLineCapStrokeCaps: self asParameter
 		startCap: startLineCapConstant
 		endCap: endLineCapConstant!
@@ -77,7 +77,7 @@ strokeCaps
 
 	| buf |
 	buf := ByteArray newFixed: 8.
-	GdiplusLibrary default
+	Gdip
 		gdipGetCustomLineCapStrokeCaps: self asParameter
 		startCap: buf
 		endCap: buf yourAddress + 4.
@@ -88,27 +88,27 @@ strokeJoin
 
 	| lineJoin |
 	lineJoin := ByteArray newFixed: 4.
-	GdiplusLibrary default gdipGetCustomLineCapStrokeJoin: self asParameter lineJoin: lineJoin.
+	Gdip gdipGetCustomLineCapStrokeJoin: self asParameter lineJoin: lineJoin.
 	^lineJoin sdwordAtOffset: 0!
 
 strokeJoin: aLineJoinConstant
 	"Set the style of line join (how intersecting lines are joined) for the stroke."
 
-	GdiplusLibrary default gdipSetCustomLineCapStrokeJoin: self asParameter lineJoin: aLineJoinConstant!
+	Gdip gdipSetCustomLineCapStrokeJoin: self asParameter lineJoin: aLineJoinConstant!
 
 widthScale
 	"Answer the amount to scale the receiver relative to the width of the GdiplusPen used to draw lines."
 
 	| widthScale |
 	widthScale := ByteArray newFixed: 4.
-	GdiplusLibrary default gdipGetCustomLineCapWidthScale: self asParameter widthScale: widthScale.
+	Gdip gdipGetCustomLineCapWidthScale: self asParameter widthScale: widthScale.
 	^widthScale floatAtOffset: 0!
 
 widthScale: aNumber
 	"Set the amount to scale the receiver relative to the width of the GdiplusPen used to 
 	draw lines. The default value of 1.0 does not scale the line cap."
 
-	GdiplusLibrary default gdipSetCustomLineCapWidthScale: self asParameter widthScale: aNumber! !
+	Gdip gdipSetCustomLineCapWidthScale: self asParameter widthScale: aNumber! !
 !Graphics.Gdiplus.CustomLineCap categoriesFor: #baseCap!accessing!public! !
 !Graphics.Gdiplus.CustomLineCap categoriesFor: #baseCap:!accessing!public! !
 !Graphics.Gdiplus.CustomLineCap categoriesFor: #baseInset!accessing!public! !

@@ -87,12 +87,11 @@ extent
 	^self image extent!
 
 findEdgePoints
-	| width argb gdipluslib imageHandle height pts |
+	| width argb imageHandle height pts |
 	pts := OrderedCollection new: 50.
 	height := image height.
 	width := image width.
 	argb := ByteArray new: 4.
-	gdipluslib := GdiplusLibrary default.
 	imageHandle := image asParameter.
 	0 to: height + EdgePointResolution
 		by: EdgePointResolution
@@ -105,7 +104,7 @@ findEdgePoints
 				by: EdgePointResolution
 				do: 
 					[:x |
-					gdipluslib
+					Gdip
 						gdipBitmapGetPixel: imageHandle
 						x: (x min: width - 1)
 						y: ym
@@ -169,14 +168,13 @@ setImage: aGdiplusImage
 !
 
 testCollisionIn: aGdiplusBitmap
-	| white color1 gdiplusLib bitmapHandle |
+	| white color1 bitmapHandle |
 	white := Color white argbCode asSDword.
 	color1 := ByteArray new: 4.
-	gdiplusLib := GdiplusLibrary default.
 	bitmapHandle := aGdiplusBitmap asParameter.
 	^(self matrix transformPoints: self edgePoints) anySatisfy: 
 			[:each |
-			(gdiplusLib
+			(Gdip
 				gdipBitmapGetPixel: bitmapHandle
 				x: each x
 				y: each y

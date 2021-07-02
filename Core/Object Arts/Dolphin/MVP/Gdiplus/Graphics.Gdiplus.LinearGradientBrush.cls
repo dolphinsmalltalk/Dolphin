@@ -16,7 +16,7 @@ blendCount
 
 	| count |
 	count := ByteArray newFixed: 4.
-	GdiplusLibrary default gdipGetLineBlendCount: self asParameter count: count.
+	Gdip gdipGetLineBlendCount: self asParameter count: count.
 	^count sdwordAtOffset: 0!
 
 blendFactors
@@ -27,7 +27,7 @@ blendFactors
 	count := self blendCount.
 	factorsArray := FLOATArray new length: count.
 	positionsArray := FLOATArray new length: count.
-	GdiplusLibrary default
+	Gdip
 		gdipGetLineBlend: self asParameter
 		blend: factorsArray
 		positions: positionsArray
@@ -41,7 +41,7 @@ blendFactors: factorsArray positions: positionsArray
 	self assert: [positionsArray size >= 2].
 	self assert: [factorsArray allSatisfy: [:each | each between: 0 and: 1]].
 	self assert: [positionsArray first = 0 and: [positionsArray last = 1]].
-	GdiplusLibrary default
+	Gdip
 		gdipSetLineBlend: self asParameter
 		blend: (FLOATArray withAll: factorsArray)
 		positions: (FLOATArray withAll: positionsArray)
@@ -52,19 +52,18 @@ isGammaCorrected
 
 	| result |
 	result := ByteArray newFixed: 4.
-	GdiplusLibrary default gdipGetLineGammaCorrection: self asParameter useGammaCorrection: result.
+	Gdip gdipGetLineGammaCorrection: self asParameter useGammaCorrection: result.
 	^(result sdwordAtOffset: 0) ~~ 0!
 
 isGammaCorrected: aBoolean
 	"Set whether gamma correction is applied to the receiver when rendering."
 
-	GdiplusLibrary default gdipSetLineGammaCorrection: self asParameter
-		useGammaCorrection: aBoolean asParameter!
+	Gdip gdipSetLineGammaCorrection: self asParameter useGammaCorrection: aBoolean asParameter!
 
 startingColor: startColor endingColor: endColor
 	"Set the receiver's starting and ending colors."
 
-	GdiplusLibrary default
+	Gdip
 		gdipSetLineColors: self asParameter
 		color1: startColor argbCode
 		color2: endColor argbCode! !

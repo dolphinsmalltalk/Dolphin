@@ -14,14 +14,14 @@ Graphics.Gdiplus.Font comment: 'GdiplusFont encapsulates the characteristics, su
 basicFree
 	"Private - Free up external resources held by the receiver.  Ignore any errors which might arise."
 
-	GdiplusLibrary default gdipDeleteFont: handle!
+	Gdip gdipDeleteFont: handle!
 
 emSize
 	"Answer the font size (commonly called the em size) of this Font object. The size is in the units of this Font object."
 
 	| size |
 	size := ByteArray newFixed: 4.
-	GdiplusLibrary default gdipGetFontSize: self asParameter size: size.
+	Gdip gdipGetFontSize: self asParameter size: size.
 	^size floatAtOffset: 0!
 
 family
@@ -29,7 +29,7 @@ family
 
 	| gpHandle fontFamily |
 	gpHandle := Handle new.
-	GdiplusLibrary default gdipGetFamily: self asParameter family: gpHandle.
+	Gdip gdipGetFamily: self asParameter family: gpHandle.
 	fontFamily := FontFamily fromOwnedHandle: gpHandle.
 	fontFamily initializer: (FontFamilyInitializer name: (fontFamily getName: 0) fontCollection: nil).
 	^fontFamily!
@@ -41,7 +41,7 @@ height
 
 	| height |
 	height := ByteArray newFixed: 4.
-	GdiplusLibrary default
+	Gdip
 		gdipGetFontHeightGivenDPI: self asParameter
 		dpi: UI.DesktopView current resolution y
 		height: height.
@@ -54,7 +54,7 @@ heightFromGraphics: aGdiplusGraphics
 
 	| height |
 	height := ByteArray newFixed: 4.
-	GdiplusLibrary default
+	Gdip
 		gdipGetFontHeight: self asParameter
 		graphics: aGdiplusGraphics asParameter
 		height: height.
@@ -70,7 +70,7 @@ unit
 
 	| unit |
 	unit := ByteArray newFixed: 4.
-	GdiplusLibrary default gdipGetFontUnit: self asParameter unit: unit.
+	Gdip gdipGetFontUnit: self asParameter unit: unit.
 	^unit sdwordAtOffset: 0! !
 !Graphics.Gdiplus.Font categoriesFor: #basicFree!private!realizing/unrealizing! !
 !Graphics.Gdiplus.Font categoriesFor: #emSize!accessing!public! !

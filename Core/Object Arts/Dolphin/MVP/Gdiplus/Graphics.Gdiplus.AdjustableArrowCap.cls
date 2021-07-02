@@ -16,54 +16,52 @@ height
 
 	| height |
 	height := ByteArray newFixed: 4.
-	GdiplusLibrary default gdipGetAdjustableArrowCapHeight: self asParameter height: height.
+	Gdip gdipGetAdjustableArrowCapHeight: self asParameter height: height.
 	^height floatAtOffset: 0!
 
 height: aNumber
 	"Set the height of the receiver's arrow cap."
 
-	GdiplusLibrary default gdipSetAdjustableArrowCapHeight: self asParameter height: aNumber!
+	Gdip gdipSetAdjustableArrowCapHeight: self asParameter height: aNumber!
 
 isFilled
 	"Answer whether the receiver's cap is filled."
 
 	| isFilled |
 	isFilled := ByteArray newFixed: 4.
-	GdiplusLibrary default gdipGetAdjustableArrowCapFillState: self asParameter fillState: isFilled.
+	Gdip gdipGetAdjustableArrowCapFillState: self asParameter fillState: isFilled.
 	^(isFilled sdwordAtOffset: 0) ~~ 0!
 
 isFilled: aBoolean
 	"Set whether the receiver's arrow cap should be filled."
 
-	GdiplusLibrary default gdipSetAdjustableArrowCapFillState: self asParameter
-		fillState: aBoolean asParameter!
+	Gdip gdipSetAdjustableArrowCapFillState: self asParameter fillState: aBoolean asParameter!
 
 middleInset
 	"Answer the middleInset of the receiver's cap."
 
 	| middleInset |
 	middleInset := ByteArray newFixed: 4.
-	GdiplusLibrary default gdipGetAdjustableArrowCapMiddleInset: self asParameter
-		middleInset: middleInset.
+	Gdip gdipGetAdjustableArrowCapMiddleInset: self asParameter middleInset: middleInset.
 	^middleInset floatAtOffset: 0!
 
 middleInset: aNumber
 	"Set the middleInset of the receiver's arrow cap."
 
-	GdiplusLibrary default gdipSetAdjustableArrowCapMiddleInset: self asParameter middleInset: aNumber!
+	Gdip gdipSetAdjustableArrowCapMiddleInset: self asParameter middleInset: aNumber!
 
 width
 	"Answer the width of the receiver's cap."
 
 	| width |
 	width := ByteArray newFixed: 4.
-	GdiplusLibrary default gdipGetAdjustableArrowCapWidth: self asParameter width: width.
+	Gdip gdipGetAdjustableArrowCapWidth: self asParameter width: width.
 	^width floatAtOffset: 0!
 
 width: aNumber
 	"Set the width of the receiver's arrow cap."
 
-	GdiplusLibrary default gdipSetAdjustableArrowCapWidth: self asParameter width: aNumber! !
+	Gdip gdipSetAdjustableArrowCapWidth: self asParameter width: aNumber! !
 !Graphics.Gdiplus.AdjustableArrowCap categoriesFor: #height!accessing!public! !
 !Graphics.Gdiplus.AdjustableArrowCap categoriesFor: #height:!accessing!public! !
 !Graphics.Gdiplus.AdjustableArrowCap categoriesFor: #isFilled!accessing!public! !
