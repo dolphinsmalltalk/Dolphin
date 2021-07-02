@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Tests.DolphinTest subclass: #'UI.Tests.DialogViewTest'
-	instanceVariableNames: 'owner shell2 fakeUser32 cursorPos'
+UI.Tests.AbstractShellViewTest subclass: #'UI.Tests.DialogViewTest'
+	instanceVariableNames: 'owner shell2'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -12,7 +12,10 @@ UI.Tests.DialogViewTest comment: ''!
 !UI.Tests.DialogViewTest methodsFor!
 
 createShell: aRectangle text: aString
-	^ShellView new
+	| shell |
+	shell := ShellView new.
+	shells addLast: shell.
+	^shell
 		create;
 		rectangle: aRectangle;
 		text: aString;
@@ -55,29 +58,6 @@ evaluateInModalDialog: aBlock owner: ownerView centered: aBoolean
 	dialog isInProc: true.
 	dialog showModalTo: ownerView.
 	self deny: dialog isOpen!
-
-getSecondaryMonitorIfAvailable
-	"Private - Attempt to find a non-primary monitor, which will only be possible if more than one display monitor is attached."
-
-	| monitors |
-	monitors := DisplayMonitor desktopMonitors.
-	^monitors size > 1 ifTrue: [monitors detect: [:each | each isPrimary not]] ifFalse: [monitors first]!
-
-setUpFakeUserLibrary
-	fakeUser32 := FakeUserLibrary new.
-	fakeUser32
-		initializeForDesktopActive;
-		getCursorPosBlock: 
-				[:pointl |
-				pointl value: cursorPos.
-				1];
-		open!
-
-tearDown
-	fakeUser32 ifNotNil: [fakeUser32 close].
-	owner ifNotNil: [owner destroy].
-	shell2 ifNotNil: [shell2 destroy].
-	super tearDown!
 
 testCenteringInOwner
 	"Test that a modal dialog is centered in its owner."
@@ -226,23 +206,16 @@ testRemainsOnScreen
 		owner: owner
 		centered: true.
 	self assert: rect origin
-		equals: (self workAreaNearest: workArea topRight) topRight - (self dialogExtent x @ 0)!
-
-workAreaNearest: aPoint
-	^(DisplayMonitor nearestPoint: aPoint) workArea! !
-!UI.Tests.DialogViewTest categoriesFor: #createShell:text:!helpers!private! !
+		equals: (self workAreaNearest: workArea topRight) topRight - (self dialogExtent x @ 0)! !
+!UI.Tests.DialogViewTest categoriesFor: #createShell:text:!private! !
 !UI.Tests.DialogViewTest categoriesFor: #createSubjectDialog:!helpers!private! !
 !UI.Tests.DialogViewTest categoriesFor: #createTestShells:!helpers!private! !
 !UI.Tests.DialogViewTest categoriesFor: #dialogExtent!constants!private! !
 !UI.Tests.DialogViewTest categoriesFor: #evaluateInModalDialog:owner:centered:!helpers!private! !
-!UI.Tests.DialogViewTest categoriesFor: #getSecondaryMonitorIfAvailable!helpers!private! !
-!UI.Tests.DialogViewTest categoriesFor: #setUpFakeUserLibrary!helpers!private! !
-!UI.Tests.DialogViewTest categoriesFor: #tearDown!public!running! !
 !UI.Tests.DialogViewTest categoriesFor: #testCenteringInOwner!public!unit tests! !
 !UI.Tests.DialogViewTest categoriesFor: #testCenteringInOwnerModeless!public!unit tests! !
 !UI.Tests.DialogViewTest categoriesFor: #testInplaceNotRepositioned!public!unit tests! !
 !UI.Tests.DialogViewTest categoriesFor: #testNearOwnerModal!public!unit tests! !
 !UI.Tests.DialogViewTest categoriesFor: #testNearOwnerModeless!public!unit tests! !
 !UI.Tests.DialogViewTest categoriesFor: #testRemainsOnScreen!public!unit tests! !
-!UI.Tests.DialogViewTest categoriesFor: #workAreaNearest:!helpers!private! !
 

@@ -2759,7 +2759,7 @@ UI.View subclass: #'UI.ControlView'
 	classConstants: {}!
 UI.View subclass: #'UI.DesktopView'
 	instanceVariableNames: 'resolution defaultExtentBlock dvReserved1 dvReserved2'
-	classVariableNames: 'Current ProgmanClassAtom'
+	classVariableNames: 'Current'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!

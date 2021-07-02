@@ -35,9 +35,7 @@ testActive
 		open.
 	"As we have things set up to fake the foreground/active window, sneak in some tests of related View class enquiries."
 	self assertIsNil: View activeHandle.
-	self assert: (DesktopView isProgramManager: View foregroundHandle).
 	self assert: View activeOrDesktop isDesktop.
-	"When the program manager is active, we deliberately choose to regard the display with the mouse cursor as the active display"
 	self assert: DisplayMonitor active equals: (DisplayMonitor containingPoint: Cursor position)]
 			ensure: 
 				[user32 free.

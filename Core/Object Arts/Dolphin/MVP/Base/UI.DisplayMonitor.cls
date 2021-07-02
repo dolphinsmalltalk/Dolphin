@@ -118,14 +118,11 @@ workArea
 !UI.DisplayMonitor class methodsFor!
 
 active
-	"Answer an instance of the receiver representing the monitor that is most likely to be the one the user might consider active. There is no completely reliable way to determine this, so we use the heuristic that the monitor of the foreground window (whether that is a Dolphin window or not) is likely to be the one with the users' interest.
-	An exception is if the 'Progman' window is the foreground window, which will be the case if the user has clicked on the desktop (at least in any version of Windows that is currently relevant)."
+	"Answer an instance of the receiver representing the monitor that is most likely to be the one the user might consider active. There is no completely reliable way to determine this, so we use the heuristic that the monitor of the foreground window is to be used if that is a Dolphin window, otherwise the monitor over which the cursor is hovering. The reason for making this distinction is that the foreground window may be some part of the Windows shell if the user clicked on the desktop background or the taskbar, which are always considered as being on the primary monitor only. Up until Windows 11 it was possible to detect this case reasonably well by detecting that the window with focus was the 'Program Manager', but this no longer holds in Windows 11. Therefore we just go for the simpler option of tracking the cursor when the active window is not a Dolphin window."
 
-	User32 getForegroundWindow
-		ifNotNil: [:hWnd | (DesktopView isProgramManager: hWnd) ifFalse: [^self displayingView: hWnd]].
-
-	"We want to return the display with the mouse cursor if the desktop (really the program manager) has focus, or in the unlikely event that GetForegroundWindow returns null, which according to the docs it can do if activation is in transition."
-	^self containingPoint: Cursor position!
+	^View active
+		ifNil: [self containingPoint: Cursor position]
+		ifNotNil: [:hWnd | self displayingView: hWnd]!
 
 allIntersecting: aRectangle
 	"Answer a `<collection>` containing instances of the receiver describing all the display monitors with display areas that intersect the specified virtual screen area (i.e. desktop area)."

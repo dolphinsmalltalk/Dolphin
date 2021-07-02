@@ -29,6 +29,7 @@ package setClassNames: #(
 	#{UI.Tests.AbstractContainerViewTest}
 	#{UI.Tests.AbstractKeyboardTest}
 	#{UI.Tests.AbstractMultilineTextEditTest}
+	#{UI.Tests.AbstractShellViewTest}
 	#{UI.Tests.AbstractTextEditTest}
 	#{UI.Tests.AcceleratorTableTest}
 	#{UI.Tests.BorderLayoutTest}
@@ -73,6 +74,7 @@ package setClassNames: #(
 	#{UI.Tests.SelectableItemsTest}
 	#{UI.Tests.SelectableListItemsTest}
 	#{UI.Tests.SelectableTreeItemsTest}
+	#{UI.Tests.ShellViewTest}
 	#{UI.Tests.SingleSelectListBoxTest}
 	#{UI.Tests.SingleSelectListViewTest}
 	#{UI.Tests.SliderTest}
@@ -155,7 +157,7 @@ UI subclass: #'UI.Tests'
 	classInstanceVariableNames: ''
 	classConstants: {}!
 OS.UserLibrary subclass: #'UI.Tests.FakeUserLibrary'
-	instanceVariableNames: 'user32 getForegroundWindowBlock getActiveWindowBlock getCursorPosBlock'
+	instanceVariableNames: 'user32 process getForegroundWindowBlock getActiveWindowBlock getCursorPosBlock'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -180,6 +182,12 @@ Core.Tests.DolphinTest subclass: #'Graphics.Tests.AbstractPointTest'
 	classConstants: {}!
 Core.Tests.DolphinTest subclass: #'Graphics.Tests.AbstractRectangleTest'
 	instanceVariableNames: 'desktop oddDesktop unary'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Core.Tests.DolphinTest subclass: #'UI.Tests.AbstractShellViewTest'
+	instanceVariableNames: 'fakeUser32 cursorPos shells'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -228,12 +236,6 @@ Core.Tests.DolphinTest subclass: #'Graphics.Tests.ColorTest'
 	classConstants: {}!
 Core.Tests.DolphinTest subclass: #'UI.Tests.CommandDescriptionTest'
 	instanceVariableNames: 'savedKeyboardLayout'
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-Core.Tests.DolphinTest subclass: #'UI.Tests.DialogViewTest'
-	instanceVariableNames: 'owner shell2 fakeUser32 cursorPos'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -401,6 +403,18 @@ Graphics.Tests.AbstractRectangleTest subclass: #'External.Tests.RECTTest'
 	classInstanceVariableNames: ''
 	classConstants: {}!
 External.Tests.RECTTest subclass: #'OS.Tests.RECTLTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+UI.Tests.AbstractShellViewTest subclass: #'UI.Tests.DialogViewTest'
+	instanceVariableNames: 'owner shell2'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+UI.Tests.AbstractShellViewTest subclass: #'UI.Tests.ShellViewTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

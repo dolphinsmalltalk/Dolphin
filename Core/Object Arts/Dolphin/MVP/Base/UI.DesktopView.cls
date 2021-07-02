@@ -2,7 +2,7 @@
 
 UI.View subclass: #'UI.DesktopView'
 	instanceVariableNames: 'resolution defaultExtentBlock dvReserved1 dvReserved2'
-	classVariableNames: 'Current ProgmanClassAtom'
+	classVariableNames: 'Current'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
@@ -209,8 +209,7 @@ onStartup
 	"Make sure the receiver represents the desktop window handle."
 
 	self assumeDesktopHandle.
-	resolution := nil.
-	self class getProgmanClass!
+	resolution := nil!
 
 onViewActivated: anEvent
 	"Default handler for window activation.
@@ -388,11 +387,6 @@ current: aDesktopView
 
 	Current := aDesktopView!
 
-getProgmanClass
-	ProgmanClassAtom := User32
-				getClassLongPtr: (User32 findWindow: 'Progman' asUtf16String lpWindowName: nil)
-				nIndex: GCW_ATOM!
-
 icon
 	"Answers an Icon that can be used to represent this class"
 
@@ -404,11 +398,6 @@ initialize
 	Current := self new
 			assumeDesktopHandle;
 			yourself!
-
-isProgramManager: hWnd
-	"Private - Answer whether the argument is the window handle of the Windows program manager. Here we are relying on the undocumented fact that the 'program manager' (main Windows shell) has a specific name for its Window class, and has done so since the very earliest versions of Windows. It seems unlikely to change, but if it does will fail safe for most purposes."
-
-	^(User32 getClassLongPtr: hWnd asParameter nIndex: Win32Constants.GCW_ATOM) == ProgmanClassAtom!
 
 stbConvertFromVersion9: anArray
 	"Private - Perform an STB conversion from a version 9 (or earlier) instance
@@ -441,10 +430,8 @@ uninitialize
 	Current := nil! !
 !UI.DesktopView class categoriesFor: #current!accessing!public! !
 !UI.DesktopView class categoriesFor: #current:!accessing!public! !
-!UI.DesktopView class categoriesFor: #getProgmanClass!initializing!private! !
 !UI.DesktopView class categoriesFor: #icon!constants!public! !
 !UI.DesktopView class categoriesFor: #initialize!development!initializing!private! !
-!UI.DesktopView class categoriesFor: #isProgramManager:!enquiries!private! !
 !UI.DesktopView class categoriesFor: #stbConvertFromVersion9:!binary filing!private! !
 !UI.DesktopView class categoriesFor: #uninitialize!class hierarchy-removing!private! !
 
