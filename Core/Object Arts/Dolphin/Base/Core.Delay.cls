@@ -425,7 +425,7 @@ queryOsTimerResolution
 	min := ByteArray newFixed: 4.
 	max := ByteArray newFixed: 4.
 	actual := ByteArray newFixed: 4.
-	(OS.NTLibrary default
+	(OS.NtDll
 		ntQueryTimerResolution: min
 		maximum: max
 		actual: actual) == 0
@@ -484,7 +484,7 @@ timerResolution: aDuration set: aBoolean
 
 	| actualResolution |
 	actualResolution := External.DWORDBytes new.
-	OS.NTLibrary default
+	OS.NtDll
 		setTimerResolution: aDuration asNanoseconds // 100
 		set: aBoolean
 		actualResolution: actualResolution.

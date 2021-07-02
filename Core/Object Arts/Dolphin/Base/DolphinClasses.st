@@ -3168,8 +3168,8 @@ External.PermanentLibrary subclass: #'OS.KernelLibrary'
 	classInstanceVariableNames: ''
 	classConstants: {}!
 External.PermanentLibrary subclass: #'OS.NTLibrary'
-	instanceVariableNames: ''
-	classVariableNames: 'IsWine'
+	instanceVariableNames: 'isWine'
+	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!

@@ -282,7 +282,7 @@ showSuppressible
 				iDefault: (self idOfButtonAt: self defaultButton)
 				pszRegVal: self globallyUniqueId.
 	button == -1 ifTrue: [ShlwapiLibrary default systemError].
-	NTLibrary isWine ifFalse: [^self].
+	NtDll isWine ifFalse: [^self].
 	#wineFix.
 	"Suppressible message boxes under Wine have a bug where they ignore the buttonStyles #yesNo and #yesNoCancel and will always answer #ok or #cancel instead. Here we map the return button ids to the correct values"
 	(self buttonStyle == #yesNo or: [self buttonStyle == #yesNoCancel])

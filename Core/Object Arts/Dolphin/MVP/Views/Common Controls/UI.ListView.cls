@@ -2622,7 +2622,7 @@ onStartup
 	"The system is starting: Register a message to be used for cancelling a selection after
 	the fact."
 
-	NTLibrary isWine
+	NtDll isWine
 		ifTrue: 
 			["Having autoSelectPackages option turned on in System  Browser gives unpleasant scrolling effect when many multiple packages are selected. This also happens in Package Browser. Problem under Wine traced to LVIS_FOCUSED option in ListView>>selectIndex:. Not sure what overall effect it will have turning this off."
 			SelectionStateMask := LVIS_SELECTED]
