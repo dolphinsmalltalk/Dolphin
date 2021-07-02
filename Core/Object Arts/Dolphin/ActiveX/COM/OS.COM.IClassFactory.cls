@@ -72,7 +72,7 @@ ctxServer
 	servers, and so is not strictly a constant (thanks guys)."
 
 	^##(CLSCTX_INPROC_SERVER | CLSCTX_LOCAL_SERVER)
-		| (OLELibrary default supportsDCOM ifTrue: [CLSCTX_REMOTE_SERVER] ifFalse: [0])!
+		| (Ole32 supportsDCOM ifTrue: [CLSCTX_REMOTE_SERVER] ifFalse: [0])!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'UNKNWN.IClassFactory'

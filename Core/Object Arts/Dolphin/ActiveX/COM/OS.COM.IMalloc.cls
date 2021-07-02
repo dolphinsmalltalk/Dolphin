@@ -156,7 +156,7 @@ task
 		ifTrue: 
 			[| pMalloc |
 			pMalloc := self newPointer.
-			OLELibrary default coGetMalloc: MEMCTX_TASK ppMalloc: pMalloc.	"may throw HRESULTError"
+			Ole32 coGetMalloc: MEMCTX_TASK ppMalloc: pMalloc.	"may throw HRESULTError"
 			Task := pMalloc].
 	^Task!
 

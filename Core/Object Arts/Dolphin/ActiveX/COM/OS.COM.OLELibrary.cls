@@ -331,6 +331,10 @@ fileName
 	"Answer the host system file name of the external library which
 	the receiver represents."
 
-	^'OLE32'! !
+	^'OLE32'!
+
+sharedVariableName
+	^#{Ole32}! !
 !OS.COM.OLELibrary class categoriesFor: #fileName!constants!public! !
+!OS.COM.OLELibrary class categoriesFor: #sharedVariableName!constants!private! !
 

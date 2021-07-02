@@ -88,7 +88,7 @@ disconnect
 
 			"KernelLibrary default outputDebugString: 'Disconnecting ', self printString, String lineDelimiter."
 			count := count + 1.
-			OLELibrary default coDisconnectObject: interfaces first dwReserved: 0.
+			Ole32 coDisconnectObject: interfaces first dwReserved: 0.
 			self free]!
 
 findInterface: interfaceClass ifNoneAdd: operation

@@ -17,12 +17,7 @@ You can also use Dolphin as both client and server.
 
 Note: This sample is not compatible with the sample of the same name in the 2.1 and earlier releases of Dolphin.'.
 
-package basicScriptAt: #postinstall put: 'ShellLibrary default isUserAnAdmin 
-	ifTrue: [OS.COM.Examples.RandomStream registerClassFactory]
-	ifFalse: 
-		[Notification 
-			signal: ''Unable to register Random Stream sample COM object due to insufficient privileges''].	"Register a class factory for the Random Number Stream"
-OS.COM.Examples.RandomStream registerClassFactory'.
+package basicScriptAt: #postinstall put: 'OS.COM.Examples.RandomStream registerClassFactory'.
 package basicScriptAt: #preuninstall put: '"Revoke the class factory registration."
 OS.COM.Examples.RandomStream revokeClassFactories'.
 

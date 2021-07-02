@@ -150,7 +150,7 @@ binaryStoreControlOnIStream: target
 						ifNone: [unkControl queryInterface: IPersistStream].
 			ips isNull
 				ifFalse: 
-					[OLELibrary default oleSaveToStream: ips pStm: target.
+					[Ole32 oleSaveToStream: ips pStm: target.
 					^self]].
 	target nextPutCLSID: self clsid!
 

@@ -128,7 +128,7 @@ register
 	dwCookie := DWORDBytes new.
 	iClassFactory := IClassFactory on: self.
 	
-	[OLELibrary default
+	[Ole32
 		coRegisterClassObject: clsid
 		pUnk: iClassFactory asParameter
 		dwClsContext: CLSCTX_LOCAL_SERVER
@@ -158,7 +158,7 @@ revoke
 	"Private - Revoke the receiver's COM class object registration."
 
 	registration isNil ifTrue: [^self].
-	OLELibrary default coRevokeClassObject: registration.
+	Ole32 coRevokeClassObject: registration.
 	registration := nil!
 
 serverClass

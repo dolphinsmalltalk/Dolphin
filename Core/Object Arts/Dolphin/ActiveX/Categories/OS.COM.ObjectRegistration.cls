@@ -56,7 +56,7 @@ getUserType: form
 
 	| mem answer hresult |
 	mem := TaskMemory new.
-	hresult := OLELibrary default
+	hresult := Ole32
 				oleRegGetUserType: clsid
 				dwFormOfType: form
 				pszUserType: mem.

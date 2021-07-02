@@ -158,7 +158,7 @@ handle
 
 	| hglobal |
 	hglobal := External.Handle new.
-	OLELibrary default getHGlobalFromStream: self phglobal: hglobal.
+	Ole32 getHGlobalFromStream: self phglobal: hglobal.
 	^hglobal!
 
 isEmpty
@@ -225,7 +225,7 @@ nextCLSID
 
 	| answer |
 	answer := CLSID newNull.
-	OLELibrary default readClassStm: self pclsid: answer.
+	Ole32 readClassStm: self pclsid: answer.
 	^answer!
 
 nextLine
@@ -248,7 +248,7 @@ nextPutCLSID: aCLSID
 	"Append the specified CLSID to the specified stream.
 	N.B. By convention this should be done before the associated data is streamed."
 
-	OLELibrary default writeClassStm: self rclsid: aCLSID!
+	Ole32 writeClassStm: self rclsid: aCLSID!
 
 notEmpty
 	"Answer whether there are any sequence values in the receiver."
@@ -527,7 +527,7 @@ onHGLOBAL: hGlobal
 
 	| answer |
 	answer := self newPointer.
-	OLELibrary default
+	Ole32
 		createStreamOnHGlobal: hGlobal
 		fDeleteOnRelease: true
 		ppstm: answer.

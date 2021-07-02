@@ -713,7 +713,7 @@ getObject: aString
 
 	| answer |
 	answer := self newPointer.
-	OLELibrary default
+	Ole32
 		coGetObject: aString
 		pBindOptions: nil
 		riid: self iid
@@ -901,7 +901,7 @@ onCLSID: aCLSID outerIUnknown: pUnkOuter hostName: hostNameString licenseKey: li
 			pServerInfo hostName: hostNameString.
 			dwClsContext := dwClsContext bitOr: CLSCTX_REMOTE_SERVER].
 	pFactory := IClassFactory newPointer.
-	OLELibrary default
+	Ole32
 		coGetClassObject: aCLSID
 		dwClsContext: dwClsContext
 		pServerInfo: pServerInfo
