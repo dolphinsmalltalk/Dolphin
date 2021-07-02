@@ -246,11 +246,9 @@ clear: addressOrBytes
 	"Free external resources referenced by the structure
 	of the receiver's element type at the specified address."
 
-	| lib |
-	lib := OLEAutLibrary default.
 	4 to: 12
 		by: 4
-		do: [:offset | lib sysFreeString: (addressOrBytes sdwordAtOffset: offset)]!
+		do: [:offset | OleAut32 sysFreeString: (addressOrBytes sdwordAtOffset: offset)]!
 
 defineFields
 	"Define the fields of the EXCEPINFO structure.

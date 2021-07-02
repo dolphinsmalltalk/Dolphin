@@ -199,7 +199,7 @@ fromFont: aFont
 	| answer fd |
 	fd := FONTDESC fromFont: aFont.
 	answer := IFontDisp newPointer.
-	OLEAutLibrary default
+	OleAut32
 		oleCreateFontIndirect: fd
 		riid: IFontDisp iid
 		ppvObj: answer.

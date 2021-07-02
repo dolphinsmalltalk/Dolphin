@@ -117,6 +117,14 @@ package setMethodNames: #(
 	#(#{Kernel.ProcessorScheduler} #unregisterCOMStub:)
 ).
 
+package setVariableNames: #(
+	#{OS.COM.OleAut32}
+).
+
+package setBinaryVariableNames: #(
+	#{OS.COM.OleAut32}
+).
+
 package setPrerequisites: #(
 	'..\..\Base\Dolphin'
 	'..\..\Base\Dolphin Message Box'

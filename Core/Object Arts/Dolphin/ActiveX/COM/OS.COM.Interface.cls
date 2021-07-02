@@ -119,8 +119,7 @@ getExtendedErrorInfo: excep
 	| errorInfo |
 	self supportsErrorInfo ifFalse: [^self].
 	errorInfo := IErrorInfo newPointer.
-	(OLEAutLibrary default getErrorInfo: 0 pperrinfo: errorInfo) == S_OK
-		ifTrue: [excep errorInfo: errorInfo]!
+	(OleAut32 getErrorInfo: 0 pperrinfo: errorInfo) == S_OK ifTrue: [excep errorInfo: errorInfo]!
 
 hash
 	"Answer the SmallInteger hash value for the receiver."

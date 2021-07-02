@@ -33,7 +33,7 @@ asUtf16String
 	bstr := bytes uintPtrAtOffset: 0.
 	^bstr == 0
 		ifTrue: [Utf16String empty]
-		ifFalse: [Utf16String fromAddress: bstr length: (OLEAutLibrary default sysStringLen: bstr)]!
+		ifFalse: [Utf16String fromAddress: bstr length: (OleAut32 sysStringLen: bstr)]!
 
 asUtf8String
 	"Answer a `Utf8String` containing the same code points as the UTF-16 encoded BSTR pointed at by the receiver, or the empty string if the referenced BSTR is a null pointer (by convention a null BSTR is treated the same as an empty string)."
@@ -53,7 +53,7 @@ value: aString
 
 	| bstr |
 	bstr := bytes uintPtrAtOffset: 0.
-	bstr == 0 ifFalse: [OLEAutLibrary default sysFreeString: bstr].
+	bstr == 0 ifFalse: [OleAut32 sysFreeString: bstr].
 	bstr := aString asBSTR.
 	"Avoid side effect on argument if it is already a <BSTR>"
 	bstr == aString ifTrue: [bstr := bstr copy].

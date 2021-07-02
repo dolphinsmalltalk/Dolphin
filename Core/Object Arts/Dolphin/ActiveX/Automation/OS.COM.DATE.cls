@@ -36,7 +36,7 @@ fromString: aString
 fromString: aString locale: aLocale
 	| answer |
 	answer := self new.
-	OLEAutLibrary default
+	OleAut32
 		varDateFromStr: aString
 		lcid: aLocale asParameter
 		dwFlags: 0

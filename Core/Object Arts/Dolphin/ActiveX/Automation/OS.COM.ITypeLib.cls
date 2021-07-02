@@ -302,7 +302,7 @@ load: libid major: verMajor minor: verMinor locale: locale
 		open: (self queryPath: libid major: verMajor minor: verMinor locale: locale)
 		register: false"
 	answer := self newPointer.
-	OLEAutLibrary default
+	OleAut32
 		loadRegTypeLib: libid
 		wVerMajor: verMajor
 		wVerMinor: verMinor
@@ -320,20 +320,19 @@ open: aString register: aBoolean
 	"Open the type library at the specified path and answer an instance of the
 	receiver on it. Optionally (re)register the type library."
 
-	| answer oleaut |
+	| answer |
 	answer := self newPointer.
-	oleaut := OLEAutLibrary default.
-	oleaut loadTypeLib: aString pptlib: answer.
+	OleAut32 loadTypeLib: aString pptlib: answer.
 	aBoolean
 		ifTrue: 
 			["Attempt to register system wide first - this will fail if not running elevated"
-			(oleaut
+			(OleAut32
 				registerTypeLib: answer
 				wszFullPath: aString
 				wszHelpDir: nil) < S_OK
 				ifTrue: 
 					["Fall back on user specific registration, which does not require admin priviledges"
-					oleaut
+					OleAut32
 						registerTypeLibForUser: answer
 						szFullPath: aString
 						szHelpDir: nil]].
@@ -355,7 +354,7 @@ queryPath: libid major: major minor: minor locale: locale ifNone: exceptionHandl
 
 	| answer hr |
 	answer := BSTR new.
-	hr := OLEAutLibrary default
+	hr := OleAut32
 				queryPathOfRegTypeLib: libid
 				wVerMajor: major
 				wVerMinor: minor

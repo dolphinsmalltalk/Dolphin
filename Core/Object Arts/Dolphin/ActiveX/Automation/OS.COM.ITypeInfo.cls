@@ -501,7 +501,7 @@ recordInfoIfNone: exceptionHandler
 
 	| answer hr |
 	answer := IRecordInfo newPointer.
-	hr := OLEAutLibrary default getRecordInfoFromTypeInfo: self asParameter ppRecInfo: answer.
+	hr := OleAut32 getRecordInfoFromTypeInfo: self asParameter ppRecInfo: answer.
 	^hr < 0 ifTrue: [exceptionHandler value] ifFalse: [answer]!
 
 ReleaseFuncDesc: pFuncDesc

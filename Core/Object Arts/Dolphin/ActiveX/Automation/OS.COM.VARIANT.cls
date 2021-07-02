@@ -37,7 +37,7 @@ _deepCopy: copiesDictionary
 
 	| copy |
 	copy := VARIANT new.
-	OLEAutLibrary default variantCopyInd: copy pvargSrc: self.
+	OleAut32 variantCopyInd: copy pvargSrc: self.
 	^copy!
 
 < comperand
@@ -127,7 +127,7 @@ bstr
 				ifTrue: 
 					["By convention a null BSTR represents the empty string"
 					'']
-				ifFalse: [Utf16String fromAddress: addr length: (OLEAutLibrary default sysStringLen: addr)]]!
+				ifFalse: [Utf16String fromAddress: addr length: (OleAut32 sysStringLen: addr)]]!
 
 bstr: aString
 	"Set the BSTR value of the receiver to the <String> argument, newValue.
@@ -164,7 +164,7 @@ changeType: newVT
 	| answer |
 	newVT == self vt ifTrue: [^self].	"Already requested type"
 	answer := self class new.
-	OLEAutLibrary default
+	OleAut32
 		variantChangeType: answer
 		pvarSrc: self
 		wFlags: 0
@@ -178,7 +178,7 @@ changeType: newVT locale: aLocale
 	| answer |
 	newVT == self vt ifTrue: [^self].	"Already requested type"
 	answer := self class new.
-	OLEAutLibrary default
+	OleAut32
 		variantChangeTypeEx: answer
 		pvarSrc: self
 		lcid: aLocale lcid
@@ -200,7 +200,7 @@ cmp: comperand
 
 	| cmp varRight |
 	varRight := comperand asVariant.
-	cmp := OLEAutLibrary default
+	cmp := OleAut32
 				varCmp: self
 				pvarRight: varRight
 				lcid: NlsConstants.LOCALE_USER_DEFAULT
@@ -219,7 +219,7 @@ copy
 
 	| copy |
 	copy := VARIANT new.
-	OLEAutLibrary default variantCopy: copy pvargSrc: self.
+	OleAut32 variantCopy: copy pvargSrc: self.
 	^copy!
 
 cy
@@ -607,7 +607,7 @@ systemTime
 
 	| systime |
 	systime := SYSTEMTIME new.
-	OLEAutLibrary default variantTimeToSystemTime: self double lpSystemTime: systime.
+	OleAut32 variantTimeToSystemTime: self double lpSystemTime: systime.
 	^systime!
 
 typeName
@@ -845,7 +845,7 @@ clear: addressOrBytes
 	"Free an instance of the structure which instances of the receiver wrap
 	which resides at the specified address."
 
-	OLEAutLibrary default variantClear: addressOrBytes!
+	OleAut32 variantClear: addressOrBytes!
 
 defineFields
 	"Define the fields of the VARIANT structure.
@@ -1028,7 +1028,7 @@ init: buffer
 	"Initialize a buffer (or buffer at the specified address) to hold an instance of the record type
 	described by the receiver. Assumes that the memory is completely uninitialized."
 
-	OLEAutLibrary default variantInit: buffer!
+	OleAut32 variantInit: buffer!
 
 initialize
 	"Private - Initialize the receiver's class variables.

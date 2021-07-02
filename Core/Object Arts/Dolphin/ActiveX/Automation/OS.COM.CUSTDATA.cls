@@ -21,7 +21,7 @@ Warning: This comment was automatically generated from the struct''s type inform
 basicFree
 	"Private - Free external resources owned by the receiver."
 
-	OLEAutLibrary default clearCustData: self!
+	OleAut32 clearCustData: self!
 
 buildContents
 	| attrs |

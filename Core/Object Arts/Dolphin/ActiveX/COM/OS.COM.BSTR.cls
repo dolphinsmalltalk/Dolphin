@@ -88,14 +88,14 @@ attach: newValue
 basicFree
 	"Private - Free the receiver's external resources."
 
-	OLEAutLibrary default sysFreeString: self.
+	OleAut32 sysFreeString: self.
 	self basicUIntPtrAtOffset: 0 put: 0!
 
 byteSize
 	"Answer the size in bytes of the string pointed at by the receiver, including any
 	embedded nulls, but excluding the terminating null."
 
-	^OLEAutLibrary default sysStringByteLen: self!
+	^OleAut32 sysStringByteLen: self!
 
 copy
 	"Answer an <Object> which is a copy of the receiver (by default a copy which shares the receiver's 
@@ -118,7 +118,7 @@ deepCopy
 	is a byte object and the sole purpose of which is to act as a reference to another
 	object, and there is no point copying its body."
 
-	^OLEAutLibrary default sysAllocString: self!
+	^OleAut32 sysAllocString: self!
 
 displayOn: aPuttableStream
 	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that an end-user might want to see."
@@ -154,7 +154,7 @@ size
 	terminating null) in the receiver. If the receiver is a null pointer, then the answer will
 	be zero."
 
-	^OLEAutLibrary default sysStringLen: self!
+	^OleAut32 sysStringLen: self!
 
 species
 	^Utf16String!
@@ -205,7 +205,7 @@ basicNew
 	^self newFixed: 4!
 
 clear: anExternalAddress
-	OLEAutLibrary default sysFreeString: (anExternalAddress dwordAtOffset: 0)!
+	OleAut32 sysFreeString: (anExternalAddress dwordAtOffset: 0)!
 
 fromInteger: anAddress
 	"Answer a new instance of the receiver that points at a copy of the 
@@ -218,7 +218,7 @@ fromInteger: anAddress
 		ifTrue: [self new]
 		ifFalse: 
 			[| answer |
-			answer := OLEAutLibrary default sysAllocString: anAddress.
+			answer := OleAut32 sysAllocString: anAddress.
 			answer isNull
 				ifTrue: [OutOfMemoryError signal]
 				ifFalse: 

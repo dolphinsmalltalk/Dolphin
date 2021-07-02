@@ -119,7 +119,7 @@ new
 
 	| answer |
 	answer := self newPointer.
-	OLEAutLibrary default createErrorInfo: answer.
+	OleAut32 createErrorInfo: answer.
 	^answer! !
 !OS.COM.ICreateErrorInfo class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
 !OS.COM.ICreateErrorInfo class categoriesFor: #fromEXCEPINFO:guid:!instance creation!public! !
