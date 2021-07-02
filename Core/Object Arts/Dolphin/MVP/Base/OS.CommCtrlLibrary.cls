@@ -361,10 +361,14 @@ initFlags
 	^InitFlags!
 
 initFlags: anInteger 
-	InitFlags := anInteger! !
+	InitFlags := anInteger!
+
+sharedVariableName
+	^#{ComCtl32}! !
 !OS.CommCtrlLibrary class categoriesFor: #closeDefault!private!realizing/unrealizing! !
 !OS.CommCtrlLibrary class categoriesFor: #defaultInitFlags!accessing!private! !
 !OS.CommCtrlLibrary class categoriesFor: #fileName!constants!public! !
 !OS.CommCtrlLibrary class categoriesFor: #initFlags!accessing!public! !
 !OS.CommCtrlLibrary class categoriesFor: #initFlags:!accessing!not an aspect!public! !
+!OS.CommCtrlLibrary class categoriesFor: #sharedVariableName!constants!private! !
 

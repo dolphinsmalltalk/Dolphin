@@ -162,7 +162,7 @@ addToImageList: aWinImageList mask: aColorOrNil
 				asBitmap.
 	"We assume that the receiver contains transparency information so the mask color is ignored. Reference it to suppress warning of unref'd arg - the compiler will optimise this out."
 	aColorOrNil.
-	index := CommCtrlLibrary default
+	index := ComCtl32
 				imageList_AddMasked: aWinImageList asParameter
 				hbmImage: bitmap asParameter
 				crMask: CLR_NONE.

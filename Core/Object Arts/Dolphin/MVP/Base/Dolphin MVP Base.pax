@@ -388,11 +388,13 @@ package setMethodNames: #(
 ).
 
 package setVariableNames: #(
+	#{OS.ComCtl32}
 	#{OS.Gdi32}
 	#{OS.UxTheme}
 ).
 
 package setBinaryVariableNames: #(
+	#{OS.ComCtl32}
 	#{OS.Gdi32}
 	#{OS.UxTheme}
 ).

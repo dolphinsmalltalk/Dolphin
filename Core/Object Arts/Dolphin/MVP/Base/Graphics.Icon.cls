@@ -234,7 +234,7 @@ load: anObject fromInstance: hModule extent: aPoint
 		ifTrue: 
 			[| hIcon |
 			hIcon := External.Handle new.
-			(CommCtrlLibrary default
+			(ComCtl32
 				loadIconWithScaleDown: hModule
 				pszName: anObject asResourceId
 				cx: aPoint x
@@ -263,7 +263,7 @@ loadFromInstance: hModule
 		ifTrue: 
 			[| hIcon |
 			hIcon := External.Handle new.
-			(CommCtrlLibrary default
+			(ComCtl32
 				loadIconMetric: hModule asParameter
 				pszName: identifier asResourceId
 				lims: LIM_LARGE

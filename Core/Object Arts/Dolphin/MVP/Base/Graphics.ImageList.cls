@@ -46,7 +46,7 @@ addBitmap: aBitmap mask: aColorOrNil
 	"#305 - We must make sure the bitmap is not selected into a DC, or the result will be a blank image in the list
 	 	this won't damage the Bitmap in any way, because the canvas can be lazily recreated."
 	bmp freeDC.
-	^CommCtrlLibrary default
+	^ComCtl32
 		imageList_AddMasked: hImgList
 		hbmImage: bmp asParameter
 		crMask: (aColorOrNil isNil ifTrue: [CLR_NONE] ifFalse: [aColorOrNil asCOLORREF])!
@@ -56,7 +56,7 @@ addIcon: anIcon
 	Answer -1 if the icon could not be added for some reason (we don't throw an error as this is probably 
 	only a cosmetic problem)."
 
-	^CommCtrlLibrary default
+	^ComCtl32
 		imageList_ReplaceIcon: self asParameter
 		i: -1
 		hicon: anIcon asParameter!
@@ -79,7 +79,7 @@ backcolor
 	If the answer is nil then there is no background color set."
 
 	| colorref |
-	colorref := CommCtrlLibrary default imageList_GetBkColor: handle.
+	colorref := ComCtl32 imageList_GetBkColor: handle.
 	^colorref = CLR_NONE ifFalse: [Color fromCOLORREF: colorref]!
 
 backcolor: aColor
@@ -87,19 +87,19 @@ backcolor: aColor
 	Answers the previous background <Color>, or nil if there was none."
 
 	| colorref |
-	colorref := CommCtrlLibrary default imageList_SetBkColor: self asParameter
+	colorref := ComCtl32 imageList_SetBkColor: self asParameter
 				clrBk: (aColor isNil ifTrue: [CLR_NONE] ifFalse: [aColor asCOLORREF]).
 	^colorref = CLR_NONE ifFalse: [Color fromCOLORREF: colorref]!
 
 basicFree
 	"Private - Free external resources held by the receiver"
 
-	CommCtrlLibrary default imageList_Destroy: handle!
+	ComCtl32 imageList_Destroy: handle!
 
 beginDragImage: anInteger hotSpotX: x hotSpotY: y
 	"Start a drag process using the image at the offset anInteger in the receiver."
 
-	^CommCtrlLibrary default
+	^ComCtl32
 		imageList_BeginDrag: handle
 		iTrack: anInteger
 		dxHotspot: x
@@ -113,14 +113,14 @@ copy
 copyHandle
 	"Private - Answer an external handle to the image which is a copy of that represented by the receiver."
 
-	^CommCtrlLibrary default imageList_Duplicate: self handle!
+	^ComCtl32 imageList_Duplicate: self handle!
 
 createHandle
 	"Private - Create and answer an external resource handle associated with the receiver.
 	This may be installed as the handle of the receiver if called from #basicRealize or it
 	may be used by third parties who require a duplicate handle"
 
-	^CommCtrlLibrary default
+	^ComCtl32
 		imageList_Create: extent x
 		cy: extent y
 		flags: createFlags
@@ -137,7 +137,7 @@ dragEnter: aView at: aPoint
 	"The drag for which the receiver is supplying images has entered the specified
 	<View> at the specified point."
 
-	^CommCtrlLibrary default
+	^ComCtl32
 		imageList_DragEnter: aView asParameter
 		x: aPoint x
 		y: aPoint y!
@@ -146,17 +146,17 @@ dragLeave: aView
 	"The drag for which the receiver is supplying images has exited the specified
 	<View>."
 
-	^CommCtrlLibrary default imageList_DragLeave: aView asParameter!
+	^ComCtl32 imageList_DragLeave: aView asParameter!
 
 dragMoveTo: aPoint
 	"Move the drag image to (x, y)."
 
-	^CommCtrlLibrary default imageList_DragMove: aPoint x y: aPoint y!
+	^ComCtl32 imageList_DragMove: aPoint x y: aPoint y!
 
 dragShow: aBoolean
 	"Show/hide the drag image as a 'fake' cursor."
 
-	^CommCtrlLibrary default imageList_DragShowNolock: aBoolean!
+	^ComCtl32 imageList_DragShowNolock: aBoolean!
 
 draw: anInteger on: aCanvas at: aPoint 
 	^self 
@@ -170,7 +170,7 @@ draw: imageIndexInteger on: aCanvas at: aPoint backcolor: backColor forecolor: f
 	<Canvas>, aCanvas, at the <Point> position, aPoint, using the foreground and background
 	<Color>s foreColor and backColor respectively, with <integer> style flags, flagsInteger."
 
-	^CommCtrlLibrary default
+	^ComCtl32
 		imageList_DrawEx: self asParameter
 		i: imageIndexInteger - 1
 		hdcDst: aCanvas asParameter
@@ -186,7 +186,7 @@ draw: imageIndexInteger on: aCanvas at: aPoint flags: flagsInteger
 	"Draw the image at <integer> index, imageIndex, in the receiver onto the <Canvas>,
 	target, at the <Point>, position, with <integer> style mask, flags."
 
-	^CommCtrlLibrary default
+	^ComCtl32
 		imageList_Draw: self asParameter
 		i: imageIndexInteger - 1
 		hdcDst: aCanvas asParameter
@@ -197,7 +197,7 @@ draw: imageIndexInteger on: aCanvas at: aPoint flags: flagsInteger
 endDrag
 	"End the image drag operation."
 
-	^CommCtrlLibrary default imageList_EndDrag!
+	^ComCtl32 imageList_EndDrag!
 
 extent
 	"Answer a <Point>, the x any y coordinates of which specify the width and height (respectively)
@@ -208,7 +208,7 @@ extent
 			[| cx cy |
 			cx := SDWORD new.
 			cy := SDWORD new.
-			CommCtrlLibrary default
+			ComCtl32
 				imageList_GetIconSize: self handle
 				cx: cx
 				cy: cy.
@@ -217,7 +217,7 @@ extent
 getIcon: anIntegerIndex style: anIntegerStyle
 	"Answer an instance of Icon generated from the image at anIntegerIndex."
 
-	^Icon fromOwnedHandle: (CommCtrlLibrary default
+	^Icon fromOwnedHandle: (ComCtl32
 				imageList_GetIcon: handle
 				i: anIntegerIndex - 1
 				flags: anIntegerStyle)!
@@ -225,7 +225,7 @@ getIcon: anIntegerIndex style: anIntegerStyle
 getImageCount
 	"Answer the number of images held by the receiver."
 
-	^CommCtrlLibrary default imageList_GetImageCount: handle!
+	^ComCtl32 imageList_GetImageCount: handle!
 
 hasMask
 	^createFlags allMask: ILC_MASK!
@@ -251,7 +251,7 @@ isPersistent
 setDragCursorImage: anInteger hotSpotX: x hotSpotY: y
 	"Start a drag process using the image at the offset anInteger in the receiver."
 
-	^CommCtrlLibrary default
+	^ComCtl32
 		imageList_SetDragCursorImage: handle
 		iDrag: anInteger
 		dxHotspot: x
