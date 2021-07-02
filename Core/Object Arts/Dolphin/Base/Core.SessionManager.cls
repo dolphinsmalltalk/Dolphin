@@ -761,7 +761,7 @@ openEventLog
 	^eventLogHandle!
 
 openFd: anInteger mode: aSymbol
-	^(CRTLibrary default _get_osfhandle: anInteger) asSignedInteger < 0
+	^(Ucrt _get_osfhandle: anInteger) asSignedInteger < 0
 		ifTrue: 
 			["stdio file descriptor is not currently established, attach to the console handle"
 			self consoleStreamClass

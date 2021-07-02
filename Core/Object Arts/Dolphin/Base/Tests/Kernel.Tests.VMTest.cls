@@ -412,12 +412,10 @@ testCRTFault
 	"Tests that the VM sends an interrupt when the CRT is passed an invalid parameter and calls
 	the invalid parameter handler (issue #59). On an unfixed V2015 VM this will just crash."
 
-	| crt |
-	crt := CRTLibrary default.
 	self
 		should: 
 			[Processor enableAsyncEvents: false.
-			crt _close: -1]
+			Ucrt _close: -1]
 		raise: CRTError
 		matching: 
 			[:err |
@@ -425,7 +423,7 @@ testCRTFault
 			self
 				isFault: err
 				raisedIn: CRTLibrary >> #_close:
-				receiver: crt]!
+				receiver: Ucrt]!
 
 testDwordAtOffsetPut
 	| bytes dword max |
@@ -2907,7 +2905,7 @@ testRegistry
 						#ImageVersionMinor -> imageVersionMinor.
 						#ImageVersionMajor -> imageVersionMajor.
 						#KernelHandle -> Kernel32 handle.
-						#CRTHandle -> CRTLibrary default handle.
+						#CRTHandle -> Ucrt handle.
 						#Dispatcher -> SessionManager inputState.
 						#VMHandle -> VM handle.
 						#arithmeticSelectors -> #+.
@@ -3132,9 +3130,9 @@ verifyExtCallArgLpwstr: aBoolean
 
 verifyExtCallCrtFault: aBoolean
 	| lib |
-	lib := aBoolean ifTrue: [CRTLibrary nonblocking] ifFalse: [CRTLibrary default].
+	lib := aBoolean ifTrue: [CRTLibrary nonblocking] ifFalse: [Ucrt].
 	self
-		should: [lib fgetc:  nil]
+		should: [lib fgetc: nil]
 		raise: CRTError
 		matching: [:ex | ex tag == EINVAL]!
 
@@ -3145,7 +3143,7 @@ verifyExtCallFpFault: aBoolean
 						expandMacrosWith: aBoolean)
 				in: CRTLibrary.
 	exceptions := OrderedCollection new.
-	[2 timesRepeat: [method value: CRTLibrary default withArguments: #(-1)]] on: FloatingPointException
+	[2 timesRepeat: [method value: Ucrt withArguments: #(-1)]] on: FloatingPointException
 		do: [:ex | exceptions add: ex].
 	self assert: exceptions size equals: 1.
 	fpFault := exceptions first.
@@ -3175,7 +3173,7 @@ verifyExtCallIntDivZero: aBoolean
 						expandMacrosWith: aBoolean)
 				in: CRTLibrary.
 	self
-		should: [method value: CRTLibrary default withArguments: #(123 0)]
+		should: [method value: Ucrt withArguments: #(123 0)]
 		raise: ZeroDivide
 		matching: [:ex | ex dividend = 123]!
 

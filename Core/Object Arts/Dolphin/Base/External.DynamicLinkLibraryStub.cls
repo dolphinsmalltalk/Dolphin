@@ -23,6 +23,8 @@ libraryClass: aClass
 
 libraryClass: aClass
 	<primitive: 157>
-	^self new libraryClass: aClass! !
+	^self new
+		libraryClass: aClass;
+		yourself! !
 !External.DynamicLinkLibraryStub class categoriesFor: #libraryClass:!public! !
 

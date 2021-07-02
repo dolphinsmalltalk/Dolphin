@@ -89,7 +89,7 @@ testFromHandleOnFile
 	filestream nextPutAll: written.
 	filestream close.
 	handle := Handle new.
-	errno := CRTLibrary default
+	errno := Ucrt
 				_wfopen_s: handle
 				filename: tempFileName
 				mode: 'rt, ccs=UTF-8'.
@@ -118,8 +118,8 @@ testFromHandleOnPipe
 					[:each |
 					| fd hFile |
 					"Note that ownership of the OS handle is transferred to the CRT file here"
-					fd := CRTLibrary default _open_osfhandle: each key flags: 0.
-					hFile := CRTLibrary default _fdopen: fd mode: each value.
+					fd := Ucrt _open_osfhandle: each key flags: 0.
+					hFile := Ucrt _fdopen: fd mode: each value.
 					StdioFileStream fromHandle: hFile].
 	streams do: 
 			[:each |

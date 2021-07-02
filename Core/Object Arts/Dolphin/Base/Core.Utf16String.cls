@@ -33,7 +33,7 @@ _beginsString: aString
 	comperand := aString asUtf16String.
 	size := self size.
 	^size <= comperand size
-		and: [(OS.CRTLibrary default
+		and: [(OS.Ucrt
 				memcmp: comperand
 				buf2: self
 				count: size * 2) == 0]!
@@ -105,7 +105,7 @@ byteSize
 	^self basicSize + 1 bitShift: 1!
 
 copyToBuffer: anAddress ofSize: anInteger
-	OS.CRTLibrary default
+	OS.Ucrt
 		wcsncpy_s: anAddress
 		bufferSize: anInteger
 		strSource: self
@@ -330,8 +330,7 @@ stbSaveOn: anSTBOutFiler
 	^self asUtf8String stbSaveOn: anSTBOutFiler!
 
 strcspn: aString start: anInteger
-	^OS.CRTLibrary default wcscspn: self yourAddress + ((anInteger - 1) * 2)
-		strCharSet: aString asUtf16String!
+	^OS.Ucrt wcscspn: self yourAddress + ((anInteger - 1) * 2) strCharSet: aString asUtf16String!
 
 strlen
 	"Answer the length of the receiver (in code units) up to the first null terminator. This may be less than its size if it contains embedded nulls. It can never be greater than the receiver's size."

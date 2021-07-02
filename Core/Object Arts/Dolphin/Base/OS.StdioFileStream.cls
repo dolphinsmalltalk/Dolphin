@@ -47,7 +47,7 @@ attach: anExternalHandle toFd: fdInteger mode: aString
 	specified stdio mode."
 
 	| handle newFd |
-	crtlib := CRTLibrary default.
+	crtlib := Ucrt.
 	"1. dup the existing use of fdInteger"
 	oldFd := crtlib _dup: fdInteger.
 	oldFd < 0 ifTrue: [CRTError signal].
@@ -327,7 +327,7 @@ nextPutAll: aCollection
 open: pathString mode: modeString
 	| handle errno |
 	handle := External.Handle new.
-	errno := CRTLibrary default
+	errno := Ucrt
 				_wfopen_s: handle
 				filename: pathString
 				mode: modeString.
@@ -381,9 +381,7 @@ setStream: anExternalAddress name: aString flags: anInteger
 	stream := anExternalAddress asExternalHandle.
 	flags := anInteger.
 	name := aString.
-	crtlib := (flags allMask: NonBlockingMask)
-				ifTrue: [CRTLibrary nonblocking]
-				ifFalse: [CRTLibrary default].
+	crtlib := (flags allMask: NonBlockingMask) ifTrue: [CRTLibrary nonblocking] ifFalse: [Ucrt].
 	fd := crtlib _fileno: stream.
 	self beFinalizable.
 	"Examine the underlying OS file handle to determine the file type"
@@ -561,7 +559,7 @@ on: aFile type: aSymbol
 	"Answer an new concrete sub-instance of the receiver attached to the open <File>, aFile, with content type named by the <Symbol>, aSymbol.
 	Valid content types are #binary, to read/write raw bytes, #text (for text translation mode - sniffing the current encoding) or one of the valid String encodings - see String.Encodings."
 
-	| oshandle proc crt fd handle mode encoding flags |
+	| oshandle proc fd handle mode encoding flags |
 	aFile isReadable ifFalse: [self error: 'must be attached to a readable file'].
 	encoding := aSymbol == #text ifTrue: [String encodingName: aFile sniffEncoding] ifFalse: [aSymbol].
 	oshandle := External.Handle new.
@@ -574,8 +572,7 @@ on: aFile type: aSymbol
 		dwDesiredAccess: 0
 		bInheritHandle: false
 		dwOptions: Win32Constants.DUPLICATE_SAME_ACCESS) ifFalse: [Kernel32 systemError].
-	crt := CRTLibrary default.
-	fd := crt _open_osfhandle: oshandle flags: 0.
+	fd := Ucrt _open_osfhandle: oshandle flags: 0.
 	aFile isWriteable
 		ifTrue: 
 			[flags := 0.
@@ -583,7 +580,7 @@ on: aFile type: aSymbol
 		ifFalse: 
 			[flags := ReadOnlyMask.
 			mode := 'r'].
-	handle := crt _fdopen: fd mode: (mode copyWith: (encoding == #binary ifTrue: [$b] ifFalse: [$t])).
+	handle := Ucrt _fdopen: fd mode: (mode copyWith: (encoding == #binary ifTrue: [$b] ifFalse: [$t])).
 	handle isNil ifTrue: [CRTError signal].
 	^(self newForEncoding: encoding)
 		setStream: handle
@@ -623,8 +620,9 @@ open: fileId mode: modeSymbol check: aBoolean type: typeSymbol
 	concreteClass == StdioBinaryFileStream
 		ifTrue: [mode := mode copyWith: $b]
 		ifFalse: 
-			[concreteClass == StdioUtf8FileStream ifTrue: [mode := mode , 't, ccs=UTF-8'].
-			concreteClass == StdioUtf16FileStream ifTrue: [mode := mode , 't, ccs=UTF-16LE']].
+			[concreteClass == StdioUtf8FileStream
+				ifTrue: [mode := mode , 't, ccs=UTF-8']
+				ifFalse: [concreteClass == StdioUtf16FileStream ifTrue: [mode := mode , 't, ccs=UTF-16LE']]].
 	stream := concreteClass basicNew.
 	stream open: path mode: mode.
 	modeSymbol == #append ifTrue: [stream setToEnd].
@@ -640,7 +638,7 @@ openFd: fdInteger mode: modeSymbol
 			[flags := 0.
 			rwMode := 'w'].
 	^(self newForEncoding: self encodingType)
-		setStream: (CRTLibrary default _fdopen: fdInteger mode: (rwMode copyWith: self encodingMode))
+		setStream: (Ucrt _fdopen: fdInteger mode: (rwMode copyWith: self encodingMode))
 		name: nil
 		flags: flags!
 

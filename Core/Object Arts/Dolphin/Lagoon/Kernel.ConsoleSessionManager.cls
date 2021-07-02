@@ -27,9 +27,8 @@ allocConsole
 	"We already have one"!
 
 attachFd: anInteger stream: anExternalHandle
-	^((CRTLibrary default _isatty: anInteger)
-		ifTrue: [self consoleStreamClass]
-		ifFalse: [self fileStreamClass]) fromHandle: anExternalHandle!
+	^((Ucrt _isatty: anInteger) ifTrue: [self consoleStreamClass] ifFalse: [self fileStreamClass])
+		fromHandle: anExternalHandle!
 
 basicTertiaryStartup
 	"Perform fundamental tertiary system startup operations."

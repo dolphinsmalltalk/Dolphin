@@ -21,7 +21,7 @@ _beginsString: aString
 	comperand := aString asAnsiString.
 	size := self size.
 	^size <= comperand size
-		and: [(OS.CRTLibrary default
+		and: [(OS.Ucrt
 				memcmp: comperand
 				buf2: self
 				count: size) == 0]!
@@ -60,7 +60,7 @@ codePointsDo: operation
 	1 to: self size do: [:i | operation value: (self at: i)]!
 
 copyToBuffer: anAddress ofSize: anInteger
-	OS.CRTLibrary default
+	OS.Ucrt
 		strncpy_s: anAddress
 		bufferSize: anInteger
 		strSource: self

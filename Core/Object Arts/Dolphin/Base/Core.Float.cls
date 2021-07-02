@@ -1338,7 +1338,7 @@ reset
 	Processor activeProcess resetFloatingPoint!
 
 statusFlags
-	^OS.CRTLibrary default _statusfp!
+	^OS.Ucrt _statusfp!
 
 zero
 	"Answer the receiver's representation of zero."

@@ -116,7 +116,7 @@ copyMemory: destination source: source length: length
 	"CopyMemory is a macro defined to RtlCopyMemory, which in turn is a macro defined to memcpy"
 
 	| errno |
-	(errno := CRTLibrary default
+	(errno := Ucrt
 				memcpy_s: destination
 				destSize: length
 				src: source

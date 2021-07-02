@@ -33,7 +33,7 @@ _beginsString: aString
 	comperand := aString asUtf8String.
 	size := self size.
 	^size <= comperand size
-		and: [(OS.CRTLibrary default
+		and: [(OS.Ucrt
 				memcmp: comperand
 				buf2: self
 				count: size) == 0]!
@@ -78,7 +78,7 @@ bom
 	^Bom!
 
 copyToBuffer: anAddress ofSize: anInteger
-	OS.CRTLibrary default
+	OS.Ucrt
 		strncpy_s: anAddress
 		bufferSize: anInteger
 		strSource: self
@@ -451,7 +451,7 @@ reversedFrom: startInteger to: stopInteger
 strlen
 	"Private - Answer the length of the receiver in code units (not code points) up to the first null terminator. This may be less than its size if it contains embedded nulls. It can never be greater than the receiver's size."
 
-	^OS.CRTLibrary default strlen: self!
+	^OS.Ucrt strlen: self!
 
 urlEncoded
 	"Percent encode the receiver as described in RFC 3986 (https://tools.ietf.org/html/rfc3986) Section 2.
@@ -505,8 +505,7 @@ codePage
 fromAddress: anAddress
 	"Answer a new String instantiated from the null terminated string at anAddress."
 
-	^anAddress isNull
-		ifFalse: [self fromAddress: anAddress length: (OS.CRTLibrary default strlen: anAddress)]!
+	^anAddress isNull ifFalse: [self fromAddress: anAddress length: (OS.Ucrt strlen: anAddress)]!
 
 initialize
 	self extraInstanceSpec: EncodingUtf8.

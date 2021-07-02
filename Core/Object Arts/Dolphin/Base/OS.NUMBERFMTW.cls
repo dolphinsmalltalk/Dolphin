@@ -151,7 +151,7 @@ numberGrouping: aString
 				into: 
 					[:grouping :each |
 					| group |
-					group := CRTLibrary default atoi: each.
+					group := Ucrt atoi: each.
 					grouping * 10 + group])!
 
 NumDigits

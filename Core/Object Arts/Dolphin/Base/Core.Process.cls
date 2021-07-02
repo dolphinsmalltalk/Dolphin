@@ -405,12 +405,11 @@ queueInterrupt: anInteger with: anObject
 	^self primitiveFailed: _failureCode!
 
 resetFloatingPoint
-	OS.CRTLibrary default
+	OS.Ucrt
 		_clearfp;
 		_control87: fpControl
-			mask: ##(OS.CRTConstants._MCW_DN | OS.CRTConstants._MCW_EM
-					| OS.CRTConstants._MCW_IC | OS.CRTConstants._MCW_PC
-					| OS.CRTConstants._MCW_RC)!
+			mask: ##(OS.CRTConstants._MCW_DN | OS.CRTConstants._MCW_EM | OS.CRTConstants._MCW_IC
+					| OS.CRTConstants._MCW_PC | OS.CRTConstants._MCW_RC)!
 
 resume
 	"Change the state of the receiver from Suspended to Ready (by placing it at the end of the Processor's queue for the receiver's priority). Fail if the receiver is already waiting in a queue (in a Semaphore or the Processor). See #resume: for further details (sending this message is equivalent to sending #resume: with nil as the argument)."

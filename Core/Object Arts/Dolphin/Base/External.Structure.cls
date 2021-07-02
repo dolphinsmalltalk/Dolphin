@@ -45,7 +45,7 @@ _deepenShallowCopy: clone trail: copiesDictionary
 					[| isNull |
 					(isNull := self isNull) == anExternalStructure isNull and: 
 							[isNull or: 
-									[(CRTLibrary default
+									[(Ucrt
 										memcmp: self
 										buf2: anExternalStructure
 										count: self comparisonSize) == 0]]]]!

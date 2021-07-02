@@ -221,7 +221,7 @@ testDynamicLinkLibraries
 						{OS.Kernel32}.
 						CompilerLibrary default.
 						VM.
-						OS.CRTLibrary default.
+						OS.Ucrt.
 						OS.CRTLibrary nonblocking}.
 	self serializeAndMaterialize: libs!
 

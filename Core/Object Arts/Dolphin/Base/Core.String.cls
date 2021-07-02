@@ -1113,12 +1113,12 @@ storeOn: aStream
 	self printOn: aStream!
 
 strcspn: aString start: anInteger
-	^OS.CRTLibrary default strcspn: self yourAddress + anInteger - 1 strCharSet: aString!
+	^OS.Ucrt strcspn: self yourAddress + anInteger - 1 strCharSet: aString!
 
 strlen
 	"Answer the length of the receiver (in code units) up to the first null terminator. This may be less than its size if it contains embedded nulls. It can never be greater than the receiver's size."
 
-	^OS.CRTLibrary default strlen: self!
+	^OS.Ucrt strlen: self!
 
 subStrings
 	"Answer an Array containing the substrings of the receiver which are separated by one or 

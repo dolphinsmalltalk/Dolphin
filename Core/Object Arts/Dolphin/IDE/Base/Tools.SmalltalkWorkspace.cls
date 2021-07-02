@@ -383,13 +383,9 @@ completeWordAt: anInteger with: aString
 	^addSpace!
 
 completionListSortBlock
-	| crt |
-	crt := OS.CRTLibrary default.
-	"Note that we must use str[i]cmp to ensure the same comparison order as Scintilla uses when
-	searching for items in the list."
 	^self isAutoCompletionCaseInsensitive
-		ifTrue: [[:a :b | (crt _stricmp: a displayString string2: b displayString) <= 0]]
-		ifFalse: [[:a :b | (crt strcmp: a displayString string2: b displayString) <= 0]]!
+		ifTrue: [[:a :b | (OS.Ucrt _stricmp: a displayString string2: b displayString) <= 0]]
+		ifFalse: [[:a :b | (OS.Ucrt strcmp: a displayString string2: b displayString) <= 0]]!
 
 completionStringFor: aString at: anInteger
 	| rawContents answer |

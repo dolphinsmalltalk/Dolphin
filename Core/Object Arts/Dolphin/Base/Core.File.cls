@@ -1075,7 +1075,7 @@ makePath: anArray
 			ext := e asUtf8String.
 			size := size + ext size + 1].
 	path := Utf8String newFixed: size.
-	^(errno := CRTLibrary default
+	^(errno := Ucrt
 				_makepath_s: path
 				bufferSize: size + 1
 				drive: drive
@@ -1236,11 +1236,10 @@ removeDirectory: aString
 removeExtension: aString
 	"Answer a <readableString> which is the path argument with the extension component removed."
 
-	| drive dir fname errno max path crt |
+	| drive dir fname errno max path |
 	path := aString asUtf8String.
 	max := path size.
-	crt := CRTLibrary default.
-	(errno := crt
+	(errno := Ucrt
 				_splitpath_s: path
 				drive: (drive := Utf8String new: CRTConstants._MAX_DRIVE)
 				driveLen: ##(CRTConstants._MAX_DRIVE + 1)
@@ -1252,7 +1251,7 @@ removeExtension: aString
 				extLen: 0) == 0
 		ifTrue: 
 			[| unextended |
-			(errno := crt
+			(errno := Ucrt
 						_makepath_s: (unextended := Utf8String new: max)
 						bufferSize: max + 1
 						drive: drive
@@ -1358,7 +1357,7 @@ splitDriveFrom: aString
 	Answers an empty string if there is no drive component in the path."
 
 	| drive errno |
-	^(errno := CRTLibrary default
+	^(errno := Ucrt
 				_splitpath_s: aString asUtf8String
 				drive: (drive := Utf8String new: CRTConstants._MAX_DRIVE)
 				driveLen: ##(CRTConstants._MAX_DRIVE + 1)
@@ -1378,7 +1377,7 @@ splitExtensionFrom: aString
 	| ext errno path len crt |
 	path := aString asUtf8String.
 	(len := path size) == 0 ifTrue: [^''].
-	crt := CRTLibrary default.
+	crt := Ucrt.
 	(errno := crt
 				_splitpath_s: path
 				drive: nil
@@ -1400,7 +1399,7 @@ splitFilenameFrom: aString
 	| fname ext errno max path |
 	path := aString asUtf8String.
 	max := path size.
-	(errno := CRTLibrary default
+	(errno := Ucrt
 				_splitpath_s: path
 				drive: nil
 				driveLen: 0
@@ -1411,7 +1410,7 @@ splitFilenameFrom: aString
 				ext: (ext := Utf8String new: max)
 				extLen: max + 1) == 0
 		ifTrue: 
-			[(errno := CRTLibrary default
+			[(errno := Ucrt
 						strcat_s: fname
 						bufferSize: max + 1
 						strSource: ext) == 0
@@ -1424,15 +1423,14 @@ splitPath: aString
 	Note: We use the C-runtime library to implement this, hence either backward or forward
 	slashes (i.e. $\ or $/) are acceptable as pathname delimiters."
 
-	| max path drive dir fname ext errno crt |
+	| max path drive dir fname ext errno |
 	"To avoid problems with long filenames, we use the length of the input string as the buffer
 	sizes - clearly the component parts can never be larger than this.  In order to support
 	Unicode paths, we work in UTF-8."
 	path := aString asUtf8String.
 	max := path size.
 	max = 0 ifTrue: [^{''. ''. ''. ''}].
-	crt := CRTLibrary default.
-	^(errno := crt
+	^(errno := Ucrt
 				_splitpath_s: path
 				drive: (drive := Utf8String new: CRTConstants._MAX_DRIVE)
 				driveLen: ##(CRTConstants._MAX_DRIVE + 1)
@@ -1462,7 +1460,7 @@ splitPathFrom: aPathnameString
 	path := aPathnameString asUtf8String.
 	len := path size.
 	"Deliberately allocate extra space for the drive letter buffer so we can strcat to it later."
-	(errno := CRTLibrary default
+	(errno := Ucrt
 				_splitpath_s: path
 				drive: (drive := Utf8String new: len)
 				driveLen: ##(CRTConstants._MAX_DRIVE + 1)
@@ -1473,7 +1471,7 @@ splitPathFrom: aPathnameString
 				ext: nil
 				extLen: 0) == 0
 		ifTrue: 
-			[(errno := CRTLibrary default
+			[(errno := Ucrt
 						strcat_s: drive
 						bufferSize: len + 1
 						strSource: dir) == 0
@@ -1487,7 +1485,7 @@ splitStemFrom: aString
 	| fname errno path len |
 	path := aString asUtf8String.
 	len := path size.
-	^(errno := CRTLibrary default
+	^(errno := Ucrt
 				_splitpath_s: path
 				drive: nil
 				driveLen: 0

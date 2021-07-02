@@ -21,8 +21,10 @@ libraryClass: aClass
 Kernel at: #VM put: VMLibrary default!
 OS at: #User32 put: UserLibrary default!
 OS at: #Kernel32 put: KernelLibrary default!
+OS at: #Ucrt put: CRTLibrary default!
+
 | systemPackage |
 systemPackage := Object owningPackage.
 DynamicLinkLibraryStub owningPackage: systemPackage.
-#(#{Kernel.VM} #{OS.User32} #{OS.Kernel32}) do: [:each |
+#(#{Kernel.VM} #{OS.User32} #{OS.Kernel32} #{OS.Ucrt}) do: [:each |
 	each binding owningPackage: systemPackage]!
