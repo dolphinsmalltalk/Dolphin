@@ -256,7 +256,7 @@ largeIconExtent
 	^largeIconExtent ifNil: [largeIconExtent := self getMetric: SM_CXICON pair: SM_CYICON]!
 
 menuBarColor
-	^ThemeLibrary default isAppThemed ifTrue: [Graphics.Color menuBar] ifFalse: [Graphics.Color menu]!
+	^UxTheme isAppThemed ifTrue: [Graphics.Color menuBar] ifFalse: [Graphics.Color menu]!
 
 menuBarHeight
 	"Answer the height of a menu item as currently configured."

@@ -149,7 +149,7 @@ openTheme
 	pinSize := SystemMetrics current smallIconExtent asParameter.
 	self isThemed
 		ifTrue: 
-			[ThemeLibrary default
+			[UxTheme
 				getThemePartSize: self theme
 				hdc: nil
 				iPartId: EBP_HEADERPIN
@@ -189,7 +189,7 @@ paintEdgesOn: aCanvas
 		ifFalse: [self paintClassicEdgesOn: aCanvas]!
 
 paintThemedBackgroundOn: aCanvas
-	ThemeLibrary default
+	UxTheme
 		drawThemeBackground: self theme
 		hdc: aCanvas asParameter
 		iPartId: self headerBackgroundPart
@@ -199,7 +199,7 @@ paintThemedBackgroundOn: aCanvas
 
 paintThemedEdgesOn: aCanvas
 	self isPinned ifTrue: [^nil].
-	ThemeLibrary default
+	UxTheme
 		drawThemeBackground: tabs theme
 		hdc: aCanvas asParameter
 		iPartId: TABP_PANE
@@ -212,7 +212,7 @@ paintThemedOn: aCanvas
 	self paintThemedPinOn: aCanvas!
 
 paintThemedPinOn: aCanvas
-	ThemeLibrary default
+	UxTheme
 		drawThemeBackground: self theme
 		hdc: aCanvas asParameter
 		iPartId: EBP_HEADERPIN

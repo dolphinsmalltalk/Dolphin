@@ -202,7 +202,7 @@ paintTabLabelsOn: aCanvas
 
 paintThemedBackgroundOn: aCanvas in: aRectangle
 	| bkColor |
-	ThemeLibrary default
+	UxTheme
 		drawThemeBackground: self theme
 		hdc: aCanvas asParameter
 		iPartId: TABP_PANE
@@ -216,18 +216,17 @@ paintThemedBackgroundOn: aCanvas in: aRectangle
 			aCanvas fillRectangle: (aCanvas clipBox subtract: aRectangle) color: bkColor]!
 
 paintThemedTabsOn: aCanvas offset: aMonadicValuable
-	| selected hot numItems themeLib dc part rcItem hTheme |
+	| selected hot numItems dc part rcItem hTheme |
 	numItems := self itemCount.
 	numItems <= 0 ifTrue: [^self].
 	"Paint all the tabs except for the selected one (assuming there is one; in very unusual circumstances there may not be)"
 	hot := self itemFromPoint: self cursorPosition.
 	selected := self selectionByIndex.
-	themeLib := ThemeLibrary default.
 	dc := aCanvas asParameter.
 	hTheme := self theme.
 	selected == 1
 		ifFalse: 
-			[themeLib
+			[UxTheme
 				drawThemeBackground: hTheme
 				hdc: dc
 				iPartId: TABP_TABITEMLEFTEDGE
@@ -237,7 +236,7 @@ paintThemedTabsOn: aCanvas offset: aMonadicValuable
 	2 to: selected - 1
 		do: 
 			[:i |
-			themeLib
+			UxTheme
 				drawThemeBackground: hTheme
 				hdc: dc
 				iPartId: TABP_TABITEM
@@ -247,7 +246,7 @@ paintThemedTabsOn: aCanvas offset: aMonadicValuable
 	(selected + 1 max: 2) to: numItems - 1
 		do: 
 			[:i |
-			themeLib
+			UxTheme
 				drawThemeBackground: hTheme
 				hdc: dc
 				iPartId: TABP_TABITEM
@@ -258,7 +257,7 @@ paintThemedTabsOn: aCanvas offset: aMonadicValuable
 		ifFalse: 
 			[| anInteger |
 			anInteger := TABP_TABITEMRIGHTEDGE.
-			themeLib
+			UxTheme
 				drawThemeBackground: hTheme
 				hdc: dc
 				iPartId: anInteger
@@ -279,7 +278,7 @@ paintThemedTabsOn: aCanvas offset: aMonadicValuable
 
 					"selected == numItems ifTrue: [TABP_TABITEMRIGHTEDGE] ifFalse: [TABP_TABITEM]"
 					TABP_TABITEM].
-	themeLib
+	UxTheme
 		drawThemeBackground: hTheme
 		hdc: dc
 		iPartId: part

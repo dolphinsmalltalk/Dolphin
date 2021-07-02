@@ -119,6 +119,7 @@ package methodNames
 	add: 'STBViewProxy class' -> #for:;
 	add: 'SystemColor class' -> #fromId:;
 	add: 'TextTileIcon class' -> #text:font:color:;
+	add: 'ThemeLibrary class' -> #isAppThemed;
 	add: 'WindowsEvent class' -> #message:handle:wParam:lParam:;
 	yourself.
 
@@ -831,6 +832,13 @@ text: labelString font: fontString color: aColor
 		fontName: fontString
 		color: aColor! !
 !TextTileIcon class categoriesFor: #text:font:color:!instance creation!public! !
+
+!ThemeLibrary class methodsFor!
+
+isAppThemed
+	Notification deprecated.
+	^self default isAppThemed! !
+!ThemeLibrary class categoriesFor: #isAppThemed!private!testing! !
 
 !TreeView methodsFor!
 

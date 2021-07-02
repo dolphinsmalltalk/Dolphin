@@ -419,7 +419,7 @@ beDefaultThemed
 
 	SystemMetrics current hasThemes
 		ifTrue: 
-			[ThemeLibrary default
+			[UxTheme
 				setWindowTheme: self handle
 				pszSubAppName: self themeSubAppName
 				pszSubIdList: nil.
@@ -436,7 +436,7 @@ beNotThemed
 	SystemMetrics current hasThemes
 		ifTrue: 
 			[self freeTheme.
-			ThemeLibrary default
+			UxTheme
 				setWindowTheme: self handle
 				pszSubAppName: Utf16String empty
 				pszSubIdList: Utf16String empty]!
@@ -5362,7 +5362,7 @@ frameWidths: anInteger
 				ifFalse: [(anInteger allMask: WS_BORDER) ifTrue: [SystemMetrics current borderExtent] ifFalse: [0 @ 0]]]!
 
 freeTheme
-	theme notNull ifTrue: [ThemeLibrary default closeThemeData: theme].
+	theme notNull ifTrue: [UxTheme closeThemeData: theme].
 	theme := nil!
 
 fromHandle: aHandle
@@ -5441,7 +5441,7 @@ onExit
 	"Clean up the residue on Dolphin exit."
 
 	self allSubclassesDo: [:c | c freeTheme].
-	ThemeLibrary default onExit.
+	UxTheme onExit.
 	self destroyAll.	"Destroy rather than close as more forcible and avoids save prompts"
 	self unregisterClass!
 
@@ -5464,12 +5464,12 @@ onStartup
 		id: 0
 		fsModifiers: MOD_CONTROL
 		vk: VK_CANCEL.
-	ThemeLibrary default onStartup!
+	UxTheme onStartup!
 
 openTheme
-	^(self themePartName isNil or: [ThemeLibrary isAppThemed not])
+	^(self themePartName isNil or: [UxTheme isAppThemed not])
 		ifTrue: [##(External.Handle new)]
-		ifFalse: [ThemeLibrary default openThemeData: nil pszClassList: self themePartName asUtf16String]!
+		ifFalse: [UxTheme openThemeData: nil pszClassList: self themePartName asUtf16String]!
 
 registerClass
 	"Private - Register the receivers corresponding Win32 class - answer the class atom.

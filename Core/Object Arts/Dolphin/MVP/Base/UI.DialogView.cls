@@ -230,7 +230,7 @@ onInitDialog
 	(self isPropertyPage and: [self isThemed])
 		ifTrue: 
 			["Property pages in tabbed dialogs require a specific theme"
-			ThemeLibrary default enableThemeDialogTexture: self asParameter dwFlags: ETDT_ENABLETAB].
+			UxTheme enableThemeDialogTexture: self asParameter dwFlags: ETDT_ENABLETAB].
 
 	"Tell Windows NOT to set the focus. We set focus later after we have populated the dialog
 	(though subclasses loaded from a Windows dialog template resource may wish to return true

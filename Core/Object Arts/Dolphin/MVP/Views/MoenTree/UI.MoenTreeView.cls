@@ -1416,7 +1416,7 @@ paintNode: aMoenTreeNode on: aCanvas
 	isSel ifTrue: [aCanvas restore]!
 
 paintThemeButton: aRectangle on: aCanvas isExpanded: aBoolean
-	ThemeLibrary default
+	UxTheme
 		drawThemeBackground: self theme
 		hdc: aCanvas asParameter
 		iPartId: TVP_GLYPH

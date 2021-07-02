@@ -389,10 +389,12 @@ package setMethodNames: #(
 
 package setVariableNames: #(
 	#{OS.Gdi32}
+	#{OS.UxTheme}
 ).
 
 package setBinaryVariableNames: #(
 	#{OS.Gdi32}
+	#{OS.UxTheme}
 ).
 
 package setPrerequisites: #(
@@ -1651,7 +1653,7 @@ External.DynamicLinkLibrary subclass: #'OS.DwmApiLibrary'
 	classConstants: {}!
 External.DynamicLinkLibrary subclass: #'OS.ThemeLibrary'
 	instanceVariableNames: ''
-	classVariableNames: 'IsAppThemed'
+	classVariableNames: ''
 	imports: #(#{OS.ThemeConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!

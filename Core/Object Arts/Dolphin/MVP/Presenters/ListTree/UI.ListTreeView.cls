@@ -2219,7 +2219,7 @@ fillStateImageManagerThemed
 	| extent treeViewTheme image rect canvas |
 	extent := self stateImageExtent.
 	rect := RECTL extent: extent.
-	treeViewTheme := ThemeLibrary default openThemeData: nil pszClassList: 'Explorer::TreeView'.
+	treeViewTheme := UxTheme openThemeData: nil pszClassList: 'Explorer::TreeView'.
 	stateImageManager maskcolor: Color white.
 
 	"image for state leaf"
@@ -2231,7 +2231,7 @@ fillStateImageManagerThemed
 	"image for state expanded"
 	image := Bitmap displayCompatibleWithExtent: extent.
 	canvas := image canvas.
-	ThemeLibrary default
+	UxTheme
 		drawThemeBackground: treeViewTheme
 		hdc: canvas asParameter
 		iPartId: ThemeConstants.TVP_GLYPH
@@ -2244,7 +2244,7 @@ fillStateImageManagerThemed
 	"image for state collapsed"
 	image := Bitmap displayCompatibleWithExtent: extent.
 	canvas := image canvas.
-	ThemeLibrary default
+	UxTheme
 		drawThemeBackground: treeViewTheme
 		hdc: canvas asParameter
 		iPartId: ThemeConstants.TVP_GLYPH
@@ -2253,7 +2253,7 @@ fillStateImageManagerThemed
 		pClipRect: nil.
 	stateImageManager addImage: image.
 	image freeDC.
-	ThemeLibrary default closeThemeData: treeViewTheme!
+	UxTheme closeThemeData: treeViewTheme!
 
 internalListModelClass
 	"answer the factory object to use for our instances' internally
@@ -2322,7 +2322,7 @@ stateImageManager
 					ex return: nil].
 			image isNil
 				ifTrue: 
-					[ThemeLibrary isAppThemed
+					[UxTheme isAppThemed
 						ifTrue: [self fillStateImageManagerThemed]
 						ifFalse: [self fillStateImageManager]]
 				ifFalse: [self fillStateImageManagerFrom: image]].

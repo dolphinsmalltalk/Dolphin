@@ -31,7 +31,7 @@ is3State: aBoolean
 
 paintTransparentBackgroundOn: aCanvas
 	self isThemed ifFalse: [^self].
-	ThemeLibrary default
+	UxTheme
 		drawThemeParentBackground: self asParameter
 		hdc: aCanvas asParameter
 		prc: nil! !
