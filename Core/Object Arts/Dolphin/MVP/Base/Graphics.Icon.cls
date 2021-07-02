@@ -217,13 +217,13 @@ includesFrame: frameNumber
 
 	| hDC includes screenDC |
 	screenDC := User32 getDC: nil.
-	hDC := GDILibrary default createCompatibleDC: screenDC.
+	hDC := Gdi32 createCompatibleDC: screenDC.
 	includes := self
 				drawOn: hDC
 				at: Point.Zero
 				frame: frameNumber
 				background: nil.
-	GDILibrary default deleteDC: hDC.
+	Gdi32 deleteDC: hDC.
 	User32 releaseDC: nil hDC: screenDC.
 	^includes!
 

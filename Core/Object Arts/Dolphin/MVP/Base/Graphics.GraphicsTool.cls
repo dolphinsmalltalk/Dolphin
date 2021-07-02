@@ -21,7 +21,7 @@ basicFree
 	"Private - Free up external resources held by the receiver.
 	Ignore any errors which might arise."
 
-	GDILibrary default deleteObject: handle!
+	Gdi32 deleteObject: handle!
 
 basicHandle
 	"Answer the receiver's handle instance variable.
@@ -81,7 +81,7 @@ getData: aWinStruct
 	"Private - Get the data bytes of the receiver's external resource object into	
 	the specified structure. N.B. This only works for GDI objects."
 
-	^GDILibrary default
+	^Gdi32
 		getObject: self asParameter
 		cbBuffer: aWinStruct byteSize
 		lpvObject: aWinStruct!
@@ -90,7 +90,7 @@ getDataW: aWinStruct
 	"Private - Get the data bytes of the receiver's external resource object into	
 	the specified structure. N.B. This only works for GDI objects."
 
-	^GDILibrary default
+	^Gdi32
 		getObjectW: self asParameter
 		cbBuffer: aWinStruct byteSize
 		lpvObject: aWinStruct!
@@ -98,7 +98,7 @@ getDataW: aWinStruct
 getStockObject: anInteger
 	"Private - Get the handle of the specified stock object."
 
-	^GDILibrary default getStockObject: anInteger!
+	^Gdi32 getStockObject: anInteger!
 
 handle
 	"Answer the receiver's handle. If unrealized then attempt to realize it first."

@@ -21,7 +21,7 @@ HatchBrushes are not normally instantiated directly, but rather through one of t
 !Graphics.HatchBrush methodsFor!
 
 createHandle
-	^GDILibrary default createHatchBrush: id color: color asCOLORREF!
+	^Gdi32 createHatchBrush: id color: color asCOLORREF!
 
 name
 	"Answer the symbolic name of this hatched brush."

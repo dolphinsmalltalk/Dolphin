@@ -29,6 +29,7 @@ package setMethodNames: #(
 	#(#{STON.Tests.TestKnownObject class} #icon)
 	#(#{STON.Tests.WriteReadTest} #testBindingReferences)
 	#(#{STON.Tests.WriteReadTest} #testCompiledMethodsAndBlocks)
+	#(#{STON.Tests.WriteReadTest} #testDynamicLinkLibraries)
 	#(#{STON.Tests.WriteReadTest} #testExtendedCharacters)
 	#(#{STON.Tests.WriteReadTest} #testFramingCalculation)
 	#(#{STON.Tests.WriteReadTest} #testNamedColors)
@@ -214,6 +215,16 @@ testBindingReferences
 testCompiledMethodsAndBlocks
 	self serializeAndMaterialize: self class methodDictionary!
 
+testDynamicLinkLibraries
+	| libs |
+	libs := STON listClass withAll: {OS.Kernel32.
+						{OS.Kernel32}.
+						CompilerLibrary default.
+						VM.
+						OS.CRTLibrary default.
+						OS.CRTLibrary nonblocking}.
+	self serializeAndMaterialize: libs!
+
 testExtendedCharacters
 	| characters |
 	characters := {$£. $\x6587. $\x1F37A. $£. $\x394}.
@@ -249,6 +260,7 @@ testSystemDictionary
 	self serializeAndMaterialize: {'Foo'. Smalltalk. 'Bar'}! !
 !STON.Tests.WriteReadTest categoriesFor: #testBindingReferences!public!tests! !
 !STON.Tests.WriteReadTest categoriesFor: #testCompiledMethodsAndBlocks!public!tests! !
+!STON.Tests.WriteReadTest categoriesFor: #testDynamicLinkLibraries!public!tests! !
 !STON.Tests.WriteReadTest categoriesFor: #testExtendedCharacters!public!tests! !
 !STON.Tests.WriteReadTest categoriesFor: #testFramingCalculation!public!tests! !
 !STON.Tests.WriteReadTest categoriesFor: #testNamedColors!public!tests! !

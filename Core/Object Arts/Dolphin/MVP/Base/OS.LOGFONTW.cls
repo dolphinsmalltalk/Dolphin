@@ -40,7 +40,7 @@ struct tagLOGFONTW {
 !OS.LOGFONTW methodsFor!
 
 createFont
-	^GDILibrary default createFontIndirectW: self!
+	^Gdi32 createFontIndirectW: self!
 
 faceName
 	"Answer the receiver's lfFaceName field as a UTF-8 encoded string, having trimmed any extra
@@ -54,7 +54,7 @@ faceName: aString
 	self lfFaceName: aString asUtf16String!
 
 getData: hFont
-	GDILibrary default
+	Gdi32
 		getObjectW: hFont
 		cbBuffer: self byteSize
 		lpvObject: self!

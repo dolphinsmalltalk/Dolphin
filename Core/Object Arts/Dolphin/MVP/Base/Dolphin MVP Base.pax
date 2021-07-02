@@ -387,6 +387,14 @@ package setMethodNames: #(
 	#(#{UI.ResourceIdentifier} #show)
 ).
 
+package setVariableNames: #(
+	#{OS.Gdi32}
+).
+
+package setBinaryVariableNames: #(
+	#{OS.Gdi32}
+).
+
 package setPrerequisites: #(
 	'..\..\Base\Dolphin'
 	'Dolphin Basic Geometry'

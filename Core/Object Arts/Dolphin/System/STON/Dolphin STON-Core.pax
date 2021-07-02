@@ -137,6 +137,8 @@ package setMethodNames: #(
 	#(#{Core.Time class} #fromSton:)
 	#(#{Core.UndefinedObject} #stonContainSubObjects)
 	#(#{Core.UndefinedObject} #stonOn:)
+	#(#{External.DynamicLinkLibrary} #stonOn:)
+	#(#{External.DynamicLinkLibrary class} #fromSton:)
 	#(#{Kernel.BlockClosure} #fromSton:)
 	#(#{Kernel.BlockClosure} #stonOn:)
 	#(#{Kernel.CompiledCode} #fromSton:)
@@ -805,6 +807,20 @@ stonOn: stonWriter
 	stonWriter writeNull! !
 !Core.UndefinedObject categoriesFor: #stonContainSubObjects!public!ston! !
 !Core.UndefinedObject categoriesFor: #stonOn:!public!ston! !
+
+!External.DynamicLinkLibrary methodsFor!
+
+stonOn: stonWriter
+	stonWriter writeObject: self listSingleton: #default! !
+!External.DynamicLinkLibrary categoriesFor: #stonOn:!public!ston! !
+
+!External.DynamicLinkLibrary class methodsFor!
+
+fromSton: stonReader
+	stonReader parseListSingleton.
+	^self default
+! !
+!External.DynamicLinkLibrary class categoriesFor: #fromSton:!public!ston! !
 
 !Kernel.BlockClosure methodsFor!
 

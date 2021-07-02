@@ -1324,6 +1324,10 @@ fileName
 	"Answer the host system file name of the external library which the 
 	receiver represents"
 
-	^'GDI32'! !
+	^'GDI32'!
+
+sharedVariableName
+	^#{Gdi32}! !
 !OS.GDILibrary class categoriesFor: #fileName!constants!public! !
+!OS.GDILibrary class categoriesFor: #sharedVariableName!constants!private! !
 

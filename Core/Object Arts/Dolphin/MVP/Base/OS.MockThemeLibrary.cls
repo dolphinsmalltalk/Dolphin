@@ -106,7 +106,7 @@ drawThemeParentBackground: hwnd hdc: hDC prc: prc
 		lpPoints: offset
 		cPoints: 1.
 	oldOrg := POINTL new.
-	(GDILibrary default
+	(Gdi32
 		offsetWindowOrgEx: hDC
 		nXOrg: offset x
 		nYOrg: offset y
@@ -116,7 +116,7 @@ drawThemeParentBackground: hwnd hdc: hDC prc: prc
 		msg: WM_PRINTCLIENT
 		wParam: hDC
 		lParam: PRF_CLIENT.
-	GDILibrary default
+	Gdi32
 		setWindowOrgEx: hDC
 		nXOrg: oldOrg x
 		nYOrg: oldOrg y
@@ -531,9 +531,7 @@ getThemeTextMetrics: htheme hdc: hDC iPartId: iPartId iStateId: iStateId pTM: pt
 			[in]int iStateId,
 			[out]TEXTMETRIC* ptm);"
 
-	^(GDILibrary default getTextMetrics: hDC lptm: ptm)
-		ifTrue: [S_OK]
-		ifFalse: [(HRESULT win32Error: 2) asInteger]!
+	^(Gdi32 getTextMetrics: hDC lptm: ptm) ifTrue: [S_OK] ifFalse: [(HRESULT win32Error: 2) asInteger]!
 
 getWindowTheme: hwnd 
 	"Invoke the GetWindowTheme() function of the module wrapped by the receiver.

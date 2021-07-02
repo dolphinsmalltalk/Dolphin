@@ -65,15 +65,14 @@ edgeExtent
 getDefaultColorDepth
 	"Private - Answer the default color depth based on that of the current screen driver."
 
-	| gdi hDC |
-	gdi := GDILibrary default.
-	hDC := gdi
+	| hDC |
+	hDC := Gdi32
 				createDC: 'DISPLAY'
 				lpszDevice: nil
 				lpszOutput: nil
 				lpInitData: nil.
-	^[(gdi getDeviceCaps: hDC nIndex: BITSPIXEL) * (gdi getDeviceCaps: hDC nIndex: PLANES) max: 4]
-		ensure: [gdi deleteDC: hDC]!
+	^[(Gdi32 getDeviceCaps: hDC nIndex: BITSPIXEL) * (Gdi32 getDeviceCaps: hDC nIndex: PLANES) max: 4]
+		ensure: [Gdi32 deleteDC: hDC]!
 
 getIconTitleFont
 	"Private - Answer a <Font> which is that used for icon titles on the desktop.

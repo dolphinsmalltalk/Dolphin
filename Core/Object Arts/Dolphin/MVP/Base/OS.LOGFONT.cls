@@ -16,7 +16,7 @@ LOGFONT has been replaced by LOGFONTW, but is retained due to references from pr
 !OS.LOGFONT methodsFor!
 
 createFont
-	^GDILibrary default createFontIndirectA: self!
+	^Gdi32 createFontIndirectA: self!
 
 faceName
 	"Answer the receiver's lfFaceName ANSI string field, having trimmed any extra nulls."
@@ -29,7 +29,7 @@ faceName: aString
 	self lfFaceName: aString asAnsiString!
 
 getData: hFont
-	GDILibrary default
+	Gdi32
 		getObject: hFont
 		cbBuffer: self byteSize
 		lpvObject: self!

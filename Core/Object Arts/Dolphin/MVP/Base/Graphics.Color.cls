@@ -143,8 +143,7 @@ chroma
 defaultPalette
 	"Private - Answer the default palette."
 
-	^GDILibrary default getStockObject: Win32Constants.DEFAULT_PALETTE
-!
+	^Gdi32 getStockObject: Win32Constants.DEFAULT_PALETTE!
 
 faded
 	"Answer a new color which is a faded (half intensity) copy of the receiver."

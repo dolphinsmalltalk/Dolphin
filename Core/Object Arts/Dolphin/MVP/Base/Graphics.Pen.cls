@@ -28,7 +28,7 @@ createHandle
 	"Private - Answer an <ExternalHandle> to a new pen as described by the receiver's
 	<LOGPEN> structure."
 
-	^GDILibrary default createPenIndirect: logPen!
+	^Gdi32 createPenIndirect: logPen!
 
 handle: anExternalHandle
 	"Private - Set the handle for the receiver and query its logical info."

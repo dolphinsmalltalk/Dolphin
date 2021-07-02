@@ -85,7 +85,7 @@ createHandle
 	depth > 8
 		ifTrue: 
 			["RGB usage"
-			dibSection := GDILibrary default
+			dibSection := Gdi32
 						createDIBSection: 0
 						pbmi: info
 						iUsage: DIB_RGB_COLORS
@@ -103,7 +103,7 @@ createHandle
 						bitsPerPixel: depth
 						bits: bits.
 			canvas := palBitmap canvas.
-			dibSection := GDILibrary default
+			dibSection := Gdi32
 						createDIBSection: canvas asParameter
 						pbmi: info
 						iUsage: DIB_PAL_COLORS
@@ -139,7 +139,7 @@ getColorTable
 	size := 2 raisedToInteger: bits.
 	quads := StructureArray length: size elementClass: RGBQUAD.
 	canvas := self canvas.
-	size := GDILibrary default
+	size := Gdi32
 				getDIBColorTable: canvas asParameter
 				uStartIndex: 0
 				cEntries: size
@@ -175,7 +175,7 @@ setColorTable: anRGBQUADArray
 			["Inappropriate colour table size"
 			self errorInappropriateColorTable: anRGBQUADArray].
 	canvas := self canvas.
-	newSize := GDILibrary default
+	newSize := Gdi32
 				setDIBColorTable: canvas asParameter
 				uStartIndex: 0
 				cEntries: size
