@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Tests.DolphinTest subclass: #'External.Tests.GUIDTest'
 	instanceVariableNames: ''
@@ -48,7 +48,7 @@ testAsInteger
 			| int cmp |
 			int := subject asInteger.
 			self assert: int positive.
-			cmp := RPCLibrary default
+			cmp := Rpcrt4
 						uuidCompare: int basicYourAddress
 						uuid2: subject
 						status: status.

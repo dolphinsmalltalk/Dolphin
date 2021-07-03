@@ -79,6 +79,10 @@ uuidToString: uuid stringUuid: lppstr
 fileName
 	"Answer the host system file name of the external library which the receiver represents"
 
-	^'RPCRT4'! !
+	^'RPCRT4'!
+
+sharedVariableName
+	^#{Rpcrt4}! !
 !OS.RPCLibrary class categoriesFor: #fileName!constants!public! !
+!OS.RPCLibrary class categoriesFor: #sharedVariableName!constants!private! !
 

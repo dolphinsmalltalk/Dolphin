@@ -23,7 +23,7 @@ REFGUID fromAddress: Object guid yourAddress'!
 
 	| status answer |
 	status := ByteArray newFixed: 4.
-	answer := RPCLibrary default
+	answer := Rpcrt4
 				uuidCompare: self
 				uuid2: aGUID
 				status: status.

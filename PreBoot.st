@@ -36,9 +36,10 @@ ntdll instVarAt: (OS.NTLibrary indexOfInstVar: 'isWine') put: isWine.
 OS at: #NtDll put: ntdll!
 OS at: #Shlwapi put: ShlwapiLibrary default!
 OS at: #AdvApi32 put: AdvApiLibrary default!
+OS at: #Rpcrt4 put: RPCLibrary default!
 
 | systemPackage |
 systemPackage := Object owningPackage.
 DynamicLinkLibraryStub owningPackage: systemPackage.
-#(#{Kernel.VM} #{OS.User32} #{OS.Kernel32} #{OS.Ucrt} #{OS.NtDll} #{OS.Shlwapi} #{OS.AdvApi32}) do: [:each |
+#(#{Kernel.VM} #{OS.User32} #{OS.Kernel32} #{OS.Ucrt} #{OS.NtDll} #{OS.Shlwapi} #{OS.AdvApi32} #{OS.Rpcrt4}) do: [:each |
 	each binding owningPackage: systemPackage]!
