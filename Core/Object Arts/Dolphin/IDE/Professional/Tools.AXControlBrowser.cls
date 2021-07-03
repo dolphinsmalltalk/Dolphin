@@ -91,7 +91,7 @@ controlHelp
 						expandMacrosWith: tiControl name))
 					ifTrue: [self browseIDLOfTypeLib: typeLib]]
 		ifFalse: 
-			[[OS.ShellLibrary default shellOpen: filename] on: OS.Win32Error
+			[[OS.Shell32 shellOpen: filename] on: OS.Win32Error
 				do: [:e | MessageBox errorMsg: e messageText caption: 'Unabled to open help file: ' , filename]]!
 
 controlProperties

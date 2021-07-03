@@ -17,7 +17,7 @@ allocator
 	As we are representing a block of memory for the standard COM task allocator,
 	answer that."
 
-	^ShellLibrary default allocator!
+	^Shell32 allocator!
 
 initialize
 	"Private - Initialize the receiver's class variables.

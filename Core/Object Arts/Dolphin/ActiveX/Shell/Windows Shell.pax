@@ -31,6 +31,14 @@ package setMethodNames: #(
 	#(#{UI.View class} #unregisterShellMessages)
 ).
 
+package setVariableNames: #(
+	#{OS.Shell32}
+).
+
+package setBinaryVariableNames: #(
+	#{OS.Shell32}
+).
+
 package setPrerequisites: #(
 	'..\..\Base\Dolphin'
 	'..\..\MVP\Base\Dolphin Basic Geometry'
@@ -287,7 +295,7 @@ OS.Win32Structure subclass: #'OS.SHSTOCKICONINFO'
 documentsDirectory
 	"Answer the path of the Windows 'My Documents' directory on the host computer for the current user."
 
-	^ShellLibrary default getSpecialFolderLocation: ShellConstants.CSIDL_PERSONAL! !
+	^Shell32 getSpecialFolderLocation: ShellConstants.CSIDL_PERSONAL! !
 !Core.SessionManager categoriesFor: #documentsDirectory!accessing!public! !
 
 !Graphics.Icon class methodsFor!
@@ -299,7 +307,7 @@ shellStock: anInteger
 
 	| info |
 	info := SHSTOCKICONINFO new.
-	ShellLibrary default
+	Shell32
 		shGetStockIconInfo: anInteger
 		uFlags: 0
 		psii: info.
@@ -309,7 +317,7 @@ shellStock: anInteger
 !UI.View methodsFor!
 
 acceptDroppedFiles: aBoolean
-	ShellLibrary default dragAcceptFiles: handle fAccept: aBoolean!
+	Shell32 dragAcceptFiles: handle fAccept: aBoolean!
 
 wmDropFiles: msgInteger wParam: wParamInteger lParam: lParamInteger
 	| files |

@@ -229,6 +229,10 @@ shGetStockIconInfo: siid uFlags: uFlags psii: psii
 fileName
 	"Answer the file name of the external library which the receiver represents."
 
-	^'Shell32'! !
+	^'Shell32'!
+
+sharedVariableName
+	^#{Shell32}! !
 !OS.ShellLibrary class categoriesFor: #fileName!constants!public! !
+!OS.ShellLibrary class categoriesFor: #sharedVariableName!constants!private! !
 

@@ -62,7 +62,7 @@ initialize
 		homePage: ((PackageRelativeFileLocator packageNamed: 'Autoplay') localFileSpecFor: 'autorun.htm').
 	self pageExtent: 480 @ 480!
 
-OnBeforeNavigate2: anIDispatch URL: urlVARIANT Flags: flagsVARIANT TargetFrameName: targetVARIANT PostData: postDataVARIANT Headers: headersVARIANT Cancel: aBooleanValue 
+OnBeforeNavigate2: anIDispatch URL: urlVARIANT Flags: flagsVARIANT TargetFrameName: targetVARIANT PostData: postDataVARIANT Headers: headersVARIANT Cancel: aBooleanValue
 	"Can be a URL or a PIDL"
 
 	"Pre-navigation event fired by the control. Can be used to take control of what happens when
@@ -74,13 +74,13 @@ OnBeforeNavigate2: anIDispatch URL: urlVARIANT Flags: flagsVARIANT TargetFrameNa
 
 	| url |
 	url := urlVARIANT value.
-	navigating 
+	navigating
 		ifTrue: [navigating := false]
 		ifFalse: 
 			["Set the cancel value holder to true in order to suppress navigation in this window"
 			aBooleanValue value: true.
 			"Defer the navigation to avoid holding up the browser thread unecessarily"
-			[ShellLibrary default shellOpen: url] postToMessageQueue]!
+			[Shell32 shellOpen: url] postToMessageQueue]!
 
 OnNavigateComplete2: anIDispatch URL: urlOrPIDL
 	"Event fired by the control when the document being navigated to becomes visible and enters the navigation

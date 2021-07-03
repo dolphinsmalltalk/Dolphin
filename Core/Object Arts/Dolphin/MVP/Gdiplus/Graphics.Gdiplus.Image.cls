@@ -1506,7 +1506,7 @@ exampleGdipIPropertyItems
 
 	| directory filenames strm image |
 	(directory := #{UI.BrowseFolderDialog} value new
-				value: #{ShellLibrary} value default myPictures;
+				value: #{Shell32} value myPictures;
 				showModal) ifNil: [^nil].
 	filenames := (File find: (File composePath: directory subPath: '*.jpg')) collect: [:e | e path].
 	strm := String writeStream.

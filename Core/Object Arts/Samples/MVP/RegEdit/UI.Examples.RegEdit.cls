@@ -161,11 +161,11 @@ importRegistryFile
 	"Private - Import a .reg file selected by the user into the registry."
 
 	| openFilename |
-	openFilename := (FileOpenDialog new)
+	openFilename := FileOpenDialog new
 				fileTypes: self fileTypes;
 				caption: 'Import Registry File';
 				showModal.
-	openFilename notNil ifTrue: [ShellLibrary default shellOpen: openFilename]!
+	openFilename notNil ifTrue: [Shell32 shellOpen: openFilename]!
 
 initialize
 	"Private - Initialize the receiver"

@@ -426,7 +426,7 @@ typeLib: aTypeLibraryAnalyzerOrNil
 typeLibHelp
 	"Open the selected type-libraries help file."
 
-	OS.ShellLibrary default shellOpen: self typeLib helpfile!
+	OS.Shell32 shellOpen: self typeLib helpfile!
 
 updateTypelibVariable
 	"Private - The user has toggled on/off generation of the variable to hold the currently selected type library."

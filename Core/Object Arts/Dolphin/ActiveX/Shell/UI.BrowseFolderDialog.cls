@@ -31,7 +31,7 @@ Example Usage:
 basicShowModal
 	"Private - Open a common folder browse dialog."
 
-	^ShellLibrary default SHBrowseForFolder: winStruct!
+	^Shell32 SHBrowseForFolder: winStruct!
 
 caption: aString 
 	"Sets the caption for the receiver to aString"
@@ -78,7 +78,7 @@ pathFromIDList: idList
 	"Private - Answer the <readableString> path corresponding to the IDLIST
 	argument."
 
-	^ShellLibrary default pathFromIDList: idList!
+	^Shell32 pathFromIDList: idList!
 
 prepareStruct
 	"Private - Initialize the parameter structure to be passed to the Win32
@@ -91,7 +91,7 @@ root: path
 	"Sets the root for the receiver to the <readableString>, path."
 
 	| pi |
-	pi := ShellLibrary default getDesktopFolder.
+	pi := Shell32 getDesktopFolder.
 	self winStruct pidlRoot: (pi pidlFromPath: path).
 	pi free!
 

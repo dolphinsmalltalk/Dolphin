@@ -622,7 +622,7 @@ browseEnvironment: aBrowserEnvironment
 	^self browseMethodsIn: aBrowserEnvironment!
 
 browseFolder: aString
-	OS.ShellLibrary default shellOpen: aString!
+	OS.Shell32 shellOpen: aString!
 
 browseHierarchy
 	"Open a new hierarchy browser at the root of the standard class hierarchy."
@@ -1777,7 +1777,7 @@ dropClassFile: aString
 			ifTrue: [self sourceManager fileIn: aString normalizeLineEndings: true]!
 
 dropFile: aString
-	[OS.ShellLibrary default shellOpen: aString] on: OS.Win32Error
+	[OS.Shell32 shellOpen: aString] on: OS.Win32Error
 		do: [:ex | MessageBox warning: ex description caption: ('Drop <1p>' expandMacrosWith: aString)]!
 
 dropPackageFile: aString 
@@ -2616,7 +2616,7 @@ openTool: folderItem
 openUrl: aURLString
 	"Open the URL identified in aURLString in a browser"
 
-	OS.ShellLibrary default shellOpen: aURLString directory: self sessionManager installationDirectory!
+	OS.Shell32 shellOpen: aURLString directory: self sessionManager installationDirectory!
 
 openViewComposer
 	"Open a new ViewComposer editing a new instance of ShellView."

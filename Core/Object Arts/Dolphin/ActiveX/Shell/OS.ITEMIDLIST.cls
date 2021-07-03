@@ -175,7 +175,7 @@ defineFields
 exampleCopying
 	| path iDesktop id1 id2 |
 	path := 'c:\program files'.
-	iDesktop := ShellLibrary default getDesktopFolder.
+	iDesktop := Shell32 getDesktopFolder.
 	id1 := iDesktop idlFromPath: path.
 	id1 getSize.
 	id2 := id1 idCopy.
@@ -198,7 +198,7 @@ exampleWalkID: anITEMIDLIST
 exampleWalking
 	| path iDesktop id1 id2 |
 	path := 'c:\program files'.
-	iDesktop := ShellLibrary default getDesktopFolder.
+	iDesktop := Shell32 getDesktopFolder.
 	id1 := iDesktop idlFromPath: path.
 	id1 getSize.
 	id2 := id1 idNext.
@@ -210,7 +210,7 @@ exampleWalkPath: aString
 		self exampleWalkPath: 'c:\program files'	
 	"
 
-	^self exampleWalkID: (ShellLibrary default getDesktopFolder idlFromPath: aString)!
+	^self exampleWalkID: (Shell32 getDesktopFolder idlFromPath: aString)!
 
 getFieldNames
 	^#()!

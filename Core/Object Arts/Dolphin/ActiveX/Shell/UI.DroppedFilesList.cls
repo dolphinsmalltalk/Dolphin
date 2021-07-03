@@ -19,7 +19,7 @@ at: index
 
 	| cch answer |
 	(index < 1 or: [index > self size]) ifTrue: [^self errorSubscriptBounds: index].
-	cch := ShellLibrary default
+	cch := Shell32
 				dragQueryFile: handle
 				iFile: index - 1
 				lpszFile: nil
@@ -28,7 +28,7 @@ at: index
 	"Note that although DragQueryFile returns the number of chars required excluding the null
 	terminator, one has to tell it the complete length of the buffer including the null
 	terminator."
-	ShellLibrary default
+	Shell32
 		dragQueryFile: handle
 		iFile: index - 1
 		lpszFile: answer
@@ -42,7 +42,7 @@ basicFree
 	| hdrop |
 	hdrop := handle.
 	handle := nil.
-	ShellLibrary default dragFinish: hdrop!
+	Shell32 dragFinish: hdrop!
 
 free
 	handle isNull ifTrue: [^self].
@@ -54,7 +54,7 @@ position
 
 	| struct |
 	struct := POINTL new.
-	ShellLibrary default dragQueryPoint: handle lppt: struct.
+	Shell32 dragQueryPoint: handle lppt: struct.
 	^struct asPoint!
 
 setHandle: anExternalHandle
@@ -66,7 +66,7 @@ size
 
 	size
 		ifNil: 
-			[size := ShellLibrary default
+			[size := Shell32
 						dragQueryFile: handle
 						iFile: -1
 						lpszFile: nil
