@@ -51,6 +51,14 @@ package setMethodNames: #(
 	#(#{Kernel.SourceManager} #secureFileItIn:)
 ).
 
+package setVariableNames: #(
+	#{OS.BCrypt}
+).
+
+package setBinaryVariableNames: #(
+	#{OS.BCrypt}
+).
+
 package setPrerequisites: #(
 	'..\Base\Dolphin'
 	'..\Base\Dolphin Legacy Date & Time'

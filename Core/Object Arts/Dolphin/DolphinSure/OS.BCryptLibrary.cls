@@ -170,6 +170,10 @@ shaHashBuffer: aHashHandle buffer: buffer
 fileName
 	"Answer the host system file name for the library"
 
-	^ 'BCrypt'! !
+	^ 'BCrypt'!
+
+sharedVariableName
+	^#{BCrypt}! !
 !OS.BCryptLibrary class categoriesFor: #fileName!constants!public! !
+!OS.BCryptLibrary class categoriesFor: #sharedVariableName!constants!private! !
 
