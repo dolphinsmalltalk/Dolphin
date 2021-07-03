@@ -54,7 +54,7 @@ testEmptySz
 	| temp |
 	temp := RegKey userRoot createKey: GUID newUnique asString.
 	
-	[self assert: (AdvApiLibrary default
+	[self assert: (AdvApi32
 				regSetValueEx: temp asParameter
 				lpValueName: 'Empty'
 				reserved: 0

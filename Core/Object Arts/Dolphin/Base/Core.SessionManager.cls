@@ -199,7 +199,7 @@ closeEventLog
 
 	eventLogHandle notNil
 		ifTrue: 
-			[AdvApiLibrary default deregisterEventSource: eventLogHandle.
+			[AdvApi32 deregisterEventSource: eventLogHandle.
 			eventLogHandle := nil]!
 
 computerName
@@ -545,7 +545,7 @@ logEvent: message type: typeCode
 	msg := message asUtf16String.
 	inserts at: 1 put: app yourAddress.
 	inserts at: 2 put: msg yourAddress.
-	(AdvApiLibrary default
+	(AdvApi32
 		reportEvent: eventLogHandle
 		wType: typeCode
 		wCategory: 0
@@ -1125,8 +1125,7 @@ userName
 	| name nameSize |
 	name := Utf16String new: 256.
 	nameSize := External.DWORDBytes fromInteger: name size.
-	(AdvApiLibrary default getUserName: name nSize: nameSize asParameter)
-		ifFalse: [AdvApiLibrary default systemError].
+	(AdvApi32 getUserName: name nSize: nameSize asParameter) ifFalse: [AdvApi32 systemError].
 	^name leftString: nameSize asInteger - 1!
 
 versionInfo

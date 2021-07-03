@@ -449,7 +449,7 @@ sniffEncoding
 	ituResult := (ByteArray newFixed: 4)
 				sdwordAtOffset: 0 put: -1;
 				yourself.
-	^((AdvApiLibrary default
+	^((AdvApi32
 		isTextUnicode: buf
 		iSize: count
 		lpiResult: ituResult) and: 

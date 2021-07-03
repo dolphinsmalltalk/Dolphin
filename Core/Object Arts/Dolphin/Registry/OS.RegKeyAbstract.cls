@@ -403,7 +403,7 @@ registryLibrary
 	"Private - Answer the host system shared DLL used
 	to access the registry."
 
-	^AdvApiLibrary default!
+	^AdvApi32!
 
 removeKey: key ifAbsent: exceptionHandler
 	"Remove the key (and its associated value), from the receiver. If key is
@@ -715,7 +715,7 @@ valueAt: aString put: anObject type: aSymbol
 				ifFalse: [anObject].
 	"The size is always specified in bytes"
 	size := value byteSize.
-	result := AdvApiLibrary default
+	result := AdvApi32
 				regSetValueEx: self asParameter
 				lpValueName: aString
 				reserved: 0
