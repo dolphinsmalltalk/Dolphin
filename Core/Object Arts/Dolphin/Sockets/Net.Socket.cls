@@ -30,7 +30,7 @@ connect
 				port: self port;
 				sin_addr: (IN_ADDR address: self address);
 				yourself.
-	WS2_32Library default
+	Ws2_32
 		connect: self asParameter
 		name: socketAddress
 		namelen: socketAddress byteSize!
@@ -45,7 +45,7 @@ hasInput
 	fdSet fd_count: 1.
 	fdSet fd_array at: 1 put: self asParameter.
 	timeOut := TIMEVAL new.
-	result := WS2_32Library default
+	result := Ws2_32
 				select: 0
 				readfds: fdSet
 				writefds: nil
@@ -78,7 +78,7 @@ peerAddress
 	winSockAddr := SOCKADDR_IN new.
 	winSockAddrLen := SDWORD new.
 	winSockAddrLen value: winSockAddr byteSize.
-	(WS2_32Library default
+	(Ws2_32
 		getpeername: self asParameter
 		name: winSockAddr
 		namelen: winSockAddrLen) = SOCKET_ERROR
@@ -139,7 +139,7 @@ receiveSome: aByteObject count: lengthInteger startingAt: startInteger
 	exception. Any other error will result in a <SocketError> exception being raised."
 
 	| bytesReceived |
-	bytesReceived := WS2_32Library default
+	bytesReceived := Ws2_32
 				recv: self asParameter
 				buf: aByteObject yourAddress + startInteger - 1
 				len: lengthInteger
@@ -182,7 +182,7 @@ sendSome: aByteObject count: lengthInteger startingAt: startInteger
 	until at least some data has been sent."
 
 	| result |
-	result := WS2_32Library default
+	result := Ws2_32
 				send: self asParameter
 				buf: aByteObject yourAddress + startInteger - 1
 				len: lengthInteger

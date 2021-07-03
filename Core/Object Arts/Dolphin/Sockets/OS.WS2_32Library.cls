@@ -970,6 +970,10 @@ fileName
 	"Answer the host system file name of the external library which the 
 	receiver represents"
 
-	^'WS2_32'! !
+	^'WS2_32'!
+
+sharedVariableName
+	^#{Ws2_32}! !
 !OS.WS2_32Library class categoriesFor: #fileName!constants!public! !
+!OS.WS2_32Library class categoriesFor: #sharedVariableName!constants!private! !
 

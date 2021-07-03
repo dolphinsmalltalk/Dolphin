@@ -36,7 +36,7 @@ displayOn: aPuttableStream
 	(self isNull or: [self sa_family == 0]) ifTrue: [^self].
 	buf := Utf16String newFixed: INET6_ADDRSTRLEN.
 	len := DWORDBytes fromInteger: buf size.
-	WS2_32Library default
+	Ws2_32
 		wsaAddressToStringW: bytes
 		dwAddressLength: self byteSize
 		lpProtocolInfo: nil

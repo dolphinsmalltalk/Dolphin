@@ -22,7 +22,7 @@ accept
 	address := SOCKADDR_IN new.
 	length := DWORD new.
 	length value: address byteSize.
-	newDescriptor := WS2_32Library default
+	newDescriptor := Ws2_32
 				accept: self asParameter
 				addr: address
 				addrlen: length.
@@ -40,7 +40,7 @@ bind
 	socketAddress sin_family: AF_INET.
 	socketAddress sin_addr s_addr: INADDR_ANY.
 	socketAddress port: self port.
-	WS2_32Library default
+	Ws2_32
 		bind: self asParameter
 		name: socketAddress
 		namelen: socketAddress byteSize!
@@ -59,7 +59,7 @@ createOnPort: anInteger
 		create.
 	dw := DWORD fromInteger: 1.
 	"Set the re-use address option so can re-use server port without having to wait for timeout."
-	WS2_32Library default
+	Ws2_32
 		setsockopt: self asParameter
 		level: SOL_SOCKET
 		optname: SO_REUSEADDR
@@ -72,7 +72,7 @@ listen: anIntegerBacklog
 	using #accept."
 
 	| result |
-	result := WS2_32Library default listen: self asParameter backlog: anIntegerBacklog.
+	result := Ws2_32 listen: self asParameter backlog: anIntegerBacklog.
 	result = SOCKET_ERROR ifTrue: [self socketError]!
 
 preBindPort: anInteger 

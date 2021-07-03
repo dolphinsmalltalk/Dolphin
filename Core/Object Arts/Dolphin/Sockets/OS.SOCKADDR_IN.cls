@@ -35,12 +35,12 @@ struct tagSOCKADDR_IN {
 port
 	"Answer the <integer> port number."
 
-	^WS2_32Library default ntohs: self sin_port!
+	^Ws2_32 ntohs: self sin_port!
 
 port: anInteger
 	"Set the <integer> port number."
 
-	self sin_port: (WS2_32Library default htons: anInteger)!
+	self sin_port: (Ws2_32 htons: anInteger)!
 
 sin_addr
 	"Answer the <IN_ADDR> value of the receiver's 'sin_addr' field."

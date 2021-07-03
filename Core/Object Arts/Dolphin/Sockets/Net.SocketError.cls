@@ -29,7 +29,7 @@ basicSignalWith: anInteger
 	^self new signalWith: (HRESULT win32Error: anInteger)!
 
 errorCode
-	^WS2_32Library default wsaGetLastError!
+	^Ws2_32 wsaGetLastError!
 
 initialize
 	ErrorClasses := LookupTable new.

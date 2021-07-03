@@ -148,7 +148,7 @@ host: aStringHostName
 	"
 
 	| answer |
-	answer := WS2_32Library default gethostbyname: aStringHostName asAnsiString.
+	answer := Ws2_32 gethostbyname: aStringHostName asAnsiString.
 	^answer isNull
 		ifTrue: [Net.SocketError signalWith: Processor activeProcess lastError]
 		ifFalse: [answer]! !
