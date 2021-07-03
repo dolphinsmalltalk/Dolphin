@@ -18,15 +18,14 @@ This is the normal type of buffer used by the Database Connection as it is more 
 bind: aDBStatement
 	"Private - Bind the receiver's field buffers to columns in the result table."
 
-	| hStmt odbc |
+	| hStmt |
 	hStmt := super bind: aDBStatement.
-	odbc := OS.ODBCLibrary default.
 	self contents do: 
 			[:eachField |
 			| dataBuffer column |
 			column := eachField column.
 			dataBuffer := eachField fieldBuf.
-			aDBStatement dbCheckException: (odbc
+			aDBStatement dbCheckException: (OS.Odbc32
 						sqlBindCol: hStmt
 						columnNumber: column columnNumber
 						targetType: column cType

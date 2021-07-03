@@ -25,15 +25,14 @@ bindParams
 	subsequently fill the buffer fields the statement is ready to exec. Normally only done 
 	just before first exec (from #parameters)."
 
-	| odbc hstmt |
-	odbc := OS.ODBCLibrary default.
+	| hstmt |
 	hstmt := self allocatedHandle.
 	parameters keysAndValuesDo: 
 			[:i :eachField |
 			| buf column |
 			buf := eachField fieldBuf.
 			column := eachField column.
-			self dbCheckException: (odbc
+			self dbCheckException: (OS.Odbc32
 						sqlBindParameter: hstmt
 						parameterNumber: i
 						inputOutputType: column parameterType
@@ -50,14 +49,11 @@ exec
 
 	| ret |
 	self close.
-	isPrepared
-		ifFalse: [self prepare].
-	paramCols notNil
-		ifTrue: [self setValues].
-	ret := OS.ODBCLibrary default sqlExecute: self allocatedHandle.
+	isPrepared ifFalse: [self prepare].
+	paramCols notNil ifTrue: [self setValues].
+	ret := OS.Odbc32 sqlExecute: self allocatedHandle.
 	self dbCheckException: ret.
-	executed := true.
-!
+	executed := true!
 
 free
 	"Release external resources held by the receiver,
@@ -96,7 +92,7 @@ prepare
 	| ret |
 	isPrepared := false.
 	parameters := nil.
-	ret := OS.ODBCLibrary default 
+	ret := OS.Odbc32
 				sqlPrepare: self allocatedHandle
 				statementText: self sqlString
 				textLength: SQL_NTS.

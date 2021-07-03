@@ -84,7 +84,7 @@ getData: aDBStatement
 	following a fetch (into the receiver's buffer)."
 
 	| ret |
-	ret := OS.ODBCLibrary default
+	ret := OS.Odbc32
 				sqlGetData: aDBStatement executedHandle
 				columnNumber: column columnNumber
 				targetType: column cType

@@ -15,7 +15,7 @@ executeStatement
 	"Private - Execute the database command that the receiver represents.
 	Answer the <integer> return code."
 
-	^OS.ODBCLibrary default 
+	^OS.Odbc32
 		sqlProcedures: self allocatedHandle
 		catalogName: self catalogName
 		nameLength1: SQL_NTS

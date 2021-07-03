@@ -31,7 +31,7 @@ exec: aString
 	self sqlString: aString; exec!
 
 executeStatement
-	^OS.ODBCLibrary default 
+	^OS.Odbc32
 		sqlExecDirect: self allocatedHandle
 		statementText: self sqlString
 		textLength: SQL_NTS!

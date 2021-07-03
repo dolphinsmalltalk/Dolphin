@@ -45,38 +45,35 @@ basicFree
 cancel
 	"Cancel any outstanding asynchronous request."
 
-	executed 
+	executed
 		ifTrue: 
-			[handle isNull 
+			[handle isNull
 				ifTrue: [executed := false]
-				ifFalse: [self dbCheckException: (OS.ODBCLibrary default sqlCancel: handle)]]!
+				ifFalse: [self dbCheckException: (OS.Odbc32 sqlCancel: handle)]]!
 
 close
 	"Private - Close the cursor, but keep the handle.
 	Implementation Note: Use SQLFreeStmt(,SQL_CLOSE), rather than SQLCloseCursor, since the latter
 	treats the cursor not actually being open as an error condition, and we don't care about that."
 
-	executed 
+	executed
 		ifTrue: 
 			[executed := false.
-			handle isNull 
-				ifFalse: 
-					[self 
-						dbCheckException: (OS.ODBCLibrary default sqlFreeStmt: handle option: SQL_CLOSE)]]!
+			handle isNull ifFalse: [self dbCheckException: (OS.Odbc32 sqlFreeStmt: handle option: SQL_CLOSE)]]!
 
-columnLength: anInteger 
+columnLength: anInteger
 	"Answer the length (bytes) of column number anInteger in the Result Set."
 
 	| ret len |
 	len := ByteArray newFixed: 4.
-	ret := OS.ODBCLibrary default 
+	ret := OS.Odbc32
 				sqlColAttribute: self executedHandle
 				columnNumber: anInteger
-				fieldIdentifier: SQL_COLUMN_LENGTH	"Note using ODBC 2.x definition of column length"
+				fieldIdentifier: SQL_COLUMN_LENGTH
 				characterAttributePtr: nil
 				bufferLength: 0
 				stringLengthPtr: nil
-				numericAttributePtr: len.	
+				numericAttributePtr: len.	"Note using ODBC 2.x definition of column length"
 	self dbCheckException: ret.
 	^len dwordAtOffset: 0!
 
@@ -116,12 +113,12 @@ describeCol: anInteger
 
 	^(self describeCols: {anInteger}) first!
 
-describeCols: columnNumbers 
+describeCols: columnNumbers
 	"Answer an array of <DBColAttr>s describing each of the columns of the receiver's results with indices in the <sequencedReadableCollection> argument."
 
-	| answer i name columnSize colNameLen dataType decimalDigits nullable nameBufSize hStmt colLen lib |
+	| answer i name columnSize colNameLen dataType decimalDigits nullable nameBufSize hStmt colLen |
 	"Allocate a buffer sufficient to hold any column name, that we will re-use for all the columns"
-	nameBufSize := self parent maxColumnNameLength+ 1.
+	nameBufSize := self parent maxColumnNameLength + 1.
 	name := Utf16String newFixed: nameBufSize.
 	"Similarly, re-usable buffers for all the other output parameters"
 	colNameLen := External.SWORD new.
@@ -131,13 +128,12 @@ describeCols: columnNumbers
 	nullable := External.SWORD new.
 	colLen := External.DWORDBytes new.
 	hStmt := self executedHandle.
-	lib := OS.ODBCLibrary default.
 	answer := Array new: columnNumbers size.
 	i := 1.
 	columnNumbers do: 
-			[:each | 
+			[:each |
 			| ret col |
-			ret := lib 
+			ret := OS.Odbc32
 						sqlDescribeCol: hStmt
 						columnNumber: each
 						columnName: name
@@ -148,29 +144,26 @@ describeCols: columnNumbers
 						decimalDigitsPtr: decimalDigits
 						nullablePtr: nullable.
 			self dbCheckException: ret.
-
 			col := DBColAttr new
-					columnNumber: each;
-					name: (name copyFrom: 1 to: colNameLen value);
-					type: dataType value;
-					precision: columnSize value;
-					scale: decimalDigits value;
-					yourself.
-
+						columnNumber: each;
+						name: (name copyFrom: 1 to: colNameLen value);
+						type: dataType value;
+						precision: columnSize value;
+						scale: decimalDigits value;
+						yourself.
 			col hasVariableTransferOctetLength
 				ifTrue: 
-					[ret := lib 
-							sqlColAttribute: hStmt
-							columnNumber: each
-							fieldIdentifier: SQL_DESC_OCTET_LENGTH
-							characterAttributePtr: nil
-							bufferLength: nil
-							stringLengthPtr: nil
-							numericAttributePtr: colLen.
+					[ret := OS.Odbc32
+								sqlColAttribute: hStmt
+								columnNumber: each
+								fieldIdentifier: SQL_DESC_OCTET_LENGTH
+								characterAttributePtr: nil
+								bufferLength: nil
+								stringLengthPtr: nil
+								numericAttributePtr: colLen.
 					self dbCheckException: ret.
-					col length: colLen value] 
-				ifFalse: 
-					[col length: col transferOctetLength].
+					col length: colLen value]
+				ifFalse: [col length: col transferOctetLength].
 			answer at: i put: col.
 			i := i + 1].
 	^answer!
@@ -180,7 +173,7 @@ driverHStmt
 
 	| value |
 	value := External.Handle new.
-	self dbCheckException: (OS.ODBCLibrary default
+	self dbCheckException: (OS.Odbc32
 				sqlGetInfo: self asParameter
 				infoType: SQL_DRIVER_HSTMT
 				infoValuePtr: value
@@ -235,12 +228,12 @@ getStringAttribute: anInteger
 
 	| buffer |
 	buffer := Utf16String newFixed: SQL_MAX_OPTION_STRING_LENGTH.
-	self dbCheckException: (OS.ODBCLibrary default
+	self dbCheckException: (OS.Odbc32
 				sqlGetStmtAttr: self allocatedHandle
 				attribute: anInteger
 				valuePtr: buffer
-				bufferLength: ##((SQL_MAX_OPTION_STRING_LENGTH + 1) * 2) "Byte size including implicit null terminator"
-				stringLengthPtr: nil).	
+				bufferLength: ##((SQL_MAX_OPTION_STRING_LENGTH + 1) * 2)
+				stringLengthPtr: nil).	"Byte size including implicit null terminator"
 	"N.B. We assume that as with SqlGetConnectAttr that the SQL server driver will not populate the stringLengthPtr argument. There do not seem to be any string options to test this against currently."
 	^buffer trimNulls!
 
@@ -260,12 +253,12 @@ initialize: aDBConnection
 	parent := aDBConnection.
 	self initialize!
 
-moveTo: anIntegerRow 
+moveTo: anIntegerRow
 	"Private - Position the cursor at the specified
 	row so that it is read on a subsequent Fetch (requires
 	extended fetch)"
 
-	self dbCheckException: (OS.ODBCLibrary default 
+	self dbCheckException: (OS.Odbc32
 				sqlSetPos: self executedHandle
 				rowNumber: anIntegerRow
 				operation: SQL_POSITION
@@ -276,9 +269,7 @@ numColumns
 
 	| ccol ret |
 	ccol := ByteArray newFixed: 2.
-	ret := OS.ODBCLibrary default
-		sqlNumResultCols: self executedHandle
-		pccol: ccol.
+	ret := OS.Odbc32 sqlNumResultCols: self executedHandle pccol: ccol.
 	self dbCheckException: ret.
 	^ccol swordAtOffset: 0!
 
@@ -289,8 +280,7 @@ numRows
 
 	| rowCount ret |
 	rowCount := ByteArray newFixed: 4.
-	ret := OS.ODBCLibrary default sqlRowCount: self executedHandle
-				rowCountPtr: rowCount.
+	ret := OS.Odbc32 sqlRowCount: self executedHandle rowCountPtr: rowCount.
 	self dbCheckException: ret.
 	^rowCount sdwordAtOffset: 0!
 
@@ -311,9 +301,9 @@ results
 	^(self cursorType == #forwardOnly ifTrue: [DBForwardOnlyResultSet] ifFalse: [DBResultSet])
 		statement: self!
 
-setAttribute: attributeInteger value: anIntegerOrStringOrBytes size: sizeInteger 
+setAttribute: attributeInteger value: anIntegerOrStringOrBytes size: sizeInteger
 	| ret |
-	ret := OS.ODBCLibrary default 
+	ret := OS.Odbc32
 				sqlSetStmtAttr: self allocatedHandle
 				attribute: attributeInteger
 				valuePtr: anIntegerOrStringOrBytes

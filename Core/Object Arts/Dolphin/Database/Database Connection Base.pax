@@ -52,6 +52,14 @@ package setClassNames: #(
 	#{OS.ODBCTypes}
 ).
 
+package setVariableNames: #(
+	#{OS.Odbc32}
+).
+
+package setBinaryVariableNames: #(
+	#{OS.Odbc32}
+).
+
 package setPrerequisites: #(
 	'..\Base\Dolphin'
 	'..\Base\Dolphin Legacy Date & Time'
