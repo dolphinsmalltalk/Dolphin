@@ -36,7 +36,7 @@ basicShowModal
 
 checkError
 	| err |
-	err := ComDlgLibrary default commDlgExtendedError.
+	err := ComDlg32 commDlgExtendedError.
 	^err = 0 ifFalse: [self error: ('Common dialog error: <1d>' expandMacrosWith: err)]!
 
 createHook

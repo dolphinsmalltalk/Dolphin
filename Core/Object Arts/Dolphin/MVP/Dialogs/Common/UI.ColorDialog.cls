@@ -26,7 +26,7 @@ basicShowModal
 	"Private - Create and show a new Colour dialog. Hang it off the receiver's parentView.
 	Answer a <Color> based on the dialog selection, or nil if no selection was made. "
 
-	^ComDlgLibrary default chooseColor: self winStruct asParameter!
+	^ComDlg32 chooseColor: self winStruct asParameter!
 
 defaultColor
 	^ColorRef defaultColorRepresentation!

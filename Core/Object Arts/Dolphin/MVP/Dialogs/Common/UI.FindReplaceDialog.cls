@@ -19,7 +19,7 @@ Instance Variables:
 basicShowModal
 	"Private - Create and show a new FindReplace dialog."
 
-	^ComDlgLibrary default replaceText: self winStruct asParameter!
+	^ComDlg32 replaceText: self winStruct asParameter!
 
 initialize
 	"Private - Initialize the state of the receiver."

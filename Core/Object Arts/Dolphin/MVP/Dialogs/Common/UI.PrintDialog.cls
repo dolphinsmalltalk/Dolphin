@@ -16,7 +16,7 @@ basicShowModal
 	Answer an new hDC on the selected printer. The hDC should be freed using
 	DeleteDC()."
 
-	^ComDlgLibrary default printDlg: self winStruct asParameter!
+	^ComDlg32 printDlg: self winStruct asParameter!
 
 copies
 	"Answer the number of copies to be printed"

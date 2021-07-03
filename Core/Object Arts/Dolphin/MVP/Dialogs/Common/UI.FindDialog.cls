@@ -19,7 +19,7 @@ Instance Variables:
 basicShowModal
 	"Private - Create and show a new FindText dialog."
 
-	^ComDlgLibrary default findText: self winStruct asParameter!
+	^ComDlg32 findText: self winStruct asParameter!
 
 extractResult: anExternalHandle
 	"Private - Extract and apply the result from the parameter structure passed to the Win32 API
