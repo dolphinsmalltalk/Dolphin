@@ -22,7 +22,7 @@ Class Variables:
 	DefaultInstance		<WinAsyncSocket> which is the singleton instance of this class.
 
 '!
-!WinAsyncSocket categoriesForClass!Windows Sockets! !
+!WinAsyncSocket categoriesForClass!Deprecated!Windows Sockets! !
 !WinAsyncSocket methodsFor!
 
 cancelSocket: aSocket 

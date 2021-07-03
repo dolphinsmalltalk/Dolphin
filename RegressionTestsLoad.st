@@ -28,7 +28,6 @@ Package manager
 	install: 'Core\Object Arts\Dolphin\Lagoon\Lagoon Tests.pax';
 	install: 'Core\Contributions\Solutions Software\Tests\SSW EditableListView Tests.pax';
 	install: 'Core\Object Arts\Dolphin\Sockets\Dolphin Sockets Tests.pax';
-	install: 'Core\Object Arts\Dolphin\Sockets\Sockets Connection Tests.pax';
 	install: 'Core\Object Arts\Dolphin\System\STON\Dolphin STON Tests.pax';
 	install: 'Core\Object Arts\Dolphin\Registry\Dolphin Registry Access Tests.pax';
 	install: 'Core\Object Arts\Dolphin\ActiveX\Components\ADO\Tests\ADODB Tests.pax';

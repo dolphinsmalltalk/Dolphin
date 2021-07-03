@@ -100,7 +100,6 @@ contents
 		add: #('Core\Object Arts\Dolphin\MVP\Presenters\Prompters\Dolphin Integer Prompter.pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\Sockets\Dolphin Sockets.pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\Sockets\Dolphin Sockets (Old Names).pax' #plain #imageBased);
-		add: #('Core\Object Arts\Dolphin\Sockets\Sockets Connection.pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\Sockets\WinInet.pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\ActiveX\Components\ADO\ADODB.pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\ActiveX\Components\ADO\ADODB (Old Names).pax' #plain #imageBased);
