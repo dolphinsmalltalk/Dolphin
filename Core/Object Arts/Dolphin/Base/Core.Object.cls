@@ -1423,6 +1423,11 @@ update: anAspect with: argument from: originator
 
 	self update: anAspect with: argument.!
 
+value
+	"Answer the result of evaluating the receiver."
+
+	^self!
+
 when: aSymbol perform: aValuable
 	"Private - Adds aValuable to the event list for the event named by aSymbol in the receiver.
 	N.B. Do not use this to register blocks as event handlers as you will not be able to
@@ -1670,6 +1675,7 @@ yourself
 !Core.Object categoriesFor: #update:!dependency!public! !
 !Core.Object categoriesFor: #update:with:!dependency!public! !
 !Core.Object categoriesFor: #update:with:from:!dependency!public! !
+!Core.Object categoriesFor: #value!evaluating!public! !
 !Core.Object categoriesFor: #when:perform:!events!private! !
 !Core.Object categoriesFor: #when:send:to:!events!public! !
 !Core.Object categoriesFor: #when:send:to:with:!events!public! !
