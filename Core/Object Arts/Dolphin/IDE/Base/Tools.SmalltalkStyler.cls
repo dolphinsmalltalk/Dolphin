@@ -8,42 +8,51 @@ UI.Scintilla.Styler subclass: #'Tools.SmalltalkStyler'
 	classConstants: {}!
 Tools.SmalltalkStyler guid: (Core.GUID fromString: '{eb307480-e6d7-4715-934e-59caf9618538}')!
 Tools.SmalltalkStyler isNonInstantiable: true!
-Tools.SmalltalkStyler comment: 'SmalltalkStyler is a <ScintillaStyler> that is capable of colouring Smalltalk source text according to the established Dolphin syntax colouring convention; in fact it is somewhat more sophisticated than the earlier compiler based colouring, and can differentiate a larger set of syntactic elements. The text styles emitted are:
+Tools.SmalltalkStyler comment: '`SmalltalkStyler` is a Scintilla `Styler` that is capable of colouring Smalltalk source text according to the established Dolphin syntax colouring convention; in fact it is somewhat more sophisticated than the earlier compiler based colouring, and can differentiate a larger set of syntactic elements. The text styles emitted are:
 
-#argDecl			Formal parameter name in method signature
-#assignment			Assignment token, i.e. :=
-#binaryMessage		Selector of binary message send, e.g. the + in 1+2.
-#binarySelector		Binary selector in a method signature.
-#blockArgDecl		Formal parameter name of a block argument
-#comment			Comments
-#identifier			Variable references
-#illegal				Illegal characters that are not valid in ANSI Smalltalk
-#keywordMessage	Each part of a keyword selector in a message send
-#keywordSelector	Each part of a keyword selector in a method signature
-#literalArray			Opening and closing brackets of a literal array, including the initial #.
-#literalBytes			Literal byte array (brackets and values).
-#literalCharacter		Character constants, e.g. $A
-#literalNumber		Numeric constants, e.g. -1, or 1.2e10
-#literalPseudo		The constants nil, true, and false.
-#literalString			String constants, e.g. ''abc''
-#literalSymbol		Symbolic constants, e.g. #abc
-#normal 			Used for whitespace if a #whitespace style is not defined
-#specialCharacter	Other characters with syntactice relevance, such as the period used for statement termination, parentheses, block brackets, etc
-#tag				Primitive or external call declaration
-#tempCloseBar		Closing bar of temporary declarations
-#tempDecl			Temporary variable declaration in a method or block.
-#tempOpenBar		Opening bar of temporary declarations
-#unaryMessage 		Selector of a unary message send.
-#unarySelector		Selector of a unary method, in the signature.
-#whitespace			Whitespace between tokens (but not in comments or literal strings).
+  `#argDecl`			Formal parameter name in method signature
+  `#assignment`		Assignment token, i.e. `:=`
+  `#binaryMessage`		Selector of binary message send, e.g. the `+` in `1+2`.
+  `#binarySelector`		Binary selector in a method signature.
+  `#blockArgDecl`		Formal parameter name of a block argument
+  `#comment`			Comments
+  `#identifier`			Variable references
+  `#illegal`			Illegal characters that are not valid in ANSI Smalltalk
+  `#keywordMessage`	Each part of a keyword selector in a message send
+  `#keywordSelector`	Each part of a keyword selector in a method signature
+  `#literalArray`		Opening and closing brackets of a literal array, including the initial `#`.
+  `#literalBytes`		Literal byte array (brackets and values).
+  `#literalCharacter`		Character constants, e.g. `$A`
+  `#literalNumber`		Numeric constants, e.g. `-1`, or `1.2e10`
+  `#literalPseudo`		The constants nil, true, and false.
+  `#literalString`		String constants, e.g. `''abc''`
+  `#literalSymbol`		Symbolic constants, e.g. `#abc`
+  `#normal` 			Used for whitespace if a `#whitespace` style is not defined
+  `#specialCharacter`	Other characters with syntactice relevance, such as the period used for statement termination, parentheses, block brackets, etc
+  `#tag`				Primitive or external call declaration
+  `#tempCloseBar`		Closing bar of temporary declarations
+  `#tempDecl`			Temporary variable declaration in a method or block.
+  `#tempOpenBar`		Opening bar of temporary declarations
+  `#unaryMessage` 		Selector of a unary message send.
+  `#unarySelector`		Selector of a unary method, in the signature.
+  `#whitespace`		Whitespace between tokens (but not in comments or literal strings).
 
-Note that the #whitespace style is optional. If it is not set up in the View, then whitespace is set to the #normal style, but will use the whitespace foreground and background colours configured in the view (if any), although these will only be used when the whitespaceVisibility mode is other than #invisible.
+Note that the `#whitespace` style is optional. If it is not set up in the View, then whitespace is set to the `#normal` style, but will use the whitespace foreground and background colours configured in the view (if any), although these will only be used when the `whitespaceVisibility` mode is other than `#invisible`.
 
-The actual visual styles associated with these classifications can be configured by modifying the view configuration. This is exposed as the #textStyles published aspect of SmalltalkWorkspace.
+The actual visual styles associated with these classifications can be configured by modifying the view configuration. This is exposed as the `#textStyles` published aspect of `Tools.SmalltalkWorkspace`.
 
 The colouring is largely based on identification of tokens through lexical analysis. This has three significant advantages over colouring based on syntax analysis: i) it is faster, ii) it can be initiated in the middle of some source text much more easily, iii) it is tolerant of syntax errors. These features allow the colouring to be performed in "real-time" as the user types, and also allow reasonable colouring of very large workspaces. Large amounts of text are coloured in chunks. 
 
 Pure lexical analysis has the drawback that it isn''t able to distinguish between different uses of the same token type. In Smalltalk there are a number of such ambiguities, for example identifiers that might be variable names or unary selectors. Another example is the use of the vertical bar symbol as a temporary declaration delimiter and also as a binary selector. In order to handle these cases efficiently a number of extra style names are introduced to record an informal parse state as the colouring progresses. Since the style set up for the last token (mostly) encodes the parse state, it is possible to style the current token without looking any further back. This does, however, mean that there are more styles than are strictly needed for visual purposes - for example there are styles for opening and closing temp bars, but it is unlikely one would want these to have a different appearance. There is one case, that of literal arrays, where it is necessary to look back further when styling. This is because literal arrays may contain unquoted literal symbols and nester arrays, at least in Smalltalk-80 syntax.
+
+## Instance Variables:
+  `arrayDepth`		`<integer>`
+  `view`			`ScintillaView`
+  `last`			`Association`
+  `inTag`			`<boolean>`
+  `stack`			`OrderedCollection`
+
+
 '!
 !Tools.SmalltalkStyler categoriesForClass!Kernel-Objects! !
 !Tools.SmalltalkStyler methodsFor!
