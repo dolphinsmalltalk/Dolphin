@@ -31,6 +31,7 @@ package methodNames
 	add: #BorderLayout -> #hasNorth;
 	add: #BorderLayout -> #hasSouth;
 	add: #BorderLayout -> #hasWest;
+	add: #Canvas -> #fonts:do:;
 	add: #Canvas -> #origin:;
 	add: #Canvas -> #setBkMode:;
 	add: #Canvas -> #setTextColor:;
@@ -43,6 +44,7 @@ package methodNames
 	add: #ColorNone -> #saturation;
 	add: #ColorRef -> #asIndexedColor;
 	add: #ColorRef -> #asIndexedColorUsingPalette:;
+	add: #GDILibrary -> #enumFonts:lpFaceName:lpFontFunc:lParam:;
 	add: #GUISessionManager -> #whatsThis:;
 	add: #IndexedColor -> #asIndexedColor;
 	add: #ListBox -> #basicSelectionByIndex:;
@@ -309,6 +311,37 @@ ltGray
 
 !Canvas methodsFor!
 
+fonts: aString do: operation
+	"Enumerate the fonts in a specified font family that are available on the receiver's device.
+	The triadic valuable argument, operation, is passed the LOGFONTW, TEXTMETRICW and font 
+	type as its three arguments, and should answer true to continue the enueration, false to 
+	terminate it (it must not contain a ^-return).
+
+		int CALLBACK EnumFontsProc(
+			lplf lplf,	// pointer to logical-font data 
+			lptm lptm,	// pointer to physical-font data 
+			DWORD dwType,	// font type 
+			LPARAM lpData 	// pointer to application-defined data  
+		);"
+
+	| callback answer |
+	#deprecated. "Use fontFamilies:do:, which uses the newer Windows API."
+	callback := External.Callback block: 
+					[:lplf :lptm :dwType :lpData |
+					operation
+						value: lplf
+						value: lptm
+						value: dwType]
+				descriptor: (External.FunctionDescriptor returnType: 'sdword'
+						argumentTypes: 'LOGFONTW* lpvoid dword uintptr').
+	answer := Gdi32
+				enumFonts: self asParameter
+				lpFaceName: aString
+				lpFontFunc: callback asParameter
+				lParam: 0.
+	callback free.
+	^answer!
+
 origin: aPoint
 	Notification deprecated.	"5.0: Use #viewportOrigin:"
 	^self viewportOrigin: aPoint!
@@ -320,6 +353,7 @@ setBkMode: mode
 setTextColor: colour
 	Notification deprecated.	"6.0 (reprise)"
 	^self forecolor: colour! !
+!Canvas categoriesFor: #fonts:do:!enumerating!public! !
 !Canvas categoriesFor: #origin:!operations!public! !
 !Canvas categoriesFor: #setBkMode:!modes!public! !
 !Canvas categoriesFor: #setTextColor:!modes!public! !
@@ -414,6 +448,24 @@ asIndexedColorUsingPalette: hPalette
 	^self asRGB asIndexedColorUsingPalette: hPalette! !
 !ColorRef categoriesFor: #asIndexedColor!converting!public! !
 !ColorRef categoriesFor: #asIndexedColorUsingPalette:!converting!public! !
+
+!GDILibrary methodsFor!
+
+enumFonts: dcHandle lpFaceName: aString lpFontFunc: aCallbackThunk lParam: anInteger
+	"Enumerate the fonts with the specified face name on the specified device throught the
+	specified callback with the specified extra parameter.
+
+		int EnumFonts(
+			HDC hdc,					// handle of device context 
+			LPCTSTR lpFaceName,		// font typeface name string 
+			FONTENUMPROC lpFontFunc,	// callback function 
+			LPARAM lParam 				// application-supplied data
+		);"
+
+	<stdcall: sdword EnumFontsW handle lpwstr lpvoid uintptr>
+	#deprecated.
+	^self invalidCall: _failureCode! !
+!GDILibrary categoriesFor: #enumFonts:lpFaceName:lpFontFunc:lParam:!public!win32 functions-font and text! !
 
 !GUISessionManager methodsFor!
 

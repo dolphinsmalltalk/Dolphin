@@ -319,20 +319,6 @@ enumFontFamilies: aHandle lpszFamily: aString lpEnumFontFamProc: anExternalCallb
 	<stdcall: sdword EnumFontFamiliesW handle lpwstr lpvoid uintptr>
 	^self invalidCall: _failureCode!
 
-enumFonts: dcHandle lpFaceName: aString lpFontFunc: aCallbackThunk lParam: anInteger
-	"Enumerate the fonts with the specified face name on the specified device throught the
-	specified callback with the specified extra parameter.
-
-		int EnumFonts(
-			HDC hdc,					// handle of device context 
-			LPCTSTR lpFaceName,		// font typeface name string 
-			FONTENUMPROC lpFontFunc,	// callback function 
-			LPARAM lParam 				// application-supplied data
-		);"
-
-	<stdcall: sdword EnumFontsW handle lpwstr lpvoid uintptr>
-	^self invalidCall: _failureCode!
-
 excludeClipRect: hdc nLeftRect: nLeftRect nTopRect: nTopRect nRightRect: nRightRect nBottomRect: nBottomRect
 	"Invoke the ExcludeClipRect() function of the module wrapped by the receiver.
 	Helpstring: Creates a new clipping region that consists of the existing clipping region minus the specified rectangle
@@ -1244,7 +1230,6 @@ textOut: hdc nXStart: nXStart nYStart: nYStart lpString: lpString cbString: cbSt
 !OS.GDILibrary categoriesFor: #endPage:!**auto generated**!public!win32 functions-printing and printer spooler! !
 !OS.GDILibrary categoriesFor: #endPath:!**auto generated**!public!win32 functions-path! !
 !OS.GDILibrary categoriesFor: #enumFontFamilies:lpszFamily:lpEnumFontFamProc:lParam:!public!win32 functions-font and text! !
-!OS.GDILibrary categoriesFor: #enumFonts:lpFaceName:lpFontFunc:lParam:!public!win32 functions-font and text! !
 !OS.GDILibrary categoriesFor: #excludeClipRect:nLeftRect:nTopRect:nRightRect:nBottomRect:!**auto generated**!public!win32 functions-clipping! !
 !OS.GDILibrary categoriesFor: #extTextOut:x:y:fuOptions:lprc:lpString:cbCount:lpDx:!**auto generated**!public!win32 functions-font and text! !
 !OS.GDILibrary categoriesFor: #fillRgn:hRgn:hBr:!public!win32 functions-region! !

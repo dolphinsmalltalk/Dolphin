@@ -307,6 +307,42 @@ font: aFont
 	self selectObject: aFont.
 	^oldFont!
 
+fontFamilies: aString do: aValuable
+	"Enumerate the fonts in a specified font family that are available on the receiver's device.
+	The triadic valuable argument, operation, is passed the LOGFONTW, TEXTMETRICW and font 
+	type as its three arguments, and should answer true to continue the enueration, false to 
+	terminate it (it must not contain a ^-return).
+
+		int CALLBACK EnumFontFamiliesProc(
+			LOGFONT* lplf,	// pointer to logical-font data 
+			NEWTEXTMETRIC* lpntm,	// pointer to physical-font data 
+			DWORD dwType,	// font type 
+			LPARAM lpData 	// pointer to application-defined data  
+		);"
+
+	| callback answer |
+	callback := aValuable argumentCount == 1
+				ifTrue: 
+					[Callback block: [:lplf :lpntm :dwType :lpData | aValuable value: lplf]
+						descriptor: (FunctionDescriptor returnType: 'sdword'
+								argumentTypes: 'ENUMLOGFONTW* lpvoid dword uintptr')]
+				ifFalse: 
+					[Callback block: 
+							[:lplf :lpntm :dwType :lpData |
+							aValuable
+								cull: lplf
+								cull: lpntm
+								cull: dwType]
+						descriptor: (FunctionDescriptor returnType: 'sdword'
+								argumentTypes: 'ENUMLOGFONTW* NEWTEXTMETRICW* dword uintptr')].
+	answer := Gdi32
+				enumFontFamilies: self asParameter
+				lpszFamily: aString
+				lpEnumFontFamProc: callback asParameter
+				lParam: 0.
+	callback free.
+	^answer!
+
 fontHandle
 	^self getCurrentObject: OBJ_FONT!
 
@@ -315,41 +351,11 @@ fontNames
 
 	| answer |
 	answer := Set new.
-	self fonts: nil
+	self fontFamilies: nil
 		do: 
-			[:lf :lp :dw |
+			[:lf |
 			answer add: lf faceName.
 			true].
-	^answer!
-
-fonts: aString do: operation
-	"Enumerate the fonts in a specified font family that are available on the receiver's device.
-	The triadic valuable argument, operation, is passed the LOGFONTW, TEXTMETRICW and font 
-	type as its three arguments, and should answer true to continue the enueration, false to 
-	terminate it (it must not contain a ^-return).
-
-		int CALLBACK EnumFontsProc(
-			lplf lplf,	// pointer to logical-font data 
-			lptm lptm,	// pointer to physical-font data 
-			DWORD dwType,	// font type 
-			LPARAM lpData 	// pointer to application-defined data  
-		);"
-
-	| callback answer |
-	callback := External.Callback block: 
-					[:lplf :lptm :dwType :lpData |
-					operation
-						value: lplf
-						value: lptm
-						value: dwType]
-				descriptor: (External.FunctionDescriptor returnType: 'sdword'
-						argumentTypes: 'LOGFONTW* lpvoid dword uintptr').
-	answer := Gdi32
-				enumFonts: self asParameter
-				lpFaceName: aString
-				lpFontFunc: callback asParameter
-				lParam: 0.
-	callback free.
 	^answer!
 
 forecolor
@@ -1031,9 +1037,9 @@ windowScaling
 !Graphics.Canvas categoriesFor: #fillRegion:brush:!drawing!public! !
 !Graphics.Canvas categoriesFor: #font!accessing!public!tools! !
 !Graphics.Canvas categoriesFor: #font:!accessing!public!tools! !
+!Graphics.Canvas categoriesFor: #fontFamilies:do:!enumerating!public! !
 !Graphics.Canvas categoriesFor: #fontHandle!accessing!private!tools! !
 !Graphics.Canvas categoriesFor: #fontNames!enquiries!public! !
-!Graphics.Canvas categoriesFor: #fonts:do:!enumerating!public! !
 !Graphics.Canvas categoriesFor: #forecolor!modes!public! !
 !Graphics.Canvas categoriesFor: #forecolor:!modes!public! !
 !Graphics.Canvas categoriesFor: #formatText:in:!drawing!public! !

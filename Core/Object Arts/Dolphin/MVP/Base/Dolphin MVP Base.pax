@@ -87,6 +87,7 @@ package setClassNames: #(
 	#{OS.DRAWITEMSTRUCT}
 	#{OS.DTBGOPTS}
 	#{OS.DwmApiLibrary}
+	#{OS.ENUMLOGFONTW}
 	#{OS.FLASHWINFO}
 	#{OS.GDILibrary}
 	#{OS.GRADIENT_RECT}
@@ -2688,6 +2689,15 @@ OS.AbstractLOGFONT subclass: #'OS.LOGFONTW'
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_lfFaceName' -> 16r1C
+	}!
+OS.LOGFONTW subclass: #'OS.ENUMLOGFONTW'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_elfFullName' -> 16r5C.
+		'_OffsetOf_elfStyle' -> 16rDC
 	}!
 OS.MONITORINFO subclass: #'OS.MONITORINFOEXW'
 	instanceVariableNames: ''
