@@ -97,11 +97,11 @@ preTranslateMessage: aMSG
 			^true].
 	^false!
 
-setTimer: idInteger interval: intervalInteger
+setTimer: idInteger interval: integerOrDuration
 	^User32
 		setTimer: handle
 		nIDEvent: idInteger
-		uElapse: intervalInteger
+		uElapse: integerOrDuration asParameter
 		lpTimerFunc: nil! !
 !Kernel.PostedActionWindow categoriesFor: #asParameter!converting!public! !
 !Kernel.PostedActionWindow categoriesFor: #dispatchMessage:wParam:lParam:!dispatching!private! !

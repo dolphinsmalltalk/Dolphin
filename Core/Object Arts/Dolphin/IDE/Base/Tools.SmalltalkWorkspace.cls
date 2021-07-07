@@ -1807,13 +1807,12 @@ annotationMode: anObject
 	AnnotationMode := anObject!
 
 autoCompleteDwell
-	"Answer the <integer> number of milliseconds that must elapse between characters being typed
-	before the workspace will attempt to display an auto-completion list."
+	"Answer the `Duration` that must elapse between characters being typed before the workspace will attempt to display an auto-completion list."
 
 	^AutoCompleteDwell!
 
-autoCompleteDwell: anInteger 
-	AutoCompleteDwell := anInteger!
+autoCompleteDwell: aDuration
+	AutoCompleteDwell := aDuration!
 
 customEditorKeyBindings
 	| bindings |
@@ -2181,7 +2180,7 @@ initialize
 	DefaultFont := Font name: 'Segoe UI' pointSize: 10.
 	WordWrap := true.
 	DefaultTabWidth := 8.
-	AutoCompleteDwell := 30.
+	AutoCompleteDwell := 30 milliseconds.
 	KeywordCompletions := self defaultKeywordCompletions.
 	StandardUnaryReturnTypes := self defaultUnaryReturnTypes.
 	IsAutoCompletionCaseInsensitive := false.

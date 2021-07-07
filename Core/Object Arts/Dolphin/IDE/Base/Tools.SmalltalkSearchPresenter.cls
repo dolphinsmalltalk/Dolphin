@@ -340,13 +340,12 @@ tokenStartAt: anInteger
 !Tools.SmalltalkSearchPresenter class methodsFor!
 
 autoCompleteDwell
-	"Answer the <integer> number of milliseconds that must elapse between characters being typed
-	before the workspace will attempt to display an auto-completion list."
+	"Answer the `Duration` that must elapse between characters being typed  before the workspace will attempt to display an auto-completion list."
 
 	^AutoCompleteDwell!
 
-autoCompleteDwell: anInteger 
-	AutoCompleteDwell := anInteger!
+autoCompleteDwell: aDuration
+	AutoCompleteDwell := aDuration!
 
 defaultAdditionalAccelerators
 	^#(#(#searchSmalltalk 'Ctrl+Shift+F')).!
@@ -359,7 +358,7 @@ initialize
 		self initialize
 	"
 
-	AutoCompleteDwell := 30.
+	AutoCompleteDwell := 30 milliseconds
 	!
 
 resource_Default_view

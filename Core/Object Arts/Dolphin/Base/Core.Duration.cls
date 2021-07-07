@@ -94,6 +94,12 @@ asNanoseconds
 
 	^seconds * 1e9!
 
+asParameter
+	"Answer the receiver in a form suitable for passing to an external function primitive method (see ExternalLibrary and subclasses). 
+	There is no one ideal conversion, since we don't know the target units, but the most likely is milliseconds."
+
+	^self asMilliseconds!
+
 asSeconds
 	"Answer the <rational> total number of seconds in the length of time represented by the receiver including any fractional part of a second. 
 	If the receiver is less than <Duration factory> #zero then the result will be less than 0."
@@ -306,6 +312,7 @@ wait
 !Core.Duration categoriesFor: #asMicroseconds!converting!public! !
 !Core.Duration categoriesFor: #asMilliseconds!converting!public! !
 !Core.Duration categoriesFor: #asNanoseconds!converting!public! !
+!Core.Duration categoriesFor: #asParameter!converting!public! !
 !Core.Duration categoriesFor: #asSeconds!converting!public! !
 !Core.Duration categoriesFor: #days!accessing!public! !
 !Core.Duration categoriesFor: #displayOn:!printing!public! !

@@ -3317,7 +3317,7 @@ setStateRestoring
 setTimer: id interval: interval
 	"Sets up a timer for this window. The <integer> timer identifier (id)
 	will be passed to the wmTimer:wParam:lParam: event approximately every
-	<integer> interval milliseconds. Answers true if the function succeeds."
+	`Duration`|`SmallInteger` interval milliseconds. Answers true if the function succeeds."
 
 	id == WM_ENTERIDLE
 		ifTrue: 
@@ -3325,8 +3325,8 @@ setTimer: id interval: interval
 	^(User32
 		setTimer: handle
 		nIDEvent: id
-		uElapse: interval
-		lpTimerFunc: nil) ~= 0!
+		uElapse: interval asParameter
+		lpTimerFunc: nil) ~~ 0!
 
 settingChanged: aSettingsChangeEvent
 	"Private - A system wide setting has been changed. Propagate the change event to all sub-views, and updated as required."
