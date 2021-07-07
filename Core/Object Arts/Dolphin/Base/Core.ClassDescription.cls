@@ -566,10 +566,21 @@ instanceVariableString: aString
 
 	instanceVariables := (aString notNil and: [aString notEmpty]) ifTrue: [aString]!
 
+instVarName: anInteger
+	"Answer the name of the receiver's instance variable with the specified index."
+
+	| current ancestor |
+	current := self.
+	
+	[ancestor := current superclass.
+	ancestor isNil or: [anInteger > ancestor instSize]]
+			whileFalse: [current := ancestor].
+	^current instVarNames at: anInteger - ancestor instSize!
+
 instVarNames
 	"Answer a <sequencedReadableCollection> of the receiver's instance variable names."
 
-	instanceVariables isNil ifTrue: [^#()].
+	instanceVariables ifNil: [^#()].
 	^instanceVariables isString
 		ifTrue: [($\x20 split: instanceVariables) reject: [:each | each isEmpty]]
 		ifFalse: [instanceVariables]!
@@ -1084,6 +1095,7 @@ withAllSubclassesDo: aMonadicValuable
 !Core.ClassDescription categoriesFor: #instanceClass!accessing!public! !
 !Core.ClassDescription categoriesFor: #instanceVariableString!accessing!public! !
 !Core.ClassDescription categoriesFor: #instanceVariableString:!accessing!private! !
+!Core.ClassDescription categoriesFor: #instVarName:!accessing!public! !
 !Core.ClassDescription categoriesFor: #instVarNames!instance variables!public! !
 !Core.ClassDescription categoriesFor: #isAnonymous!public!testing! !
 !Core.ClassDescription categoriesFor: #isChanged!public!source filing!testing! !
