@@ -53,11 +53,6 @@ first
 
 	^Message selector: (self basicAt: 1) arguments: (self basicAt: 2)!
 
-nextIdentityIndexOf: anObject from: startInteger to: stopInteger
-	<primitive: 59>
-	startInteger to: stopInteger do: [:i | (self at: i) == anObject ifTrue: [^i]].
-	^0!
-
 printOn: aStream
 	self basicPrintOn: aStream.
 	aStream nextPut: $(.
@@ -113,7 +108,6 @@ uncheckedFrom: startInteger to: stopInteger keysAndValuesDo: aDyadicValuable
 !Kernel.MethodAnnotations categoriesFor: #do:!enumerating!public! !
 !Kernel.MethodAnnotations categoriesFor: #environment!public!searching! !
 !Kernel.MethodAnnotations categoriesFor: #first!enumerating!public! !
-!Kernel.MethodAnnotations categoriesFor: #nextIdentityIndexOf:from:to:!private!searching! !
 !Kernel.MethodAnnotations categoriesFor: #printOn:!printing!public! !
 !Kernel.MethodAnnotations categoriesFor: #refersTo:asLiteralOf:!private!testing! !
 !Kernel.MethodAnnotations categoriesFor: #uncheckedFrom:to:keysAndValuesDo:!enumerating!private! !

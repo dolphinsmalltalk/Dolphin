@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Tests.DolphinTest subclass: #'Kernel.Tests.CompiledMethodTest'
 	instanceVariableNames: ''
@@ -16,6 +16,11 @@ returnPlusOne: anInteger
 
 returnTrue
 	^true!
+
+testHasAnnotation
+	self assert: (SortedCollection>>#algorithm hasAnnotation: #nonBrowsable).
+	self assert: (Association>>#setKey: hasAnnotation: #mutable).
+	self deny: (Association>>#key: hasAnnotation: #mutable).!
 
 testIsQuick
 	| method |
@@ -88,6 +93,7 @@ testValueWithReceiverArguments
 	self assert: value equals: 2! !
 !Kernel.Tests.CompiledMethodTest categoriesFor: #returnPlusOne:!examples!private! !
 !Kernel.Tests.CompiledMethodTest categoriesFor: #returnTrue!examples!private! !
+!Kernel.Tests.CompiledMethodTest categoriesFor: #testHasAnnotation!public!unit tests! !
 !Kernel.Tests.CompiledMethodTest categoriesFor: #testIsQuick!public!unit tests! !
 !Kernel.Tests.CompiledMethodTest categoriesFor: #testIsSimpleSelfSend!public!unit tests! !
 !Kernel.Tests.CompiledMethodTest categoriesFor: #testLocalEnvironment!public!unit tests! !

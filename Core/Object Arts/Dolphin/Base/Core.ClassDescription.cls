@@ -73,15 +73,13 @@ allClassVarNames
 	self withAllSuperclassesDo: [:c | answer addAll: c classBindingNames].
 	^answer!
 
-allGetters
-	"Private - Answer a <Set> of the instance variable getter methods in the receiver"
+allGettersDo: aMonadicAvaluable
+	"Private - Evaluate the <monadicValuable> argument for each of the instance variable getter methods in the receiver."
 
-	| getters |
-	getters := IdentitySet new.
 	self withAllSuperclassesDo: 
 			[:eachClass |
-			eachClass methodDictionary do: [:eachMethod | eachMethod isGetter ifTrue: [getters add: eachMethod]]].
-	^getters!
+			eachClass methodDictionary
+				do: [:eachMethod | eachMethod isGetter ifTrue: [aMonadicAvaluable value: eachMethod]]]!
 
 allInstances
 	"Answer an <Array> of all direct instances of the receiver."
@@ -1028,7 +1026,7 @@ withAllSubclassesDo: aMonadicValuable
 !Core.ClassDescription categoriesFor: #addProtocol:!private!protocols! !
 !Core.ClassDescription categoriesFor: #addSharedPool:!pool variables!public! !
 !Core.ClassDescription categoriesFor: #allClassVarNames!class variables!public! !
-!Core.ClassDescription categoriesFor: #allGetters!accessing!private! !
+!Core.ClassDescription categoriesFor: #allGettersDo:!accessing!private! !
 !Core.ClassDescription categoriesFor: #allInstances!instances!public! !
 !Core.ClassDescription categoriesFor: #allInstVarNames!instance variables!public! !
 !Core.ClassDescription categoriesFor: #allMethodsDo:!enumerating!public! !

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Tests.DolphinTest subclass: #'Kernel.Tests.MethodAnnotationsTest'
 	instanceVariableNames: ''
@@ -71,16 +71,23 @@ testFirst
 	empty := self emptySubject.
 	self should: [empty first] raise: BoundsError!
 
+testIdentityIndexOf
+	self assert: (self canonicalSubject identityIndexOf: #mutable) equals: 0!
+
 testIncludes
 	| message subject |
 	message := Message selector: #namespace: arguments: {Core}.
 	subject := self canonicalSubject.
 	self assert: (subject includes: message).
 	self deny: (subject includes: (Message selector: #wibble)).
+	self deny: (subject includes: #namespace:).
 	self deny: (self emptySubject includes: message)!
 
 testIndexOf
-	self assert: (self canonicalSubject indexOf: (Message selector: #mutable)) equals: 2!
+	| subject |
+	subject := self canonicalSubject.
+	self assert: (subject indexOf: (Message selector: #mutable)) equals: 2.
+	self assert: (subject indexOf: #mutable) equals: 0!
 
 testPrintOn
 	self assert: self canonicalSubject printString
@@ -125,6 +132,7 @@ testSize
 !Kernel.Tests.MethodAnnotationsTest categoriesFor: #testCopyFromTo!public! !
 !Kernel.Tests.MethodAnnotationsTest categoriesFor: #testEnvironment!public! !
 !Kernel.Tests.MethodAnnotationsTest categoriesFor: #testFirst!public! !
+!Kernel.Tests.MethodAnnotationsTest categoriesFor: #testIdentityIndexOf!public! !
 !Kernel.Tests.MethodAnnotationsTest categoriesFor: #testIncludes!public! !
 !Kernel.Tests.MethodAnnotationsTest categoriesFor: #testIndexOf!public! !
 !Kernel.Tests.MethodAnnotationsTest categoriesFor: #testPrintOn!public! !

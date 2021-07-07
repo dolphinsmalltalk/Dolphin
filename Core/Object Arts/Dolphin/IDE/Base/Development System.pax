@@ -2233,17 +2233,17 @@ publicAccessorAspects
 	"Answer a <LookupTable> of the <Aspect> for public accessor methods of the
     	the receiver."
 
-	| aspects hidden |
-	aspects := LookupTable new
-				add: (self newAspect: #yourself class: Aspect);
-				yourself.
-	hidden := #'non browsable' asMethodCategory.
-	self class allGetters do: 
+	| aspects |
+	aspects := LookupTable new: (self class instSize + 1) * 2.
+	aspects add: ((self newAspect: #yourself class: Aspect)
+				type: self class;
+				yourself).
+	self class allGettersDo: 
 			[:each |
-			(each isPublic and: [(hidden includesMethod: each) not])
+			(each isPublic and: [(each hasAnnotation: #nonBrowsable) not])
 				ifTrue: 
 					[| aspect |
-					aspect := (self perform: each selector) newAspect: each selector class: Aspect.
+					aspect := (each value: self withArguments: #()) newAspect: each selector class: Aspect.
 					(aspect canWriteInto: self) ifFalse: [aspect beReadOnly].
 					aspects add: aspect]].
 	^aspects!

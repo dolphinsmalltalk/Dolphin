@@ -271,6 +271,17 @@ getSource
 
 	^self subclassResponsibility!
 
+hasAnnotation: aSymbol
+	"Answer whether the receiver has one or more annotations with the specified selector."
+
+	| annotations |
+	annotations := self annotations.
+	^annotations notNil
+		and: [(annotations
+				basicIdentityIndexOf: aSymbol
+				from: 1
+				to: annotations size) ~~ 0]!
+
 hash
 	"Answer the <SmallInteger> hash value for the receiver."
 
@@ -705,6 +716,7 @@ writesInstVar: aString at: anInteger
 !Kernel.CompiledCode categoriesFor: #fullBindingFor:!binding!public! !
 !Kernel.CompiledCode categoriesFor: #getDebugInfo!development!private! !
 !Kernel.CompiledCode categoriesFor: #getSource!accessing!development!public! !
+!Kernel.CompiledCode categoriesFor: #hasAnnotation:!enquiries!public! !
 !Kernel.CompiledCode categoriesFor: #hash!comparing!public! !
 !Kernel.CompiledCode categoriesFor: #header!accessing!private! !
 !Kernel.CompiledCode categoriesFor: #header:!accessing!private! !

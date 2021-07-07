@@ -104,6 +104,7 @@ asSeconds
 	"Answer the <rational> total number of seconds in the length of time represented by the receiver including any fractional part of a second. 
 	If the receiver is less than <Duration factory> #zero then the result will be less than 0."
 
+	<nonBrowsable>
 	^seconds!
 
 days
