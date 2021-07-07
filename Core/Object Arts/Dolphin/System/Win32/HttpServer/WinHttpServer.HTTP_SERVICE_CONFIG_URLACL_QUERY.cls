@@ -19,7 +19,7 @@ The type library contains the following helpstring for this struct
 
 IDL definition follows:
 ```
-typedef [uuid(fbe6f060-f472-445e-b48c-9caa8faedc7e), helpstring("This data structure is used by HttpQueryServiceConfiguration() for the	config ID HttpServiceConfigUrlAclInfo to query records from the URL ACL store.")]
+typedef [uuid(fbe6f060-f472-445e-b48c-9caa8faedc7e), helpstring("This data structure is used by HttpQueryServiceConfiguration() for the config ID HttpServiceConfigUrlAclInfo to query records from the URL ACL store.")]
 struct tagHTTP_SERVICE_CONFIG_URLACL_QUERY {
 	HttpServiceConfigQuery;
 	HTTP_SERVICE_CONFIG_URLACL_KEY KeyDesc;
@@ -61,7 +61,7 @@ defineFields
 
 	HTTP_SERVICE_CONFIG_URLACL_QUERY compileDefinition
 
-		typedef [uuid(fbe6f060-f472-445e-b48c-9caa8faedc7e), helpstring('This data structure is used by HttpQueryServiceConfiguration() for the	config ID HttpServiceConfigUrlAclInfo to query records from the URL ACL store.')]
+		typedef [uuid(fbe6f060-f472-445e-b48c-9caa8faedc7e), helpstring('This data structure is used by HttpQueryServiceConfiguration() for the config ID HttpServiceConfigUrlAclInfo to query records from the URL ACL store.')]
 		struct tagHTTP_SERVICE_CONFIG_URLACL_QUERY {
 			HttpServiceConfigQuery;
 			HTTP_SERVICE_CONFIG_URLACL_KEY KeyDesc;

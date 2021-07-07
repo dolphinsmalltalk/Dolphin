@@ -4,7 +4,7 @@ package paxVersion: 2.1;
 	basicComment: 'Dolphin STON-Core
 Copyright (c) Object Arts Ltd, 2019. Portions Copyright (C) 2012 Sven Van Caekenberghe 
 
-STON was ported to Dolphin originally had a separate STON-Core package which contained Sven''s original classes with only minor modifications for Dolphin, and then a Dolphin package which subclassed (and replaced) much of the implementation in those classes. This starting as a porting excercise to address dialect incompatibilites, but ended up as a significant rewrite of the Reader and Writer in particular. The original implementations are too slow (in Dolphin) to use as a general purpose serialisation mechanism. This does mean that the implementation has diverged significantly, and will make it much more difficult to consume any changes made in the base. However that is relatively stable now, and much of the value of STON is in the standardised format, rather than the implementation per se.
+STON was ported to Dolphin and originally had a separate STON-Core package which contained Sven''s original classes with only minor modifications for Dolphin, and then a Dolphin package which subclassed (and replaced) much of the implementation in those classes. This started as a porting exercise to address dialect incompatibilites, but ended up as a significant rewrite of the Reader and Writer in particular. The original implementations are too slow (in Dolphin) to use as a general purpose serialisation mechanism. This does mean that the implementation has diverged significantly, and will make it much more difficult to consume any changes made in the base. However that is relatively stable now, and much of the value of STON is in the standardised format, rather than the implementation per se.
 
 As of Dolphin 7.2 the original two packages have been merged into this single package, and the contents of this package represent the derived work. Sven''s original comment and licensing information are below.
 
@@ -360,7 +360,7 @@ stonOn: stonWriter
 !Core.Collection class methodsFor!
 
 fromSton: stonReader
-	"For collections we chose to instanciate based a list of elements using #add:
+	"For collections we chose to instantiate based a list of elements using #add:
 	This is not the best or most correct solution for all subclasses though,
 	so some will revert to standard object behavior or chose another solution."
 	

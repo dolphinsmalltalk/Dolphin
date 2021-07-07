@@ -832,13 +832,13 @@ parseQualifiedRefModifiers: anStQualifiedReferenceNode
 
 parserError: anInteger
 	"Raise a <SmalltalkParseError> with the specified <integer> error code and associated arguments
-	(which are used to when formatting the error message)."
+	(which are used when formatting the error message)."
 
 	self parserError: anInteger range: currentToken sourceInterval!
 
 parserError: anInteger range: anInterval 
 	"Private - Raise a <SmalltalkParseError> with the specified <integer> error code and associated arguments
-	(which are used to when formatting the error message)."
+	(which are used when formatting the error message)."
 
 	^self 
 		parserError: anInteger

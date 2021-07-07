@@ -15,7 +15,7 @@ next
 	"Answer a pseudo-Random floating point number between 0 and 1.
 	Uses the C run-time library rand() function.
 	N.B. It is not recommended you use this generator, it is very poor. The range
-	of numbers generated is only 15 bits. The only plus  point is speed."
+	of numbers generated is only 15 bits. The only plus point is speed."
 
 	^next isNil
 		ifTrue: [(seed := Ucrt rand asFloat) / ##(RAND_MAX + 1 asFloat)]

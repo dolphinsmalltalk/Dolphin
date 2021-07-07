@@ -23,7 +23,7 @@ Instance Variables:
 	classificationTable	<Array> of <Symbol>. Symbolic types of each possible character (one slot per code point).
 	separatorsInLiterals	<boolean>. Whether to allow whitespace in literal constants.
 	extendedLiterals		<boolean>. Whether extended literal constants (prefixed with ##) are parsed.
-	comments			<OrderedCollection> of <Interval>. Ranges of the source occuppied by comments.
+	comments			<OrderedCollection> of <Interval>. Ranges of the source occupied by comments.
 	errorBlock			<dyadicValuable> evaluated on encountering lexical errors
 	nameSpaceCharacter	<Character>. Namespace separator character (not currently used on Dolphin)
 	line					<integer> line number of current token.

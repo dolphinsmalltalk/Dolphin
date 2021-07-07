@@ -8,7 +8,7 @@ Kernel.StValueNode subclass: #'Kernel.StAbstractVariableNode'
 	classConstants: {}!
 Kernel.StAbstractVariableNode guid: (Core.GUID fromString: '{38ecca66-7d53-4b09-90f6-5c6f0e76ba79}')!
 Kernel.StAbstractVariableNode isNonInstantiable: true!
-Kernel.StAbstractVariableNode comment: 'StAbstrctVariableNode is an abstract parse tree node with subclasses to represent variable references and definitions.
+Kernel.StAbstractVariableNode comment: 'StAbstractVariableNode is an abstract parse tree node with subclasses to represent variable references and definitions.
 
 Instance Variables:
 	start		<Integer> start position of the variable in the source

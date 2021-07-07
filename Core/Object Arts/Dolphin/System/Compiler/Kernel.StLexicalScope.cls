@@ -91,7 +91,7 @@ needsContext
 	^self hasFarReturn or: [self envTempCount > 0]!
 
 needsSelf
-	"Answer whether this scope access self (or super)."
+	"Answer whether this scope accesses self (or super)."
 
 	^flags anyMask: NeedsSelfMask!
 

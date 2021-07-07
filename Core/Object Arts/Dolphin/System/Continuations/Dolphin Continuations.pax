@@ -7,7 +7,7 @@ Copyright (c) Object Arts Ltd, 2002.
 
 A Continuation reifies the dynamic execution state of a Process (i.e. the pending execution stack), at a particular point in time, as a first-class object. The resulting object can be sent messages to continue the computation.
 
-Note that many of the uses of call continuations in Lisp are directly supported by Smalltalk''s built-in return from block home (i.e. ^-return) mechanism, so we do not need to use these more heavyweight continations to perform operations such as escaping from loops or recursion. In those cases it is simpler to pass in a block containing a ^-return as an argument. ANSI Smalltalk Exceptions even provide a standard mechanism to to allow one to escape from a computation and subsequently re-enter it. However resumption of a thread that throws an exception can only be done once. Should we wish to capture the state of a compuation, escape from it, and then re-enter it multiple times, then we need full blown <Continuation>s.
+Note that many of the uses of call continuations in Lisp are directly supported by Smalltalk''s built-in return from block home (i.e. ^-return) mechanism, so we do not need to use these more heavyweight continuations to perform operations such as escaping from loops or recursion. In those cases it is simpler to pass in a block containing a ^-return as an argument. ANSI Smalltalk Exceptions even provide a standard mechanism to allow one to escape from a computation and subsequently re-enter it. However resumption of a thread that throws an exception can only be done once. Should we wish to capture the state of a computation, escape from it, and then re-enter it multiple times, then we need full blown <Continuation>s.
 
 Dolphin''s Continuations have been inspired by Seaside Continuations for Squeak, but the implementation is necessarily completely different because Dolphin uses an explict process stack, rather than the traditional Smalltalk-80 representation of the stack as a linked series of activation records.
 
@@ -131,7 +131,7 @@ acceptProcessCopier: aProcessCopier
 	^self isClean ifTrue: [self] ifFalse: [aProcessCopier copyObject: self]!
 
 callCC
-	"Answer a <Contination> which contains a copy of the active process.
+	"Answer a <Continuation> which contains a copy of the active process.
 	When the continuation is later evaluated, it is like returning a value from 
 	this frame again."
 

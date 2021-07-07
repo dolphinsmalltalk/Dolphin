@@ -158,7 +158,7 @@ instVarMapFor: aClass
 		ifAbsentPut: 
 			[| names |
 			names := aClass stonAllInstVarNames asSet.
-			"The 'map' is an actually array of all named inst vars, with nils in the slots of those not to be stored"
+			"The 'map' is actually an array of all named inst vars, with nils in the slots of those not to be stored"
 			aClass allInstVarNames collect: [:each | (names includes: each) ifTrue: [each]]]!
 
 isSimpleSymbol: aSymbol
@@ -178,7 +178,7 @@ jsonMode
 keepNewLines: boolean
 	"If true, any newline CR, LF or CRLF inside strings or symbols will not be escaped
 	but will instead be converted to the newline convention chosen, see #newLine:
-	The default is false, where CR, LF or CRLF will be enscaped unchanged."
+	The default is false, where CR, LF or CRLF will be escaped unchanged."
 	
 	keepNewLines := boolean!
 

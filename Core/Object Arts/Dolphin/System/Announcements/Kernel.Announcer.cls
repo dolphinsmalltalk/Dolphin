@@ -41,7 +41,7 @@ numberOfSubscriptions
 on: anAnnouncementClass do: aValuable
 	"This method is deprecated!!
 	Declare that when anAnnouncementClass is raised, aValuable is executed.
-	In addition pay attention that ushc method as well as when:do: should not be used on weak announcer since the
+	In addition pay attention that such method as well as when:do: should not be used on weak announcer since the
 	block holds the receiver and more strongly."
 	
 	^ self when: anAnnouncementClass do: aValuable!
@@ -97,7 +97,7 @@ weak
 	^WeakSubscriptionBuilder on: self!
 
 when: anAnnouncementClass do: aValuable
-	"Declare that when anAnnouncementClass is raised, aValuable is executed.  Pay attention that ushc method as well as when:do: should not be used on weak announcer since the block holds the receiver and more strongly."
+	"Declare that when anAnnouncementClass is raised, aValuable is executed.  Pay attention that such method as well as when:do: should not be used on weak announcer since the block holds the receiver and more strongly."
 	
 	^ self subscribe: anAnnouncementClass do: aValuable!
 

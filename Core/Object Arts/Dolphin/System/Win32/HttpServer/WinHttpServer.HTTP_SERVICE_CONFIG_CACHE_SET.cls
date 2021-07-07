@@ -13,13 +13,13 @@ WinHttpServer.HTTP_SERVICE_CONFIG_CACHE_SET guid: (Core.GUID fromString: '{7d7f2
 WinHttpServer.HTTP_SERVICE_CONFIG_CACHE_SET comment: '`HTTP_SERVICE_CONFIG_CACHE_SET` is an `External.Structure` class to wrap the struct ''WinHttpServer.HTTP_SERVICE_CONFIG_CACHE_SET'' from type information in the ''Windows Http Server API'' library.
 
 The type library contains the following helpstring for this struct
-	"To set a cache parameter value use the set structure. To query use the key directly.When you query a parameter value the output buffer must be exactly the sizeof param."
+	"To set a cache parameter value use the set structure. To query use the key directly. When you query a parameter value the output buffer must be exactly the sizeof param."
 
 ** This comment was automatically generated from a type library. Delete this line to prevent any manual edits from being overwritten if the wrapper class is regenerated.
 
 IDL definition follows:
 ```
-typedef [uuid(7d7f269d-ce99-4ee1-979d-387f6f2147be), helpstring("To set a cache parameter value use the set structure. To query use the key directly.When you query a parameter value the output buffer must be exactly the sizeof param.")]
+typedef [uuid(7d7f269d-ce99-4ee1-979d-387f6f2147be), helpstring("To set a cache parameter value use the set structure. To query use the key directly. When you query a parameter value the output buffer must be exactly the sizeof param.")]
 struct tagHTTP_SERVICE_CONFIG_CACHE_SET {
 	HTTP_SERVICE_CONFIG_CACHE_KEY KeyDesc;
 	ULONG ParamDesc;

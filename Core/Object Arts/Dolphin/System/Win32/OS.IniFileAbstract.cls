@@ -73,7 +73,7 @@ at: aString ifAbsent: aNiladicValuable
 
 at: aString ifAbsentPut: aNiladicValuable
 	"Answer the value of the receiver keyed by the <String> argument, or if not found add and
-	answer the result of result of evaluating the <niladicValuable>, argument."
+	answer the result of evaluating the <niladicValuable>, argument."
 
 	| preexisting |
 	preexisting := self at: aString ifAbsent: [AbsentCookie].
