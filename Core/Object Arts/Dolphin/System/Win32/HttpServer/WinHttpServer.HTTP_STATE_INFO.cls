@@ -86,7 +86,7 @@ defineFields
 		typedef [uuid(5dc84435-3eb8-42fe-94bf-25f253e612fd), helpstring('The HTTP_STATE_INFO structure is used to enable or disable a Server Session or URL Group.')]
 		struct tagHTTP_STATE_INFO {
 			[nonbrowsable, helpstring('specifying whether the property is present.')] HTTP_PROPERTY_FLAGS;
-			[helpstring('A member of the HTTP_ENABLED_STATE enumeration specifying the whether the configuration object is enabled or disabled.	This can be used to disable a URL Group or Server Session.')] HTTP_ENABLED_STATE State;
+			[helpstring('A member of the HTTP_ENABLED_STATE enumeration specifying whether the configuration object is enabled or disabled. This can be used to disable a URL Group or Server Session.')] HTTP_ENABLED_STATE State;
 		} HTTP_STATE_INFO;
 "
 

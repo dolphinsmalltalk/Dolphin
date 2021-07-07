@@ -11,7 +11,7 @@ The DebugTraceStream is just one of the standard options available for diagnosti
 1. Transcript
 2. Stdio streams (e.g. `SessionManager current stdout`)
 
-The DebugTraceStream has a couple advantages over these alternatives:
+The DebugTraceStream has a couple of advantages over these alternatives:
 - It is much faster; about 5x faster than the Transcript, and 20x faster than writing to stdout (at least in a GUI app).
 - It is only visible when either running under a native debugger, or when using a tool such as DebugView, so it can be left in place in an application without too much impact. This avoids the undesirable behaviour of having output open a console window, in a GUI app, or of needing to include the TranscriptShell as part of the application.
 

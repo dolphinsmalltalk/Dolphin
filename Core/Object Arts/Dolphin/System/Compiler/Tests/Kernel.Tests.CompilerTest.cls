@@ -983,7 +983,7 @@ testReturnFromOptimizedBlock
 	| compiled lowerText upperText |
 	compiled := self getTestMethod: #testReturnFromOptimizedBlock.
 	self assert: compiled needsContext.
-	"Note that the far returns in the optimized ifTrue: blocks can replaced with a normal returns"
+	"Note that the far returns in the optimized ifTrue: blocks can be replaced with normal returns"
 	lowerText := compiled disassembly.
 	upperText := 'Normal, 0 args, 0 env temps, <1d> literals, needs context
 
