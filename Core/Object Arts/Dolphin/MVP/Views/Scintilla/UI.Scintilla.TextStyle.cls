@@ -411,75 +411,102 @@ weight: anInteger
 buildPropertyMap
 	^IdentityDictionary new
 		at: #forecolor
-			put: (ColorPropertyDescriptor
+			put: (ColourPropertyDescriptor
 					getSelector: #forecolor
 					defaultValue: Color black
 					setMessage: SCI_STYLESETFORE);
 		at: #backcolor
-			put: (ColorPropertyDescriptor
+			put: (ColourPropertyDescriptor
 					getSelector: #backcolor
 					defaultValue: Color white
 					setMessage: SCI_STYLESETBACK);
 		at: #fontName
-			put: (PropertyDescriptor
+			put: ((EnumPropertyDescriptor
 					getSelector: #fontName
 					defaultValue: nil
-					setMessage: SCI_STYLESETFONT);
+					setMessage: SCI_STYLESETFONT)
+					type: String;
+					values: [(Canvas forDesktop fontNames reject: [:each | (each at: 1) = $@]) asArray sort];
+					nilChoice: '<Inherited>';
+					yourself);
 		at: #isBold
-			put: (PropertyDescriptor
+			put: ((BoolPropertyDescriptor
 					getSelector: #isBold
 					defaultValue: false
-					setMessage: SCI_STYLESETBOLD);
+					setMessage: SCI_STYLESETBOLD)
+					beNullable;
+					yourself);
 		at: #isItalic
-			put: (PropertyDescriptor
+			put: ((BoolPropertyDescriptor
 					getSelector: #isItalic
 					defaultValue: false
-					setMessage: SCI_STYLESETITALIC);
+					setMessage: SCI_STYLESETITALIC)
+					beNullable;
+					yourself);
 		at: #isUnderlined
-			put: (PropertyDescriptor
+			put: ((BoolPropertyDescriptor
 					getSelector: #isUnderlined
 					defaultValue: false
-					setMessage: SCI_STYLESETUNDERLINE);
+					setMessage: SCI_STYLESETUNDERLINE)
+					beNullable;
+					yourself);
 		at: #case
-			put: (PropertyDescriptor
+			put: ((EnumPropertyDescriptor
 					getSelector: #case
 					defaultValue: SC_CASE_MIXED
-					setMessage: SCI_STYLESETCASE);
+					setMessage: SCI_STYLESETCASE)
+					values: self caseNames;
+					beNullable;
+					yourself);
 		at: #characterSet
-			put: (PropertyDescriptor
+			put: ((IntPropertyDescriptor
 					getSelector: #characterSet
 					defaultValue: SC_CHARSET_DEFAULT
-					setMessage: SCI_STYLESETCHARACTERSET);
+					setMessage: SCI_STYLESETCHARACTERSET)
+					beNullable;
+					isNonBrowsable: true;
+					yourself);
 		at: #pointSize
-			put: (PropertyDescriptor
+			put: (FloatPropertyDescriptor
 					getSelector: #centiPointSize
 					defaultValue: nil
 					setMessage: SCI_STYLESETSIZEFRACTIONAL);
 		at: #isBackcolorExtendedToEndOfLine
-			put: (PropertyDescriptor
+			put: ((BoolPropertyDescriptor
 					getSelector: #isBackcolorExtendedToEndOfLine
 					defaultValue: false
-					setMessage: SCI_STYLESETEOLFILLED);
+					setMessage: SCI_STYLESETEOLFILLED)
+					beNullable;
+					yourself);
 		at: #isChangeable
-			put: (PropertyDescriptor
+			put: ((BoolPropertyDescriptor
 					getSelector: #isChangeable
 					defaultValue: true
-					setMessage: SCI_STYLESETCHANGEABLE);
+					setMessage: SCI_STYLESETCHANGEABLE)
+					beNullable;
+					isNonBrowsable: true;
+					yourself);
 		at: #isHotspot
-			put: (PropertyDescriptor
+			put: ((BoolPropertyDescriptor
 					getSelector: #isHotspot
 					defaultValue: false
-					setMessage: SCI_STYLESETHOTSPOT);
+					setMessage: SCI_STYLESETHOTSPOT)
+					beNullable;
+					yourself);
 		at: #isVisible
-			put: (PropertyDescriptor
+			put: ((BoolPropertyDescriptor
 					getSelector: #isVisible
 					defaultValue: true
-					setMessage: SCI_STYLESETVISIBLE);
+					setMessage: SCI_STYLESETVISIBLE)
+					beNullable;
+					yourself);
 		at: #weight
-			put: (PropertyDescriptor
+			put: ((IntPropertyDescriptor
 					getSelector: #weight
 					defaultValue: SC_WEIGHT_NORMAL
-					setMessage: SCI_STYLESETWEIGHT);
+					setMessage: SCI_STYLESETWEIGHT)
+					beNullable;
+					yourself);
 		shrink;
 		yourself!
 

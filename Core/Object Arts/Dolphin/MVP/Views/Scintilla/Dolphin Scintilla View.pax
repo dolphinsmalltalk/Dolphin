@@ -41,12 +41,16 @@ package setClassNames: #(
 	#{UI.Scintilla}
 	#{UI.Scintilla.Annotation}
 	#{UI.Scintilla.Attribute}
+	#{UI.Scintilla.BoolPropertyDescriptor}
 	#{UI.Scintilla.CallTipStyle}
 	#{UI.Scintilla.CharacterRepresentation}
-	#{UI.Scintilla.ColorAlphaPropertyDescriptor}
-	#{UI.Scintilla.ColorPropertyDescriptor}
+	#{UI.Scintilla.ColourAlphaPropertyDescriptor}
+	#{UI.Scintilla.ColourPropertyDescriptor}
+	#{UI.Scintilla.EnumPropertyDescriptor}
+	#{UI.Scintilla.FloatPropertyDescriptor}
 	#{UI.Scintilla.Indicator}
 	#{UI.Scintilla.IndicatorStyle}
+	#{UI.Scintilla.IntPropertyDescriptor}
 	#{UI.Scintilla.KeyBinding}
 	#{UI.Scintilla.LexerMetadata}
 	#{UI.Scintilla.LexerNamedStyle}
@@ -1371,7 +1375,9 @@ Core.Object subclass: #'UI.Scintilla.PropertyDescriptor'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'AlwaysPrintMask' -> 16r1
+		'AlwaysPrintMask' -> 16r1.
+		'NonBrowsableMask' -> 16r4.
+		'NullableMask' -> 16r2
 	}!
 Core.Object subclass: #'UI.Scintilla.Styler'
 	instanceVariableNames: ''
@@ -1474,13 +1480,37 @@ UI.ValuePresenter subclass: #'UI.Scintilla.TextStylePresenter'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-UI.Scintilla.PropertyDescriptor subclass: #'UI.Scintilla.ColorAlphaPropertyDescriptor'
+UI.Scintilla.PropertyDescriptor subclass: #'UI.Scintilla.BoolPropertyDescriptor'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-UI.Scintilla.PropertyDescriptor subclass: #'UI.Scintilla.ColorPropertyDescriptor'
+UI.Scintilla.PropertyDescriptor subclass: #'UI.Scintilla.ColourAlphaPropertyDescriptor'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+UI.Scintilla.PropertyDescriptor subclass: #'UI.Scintilla.ColourPropertyDescriptor'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+UI.Scintilla.PropertyDescriptor subclass: #'UI.Scintilla.EnumPropertyDescriptor'
+	instanceVariableNames: 'values nilChoice type'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+UI.Scintilla.PropertyDescriptor subclass: #'UI.Scintilla.FloatPropertyDescriptor'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+UI.Scintilla.PropertyDescriptor subclass: #'UI.Scintilla.IntPropertyDescriptor'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

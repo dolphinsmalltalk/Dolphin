@@ -637,9 +637,7 @@ package setMethodNames: #(
 	#(#{UI.RichTextPresenter class} #publishedEventsOfInstances)
 	#(#{UI.Scintilla.Attribute class} #publishedAspectsOfInstances)
 	#(#{UI.Scintilla.CharacterRepresentation class} #publishedAspectsOfInstances)
-	#(#{UI.Scintilla.IndicatorStyle class} #publishedAspectsOfInstances)
 	#(#{UI.Scintilla.KeyBinding class} #publishedAspectsOfInstances)
-	#(#{UI.Scintilla.Margin class} #publishedAspectsOfInstances)
 	#(#{UI.Scintilla.MarkerDefinition class} #publishedAspectsOfInstances)
 	#(#{UI.Scintilla.ScintillaView} #publishedAspects)
 	#(#{UI.Scintilla.ScintillaView class} #publishedAspectsOfInstances)
@@ -6942,9 +6940,12 @@ publishedEventsOfInstances
 publishedAspectsOfInstances
 	"Answer a <LookupTable> of the <Aspect>s published by instances of the receiver."
 
-	^super publishedAspectsOfInstances
-		add: (Aspect integer: #id) beReadOnly;
-		yourself! !
+	| aspects |
+	aspects := super publishedAspectsOfInstances.
+	aspects add: (Aspect integer: #id) beReadOnly.
+	self propertyMap
+		keysAndValuesDo: [:eachKey :eachValue | eachValue isNonBrowsable ifFalse: [aspects add: (eachValue aspectNamed: eachKey)]].
+	^aspects! !
 !UI.Scintilla.Attribute class categoriesFor: #publishedAspectsOfInstances!constants!public! !
 
 !UI.Scintilla.CharacterRepresentation class methodsFor!
@@ -6960,24 +6961,6 @@ publishedAspectsOfInstances
 		yourself! !
 !UI.Scintilla.CharacterRepresentation class categoriesFor: #publishedAspectsOfInstances!constants!public! !
 
-!UI.Scintilla.IndicatorStyle class methodsFor!
-
-publishedAspectsOfInstances
-	"Answer a <LookupTable> of the <Aspect>s published by instances of the receiver."
-
-	^super publishedAspectsOfInstances
-		add: (Aspect color: #forecolor);
-		add: (Aspect color: #hoverForecolor);
-		add: (Aspect choice: #style from: IndicatorStyles);
-		add: (Aspect choice: #hoverStyle from: IndicatorStyles);
-		add: (Aspect name: #name);
-		add: (Aspect integer: #alpha);
-		add: (Aspect integer: #foreAlpha);
-		add: (Aspect integer: #strokeWidth);
-		add: (Aspect boolean: #isUnderText);
-		yourself! !
-!UI.Scintilla.IndicatorStyle class categoriesFor: #publishedAspectsOfInstances!constants!public! !
-
 !UI.Scintilla.KeyBinding class methodsFor!
 
 publishedAspectsOfInstances
@@ -6991,34 +6974,14 @@ publishedAspectsOfInstances
 		yourself! !
 !UI.Scintilla.KeyBinding class categoriesFor: #publishedAspectsOfInstances!constants!public! !
 
-!UI.Scintilla.Margin class methodsFor!
-
-publishedAspectsOfInstances
-	"Answer a <LookupTable> of the <Aspect>s published by instances of the receiver."
-
-	^super publishedAspectsOfInstances
-		add: (Aspect boolean: #isSensitive);
-		add: (Aspect choice: #type from: MarginTypes);
-		add: (Aspect integer: #width);
-		add: (Aspect integer: #mask);
-		add: (Aspect choice: #cursorType from: CursorTypes values);
-		add: (Aspect color: #backcolor);
-		yourself! !
-!UI.Scintilla.Margin class categoriesFor: #publishedAspectsOfInstances!constants!public! !
-
 !UI.Scintilla.MarkerDefinition class methodsFor!
 
 publishedAspectsOfInstances
-	"Answer a <LookupTable> of the <Aspect>s published by instances of the receiver."
+	"Answer a <LookupTable> of the <Aspect>s published by instances of the receiver.
+	Most of the aspects can be built from the property descriptor map."
 
 	^super publishedAspectsOfInstances
 		add: (Aspect name: #name);
-		add: (Aspect choice: #glyphName from: self glyphNames , self visibleCharacterGlyphs);
-		add: (Aspect color: #forecolor);
-		add: (Aspect color: #backcolor);
-		add: (Aspect integer: #alpha);
-		add: (Aspect color: #selectionBackcolor);
-		add: (Aspect integer: #strokeWidth);
 		yourself! !
 !UI.Scintilla.MarkerDefinition class categoriesFor: #publishedAspectsOfInstances!constants!public! !
 
@@ -7161,28 +7124,8 @@ newInstanceAspect: aSymbol class: aspectClass
 publishedAspectsOfInstances
 	"Answer a <LookupTable> of the <Aspect>s published by instances of the receiver."
 
-	| answer |
-	answer := super publishedAspectsOfInstances.
-	"Don't bother exposing the changeable style flag, since it doesn't work at present"
-	#(#isItalic #isBold #isUnderlined #isBackcolorExtendedToEndOfLine #isHotspot #isInvisible)
-		do: [:each | answer add: ((Aspect boolean: each)
-						isNullable: true;
-						yourself)].
-	^answer
-		add: (Aspect color: #forecolor);
-		add: (Aspect color: #backcolor);
-		add: (Aspect
-					choice: #fontName
-					from: Canvas forDesktop fontNames asSortedCollection
-					andNil: nil);
-		add: (Aspect number: #pointSize);
-		add: (Aspect integer: #characterSet);
-		add: (Aspect
-					choice: #caseName
-					from: self caseNames
-					andNil: nil);
+	^super publishedAspectsOfInstances
 		add: (Aspect name: #name);
-		add: (Aspect number: #weight);
 		yourself! !
 !UI.Scintilla.TextStyle class categoriesFor: #newInstanceAspect:class:!adapters!private! !
 !UI.Scintilla.TextStyle class categoriesFor: #publishedAspectsOfInstances!constants!public! !

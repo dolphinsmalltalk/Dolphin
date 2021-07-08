@@ -7,12 +7,12 @@ UI.Scintilla.Styler subclass: #'UI.Scintilla.NullStyler'
 	classInstanceVariableNames: ''
 	classConstants: {}!
 UI.Scintilla.NullStyler guid: (Core.GUID fromString: '{930680af-646b-4660-a349-1f5e5a8e0fec}')!
-UI.Scintilla.NullStyler comment: 'NullScintillaStyler is a <ScintillaStyler> that leaves text in plain unformatted form, i.e. all text assumes the configured ''normal'' style, which is normally the style named #normal.
+UI.Scintilla.NullStyler comment: '`NullStyler` is a Scintilla `Styler` that leaves text in plain unformatted form, i.e. all text assumes the configured ''normal'' style, which is usually the style named #normal.
 
-This styler is useful either when one wants to use Scintilla, but with plain text, or to temporarily disable styling.
+This styler is useful either when one wants to use Scintilla with plain text, or to temporarily disable styling.
 
-Instance Variables:
-	normalStyleName		<Symbol>'!
+## Instance Variables:
+  normalStyleName		`Symbol`'!
 !UI.Scintilla.NullStyler categoriesForClass!Kernel-Objects! !
 !UI.Scintilla.NullStyler methodsFor!
 

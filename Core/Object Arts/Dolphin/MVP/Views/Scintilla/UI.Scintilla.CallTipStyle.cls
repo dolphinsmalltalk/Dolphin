@@ -27,7 +27,7 @@ initialize
 
 	propertyMap := self buildPropertyMap
 				at: #forecolor
-					put: (ColorPropertyDescriptor
+					put: (ColourPropertyDescriptor
 							getSelector: #forecolor
 							defaultValue: Color gray
 							setMessage: SCI_STYLESETFORE);
