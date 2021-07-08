@@ -1,8 +1,8 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
 Kernel.AttributeDescriptor subclass: #'Tools.Aspect'
-	instanceVariableNames: 'name presenterBlock editBlock immediateActionBlock category getBlock putBlock'
-	classVariableNames: ''
+	instanceVariableNames: 'name presenterBlock editBlock immediateActionBlock category getBlock putBlock type icon'
+	classVariableNames: 'DefaultPresenterBlock'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
@@ -51,7 +51,7 @@ accessorFor: anObject
 beEditedInPlace
 	"Set that aspect editor should be displayed in-place."
 
-	flags := flags maskSet: EditInPlaceMask!
+	flags := flags bitOr: EditInPlaceMask!
 
 beImmediateActionIsEdit
 	"Some aspects can use their edit block to perform an immediate action. Set this here"
@@ -68,12 +68,7 @@ bePresenterBlockReadOnly
 	not setting them. This is used by the PropertyEditor in particular to swap out a
 	presenterBlock for the default block when the provided block is read only."
 
-	flags := flags maskSet: ##(ReadOnlyPresenterBlockMask | ValueWorkspaceEditorMask)!
-
-beValueWorkspacePresenter
-	"Set that the receiver's presenter block uses a ValueWorkspace presenter for displaying/editing the receiver."
-
-	flags := flags maskSet: ValueWorkspaceEditorMask!
+	flags := flags bitOr: ##(ReadOnlyPresenterBlockMask | ValueWorkspaceEditorMask)!
 
 canEdit
 	"Answer true if the receiver can be edited; that is, it has an edit block
@@ -135,7 +130,7 @@ editablePresenterBlock
 	"Answer the presenter block that can definitely be used to display AND edit the receiver's aspect"
 
 	^self isPresenterBlockReadOnly 
-		ifTrue: [self class defaultPresenterBlock]
+		ifTrue: [DefaultPresenterBlock]
 		ifFalse: [self presenterBlock]!
 
 editablePresenterFor: aValueModel in: aCompositePresenter 
@@ -146,9 +141,12 @@ editablePresenterFor: aValueModel in: aCompositePresenter
 	^self editablePresenterBlock value: aCompositePresenter value: aValueModel!
 
 editBlock
-	"Private - Answer the <monadicValuable> that can be used to edit the receiver's aspect."
+	"Answer the <monadicValuable> that can be used to edit the receiver's aspect."
 
 	^editBlock!
+
+editBlock: anObject
+	editBlock := anObject!
 
 getBlock: aMonadicValuable
 	getBlock := aMonadicValuable!
@@ -164,10 +162,21 @@ hash
 
 	^self name hash!
 
+icon
+	"Answer an icon to be displayed alongside the aspect to give the user an indication of the type of object that it should contain (which may be more general than the type object Object currently assigned)."
+
+	^icon ifNil: [type ifNotNil: [type icon]]!
+
+icon: anIcon
+	icon := anIcon!
+
 immediateActionBlock
 	"Private - Answer the <monadicValuable> that can be used to immediately action the receiver's aspect."
 
 	^immediateActionBlock!
+
+immediateActionBlock: anObject
+	immediateActionBlock := anObject!
 
 isEditedInPlace
 	"Answer whether the aspect should be edited in-place if possible."
@@ -203,14 +212,14 @@ name
 	^name!
 
 name: aSymbol presenterBlock: aDyadicValuableOrNil editBlock: aMonadicValuable
-	"Private - Initialize the receiver; set the name to aSymbol and the 
-	editor presenter creation block to aOneArgBlock"
+	"Private - Initialize the receiver"
 
+	flags := self defaultFlags.
 	name := aSymbol.
-	aDyadicValuableOrNil == self class defaultPresenterBlock
+	aDyadicValuableOrNil == DefaultPresenterBlock
 		ifTrue: 
 			["If no presenter block is specified, then the default ValueWorkspace presentation should be used."
-			self beValueWorkspacePresenter]
+			flags := flags bitOr: ValueWorkspaceEditorMask]
 		ifFalse: [presenterBlock := aDyadicValuableOrNil].
 	editBlock := aMonadicValuable!
 
@@ -226,7 +235,7 @@ presenterBlock
 	"Answer the <dyadicValuable> capable of creating a presenter for the receiver's
 	 aspect name"
 
-	^presenterBlock ?? self class defaultPresenterBlock!
+	^presenterBlock ?? DefaultPresenterBlock!
 
 presenterFor: aValueModel in: aCompositePresenter
 	"Answer a new <Presenter> to display (and possibly edit) the aspect
@@ -251,6 +260,16 @@ putSelector
 readFrom: anObject
 	^getBlock ifNil: [anObject perform: self getSelector] ifNotNil: [getBlock value: anObject]!
 
+type
+	"The class of object that is expected to be associated with this aspect. Can be nil for unspecified."
+
+	^type!
+
+type: aClass
+	"The class of object that is expected to be associated with this aspect. Can be nil for anything."
+
+	type := aClass!
+
 value
 	"Private - Answer the value of the receiver when it is to appear as an
 	association (Aspects can be stored in Dictionaries)"
@@ -272,7 +291,6 @@ writeInto: subjectObject value: valueObject
 !Tools.Aspect categoriesFor: #beImmediateActionIsEdit!accessing!public! !
 !Tools.Aspect categoriesFor: #beMultilineValue!public!testing! !
 !Tools.Aspect categoriesFor: #bePresenterBlockReadOnly!accessing!public! !
-!Tools.Aspect categoriesFor: #beValueWorkspacePresenter!public!testing! !
 !Tools.Aspect categoriesFor: #canEdit!public!testing! !
 !Tools.Aspect categoriesFor: #canGenerateAccessors!private!testing! !
 !Tools.Aspect categoriesFor: #canImmediateAction!public!testing! !
@@ -288,11 +306,15 @@ writeInto: subjectObject value: valueObject
 !Tools.Aspect categoriesFor: #displayOn:!displaying!public! !
 !Tools.Aspect categoriesFor: #editablePresenterBlock!enquiries!public! !
 !Tools.Aspect categoriesFor: #editablePresenterFor:in:!enquiries!public! !
-!Tools.Aspect categoriesFor: #editBlock!accessing!private! !
+!Tools.Aspect categoriesFor: #editBlock!accessing!public! !
+!Tools.Aspect categoriesFor: #editBlock:!initializing!public! !
 !Tools.Aspect categoriesFor: #getBlock:!accessing!public! !
 !Tools.Aspect categoriesFor: #getSelector!accessing!private! !
 !Tools.Aspect categoriesFor: #hash!comparing!public! !
+!Tools.Aspect categoriesFor: #icon!accessing!public! !
+!Tools.Aspect categoriesFor: #icon:!initializing!public! !
 !Tools.Aspect categoriesFor: #immediateActionBlock!accessing!private! !
+!Tools.Aspect categoriesFor: #immediateActionBlock:!initializing!private! !
 !Tools.Aspect categoriesFor: #isEditedInPlace!public!testing! !
 !Tools.Aspect categoriesFor: #isEditedWithValueWorkspace!public!testing! !
 !Tools.Aspect categoriesFor: #isMultilineValue!public!testing! !
@@ -308,25 +330,28 @@ writeInto: subjectObject value: valueObject
 !Tools.Aspect categoriesFor: #putBlock:!accessing!public! !
 !Tools.Aspect categoriesFor: #putSelector!accessing!public! !
 !Tools.Aspect categoriesFor: #readFrom:!indirect accessing!private! !
+!Tools.Aspect categoriesFor: #type!initializing!public! !
+!Tools.Aspect categoriesFor: #type:!initializing!public! !
 !Tools.Aspect categoriesFor: #value!accessing!private! !
 !Tools.Aspect categoriesFor: #writeInto:value:!indirect accessing!private! !
 
 !Tools.Aspect class methodsFor!
 
-autostring: aStringAspectSymbol 
+autostring: aStringAspectSymbol
 	"Answer an instance of the receiver for aStringAspectSymbol.
 	The aspect is editable using a TextPresenter with a single line editor view
 	that updates on each character"
 
 	^(self name: aStringAspectSymbol
 		presenterBlock: 
-			[:p :m | 
+			[:p :m |
 			| presenter |
 			presenter := TextPresenter createIn: p on: m.
-			(presenter view)
+			presenter view
 				updatePerChar: true;
 				selectAllIfSingleLine.
 			presenter])
+		type: String;
 		beEditedInPlace;
 		yourself!
 
@@ -353,6 +378,7 @@ bitmap: aBitmapAspectSymbol
 						fileTypes: {DIBSection filesType. FileDialog allFilesType};
 						showModal.
 			filename notNil ifTrue: [p value: (DIBSection fromFile: filename)]])
+		type: Graphics.Bitmap;
 		bePresenterBlockReadOnly;
 		yourself!
 
@@ -361,40 +387,31 @@ block: anAspectSymbol
 	for some kind of <valuable> (not necessarily a block).
 	The aspect is editable using a <ValueWorkspace> presenter."
 
-	^(self name: anAspectSymbol presenterBlock: self defaultPresenterBlock)
+	^(self name: anAspectSymbol presenterBlock: DefaultPresenterBlock)
+		type: BlockClosure;
 		beMultilineValue;
 		yourself!
 
-boolean: aBooleanAspectSymbol 
+boolean: aBooleanAspectSymbol
 	"Answer an instance of the receiver for aBooleanAspectSymbol. The aspect is viewable using a
 	<BooleanPresenter> and can be edited by toggling the aspect value. By default boolean aspects
-	are not nullable. If they are nullable then a three state view is used."
+	are not nullable, but see #nullableBoolean."
 
-	| answer |
-	answer := super new.
-	answer 
+	| editBlock |
+	editBlock := [:p | p value: p value not].
+	^self basicNew
 		name: aBooleanAspectSymbol
-		presenterBlock: 
-			[:p :m | 
-			| bp |
-			bp := BooleanPresenter 
-						create: (answer isNullable 
-								ifTrue: [BooleanPresenter threeStateView]
-								ifFalse: [BooleanPresenter defaultView])
-						in: p
-						on: m.
-			bp]
-		editBlock: 
-			[:p | 
-			"3-state toggles between nil, false, and true in a cylce, 2-state just
-			between cycles between false and true"
-			p value: (answer isNullable 
-						ifTrue: [p value ifNil: [false] ifNotNil: [:value | value ifFalse: [true]]]
-						ifFalse: [p value not])].
-	answer
-		isNullable: false;
-		beImmediateActionIsEdit.
-	^answer!
+			presenterBlock: 
+				[:p :m |
+				BooleanPresenter
+					create: 'CheckBox view'
+					in: p
+					on: m]
+			editBlock: editBlock;
+		flags: ##(WriteableMask | ReadableMask | MutableMask);
+		immediateActionBlock: editBlock;
+		type: Boolean;
+		yourself!
 
 choice: aChoiceAspectSymbol choiceBlock: aMonadicValuable
 	"Answer an instance of the receiver for aChoiceAspectSymbol.
@@ -406,55 +423,72 @@ choice: aChoiceAspectSymbol choiceBlock: aMonadicValuable
 			(ChoicePresenter createIn: p on: m)
 				choices: (aMonadicValuable value: m);
 				yourself])
-		isNullable: false;
+		beNonNullable;
 		yourself!
 
-choice: aChoiceAspectSymbol evaluationFrom: anArrayOfEvaluableStrings 
+choice: aChoiceAspectSymbol evaluationFrom: aNiladicValuable
 	"Answer an instance of the receiver for aChoiceAspectSymbol.
 	The possible choices can be taken from evaluations of the strings in anArrayOfEvaluableStrings"
 
 	^(self name: aChoiceAspectSymbol
 		presenterBlock: 
-			[:p :m | 
+			[:p :m |
 			| evaluatorModel |
 			evaluatorModel := ValueConverter subject: m typeConverter: EvaluationConverter new inverted.
 			(ChoicePresenter createIn: p on: evaluatorModel)
-				choices: anArrayOfEvaluableStrings;
+				choices: aNiladicValuable value;
 				yourself])
-		isNullable: false;
+		beNonNullable;
 		yourself!
 
-choice: aChoiceAspectSymbol from: anArray
-	"Answer an instance of the receiver for aChoiceAspectSymbol.
-	The possible choices can be taken from from anArray"
+choice: aChoiceAspectSymbol from: choicesValuable
+	"Answer an instance of the receiver for aChoiceAspectSymbol. The possible choices can be taken from the value of choicesValuable, normally a <sequenceableCollection>."
 
-	^(self name: aChoiceAspectSymbol
-		presenterBlock: 
-			[:p :m | 
-			(ChoicePresenter createIn: p on: m)
-				choices: anArray;
-				yourself])
-		isNullable: false;
-		yourself!
+	^self
+		choice: aChoiceAspectSymbol
+		from: choicesValuable
+		type: nil!
 
-choice: aChoiceAspectSymbol from: anArray andNil: nilChoice 
+choice: aChoiceAspectSymbol from: choicesValuable andNil: nilChoice
 	"Answer an instance of the receiver for aChoiceAspectSymbol.
 	The possible choices can be taken from from anArray together with a choice
 	which represents nil"
 
-	| choices |
-	choices := (OrderedCollection with: nilChoice)
-				addAll: anArray;
-				yourself.
 	^self name: aChoiceAspectSymbol
 		presenterBlock: 
-			[:p :m | 
+			[:p :m |
+			| values count choices |
+			values := choicesValuable value.
+			count := values size + 1.
+			choices := (Array new: count)
+						at: 1 put: nilChoice;
+						replaceFrom: 2
+							to: count
+							with: values
+							startingAt: 1;
+						yourself.
 			(ChoicePresenter createIn: p on: m)
 				nilChoice: nilChoice;
 				choices: choices;
 				yourself]!
 
-choice: aSymbol fromMap: aLookupTable nullValue: anObject 
+choice: aChoiceAspectSymbol from: choicesValuable type: aClass
+	"Answer an instance of the receiver for aChoiceAspectSymbol. The possible choices can be taken from from aSequenceableCollection and are expected to be (sub)instances of the class, aClass.
+	The aspect is not nullable (i.e. cannot be assigned `nil`)"
+
+	^(self
+		name: aChoiceAspectSymbol
+		presenterBlock: 
+			[:p :m |
+			(ChoicePresenter createIn: p on: m)
+				choices: choicesValuable value;
+				yourself]
+		editBlock: nil)
+		beNonNullable;
+		type: aClass;
+		yourself!
+
+choice: aSymbol fromMap: mapValuable nullValue: anObject
 	"Answer an instance of the receiver for an aspect named by the
 	<Symbol> argument. The possible choices can be taken from 
 	the <LookupTable> argument, whose keys are the display values, 
@@ -463,13 +497,15 @@ choice: aSymbol fromMap: aLookupTable nullValue: anObject
 
 	^self name: aSymbol
 		presenterBlock: 
-			[:parent :model | 
+			[:parent :model |
+			| map |
+			map := mapValuable value.
 			(ChoicePresenter createIn: parent
 				on: (ValueConverter subject: model
-						typeConverter: ((MappingConverter rightToLeft: aLookupTable)
+						typeConverter: ((MappingConverter rightToLeft: map)
 								leftNullValue: anObject;
 								yourself)))
-				choices: aLookupTable keys asSortedCollection;
+				choices: map keys asSortedCollection;
 				yourself]!
 
 collection: aSymbol 
@@ -498,56 +534,64 @@ collection: aCollectionAspectSymbol addFrom: anArray
 		presenterClass: CollectionPresenter
 		addFrom: anArray!
 
-collection: aSymbol presenterClass: aClass 
-	^self 
+collection: aSymbol presenterClass: aClass
+	^(self
 		name: aSymbol
 		presenterBlock: [:p :m | aClass createIn: p on: m]
-		editBlock: self defaultCollectionEditBlock!
+		editBlock: self defaultCollectionEditBlock)
+		type: Collection;
+		yourself!
 
-collection: aSymbol presenterClass: collectionPresenterClass addEvaluationFrom: anArrayOfStrings 
-	^self 
+collection: aSymbol presenterClass: collectionPresenterClass addEvaluationFrom: evalChoicesValuable
+	^self
 		name: aSymbol
 		presenterBlock: 
-			[:p :m | 
+			[:p :m |
+			| choices |
+			choices := evalChoicesValuable value.
 			(collectionPresenterClass createIn: p on: m) setAddItemBlock: 
 					[| choice |
-					choice := anArrayOfStrings size > 1 
-								ifTrue: [ChoicePrompter choices: anArrayOfStrings caption: 'Add an Evaluation']
-								ifFalse: [anArrayOfStrings first].
+					choice := choices size > 1
+								ifTrue: [ChoicePrompter choices: choices caption: 'Add an Evaluation']
+								ifFalse: [choices first].
 					choice notNil ifTrue: [Compiler evaluate: choice]]]
 		editBlock: self defaultCollectionEditBlock!
 
-collection: aCollectionAspectSymbol presenterClass: collectionPresenterClass addFrom: anArray 
-	^self 
+collection: aCollectionAspectSymbol presenterClass: collectionPresenterClass addFrom: choicesValuable
+	^self
 		name: aCollectionAspectSymbol
 		presenterBlock: 
-			[:p :m | 
+			[:p :m |
+			| choices |
+			choices := choicesValuable value.
 			(collectionPresenterClass createIn: p on: m) setAddItemBlock: 
-					[anArray size > 1 
-						ifTrue: [ChoicePrompter choices: anArray caption: 'Add…']
-						ifFalse: [anArray first]]]
+					[choices size ~~ 1
+						ifTrue: [ChoicePrompter choices: choices caption: 'Add…']
+						ifFalse: [choices first]]]
 		editBlock: self defaultCollectionEditBlock!
 
-color: aColorAspectSymbol 
+color: aColorAspectSymbol
 	"Answer an instance of the receiver for aColorAspectSymbol. The aspect is viewable using a
 	ColorPresenter and editable using a ColorDialog, or editable in-place with a single-line
 	ValueWorkspace."
 
-	^(self 
+	^(self
 		name: aColorAspectSymbol
 		presenterBlock: [:p :m | ColorPresenter createIn: p on: m]
 		editBlock: [:p | ColorDialog showModalOn: p model])
-		beImmutable;
-		bePresenterBlockReadOnly;
-		beEditedInPlace;
+		type: Color;
+		flags: ##(WriteableMask | ReadableMask | NullableMask | ReadOnlyPresenterBlockMask
+					| ValueWorkspaceEditorMask | EditInPlaceMask);
 		yourself!
 
-date: aSymbol 
+date: aSymbol
 	"Answer an instance of the receiver for accessing a <Date> aspect
 	of an object with accessor, aSymbol.
 	The aspect is viewable and editable using a DatePresenter."
 
-	^self name: aSymbol presenterBlock: [:p :m | DatePresenter createIn: p on: m]!
+	^(self name: aSymbol presenterBlock: [:p :m | DatePresenter createIn: p on: m])
+		type: Date;
+		yourself!
 
 defaultCollectionEditBlock
 	^nil!
@@ -562,13 +606,22 @@ dictionary: aSymbol
 	"Answer an instance of the receiver for the <Dictionary> aspect named by the <Symbol> 
 	argument . The aspect is displayed using a DictionaryPresenter"
 
-	^self collection: aSymbol presenterClass: DictionaryPresenter!
+	^(self collection: aSymbol presenterClass: DictionaryPresenter)
+		type: Dictionary;
+		yourself!
+
+duration: aSymbol
+	"Answer an instance of the receiver for anAspectSymbol, which is expected to hold instances `Duration`."
+
+	^self name: aSymbol type: Duration!
 
 extent: aSymbol
 	"Answer an instance of the receiver for editing a <Point> extent aspect of an 
 	object. See #point:"
 
-	^self point: aSymbol!
+	^(self point: aSymbol)
+		icon: External.SIZE icon;
+		yourself!
 
 fileOpen: aFilenameAspectSymbol 
 	"Answer an instance of the receiver for aFilenameAspectSymbol.
@@ -586,7 +639,9 @@ float: aSymbol
 	"Answer an instance of the receiver for the <Float> aspect, aSymbol.
 	The aspect is editable using a NumberPresenter."
 
-	^self number: aSymbol!
+	^(self number: aSymbol)
+		type: Float;
+		yourself!
 
 folder: aFolderAspectSymbol
 	"Answer an instance of the receiver for aFolderAspectSymbol.
@@ -595,24 +650,27 @@ folder: aFolderAspectSymbol
 	^self name: aFolderAspectSymbol
 		editBlock: (#{BrowseFolderDialog} ifDefined: [:dialog | [:p | dialog showModalOn: p model]])!
 
-font: aFontAspectSymbol 
+font: aFontAspectSymbol
 	"Answer an instance of the receiver for aFontAspectSymbol. The aspect is viewable using a
 	FontPresenter and editable using a FontDialog, or in-place with a single line value
 	workspace."
 
-	^(self 
+	^(self
 		name: aFontAspectSymbol
 		presenterBlock: [:p :m | FontPresenter createIn: p on: m]
 		editBlock: [:p | FontDialog showModalOn: p model])
-		bePresenterBlockReadOnly;
-		beEditedInPlace;
+		flags: ##(WriteableMask | ReadableMask | MutableMask | NullableMask | EditInPlaceMask
+					| ReadOnlyPresenterBlockMask | ValueWorkspaceEditorMask);
+		type: Font;
 		yourself!
 
-hotkey: aHotKeyAspectSymbol 
+hotkey: aHotKeyAspectSymbol
 	"Answer an instance of the receiver for aHotKeyAspectSymbol.
 	The aspect is editable using a HotKey control."
 
-	^self name: aHotKeyAspectSymbol presenterBlock: [:p :m | AcceleratorPresenter createIn: p on: m]!
+	^(self name: aHotKeyAspectSymbol presenterBlock: [:p :m | AcceleratorPresenter createIn: p on: m])
+		type: HotKey;
+		yourself!
 
 icon: anIconAspectSymbol
 	"Answer an instance of the receiver for anIconAspectSymbol.
@@ -632,17 +690,24 @@ icon: anIconAspectSymbol
 			(m value notNil and: [m value isPersistent not]) ifTrue: [ip view viewMode: #scaleBestFit].
 			ip]
 		editBlock: [:p | InternalIcon choose ifNotNil: [:icon | p value: icon]])
+		type: Icon;
+		icon: Image icon;
 		bePresenterBlockReadOnly;
 		yourself!
 
-imageList: anImageListAspectSymbol 
-	^self name: anImageListAspectSymbol
+imageList: anImageListAspectSymbol
+	^(self name: anImageListAspectSymbol
 		presenterBlock: 
-			[:p :m | 
-			ImagePresenter 
+			[:p :m |
+			ImagePresenter
 				create: 'ImageList view'
 				in: p
-				on: m]!
+				on: m])
+		type: ImageList;
+		yourself!
+
+initialize
+	self addClassConstant: 'DefaultPresenterBlock' value: [:p :m | ValueWorkspace createIn: p on: m]!
 
 inspector: anAspectSymbol
 	"Answer an instance of the receiver for anAspectSymbol.
@@ -659,7 +724,17 @@ integer: aSymbol
 	"Answer an instance of the receiver for aSymbol.
 	The aspect is editable using a NumberPresenter"
 
-	^self number: aSymbol!
+	^(self name: aSymbol
+		presenterBlock: 
+			[:p :m |
+			| presenter |
+			presenter := NumberPresenter create: 'Integer text' in: p on: m.
+			presenter view typeconverter leftNullValue: 0.
+			presenter view selectAllIfSingleLine.
+			presenter])
+		beEditedInPlace;
+		type: Integer;
+		yourself!
 
 key: aKey
 	"Answers an instance of KeyedAspect on aKey"
@@ -690,23 +765,27 @@ menu: aMenuAspectSymbol
 	"Answer an instance of the receiver for aMenuAspectSymbol.
 	The aspect is editable using a MenuComposer"
 
-	^self
+	^(self
 		name: aMenuAspectSymbol
 		presenterBlock: nil
-		editBlock: [:p | MenuComposer showModalOn: p model]!
+		editBlock: [:p | MenuComposer showModalOn: p model])
+		type: Menu;
+		yourself!
 
 menuBar: aMenuAspectSymbol
 	"Answer an instance of the receiver for aMenuAspectSymbol.
 	The aspect is editable using a MenuComposer"
 
-	^self name: aMenuAspectSymbol editBlock: [:p | MenuBarComposer showModalOn: p model]!
+	^(self name: aMenuAspectSymbol editBlock: [:p | MenuBarComposer showModalOn: p model])
+		type: MenuBar;
+		yourself!
 
 multilineString: aStringAspectSymbol
 	"Answer an instance of the receiver for aStringAspectSymbol.
 	The aspect is editable using a TextPresenter with a multiline editor view
 	that updates on each character"
 
-	^self name: aStringAspectSymbol
+	^(self name: aStringAspectSymbol
 		presenterBlock: 
 			[:p :m |
 			| presenter |
@@ -717,13 +796,18 @@ multilineString: aStringAspectSymbol
 			presenter view
 				updatePerChar: true;
 				tabWidth: 4.
-			presenter]!
+			presenter])
+		type: String;
+		yourself!
 
 name: aSymbol
 	"Answer an instance of the receiver for anAspectSymbol.
 	The aspect is editable using the default ValueWorkspace presenter"
 
-	^self name: aSymbol presenterBlock: self defaultPresenterBlock!
+	^self
+		name: aSymbol
+		presenterBlock: DefaultPresenterBlock
+		editBlock: nil!
 
 name: aSymbol chooseFrom: anArrayOEvaluableStrings 
 	"Answer an instance of the receiver for anAspectSymbol.
@@ -750,7 +834,7 @@ name: aSymbol editBlock: aOneArgEditBlock
 
 	^self 
 		name: aSymbol
-		presenterBlock: self defaultPresenterBlock
+		presenterBlock: DefaultPresenterBlock
 		editBlock: aOneArgEditBlock!
 
 name: aSymbol presenterBlock: aTwoArgPresenterBlock
@@ -771,15 +855,42 @@ name: aSymbol presenterBlock: aTwoArgPresenterBlock editBlock: aOneArgEditBlock
 	being edited. The aspect may be additionally edited by evaluating aOneArgEditBlock
 	whose parameter is the presenter viewing the aspect."
 
-	^super new 
+	^self basicNew
 		name: aSymbol
 		presenterBlock: aTwoArgPresenterBlock
 		editBlock: aOneArgEditBlock!
+
+name: aSymbol type: aClass
+	"Answer an instance of the receiver for anAspectSymbol, which is expected to hold (sub)instances of the class, aClass.
+	The aspect is editable using the default ValueWorkspace presenter"
+
+	^(self name: aSymbol presenterBlock: DefaultPresenterBlock )
+		type: aClass;
+		yourself!
 
 new
 	"Private - Use #name:presenterClass:"
 
 	^self shouldNotImplement!
+
+nullableBoolean: aBooleanAspectSymbol
+	"Answer an instance of the receiver for aBooleanAspectSymbol. The aspect is viewable using a <BooleanPresenter> three-state view and can be edited by toggling the aspect value, cycling between nil, true and false values."
+
+	| editBlock |
+	editBlock := [:p | p value: (p value ifNil: [false] ifNotNil: [:value | value ifFalse: [true]])].
+	^self basicNew
+		name: aBooleanAspectSymbol
+			presenterBlock: 
+				[:p :m |
+				BooleanPresenter
+					create: 'Three state view'
+					in: p
+					on: m]
+			editBlock: editBlock;
+		flags: ##(WriteableMask | ReadableMask | MutableMask | NullableMask);
+		immediateActionBlock: editBlock;
+		type: Boolean;
+		yourself!
 
 number: aSymbol
 	"Answer an instance of the receiver for the <Number> aspect, aSymbol.
@@ -793,6 +904,7 @@ number: aSymbol
 			presenter view typeconverter leftNullValue: 0.
 			presenter view selectAllIfSingleLine.
 			presenter])
+		type: Number;
 		beEditedInPlace;
 		yourself!
 
@@ -802,9 +914,8 @@ point: aSymbol
 	specialised editor at present. Point aspects are immutable, so if their x or y values are
 	changed the whole Point is replaced."
 
-	^(self name: aSymbol)
-		beImmutable;
-		beEditedInPlace;
+	^(self name: aSymbol type: Point)
+		flags: ##(WriteableMask | ReadableMask | NullableMask | EditInPlaceMask);
 		yourself!
 
 position: aSymbol
@@ -819,6 +930,7 @@ rectangle: aSymbol
 	don't have any other more specialised editor at present."
 
 	^(self name: aSymbol)
+		type: Rectangle;
 		beImmutable;
 		beEditedInPlace;
 		yourself!
@@ -827,19 +939,23 @@ richText: aRichTextAspectSymbol
 	"Answer an instance of the receiver for aTextAspectSymbol.
 	The aspect is editable using a RichTextPresenter"
 
-	^self name: aRichTextAspectSymbol
+	^(self name: aRichTextAspectSymbol
 		presenterBlock: 
-			[:p :m | 
+			[:p :m |
 			| presenter |
 			presenter := RichTextPresenter createIn: p on: m.
 			presenter view updatePerChar: true.
-			presenter]!
+			presenter])
+		type: RichText;
+		yourself!
 
 sequenceableCollection: aSymbol
 	"Answer an instance of the receiver for the <SequenceableCollection> aspect named
 	by the <Symbol> argument."
 
-	^self collection: aSymbol presenterClass: SequenceableCollectionPresenter!
+	^(self collection: aSymbol presenterClass: SequenceableCollectionPresenter)
+		type: SequenceableCollection;
+		yourself!
 
 sequenceableCollection: aSymbol addEvaluationFrom: anArray
 	"Answer an instance of the receiver for an aspect named by the <Symbol>, aSymbol.
@@ -847,46 +963,65 @@ sequenceableCollection: aSymbol addEvaluationFrom: anArray
 	items added by choosing an appropriate appropriate evaluation from the <Array>
 	of <String>s, anArray."
 
-	^self 
+	^(self
 		collection: aSymbol
 		presenterClass: SequenceableCollectionPresenter
-		addEvaluationFrom: anArray!
+		addEvaluationFrom: anArray)
+		type: SequenceableCollection;
+		yourself!
 
-sequenceableCollection: aSymbol addFrom: anArray
+sequenceableCollection: aSymbol addFrom: choicesValuable
 	"Answer an instance of the receiver for an aspect named by the <Symbol>, aSymbol.
 	The aspect is displayed using a SequenceableCollectionPresenter and may have new 
 	items added by choosing an appropriate object from the <Array>, anArray."
 
-	^self 
+	^(self
 		collection: aSymbol
 		presenterClass: SequenceableCollectionPresenter
-		addFrom: anArray!
+		addFrom: choicesValuable)
+		type: SequenceableCollection;
+		yourself!
 
 set: aSymbol
 	"Answer an instance of the receiver for the <Set> aspect named by the <Symbol> 
 	argument . The aspect is displayed using a HashedCollectionPresenter"
 
-	^self collection: aSymbol presenterClass: HashedCollectionPresenter!
+	^(self collection: aSymbol presenterClass: HashedCollectionPresenter)
+		type: Set;
+		yourself!
 
-string: aStringAspectSymbol 
+string: aStringAspectSymbol
 	"Answer an instance of the receiver for aStringAspectSymbol.
 	The aspect is editable using a TextPresenter with a single editor view
 	that updates on Enter or kill focus"
 
-	^self name: aStringAspectSymbol
+	^(self name: aStringAspectSymbol
 		presenterBlock: 
-			[:p :m | 
+			[:p :m |
 			| presenter |
 			presenter := TextPresenter createIn: p on: m.
 			presenter view selectAllIfSingleLine.
-			presenter]!
+			presenter])
+		type: String;
+		yourself!
 
-time: aSymbol 
+symbol: aChoiceAspectSymbol from: anArray
+	"Answer an instance of the receiver for aChoiceAspectSymbol.
+	The possible choices can be taken from from anArray"
+
+	^self
+		choice: aChoiceAspectSymbol
+		from: anArray
+		type: Symbol!
+
+time: aSymbol
 	"Answer an instance of the receiver for accessing a <Time> aspect
 	of an object with accessor, aSymbol.
 	The aspect is viewable and editable using a TimePresenter."
 
-	^self name: aSymbol presenterBlock: [:p :m | TimePresenter createIn: p on: m]! !
+	^(self name: aSymbol presenterBlock: [:p :m | TimePresenter createIn: p on: m])
+		type: Time;
+		yourself! !
 !Tools.Aspect class categoriesFor: #autostring:!instance creation!public! !
 !Tools.Aspect class categoriesFor: #bitmap:!instance creation!public! !
 !Tools.Aspect class categoriesFor: #block:!instance creation!public! !
@@ -895,6 +1030,7 @@ time: aSymbol
 !Tools.Aspect class categoriesFor: #choice:evaluationFrom:!instance creation!public! !
 !Tools.Aspect class categoriesFor: #choice:from:!instance creation!public! !
 !Tools.Aspect class categoriesFor: #choice:from:andNil:!instance creation!public! !
+!Tools.Aspect class categoriesFor: #choice:from:type:!instance creation!public! !
 !Tools.Aspect class categoriesFor: #choice:fromMap:nullValue:!instance creation!public! !
 !Tools.Aspect class categoriesFor: #collection:!instance creation!public! !
 !Tools.Aspect class categoriesFor: #collection:addEvaluationFrom:!instance creation!public! !
@@ -907,6 +1043,7 @@ time: aSymbol
 !Tools.Aspect class categoriesFor: #defaultCollectionEditBlock!constants!private! !
 !Tools.Aspect class categoriesFor: #defaultPresenterBlock!constants!private! !
 !Tools.Aspect class categoriesFor: #dictionary:!instance creation!public! !
+!Tools.Aspect class categoriesFor: #duration:!instance creation!public! !
 !Tools.Aspect class categoriesFor: #extent:!instance creation!public! !
 !Tools.Aspect class categoriesFor: #fileOpen:!instance creation!public! !
 !Tools.Aspect class categoriesFor: #fileSave:!instance creation!public! !
@@ -916,6 +1053,7 @@ time: aSymbol
 !Tools.Aspect class categoriesFor: #hotkey:!instance creation!public! !
 !Tools.Aspect class categoriesFor: #icon:!instance creation!public! !
 !Tools.Aspect class categoriesFor: #imageList:!instance creation!public! !
+!Tools.Aspect class categoriesFor: #initialize!constants!private! !
 !Tools.Aspect class categoriesFor: #inspector:!instance creation!public! !
 !Tools.Aspect class categoriesFor: #integer:!instance creation!public! !
 !Tools.Aspect class categoriesFor: #key:!instance creation!public! !
@@ -931,7 +1069,9 @@ time: aSymbol
 !Tools.Aspect class categoriesFor: #name:editBlock:!instance creation!public! !
 !Tools.Aspect class categoriesFor: #name:presenterBlock:!instance creation!public! !
 !Tools.Aspect class categoriesFor: #name:presenterBlock:editBlock:!instance creation!public! !
+!Tools.Aspect class categoriesFor: #name:type:!instance creation!public! !
 !Tools.Aspect class categoriesFor: #new!instance creation!private! !
+!Tools.Aspect class categoriesFor: #nullableBoolean:!instance creation!public! !
 !Tools.Aspect class categoriesFor: #number:!instance creation!public! !
 !Tools.Aspect class categoriesFor: #point:!instance creation!public! !
 !Tools.Aspect class categoriesFor: #position:!instance creation!public! !
@@ -942,5 +1082,6 @@ time: aSymbol
 !Tools.Aspect class categoriesFor: #sequenceableCollection:addFrom:!instance creation!public! !
 !Tools.Aspect class categoriesFor: #set:!instance creation!public! !
 !Tools.Aspect class categoriesFor: #string:!instance creation!public! !
+!Tools.Aspect class categoriesFor: #symbol:from:!instance creation!public! !
 !Tools.Aspect class categoriesFor: #time:!instance creation!public! !
 

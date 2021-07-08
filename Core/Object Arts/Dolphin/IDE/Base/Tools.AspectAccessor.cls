@@ -121,6 +121,9 @@ isMutable
 isReadable
 	^aspectDescriptor isReadable!
 
+key
+	^self name!
+
 name
 	"Answer the <readableString> that describes the receiver's aspect"
 
@@ -153,28 +156,43 @@ setValue: anObject
 
 	self aspectDescriptor writeInto: self subject value: anObject!
 
+typeIcon
+	^aspectDescriptor icon!
+
+typeImage
+	^aspectDescriptor icon ifNil: [0] ifNotNil: [:icon | icon imageIndex]!
+
 value
 	"Answers the <Object> value of the receiver.
 	If an exception is raised attempting to access the value, then answer that instead."
 
 	^self aspectDescriptor readFrom: self subject!
 
+valueDebugText
+	^[self value debugPrintString] on: Error
+		do: 
+			[:ex |
+			String smalltalkWriteStream
+				nextPutAll: 'an invalid ';
+				print: aspectDescriptor;
+				nextPutAll: ' {';
+				nextPutAll: ex description;
+				nextPut: $}]!
+
 valueIcon
 	self canGet ifFalse: [^Icon question].
 	^[self value icon] on: Error do: [:ex | self icon]!
 
 valueImage
-	^self valueIcon imageIndex!
+	^[self valueIcon ifNil: [0] ifNotNil: [:icon | icon imageIndex]] on: Error do: [:ex | -1]!
 
 valueNameInfo
 	"Answer a string that can be used in an info tip to describe the receiver"
 
 	| stream |
 	stream := String smalltalkWriteStream: 40.
-	
-	[self aspectDescriptor displayAspectInfoOf: self subject on: stream.
-	self] on: Error
-			do: [:ex | stream basicPrint: ex].
+	[self aspectDescriptor displayAspectInfoOf: self subject on: stream] on: Error
+		do: [:ex | stream basicPrint: ex].
 	^stream contents!
 
 valueNameOnly
@@ -229,13 +247,17 @@ yourselfAspect
 !Tools.AspectAccessor categoriesFor: #immediateActionUsing:!operations!public! !
 !Tools.AspectAccessor categoriesFor: #isMutable!accessing!public! !
 !Tools.AspectAccessor categoriesFor: #isReadable!public! !
+!Tools.AspectAccessor categoriesFor: #key!public! !
 !Tools.AspectAccessor categoriesFor: #name!accessing!public! !
 !Tools.AspectAccessor categoriesFor: #objectRef!accessing!private! !
 !Tools.AspectAccessor categoriesFor: #objectRefName!accessing!public! !
 !Tools.AspectAccessor categoriesFor: #selectIn:!event handling!private! !
 !Tools.AspectAccessor categoriesFor: #setSubject:aspectDescriptor:!initializing!private! !
 !Tools.AspectAccessor categoriesFor: #setValue:!accessing!private! !
+!Tools.AspectAccessor categoriesFor: #typeIcon!accessing!public! !
+!Tools.AspectAccessor categoriesFor: #typeImage!accessing!public! !
 !Tools.AspectAccessor categoriesFor: #value!accessing!public! !
+!Tools.AspectAccessor categoriesFor: #valueDebugText!accessing!public! !
 !Tools.AspectAccessor categoriesFor: #valueIcon!accessing!public! !
 !Tools.AspectAccessor categoriesFor: #valueImage!accessing!public! !
 !Tools.AspectAccessor categoriesFor: #valueNameInfo!accessing!public! !

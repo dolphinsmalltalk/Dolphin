@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
 Tools.SmalltalkToolShell subclass: #'Tools.Debugger'
-	instanceVariableNames: 'process topFrame temp tempCount depth flags breakWhen stackPresenter sourcePresenter tempsPresenter inspectorPresenter breakAction suspendingList _method refactoringTool'
+	instanceVariableNames: 'process topFrame localAccessor depth flags breakWhen stackPresenter sourcePresenter variablesPresenter inspectorPresenter breakAction suspendingList _method refactoringTool aspectValueHolder'
 	classVariableNames: 'AnimatePause DefaultStackDepth EnableDynamicMenus RestartOnMethodSave RunToCursorBehavior ShowWalkbacks SkipTable'
 	imports: #(#{Kernel.CompilerFlags} #{Kernel.OpcodePool})
 	classInstanceVariableNames: ''
@@ -25,21 +25,20 @@ Dolphin serializes callback returns to maintain LIFO order on the machine stack 
 Caution: Although modifying the Debugger can be fun it is quite easy to crash the system if a mistake is made. You should also note that if you develop your own custom view the use of a virtual ListView for the stack presenter is not recommended since the stack may change dynamically and become momentarily invalid at just the point that the control requests display details.
 
 Instance Variables:
-	process				<Process> being debugged.
-	topFrame			<StackFrame> which is at the top of the debugger''s stack.
-	temp				<Object> the contents of the currently selected instance variable.
-	tempCount			<integer> count of temporaries in the currently selected stack frame.
-	depth				<integer> count of stack frames currently listed.
-	flags				<integer> flags controlling the debugger''s behaviour.
-	breakWhen			<monadicValuable> used to determine the next execution should be interrupted.
-	stackPresenter		<ListPresenter> used to display the stack frames.
-	sourcePresenter		<SmalltalkWorkspace> holding the source/this assembly of the selected frame.
-	tempsPresenter		<ListPresenter> holding the list of temporaries in the selected frame.
-	inspectorPresenter	<SmalltalkWorkspace>  holding the value of the selected temporary variable.
-	breakAction			<niladicValuable>. The second half of a composite action to be performed after an unwind.
-	suspendingList		<Semaphore> on which debugged process was suspended when interrupted (or nil if none).
-	_method			<CompiledCode>. Method associated with selected frame.
-	refactoringTool		<MethodRefactoringTool>. Implements method refactorings (in DPRO only).
+	`process`				`Process` being debugged.
+	`topFrame`			`StackFrame` which is at the top of the debugger''s stack.
+	`temp`				`AspectAccessor` for the currently selected variable.
+	`depth`				`<integer>` count of stack frames currently listed.
+	`flags`				`<integer>` flags controlling the debugger''s behaviour.
+	`breakWhen`			`<monadicValuable>` used to determine the next execution should be interrupted.
+	`stackPresenter`		`ListPresenter` used to display the stack frames.
+	`sourcePresenter`		`SmalltalkWorkspace` holding the source/this assembly of the selected frame.
+	`tempsPresenter`		`TreePresenter` with roots representing the list of local variables in the selected frame.
+	`inspectorPresenter`	`ValueWorkspace`  holding the value of the selected variable in the `tempsPresenter`.
+	`breakAction`			`<niladicValuable>`. The second half of a composite action to be performed after an unwind.
+	`suspendingList`		`Semaphore` on which debugged process was suspended when interrupted (or nil if none).
+	`_method`			`CompiledCode`. Method associated with selected frame.
+	`refactoringTool`		`MethodRefactoringTool`. Implements method refactorings (in DPRO only).
 
 Class Variables:
 	AnimateMask		<integer> bit-mask for testing/setting the animation flag
@@ -64,12 +63,7 @@ accept
 	"Private - Saves the current method source, restarting the method frame if the system
 	options so indicate."
 
-	"Implementation Note: Because we don't employ a separate presenter for the inspector text
-	pane, we need to test the focus to see how to act on the command."
-
-	inspectorPresenter hasFocus 
-		ifTrue: [self acceptVariableValue]
-		ifFalse: [self accept: self class restartOnMethodSave methodSource: self source]!
+	self accept: self class restartOnMethodSave methodSource: self source!
 
 accept: aBoolean methodSource: aString
 	"Private - Saves the current method source, optionally restarting the frame depending on the
@@ -113,20 +107,6 @@ acceptNoRestart
 	process becomes out of sync. with the current method)."
 
 	self accept: false methodSource: self source!
-
-acceptVariableValue
-	"Private - Evaluate an expression in the inspectorPresenter and save the result as the new
-	value of the selected variable in the temps list."
-
-	"If there is no selection then the entire workspace is selected for consistency with saving
-	method source. This also works rather better with word wrap too."
-
-	| newValue |
-	inspectorPresenter view hasSelection ifFalse: [inspectorPresenter view selectAll].
-
-	"Evaluate the new value and keep a copy of the old value for undo purposes"
-	newValue := inspectorPresenter evaluateItIfFail: [^self].
-	self setSelectedVariableTo: newValue!
 
 addToCommandRoute: route 
 	"Update the <OrderedCollection>, path, with the receiver's contribution to the command path
@@ -262,7 +242,7 @@ browseHierarchy
 browseIt
 	"Open a default browser on the current method"
 
-	tempsPresenter hasFocus ifTrue: [self browseVariableClass] ifFalse: [self browseHierarchy]!
+	variablesPresenter hasFocus ifTrue: [self browseVariableClass] ifFalse: [self browseHierarchy]!
 
 browseMessages
 	"Private - Browse the definitions of one of the messages sent within the method of the
@@ -314,7 +294,7 @@ browseSystem
 		ifFalse: [self model browseSystemOnMethod: self selectedMethod]!
 
 browseVariableClass
-	temp browse!
+	localAccessor value browse!
 
 buildParseTree
 	^self selectedMethod
@@ -370,12 +350,12 @@ createComponents
 				add: ListPresenter new
 				name: 'stack'
 				helpId: 10882.
-	tempsPresenter := self
+	variablesPresenter := self
 				add: TreePresenter new
 				name: 'temps'
 				helpId: 10883.
 	inspectorPresenter := self
-				add: self workspaceClass new
+				add: ValueWorkspace new
 				name: 'inspector'
 				helpId: 10884.
 	sourcePresenter := self
@@ -391,7 +371,7 @@ createSchematicWiring
 	"Create the trigger wiring for the receiver"
 
 	super createSchematicWiring.
-	self 
+	self
 		when: #closeRequested:
 		send: #onCloseRequested:
 		to: self.
@@ -405,22 +385,22 @@ createSchematicWiring
 		when: #actionPerformed
 			send: #browseIt
 			to: self.
-	tempsPresenter
+	variablesPresenter
 		when: #selectionChanged
 			send: #onTempSelected
 			to: self;
 		when: #actionPerformed
 			send: #inspectIt
 			to: self.
-	sourcePresenter 
+	sourcePresenter
 		when: #expressionEvaluated:
 		send: #onExpressionEvaluated:
 		to: self.
-	inspectorPresenter 
+	inspectorPresenter
 		when: #expressionEvaluated:
 		send: #onExpressionEvaluated:
 		to: self.
-	(self model)
+	self model
 		when: #methodUpdated:
 			send: #onMethodUpdated:
 			to: self;
@@ -491,6 +471,21 @@ displayFrame
 	self displaySource.
 	self updateTemporaries!
 
+displayLocal: anAspectAccessor
+	"Private - Inspect the value of the selected local/instance variable."
+
+	localAccessor removeEventsTriggeredFor: self.
+	localAccessor := anAspectAccessor.
+	inspectorPresenter model: localAccessor.
+	localAccessor
+		when: #valueChanged
+		send: #onVariableValueChanged
+		to: self
+
+	"Rather than change the context to the variable value, I think I prefer it to remain as the frame receiver.
+	The locals can be accessed by name"
+	"inspectorPresenter evaluationContext: temp."!
+
 displaySource
 	"Private - Refresh the receiver's source display to reflect a newly selected frame."
 
@@ -509,16 +504,6 @@ displaySource
 		stylerClass: styler;
 		isModified: false.
 	self setSourceSelection!
-
-displayTemp
-	"Private - Inspect the selected temporary, anObject."
-
-	inspectorPresenter text: (self class debugPrintStringFor: temp)
-
-	"Rather than change the context to the temp, I think I prefer it to remain as the frame receiver.
-	The temp can be accessed by name"
-	"inspectorPresenter evaluationContext: temp."
-	!
 
 emitKeywordSignatureFor: aMessage in: aClass on: aPuttableStream 
 	| argNames instVars |
@@ -606,19 +591,19 @@ initialize
 	breakWhen := OrderedCollection new!
 
 inspectIt
-	"Private - Open an inspector on the currently selected temporary."
+	"Private - Open an inspector on the currently selected local variable (or instance variable)."
 
-	temp inspect!
+	localAccessor value inspect!
 
 inspectReferences
-	"Private - Open a new Inspector on all the objects which references the currently selected temporary."
+	"Private - Open a new Inspector on all the objects which references the currently selected local variable or instance variable."
 
 	| refs |
-	refs := temp allReferences copyWithout: self.
+	refs := localAccessor value allReferences copyWithout: self.
 	refs isEmpty
 		ifTrue: 
 			[MessageBox notify: ('There are no additional references to:<n><t><1p>'
-						expandMacrosWith: tempsPresenter selection first)]
+						expandMacrosWith: variablesPresenter selection first)]
 		ifFalse: [refs inspect]!
 
 isAnimating
@@ -718,16 +703,16 @@ newLocalsTreeWithRoots: anOrderedCollection
 	treeModel := ExpandingTreeModel withRoots: anOrderedCollection.
 	treeModel getChildrenBlock: 
 			[:each |
-			| value varNames |
-			value := each second.
-			varNames := value basicClass allInstVarNames.
-			(1 to: varNames size) collect: [:i | Pair first: (varNames at: i) second: (value instVarAt: i)]].
+			| inspectee |
+			inspectee := [each value] on: Error do: [:ex | ex].
+			(1 to: inspectee class instSize)
+				collect: [:i | ((inspectee instVarAt: i) newAspect: i class: InstVarAspect) accessorFor: inspectee]].
 	^treeModel!
 
 nilVariable
 	"Private - Nil the currently selected variable or stack slot."
 
-	self setSelectedVariableTo: nil!
+	localAccessor value: nil!
 
 onAboutToDisplayMenu: aMenu
 	"The system is about to display the <Menu>, popup, this is our chance
@@ -813,11 +798,11 @@ onFrameSelected
 	| frame |
 	self clearCachedMethodInfo.
 	frame := self frame.
-	frame notNil 
+	frame notNil
 		ifTrue: [self displayFrame]
 		ifFalse: 
 			[sourcePresenter clear.
-			tempsPresenter clear]!
+			variablesPresenter model: TreeModel new]!
 
 onFrameSelectionChanging: aSelectionChangingEvent
 	self onPromptToSaveChanges: aSelectionChangingEvent!
@@ -921,12 +906,12 @@ onStep: pFrame
 onTempSelected
 	"Private - A selection has been made in the temporaries list, update the inspector model."
 
-	(temp := tempsPresenter selectionOrNil) isNil
-		ifFalse: 
-			[temp := temp second.
-			self displayTemp.
+	variablesPresenter selectionOrNil
+		ifNotNil: 
+			[:newTemp |
+			self displayLocal: newTemp.
 			inspectorPresenter view enable]
-		ifTrue: 
+		ifNil: 
 			[inspectorPresenter view
 				clearAll;
 				disable]!
@@ -935,8 +920,18 @@ onTerminate
 	"Private - The debugged process is about to terminate, so if this is the receiver's process,
 	close the receiver."
 
+	stackPresenter resetSelection.
 	process debugger: nil.
 	self view close!
+
+onVariableValueChanged
+	variablesPresenter model collapse: localAccessor.
+	"If the variable is one of the locals (as opposed to an instance variable somewhere inside one of the locals), update the inspector workspace pool"
+	(localAccessor aspectDescriptor isKindOf: StackFrameSlot)
+		ifTrue: 
+			[| varName |
+			varName := localAccessor name.
+			varName notEmpty ifTrue: [inspectorPresenter workspacePool at: varName put: localAccessor value]]!
 
 onViewClosed
 	"Private - Sent by the receiver's view when it has been closed. Disconnect from any events
@@ -1035,7 +1030,7 @@ promptToSaveChanges
 
 	^self onPromptToSaveChanges: (SelectionChangingEvent forSource: self)!
 
-queryCommand: aCommandQuery 
+queryCommand: aCommandQuery
 	"Private - Enter details about a potential command for the receiver into the 
 	<CommandQuery>."
 
@@ -1044,53 +1039,51 @@ queryCommand: aCommandQuery
 	animating := self isAnimating.
 	running := self isRunning or: [animating].
 	runnable := running not and: [self isResumable].
-	#nilVariable == selector 
+	#nilVariable == selector
 		ifTrue: 
-			[aCommandQuery isEnabled: tempsPresenter hasSelection.
+			[aCommandQuery isEnabled: (localAccessor notNil and: [localAccessor canSet]).
 			^true].
-	#accept == selector 
+	#accept == selector
 		ifTrue: 
-			[inspectorPresenter hasFocus 
-				ifTrue: [aCommandQuery isEnabled: tempsPresenter hasSelection]
-				ifFalse: [aCommandQuery isEnabled: self canSaveMethod].
+			[aCommandQuery isEnabled: (inspectorPresenter hasFocus not and: [self canSaveMethod]).
 			^true].
-	#browseVariableClass == selector 
+	#browseVariableClass == selector
 		ifTrue: 
-			[aCommandQuery isEnabled: tempsPresenter hasSelection.
+			[aCommandQuery isEnabled: localAccessor notNil.
 			^true].
-	selector == #userBreak 
+	selector == #userBreak
 		ifTrue: 
 			[aCommandQuery isEnabled: (running and: [animating not]).
 			^true].
-	(#(#resumeProcess #runProcess) identityIncludes: selector) 
+	(#(#resumeProcess #runProcess) identityIncludes: selector)
 		ifTrue: 
 			[aCommandQuery isEnabled: runnable.
 			^true].
-	selector == #toggleDisassembly 
+	selector == #toggleDisassembly
 		ifTrue: 
 			[aCommandQuery
 				isEnabled: true;
 				isChecked: self isDisassembled.
 			^true].
-	selector == #toggleAnimation 
+	selector == #toggleAnimation
 		ifTrue: 
 			[aCommandQuery
 				isEnabled: (runnable or: [animating]);
 				isChecked: animating.
 			^true].
-	(#(#moreFrames #allFrames) identityIncludes: selector) 
+	(#(#moreFrames #allFrames) identityIncludes: selector)
 		ifTrue: 
 			[aCommandQuery isEnabled: (running not and: [self depth <= self frames size]).
 			^true].
-	#showNextStatement == selector 
+	#showNextStatement == selector
 		ifTrue: 
 			[aCommandQuery isEnabled: running not.
 			^true].
-	#terminateProcess == selector 
+	#terminateProcess == selector
 		ifTrue: 
 			[aCommandQuery isEnabled: process isTerminated not.
 			^true].
-	(#(#definitionsMenu #referencesMenu) identityIncludes: selector) 
+	(#(#definitionsMenu #referencesMenu) identityIncludes: selector)
 		ifTrue: 
 			[aCommandQuery isEnabled: true.
 			^true].
@@ -1537,17 +1530,6 @@ setInitialFocus
 
 	sourcePresenter setFocus!
 
-setSelectedVariableTo: anObject 
-	| index varName info |
-	index := tempsPresenter selectionByIndex.
-	info := tempsPresenter list at: index.
-	info at: 2 put: anObject.
-	temp := self variableAtIndex: index put: anObject.
-	varName := info first trimBlanks.
-	varName notEmpty ifTrue: [inspectorPresenter workspacePool at: varName put: anObject].
-	tempsPresenter model refreshAtIndex: index.
-	self displayTemp!
-
 setSourceSelection
 	"Private - Refresh the receiver's source selection to reflect the 'current' IP in the
 	selected frame. Note that the range of source selected will depend on whether the top-most
@@ -1566,36 +1548,38 @@ setSourceSelection
 			[sourcePresenter selectionRange: (self sourceRangeAt: ip inTextMap: self selectedMethod textMap)]!
 
 setVariablesList: aSequenceableCollection
-	"Private - Set the temporary variables list to an the <sequencedReadableCollection> of name-value pairs argument.
+	"Private - Set the temporary variables list to an the <sequencedReadableCollection> of <AspectAccessor> on <StackFrameSlot> argument.
 	Attempt to maintain any existing temporary selection, failing that select the first entry (self). If there is no selection, then maintain that state."
 
 	| wasExpanded treeModel newSelection |
 	treeModel := self newLocalsTreeWithRoots: aSequenceableCollection.
-	(tempsPresenter selectionIfNone: [])
+	(variablesPresenter selectionIfNone: [])
 		ifNil: [wasExpanded := false]
 		ifNotNil: 
 			[:selection |
-			| selectionChain pairs current i |
+			| selectionChain slots current index |
 			"We are going to attempt to select the nearest variable to the previous selection in the variables presenter.
 			We have to work our way down in order to re-expand as far as we can."
-			wasExpanded := tempsPresenter isExpanded: selection.
-			selectionChain := (tempsPresenter model allParentsOf: selection)
+			wasExpanded := variablesPresenter isExpanded: selection.
+			selectionChain := (variablesPresenter model allParentsOf: selection)
 						addLast: selection;
 						readStream.
-			pairs := aSequenceableCollection.
+			slots := aSequenceableCollection.
 			
 			[current := selectionChain nextAvailable.
-			current notNil and: [(i := pairs indexOf: current) ~~ 0]]
+			current notNil and: 
+					[index := slots findFirst: [:each | each name = current name].
+					index ~~ 0]]
 					whileTrue: 
-						[newSelection := pairs at: i.
-						pairs := treeModel childrenOf: newSelection].
-			(newSelection isNil and: [selection first = 'self'])
+						[newSelection := slots at: index.
+						slots := treeModel childrenOf: newSelection].
+			(newSelection isNil and: [selection key = 'self'])
 				ifTrue: [newSelection := aSequenceableCollection first]].
-	tempsPresenter model: treeModel.
+	variablesPresenter model: treeModel.
 	newSelection
 		ifNotNil: 
-			[tempsPresenter selection: newSelection.
-			wasExpanded ifTrue: [tempsPresenter expand: newSelection]]!
+			[variablesPresenter selection: newSelection.
+			wasExpanded ifTrue: [variablesPresenter expand: newSelection]]!
 
 showNextStatement
 	self frame = topFrame 
@@ -1818,7 +1802,7 @@ updateForBreakAt: interruptFrame
 updateTemporaries
 	"Private - Refresh the receiver's temporaries list model."
 
-	| temps pool frame varList receiver base extra class |
+	| temps tempCount pool frame varList receiver base extra class |
 	frame := self frame.
 	temps := frame temps.
 	tempCount := temps size.
@@ -1826,7 +1810,10 @@ updateTemporaries
 	extra := frame stackWorkspace.
 	class := receiver basicClass.
 	varList := OrderedCollection new: 1 + tempCount + class instSize + extra.
-	varList addLast: (Pair first: 'self' second: receiver).
+	varList
+		addLast: (((StackFrameSlot local: 'self' index: 0)
+				beReadOnly;
+				yourself) accessorFor: frame).
 
 	"The evaluation context of the inspector becomes the frames receiver."
 	inspectorPresenter evaluationContext: receiver.
@@ -1843,16 +1830,16 @@ updateTemporaries
 			i := each third.
 			i > 0
 				ifTrue: 
-					[| tempValue tempName |
+					[| tempName accessor |
 					tempName := each first.
-					tempValue := (frame getOuter: each second) at: i.
-					pool at: tempName put: tempValue.
-					varList addLast: (Pair first: tempName second: tempValue)]].
+					accessor := (StackFrameSlot local: tempName index: i) accessorFor: (frame getOuter: each second).
+					pool at: tempName put: accessor value.
+					varList addLast: accessor]].
 
 	"Add any extra used stack slots onto the variables list"
-	base := frame index + frame frameSize.
+	base := frame index.
 	0 to: extra - 1
-		do: [:i | varList addLast: (Pair first: '_stack' , i printString second: (process at: base + i))].
+		do: [:i | (StackFrameSlot local: '_stack' , i printString index: base + i) accessorFor: frame].
 	frame method evaluationPools
 		ifNotNil: 
 			[:evalPools |
@@ -1879,35 +1866,10 @@ userBreak
 	topFrame := process topFrame.
 	self populateStackModel
 	
-	!
-
-variableAtIndex: anInteger put: anObject 
-	"Private - Set the value of the temporary at the specified <integer> index in the temporaries
-	list."
-
-	| frame receiver tempsOffset index |
-	anInteger < 2 ifTrue: [self errorSubscriptBounds: anInteger].
-	index := anInteger - 1.
-	frame := self frame.
-	receiver := frame receiver.
-	tempsOffset := receiver basicClass instSize.
-	^index <= tempsOffset 
-		ifTrue: [receiver instVarAt: index put: anObject]
-		ifFalse: 
-			[| offset |
-			offset := index - tempsOffset.
-			offset <= tempCount 
-				ifTrue: [frame at: offset put: anObject]
-				ifFalse: 
-					["Stack working value selected"
-					offset := frame sp - offset + tempCount + 1.
-					"If on the topFrame, then break before message send not in it"
-					frame = topFrame ifTrue: [offset := offset + 1].
-					process at: offset put: anObject]]! !
+	! !
 !Tools.Debugger categoriesFor: #accept!commands!private! !
 !Tools.Debugger categoriesFor: #accept:methodSource:!operations!private! !
 !Tools.Debugger categoriesFor: #acceptNoRestart!commands!private! !
-!Tools.Debugger categoriesFor: #acceptVariableValue!commands!private! !
 !Tools.Debugger categoriesFor: #addToCommandRoute:!commands!public! !
 !Tools.Debugger categoriesFor: #allFrames!commands!private! !
 !Tools.Debugger categoriesFor: #animatePause!accessing!private! !
@@ -1945,8 +1907,8 @@ variableAtIndex: anInteger put: anObject
 !Tools.Debugger categoriesFor: #depth!accessing!private! !
 !Tools.Debugger categoriesFor: #depth:!accessing!private! !
 !Tools.Debugger categoriesFor: #displayFrame!private!updating! !
+!Tools.Debugger categoriesFor: #displayLocal:!private!updating! !
 !Tools.Debugger categoriesFor: #displaySource!private!updating! !
-!Tools.Debugger categoriesFor: #displayTemp!private!updating! !
 !Tools.Debugger categoriesFor: #emitKeywordSignatureFor:in:on:!helpers!private! !
 !Tools.Debugger categoriesFor: #findBlockHome:!helpers!private! !
 !Tools.Debugger categoriesFor: #findHomeFrame:!helpers!private! !
@@ -1988,6 +1950,7 @@ variableAtIndex: anInteger put: anObject
 !Tools.Debugger categoriesFor: #onStep:!event handling!private! !
 !Tools.Debugger categoriesFor: #onTempSelected!event handling!private! !
 !Tools.Debugger categoriesFor: #onTerminate!event handling!private! !
+!Tools.Debugger categoriesFor: #onVariableValueChanged!public! !
 !Tools.Debugger categoriesFor: #onViewClosed!event handling!private! !
 !Tools.Debugger categoriesFor: #onWalkback:topFrame:resumable:!event handling!private! !
 !Tools.Debugger categoriesFor: #parseContext!accessing!public! !
@@ -2024,7 +1987,6 @@ variableAtIndex: anInteger put: anObject
 !Tools.Debugger categoriesFor: #selectedNode!accessing!private! !
 !Tools.Debugger categoriesFor: #selectionIP!accessing!private! !
 !Tools.Debugger categoriesFor: #setInitialFocus!operations!public! !
-!Tools.Debugger categoriesFor: #setSelectedVariableTo:!commands!private! !
 !Tools.Debugger categoriesFor: #setSourceSelection!private!updating! !
 !Tools.Debugger categoriesFor: #setVariablesList:!private!updating! !
 !Tools.Debugger categoriesFor: #showNextStatement!commands!private! !
@@ -2048,7 +2010,6 @@ variableAtIndex: anInteger put: anObject
 !Tools.Debugger categoriesFor: #updateForBreakAt:!operations!private! !
 !Tools.Debugger categoriesFor: #updateTemporaries!private!updating! !
 !Tools.Debugger categoriesFor: #userBreak!commands!private! !
-!Tools.Debugger categoriesFor: #variableAtIndex:put:!helpers!private! !
 
 Tools.Debugger methodProtocol: #debugEventHandler attributes: #(#readOnly) selectors: #(#onBreak: #onHalt: #onStep: #onTerminate #onWalkback:topFrame:resumable:)!
 Tools.Debugger methodProtocol: #variableMetadataProvider attributes: #(#readOnly) selectors: #(#classForVariable: #tipForVariable:)!
@@ -2066,12 +2027,6 @@ animatePause: anInteger
 	animating debugged processes."
 
 	AnimatePause := anInteger!
-
-debugPrintStringFor: anObject
-	"Private - Answer the debugging string representation of the argument."
-
-	^[anObject debugPrintString] on: Error
-		do: [:ex | 'an invalid ' , anObject basicClass name , ' {' , ex description , '}']!
 
 defaultAdditionalAccelerators
 	^super defaultAdditionalAccelerators , #(#(#renameIt 'F2'))!
@@ -2162,9 +2117,9 @@ publishedAspects
 		add: (Aspect boolean: #restartOnMethodSave);
 		add: (Aspect boolean: #enableDynamicMenus);
 		add: ((Aspect integer: #animatePause)
-					isNullable: false;
+					beNonNullable;
 					yourself);
-		add: (Aspect choice: #runToCursorBehavior from: #(#precise #conservative));
+		add: (Aspect symbol: #runToCursorBehavior from: #(#precise #conservative));
 		yourself!
 
 resource_Basic_debugger
@@ -2175,7 +2130,7 @@ resource_Basic_debugger
 	Tools.ViewComposer openOn: (UI.ResourceIdentifier class: self selector: #resource_Basic_debugger)
 	"
 
-	^#(#'!!STL' 4 985166 10 ##(UI.STBViewProxy) ##(Tools.DebuggerShellView) 34 27 nil nil 8 #(13565952 65536) 416 nil 1245702 ##(Graphics.ThemeColor) #toolBackground nil 551 nil nil nil 416 984838 ##(UI.BorderLayout) 1 1 nil nil nil nil 410 ##(UI.ContainerView) 34 15 nil 416 34 2 8 1140850688 131073 528 nil nil nil 7 nil nil nil 528 1376774 ##(UI.ProportionalLayout) 138 ##(Core.Dictionary) 34 2 1049094 ##(Core.Association) 410 ##(UI.ReferenceView) 34 14 nil 528 34 2 8 1140916224 131073 688 nil nil nil 23 461638 4 ##(UI.Menu) nil true 34 17 1180742 2 ##(UI.CommandMenuItem) 1 1377606 4 ##(UI.CommandDescription) #accept 8 '&Accept' 1 1 nil nil nil 802 1 834 #acceptNoRestart 8 'Acce&pt No Restart' 1 1 nil nil nil 1179974 1 ##(UI.DividerMenuItem) 4097 802 1 834 #runToCursor 8 '&Run to Cursor' 1 1 nil nil nil 802 1 834 #toggleBreakpoint 8 'T&oggle Breakpoint' 1 1 nil nil nil 802 1 834 #toggleDisassembly 8 'Disasse&mbly' 1 1 nil nil nil 930 4097 754 nil true 34 9 802 1 834 #undo 8 '&Undo' 1 1 nil nil nil 930 4097 802 1 834 #cutSelection 8 'Cu&t' 1 1 nil nil nil 802 1 834 #copySelection 8 '&Copy' 1 1 nil nil nil 802 1 834 #pasteClipboard 8 '&Paste' 1 1 nil nil nil 802 1 834 #clearSelection 8 'De&lete' 1 1 nil nil nil 930 4097 802 1 834 #selectAll 8 '&Select All' 1 1 nil nil nil 802 1 834 #clear 8 'Cle&ar' 1 1 nil nil nil 8 '&Edit' nil 134217729 nil nil nil nil nil 930 4097 802 1 834 #browseIt 8 'Bro&wse It' 1 1 nil nil nil 802 1 834 #displayIt 8 '&Display It' 1 1 nil nil nil 802 1 834 #printIt 8 '&Print It' 1 1 853318 3 ##(Graphics.Icon) nil true 2031622 ##(Kernel.ImageRelativeFileLocator) 8 'PrintIt.ico' 2490894 ##(Kernel.STBExternalResourceLibraryProxy) 8 'dolphindr8.dll' nil nil nil 802 1 834 #evaluateIt 8 'E&valuate It' 1 1 nil nil nil 802 1 834 #debugIt 8 'Deb&ug It' 1 1 nil nil nil 802 1 834 #inspectIt 8 '&Inspect It' 1 1 nil nil nil 930 4097 754 nil true 34 2 802 1 834 #browseDefinitions 8 '&Definitions…' 1 1 nil nil nil 802 1 834 #browseReferences 8 '&References…' 1 1 nil nil nil 8 '&Browse' nil 134217729 nil nil nil nil nil 8 '&Workspace' nil 134217729 nil nil nil nil nil nil nil 688 1376838 1 ##(UI.ResourceIdentifier) ##(Tools.MethodWorkspace) #resource_Debugger_source nil 1310982 ##(Core.MessageSequence) 138 144 34 2 1049350 ##(Core.MessageSend) #createAt:extent: 34 2 918022 ##(Graphics.Point) 1 347 2290 1169 337 688 2242 #contextMenu: 34 1 768 688 1179910 ##(OS.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 173 0 0 0 72 2 0 0 85 1 0 0] 8 #() 2290 193 193 nil 27 3 658 410 ##(UI.Splitter) 34 12 nil 528 34 2 8 1140850688 1 2464 nil nil nil 519 nil nil nil 1707078 1 ##(UI.DraggableViewInteractor) 2464 nil 1 #left nil nil nil 2290 1 1 2290 9 9 nil 2560 nil 2178 138 144 34 1 2242 #createAt:extent: 34 2 2290 1 337 2290 1169 11 2464 2370 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 168 0 0 0 72 2 0 0 173 0 0 0] 8 #() 2432 nil 27 1 true 170 192 34 2 688 8 'source' nil 2178 138 144 34 1 2242 #createAt:extent: 34 2 2290 1 1 2290 1169 683 528 2370 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 72 2 0 0 85 1 0 0] 34 3 410 ##(UI.ContainerView) 34 15 nil 528 34 2 8 1140850688 131073 2960 nil nil nil 7 nil nil nil 2960 594 138 ##(Core.Dictionary) 34 5 658 410 ##(UI.ListBox) 34 17 nil 2960 34 2 8 1144062209 1 3088 787270 2 ##(UI.ListModel) 138 144 2416 nil 1769478 ##(Kernel.IdentitySearchPolicy) 917510 ##(Graphics.Color) #default nil 7 754 nil true 34 11 802 1 834 #stepInto 8 'Step &Into' 1269 5 nil nil nil 802 1 834 #stepOver 8 'Step O&ver' 1267 5 nil nil nil 802 1 834 #stepOut 8 'Step O&ut' 5365 1 nil nil nil 802 1 834 #returnFromMessage 8 'Retur&n …' 1 1 nil nil nil 802 1 834 #restartFrame 8 '&Restart' 1 1 nil nil nil 754 nil true 8 #() 8 'Im&plement in' #implementDNUMenu 134217729 nil nil nil nil nil 930 4097 802 1 834 #moreFrames 8 '&More' 1 1 nil nil nil 802 1 834 #allFrames 8 'A&ll' 1 1 nil nil nil 930 4097 754 nil true 34 4 802 1 834 #browseDefinitions 8 '&Definitions' 1 1 nil nil nil 802 1 834 #browseReferences 8 '&References' 1 1 nil nil nil 802 1 834 #browseMessages 8 '&Messages…' 1 1 nil nil nil 802 1 834 #browseMethodInheritanceChain 8 'In&heritance Chain' 1 1 nil nil nil 8 '&Browse' nil 134217729 nil nil nil nil nil 8 '&Debug' nil 134217729 nil nil nil nil nil nil nil 3088 nil 8 1731057856 ##(UI.BasicListAbstract) 8 #() false 2178 138 144 34 3 2242 #createAt:extent: 34 2 2290 1 1 2290 511 337 3088 2242 #contextMenu: 34 1 3264 3088 2242 #horizontalExtent: 8 #(0) 3088 2370 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 255 0 0 0 168 0 0 0] 8 #() 2432 nil 27 852486 ##(Core.Fraction) 3305 675 658 410 ##(UI.Splitter) 34 12 nil 2960 34 2 8 1140850688 1 4272 nil nil nil 519 nil nil nil 2530 4272 nil 1 #left nil nil nil 2560 2576 nil 2560 nil 2178 138 144 34 1 2242 #createAt:extent: 34 2 2290 511 1 2290 11 337 4272 2370 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 4 1 0 0 168 0 0 0] 8 #() 2432 nil 27 1 658 410 ##(UI.TreeView) 34 27 nil 2960 34 2 8 1140916771 1 4528 787526 3 ##(UI.TreeModel) nil 3216 721670 ##(UI.TreeNode) nil nil nil 170 192 2416 3248 nil 7 754 nil true 34 2 802 1 834 #inspectIt 8 '&Inspect' 1 1 nil nil nil 802 1 834 #inspectReferences 8 'Inspect &References' 1 1 nil nil nil 8 '&Inspect' nil 134217729 nil nil nil nil nil nil nil 4528 nil 8 1731037456 786950 ##(Core.Message) #first 8 #() 1246566 3 ##(Kernel.BlockClosure) 0 nil 1377574 ##(Kernel.CompiledMethod) 2 3 ##(UI.IconicListAbstract) #defaultGetImageBlock 448019587 8 #[30 105 226 0 106] #iconImageIndex 4896 7 257 nil 1639750 1 ##(Graphics.IconImageManager) nil nil nil nil nil 170 176 2416 nil #noIcons 1 170 192 2416 2178 138 144 34 2 2242 #createAt:extent: 34 2 2290 521 1 2290 219 337 4528 2242 #contextMenu: 34 1 4672 4528 2370 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 4 1 0 0 0 0 0 0 113 1 0 0 168 0 0 0] 8 #() 2432 nil 27 4226 1415 675 658 410 ##(UI.ReferenceView) 34 14 nil 2960 34 2 8 1140916224 131073 5248 nil nil nil 23 nil nil nil 5248 2146 ##(Tools.SmalltalkWorkspace) #resource_Default_view nil 2178 138 144 34 1 2242 #createAt:extent: 34 2 2290 749 1 2290 421 337 5248 2370 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 118 1 0 0 0 0 0 0 72 2 0 0 168 0 0 0] 2416 2432 nil 27 9 658 410 ##(UI.Splitter) 34 12 nil 2960 34 2 8 1140850688 1 5488 nil nil nil 519 nil nil nil 2530 5488 nil 1 #left nil nil nil 2560 2576 nil 2560 nil 2178 138 144 34 1 2242 #createAt:extent: 34 2 2290 739 1 2290 11 337 5488 2370 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 113 1 0 0 0 0 0 0 118 1 0 0 168 0 0 0] 8 #() 2432 nil 27 1 false 170 192 34 6 5248 8 'inspector' 4528 8 'temps' 3088 8 'stack' nil 2178 138 144 34 1 2242 #createAt:extent: 34 2 2290 1 1 2290 1169 337 2960 2370 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 72 2 0 0 168 0 0 0] 34 5 3088 4272 4528 5488 5248 2432 nil 27 2464 688 2432 nil 27 170 192 34 2 528 8 'main' nil 658246 4 ##(UI.MenuBar) nil true 34 7 754 nil true 34 8 802 1 834 #fileNew 8 '&New' 9373 1 nil nil nil 802 1 834 #fileOpen 8 '&Open…' 9375 1 nil nil nil 802 1 834 #fileFileIn 8 '&File In…' 1 1 nil nil nil 930 4097 802 1 834 #saveImage 8 'Sa&ve Image' 1 1 nil nil nil 802 1 834 #smalltalkExit 8 'E&xit Dolphin' 1 1 nil nil nil 930 4097 802 1 834 #exit 8 'Close' 17639 1 nil nil nil 8 '&File' nil 134217729 nil nil 48759 nil nil 754 nil true 34 13 802 1 834 #undo 8 '&Undo' 9397 1 nil nil nil 930 4097 802 1 834 #cutSelection 8 'Cu&t' 9393 1 nil nil nil 802 1 834 #copySelection 8 '&Copy' 9351 1 nil nil nil 802 1 834 #pasteClipboard 8 '&Paste' 9389 1 nil nil nil 802 1 834 #editDelete 8 '&Delete' 1 1 nil nil nil 754 nil true 34 2 802 1 834 #reformatSource 8 '&Source' 9391 1 nil nil nil 802 1 834 #reformatComment 8 '&Comment' 9367 1 nil nil nil 8 'Ref&ormat' nil 134217729 nil nil 48775 nil nil 930 4097 802 1 834 #selectAll 8 'Select &All' 9347 1 nil nil nil 930 4097 802 1 834 #editFind 8 '&Find…' 9357 1 nil nil nil 802 1 834 #findNext 8 'Find &Next' 1253 1 nil nil nil 802 1 834 #findReplace 8 '&Replace…' 9361 1 nil nil nil 8 '&Edit' nil 134217729 nil nil 48785 nil nil 754 nil true 34 18 802 1 834 #browseIt 8 '&Browse It' 9349 1 nil nil nil 802 1 834 #displayIt 8 '&Display It' 9353 1 nil nil nil 802 1 834 #printIt 8 '&Print It' 9377 1 1698 nil true 1744 8 'PrintIt.ico' 1792 nil nil 802 1 834 #evaluateIt 8 '&Evaluate It' 9355 1 nil nil nil 802 1 834 #inspectIt 8 '&Inspect It' 9363 1 nil nil nil 802 1 834 #debugIt 8 'Deb&ug It' 1 1 nil nil nil 802 1 834 #fileItIn 8 'Fi&le It In' 1 1 nil nil nil 930 4097 802 1 834 #browseDefinitions 8 'Defi&nitions…' 1271 1 nil nil nil 802 1 834 #browseReferences 8 '&References…' 5367 1 nil nil nil 930 4097 802 2097153 834 #accept 8 '&Accept' 9383 1 nil nil nil 802 1 834 #reformatAccept 8 'Refor&mat/Accept' 13479 1 nil nil nil 802 1 834 #acceptNoRestart 8 'Acce&pt No Restart' 1 1 nil nil nil 930 4097 754 nil true 34 13 802 1 834 #renameVariable 8 'Re&name <1d>…' 1 1 nil nil nil 930 4097 802 1 834 #extractToTemporary 8 'Extract to &Temporary…' 9385 1 nil nil nil 802 1 834 #extractMethod 8 'E&xtract Method…' 9371 1 nil nil nil 802 1 834 #extractToComponent 8 'Extract to &Component…' 1 1 nil nil nil 802 1 834 #inlineMessage 8 'Inline &Message' 13467 1 nil nil nil 930 4097 802 1 834 #inlineTemporary 8 '&Inline Temporary' 13481 1 nil nil nil 802 1 834 #moveTempToInnerScope 8 'Move to Inner &Scope' 9655 1 nil nil nil 802 1 834 #convertTempToInstVar 8 'Con&vert to Instance Variable' 1 1 nil nil nil 930 4097 802 1 834 #inlineParameter 8 'In&line Parameter' 1 1 nil nil nil 802 1 834 #removeParameter 8 'Remove &Parameter' 1 1 nil nil nil 8 'Re&factorings' #codeRefactoringsMenu 134217729 nil nil 48831 nil nil 930 4097 754 nil true 34 7 802 1 834 #toggleAutoCompletion 8 '&Auto-complete' 1 1 nil nil nil 802 1 834 #toggleIndentationGuides 8 'Indentation &Guides' 1 1 nil nil nil 802 1 834 #toggleLineEndings 8 'Line &Endings' 1 1 nil nil nil 802 1 834 #toggleLineNumbers 8 'Line N&umbers' 1 1 nil nil nil 802 1 834 #toggleStyling 8 '&Syntax Coloring' 1 1 nil nil nil 802 1 834 #toggleWhitespace 8 'W&hitespace' 1 1 nil nil nil 802 1 834 #toggleWordWrap 8 '&Word Wrap' 1 1 nil nil nil 8 '&Options' nil 134217729 nil nil 48847 nil nil 8 '&Workspace' nil 134217729 nil nil 48849 nil nil 754 nil true 34 22 802 1 834 #resumeProcess 8 'G&o/detach' 1257 1 nil nil nil 802 1 834 #toggleAnimation 8 '&Animate' 1 1 nil nil nil 802 1 834 #terminateProcess 8 '&Terminate' 5353 1 nil nil nil 802 1 834 #killProcess 8 '&Kill' 1 1 nil nil nil 802 1 834 #userBreak 8 '&Break' 1 1 nil nil nil 930 4097 802 1 834 #stepInto 8 'Step &Into' 1269 5 nil nil nil 802 1 834 #stepOver 8 'Step O&ver' 1267 5 nil nil nil 802 1 834 #stepOut 8 'Step O&ut' 5365 1 nil nil nil 802 1 834 #runToCursor 8 'Run to &Cursor' 9459 1 nil nil nil 802 1 834 #runProcess 8 '&Run' 9449 1 nil nil nil 802 1 834 #restartFrame 8 'R&estart' 13545 1 nil nil nil 802 1 834 #returnFromMessage 8 'Retur&n …' 1 1 nil nil nil 930 4097 754 nil true 8 #() 8 'Im&plement in' #implementDNUMenu 134217729 nil nil 48875 nil nil 754 nil true 34 14 754 nil true 34 3 802 1 834 #renameMethod 8 'All…' 1 1 nil nil nil 802 1 834 #renameMethodInHierarchy 8 'In &Hierarchy…' 1 1 nil nil nil 802 1 834 #renameMethodInPackage 8 'In &Package…' 1 1 nil nil nil 8 'Re&name' nil 134217729 nil nil 48883 nil nil 802 1 834 #safeRemoveMethods 8 'Rem&ove' 1 1 nil nil nil 930 4097 802 1 834 #addParameter 8 'Add &Parameter…' 1 1 nil nil nil 754 nil true 8 #() 8 'Remo&ve Parameter' #removeParameterMenu 134217729 nil nil 48889 nil nil 754 nil true 8 #() 8 'Rena&me Parameter' #renameParameterMenu 134217729 nil nil 48891 nil nil 754 nil true 8 #() 8 '&Inline Parameter' #inlineParameterMenu 134217729 nil nil 48893 nil nil 930 4097 754 nil true 8 #() 8 'Rename &Temporary' #renameTempMenu 134217729 nil nil 48895 nil nil 754 nil true 8 #() 8 'Convert Temp to Inst. Var.' #convertTempToInstVarMenu 134217729 nil nil 48897 nil nil 930 4097 802 1 834 #inlineAllSelfSends 8 'Inline &Self Sends' 1 1 nil nil nil 802 1 834 #pushUpMethods 8 'Push &Up' 1 1 nil nil nil 802 1 834 #pushDownMethods 8 'Push &Down' 1 1 nil nil nil 8 'Refactorin&gs' #methodRefactoringsMenu 134217729 nil nil 48905 nil nil 930 4097 802 1 834 #toggleBreakpoint 8 'Toggle Breakpoint' 1265 1 nil nil nil 802 1 834 #toggleDisassembly 8 'Disasse&mbly' 9461 1 nil nil nil 802 1 834 #showNextStatement 8 'Show Ne&xt Statement' 17621 1 nil nil nil 930 4097 754 nil true 34 2 802 1 834 #moreFrames 8 '&More' 1 1 nil nil nil 802 1 834 #allFrames 8 'A&ll' 1 1 nil nil nil 8 'Call &Stack' nil 134217729 nil nil 48917 nil nil 8 '&Debug' nil 134217729 nil nil 48919 nil nil 754 nil true 8 #() 8 '&Tools' #toolsMenu 134217729 nil nil 48921 nil nil 754 nil true 8 #() 8 'Wi&ndow' #windowMenu 134217729 nil nil 48923 nil nil 754 nil true 34 15 802 1 834 #helpContents 8 '&Contents' 1025 1 nil nil nil 802 1 834 #help 8 'On this &Tool' 1249 1 nil nil nil 802 1 834 #helpWhatsThis 8 'What''s This?' 5345 1 nil nil nil 930 4097 802 1 834 #learnSmalltalk 8 'Learn Smalltalk' 1 1 nil nil nil 930 4097 802 1 834 #helpWhatsNew 8 'What''s &New' 1 1 nil nil nil 802 1 834 #helpGuidedTour 8 '&Guided Tour' 1 1 nil nil nil 802 1 834 #helpTutorials 8 'Tutorials' 1 1 nil nil nil 930 4097 802 1 834 #objectArtsHomePage 8 'Object Arts Homepage' 1 1 nil nil nil 802 1 834 #dolphinNewsgroup 8 'Dolphin Newsgroup/Forum' 1 1 nil nil nil 802 1 834 #dolphinWikiWeb 8 'Dolphin WikiWeb' 1 1 nil nil nil 930 4097 802 1 834 #aboutDolphin 8 '&About Dolphin Smalltalk' 1 1 nil nil nil 8 '&Help' #help 134217729 nil nil 48947 nil nil 8 '' nil 134217729 nil nil nil nil nil nil nil nil 1 nil nil nil nil 1 nil nil 2178 138 144 34 1 2242 #createAt:extent: 34 2 2290 12287 21 2290 1201 801 416 2370 8 #[44 0 0 0 0 0 0 0 0 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 23 0 0 10 0 0 0 87 26 0 0 154 1 0 0] 34 1 528 2432 nil 27 )!
+	^#(#'!!STL' 4 985166 10 ##(UI.STBViewProxy) ##(Tools.DebuggerShellView) 34 27 nil nil 8 #(13565952 65536) 416 nil 1245702 ##(Graphics.ThemeColor) #toolBackground nil 551 nil nil nil 416 984838 ##(UI.BorderLayout) 1 1 nil nil nil nil 410 ##(UI.ContainerView) 34 15 nil 416 34 2 8 1140850688 131073 528 nil nil nil 7 nil nil nil 528 1376774 ##(UI.ProportionalLayout) 138 ##(Core.Dictionary) 34 2 1049094 ##(Core.Association) 410 ##(UI.ReferenceView) 34 14 nil 528 34 2 8 1140916224 131073 688 nil nil nil 23 461638 4 ##(UI.Menu) nil true 34 17 1180742 2 ##(UI.CommandMenuItem) 1 1377606 4 ##(UI.CommandDescription) #accept 8 '&Accept' 1 1 nil nil nil 802 1 834 #acceptNoRestart 8 'Acce&pt No Restart' 1 1 nil nil nil 1179974 1 ##(UI.DividerMenuItem) 4097 802 1 834 #runToCursor 8 '&Run to Cursor' 1 1 nil nil nil 802 1 834 #toggleBreakpoint 8 'T&oggle Breakpoint' 1 1 nil nil nil 802 1 834 #toggleDisassembly 8 'Disasse&mbly' 1 1 nil nil nil 930 4097 754 nil true 34 9 802 1 834 #undo 8 '&Undo' 1 1 nil nil nil 930 4097 802 1 834 #cutSelection 8 'Cu&t' 1 1 nil nil nil 802 1 834 #copySelection 8 '&Copy' 1 1 nil nil nil 802 1 834 #pasteClipboard 8 '&Paste' 1 1 nil nil nil 802 1 834 #clearSelection 8 'De&lete' 1 1 nil nil nil 930 4097 802 1 834 #selectAll 8 '&Select All' 1 1 nil nil nil 802 1 834 #clear 8 'Cle&ar' 1 1 nil nil nil 8 '&Edit' nil 134217729 nil nil nil nil nil 930 4097 802 1 834 #browseIt 8 'Bro&wse It' 1 1 nil nil nil 802 1 834 #displayIt 8 '&Display It' 1 1 nil nil nil 802 1 834 #printIt 8 '&Print It' 1 1 853318 3 ##(Graphics.Icon) nil true 2031622 ##(Kernel.ImageRelativeFileLocator) 8 'PrintIt.ico' 2490894 ##(Kernel.STBExternalResourceLibraryProxy) 8 'dolphindr8.dll' nil nil nil 802 1 834 #evaluateIt 8 'E&valuate It' 1 1 nil nil nil 802 1 834 #debugIt 8 'Deb&ug It' 1 1 nil nil nil 802 1 834 #inspectIt 8 '&Inspect It' 1 1 nil nil nil 930 4097 754 nil true 34 2 802 1 834 #browseDefinitions 8 '&Definitions…' 1 1 nil nil nil 802 1 834 #browseReferences 8 '&References…' 1 1 nil nil nil 8 '&Browse' nil 134217729 nil nil nil nil nil 8 '&Workspace' nil 134217729 nil nil nil nil nil nil nil 688 1376838 1 ##(UI.ResourceIdentifier) ##(Tools.MethodWorkspace) #resource_Debugger_source nil 1310982 ##(Core.MessageSequence) 34 2 1049350 ##(Core.MessageSend) #createAt:extent: 34 2 918022 ##(Graphics.Point) 1 347 2274 1169 337 688 2226 #contextMenu: 34 1 768 688 1179910 ##(OS.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 173 0 0 0 72 2 0 0 85 1 0 0] 8 #() 2274 193 193 nil 27 3 658 410 ##(UI.Splitter) 34 12 nil 528 34 2 8 1140850688 1 2448 nil nil nil 519 nil nil nil 1707078 1 ##(UI.DraggableViewInteractor) 2448 nil 1 #left nil nil nil 2274 1 1 2274 9 9 nil 2544 nil 2178 34 1 2226 #createAt:extent: 34 2 2274 1 337 2274 1169 11 2448 2354 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 168 0 0 0 72 2 0 0 173 0 0 0] 8 #() 2416 nil 27 1 true 170 192 34 2 688 8 'source' nil 2178 34 1 2226 #createAt:extent: 34 2 2274 1 1 2274 1169 683 528 2354 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 72 2 0 0 85 1 0 0] 34 3 410 ##(UI.ContainerView) 34 15 nil 528 34 2 8 1140850688 131073 2912 nil nil nil 7 nil nil nil 2912 594 138 ##(Core.Dictionary) 34 5 658 410 ##(UI.ListBox) 34 17 nil 2912 34 2 8 1144062209 1 3040 787270 2 ##(UI.ListModel) 138 144 2400 nil 1769478 ##(Kernel.IdentitySearchPolicy) 917510 ##(Graphics.Color) #default nil 7 754 nil true 34 11 802 1 834 #stepInto 8 'Step &Into' 1269 5 nil nil nil 802 1 834 #stepOver 8 'Step O&ver' 1267 5 nil nil nil 802 1 834 #stepOut 8 'Step O&ut' 5365 1 nil nil nil 802 1 834 #returnFromMessage 8 'Retur&n …' 1 1 nil nil nil 802 1 834 #restartFrame 8 '&Restart' 1 1 nil nil nil 754 nil true 8 #() 8 'Im&plement in' #implementDNUMenu 134217729 nil nil nil nil nil 930 4097 802 1 834 #moreFrames 8 '&More' 1 1 nil nil nil 802 1 834 #allFrames 8 'A&ll' 1 1 nil nil nil 930 4097 754 nil true 34 4 802 1 834 #browseDefinitions 8 '&Definitions' 1 1 nil nil nil 802 1 834 #browseReferences 8 '&References' 1 1 nil nil nil 802 1 834 #browseMessages 8 '&Messages…' 1 1 nil nil nil 802 1 834 #browseMethodInheritanceChain 8 'In&heritance Chain' 1 1 nil nil nil 8 '&Browse' nil 134217729 nil nil nil nil nil 8 '&Debug' nil 134217729 nil nil nil nil nil nil nil 3040 nil 8 1793341440 ##(UI.BasicListAbstract) 8 #() false 2178 34 3 2226 #createAt:extent: 34 2 2274 1 1 2274 511 337 3040 2226 #contextMenu: 34 1 3216 3040 2226 #horizontalExtent: 8 #(0) 3040 2354 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 255 0 0 0 168 0 0 0] 8 #() 2416 nil 27 852486 ##(Core.Fraction) 3305 675 658 410 ##(UI.TreeView) 34 27 nil 2912 34 2 8 1140916775 1 4208 787526 3 ##(UI.TreeModel) nil 3168 721670 ##(UI.TreeNode) nil nil nil 170 192 2400 3200 nil 7 754 nil true 34 2 802 1 834 #inspectIt 8 '&Inspect' 1 1 nil nil nil 802 1 834 #inspectReferences 8 'Inspect &References' 1 1 nil nil nil 8 '&Inspect' nil 134217729 nil nil nil nil nil nil nil 4208 nil 8 1793527760 786950 ##(Core.Message) #name 2400 4514 #valueImage 2400 1639750 1 ##(Graphics.IconImageManager) nil nil nil nil nil 170 176 2400 nil #noIcons 1 170 192 2400 2178 34 2 2226 #createAt:extent: 34 2 2274 521 1 2274 219 337 4208 2226 #contextMenu: 34 1 4352 4208 2354 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 4 1 0 0 0 0 0 0 113 1 0 0 168 0 0 0] 8 #() 2416 nil 27 4162 1415 675 658 410 ##(UI.Splitter) 34 12 nil 2912 34 2 8 1140850688 1 4832 nil nil nil 519 nil nil nil 2514 4832 nil 1 #left nil nil nil 2544 2560 nil 2544 nil 2178 34 1 2226 #createAt:extent: 34 2 2274 739 1 2274 11 337 4832 2354 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 113 1 0 0 0 0 0 0 118 1 0 0 168 0 0 0] 8 #() 2416 nil 27 1 658 410 ##(UI.Splitter) 34 12 nil 2912 34 2 8 1140850688 1 5072 nil nil nil 519 nil nil nil 2514 5072 nil 1 #left nil nil nil 2544 2560 nil 2544 nil 2178 34 1 2226 #createAt:extent: 34 2 2274 511 1 2274 11 337 5072 2354 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 4 1 0 0 168 0 0 0] 8 #() 2416 nil 27 1 658 410 ##(UI.ReferenceView) 34 14 nil 2912 34 2 8 1140916224 131073 5312 nil nil nil 23 nil nil nil 5312 2146 ##(Tools.SmalltalkWorkspace) #resource_Default_view nil 2178 34 1 2226 #createAt:extent: 34 2 2274 749 1 2274 421 337 5312 2354 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 118 1 0 0 0 0 0 0 72 2 0 0 168 0 0 0] 2400 2416 nil 27 9 false 170 192 34 6 4208 8 'temps' 5312 8 'inspector' 3040 8 'stack' nil 2178 34 1 2226 #createAt:extent: 34 2 2274 1 1 2274 1169 337 2912 2354 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 72 2 0 0 168 0 0 0] 34 5 3040 5072 4208 4832 5312 2416 nil 27 2448 688 2416 nil 27 170 192 34 2 528 8 'main' nil 658246 4 ##(UI.MenuBar) nil true 34 7 754 nil true 34 8 802 1 834 #fileNew 8 '&New' 9373 1 nil nil nil 802 1 834 #fileOpen 8 '&Open…' 9375 1 nil nil nil 802 1 834 #fileFileIn 8 '&File In…' 1 1 nil nil nil 930 4097 802 1 834 #saveImage 8 'Sa&ve Image' 1 1 nil nil nil 802 1 834 #smalltalkExit 8 'E&xit Dolphin' 1 1 nil nil nil 930 4097 802 1 834 #exit 8 'Close' 17639 1 nil nil nil 8 '&File' nil 134217729 nil nil 46703 nil nil 754 nil true 34 13 802 1 834 #undo 8 '&Undo' 9397 1 nil nil nil 930 4097 802 1 834 #cutSelection 8 'Cu&t' 9393 1 nil nil nil 802 1 834 #copySelection 8 '&Copy' 9351 1 nil nil nil 802 1 834 #pasteClipboard 8 '&Paste' 9389 1 nil nil nil 802 1 834 #editDelete 8 '&Delete' 1 1 nil nil nil 754 nil true 34 2 802 1 834 #reformatSource 8 '&Source' 9391 1 nil nil nil 802 1 834 #reformatComment 8 '&Comment' 9367 1 nil nil nil 8 'Ref&ormat' nil 134217729 nil nil 46719 nil nil 930 4097 802 1 834 #selectAll 8 'Select &All' 9347 1 nil nil nil 930 4097 802 1 834 #editFind 8 '&Find…' 9357 1 nil nil nil 802 1 834 #findNext 8 'Find &Next' 1253 1 nil nil nil 802 1 834 #findReplace 8 '&Replace…' 9361 1 nil nil nil 8 '&Edit' nil 134217729 nil nil 46729 nil nil 754 nil true 34 18 802 1 834 #browseIt 8 '&Browse It' 9349 1 nil nil nil 802 1 834 #displayIt 8 '&Display It' 9353 1 nil nil nil 802 1 834 #printIt 8 '&Print It' 9377 1 1698 nil true 1744 8 'PrintIt.ico' 1792 nil nil 802 1 834 #evaluateIt 8 '&Evaluate It' 9355 1 nil nil nil 802 1 834 #inspectIt 8 '&Inspect It' 9363 1 nil nil nil 802 1 834 #debugIt 8 'Deb&ug It' 1 1 nil nil nil 802 1 834 #fileItIn 8 'Fi&le It In' 1 1 nil nil nil 930 4097 802 1 834 #browseDefinitions 8 'Defi&nitions…' 1271 1 nil nil nil 802 1 834 #browseReferences 8 '&References…' 5367 1 nil nil nil 930 4097 802 2097153 834 #accept 8 '&Accept' 9383 1 nil nil nil 802 1 834 #reformatAccept 8 'Refor&mat/Accept' 13479 1 nil nil nil 802 1 834 #acceptNoRestart 8 'Acce&pt No Restart' 1 1 nil nil nil 930 4097 754 nil true 34 13 802 1 834 #renameVariable 8 'Re&name <1d>…' 1 1 nil nil nil 930 4097 802 1 834 #extractToTemporary 8 'Extract to &Temporary…' 9385 1 nil nil nil 802 1 834 #extractMethod 8 'E&xtract Method…' 9371 1 nil nil nil 802 1 834 #extractToComponent 8 'Extract to &Component…' 1 1 nil nil nil 802 1 834 #inlineMessage 8 'Inline &Message' 13467 1 nil nil nil 930 4097 802 1 834 #inlineTemporary 8 '&Inline Temporary' 13481 1 nil nil nil 802 1 834 #moveTempToInnerScope 8 'Move to Inner &Scope' 9655 1 nil nil nil 802 1 834 #convertTempToInstVar 8 'Con&vert to Instance Variable' 1 1 nil nil nil 930 4097 802 1 834 #inlineParameter 8 'In&line Parameter' 1 1 nil nil nil 802 1 834 #removeParameter 8 'Remove &Parameter' 1 1 nil nil nil 8 'Re&factorings' #codeRefactoringsMenu 134217729 nil nil 46775 nil nil 930 4097 754 nil true 34 7 802 1 834 #toggleAutoCompletion 8 '&Auto-complete' 1 1 nil nil nil 802 1 834 #toggleIndentationGuides 8 'Indentation &Guides' 1 1 nil nil nil 802 1 834 #toggleLineEndings 8 'Line &Endings' 1 1 nil nil nil 802 1 834 #toggleLineNumbers 8 'Line N&umbers' 1 1 nil nil nil 802 1 834 #toggleStyling 8 '&Syntax Coloring' 1 1 nil nil nil 802 1 834 #toggleWhitespace 8 'W&hitespace' 1 1 nil nil nil 802 1 834 #toggleWordWrap 8 '&Word Wrap' 1 1 nil nil nil 8 '&Options' nil 134217729 nil nil 46791 nil nil 8 '&Workspace' nil 134217729 nil nil 46793 nil nil 754 nil true 34 22 802 1 834 #resumeProcess 8 'G&o/detach' 1257 1 nil nil nil 802 1 834 #toggleAnimation 8 '&Animate' 1 1 nil nil nil 802 1 834 #terminateProcess 8 '&Terminate' 5353 1 nil nil nil 802 1 834 #killProcess 8 '&Kill' 1 1 nil nil nil 802 1 834 #userBreak 8 '&Break' 1 1 nil nil nil 930 4097 802 1 834 #stepInto 8 'Step &Into' 1269 5 nil nil nil 802 1 834 #stepOver 8 'Step O&ver' 1267 5 nil nil nil 802 1 834 #stepOut 8 'Step O&ut' 5365 1 nil nil nil 802 1 834 #runToCursor 8 'Run to &Cursor' 9459 1 nil nil nil 802 1 834 #runProcess 8 '&Run' 9449 1 nil nil nil 802 1 834 #restartFrame 8 'R&estart' 13545 1 nil nil nil 802 1 834 #returnFromMessage 8 'Retur&n …' 1 1 nil nil nil 930 4097 754 nil true 8 #() 8 'Im&plement in' #implementDNUMenu 134217729 nil nil 46819 nil nil 754 nil true 34 14 754 nil true 34 3 802 1 834 #renameMethod 8 'All…' 1 1 nil nil nil 802 1 834 #renameMethodInHierarchy 8 'In &Hierarchy…' 1 1 nil nil nil 802 1 834 #renameMethodInPackage 8 'In &Package…' 1 1 nil nil nil 8 'Re&name' nil 134217729 nil nil 46827 nil nil 802 1 834 #safeRemoveMethods 8 'Rem&ove' 1 1 nil nil nil 930 4097 802 1 834 #addParameter 8 'Add &Parameter…' 1 1 nil nil nil 754 nil true 8 #() 8 'Remo&ve Parameter' #removeParameterMenu 134217729 nil nil 46833 nil nil 754 nil true 8 #() 8 'Rena&me Parameter' #renameParameterMenu 134217729 nil nil 46835 nil nil 754 nil true 8 #() 8 '&Inline Parameter' #inlineParameterMenu 134217729 nil nil 46837 nil nil 930 4097 754 nil true 8 #() 8 'Rename &Temporary' #renameTempMenu 134217729 nil nil 46839 nil nil 754 nil true 8 #() 8 'Convert Temp to Inst. Var.' #convertTempToInstVarMenu 134217729 nil nil 46841 nil nil 930 4097 802 1 834 #inlineAllSelfSends 8 'Inline &Self Sends' 1 1 nil nil nil 802 1 834 #pushUpMethods 8 'Push &Up' 1 1 nil nil nil 802 1 834 #pushDownMethods 8 'Push &Down' 1 1 nil nil nil 8 'Refactorin&gs' #methodRefactoringsMenu 134217729 nil nil 46849 nil nil 930 4097 802 1 834 #toggleBreakpoint 8 'Toggle Breakpoint' 1265 1 nil nil nil 802 1 834 #toggleDisassembly 8 'Disasse&mbly' 9461 1 nil nil nil 802 1 834 #showNextStatement 8 'Show Ne&xt Statement' 17621 1 nil nil nil 930 4097 754 nil true 34 2 802 1 834 #moreFrames 8 '&More' 1 1 nil nil nil 802 1 834 #allFrames 8 'A&ll' 1 1 nil nil nil 8 'Call &Stack' nil 134217729 nil nil 46861 nil nil 8 '&Debug' nil 134217729 nil nil 46863 nil nil 754 nil true 8 #() 8 '&Tools' #toolsMenu 134217729 nil nil 46865 nil nil 754 nil true 8 #() 8 'Wi&ndow' #windowMenu 134217729 nil nil 46867 nil nil 754 nil true 34 15 802 1 834 #helpContents 8 '&Contents' 1025 1 nil nil nil 802 1 834 #help 8 'On this &Tool' 1249 1 nil nil nil 802 1 834 #helpWhatsThis 8 'What''s This?' 5345 1 nil nil nil 930 4097 802 1 834 #learnSmalltalk 8 'Learn Smalltalk' 1 1 nil nil nil 930 4097 802 1 834 #helpWhatsNew 8 'What''s &New' 1 1 nil nil nil 802 1 834 #helpGuidedTour 8 '&Guided Tour' 1 1 nil nil nil 802 1 834 #helpTutorials 8 'Tutorials' 1 1 nil nil nil 930 4097 802 1 834 #objectArtsHomePage 8 'Object Arts Homepage' 1 1 nil nil nil 802 1 834 #dolphinNewsgroup 8 'Dolphin Newsgroup/Forum' 1 1 nil nil nil 802 1 834 #dolphinWikiWeb 8 'Dolphin WikiWeb' 1 1 nil nil nil 930 4097 802 1 834 #aboutDolphin 8 '&About Dolphin Smalltalk' 1 1 nil nil nil 8 '&Help' #help 134217729 nil nil 46891 nil nil 8 '' nil 134217729 nil nil nil nil nil nil nil nil 1 nil nil nil nil 1 nil nil 2178 34 1 2226 #createAt:extent: 34 2 2274 12287 21 2274 1201 801 416 2354 8 #[44 0 0 0 0 0 0 0 0 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 23 0 0 10 0 0 0 87 26 0 0 154 1 0 0] 34 1 528 2416 nil 27 )!
 
 resource_Default_view
 	"Answer the literal data from which the 'Default view' resource can be reconstituted.
@@ -2185,7 +2140,7 @@ resource_Default_view
 	Tools.ViewComposer openOn: (UI.ResourceIdentifier class: self selector: #resource_Default_view)
 	"
 
-	^#(#'!!STL' 4 985166 10 ##(UI.STBViewProxy) ##(Tools.DebuggerShellView) 34 27 nil nil 8 #(13565952 65536) 416 nil 1245702 ##(Graphics.ThemeColor) #toolBackground nil 551 nil nil nil 416 984838 ##(UI.BorderLayout) 1 1 410 ##(UI.Toolbar) 34 28 nil 416 34 2 8 1140853580 1 528 nil nil nil 519 nil nil nil 528 917510 ##(Graphics.Color) #default 8 1731461760 170 192 34 10 410 ##(UI.ReferenceView) 34 14 nil 528 34 2 8 1140850688 131073 672 nil nil nil 7 nil nil nil 672 1376838 1 ##(UI.ResourceIdentifier) ##(UI.Toolbar) #resource_Smalltalk_tools nil 1310982 ##(Core.MessageSequence) 138 144 34 1 1049350 ##(Core.MessageSend) #createAt:extent: 34 2 918022 ##(Graphics.Point) 63 1 882 553 51 672 1179910 ##(OS.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 31 0 0 0 0 0 0 0 51 1 0 0 25 0 0 0] 8 #() 882 193 193 nil 27 8 'smalltalkTools' 410 ##(UI.ReferenceView) 34 14 nil 528 34 2 8 1140850688 131073 1024 nil nil nil 7 nil nil nil 1024 738 ##(UI.Toolbar) #resource_Workspace_tools nil 770 138 144 34 1 834 #createAt:extent: 34 2 882 1 51 882 247 51 1024 930 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 25 0 0 0 123 0 0 0 50 0 0 0] 976 992 nil 27 8 'workspaceTools' 410 ##(UI.ReferenceView) 34 14 nil 528 34 2 8 1140850688 131073 1264 nil nil nil 7 nil nil nil 1264 738 ##(UI.Toolbar) #resource_Search_tools nil 770 138 144 34 1 834 #createAt:extent: 34 2 882 615 1 882 437 51 1264 930 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 51 1 0 0 0 0 0 0 13 2 0 0 25 0 0 0] 976 992 nil 27 8 'searchTools' 410 ##(UI.ReferenceView) 34 14 nil 528 34 2 8 1140850688 131073 1504 nil nil nil 7 nil nil nil 1504 738 ##(UI.Toolbar) #resource_Image_tools nil 770 138 144 34 1 834 #createAt:extent: 34 2 882 1 1 882 63 51 1504 930 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 31 0 0 0 25 0 0 0] 976 992 nil 27 8 'imageTools' 410 ##(UI.ReferenceView) 34 14 nil 528 34 2 8 1140850688 131073 1744 nil nil nil 7 nil nil nil 1744 738 ##(UI.Toolbar) #resource_Debugger_tools nil 770 138 144 34 1 834 #createAt:extent: 34 2 882 247 51 882 431 51 1744 930 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 123 0 0 0 25 0 0 0 82 1 0 0 50 0 0 0] 976 992 nil 27 8 'debuggerTools' nil nil nil 170 192 976 138 144 976 nil nil 1 nil 882 33 33 nil nil 852806 1 ##(UI.FlowLayout) 1 1 1 770 138 144 34 1 834 #createAt:extent: 34 2 882 1 1 882 1169 101 528 930 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 72 2 0 0 50 0 0 0] 34 5 1504 672 1264 1024 1744 992 nil 29 nil nil nil 410 ##(UI.ContainerView) 34 15 nil 416 34 2 8 1140850688 131073 2224 nil nil nil 7 nil nil nil 2224 1376774 ##(UI.ProportionalLayout) 138 ##(Core.Dictionary) 34 2 1049094 ##(Core.Association) 410 ##(UI.Splitter) 34 12 nil 2224 34 2 8 1140850688 1 2384 nil nil nil 519 nil nil nil 1707078 1 ##(UI.DraggableViewInteractor) 2384 nil 1 #left nil nil nil 882 1 1 882 9 9 nil 2480 nil 770 138 144 34 1 834 #createAt:extent: 34 2 882 1 287 882 1169 11 2384 930 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 143 0 0 0 72 2 0 0 148 0 0 0] 8 #() 992 nil 27 1 2354 410 ##(UI.ReferenceView) 34 14 nil 2224 34 2 8 1140916224 131073 2688 nil nil nil 23 nil nil nil 2688 738 ##(Tools.MethodWorkspace) #resource_Debugger_source nil 770 138 144 34 1 834 #createAt:extent: 34 2 882 1 297 882 1169 287 2688 930 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 148 0 0 0 72 2 0 0 35 1 0 0] 976 992 nil 27 3 true 170 192 34 2 2688 8 'source' nil 770 138 144 34 1 834 #createAt:extent: 34 2 882 1 101 882 1169 583 2224 930 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 50 0 0 0 72 2 0 0 85 1 0 0] 34 3 410 ##(UI.ContainerView) 34 15 nil 2224 34 2 8 1140850688 131073 3120 nil nil nil 7 nil nil nil 3120 2290 138 ##(Core.Dictionary) 34 3 2354 410 ##(UI.Splitter) 34 12 nil 3120 34 2 8 1140850688 1 3248 nil nil nil 519 nil nil nil 2450 3248 nil 1 #left nil nil nil 2480 2496 nil 2480 nil 770 138 144 34 1 834 #createAt:extent: 34 2 882 521 1 882 11 287 3248 930 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 4 1 0 0 0 0 0 0 9 1 0 0 143 0 0 0] 8 #() 992 nil 27 1 2354 410 ##(UI.ContainerView) 34 15 nil 3120 34 2 8 1140850688 131073 3504 nil nil nil 7 nil nil nil 3504 2290 170 176 34 4 410 ##(UI.ListTreeView) 34 59 nil 3504 34 2 8 1140953421 1025 3616 787270 2 ##(UI.ListModel) 138 144 976 nil 1769478 ##(Kernel.IdentitySearchPolicy) 608 nil 7 461638 4 ##(UI.Menu) nil true 34 8 1180742 2 ##(UI.CommandMenuItem) 1 1377606 4 ##(UI.CommandDescription) #inspectIt 8 '&Inspect' 1 1 853318 3 ##(Graphics.Icon) nil true 2031622 ##(Kernel.ImageRelativeFileLocator) 8 'BasicInspector.ico' 2490894 ##(Kernel.STBExternalResourceLibraryProxy) 8 'dolphindr8.dll' nil nil nil 3810 1 3842 #inspectReferences 8 'Inspect &References' 1 1 nil nil nil 1179974 1 ##(UI.DividerMenuItem) 4097 3810 1 3842 #nilVariable 8 'Set to &Nil' 1 1 nil nil nil 4066 4097 3810 1 3842 #browseVariableClass 8 '&Browse Class' 1 1 nil nil nil 4066 4097 3810 1 3842 #refreshVariables 8 'Re&fresh' 1 1 nil nil nil 8 '&Inspect' nil 134217729 nil nil nil nil nil nil nil 3616 nil 8 1731436288 786950 ##(Core.Message) #first 8 #() nil 1639750 1 ##(Graphics.IconImageManager) nil 1246566 3 ##(Kernel.BlockClosure) 0 nil 1639718 ##(Kernel.CompiledExpression) 3 1 ##(Core.UndefinedObject) 8 'doIt' 8 '[:each | Debugger debugPrintStringFor: each]' 8 #[31 105 45 17 177 106] 2354 #'Tools.Debugger' ##(Tools.Debugger) #debugPrintStringFor: 4400 7 257 nil nil nil nil nil 138 144 34 2 1117254 5 ##(UI.ListViewColumn) 8 'Variable' 361 #left ##(UI.BasicListAbstract) 4306 #<= 8 #() 4306 #first 8 #() nil 3616 nil 1 nil nil 4546 8 'Value' 271 #left 4386 0 nil 4418 3 1 ##(Core.UndefinedObject) 8 'doIt' 8 '[:each | Debugger debugPrintStringFor: each]' 8 #[31 105 45 17 177 106] 2354 #'Tools.Debugger' ##(Tools.Debugger) #debugPrintStringFor: 4688 7 257 nil 4306 #<= 8 #() 4306 #second 4640 nil 3616 nil 3 nil nil #report 8 #() nil 131143 nil 1 nil nil 201 nil nil nil nil nil nil nil nil nil nil nil nil false 1247046 3 ##(UI.VirtualTreeModel) nil 3744 138 144 976 4386 0 nil 1377574 ##(Kernel.CompiledMethod) 2 3 4848 #defaultGetChildrenBlock 207889891 8 #[30 105 226 0 106] #children 4896 7 257 nil 4386 0 nil 4914 2 3 4848 #defaultGetParentBlock 207895587 8 #[30 105 226 0 106] #parent 4960 7 257 nil 4386 0 nil 4914 2 3 4848 #defaultHasChildrenBlock 207901123 8 #[252 1 0 0 1 4 0 65 176 159 106 105] #childrenOf: #notEmpty 17 257 4864 4386 0 nil 4914 1 83886083 4848 #defaultFilterBlock 207883619 8 #[29 105 17 157 106] 5056 7 257 nil nil 138 ##(Core.IdentitySet) 976 138 ##(Core.IdentitySet) 976 45 1 nil nil nil nil nil nil nil 770 138 144 34 3 834 #createAt:extent: 34 2 882 1 1 882 639 207 3616 834 #contextMenu: 34 1 3776 3616 834 #text: 34 1 8 'Variable' 3616 930 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 63 1 0 0 103 0 0 0] 8 #() 992 nil 2029 7 410 ##(UI.ReferenceView) 34 14 nil 3504 34 2 8 1140916224 131073 5376 nil nil nil 23 nil nil nil 5376 738 ##(Tools.SmalltalkWorkspace) #resource_Default_view nil 770 138 144 34 1 834 #createAt:extent: 34 2 882 1 217 882 639 71 5376 930 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 108 0 0 0 63 1 0 0 143 0 0 0] 976 992 nil 27 3 true 170 192 34 4 3616 8 'temps' 5376 8 'inspector' 1180166 ##(Graphics.Rectangle) 882 1 1 882 1 1 770 138 144 34 1 834 #createAt:extent: 34 2 882 531 1 882 639 287 3504 930 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 9 1 0 0 0 0 0 0 72 2 0 0 143 0 0 0] 34 3 3616 410 ##(UI.Splitter) 34 12 nil 3504 34 2 8 1140850688 1 5888 nil nil nil 519 nil nil nil 2450 5888 nil 1 #left nil nil nil 2480 2496 nil 2480 nil 770 138 144 34 1 834 #createAt:extent: 34 2 882 1 207 882 639 11 5888 930 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 103 0 0 0 63 1 0 0 108 0 0 0] 8 #() 992 nil 27 5376 992 nil 27 13 2354 410 ##(UI.ListBox) 34 17 nil 3120 34 2 8 1144062209 1025 6144 3682 138 144 976 nil 3744 608 nil 7 3762 nil true 34 13 3810 1 3842 #stepInto 8 'Step &Into' 1269 5 3890 nil true 3936 8 'StepInto.ico' 3984 nil nil 3810 1 3842 #stepOver 8 'Step O&ver' 1267 5 3890 nil true 3936 8 'StepOver.ico' 3984 nil nil 3810 1 3842 #stepOut 8 'Step O&ut' 5365 1 3890 nil true 3936 8 'StepOut.ico' 3984 nil nil 3810 1 3842 #restartFrame 8 '&Restart' 1 1 1378630 2 ##(Graphics.TextTileIcon) $\x2B6E 8 'Cambria' nil nil nil nil 1 nil nil nil nil 3810 1 3842 #returnFromMessage 8 'Retur&n …' 1 1 6562 $\x23CE 8 'Cambria' nil nil nil nil 1 nil nil nil nil 4066 4097 3762 nil true 8 #() 8 'Im&plement in' #implementDNUMenu 134217729 nil nil nil nil nil 3762 nil true 34 16 3810 1 3842 #renameMethod 8 'Re&name…' 1 1 nil nil nil 3810 1 3842 #renameMethodReferences 8 'Rename Re&ferences…' 1 1 nil nil nil 3810 1 3842 #safeRemoveMethods 8 'Rem&ove' 1 5 nil nil nil 4066 4097 3810 1 3842 #addParameter 8 'Add &Parameter…' 1 1 nil nil nil 3762 nil true 8 #() 8 'Remo&ve Parameter' #removeParameterMenu 134217729 nil nil nil nil nil 3762 nil true 8 #() 8 'Rena&me Parameter' #renameParameterMenu 134217729 nil nil nil nil nil 3762 nil true 8 #() 8 '&Inline Parameter' #inlineParameterMenu 134217729 nil nil nil nil nil 4066 4097 3762 nil true 8 #() 8 'Rename &Temporary' #renameTempMenu 134217729 nil nil nil nil nil 3762 nil true 8 #() 8 'Convert Temp to Inst. Var.' #convertTempToInstVarMenu 134217729 nil nil nil nil nil 4066 4097 3810 1 3842 #inlineAllSelfSends 8 'Inline &Self Sends' 1 1 nil nil nil 3810 1 3842 #pushUp 8 'Push &Up' 1 1 nil nil nil 3810 1 3842 #pushDown 8 'Push &Down' 1 1 nil nil nil 3810 1 3842 #moveMethod 8 'Move to &Component…' 1 1 nil nil nil 8 'Refactorin&gs' #methodRefactoringsMenu 134217729 3890 nil true 3936 8 'Refactoring.ico' 3984 nil nil nil nil 4066 4097 3810 1 3842 #moreFrames 8 '&More' 1 1 nil nil nil 3810 1 3842 #allFrames 8 'A&ll' 1 1 nil nil nil 4066 4097 3762 nil true 34 5 3762 nil true 34 1 3810 1 3842 #browseDefinitions 8 'Browse Defi&nitions' 247 1 nil nil nil 8 '&Definitions Of' #definitionsMenu 134217729 nil nil nil nil nil 3762 nil true 34 1 3810 1 3842 #browseReferences 8 'Browse &References' 4343 1 nil nil nil 8 '&References To' #referencesMenu 134217729 nil nil nil nil nil 3810 1 3842 #browseMethodInheritanceChain 8 '&Inheritance Chain' 1 1 nil nil nil 4066 4097 3810 1 3842 #browseMethodHistory 8 '&Change History in Image' 1 1 3890 nil true 3936 8 'MethodHistory.ico' 3984 nil nil 8 '&Browse' nil 134217729 nil nil nil nil nil 8 '&Debug' nil 134217729 nil nil nil nil nil nil nil 6144 nil 8 1731057856 ##(UI.BasicListAbstract) 8 #() nil 770 138 144 34 3 834 #createAt:extent: 34 2 882 1 1 882 521 287 6144 834 #contextMenu: 34 1 6240 6144 834 #horizontalExtent: 8 #(0) 6144 930 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 4 1 0 0 143 0 0 0] 8 #() 992 nil 27 852486 ##(Core.Fraction) 3305 675 false 170 192 34 2 6144 8 'stack' nil 770 138 144 34 1 834 #createAt:extent: 34 2 882 1 1 882 1169 287 3120 930 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 72 2 0 0 143 0 0 0] 34 3 6144 3248 3504 992 nil 27 2384 2688 992 nil 27 170 192 34 4 528 8 'toolbar' 2224 8 'main' nil 658246 4 ##(UI.MenuBar) nil true 34 8 3762 nil true 34 8 3810 1 3842 #fileNew 8 '&New Workspace' 9373 1 3890 nil true 3936 8 'NewWorkspace.ico' 3984 nil nil 3810 1 3842 #fileOpen 8 '&Open Workspace…' 9375 1 3890 nil true 3936 8 'OpenWorkspace.ico' 3984 nil nil 3810 1 3842 #fileFileIn 8 '&File In…' 1 1 nil nil nil 4066 4097 3810 1 3842 #saveImage 8 'Sa&ve Image' 1 1 3890 nil true 3936 8 'Snapshot.ico' 3984 nil nil 3810 1 3842 #smalltalkExit 8 'E&xit Dolphin' 1 1 3890 nil true 3936 8 'PowerSwitch.ico' 3984 nil nil 4066 4097 3810 1 3842 #exit 8 'Close' 17639 1 6562 $\x2716 nil nil nil nil nil 1 nil nil nil nil 8 '&File' nil 134217729 nil nil 51621 nil nil 3762 nil true 34 13 3810 1 3842 #undo 8 '&Undo' 9397 1 3890 nil true 3936 8 'EditUndo.ico' 3984 nil nil 4066 4097 3810 1 3842 #cutSelection 8 'Cu&t' 9393 1 3890 nil true 3936 8 'EditCut.ico' 3984 nil nil 3810 1 3842 #copySelection 8 '&Copy' 9351 1 3890 nil true 3936 8 'EditCopy.ico' 3984 nil nil 3810 1 3842 #pasteClipboard 8 '&Paste' 9389 1 3890 nil true 3936 8 'EditPaste.ico' 3984 nil nil 3810 1 3842 #editDelete 8 '&Delete' 1 1 3890 nil true 3936 8 'EditClear.ico' 3984 nil nil 3762 nil true 34 2 3810 1 3842 #reformatSource 8 '&Source' 9391 1 nil nil nil 3810 1 3842 #reformatComment 8 '&Comment' 9367 1 nil nil nil 8 'Ref&ormat' nil 134217729 nil nil 51637 nil nil 4066 4097 3810 1 3842 #selectAll 8 'Select &All' 9347 1 nil nil nil 4066 4097 3810 1 3842 #editFind 8 '&Find…' 9357 1 3890 nil true 3936 47 983302 ##(OS.ShellLibrary) nil nil 3810 1 3842 #findNext 8 'Find &Next' 1253 1 3890 nil true 3936 8 'FindNext.ico' 3984 nil nil 3810 1 3842 #findReplace 8 '&Replace…' 9361 1 nil nil nil 8 '&Edit' nil 134217729 nil nil 51647 nil nil 3762 nil true 34 18 3810 1 3842 #browseIt 8 '&Browse It' 9349 1 3890 nil true 3936 8 'ClassBrowserShell.ico' 3984 nil nil 3810 1 3842 #displayIt 8 '&Display It' 9353 1 3890 nil true 3936 8 'DisplayIt.ico' 3984 nil nil 3810 1 3842 #printIt 8 '&Print It' 9377 1 3890 nil true 3936 8 'PrintIt.ico' 3984 nil nil 3810 1 3842 #evaluateIt 8 '&Evaluate It' 9355 1 3890 nil true 3936 8 'EvaluateIt.ico' 3984 nil nil 3810 1 3842 #inspectIt 8 '&Inspect It' 9363 1 3904 nil nil 3810 1 3842 #debugIt 8 'Deb&ug It' 1 1 3890 nil true 3936 8 'Debugger.ico' 3984 nil nil 3810 1 3842 #fileItIn 8 'Fi&le It In' 1 1 nil nil nil 4066 4097 3810 1 3842 #browseDefinitions 8 'Defi&nitions…' 1271 1 nil nil nil 3810 1 3842 #browseReferences 8 '&References…' 5367 1 nil nil nil 4066 4097 3810 2097153 3842 #accept 8 '&Accept' 9383 1 6562 $\x2714 8 'Segoe UI Emoji' nil 594 #commonGreen nil nil 1 nil nil nil nil 3810 1 3842 #reformatAccept 8 'Refor&mat/Accept' 13479 1 nil nil nil 3810 1 3842 #acceptNoRestart 8 'Acce&pt No Restart' 1 1 nil nil nil 4066 4097 3762 nil true 34 13 3810 1 3842 #renameVariable 8 'Re&name <1d>…' 1 1 nil nil nil 4066 4097 3810 1 3842 #extractToTemporary 8 'Extract to &Temporary…' 9385 1 nil nil nil 3810 1 3842 #extractMethod 8 'E&xtract Method…' 9371 1 nil nil nil 3810 1 3842 #extractToComponent 8 'Extract to &Component…' 1 1 nil nil nil 3810 1 3842 #inlineMessage 8 'Inline &Message' 13467 1 nil nil nil 4066 4097 3810 1 3842 #inlineTemporary 8 '&Inline Temporary' 13481 1 nil nil nil 3810 1 3842 #moveTempToInnerScope 8 'Move to Inner &Scope' 9655 1 nil nil nil 3810 1 3842 #convertTempToInstVar 8 'Con&vert to Instance Variable' 1 1 nil nil nil 4066 4097 3810 1 3842 #inlineParameter 8 'In&line Parameter' 1 1 nil nil nil 3810 1 3842 #removeParameter 8 'Remove &Parameter' 1 1 nil nil nil 8 'Re&factorings' #codeRefactoringsMenu 134217729 3890 nil true 3936 8 'Refactoring.ico' 3984 nil 51693 nil nil 4066 4097 3762 nil true 34 7 3810 1 3842 #toggleAutoCompletion 8 '&Auto-complete' 1 1 nil nil nil 3810 1 3842 #toggleIndentationGuides 8 'Indentation &Guides' 1 1 nil nil nil 3810 1 3842 #toggleLineEndings 8 'Line &Endings' 1 1 6562 $¶ 8 'Arial' nil nil nil nil 1 nil nil nil nil 3810 1 3842 #toggleLineNumbers 8 'Line N&umbers' 1 1 nil nil nil 3810 1 3842 #toggleStyling 8 '&Syntax Coloring' 1 1 nil nil nil 3810 1 3842 #toggleWhitespace 8 'W&hitespace' 1 1 nil nil nil 3810 1 3842 #toggleWordWrap 8 '&Word Wrap' 1 1 nil nil nil 8 '&Options' nil 134217729 3890 nil true 3936 8 'Preferences.ico' 3984 nil 51709 nil nil 8 '&Workspace' nil 134217729 nil nil 51711 nil nil 3762 nil true 34 23 3810 1 3842 #resumeProcess 8 'G&o/detach' 1257 1 nil nil nil 3810 1 3842 #toggleAnimation 8 '&Animate' 1 1 nil nil nil 3810 1 3842 #terminateProcess 8 '&Terminate' 5353 1 nil nil nil 3810 1 3842 #killProcess 8 '&Kill' 1 1 nil nil nil 3810 1 3842 #userBreak 8 '&Break' 1 1 nil nil nil 4066 4097 3810 1 3842 #stepInto 8 'Step &Into' 1269 5 3890 nil true 3936 8 'StepInto.ico' 3984 nil nil 3810 1 3842 #stepOver 8 'Step O&ver' 1267 5 3890 nil true 3936 8 'StepOver.ico' 3984 nil nil 3810 1 3842 #stepOut 8 'Step O&ut' 5365 1 3890 nil true 3936 8 'StepOut.ico' 3984 nil nil 3810 1 3842 #stepIntoBlock 8 'Step Into Block' 1025 1 3890 nil true 3936 8 'StepIntoBlock.ico' 3984 nil nil 3810 1 3842 #runToCursor 8 'Run to &Cursor' 9459 1 3890 nil true 3936 8 'RunToCursor.ico' 3984 nil nil 3810 1 3842 #runProcess 8 '&Run' 9449 1 3890 nil true 3936 8 'Run.ico' 3984 nil nil 3810 1 3842 #restartFrame 8 'R&estart' 13545 1 6562 $\x2B6E 8 'Cambria' nil nil nil nil 1 nil nil nil nil 3810 1 3842 #returnFromMessage 8 'Retur&n …' 1 1 6562 $\x23CE 8 'Cambria' nil nil nil nil 1 nil nil nil nil 4066 4097 3762 nil true 8 #() 8 'Im&plement in' #implementDNUMenu 134217729 nil nil 51739 nil nil 3762 nil true 34 14 3762 nil true 34 3 3810 1 3842 #renameMethod 8 'All…' 1 1 nil nil nil 3810 1 3842 #renameMethodInHierarchy 8 'In &Hierarchy…' 1 1 nil nil nil 3810 1 3842 #renameMethodInPackage 8 'In &Package…' 1 1 nil nil nil 8 'Re&name' nil 134217729 nil nil 51747 nil nil 3810 1 3842 #safeRemoveMethods 8 'Rem&ove' 1 1 nil nil nil 4066 4097 3810 1 3842 #addParameter 8 'Add &Parameter…' 1 1 nil nil nil 3762 nil true 8 #() 8 'Remo&ve Parameter' #removeParameterMenu 134217729 nil nil 51753 nil nil 3762 nil true 8 #() 8 'Rena&me Parameter' #renameParameterMenu 134217729 nil nil 51755 nil nil 3762 nil true 8 #() 8 '&Inline Parameter' #inlineParameterMenu 134217729 nil nil 51757 nil nil 4066 4097 3762 nil true 8 #() 8 'Rename &Temporary' #renameTempMenu 134217729 nil nil 51759 nil nil 3762 nil true 8 #() 8 'Convert Temp to Inst. Var.' #convertTempToInstVarMenu 134217729 nil nil 51761 nil nil 4066 4097 3810 1 3842 #inlineAllSelfSends 8 'Inline &Self Sends' 1 1 nil nil nil 3810 1 3842 #pushUpMethods 8 'Push &Up' 1 1 nil nil nil 3810 1 3842 #pushDownMethods 8 'Push &Down' 1 1 nil nil nil 8 'Refactorin&gs' #methodRefactoringsMenu 134217729 3890 nil true 3936 8 'Refactoring.ico' 3984 nil 51769 nil nil 4066 4097 3810 1 3842 #toggleBreakpoint 8 'Toggle Breakpoint' 1265 1 nil nil nil 3810 1 3842 #toggleDisassembly 8 'Disasse&mbly' 9461 1 nil nil nil 3810 1 3842 #showNextStatement 8 'Show Ne&xt Statement' 17621 1 3890 nil true 3936 8 'ShowNextStatement.ico' 3984 nil nil 4066 4097 3762 nil true 34 2 3810 1 3842 #moreFrames 8 '&More' 1 1 nil nil nil 3810 1 3842 #allFrames 8 'A&ll' 1 1 nil nil nil 8 'Call &Stack' nil 134217729 nil nil 51781 nil nil 8 '&Debug' nil 134217729 nil nil 51783 nil nil 3762 nil true 34 3 3810 1 3842 #undoChange 8 '&Undo <1d>' 1 1 3890 nil true 3936 8 'EditUndo.ico' 3984 nil nil 3810 1 3842 #redoChange 8 '&Redo <1d>' 1 1 3890 nil true 3936 8 'EditRedo.ico' 3984 nil nil 3810 1 3842 #clearChangeHistory 8 'Clear Change &History' 1 1 3890 nil true 3936 8 'MethodHistoryErase.ico' 3984 nil nil 8 'H&istory' nil 134217729 nil nil 51791 nil nil 3762 nil true 8 #() 8 '&Tools' #toolsMenu 134217729 nil nil 51793 nil nil 3762 nil true 8 #() 8 'Wi&ndow' #windowMenu 134217729 nil nil 51795 nil nil 3762 nil true 34 15 3810 1 3842 #helpContents 8 '&Contents' 1025 1 3890 nil true 3936 8 'Help.ico' 3984 nil nil 3810 1 3842 #help 8 'On this &Tool' 1249 1 nil nil nil 3810 1 3842 #helpWhatsThis 8 'What''s This?' 5345 1 nil nil nil 4066 4097 3810 1 3842 #learnSmalltalk 8 'Learn Smalltalk' 1 1 nil nil nil 4066 4097 3810 1 3842 #helpWhatsNew 8 'What''s &New' 1 1 nil nil nil 3810 1 3842 #helpGuidedTour 8 '&Guided Tour' 1 1 nil nil nil 3810 1 3842 #helpTutorials 8 'Tutorials' 1 1 nil nil nil 4066 4097 3810 1 3842 #objectArtsHomePage 8 'Object Arts Homepage' 1 1 3890 nil true 3936 8 '!!APPLICATION' 3984 nil nil 3810 1 3842 #dolphinNewsgroup 8 'Dolphin Newsgroup/Forum' 1 1 nil nil nil 3810 1 3842 #dolphinWikiWeb 8 'Dolphin WikiWeb' 1 1 nil nil nil 4066 4097 3810 1 3842 #aboutDolphin 8 '&About Dolphin Smalltalk' 1 1 6562 $\x1F42C nil nil 594 #darkSlateBlue nil nil 1 nil nil nil nil 8 '&Help' #help 134217729 nil nil 51819 nil nil 8 '' nil 134217729 nil nil nil nil nil nil nil nil 1 nil nil nil nil 1 nil nil 770 138 144 34 1 834 #createAt:extent: 34 2 882 12287 21 882 1201 801 416 930 8 #[44 0 0 0 0 0 0 0 0 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 23 0 0 10 0 0 0 87 26 0 0 154 1 0 0] 34 2 528 2224 992 nil 27 )!
+	^#(#'!!STL' 4 985166 10 ##(UI.STBViewProxy) ##(Tools.DebuggerShellView) 34 27 nil nil 8 #(13565952 65536) 416 nil 1245702 ##(Graphics.ThemeColor) #toolBackground nil 551 nil nil nil 416 984838 ##(UI.BorderLayout) 1 1 410 ##(UI.Toolbar) 34 28 nil 416 34 2 8 1140853580 1 528 nil nil nil 519 nil nil nil 528 917510 ##(Graphics.Color) #default 8 1793775856 170 192 34 10 410 ##(UI.ReferenceView) 34 14 nil 528 34 2 8 1140850688 131073 672 nil nil nil 7 nil nil nil 672 1376838 1 ##(UI.ResourceIdentifier) ##(UI.Toolbar) #resource_Workspace_tools nil 1310982 ##(Core.MessageSequence) 34 1 1049350 ##(Core.MessageSend) #createAt:extent: 34 2 918022 ##(Graphics.Point) 1 51 866 247 51 672 1179910 ##(OS.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 25 0 0 0 123 0 0 0 50 0 0 0] 8 #() 866 193 193 nil 27 8 'workspaceTools' 410 ##(UI.ReferenceView) 34 14 nil 528 34 2 8 1140850688 131073 1008 nil nil nil 7 nil nil nil 1008 738 ##(UI.Toolbar) #resource_Smalltalk_tools nil 770 34 1 818 #createAt:extent: 34 2 866 63 1 866 553 51 1008 914 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 31 0 0 0 0 0 0 0 51 1 0 0 25 0 0 0] 960 976 nil 27 8 'smalltalkTools' 410 ##(UI.ReferenceView) 34 14 nil 528 34 2 8 1140850688 131073 1232 nil nil nil 7 nil nil nil 1232 738 ##(UI.Toolbar) #resource_Image_tools nil 770 34 1 818 #createAt:extent: 34 2 866 1 1 866 63 51 1232 914 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 31 0 0 0 25 0 0 0] 960 976 nil 27 8 'imageTools' 410 ##(UI.ReferenceView) 34 14 nil 528 34 2 8 1140850688 131073 1456 nil nil nil 7 nil nil nil 1456 738 ##(UI.Toolbar) #resource_Debugger_tools nil 770 34 1 818 #createAt:extent: 34 2 866 247 51 866 431 51 1456 914 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 123 0 0 0 25 0 0 0 82 1 0 0 50 0 0 0] 960 976 nil 27 8 'debuggerTools' 410 ##(UI.ReferenceView) 34 14 nil 528 34 2 8 1140850688 131073 1680 nil nil nil 7 nil nil nil 1680 738 ##(UI.Toolbar) #resource_Search_tools nil 770 34 1 818 #createAt:extent: 34 2 866 615 1 866 437 51 1680 914 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 51 1 0 0 0 0 0 0 13 2 0 0 25 0 0 0] 960 976 nil 27 8 'searchTools' nil nil nil 170 192 960 138 144 960 nil nil 1 nil 866 33 33 nil nil 852806 1 ##(UI.FlowLayout) 1 1 1 770 34 1 818 #createAt:extent: 34 2 866 1 1 866 1169 101 528 914 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 72 2 0 0 50 0 0 0] 34 5 1232 1008 1680 672 1456 976 nil 29 nil nil nil 410 ##(UI.ContainerView) 34 15 nil 416 34 2 8 1140850688 131073 2128 nil nil nil 7 nil nil nil 2128 1376774 ##(UI.ProportionalLayout) 138 ##(Core.Dictionary) 34 2 1049094 ##(Core.Association) 410 ##(UI.Splitter) 34 12 nil 2128 34 2 8 1140850688 1 2288 nil nil nil 519 nil nil nil 1707078 1 ##(UI.DraggableViewInteractor) 2288 nil 1 #left nil nil nil 866 1 1 866 9 9 nil 2384 nil 770 34 1 818 #createAt:extent: 34 2 866 1 287 866 1169 11 2288 914 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 143 0 0 0 72 2 0 0 148 0 0 0] 8 #() 976 nil 27 1 2258 410 ##(UI.ReferenceView) 34 14 nil 2128 34 2 8 1140916224 131073 2576 nil nil nil 23 nil nil nil 2576 738 ##(Tools.MethodWorkspace) #resource_Debugger_source nil 770 34 1 818 #createAt:extent: 34 2 866 1 297 866 1169 287 2576 914 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 148 0 0 0 72 2 0 0 35 1 0 0] 960 976 nil 27 3 true 170 192 34 2 2576 8 'source' nil 770 34 1 818 #createAt:extent: 34 2 866 1 101 866 1169 583 2128 914 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 50 0 0 0 72 2 0 0 85 1 0 0] 34 3 410 ##(UI.ContainerView) 34 15 nil 2128 34 2 8 1140850688 131073 2976 nil nil nil 7 nil nil nil 2976 2194 138 ##(Core.Dictionary) 34 3 2258 410 ##(UI.ListBox) 34 17 nil 2976 34 2 8 1144062209 1025 3104 787270 2 ##(UI.ListModel) 138 144 960 nil 1769478 ##(Kernel.IdentitySearchPolicy) 608 nil 7 461638 4 ##(UI.Menu) nil true 34 13 1180742 2 ##(UI.CommandMenuItem) 1 1377606 4 ##(UI.CommandDescription) #stepInto 8 'Step &Into' 1269 5 853318 3 ##(Graphics.Icon) nil true 2031622 ##(Kernel.ImageRelativeFileLocator) 8 'StepInto.ico' 2490894 ##(Kernel.STBExternalResourceLibraryProxy) 8 'dolphindr8.dll' nil nil nil 3298 1 3330 #stepOver 8 'Step O&ver' 1267 5 3378 nil true 3424 8 'StepOver.ico' 3472 nil nil 3298 1 3330 #stepOut 8 'Step O&ut' 5365 1 3378 nil true 3424 8 'StepOut.ico' 3472 nil nil 3298 1 3330 #restartFrame 8 '&Restart' 1 1 1378630 2 ##(Graphics.TextTileIcon) $\x2B6E 8 'Cambria' nil nil nil nil 1 nil nil nil nil 3298 1 3330 #returnFromMessage 8 'Retur&n …' 1 1 3714 $\x23CE 8 'Cambria' nil nil nil nil 1 nil nil nil nil 1179974 1 ##(UI.DividerMenuItem) 4097 3250 nil true 8 #() 8 'Im&plement in' #implementDNUMenu 134217729 nil nil nil nil nil 3250 nil true 34 16 3298 1 3330 #renameMethod 8 'Re&name…' 1 1 nil nil nil 3298 1 3330 #renameMethodReferences 8 'Rename Re&ferences…' 1 1 nil nil nil 3298 1 3330 #safeRemoveMethods 8 'Rem&ove' 1 5 nil nil nil 3842 4097 3298 1 3330 #addParameter 8 'Add &Parameter…' 1 1 nil nil nil 3250 nil true 8 #() 8 'Remo&ve Parameter' #removeParameterMenu 134217729 nil nil nil nil nil 3250 nil true 8 #() 8 'Rena&me Parameter' #renameParameterMenu 134217729 nil nil nil nil nil 3250 nil true 8 #() 8 '&Inline Parameter' #inlineParameterMenu 134217729 nil nil nil nil nil 3842 4097 3250 nil true 8 #() 8 'Rename &Temporary' #renameTempMenu 134217729 nil nil nil nil nil 3250 nil true 8 #() 8 'Convert Temp to Inst. Var.' #convertTempToInstVarMenu 134217729 nil nil nil nil nil 3842 4097 3298 1 3330 #inlineAllSelfSends 8 'Inline &Self Sends' 1 1 nil nil nil 3298 1 3330 #pushUp 8 'Push &Up' 1 1 nil nil nil 3298 1 3330 #pushDown 8 'Push &Down' 1 1 nil nil nil 3298 1 3330 #moveMethod 8 'Move to &Component…' 1 1 nil nil nil 8 'Refactorin&gs' #methodRefactoringsMenu 134217729 3378 nil true 3424 8 'Refactoring.ico' 3472 nil nil nil nil 3842 4097 3298 1 3330 #moreFrames 8 '&More' 1 1 nil nil nil 3298 1 3330 #allFrames 8 'A&ll' 1 1 nil nil nil 3842 4097 3250 nil true 34 5 3250 nil true 34 1 3298 1 3330 #browseDefinitions 8 'Browse Defi&nitions' 247 1 nil nil nil 8 '&Definitions Of' #definitionsMenu 134217729 nil nil nil nil nil 3250 nil true 34 1 3298 1 3330 #browseReferences 8 'Browse &References' 4343 1 nil nil nil 8 '&References To' #referencesMenu 134217729 nil nil nil nil nil 3298 1 3330 #browseMethodInheritanceChain 8 '&Inheritance Chain' 1 1 nil nil nil 3842 4097 3298 1 3330 #browseMethodHistory 8 '&Change History in Image' 1 1 3378 nil true 3424 8 'MethodHistory.ico' 3472 nil nil 8 '&Browse' nil 134217729 nil nil nil nil nil 8 '&Debug' nil 134217729 nil nil nil nil nil nil nil 3104 nil 8 1793341440 ##(UI.BasicListAbstract) 8 #() nil 770 34 3 818 #createAt:extent: 34 2 866 1 1 866 521 287 3104 818 #contextMenu: 34 1 3264 3104 818 #horizontalExtent: 8 #(0) 3104 914 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 4 1 0 0 143 0 0 0] 8 #() 976 nil 27 852486 ##(Core.Fraction) 3305 675 2258 410 ##(UI.Splitter) 34 12 nil 2976 34 2 8 1140850688 1 5488 nil nil nil 519 nil nil nil 2354 5488 nil 1 #left nil nil nil 2384 2400 nil 2384 nil 770 34 1 818 #createAt:extent: 34 2 866 521 1 866 11 287 5488 914 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 4 1 0 0 0 0 0 0 9 1 0 0 143 0 0 0] 8 #() 976 nil 27 1 2258 410 ##(UI.ContainerView) 34 15 nil 2976 34 2 8 1140850688 131073 5728 nil nil nil 7 nil nil nil 5728 2194 170 176 34 4 410 ##(UI.ReferenceView) 34 14 nil 5728 34 2 8 1140916224 131073 5840 nil nil nil 23 nil nil nil 5840 738 ##(Tools.SmalltalkWorkspace) #resource_Default_view nil 770 34 1 818 #createAt:extent: 34 2 866 1 217 866 639 71 5840 914 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 108 0 0 0 63 1 0 0 143 0 0 0] 960 976 nil 27 3 410 ##(UI.ListTreeView) 34 59 nil 5728 34 2 8 1140953421 1025 6048 3170 138 144 960 nil 3232 608 nil 7 3250 nil true 34 8 3298 1 3330 #inspectIt 8 '&Inspect' 1 1 3378 nil true 3424 8 'BasicInspector.ico' 3472 nil nil 3298 1 3330 #inspectReferences 8 'Inspect &References' 1 1 nil nil nil 3842 4097 3298 1 3330 #nilVariable 8 'Set to &Nil' 1 1 nil nil nil 3842 4097 3298 1 3330 #browseVariableClass 8 '&Browse Class' 1 1 nil nil nil 3842 4097 3298 1 3330 #refreshVariables 8 'Re&fresh' 1 1 nil nil nil 8 '&Inspect' nil 134217729 nil nil nil nil nil nil nil 6048 nil 8 1793750192 786950 ##(Core.Message) #name 8 #() 6530 #valueImage 6560 1639750 1 ##(Graphics.IconImageManager) nil nil nil nil nil nil 138 144 34 2 1117254 5 ##(UI.ListViewColumn) 8 'Variable' 361 #left 6530 #name 6560 1246566 3 ##(Kernel.BlockClosure) 0 nil 1639718 ##(Kernel.CompiledExpression) 2 1 6720 8 'doIt' 8 '[:a :b | a name <= b name]' 8 #[30 105 226 0 226 32 130 106] #name 6736 7 513 nil nil nil 6048 6530 #valueImage 6560 1 nil nil 6658 8 'Value' 271 #left 6530 #valueDebugText 8 #() 6530 #<= 8 #() nil nil 6048 nil 3 nil nil #report 8 #() nil 131143 nil 1 nil nil 201 nil nil nil nil nil nil nil nil nil nil nil nil false 1247046 3 ##(UI.VirtualTreeModel) nil 3232 138 144 960 6722 0 nil 1377574 ##(Kernel.CompiledMethod) 2 3 6960 #defaultGetChildrenBlock 207889891 8 #[30 105 226 0 106] #children 7008 7 257 nil 6722 0 nil 7026 2 3 6960 #defaultGetParentBlock 207895587 8 #[30 105 226 0 106] #parent 7072 7 257 nil 6722 0 nil 7026 2 3 6960 #defaultHasChildrenBlock 207901123 8 #[252 1 0 0 1 4 0 65 176 159 106 105] #childrenOf: #notEmpty 17 257 6976 6722 0 nil 7026 1 83886083 6960 #defaultFilterBlock 207883619 8 #[29 105 17 157 106] 7168 7 257 nil nil 138 ##(Core.IdentitySet) 960 138 ##(Core.IdentitySet) 960 45 1 nil nil nil nil nil nil nil 770 34 3 818 #createAt:extent: 34 2 866 1 1 866 639 207 6048 818 #contextMenu: 34 1 6144 6048 818 #text: 34 1 8 'Variable' 6048 914 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 63 1 0 0 103 0 0 0] 8 #() 976 nil 2029 7 true 170 192 34 4 5840 8 'inspector' 6048 8 'temps' 1180166 ##(Graphics.Rectangle) 866 1 1 866 1 1 770 34 1 818 #createAt:extent: 34 2 866 531 1 866 639 287 5728 914 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 9 1 0 0 0 0 0 0 72 2 0 0 143 0 0 0] 34 3 6048 410 ##(UI.Splitter) 34 12 nil 5728 34 2 8 1140850688 1 7744 nil nil nil 519 nil nil nil 2354 7744 nil 1 #left nil nil nil 2384 2400 nil 2384 nil 770 34 1 818 #createAt:extent: 34 2 866 1 207 866 639 11 7744 914 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 103 0 0 0 63 1 0 0 108 0 0 0] 8 #() 976 nil 27 5840 976 nil 27 13 false 170 192 34 2 3104 8 'stack' nil 770 34 1 818 #createAt:extent: 34 2 866 1 1 866 1169 287 2976 914 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 72 2 0 0 143 0 0 0] 34 3 3104 5488 5728 976 nil 27 2288 2576 976 nil 27 170 192 34 4 528 8 'toolbar' 2128 8 'main' nil 658246 4 ##(UI.MenuBar) nil true 34 8 3250 nil true 34 8 3298 1 3330 #fileNew 8 '&New Workspace' 9373 1 3378 nil true 3424 8 'NewWorkspace.ico' 3472 nil nil 3298 1 3330 #fileOpen 8 '&Open Workspace…' 9375 1 3378 nil true 3424 8 'OpenWorkspace.ico' 3472 nil nil 3298 1 3330 #fileFileIn 8 '&File In…' 1 1 nil nil nil 3842 4097 3298 1 3330 #saveImage 8 'Sa&ve Image' 1 1 3378 nil true 3424 8 'Snapshot.ico' 3472 nil nil 3298 1 3330 #smalltalkExit 8 'E&xit Dolphin' 1 1 3378 nil true 3424 8 'PowerSwitch.ico' 3472 nil nil 3842 4097 3298 1 3330 #exit 8 'Close' 17639 1 3714 $\x2716 nil nil nil nil nil 1 nil nil nil nil 8 '&File' nil 134217729 nil nil 56399 nil nil 3250 nil true 34 13 3298 1 3330 #undo 8 '&Undo' 9397 1 3378 nil true 3424 8 'EditUndo.ico' 3472 nil nil 3842 4097 3298 1 3330 #cutSelection 8 'Cu&t' 9393 1 3378 nil true 3424 8 'EditCut.ico' 3472 nil nil 3298 1 3330 #copySelection 8 '&Copy' 9351 1 3378 nil true 3424 8 'EditCopy.ico' 3472 nil nil 3298 1 3330 #pasteClipboard 8 '&Paste' 9389 1 3378 nil true 3424 8 'EditPaste.ico' 3472 nil nil 3298 1 3330 #editDelete 8 '&Delete' 1 1 3378 nil true 3424 8 'EditClear.ico' 3472 nil nil 3250 nil true 34 2 3298 1 3330 #reformatSource 8 '&Source' 9391 1 nil nil nil 3298 1 3330 #reformatComment 8 '&Comment' 9367 1 nil nil nil 8 'Ref&ormat' nil 134217729 nil nil 56415 nil nil 3842 4097 3298 1 3330 #selectAll 8 'Select &All' 9347 1 nil nil nil 3842 4097 3298 1 3330 #editFind 8 '&Find…' 9357 1 3378 nil true 3424 47 983302 ##(OS.ShellLibrary) nil nil 3298 1 3330 #findNext 8 'Find &Next' 1253 1 3378 nil true 3424 8 'FindNext.ico' 3472 nil nil 3298 1 3330 #findReplace 8 '&Replace…' 9361 1 nil nil nil 8 '&Edit' nil 134217729 nil nil 56425 nil nil 3250 nil true 34 18 3298 1 3330 #browseIt 8 '&Browse It' 9349 1 3378 nil true 3424 8 'ClassBrowserShell.ico' 3472 nil nil 3298 1 3330 #displayIt 8 '&Display It' 9353 1 3378 nil true 3424 8 'DisplayIt.ico' 3472 nil nil 3298 1 3330 #printIt 8 '&Print It' 9377 1 3378 nil true 3424 8 'PrintIt.ico' 3472 nil nil 3298 1 3330 #evaluateIt 8 '&Evaluate It' 9355 1 3378 nil true 3424 8 'EvaluateIt.ico' 3472 nil nil 3298 1 3330 #inspectIt 8 '&Inspect It' 9363 1 6224 nil nil 3298 1 3330 #debugIt 8 'Deb&ug It' 1 1 3378 nil true 3424 8 'Debugger.ico' 3472 nil nil 3298 1 3330 #fileItIn 8 'Fi&le It In' 1 1 nil nil nil 3842 4097 3298 1 3330 #browseDefinitions 8 'Defi&nitions…' 1271 1 nil nil nil 3298 1 3330 #browseReferences 8 '&References…' 5367 1 nil nil nil 3842 4097 3298 2097153 3330 #accept 8 '&Accept' 9383 1 3714 $\x2714 8 'Segoe UI Emoji' nil 594 #commonGreen nil nil 1 nil nil nil nil 3298 1 3330 #reformatAccept 8 'Refor&mat/Accept' 13479 1 nil nil nil 3298 1 3330 #acceptNoRestart 8 'Acce&pt No Restart' 1 1 nil nil nil 3842 4097 3250 nil true 34 13 3298 1 3330 #renameVariable 8 'Re&name <1d>…' 1 1 nil nil nil 3842 4097 3298 1 3330 #extractToTemporary 8 'Extract to &Temporary…' 9385 1 nil nil nil 3298 1 3330 #extractMethod 8 'E&xtract Method…' 9371 1 nil nil nil 3298 1 3330 #extractToComponent 8 'Extract to &Component…' 1 1 nil nil nil 3298 1 3330 #inlineMessage 8 'Inline &Message' 13467 1 nil nil nil 3842 4097 3298 1 3330 #inlineTemporary 8 '&Inline Temporary' 13481 1 nil nil nil 3298 1 3330 #moveTempToInnerScope 8 'Move to Inner &Scope' 9655 1 nil nil nil 3298 1 3330 #convertTempToInstVar 8 'Con&vert to Instance Variable' 1 1 nil nil nil 3842 4097 3298 1 3330 #inlineParameter 8 'In&line Parameter' 1 1 nil nil nil 3298 1 3330 #removeParameter 8 'Remove &Parameter' 1 1 nil nil nil 8 'Re&factorings' #codeRefactoringsMenu 134217729 3378 nil true 3424 8 'Refactoring.ico' 3472 nil 56471 nil nil 3842 4097 3250 nil true 34 7 3298 1 3330 #toggleAutoCompletion 8 '&Auto-complete' 1 1 nil nil nil 3298 1 3330 #toggleIndentationGuides 8 'Indentation &Guides' 1 1 nil nil nil 3298 1 3330 #toggleLineEndings 8 'Line &Endings' 1 1 3714 $¶ 8 'Arial' nil nil nil nil 1 nil nil nil nil 3298 1 3330 #toggleLineNumbers 8 'Line N&umbers' 1 1 nil nil nil 3298 1 3330 #toggleStyling 8 '&Syntax Coloring' 1 1 nil nil nil 3298 1 3330 #toggleWhitespace 8 'W&hitespace' 1 1 nil nil nil 3298 1 3330 #toggleWordWrap 8 '&Word Wrap' 1 1 nil nil nil 8 '&Options' nil 134217729 3378 nil true 3424 8 'Preferences.ico' 3472 nil 56487 nil nil 8 '&Workspace' nil 134217729 nil nil 56489 nil nil 3250 nil true 34 23 3298 1 3330 #resumeProcess 8 'G&o/detach' 1257 1 nil nil nil 3298 1 3330 #toggleAnimation 8 '&Animate' 1 1 nil nil nil 3298 1 3330 #terminateProcess 8 '&Terminate' 5353 1 nil nil nil 3298 1 3330 #killProcess 8 '&Kill' 1 1 nil nil nil 3298 1 3330 #userBreak 8 '&Break' 1 1 nil nil nil 3842 4097 3298 1 3330 #stepInto 8 'Step &Into' 1269 5 3378 nil true 3424 8 'StepInto.ico' 3472 nil nil 3298 1 3330 #stepOver 8 'Step O&ver' 1267 5 3378 nil true 3424 8 'StepOver.ico' 3472 nil nil 3298 1 3330 #stepOut 8 'Step O&ut' 5365 1 3378 nil true 3424 8 'StepOut.ico' 3472 nil nil 3298 1 3330 #stepIntoBlock 8 'Step Into Block' 1025 1 3378 nil true 3424 8 'StepIntoBlock.ico' 3472 nil nil 3298 1 3330 #runToCursor 8 'Run to &Cursor' 9459 1 3378 nil true 3424 8 'RunToCursor.ico' 3472 nil nil 3298 1 3330 #runProcess 8 '&Run' 9449 1 3378 nil true 3424 8 'Run.ico' 3472 nil nil 3298 1 3330 #restartFrame 8 'R&estart' 13545 1 3714 $\x2B6E 8 'Cambria' nil nil nil nil 1 nil nil nil nil 3298 1 3330 #returnFromMessage 8 'Retur&n …' 1 1 3714 $\x23CE 8 'Cambria' nil nil nil nil 1 nil nil nil nil 3842 4097 3250 nil true 8 #() 8 'Im&plement in' #implementDNUMenu 134217729 nil nil 56517 nil nil 3250 nil true 34 14 3250 nil true 34 3 3298 1 3330 #renameMethod 8 'All…' 1 1 nil nil nil 3298 1 3330 #renameMethodInHierarchy 8 'In &Hierarchy…' 1 1 nil nil nil 3298 1 3330 #renameMethodInPackage 8 'In &Package…' 1 1 nil nil nil 8 'Re&name' nil 134217729 nil nil 56525 nil nil 3298 1 3330 #safeRemoveMethods 8 'Rem&ove' 1 1 nil nil nil 3842 4097 3298 1 3330 #addParameter 8 'Add &Parameter…' 1 1 nil nil nil 3250 nil true 8 #() 8 'Remo&ve Parameter' #removeParameterMenu 134217729 nil nil 56531 nil nil 3250 nil true 8 #() 8 'Rena&me Parameter' #renameParameterMenu 134217729 nil nil 56533 nil nil 3250 nil true 8 #() 8 '&Inline Parameter' #inlineParameterMenu 134217729 nil nil 56535 nil nil 3842 4097 3250 nil true 8 #() 8 'Rename &Temporary' #renameTempMenu 134217729 nil nil 56537 nil nil 3250 nil true 8 #() 8 'Convert Temp to Inst. Var.' #convertTempToInstVarMenu 134217729 nil nil 56539 nil nil 3842 4097 3298 1 3330 #inlineAllSelfSends 8 'Inline &Self Sends' 1 1 nil nil nil 3298 1 3330 #pushUpMethods 8 'Push &Up' 1 1 nil nil nil 3298 1 3330 #pushDownMethods 8 'Push &Down' 1 1 nil nil nil 8 'Refactorin&gs' #methodRefactoringsMenu 134217729 3378 nil true 3424 8 'Refactoring.ico' 3472 nil 56547 nil nil 3842 4097 3298 1 3330 #toggleBreakpoint 8 'Toggle Breakpoint' 1265 1 nil nil nil 3298 1 3330 #toggleDisassembly 8 'Disasse&mbly' 9461 1 nil nil nil 3298 1 3330 #showNextStatement 8 'Show Ne&xt Statement' 17621 1 3378 nil true 3424 8 'ShowNextStatement.ico' 3472 nil nil 3842 4097 3250 nil true 34 2 3298 1 3330 #moreFrames 8 '&More' 1 1 nil nil nil 3298 1 3330 #allFrames 8 'A&ll' 1 1 nil nil nil 8 'Call &Stack' nil 134217729 nil nil 56559 nil nil 8 '&Debug' nil 134217729 nil nil 56561 nil nil 3250 nil true 34 3 3298 1 3330 #undoChange 8 '&Undo <1d>' 1 1 3378 nil true 3424 8 'EditUndo.ico' 3472 nil nil 3298 1 3330 #redoChange 8 '&Redo <1d>' 1 1 3378 nil true 3424 8 'EditRedo.ico' 3472 nil nil 3298 1 3330 #clearChangeHistory 8 'Clear Change &History' 1 1 3378 nil true 3424 8 'MethodHistoryErase.ico' 3472 nil nil 8 'H&istory' nil 134217729 nil nil 56569 nil nil 3250 nil true 8 #() 8 '&Tools' #toolsMenu 134217729 nil nil 56571 nil nil 3250 nil true 8 #() 8 'Wi&ndow' #windowMenu 134217729 nil nil 56573 nil nil 3250 nil true 34 15 3298 1 3330 #helpContents 8 '&Contents' 1025 1 3378 nil true 3424 8 'Help.ico' 3472 nil nil 3298 1 3330 #help 8 'On this &Tool' 1249 1 nil nil nil 3298 1 3330 #helpWhatsThis 8 'What''s This?' 5345 1 nil nil nil 3842 4097 3298 1 3330 #learnSmalltalk 8 'Learn Smalltalk' 1 1 nil nil nil 3842 4097 3298 1 3330 #helpWhatsNew 8 'What''s &New' 1 1 nil nil nil 3298 1 3330 #helpGuidedTour 8 '&Guided Tour' 1 1 nil nil nil 3298 1 3330 #helpTutorials 8 'Tutorials' 1 1 nil nil nil 3842 4097 3298 1 3330 #objectArtsHomePage 8 'Object Arts Homepage' 1 1 3378 nil true 3424 8 '!!APPLICATION' 3472 nil nil 3298 1 3330 #dolphinNewsgroup 8 'Dolphin Newsgroup/Forum' 1 1 nil nil nil 3298 1 3330 #dolphinWikiWeb 8 'Dolphin WikiWeb' 1 1 nil nil nil 3842 4097 3298 1 3330 #aboutDolphin 8 '&About Dolphin Smalltalk' 1 1 3714 $\x1F42C nil nil 594 #darkSlateBlue nil nil 1 nil nil nil nil 8 '&Help' #help 134217729 nil nil 56597 nil nil 8 '' nil 134217729 nil nil nil nil nil nil nil nil 1 nil nil nil nil 1 nil nil 770 34 1 818 #createAt:extent: 34 2 866 12287 21 866 1201 801 416 914 8 #[44 0 0 0 0 0 0 0 0 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 23 0 0 10 0 0 0 87 26 0 0 154 1 0 0] 34 2 528 2128 976 nil 27 )!
 
 restartOnMethodSave
 	"Answer true if instances of the receiver automatically restart a stack frame when the
@@ -2282,7 +2237,6 @@ unskipSelector: aSymbol of: aClass
 	(self skipTable lookup: aClass) ifNotNil: [:selectors | selectors removeKey: aSymbol ifAbsent: []]! !
 !Tools.Debugger class categoriesFor: #animatePause!options!public! !
 !Tools.Debugger class categoriesFor: #animatePause:!options!public! !
-!Tools.Debugger class categoriesFor: #debugPrintStringFor:!helpers!private! !
 !Tools.Debugger class categoriesFor: #defaultAdditionalAccelerators!constants!private! !
 !Tools.Debugger class categoriesFor: #defaultStackDepth!accessing!public! !
 !Tools.Debugger class categoriesFor: #defaultStackDepth:!accessing!public! !

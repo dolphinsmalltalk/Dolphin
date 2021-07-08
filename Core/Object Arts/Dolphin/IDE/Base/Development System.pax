@@ -118,6 +118,7 @@ package setClassNames: #(
 	#{Tools.SmalltalkWorkspace}
 	#{Tools.SmalltalkWorkspaceDocument}
 	#{Tools.SpecialReferencesCategory}
+	#{Tools.StackFrameSlot}
 	#{Tools.STBDebugger}
 	#{Tools.StructureInspector}
 	#{Tools.TwinLevelInspector}
@@ -863,8 +864,8 @@ Core.Object subclass: #'Tools.VisualShellFinder'
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Kernel.AttributeDescriptor subclass: #'Tools.Aspect'
-	instanceVariableNames: 'name presenterBlock editBlock immediateActionBlock category getBlock putBlock'
-	classVariableNames: ''
+	instanceVariableNames: 'name presenterBlock editBlock immediateActionBlock category getBlock putBlock type icon'
+	classVariableNames: 'DefaultPresenterBlock'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
@@ -893,6 +894,12 @@ Tools.KeyedAspect subclass: #'Tools.InstVarAspect'
 	classConstants: {}!
 Tools.KeyedAspect subclass: #'Tools.KeyedAspectBatch'
 	instanceVariableNames: 'batchSize keys accessorClass'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Tools.KeyedAspect subclass: #'Tools.StackFrameSlot'
+	instanceVariableNames: 'index'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -1291,7 +1298,7 @@ Tools.SmalltalkToolShell subclass: #'Tools.ClassBrowserAbstract'
 		'ShowInheritedMethodsMask' -> 16r1
 	}!
 Tools.SmalltalkToolShell subclass: #'Tools.Debugger'
-	instanceVariableNames: 'process topFrame temp tempCount depth flags breakWhen stackPresenter sourcePresenter tempsPresenter inspectorPresenter breakAction suspendingList _method refactoringTool'
+	instanceVariableNames: 'process topFrame localAccessor depth flags breakWhen stackPresenter sourcePresenter variablesPresenter inspectorPresenter breakAction suspendingList _method refactoringTool aspectValueHolder'
 	classVariableNames: 'AnimatePause DefaultStackDepth EnableDynamicMenus RestartOnMethodSave RunToCursorBehavior ShowWalkbacks SkipTable'
 	imports: #(#{Kernel.CompilerFlags} #{Kernel.OpcodePool})
 	classInstanceVariableNames: ''
