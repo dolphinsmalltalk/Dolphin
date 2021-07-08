@@ -642,7 +642,7 @@ composeStem: aStemString extension: anExtensionString
 	how file names are constructed is warranted. Note that the dot separator may be
 	specified in the extension, or not."
 
-	^anExtensionString first == $.
+	^(anExtensionString at: 1) == $.
 		ifTrue: [aStemString, anExtensionString]
 		ifFalse: [aStemString, '.', anExtensionString]!
 

@@ -492,7 +492,7 @@ publishedAspects
 		add: (Aspect bitmap: #backImage);
 		add: (Aspect boolean: #backImageIsTiled);
 		add: (Aspect integer: #backImageAlphaPercent);
-		add: (Aspect choice: #viewMode from: #(#smallIcons #largeIcons #tileIcons #list #report));
+		add: (Aspect symbol: #viewMode from: #(#smallIcons #largeIcons #tileIcons #list #report));
 		add: (Aspect boolean: #playSystemSounds);
 		add: (Aspect hotkey: #hotKey);
 		add: (Aspect boolean: #resetWhenInvisible);

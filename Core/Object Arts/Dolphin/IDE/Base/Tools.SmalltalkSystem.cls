@@ -4688,21 +4688,37 @@ publishedAspectsOfInstances
 	| aspects |
 	aspects := super publishedAspectsOfInstances.
 	#(#hierarchyBrowserClass #protocolBrowserClass #debuggerClass #methodExplorerClass #packageBrowserClass #resourceBrowserClass #viewComposerClass #workspaceClass #workspaceShellClass #classChooserClass #resourceIdentifierDialogClass #defaultInspectorClass #testBrowserClass #aboutBoxClass)
-		do: [:each | aspects add: (Aspect name: each)].
+		do: 
+			[:each |
+			aspects add: (Aspect
+						name: each type: Presenter class;
+						icon: SmalltalkToolShell icon;
+						yourself)].
 	#(#autoFormatMethodSource #backupOnImageSave #preferAlternateInspectors #splashShowAtStartup)
 		do: [:each | aspects add: (Aspect boolean: each)].
 	^aspects
 		add: ((Aspect font: #defaultFont) category: #appearence);
-		add: (Aspect choice: #formatterClass from: (ClassCategory name: 'System-Compiler-Formatters') classes);
+		add: (Aspect
+					choice: #formatterClass
+					from: [(ClassCategory name: 'System-Compiler-Formatters') classes]
+					type: Class);
 		add: (Aspect integer: #changeHistorySize);
 		add: (Aspect color: #toolBackgroundColor);
 		add: (Aspect hotkey: #interruptHotKey);
-		add: (Aspect
+		add: ((Aspect
 					choice: #toolbarBitmapSize
 					from: ##({16 @ 16. 20 @ 20. 24 @ 24. 32 @ 32. 40 @ 40. 48 @ 48. 64 @ 64})
-					andNil: nil);
-		add: (Aspect choice: #defaultMaxStack from: #(32 64 96 128));
-		add: (Aspect choice: #displayItLocale from: {Locale smalltalk. Locale userDefault. Locale invariant});
+					type: Point)
+					icon: External.SIZE icon;
+					yourself);
+		add: (Aspect
+					choice: #defaultMaxStack
+					from: #(32 64 96 128)
+					type: Integer);
+		add: (Aspect
+					choice: #displayItLocale
+					from: [{Locale smalltalk. Locale userDefault. Locale invariant}]
+					type: Locale);
 		yourself!
 
 publishedEventsOfInstances

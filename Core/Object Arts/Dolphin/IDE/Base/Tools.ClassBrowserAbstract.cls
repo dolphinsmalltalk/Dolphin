@@ -2899,14 +2899,14 @@ publishedAspects
 		add: (Aspect boolean: #defaultShowInheritedMethods);
 		add: (Aspect boolean: #defaultFilterObjectMethods);
 		add: ((Aspect color: #looseMethodColor)
-					isNullable: false;
+					beNonNullable;
 					yourself);
 		add: ((Aspect integer: #grayedMethodFadeFactor)
-					isNullable: false;
+					beNonNullable;
 					yourself);
-		add: ((Aspect sequenceableCollection: #plugins addFrom: self availablePluginClasses)
+		add: ((Aspect sequenceableCollection: #plugins addFrom: [self availablePluginClasses])
 					beMutable;
-					isNullable: true;
+					beNullable;
 					yourself);
 		add: (Aspect integer: #historyListSize);
 		yourself!

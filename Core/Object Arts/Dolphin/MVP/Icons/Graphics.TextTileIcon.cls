@@ -49,12 +49,15 @@ actualFontStyle
 	^(flags bitAnd: FontStyleMask) >> 2!
 
 actualTextcolor
-	"Private - Answer the colour used to draw the text. If unspecified this will default to either black
-	or white, depending on the luminance of the tile background colour."
+	"Private - Answer the colour used to draw the text. If unspecified and:
+		- there is no tile colour, then default to `Color windowText` (i.e. the normal text foreground colour of the current OS theme); otherwise
+		- default to either `Color black` or `Color white`, depending on the luminance of the tile background colour."
 
 	^textcolor
-		ifNil: [(tilecolor isNil or: [tilecolor luminance > 0.6]) ifTrue: [Color black] ifFalse: [Color white]]
-!
+		ifNil: 
+			[tilecolor
+				ifNil: [Color windowText]
+				ifNotNil: [tilecolor luminance > 0.6 ifTrue: [Color black] ifFalse: [Color white]]]!
 
 addToImageList: aWinImageList mask: aColorOrNil
 	"Private - Add a pictorial representation of the receiver to aWinImageList drawn directly at the

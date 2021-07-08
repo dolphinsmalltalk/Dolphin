@@ -53,6 +53,10 @@ beNonNullable
 	flags := flags bitAnd: ##(NullableMask bitInvert).
 	^self!
 
+beNullable
+	flags := flags bitOr: NullableMask.
+	^self!
+
 beOverride
 	"Set the receiver's flags to specify it as an override attribute
 	(i.e. one for which compiled accessors will be generated, even if defined
@@ -185,6 +189,7 @@ writeInto: subjectObject value: valueObject
 !Kernel.AttributeDescriptor categoriesFor: #beMutable!modes!public! !
 !Kernel.AttributeDescriptor categoriesFor: #beNonBrowsable!modes!public! !
 !Kernel.AttributeDescriptor categoriesFor: #beNonNullable!accessing!modes!public! !
+!Kernel.AttributeDescriptor categoriesFor: #beNullable!accessing!modes!public! !
 !Kernel.AttributeDescriptor categoriesFor: #beOverride!modes!public! !
 !Kernel.AttributeDescriptor categoriesFor: #beReadOnly!modes!public! !
 !Kernel.AttributeDescriptor categoriesFor: #beUncompiled!modes!public! !

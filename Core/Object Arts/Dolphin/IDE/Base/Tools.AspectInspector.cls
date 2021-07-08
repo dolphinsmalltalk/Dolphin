@@ -252,7 +252,7 @@ publishedAspects
 	"Answer a <LookupTable> of the <Aspect>s published by the receiver."
 
 	^super publishedAspects
-		add: (Aspect choice: #treeUpdateMode from: TreeView updateModes);
+		add: (Aspect symbol: #treeUpdateMode from: TreeView updateModes);
 		add: (Aspect boolean: #treeHasGridLines);
 		yourself!
 

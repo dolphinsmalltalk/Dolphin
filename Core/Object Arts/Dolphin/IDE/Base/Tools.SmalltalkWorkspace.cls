@@ -2167,7 +2167,7 @@ indicatorStyles: aCollectionOfScintillaIndicatorStyles
 
 indicatorStylesAspect
 	^(Aspect sequenceableCollection: #indicatorStyles
-		addEvaluationFrom: {IndicatorStyle name , ' new'})
+		addEvaluationFrom: [{IndicatorStyle shortName , ' new'}])
 		beImmutable;
 		yourself!
 
@@ -2261,18 +2261,18 @@ publishedAspects
 	answer := super publishedAspects.
 	#(#isAutoCompletionEnabled #isAutoCompletionCaseInsensitive #isAutoCompletionTruncating #useDirectWrite)
 		do: [:each | answer add: (Aspect boolean: each)].
-	#(#defaultTabWidth #autoCompleteDwell #maxAutoCompletionListSize)
-		do: [:each | answer add: (Aspect integer: each)].
+	#(#defaultTabWidth #maxAutoCompletionListSize) do: [:each | answer add: (Aspect integer: each)].
+	answer add: (Aspect duration: #autoCompleteDwell).
 	#(#defaultBackcolor #defaultCaretColor) do: [:each | answer add: (Aspect color: each)].
 	^answer
-		add: (Aspect choice: #annotationMode from: ScintillaView annotationModes);
-		add: (Aspect choice: #wrapIndentMode from: ScintillaView wrapIndentModes);
-		add: (Aspect sequenceableCollection: #editorKeyBindings
-					addEvaluationFrom: {KeyBinding name , ' new'}) beImmutable;
+		add: (Aspect symbol: #annotationMode from: ScintillaView annotationModes);
+		add: (Aspect symbol: #wrapIndentMode from: ScintillaView wrapIndentModes);
+		add: (Aspect sequenceableCollection: #editorKeyBindings addEvaluationFrom: [{KeyBinding shortName , ' new'}])
+					beImmutable;
 		add: (Aspect dictionary: #acceleratorKeyBindings) beImmutable;
 		add: self textStylesAspect;
 		add: self indicatorStylesAspect;
-		add: (Aspect choice: #fontQuality from: ScintillaView fontQualities);
+		add: (Aspect symbol: #fontQuality from: ScintillaView fontQualities);
 		add: (Aspect font: #defaultFont);
 		yourself!
 
@@ -2320,6 +2320,7 @@ textStylesAspect
 			(StylesCollectionPresenter createIn: p on: m)
 				defaultStyle: self defaultTextStyle;
 				yourself])
+		type: SequenceableCollection;
 		beImmutable;
 		yourself!
 

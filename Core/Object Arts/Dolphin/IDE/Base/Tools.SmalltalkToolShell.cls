@@ -549,8 +549,13 @@ publishedAspects
 	"Answer a <LookupTable> of the <Aspect>s published by the receiver."
 
 	^super publishedAspects
-		add: (Aspect choice: #defaultView from: self resourceNames);
-		add: (Aspect name: #defaultExtent);
+		add: ((Aspect
+					choice: #defaultView
+					from: [self resourceNames]
+					type: String)
+					icon: UI.ResourceIdentifier icon;
+					yourself);
+		add: (Aspect extent: #defaultExtent);
 		add: (Aspect dictionary: #acceleratorKeyBindings) beImmutable;
 		add: (Aspect integer: #historyDwellTime);
 		add: (Aspect integer: #searchFieldFlashes);

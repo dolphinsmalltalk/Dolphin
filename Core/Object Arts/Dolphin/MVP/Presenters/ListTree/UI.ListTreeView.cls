@@ -179,9 +179,7 @@ basicCollapse: anObject
 	"collapse the node and collapse and remove any children.
 	Someday I may activate the redraw-suppression code configurably"
 
-	"self disableRedraw. [ Cursor wait showWhile: ["
-	self veryBasicCollapse: anObject.
-	"] ] ensure: [self enableRedraw]."
+	self noRedrawDo: [self veryBasicCollapse: anObject].
 
 	"as with #expand: we allow the tree model to say that an object has children even if
 	the actual set thereof is zero-sized, hence we display a #Closed image even if there

@@ -7200,9 +7200,9 @@ publishedAspectsOfInstances
 		add: (Aspect boolean: #defineFunctionTables);
 		add: (Aspect boolean: #defineMethodProtocols);
 		add: (Aspect string: #namespaceName);
-		add: (Aspect choice: #highLevelWrappers from: self highLevelWrapperStyles);
-		add: (Aspect choice: #classComments from: self classCommentStyles);
-		add: (Aspect choice: #tracing from: self tracingStyles);
+		add: (Aspect symbol: #highLevelWrappers from: self highLevelWrapperStyles);
+		add: (Aspect symbol: #classComments from: self classCommentStyles);
+		add: (Aspect symbol: #tracing from: self tracingStyles);
 		add: (Aspect name: #aliasMap);
 		add: (Aspect sequenceableCollection: #interfaces) beReadOnly;
 		add: (Aspect sequenceableCollection: #coclasses) beReadOnly;

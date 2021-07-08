@@ -60,7 +60,7 @@ fromPoint: aPoint
 icon
 	"Answer a suitable iconic representation for the receiver."
 
-	^Graphics.Icon fromId: 'extent.ico'!
+	^##(Graphics.Icon fromId: 'extent.ico')!
 
 width: cx height: cy
 	^self new

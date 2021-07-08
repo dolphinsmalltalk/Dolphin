@@ -167,7 +167,7 @@ publishedAspects
 
 	^super publishedAspects
 		add: ((Aspect sequenceableCollection: #renderers)
-					isNullable: false;
+					beNonNullable;
 					yourself);
 		add: (Aspect boolean: #canUseIdeaSpace);
 		yourself!

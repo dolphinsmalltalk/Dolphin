@@ -114,6 +114,9 @@ resource_Default_view
 textStyles
 	^TextStyles ifNil: [TextStyles := self defaultTextStyles]!
 
+textStyles: anIdentityDictionary
+	TextStyles := anIdentityDictionary!
+
 uninitialize
 	ThemeColor removeNamed: #commentWorkspace!
 
@@ -137,6 +140,7 @@ wordWrap: aBoolean
 !Tools.ClassCommentPlugin class categoriesFor: #publishedAspects!public! !
 !Tools.ClassCommentPlugin class categoriesFor: #resource_Default_view!public!resources-views! !
 !Tools.ClassCommentPlugin class categoriesFor: #textStyles!accessing!options!public! !
+!Tools.ClassCommentPlugin class categoriesFor: #textStyles:!accessing!options!public! !
 !Tools.ClassCommentPlugin class categoriesFor: #uninitialize!class hierarchy-removing!private! !
 !Tools.ClassCommentPlugin class categoriesFor: #wordWrap!accessing!options!public! !
 !Tools.ClassCommentPlugin class categoriesFor: #wordWrap:!accessing!options!public! !

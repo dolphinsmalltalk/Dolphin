@@ -401,7 +401,12 @@ publishedAspects
 	"Answer a <LookupTable> of the <Aspect>s published by the receiver."
 
 	^super publishedAspects
-		add: (Aspect choice: #defaultView from: self resourceNames);
+		add: ((Aspect
+					choice: #defaultView
+					from: [self resourceNames]
+					type: String)
+					icon: ResourceIdentifier icon;
+					yourself);
 		yourself!
 
 resource_Default_view

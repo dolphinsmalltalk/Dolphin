@@ -2209,7 +2209,9 @@ thumbnailExtent
 	^thumbnailExtent ifNil: [self defaultThumbnailExtent]!
 
 thumbnailExtent: aPointOrNil
-	thumbnailExtent := aPointOrNil = self defaultThumbnailExtent ifFalse: [aPointOrNil]!
+	thumbnailExtent = aPointOrNil ifTrue: [^self].
+	thumbnailExtent := aPointOrNil = self defaultThumbnailExtent ifFalse: [aPointOrNil].
+	self viewMode == #thumbnails ifTrue: [self viewModeChanged]!
 
 thumbnailsImageManager
 	"Private - Answer the  private <ImageManager> containing images for the large images size modes of the receiver.

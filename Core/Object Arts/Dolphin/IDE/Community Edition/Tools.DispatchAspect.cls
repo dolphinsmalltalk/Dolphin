@@ -17,12 +17,6 @@ dispid
 dispid: anInteger 
 	dispid := anInteger!
 
-flags
-	^flags!
-
-flags: anInteger 
-	flags := anInteger!
-
 readFrom: anObject
 	"Private - Answer the attribute of anObject represented by the receiver."
 
@@ -39,8 +33,6 @@ writeInto: subjectObject value: valueObject
 				caption: ('Error setting property <1p>' expandMacrosWith: self name)]! !
 !Tools.DispatchAspect categoriesFor: #dispid!accessing!public! !
 !Tools.DispatchAspect categoriesFor: #dispid:!accessing!private! !
-!Tools.DispatchAspect categoriesFor: #flags!accessing!private! !
-!Tools.DispatchAspect categoriesFor: #flags:!accessing!private! !
 !Tools.DispatchAspect categoriesFor: #readFrom:!indirect accessing!private! !
 !Tools.DispatchAspect categoriesFor: #writeInto:value:!indirect accessing!private! !
 

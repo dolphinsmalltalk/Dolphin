@@ -304,7 +304,7 @@ publishedAspects
 
 	^super publishedAspects
 		add: ((Aspect integer: #defaultUpdateInterval)
-					isNullable: false;
+					beNonNullable;
 					yourself);
 		yourself!
 

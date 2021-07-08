@@ -297,7 +297,7 @@ fromFile: aFilename usingLocator: aFileLocator
 fromId: anIntegerOrStringId
 	"Answer a new instance with a resource Id of anIntegerOrStringId."
 
-	^self fromId: anIntegerOrStringId in: SessionManager current defaultResourceLibrary!
+	^self fromId: anIntegerOrStringId in: SessionManager.Current defaultResourceLibrary!
 
 fromId: anIntegerOrStringId in: anInstanceHandle
 	"Answer a new instance with a resourceID of anIntegerOrStringId

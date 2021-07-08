@@ -561,8 +561,13 @@ publishedAspects
 	#(#defaultBackcolor #defaultCaretColor) do: [:each | answer add: (Aspect color: each)].
 	answer
 		add: (Aspect font: #defaultFont);
-		add: (Aspect choice: #defaultView from: self resourceNames);
-		add: (Aspect name: #defaultExtent);
+		add: ((Aspect
+					choice: #defaultView
+					from: [self resourceNames]
+					type: String)
+					icon: ResourceIdentifier icon;
+					yourself);
+		add: (Aspect extent: #defaultExtent);
 		add: self workspaceClass textStylesAspect;
 		add: (Aspect integer: #defaultTabWidth);
 		yourself.

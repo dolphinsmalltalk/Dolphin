@@ -1245,9 +1245,7 @@ publishedAspects
 
 	^super publishedAspects
 		add: (Aspect dictionary: #acceleratorKeyBindings) beImmutable;
-		add: ((Aspect boolean: #hasInfoTips)
-					isNullable: true;
-					yourself);
+		add: (Aspect threeStateBoolean: #hasInfoTips);
 		yourself!
 
 publishedEventsOfInstances
