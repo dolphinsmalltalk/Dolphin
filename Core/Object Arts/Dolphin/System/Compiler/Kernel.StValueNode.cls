@@ -11,7 +11,7 @@ Kernel.StValueNode isNonInstantiable: true!
 Kernel.StValueNode comment: 'StValueNode is an abstract class to represent parse tree nodes that return some value.
 
 Instance Variables:
-	parentheses	<SequenceableCollection> of <Interval>	the positions of each parenthesis pair around this node. We need a collection of intervals for stupid code such as "((3 + 4))" that has multiple parenthesis pairs around the same expression.
+	parentheses	<SequenceableCollection> of <Interval>	the positions of the parentheses around this node. We need a collection of intervals for stupid code such as "((3 + 4))" that has multiple parentheses around the same expression.
 
 '!
 !Kernel.StValueNode categoriesForClass!System-Compiler! !

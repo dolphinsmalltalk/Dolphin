@@ -45,7 +45,7 @@ notEmpty
 	^self getRecentList notEmpty!
 
 onAboutToDisplayMenu: recentMenu
-	"Private - The system is about to display the <Menu> popup, this is our chance
+	"Private - The system is about to display the <Menu>, recentMenu popup, this is our chance
 	to fiddle with it and display the recent files list if appropriate."
 
 	| recentList basePath |
