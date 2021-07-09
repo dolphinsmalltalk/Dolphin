@@ -451,7 +451,7 @@ onFullPrint: npFullPrint
 !
 
 onNew: savedDataOrNil
-	"TPrivate - the receiver has just been created by the internet browser. savedData
+	"Private - the receiver has just been created by the internet browser. savedData
 	is a <COMTaskMemory> pointer (or nil) holding any data blocks associated 
 	with this mimetype/url by the last instance of the applet."
 
