@@ -105,10 +105,8 @@ styleNames
 currentLineAlpha: alphaInteger
 	"Set background alpha of the caret line."
 
-	#deprecated.	"Use a currentLineBackcolor with alpha"
-	self
-		currentLineBackcolor: (self currentLineBackcolor alpha: alphaInteger);
-		currentLineBackcolorLayer: (alphaInteger < 255 ifTrue: [#underText] ifFalse: [#base])!
+	Notification deprecated.	"Use a currentLineBackcolor with a Color with alpha"
+	self currentLineBackcolor: (self currentLineBackcolor alpha: alphaInteger)!
 
 firstVisibleLine: anInteger
 	"Scroll so that a display line is at the top of the display."

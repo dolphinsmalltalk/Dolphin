@@ -41,6 +41,7 @@ package setClassNames: #(
 	#{Graphics.Brush}
 	#{Graphics.Canvas}
 	#{Graphics.Color}
+	#{Graphics.ColorAlpha}
 	#{Graphics.ColorDefault}
 	#{Graphics.ColorNone}
 	#{Graphics.ColorRef}
@@ -1596,6 +1597,12 @@ Graphics.ColorRef subclass: #'Graphics.ColorNone'
 	classConstants: {}!
 Graphics.ColorRef subclass: #'Graphics.RGB'
 	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Graphics.VirtualColor subclass: #'Graphics.ColorAlpha'
+	instanceVariableNames: 'color alpha'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''

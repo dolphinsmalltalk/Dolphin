@@ -20,8 +20,9 @@ alpha: anAlphaInteger
 	"Answer an <ARGB> which has the same red, green and blue components as the receiver, but with the <integer> alpha, anAlphaInteger.
 	The alpha component is expected to be in the range [0,255], but is clamped to that if not."
 
-	^self class fromArgbCode: ((code bitAnd: 16rFFFFFF)
-				bitOr: ((anAlphaInteger asInteger clampBetween: 0 and: 255) bitShift: 24))!
+	| alpha |
+	alpha := self alpha * (anAlphaInteger asInteger clampBetween: 0 and: 255) // 255.
+	^self class fromArgbCode: ((code bitAnd: 16rFFFFFF) bitOr: (alpha bitShift: 24))!
 
 alphaMask
 	"Private - Answer the receiver's alpha bits as they would compose into an ARGB."

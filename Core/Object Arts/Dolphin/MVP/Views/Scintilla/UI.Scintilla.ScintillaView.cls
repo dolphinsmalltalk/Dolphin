@@ -1286,9 +1286,14 @@ currentLineBackcolor: aColorOrNil
 	The effect of any alpha in the colour will depend on the #currentLineBackgroundLayer setting as follows:
 		#base		- the colour is drawn opaquely over the ambient background colour of the view. Any alpha is ignored.
 		#underText	- the colour is drawn with translucency under the text. If the colour has no alpha, this will look the same as #base.
-		#overText		- the colour is drawn with translucency over the text. If the colour has no alpha, the text will be obliterated (probably not useful)."
+		#overText		- the colour is drawn with translucency over the text. If the colour has no alpha, the text will be obliterated (probably not useful).
 
-	self setOrResetElement: SC_ELEMENT_CARET_LINE_BACK color: aColorOrNil!
+	Since it is awkward to manage these two settings separately (and the value is questionable), we just adjust the layer setting based on whether there is any alpha in the colour, although defaulting to #underText would have much the same effect."
+
+	self setOrResetElement: SC_ELEMENT_CARET_LINE_BACK color: aColorOrNil.
+	self currentLineBackcolorLayer: ((aColorOrNil isNil or: [aColorOrNil alpha == 255])
+				ifTrue: [#base]
+				ifFalse: [#underText])!
 
 currentLineBackcolorLayer
 	^self class layerNames at: self sciGetCaretLineLayer + 1!

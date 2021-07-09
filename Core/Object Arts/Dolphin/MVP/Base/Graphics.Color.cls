@@ -56,7 +56,7 @@ alpha: anAlphaInteger
 	"Answer a `Color` which has the same red, green and blue components as the receiver, but with the <integer> alpha, anAlphaInteger.
 	The alpha component is expected to be in the range [0,255], but is clamped to that if not."
 
-	^anAlphaInteger >= 255 ifTrue: [self] ifFalse: [self asRGB alpha: anAlphaInteger]!
+	^ColorAlpha color: self alpha: anAlphaInteger!
 
 alphaMask
 	"Private - Answer the receiver's alpha bits as they would compose into an ARGB."
@@ -154,7 +154,7 @@ fadedBy: aNumber
 	"Answer a new <Color> which is a copy of the receiver faded by
 	the specified factor."
 
-	^self asRGB fadedBy: aNumber!
+	^(self asRGB fadedBy: aNumber) alpha: self alpha!
 
 green
 	"Answer the receiver's green component component expressed as an <integer> in the range [0,255]."

@@ -24,6 +24,7 @@ printOn: aPuttableStream
 		print: self class;
 		space;
 		display: #with:;
+		space;
 		print: valuable!
 
 setValuable: aNiladicValuable 
@@ -40,14 +41,8 @@ stbSaveOn: anSTBOutFiler
 
 !Graphics.PluggableColor class methodsFor!
 
-stbReadFrom: anSTBInFiler format: anSTBClassConversion 
-	"Override back to default implementation"
-
-	^anSTBInFiler readObjectOfClass: self format: anSTBClassConversion!
-
 with: aNiladicValuable 
 	<primitive: 157>
 	^self basicNew setValuable: aNiladicValuable! !
-!Graphics.PluggableColor class categoriesFor: #stbReadFrom:format:!binary filing!public! !
 !Graphics.PluggableColor class categoriesFor: #with:!instance creation!public! !
 
