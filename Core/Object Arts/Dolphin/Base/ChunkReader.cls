@@ -15,6 +15,7 @@ ChunkReader comment: '
 chunk: chunkString
 	"Private - Evaluate the receivers chunkBlock with chunkString."
 
+	#deprecated.
 	self chunkBlock value: chunkString!
 
 chunkBlock
@@ -37,7 +38,7 @@ fileInFrom: aSourceFiler
 
 	| chunk |
 	[aSourceFiler atEnd or: [(chunk := aSourceFiler nextChunk) isEmpty]]
-		whileFalse: [self chunk: chunk].
+		whileFalse: [chunkBlock cull: chunk cull: aSourceFiler].
 	^endAction value!
 
 setChunkBlock: perChunk context: contextObject endAction: finalOperation 
@@ -46,11 +47,13 @@ setChunkBlock: perChunk context: contextObject endAction: finalOperation
 	chunkBlock := perChunk.
 	endAction := finalOperation.
 	context := contextObject! !
-!ChunkReader categoriesFor: #chunk:!operations!private! !
-!ChunkReader categoriesFor: #chunkBlock!accessing!public! !
-!ChunkReader categoriesFor: #context!accessing!public! !
-!ChunkReader categoriesFor: #fileInFrom:!private!source filing! !
-!ChunkReader categoriesFor: #setChunkBlock:context:endAction:!accessing!private! !
+!ChunkReader categoriesForMethods!
+chunk:!operations!private! !
+chunkBlock!accessing!public! !
+context!accessing!public! !
+fileInFrom:!private!source filing! !
+setChunkBlock:context:endAction:!accessing!private! !
+!
 
 !ChunkReader class methodsFor!
 
@@ -90,7 +93,7 @@ null
 	"Answer a null instance of the receiver which consumes and discards input without
 	processing it in any way."
 
-	Null isNil ifTrue: [Null := self do: [:chunk |]].
+	Null isNil ifTrue: [Null := self do: [:chunk :filer | ]].
 	^Null!
 
 onPreStripImage
@@ -98,9 +101,11 @@ onPreStripImage
 	any lazily initialized class variables in order to assist the stripping process."
 
 	Null := nil! !
-!ChunkReader class categoriesFor: #do:!instance creation!public! !
-!ChunkReader class categoriesFor: #do:atEnd:!instance creation!public! !
-!ChunkReader class categoriesFor: #do:inContext:atEnd:!instance creation!public! !
-!ChunkReader class categoriesFor: #null!instance creation!public! !
-!ChunkReader class categoriesFor: #onPreStripImage!initializing!private! !
+!ChunkReader class categoriesForMethods!
+do:!instance creation!public! !
+do:atEnd:!instance creation!public! !
+do:inContext:atEnd:!instance creation!public! !
+null!instance creation!public! !
+onPreStripImage!initializing!private! !
+!
 

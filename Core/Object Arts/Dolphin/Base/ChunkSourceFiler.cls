@@ -193,22 +193,24 @@ storeSourceString: aString forMethod: aCompiledMethod
 		emitFooterForMethodsOf: methodClass;
 		flush
 ! !
-!ChunkSourceFiler categoriesFor: #emitChunk:!private!source filing-file out! !
-!ChunkSourceFiler categoriesFor: #emitFooterForMethodsOf:!private!source filing-file out! !
-!ChunkSourceFiler categoriesFor: #emitGUIDOfClass:!private!source filing-file out! !
-!ChunkSourceFiler categoriesFor: #emitHeaderForMethodsOf:!private!source filing-file out! !
-!ChunkSourceFiler categoriesFor: #emitString:!private!source filing-file out! !
-!ChunkSourceFiler categoriesFor: #endChunk!private!source filing-file out! !
-!ChunkSourceFiler categoriesFor: #fileIn!public!source filing-file in! !
-!ChunkSourceFiler categoriesFor: #fileOutExpression:!public!source filing-file out! !
-!ChunkSourceFiler categoriesFor: #getSourceFromDescriptor:!public!source filing-file in! !
-!ChunkSourceFiler categoriesFor: #nextChunk!private!source filing-file in! !
-!ChunkSourceFiler categoriesFor: #nextChunkPut:!private!source filing-file out! !
-!ChunkSourceFiler categoriesFor: #normalizeLineEndings!accessing!public! !
-!ChunkSourceFiler categoriesFor: #normalizeLineEndings:!accessing!public! !
-!ChunkSourceFiler categoriesFor: #sourceDescriptorForIndex:position:!private!source filing-file in! !
-!ChunkSourceFiler categoriesFor: #sourceFileIndex:!accessing!private! !
-!ChunkSourceFiler categoriesFor: #storeSourceString:forMethod:!private!source filing-file out! !
+!ChunkSourceFiler categoriesForMethods!
+emitChunk:!private!source filing-file out! !
+emitFooterForMethodsOf:!private!source filing-file out! !
+emitGUIDOfClass:!private!source filing-file out! !
+emitHeaderForMethodsOf:!private!source filing-file out! !
+emitString:!private!source filing-file out! !
+endChunk!private!source filing-file out! !
+fileIn!public!source filing-file in! !
+fileOutExpression:!public!source filing-file out! !
+getSourceFromDescriptor:!public!source filing-file in! !
+nextChunk!private!source filing-file in! !
+nextChunkPut:!private!source filing-file out! !
+normalizeLineEndings!accessing!public! !
+normalizeLineEndings:!accessing!public! !
+sourceDescriptorForIndex:position:!private!source filing-file in! !
+sourceFileIndex:!accessing!private! !
+storeSourceString:forMethod:!private!source filing-file out! !
+!
 
 !ChunkSourceFiler class methodsFor!
 
@@ -224,6 +226,8 @@ on: aWriteStream sourceFileIndex: anInteger
 	^(self on: aWriteStream)
 		sourceFileIndex: anInteger;
 		yourself! !
-!ChunkSourceFiler class categoriesFor: #initialize!development!initializing!public! !
-!ChunkSourceFiler class categoriesFor: #on:sourceFileIndex:!instance creation!public! !
+!ChunkSourceFiler class categoriesForMethods!
+initialize!development!initializing!public! !
+on:sourceFileIndex:!instance creation!public! !
+!
 
