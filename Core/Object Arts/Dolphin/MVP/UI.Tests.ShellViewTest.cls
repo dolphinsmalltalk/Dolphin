@@ -31,7 +31,7 @@ testOpensOnForegroundMonitor
 	cursorPos := secondary workArea center.
 	shell1 := self createShell: self printString , ': shell1'.
 	self assert: shell1 displayMonitor equals: secondary.
-	fakeUser32 getForegroundWindowBlock: [shell1].
+	fakeUser32 getActiveWindowBlock: [shell1 handle].
 	"Position cursor over the primary window - shell should still open on secondary because the foreground window is there."
 	cursorPos := primary workArea center.
 	shell2 := self createShell: self printString , ': shell2'.
