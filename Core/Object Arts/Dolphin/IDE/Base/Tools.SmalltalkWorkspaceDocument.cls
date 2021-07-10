@@ -474,6 +474,16 @@ defaultModel
 
 	^SmalltalkSystem current!
 
+defaultSelectionColor
+	"Answer the default selection highlight colour to use for instances of the receiver"
+
+	^self workspaceClass defaultSelectionColor!
+
+defaultSelectionColor: aColorOrNil 
+	"Set the default selection highlight colour to use for instances of the receiver."
+
+	self workspaceClass defaultSelectionColor: aColorOrNil!
+
 defaultTabWidth
 	"Answer the width of tabs (equivalent number of spaces) in instances of the receiver."
 
@@ -558,7 +568,7 @@ publishedAspects
 	answer := super publishedAspects.
 	#(#reuseIfOpen #canUseIdeaSpace #wordWrap #variableTips)
 		do: [:each | answer add: (Aspect boolean: each)].
-	#(#defaultBackcolor #defaultCaretColor) do: [:each | answer add: (Aspect color: each)].
+	#(#defaultBackcolor #defaultCaretColor #defaultSelectionColor) do: [:each | answer add: (Aspect color: each)].
 	answer
 		add: (Aspect font: #defaultFont);
 		add: ((Aspect
@@ -667,6 +677,8 @@ workspaceClass
 !Tools.SmalltalkWorkspaceDocument class categoriesFor: #defaultFont!accessing!options!public! !
 !Tools.SmalltalkWorkspaceDocument class categoriesFor: #defaultFont:!accessing!options!public! !
 !Tools.SmalltalkWorkspaceDocument class categoriesFor: #defaultModel!models!public! !
+!Tools.SmalltalkWorkspaceDocument class categoriesFor: #defaultSelectionColor!accessing!options!public! !
+!Tools.SmalltalkWorkspaceDocument class categoriesFor: #defaultSelectionColor:!accessing!options!public! !
 !Tools.SmalltalkWorkspaceDocument class categoriesFor: #defaultTabWidth!accessing!options!public! !
 !Tools.SmalltalkWorkspaceDocument class categoriesFor: #defaultTabWidth:!accessing!options!public! !
 !Tools.SmalltalkWorkspaceDocument class categoriesFor: #defaultView!constants!public! !

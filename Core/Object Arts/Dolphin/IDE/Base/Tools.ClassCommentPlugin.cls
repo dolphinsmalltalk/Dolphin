@@ -70,7 +70,7 @@ systemUpdateEvent
 !Tools.ClassCommentPlugin class methodsFor!
 
 defaultBackcolor
-	^(Color named: #commentWorkspace) actualColor!
+	^(Color named: #commentWorkspace) basicActualColor!
 
 defaultBackcolor: aColor
 	(Color named: #commentWorkspace) actualColor: aColor!

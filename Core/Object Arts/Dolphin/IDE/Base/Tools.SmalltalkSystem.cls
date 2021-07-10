@@ -4017,7 +4017,7 @@ testBrowserClass
 toolBackgroundColor
 	"Answer the background used in some of the system tools"
 
-	^(Color named: #toolBackground) actualColor!
+	^(Color named: #toolBackground) basicActualColor!
 
 toolBackgroundColor: aColor
 	(Color named: #toolBackground) actualColor: aColor!
@@ -4665,7 +4665,9 @@ icon
 
 initialize
 	self initializeFileDrops.
-	ThemeColor addNamed: #toolBackground color: Color face3d!
+	ThemeColor
+		addNamed: #toolBackground color: Color face3d;
+		addNamed: #workspaceSelection color: (Color highlight alpha: 60)!
 
 initializeFileDrops
 	FileDrops := LookupTable new
