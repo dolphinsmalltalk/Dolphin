@@ -579,7 +579,7 @@ removeItemAt: index
 			[(User32
 				removeMenu: self handle
 				uPosition: index - 1
-				uFlags: MF_BYPOSITION) ifFalse: [OS.UserLibrary default systemError]].
+				uFlags: MF_BYPOSITION) ifFalse: [User32 systemError]].
 	^removed!
 
 replaceItem: oldMenuItem with: newMenuItem

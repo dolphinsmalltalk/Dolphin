@@ -931,7 +931,7 @@ getThreadUILanguage
 
 getTickCount
 	"
-	KernelLibrary default getTickCount.
+	Kernel32 getTickCount.
 
 The return value is the number of milliseconds that have elapsed since the system was started.
 

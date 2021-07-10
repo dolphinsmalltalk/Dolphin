@@ -11,7 +11,7 @@ package basicPackageVersion: '6.1'.
 
 package basicScriptAt: #postinstall put: 'COM.OLELibrary closeDefault.	"Cause the OLELibrary to be reinitialized"
 COM.Interface registerSubclasses.
-VMLibrary default 
+VM 
 	registryAt: #IUnknown put: COM.IUnknown;
 	registryAt: #BSTR put: COM.BSTR.
 #{Tools.Debugger}

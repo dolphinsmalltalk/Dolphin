@@ -1544,12 +1544,12 @@ fromResourceId: resourceId in: anExternalLibraryOrHandle
 
 	| len pch |
 	pch := External.Address new.
-	(len := OS.UserLibrary default
+	(len := OS.User32
 				loadString: anExternalLibraryOrHandle asParameter
 				uID: resourceId asResourceId
 				lpBuffer: pch basicYourAddress
 				nBufferMax: 0) isZero
-		ifTrue: [OS.UserLibrary default systemError].
+		ifTrue: [OS.User32 systemError].
 	^Utf16String fromAddress: pch length: len!
 
 fromString: aString

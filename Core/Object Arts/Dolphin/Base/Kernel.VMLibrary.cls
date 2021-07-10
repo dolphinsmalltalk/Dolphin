@@ -74,7 +74,7 @@ basePatchLevel
 
 bytecodeVersion
 	"Answer the <integer> bytecode version number.
-		VMLibrary default bytecodeVersion
+		VM bytecodeVersion
 	"
 
 	^Integer fromString: (self versionInfo at: 'PrivateBuild')!
@@ -91,7 +91,7 @@ crashDump: message
 	unexpected situation and want the sort of information available in the crash
 	dump (the stack state at the time, etc), but you don't actually want to raise a
 	non-continuable exception.
-		VMLibrary default crashDump: 'Hello'
+		VM crashDump: 'Hello'
 	N.B. In order for a crash dump to be produced the registry on the machine
 	must be appropriately configured."
 
@@ -264,7 +264,7 @@ isSlowMachine
 	^(User32 getSystemMetrics: SM_SLOWMACHINE) ~~ 0
 
 	"
-	VMLibrary default isSlowMachine
+	VM isSlowMachine
 "!
 
 isUserBreakRequested
@@ -395,7 +395,7 @@ signedFromUnsigned: anInteger
 
 specialSelectors
 	"Private - Answer all special messages that have their own individual bytecodes.
-		VMLibrary default specialSelectors
+		VM specialSelectors
 	"
 
 	| selectors |

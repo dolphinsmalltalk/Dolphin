@@ -223,7 +223,7 @@ coUninitialize
 initialize
 	"Private - Initialize the receiver using the specified default task
 	allocator (usually nil). This initialization will be automatically
-	run if you make any references to 'OLELibrary default', and therefore
+	run if you make any references to `Ole32` or `OLELibrary default`, and therefore
 	you must either set up the DefaultIMalloc BEFORE any calls to OLELibrary,
 	OR set the default library using #default:, OR perform a subsequent
 	initialize passing the IMalloc you want to use."
@@ -235,7 +235,7 @@ initialize
 initialize: anIMallocOrNil
 	"Private - Initialize the receiver using the specified default task
 	allocator (usually nil). This initialization will be automatically
-	run if you make any references to 'OLELibrary default', and therefore
+	run if you make any references to `Ole32` or `OLELibrary default`, and therefore
 	you must either set up the DefaultIMalloc BEFORE any calls to OLELibrary,
 	OR set the default library using #default:, OR perform a subsequent
 	initialize passing the IMalloc you want to use."

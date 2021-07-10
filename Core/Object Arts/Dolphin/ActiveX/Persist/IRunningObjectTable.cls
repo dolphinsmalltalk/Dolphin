@@ -131,7 +131,7 @@ new
 
 	| answer |
 	answer := self newPointer.
-	OLELibrary default getRunningObjectTable: 0 pprot: answer.
+	Ole32 getRunningObjectTable: 0 pprot: answer.
 	^answer! !
 !IRunningObjectTable class categoriesFor: #new!instance creation!public! !
 

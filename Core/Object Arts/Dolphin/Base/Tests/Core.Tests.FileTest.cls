@@ -295,7 +295,7 @@ testClassRelativePathOfTo
 
 testCommonPrefixOfAnd
 	self
-		assert: ((File commonPrefixOf: OS.Kernel32 moduleFileName and: OS.UserLibrary default moduleFileName)
+		assert: ((File commonPrefixOf: OS.Kernel32 moduleFileName and: OS.User32 moduleFileName)
 				sameAs: SessionManager current systemDirectory).
 	self
 		assert: (File commonPrefixOf: 'D:\dev\Dolphin\DolphinVM7.DLL' and: 'C:\dev\Dolphin\DolphinVM7.DLL')

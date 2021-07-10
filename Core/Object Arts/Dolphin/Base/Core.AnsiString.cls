@@ -39,7 +39,7 @@ asLowercase
 
 	| copy |
 	copy := self shallowCopy.
-	OS.UserLibrary default charLowerBuffA: copy cchLength: copy size.
+	OS.User32 charLowerBuffA: copy cchLength: copy size.
 	^copy!
 
 asUppercase
@@ -51,7 +51,7 @@ asUppercase
 
 	| copy |
 	copy := self shallowCopy.
-	OS.UserLibrary default charUpperBuffA: copy cchLength: copy size.
+	OS.User32 charUpperBuffA: copy cchLength: copy size.
 	^copy!
 
 codePointsDo: operation

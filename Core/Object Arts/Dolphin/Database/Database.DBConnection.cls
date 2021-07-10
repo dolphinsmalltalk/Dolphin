@@ -674,7 +674,7 @@ open
 	lenConnSz := External.SWORD new.
 	ret := OS.Odbc32
 				sqlDriverConnect: self getHandle
-				windowHandle: OS.UserLibrary default getActiveWindow
+				windowHandle: OS.User32 getActiveWindow
 				inConnectionString: self connectString
 				stringLength1: SQL_NTS
 				outConnectionString: connSz

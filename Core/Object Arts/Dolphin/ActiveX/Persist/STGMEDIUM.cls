@@ -238,7 +238,7 @@ clear: addressOrBytes
 	"Free external resources referenced by STGMEDIUM
 	structure at the specified address."
 
-	OLELibrary default releaseStgMedium: addressOrBytes!
+	Ole32 releaseStgMedium: addressOrBytes!
 
 defineFields
 	"Define the fields of the OLE COM STGMEDIUM structure.

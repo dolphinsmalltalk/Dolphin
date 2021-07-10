@@ -46,7 +46,7 @@ Example:
 	doc save: ''file://'', tmp.
 
 	"And then admire one''s handywork in IE or other XML browse tool - scroll to the bottom to see our addition"
-	ShellLibrary default shellOpen: tmp directory: nil.
+	Shell32 shellOpen: tmp directory: nil.
 ```
 
 ------------------------

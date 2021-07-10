@@ -88,7 +88,7 @@ beep
 beep: anInteger
 	"Generate a parp of the specified type (see Win32 documentation) from the system speaker."
 
-	OS.UserLibrary default messageBeep: anInteger!
+	OS.User32 messageBeep: anInteger!
 
 beep: freqInteger duration: durationInteger
 	"Generate a parp of the specified frequency and duration from the system speaker."

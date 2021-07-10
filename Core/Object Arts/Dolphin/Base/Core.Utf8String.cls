@@ -44,7 +44,7 @@ asLowercase
 
 	| utf16 |
 	utf16 := self asUtf16String.
-	OS.UserLibrary default charLowerBuffW: utf16 cchLength: utf16 size.
+	OS.User32 charLowerBuffW: utf16 cchLength: utf16 size.
 	^utf16 asUtf8String!
 
 asUppercase
@@ -53,7 +53,7 @@ asUppercase
 
 	| utf16 |
 	utf16 := self asUtf16String.
-	OS.UserLibrary default charUpperBuffW: utf16 cchLength: utf16 size.
+	OS.User32 charUpperBuffW: utf16 cchLength: utf16 size.
 	^utf16 asUtf8String!
 
 asUtf8String

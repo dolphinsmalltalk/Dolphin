@@ -243,7 +243,7 @@ new
 
 	| answer |
 	answer := self newPointer.
-	OLELibrary default createBindCtx: 0 ppbc: answer.
+	Ole32 createBindCtx: 0 ppbc: answer.
 	^answer! !
 !IBindCtx class categoriesFor: #new!instance creation!public! !
 

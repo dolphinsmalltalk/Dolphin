@@ -421,8 +421,7 @@ severityClass
 showMessage: aString style: anInteger
 	"Implementation Note: Avoid creating a dependency on MessageBox, as this class will always be required in an application even if MessageBox is not."
 
-	^#(#ok #cancel #abort #retry #ignore #yes #no #close #help #retry #ignore)
-		at: (OS.UserLibrary default
+	^#(#ok #cancel #abort #retry #ignore #yes #no #close #help #retry #ignore) at: (OS.User32
 				messageBox: nil
 				text: aString
 				caption: SessionManager current applicationName
@@ -589,7 +588,7 @@ beep
 
 	"Implementation Note: Use the MessageBeep() API directly to avoid creating a dependency on the Sound class."
 
-	OS.UserLibrary default messageBeep: self mbIconId!
+	OS.User32 messageBeep: self mbIconId!
 
 handles: exception
 	"Answer whether the receiver matches the <exceptionDescription>, exception, and 

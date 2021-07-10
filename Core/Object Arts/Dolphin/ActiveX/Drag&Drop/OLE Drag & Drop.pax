@@ -101,14 +101,14 @@ registerDragDrop
 
 	| intf |
 	intf := IDropTarget on: self.
-	OLELibrary default
+	Ole32
 		registerDragDrop: self asParameter pDropTarget: intf asParameter.
 	intf release!
 
 revokeDragDrop
 	"Revoke the receiver's status as an OLE Drag/Drop target."
 
-	^OLELibrary default
+	^Ole32
 		revokeDragDrop: self asParameter! !
 !View categoriesFor: #DragEnter:grfKeyState:pt:pdwEffect:!private! !
 !View categoriesFor: #DragLeave!private! !

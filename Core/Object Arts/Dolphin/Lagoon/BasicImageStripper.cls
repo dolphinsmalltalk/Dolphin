@@ -679,7 +679,7 @@ removeRedundantPackages
 	[required := self verifyRequiredPackages] on: Warning
 		do: 
 			[:warning |
-			warning resume: (OS.UserLibrary default
+			warning resume: (User32
 						messageBox: nil
 						lpText: warning description
 						lpCaption: SessionManager current applicationName

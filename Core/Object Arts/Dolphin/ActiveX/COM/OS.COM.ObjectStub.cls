@@ -86,7 +86,7 @@ disconnect
 		ifTrue: 
 			["This might indicate interface leaks in the client, so one might want them traced"
 
-			"KernelLibrary default outputDebugString: 'Disconnecting ', self printString, String lineDelimiter."
+			"Kerne32 outputDebugString: 'Disconnecting ', self printString, String lineDelimiter."
 			count := count + 1.
 			Ole32 coDisconnectObject: interfaces first dwReserved: 0.
 			self free]!

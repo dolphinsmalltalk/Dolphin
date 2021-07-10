@@ -132,7 +132,7 @@ asLowercase
 
 	| ucp |
 	^(ucp := self codePoint) <= 16rFFFF
-		ifTrue: [self class codePoint: (OS.UserLibrary default charLower: ucp)]
+		ifTrue: [self class codePoint: (OS.User32 charLower: ucp)]
 		ifFalse: [self]!
 
 asString
@@ -154,7 +154,7 @@ asUppercase
 
 	| ucp |
 	^(ucp := self codePoint) <= 16rFFFF
-		ifTrue: [self class codePoint: (OS.UserLibrary default charUpper: ucp)]
+		ifTrue: [self class codePoint: (OS.User32 charUpper: ucp)]
 		ifFalse: [self]!
 
 asUtf16String

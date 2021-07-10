@@ -394,7 +394,7 @@ closeAllDevelopmentTools
 		purgeDeadWindows.
 
 	"Update the desktop to redraw under removed windows"
-	OS.UserLibrary default updateWindow: OS.UserLibrary default getDesktopWindow.
+	User32 updateWindow: User32 getDesktopWindow.
 	self collectGarbage: 3!
 
 closeChangeLog
@@ -1097,7 +1097,7 @@ The image MUST exit immediately, but see crash dump (if configured).
 
 '
 				, anError description.
-	OS.UserLibrary default
+	User32
 		messageBox: nil
 		lpText: text
 		lpCaption: SessionManager current applicationName
@@ -1600,7 +1600,7 @@ saveExecutable: exePath keepImage: retainImage
 				retainImage ifFalse: [File delete: image]].
 	unattended
 		ifFalse: 
-			[OS.UserLibrary default
+			[User32
 				messageBox: nil
 				lpText: 'The image has been stripped and deployed to the executable file:
 ' , exePath

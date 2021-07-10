@@ -184,7 +184,7 @@ exampleCopying
 exampleWalkID: anITEMIDLIST
 	"Step through each item id (SHITEMID) in anITEMIDLIST.  Answer a collection of Associations, 
 	each consisting of an item id and its length.
-		self exampleWalkID: (ShellLibrary default getDesktopFolder idlFromPath: 'c:\program files')		
+		self exampleWalkID: (Shell32 getDesktopFolder idlFromPath: 'c:\program files')
 	"
 
 	| idFull coll |

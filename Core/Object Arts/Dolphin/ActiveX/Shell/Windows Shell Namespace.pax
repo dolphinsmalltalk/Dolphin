@@ -109,7 +109,7 @@ allocator
 getDesktopFolder
 	"Answer an <IShellFolder> on the desktop (top-level) folder.
 
-		sh := ShellLibrary default getDesktopFolder.
+		sh := Shell32 getDesktopFolder.
 	"
 
 	| answer |

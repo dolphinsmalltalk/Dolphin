@@ -177,7 +177,7 @@ crtFault: aByteArray
 	record, the first argument of which is the fault code. An example of where this is fired is
 	when an invalid parameter is passed to any CRT function, e.g. attempting to close an invalid
 	file descriptor as follows: 
-		CRTLibrary default _close: -1
+		Ucrt _close: -1
 	"
 
 	| exceptionRecord |
