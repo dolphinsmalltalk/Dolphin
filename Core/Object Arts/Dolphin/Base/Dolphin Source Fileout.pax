@@ -16,6 +16,7 @@ package setMethodNames: #(
 	#(#{Core.Class} #storeClassCategories)
 	#(#{Core.Metaclass} #storeClassCategories)
 	#(#{Kernel.AbstractChunkSourceFiler} #emitBinaryVariableDefinition:)
+	#(#{Kernel.AbstractChunkSourceFiler} #emitCategoriesForMethods:of:)
 	#(#{Kernel.AbstractChunkSourceFiler} #emitCategoriesOfClass:)
 	#(#{Kernel.AbstractChunkSourceFiler} #emitCategoriesOfMethod:)
 	#(#{Kernel.AbstractChunkSourceFiler} #emitComment:)
@@ -120,10 +121,12 @@ storeClassCategories
 	The job is simply delegated to the receiver's source manager (if available)."
 
 	self sourceManager storeCategoriesForClass: self! !
-!Core.Class categoriesFor: #definitionChunk!public!source filing-class definition! !
-!Core.Class categoriesFor: #fileOutOn:!public!source filing! !
-!Core.Class categoriesFor: #printDefinitionOn:!private!source filing-class definition! !
-!Core.Class categoriesFor: #storeClassCategories!private!source filing-methods! !
+!Core.Class categoriesForMethods!
+definitionChunk!public!source filing-class definition! !
+fileOutOn:!public!source filing! !
+printDefinitionOn:!private!source filing-class definition! !
+storeClassCategories!private!source filing-methods! !
+!
 
 !Core.Metaclass methodsFor!
 
@@ -132,7 +135,9 @@ storeClassCategories
 	The job is simply delegated to the receiver's source manager (if available)."
 
 	self instanceClass storeClassCategories! !
-!Core.Metaclass categoriesFor: #storeClassCategories!private!source filing-methods! !
+!Core.Metaclass categoriesForMethods!
+storeClassCategories!private!source filing-methods! !
+!
 
 !Kernel.AbstractChunkSourceFiler methodsFor!
 
@@ -151,6 +156,28 @@ emitBinaryVariableDefinition: aBindingReference
 		space;
 		cr.
 	value binaryStoreBytes base64StoreOn: stream.
+	stream
+		nextPut: $!!;
+		cr!
+
+emitCategoriesForMethods: aSequencableCollection of: aClass
+	"Emit source that associates the <CompiledMethod>s in the <collection>, methods, with their current categories.
+	Note that it is assumed that all the methods are of the same class."
+
+	aSequencableCollection isEmpty ifTrue: [^self].
+	stream nextPut: $!!.
+	self emitClassName: aClass.
+	stream
+		space;
+		nextPutAll: #categoriesForMethods;
+		nextPut: $!!;
+		cr.
+	aSequencableCollection do: 
+			[:method |
+			self emitString: method selector.
+			stream nextPut: $!!.
+			method realCategories asSortedCollection do: [:each | self nextChunkPut: each name].
+			self endChunk].
 	stream
 		nextPut: $!!;
 		cr!
@@ -257,7 +284,7 @@ fileOutMessages: aCollection ofBehavior: aClass
 	self emitHeaderForMethodsOf: aClass.
 	methods := self emitMessages: aClass ofBehavior: aCollection.
 	self emitFooterForMethodsOf: aClass.
-	self isSourceOnly ifFalse: [methods do: [:each | self emitCategoriesOfMethod: each]].
+	self isSourceOnly ifFalse: [self emitCategoriesForMethods: methods of: aClass].
 	self cr!
 
 fileOutProtocols: aCollection ofBehavior: aClassDescription
@@ -365,22 +392,25 @@ storeSource: aString for: aSourceObject
 	"Private - Store the <readableString>, aString, as the source text for the <sourceObject>, aSourceObject. If the receiver is associated with a source file then update aSourceObject's source descriptor so that in future it retrieves the source text from the receiver's source stream."
 
 	self nextChunkPut: aString! !
-!Kernel.AbstractChunkSourceFiler categoriesFor: #emitBinaryVariableDefinition:!public!source filing-file out! !
-!Kernel.AbstractChunkSourceFiler categoriesFor: #emitCategoriesOfClass:!private!source filing-file out! !
-!Kernel.AbstractChunkSourceFiler categoriesFor: #emitCategoriesOfMethod:!private!source filing-file out! !
-!Kernel.AbstractChunkSourceFiler categoriesFor: #emitComment:!private!source filing-file out! !
-!Kernel.AbstractChunkSourceFiler categoriesFor: #emitCommentOfClass:!public!source filing! !
-!Kernel.AbstractChunkSourceFiler categoriesFor: #emitMethod:!private!source filing-file out! !
-!Kernel.AbstractChunkSourceFiler categoriesFor: #emitSpecialBehaviorAttributesOfClass:!public!source filing! !
-!Kernel.AbstractChunkSourceFiler categoriesFor: #fileOutAttributesOfClass:!public!source filing! !
-!Kernel.AbstractChunkSourceFiler categoriesFor: #fileOutBasicDefinitionOfClass:!public!source filing-file out! !
-!Kernel.AbstractChunkSourceFiler categoriesFor: #fileOutMessages:ofBehavior:!public!source filing! !
-!Kernel.AbstractChunkSourceFiler categoriesFor: #fileOutProtocols:ofBehavior:!public!source filing-file out! !
-!Kernel.AbstractChunkSourceFiler categoriesFor: #logEvaluation:!private!source filing-file out! !
-!Kernel.AbstractChunkSourceFiler categoriesFor: #printBasicDefinitionOfClass:!public!source filing-file out! !
-!Kernel.AbstractChunkSourceFiler categoriesFor: #storeCommentString:forClass:!public!source filing-file out! !
-!Kernel.AbstractChunkSourceFiler categoriesFor: #storeCommentString:forPackage:!public!source filing-file out! !
-!Kernel.AbstractChunkSourceFiler categoriesFor: #storeSource:for:!private!source filing-file out! !
+!Kernel.AbstractChunkSourceFiler categoriesForMethods!
+emitBinaryVariableDefinition:!public!source filing-file out! !
+emitCategoriesForMethods:of:!public!source filing! !
+emitCategoriesOfClass:!private!source filing-file out! !
+emitCategoriesOfMethod:!private!source filing-file out! !
+emitComment:!private!source filing-file out! !
+emitCommentOfClass:!public!source filing! !
+emitMethod:!private!source filing-file out! !
+emitSpecialBehaviorAttributesOfClass:!public!source filing! !
+fileOutAttributesOfClass:!public!source filing! !
+fileOutBasicDefinitionOfClass:!public!source filing-file out! !
+fileOutMessages:ofBehavior:!public!source filing! !
+fileOutProtocols:ofBehavior:!public!source filing-file out! !
+logEvaluation:!private!source filing-file out! !
+printBasicDefinitionOfClass:!public!source filing-file out! !
+storeCommentString:forClass:!public!source filing-file out! !
+storeCommentString:forPackage:!public!source filing-file out! !
+storeSource:for:!private!source filing-file out! !
+!
 
 !Kernel.BootSessionManager methodsFor!
 
@@ -425,7 +455,9 @@ saveImageTo: aString
 					openSources]
 						on: Error
 						do: [:anError | anError resignalAsWarning]]! !
-!Kernel.BootSessionManager categoriesFor: #saveImageTo:!operations-saving!private! !
+!Kernel.BootSessionManager categoriesForMethods!
+saveImageTo:!operations-saving!private! !
+!
 
 !Kernel.ChunkSourceFiler methodsFor!
 
@@ -441,7 +473,9 @@ storeSource: aString for: aSourceObject
 	sourceFileIndex notNil 
 		ifTrue: 
 			[aSourceObject sourceDescriptor: (aString isEmpty ifFalse: [self sourceDescriptorForIndex: sourceFileIndex position: position])]! !
-!Kernel.ChunkSourceFiler categoriesFor: #storeSource:for:!private!source filing-file out! !
+!Kernel.ChunkSourceFiler categoriesForMethods!
+storeSource:for:!private!source filing-file out! !
+!
 
 !Kernel.CompiledMethod methodsFor!
 
@@ -450,7 +484,9 @@ storeCategories
 	The job is simply delegated to the receiver's source manager."
 
 	self class sourceManager storeCategoriesForMethod: self.! !
-!Kernel.CompiledMethod categoriesFor: #storeCategories!private!source filing-methods! !
+!Kernel.CompiledMethod categoriesForMethods!
+storeCategories!private!source filing-methods! !
+!
 
 !Kernel.SourceFiler methodsFor!
 
@@ -578,24 +614,26 @@ storeCommentString: aString forClass: aClass
 	index into the class' source descriptor so that the comment may be retrieved later."
 
 	^self subclassResponsibility! !
-!Kernel.SourceFiler categoriesFor: #collateClass:against:!private!source filing! !
-!Kernel.SourceFiler categoriesFor: #emitCategoriesOfClass:!private!source filing-file out! !
-!Kernel.SourceFiler categoriesFor: #emitCategoriesOfMethod:!private!source filing-file out! !
-!Kernel.SourceFiler categoriesFor: #emitComment:!operations-logging!private! !
-!Kernel.SourceFiler categoriesFor: #emitLiteral:!private!source filing! !
-!Kernel.SourceFiler categoriesFor: #emitMessages:ofBehavior:!private!source filing! !
-!Kernel.SourceFiler categoriesFor: #emitMethod:!private!source filing! !
-!Kernel.SourceFiler categoriesFor: #fileOutAllMethodsOfBehavior:!public!source filing! !
-!Kernel.SourceFiler categoriesFor: #fileOutAttributesOfClass:!public!source filing! !
-!Kernel.SourceFiler categoriesFor: #fileOutBasicDefinitionOfClass:!public!source filing! !
-!Kernel.SourceFiler categoriesFor: #fileOutClass:!public!source filing! !
-!Kernel.SourceFiler categoriesFor: #fileOutDefinitionOfClass:!public! !
-!Kernel.SourceFiler categoriesFor: #fileOutExpression:!public! !
-!Kernel.SourceFiler categoriesFor: #fileOutMessages:ofBehavior:!public! !
-!Kernel.SourceFiler categoriesFor: #fileOutMethods:!public! !
-!Kernel.SourceFiler categoriesFor: #fileOutProtocols:ofBehavior:!public! !
-!Kernel.SourceFiler categoriesFor: #fileOutResource:!public! !
-!Kernel.SourceFiler categoriesFor: #storeCommentString:forClass:!public!source filing! !
+!Kernel.SourceFiler categoriesForMethods!
+collateClass:against:!private!source filing! !
+emitCategoriesOfClass:!private!source filing-file out! !
+emitCategoriesOfMethod:!private!source filing-file out! !
+emitComment:!operations-logging!private! !
+emitLiteral:!private!source filing! !
+emitMessages:ofBehavior:!private!source filing! !
+emitMethod:!private!source filing! !
+fileOutAllMethodsOfBehavior:!public!source filing! !
+fileOutAttributesOfClass:!public!source filing! !
+fileOutBasicDefinitionOfClass:!public!source filing! !
+fileOutClass:!public!source filing! !
+fileOutDefinitionOfClass:!public! !
+fileOutExpression:!public! !
+fileOutMessages:ofBehavior:!public! !
+fileOutMethods:!public! !
+fileOutProtocols:ofBehavior:!public! !
+fileOutResource:!public! !
+storeCommentString:forClass:!public!source filing! !
+!
 
 !Kernel.SourceManager methodsFor!
 
@@ -848,26 +886,28 @@ storeCategoriesForMethod: aCompiledMethod
 						emitCategoriesOfMethod: aCompiledMethod;
 						cr;
 						flush]]! !
-!Kernel.SourceManager categoriesFor: #basicCompressSources:!operations-source files!private! !
-!Kernel.SourceManager categoriesFor: #compressChangedMethodsOf:onto:!operations-source files!private! !
-!Kernel.SourceManager categoriesFor: #compressChanges!operations-source files!public! !
-!Kernel.SourceManager categoriesFor: #compressChangesOf:onto:!operations-source files!private! !
-!Kernel.SourceManager categoriesFor: #compressChangesOnto:!operations-source files!public! !
-!Kernel.SourceManager categoriesFor: #compressPackageCommentsOn:!operations-source files!private! !
-!Kernel.SourceManager categoriesFor: #compressSources!operations-source files!public! !
-!Kernel.SourceManager categoriesFor: #compressSourcesWith:!operations-source files!public! !
-!Kernel.SourceManager categoriesFor: #copyAndReopenSources:!operations-source files!private! !
-!Kernel.SourceManager categoriesFor: #createDirectoryPath:!private!source filing! !
-!Kernel.SourceManager categoriesFor: #createSources:!operations-source files!private! !
-!Kernel.SourceManager categoriesFor: #createSourcesFile:!operations-source files!private! !
-!Kernel.SourceManager categoriesFor: #emitFileOutHeaderOn:!private!source filing! !
-!Kernel.SourceManager categoriesFor: #fileOut:!public!source filing! !
-!Kernel.SourceManager categoriesFor: #fileOut:to:!public!source filing! !
-!Kernel.SourceManager categoriesFor: #logChanged:!public!source filing! !
-!Kernel.SourceManager categoriesFor: #logComment:!operations-logging!public! !
-!Kernel.SourceManager categoriesFor: #logComment:to:!operations-logging!private! !
-!Kernel.SourceManager categoriesFor: #storeCategoriesForClass:!private!source filing! !
-!Kernel.SourceManager categoriesFor: #storeCategoriesForMethod:!private!source filing! !
+!Kernel.SourceManager categoriesForMethods!
+basicCompressSources:!operations-source files!private! !
+compressChangedMethodsOf:onto:!operations-source files!private! !
+compressChanges!operations-source files!public! !
+compressChangesOf:onto:!operations-source files!private! !
+compressChangesOnto:!operations-source files!public! !
+compressPackageCommentsOn:!operations-source files!private! !
+compressSources!operations-source files!public! !
+compressSourcesWith:!operations-source files!public! !
+copyAndReopenSources:!operations-source files!private! !
+createDirectoryPath:!private!source filing! !
+createSources:!operations-source files!private! !
+createSourcesFile:!operations-source files!private! !
+emitFileOutHeaderOn:!private!source filing! !
+fileOut:!public!source filing! !
+fileOut:to:!public!source filing! !
+logChanged:!public!source filing! !
+logComment:!operations-logging!public! !
+logComment:to:!operations-logging!private! !
+storeCategoriesForClass:!private!source filing! !
+storeCategoriesForMethod:!private!source filing! !
+!
 
 "End of package definition"!
 

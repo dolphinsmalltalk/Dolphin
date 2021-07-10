@@ -220,10 +220,18 @@ categoriesFor: selector
 			[:method |
 			| categories |
 			categories := OrderedCollection new.
-			ChunkReader do: [:chunk | categories addLast: chunk asMethodCategory]
+			ChunkReader do: [:chunk :filer | categories addLast: chunk asMethodCategory]
 				atEnd: 
 					[method categories: categories.
 					method storeCategories]]!
+
+categoriesForMethods
+	"Answer a chunk reader to read all the categories for the receiver's methods."
+
+	^ChunkReader
+		do: [:selector :filer | (self categoriesFor: selector asSymbol) fileInFrom: filer]
+		inContext: self
+		atEnd: []!
 
 categoriesOfMethod: aCompiledMethod
 	"Private - Answer a <Set> of all the <methodCategory> objects in the receiver
@@ -697,7 +705,7 @@ methodsFor
 	| methodEnvironment |
 	methodEnvironment := QueryEnvironmentNotification signalWith: self.
 	^ChunkReader
-		do: [:chunkString | self compile: chunkString environment: methodEnvironment]
+		do: [:chunkString :filer | self compile: chunkString environment: methodEnvironment]
 		inContext: self
 		atEnd: []!
 
@@ -1031,134 +1039,137 @@ withAllSubclassesDo: aMonadicValuable
 
 	aMonadicValuable value: self.
 	self allSubclassesDo: aMonadicValuable! !
-!Core.ClassDescription categoriesFor: #<=!comparing!public! !
-!Core.ClassDescription categoriesFor: #>>!accessing!public! !
-!Core.ClassDescription categoriesFor: #addInstVarName:!class hierarchy-mutating!instance variables!public! !
-!Core.ClassDescription categoriesFor: #addProtocol:!private!protocols! !
-!Core.ClassDescription categoriesFor: #addSharedPool:!pool variables!public! !
-!Core.ClassDescription categoriesFor: #allClassVarNames!class variables!public! !
-!Core.ClassDescription categoriesFor: #allGettersDo:!accessing!private! !
-!Core.ClassDescription categoriesFor: #allInstances!instances!public! !
-!Core.ClassDescription categoriesFor: #allInstVarNames!instance variables!public! !
-!Core.ClassDescription categoriesFor: #allMethodsDo:!enumerating!public! !
-!Core.ClassDescription categoriesFor: #allProtocols!protocols!public! !
-!Core.ClassDescription categoriesFor: #allSelectors!methods-accessing!public! !
-!Core.ClassDescription categoriesFor: #allSubclasses!class hierarchy-accessing!public! !
-!Core.ClassDescription categoriesFor: #allSubclassesBreadthFirstDo:!class hierarchy-accessing!enumerating!public! !
-!Core.ClassDescription categoriesFor: #allSubclassesDo:!class hierarchy-accessing!enumerating!public! !
-!Core.ClassDescription categoriesFor: #allSubclassesEndOrderDo:!class hierarchy-accessing!private! !
-!Core.ClassDescription categoriesFor: #allSubclassesPreOrderDo:!class hierarchy-accessing!private! !
-!Core.ClassDescription categoriesFor: #allSubinstances!instances!public! !
-!Core.ClassDescription categoriesFor: #asQualifiedReference!converting!public! !
-!Core.ClassDescription categoriesFor: #baseEnvironment!constants!private! !
-!Core.ClassDescription categoriesFor: #bindingNames!bindings!public! !
-!Core.ClassDescription categoriesFor: #bindings!accessing!public! !
-!Core.ClassDescription categoriesFor: #bindingsChanged!adding!private! !
-!Core.ClassDescription categoriesFor: #bindingsDo:!enumerating!public! !
-!Core.ClassDescription categoriesFor: #canUnderstandProtocol:!methods-testing!public! !
-!Core.ClassDescription categoriesFor: #categoriesFor:!public!source filing-methods! !
-!Core.ClassDescription categoriesFor: #categoriesOfMethod:!categories-accessing!private! !
-!Core.ClassDescription categoriesFor: #changeIndex!accessing!private! !
-!Core.ClassDescription categoriesFor: #changeIndexValue:!accessing!private! !
-!Core.ClassDescription categoriesFor: #classBindingNames!class variables!public! !
-!Core.ClassDescription categoriesFor: #classCategoryClass!constants!private! !
-!Core.ClassDescription categoriesFor: #classPool!class variables!public! !
-!Core.ClassDescription categoriesFor: #classVariableNames!class variables!public! !
-!Core.ClassDescription categoriesFor: #classVariables!class variables!public! !
-!Core.ClassDescription categoriesFor: #classVariableString!accessing!public! !
-!Core.ClassDescription categoriesFor: #comment!accessing!public! !
-!Core.ClassDescription categoriesFor: #comment:!accessing!public! !
-!Core.ClassDescription categoriesFor: #compile:categories:!compiling!development!public! !
-!Core.ClassDescription categoriesFor: #compile:categories:package:!compiling!development!public! !
-!Core.ClassDescription categoriesFor: #compile:categories:package:flags:!compiling!development!public! !
-!Core.ClassDescription categoriesFor: #compile:classified:!compiling!public! !
-!Core.ClassDescription categoriesFor: #compile:environment:categories:package:!compiling!development!public! !
-!Core.ClassDescription categoriesFor: #compile:environment:categories:package:flags:!compiling!development!public! !
-!Core.ClassDescription categoriesFor: #compileAllSubclasses!compiling!development!public! !
-!Core.ClassDescription categoriesFor: #conformsToProtocol:!protocols!public! !
-!Core.ClassDescription categoriesFor: #definedBindings!accessing!private! !
-!Core.ClassDescription categoriesFor: #definition!public!source filing-class definition! !
-!Core.ClassDescription categoriesFor: #displayOn:!displaying!public! !
-!Core.ClassDescription categoriesFor: #fullBindingFor:!binding!public! !
-!Core.ClassDescription categoriesFor: #fullBindingFor:environment:!binding!public! !
-!Core.ClassDescription categoriesFor: #fullName!accessing!namespaces!public! !
-!Core.ClassDescription categoriesFor: #fullyQualifiedReference!accessing!public! !
-!Core.ClassDescription categoriesFor: #hasCompilationFailures!public!testing! !
-!Core.ClassDescription categoriesFor: #hierarchyBindingFor:!bindings!public! !
-!Core.ClassDescription categoriesFor: #importedNamespacesDo:!pool variables!public! !
-!Core.ClassDescription categoriesFor: #imports!pool variables!public! !
-!Core.ClassDescription categoriesFor: #imports:!pool variables!public! !
-!Core.ClassDescription categoriesFor: #includesCategory:!categories-testing!public! !
-!Core.ClassDescription categoriesFor: #includeSelector:inCategory:!categories-testing!public! !
-!Core.ClassDescription categoriesFor: #indexOfInstVar:!instance variables!public! !
-!Core.ClassDescription categoriesFor: #indexOfInstVar:ifAbsent:!instance variables!public! !
-!Core.ClassDescription categoriesFor: #instanceClass!accessing!public! !
-!Core.ClassDescription categoriesFor: #instanceVariableString!accessing!public! !
-!Core.ClassDescription categoriesFor: #instanceVariableString:!accessing!private! !
-!Core.ClassDescription categoriesFor: #instVarName:!accessing!public! !
-!Core.ClassDescription categoriesFor: #instVarNames!instance variables!public! !
-!Core.ClassDescription categoriesFor: #isAnonymous!public!testing! !
-!Core.ClassDescription categoriesFor: #isChanged!public!source filing!testing! !
-!Core.ClassDescription categoriesFor: #isChanged:!public!source filing! !
-!Core.ClassDescription categoriesFor: #localBindingFor:!binding!public! !
-!Core.ClassDescription categoriesFor: #localEnvironment!accessing!private! !
-!Core.ClassDescription categoriesFor: #localScope!accessing!public! !
-!Core.ClassDescription categoriesFor: #logDefinition!class hierarchy-mutating!instance variables!private! !
-!Core.ClassDescription categoriesFor: #logRemoveSelector:!development!helpers!private! !
-!Core.ClassDescription categoriesFor: #logRemoveSelectors:!development!helpers!private! !
-!Core.ClassDescription categoriesFor: #methodCategories!categories-accessing!public! !
-!Core.ClassDescription categoriesFor: #methodChanged:!helpers!private! !
-!Core.ClassDescription categoriesFor: #methodProtocol:attributes:selectors:!development!public!source filing-methods! !
-!Core.ClassDescription categoriesFor: #methodProtocolClass!constants!private! !
-!Core.ClassDescription categoriesFor: #methods!public!source filing-methods! !
-!Core.ClassDescription categoriesFor: #methodsCatalogue!categories-accessing!private! !
-!Core.ClassDescription categoriesFor: #methodsCatalogue:!categories-accessing!private! !
-!Core.ClassDescription categoriesFor: #methodsFor!public!source filing-methods! !
-!Core.ClassDescription categoriesFor: #name!accessing!public! !
-!Core.ClassDescription categoriesFor: #owningPackage!accessing!public! !
-!Core.ClassDescription categoriesFor: #packageManager!development!public!source filing! !
-!Core.ClassDescription categoriesFor: #printDefinitionOn:!development!private!source filing-class definition! !
-!Core.ClassDescription categoriesFor: #printFullNameOn:!helpers!private! !
-!Core.ClassDescription categoriesFor: #protocolNames!private!protocols! !
-!Core.ClassDescription categoriesFor: #protocols!private!protocols! !
-!Core.ClassDescription categoriesFor: #protocols:!private!protocols! !
-!Core.ClassDescription categoriesFor: #realMethodCategories!categories-accessing!public! !
-!Core.ClassDescription categoriesFor: #recompileAll!compiling!development!public! !
-!Core.ClassDescription categoriesFor: #recompileAllReferencesToLiteral:!development!private! !
-!Core.ClassDescription categoriesFor: #removeCategory:!categories-removing!public! !
-!Core.ClassDescription categoriesFor: #removeInstVarName:!class hierarchy-mutating!instance variables!public! !
-!Core.ClassDescription categoriesFor: #removeMethodFromNonVirtualCategories:!development!helpers!private! !
-!Core.ClassDescription categoriesFor: #removeProtocol:!private!protocols! !
-!Core.ClassDescription categoriesFor: #removeProtocol:ifAbsent:!private!protocols! !
-!Core.ClassDescription categoriesFor: #removeSelector:fromCategory:!categories-removing!private! !
-!Core.ClassDescription categoriesFor: #removeSelector:ifAbsent:!development!methods-removing!must strip!public! !
-!Core.ClassDescription categoriesFor: #removeSelectors:!development!methods-removing!public! !
-!Core.ClassDescription categoriesFor: #removeUnsupportedProtocols:selector:!development!methods-removing!private!protocols! !
-!Core.ClassDescription categoriesFor: #resourceIdentifiers!accessing!public! !
-!Core.ClassDescription categoriesFor: #resourceIdentifiersDo:!enumerating!public! !
-!Core.ClassDescription categoriesFor: #resourceNames!accessing!public! !
-!Core.ClassDescription categoriesFor: #resources!accessing!public! !
-!Core.ClassDescription categoriesFor: #resourceSelectorsDo:!enumerating!public! !
-!Core.ClassDescription categoriesFor: #selectorsInCategory:!categories-accessing!public! !
-!Core.ClassDescription categoriesFor: #setInstanceVariables:!instance variables!private! !
-!Core.ClassDescription categoriesFor: #setShapeFlags:to:!class hierarchy-mutating!instance specification-accessing!private! !
-!Core.ClassDescription categoriesFor: #shortName!accessing!public! !
-!Core.ClassDescription categoriesFor: #sourceFilerClass!private!source filing-class definition! !
-!Core.ClassDescription categoriesFor: #sourceManager!accessing!public! !
-!Core.ClassDescription categoriesFor: #stbReadFrom:format:!binary filing!public! !
-!Core.ClassDescription categoriesFor: #storeClassCategories!private!source filing-methods! !
-!Core.ClassDescription categoriesFor: #storeOn:!printing!public! !
-!Core.ClassDescription categoriesFor: #subclasses!class hierarchy-accessing!public! !
-!Core.ClassDescription categoriesFor: #subclassesDo:!class hierarchy-accessing!public! !
-!Core.ClassDescription categoriesFor: #subclassInstVarNames!instance variables!public! !
-!Core.ClassDescription categoriesFor: #suggestedPrivacyFor:!compiling!private! !
-!Core.ClassDescription categoriesFor: #variableAdded:!class variables!private! !
-!Core.ClassDescription categoriesFor: #variableRemoved:!class variables!private! !
-!Core.ClassDescription categoriesFor: #whichCategoriesIncludeSelector:!categories-accessing!private! !
-!Core.ClassDescription categoriesFor: #whichClassDefinesClassVar:!class variables!public! !
-!Core.ClassDescription categoriesFor: #whichNonVirtualCategoriesIncludeSelector:!categories-accessing!private! !
-!Core.ClassDescription categoriesFor: #withAllSubclasses!class hierarchy-accessing!public! !
-!Core.ClassDescription categoriesFor: #withAllSubclassesDo:!enumerating!public! !
+!Core.ClassDescription categoriesForMethods!
+<=!comparing!public! !
+>>!accessing!public! !
+addInstVarName:!class hierarchy-mutating!instance variables!public! !
+addProtocol:!private!protocols! !
+addSharedPool:!pool variables!public! !
+allClassVarNames!class variables!public! !
+allGettersDo:!accessing!private! !
+allInstances!instances!public! !
+allInstVarNames!instance variables!public! !
+allMethodsDo:!enumerating!public! !
+allProtocols!protocols!public! !
+allSelectors!methods-accessing!public! !
+allSubclasses!class hierarchy-accessing!public! !
+allSubclassesBreadthFirstDo:!class hierarchy-accessing!enumerating!public! !
+allSubclassesDo:!class hierarchy-accessing!enumerating!public! !
+allSubclassesEndOrderDo:!class hierarchy-accessing!private! !
+allSubclassesPreOrderDo:!class hierarchy-accessing!private! !
+allSubinstances!instances!public! !
+asQualifiedReference!converting!public! !
+baseEnvironment!constants!private! !
+bindingNames!bindings!public! !
+bindings!accessing!public! !
+bindingsChanged!adding!private! !
+bindingsDo:!enumerating!public! !
+canUnderstandProtocol:!methods-testing!public! !
+categoriesFor:!public!source filing-methods! !
+categoriesForMethods!public!source filing-methods! !
+categoriesOfMethod:!categories-accessing!private! !
+changeIndex!accessing!private! !
+changeIndexValue:!accessing!private! !
+classBindingNames!class variables!public! !
+classCategoryClass!constants!private! !
+classPool!class variables!public! !
+classVariableNames!class variables!public! !
+classVariables!class variables!public! !
+classVariableString!accessing!public! !
+comment!accessing!public! !
+comment:!accessing!public! !
+compile:categories:!compiling!development!public! !
+compile:categories:package:!compiling!development!public! !
+compile:categories:package:flags:!compiling!development!public! !
+compile:classified:!compiling!public! !
+compile:environment:categories:package:!compiling!development!public! !
+compile:environment:categories:package:flags:!compiling!development!public! !
+compileAllSubclasses!compiling!development!public! !
+conformsToProtocol:!protocols!public! !
+definedBindings!accessing!private! !
+definition!public!source filing-class definition! !
+displayOn:!displaying!public! !
+fullBindingFor:!binding!public! !
+fullBindingFor:environment:!binding!public! !
+fullName!accessing!namespaces!public! !
+fullyQualifiedReference!accessing!public! !
+hasCompilationFailures!public!testing! !
+hierarchyBindingFor:!bindings!public! !
+importedNamespacesDo:!pool variables!public! !
+imports!pool variables!public! !
+imports:!pool variables!public! !
+includesCategory:!categories-testing!public! !
+includeSelector:inCategory:!categories-testing!public! !
+indexOfInstVar:!instance variables!public! !
+indexOfInstVar:ifAbsent:!instance variables!public! !
+instanceClass!accessing!public! !
+instanceVariableString!accessing!public! !
+instanceVariableString:!accessing!private! !
+instVarName:!accessing!public! !
+instVarNames!instance variables!public! !
+isAnonymous!public!testing! !
+isChanged!public!source filing!testing! !
+isChanged:!public!source filing! !
+localBindingFor:!binding!public! !
+localEnvironment!accessing!private! !
+localScope!accessing!public! !
+logDefinition!class hierarchy-mutating!instance variables!private! !
+logRemoveSelector:!development!helpers!private! !
+logRemoveSelectors:!development!helpers!private! !
+methodCategories!categories-accessing!public! !
+methodChanged:!helpers!private! !
+methodProtocol:attributes:selectors:!development!public!source filing-methods! !
+methodProtocolClass!constants!private! !
+methods!public!source filing-methods! !
+methodsCatalogue!categories-accessing!private! !
+methodsCatalogue:!categories-accessing!private! !
+methodsFor!public!source filing-methods! !
+name!accessing!public! !
+owningPackage!accessing!public! !
+packageManager!development!public!source filing! !
+printDefinitionOn:!development!private!source filing-class definition! !
+printFullNameOn:!helpers!private! !
+protocolNames!private!protocols! !
+protocols!private!protocols! !
+protocols:!private!protocols! !
+realMethodCategories!categories-accessing!public! !
+recompileAll!compiling!development!public! !
+recompileAllReferencesToLiteral:!development!private! !
+removeCategory:!categories-removing!public! !
+removeInstVarName:!class hierarchy-mutating!instance variables!public! !
+removeMethodFromNonVirtualCategories:!development!helpers!private! !
+removeProtocol:!private!protocols! !
+removeProtocol:ifAbsent:!private!protocols! !
+removeSelector:fromCategory:!categories-removing!private! !
+removeSelector:ifAbsent:!development!methods-removing!must strip!public! !
+removeSelectors:!development!methods-removing!public! !
+removeUnsupportedProtocols:selector:!development!methods-removing!private!protocols! !
+resourceIdentifiers!accessing!public! !
+resourceIdentifiersDo:!enumerating!public! !
+resourceNames!accessing!public! !
+resources!accessing!public! !
+resourceSelectorsDo:!enumerating!public! !
+selectorsInCategory:!categories-accessing!public! !
+setInstanceVariables:!instance variables!private! !
+setShapeFlags:to:!class hierarchy-mutating!instance specification-accessing!private! !
+shortName!accessing!public! !
+sourceFilerClass!private!source filing-class definition! !
+sourceManager!accessing!public! !
+stbReadFrom:format:!binary filing!public! !
+storeClassCategories!private!source filing-methods! !
+storeOn:!printing!public! !
+subclasses!class hierarchy-accessing!public! !
+subclassesDo:!class hierarchy-accessing!public! !
+subclassInstVarNames!instance variables!public! !
+suggestedPrivacyFor:!compiling!private! !
+variableAdded:!class variables!private! !
+variableRemoved:!class variables!private! !
+whichCategoriesIncludeSelector:!categories-accessing!private! !
+whichClassDefinesClassVar:!class variables!public! !
+whichNonVirtualCategoriesIncludeSelector:!categories-accessing!private! !
+withAllSubclasses!class hierarchy-accessing!public! !
+withAllSubclassesDo:!enumerating!public! !
+!
 
 Core.ClassDescription methodProtocol: #bindingScope attributes: #(#readOnly) selectors: #(#environment #localScope)!
 Core.ClassDescription methodProtocol: #classDescription attributes: #(#ansi #readOnly) selectors: #(#allSubclasses #allSuperclasses #name #subclasses #superclass)!

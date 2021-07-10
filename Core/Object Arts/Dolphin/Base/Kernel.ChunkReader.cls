@@ -16,11 +16,11 @@ Kernel.ChunkReader comment: '
 chunk: chunkString
 	"Private - Evaluate the receivers chunkBlock with chunkString."
 
+	#deprecated.
 	self chunkBlock value: chunkString!
 
 chunkBlock
-	"Answer the receivers chunkBlock. This is a <monadicValuable> 
-	which is evaluated for each chunk of text read from a stream."
+	"Answer the receivers chunkBlock. This is a <dyadicValuable> which is evaluated for each chunk of text read from a stream."
 
 	^chunkBlock!
 
@@ -31,14 +31,11 @@ context
 	^context!
 
 fileInFrom: aSourceFiler
-	"Private - File in the next chunk from the <ChunkSourceFiler> argument, 
-	aChunkSourceFiler. Continue reading chunks until the end of the file or an 
-	empty chunk is reached, at which point the final action is evaluated. Answer 
-	the result of the final action."
+	"Private - File in the next chunk from the `ChunkSourceFiler` argument. Continue reading chunks until the end of the file or an empty chunk is reached, at which point the final action is evaluated. Answer the result of the final action."
 
 	| chunk |
 	[aSourceFiler atEnd or: [(chunk := aSourceFiler nextChunk) isEmpty]]
-		whileFalse: [self chunk: chunk].
+		whileFalse: [chunkBlock cull: chunk cull: aSourceFiler].
 	^endAction value!
 
 setChunkBlock: perChunk context: contextObject endAction: finalOperation 
@@ -47,11 +44,13 @@ setChunkBlock: perChunk context: contextObject endAction: finalOperation
 	chunkBlock := perChunk.
 	endAction := finalOperation.
 	context := contextObject! !
-!Kernel.ChunkReader categoriesFor: #chunk:!operations!private! !
-!Kernel.ChunkReader categoriesFor: #chunkBlock!accessing!public! !
-!Kernel.ChunkReader categoriesFor: #context!accessing!public! !
-!Kernel.ChunkReader categoriesFor: #fileInFrom:!private!source filing! !
-!Kernel.ChunkReader categoriesFor: #setChunkBlock:context:endAction:!accessing!private! !
+!Kernel.ChunkReader categoriesForMethods!
+chunk:!operations!private! !
+chunkBlock!accessing!public! !
+context!accessing!public! !
+fileInFrom:!private!source filing! !
+setChunkBlock:context:endAction:!accessing!private! !
+!
 
 !Kernel.ChunkReader class methodsFor!
 
@@ -91,7 +90,7 @@ null
 	"Answer a null instance of the receiver which consumes and discards input without
 	processing it in any way."
 
-	Null isNil ifTrue: [Null := self do: [:chunk |]].
+	Null isNil ifTrue: [Null := self do: [:chunk :filer | ]].
 	^Null!
 
 onPreStripImage
@@ -99,9 +98,11 @@ onPreStripImage
 	any lazily initialized class variables in order to assist the stripping process."
 
 	Null := nil! !
-!Kernel.ChunkReader class categoriesFor: #do:!instance creation!public! !
-!Kernel.ChunkReader class categoriesFor: #do:atEnd:!instance creation!public! !
-!Kernel.ChunkReader class categoriesFor: #do:inContext:atEnd:!instance creation!public! !
-!Kernel.ChunkReader class categoriesFor: #null!instance creation!public! !
-!Kernel.ChunkReader class categoriesFor: #onPreStripImage!initializing!private! !
+!Kernel.ChunkReader class categoriesForMethods!
+do:!instance creation!public! !
+do:atEnd:!instance creation!public! !
+do:inContext:atEnd:!instance creation!public! !
+null!instance creation!public! !
+onPreStripImage!initializing!private! !
+!
 

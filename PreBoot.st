@@ -43,3 +43,19 @@ systemPackage := Object owningPackage.
 DynamicLinkLibraryStub owningPackage: systemPackage.
 #(#{Kernel.VM} #{OS.User32} #{OS.Kernel32} #{OS.Ucrt} #{OS.NtDll} #{OS.Shlwapi} #{OS.AdvApi32} #{OS.Rpcrt4}) do: [:each |
 	each binding owningPackage: systemPackage]!
+
+!Core.ClassDescription methodsFor!
+
+categoriesForMethods
+	^ChunkReader
+		do: [:selector :filer | (self categoriesFor: selector asSymbol) fileInFrom: filer]
+		inContext: self
+		atEnd: []! !
+		
+!Kernel.ChunkReader methodsFor!
+
+fileInFrom: aSourceFiler
+	| chunk |
+	[aSourceFiler atEnd or: [(chunk := aSourceFiler nextChunk) isEmpty]]
+		whileFalse: [chunkBlock cull: chunk cull: aSourceFiler].
+	^endAction value! !
