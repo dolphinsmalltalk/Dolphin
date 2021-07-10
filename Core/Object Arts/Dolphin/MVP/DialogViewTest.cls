@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smallalk"!
 
-DolphinTest subclass: #DialogViewTest
-	instanceVariableNames: 'owner shell2 fakeUser32 cursorPos'
+AbstractShellViewTest subclass: #DialogViewTest
+	instanceVariableNames: 'owner shell2'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -11,7 +11,10 @@ DialogViewTest comment: ''!
 !DialogViewTest methodsFor!
 
 createShell: aRectangle text: aString
-	^ShellView new
+	| shell |
+	shell := ShellView new.
+	shells addLast: shell.
+	^shell
 		create;
 		rectangle: aRectangle;
 		text: aString;
@@ -54,29 +57,6 @@ evaluateInModalDialog: aBlock owner: ownerView centered: aBoolean
 	dialog isInProc: true.
 	dialog showModalTo: ownerView.
 	self deny: dialog isOpen!
-
-getSecondaryMonitorIfAvailable
-	"Private - Attempt to find a non-primary monitor, which will only be possible if more than one display monitor is attached."
-
-	| monitors |
-	monitors := DisplayMonitor desktopMonitors.
-	^monitors size > 1 ifTrue: [monitors detect: [:each | each isPrimary not]] ifFalse: [monitors first]!
-
-setUpFakeUserLibrary
-	fakeUser32 := FakeUserLibrary new.
-	fakeUser32
-		initializeForDesktopActive;
-		getCursorPosBlock: 
-				[:pointl |
-				pointl value: cursorPos.
-				1];
-		open!
-
-tearDown
-	fakeUser32 ifNotNil: [fakeUser32 close].
-	owner ifNotNil: [owner destroy].
-	shell2 ifNotNil: [shell2 destroy].
-	super tearDown!
 
 testCenteringInOwner
 	"Test that a modal dialog is centered in its owner."
@@ -235,15 +215,12 @@ createSubjectDialog:!helpers!private! !
 createTestShells:!helpers!private! !
 dialogExtent!constants!private! !
 evaluateInModalDialog:owner:centered:!helpers!private! !
-getSecondaryMonitorIfAvailable!helpers!private! !
-setUpFakeUserLibrary!helpers!private! !
-tearDown!public!running! !
 testCenteringInOwner!public!unit tests! !
 testCenteringInOwnerModeless!public!unit tests! !
 testInplaceNotRepositioned!public!unit tests! !
 testNearOwnerModal!public!unit tests! !
 testNearOwnerModeless!public!unit tests! !
 testRemainsOnScreen!public!unit tests! !
-workAreaNearest:!helpers!private! !
+workAreaNearest:!public! !
 !
 

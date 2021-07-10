@@ -9,6 +9,7 @@ package classNames
 	add: #AbstractContainerViewTest;
 	add: #AbstractPointTest;
 	add: #AbstractRectangleTest;
+	add: #AbstractShellViewTest;
 	add: #AbstractTextEditTest;
 	add: #AcceleratorTableTest;
 	add: #ARGBTest;
@@ -72,6 +73,7 @@ package classNames
 	add: #SelectableItemsTest;
 	add: #SelectableListItemsTest;
 	add: #SelectableTreeItemsTest;
+	add: #ShellViewTest;
 	add: #SingleSelectListBoxTest;
 	add: #SingleSelectListViewTest;
 	add: #SliderTest;
@@ -150,7 +152,7 @@ Object subclass: #MockScintillaView
 	poolDictionaries: 'ScintillaConstants'
 	classInstanceVariableNames: ''!
 UserLibrary subclass: #FakeUserLibrary
-	instanceVariableNames: 'user32 getForegroundWindowBlock getActiveWindowBlock getCursorPosBlock'
+	instanceVariableNames: 'user32 process getForegroundWindowBlock getActiveWindowBlock getCursorPosBlock'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -166,6 +168,11 @@ DolphinTest subclass: #AbstractPointTest
 	classInstanceVariableNames: ''!
 DolphinTest subclass: #AbstractRectangleTest
 	instanceVariableNames: 'desktop oddDesktop unary'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+DolphinTest subclass: #AbstractShellViewTest
+	instanceVariableNames: 'fakeUser32 cursorPos shells'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -201,11 +208,6 @@ DolphinTest subclass: #ColorTest
 	classInstanceVariableNames: ''!
 DolphinTest subclass: #CommandDescriptionTest
 	instanceVariableNames: 'savedKeyboardLayout'
-	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-DolphinTest subclass: #DialogViewTest
-	instanceVariableNames: 'owner shell2 fakeUser32 cursorPos'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -350,6 +352,16 @@ AbstractRectangleTest subclass: #RectangleTest
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ExternalRectangleTest subclass: #RECTLTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+AbstractShellViewTest subclass: #DialogViewTest
+	instanceVariableNames: 'owner shell2'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+AbstractShellViewTest subclass: #ShellViewTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''

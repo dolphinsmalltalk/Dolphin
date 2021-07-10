@@ -187,7 +187,7 @@ defaultPositionWithin: aParentView forExtent: aPoint
 	"Private - Answer the default position of the receiver within aParentView given its intended extent aPoint.
 	This is used only on creation."
 
-	| testWindow defaultPosition |
+	| testWindow defaultPosition activeMonitor defaultMonitor |
 	self assert: [aParentView notNil].
 	self isInitiallyCentered ifTrue: [^self centerExtent: aPoint within: aParentView].
 
@@ -199,6 +199,15 @@ defaultPositionWithin: aParentView forExtent: aPoint
 		createAt: ##(CW_USEDEFAULT @ CW_USEDEFAULT) extent: aPoint.
 	defaultPosition := testWindow position.
 	testWindow destroy.
+	"Reposition to within bounds of active monitor"
+	activeMonitor := DisplayMonitor active.
+	defaultMonitor := DisplayMonitor containingPoint: defaultPosition.
+	activeMonitor = defaultMonitor
+		ifFalse: 
+			[| workArea |
+			defaultPosition := activeMonitor origin + (defaultPosition - defaultMonitor origin).
+			workArea := activeMonitor workArea.
+			defaultPosition := (defaultPosition min: workArea bottomRight - aPoint) max: workArea topLeft].
 	^defaultPosition!
 
 defaultShowStyle
